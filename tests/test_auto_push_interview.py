@@ -419,6 +419,48 @@ def test_海报在就照发(repo: Path):
     assert picked[0] == "demo"
 
 
+def _commit_cover_scan(repo: Path, frames: dict[float, str], slug: str = "demo") -> None:
+    """按 fixture 里那条 spec 的取景写一份 `cover_candidates.json` 并提交。"""
+    import interview_cover_scan as scan  # noqa: PLC0415
+
+    spec = json.loads((repo / f"specs/interviews/{slug}.json").read_text(encoding="utf-8"))
+    face = {"box": [380, 230, 180, 180], "eyes": 2, "face_height_ratio": 0.22,
+            "face_area_ratio": 0.037, "sharpness": 120.0, "contrast": 96.0}
+    entries = [{"frame_at": t, "status": status,
+                "issues": [] if status == "pass" else ["只检出 1 只眼"],
+                "face": face, "margin": 1.5} for t, status in frames.items()]
+    record = scan.build_record(spec, (18.0, 22.0), 0.2, entries)
+    (repo / f"output/interviews/{slug}" / scan.RECORD_NAME).write_text(
+        json.dumps(record, ensure_ascii=False), encoding="utf-8")
+    _commit_all(repo)
+
+
+def test_扫过封面的话推出去的那一帧必须是扫描里过闸的那一格(repo: Path, capsys):
+    """第 7 道闸（2026-09-27）：推出去的 spec 写着「没看过这一帧」而 auto 是 true。
+
+    `mode=cover` 现在逐格扫一段落 `cover_candidates.json`；提交了这份记录，
+    `cover.frame_at`（fixture 里是 20.0）就必须是其中**过闸**的那一格——
+    没扫过、或扫过但没过，都不发。"""
+    _spec(repo, {"auto": True})
+    _commit_cover_scan(repo, {19.8: "pass", 20.2: "pass"})     # 20.0 没扫过
+    assert gate.pick(CHANGED, repo) is None
+    assert "没扫过" in capsys.readouterr().out
+
+    _commit_cover_scan(repo, {20.0: "fail", 20.2: "pass"})     # 扫过但没过闸
+    assert gate.pick(CHANGED, repo) is None
+    assert "没过闸" in capsys.readouterr().out
+
+
+def test_扫描记录里过闸的那一格照发_没有记录不对账(repo: Path):
+    """反向验证上一条：同样的输入，frame_at 换成过闸的那一格就该发；
+    没有记录（存量全是这样）不许因为这道闸被拦——它只管扫过的。"""
+    _spec(repo, {"auto": True})
+    assert gate.pick(CHANGED, repo) is not None, "没有扫描记录却被拦了——存量会被这道闸一刀切"
+    _commit_cover_scan(repo, {20.0: "pass", 20.2: "pass"})
+    picked = gate.pick(CHANGED, repo)
+    assert picked is not None and picked[0] == "demo"
+
+
 def test_render必须绑定当前QC凭证(repo: Path, capsys):
     """旧 render 不能配一份后来替换的 pass QC 冒充同一轮质检。"""
     _spec(repo, {"auto": True})

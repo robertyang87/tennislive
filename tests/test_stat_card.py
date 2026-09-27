@@ -414,7 +414,9 @@ def test_中英那一对的垂直位置是量出来的一组数():
     src = Path(sc.__file__).read_text(encoding="utf-8")
 
     def decl(rule: str, prop: str) -> str:
-        m = re.search(rf"\n\.{rule}\{{{{([^}}]*)\}}}}", src)
+        # 规则体里允许 f-string 占位（2026-09-27 起颜色走 token，`color:{_rgba(FG, .92)}`
+        # 这种），否则 `[^}]*` 在第一个占位的右花括号那儿就断了、整条规则找不到
+        m = re.search(r"\n\." + re.escape(rule) + r"\{\{((?:[^{}]|\{[^{}]*\})*)\}\}", src)
         assert m, f"CSS 里没有 .{rule} 规则"
         got = re.search(rf"(?<![\w-]){prop}:(-?[\d.]+)px", m.group(1).replace(" ", ""))
         assert got, f".{rule} 少了 {prop}"

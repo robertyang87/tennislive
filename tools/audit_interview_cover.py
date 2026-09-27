@@ -40,6 +40,12 @@ MIN_FACE_AREA_RATIO = 0.010
 MIN_FACE_SHARPNESS = 45.0
 MIN_FACE_CONTRAST = 32.0
 MIN_EYES = 2
+#: 人脸中心的近景安全区（照片区内的比例）。原来是 `validate_result` 里的裸数字——
+#: 抽成常量，封面扫描记录（`interview_cover_scan.ruler`）才认得出「阈值变过」。
+#: ⚠️ 这个模块的**模块级大写数字常量**都算这把尺子的阈值（`ruler` 自己推，不维护
+#: 名单）；改了检测器本身（Haar 参数之类）要连 `LOCAL_AUDITOR` 的版本号一起改。
+FACE_CENTER_X_RANGE = (0.08, 0.92)
+FACE_CENTER_Y_RANGE = (0.06, 0.72)
 REPORT_NAME = "cover_visual_attestation.json"
 
 
@@ -387,10 +393,31 @@ def validate_result(result: object, spec: dict) -> list[str]:
         issues.append(f"脸部明暗跨度 {contrast:g}，必须 ≥ {MIN_FACE_CONTRAST:g}")
     center_x = _number(face.get("center_x_ratio"))
     center_y = _number(face.get("center_y_ratio"))
-    if not 0.08 <= center_x <= 0.92 or not 0.06 <= center_y <= 0.72:
+    if (not FACE_CENTER_X_RANGE[0] <= center_x <= FACE_CENTER_X_RANGE[1]
+            or not FACE_CENTER_Y_RANGE[0] <= center_y <= FACE_CENTER_Y_RANGE[1]):
         issues.append(f"人脸中心 ({center_x:.1%}, {center_y:.1%}) 不在近景安全区")
     issues.extend(face_model_issues(result, spec)[0])
     return issues
+
+
+def audit_poster(poster: Path, spec: dict, *, face: bool = False) -> tuple[dict, list[str]]:
+    """量一张海报、按当前 spec 判——返回 (证据, 不合格项)，空列表才是通过。
+
+    **`main()` 和候选帧扫描（`interview_cover_scan`）共用这一份。** 扫描要在
+    几十帧里挑出「过得了这道闸」的那几帧，它用的尺子必须和终审是同一把：
+    自己另抄一遍 `analyze_poster → contract → validate_result` 的话，两边的
+    阈值或构图合同迟早分叉，而分叉的样子是「扫描说能过、终审红了」——
+    正是扫描要省掉的那一趟 render。
+    """
+    result = analyze_poster(poster)
+    contract, _ = framing_contract(spec)
+    result["contract"] = contract
+    # `face=True`：终审（main）再加认人＋睁眼（O2+O3，insightface），`validate_result`
+    # 见到 `face_model` 就把它的不合格项并进来。候选扫描默认不跑——几十帧各跑一遍
+    # 人脸模型会吃掉扫描的时间预算；扫描挑出来的那一帧照样要过这道终审。
+    if face:
+        result["face_model"] = poster_face_model(poster, expected_subject(spec))
+    return result, validate_result(result, spec)
 
 
 def write_report(
@@ -500,11 +527,7 @@ def main() -> int:
         return 2
 
     try:
-        result = analyze_poster(poster)
-        contract, _ = framing_contract(spec)
-        result["contract"] = contract
-        result["face_model"] = poster_face_model(poster, expected)
-        issues = validate_result(result, spec)
+        result, issues = audit_poster(poster, spec, face=True)
         warnings = face_model_issues(result, spec)[1]
         write_report(out, spec_path, poster, expected, result, issues,
                      warnings=warnings)
