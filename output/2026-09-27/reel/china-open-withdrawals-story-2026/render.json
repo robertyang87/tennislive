@@ -1,0 +1,72 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 3.994,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 184.11,
+  "topbar": null,
+  "film_seconds": 191.96,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 8.52,
+    "1": 9.12,
+    "2": 5.76,
+    "3": 10.512,
+    "4": 9.192,
+    "5": 7.704,
+    "6": 7.752,
+    "7": 9.024,
+    "8": 8.232,
+    "9": 9.576,
+    "10": 10.92,
+    "11": 8.88,
+    "12": 9.672,
+    "13": 9.384,
+    "14": 7.752,
+    "15": 7.8,
+    "16": 9.216,
+    "17": 10.032
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "china-open-withdrawals-story-2026",
+    "received_at": "2026-09-27T05:11:31Z",
+    "artifact_ready_at": "2026-09-27T05:18:40Z",
+    "elapsed_seconds": 429.582,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "84cdb6854c08f5bf8985ba73f06c083d142ddd9fb4439620528f359f64441f5f",
+    "spec_sha256": "719a430cb141a6a3aef028c773787d60ebcd2ddd33c76c338038b16658fd9739",
+    "run_id": "36296478091",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-27T05:13:54Z",
+        "run_id": "36296478091"
+      }
+    ],
+    "render_seconds": 286.582,
+    "pre_render_seconds": 143.0
+  },
+  "film_sha256": "84cdb6854c08f5bf8985ba73f06c083d142ddd9fb4439620528f359f64441f5f",
+  "film_bytes": 99715691,
+  "qc_attestation_sha256": "0b8e0e5e22c498a9f8031dfcb8f975e675b5789a0d4038851eda6955cd1b9f30",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-27T05:13:54Z",
+      "run_id": "36296478091"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-27T05:18:41Z",
+      "run_id": "36296478091"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-china-open-withdrawals-story-2026/china-open-withdrawals-story-2026.mp4",
+  "video_bytes": 99715691
+}
