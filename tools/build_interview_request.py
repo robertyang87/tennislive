@@ -205,13 +205,22 @@ def is_pending(path: Path) -> bool:
 
 
 def pending_paths(only_slug: str = "") -> list[Path]:
+    """待 build 的请求。读不了的（JSON 坏了、顶层不是对象、slug 缺或非法）**照样列进来**，
+    按文件名认 slug（`requests/interviews/<slug>.json`，存量全是这个约定）：交给 `main`
+    那个逐条 try 记进失败清单、`::error file=` 指回它，同一趟其余请求照常 build。
+    原来这里一抛，整趟连 `--count-pending` / `--pending-slugs` 一起炸，那个逐条兜底
+    根本走不到——一条坏请求每 10 分钟卡死一整趟（复审 2026-09-27 nit）。"""
     out = []
     for path in _request_paths():
-        req = _read(path)
-        slug = _slug(req, path)
+        slug, pending = path.stem, True
+        try:
+            slug = _slug(_read(path), path)
+            pending = is_pending(path)   # 正式 spec 坏了也抛——一样交给 build 那一步报
+        except (OSError, ValueError):   # JSONDecodeError 是 ValueError
+            pass
         if only_slug and slug != only_slug:
             continue
-        if is_pending(path):
+        if pending:
             out.append(path)
     return out
 
@@ -694,7 +703,12 @@ def main() -> int:
         return 0
     if args.pending_slugs:
         for path in paths:
-            print(_slug(_read(path), path))
+            try:
+                print(_slug(_read(path), path))
+            except (OSError, ValueError) as exc:
+                # 不进 stdout（那是给 sparse-checkout add 的 slug 清单）；build 那一步会把它
+                # 记进失败清单并 `::error`，这里只在日志里留一句
+                print(f"[跳过] {_rel(path)} 读不了：{exc}", file=sys.stderr)
         return 0
     if not paths:
         print("没有待生成的人工采访请求。")

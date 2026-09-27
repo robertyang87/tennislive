@@ -405,25 +405,14 @@ def _workflow_run(name: str) -> str:
     return runs[0]
 
 
-def test_一条人工请求没过闸_不连坐同一趟的其余请求(tmp_path, monkeypatch, capsys):
-    """`interview-auto-render.yml`「人工指定请求转写、切行并逐行翻译」原来单条红就整步
-    退出 1：同一趟后面的「补片头」「提交」全被跳过，别的请求白 build 一遍、没提交，每 10
-    分钟重来一趟，直到有人修好那一条（复审 2026-09-27）。
-
-    现在两条请求一起跑、其中一条带没认领的全称断言：
-    ① `build_interview_request --failed-list` 退出 0，好的那条照常落盘；坏的那条一个字节
-       都不写、`::error file=` 指回请求文件、记进失败清单；
-    ② 提交那一步跳过坏的那条的转写，好的照常 add（真跑那段 bash，git 打桩）；
-    ④ dispatch 那一步也跳过坏的那条（它的正式 spec 还是上一版），好的照常投；
-    ③ 最后一步读失败清单：有就写 run 摘要、把整趟标红；没有就绿。
-    """
-    import subprocess  # noqa: PLC0415
-
+def _metadata_only_builder(tmp_path: Path, monkeypatch) -> tuple[Path, Path, Path]:
+    """把 `build_interview_request` 的三个目录指到 tmp_path，并把「只改元数据」那条路
+    以外的外部调用全打桩（ASR 一调就 fail、不调模型、文案闸放行）。产物目录照仓库的
+    相对布局摆（output/interviews/<slug>），工作流那几段 bash 能直接在 tmp_path 里跑。"""
     import build_interview_request as B  # noqa: PLC0415
     import production_preflight as PP  # noqa: PLC0415
     import tennislive.research.brief as brief  # noqa: PLC0415
 
-    # 产物目录照仓库的相对布局摆（output/interviews/<slug>），下面②那段 bash 就在 tmp_path 里跑
     requests_dir, specs = tmp_path / "requests", tmp_path / "specs"
     out = tmp_path / "output" / "interviews"
     for folder in (requests_dir, specs):
@@ -439,22 +428,51 @@ def test_一条人工请求没过闸_不连坐同一趟的其余请求(tmp_path,
         ready = True
 
     monkeypatch.setattr(brief, "Chat", _Ready)
+    return requests_dir, specs, out
+
+
+def _seed_built_request(requests_dir: Path, specs: Path, out: Path,
+                        name: str, lead: str) -> tuple[str, Path]:
+    """一条上一版已经 build 过（正式 spec、小红书、cap_asr 都在）、这一版只改了
+    `push.lead` 的人工请求：`build` 走只改元数据那条路，不跑 ASR、不调模型。"""
+    import build_interview_request as B  # noqa: PLC0415
+
+    benign = _interview_request(name)
+    slug = benign["slug"]
+    (out / slug).mkdir(parents=True)
+    (out / slug / "cap_asr.json3").write_text("{}", encoding="utf-8")
+    existing = B.build_spec(benign, ["谢谢大家"], duration=300.0)
+    existing["_request_origin"] = {"request_sha256": "上一版",
+                                   "request": copy.deepcopy(benign), "duration": 300.0}
+    (specs / f"{slug}.json").write_text(json.dumps(existing, ensure_ascii=False),
+                                        encoding="utf-8")
+    (specs / f"{slug}.xhs.txt").write_text(str(benign.get("xhs") or ""), encoding="utf-8")
+    req = {**benign, "push": {**benign["push"], "lead": lead}}
+    (requests_dir / f"{name}.json").write_text(json.dumps(req, ensure_ascii=False),
+                                               encoding="utf-8")
+    return slug, requests_dir / f"{name}.json"
+
+
+def test_一条人工请求没过闸_不连坐同一趟的其余请求(tmp_path, monkeypatch, capsys):
+    """`interview-auto-render.yml`「人工指定请求转写、切行并逐行翻译」原来单条红就整步
+    退出 1：同一趟后面的「补片头」「提交」全被跳过，别的请求白 build 一遍、没提交，每 10
+    分钟重来一趟，直到有人修好那一条（复审 2026-09-27）。
+
+    现在两条请求一起跑、其中一条带没认领的全称断言：
+    ① `build_interview_request --failed-list` 退出 0，好的那条照常落盘；坏的那条一个字节
+       都不写、`::error file=` 指回请求文件、记进失败清单；
+    ② 提交那一步跳过坏的那条的转写，好的照常 add（真跑那段 bash，git 打桩）；
+    ④ dispatch 那一步也跳过坏的那条（它的正式 spec 还是上一版），好的照常投；
+    ③ 最后一步读失败清单：有就写 run 摘要、把整趟标红；没有就绿。
+    """
+    import subprocess  # noqa: PLC0415
+
+    import build_interview_request as B  # noqa: PLC0415
+
+    requests_dir, specs, out = _metadata_only_builder(tmp_path, monkeypatch)
 
     def seed(name: str, lead: str) -> tuple[str, Path]:
-        benign = _interview_request(name)
-        slug = benign["slug"]
-        (out / slug).mkdir(parents=True)
-        (out / slug / "cap_asr.json3").write_text("{}", encoding="utf-8")
-        existing = B.build_spec(benign, ["谢谢大家"], duration=300.0)
-        existing["_request_origin"] = {"request_sha256": "上一版",
-                                       "request": copy.deepcopy(benign), "duration": 300.0}
-        (specs / f"{slug}.json").write_text(json.dumps(existing, ensure_ascii=False),
-                                            encoding="utf-8")
-        (specs / f"{slug}.xhs.txt").write_text(str(benign.get("xhs") or ""), encoding="utf-8")
-        req = {**benign, "push": {**benign["push"], "lead": lead}}
-        (requests_dir / f"{name}.json").write_text(json.dumps(req, ensure_ascii=False),
-                                                   encoding="utf-8")
-        return slug, requests_dir / f"{name}.json"
+        return _seed_built_request(requests_dir, specs, out, name, lead)
 
     bad_slug, bad_path = seed("unclaimed-interview", "他此前六次打进正赛，六次全部首轮出局。")
     good_slug, _ = seed("benign-interview", "兹维列夫拿下决定性的 3 分，欧洲队夺回拉沃尔杯。")
@@ -557,31 +575,68 @@ def test_一条人工请求没过闸_不连坐同一趟的其余请求(tmp_path,
     assert green.returncode == 0 and summary.read_text("utf-8") == ""
 
 
-def test_请求读不了时失败清单的slug列按文件名认_不许空着(tmp_path, monkeypatch):
-    """失败清单第二列是 dispatch／提交那两道闸 `cut -f2` 过滤用的 slug。请求在 build 那一刻
-    读不了（JSON 被改坏、slug 被删）时原来写 `""`——那两道就拦不住它上一版的正式 spec
-    （复审 2026-09-27 nit）。按文件名认：requests/interviews/<slug>.json。"""
+def test_请求读不了时_其余请求照常build_失败清单的slug按文件名认(tmp_path, monkeypatch, capsys):
+    """一条请求读不了（JSON 被改坏、slug 缺了）——走**真的** `pending_paths`：
+    原来它在逐条 try 之前就 `_read`／`_slug` 每一条，一抛整趟炸：`--count-pending`、
+    `--pending-slugs`、`--write --failed-list` 全是 traceback，好的那条也不 build，
+    失败清单空着、最后一步什么都不报，每 10 分钟重来一趟（复审 2026-09-27 nit；
+    上一版测试把 `pending_paths` 打了桩，测的是一条走不到的路）。现在：
+    ① 三条都列成待 build；`--pending-slugs` 只印合法的 slug（那是 sparse-checkout add 的清单）；
+    ② `--write --failed-list` 退出 0，好的照常写，坏的两条按文件名记进失败清单第二列
+       ——dispatch／提交那两道 `cut -f2` 的闸靠它拦上一版的正式 spec。"""
     import build_interview_request as B  # noqa: PLC0415
-    import tennislive.research.brief as brief  # noqa: PLC0415
 
-    requests_dir = tmp_path / "requests"
-    requests_dir.mkdir()
-    broken = requests_dir / "broken-interview.json"
-    broken.write_text("{ 这不是 JSON", encoding="utf-8")
-    no_slug = requests_dir / "no-slug-interview.json"
-    no_slug.write_text(json.dumps({"url": "https://example.com"}), encoding="utf-8")
-    monkeypatch.setattr(B, "pending_paths", lambda only="": [broken, no_slug])
+    requests_dir, specs, out = _metadata_only_builder(tmp_path, monkeypatch)
+    good_slug, _ = _seed_built_request(requests_dir, specs, out, "good-interview",
+                                       "兹维列夫拿下决定性的 3 分，欧洲队夺回拉沃尔杯。")
+    (requests_dir / "broken-interview.json").write_text("{ 这不是 JSON", encoding="utf-8")
+    (requests_dir / "no-slug-interview.json").write_text(
+        json.dumps({"url": "https://example.com"}), encoding="utf-8")
 
-    class _Ready:
-        ready = True
+    assert [p.name for p in B.pending_paths()] == [
+        "broken-interview.json", "good-interview.json", "no-slug-interview.json"]
+    assert [p.name for p in B.pending_paths("broken-interview")] == ["broken-interview.json"]
 
-    monkeypatch.setattr(brief, "Chat", _Ready)
+    def run(*argv: str) -> tuple[int, str, str]:
+        monkeypatch.setattr(sys, "argv", ["build_interview_request.py", *argv])
+        code = B.main()
+        got = capsys.readouterr()
+        return code, got.out, got.err
+
+    assert run("--count-pending")[:2] == (0, "3\n")
+    code, stdout, stderr = run("--pending-slugs")
+    assert (code, stdout) == (0, f"{good_slug}\n")
+    assert "broken-interview.json" in stderr and "no-slug-interview.json" in stderr
+
     failed = tmp_path / "request-failed.txt"
-    monkeypatch.setattr(sys, "argv", ["build_interview_request.py", "--write",
-                                      "--failed-list", str(failed)])
-    assert B.main() == 0
+    code, stdout, _err = run("--write", "--failed-list", str(failed))
+    assert code == 0
     rows = [line.split("\t") for line in failed.read_text("utf-8").splitlines()]
     assert [row[1] for row in rows] == ["broken-interview", "no-slug-interview"], rows
+    assert all(f"::error file={row[0]}::" in stdout for row in rows), stdout
+    assert f"✅ {good_slug}" in stdout
+    good = json.loads((specs / f"{good_slug}.json").read_text("utf-8"))
+    assert good["push"]["lead"].startswith("兹维列夫拿下决定性的 3 分")
+
+
+def test_仓库里的人工采访请求都读得开_slug合法且和文件名一致():
+    """`pending_paths` 读不了一条时按文件名认 slug（上面那条）——这个兜底只在
+    「文件名就是 slug」时才拦得对。存量 17 条全守着这个约定，这里钉住：CI 上提前红，
+    别等 interview-auto-render 在 runner 上每 10 分钟红一次。"""
+    import build_interview_request as B  # noqa: PLC0415
+
+    paths = sorted((ROOT / "requests" / "interviews").glob("*.json"))
+    assert paths, "requests/interviews 下一条都没有——路径变了？这条会静静空转"
+    bad = []
+    for path in paths:
+        try:
+            slug = B._slug(B._read(path), path)
+        except (OSError, ValueError) as exc:
+            bad.append(f"{path.name}: {exc}")
+            continue
+        if slug != path.stem:
+            bad.append(f"{path.name}: slug 是 {slug!r}，和文件名不一致")
+    assert not bad, "人工采访请求读不了或 slug 不合约定：\n  " + "\n  ".join(bad)
 
 
 def test_check_request逐条调用不许把sys_path越撑越长(monkeypatch):

@@ -543,13 +543,9 @@ def test_没发过的同栏目spec借账本之前那批的封面_全库照样红
     assert red() == []
 
 
-def test_账本之前发的那批冻成表_和pushed_json逐条对得上():
-    """`data/reel_pushed_before_ledger.json` 是从 `output/*/reel/*/pushed.json` 冻出来的
-    「账本之前那批」：runner 不带 `output/`，封面复用闸靠它看见这批。它必须
-    ① 覆盖 pushed.json 里每一条账本记不到的发布（时刻一字不差）——漏一条，runner 上
-       借那条封面的新 spec 又放行了；08-24 之后要是冒出一条只有 pushed.json、账本里没有
-       的推送，也红在这儿：那说明「每次推送都写账本」这个前提坏了，表会开始漏；
-    ② 每一条都早于账本的第一笔——它是冻住的历史，不许往里添新的。"""
+def _reconcile_pre_ledger() -> None:
+    """冻结表和账本、`pushed.json` 对账；读的是 `gates.PRE_LEDGER / LEDGER / OUTPUT`
+    **调用那一刻**的值（重推那条测试换成临时目录）。"""
     doc = json.loads(gates.PRE_LEDGER.read_text(encoding="utf-8"))
     frozen = gates.pre_ledger_pushes()
     assert frozen and frozen == doc["pushes"], "冻结表读不到或格式变了——runner 上那道闸会静静失明"
@@ -557,7 +553,10 @@ def test_账本之前发的那批冻成表_和pushed_json逐条对得上():
     assert doc["ledger_start"] == min(ledger.values()) == "2026-08-24T00:48:43Z"
     late = sorted(s for s, at in frozen.items() if at >= doc["ledger_start"])
     assert not late, f"冻结表里有账本开始之后的条目：{late}"
-    assert not set(frozen) & set(ledger), "冻结表和账本记的是同一条——它只该记账本之前的"
+    # 冻结表和账本**可以**有同一个 slug：账本之前发的片子重渲之后默认重推（CLAUDE.md
+    # 2026-09-22「重渲之后默认就是重推」），推送落账那一笔就是它在账本里的第一笔。
+    # 顺序由上面 `late` 管住（冻结表每一条 < ledger_start ≤ 账本任一笔），不用再断言不相交
+    # ——原来那句断言让一次合法重推把 main 打红，还没有 PR 可修（复审 2026-09-27 BLOCKING）。
     assert len(frozen) <= 125, "账本之前那批是冻住的，只许减不许加"
     pushed = sorted(gates.OUTPUT.glob("*/reel/*/pushed.json"))
     if not pushed:
@@ -566,13 +565,70 @@ def test_账本之前发的那批冻成表_和pushed_json逐条对得上():
             pytest.fail("CI 上找不到 output/*/reel/*/pushed.json——对账那一半空转了")
         pytest.skip("这棵检出里没有 output/*/reel/*/pushed.json，只验了表本身")
     from_output = gates._published(gates.PRE_LEDGER.parent / "no-such-ledger", gates.OUTPUT)
+    # 账本记不到的，冻结表必须一字不差地有；冻结表里的，重推之后 pushed.json 取早的那个
+    # 照样是它（新日期目录那份更晚）——两头都按冻结表的时刻对。
     missing = {s: at for s, at in from_output.items()
-               if s not in ledger and frozen.get(s) != at}
+               if (s in frozen or s not in ledger) and frozen.get(s) != at}
     assert not missing, ("pushed.json 里有账本记不到的发布，冻结表却没有（或时刻对不上）"
                          f"——runner 上看不见它们：{missing}")
+    # 账本时代的片子：pushed.json 不许比账本记得早。冻结表里的那批不在此列——它们第一次
+    # 发出去本来就在账本之前，重推才落账，上面 `missing` 已按冻结表的时刻对过。
     earlier = {s: (at, ledger[s]) for s, at in from_output.items()
-               if s in ledger and at < ledger[s]}
+               if s in ledger and s not in frozen and at < ledger[s]}
     assert not earlier, f"pushed.json 比账本记得早——第一次发出去的时刻在 runner 上会错：{earlier}"
+
+
+def test_账本之前发的那批冻成表_和pushed_json逐条对得上():
+    """`data/reel_pushed_before_ledger.json` 是从 `output/*/reel/*/pushed.json` 冻出来的
+    「账本之前那批」：runner 不带 `output/`，封面复用闸靠它看见这批。它必须
+    ① 覆盖 pushed.json 里每一条账本记不到的发布（时刻一字不差）——漏一条，runner 上
+       借那条封面的新 spec 又放行了；08-24 之后要是冒出一条只有 pushed.json、账本里没有
+       的推送，也红在这儿：那说明「每次推送都写账本」这个前提坏了，表会开始漏；
+    ② 每一条都早于账本的第一笔——它是冻住的历史，不许往里添新的。"""
+    _reconcile_pre_ledger()
+
+
+def test_账本之前那批重推一次_对账不红_第一次发出去的时刻不动(tmp_path, monkeypatch):
+    """复审 2026-09-27 BLOCKING 的复现：账本之前发的片子重渲、重推（CLAUDE.md 2026-09-22
+    「重渲之后默认就是重推」）。`auto_push_gate` 只查新日期目录的 `pushed.json` 和账本指纹，
+    这批两样都空，于是照常推、照常落账——auto-push 那笔提交写的正是下面这两个文件。
+    原来的对账断言「冻结表和账本不相交」「pushed.json 不许比账本早」两句都红，而 ci.yml
+    在 main 的 push 上跑、不 paths-ignore `data/`：main 红，之后每个 PR 都红，没有 PR 可修
+    （复现用的是 noskova-tauson，冻结表里 2026-08-18T22:18:09Z）。
+
+    现在：对账照样绿；`first_sent` 取早的那个，仍是冻结表的时刻（本地、runner 两个视角）。
+    挑哪一条不写死：真账本哪天真给某条重推落了账，写死的那条就不再是「第一次进账本」。"""
+    frozen = gates.pre_ledger_pushes()
+    fresh = sorted(s for s in frozen if not (gates.LEDGER / f"{s}.json").exists())
+    slug = (fresh or sorted(frozen))[0]
+    first = frozen[slug]
+    assert first < "2026-08-24", first
+    ledger = tmp_path / "ledger"
+    shutil.copytree(gates.LEDGER, ledger)
+    entry = ledger / f"{slug}.json"
+    doc = json.loads(entry.read_text(encoding="utf-8")) if entry.exists() else {"attempts": []}
+    repush = "2099-01-01T03:00:00Z"
+    doc["attempts"] = [*doc.get("attempts", []),
+                       {"status": "sending", "at": repush}, {"status": "sent", "at": repush}]
+    entry.write_text(json.dumps(doc), encoding="utf-8")
+    output = tmp_path / "output"
+    for day, at in ((first[:10], first), (repush[:10], repush)):     # 原来那份 ＋ 重推那份
+        folder = output / day / "reel" / slug
+        folder.mkdir(parents=True)
+        (folder / "pushed.json").write_text(json.dumps({"at": at}), encoding="utf-8")
+    monkeypatch.setattr(gates, "LEDGER", ledger)
+    monkeypatch.setattr(gates, "OUTPUT", output)
+    _reconcile_pre_ledger()
+    for out in (output, tmp_path / "no-output"):                      # 本地 / runner
+        assert gates.first_sent(slug, ledger=ledger, output=out,
+                                pre_ledger=gates.PRE_LEDGER) == first
+    # 进了账本之后，冻结表那一格照样对账：pushed.json 冒出一个比表更早的时刻就红
+    stray = output / "2000-01-01" / "reel" / slug
+    stray.mkdir(parents=True)
+    (stray / "pushed.json").write_text(json.dumps({"at": "2000-01-01T00:00:00Z"}),
+                                       encoding="utf-8")
+    with pytest.raises(AssertionError, match="时刻对不上"):
+        _reconcile_pre_ledger()
 
 
 @pytest.mark.parametrize("kind,check,cap", [
