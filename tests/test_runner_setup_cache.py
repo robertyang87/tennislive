@@ -160,8 +160,11 @@ def test_apt缓存只在这趟真下了新包时回写():
                 assert "env.APT_CACHE_DIRTY == '1'" in cond, (
                     f"{fname}::{job} 的 apt save 没认 APT_CACHE_DIRTY：{cond!r}——"
                     "每趟都存就又回到「空目录存成最新那一格」")
-                assert set(_paths(save).split()) == set(_paths(step).split()), (
-                    f"{fname}::{job} 的 apt save 和 restore 缓存的目录不一样")
+                # 按顺序比，不按集合比：actions/cache 的版本号是按顺序拼的路径列表的
+                # 哈希，save 换了个顺序就存进一个 restore 永远查不到的版本，不报错
+                assert _path_list(save) == _path_list(step), (
+                    f"{fname}::{job} 的 apt save 和 restore 缓存的目录（或顺序）不一样："
+                    f"{_path_list(save)} vs {_path_list(step)}")
                 pairs.append((i, saves[0]))
         for c, step in enumerate(steps):
             if not _CONSUMER.search(_code(step.get("run"))):
@@ -176,26 +179,19 @@ def test_apt缓存只在这趟真下了新包时回写():
 # ---- 缓存按 ref 隔离：分支上看得见的只有本分支和 main 的那几份 --------------
 
 _RUN_ID = "${{ github.run_id }}"
-_COND_KEY = re.compile(
-    r"\$\{\{\s*\((?P<cond>.+?)\)\s*&&\s*format\('(?P<fmt>[^']*)',\s*runner\.os\)"
-    r"\s*\|\|\s*''\s*\}\}")
 
 
-def _restore_keys(step) -> list[tuple[str, str | None]]:
-    """[(前缀, 条件或 None)]——`${{ (条件) && format('…{0}…', runner.os) || '' }}`
-    这种按 mode 开关的一格，按「条件成立时」的样子还原成字面前缀。"""
-    out = []
-    for line in str((step.get("with") or {}).get("restore-keys") or "").splitlines():
-        line = line.strip()
-        if not line:
-            continue
-        m = _COND_KEY.fullmatch(line)
-        if m:
-            out.append((m.group("fmt").replace("{0}", "${{ runner.os }}"),
-                        " ".join(m.group("cond").split())))
-        else:
-            out.append((line, None))
-    return out
+def _restore_keys(step) -> list[str]:
+    """restore-keys 逐行的字面前缀。
+
+    ⚠️ 按 mode 开关的写法（`${{ (条件) && format('…{0}…', runner.os) || '' }}`）
+    **故意不还原**：2026-09-27 match-reel 退到 CI 那一格改成了普通一行之后，没有一条
+    工作流再这么写，还原它的那段解析和「开关条件要和装字体那一步的 `if` 一字不差」
+    那道核对都跑不到任何主语、反向验证不了，于是一起删了。真要加回按 mode 开关的
+    一格，这里按字面比对会当场红（前缀对不上 CI 那一格）——那时连那道核对一起加回来。"""
+    return [line.strip()
+            for line in str((step.get("with") or {}).get("restore-keys") or "").splitlines()
+            if line.strip()]
 
 
 def _path_list(step) -> list[str]:
@@ -221,7 +217,7 @@ def _apt_restores():
 
 
 def test_装字体的apt缓存都能退到CI在main上存的那份():
-    """各条线的 apt 缓存键各是各的前缀（`…-ffmpeg-fonts-v3-` / `…-explainer-v2-`…），
+    """各条线的 apt 缓存键各是各的前缀（`…-ffmpeg-fonts-v4-` / `…-explainer-v2-`…），
     而 **actions/cache 按 ref 隔离**：分支上的 run 只看得见本分支和 main 存的那几份。
     render / 采访 / 解说都在会话分支上跑，存进的是各自的分支——**每条新分支的第一趟
     都是冷的**，照样摸那个会抽风的镜像。
@@ -231,9 +227,9 @@ def test_装字体的apt缓存都能退到CI在main上存的那份():
     CI 那个前缀，而且缓存目录的**顺序**要和 CI 一模一样（版本号按顺序哈希，
     顺序一换就永远 miss，不报错）。
 
-    按 mode 开关的那一格（match-reel 只给 render / cover 加：probe、narration 不装
-    字体，捞一百来 MB 回来白下）——开关的条件必须和装字体那一步的 `if` 一字不差，
-    差一点就是「该退的时候不退」或者「白下」。
+    CI 那一格一律是**普通一行**。match-reel 原来按 mode 开关它（只给 render / cover
+    加），2026-09-27 起整步 apt 恢复就只在 render / cover 跑，那一格也就写成了普通
+    一行；按 mode 开关的写法这条判据不认（见 `_restore_keys`），写了就红。
     """
     ci = [(steps, step) for fname, _job, steps, step in _apt_restores() if fname == "ci.yml"]
     assert len(ci) == 1, f"ci.yml 里应该恰好有一处 apt 缓存恢复，找到 {len(ci)} 处"
@@ -254,22 +250,15 @@ def test_装字体的apt缓存都能退到CI在main上存的那份():
             continue
         where = f"{fname}::{job}「{step.get('name')}」"
         keys = _restore_keys(step)
-        hit = [(p, cond) for p, cond in keys if p == ci_prefix]
-        assert hit, (
+        assert ci_prefix in keys, (
             f"{where} 装的 {sorted(pkgs)} 是 CI 那份的子集，restore-keys 却退不到 "
-            f"{ci_prefix}——每条新分支的第一趟都是冷缓存：{keys}")
-        assert keys[0][0] != ci_prefix, (
+            f"{ci_prefix}——每条新分支的第一趟都是冷缓存：{keys}"
+            "（按 mode 开关的 `${{ … && format(…) }}` 写法这里不认，见 `_restore_keys`）")
+        assert keys[0] != ci_prefix, (
             f"{where} 的第一格是 CI 的前缀——本线自己存的（可能多装了包）要排在前面")
         assert _path_list(step) == ci_paths, (
             f"{where} 缓存的目录（或顺序）和 CI 不一样：{_path_list(step)} vs {ci_paths}"
             "——版本号对不上，退到 CI 那一格永远 miss")
-        cond = hit[0][1]
-        if cond is not None:
-            installers = {" ".join(str(s.get("if") or "").split()) for s in steps
-                          if re.search(r"(?<![\w-])apt_install_cached\s", _code(s.get("run")))}
-            assert installers == {cond}, (
-                f"{where} 退到 CI 那一格的开关条件 {cond!r} 和装字体那一步的 if "
-                f"{sorted(installers)} 不一样")
         checked.append(where)
     assert len(checked) >= 6, f"只扫到 {len(checked)} 处装字体的 apt 缓存：{checked}"
 
@@ -295,10 +284,167 @@ def test_apt缓存不许再认被空壳污染的前缀():
         for prefix in _POLLUTED_APT_PREFIXES:
             assert not key.startswith(prefix), (
                 f"{fname}::{job} 的 apt 缓存键又用回了被空壳污染的前缀 {prefix}")
-            assert all(p != prefix for p, _c in _restore_keys(step)), (
+            assert prefix not in _restore_keys(step), (
                 f"{fname}::{job} 的 restore-keys 认 {prefix}——main 上那个前缀下只有"
                 "243 字节的空壳，捞回来就是冷缓存")
     assert seen >= 14, f"只扫到 {seen} 处 apt 缓存恢复，判据的主语像是没了"
+
+
+# ---- 同一个前缀下存进去的，得是同一批包 -----------------------------------
+
+_ATOM = re.compile(r"([\w.-]+)\s*(==|!=)\s*'([^']*)'")
+# save 那一步自己的两道守卫：「这趟标脏了」「restore 那一步跑了」——下面按「会存」
+# 的那种趟来算，这两格一律当成立
+_SAVE_GUARD = re.compile(r"env\.APT_CACHE_DIRTY==|steps\.[\w-]+\.outputs\.cache-primary-key!=")
+
+
+def _mode_options(fname: str) -> list[str]:
+    """workflow_dispatch 的 mode 选项；没有 mode 输入的工作流按「只有一种趟」算。"""
+    import yaml  # noqa: PLC0415
+
+    spec = yaml.safe_load((WORKFLOWS / fname).read_text(encoding="utf-8")) or {}
+    on = spec.get(True) or spec.get("on") or {}
+    dispatch = (on.get("workflow_dispatch") or {}) if isinstance(on, dict) else {}
+    mode = ((dispatch or {}).get("inputs") or {}).get("mode") or {}
+    return list(mode.get("options") or []) or [""]
+
+
+def _holds(cond, mode: str, assume: frozenset[str], where: str) -> bool:
+    """`if:` 在 mode 这一档成不成立。mode 那几格按值算；`assume` 里的原子（restore
+    自己那句里不是 mode 的条件，比如 `steps.gate.outputs.work == 'true'`）和 save 的
+    守卫当成立；别的原子**判不了就红**，不猜。"""
+    text = str(cond or "").strip()
+    if not text:
+        return True
+    text = text.removeprefix("${{").removesuffix("}}")
+
+    def atom(m: re.Match) -> str:
+        lhs, op, rhs = m.groups()
+        if lhs == "github.event.inputs.mode":
+            return f" {(mode == rhs) == (op == '==')} "
+        flat = re.sub(r"\s+", "", m.group(0))
+        if flat in assume or _SAVE_GUARD.match(flat):
+            return " True "
+        pytest.fail(f"{where} 的条件里有判不了的一格 {m.group(0)!r}——教这条判据认它，别让它猜")
+
+    expr = _ATOM.sub(atom, text).replace("&&", " and ").replace("||", " or ")
+    tokens = re.findall(r"[()]|[^\s()]+", expr)
+    assert set(tokens) <= {"True", "False", "and", "or", "(", ")"}, (
+        f"{where} 的条件 {text!r} 拆不干净：{tokens}")
+    return bool(eval(" ".join(tokens)))  # noqa: S307 — 只剩 True/False/and/or/括号
+
+
+def _step_packages(step) -> set[str]:
+    """这一步可能往 apt 缓存里放的包。`ensure_ffmpeg` 算 ffmpeg：静态构建落空时
+    它退回的正是 `apt_install_cached ffmpeg`。"""
+    code = _code(step.get("run"))
+    pkgs: set[str] = set()
+    for m in re.finditer(r"(?<![\w-])apt_install_cached\s+([^\n;&|]+)", code):
+        pkgs |= set(m.group(1).split())
+    if re.search(r"(?<![\w-])ensure_ffmpeg(?![\w-])", code):
+        pkgs.add("ffmpeg")
+    return pkgs
+
+
+def _saved_package_sets():
+    """[(文件, job, 主键前缀, {会回写的那几档 mode: 这一档装的包})]。"""
+    out = []
+    for fname, job, steps in _jobs():
+        for i, step in enumerate(steps):
+            if not ("apt-archives" in _paths(step)
+                    and str(step.get("uses", "")).startswith("actions/cache/restore")):
+                continue
+            where = f"{fname}::{job}「{step.get('name')}」"
+            sid = step.get("id")
+            j = next(j for j, s in enumerate(steps)
+                     if j > i and str(s.get("uses", "")).startswith("actions/cache/save")
+                     and f"steps.{sid}.outputs.cache-primary-key" in str((s.get("with") or {}).get("key", "")))
+            key = str(step["with"]["key"])
+            assert _RUN_ID in key, f"{where} 的 apt 缓存键不是滚动键：{key}"
+            assume = frozenset(re.sub(r"\s+", "", m.group(0))
+                               for m in _ATOM.finditer(str(step.get("if") or ""))
+                               if m.group(1) != "github.event.inputs.mode")
+            per_mode = {}
+            for mode in _mode_options(fname):
+                if not (_holds(step.get("if"), mode, assume, where)
+                        and _holds(steps[j].get("if"), mode, assume, where)):
+                    continue
+                per_mode[mode] = set().union(*(
+                    _step_packages(s) for s in steps[i + 1:j]
+                    if _holds(s.get("if"), mode, assume, f"{where} 之后的「{s.get('name')}」")))
+            out.append((fname, job, key.split(_RUN_ID)[0], per_mode))
+    return out
+
+
+def test_同一把apt缓存键在每个会存它的mode下装的包都一样():
+    """match-reel 原来 `mode != 'push'` 就恢复 apt 缓存：probe / narration 只
+    `ensure_ffmpeg`，静态构建一落空就退到 `apt_install_cached ffmpeg`、标脏、在
+    它的前缀（当时是 `ffmpeg-fonts-v3-`）下存一份**只有 ffmpeg** 的缓存——它挂在前缀最新那一格，
+    下一趟 render 先捞到它，字体 `--no-download` 落空、照样摸镜像（沙箱里拿真 apt
+    复现过：A 趟 `apt_install_cached ed` 存下只有 ed 的缓存，B 趟恢复它再
+    `apt_install_cached sl` → 「缓存没有或不全，走网络」）。
+
+    判据：在 restore 和它的 save 之间，**每一档会回写的 mode 装的包都一样**。
+    按 `if:` 真算（mode 那几格代值），判不了的条件直接红，不猜。
+    """
+    sets = _saved_package_sets()
+    for fname, job, prefix, per_mode in sets:
+        assert per_mode, f"{fname}::{job} 的 {prefix} 没有哪一档 mode 会回写——判据没算对"
+        distinct = {frozenset(v) for v in per_mode.values()}
+        assert len(distinct) == 1, (
+            f"{fname}::{job} 在 {prefix} 下回写的包随 mode 变："
+            + "；".join(f"{m or '（无 mode）'} → {sorted(v)}" for m, v in per_mode.items())
+            + "——装得少的那一档一存，装得多的那几档下一趟就捞回半份。"
+              "把 restore 收窄到装全套的那几档")
+    assert len(sets) >= 14, f"只算到 {len(sets)} 处 apt 缓存，判据的主语像是没了"
+
+
+def test_共用一个apt缓存前缀的几条线装的包一样():
+    """reel-model-benchmark / wang-vekic 只装 ffmpeg，原来跟 match-reel 共用
+    `ffmpeg-fonts-v3-`。benchmark 在推 main 时跑（它的 paths 里有它自己的 yml），
+    于是在 main 上存下一份只有 ffmpeg 的 v3——会话分支上每一趟 render / cover
+    按前缀先捞到它（排在 CI 那份前面），字体落空、退回镜像，直到哪趟 main 上的
+    render 存出一份全的。前缀是**写**缓存的那条线的地盘：谁往里存，谁就得装同一批包。
+
+    2026-09-27 搬走的是 match-reel（→ `ffmpeg-fonts-v4-`），v3 留给那两条只装 ffmpeg
+    的线：改 benchmark 的 yml 会让合并那一下在 main 上跑一趟 DeepSeek ＋ MiniMax 对比，
+    而账号所有者当天说这两个模型不要用。match-reel 退回 v3，这里就红。
+    """
+    by_prefix: dict[str, dict[str, frozenset[str]]] = {}
+    for fname, job, prefix, per_mode in _saved_package_sets():
+        for pkgs in {frozenset(v) for v in per_mode.values()}:
+            by_prefix.setdefault(prefix, {})[f"{fname}::{job}"] = pkgs
+    shared = 0
+    for prefix, owners in by_prefix.items():
+        if len(owners) > 1:
+            shared += 1
+        assert len(set(owners.values())) == 1, (
+            f"{prefix} 下有几条线在存，装的包不一样："
+            + "；".join(f"{k} → {sorted(v)}" for k, v in owners.items())
+            + "——装得少的那条一存，别人下一趟就捞回半份。给它自己一个前缀")
+    assert shared >= 1, "一个共用的前缀都没有了？那这条判据扫到的全是单独一条线，看看主语还在不在"
+
+
+def test_matrix_job的apt缓存键带job序号():
+    """matrix 里的几个 job 共用一个 run_id：主键不带 `strategy.job-index` 时，
+    都去存同一把键，只有第一个存得上，其余每个各报一行 `Unable to reserve cache`。"""
+    import yaml  # noqa: PLC0415
+
+    seen = 0
+    for path in sorted(WORKFLOWS.glob("*.yml")):
+        spec = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        for job_name, job in (spec.get("jobs") or {}).items():
+            if not (job.get("strategy") or {}).get("matrix"):
+                continue
+            for step in job.get("steps") or []:
+                if not ("apt-archives" in _paths(step)
+                        and str(step.get("uses", "")).startswith("actions/cache/restore")):
+                    continue
+                seen += 1
+                key = str(step["with"]["key"])
+                assert "${{ strategy.job-index }}" in key, (
+                    f"{path.name}::{job_name} 是 matrix job，apt 缓存主键却不带 job 序号：{key}")
+    assert seen >= 1, "一个 matrix 里的 apt 缓存都没扫到——oncourt-interviews 的 draft 还在吗"
 
 
 # ---------------------------------------------------------------------------
@@ -432,7 +578,7 @@ def _logging_wrappers(tmp: Path) -> tuple[Path, Path]:
     return b, log
 
 
-def _extract(tmp: Path, archive: Path, top: str) -> tuple[subprocess.CompletedProcess, str, Path]:
+def _extract(tmp: Path, archive: Path, top: str, **env) -> tuple[subprocess.CompletedProcess, str, Path]:
     wrap, log = _logging_wrappers(tmp)
     dest = tmp / "dest"
     dest.mkdir()
@@ -440,7 +586,7 @@ def _extract(tmp: Path, archive: Path, top: str) -> tuple[subprocess.CompletedPr
         ["bash", "-c", f"set -euo pipefail; source {SCRIPT}; "
                        f"_ffmpeg_extract {archive} {dest} {top}"],
         env=dict(os.environ, PATH=f"{wrap}:{os.environ['PATH']}",
-                 APT_CACHE_DIR=str(tmp / "a"), APT_LISTS_DIR=str(tmp / "l")),
+                 APT_CACHE_DIR=str(tmp / "a"), APT_LISTS_DIR=str(tmp / "l"), **env),
         capture_output=True, text=True, timeout=60)
     return proc, log.read_text(encoding="utf-8") if log.exists() else "", dest
 
@@ -455,10 +601,14 @@ def test_ensure_ffmpeg只解两个成员不许整包过好几遍(tmp_path):
       两个拿到就停（排在最后的 ffplay 176 MB 不用解）；xz 走 `-T0` 多线程；
     - 取出来的两个真能跑、ffplay 没被解出来；
     - 包的结构变了（顶层目录改名）时退回老办法，但**只列一遍**，照样取对。
+
+    快路那一趟故意挂着一个 `TAPE`：管道里的 `tar -x` 读 stdin 只是 GNU tar 编译进去
+    的默认（`-f-`），不写 `-f -` 时它改读 `$TAPE`、快路静静落空，退到慢路还照样绿。
     """
     fast = tmp_path / "fast"
     fast.mkdir()
-    proc, calls, dest = _extract(fast, _fake_build(fast, _TOP), _TOP)
+    proc, calls, dest = _extract(fast, _fake_build(fast, _TOP), _TOP,
+                                 TAPE=str(fast / "no-such-tape"))
     assert proc.returncode == 0, proc.stderr
     out = proc.stdout.split()
     assert out == [str(dest / _TOP / "bin/ffmpeg"), str(dest / _TOP / "bin/ffprobe")], proc.stdout

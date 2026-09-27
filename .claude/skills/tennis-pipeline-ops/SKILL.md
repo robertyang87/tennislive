@@ -366,7 +366,7 @@ ledger，等到了、还打开看了——**差点就报「发出去了」**：
 
 ⚠️ **而 `push.html` 本身只有 18704 字符，合规**。把它顶到 21404 的是
 `pin_asset_revision`：每张图有**三条**完整 URL（`src` / `data-src` /
-「点此打开原图」的 `<a href>`，都出自 `knowledge_push_html_from_parts`），
+「点此打开原图」的 `<a href>`——2026-09-27 起缩成「原图 ↗」，都出自 `knowledge_push_html_from_parts`），
 `@main`（5 字符）换成 `@<40 位 sha>`（41 字符）**每处多 36 字符，75 处 2700**。
 
 ⚠️⚠️ **这个膨胀只在发送那一刻发生**：本地打开 push.html 一切正常，`--dry-run`
@@ -2251,10 +2251,27 @@ run 30973785219 就卡在「安装 Chromium」上。
 **每条新分支的第一趟照样是冷的**。main 上真有一份完整的只有 CI（`ci.yml` 每次合并都在 main 上跑，
 装 cjk ＋ core ＋ emoji），所以凡是装的字体是它子集的那几步，`restore-keys` 第二格退到
 `apt-pkgs-<os>-24.04-ci-v2-`；缓存目录的**顺序**要和 CI 一模一样（actions/cache 的版本号按顺序哈希，
-顺序一换就永远 miss、不报错）。match-reel 那一格只给 render / cover 开（probe、narration 不装字体，
-捞一百来 MB 回来白下）。**match-reel 的前缀从 v2 换成 v3**：main 上 v2 这个前缀底下只有 probe 存的
+顺序一换就永远 miss、不报错）。**match-reel 的前缀从 v2 换成 v3**：main 上 v2 这个前缀底下只有 probe 存的
 243 字节空壳，按前缀退的时候它排在 CI 那一格前面，永远捞回空壳。判据
 `test_装字体的apt缓存都能退到CI在main上存的那份`、`test_apt缓存不许再认被空壳污染的前缀`。
+
+⚠️ **一个前缀下存进去的，得是同一批包**——否则装得少的那条线一存，装得多的下一趟就先捞回
+半份（它排在 CI 那一格前面）、`--no-download` 落空、又去摸镜像。沙箱拿真 apt 复现过：
+A 趟 `apt_install_cached ed` 存下只有 ed 的缓存，B 趟恢复它再装 `sl` →「缓存没有或不全，走网络」。
+两个入口都堵了：reel-model-benchmark / wang-vekic 只装 ffmpeg，原来跟 match-reel 共用 v3
+（benchmark 推 main 就跑，会在 main 上存一份只有 ffmpeg 的 v3），**搬走的是 match-reel**（→ `ffmpeg-fonts-v4-`），
+v3 留给那两条——benchmark 的 push 触发器 paths 里有它自己的 yml，改它的缓存键，合并那一下就会在 main 上
+跑一趟 DeepSeek ＋ MiniMax 对比（账号所有者 2026-09-27：这两个模型不要用）；同样的隔离，挪自己这一边就拿得到。
+match-reel 的 apt 恢复从 `mode != 'push'` 收窄到 render / cover（probe / narration 的静态构建一落空
+就退 `apt_install_cached ffmpeg`、标脏、存一份只有 ffmpeg 的；save 认 restore 的 `cache-primary-key`，
+restore 跳过它就跟着跳过；CI 那一格也就写成普通一行，按 mode 开关的写法判据不再认）。
+⚠️ 这样收窄之后 probe / narration / cookies 的「装 ffmpeg」**没有 apt 缓存可恢复**：静态构建落空时
+`apt_install_cached ffmpeg` 直接摸镜像。是有意的——render / cover 的 ffmpeg 也走 `ensure_ffmpeg`，apt 那一步
+只装字体，这个前缀正常只存字体包；CI 的 ci-v2 同样没有 ffmpeg 的 .deb（ci.yml 也是 `ensure_ffmpeg`），
+给这几档加一格只读的 ci-v2 恢复救不了它。判据 `test_共用一个apt缓存前缀的几条线装的包一样`、
+`test_同一把apt缓存键在每个会存它的mode下装的包都一样`（按 `if:` 真代值算每一档 mode，判不了就红）。
+matrix job 的主键末尾带 `${{ strategy.job-index }}`（同一个 run_id 下几个 job 抢一把键，只有第一个
+存得上，其余各报一行 `Unable to reserve cache`）——`test_matrix_job的apt缓存键带job序号`。
 
 **Chromium 那一笔**：键是 `hashFiles('pyproject.toml')`，pyproject 写 `playwright>=1.40`、
 08-08 之后没动过，主键永远命中旧缓存（chromium-1234）；pip 装上的新 playwright 要 1243，
@@ -2273,6 +2290,8 @@ post 步骤「not saving cache」，**永远修不好自己**。「装 Chromium�
 按包名算死、`--occurrence=1` 拿够就停、`xz -T0` 多线程解（22 个 24 MiB 的块）；
 结构变了才退回「列一遍」（只列一遍）。沙箱 4 核同一个包：老办法 99.1s、`--occurrence`
 32.4s、再加 `xz -T0` 15.0s（沙箱被占着，绝对值偏大，比例才是要看的）。
+管道里那个 `tar -x` 要写明 `-f -`：读 stdin 只是 GNU tar 编译进去的默认（`tar --show-defaults`
+里的 `-f-`），环境里有 `TAPE` 就改读它，快路静静落空、退到慢路还照样绿（判据里故意挂着一个 `TAPE`）。
 ⚠️ **没做「缓存解出来的二进制」**：`latest` 每天重编，键要么按天滚（每天第一趟照样下），
 要么钉死（等于冻住 ffmpeg 版本——那是另一个口径，不是速度问题）；解包压到十几秒以内之后，
 缓存再省的那几秒换不来 350 MB 的池子占用。

@@ -160,6 +160,29 @@ def test_两条网球有故事推送长得一样_药丸是栏目名_有标题提
         assert after_title.index(ps.TITLE_HINT_TEXT) < 200
 
 
+def test_字卡推送药丸按这一条自己的栏目_存档的开球之前不改印网球有故事(tmp_path):
+    """药丸现在写栏目名。`knowledge_push_html_from_parts` 的默认栏目是「网球有故事」，
+    而撤掉的「开球之前」名下还有 9 条已发的（`_ARCHIVED_DECKS`）——`explainer_push_html`
+    不传栏目的话，那 9 条一重渲就被改印成「网球有故事」（WP2 复核；老样子写中性的
+    「知识解说视频」，不会错栏目）。产物目录名就是 slug。"""
+    from tennislive.video.explainer import (  # noqa: PLC0415
+        _ARCHIVED_DECKS,
+        explainer_column,
+        explainer_push_html,
+    )
+
+    archived = sorted(_ARCHIVED_DECKS)[0]
+    assert explainer_column(archived) == "开球之前"
+    for slug, column in ((archived, "开球之前"), ("x", "网球有故事")):
+        outdir = tmp_path / f"output/2026-09-26/explainer/{slug}"
+        outdir.mkdir(parents=True)
+        body = explainer_push_html([None] * 2, outdir, date=_dt.date(2026, 9, 26),
+                                   xhs_text=XHS, copy_url=COPY)
+        assert _style_of(body, column) == ps.PILL, slug
+        other = ({"开球之前", "网球有故事"} - {column}).pop()
+        assert f">{other}</div>" not in body, f"{slug} 的药丸印成了「{other}」"
+
+
 # ── ④ 整块可选、lang、图片预留比例、回退链接 ─────────────────────────────
 def test_推送标题正文整块可选_片段声明中文():
     """在推送里复制正文原来要手指拖着选一千字；`user-select:all` 让长按一下选中整段。
@@ -418,16 +441,26 @@ def test_复制页和推送在浏览器里真的量得到(tmp_path):
             tab.evaluate("__advance(1000)")
             assert _toast(tab)[1] is False
 
-            # 失败：说失败，并且真的整段选中
+            # 失败：说失败，并且真的整段选中。先成功点一次，趁按钮还在「已复制 ✓」那
+            # 1.4 秒里再点一次、这次失败——按钮要当场还原，不能 toast 说失败、按钮还挂着
+            # 「已复制 ✓」（WP2 复核：原来失败分支不碰按钮，要等上一次的计时到点）
+            tab.evaluate(_CLIPBOARD_OK)
+            tab.click("button[data-copy=title]")
+            tab.wait_for_function(
+                "document.querySelector('button[data-copy=title]').classList.contains('copied')")
+            tab.evaluate("__advance(300)")
             tab.evaluate(_CLIPBOARD_FAIL)
             tab.click("button[data-copy=title]")
-            tab.wait_for_function("document.getElementById('toast').classList.contains('show')")
+            tab.wait_for_function("t => document.getElementById('toast').textContent === t",
+                                  arg=ps.COPY_FAILED_TEXT)
             assert _toast(tab) == [ps.COPY_FAILED_TEXT, True]
             sel = tab.evaluate("() => { const f = document.getElementById('title');"
                                " return [document.activeElement.id, f.selectionStart,"
                                " f.selectionEnd, f.value.length]; }")
             assert sel[0] == "title" and sel[1] == 0 and sel[2] == sel[3] > 0, sel
-            assert "已复制" not in tab.inner_text("button[data-copy=title]")
+            btn = tab.evaluate("() => { const b = document.querySelector('button[data-copy=title]');"
+                               " return [b.textContent, b.classList.contains('copied')]; }")
+            assert btn == ["复制标题", False], f"toast 说复制失败，按钮却还是 {btn}"
 
             # 键盘焦点：2px 的环
             tab.evaluate("() => document.activeElement.blur()")
@@ -457,6 +490,80 @@ def test_复制页和推送在浏览器里真的量得到(tmp_path):
           return label.getBoundingClientRect().top - body.getBoundingClientRect().bottom; }""")
         assert gap >= 20, gap
         ctx.close()
+        browser.close()
+
+
+def _unconditional_values(css: str) -> dict[str, list[str]]:
+    """`@media` 之外、选择器没钉 `data-theme` 的块里，每个变量声明过的**每一个**值
+    （重复的都留着）——不认媒体查询的 WebView 只看得见这些。"""
+    top = re.sub(r"@media[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}", "", css)
+    vals: dict[str, list[str]] = {}
+    for sel, block in re.findall(r"(?m)^(\S[^{}]*?) \{(.*?)^\}", top, re.S):
+        if re.fullmatch(r':root\[data-theme="(?:light|dark)"\]', sel):
+            continue
+        for k, v in re.findall(r"(--[\w-]+):\s*([^;]+);", block):
+            vals.setdefault(k, []).append(v)
+    return vals
+
+
+def test_复制页不认prefers_color_scheme也是浅色(tmp_path):
+    """颜色要是只写在 `@media (prefers-color-scheme: …)` 和 `[data-theme]` 里，一个不认
+    这条媒体查询的 WebView 里每个 `--tl-*` 颜色都落空：按钮透明、只剩一行黑字，页面和
+    toast 都透明（WP2 复核把媒体特性改名模拟出来的；老复制页在同一个模拟下还是浅色）。
+    所以 `@media` 外面、没钉 `data-theme` 的地方要有**恰好一份**浅色：`tokens_css()`
+    自己没给（浅色还包在查询里），复制页就在裸 `:root` 上垫一份——选择器 (0,1,0) 比两种
+    主题块都弱，认查询的浏览器照旧跟着系统／`data-theme` 走；`tokens_css()` 已经给了
+    （看板 WP1 那一版把浅色挪到了 `@media` 外面），就不许再垫——两份一样的只是死 CSS。"""
+    from playwright.sync_api import sync_playwright  # noqa: PLC0415
+
+    from tennislive.chromium import launch_chromium  # noqa: PLC0415
+
+    # ① 静态：浅色的每个变量，在 `@media` 外面、没钉主题的块里恰好声明一次，值就是浅色
+    #    （少了＝不认查询时落空；多了＝和 tokens_css 自带的那份重复的死 CSS）
+    got = _unconditional_values(ps.copy_page_tokens())
+    light = dict(re.findall(r"(--[\w-]+):\s*([^;]+);", T.css_vars("light")))
+    used = set(re.findall(r"var\((--[\w-]+)\)", ps.COPY_PAGE_CSS)) & set(light)
+    assert used, "复制页一个浅色变量都没用到，这条量的不是它"
+    assert {v: got.get(v) for v in light} == {v: [light[v]] for v in light}
+
+    # ② 真渲：媒体特性改名＝这个 WebView 不认它；再确认认它的浏览器一个像素都没变
+    page = to_copy_page(XHS, pinned_comment="你选谁？")
+    assert "prefers-color-scheme" in page
+    cases = {
+        "nomq": (page.replace("prefers-color-scheme", "x-unknown-color-scheme"), "light"),
+        "dark": (page, "dark"),
+        "pinned": (page.replace('<html lang="zh-CN">', '<html lang="zh-CN" data-theme="dark">'),
+                   "light"),
+    }
+    probe = """() => { const c = (el) => { const s = getComputedStyle(el);
+        return [s.backgroundColor, s.color]; };
+      return {body: c(document.body), button: c(document.querySelector('button')),
+              toast: c(document.getElementById('toast'))}; }"""
+
+    def rgb(hexcolor: str) -> str:
+        h = hexcolor.lstrip("#")
+        return "rgb({}, {}, {})".format(*(int(h[i:i + 2], 16) for i in (0, 2, 4)))
+
+    L, D = T.LIGHT, T.DARK
+    want = {
+        "nomq": {"body": [rgb(L["background"]), rgb(L["foreground"])],
+                 "button": [rgb(L["primary"]), rgb(L["primary-foreground"])],
+                 "toast": [rgb(L["foreground"]), rgb(L["background"])]},
+    }
+    want["dark"] = want["pinned"] = {
+        "body": [rgb(D["background"]), rgb(D["foreground"])],
+        "button": [rgb(D["primary"]), rgb(D["primary-foreground"])],
+        "toast": [rgb(D["foreground"]), rgb(D["background"])]}
+    with sync_playwright() as pw:
+        browser = launch_chromium(pw, args=["--no-sandbox"])
+        for name, (text, scheme) in cases.items():
+            f = tmp_path / f"{name}.html"
+            f.write_text(text, encoding="utf-8")
+            ctx = browser.new_context(viewport={"width": 390, "height": 844}, color_scheme=scheme)
+            tab = ctx.new_page()
+            tab.goto(f.as_uri())
+            assert tab.evaluate(probe) == want[name], name
+            ctx.close()
         browser.close()
 
 

@@ -216,9 +216,11 @@ apt_install_cached() {
 _ffmpeg_extract() {
   local archive="$1" dest="$2" top="$3"
   local ffbin="$top/bin/ffmpeg" ffprobebin="$top/bin/ffprobe"
-  # tar 拿够就退，xz 会吃一个 SIGPIPE——管道的退出码不说明问题，下面按产物判
+  # tar 拿够就退，xz 会吃一个 SIGPIPE——管道的退出码不说明问题，下面按产物判。
+  # `-f -` 要写明：不写时读 stdin 只是 GNU tar 编译进去的默认（`tar --show-defaults`
+  # 里那个 `-f-`），环境里有 `TAPE` 就改读它、快路静静落空，退到下面「列一遍」的慢路
   { xz -T0 -dc "$archive" 2>/dev/null \
-      | tar -x -C "$dest" --occurrence=1 "$ffbin" "$ffprobebin" 2>/dev/null; } || true
+      | tar -x -f - -C "$dest" --occurrence=1 "$ffbin" "$ffprobebin" 2>/dev/null; } || true
   if ! _ffmpeg_runs "$dest/$ffbin" "$dest/$ffprobebin"; then
     echo "[ffmpeg] 包里没有 $ffbin（结构变了？），列一遍找名字" >&2
     local listing
