@@ -1127,6 +1127,7 @@ def test_冷开场豁免表只许减():
     assert not missing, f"豁免表里这几条 spec 已经不在了：{sorted(missing)}"
     assert len(reel.LEGACY_NO_COLD_OPEN) <= 28, "豁免表只许减不许加"
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_冷开场里的结局必须在正文重新兑现(tmp_path):
     """冷开场放过最后一球，不等于正文可以停在赛点还没打完的时候。
 
@@ -6598,6 +6599,7 @@ def test_比分板的英文名只在名里缩写姓整个留下():
         "又出现了那个孤零零的 `-.`——连字符被当成一个名字了")
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_赛场之上的比分板形状要在dry_run就拦下来():
     """`cover.scoreboard` 缺不缺，`--dry-run` 就要报，不许留到 runner 上。
 
@@ -9102,6 +9104,7 @@ def test_屏幕上的数字不许把字吃掉():
             "一个没写完的数")
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_旁白里的百分号要在dry_run前拦住():
     """屏幕可以写 49%，中文配音原文必须写「百分之四十九」。"""
     reel = _reel()
@@ -14097,6 +14100,7 @@ def test_换取签名URL拉受控流这条源禁掉():
         "多出来说明判据放宽了、误伤了合规的源。")
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_签名源那道闸排在下载之前():
     """又是「闸装在哪一步」那条老账——**只测行为拦不住位置错**。
 
@@ -17642,6 +17646,7 @@ def test_轮次分数在字幕里写成1斜杠N决赛():
     assert A("百分之六十四") == "64%"
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_quote的at超出段长在dry_run就红():
     """`explicit_quote_cues` 原来要等全部分段编完、拼接写字幕时才报——
     zverev-deminaur-laver-cup-2026 第二趟 render 就这么白跑了两分钟。

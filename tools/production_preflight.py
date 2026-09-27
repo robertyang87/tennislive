@@ -29,6 +29,15 @@ def check_request(req: dict) -> None:
     start, end = float(req.get('start') or 0), req.get('end')
     if start < 0 or (end is not None and float(end) <= start):
         raise ValueError('正文时间窗无效')
+    # 全称断言：人工请求**不经过草稿**，`build_interview_request` 直接写正式 spec，
+    # 所以这道闸要在 build 这一刻（ASR／翻译之前）查，别等 render 前置检查
+    # （`check_interview_claims`）才红。`_claims` 写在请求里，`build_spec` 原样带进 spec。
+    sys.path.insert(0, str(ROOT / 'tools'))
+    from absolute_claims import interview_problem  # noqa: PLC0415
+    slug = str(req.get('slug') or '')
+    problem = interview_problem(req, slug, where=f'requests/interviews/{slug}.json')
+    if problem:
+        raise ValueError(problem)
     with tempfile.TemporaryDirectory() as td:
         base = Path(td) / 'request'
         base.with_suffix('.json').write_text(json.dumps(req, ensure_ascii=False))
@@ -47,8 +56,13 @@ def check_interview_claims(spec_path: Path) -> None:
     ⚠️ **自动转正的采访 spec 也硬拦，没有竖版短片那种「自动 spec 只报」的分流**——
     那一刀是因为模型写不了 `_claims`，而采访线**没有模型写的文案**：
     `draft_interview_spec` 不写 push/cover/takeaway，`promote_interview_draft` 只填模板
-    （模板里没有全称断言，`test_采访线自动转正的模板文案过得了全称断言那道闸` 钉着）；
-    带文案的草稿来自人工请求（`build_interview_request` 原样抄），人写得了 `_claims`。
+    （模板里没有全称断言，`test_采访线自动转正的模板文案过得了全称断言那道闸` 钉着）。
+    人写的文案走两条路，各在自己的入口先查同一道闸，不会走到这儿才红：
+    - **人工请求**（`requests/interviews/*.json`）不经过草稿，`build_interview_request`
+      直接写正式 spec——`check_request` 在 build 那一刻查，`_claims` 写在请求里、
+      `build_spec` 原样带进 spec；
+    - **手改过的草稿**（`.draft.json` 里有人补了 push/cover/takeaway）——
+      `promote_interview_draft.promote_all` 转正前查，没认领就留草稿。
     哪天草稿开始带模型写的文案，先在 promote 那一关分流。
     """
     sys.path.insert(0, str(ROOT / 'tools'))

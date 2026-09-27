@@ -495,6 +495,12 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
     }
     if req.get("caption_gaps_ok"):
         spec["caption_gaps_ok"] = dict(req["caption_gaps_ok"])
+    if req.get("_claims"):
+        # 全称断言的认领（「六次打进，六次全部首轮出局」要两个独立源）写在请求里，
+        # 得跟着文案一起进正式 spec——不抄的话 push/takeaway 原样进去了、认领丢了，
+        # render 前置检查（`production_preflight.check_interview_claims`）红在
+        # 一条人已经核过源的断言上。
+        spec["_claims"] = json.loads(json.dumps(req["_claims"]))
     if req.get("lead_in"):
         # Preserve the user's reviewed source, time window and bilingual commentary.
         # The renderer still validates the lead-in and same-match contract.
@@ -543,9 +549,11 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
     if metadata_only:
         # Apply only fields the user changed, preserving refined translations/lead-in.
         spec = dict(existing)
+        # `_claims` 跟着文案走：只改了认领（或文案连同认领一起改）也要落进 spec。
         for key in ("cover", "push", "takeaway", "opening", "lead_in", "event",
                     "winner", "subject", "featured_player", "ceremony_subtype",
-                    "topbar_layout", "interview_kind", "requested_content_type"):
+                    "topbar_layout", "interview_kind", "requested_content_type",
+                    "_claims"):
             if req.get(key) != previous.get(key):
                 spec[key] = _apply_request_delta(spec.get(key), previous.get(key), req.get(key))
         from interview_source_gate import finalize_source_contract, validate_source_contract
