@@ -123,8 +123,13 @@ def assess(repo: Path, slug: str, outdir: Path, spec_path: Path) -> Assessment:
         return _with(unknown, qc, qc_bytes, render)
     manifest_bytes, manifest = loaded
     digest = ri.sha256_bytes(manifest_bytes)
-    if manifest.get("version") != ri.VERSION:
-        unknown.reasons.append(f"{ri.MANIFEST_NAME} 版本 {manifest.get('version')!r} 不认")
+    if not ri.same_rules(manifest):
+        # 版本号一样、口径指纹对不上：渲完之后有人改了投影那几张表（没升版本号）。
+        # 拿新口径比旧清单只会误判，判不了（`render_inputs.rules_digest`）。
+        unknown.reasons.append(
+            f"{ri.MANIFEST_NAME} 是旧口径写的（版本 {manifest.get('version')!r}、口径指纹 "
+            f"{str(manifest.get('rules'))[:12]}；现在是版本 {ri.VERSION}、"
+            f"{ri.rules_digest()[:12]}）——拿新口径比会误判，判不了")
     if render.get("render_inputs_sha256") != digest:
         unknown.reasons.append(f"render.json 记的 {ri.MANIFEST_NAME} 不是眼前这一份（渲完之后被改过）")
     if qc.get("render_inputs_sha256") != digest:

@@ -70,6 +70,9 @@ from typing import Any, Callable, NamedTuple
 MANIFEST_NAME = "render_inputs.json"
 #: v2（2026-09-27）：投影按原顺序比（见模块 docstring「键的顺序」），认领按闸的
 #: 位置和口径记。v1 的清单按新口径判不了 → `reattest_check` 报「判不了」、照旧重渲。
+#: ⚠️ 光靠这个数不够：下面那几张表一改（`RENDER_ANNOTATIONS` 加一个键），投影的口径
+#: 就变了，而没人会记得升它——所以清单另记一份 `rules_digest()`，口径是
+#: `VERSION` ＋ 那个指纹两样一起认（`same_rules`），表一变自动算「旧口径」。
 VERSION = 2
 
 #: 渲染路径上**会进成片**的 `_` 键。它们的值留在指纹里，改了就要重渲。
@@ -123,6 +126,9 @@ class Gate(NamedTuple):
     `where` 为空＝**不是认领**：只在备料（`promote_reel_draft`）时读、render 和
     dry-run 都不调；或者它的出现是「拒绝」而不是「放行」（`_import`）。删了不绕过
     任何闸，不记。
+    ⚠️ **归类测试分不出 dry-run 闸和只在编码里跑的闸**：给一道 render 里才查的认领
+    写空 `where`，测试照样绿，而重核对从此允许删掉它、那道闸不再跑（reattest 只跑
+    dry-run）。只在编码里查的（`build_cover`、`reel_face_gate._claim` 这类）**必须**写 `where`。
 
     `where` 的写法：点分路径，`[]` 是列表里每一项、`[0]` 是第 0 项——
     `segments[].voice._why` 就是「每一段的 voice 对象里那个 `_why`」。
@@ -162,6 +168,8 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
         "cover_reuse_finding", "_cover_reuse_why"),
     "_decider_why": _gate("reel_facts.decider_set_problem：大满贯提「决胜盘」的认领",
                           "decider_set_problem", "_decider_why"),
+    "_draft": _gate("promote_reel_draft.promote：转正时按键名比出草稿块、剥掉它（备料，render "
+                    "和 dry-run 都不调）", "promote"),
     "_durations": _gate("promote_reel_draft._duration（备料时读）", "_duration"),
     "_ending_payoff_required": _gate(
         "ending_payoff_problem：冷开场要不要在正文兑现结局（true / false 都是表态）",
@@ -425,6 +433,56 @@ def diff_paths(old: Any, new: Any, path: list[str | int] | None = None) -> list[
     return [] if canonical(old) == canonical(new) else [path]
 
 
+#: `rules_digest` 拿来量口径的一份样本 spec：`sources` 里有 `_` 键且排在第一、深层
+#: 注解、推送块、`1` 和 `1.0`、中文——`project` / `canonical` / `diff_paths` 哪一处
+#: 的行为变了，它的投影或差异就跟着变。表里的键另外按名字进指纹（见 `rules_digest`）。
+_RULES_PROBE: dict = {
+    "slug": "probe",
+    "sources": {"_why": "https://a.test/1", "r1": {"url": "https://b.test/2", "_note": "源"}},
+    "segments": [{"start": 1, "end": 2.0, "_why": "注", "narration": "中文",
+                  "voice": {"rate": "+5%", "_why": "降速"}}],
+    "cover": {"eyebrow": "赛场之上", "_layout_why": "认领",
+              "portrait": {"image": "assets/reel/p.jpg", "_face_check_why": "认人"}},
+    "_facts": ["注解"],
+}
+
+
+def rules_digest() -> str:
+    """这一版投影口径的指纹：**表一改就变**，不用等人想起来升 `VERSION`。
+
+    评审 2026-09-27（第三轮）量出来的：往 `RENDER_ANNOTATIONS` 里加一个键、而不升
+    `VERSION`，改之前渲、改之后才合并的片子，发布门禁拿新口径去比旧清单——旧投影里
+    没有那个键、新投影里有——判「渲染输入变了」，自动链上那个 `Skip` 只印一行
+    `[跳过]`，片子就**不吭声地永远不推**。现在清单记下渲染那一刻的指纹，门禁和
+    `reattest_check` 认口径时连它一起比（`same_rules`），对不上就按旧口径走：普通渲染
+    退回 spec 字节那一道，重核对判不了。
+
+    进指纹的：进投影的注解键、整块剥掉的推送字段、算「引用了素材」的后缀，和
+    `project` / `canonical` / `diff_paths` 在 `_RULES_PROBE` 上的行为。
+    **不进的**：`GATE_ANNOTATIONS`——它只管认领，加一道闸不改投影；也正因为不进，
+    兄弟分支每加一道闸，已渲片子的清单照旧有效。
+    """
+    probe = json.loads(json.dumps(_RULES_PROBE))
+    for key in RENDER_ANNOTATIONS:
+        probe[key] = probe["cover"][key] = f"值{key}"
+    for key in PUBLISH_FIELDS:
+        probe[key] = {"auto": True, "_why": "推送"}
+    swapped = dict(probe, sources=dict(reversed(list(probe["sources"].items()))))
+    shape = {
+        "render_annotations": sorted(RENDER_ANNOTATIONS),
+        "publish_fields": sorted(PUBLISH_FIELDS),
+        "asset_suffixes": sorted(ASSET_SUFFIXES),
+        "projection": canonical(project(probe)),
+        "diff": [path_str(p) for p in diff_paths(project(probe), project(swapped))],
+    }
+    return sha256_bytes(json.dumps(shape, ensure_ascii=False, sort_keys=True).encode("utf-8"))
+
+
+def same_rules(manifest: dict) -> bool:
+    """这份清单是不是按今天的口径写的：`VERSION` 和 `rules_digest()` 都对得上。"""
+    return manifest.get("version") == VERSION and manifest.get("rules") == rules_digest()
+
+
 def describe(path: list[str | int]) -> str:
     """把一处差异翻成「它会动到成片的哪一块」。"""
     head = path[0] if path else ""
@@ -457,6 +515,7 @@ def build(spec_path: Path, outdir: Path, film: Path, repo: Path) -> dict:
                  for name in ARTIFACTS if (outdir / name).is_file()}
     return {
         "version": VERSION,
+        "rules": rules_digest(),
         "slug": str(spec.get("slug") or film.stem),
         "written_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "code_sha": os.environ.get("GITHUB_SHA", ""),

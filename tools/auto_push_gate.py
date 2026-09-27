@@ -181,7 +181,9 @@ def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
       那一段、再把 spec 字节补进凭证，就绕过去了）。普通渲染 spec 没变，这一步
       恒过、不花钱。素材字节这一半这里核不了（这条工作流稀疏检出，不拉
       assets/），它由 runner 那一步现算
-    - 清单是**旧口径**（`version` 比今天的 `render_inputs.VERSION` 小）写的：不重算
+    - 清单是**旧口径**写的——`version` 比今天的 `render_inputs.VERSION` 小，或者版本号
+      一样、渲染那一刻的口径指纹（`rules`）和今天的 `render_inputs.rules_digest()` 对不上
+      （有人往 `RENDER_ANNOTATIONS` / `PUBLISH_FIELDS` 里加了键、没升版本号）：不重算
       （拿新口径比旧清单只会误判），普通渲染退回 spec 字节那道；重核对凭证不认
     """
     digest = qc.get("render_inputs_sha256")
@@ -210,18 +212,21 @@ def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
     if manifest.get("spec_sha256") != qc.get("spec_sha256") and not qc.get("reattest"):
         raise Skip(f"{slug}：{name} 记的 spec 和凭证记的不是同一份，而凭证不是重核对出的")
     version = manifest.get("version")
-    if version != render_inputs.VERSION:
+    if not render_inputs.same_rules(manifest):
         # 清单是旧口径写的：拿今天的 `project` 重算去比，比出来的差异是口径变了、不是
-        # spec 变了（v1→v2 那次「按原顺序比」就会把每一份 v1 清单判成「键的顺序变了」）。
+        # spec 变了（v1→v2 那次「按原顺序比」就会把每一份 v1 清单判成「键的顺序变了」；
+        # 往 `RENDER_ANNOTATIONS` 加一个键而没升版本号，也会把改之前渲的每一份判成
+        # 「渲染参数变了」——评审 2026-09-27 第三轮复现的，自动链上只印一行 `[跳过]`）。
         # 重核对凭证判不了就不认（`reattest_check` 本来就不给旧清单出凭证）；普通渲染的
         # 凭证照旧由上面那道 spec 字节逐字节钉着——退回的正是加清单之前的那道闸。
         # 要借「改版本号」绕过去就得改清单、重钉三处 sha，而改得动清单的人本来就能把
         # 投影一起改掉——重算防的是「只手搓凭证、没动清单」那一种，这里一点没松。
         if qc.get("reattest"):
-            raise Skip(f"{slug}：重核对凭证钉的 {name} 是版本 {version!r}，"
-                       f"现在的口径是 {render_inputs.VERSION}——判不了，不认")
+            raise Skip(f"{slug}：重核对凭证钉的 {name} 是旧口径（版本 {version!r}、口径指纹 "
+                       f"{str(manifest.get('rules'))[:12]}），现在的口径是版本 "
+                       f"{render_inputs.VERSION}——判不了，不认")
         if not (isinstance(version, int) and not isinstance(version, bool)
-                and 0 < version < render_inputs.VERSION):
+                and 0 < version <= render_inputs.VERSION):
             raise Skip(f"{slug}：{name} 的版本 {version!r} 不认")
         return
     problems = render_inputs.spec_problems(spec_path.read_bytes(), manifest)

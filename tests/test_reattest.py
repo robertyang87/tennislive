@@ -605,6 +605,101 @@ def test_旧口径的清单_重核对凭证不认(reattested):
         gate.validate_qc(repo, SLUG, r_outdir)
 
 
+#: 以后可能有人对投影那几张表做的改动——**都不升 `VERSION`**。
+_TABLE_CHANGES = {
+    # 把一个注解改判成「进成片」（评审第三轮原样复现的那一条）
+    "RENDER_ANNOTATIONS 加键": lambda mp: mp.setitem(
+        ri.RENDER_ANNOTATIONS, "_facts", "假设哪天渲染开始读它"),
+    # 把一个真字段改判成「只进推送」
+    "PUBLISH_FIELDS 加键": lambda mp: mp.setitem(ri.PUBLISH_FIELDS, "source_url", frozenset()),
+}
+
+
+@pytest.mark.parametrize("change", list(_TABLE_CHANGES.values()), ids=list(_TABLE_CHANGES))
+def test_投影那几张表改了而版本号没升_已渲的片子照发(tmp_path, monkeypatch, change):
+    """评审 2026-09-27（第三轮）复现的：往 `RENDER_ANNOTATIONS` 里加一个键、没升
+    `VERSION`，改之前渲、改之后才合并的片子——spec 一个字节没动——门禁拿新口径比旧
+    清单，报「渲染输入变了——渲染参数：_facts」。自动链上那个 `Skip` 只印一行
+    `[跳过]`，这条片子就**不吭声地永远不推**。
+
+    现在清单记着渲染那一刻的口径指纹（`rules_digest`），门禁按「旧口径」走：普通渲染
+    退回 spec 字节那一道（照发），`reattest_check` 判不了（不拿新口径误判成「要重渲」）。
+    """
+    _git(tmp_path, "init", "-q")
+    outdir = _rendered(tmp_path)
+    _commit(tmp_path)
+    manifest = json.loads((outdir / ri.MANIFEST_NAME).read_text(encoding="utf-8"))
+    assert manifest["rules"] == ri.rules_digest() and ri.same_rules(manifest)
+    assert gate.validate_qc(tmp_path, SLUG, outdir) == _sha(FILM)
+
+    change(monkeypatch)
+    # 前提：拿改过的表去比这份清单，确实会误判（不是测试一厢情愿）
+    spec_bytes = (tmp_path / "specs/reels" / f"{SLUG}.json").read_bytes()
+    assert ri.spec_problems(spec_bytes, manifest), "改表没改动投影，这条测试是空转"
+    assert not ri.same_rules(manifest)
+    assert gate.validate_qc(tmp_path, SLUG, outdir) == _sha(FILM)
+    a = _assess(tmp_path, outdir)
+    assert a.status == "unknown" and any("旧口径" in r for r in a.reasons), a.reasons
+
+
+@pytest.mark.parametrize("change", list(_TABLE_CHANGES.values()), ids=list(_TABLE_CHANGES))
+def test_投影那几张表改了而版本号没升_重核对凭证不认(reattested, monkeypatch, change):
+    repo, r_outdir = reattested
+    assert gate.validate_qc(repo, SLUG, r_outdir) == _sha(FILM)   # 前提：改之前是认的
+    change(monkeypatch)
+    with pytest.raises(gate.Skip, match="旧口径.*判不了，不认"):
+        gate.validate_qc(repo, SLUG, r_outdir)
+
+
+def _sorted_project(spec, _orig=ri.project):
+    return json.loads(json.dumps(_orig(spec), sort_keys=True))
+
+
+def _strip_sources_annotations(spec, _orig=ri.project):
+    out = _orig(spec)
+    if isinstance(out.get("sources"), dict):
+        out["sources"] = {k: v for k, v in out["sources"].items() if not str(k).startswith("_")}
+    return out
+
+
+def _order_blind_diff(old, new, path=None, _orig=ri.diff_paths):
+    return [p for p in _orig(old, new, path) if p[-1:] != [ri.ORDER]]
+
+
+@pytest.mark.parametrize("attr, value", [
+    ("ASSET_SUFFIXES", ri.ASSET_SUFFIXES | {".pdf"}),
+    ("project", _sorted_project),                     # v1 那种 sort_keys
+    ("project", _strip_sources_annotations),          # 第二轮那种「sources 里的 _ 键当注解剥」
+    ("canonical", lambda obj: json.dumps(obj, separators=(",", ":"))),   # ensure_ascii
+    ("diff_paths", _order_blind_diff),                # 不报键的顺序
+], ids=["后缀表", "投影排序", "sources剥下划线", "canonical转义", "diff不看顺序"])
+def test_口径指纹跟着投影的行为变(monkeypatch, attr, value):
+    """`rules_digest` 不只认表里的键名，`project` / `canonical` / `diff_paths` 在样本
+    spec 上的行为一变也要变——这几处每一处改了都会让旧清单被误判。"""
+    before = ri.rules_digest()
+    monkeypatch.setattr(ri, attr, value)
+    assert ri.rules_digest() != before
+
+
+def test_口径指纹跨进程稳定():
+    """渲染在一台 runner 上算、门禁在另一台上算：指纹要是跟着哈希种子变（frozenset 的
+    遍历顺序），每一份清单都会被当成旧口径——重核对永远判不了，而且不吭声。"""
+    code = "import sys; sys.path.insert(0, 'tools'); import render_inputs as r; print(r.rules_digest())"
+    got = {subprocess.run([sys.executable, "-c", code], cwd=ROOT, capture_output=True, text=True,
+                          check=True, env={"PYTHONHASHSEED": seed, "PATH": "/usr/bin:/bin"}
+                          ).stdout.strip() for seed in ("1", "2", "3")}
+    assert got == {ri.rules_digest()}, got
+
+
+def test_加一道闸不动口径指纹(monkeypatch):
+    """反过来：`GATE_ANNOTATIONS` 不进指纹——兄弟分支每加一道闸（归类测试逼着加的），
+    已渲片子的清单照旧有效，不会平白全部退回旧口径。"""
+    before = ri.rules_digest()
+    monkeypatch.setitem(ri.GATE_ANNOTATIONS, "_new_gate_why",
+                        ri._gate("假设的新闸", "new_gate", "_new_gate_why"))
+    assert ri.rules_digest() == before
+
+
 def test_spec变了而凭证不是重核对出的_发布门禁不认(tmp_path):
     """只改了注解（投影不变）、却手搓凭证而不走 reattest：清单记的 spec 和凭证记的
     不是同一份——那等于绕过了 runner 那一步的素材字节和 Release 现算，不认。"""
@@ -688,6 +783,11 @@ def _key_reads(path: Path) -> list[tuple[str, str, int]]:
     字符串常量（`KEY = "_why"` 然后 `x.get(KEY)`）、循环变量走的字面量序列
     （`for k in ("_a", "_b"): x.get(k)`）；以 `_` 开头拼出来的键（f-string、`+`）
     认不出是哪一个，记成 `DYNAMIC_KEY`。
+
+    **不经下标、按键名比出来的读**也认（评审第三轮：原来看不见）——
+    `for k, v in spec.items(): if k == "_x"`、`k in ("_x", "_y")`、
+    `spec.keys() & {"_x"}` / `set(spec) >= {"_x"}`：比较或集合运算里出现的
+    `_` 开头字面量（和只进推送的字段名）一律当成一次读。
     """
     tree = ast.parse(path.read_text(encoding="utf-8"))
     names: dict[str, set[str]] = {}
@@ -716,23 +816,38 @@ def _key_reads(path: Path) -> list[tuple[str, str, int]]:
             return {DYNAMIC_KEY}
         return set()
 
+    def named_keys(operand: ast.AST) -> set[str]:
+        """比较/集合运算的一个操作数里，按名字点到的键：字面量本身，或字面量序列的元素。"""
+        elts = (operand.elts if isinstance(operand, (ast.Tuple, ast.List, ast.Set))
+                else [operand])
+        return {e.value for e in elts
+                if isinstance(e, ast.Constant) and isinstance(e.value, str)
+                and ((e.value.startswith("_") and not e.value.startswith("__"))
+                     or e.value in ri.PUBLISH_FIELDS)}
+
     out: list[tuple[str, str, int]] = []
 
     def visit(node: ast.AST, fn: str) -> None:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             fn = node.name
-        arg = None
+        keys: set[str] = set()
         if isinstance(node, ast.Subscript):
-            arg = node.slice
+            keys = keys_of(node.slice)
         elif (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
               and node.func.attr in ("get", "pop", "setdefault") and node.args):
-            arg = node.args[0]
-        elif (isinstance(node, ast.Compare)
-              and any(isinstance(op, (ast.In, ast.NotIn)) for op in node.ops)):
-            arg = node.left
-        if arg is not None:
-            for key in sorted(keys_of(arg)):
-                out.append((key, fn, getattr(node, "lineno", 0)))
+            keys = keys_of(node.args[0])
+        elif isinstance(node, ast.Compare):
+            if any(isinstance(op, (ast.In, ast.NotIn)) for op in node.ops):
+                keys = set(keys_of(node.left))
+            for operand in [node.left, *node.comparators]:
+                keys |= named_keys(operand)
+        elif (isinstance(node, ast.BinOp)
+              and isinstance(node.op, (ast.BitAnd, ast.BitOr, ast.BitXor, ast.Sub))):
+            for operand in (node.left, node.right):
+                if isinstance(operand, ast.Set):
+                    keys |= named_keys(operand)
+        for key in sorted(keys):
+            out.append((key, fn, getattr(node, "lineno", 0)))
         for child in ast.iter_child_nodes(node):
             visit(child, fn)
 
@@ -750,10 +865,25 @@ def test_读取扫描认得出不是字面量的键(tmp_path):
         '    for k in ("_via_loop", "plain"):\n'
         "        spec[k]\n"
         '    spec.get(f"_{x}_why")\n'
-        '    return ("_" + x) in spec\n', encoding="utf-8")
+        '    return ("_" + x) in spec\n'
+        "def by_name(spec):\n"
+        "    for k, v in spec.items():\n"
+        '        if k == "_via_eq" or "_via_eq_rhs" != k:\n'
+        "            pass\n"
+        '        if k in ("_via_in_literal", "plain2"):\n'
+        "            pass\n"
+        '    if spec.keys() & {"_via_set_op"}:\n'
+        "        pass\n"
+        '    return set(spec) >= {"_via_set_cmp"} or any(k == "push" for k in spec)\n',
+        encoding="utf-8")
     keys = {(key, fn) for key, fn, _ in _key_reads(module)}
     assert {("_via_const", "gate"), ("_via_loop", "gate"), ("plain", "gate"),
             (DYNAMIC_KEY, "gate")} <= keys, keys
+    # 不经下标、按键名比出来的读（评审第三轮）
+    assert {("_via_eq", "by_name"), ("_via_eq_rhs", "by_name"),
+            ("_via_in_literal", "by_name"), ("_via_set_op", "by_name"),
+            ("_via_set_cmp", "by_name"), ("push", "by_name")} <= keys, keys
+    assert ("plain2", "by_name") not in keys, "普通字符串比较不是键读，别把噪音拉进来"
     assert DYNAMIC_KEY not in ri.RENDER_ANNOTATIONS and DYNAMIC_KEY not in ri.GATE_ANNOTATIONS
 
 

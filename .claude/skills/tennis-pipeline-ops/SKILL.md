@@ -154,6 +154,13 @@ render；而 `segments[i]._why`、`cover.portrait._why`、`stats._why` 这类同
 - 清单是**旧口径**写的（`version` 比 `render_inputs.VERSION` 小）：门禁不拿新口径重算
   （v1→v2 那次按原顺序比，会把每份 v1 清单都判成「键的顺序变了」），普通渲染退回 spec
   字节那一道、重核对凭证不认——**升 `VERSION` 不用回头迁移老清单**
+- ⭐ **「旧口径」不靠人记得升版本号**（评审第三轮复现的）：往 `RENDER_ANNOTATIONS` 里加一个键、
+  没升 `VERSION`，改之前渲、改之后才合并的片子 spec 一个字节没动，门禁却拿新口径比出
+  「渲染参数：_facts 变了」——自动链上只印一行 `[跳过]`，**不吭声地永远不推**。现在清单另记
+  `rules`（`render_inputs.rules_digest()`：进投影的注解键、整块剥掉的推送字段、素材后缀，
+  和 `project` / `canonical` / `diff_paths` 在一份样本 spec 上的行为），口径是版本号 ＋ 指纹
+  两样一起认（`same_rules`），表一改自动算旧口径。**`GATE_ANNOTATIONS` 不进指纹**——加一道闸
+  不改投影，兄弟分支每归类一个键，已渲片子的清单照旧能重核对
 - ⚠️ **和别的分支合并时，后合进 main 的那一个负责归类**：两边各自往渲染路径上加了读 `_`
   键的闸，文本上不冲突、合起来那条扫描测试就红（2026-09-27 rebase 时撞上的：main 刚加的
   `_short_match_why` / `_cover_reuse_why` / `_numeral_display_why` / `_board_on_screen_why`，
@@ -161,6 +168,16 @@ render；而 `segments[i]._why`、`cover.portrait._why`、`stats._why` 这类同
   源片到手才查），`Gate.where` 必须写到它真读的位置——空着就等于允许重核对删掉它。
   读的不是 spec、是渲染自己攒的字典（`_FACE_REPORT` 里的 `_key`）：按（键, 函数）登记进
   测试里的 `_NOT_SPEC_READS`，不整批放
+- ⚠️⚠️ **扫描测试分不出「dry-run 里跑的闸」和「只在编码里跑的闸」，`where` 填对全靠归类的人**。
+  它只逼你**登记**，不替你判断：给一道只在 render（编码、源片到手之后）才查的认领登记
+  `where=()`，测试照样绿——而重核对从此允许删掉那句认领、那道闸一次都不再跑
+  （reattest 只跑 dry-run）。**`where=()` 只给两种**：只在备料时读（`promote_reel_draft`，
+  render 和 dry-run 都不调），或者它出现就是拒绝（`_import`）。拿不准就去看读它的函数
+  被谁调：`--dry-run` 走不到的，一律写 `where`。赶着让自己分支变绿时最容易错在这儿
+- ⚠️ 这条测试按**模块**走 import 图，不按函数：哪个分支把一个模块拉进了渲染 import 图
+  （比如 `build_interview_clip`），那个模块里**采访线才调**的函数读的键也会被扫出来。
+  确认读它的函数渲染/dry-run 路径上不调，再按 `where=()` 登记（写清「采访线读，赛场之上
+  不调」）；`push` 在那种函数里读，加进 `PUBLISH_FIELDS["push"]`
 
 ⚠️ 所以上面那句「注解要在发 `mode=render` 之前改完」仍然是**最便宜**的做法（一秒都不花）；
 重核对是**改晚了**时的出路：一趟只装主依赖、跑 dry-run、拉一份成片算 sha256 的 runner，
