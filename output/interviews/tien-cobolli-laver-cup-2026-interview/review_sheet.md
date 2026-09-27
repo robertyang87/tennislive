@@ -1,6 +1,6 @@
 # 转写核对表：tien-cobolli-laver-cup-2026-interview
 
-源片 https://www.youtube.com/watch?v=NPJ0nTLVkbs　采访段 0.0–117.4 秒（共 56 行）
+源片 https://www.youtube.com/watch?v=NPJ0nTLVkbs　采访段 0.0–114.2 秒（共 56 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
