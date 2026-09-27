@@ -64,11 +64,10 @@
   },
   "_no_quote_why": "当前可核素材为2026资料集锦；本片不讲这些比赛的过程，尚无与2023关键分匹配的已实听原声。不能用另一场精彩原声冒充历史。",
   "_qc_pending": [
-    "吴源本轮实帧确认",
-    "全片配音实听：吴易昺、孟凡茗、曾俊欣、松冈隼",
-    "成片裁切及资料角标常驻",
-    "更新9/27实际赛况",
-    "MiniMax实际视听QC"
+    "主Agent成片画面复核：人物、资料时期、裁切及角标",
+    "全片配音实听待完成：吴易昺、孟凡茗、曾俊欣、松冈隼及抢七断句",
+    "更新发布时实际赛况",
+    "runner最终TTS装窗确认，Edge预检不能代替Azure实测"
   ],
   "segments": [
     {
@@ -145,8 +144,8 @@
       "_ending_payoff_why": "签表前瞻，不是一场比赛复盘，不制造亚运已赢球错觉。"
     },
     {
-      "title_card": "108 · 109 · 113\n前三种子排名很接近",
-      "kicker": "签表列示排名 · 非实时排名",
+      "title_card": "前三种子\n排名只差五位",
+      "kicker": "签表排名 黄泽林108 舍甫琴科109 吴易昺113",
       "seconds": 12.1,
       "narration": "黄泽林第一百零八，舍甫琴科第一百零九，吴易昺第一百一十三。三个人挨得很近，头号种子，并不等于明显高出所有人一档。",
       "_why": "文字事实示意，非比赛实拍。来源见_claims。"
@@ -184,7 +183,7 @@
       "title_card": "抢七1比6落后\n连拿7分逆转",
       "kicker": "2023杭州亚运 · 黄泽林对吴易昺",
       "seconds": 13.1,
-      "narration": "回到二〇二三年杭州亚运会。黄泽林在决胜盘抢七一比六落后，救回五个赛点，连拿七分，最后八比六逆转。这是两人上一届亚运会的交手。",
+      "narration": "回到二〇二三年杭州亚运会。黄泽林在决胜盘抢七，一比六落后。他救回五个赛点，连拿七分，最后八比六逆转。",
       "_why": "文字事实示意，非比赛实拍。来源见_claims。"
     },
     {
@@ -223,6 +222,18 @@
       "_why": "以观众选择结束，不制造敌意，不给虚假确定性。"
     }
   ],
-  "_preflight_status": "2026-09-27本地dry-run通过形状/措辞/图片字幕几何；选段probe未自动认领，不等于已核。check-narration第一段Edge因证书链失败，无音频产出，须runner Azure实测；本地封面渲染缺Chromium，未宣称已预览。",
-  "_source_order_why": "已按build_match_reel.spec_sources实际schema修正：sources第一项wu是主源；移除不被渲染读取的primary字段，不再用它推断帧率。mixed_fps只认领真实异帧率源wong。"
+  "_preflight_status": "本地形状、措辞及证据卡字幕几何dry-run通过。此前Edge证书问题已通过使用本机已安装系统CA修复；2026-09-27对修改后的第12段执行真实Edge合成与时长测量，具体结果见_local_tts_revision。选段probe尚未自动认领，不能当作画面已核。全片实听及主Agent成片复核仍待完成。",
+  "_source_order_why": "已按build_match_reel.spec_sources实际schema修正：sources第一项wu是主源；移除不被渲染读取的primary字段，不再用它推断帧率。mixed_fps只认领真实异帧率源wong。",
+  "_human_review_requirement": "用户新增硬约束：本任务禁用DeepSeek与MiniMax，由当前Agent直接分析，root亲自复核并决策。不得调用库内两者；不得将模型审查状态标为通过。",
+  "_local_tts_revision": {
+    "segment": 12,
+    "engine": "Edge zh-CN-YunjianNeural +6%",
+    "duration_seconds": 10.992,
+    "window_seconds": 13.1,
+    "fits": true,
+    "audio_path": "/tmp/asiad-men-revised-segment12-speakable.mp3",
+    "listening_status": "未完成实听；仅真实合成及ffprobe装窗核验，不宣称声调或人声自然度已通过。",
+    "boundary_evidence": "words.json用于辅助检查分词，不证明声调。",
+    "input_transform": "按生产入口speakable()转换，含〇→零；实际合成文本回到二零二三年杭州亚运会。黄泽林在决胜盘抢七，一比六落后。他救回五个赛点，连拿七分，最后八比六逆转。"
+  }
 }
