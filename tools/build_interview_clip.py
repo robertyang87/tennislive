@@ -1261,6 +1261,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 #: （= `build_match_reel.TOPBAR_SETWIN_ASS`，2026-08-18 两条线定成同一支；Q1 2026-09-27
 #: 「薄荷只表示这一方赢了」）。内联标签的内容，不带外层花括号。
 _MARK_COLOUR = ass_inline(SCORE["win_video"]).strip("{}")
+#: 英文字幕里 `highlight_en` 标出来的固定搭配：品牌黄绿 `primary`，**不借薄荷**。
+#: Q1（2026-09-27）：「黄绿是唯一品牌色，薄荷只表示这一方赢了」——一句英文里的
+#: 短语不是「谁赢了」，染薄荷就是在同一帧里让「赢」多了一种读法（评审 WP3 nit 1）。
+_PHRASE_COLOUR = ass_inline(DARK["primary"]).strip("{}")
 #: 比分里的连字符压暗一档（Q17 2026-09-27，和赛场之上 `TOPBAR_SETDASH_ASS` 同一支
 #: `SCORE["dash"]`）：它是分隔符不是内容，也不跟着赢盘加粗、输盘转细——走常规档。
 _DASH_TAG = ass_inline(SCORE["dash"]).strip("{}") + r"\b0"
@@ -1497,9 +1501,9 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
         lose = next(s for s in sides if s != win)
         # 赢的那个名字要**看得出来**是赢家——账号所有者：「谢尔顿要高亮吧，
         # 赢球的人」。**重用 `_MARK_COLOUR`，不新开一支颜色**：那正是顶栏
-        # 最前面那支麦克风（原来是竖条 `▍`）在用的那支品牌绿，也是 `highlight_en()` 高亮关键
-        # 短语时用的同一支——「一屏（这条片子从头到尾算一屏）只留一个强调色」，
-        # 见 `highlight_en` 的 docstring 和 CLAUDE.md。输的那个名字和比分
+        # 最前面那支麦克风（原来是竖条 `▍`）在用的那支薄荷——Q1（2026-09-27）定死它
+        # 只表示「这一方赢了」，所以 `highlight_en()` 高亮英文短语改用品牌黄绿
+        # `_PHRASE_COLOUR`，不再借它。输的那个名字和比分
         # 前后的「· 赛后场上采访」都留默认色，不然满行都是重点等于没有重点。
         # 比分本身按盘拆分上色，见 `_score_runs`——不是整条一个颜色。
         score_px = round(_SCORE_PX * scale)
@@ -1537,17 +1541,33 @@ def header_lines(spec: dict) -> tuple[str, str]:
     长一点（「2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔」）就够了。
     每一段按**它自己那支字体**量，比分那段是窄身的 Barlow，按中文的尺子量
     会高估三成。可用宽是 1080 减两边各 48。
+
+    ⚠️ **两种版式，两把尺子——跟着「谁来画」走。** 普通赛后采访的顶栏是 libass
+    画的，按 `_run_width`（PIL 步进 ÷ libass 的 em 比值，评审 I9）量；**人物主标题
+    （`subject_primary`）不走 libass**，是 `_subject_topbar_png` 拿 PIL 按字号＝em
+    直接画成像素的，量它就得用画它的那一支字体、那个字号（`_subject_head_width`）。
+    2026-09-27 修评审阻塞项时量过：「阿格涅什卡·拉德万斯卡 · 国际网球名人堂入选致辞」
+    按 libass 的尺子只有 842px、闸放行，而 PNG 上真画出来 1266px，两头各被 1080
+    的画布切掉一截——那张 PNG 的像素闸只数「够不够亮」，切掉一半照样过。
     """
+    subject = topbar_layout(spec) == "subject_primary"
     out = []
     for runs in header_runs(spec):
         # **按每一段自己的字号量。** 比分那段是 `\fs38` 渲的，拿 32 去量会
         # 少算两成——闸就成了摆设，而溢出照样不报错。
-        w = sum(_run_width(kind, size, text) for text, kind, _, size in runs)
+        w = sum(_subject_head_width(size, text) if subject
+                else _run_width(kind, size, text)
+                for text, kind, _, size in runs)
         text = "".join(t for t, kind, _, _ in runs if kind != "icon")
         if w > _HEAD_PX:
             raise SystemExit(
-                f"顶栏这行 {w:.0f}px，超过可用的 {_HEAD_PX}px，会折到下一行上：{text}\n"
-                "把 `event` 写短一点（赛事＋级别＋轮次就够，别再加国别、场地）。")
+                f"顶栏这行 {w:.0f}px，超过可用的 {_HEAD_PX}px，"
+                + ("两头会被画布切掉" if subject else "会折到下一行上")
+                + f"：{text}\n"
+                + ("把 `subject.name` / `interview_kind` 写短一点（人物主标题这一行就是"
+                   "「名字 · 采访类型」；典礼全名第二行 `event` 里已经有了，别再塞进 `interview_kind`）。"
+                   if subject else
+                   "把 `event` 写短一点（赛事＋级别＋轮次就够，别再加国别、场地）。"))
         out.append(text)
     return out[0], out[1]
 
@@ -1698,6 +1718,36 @@ def watermark_filter(outdir: Path, spec: dict, *,
             f"[{src}][wm]overlay={x}:{y}[{dst}]")
 
 
+_SUBJECT_FONT_CACHE: dict[int, object] = {}
+
+
+def _subject_head_font(size: int):
+    """人物主标题顶栏那张 PNG **画字用的那一支字体**：NotoSansCJK-Regular.ttc 的
+    index 2（简体中文）。量宽（`header_lines` 的闸）和画（`_subject_topbar_png`）
+    共用这一份——⚠️ 别拿 `_measure_at("zh", …)` 顶：它读的是同一个 TTC 的
+    **index 0（日文）**，「·」在两个 face 里步进不同，那条 1266px 的顶栏它只量出
+    1219px，贴着 984 的时候会差出一个误判。
+    """
+    if size not in _SUBJECT_FONT_CACHE:
+        from PIL import ImageFont  # noqa: PLC0415
+
+        font_path = Path(_FONT_FILES["zh"][0])
+        if not font_path.exists():
+            raise SystemExit(
+                f"人物顶栏预栅格需要 {font_path}；不能拿回退字体生成正式标题。")
+        try:
+            # Ubuntu 的 NotoSansCJK-Regular.ttc：index 2 是 Simplified Chinese。
+            _SUBJECT_FONT_CACHE[size] = ImageFont.truetype(str(font_path), size, index=2)
+        except OSError as exc:
+            raise SystemExit(f"无法从 {font_path} 加载简体中文 Noto 字体：{exc}") from exc
+    return _SUBJECT_FONT_CACHE[size]
+
+
+def _subject_head_width(size: int, text: str) -> float:
+    """人物主标题顶栏这一段**画在 PNG 上**有多宽：PIL 按字号＝em，不除 libass 的比值。"""
+    return _subject_head_font(size).getlength(text)
+
+
 def _subject_topbar_png(spec: dict, outdir: Path) -> Path | None:
     """把人物主标题顶栏预栅格为透明 PNG，绕开生产 libass 的顶边差异。
 
@@ -1709,19 +1759,11 @@ def _subject_topbar_png(spec: dict, outdir: Path) -> Path | None:
     if not wants_topbar(spec) or topbar_layout(spec) != "subject_primary":
         return None
 
-    from PIL import Image, ImageDraw, ImageFont  # noqa: PLC0415
+    from PIL import Image, ImageDraw  # noqa: PLC0415
 
     main, context = header_lines(spec)
-    font_path = Path(_FONT_FILES["zh"][0])
-    if not font_path.exists():
-        raise SystemExit(
-            f"人物顶栏预栅格需要 {font_path}；不能拿回退字体生成正式标题。")
-    try:
-        # Ubuntu 的 NotoSansCJK-Regular.ttc：index 2 是 Simplified Chinese。
-        main_font = ImageFont.truetype(str(font_path), _HEAD_SIZE["a"], index=2)
-        context_font = ImageFont.truetype(str(font_path), _HEAD_SIZE["b"], index=2)
-    except OSError as exc:
-        raise SystemExit(f"无法从 {font_path} 加载简体中文 Noto 字体：{exc}") from exc
+    main_font = _subject_head_font(_HEAD_SIZE["a"])
+    context_font = _subject_head_font(_HEAD_SIZE["b"])
 
     image = Image.new("RGBA", (CANVAS_W, VIDEO_TOP), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
@@ -1898,6 +1940,11 @@ def _ts(x: float) -> str:
     return f"{int(x // 3600)}:{int(x % 3600 // 60):02d}:{x % 60:05.2f}"
 
 
+#: 中文字幕里要放大的那几段（数字和西文）。**和 `explainer._ASS_RUN` 是同一个式子**，
+#: 故意抄一份而不是 import：`tennislive.video.explainer` 一 import 就是 ~2.4 秒（本文件
+#: 自己 ~0.6 秒），而本文件每一步（`--stage subs` / 测试收集）都要 import——为一个正则把
+#: 最快那一步拖慢四倍不值。两边分叉由 `test_中文字幕放大数字和赛场之上是同一个式子`
+#: 当场报（式子逐字相等 ＋ 同一批句子烧出来的标记逐字节相等；评审 WP3 nit 6）。
 _ZH_RUN = re.compile(r"[0-9A-Za-z]+")
 
 
@@ -1936,15 +1983,19 @@ def _zh_margin_v(shown: str) -> int:
 
 
 def highlight_en(text: str, phrases: list[str]) -> tuple[str, set[str]]:
-    """把 `phrases` 里每一个字面短语，在 `text` 里原样出现的地方包上品牌绿。
+    """把 `phrases` 里每一个字面短语，在 `text` 里原样出现的地方包上品牌黄绿。
 
     **只上色，不放大。** 放大要改 `\\fs`，会动这一行的实际占宽——而这一行的
     宽度是按固定字号卡死量出来的（见 `_LINE_PX` / `_en_width`），改宽度就要
     重新过一遍那道闸。上色用 `\\c`，字符前进量一个像素都不变，`_en_width`
     在这一步**之前**量过的数照样作数。
 
-    **重用 `_MARK_COLOUR`，不新开一个强调色。** 顶栏那条竖杠已经在用它——
-    一屏（这条片子从头到尾算一屏）只留一个强调色，见 CLAUDE.md。
+    **颜色是 `_PHRASE_COLOUR`（品牌黄绿 `primary`），不是顶栏的 `_MARK_COLOUR`。**
+    原来这儿「重用 `_MARK_COLOUR`，不新开一个强调色」——那是薄荷，而 Q1
+    （2026-09-27）定死薄荷只表示「这一方赢了」（顶栏赢家、赢盘）；黄绿才是这个号
+    唯一的品牌强调色，封面的 `hook_accent` 用的也是它。一句英文里的固定搭配不是
+    「赢」，所以用黄绿（评审 WP3 nit 1；写这条时存量 spec 没有一条用 `highlight_en`，
+    已发的片子一帧不变）。
 
     ⚠️ **先找完所有短语的匹配区间，再一次性拼出结果**，不是挨个 `str.replace`。
     短语之间可能有包含关系（比如 `stay focused` 和某个恰好取了 `focused` 的
@@ -1974,7 +2025,7 @@ def highlight_en(text: str, phrases: list[str]) -> tuple[str, set[str]]:
     matched: set[str] = set()
     for s, e, phrase in spans:
         out.append(text[cursor:s])
-        out.append(rf"{{{_MARK_COLOUR}}}{text[s:e]}{{\r}}")
+        out.append(rf"{{{_PHRASE_COLOUR}}}{text[s:e]}{{\r}}")
         matched.add(phrase)
         cursor = e
     out.append(text[cursor:])
@@ -3065,6 +3116,38 @@ def _title_px(lines: list[str]) -> int:
     return _TITLE_PX if widest <= _TITLE_W else int(_TITLE_PX * _TITLE_W / widest)
 
 
+def hook_accent_problem(lines: list[str], accent: str) -> str | None:
+    """`cover.hook_accent` 合不合规矩；合规回 None，不合回一句能照着改的话。
+
+    `_title_html`（渲封面）和 `check_cover_hook`（`main()` 开头那排 spec 闸）
+    共用这一处——原来只有渲封面时才查，写错了要等到出封面那一步才红
+    （评审 WP3 nit 5）。
+    """
+    accent = str(accent or "").strip()
+    if not accent:
+        return None
+    hits = sum(ln.count(accent) for ln in lines)
+    if hits != 1:
+        return (f"cover.hook_accent「{accent}」在标题里出现了 {hits} 次，要正好一次"
+                "（0 次＝什么都没高亮，2 次＝两处都亮，一屏只留一个强调色）。"
+                f"标题是：{' / '.join(lines)}")
+    if any(ln.strip() == accent for ln in lines):
+        return (f"cover.hook_accent「{accent}」是一整行——重点词是**一个词**，"
+                "整行都亮就没有重点了。挑这一行里最该被看见的那几个字。")
+    return None
+
+
+def check_cover_hook(spec: dict) -> None:
+    """spec 闸：`cover.hook_accent` 写了就得合规矩。只读 spec，排在 `main()` 最前面
+    那排检查里，`--stage subs` 第一秒就报，不等出封面。没写 `hook_accent` 是零行为。"""
+    cov = spec.get("cover") or {}
+    accent = str(cov.get("hook_accent") or "").strip()
+    if not accent:
+        return
+    if problem := hook_accent_problem([str(x) for x in cov.get("title") or []], accent):
+        raise SystemExit(f"{spec.get('slug', '?')}：{problem}")
+
+
 def _title_html(lines: list[str], accent: str = "") -> str:
     """标题那几行：每行一个 `<div>`；`cover.hook_accent` 那一截包成 `.accent`（黄绿）。
 
@@ -3078,16 +3161,8 @@ def _title_html(lines: list[str], accent: str = "") -> str:
     accent = str(accent or "").strip()
     if not accent:
         return "".join(f"<div>{_html.escape(ln)}</div>" for ln in lines)
-    hits = sum(ln.count(accent) for ln in lines)
-    if hits != 1:
-        raise SystemExit(
-            f"cover.hook_accent「{accent}」在标题里出现了 {hits} 次，要正好一次"
-            "（0 次＝什么都没高亮，2 次＝两处都亮，一屏只留一个强调色）。"
-            f"标题是：{' / '.join(lines)}")
-    if any(ln.strip() == accent for ln in lines):
-        raise SystemExit(
-            f"cover.hook_accent「{accent}」是一整行——重点词是**一个词**，"
-            "整行都亮就没有重点了。挑这一行里最该被看见的那几个字。")
+    if problem := hook_accent_problem(lines, accent):
+        raise SystemExit(problem)
     out = []
     for ln in lines:
         if accent in ln:
@@ -4918,6 +4993,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 所以两条出路都走同一个 `_record_film_seconds`，别在这儿各写一遍。
     if len(parts) == 1:
         body.replace(out)
+        _record_seams(outdir, {"count": 0, "transition": "none"})
         return _record_film_seconds(out, outdir)
     # ⚠️ **不给 `+faststart`，`moov` 会落在文件末尾——账号所有者
     # 2026-08-22 报的「视频号封面显示不出来」根子就在这儿。** ffmpeg 的
@@ -4932,14 +5008,23 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # `ftyp moov free mdat`，moov 挪到了最前面。
     #
     # ⭐ 2026-09-27 Q4：接缝一律溶解（`dissolve_concat`），正文中间那一大段照旧直拷。
+    # ⚠️ **溶解的是 `parts` 里相邻两段之间的每一刀**——账号所有者点名的是
+    # 封面→冷开场→正文、正文→收尾卡→片尾；可选的开头落点卡（`takeaway.open`）
+    # 和捧杯（`trail_in`）也在 `parts` 里，它们两边同样溶解（评审 WP3 nit 2 要求写明）。
+    #
     # 溶解那条路出任何岔子（切出来帧数不对、某一段切不开）就**退回原来的硬切**，
-    # 而且要出声——「没溶解」和「溶解了」在日志里必须分得开。
+    # 而且要出声——「没溶解」和「溶解了」必须分得开。⚠️ 光打一行日志不够：日志
+    # 没人回头翻，**闸只看得见产物**。所以接法写进 `render.json` 的 `seams`：
+    # `{"count": 接缝数, "transition": "dissolve" | "hard_cut" | "none", "fallback_reason": …}`，
+    # `check_interview_landed` 读它、退回硬切时点名（评审 WP3 nit 2）。
+    n = len(parts) - 1
     try:
         dissolve_concat(parts, out)
-        print(f"[拼接] {len(parts)} 段，{len(parts) - 1} 个接缝溶解 {_DISSOLVE_S:g}s，"
-              "正文中间直拷")
+        print(f"[拼接] {len(parts)} 段，{n} 个接缝溶解 {_DISSOLVE_S:g}s，正文中间直拷")
+        seams = {"count": n, "transition": "dissolve", "dissolve_s": _DISSOLVE_S}
     except (Exception, SystemExit) as exc:  # noqa: BLE001 - 正文已经编完，拼接不许把整条带崩
-        print(f"[拼接] ⚠️ 溶解没做成，这一条退回硬切：{type(exc).__name__}: {exc}")
+        reason = f"{type(exc).__name__}: {exc}"
+        print(f"[拼接] ⚠️ 溶解没做成，这一条退回硬切：{reason}")
         import shutil  # noqa: PLC0415
         shutil.rmtree(outdir / "_seams", ignore_errors=True)
         lst = outdir / "_concat.txt"
@@ -4949,9 +5034,21 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
                         "-c", "copy", "-movflags", "+faststart", str(out)],
                        check=True, timeout=600)
         lst.unlink(missing_ok=True)
+        seams = {"count": n, "transition": "hard_cut", "fallback_reason": reason[:500]}
+    _record_seams(outdir, seams)
     for tmp in parts:
         tmp.unlink(missing_ok=True)
     return _record_film_seconds(out, outdir)
+
+
+def _record_seams(outdir: Path, seams: dict) -> None:
+    """`seams` 合并写进 `render.json`（和 `_record_film_seconds` 同一个规矩：先读后写，
+    不覆盖工作流之后写的 `video_url` / `video_bytes`）。"""
+    path = outdir / "render.json"
+    data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+    data["seams"] = seams
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
 
 
 def probe_duration(path: Path) -> float:
@@ -5099,6 +5196,7 @@ def main() -> int:
     check_lead_in(spec)
     check_trail_in(spec)
     check_copy_page(spec)
+    check_cover_hook(spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"

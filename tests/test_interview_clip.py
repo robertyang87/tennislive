@@ -1188,9 +1188,9 @@ def test_顶栏赢家的名字要高亮不是输家():
     两个名字原来一个颜色，谁赢谁输全靠看比分自己算，赢家没有任何视觉上的
     突出。
 
-    **重用 `_MARK_COLOUR`，不新开一支颜色**：那正是顶栏竖条 `▍` 和
-    `highlight_en()` 高亮关键短语用的同一支品牌绿——「一屏（这条片子从头
-    到尾算一屏）只留一个强调色」，见 `highlight_en` 的 docstring。
+    **重用 `_MARK_COLOUR`，不新开一支颜色**：那正是顶栏竖条 `▍`（现在是麦克风）
+    用的那支薄荷。2026-09-27 Q1 起它只表示「这一方赢了」，`highlight_en()` 的短语
+    改染品牌黄绿 `_PHRASE_COLOUR`，见 `highlight_en` 的 docstring。
 
     ⚠️ 这条只管**名字**。比分本身按数字上色的判据在
     `test_顶栏比分一盘里只有赢的那个数字绿`——两件事分开测，别在一条测试里
@@ -1324,12 +1324,13 @@ def test_英文也要过宽度闸(tmp_path):
 def test_高亮短语上色不放大且不改变周边文字():
     """**只上色，不放大**——放大会改这一行的实际占宽，得重新过宽度闸；
     上色用 `\\c`，字符前进量一个像素不变。"""
-    from tools.build_interview_clip import _MARK_COLOUR, highlight_en
+    # 2026-09-27 Q1：短语染品牌黄绿 `_PHRASE_COLOUR`，薄荷 `_MARK_COLOUR` 只表示「赢」
+    from tools.build_interview_clip import _PHRASE_COLOUR, highlight_en
 
     out, hit = highlight_en("It was tough to face when you want to finish.",
                             ["tough to face"])
     assert hit == {"tough to face"}
-    assert out == ("It was " + f"{{{_MARK_COLOUR}}}tough to face{{\\r}}"
+    assert out == ("It was " + f"{{{_PHRASE_COLOUR}}}tough to face{{\\r}}"
                    + " when you want to finish.")
     # 把标签一律去掉之后必须还原成原文，一个字都不能多或少
     assert re.sub(r"\{[^}]*\}", "", out) == \
@@ -1385,7 +1386,7 @@ def test_没写highlight_en字段行为不变(tmp_path):
 def test_高亮短语跨多行各自匹配不误报未命中(tmp_path):
     """两个短语分别落在不同行——不能因为「这一行没找到」就报错，
     要等**所有行**都扫完，真的一次都没中的才算数。"""
-    from tools.build_interview_clip import _MARK_COLOUR
+    from tools.build_interview_clip import _PHRASE_COLOUR
 
     lines = _lines(["stay focused please.", "tough to face today."])
     spec = {"highlight_en": ["stay focused", "tough to face"],
@@ -1394,7 +1395,7 @@ def test_高亮短语跨多行各自匹配不误报未命中(tmp_path):
     path = tmp_path / "t.ass"
     write_ass(lines, ["一", "二"], 0.0, path, spec)  # 不许抛
     body = path.read_text(encoding="utf-8")
-    assert body.count(f"{{{_MARK_COLOUR}}}") == 2
+    assert body.count(f"{{{_PHRASE_COLOUR}}}") == 2
 
 
 def test_翻转和裁角标要作用到封面帧上():
@@ -2588,10 +2589,10 @@ def test_ci能看到赛后开麦的转写产物(tmp_path):
     should_not_have = {"output/interviews/foo/clip.mp4",
                        "output/2026-08-20/reel/bar/poster.jpg"}
     assert should_have <= got, (
-        "真跑一遍 ci.yml 的 sparse-checkout 之后，这些该在磁盘上的文件不在：\n  "
+        f"真跑一遍 ci.yml 的 sparse-checkout 之后，这些该在磁盘上的文件不在：\n  "
         + "\n  ".join(sorted(should_have - got)))
     assert not (should_not_have & got), (
-        "这些二进制不该被带进 CI 的检出，却在磁盘上：\n  "
+        f"这些二进制不该被带进 CI 的检出，却在磁盘上：\n  "
         + "\n  ".join(sorted(should_not_have & got)))
 
 
@@ -2687,7 +2688,7 @@ def test_封面引的话必须在片子里(path):
     lines_path = ROOT / "output" / "interviews" / spec["slug"] / "lines.json"
     if not lines_path.exists():
         pytest.skip(f"还没跑过 --stage subs：{lines_path}")
-    body = " ".join(ln["en"] for ln in json.loads(lines_path.read_text(encoding="utf-8")))
+    body = " ".join(l["en"] for l in json.loads(lines_path.read_text(encoding="utf-8")))
     for quote in cited:
         assert (r := _best_match(quote, body)) >= 0.70, (
             f"{path.name} 的封面注里引了一句片子里没有的话（最像的只有 {r:.2f}）：\n"
@@ -2948,7 +2949,7 @@ def test_换了候选视频不许复用上一条的字幕缓存(monkeypatch, tmp
         "https://www.youtube.com/watch?v=ZycljTf6s0E", tmp_path, {})
 
     assert len(calls) == 1, (
-        "没有真的发起网络请求，而是命中了旧候选的缓存文件（0 次调用应为 1 次）")
+        f"没有真的发起网络请求，而是命中了旧候选的缓存文件（0 次调用应为 1 次）")
     assert words == [(0.0, "real new content")], (
         f"读到了错的内容：{words}——旧候选 SOUMru-EDI8 的缓存没有被绕开")
     assert (tmp_path / "cap_SOUMru-EDI8.en.json3").exists(), (
@@ -3060,6 +3061,7 @@ def test_小红书正文不许超一千字():
     import io
     import sys
 
+    import pytest
 
     sys.path.insert(0, str(ROOT / "tools"))
     from push_reel import BODY_MAX, cut_at_tags, split_copy

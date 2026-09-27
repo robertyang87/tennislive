@@ -95,6 +95,17 @@ def test_顶栏主行近白_赢盘薄荷_连字符压暗和赛场之上同一支
     assert [d.strip() for d in digits] == ["7", "6", "4", "6", "6", "4"]
 
 
+def test_英文短语高亮是品牌黄绿_薄荷只留给赢():
+    """Q1（2026-09-27）：黄绿 `primary` 是唯一品牌强调色，薄荷只表示「这一方赢了」。
+    `highlight_en` 原来借的是顶栏那支薄荷（评审 WP3 nit 1）——一句英文里的固定搭配
+    不是「赢」。"""
+    assert "{" + clip._PHRASE_COLOUR + "}" == ass_inline(DARK["primary"])
+    out, hit = clip.highlight_en("It was tough to face.", ["tough to face"])
+    assert hit == {"tough to face"}
+    assert "{" + clip._PHRASE_COLOUR + "}tough to face" in out
+    assert clip._MARK_COLOUR not in out, "英文短语又染成了表示「赢」的薄荷"
+
+
 # ── I1：中文字幕不写标点 ────────────────────────────────────────────────────
 
 def test_中文字幕烧上屏不带标点_只留问号叹号(tmp_path):
@@ -111,6 +122,18 @@ def test_中文字幕烧上屏不带标点_只留问号叹号(tmp_path):
     assert not any(ch in "".join(zh) for ch in "，。、：；"), zh
     assert zh[1].endswith("？"), "问号要留——少了它一问就成了陈述句"
     assert en[0].endswith("quickly.") and "," in en[0], "英文是学习素材，标点不动"
+
+
+def test_中文字幕放大数字和赛场之上是同一个式子():
+    """`_ZH_RUN` 抄的是 `explainer._ASS_RUN`（不 import 的理由写在定义那儿：explainer
+    一 import 2.4 秒）。抄的就得钉住：式子逐字相等，同一批句子烧出来的标记逐字节相等
+    （评审 WP3 nit 6）。"""
+    from tennislive.video import explainer as E
+    from tennislive.video.subtitle_text import drop_punctuation
+
+    assert (clip._ZH_RUN.pattern, clip._ZH_RUN.flags) == (E._ASS_RUN.pattern, E._ASS_RUN.flags)
+    for cn in ("欧洲队7比5，守得住吗？", "他打出了第12个ACE。", "2026年美网", "我们会赢！"):
+        assert clip.zh_display(cn) == E._ass_text(drop_punctuation(cn)), cn
 
     # 全库：spec 里写的每一行中文，烧上屏的那一份都不许带这几个标点
     bad = []
@@ -228,6 +251,55 @@ def test_顶栏宽度尺量的是libass真渲出来的宽(tmp_path):
                                     "国家银行公开赛 第三场 夜场"})
 
 
+def _subject_spec(name: str, kind: str) -> dict:
+    spec = _spec("federer-ithf-2026-induction-speech")
+    spec["subject"] = {**spec["subject"], "name": name}
+    spec["interview_kind"] = kind
+    return spec
+
+
+def test_人物主标题顶栏按PNG真画的宽量_画不下要报错(tmp_path):
+    """评审阻塞项（2026-09-27）：I9 把顶栏的尺子换成 libass 的（PIL ÷ 1.448）之后，
+    **人物主标题那条路也跟着换了**——可它不走 libass，是 `_subject_topbar_png` 拿 PIL
+    按字号＝em 直接画成像素的。闸于是宽松了 1.448 倍：「阿格涅什卡·拉德万斯卡 ·
+    国际网球名人堂入选致辞」闸量 842px 放行，PNG 上真画 1266px，两头被 1080 的画布
+    切掉，而那张 PNG 的像素闸只数够不够亮，照样过。
+
+    三件事：画不下的要报错；量的那把尺子就是画的那一支字体（TTC index 2 简体，
+    不是 `_measure_at` 读的 index 0 日文——「·」在两个 face 里是 54 对 30px）；
+    装得下的那条，预测宽 = PNG 上真画出来的墨迹宽，而且没贴画布边。
+    """
+    import numpy as np
+    from PIL import Image
+
+    size = clip._HEAD_SIZE["a"]
+    # ① 评审的复现：真画 1266px
+    big = _subject_spec("阿格涅什卡·拉德万斯卡", "国际网球名人堂入选致辞")
+    assert clip._subject_head_width(size, clip.header_runs(big)[0][0][0]) > clip._HEAD_PX
+    with pytest.raises(SystemExit, match="顶栏这行 1266px"):
+        clip.header_lines(big)
+    with pytest.raises(SystemExit, match="两头会被画布切掉"):
+        clip._subject_topbar_png(big, tmp_path)
+
+    # ② 贴边那一种：按日文 face 量 901px 放得下，按真画的简体 face 是 996px——
+    #    拿 `_measure_at` 顶替画字那支字体，这一条就漏过去
+    edge = _subject_spec("玛丽亚·何塞·马丁内斯·桑切斯", "致辞")
+    main = clip.header_runs(edge)[0][0][0]
+    assert clip._measure_at("zh", size, main) <= clip._HEAD_PX < clip._subject_head_width(size, main)
+    with pytest.raises(SystemExit, match="顶栏这行"):
+        clip.header_lines(edge)
+
+    # ③ 装得下的那条：量的就是画的
+    ok = _spec("federer-ithf-2026-induction-speech")
+    png = clip._subject_topbar_png(ok, tmp_path)
+    alpha = np.asarray(Image.open(png).getchannel("A"))
+    cols = np.where(alpha[:clip._TOPBAR_BAND_SPLIT_Y].max(0) > 0)[0]
+    ink = cols[-1] - cols[0] + 1
+    predicted = clip._subject_head_width(size, clip.header_lines(ok)[0])
+    assert abs(ink - predicted) / predicted < 0.03, f"预测 {predicted:.0f}px，PNG 上画了 {ink}px"
+    assert 0 < cols[0] and cols[-1] < clip.CANVAS_W - 1, "装得下的那条也不许贴画布边"
+
+
 # ── Q7 / I11：封面 ─────────────────────────────────────────────────────────
 
 def _frame(tmp: Path) -> Path:
@@ -294,6 +366,28 @@ def test_封面重点词只能一个_不许整行():
     for bad in ("不存在", "西", "中岛布兰登逆转门西克"):   # 0 次 / 2 次 / 整行
         with pytest.raises(SystemExit, match="hook_accent"):
             clip._title_html(lines, bad)
+
+
+def test_封面重点词写错了在spec闸就红_不等出封面():
+    """评审 WP3 nit 5：`hook_accent` 原来只在渲封面（`_title_html`）时才查，写错了要等到
+    出封面那一步。现在 `check_cover_hook` 坐在 `main()` 开头那排只读 spec 的闸里，
+    排在联网取字幕、切行之前；存量 spec 一条都不许被它误伤。"""
+    title = ["阿加西：我怀疑他是AI", "中岛布兰登逆转门西克"]
+    for bad in ("不存在", "西", "中岛布兰登逆转门西克"):
+        with pytest.raises(SystemExit, match="hook_accent"):
+            clip.check_cover_hook({"slug": "t", "cover": {"title": title, "hook_accent": bad}})
+    clip.check_cover_hook({"slug": "t", "cover": {"title": title, "hook_accent": "AI"}})
+    clip.check_cover_hook({"slug": "t", "cover": {"title": title}})     # 没写＝零行为
+    clip.check_cover_hook({"slug": "t"})
+    for spec in _specs():
+        clip.check_cover_hook(spec)
+
+    body = clip.Path(clip.__file__).read_text(encoding="utf-8").split("def main(")[1]
+    body = "\n".join(ln for ln in body.splitlines() if not ln.lstrip().startswith("#"))
+    assert "check_cover_hook(spec)" in body, "`main()` 里没有调 `check_cover_hook`"
+    for later in ("fetch_words(", "storyboard_sheet(", "segment(", "write_ass("):
+        assert body.index("check_cover_hook(") < body.index(later), (
+            f"重点词那道闸排在 `{later}` 后面了——它只读 spec，该在第一秒就报")
 
 
 def test_封面文字列真渲出来和台头图标左对齐(tmp_path):
@@ -491,6 +585,69 @@ def test_接缝溶解_正文中间逐帧不变_音画等长_没有黑帧(tmp_pat
     assert (window > 1).sum() >= clip._OVERLAP_FRAMES - 1, f"接缝没溶解开：{window}"
     for s in range(1, len(luma) - 1):
         assert luma[s] >= min(luma[s - 1], luma[s + 1]) - 8, f"第 {s} 帧比两边都暗——有黑帧"
+
+
+def _render_stubbed(tmp_path: Path, monkeypatch, *, fail_dissolve: bool) -> dict:
+    """真跑一遍 `render()` 的拼接那一段：正文 8 秒 ＋ 片尾 2 秒（都带 `_seam_keyframes`），
+    只打桩跑不动的那几件事（下源片、正文那趟 filter_complex、顶栏像素闸）。
+    和 `test_interview_film_seconds` 同一个做法。回 `render.json`。"""
+    outdir = tmp_path / "out"
+    outdir.mkdir()
+    monkeypatch.setattr(clip, "check_takeaway", lambda spec: None)
+    monkeypatch.setattr(clip, "yt_download",
+                        lambda *a, **k: _clip(outdir / "source.mp4", 1.0))
+    monkeypatch.setattr(clip, "_takeaway_segments", lambda *a, **k: [])
+    monkeypatch.setattr(clip, "assert_rendered_topbar", lambda *a, **k: None)
+    monkeypatch.setattr(clip, "assert_topbar_font_log", lambda *a, **k: None)
+    monkeypatch.setattr(clip, "_build_outro",
+                        lambda d: _clip(d / "_outro.mp4", 2.0, still=True, hue=160))
+    if fail_dissolve:
+        def boom(parts, out):
+            raise SystemExit("_body.mp4 在关键帧处直拷切开之后第 1 截帧数不对（要 150）")
+        monkeypatch.setattr(clip, "dissolve_concat", boom)
+    real_run = subprocess.run
+
+    def fake_run(cmd, *a, **k):
+        # 只替正文那一趟编码和顶栏预检（输出是 `_body.mp4` / `_topbar_probe.mp4`）；
+        # 接缝那几趟也带 filter_complex，照常真跑
+        name = Path(str(cmd[-1])).name
+        if cmd[0] == "ffmpeg" and "-filter_complex" in cmd and name in {
+                "_body.mp4", "_topbar_probe.mp4"}:
+            if name == "_body.mp4":
+                _clip(outdir / "_body.mp4", 8.0, tone=440)
+            return subprocess.CompletedProcess(cmd, 0, "", "")
+        return real_run(cmd, *a, **k)
+
+    monkeypatch.setattr(clip.subprocess, "run", fake_run)
+    (outdir / "render.json").write_text('{"video_url": "https://example.invalid/v.mp4"}\n',
+                                        encoding="utf-8")
+    spec = {"slug": "demo", "url": "https://example.invalid/x", "start": 10.0, "end": 18.0,
+            "zh": [], "en": []}
+    assert clip.render(spec, outdir / "subs.ass", outdir).is_file()
+    return json.loads((outdir / "render.json").read_text(encoding="utf-8"))
+
+
+@pytest.mark.parametrize("fail_dissolve", [False, True], ids=["溶解", "退回硬切"])
+def test_接缝是溶解还是退回了硬切_记进render_json(tmp_path, monkeypatch, capsys, fail_dissolve):
+    """评审 WP3 nit 2：溶解失败退回硬切，原来只在日志里打一行 `[拼接] ⚠️`——没有哪道闸
+    看得见。现在 `render()` 把接法写进 `render.json` 的 `seams`，`check_interview_landed`
+    读它、退回硬切时点名（片子照样能发，不计不合格）。合并写，不覆盖 `video_url`。"""
+    data = _render_stubbed(tmp_path, monkeypatch, fail_dissolve=fail_dissolve)
+    seams = data["seams"]
+    assert data["video_url"] == "https://example.invalid/v.mp4", "把 render.json 覆盖了"
+    assert seams["count"] == 1
+    sys.path.insert(0, str(ROOT / "tools"))
+    import check_interview_landed as ci
+
+    line = ci.report_seams(data)
+    if fail_dissolve:
+        assert seams["transition"] == "hard_cut", seams
+        assert "帧数不对" in seams["fallback_reason"]
+        assert line.startswith("[注意]") and "硬切" in line and "帧数不对" in line
+    else:
+        assert seams["transition"] == "dissolve", seams
+        assert line.startswith("[ok]")
+    assert "[跳过]" in ci.report_seams({}), "老片子没记接缝要说「没记」，不许当成 ok"
 
 
 def test_收尾卡口播等溶解走完再开口(tmp_path):
