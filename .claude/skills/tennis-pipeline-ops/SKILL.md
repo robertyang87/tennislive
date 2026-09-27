@@ -3889,6 +3889,22 @@ slug probe 过**；带自动备料的 144 趟 probe 里 8 趟撞了先例——`
 - `find_pending_draft` 的退出码原来只要 origin/* 上有任何一份就是 0（含半年前那场、含会话自己
   推上去的那份）
 
+⭐ **2026-09-27 账号所有者选定：标了完成的认领也有钟，20 小时。** 原来 `done_at` 一标，
+认领就挡满 `DEDUPE_DAYS`（3 天）——会话 probe 完没写成 spec（换题、放弃、卡在封面），这一场
+三天没人再点。现在：完成之后 `DONE_CLAIM_SPEC_HOURS`（20）小时里 main 上还没有这个 slug 的
+正式 spec（`specs/reels/<slug>.json`），认领**不再挡**；有 spec 就照旧挡。20 是他选的「和比赛日
+那道新鲜窗同一个数」，和 `orchestrate.FRESH_RESULT_HOURS`、`promote_reel_draft.PENDING_MAX_AGE`
+由测试钉成同一个。实现只在 `probe_claims._claim_priors`（`done_claim_lapsed`），查不了 spec
+（没给 `has_spec`）就照旧挡。判据 `test_完成的认领20小时没有正式spec就不再挡`、
+`test_完成的认领过了20小时_编排器按main上有没有正式spec决定挡不挡`，三个方向反向验证过。
+
+- ⚠️ **对编排器，这一刀多数时候落在它自己的新鲜窗后面**（按代码推的，不是量的）：`done_at`
+  一定晚于开赛，而 `_stale_result` 按**开赛** ＋ 20 小时就把候选剔掉了——所以放行真正起作用的
+  是 `start_utc` 缺失（不算过期）的那些场次，以及会话 `probe-step` 那句 `::warning::`
+  （过钟又没 spec 的认领不再被当成先例报出来）
+- 认 spec 按**认领里的 slug**：会话 probe 用的就是正式 slug，编排器 promote 也不改 slug；
+  两者不一致时（先 probe 短 slug、spec 另起名），这条认领 20 小时后会被放掉
+
 ⚠️ **同一轮评估过、没做的一条：「渲染前拿 main 上最新的闸验分支 spec」。** 取证报告
 举的两个例子**都不成立**：`alcaraz-fritz` 那道「没配音要配中英字幕」的闸（df9fb05f，
 18:41Z 是它在**分支上**的提交时间）**01:19:30Z 才随 #1082 进 main**，晚于那两趟分支

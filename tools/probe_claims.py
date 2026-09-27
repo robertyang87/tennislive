@@ -32,7 +32,9 @@
 
 认领的三个终点：probe 失败 `release` 摘掉；分支上 probe 成功 `done` 标完成（产物落在
 分支上，main 上看不见，只能靠这一笔）；**job 被取消／超时两样都做不了**——所以没标
-完成的认领开跑 `CLAIM_STALE_MINUTES` 分钟后作废，不许它把这一场压三天。
+完成的认领开跑 `CLAIM_STALE_MINUTES` 分钟后作废，不许它把这一场压三天。标了完成的
+认领也有钟：完成之后 `DONE_CLAIM_SPEC_HOURS`（20）小时里 main 上还没有这个 slug 的
+正式 spec，就不再挡（账号所有者 2026-09-27 选定，和比赛日的新鲜窗同一个数）。
 
 用法::
 
@@ -68,6 +70,15 @@ CLAIM_TTL_DAYS = 7
 #: 压三天**（review 复现的死锁：编排器缩写名那趟被取消，认领还挂着，下一班同一场的
 #: 全名 slug 被它挡住，两个 slug 三天里谁都不点）。
 CLAIM_STALE_MINUTES = 90
+#: 标了完成（`done_at`）的认领挡多久：完成之后这么多小时里，main 上还是没有这个
+#: slug 的正式 spec（`FORMAL_SPEC`），认领就**不再挡**编排器。账号所有者 2026-09-27
+#: 选定：「和比赛日那道新鲜窗同一个数」——`orchestrate.FRESH_RESULT_HOURS` ＝
+#: `promote_reel_draft.PENDING_MAX_AGE` ＝ 20 小时（不 import：orchestrate 反过来
+#: import 这里；三个数由 `test_完成的认领20小时没有正式spec就不再挡` 钉成同一个）。
+#: 在这之前标了完成的认领一律挡满 `DEDUPE_DAYS`（3 天）——会话 probe 完没写成 spec
+#: （换题、放弃、卡在封面），这一场就三天没人再点。
+DONE_CLAIM_SPEC_HOURS = 20
+FORMAL_SPEC = "specs/reels/{}.json"
 #: 只有这一栏的 probe 才算「在做这一场」——故事片借同一条源片 probe，不会产出赛场之上。
 MATCH_COLUMN = "赛场之上"
 
@@ -207,7 +218,23 @@ def claim_is_stale(c: dict, now: datetime) -> bool:
             and _aware(now) - at > timedelta(minutes=CLAIM_STALE_MINUTES))
 
 
-def _claim_priors(doc: dict | None, *, ref: str, now: datetime, days: int) -> list[Prior]:
+def done_claim_lapsed(c: dict, now: datetime, has_spec) -> bool:
+    """标了完成、完成之后超过 `DONE_CLAIM_SPEC_HOURS` 小时、`has_spec(slug)` 还是假：
+    那趟 probe 跑完了，但这一场没人写成正式 spec——认领不再挡（账号所有者 2026-09-27）。
+    `done_at` 读不出来就按没过期算（判不了 ≠ 过期了）。"""
+    done = _claimed_at({"claimed_at": c.get("done_at")}) if isinstance(c, dict) else None
+    if done is None or _aware(now) - done <= timedelta(hours=DONE_CLAIM_SPEC_HOURS):
+        return False
+    return not has_spec(str(c.get("slug") or ""))
+
+
+def _claim_priors(doc: dict | None, *, ref: str, now: datetime, days: int,
+                  has_spec=None, stale_seen: set | None = None) -> list[Prior]:
+    """`has_spec(slug)`：main 上有没有这个 slug 的正式 spec。不给就不做完成认领的
+    20 小时作废（查不了 spec 时照旧挡，不许因为「没查」就放行）。
+
+    `stale_seen`：同一次查找里已经报过「不再挡」的认领。编排器按工作区和 HEAD 各读一遍
+    同一个认领文件，不带它的话每条都印两遍。"""
     out = []
     now = _aware(now)
     claims = (doc or {}).get("claims") if isinstance(doc, dict) else None
@@ -218,6 +245,15 @@ def _claim_priors(doc: dict | None, *, ref: str, now: datetime, days: int) -> li
         if claim_is_stale(c, now):
             print(f"[认领] {c.get('slug')} 的认领开跑 {int((now - at).total_seconds() // 60)} 分钟"
                   f"还没标完成（{ref}），按作废处理——那趟 job 多半被取消或超时了")
+            continue
+        if has_spec is not None and done_claim_lapsed(c, now, has_spec):
+            seen_key = ("done", str(c.get("slug")), str(c.get("done_at")))
+            if stale_seen is None or seen_key not in stale_seen:
+                print(f"[认领] {c.get('slug')} 的认领 {c.get('done_at')} 就标了完成，"
+                      f"{DONE_CLAIM_SPEC_HOURS} 小时过去还没有正式 spec"
+                      f"（{FORMAL_SPEC.format(c.get('slug'))}），不再挡这一场")
+            if stale_seen is not None:
+                stale_seen.add(seen_key)
             continue
         out.append(Prior(slug=str(c.get("slug") or "?"), kind="claim",
                          where=str(c.get("outdir") or ""), ref=ref,
@@ -300,13 +336,23 @@ def find_priors(key: str, *, refs: list[str] = (), root: Path | None = None,
         seen.setdefault((p.slug, p.kind, p.where), p)
 
     live_refs = []
+    stale_seen: set = set()
+
+    def has_spec(slug: str) -> bool:
+        # 工作区或任何一个给了的 ref 上有就算——编排器的 HEAD 就是 main；会话那头
+        # 连自己分支也算上，只会多挡、不会误放
+        path = FORMAL_SPEC.format(slug)
+        if root is not None and (Path(root) / path).is_file():
+            return True
+        return any(git_blobs.show(r, path, cwd=cwd) is not None for r in refs)
 
     dates = recent_dates(today, days)
     if root is not None:
         root = Path(root)
         cp = root / claim_path(key)
         if cp.is_file():
-            for p in _claim_priors(_load_json(cp.read_bytes()), ref="工作区", now=now, days=days):
+            for p in _claim_priors(_load_json(cp.read_bytes()), ref="工作区", now=now, days=days,
+                                   has_spec=has_spec, stale_seen=stale_seen):
                 add(p)
         for d in dates:
             for pj in sorted((root / "output" / d / "reel").glob("*/probe.json")):
@@ -323,7 +369,8 @@ def find_priors(key: str, *, refs: list[str] = (), root: Path | None = None,
             continue
         live_refs.append(ref)
         for p in _claim_priors(_load_json(git_blobs.show(ref, claim_path(key), cwd=cwd)),
-                               ref=ref, now=now, days=days):
+                               ref=ref, now=now, days=days, has_spec=has_spec,
+                               stale_seen=stale_seen):
             add(p)
         rows = [(oid, path) for oid, path in git_blobs.ls_tree(
             ref, [f"output/{d}/reel" for d in dates], cwd=cwd)

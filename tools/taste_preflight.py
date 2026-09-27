@@ -21,6 +21,11 @@
 （CLAUDE.md「判断题写不成测试」）。清单里的「字段里出现了……」只是把事实摆出来，
 不是判定。
 
+**推断出来的规则只当提醒**（账号所有者 2026-09-27 选定）：SKILL 里标着
+〔推断·只自查，永不做成闸〕的规则没有他的原话，只是从他的挑选里推出来、或者会话转述的。
+这里把它们单列成「提醒」、在清单对应编号后面挂上标记，**永远不进退出码**；
+`test_推断出来的口味规则永不做成闸` 钉住它们也不出现在任何一张闸的名单里。
+
 用法：
 
     python3 tools/taste_preflight.py --slug wong-vallejo-hangzhou-2026-r2
@@ -68,6 +73,15 @@ HOOK_TERMS = re.compile(
     r"破发|抢七|抢十|(?<!第)一发(?!不可)|二发|ACE|[Aa]ce\b|爱司|爱局|[Ll]ove\b"
     r"|接发球?局|得分率|决胜局|发球胜[赛盘]局|首秀|复仇|[\d一二两三四五六七八九十]+分里"
     r"|说晚安")
+
+#: 推断出来的规则：SKILL 规则正文末尾写 ``〔推断·只自查，永不做成闸〕`<规则编号>```，
+#: 连着的 ``〔自查 C4〕`` 是它挂在清单上的编号。头部和图例里提到这个标记时后面不跟
+#: 反引号编号，不会被认成一条规则。
+INFERRED_TAG = "推断·只自查，永不做成闸"
+_INFERRED = re.compile(
+    r"〔推断·只自查，永不做成闸〕`(?P<id>[a-z0-9-]+)`"
+    r"(?:〔自查 (?P<items>[A-D]\d{1,2}(?:[ 、][A-D]\d{1,2})*)〕)?")
+_RULE_TITLE = re.compile(r"^- \*\*(?P<title>.+?)\*\*")
 
 _N = r"[\d一二两三四五六七八九十百]+"
 #: 全场总得分差（账号所有者 2026-09-13「不要写总分差距了」、09-19「其实网球差距
@@ -124,6 +138,31 @@ def parse_checklist(text: str) -> list[Item]:
             items.append(Item(m["id"], frozenset(m["lines"].split("·")),
                               m["q"].strip(), m["bad"].strip(), m["good"].strip()))
     return items
+
+
+@dataclass(frozen=True)
+class Inferred:
+    """一条推断出来的规则：只提醒，永不做成闸。"""
+    id: str
+    title: str
+    items: tuple[str, ...]
+
+
+def parse_inferred(text: str) -> list[Inferred]:
+    out, title = [], ""
+    for raw in text.split("\n"):
+        m = _RULE_TITLE.match(raw)
+        if m:
+            title = m["title"]
+        hit = _INFERRED.search(raw)
+        if hit and title:
+            out.append(Inferred(hit["id"], title,
+                                tuple(re.findall(r"[A-D]\d{1,2}", hit["items"] or ""))))
+    return out
+
+
+def load_inferred(path: Path = SKILL) -> list[Inferred]:
+    return parse_inferred(path.read_text(encoding="utf-8")) if path.is_file() else []
 
 
 def load_checklist(path: Path = SKILL) -> list[Item]:
@@ -557,16 +596,32 @@ def _rel(path: Path) -> str:
         return str(path)
 
 
-def report(ctx: Ctx, filled, gates: list[GateResult] | None) -> str:
+def reminders(inferred: list[Inferred], filled) -> list[Inferred]:
+    """这条线用得上的推断规则：没挂清单编号的都列，挂了的只在那条清单也列出来时列。"""
+    shown = {item.id for item, _ in filled}
+    return [r for r in inferred if not r.items or set(r.items) & shown]
+
+
+def report(ctx: Ctx, filled, gates: list[GateResult] | None,
+           inferred: list[Inferred] | None = None) -> str:
+    inferred = inferred or []
+    tagged = {i for r in inferred for i in r.items}
     rows = [f"# 口味预检：{ctx.slug or '（还没有 spec）'}",
             f"线：{ctx.line or '（没认出栏目，只列「全部」那几条）'}"
             + (f"　spec：{_rel(ctx.path)}" if ctx.path else ""),
             "", "## 清单（自查——答「否」就先改，别带着进 render）", ""]
     for item, facts in filled:
-        rows.append(f"[{item.id}] {item.question}")
+        rows.append(f"[{item.id}] {item.question}"
+                    + (f"　〔{INFERRED_TAG}〕" if item.id in tagged else ""))
         rows.extend(f"      · {f}" for f in facts)
         rows.append(f"      ❌ {item.bad}")
         rows.append(f"      ✅ {item.good}")
+    shown = reminders(inferred, filled)
+    if shown:
+        rows += ["", f"## 提醒：推断出来的规则（{INFERRED_TAG}——不是他的原话，不判、不影响退出码）", ""]
+        for r in shown:
+            rows.append(f"· {r.title}（`{r.id}`"
+                        + (f"，清单 {'、'.join(r.items)}" if r.items else "") + "）")
     if gates is not None:
         rows += ["", "## main 上已有的口味闸", ""]
         for g in gates:
@@ -589,6 +644,7 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
 
     items = load_checklist()
+    inferred = load_inferred()
     found = find_spec(args.slug) if args.slug else None
     if args.slug and not found and not args.line:
         print(f"找不到 specs/reels/{args.slug}.json 或 specs/interviews/{args.slug}.json；"
@@ -614,14 +670,18 @@ def main(argv: list[str] | None = None) -> int:
             gates = run_interview_checks(ctx.spec, ctx.xhs)
 
     if args.json:
+        tagged = {i for r in inferred for i in r.items}
         print(json.dumps({
             "slug": ctx.slug, "line": ctx.line,
             "checklist": [{"id": i.id, "question": i.question, "facts": f,
-                           "rejected": i.bad, "accepted": i.good} for i, f in filled],
+                           "rejected": i.bad, "accepted": i.good,
+                           "inferred": i.id in tagged} for i, f in filled],
+            "reminders": [{"id": r.id, "rule": r.title, "items": list(r.items)}
+                          for r in reminders(inferred, filled)],
             "gates": None if gates is None else [g.__dict__ for g in gates],
         }, ensure_ascii=False, indent=1))
     else:
-        print(report(ctx, filled, gates))
+        print(report(ctx, filled, gates, inferred))
     red = [g for g in gates or [] if g.status == "fail"]
     if red and not args.json:
         print(f"\n❌ {len(red)} 道闸红在这一条上——先修，别发 render。")

@@ -614,3 +614,77 @@ def test_match_reel的probe一开跑就认领_失败摘认领_表单不加输入
         "url 走 env 传，别把表单原文拼进 shell")
     wf = yaml.safe_load((ROOT / ".github" / "workflows" / "match-reel.yml").read_text(encoding="utf-8"))
     assert len(wf[True]["workflow_dispatch"]["inputs"]) <= 25, "GitHub 表单最多 25 个输入"
+
+
+# ------------------------------------------------------------------ 完成的认领也有钟
+# 账号所有者 2026-09-27 选定：标了完成的认领，完成之后 20 小时里 main 上还没有这个
+# slug 的正式 spec，就不再挡编排器（和比赛日那道新鲜窗同一个数）。
+
+
+def test_完成的认领20小时没有正式spec就不再挡(capsys):
+    from datetime import datetime, timedelta, timezone
+
+    import promote_reel_draft  # noqa: PLC0415
+    now = datetime(2026, 9, 27, 11, 0, tzinfo=timezone.utc)
+    slug = "wu-shang-hangzhou-2026-r2"
+
+    def doc(hours):
+        return {"claims": [{"slug": slug, "claimed_at": _iso(now - timedelta(hours=hours, minutes=12)),
+                            "done_at": _iso(now - timedelta(hours=hours))}]}
+
+    def got(d, has_spec):
+        return [p.slug for p in probe_claims._claim_priors(d, ref="HEAD", now=now, days=3,
+                                                            has_spec=has_spec)]
+
+    on_main = lambda s: s == slug  # noqa: E731
+    missing = lambda s: False  # noqa: E731
+    assert got(doc(21), on_main) == [slug], "完成的认领 ＋ main 上有正式 spec：照旧挡"
+    assert got(doc(19), missing) == [slug], "完成 19 小时、还没 spec：还在窗里，挡"
+    capsys.readouterr()
+    assert got(doc(21), missing) == [], "完成 21 小时、main 上还没 spec：不再挡"
+    assert "不再挡这一场" in capsys.readouterr().out, "放行要出声，别和「没人认领」长得一样"
+    assert got(doc(21), None) == [slug], "查不了 spec（没给 has_spec）就照旧挡，不许因为没查就放行"
+    # 没标完成的那条钟（90 分钟）不受影响
+    running = {"claims": [{"slug": slug, "claimed_at": _iso(now - timedelta(minutes=30))}]}
+    assert got(running, missing) == [slug]
+    # 三处是同一个数：调度侧新鲜窗、草稿侧新鲜窗、完成认领的钟
+    o = _orch()
+    assert (timedelta(hours=probe_claims.DONE_CLAIM_SPEC_HOURS)
+            == timedelta(hours=o.FRESH_RESULT_HOURS) == promote_reel_draft.PENDING_MAX_AGE)
+
+
+def test_完成的认领过了20小时_编排器按main上有没有正式spec决定挡不挡(repo, monkeypatch, capsys):
+    """走真的 `find_priors`（按 git 对象读 main 上的认领和 spec）＋ `blocks_dispatch`。
+    编排器工作区和 main 上是同一份认领文件——「不再挡」那一句只许印一次。"""
+    from datetime import datetime, timedelta, timezone
+    now = datetime.now(timezone.utc)
+    slug = "garland-wang-singapore-2026-r2"
+    _git(repo.seed, "switch", "-q", "main")
+    _write(repo.seed, probe_claims.claim_path(KEY), {"video_key": KEY, "claims": [
+        {"slug": slug, "branch": "claude/x", "outdir": f"output/x/reel/{slug}",
+         "claimed_at": _iso(now - timedelta(hours=21, minutes=10)),
+         "done_at": _iso(now - timedelta(hours=21))}]})
+    _git(repo.seed, "add", "-A")
+    _git(repo.seed, "commit", "-q", "-m", "claim")
+    _git(repo.seed, "push", "-q", "origin", "main")
+    git_blobs.fetch_ref("origin", "main", cwd=repo.work)
+    monkeypatch.chdir(repo.work)
+
+    def blocking():
+        priors = probe_claims.find_priors(KEY, refs=["refs/remotes/origin/main"], root=repo.work,
+                                          surnames=["wang", "garland"], now=now)
+        return [p.slug for p in priors if p.slug == slug
+                and probe_claims.blocks_dispatch(p, "wang-garland", ["wang", "garland"])]
+
+    _write(repo.work, probe_claims.claim_path(KEY), json.loads(
+        (repo.seed / probe_claims.claim_path(KEY)).read_text(encoding="utf-8")))
+    capsys.readouterr()
+    assert blocking() == [], "完成 21 小时、main 上没有正式 spec：编排器照常点"
+    said = capsys.readouterr().out.count("不再挡这一场")
+    assert said == 1, f"工作区和 main 各读一遍同一个认领，「不再挡」印了 {said} 遍"
+    _write(repo.seed, probe_claims.FORMAL_SPEC.format(slug), {"cover": {"eyebrow": "赛场之上"}})
+    _git(repo.seed, "add", "-A")
+    _git(repo.seed, "commit", "-q", "-m", "spec")
+    _git(repo.seed, "push", "-q", "origin", "main")
+    git_blobs.fetch_ref("origin", "main", cwd=repo.work)
+    assert blocking() == [slug], "正式 spec 落在 main 上了：这一场有人做完了，照旧挡"
