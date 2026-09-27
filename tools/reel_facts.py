@@ -6,6 +6,7 @@ Flashscore 的逐盘数据固定是 home/away 顺序；封面和顶栏固定是�
 
 from __future__ import annotations
 
+import os
 import re
 from pathlib import Path
 
@@ -768,7 +769,11 @@ def _utc(text):
 
 #: 竖版短片的发布账本。模块级常量是为了测试能把它指到 tmp_path——
 #: **判据测试一律不许读真账本**：真账本每推一条就变一次，读它的测试会跟着日历红。
-REEL_LEDGER_DIR = Path(__file__).resolve().parents[1] / "data" / "reel_publish_ledger"
+#: 测试起的子进程（`build_match_reel.py render --dry-run`）monkeypatch 够不着，
+#: 所以同时认 `TENNISLIVE_REEL_LEDGER_DIR`（`tests/conftest.py::_empty_reel_ledger`
+#: 两样都设）；生产上没人设它，走默认路径。
+REEL_LEDGER_DIR = Path(os.environ.get("TENNISLIVE_REEL_LEDGER_DIR")
+                       or Path(__file__).resolve().parents[1] / "data" / "reel_publish_ledger")
 
 
 def newest_sent_at(slug: str, ledger_dir=None):
@@ -940,3 +945,110 @@ def time_sensitive_gate(spec: dict, *, at_render: bool = True,
     自动链卡成「今天没有候选」。`validate_spec` 和全库扫描共用这一刀，别各写一份。"""
     problems = time_sensitive_problems(spec, at_render=at_render, ledger_dir=ledger_dir)
     return ([], problems) if is_auto_spec(spec) else (problems, [])
+
+
+# ——— 当事人声明类选题：X / Instagram 查过没有 ———
+
+#: 「网球有故事」里讲**当事人声明**的那一类（退赛、伤情、复出、告别、隔空喊话、官宣）。
+#: 只看**标题层**（slug、`push.summary`、`cover.hook`、`cover.topic`）——旁白里提一句
+#: 「上一站她退赛了」不算这一类。2026-09-27 拿它扫全部 42 条「网球有故事」剪辑片，
+#: 命中 4 条，四条都是真的这一类（sinner 退赛、prozorova 被强制退赛、谢淑薇詹皓晴
+#: 隔空开吵、中网女单退赛潮）；「comeback」「return」这两个词**故意不收**——`comeback-five-love-down`
+#: 是场上逆转、`tiafoe-story` 的「他回来了」是重返决赛，收了就是误伤。
+#: 「伤」前面是 悲／忧／哀／感 的是情绪词（「最悲伤的一夜」），后面是 心／感 的同理——
+#: 都不是伤情。slug 那一层的英文词要认复数（`china-open-withdrawals-story-2026`
+#: 原来只靠中文标题兜住，slug 这一层是漏的）。
+_STATEMENT_ZH = re.compile(
+    r"退赛|退出|(?<![悲忧哀感])伤(?!心|感)|声明|宣布|官宣|告别|退役|复出|隔空|怀孕|手术")
+_STATEMENT_SLUG = re.compile(
+    r"(?:^|-)(?:withdraw(?:als?|n|s)?|injur(?:y|ed|ies)|retire(?:ments?|d|s)?"
+    r"|statements?|announce(?:ments?|d|s)?|farewells?|feuds?|pregnan(?:t|cy)"
+    r"|surger(?:y|ies))(?=-|$)")
+_X_MARK = re.compile(r"x\.com|twitter|推特|(?<![A-Za-z])X(?![A-Za-z])")
+_IG_MARK = re.compile(r"instagram|(?<![A-Za-z])(?:IG|ins)(?![A-Za-z])", re.IGNORECASE)
+
+
+def _flat(value) -> str:
+    if isinstance(value, dict):
+        return " ".join(f"{k} {_flat(v)}" for k, v in value.items())
+    if isinstance(value, (list, tuple)):
+        return " ".join(_flat(v) for v in value)
+    return str(value or "")
+
+
+def statement_topic(spec: dict) -> str | None:
+    """这条「网球有故事」是不是当事人声明类选题；是就返回命中的那个词。"""
+    cover = spec.get("cover") if isinstance(spec.get("cover"), dict) else {}
+    if str(cover.get("eyebrow") or "").strip() != "网球有故事":
+        return None
+    push = spec.get("push") if isinstance(spec.get("push"), dict) else {}
+    heads = " ".join(str(x or "") for x in (push.get("summary"), cover.get("hook"),
+                                           cover.get("topic")))
+    hit = _STATEMENT_ZH.search(heads)
+    if hit:
+        return hit.group(0)
+    slug = _STATEMENT_SLUG.search(str(spec.get("slug") or ""))
+    return slug.group(0).strip("-") if slug else None
+
+
+def social_search_problem(spec: dict) -> str | None:
+    """⭐⭐ 当事人声明类选题要写 `_social_search`：**X 和 Instagram 各查了哪个账号、结果如何**。
+
+    ## 来路
+
+    `sinner-beijing-withdrawal-2026` 第一版只在官网找，找不到就拿旁白转述了他的话；
+    而他本人 44 秒 1080×1920 的退赛视频一直挂在 X 上——推出去之后账号所有者说
+    「**多去找找 X 和 Instagram**」「建议把辛纳自己的视频加在最前面」，重推一次
+    （97ebe27a）。CLAUDE.md 2026-09-25 那节把它写成了规矩，**但没有闸**：
+    一条只写在文档里的规矩，拦不住下一个会话（同一个形状本仓库记过十几次）。
+
+    ## 判据
+
+    - 只管「网球有故事」、只看标题层（`statement_topic`）
+    - `_social_search` 里 X（x.com / twitter / 推特 / 单独的大写 X）和 Instagram
+      （instagram / IG / ins）**两个都要点到名**——「查过了」三个字不算；
+      账号没有就写「Instagram：没有公开账号」，那也是查过的结论
+    - 真不是这一类（标题里的「伤」说的是别的事）→ 写 `_social_search_why`
+    - 定规矩之前的挂在 `data/legacy_social_search.json`，只许减不许加
+    """
+    if str(spec.get("slug") or "") in legacy_social_search():
+        return None
+    word = statement_topic(spec)
+    if not word or str(spec.get("_social_search_why") or "").strip():
+        return None
+    claim = spec.get("_social_search")
+    text = _flat(claim)
+    # 写成字典时键就是平台名（`{"x": …, "instagram": …}`，报错里给的例子就是这么写的）：
+    # 键不分大小写认；写成一句话时按正文里的平台名认
+    keys = ({str(k).strip().lower() for k, v in claim.items() if _flat(v).strip()}
+            if isinstance(claim, dict) else set())
+    marks = (("X", _X_MARK, {"x", "twitter", "推特"}),
+             ("Instagram", _IG_MARK, {"instagram", "ig", "ins"}))
+    missing = [name for name, rx, names in marks
+               if not (keys & names) and not rx.search(text)]
+    if not missing:
+        return None
+    what = ("没有 `_social_search`" if not text.strip()
+            else f"`_social_search` 里没点到 {' 和 '.join(missing)}")
+    return (
+        f"这条「网球有故事」是当事人声明类选题（标题层命中「{word}」），{what}。\n"
+        "账号所有者 2026-09-25：「多去找找 X 和 Instagram」——球员声明、退赛、伤情、"
+        "复出、告别、赛事官宣，**先去本人／官方的 X、Instagram 找第一手**，"
+        "找到当事人自己开口的视频就放第 1 段、配中英字幕（sinner-beijing-withdrawal "
+        "第一版漏了他 X 上的视频，重推一次，97ebe27a）。\n"
+        "在 spec 顶层写 `_social_search`，X 和 Instagram 各写查了哪个账号、结果如何，例：\n"
+        '  "_social_search": {"x": "@janniksin 9/25 有 44s 退赛视频（已用作第 1 段）",'
+        ' "instagram": "@janniksinner 只有一张图文，没视频"}\n'
+        "怎么挖帖子地址、怎么下：tennis-media-sources「X 和 Instagram 是第一手源」。"
+        "真不是这一类，写 `_social_search_why` 说清楚。")
+
+
+def legacy_social_search() -> frozenset:
+    """「声明类选题要写 `_social_search`」（2026-09-27）之前已发的，只许减不许加。"""
+    import json as _json
+    from pathlib import Path as _Path
+    path = _Path(__file__).resolve().parents[1] / "data" / "legacy_social_search.json"
+    try:
+        return frozenset(_json.loads(path.read_text(encoding="utf-8")).get("reels") or ())
+    except FileNotFoundError:
+        return frozenset()

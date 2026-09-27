@@ -97,6 +97,7 @@ def test_豁免表只许减不许加():
     assert len(legacy) <= 225
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_渲染入口在dry_run就拦():
     spec = json.loads((ROOT / "specs" / "reels" / "wong-vallejo-hangzhou-2026-r2.json")
                       .read_text(encoding="utf-8"))

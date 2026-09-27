@@ -3990,6 +3990,29 @@ slug probe 过**；带自动备料的 144 趟 probe 里 8 趟撞了先例——`
   `state["blocked"]` 的三方合并把本趟摘掉的也带过去；作废的认领一次查找只报一次；
   `find_pending_draft` 对工作区 pending 用同一把 3 天的尺子（按 `received_at`）
 
+⭐ **2026-09-27 账号所有者选定：标了完成的认领也有钟，20 小时。** 原来 `done_at` 一标，
+认领就挡满 `DEDUPE_DAYS`（3 天）——会话 probe 完没写成 spec（换题、放弃、卡在封面），这一场
+三天没人再点。现在：完成之后 `DONE_CLAIM_SPEC_HOURS`（20）小时里 main 上还没有这个 slug 的
+正式 spec（`specs/reels/<slug>.json`），认领**不再挡**；有 spec 就照旧挡。20 是他选的「和比赛日
+那道新鲜窗同一个数」，和 `orchestrate.FRESH_RESULT_HOURS`、`promote_reel_draft.PENDING_MAX_AGE`
+由测试钉成同一个。实现只在 `probe_claims._claim_priors`（`done_claim_lapsed`），查不了 spec
+（没给 `has_spec`）就照旧挡。判据 `test_完成的认领20小时没有正式spec就不再挡`、
+`test_完成的认领过了20小时_编排器按main上有没有正式spec决定挡不挡`，三个方向反向验证过。
+
+- ⚠️ **对编排器，这一刀多数时候落在它自己的新鲜窗后面**（按代码推的，不是量的）：`done_at`
+  一定晚于开赛，而 `_stale_result` 按**开赛** ＋ 20 小时就把候选剔掉了——所以放行真正起作用的
+  是 `start_utc` 缺失（不算过期）的那些场次，以及会话 `probe-step` 那句 `::warning::`
+  （过钟又没 spec 的认领不再被当成先例报出来）
+- 认 spec 先按**认领里的 slug**，再认 `sources` 里挂着**这条源片**的赛场之上正式 spec——先 probe
+  短 slug、spec 另起名也算这一场做完了；故事片借同一条源片不算（评审 09-27 nit；量过 main 上 7 条
+  完成认领 7 条同名，这一刀防的是以后）。只打开 slug 里带着这场姓的 spec（部分克隆里 300 份
+  一份份懒取是 9 MB）
+- ⚠️ **按 ref 查 spec 在不在只看树**（`git ls-tree`）：原来用 `cat-file blob`，部分克隆
+  （`--filter=blob:none`）里 blob 要懒取，懒取不到（断网、远端换了）就读成「没 spec」、把认领
+  放掉——正好和「查不了就照旧挡」相反。git 出错、spec 内容取不回来，一律照旧挡。判据
+  `test_完成认领查正式spec_部分克隆懒取不到blob也照旧挡`／`…另起名的同一场赛场之上也算_故事片借源不算`／
+  `…git出错照旧挡`，各自反向验证过
+
 ⚠️ **同一轮评估过、没做的一条：「渲染前拿 main 上最新的闸验分支 spec」。** 取证报告
 举的两个例子**都不成立**：`alcaraz-fritz` 那道「没配音要配中英字幕」的闸（df9fb05f，
 18:41Z 是它在**分支上**的提交时间）**01:19:30Z 才随 #1082 进 main**，晚于那两趟分支

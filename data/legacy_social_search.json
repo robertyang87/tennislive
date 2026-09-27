@@ -1,0 +1,9 @@
+{
+  "_note": "「当事人声明类『网球有故事』要写 `_social_search`（X 和 Instagram 各查了什么）」这条闸（2026-09-27，reel_facts.social_search_problem）之前已经发出去的。只许减不许加：tests/test_social_search.py 自检每一条都存在、都还过不了闸。已发的不为补一个注解键改 spec——spec 字节进 QC 指纹，改了会断掉自动推送那条哈希链（tennis-pipeline-ops「竖版短片那条线有同一条哈希链」）。sinner-beijing-withdrawal-2026 其实已经用上了他 X 上的视频（97ebe27a），只是那时还没有这个字段可写。china-open-withdrawals-story-2026 是这条闸写好之后、合进 main 之前落地的（998bae43，873872d7 已自动推送）：标题层命中「退赛」，而它的 _note / _sources_why / _facts 一个字都没提 X 或 Instagram——真没查过，所以挂这儿，不替它补一个 `_social_search`（改 spec 字节会断哈希链）。",
+  "reels": [
+    "china-open-withdrawals-story-2026",
+    "hsieh-chan-handshake-feud-2026",
+    "prozorova-concussion-withdrawal-2026",
+    "sinner-beijing-withdrawal-2026"
+  ]
+}
