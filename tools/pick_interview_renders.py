@@ -60,6 +60,7 @@ from build_interview_clip import (  # noqa: E402
     _NO_TAKEAWAY_LEGACY,
     check_lead_in,
 )
+from interview_revision import post_push_edit  # noqa: E402
 from interview_source_gate import SourceContractError, validate_source_contract  # noqa: E402
 
 SPECS = ROOT / "specs" / "interviews"
@@ -179,7 +180,25 @@ def missing_for_render(slug: str, spec: dict) -> list[str]:
         check_lead_in(spec)
     except SystemExit as exc:
         missing.append(f"lead_in（{str(exc).splitlines()[0]}）")
+    if not missing:
+        missing += _preflight_problems(slug, spec)
     return missing
+
+
+def _preflight_problems(slug: str, spec: dict) -> list[str]:
+    """dispatch 之前把 runner 上必红的「只看 spec 就判得出」的错拦下来。
+
+    来路：2026-09-06 之后 interview-clip 有 12 趟红在中文字幕（超宽／吊「的」／
+    117:114 行数对不上）、9 趟红在 tag／标题——全是 spec 本身的错，却都要等 runner
+    装完依赖、取完字幕才报；自动链投出去的那条红了还会占住 70 分钟的「已投」窗口。
+    判据全在 `interview_preflight.spec_problems`（和出片那一趟同一份函数），这里只取
+    每条红的第一行。⚠️ 环境不全（缺 PIL／字体）时它抛 `PreflightUnavailable`，**不在
+    这儿吞**——interview-auto-render 那个「没活就早退」的探针正是靠非零退出码判
+    「要装依赖再看」，吞掉就成了「判不了」当「判过了」。
+    """
+    from interview_preflight import spec_problems  # noqa: PLC0415
+    problems, _notes = spec_problems(spec)
+    return [f"预检：{p.splitlines()[0]}" for p in problems]
 
 
 def _load_state() -> dict:
@@ -259,7 +278,23 @@ def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[st
             if not (revision.get("id") and revision.get("base_film_sha256")
                     and revision.get("base_film_sha256") == pushed.get("film_sha256")):
                 # A stale generator changing spec bytes is not a new user request.
-                continue
+                if revision:
+                    continue
+                # 没写修订标记：推送之后改了会进成片的字段、而且还在自动修订窗口里，
+                # 就当成一次修订（09-22「重渲之后默认就是重推」）；窗口外的说一声，
+                # 只改注解的照旧安静跳过。判据和来路见 interview_revision。
+                qc_raw = _repo_bytes(OUTPUT / p.stem / "qc_attestation.json")
+                try:
+                    qc = json.loads(qc_raw) if qc_raw else None
+                except (ValueError, UnicodeDecodeError):
+                    qc = None
+                revise, why = post_push_edit(
+                    spec, pushed, qc if isinstance(qc, dict) else None,
+                    now or datetime.now(timezone.utc))
+                if not revise:
+                    if why:
+                        waiting.append((p.stem, [why]))
+                    continue
         missing = missing_for_render(p.stem, spec)
         if missing:
             waiting.append((p.stem, missing))

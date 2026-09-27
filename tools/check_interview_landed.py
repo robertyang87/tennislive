@@ -210,6 +210,7 @@ def check_film(film: Path, spec: dict, ass: Path) -> int:
     print(f"[{'ok' if ok else '不合格'}] 片尾捧杯原声双语字幕 {detail}")
 
     meta = film.parent / "render.json"
+    data = {}
     if meta.is_file():
         data = json.loads(meta.read_text(encoding="utf-8"))
         rec = float(data.get("film_seconds") or 0)
@@ -217,6 +218,16 @@ def check_film(film: Path, spec: dict, ass: Path) -> int:
         bad += 0 if ok else 1
         print(f"[{'ok' if ok else '不合格'}] 片长 vs render.json film_seconds"
               f"（实测 {v_dur:.2f}s / 记录 {rec:.2f}s）")
+
+    # 解读卡口播、品牌片尾：render 那两条退路都是绿着退的，整条的峰值看不出来
+    # （收尾卡 −91 dB，整条照样 −10 dB）。照 spec 核 render.json 里量好的拼接清单。
+    from interview_assembly import problems as assembly_problems  # noqa: PLC0415
+    gaps = assembly_problems(spec, data)
+    bad += len(gaps)
+    for gap in gaps:
+        print(f"[不合格] {gap}")
+    if not gaps:
+        print("[ok] 拼接清单：spec 要的解读卡有声音、品牌片尾在")
     return bad
 
 
@@ -279,9 +290,18 @@ def cover_visual_ok(spec_path: Path, spec: dict,
     ), proof
 
 
+def _render_meta(outdir: Path) -> dict:
+    path = outdir / "render.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+    except (OSError, ValueError):
+        return {}
+
+
 def write_attestation(film: Path, spec_path: Path, spec: dict,
                       ass: Path, outdir: Path) -> Path:
     """L0/L2 全绿后落不可变发布凭证；自动推送只认这份凭证。"""
+    from interview_revision import content_sha256  # noqa: PLC0415
     from interview_source_gate import (  # noqa: PLC0415
         content_identity_id,
         validate_source_contract,
@@ -315,6 +335,9 @@ def write_attestation(film: Path, spec_path: Path, spec: dict,
         ),
         "film_sha256": _sha256(film),
         "film_bytes": film.stat().st_size,
+        # 「会进成片的那部分」的指纹：推送之后 spec 再改，`pick_interview_renders`
+        # 拿它分辨改的是内容（要重渲重推）还是注解（不用）。见 interview_revision。
+        "spec_content_sha256": content_sha256(spec),
         "checks": {
             "canvas": [CANVAS_W, CANVAS_H],
             "max_av_delta_s": MAX_AV_DELTA,
@@ -324,6 +347,10 @@ def write_attestation(film: Path, spec_path: Path, spec: dict,
             "bilingual_trail_cues": len(_ass_body_events(outdir / "_trail.ass")["EN"]),
             "cover_subject": cover_proof["expected_subject"],
             "cover_subject_prominent": True,
+            "assembly": [
+                {k: row.get(k) for k in ("role", "seconds", "peak_db") if k in row}
+                for row in ((_render_meta(outdir).get("assembly") or {}).get("parts") or [])
+            ],
         },
     }
     # 保留旧消费者读取的 match_id；非比赛典礼只写通用 content_id。

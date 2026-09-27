@@ -87,6 +87,12 @@ def tool(monkeypatch, tmp_path):
         p, "LEGACY_INPUT_BASELINE",
         tmp_path / "data" / "interview_render_legacy_baseline.json")
     monkeypatch.setattr(p, "_rendered_slugs", lambda: {"a-done"})
+    # 夹具里的 spec 只有「过得了三道编辑闸」的骨架，没有字幕、文案、顶栏——真跑
+    # dispatch 前的离线预检必红。预检的接线由 `test_预检红的spec不dispatch_进等待名单`
+    # 单独钉，其余测试钉的是状态与指纹逻辑，这里让预检放行。
+    import interview_preflight  # noqa: PLC0415
+    monkeypatch.setattr(interview_preflight, "spec_problems",
+                        lambda spec, **kw: ([], []))
     return p
 
 

@@ -11,11 +11,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def check_copy(copy: Path, column: str, *, date: str = '') -> None:
+def check_copy(copy: Path, column: str, *, date: str = '', quiet: bool = False) -> None:
+    # quiet：把 push_reel 的输出收进异常里，不写到 stdout——
+    # `interview_preflight` 被 `pick_interview_renders` 调，后者的 stdout 是 dispatch 名单。
     date = date or datetime.now(timezone(timedelta(hours=8))).date().isoformat()
     subprocess.run([sys.executable, str(ROOT / 'tools/push_reel.py'), '--stage', 'check',
                     '--copy', str(copy), '--outdir', 'output/preflight',
-                    '--column', column, '--date', date], check=True)
+                    '--column', column, '--date', date], check=True,
+                   **({'capture_output': True, 'text': True} if quiet else {}))
 
 
 def check_request(req: dict) -> None:

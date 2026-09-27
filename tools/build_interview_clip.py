@@ -581,20 +581,8 @@ def fetch_words(url: str, workdir: Path,
     在「要不要重试」而不是「要不要带 cookie」。
     """
     workdir.mkdir(parents=True, exist_ok=True)
-    # 人工请求已把第一份 Whisper 逐词稿持久化为 `cap_asr.json3`；渲染必须继续
-    # 使用同一份第一源。若这里又优先下载 YouTube 自动字幕，翻译与渲染会因
-    # 两套断句产生 674/673 这类错位。medium.en 仍独立担任第二份 ASR 校验。
-    asr_cache = workdir / "cap_asr.json3"
-    if spec and spec.get("asr_model") and asr_cache.is_file():
-        data = json.loads(asr_cache.read_text())
-        out = []
-        for ev in data.get("events", []):
-            base = ev.get("tStartMs", 0)
-            for seg in ev.get("segs") or []:
-                word = (seg.get("utf8") or "").strip()
-                if word:
-                    out.append(((base + seg.get("tOffsetMs", 0)) / 1000, word))
-        return out
+    if (cached := cached_words(url, workdir, spec)) is not None:
+        return cached
     # **抓过就别再抓，但只认这条 URL 抓的那份。** YouTube 会限流，而限流时的
     # 报错和「这条片子没字幕」长得不一样但同样让人停手；字幕又是不会变的，
     # 缓存下来重跑不花代价——**这句话的前提是 outdir 里只对应一条视频**。
@@ -662,7 +650,11 @@ def fetch_words(url: str, workdir: Path,
                 f"{len(tried)} 档 client 都拿不到自动字幕：\n" + "\n".join(tried)
                 + "\n先用 `yt-dlp --list-subs` 确认这条片子有没有，"
                 "再判断是「没有」还是「被挡了」。")
-    data = json.loads(pick_caption(files).read_text())
+    return _json3_words(pick_caption(files))
+
+
+def _json3_words(path: Path) -> list[tuple[float, str]]:
+    data = json.loads(path.read_text())
     out = []
     for ev in data.get("events", []):
         base = ev.get("tStartMs", 0)
@@ -671,6 +663,26 @@ def fetch_words(url: str, workdir: Path,
             if word:
                 out.append(((base + seg.get("tOffsetMs", 0)) / 1000, word))
     return out
+
+
+def cached_words(url: str, workdir: Path,
+                 spec: dict | None = None) -> list[tuple[float, str]] | None:
+    """`fetch_words` 的**不联网那一半**：目录里已经有这条 URL 的字幕缓存就读它，
+    没有就返回 None（不下载）。
+
+    抽出来是为了 `tools/interview_preflight.py`：dispatch 之前在本地按仓库里
+    落着的缓存重切一遍行，行数对不上、字幕超宽这类 runner 上必红的错，第 1 秒
+    就报——而**选哪份缓存**必须和出片那一趟同一个口径，所以只能有这一处。
+    """
+    # 人工请求已把第一份 Whisper 逐词稿持久化为 `cap_asr.json3`；渲染必须继续
+    # 使用同一份第一源。若这里又优先下载 YouTube 自动字幕，翻译与渲染会因
+    # 两套断句产生 674/673 这类错位。medium.en 仍独立担任第二份 ASR 校验。
+    asr_cache = workdir / "cap_asr.json3"
+    if spec and spec.get("asr_model") and asr_cache.is_file():
+        return _json3_words(asr_cache)
+    vid = _video_id(url) if is_youtube(url) else ""
+    files = sorted(workdir.glob(f"cap_{vid}*.json3" if vid else "cap_*.json3"))
+    return _json3_words(pick_caption(files)) if files else None
 
 
 # **空档判据**：自动字幕连一个事件都没有的那几秒。阈值 2.0 秒是从真实分布量的，
@@ -1913,6 +1925,13 @@ TAKEAWAY_MAX_CHARS = 34
 # 每个字给多少秒。中文默读约 6~8 字/秒，这儿按 5.5 字/秒留一档余量——
 # 卡上的字是**要在手机上一眼扫完**的，读不完等于没写。
 TAKEAWAY_SECONDS_PER_CHAR = 1 / 5.5
+# 解读卡正文区的左右留白和 `.point` 那一行的字号/字距（px）。**渲卡片的 CSS 和
+# 「一行放不放得下」那道闸（`interview_spec_gates.takeaway_point_problems`）
+# 读的是这同一组数**——写两处必分叉，而分叉的样子是闸说放得下、卡上折成两行。
+TAKEAWAY_PAD_LEFT = 92
+TAKEAWAY_PAD_RIGHT = 150
+TAKEAWAY_POINT_PX = 76
+TAKEAWAY_POINT_TRACKING = 0.5
 
 
 def takeaway_seconds(card: dict) -> float:
@@ -2990,14 +3009,14 @@ def build_takeaway_card(spec: dict, which: str, dest: Path) -> Path:
 body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
  background:radial-gradient(120% 90% at 50% 12%,#0d2b21 0%,#06140f 62%);
  font-family:'TL Sans SC',sans-serif;color:#f4fbf7;
- padding:206px 150px 150px 92px;display:flex;flex-direction:column;
+ padding:206px {TAKEAWAY_PAD_RIGHT}px 150px {TAKEAWAY_PAD_LEFT}px;display:flex;flex-direction:column;
  justify-content:center}}
 .mk{{position:absolute;top:96px;left:92px;width:64px;height:64px;opacity:.9}}
 .eyebrow{{position:absolute;top:112px;left:180px;font-size:32px;color:#74dcc3;
  font-family:'TL Display SC','TL Sans SC',sans-serif;letter-spacing:2px}}
 .lead{{font-size:42px;line-height:1.5;color:#a9bcb2;margin-bottom:34px}}
 .point{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
- font-size:76px;line-height:1.36;letter-spacing:.5px}}
+ font-size:{TAKEAWAY_POINT_PX}px;line-height:1.36;letter-spacing:{TAKEAWAY_POINT_TRACKING}px}}
 .facts{{list-style:none;margin-top:56px;display:flex;flex-direction:column;gap:22px}}
 .facts li{{font-size:40px;line-height:1.42;color:#cfe3d9;padding-left:30px;
  position:relative}}
@@ -3449,6 +3468,19 @@ def check_topline_format(spec: dict) -> None:
     ev = str(spec.get("event") or "").strip()
     if ev and (problem := tour_topline_problem(ev, spec.get("_topbar_format_why", ""))):
         raise SystemExit(f"{slug} 的 `event`：{problem}")
+
+
+def check_score_orientation(spec: dict) -> None:
+    """顶栏比分（`push.score`）必须是赢家视角——顶栏印的是「赢家 比分 输家」。
+
+    zheng-rybakina 857f1fbc 之前照着郑钦文视角写了 `6-3 1-6 4-6`、赢家却是
+    莱巴金娜。判据在 `interview_spec_gates.score_orientation_problem`，
+    dispatch 前的预检跑的是同一份。
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from interview_spec_gates import score_orientation_problem  # noqa: PLC0415
+    if problem := score_orientation_problem(spec):
+        raise SystemExit(f"{spec.get('slug', '?')}：{problem}")
 
 
 def check_source_contract(spec: dict) -> str:
@@ -4067,11 +4099,28 @@ def check_takeaway(spec: dict) -> None:
                     "引一句他没说过的话，渲出来一点异常都没有。\n"
                     "对一下 spec 的 `zh`（比对时两边的标点都会被剥掉，不用逐字一样）。")
 
+    # ②b `point` 那一句要一行放得下——折行只看宽度不看词，jodar-bublik／deminaur
+    # 两次都折在人名和词中间、渲完抽帧才看见。排在「引的是不是他说的」之后：
+    # 那一条是这张卡唯一致命的错法，先报它。判据、量法和豁免表都在
+    # `interview_spec_gates`，dispatch 前的预检跑的是同一份。
+    sys.path.insert(0, str(ROOT / "tools"))
+    from interview_spec_gates import takeaway_point_problems  # noqa: PLC0415
+    if wrap := takeaway_point_problems(spec):
+        raise SystemExit("解读卡的字放不下一行：\n  " + "\n  ".join(wrap))
+
     # ③ 我们自己的画面占比——**只报数，不拒渲**（2026-08-08 账号所有者撤销
     # 了拿它拒渲那道闸，见 `MIN_OURS_RATIO` 上面那段）。低于旧门槛时多印一句
     # 提示，供写卡片的人参考，但不阻止出片——完整发布会、完整问答，
     # 内容本身要多长就多长。
-    ours, total = ours_ratio(spec)
+    try:
+        ours, total = ours_ratio(spec)
+    except (ImportError, OSError) as exc:
+        # ⚠️ 这一项只报数不拒渲，**不许因为算不了把前面那几道真闸一起带崩**：
+        # `ours_ratio` 要 import `outro_page`→`explainer`，后者在模块加载时就读
+        # `assets/explainer/…`，而 dispatch 之前跑预检的 interview-auto-render
+        # 稀疏检出里没有那个目录（`tools/interview_preflight.py`）。出片那一趟全检出，照常算。
+        print(f"[解读卡] 自有画面占比这次算不了（{type(exc).__name__}: {exc}）——只报数的一项，跳过")
+        return
     pct = ours / total
     note = "" if pct >= MIN_OURS_RATIO else f"（低于旧门槛 {MIN_OURS_RATIO:.0%}，仅供参考，不拒渲）"
     print(f"[解读卡] 自有画面 {ours:.1f}s / 全片 {total:.1f}s ＝ {pct:.1%}{note}")
@@ -4254,10 +4303,24 @@ def _side_segment(spec: dict, outdir: Path, key: str = "lead_in") -> Path | None
     return dest
 
 
+def check_tail(spec: dict, src: Path) -> None:
+    """源片到手、**编码之前**：`end` 压进了源片的片尾板，或者越过了源片画面（冻帧）。
+
+    拉沃尔杯七条采访有四条第一版把片尾板剪了进来、两条推上微信又重推，每次都是
+    渲完把成片拉回来逐帧量才看见——而量法是机械的，源片在手就能量。判据和校准数据
+    在 `interview_tail`（认领口 `_end_board_ok` / `_frozen_tail_ok`）。
+    """
+    sys.path.insert(0, str(ROOT / "tools"))
+    from interview_tail import end_card_problem  # noqa: PLC0415
+    if problem := end_card_problem(spec, src):
+        raise SystemExit(f"{spec.get('slug', '?')}：{problem}")
+
+
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     check_takeaway(spec)
     src = yt_download(spec["url"], outdir / "source.mp4",
                       "bv*[height<=1080]+ba/b[height<=1080]", spec)
+    check_tail(spec, src)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)
@@ -4384,6 +4447,11 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     parts += _takeaway_segments(spec, outdir, "close")
     if (outro := _build_outro(outdir)) is not None:
         parts.append(outro)
+    # 拼了哪几段、解读卡有没有声音，量出来记进 render.json——上面两条退路都是
+    # 绿着退的，L2（check_interview_landed）照 spec 核这份记录。见 interview_assembly。
+    sys.path.insert(0, str(ROOT / "tools"))
+    from interview_assembly import record as record_assembly  # noqa: PLC0415
+    record_assembly(parts, outdir)
 
     # ⚠️ **两个 return，两个都要记片长。** 这个文件里同一个形状栽过一次
     # （`build_cover` 委托链上只改了一个 return，成片当场塌成 12 秒），
@@ -4547,6 +4615,7 @@ def main() -> int:
     # 用户要的“本场场上采访”。
     check_source_contract(spec)
     check_topline_format(spec)
+    check_score_orientation(spec)
     # **排在最前面，每一趟都过。** 它只读 spec、不联网、不下源片——
     # 「这条片子怎么开头」是写 spec 那一刻就该定下来的事，让它在第 0.2 秒报，
     # 而不是等九分钟的 render 出片之后再由人看出来「怎么一上来就有人在说话」。

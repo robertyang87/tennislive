@@ -429,8 +429,31 @@ def _verification(req: dict) -> dict:
     }
 
 
+def request_window(req: dict, duration: float,
+                   rows: list[dict] | None = None) -> tuple[float, float]:
+    """请求的时间窗。**没给 `end` 时不再取源片全长**，取最后一个词的词尾 ＋ 一口气
+    （`interview_tail.default_end`）——拉沃尔杯那批第一版把片尾板剪进成片、两条推上
+    微信又重推，全是 `else duration` 这一行默认出来的。切行（`_build_one_unlocked`）
+    和写进 spec 的 `end`（`build_spec`）必须是同一个数，所以只算这一处。"""
+    from interview_tail import default_end  # noqa: PLC0415
+
+    start = max(0.0, float(req.get("start") or 0.0))
+    requested_end = req.get("end")
+    if requested_end not in (None, ""):
+        end = float(requested_end)
+    elif rows:
+        end = default_end(rows, duration, start)
+    else:
+        end = float(duration)
+    return start, min(float(duration), end)
+
+
 def build_spec(req: dict, zh: list[str], duration: float) -> dict:
-    """已经正式切行的中文 + 请求元数据 → 带 L0 签名的正式 spec。"""
+    """已经正式切行的中文 + 请求元数据 → 带 L0 签名的正式 spec。
+
+    时间窗走 `request_window`；`_build_one_unlocked` 按逐词稿算好默认终点后
+    以 `{**req, "end": end}` 传进来，所以切行用的窗和写进 spec 的是同一个数。
+    """
     from interview_source_gate import (  # noqa: PLC0415
         REQUESTED_KINDS,
         finalize_source_contract,
@@ -441,10 +464,7 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
     requested = str(req["requested_content_type"])
     if requested not in REQUESTED_KINDS:
         raise ValueError(f"未登记的 requested_content_type：{requested}")
-    start = max(0.0, float(req.get("start") or 0.0))
-    requested_end = req.get("end")
-    end = float(requested_end) if requested_end not in (None, "") else float(duration)
-    end = min(float(duration), end)
+    start, end = request_window(req, duration)
     if end <= start:
         raise ValueError(f"无效时间窗：{start}-{end}（源长 {duration}）")
     if not zh:
@@ -581,10 +601,7 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
 
         if not rows:
             raise RuntimeError(f"{slug}: 第一份 ASR 为空")
-        start = max(0.0, float(req.get("start") or 0.0))
-        requested_end = req.get("end")
-        end = float(requested_end) if requested_end not in (None, "") else float(duration)
-        end = min(float(duration), end)
+        start, end = request_window(req, duration, rows)
         lines = segment(
             [(row["t"], row["text"]) for row in rows], start, end,
             budget=req.get("segment_budget_px"),
@@ -607,7 +624,8 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
         }, translate_once) if write else translate_once())
         if len(zh) != len(lines):
             raise RuntimeError(f"{slug}: 中英文行数不一致 {len(zh)} != {len(lines)}")
-        spec = build_spec(req, zh, duration)
+        # 默认终点按逐词稿算好再交给 build_spec（`_request_origin` 记的仍是原请求）
+        spec = build_spec({**req, "end": end}, zh, duration)
     if write:
         if research_job is not None:
             spec["_tactical_research"] = research_job.result()

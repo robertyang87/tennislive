@@ -4289,3 +4289,37 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
 
     git rm output/<日期>/reel/<slug>/pushed.json && 合并
     # 或 match-reel.yml mode=push push=true（同样要先删掉 pushed.json）
+
+
+## ⭐⭐ 2026-09-27：赛后开麦 dispatch 之前的离线预检、片尾板、拼接清单、推送后修订
+
+**写完或改完一条采访 spec，dispatch 之前先跑一条命令**（秒级、不联网、不下源片）：
+
+    PYTHONPATH=src python tools/interview_preflight.py --slug <slug>
+
+它按出片那一趟**同一份函数**把「只看 spec 就判得出」的闸全过一遍：L0、顶栏赛事行、
+顶栏比分方向、开场、冷开场／片尾那两段、小红书正文在不在、解读卡（含**收尾卡那一句
+一行放得下**）、文案 tag／标题（`push_reel --stage check`），再按仓库里的字幕缓存
+重切一遍行、走 `write_ass` 全套（中英行数、超宽、吊在「的」上、顶栏宽度）。
+`interview-clip.yml` 在装完字体之后、取字幕之前跑同一条；`pick_interview_renders`
+在自动 dispatch 之前跑同一份，红的进「等自动补齐 / 例外复核」、不投。
+退出码 2 是**判不了**（缺 PIL／字体），不是「判过了」。
+
+来路：2026-09-06 起 interview-clip 12 趟红在中文字幕、9 趟红在 tag／标题，全是 spec
+本身的错，却要等 runner 装完依赖、取完字幕（中位 146 秒）才报；收尾卡折行
+（jodar-bublik 48a60760「费 ／ 德勒」、deminaur 617db353「一 ／ 直顶住」）渲完抽帧才看见。
+
+另外三件同一包里落的（判据 `tests/test_interview_preflight.py`）：
+
+| | 在哪儿 | 一句话 |
+|---|---|---|
+| 片尾板／冻帧 | `interview_tail.end_card_problem`，`render()` 下完源片、**编码之前** | 源片最后一张「硬切或黑场淡入之后一直不动」的板，`end` 压进去就红并给出该收到的终点；`end` 越过源片视频流也红（成片会冻住）。认领 `_end_board_ok` / `_frozen_tail_ok` |
+| 默认终点 | `interview_tail.default_end` | 自动链没给 `end` 时＝最后一个词的词尾 ＋ 0.5 秒，不再是源片全长 |
+| 拼接清单 | `interview_assembly`，`render()` 写进 `render.json["assembly"]`，`check_interview_landed --film` 照 spec 核 | 收尾卡口播没合上（退回静音卡）、品牌片尾渲不出来，原来都是绿着退的 |
+| 推送后修订 | `interview_revision.post_push_edit`，`pick_interview_renders.todo_slugs` | 推送后 24 小时内改了会进成片的字段（按 `qc_attestation.spec_content_sha256` 比，只改 `_` 注解不算）＝一次修订，自动重渲重推；过了窗口进等待名单，要重渲写 `_publication_revision` |
+
+⚠️ 片尾板那道闸是拿真产物校过的：已发 101 条采访的正片尾巴里认出 2 条真板
+（`sabalenka-pegula-us-open-2026-sf-interview` 美网板、`ruud-cerundolo-laver-cup-2026-presser`
+拉沃尔杯板，都已推送），发布会（机位锁死、相邻帧差 < 0.5 能连着 9 秒）0 条误认；
+另有 5 条正片最后 1.1~1.7 秒是冻帧（`end` 越过了源片画面）。这 7 条不挂豁免：闸只在重渲
+那一刻才跑，重渲时就该一起收掉。量法和名单在 `tools/interview_tail.py` 的 docstring。
