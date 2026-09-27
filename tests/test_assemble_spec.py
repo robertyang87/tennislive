@@ -119,14 +119,17 @@ def test_自动草稿的推送文案默认开启质检后自动发送():
     assert "默认开启 QC 后自动推送" in push_block
 
 
-def test_爆冷封面优先明星输家失落近景(tool):
+def test_爆冷封面优先明星输家还在拼的近景(tool):
+    """账号所有者 2026-08-15（arango-venus）：拍输家拍他在拼，不拍他垮掉。"""
     matchup = [
         {"name": "梅德韦杰夫", "name_en": "Daniil Medvedev", "rank": 8},
         {"name": "小马丁·达姆", "name_en": "Martin Damm", "rank": 92},
     ]
     brief = tool.upset_cover_brief(matchup, [(5, 7), (3, 6)])
     assert brief["preferred_subject"] == "梅德韦杰夫"
-    assert "失落" in brief["preferred_moment"]
+    assert "仍在拼" in brief["preferred_moment"]
+    assert "不要低头垮掉" in brief["preferred_moment"]
+    assert "失落" not in brief["preferred_moment"]
     assert brief["fallback_subject"] == "小马丁·达姆"
 
 

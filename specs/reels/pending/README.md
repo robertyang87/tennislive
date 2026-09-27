@@ -2,7 +2,9 @@
 
 > 会话开工前先 `python3 tools/find_pending_draft.py --who <姓>,<姓>`——
 > 这一场自动链多半已经 probe 过、赛果和统计也拉好了，别再 dispatch 一趟 probe
-> （CLAUDE.md「开工前先查 pending 草稿」）。
+> （CLAUDE.md「开工前先查 pending 草稿」）。它除了这个目录还翻 origin/main 和近 3 天
+> 动过的 origin/*；退出码 0＝有能接着用的草稿或 spec，2＝都没有（这个目录里 3 天以前的
+> 老草稿、老交手、自己分支上的那份只列不算）。
 
 `specs/reels/*.json` 是**非递归**扫的（`tests/` 里两处都是 `Path("specs/reels").glob("*.json")`），
 所以放进这个子目录的 spec **不参与那批判据**，也不会被 `auto-push-reel` 认领。

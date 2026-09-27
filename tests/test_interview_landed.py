@@ -361,3 +361,49 @@ def test_封面闸不合格也要把量到的数打出来(tmp_path, monkeypatch,
     # 一张正面脸都没检出时，读数那一行也要说人话，不能崩
     assert "没有人脸证据" in cover._evidence_line({"poster": {}})
     assert cover._evidence_line(None)
+
+
+def _face_model_block(*, similarity: float, ear: float) -> dict:
+    """凭证里 `result.face_model` 的形状（`face_checks.check_frame` 落盘的那样），
+    判词字符串故意写成「过」——复核只许看数。"""
+    return {"status": "ok", "model": "buffalo_s-v0.7",
+            "identity": {"verdict": "match", "name": "费德勒",
+                         "similarity": {"费德勒": similarity}, "missing": [],
+                         "face_px": 364.0},
+            "eyes": {"verdict": "open", "ear": ear, "face_px": 364.0},
+            "problems": [], "warnings": []}
+
+
+def test_L2复核凭证里存的认人睁眼的数_手改判词骗不过去(tmp_path):
+    """评审 2026-09-27 nit 1：`validate_result` 里那行
+    `issues.extend(face_model_issues(...))` 挪走，`check_interview_landed`
+    和 `auto_push_interview_gate` 就不再复核 `face_model`——而原来全部测试照样绿。
+
+    数是真量到的那两个：阿加西那帧对勒纳·钱 −0.004、鲁德低头那帧 EAR 0.097；
+    垂眼那一档（0.12~0.16）拿 0.14 钉。"""
+    ci, cover = _tool(), _cover_tool()
+    spec = _cover_spec()
+    spec_path = tmp_path / "demo.json"
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    poster = tmp_path / "poster.jpg"
+    poster.write_bytes(b"poster")
+
+    def _verdict(block, claim_spec=None):
+        result = _good_cover_result()
+        result["face_model"] = block
+        proof = tmp_path / cover.REPORT_NAME
+        cover.write_report(proof, spec_path, poster, "费德勒", result, [])
+        return ci.cover_visual_ok(spec_path, claim_spec or spec, tmp_path)
+
+    ok, detail, _ = _verdict(_face_model_block(similarity=-0.004, ear=0.097))
+    assert not ok and "不是本人" in detail and "闭眼" in detail, detail
+    ok, detail, _ = _verdict(_face_model_block(similarity=0.62, ear=0.14))
+    assert not ok and "垂眼" in detail, detail
+    ok, detail, _ = _verdict(_face_model_block(similarity=0.62, ear=0.28))
+    assert ok, detail
+    # 认领口照样认：写了 `_face_check_why` 就降成提示
+    claimed = json.loads(json.dumps(spec))
+    claimed["cover"]["_face_check_why"] = "测试：讲的就是他低头那一下"
+    spec_path.write_text(json.dumps(claimed, ensure_ascii=False), encoding="utf-8")
+    ok, detail, _ = _verdict(_face_model_block(similarity=0.62, ear=0.097), claimed)
+    assert ok, detail

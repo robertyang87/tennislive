@@ -53,6 +53,20 @@ def merge_states(base: dict, ours: dict, theirs: dict) -> dict:
         if base_d.get(slug) != entry:
             # 本趟新增或改写的条目：run 已经点出去了，必须落库
             dispatched[slug] = entry
+    # `blocked`（被别人的 probe 挡下、缓存着探到的源片）：本趟新挡下的加回（丢了只是
+    # 下一班多探一次，但没理由丢）；**本趟摘掉的也带过去**——和上面「本趟的删除不带过去」
+    # 反着，因为这一栏的删除有意思：挡它的没了、这一班照常点了（`drop_already_probed`／
+    # `mark_dispatched` 摘的）。不带的话远端那条留到 STATE_TTL_DAYS，「复查」那一行天天
+    # 印一个早就点出去的 slug。远端自己改过那一条（theirs ≠ base）就听远端的
+    base_b = base.get("blocked") or {}
+    ours_b = ours.get("blocked") or {}
+    theirs_b = theirs.get("blocked") or {}
+    for slug, entry in ours_b.items():
+        if base_b.get(slug) != entry:
+            merged.setdefault("blocked", {})[slug] = entry
+    for slug, entry in base_b.items():
+        if slug not in ours_b and theirs_b.get(slug) == entry:
+            (merged.get("blocked") or {}).pop(slug, None)
     stamps = [s for s in (ours.get("last_dispatch_at"),
                           merged.get("last_dispatch_at")) if s]
     if stamps:

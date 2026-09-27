@@ -44,6 +44,7 @@ from typing import Callable, Sequence
 from ..cdn import jsdelivr_base
 from ..design_tokens import MOTION as _MOTION
 from ..render.hashtags import with_campaign_tags
+from .numeral_halves import other_half_is_arabic
 from .subtitle_text import drop_punctuation
 
 # The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
@@ -10228,6 +10229,18 @@ _CAPTIONS: dict[str, dict] = {
 }
 
 
+#: 全称断言的出处认领：`{slug: {"<把那句话抄进键里>": "…核过的记录… https://A/… ；https://B/…"}}`。
+#:
+#: 「零胜／唯一一个／史上第一／从来没有」和「一共只进过三次决赛，三次全部拿下」这一族
+#: **一个反例就倒**，写了就要两个不同主机的穷举出处——和竖版短片 spec 的 `_claims`
+#: 同一个口径、同一份判据（`tools/absolute_claims.py`）。这张表 2026-09-27 才有：
+#: 之前解说片这条线一道闸都没有，`wawrinka-wildcard`「一共只进过三次大满贯决赛」
+#: 推了微信才被指出是四次（f58553ef）。装闸之前的存量挂在
+#: `absolute_claims.EXPLAINER_LEGACY`，只许减不许加；`tools/explainer_preflight.py`
+#: 在渲染之前就查（`explainer.yml` 第一步）。
+_CLAIMS: dict[str, dict[str, str]] = {}
+
+
 @dataclass(frozen=True)
 class Column:
     """A named strand of the account, printed on every card it produces.
@@ -12725,6 +12738,8 @@ def arabic_numerals(text: str) -> str:
             return m.group(0)
         if set(run) & _STRUCTURED:
             return value + nxt         # 十九、三十六、四百六十九
+        if other_half_is_arabic(text, m.start(), m.end(), run, nxt):
+            return value + nxt         # 两小时四十分钟 → 2小时40分钟（见 numeral_halves）
         if len(run) > 1:
             # **裸数字连成一串，不读成一个数。** 中文里除了年份没人这么写，
             # 而年份那一轮在上面已经单独处理过了。
@@ -14060,7 +14075,6 @@ def explainer_push_html(
     xhs_text: str,
     video_name: str = "explainer.mp4",
     copy_url: str | None | _Unset = _UNSET,
-    story=None,
 ) -> str:
     """Build the WeChat push using the knowledge post's own template.
 
@@ -14071,8 +14085,11 @@ def explainer_push_html(
     the same publication, and append the link to the finished video, which is
     the one thing a knowledge post does not have.
     """
-    from ..render.knowledge import knowledge_column, knowledge_push_html_from_parts
+    from ..render.knowledge import knowledge_push_html_from_parts
 
+    # `date` 原来只给药丸上「知识解说视频 · 9.26」那个日期用；药丸现在写栏目名
+    # （2026-09-27 UI 评审 WP2），参数留着，调用方不用跟着改。
+    del date
     slides = [f"slide_{i:02d}.jpg" for i in range(len(segments))]
     rel = outdir.as_posix()
     if "output/" in rel:
@@ -14133,22 +14150,17 @@ def explainer_push_html(
     # 「探过了没有」，按钮就无声消失了——正文里那段文案的唯一出口。
     if isinstance(copy_url, _Unset):
         copy_url = f"{_PAGES_URL}/{rel}/copy.html"
+    # 药丸写栏目名、按钮写「▶ 打开竖版成片」——都由 knowledge_push_html_from_parts
+    # 自己出（2026-09-27 UI 评审 WP2：同一栏目的剪辑片推送和这条原来长得不一样，
+    # 正是因为这两段文字是从这儿传进去的）。
     return knowledge_push_html_from_parts(
-        date=date,
         image_urls=[
             f"{jsdelivr_base(_REPOSITORY)}/{rel}/{name}"
             for name in slides
         ],
         xhs_text=xhs_text,
         copy_url=copy_url,
-        # 台头药丸写**栏目名**，和知识帖、片子台头「网球时差 · 网球有故事」同一个
-        # 出处（2026-09-27 UI/VI 评审：两个模板的药丸原来各写各的，这边是
-        # 「知识解说视频」）。按钮原来写「打开 9:16 成片」——2026-09-16 起默认画布
-        # 已经是 3:4，那个比例写在按钮上就是错的，改成不带比例的「竖版成片」。
-        # ⚠️ 红按钮（#ff2442 那颗「分别复制标题 / 正文 / 置顶评论」）在
-        # `knowledge_push_html_from_parts` 里，这儿一个字节都不碰。
-        badge=knowledge_column(story),
-        extra_action=(video_url, "▶ 打开竖版成片"),
+        video_url=video_url,
     )
 
 

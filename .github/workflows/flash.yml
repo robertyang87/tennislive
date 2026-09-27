@@ -69,11 +69,30 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e ".[webrender]"
 
+      # ⚠️⚠️ **Chromium 缓存键按装上的 playwright 版本算，不按 pyproject 的哈希**
+      # （2026-09-27）pyproject 写的是 `playwright>=1.40`、而且 08-08 之后没动过，
+      # 于是主键**永远命中**那份旧缓存（chromium-1234）；pip 装上的新 playwright 要
+      # 1243，launch 探针落空、每趟重下 187 MiB ＋ 114 MiB 还跑一遍 `--with-deps`
+      # 的 apt（run 36284220097）——而主键命中时 post 步骤「not saving cache」，
+      # 这份缓存**永远修不好自己**。「装 Chromium」这一步 09-15 前中位 1s、之后
+      # 18s（n=189）。按版本算：换版本那一趟主键落空、退到上一份、装完存新的一格。
+      # 判据 `tests/test_runner_setup_cache.py`。
+      - name: 算 Chromium 缓存键（装上的 playwright 版本）
+        id: pw_version
+        run: |
+          v=$(python -c 'import importlib.metadata as m; print(m.version("playwright"))')
+          echo "playwright $v"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
       - name: 缓存 Chromium
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          key: playwright-chromium-${{ runner.os }}-pw${{ steps.pw_version.outputs.version }}
+          # ⚠️ 下面这段是 2026-08-05 键还钉在 pyproject 上时的账；2026-09-27 起键是
+          # 装上的 playwright 版本（见上一步）。`restore-keys` 照旧要：换版本那一趟
+          # 靠它退到上一份，`playwright install` 只补差的那一版。
+          #
           # ⚠️ **键钉在整份 `pyproject.toml` 上太宽。** 决定装哪个 Chromium 的
           # 只有 playwright 的版本，可这个键是**整份文件的哈希**——加一个依赖、
           # 改一行注释，六条工作流的 150 MB Chromium 缓存**同时失效**，

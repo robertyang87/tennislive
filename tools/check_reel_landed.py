@@ -392,17 +392,53 @@ def dead_seconds(levels: list[float], after: int,
     return dead, exempt
 
 
-def scoreboard_geometry_problem(film: Path, spec_path: Path, spec: dict) -> str | None:
-    """New US Open renders must carry frame-mask evidence, not just a QC flag."""
+def _us_open_band(spec: dict) -> bool:
     line = str((spec.get("topbar") or {}).get("line1", "")).lower()
-    if spec.get("layout") != "band" or not ("美网" in line or "us open" in line):
+    return spec.get("layout") == "band" and ("美网" in line or "us open" in line)
+
+
+def scoreboard_evidence_expected(spec: dict) -> bool:
+    """这条成片该不该带逐帧贴板证据（`scoreboard_qc.json` ＋ `score_masks/`）。
+
+    美网带式一律要（原来就这么查）；**全出血开了 `score_inset` 的也要**——2026-09-24 起
+    全出血只认标定过的转播（ATP / WTA / 比利·简·金杯 / 拉沃尔杯），render 的逐帧蒙版
+    每一家都写这份证据，认不出的转播在 dry-run 就红，不再退回老的整段矩形。
+    ⚠️ 美网以外的带式（`band-legacy`，全库 0 条）走的是老路 `resolve_board_insets`，
+    它不写逐帧证据，这里不查它——别让「不查」读成「查过了」，main 会打印跳过。
+    """
+    if _us_open_band(spec):
+        return True
+    return spec.get("layout") != "band" and any(
+        seg.get("score_inset") for seg in spec.get("segments") or [])
+
+
+def scoreboard_geometry_problem(film: Path, spec_path: Path, spec: dict) -> str | None:
+    """回贴过比分板的成片必须带**和这一版成片对得上**的逐帧蒙版证据，不只是一个 QC 标记。
+
+    原来只查美网带式。2026-09-27 全库返工盘点：全出血的「赛场之上」（ATP / WTA /
+    金杯 / 拉沃尔杯）从 9-24 起每一条都走逐帧蒙版，**这一层却一行都没查**。拿仓库里
+    29 条全出血回贴成片量过：26 条证据齐、hash 对得上；另外 3 条（`bu-zheng-hangzhou`
+    `zhang-cocciaretto` `zheng-paolini`）渲在各自那家逐帧蒙版落地（7122b28f / 40a68f3b）
+    之前，本来就没有这份证据——已发的不重渲，QC 也只在新渲的那一趟跑。
+    老路那种「60/60 帧没检出、静静退回最宽兜底」（德约那条，0f82e4cf）要是换个样子
+    再回来，唯一的产物痕迹就是**这份证据不在、或者某一段一帧板都没有**。
+
+    ⚠️ **「右缘不到全片中位数七成就红」那条没加**——拿仓库里全部 79 份历史证据量过：
+    它一次都没抓到真出过事的那两版（`zhang-wong` 首盘 226 对中位数 276，是 0.82），
+    反而在 `mensik-nakashima` 两版合格成片上红了三段（紧凑版板 382 对宽版全名板撑高的
+    中位数 578）。一条抓不到真错、专红好片子的闸，不如没有。
+    """
+    if not scoreboard_evidence_expected(spec):
         return None
-    meta = json.loads((film.parent / "render.json").read_text(encoding="utf-8"))
+    us_open = _us_open_band(spec)
+    meta_path = film.parent / "render.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.is_file() else {}
     audit = film.parent / "scoreboard_qc.json"
     if not audit.is_file() or meta.get("scoreboard_qc_sha256") != _sha256(audit):
         return "比分板逐帧贴图证据缺失或在渲染后变化"
     proof = json.loads(audit.read_text(encoding="utf-8"))
-    if proof.get("status") != "pass" or proof.get("spec_sha256") != _sha256(spec_path):
+    if proof.get("status") != "pass" or (
+            us_open and proof.get("spec_sha256") != _sha256(spec_path)):
         return "比分板证据不对应当前 spec"
     expected = {i for i, seg in enumerate(spec["segments"]) if seg.get("score_inset")}
     records = proof.get("segments") or []
@@ -412,10 +448,12 @@ def scoreboard_geometry_problem(film: Path, spec_path: Path, spec: dict) -> str 
         path = film.parent / "score_masks" / Path(record["mask"]).name
         if not path.is_file() or _sha256(path) != record.get("mask_sha256"):
             return "比分板透明蒙版缺失或 hash 不一致"
-        if record.get("max_extra_source_px", 999) > 4 or record.get("gap_bridge_frames") != 0:
+        if us_open and (record.get("max_extra_source_px", 999) > 4
+                        or record.get("gap_bridge_frames") != 0):
             return "比分板仍允许宽裁或跨过已消失的帧"
         if not record.get("frames") or not record.get("present_frames"):
-            return "比分板证据没有实际检测帧"
+            return (f"比分板证据没有实际检测帧（第 {int(record.get('segment', -1)) + 1} 段 "
+                    f"{record.get('present_frames')}/{record.get('frames')}）")
     return None
 
 
@@ -561,8 +599,10 @@ def main() -> int:
     if score_problem:
         bad += 1
         print(f"[不合格] {score_problem}")
-    else:
+    elif scoreboard_evidence_expected(spec):
         print("[ok] 比分板逐帧贴图证据与当前成片输入一致")
+    else:
+        print("[跳过] 没开回贴（或是美网以外的带式老路），没有逐帧贴板证据要查")
 
     if bad == 0:
         write_attestation(film, spec_path, spec)

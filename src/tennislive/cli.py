@@ -305,7 +305,7 @@ def cmd_explainer(args) -> int:
     # 也一起拿掉（2026-07-29 蒂姆那条推送就是这么少了按钮的，run 30432435525）。
     # 闸装在 `publish pushplus` 里，那一步跑在提交之后，见 drop_dead_copy_button。
     (outdir / "push.html").write_text(
-        explainer_push_html(segments, outdir, date=d, xhs_text=xhs_text, story=story),
+        explainer_push_html(segments, outdir, date=d, xhs_text=xhs_text),
         encoding="utf-8",
     )
     # 标题是「选题｜封面大标题」。⚠️ 大标题现在可以是两行，而第一行往往**就是**

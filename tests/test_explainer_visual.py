@@ -9,7 +9,6 @@
 - 示意图压到文案块就等比缩，缩过头就停（渲染时断言）
 - 封面念的就是大问题时不另排字幕（`same_line_as_printed` 两条线共用一份）
 - 每个接缝 0.18 秒溶解，含冷开场→封面、末屏→片尾，中间一帧黑都没有（Q4）
-- 推送药丸写栏目名，按钮写「竖版成片」，红按钮一个字节不动
 """
 
 from __future__ import annotations
@@ -440,7 +439,11 @@ def test_接缝真跑ffmpeg_没有黑帧没有单帧跳变_声画对得上(tmp_p
     """真拼一条：冷开场（画面 2.0s、声音只有 1.5s）→ 三屏 → 片尾，相邻两段亮度各差
     40 以上（硬切的话接缝上就是一帧跳 40+）。
 
-    - 相邻两帧亮度差不超过 20（评审验收：「接缝处逐帧差分，不允许单帧跳变超过 20」）
+    - 相邻两帧亮度差不超过 20（评审验收：「接缝处逐帧差分，不允许单帧跳变超过 20」）。
+      ⚠️ 这个 20 只对**这组素材**成立：0.18 秒溶解在 30fps 上约 5.4 帧，单帧步长
+      ≈ 两屏亮度差 ÷ 5.4——这里两屏差 40 上下，一步 7~8；换成 200→60 的纯灰，老老实实的
+      溶解一步也有 22.6。别把 20 当成任意内容的硬指标，判「是不是溶解」看的是步长
+      和对比度的比例（真稿三个接缝 5.4 / 1.5 / 2.9）
     - 没有一帧比最暗的那段还暗（「中间一帧黑都不许有」）
     - **每一屏的旁白都在它那一屏画面起点之后正好那么久响起**，总长、声画一样长。
       两个会漂的来源都在这儿：冷开场声音比画面短 0.5s；每屏的 mp3 是 libmp3lame
@@ -518,34 +521,3 @@ def test_接缝真跑ffmpeg_没有黑帧没有单帧跳变_声画对得上(tmp_p
         got, want = onsets[k] - onsets[0], expect[k] - expect[0]
         assert abs(got - want) < 0.02, (
             f"第 {k + 1} 屏旁白离第一屏 {got:.3f}s，该是 {want:.3f}s——声音一屏一屏往前漂了")
-
-
-# ── 推送 ──────────────────────────────────────────────────────────────────
-
-def test_推送药丸写栏目名_按钮写竖版成片_红按钮不动():
-    """评审：两个模板的台头药丸各写各的（这边是「知识解说视频」）；按钮写着
-    「打开 9:16 成片」而默认画布早是 3:4。红按钮 #ff2442 一个字节不许动。"""
-    import datetime as dt
-
-    from tennislive.render.knowledge import knowledge_column, knowledge_push_html_from_parts
-
-    story = find_story_by_slug("hawkeye")
-    deck = E.explainer_script(story)
-    xhs = E.explainer_xiaohongshu(story, deck, "7.25")
-    outdir = Path("output/2026-07-25/explainer/hawkeye")
-    body = E.explainer_push_html(deck, outdir, date=dt.date(2026, 7, 25), xhs_text=xhs,
-                                 story=story)
-    assert f">{knowledge_column(story)} · 7.25</div>" in body
-    assert "知识解说视频" not in body
-    assert "▶ 打开竖版成片" in body and "9:16" not in body
-    # 不传 story 的老调用方（一次性脚本）拿到的也是同一个栏目名
-    assert f">{knowledge_column(story)} · 7.25</div>" in E.explainer_push_html(
-        deck, outdir, date=dt.date(2026, 7, 25), xhs_text=xhs)
-
-    def red(markup: str) -> list[str]:
-        return re.findall(r"<[^>]*#ff2442[^>]*>[^<]*", markup)
-
-    reference = knowledge_push_html_from_parts(
-        date=dt.date(2026, 7, 25), image_urls=[], xhs_text=xhs,
-        copy_url=f"{E._PAGES_URL}/{outdir.as_posix()}/copy.html")
-    assert red(body) and red(body) == red(reference), "红按钮的字节变了"
