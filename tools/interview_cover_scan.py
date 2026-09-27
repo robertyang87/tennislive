@@ -196,9 +196,15 @@ def _numeric_constants(module) -> dict:
 #: 扫描记录里那一格的 pass/fail 说的就不是它了——而审核模块的阈值一个都没动，
 #: 只比阈值的话，旧记录看起来还是新的，一格旧的 fail 照样拦（review 2026-09-27：
 #: 待合的 UI 包 Q7/Q17 正要改赛后开麦封面的版式）。
-LAYOUT_FUNCS = ("build_cover", "cover_poster", "_cover_framing", "_crop_expr",
+#: ⚠️ 2026-09-27 UI 包 WP3 把封面 HTML 从 `build_cover` 抽进了 `cover_html`（＋ 标题、
+#: 台头两个小函数和几条版式常量）——不跟着列进来，`build_cover` 只剩一行转调，
+#: 指纹就管不到模板了（合并时 `test_版式指纹跟着海报模板和画布几何走_只改说明不动` 抓到的）。
+LAYOUT_FUNCS = ("build_cover", "cover_html", "_title_html", "_title_px", "_lockup_html",
+                "cover_poster", "_cover_framing", "_crop_expr",
                 "_video_eq_filter", "_logo_filter", "logo_mask", "canvas_page", "_shoot")
-LAYOUT_CONSTS = ("CANVAS_W", "CANVAS_H", "CROP_RATIO", "VIDEO_TOP", "VIDEO_H")
+LAYOUT_CONSTS = ("CANVAS_W", "CANVAS_H", "CROP_RATIO", "VIDEO_TOP", "VIDEO_H",
+                 "_TITLE_PX", "_COVER_BAND_H", "_BAND_TOP", "_COVER_PAD_X", "_INK_BG",
+                 "_LOCKUP_CSS", "_SOFT_FG", "_TOPIC_FG")
 CLIP_SOURCE = ROOT / "tools" / "build_interview_clip.py"
 
 

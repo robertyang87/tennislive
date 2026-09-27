@@ -731,7 +731,10 @@ def test_版式指纹跟着海报模板和画布几何走_只改说明不动(tmp
         return scan.layout(path)
 
     fp = scan.layout(base)
-    assert variant("band", "height:520px;", "height:560px;") != fp, "钩子带挪了，指纹没变"
+    assert variant("band", "_COVER_BAND_H = 520\n", "_COVER_BAND_H = 560\n") != fp, "钩子带挪了，指纹没变"
+    assert variant("title", "_TITLE_PX = 94\n", "_TITLE_PX = 90\n") != fp, "标题字号变了，指纹没变"
+    assert variant("sub", ".sub{{margin-top:26px;", ".sub{{margin-top:30px;") != fp, (
+        "cover_html 模板里的一个数变了，指纹没变——封面 HTML 在 cover_html 里，别只盯 build_cover")
     assert variant("top", "VIDEO_TOP = 150\n", "VIDEO_TOP = 170\n") != fp, "照片区挪了，指纹没变"
     assert variant("doc", '"""封面：本场抽一帧 + 文案', '"""封面（改个说法）：本场抽一帧 + 文案') == fp, (
         "只改了 build_cover 的 docstring，指纹却变了")
