@@ -279,6 +279,25 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      # **同一条源片别 probe 两遍**（2026-09-27 返工取证 P6）。一开跑就按视频 id
+      # 查 main 上的认领（data/probe_claims/<id>.json）和近三天的 probe 目录：别的
+      # slug 做过就 `::warning::` 带出可复用的目录，然后把这一趟的认领**推到 main**
+      # ——不管本趟跑在哪个分支上：编排器只看得见 main，而会话常在分支上 probe
+      # （`swiatek-zheng` 10dee4a6：会话那份落在分支上 8 分钟后，编排器又点了一遍）。
+      # 排在装依赖之前：只要标准库 + git，越早认领，两边同时点的窗口越窄
+      # （`wang-garland` 7fb9fa50 两边只差 2 分钟）。**只出声不拦**——会话有时就是
+      # 要重 probe（换 scorebox、换区间、故事片借源）；拦不拦归编排器
+      # （`orchestrate.drop_already_probed`）。推不上 main 只告警，不让 probe 红。
+      - name: probe — 认领源片（同一条集锦别 probe 两遍）
+        if: github.event.inputs.mode == 'probe'
+        timeout-minutes: 2
+        env:
+          URL: ${{ github.event.inputs.url }}
+          SLUG: ${{ github.event.inputs.slug }}
+        run: |
+          python tools/probe_claims.py probe-step --url "$URL" --slug "$SLUG" \
+            --branch "${{ github.ref_name }}" --run-id "${{ github.run_id }}"
+
       # **装依赖和 dry-run 排在 apt 那两步前面。** dry-run 只读 spec 和
       # probe.json，一个 ffmpeg / 字体 / 抠图模型都不碰（沙箱里把 PATH 上的
       # ffmpeg 抽掉跑过一遍，0.2 秒照旧绿）；而 apt 那两步各带 15 分钟的最坏
@@ -1318,6 +1337,17 @@ jobs:
             !${{ steps.paths.outputs.outdir }}/source*
             !${{ steps.paths.outputs.outdir }}/frames/**
           retention-days: 14
+
+      # 开跑时推到 main 的**源片认领**，probe 没做成就摘掉：认领还挂着的话，编排器
+      # 三天之内都会以为「有人在做」而不点它。只摘本 slug 那一条（别人的认领不动）；
+      # 排在下面摘 state 那步之前——那步会 `git switch` 到远端最新，别让它改了脚下的树。
+      - name: probe 失败摘源片认领
+        if: failure() && github.event.inputs.mode == 'probe'
+        timeout-minutes: 2
+        env:
+          URL: ${{ github.event.inputs.url }}
+          SLUG: ${{ github.event.inputs.slug }}
+        run: python tools/probe_claims.py release --url "$URL" --slug "$SLUG"
 
       # probe 失败（下不动源片）时，把 slug 从编排器 state 里摘掉——否则它已被
       # 标记「已 dispatch」，下次 cron 跳过它、永不重试。摘掉之后下次 cron 会重新

@@ -38,6 +38,7 @@ from tennislive.render.rating import (  # noqa: E402
 from tennislive.zh import player_name_en  # noqa: E402
 from tennislive.zh.terms import round_zh  # noqa: E402
 
+import probe_claims  # noqa: E402  按视频 id 查「这条源片别人 probe 过没有」
 import slam_feed  # noqa: E402  大满贯官方 feed 补 round/court
 
 # 编排器按**北京时间**的「今天」抓 digest——凌晨结束的欧美比赛在 flashscore 算
@@ -254,14 +255,76 @@ def candidates(digest) -> list[dict]:
     dedup: dict[str, dict] = {}
 
     def _fuller(a: dict, b: dict) -> dict:
-        key = lambda x: (len(x["home"]) + len(x["away"])
-                         - (x["home"].count(".") + x["away"].count(".")))
-        return a if key(a) >= key(b) else b
+        return a if _name_fullness(a) >= _name_fullness(b) else b
 
     for c in out:
         prev = dedup.get(c["slug"])
         dedup[c["slug"]] = c if prev is None else _fuller(prev, c)
     return sorted(dedup.values(), key=lambda c: c["score"], reverse=True)
+
+
+def _name_fullness(c: dict) -> int:
+    """名字越长、越不含缩写点，越是 assemble / detect_highlights 要的全名版。"""
+    return (len(c["home"]) + len(c["away"])
+            - (c["home"].count(".") + c["away"].count(".") + c["slug"].count(".")))
+
+
+def _prior_finder(key: str, surnames: list[str]) -> list:
+    """编排器那份检出是稀疏的，`output/` 不在工作区：probe 目录按 HEAD 的 git 对象
+    读，认领按工作区的 `data/probe_claims/` 读（`data` 在稀疏范围里）。"""
+    return probe_claims.find_priors(key, refs=["HEAD"], root=Path("."), surnames=surnames)
+
+
+def drop_already_probed(dispatchable: list[tuple[dict, str, str]], *,
+                        finder=None) -> list[tuple[dict, str, str]]:
+    """按**源片的视频 id** 去重：别的 slug 已经 probe／认领过这条源片，就不再点 run。
+
+    ⚠️ **放在 `find_highlight` 之后，不在 `dispatch_plan` 里**：视频 id 只有探到
+    源片之后才有，而 `dispatch_plan` 排在探测之前（它的去重是为了省探测）。
+
+    两层，都是 2026-09-27 回放历史 144 趟带自动备料的 probe 量出来的（8 趟撞了先例）：
+
+    1. **同一批里**两个 slug 指着同一条源片：两个源一个给全名一个给缩写，
+       `slug_for` 拼出 `bouzas-rybakina` / `maneiro-rybakina`、`pliskova-shnaider`
+       / `ka.-shnaider`——按 slug 去重认不出，按视频 id 一眼就是同一场。留全名那条
+    2. **别人先做了**：会话（或上一班）在 main 上认领／落了 probe 目录，而且
+       `probe_claims.blocks_dispatch` 看得出是在做这一场（`wang-prozorova` 23 分钟、
+       `swiatek-zheng` 8 分钟、`fernandez-chwalinska` 34 分钟、`zheng-liutova`
+       113 分钟之后编排器又点了一遍）
+
+    ⚠️ 查不出来（git 读挂了）**按没做过处理并出声**：宁可重复一趟 probe，也别
+    因为一个读错把整班候选都吞掉——那和「今天没有候选」长得一模一样。
+    """
+    finder = finder or _prior_finder
+    # 认不出视频 id 的（brightcove 等）各自一组，原样放行；dict 保序＝保分数顺序
+    groups: dict[object, list[tuple[dict, str, str]]] = {}
+    for item in dispatchable:
+        key = probe_claims.video_key(item[1])
+        groups.setdefault(key if key is not None else object(), []).append(item)
+    kept = []
+    for key, group in groups.items():
+        best = max(group, key=lambda it: _name_fullness(it[0]))
+        for c, _u, _v in group:
+            if c is not best[0]:
+                print(f"  [{c['slug']}] 和 {best[0]['slug']} 是同一条源片（{key}），"
+                      "同一场两个 slug——只点全名那条")
+        c = best[0]
+        if not isinstance(key, str):
+            kept.append(best)
+            continue
+        surnames = [_surname(c.get("home", "")).lower(), _surname(c.get("away", "")).lower()]
+        try:
+            priors = finder(key, surnames)
+        except Exception as exc:  # noqa: BLE001 —— 查不出来按没做过处理，但要出声
+            print(f"::warning::[{c['slug']}] 查源片 {key} 的认领失败"
+                  f"（{type(exc).__name__}: {exc}），按没人做过处理，照常点 run")
+            priors = []
+        block = [p for p in priors if probe_claims.blocks_dispatch(p, c["slug"], surnames)]
+        if block:
+            print(f"  [{c['slug']}] 这条源片（{key}）{block[0].describe()}——不再点 probe，接着用它")
+            continue
+        kept.append(best)
+    return kept
 
 
 def load_state() -> dict:
@@ -589,6 +652,9 @@ def main() -> int:
             print(f"  [{c['slug']}] 集锦还没探到，跳过，下次再探")
             continue
         dispatchable.append((c, url, via))
+    # 同一条源片别人已经 probe／认领过就不再点——**排在配额切片之前**，
+    # 被去重掉的不许白占本班配额（和上面「探不到的不占配额」同一个道理）
+    dispatchable = drop_already_probed(dispatchable)
     overflow = len(dispatchable) - args.max
     if overflow > 0:
         skipped = "、".join(c["slug"] for c, _u, _v in dispatchable[args.max:])

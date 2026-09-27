@@ -51,8 +51,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # 编排器只碰 src（digest/rating）、tools（orchestrate.py）、data（state），
-          # 一个字节都不碰 output/assets——全量 checkout 白等一分半。
+          # 编排器只碰 src（digest/rating）、tools（orchestrate.py）、data（state ＋
+          # probe_claims 源片认领），一个字节都不碰 output/assets——全量 checkout 白等
+          # 一分半。近三天的 probe.json 按 HEAD 的 git 对象读（probe_claims.find_priors）。
           sparse-checkout: |
             src
             tools

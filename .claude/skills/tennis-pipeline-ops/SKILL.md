@@ -3814,6 +3814,42 @@ rebase 撞上 CLAUDE.md 冲突——别的会话把同一条发布台账的发�
 断言行。装上当天拿 24 份 pending 扫过：**正好命中那 6 份，零误伤**，六份已删。
 
 
+### ⭐⭐ 2026-09-27：同一条源片别 probe 两遍——按**视频 id** 认领，开跑就写、写到 main 上
+
+上一节管的是「同一场发两条」，这一节管更早的那一步：**probe 被做两遍**（3~5 分钟 ＋
+一份没人用的草稿）。量出来的账：全库 628 份 probe.json 里 **38 条源片被不止一个
+slug probe 过**；带自动备料的 144 趟 probe 里 8 趟撞了先例——`wang-prozorova`（会话那份
+23 分钟前就在 main 上）、`swiatek-zheng`（会话那份在**分支**上，8 分钟后编排器又点）、
+`fernandez-chwalinska` 34 分钟、`zheng-liutova` 113 分钟、`wang-garland` 2 分钟；外加
+编排器自己把同一场点两遍（两个源一个全名一个缩写：`bouzas-rybakina`／`maneiro-rybakina`、
+`pliskova-shnaider`／`ka.-shnaider`）。**slug 认不出同一场，视频 id 认得出。**
+
+| 哪儿 | 做什么 |
+|---|---|
+| match-reel.yml probe 第一步 `probe_claims.py probe-step` | 按视频 id 查 main 上的 `data/probe_claims/<id>.json` 和近 3 天 probe 目录，别的 slug 做过就 `::warning::` 带出可复用的目录；然后把本趟认领**直接推到 main**（临时索引 ＋ `commit-tree`，不碰分支和工作区）。**只出声不拦**。失败时 `release` 摘掉自己那条 |
+| `orchestrate.drop_already_probed` | 探到源片之后、配额切片之前：同一批按视频 id 合组只点全名那条；别人已认领／已 probe 且 slug 带着这场的姓、又不是 `-src-` 借源 → 不点 run。查不出来按没做过处理并出声 |
+| `find_pending_draft.py` | 除了工作区 pending，还翻 `origin/main` 和近 3 天动过的 `origin/*`（`--url` 按视频 id、`--fs-id` 按 flashscore id、`--who` 按姓），同一场有更大的封面就喊 |
+
+- **写在开跑时、写到 main**：等产物落库再说「我做过了」，两分钟的并发永远赶不上；
+  编排器只看得见 main，会话常在分支上 probe
+- 回放：probe 那一步的告警在 613 趟历史 probe 里会响 33 次（5.4%），**每一次都是
+  同一条视频真被另一个 slug probe 过**；编排器那道在这 144 趟里拦 8 趟，先例全带着这场
+  的姓、没有一条是 `-src-`。「更大的封面」按写 spec 那一刻回放，148 条单打正式 spec
+  里报 4 条，全是自动链草稿里躺着同一场更大的官方图（`eala-jovic` 用了 1280×720，
+  草稿里是 5530×3687）
+- 判据 `tests/test_probe_claims.py`（部分克隆＋浅＋稀疏的现搭仓库）、
+  `tests/test_find_pending_draft.py` 后半，17 个方向各自反向验证过
+
+⚠️ **同一轮评估过、没做的一条：「渲染前拿 main 上最新的闸验分支 spec」。** 取证报告
+举的两个例子**都不成立**：`alcaraz-fritz` 那道「没配音要配中英字幕」的闸（df9fb05f，
+18:41Z 是它在**分支上**的提交时间）**01:19:30Z 才随 #1082 进 main**，晚于那两趟分支
+render 和两次推送；`bucsa-noskova` 那条「钩子写过程＋结果」只写在 tennis-editorial，
+没有机械闸。回放 09-20 以来 81 趟分支 render（真合并一次、用合并后的代码跑 dry-run）：
+75 过，**只有 1 趟真拦**（`sakkari-gibson` 小红书首行复读标题，CI 7 分钟后也逮到了，
+`.xhs.txt` 不在指纹链里不用重渲），另 5 趟是 `build_match_reel.py` 两边文本冲突——
+做成闸就是每趟分支 render 多 10~30 秒、6% 被冲突拦下，换 1/81 的早报。不值，没装。
+
+
 ### ⚠️⚠️ 2026-09-03 它又被违反了一次——而挡住我的不是「要不要发」，是**会话级的分支策略被读宽了**
 
 账号所有者：「**质检通过后就可以推啊**」。

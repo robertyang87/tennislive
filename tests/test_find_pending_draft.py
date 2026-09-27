@@ -34,7 +34,7 @@ def test_没找到要出声并且退出码是2(tmp_path, monkeypatch, capsys):
     t = _tool()
     monkeypatch.setattr(t, "PENDING", tmp_path)
     (tmp_path / "x-y.draft.json").write_text(json.dumps(_draft("A X", "B Y")), encoding="utf-8")
-    monkeypatch.setattr("sys.argv", ["find_pending_draft", "--who", "Nobody,Nothing"])
+    monkeypatch.setattr("sys.argv", ["find_pending_draft", "--who", "Nobody,Nothing", "--no-refs"])
     assert t.main() == 2
     out = capsys.readouterr().out
     assert "没有匹配" in out and "扫了 1 份" in out, "「没找到」要说清扫了几份，别和「没查」长得一样"
@@ -50,9 +50,116 @@ def test_找到了要把probe目录和卡点一起打出来(tmp_path, monkeypatc
               "_match": {"status": "result_verified", "winner": "兹维列夫", "winner_result": "6-4 3-6 6-3", "loser": "索内戈"},
               "_production": {"received_at": "2026-09-02T06:09:04Z", "event": "US Open"}})
     (tmp_path / "zverev-sonego.draft.json").write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
-    monkeypatch.setattr("sys.argv", ["find_pending_draft", "--who", "Zverev,Sonego"])
+    monkeypatch.setattr("sys.argv", ["find_pending_draft", "--who", "Zverev,Sonego", "--no-refs"])
     assert t.main() == 0
     out = capsys.readouterr().out
     for needle in ("probe ✅", "output/2026-09-02/reel/zverev-sonego", "result_verified", "6-4 3-6 6-3",
                    "统计 ✅", "缺 round", "youtu.be/abc"):
         assert needle in out, needle
+
+
+# ---------------------------------------------------------------------------
+# P6（2026-09-27）：工作区里的 pending 只是三处里的一处——还要翻 origin/main 和
+# 最近动过的 origin/* 分支，并把各处的封面按像素排。来路：putintseva-bencic 的
+# 草稿里早就躺着一张 Getty 本场实拍（56e113c3），会话 22 分钟后的正式 spec
+# （2fa95f43）删了那份草稿、用了一张小得多的特写，重渲一趟才换回来。
+
+
+def _git(cwd, *args):
+    import os
+    import subprocess
+    import sys
+    sys.path.insert(0, str(ROOT / "tools"))
+    import git_blobs  # noqa: PLC0415
+    res = subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True,
+                         env={**os.environ, **git_blobs.BOT_ENV})
+    assert res.returncode == 0, res.stderr
+    return res.stdout
+
+
+def _png(path, w, h):
+    from PIL import Image
+    path.parent.mkdir(parents=True, exist_ok=True)
+    Image.new("RGB", (w, h), (40, 90, 40)).save(path)
+
+
+def _spec(slug, names, image, url="https://www.youtube.com/watch?v=FCgBoA8IDOc", fs=""):
+    d = {"slug": slug, "source_url": url,
+         "cover": {"matchup": [{"name_en": n} for n in names], "portrait": {"image": image}}}
+    if fs:
+        d["_match"] = {"flashscore_id": fs}
+    return json.dumps(d)
+
+
+def _origin_world(tmp_path):
+    """一个「远端」：main 上有自动链的草稿（大封面），另一条分支上有一份只活在
+    PR 里的正式 spec；本地仓库 fetch 过它们，工作区里是会话自己那份（小封面）。"""
+    remote = tmp_path / "remote"
+    _git(tmp_path, "init", "-q", "-b", "main", str(remote))
+    (remote / "specs" / "reels" / "pending").mkdir(parents=True)
+    (remote / "specs/reels/pending/putintseva-bencic.draft.json").write_text(
+        _spec("putintseva-bencic", ["Yulia Putintseva", "Belinda Bencic"], "assets/reel/big.jpg"), encoding="utf-8")
+    _png(remote / "assets/reel/big.jpg", 1600, 1200)
+    # 两个姓都带着、却不是这一场的双打——不许被认成同一场
+    (remote / "specs/reels/putintseva-x-doubles.json").write_text(
+        _spec("putintseva-x-doubles", ["Yulia Putintseva / A B", "Belinda Bencic / C D"],
+              "assets/reel/huge.jpg", url="https://youtu.be/zzzzzzzzzzz"), encoding="utf-8")
+    _png(remote / "assets/reel/huge.jpg", 4000, 3000)
+    _git(remote, "add", "-A")
+    _git(remote, "commit", "-q", "-m", "auto draft")
+    _git(remote, "switch", "-q", "-c", "claude/pr-only")
+    (remote / "specs/reels/swiatek-bouzkova-us-open-2026-r3.json").write_text(
+        _spec("swiatek-bouzkova-us-open-2026-r3", ["Iga Swiatek", "Marie Bouzkova"], "assets/reel/sb.jpg",
+              url="https://youtu.be/0x6WoB4W8bI", fs="AbCd1234"), encoding="utf-8")
+    _png(remote / "assets/reel/sb.jpg", 800, 600)
+    _git(remote, "add", "-A")
+    _git(remote, "commit", "-q", "-m", "pr only")
+    _git(remote, "switch", "-q", "main")
+    local = tmp_path / "local"
+    _git(tmp_path, "clone", "-q", str(remote), str(local))
+    (local / "specs/reels/putintseva-bencic-us-open-2026-r1.json").write_text(
+        _spec("putintseva-bencic-us-open-2026-r1", ["Yulia Putintseva", "Belinda Bencic"], "assets/reel/small.jpg"),
+        encoding="utf-8")
+    _png(local / "assets/reel/small.jpg", 600, 800)
+    return local
+
+
+def test_翻origin上的草稿_封面比工作区spec用的那张大就喊出来(tmp_path, monkeypatch, capsys):
+    t = _tool()
+    local = _origin_world(tmp_path)
+    monkeypatch.setattr(t, "ROOT", local)
+    refs = t.recent_refs(cwd=local)
+    assert refs[0] == "refs/remotes/origin/main" and "refs/remotes/origin/claude/pr-only" in refs
+    hits = t.ref_hits(refs, ["Putintseva", "Bencic"], set(), set(), cwd=local)
+    assert [h.path for h in hits] == ["specs/reels/pending/putintseva-bencic.draft.json"], (
+        "双打那份两个姓都带着，却不是这一场")
+    assert hits[0].cover_px == (1600, 1200)
+    t.report_refs(hits, t.local_cover(["Putintseva", "Bencic"], set(), set()))
+    out = capsys.readouterr().out
+    assert "::warning::有一张更大的封面" in out and "assets/reel/big.jpg 1600×1200" in out
+    assert "assets/reel/small.jpg（600×800）" in out
+
+
+def test_只活在PR分支上的spec按视频id和flashscore_id都认得出(tmp_path, monkeypatch):
+    t = _tool()
+    local = _origin_world(tmp_path)
+    monkeypatch.setattr(t, "ROOT", local)
+    refs = t.recent_refs(cwd=local)
+    by_url = t.ref_hits(refs, [], {"0x6WoB4W8bI"}, set(), cwd=local)
+    assert [(h.path, h.refs, h.by) for h in by_url] == [(
+        "specs/reels/swiatek-bouzkova-us-open-2026-r3.json",
+        ["refs/remotes/origin/claude/pr-only"], "视频 id")], "那份 spec 只在 PR 分支上——工作区和 main 都没有"
+    by_fs = t.ref_hits(refs, [], set(), {"AbCd1234"}, cwd=local)
+    assert [h.by for h in by_fs] == ["flashscore id"]
+
+
+def test_fetch挂了要说可能是旧的_照样按本地已有的origin查(tmp_path, monkeypatch, capsys):
+    t = _tool()
+    local = _origin_world(tmp_path)
+    monkeypatch.setattr(t, "ROOT", local)
+    monkeypatch.setattr(t, "PENDING", tmp_path / "none")
+    _git(local, "remote", "set-url", "origin", str(tmp_path / "gone"))
+    monkeypatch.setattr("sys.argv", ["find_pending_draft", "--url", "https://youtu.be/0x6WoB4W8bI"])
+    assert t.main() == 0
+    out = capsys.readouterr().out
+    assert "fetch origin 失败" in out and "swiatek-bouzkova-us-open-2026-r3" in out
