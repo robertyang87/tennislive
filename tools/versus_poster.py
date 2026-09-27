@@ -2020,6 +2020,8 @@ __SCRIM__
         # **别再把它加回来**：现在标题就是第一个孩子，补 margin 只会把整块
         # 往下推，而下面只剩 11px 余量。
         + f".storytitle{{font-size:{title_px}px}}"
+        + (".storytitle{width:100%;text-align:center}"
+           if cover.get("hook_align") == "center" else "")
         # 上下叠一张时文案压到底部——**居中会正好骑在分界线上**，把上格的下半
         # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
         # 追加在最后，同特异性下后写的赢。

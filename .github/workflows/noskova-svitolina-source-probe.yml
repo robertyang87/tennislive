@@ -1,0 +1,25 @@
+name: noskova-svitolina-source-probe
+on:
+  push:
+    branches: [codex/noskova-svitolina-bjk-final-20260927]
+    paths: [.github/workflows/noskova-svitolina-source-probe.yml]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Dispatch source probe without model generation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow run match-reel.yml --ref codex/noskova-svitolina-bjk-final-20260927 \
+            -f mode=probe \
+            -f slug=noskova-svitolina-bjk-cup-2026-final \
+            -f url=https://www.youtube.com/watch?v=ZxGHdW5GnbY \
+            -f scorebox=40,905,600,1012 \
+            -f received_at=2026-09-27T13:16:00Z \
+            -f push=false
