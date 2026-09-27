@@ -8235,11 +8235,11 @@ def validate_spec(
     if hard:
         raise ReelError("\n\n".join(hard))
     # 账号所有者口味规则里量过全库、留下来的那几道（总分差、赛点同义反复、信箱式
-    # 封面、VS 封面、前瞻事实回头查、收尾一问……；转述来的规则只报，永不做成闸）。判据、存量表和误伤/真阳的账都在
-    # tools/taste_gates_extra.py；自动 spec 只报不拦。全库盘点（allow_published_legacy）
-    # 不跑读墙上的钟的那几条——否则已发的 spec 过一天自己变红，main 上每个 PR 跟着红。
+    # 封面、VS 封面、收尾一问……；转述来的规则只报，永不做成闸）。判据、存量表和
+    # 误伤/真阳的账都在 tools/taste_gates_extra.py；自动 spec 只报不拦。前瞻事实回头查
+    # 不在那儿——上面 `time_sensitive_gate` 那一刀管（`_rechecked_at`），别再写第二份。
     from taste_gates_extra import spec_taste_extra  # noqa: PLC0415
-    taste_hard, taste_soft = spec_taste_extra(spec, check_age=not allow_published_legacy)
+    taste_hard, taste_soft = spec_taste_extra(spec)
     for note in taste_soft:
         print(f"[口味] 只报：{note}")
     if taste_hard:

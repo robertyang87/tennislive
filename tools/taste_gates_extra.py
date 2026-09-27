@@ -34,7 +34,6 @@ from __future__ import annotations
 import json
 import re
 import sys
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -271,121 +270,13 @@ def solo_layout_problem(spec: dict) -> str | None:
             "`cover.portrait.frame_at` 挑一帧清晰、偏正面的。")
 
 
-# ─────────────────────────────── ⑥ 前瞻事实写了「要等 X」，渲之前必须回头查 X ──
-
-#: 只认「这件事还没公布」的那几种说法。**裸的「要等」不认**：全库 27 条 spec 的注解里
-#: 有「要等死球了再切」「具体帧要等 runner 渲完」这类，和事实没关系（量过：放宽到裸
-#: 「要等」，27 条里 26 条是误伤）。
-#:
-#: `TBD` 两边不许贴着字母数字：注解里抄进来的 YouTube／flashscore id、URL 是大小写
-#: 混排的随机串（`…xTbDq…`），`re.I` 下裸子串会撞上。不用 `\b`——Python 的 `\b`
-#: 把汉字也算单词字符，「名单TBD」反而认不出来。
-PENDING_MARK = re.compile(
-    r"待公布|名单定了再|公布后再|抽签后再|(?<![A-Za-z0-9])TBD(?![A-Za-z0-9])|to be confirmed"
-    r"|(名单|阵容|场序|签表|抽签)[^。；\n]{0,6}要等"
-    r"|要等[^。；\n]{0,4}(抽签|名单|阵容|官宣|公布|场序)", re.I)
-
-#: `still_pending` 的认领多久之后要再查一次。账号所有者 2026-09-18（戴维斯杯中国队阵容）：
-#: 第二版重发时名单已经公布了 58 分钟，一次都没回头看。
-#:
-#: ⚠️ **只管 `still_pending`，`resolved` 不过期**：规矩是「先查那件事定了没——定了就按它
-#: 改」，定了就是定了，没有「再查一次」这回事。而且过期判据**读的是墙上的钟**——
-#: 让它管 `resolved`，一条照规矩写好、已经发出去的 spec 在 24 小时后会被 CI 的全库扫描
-#: （`validate_spec(allow_published_legacy=True)`）判红，main 从此每个 PR 都红
-#: （fix round 1 复现过：同一条 spec，checked_at 早 1 小时绿、早 25 小时红）。
-#: 所以年龄只在**要出片的那一刻**查：`check_age=False` 给全库盘点用。
-PENDING_MAX_AGE = timedelta(hours=24)
-
-#: 第三版已经按 ITF 正式名单改对、推过了；它的注解里正记着这次事故（marker 就在
-#: 那段复盘里），不为补一个认领字段改已发的 spec。
-PENDING_LEGACY = frozenset({"davis-cup-china-first-world-group-1"})
-
-
-def _notes(node):
-    """spec 里所有 `_` 开头的注解（递归）里的字符串。`_pending_resolved` 自己不算。"""
-    if isinstance(node, dict):
-        for k, v in node.items():
-            k = str(k)
-            if k == "_pending_resolved":
-                continue
-            if k.startswith("_"):
-                yield from _strings(v, k)
-            else:
-                yield from _notes(v)
-    elif isinstance(node, list):
-        for item in node:
-            yield from _notes(item)
-
-
-def _strings(node, key: str):
-    if isinstance(node, str):
-        yield key, node
-    elif isinstance(node, dict):
-        for k, v in node.items():
-            yield key, str(k)
-            yield from _strings(v, key)
-    elif isinstance(node, list):
-        for item in node:
-            yield from _strings(item, key)
-
-
-def _parse_time(text: str) -> datetime | None:
-    try:
-        stamp = datetime.fromisoformat(str(text).replace("Z", "+00:00"))
-    except ValueError:
-        return None
-    return stamp if stamp.tzinfo else stamp.replace(tzinfo=timezone.utc)
-
-
-def pending_fact_findings(spec: dict, *, now: datetime | None = None,
-                          check_age: bool = True) -> tuple[list[str], list[str]]:
-    """(硬的, 只报的)。认领写在 spec 顶层 `_pending_resolved`：
-
-        [{"marker": "正式名单要等抽签日", "status": "resolved" | "still_pending",
-          "checked_at": "2026-09-17T12:27Z", "source": "https://…"}]
-
-    `marker` 是注解里那句话的一段原文。`resolved` 查过就算数，不过期。
-    `still_pending` 放行，但只报一句（旁白不许押具体阵容）；它的 `checked_at` 超过
-    24 小时就要回头再查一次——**只在 `check_age` 时判**（dry-run / render），
-    全库盘点传 `check_age=False`，否则判据会随墙上的钟自己变红。
-    """
-    if _slug(spec) in PENDING_LEGACY:
-        return [], []
-    found = [(key, text, m.group(0)) for key, text in _notes(spec)
-             for m in PENDING_MARK.finditer(text)]
-    if not found:
-        return [], []
-    now = now or datetime.now(timezone.utc)
-    claims = [c for c in spec.get("_pending_resolved") or [] if isinstance(c, dict)]
-    hard, soft = [], []
-    for key, text, mark in found:
-        claim = next((c for c in claims if str(c.get("marker") or "").strip()
-                      and str(c["marker"]).strip() in text), None)
-        where = f"`{key}` 里的「{mark}」"
-        if claim is None:
-            hard.append(
-                f"{where}：spec 自己写着这件事还没定，却没有回头查的记录。账号所有者 "
-                "2026-09-18（戴维斯杯中国队阵容，第二版重发时名单已经公布 58 分钟）。\n"
-                "查一次，在顶层 `_pending_resolved` 里记一条 {marker（那句话的原文片段）, "
-                "status: resolved|still_pending, checked_at（ISO 时刻）, source（URL）}；"
-                "定了就按它改旁白和文案。")
-            continue
-        stamp = _parse_time(str(claim.get("checked_at") or ""))
-        source = str(claim.get("source") or "")
-        status = str(claim.get("status") or "")
-        if stamp is None or not source.startswith("http") or \
-                status not in ("resolved", "still_pending"):
-            hard.append(f"{where}：`_pending_resolved` 那一条缺 checked_at（ISO）／"
-                        "source（URL）／status（resolved|still_pending）。")
-        elif status == "still_pending" and check_age and now - stamp > PENDING_MAX_AGE:
-            hard.append(f"{where}：上一次查是 {claim['checked_at']}（还没定），已经超过 "
-                        f"{int(PENDING_MAX_AGE.total_seconds() // 3600)} 小时——每次渲之前、"
-                        "每次重发之前都要回头再查一次：定了就按它改、改成 resolved；"
-                        "还没定就更新 `checked_at`。")
-        elif status == "still_pending":
-            soft.append(f"{where} 还没定（{claim['checked_at']} 查过）：旁白和钩子只能用"
-                        "「领衔」这类不押具体阵容的写法。")
-    return hard, soft
+# ─────────────────── ⑥ 前瞻事实写了「要等 X」，渲之前回头查 X：**不在这个模块** ──
+#
+# 它的闸是 `reel_facts.waiting_fact_problem`（认领 spec 顶层 `_rechecked_at`；渲染入口
+# 另拿发布账本比 `waiting_fact_stale_problem`），`validate_spec` 经 `time_sensitive_gate`
+# 调它。这里曾另写过一份（认领 `_pending_resolved`）：两道闸各不认对方的字段，只写
+# `_rechecked_at` 被这一份拦、只写 `_pending_resolved` 被那一份拦（它把注解里的这个字段
+# 当成「还没定」又扫一遍），CI 的全库扫描也跟着红。同一条规矩只许一道闸。
 
 
 # ─────────────────────────── ⑦ 收尾要落在一问上（挪自 tests/test_match_reel.py） ──
@@ -759,12 +650,14 @@ def nickname_note(texts) -> str | None:
 
 # ═══════════════════════════════════════════════════════════════════ 接入口 ══
 
-def spec_taste_extra(spec: dict, *, now: datetime | None = None,
-                     check_age: bool = True) -> tuple[list[str], list[str]]:
+def spec_taste_extra(spec: dict) -> tuple[list[str], list[str]]:
     """`validate_spec` 只接这一刀：返回 `(硬的, 只报的)`。自动 spec 的硬项降成只报。
 
-    `check_age=False`：全库盘点（`validate_spec(allow_published_legacy=True)`、CI 的
-    全库扫描）用——凡是读墙上的钟的判据都不跑，免得已发的 spec 过一天自己变红。
+    ⚠️ 「前瞻事实写了要等 X，渲之前回头查 X」**不在这里**：它的闸是
+    `reel_facts.waiting_fact_problem`（认领 `_rechecked_at`；渲染入口另拿发布账本比
+    `waiting_fact_stale_problem`），`validate_spec` 经 `time_sensitive_gate` 调它。这里
+    曾经另写过一份（`_pending_resolved`），两道闸互相不认对方的认领字段——只写一种
+    就被另一道拦（`test_前瞻事实只有一道闸_认领字段是_rechecked_at`）。
     """
     hard: list[str] = []
     soft: list[str] = []
@@ -775,9 +668,6 @@ def spec_taste_extra(spec: dict, *, now: datetime | None = None,
             hard.append(problem)
     if note := peng_shuai_note(_outward(spec)):
         soft.append(note)                     # 转述来的规则：只报，永不做成闸（见 peng_shuai_note）
-    pending_hard, pending_soft = pending_fact_findings(spec, now=now, check_age=check_age)
-    hard += pending_hard
-    soft += pending_soft
     cover, push = spec.get("cover") or {}, spec.get("push") or {}
     numerals = None if already_published(_slug(spec), "reel_publish_ledger") else \
         screen_numerals_note([("钩子", cover.get("hook")), ("副标题", cover.get("topic")),
@@ -810,12 +700,15 @@ def interview_taste_extra(spec: dict, xhs_text: str | None = None
     title = "".join(title) if isinstance(title, list) else str(title or "")
     shadow = {"slug": _slug(spec), "cover": {"hook": title, "eyebrow": "赛后开麦"},
               "push": {"summary": push.get("summary")}}
-    texts = [title] + [str(v) for k, v in push.items()
-                       if not str(k).startswith("_") and isinstance(v, str)]
-    texts += [str(z) for z in spec.get("zh") or []]
-    texts += [str((spec.get("takeaway") or {}).get(k) or "") for k in ("point", "narration")]
+    # 我们写的文案：标题、推送、解读卡。「赛点只兑现了一个」管的是这些（账号所有者
+    # 08-19 说的是我们的文案）——`zh` 是当事人自己的话的译文，照实翻，不许因为球员说了
+    # 「三个盘点只拿下一个」就把片子拦在渲染入口、把自动草稿挡在转正外。
+    ours = [title] + [str(v) for k, v in push.items()
+                      if not str(k).startswith("_") and isinstance(v, str)]
+    ours += [str((spec.get("takeaway") or {}).get(k) or "") for k in ("point", "narration")]
+    texts = ours + [str(z) for z in spec.get("zh") or []]
     one_of_n = None
-    if _slug(spec) not in ONE_OF_N_LEGACY and (hits := _hits(ONE_OF_N, texts)):
+    if _slug(spec) not in ONE_OF_N_LEGACY and (hits := _hits(ONE_OF_N, ours)):
         one_of_n = (f"写了「N 个赛点／盘点只兑现了一个」：{hits}——赢家永远只兑现最后一个，"
                     "要写就写对手救下了几个（账号所有者 2026-08-19）。")
     hard = [p for p in (total_margin_problem(shadow), one_of_n,

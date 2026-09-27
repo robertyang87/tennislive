@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pytest
@@ -100,6 +99,19 @@ def test_赛点盘点只兑现一个是同义反复_破发点不算():
         assert T.one_of_n_problem(_court(hook=hook)) is None, hook
 
 
+def test_采访的赛点同义反复只管我们的文案_当事人的原话照实翻():
+    """账号所有者 08-19「杜绝类似的弱智文案」说的是我们写的字。`zh` 是球员自己的话的译文——
+    球员说「三个盘点只拿下一个」就照实翻，不许因此把片子拦在渲染入口、把自动草稿挡在
+    转正外（和「彭帅」那条同一个形状：review 复现过这个假红）。"""
+    iv = json.loads((INTERVIEWS / "tien-cobolli-laver-cup-2026-interview.json").read_text("utf-8"))
+    assert not T.interview_taste_extra(iv)[0], "底稿原样要是绿的"
+    said = {**iv, "zh": list(iv["zh"])}
+    said["zh"][-1] = "我那盘有三个盘点，只拿下了一个，所以很沮丧"
+    assert not T.interview_taste_extra(said)[0], "当事人的原话被判成了我们的文案"
+    wrote = {**iv, "takeaway": {**(iv.get("takeaway") or {}), "point": "三个盘点只兑现了一个"}}
+    assert any("只兑现了一个" in h for h in T.interview_taste_extra(wrote)[0]), "我们写的照样红"
+
+
 # ─────────────────────────────────────────────────── ③ 彭帅（转述来的，只报） ──
 
 def test_会发出去的字里提了彭帅只报_注解不管():
@@ -163,7 +175,7 @@ def test_不提彭帅是转述来的_三个入口都只报不拦(tmp_path, capsy
         ipath.write_text(json.dumps(iv, ensure_ascii=False), encoding="utf-8")
         ipath.with_suffix(".xhs.txt").write_text(ixhs, encoding="utf-8")
         clip.check_taste_extra(iv, ipath)                           # 不 SystemExit
-        return {"spec": T.spec_taste_extra(spec, check_age=False),
+        return {"spec": T.spec_taste_extra(spec),
                 "xhs": T.xhs_taste_extra(spec, xhs),
                 "interview": T.interview_taste_extra(iv, ixhs)}
 
@@ -203,41 +215,30 @@ def test_赛场之上的VS封面写了_layout_why也不放行():
     assert T.solo_layout_problem(story) is None, "网球有故事讲交手史可以用 H2H 双人版"
 
 
-# ─────────────────────────────────────────────── ⑥ 前瞻事实要回头查 ──
+# ──────────────────── ⑥ 前瞻事实回头查：只有一道闸，在 reel_facts（不在这个模块） ──
 
-NOW = datetime(2026, 9, 18, 6, 0, tzinfo=timezone.utc)
+@pytest.mark.usefixtures("_empty_reel_ledger")
+def test_前瞻事实只有一道闸_认领字段是_rechecked_at():
+    """review 复现过的阻塞：这个模块曾另写一份前瞻事实闸（认领 `_pending_resolved`），而 main
+    上已经有 `reel_facts.waiting_fact_problem`（认领 `_rechecked_at`）。两道闸各不认对方的
+    字段：只写 `_rechecked_at` 被这一份拦；只写 `_pending_resolved` 被那一份拦（它扫全部
+    注解，`_pending_resolved` 里抄的「正式名单」自己就是命中）；两样都写才过。合进 main
+    当场打红 `test_片子推送一落账_全库扫描不许跟着红_重渲入口照样拦`。
 
-
-def test_写了要等名单就要回头查_还没定的过期要再查():
-    base = {"slug": "new-story", "_facts": ["挪威 2 月鲁德退赛过——所以正式名单要等抽签日"]}
-    hard, _ = T.pending_fact_findings(base, now=NOW)
-    assert hard and "名单要等" in hard[0]
-    claim = {"marker": "正式名单要等抽签日", "status": "resolved",
-             "checked_at": "2026-09-17T12:27Z",
-             "source": "https://www.daviscup.com/en/draws-results/tie/"}
-    assert T.pending_fact_findings({**base, "_pending_resolved": [claim]}, now=NOW) == ([], [])
-    # `resolved` 不过期：定了就是定了（「先查定了没——定了就按它改」）
-    old = {**claim, "checked_at": "2026-09-16T09:00Z"}
-    assert T.pending_fact_findings({**base, "_pending_resolved": [old]}, now=NOW) == ([], [])
-    pending = {**claim, "status": "still_pending"}
-    hard, soft = T.pending_fact_findings({**base, "_pending_resolved": [pending]}, now=NOW)
-    assert not hard and soft and "领衔" in soft[0]
-    # 还没定的，过了 24 小时要回头再查——只在要出片的那一刻判
-    stale = {**pending, "checked_at": "2026-09-16T09:00Z"}
-    hard, _ = T.pending_fact_findings({**base, "_pending_resolved": [stale]}, now=NOW)
-    assert hard and "再查一次" in hard[0]
-    hard, soft = T.pending_fact_findings({**base, "_pending_resolved": [stale]}, now=NOW,
-                                         check_age=False)
-    assert not hard and soft and "领衔" in soft[0]
-    # 反面锚点：「要等死球了再切」「具体帧要等 runner 渲完」不是没公布的事实
-    assert T.pending_fact_findings(
-        {"slug": "x", "_editing_why": "剪辑的时候要等死球了再去切", "cover": {
-            "_why": "具体帧要等 runner 渲完 poster.jpg"}}, now=NOW) == ([], [])
-    # TBD 只认独立的那个词：注解里抄进来的 id／URL 是大小写混排的随机串，不许撞上
-    for noise in ("https://www.youtube.com/watch?v=aXtBdQ9kLmZ", "flashscore 比赛 id xTbD4Kp2"):
-        assert T.pending_fact_findings({"slug": "x", "_source": noise}, now=NOW) == ([], []), noise
-    for mark in ("场序 TBD", "决赛对手TBD", "order of play: tbd"):
-        assert T.pending_fact_findings({"slug": "x", "_facts": [mark]}, now=NOW)[0], mark
+    钉三件事：① 口味闸这一刀对「要等名单」不出声（硬的、只报的都和不写一样）；② 按 main
+    的口径只写 `_rechecked_at`，渲染入口和全库盘点都绿；③ 不写照样红，红在 reel_facts
+    那一句——报错指人去写 `_rechecked_at`，不是另一个字段。"""
+    reel = pytest.importorskip("build_match_reel")
+    base = reel.load_spec(REELS / "medvedev-royer-hangzhou-2026-r2.json")
+    waiting = {**base, "_facts": ["挪威 2 月鲁德退赛过——所以正式名单要等抽签日"]}
+    assert T.spec_taste_extra(waiting) == T.spec_taste_extra(base), (
+        "口味闸这一刀又管起了前瞻事实——同一条规矩只许一道闸（reel_facts.waiting_fact_problem）")
+    with pytest.raises(reel.ReelError, match="_rechecked_at") as red:
+        reel.validate_spec(json.loads(json.dumps(waiting)))
+    assert "_pending_resolved" not in str(red.value)
+    rechecked = {**waiting, "_rechecked_at": "2026-09-18T06:50Z"}
+    reel.validate_spec(json.loads(json.dumps(rechecked)))                          # 渲染入口
+    reel.validate_spec(json.loads(json.dumps(rechecked)), allow_published_legacy=True)  # 全库盘点
 
 
 # ───────────────────────── ⑦~⑪ 从 pytest 挪进 validate_spec 的那五道（形状测试） ──
@@ -328,9 +329,9 @@ def test_汉字数字那条只对还没发出去的片子出声():
     spec = _reels()["chung-nagal-davis-cup-2026"]
     assert T.screen_numerals_note([("钩子", spec["cover"]["hook"])]), "底稿要真的有汉字计数"
     assert T.already_published("chung-nagal-davis-cup-2026", "reel_publish_ledger")
-    _, soft = T.spec_taste_extra(spec, check_age=False)
+    _, soft = T.spec_taste_extra(spec)
     assert not [n for n in soft if "汉字" in n], soft
-    _, soft = T.spec_taste_extra({**spec, "slug": "chung-nagal-new"}, check_age=False)
+    _, soft = T.spec_taste_extra({**spec, "slug": "chung-nagal-new"})
     assert [n for n in soft if "汉字" in n], "没发过的照旧要报"
     assert T.already_published("alcaraz-fritz-laver-cup-2026-interview",
                                "interview_publish_ledger"), "采访账本写的是 accepted"
@@ -344,8 +345,7 @@ def test_全库已发的spec一条都不红():
     assert len(specs) > 200, "spec 目录像是没扫到"
     red = {}
     for slug, spec in specs.items():
-        # check_age=False：全库盘点不跑读墙上的钟的判据，否则已发的 spec 过一天自己变红
-        hard, _ = T.spec_taste_extra(spec, check_age=False)
+        hard, _ = T.spec_taste_extra(spec)
         hard += T.xhs_taste_extra(spec, _xhs(slug))[0]
         if hard:
             red[slug] = [h.split("\n")[0][:80] for h in hard]
@@ -367,7 +367,6 @@ def test_全库已发的spec一条都不红():
     ("ONE_OF_N_LEGACY", lambda s: T.one_of_n_problem({**s, "slug": "_"})),
     ("FIT_WIDTH_LEGACY", lambda s: T.cover_fit_problem({**s, "slug": "_"})),
     ("SOLO_EXTRA_LEGACY", lambda s: T.solo_layout_problem({**s, "slug": "_"})),
-    ("PENDING_LEGACY", lambda s: T.pending_fact_findings({**s, "slug": "_"})[0]),
 ])
 def test_存量表只许减不许加(table, check):
     """表里每一条都要真的存在、而且**摘掉豁免之后真的还红**——写错一个名字，
@@ -390,28 +389,6 @@ def test_validate_spec接了这道闸_自动spec只报不拦(capsys):
     spec["_production"] = {**(spec.get("_production") or {}), "status": "ready_for_render"}
     reel.validate_spec(spec)                                  # 自动 spec：只报
     assert "[口味] 只报" in capsys.readouterr().out
-
-
-def test_前瞻事实的认领过一天不会让全库扫描变红():
-    """fix round 1 复现过的定时炸弹：一条照规矩写好 `_pending_resolved` 的已发 spec，
-    24 小时之后被 CI 的全库扫描（`validate_spec(allow_published_legacy=True)`，
-    `test_每条spec的旁白都还估得下` 就是这么调的）判红，main 上每个 PR 跟着红。
-
-    钉两件事：`resolved` 永不过期；`still_pending` 过期只在出片路径上红，全库盘点不红。
-    """
-    reel = pytest.importorskip("build_match_reel")
-    spec = reel.load_spec(REELS / "medvedev-royer-hangzhou-2026-r2.json")
-    day_ago = (datetime.now(timezone.utc) - timedelta(hours=25)).strftime("%Y-%m-%dT%H:%MZ")
-    claim = {"marker": "正式名单要等抽签日", "status": "resolved", "checked_at": day_ago,
-             "source": "https://www.daviscup.com/en/draws-results/tie/"}
-    spec["_facts"] = ["挪威 2 月鲁德退赛过——所以正式名单要等抽签日"]
-    spec["_pending_resolved"] = [claim]
-    reel.validate_spec(spec, allow_published_legacy=True)       # 全库盘点：绿
-    reel.validate_spec(spec)                                    # 出片路径：resolved 也绿
-    spec["_pending_resolved"] = [{**claim, "status": "still_pending"}]
-    reel.validate_spec(spec, allow_published_legacy=True)       # 全库盘点：只报
-    with pytest.raises(reel.ReelError, match="再查一次"):
-        reel.validate_spec(spec)                                # 出片路径：还没定、过期 → 红
 
 
 def test_小红书正文那一面接在措辞座位上(tmp_path):
