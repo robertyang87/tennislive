@@ -73,7 +73,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 # **共用三样，import 不抄。** `Skip`、`tracked`、旧 `MARKER` 不涉及哪条线；
 # 新发布账本则是采访线自己的权威状态，不能继续写在可被重渲覆盖的 outdir。
 from auto_push_gate import MARKER, Skip, tracked  # noqa: E402
-from publication_ledger import receipt_fields  # noqa: E402
+from publication_ledger import INTERVIEW_PUBLISHED, receipt_fields  # noqa: E402
 
 # `output/interviews/eala-parks-toronto-2026/render.json`
 # ⚠️ **没有日期那一层**，和 reel 的 `output/<日期>/reel/<slug>/` 差的就是这个。
@@ -449,9 +449,7 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     key = _publication_key(slug, film_hash)
     previous = next((row for row in ledger.get("attempts", [])
                      if row.get("key") == key
-                     and row.get("status") in {
-                         "sending", "accepted", "delivered", "sent", "uncertain"
-                     }), None)
+                     and row.get("status") in INTERVIEW_PUBLISHED), None)
     if previous:
         if _accepted_attempt(previous):
             raise AlreadyAccepted(
@@ -482,6 +480,16 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
                        f"平台接收凭据（{when}），状态不明，不自动重发")
         print(f"[重渲发布] {slug}：旧 pushed.json 绑定 {marker_hash[:12]}…，"
               f"当前成片是 {film_hash[:12]}…；保留旧账，允许新成片进入发布。")
+
+    # 小红书正文不在 QC 哈希链里（`validate_qc` 只绑 spec 和海报）。渲完到推之间手改
+    # `.xhs.txt`：渲染入口那道 `check_copy_bilingual` 已经跑过，全库测试对还没核也没发
+    # 的自动 spec 又只报——这一刻能拦住它的只剩这儿（2026-09-27 评审）。
+    from build_interview_clip import check_copy_bilingual  # noqa: PLC0415
+
+    try:
+        check_copy_bilingual(json.loads(spec.read_text(encoding="utf-8")), root=repo)
+    except SystemExit as exc:
+        raise Skip(f"{slug}：{exc}") from None
 
     cover_scan_gate(repo, slug, outdir)
 

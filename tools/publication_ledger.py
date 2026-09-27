@@ -7,6 +7,14 @@ from pathlib import Path
 
 BLOCKING = frozenset({"sending", "sent", "uncertain"})
 
+#: 采访线账本里「这条已经发出去、正在发、或状态不明」的全部状态。比 `BLOCKING` 多
+#: `accepted` / `delivered`：采访线的 `auto_push_interview_gate` 把 PushPlus 接收写成
+#: 这两个（main 上采访账本绝大多数条目就是 `accepted`）。两个读者共用这一份：
+#: `wants_auto_push` 拿它挡重发，`build_interview_request._protected` 拿它认「已推送」
+#: ——各写一份就会分叉（2026-09-27 评审：锦织圭那条账本 `sent`、没有 pushed.json，
+#: 被当成「自动链还没核没发」，全库测试对这条已发、手改过的 spec 只报）。
+INTERVIEW_PUBLISHED = frozenset({"sending", "accepted", "delivered", "sent", "uncertain"})
+
 
 def _tracked(repo: Path, path: Path) -> bool:
     rel = path.relative_to(repo) if path.is_absolute() else path
@@ -40,6 +48,21 @@ def load(repo: Path, column: str, slug: str) -> dict:
         raise ValueError(f"{path} 损坏，未知发布状态下禁止继续") from exc
     data.setdefault("attempts", [])
     return data
+
+
+def interview_published(repo: Path, slug: str) -> bool:
+    """这条采访在发布账本里有没有任何一次「发出去 / 正在发 / 状态不明」。
+
+    账本是权威发布状态（`output/…/pushed.json` 只是上一份成片的兼容标记，会被重渲
+    替换、也可能从来没写过）。稀疏检出下文件不在盘上时 `load` 从 git index / HEAD 读。
+    **账本读不了算「发过」**：状态不明时宁可当成已经不归自动链管。
+    """
+    try:
+        attempts = load(repo, "interview", slug)["attempts"]
+    except ValueError:
+        return True
+    return any(isinstance(row, dict) and row.get("status") in INTERVIEW_PUBLISHED
+               for row in attempts)
 
 
 def key(column: str, slug: str, fingerprint: str) -> str:

@@ -4469,8 +4469,18 @@ ci.yml**，于是它不红在自己身上：`test_字号涨了不许撑破已有
 **判据只有一份**：`build_interview_request.unverified_auto_spec(spec, slug)`——
 章是 `transcript_verification == "auto_pending"`（三个自动写手都盖、**没有代码会改掉它**，人工修
 spec 也不改），销章看 `_protected`：人核过（`transcript_verified` / `_verified_clean`）或已推送
-（`pushed.json`，稀疏检出看不到就查 git index）。**草稿（`*.draft.json`）也算**。只报的出口是
+——**发布账本**（`data/interview_publish_ledger/<slug>.json` 里任何一次
+`sending/accepted/delivered/sent/uncertain`，集合是 `publication_ledger.INTERVIEW_PUBLISHED`，
+和 `wants_auto_push` 挡重发共用一份）或老的 `pushed.json` 标记，稀疏检出看不到就查 git index。
+**草稿（`*.draft.json`）也算**。只报的出口是
 `report_unverified_auto`：印出来 ＋ 挂 `UnverifiedAutoSpecFinding` warning（CI 的 warnings 汇总里看得见）。
+
+⚠️ **「已推送」只认 `pushed.json` 是第一版的错**（评审 2026-09-27 抓到）：
+`nishikori-sakamoto-us-open-2026-q3-farewell` 账本 `sent`（2026-08-29 06:53Z，run 33239487051）、
+账号所有者手改过（7c6110dd2），**`pushed.json` 从来没有过**——于是它被当成「自动链还没核没发」，
+这张表里每一条全库测试对它都只报；同一个盲区早在 8/29 就让 `is_pending` 放行了一次重建
+（519816362 给这条 `opening.why` 写着「按账号所有者明确要求不补冷开场」的片子挂上了 `lead_in`）。
+`_protected` 现在读账本，两处一起堵上。
 
 | 全库测试（只对未销章的自动 spec 只报） | 拦同一个缺陷的渲染闸 |
 |---|---|
@@ -4479,18 +4489,35 @@ spec 也不改），销章看 `_protected`：人核过（`transcript_verified` /
 | `test_interview_clip::test_不需要跨视频片头时check_lead_in是空操作` | `main()` 开头 `check_lead_in` |
 | `test_interview_visual::test_封面重点词写错了在spec闸就红_不等出封面`（全库那一圈） | `main()` 开头 `check_cover_hook` |
 | `test_topline_format::test_新片子的顶栏赛事行都合格式[interviews]`（连草稿：`oncourt` 草稿的 `event` 是「2026 中国网球公开赛」） | `main()` 开头 `check_topline_format` |
-| `test_interview_clip::test_文案不许再提中英双语字幕` | **这次新装**：`main()` 的 `check_copy_bilingual`（式子和 78 个文件的豁免表搬进 `build_interview_clip`，测试和闸读同一份） |
-| `test_interview_clip::test_TennisTV的源片必须真的把台标挪出窗口` | **这次新装**：`main()` 的 `check_tennistv_logo`（`promote_interview_draft` 收 Tennis TV 草稿、不设 `crop_shift_x`） |
+| `test_interview_clip::test_新的采访片必须认领怎么开头` | `main()` 开头 `check_opening`（`promote_interview_draft` 只给三种核验方式补 `opening`） |
+| `test_interview_clip::test_文案不许再提中英双语字幕` | **这次新装**：`main()` 的 `check_copy_bilingual`（式子和 78 个文件的豁免表搬进 `build_interview_clip`，测试和闸读同一份）；`.xhs.txt` 不在 QC 哈希链里，所以**推送闸 `wants_auto_push` 再查一次**（渲完到推之间手改正文） |
+| `test_interview_clip::test_TennisTV的源片必须真的把台标挪出窗口` | **这次新装**：`main()` 的 `check_tennistv_logo`；`promote_interview_draft` 转正 Tennis TV 草稿时按 `TENNISTV_CROP_SHIFT`（−0.06，台标左沿推出来的）补上，自动链不再停在这道闸上 |
 
 ⚠️ **没有渲染闸的照判，不许拿这个判据当通用豁免**：`test_explainer::test_人名要以译名表为准`
 （「勒纳·田」「帕特里克」那两次）渲染一个字都不查，对自动 spec 照旧判红——要让它也只报，得先把
 近似串那套（`_ON_PURPOSE` / `_KNOWN_TYPOS` / `_near_misses`…）从测试里搬进工具、接进 `main()`。
+同一个形状、**评审量出来还没堵的另外三条**（一条盖章的合成 spec 当场红三条）：
+`test_interview_clip::test_轮次写分数式不写N强`、`test_spec_wording::test_文案里不许挂来源注脚`、
+`test_match_reel::test_接发球局不许说丢`——`build_interview_request` / `push_reel --stage check` /
+`build_interview_clip.main()` / `wants_auto_push` 一个都不查（`check_interview_copy_wording` 只在
+`promote_interview_draft` 和 `taste_preflight` 里跑，而且不扫 `zh`）。**自动链还能经由这四条把 main 打红**；
+堵法是同一个：先在 `main()` 装同一个判据，再让测试对自动 spec 只报。
+⚠️ **这些「照判」拦不住出片，只守 main 的绿**：GITHUB_TOKEN 推的提交不触发 ci.yml，自动链提交完
+渲染已经派出去了，全库测试是之后才跑的。所以「照判」的意思是「这条缺陷只有它在查，红给下一个人工
+PR 看」，不是「它挡在出片前面」。
 ⚠️ **「赛场之上」不在这张表里**：它的自动 spec（`_production.status == ready_for_render`）在
-`validate_spec` 里好几道闸本来就**只报不拦**，渲染替它拦不住，所以全库测试是唯一那道硬闸，照判。
+`validate_spec` 里好几道闸本来就**只报不拦**，渲染替它拦不住，全库测试是唯一查它的判据，照判
+（同上：它不挡出片；而钩子那道 `promote_reel_draft` 写盘前就跑 `validate_spec`，红的钩子进不了 main）。
+⚠️ **还有一段缝判据认不出**：自动 spec 被人手修过、但还没推（#1130 手修拉沃尔杯那条，ba28735dc 到推送
+约 19 分钟）。手修不改章，这段时间里对手修的回归全库测试也只报——渲染闸照拦，只是 PR 上那一盏绿
+不代表这几条判据查过它。
 ⚠️ 豁免表照旧**只许减不许加**；新加一条全库判据时先问：**渲染入口有没有同一个判据在拦？**
 有，才轮得到对自动 spec 只报；没有，先把闸装上。
 
 判据 `test_自动链刚提交的采访spec只报_销章就红_渲染闸照拦`（01684ef0 那一行原文：盖章只报、
 销章就红、`write_ass` 照拦）、`test_自动spec的判据_章在而且没核没发才算`（含主语：main 上盖章的
-17 条正式 spec 里 16 条已推送，判据要认得出来，门槛 ≥10）、`test_字幕规格和TennisTV台标原来只在全库测试里_现在渲染入口就拦`、
+17 条正式 spec **17 条全推过**——账本里发过的每一条都必须认成销章，锦织圭那条点名；门槛 ≥10）、
+`test_production_speed::test_publish_ledger_protects_unreviewed_spec_without_pushed_marker`（`is_pending`
+不再重建账本里发过的 spec）、`test_auto_push_interview::test_渲完之后手改小红书正文提了字幕规格_推送闸拦住`、
+`test_promote_interview_draft::test_promote给TennisTV草稿补台标那一挪_渲染闸放行`、`test_字幕规格和TennisTV台标原来只在全库测试里_现在渲染入口就拦`、
 `test_topline_format::test_采访草稿直推main的赛事行只报_销章就红_渲染入口照拦`。

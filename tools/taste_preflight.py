@@ -522,8 +522,9 @@ def run_interview_checks(spec: dict, xhs: str) -> list[GateResult]:
 
     checks: list[tuple[str, Callable[[], object]]] = [
         (name, (lambda f=getattr(bic, name): f(spec)))
-        for name in ("check_source_contract", "check_topline_format", "check_opening",
-                     "check_lead_in", "check_trail_in", "check_copy_page")
+        for name in ("check_source_contract", "check_tennistv_logo", "check_topline_format",
+                     "check_opening", "check_lead_in", "check_trail_in", "check_copy_page",
+                     "check_copy_bilingual")
     ]
     if spec.get("takeaway"):
         checks.append(("check_takeaway", lambda: bic.check_takeaway(spec)))

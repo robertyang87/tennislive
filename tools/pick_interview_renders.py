@@ -61,6 +61,7 @@ from build_interview_clip import (  # noqa: E402
     check_lead_in,
 )
 from interview_source_gate import SourceContractError, validate_source_contract  # noqa: E402
+from build_interview_request import AUTO_PENDING  # noqa: E402  自动章只定义一处
 
 SPECS = ROOT / "specs" / "interviews"
 STATE = ROOT / "data" / "interview_render_dispatched.json"
@@ -165,7 +166,7 @@ def missing_for_render(slug: str, spec: dict) -> list[str]:
         # 不渲、不报错、不产 render.json，dispatch 出去就是一趟静默的空跑
         missing.append("zh（中文字幕还没填）")
     if spec.get("transcript_verified") is not True and \
-            spec.get("transcript_verification") != "auto_pending":
+            spec.get("transcript_verification") != AUTO_PENDING:
         missing.append("transcript_verified / auto_pending（转写没有核验路径）")
     if not spec.get("takeaway") and slug not in _NO_TAKEAWAY_LEGACY:
         missing.append("takeaway（收尾解读卡）")

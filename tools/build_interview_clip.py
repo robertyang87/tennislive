@@ -3989,6 +3989,10 @@ _TENNISTV_LOGO_LEFT = 0.823
 # 窗口至少要往左挪这么多。**这个数是推出来的，不是拍的**——改上面那个量到的
 # 位置，它自己跟着走。
 _TENNISTV_MIN_SHIFT = _TENNISTV_LOGO_LEFT - 0.875
+# 实际写进 spec 的那个数：德约那条（同一个转播模板）用的就是它，比 `_TENNISTV_MIN_SHIFT`
+# 多留 0.008 余量。`promote_interview_draft` 转正 Tennis TV 草稿时照它补——这是几何推出来
+# 的数，不是编辑口味；不补的话自动链就停在 `check_tennistv_logo` 这道闸上。
+TENNISTV_CROP_SHIFT = -0.06
 
 # 这条规矩立起来之前发的两条。**只许减不许加**，自检在
 # `test_那张TennisTV豁免表自己也要是真的`。
@@ -4015,8 +4019,8 @@ def tennistv_logo_problem(spec: dict) -> str | None:
         return (
             f"{slug} 的源片是 Tennis TV，右上角有台标，而 spec 没写 `crop_shift_x`。\n"
             f"居中的 4:3 窗口保留 x 0.125–0.875，台标左沿在 {_TENNISTV_LOGO_LEFT}——"
-            "**它在窗口里面**。写 `\"crop_shift_x\": -0.06`（德约那条同一个转播模板用的"
-            "就是这个），或者走 `logo_box`。")
+            f"**它在窗口里面**。写 `\"crop_shift_x\": {TENNISTV_CROP_SHIFT}`（德约那条同一个"
+            "转播模板用的就是这个），或者走 `logo_box`。")
     if shift > _TENNISTV_MIN_SHIFT + 1e-9:
         return (
             f"{slug} 的 `crop_shift_x` = {shift}，还不够把台标挪出窗口："
@@ -4030,9 +4034,10 @@ def check_tennistv_logo(spec: dict) -> None:
     logo 剪掉」）。
 
     ⚠️ 原来这条只活在 `test_TennisTV的源片必须真的把台标挪出窗口` 里，渲染不查——
-    草稿转正（`promote_interview_draft` 收 `tennistv_structured_feed` 的草稿、不设
+    草稿转正（`promote_interview_draft` 收 `tennistv_structured_feed` 的草稿、原来不设
     `crop_shift_x`）直推 main 的那一刻，要么把 main 打红，要么（测试对自动 spec 只报之后）
-    带着台标出片。所以挪到这儿：只读 spec，排在下载之前。
+    带着台标出片。所以挪到这儿：只读 spec，排在下载之前。转正现在按
+    `TENNISTV_CROP_SHIFT` 补上这一挪，这道闸兜的是手写和别的路进来的。
     """
     if problem := tennistv_logo_problem(spec):
         raise SystemExit(problem)
@@ -4789,16 +4794,18 @@ def bilingual_copy_hits(obj) -> list[str]:
                    for m in _BILINGUAL_COPY.finditer(text)})
 
 
-def check_copy_bilingual(spec: dict) -> None:
+def check_copy_bilingual(spec: dict, root: Path = ROOT) -> None:
     """渲染入口：这条 spec 和它的小红书正文都不许提字幕规格（豁免表按文件名认）。
 
     **排在下载之前**，和 `check_copy_page` 同一个座位：只读 spec 和正文，0.2 秒就报。
+    推送闸（`auto_push_interview_gate.wants_auto_push`）用 `root=<仓库>` 再调一次：
+    `.xhs.txt` 不在 QC 哈希链里，渲完到推之间手改它，渲染这道闸已经跑过了。
     """
     slug = str(spec.get("slug", ""))
     found = {}
     if hits := bilingual_copy_hits(spec):
         found[f"{slug}.json"] = hits
-    copy_path = ROOT / "specs" / "interviews" / f"{slug}.xhs.txt"
+    copy_path = root / "specs" / "interviews" / f"{slug}.xhs.txt"
     if copy_path.is_file() and (hits := bilingual_copy_hits(
             copy_path.read_text(encoding="utf-8"))):
         found[copy_path.name] = hits

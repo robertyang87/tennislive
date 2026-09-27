@@ -145,6 +145,29 @@ def test_promote补winner和push(tool):
     assert spec["source_verification"]["attestation_sha256"]
 
 
+def test_promote给TennisTV草稿补台标那一挪_渲染闸放行(tool):
+    """`check_tennistv_logo`（`main()` 开头）不写 `crop_shift_x` 就拦出片，而转正原来
+    不补——main 上 winston-salem 三份 Tennis TV 草稿转正后会一条条停在那道闸上
+    （2026-09-27 评审）。这个数是台标左沿推出来的，不是编辑口味，转正就补上。
+    """
+    import build_interview_clip as clip  # noqa: PLC0415
+
+    tv = "https://www.tennistv.com/videos/x-on-court-interview"
+    who = ("兹维列夫", "阿特马内", "兹维列夫 vs 阿特马内")
+    draft = _draft(url=tv)
+    draft["source_verification"] = dict(draft["source_verification"], source_url=tv)
+    spec = tool.promote(draft, who)
+    assert spec["crop_shift_x"] == clip.TENNISTV_CROP_SHIFT
+    assert clip.tennistv_logo_problem(spec) is None, "补了还过不了渲染那道闸"
+    assert "crop_shift_x" in (clip.tennistv_logo_problem(draft) or ""), "对照组：草稿本身过不了"
+
+    kept = dict(draft, crop_shift_x=-0.1)
+    assert tool.promote(kept, who)["crop_shift_x"] == -0.1, "人写过的不许覆盖"
+    boxed = dict(draft, logo_box=[1, 2, 3, 4])
+    assert "crop_shift_x" not in tool.promote(boxed, who), "走 logo_box 的不再挪窗口"
+    assert "crop_shift_x" not in tool.promote(_draft(), who), "不是 Tennis TV 的不挪"
+
+
 def test_promote保留给终审的注解键(tool):
     """`_zh_draft` / `_notes` 是写给终审的（机器译文参考、cap_asr 没有说话人
     标记的提醒）。旧版一刀剥掉全部 `_` 键，提示就这么丢过——只许剥

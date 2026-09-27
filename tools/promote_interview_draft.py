@@ -290,6 +290,17 @@ def promote(draft: dict, opponent: tuple[str, str, str], details: dict | None = 
             "kind": "none",
             "why": "正文是独立场上采访产品；比赛结束画面必须从同场官方集锦以 lead_in 接入。",
         }
+    # Tennis TV 源片右上角有台标，`build_interview_clip.main()` 开头的 `check_tennistv_logo`
+    # 不写 `crop_shift_x`（也没走 `logo_box`）就拦出片。这个数是量到的台标左沿推出来的、
+    # 闸自己给的出路，不是编辑口味；转正时不补，自动链就一条条停在那道闸上
+    # （2026-09-27 评审：main 上 winston-salem 三份 Tennis TV 草稿都没有它）。
+    if ("tennistv.com" in str(spec.get("url", "")) and spec.get("crop_shift_x") is None
+            and not spec.get("logo_box")):
+        from build_interview_clip import TENNISTV_CROP_SHIFT  # noqa: PLC0415
+
+        spec["crop_shift_x"] = TENNISTV_CROP_SHIFT
+        spec["_crop_shift_why"] = ("Tennis TV 右上角台标（左沿 0.823）在居中 4:3 窗口里；"
+                                   "转正时按 check_tennistv_logo 的几何补的默认值。")
     return finalize_source_contract(spec)
 
 

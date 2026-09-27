@@ -99,7 +99,9 @@ def _auto_marks():
     """
     import sys  # noqa: PLC0415
 
-    sys.path.insert(0, str(ROOT / "tools"))
+    tools = str(ROOT / "tools")
+    if tools not in sys.path:  # 每条参数化用例都会调一次，别把 sys.path 塞满重复项
+        sys.path.insert(0, tools)
     import build_interview_request  # noqa: PLC0415
 
     return build_interview_request
@@ -3641,11 +3643,16 @@ def test_自动spec的判据_章在而且没核没发才算(tmp_path, monkeypatc
 
     章是三个自动写手都盖的 `transcript_verification: auto_pending`；**没有代码会把它
     改掉**，所以销章看 `_protected`：人核过或已推送。主语也钉住：main 上盖着章的
-    那一批几乎都推过了，判据要真的把它们认成「过了那一关」——认不出来就等于把
+    那一批**全都推过了**，判据要真的把它们认成「过了那一关」——认不出来就等于把
     全库测试对它们全关了，一盏恒真的绿灯。
+
+    ⚠️「已推送」要认**发布账本**，不能只认 `pushed.json`：评审 2026-09-27 抓到
+    `nishikori-sakamoto-us-open-2026-q3-farewell` 账本 `sent`、`pushed.json` 从来没有，
+    第一版把这条已发、账号所有者手改过的 spec 当成「还没核没发」——全库测试对它只报。
     """
     req = _auto_marks()
     monkeypatch.setattr(req, "OUTDIR", tmp_path / "out")
+    monkeypatch.setattr(req, "ROOT", tmp_path)
     auto = {"slug": "zz-new", "transcript_verification": "auto_pending",
             "transcript_verified": False}
     assert req.unverified_auto_spec(auto)
@@ -3654,19 +3661,51 @@ def test_自动spec的判据_章在而且没核没发才算(tmp_path, monkeypatc
     assert not req.unverified_auto_spec(dict(auto, transcript_verification="reviewed_dual_asr"))
     assert not req.unverified_auto_spec(dict(auto, transcript_verified=True))
     assert not req.unverified_auto_spec(dict(auto, _verified_clean=True))
+
+    # 账本：发出/在发/状态不明都算推过；空账本不算；读不了的账本按「发过」算
+    ledger = tmp_path / "data" / "interview_publish_ledger" / "zz-new.json"
+    ledger.parent.mkdir(parents=True)
+    ledger.write_text('{"slug": "zz-new", "attempts": []}', encoding="utf-8")
+    assert req.unverified_auto_spec(auto), "空账本不是发过"
+    for status in ("sent", "accepted", "delivered", "sending", "uncertain"):
+        ledger.write_text(json.dumps({"slug": "zz-new", "attempts": [
+            {"key": "k", "status": status}]}), encoding="utf-8")
+        assert not req.unverified_auto_spec(auto), (
+            f"账本 {status}、没有 pushed.json——发布账本才是权威状态，这就是推过了")
+    ledger.write_text("{坏的", encoding="utf-8")
+    assert not req.unverified_auto_spec(auto), "账本读不了：状态不明，不当成自动链还没发"
+    ledger.unlink()
+
     (tmp_path / "out" / "zz-new").mkdir(parents=True)
     (tmp_path / "out" / "zz-new" / "pushed.json").write_text("{}", encoding="utf-8")
     assert not req.unverified_auto_spec(auto), "推出去了就过了那一关"
 
     monkeypatch.undo()
+    from publication_ledger import INTERVIEW_PUBLISHED  # noqa: PLC0415
+
+    ledger_dir = ROOT / "data" / "interview_publish_ledger"
+
+    def _sent(stem: str) -> bool:
+        """独立读账本（不走被测的那条路）：这条有没有任何一次发出/在发/状态不明。"""
+        path = ledger_dir / f"{stem}.json"
+        if not path.is_file():
+            return False
+        return any(a.get("status") in INTERVIEW_PUBLISHED
+                   for a in json.loads(path.read_text("utf-8")).get("attempts", []))
+
     stamped = [p for p in _specs() if json.loads(p.read_text("utf-8"))
                .get("transcript_verification") == "auto_pending"]
-    open_ = [p.stem for p in stamped
+    published = [p for p in stamped if _sent(p.stem)]
+    open_ = [p.stem for p in published
              if req.unverified_auto_spec(json.loads(p.read_text("utf-8")), p.stem)]
     assert len(stamped) >= 10, f"盖着自动章的正式 spec 只扫到 {len(stamped)} 条——主语没了"
-    assert len(stamped) - len(open_) >= 10, (
-        f"盖着章的 {len(stamped)} 条里 {len(open_)} 条被当成「还没核没发」：{open_}。"
-        "推过的认不出来，全库测试就对它们全关了——多半是 `pushed.json` 读不到了")
+    assert len(published) >= 10, (
+        f"盖着章、账本里发过的正式 spec 只扫到 {len(published)} 条——主语没了")
+    assert "nishikori-sakamoto-us-open-2026-q3-farewell" in {p.stem for p in published}, (
+        "锦织圭那条（账本 sent、没有 pushed.json）是这条判据的来路，主语要在")
+    assert not open_, (
+        f"盖着章、账本里发过的 {len(published)} 条里 {len(open_)} 条被当成「还没核没发」："
+        f"{open_}。推过的认不出来，全库测试就对它们全关了——发布账本要算「已推送」")
 
 
 def test_字幕规格和TennisTV台标原来只在全库测试里_现在渲染入口就拦(tmp_path, monkeypatch):
@@ -5378,9 +5417,12 @@ def test_新的采访片必须认领怎么开头():
     """
     import tools.build_interview_clip as clip
 
-    for p in _iv_specs():
-        d = json.loads(p.read_text("utf-8"))
-        clip.check_opening(d)          # 缺字段 / kind 写错 / 没 why / lead_in 越界都会抛
+    # 缺字段 / kind 写错 / 没 why / lead_in 越界都会抛。自动链刚提交、还没核也没发的只报：
+    # 同一个 `check_opening` 在 `main()` 开头、下载之前照拦它出片（`promote_interview_draft`
+    # 只给三种核验方式补 `opening`，另外几种转正时 `opening` 是空的）。
+    _gate_split("新的采访片必须认领怎么开头",
+                ((p, json.loads(p.read_text("utf-8"))) for p in _iv_specs()),
+                clip.check_opening)
 
     ok = {"slug": "新片", "opening": {"kind": "match_end", "lead_in": 13.8,
                                       "why": "赛点落地 ＋ 解说报出赛果"}}
