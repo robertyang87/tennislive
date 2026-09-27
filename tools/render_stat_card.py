@@ -403,8 +403,8 @@ def _stat_row(kind: str, a: dict, b: dict, *fields: str) -> tuple:
         num_key, den_key = fields
         an, ad = a[num_key], a[den_key]
         bn, bd = b[num_key], b[den_key]
-        apct = round(an / ad * 100) if ad else 0
-        bpct = round(bn / bd * 100) if bd else 0
+        apct = int((200 * an + ad) // (2 * ad)) if ad else 0
+        bpct = int((200 * bn + bd) // (2 * bd)) if bd else 0
         lead = None if apct == bpct else ("a" if apct > bpct else "b")
         return f"{apct}%", f"{an}/{ad}", f"{bpct}%", f"{bn}/{bd}", lead
     if kind == "frac":
