@@ -7260,6 +7260,9 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
+#: - **2026-09-27 起**抽帧推出去之后官方图一到，`reel-cover-upgrade.yml` 自动换图
+#:   重推（O4）；换过的 slug 由 `auto_upgraded_frame_covers()` 从这张表里减掉，
+#:   不用回来删行。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
     "safiullin-bu-hangzhou-2026-qf",  # Standing authorization; source-frame evidence in spec.
     "wu-duckworth-us-open-2026-r2",
@@ -7314,6 +7317,28 @@ LEGACY_SOFT_COVERS = frozenset({
     "svitolina-valentova", "trungelliti-medvedev", "tsitsipas-auger-aliassime",
     "wangxiyu-fernandez", "zhang-day", "zhang-li", "zverev-norrie",
 })
+
+
+def auto_upgraded_frame_covers(path: Path | None = None) -> frozenset:
+    """`tools/cover_upgrade.py` 已经自动换成官方实拍的 slug（`data/cover_upgrades.json`
+    里 `status: upgraded` 的那些）。
+
+    账号所有者 2026-09-27 O4「自动换图重推」：抽帧封面推出去之后官方图一到，定时
+    班次自己换图、重渲、重推。`OWNER_APPROVED_FRAME_COVERS` 的自检要求「补上真图
+    之后也该删」——**机器不去改这个 Python 文件，改的是那份账**，这里减掉。
+    方向只会收紧（豁免变少），账读不到就当没换过（豁免照旧，闸不会因此变松）。
+    """
+    path = path or Path(__file__).resolve().parents[1] / "data" / "cover_upgrades.json"
+    try:
+        rows = json.loads(path.read_text(encoding="utf-8")).get("upgrades") or {}
+    except (OSError, ValueError, AttributeError):
+        return frozenset()
+    return frozenset(slug for slug, row in rows.items()
+                     if isinstance(row, dict) and row.get("status") == "upgraded")
+
+
+# 表里的字面量留着（那是账号所有者逐条授权的来路），自动换过图的在这儿减掉。
+OWNER_APPROVED_FRAME_COVERS = OWNER_APPROVED_FRAME_COVERS - auto_upgraded_frame_covers()
 
 
 def cover_photo_problem(spec: dict) -> str | None:

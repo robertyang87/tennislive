@@ -175,3 +175,31 @@ def test_挂账那句话不许写成一句空话():
     # ⚠️ 这里**故意不设下限**：哪天所有碰撞都被清掉（比如换了 tag 方案），
     # 一条挂账都没有是正常的，而上面那条判据仍然守着「新碰撞要出声」。
     print(f"  {checked} 份挂了账的记录，措辞都过关")
+
+
+def test_成片传上Release之后当场给新的这一份挂账():
+    """上面那条判据只会**事后**红：render 用 GITHUB_TOKEN 直推 main、CI 不跑，跨天重渲
+    留下的碰撞要等**下一个不相干的 PR** 才红（评审 NB1，O4 自动换图重推把跨天重渲变成
+    了常态）。所以 Release 那一步传完、写完 `video_url` 就当场挂新的这一份
+    （`tools/release_tag_note.py current`，它知道此刻 tag 上是哪一份）；旧的那几格由
+    `cover_upgrade.apply_upgrade` 在换图时挂（`test_跨天重渲_新旧两格render_json都挂账_tag碰撞判据不红`）。
+
+    ⚠️ 顺序钉死：在写 `video_url` **之后**（它读的就是那个字段），在 `rm -f "$REEL"` 之前
+    （同一步里，不单拆一步——单拆就得另想「上一步红了它跑不跑」）；失败不许拖红一条已经
+    传上去的成片，但要出声（`::warning::`），不许 `|| true` 吞掉。"""
+    import yaml
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows" / "match-reel.yml").read_text("utf-8"))
+    steps = [s for job in wf["jobs"].values() for s in job["steps"]]
+    step = next(s for s in steps if "gh release upload" in str(s.get("run") or ""))
+    run = step["run"]
+    assert "tools/release_tag_note.py current" in run, (
+        "Release 那一步传完没给新的 render.json 挂账——跨天重渲留下的碰撞要等下一个 PR 才红")
+    at_url = run.index('data["video_url"] = url')
+    at_note = run.index("tools/release_tag_note.py current")
+    at_rm = run.index('rm -f "$REEL"')
+    assert at_url < at_note < at_rm, "挂账要排在写 video_url 之后、删成片之前"
+    line = run[run.rfind("\n", 0, at_note):run.find("\n", at_note)]
+    assert "|| true" not in line and "if ! python tools/release_tag_note.py current" in run
+    assert '--render-json "$OUTDIR/render.json"' in run and "github.run_id" in run
+    assert "::warning::" in run[at_note:at_rm], "挂账失败要出声"

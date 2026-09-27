@@ -92,7 +92,9 @@ def test_every_workflow_that_commits_generated_files_has_a_size_gate():
     committers = [path for path, body in bodies.items() if "git commit" in body]
     assert len(committers) >= 8, f"只找到 {len(committers)} 条会提交的工作流，判据可能失效了"
     for path in committers:
-        assert "python tools/check_staged_file_sizes.py" in bodies[path], (
+        # `python3` 也算：reel-cover-upgrade.yml 在 0 条目标的那一班不跑 setup-python
+        # （省掉 72 班/天的 pip 缓存还原），提交账那一步只能用 runner 自带的 python3
+        assert re.search(r"\bpython3? tools/check_staged_file_sizes\.py", bodies[path]), (
             f"{path.name} 会 git commit 却没有体积闸——"
             "渲完一整趟才被 GitHub 拒收是最贵的失败")
 
