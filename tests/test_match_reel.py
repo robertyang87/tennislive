@@ -3703,6 +3703,11 @@ def test_死球时刻要趁源片还在的时候量出来(tmp_path, capsys):
          "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p",
          str(flip)], check=True)
 
+    # ①ᵇ 框超出源片画面（照搬 1080p 转播的框去量 720p 源片）→ 说清楚，
+    # 不许掉进 cv2 的 `!_src.empty()` traceback（medvedev-wong run 36331431180）
+    with pytest.raises(reel.ReelError, match="超出源片画面 320×240"):
+        reel.point_end_candidates(flip, "98,200,519,300")
+
     # ② 框住那一格 → 量得出跳变
     hits = reel.point_end_candidates(flip, "0,0,80,60")
     assert hits, "翻牌那一格量不出跳变，通路是断的"

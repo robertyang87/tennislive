@@ -990,6 +990,21 @@ def measure_point_ends(source: Path, scorebox: str,
     return ends, scorebox_guess, ends_guess
 
 
+def _video_frame_size(source: Path) -> tuple[int, int] | None:
+    """源片的宽高；读不出来就返回 None（不拦，交给后面照旧跑）。"""
+    try:
+        import cv2  # noqa: PLC0415
+    except ImportError:  # pragma: no cover
+        return None
+    cap = cv2.VideoCapture(str(source))
+    try:
+        w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    finally:
+        cap.release()
+    return (w, h) if w > 0 and h > 0 else None
+
+
 def point_end_candidates(source: Path, scorebox: str, *,
                          guessed: bool = False) -> list[float]:
     """量一遍死球时刻，写进 `probe.json`——**趁源片还在**。
@@ -1028,6 +1043,14 @@ def point_end_candidates(source: Path, scorebox: str, *,
     except ValueError:
         raise ReelError(
             f"--scorebox 要写成 x0,y0,x1,y1（源片像素），给的是「{scorebox}」")
+    # 2026-09-27 medvedev-wong（run 36331431180）：照搬 1080p 转播的框去 probe
+    # 一条只有 1280×720 的源片，框整个落在画面外，cv2 在第 57 行报一句
+    # `!_src.empty()` 的 traceback——看不出是「框和分辨率对不上」。
+    frame_size = _video_frame_size(source)
+    if frame_size and (box[2] > frame_size[0] or box[3] > frame_size[1]):
+        raise ReelError(
+            f"--scorebox {scorebox} 超出源片画面 {frame_size[0]}×{frame_size[1]}"
+            "——框是按别的分辨率量的，照源片像素重新给")
     with stage("量死球（猜的框）" if guessed else "量死球"):
         rows = fpe.scan(source, box, 0.1)
         ends = fpe.point_ends(rows, fpe.CHANGE, fpe.DARK_SHARE, fpe.MERGE)
