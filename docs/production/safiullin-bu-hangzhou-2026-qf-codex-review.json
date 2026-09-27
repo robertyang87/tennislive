@@ -1,5 +1,5 @@
 {
-  "status": "v5_editorial_fix_render_pending",
+  "status": "v5_render_actual_visual_and_technical_qc_pass_ci_merge_push_pending",
   "source_sha256": "1646603e5fd793f4eeb6ca05fef5c07c2c01ee21367a9d229e2207cf8559f666",
   "source_probe_run": 36322312524,
   "duration": 124.296417,
@@ -19,13 +19,12 @@
     "full_source tactical segments preserve sideline movement and volley",
     "final match point and handshake retained; promotional card excluded",
     "final stat card Bu 23/40 correctly displays 58%",
-    "v4 actual 102s final serve/return frame preserves both players; 114s handshake verified"
+    "v4 actual 102s final serve/return frame preserves both players; 114s handshake verified",
+    "v5 overview and actual frames 0/18/102/111 checked: centered cover, revised opening, complete final serve/receiver and closing question"
   ],
   "pending": [
-    "v5 render",
-    "v5 actual final film QC",
-    "current head full CI",
-    "merge and push"
+    "current final head full CI",
+    "merge and verified PushPlus receipt"
   ],
   "model_calls": {
     "DeepSeek": false,
@@ -42,7 +41,7 @@
     "status": "failed",
     "reason": "ffmpeg score mask 109px versus YUV crop108px"
   },
-  "current_render_run": 36324598388,
+  "current_render_run": 36325902329,
   "fixed": [
     "cover hook center option",
     "nine segments matched to exact TTS offsets",
@@ -53,16 +52,16 @@
   ],
   "local_validation": {
     "stat_tests": "33 passed",
-    "narration": "8 actual Edge TTS segments fit; maximum gap3.86s; no >4s gap",
+    "narration": "8 actual Edge TTS segments fit; maximum gap3.35s; first14.328s,last13.968s",
     "pronunciation": "Actual nine words.json files scanned against repo FAKE_TOKENS: no hits. Eight narration segments fit; timing/pauses checked. Direct listening was unavailable; no auditory correctness claim."
   },
   "current_render": {
-    "run": 36324598388,
-    "film_sha256": "b76c6fb69c0eb1dd841c5766930bb3864ad78503f5c681dd1bf8567de5a3da0e",
-    "film_bytes": 53792588,
+    "run": 36325902329,
+    "film_sha256": "a07995af6f39eae5e32e2b118e465bfe73f3504ddb6ce5a1ba5ecb95b77574be",
+    "film_bytes": 53813904,
     "seconds": 118.88,
     "formal_qc": "pass",
-    "final_evidence_run": 36324677933,
+    "final_evidence_run": 36325895226,
     "downloaded_complete_and_hash_verified": true
   },
   "limitations": [
@@ -79,5 +78,12 @@
       "显式_hit_data官方数据",
       "登记hook_align正式字段"
     ]
+  },
+  "v5_ci": {
+    "run": 36325897295,
+    "passed": 3885,
+    "failed": 3,
+    "cause": "temporary evidence workflow cache and timeout requirements",
+    "resolution": "completed one-use evidence workflow removed after artifacts downloaded; production workflow and tests unchanged"
   }
 }
