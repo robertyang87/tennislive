@@ -11614,6 +11614,7 @@ def _slide_html(
 ) -> str:
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
+    from . import explainer_card_palette as P
 
     cover = segment.kind == "cover"
     circled = ("①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨")
@@ -11794,14 +11795,17 @@ def _slide_html(
         if segment.points
         else ""
     )
+    def ink(alpha: float) -> str:
+        return P.rgba(P.SLIDE_INK, alpha)
+
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{css}
 *{{margin:0;padding:0;box-sizing:border-box;}}
 html,body{{width:{W}px;height:{H}px;}}
 body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
-.slide{{position:relative;width:{W}px;height:{H}px;overflow:hidden;color:#f4fbf7;
- background:#061c14;}}
+.slide{{position:relative;width:{W}px;height:{H}px;overflow:hidden;color:{P.FOREGROUND};
+ background:{P.SLIDE_INK};}}
 .hero{{position:absolute;inset:0;}}
-.hero.diagram{{background:radial-gradient(125% 80% at 50% 20%,#155a41 0%,#0b3a2a 55%,#061c14 100%);}}
+.hero.diagram{{background:radial-gradient(125% 80% at 50% 20%,{P.HERO_GLOW} 0%,{P.HERO_DEEP} 55%,{P.SLIDE_INK} 100%);}}
 /* 信箱式缩放那几屏的底衬：同一张照片的模糊放大版，让卡片顶栏压在照片色上，
    和铺满的那几屏观感一致。压暗到 .42 是为了让上层 contain 的那张仍然是
    视觉主体；scale(1.2) 给 blur 留溢出量，否则边缘透底。 */
@@ -11814,17 +11818,17 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .diagram-wrap{{position:absolute;left:0;right:0;top:210px;display:flex;justify-content:center;}}
 .diagram-wrap svg{{width:920px;height:auto;}}
 .scrim{{position:absolute;inset:0;background:linear-gradient(180deg,
- rgba(6,28,20,.55) 0%,rgba(6,28,20,.10) 34%,rgba(6,28,20,.20) 60%,rgba(6,28,20,.94) 100%);}}
+ {ink(.55)} 0%,{ink(.10)} 34%,{ink(.20)} 60%,{ink(.94)} 100%);}}
 /* 示意图那一屏：上半**一点都不压**。示意图是我们自己画在深绿渐变上的，
    下面没有照片要压住，scrim 在这儿只会把自己的字削暗（实测顶部 −36%、
    底部 −19%，正文对比度掉到 3.8:1，而同一张卡下半的要点是 17:1）。
    58% 这个拐点是示意图画布的下沿（top 210px + 613px ÷ 1440px ≈ 57.2%）
    再留一点余量——底下那一段照旧压住，`.copy` 的可读性一个字都没让。 */
 .scrim--diagram{{background:linear-gradient(180deg,
- rgba(6,28,20,0) 0%,rgba(6,28,20,0) 58%,rgba(6,28,20,.30) 74%,
- rgba(6,28,20,.94) 100%);}}
+ {ink(0)} 0%,{ink(0)} 58%,{ink(.30)} 74%,
+ {ink(.94)} 100%);}}
 .bar{{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
- background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);}}
+ background:{P.BRAND_BAR};}}
 .head{{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
  align-items:center;
  text-shadow:0 2px 12px rgba(0,0,0,.6);}}
@@ -11835,21 +11839,16 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
    of green seats, so lift it and give it its own shadow — still quieter
    than the brand line above, but legible on any frame. */
 .topic{{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
- color:#dcefe4;letter-spacing:1px;
- text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8);}}
+ color:{P.TOPIC};letter-spacing:1px;
+ text-shadow:{P.SHADOW_CHROME};}}
 .brand-icon{{width:52px;height:52px;object-fit:contain;
  filter:drop-shadow(0 2px 8px rgba(0,0,0,.55));}}
 .brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:38px;font-weight:400;letter-spacing:1px;}}
-.foot{{position:absolute;bottom:44px;left:70px;right:70px;z-index:5;
- display:flex;align-items:center;justify-content:flex-end;}}
-.tag{{font-family:'Barlow Condensed','TL Sans SC',sans-serif;
- font-size:28px;color:#9fb4aa;font-weight:600;letter-spacing:2px;
- text-shadow:0 2px 10px rgba(0,0,0,.7);}}
 .copy{{position:absolute;left:70px;right:70px;bottom:{CARD_COPY_BOTTOM}px;z-index:5;
  display:flex;flex-direction:column;gap:28px;}}
 .chip{{align-self:flex-start;background:#37e29a;color:#062018;font-size:32px;
- font-weight:800;letter-spacing:3px;padding:12px 28px;border-radius:999px;}}
+ font-weight:700;letter-spacing:3px;padding:12px 28px;border-radius:999px;}}
 .title{{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:{title_px}px;line-height:1.2;font-weight:400;
  white-space:nowrap;text-shadow:0 4px 24px rgba(0,0,0,.75);}}
@@ -11859,8 +11858,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
    字符串本身**（`test_每条片子都以问题开场` 断言原字符串要出现在页面里，
    手插 `<br>` 或换行符会把那条判据弄假）。 */
 .cover .title{{white-space:normal;text-wrap:balance;line-height:1.24;font-weight:400;
- text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
- 0 0 60px rgba(6,28,20,.7);}}
+ text-shadow:{P.SHADOW_HOOK};}}
 /* ⚠️ 这段注释**会被渲进 HTML**，所以里面一个日期都不许出现。
    `test_知识卡右上角不写日期` 扫的是渲出来的整页（知识片是常青的，右上角
    不打日期），年份串一写进注释就当场打红。我连着栽了两次：第一次写了日期，
@@ -11916,36 +11914,36 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
    （`test_封面不许再压一层居中的阴影`），不钉某张封面的对比度读数——
    那会随换图漂移，变成一条常年红或者一盏假绿灯。 */
 .cover .scrim{{background:
- linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,
-  rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 54%,rgba(6,28,20,.34) 70%,
-  rgba(6,28,20,.62) 88%,rgba(6,28,20,.70) 100%);}}
+ linear-gradient(180deg,{ink(.62)} 0%,{ink(.16)} 17%,
+  {ink(.08)} 32%,{ink(.08)} 54%,{ink(.34)} 70%,
+  {ink(.62)} 88%,{ink(.70)} 100%);}}
 .kicker{{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
- font-weight:800;letter-spacing:4px;padding:11px 26px;border-radius:999px;}}
-.tail{{align-self:flex-start;font-size:34px;font-weight:700;color:#dff3e8;
+ font-weight:700;letter-spacing:4px;padding:11px 26px;border-radius:999px;}}
+.tail{{align-self:flex-start;font-size:34px;font-weight:700;color:{P.TAIL};
  text-shadow:0 3px 14px rgba(0,0,0,.75);}}
 .points{{align-self:stretch;display:flex;flex-direction:column;gap:16px;
- background:rgba(6,28,20,.66);border-left:7px solid #c6f65a;
+ background:{ink(.66)};border-left:7px solid {P.PRIMARY};
  padding:24px 28px;border-radius:12px;}}
 .point{{display:flex;gap:16px;align-items:flex-start;font-size:34px;
- font-weight:700;line-height:1.38;color:#f4fbf7;
+ font-weight:700;line-height:1.38;color:{P.FOREGROUND};
  text-shadow:0 2px 8px rgba(0,0,0,.55);}}
-.point i{{color:#c6f65a;font-style:normal;flex:none;line-height:1.38;}}
+.point i{{color:{P.PRIMARY};font-style:normal;flex:none;line-height:1.38;}}
 .ask{{align-self:stretch;margin-top:2px;font-family:'TL Display SC','TL Sans SC',sans-serif;
- font-size:38px;font-weight:400;line-height:1.3;color:#c6f65a;
+ font-size:38px;font-weight:400;line-height:1.3;color:{P.PRIMARY};
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
 /* 封面标题底下那行注。它是**注**不是副标题：字号压到标题的三分之一上下，
    颜色比标题淡一档，别把观众的眼睛从大问题上拽走。 */
 .gloss{{align-self:flex-start;margin-top:-2px;font-size:34px;font-weight:700;
- letter-spacing:1px;color:#cfe6d8;text-shadow:0 2px 12px rgba(0,0,0,.85);}}
+ letter-spacing:1px;color:{P.MUTED_FOREGROUND};text-shadow:0 2px 12px rgba(0,0,0,.85);}}
 /* 赛前片的封面小字。两行之间用一道细线分开，而不是靠间距——封面底下就是
    照片，间距在深浅不一的画面上读不出「这两行是一组」。 */
 .fixture{{align-self:flex-start;display:flex;flex-direction:column;gap:12px;
- margin-top:-10px;padding-left:4px;border-left:5px solid #c6f65a;
+ margin-top:-10px;padding-left:4px;border-left:5px solid {P.PRIMARY};
  padding-top:2px;padding-bottom:2px;}}
 .fixture .when{{padding-left:16px;font-size:33px;font-weight:700;letter-spacing:1px;
- color:#dff3e8;text-shadow:0 2px 10px rgba(0,0,0,.8);}}
-.fixture .who{{padding-left:16px;font-size:44px;font-weight:800;letter-spacing:2px;
- color:#f4fbf7;text-shadow:0 3px 14px rgba(0,0,0,.85);}}
+ color:{P.TAIL};text-shadow:0 2px 10px rgba(0,0,0,.8);}}
+.fixture .who{{padding-left:16px;font-size:44px;font-weight:700;letter-spacing:2px;
+ color:{P.FOREGROUND};text-shadow:0 3px 14px rgba(0,0,0,.85);}}
 </style></head><body>
 <div class="slide{cover_cls}">{hero}<div class="bar"></div>
 <div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines"><span class="brand">网球时差 · {html.escape(column)}</span>{topic_html}</div></div></div>
@@ -12044,6 +12042,7 @@ def _render_intro_badge(topic: str, column: str, outdir: Path) -> Path | None:
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
     from ..render.webcards import _font_css  # noqa: PLC0415
+    from . import explainer_card_palette as P  # noqa: PLC0415
 
     icon_path = _REPO / "assets" / "logo" / "brand" / "icon.png"
     brand_icon = (
@@ -12054,16 +12053,16 @@ def _render_intro_badge(topic: str, column: str, outdir: Path) -> Path | None:
     doc = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box;}}
 html,body{{width:{VIDEO_W}px;height:{badge_h}px;background:transparent;}}
-body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;color:#f4fbf7;}}
+body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;color:{P.FOREGROUND};}}
 .bar{{position:absolute;top:0;left:0;right:0;height:12px;
- background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);}}
+ background:{P.BRAND_BAR};}}
 .head{{position:absolute;top:44px;left:70px;right:70px;display:flex;align-items:center;
  text-shadow:0 2px 12px rgba(0,0,0,.6);}}
 .brandwrap{{display:flex;align-items:center;gap:14px;}}
 .brandlines{{display:flex;flex-direction:column;gap:2px;}}
 .topic{{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
- color:#dcefe4;letter-spacing:1px;
- text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8);}}
+ color:{P.TOPIC};letter-spacing:1px;
+ text-shadow:{P.SHADOW_CHROME};}}
 .brand-icon{{width:52px;height:52px;object-fit:contain;
  filter:drop-shadow(0 2px 8px rgba(0,0,0,.55));}}
 .brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
