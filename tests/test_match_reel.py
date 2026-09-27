@@ -2745,7 +2745,12 @@ def test_文案里的tag最多五个():
     sys.path.insert(0, str(Path("tools").resolve()))
     from tennislive.render.hashtags import MAX_HASHTAGS, hashtag_count  # noqa: PLC0415
 
-    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+    # ⚠️ **采访线的文案也要扫**：原来只 glob 了 specs/reels，于是 2026-09 起 9 趟
+    # run 红在「6 个 tag，超过 5 个」，其中 7 趟是 specs/interviews 的（tien-cobolli
+    # 653b6d60、nakashima-mensik f8de57d3 都是「账号＋赛事＋三个人＋栏目」）——
+    # 推送前那道闸（push_reel）拦得住，可那已经是渲完、合完之后了。
+    for path in sorted([*Path("specs/reels").glob("*.xhs.txt"),
+                        *Path("specs/interviews").glob("*.xhs.txt")]):
         n = hashtag_count(path.read_text(encoding="utf-8"))
         assert n <= MAX_HASHTAGS, f"{path.name} 有 {n} 个 tag"
 

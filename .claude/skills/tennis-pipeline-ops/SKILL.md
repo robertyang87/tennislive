@@ -4593,3 +4593,70 @@ PR 看」，不是「它挡在出片前面」。
 不再重建账本里发过的 spec）、`test_auto_push_interview::test_渲完之后手改小红书正文提了字幕规格_推送闸拦住`、
 `test_promote_interview_draft::test_promote给TennisTV草稿补台标那一挪_渲染闸放行`、`test_字幕规格和TennisTV台标原来只在全库测试里_现在渲染入口就拦`、
 `test_topline_format::test_采访草稿直推main的赛事行只报_销章就红_渲染入口照拦`。
+
+## ⭐⭐ 2026-09-27：赛后开麦 dispatch 之前的离线预检、片尾板、拼接清单、推送后修订
+
+**写完或改完一条采访 spec，dispatch 之前先跑一条命令**（秒级、不联网、不下源片）：
+
+    PYTHONPATH=src python tools/interview_preflight.py --slug <slug>
+
+它按出片那一趟**同一份函数**把「只看 spec 就判得出」的闸全过一遍：L0、顶栏赛事行、
+顶栏比分方向、开场、冷开场／片尾那两段、小红书正文在不在、解读卡（含**收尾卡那一句
+一行放得下**）、文案 tag／标题（`push_reel --stage check`），再按仓库里的字幕缓存
+重切一遍行、走 `write_ass` 全套（中英行数、超宽、吊在「的」上、顶栏宽度）。
+`interview-clip.yml` 在装完字体之后、取字幕之前跑同一条；`pick_interview_renders`
+在自动 dispatch 之前跑同一份，红的进「等自动补齐 / 例外复核」、不投。
+退出码 2 是**判不了**（缺 PIL／字体），不是「判过了」。
+
+来路：2026-09-06 起 interview-clip 12 趟红在中文字幕、9 趟红在 tag／标题，全是 spec
+本身的错，却要等 runner 装完依赖、取完字幕（中位 146 秒）才报；收尾卡折行
+（jodar-bublik 48a60760「费 ／ 德勒」、deminaur 617db353「一 ／ 直顶住」）渲完抽帧才看见。
+
+另外三件同一包里落的（判据 `tests/test_interview_preflight.py`）：
+
+| | 在哪儿 | 一句话 |
+|---|---|---|
+| 片尾板／冻帧 | `interview_tail.tail_verdict`，`render()` 下完源片、**编码之前** | 源片最后一张「硬切或黑场淡入之后一直不动」的板，`end` 压进去就红并给出该收到的终点；`end` 越过源片视频流也红（成片会冻住）。认领 `_end_board_ok` / `_frozen_tail_ok`。⚠️ **`end` 是生成器算的默认值（`_end_default` 还等于 `end`）时不红，直接收到算出来的终点**，日志和 `render.json["end_trim"]` 记一笔——自动产的 spec 没人会来改 `end`，红了就是每 70 分钟重投一次；**人给的 `end` 照旧红** |
+| 默认终点 | `interview_tail.default_end` | 自动链没给 `end` 时＝最后一个词的词尾 ＋ 0.8 秒（人手收尾的中位，偏向多留；撞上板由出片那一趟收），不再是源片全长；生成器同时记 `_end_default` |
+| 拼接清单 | `interview_assembly`，`render()` 写进 `render.json["assembly"]`，`check_interview_landed --film` 照 spec 核 | 收尾卡口播没合上（退回静音卡）、品牌片尾渲不出来，原来都是绿着退的 |
+| 推送后修订 | `interview_revision.post_push_edit`，`pick_interview_renders.todo_slugs` | 推送后 24 小时内改了**会进成片的字段**（`interview_revision.FILM_KEYS` 白名单，按 `qc_attestation.spec_content_sha256` 比）＝一次修订，自动重渲重推；过了窗口进等待名单，要重渲写 `_publication_revision`。⚠️ **是白名单不是「去掉 `_` 注解」**：`transcript_verified`／`caption_gaps_ok`／`whisper_model`／`match`／`source_verification`／`push.lead` 这些不进画面，改了不重渲——edge-tts 和 Chromium 不是逐字节确定的，重渲出来指纹一变就是微信上多一条一样的消息。加了会进成片的新字段要同时进白名单（`test_内容指纹白名单盖住出片读的每一个键` 替你记得） |
+
+⚠️ **auto-render 的「没活就早退」探针跑在 runner 的系统 python3 上，没有 PIL**
+（`pick_interview_renders.py --probe`）：不要 PIL 的闸照跑，量宽度那几项（解读卡一行、
+文案、字幕重切、冷开场双语字幕宽度）记成「判不了」，拿**上一趟全量预检同一份输入**记下的
+结论顶上（`VERDICT_CACHE`，actions/cache 带过去；键是判据代码＋spec＋文案＋字幕缓存＋日期
+的指纹）。没有就算待投、交给全量那一趟。原来一律抛，一条卡在量宽度上的红 spec 每 10 分钟
+逼一次全量 job。全库回放：全量 29 秒 → 探针 0.5 秒，待投／等待两份名单逐条一样。
+复审补的四处：**缓存键里的字幕和预检实际读的是同一组**（`interview_preflight.caption_fingerprint`
+和 `_materialize_captions` 同一个分支——工作区有产物格就只认工作区，按 git blob 算法取指纹，
+和 HEAD 一样时键也一样）；`push_reel` 子进程崩出 Traceback 的那种红打 `CRASHED` 标记、**不记进
+缓存**（不然偶发一次崩溃被探针重放到北京日期翻过去）；探针里量宽度撞上缺字体的 **OSError 也算
+判不了**（探针排在 apt 装字体之前）；结论文件按 `sort_keys` 写，**内容有变才另存一份缓存**
+（键仍带 run_id——缓存键一经写入不可覆盖，按内容定键的话 A→B→A 存不进去）。
+⚠️ **探针那条 import 链只许标准库**：`pick_interview_renders` → `build_interview_clip` 顶层
+一行 `from tennislive.video.subtitle_text import …` 就会经 `tennislive/video/__init__.py`
+把 pipeline → research → digest → sources → requests 整串拉进来，探针 import 就崩、
+workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟全量（合并 main 时
+撞上过，改成函数里 import）。判据 `test_探针的import链只用标准库`（子进程里只放行标准库
+和仓库自己的代码，真跑一遍 `--probe`）。
+
+⚠️ 自动收短的终点「板前 0.2 秒」在板紧贴话尾时会吃字尾（alcaraz-fritz 的板在词尾 ＋0.11 秒）：
+`check_tail` 从 `cap_asr.json3` 量出最后一个真词的词尾给终点托底，但不越过板前最后一帧确定
+不是板的采样；YouTube 自动字幕只有词头（估的）不托底。
+
+⚠️ **收尾卡「一行放得下」量的是 `takeaway_html` 同一组常量**（`TAKEAWAY_PAD_LEFT/RIGHT`、
+`TAKEAWAY_POINT_PX/TRACKING`）。2026-09-27 main 的评审 I2／I3 把卡改成 `keep-all`＋`balance`、
+左边距跟台头收到 70（正文区 860px），合并时 CSS 改成读这组常量——不然闸按 838 量、卡按 860 排，
+正是「写两处必分叉」。`interview_spec_gates.card_lines` 照这套 CSS 排行，全库 104 张卡＋4 条样例
+真渲对过，折点逐字一样，报错里印的就是卡上的折点。⚠️ **「在空格处折成匀称的两行」算不算合格
+是账号所有者还没定的口径**，定之前照旧要求一行。
+
+⚠️ `FROZEN_SLACK`＝0.2 只校准过 1.1~1.7 秒；已发的 0.2~1 秒短冻帧（从 Release 拉回 102 条
+已发正片量出来 2 条）挂在 `data/legacy_interview_gates.json` 的 `frozen_tail_short`，
+**只认量的那一刻的 `end`**，只许减不许加。
+
+⚠️ 片尾板那道闸是拿真产物校过的：已发 101 条采访的正片尾巴里认出 2 条真板
+（`sabalenka-pegula-us-open-2026-sf-interview` 美网板、`ruud-cerundolo-laver-cup-2026-presser`
+拉沃尔杯板，都已推送），发布会（机位锁死、相邻帧差 < 0.5 能连着 9 秒）0 条误认；
+另有 5 条正片最后 1.1~1.7 秒是冻帧（`end` 越过了源片画面）。这 7 条不挂豁免：闸只在重渲
+那一刻才跑，重渲时就该一起收掉。量法和名单在 `tools/interview_tail.py` 的 docstring。

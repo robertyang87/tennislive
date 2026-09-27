@@ -277,7 +277,11 @@ def _interview_request(slug: str) -> dict:
         },
         "cover": {"frame_at": 30, "title": ["前一天握赛点被逆转", "兹维列夫锁定欧洲夺冠"],
                   "sub": "拉沃尔杯第三天单打 赛后场上采访", "tag": "2026 拉沃尔杯 · 兹维列夫"},
-        "takeaway": {"close": {"point": "前一天被逆转 今天他亲手锁定冠军",
+        # 收尾卡那一句要一行放得下（`production_preflight.check_request` 的解读卡闸，860px）：
+        # 「今天他亲手锁定冠军」那版量出来 934px，这几条测的是全称断言，别让两道闸在同一个
+        # 夹具上互相遮蔽——解读卡那道另有判据（test_interview_preflight
+        # `test_请求预检就拦收尾卡折行_不等自动链建完spec`）。
+        "takeaway": {"close": {"point": "前一天被逆转 今天他锁定冠军",
                                "ask": "欧洲队13比5夺冠 下一届你看好谁？"}},
         "push": {"matchup": "兹维列夫 vs 勒纳·钱", "score": "7-6(3) 6-3", "event": "",
                  "summary": "兹维列夫赛后开麦",

@@ -512,8 +512,31 @@ def _verification(req: dict) -> dict:
     }
 
 
+def request_window(req: dict, duration: float,
+                   rows: list[dict] | None = None) -> tuple[float, float]:
+    """请求的时间窗。**没给 `end` 时不再取源片全长**，取最后一个词的词尾 ＋ 一口气
+    （`interview_tail.default_end`）——拉沃尔杯那批第一版把片尾板剪进成片、两条推上
+    微信又重推，全是 `else duration` 这一行默认出来的。切行（`_build_one_unlocked`）
+    和写进 spec 的 `end`（`build_spec`）必须是同一个数，所以只算这一处。"""
+    from interview_tail import default_end  # noqa: PLC0415
+
+    start = max(0.0, float(req.get("start") or 0.0))
+    requested_end = req.get("end")
+    if requested_end not in (None, ""):
+        end = float(requested_end)
+    elif rows:
+        end = default_end(rows, duration, start)
+    else:
+        end = float(duration)
+    return start, min(float(duration), end)
+
+
 def build_spec(req: dict, zh: list[str], duration: float) -> dict:
-    """已经正式切行的中文 + 请求元数据 → 带 L0 签名的正式 spec。"""
+    """已经正式切行的中文 + 请求元数据 → 带 L0 签名的正式 spec。
+
+    时间窗走 `request_window`；`_build_one_unlocked` 按逐词稿算好默认终点后
+    以 `{**req, "end": end}` 传进来，所以切行用的窗和写进 spec 的是同一个数。
+    """
     from interview_source_gate import (  # noqa: PLC0415
         REQUESTED_KINDS,
         finalize_source_contract,
@@ -524,10 +547,7 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
     requested = str(req["requested_content_type"])
     if requested not in REQUESTED_KINDS:
         raise ValueError(f"未登记的 requested_content_type：{requested}")
-    start = max(0.0, float(req.get("start") or 0.0))
-    requested_end = req.get("end")
-    end = float(requested_end) if requested_end not in (None, "") else float(duration)
-    end = min(float(duration), end)
+    start, end = request_window(req, duration)
     if end <= start:
         raise ValueError(f"无效时间窗：{start}-{end}（源长 {duration}）")
     if not zh:
@@ -677,10 +697,7 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
 
         if not rows:
             raise RuntimeError(f"{slug}: 第一份 ASR 为空")
-        start = max(0.0, float(req.get("start") or 0.0))
-        requested_end = req.get("end")
-        end = float(requested_end) if requested_end not in (None, "") else float(duration)
-        end = min(float(duration), end)
+        start, end = request_window(req, duration, rows)
         lines = segment(
             [(row["t"], row["text"]) for row in rows], start, end,
             budget=req.get("segment_budget_px"),
@@ -703,7 +720,12 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
         }, translate_once) if write else translate_once())
         if len(zh) != len(lines):
             raise RuntimeError(f"{slug}: 中英文行数不一致 {len(zh)} != {len(lines)}")
-        spec = build_spec(req, zh, duration)
+        # 默认终点按逐词稿算好再交给 build_spec（`_request_origin` 记的仍是原请求）
+        spec = build_spec({**req, "end": end}, zh, duration)
+        if req.get("end") in (None, "") and "end" in spec:
+            # 请求没给 `end`：这个数是生成器算的。记下来，出片那一趟撞上片尾板时
+            # 按它认「没人给过」、直接收到闸算出来的终点（interview_tail 第四节）。
+            spec["_end_default"] = spec["end"]
     if write:
         if research_job is not None:
             spec["_tactical_research"] = research_job.result()
@@ -795,16 +817,38 @@ def main() -> int:
         print("::error::没配 DEEPSEEK_API_KEY，中文字幕无法生成")
         return 2
 
-    # 一条失败不连坐：每条请求各自 try，失败的那条**什么都不写**（所有落盘都排在
-    # `_build_one_unlocked` 末尾、所有闸之后），其余照常写。原来单条红就整步退出 1，
-    # 同一趟后面的「补片头」「提交」全被跳过，别的请求白转写一遍、每 10 分钟重来一趟。
+    return build_all(paths, chat, write=args.write, failed_list=failed_list)
+
+
+def build_all(paths: list[Path], chat, *, write: bool,
+              failed_list: Path | None = None) -> int:
+    """逐条建 spec → 退出码。一条失败不连坐：每条请求各自 try，失败的那条**什么都不写**
+    （所有落盘都排在 `_build_one_unlocked` 末尾、所有闸之后），其余照常写。原来单条红就
+    整步退出 1，同一趟后面的「补片头」「提交」全被跳过，别的请求白转写一遍、每 10 分钟重来一趟。
+
+    ⚠️ 请求自己没过前置检查（`production_preflight.RequestNotReady`：解读卡写长了、
+    全称断言没认领、时间窗无效……）**不算这一步失败**：这条留在待生成名单、报一句
+    `::warning::`，退出码照旧看别的失败。这一步红了，工作流后面的提交和 dispatch 会被
+    隐式的 success() 一起跳过——一条写错的请求会把所有别的 spec 每 10 分钟卡一趟。
+
+    带 `failed_list`（interview-auto-render 的 `--failed-list`）时，**所有**失败——含
+    `RequestNotReady`——都记进清单、`::error file=` 指回请求文件，退出码一律 0：提交和
+    dispatch 按清单第二列跳过这几条，最后一步读清单写 run 摘要、把整趟标红。两种调法
+    都不连坐；清单那条路上没过前置检查的请求也不会只剩一句被人略过的 warning。
+    """
+    from production_preflight import RequestNotReady  # noqa: PLC0415
+
     failed: list[tuple[str, str, str]] = []
     for path in paths:
         try:
-            slug, n_lines, duration = _build_one(path, chat, write=args.write)
-            mode = "已写入" if args.write else "干跑"
+            slug, n_lines, duration = _build_one(path, chat, write=write)
+            mode = "已写入" if write else "干跑"
             print(f"✅ {slug}: {n_lines} 行，源长 {duration:.1f}s，{mode}")
         except Exception as exc:  # noqa: BLE001 — 一条失败不吞掉后续请求
+            if isinstance(exc, RequestNotReady) and failed_list is None:
+                print(f"::warning::{path.name}: 请求没过前置检查，留在待生成名单"
+                      f"（改好请求下一趟自动接上，别的请求照常走）：{exc}")
+                continue
             rel = _rel(path)
             try:
                 slug = _slug(_read(path), path)

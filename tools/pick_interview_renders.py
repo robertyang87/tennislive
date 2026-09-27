@@ -44,6 +44,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
@@ -60,6 +61,7 @@ from build_interview_clip import (  # noqa: E402
     _NO_TAKEAWAY_LEGACY,
     check_lead_in,
 )
+from interview_revision import post_push_edit  # noqa: E402
 from interview_source_gate import SourceContractError, validate_source_contract  # noqa: E402
 from build_interview_request import AUTO_PENDING  # noqa: E402  自动章只定义一处
 
@@ -176,11 +178,178 @@ def missing_for_render(slug: str, spec: dict) -> list[str]:
         missing.append("xhs.txt（推送文案）")
     # 独立场上采访必须配同场获胜画面和解说。复用 render 的同一条闸，不在
     # 调度器里另抄一份字段判断；否则两处迟早分叉。
+    unknown = False
     try:
         check_lead_in(spec)
     except SystemExit as exc:
         missing.append(f"lead_in（{str(exc).splitlines()[0]}）")
-    return missing
+    except (ImportError, OSError):
+        # 冷开场那段的双语字幕要量宽度（PIL＋中文字体）——探针的系统 python3 上判不了：
+        # 没有 PIL 是 ImportError，有 PIL 没字体（探针排在 apt 装字体之前）是 OSError。
+        # 全量模式照旧抛（判不了不许当成判过了）。
+        if not PROBE:
+            raise
+        unknown = True
+    if not missing:
+        pre, pre_unknown = _preflight_problems(slug, spec)
+        missing += pre
+        unknown = unknown or pre_unknown
+    if not PROBE:
+        _remember(slug, missing)
+        return missing
+    if missing or not unknown:
+        return missing          # 不要 PIL 的闸已经判红，或者这一趟本来就判得全
+    return _cached_verdict(slug)
+
+
+#: `--probe`：interview-auto-render「没活就早退」那一步（runner 的系统 python3，没有 PIL）。
+PROBE = False
+#: 上一趟**全量**预检记下的结论（slug → {key, problems}），探针拿它顶「判不了」的那几项。
+#: 存在 actions/cache 里（interview-auto-render 的「预检结论缓存」那两步），不进 git。
+VERDICT_CACHE = Path(os.environ.get("INTERVIEW_PREFLIGHT_CACHE")
+                     or Path.home() / ".cache" / "tennislive-preflight" / "interview_verdicts.json")
+_VERDICTS: dict | None = None
+_VERDICTS_DIRTY = False
+_UNKNOWN: list[str] = []
+_CODE_FP: str | None = None
+
+
+def _git(*args: str) -> str | None:
+    try:
+        proc = subprocess.run(["git", "-C", str(ROOT), *args], capture_output=True,
+                              text=True, check=False, timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return proc.stdout if proc.returncode == 0 else None
+
+
+def _code_fingerprint() -> str | None:
+    """预检判据的代码和豁免表：`tools/`、`src/`、仓库字体、`data/legacy_*.json` 的 git 对象号。"""
+    global _CODE_FP
+    if _CODE_FP is None:
+        trees = _git("rev-parse", "HEAD:tools", "HEAD:src", "HEAD:assets/fonts")
+        data = _git("ls-tree", "HEAD", "data/")
+        if trees is None or data is None:
+            return None
+        legacy = [ln for ln in data.splitlines() if "\tdata/legacy_" in ln]
+        _CODE_FP = hashlib.sha256((trees + "\n".join(legacy)).encode()).hexdigest()
+    return _CODE_FP
+
+
+def verdict_key(slug: str) -> str | None:
+    """全量预检这条 spec 的全部输入的指纹：判据代码、spec、文案、字幕缓存、北京日期
+    （文案标题带日期）。任何一样变了，缓存的结论就作废——**缓存只省 runner，不许
+    替一个没判过的输入说话**。拿不到（没有 git）返回 None，不用缓存。"""
+    if not (SPECS / f"{slug}.json").is_file():
+        return None
+    import interview_preflight  # noqa: PLC0415 —— 顶层只 import 标准库，探针的系统 python3 能跑
+
+    code = _code_fingerprint()
+    # ⚠️ 字幕按预检**实际读的那几份**取指纹（`caption_fingerprint` 和 `_materialize_captions`
+    # 同一个分支：工作区有目录就只认工作区）。原来按 `git ls-files` 记 index——auto-render
+    # 把请求的产物格加回稀疏范围、只提交 `cap_asr.json3`，全量判的是没提交的 `cap_*`，
+    # 记下的键却是下一趟 HEAD 能原样复现的（review 那条）。
+    caps = interview_preflight.caption_fingerprint(slug)
+    if code is None or caps is None:
+        return None
+    xhs = SPECS / f"{slug}.xhs.txt"
+    blob = json.dumps({
+        "code": code,
+        "date": datetime.now(timezone(timedelta(hours=8))).date().isoformat(),
+        "spec": _sha256(SPECS / f"{slug}.json"),
+        "xhs": _sha256(xhs) if xhs.is_file() else "",
+        "captions": caps,
+    }, sort_keys=True)
+    return hashlib.sha256(blob.encode()).hexdigest()
+
+
+def _verdicts() -> dict:
+    global _VERDICTS
+    if _VERDICTS is None:
+        try:
+            data = json.loads(VERDICT_CACHE.read_text(encoding="utf-8"))
+            _VERDICTS = data if isinstance(data, dict) else {}
+        except (OSError, ValueError):
+            _VERDICTS = {}
+    return _VERDICTS
+
+
+def save_verdicts() -> None:
+    """全量那一趟跑完把结论落盘（actions/cache 带给下一趟的探针）。写不了只告警。"""
+    if not _VERDICTS_DIRTY:
+        return
+    try:
+        VERDICT_CACHE.parent.mkdir(parents=True, exist_ok=True)
+        tmp = VERDICT_CACHE.with_suffix(".tmp")
+        # sort_keys：同样的结论写出同样的字节——工作流按文件指纹判「有变才另存一份缓存」
+        tmp.write_text(json.dumps(_verdicts(), ensure_ascii=False, indent=1, sort_keys=True),
+                       encoding="utf-8")
+        tmp.replace(VERDICT_CACHE)
+    except OSError as exc:
+        print(f"[预检缓存] 写不了 {VERDICT_CACHE}（{exc}）——下一趟探针判不了的会照常走全量",
+              file=sys.stderr)
+
+
+def _remember(slug: str, missing: list[str]) -> None:
+    """全量那一趟判完一条：把「还缺什么」按 `verdict_key` 记下来（空列表＝判过、全绿）。
+
+    ⚠️ 有一项是**工具崩了**（`interview_preflight.CRASHED`，不是判据判的红）就不记，
+    连旧的一起删掉：偶发的崩溃记进去，探针会拿它当「同一份输入判过是红的」一直重放到
+    北京日期翻过去；不记，下一趟探针判不了、交给全量重判。"""
+    global _VERDICTS_DIRTY
+    from interview_preflight import CRASHED  # noqa: PLC0415
+    if any(CRASHED in m for m in missing):
+        if _verdicts().pop(slug, None) is not None:
+            _VERDICTS_DIRTY = True
+        return
+    if (key := verdict_key(slug)) is not None:
+        _verdicts()[slug] = {"key": key, "missing": list(missing)}
+        _VERDICTS_DIRTY = True
+
+
+def _cached_verdict(slug: str) -> list[str]:
+    """探针判不全的一条：同一份输入全量判过就用那一份，没有就当「要全量那一趟来判」。"""
+    key = verdict_key(slug)
+    row = _verdicts().get(slug) or {}
+    if key is not None and isinstance(row, dict) and row.get("key") == key \
+            and isinstance(row.get("missing"), list):
+        return [f"{m}（上一趟全量预检判的，输入没变）" for m in row["missing"]]
+    _UNKNOWN.append(slug)
+    return []
+
+
+def _preflight_problems(slug: str, spec: dict) -> tuple[list[str], bool]:
+    """dispatch 之前把 runner 上必红的「只看 spec 就判得出」的错拦下来 → (红, 判不全)。
+
+    来路：2026-09-06 之后 interview-clip 有 12 趟红在中文字幕（超宽／吊「的」／
+    117:114 行数对不上）、9 趟红在 tag／标题——全是 spec 本身的错，却都要等 runner
+    装完依赖、取完字幕才报；自动链投出去的那条红了还会占住 70 分钟的「已投」窗口。
+    判据全在 `interview_preflight.spec_problems`（和出片那一趟同一份函数），这里只取
+    每条红的第一行。
+
+    ⚠️ **全量模式**（dispatch 那一步）环境不全时抛 `PreflightUnavailable`，**不在这儿吞**
+    ——吞掉就成了「判不了」当「判过了」。判完由 `missing_for_render` 按 `verdict_key`
+    记下来。
+
+    ⚠️ **探针模式**（`--probe`，系统 python3 没有 PIL）：不要 PIL 的那几道照跑
+    （`probe_problems`），红了就是红；量宽度那几项判不了——由 `missing_for_render`
+    拿上一趟全量预检**同一份输入**记下的结论顶上，没有就当「要全量那一趟来判」
+    放进待投名单（探针只拿它数数，不 dispatch）。原来这里一律抛，于是一条卡在
+    量宽度上的红 spec 每 10 分钟逼一次全量 job（review 量的）。
+    """
+    from interview_preflight import (  # noqa: PLC0415
+        PreflightUnavailable,
+        probe_problems,
+        spec_problems,
+    )
+    try:
+        problems, _notes = spec_problems(spec)
+        return [f"预检：{p.splitlines()[0]}" for p in problems], False
+    except PreflightUnavailable:
+        if not PROBE:
+            raise
+    red, _unknown = probe_problems(spec)
+    return [f"预检：{p.splitlines()[0]}" for p in red], True
 
 
 def _load_state() -> dict:
@@ -260,7 +429,23 @@ def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[st
             if not (revision.get("id") and revision.get("base_film_sha256")
                     and revision.get("base_film_sha256") == pushed.get("film_sha256")):
                 # A stale generator changing spec bytes is not a new user request.
-                continue
+                if revision:
+                    continue
+                # 没写修订标记：推送之后改了会进成片的字段、而且还在自动修订窗口里，
+                # 就当成一次修订（09-22「重渲之后默认就是重推」）；窗口外的说一声，
+                # 只改注解的照旧安静跳过。判据和来路见 interview_revision。
+                qc_raw = _repo_bytes(OUTPUT / p.stem / "qc_attestation.json")
+                try:
+                    qc = json.loads(qc_raw) if qc_raw else None
+                except (ValueError, UnicodeDecodeError):
+                    qc = None
+                revise, why = post_push_edit(
+                    spec, pushed, qc if isinstance(qc, dict) else None,
+                    now or datetime.now(timezone.utc))
+                if not revise:
+                    if why:
+                        waiting.append((p.stem, [why]))
+                    continue
         missing = missing_for_render(p.stem, spec)
         if missing:
             waiting.append((p.stem, missing))
@@ -320,7 +505,12 @@ def main() -> int:
                     help="配合 --mark-one：写入这次 dispatch 的 UTC 时刻")
     ap.add_argument("--stale", action="store_true",
                     help="列出投了超过 %d 分钟还没有当前成片的" % STALE_MINUTES)
+    ap.add_argument("--probe", action="store_true",
+                    help="「没活就早退」的探针：缺 PIL 时量宽度那几项拿上一趟全量预检的结论顶，"
+                         "没有就算待投（只数数，不 dispatch）")
     args = ap.parse_args()
+    global PROBE
+    PROBE = bool(args.probe)
 
     if args.mark_one:
         mark_one(args.mark_one, now=args.at)
@@ -336,7 +526,12 @@ def main() -> int:
         return 0
 
     ready, waiting = todo_slugs()
-    print(f"待 dispatch {len(ready)} 条：")
+    if not PROBE:
+        save_verdicts()
+    unknown = [s for s in ready if s in _UNKNOWN]
+    print(f"待 dispatch {len(ready)} 条：" + (
+        f"（其中 {len(unknown)} 条量宽度那几项这里判不了、也没有同一份输入的全量结论，"
+        f"交给全量那一趟判：{'、'.join(unknown)}）" if unknown else ""))
     for s in ready:
         print(s)
     # 等自动补齐/例外复核的走 stderr：stdout 第二行起是给 workflow 切的名单，混进去就会把

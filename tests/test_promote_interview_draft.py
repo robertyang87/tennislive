@@ -263,6 +263,52 @@ def test_promote_all写盘时保留注解并删草稿(tool, monkeypatch, tmp_pat
     assert spec["_zh_draft"] == ["机器译文"], "注解键要跟着进正式 spec"
 
 
+# ── 自动收尾卡那一句要一行放得下（interview_spec_gates 那道闸的同一把尺）──────
+
+
+def _top500_names() -> list[str]:
+    table = json.loads((_TOOLS.parent / "src" / "tennislive" / "zh"
+                        / "player_names_top500.json").read_text(encoding="utf-8"))
+    return sorted({row["name_zh"] for rows in table["tours"].values()
+                   for row in rows if row.get("name_zh")})
+
+
+@pytest.mark.parametrize("win", [
+    # review 量出来会折行的 top-100：WTA #5 / #19 / #25、ATP #25
+    "米拉·安德烈耶娃", "亚历山德罗娃", "克雷吉茨科娃", "达维多维奇·福基纳",
+])
+def test_promote的自动收尾卡长名字也放得下一行(tool, win):
+    """原模板 `{win}赢球后的第一反应` 在这几个名字上量出来 858~1002px，卡上一行当时只有
+    838px（main 收左边距之后 860px，安德烈耶娃 940、福基纳 1002 照样放不下）——提升出来的
+    spec 在 picker 预检和 render 的 check_takeaway 都红，而自动链没有任何一步会替它改短，
+    只能永久躺在等待名单里。"""
+    pytest.importorskip("PIL")
+    import interview_spec_gates as gates  # noqa: PLC0415
+
+    spec = tool.promote(_draft(), (win, "对手", f"{win} vs 对手"))
+    point = spec["takeaway"]["close"]["point"]
+    assert gates.takeaway_point_problems(spec) == [], point
+    assert gates.point_width(point) <= gates.point_box_px()
+
+
+def test_promote的自动收尾卡短名字照旧用全句(tool):
+    """退路只在放不下时才用——放得下的名字不许被顺手砍短。"""
+    pytest.importorskip("PIL")
+    spec = tool.promote(_draft(), ("兹维列夫", "阿特马内", "兹维列夫 vs 阿特马内"))
+    assert spec["takeaway"]["close"]["point"] == "兹维列夫赢球后的第一反应"
+
+
+def test_promote的自动收尾卡_译名表里每个名字都放得下一行(tool):
+    """全表扫：top-500 译名表里的每一个中文名，自动模板都要落在一行里。"""
+    pytest.importorskip("PIL")
+    import interview_spec_gates as gates  # noqa: PLC0415
+
+    box = gates.point_box_px()
+    too_wide = [(win, tool.auto_takeaway_point(win)) for win in _top500_names()
+                if gates.point_width(tool.auto_takeaway_point(win)) > box]
+    assert not too_wide, too_wide
+
+
 def test_手改过的草稿带着没认领的全称断言_转正时留草稿(tool, monkeypatch, tmp_path):
     """转正之后 interview-clip 会被自动 dispatch，而前置检查里那道全称断言闸是
     硬的（`production_preflight.check_interview_claims`）。有人往 `.draft.json`

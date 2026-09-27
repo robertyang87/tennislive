@@ -4564,7 +4564,9 @@ def test_落点卡引一句他没说过的话要当场报错():
         "slug": "fake-x", "start": 0.0, "end": 50.0, "cover": {"frame_at": 1},
         "zh": ["但更让我高兴的是 我健康了", "我百分百打出了最好的网球"],
         "takeaway": {
-            "open": {"point": "「但更让我高兴的是，我健康了」",
+            # 引语收在卡上一行放得下的长度（`check_takeaway` 另有折行那道闸：
+            # 原来那句「但更让我高兴的是，我健康了」量出来 919px，会折成两行）
+            "open": {"point": "「让我高兴的是，我健康了」",
                      "facts": ["他说了 4 次「健康」"]},
             "close": {"point": "他谈的不是赢球。", "ask": "他其实在说什么？"}},
     }
@@ -4862,9 +4864,12 @@ def test_解读卡字号不许退回2026年8月之前的更小档位():
 
     import tools.build_interview_clip as clip
 
-    # 2026-09-27 CSS 挪进 `takeaway_html`（封面和收尾卡共用台头之后），判据跟着读它
+    # 2026-09-27 CSS 挪进 `takeaway_html`（封面和收尾卡共用台头之后），判据跟着读它；
+    # `.point` 的字号同一天收成常量——渲卡片的 CSS 和「一行放不放得下」那道闸
+    # （interview_spec_gates）读的是同一个数
     src = inspect.getsource(clip.takeaway_html)
-    assert "font-size:76px" in src, "解读卡 .point 字号不许退回 64px 那档"
+    assert clip.TAKEAWAY_POINT_PX >= 76 and "font-size:{TAKEAWAY_POINT_PX}px" in src, (
+        "解读卡 .point 字号不许退回 64px 那档")
     assert "font-size:54px" in src, "解读卡 .ask 字号不许退回 46px 那档"
     """这台沙箱的出网走一个做 TLS 拦截的代理，而 edge-tts 认 certifi 的根证书。
 

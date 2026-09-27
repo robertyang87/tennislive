@@ -216,6 +216,39 @@ def find_opponent(digest, surname: str, draft: dict | None = None) -> tuple[str,
     return found["winner"], found["loser"], found["matchup"]
 
 
+#: 自动收尾卡 `point` 的候选，从长到短。**第一个一行放得下的就用它**——量法和
+#: 渲染入口那道闸是同一把尺（`interview_spec_gates.point_width`）。
+#: 来路：原来只有第一条，而 `{win}赢球后的第一反应` 在 6 个字以上的中文名上超出
+#: 838px 的正文区——top-500 译名表量过，top-100 里 16 位（米拉·安德烈耶娃 940px、
+#: 亚历山德罗娃 858px、克雷吉茨科娃 858px、达维多维奇·福基纳 1002px……），
+#: 提升出来的 spec 在 picker 预检和 render 的 check_takeaway 都会红，而自动链里
+#: 没有任何一步会替它改短，于是永久卡在等待名单里。
+#: （838px 是当时的正文区；同一天 main 把卡的左边距收到 70，正文区变成 860px，
+#: 亚历山德罗娃／克雷吉茨科娃 858px 刚好放得下，安德烈耶娃／福基纳照样放不下——
+#: 所以这里不写死任何宽度，只拿 `point_box_px()` 量。）
+AUTO_TAKEAWAY_POINTS = ("{win}赢球后的第一反应", "{win}赛后的第一反应",
+                        "{win}的第一反应", "赢球后的第一反应")
+
+
+def auto_takeaway_point(win: str) -> str:
+    """自动收尾卡那一句：按候选从长到短，取第一个量出来一行放得下的。
+
+    量不了（缺 PIL／字体——interview-auto-render 的提升那一步排在装依赖之后，
+    正常不会走到这儿）就退到**不带名字**的那一句：它在 76px 下只有 490px，任何
+    名字都不会让它折行，宁可少一个名字也不产一条必红的 spec。
+    """
+    try:
+        from interview_spec_gates import point_box_px, point_width  # noqa: PLC0415
+        box = point_box_px()
+        for tpl in AUTO_TAKEAWAY_POINTS:
+            text = tpl.format(win=win)
+            if point_width(text) <= box:
+                return text
+    except (ImportError, OSError):
+        pass
+    return AUTO_TAKEAWAY_POINTS[-1].format(win=win)
+
+
 def promote(draft: dict, opponent: tuple[str, str, str], details: dict | None = None) -> dict:
     """草稿 + 对手 → 正式 spec（补 winner/push，剥 `_draft` 标记）。
 
@@ -274,7 +307,7 @@ def promote(draft: dict, opponent: tuple[str, str, str], details: dict | None = 
     if not spec.get("takeaway"):
         spec["takeaway"] = {
             "close": {
-                "point": f"{win}赢球后的第一反应",
+                "point": auto_takeaway_point(win),
                 "ask": f"你怎么看{win}这场比赛的表现？",
             }
         }
