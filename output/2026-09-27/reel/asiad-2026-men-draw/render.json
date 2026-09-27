@@ -1,0 +1,70 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 195.5,
+  "topbar": null,
+  "film_seconds": 200.567,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 16.416,
+    "1": 10.8,
+    "2": 10.584,
+    "3": 8.184,
+    "4": 11.976,
+    "5": 10.992,
+    "6": 11.712,
+    "7": 11.496,
+    "8": 13.296,
+    "9": 12.6,
+    "10": 13.488,
+    "11": 10.992,
+    "12": 6.288,
+    "13": 11.16,
+    "14": 12.312,
+    "15": 9.744
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "asiad-2026-men-draw",
+    "received_at": "2026-09-27T05:28:02Z",
+    "artifact_ready_at": "2026-09-27T05:33:13Z",
+    "elapsed_seconds": 311.634,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "dae38ab8a580546f51dfafdb4d3d2e704229fc0542c93614dd5fbf1344a7d43e",
+    "spec_sha256": "114dca8d6d7403696cdf5d12886769951ec563ff8812479fb482c69932b11b5c",
+    "run_id": "36297276954",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-27T05:30:44Z",
+        "run_id": "36297276954"
+      }
+    ],
+    "render_seconds": 150.634,
+    "pre_render_seconds": 161.0
+  },
+  "film_sha256": "dae38ab8a580546f51dfafdb4d3d2e704229fc0542c93614dd5fbf1344a7d43e",
+  "film_bytes": 43461680,
+  "qc_attestation_sha256": "547ba140116f4facb262de608d67c7b6f0cae604e875bdddf8a1ba2a355e3e1b",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-27T05:30:44Z",
+      "run_id": "36297276954"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-27T05:33:14Z",
+      "run_id": "36297276954"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-asiad-2026-men-draw/asiad-2026-men-draw.mp4",
+  "video_bytes": 43461680
+}
