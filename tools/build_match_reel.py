@@ -9623,7 +9623,8 @@ def watermark_xy(*, has_topbar: bool) -> tuple[int, int]:
 
     **纵向要让开顶部那条带**，不然角标压在顶栏的字上：
     - 带式：顶带是实色，画面从 `BAND_TOP` 才开始
-    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，底下垫着一层半透明黑
+    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，字底下垫着一层渐变压暗（`TOPBAR_SCRIM_*`，
+      顶上 0.62 淡到 200px 处 0——Q6 之前是一块 45% 半透明黑实条）
     - 全出血、没顶栏（网球有故事这类）：顶上是空的，直接贴
     """
     if LAYOUT == "band":
@@ -9648,8 +9649,9 @@ def inset_top_clear_y(spec: dict) -> int:
     topic = str(cover.get("topic", "")).strip()
     _wx, wy = watermark_xy(has_topbar=bool(spec.get("topbar")))
     # ⚠️ `watermark_xy` 给的是 PNG 的左上角，**阴影那一圈（SHADOW_PAD）已经减掉**
-    # ——墨的顶边要把它加回来，不然算出来比真值高 18px（第一版就这么错的，
-    # 判据 test_inset_animation 那条钉的是绝对值 151）。
+    # ——墨的顶边要把它加回来，不然算出来比真值高 `WATERMARK_SHADOW_PAD`（现在
+    # 11px ＝ 阴影 3×3 ＋ 描边 2；Q11 收紧阴影之前是 18px，第一版就这么错的）。
+    # 判据 test_inset_animation 那条钉的是绝对值 151（44+56+27+24），和 pad 无关。
     ink_top = wy + WATERMARK_SHADOW_PAD
     block_h = (TOPIC_INK_TOP_PX + TOPIC_TEXT_PX) if topic else BRAND_ICON_PX
     return ink_top + block_h + INSET_WATERMARK_GAP_PX
@@ -9823,7 +9825,7 @@ def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
 #: ⚠️ **满档那一段量到比分行的行盒底（72+38）再多 2px 描边，不是评审图里的
 #: 100px。** 评审给账号所有者看的那一版（`grad_topbar.png`）满档只到 100，
 #: 而比分行的墨实测落在 y86~109——下面 9 行字压在已经开始变淡的底上，白底上
-#: 最亮那一行只剩 **3.31:1**，过不了他定的「比分行 ≥3.5:1」。延到 112 之后
+#: 最亮那一行只剩 **3.31:1**，过不了他定的「比分行 ≥3.6:1」。延到 112 之后
 #: 整行都在满档上，淡出段 88px，仍然看不出边。
 #: ⚠️ **图在滤镜图里现生成，不另起一路输入**（`color` 源 ＋ `geq` 写 alpha，
 #: 一帧、1080×200，overlay 默认把最后一帧一直重复下去）——加一路输入就得改

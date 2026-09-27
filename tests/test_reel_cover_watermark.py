@@ -108,47 +108,63 @@ def test_顶栏底是渐变压暗没有硬边_白底上比分行读得出(tmp_pa
 
     ① 形状：满档那一段 ≈ 255×(1−0.62)，200px 以下回到纯白；相邻两行最多差几级
        ——老的实条下沿一行跳 114（反向验证：换回 drawbox，这一条红）
-    ② 比分行（薄荷 #4adc8c，这一行最淡的那支字色）在它自己那几行的底上 ≥ 3.5:1
-       ——满档只铺到 100px（评审图那一版）时是 3.31:1（反向验证过，红在这一条）
-    ③ 带式不垫这一层（顶带本来就是实色）
+    ② 比分行（薄荷 #4adc8c，这一行最淡的那支字色）在它自己那几行的底上 ≥ 3.6:1
+       （账号所有者定的「1.9:1 → 3.6:1」，实测 3.62）——满档只铺到 100px（评审图
+       那一版）时是 3.31:1（反向验证过，红在这一条）
+    ③ 带式不垫（顶带本来就是实色）
+
+    ①② 在比赛画面的第 0.5 / 2 / 4 秒各量一遍：压暗那张图是 `color` 源的**一帧**
+    （`d=1`），第 1 秒之后还在，全靠 overlay 默认 `eof_action=repeat` 把它重复下去。
+    只在第 0.5 秒量的时候，那一帧本来就还活着——压暗层第 1 秒之后没了，这条照样绿。
+    反向验证：overlay 加 `enable='lt(t,1)'`（只压第 1 秒），只量 0.5 秒的老版本
+    **1 passed**，这一版红在第 2 秒那一格的 ①。
     """
     assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了"
     monkeypatch.setattr(reel, "LAYOUT", "full")
     fonts = ROOT / "assets" / "fonts"
     assert fonts.is_dir()
+    cover_secs, match_secs = 0.4, 4.6
     ass = reel.write_topbar_ass(("2026 ATP250 杭州 第二轮", "黄泽林 7-6(2) 4-6 6-3 巴列霍"),
-                                0.4, 1.4, tmp_path / "t.ass")
-    graph = reel.topbar_filtergraph(0.4, 1.0, ass, _empty_ass(tmp_path / "e.ass"))
+                                cover_secs, cover_secs + match_secs, tmp_path / "t.ass")
+    graph = reel.topbar_filtergraph(cover_secs, match_secs, ass, _empty_ass(tmp_path / "e.ass"))
     white = tmp_path / "white.png"
     Image.new("RGB", (1080, 1440), (255, 255, 255)).save(white)
-    vid, frame = tmp_path / "v.mp4", tmp_path / "f.png"
+    vid = tmp_path / "v.mp4"
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-loop", "1", "-framerate", "25",
-                    "-i", str(white), "-t", "1.8", "-filter_complex", graph,
+                    "-i", str(white), "-t", f"{cover_secs + match_secs + 0.4:.1f}",
+                    "-filter_complex", graph,
                     "-map", "[out]", "-pix_fmt", "yuv444p", "-c:v", "libx264",
-                    "-qp", "0", str(vid)], check=True, cwd=ROOT)
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", "0.9", "-i", str(vid),
-                    "-frames:v", "1", str(frame)], check=True)
-    a = np.asarray(Image.open(frame).convert("RGB"), dtype=int)
-
-    # ① 形状：x=1060 这一列没有字
-    prof = a[:260, 1060, 0]
+                    "-preset", "ultrafast", "-qp", "0", str(vid)], check=True, cwd=ROOT)
     solid = round(255 * (1 - reel.TOPBAR_SCRIM_ALPHA))
-    assert abs(int(prof[: reel.TOPBAR_SCRIM_SOLID_PX].max()) - solid) <= 3, (
-        f"满档那一段应该是 {solid} 上下，量到 {prof[:reel.TOPBAR_SCRIM_SOLID_PX].max()}")
-    assert prof[reel.TOPBAR_SCRIM_FADE_PX + 2:].min() >= 250, "200px 以下还没回到画面本色"
-    jump = int(np.abs(np.diff(prof)).max())
-    assert jump <= 8, f"压暗层有硬边：相邻两行差 {jump}/255（老实条下沿一行跳 114）"
 
-    # ② 比分行：找薄荷的墨（第二行，避开第一行最前面那块同色的球场图标）
-    mint = (a[..., 1] - a[..., 0] > 60) & (a[..., 1] - a[..., 2] > 30)
-    rows = np.where(mint[reel.TOPBAR_BODY_TOP - 5:reel.TOPBAR_H, 330:900].any(axis=1))[0]
-    assert rows.size, "比分行一个薄荷字都没量到——顶栏没渲出来"
-    y0, y1 = reel.TOPBAR_BODY_TOP - 5 + rows.min(), reel.TOPBAR_BODY_TOP - 5 + rows.max()
-    bg = a[y0:y1 + 1, 1060].max(axis=0)
-    ratio = T.contrast(T.SCORE["win_video"], "#%02x%02x%02x" % tuple(int(c) for c in bg))
-    assert ratio >= 3.5, (
-        f"白底上比分行（y{y0}~{y1}）的薄荷只有 {ratio:.2f}:1——账号所有者要的是 ≥3.5:1；"
-        "多半是满档那一段没铺到比分行的底")
+    for at in (0.5, 2.0, 4.0):                        # 比赛画面里的第几秒
+        frame = tmp_path / f"f{at}.png"
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{cover_secs + at:.2f}",
+                        "-i", str(vid), "-frames:v", "1", str(frame)], check=True)
+        a = np.asarray(Image.open(frame).convert("RGB"), dtype=int)
+
+        # ① 形状：x=1060 这一列没有字
+        prof = a[:260, 1060, 0]
+        top = int(prof[: reel.TOPBAR_SCRIM_SOLID_PX].max())
+        assert abs(top - solid) <= 3, (
+            f"第 {at} 秒：满档那一段应该是 {solid} 上下，量到 {top}"
+            + ("——前面几格还在、这一格没了：压暗那一帧没被一直重复下去"
+               "（overlay 的 eof_action / enable）" if at > 1 else ""))
+        assert prof[reel.TOPBAR_SCRIM_FADE_PX + 2:].min() >= 250, (
+            f"第 {at} 秒：200px 以下还没回到画面本色")
+        jump = int(np.abs(np.diff(prof)).max())
+        assert jump <= 8, f"第 {at} 秒：压暗层有硬边，相邻两行差 {jump}/255（老实条下沿一行跳 114）"
+
+        # ② 比分行：找薄荷的墨（第二行，避开第一行最前面那块同色的球场图标）
+        mint = (a[..., 1] - a[..., 0] > 60) & (a[..., 1] - a[..., 2] > 30)
+        rows = np.where(mint[reel.TOPBAR_BODY_TOP - 5:reel.TOPBAR_H, 330:900].any(axis=1))[0]
+        assert rows.size, f"第 {at} 秒：比分行一个薄荷字都没量到——顶栏没渲出来"
+        y0, y1 = reel.TOPBAR_BODY_TOP - 5 + rows.min(), reel.TOPBAR_BODY_TOP - 5 + rows.max()
+        bg = a[y0:y1 + 1, 1060].max(axis=0)
+        ratio = T.contrast(T.SCORE["win_video"], "#%02x%02x%02x" % tuple(int(c) for c in bg))
+        assert ratio >= 3.6, (
+            f"第 {at} 秒：白底上比分行（y{y0}~{y1}）的薄荷只有 {ratio:.2f}:1——账号所有者"
+            "要的是 ≥3.6:1（实测 3.62）；多半是满档那一段没铺到比分行的底")
 
     # ③ 带式不垫
     monkeypatch.setattr(reel, "LAYOUT", "band")
