@@ -1,5 +1,5 @@
 {
-  "status": "render_and_visual_qc_complete_ci_pending",
+  "status": "v5_editorial_fix_render_pending",
   "source_sha256": "1646603e5fd793f4eeb6ca05fef5c07c2c01ee21367a9d229e2207cf8559f666",
   "source_probe_run": 36322312524,
   "duration": 124.296417,
@@ -22,8 +22,10 @@
     "v4 actual 102s final serve/return frame preserves both players; 114s handshake verified"
   ],
   "pending": [
-    "current head CI",
-    "merge and push receipt"
+    "v5 render",
+    "v5 actual final film QC",
+    "current head full CI",
+    "merge and push"
   ],
   "model_calls": {
     "DeepSeek": false,
@@ -65,5 +67,17 @@
   },
   "limitations": [
     "Audio reviewed by generated word boundaries, silence/duration gates and timing, not direct listening; cold-open quote based on official automatic captions."
-  ]
+  ],
+  "ci_failure": {
+    "run": 36324997686,
+    "passed": 3882,
+    "failed": 6,
+    "fixes": [
+      "北京时间与约略开球时刻（源见spec）",
+      "末句接发站位/深度互动提问",
+      "quote_kind=broadcast",
+      "显式_hit_data官方数据",
+      "登记hook_align正式字段"
+    ]
+  }
 }
