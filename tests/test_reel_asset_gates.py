@@ -432,3 +432,44 @@ def test_dry_run的推送标题和runner同一个函数(tmp_path, monkeypatch, c
                                       "--outdir", str(tmp_path / "dry")])
     assert reel.main() == 1
     assert "推送文案前置检查不过" in capsys.readouterr().out
+
+
+def test_封面复用只有同一栏目才硬红_跨栏目只报(tmp_path, monkeypatch):
+    """CLAUDE.md「同一件事，不同栏目各讲一次不算重复」。存量 7 次命中里 6 次是
+    网球有故事借同一个人的赛场之上封面；唯一的证据（wang-prozorova 「换一张封面吧」）
+    是同栏目同站。所以同栏目硬红、跨栏目只报——不然每条借球员比赛照的故事片都红。"""
+    kw = _reuse_world(tmp_path)
+    sent = json.loads((kw["specs"] / "wang-garland.json").read_text(encoding="utf-8"))
+    sent["cover"]["eyebrow"] = "赛场之上"
+    (kw["specs"] / "wang-garland.json").write_text(json.dumps(sent), encoding="utf-8")
+    same = {"slug": "wang-prozorova",
+            "cover": {"eyebrow": "赛场之上", "portrait": {"image": "assets/wang-copy.jpg"}}}
+    story = {"slug": "wang-story",
+             "cover": {"eyebrow": "网球有故事", "portrait": {"image": "assets/wang-copy.jpg"}}}
+    assert gates.cover_reuse_finding(same, **kw)[1] is True
+    assert gates.cover_reuse_finding(story, **kw)[1] is False
+    # 接进 spec_asset_problems 之后：同栏目在「硬」里，跨栏目只在「报」里
+    real = gates.cover_reuse_finding
+    monkeypatch.setattr(gates, "cover_reuse_finding", lambda spec, **_: real(spec, **kw))
+    monkeypatch.setattr(gates, "numeral_display_problems", lambda spec, **_: [])
+    for other in ("duration_problem", "stats_card_problem"):
+        monkeypatch.setattr(gates, other, lambda spec, **_: None)
+    monkeypatch.setattr(gates, "image_problems", lambda spec, **_: [])
+    hard, soft = gates.spec_asset_problems(same)
+    assert any("wang-garland" in h for h in hard) and not soft
+    hard, soft = gates.spec_asset_problems(story)
+    assert not hard and any("跨栏目" in s for s in soft)
+
+
+def test_存量表读不到时当没有存量_不许抛(monkeypatch, tmp_path):
+    """finalize-reel / reel-model-benchmark 的稀疏检出没有 `data/`：读不到存量表
+    要当空表，不能让 promote → validate_spec 抛 FileNotFoundError（复查复现过，
+    每一条人工 finalize 的草稿都会红）。"""
+    # `_legacy_doc` 带 lru_cache：别的用例先读过真表的话，只换路径不清缓存等于没换
+    gates._legacy_doc.cache_clear()
+    monkeypatch.setattr(gates, "LEGACY_PATH", tmp_path / "nope" / "legacy.json")
+    try:
+        assert gates.legacy("no_stats") == frozenset()
+        assert gates.legacy("cover_reuse") == frozenset()
+    finally:
+        gates._legacy_doc.cache_clear()

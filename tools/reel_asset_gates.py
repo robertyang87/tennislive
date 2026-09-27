@@ -62,7 +62,15 @@ def _auto(spec: dict) -> bool:
 
 @functools.lru_cache(maxsize=1)
 def _legacy_doc() -> dict:
-    return json.loads(LEGACY_PATH.read_text(encoding="utf-8"))
+    # ⚠️ 读不到就当没有存量：finalize-reel / reel-model-benchmark 的稀疏检出里没有
+    # `data/`，不接住的话 promote → validate_spec 在这儿抛 FileNotFoundError，每一条
+    # 人工 finalize 的草稿都红（复查在不带 data/ 的检出里复现）。validate_spec 路径上
+    # 另外四张存量表（legacy_cover_topic / fullbleed / topline / unvoiced_quote）都是
+    # 这么接的。
+    try:
+        return json.loads(LEGACY_PATH.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return {}
 
 
 def legacy(kind: str) -> frozenset[str]:
@@ -324,6 +332,16 @@ def _sha_cached(path: Path, size: int, mtime_ns: int) -> str:
 def cover_reuse_problem(spec: dict, *, specs: Path = SPECS, ledger: Path = LEDGER,
                         root: Path = ROOT, output: Path = OUTPUT,
                         legacy_set: frozenset[str] | None = None) -> str | None:
+    """见 `cover_reuse_finding`；只要文案，不分栏目。"""
+    found = cover_reuse_finding(spec, specs=specs, ledger=ledger, root=root,
+                                output=output, legacy_set=legacy_set)
+    return found[0] if found else None
+
+
+def cover_reuse_finding(spec: dict, *, specs: Path = SPECS, ledger: Path = LEDGER,
+                        root: Path = ROOT, output: Path = OUTPUT,
+                        legacy_set: frozenset[str] | None = None,
+                        ) -> tuple[str, bool] | None:
     """封面照片和另一条**已经发出去**的片子是同一张（按路径，或者按内容哈希）。
 
     账号所有者看 wang-prozorova 第一版时要「换一张封面吧」：那张是同站
@@ -369,10 +387,16 @@ def cover_reuse_problem(spec: dict, *, specs: Path = SPECS, ledger: Path = LEDGE
                 same = any(_sha(path) == _sha(candidate)
                            for candidate in by_size.get(size, ()))
             if same:
+                # 第二个值＝同一栏目。CLAUDE.md「同一件事，不同栏目各讲一次不算重复」：
+                # 存量 7 次命中里 6 次是网球有故事借同一个人的赛场之上封面，唯一的证据
+                # （wang-prozorova「换一张封面吧」）是同栏目同站——跨栏目只报不拦。
+                mine_col = str((spec.get("cover") or {}).get("eyebrow") or "")
+                their_col = str((other.get("cover") or {}).get("eyebrow") or "")
                 return (f"封面照片 {rel} 已经在 `{other_slug}` 上发出去过（{their_sent}）——"
                         "读者刷到的是同一张图。换一张这一场自己的图（官方图库／抽帧，见 "
                         "tennis-cover-photos）；真要沿用（同一个人的系列、按要求重做）就在 "
-                        "spec 顶层写 `_cover_reuse_why` 说清为什么。")
+                        "spec 顶层写 `_cover_reuse_why` 说清为什么。",
+                        mine_col == their_col)
     return None
 
 
@@ -499,6 +523,11 @@ def spec_asset_problems(spec: dict) -> tuple[list[str], list[str]]:
     if stats:
         hard.append(stats)
     hard += image_problems(spec)
-    judged = [p for p in [cover_reuse_problem(spec)] if p] + numeral_display_problems(spec)
+    reuse = cover_reuse_finding(spec)
+    judged = numeral_display_problems(spec)
+    if reuse and reuse[1]:
+        judged = [reuse[0]] + judged
+    elif reuse:
+        soft.append("（跨栏目，只报）" + reuse[0])
     (soft if _auto(spec) else hard).extend(judged)
     return hard, soft
