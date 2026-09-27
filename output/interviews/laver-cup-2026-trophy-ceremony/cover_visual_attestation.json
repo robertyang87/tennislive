@@ -1,0 +1,112 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-27T18:04:59Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "诺阿",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at + face model buffalo_s-v0.7 vs official headshot",
+  "spec_sha256": "e5a956c9114cde286b85ece6f6663437f25236ef29c297c1b8e49d98b386643d",
+  "poster_sha256": "7f83f66db04c1fa45a37c0a7a80ad98b6224ef36a376ba811996a1d4e4186361",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        162,
+        427,
+        199,
+        199
+      ],
+      "detected_faces": 7,
+      "eyes": 4,
+      "face_height_ratio": 0.24568,
+      "face_area_ratio": 0.04527,
+      "center_x_ratio": 0.24213,
+      "center_y_ratio": 0.46481,
+      "sharpness": 225.959,
+      "contrast": 120.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 825.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    },
+    "face_model": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "unknown",
+        "name": null,
+        "similarity": {},
+        "missing": [
+          "诺阿"
+        ],
+        "expected": [
+          "诺阿"
+        ],
+        "face": [
+          407,
+          155,
+          580,
+          369
+        ],
+        "face_px": 214.5,
+        "reason": "没有可比的官方头像：诺阿",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2137,
+        "ear_each": [
+          0.1883,
+          0.2392
+        ],
+        "face": [
+          407,
+          155,
+          580,
+          369
+        ],
+        "face_px": 214.5,
+        "reason": "眼睛纵横比 0.21 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": [
+        "认人拿不准：没有可比的官方头像：诺阿"
+      ]
+    }
+  },
+  "issues": [],
+  "warnings": [
+    "认人拿不准：没有可比的官方头像：诺阿"
+  ]
+}
