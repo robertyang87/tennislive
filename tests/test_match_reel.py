@@ -5464,6 +5464,9 @@ def test_dry_run秒级返回且一个字节都不下载(tmp_path):
         Path("specs/reels/tiafoe-musetti-cincinnati-2026-qf.json").read_text(
             encoding="utf-8"))
     spec["source_url"] = "http://0.0.0.0/绝对下不动.mp4"
+    # 2026-09-27 起新的手写 spec 每条源都要认领得到 probe（probe_sources）——这条
+    # 故意喂一个没人 probe 过的地址，按那道闸的认领口写明为什么
+    spec["_no_probe_why"] = {"": "测试夹具：故意喂一个下不动、也没 probe 过的地址"}
     # 临时文件用底稿自己的 slug 命名：措辞豁免按 slug 查（spec_wording），
     # 这条底稿挂着「7点05分」的账，换名克隆就丢豁免、dry-run 会红在措辞上
     path = tmp_path / "tiafoe-musetti-cincinnati-2026-qf.json"

@@ -487,6 +487,21 @@ jobs:
             git sparse-checkout add $COVER_DIRS
             echo "拉回封面帧（dry-run 先查认人／睁眼）：$COVER_DIRS"
           fi
+          # 多源片子的源常常 probe 在**别的 slug 目录**下（hsieh-chan-uso3、proz-mia25、
+          # quiet-src-*……）——上面按本 slug 拉不回来，7 趟几何红的 runner dry-run 因此
+          # 全是「一份 probe.json 都没认领上」。按源片 URL 把它们的 probe.json 落盘
+          # （只取 probe.json，不拉缩略图墙；一趟批量 fetch），见 tools/probe_sources.py。
+          # ⚠️ 这一步必须排在**所有** `git sparse-checkout add` 之后：add 会把稀疏范围
+          # 之外、没被跟踪修改的落盘文件清掉（评审实测），落好的 probe.json 就没了。
+          # 取失败了**要往下传**（REEL_PROBES_MATERIALIZE_FAILED）：这一趟「认领不到
+          # probe」可能只是没拉回来，覆盖那道闸降成只报，别拿「先跑一趟 mode=probe」误导人。
+          if ! python tools/probe_sources.py materialize "$SPEC"; then
+            echo "::warning::按 URL 认领 probe.json 失败——这一趟覆盖那道闸只报不拦"
+            export REEL_PROBES_MATERIALIZE_FAILED=1
+          fi
+          # 覆盖那道闸只在 mode=render 硬：cover／narration 这两趟用不到 probe，
+          # 时效第一、封面排最前，别让一条还没 probe 的源挡住出封面。
+          export REEL_DRY_RUN_FOR="${{ github.event.inputs.mode }}"
           python tools/build_match_reel.py render --dry-run \
             --spec "$SPEC" --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log
 
