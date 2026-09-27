@@ -67,7 +67,7 @@ def _load_embedder():
     try:
         import face_checks  # noqa: PLC0415
 
-        return face_checks.load()
+        return face_checks.load(fetch=True)   # 人手跑的工具：缺权重就现下
     except ImportError as exc:
         raise SystemExit(f"读不了人脸模型：{exc}") from exc
     except Exception as exc:  # noqa: BLE001 — ModelUnavailable 及其它，都要说清楚

@@ -91,6 +91,16 @@ MODEL_FILES = {
     "w600k_mbf.onnx": "9cc6e4a75f0e2bf0b1aed94578f144d15175f357bdc05e815e5c4a02b319eb4f",
     "2d106det.onnx": "f001b856447c413801ef5c42091ed0cd516fcd21f2d6b79635b1e733a7109dbf",
 }
+#: 工作流 `actions/cache` 的键：**按内容定址**——版本号 ＋ 三个权重 sha256 的摘要。
+#: 换权重（哪怕版本号忘了改）键就跟着变，旧目录不会被当成新的命中。工作流里写的是
+#: 字面值，`test_人脸模型缓存键跟着模型版本走` 逼着它和这里逐字一致。
+#: ⚠️ 键按内容算还不够：`fetch` 下到一半失败会留下半截目录，所以存缓存那一步
+#: **只在 fetch 成功之后跑**（`actions/cache/save` 挂在 fetch 的 `ok` 输出上），
+#: 半截目录永远不会被钉进一个不可变的键里。
+CACHE_KEY = "face-models-{}-{}".format(
+    MODEL_VERSION,
+    hashlib.sha256("".join(f"{n}:{d}\n" for n, d in sorted(MODEL_FILES.items()))
+                   .encode()).hexdigest()[:12])
 
 # ---------------------------------------------------------------- 判据
 
@@ -184,6 +194,13 @@ def models_ready(directory: Path | None = None) -> list[str]:
     return bad
 
 
+def onnxruntime_importable() -> bool:
+    """装没装 onnxruntime（不 import，只找模块）。"""
+    import importlib.util  # noqa: PLC0415
+
+    return importlib.util.find_spec("onnxruntime") is not None
+
+
 def fetch_models(directory: Path | None = None, *, url: str = MODEL_URL) -> Path:
     """把三个 onnx 下好、校验好。已经齐了就一个字节都不下。
 
@@ -194,6 +211,12 @@ def fetch_models(directory: Path | None = None, *, url: str = MODEL_URL) -> Path
     missing = models_ready(directory)
     if not missing:
         return directory
+    if not onnxruntime_importable():
+        # **先问推理引擎在不在，再下 127 MB。** 没装 onnxruntime 时下好的权重也
+        # 一个字节都用不上——那一趟下载纯属白等（评审 2026-09-27 nit 6）
+        raise ModelUnavailable(
+            "没装 onnxruntime——装 extra：pip install -e \".[faces]\"（没下模型：装不上引擎，"
+            "下了也用不了）")
     if os.environ.get("TENNISLIVE_FACE_MODEL_FETCH", "1") == "0":
         raise ModelUnavailable(
             f"人脸模型不在 {directory}（缺 {', '.join(missing)}），"
@@ -427,10 +450,17 @@ _MODEL_ERROR: str | None = None
 _LOAD_LOCK = threading.Lock()
 
 
-def load(*, fetch: bool = True) -> FaceModel:
+def load(*, fetch: bool = False) -> FaceModel:
     """进程内单例。失败一次就记住原因，后面同样抛（别每一帧重试一次下载）。
 
-    上锁：render 里分段那道在后台线程、封面那道在主线程，两边可能同时第一次叫它。"""
+    上锁：render 里分段那道在后台线程、封面那道在主线程，两边可能同时第一次叫它。
+
+    ⚠️ **默认不联网**（`fetch=False`）。出片链路（封面闸、分段认人、采访封面闸）里
+    权重由工作流「备好人脸模型」那一步先下好、缓存住；那一步没备上，这里就该
+    **当场报 unavailable**，而不是在 job 中途再去 GitHub Release 拉 127 MB 的包
+    （评审 2026-09-27 nit 6：原来默认 `fetch=True`，缺权重时每条出片链路都会
+    现下一遍，还排在「onnxruntime 装没装」之前）。只有人手跑的命令行
+    （`face_checks.py check/scan/...`、`identify_player_frame.py`）才显式 `fetch=True`。"""
     global _MODEL, _MODEL_ERROR
     with _LOAD_LOCK:
         if _MODEL is not None:
@@ -575,8 +605,19 @@ def resolve_expected(expected: Mapping[str, object] | Sequence[str] | str
 # 下面两个纯函数是全文件唯一的判据，`identify` / `eyes_open` / `problems_of` 都调它们。
 
 def identity_verdict(sims: Mapping[str, float], missing: Sequence[str],
-                     face_px: float) -> tuple[str, str | None, str]:
-    """(verdict, name, reason)。"""
+                     face_px: float, target: Sequence[str] | None = None
+                     ) -> tuple[str, str | None, str]:
+    """(verdict, name, reason)。
+
+    `target`：候选里**封面要的是哪一个（几个）**。给了它，`match` 就只认它——
+    另外那几个人只用来判「这张脸是谁」（是对手 → `mismatch`）和「拿不准」，
+    **永远不许让一张对手的脸算通过**。
+
+    来路（评审 2026-09-27 BLOCKING）：赛场之上的封面要认的候选是 `cover.matchup`
+    里的两个人，原来「像两人之一就算 match」——`medvedev-royer` 那帧梅德韦杰夫
+    的脸，把 `cover.subject` 改成鲁瓦耶照样 `match`、`problems=[]`。80 条抽帧封面
+    里 74 条在 `cover.subject` 写着封面上是谁，这道闸却一次都没看它。
+    """
     if face_px <= 0:
         return "unknown", None, "没检出人脸"
     if face_px < MIN_ID_FACE_PX:
@@ -584,6 +625,9 @@ def identity_verdict(sims: Mapping[str, float], missing: Sequence[str],
     if not sims:
         return "unknown", None, f"没有可比的官方头像：{'、'.join(missing) or '（未给人名）'}"
     best = max(sims, key=sims.get)
+    want = [str(n) for n in (target or []) if str(n)]
+    if want:
+        return _targeted_verdict(sims, missing, want, best)
     if sims[best] >= MATCH_SIM:
         return "match", best, f"像 {best}（{sims[best]:.2f} ≥ {MATCH_SIM}）"
     if not missing and all(v < MISMATCH_SIM for v in sims.values()):
@@ -595,6 +639,45 @@ def identity_verdict(sims: Mapping[str, float], missing: Sequence[str],
     if missing:
         why += f"；{'、'.join(missing)} 没有官方头像，不敢判「不是他」"
     return "unknown", best, why
+
+
+def _targeted_verdict(sims: Mapping[str, float], missing: Sequence[str],
+                      want: Sequence[str], best: str) -> tuple[str, str | None, str]:
+    """`identity_verdict` 给了 `target` 的那一支。四种结论，按顺序：
+
+    1. 封面主角像到 `MATCH_SIM` 以上、而且没有别人比他更像 → `match`
+    2. 别人（对手／搭档）像到 `MATCH_SIM` 以上、封面主角没到 → `mismatch`：
+       **这张脸是另一个人**——`MATCH_SIM` 让「不同的人被认成是他」压在万分之四
+    3. 封面主角有头像、相似度低于 `MISMATCH_SIM` → `mismatch`：同一个人 85 张真封面
+       里最低 0.217，**0 张落在 0.15 以下**，和别人像不像无关
+    4. 其余（主角没头像、落在中间地带、两个人都像）→ `unknown`，只报不拦
+    """
+    who = "／".join(want)
+    tsims = {n: sims[n] for n in want if n in sims}
+    tmissing = [n for n in want if n not in sims]
+    tbest = max(tsims, key=tsims.get) if tsims else None
+    if tbest is not None and tsims[tbest] >= MATCH_SIM:
+        if best not in want and sims[best] > tsims[tbest]:
+            return "unknown", tbest, (
+                f"像 {tbest}（{tsims[tbest]:.2f}）也像 {best}（{sims[best]:.2f}，更像），"
+                "两个人分不清——不硬判")
+        return "match", tbest, f"像 {tbest}（{tsims[tbest]:.2f} ≥ {MATCH_SIM}）"
+    if best not in want and sims[best] >= MATCH_SIM:
+        mine = (f"，和{who}只有 {tsims[tbest]:.2f}" if tbest is not None
+                else f"，{who}没有官方头像")
+        return "mismatch", best, (f"这张脸是{best}（{sims[best]:.2f} ≥ {MATCH_SIM}）"
+                                  f"{mine}——封面要的是{who}")
+    if tsims and not tmissing and all(v < MISMATCH_SIM for v in tsims.values()):
+        detail = "、".join(f"{k} {v:.2f}" for k, v in tsims.items())
+        return "mismatch", None, (f"不是封面主角{who}（和官方头像的相似度 {detail}，"
+                                  f"< {MISMATCH_SIM}）")
+    if tbest is None:
+        why = f"封面主角{who}没有官方头像，认不了"
+        if missing:
+            why += f"（缺头像：{'、'.join(sorted(set(missing)))}）"
+        return "unknown", None, why
+    return "unknown", tbest, (f"和封面主角{tbest}只有 {tsims[tbest]:.2f}，"
+                              f"介于 {MISMATCH_SIM}~{MATCH_SIM}")
 
 
 def eyes_verdict(ear: float | None, face_px: float) -> tuple[str, str]:
@@ -614,12 +697,15 @@ def eyes_verdict(ear: float | None, face_px: float) -> tuple[str, str]:
 
 
 def identify(image, expected_players, *, face: Face | None = None,
-             model: FaceModel | None = None) -> dict:
+             model: FaceModel | None = None, target: Sequence[str] | None = None) -> dict:
     """这张图里最大的那张脸，是不是 `expected_players` 里的人。
 
     返回 `{"verdict": "match"|"mismatch"|"unknown", "name", "similarity", "missing", ...}`。
     **只有两种硬结论**：像到 `MATCH_SIM` 以上＝match；和每一个候选都不到
     `MISMATCH_SIM`＝mismatch（**有人没头像就不判 mismatch**）。其余一律 unknown。
+
+    给了 `target`（必须是 `expected_players` 里的名字）：只有**它**能 match，
+    别的候选只拿来认「这张脸是谁」——见 `_targeted_verdict`。
     """
     model = model or load()
     img = read_bgr(image)
@@ -638,13 +724,20 @@ def identify(image, expected_players, *, face: Face | None = None,
                 missing.append(name)
                 continue
             sims[name] = round(float((emb * ref).sum()), 4)
-    verdict, name, reason = identity_verdict(sims, missing, face_px)
-    return {"verdict": verdict, "name": name, "similarity": sims,
-            "missing": sorted(set(missing)), "expected": sorted(refs),
-            "face": face.box() if face else None, "face_px": face_px,
-            "reason": reason,
-            "thresholds": {"match": MATCH_SIM, "mismatch": MISMATCH_SIM,
-                           "min_face_px": MIN_ID_FACE_PX}}
+    want = sorted(str(n) for n in (target or []) if str(n) in refs)
+    if target and not want:
+        raise ValueError(f"target {list(target)} 不在候选 {sorted(refs)} 里")
+    verdict, name, reason = identity_verdict(sims, missing, face_px, want or None)
+    out = {"verdict": verdict, "name": name, "similarity": sims,
+           "missing": sorted(set(missing)), "expected": sorted(refs),
+           "face": face.box() if face else None, "face_px": face_px,
+           "reason": reason,
+           "thresholds": {"match": MATCH_SIM, "mismatch": MISMATCH_SIM,
+                          "min_face_px": MIN_ID_FACE_PX}}
+    if want:
+        # 落盘：`problems_of` 重判时要知道「只认谁」，不然重判会退回「两人之一」
+        out["target"] = want
+    return out
 
 
 def eyes_open(image, face: Face | None = None, *, model: FaceModel | None = None) -> dict:
@@ -687,7 +780,8 @@ def problems_of(block: object) -> tuple[list[str], list[str]]:
     ident = block.get("identity") or {}
     sims = {str(k): float(v) for k, v in (ident.get("similarity") or {}).items()}
     verdict, _name, reason = identity_verdict(
-        sims, list(ident.get("missing") or []), float(ident.get("face_px") or 0.0))
+        sims, list(ident.get("missing") or []), float(ident.get("face_px") or 0.0),
+        [str(n) for n in ident.get("target") or []] or None)
     if verdict == "mismatch":
         problems.append(f"这张脸不是本人：{reason}")
     elif verdict == "unknown":
@@ -704,7 +798,8 @@ def problems_of(block: object) -> tuple[list[str], list[str]]:
     return problems, warnings
 
 
-def check_frame(image, expected_players, *, model: FaceModel | None = None) -> dict:
+def check_frame(image, expected_players, *, model: FaceModel | None = None,
+                target: Sequence[str] | None = None) -> dict:
     """封面帧一次查两件事（同一张脸）。给 `audit_interview_cover` 和
     `reel_face_gate` 共用——**两条线一个出口，别写两份**。
 
@@ -721,30 +816,39 @@ def check_frame(image, expected_players, *, model: FaceModel | None = None) -> d
     img = read_bgr(image)
     face = largest_face(model, img)
     block = {"status": "ok", "model": MODEL_VERSION,
-             "identity": identify(img, expected_players, face=face, model=model),
+             "identity": identify(img, expected_players, face=face, model=model,
+                                  target=target),
              "eyes": eyes_open(img, face, model=model)}
     problems, warnings = problems_of(block)
     return {**block, "problems": problems, "warnings": warnings}
 
 
 def rank_frames(frames: Iterable[tuple[str, object]], expected_players, *,
-                model: FaceModel | None = None) -> list[dict]:
+                model: FaceModel | None = None,
+                target: Sequence[str] | None = None) -> list[dict]:
     """一批候选帧里**哪几张能过**：同一个人（match）＋ 睁眼，按相似度、睁眼程度排。
 
     这是「拦下来之后换哪一帧」那一步——`python tools/face_checks.py scan` 走这里，
     `reel_face_gate` 拦住封面帧时也拿它在 `frame_at` 前后扫一圈，把能过的秒数
     印进报错里，不用人再去 2 秒一格的缩略图墙上猜。
+
+    给了 `target` 就只有它的脸算「能过」——**拦下一张对手的脸之后，推荐的换帧
+    不许又是对手**（评审 2026-09-27 BLOCKING 的同一个洞）。排序用的相似度也是
+    认出来的那个人的，不是所有候选里最大的那个。
     """
     model = model or load()
     rows = []
     for label, frame in frames:
-        res = check_frame(frame, expected_players, model=model)
-        ok = (not res["problems"] and res["identity"]["verdict"] == "match"
+        res = check_frame(frame, expected_players, model=model, target=target)
+        ident = res["identity"]
+        sims = ident["similarity"]
+        ok = (not res["problems"] and ident["verdict"] == "match"
               and res["eyes"]["verdict"] == "open")
-        rows.append({"frame": label, "ok": ok,
-                     "similarity": max(res["identity"]["similarity"].values(), default=None),
-                     "name": res["identity"]["name"], "ear": res["eyes"]["ear"],
-                     "face_px": res["identity"]["face_px"], "problems": res["problems"]})
+        sim = (sims.get(ident["name"]) if ident["name"] in sims
+               else max(sims.values(), default=None))
+        rows.append({"frame": label, "ok": ok, "similarity": sim,
+                     "name": ident["name"], "ear": res["eyes"]["ear"],
+                     "face_px": ident["face_px"], "problems": res["problems"]})
     rows.sort(key=lambda r: (not r["ok"], -(r["similarity"] or -1), -(r["ear"] or 0)))
     return rows
 
@@ -796,7 +900,7 @@ def crop_findings(frames: Iterable[tuple[str, object]], named: str,
 def _bench(images: list[Path]) -> dict:
     t0 = time.perf_counter()
     _reset_for_tests()
-    model = load()
+    model = load(fetch=True)
     t_load = time.perf_counter() - t0
     rows = []
     for path in images:
@@ -861,14 +965,18 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("fetch", help="下好并校验三个 onnx（工作流在缓存没命中时跑）")
-    sub.add_parser("version", help="印缓存键用的模型版本")
+    sub.add_parser("version", help="印模型版本")
+    sub.add_parser("cache-key", help="印工作流 actions/cache 该用的键（按权重内容定址）")
     c = sub.add_parser("check", help="查一张图：是不是这个人、眼睛睁没睁")
     c.add_argument("image")
     c.add_argument("--expect", action="append", default=[],
                    help="应该是谁（中文名，可重复；双打写两次）")
+    c.add_argument("--subject", action="append", default=[],
+                   help="--expect 里封面要的是哪一个（给了就只认他，另一个只用来认对手）")
     s = sub.add_parser("scan", help="一批候选帧里哪几张能过（同一个人＋睁眼），按好坏排")
     s.add_argument("images", nargs="+")
     s.add_argument("--expect", action="append", default=[], required=True)
+    s.add_argument("--subject", action="append", default=[])
     b = sub.add_parser("bench", help="量加载和每帧推理的耗时")
     b.add_argument("images", nargs="+")
     sub.add_parser("calibrate", help="官方头像两两比，看「不同的人」能像到多少")
@@ -877,20 +985,35 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "version":
         print(MODEL_VERSION)
         return 0
+    if args.cmd == "cache-key":
+        print(CACHE_KEY)
+        return 0
     if args.cmd == "fetch":
         t0 = time.perf_counter()
         before = models_ready()
-        directory = fetch_models()
+        try:
+            directory = fetch_models()
+        except ModelUnavailable as exc:
+            # 非零退出：工作流「备好人脸模型」据此**不写** ok=true，缓存就不会存下半截目录
+            print(f"[人脸模型] 没备好：{exc}", file=sys.stderr)
+            return 1
         print(f"[人脸模型] {MODEL_VERSION} → {directory}"
               f"（{'已在缓存里' if not before else '现下 ' + ', '.join(before)}，"
               f"{time.perf_counter() - t0:.1f}s）")
         return 0
+    # 人手跑的命令行：缺权重就现下（出片链路里的 `load()` 默认不联网，见它的注释）
+    try:
+        load(fetch=True)
+    except ModelUnavailable as exc:
+        print(f"[人脸模型] 不可用：{exc}", file=sys.stderr)
+        return 2
     if args.cmd == "check":
-        res = check_frame(Path(args.image), args.expect)
+        res = check_frame(Path(args.image), args.expect, target=args.subject or None)
         print(json.dumps(res, ensure_ascii=False, indent=2))
         return 1 if res.get("problems") else 0
     if args.cmd == "scan":
-        rows = rank_frames([(p, Path(p)) for p in args.images], args.expect)
+        rows = rank_frames([(p, Path(p)) for p in args.images], args.expect,
+                           target=args.subject or None)
         for r in rows:
             mark = "✅" if r["ok"] else "  "
             print(f"{mark} {r['frame']}  像 {r['name'] or '?'} {r['similarity']}  "

@@ -4547,42 +4547,136 @@ def _cover_asset_key(spot: dict, primary: str, kind: str) -> dict:
 _FACE_REPORT: dict = {}
 
 
+def _face_gate_key(spec: dict, frame: Path) -> str:
+    """同一张帧（逐字节）＋ 同一份封面合同（人名、头像、窗口几何、认领）＝同一个结论。
+    `render()` 开跑时查过的，渲封面那一步就不再查第二遍。"""
+    cover = spec.get("cover") or {}
+    heads = [((spec.get("stats") or {}).get(k) or {}).get("headshot") for k in ("a", "b")]
+    blob = json.dumps({"cover": cover, "heads": heads}, sort_keys=True,
+                      ensure_ascii=False, default=str).encode("utf-8")
+    return hashlib.sha256(Path(frame).read_bytes() + b"\0" + blob).hexdigest()
+
+
 def _gate_cover_face(spec: dict, frame: Path, spot: dict,
                      sources: dict[str, Path] | None, primary: str,
                      workdir: Path) -> None:
-    """抽帧封面：不是这场球的人、闭眼／垂眼 → 当场拦，并扫出前后能换的秒数。"""
+    """抽帧封面：不是 `cover.subject` 那个人、闭眼／垂眼 → 当场拦，并扫出前后能换的秒数。"""
     import reel_face_gate as gate  # noqa: PLC0415
 
+    key = _face_gate_key(spec, frame)
+    done = _FACE_REPORT.get("cover")
+    if done and done.get("_key") == key and not done.get("problems"):
+        done["frame"] = str(frame)
+        print("    [封面认人] 开跑时已经查过这一帧（同一个字节、同一份封面合同），不重查")
+        return
     rep = gate.cover_frame_report(spec, frame)
+    rep["_key"] = key
     _FACE_REPORT["cover"] = rep
     for line in rep["warnings"]:
         print(f"    [封面认人] ⚠️ {line}")
     if rep["problems"]:
-        key = str(spot.get("source", primary))
-        cands = (gate.nearby_passing(spec, sources[key], float(spot["frame_at"]), workdir,
-                                     conform_vf_args(sources[key]))
-                 if sources and key in sources else None)
+        skey = str(spot.get("source", primary))
+        cands = (gate.nearby_passing(spec, sources[skey], float(spot["frame_at"]), workdir,
+                                     conform_vf_args(sources[skey]))
+                 if sources and skey in sources else None)
         raise ReelError(gate.cover_error(rep, cands))
     if rep.get("status") == "ok":
         print(f"    [封面认人] {rep['identity']['reason']}｜{rep['eyes']['reason']}")
 
 
-def _dry_run_cover_face(spec: dict, outdir: Path) -> bool:
-    """`--dry-run` 查 `cover_src/` 里**已经抓好的这一版**封面帧（本地 0.5 秒）。
-    还没抓过就说一声、交给 runner——「没查」和「查过没问题」不许长得一样。"""
-    art = (spec.get("cover") or {}).get("portrait") or {}
-    if art.get("image") or art.get("frame_at") is None:
-        return False
+def _solo_frame_cover(spec: dict) -> dict | None:
+    """这条 spec 的封面是不是**抽帧的 solo**（认人／睁眼只管这一种）。是就返回 portrait。"""
+    cover = spec.get("cover") or {}
+    art = cover.get("portrait") or {}
+    if (cover.get("approved_image") or str(cover.get("layout", "cutout")) != "solo"
+            or art.get("image") or art.get("frame_at") is None):
+        return None
+    return art
+
+
+def precheck_cover_face(spec: dict, sources: dict[str, Path], primary: str,
+                        outdir: Path) -> None:
+    """**源片一到手就查封面帧**——排在 TTS、比分板蒙版、跟踪、分段编码之前。
+
+    评审 2026-09-27 nit 3：原来这道闸挂在 `build_cover` 里，而 `build_cover` 排在
+    TTS ＋ 板蒙版 ＋ `track_shots` 之后（`render()` 里第 8542 行上下），一张抽错人的
+    封面要等一两分钟才红。封面帧只要源片，不要别的——所以抓一帧（`cover_src/`
+    里有这一版就直接用）当场查，红了就在「下完源片」后的第一秒红。
+
+    渲封面那一步（`resolve_cover_payload`）照旧会过这道闸：同一帧同一份合同就
+    跳过（`_face_gate_key`），换过就重查——两处不会各说各的。
+    """
+    art = _solo_frame_cover(spec)
+    if art is None:
+        return
     cache = outdir / COVER_SRC_DIR
     try:
         manifest = json.loads((cache / "manifest.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
         manifest = {}
     frame = cache / "portrait.jpg"
-    if manifest.get("portrait") != _cover_asset_key(art, str(spec.get("primary", "")),
-                                                    "frame") or not frame.is_file():
+    temp = None
+    if manifest.get("portrait") != _cover_asset_key(art, primary, "frame") or not frame.is_file():
+        import reel_face_gate as gate  # noqa: PLC0415
+
+        key = str(art.get("source", primary))
+        if key not in sources:
+            return          # 源键写错由 resolve_cover_payload 报，那里的话说得更清楚
+        temp = outdir / "_face_precheck_portrait.jpg"
+        try:
+            with stage("封面认人（开跑先查）"):
+                frame = gate.grab_frame(sources[key], float(art["frame_at"]), temp,
+                                        conform_vf_args(sources[key]))
+        except (subprocess.SubprocessError, OSError) as exc:
+            # 抓不到帧不算过：渲封面那一步会再抓一次、再过同一道闸，抓不到就在那儿红
+            temp.unlink(missing_ok=True)
+            print(f"    [封面认人] ⚠️ 开跑先查没抓到 {art['frame_at']}s 那一帧"
+                  f"（{type(exc).__name__}），留到渲封面那一步再查")
+            return
+    try:
+        _gate_cover_face(spec, frame, art, sources, primary, outdir)
+    finally:
+        if temp is not None:
+            temp.unlink(missing_ok=True)
+
+
+def _dry_run_cover_frame(spec: dict, outdir: Path, art: dict,
+                         repo_root: Path | None = None) -> Path | None:
+    """`--dry-run` 能拿来查的那一帧：先看 `outdir/cover_src/`，再看仓库里这条 slug
+    **任何一天**留下的 `cover_src/`（新的在前）——只认 manifest 和这一版 `frame_at`
+    对得上的那份。
+
+    runner 上的 dry-run 用的是 `--outdir /tmp/dryrun`，只看 outdir 的话这一步在
+    runner 上**永远是空的**（评审 2026-09-27 nit 3）；工作流在 dry-run 之前把这条
+    slug 的 `cover_src/` 拉回来，这里按 slug 去找。"""
+    want = _cover_asset_key(art, str(spec.get("primary", "")), "frame")
+    slug = str(spec.get("slug") or "").strip()
+    root = repo_root or Path(__file__).resolve().parents[1]
+    dirs = [outdir / COVER_SRC_DIR]
+    if slug:
+        dirs += sorted(root.glob(f"output/*/reel/{slug}/{COVER_SRC_DIR}"), reverse=True)
+    for cache in dirs:
+        try:
+            manifest = json.loads((cache / "manifest.json").read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        frame = cache / "portrait.jpg"
+        if manifest.get("portrait") == want and frame.is_file():
+            return frame
+    return None
+
+
+def _dry_run_cover_face(spec: dict, outdir: Path, *, repo_root: Path | None = None) -> bool:
+    """`--dry-run` 查**已经抓好的这一版**封面帧（本地 0.5 秒）。
+    还没抓过就说一声、交给 runner——「没查」和「查过没问题」不许长得一样。"""
+    art = _solo_frame_cover(spec)
+    if art is None:
+        return False
+    frame = _dry_run_cover_frame(spec, outdir, art, repo_root)
+    if frame is None:
         print("[dry-run] 封面帧还没抓（cover_src/ 里没有这一版），认人／睁眼留到 runner 抓帧时查")
         return False
+    print(f"[dry-run] 封面认人／睁眼查的是 {frame}")
     try:
         _gate_cover_face(spec, frame, art, None, "", outdir)
     except ReelError as exc:
@@ -4601,8 +4695,9 @@ def _face_checks_record(segment_future) -> dict:
     if segs and segs.get("status") == "ok":
         print(f"  [分段认人] 查了 {len(segs['segments'])} 段 {segs['frames']} 帧，"
               f"{segs['faces']} 帧有够大的脸，{len(segs['findings'])} 处画面和旁白对不上（只报不拦）")
-    return {"cover": _FACE_REPORT.get("cover") or {"status": "not_applicable",
-                                                   "why": "封面不是抽帧"},
+    cover = {k: v for k, v in (_FACE_REPORT.get("cover") or {}).items()
+             if not k.startswith("_")}
+    return {"cover": cover or {"status": "not_applicable", "why": "封面不是抽帧"},
             "segments": segs}
 
 
@@ -8331,6 +8426,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     check_sources_match(sources, spec)
     primary = next(iter(sources))
     source = sources[primary]
+    # **抽帧封面的认人＋睁眼，源片一到手就查**（硬闸）——排在 TTS、板蒙版、跟踪、
+    # 分段编码之前，也排在只出封面那条路之前：抽错人／闭眼的帧死在这一秒，
+    # 不用等一两分钟的准备活干完（评审 2026-09-27 nit 3）。
+    precheck_cover_face(spec, sources, primary, outdir)
     # 网盘那份常常只有视频轨（DASH 的自适应流是分开的）。人另外传了 m4a 就在这儿
     # 合上——没有原声的成片只剩解说，球声和观众声全没了，片子会很平。
     audio = spec.get("source_audio")

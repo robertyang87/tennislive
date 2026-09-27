@@ -2138,7 +2138,7 @@ GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: 
 | | 查什么 | 红了怎样 |
 |---|---|---|
 | 采访封面闸 `audit_interview_cover.py` | 海报照片区那张脸是不是 `expected_subject`、眼睛睁没睁 | **硬**：凭证 `fail`；推送闸复核时**从存下的数重判**（`problems_of`），手改 verdict 骗不过去 |
-| 「赛场之上」抽帧封面（`cover.portrait.frame_at`） | 是不是 `cover.matchup` 两个人之一、睁眼 | **硬**：`ReelError`，报错里印出 `frame_at` 前后 ±1 秒能过的秒数。runner 上新抓的、`cover_src/` 里复用的（`render_cover_local.py`、`--dry-run`）都过 |
+| 「赛场之上」抽帧封面（`cover.portrait.frame_at`） | **海报上露出来的那扇 3:4 窗里**，是不是 `cover.subject` 那个人、睁眼 | **硬**：`ReelError`，报错里印出 `frame_at` 前后 ±1 秒能过的秒数。**源片一到手就查**（`precheck_cover_face`，排在 TTS／板蒙版／分段之前）；`cover_src/` 里复用的（`render_cover_local.py`、`--dry-run`，runner 上 dry-run 会先把这条 slug 的 `cover_src/` 拉回来）都过 |
 | 分段 3:4 画面 | 旁白只点了一个人的名，窗口里最大的脸是不是另一个人 | **只报不拦**，写进 `render.json` 的 `face_checks.segments`（精度没像封面那样量过，先攒数） |
 
 **门槛是量出来的**（数和来路写在 `face_checks.py` 常量的注释里，别顺手调）：
@@ -2150,6 +2150,15 @@ GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: 
   `< 0.12` 闭眼、`0.12~0.16` 垂眼，都拦。⚠️ 第一版的线是 0.18——阿尔卡拉斯**大笑眯眼**
   （0.171）、胡佳咬牙（0.164）被判成垂眼，而情绪外露正是封面要的，所以收到 0.16
 
+⚠️⚠️ **认的是 `cover.subject`，不是「两个人之一」**（同日评审抓到的 BLOCKING）：第一版把
+`cover.matchup` 两个人都当「应该是的人」，`medvedev-royer` 那帧是梅德韦杰夫，把
+`cover.subject` 改成鲁瓦耶照样过——**对手的脸能上封面**。现在 `subject` 点了 matchup 里的人
+就只认他：对手像到 0.34 以上＝「这张脸是对手」，主角低于 0.15＝「不是他」，都硬拦；
+扫前后能换的帧也只认他。`subject` 没写／不在 matchup 里就退回「两人之一」，但出声。
+**看的也是海报上露出来的那一块**（`versus_poster.solo_photo_window`，和海报 CSS 同一套几何、
+拿 Chromium 真渲比对过）——窗外那张更大的脸不许替窗里的人去过闸。认人这一步自己抛异常
+＝`status: error`、当成没过（不崩、不放行）；模型加载不了才是 `unavailable`、大声降级。
+
 **认领口**：这一帧确实要用（讲的就是教练席那一幕、闭眼流泪就是要的情绪）——
 采访写 `cover._face_check_why`，赛场之上写 `cover.portrait._face_check_why`。
 硬问题降成提示，照旧出声。
@@ -2157,7 +2166,7 @@ GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: 
 **模型加载不了＝大声降级**：凭证 / `render.json` 记 `status: unavailable`，日志打 ⚠️，
 工作流打 `::warning::`——不拖垮出片，也不装作查过（账号所有者原话要的就是这个）。
 
-**挑帧也用它**：`python tools/face_checks.py scan --expect <中文名> 候选帧/*.jpg`
+**挑帧也用它**：`python tools/face_checks.py scan --expect <甲> --expect <乙> --subject <甲> 候选帧/*.jpg`
 按「是本人＋睁眼」排好，✅ 的才能进 `frame_at`；单张 `check`。**缩略图墙选姿态，
 这个选眼神**——③那句「格子里分辨不出眼睛」在这儿补上了。
 
@@ -2166,7 +2175,7 @@ GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: 
 | | |
 |---|---|
 | 装 onnxruntime（干净 venv） | **2.7 s**；赛场之上那条本来就跟着 rembg 装着，零增量 |
-| 下模型（buffalo_s.zip 127.6 MB，只解 3 个 onnx，21 MB） | **1.6 s** 冷；缓存命中 0.1 s（`actions/cache` 键 `face-models-buffalo_s-v0.7`） |
+| 下模型（buffalo_s.zip 127.6 MB，只解 3 个 onnx，21 MB） | **1.6 s** 冷；缓存命中 0.1 s（键按内容定址 `face_checks.CACHE_KEY`；restore / save 拆开，**fetch 成功才存**，半截目录不会被钉进不可变的键；出片链路里 `load()` 不联网，只有「备好人脸模型」那一步和人手跑的命令行会下） |
 | 加载三个 session | **0.35 s** |
 | 每帧（检测＋向量＋106 点） | **0.1~0.3 s**（1920×1080 / 1080×1440） |
 | 分段那道 | 和分段编码**并行**跑（后台线程），不占关键路径 |

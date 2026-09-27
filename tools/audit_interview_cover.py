@@ -476,6 +476,12 @@ def main() -> int:
     parser.add_argument("--spec", required=True)
     parser.add_argument("--poster", required=True)
     parser.add_argument("--out", required=True)
+    # 只有 **render** 那一档才给：那时 render.json 是这一趟刚写的、描述的就是这张
+    # 海报所属的成片。`mode=cover` 只换海报，outdir 里躺着的 render.json 是**上一版
+    # 成片**的——往里写这张新海报的认人结果，就是在一份描述别的片子的产物上
+    # 记账（评审 2026-09-27 nit 8）。不给就不碰它，结果照样在封面凭证里。
+    parser.add_argument("--render-json", default="",
+                        help="把认人／睁眼结果并进这份 render.json（只在 render 那一档给）")
     args = parser.parse_args()
 
     spec_path, poster, out = Path(args.spec), Path(args.poster), Path(args.out)
@@ -502,7 +508,8 @@ def main() -> int:
         warnings = face_model_issues(result, spec)[1]
         write_report(out, spec_path, poster, expected, result, issues,
                      warnings=warnings)
-        note_render_json(out.parent / "render.json", result["face_model"], warnings)
+        if args.render_json:
+            note_render_json(Path(args.render_json), result["face_model"], warnings)
         for line in warnings:
             print(f"⚠️ [封面认人] {line}")
     except Exception as exc:  # noqa: BLE001 — 本地证据不足必须留下失败凭据
@@ -547,8 +554,11 @@ def note_render_json(path: Path, face_model: dict, warnings: list[str]) -> None:
     """render 那一档 render.json 已经在了：把认人／睁眼的结果并进去（只加一个键）。
 
     账号所有者 2026-09-27 的要求是「模型加载不了要在 render.json 里留警告」——
-    降级必须落在产物上，不能只活在一趟 run 的日志里。`mode=cover` 没有
-    render.json，结果照样在封面凭证里。"""
+    降级必须落在产物上，不能只活在一趟 run 的日志里。
+
+    ⚠️ **只由 `--render-json` 点名才写**：`mode=cover` 那一档 outdir 里常常躺着
+    上一版成片的 render.json（采访产物目录没有日期那一层），它描述的是另一条片子，
+    不许往里记这张新海报的账。结果照样在封面凭证里。"""
     if not path.is_file():
         return
     try:

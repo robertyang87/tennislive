@@ -148,6 +148,10 @@ def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
           .replace("cancelled()", "False")
           .replace("always()", "True")
           .replace("steps.manual_reserve.outcome", repr("success"))
+          # 人脸模型缓存拆成 restore / save（评审 2026-09-27 nit 7）：存缓存那一步挂在
+          # 「没命中 ＋ fetch 成功」上。按冷缓存、fetch 成功那条路求值——也就是它真会跑的那条
+          .replace("steps.face-cache.outputs.cache-hit", repr(""))
+          .replace("steps.face-models.outputs.ok", repr("true"))
           # 「叫醒自动推送」那一步的 if 里有 ref_name——这套模拟按「跑在
           # main 上」求值：分支上的行为(那一步跳过)不在这套判据的主语里。
           .replace("github.ref_name", repr("main"))

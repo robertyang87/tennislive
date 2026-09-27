@@ -13,12 +13,37 @@ Haar，这边连 Haar 都没有（forensics：`match-reel.yml` 里没有任何�
 
 | | 查什么 | 红了怎样 |
 |---|---|---|
-| **封面抽帧**（`cover.portrait.frame_at`） | 是不是这场球的两个人之一、眼睛睁没睁 | **硬**：`ReelError`，并把 `frame_at` 前后 ±1 秒扫一圈能过的秒数印出来 |
+| **封面抽帧**（`cover.portrait.frame_at`） | 海报上露出来的那一块里，是不是 `cover.subject` 那个人、眼睛睁没睁 | **硬**：`ReelError`，并把 `frame_at` 前后 ±1 秒扫一圈能过的秒数印出来 |
 | **分段 3:4 画面** | 旁白只点了一个人的名，画面里最大的那张脸是不是另一个人 | **只报不拦**：写进 `render.json` 的 `face_checks.segments` |
 
 分段那道为什么只报：转播主机位的宽景里球员的脸只有二三十像素，认人在这种画面上
 **没有拿真样本量过精度**（封面那两个门槛是拿 85 张真封面量的）。先攒数，证明了再收紧
 ——`crosses_cut` 那次「做成硬闸然后被数据否掉」的老账不再来一遍。
+
+## 认的是谁：`cover.subject`，不是「两个人之一」
+
+评审 2026-09-27 抓到的 BLOCKING：第一版把 `cover.matchup` 的两个人都当「应该是的人」，
+像其中任何一个就放行——`medvedev-royer` 那帧是梅德韦杰夫，把 `cover.subject`
+改成鲁瓦耶照样 `match`、`problems=[]`。**80 条抽帧封面里 74 条在 `cover.subject`
+写着封面上是谁**（另 6 条没有 matchup，`subject` 本来就是唯一的候选）。
+
+所以 `cover.subject` 点了 matchup 里的人，就**只认他**（`cover_target`）；另一个人
+只用来认「这张脸是谁」——是对手就是 `mismatch`，两个人都像就 `unknown`。扫前后
+能换的帧也只认他，**拦下一张对手的脸之后不许又推荐一张对手的脸**。
+`subject` 没写、或写的不是 matchup 里的人：退回「两人之一」，但**出声**。
+
+## 看的是哪一块：海报上露出来的那扇 3:4 窗
+
+整幅 1920×1080 里最大的那张脸不一定在海报上——`focus`／`zoom` 挪出来的窗外
+那张脸（对手、教练、看台）会替窗里的人去过闸。所以先按 `versus_poster.solo_photo_window`
+（和海报 CSS 同一套几何）裁出露出来的那一块，再认人、量眼睛。
+
+## 出错不是通过
+
+`check_frame` 自己抛了异常（坏图、头像索引读不了……）→ `status: error`，
+**当成没过**：报错说清是哪一步、什么异常，不崩成一串 traceback，也不悄悄放行。
+模型根本加载不了（没装 onnxruntime、权重没备上）是另一回事：`unavailable`，
+大声降级、不拦——那是账号所有者定的口径。
 
 ## 认领口
 
@@ -74,17 +99,76 @@ def expected_players(spec: dict) -> dict[str, str | None]:
     return out
 
 
+def cover_target(spec: dict) -> tuple[list[str] | None, str | None]:
+    """封面上**应该是谁**：`cover.subject` 里点到的 matchup 球员。返回 (名单, 提示)。
+
+    - 没有 matchup：`expected_players` 已经只剩 `subject`，不用再挑 → (None, None)
+    - `subject` 点了 matchup 里的人 → 只认他（双打写「A / B」就是两个都认）
+    - `subject` 没写／点的不是 matchup 里的人 → (None, 提示)：退回「两人之一」，
+      但那是**降级**，要出声
+    """
+    cover = spec.get("cover") or {}
+    players = [n for entry in cover.get("matchup") or [] for n in _names(entry)]
+    if not players:
+        return None, None
+    subject = _names(cover.get("subject"))
+    if not subject:
+        return None, ("没写 cover.subject：认人只认得出「是这场球里的人之一」，"
+                      "分不出是不是封面要的那一个")
+    target = [n for n in subject if n in players]
+    if not target:
+        return None, (f"cover.subject「{'／'.join(subject)}」不在 cover.matchup"
+                      f"（{'／'.join(players)}）里：认人退回「两人之一」")
+    return target, None
+
+
 def _claim(spec: dict) -> str:
     art = (spec.get("cover") or {}).get("portrait") or {}
     return str(art.get(FACE_CHECK_WHY) or "").strip()
 
 
+def poster_region(spec: dict, frame: Path):
+    """(裁好的 PIL 图, [x0, y0, x1, y1])：海报上**真正露出来**的那一块。"""
+    from PIL import Image, ImageOps  # noqa: PLC0415
+
+    from versus_poster import solo_photo_window  # noqa: PLC0415
+
+    with Image.open(frame) as im:
+        img = ImageOps.exif_transpose(im).convert("RGB")
+    x0, y0, x1, y1 = solo_photo_window(spec.get("cover") or {}, img.size)
+    box = [int(x0), int(y0), int(round(x1)), int(round(y1))]
+    return img.crop(tuple(box)), box
+
+
 def cover_frame_report(spec: dict, frame: Path) -> dict:
-    """封面抽下来的那一帧：认人＋睁眼。`problems` 非空＝要拦（除非认领过）。"""
+    """封面抽下来的那一帧：认人＋睁眼。`problems` 非空＝要拦（除非认领过）。
+
+    看的是海报上露出来的那一块（`poster_region`），认的是 `cover_target` 点的那个人。
+    这一步抛任何异常都记成 `status: error` ＋ 一条**硬问题**——出错不是通过。
+    """
     expected = expected_players(spec)
-    rep = face_checks.check_frame(Path(frame), expected)
+    target, note = cover_target(spec)
+    try:
+        region, box = poster_region(spec, Path(frame))
+        rep = face_checks.check_frame(region, expected, target=target,
+                                      model=face_checks.load())
+        rep["region"] = box
+    except face_checks.ModelUnavailable as exc:
+        # 模型加载不了＝大声降级（账号所有者定的口径），不是出错
+        block = {"status": "unavailable", "model": face_checks.MODEL_VERSION, "error": str(exc)}
+        problems, warnings = face_checks.problems_of(block)
+        rep = {**block, "problems": problems, "warnings": warnings}
+    except Exception as exc:                                      # noqa: BLE001
+        err = f"{type(exc).__name__}: {exc}"
+        rep = {"status": "error", "model": face_checks.MODEL_VERSION, "error": err,
+               "problems": [f"认人／睁眼这一步出错了（{err}）——这一帧**没查过**，"
+                            "不当成通过；先修好这一步（或换一帧）再渲"],
+               "warnings": []}
     rep["frame"] = str(frame)
     rep["frame_at"] = ((spec.get("cover") or {}).get("portrait") or {}).get("frame_at")
+    rep["target"] = target
+    if note:
+        rep["warnings"].append(note)
     if not expected:
         rep["warnings"].append("cover.matchup / cover.subject 里没有人名，认人无从比起")
     if rep["problems"] and (why := _claim(spec)):
@@ -104,8 +188,12 @@ def grab_frame(source: Path, at: float, dest: Path, vf_args: tuple[str, ...] = (
 
 
 def nearby_passing(spec: dict, source: Path, at: float, workdir: Path,
-                   vf_args: tuple[str, ...] = ()) -> list[dict]:
-    """被拦下之后「换哪一帧」：`frame_at` 前后扫一圈，返回能过的（好的在前）。"""
+                   vf_args: tuple[str, ...] = ()) -> list[dict] | None:
+    """被拦下之后「换哪一帧」：`frame_at` 前后扫一圈，返回能过的（好的在前）。
+
+    和封面那道**同一把尺**：只看海报上露出来的那一块、只认 `cover_target` 那个人
+    ——拦下一张对手的脸之后，推荐的换帧不许又是对手。扫的过程出错 → `None`
+    （报错里说「没扫成」，不冒充「前后都不行」）。"""
     scan = workdir / "_face_scan"
     scan.mkdir(parents=True, exist_ok=True)
     frames = []
@@ -118,8 +206,13 @@ def nearby_passing(spec: dict, source: Path, at: float, workdir: Path,
             frames.append((t, grab_frame(source, t, scan / f"{t:.2f}.jpg", vf_args)))
         except (subprocess.SubprocessError, OSError):
             continue
+    target, _note = cover_target(spec)
     try:
-        rows = face_checks.rank_frames(frames, expected_players(spec))
+        regions = [(t, poster_region(spec, path)[0]) for t, path in frames]
+        rows = face_checks.rank_frames(regions, expected_players(spec), target=target)
+    except Exception as exc:                                      # noqa: BLE001
+        print(f"    [封面认人] ⚠️ 扫前后帧没扫成：{type(exc).__name__}: {exc}")
+        return None
     finally:
         for _, path in frames:
             path.unlink(missing_ok=True)
@@ -136,10 +229,15 @@ def cover_error(rep: dict, candidates: list[dict] | None) -> str:
     lines = [f"封面抽帧 {rep.get('frame_at')}s 过不了认人／睁眼闸"
              "（账号所有者 2026-09-27 批的 O2+O3：选错人、闭眼／垂眼的帧不许上封面）："]
     lines += [f"  - {p}" for p in rep["problems"]]
+    if rep.get("status") == "error":
+        lines.append(f"  这一步没跑完：{rep.get('error')}")
+    if rep.get("target"):
+        lines.append(f"  封面要的是 cover.subject：{'／'.join(rep['target'])}"
+                     "（另一个人只用来认「这张脸是谁」，像他不算过）")
     lines.append(f"  量到的：相似度 {ident.get('similarity')}（门槛 match ≥ "
                  f"{face_checks.MATCH_SIM}、mismatch < {face_checks.MISMATCH_SIM}）｜"
                  f"眼睛纵横比 {eyes.get('ear')}（< {face_checks.EYE_OPEN_EAR} 算垂眼）｜"
-                 f"脸高 {ident.get('face_px')}px")
+                 f"脸高 {ident.get('face_px')}px｜看的是海报上露出来的 {rep.get('region')}")
     if candidates:
         best = "、".join(f"{c['frame']}s（像 {c['name']} {c['similarity']:.2f}，眼 {c['ear']:.2f}）"
                         for c in candidates[:4])
@@ -147,6 +245,10 @@ def cover_error(rep: dict, candidates: list[dict] | None) -> str:
     elif candidates is not None:
         lines.append(f"  前后 ±{SCAN_RADIUS:g} 秒里没有一帧能过——换一个镜头，"
                      "或者先去找官方高清实拍（tools/find_cover_photo.py）")
+    else:
+        lines.append(f"  前后 ±{SCAN_RADIUS:g} 秒没扫（手边没有源片或扫的时候出错）——"
+                     "`python tools/face_checks.py scan <帧…> --expect 甲 --expect 乙 "
+                     "--subject 甲` 自己扫一圈")
     lines.append(f"  这一帧确实要用，就在 cover.portrait 写 `{FACE_CHECK_WHY}` 说清楚为什么。")
     return "\n".join(lines)
 
