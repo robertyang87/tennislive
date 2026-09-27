@@ -4,45 +4,8 @@
     "transition": "dissolve",
     "dissolve_s": 0.18
   },
-  "film_sha256": "490a73602abba27f3d86d88ef7f037ae50335f63a422af9f2adfd26c2a876d2f",
+  "film_sha256": "38f0a687536ccb1883e3fe82c6d9dbe2e10975a3d6439d7e14431d46e683d209",
   "film_seconds": 194.64,
-  "production_sla": {
-    "version": 2,
-    "pipeline": "interview-clip",
-    "slug": "cobolli-mensik-laver-cup-2026-doubles-interview",
-    "received_at": "2026-09-27T16:31:56Z",
-    "artifact_ready_at": "2026-09-27T16:38:25Z",
-    "elapsed_seconds": 389.381,
-    "budget_seconds": 600,
-    "met": true,
-    "film_sha256": "490a73602abba27f3d86d88ef7f037ae50335f63a422af9f2adfd26c2a876d2f",
-    "spec_sha256": "2ecadf4d85a86c751c9a43c975c4c7d587fa8fe9d5cf292b53f74cf854548611",
-    "run_id": "36333590996",
-    "stage_events": [
-      {
-        "stage": "preflight",
-        "at": "2026-09-27T16:32:49Z",
-        "run_id": "36333590996"
-      },
-      {
-        "stage": "cover_audit",
-        "at": "2026-09-27T16:33:52Z",
-        "run_id": "36333590996"
-      },
-      {
-        "stage": "asr_verify",
-        "at": "2026-09-27T16:34:06Z",
-        "run_id": "36333590996"
-      },
-      {
-        "stage": "render",
-        "at": "2026-09-27T16:35:47Z",
-        "run_id": "36333590996"
-      }
-    ],
-    "render_seconds": 158.381,
-    "pre_render_seconds": 231.0
-  },
   "face_checks": {
     "cover": {
       "status": "ok",
@@ -101,37 +64,113 @@
   "production_stage_events": [
     {
       "stage": "preflight",
-      "at": "2026-09-27T16:32:49Z",
-      "run_id": "36333590996"
+      "at": "2026-09-27T17:04:51Z",
+      "run_id": "36335539520"
     },
     {
       "stage": "cover_audit",
-      "at": "2026-09-27T16:33:52Z",
-      "run_id": "36333590996"
+      "at": "2026-09-27T17:06:00Z",
+      "run_id": "36335539520"
     },
     {
       "stage": "asr_verify",
-      "at": "2026-09-27T16:34:06Z",
-      "run_id": "36333590996"
+      "at": "2026-09-27T17:06:16Z",
+      "run_id": "36335539520"
     },
     {
       "stage": "render",
-      "at": "2026-09-27T16:35:47Z",
-      "run_id": "36333590996"
+      "at": "2026-09-27T17:07:55Z",
+      "run_id": "36335539520"
     },
     {
       "stage": "qc",
-      "at": "2026-09-27T16:38:26Z",
-      "run_id": "36333590996"
+      "at": "2026-09-27T17:10:34Z",
+      "run_id": "36335539520"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-27T16:38:27Z",
-      "run_id": "36333590996"
+      "at": "2026-09-27T17:10:34Z",
+      "run_id": "36335539520"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-cobolli-mensik-laver-cup-2026-doubles-interview/cobolli-mensik-laver-cup-2026-doubles-interview.mp4?v=490a73602abba27f",
-  "video_bytes": 73589405,
-  "release_asset_digest": "sha256:490a73602abba27f3d86d88ef7f037ae50335f63a422af9f2adfd26c2a876d2f",
-  "qc_attestation_sha256": "260ca7054100a0a51a49a5a87cc64055cfe6573e1d2de77c9b22b33a0156a6c6"
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-cobolli-mensik-laver-cup-2026-doubles-interview/cobolli-mensik-laver-cup-2026-doubles-interview.mp4?v=38f0a687536ccb18",
+  "video_bytes": 73593948,
+  "release_asset_digest": "sha256:38f0a687536ccb1883e3fe82c6d9dbe2e10975a3d6439d7e14431d46e683d209",
+  "qc_attestation_sha256": "ad749fdfd02617aec5c63736cc84959260976b73314219a70909ea66d531421f",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "cobolli-mensik-laver-cup-2026-doubles-interview",
+      "received_at": "2026-09-27T16:31:56Z",
+      "artifact_ready_at": "2026-09-27T16:38:25Z",
+      "elapsed_seconds": 389.381,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "490a73602abba27f3d86d88ef7f037ae50335f63a422af9f2adfd26c2a876d2f",
+      "spec_sha256": "2ecadf4d85a86c751c9a43c975c4c7d587fa8fe9d5cf292b53f74cf854548611",
+      "run_id": "36333590996",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-09-27T16:32:49Z",
+          "run_id": "36333590996"
+        },
+        {
+          "stage": "cover_audit",
+          "at": "2026-09-27T16:33:52Z",
+          "run_id": "36333590996"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-09-27T16:34:06Z",
+          "run_id": "36333590996"
+        },
+        {
+          "stage": "render",
+          "at": "2026-09-27T16:35:47Z",
+          "run_id": "36333590996"
+        }
+      ],
+      "render_seconds": 158.381,
+      "pre_render_seconds": 231.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "cobolli-mensik-laver-cup-2026-doubles-interview",
+    "received_at": "2026-09-27T17:04:05Z",
+    "artifact_ready_at": "2026-09-27T17:10:33Z",
+    "elapsed_seconds": 388.035,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "38f0a687536ccb1883e3fe82c6d9dbe2e10975a3d6439d7e14431d46e683d209",
+    "spec_sha256": "08a3e7177cba8380c40dd8e4c195d86c56757dadb519d1a59a075da892d6b0c6",
+    "run_id": "36335539520",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-27T17:04:51Z",
+        "run_id": "36335539520"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-09-27T17:06:00Z",
+        "run_id": "36335539520"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-27T17:06:16Z",
+        "run_id": "36335539520"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-27T17:07:55Z",
+        "run_id": "36335539520"
+      }
+    ],
+    "render_seconds": 158.035,
+    "pre_render_seconds": 230.0
+  }
 }
