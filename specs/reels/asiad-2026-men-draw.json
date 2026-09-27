@@ -13,18 +13,22 @@
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
-    "subject": "吴易昺",
+    "subject": "吴易昺、黄泽林",
     "hook": "救过5个赛点的对手\n这次只能决赛见？",
     "topic": "2026亚运男单 · 潜在对决",
     "portrait": {
       "image": "assets/asiad-2026-draws/wu-cover.jpg",
-      "fit": "width",
       "focus": 0.5,
-      "zoom": 1.0,
-      "_why": "吴2026美网官方资料实拍，1280×720按宽1080缩小使用，不将横图硬撑竖幅。若改双人封面须模板渲染实看。",
-      "_low_res_why": "当前为官方2026美网实拍1280×720。显式fit:width、zoom:1.0按1080px宽缩小，保留整张横幅，上下为模板垫层；不声称可撑满竖幅。形状闸按1080×1440假设得到2倍放大，本稿实际不用这个裁法。最终封面必须抽看横幅与背景衔接，若改成铺满必须换高清原图，不能沿用本认领。"
+      "focus_y": 0.5,
+      "_why": "2026-09-27用户要求双人主题封面两人拼接、照片铺满。上下半幅采用实拍原图cover裁切，不垫模糊背景。"
     },
-    "scrim": "clear"
+    "scrim": "clear",
+    "portrait_above": {
+      "image": "assets/asiad-2026-draws/wong-cover.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5
+    },
+    "split": 0.5
   },
   "editorial": {
     "mode": "match_review",
