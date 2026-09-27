@@ -2210,6 +2210,39 @@ TRANSCRIPT_MAX_DISAGREE = 0.12
 _COMPARE_FILLERS = frozenset({"uh", "uhh", "um", "umm", "erm"})
 
 
+def en_fixed_misaligned(lines: list[dict], en_fixed: dict) -> list[str]:
+    """`en_fixed` 是按 **1 起** 的行号整行替换；写成 0 起就整体错一行，而且不吭声。
+
+    2026-09-27 `cobolli-mensik-laver-cup-2026-doubles-interview` 就这么发出去了：
+    四处订正全挂到了上一行——`You're just one match away` 被换成
+    `from winning the Laver Cup,`，而真正该改的 `Labour Cup` 原样烧进了画面。
+    整行替换本来就允许大改（ASR 把一句听成乱码），所以只看「和原行像不像」会误伤；
+    判据收窄到**错位的形状**：和自己那一行几乎不像（< 0.5），却和相邻某一行很像
+    （≥ 0.7，且比自己那行高）。返回每处的说明，空列表＝没问题。
+    """
+    out = []
+    def sim(a: str, b: str) -> float:
+        return difflib.SequenceMatcher(
+            None, compare_tokens(a), compare_tokens(b)).ratio()
+    for k, v in en_fixed.items():
+        idx = int(k) - 1
+        if not 0 <= idx < len(lines):
+            continue
+        own = sim(lines[idx]["en"], v)
+        if own >= 0.5:
+            continue
+        for j in (idx - 1, idx + 1):
+            if 0 <= j < len(lines):
+                near = sim(lines[j]["en"], v)
+                if near >= 0.7 and near > own:
+                    out.append(
+                        f"`en_fixed[{k}]` = {v!r}：第 {k} 行是 {lines[idx]['en']!r}"
+                        f"（相似 {own:.2f}），第 {j + 1} 行 {lines[j]['en']!r} 才像它"
+                        f"（{near:.2f}）")
+                    break
+    return out
+
+
 def compare_tokens(text: str) -> list[str]:
     """比对用的词流：小写、去标点、**去掉填词**。见 `_COMPARE_FILLERS`。"""
     words = re.sub(r"[^\w\s']", " ", text.lower()).split()
@@ -5407,6 +5440,11 @@ def main() -> int:
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
     # ASR 会把整句说得语法不成立（`The crazy Yes. round of applause.`），
     # 那种句子照发出去，这个号的英语素材就没有可信度了。
+    bad = en_fixed_misaligned(lines, spec.get("en_fixed") or {})
+    if bad:
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 的 `en_fixed` 行号像是挂错了行（键是 **1 起** 的行号）：\n  "
+            + "\n  ".join(bad))
     for k, v in (spec.get("en_fixed") or {}).items():
         idx = int(k) - 1
         if 0 <= idx < len(lines):
