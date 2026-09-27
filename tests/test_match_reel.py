@@ -1127,6 +1127,7 @@ def test_冷开场豁免表只许减():
     assert not missing, f"豁免表里这几条 spec 已经不在了：{sorted(missing)}"
     assert len(reel.LEGACY_NO_COLD_OPEN) <= 28, "豁免表只许减不许加"
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_冷开场里的结局必须在正文重新兑现(tmp_path):
     """冷开场放过最后一球，不等于正文可以停在赛点还没打完的时候。
 
@@ -3703,6 +3704,11 @@ def test_死球时刻要趁源片还在的时候量出来(tmp_path, capsys):
          "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p",
          str(flip)], check=True)
 
+    # ①ᵇ 框超出源片画面（照搬 1080p 转播的框去量 720p 源片）→ 说清楚，
+    # 不许掉进 cv2 的 `!_src.empty()` traceback（medvedev-wong run 36331431180）
+    with pytest.raises(reel.ReelError, match="超出源片画面 320×240"):
+        reel.point_end_candidates(flip, "98,200,519,300")
+
     # ② 框住那一格 → 量得出跳变
     hits = reel.point_end_candidates(flip, "0,0,80,60")
     assert hits, "翻牌那一格量不出跳变，通路是断的"
@@ -5778,7 +5784,13 @@ def test_装ffmpeg和字体一律先试本地缓存不能只靠重试():
         for name in _steps(body):
             block = _step_block(name, raw)
             block_yaml_only = _yaml_only(block)
-            if "actions/cache@v4" in block_yaml_only and "apt-archives" in block_yaml_only:
+            # 2026-09-27 起 apt 缓存拆成 `actions/cache/restore@v4` ＋ 只在摸了网时跑的
+            # `actions/cache/save@v4`（自动回写把空目录存成最新那一格，见
+            # `tests/test_runner_setup_cache.py`）——换了个 action 名，「前面有恢复
+            # 缓存那一步」这件事不变，两种写法都认
+            restores = ("actions/cache@v4" in block_yaml_only
+                        or "actions/cache/restore@v4" in block_yaml_only)
+            if restores and "apt-archives" in block_yaml_only:
                 cache_step_seen = True
                 continue
             calls_here = ("apt_install_cached" in block_yaml_only
@@ -6288,7 +6300,18 @@ def test_挂代理CA要排在导入edge_tts之前(tmp_path, monkeypatch, capsys)
     之后再挂 CA 一点用都没有——而那种失败长得和「没挂」一模一样。
     所以两件事一起钉：调用排在最前面，且没有任何模块级的 `import edge_tts`。
     """
+    import certifi  # noqa: PLC0415
+    import certifi.core  # noqa: PLC0415
+
     from tennislive import localca  # noqa: PLC0415
+
+    # `trust_local_proxy_ca` 改的是**全局**的 `certifi.where`，monkeypatch 管不到。
+    # 同一个 xdist worker 里前面谁挂过一次，它就还指着那份 bundle——那份一不在，
+    # 下面第 ② 步 `read_text` 就 FileNotFoundError（全量里偶发、单跑必绿）。
+    # 先钉回真的那个，teardown 再还原，**两个方向都不漏**：别人漏给我的、我漏给别人的。
+    monkeypatch.setattr(certifi, "where", certifi.core.where)
+    for var in ("SSL_CERT_FILE", "REQUESTS_CA_BUNDLE"):
+        monkeypatch.delenv(var, raising=False)   # 第 ② 步直接写 os.environ，交给 teardown 还原
 
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     body = src[src.index("def main() -> int:"):]
@@ -6317,7 +6340,6 @@ def test_挂代理CA要排在导入edge_tts之前(tmp_path, monkeypatch, capsys)
     monkeypatch.setattr(localca, "_CACHE", tmp_path / "bundle.pem")
     monkeypatch.setenv("TENNISLIVE_EXTRA_CA", str(ca))
     got = localca.trust_local_proxy_ca()
-    import certifi  # noqa: PLC0415
     assert got == os.environ["SSL_CERT_FILE"] == os.environ["REQUESTS_CA_BUNDLE"]
     assert certifi.where() == got, "edge-tts 认的是 certifi.where()，它没被指过来"
     merged = Path(got).read_text(encoding="utf-8")
@@ -6577,6 +6599,7 @@ def test_比分板的英文名只在名里缩写姓整个留下():
         "又出现了那个孤零零的 `-.`——连字符被当成一个名字了")
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_赛场之上的比分板形状要在dry_run就拦下来():
     """`cover.scoreboard` 缺不缺，`--dry-run` 就要报，不许留到 runner 上。
 
@@ -7706,8 +7729,13 @@ def test_重放不许把已经删掉的成片救活():
     每一个文件，`git rm` 把 `reset --hard` 刚救活的那份再删掉并进索引。
     """
     text = WORKFLOW.read_text(encoding="utf-8")
-    block = text[text.index("push 被拒（第 $attempt 次）"):]
-    block = block[:block.index("sleep $((attempt")]
+    # 重放抽成了一个函数（main 上的 probe 第一次 push 之前也要先重放一次）：
+    # 被拒之后那一段必须调它，删除那半的判据看函数体
+    retry = text[text.index("push 被拒（第 $attempt 次）"):]
+    retry = retry[:retry.index("sleep $((attempt")]
+    assert "replay_onto_latest" in retry, "被拒之后没有重放就直接 sleep 重推——同一个冲突撞十次"
+    block = text[text.index("replay_onto_latest() {"):]
+    block = block[:block.index("\n          }\n")]
     assert "--diff-filter=D rendered^ rendered" in block, (
         "重放没把「这次提交删掉的文件」再删一遍——reset --hard 救活的旧成片"
         "会一直留在仓库里（run 30727483963）")
@@ -9076,6 +9104,7 @@ def test_屏幕上的数字不许把字吃掉():
             "一个没写完的数")
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_旁白里的百分号要在dry_run前拦住():
     """屏幕可以写 49%，中文配音原文必须写「百分之四十九」。"""
     reel = _reel()
@@ -11979,6 +12008,8 @@ def test_全称断言必须认领一份能穷举的出处():
     和「看了几场就下结论」分开。
     """
     reel = _reel()
+    # 词表 2026-09-27 挪进了三条线共用的 `tools/absolute_claims.py`（`_reel()` 已把 tools/ 挂上）。
+    import absolute_claims  # noqa: PLC0415
 
     # ---- 豁免表自检：名字要真的存在，而且真的还带着那种断言 ----
     for slug in sorted(reel._LEGACY_UNSOURCED_CLAIMS):
@@ -11986,7 +12017,7 @@ def test_全称断言必须认领一份能穷举的出处():
         assert path.is_file(), f"豁免表里的 {slug} 不存在了——过期的名字就是恒真的绿灯"
         spec = json.loads(path.read_text(encoding="utf-8"))
         texts = reel.spec_outward_text(spec)
-        assert any(reel._ABSOLUTE_CLAIM_RE.search(t) for t in texts), (
+        assert absolute_claims.claim_phrases(texts), (
             f"{slug} 已经没有全称断言了，把它从 _LEGACY_UNSOURCED_CLAIMS 删掉（只许减不许加）")
 
     # ---- 存量里没被豁免的，一条都不许漏 ----
@@ -14069,6 +14100,7 @@ def test_换取签名URL拉受控流这条源禁掉():
         "多出来说明判据放宽了、误伤了合规的源。")
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_签名源那道闸排在下载之前():
     """又是「闸装在哪一步」那条老账——**只测行为拦不住位置错**。
 
@@ -17614,6 +17646,7 @@ def test_轮次分数在字幕里写成1斜杠N决赛():
     assert A("百分之六十四") == "64%"
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_quote的at超出段长在dry_run就红():
     """`explicit_quote_cues` 原来要等全部分段编完、拼接写字幕时才报——
     zverev-deminaur-laver-cup-2026 第二趟 render 就这么白跑了两分钟。

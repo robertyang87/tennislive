@@ -141,8 +141,9 @@ jobs:
       # （`tools/ci_apt_install.sh`），裸调既绕开缓存、又没有超时——实测同一步
       # 能从 18 秒变成 13 分 42 秒，而 `-qq` 让它卡的时候一个字都不吭。
       - name: 缓存 apt 包（字幕排版字体，绕开镜像抽风）
+        id: apt_cache
         if: steps.gate.outputs.work == 'true'
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             ~/.cache/apt-archives
@@ -150,8 +151,12 @@ jobs:
           # 滚动键：按稳定前缀恢复最近一份，跑完用本次 run_id 回写——固定钥匙
           # 的话第一趟只攒下一部分包，之后再也覆盖不掉同名缓存。
           key: apt-pkgs-${{ runner.os }}-24.04-interview-auto-render-v1-${{ github.run_id }}
+          # 第二格退到 CI 在 main 上存的那份（cjk＋core＋emoji，这一步装的字体是它的
+          # 子集）：缓存按 ref 隔离，本线自己存的只有同一条分支看得见，每条新分支
+          # 的第一趟全靠这一格（2026-09-27，见 match-reel.yml 同一步的注释）
           restore-keys: |
             apt-pkgs-${{ runner.os }}-24.04-interview-auto-render-v1-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: 装转写与字幕排版字体
         timeout-minutes: 15
         if: steps.gate.outputs.work == 'true'
@@ -159,6 +164,19 @@ jobs:
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-core fonts-noto-cjk
           test -f /usr/share/fonts/truetype/noto/NotoSans-Regular.ttf
+
+      # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
+      # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：
+      # 命中的趟白传一份、只装 ffmpeg 的趟把空目录存成最新那一格——见那份脚本
+      # 顶部 2026-09-27 那段。判据 `tests/test_runner_setup_cache.py`。
+      - name: 回写 apt 缓存（这趟真下了新包才存）
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
 
       - name: 缓存转写模型和生产检查点
         if: steps.gate.outputs.work == 'true'

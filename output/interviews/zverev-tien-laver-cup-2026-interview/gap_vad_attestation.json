@@ -1,0 +1,71 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "4413671252dff24d26372d6c6a7db8d23683e50698d0d781dee1c74e22d6134d",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "9.4-11.6",
+   "start": 9.36,
+   "end": 11.58,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  },
+  {
+   "key": "19.4-26.2",
+   "start": 19.42,
+   "end": 26.19,
+   "speech_seconds": 0.746,
+   "second_asr_words": [
+    "I",
+    "think",
+    "I"
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  },
+  {
+   "key": "42.8-48.6",
+   "start": 42.79,
+   "end": 48.6,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "How"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "77.0-79.0",
+   "start": 76.98,
+   "end": 79.02,
+   "speech_seconds": 0.434,
+   "second_asr_words": [
+    "And"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "117.8-120.5",
+   "start": 117.85,
+   "end": 120.47,
+   "speech_seconds": 0.908,
+   "second_asr_words": [
+    "But,",
+    "you",
+    "know,"
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  }
+ ]
+}

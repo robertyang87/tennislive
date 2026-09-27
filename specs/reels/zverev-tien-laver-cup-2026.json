@@ -1,0 +1,390 @@
+{
+ "slug": "zverev-tien-laver-cup-2026",
+ "_column": "赛场之上",
+ "sources": {
+  "main": "https://www.youtube.com/watch?v=MfMq9-cwtCU"
+ },
+ "scorebox": [
+  80,
+  862,
+  520,
+  1036
+ ],
+ "_scorebox_why": "和同一届 zverev-deminaur / ruud-cerundolo / cobolli-tien 同一块转播板、同一个框；probe 带这个框量出 74 个翻牌时刻（point_ends）。",
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "兹维列夫",
+  "hook": "昨天握着赛点输了\n兹维列夫替欧洲夺冠",
+  "_hook_why": "账号所有者 2026-09-25「钩子只讲重点或关键内容，以及结果」＋ 2026-09-19「拿人的来路当影子」：第一行＝他昨天的局面（第二天单打握着赛点被德米纳尔 2-6 7-6(5) 11-9 逆转——zverev-deminaur-laver-cup-2026 已核，官网本场赛报「dropping a 2-6, 7-6(5), 11-9 decision to Team World’s Alex de Minaur on Day 2」），第二行＝结果（这一场 7-6(3) 6-3 让欧洲队 13-5 夺冠，画面 126~163s `TEAM EUROPE WINS THE LAVER CUP 13 : 5`）。同一个人、昨天输→今天夺冠的落差；不带比分数字、没有术语。每行 8／9 字符，≤ 10。",
+  "topic": "拉沃尔杯 第三天 · 兹维列夫 VS 勒纳·钱",
+  "winner": "兹维列夫",
+  "result": "7-6(3) 6-3",
+  "matchup": [
+   {
+    "name": "兹维列夫",
+    "name_en": "Alexander Zverev",
+    "country": "GER",
+    "rank": 2
+   },
+   {
+    "name": "勒纳·钱",
+    "name_en": "Learner Tien",
+    "country": "USA",
+    "rank": 13
+   }
+  ],
+  "_matchup_rank_why": "和同届 zverev-deminaur（兹维列夫 2）、cobolli-tien（勒纳·钱 13）同一期：lavercup.com 球员页＋ tennisexplorer 21.09.2026；官网本场赛报「the world No. 2 Zverev」。",
+  "_name_why": "两个中文名都走 `player_zh()`：Alexander Zverev → 兹维列夫，Learner Tien → 勒纳·钱。",
+  "_heat_why": "世界第 2 对世界第 13（都在 HEAT_TOP_RANK=20 以内）；这一场是拉沃尔杯 2026 的夺冠一场，欧洲队 13-5 捧杯。",
+  "scoreboard": {
+   "court": "The O2",
+   "_court_why": "同一届前几条同一块场地（flashscore `VEN÷O2 Arena ¬ TWN÷London`；官网赛报「at The O2 in London」）。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A49%3A00%22%2C%20%22source%22%3A%20%22lavercup.com%20%E8%B5%9B%E6%8A%A5%202026-09-27%E3%80%8Cserved%20it%20out%20in%20one%20hour%20and%2049%20minutes%E3%80%8D%22%2C%20%22cross_check%22%3A%20%22flashscore%20fgVBhTPH%20df_sui_1%EF%BC%9A1%3A10%20%2B%200%3A40%20%3D%201%3A50%EF%BC%88%E5%88%86%E7%9B%98%E5%8F%96%E6%95%B4%EF%BC%89%22%7D",
+    "field": "duration"
+   }
+  },
+  "_duration_why": "印 1:49：官网赛报「served it out in one hour and 49 minutes」；flashscore 分盘 1:10 + 0:40 取整后是 1:50。",
+  "portrait": {
+   "frame_at": 126.0,
+   "focus": 0.5,
+   "focus_y": 0.4,
+   "zoom": 1.0,
+   "_frame_why": "集锦 126.0s：拉沃尔杯点落地后，兹维列夫张开双臂、右手举拍，正脸直视前方、双眼睁开、笑着——情绪对「夺冠」。按 2026-09-26 常设授权（清晰、偏正面的抽帧）。官方源查过（北京 9/28 00:00 前后，终场后约 45 分钟）：拉沃尔杯官网 WordPress 媒体库 `find_cover_photo.py --player Zverev --site lavercup.com --date 2026-09-27` 今天 21 张里本场只有两张视频缩略图（`lc26-match10-highlights-thumb-1.jpg` 1920×1080 是转播截图、背身；`LC26-match10-interview-thumb.jpg`），Getty 第三天比赛图还没上（第二天的图是次日 14:14Z 才批量上传的）；按 `search=Zverev` 最新一张是第二天的；AP、WTA photo-resources 0。",
+   "_low_res_why": "源片 1920×1080，铺 1080×1440 是放大 1.33 倍——认领这个代价。"
+  }
+ },
+ "topbar": {
+  "line1": "2026 拉沃尔杯 第三天",
+  "line2": "兹维列夫 7-6(3) 6-3 勒纳·钱"
+ },
+ "_topbar_why": "和同届几条同一写法：团体赛没有「级别＋站」，轮次写「第三天」。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "fgVBhTPH",
+  "flashscore_id": "fgVBhTPH",
+  "participants": [
+   "兹维列夫",
+   "勒纳·钱"
+  ],
+  "set_scores_home_away": [
+   [
+    7,
+    6
+   ],
+   [
+    6,
+    3
+   ]
+  ],
+  "tiebreaks_home_away": [
+   [
+    7,
+    3
+   ],
+   null
+  ],
+  "winner": "兹维列夫",
+  "loser": "勒纳·钱",
+  "winner_result": "7-6(3) 6-3",
+  "loser_result": "6-7(3) 3-6",
+  "_direction_why": "flashscore 当日表 f_2_0：AE=Zverev A.（home）、AF=Tien L.（away），BA/BB=7:6、BC/BD=6:3、DA/DB=7:3（第一盘抢七小分）、AG/AH=2:0。官网赛报「7-6(3), 6-3 over Team World’s Learner Tien」。画面 132.5s 宽版板 `ALEXANDER ZVEREV 7⁷ 6 / LEARNER TIEN 6³ 3`。"
+ },
+ "stats": {
+  "a": {
+   "aces": 5,
+   "df": 4,
+   "winners": 32,
+   "ue": 32,
+   "first_in": 51,
+   "first_won": 41,
+   "second_total": 22,
+   "second_won": 12,
+   "bp_conv": 1,
+   "bp_chances": 6,
+   "pts_won": 81,
+   "pts_total": 150,
+   "first_total": 73,
+   "headshot": "assets/players/headshots/atp-Z355.png"
+  },
+  "b": {
+   "aces": 0,
+   "df": 2,
+   "winners": 21,
+   "ue": 28,
+   "first_in": 46,
+   "first_won": 33,
+   "second_total": 32,
+   "second_won": 17,
+   "bp_conv": 0,
+   "bp_chances": 4,
+   "pts_won": 69,
+   "pts_total": 150,
+   "first_total": 78,
+   "headshot": "assets/players/headshots/atp-T0HA.png"
+  },
+  "_source": "flashscore fgVBhTPH 的 df_st_1，`match_stat_hooks.py fgVBhTPH --home Zverev --away Tien --stats-block` 机器抄出；home＝兹维列夫＝cover.matchup[0]，a/b 不对调。锚点：Aces 主队 5、客队 0；Break Points Converted 主队 1/6（官网赛报「his first service break in six opportunities」）。头像：兹维列夫 atp-Z355、勒纳·钱 atp-T0HA（仓库已发片子同一张）。"
+ },
+ "segments": [
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 125.1,
+   "end": 136.6,
+   "narration": "",
+   "quote": [
+    {
+     "at": 4.9,
+     "text": "The Laver Cup returns to Europe\n拉沃尔杯回到了欧洲"
+    },
+    {
+     "at": 8.66,
+     "text": "and how they will celebrate.\n他们要好好庆祝了"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "冷开场：拉沃尔杯点落地之后（125.02 那一刀）。125~128s 兹维列夫张开双臂、举拍大笑，129~131s 欧洲队全队冲进场，133~135s 俯拍抱成一团，136s 近景拥抱。解说原声 130.00~135（captions.txt；ASR「leather cup」按画面横幅 TEAM EUROPE WINS 写回 Laver Cup）。",
+   "point_end_ok": "比赛已经结束，那串翻牌是宽版板和团体比分条的动画。",
+   "_ending_payoff_required": true,
+   "_ending_payoff_why": "正文按时间顺序重放 114–125 的拉沃尔杯点和 125.1–136.6 的庆祝，这次配旁白。",
+   "crosses_cut": "129.00 —— 同一刻换机位：兹维列夫张臂的近景切到欧洲队冲进场，都是赛点落地之后的庆祝。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 136.7,
+   "end": 149.9,
+   "narration": "昨天，他握着赛点，被德米纳尔逆转。今天欧洲队十比五，只差这一场的三分。兹维列夫拿下了，这是他第四次，替欧洲队锁定了拉沃尔杯。",
+   "_why": "② 落点。画面接着冷开场：137~149s 欧洲队在场上抱成一圈，144s 起右下团体比分条 `TEAM EUROPE WINS THE LAVER CUP 13 : 5`。事实：昨天单打被逆转（官网赛报「dropping a 2-6, 7-6(5), 11-9 decision to Team World’s Alex de Minaur on Day 2」＋ zverev-deminaur-laver-cup-2026 的 flashscore 逐分：9-8 赛点没兑现）；10-5（官网上一篇赛报「Now ahead, 10-5 … could clinch … when Alexander Zverev takes the court against Learner Tien」）；最后一天每场 3 分（laver-cup-history-2026 已核）；第四次（官网赛报「It marked the fourth time Zverev has sealed this global first-to-13 showdown following Chicago (2018), Geneva (2019) and Boston (2021)」）。",
+   "point_end_ok": "比赛已经结束。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 0.3,
+   "end": 32.8,
+   "narration": "北京时间九月二十七号晚上九点多，拉沃尔杯第三天，也是最后一天。兹维列夫对勒纳·钱，他第一次参加拉沃尔杯。第一盘五平，钱发球，零比四十，三个破发点。这一分钱被压到底线后面，兹维列夫在网前一板一板扣高压，他一板一板往回捡。整座球馆，看得站了起来。",
+   "_why": "③ 坐标，见 _opening_time_source。画面：第一盘 5-5 勒纳·钱发球 0-40（记分条 0.5~32.5s `3 BREAK POINTS / ZVEREV 5 40 / TIEN •5 0`），同一分打了三十多秒：勒纳·钱（近端红衣）10s 扑倒在右侧底线、16~22s 退到底线后几米，兹维列夫（远端蓝衣）在网前。官网赛报「Serving at 5-5, 0-40 in the opener, Tien, a lefty, brought The O2 crowd to its collective feet in appreciation after repeatedly chasing down Zverev overheads」。「第一次来打」：官网赛报「Tien was making his Team World debut」。收在 32.9 切近景之前。",
+   "point_end_ok": "这一分在 32.9 那一刀之前落地（34.5s 记分条翻成 40-15、BREAK POINTS 从 3 变 2），下一段 32.9 接着放兹维列夫的反应镜头。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 32.9,
+   "end": 40.7,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.78,
+     "text": "And that is what the Laver Cup is all about.\n这就是拉沃尔杯"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "33~36s 兹维列夫近景（苦笑、低头），38~40s 全场全景。解说原声 33.68~36.5（captions.txt；ASR「Labor Cup」写回 Laver Cup）。收在 40.84 那一刀之前。",
+   "point_end_ok": "上一分已经结束，34.5s 那次翻牌就是这一分的结果；段内没有比赛进行。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 41.0,
+   "end": 58.2,
+   "narration": "这一分是钱的。三个破发点，他全都救了回来，保住了发球局。世界队的替补席，全都站起来鼓掌，队长阿加西笑得捂住了脸。第一盘，打进了抢七。",
+   "_why": "画面：42~46s 世界队替补席起身鼓掌，44s、52~57s 阿加西（红衣）大笑、捂脸；记分条 36.5~56.5s `2 BREAK POINTS / ZVEREV 5 40 / TIEN •5 15`。flashscore df_mh_1 Set 1 `5-6 客队发球，客队拿下 ← 3个破发点`（40:0/40:15/40:30 三个 B1 之后客队拿下）；官网赛报「would go on to erase his opponent’s triple break-point opportunity to hold, and eventually force a tiebreak」。旁白不指认哪一个是第几个破发点。收在 58.3 溶解进抢七之前。",
+   "point_end_ok": "段内没有比赛进行（替补席、阿加西、看台），58.5s 那次翻牌是记分条换成抢七的动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 58.4,
+   "end": 66.3,
+   "narration": "抢七，兹维列夫六比三，三个盘点。第一个，他就兑现了，七比三。",
+   "_why": "记分条 58.5~68.5s `3 SET POINTS / ZVEREV •6 6 / TIEN 6 3`（抢七 6-3，兹维列夫发球）；70.5s `MATCH 10 / ZVEREV 7⁷ / TIEN 6³`。flashscore DA/DB=7:3。第一个盘点兑现：6-3 → 7-3 中间没有别的比分。画面 59~65s 勒纳·钱在近端接发、兹维列夫远端发球，这一分在 65.57 那一刀之前落地。",
+   "crosses_cut": "65.57 —— 同一分落地后的反应镜头（兹维列夫握拳）。",
+   "point_end_ok": "盘点在 65.57 之前落地；66.37 那次翻牌是记分条换盘的动画，下一段 66.4 接着放反应镜头。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 66.4,
+   "end": 74.6,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.24,
+     "text": "Not pretty. But priceless for Team Europe\n不算漂亮 但对欧洲队来说无价"
+    },
+    {
+     "at": 3.44,
+     "text": "as Zverev grabs the opener on the tiebreak.\n兹维列夫在抢七里拿下首盘"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "66~68s 兹维列夫握拳、走回，69~71s 欧洲队队长诺阿（蓝帽）抿嘴点头，73~74s 全场全景。解说原声 66.64~74.3（captions.txt；ASR「Verv」写回 Zverev）。",
+   "point_end_ok": "盘间，没有比赛进行；那串翻牌是记分条换盘、宽版板的动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 74.7,
+   "end": 84.6,
+   "narration": "第一盘一小时十分钟，七比六。最后一天一场三分，欧洲队离捧杯只差一盘。第二盘一比零，钱发球。",
+   "_why": "74~76s 全场全景，78~82s 兹维列夫换边，84s 兹维列夫接发（`91 MPH`）。记分条 84.5s `MATCH 10 / ZVEREV 7⁷ 1 15 / TIEN •6³ 0 40`。flashscore df_sui_1 Set 1 用时 1:10；df_mh_1 Set 2 `1-0 主队发球，主队拿下`、`1-1 客队发球，客队拿下`。收在 84.68 那一刀——同一分接下一段。 「只差一盘」：10-5 ＋这一场 3 分＝13，而他已经先赢一盘、两盘制。",
+   "crosses_cut": "84.68 —— 同一分在宽景里接着打（下一段 84.7 起）。",
+   "point_end_ok": "这一分在下一段 84.7~92 里打完。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 84.7,
+   "end": 96.6,
+   "narration": "",
+   "quote": [
+    {
+     "at": 7.3,
+     "text": "Oh, what a reply there from Tien\n钱这一拍回得漂亮"
+    },
+    {
+     "at": 9.86,
+     "text": "Hanging on to the sideline\n压在了边线上"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "第二盘 0-1、勒纳·钱发球 40-15（记分条 84.5~92.5s `ZVEREV 7⁷ 1 15 / TIEN •6³ 0 40`），88~91s 勒纳·钱在近端被拉到两个角，92s 回到中间；93~96s 勒纳·钱近景（拿球、看拍）。94.5s 记分条翻成 `•7⁷ 1 / 6³ 1`＝他保住，一比一。解说原声 92.00~96（captions.txt；ASR「Tier」写回 Tien）。收在 96~97 那一刀之前。",
+   "point_end_ok": "这一分在 93.06 那一刀之前落地（94.5s 记分条翻成 1-1），93~96.6 是反应镜头。",
+   "crosses_cut": "93.06 —— 同一分落地后的反应镜头（勒纳·钱近景）。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 97.2,
+   "end": 109.3,
+   "narration": "三比二，钱发球，兹维列夫逼出他一个反手失误，破发。下一局，兹维列夫自己零比四十落后，三个破发点，他一个没给。",
+   "_why": "画面：97~108s 记分条 `ZVEREV •7⁷ 4 AD / TIEN 6³ 2`＝兹维列夫 4-2 发球占先，这一分收下这一局。flashscore df_mh_1 Set 2 `4-2 客队发球，主队拿下 ← 破发`（40:30 B1 之后主队拿下）、`5-2 主队发球，主队拿下 ← 3个破发点`（0:15, 0:30, 0:40 B1, 15:40 B1, 30:40 B1, 40:40, A:40）。官网赛报「With Tien serving at 2-3, 30-40, he would force a backhand error for his first service break in six opportunities. Zverev fought off a triple break-point opportunity for Tien at 4-2」。旁白不指认画面是哪一分。",
+   "point_end_ok": "这一分在 109.38 那一刀之前落地（解说 109.28「game」），下一段 109.4 是反应镜头。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 109.4,
+   "end": 113.8,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.84,
+     "text": "Five straight points for Team Europe\n欧洲队连拿五分"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "109~110s 兹维列夫握拳，112~113s 诺阿握拳。解说原声 110.24~112.5（captions.txt）。「连拿五分」＝ 0-40 之后连赢五分（flashscore 逐分）。收在 114 切回宽景之前。",
+   "point_end_ok": "局间，没有比赛进行。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 114.1,
+   "end": 125.0,
+   "narration": "五比三，四十比十五，拉沃尔杯点。去年在旧金山，最后一场他输给了弗里茨。这一次，第一个点他就拿下了。",
+   "_why": "记分条 114.5~126.5s `LAVER CUP POINT / ZVEREV •7⁷ 5 40 / TIEN 6³ 3 15`；128.5s `7⁷ 6 / 6³ 3`。flashscore df_mh_1 Set 2 `6-3 主队发球，主队拿下 ← 1个赛点`（40:15 B3 之后主队拿下）；官网赛报「two games later served it out」。画面：兹维列夫在近端发球，123~124s 被拉到右侧。旁白不说这一分怎么结束的（画面看不清最后一拍）。 去年：laver-cup-history-2026 已核「二〇二五年旧金山，世界队又以十五比九夺冠，弗里茨击败兹维列夫拿下最后一场」＋官网赛报「Denied the Laver Cup in his first attempt in San Francisco in 2025」（诺阿）、兹维列夫赛后「They were champions last year」。",
+   "point_end_ok": "比赛在 125.02 那一刀之前结束。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 125.1,
+   "end": 136.6,
+   "narration": "七比六、六比三，一小时四十九分。欧洲队十三比五，拉沃尔杯回到欧洲。全队冲进场，把他围在中间。",
+   "_why": "和冷开场同一段画面，按时间顺序重放、配旁白。用时见 cover.scoreboard；13-5：画面 144s 起 `TEAM EUROPE WINS THE LAVER CUP 13 : 5` ＋官网赛报「clinching the Laver Cup for Team Europe, 13-5」。",
+   "point_end_ok": "比赛已经结束。",
+   "crosses_cut": "129.00 —— 同一刻换机位：兹维列夫张臂的近景切到欧洲队冲进场，都是赛点落地之后的庆祝。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": false,
+   "start": 150.2,
+   "end": 163.5,
+   "narration": "他走到世界队的替补席，和勒纳·钱握手，一个一个道谢。奖杯回到了欧洲。明年，欧洲队还守得住吗？",
+   "_why": "150~151s 看台，152s 兹维列夫双手抱头，153~155s 放下球拍，156~163s 走到世界队替补席（红衣）握手、拥抱。解说 154.24「Zverev's going to go and offer his thanks to Tien for offering up a good match」（captions.txt；ASR「Zav's」写回 Zverev）。收在 163.61 静音之前。",
+   "point_end_ok": "比赛已经结束，那串翻牌是团体比分条的动画。",
+   "_score_inset_why": "赛后画面，比分条换成团体比分条，probe 逐帧量 68 帧一帧转播板都没认出。"
+  }
+ ],
+ "_source": "拉沃尔杯官方 YouTube《Alexander Zverev v Learner Tien Highlights | Laver Cup 2026 Match 10》`MfMq9-cwtCU`（账号所有者给的链接），1920×1080 / 29.97fps / 166.63s（probe 实测）；官网视频页 2026-09-27T15:34Z 同名集锦。四要素：①记分条 `MATCH 10 / ZVEREV / TIEN`，132.5s 宽版板 `ALEXANDER ZVEREV 7⁷ 6 / LEARNER TIEN 6³ 3`，和 flashscore fgVBhTPH 逐字一致；②黑色场地 `LAVER CUP LONDON 2026`、挡板 `Alipay+` `ROLEX` `UBS`；③兹维列夫蓝色 Team Europe＋白发带，勒纳·钱红色 Team World＋白帽；④144s 起团体比分条 `TEAM EUROPE WINS THE LAVER CUP 13 : 5`。",
+ "_opening_time_source": {
+  "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+  "match_id": "fgVBhTPH",
+  "field": "AD",
+  "value": 1790515500,
+  "beijing": "2026-09-27T21:25+08:00",
+  "spoken_precision": "approximate-hour",
+  "_why": "flashscore AD=1790515500 → 13:25Z ＝ 北京 9/27 21:25，说「晚上九点多」。终场 AO=1790522080 → 15:14Z。"
+ },
+ "_hit_data": "`match_feed.py show fgVBhTPH`：第一盘 5-5 勒纳·钱发球 0-40，三个破发点全救（官网：一次次追上兹维列夫的高压）；抢七兹维列夫 7-3，第一个盘点兑现（1:10）。第二盘 3-2 兹维列夫第六个破发点才破成（官网「first service break in six opportunities」），4-2 自己发球 0-40 连拿五分；5-3 第一个拉沃尔杯点兑现（0:40）。统计：兹维列夫 5 个 ACE、32 个制胜分；勒纳·钱四个破发点一个没兑现，兹维列夫发球局 11 局全保。",
+ "_turning_points": [
+  "第一盘 5-5 勒纳·钱 0-40 救回三个破发点（记分条 0.5~56.5s），盘面拖进抢七。",
+  "抢七兹维列夫 6-3 第一个盘点兑现，7-3（记分条 58.5~70.5s）。",
+  "第二盘 4-2 兹维列夫自己发球 0-40，连拿五分保住（记分条 97~108s ＋解说「Five straight points」）。"
+ ],
+ "_editing_why": "源片 166.63 秒：比赛画面到 125.02（拉沃尔杯点），125~163.6 是赛后（兹维列夫张臂、全队冲进场、抱成一团、走去世界队替补席握手），163.61 起静音、164 起片尾板；没有场上采访。开场三格：冷开场（赛后＋解说原声）→ 落点（昨天被逆转／第四次锁定冠军）→ 坐标＋5-5 那一分，然后按时间顺序：破发点全救 → 抢七盘点 → 解说「Not pretty. But priceless」→ 第二盘 1-1 → 破发＋0-40 保发 → 拉沃尔杯点 → 重放庆祝 → 握手。没用的：没有。",
+ "mixed_fps": {
+  "main": "单源，29.97fps。"
+ },
+ "_voice_why": "沿用默认：云见（`zh-CN-YunjianNeural`）＋6%。",
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "昨天握着赛点输了",
+   "兹维列夫替欧洲夺冠"
+  ],
+  "question": "昨天兹维列夫握着赛点被德米纳尔逆转，今天欧洲队只差这一场——他是怎么把最后三分拿下来的？",
+  "thesis": "第一盘五平，勒纳·钱零比四十救回三个破发点，兹维列夫抢七七比三拿下；第二盘他破发之后自己零比四十落后又连拿五分，五比三第一个拉沃尔杯点兑现，欧洲队十三比五夺冠。",
+  "beats": [
+   "冷开场：兹维列夫张臂、全队冲进场，解说「The Laver Cup returns to Europe」。",
+   "昨天握着赛点被逆转；今天欧洲队十比五，第四次替欧洲锁定冠军。",
+   "北京时间晚上九点多；第一盘五平零比四十，钱一次次捡回高压。",
+   "三个破发点全救，抢七七比三。",
+   "第二盘破发，零比四十连拿五分。",
+   "五比三拉沃尔杯点兑现；十三比五；去年输掉最后一场，今年拿回奖杯。"
+  ],
+  "_hook_why": "和 cover.hook 逐行相同。",
+  "human_context": {
+   "angle": "兹维列夫昨天（第二天）握着赛点被德米纳尔逆转；今天欧洲队 10-5，这一场 3 分正好够 13 分。他第四次替欧洲锁定拉沃尔杯（2018 芝加哥、2019 日内瓦、2021 波士顿、2026 伦敦——官网赛报）；去年旧金山最后一场他输给弗里茨。",
+   "facts": [
+    "flashscore fgVBhTPH：7-6(3) 6-3，分盘用时 1:10 / 0:40；官网 1 小时 49 分。",
+    "团体比分：画面 `TEAM EUROPE WINS THE LAVER CUP 13 : 5` ＋官网赛报。",
+    "排名：兹维列夫 2、勒纳·钱 13。"
+   ],
+   "sources": [
+    "https://www.flashscore.com/match/tennis/fgVBhTPH/",
+    "https://www.youtube.com/watch?v=MfMq9-cwtCU",
+    "https://lavercup.com/news/2026/09/27/zverev-again-clinches-laver-cup-for-team-europe"
+   ],
+   "voice_label": "昨天输了今天捧杯"
+  }
+ },
+ "_claims": [],
+ "_no_repeat": "同一届兄弟片：zverev-deminaur 讲过昨天那场的赛点，这里只一句带过；laver-cup-history 讲过赛制，这里只说「只差这一场的三分」。",
+ "push": {
+  "summary": "兹维列夫为欧洲锁定冠军",
+  "lead": "拉沃尔杯伦敦站最后一天，兹维列夫 7-6(3)、6-3 胜勒纳·钱，欧洲队 13-5 夺冠。第一盘 5-5，勒纳·钱 0-40 救回三个破发点，抢七兹维列夫 7-3；第二盘他破发之后自己 0-40 落后，连拿五分保住，5-3 第一个拉沃尔杯点兑现。昨天他刚握着赛点输给德米纳尔，这是他第四次替欧洲锁定冠军。",
+  "matchup": "兹维列夫 vs 勒纳·钱",
+  "score": "7-6(3) 6-3",
+  "auto": true
+ },
+ "_push_summary_why": "11 字位（加日期栏目 19，≤20），主语兹维列夫。"
+}

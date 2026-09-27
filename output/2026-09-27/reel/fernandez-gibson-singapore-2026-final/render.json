@@ -1,0 +1,127 @@
+{
+  "scoreboard_qc_sha256": "3df4e8d21fb54678f4928c6e4791d2b420ca46f4965f0557ba0798601ecad1dd",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 272.32,
+  "topbar": {
+    "line1": "2026 WTA500 新加坡 决赛",
+    "line2": "费尔南德斯 7-5 6-0 吉布森",
+    "start": 1.2,
+    "end": 273.52
+  },
+  "film_seconds": 277.36,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 26.088,
+    "2": 12.624,
+    "3": 17.88,
+    "4": 23.544,
+    "5": 16.224,
+    "6": 11.112,
+    "8": 15.216,
+    "9": 21.912,
+    "10": 22.416,
+    "11": 7.752,
+    "12": 21.864,
+    "14": 9.912
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 3,
+          "named": "吉布森",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 6,
+          "named": "吉布森",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 9,
+          "named": "费尔南德斯",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 11,
+          "named": "吉布森",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 12,
+          "named": "吉布森",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 10,
+      "faces": 0
+    }
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "fernandez-gibson-singapore-2026-final",
+    "received_at": "2026-09-27T12:14:58Z",
+    "artifact_ready_at": "2026-09-27T12:23:09Z",
+    "elapsed_seconds": 491.547,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "8673e8d8f7eb2f268efe9b8a396465bf552393b0a89e0879aabfb5664c18162d",
+    "spec_sha256": "355b508391c4ebd29c09b31b8743551a4fc4b0620564bd5b15abd24a9d73492c",
+    "run_id": "36318347403",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-27T12:17:12Z",
+        "run_id": "36318347403"
+      }
+    ],
+    "render_seconds": 357.547,
+    "pre_render_seconds": 134.0
+  },
+  "film_sha256": "8673e8d8f7eb2f268efe9b8a396465bf552393b0a89e0879aabfb5664c18162d",
+  "film_bytes": 142653826,
+  "qc_attestation_sha256": "5336ff37db504cfd9773702cbce57aaf0f76bff49e1e28587bfe03659d6a912d",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-27T12:17:12Z",
+      "run_id": "36318347403"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-27T12:23:10Z",
+      "run_id": "36318347403"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fernandez-gibson-singapore-2026-final/fernandez-gibson-singapore-2026-final.mp4",
+  "video_bytes": 142653826
+}

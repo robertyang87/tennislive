@@ -740,13 +740,17 @@ def test_mode_cover不往旧render_json里记账(tmp_path, monkeypatch):
     assert (tmp_path / "render.json").read_bytes() == old, "mode=cover 不许改上一版成片的 render.json"
 
     wf = yaml.safe_load((ROOT / ".github/workflows/interview-clip.yml").read_text(encoding="utf-8"))
-    step = next(s for job in wf["jobs"].values() for s in job.get("steps") or []
-                if "audit_interview_cover.py" in str(s.get("run") or ""))
-    run = step["run"]
-    gate_at = run.index('= "render" ]')
-    assert gate_at < run.index("--render-json") < run.index("audit_interview_cover.py"), (
-        "`--render-json` 只许在 mode=render 那一支给")
-    assert '"${RENDER_JSON[@]}"' in run
+    # 调审核的步骤不止一处（封面前置那一步在编码之前、终审在出片之后）：凡是给了
+    # `--render-json` 的，都要在 mode=render 那一支里给；一处都没给也不行。
+    steps = [s for job in wf["jobs"].values() for s in job.get("steps") or []
+             if "audit_interview_cover.py" in str(s.get("run") or "")]
+    with_rj = [s["run"] for s in steps if "--render-json" in s["run"]]
+    assert with_rj, "终审那一步要把认人结果并进这一趟的 render.json"
+    for run in with_rj:
+        gate_at = run.index('= "render" ]')
+        assert gate_at < run.index("--render-json") < run.index("audit_interview_cover.py"), (
+            "`--render-json` 只许在 mode=render 那一支给")
+        assert '"${RENDER_JSON[@]}"' in run
 
 
 def test_dry_run认的主源和render是同一个_sources第一个键(tmp_path):
