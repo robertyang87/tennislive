@@ -68,6 +68,8 @@ _PY_SHIM = """#!/usr/bin/env bash
 echo "python $*" >> "$SHIM_LOG"
 case "$*" in
   *audit_interview_cover.py*) exit "${AUDIT_RC:-0}" ;;
+  *"--stage cover-scan"*) exit 0 ;;
+  *"--stage cover"*) exit "${COVER_RC:-0}" ;;
   *"--stage verify"*) exit "${VERIFY_RC:-0}" ;;
 esac
 exit 0
@@ -179,12 +181,7 @@ def test_预览档先扫一段再出海报再验(tmp_path):
 
     # 红了：记录**照样先提交**（下一帧挑哪个、推送前对账都要它），排名在错误
     # 旁边再印一遍，然后才非零退出——红了之后「提交成片」那一步不会跑
-    red = tmp_path / "red"
-    shutil.copytree(ROOT / "tools", red / "tools",
-                    ignore=lambda d, names: [n for n in names if n != "git_push_retry.sh"])
-    rec = red / "output" / "interviews" / "demo" / scan.RECORD_NAME
-    rec.parent.mkdir(parents=True)
-    rec.write_text('{"method": "cover_scan_v1"}', encoding="utf-8")
+    red = _red_cover_dir(tmp_path)
     done, calls = _run_step(red, COVER_STEP, mode="cover", env={"AUDIT_RC": "1"})
     assert done.returncode != 0
     assert _kinds(calls) == ["scan keep", "cover", "audit", "report"], calls
@@ -195,6 +192,46 @@ def test_预览档先扫一段再出海报再验(tmp_path):
     i_commit = next(i for i, c in enumerate(calls) if c.startswith("git commit"))
     i_push = next(i for i, c in enumerate(calls) if c.startswith("git push"))
     assert i_add < i_commit < i_push, calls
+
+
+def _red_cover_dir(tmp_path: Path) -> Path:
+    """一个 `bash -e` 真跑得到提交那一支的目录：有 `git_push_retry.sh`、有一份扫描记录。"""
+    red = tmp_path / "red"
+    shutil.copytree(ROOT / "tools", red / "tools",
+                    ignore=lambda d, names: [n for n in names if n != "git_push_retry.sh"])
+    rec = red / "output" / "interviews" / "demo" / scan.RECORD_NAME
+    rec.parent.mkdir(parents=True)
+    rec.write_text('{"method": "cover_scan_v1"}', encoding="utf-8")
+    return red
+
+
+def test_预览档渲不出海报也先交扫描记录(tmp_path):
+    """`--stage cover` **自己**红了（frame_at 越过视频流最后一帧抛 NoFrameAt、
+    Chromium 起不来……），扫描记录照样先提交再非零退出。
+
+    第一版提交那几行只写在「像素闸没过」那一支里：`--stage cover` 一红，
+    `bash -e` 当场结束这一步，刚写好的 `cover_candidates.json` 跟着 runner
+    一起没了——而 frame_at 越过片尾那一种，扫描**刚好**把那一格记成了「没有画面」，
+    正是最该交上去的那份（review 2026-09-27）。"""
+    red = _red_cover_dir(tmp_path)
+    done, calls = _run_step(red, COVER_STEP, mode="cover", env={"COVER_RC": "1"})
+    assert done.returncode != 0, "海报都没渲出来，这一步却退出 0"
+    assert _kinds(calls) == ["scan keep", "cover", "report"], (
+        f"渲不出海报之后不该再跑像素闸，要先印排名：{calls}")
+    adds = [c for c in calls if c.startswith("git add")]
+    assert adds == [f"git add output/interviews/demo/{scan.RECORD_NAME}"], (
+        f"`--stage cover` 红了，扫描记录没交上去：{calls}")
+    i_commit = next(i for i, c in enumerate(calls) if c.startswith("git commit"))
+    i_push = next(i for i, c in enumerate(calls) if c.startswith("git push"))
+    assert calls.index(adds[0]) < i_commit < i_push, calls
+
+    # render 档照旧只红不交：自动链只拨 render，它认领不了一份机器记录
+    solo = tmp_path / "render"
+    solo.mkdir()
+    done, calls = _run_step(solo, COVER_STEP, mode="render", env={"COVER_RC": "1"})
+    assert done.returncode != 0
+    assert _kinds(calls) == ["cover keep"], calls
+    assert not any(c.startswith("git ") for c in calls), calls
 
 
 def test_第二份ASR在subs那一趟跑_排在切行提交之后(tmp_path):
@@ -671,6 +708,79 @@ def test_换了尺子的旧记录不对账_旧的fail不许接着拦(monkeypatch
 
     legacy = {k: v for k, v in record.items() if k != "thresholds"}  # 第一版写的记录
     assert scan.record_problem(legacy, spec) == ""
+
+
+def test_版式指纹跟着海报模板和画布几何走_只改说明不动(tmp_path):
+    """尺子只比审核模块的阈值时，**换海报版式**（模板、钩子那条渐变带、照片区几何）
+    的旧记录看起来还是新的——同一个 frame_at 渲出来已经是另一张海报，一格旧的 fail
+    照样拦（review 2026-09-27：待合的 UI 包正要改赛后开麦封面的版式）。
+
+    指纹按源码文本算：模板里一个数变了就变；只改 docstring／整行注释不变
+    （这个仓库的注释天天在长，每长一句就让全部记录失效，闸就等于没有）；
+    名单里的函数改名了要大声报错，不许悄悄少算一段。"""
+    src = ROOT / "tools" / "build_interview_clip.py"
+    text = src.read_text(encoding="utf-8")
+    base = tmp_path / "base.py"
+    base.write_text(text, encoding="utf-8")
+    assert scan.layout(base) == scan.layout(), "同一份源码两个指纹"
+
+    def variant(name: str, old: str, new: str) -> str:
+        assert text.count(old) == 1, f"判据的锚点「{old}」没了或重复了"
+        path = tmp_path / f"{name}.py"
+        path.write_text(text.replace(old, new), encoding="utf-8")
+        return scan.layout(path)
+
+    fp = scan.layout(base)
+    assert variant("band", "height:520px;", "height:560px;") != fp, "钩子带挪了，指纹没变"
+    assert variant("top", "VIDEO_TOP = 150\n", "VIDEO_TOP = 170\n") != fp, "照片区挪了，指纹没变"
+    assert variant("doc", '"""封面：本场抽一帧 + 文案', '"""封面（改个说法）：本场抽一帧 + 文案') == fp, (
+        "只改了 build_cover 的 docstring，指纹却变了")
+    assert variant("comment", "    cov = spec[\"cover\"]\n",
+                   "    # 只是一句新注释\n\n    cov = spec[\"cover\"]\n") == fp, (
+        "只加了一行注释，指纹却变了")
+    assert variant("unrelated", '_FONT_SIZE = {"en": 46, "zh": 70}',
+                   '_FONT_SIZE = {"en": 48, "zh": 70}') == fp, "字幕字号不在封面上，指纹却变了"
+    renamed = tmp_path / "renamed.py"
+    renamed.write_text(text.replace("def build_cover(", "def build_poster("), encoding="utf-8")
+    with pytest.raises(SystemExit, match="build_cover"):
+        scan.layout(renamed)
+
+
+def test_换了版式或人脸模型的旧记录不对账(monkeypatch):
+    """版式、人脸模型（main 上的 `face_checks`，并进来之后它的阈值和权重也决定
+    一格过不过）都是尺子的一部分：变了，旧记录的 fail 不许接着拦。"""
+    import types  # noqa: PLC0415
+
+    monkeypatch.setitem(sys.modules, "face_checks", None)   # 这条分支上还没有
+    spec = {"slug": "demo", "url": "u", "cover": {"frame_at": 2.5}}
+    entries = [{"frame_at": 2.5, "status": "fail", "issues": ["只检出 1 只眼"],
+                "face": _face(90, 1), "margin": 2.0}]
+    record = _record(spec, entries)
+    assert record["face_model"] is None
+    assert "没过闸" in scan.record_problem(record, spec), "同一把尺子下旧 fail 该拦"
+
+    real_layout = scan.layout
+    monkeypatch.setattr(scan, "layout", lambda source=None: "0123456789abcdef")
+    assert "版式" in scan.stale_ruler(record)
+    assert scan.record_problem(record, spec) == "", "海报版式变了，旧的 fail 还在拦"
+    monkeypatch.setattr(scan, "layout", real_layout)
+    legacy = {k: v for k, v in record.items() if k != "layout"}      # 版式指纹之前写的记录
+    assert "版式" in scan.stale_ruler(legacy)
+    assert scan.record_problem(legacy, spec) == ""
+
+    face = types.ModuleType("face_checks")
+    face.CACHE_KEY, face.MATCH_SIM, face.EYE_OPEN_EAR = "face-models-a", 0.34, 0.16
+    monkeypatch.setitem(sys.modules, "face_checks", face)
+    assert "人脸模型" in scan.stale_ruler(record), "人脸模型并进来了，没它的旧记录还在对账"
+    assert scan.record_problem(record, spec) == ""
+    with_face = _record(spec, entries)
+    assert with_face["face_model"]["cache_key"] == "face-models-a"
+    assert "没过闸" in scan.record_problem(with_face, spec)
+    monkeypatch.setattr(face, "EYE_OPEN_EAR", 0.18)                  # 睁眼阈值改了
+    assert "人脸模型" in scan.stale_ruler(with_face)
+    monkeypatch.setattr(face, "EYE_OPEN_EAR", 0.16)
+    monkeypatch.setattr(face, "CACHE_KEY", "face-models-b")          # 换了权重
+    assert scan.record_problem(with_face, spec) == ""
 
 
 def test_候选墙贴原尺寸的脸(tmp_path):

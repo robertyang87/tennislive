@@ -2130,8 +2130,9 @@ Release 拉回本地，在候选时间点前后逐帧抽样**（0.5~1 秒一格�
   ①那条「闸放行 ≠ 睁眼」、fcc6c385 那条「过闸的里有看台观众」都还成立，最后一眼
   照旧要人看，这面墙就是给那一眼的；**它和缩略图墙一样是工作台，只走 artifact**，
   `.gitignore` 挡着）。本地实测 11 格 32 秒
-- `mode=cover` 那一帧**没过闸、这一步红着退出时，扫描记录照样先提交**，排名表在错误
-  旁边再印一遍（`interview_cover_scan.py --report`）——那正是这份记录最有用的时候。
+- `mode=cover` 那一帧**没过闸（或 `--stage cover` 自己渲不出海报，比如 frame_at 越过
+  最后一帧）、这一步红着退出时，扫描记录照样先提交**，排名表在错误旁边再印一遍
+  （`interview_cover_scan.py --report`）——那正是这份记录最有用的时候。
   `--stage cover` 排在取字幕之前，中文还空着也照样出海报
 - 片尾按**视频流**时长剔（`probe_video_duration`，音轨可以比画面长）；剔完还撞上最后
   一帧之后的格子记成一格「没有画面」，不拖垮整趟扫描
@@ -2140,8 +2141,15 @@ Release 拉回本地，在候选时间点前后逐帧抽样**（0.5~1 秒一格�
 - 提交过扫描记录的话，`cover.frame_at` 必须是其中**过闸**的那一格（render 前置那一步
   和 `auto_push_interview_gate` 都对账，`interview_cover_scan.py --check --spec S`
   本地 0.1 秒）。取景（源片／翻转／裁切／zoom／focus）变过的旧记录不管；**尺子
-  （审核器版本、`audit_interview_cover` 的阈值）变过的旧记录也不管**——旧的 fail
+  （审核器版本、`audit_interview_cover` 的阈值、海报版式指纹 `layout()`、有了
+  `face_checks` 之后它的阈值和模型缓存键）变过的旧记录也不管**——旧的 fail
   不许接着拦；真要用一帧没扫过的，重扫，或写 `cover._frame_scan_why`
+- ⚠️ **会话（沙箱）看不到候选墙**：它只走 artifact，而 artifact 在沙箱里下不下来
+  （tennis-dev-practices「这台沙箱的两条硬限制」）。会话手上只有两样：`get_job_logs`
+  拉到的排名表（扫描那一步和 `--report` 都印），和 `mode=cover` 提交进分支的那一张
+  `poster.jpg`（当前 `frame_at` 那一格）。所以会话挑帧＝按排名表挑余量最大的一格写进
+  `frame_at` → 再发一趟 `mode=cover` → `git pull` 之后 `Read` 打开 `poster.jpg` 看眼睛
+  和是不是本人；墙是给在浏览器里开得了 artifact 的人看的
 
 ⚠️ **Release 那一步的探法**：`curl -I`（HEAD）回 **401**——预签名 URL 是按
 GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: bytes=0-2047`

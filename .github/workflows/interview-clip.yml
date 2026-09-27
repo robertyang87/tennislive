@@ -617,7 +617,7 @@ jobs:
       #   cover  —— 预览档：先 `--stage cover-scan` 把 frame_at 前后一段逐格过同一
       #             道闸，`cover_candidates.json` 随这一趟提交、候选墙只走 artifact
       #             ——挑帧从「一趟试一帧」变成「一趟扫一段」（monfils 那条前九趟
-      #             都在赌）。⚠️ **frame_at 没过闸、这一步红着退出时，记录照样先提交**：
+      #             都在赌）。⚠️ **frame_at 没过闸（或者渲不出海报）、这一步红着退出时，记录照样先提交**：
       #             那正是这份记录最有用的时候（下一帧该挑哪个），而红了之后
       #             「提交成片」那一步不会跑。排名表在错误旁边再印一遍。
       #   render —— 出片档：`--keep-source` 把源片留给后面的「剪 + 烧字幕」
@@ -659,10 +659,37 @@ jobs:
             KEEP="--keep-source"
             python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase cover_audit
           fi
+          # cover 档红着退出之前**先交扫描记录**。两条红路都走它：`--stage cover`
+          # 自己红（比如 frame_at 越过视频流最后一帧抛 NoFrameAt——而扫描刚把
+          # 那一格记成「没有画面」，正是最该交上去的那份）和像素闸没过。
+          # 写成函数、两处调同一份：原来提交那几行只写在像素闸那一支里，
+          # `--stage cover` 一红，`bash -e` 当场结束这一步，刚写好的记录跟着
+          # runner 一起没了（review 2026-09-27）。
+          commit_scan_record() {
+            echo "::error::$1 扫描记录照样提交（下一趟挑帧、推送前对账都要它），候选排名再印一遍："
+            PYTHONPATH=src python tools/interview_cover_scan.py --report --spec "$SPEC" \
+              || echo "::warning::排名表没印出来（记录读不了）"
+            REC="$OUTDIR/cover_candidates.json"
+            [ -f "$REC" ] || return 0
+            git config user.name "Claude"
+            git config user.email "noreply@anthropic.com"
+            git add "$REC"
+            git diff --cached --quiet && return 0
+            python tools/check_staged_file_sizes.py
+            git commit -m "interview: $SLUG 封面扫描记录（$2）"
+            source tools/git_push_retry.sh
+            push_with_rebase_retry "${{ github.ref_name }}" 5 \
+              || echo "::warning::扫描记录没推上去——上面那张排名表就是这一趟的全部产出"
+          }
           if [ "$MODE" = "cover" ]; then
             PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover-scan --keep-source
           fi
-          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover $KEEP
+          if ! PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover $KEEP; then
+            if [ "$MODE" = "cover" ]; then
+              commit_scan_record "封面没渲出来（--stage cover 自己红了，见上面的报错）。" "frame_at 渲不出海报"
+            fi
+            exit 1
+          fi
           if ! PYTHONPATH=src python tools/audit_interview_cover.py \
               --spec "$SPEC" \
               --poster "$OUTDIR/poster.jpg" \
@@ -674,21 +701,7 @@ jobs:
               echo "::error::封面那一帧没过本地像素闸——停在转写校验和编码之前。就地扫 frame_at 前后一段（源片已在手上）："
               PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover-scan --keep-source
             else
-              echo "::error::封面那一帧没过本地像素闸。扫描记录照样提交（下一趟挑帧、推送前对账都要它），候选排名再印一遍："
-              PYTHONPATH=src python tools/interview_cover_scan.py --report --spec "$SPEC"
-              REC="$OUTDIR/cover_candidates.json"
-              if [ -f "$REC" ]; then
-                git config user.name "Claude"
-                git config user.email "noreply@anthropic.com"
-                git add "$REC"
-                if ! git diff --cached --quiet; then
-                  python tools/check_staged_file_sizes.py
-                  git commit -m "interview: $SLUG 封面扫描记录（frame_at 没过闸）"
-                  source tools/git_push_retry.sh
-                  push_with_rebase_retry "${{ github.ref_name }}" 5 \
-                    || echo "::warning::扫描记录没推上去——上面那张排名表就是这一趟的全部产出"
-                fi
-              fi
+              commit_scan_record "封面那一帧没过本地像素闸。" "frame_at 没过闸"
             fi
             exit 1
           fi
