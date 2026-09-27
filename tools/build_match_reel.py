@@ -6020,11 +6020,6 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # @hsieh_n_wong 的转播片段（status 2097070765837541743，X CDN 直链），
     # `yt-dlp -J` 最高一档就是 http-2176 1298×720。
     "https://video.twimg.com/amplify_video/2097070560262119424/vid/avc1/1298x720/n05xE1nleDY12yvP.mp4?tag=14": 720,
-    # 梅德韦杰夫 v 黄泽林（medvedev-wong-hangzhou-2026-qf）：账号所有者 2026-09-28 凌晨
-    # 选了「Use 720p now」。杭州 1/4 决赛终场（北京 22:47）后近两小时，Tennis TV YouTube
-    # 和 tennistv.com 短集锦都没发这一场；唯一的源是 ATP Tour 官方频道这条，runner 上两次
-    # 下载（watch 与 youtu.be 两个 URL、两个缓存键）都只有 398（1280×720 AV1）一档。
-    "https://www.youtube.com/watch?v=QstPIQhG8Zc": 720,
 }
 
 
@@ -7178,7 +7173,8 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #: - `medvedev-wong-hangzhou-2026-qf`：2026-09-27 杭州 ATP250 1/4决赛（北京 22:47
 #:   打完）。按下面那条常设授权走：终场后近两小时 find_cover_photo 查 AP、WTA
 #:   photo-resources 都是 0。账号所有者 2026-09-28 选了封面放梅德韦杰夫（黄泽林在源片里
-#:   没有清楚的正脸）。用赛后梅德韦杰夫正脸近景，源片 1280×720（低清源另有授权）。
+#:   没有清楚的正脸）。用赛后梅德韦杰夫正脸近景（Tennis TV 1/4 决赛合集 384.4s），
+#:   源片 1920×1080，放大 1.33 倍。
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
