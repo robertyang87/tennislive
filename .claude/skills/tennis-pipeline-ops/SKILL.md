@@ -4496,6 +4496,12 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
 缓存**（不然偶发一次崩溃被探针重放到北京日期翻过去）；探针里量宽度撞上缺字体的 **OSError 也算
 判不了**（探针排在 apt 装字体之前）；结论文件按 `sort_keys` 写，**内容有变才另存一份缓存**
 （键仍带 run_id——缓存键一经写入不可覆盖，按内容定键的话 A→B→A 存不进去）。
+⚠️ **探针那条 import 链只许标准库**：`pick_interview_renders` → `build_interview_clip` 顶层
+一行 `from tennislive.video.subtitle_text import …` 就会经 `tennislive/video/__init__.py`
+把 pipeline → research → digest → sources → requests 整串拉进来，探针 import 就崩、
+workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟全量（合并 main 时
+撞上过，改成函数里 import）。判据 `test_探针的import链只用标准库`（子进程里只放行标准库
+和仓库自己的代码，真跑一遍 `--probe`）。
 
 ⚠️ 自动收短的终点「板前 0.2 秒」在板紧贴话尾时会吃字尾（alcaraz-fritz 的板在词尾 ＋0.11 秒）：
 `check_tail` 从 `cap_asr.json3` 量出最后一个真词的词尾给终点托底，但不越过板前最后一帧确定

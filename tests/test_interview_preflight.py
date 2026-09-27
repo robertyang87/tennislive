@@ -63,7 +63,9 @@ def test_量宽的尺子能复现老成片上看到的折点(point, where):
 #: （`tests/test_interview_visual._LINES_JS` 那一套），2026-09-27 全库 104 张卡＋4 条
 #: 长名字样例对过一遍，66 张多行卡的折点和 `card_lines` 逐字一样。这里钉各类形状各一张。
 _CHROMIUM_LINES = [
-    ("首秀赢完球 他先谢看台上的费德勒", ["首秀赢完球", "他先谢看台上的费德勒"]),     # 空格＋balance
+    ("首秀赢完球 他先谢看台上的费德勒", ["首秀赢完球", "他先谢看台上的费德勒"]),     # 空格
+    ("决胜盘 0-5 落后 救回赛点 连赢七局",                                           # balance：贪心会是
+     ["决胜盘 0-5 落后", "救回赛点 连赢七局"]),                                      # 「…救回赛点 ／ 连赢七局」
     ("单打选手打双打 他说靠的是正手", ["单打选手打双打", "他说靠的是正手"]),         # ruud-zverev
     ("有球迷说「今晚想当一次菲律宾人」", ["有球迷说", "「今晚想当一次菲律宾人」"]),   # 开引号前可断
     ("去年在停车场哭，今年二夺辛辛那提", ["去年在停车场哭，", "今年二夺辛辛那提"]),   # 标点后可断
@@ -843,6 +845,24 @@ def test_片尾板那道闸排在编码之前(tmp_path, monkeypatch):
     spec = {"slug": "x", "url": "https://example.invalid/x", "start": 0.0, "end": 6.0}
     with pytest.raises(SystemExit, match="片尾板"):
         bic.render(spec, tmp_path / "x.ass", tmp_path)
+
+
+def test_render把产物目录交给check_tail_自动收短才量得到词尾(tmp_path, monkeypatch):
+    """词尾托底读的是产物目录里的 `cap_asr.json3`——`render()` 调 `check_tail` 时漏传
+    `outdir`，托底就静静失效（终点照旧落在最后一个词里），什么都不会红。"""
+    seen = {}
+
+    def spy(spec, src, workdir=None):
+        seen["workdir"] = workdir
+        raise SystemExit("spy")
+
+    monkeypatch.setattr(bic, "check_takeaway", lambda spec: None)
+    monkeypatch.setattr(bic, "yt_download", lambda *a, **k: tmp_path / "s.mp4")
+    monkeypatch.setattr(bic, "check_tail", spy)
+    with pytest.raises(SystemExit, match="spy"):
+        bic.render({"slug": "x", "url": "u", "start": 0.0, "end": 6.0},
+                   tmp_path / "x.ass", tmp_path)
+    assert seen["workdir"] == tmp_path
 
 
 def test_自动默认的end撞上片尾板_直接收到算出来的终点_不红(tmp_path, capsys):

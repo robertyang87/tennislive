@@ -86,7 +86,12 @@ from tennislive.design_tokens import (  # noqa: E402
     BRAND_BAR_CSS, DARK, MOTION, SCORE, TEXT_SHADOW_CHROME, TEXT_SHADOW_HOOK,
     ass, ass_inline, rgb,
 )
-from tennislive.video.subtitle_text import drop_punctuation  # noqa: E402
+# ⚠️ `tennislive.video.subtitle_text` **不许在模块级 import**：它本身只用标准库，可
+# `tennislive/video/__init__.py` 会把 pipeline → research → digest → sources → requests
+# 整串拉进来。interview-auto-render 的「没活就早退」探针跑在 runner 的系统 python3 上、
+# 靠 `pick_interview_renders` → 本文件顶层只 import 标准库（那边顶部的注释），模块级
+# 这一行会让探针 import 就崩、每 10 分钟退回全量 job。用到它的 `zh_display` 里再 import。
+# 判据 `test_探针的import链只用标准库`。
 
 # 这条线自己的几支色：`design_tokens` 里**没有同值的角色**。评审把它们登记成「合并」
 # 对象（#06140f → background #04120d、#cfe3d9 / #dcefe4 → muted-foreground #cfe6d8、
@@ -1979,6 +1984,8 @@ def zh_display(cn: str) -> str:
     ⚠️ 一整行只有标点（「……」）时退回原文，不画一条空字幕——L2 闸要求中英
     逐 cue 成对，空文本会被当成「这一句没有中文」。
     """
+    from tennislive.video.subtitle_text import drop_punctuation  # noqa: PLC0415 —— 见模块顶部
+
     shown = drop_punctuation(cn) or cn.strip()
     return _ZH_RUN.sub(
         lambda m: rf"{{\fs{_ZH_NUM_PX}}}{m.group(0)}{{\fs{_ZH_RENDER_PX}}}", shown)

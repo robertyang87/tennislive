@@ -628,6 +628,9 @@ def _render_stubbed(tmp_path: Path, monkeypatch, *, fail_dissolve: bool) -> dict
     monkeypatch.setattr(clip, "_takeaway_segments", lambda *a, **k: [])
     monkeypatch.setattr(clip, "assert_rendered_topbar", lambda *a, **k: None)
     monkeypatch.setattr(clip, "assert_topbar_font_log", lambda *a, **k: None)
+    # 假源片只有 1 秒而 spec 的 end 是 18——编码之前那道「end 越过源片画面／压进片尾板」
+    # 的闸（`check_tail`）会正确地先红。它的判据在 test_interview_preflight，这里只验接缝。
+    monkeypatch.setattr(clip, "check_tail", lambda *a, **k: None)
     monkeypatch.setattr(clip, "_build_outro",
                         lambda d: _clip(d / "_outro.mp4", 2.0, still=True, hue=160))
     if fail_dissolve:
