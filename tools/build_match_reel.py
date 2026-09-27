@@ -7114,7 +7114,9 @@ def cover_photo_problem(spec: dict) -> str | None:
             "`--player` 要给文件名里的全名写法\n"
             "  ③ **再扩渠道**——Getty（`GettyImages-<id>.jpg` 走 WTA CDN "
             "`?width=4000`，说明页自带四要素）、WTA 单条集锦视频页的头图、"
-            "当地报纸的每日图集（原图 4800px 级）、球员和赛事的官方社媒\n"
+            "当地报纸的每日图集（原图 4800px 级）、球员和赛事的官方社媒；"
+            "**亚洲赛季加 `--zh <中文名> --zh <对手> --city <城市>`**（搜狗微信公众号＋"
+            "当地网站：hu-kopriva / zhang-wong / bu-majchrzak 换上的实拍都出自这一档）\n"
             "  ④ 真到了「翻到底就是没有」，那是一个**要说出来的结论**，"
             "不是一次静悄悄的跳过——把①②③各查了什么、结果如何写清楚")
     path = Path(str(image))
@@ -7913,6 +7915,14 @@ def validate_spec(
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)
+    # 当事人声明类「网球有故事」：X / Instagram 查过没有（sinner 97ebe27a）。
+    from reel_facts import social_search_problem  # noqa: PLC0415
+    social = social_search_problem(spec)
+    if social:
+        if (spec.get("_production") or {}).get("status") == "ready_for_render":
+            print(f"[当事人声明] 自动 spec，只报不拦：{social.splitlines()[0]}")
+        else:
+            raise ReelError(social)
     duplicate = duplicate_match_problem(spec)
     if duplicate:
         raise ReelError(duplicate)
@@ -10185,6 +10195,17 @@ def main() -> int:
         else:
             print(f"[dry-run] ⚠️ 没有 {copy_path.name}——render 走到写复制页"
                   "那一步会直接报「找不到」。**现在补，别等渲完。**")
+        # 官方频道 36 小时内没用上的上传 ＋ 封面比源片旧——**只报不拦、离线读快照**
+        # （`list_official_uploads`：eala-jovic 5053eafb 漏了官方出场视频、
+        # osaka 3a82caee 六月的图当九月的封面）。报告自己出错也不许挡住 dry-run。
+        try:
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            import list_official_uploads  # noqa: PLC0415
+
+            for line in list_official_uploads.dry_run_lines(spec, args.spec):
+                print(line)
+        except Exception as exc:                          # noqa: BLE001 — 只报不拦
+            print(f"[官方上传] ⚠️ 报告出错（不影响 dry-run）：{type(exc).__name__}: {exc}")
         # **旁白写长了不用等 render，也不用等 TTS。** 这一条离线估，误差
         # ±1.5s（见 `speech_seconds` 的推导），所以只判「估得再乐观也装不下」；
         # 剩下的交给 `--check-narration` 拿真语音量。
