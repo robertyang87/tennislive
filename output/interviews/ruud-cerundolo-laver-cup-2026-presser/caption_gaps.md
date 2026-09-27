@@ -7,7 +7,7 @@
 ## 50.5–55.5 秒（片内，5.0 秒；源片 https://youtu.be/r8PvLOZrW-0?t=50）
 
 - 键：`50.5-55.5`
-- 第二份 ASR（medium.en）：`Congrats`　→ **第一份（ASR（small.en））漏了英语，补进 `en_fixed`**
+- 第二份 ASR（medium.en）：**什么都没有** → 人去听：没人说话，还是不是英语？
 - 已销账：**否**
 
 ## 167.1–169.8 秒（片内，2.7 秒；源片 https://youtu.be/r8PvLOZrW-0?t=167）
