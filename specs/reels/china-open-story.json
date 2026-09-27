@@ -1,0 +1,267 @@
+{
+  "slug": "china-open-story",
+  "_source": "原创赛事介绍。研究参考五一爸爸作品，但成片完全不使用其画面、字幕、音轨。公开视频均由中网、WTA、Tennis TV官方发布。制作结构参考 specs/reels/cincinnati-story.json。",
+  "_column": "网球有故事：同一个中网，为什么男女赛事是两个级别？通过赛事身份、场馆升级、经典决赛、主场意义回答。",
+  "_facts": "现代中网2004创办、2009迁国家网球中心、2011钻石球场启用：https://m.yunnan.cn/system/2024/10/06/033256293.shtml（新华社）。2009男子ATP500女子皇冠赛：https://www.sport.gov.cn/n20001280/n20067662/n20067613/c23176147/content.html 。现行女子WTA1000、96签、钻石球场15000：https://www.wtatennis.com/tournaments/china-open 。男子ATP500：https://www.chinaopen.com/en/contents/353/598.html 。2024决赛3h21与奖杯：https://www.chinaopen.com/cn/contents/281/591.html 。抢七0-3后连得7分：https://www.reuters.com/sports/tennis/alcaraz-fights-back-down-defending-champion-sinner-win-china-open-2024-10-02/ 。郑钦文2024四强：https://www.wtatennis.com/news/4139983/zheng-reels-in-andreeva-in-beijing-to-make-first-wta-1000-semifinal 。2026日程：https://www.chinaopen.com/cn/contents/281/1463.html。",
+  "sources": {
+    "promo": "https://www.tennistv.com/videos/4120368/watch-the-2024-china-open-live-on-tennis-tv",
+    "brand": "https://www.chinaopen.com/en/upload/videos/2026/6/c87f561a357dab35.mp4",
+    "gauff": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6362929392112",
+    "qf": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6362763886112"
+  },
+  "conform": {
+    "gauff": "WTA公开源720p，等比放大至主源1080p，不另裁原始内容。",
+    "qf": "WTA公开源720p，等比放大至主源1080p。",
+    "brand": "中网官方4K源等比缩至1920×1080，与TennisTV1080p基准一致，保留真实细节。"
+  },
+  "mixed_fps": {
+    "gauff": "赛事介绍选段，按主源帧率合成；不是逐拍技战术分析。",
+    "qf": "赛事介绍选段，按主源帧率合成。",
+    "promo": "官方宣传片历史镜头按主源帧率合成。",
+    "brand": "品牌片30fps降至主源25fps，仅用于场馆与人物B-roll。"
+  },
+  "tts_backend": "edge",
+  "_tts_backend_why": "本地可用云见音色，不使用情绪SSML；采用自然语音与标点停顿。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "中国网球公开赛",
+    "hook": "同一个中网\n为何两个级别",
+    "narration": "同一个中网，为何两个级别？",
+    "topic": "中国网球公开赛 · 来路与主场记忆",
+    "portrait": {
+      "image": "assets/reel/china-open-story/diamond-official.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1,
+      "_why": "WTA官方赛事页高清钻石球场实拍，4000×1638。题目讲赛事身份，封面使用场馆本体。"
+    },
+    "scrim": "clear"
+  },
+  "push": {
+    "auto": true,
+    "summary": "中网为何有两个级别",
+    "lead": "同一个中网，女子是WTA1000赛，男子却是ATP500赛。沿着赛事身份、钻石球场、经典决赛和中国球员的主场记忆，重新认识中国网球公开赛。"
+  },
+  "segments": [
+    {
+      "source": "gauff",
+      "start": 508,
+      "end": 515.456,
+      "fit": "crop",
+      "narration": "女子冠军拿一千分，男子冠军拿五百分。怎么同一个中网，还有两种级别？",
+      "_why": "2024女单决赛真实比赛画面，提出赛事级别问题。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "source": "promo",
+      "start": 0.1,
+      "end": 3.332,
+      "fit": "crop",
+      "narration": "答案藏在两套巡回赛体系里。",
+      "_why": "官方2024宣传片内历史男子比赛镜头，不当作2026画面。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "source": "qf",
+      "start": 173,
+      "end": 180.192,
+      "fit": "crop",
+      "narration": "女子赛事属于女子网球协会，男子属于职业网球联合会，各有自己的赛事分级。",
+      "_why": "WTA赛事球场画面，说明赛事组织体系。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "source": "promo",
+      "start": 8,
+      "end": 14.928,
+      "fit": "crop",
+      "narration": "所以，一座球场可以承办不同级别的赛事。场馆大小，不等于赛事等级。",
+      "_why": "宣传片钻石球场建筑接男子比赛。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "image": "assets/reel/china-open-story/guangcai.jpg",
+      "seconds": 8.1,
+      "narration": "今天熟悉的中网，从二零零四年讲起。最初的比赛，办在北京光彩网球中心。",
+      "_why": "新华社2004年9月7日光彩网球中心全景，孟永民摄。按原图横幅展示，不伪造历史实录。"
+    },
+    {
+      "source": "brand",
+      "start": 0,
+      "end": 5.992,
+      "fit": "crop",
+      "narration": "二零零九年，它搬进北京奥运会的网球场馆，也就是国家网球中心。",
+      "_why": "2026官方资料片中的钻石球场外观、满场内景及北京天际线，表示今日国家网球中心，不冒充2009实录。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "source": "brand",
+      "start": 7,
+      "end": 14.84,
+      "fit": "crop",
+      "narration": "同一年，男子升级为五百赛，女子进入当时的皇冠赛行列。男女走上了不同的级别。",
+      "_why": "2026官方资料片历年男女球员及观众蒙太奇，旁白讲2009两条升级路线。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "image": "assets/reel/china-open-story/diamond-official-vertical.jpg",
+      "seconds": 8.5,
+      "narration": "二零一一年，钻石球场启用。一万五千个座位，加上可以闭合的顶棚。",
+      "_why": "WTA官方钻石球场高清实拍；历史年份通过解说交代。",
+      "image_kind": "photo",
+      "_photo_source": "https://www.wtatennis.com/tournaments/china-open",
+      "_photo_caption_safety": "字幕位于画布底部1284px以下。阿尔卡拉斯脸部及手持奖杯在上中部，球场图主题为顶部建筑与中部看台。无图中文字被字幕遮盖。"
+    },
+    {
+      "source": "qf",
+      "start": 25,
+      "end": 32.408,
+      "fit": "crop",
+      "narration": "如今的女单是一千赛。二零二四年起，正赛扩到九十六签，比赛也铺得更开。",
+      "_why": "2024女单现场。九十六签指正赛签表大小，不把轮空说成额外比赛。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "source": "gauff",
+      "start": 524,
+      "end": 528.96,
+      "fit": "crop",
+      "narration": "高芙在二零二四年捧杯，把自己的名字留在了北京。",
+      "_why": "2024决赛结束后的高芙与穆霍娃握手拥抱，画面核验529s。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "image": "assets/reel/china-open-story/alcaraz0-vertical.jpg",
+      "seconds": 10.2,
+      "narration": "男子虽然是五百赛，却照样能留下经典。二零二四年，阿尔卡拉斯与辛纳，苦战三小时二十一分钟。",
+      "_why": "中网官方2024阿尔卡拉斯冠军写真，讲同届决赛。",
+      "image_kind": "photo",
+      "_photo_source": "https://www.chinaopen.com/cn/contents/281/591.html",
+      "_photo_caption_safety": "字幕位于画布底部1284px以下。阿尔卡拉斯脸部及手持奖杯在上中部，球场图主题为顶部建筑与中部看台。无图中文字被字幕遮盖。"
+    },
+    {
+      "image": "assets/reel/china-open-story/alcaraz1-vertical.jpg",
+      "seconds": 8.5,
+      "narration": "决胜盘抢七，阿尔卡拉斯零比三落后，接着连得七分，第一次在中网夺冠。",
+      "_why": "官方冠军写真，统计由Reuters与中网官网核验；不拿其他回合冒充该抢七。",
+      "image_kind": "photo",
+      "_photo_source": "https://www.chinaopen.com/cn/contents/281/591.html",
+      "_photo_caption_safety": "字幕位于画布底部1284px以下。阿尔卡拉斯脸部及手持奖杯在上中部，球场图主题为顶部建筑与中部看台。无图中文字被字幕遮盖。"
+    },
+    {
+      "source": "promo",
+      "start": 17.4,
+      "end": 20.824,
+      "fit": "crop",
+      "narration": "再看看这座奖杯，很有中国味。",
+      "_why": "官方宣传片奖杯特写。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "image": "assets/reel/china-open-story/alcaraz2-vertical.jpg",
+      "seconds": 8.2,
+      "narration": "男单的中国之杯，造型源自金瓯永固杯。冠军拿走的，也是一份北京记忆。",
+      "_why": "官方赛事说明与冠军写真。",
+      "image_kind": "photo",
+      "_photo_source": "https://www.chinaopen.com/cn/contents/281/591.html",
+      "_photo_caption_safety": "字幕位于画布底部1284px以下。阿尔卡拉斯脸部及手持奖杯在上中部，球场图主题为顶部建筑与中部看台。无图中文字被字幕遮盖。"
+    },
+    {
+      "source": "qf",
+      "start": 98,
+      "end": 105.12,
+      "fit": "crop",
+      "narration": "而对中国球迷来说，这里还有主场的意义。世界巡回赛，来到自己家门口。",
+      "_why": "2024郑钦文对波多罗斯卡比赛，概述主场感受，不冒称四分之一决赛。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "source": "qf",
+      "start": 109,
+      "end": 118.496,
+      "fit": "crop",
+      "narration": "二零二四年，郑钦文打进中网四强。看台上的加油声，把一项国际赛事，变成了很多人的现场记忆。",
+      "_why": "使用该届郑钦文第三轮资料镜头，结果事实来自WTA官方。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。"
+    },
+    {
+      "source": "brand",
+      "start": 15,
+      "end": 18.6672,
+      "fit": "crop",
+      "narration": "从光彩网球中心到钻石球场，中网的变化，不只是球场变大了。",
+      "_why": "官方资料片历史球员入场、训练画面，正常0.6倍慢放，讲舞台变化而非具体年份比赛。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。",
+      "speed": 0.6
+    },
+    {
+      "source": "brand",
+      "start": 11.2,
+      "end": 14.8652,
+      "fit": "crop",
+      "narration": "它让更多人有机会现场看球，也让年轻球员看见，自己的舞台可以有多大。",
+      "_why": "官方资料片网球特写及看台观众，与现场看球段落对应。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。",
+      "speed": 0.55
+    },
+    {
+      "image": "assets/reel/china-open-story/diamond-official-vertical.jpg",
+      "seconds": 8.8,
+      "narration": "二零二六年，男女正赛九月三十日开打。男单决赛十月六日，女单决赛十月十一日。",
+      "_why": "官方现行赛事日期，配钻石球场实景；不声称历史画面人物今年必定参赛。",
+      "image_kind": "photo",
+      "_photo_source": "https://www.wtatennis.com/tournaments/china-open",
+      "_photo_caption_safety": "字幕位于画布底部1284px以下。阿尔卡拉斯脸部及手持奖杯在上中部，球场图主题为顶部建筑与中部看台。无图中文字被字幕遮盖。"
+    },
+    {
+      "source": "brand",
+      "start": 0.0,
+      "end": 2.7828,
+      "fit": "crop",
+      "narration": "你最难忘的中网记忆，是一场比赛，一位球员，还是第一次走进钻石球场？",
+      "_why": "结尾回到钻石球场外观和全景，与封面呼应；约0.45倍速场馆慢镜。",
+      "mute": true,
+      "crosses_cut": "已按官方源缩略图核对：赛事介绍的连续蒙太奇，跨转播剪切不指认单一完整回合。",
+      "speed": 0.45
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "同一个中网，为什么有两个级别？",
+    "thesis": "男女赛事分属两套巡回体系；赛事分级之外，中网的价值还来自场馆升级、经典比赛和主场记忆。",
+    "beats": [
+      "两套分级体系回答开场疑问",
+      "2004至2011创办迁址与场馆升级",
+      "2024名局和主场记忆回扣赛事意义"
+    ],
+    "human_context": {
+      "angle": "以中国球迷理解赛事与现场观赛为切口，不照搬官方集锦的胜负顺序。",
+      "facts": [
+        "2009分别升级ATP500与女子皇冠赛",
+        "2024女子扩为96签",
+        "2024男子决赛3小时21分"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/tournaments/china-open",
+        "https://www.chinaopen.com/cn/contents/281/591.html",
+        "https://www.sport.gov.cn/n20001280/n20067662/n20067613/c23176147/content.html"
+      ]
+    }
+  },
+  "_crop_zoom_why": "沿用辛辛那提剪辑模板3:4全出血；主体居中。源为真实比赛及场馆，未镜像、未去水印，年份作为资料画面说明。",
+  "_attribution": "素材署名与历史年份详见随片来源说明。正片仅保留模板原栏目水印，避免重复顶栏。"
+}
