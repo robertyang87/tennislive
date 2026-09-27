@@ -7712,8 +7712,13 @@ def test_重放不许把已经删掉的成片救活():
     每一个文件，`git rm` 把 `reset --hard` 刚救活的那份再删掉并进索引。
     """
     text = WORKFLOW.read_text(encoding="utf-8")
-    block = text[text.index("push 被拒（第 $attempt 次）"):]
-    block = block[:block.index("sleep $((attempt")]
+    # 重放抽成了一个函数（main 上的 probe 第一次 push 之前也要先重放一次）：
+    # 被拒之后那一段必须调它，删除那半的判据看函数体
+    retry = text[text.index("push 被拒（第 $attempt 次）"):]
+    retry = retry[:retry.index("sleep $((attempt")]
+    assert "replay_onto_latest" in retry, "被拒之后没有重放就直接 sleep 重推——同一个冲突撞十次"
+    block = text[text.index("replay_onto_latest() {"):]
+    block = block[:block.index("\n          }\n")]
     assert "--diff-filter=D rendered^ rendered" in block, (
         "重放没把「这次提交删掉的文件」再删一遍——reset --hard 救活的旧成片"
         "会一直留在仓库里（run 30727483963）")
