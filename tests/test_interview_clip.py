@@ -6807,3 +6807,22 @@ def test_自动链接冷开场时也写源字幕():
     src = (Path(__file__).resolve().parent.parent / "tools" / "attach_interview_lead_in.py").read_text("utf-8")
     body = src.split("def attach(")[1].split("\ndef ")[0]
     assert '"source_captions"' in body
+
+
+def test_en_fixed按1起的行号_挂错一行要当场红():
+    """2026-09-27 `cobolli-mensik-laver-cup-2026-doubles-interview`：`en_fixed` 键写成
+    0 起，四处订正全挂到了上一行、推上了微信——`You're just one match away` 被换成
+    `from winning the Laver Cup,`，真正的 `Labour Cup` 原样烧进画面。行文照实抄。"""
+    import tools.build_interview_clip as clip
+
+    lines = [{"en": t} for t in (
+        "That's a big, big win for Team Europe.",
+        "You're just one match away",
+        "from winning the Labour Cup,",
+        "getting it back from Team World.",
+    )]
+    挂错 = clip.en_fixed_misaligned(lines, {"2": "from winning the Laver Cup,"})
+    assert 挂错 and "第 3 行" in 挂错[0], 挂错
+    assert clip.en_fixed_misaligned(lines, {"3": "from winning the Laver Cup,"}) == []
+    # 整行大改（ASR 听成乱码）不许误伤：和哪一行都不像就放行
+    assert clip.en_fixed_misaligned(lines, {"2": "Congratulations, both of you."}) == []
