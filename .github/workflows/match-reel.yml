@@ -1,4 +1,7 @@
 name: match-reel
+# run 标题带上 slug：看板首屏和阻塞微信（账号所有者 Q9）从标题里认「哪条卡住」——
+# 手动拨的 run 原来标题只有工作流名。判据 test_手动拨的出片工作流run标题带slug
+run-name: "match-reel · ${{ inputs.mode }} · ${{ inputs.slug }}"
 
 # 把一条官方集锦剪成 9:16 竖版短片。分两步，因为**选段必须靠眼睛**：
 #

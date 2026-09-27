@@ -9,16 +9,24 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import html
 import json
 import os
 import statistics
 import subprocess
+import sys
 import urllib.error
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+# 「阻塞」只在看板那边定义一次，这儿直接用它（账号所有者 Q9：看板转阻塞就推微信）。
+# ⚠️ pipeline-health.yml 是逐文件稀疏检出的，这个文件要在列表里——
+# 判据 test_健康检查的阻塞定义就是看板那一份_工作流检出了它
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import build_dashboard_snapshot as dashboard  # noqa: E402
 
 DEFAULT_WORKFLOWS = (
     "oncourt-interviews.yml",
@@ -315,10 +323,7 @@ def notification_transition(
     状态由 workflow 的跨 run cache 保存，不提交进 main，避免健康检查每小时
     制造一次仓库提交。损坏/缺失的 cache 按首次运行处置。
     """
-    try:
-        previous = json.loads(state_path.read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        previous = {}
+    previous = _read_state(state_path)
     before = sorted(str(v) for v in previous.get("active_keys") or [])
     current = alert_keys(alerts)
     message = "；".join(alerts).replace("\n", " ")[:1800]
@@ -334,17 +339,100 @@ def notification_transition(
     else:
         title, notification = "", ""
 
-    state_path.parent.mkdir(parents=True, exist_ok=True)
-    saved = {
+    _write_state(state_path, {
+        **previous,
         "active_keys": current,
         "message": message,
-        "checked_at": (now or datetime.now(timezone.utc)).strftime(
-            "%Y-%m-%dT%H:%M:%SZ"),
-    }
+        "checked_at": _stamp(now or datetime.now(timezone.utc)),
+    })
+    return notify, title, notification
+
+
+def _read_state(state_path: Path) -> dict:
+    try:
+        data = json.loads(state_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def _write_state(state_path: Path, saved: dict) -> None:
+    # 趋势告警和阻塞推送共用这一份（跨 run 的 cache），各写各的键，谁都不许整份覆盖
+    state_path.parent.mkdir(parents=True, exist_ok=True)
     temp = state_path.with_suffix(state_path.suffix + ".tmp")
     temp.write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")
     temp.replace(state_path)
-    return notify, title, notification
+
+
+def _stamp(at: datetime) -> str:
+    return at.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+# ── 流水线阻塞 → 微信（账号所有者 Q9，2026-09-27）────────────────────────────
+#
+# 看板在 github.io，他在国内打不开；网页留作备用，阻塞摘要推到微信。
+# 「阻塞」的定义是看板那一份（`dashboard.blocked_runs`），不在这儿另写。
+#
+# 只在**转入**阻塞时推，恢复不推（他要的是「卡住了」这一声，不是来回播报）。
+# 两道防刷屏：
+# - 同一条工作流恢复后又在 BLOCKED_REPEAT_COOLDOWN 内红回来（来回抖），不再推，
+#   记成已知——否则一条时好时坏的线一天能刷十几条
+# - 两次阻塞推送之间至少隔 BLOCKED_MIN_INTERVAL：被压下的新阻塞**不记成已推**，
+#   下一班过了间隔还阻塞就补推，不会丢
+BLOCKED_MIN_INTERVAL = timedelta(minutes=30)
+BLOCKED_REPEAT_COOLDOWN = timedelta(hours=6)
+NO_SLUG = "run 标题里没写是哪条"
+
+
+def blocked_summary(blocked: list[dict], still: int = 0) -> tuple[str, str]:
+    """短摘要：哪个阶段失败、哪条片子卡住、失败的 run 链接。HTML（PushPlus template=html）。"""
+    stages = list(dict.fromkeys(s for b in blocked for s in b.get("stages") or []))
+    title = "⛔ 网球流水线阻塞：" + (" / ".join(stages) or "未知阶段")
+    lines = []
+    for b in blocked:
+        where = " / ".join(b.get("stages") or []) or b.get("workflow", "")
+        line = (f"{html.escape(where)} · {html.escape(str(b.get('workflow', '')))} 失败"
+                f" · 卡住：{html.escape(b.get('slug') or NO_SLUG)}")
+        if b.get("url"):
+            line += f' · <a href="{html.escape(b["url"], quote=True)}">打开失败的 run</a>'
+        lines.append(line)
+    if still:
+        lines.append(f"另有 {still} 条工作流此前已报过、仍在阻塞")
+    return title, "<br>".join(lines)
+
+
+def blocked_transition(blocked: list[dict], state_path: Path,
+                       now: datetime | None = None) -> tuple[bool, str, str]:
+    """看板从「不阻塞」转入「阻塞」（或多了一条新阻塞的工作流）时推一次。"""
+    now = now or datetime.now(timezone.utc)
+    state = _read_state(state_path)
+    known = {str(k) for k in state.get("blocked_active") or []}
+    last_push = {str(k): str(v) for k, v in (state.get("blocked_last_push") or {}).items()}
+    pushed_at = instant(state.get("blocked_pushed_at"))
+
+    current = {b["workflow"]: b for b in blocked}
+    new = [w for w in current if w not in known]
+    flapping = [w for w in new if (at := instant(last_push.get(w)))
+                and now - at < BLOCKED_REPEAT_COOLDOWN]
+    fresh = [w for w in new if w not in flapping]
+    notify = bool(fresh) and (pushed_at is None or now - pushed_at >= BLOCKED_MIN_INTERVAL)
+
+    active = (known & set(current)) | set(flapping)  # 恢复了的自动出列：再红就是新的转入
+    title = message = ""
+    if notify:
+        still = len(active)
+        active |= set(fresh)
+        for w in fresh:
+            last_push[w] = _stamp(now)
+        pushed_at = now
+        title, message = blocked_summary([current[w] for w in fresh], still)
+    _write_state(state_path, {
+        **state,
+        "blocked_active": sorted(active),
+        "blocked_last_push": last_push,
+        "blocked_pushed_at": _stamp(pushed_at) if pushed_at else None,
+    })
+    return notify, title, message
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -363,10 +451,17 @@ def main(argv: list[str] | None = None) -> int:
     health, steps = [], []
     for workflow in args.workflows:
         row, these_steps = workflow_health(api, workflow, args.limit, args.step_runs)
-        health.append(row); steps.extend(these_steps)
+        health.append(row)
+        steps.extend(these_steps)
     sla = sla_health()
     report, alerts = render_report(health, steps, sla, stale_publications(),
                                    orchestrator_productivity())
+    # 和看板同一份数据（最近 100 条 run）、同一个定义
+    runs = api.get("actions/runs?per_page=100").get("workflow_runs") or []
+    blocked = dashboard.blocked_runs(runs)
+    report += "\n### 流水线阻塞（和看板同一个定义）\n\n" + ("\n".join(
+        f"- {' / '.join(b['stages'])} · {b['workflow']} · {b.get('slug') or NO_SLUG} · {b.get('url') or ''}"
+        for b in blocked) or "- 没有阻塞。") + "\n"
     print(report, end="")
     if args.summary:
         with open(args.summary, "a", encoding="utf-8") as fh:
@@ -375,10 +470,18 @@ def main(argv: list[str] | None = None) -> int:
     if args.alert_state:
         notify, title, message = notification_transition(
             alerts, Path(args.alert_state))
+        blocked_notify, blocked_title, blocked_message = blocked_transition(
+            blocked, Path(args.alert_state))
     else:
         notify = bool(alerts)
         title = "⚠️ 网球视频流水线趋势异常" if alerts else ""
         message = "；".join(alerts).replace("\n", " ")[:1800]
+        blocked_notify = bool(blocked)
+        blocked_title, blocked_message = blocked_summary(blocked) if blocked else ("", "")
+    if blocked_notify:
+        # 阻塞摘要排最前、标题用它；同一班恰好也有趋势变化就跟在后面，一条消息说完
+        message = blocked_message + ("<br><br>" + message if notify else "")
+        title, notify = blocked_title, True
     if output:
         with open(output, "a", encoding="utf-8") as fh:
             fh.write(f"alert={'true' if alerts else 'false'}\n")

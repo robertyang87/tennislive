@@ -396,6 +396,8 @@ def test_绕过检测器自己认得出绕过():
 #: 登记之后再想拿掉，就得同时改这张表，在 diff 里看得见。WP1–WP8 接完 token
 #: 各自往这儿加一行。
 _ENFORCED_FLOOR = (
+    # WP1（2026-09-27）：看板样式只写 var(--tl-…)
+    "dashboard/styles.css",
     "src/tennislive/video/diagram_palette.py",
     "tools/design_compare_sheet.py",
     "tools/gen_tokens_css.py",
@@ -520,7 +522,14 @@ def test_CSS变量带tl前缀_和看板自己的变量不撞名():
         if p.name == "tokens.css":
             continue
         theirs[p.name] = _declared(p.read_text(encoding="utf-8"))
-    assert "--muted" in theirs.get("styles.css", set()), "判据失效：看板的 --muted 没扫到"
+    # WP1 之后看板 styles.css 一个自己的变量都不定义了（只用 var(--tl-…)），
+    # 所以「扫到了 --muted」这条自证换成：styles.css 确实被扫了，而且撞名检测
+    # 拿老看板那两个名字喂进去必须报出来——不然这条是恒真的绿灯。
+    assert "styles.css" in theirs, "判据失效：看板的 styles.css 没扫到"
+    old_dashboard = _declared(":root{--muted:#91a99b;--radius:20px}")
+    assert old_dashboard - ours == old_dashboard, "判据失效：老看板的 --muted/--radius 本该不撞"
+    assert {"--tl-muted"} & ours and _declared(":root{--tl-muted:#000}") & ours, (
+        "判据失效：同名变量喂进去没被认成撞名")
     clash = {name: sorted(names & ours) for name, names in theirs.items() if names & ours}
     assert not clash, f"和看板自己的变量撞名：{clash}"
 
@@ -647,6 +656,14 @@ _POINTER_FILES = (
     "tools/gen_tokens_css.py",
     "tools/design_compare_sheet.py",
     "tests/test_design_tokens.py",
+    # WP1 看板：注释里点名的判据同样要指得到
+    ".github/workflows/pages.yml",
+    ".github/workflows/pipeline-health.yml",
+    "dashboard/app.js",
+    "dashboard/index.html",
+    "dashboard/styles.css",
+    "tools/build_dashboard_snapshot.py",
+    "tools/pipeline_health.py",
 )
 
 

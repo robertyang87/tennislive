@@ -28,6 +28,9 @@ jobs:
             data/explainer_publish_ledger/*.json
             output/**/render.json
             tools/pipeline_health.py
+            # 「阻塞」的唯一定义在看板那边，pipeline_health import 它（Q9 阻塞推微信）。
+            # 判据 test_健康检查的阻塞定义就是看板那一份_工作流检出了它
+            tools/build_dashboard_snapshot.py
             # ⚠️ 叫醒挨饿班次那一步 `source` 它。这条是**逐文件**列的
             # （不像 orchestrate / reel-auto-ready 那样整个 `tools`），
             # 漏了它那一步每小时 `No such file or directory` 一次——
@@ -54,7 +57,9 @@ jobs:
           python3 tools/pipeline_health.py --limit 10 --step-runs 3 \
             --alert-state "$RUNNER_TEMP/pipeline-health-alert.json"
 
-      - name: 趋势异常时推送微信告警
+      # 两类消息走同一步、同一份去重状态：趋势异常（变化/恢复各一次），
+      # 以及流水线转入阻塞（Q9：哪个阶段、哪条卡住、run 链接；恢复不推）。
+      - name: 趋势异常或流水线转入阻塞时推送微信告警
         if: steps.health.outputs.notify == 'true'
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}

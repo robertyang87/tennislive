@@ -17,15 +17,18 @@ on:
       - ".github/workflows/pages.yml"
   workflow_run:
     workflows:
+      # ⚠️ 这里认的是工作流的 `name:`，不是文件名：probe.yml 叫 probe-data-sources、
+      # explainer.yml 叫 explainer-video——原来写成文件名，这两条跑完从来没触发过部署。
+      # 判据 test_看板阶段表点名的工作流文件都存在_pages按名字订阅它们
       - orchestrate
       - oncourt-interviews
       - official-social-images
       - source-health
-      - probe
+      - probe-data-sources
       - reel-dispatch-queue
       - match-reel
       - interview-auto-render
-      - explainer
+      - explainer-video
       - auto-push-reel
       - auto-push-interview
       - auto-push-explainer
@@ -57,6 +60,8 @@ jobs:
             output/**/*.html
             output/**/render.json
             dashboard
+            assets/logo/brand/favicon.png
+            assets/logo/brand/icon-180.png
             tools/build_dashboard_snapshot.py
             data/orchestration_state.json
             data/reel-dispatch-queue/*.json
@@ -72,7 +77,10 @@ jobs:
             mkdir -p "_site/$(dirname "$f")"
             cp "$f" "_site/$f"
           done
-          cp dashboard/index.html dashboard/styles.css dashboard/app.js _site/dashboard/
+          # tokens.css 是 design_tokens 的生成物；图标给 favicon / apple-touch-icon / 顶栏 lockup。
+          # 判据 test_看板页面引用的本地文件pages都拷过去了
+          cp dashboard/index.html dashboard/tokens.css dashboard/styles.css dashboard/app.js _site/dashboard/
+          cp assets/logo/brand/favicon.png assets/logo/brand/icon-180.png _site/dashboard/
           touch _site/.nojekyll
           n=$(find _site/output -name '*.html' 2>/dev/null | wc -l)
           if [ "$n" -eq 0 ]; then
@@ -84,7 +92,10 @@ jobs:
       - name: 生成无密钥状态快照
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: python3 tools/build_dashboard_snapshot.py --root . --output _site/dashboard/snapshot.json
+        # 把本趟 run id 交给它：看板不把「正在部署自己」算成运行中的任务
+        run: |
+          python3 tools/build_dashboard_snapshot.py --root . --output _site/dashboard/snapshot.json \
+            --self-run-id "$GITHUB_RUN_ID"
 
       - uses: actions/upload-pages-artifact@v3
         with:

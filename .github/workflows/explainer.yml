@@ -1,4 +1,7 @@
 name: explainer-video
+# run 标题带上 slug：看板首屏和阻塞微信（账号所有者 Q9）从标题里认「哪条卡住」——
+# 手动拨的 run 原来标题只有工作流名。判据 test_手动拨的出片工作流run标题带slug
+run-name: "explainer-video · ${{ inputs.slug || 'hawkeye' }}"
 
 # 生成一条 AI 旁白知识解说视频（前因后果 / 技术原理 / 当今现状）。
 # 面向抽象、拿不到合格真实照片的知识点（如鹰眼/计分制）：解说词由该选题

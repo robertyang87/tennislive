@@ -244,8 +244,8 @@ def test_监控名单不许点名不存在的工作流():
     # ⚠️ 只认真正的字符串项，不扫注释：这个仓库的注释正是教训的存放处，
     # 上面那段就写着被删掉的 `knowledge-adhoc.yml`，连注释一起扫会把
     # 「把坑记下来」判成「又踩了这个坑」。
-    body = "\n".join(l for l in block.group(1).splitlines()
-                     if not l.lstrip().startswith("#"))
+    body = "\n".join(ln for ln in block.group(1).splitlines()
+                     if not ln.lstrip().startswith("#"))
     listed = re.findall(r'"([^"]+\.yml)"', body)
     assert len(listed) >= 6, f"只解析出 {len(listed)} 条，判据可能失效了"
 
@@ -254,3 +254,120 @@ def test_监控名单不许点名不存在的工作流():
     assert not missing, (
         f"监控名单点名了不存在的工作流 {missing}——拿回来的永远是空，"
         "而「空」和「这条线很健康」长得一模一样")
+
+
+# ── 流水线阻塞 → 微信（账号所有者 Q9，2026-09-27）─────────────────────────────
+#
+# 看板在 github.io，他在国内打不开；阻塞摘要推到微信、网页留作备用。
+# 扩的是这条已有的告警链（同一步 PushPlus、同一份跨 run 去重状态），不另起一条。
+
+def _blocked(workflow="match-reel", slug="bu-majchrzak-hangzhou-2026-r2", stages=("渲染", "质检")):
+    return {"workflow": workflow, "stages": list(stages), "slug": slug,
+            "url": f"https://github.com/o/r/actions/runs/{abs(hash(workflow)) % 1000}",
+            "title": workflow, "at": "2026-09-27T08:00:00Z"}
+
+
+def test_看板转阻塞时推一条短摘要_只在转入时推(tmp_path):
+    from datetime import datetime, timedelta, timezone  # noqa: PLC0415
+
+    from tools.pipeline_health import blocked_transition  # noqa: PLC0415
+
+    state = tmp_path / "alert.json"
+    t0 = datetime(2026, 9, 27, 8, 0, tzinfo=timezone.utc)
+    b = _blocked()
+
+    notify, title, message = blocked_transition([b], state, t0)
+    assert notify and "阻塞" in title and "渲染" in title
+    assert "bu-majchrzak-hangzhou-2026-r2" in message and b["url"] in message
+    assert "打开失败的 run" in message and "\n" not in message, "GITHUB_OUTPUT 只认一行"
+    assert len(message) < 400, "要的是短摘要"
+
+    # 还阻塞着：不再推（每小时一班，不许每小时轰一条）
+    assert blocked_transition([b], state, t0 + timedelta(hours=1))[0] is False
+    # 恢复：不推（他要的是「卡住了」这一声）
+    assert blocked_transition([], state, t0 + timedelta(hours=2))[0] is False
+    # 6 小时内又红回来（来回抖）：不推，记成已知
+    assert blocked_transition([b], state, t0 + timedelta(hours=3))[0] is False
+    assert blocked_transition([b], state, t0 + timedelta(hours=10))[0] is False, "已知的仍在阻塞，不补推"
+    # 恢复、过了冷却再红：是新的一次转入，推
+    blocked_transition([], state, t0 + timedelta(hours=11))
+    assert blocked_transition([b], state, t0 + timedelta(hours=12))[0] is True
+
+    # 另一条工作流也红了，但离上一条阻塞推送不到 30 分钟：先压着、不丢
+    other = _blocked("orchestrate", None, ("编排",))
+    t1 = t0 + timedelta(hours=12, minutes=10)
+    assert blocked_transition([b, other], state, t1)[0] is False
+    notify, title, message = blocked_transition([b, other], state, t1 + timedelta(minutes=25))
+    assert notify and "编排" in title and "run 标题里没写是哪条" in message, "slug 不知道就照实说"
+    assert "另有 1 条" in message and "bu-majchrzak" not in message, "只报新转入的，旧的一句带过"
+
+
+def test_阻塞推送和趋势告警共用一份状态文件互不覆盖(tmp_path):
+    import json  # noqa: PLC0415
+
+    from tools.pipeline_health import blocked_transition  # noqa: PLC0415
+
+    state = tmp_path / "alert.json"
+    notification_transition(["编排器已 25 小时没点过 run（阈值 24h）"], state)
+    blocked_transition([_blocked()], state)
+    notification_transition(["编排器已 26 小时没点过 run（阈值 24h）"], state)
+    saved = json.loads(state.read_text("utf-8"))
+    assert saved["active_keys"] == ["orchestrator"]
+    assert saved["blocked_active"] == ["match-reel"], "趋势那一步把阻塞的去重状态冲掉了——会每小时重推"
+    assert blocked_transition([_blocked()], state)[0] is False
+
+
+def test_健康检查的阻塞定义就是看板那一份_工作流检出了它():
+    """「阻塞」写两份，看板说阻塞、微信不响（或反过来）只是时间问题。"""
+    import tools.pipeline_health as ph  # noqa: PLC0415
+
+    src = Path(ph.dashboard.__file__).resolve()
+    assert src == Path("tools/build_dashboard_snapshot.py").resolve()
+    body = Path("tools/pipeline_health.py").read_text("utf-8")
+    assert "dashboard.blocked_runs(runs)" in body
+    assert "def blocked_runs" not in body, "不许在这儿另写一份定义"
+    wf = Path(".github/workflows/pipeline-health.yml").read_text("utf-8")
+    checkout = wf.split("actions/checkout@v4", 1)[1].split("- name:", 1)[0]
+    assert "tools/build_dashboard_snapshot.py" in checkout, (
+        "逐文件稀疏检出漏了它，runner 上 import 直接炸——监控线自己常年红")
+
+
+def test_main把阻塞摘要写进GITHUB_OUTPUT(tmp_path, monkeypatch):
+    """「写了不等于跑过」：`main()` 真的拉了 run、算了阻塞、把标题和一行摘要交给
+    推送那一步（`steps.health.outputs.notify == 'true'` 才推）。"""
+    import json  # noqa: PLC0415
+    from datetime import datetime, timedelta, timezone  # noqa: PLC0415
+
+    import tools.pipeline_health as ph  # noqa: PLC0415
+
+    now = datetime.now(timezone.utc)
+    iso = lambda m: (now - timedelta(minutes=m)).isoformat().replace("+00:00", "Z")  # noqa: E731
+    failing = {"id": 8, "name": "match-reel", "path": ".github/workflows/match-reel.yml",
+               "status": "completed", "conclusion": "failure", "created_at": iso(20),
+               "updated_at": iso(10), "html_url": "https://github.com/o/r/actions/runs/8",
+               "display_title": "match-reel · render · bu-majchrzak-hangzhou-2026-r2"}
+
+    def fake_get(self, path):
+        if path.startswith("actions/runs?"):
+            return {"workflow_runs": [failing]}
+        return {"workflow_runs": [], "jobs": []}
+
+    monkeypatch.setattr(ph.GitHubAPI, "get", fake_get)
+    monkeypatch.setattr(ph, "sla_health", lambda: (0, 0, 0.0))
+    monkeypatch.setattr(ph, "stale_publications", lambda: [])
+    monkeypatch.setattr(ph, "orchestrator_productivity", lambda: ("2026-09-27T00:00:00Z", 1.0))
+    out = tmp_path / "out.txt"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    state = tmp_path / "state.json"
+    assert ph.main(["--repo", "o/r", "--token", "x", "--workflows", "match-reel.yml",
+                    "--step-runs", "0", "--alert-state", str(state)]) == 0
+    got = dict(line.split("=", 1) for line in out.read_text("utf-8").splitlines())
+    assert got["notify"] == "true" and "阻塞" in got["title"]
+    assert "bu-majchrzak-hangzhou-2026-r2" in got["message"] and "runs/8" in got["message"]
+    assert json.loads(state.read_text("utf-8"))["blocked_active"] == ["match-reel"]
+    # 下一班还是同一条阻塞：不再推
+    out.write_text("")
+    ph.main(["--repo", "o/r", "--token", "x", "--workflows", "match-reel.yml",
+             "--step-runs", "0", "--alert-state", str(state)])
+    got = dict(line.split("=", 1) for line in out.read_text("utf-8").splitlines())
+    assert got["notify"] == "false"
