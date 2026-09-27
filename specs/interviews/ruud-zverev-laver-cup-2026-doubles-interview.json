@@ -6,7 +6,7 @@
   "url": "https://www.youtube.com/watch?v=r0ZRDB70EFU",
   "source_title": "Casper Ruud Alexander Zverev On-Court Interview | Laver Cup 2026 Match 8",
   "start": 0.0,
-  "end": 85.16,
+  "end": 79.9,
   "asr_model": "small.en",
   "whisper_model": "medium.en",
   "segment_budget_px": null,
@@ -70,9 +70,7 @@
     "最重要的一场胜利",
     "我也很高兴",
     "我们也以一场胜利",
-    "结束了这一天",
-    "现在我们领先着",
-    "进入最后一天"
+    "结束了这一天"
   ],
   "_zh_draft": [
     "伙计们，今晚有几场很棒的胜利",
@@ -213,14 +211,14 @@
     "elapsed_seconds": 1.437
   },
   "cover": {
-    "frame_at": 55.0,
+    "frame_at": 62.5,
     "title": [
       "发球上网？会输得很快",
       "鲁德兹维列夫拿下双打"
     ],
     "sub": "拉沃尔杯第二天双打 赛后场上采访",
     "tag": "2026 拉沃尔杯 · 鲁德/兹维列夫",
-    "_why": "55.0 是兹维列夫答「为什么不发球上网」那一段（52.9~57.3），沙箱下不动 YouTube，没看过这一帧；渲完拉成片回来逐帧核，镜头不在他身上就换。",
+    "_why": "第一版写 55.0（按讲话段估的），run 36285481173 封面闸拦下：只检出 1 只眼——那段他侧着脸看主持人，屏幕下方还挂着名条。取 subs 那趟的缩略图墙（artifact 里的 storyboard.jpg）放大逐格看：62.5 他偏向镜头、两只眼都在画面里、名条已经撤了，是他答「为什么不发球上网」之后讲正手和截击那一段（61.0~66.6）。",
     "_copy_why": "第一行出自兹维列夫原话：`because if we would serve in volley, we would lose very, very quickly`（54.5~57.3），主持人问的是业余球迷常问「你们打双打为什么不发球上网」；第二行＝结果（6-4 7-6(7)，同场赛场之上已核）。不写排名、术语。"
   },
   "takeaway": {
@@ -424,5 +422,6 @@
     "9": "I mean, it was nerve-racking watching every"
   },
   "_en_fixed_why": "照 runner 第一份 ASR（small.en）改两处：第 2 行 `Kasper` 是 Casper（鲁德的名）；第 9 行 `no -racking` 是 nerve-racking。其余照原样。",
-  "_zh_fix_why": "DeepSeek 初译逐行对着英文重写：第 16~18、33~37、41~47 行英文把后半句挂在下一行，初译照中文语序整句挪位，和英文那一行对不上，按每行英文重新对齐；第 2 行名字写「卡斯珀」；第 9~10 行 nerve-racking 是「紧张」。第 19 行起答题的是兹维列夫（主持人叫他 Sasha）。"
+  "_zh_fix_why": "DeepSeek 初译逐行对着英文重写：第 16~18、33~37、41~47 行英文把后半句挂在下一行，初译照中文语序整句挪位，和英文那一行对不上，按每行英文重新对齐；第 2 行名字写「卡斯珀」；第 9~10 行 nerve-racking 是「紧张」。第 19 行起答题的是兹维列夫（主持人叫他 Sasha）。",
+  "_window_why": "0.0 起：主持人第一句。终点 79.9：兹维列夫「…finished the day off with a win as well.」79.64 说完；下一句「And now we're ahead going into the last day」79.94~81.74 说到一半，源片就切进了 LAVER CUP 片尾板（subs 那趟的缩略图墙 80.1 还是他、81.1 已是片尾板），整句收不全，所以收在它前面。"
 }
