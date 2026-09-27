@@ -39,6 +39,36 @@ atptour.com 上没有对应文章。我先在官网找、找不到就写成「�
 判据 `test_竖屏源一律铺满画布不留模糊垫底`。原声没有字幕时，`pip install faster-whisper` 跑 `small.en`
 拿逐词时间戳切双语 cue，措辞再和刊出的全文逐句核一遍（whisper 会把 Jannik 拼成 Janik）。
 
+⭐⭐ **2026-09-27 起有闸**（`reel_facts.social_search_problem`，`--dry-run` 就红）：「网球有故事」
+标题层（slug / `push.summary` / `cover.hook` / `cover.topic`）出现退赛、退出、伤、声明、宣布、
+官宣、告别、退役、复出、隔空、怀孕、手术（slug 里 withdrawal / injury / retire / statement /
+announce / farewell / feud…），spec 顶层就要写 `_social_search`，**X 和 Instagram 各查了哪个
+账号、结果如何**（`{"x": "@janniksin 9/25 有 44s 退赛视频（已用）", "instagram": "@janniksinner 只有图文"}`；
+账号没有也写「没有公开账号」）。「comeback」「return」故意不收（场上逆转、重返决赛）。
+真不是这一类写 `_social_search_why`。定规矩之前的 4 条挂 `data/legacy_social_search.json`，
+只许减不许加；自动产的 spec 只报。判据 `tests/test_social_search.py`。
+⚠️ 第 4 条 `china-open-withdrawals-story-2026` 是闸写好之后、合进 main 之前才落地的——**这类「全库过闸」判据合并前要在合完的那棵树上再扫一遍**，否则中间落地的新片子会让 main 的 CI 红。
+
+#### 官方频道 36 小时内的上传：`tools/list_official_uploads.py`
+
+`eala-jovic-us-open-2026-r3` 漏了美网官方频道的出场视频（5053eafb，账号所有者点名要加）——
+写 spec 时手上只有「这场的集锦」，而同一个频道同一天还有出场、采访、赛后花絮。
+
+    python3 tools/list_official_uploads.py --spec specs/reels/<slug>.json      # 要联网
+    python3 tools/list_official_uploads.py --who Eala,Jovic --channel UC…       # 临时加一个赛事频道
+
+- 频道：ATP / WTA / 四大满贯 / Tennis TV ＋ `data/oncourt_sources.json` 里官方档写着
+  `/channel/UC…` 的（团体赛、大师赛、500、协会）
+- 上传 RSS（`feeds/videos.xml?playlist_id=UU…`）只给 15 条；**最早那条还在窗口里就说明截断了**，
+  翻上传列表页（`playlist?list=UU…`，`ytInitialData` 里 100 条 `lockupViewModel`）补，
+  列表页只有「12h ago / 1d ago」，按最晚可能时刻算（`1d ago` 记 24 小时前，宁可放进窗口）、标 `≈`
+- 按姓整词认（`Bu` 不中 `Bublik`）；中国球员英文名前后顺序不定，两个词都认
+- 存一份快照到 `$TENNISLIVE_UPLOADS_CACHE`（默认 `~/.cache/tennislive/official_uploads/`，
+  **不进仓库**），`render --dry-run` **离线**读它，印「没用上的官方上传」和「封面比源片旧」——
+  **只报不拦**；没快照就印一行命令。快照超过 36 小时会说过期
+- 2026-09-27 实测 `fernandez-chwalinska-singapore-2026-sf`：19 个频道、约 10 秒，标题带名字的
+  10 条里 spec 用了 1 条，另外 9 条是 WTA 的赛中短片和赛后「headed to the final」
+
 ⚠️ Instagram 帖子在沙箱里多半要登录，拿不到就先找同一段视频在 X 上的那份。
 
 ### ⚠️⚠️ 2026-09-26：YouTube 频道 RSS **不许按顺序两两配对** videoId 和 title
