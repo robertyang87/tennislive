@@ -1,0 +1,403 @@
+{
+  "slug": "mannarino-shapovalov-chengdu-2026-qf",
+  "_column": "赛场之上",
+  "sources": {
+    "tv": "https://www.youtube.com/watch?v=0aPy-2BUO2A"
+  },
+  "primary": "tv",
+  "_source": "账号所有者给的链接：Tennis TV 官方 YouTube《Denis Shapovalov vs Adrian Mannarino Entertaining Match 🤝 | Chengdu 2026 Highlights》（oEmbed `author_name=Tennis TV`）。probe（run 36316738508）1920×1080、25fps、251.98s；比赛画面到 241.96s，之后是 Tennis TV 片尾板和二维码卡（245.87 起静音）。没有场上采访。四要素自证：记分条 `MANNARINO / SHAPOVALOV`、场地挡板 `CHENGDU 成都`、终局 `7 3 2 / 6⁶ 6 6`。",
+  "_tennistv_trim": "**片尾**：241.96 起是 Tennis TV 的 `THE BEST SEAT IN TENNIS` 片尾板、244 起二维码下载卡；用到的最后一段收在 241.8。**台标**：Tennis TV 台标烧在右上角（源片 x≈1720~1900），3:4 取景窗 cx=0.5 只取 555~1365，角上那块在窗外。",
+  "mixed_fps": {
+    "tv": "YouTube 1080p，probe 在 runner 上报 25fps。单一源片，没有混帧率。"
+  },
+  "scorebox": [
+    98,
+    920,
+    550,
+    1029
+  ],
+  "_scorebox_why": "同一站同一套 ATP 转播比分板，左缘、上下沿沿用 `tabilo-mannarino-chengdu-2026-r2`／`shang-mannarino-chengdu-2026-r1` 全分辨率帧实测的框（98 / 920 / 1029）；右缘按这一场最宽那一档写到 550——dry-run 在第三盘两段（带三列盘分＋分数）量到板右缘 539~550。",
+  "_match": {
+    "id": "2026:chengdu:mens-qf:adrian-mannarino-denis-shapovalov",
+    "event": "2026 ATP250 成都",
+    "event_search": "Chengdu",
+    "round": "Men's Singles Quarterfinals",
+    "year": 2026,
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "C88yROce",
+    "flashscore_id": "C88yROce",
+    "participants": [
+      "沙波瓦洛夫",
+      "马纳里诺"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        7
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        6,
+        2
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        6,
+        8
+      ],
+      null,
+      null
+    ],
+    "winner": "沙波瓦洛夫",
+    "loser": "马纳里诺",
+    "winner_en": "Denis Shapovalov",
+    "loser_en": "Adrian Mannarino",
+    "winner_result": "6-7(6) 6-3 6-2",
+    "loser_result": "7-6(6) 3-6 2-6",
+    "_order_why": "flashscore 这一场 home=Mannarino A.、away=Shapovalov D.；这里 participants 按 cover.matchup 的版式顺序（沙波瓦洛夫在前），盘分和抢七小分已经按这个顺序对调过。",
+    "_source": "三源一致：flashscore C88yROce 逐分（首盘 12 局全保进抢七、第二盘 3-6、第三盘 2-6）；tennis.com 比赛页（Quarterfinal · Center Court · Completed，抢七 `8-6`）；tennistemple「Denis Shapovalov defeats Adrian Mannarino 6/7⁶, 6/3, 6/2 … 2h31min」；源片记分条终局 `MANNARINO 7 3 2 / SHAPOVALOV 6⁶ 6 6`。"
+  },
+  "_result_why": "见 `_match._source`。",
+  "topbar": {
+    "line1": "2026 ATP250 成都 1/4决赛",
+    "line2": "沙波瓦洛夫 6-7(6) 6-3 6-2 马纳里诺"
+  },
+  "_topbar_why": "按账号所有者 2026-09-24／09-26 定的格式「<年份> <巡回赛><级别> <城市> <轮次>」：成都公开赛是 ATP250（官方签表页眉 `250 pts`）。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/dc_1_C88yROce",
+    "match_id": "C88yROce",
+    "field": "DC",
+    "value": 1790498400,
+    "beijing": "2026-09-27T16:40+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `dc_1` 的 `DC=1790498400` → 08:40Z＝北京 16:40；`DD=1790507472`（北京 19:11）是结束时刻。旁白说「下午四点多」。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "沙波瓦洛夫",
+    "hook": "对手4次机会全落空\n沙波瓦洛夫逆转进4强",
+    "hook_accent": "逆转进4强",
+    "_hook_why": "第一行关键局面、第二行结果（账号所有者 2026-09-25「只讲重点或关键内容，以及结果」），句式照他认可过的「对手5次机会全落空／梅德韦杰夫挺进8强」。①「对手4次机会全落空」：马纳里诺全场 4 个破发点一个没兑现——flashscore df_st_1 Break Points Converted 马纳里诺 0/4、沙波瓦洛夫 Break Points Saved 4/4；tennis.com `Break Points Won 0% (0/4)`，两源。②「逆转进4强」：先丢首盘（抢七 6-8）再连赢两盘。9 字、10 字；没有破发、抢七这类术语，没有排名和种子。",
+    "topic": "ATP250 成都 1/4决赛 · 沙波瓦洛夫 VS 马纳里诺",
+    "winner": "沙波瓦洛夫",
+    "result": "6-7(6) 6-3 6-2",
+    "matchup": [
+      {
+        "name": "沙波瓦洛夫",
+        "name_en": "Denis Shapovalov",
+        "country": "CAN",
+        "rank": 50
+      },
+      {
+        "name": "马纳里诺",
+        "name_en": "Adrian Mannarino",
+        "country": "FRA",
+        "rank": 78
+      }
+    ],
+    "_matchup_rank_why": "ATP 排名 2026-09-21 那一期：`fetch_rankings()`（tennisexplorer，atp_at=21.09.2026）沙波瓦洛夫 50、马纳里诺 78；tennis.com 比赛页 `Ranked 50 / 78`；官方签表种子表 `7 Shapovalov, Denis 50`。三处一致。",
+    "_name_why": "译名表 `src/tennislive/zh/players.py` 与 `player_names_top500.json`：Shapovalov → 沙波瓦洛夫，Mannarino → 马纳里诺（同站两条已发片子同一写法）。",
+    "_heat_why": "账号所有者亲自给的链接（「做这个赛场之上」）。另一层：马纳里诺这一周首轮送走 2024 年冠军商竣程、次轮送走卫冕冠军塔比洛，中国观众这一站已经连着看了他两条；这一场是他止步的地方。",
+    "_subject_why": "封面放沙波瓦洛夫：他是赢家（默认赢家），钩子两行也都从他的视角写。",
+    "scoreboard": {
+      "court": "Center Court",
+      "_court_why": "tennis.com 比赛页 `Quarterfinal · Center Court`。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A31%3A00%22%2C%20%22source%22%3A%20%22flashscore%20dc_1%EF%BC%88C88yROce%EF%BC%89%E5%BC%80%E8%B5%9B%20DC%3D1790498400%EF%BC%8808%3A40%3A00Z%EF%BC%89%E3%80%81%E5%AE%8C%E8%B5%9B%20DD%3D1790507472%EF%BC%8811%3A11%3A12Z%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%87%8F%202%3A31%3A12%22%2C%20%22cross_check%22%3A%20%22tennistemple%20%E6%AF%94%E8%B5%9B%E9%A1%B5%202h31min%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore 自己的开赛/完赛时间戳相减 2:31:12，印 2:31；tennistemple 同为 2h31min。"
+    },
+    "portrait": {
+      "frame_at": 205.5,
+      "focus": 0.37,
+      "focus_y": 0.0,
+      "zoom": 1.2,
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`；这一站前面几条（`shang-mannarino`、`tabilo-mannarino`、`vacherot-harris`）也都是抽帧。四类源各查过（北京 19:50 前后，终场后约 40 分钟）：① 官方图库——`tools/find_cover_photo.py --player Shapovalov --event Chengdu --date 2026-09-27` WTA photo-resources、AP 都是 0 张；成都公开赛没有可探的 WordPress 媒体库。② 赛后稿：ATP 官网（沙箱 403）这一场还没出稿，WebSearch 只搜到赛前前瞻。③ 组委会经四川在线发的图，同站此前只有首轮稿，这一场未发。④ Getty／Imago 沙箱搜不了。\n**这一帧**：源片 205.5s，决胜盘 1-1 他拿下一分之后切到的近景（frame-grab 逐 0.5 秒抽过 204.5~206.5）：**正脸、双眼睁着、张嘴吼出来**，白色反戴帽、黑色 Nike 球衣，和本场所有镜头一致；204.5 手臂挡在嘴前，206.0 起脸往下看、情绪收了。",
+      "_low_res_why": "源片 1920×1080，zoom 1.2 取 675×900 铺 1080×1440，放大 1.6 倍（抽帧的理由见 `_frame_why`）。",
+      "_focus_why": "focus 0.37：这一帧脸的中心在源片横向约 710px（0.37），窗口宽 675 取约 372~1047；focus_y 0.0 从顶上取 0~900，左下角转播记分条（y 920 起）在窗外。"
+    }
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "aces": 14,
+      "df": 9,
+      "first_in": 72,
+      "first_won": 56,
+      "second_total": 34,
+      "second_won": 16,
+      "bp_conv": 4,
+      "bp_chances": 8,
+      "pts_won": 100,
+      "pts_total": 194,
+      "first_total": 106,
+      "headshot": "assets/players/headshots/atp-SU55.png"
+    },
+    "b": {
+      "aces": 6,
+      "df": 1,
+      "first_in": 58,
+      "first_won": 39,
+      "second_total": 30,
+      "second_won": 21,
+      "bp_conv": 0,
+      "bp_chances": 4,
+      "pts_won": 94,
+      "pts_total": 194,
+      "first_total": 88,
+      "headshot": "assets/players/headshots/atp-ME82.png"
+    },
+    "_source": "`python tools/match_stat_hooks.py C88yROce --stats-block` 机器抄的 flashscore df_st_1 全场统计。a/b 跟 cover.matchup 的顺序（a=沙波瓦洛夫、b=马纳里诺）；flashscore 这一场 home=Mannarino A.、away=Shapovalov D.，**顺序相反，已对调**。头像：沙波瓦洛夫 `atp-SU55.png`（`gea-shapovalov` 用过、挂的就是他），马纳里诺 `atp-ME82.png`（同站 `tabilo-mannarino` 用过）。",
+    "_winners_ue_why": "两个源都查过，都用不了：① flashscore df_st_1 这一场没有制胜分和非受迫失误（`match_stat_hooks.py C88yROce` 报「flashscore 这场没有」）；② TNNS（tnns-stats.yml run 36316872847，id 74753320）给了全场制胜分 26/42、非受迫失误 33/45（马纳里诺/沙波瓦洛夫），但分盘合计对不上（制胜分分盘 [12,37] vs 全场 [26,42]，非受迫失误 [34,54] vs [33,45]），工具自己判「多半解错了，别用」。所以数据图只画七项官方统计。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py C88yROce` 和 `match_feed.py show C88yROce`（flashscore home=Mannarino、away=Shapovalov）。进旁白和钩子的：**沙波瓦洛夫 14 个发球局全保**（df_st_1 Service games won 14/14），**面对的 4 个破发点全救**（Break Points Saved 4/4，第二盘 0-2 两个、2-4 一个，第三盘第一局一个）；**首盘 12 局全保进抢七、8-6**；**第二盘第一局三个破发点兑现第三个**——全场第一次破发；**第三盘 2-3 马纳里诺发球 15-40 被破**。没进旁白的：沙波瓦洛夫 14 个 ACE、9 个双误。",
+  "_turning_points": [
+    "首盘抢七 7-6 马纳里诺的盘点（源片 38.0~76.6）：沙波瓦洛夫被左右调动，70.0 左侧底线滑倒，丢盘，抢七 6-8。",
+    "第二盘第一局（马纳里诺发球）`0:15, 0:30, 0:40 |B1|, 15:40 |B1|, 30:40 |B1|`——第三个破发点被破，全场第一次破发（源片 87.2~97.8）。",
+    "第二盘 2-4（沙波瓦洛夫发球）马纳里诺 A:40 一个破发点，被救（源片 100~110 是这一局的 15-0 那一分）。",
+    "第二盘 3-6（马纳里诺发球）平分之后全场最长回合（源片 127.3~152.9），两个盘点第二个兑现（157.0~180）。",
+    "第三盘第一局沙波瓦洛夫救下马纳里诺全场最后一个破发点（源片没有这一分，旁白带过）；2-4（马纳里诺发球）15-40 第二个破发点被破（源片 207~223）；2-6 第一个赛点兑现（226.6~232.5）。"
+  ],
+  "_claims": [],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "对手4次机会全落空",
+      "沙波瓦洛夫逆转进4强"
+    ],
+    "question": "首盘抢七丢在一个滑倒的回合上，沙波瓦洛夫是怎么把后两盘拿回来的？",
+    "thesis": "两个左手将，首盘发球局全保进抢七，沙波瓦洛夫在 7-6 的盘点上被左右调动、滑倒，6-8 丢盘；第二盘第一局他就破发，之后 14 个发球局一局没丢、面对的 4 个破发点全救，最长的回合和两个盘点磨下第二盘；决胜盘 2-3 再破一次，第一个赛点收下。",
+    "beats": [
+      "冷开场：赛点之后解说那句「反应说明了一切」。",
+      "落点＋坐标：北京时间 9 月 27 日下午四点多，成都公开赛 1/4决赛，七号种子对世界第 78。",
+      "首盘：两人发球局全保，马纳里诺在底线卸力；5-5 沙波瓦洛夫上网收分。",
+      "抢七 7-6：马纳里诺左右调动，沙波瓦洛夫滑倒，8-6 丢盘。",
+      "第二盘：第一局三个破发点兑现第三个；马纳里诺降速拿分、一个破发点被救；3-4 网前截击保发；最长回合；第二个盘点 6-3。",
+      "决胜盘：救下全场最后一个破发点；2-3 破发，教练握拳。",
+      "赛点：第一个兑现，14 个发球局全保；半决赛能否再进一步。"
+    ],
+    "human_context": {
+      "angle": "这场球的主语是**沙波瓦洛夫的发球局**：首盘丢在抢七一个滑倒的回合上，之后 14 个发球局一局没丢，马纳里诺 4 个破发点一个没兑现。对面的马纳里诺这一周首轮送走 2024 年冠军商竣程、次轮送走卫冕冠军塔比洛。",
+      "facts": [
+        "flashscore C88yROce：Mannarino A. 7-6 3-6 2-6 Shapovalov D.；dc_1 DC=1790498400（北京 16:40）、DD=1790507472（北京 19:11），2:31:12。",
+        "flashscore df_st_1（沙波瓦洛夫／马纳里诺）：ACE 14/6、双误 9/1、破发点兑现 4/8 对 0/4、发球局 14/14 对 11/15。",
+        "排名：tennisexplorer 2026-09-21 期 50 / 78；tennis.com 50 / 78；签表 7 号种子。",
+        "马纳里诺此前两轮：`shang-mannarino-chengdu-2026-r1`、`tabilo-mannarino-chengdu-2026-r2`（均已发）。",
+        "半决赛：对手是赫尔卡奇（5 号种子）和哈里斯（资格赛）之间的胜者，那场排在当地晚上，写 spec 时还没打。"
+      ],
+      "sources": [
+        "https://www.flashscore.com/match/tennis/C88yROce/",
+        "https://www.tennis.com/tournaments/chengdu-open/matches/a-mannarino-vs-d-shapovalov-2026-09-27",
+        "https://en.tennistemple.com/video/denis-shapovalov-defeats-adrian-mannarino-at/kLJl4",
+        "https://www.protennislive.com/posting/2026/7581/mds.pdf",
+        "https://www.youtube.com/watch?v=0aPy-2BUO2A"
+      ]
+    }
+  },
+  "_editing_why": "单一源片（Tennis TV YouTube 1080p），比赛画面到 241.96，之后片尾板；没有场上采访。认人：沙波瓦洛夫黑色球衣、白色反戴帽；马纳里诺白衣、光头。段落端点取自 probe 的 `scene_cuts`／`scene_cuts_loose`／`point_ends`，球路来自 frame-grab 逐 0.5 秒帧（run mannarino-shapovalov-rallies）和 `captions.txt`。集锦没播的局只在旁白里按 flashscore 逐局一句带过。看台过场里 76.7~86.9 留作解说原声段（那两句在复盘抢七那一分）。",
+  "_tactics_why_note": "球路写在第 3 段（底线卸力）、第 4 段（跟到网前收分）、第 5 段（左右调动、滑倒）、第 8 段（降球速打乱节奏）、第 9 段（网前截击）、第 11 段（底线左右奔跑）、第 13 段（调到场外）。",
+  "_quote_why_global": "四段原声：冷开场「There it is… the reaction said an awful lot」、抢七之后「The slip didn't help the Canadian」、最长回合「Longest rally of them all」。",
+  "_no_repeat": "同栏目做过马纳里诺的 `shang-mannarino-chengdu-2026-r1`、`tabilo-mannarino-chengdu-2026-r2`，这一条只在 `_heat_why`／小红书正文里一句带过前两轮，不重讲；沙波瓦洛夫做过的 `gea-shapovalov`、`jodar-shapovalov` 是别的比赛。",
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+  "push": {
+    "summary": "丢掉首盘后沙波瓦洛夫逆转",
+    "lead": "成都公开赛 1/4决赛，7 号种子沙波瓦洛夫 6-7(6) 6-3 6-2 逆转马纳里诺，打进半决赛。首盘两人发球局全保，抢七 7-6 的盘点上他被左右调动、在底线滑倒，6-8 丢盘；之后他 14 个发球局一局没丢，马纳里诺 4 个破发点一个没兑现。第二盘第一局破发，打完全场最长的回合拿下第二个盘点；决胜盘 2-3 再破一次，第一个赛点收下。",
+    "matchup": "沙波瓦洛夫 vs 马纳里诺",
+    "score": "6-7(6) 6-3 6-2",
+    "auto": true
+  },
+  "_push_summary_why": "12 字位，主语是沙波瓦洛夫；「丢掉首盘」＋「逆转」是这一场的形状。标题里不写排名。",
+  "segments": [
+    {
+      "source": "tv",
+      "start": 232.6,
+      "end": 241.8,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.28,
+          "text": "There it is.\n拿下了"
+        },
+        {
+          "at": 3.96,
+          "text": "And the reaction said an awful lot.\n这个反应说明了一切"
+        },
+        {
+          "at": 6.92,
+          "text": "A big moment for Shapo.\n对沙波来说这是个大时刻"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：赛点落地之后（232.5s 记分条已是终局 `2 / 6`），宽景里两人往网前走，237.3 切到沙波瓦洛夫走向球网、240~241 两人握手；241.96 起是 Tennis TV 片尾板，段尾 241.8 收在它之前。不配旁白，只留解说原声＋中英字幕：probe `captions.txt` 232.88「There it is.」236.56「And the reaction said an awful lot. A」239.52「big moment for Shappa.」（自动字幕把昵称 Shapo 写成 Shappa），段内 at = 原时刻 − 232.6。",
+      "_payoff_why": "最后一段（226.6→241.8）按时间顺序完整重放赛点那一分、落地和握手，覆盖本段 232.6~241.8 整段。",
+      "point_end_ok": "比赛已经结束：赛点在 232.5 前落地；238.3 那一次「翻牌」是比分板撤下，242.0 是切到片尾板。",
+      "crosses_cut": "237.30 从宽景切到沙波瓦洛夫走向球网：赛点之后同一刻，画面里都是他。"
+    },
+    {
+      "source": "tv",
+      "start": 0.3,
+      "end": 16.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "丢掉第一盘，沙波瓦洛夫还是翻了回来。北京时间九月二十七号下午四点多，成都公开赛四分之一决赛，七号种子沙波瓦洛夫，对世界第七十八的马纳里诺。",
+      "_why": "首盘第一局沙波瓦洛夫发球（记分条 `0 / 0 30`，他那一侧带发球点），逐 0.5 秒帧：他在近端底线，这一分拿下，16.5s 记分条翻成 `0 40`；解说 14.08「Super strike」。开场顺序照「画面爆点 → 落点 → 坐标」：第 1 段是冷开场，这一段先一句落点，再给坐标。",
+      "_start_time_why": "开球时刻见顶层 `_opening_time_source`：北京 16:40，只说「下午四点多」。",
+      "point_end_ok": "这一分在 16.5 前打完（16.5 帧记分条已是 `0 40`）；16.78 是溶解到下一分（3-3）的切点，之后挂出的 `3 15 / 3 0` 是下一个镜头首帧的新比分。"
+    },
+    {
+      "source": "tv",
+      "start": 16.9,
+      "end": 29.2,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "两个左手将，第一盘谁也没丢发球局。沙波瓦洛夫一拍比一拍打得重，马纳里诺站在底线，把他的力量一拍一拍卸掉。",
+      "_why": "首盘 3-3 沙波瓦洛夫发球（记分条 `3 15 / 3 0`），逐帧：马纳里诺（白衣）在近端底线相持，这一分他拿下，26.82 切到他走回的近景，记分条翻成 `3 30 / 3 0`。解说 26.40「Soaking up the power with ease. There was the Frenchman.」。第一盘双方发球局全保：flashscore df_st_1 Set 1 Service games won 6/6 对 6/6；两人都是左手：官方签表与 tennis.com 比赛页。",
+      "crosses_cut": "26.82 从宽景切到马纳里诺走回的近景：这一分已经打完。",
+      "point_end_ok": "这一分 26.8 前打完；29.32 切回宽景是下一分（5-5），段尾 29.2 在它之前。"
+    },
+    {
+      "source": "tv",
+      "start": 29.4,
+      "end": 37.0,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "打到五比五。沙波瓦洛夫压到网前，把这一分收掉。第一盘拖进了抢七。",
+      "_why": "首盘 5-5 沙波瓦洛夫发球（记分条 `5 0 / 5 30`），逐帧 35~36 远端的沙波瓦洛夫（黑衣）压到网前；解说 36.24「That's excellent close at the net」。flashscore 首盘 5-6 那一局他保发，6-6 进抢七。",
+      "point_end_ok": "网前那一拍在 36.3 前落地（解说 36.24 已在评这一分）；37.x 之后挂出的是抢七的记分条（下一个镜头）。"
+    },
+    {
+      "source": "tv",
+      "start": 38.0,
+      "end": 76.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第一盘，两人的一发几乎分分必得。马纳里诺百分之八十八，沙波瓦洛夫百分之八十九。抢七马纳里诺七比六领先，拿到盘点。这一分他在底线不急着抢攻，把沙波瓦洛夫从左边调到右边、再调回左边。沙波瓦洛夫一路追，在左侧底线脚下一滑，这一分没守住。抢七八比六，第一盘是马纳里诺的。",
+      "_why": "首盘抢七（记分条 `6 7 / 6 6`，马纳里诺那一侧带发球点）：逐 0.5 秒帧 38~76，马纳里诺在远端，沙波瓦洛夫在近端底线左右奔跑（40 左、43 右、46 左……67 右），70.0 帧他在左侧底线角滑倒；76.5s 记分条翻成第二盘 `7 0 / 6⁶ 0`。解说 76.00「really well played」78.72「The slip didn't help the Canadian」。抢七 8-6：flashscore 首盘 7-6、tennis.com `8-6`、tennistemple `6/7⁶`。 首盘一发得分率：flashscore df_st_1 Set 1 1st serve points won 马纳里诺 88%（21/24）、沙波瓦洛夫 89%（24/27）。",
+      "point_end_ok": "这一分在 75.7 翻牌前打完（point_ends 75.7）；76.7 是切到看台的切点，段尾 76.6 在它之前。"
+    },
+    {
+      "source": "tv",
+      "start": 77.0,
+      "end": 86.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 1.72,
+          "text": "The slip didn't help the Canadian.\n这一滑 对加拿大人可没帮上忙"
+        },
+        {
+          "at": 6.76,
+          "text": "But Mannarino rock solid when he needed to be.\n马纳里诺在关键时刻稳如磐石"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "拿下首盘之后的看台和转播过场（76.7 切看台、78~81 赛事图标、81.78 起看台），解说在这里复盘那一分：captions 78.72「The slip didn't help the Canadian.」83.76「But Manorino rock solid when he needed to be.」（Manorino 是自动字幕把 Mannarino 写错）。段内 at = 原时刻 − 77.0。",
+      "point_end_ok": "这一段没有比赛画面（看台和过场）；87.02 切回宽景是第二盘第一局，段尾 86.9 在它之前。"
+    },
+    {
+      "source": "tv",
+      "start": 87.2,
+      "end": 97.8,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘第一局，马纳里诺的发球局，沙波瓦洛夫连着拿到三个破发点。第三个，他兑现了，这是全场第一次破发。",
+      "_why": "第二盘第一局马纳里诺发球（记分条 `7 0 30 / 6⁶ 0 40`），96.5s 翻成 `0 / 1`。flashscore 第二盘 0-1 那一局 `0:15, 0:30, 0:40 |B1|, 15:40 |B1|, 30:40 |B1|`：三个破发点，第三个被破；全场第一次破发——首盘双方破发点都是 0/0（df_st_1 Set 1 Break Points Converted 0/0）。",
+      "point_end_ok": "这一分在 95.6 翻牌前打完（point_ends 95.6）；97.9 是切到马纳里诺近景的切点，段尾 97.8 在它之前（离翻牌 0.1 秒，是切点本身）。"
+    },
+    {
+      "source": "tv",
+      "start": 98.0,
+      "end": 112.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "马纳里诺没有乱。沙波瓦洛夫的下一个发球局里，他突然把球速降下来，打乱了对手的节奏，拿下这一分。这一局他还拿到一个破发点，被沙波瓦洛夫救了回去。",
+      "_why": "98.0~100.0 马纳里诺近景；100.02 起第二盘 2-3 沙波瓦洛夫发球（记分条 `7 2 15 / 6⁶ 3 0`），这一分马纳里诺拿下，110.26 切到沙波瓦洛夫近景、记分条 `2 15 / 3 15`。解说 108.24「Cleverly done.」110.96「did so well to take the pace off there」。flashscore 第二盘 2-4 那一局（沙波瓦洛夫发球）`15:0, 15:15, 15:30, 15:40, 30:40, 40:40, A:40 |B1|, 40:40, 40:A, 40:40, 40:A`：马纳里诺一个破发点，被救。",
+      "crosses_cut": "100.02 从马纳里诺近景切到宽景（发球之前）；110.26 切到沙波瓦洛夫近景：这一分已经打完。",
+      "point_end_ok": "这一分在 110.2 前打完；110.26~112.6 是沙波瓦洛夫近景，112.68 之后挂出的 `3 30 / 4 30` 是隔了一局的下一个镜头。"
+    },
+    {
+      "source": "tv",
+      "start": 112.8,
+      "end": 125.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "三比四，三十平。他冲到网前，把马纳里诺的来球截了下来，保住这一局。接着马纳里诺发球，打到平分，全场最长的回合来了。",
+      "_why": "第二盘 3-4 沙波瓦洛夫发球 30-30（记分条 114.5~124.5s `7 3 30 / 6⁶ 4 30`），这一分他在网前截击拿下，126.5s 翻成 `3 30 / 4 40`。解说 122.96「Oh, he dealt with it really well at the net, didn't he? How he got the volley」。flashscore 3-5 那一局（沙波瓦洛夫发球）`…30:30, 30:40` 保发；下一局马纳里诺发球，记分条 128.5s `7 3 40 / 6⁶ 5 40`。最后一句是给下一段（最长回合，只留现场声和解说原声）做的铺垫。",
+      "point_end_ok": "网前那一分在 125.98（loose 切点）前打完；段尾 125.9 在切点之前，126.5 的翻牌是切到他走回近景之后。"
+    },
+    {
+      "source": "tv",
+      "start": 127.3,
+      "end": 156.7,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 23.26,
+          "text": "Wow. Longest rally of them all.\n哇 全场最长的一个回合"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "第二盘 3-5 马纳里诺发球、平分（记分条 128.5~152.5s `7 3 40 / 6⁶ 5 40`）：逐 0.5 秒帧，马纳里诺（白衣）在近端底线被来回调动，149~152 被逼到右侧场外，这一分沙波瓦洛夫拿下；153.0 切沙波瓦洛夫走回，154~156 转播打出 `SET POINT` 字样、记分条 `5 AD`。解说 150.56「Wow. Longest rally of them all.」——这一分不配旁白，整段留给现场声和这一句原声（上一段已经交代了局面）。段内 at = 原时刻 − 127.3。",
+      "crosses_cut": "153.0 从宽景切到沙波瓦洛夫走回的近景：最长回合已经打完。",
+      "point_end_ok": "这一分在 152.9 前打完；153.x 翻成 `AD` 在段内，段尾 156.7 在 156.8（loose 切点）之前，下一次翻牌 180 起。"
+    },
+    {
+      "source": "tv",
+      "start": 157.0,
+      "end": 182.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "这一盘，马纳里诺的一发得分率，从第一盘的百分之八十八，掉到了百分之四十七。盘点又是一个长回合，他在底线左右奔跑，一次次把球救回来，最后还是没守住。第一个盘点他救了，第二个丢了。六比三，决胜盘。",
+      "_why": "第二盘 3-5 马纳里诺发球、沙波瓦洛夫的盘点（记分条 157~178.5s `7 3 / 6⁶ 5 AD`）：逐帧，马纳里诺在近端底线左右跑动，179~180 这一分结束，180.5s 记分条翻成第三盘 `7 3 0 / 6⁶ 6 0`。flashscore 这一局 `…40:A |B1| |B2|, 40:40, A:40, 40:40, 40:A |B1| |B2|`：两个盘点，第一个被救、第二个兑现。解说 182.24「Great mixture of dexterity, movement, and patience.」。 第二盘一发得分率：df_st_1 Set 2 1st serve points won 马纳里诺 47%（9/19），第一盘 88%（21/24）。",
+      "point_end_ok": "这一分在 180 前打完，180.5 翻牌是下一盘的比分；段尾 182.9 在 183.0 切点（看台）之前。"
+    },
+    {
+      "source": "tv",
+      "start": 186.6,
+      "end": 206.7,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "决胜盘第一局，马纳里诺拿到全场最后一个破发点，被沙波瓦洛夫救了下来。这一盘他的发球局，马纳里诺再没碰到机会。又轮到他发球，底线对拉，这一分还是他的。他冲着自己吼了一声。",
+      "_why": "第三盘 1-1 沙波瓦洛夫发球（记分条 186.5~202.5s `7 3 1 15 / 6⁶ 6 1 15`），底线相持，这一分他拿下，204.5s 翻成 `1 15 / 1 30`；203.68 切到他近景，204.5~205.5 帧张嘴吼、手臂挥了一下。flashscore 第三盘第一局（他发球）`15:0, 30:0, 30:15, 30:30, 40:30 |B1|, 40:40, 40:A…` 救下一个破发点——之后马纳里诺全场再没拿到破发点（df_st_1 Break Points Saved 沙波瓦洛夫 4/4）。 第三盘 df_st_1 Break Points Saved 沙波瓦洛夫 1/1、Service games won 4/4：第一局之后马纳里诺再没拿到破发点。",
+      "crosses_cut": "203.68 从宽景切到沙波瓦洛夫近景：这一分已经打完，旁白说的正是他。",
+      "point_end_ok": "这一分在 203.6 前打完，204.x 翻牌在段内；段尾 206.7 在 206.84（loose 切点）之前。"
+    },
+    {
+      "source": "tv",
+      "start": 207.0,
+      "end": 226.5,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "二比三，马纳里诺发球，十五比四十。这一分，沙波瓦洛夫把他调到右边场外，回球没能过来。这是马纳里诺全场第三次被破发，四比二，包厢里的教练举起了拳头。",
+      "_why": "第三盘 2-3 马纳里诺发球 15-40（记分条 208.5~222.5s `7 3 2 15 / 6⁶ 6 3 40`）：逐帧，马纳里诺在近端，221~223 被调到右侧场外，这一分结束；223.38 切到包厢，224.5 记分条 `2 / 4`、225~226 教练团队握拳。flashscore 2-4 那一局 `0:15, 0:30, 0:40 |B1|, 15:40 |B1|`：第二个破发点兑现。解说 223.44「Yeah, he was strong but patient.」。 第三次被破：第二盘第一局、第二盘 3-6、第三盘 2-4（flashscore 逐局；全场 Service games won 11/15，第四次是最后一局赛点）。",
+      "crosses_cut": "223.38 从宽景切到包厢：破发那一分已经打完，旁白说的是他们。",
+      "point_end_ok": "这一分在 223.3 前打完，224.x 翻牌在段内；段尾 226.5 在 226.56 切点之前。"
+    },
+    {
+      "source": "tv",
+      "start": 226.6,
+      "end": 241.8,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "二比五，马纳里诺发球，沙波瓦洛夫拿到赛点，第一个就拿下了。整场十四个发球局，他一局没丢。半决赛，他能在成都再往前走一步吗？",
+      "_why": "第三盘 2-5 马纳里诺发球 30-40（记分条 228.5~230.5s `7 3 2 30 / 6⁶ 6 5 40`，赛点），232.5s 翻成终局 `2 / 6`，之后两人走向网前握手。flashscore 最后一局 `0:15, 15:15, 15:30, 30:30, 30:40 |B1| |B3|`：第一个赛点兑现。发球局全保：df_st_1 Service games won 14/14。半决赛对手是赫尔卡奇和哈里斯之间的胜者（官方签表 mds.pdf 09/27 16:21 版，那场排在当地晚上），还没定，所以旁白不点名。",
+      "_payoff_why": "按时间顺序重放赛点、落地和握手，覆盖冷开场 232.6~241.8 整段。",
+      "point_end_ok": "比赛在 232.5 翻牌前结束；238.3 是比分板撤下，段尾 241.8 在 241.96 片尾板之前。",
+      "crosses_cut": "237.30 从宽景切到沙波瓦洛夫走向球网：比赛已经结束，旁白是片尾那一问。"
+    }
+  ]
+}
