@@ -1,0 +1,112 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,46,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,70,&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:01:25.16,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 拉沃尔杯 第二天
+Dialogue: 1,0:00:00.00,0:01:25.16,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs35\c&H8CDC4A&\an8\pos(540,92)}鲁德/兹维列夫 {\r\fnTL Score\c&H8CDC4A&\b1\fs41}6-{\r\fnTL Score\b300\fs41}4 {\r\fnTL Score\c&H8CDC4A&\b1\fs41}7-{\r\fnTL Score\b300\fs41}6{\r\fnTL Score\fs41}⁷{\r\fnNoto Sans CJK SC\fs35} 布勃利克/中岛布兰登 · 赛后场上采访
+Dialogue: 0,0:00:00.00,0:00:02.84,EN,,0,0,0,,Fellas, a couple of great wins tonight.
+Dialogue: 0,0:00:00.00,0:00:02.84,ZH,,0,0,0,,伙计们 今晚两场漂亮的胜利
+Dialogue: 0,0:00:02.84,0:00:04.76,EN,,0,0,0,,Casper, I want to start with you.
+Dialogue: 0,0:00:02.84,0:00:04.76,ZH,,0,0,0,,卡斯珀 先从你开始
+Dialogue: 0,0:00:04.76,0:00:06.46,EN,,0,0,0,,Before your doubles match, Carlos won
+Dialogue: 0,0:00:04.76,0:00:06.46,ZH,,0,0,0,,你们双打之前 卡洛斯在这里
+Dialogue: 0,0:00:06.46,0:00:09.26,EN,,0,0,0,,an absolutely epic match out here.
+Dialogue: 0,0:00:06.46,0:00:09.26,ZH,,0,0,0,,赢了一场绝对史诗级的比赛
+Dialogue: 0,0:00:09.26,0:00:10.30,EN,,0,0,0,,Did that give you guys
+Dialogue: 0,0:00:09.26,0:00:10.30,ZH,,0,0,0,,那有没有给你们
+Dialogue: 0,0:00:10.30,0:00:11.86,EN,,0,0,0,,a little extra confidence and freedom
+Dialogue: 0,0:00:10.30,0:00:11.86,ZH,,0,0,0,,多一点信心和放松
+Dialogue: 0,0:00:11.86,0:00:14.42,EN,,0,0,0,,to come out here and play well?
+Dialogue: 0,0:00:11.86,0:00:14.42,ZH,,0,0,0,,让你们上场打出好表现？
+Dialogue: 0,0:00:14.42,0:00:15.22,EN,,0,0,0,,Maybe.
+Dialogue: 0,0:00:14.42,0:00:15.22,ZH,,0,0,0,,也许吧
+Dialogue: 0,0:00:15.22,0:00:16.88,EN,,0,0,0,,I mean, it was nerve-racking watching every
+Dialogue: 0,0:00:15.22,0:00:16.88,ZH,,0,0,0,,我是说 今天看每一场
+Dialogue: 0,0:00:16.88,0:00:17.68,EN,,0,0,0,,match today.
+Dialogue: 0,0:00:16.88,0:00:17.68,ZH,,0,0,0,,都让人很紧张
+Dialogue: 0,0:00:17.68,0:00:20.10,EN,,0,0,0,,So sometimes it's almost better to play
+Dialogue: 0,0:00:17.68,0:00:20.10,ZH,,0,0,0,,所以有时候上场打
+Dialogue: 0,0:00:20.10,0:00:22.26,EN,,0,0,0,,than to watch from the sidelines.
+Dialogue: 0,0:00:20.10,0:00:22.26,ZH,,0,0,0,,几乎比在场边看要好
+Dialogue: 0,0:00:22.26,0:00:23.62,EN,,0,0,0,,And luckily,
+Dialogue: 0,0:00:22.26,0:00:23.62,ZH,,0,0,0,,幸运的是
+Dialogue: 0,0:00:23.62,0:00:25.40,EN,,0,0,0,,we avoided another match tiebreak now
+Dialogue: 0,0:00:23.62,0:00:25.40,ZH,,0,0,0,,我们这次避免了又一个抢十
+Dialogue: 0,0:00:25.40,0:00:26.76,EN,,0,0,0,,and it was really fun.
+Dialogue: 0,0:00:25.40,0:00:26.76,ZH,,0,0,0,,真的很有趣
+Dialogue: 0,0:00:26.76,0:00:28.78,EN,,0,0,0,,A great team effort to get two wins
+Dialogue: 0,0:00:26.76,0:00:28.78,ZH,,0,0,0,,团队一起拼下两场胜利
+Dialogue: 0,0:00:28.78,0:00:30.28,EN,,0,0,0,,in this night's session was needed
+Dialogue: 0,0:00:28.78,0:00:30.28,ZH,,0,0,0,,今晚夜场正需要这个
+Dialogue: 0,0:00:30.28,0:00:35.40,EN,,0,0,0,,after two tough losses, so really happy.
+Dialogue: 0,0:00:30.28,0:00:35.40,ZH,,0,0,0,,毕竟之前输了两场 真开心
+Dialogue: 0,0:00:38.54,0:00:39.04,EN,,0,0,0,,And Sasha,
+Dialogue: 0,0:00:38.54,0:00:39.04,ZH,,0,0,0,,还有萨沙
+Dialogue: 0,0:00:39.04,0:00:41.48,EN,,0,0,0,,all the guys here are singles players.
+Dialogue: 0,0:00:39.04,0:00:41.48,ZH,,0,0,0,,这里所有的球员都是单打选手
+Dialogue: 0,0:00:41.48,0:00:42.54,EN,,0,0,0,,I think a lot of amateurs
+Dialogue: 0,0:00:41.48,0:00:42.54,ZH,,0,0,0,,我想很多业余爱好者
+Dialogue: 0,0:00:42.54,0:00:43.74,EN,,0,0,0,,when they watch doubles, they say,
+Dialogue: 0,0:00:42.54,0:00:43.74,ZH,,0,0,0,,看双打的时候会说
+Dialogue: 0,0:00:43.74,0:00:45.72,EN,,0,0,0,,why aren't you guys serving in volley?
+Dialogue: 0,0:00:43.74,0:00:45.72,ZH,,0,0,0,,你们为什么不发球上网？
+Dialogue: 0,0:00:45.72,0:00:46.92,EN,,0,0,0,,Can you just respond to that?
+Dialogue: 0,0:00:45.72,0:00:46.92,ZH,,0,0,0,,你能回应一下这个吗？
+Dialogue: 0,0:00:46.92,0:00:48.32,EN,,0,0,0,,Why don't you guys serve in volley?
+Dialogue: 0,0:00:46.92,0:00:48.32,ZH,,0,0,0,,你们为什么不发球上网？
+Dialogue: 0,0:00:48.32,0:00:49.96,EN,,0,0,0,,Do you try to play like singles players
+Dialogue: 0,0:00:48.32,0:00:49.96,ZH,,0,0,0,,你试着像单打选手那样打吗
+Dialogue: 0,0:00:49.96,0:00:50.44,EN,,0,0,0,,or do you try
+Dialogue: 0,0:00:49.96,0:00:50.44,ZH,,0,0,0,,还是你试着
+Dialogue: 0,0:00:50.44,0:00:52.88,EN,,0,0,0,,to play like doubles players out here?
+Dialogue: 0,0:00:50.44,0:00:52.88,ZH,,0,0,0,,像双打选手那样打？
+Dialogue: 0,0:00:52.88,0:00:54.48,EN,,0,0,0,,No, we try to play like singles players
+Dialogue: 0,0:00:52.88,0:00:54.48,ZH,,0,0,0,,不 我们像单打选手那样打
+Dialogue: 0,0:00:54.48,0:00:56.02,EN,,0,0,0,,because if we would serve in volley,
+Dialogue: 0,0:00:54.48,0:00:56.02,ZH,,0,0,0,,因为如果我们发球上网，
+Dialogue: 0,0:00:56.02,0:00:57.28,EN,,0,0,0,,we would lose very, very quickly.
+Dialogue: 0,0:00:56.02,0:00:57.28,ZH,,0,0,0,,我们会非常非常快就输掉。
+Dialogue: 0,0:00:57.28,0:01:01.00,EN,,0,0,0,,So there's no point of doing that.
+Dialogue: 0,0:00:57.28,0:01:01.00,ZH,,0,0,0,,所以那样做没有意义。
+Dialogue: 0,0:01:01.00,0:01:03.02,EN,,0,0,0,,I think we probably hit a little bit
+Dialogue: 0,0:01:01.00,0:01:03.02,ZH,,0,0,0,,我觉得我们的正手
+Dialogue: 0,0:01:03.02,0:01:03.82,EN,,0,0,0,,of a bigger forehand
+Dialogue: 0,0:01:03.02,0:01:03.82,ZH,,0,0,0,,可能打得更重一点
+Dialogue: 0,0:01:03.82,0:01:05.14,EN,,0,0,0,,than some doubles guys.
+Dialogue: 0,0:01:03.82,0:01:05.14,ZH,,0,0,0,,比一些双打选手
+Dialogue: 0,0:01:05.14,0:01:06.58,EN,,0,0,0,,And doubles guys definitely volley better
+Dialogue: 0,0:01:05.14,0:01:06.58,ZH,,0,0,0,,而双打选手的截击肯定
+Dialogue: 0,0:01:06.58,0:01:07.28,EN,,0,0,0,,than us.
+Dialogue: 0,0:01:06.58,0:01:07.28,ZH,,0,0,0,,比我们好
+Dialogue: 0,0:01:07.28,0:01:09.92,EN,,0,0,0,,So, you know, it's a give and take,
+Dialogue: 0,0:01:07.28,0:01:09.92,ZH,,0,0,0,,所以 有得有失
+Dialogue: 0,0:01:09.92,0:01:11.74,EN,,0,0,0,,but I'm very happy with the team effort.
+Dialogue: 0,0:01:09.92,0:01:11.74,ZH,,0,0,0,,但我对团队的表现非常满意
+Dialogue: 0,0:01:11.74,0:01:14.40,EN,,0,0,0,,I think Carlos kicked it off with, you know,
+Dialogue: 0,0:01:11.74,0:01:14.40,ZH,,0,0,0,,我觉得卡洛斯开了个好头
+Dialogue: 0,0:01:14.40,0:01:15.40,EN,,0,0,0,,probably the most important win
+Dialogue: 0,0:01:14.40,0:01:15.40,ZH,,0,0,0,,可能是这个周末
+Dialogue: 0,0:01:15.40,0:01:16.80,EN,,0,0,0,,of the weekend.
+Dialogue: 0,0:01:15.40,0:01:16.80,ZH,,0,0,0,,最重要的一场胜利
+Dialogue: 0,0:01:16.80,0:01:18.22,EN,,0,0,0,,And I'm very happy
+Dialogue: 0,0:01:16.80,0:01:18.22,ZH,,0,0,0,,我也很高兴
+Dialogue: 0,0:01:18.22,0:01:19.52,EN,,0,0,0,,that we finished the day off with a win
+Dialogue: 0,0:01:18.22,0:01:19.52,ZH,,0,0,0,,我们也以一场胜利
+Dialogue: 0,0:01:19.52,0:01:19.94,EN,,0,0,0,,as well.
+Dialogue: 0,0:01:19.52,0:01:19.94,ZH,,0,0,0,,结束了这一天
+Dialogue: 0,0:01:19.94,0:01:21.24,EN,,0,0,0,,And now we're ahead going
+Dialogue: 0,0:01:19.94,0:01:21.24,ZH,,0,0,0,,现在我们领先着
+Dialogue: 0,0:01:21.24,0:01:23.24,EN,,0,0,0,,into the last day.
+Dialogue: 0,0:01:21.24,0:01:23.24,ZH,,0,0,0,,进入最后一天
