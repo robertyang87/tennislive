@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-27T02:50:31Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "阿尔卡拉斯",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "1926b04f38d06ee4d383624080a1f282554d5fc2a9b56d9116ae0ed7c5cb0a0c",
+  "poster_sha256": "6a02b474ac0389e0378e1a01e55d1e64ebe18d18c0e629190f0355a55ff0ad2c",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-alt2",
+      "box": [
+        441,
+        319,
+        309,
+        309
+      ],
+      "detected_faces": 1,
+      "eyes": 2,
+      "face_height_ratio": 0.38148,
+      "face_area_ratio": 0.10915,
+      "center_x_ratio": 0.55139,
+      "center_y_ratio": 0.39938,
+      "sharpness": 294.31,
+      "contrast": 168.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 56.2,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
