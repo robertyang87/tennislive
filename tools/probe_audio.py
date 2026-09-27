@@ -34,16 +34,44 @@
 - **重放**（`predict_levels` → `check_reel_landed.dead_seconds`）：按封面长度和
   每段的成片起点把成片每一整秒映射回源片，**按上界**算能量（窗口两头各放宽一块、
   压到的块整块算、溶解那 0.18 秒两路都整份算、「响」块当无穷大），乘上这一段真实
-  的现场声增益（`BED_LOUD`×音床），再交给 QC 自己的 `dead_seconds`——**同一个
-  函数、同一个门槛、同一个起算秒**。上界的意思是：预测「静音」时成片只会更静，
-  所以这里红了就不是误报；代价是贴线的那零点几 dB 漏给 QC 兜底。
+  的现场声增益（`BED_LOUD`×音床；不闪避那条路是 1.0），再交给 QC 自己的
+  `dead_seconds`——**同一个函数、同一个门槛、同一个起算秒**。
   两头各放宽一整块（0.05s）而不是几毫秒：AAC 的一帧就有 21ms，响块的能量会被
   编码器和重采样抹进相邻几十毫秒——紧挨着响块的那一秒不许判成静音。
+- **时间轴要按 render 的真实账算，不是按名义段长**（`audio_drift`，评审 2026-09-27
+  抓的 BLOCKING）：每个 part 的现场声是 `-t {L+尾巴:.3f}` 编成的 AAC 48k，解出来是
+  **整数个 1024 样本帧**（`-t 5.18` 解出 5.184s、`7.01` → 7.0187s），而
+  `acrossfade` 把每一路接在前一路**解出来的末尾**上——于是第 k 段的现场声比画面、
+  旁白、字幕晚 δ_k = Σ_{j<k}（封面算第 0 个 part）每个 part 多出来的那一截。
+  画面不截的时候实测 14 段累积到 +159 ms，逐段和「补满」公式对到 0.1 ms。
+  **但 δ 只知道区间**：每个 part 都带 `-shortest`，25 / 29.97 fps 下 `-ss` 落在两帧
+  之间时画面少一帧，音轨跟着被截短 1~2 帧 AAC（真调 `cut_segment` 量的，三成的刀；
+  50/60 fps 一刀没截）——哪一刀会截 dry-run 看不见，所以按 `part_padding` 的区间算，
+  这一秒可能对上的源片取所有对齐的并集。越往后的段区间越宽，短的静音就判不死，
+  那是漏给 QC 兜底，不是误报。不算 δ 的话，冷开场后半截「源片刚变静」会被判成必红，
+  而成片那一秒里还有几十毫秒的响。
+- **量的那一路要和 `-ss` 同一条时间轴**：音轨比画面晚开始的源片（容器里 audio
+  start_time > 0），裸 PCM 的第 0 个样本是音轨自己的第一个样本，而 `-ss` 按文件
+  时间轴寻址——实测 56ms 的源片整条错开 56ms。`aresample=first_pts=0` 补齐。
 
-判据 `tests/test_probe_audio.py::test_真跑一遍混音链_预测的静音秒成片里真的静音`：
-合成源片把 render 的真音频链（AAC 分段 → `dissolve_filtergraph` → `duck_filtergraph`
-→ AAC）跑一遍再用 QC 的 `per_second_db` 量，**没有一秒被预测成静音而实际不是**，
-源片 −58.5 dB（silencedetect 看不见）那一截被预测到了。
+**上界只在这几个前提都成立时才是上界**——这是它会不会误报的全部条件，不是一句保证：
+① 时间轴按上面那本账（δ 的区间、first_pts）；② 编码／重采样把响块能量抹开的范围不超过
+`ALIGN_SLACK`（成片比量源片时多过三代 AAC——实测 −2 dB 的响→静边沿，格子后面那块
+量源片时是干净的，成片里却抹进来 0.6~13 dB）；③ 增益按 render 那一趟真走的混音分支
+（`_mix_ducks`）。render 改了 part 的编码（采样率、编码器、`-t`／`-shortest` 的写法）或者
+混音分支，这几条就要跟着改——判据是下面那几条**真跑一遍 render 音频链**的测试，不是
+这段话。贴线的那零点几 dB 漏给 QC 兜底。
+
+判据（`tests/test_probe_audio.py`）：
+`::test_真跑一遍混音链_预测的静音秒成片里真的静音`（3 段）和
+`::test_十几段之后的漂移_段界溶解尾巴_响静边沿_真跑一遍混音链`（14 段）——合成源片把 render
+的真音频链（AAC 分段 → `dissolve_filtergraph` → `duck_filtergraph` → AAC）跑一遍，再用
+QC 的 `per_second_db` 量：**这两份夹具里**没有一秒被预测成静音而实际不是、给出了数的秒
+一秒都不低于成片；源片 −58.5 dB（silencedetect 看不见）那一截被预测到；第 13 段上 +0.2 秒
+的漂移、第 9→10 段接缝上的溶解尾巴、三道 −2 dB 的响→静边沿各有一秒专门压着——拆掉 δ、
+拆掉溶解尾巴、`ALIGN_SLACK` 归零，各红一条。
+`::test_真的cut_segment解出来的音轨长度落在模型的区间里`：δ 区间的两头拿**真的**
+`cut_segment`／`_still_to_clip` 量。
 
 ## 硬不硬（R7：旁白尾巴那一类不做硬闸）
 
@@ -64,7 +92,6 @@
 
 from __future__ import annotations
 
-import bisect
 import math
 import re
 import subprocess
@@ -90,11 +117,19 @@ DIGITAL_SILENCE_DB = -99.0
 #: edge-tts 的 mp3 末尾那一截固定静音（`tennis-pipeline-ops`「说到 ＝ 段起点 ＋
 #: mp3 时长 − 0.83」，逐段对过）。离线估的是 mp3 时长，真说完要再往前挪这么多。
 TTS_TAIL = 0.83
-#: 成片音轨相对画面时间轴、以及编码器／重采样抹开能量的余量：窗口两头各放宽
-#: 一整块。AAC 一帧 1024 样本（48k 下 21ms），响块旁边几十毫秒会沾上它的能量。
+#: 编码器／重采样把响块能量抹开的余量：窗口两头各放宽一整块。时间轴的账（δ 区间、
+#: first_pts）另算，这一格只管「抹」——成片比量源片时多过三代 AAC，响→静边沿后面
+#: 十几毫秒里成片沾到的能量比量出来的多（14 段夹具实测，归零就把上界打穿 0.6~13 dB）。
 ALIGN_SLACK = BLOCK_SECONDS
 #: 段级认领键：看过、确认这几秒就是要这样剪（写了降成只报）。
 CLAIM_KEY = "_digital_silence_why"
+#: render 的每个 part（封面、分段、证据段、片尾）音轨都是 `-c:a aac -ar 48000`
+#: （`build_match_reel.AUDIO_RATE`，测试钉着两边一样），AAC 一帧 1024 个样本。
+PART_AUDIO_RATE = 48000
+AAC_FRAME = 1024
+#: 成片帧率最低能到多少（`resolve_fps` 不认 10 fps 以下）——不知道帧率时按它算
+#: δ 往少那头最远能漂多远（`part_padding`）。
+SLOWEST_FPS = 10.0
 
 _ENC_HOW = ("逐 0.05 秒 RMS（8 kHz 单声道，同 check_reel_landed.per_second_db），"
             "dB 向上取整到 0.1；任何含它的 window 秒窗口按 quietest_gain 都红不了"
@@ -118,13 +153,43 @@ def block_levels(pcm: bytes, rate: int = RATE,
     import numpy as np  # noqa: PLC0415
 
     size = int(round(rate * block))
-    samples = np.frombuffer(pcm, dtype=np.int16).astype(float) / 32768.0
-    count = len(samples) // size
+    count = len(pcm) // 2 // size
     if not count:
         return []
-    rms = np.sqrt((samples[:count * size].reshape(count, size) ** 2).mean(axis=1))
+    samples = np.frombuffer(pcm, dtype=np.int16, count=count * size).astype(float) / 32768.0
+    rms = np.sqrt((samples.reshape(count, size) ** 2).mean(axis=1))
     return [math.ceil(20.0 * math.log10(v) * 10 - 1e-9) / 10 if v > 0
             else DIGITAL_SILENCE_DB for v in rms]
+
+
+#: 流式读 PCM 时一口读多少块（60 秒）。整条读进内存再转 float64，8678 秒那条
+#: 源片（仓库里 probe 过最长的，usq-2026-kei14）会在 probe runner 上顶到约 1.1 GB
+#: （评审 2026-09-27 nit）；按块流式算，峰值只剩这一口。
+STREAM_BLOCKS = 1200
+
+
+def stream_block_levels(stream, rate: int = RATE,
+                        block: float = BLOCK_SECONDS) -> tuple[list[float], int]:
+    """从管道流式读 s16le 单声道 PCM，逐块算 RMS。返回 `(逐块 dB, 总字节数)`——
+    和一次读完喂给 `block_levels` 的结果**逐块一样**（测试钉着）。"""
+    size_bytes = int(round(rate * block)) * 2
+    want = size_bytes * STREAM_BLOCKS
+    levels: list[float] = []
+    carry = b""
+    total = 0
+    while True:
+        chunk = stream.read(want - len(carry))
+        if not chunk:
+            break
+        total += len(chunk)
+        carry += chunk
+        if len(carry) >= want:
+            levels.extend(block_levels(carry[:want], rate, block))
+            carry = carry[want:]
+    whole = len(carry) // size_bytes * size_bytes
+    if whole:
+        levels.extend(block_levels(carry[:whole], rate, block))
+    return levels, total
 
 
 def measure(path: Path, *, quietest_gain: float, floor_db: float = -60.0,
@@ -137,26 +202,41 @@ def measure(path: Path, *, quietest_gain: float, floor_db: float = -60.0,
     两个输出都 `-map 0:a:0`：render 切段取的就是这一路（`cut_segment`）。
     `quietest_gain`：成片里现场声最轻会乘到多少（`BED_LOUD`×最低一档音床），
     存进记录——重放时比它还轻的段（mute）这份数据判不了，要出声说。
+    PCM 按块**流式**读（`stream_block_levels`），不把整条音轨攥在内存里；
+    stderr（silencedetect 的输出）落临时文件，免得两个管道互相堵死。
     """
+    import tempfile  # noqa: PLC0415
+
     if not _has_audio(path):
         return None, None
-    proc = subprocess.run(
-        ["ffmpeg", "-hide_banner", "-nostats", "-i", str(path),
-         "-map", "0:a:0", "-af",
-         f"silencedetect=noise={floor_db}dB:d={min_silence}", "-f", "null", "-",
-         "-map", "0:a:0", "-ac", "1", "-ar", str(RATE), "-f", "s16le", "pipe:1"],
-        capture_output=True)
-    if proc.returncode:
-        raise RuntimeError("量源片音频失败："
-                           + proc.stderr[-600:].decode("utf-8", "replace"))
-    err = proc.stderr.decode("utf-8", "replace")
+    with tempfile.TemporaryFile() as err_file:
+        proc = subprocess.Popen(
+            ["ffmpeg", "-hide_banner", "-nostats", "-i", str(path),
+             "-map", "0:a:0", "-af",
+             f"silencedetect=noise={floor_db}dB:d={min_silence}", "-f", "null", "-",
+             # `first_pts=0`：音轨比画面晚开始的源片（容器里 audio start_time > 0），
+             # 裸 PCM 第 0 个样本是音轨自己的第一个样本，而 render 的 `-ss` 按**文件
+             # 时间轴**寻址——不补齐就整条错开 start_time 那么多（实测 56ms 的源片
+             # 错开 56ms，比 ALIGN_SLACK 还宽）。silencedetect 按帧 pts 报时，本来就对。
+             "-map", "0:a:0", "-af", "aresample=first_pts=0",
+             "-ac", "1", "-ar", str(RATE), "-f", "s16le", "pipe:1"],
+            stdout=subprocess.PIPE, stderr=err_file)
+        try:
+            levels, total = stream_block_levels(proc.stdout)
+        finally:
+            proc.stdout.close()
+            code = proc.wait()
+        err_file.seek(0)
+        err = err_file.read().decode("utf-8", "replace")
+    if code:
+        raise RuntimeError("量源片音频失败：" + err[-600:])
     starts = [float(m) for m in re.findall(r"silence_start:\s*(-?[\d.]+)", err)]
     ends = [float(m) for m in re.findall(r"silence_end:\s*(-?[\d.]+)", err)]
     if len(starts) > len(ends):
         # 贴着文件末尾的静音没打 end——终点取音轨自己解出来的长度
-        ends.append(len(proc.stdout) / 2 / RATE)
+        ends.append(total / 2 / RATE)
     spans = [[round(a, 2), round(b, 2)] for a, b in zip(starts, ends)]
-    return spans, encode_levels(block_levels(proc.stdout), quietest_gain)
+    return spans, encode_levels(levels, quietest_gain)
 
 
 # ── 存 ────────────────────────────────────────────────────────────────────────
@@ -256,7 +336,8 @@ def source_energy(levels: Sequence[float], lo: float, hi: float,
 
 def film_starts(segments, cover: float) -> list[float]:
     """每段在成片上的起点——和 `dissolve_filtergraph` 的长度账同一笔：溶解吃掉的
-    是每段多切的那 `SEG_FADE` 秒尾巴，起点一个不变。"""
+    是每段多切的那 `SEG_FADE` 秒尾巴，起点一个不变。**这是画面（以及旁白 adelay、
+    字幕）的时间轴**；现场声还要再晚 `audio_drift` 那么多。"""
     out, t = [], cover
     for seg in segments:
         out.append(t)
@@ -264,57 +345,125 @@ def film_starts(segments, cover: float) -> list[float]:
     return out
 
 
+def aac_padding(seconds: float) -> float:
+    """一个 part 按 `-t {seconds:.3f}` 编成 AAC 48k 之后，解出来**最多**比名义长多少秒。
+
+    AAC 一帧 1024 个样本，编码器把最后一帧补零补满，解码不裁——于是解出来是整数帧：
+    `-t 5.18` → 5.184s、`7.01` → 7.0187s、`4.55` → 4.5653s（评审 2026-09-27 实测）。
+    `-t` 按三位小数写，这一笔零头也算进来。
+    """
+    cut = round(seconds, 3)
+    frames = math.ceil(cut * PART_AUDIO_RATE / AAC_FRAME - 1e-9)
+    return frames * AAC_FRAME / PART_AUDIO_RATE - seconds
+
+
+def part_padding(seconds: float, frame_seconds: float) -> tuple[float, float]:
+    """一个 part 解出来比名义 `seconds` 长多少秒：`(最少, 最多)`，最少可以是负的。
+
+    - **最多** `aac_padding`：`-t` 截到 `seconds`，最后一帧补满。
+    - **最少**：每个 part 都带 `-shortest`，音频不越过视频那一路的尾巴。视频是
+      `fps=` 之后按 `-t` 截的，`-ss` 落在两帧之间时会少一帧，尾巴 ≥ `seconds − 1/fps`；
+      音频截到不越过它的整帧，再少一帧 AAC。
+
+    实测（2026-09-27，真调 `cut_segment`，25 / 29.97 / 50 / 60 fps 各 12 刀）：解出来
+    落在 `[seconds − 24.7ms, seconds + aac_padding]`；25 和 29.97 fps 有三成的刀比
+    「补满」少 1~2 帧 AAC，50/60 fps 一刀都没少——**哪一刀会少，dry-run 看不见**
+    （取决于 `-ss` 的相位和 ffmpeg 版本的 `-shortest` 实现），所以按区间算。
+    """
+    hi = aac_padding(seconds)
+    lo = -(frame_seconds + AAC_FRAME / PART_AUDIO_RATE)
+    return min(lo, hi), hi
+
+
+def part_audio_seconds(seg, fade: float) -> float:
+    """第 k 个 part 的音轨里**有真声**的那一截多长：段长 ＋ 多切的溶解底料。
+    底料是源片 `seg.end` 之后那 `fade` 秒，它在下一段开头那次溶解里淡出——
+    **下一段开头那一秒里有它**（上一段的尾巴），重放时不许漏。再往后是补齐的零。
+    末段不留尾巴时（片尾关掉）真声只到段长，按 `L + fade` 算只会多算，上界不破。"""
+    return seg.length + fade
+
+
+def audio_drift(segments, cover: float, fade: float,
+                frame_seconds: float) -> list[tuple[float, float]]:
+    """第 k 段的现场声在成片上比画面晚多少秒：`[(δ_k 最少, δ_k 最多), …]`。
+
+    `acrossfade` 没有 offset，每一路都接在前一路**解出来**的末尾上（见
+    `dissolve_filtergraph` 的长度账），所以 δ_k = 封面 part 的补齐 + Σ_{j<k} 第 j 段的
+    补齐（`part_padding`）。第 k 段之前的 part 都不是末段，尾巴一律是 `fade`。
+    旁白是在拼好之后按名义起点 `adelay` 上去的，**不漂**；只有现场声漂。
+    """
+    lo, hi = part_padding(cover + fade, frame_seconds)
+    out = []
+    for seg in segments:
+        out.append((lo, hi))
+        d_lo, d_hi = part_padding(seg.length + fade, frame_seconds)
+        lo, hi = lo + d_lo, hi + d_hi
+    return out
+
+
 def predict_levels(segments, levels_by_source: dict[str, Sequence[float] | None],
                    cover: float, voiced_until: Sequence[float],
                    gain: Callable[[object], float], fade: float,
                    judged: Callable[[object], bool] = lambda seg: True,
-                   ) -> list[float]:
+                   *, frame_seconds: float = 1 / SLOWEST_FPS) -> list[float]:
     """成片逐秒响度的**上界**预测，形状和 `per_second_db` 的输出一样。
 
-    `voiced_until[k]`：第 k 段在成片上有人声盖着的终点（绝对秒）；无旁白段
-    就是它自己的起点。压到人声、整屏证据段、封面、片尾，或者源片没量到、
+    `voiced_until[k]`：第 k 段在成片上有人声盖着的终点（绝对秒，画面时间轴）；
+    无旁白段就是它自己的起点。压到人声、整屏证据段、封面、片尾，或者源片没量到、
     `judged` 说判不了的段的秒记 +inf——判不了就当响，**不许**判成静音。
+
+    现场声按**真实的音频时间轴**摆：第 k 个 part 的音轨从成片 `起点 + δ_k` 开始，
+    本地第 t 秒是源片 `seg.start + t`，一直到 `L + fade`（再往后是补齐的零）——溶解
+    那一段两路都在，三角曲线的权重 ≤ 1，所以**各自整份相加**就是上界。δ_k 只知道
+    区间（`audio_drift`），这一秒可能对上的源片取**所有对齐的并集**。
+    `frame_seconds`：成片一帧多长（`1/fps`），决定 δ 往少那头能漂多远；不知道就按
+    `resolve_fps` 认的最低帧率算最坏。
     """
     starts = film_starts(segments, cover)
     end = starts[-1] + segments[-1].length if segments else cover
     out = [math.inf] * max(0, math.ceil(end - 1e-9))
+    drift = audio_drift(segments, cover, fade, frame_seconds)
 
-    def piece(k: int, off_lo: float, off_hi: float) -> float | None:
+    def piece(k: int, local_lo: float, local_hi: float) -> float | None:
+        """第 k 个 part 自己时间轴上 [lo, hi) 这一截（×增益²）的能量上界。"""
         seg = segments[k]
         if seg.image:
-            return 0.0                    # 证据段的底轨是 anullsrc：只在溶解底料里出现
+            return 0.0                    # 证据段的底轨是 anullsrc：一个样本都是零
         levels = levels_by_source.get(seg.source)
         if levels is None or not judged(seg):
             return None
-        e = source_energy(levels, seg.start + off_lo, seg.start + off_hi)
+        e = source_energy(levels, seg.start + local_lo, seg.start + local_hi)
         return None if e is None else e * gain(seg) ** 2
+
+    def masked(i: int) -> bool:
+        """这一秒压到人声（旁白按画面时间轴 adelay）或整屏证据段——判不了。"""
+        for k, (a, seg) in enumerate(zip(starts, segments)):
+            lo, hi = max(i, a), min(i + 1, a + seg.length)
+            if hi > lo and (seg.image or lo < voiced_until[k] - 1e-9):
+                return True
+        return False
 
     for i in range(math.ceil(cover - 1e-9), len(out)):
         if i + 1 > end + 1e-9:
             break                         # 这一秒压到片尾页（口播）了
+        if masked(i):
+            continue
         energy, ok = 0.0, True
-        k = max(0, bisect.bisect_right(starts, i) - 1)
-        while ok and k < len(segments) and starts[k] < i + 1:
-            a, seg = starts[k], segments[k]
-            lo, hi = max(i, a), min(i + 1, a + seg.length)
-            if hi > lo:
-                if seg.image or lo < voiced_until[k] - 1e-9:
-                    ok = False
-                    break
-                e = piece(k, lo - a, hi - a)
-                # 溶解：这一段开头 `fade` 秒里还叠着上一段多切的尾巴（淡出）。
-                # 两路都按满增益整份算——三角曲线只会更小，上界不破。
-                # 第 0 段叠的是封面的 anullsrc，算 0。
-                if e is not None and k and lo < a + fade:
-                    prev = segments[k - 1]
-                    x_hi = min(hi, a + fade)
-                    e2 = piece(k - 1, prev.length + (lo - a), prev.length + (x_hi - a))
-                    e = None if e2 is None else e + e2
-                if e is None:
-                    ok = False
-                    break
-                energy += e
-            k += 1
+        # 封面 part 的底轨是 anullsrc，能量 0，不用算。
+        for k, (a, seg, (d_lo, d_hi)) in enumerate(zip(starts, segments, drift)):
+            # 这个 part 的本地时间里，哪一截可能落进成片 [i, i+1)：音轨最晚在
+            # a+d_hi 接上、最早在 a+d_lo 接上，两头各取最宽的那一种。
+            # 过了 `part_audio_seconds` 就是补齐的零——源片后面那一截根本没切进来；
+            # 它之前那 `fade` 秒是溶解底料，落在下一段开头（上一段的尾巴也算这里）。
+            local_lo = max(0.0, i - (a + d_hi))
+            local_hi = min(part_audio_seconds(seg, fade), i + 1 - (a + d_lo))
+            if local_hi <= local_lo:
+                continue
+            e = piece(k, local_lo, local_hi)
+            if e is None:
+                ok = False
+                break
+            energy += e
         if ok:
             out[i] = 10 * math.log10(energy) if energy > 0 else DIGITAL_SILENCE_DB
     return out
@@ -322,6 +471,7 @@ def predict_levels(segments, levels_by_source: dict[str, Sequence[float] | None]
 
 def _describe(seg, start: float, second: int, levels, predicted: float,
               gain_value: float) -> str:
+    """`start` 是这一段现场声在成片上的起点（画面起点 + δ_k）。"""
     src = seg.start + max(0.0, second - start)
     lo = max(0, math.floor(src / BLOCK_SECONDS))
     window = [db for db in (levels or [])[lo:lo + round(1 / BLOCK_SECONDS)]
@@ -336,8 +486,12 @@ def digital_silence_findings(
         spec: dict, segments, probes: dict, urls: dict, *,
         gain: Callable[[object], float], fade: float,
         cover_exact: float | None, cover_estimate: float,
-        estimates: dict[int, float], est_err: float) -> tuple[list[str], list[str]]:
+        estimates: dict[int, float], est_err: float,
+        frame_seconds: float = 1 / SLOWEST_FPS) -> tuple[list[str], list[str]]:
     """probe_dry_run 的第 ⑥ 条后半：按成片口径重放数字静音闸，返回 `(硬, 软)`。
+
+    - `frame_seconds`：成片一帧多长（主源 probe 的帧率按 `resolve_fps` 折算），
+      给 `audio_drift` 定 δ 的区间；不知道就按最低帧率算最坏
 
     - `cover_exact`：封面定长时的秒数（赛场之上恒为 `COVER_SECONDS`）；跟着
       配音走时传 None，`cover_estimate` 是离线估，从它起扫一整个周期的相位
@@ -398,7 +552,7 @@ def digital_silence_findings(
                       a + max(0.0, estimates.get(k, seg.length) + err - TTS_TAIL)
                       for k, (a, seg, said) in enumerate(zip(starts, segments, narrated))]
             table = predict_levels(segments, levels_by_source, cover, voiced,
-                                   gain, fade, judged)
+                                   gain, fade, judged, frame_seconds=frame_seconds)
             found[name] = (set(dead_seconds(table, math.ceil(cover) + 1, evidence)[0]),
                            table)
         bare, strict = found["bare"]
@@ -414,6 +568,7 @@ def digital_silence_findings(
     shown = next((run for run in runs if run[2]),
                  next((run for run in runs if run[3] or run[4]), runs[0]))
     cover, starts, bare, sure, maybe, strict, sure_table, loose = shown
+    drift = [hi for _lo, hi in audio_drift(segments, cover, fade, frame_seconds)]
 
     def owner(second: int) -> int:
         return max(range(len(segments)),
@@ -426,8 +581,8 @@ def digital_silence_findings(
         for second in sorted(seconds):
             k = owner(second)
             grouped.setdefault((k, kind), []).append(_describe(
-                segments[k], starts[k], second, levels_by_source.get(segments[k].source),
-                table[second], gain(segments[k])))
+                segments[k], starts[k] + drift[k], second,
+                levels_by_source.get(segments[k].source), table[second], gain(segments[k])))
     phase = ("" if cover_exact is not None else
              f"（封面跟着配音走，按封面 {cover:.2f}s 摆的相位"
              + ("；扫过一整个周期，**每个相位都有死秒**）" if every_phase else

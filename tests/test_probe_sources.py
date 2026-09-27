@@ -191,8 +191,78 @@ def test_工作流dry_run之前按URL把probe落盘():
     step = next(s for s in flow["jobs"]["reel"]["steps"]
                 if str(s.get("name", "")).startswith("dry-run"))
     run = step["run"]
-    assert "probe_sources.py materialize" in run
-    assert run.index("probe_sources.py materialize") < run.index("render --dry-run")
+    code = [line.split("#")[0] for line in run.splitlines()]
+    at = next(i for i, line in enumerate(code) if "probe_sources.py materialize" in line)
+    dry = next(i for i, line in enumerate(code) if "render --dry-run" in line)
+    assert at < dry
+    # `git sparse-checkout add` 会把稀疏范围外落好的文件清掉——落盘必须排在每一个 add 之后
+    adds = [i for i, line in enumerate(code) if "sparse-checkout add" in line]
+    assert adds and max(adds) < at, (adds, at)
+    # 取失败要往下传（这一趟覆盖只报），mode 也要传（只在 render 硬）
+    fail = "\n".join(code[at:dry])
+    assert f"export {ps.MATERIALIZE_FAILED_ENV}=1" in fail, fail
+    assert f'export {ps.MODE_ENV}="${{{{ github.event.inputs.mode }}}}"' in fail, fail
+
+
+def test_覆盖只在mode_render硬_取probe失败这趟只报(monkeypatch):
+    """评审 2026-09-27 两条 nit：cover／narration 两趟共用 dry-run 那一步，却用不到
+    probe——一条还没 probe 的源不许挡住出封面（时效第一、封面排最前）；工作流按 URL
+    取 probe.json 失败时，「认领不到」可能只是没拉回来，硬红只会把人领去重跑 probe。"""
+    probes = {"A": _probe("A")}
+    hard, _soft = ps.coverage_findings(_spec(), probes, legacy=NONE, env={})
+    assert hard, "本地不传 mode＝按 render 算，照旧硬"
+    assert ps.coverage_findings(_spec(), probes, legacy=NONE,
+                                env={ps.MODE_ENV: "render"})[0]
+    for mode in ("cover", "narration"):
+        hard, soft = ps.coverage_findings(_spec(), probes, legacy=NONE,
+                                          env={ps.MODE_ENV: mode})
+        assert not hard and any(f"mode={mode}" in s for s in soft), (mode, hard, soft)
+    hard, soft = ps.coverage_findings(_spec(), probes, legacy=NONE,
+                                      env={ps.MATERIALIZE_FAILED_ENV: "1"})
+    assert not hard and any("取 probe.json 那一步失败了" in s for s in soft), soft
+    # 接到 dry-run 上：一条都没 probe 的新手写 spec，mode=cover 那一趟不红
+    spec = {"slug": "brand-new", "source_url": "U",
+            "segments": [{"start": 1.0, "end": 5.0, "narration": "一句。"}]}
+    monkeypatch.setattr(reel, "probes_for_spec", lambda _s: ({}, [""]))
+    monkeypatch.setenv(ps.MODE_ENV, "cover")
+    segs = reel.parse_segments(spec, {"": Path("x")}, "")
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        assert reel.probe_dry_run(spec, segs) is False, buf.getvalue()
+
+
+def test_取probe不完整要非0退出(tmp_path, monkeypatch, capsys):
+    """原来批量 fetch 失败只打一句 warning、退出码 0——工作流以为落好了，dry-run 接着
+    按「没 probe」硬红。现在取得不完整就记下原因、`main` 退出码 1。"""
+    origin = tmp_path / "origin"
+    origin.mkdir()
+    _git(origin, "init", "-q", "-b", "main")
+    _git(origin, "config", "user.email", "t@t")
+    _git(origin, "config", "user.name", "t")
+    rel = "output/2026-09-25/reel/quiet-src-a/probe.json"
+    (origin / rel).parent.mkdir(parents=True)
+    (origin / rel).write_text(json.dumps(_probe("A")), encoding="utf-8")
+    _git(origin, "add", "-A")
+    _git(origin, "commit", "-q", "-m", "probes")
+    _git(origin, "config", "uploadpack.allowFilter", "true")
+    clone = tmp_path / "clone"
+    _git(tmp_path, "clone", "-q", "--filter=blob:none", "--sparse",
+         f"file://{origin}", str(clone))
+    origin.rename(tmp_path / "gone")                      # 远端没了：批量 fetch 必失败
+    problems: list[str] = []
+    assert ps.materialize(_spec(), cwd=clone, problems=problems) == []
+    assert any("批量取 probe.json 失败" in p for p in problems), problems
+    assert any("没取回来" in p for p in problems), problems
+    # main 把它变成退出码
+    spec_path = tmp_path / "spec.json"
+    spec_path.write_text(json.dumps(_spec()), encoding="utf-8")
+    monkeypatch.setattr(ps, "materialize",
+                        lambda spec, ref="HEAD", cwd=ROOT, problems=None:
+                        (problems.append("批量取 probe.json 失败：x") or []))
+    assert ps.main(["materialize", str(spec_path)]) == 1
+    assert "批量取 probe.json 失败" in capsys.readouterr().err
+    monkeypatch.setattr(ps, "materialize", lambda spec, ref="HEAD", cwd=ROOT, problems=None: [])
+    assert ps.main(["materialize", str(spec_path)]) == 0
 
 
 def test_豁免表外的手写spec每条源都认领得到probe():

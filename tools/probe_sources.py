@@ -34,6 +34,11 @@
   老 probe 没记宽高帧率只报不拦；自动产的 spec 只报（它们本来就先 probe 后 promote，
   真缺了是链路的毛病，硬了只会把自动链卡成「今天没有候选」）；
   定规矩之前已有的挂在 `data/legacy_no_probe_sources.json`，**只许减不许加**。
+  ⚠️ **只在 mode=render 那一趟硬**（工作流传 `REEL_DRY_RUN_FOR`，本地不传按 render 算）：
+  cover／narration 两趟用不到 probe，时效第一、封面排最前——一条还没 probe 的源不许
+  挡住出封面（评审 2026-09-27 nit）。工作流按 URL 取 probe.json 那一步失败了
+  （`REEL_PROBES_MATERIALIZE_FAILED=1`）也降成只报：那一趟「认领不到」可能只是没拉回来，
+  硬红只会拿「先跑一趟 mode=probe」把人往错的方向领。
 - **runner 看得见**（`materialize`）：工作流 dry-run 那一步按 URL 把认领这条 spec
   的 probe.json 从 HEAD 的树里取出来落盘——**只取 probe.json**，不拉缩略图墙；
   稀疏检出是 `blob:none` 的部分克隆，所以先一趟批量 fetch 把这几百份小 blob
@@ -55,6 +60,10 @@ ROOT = Path(__file__).resolve().parents[1]
 LEGACY_PATH = ROOT / "data" / "legacy_no_probe_sources.json"
 CLAIM_KEY = "_no_probe_why"
 PROBE_SUFFIX = "/probe.json"
+#: 工作流 dry-run 那一步是替哪个 mode 跑的（render / cover / narration）。不传＝本地，按 render 算。
+MODE_ENV = "REEL_DRY_RUN_FOR"
+#: 工作流按 URL 落 probe.json 那一步失败了（`materialize` 退出码非 0）。
+MATERIALIZE_FAILED_ENV = "REEL_PROBES_MATERIALIZE_FAILED"
 
 
 def spec_urls(spec: dict) -> dict[str, str]:
@@ -128,14 +137,29 @@ def source_dims(spec: dict, probes: dict[str, dict],
     return dims, lacking
 
 
+def coverage_demoted(env: dict | None = None) -> str:
+    """这一趟覆盖那道闸为什么降成只报；空串＝照常（硬）。"""
+    env = os.environ if env is None else env
+    mode = str(env.get(MODE_ENV) or "render").strip() or "render"
+    if mode != "render":
+        return (f"这一趟是 mode={mode}，用不到 probe——覆盖只在 mode=render 硬，"
+                "别让它挡住出封面／查旁白")
+    if str(env.get(MATERIALIZE_FAILED_ENV) or "").strip() not in ("", "0"):
+        return ("工作流按 URL 取 probe.json 那一步失败了，认领不上可能只是没拉回来——"
+                "先看那一步的日志，这一趟只报")
+    return ""
+
+
 def coverage_findings(spec: dict, probes: dict[str, dict], *,
                       legacy: dict[str, list[str]] | None = None,
+                      env: dict | None = None,
                       ) -> tuple[list[str], list[str]]:
     """每条源都认领得到 probe.json 没有。返回 `(硬, 软)`。"""
     hard: list[str] = []
     soft: list[str] = []
     if is_imported_master(spec):
         return hard, soft
+    demoted = coverage_demoted(env)
     legacy = legacy_no_probe() if legacy is None else legacy
     grandfathered = set(legacy.get(str(spec.get("slug") or ""), []))
     claims = spec.get(CLAIM_KEY) or {}
@@ -153,6 +177,8 @@ def coverage_findings(spec: dict, probes: dict[str, dict], *,
             soft.append(f"{line}（定规矩之前就有的，挂在 legacy_no_probe_sources）")
         elif is_auto(spec):
             soft.append(f"{line}（自动产的 spec 只报）")
+        elif demoted:
+            soft.append(f"{line}（{demoted}）")
         else:
             hard.append(f"{line}。\n    先跑一趟 `match-reel.yml mode=probe url=<这条>`"
                         "（多源的每一条都要，可以并排拨）；真 probe 不了就在 spec 顶层写 "
@@ -193,6 +219,7 @@ def _git(args: list[str], cwd: Path, stdin: bytes | None = None,
 
 
 def committed_probes(ref: str = "HEAD", cwd: Path = ROOT,
+                     problems: list[str] | None = None,
                      ) -> dict[str, tuple[str, bytes]]:
     """HEAD 的树里每一份 `output/*/reel/*/probe.json`：`{路径: (blob, 内容)}`。
 
@@ -200,8 +227,17 @@ def committed_probes(ref: str = "HEAD", cwd: Path = ROOT,
     `blob:none`）里 blob 不在本地，逐个懒取是几百次往返——先一趟批量 fetch
     （git 自己懒取时用的就是这条命令），再 `cat-file --batch` 一次读完；
     读的那一步关掉懒取，fetch 没取回来的就当没有，别退回逐个往返。
+
+    `problems`：取得不完整（树读不出、批量 fetch 失败、有 blob 没取回来）时往里
+    记一句——「没取回来」和「树里本来就没有」在返回值里长得一样，调用方要分得开。
     """
-    listing = _git(["ls-tree", "-r", ref, "--", "output"], cwd).stdout.decode()
+    problems = [] if problems is None else problems
+    listed = _git(["ls-tree", "-r", ref, "--", "output"], cwd)
+    if listed.returncode:
+        problems.append("读不出 " + ref + " 的树："
+                        + listed.stderr.decode("utf-8", "replace")[-300:])
+        return {}
+    listing = listed.stdout.decode()
     wanted: dict[str, str] = {}
     for line in listing.splitlines():
         meta, _, path = line.partition("\t")
@@ -221,8 +257,8 @@ def committed_probes(ref: str = "HEAD", cwd: Path = ROOT,
                         "--no-tags", "--no-write-fetch-head", "--recurse-submodules=no",
                         "--filter=blob:none", "--stdin", "origin"], cwd, stdin=oids)
         if fetched.returncode:
-            print("::warning::批量取 probe.json 失败："
-                  + fetched.stderr.decode("utf-8", "replace")[-300:], file=sys.stderr)
+            problems.append("批量取 probe.json 失败："
+                            + fetched.stderr.decode("utf-8", "replace")[-300:])
     env = {**os.environ, "GIT_NO_LAZY_FETCH": "1"}
     out = _git(["cat-file", "--batch"], cwd, stdin=oids, env=env).stdout
     blobs: dict[str, bytes] = {}
@@ -236,16 +272,20 @@ def committed_probes(ref: str = "HEAD", cwd: Path = ROOT,
         size = int(head[2])
         blobs[head[0].decode()] = out[head_end + 1:head_end + 1 + size]
         pos = head_end + 1 + size + 1
+    lost = sorted(path for path, oid in wanted.items() if oid not in blobs)
+    if lost:
+        problems.append(f"{len(lost)} 份 probe.json 的内容没取回来（例：{lost[0]}）——"
+                        "它们认领的是哪条 URL 不知道")
     return {path: (oid, blobs[oid]) for path, oid in wanted.items() if oid in blobs}
 
 
 def claim_paths(spec: dict, ref: str = "HEAD", cwd: Path = ROOT,
-                ) -> dict[str, bytes]:
+                problems: list[str] | None = None) -> dict[str, bytes]:
     """HEAD 的树里，`url` 是这条 spec 某一条源的那几份 probe.json：`{路径: 内容}`。
     按 `url` 字段精确比对——**不按 slug 猜**，否则会拿别的片子的切点来判。"""
     urls = {u for u in spec_urls(spec).values() if u}
     out: dict[str, bytes] = {}
-    for path, (_oid, blob) in committed_probes(ref, cwd).items():
+    for path, (_oid, blob) in committed_probes(ref, cwd, problems).items():
         try:
             if json.loads(blob).get("url") in urls:
                 out[path] = blob
@@ -254,10 +294,12 @@ def claim_paths(spec: dict, ref: str = "HEAD", cwd: Path = ROOT,
     return out
 
 
-def materialize(spec: dict, ref: str = "HEAD", cwd: Path = ROOT) -> list[str]:
-    """把认领这条 spec 的 probe.json 落到工作区（已经在的不动），返回它们的路径。"""
+def materialize(spec: dict, ref: str = "HEAD", cwd: Path = ROOT,
+                problems: list[str] | None = None) -> list[str]:
+    """把认领这条 spec 的 probe.json 落到工作区（已经在的不动），返回它们的路径。
+    取得不完整的原因记进 `problems`（`main` 据此退出码非 0，工作流往下传）。"""
     written = []
-    for path, blob in sorted(claim_paths(spec, ref, cwd).items()):
+    for path, blob in sorted(claim_paths(spec, ref, cwd, problems).items()):
         dest = cwd / path
         if not dest.is_file():
             dest.parent.mkdir(parents=True, exist_ok=True)
@@ -275,12 +317,17 @@ def main(argv: list[str] | None = None) -> int:
     m.add_argument("--ref", default="HEAD")
     args = ap.parse_args(argv)
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
-    paths = materialize(spec, args.ref)
+    problems: list[str] = []
+    paths = materialize(spec, args.ref, problems=problems)
     urls = spec_urls(spec)
     print(f"按 URL 认领到 {len(paths)} 份 probe.json（spec 有 {len(urls)} 条源）：")
     for path in paths:
         print(f"  {path}")
-    return 0
+    # **取得不完整要非 0 退出**：原来 fetch 失败只打一句 warning、退出码 0，dry-run
+    # 接着按「没 probe」硬红——人被领去重跑 probe，而 probe 早就在仓库里。
+    for line in problems:
+        print(f"::warning::{line}", file=sys.stderr)
+    return 1 if problems else 0
 
 
 if __name__ == "__main__":

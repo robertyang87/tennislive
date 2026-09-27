@@ -1828,6 +1828,14 @@ def resolve_fps(path: Path) -> tuple[str, float]:
     raw = run("ffprobe", "-v", "error", "-select_streams", "v:0",
               "-show_entries", "stream=r_frame_rate",
               "-of", "default=nw=1:nk=1", str(path)).stdout.strip()
+    return target_fps(raw)
+
+
+def target_fps(raw: str, *, quiet: bool = False) -> tuple[str, float]:
+    """`resolve_fps` 的规则本身：源片报的帧率写法 → 成片帧率。拆出来是给
+    `--dry-run` 用的——它手里只有 probe.json 里记的 `fps`，没有源片（`probe_audio`
+    要按成片帧率定每个 part 的音轨能被 `-shortest` 截短多少）。规则只此一份。"""
+    say = (lambda *_a, **_k: None) if quiet else print
     try:
         num, den = (raw.split("/") + ["1"])[:2]
         source = Fraction(int(num), int(den))
@@ -1836,7 +1844,7 @@ def resolve_fps(path: Path) -> tuple[str, float]:
         value = 0.0
         source = Fraction(0, 1)
     if not 10.0 <= value <= 120.0:
-        print(f"[fps] 源片报的帧率是 {raw!r}，不合常理，退回 30")
+        say(f"[fps] 源片报的帧率是 {raw!r}，不合常理，退回 30")
         return "30", 30.0
     if value > 30.5:
         divisor = max(2, round(value / 30.0))
@@ -1845,12 +1853,12 @@ def resolve_fps(path: Path) -> tuple[str, float]:
         if 23.5 <= target_value <= 30.5:
             expr = (str(target.numerator) if target.denominator == 1 else
                     f"{target.numerator}/{target.denominator}")
-            print(f"[fps] 高帧率源整除降采样：{raw} / {divisor} → "
-                  f"{expr} = {target_value:.3f}")
+            say(f"[fps] 高帧率源整除降采样：{raw} / {divisor} → "
+                f"{expr} = {target_value:.3f}")
             return expr, target_value
-        print(f"[fps] 高帧率源 {raw} 找不到 24~30 fps 的整数除数，退回 30")
+        say(f"[fps] 高帧率源 {raw} 找不到 24~30 fps 的整数除数，退回 30")
         return "30", 30.0
-    print(f"[fps] 成片跟着源片走：{raw} = {value:.3f}")
+    say(f"[fps] 成片跟着源片走：{raw} = {value:.3f}")
     return raw, value
 
 
@@ -2730,12 +2738,28 @@ def _seg_audio_chain(seg: "Segment") -> str:
     return ",".join(parts)
 
 
-def _seg_bed_gain(seg: "Segment") -> float:
+def _seg_bed_gain(seg: "Segment", *, ducked: bool = True) -> float:
     """这一段的现场声在成片里乘了多少：`_seg_audio_chain` 的 mute／音床 ×
     `duck_filtergraph` 的 `BED_LOUD`。`--dry-run` 按它把源片实测响度换算成成片
-    口径（`probe_audio`）——和上面那条链写在一起，改一处就看得见另一处。"""
-    return (BED_LOUD * (MUTE_FLOOR if seg.mute else 1.0)
+    口径（`probe_audio`）——和上面那条链写在一起，改一处就看得见另一处。
+
+    `ducked=False`：render 混音那一步**一路人声都没有**（`_mix_ducks` 为假）时走的
+    是不闪避那条分支，现场声原样转码、`BED_LOUD` 根本没乘——按 0.72 算会把成片
+    估轻 2.85 dB，反过来误报（评审 2026-09-27 nit）。"""
+    return ((BED_LOUD if ducked else 1.0) * (MUTE_FLOOR if seg.mute else 1.0)
             * (BED_TIERS[seg.bed] if seg.bed else 1.0))
+
+
+def _mix_ducks(spec: dict, segments: list["Segment"]) -> bool:
+    """render 混音那一步走不走闪避（`filters` 非空）：封面配了音、任何一段（原声段
+    除外）配了旁白、或者开着片尾口播，三样占一样就走 `duck_filtergraph`；
+    一样都没有就是 `-vn -c:a aac` 原样转码那条分支。和 render 里拼 `filters`
+    的三处同一个判法——改那边就要改这儿（`test_不闪避那条分支现场声不乘BED_LOUD`）。"""
+    if str((spec.get("cover") or {}).get("narration") or "").strip():
+        return True
+    if spec.get("outro", True) is not False:
+        return True
+    return any(seg.narration.strip() and not seg.quote for seg in segments)
 
 
 def _seg_audio_needs_filter(seg: "Segment") -> bool:
@@ -5915,7 +5939,8 @@ def silence_findings(spec: dict, segments, probes: dict,
         spans = probe.get("silent_audio")
         if spans is None:
             continue    # 源片没有音轨——silent_source 认领那道闸管，别重复报
-        if not seg.narration.strip() and probe_audio.judges(seg, probe, _seg_bed_gain(seg)):
+        if not seg.narration.strip() and probe_audio.judges(
+                seg, probe, _seg_bed_gain(seg, ducked=_mix_ducks(spec, segments))):
             continue    # 无旁白段按成片口径逐块重放（probe_audio），同一截别报两遍
         spoken = ests.get(index)
         for lo, hi, certain, probable in silence_risk(
@@ -6235,12 +6260,19 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     import probe_audio  # noqa: PLC0415
 
     cover_text = str((spec.get("cover") or {}).get("narration") or "").strip()
+    # 成片帧率跟着主源（sources 的第一个键，和 render() 认的同一条）走——
+    # 它定每个 part 的音轨能被 `-shortest` 截短多少；probe 没记就按最坏算。
+    primary_fps = str((probes.get(next(iter(urls.values()), "")) or {}).get("fps") or "")
+    frame_seconds = (1 / target_fps(primary_fps, quiet=True)[1] if primary_fps
+                     else 1 / probe_audio.SLOWEST_FPS)
     d_hard, d_soft = probe_audio.digital_silence_findings(
-        spec, segments, probes, urls, gain=_seg_bed_gain, fade=SEG_FADE,
+        spec, segments, probes, urls, fade=SEG_FADE,
+        gain=lambda seg, _ducked=_mix_ducks(spec, segments): _seg_bed_gain(
+            seg, ducked=_ducked),
         cover_exact=None if cover_text else COVER_SECONDS,
         cover_estimate=speech_seconds(speakable(cover_text)) + COVER_TAIL,
         estimates={i: est for i, est, _room in narration_estimates(segments)},
-        est_err=SPEECH_EST_ERR)
+        est_err=SPEECH_EST_ERR, frame_seconds=frame_seconds)
     hard.extend(d_hard)
     soft.extend(d_soft)
 
