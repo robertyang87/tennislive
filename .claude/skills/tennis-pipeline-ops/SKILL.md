@@ -2675,6 +2675,41 @@ outdir 里，成功那趟工作流本来就 `git add "$OUTDIR"`；失败那趟 o
 那一半目前没有任何埋点，这份台账**不覆盖它**，也不该被引用成覆盖了。
 
 
+### ⭐⭐ 2026-09-27：比分板回贴在 probe 那一趟逐帧量，`--dry-run` 就知道哪一段会红
+
+全库返工盘点量出来：回贴是「赛场之上」头号返工来源（22 次返工、11 趟 render 红在蒙版，
+51.5 runner-分钟），**每一次都是渲完拉回成片才发现**——判「这一段有没有板」要解源片。
+现在 probe 趁源片在，拿 render 那五套判据（`atp/wta/itf/lavercup_scoreboard`、
+`scoreboard_geometry`，**一个阈值都不抄**）按 5 fps 扫一遍，存进 `probe.json` 的 `board`
+（`tools/probe_board.py`；后台线程和缩略图墙并行——60 秒 1080p 串行要 10 秒，500 秒的
+WTA 集锦串行会多一分多钟）。
+
+| dry-run 判什么 | 硬不硬 |
+|---|---|
+| 开着 `score_inset`，窗口里一帧板都没认出 | **硬**（render 的蒙版会报「一帧都没认出」；只闪不到 0.2 秒的漏得掉，那种段本来也该关） |
+| 美网带式：右缘一帧都量不出／板比框宽 | **硬**（「no stable geometry」／「exceeds source box」） |
+| 写着不贴，板却**连着 ≥0.8 秒**在画面里 | 手写新 spec **硬**；认领口 `_board_on_screen_why`；老 spec（`data/legacy_board_on_screen.json`，71 条）和自动 spec 只报 |
+| 右缘量不出的帧 >30%、x1 比有签名色撑着的右缘窄 | 只报（这些帧 render 按 x1 兜底） |
+
+- ⚠️ **框要对得上才算数**：probe 扫每家转播**在 spec 里实际用的那条带**（`CALIBRATED`，
+  全库量的）加这一趟给的 `--scorebox`；spec 的 scorebox 对不上（x0 ±4、y0/y1 ±2）就只报
+  「这一层没查」。老 probe 没有 `board`，同样只报——**重跑一趟 probe 就有数**
+- ⚠️ **0.8 秒不是 0.3 秒**：那是 render 自己的 `BOARD_SPAN_MIN`（「不值得贴的一闪」）；
+  冷开场头半秒淡出的残影 render 自己也不贴
+- **拿真像素验过**：把仓库里 `score_*.jpg`（2 秒一格、正是板那块）放大回源片坐标重放
+  判据，82 条 spec 里开着回贴的 260 段有 254 段和 render 自己的 `scoreboard_qc.json` 对得上
+  （另 6 段是采样间隔盖不住的一闪、和拉沃尔杯宽版板超出缩略图裁切宽度）；别家判据在
+  这些源上零星会亮——所以 **dry-run 用哪家判据看 spec（`scoreboard_profile`），不看数据**
+- **没做的两条，量过才砍的**：「段起点晚于最后一次翻牌」——`point_ends` 在赛后采访的
+  图形上还在翻（`prozorova-eala` 翻到 469.8s，赛点在 263.6s），全库 580 段命中 0；
+  QC 的「右缘不到全片中位数七成」——79 份历史 `scoreboard_qc.json` 里一次没抓到真出过事的
+  那两版（`zhang-wong` 首盘 226/276=0.82），反而在 `mensik-nakashima` 合格成片上红三段
+- QC 那头（`check_reel_landed`）：全出血开了回贴的成片**也要带逐帧证据**（原来只查美网）——
+  29 条里 26 条齐，另 3 条渲在各自那家逐帧蒙版落地之前
+
+判据 `tests/test_probe_board.py`、`tests/test_scoreboard_geometry_qc.py`，18 个方向分别反向验证过。
+
+
 ### 能并行的是安装，不是编码——x264 已经吃满四核
 
 账号所有者问「能否并行」。量了才知道**编码这块没有余量**：同一段素材
