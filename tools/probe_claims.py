@@ -33,13 +33,18 @@
 认领的三个终点：probe 失败 `release` 摘掉；分支上 probe 成功 `done` 标完成（产物落在
 分支上，main 上看不见，只能靠这一笔）；**job 被取消／超时两样都做不了**——所以没标
 完成的认领开跑 `CLAIM_STALE_MINUTES` 分钟后作废，不许它把这一场压三天。
+`release` / `done` 都按 `--run-id` 认**这一趟**：同一个 slug 重 probe（第二趟带
+`--scorebox`）被取消或失败，不许把上一趟已经标完成的记录一起抹掉。
+标了完成的认领也有钟：完成之后 `DONE_CLAIM_SPEC_HOURS`（20）小时里 main 上还没有这一场的
+正式 spec（这个 slug 的，或 `sources` 挂着这条源片的赛场之上 spec），就不再挡（账号所有者
+2026-09-27 选定，和比赛日的新鲜窗同一个数）。查不了 spec 一律照旧挡。
 
 用法::
 
     python tools/probe_claims.py probe-step --url URL --slug SLUG --branch B --run-id N
     python tools/probe_claims.py check --url URL --slug SLUG [--ref origin/main]
-    python tools/probe_claims.py release --url URL --slug SLUG
-    python tools/probe_claims.py done --url URL --slug SLUG
+    python tools/probe_claims.py release --url URL --slug SLUG --run-id N
+    python tools/probe_claims.py done --url URL --slug SLUG --run-id N
 """
 from __future__ import annotations
 
@@ -68,6 +73,15 @@ CLAIM_TTL_DAYS = 7
 #: 压三天**（review 复现的死锁：编排器缩写名那趟被取消，认领还挂着，下一班同一场的
 #: 全名 slug 被它挡住，两个 slug 三天里谁都不点）。
 CLAIM_STALE_MINUTES = 90
+#: 标了完成（`done_at`）的认领挡多久：完成之后这么多小时里，main 上还是没有这一场的
+#: 正式 spec（这个 slug 的 `FORMAL_SPEC`，或源片是同一条的赛场之上 spec），认领就**不再挡**编排器。账号所有者 2026-09-27
+#: 选定：「和比赛日那道新鲜窗同一个数」——`orchestrate.FRESH_RESULT_HOURS` ＝
+#: `promote_reel_draft.PENDING_MAX_AGE` ＝ 20 小时（不 import：orchestrate 反过来
+#: import 这里；三个数由 `test_完成的认领20小时没有正式spec就不再挡` 钉成同一个）。
+#: 在这之前标了完成的认领一律挡满 `DEDUPE_DAYS`（3 天）——会话 probe 完没写成 spec
+#: （换题、放弃、卡在封面），这一场就三天没人再点。
+DONE_CLAIM_SPEC_HOURS = 20
+FORMAL_SPEC = "specs/reels/{}.json"
 #: 只有这一栏的 probe 才算「在做这一场」——故事片借同一条源片 probe，不会产出赛场之上。
 MATCH_COLUMN = "赛场之上"
 
@@ -102,32 +116,111 @@ def slug_words(slug: str) -> list[str]:
     return [w for w in re.split(r"[-_.]+", (slug or "").lower()) if w]
 
 
+def _alnum(s: str) -> str:
+    return re.sub(r"[^0-9a-z]", "", (s or "").lower())
+
+
 def _word_is(surname: str, word: str) -> bool:
     """整词；≥4 个字母的姓也认前缀——会话写过 `wangxiyu-swiatek`，编排器的姓是 `wang`。"""
     return word == surname or (len(surname) >= 4 and word.startswith(surname))
 
 
+#: 复姓前面的小词（`de` Minaur、`van de` Zandschulp、`del` Potro）。只用来认
+#: 「这一截是小词 ＋ 姓」，不单独当姓。
+_PARTICLES = re.compile(r"(?:de|da|di|do|du|del|della|der|den|des|van|von|le|la|lo|"
+                        r"dos|das|st|mc|mac|ter|ten|al|el)+")
+#: 一个人在 slug 里最多占几个词（`van-de-zandschulp` 三个；留一个余量）。
+MAX_NAME_WORDS = 4
+
+
+def family_name(name: str) -> str:
+    """英文全名里的**整个姓**（编排器拿它认 slug）：`surname_en` 只取一个词，复姓就丢了
+    一半——`Jessica Bouzas Maneiro` 给 `Maneiro`，会话写的是 `muchova-bouzas-…`；
+    `De Minaur A.` 给 `De`。
+
+    两种形状和 `surname_en` 一样：缩写在末尾（`Bouzas Maneiro J.`、`Wolf J.J.`）→
+    前面全是姓；缩写在开头（`Ka. Pliskova`）或是全名（`Alex de Minaur`）→ 去掉第一个词。
+    """
+    words = [w for w in str(name or "").split() if w]
+    if len(words) < 2:
+        return " ".join(words)
+    if words[-1].endswith("."):
+        return " ".join(w for w in words if not w.endswith("."))
+    return " ".join(words[1:])
+
+
+def name_forms(name: str) -> set[str]:
+    """一个人的姓在 slug 里可能的写法（只留字母数字）：整个姓连写，姓里 ≥4 个字母的
+    每一截，以及最后一截（多短都算：`wu`、`li`）。
+
+    `de minaur` → deminaur / minaur；`auger-aliassime` → augeraliassime / auger /
+    aliassime；`bouzas maneiro` → bouzasmaneiro / bouzas / maneiro；`o'connell` → oconnell。
+    """
+    parts = [p for p in (_alnum(x) for x in re.split(r"[\s-]+", name or "")) if p]
+    if not parts:
+        return set()
+    return {"".join(parts), parts[-1], *(p for p in parts if len(p) >= 4)}
+
+
+def _span_is(forms: set[str], words: list[str]) -> bool:
+    """slug 里连着的这几个词是不是这个人：
+
+    - 连写后正好是某个写法（`auger`+`aliassime`、`o`+`connell`、`bouzas`）
+    - 单个词认前缀（`wangxiyu` ↔ `wang`，同 `_word_is`）
+    - 连写后是「小词 ＋ 姓」（`deminaur`、`de`+`minaur`、`van`+`de`+`zandschulp` ↔
+      `minaur` / `zandschulp`）。前面那截**必须全是小词**——只认「以姓结尾」的话，
+      `comebacks`+`zheng` 也是以 `zheng` 结尾，故事片 `comebacks-zheng-keys` 当场被认成
+      `keys-zheng` 这一场
+    """
+    joined = _alnum("".join(words))
+    if not joined:
+        return False
+    for f in forms:
+        if joined == f or (len(words) == 1 and _word_is(f, joined)):
+            return True
+        if len(f) >= 4 and joined.endswith(f) and _PARTICLES.fullmatch(joined[:-len(f)]):
+            return True
+    return False
+
+
+def _spans(words: list[str], start: int):
+    for end in range(start + 1, min(start + MAX_NAME_WORDS, len(words)) + 1):
+        yield end, words[start:end]
+
+
 def names_hit(surnames: list[str], slug: str) -> bool:
     """slug 里带不带这场球员的姓（任何一个、任何位置）。"""
     words = slug_words(slug)
-    return any(_word_is(s, w) for s in (x.lower() for x in surnames if x) for w in words)
+    for forms in (name_forms(x) for x in surnames if x):
+        if any(_span_is(forms, span) for i in range(len(words)) for _e, span in _spans(words, i)):
+            return True
+    return False
 
 
 def leads_with_pair(surnames: list[str], slug: str) -> bool:
-    """slug **开头两个词正好是这两个姓**（先后不论）——赛场之上的命名：编排器拼
+    """slug **开头正好是这两个姓**（先后不论）——赛场之上的命名：编排器拼
     `<home>-<away>`，会话写 `<赢家>-<输家>-<站>-<年>-<轮>`。
 
     故事片借源的 slug 姓也带着，只是不在开头：`comebacks-zheng-keys`（和 `keys-zheng`
     同一条视频）、`zheng-us-open-outlook-zheng`、`zheng-lanlana-hl-zheng-paris`——
     「slug 里带着姓」拦它们，就是故事片先 probe 了，这一场的赛场之上三天不点。
+
+    一个姓可以占开头的 1~`MAX_NAME_WORDS` 个词、按字母数字比（`_span_is`）：第一版只比
+    「开头两个词」的整词／前缀，复姓全认不出——`zverev-deminaur-…`（编排器的姓是
+    `minaur`）、`tsitsipas-auger-aliassime-…`、`fonseca-van-de-zandschulp`、
+    `fritz-oconnell`（编排器是 `o'connell`）、`muchova-bouzas-…`（要给整个姓
+    `bouzas maneiro`，见 `family_name`）。235 份带 `name_en` 的已发赛场之上 spec 里
+    约 8% 在会话的 spec 还没上 main 时会被编排器再 probe 一遍（review 量的）。
     """
-    names = [x.lower() for x in surnames if x]
-    words = slug_words(slug)[:2]
-    if len(names) != 2 or len(words) != 2:
+    names = [name_forms(x) for x in surnames if x]
+    if len(names) != 2 or not all(names):
         return False
-    a, b = names
-    return ((_word_is(a, words[0]) and _word_is(b, words[1]))
-            or (_word_is(b, words[0]) and _word_is(a, words[1])))
+    words = slug_words(slug)
+    for a, b in ((names[0], names[1]), (names[1], names[0])):
+        for mid, head in _spans(words, 0):
+            if _span_is(a, head) and any(_span_is(b, tail) for _e, tail in _spans(words, mid)):
+                return True
+    return False
 
 
 @dataclass(frozen=True)
@@ -207,7 +300,23 @@ def claim_is_stale(c: dict, now: datetime) -> bool:
             and _aware(now) - at > timedelta(minutes=CLAIM_STALE_MINUTES))
 
 
-def _claim_priors(doc: dict | None, *, ref: str, now: datetime, days: int) -> list[Prior]:
+def done_claim_lapsed(c: dict, now: datetime, has_spec) -> bool:
+    """标了完成、完成之后超过 `DONE_CLAIM_SPEC_HOURS` 小时、`has_spec(slug)` 还是假：
+    那趟 probe 跑完了，但这一场没人写成正式 spec——认领不再挡（账号所有者 2026-09-27）。
+    `done_at` 读不出来就按没过期算（判不了 ≠ 过期了）。"""
+    done = _claimed_at({"claimed_at": c.get("done_at")}) if isinstance(c, dict) else None
+    if done is None or _aware(now) - done <= timedelta(hours=DONE_CLAIM_SPEC_HOURS):
+        return False
+    return not has_spec(str(c.get("slug") or ""))
+
+
+def _claim_priors(doc: dict | None, *, ref: str, now: datetime, days: int,
+                  has_spec=None, stale_seen: set | None = None) -> list[Prior]:
+    """`has_spec(slug)`：main 上有没有这个 slug 的正式 spec。不给就不做完成认领的
+    20 小时作废（查不了 spec 时照旧挡，不许因为「没查」就放行）。
+
+    `stale_seen`：同一次查找里已经报过「不再挡」的认领。编排器按工作区和 HEAD 各读一遍
+    同一个认领文件，不带它的话每条都印两遍。"""
     out = []
     now = _aware(now)
     claims = (doc or {}).get("claims") if isinstance(doc, dict) else None
@@ -216,8 +325,21 @@ def _claim_priors(doc: dict | None, *, ref: str, now: datetime, days: int) -> li
         if at is None or now - at > timedelta(days=days):
             continue
         if claim_is_stale(c, now):
-            print(f"[认领] {c.get('slug')} 的认领开跑 {int((now - at).total_seconds() // 60)} 分钟"
-                  f"还没标完成（{ref}），按作废处理——那趟 job 多半被取消或超时了")
+            seen_key = (str(c.get("slug")), at)
+            if stale_seen is None or seen_key not in stale_seen:
+                print(f"[认领] {c.get('slug')} 的认领开跑 {int((now - at).total_seconds() // 60)} 分钟"
+                      f"还没标完成（{ref}），按作废处理——那趟 job 多半被取消或超时了")
+            if stale_seen is not None:
+                stale_seen.add(seen_key)
+            continue
+        if has_spec is not None and done_claim_lapsed(c, now, has_spec):
+            seen_key = ("done", str(c.get("slug")), str(c.get("done_at")))
+            if stale_seen is None or seen_key not in stale_seen:
+                print(f"[认领] {c.get('slug')} 的认领 {c.get('done_at')} 就标了完成，"
+                      f"{DONE_CLAIM_SPEC_HOURS} 小时过去还没有正式 spec"
+                      f"（{FORMAL_SPEC.format(c.get('slug'))}），不再挡这一场")
+            if stale_seen is not None:
+                stale_seen.add(seen_key)
             continue
         out.append(Prior(slug=str(c.get("slug") or "?"), kind="claim",
                          where=str(c.get("outdir") or ""), ref=ref,
@@ -274,6 +396,49 @@ def _column_of(slug: str, *, root: Path | None, refs, cwd) -> str:
     return ""
 
 
+_FORMAL_SPEC_PATH = re.compile(r"^specs/reels/([^/]+)\.json$")
+
+
+def spec_video_keys(doc: dict | None) -> set[str]:
+    """spec 挂着的源片视频 id（`source_url`／`url`／`sources.*`，和
+    `find_pending_draft._spec_urls` 同一套字段）。"""
+    if not isinstance(doc, dict):
+        return set()
+    urls = [doc.get("source_url"), doc.get("url")]
+    sources = doc.get("sources")
+    for v in sources.values() if isinstance(sources, dict) else []:
+        urls.append(v.get("url") if isinstance(v, dict) else v)
+    return {k for u in urls if u and (k := video_key(str(u)))}
+
+
+def _match_spec_carries(key: str, *, root: Path | None, refs, cwd, wanted=None) -> bool:
+    """有没有哪份赛场之上正式 spec（`specs/reels/*.json`）的源片是这条视频。
+    `wanted(slug)`：只打开 slug 里带着这场姓的 spec（和 probe 目录同一个理由：
+    部分克隆里 300 份 spec 一份份懒取是 9 MB）。取不回内容就按「有」算——判不了 ≠ 没有。"""
+    def hit(doc) -> bool:
+        return spec_column(doc) == MATCH_COLUMN and key in spec_video_keys(doc)
+
+    wanted = wanted or (lambda _slug: True)
+    if root is not None:
+        for sp in sorted((Path(root) / "specs" / "reels").glob("*.json")):
+            if wanted(sp.stem) and hit(_load_json(sp.read_bytes())):
+                return True
+    for ref in refs:
+        try:
+            oids = [oid for oid, p in git_blobs.ls_tree(ref, ["specs/reels"], cwd=cwd)
+                    if (m := _FORMAL_SPEC_PATH.match(p)) and wanted(m.group(1))]
+            blobs = git_blobs.read_blobs(oids, cwd=cwd)
+        except git_blobs.GitError as exc:
+            print(f"[认领] 读不了 {ref} 上的 specs/reels（{exc}），照旧挡")
+            return True
+        if any(hit(_load_json(blobs.get(oid))) for oid in oids):
+            return True
+        if len(blobs) < len(set(oids)):
+            print(f"[认领] {ref} 上 {len(set(oids)) - len(blobs)} 份正式 spec 取不回内容，照旧挡")
+            return True
+    return False
+
+
 def find_priors(key: str, *, refs: list[str] = (), root: Path | None = None,
                 surnames: list[str] | None = None, slug_hint: str = "",
                 today: date | None = None, now: datetime | None = None,
@@ -299,14 +464,42 @@ def find_priors(key: str, *, refs: list[str] = (), root: Path | None = None,
     def add(p: Prior) -> None:
         seen.setdefault((p.slug, p.kind, p.where), p)
 
-    live_refs = []
+    live_refs = [r for r in refs if git_blobs.rev(r, cwd=cwd)]
+    stale_seen: set = set()
+    same_video: dict[str, bool] = {}   # 这条源片有没有赛场之上正式 spec：一次查找只算一遍
+
+    def has_spec(slug: str) -> bool:
+        """这一场有没有正式 spec。工作区或任何一个给了的 ref 上有就算——编排器的 HEAD
+        就是 main；会话那头连自己分支也算上，只会多挡、不会误放。
+
+        - 先按认领自己的 slug（`FORMAL_SPEC`）；再认 `sources` 里挂着**这条源片**的
+          赛场之上正式 spec——spec 另起了名（先 probe 短 slug）也是这一场做完了
+        - 按 ref 查存在**只看树**（`ls-tree`）：部分克隆（`--filter=blob:none`）里树在
+          本地、blob 要懒取，`cat-file` 懒取不到就读成「没有」、把认领放掉
+        - **查不了就照旧挡**：git 出错、要读的 spec 内容取不回来，一律按「有」算
+        """
+        path = FORMAL_SPEC.format(slug)
+        if root is not None and (Path(root) / path).is_file():
+            return True
+        try:
+            if any(p == path for r in live_refs
+                   for _oid, p in git_blobs.ls_tree(r, [path], cwd=cwd)):
+                return True
+        except git_blobs.GitError as exc:
+            print(f"[认领] 查不了 {path} 在不在（{exc}），照旧挡")
+            return True
+        if "hit" not in same_video:
+            same_video["hit"] = _match_spec_carries(key, root=root, refs=live_refs, cwd=cwd,
+                                                    wanted=wanted)
+        return same_video["hit"]
 
     dates = recent_dates(today, days)
     if root is not None:
         root = Path(root)
         cp = root / claim_path(key)
         if cp.is_file():
-            for p in _claim_priors(_load_json(cp.read_bytes()), ref="工作区", now=now, days=days):
+            for p in _claim_priors(_load_json(cp.read_bytes()), ref="工作区", now=now, days=days,
+                                   has_spec=has_spec, stale_seen=stale_seen):
                 add(p)
         for d in dates:
             for pj in sorted((root / "output" / d / "reel").glob("*/probe.json")):
@@ -318,12 +511,12 @@ def find_priors(key: str, *, refs: list[str] = (), root: Path | None = None,
                     add(Prior(slug=slug, kind="probe", where=str(pj.parent.relative_to(root)),
                               ref="工作区", at=d))
     for ref in refs:
-        if not git_blobs.rev(ref, cwd=cwd):
+        if ref not in live_refs:
             print(f"[认领] {ref} 在这份检出里不存在，跳过（没 fetch？）")
             continue
-        live_refs.append(ref)
         for p in _claim_priors(_load_json(git_blobs.show(ref, claim_path(key), cwd=cwd)),
-                               ref=ref, now=now, days=days):
+                               ref=ref, now=now, days=days, has_spec=has_spec,
+                               stale_seen=stale_seen):
             add(p)
         rows = [(oid, path) for oid, path in git_blobs.ls_tree(
             ref, [f"output/{d}/reel" for d in dates], cwd=cwd)
@@ -349,17 +542,30 @@ def find_priors(key: str, *, refs: list[str] = (), root: Path | None = None,
 # ---------------------------------------------------------------- 写认领
 
 
+def _is_run(c, slug: str, run_id: str) -> bool:
+    """这一条是不是 `slug` 这一趟（`run_id` 给了就按 run 认，没给就按 slug 认）**还没标完成**
+    的认领。标了完成的那条是「这一场 probe 过」的记录，不归哪一趟后来的 run 摘。"""
+    return (isinstance(c, dict) and c.get("slug") == slug and not c.get("done_at")
+            and (not run_id or str(c.get("run_id") or "") == str(run_id)))
+
+
 def with_claim(doc: dict | None, *, key: str, url: str, slug: str, branch: str,
                run_id: str, outdir: str, now: datetime) -> dict:
-    """在认领文件里加（或刷新）这个 slug 的那一条，顺手清掉过期的。"""
+    """在认领文件里加这一趟的认领，顺手清掉过期的。
+
+    同一个 slug 再 probe 一趟（会话常这么做：第二趟带 `--scorebox`）：上一趟**没标完成**
+    的那条换成这一趟的（那一趟被 concurrency 取消了，或者早就摘了／作废了）；**标了完成
+    的留着**——分支上的 probe 产物 main 上看不见，那一条是「这一场已经 probe 过」的唯一
+    记录。review 复现：原来整条换掉，这一趟又被取消或失败摘掉，上一趟的完成记录跟着没了，
+    编排器 40 分钟后就把这一场再 probe 一遍。
+    """
     now = _aware(now)
     keep = []
     for c in (doc or {}).get("claims") or []:
         at = _claimed_at(c)
-        if at is None or c.get("slug") == slug:
+        if at is None or now - at > timedelta(days=CLAIM_TTL_DAYS) or _is_run(c, slug, ""):
             continue
-        if now - at <= timedelta(days=CLAIM_TTL_DAYS):
-            keep.append(c)
+        keep.append(c)
     keep.append({"slug": slug, "url": url, "branch": branch, "run_id": str(run_id),
                  "outdir": outdir, "claimed_at": now.strftime("%Y-%m-%dT%H:%M:%SZ")})
     return {"video_key": key,
@@ -368,24 +574,31 @@ def with_claim(doc: dict | None, *, key: str, url: str, slug: str, branch: str,
             "claims": keep}
 
 
-def with_done(doc: dict | None, *, slug: str, now: datetime) -> dict | None:
-    """probe 成功：给这个 slug 的认领标 `done_at`，它就不会在 `CLAIM_STALE_MINUTES`
-    之后作废。没有这条认领（开跑那一推没推上）就原样返回——不补写。"""
+def with_done(doc: dict | None, *, slug: str, now: datetime, run_id: str = "") -> dict | None:
+    """probe 成功：给这一趟（`run_id`）的认领标 `done_at`，它就不会在 `CLAIM_STALE_MINUTES`
+    之后作废；同一个 slug 更早的完成记录由这一条接替（产物目录以最新这趟为准）。
+    没有这条认领（开跑那一推没推上）就原样返回——不补写。"""
     if not doc:
         return doc
-    claims = []
-    for c in doc.get("claims") or []:
-        if isinstance(c, dict) and c.get("slug") == slug and not c.get("done_at"):
-            c = {**c, "done_at": _aware(now).strftime("%Y-%m-%dT%H:%M:%SZ")}
-        claims.append(c)
-    return {**doc, "claims": claims}
+    claims = doc.get("claims") or []
+    if not any(_is_run(c, slug, run_id) for c in claims):
+        return doc
+    stamp = _aware(now).strftime("%Y-%m-%dT%H:%M:%SZ")
+    out = []
+    for c in claims:
+        if _is_run(c, slug, run_id):
+            out.append({**c, "done_at": stamp})
+        elif not (isinstance(c, dict) and c.get("slug") == slug and c.get("done_at")):
+            out.append(c)
+    return {**doc, "claims": out}
 
 
-def without_claim(doc: dict | None, *, slug: str) -> dict | None:
-    """probe 失败时摘掉自己那一条；摘空了返回 None（删文件）。"""
+def without_claim(doc: dict | None, *, slug: str, run_id: str = "") -> dict | None:
+    """probe 失败时摘掉**这一趟**（`run_id`）的认领；摘空了返回 None（删文件）。
+    同一个 slug 更早那趟标了完成的记录不动——这一趟失败不等于那一场没 probe 过。"""
     if not doc:
         return None
-    rest = [c for c in doc.get("claims") or [] if c.get("slug") != slug]
+    rest = [c for c in doc.get("claims") or [] if not _is_run(c, slug, run_id)]
     if not rest:
         return None
     return {**doc, "claims": rest}
@@ -484,7 +697,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.action == "release":
         try:
-            commit = push_to_main(key, lambda d: without_claim(d, slug=args.slug),
+            commit = push_to_main(key, lambda d: without_claim(d, slug=args.slug, run_id=args.run_id),
                                   message=f"probe: 摘掉 {args.slug} 对源片 {key} 的认领（probe 失败）",
                                   fetch=not args.no_fetch)
         except Exception as exc:  # noqa: BLE001 —— 认领是告示，哪种错都只出声
@@ -498,7 +711,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.action == "done":
         try:
             commit = push_to_main(
-                key, lambda d: with_done(d, slug=args.slug, now=datetime.now(timezone.utc)),
+                key, lambda d: with_done(d, slug=args.slug, run_id=args.run_id,
+                                         now=datetime.now(timezone.utc)),
                 message=f"probe: {args.slug} 对源片 {key} 的认领标完成", fetch=not args.no_fetch)
         except Exception as exc:  # noqa: BLE001 —— 同上
             print(f"::warning::认领没标上完成（{type(exc).__name__}: {exc}）——开跑 "

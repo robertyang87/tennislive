@@ -20,10 +20,11 @@ probe 目录（缩略图墙 / 切点 / 死球 / 静音区都在里面）、结�
 找到了就**接着用**：`assemble_spec` 产的 `_match` / `stats` / `_hit_data` /
 `_turning_points` 直接搬进正式 spec，probe 目录直接指给 `--dry-run`。
 
-退出码：0 找到了能接着用的——工作区 pending 里的草稿，或 origin/* 上最近
-`REF_DAYS` 天动过的同一场的 spec／草稿；2 没有——**没有也要出声**，「没找到」和
-「没查」在会话里长得一模一样。**不算「找到」的**（照样列出来，只是不改退出码）：
-按姓认出、最近没动过的老 spec（两人上一次交手），以及只在**当前分支自己的**
+退出码：0 找到了能接着用的——工作区 pending 里最近 `REF_DAYS` 天的草稿（按
+`_production.received_at`），或 origin/* 上最近 `REF_DAYS` 天动过的同一场的 spec／
+草稿；2 没有——**没有也要出声**，「没找到」和「没查」在会话里长得一模一样。
+**不算「找到」的**（照样列出来，只是不改退出码）：pending 里 `REF_DAYS` 天以前的老草稿
+和按姓认出、最近没动过的老 spec（都多半是两人上一次交手），以及只在**当前分支自己的**
 `origin/<分支>` 上的那份（会话自己推上去的，不是别人做的）。
 
 ⭐ 2026-09-27（P6）：**工作区里的 pending 只是三处里的一处。** 还要翻
@@ -50,6 +51,7 @@ import re
 import sys
 import time
 from contextlib import redirect_stdout
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -203,6 +205,27 @@ def _match_by(doc: dict, slug: str, who: list[str], keys: set[str], fs_ids: set[
         if matches(doc, slug, who, "") and "doubles" not in _slug_words(slug):
             return "两个姓"
     return ""
+
+
+def draft_recent(path: Path, draft: dict, days: int = REF_DAYS) -> bool:
+    """工作区 pending 里的这份草稿算不算「最近的」：按 `_production.received_at`（编排器
+    收到赛果的时刻）；没有或读不出，就按它在 HEAD 上最近一次提交（没提交过＝刚写的，算新的）。
+
+    review 复现：`--who Swiatek,Zheng` 退出码 0，靠的是 9/07 那份 `swiatek-zheng.draft.json`
+    ——它自己的 promote 卡点写着「自动草稿已超过 20 小时」，同一份输出的 origin/* 那一段
+    也说「都不算能接着用的」。pending 里躺着一百多份，大半是几周前的，同两个人再交手就会撞上。
+    """
+    raw = str(_dict(draft.get("_production")).get("received_at") or "").strip()
+    if raw:
+        try:
+            at = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except ValueError:
+            at = None
+        if at is not None:
+            at = at if at.tzinfo is not None else at.replace(tzinfo=timezone.utc)
+            return at.timestamp() >= time.time() - days * 86400
+    sys.path.insert(0, str(ROOT / "tools"))
+    return _touched_within("HEAD", _rel(path), days, ROOT)
 
 
 def _touched_within(ref: str, path: str, days: int, cwd: Path) -> bool:
@@ -380,6 +403,7 @@ def main() -> int:
     fs_ids = {f.strip() for f in args.fs_id if f.strip()}
     found = 0
     if who or args.slug:
+        matched = 0
         for path in sorted(PENDING.glob("*.draft.json")):
             try:
                 draft = json.loads(path.read_text(encoding="utf-8"))
@@ -388,10 +412,20 @@ def main() -> int:
                 continue
             if matches(draft, path.name.replace(".draft.json", ""), who, args.slug):
                 report(path, draft)
-                found += 1
-        if not found:
-            print(f"pending 里没有匹配 {who or args.slug} 的草稿（扫了 {len(list(PENDING.glob('*.draft.json')))} 份）——"
+                matched += 1
+                if draft_recent(path, draft):
+                    found += 1
+                else:
+                    print(f"    ⚠️ {REF_DAYS} 天以前的老草稿（received_at "
+                          f"{_dict(draft.get('_production')).get('received_at') or '?'}），多半是两人"
+                          "上一次交手——只列出来，不算能接着用的")
+        scanned = len(list(PENDING.glob("*.draft.json")))
+        if not matched:
+            print(f"pending 里没有匹配 {who or args.slug} 的草稿（扫了 {scanned} 份）——"
                   "这一场自动链没 probe 过，或者草稿已经清掉；自己 probe 之前先 `ls output/*/reel/` 再确认一次")
+        elif not found:
+            print(f"pending 里匹配 {who or args.slug} 的 {matched} 份草稿都是 {REF_DAYS} 天以前的"
+                  f"（扫了 {scanned} 份）——不算能接着用的")
     if not args.no_refs and (who or keys or fs_ids):
         found += _refs_section(who, keys, fs_ids, fetch=not args.no_fetch)
     return 0 if found else 2
