@@ -1,0 +1,746 @@
+#!/usr/bin/env python3
+"""账号所有者口味规则里**剩下那批**候选闸——逐条量过全库之后留下来的那几道。
+
+来路：2026-09-27 账号所有者「总结我的口味和品味这种个性化的要求，形成一个通用的规则
+在做视频前就拦掉，而不是说做了一半又返工」。口味规则书挖出 125 条，其中 32 条的闸
+只有提案、没量过。这个模块是那 32 条逐条**先拿全库量**（已发的 spec 上报几条＝误伤，
+被账号所有者打回的历史版本上报几条＝真阳）之后的结果：
+
+- 误伤能压到 0（或者全是规矩定下之前已发的、挂进存量表）**而且**至少逮得住一个
+  被打回的历史版本的，才进这里
+- 已经有闸的（封面复用、原声双语、全称断言……）、别的包在做的、要量源片才判得了的，
+  都**不在这里**——账和理由写在 ``notes`` 里，不在代码里假装做了
+
+⚠️ 分两种出口，和仓库的老规矩一致：
+
+- **硬的**：手写 spec 红（``--dry-run`` 0.2 秒就报）；自动产的 spec
+  （``_production.status == "ready_for_render"``）只报不拦——那一头没人写认领，
+  做硬会把自动链卡成「今天没有候选」
+- **只报的**：判断题，机器只负责把它摆到眼前（``[口味] 只报``），不替人决定
+
+几条是从 pytest 里**挪过来**的（收尾一问、推送标题剥完为空、制胜分/UE 认领、Tennis TV
+片尾认领、quote 段认领、小红书 markdown）：它们原来只在 CI 上跑，而自动出片链直推
+main **不触发 CI**——`andreeva-gauff` 就是这么带着一句「停在数据上的收尾」发进微信的
+（那条存量注释自己写着「这一类的修法是把判据搬进那道闸」）。挪过来之后**判据和存量表
+只有这一个出处**，测试 import 这里的，不再各抄一份（「一个数写两处必分叉」）。
+
+存量表一律**只许减不许加**，自检在 ``tests/test_taste_gates_extra.py``。
+"""
+from __future__ import annotations
+
+import re
+import sys
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+sys.path.insert(0, str(ROOT / "src"))
+
+
+def _auto(spec: dict) -> bool:
+    return (spec.get("_production") or {}).get("status") == "ready_for_render"
+
+
+def _slug(spec: dict) -> str:
+    return str(spec.get("slug") or "")
+
+
+def _eyebrow(spec: dict) -> str:
+    return str((spec.get("cover") or {}).get("eyebrow") or "").strip()
+
+
+def _hook_text(spec: dict) -> str:
+    """钩子两行拼成一句——两行本来就是一句话，换行只是排版。"""
+    return "".join(str((spec.get("cover") or {}).get("hook") or "").split("\n"))
+
+
+def _quote_texts(seg: dict) -> list[str]:
+    raw = seg.get("quote")
+    items = raw if isinstance(raw, list) else [raw] if raw else []
+    out = []
+    for item in items:
+        text = item.get("text") if isinstance(item, dict) else item
+        if text:
+            out.append(str(text))
+    return out
+
+
+def _outward(spec: dict) -> list[str]:
+    """会发出去的字：旁白、cover/push/topbar 里非注解的字符串、原声段的双语字幕。"""
+    from spec_wording import outward_deep  # noqa: PLC0415
+
+    texts = [str(t) for t in outward_deep(spec) if t]
+    texts.append(_hook_text(spec))
+    for seg in spec.get("segments") or []:
+        if isinstance(seg, dict):
+            texts += _quote_texts(seg)
+    return texts
+
+
+def _hits(pattern: re.Pattern, texts) -> list[str]:
+    return sorted({m.group(0) for t in texts for m in pattern.finditer(t or "")})
+
+
+# ───────────────────────────────────────── ① 钩子／推送标题不拿全场总分差说事 ──
+
+#: 「全场只多赢一分」「总分九十七平」「她少赢了七个小分」。三盘球的总得分永远接近，
+#: 这个数说不出这场球的形状（账号所有者 2026-09-19，chung-nagal 第一版钩子）。
+TOTAL_MARGIN = re.compile(
+    r"(全场|总分|总得分)[^\n，。]{0,8}(多赢|少赢|领先|只差|差|平)"
+    r"|(多|少)(赢|拿)了?[\d一二三四五六七八九十两]+个?小?分"
+    r"|[\d一二三四五六七八九十百]+个小分")
+
+#: 2026-09-19 那条规矩之前已经发出去的。全库量过：钩子／推送标题里写总分差的 12 条，
+#: **最晚一条是 09-12**，规矩之后 0 条——也就是说这 12 条全是规矩定下之前的写法，
+#: 不是这道闸的误伤。已发的不为文案重渲。
+TOTAL_MARGIN_LEGACY = frozenset({
+    "bejlek-keys-cincinnati-2026-qf",   # 总分一百零七平（08-22）
+    "boulter-volynets",                 # 她少赢了七个小分（08-15）
+    "fritz-cerundolo-us-open-2026-r3",  # 两盘领先 多拿两分（09-06）
+    "fritz-nakashima-cincinnati-2026-qf",  # 总分九十七平（08-22）
+    "kenin-lys",                        # 总分却是七十一平（08-15）
+    "navarro-kalinina",                 # 一百六十九个小分／她只多赢了一个（08-16）
+    "rybakina-gauff-us-open-2026-sf",   # 全场只多赢六分（09-11）
+    "safiullin-alcaraz-us-open-2026-r1",  # 总分只差八分（09-01）
+    "snigur-keys",                      # 全场只多赢四分（08-17）
+    "wang-kalinskaya-us-open-2026-r2",  # 推送标题：王欣瑜多拿一分仍然出局
+    "wu-duckworth-us-open-2026-r2",     # 首盘只多赢四分（09-03）
+    "zverev-khachanov-us-open-2026-sf",  # 全场只多赢三分（09-12）
+})
+
+
+def total_margin_problem(spec: dict) -> str | None:
+    if _slug(spec) in TOTAL_MARGIN_LEGACY:
+        return None
+    fields = (("钩子", _hook_text(spec)),
+              ("推送标题", str((spec.get("push") or {}).get("summary") or "")))
+    bad = [f"{name}「{m.group(0)}」" for name, text in fields
+           for m in TOTAL_MARGIN.finditer(text)]
+    if not bad:
+        return None
+    return ("钩子／推送标题拿全场总分差说事：" + "、".join(bad) + "。\n"
+            "账号所有者 2026-09-19：「以后尽量避免比较全场得分只差几分……其实网球差距就在"
+            "一两分的关键分」。差距写在关键分上（几个破发点、盘点、赛点，救了几个，第几个"
+            "兑现），或者拿人物的来路当影子（chung-nagal「背伤毁掉的生涯／他咬了三小时翻"
+            "回来」）。旁白和小红书正文不管。")
+
+
+# ─────────────────────────────────────── ② 「三个赛点只兑现了一个」的同义反复 ──
+
+#: 赛点／盘点是「兑现即终止」的点：赢家永远只兑现最后一个，「N 个只兑现了一个」
+#: 不是短板，是同义反复（账号所有者 2026-08-19「这种文案是有问题的，以后杜绝类似
+#: 的弱智文案」）。**只认赛点和盘点**——破发点分散在十几个发球局里，2/13 是真会
+#: 变的效率（berrettini-wawrinka「十三个破发点／他只兑现两个」是好钩子）。
+ONE_OF_N = re.compile(r"(赛点|盘点)[^。！？\n]{0,8}只(兑现|转化|拿下|把握住?)了?[一1]个")
+
+#: 就是账号所有者点名的那一条，已发。
+ONE_OF_N_LEGACY = frozenset({"bouzkova-jovic"})
+
+
+def one_of_n_problem(spec: dict, xhs_text: str | None = None) -> str | None:
+    if _slug(spec) in ONE_OF_N_LEGACY:
+        return None
+    hits = _hits(ONE_OF_N, _outward(spec) + ([xhs_text] if xhs_text else []))
+    if not hits:
+        return None
+    return (f"写了「N 个赛点／盘点只兑现了一个」：{hits}——赢家永远只兑现最后一个，"
+            "这是同义反复（账号所有者 2026-08-19「以后杜绝类似的弱智文案」）。"
+            "要写就写对手救下了几个（「约维奇连救两个」「五个赛点，一个没给」）。")
+
+
+# ──────────────────────────────────────────────────────────────── ③ 不提彭帅 ──
+
+PENG_SHUAI = re.compile(r"彭帅|Peng\s*Shuai|Shuai\s*Peng", re.I)
+
+#: 账号所有者本人点过头的例外。**只有账号所有者本人能往里加**——这条没有 `_why`
+#: 认领口，是有意的（finals-venues 为它重渲过一版、替换了同一个 Release 附件）。
+PENG_SHUAI_OWNER_APPROVED: frozenset[str] = frozenset()
+
+
+def peng_shuai_problem(slug: str, texts) -> str | None:
+    if slug in PENG_SHUAI_OWNER_APPROVED:
+        return None
+    hits = _hits(PENG_SHUAI, texts)
+    if not hits:
+        return None
+    return (f"会发出去的字里提了彭帅：{hits}。账号所有者 2026-09-16：「这条线上不提彭帅」"
+            "（research/wta-finals-venues-2026.md）——讲深圳合同为什么断，只写到「疫情停办、"
+            "此后没再回去」。注解栏（`_` 开头的键）不管，那儿可以记。")
+
+
+# ─────────────────────────────────────── ④ 赛场之上封面不用 fit:width 的信箱式 ──
+
+#: 已发的两条：`wangxiyu-fernandez`（2026-08-17，规矩之前）和 `zheng-keys-us-open-2026-r3`
+#: （09-06，写了 `_fit_why`，推送之后没人提——但按这条的口径它也是信箱式）。
+FIT_WIDTH_LEGACY = frozenset({"wangxiyu-fernandez", "zheng-keys-us-open-2026-r3"})
+
+
+def cover_fit_problem(spec: dict) -> str | None:
+    """⚠️ **`_fit_why` 在「赛场之上」不放行，是量出来的**：账号所有者 2026-08-31 否掉的
+    zhang-fernandez 那一版（008a8806）**正写着一段很认真的 `_fit_why`**（「源图 1280×720
+    横构图，cover 要放大 2.00 倍……两版真渲出来比过」）——而他的回答是「建议还是裁切铺满
+    画布全屏做封面，不要用当前这种方式了」，改完用的正是 2.0× 放大。认领口一开，被否掉的
+    那一版照样过闸。「网球有故事」的信箱式不在这条里。
+    """
+    if _eyebrow(spec) != "赛场之上" or _slug(spec) in FIT_WIDTH_LEGACY:
+        return None
+    portrait = (spec.get("cover") or {}).get("portrait")
+    if not isinstance(portrait, dict) or portrait.get("fit") != "width":
+        return None
+    return ("「赛场之上」封面写了 `cover.portrait.fit: \"width\"`——人物只占中段，上下两条"
+            "模糊带。账号所有者 2026-08-31：「建议还是裁切铺满画布全屏做封面，不要用当前这种"
+            "方式了」；2026-09-06：「封面要全铺满」。\n"
+            "删掉 `fit`（默认 cover 裁切铺满），用 `zoom` / `focus` / `focus_y` 把人物放到"
+            "几何中心、接近铺满、四周留一圈（横构图 1280×720 的那张放大 2.0× 用的就是这条路）。"
+            "⚠️ `_fit_why` 在这一栏不放行——被否掉的那一版正写着一段 `_fit_why`。")
+
+
+# ──────────────────────────────── ⑤ 赛场之上封面一律 solo，`_layout_why` 不再放行 ──
+
+#: 2026-08-04「以后都用 solo 版」之前、带 `_layout_why` 钉成 diagonal 的两条（已发）。
+#: 其余存量是 `build_match_reel._LEGACY_VS_COVERS`，两张表合起来用，不另抄一份。
+SOLO_EXTRA_LEGACY = frozenset({"eala-zheng", "nishikori-shang"})
+
+
+def legacy_vs_covers() -> frozenset[str]:
+    """`build_match_reel._LEGACY_VS_COVERS`。`--dry-run` 是把 build_match_reel 当
+    `__main__` 跑的，按模块名再 import 一遍等于把一万行的工具再加载一次——先找已经
+    加载的那份。"""
+    for name in ("build_match_reel", "__main__"):
+        table = getattr(sys.modules.get(name), "_LEGACY_VS_COVERS", None)
+        if table is not None:
+            return frozenset(table)
+    from build_match_reel import _LEGACY_VS_COVERS  # noqa: PLC0415
+    return frozenset(_LEGACY_VS_COVERS)
+
+
+def solo_layout_problem(spec: dict) -> str | None:
+    """`build_cover` 那道闸认 `_layout_why`：写一句就能退回 VS。**而账号所有者正是在
+    一条写了 `_layout_why` 的 VS 封面上说了不**——shang-mannarino 42cfae85（「solo 要的
+    本场官方实拍出片时不存在」），2026-09-24：「不要用这种封面……还不如从比赛画面中截取
+    抽帧去做」。所以「赛场之上」这一栏认领口关掉：没有实拍就挑一帧清晰的抽帧。
+    「网球有故事」讲两个人的交手史照旧可以用 H2H 双人版（`build_cover` 那边不动）。
+    """
+    if _eyebrow(spec) != "赛场之上":
+        return None
+    layout = str((spec.get("cover") or {}).get("layout", "cutout"))
+    if layout == "solo":
+        return None
+    if _slug(spec) in legacy_vs_covers() | SOLO_EXTRA_LEGACY:
+        return None
+    return (f"「赛场之上」的封面写的是 layout={layout!r}。这一栏一律 solo：本场实拍铺满，"
+            "下面一块带双方国旗和排名的比分板。**`_layout_why` 在这一栏不再放行**——"
+            "账号所有者 2026-09-24 否掉的正是一条写了认领的 VS 封面（shang-mannarino）："
+            "「不要用这种封面……还不如从比赛画面中截取抽帧去做」。没有官方实拍就用 "
+            "`cover.portrait.frame_at` 挑一帧清晰、偏正面的。")
+
+
+# ─────────────────────────────── ⑥ 前瞻事实写了「要等 X」，渲之前必须回头查 X ──
+
+#: 只认「这件事还没公布」的那几种说法。**裸的「要等」不认**：全库 27 条 spec 的注解里
+#: 有「要等死球了再切」「具体帧要等 runner 渲完」这类，和事实没关系（量过：放宽到裸
+#: 「要等」，27 条里 26 条是误伤）。
+PENDING_MARK = re.compile(
+    r"待公布|名单定了再|公布后再|抽签后再|TBD|to be confirmed"
+    r"|(名单|阵容|场序|签表|抽签)[^。；\n]{0,6}要等"
+    r"|要等[^。；\n]{0,4}(抽签|名单|阵容|官宣|公布|场序)", re.I)
+
+#: 认领之后多久要再查一次。账号所有者 2026-09-18（戴维斯杯中国队阵容）：第二版重发时
+#: 名单已经公布了 58 分钟，一次都没回头看。
+PENDING_MAX_AGE = timedelta(hours=24)
+
+#: 第三版已经按 ITF 正式名单改对、推过了；它的注解里正记着这次事故（marker 就在
+#: 那段复盘里），不为补一个认领字段改已发的 spec。
+PENDING_LEGACY = frozenset({"davis-cup-china-first-world-group-1"})
+
+
+def _notes(node):
+    """spec 里所有 `_` 开头的注解（递归）里的字符串。`_pending_resolved` 自己不算。"""
+    if isinstance(node, dict):
+        for k, v in node.items():
+            k = str(k)
+            if k == "_pending_resolved":
+                continue
+            if k.startswith("_"):
+                yield from _strings(v, k)
+            else:
+                yield from _notes(v)
+    elif isinstance(node, list):
+        for item in node:
+            yield from _notes(item)
+
+
+def _strings(node, key: str):
+    if isinstance(node, str):
+        yield key, node
+    elif isinstance(node, dict):
+        for k, v in node.items():
+            yield key, str(k)
+            yield from _strings(v, key)
+    elif isinstance(node, list):
+        for item in node:
+            yield from _strings(item, key)
+
+
+def _parse_time(text: str) -> datetime | None:
+    try:
+        stamp = datetime.fromisoformat(str(text).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return stamp if stamp.tzinfo else stamp.replace(tzinfo=timezone.utc)
+
+
+def pending_fact_findings(spec: dict, *, now: datetime | None = None
+                          ) -> tuple[list[str], list[str]]:
+    """(硬的, 只报的)。认领写在 spec 顶层 `_pending_resolved`：
+
+        [{"marker": "正式名单要等抽签日", "status": "resolved" | "still_pending",
+          "checked_at": "2026-09-17T12:27Z", "source": "https://…"}]
+
+    `marker` 是注解里那句话的一段原文；`checked_at` 超过 24 小时就要回头再查一次。
+    `still_pending` 放行，但只报一句：旁白不许押具体阵容。
+    """
+    if _slug(spec) in PENDING_LEGACY:
+        return [], []
+    found = [(key, text, m.group(0)) for key, text in _notes(spec)
+             for m in PENDING_MARK.finditer(text)]
+    if not found:
+        return [], []
+    now = now or datetime.now(timezone.utc)
+    claims = [c for c in spec.get("_pending_resolved") or [] if isinstance(c, dict)]
+    hard, soft = [], []
+    for key, text, mark in found:
+        claim = next((c for c in claims if str(c.get("marker") or "").strip()
+                      and str(c["marker"]).strip() in text), None)
+        where = f"`{key}` 里的「{mark}」"
+        if claim is None:
+            hard.append(
+                f"{where}：spec 自己写着这件事还没定，却没有回头查的记录。账号所有者 "
+                "2026-09-18（戴维斯杯中国队阵容，第二版重发时名单已经公布 58 分钟）。\n"
+                "查一次，在顶层 `_pending_resolved` 里记一条 {marker（那句话的原文片段）, "
+                "status: resolved|still_pending, checked_at（ISO 时刻）, source（URL）}；"
+                "定了就按它改旁白和文案。")
+            continue
+        stamp = _parse_time(str(claim.get("checked_at") or ""))
+        source = str(claim.get("source") or "")
+        status = str(claim.get("status") or "")
+        if stamp is None or not source.startswith("http") or \
+                status not in ("resolved", "still_pending"):
+            hard.append(f"{where}：`_pending_resolved` 那一条缺 checked_at（ISO）／"
+                        "source（URL）／status（resolved|still_pending）。")
+        elif now - stamp > PENDING_MAX_AGE:
+            hard.append(f"{where}：上一次查是 {claim['checked_at']}，已经超过 "
+                        f"{int(PENDING_MAX_AGE.total_seconds() // 3600)} 小时——每次渲之前、"
+                        "每次重发之前都要回头再查一次，然后更新 `checked_at`。")
+        elif status == "still_pending":
+            soft.append(f"{where} 还没定（{claim['checked_at']} 查过）：旁白和钩子只能用"
+                        "「领衔」这类不押具体阵容的写法。")
+    return hard, soft
+
+
+# ─────────────────────────── ⑦ 收尾要落在一问上（挪自 tests/test_match_reel.py） ──
+
+#: 收尾没落在一问上、而且**已经发出去了**的。只许减不许加，自检在测试里。
+ENDING_LEGACY = frozenset({
+    # `eala-parks` 收在「六比二，晋级第三轮。」这句数据上。
+    "eala-parks",
+    # `shang-darderi-montreal-2026` 收在「四比五，他救下两个赛点。」这句数据上。
+    "shang-darderi-montreal-2026",
+    # `zheng-you-us-open-2026-q1` 收在「……零次被破发，是这场胜利最硬的答案。」
+    # 这句数据上。它 2026-08-25T01:53:09Z 已经推过微信（run 32799209180），
+    # 收尾那句烧在音轨和字幕里，不为措辞重渲。
+    "zheng-you-us-open-2026-q1",
+    # `andreeva-gauff` 收在「全场总得分九十五比九十四，高芙只多拿一分。
+    # 她救回两个赛点，把这场胜利拼到了手里。」这句数据上。它
+    # 2026-09-10T00:43:27Z 已经推过微信（发布台账 `sent`）。它是**自动链产的**，
+    # 而这条判据当时只活在 pytest 里——自动链直推 main 不触发 CI。挪进
+    # `validate_spec` 之后自动 spec 也会在 dry-run 里被报出来。
+    "andreeva-gauff",
+})
+
+
+def ending_offender(spec: dict) -> str | None:
+    """停在数据上的那句收尾（没落在一问上），落在一问上返回 None。
+
+    末尾一问落在「最后一句 narration」或者「真正的最后一段（narration 或 quote 的中文
+    那半行）」任意一处就算数——gauff-bejlek 的末拍是转播原声「这一次，她能拿下吗？」。
+    只看最后一段的末尾，不数问号个数：中间抛几问是写稿的选择。
+    """
+    segs = [s for s in spec.get("segments") or [] if isinstance(s, dict)]
+    nars = [str(s.get("narration") or "") for s in segs]
+    nars = [n for n in nars if n]
+    last_narration = nars[-1] if nars else ""
+    true_last = ""
+    last_seg = segs[-1] if segs else {}
+    nar = str(last_seg.get("narration", "")).strip()
+    if nar:
+        true_last = nar
+    else:
+        quote = last_seg.get("quote")
+        if isinstance(quote, str) and quote.strip():
+            true_last = quote.strip()
+        elif isinstance(quote, list) and quote:
+            entry = quote[-1]
+            text = entry.get("text", "") if isinstance(entry, dict) else str(entry)
+            zh = str(text).split("\n")[-1].strip()
+            true_last = zh or str(text).strip()
+    if not last_narration and not true_last:
+        return None
+    if "？" in last_narration[-30:] or "？" in true_last[-30:]:
+        return None
+    return (true_last or last_narration)[-26:]
+
+
+def ending_problem(spec: dict) -> str | None:
+    if _slug(spec) in ENDING_LEGACY:
+        return None
+    tail = ending_offender(spec)
+    if tail is None:
+        return None
+    return (f"收尾停在数据上，没有落在一问上：…{tail}\n"
+            "账号所有者：「不要平白地叙事，要能引爆传播」。最后一段要么旁白问出一个针对"
+            "这场的问题，要么留一句带问号的原声；先用一个数字回答开场的问题，再抛下一问。"
+            "往积极的方向落——请读者期待他兑现，不是请读者怀疑他。")
+
+
+# ─────────── ⑧ 推送标题：剥完名字和赛果动词要还剩东西（挪自 tests/test_reel_editorial.py） ──
+
+#: 动词表只用来**剥**：漏掉一个动词的后果是漏判，不是误伤，方向是安全的那一头。
+RESULT_VERB = re.compile(
+    r"(晋级|淘汰|横扫|逆转|击败|险胜|过关|出局|收官|锁定|苦战|拿下|战胜|获胜|胜)")
+
+SUMMARY_LEGACY_已推送 = frozenset({
+    # ⚠️ 这条是这道判据落地（#332）的同一天做的，两边并行，改完 spec 才撞上。
+    #    它 08-14 03:2x 已经自动推送过了——`push.summary` 参与拼微信标题，
+    #    改它会让今天算出来的标题和当时真发出去的那条对不上（eala-osaka 那条
+    #    「故意不补 summary」记的就是这个），所以按已推送挂账，不改字。
+    "landaluce-draper",            # 兰达卢塞逆转
+    "osaka-fernandez",             # 大坂直美淘汰费尔南德斯
+    "osaka-mertens",               # 奥萨卡横扫梅尔滕斯晋级
+    "rybakina-gauff-toronto-sf",   # 莱巴金娜逆转晋级
+    "shelton-fonseca",             # 谢尔顿险胜丰塞卡
+    "shelton-mensik",              # 谢尔顿横扫门西克
+    "svitolina-alexandrova",       # 斯维托丽娜逆转晋级
+    "swiatek-golubic",             # 斯瓦泰克横扫戈卢比奇晋级
+    "swiatek-kostyuk",             # 斯瓦泰克逆转科斯秋克晋级
+})
+
+# ⏰ **还没推——`push.summary` 只是一行字，改它连重渲都不用。**
+SUMMARY_LEGACY_还没推送 = frozenset({
+    "rybakina-li",                    # 莱巴金娜逆转晋级
+    "rybakina-osaka",                 # 莱巴金娜逆转大坂直美
+    "swiatek-svitolina-toronto-sf",   # 斯瓦泰克逆转晋级
+})
+
+SUMMARY_LEGACY = SUMMARY_LEGACY_已推送 | SUMMARY_LEGACY_还没推送
+
+#: 两个本该连读的动词中间插了代词（「决胜局四十比零落后**她**逆转」）——账号所有者
+#: 2026-08-20「标题写的要有钩子，但是你要写的通顺」。全库量过只有被点名的那一条。
+SUMMARY_PRONOUN_SPLIT = re.compile(r"落后(她|他)(逆转|翻盘|赢)")
+SUMMARY_FLUENCY_LEGACY = frozenset({"kostyuk-andreeva"})
+
+
+def summary_strip_offender(spec: dict) -> str | None:
+    """「赛场之上」推送标题剥掉名字和赛果动词之后什么都不剩的，返回那个标题。"""
+    cover = spec.get("cover") or {}
+    if cover.get("eyebrow") != "赛场之上":
+        return None
+    summary = str((spec.get("push") or {}).get("summary") or "").strip()
+    if not summary:
+        return None
+    rest = summary
+    names = [str(m.get("name") or "") for m in (cover.get("matchup") or [])]
+    names += [str(cover.get("winner") or ""), str(cover.get("subject") or "")]
+    for name in names:
+        if name.strip():
+            rest = rest.replace(name.strip(), "")
+    rest = RESULT_VERB.sub("", rest)
+    return None if re.sub(r"[，,。、·\s]", "", rest) else summary
+
+
+def push_summary_problem(spec: dict) -> str | None:
+    slug = _slug(spec)
+    out = []
+    if slug not in SUMMARY_LEGACY and (summary := summary_strip_offender(spec)):
+        out.append(f"推送标题「{summary}」剥掉名字和赛果动词之后什么都不剩——「谁逆转晋级」"
+                   "在微信消息列表里分不出是哪一条片子；同一份 spec 的 `push.lead` 里往往"
+                   "就躺着那句该当标题的话（下一轮的强敌、关键分、来路）。")
+    summary = str((spec.get("push") or {}).get("summary") or "")
+    if slug not in SUMMARY_FLUENCY_LEGACY and (m := SUMMARY_PRONOUN_SPLIT.search(summary)):
+        out.append(f"推送标题「{summary}」在两个连读的动词中间插了代词（{m.group(0)}）——"
+                   "一句只留一层铺垫：「零比二落后连赢六局」（账号所有者 2026-08-20「要写的"
+                   "通顺」）。")
+    return "\n".join(out) or None
+
+
+# ──────────── ⑨ 数据图缺制胜分/UE 要写 `_winners_ue_why`（挪自 tests/test_reel_editorial.py） ──
+
+#: 这条闸上线之前就写好的全部。里面包括 `zverev-norrie` 那一类——那两行数字一直
+#: 拿得到，而它发出去的时候没有。已发的片子不重渲，只挂账，只管以后。
+WINNERS_UE_LEGACY = frozenset({
+    "baez-dimitrov", "bejlek-pliskova", "boisson-krueger", "boulter-volynets",
+    "bucsa-chwalinska", "cirstea-bartunkova", "eala-ruse", "hijikata-monfils",
+    "jodar-shapovalov", "kenin-lys", "maria-yastremska", "navarro-kalinina",
+    "noskova-boulter", "ostapenko-frech", "parry-mertens", "pegula-waltert",
+    "sonmez-anisimova", "sonmez-kasatkina", "stearns-tauson", "townsend-osorio",
+    "tsitsipas-royer", "wang-vandewinkel", "wangxiyu-timofeeva",
+})
+
+
+def winners_ue_missing(spec: dict) -> bool:
+    """「赛场之上」有 `stats` 块、却缺制胜分/非受迫失误、又没说查过 TNNS。
+
+    两边都要查：`render_stat_card.usable_rows` 对「只有一边有」是报错的。整块没有
+    归 `reel_asset_gates.stats_card_problem` 管。
+    """
+    if _eyebrow(spec) != "赛场之上" or not spec.get("segments"):
+        return False
+    stats = spec.get("stats")
+    if not stats:
+        return False
+    a, b = stats.get("a") or {}, stats.get("b") or {}
+    if all(key in a and key in b for key in ("winners", "ue")):
+        return False
+    return not stats.get("_winners_ue_why")
+
+
+def winners_ue_problem(spec: dict) -> str | None:
+    if _slug(spec) in WINNERS_UE_LEGACY or not winners_ue_missing(spec):
+        return None
+    return ("数据图缺制胜分/非受迫失误，又没写 `stats._winners_ue_why`。**flashscore 没有 ≠ "
+            "没有**——TNNS Live 这两行按场给（账号所有者 2026-08-16「tnns live 有啊」）：\n"
+            "    gh workflow run tnns-stats.yml -f who=<姓>,<姓>\n"
+            "拿到就填进 `stats.a/b` 的 `winners` / `ue`；五类源都查空才写一句 "
+            "`stats._winners_ue_why` 记下来。")
+
+
+# ────────── ⑩ Tennis TV 源片要说清片尾和台标怎么剪（挪自 tests/test_match_reel.py） ──
+
+#: 用 Tennis TV 源片、而且发在「片尾和台标要剪掉」这条规矩（账号所有者 2026-08-16）
+#: 之前的片子。已发的不重渲——**只许减不许加**。
+TENNISTV_LEGACY = frozenset({
+    "baez-dimitrov", "djokovic-tirante", "eala-svitolina", "fonseca-ruud",
+    "fritz-jodar-final", "gea-shapovalov", "hewitt-washington",
+    "hijikata-monfils", "kovacevic-khachanov",
+    "landaluce-draper", "medvedev-zandschulp", "nakashima-jodar-montreal-sf",
+    "shang-darderi-montreal-2026", "shang-vallejo", "shelton-fonseca",
+    "shelton-nakashima-montreal-final", "shelton-tien-montreal-sf",
+    "tirante-fritz", "tsitsipas-royer", "wang-samsonova", "wong-brooksby",
+    "wong-gea", "wong-lehecka", "zverev-griekspoor",
+})
+
+
+def uses_tennistv(spec: dict) -> bool:
+    """只看 `_source` 和 `_editing_why` 这两栏（我们自己写的来路交代）——`_no_repeat`
+    里会点名别的片子，整份扫会误判。判据宁可窄，不可宽。"""
+    blob = " ".join(str(spec.get(k) or "") for k in ("_source", "_editing_why"))
+    return "Tennis TV" in blob or "TennisTV" in blob
+
+
+def tennistv_trim_problem(spec: dict) -> str | None:
+    if _slug(spec) in TENNISTV_LEGACY or not uses_tennistv(spec):
+        return None
+    if str(spec.get("_tennistv_trim") or "").strip():
+        return None
+    return ("用了 Tennis TV 的源片，却没写 `_tennistv_trim`。账号所有者 2026-08-16：「把后面 "
+            "tennis tv 的片尾也裁剪掉啊」「最好把右上角的 tennistv logo 裁剪掉」——写一句说清"
+            "末段离片尾板多远、取景窗有没有把角上那块台标框进来（「忘了看」和「看过了没问题」"
+            "在成片上分不出来）。")
+
+
+# ───────── ⑪ 赛场之上的 quote 段只认转播原声／颁奖现场声（挪自 tests/test_match_reel.py） ──
+
+QUOTE_KINDS = frozenset({"broadcast", "ceremony"})
+#: 账号所有者 2026-08-10 点名的四条（quote 窗口全落在 WTA 纯集锦 310 秒之后），已发。
+QUOTE_KIND_LEGACY = frozenset({
+    "rybakina-samsonova", "alexandrova-sabalenka", "osaka-mertens", "swiatek-kostyuk",
+})
+
+
+def quote_kind_offenders(spec: dict) -> list[int]:
+    """「赛场之上」里没认领 `_quote_kind`（或认领了不合法的值）的 quote 段序号（1 起）。"""
+    if _eyebrow(spec) != "赛场之上":
+        return []
+    return [i for i, seg in enumerate(spec.get("segments") or [], 1)
+            if isinstance(seg, dict) and seg.get("quote")
+            and seg.get("_quote_kind") not in QUOTE_KINDS]
+
+
+def quote_kind_problem(spec: dict) -> str | None:
+    if _slug(spec) in QUOTE_KIND_LEGACY:
+        return None
+    bad = quote_kind_offenders(spec)
+    if not bad:
+        return None
+    return (f"第 {bad} 段的 quote 没认领 `_quote_kind`（broadcast／ceremony）。账号所有者："
+            "「赛场之上视频不要赛后采访」——那是赛后开麦的素材，另出一条；转播解说原声、"
+            "颁奖现场声才许留，写上认领。")
+
+
+# ─────────────────────── ⑫ 小红书正文是纯文本（挪自 tests/test_match_reel.py） ──
+
+#: 出口（复制页 textarea、微信正文）不渲染 markdown，粘过去会原样露出来。**不管 `-`
+#: 开头的行**（粘过去就是一个横杠）；tag 行 `#网球时差` 不误伤（ATX 标题要带空格）。
+XHS_MARKS = (
+    ("星号（**加粗** / *斜体*）", re.compile(r"\*")),
+    ("反引号", re.compile(r"`")),
+    ("下划线强调 __", re.compile(r"__")),
+    ("表格竖线", re.compile(r"^\s*\|", re.M)),
+    ("# 标题", re.compile(r"^#{1,6}\s", re.M)),
+    ("> 引用", re.compile(r"^>\s", re.M)),
+    ("[]() 链接", re.compile(r"\[[^\]]*\]\([^)]*\)")),
+)
+
+
+def xhs_markdown_hits(text: str) -> list[str]:
+    return [f"{name}×{len(pat.findall(text))}" for name, pat in XHS_MARKS if pat.search(text)]
+
+
+def xhs_markdown_problem(text: str | None) -> str | None:
+    hits = xhs_markdown_hits(text or "")
+    if not hits:
+        return None
+    return (f"小红书正文里有 markdown 记号：{hits}。账号所有者 2026-08-06：「正文里复制的内容，"
+            "不要用 markdown 格式，复制过去显示会有问题」——出口不渲染它，粘过去会原样露出来。")
+
+
+# ═══════════════════════════════════════════════════════════════ 只报的四道 ══
+
+#: 钩子写身份：非头号的种子号、「世界第 N」（N≠1）。「掀翻世界第一」「淘汰头号种子」
+#: 是结果行的重量，放行；其余的要自己确认它不是「只靠排名」。
+HOOK_IDENTITY = re.compile(
+    r"世界第(?!一(?![\d一二三四五六七八九十百]))[\d一二三四五六七八九十百]+"
+    r"|(?<!头)(?<![\d一二三四五六七八九十])(?!(?:1|一)号)[\d一二三四五六七八九十]+号种子")
+
+
+def hook_identity_note(spec: dict) -> str | None:
+    cover = spec.get("cover") or {}
+    if _eyebrow(spec) != "赛场之上" or str(cover.get("_hook_identity_why") or "").strip():
+        return None
+    hits = _hits(HOOK_IDENTITY, [_hook_text(spec)])
+    if not hits:
+        return None
+    return (f"钩子里写了身份 {hits}——账号所有者 2026-08-05「你这个只靠排名，这个太机械化、"
+            "固定化了」、2026-09-26「封面别说淘汰八号种子，说挺进 8 强」。结果行写本人走到"
+            "哪一步；对手的身份只在够分量（头号种子、世界第一）时才当落点。确认过写 "
+            "`cover._hook_identity_why`。")
+
+
+#: 球员的声明（退赛、伤情、复出、告别）要先去本人和官方的 X、Instagram 找当事人开口
+#: 的视频（sinner-beijing-withdrawal-2026，账号所有者 2026-09-25「多去找找 X 和
+#: Instagram」「建议把辛纳自己的视频加在最前面」）。
+SOCIAL_TOPIC = re.compile(r"退赛|退出|伤病|伤情|复出|告别|声明|withdraw|retire|injur", re.I)
+
+
+def social_first_note(spec: dict) -> str | None:
+    if _eyebrow(spec) != "网球有故事" or str(spec.get("_social_checked") or "").strip():
+        return None
+    cover = spec.get("cover") or {}
+    blob = " ".join([_slug(spec), str(cover.get("hook") or ""), str(cover.get("topic") or "")])
+    m = SOCIAL_TOPIC.search(blob)
+    if not m:
+        return None
+    return (f"讲的是球员声明一类（{m.group(0)}）：先去本人和官方的 X、Instagram 找当事人自己"
+            "开口的视频，放第 1 段当冷开场、配中英双语，别拿旁白转述他的话。查过写 "
+            "`_social_checked`（查了哪些账号、结果如何）。")
+
+
+#: 给人看的字里的**计数**汉字数字（「三天前」「八号种子」「三盘」）。序数（第…）、术语
+#: （抢七／抢十）、「世界第一」、「一个没给」「两个赛点」这类惯用说法不在里面——
+#: `arabic_numerals` 直接喂手写字段会把「抢十」换成「抢10」、把「第180三盘」粘成
+#: 「第1803盘」，所以这里只认「二~九开头、后面跟量词」的计数。
+SCREEN_COUNT = re.compile(
+    r"(?<![第抢世界星期周礼拜一二三四五六七八九十百千万两〇零])"
+    r"([二三四五六七八九十][一二三四五六七八九十百千]*|一[十百千][一二三四五六七八九十百千]*)"
+    r"(?=个|次|天|周|年|月|岁|局|盘|分|场|拍|座|支|位|名|小时|号种子|连胜|连败|届|站|城)")
+
+
+def screen_numerals_note(fields) -> str | None:
+    """fields: [(字段名, 文本)]。只报：写成阿拉伯数字（账号所有者 2026-09-16）。"""
+    bad = [f"{name}「{str(text)[m.start():m.end() + 2]}」" for name, text in fields
+           for m in SCREEN_COUNT.finditer(str(text or ""))]
+    if not bad:
+        return None
+    return ("给人看的字里的数字写成了汉字：" + "、".join(bad) + "——账号所有者 2026-09-16"
+            "「给用户看的文案里的数字不要用汉字，就用 2025 之类的阿拉伯数字」（TTS 底稿照旧写"
+            "汉字；序数、抢七、万不换）。")
+
+
+#: 英文里的昵称、简称不另外音译成一个新名字（账号所有者 2026-09-06「麦迪是凯斯名字的
+#: 简称」，258269d6）。**只收被点过名的**——「萨沙」「伊加」这类直呼名在已发的采访
+#: 字幕里有几十处，账号所有者没说过不行，这张表只随真实的投诉长。
+NICKNAMES = {"麦迪": "凯斯"}
+
+
+def nickname_note(texts) -> str | None:
+    pattern = re.compile("|".join(map(re.escape, NICKNAMES)))
+    hits = _hits(pattern, texts)
+    if not hits:
+        return None
+    return ("字幕里把昵称音译成了一个新名字：" + "、".join(
+        f"{h}→{NICKNAMES[h]}" for h in hits) + "——一律走仓库译名表（账号所有者 2026-09-06）。")
+
+
+# ═══════════════════════════════════════════════════════════════════ 接入口 ══
+
+def spec_taste_extra(spec: dict, *, now: datetime | None = None
+                     ) -> tuple[list[str], list[str]]:
+    """`validate_spec` 只接这一刀：返回 `(硬的, 只报的)`。自动 spec 的硬项降成只报。"""
+    hard: list[str] = []
+    soft: list[str] = []
+    for check in (total_margin_problem, one_of_n_problem, cover_fit_problem,
+                  solo_layout_problem, ending_problem, push_summary_problem,
+                  winners_ue_problem, tennistv_trim_problem, quote_kind_problem):
+        if problem := check(spec):
+            hard.append(problem)
+    if problem := peng_shuai_problem(_slug(spec), _outward(spec)):
+        hard.append(problem)
+    pending_hard, pending_soft = pending_fact_findings(spec, now=now)
+    hard += pending_hard
+    soft += pending_soft
+    cover, push = spec.get("cover") or {}, spec.get("push") or {}
+    for note in (hook_identity_note(spec), social_first_note(spec),
+                 screen_numerals_note([("钩子", cover.get("hook")), ("副标题", cover.get("topic")),
+                                       ("推送标题", push.get("summary"))]),
+                 nickname_note(sum((_quote_texts(s) for s in spec.get("segments") or []
+                                    if isinstance(s, dict)), []))):
+        if note:
+            soft.append(note)
+    if _auto(spec):
+        return [], hard + soft
+    return hard, soft
+
+
+def xhs_taste_extra(spec: dict, xhs_text: str | None) -> tuple[list[str], list[str]]:
+    """小红书正文那一面（`enforce_spec_wording` 那个座位，它才拿得到 `.xhs.txt`）。"""
+    if not xhs_text:
+        return [], []
+    hard = [p for p in (xhs_markdown_problem(xhs_text),
+                        one_of_n_problem({"slug": _slug(spec)}, xhs_text),
+                        peng_shuai_problem(_slug(spec), [xhs_text])) if p]
+    return ([], hard) if _auto(spec) else (hard, [])
+
+
+def interview_taste_extra(spec: dict, xhs_text: str | None = None
+                          ) -> tuple[list[str], list[str]]:
+    """赛后开麦：钩子是 `cover.title`（两行列表），推送标题同名。"""
+    cover, push = spec.get("cover") or {}, spec.get("push") or {}
+    title = cover.get("title")
+    title = "".join(title) if isinstance(title, list) else str(title or "")
+    shadow = {"slug": _slug(spec), "cover": {"hook": title},
+              "push": {"summary": push.get("summary")}}
+    texts = [title] + [str(v) for k, v in push.items()
+                       if not str(k).startswith("_") and isinstance(v, str)]
+    texts += [str(z) for z in spec.get("zh") or []]
+    texts += [str((spec.get("takeaway") or {}).get(k) or "") for k in ("point", "narration")]
+    one_of_n = None
+    if _slug(spec) not in ONE_OF_N_LEGACY and (hits := _hits(ONE_OF_N, texts)):
+        one_of_n = (f"写了「N 个赛点／盘点只兑现了一个」：{hits}——赢家永远只兑现最后一个，"
+                    "要写就写对手救下了几个（账号所有者 2026-08-19）。")
+    hard = [p for p in (total_margin_problem(shadow), one_of_n,
+                        peng_shuai_problem(_slug(spec), texts + ([xhs_text] if xhs_text else [])),
+                        xhs_markdown_problem(xhs_text)) if p]
+    soft = [n for n in (screen_numerals_note([("标题", title), ("推送标题", push.get("summary"))]),
+                        nickname_note([str(z) for z in spec.get("zh") or []])) if n]
+    return hard, soft

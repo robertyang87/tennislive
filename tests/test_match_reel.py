@@ -1327,22 +1327,12 @@ _NO_SLATE_YET = {
 }
 
 # 收尾没落在一问上、而且**已经发出去了**的。只许减不许加，底下有自检。
-_ENDING_LEGACY = {
-    # 同上：`eala-parks` 收在「六比二，晋级第三轮。」这句数据上。
-    "eala-parks",
-    # `shang-darderi-montreal-2026` 收在「四比五，他救下两个赛点。」这句数据上。
-    "shang-darderi-montreal-2026",
-    # `zheng-you-us-open-2026-q1` 收在「……零次被破发，是这场胜利最硬的答案。」
-    # 这句数据上。它 2026-08-25T01:53:09Z 已经推过微信（run 32799209180），
-    # 收尾那句烧在音轨和字幕里，不为措辞重渲。
-    "zheng-you-us-open-2026-q1",
-    # `andreeva-gauff` 收在「全场总得分九十五比九十四，高芙只多拿一分。
-    # 她救回两个赛点，把这场胜利拼到了手里。」这句数据上。它
-    # 2026-09-10T00:43:27Z 已经推过微信（发布台账 `sent`），收尾那句烧在
-    # 音轨和字幕里，不为措辞重渲。⚠️ 同一条片子在 `_NO_SLATE_YET` 里也挂着
-    # 一笔，那条注释记着这一类的根子（自动链直推 main 不触发 CI）。
-    "andreeva-gauff",
-}
+# ⚠️ 判据和这张表的单一出处在 tools/taste_gates_extra.py（validate_spec 也用它，
+# `--dry-run` 0.2 秒就报）——这儿只 import，不再各抄一份。
+sys.path.insert(0, str(Path("tools").resolve()))
+import taste_gates_extra as _TG  # noqa: E402
+
+_ENDING_LEGACY = _TG.ENDING_LEGACY
 
 
 def test_赛场之上开场要给出北京时间赛事和轮次():
@@ -1539,39 +1529,11 @@ def test_收尾要落在一问上不能停在数据上():
     """
     bad, offenders = [], set()
     for slug, spec in _reel_specs().items():
-        segs = spec["segments"]
-        # `.get`：原声段（`quote`）根本没有 narration 这个键
-        nars = [s.get("narration", "") for s in segs]
-        nars = [n for n in nars if n]
-        last_narration = nars[-1] if nars else ""
-
-        true_last_text = ""
-        last_seg = segs[-1] if segs else {}
-        nar = str(last_seg.get("narration", "")).strip()
-        if nar:
-            true_last_text = nar
-        else:
-            quote = last_seg.get("quote")
-            if isinstance(quote, str) and quote.strip():
-                true_last_text = quote.strip()
-            elif isinstance(quote, list) and quote:
-                entry = quote[-1]
-                text = entry.get("text", "") if isinstance(entry, dict) else str(entry)
-                # `text` 是「英文\n中文」，末尾一问只看中文那半行
-                zh = str(text).split("\n")[-1].strip()
-                true_last_text = zh or str(text).strip()
-
-        if not last_narration and not true_last_text:
-            continue
-
-        ends_in_question = (
-            ("？" in last_narration[-30:]) or ("？" in true_last_text[-30:])
-        )
-        if not ends_in_question:
+        tail = _TG.ending_offender(spec)
+        if tail is not None:
             offenders.add(slug)
             if slug not in _ENDING_LEGACY:
-                shown = true_last_text or last_narration
-                bad.append(f"{slug}: …{shown[-26:]}")
+                bad.append(f"{slug}: …{tail}")
     assert not bad, (
         "这些片子的收尾停在数据上，没有落在一问上：\n  " + "\n  ".join(bad))
 
@@ -7631,24 +7593,11 @@ def test_小红书正文不许用markdown():
     ⚠️ tag 行 `#网球时差` 不许误伤：`#` 后面没有空格，和 markdown 的 ATX 标题
     （`# ` 必须带空格）分得开。反向验证里专门有这一条。
     """
-    import re  # noqa: PLC0415
-
-    marks = (
-        ("星号（**加粗** / *斜体*）", re.compile(r"\*")),
-        ("反引号", re.compile(r"`")),
-        ("下划线强调 __", re.compile(r"__")),
-        ("表格竖线", re.compile(r"^\s*\|", re.M)),
-        ("# 标题", re.compile(r"^#{1,6}\s", re.M)),
-        ("> 引用", re.compile(r"^>\s", re.M)),
-        ("[]() 链接", re.compile(r"\[[^\]]*\]\([^)]*\)")),
-    )
-
+    # ⚠️ 记号表的单一出处在 tools/taste_gates_extra.py（`--dry-run` 的措辞座位也用它）。
     offenders, checked = {}, 0
     for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
         checked += 1
-        text = path.read_text(encoding="utf-8")
-        hits = [f"{name}×{len(pat.findall(text))}"
-                for name, pat in marks if pat.search(text)]
+        hits = _TG.xhs_markdown_hits(path.read_text(encoding="utf-8"))
         if hits:
             offenders[path.name] = hits
     assert checked >= 15, f"只扫到 {checked} 份文案——目录写错了？"
@@ -10093,29 +10042,10 @@ def _with_legacy_soft_cover(slug: str, spec: dict) -> dict:
     return spec
 
 
-#: 用 Tennis TV 源片、而且发在「片尾和台标要剪掉」这条规矩（账号所有者 2026-08-16）
-#: 之前的片子。已发的不重渲——**只许减不许加**，自检在下面那条测试里。
-_LEGACY_TENNISTV = {
-    "baez-dimitrov", "djokovic-tirante", "eala-svitolina", "fonseca-ruud",
-    "fritz-jodar-final", "gea-shapovalov", "hewitt-washington",
-    "hijikata-monfils", "kovacevic-khachanov",
-    "landaluce-draper", "medvedev-zandschulp", "nakashima-jodar-montreal-sf",
-    "shang-darderi-montreal-2026", "shang-vallejo", "shelton-fonseca",
-    "shelton-nakashima-montreal-final", "shelton-tien-montreal-sf",
-    "tirante-fritz", "tsitsipas-royer", "wang-samsonova", "wong-brooksby",
-    "wong-gea", "wong-lehecka", "zverev-griekspoor",
-}
-
-
-def _uses_tennistv(spec: dict) -> bool:
-    """这条 spec 的源片是不是 Tennis TV 的。
-
-    ⚠️ **只看 `_source` 和 `_editing_why` 这两栏**（我们自己写的来路交代），
-    不扫整份 spec——`_no_repeat` 里会点名别的片子，那些片子的名字里带 Tennis TV
-    就会把这一条误判成「也用了 Tennis TV」。判据宁可窄，不可宽。
-    """
-    blob = " ".join(str(spec.get(k) or "") for k in ("_source", "_editing_why"))
-    return "Tennis TV" in blob or "TennisTV" in blob
+#: 用 Tennis TV 源片、而且发在「片尾和台标要剪掉」这条规矩之前的片子——判据和存量表的
+#: 单一出处在 tools/taste_gates_extra.py（`--dry-run` 也用它），这儿只 import。
+_LEGACY_TENNISTV = _TG.TENNISTV_LEGACY
+_uses_tennistv = _TG.uses_tennistv
 
 
 def test_用TennisTV的源片要说清片尾和台标怎么剪掉():
@@ -10144,10 +10074,8 @@ def test_用TennisTV的源片要说清片尾和台标怎么剪掉():
         assert _uses_tennistv(specs[slug]), (
             f"{slug} 已经不是 Tennis TV 的源片了，从 `_LEGACY_TENNISTV` 里删掉")
 
-    fresh = sorted(
-        slug for slug, spec in specs.items()
-        if _uses_tennistv(spec) and slug not in _LEGACY_TENNISTV
-        and not str(spec.get("_tennistv_trim") or "").strip())
+    fresh = sorted(slug for slug, spec in specs.items()
+                   if _TG.tennistv_trim_problem(spec))
     assert not fresh, (
         f"这几条用了 Tennis TV 的源片，却没写 `_tennistv_trim`：{fresh}。\n"
         "账号所有者 2026-08-16 定的：**片尾和台标都要剪掉**。写一句说清"
@@ -13068,27 +12996,24 @@ def test_赛场之上的quote段不许是赛后采访():
     发现集锦尾巴带采访的正确动作是记成赛后开麦候选另出一条。
     已发的四条不重渲，挂 legacy 表，只许减不许加。
     """
-    legacy = {"rybakina-samsonova", "alexandrova-sabalenka",
-              "osaka-mertens", "swiatek-kostyuk"}
-    allowed = {"broadcast", "ceremony"}
+    # ⚠️ 判据和存量表的单一出处在 tools/taste_gates_extra.py（`--dry-run` 也用它）。
+    legacy = _TG.QUOTE_KIND_LEGACY
     checked = 0
     legacy_seen = set()
     for p in sorted(Path("specs/reels").glob("*.json")):
         spec = json.loads(p.read_text(encoding="utf-8"))
         if (spec.get("cover") or {}).get("eyebrow") != "赛场之上":
             continue
-        for i, seg in enumerate(spec.get("segments") or [], 1):
-            if not seg.get("quote"):
-                continue
-            checked += 1
-            if p.stem in legacy:
+        checked += sum(1 for seg in spec.get("segments") or [] if seg.get("quote"))
+        bad = _TG.quote_kind_offenders(spec)
+        if p.stem in legacy:
+            if bad:
                 legacy_seen.add(p.stem)
-                continue
-            kind = seg.get("_quote_kind")
-            assert kind in allowed, (
-                f"{p.name} 段{i} 的 quote 没认领 _quote_kind（broadcast/"
-                f"ceremony）。赛后采访不进复盘——那是赛后开麦的素材，"
-                f"另出一条；转播原声/颁奖现场声才许留，写上认领")
+            continue
+        assert not bad, (
+            f"{p.name} 段{bad} 的 quote 没认领 _quote_kind（broadcast/"
+            f"ceremony）。赛后采访不进复盘——那是赛后开麦的素材，"
+            f"另出一条；转播原声/颁奖现场声才许留，写上认领")
     # 判据自己的判据：主语没了要出声，别变成恒真的绿灯
     assert checked >= 7, f"只扫到 {checked} 个 quote 段，spec 目录是不是不对"
     # legacy 表自检：写错一个名字，豁免就成了一盏恒真的绿灯

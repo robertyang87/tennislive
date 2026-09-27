@@ -1,0 +1,314 @@
+"""tools/taste_gates_extra.py 的判据：账号所有者口味规则里量过全库、留下来的那几道。
+
+每一道三件事都要钉住：
+
+1. **被打回的那一版真的红**（真阳）——用的就是账号所有者当时否掉的原文
+2. **改好之后的那一版真的绿**（反面锚点）——判据宽一点就会把好写法一起判红
+3. **全库已发的 spec 一条都不红**（误伤 0），存量表只许减不许加、每一条都真的还在违规
+
+最后一条钉接线：`validate_spec`（`--dry-run`）真的调了它，自动 spec 只报不拦。
+"""
+from __future__ import annotations
+
+import json
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+sys.path.insert(0, str(ROOT / "src"))
+
+import taste_gates_extra as T  # noqa: E402
+
+REELS = ROOT / "specs" / "reels"
+INTERVIEWS = ROOT / "specs" / "interviews"
+
+
+def _reels() -> dict[str, dict]:
+    return {p.stem: json.loads(p.read_text("utf-8")) for p in sorted(REELS.glob("*.json"))}
+
+
+def _xhs(slug: str) -> str | None:
+    path = REELS / f"{slug}.xhs.txt"
+    return path.read_text("utf-8") if path.is_file() else None
+
+
+def _court(**cover) -> dict:
+    return {"slug": "new-spec", "cover": {"eyebrow": "赛场之上", "layout": "solo", **cover},
+            "segments": [{"start": 0, "end": 5, "narration": "下一轮，她还能赢吗？"}]}
+
+
+# ─────────────────────────────────────────────────────────────── ① 总分差 ──
+
+def test_钩子和推送标题不拿全场总分差说事():
+    # chung-nagal 第一版（3a72b12e^），账号所有者 2026-09-19 否掉的原文
+    rejected = _court(hook="一盘落后翻上来\n全场只多赢一分")
+    assert T.total_margin_problem(rejected)
+    assert T.total_margin_problem({**_court(hook="背伤毁掉的生涯\n他咬了三小时翻回来"),
+                                   "push": {"summary": "纳瓦罗多赢一分逆转"}})
+    for hook in ("总分九十七平\n最后四局全拿走", "她少赢了七个小分\n比分却是她赢"):
+        assert T.total_margin_problem(_court(hook=hook)), hook
+    # 反面锚点：改好的那一版、以及关键分的写法
+    for hook in ("背伤毁掉的生涯\n他咬了三小时翻回来", "3个赛点全丢了\n最后4分全是她的",
+                 "前10次机会全落空\n黄泽林挺进8强", "首盘1比4落后\n后7局赢下6局"):
+        assert T.total_margin_problem(_court(hook=hook)) is None, hook
+
+
+# ─────────────────────────────────────────────────────── ② 赛点同义反复 ──
+
+def test_赛点盘点只兑现一个是同义反复_破发点不算():
+    # bouzkova-jovic（62fb9194），钩子分两行——换行不能让它漏掉
+    assert T.one_of_n_problem(_court(hook="三个赛点\n只兑现了一个"))
+    assert T.one_of_n_problem(_court(hook="x"), xhs_text="五个盘点，她只把握住一个")
+    # 反面锚点：破发点是真会变的效率；「一个没给」是救点
+    for hook in ("十三个破发点\n他只兑现两个", "五个赛点\n一个没给", "约维奇连救两个"):
+        assert T.one_of_n_problem(_court(hook=hook)) is None, hook
+
+
+# ──────────────────────────────────────────────────────────────── ③ 彭帅 ──
+
+def test_会发出去的字里不提彭帅_注解不管():
+    spec = _court(hook="x")
+    spec["segments"][0]["narration"] = "深圳撞上疫情，又撞上彭帅那件事。"
+    assert T.peng_shuai_problem("new-spec", T._outward(spec))
+    # 注解栏可以记（asian-games-vs-china-open 的 `_facts` 里就有「2010 彭帅」）
+    noted = {**_court(hook="x"), "_facts": ["2010 彭帅"]}
+    assert T.peng_shuai_problem("new-spec", T._outward(noted)) is None
+    assert T.PENG_SHUAI_OWNER_APPROVED == frozenset(), "这张表只有账号所有者本人能加"
+
+
+def test_解说片也一个字都不提彭帅():
+    """finals-venues（38a68bda^）的旁白就是在 `_SCRIPTS` 里写的——解说片没有 spec，
+    这条在 CI 上扫它的旁白、要点、标题、封面问句和小红书 hook。"""
+    from tennislive.video import explainer as E  # noqa: PLC0415
+
+    texts = []
+    for beats in E._SCRIPTS.values():
+        for row in beats:
+            seg = E.ExplainerSegment(*row)
+            texts += [seg.narration, seg.title, seg.question, *seg.points]
+    for opening in E._OPENINGS.values():
+        texts += [str(opening.get(k) or "") for k in ("topic", "question", "narration", "gloss")]
+    texts += [str(c.get("hook") or "") for c in E._CAPTIONS.values()]
+    assert len(texts) > 300, "解说片一段文字都没扫到，判据的主语像是没了"
+    assert T.peng_shuai_problem("explainer", texts) is None
+    assert T.peng_shuai_problem("explainer", ["深圳撞上疫情，又撞上彭帅那件事"])
+
+
+# ────────────────────────────────────────────── ④ 赛场之上封面不用信箱式 ──
+
+def test_赛场之上封面不用fit_width_认领也不放行():
+    # zhang-fernandez 被否掉的那一版（008a8806）**写着 `_fit_why`**
+    rejected = _court(portrait={"image": "x.jpg", "fit": "width",
+                                "_fit_why": "源图 1280×720 横构图，cover 要放大 2.00 倍"})
+    assert T.cover_fit_problem(rejected)
+    assert T.cover_fit_problem(_court(portrait={"image": "x.jpg", "zoom": 2.0})) is None
+    story = _court(portrait={"image": "x.jpg", "fit": "width"})
+    story["cover"]["eyebrow"] = "网球有故事"
+    assert T.cover_fit_problem(story) is None, "网球有故事的信箱式不在这条里"
+
+
+# ─────────────────────────────────────────── ⑤ 赛场之上一律 solo，认领不放行 ──
+
+def test_赛场之上的VS封面写了_layout_why也不放行():
+    # shang-mannarino 42cfae85：cutout + 一段认真的 `_layout_why`，账号所有者 2026-09-24 否掉
+    rejected = _court(layout="cutout", _layout_why="solo 要的本场官方实拍出片时不存在")
+    assert T.solo_layout_problem(rejected)
+    assert T.solo_layout_problem(_court()) is None
+    story = _court(layout="cutout")
+    story["cover"]["eyebrow"] = "网球有故事"
+    assert T.solo_layout_problem(story) is None, "网球有故事讲交手史可以用 H2H 双人版"
+
+
+# ─────────────────────────────────────────────── ⑥ 前瞻事实要回头查 ──
+
+NOW = datetime(2026, 9, 18, 6, 0, tzinfo=timezone.utc)
+
+
+def test_写了要等名单就要回头查_过期要再查():
+    base = {"slug": "new-story", "_facts": ["挪威 2 月鲁德退赛过——所以正式名单要等抽签日"]}
+    hard, _ = T.pending_fact_findings(base, now=NOW)
+    assert hard and "名单要等" in hard[0]
+    claim = {"marker": "正式名单要等抽签日", "status": "resolved",
+             "checked_at": "2026-09-17T12:27Z",
+             "source": "https://www.daviscup.com/en/draws-results/tie/"}
+    assert T.pending_fact_findings({**base, "_pending_resolved": [claim]}, now=NOW) == ([], [])
+    stale = {**claim, "checked_at": "2026-09-16T09:00Z"}
+    hard, _ = T.pending_fact_findings({**base, "_pending_resolved": [stale]}, now=NOW)
+    assert hard and "再查一次" in hard[0]
+    pending = {**claim, "status": "still_pending"}
+    hard, soft = T.pending_fact_findings({**base, "_pending_resolved": [pending]}, now=NOW)
+    assert not hard and soft and "领衔" in soft[0]
+    # 反面锚点：「要等死球了再切」「具体帧要等 runner 渲完」不是没公布的事实
+    assert T.pending_fact_findings(
+        {"slug": "x", "_editing_why": "剪辑的时候要等死球了再去切", "cover": {
+            "_why": "具体帧要等 runner 渲完 poster.jpg"}}, now=NOW) == ([], [])
+
+
+# ───────────────────────── ⑦~⑪ 从 pytest 挪进 validate_spec 的那五道（形状测试） ──
+
+def test_收尾停在数据上就红_落在一问上就绿():
+    # wong-lehecka 0ab84ddd，账号所有者：「不要平白地叙事，要能引爆传播」
+    spec = _court()
+    spec["segments"][0]["narration"] = "一比六、六比三、六比四。排名差九十六位，生涯排名最高胜。"
+    assert T.ending_problem(spec)
+    spec["segments"][0]["narration"] += "下一次这样的球，要等多久？"
+    assert T.ending_problem(spec) is None
+    quoted = _court()
+    quoted["segments"].append({"start": 5, "end": 9, "quote": [
+        {"at": 1.0, "text": "Can she do it this time?\n这一次，她能拿下吗？"}]})
+    quoted["segments"][0]["narration"] = "六比四。"
+    assert T.ending_problem(quoted) is None, "末拍是带问号的原声也算数"
+
+
+def test_推送标题剥完为空和代词插进连读():
+    spec = _court(matchup=[{"name": "莱巴金娜"}, {"name": "高芙"}], winner="莱巴金娜")
+    spec["push"] = {"summary": "莱巴金娜逆转晋级"}
+    assert T.push_summary_problem(spec)
+    spec["push"] = {"summary": "决胜局四十比零落后她逆转"}
+    assert "代词" in T.push_summary_problem(spec)
+    for good in ("零比二落后连赢六局", "莱巴金娜逆转，下一轮打萨巴伦卡"):
+        spec["push"] = {"summary": good}
+        assert T.push_summary_problem(spec) is None, good
+
+
+def test_推送标题的代词豁免表只许减():
+    specs = _reels()
+    for slug in T.SUMMARY_FLUENCY_LEGACY:
+        assert slug in specs, f"{slug} 这条 spec 已经没了，从表里删掉"
+        assert T.SUMMARY_PRONOUN_SPLIT.search(
+            str((specs[slug].get("push") or {}).get("summary") or "")), \
+            f"{slug} 已经不违规了，从 SUMMARY_FLUENCY_LEGACY 里删掉"
+
+
+def test_数据图缺制胜分UE_TennisTV片尾_quote段认领():
+    spec = _court()
+    spec["stats"] = {"a": {"aces": 3}, "b": {"aces": 1}}
+    assert T.winners_ue_problem(spec)
+    spec["stats"]["_winners_ue_why"] = "TNNS hasExtendedStats=false"
+    assert T.winners_ue_problem(spec) is None
+
+    tv = {**_court(), "_source": "Tennis TV 官方 YouTube"}
+    assert T.tennistv_trim_problem(tv)
+    assert T.tennistv_trim_problem({**tv, "_tennistv_trim": "末段收在片尾板前 2.1s"}) is None
+
+    q = _court()
+    q["segments"].append({"start": 5, "end": 8, "quote": "Game, set and match!\n比赛结束！"})
+    assert T.quote_kind_problem(q)
+    q["segments"][-1]["_quote_kind"] = "broadcast"
+    assert T.quote_kind_problem(q) is None
+
+
+def test_小红书正文不许markdown_tag行不误伤():
+    assert T.xhs_markdown_problem("**加粗**的正文")
+    assert T.xhs_markdown_problem("> 引用块")
+    assert T.xhs_markdown_problem("#网球 #赛场之上 #网球时差\n- 横杠开头的行") is None
+
+
+# ═══════════════════════════════════════════════════════════ 只报的四道 ══
+
+def test_只报的四道真的会报_也不会报错好写法():
+    assert T.hook_identity_note(_court(hook="只差一分被拖进决胜盘\n他还是淘汰了八号种子"))
+    assert T.hook_identity_note(_court(hook="菲斯发球局全没丢\n世界第八还是告负"))
+    for ok in ("五比一被追平\n她照样掀翻世界第一", "次盘5比2被追平\n7比5淘汰头号种子",
+               "只差一分被拖进决胜盘\n他还是挺进了8强"):
+        assert T.hook_identity_note(_court(hook=ok)) is None, ok
+    story = _court(hook="温网捧杯之后\n他再没打过一场", topic="辛纳退出中网")
+    story["cover"]["eyebrow"] = "网球有故事"
+    story["slug"] = "sinner-beijing-withdrawal-2026"
+    assert T.social_first_note(story)
+    assert T.social_first_note({**story, "_social_checked": "X @janniksin 44s 视频"}) is None
+    assert T.screen_numerals_note([("钩子", "三天前刚拿青少年冠军")])
+    for ok in ("3个赛点全丢了", "抢十逆转门西克", "第十五次", "世界第一", "一局没丢", "两个赛点"):
+        assert T.screen_numerals_note([("钩子", ok)]) is None, ok
+    assert T.nickname_note(["你支持的是麦迪还是我"])
+    assert T.nickname_note(["你支持的是凯斯还是我"]) is None
+
+
+# ═════════════════════════════════════════════ 全库误伤 0 ＋ 存量表只许减 ══
+
+def test_全库已发的spec一条都不红():
+    specs = _reels()
+    assert len(specs) > 200, "spec 目录像是没扫到"
+    red = {}
+    for slug, spec in specs.items():
+        hard, _ = T.spec_taste_extra(spec)
+        hard += T.xhs_taste_extra(spec, _xhs(slug))[0]
+        if hard:
+            red[slug] = [h.split("\n")[0][:80] for h in hard]
+    assert not red, f"已发的 spec 被判红了（误伤，或者存量表漏挂）：{red}"
+    iv_red = {}
+    for path in sorted(INTERVIEWS.glob("*.json")):
+        if path.name.endswith(".draft.json"):
+            continue
+        xhs = path.with_suffix(".xhs.txt")
+        hard, _ = T.interview_taste_extra(json.loads(path.read_text("utf-8")),
+                                          xhs.read_text("utf-8") if xhs.is_file() else None)
+        if hard:
+            iv_red[path.stem] = hard
+    assert not iv_red, f"已发的采访 spec 被判红了：{iv_red}"
+
+
+@pytest.mark.parametrize("table,check", [
+    ("TOTAL_MARGIN_LEGACY", lambda s: T.total_margin_problem({**s, "slug": "_"})),
+    ("ONE_OF_N_LEGACY", lambda s: T.one_of_n_problem({**s, "slug": "_"})),
+    ("FIT_WIDTH_LEGACY", lambda s: T.cover_fit_problem({**s, "slug": "_"})),
+    ("SOLO_EXTRA_LEGACY", lambda s: T.solo_layout_problem({**s, "slug": "_"})),
+    ("PENDING_LEGACY", lambda s: T.pending_fact_findings({**s, "slug": "_"})[0]),
+])
+def test_存量表只许减不许加(table, check):
+    """表里每一条都要真的存在、而且**摘掉豁免之后真的还红**——写错一个名字，
+    豁免就成了一盏恒真的绿灯。"""
+    specs = _reels()
+    for slug in sorted(getattr(T, table)):
+        assert slug in specs, f"{table} 里的 {slug} 找不到 spec，从表里删掉"
+        assert check(specs[slug]), f"{slug} 已经不违规了，从 {table} 里删掉——只许减不许加"
+
+
+# ═══════════════════════════════════════════════════════════════ 接线 ══
+
+def test_validate_spec接了这道闸_自动spec只报不拦(capsys):
+    reel = pytest.importorskip("build_match_reel")
+    spec = reel.load_spec(REELS / "medvedev-royer-hangzhou-2026-r2.json")
+    reel.validate_spec(spec)                                  # 原样是绿的
+    spec["cover"]["hook"] = "总分只差八分\n梅德韦杰夫挺进8强"
+    with pytest.raises(reel.ReelError, match="总分差"):
+        reel.validate_spec(spec)
+    spec["_production"] = {**(spec.get("_production") or {}), "status": "ready_for_render"}
+    reel.validate_spec(spec)                                  # 自动 spec：只报
+    assert "[口味] 只报" in capsys.readouterr().out
+
+
+def test_小红书正文那一面接在措辞座位上(tmp_path):
+    """`validate_spec` 拿不到 `.xhs.txt`，markdown／赛点同义反复／彭帅的正文那一面坐在
+    `enforce_spec_wording`（dry-run / check-narration / render 三条路共用的那个座位）。"""
+    reel = pytest.importorskip("build_match_reel")
+    slug = "medvedev-royer-hangzhou-2026-r2"
+    spec = json.loads((REELS / f"{slug}.json").read_text("utf-8"))
+    path = tmp_path / f"{slug}.json"
+    path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    xhs = (REELS / f"{slug}.xhs.txt").read_text("utf-8")
+    path.with_suffix(".xhs.txt").write_text(xhs, encoding="utf-8")
+    reel.enforce_spec_wording(spec, path)                      # 原样是绿的
+    path.with_suffix(".xhs.txt").write_text(xhs + "\n\n**加粗的一句**", encoding="utf-8")
+    with pytest.raises(reel.ReelError, match="markdown"):
+        reel.enforce_spec_wording(spec, path)
+
+
+def test_采访线的口味闸接在渲染入口和转正入口(tmp_path):
+    clip = pytest.importorskip("build_interview_clip")
+    spec = {"slug": "x-interview", "cover": {"title": ["全场只多赢三分", "「我一直相信自己」"]},
+            "push": {"summary": "兹维列夫只多赢三分"}}
+    path = tmp_path / "x-interview.json"
+    with pytest.raises(SystemExit, match="总分差"):
+        clip.check_taste_extra(spec, path)
+    clip.check_taste_extra({"slug": "ok", "cover": {"title": ["决胜盘一度落后", "他赢了"]}}, path)
+    body = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    main = body[body.index("def main("):]
+    assert main.index("check_taste_extra(") < main.index('outdir = OUTDIR'), \
+        "`main()` 里 check_taste_extra 要排在任何下载／切行之前"
+    promote = (ROOT / "tools" / "promote_interview_draft.py").read_text(encoding="utf-8")
+    assert "interview_taste_extra(spec, copy_text)[0]" in promote, "转正入口没接口味闸"

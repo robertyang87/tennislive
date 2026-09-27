@@ -3948,6 +3948,21 @@ def check_topline_format(spec: dict) -> None:
         raise SystemExit(f"{slug} 的 `event`：{problem}")
 
 
+def check_taste_extra(spec: dict, spec_path: Path) -> None:
+    """账号所有者口味规则里对采访线也成立的那几道（标题／推送标题拿总分差、赛点同义反复、
+    彭帅、小红书正文 markdown），判据和账在 tools/taste_gates_extra.py。只读 spec 和
+    `.xhs.txt`，第 0.2 秒就报。只报的（汉字数字、昵称音译）印出来不拦。"""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from taste_gates_extra import interview_taste_extra  # noqa: PLC0415
+    xhs = spec_path.with_suffix(".xhs.txt")
+    hard, soft = interview_taste_extra(
+        spec, xhs.read_text(encoding="utf-8") if xhs.is_file() else None)
+    for note in soft:
+        print(f"[口味] 只报：{note}")
+    if hard:
+        raise SystemExit(f"{spec.get('slug', '?')}：\n  - " + "\n  - ".join(hard))
+
+
 def check_source_contract(spec: dict) -> str:
     """L0：在任何下载、转写或渲染之前确认这是一条被验证过身份的赛后内容。
 
@@ -5350,6 +5365,7 @@ def main() -> int:
     check_trail_in(spec)
     check_copy_page(spec)
     check_cover_hook(spec)
+    check_taste_extra(spec, Path(args.spec))
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"

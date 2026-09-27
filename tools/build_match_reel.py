@@ -3494,6 +3494,14 @@ def enforce_spec_wording(spec: dict, spec_path: Path) -> None:
             print(f"    [文案] ⚠️ {echo}")
         else:
             raise ReelError(echo)
+    # 小红书正文那一面的口味闸（markdown、赛点同义反复、彭帅）：validate_spec 拿不到
+    # `.xhs.txt`，所以坐这个座位。判据在 tools/taste_gates_extra.py。
+    from taste_gates_extra import xhs_taste_extra  # noqa: PLC0415
+    taste_hard, taste_soft = xhs_taste_extra(spec, xhs_text)
+    for note in taste_soft:
+        print(f"    [口味] ⚠️ {note}")
+    if taste_hard:
+        raise ReelError("小红书正文不合规矩：\n  - " + "\n  - ".join(taste_hard))
 
 
 def _normalize_stat_card_segments(spec: dict) -> None:
@@ -8146,6 +8154,15 @@ def validate_spec(
         print(f"[素材] 自动 spec，只报不拦：{note}")
     if hard:
         raise ReelError("\n\n".join(hard))
+    # 账号所有者口味规则里量过全库、留下来的那几道（总分差、赛点同义反复、彭帅、信箱式
+    # 封面、VS 封面、前瞻事实回头查、收尾一问……）。判据、存量表和误伤/真阳的账都在
+    # tools/taste_gates_extra.py；自动 spec 只报不拦。
+    from taste_gates_extra import spec_taste_extra  # noqa: PLC0415
+    taste_hard, taste_soft = spec_taste_extra(spec)
+    for note in taste_soft:
+        print(f"[口味] 只报：{note}")
+    if taste_hard:
+        raise ReelError("\n\n".join(taste_hard))
     return segments
 
 
