@@ -50,7 +50,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 # 海报/成片链接停在旧域名，而校验和钉版本早就按 .jsdelivr.net 认了，
 # 分叉不报错，只是国内取图慢。
 from tennislive.cdn import jsdelivr_base  # noqa: E402
-from tennislive.publish.pushplus import push  # noqa: E402
+from tennislive.publish.pushplus import push, write_receipt  # noqa: E402
 from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
@@ -925,12 +925,9 @@ def main() -> int:
     # 复制页里印的都是裸 `title`——前缀混进去就是「等一句永远不出现的话」。
     receipt = push(f"{args.title_prefix}{title}", body, asset_dir=outdir)
     if args.receipt_out:
-        receipt_path = Path(args.receipt_out)
-        receipt_path.parent.mkdir(parents=True, exist_ok=True)
-        receipt_path.write_text(
-            json.dumps({"receipt": receipt}, ensure_ascii=False) + "\n",
-            encoding="utf-8",
-        )
+        # 流水号和消息网页一起落：「记下已推送」那一步把它写进 pushed.json，
+        # 会话推完照着 `tools/push_link.py` 把网页链接发进对话。
+        receipt_path = write_receipt(args.receipt_out, receipt)
         print(f"[PushPlus] 流水号凭据已写入：{receipt_path}")
     # ⚠️ 印的是**正文**的字数，不是 copy_text 的长度——后者含标题和那行空行，
     # 比正文多二十几字。而受 1000 字硬限制（`split_copy` 的 `BODY_MAX`）的只有

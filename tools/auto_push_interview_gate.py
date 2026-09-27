@@ -70,6 +70,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 # **共用三样，import 不抄。** `Skip`、`tracked`、旧 `MARKER` 不涉及哪条线；
 # 新发布账本则是采访线自己的权威状态，不能继续写在可被重渲覆盖的 outdir。
 from auto_push_gate import MARKER, Skip, tracked  # noqa: E402
+from publication_ledger import receipt_fields  # noqa: E402
 
 # `output/interviews/eala-parks-toronto-2026/render.json`
 # ⚠️ **没有日期那一层**，和 reel 的 `output/<日期>/reel/<slug>/` 差的就是这个。
@@ -298,7 +299,7 @@ def _write_ledger(repo: Path, slug: str, outdir: Path, *, status: str,
     current.update(_status_fields(status))
     current.update({"at": now, "run": run_url})
     if status in {"accepted", "delivered"} and receipt:
-        current["pushplus_receipt"] = receipt
+        current.update(receipt_fields(receipt))
     path = _ledger_path(repo, slug)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n",
@@ -330,11 +331,12 @@ def record(repo: Path, slug: str, outdir: Path, run_url: str, now: str,
         "channel": PROVIDER,
         "publication_key": _publication_key(slug, film_hash),
         "film_sha256": film_hash,
-        "pushplus_receipt": receipt,
+        **receipt_fields(receipt),
         "at": now,
         "run": run_url,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"[自动推送] L4 平台接收凭据：{marker}（{film_hash[:12]}…；手机送达未核验）")
+    print(f"[自动推送] 微信推送网页：{receipt_fields(receipt)['message_url']}")
     return ledger_path
 
 

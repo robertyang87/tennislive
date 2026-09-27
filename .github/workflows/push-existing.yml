@@ -111,4 +111,7 @@ jobs:
           test -s "${OUT_DIR}/xiaohongshu.txt"
           test -n "${PUSHPLUS_TOKEN}"
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
-          tennislive publish pushplus --dir "${OUT_DIR}"
+          tennislive publish pushplus --dir "${OUT_DIR}" --receipt-out "$RUNNER_TEMP/pushplus-receipt.json"
+          python tools/push_link.py --receipt-file "$RUNNER_TEMP/pushplus-receipt.json" \
+            --slug "${INPUT_SLUG:-$SCOPE}" --summary "$GITHUB_STEP_SUMMARY" \
+            || echo "::warning::推送网页链接没写进摘要（消息已发，不影响记账）"

@@ -262,6 +262,9 @@ jobs:
             --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             --now "$(date -u +%FT%TZ)" \
             --receipt-file "$RUNNER_TEMP/interview-pushplus-receipt.json"
+          python tools/push_link.py --receipt-file "$RUNNER_TEMP/interview-pushplus-receipt.json" \
+            --slug "${{ steps.gate.outputs.slug }}" --summary "$GITHUB_STEP_SUMMARY" \
+            || echo "::warning::推送网页链接没写进摘要（消息已发，不影响记账）"
           git add --sparse "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json" "${{ steps.gate.outputs.outdir }}/pushed.json"
           python tools/check_staged_file_sizes.py
           git commit -m "interview: ${{ steps.gate.outputs.slug }} PushPlus 已接收"

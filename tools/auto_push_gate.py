@@ -48,7 +48,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from publication_ledger import blocking_attempt, write as write_ledger
+from publication_ledger import (blocking_attempt, read_receipt_file, receipt_fields,
+                                write as write_ledger)
 
 # `output/2026-08-03/reel/eala-pegula/render.json`
 _RENDER_JSON = re.compile(
@@ -306,17 +307,31 @@ def _emit(slug: str, outdir: Path) -> None:
             fh.write("\n".join(lines) + "\n")
 
 
-def record(outdir: Path, run_url: str, now: str) -> Path:
-    """发完记一笔。**这就是「已经发过」的唯一判据**，所以它必须进仓库。"""
+def record(outdir: Path, run_url: str, now: str, receipt: str = "") -> Path:
+    """发完记一笔。**这就是「已经发过」的唯一判据**，所以它必须进仓库。
+
+    带上流水号时顺手记下这条微信推送的网页（`message_url`）：账号所有者要
+    「推送到微信之后，把那个网页链接发到对话里」，会话推完用
+    `tools/push_link.py --slug <slug>` 读的就是这一笔。
+    """
     marker = outdir / MARKER
+    fields = receipt_fields(receipt)
     marker.write_text(json.dumps(
-        {"at": now, "run": run_url}, ensure_ascii=False, indent=2) + "\n",
+        {"at": now, "run": run_url, **fields}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8")
     print(f"[自动推送] 记下已推送：{marker}")
+    if fields:
+        print(f"[自动推送] 微信推送网页：{fields['message_url']}")
+    else:
+        # 消息已经发了，不能因为缺流水号就不记（不记＝自动闸以为没发过）；
+        # 但要出声：没有流水号，就没有能发进对话的那个链接。
+        print("::warning::这一趟没拿到 PushPlus 流水号（推送那步没传 --receipt-out？），"
+              "pushed.json 里没有 message_url，推送网页链接取不到")
     return marker
 
 
-def ledger_status(repo: Path, outdir: Path, status: str, run_url: str, now: str) -> Path:
+def ledger_status(repo: Path, outdir: Path, status: str, run_url: str, now: str,
+                  receipt: str = "") -> Path:
     slug = outdir.name
     film_hash = validate_qc(repo, slug, outdir)
     if status == "sending":
@@ -324,7 +339,7 @@ def ledger_status(repo: Path, outdir: Path, status: str, run_url: str, now: str)
         if previous:
             raise SystemExit(f"{slug} 已有 {previous.get('status')} 发布记录，禁止盲目重发")
     return write_ledger(repo, LEDGER_COLUMN, slug, film_hash, status=status,
-                        run_url=run_url, now=now)
+                        run_url=run_url, now=now, receipt=receipt)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -337,6 +352,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--uncertain", default="", help="发送失败后记状态不明")
     ap.add_argument("--run", default="", help="--record：这次运行的地址")
     ap.add_argument("--now", default="", help="--record：时间戳")
+    ap.add_argument("--receipt-file", default="",
+                    help="--record：push_reel 写下的 PushPlus 流水号 JSON（记进 pushed.json 和账本）")
     ap.add_argument("--repo", default=".", help="仓库根目录")
     ap.add_argument("--forced", action="store_true",
                     help="表单勾了「强制推送」：只放宽 push.auto 那一道意图闸，"
@@ -348,9 +365,10 @@ def main(argv: list[str] | None = None) -> int:
     if action:
         outdir = Path(action)
         status = "sending" if args.reserve else "sent" if args.record else "uncertain"
-        ledger_status(repo, outdir, status, args.run, args.now)
+        receipt = read_receipt_file(args.receipt_file) if args.record else ""
+        ledger_status(repo, outdir, status, args.run, args.now, receipt=receipt)
         if args.record:
-            record(outdir, args.run, args.now)  # 兼容历史消费者
+            record(outdir, args.run, args.now, receipt)  # 兼容历史消费者
         return 0
 
     found = pick(args.changed, repo, forced=args.forced)

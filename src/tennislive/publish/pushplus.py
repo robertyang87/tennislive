@@ -9,6 +9,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 import mimetypes
 import os
@@ -26,6 +27,29 @@ logger = logging.getLogger(__name__)
 URL = "https://www.pushplus.plus/send"
 ACCESS_KEY_URL = "https://www.pushplus.plus/api/common/openApi/getAccessKey"
 UPLOAD_TOKEN_URL = "https://www.pushplus.plus/api/open/userImage/uploadToken"
+# 推送到微信的那一条消息，本身就有一个网页：官方 OpenAPI 文档「二. 消息接口 /
+# 4. 消息详情」写的是 `GET https://www.pushplus.plus/shortMessage/<消息短链码>`，
+# 短链码就是 /send 同步返回的流水号，**不要鉴权**。2026-09-27 拿两条真实流水号
+# 实测：200、`text/html`、页面 <title> 就是那条推送的标题。
+# ⚠️ 别写成 `shortMessage.html?shortCode=`——那个形状回的是「接口不存在」。
+# 账号所有者要它是因为他在国内：GitHub 的 Release / Pages 他点不开，
+# pushplus.plus 打得开（2026-09-27「把推送到微信的那个网页链接也给我」）。
+MESSAGE_PAGE_URL = "https://www.pushplus.plus/shortMessage/{receipt}"
+
+
+def message_url(receipt: str) -> str:
+    """流水号 → 这条微信推送的网页。没有流水号就是空串，**不编一个链接**。"""
+    receipt = (receipt or "").strip()
+    return MESSAGE_PAGE_URL.format(receipt=receipt) if receipt else ""
+
+
+def write_receipt(path: "str | os.PathLike[str]", receipt: str) -> str:
+    """把流水号和消息网页落成一个 JSON，给「记下已推送」那一步读。返回写入路径。"""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps({"receipt": receipt, "message_url": message_url(receipt)},
+                              ensure_ascii=False) + "\n", encoding="utf-8")
+    return str(out)
 
 
 class PushPlusError(RuntimeError):
@@ -652,6 +676,7 @@ def push(
     print(f"[PushPlus] 收下了：流水号 {receipt or '(返回体里没有)'}"
           f"　投递通道 wechat　图片通道 {image_provider}"
           f"　msg={data.get('msg') or ''}")
+    print(f"[PushPlus] 消息网页：{message_url(receipt)}")
     # 官方 OpenAPI 有发送结果查询能力，但不是拿消息 token + 流水号就能查：还要
     # 用户 secretKey、后台启用开放接口，并让请求 IP 通过安全白名单。当前发布
     # 工作流只配置 PUSHPLUS_TOKEN，GitHub Actions 出口 IP 也不固定，所以本趟

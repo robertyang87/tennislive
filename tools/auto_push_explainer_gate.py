@@ -27,7 +27,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from auto_push_gate import MARKER, Skip, record, tracked  # noqa: E402
-from publication_ledger import blocking_attempt, write as write_ledger  # noqa: E402
+from publication_ledger import blocking_attempt, read_receipt_file, write as write_ledger  # noqa: E402
 
 LEDGER_COLUMN = "explainer"
 
@@ -103,13 +103,14 @@ def _fingerprint(repo: Path, outdir: Path) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-def ledger_status(repo: Path, outdir: Path, status: str, run_url: str, now: str) -> Path:
+def ledger_status(repo: Path, outdir: Path, status: str, run_url: str, now: str,
+                  receipt: str = "") -> Path:
     slug = outdir.name
     fingerprint = _fingerprint(repo, outdir)
     if status == "sending" and blocking_attempt(repo, LEDGER_COLUMN, slug, fingerprint):
         raise SystemExit(f"{slug} 已有发布记录，禁止盲目重发")
     return write_ledger(repo, LEDGER_COLUMN, slug, fingerprint, status=status,
-                        run_url=run_url, now=now)
+                        run_url=run_url, now=now, receipt=receipt)
 
 
 def pick(changed: list[str], repo: Path) -> tuple[str, Path] | None:
@@ -154,6 +155,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--uncertain", default="")
     ap.add_argument("--run", default="")
     ap.add_argument("--now", default="")
+    ap.add_argument("--receipt-file", default="",
+                    help="--record：`tennislive publish pushplus --receipt-out` 写下的流水号 JSON")
     ap.add_argument("--repo", default=".")
     args = ap.parse_args(argv)
 
@@ -162,9 +165,10 @@ def main(argv: list[str] | None = None) -> int:
     if action:
         outdir = Path(action)
         status = "sending" if args.reserve else "sent" if args.record else "uncertain"
-        ledger_status(repo, outdir, status, args.run, args.now)
+        receipt = read_receipt_file(args.receipt_file) if args.record else ""
+        ledger_status(repo, outdir, status, args.run, args.now, receipt=receipt)
         if args.record:
-            record(outdir, args.run, args.now)
+            record(outdir, args.run, args.now, receipt)
         return 0
 
     found = pick(args.changed, repo)
