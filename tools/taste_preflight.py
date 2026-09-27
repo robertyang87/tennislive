@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """开工前口味清单 ＋ main 上已有的口味闸：发 render 之前跑这一条。
 
-账号所有者 2026-09-27：「总结我的口味和品味这种个性化的要求，形成一个通用的规则
-在做视频前就拦掉，而不是说做了一半又返工」。
+账号所有者 2026-09-27：「你要总结我的口味和品味这种个性化的要求，形成一个通用的规则
+在做视频前就烂掉，而不是说做了一半又返工」（原话如此，「烂掉」指拦掉）。
 
 规则全文和清单在 `.claude/skills/tennis-owner-taste/SKILL.md`——**清单的问题只有
 那一份**。这里按行首编号（A1、B2……）把它读进来，在每个问题底下贴上这条 spec 的
@@ -547,7 +547,10 @@ def run_interview_checks(spec: dict, xhs: str) -> list[GateResult]:
 # ————————————————————————— 输出 —————————————————————————
 
 _MARK = {"pass": "✅", "fail": "❌", "other": "⚪", "env": "⚠️", "skip": "·"}
-_NOTE = {"other": "红在别的 spec 上，不是这一条", "env": "环境缺文件或没跑到，判不了"}
+#: ⚪ 不等于过了：全库扫描的判据多半在第一处红就停（`assert not offenders` 之前先扫存量表、
+#: 或者逐条 assert），别人的红会**遮住**这一条——它有没有红，这一趟看不出来。
+_NOTE = {"other": "红在别的 spec 上；判据在第一处红就停，这一条被遮住了、判不了，不等于过了",
+         "env": "环境缺文件或没跑到，判不了"}
 
 
 def _rel(path: Path) -> str:
@@ -625,6 +628,10 @@ def main(argv: list[str] | None = None) -> int:
     red = [g for g in gates or [] if g.status == "fail"]
     if red and not args.json:
         print(f"\n❌ {len(red)} 道闸红在这一条上——先修，别发 render。")
+    masked = [g for g in gates or [] if g.status == "other"]
+    if masked and not args.json:
+        print(f"\n⚪ {len(masked)} 道判据红在别的 spec 上，这一条被遮住了：退出码不算它们，"
+              "但也没证明这一条过了——单独核一下，或等那几处修好再跑一遍。")
     return 1 if red else 0
 
 

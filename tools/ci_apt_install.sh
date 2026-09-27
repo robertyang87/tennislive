@@ -65,6 +65,28 @@
 # 那条真正会摸网重试的路一起陪葬。**代价是最坏预算从 640 秒涨到
 # 790 秒**（150 + 640），调用方的 `timeout-minutes` 要跟着涨，
 # 判据在 `tests/test_workflow_alerts.py` 的 `WORST_CASE_BUDGET`。
+#
+# ⚠️⚠️ **2026-09-27：上面这套缓存从 #452 上线起一次都没命中过。**
+# 84 份 run 日志（match-reel 成功/失败、CI、采访线）里「缓存命中：零网络」
+# 出现 0 次、「缓存没有或不全」出现 84 次。两个根子，都不吭声：
+#
+#   ① **存不上**：`sudo apt-get` 在这两个目录里留下 root 的 `lock`（0640）和
+#      `partial/`（0700），`actions/cache` 回写时是 runner 用户跑 tar——
+#      `tar: …/apt-archives/lock: Cannot open: Permission denied`，
+#      `Failed to save`，只是一行 warning（run 36284220097 的 post job）。
+#      修法：每次 apt 跑完把目录所有权交还给调用者（`_apt_cache_handback`）。
+#   ② **存下的是空的**：probe 那几档只 `ensure_ffmpeg`（走静态构建、不碰
+#      apt），目录是空的、runner 自己的，于是**反而存得上**——243 字节的空
+#      缓存挂在滚动键最新那一格上，下一趟 render 恢复的就是它
+#      （`Cache restored from key: …-36276804834`，那是一趟 probe；
+#      `Cache Size: ~0 MB (243 B)`），然后 `E: Unable to locate package`。
+#      修法：工作流不再用 `actions/cache@v4` 的自动回写，拆成
+#      `actions/cache/restore` ＋ 显式的 `actions/cache/save`，**只在这一趟
+#      真的摸了网、下了新东西时才存**——这份脚本在那条路上置
+#      `APT_CACHE_DIRTY=1`（写进 `$GITHUB_ENV`，后面的 save 步骤读它）。
+#      顺带：命中的那几趟不再每趟重传一份一模一样的缓存去挤 10 GB 的池子。
+#
+# 判据 `tests/test_runner_setup_cache.py`。
 set -uo pipefail
 
 APT_CACHE_DIR="${APT_CACHE_DIR:-$HOME/.cache/apt-archives}"
@@ -85,31 +107,57 @@ apt_retry() {
   return 1
 }
 
+# sudo 跑的 apt 会在两个缓存目录里留下 root 的 `lock` 和 `partial/`，
+# actions/cache 回写时是 runner 用户跑 tar，读不动就整份存不上（见顶部
+# 2026-09-27 那段 ①）。**每次 apt 跑完就把所有权交还给调用者**——成败都交：
+# 失败那一趟不回写，但同一个 job 后面可能还有一步会摸网、会回写。
+_apt_cache_handback() {
+  sudo chown -R "$(id -u):$(id -g)" "$APT_CACHE_DIR" "$APT_LISTS_DIR" 2>/dev/null || true
+}
+
+# 这一趟摸了网、目录里多了新东西——告诉后面的 `actions/cache/save` 步骤
+# 「这份值得存」。没摸网的那几趟（缓存命中、或者压根没调 apt）不置，
+# save 步骤就跳过：不再把空目录或一模一样的旧缓存再传一遍（顶部 ②）。
+_apt_cache_mark_dirty() {
+  export APT_CACHE_DIRTY=1
+  if [ -n "${GITHUB_ENV:-}" ]; then
+    echo "APT_CACHE_DIRTY=1" >> "$GITHUB_ENV"
+  fi
+}
+
 # 用法：apt_install_cached <包名...>
 #
-# 先试一次「优先吃本地缓存」——`Dir::Cache::Archives` / `Dir::State::lists`
-# 指到的两个目录如果被 actions/cache 命中过、且这批包的 .deb 也真的在盘上，
+# 先试一次「只吃本地缓存」——`Dir::Cache::Archives` / `Dir::State::lists`
+# 指到的两个目录如果被 actions/cache 恢复过、且这批包的 .deb 也真的在盘上，
 # 这一步几秒钟就装完，一次 HTTP 请求都不发。
 #
-# ⚠️ **它不保证零网络**：索引是新的（比如同一个 job 里前一步刚 `apt-get
-# update` 过）不等于这批包的 .deb 也已经下过——前一步装的是另一批包，
-# 索引里认得这批包不代表本地就有它们的安装文件，这句仍然可能去摸网。
-# 正因为「像是本地安装，其实在下载」这件事分不清楚，它才**必须**包一层
-# `timeout`：卡住的时候不吭声，和真的在装一样，只有超时兜底才拦得住。
+# ⚠️ 原来这句**不保证零网络**：索引是新的不等于这批包的 .deb 也在盘上，
+# 它会在「本地安装」的名义下悄悄去下载（run 32290505356 卡满 12 分钟就是
+# 这么来的），所以才包了 `timeout 150`。**2026-09-27 起加了 `--no-download`**：
+# 缺哪个 .deb 当场报错、零点几秒落到下面那条会摸网的路，不再在「像是本地
+# 安装、其实在下载」上赌 150 秒——而且只有走了那条路才算「这趟下了新包」，
+# 回写缓存的判断（`_apt_cache_mark_dirty`）才是准的。`timeout 150` 留着兜底。
 # 缓存没命中、或者装到一半发现缺包/索引太旧，才回退到会摸网的那条老路
 # （apt-get update + install，各自 `apt_retry` 兜两次）。
 apt_install_cached() {
-  if sudo timeout 150 apt-get "${_apt_opts[@]}" install -y -qq --no-install-recommends "$@" \
-       2>/tmp/apt_install_cached.log; then
+  if sudo timeout 150 apt-get "${_apt_opts[@]}" install -y -qq --no-install-recommends \
+       --no-download "$@" 2>/tmp/apt_install_cached.log; then
+    _apt_cache_handback
     echo "[apt] 缓存命中：零网络请求装上了 $*"
     return 0
   fi
   echo "[apt] 缓存没有或不全，走网络（$*）："
   cat /tmp/apt_install_cached.log || true
+  local rc=0
   apt_retry apt-get "${_apt_opts[@]}" update -qq \
     -o Acquire::Retries=3 -o Acquire::http::Timeout=20
   apt_retry apt-get "${_apt_opts[@]}" install -y -qq --no-install-recommends \
-    -o Acquire::Retries=3 -o Acquire::http::Timeout=20 "$@"
+    -o Acquire::Retries=3 -o Acquire::http::Timeout=20 "$@" || rc=$?
+  _apt_cache_handback
+  if [ "$rc" = 0 ]; then
+    _apt_cache_mark_dirty
+  fi
+  return "$rc"
 }
 
 # ⚠️⚠️ 2026-08-19 下午到晚上，apt 镜像单单对 ffmpeg 这个包反复失灵——
@@ -148,22 +196,65 @@ apt_install_cached() {
 # ⚠️ **不是替换 apt，是多一条更快的路，apt 仍然是保底。** 静态构建
 # 下载失败（那天也抽风、tar 包结构变了……）就原样退回
 # `apt_install_cached ffmpeg`——旧路径一个字没删，坏的方向不会比现在更糟。
+# ⭐ 2026-09-27：这一步每趟 30 秒（188 趟 render/cover ＋ 228 趟 probe，中位 30s、
+# p90 31s，09-15 前后一样），而**下载只占 1.3 秒**——大头是解包：原来先
+# `tar -tJf` 整包解两遍找名字（`grep -m1` 早退救不了 tar，它照样把 518 MB
+# 解完），再整包解一遍取两个文件。包里的顺序是 presets/ doc/ … bin/ffmpeg
+# bin/ffprobe bin/ffplay，ffplay（176 MB）排在最后。
+#
+# 现在：**成员名按下载地址算死**（`<包名>/bin/ffmpeg`），`--occurrence=1`
+# 让 tar 两个都拿到就停，ffplay 那 176 MB 一个字节都不解；`xz -T0` 多线程解
+# （这个包是 22 个 24 MiB 的块，能并行）。沙箱 4 核实测同一个包：老办法
+# 99.1s，`--occurrence` 32.4s，再加 `xz -T0` 15.0s（沙箱被别的活占着，绝对值
+# 偏大，比例才是要看的）。
+#
+# 包的结构变了（顶层目录改名……）就退回老办法：列一遍（只列一遍）找名字再取。
+# 两条路取出来的都要**真跑一次 `-version`** 才算数——解到一半的截断文件
+# `-f` 也是真的，只有跑得起来才不是。
+#
+# 用法：_ffmpeg_extract <包> <解到哪> <顶层目录名>，成功时把两个路径各打一行。
+_ffmpeg_extract() {
+  local archive="$1" dest="$2" top="$3"
+  local ffbin="$top/bin/ffmpeg" ffprobebin="$top/bin/ffprobe"
+  # tar 拿够就退，xz 会吃一个 SIGPIPE——管道的退出码不说明问题，下面按产物判
+  { xz -T0 -dc "$archive" 2>/dev/null \
+      | tar -x -C "$dest" --occurrence=1 "$ffbin" "$ffprobebin" 2>/dev/null; } || true
+  if ! _ffmpeg_runs "$dest/$ffbin" "$dest/$ffprobebin"; then
+    echo "[ffmpeg] 包里没有 $ffbin（结构变了？），列一遍找名字" >&2
+    local listing
+    listing=$(tar -tJf "$archive" 2>/dev/null) || true
+    ffbin=$(printf '%s\n' "$listing" | grep -m1 '/ffmpeg$' || true)
+    ffprobebin=$(printf '%s\n' "$listing" | grep -m1 '/ffprobe$' || true)
+    if [ -z "$ffbin" ] || [ -z "$ffprobebin" ]; then
+      return 1
+    fi
+    tar -xJf "$archive" -C "$dest" --occurrence=1 "$ffbin" "$ffprobebin" 2>/dev/null || true
+    _ffmpeg_runs "$dest/$ffbin" "$dest/$ffprobebin" || return 1
+  fi
+  printf '%s\n%s\n' "$dest/$ffbin" "$dest/$ffprobebin"
+}
+
+_ffmpeg_runs() {
+  [ -f "$1" ] && [ -f "$2" ] || return 1
+  chmod +x "$1" "$2" 2>/dev/null || true
+  "$1" -version >/dev/null 2>&1 && "$2" -version >/dev/null 2>&1
+}
+
 ensure_ffmpeg() {
   if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
     echo "[ffmpeg] 已经在 PATH 上了，跳过"
     return 0
   fi
   local url="https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz"
-  local tmp ok=0
+  local tmp ok=0 t0=$SECONDS
   tmp="$(mktemp -d)"
   if timeout 90 curl -fsSL "$url" -o "$tmp/ffmpeg.tar.xz" 2>"$tmp/dl.log"; then
-    local ffbin ffprobebin
-    ffbin=$(tar -tJf "$tmp/ffmpeg.tar.xz" 2>/dev/null | grep -m1 '/ffmpeg$' || true)
-    ffprobebin=$(tar -tJf "$tmp/ffmpeg.tar.xz" 2>/dev/null | grep -m1 '/ffprobe$' || true)
-    if [ -n "$ffbin" ] && [ -n "$ffprobebin" ]; then
-      tar -xJf "$tmp/ffmpeg.tar.xz" -C "$tmp" "$ffbin" "$ffprobebin" 2>/dev/null
-      sudo install -m 755 "$tmp/$ffbin" /usr/local/bin/ffmpeg 2>/dev/null
-      sudo install -m 755 "$tmp/$ffprobebin" /usr/local/bin/ffprobe 2>/dev/null
+    local bins ffbin ffprobebin
+    if bins=$(_ffmpeg_extract "$tmp/ffmpeg.tar.xz" "$tmp" "$(basename "$url" .tar.xz)"); then
+      ffbin=$(printf '%s\n' "$bins" | sed -n 1p)
+      ffprobebin=$(printf '%s\n' "$bins" | sed -n 2p)
+      sudo install -m 755 "$ffbin" /usr/local/bin/ffmpeg 2>/dev/null
+      sudo install -m 755 "$ffprobebin" /usr/local/bin/ffprobe 2>/dev/null
       if command -v ffmpeg >/dev/null 2>&1 && ffmpeg -version >/dev/null 2>&1; then
         ok=1
       fi
@@ -171,7 +262,7 @@ ensure_ffmpeg() {
   fi
   rm -rf "$tmp"
   if [ "$ok" = 1 ]; then
-    echo "[ffmpeg] 走静态构建（BtbN，GPL 版含 drawtext），没碰 apt 镜像"
+    echo "[ffmpeg] 走静态构建（BtbN，GPL 版含 drawtext），没碰 apt 镜像：下载＋解包 $((SECONDS - t0))s"
     return 0
   fi
   echo "[ffmpeg] 静态构建拿不到，退回 apt"

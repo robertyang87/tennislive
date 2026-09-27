@@ -94,7 +94,7 @@ import shutil
 import subprocess
 import sys
 import time
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from fractions import Fraction
@@ -825,18 +825,23 @@ def stage(name: str):
 def report_timings() -> None:
     if not _TIMINGS:
         return
-    total = sum(s for _, s in _TIMINGS)
-    # 同名的步骤（每段切片、每段跟踪）合起来看，不然十一行淹掉重点
-    buckets: dict[str, tuple[int, float]] = {}
-    for name, spent in _TIMINGS:
-        key = name.split("#")[0].strip()
-        count, acc = buckets.get(key, (0, 0.0))
-        buckets[key] = (count + 1, acc + spent)
-    print(f"\n=== 耗时明细（合计 {total:.1f}s，{os.cpu_count()} 核）===")
-    for key, (count, acc) in sorted(buckets.items(), key=lambda kv: -kv[1][1]):
-        share = acc / total * 100 if total else 0
-        times = f" ×{count}" if count > 1 else ""
-        print(f"  {acc:7.1f}s  {share:5.1f}%  {key}{times}")
+    # 份额按**墙钟**算，并行累加（每段各记一行的那种）单列、不进合计——
+    # 原来一起加，四个 worker 的累加把「分段编码」撑到六成，整张表过 100%。
+    # 表的格式和台账共用一份（`pipeline_timing.stage_table`），两处各写必分叉。
+    print("\n" + stage_table(_TIMINGS))
+
+
+# 分段编码跑在线程池里：每一段各记一行（带 `PARALLEL_MARK`，是几个 worker 的
+# **累加**），外面再包一个 `stage("分段编码")` 记这一步的**墙钟**。原来只有
+# 每段那一行，台账把 4 个 worker 的累加当成这一步的耗时，份额 60% 以上，而
+# 真实墙钟只占 18%（见 `pipeline_timing` 里 PARALLEL_MARK 那段）。
+# ⚠️ 模块级的兄弟 import 要先自己挂上 `tools/`——测试按 `tools.build_match_reel`
+# 这个包名导入时它不在 `sys.path` 上（`test_测试按包名导入的tools模块要能在tools不在sys_path时导入`，
+# 下面 `reel_timing` 那处是同一个形状）。
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pipeline_timing import PARALLEL_MARK, stage_table  # noqa: E402
+
+SEGMENT_STAGE = "分段编码" + PARALLEL_MARK
 
 
 def run(*args: str, quiet: bool = True) -> subprocess.CompletedProcess:
@@ -4006,7 +4011,7 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
         card, Image, full_bleed=seg.full_bleed, full_canvas=seg.full_canvas)
     still = dest.with_suffix(".evidence.png")
     canvas.convert("RGB").save(still)
-    with stage("分段编码"):
+    with stage(SEGMENT_STAGE):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-loop", "1", "-i", str(still), "-f", "lavfi",
             "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
@@ -4339,7 +4344,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                  f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}"])
     # ⚠️ **这儿不许再出现 `fade=`。** 淡入淡出收在拼接那一步的 `xfade`：
     # 在这儿淡是「各自淡到黑」，接缝中间必然有一帧全黑（量过，见 SEG_FADE）。
-    with stage("分段编码"):
+    with stage(SEGMENT_STAGE):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             # `-ss` 放在 `-i` **前面**（输入寻址）。这里原来放在后面，理由写的是
             # 「放前面只能定位到关键帧，可能偏几百毫秒」——那是 ffmpeg 2.1 之前的
@@ -8617,31 +8622,35 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 「比分板的宽度会变化的，所以不能固定宽度去切，要自适应」。排在切片之前，
     # 和 track_shots 同一个位置：都是「先把整条量完，再逐段切」。
     profile = scoreboard_profile(spec, segments)
-    if profile == "us-open":
-        from scoreboard_geometry import resolve_masks
-        resolve_masks(sources, segments, outdir,
-                      Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
-                      FPS_EXPR, SEG_FADE)
-    elif profile == "atp":
-        # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
-        # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
-        from atp_scoreboard import resolve_masks as resolve_atp_masks
-        resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-    elif profile == "wta":
-        # ⭐ WTA 巡回赛转播：板不在的帧不贴、板多宽切多宽（见 wta_scoreboard）。
-        from wta_scoreboard import resolve_masks as resolve_wta_masks
-        resolve_wta_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-    elif profile == "itf-bjk":
-        # ⭐ 比利·简·金杯（ITF 转播）：宝蓝底＋浅青小分格＋发球小球（见 itf_scoreboard）。
-        from itf_scoreboard import resolve_masks as resolve_itf_masks
-        resolve_itf_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-    elif profile == "lavercup":
-        # ⭐ 拉沃尔杯转播（账号所有者 2026-09-25「比分板补一套适配，彻底解决」）：
-        # 蓝边一行＋红边一行＋金色标签，三块胶囊各切各的；宽版全名板不贴（见 lavercup_scoreboard）。
-        from lavercup_scoreboard import resolve_masks as resolve_laver_masks
-        resolve_laver_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-    elif profile == "band-legacy":
-        resolve_board_insets(sources, segments)
+    # **这一段要计时**（2026-09-27）：逐段解码扫板，board-inset 的片子中位 20 秒、
+    # 最长 40 秒，原来没有 stage 包着——报表上看不见，`last_stage` 也指不到它
+    # （「第 N 段一帧都认不出板」死在这儿时，台账记的是上一步 TTS）。
+    with stage("比分板蒙版") if profile else nullcontext():
+        if profile == "us-open":
+            from scoreboard_geometry import resolve_masks
+            resolve_masks(sources, segments, outdir,
+                          Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
+                          FPS_EXPR, SEG_FADE)
+        elif profile == "atp":
+            # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
+            # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
+            from atp_scoreboard import resolve_masks as resolve_atp_masks
+            resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "wta":
+            # ⭐ WTA 巡回赛转播：板不在的帧不贴、板多宽切多宽（见 wta_scoreboard）。
+            from wta_scoreboard import resolve_masks as resolve_wta_masks
+            resolve_wta_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "itf-bjk":
+            # ⭐ 比利·简·金杯（ITF 转播）：宝蓝底＋浅青小分格＋发球小球（见 itf_scoreboard）。
+            from itf_scoreboard import resolve_masks as resolve_itf_masks
+            resolve_itf_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "lavercup":
+            # ⭐ 拉沃尔杯转播（账号所有者 2026-09-25「比分板补一套适配，彻底解决」）：
+            # 蓝边一行＋红边一行＋金色标签，三块胶囊各切各的；宽版全名板不贴（见 lavercup_scoreboard）。
+            from lavercup_scoreboard import resolve_masks as resolve_laver_masks
+            resolve_laver_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "band-legacy":
+            resolve_board_insets(sources, segments)
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
@@ -8677,11 +8686,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 每个 ffmpeg 进程自己的 CPU，不在这条 Python 线程上。worker 数跟着核走，
     # 但**至少 1**：单核机器或只有一段时退回串行，别为并行而并行。
     workers = max(1, min(len(segments), os.cpu_count() or 2))
-    if workers > 1 and len(segments) > 1:
-        with ThreadPoolExecutor(max_workers=workers) as ex:
-            encoded = list(ex.map(_encode_one, enumerate(segments)))
-    else:
-        encoded = [_encode_one(e) for e in enumerate(segments)]
+    # 这一层记**墙钟**；每段那一行（SEGMENT_STAGE）是几个 worker 的累加
+    with stage("分段编码"):
+        if workers > 1 and len(segments) > 1:
+            with ThreadPoolExecutor(max_workers=workers) as ex:
+                encoded = list(ex.map(_encode_one, enumerate(segments)))
+        else:
+            encoded = [_encode_one(e) for e in enumerate(segments)]
     parts += [p for _, p in sorted(encoded, key=lambda t: t[0])]
     if outro_enabled:
         parts.append(build_outro(outdir, outro_secs, tail=0.0))
