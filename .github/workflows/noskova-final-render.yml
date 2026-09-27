@@ -1,0 +1,24 @@
+name: noskova-final-render
+on:
+  push:
+    branches: [codex/noskova-svitolina-bjk-final-20260927]
+    paths: [.github/workflows/noskova-final-render.yml]
+permissions:
+  contents: read
+  actions: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch corrected manually authored reel
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow run match-reel.yml --ref codex/noskova-svitolina-bjk-final-20260927 \
+            -f mode=render \
+            -f slug=noskova-svitolina-bjk-cup-2026-final \
+            -f url=https://www.youtube.com/watch?v=ZxGHdW5GnbY \
+            -f voice=zh-CN-YunjianNeural -f rate=+6% \
+            -f received_at=2026-09-27T13:16:00Z -f push=false
