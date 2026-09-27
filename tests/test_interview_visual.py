@@ -123,6 +123,15 @@ def test_中文字幕烧上屏不带标点_只留问号叹号(tmp_path):
     assert zh[1].endswith("？"), "问号要留——少了它一问就成了陈述句"
     assert en[0].endswith("quickly.") and "," in en[0], "英文是学习素材，标点不动"
 
+    # 全库：spec 里写的每一行中文，烧上屏的那一份都不许带这几个标点
+    bad = []
+    for spec in _specs():
+        for cn in spec.get("zh") or []:
+            shown = re.sub(r"\{[^}]*\}", "", clip.zh_display(cn))
+            if any(ch in shown for ch in "，。、：；") or (cn.strip() and not shown.strip()):
+                bad.append(f"{spec['slug']}: {cn!r} → {shown!r}")
+    assert not bad, "\n".join(bad[:20])
+
 
 def test_中文字幕放大数字和赛场之上是同一个式子():
     """`_ZH_RUN` 抄的是 `explainer._ASS_RUN`（不 import 的理由写在定义那儿：explainer
@@ -134,15 +143,6 @@ def test_中文字幕放大数字和赛场之上是同一个式子():
     assert (clip._ZH_RUN.pattern, clip._ZH_RUN.flags) == (E._ASS_RUN.pattern, E._ASS_RUN.flags)
     for cn in ("欧洲队7比5，守得住吗？", "他打出了第12个ACE。", "2026年美网", "我们会赢！"):
         assert clip.zh_display(cn) == E._ass_text(drop_punctuation(cn)), cn
-
-    # 全库：spec 里写的每一行中文，烧上屏的那一份都不许带这几个标点
-    bad = []
-    for spec in _specs():
-        for cn in spec.get("zh") or []:
-            shown = re.sub(r"\{[^}]*\}", "", clip.zh_display(cn))
-            if any(ch in shown for ch in "，。、：；") or (cn.strip() and not shown.strip()):
-                bad.append(f"{spec['slug']}: {cn!r} → {shown!r}")
-    assert not bad, "\n".join(bad[:20])
 
 
 def test_中文字幕带数字的那一条基线不许跳(tmp_path):
@@ -368,7 +368,7 @@ def test_封面重点词只能一个_不许整行():
             clip._title_html(lines, bad)
 
 
-def test_封面重点词写错了在spec闸就红_不等出封面():
+def test_封面重点词写错了在spec闸就红_不等出封面(tmp_path, monkeypatch):
     """评审 WP3 nit 5：`hook_accent` 原来只在渲封面（`_title_html`）时才查，写错了要等到
     出封面那一步。现在 `check_cover_hook` 坐在 `main()` 开头那排只读 spec 的闸里，
     排在联网取字幕、切行之前；存量 spec 一条都不许被它误伤。"""
@@ -382,12 +382,41 @@ def test_封面重点词写错了在spec闸就红_不等出封面():
     for spec in _specs():
         clip.check_cover_hook(spec)
 
-    body = clip.Path(clip.__file__).read_text(encoding="utf-8").split("def main(")[1]
-    body = "\n".join(ln for ln in body.splitlines() if not ln.lstrip().startswith("#"))
-    assert "check_cover_hook(spec)" in body, "`main()` 里没有调 `check_cover_hook`"
-    for later in ("fetch_words(", "storyboard_sheet(", "segment(", "write_ass("):
-        assert body.index("check_cover_hook(") < body.index(later), (
-            f"重点词那道闸排在 `{later}` 后面了——它只读 spec，该在第一秒就报")
+    # 真跑一遍 `main() --stage subs`（评审 WP3 修正轮 nit：源码里有这一行调用证明不了它
+    # 真的跑、真的排在联网之前）。联网 / 下源片那几步换成桩：走到桩就说明闸没拦住，
+    # 或者排在了它们后面。
+    class _Reached(Exception):
+        pass
+
+    def _stub(name):
+        def f(*a, **k):
+            raise _Reached(name)
+        return f
+
+    for name in ("storyboard_sheet", "fetch_words", "segment", "write_ass"):
+        monkeypatch.setattr(clip, name, _stub(name))
+    monkeypatch.setattr(clip, "OUTDIR", tmp_path / "out")
+
+    def run(accent: str) -> str:
+        spec = _spec("ruud-zverev-laver-cup-2026-doubles-interview")
+        spec["cover"]["hook_accent"] = accent
+        p = tmp_path / f"{spec['slug']}.json"
+        p.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+        monkeypatch.setattr(sys, "argv", ["build_interview_clip.py", "--spec", str(p),
+                                          "--stage", "subs"])
+        try:
+            clip.main()
+        except _Reached as e:
+            return f"走到了 {e}"
+        except SystemExit as e:
+            return f"拦下：{e}"
+        return "跑完了"
+
+    # 对照组：合规的重点词，前面那排闸全放行，一路走到第一个联网的步骤——桩是接上的
+    assert run("紧张") == "走到了 storyboard_sheet"
+    out = run("不存在")
+    assert out.startswith("拦下") and "hook_accent" in out, (
+        f"重点词写错了，`main()` 却{out}——它只读 spec，该在联网之前第一秒就报")
 
 
 def test_封面文字列真渲出来和台头图标左对齐(tmp_path):
