@@ -840,17 +840,25 @@ def sweep_tournament(site: str, date: str | None, player: str | None = None) -> 
     res: dict = {"media": [], "galleries": [], "by_name": []}
     if player:
         try:
+            # ⚠️ `caption` / `alt_text` 也要：`search` 本来就是按它们命中的，而图注
+            # 才是「这张拍的是哪一场」的出处——拉沃尔杯 BS2_8696 的 title 只写
+            # 「Carlos Alcaraz」，caption 写着「takes the singles against Fritz on
+            # Saturday night」（2026-09-27 实测）。`cover_upgrade.py` 拿它过点名闸。
             named = json.loads(_get(
                 f"{base}/media?per_page=40&search={player}"
-                "&_fields=date,source_url,media_details,title"))
+                "&_fields=date,source_url,media_details,title,caption,alt_text"))
             for m in named:
                 md = m.get("media_details") or {}
                 if not md.get("width"):
                     continue
                 url = m.get("source_url") or ""
+                cap = html_mod.unescape(re.sub(
+                    r"<[^>]+>", "", (m.get("caption") or {}).get("rendered", ""))).strip()
                 res["by_name"].append({
                     "date": m.get("date"), "wh": f"{md.get('width')}x{md.get('height')}",
-                    "title": (m.get("title") or {}).get("rendered", ""),
+                    "title": html_mod.unescape((m.get("title") or {}).get("rendered", "")),
+                    "alt": html_mod.unescape(str(m.get("alt_text") or "")).strip(),
+                    "caption": cap,
                     "url": url, "original": original_url(url),
                 })
         except Exception:                                       # noqa: BLE001

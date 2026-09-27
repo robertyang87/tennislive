@@ -85,7 +85,9 @@ pytest -q -n auto                                                    # 全量，
 probe 并备料；候选报告写进 job summary，不用翻日志。往下接
 `reel-auto-ready.yml`（草稿转正）、`reel-dispatch-queue.yml`、
 `auto-push-reel.yml` / `auto-push-interview.yml` / `auto-push-explainer.yml`
-（合进 main 之后按 `push.auto` 自动推送）。
+（合进 main 之后按 `push.auto` 自动推送）。发出去之后，`reel-cover-upgrade.yml`
+每 20 分钟查一次近 48 小时的抽帧封面：官方图一到、机器闸全过就换图重渲重推
+（`tools/cover_upgrade.py`，账在 `data/cover_upgrades.json`）。
 
 状态看板和复制页共用一个 GitHub Pages 部署（`pages.yml`），
 观测口径见 [`docs/orchestration-observability.md`](docs/orchestration-observability.md)。

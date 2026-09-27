@@ -30,6 +30,7 @@ CONVERTED = [
     "interview-auto-render.yml",
     "oncourt-interviews.yml",
     "reel-auto-ready.yml",
+    "reel-cover-upgrade.yml",
 ]
 
 

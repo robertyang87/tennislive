@@ -2188,6 +2188,55 @@ GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: 
 ⚠️ **还不知道的**：bu-jodar 264.4 那张 poster 没进仓库，**它的 EAR 没量到**；
 「垂眼」这一档只靠眼睑开口判，头低着但眼睛睁着的帧（看得见瞳孔）照样放行。
 
+#### ⭐⭐ 2026-09-27 O4：抽帧封面推出去之后，官方图一到自动换图重推（`tools/cover_upgrade.py`）
+
+账号所有者在多选题里选的 O4「自动换图重推」。来路是三次同一个形状的手动补救——
+`alcaraz-fritz`（20:53:42Z 推送，拉沃尔杯官网 20:57:38Z 就上传了本场 `BS2_8696`，
+6b49049b）、`bu-majchrzak`（5beecfa6）、`zverev-deminaur`（1a4f92d3）：都是他在
+微信里看见、开口，会话才去换。定时班次 `reel-cover-upgrade.yml`（20 分钟一班）
+把那一下接过来：
+
+    近 48 小时推过（发布账本第一次 sent）、spec 的 cover.portrait 还是 frame_at 的「赛场之上」
+      → find_cover_photo 各档（WTA photo-resources ＋ 赛后稿头图 / AP / 当地报纸 / 赛事官网 WP）
+      → 机器闸全过才换 → spec ＋ assets/reel/<slug>-official.<ext> ＋ data/cover_upgrades.json 推 main
+      → 同日的 pushed.json 删掉 → match-reel mode=render push=true
+
+**闸（全是机器判得了的，任何一项拿不准都不换）**：
+
+| 闸 | 判据 | 为什么这么窄 |
+|---|---|---|
+| 点名 | 说明／文件名有主角的姓、有赛事（赛事自己的 WP 媒体库由站点担保）、**当地**日期对上这一场（说明写了按说明，没写才看元数据；写了星期几也要对上） | 同一个人前一天、后一天各打一场时，认人认得出是他、认不出是哪一场 |
+| 当地日期 | flashscore `dc_1_<id>` 的 `DC÷`／`DD÷`（开赛／结束）＋ `EVENTS` 表的时区；夜场跨午夜两天都算 | **时区不在表里就不换**，不退回宽窗口；新赛事在 `cover_upgrade.EVENTS` 加一行 |
+| 分辨率 | 按选定 zoom 铺 1080×1440 **不放大**（`cover_photo_problem` 同一个式子） | 机器不写 `_low_res_why`——那是人替取舍认领 |
+| 认人 | `face_checks`：最大那张脸 match 到 `cover.subject`（认成对手、unknown、模型不可用都不换） | O2 的闸，门槛不另调 |
+| 睁眼 | EAR ≥ 0.16 | O3 的闸 |
+| 钩子带 | 真实铺图数学算脸落在哪：下沿在 `STORYCOPY_TOP` 之上；zoom 从 1.0 推到 1.3，推一档要过一次分辨率 | 本节「挑封面之前先把钩子那条带叠上去」 |
+
+全过的里面挑**脸最大**的（近景特写优先）。**情绪对不对题机器判不了，就是不判**——
+O4 授权的是「过了这几道就换」。换完拿**正式的** `validate_spec` ＋ `cover_photo_problem`
+（去掉 slug，不走豁免表）再过一遍，不过就把写过的文件全部退回、这一班红出来。
+
+**一个 slug 最多换一次**：`data/cover_upgrades.json` 里 `status: upgraded` 的不再查（换回
+抽帧也不再动）；它同时让 `build_match_reel.OWNER_APPROVED_FRAME_COVERS` 减掉这个 slug
+（`auto_upgraded_frame_covers()`）——表的自检要求「补上真图之后也该删」，机器改账不改 Python。
+当面点过「就用这一帧」的，在 `cover.portrait._keep_frame_why` 写一句，这条就不换。
+
+⚠️ **按这套闸，拉沃尔杯官网那批图过不了**：`lavercup.com` 媒体库的上限是 1200 宽
+（`BS2_8696` 1200×927、`CB_34032` 1200×832、`BS2_9519` 1200×800），铺 1080×1440 要放大
+1.55~1.80 倍——6b49049b 是人写了 `_low_res_why` 认领的。2026-09-27 对 `bublik-jodar`
+实跑：23 张候选，本场那两张日期、说明全对，卡在分辨率。要让机器接这一档，得账号所有者
+先定「放大到几倍以内可以自动换」，**这是口径，不是 bug**。
+
+**实测过的端点（2026-09-27，沙箱）**：flashscore `dc_1_hheFZ9KN` 200（`DC÷1790360700`
+＝09-25 18:25Z）；`lavercup.com/wp-json/wp/v2/media?search=…&_fields=…caption,alt_text`
+200，caption／alt／date 都在；`wtatennis.com/videos/highlights` 200；**AP 沙箱 403**
+（`sweep_ap` 自己把失败吞成空列表，所以工具先敲一次 `/hub/tennis`，敲不开记「取不到」，
+不记「0 张」）；Getty `/detail/<id>` 301 跳到带说明的页。runner 上 AP 通不通没验过。
+
+    python3 tools/cover_upgrade.py                    # 只查、只报告（不写）
+    python3 tools/cover_upgrade.py --slug <slug>      # 只查一条
+    # 工作流：定时班次带 --apply；推完会话用 tools/push_link.py --slug <slug> 取新推送网页
+
 
 ### ⭐⭐ 2026-09-18：**比利·简·金杯官网的图在 Contentful 上，原图 5000~7000px**——页面是 JS 壳，图不是
 
