@@ -2932,6 +2932,10 @@ zoompan」，只修抖动、不改设计。**先量再修**：跟踪片尾台标
   一条在 `test_interview_clip.py`）：CI 是 `pytest -n auto --dist loadfile`，同一个文件整个落在
   一个 worker 上，而 `test_match_reel.py` 本来就是最长的那个——每条涨 5.4 倍的 CPU 就直接
   加在关键路径上。**新的「真跑片尾滤镜」测试写进那个文件，别写回两个大文件**
+- ⚠️ 挪过去之后那个文件自己三条串在一个 worker 上（本机各约 40~45s CPU）。评审第二轮：前两条量的是
+  层的入场时刻和画面帧数，和推镜平不平滑无关，走 `push_1x`（`push_filter(supersample=1)`），两条合计
+  CPU 92s → 22s；第三条（拼接）照 `_build_outro` 的参数原样跑 4 倍。**量推镜平滑的判据不许用它**——
+  那条恰恰要 4 倍（`test_outro_push.py`，真跑 4 倍的 `motion_filter`）
 - **母版怎么重出的**：`tools/build_outro_master.py --keep-voice`（这次新加的一档）——画面照样
   现渲（Chromium 渲四层 ＋ 新滤镜），口播那一轨从旧母版 `-c copy` 逐字节搬过来，帧数对不上
   就报错不写。只改画面的时候别去赌 edge-tts 这次合得和上次一样；**改了 `NARRATION` / `TAGLINE`

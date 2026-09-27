@@ -10,6 +10,13 @@
 
 ⚠️ **别挪回去**，也别把新的「真跑片尾滤镜」测试写进那两个大文件——写这儿。
 判据本身一个字没改，只是换了文件。
+
+⭐ 评审第二轮（2026-09-27）又量了一遍：挪到这儿之后这个文件三条串在一个 worker 上，
+本机单跑三条各约 40~45s CPU，loadfile 下它自己可能变成最长的那个。前两条量的是**层的
+入场时刻**和**画面帧数**，和推镜平不平滑无关，所以推镜按 1 倍网格跑（`push_1x`）：
+两条合计 CPU 92s → 22s（本机实测，含 pytest 启动；第三条 4 倍照旧约 42s）。推镜在 4 倍网格上平不平滑、
+帧数够不够，`test_outro_push.py` 真跑生产用的 `motion_filter`（4 倍）量着；第三条
+（拼接）照 `_build_outro` 的参数原样跑，是这个文件里留着的那条完整 4 倍 `render_clip`。
 """
 from __future__ import annotations
 
@@ -17,11 +24,37 @@ import re
 import sys
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 
-def test_片尾的动效每一层都要按时出现(tmp_path):
+@pytest.fixture
+def push_1x(monkeypatch):
+    """推镜按 1 倍网格跑（`push_filter(supersample=1)`），只给不量推镜的判据用。
+
+    4 倍超采样是为了推镜那 0.0x 像素一帧的亚像素平滑（`outro_page.SUPERSAMPLE`），
+    每帧多一次 4320×5760 的放大、推、缩回——CPU 约 5.4 倍。层的淡入时刻、画面帧数和
+    它无关：两种网格下滤镜图的结构、输出尺寸、帧率、`setsar` 都一样，差的只是推镜
+    每一步的步长。⚠️ 别拿它去跑推镜平滑的判据——那条恰恰要 4 倍（`test_outro_push.py`）。
+
+    `motion_filter` 按模块全局名调 `push_filter`，所以换掉模块上的那个名字就生效；
+    末尾那句断言确认它真的换上了——没换上只会变慢、不会变错，但那样这个 fixture 就是
+    一句假话。
+    """
+    from functools import partial  # noqa: PLC0415
+
+    from tennislive.video import outro_page  # noqa: PLC0415
+
+    monkeypatch.setattr(outro_page, "push_filter",
+                        partial(outro_page.push_filter, supersample=1))
+    graph = outro_page.motion_filter(1.0, "30", 30.0)
+    assert f"s={outro_page.VIDEO_W}x{outro_page.VIDEO_H}:" in graph, (
+        "push_1x 没换上——motion_filter 不再按模块全局名调 push_filter 了？")
+
+
+def test_片尾的动效每一层都要按时出现(tmp_path, push_1x):
     """账号所有者 2026-08-05：「最后最好有一个动效出来这一屏」。
 
     **真跑一遍生产用的那个滤镜图**，量每一层在自己该出现的时刻之前是不是还没
@@ -117,7 +150,7 @@ def test_片尾的动效每一层都要按时出现(tmp_path):
             f"「{key}」层前后差得太小（{before:.1f} → {after:.1f}），淡入没在动")
 
 
-def test_片尾片段的画面要和它自己要的一样长(tmp_path):
+def test_片尾片段的画面要和它自己要的一样长(tmp_path, push_1x):
     """**真调一次 `render_clip`**，量它出来的画面有多长。
 
     ⚠️ 这条是补上一条判据的漏洞的。`test_片尾的动效每一层都要按时出现` 验的是

@@ -179,6 +179,25 @@ def test_数据图台头的栏目名跟着封面走(variant):
         "封面没写 eyebrow 时缺省应该是「赛场之上」（和封面、常驻角标的缺省一样）")
 
 
+def test_数据图台头的缺省栏目和格式只有一处出处(monkeypatch):
+    """评审 2026-09-27（第二轮）：`DEFAULT_COLUMN = "赛场之上"` 原来在 `render_stat_card` 和
+    `build_match_reel` 各写一遍，「网球时差 · 栏目」那句格式也和常驻角标的 `watermark.brand_label`
+    各写一遍——值今天一样，改一处另一处不报错。
+
+    判据按行为钉，不按源码文本：把出处那一头换掉，台头必须跟着变。"""
+    import build_match_reel as reel  # noqa: PLC0415
+    from tennislive.video import watermark  # noqa: PLC0415
+
+    assert not hasattr(sc, "DEFAULT_COLUMN"), (
+        "render_stat_card 又自己定义了一份 DEFAULT_COLUMN——缺省栏目跟 build_match_reel 走")
+    monkeypatch.setattr(reel, "DEFAULT_COLUMN", "某个栏目")
+    assert sc.brand_line({}) == "网球时差 · 某个栏目", (
+        "eyebrow 空着时台头没跟 build_match_reel.DEFAULT_COLUMN 走——又写死了一份缺省")
+    monkeypatch.setattr(watermark, "brand_label", lambda column: f"<{column}>")
+    assert sc.brand_line({"eyebrow": "网球有故事"}) == "<网球有故事>", (
+        "台头那句的格式没走 watermark.brand_label——和常驻角标那一行各写一份")
+
+
 def test_数据图打着token标记():
     """`design-tokens: enforced` 是 `test_design_tokens` 扫描的入口：标记一删，
     这个文件里再写裸色值就没人管了。所以标记本身也要钉住。"""
