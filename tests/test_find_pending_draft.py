@@ -19,6 +19,11 @@ def _draft(a: str, b: str) -> dict:
     return {"cover": {"matchup": [{"name_en": a}, {"name_en": b}]}}
 
 
+def _ago(hours: float) -> str:
+    from datetime import datetime, timedelta, timezone
+    return (datetime.now(timezone.utc) - timedelta(hours=hours)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def test_按两个姓认整词不认子串():
     t = _tool()
     d = _draft("Alexander Zverev", "Lorenzo Sonego")
@@ -48,7 +53,7 @@ def test_找到了要把probe目录和卡点一起打出来(tmp_path, monkeypatc
     d = _draft("Alexander Zverev", "Lorenzo Sonego")
     d.update({"slug": "zverev-sonego", "source_url": "https://youtu.be/abc", "stats": {"a": {}},
               "_match": {"status": "result_verified", "winner": "兹维列夫", "winner_result": "6-4 3-6 6-3", "loser": "索内戈"},
-              "_production": {"received_at": "2026-09-02T06:09:04Z", "event": "US Open"}})
+              "_production": {"received_at": _ago(2), "event": "US Open"}})
     (tmp_path / "zverev-sonego.draft.json").write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
     monkeypatch.setattr("sys.argv", ["find_pending_draft", "--who", "Zverev,Sonego", "--no-refs"])
     assert t.main() == 0
@@ -243,3 +248,31 @@ def test_网球有故事的spec不拿来比封面(tmp_path, monkeypatch, capsys)
     assert "story.jpg" not in warn, "故事片的 5000×4000 被当成同一场更大的封面"
     assert "assets/reel/big.jpg 1600×1200" in warn, "赛场之上草稿里那张更大的照样要喊"
     assert "网球有故事，不是赛场之上" in out
+
+
+def test_pending里的老草稿只列不算找到_退出码2(tmp_path, monkeypatch, capsys):
+    """review 复现：`--who Swiatek,Zheng` 退出码 0，靠的是 9/07 那份
+    `swiatek-zheng.draft.json`——它自己的 promote 卡点写着「自动草稿已超过 20 小时」，
+    同一份输出里 origin/* 那一段也说「都不算能接着用的」。pending 里躺着一百多份，
+    大半是几周前的，同两个人再交手就撞上。和 origin/* 那一半同一把尺子：`REF_DAYS` 天。"""
+    t = _tool()
+    monkeypatch.setattr(t, "PENDING", tmp_path)
+    monkeypatch.setattr(t, "probe_dirs", lambda slug: [])
+    monkeypatch.setattr(t, "waiting", lambda d: ["自动草稿已超过 20 小时，不再生产上一比赛日内容"])
+    old = _draft("Iga Swiatek", "Qinwen Zheng")
+    old["_production"] = {"received_at": _ago(24 * (t.REF_DAYS + 17))}
+    (tmp_path / "swiatek-zheng.draft.json").write_text(json.dumps(old), encoding="utf-8")
+    monkeypatch.setattr("sys.argv", ["find_pending_draft", "--who", "Swiatek,Zheng", "--no-refs"])
+    assert t.main() == 2, "只有几周前那份老草稿：没有能接着用的"
+    out = capsys.readouterr().out
+    assert "swiatek-zheng.draft.json" in out, "老草稿照样要列出来"
+    assert "老草稿" in out and "不算能接着用的" in out
+    assert "没有匹配" not in out, "匹配到了，只是老——别说成「没有匹配」"
+    # 同一个文件换成这一个比赛日的：算找到
+    old["_production"] = {"received_at": _ago(3)}
+    (tmp_path / "swiatek-zheng.draft.json").write_text(json.dumps(old), encoding="utf-8")
+    assert t.main() == 0
+    # 没有 received_at（手写的草稿）：按 HEAD 上最近一次提交认；没提交过的算刚写的
+    del old["_production"]
+    (tmp_path / "swiatek-zheng.draft.json").write_text(json.dumps(old), encoding="utf-8")
+    assert t.main() == 0

@@ -177,9 +177,11 @@ concurrency:
 jobs:
   reel:
     runs-on: ubuntu-latest
-    # 53 = 各步骤声明的最坏预算之和（51：dry-run 闸 3 分钟 + 判据回喂修复步
-    # 8 分钟是后加的两笔）加两分钟余量——步骤自己还在正常重试时不许被 job 级
-    # 的壳先砍掉，判据 test_job级超时要兜得住各步骤自己声明的最坏预算之和。
+    # 各步骤声明的最坏预算之和是 57 分钟（dry-run 闸 3 + 装 ffmpeg／中文字体各 15 +
+    # 装 Chromium 10 + 判据回喂修复步 8 + 源片认领的认领／摘认领／标完成三步各 2），
+    # 63 在它上面留了几分钟余量——步骤自己还在正常重试时不许被 job 级的壳先砍掉，
+    # 判据 test_job级超时要兜得住各步骤自己声明的最坏预算之和。再加带 timeout 的步骤，
+    # 先把这个和重算一遍。
     timeout-minutes: 63
     steps:
       # 600 秒只算「生产输入已齐 → 我们自己的 MP4 落盘」。发布/Pages 是另一条
@@ -1342,7 +1344,8 @@ jobs:
           retention-days: 14
 
       # 开跑时推到 main 的**源片认领**，probe 没做成就摘掉：认领还挂着的话，编排器
-      # 三天之内都会以为「有人在做」而不点它。只摘本 slug 那一条（别人的认领不动）；
+      # 三天之内都会以为「有人在做」而不点它。只摘本 slug **这一趟**（run id）那一条——
+      # 别人的认领、本 slug 上一趟已经标完成的记录都不动（重 probe 失败不等于没 probe 过）；
       # 排在下面摘 state 那步之前——那步会 `git switch` 到远端最新，别让它改了脚下的树。
       - name: probe 失败摘源片认领
         if: failure() && github.event.inputs.mode == 'probe'
@@ -1350,7 +1353,9 @@ jobs:
         env:
           URL: ${{ github.event.inputs.url }}
           SLUG: ${{ github.event.inputs.slug }}
-        run: python tools/probe_claims.py release --url "$URL" --slug "$SLUG"
+        run: |
+          python tools/probe_claims.py release --url "$URL" --slug "$SLUG" \
+            --run-id "${{ github.run_id }}"
 
       # probe 失败（下不动源片）时，把 slug 从编排器 state 里摘掉——否则它已被
       # 标记「已 dispatch」，下次 cron 跳过它、永不重试。摘掉之后下次 cron 会重新
@@ -1433,36 +1438,49 @@ jobs:
           # 多条不同 slug 可以并行落库。push 被别的 run 抢先后，只把本条
           # OUTDIR 重放到最新分支；普通 rebase 遇到同名二进制文件会冲突，
           # 而 `break` 版循环在重试耗尽后还会错误地继续微信推送。
-          for attempt in $(seq 1 10); do
-            if git push origin "HEAD:$BRANCH"; then
-              exit 0
-            fi
-            echo "push 被拒（第 $attempt 次），把本次提交动过的文件重放到最新的 $BRANCH 上"
+          #
+          # **重放按「这次提交真正改了什么」算，不按写死的目录算。**
+          # 老写法 `rm -rf $OUTDIR && git checkout rendered -- $OUTDIR` 有两个洞：
+          # ① 只重放 OUTDIR——同一个提交里 OUTDIR 之外的文件（比如 probe
+          #    自动备料写的 specs/reels/<slug>.draft.json）被 reset --hard
+          #    抹掉之后**静默丢失**；草稿哪天挪个位置，这里还得跟着改，
+          #    而漏改不吭声。
+          # ② 「重放只加不减」的老毛病靠 rm -rf 补（run 30727483963：走了
+          #    Release、已经 rm 掉的旧成片被 reset --hard 救活）——而 rm 的
+          #    范围同样写死在 OUTDIR，跟 ① 一个形状。
+          # 两条 diff 把这次提交动过的每一个文件原样搬回来：
+          #   小写 d ＝ 排除删除（新增/修改的那些），checkout 恢复内容并进索引；
+          #   大写 D ＝ 该提交删掉的那些（走了 Release 的旧成片），git rm 把
+          #   reset --hard 刚救活的那份再删掉并进索引。--sparse：稀疏检出下
+          #   照样能动索引；--ignore-unmatch：新 origin 上已经没有它也不红。
+          # 每次重放都重新 `git branch -f rendered HEAD`，所以
+          # `rendered^..rendered` 永远正好是本次这一个提交。
+          replay_onto_latest() {
             git fetch origin "$BRANCH"
             git branch -f rendered HEAD
             git reset --hard "origin/$BRANCH"
-            # **重放按「这次提交真正改了什么」算，不按写死的目录算。**
-            # 老写法 `rm -rf $OUTDIR && git checkout rendered -- $OUTDIR` 有两个洞：
-            # ① 只重放 OUTDIR——同一个提交里 OUTDIR 之外的文件（比如 probe
-            #    自动备料写的 specs/reels/<slug>.draft.json）被 reset --hard
-            #    抹掉之后**静默丢失**；草稿哪天挪个位置，这里还得跟着改，
-            #    而漏改不吭声。
-            # ② 「重放只加不减」的老毛病靠 rm -rf 补（run 30727483963：走了
-            #    Release、已经 rm 掉的旧成片被 reset --hard 救活）——而 rm 的
-            #    范围同样写死在 OUTDIR，跟 ① 一个形状。
-            # 两条 diff 把这次提交动过的每一个文件原样搬回来：
-            #   小写 d ＝ 排除删除（新增/修改的那些），checkout 恢复内容并进索引；
-            #   大写 D ＝ 该提交删掉的那些（走了 Release 的旧成片），git rm 把
-            #   reset --hard 刚救活的那份再删掉并进索引。--sparse：稀疏检出下
-            #   照样能动索引；--ignore-unmatch：新 origin 上已经没有它也不红。
-            # 循环每一轮都重新 `git branch -f rendered HEAD`，所以
-            # `rendered^..rendered` 永远正好是本次这一个提交。
             git diff --name-only -z --diff-filter=d rendered^ rendered \
               | xargs -0 -r git checkout rendered --
             git diff --name-only -z --diff-filter=D rendered^ rendered \
               | xargs -0 -r git rm -q -f --ignore-unmatch --sparse --
             python tools/check_staged_file_sizes.py
             git diff --cached --quiet || git commit -m "$MSG"
+          }
+          # **main 上的 probe 第一次 push 必然被拒**：开跑那一步（probe_claims.py
+          # probe-step）刚往 main 推过一笔源片认领，脚下的检出落后一个提交——
+          # 照老路要白走一趟「被拒 → fetch → 重放 → sleep 5~14 秒」。所以先取一次、
+          # 重放到最新的 main 上再推，不 sleep（编排器点的 probe 全跑在 main 上，
+          # 每一趟都省这 6~20 秒）。认领没推上的那趟也照样走这条，只多一次 fetch。
+          if [ "${{ github.event.inputs.mode }}" = "probe" ] && [ "$BRANCH" = "main" ]; then
+            echo "main 上的 probe：开跑时推过源片认领，先重放到最新的 main 上再推"
+            replay_onto_latest
+          fi
+          for attempt in $(seq 1 10); do
+            if git push origin "HEAD:$BRANCH"; then
+              exit 0
+            fi
+            echo "push 被拒（第 $attempt 次），把本次提交动过的文件重放到最新的 $BRANCH 上"
+            replay_onto_latest
             sleep $((attempt * 5 + RANDOM % 10))
           done
           echo "::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链"
@@ -1479,7 +1497,9 @@ jobs:
         env:
           URL: ${{ github.event.inputs.url }}
           SLUG: ${{ github.event.inputs.slug }}
-        run: python tools/probe_claims.py done --url "$URL" --slug "$SLUG"
+        run: |
+          python tools/probe_claims.py done --url "$URL" --slug "$SLUG" \
+            --run-id "${{ github.run_id }}"
 
       # probe 只有在正式 spec 已由严格提升器落进 main 后才继续。pending/waiting
       # 是正常结果，不 dispatch；ready 则立即并行进入 render，不等下一班定时任务。

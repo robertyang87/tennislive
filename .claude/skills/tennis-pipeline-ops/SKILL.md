@@ -3826,9 +3826,9 @@ slug probe 过**；带自动备料的 144 趟 probe 里 8 趟撞了先例——`
 
 | 哪儿 | 做什么 |
 |---|---|
-| match-reel.yml probe 第一步 `probe_claims.py probe-step` | 按视频 id 查 main 上的 `data/probe_claims/<id>.json` 和近 3 天 probe 目录，别的 slug 做过就 `::warning::` 带出可复用的目录；然后把本趟认领**直接推到 main**（临时索引 ＋ `commit-tree`，不碰分支和工作区）。**只出声不拦**（`continue-on-error`）。失败时 `release` 摘掉自己那条；**分支上**成功时 `done` 标完成 |
-| `orchestrate.drop_already_probed` | 探到源片之后、配额切片之前：同一批按视频 id 合组只点全名那条；别人的 probe／认领要有**正面证据**是这一场的赛场之上才挡（spec／草稿的栏目是赛场之上且带着姓，或 slug **开头两个词**正好是这两个姓；编排器 state 里按同一条视频点过的别的 slug 也算）。挡下的记进 `state["blocked"]`，下一班复用源片、不再 `find_highlight`。查不出来按没做过处理并出声 |
-| `find_pending_draft.py` | 除了工作区 pending，还翻 `origin/main` 和近 3 天动过的 `origin/*`（`--url` 按视频 id、`--fs-id` 按 flashscore id、`--who` 按姓），同一场的**赛场之上**有更大的封面就喊。退出码 2 ＝ 没有能接着用的（老交手、只在自己分支上的那份只列不算） |
+| match-reel.yml probe 第一步 `probe_claims.py probe-step` | 按视频 id 查 main 上的 `data/probe_claims/<id>.json` 和近 3 天 probe 目录，别的 slug 做过就 `::warning::` 带出可复用的目录；然后把本趟认领**直接推到 main**（临时索引 ＋ `commit-tree`，不碰分支和工作区）。**只出声不拦**（`continue-on-error`）。失败时 `release` 摘掉**这一趟**（`--run-id`）那条；**分支上**成功时 `done` 标完成 |
+| `orchestrate.drop_already_probed` | 探到源片之后、配额切片之前：同一批按视频 id 合组只点全名那条；别人的 probe／认领要有**正面证据**是这一场的赛场之上才挡（spec／草稿的栏目是赛场之上且带着姓，或 slug **开头**正好是这两个姓——复姓／小词／连字符／撇号按字母数字比，一个姓可以占 1~4 个词；编排器 state 里按同一条视频点过、带着这场的姓的别的 slug 也算）。挡下的记进 `state["blocked"]`，下一班复用源片、不再 `find_highlight`。查不出来按没做过处理并出声 |
+| `find_pending_draft.py` | 除了工作区 pending，还翻 `origin/main` 和近 3 天动过的 `origin/*`（`--url` 按视频 id、`--fs-id` 按 flashscore id、`--who` 按姓），同一场的**赛场之上**有更大的封面就喊。退出码 2 ＝ 没有能接着用的（pending 里 3 天以前的老草稿、老交手、只在自己分支上的那份只列不算） |
 
 - **写在开跑时、写到 main**：等产物落库再说「我做过了」，两分钟的并发永远赶不上；
   编排器只看得见 main，会话常在分支上 probe
@@ -3853,6 +3853,26 @@ slug probe 过**；带自动备料的 144 趟 probe 里 8 趟撞了先例——`
 - 认领时刻漏了时区按 UTC 读（原来 `now - at` 是 TypeError，一条坏认领带崩整班）
 - `find_pending_draft` 的退出码原来只要 origin/* 上有任何一份就是 0（含半年前那场、含会话自己
   推上去的那份）
+
+⚠️ **第二轮 review 又补的**（判据 `tests/test_probe_claims.py` 末尾那一段、
+`test_find_pending_draft.py` 的老草稿那条）：
+
+- **复姓认不出**：`leads_with_pair` 原来只比开头两个整词／前缀——`zverev-deminaur`（编排器的
+  姓是 `minaur`）、`tsitsipas-auger-aliassime`、`fonseca-van-de-zandschulp`、`fritz-oconnell`
+  （编排器是 `o'connell`）、`muchova-bouzas`（编排器是 `maneiro`）全放过去，会话的 spec 还没上
+  main 时编排器照样再 probe 一遍。现在一个姓可以占开头 1~4 个词、按字母数字比；「以姓结尾」
+  要求前面那截**全是小词**（de／van／del…），否则 `comebacks`+`zheng` 也算「以 zheng 结尾」。
+  编排器给的是**整个姓**（`family_name`：`Bouzas Maneiro J.` → `Bouzas Maneiro`），不是
+  `surname_en` 那一个词。回放 232 份带 name_en 的已发赛场之上 spec：认出 217 → 230（剩下两条
+  slug 里用的是名字／没有第二个人），42 份故事片 spec 的误认和老规则一样是那 3 条 h2h
+- **重 probe 抹掉完成记录**：`with_claim` 同 slug 整条换掉、`release` 按 slug 摘——会话第二趟
+  （带 `--scorebox`）被取消或失败，第一趟标完成的记录跟着没了，40 分钟后编排器再 probe 一遍。
+  现在标了完成的留着，`release`／`done` 按 `--run-id` 认这一趟
+- **main 上的 probe 第一次 push 必然被拒**：开跑时刚往 main 推过认领，检出落后一个提交。
+  `提交产物` 对 main 上的 probe 先 fetch ＋ 重放再推（`replay_onto_latest`），省一趟 5~14 秒的 sleep
+- 同一条源片不等于同一场（合集视频）：同批合组和 state 里的 `own` 都要至少一个人对得上；
+  `state["blocked"]` 的三方合并把本趟摘掉的也带过去；作废的认领一次查找只报一次；
+  `find_pending_draft` 对工作区 pending 用同一把 3 天的尺子（按 `received_at`）
 
 ⚠️ **同一轮评估过、没做的一条：「渲染前拿 main 上最新的闸验分支 spec」。** 取证报告
 举的两个例子**都不成立**：`alcaraz-fritz` 那道「没配音要配中英字幕」的闸（df9fb05f，
