@@ -464,12 +464,19 @@ jobs:
           #   cjk ＋ core ＋ emoji——这条线要的 cjk ＋ emoji 是它的子集，而 CI 的缓存
           #   存在 main 上、所有分支都看得见。
           #   判据 `test_装字体的apt缓存都能退到CI在main上存的那份`。
-          # - **这个前缀只许装同一批包的线来存**：reel-model-benchmark 和
-          #   wang-vekic 只装 ffmpeg，走自己的 `ffmpeg-only-v1-`
-          #   （`test_共用一个apt缓存前缀的几条线装的包一样`）。
-          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-${{ github.run_id }}
+          # - **v3 → v4（同一天）：一个前缀只许装同一批包的线来存**。
+          #   reel-model-benchmark 和 wang-vekic 只装 ffmpeg，原来跟这里共用 v3——
+          #   benchmark 推 main 就跑，在 main 上存一份只有 ffmpeg 的 v3，会话分支上
+          #   的 render / cover 按前缀先捞到它（排在 CI 那一格前面），字体
+          #   `--no-download` 落空、又去摸镜像；上面那道 `mode != 'push'` 旧开关下，
+          #   probe 的静态构建一落空也会往 v3 里存同样的半份。所以**搬走的是这一条**：
+          #   v3 留给那两条只装 ffmpeg 的线，它们的 yml 一个字不动——benchmark 的
+          #   push 触发器 paths 里有它自己的 yml，改它，合并那一下就会在 main 上跑一趟
+          #   DeepSeek ＋ MiniMax 对比（账号所有者 2026-09-27：这两个模型不要用）。
+          #   判据 `test_共用一个apt缓存前缀的几条线装的包一样`（这里退回 v3 就红）。
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v4-${{ github.run_id }}
           restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v4-
             apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: 装 ffmpeg
         # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /

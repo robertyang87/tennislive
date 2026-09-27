@@ -179,26 +179,19 @@ def test_apt缓存只在这趟真下了新包时回写():
 # ---- 缓存按 ref 隔离：分支上看得见的只有本分支和 main 的那几份 --------------
 
 _RUN_ID = "${{ github.run_id }}"
-_COND_KEY = re.compile(
-    r"\$\{\{\s*\((?P<cond>.+?)\)\s*&&\s*format\('(?P<fmt>[^']*)',\s*runner\.os\)"
-    r"\s*\|\|\s*''\s*\}\}")
 
 
-def _restore_keys(step) -> list[tuple[str, str | None]]:
-    """[(前缀, 条件或 None)]——`${{ (条件) && format('…{0}…', runner.os) || '' }}`
-    这种按 mode 开关的一格，按「条件成立时」的样子还原成字面前缀。"""
-    out = []
-    for line in str((step.get("with") or {}).get("restore-keys") or "").splitlines():
-        line = line.strip()
-        if not line:
-            continue
-        m = _COND_KEY.fullmatch(line)
-        if m:
-            out.append((m.group("fmt").replace("{0}", "${{ runner.os }}"),
-                        " ".join(m.group("cond").split())))
-        else:
-            out.append((line, None))
-    return out
+def _restore_keys(step) -> list[str]:
+    """restore-keys 逐行的字面前缀。
+
+    ⚠️ 按 mode 开关的写法（`${{ (条件) && format('…{0}…', runner.os) || '' }}`）
+    **故意不还原**：2026-09-27 match-reel 退到 CI 那一格改成了普通一行之后，没有一条
+    工作流再这么写，还原它的那段解析和「开关条件要和装字体那一步的 `if` 一字不差」
+    那道核对都跑不到任何主语、反向验证不了，于是一起删了。真要加回按 mode 开关的
+    一格，这里按字面比对会当场红（前缀对不上 CI 那一格）——那时连那道核对一起加回来。"""
+    return [line.strip()
+            for line in str((step.get("with") or {}).get("restore-keys") or "").splitlines()
+            if line.strip()]
 
 
 def _path_list(step) -> list[str]:
@@ -224,7 +217,7 @@ def _apt_restores():
 
 
 def test_装字体的apt缓存都能退到CI在main上存的那份():
-    """各条线的 apt 缓存键各是各的前缀（`…-ffmpeg-fonts-v3-` / `…-explainer-v2-`…），
+    """各条线的 apt 缓存键各是各的前缀（`…-ffmpeg-fonts-v4-` / `…-explainer-v2-`…），
     而 **actions/cache 按 ref 隔离**：分支上的 run 只看得见本分支和 main 存的那几份。
     render / 采访 / 解说都在会话分支上跑，存进的是各自的分支——**每条新分支的第一趟
     都是冷的**，照样摸那个会抽风的镜像。
@@ -234,9 +227,9 @@ def test_装字体的apt缓存都能退到CI在main上存的那份():
     CI 那个前缀，而且缓存目录的**顺序**要和 CI 一模一样（版本号按顺序哈希，
     顺序一换就永远 miss，不报错）。
 
-    按 mode 开关的那一格（match-reel 只给 render / cover 加：probe、narration 不装
-    字体，捞一百来 MB 回来白下）——开关的条件必须和装字体那一步的 `if` 一字不差，
-    差一点就是「该退的时候不退」或者「白下」。
+    CI 那一格一律是**普通一行**。match-reel 原来按 mode 开关它（只给 render / cover
+    加），2026-09-27 起整步 apt 恢复就只在 render / cover 跑，那一格也就写成了普通
+    一行；按 mode 开关的写法这条判据不认（见 `_restore_keys`），写了就红。
     """
     ci = [(steps, step) for fname, _job, steps, step in _apt_restores() if fname == "ci.yml"]
     assert len(ci) == 1, f"ci.yml 里应该恰好有一处 apt 缓存恢复，找到 {len(ci)} 处"
@@ -257,22 +250,15 @@ def test_装字体的apt缓存都能退到CI在main上存的那份():
             continue
         where = f"{fname}::{job}「{step.get('name')}」"
         keys = _restore_keys(step)
-        hit = [(p, cond) for p, cond in keys if p == ci_prefix]
-        assert hit, (
+        assert ci_prefix in keys, (
             f"{where} 装的 {sorted(pkgs)} 是 CI 那份的子集，restore-keys 却退不到 "
-            f"{ci_prefix}——每条新分支的第一趟都是冷缓存：{keys}")
-        assert keys[0][0] != ci_prefix, (
+            f"{ci_prefix}——每条新分支的第一趟都是冷缓存：{keys}"
+            "（按 mode 开关的 `${{ … && format(…) }}` 写法这里不认，见 `_restore_keys`）")
+        assert keys[0] != ci_prefix, (
             f"{where} 的第一格是 CI 的前缀——本线自己存的（可能多装了包）要排在前面")
         assert _path_list(step) == ci_paths, (
             f"{where} 缓存的目录（或顺序）和 CI 不一样：{_path_list(step)} vs {ci_paths}"
             "——版本号对不上，退到 CI 那一格永远 miss")
-        cond = hit[0][1]
-        if cond is not None:
-            installers = {" ".join(str(s.get("if") or "").split()) for s in steps
-                          if re.search(r"(?<![\w-])apt_install_cached\s", _code(s.get("run")))}
-            assert installers == {cond}, (
-                f"{where} 退到 CI 那一格的开关条件 {cond!r} 和装字体那一步的 if "
-                f"{sorted(installers)} 不一样")
         checked.append(where)
     assert len(checked) >= 6, f"只扫到 {len(checked)} 处装字体的 apt 缓存：{checked}"
 
@@ -298,7 +284,7 @@ def test_apt缓存不许再认被空壳污染的前缀():
         for prefix in _POLLUTED_APT_PREFIXES:
             assert not key.startswith(prefix), (
                 f"{fname}::{job} 的 apt 缓存键又用回了被空壳污染的前缀 {prefix}")
-            assert all(p != prefix for p, _c in _restore_keys(step)), (
+            assert prefix not in _restore_keys(step), (
                 f"{fname}::{job} 的 restore-keys 认 {prefix}——main 上那个前缀下只有"
                 "243 字节的空壳，捞回来就是冷缓存")
     assert seen >= 14, f"只扫到 {seen} 处 apt 缓存恢复，判据的主语像是没了"
@@ -393,7 +379,7 @@ def _saved_package_sets():
 def test_同一把apt缓存键在每个会存它的mode下装的包都一样():
     """match-reel 原来 `mode != 'push'` 就恢复 apt 缓存：probe / narration 只
     `ensure_ffmpeg`，静态构建一落空就退到 `apt_install_cached ffmpeg`、标脏、在
-    `ffmpeg-fonts-v3-` 下存一份**只有 ffmpeg** 的缓存——它挂在前缀最新那一格，
+    它的前缀（当时是 `ffmpeg-fonts-v3-`）下存一份**只有 ffmpeg** 的缓存——它挂在前缀最新那一格，
     下一趟 render 先捞到它，字体 `--no-download` 落空、照样摸镜像（沙箱里拿真 apt
     复现过：A 趟 `apt_install_cached ed` 存下只有 ed 的缓存，B 趟恢复它再
     `apt_install_cached sl` → 「缓存没有或不全，走网络」）。
@@ -414,11 +400,15 @@ def test_同一把apt缓存键在每个会存它的mode下装的包都一样():
 
 
 def test_共用一个apt缓存前缀的几条线装的包一样():
-    """reel-model-benchmark / wang-vekic 只装 ffmpeg，却跟 match-reel 共用
+    """reel-model-benchmark / wang-vekic 只装 ffmpeg，原来跟 match-reel 共用
     `ffmpeg-fonts-v3-`。benchmark 在推 main 时跑（它的 paths 里有它自己的 yml），
     于是在 main 上存下一份只有 ffmpeg 的 v3——会话分支上每一趟 render / cover
     按前缀先捞到它（排在 CI 那份前面），字体落空、退回镜像，直到哪趟 main 上的
     render 存出一份全的。前缀是**写**缓存的那条线的地盘：谁往里存，谁就得装同一批包。
+
+    2026-09-27 搬走的是 match-reel（→ `ffmpeg-fonts-v4-`），v3 留给那两条只装 ffmpeg
+    的线：改 benchmark 的 yml 会让合并那一下在 main 上跑一趟 DeepSeek ＋ MiniMax 对比，
+    而账号所有者当天说这两个模型不要用。match-reel 退回 v3，这里就红。
     """
     by_prefix: dict[str, dict[str, frozenset[str]]] = {}
     for fname, job, prefix, per_mode in _saved_package_sets():

@@ -2259,10 +2259,16 @@ run 30973785219 就卡在「安装 Chromium」上。
 半份（它排在 CI 那一格前面）、`--no-download` 落空、又去摸镜像。沙箱拿真 apt 复现过：
 A 趟 `apt_install_cached ed` 存下只有 ed 的缓存，B 趟恢复它再装 `sl` →「缓存没有或不全，走网络」。
 两个入口都堵了：reel-model-benchmark / wang-vekic 只装 ffmpeg，原来跟 match-reel 共用 v3
-（benchmark 推 main 就跑，会在 main 上存一份只有 ffmpeg 的 v3），现在走自己的 `ffmpeg-only-v1-`；
+（benchmark 推 main 就跑，会在 main 上存一份只有 ffmpeg 的 v3），**搬走的是 match-reel**（→ `ffmpeg-fonts-v4-`），
+v3 留给那两条——benchmark 的 push 触发器 paths 里有它自己的 yml，改它的缓存键，合并那一下就会在 main 上
+跑一趟 DeepSeek ＋ MiniMax 对比（账号所有者 2026-09-27：这两个模型不要用）；同样的隔离，挪自己这一边就拿得到。
 match-reel 的 apt 恢复从 `mode != 'push'` 收窄到 render / cover（probe / narration 的静态构建一落空
 就退 `apt_install_cached ffmpeg`、标脏、存一份只有 ffmpeg 的；save 认 restore 的 `cache-primary-key`，
-restore 跳过它就跟着跳过）。判据 `test_共用一个apt缓存前缀的几条线装的包一样`、
+restore 跳过它就跟着跳过；CI 那一格也就写成普通一行，按 mode 开关的写法判据不再认）。
+⚠️ 这样收窄之后 probe / narration / cookies 的「装 ffmpeg」**没有 apt 缓存可恢复**：静态构建落空时
+`apt_install_cached ffmpeg` 直接摸镜像。是有意的——render / cover 的 ffmpeg 也走 `ensure_ffmpeg`，apt 那一步
+只装字体，这个前缀正常只存字体包；CI 的 ci-v2 同样没有 ffmpeg 的 .deb（ci.yml 也是 `ensure_ffmpeg`），
+给这几档加一格只读的 ci-v2 恢复救不了它。判据 `test_共用一个apt缓存前缀的几条线装的包一样`、
 `test_同一把apt缓存键在每个会存它的mode下装的包都一样`（按 `if:` 真代值算每一档 mode，判不了就红）。
 matrix job 的主键末尾带 `${{ strategy.job-index }}`（同一个 run_id 下几个 job 抢一把键，只有第一个
 存得上，其余各报一行 `Unable to reserve cache`）——`test_matrix_job的apt缓存键带job序号`。
