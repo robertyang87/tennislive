@@ -6294,7 +6294,18 @@ def test_挂代理CA要排在导入edge_tts之前(tmp_path, monkeypatch, capsys)
     之后再挂 CA 一点用都没有——而那种失败长得和「没挂」一模一样。
     所以两件事一起钉：调用排在最前面，且没有任何模块级的 `import edge_tts`。
     """
+    import certifi  # noqa: PLC0415
+    import certifi.core  # noqa: PLC0415
+
     from tennislive import localca  # noqa: PLC0415
+
+    # `trust_local_proxy_ca` 改的是**全局**的 `certifi.where`，monkeypatch 管不到。
+    # 同一个 xdist worker 里前面谁挂过一次，它就还指着那份 bundle——那份一不在，
+    # 下面第 ② 步 `read_text` 就 FileNotFoundError（全量里偶发、单跑必绿）。
+    # 先钉回真的那个，teardown 再还原，**两个方向都不漏**：别人漏给我的、我漏给别人的。
+    monkeypatch.setattr(certifi, "where", certifi.core.where)
+    for var in ("SSL_CERT_FILE", "REQUESTS_CA_BUNDLE"):
+        monkeypatch.delenv(var, raising=False)   # 第 ② 步直接写 os.environ，交给 teardown 还原
 
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     body = src[src.index("def main() -> int:"):]
@@ -6323,7 +6334,6 @@ def test_挂代理CA要排在导入edge_tts之前(tmp_path, monkeypatch, capsys)
     monkeypatch.setattr(localca, "_CACHE", tmp_path / "bundle.pem")
     monkeypatch.setenv("TENNISLIVE_EXTRA_CA", str(ca))
     got = localca.trust_local_proxy_ca()
-    import certifi  # noqa: PLC0415
     assert got == os.environ["SSL_CERT_FILE"] == os.environ["REQUESTS_CA_BUNDLE"]
     assert certifi.where() == got, "edge-tts 认的是 certifi.where()，它没被指过来"
     merged = Path(got).read_text(encoding="utf-8")
