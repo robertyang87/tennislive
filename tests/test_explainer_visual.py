@@ -336,6 +336,20 @@ def test_same_line_as_printed只有一份():
     assert not shared("全美第三大的网球赛事，办在一个三万多人的小镇。", "全美第三大赛事\n办在小镇")
 
 
+def test_same_line_as_printed_零映成0():
+    """`_CJK_DIGITS` 原来是 `"01123456789"`（从 `build_match_reel` 原样搬来）：十一个字对
+    十一个字，「零」错位映成 `1`。印着的那一份本来就是阿拉伯数字、不过这张表，所以
+    念「零封对手」、印「0封对手」被判成两句（多叠一行字幕），而印「1封对手」反倒被判成
+    同一句（该出的字幕被丢掉）。两个方向都钉住。"""
+    from tennislive.video.subtitle_text import same_line_as_printed
+
+    assert same_line_as_printed("零封对手。", "0封对手"), "念「零」印「0」是同一句"
+    assert same_line_as_printed("〇封对手。", "0封对手")
+    assert not same_line_as_printed("零封对手。", "1封对手"), "念「零」印「1」不是同一句"
+    for spoken, printed in zip("〇零一二三四五六七八九", "00123456789"):
+        assert same_line_as_printed(f"第{spoken}号", f"第{printed}号"), (spoken, printed)
+
+
 def _fake_runner(seconds: str):
     def runner(cmd, **kw):
         if "ffprobe" in cmd[0]:

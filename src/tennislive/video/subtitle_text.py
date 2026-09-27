@@ -54,8 +54,13 @@ def drop_punctuation(text: str) -> str:
 
 _PRINTED_VS_SPOKEN_NOISE = re.compile(r"[？！?!\s]+")
 #: 汉字数字逐字映成阿拉伯数字（`八张` 的「张」不在 `_NUM_UNITS` 里，
-#: `arabic_numerals` 够不着它）。两边走同一条路，所以映射本身讲不讲道理不影响判断。
-_CJK_DIGITS = str.maketrans("〇零一二三四五六七八九", "01123456789")
+#: `arabic_numerals` 够不着它）。⚠️ 映射本身**必须讲道理**：印着的那一份本来就是
+#: 阿拉伯数字（「给人看的字一律阿拉伯数字」），不经过这张表——所以念的「零封对手」
+#: 要落到 `0`，才等于印着的「0封对手」。原来这张表是从 `build_match_reel` 原样搬来的
+#: `"01123456789"`（十一个字对十一个字，「零」错位映成了 `1`），而旁边那句注释写着
+#: 「两边走同一条路，映射讲不讲道理不影响判断」——对 `0` 恰恰不成立。
+#: 判据 `test_same_line_as_printed_零映成0`。
+_CJK_DIGITS = str.maketrans("〇零一二三四五六七八九", "00123456789")
 
 
 def same_line_as_printed(spoken: str, printed: str) -> bool:
