@@ -9388,6 +9388,17 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     """
     from reel_facts import (bare_tiebreak_problem, decider_tiebreak_problem,
                             result_direction_problem, verified_result_problem)
+    from versus_poster import cover_style_problems  # noqa: PLC0415
+
+    # 封面两道「新 spec 才拦」的闸（场地名统一英文 / 重点词不许整行，2026-09-27
+    # 评审 Q13 / R6）——放在这儿是因为这是 `validate_spec` 第一道、每条 spec 都
+    # 走（有没有顶栏都走），`--dry-run` 就报。判据和豁免表在 `versus_poster`。
+    auto_spec = (spec.get("_production") or {}).get("status") == "ready_for_render"
+    for problem in cover_style_problems(spec):
+        if auto_spec:
+            print(f"[封面] ⚠️ {problem}")
+        else:
+            raise ReelError(problem)
 
     verified_problem = verified_result_problem(spec)
     if verified_problem:
@@ -9467,10 +9478,37 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     return lines  # type: ignore[return-value]
 
 
+# ⭐ 2026-09-27 UI/VI 评审 WP5：顶栏的颜色一律从 `tennislive.design_tokens`
+# 换算（`ass()` 管字节序——CSS 的 #RRGGBB 在 ASS 里是 &HAABBGGRR，写反过一次，
+# 见下面 `TOPBAR_HEAD_HEX`）。接法是「值不变、只换出处」：三条真 spec 的
+# `topbar.ass` 换前换后逐字节相同。
+from tennislive.design_tokens import DARK, SCORE  # noqa: E402
+from tennislive.design_tokens import ass as _ass_colour  # noqa: E402
+from tennislive.design_tokens import ass_inline as _ass_inline  # noqa: E402
+
+#: HEAD 样式（第一行赛事行）的 PrimaryColour：近白正文 `foreground`。
+#:
+#: ⚠️ **2026-09-27 修的一个字节序错**：样式行里原来写死 `&H00F4FBF7`——那是把
+#: CSS 的 `#f4fbf7` 原样抄进了 ASS。ASS 是 `&HAABBGGRR`，于是渲出来是
+#: **#f7fbf4**（R、B 各差 3/255，偏暖一丝）。和赛后开麦中文字幕那支
+#: `#c3dc74`（本意 #74dcc3）是同一类错，只是这一处差得小到看不出来。现在经
+#: `ass()` 换算，字节序只有那一处出处。判据 `test_顶栏颜色都从token换算`。
+TOPBAR_HEAD_HEX = DARK["foreground"]
+TOPBAR_HEAD_COLOUR = _ass_colour(TOPBAR_HEAD_HEX)   # "&H00F7FBF4"
+
+#: 顶栏两行字的描边（px）。⚠️ **2026-09-27 起标题行也是 1.5**：原来 HEAD 是 0、
+#: BODY 是 1.5——第一行 54px 的得意黑压在亮画面（白球衣、白天的看台）上，
+#: 笔画边缘直接化进底色里（评审 `sim_topbar_flat.jpg`）。两行同一个数，
+#: 一个出处。透视球场图标自带 `\bord0`，不跟着描。
+TOPBAR_OUTLINE_PX = 1.5
+
 #: BODY 样式的 PrimaryColour。**一个出处**：样式行和"复位"标签都从它来——
 #: 写两处必分叉，而分叉的样子是「复位之后颜色和这一行本来的颜色差一点点」，
 #: 肉眼几乎看不出来。
-TOPBAR_BODY_COLOUR = "&H00DBE2D5"
+#: ⚠️ 这支近白（#d5e2db）**不在 token 里**：评审把它列进 `muted-foreground`
+#: （#cfe6d8）的待并名单，那是值变化，没并。
+TOPBAR_BODY_HEX = "#d5e2db"
+TOPBAR_BODY_COLOUR = _ass_colour(TOPBAR_BODY_HEX)   # "&H00DBE2D5"
 
 #: ASS 内联颜色标签（`&HBBGGRR&`，字节序和 CSS 的 `#RRGGBB` 相反）。
 #:
@@ -9492,11 +9530,11 @@ TOPBAR_BODY_COLOUR = "&H00DBE2D5"
 #: **输盘不压暗，靠色相区分**（这条没变）：输的那个数字用这一行正文本来的
 #: 颜色（`TOPBAR_BODY_COLOUR`），赢的给上面这支新绿，两者靠色相分开、
 #: 不靠明暗——顶栏是直接烧进 H.264 的，比静态海报更吃"压暗读不出来"这个问题。
-TOPBAR_SETWIN_ASS = r"{\c&H8CDC4A&}"
+TOPBAR_SETWIN_ASS = _ass_inline(SCORE["win_video"])   # r"{\c&H8CDC4A&}"
 TOPBAR_SETLOSE_ASS = "{\\c" + TOPBAR_BODY_COLOUR + "&}"
 #: 连字符仍然压暗一档——比分板那次**只改了比分本身**，`.setdash` 没动
 #: （「连字符是分隔符不是内容」）。
-TOPBAR_SETDASH_ASS = r"{\c&H009CA793&}"
+TOPBAR_SETDASH_ASS = "{\\c" + _ass_colour(SCORE["dash"]) + "&}"   # r"{\c&H009CA793&}"
 
 #: ⚠️ **复位不能用 `{\r}`，尽管 CLAUDE.md 那条规矩是这么写的。**
 #:
@@ -9732,8 +9770,8 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},&H00F4FBF7,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
-Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
+Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},{TOPBAR_HEAD_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,{TOPBAR_OUTLINE_PX},0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
+Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,{TOPBAR_OUTLINE_PX},0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -9786,7 +9824,8 @@ def watermark_xy(*, has_topbar: bool) -> tuple[int, int]:
 
     **纵向要让开顶部那条带**，不然角标压在顶栏的字上：
     - 带式：顶带是实色，画面从 `BAND_TOP` 才开始
-    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，底下垫着一层半透明黑
+    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，字底下垫着一层渐变压暗（`TOPBAR_SCRIM_*`，
+      顶上 0.62 淡到 200px 处 0——Q6 之前是一块 45% 半透明黑实条）
     - 全出血、没顶栏（网球有故事这类）：顶上是空的，直接贴
     """
     if LAYOUT == "band":
@@ -9811,8 +9850,9 @@ def inset_top_clear_y(spec: dict) -> int:
     topic = str(cover.get("topic", "")).strip()
     _wx, wy = watermark_xy(has_topbar=bool(spec.get("topbar")))
     # ⚠️ `watermark_xy` 给的是 PNG 的左上角，**阴影那一圈（SHADOW_PAD）已经减掉**
-    # ——墨的顶边要把它加回来，不然算出来比真值高 18px（第一版就这么错的，
-    # 判据 test_inset_animation 那条钉的是绝对值 151）。
+    # ——墨的顶边要把它加回来，不然算出来比真值高 `WATERMARK_SHADOW_PAD`（现在
+    # 11px ＝ 阴影 3×3 ＋ 描边 2；Q11 收紧阴影之前是 18px，第一版就这么错的）。
+    # 判据 test_inset_animation 那条钉的是绝对值 151（44+56+27+24），和 pad 无关。
     ink_top = wy + WATERMARK_SHADOW_PAD
     block_h = (TOPIC_INK_TOP_PX + TOPIC_TEXT_PX) if topic else BRAND_ICON_PX
     return ink_top + block_h + INSET_WATERMARK_GAP_PX
@@ -9973,6 +10013,46 @@ def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
     )
 
 
+#: 顶栏底下那层压暗（只有全出血有；带式的顶带本来就是实色）。
+#:
+#: ⭐ **2026-09-27 账号所有者选的（评审 Q6 方案 A）：实条换成渐变。** 原来是
+#: `drawbox` 一块 45% 黑、高 `TOPBAR_H`、**下边是硬的**——白天的比赛画面上，
+#: 比分行（薄荷 #4adc8c）只有 **1.9:1**，而那道硬边在画面上多出一条横线。
+#: 现在：顶上 `TOPBAR_SCRIM_ALPHA`（0.62）一直铺到 `TOPBAR_SCRIM_SOLID_PX`
+#: （两行字都压在满档上），再用 smoothstep 淡到 `TOPBAR_SCRIM_FADE_PX`（200）
+#: 处的 0——**没有硬边**，也就没有那条线。纯白底上标题行 6.1:1、比分行（薄荷）
+#: 3.62:1（老的 1.88:1），白底上相邻两行最多差 5/255（老的实条下沿一行跳 114）。
+#:
+#: ⚠️ **满档那一段量到比分行的行盒底（72+38）再多 2px 描边，不是评审图里的
+#: 100px。** 评审给账号所有者看的那一版（`grad_topbar.png`）满档只到 100，
+#: 而比分行的墨实测落在 y86~109——下面 9 行字压在已经开始变淡的底上，白底上
+#: 最亮那一行只剩 **3.31:1**，过不了他定的「比分行 ≥3.6:1」。延到 112 之后
+#: 整行都在满档上，淡出段 88px，仍然看不出边。
+#: ⚠️ **图在滤镜图里现生成，不另起一路输入**（`color` 源 ＋ `geq` 写 alpha，
+#: 一帧、1080×200，overlay 默认把最后一帧一直重复下去）——加一路输入就得改
+#: render 里拼 `-i` 的那两处，而那两处正是「加了一处漏一处」栽过的地方。
+#: 判据 `test_顶栏底是渐变压暗没有硬边_白底上比分行读得出`（真跑 ffmpeg 量）。
+TOPBAR_SCRIM_ALPHA = 0.62
+TOPBAR_SCRIM_SOLID_PX = TOPBAR_BODY_TOP + TOPBAR_BODY_SIZE + 2   # 112
+TOPBAR_SCRIM_FADE_PX = 200
+
+
+def topbar_scrim_source(label: str = "topbar_scrim") -> str:
+    """顶栏渐变压暗的那张图：滤镜图里的一条源链，输出 `[label]`（RGBA）。
+
+    alpha：`y ≤ SOLID` 恒为 `ALPHA`；`SOLID < y < FADE` 按 smoothstep 淡到 0。
+    smoothstep 两头的斜率都是 0，所以接缝处（SOLID、FADE 那两行）没有折角——
+    线性淡出在两个端点各有一道折角，亮画面上看得出是一条线（Mach 带）。
+    """
+    a = round(255 * TOPBAR_SCRIM_ALPHA)
+    s0, s1 = TOPBAR_SCRIM_SOLID_PX, TOPBAR_SCRIM_FADE_PX
+    t = f"(Y-{s0})/{s1 - s0}"
+    alpha = (f"if(lte(Y,{s0}),{a},if(gte(Y,{s1}),0,"
+             f"{a}*(1-{t}*{t}*(3-2*{t}))))")
+    return (f"color=c=black:s={VIDEO_W}x{s1}:r=1:d=1,format=rgba,"
+            f"geq=r='0':g='0':b='0':a='{alpha}'[{label}]")
+
+
 def topbar_filtergraph(cover_secs: float, segments_secs: float,
                        topbar_ass: Path, subtitles_ass: Path,
                        foot_input: int | None = None,
@@ -10029,13 +10109,14 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
         "setpts=PTS-STARTPTS,"
         f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
         f"crop={VIDEO_W}:{VIDEO_H},"
-        # 全出血：顶栏压在画面上，垫一层半透明黑保住可读性。
-        # 带式：顶带本来就是实色（BAND_BG），再画这层会在 y=126~132 露出
-        # 一道两色接缝（drawbox 高 126、顶带高 132，差 6px）。
-        + ("" if LAYOUT == "band" else
-           f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,")
-        + "setsar=1[match_flat];"
-        f"{canvas};"
+        # 全出血：顶栏压在画面上，垫一层渐变压暗保住可读性（`TOPBAR_SCRIM_*`）。
+        # 带式：顶带本来就是实色（BAND_BG），再垫这层会在顶带下沿露出一道
+        # 两色接缝。
+        + ("setsar=1[match_flat];" if LAYOUT == "band" else
+           "setsar=1[match_bare];"
+           f"{topbar_scrim_source('topbar_scrim')};"
+           "[match_bare][topbar_scrim]overlay=0:0,setsar=1[match_flat];")
+        + f"{canvas};"
         f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
         "[cover][match_canvas][outro]concat=n=3:v=1:a=0,setpts=PTS-STARTPTS[base];"
         f"[base]subtitles={topbar_path}:fontsdir={fontsdir},"
