@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "f4b571f1fa59dbd5a78cfe82753fde3241671cdabd15f5f989bbf8e6f8d373b6",
+  "scoreboard_qc_sha256": "9da9d9b9ae91a05ba65025e19f39867d7a4f2f47881a6f6a5489d320af8e48ea",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
@@ -31,71 +31,8 @@
   },
   "face_checks": {
     "cover": {
-      "status": "ok",
-      "model": "buffalo_s-v0.7",
-      "identity": {
-        "verdict": "match",
-        "name": "沙波瓦洛夫",
-        "similarity": {
-          "沙波瓦洛夫": 0.5718,
-          "马纳里诺": -0.124
-        },
-        "missing": [],
-        "expected": [
-          "沙波瓦洛夫",
-          "马纳里诺"
-        ],
-        "face": [
-          241,
-          182,
-          419,
-          415
-        ],
-        "face_px": 232.4,
-        "reason": "像 沙波瓦洛夫（0.57 ≥ 0.34）",
-        "thresholds": {
-          "match": 0.34,
-          "mismatch": 0.15,
-          "min_face_px": 56
-        },
-        "target": [
-          "沙波瓦洛夫"
-        ]
-      },
-      "eyes": {
-        "verdict": "open",
-        "ear": 0.2474,
-        "ear_each": [
-          0.2229,
-          0.2719
-        ],
-        "face": [
-          241,
-          182,
-          419,
-          415
-        ],
-        "face_px": 232.4,
-        "reason": "眼睛纵横比 0.25 ≥ 0.16",
-        "thresholds": {
-          "closed": 0.12,
-          "open": 0.16,
-          "min_face_px": 72
-        }
-      },
-      "problems": [],
-      "warnings": [],
-      "region": [
-        373,
-        0,
-        1048,
-        900
-      ],
-      "frame": "output/2026-09-27/reel/mannarino-shapovalov-chengdu-2026-qf/cover_src/portrait.jpg",
-      "frame_at": 206.0,
-      "target": [
-        "沙波瓦洛夫"
-      ]
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
     },
     "segments": {
       "status": "ok",
@@ -136,39 +73,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "mannarino-shapovalov-chengdu-2026-qf",
-    "received_at": "2026-09-27T14:56:16Z",
-    "artifact_ready_at": "2026-09-27T15:04:02Z",
-    "elapsed_seconds": 466.484,
+    "received_at": "2026-09-27T15:15:19Z",
+    "artifact_ready_at": "2026-09-27T15:23:10Z",
+    "elapsed_seconds": 471.595,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "2b54cd24cefb093e0d19f6f97f08b1e7d94b22e0e3b052c2c8b5ab1bca138607",
-    "spec_sha256": "aaf77b84941cc2f03feb9cd43f3187d9873f342f8c9591c05e017dd1e52b852b",
-    "run_id": "36327707739",
+    "film_sha256": "fa82427d0e308315e132f5000924cda3e224ecd310d006647a3a725696c8f154",
+    "spec_sha256": "4c2c2a635e0d4169d9747cfcd4660e0bdb5bae203fafa190b11be56683b0b816",
+    "run_id": "36328867476",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-27T14:58:11Z",
-        "run_id": "36327707739"
+        "at": "2026-09-27T15:17:28Z",
+        "run_id": "36328867476"
       }
     ],
-    "render_seconds": 351.484,
-    "pre_render_seconds": 115.0
+    "render_seconds": 342.595,
+    "pre_render_seconds": 129.0
   },
-  "film_sha256": "2b54cd24cefb093e0d19f6f97f08b1e7d94b22e0e3b052c2c8b5ab1bca138607",
-  "film_bytes": 111747589,
-  "qc_attestation_sha256": "a423fcefc0770b6c2778981566ab82bf00d103e4ef32bdc6ab6c33970a0df402",
+  "film_sha256": "fa82427d0e308315e132f5000924cda3e224ecd310d006647a3a725696c8f154",
+  "film_bytes": 111751413,
+  "qc_attestation_sha256": "052505e49357e7a37b6297a4bf3c4a5a68b86ed01dcb1081d3df1055b9364664",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-27T14:58:11Z",
-      "run_id": "36327707739"
+      "at": "2026-09-27T15:17:28Z",
+      "run_id": "36328867476"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-27T15:04:03Z",
-      "run_id": "36327707739"
+      "at": "2026-09-27T15:23:11Z",
+      "run_id": "36328867476"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-mannarino-shapovalov-chengdu-2026-qf/mannarino-shapovalov-chengdu-2026-qf.mp4",
-  "video_bytes": 111747589
+  "video_bytes": 111751413
 }
