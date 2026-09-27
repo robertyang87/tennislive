@@ -511,6 +511,47 @@ def build_background(home: str, away: str, hit_data: list[dict]) -> tuple[str, l
     return ("\n".join(parts) if parts else ""), notes
 
 
+def _retry_hook_taste(draft: dict, chat, *, home: str, away: str, event: str,
+                      year: int, fixture: str, facts: str, background: str,
+                      scores, notes: list[str]) -> None:
+    """钩子不合账号所有者的口味：把判据原文回喂模型，**重写一轮**。
+
+    账号所有者 2026-09-27「形成一个通用的规则在做视频前就拦掉，而不是说做了
+    一半又返工」。自动链到了 `validate_spec` 那一步只能报不能拦（拦了就是「今天
+    没有候选」），而钩子在那一步已经没人改了——**唯一能改它的地方是起草这里**。
+
+    有界：只重写一次；新稿要**先过同一套事实闸**（比分方向、总得分、算术），
+    而且口味问题**确实变少**才换上；否则留首稿、记一句，照旧往下走——口味闸
+    永远不在自动链里撤稿。
+    """
+    from taste_gates import hook_taste_problems  # noqa: PLC0415
+
+    first = hook_taste_problems(draft["editorial"].get("hook") or [])
+    if not first:
+        return
+    brief = "；".join(p.splitlines()[0] for p in first)
+    corrected = (f"{facts}\n- 上一稿的封面钩子不合账号所有者的口味：{brief}。"
+                 "本次按钩子合同重写：第一行写关键局面，第二行写结果（谁赢了谁／走到哪一步），"
+                 "不用术语和梗，不比全场总分差")
+    retry = draft_editorial(chat, home=home, away=away, event=event, year=year,
+                            fixture=fixture, facts=corrected, background=background)
+    fact_problem = retry and (
+        editorial_score_problem(retry, scores)
+        or editorial_total_points_problem(
+            retry, draft.get("stats", {}),
+            draft.get("cover", {}).get("matchup", []), scores)
+        or arithmetic_claim_problem(retry))
+    after = hook_taste_problems((retry or {}).get("hook") or []) if retry else first
+    if retry and not fact_problem and len(after) < len(first):
+        draft["editorial"] = retry
+        notes.append("钩子口味闸首稿不合（" + brief[:80] + "），重写后"
+                     + ("通过" if not after else "仍有 " + str(len(after)) + " 条，只报不拦"))
+    else:
+        notes.append("⚠️ 钩子口味闸：" + brief[:120] + "——重写没改善"
+                     + (f"（新稿事实闸红：{fact_problem}）" if fact_problem else "")
+                     + "，留首稿，只报不拦")
+
+
 def assemble(*, slug: str, home: str, away: str, event: str, year: int,
              fixture: str, flashscore_id: str | None,
              round_name: str = "", court: str = "",
@@ -752,6 +793,11 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
                     problem = retry_problem or problem
                     draft.pop("editorial", None)
                     notes.append(f"⚠️ {problem}；重写仍未通过，已撤下 editorial")
+            if "editorial" in draft:
+                _retry_hook_taste(draft, chat, home=home, away=away, event=event,
+                                  year=year, fixture=fixture, facts=editorial_facts,
+                                  background=background, scores=authoritative_scores,
+                                  notes=notes)
             # 推送文案（summary/lead）也自动起草。自动编排产出的新片默认认领
             # `push.auto=true`：render 的 QC 全绿后直接叫醒 auto-push-reel，
             # 不再停在人工审片。只有用户对某一条明确要求「不要发布」时，才在

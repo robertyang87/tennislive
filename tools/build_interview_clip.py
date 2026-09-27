@@ -3451,6 +3451,23 @@ def check_topline_format(spec: dict) -> None:
         raise SystemExit(f"{slug} 的 `event`：{problem}")
 
 
+def check_taste(spec: dict) -> None:
+    """账号所有者的口味闸（采访线那一半）：封面大标题不许有要解释的术语，
+    标题和推送标题同一个数只能有一个说法。
+
+    账号所有者 2026-09-27「形成一个通用的规则在做视频前就拦掉，而不是说做了
+    一半又返工」。判据单一出处在 `tools/taste_gates.py`（reel 和采访共用），
+    和 `check_topline_format` 同一个座位：只读 spec，渲染入口第 0.2 秒就报。
+    规矩之前已发的标题按原文冻在 data/legacy_taste_gates.json，只许减不许加。
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from taste_gates import interview_taste_findings  # noqa: PLC0415
+    problems = interview_taste_findings(spec)
+    if problems:
+        raise SystemExit(f"{spec.get('slug', '?')} 不合账号所有者的口味：\n  - "
+                         + "\n  - ".join(problems))
+
+
 def check_source_contract(spec: dict) -> str:
     """L0：在任何下载、转写或渲染之前确认这是一条被验证过身份的赛后内容。
 
@@ -4554,6 +4571,7 @@ def main() -> int:
     check_lead_in(spec)
     check_trail_in(spec)
     check_copy_page(spec)
+    check_taste(spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"

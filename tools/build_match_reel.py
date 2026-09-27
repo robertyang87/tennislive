@@ -7823,6 +7823,40 @@ def _narration_craft(spec: dict) -> None:
     raise ReelError("旁白手艺不合格（读者 2026-09-19：文案不专业、技战术交代不清楚）：\n" + body)
 
 
+def _owner_taste(spec: dict) -> None:
+    """⭐⭐ 账号所有者的口味闸：钩子、文案一致、旁白走向、收尾、交手史信息条。
+
+    账号所有者 2026-09-27：「**总结我的口味和品味这种个性化的要求，形成一个
+    通用的规则在做视频前就拦掉，而不是说做了一半又返工**」。判据、来路和量出来
+    的账都在 `tools/taste_gates.py` 的模块 docstring 里，这儿只管接线。
+
+    | 谁写的 | 怎么办 |
+    |---|---|
+    | 手写的新 spec | **硬**——各有各的改法／认领口 |
+    | `data/legacy_taste_gates.json` 里已发的（钩子冻原文） | 放行 |
+    | 自动产的 spec（`_production.status == ready_for_render`） | **只报**——判据文本印进日志，`repair_reel_spec` 回喂时读得到；钩子那几条在 `assemble_spec` 起草时就回喂模型重写一轮 |
+
+    「只报」那几条（第一行比分没说是哪一盘、推送标题里的术语、某一盘旁白
+    一句没提）对谁都只报——它们在已接受的存量上有误报，做硬会成一条常年红。
+    """
+    from taste_gates import is_auto, reel_taste_findings  # noqa: PLC0415
+
+    hard, soft = reel_taste_findings(spec)
+    for note in soft:
+        print(f"[口味] 只报：{note}")
+    if not hard:
+        return
+    body = "\n".join(f"  - {p}" for p in hard)
+    if is_auto(spec):
+        # 每条单独一行、行首带「旁白/窗口」：`repair_reel_spec.SALIENT` 按行挑
+        # 回喂的判据，这样 render 为别的原因红了、回喂模型时这几条也在里面。
+        for p in hard:
+            print(f"[口味·旁白/窗口/钩子] 自动 spec 只报不拦：{p}")
+        return
+    raise ReelError("不合账号所有者的口味（2026-09-27：做视频前就拦掉，"
+                    "而不是做了一半又返工）：\n" + body)
+
+
 def scoreboard_profile(spec: dict, segments: list | None = None) -> str | None:
     """这条片子的比分板回贴走哪套逐帧判据；没开回贴返回 None。
 
@@ -7928,6 +7962,7 @@ def validate_spec(
     if music:
         raise ReelError(music)
     _narration_craft(spec)
+    _owner_taste(spec)
     # ⚠️ 排在 `parse_segments` **之前**：0.2 秒就报，别等渲完拉回成片抽帧才看见。
     # 这道闸拦的是几何上必然发生的一整类（居中铺的卡 vs 上锚的字幕），
     # 而四道本地闸一道都拦不住它——详见 `evidence_card_overlaps_subtitle`。

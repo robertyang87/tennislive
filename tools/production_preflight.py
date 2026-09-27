@@ -18,8 +18,22 @@ def check_copy(copy: Path, column: str, *, date: str = '') -> None:
                     '--column', column, '--date', date], check=True)
 
 
+def check_taste(spec: dict) -> None:
+    """账号所有者的口味闸（采访线）：封面大标题的术语、标题和推送标题的数字一致。
+
+    2026-09-27「形成一个通用的规则在做视频前就拦掉，而不是说做了一半又返工」——
+    所以它排在任何下载、ASR、渲染之前。判据单一出处 tools/taste_gates.py。
+    """
+    sys.path.insert(0, str(ROOT / 'tools'))
+    from taste_gates import interview_taste_findings  # noqa: PLC0415
+    problems = interview_taste_findings(spec)
+    if problems:
+        raise ValueError('不合账号所有者的口味：' + '；'.join(problems))
+
+
 def check_request(req: dict) -> None:
     # No download, fonts, browser or ASR import required here.
+    check_taste(req)
     cov = req.get('cover') or {}
     zoom, focus = float(cov.get('zoom', 1)), float(cov.get('focus_y', .5))
     if not 1 <= zoom <= 2.4 or not 0 <= focus <= 1:
@@ -43,6 +57,8 @@ def main() -> None:
     ap.add_argument('--column', required=True)
     args = ap.parse_args()
     path = Path(args.spec)
+    if args.column == '赛后开麦' and path.is_file():
+        check_taste(json.loads(path.read_text(encoding='utf-8')))
     check_copy(path.with_suffix('.xhs.txt'), args.column)
 
 
