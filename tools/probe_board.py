@@ -235,9 +235,15 @@ def _decode(source: Path, crop: tuple[int, int, int, int], start: float,
         cmd += ["-ss", f"{start:.3f}"]
     if stop is not None:
         cmd += ["-t", f"{max(0.05, stop - start):.3f}"]
+    # ⚠️ `fps` 排在最前：先降到 5 fps 再转 RGB，别让每一帧源片都先转一遍色彩空间。
+    # 复查实测（60 s 1080p30）：18.7 s → 9.3 s，输出逐字节相同（md5 一致）。
     cmd += ["-i", str(source), "-an", "-sn",
-            "-vf", f"format=rgb24,crop={w}:{h}:{x}:{y},fps={fps}", "-f", "rawvideo", "-"]
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            "-vf", f"fps={fps},format=rgb24,crop={w}:{h}:{x}:{y}", "-f", "rawvideo", "-"]
+    # stderr 落临时文件，不走 PIPE：边读 stdout 边不排 stderr，解码报错一多就把
+    # 64 KB 管道塞满、两头互等，probe 整趟卡死（复查指出的死锁）。
+    import tempfile  # noqa: PLC0415
+    errf = tempfile.TemporaryFile()
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=errf)
     per = w * h * 3
     try:
         while True:
@@ -247,8 +253,11 @@ def _decode(source: Path, crop: tuple[int, int, int, int], start: float,
             yield np.frombuffer(raw, np.uint8).reshape(h, w, 3)
     finally:
         proc.stdout.close()
-        err = proc.stderr.read().decode("utf-8", "replace")
-        if proc.wait() and err.strip():
+        rc = proc.wait()
+        errf.seek(0)
+        err = errf.read().decode("utf-8", "replace")
+        errf.close()
+        if rc and err.strip():
             raise RuntimeError(f"ffmpeg 解板失败：{err.strip()[-300:]}")
 
 
