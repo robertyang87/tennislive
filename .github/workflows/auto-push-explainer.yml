@@ -135,7 +135,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TENNISLIVE_ASSET_REV: ${{ github.sha }}
-        run: tennislive publish pushplus --dir "${{ steps.gate.outputs.outdir }}"
+        run: |
+          tennislive publish pushplus --dir "${{ steps.gate.outputs.outdir }}" \
+            --receipt-out "$RUNNER_TEMP/pushplus-receipt.json"
 
       # **发完必须记一笔，而且必须进仓库。** 这是「已经发过」的唯一判据——
       # 「工作流跑成功过」证明不了消息发出去了，而重发就是让人再收一条一样的。
@@ -149,7 +151,11 @@ jobs:
           python tools/auto_push_explainer_gate.py \
             --record "${{ steps.gate.outputs.outdir }}" \
             --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --now "$(date -u +%FT%TZ)"
+            --now "$(date -u +%FT%TZ)" \
+            --receipt-file "$RUNNER_TEMP/pushplus-receipt.json"
+          python tools/push_link.py --receipt-file "$RUNNER_TEMP/pushplus-receipt.json" \
+            --slug "${{ steps.gate.outputs.slug }}" --summary "$GITHUB_STEP_SUMMARY" \
+            || echo "::warning::推送网页链接没写进摘要（消息已发，不影响记账）"
           git add --sparse "${{ steps.gate.outputs.outdir }}" \
             "data/explainer_publish_ledger/${{ steps.gate.outputs.slug }}.json"
           python tools/check_staged_file_sizes.py

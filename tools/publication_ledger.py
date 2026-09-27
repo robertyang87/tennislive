@@ -53,8 +53,29 @@ def blocking_attempt(repo: Path, column: str, slug: str,
                  if row.get("key") == wanted and row.get("status") in BLOCKING), None)
 
 
+def receipt_fields(receipt: str) -> dict:
+    """流水号 + 这条微信推送的网页（PushPlus 消息详情页）。没有流水号就是空 dict。"""
+    receipt = (receipt or "").strip()
+    if not receipt:
+        return {}
+    from tennislive.publish.pushplus import message_url
+
+    return {"pushplus_receipt": receipt, "message_url": message_url(receipt)}
+
+
+def read_receipt_file(path: str) -> str:
+    """读 push_reel / `tennislive publish pushplus` 写下的流水号 JSON；读不到返回空串。"""
+    if not path:
+        return ""
+    try:
+        data = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return ""
+    return str(data.get("receipt") or "").strip() if isinstance(data, dict) else ""
+
+
 def write(repo: Path, column: str, slug: str, fingerprint: str, *,
-          status: str, run_url: str, now: str) -> Path:
+          status: str, run_url: str, now: str, receipt: str = "") -> Path:
     ledger = load(repo, column, slug)
     wanted = key(column, slug, fingerprint)
     row = next((item for item in ledger["attempts"] if item.get("key") == wanted), None)
@@ -62,6 +83,8 @@ def write(repo: Path, column: str, slug: str, fingerprint: str, *,
         row = {"key": wanted, "fingerprint": fingerprint}
         ledger["attempts"].append(row)
     row.update({"status": status, "at": now, "run": run_url})
+    if status == "sent" and receipt:
+        row.update(receipt_fields(receipt))
     path = path_for(repo, column, slug)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

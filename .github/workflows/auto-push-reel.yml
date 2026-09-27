@@ -169,7 +169,8 @@ jobs:
         run: |
           python tools/push_reel.py \
             --outdir "${{ steps.gate.outputs.outdir }}" \
-            --copy "specs/reels/${{ steps.gate.outputs.slug }}.xhs.txt"
+            --copy "specs/reels/${{ steps.gate.outputs.slug }}.xhs.txt" \
+            --receipt-out "$RUNNER_TEMP/pushplus-receipt.json"
 
       # **发完必须记一笔，而且必须进仓库。** 这是「已经发过」的唯一判据——
       # 「工作流跑成功过」证明不了消息发出去了，而重发就是让人再收一条一样的。
@@ -177,10 +178,16 @@ jobs:
       - name: 记下已经推送过
         if: steps.gate.outputs.found == 'true'
         run: |
+          # 流水号跟着记：pushed.json 里多一个 message_url（这条微信推送的网页），
+          # 会话推完用 tools/push_link.py 把它发进对话（账号所有者 2026-09-27 要的）。
           python tools/auto_push_gate.py \
             --record "${{ steps.gate.outputs.outdir }}" \
             --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --now "$(date -u +%FT%TZ)"
+            --now "$(date -u +%FT%TZ)" \
+            --receipt-file "$RUNNER_TEMP/pushplus-receipt.json"
+          python tools/push_link.py --receipt-file "$RUNNER_TEMP/pushplus-receipt.json" \
+            --slug "${{ steps.gate.outputs.slug }}" --summary "$GITHUB_STEP_SUMMARY" \
+            || echo "::warning::推送网页链接没写进摘要（消息已发，不影响记账）"
           git add --sparse "${{ steps.gate.outputs.outdir }}" \
             "data/reel_publish_ledger/${{ steps.gate.outputs.slug }}.json"
           python tools/check_staged_file_sizes.py

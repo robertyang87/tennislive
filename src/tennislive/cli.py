@@ -852,10 +852,15 @@ def cmd_publish_pushplus(args) -> int:
             "消息里，可长按复制[/yellow]"
         )
     try:
-        push(title, html, asset_dir=d)
+        receipt = push(title, html, asset_dir=d)
     except PushPlusError as e:
         console.print(f"[red]{e}[/red]")
         return 1
+    if getattr(args, "receipt_out", ""):
+        # 和 push_reel.py 同一份凭据：「记下已推送」把流水号和消息网页写进 pushed.json。
+        from .publish.pushplus import write_receipt
+
+        console.print(f"PushPlus 流水号凭据已写入：{write_receipt(args.receipt_out, receipt)}")
     console.print(
         "[green]PushPlus 已接收微信通道请求[/green]"
         "[yellow]（接口成功不等于手机送达，送达状态待确认）[/yellow]"
@@ -1136,6 +1141,8 @@ def build_parser() -> argparse.ArgumentParser:
     spw.add_argument("--publish", action="store_true", help="创建草稿后直接提交发布")
     spp = pub_sub.add_parser("pushplus", help="通过 PushPlus 推送到自己微信")
     spp.add_argument("--dir", required=True, help="digest 生成的内容目录")
+    spp.add_argument("--receipt-out", default="",
+                     help="PushPlus 成功后把流水号和消息网页写入这个 JSON（供 pushed.json 落证）")
     spc = pub_sub.add_parser("content", help="发送已提交的内容待发布包")
     spc.add_argument("--manifest", required=True, help="content 生成的批次清单 JSON")
 

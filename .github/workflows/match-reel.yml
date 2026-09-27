@@ -1600,7 +1600,8 @@ jobs:
             --event "${{ github.event.inputs.event }}" \
             --summary "${{ github.event.inputs.summary }}" \
             --lead "${{ github.event.inputs.push_lead }}" \
-            --copy "$COPY"
+            --copy "$COPY" \
+            --receipt-out "$RUNNER_TEMP/pushplus-receipt.json"
 
       # ⚠️ **手动推的片子也要记标记，否则自动闸会把它当成「没发过」再发一次。**
       #
@@ -1622,7 +1623,11 @@ jobs:
           python tools/auto_push_gate.py \
             --record "${{ steps.paths.outputs.outdir }}" \
             --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --now "$(date -u +%FT%TZ)"
+            --now "$(date -u +%FT%TZ)" \
+            --receipt-file "$RUNNER_TEMP/pushplus-receipt.json"
+          python tools/push_link.py --receipt-file "$RUNNER_TEMP/pushplus-receipt.json" \
+            --slug "${{ github.event.inputs.slug }}" --summary "$GITHUB_STEP_SUMMARY" \
+            || echo "::warning::推送网页链接没写进摘要（消息已发，不影响记账）"
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           git add --sparse "${{ steps.paths.outputs.outdir }}" \
