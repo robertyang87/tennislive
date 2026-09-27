@@ -31,6 +31,7 @@
 
 from __future__ import annotations
 
+# design-tokens: enforced
 import argparse
 import html
 import json
@@ -51,6 +52,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 # 分叉不报错，只是国内取图慢。
 from tennislive.cdn import jsdelivr_base  # noqa: E402
 from tennislive.publish.pushplus import push, write_receipt  # noqa: E402
+from tennislive.render import push_style as ps  # noqa: E402
 from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
@@ -678,15 +680,22 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
     """推送正文，**版式照着知识解说那条推送**（账号所有者指定的参照）：
 
         白卡（顶上一条 #ff2442 红边）
-          台头小药丸  →  大标题
+          台头小药丸（栏目名）  →  大标题  →  「☝️ 标题，长按这一行即可复制」
           海报，**铺满整卡宽，左右不留白边**
-          「图片没显示？点此打开原图」
+          灰色「原图 ↗」（图没显示时的回退）
           「👇 正文全文如下，长按整段即可复制」
           正文（pre-wrap，一整段）
           ── 分隔线 ──
           ▶ 打开竖版成片
           分别复制标题 / 正文
           图片长按保存
+
+    ⚠️ **样子不在这儿配**（2026-09-27 UI 评审 WP2）：药丸、标题、提示行、「原图 ↗」、
+    视频按钮都从 `render/push_style.py` 的同一组函数出，颜色是 `design_tokens.LIGHT`
+    ——和字卡那条推送（`knowledge_push_html_from_parts`）、复制页同一套。
+    **只有卡底那颗红按钮是字面写在这儿的**，逐字节不动（账号所有者 2026-08-31
+    「微信推送的红色按钮不要改了」），判据 `tests/test_push_visual.py` 拿真产出和
+    金样逐字节比。
 
     两处和参照不同，都是这条线自己的教训：
 
@@ -722,63 +731,47 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
     # **导语给空就不占那一行。** 详细概括现在写在文案正文的第一行（账号所有者的
     # 要求：标题精炼，讲不完的放正文第一行详细总结），导语再印一遍同样的意思
     # 就是「同一段印两遍」那个老毛病。
-    lead_el = (f'<div style="font-size:15px;line-height:1.8;color:#25342e;'
-               f'margin:0 0 14px">{html.escape(lead.strip())}</div>'
+    lead_el = (f'<div style="{ps.LEAD}">{html.escape(lead.strip())}</div>'
                if lead.strip() else "")
     img = ""
     if poster:
-        img = (f'<img src="{poster}" width="100%" alt="{html.escape(title)}"'
-               f' referrerpolicy="no-referrer"'
-               f' style="width:100%;display:block;margin:0 0 10px">'
-               f'<div style="text-align:center;margin:0 0 16px;{pad}">'
-               f'<a href="{poster}" style="color:#087747;font-size:13px;'
-               f'text-decoration:none">封面没显示？点此打开原图</a></div>')
+        img = (ps.image(poster, html.escape(title), ps.POSTER_RATIO, rounded=False)
+               + ps.original_link(poster, f";{pad}"))
 
     # 和海报一样铺满整卡宽（不留左右白边），但排在正文之后——先讲故事，
     # 再给数据，第一屏仍然留给海报。
     stat_card_el = ""
     if stat_card:
         stat_card_el = (
-            f'<div style="{pad};margin:4px 0 8px">'
-            f'<div style="color:#7a8580;font-size:12px">📊 数据统计对照</div></div>'
-            f'<img src="{stat_card}" width="100%" alt="数据统计对照图"'
-            f' referrerpolicy="no-referrer"'
-            f' style="width:100%;display:block;margin:0 0 10px">'
-            f'<div style="text-align:center;margin:0 0 16px;{pad}">'
-            f'<a href="{stat_card}" style="color:#087747;font-size:13px;'
-            f'text-decoration:none">数据图没显示？点此打开原图</a></div>')
+            ps.section_label("📊 数据统计对照", pad)
+            + ps.image(stat_card, "数据统计对照图", ps.STAT_CARD_RATIO, rounded=False)
+            + ps.original_link(stat_card, f";{pad}"))
 
-    def btn(url: str, text: str, bg: str, fg: str = "#ffffff") -> str:
+    # ⚠️ 红按钮：这个函数和它产出的那一串**逐字节不动**，只给红按钮用。
+    def btn(url: str, text: str, bg: str, fg: str = "#ffffff") -> str:  # token-exempt: 红按钮的白字，逐字节不动
         return (f'<a href="{url}" style="display:block;background-color:{bg};'
                 f'color:{fg};text-align:center;text-decoration:none;'
                 f'font-weight:bold;padding:13px 16px;border-radius:6px;'
                 f'margin:0 0 7px">{text}</a>')
 
-    return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;\
-font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
-<div style="max-width:680px;margin:0 auto;background-color:#ffffff;\
-border-top:5px solid #ff2442;padding:18px 0 22px">
-<div style="{pad}"><div style="display:inline-block;background-color:#e7f5ea;\
-color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px">\
-{html.escape(column)}</div>
-<div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;\
-margin:10px 0 4px">{html.escape(title)}</div>
-<div style="color:#7a8580;font-size:12px;margin:0 0 14px">\
-☝️ 标题，长按这一行即可复制</div></div>
+    red = btn(copy_url, "分别复制标题 / 正文", "#ff2442")  # token-exempt: 红按钮逐字节不动（2026-08-31）
+
+    return f"""<div lang="zh-CN" style="{ps.PAGE}">
+<div style="{ps.card("18px 0 22px")}">
+<div style="{pad}">{ps.pill(column)}
+{ps.title_block(html.escape(title))}
+{ps.title_hint()}</div>
 {img}
 <div style="{pad}">
 {lead_el}
-<div style="color:#7a8580;font-size:12px;margin:0 0 8px">\
-👇 正文全文如下，长按整段即可复制</div>
-<div style="font-size:15px;line-height:1.85;white-space:pre-wrap;\
-word-break:break-word;margin:0 0 4px">{html.escape(body)}</div>
+{ps.body_block(body)}
 </div>
 {stat_card_el}
 <div style="{pad}">
-<div style="border-top:1px solid #e6ebe8;margin:18px 0 12px"></div>
-{btn(video_url, "▶ 打开竖版成片", "#102d23")}
-{btn(copy_url, "分别复制标题 / 正文", "#ff2442")}
-<div style="text-align:center;color:#7a8580;font-size:12px">图片长按保存</div>
+<div style="{ps.DIVIDER}"></div>
+{ps.video_button(video_url)}
+{red}
+{ps.foot()}
 </div></div></div>"""
 
 
