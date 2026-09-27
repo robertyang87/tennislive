@@ -396,9 +396,12 @@ def test_绕过检测器自己认得出绕过():
 #: 登记之后再想拿掉，就得同时改这张表，在 diff 里看得见。WP1–WP8 接完 token
 #: 各自往这儿加一行。
 _ENFORCED_FLOOR = (
+    "src/tennislive/render/knowledge.py",    # WP2 推送：字卡那条推送正文
+    "src/tennislive/render/push_style.py",   # WP2 推送 + 复制页的唯一样式出处
     "src/tennislive/video/diagram_palette.py",
     "tools/design_compare_sheet.py",
     "tools/gen_tokens_css.py",
+    "tools/push_reel.py",                    # WP2 推送：赛场之上／赛后开麦／剪辑片
 )
 
 
@@ -644,9 +647,11 @@ def test_对比图工具读完就关文件(tmp_path):
 #: token 工具链自己的文件：里面引用的 `test_…` 名字必须真的存在。
 _POINTER_FILES = (
     "src/tennislive/design_tokens.py",
+    "src/tennislive/render/push_style.py",
     "tools/gen_tokens_css.py",
     "tools/design_compare_sheet.py",
     "tests/test_design_tokens.py",
+    "tests/test_push_visual.py",
 )
 
 
