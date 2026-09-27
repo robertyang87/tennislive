@@ -75,7 +75,7 @@
       "start": 3.7,
       "end": 17.7,
       "fit": "crop",
-      "narration": "如果一路晋级，张帅和王曦雨，有机会在亚运女单决赛会师。但先别急着算金银牌。她们通往决赛的难点，并不一样。",
+      "narration": "如果一路晋级，张帅和王曦雨，有机会在亚运女单决赛会师。但先别急着算金银牌。她们通往决赛的难点，并不一样，先从签表看起。",
       "inset": {
         "image": "assets/asiad-2026-draws/women-zhang-archive.png",
         "corner": "tl",
@@ -86,7 +86,8 @@
       "_why": "2026 BJK官方资料回合，assets本轮contact确认此窗为回合；不承担亚运赛果。",
       "_archive_why": "全段持续显示资料画面及真实赛事年份，不冒充本届亚运，不把资料回合当本届技战术证据。",
       "score_inset": false,
-      "_score_inset_why": "跨赛事签表解读，旧赛比分不是本届比分；资料标签明确来源。"
+      "_score_inset_why": "跨赛事签表解读，旧赛比分不是本届比分；资料标签明确来源。",
+      "_audio_repair_why": "2026-09-27首渲run36296273667，L2静音15/127/162秒各落此三段尾。已用render.json+实际MP3 silencedetect核：原语音文件11.424/7.512/7.464秒，末尾约0.84秒静音；只扩旁白，不截回合、不放宽QC。新TTS仍待实测。"
     },
     {
       "image": "assets/asiad-2026-draws/women-full-video.png",
@@ -177,7 +178,7 @@
       "start": 36.5,
       "end": 46.5,
       "fit": "crop",
-      "narration": "但少打一轮，不等于一路轻松。张帅更关键的考验，可能在四分之一决赛之后。",
+      "narration": "但少打一轮，不等于一路轻松。张帅更关键的考验，可能从四分之一决赛开始，硬仗可能连着来。",
       "inset": {
         "image": "assets/asiad-2026-draws/women-zhang-archive.png",
         "corner": "tl",
@@ -188,7 +189,8 @@
       "_why": "assets本轮contact确认36.5-46.5回合，2026 BJK人物背景。",
       "_archive_why": "全段持续显示资料画面及真实赛事年份，不冒充本届亚运，不把资料回合当本届技战术证据。",
       "score_inset": false,
-      "_score_inset_why": "跨赛事签表解读，旧赛比分不是本届比分；资料标签明确来源。"
+      "_score_inset_why": "跨赛事签表解读，旧赛比分不是本届比分；资料标签明确来源。",
+      "_audio_repair_why": "2026-09-27首渲run36296273667，L2静音15/127/162秒各落此三段尾。已用render.json+实际MP3 silencedetect核：原语音文件11.424/7.512/7.464秒，末尾约0.84秒静音；只扩旁白，不截回合、不放宽QC。新TTS仍待实测。"
     },
     {
       "image": "assets/asiad-2026-draws/women-zhang-route-video.png",
@@ -207,7 +209,7 @@
       "start": 20.5,
       "end": 30.5,
       "fit": "crop",
-      "narration": "看张帅，要看进攻能不能连续打出来。尤其自己的发球局，能不能一直掌握主动。",
+      "narration": "看张帅，要看进攻能不能连续打出来。尤其自己的发球局，能不能掌握主动，不给对手反扑的机会。",
       "inset": {
         "image": "assets/asiad-2026-draws/women-zhang-archive.png",
         "corner": "tl",
@@ -218,7 +220,8 @@
       "_why": "assets agent本轮contact目视20.5-30.5回合；口播观察框架，不给画面未核因果。",
       "_archive_why": "全段持续显示资料画面及真实赛事年份，不冒充本届亚运，不把资料回合当本届技战术证据。",
       "score_inset": false,
-      "_score_inset_why": "跨赛事签表解读，旧赛比分不是本届比分；资料标签明确来源。"
+      "_score_inset_why": "跨赛事签表解读，旧赛比分不是本届比分；资料标签明确来源。",
+      "_audio_repair_why": "2026-09-27首渲run36296273667，L2静音15/127/162秒各落此三段尾。已用render.json+实际MP3 silencedetect核：原语音文件11.424/7.512/7.464秒，末尾约0.84秒静音；只扩旁白，不截回合、不放宽QC。新TTS仍待实测。"
     },
     {
       "image": "assets/asiad-2026-draws/women-zhang-route-video.png",
@@ -233,22 +236,13 @@
       "_why": "回完整图，保留全员；结论标编辑判断，不写胜率或必胜。"
     },
     {
-      "source": "eala",
-      "start": 183.2,
-      "end": 189.7,
-      "fit": "crop",
+      "image": "assets/asiad-2026-draws/women-eala-photo.png",
+      "image_kind": "photo",
+      "seconds": 6.5,
       "narration": "头号种子能守住吗？中国金花，又能从哪边打开局面？",
-      "inset": {
-        "image": "assets/asiad-2026-draws/women-eala-archive.png",
-        "corner": "tl",
-        "width": 0.52,
-        "pad": 0.075,
-        "show_for": 6.5
-      },
-      "_why": "旧spec同窗为伊埃拉本人走动，2026华盛顿；不用佩古拉特写。",
-      "_archive_why": "全段持续显示资料画面及真实赛事年份，不冒充本届亚运，不把资料回合当本届技战术证据。",
-      "score_inset": false,
-      "_score_inset_why": "跨赛事签表解读，旧赛比分不是本届比分；资料标签明确来源。"
+      "_photo_source": "https://photoresources.wtatennis.com/wta/photo/2026/08/04/90a50729-a172-49c7-8d8d-5f12894779a0/GettyImages-2288166823.jpg",
+      "_photo_caption_safety": "官方6000x4000照片预裁source x1050..4350，保持双拳和面部，再按比例1080x1309置于1080x1440画布y131；资料标签y212..268位于头顶上方。面部与双拳均在字幕y1284上方，字幕仅跨下身区域。本Agent已目视输出PNG：双拳完整、脸与帽檐均未遮；仍交主Agent独立目检最终成片。",
+      "_why": "原视频段183.2..189.7在成片194.8秒出现FINAL分盘板且固定标签遮帽檐；替换为已核WTA/Getty2026华盛顿资料照片，不认定具体轮次或夺冠瞬间。6.5s旁白不变。"
     },
     {
       "image": "assets/asiad-2026-draws/women-full-video.png",
@@ -256,5 +250,6 @@
       "narration": "你更想看哪场对决：王曦雨对伊埃拉，还是张帅对普汀塞娃？把你最期待的一场，留在评论区。",
       "_why": "片尾问题与封面会师悬念不同；旁白读出完整问题。"
     }
-  ]
+  ],
+  "_review_execution": "本任务不得调用DeepSeek或MiniMax；由当前主Agent及并行Agent直接核实与目视判断。真实TTS装窗已测，不具备真实听音能力，实际发音与自然度审听未核，不声称整体QC通过。"
 }
