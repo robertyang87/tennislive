@@ -320,7 +320,7 @@ jobs:
             exit 1
           fi
 
-      - name: 顺手叫醒挨饿的编排/提升班次
+      - name: 顺手叫醒挨饿的编排/提升/监控班次
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}

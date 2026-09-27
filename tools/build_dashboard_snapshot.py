@@ -29,6 +29,7 @@ import argparse
 import json
 import os
 import re
+import time
 import urllib.request
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
@@ -124,12 +125,32 @@ def read_json(path: Path, default):
 #: 翻到顶还满就出声，不静默截断）
 RUNS_PER_PAGE = 100
 MAX_PAGES = 3
+#: 一次读失败（502、限流抖一下）先等这么久再试**一次**；第二次还失败才抛。
+RETRY_SLEEP_SECONDS = 3.0
 
 
-def monitored_runs(get, now=None) -> list[dict]:
+def get_with_retry(get, path: str, sleep=None) -> dict:
+    """`get(path)`，失败了等 `RETRY_SLEEP_SECONDS` 再试一次，第二次还失败就照原样抛。
+
+    按工作流取 run 之后，看板一趟、健康检查一班各多出 14 次调用（复核 FIX ROUND 2 的
+    nit）：任何一次读失败都整份当「读不到」——看板写「Actions 状态暂不可见」、
+    pipeline-health 红一班，下一班它就成了「监控」那一处阻塞、推一条微信。
+    「读不到」≠「健康」这条不变（第二次还失败照样抛），只是一次瞬时的 502 不再
+    被放大成一条微信。判据 `test_按工作流取run_一次瞬时失败重试一次_两次都失败才抛`。
+    """
+    try:
+        return get(path)
+    except Exception as exc:  # noqa: BLE001 — 什么错都只重试一次，第二次原样抛
+        print(f"::warning::读 {path.split('?', 1)[0]} 失败，{RETRY_SLEEP_SECONDS:g} 秒后重试一次：{exc}")
+        (sleep or time.sleep)(RETRY_SLEEP_SECONDS)
+        return get(path)
+
+
+def monitored_runs(get, now=None, *, sleep=None) -> list[dict]:
     """每条受监控工作流在 `BLOCKED_WINDOW`（24 小时）里的全部 run，按 id 合并。
 
-    `get(path)` 拿 `repos/<repo>/` 之后的那一截路径、返回解析好的 JSON；读失败就抛——
+    `get(path)` 拿 `repos/<repo>/` 之后的那一截路径、返回解析好的 JSON；读失败重试一次
+    （`get_with_retry`），还失败就抛——
     「读不到」≠「没失败」，调用方自己决定怎么出声。看板（`github_runs`）和每小时的
     `pipeline_health` 都从这儿取，**同一份数据、同一个定义**。
 
@@ -147,8 +168,8 @@ def monitored_runs(get, now=None) -> list[dict]:
     pages = []
     for wf in sorted(MONITORED):
         for page in range(1, MAX_PAGES + 1):
-            rows = get(f"actions/workflows/{wf}.yml/runs?per_page={RUNS_PER_PAGE}&page={page}"
-                       f"&created=%3E%3D{since}").get("workflow_runs") or []
+            rows = get_with_retry(get, f"actions/workflows/{wf}.yml/runs?per_page={RUNS_PER_PAGE}"
+                                  f"&page={page}&created=%3E%3D{since}", sleep).get("workflow_runs") or []
             pages.append(rows)
             if len(rows) < RUNS_PER_PAGE:
                 break
@@ -192,7 +213,7 @@ def github_runs(token: str | None):
     比首屏老实说「Actions 状态暂不可见」坏得多。"""
     get = _api_get(token)
     try:
-        return merge_runs(get("actions/runs?per_page=100").get("workflow_runs") or [],
+        return merge_runs(get_with_retry(get, "actions/runs?per_page=100").get("workflow_runs") or [],
                           monitored_runs(get))
     except Exception as exc:  # snapshot still ships repo-backed evidence
         print(f"::warning::dashboard could not read Actions: {exc}")
@@ -244,6 +265,27 @@ def slug_of(title: str, known=(), exclude=()) -> str | None:
     return max(pool, key=len) if pool else None
 
 
+def _title_parts(run: dict) -> list[str] | None:
+    """出片 run 的标题按「 · 」切开的各段；段数对不上、第一段不是 `name:`、或者这条
+    工作流不在 `RUN_NAME_FIELDS` 里，就是 None。"""
+    fields = RUN_NAME_FIELDS.get(workflow_of(run))
+    title = str(run.get("display_title") or "")
+    if not fields or not title:
+        return None
+    parts = [p.strip() for p in title.split(" · ")]
+    if len(parts) != 1 + len(fields):
+        return None
+    if run.get("name") and parts[0] != run["name"]:
+        return None
+    return parts
+
+
+def is_legacy_title(run: dict) -> bool:
+    """出片工作流（`RUN_NAME_FIELDS`）里、标题还是改 run-name 之前那种的老 run
+    （标题就是一个 `match-reel`，切不出 mode 和 slug）。"""
+    return workflow_of(run) in RUN_NAME_FIELDS and _title_parts(run) is None
+
+
 def run_name_fields(run: dict) -> dict[str, str]:
     """按 `RUN_NAME_FIELDS` 把出片 run 的标题切成 {mode, slug}。
 
@@ -251,16 +293,10 @@ def run_name_fields(run: dict) -> dict[str, str]:
     标题就是一个 `match-reel`，切不出东西）；slug 那一段必须是小写连字符词。
     切不出就是 {}——调用方再退回 `slug_of` 的启发式。
     """
-    fields = RUN_NAME_FIELDS.get(workflow_of(run))
-    title = str(run.get("display_title") or "")
-    if not fields or not title:
+    parts = _title_parts(run)
+    if parts is None:
         return {}
-    parts = [p.strip() for p in title.split(" · ")]
-    if len(parts) != 1 + len(fields):
-        return {}
-    if run.get("name") and parts[0] != run["name"]:
-        return {}
-    out = {k: v for k, v in zip(fields, parts[1:]) if v}
+    out = {k: v for k, v in zip(RUN_NAME_FIELDS[workflow_of(run)], parts[1:]) if v}
     if "slug" in out and (not _SLUG_EXACT.match(out["slug"]) or out.get("mode") in SLUGLESS_MODES):
         out.pop("slug")
     return out
@@ -275,29 +311,54 @@ def run_stages(run: dict) -> list[str]:
     return [label for label, names in WORKFLOW_GROUPS if wf in names]
 
 
-def superseded_ids(runs) -> set:
-    """被同一条片子后来那趟成功的 render 取代了的失败 run 的 id（`SUPERSEDED_BY`）。
-    `blocked_runs` 和阶段卡片都按它跳过——两边跳的是同一批，首屏和卡片才不会各说各的。"""
-    later_ok: dict[tuple[str, str], list[tuple[str, str]]] = defaultdict(list)
-    failed = []
+def superseded_ids(runs) -> dict:
+    """被后来一趟取代了的失败 run：{失败 run 的 id: 取代它的那一趟 run}。
+    `blocked_runs` 和阶段卡片都按它跳过——两边跳的是同一批，首屏和卡片才不会各说各的；
+    阶段卡片那一格只剩被取代的红时，指向取代它的那一趟（不写「暂无运行证据」）。
+
+    两种取代：
+    - 同一条片子后来那趟成功的 render（`SUPERSEDED_BY`）。
+    - **老标题**的失败（`is_legacy_title`：改 run-name 之前的 run，标题就是一个
+      `interview-clip`，切不出 mode）被同一条工作流之后任何一趟**有结论、不是取消**的
+      run 取代。它的阻塞键是光秃秃的 `interview-clip`，合并之后的新 run 永远不会再用
+      这个键——不取代的话，合并前最后一条老 run 红着，就一直按「最近一条」阻塞满 24
+      小时（后面 render 绿了也顶不掉），微信还点名「卡住：run 标题里没写是哪条」。
+      之后那一趟自己红了，它按自己的键照样报；绿了，这条工作流就是好的。
+      判据 `test_合并前最后一条老标题的run红了_之后新标题的run一来就取代`。
+    """
+    later_ok: dict[tuple[str, str], list[tuple[str, str, dict]]] = defaultdict(list)
+    later_any: dict[str, list[tuple[str, dict]]] = defaultdict(list)
+    failed, legacy_failed = [], []
     for run in runs:
-        if run.get("status") != "completed":
+        if run.get("status") != "completed" or run.get("conclusion") == "cancelled":
+            continue
+        wf, at = workflow_of(run), run.get("created_at") or ""
+        if wf in RUN_NAME_FIELDS:
+            later_any[wf].append((at, run))
+        if is_legacy_title(run):
+            if run.get("conclusion") in FAILURES:
+                legacy_failed.append(run)
             continue
         fields = run_name_fields(run)
         if not fields.get("slug") or not fields.get("mode"):
             continue
-        key = (workflow_of(run), fields["slug"])
+        key = (wf, fields["slug"])
         if run.get("conclusion") == "success" and fields["mode"] in SUPERSEDED_BY:
-            later_ok[key].append((fields["mode"], run.get("created_at") or ""))
+            later_ok[key].append((fields["mode"], at, run))
         elif run.get("conclusion") in FAILURES:
             failed.append((run, key, fields["mode"]))
-    out = set()
+    out: dict = {}
     for run, key, mode in failed:
         at_fail = run.get("created_at") or ""
-        if run.get("id") is not None and any(
-                mode in SUPERSEDED_BY[ok_mode] and at_ok > at_fail
-                for ok_mode, at_ok in later_ok.get(key, ())):
-            out.add(run["id"])
+        by = [(at_ok, ok) for ok_mode, at_ok, ok in later_ok.get(key, ())
+              if mode in SUPERSEDED_BY[ok_mode] and at_ok > at_fail]
+        if run.get("id") is not None and by:
+            out[run["id"]] = min(by, key=lambda x: x[0])[1]  # 最早取代它的那一趟
+    for run in legacy_failed:
+        at_fail = run.get("created_at") or ""
+        by = [(at, r) for at, r in later_any.get(workflow_of(run), ()) if at > at_fail]
+        if run.get("id") is not None and by:
+            out[run["id"]] = min(by, key=lambda x: x[0])[1]
     return out
 
 
@@ -479,8 +540,11 @@ def build(root: Path, token: str | None, *, self_run_id=None):
     by_workflow = defaultdict(list)
     by_stage = defaultdict(list)
     replaced = superseded_ids(runs)  # 和 blocked_runs 跳的是同一批（SUPERSEDED_BY）
+    replaced_in = defaultdict(list)  # 阶段 → 这一格里被取代的红（只在这一格别无 run 时用）
     for run in runs:
         if run.get("id") in replaced:
+            for label in run_stages(run):
+                replaced_in[label].append(run)
             continue
         by_workflow[workflow_of(run)].append(run)
         for label in run_stages(run):
@@ -509,6 +573,20 @@ def build(root: Path, token: str | None, *, self_run_id=None):
                            "detail": which({"workflow": workflow_of(r), "mode": fields.get("mode")}),
                            "slug": fields.get("slug"),
                            "updated_at": r.get("updated_at"), "url": r.get("html_url")})
+        elif replaced_in.get(label):
+            # 这一格只剩被取代的红（narration 红了、同一条 render 绿了）：它的现状是
+            # 取代它的那一趟，不是「暂无运行证据」——指过去，说清是被谁取代的。
+            # 取代它的那一趟自己红了（老标题的红被一条新标题的红取代），红记在那一趟
+            # 自己的阶段上（`blocked` 里有它），这一格不跟着红：卡片和首屏同一个判断
+            gone = max(replaced_in[label], key=lambda r: r.get("updated_at") or "")
+            by = replaced[gone["id"]]
+            fields = run_name_fields(by)
+            stages.append({"label": label,
+                           "status": "success" if run_state(by)[0] == "success" else "warning",
+                           "detail": "已被 " + which({"workflow": workflow_of(by),
+                                                     "mode": fields.get("mode")}) + "取代",
+                           "slug": fields.get("slug"),
+                           "updated_at": by.get("updated_at"), "url": by.get("html_url")})
         else:
             stages.append({"label": label, "status": "warning", "detail": "暂无运行证据", "slug": None,
                            "updated_at": None, "url": None})

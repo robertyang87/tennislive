@@ -166,7 +166,7 @@ jobs:
       # schedule 会被 GitHub 丢弃（详见 tools/nudge_stale_ticks.sh 顶注），
       # 每一班顺手叫醒别的挨饿班次。⚠️ orchestrate 要带 apply=true——
       # 它 workflow_dispatch 的 apply 默认 false，裸点一趟只扫不派发。
-      - name: 顺手叫醒挨饿的编排班次
+      - name: 顺手叫醒挨饿的编排/监控班次
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}

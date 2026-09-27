@@ -583,3 +583,58 @@ def test_冷却期内红回来是推迟不是丢_过了冷却还红就推(tmp_pa
     # 补过一次就是已知：之后每一班不再轰
     for h in (14, 20):
         assert blocked_transition([c], state, t0 + timedelta(hours=h))[0] is False
+
+
+def test_按工作流取run_一次瞬时失败重试一次_两次都失败才抛():
+    """复核 FIX ROUND 2 的 nit：按工作流取之后一班多 14 次调用，任何一次读失败都让这一班红、
+    下一班把「监控」当阻塞推一条微信。一次瞬时的 502 先等一下重试一次；两次都失败照样抛——
+    「读不到」≠「健康」这条不变。"""
+    from datetime import datetime, timezone  # noqa: PLC0415
+
+    import pytest  # noqa: PLC0415
+
+    import tools.pipeline_health as ph  # noqa: PLC0415
+
+    d = ph.dashboard
+    now = datetime(2026, 9, 27, 14, 19, 12, tzinfo=timezone.utc)
+    slept, calls = [], []
+
+    def flaky(path):
+        calls.append(path)
+        if "/match-reel.yml/" in path and calls.count(path) == 1:
+            raise RuntimeError("GitHub API 读取失败：502 Bad Gateway")
+        return {"workflow_runs": [{"id": len(calls)}]}
+
+    try:
+        runs = d.monitored_runs(flaky, now, sleep=slept.append)
+    except RuntimeError as exc:
+        pytest.fail(f"一次瞬时 502 就让整班失败——没有重试：{exc}")
+    assert slept == [d.RETRY_SLEEP_SECONDS], slept
+    assert sum("/match-reel.yml/" in p for p in calls) == 2
+    assert len(runs) == len(d.MONITORED), "重试之后每条工作流都拿到了"
+
+    calls.clear()
+    slept.clear()
+
+    def down(path):
+        calls.append(path)
+        if "/match-reel.yml/" in path:
+            raise RuntimeError("GitHub API 读取失败：502 Bad Gateway")
+        return {"workflow_runs": []}
+
+    with pytest.raises(RuntimeError):
+        d.monitored_runs(down, now, sleep=slept.append)
+    assert sum("/match-reel.yml/" in p for p in calls) == 2, "只重试一次，不无限重试"
+    assert slept == [d.RETRY_SLEEP_SECONDS]
+
+
+def test_健康检查不许被后来的一班掐掉_推过没存状态会重推():
+    """复核 FIX ROUND 2 的 nit：三个宿主都会叫醒 pipeline-health，一趟迟到的 schedule 落在
+    「PushPlus 推过、actions/cache/save 还没跑」之间把它掐掉，告警状态没存下，下一班同一条
+    阻塞再推一遍。排队只多等几分钟。"""
+    import re  # noqa: PLC0415
+
+    body = Path(".github/workflows/pipeline-health.yml").read_text("utf-8")
+    block = body.split("\nconcurrency:", 1)[1].split("\njobs:", 1)[0]
+    assert re.search(r"^\s+group:\s*pipeline-health\s*$", block, re.M), block
+    assert re.search(r"^\s+cancel-in-progress:\s*false\s*$", block, re.M), block

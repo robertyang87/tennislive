@@ -10,9 +10,13 @@ permissions:
   # read 是看板用的；write 是「顺手叫醒挨饿班次」那一步 gh workflow run 要的
   actions: write
 
+# ⚠️ 不许 cancel-in-progress：三个宿主（orchestrate / reel-auto-ready /
+# interview-auto-render）都会叫醒它，一趟迟到的 schedule 可能落在「推过微信、
+# 还没 actions/cache/save」之间把它掐掉——告警状态没存下，下一班同一条阻塞再推一遍。
+# 排队只多等几分钟。判据 test_健康检查不许被后来的一班掐掉_推过没存状态会重推。
 concurrency:
   group: pipeline-health
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   health:

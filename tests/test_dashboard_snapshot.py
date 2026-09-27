@@ -712,7 +712,8 @@ def test_看板按工作流取run_滚出全仓最近100条的失败首屏照样�
             raise OSError("rate limited")
         return io.BytesIO(json.dumps({"workflow_runs": ci}).encode())
 
-    with patch.object(module.urllib.request, "urlopen", half):
+    # 重试一次也还失败才算读不到（`get_with_retry`）；这儿不真等那几秒
+    with patch.object(module.urllib.request, "urlopen", half), patch.object(module, "RETRY_SLEEP_SECONDS", 0):
         assert module.github_runs("t") == []
 
 
@@ -749,3 +750,66 @@ def test_同一条片子后来render绿了_前面几步的红不再算阻塞(tmp
     data = _build(root, [narr_fail, other_ok])
     stage = {s["label"]: s for s in data["stages"]}
     assert data["health"]["status"] == "failed" and stage["Spec"]["status"] == "failure"
+
+
+def test_合并前最后一条老标题的run红了_之后新标题的run一来就取代(tmp_path):
+    """复核 FIX ROUND 2 的 nit：合并之前的出片 run 标题就是一个 `interview-clip`，阻塞键
+    也就是光秃秃的 `interview-clip`；合并之后的新 run 永远不会再用这个键。合并前最后一条
+    老 run 红着的话，它按「最近一条」阻塞满 24 小时——后面 subs、render 连着绿也顶不掉，
+    微信还点名「卡住：run 标题里没写是哪条」。复现原样（interview-clip 近 24 小时 30 趟
+    里红了 17 趟，合并前再来一趟老 run 多半是红的）：合并后 +4h／+12h／+20h 都不许再算阻塞。"""
+    root = _root(tmp_path)
+    legacy_fail = _run("interview-clip", 20 * 60, "failure", rid=1)
+    assert module.is_legacy_title(legacy_fail) and module.run_name_fields(legacy_fail) == {}
+    after = [_run("interview-clip", 19 * 60, rid=2, title="interview-clip · subs · sinner-press-2026"),
+             _run("interview-clip", 18 * 60, rid=3, title="interview-clip · render · sinner-press-2026"),
+             _run("interview-clip", 17 * 60, rid=4, title="interview-clip · render · eala-svitolina-dc2026-qf")]
+    for h in (4, 12, 20):
+        now = module.datetime.now(module.timezone.utc) - timedelta(hours=20 - h)
+        runs = [legacy_fail] + [r for r in after if module.parse_time(r["created_at"]) <= now]
+        assert module.blocked_runs(runs, now) == [], (h, module.blocked_runs(runs, now))
+    data = _build(root, [legacy_fail] + after)
+    assert data["health"]["status"] != "failed", data["health"]
+    row = next(w for w in data["workflows"] if w["workflow"] == "interview-clip")
+    assert row["status"] == "success", row
+    # 之后那一趟新标题的自己红了：它按自己的键照样报，老的那条不再重复点名
+    new_fail = _run("interview-clip", 19 * 60, "failure", rid=5, title="interview-clip · subs · sinner-press-2026")
+    assert [(b["mode"], b["slug"]) for b in module.blocked_runs([legacy_fail, new_fail])] == \
+        [("subs", "sinner-press-2026")]
+
+    # 反向四头：之后没有 run、之后那一趟是取消、新 run 比那一红还早、别的工作流的 run——都照样红
+    def legacy_blocked(runs):
+        return [(b["workflow"], b["mode"], b["slug"]) for b in module.blocked_runs(runs)]
+    assert legacy_blocked([legacy_fail]) == [("interview-clip", None, None)]
+    cancelled = _run("interview-clip", 60, "cancelled", rid=6, title="interview-clip · render · sinner-press-2026")
+    assert legacy_blocked([legacy_fail, cancelled]) == [("interview-clip", None, None)]
+    early = _run("interview-clip", 21 * 60, rid=7, title="interview-clip · render · sinner-press-2026")
+    assert legacy_blocked([legacy_fail, early]) == [("interview-clip", None, None)]
+    other = _run("match-reel", 60, rid=8, title="match-reel · render · zverev-sonego")
+    assert legacy_blocked([legacy_fail, other]) == [("interview-clip", None, None)]
+    # 合并之前（全是老标题）照旧：老的绿了就好了、老的后来又红了就还红着
+    legacy_ok = _run("interview-clip", 60, rid=9)
+    assert legacy_blocked([legacy_fail, legacy_ok]) == []
+    legacy_fail_late = _run("interview-clip", 30, "failure", rid=10)
+    assert legacy_blocked([legacy_ok, legacy_fail_late]) == [("interview-clip", None, None)]
+
+
+def test_一格只剩被取代的红_卡片指向取代它的那一趟_不写暂无运行证据(tmp_path):
+    """复核 FIX ROUND 2 的 nit：narration 红了、同一条 render 绿了——Spec 那一格里唯一的
+    run 被取代了，原来落进「暂无运行证据」（黄），而首屏是绿的。它的现状是取代它的那一趟。"""
+    root = _root(tmp_path)
+    narr_fail = _run("match-reel", 60, "failure", rid=60, title="match-reel · narration · zverev-sonego")
+    render_ok = _run("match-reel", 10, rid=10, title="match-reel · render · zverev-sonego")
+    stage = {s["label"]: s for s in _build(root, [narr_fail, render_ok])["stages"]}
+    spec = stage["Spec"]
+    assert (spec["status"], spec["detail"], spec["slug"], spec["url"]) == (
+        "success", "已被 match-reel（render）取代", "zverev-sonego", render_ok["html_url"]), spec
+    # 一趟都没有的格子照旧老实说没有证据
+    assert stage["编排"]["detail"] == "暂无运行证据"
+    # 取代它的那一趟自己红了：红记在那一趟自己的阶段上，这一格不跟着红
+    legacy_fail = _run("interview-clip", 60, "failure", rid=61)
+    subs_fail = _run("interview-clip", 10, "failure", rid=11, title="interview-clip · subs · sinner-press-2026")
+    data = _build(root, [legacy_fail, subs_fail])
+    stage = {s["label"]: s for s in data["stages"]}
+    assert stage["Spec"]["status"] == "failure"
+    assert stage["渲染"]["status"] == "warning" and "取代" in stage["渲染"]["detail"], stage["渲染"]
