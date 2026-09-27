@@ -22,6 +22,23 @@
   原来按单数 `interview` 去认，认不出就落成 `reel`——同一个 slug 出两条。
 - **卡片主行是 slug**：改读 spec 的 `cover.topic`（采访没有 topic 的读 `cover.title`）。
 - **没有成片数据时达标率报 0%**：现在是 `None`，页面显示「—」。
+
+账号所有者 2026-09-27 ~23:00Z 对 Q9 微信阻塞推送的四条答复（有约束力）：
+
+1. **只推无人值守链的失败**：`schedule` 触发的 run，和编排器／队列 `gh workflow run`
+   派发的 run；会话手动拨的 run 一律不推（`is_unattended`）。**看板照旧显示每一处红**，
+   只有微信收窄。判据是 run 对象自己带的 `event` ＋ `triggering_actor`，不是标题：
+   2026-09-27 实测（list_workflow_runs，只读）——`interview-clip` 36337385713 /
+   `auto-push-interview` 36336727963 由编排链派发，`triggering_actor` 是
+   `github-actions[bot]`（派发步骤都用 `GH_TOKEN: github.token`）；会话拨的
+   `match-reel` 36333879418 等是 `robertyang87`；而 `reel-auto-ready` 的 schedule run
+   36352155523 的 actor **也是** `robertyang87`（最后改 cron 的人）——所以先看 event。
+   run 标题里没有派发者标记（出片 run-name 只有 mode · slug），读不出来。
+2. **阻塞按片子去重**：键是 工作流 × mode × slug（`blocked_key`）——A 的 render 红了，
+   之后 B 的 render 绿了，A 照样阻塞，直到 A 自己绿了或滚出 24 小时。
+3. **已经按阻塞报过的工作流，不再推它的每小时趋势告警**（Q9「不重复已有告警」，
+   `pipeline_health.trend_alerts_to_push`）。
+4. **6 小时冷却按片子算**：冷却键和去重键是同一个 `blocked_key`，含 slug。
 """
 from __future__ import annotations
 
@@ -324,7 +341,9 @@ def superseded_ids(runs) -> dict:
       这个键——不取代的话，合并前最后一条老 run 红着，就一直按「最近一条」阻塞满 24
       小时（后面 render 绿了也顶不掉），微信还点名「卡住：run 标题里没写是哪条」。
       之后那一趟自己红了，它按自己的键照样报；绿了，这条工作流就是好的。
-      判据 `test_合并前最后一条老标题的run红了_之后新标题的run一来就取代`。
+      「之后」按 `updated_at`（跑完的时刻）比，不按 `created_at`——判据
+      `test_合并前最后一条老标题的run红了_之后新标题的run一来就取代`、
+      `test_老标题的红_晚开先跑完的绿不算取代`。
     """
     later_ok: dict[tuple[str, str], list[tuple[str, str, dict]]] = defaultdict(list)
     later_any: dict[str, list[tuple[str, dict]]] = defaultdict(list)
@@ -334,7 +353,9 @@ def superseded_ids(runs) -> dict:
             continue
         wf, at = workflow_of(run), run.get("created_at") or ""
         if wf in RUN_NAME_FIELDS:
-            later_any[wf].append((at, run))
+            # 老标题的取代按**结束**时刻排（复核 nit）：一趟比它晚 2 秒开、却先跑完的 run，
+            # 跑完的那一刻老 run 还没红，证明不了「红了之后好了」
+            later_any[wf].append((run.get("updated_at") or "", run))
         if is_legacy_title(run):
             if run.get("conclusion") in FAILURES:
                 legacy_failed.append(run)
@@ -355,18 +376,46 @@ def superseded_ids(runs) -> dict:
         if run.get("id") is not None and by:
             out[run["id"]] = min(by, key=lambda x: x[0])[1]  # 最早取代它的那一趟
     for run in legacy_failed:
-        at_fail = run.get("created_at") or ""
+        at_fail = run.get("updated_at") or ""
         by = [(at, r) for at, r in later_any.get(workflow_of(run), ()) if at > at_fail]
         if run.get("id") is not None and by:
             out[run["id"]] = min(by, key=lambda x: x[0])[1]
     return out
 
 
-def blocked_key(workflow: str, mode: str | None = None) -> str:
-    """一处「阻塞」的身份：工作流文件 ＋ 出片 mode（`match-reel:render`）；没有 mode
-    的工作流就是文件名。`blocked_runs` 按它取「最近一条」，`pipeline_health` 按它
-    去重微信——两处同一个键，才不会一边说阻塞、一边说没事。"""
-    return f"{workflow}:{mode}" if mode else workflow
+def blocked_key(workflow: str, mode: str | None = None, slug: str | None = None) -> str:
+    """一处「阻塞」的身份：工作流文件 ＋ 出片 mode ＋ 片子（`match-reel:render@zverev-sonego`）；
+    没有的段就不写（`orchestrate`、`match-reel:cookies`、`explainer@ranking-math`）。
+    `blocked_runs` 按它取「最近一条」，`pipeline_health` 按它去重、算 6 小时冷却——
+    同一个键，才不会一边说阻塞、一边说没事。
+
+    slug 只认 run-name 按段位读出来的那个（`run_name_fields`），不认 `slug_of` 的启发式：
+    `auto-push-reel` 这类的标题是提交信息，拿猜出来的词当键，同一条线的红绿就对不上了。
+    账号所有者 2026-09-27 答复 (2)(4)：去重和冷却都按片子算。"""
+    key = f"{workflow}:{mode}" if mode else workflow
+    return f"{key}@{slug}" if slug else key
+
+
+#: 派发者是机器人（编排器／队列用 `GH_TOKEN: github.token` 派发 → `github-actions[bot]`）
+_BOT_SUFFIX = "[bot]"
+
+
+def is_unattended(run: dict) -> bool:
+    """这趟 run 是不是**无人值守链**跑的（账号所有者 2026-09-27 答复 (1)：只有这种红才推微信）。
+
+    - `event == "schedule"` → 是。⚠️ 要先看 event：schedule run 的 actor 是最后改 cron 的人
+      （实测 reel-auto-ready 36352155523 的 actor 是 `robertyang87`）
+    - 否则看 `triggering_actor`（重跑时它是点重跑的人，`actor` 还是第一次的派发者），
+      没有再看 `actor`：登录名以 `[bot]` 结尾（或 `type == "Bot"`）→ 是，编排器／队列派发的；
+      是个人 → 不是，会话或人手动拨的
+    - 两个都没有 → 按是：认不出派发者时宁可多推一声，不许把一处无人值守的红静默吞掉
+    """
+    if run.get("event") == "schedule":
+        return True
+    who = run.get("triggering_actor") or run.get("actor")
+    if not isinstance(who, dict) or not who.get("login"):
+        return True
+    return str(who["login"]).endswith(_BOT_SUFFIX) or who.get("type") == "Bot"
 
 
 def which(b: dict) -> str:
@@ -376,9 +425,14 @@ def which(b: dict) -> str:
 
 
 def blocked_runs(runs, now=None, *, self_run_id=None, known=()) -> list[dict]:
-    """「流水线阻塞」的唯一定义：每个受监控的**工作流 × 出片 mode**
+    """「流水线阻塞」的唯一定义：每个受监控的**工作流 × 出片 mode × 片子**
     （`blocked_key`），取 24 小时内最近一条**有结论、不是取消**的 run；它失败了，
     这一处就算阻塞。按最早失败排前。
+
+    ⚠️ 键里有 slug（账号所有者 2026-09-27 答复 (2)）：片子 A 的 render 红了，之后片子 B 的
+    render 绿了，A 照样阻塞，直到 A 自己绿了或滚出 24 小时——判据
+    `test_阻塞按片子去重_B绿了A照样红`。每一处带 `unattended`（`is_unattended`）：
+    看板照旧全显示，微信只推无人值守的（`pipeline_health`）。
 
     看板首屏和 `pipeline_health` 的微信推送都用它（Q9）。
 
@@ -403,7 +457,8 @@ def blocked_runs(runs, now=None, *, self_run_id=None, known=()) -> list[dict]:
         created = parse_time(run.get("created_at"))
         if created is None or created < now - BLOCKED_WINDOW:
             continue
-        key = blocked_key(wf, run_name_fields(run).get("mode"))
+        fields = run_name_fields(run)
+        key = blocked_key(wf, fields.get("mode"), fields.get("slug"))
         if key not in latest or (run.get("updated_at") or "") > (latest[key].get("updated_at") or ""):
             latest[key] = run
     out = []
@@ -417,6 +472,7 @@ def blocked_runs(runs, now=None, *, self_run_id=None, known=()) -> list[dict]:
         out.append({
             "workflow": wf,
             "mode": fields.get("mode"),
+            "key": blocked_key(wf, fields.get("mode"), fields.get("slug")),
             "stages": run_stages(run),
             # 标题是我们写死的 run-name：按段位读；别的标题才退回启发式（不猜）
             "slug": None if slugless else (
@@ -425,6 +481,8 @@ def blocked_runs(runs, now=None, *, self_run_id=None, known=()) -> list[dict]:
             "url": run.get("html_url"),
             "at": run.get("updated_at"),
             "created_at": run.get("created_at"),
+            # 只决定推不推微信，看板照旧显示（答复 (1)）
+            "unattended": is_unattended(run),
         })
     out.sort(key=lambda b: b.get("created_at") or "")
     return out

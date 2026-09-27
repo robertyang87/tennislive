@@ -373,6 +373,10 @@ def _stamp(at: datetime) -> str:
 # 看板在 github.io，他在国内打不开；网页留作备用，阻塞摘要推到微信。
 # 「阻塞」的定义是看板那一份（`dashboard.blocked_runs`），不在这儿另写。
 #
+# 账号所有者 2026-09-27 ~23:00Z 的四条答复（看板 build_dashboard_snapshot 顶注有全文和实测证据）：
+# (1) 只推无人值守链的红（`pushable`）(2) 按片子去重 (3) 已按阻塞报的工作流不再推趋势
+# （`trend_alerts_to_push`）(4) 6 小时冷却按片子算（`_key` 含 slug）。
+#
 # 只在**转入**阻塞时推，恢复不推（他要的是「卡住了」这一声，不是来回播报）。
 # 两道防刷屏，**都是推迟、不是丢掉**：
 # - 同一处（工作流 × mode，`_key`）恢复后又在 BLOCKED_REPEAT_COOLDOWN 内红回来（来回抖），
@@ -394,10 +398,30 @@ _which = dashboard.which
 
 
 def _key(b: dict) -> str:
-    """去重按「工作流 × mode」，和 `blocked_runs` 取「最近一条」的键是同一个。
+    """去重和 6 小时冷却都按「工作流 × mode × 片子」，和 `blocked_runs` 取「最近一条」的键
+    是同一个（`blocked_key`）。
     ⚠️ 原来按工作流去重：match-reel 的 render 已经报过、之后它的 probe 也红了，
-    第二条会被当成「已知」吞掉。"""
-    return dashboard.blocked_key(str(b.get("workflow") or ""), b.get("mode"))
+    第二条会被当成「已知」吞掉。键里没有 slug 时，片子 C 的 render 红了会落进片子 A 那一声
+    的冷却里压 6 小时（账号所有者 2026-09-27 答复 (4)：冷却按片子算）。"""
+    if b.get("key"):
+        return str(b["key"])  # `blocked_runs` 算好的，slug 只认 run-name 段位读出来的
+    return dashboard.blocked_key(str(b.get("workflow") or ""), b.get("mode"), b.get("slug"))
+
+
+def pushable(blocked: list[dict]) -> list[dict]:
+    """只推无人值守链的红（账号所有者 2026-09-27 答复 (1)）：schedule 和编排器／队列派发的
+    run；会话手动拨的 run 红了不推——看板照旧显示它。没带 `unattended` 的按推：
+    认不出来时宁可多推一声。判据 `test_会话手动拨的run红了不推微信_看板照旧红`。"""
+    return [b for b in blocked if b.get("unattended", True)]
+
+
+def trend_alerts_to_push(alerts: list[str], blocked: list[dict]) -> list[str]:
+    """已经按阻塞报的工作流，它的每小时趋势告警不再推（Q9「不重复已有告警」，
+    账号所有者 2026-09-27 答复 (3)）。只去掉「<工作流>.yml：近 N 次失败率…」那一类，
+    编排器沉默、账本卡 sending 这些不是同一件事，照推；报表和 `::warning::` 照旧全列。"""
+    stems = {str(b.get("workflow") or "") for b in blocked}
+    return [a for a in alerts
+            if not any(a.startswith(f"{w}.yml：近 ") for w in stems if w)]
 
 
 def blocked_summary(blocked: list[dict], still: int = 0) -> tuple[str, str]:
@@ -481,9 +505,12 @@ def main(argv: list[str] | None = None) -> int:
     # 这儿的稀疏检出里没有 spec 清单，不给 `known`——「哪条卡住」靠出片 run 的 run-name
     # 按段位读（两段的 slug 也认得出），判据 test_两段的slug也要进微信摘要_不许说标题里没写
     runs = dashboard.monitored_runs(api.get)
-    blocked = dashboard.blocked_runs(runs)
+    blocked = dashboard.blocked_runs(runs)  # 报表全列（和看板一样）
+    to_push = pushable(blocked)             # 微信只推无人值守链的（答复 (1)）
+    trend = trend_alerts_to_push(alerts, to_push)  # 已按阻塞报的工作流不再推趋势（答复 (3)）
     report += "\n### 流水线阻塞（和看板同一个定义）\n\n" + ("\n".join(
         f"- {' / '.join(b['stages'])} · {_which(b)} · {b.get('slug') or NO_SLUG} · {b.get('url') or ''}"
+        + ("" if b.get("unattended", True) else "（会话手动拨的，不推微信）")
         for b in blocked) or "- 没有阻塞。") + "\n"
     print(report, end="")
     if args.summary:
@@ -492,15 +519,15 @@ def main(argv: list[str] | None = None) -> int:
     output = os.environ.get("GITHUB_OUTPUT")
     if args.alert_state:
         notify, title, message = notification_transition(
-            alerts, Path(args.alert_state))
+            trend, Path(args.alert_state))
         blocked_notify, blocked_title, blocked_message = blocked_transition(
-            blocked, Path(args.alert_state))
+            to_push, Path(args.alert_state))
     else:
-        notify = bool(alerts)
-        title = "⚠️ 网球视频流水线趋势异常" if alerts else ""
-        message = "；".join(alerts).replace("\n", " ")[:1800]
-        blocked_notify = bool(blocked)
-        blocked_title, blocked_message = blocked_summary(blocked) if blocked else ("", "")
+        notify = bool(trend)
+        title = "⚠️ 网球视频流水线趋势异常" if trend else ""
+        message = "；".join(trend).replace("\n", " ")[:1800]
+        blocked_notify = bool(to_push)
+        blocked_title, blocked_message = blocked_summary(to_push) if to_push else ("", "")
     if blocked_notify:
         # 阻塞摘要排最前、标题用它；同一班恰好也有趋势变化就跟在后面，一条消息说完
         message = blocked_message + ("<br><br>" + message if notify else "")

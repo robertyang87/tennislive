@@ -340,7 +340,8 @@ def test_阻塞推送和趋势告警共用一份状态文件互不覆盖(tmp_pat
     notification_transition(["编排器已 26 小时没点过 run（阈值 24h）"], state)
     saved = json.loads(state.read_text("utf-8"))
     assert saved["active_keys"] == ["orchestrator"]
-    assert saved["blocked_active"] == ["match-reel"], "趋势那一步把阻塞的去重状态冲掉了——会每小时重推"
+    assert saved["blocked_active"] == ["match-reel@bu-majchrzak-hangzhou-2026-r2"], \
+        "趋势那一步把阻塞的去重状态冲掉了——会每小时重推"
     assert blocked_transition([_blocked()], state)[0] is False
 
 
@@ -386,8 +387,9 @@ def test_main把阻塞摘要写进GITHUB_OUTPUT(tmp_path, monkeypatch):
     got = dict(line.split("=", 1) for line in out.read_text("utf-8").splitlines())
     assert got["notify"] == "true" and "阻塞" in got["title"]
     assert "bu-majchrzak-hangzhou-2026-r2" in got["message"] and "runs/8" in got["message"]
-    # 去重的键是「工作流 × mode」（`blocked_key`），和看板取「最近一条」的键是同一个
-    assert json.loads(state.read_text("utf-8"))["blocked_active"] == ["match-reel:render"]
+    # 去重的键是「工作流 × mode × 片子」（`blocked_key`），和看板取「最近一条」的键是同一个
+    assert json.loads(state.read_text("utf-8"))["blocked_active"] == \
+        ["match-reel:render@bu-majchrzak-hangzhou-2026-r2"]
     # 下一班还是同一条阻塞：不再推
     out.write_text("")
     ph.main(["--repo", "o/r", "--token", "x", "--workflows", "match-reel.yml",
@@ -562,10 +564,10 @@ def test_按工作流取run_每条受监控的都问到了_翻页有顶():
 
 
 def test_冷却期内红回来是推迟不是丢_过了冷却还红就推(tmp_path):
-    """复核的 nit，复现原样：08:00 render A 红了（推过）、09:00 片子 B 的 render 绿了、
-    10:00 片子 C 的 render 红了一直卡着。去重键是「工作流 × mode」、没有 slug，
-    C 落在 A 那一声的 6 小时冷却里——原来记成已知，10:00／11:00／16:00／22:00／28:00
-    一次都不推，他收到的唯一一条微信点的是 A。冷却是**推迟**：过了冷却还红着就推，点名 C。"""
+    """复核的 nit：冷却是**推迟**不是丢——同一处（同一条片子）恢复后又在 6 小时内红回来，
+    先压着；过了冷却还红着就推。原来记成已知，之后一次都不推。
+    账号所有者 2026-09-27 答复 (4)：冷却按片子算——08:00 片子 A 的 render 红了（推过），
+    10:00 片子 C 的 render 红了，C 不落进 A 的冷却，当班就推、点名 C。"""
     from datetime import datetime, timedelta, timezone  # noqa: PLC0415
 
     from tools.pipeline_health import blocked_transition  # noqa: PLC0415
@@ -575,14 +577,17 @@ def test_冷却期内红回来是推迟不是丢_过了冷却还红就推(tmp_pa
     a = {**_blocked(slug="alpha-beta-r1"), "mode": "render"}
     c = {**_blocked(slug="gamma-delta-r1"), "mode": "render"}
     assert blocked_transition([a], state, t0)[0] is True
-    assert blocked_transition([], state, t0 + timedelta(hours=1))[0] is False   # B 的 render 绿了
-    assert blocked_transition([c], state, t0 + timedelta(hours=2))[0] is False, "冷却期内先压着"
-    assert blocked_transition([c], state, t0 + timedelta(hours=3))[0] is False
-    notify, _title, message = blocked_transition([c], state, t0 + timedelta(hours=8))
+    notify, _title, message = blocked_transition([a, c], state, t0 + timedelta(hours=2))
     assert notify and "gamma-delta-r1" in message and "alpha-beta-r1" not in message, (notify, message)
+    # A 恢复、2 小时后又红回来（来回抖）：A 的冷却里先压着，不丢
+    assert blocked_transition([c], state, t0 + timedelta(hours=3))[0] is False
+    assert blocked_transition([a, c], state, t0 + timedelta(hours=4))[0] is False, "冷却期内先压着"
+    assert blocked_transition([a, c], state, t0 + timedelta(hours=5))[0] is False
+    notify, _title, message = blocked_transition([a, c], state, t0 + timedelta(hours=8))
+    assert notify and "alpha-beta-r1" in message and "另有 1 条" in message, (notify, message)
     # 补过一次就是已知：之后每一班不再轰
     for h in (14, 20):
-        assert blocked_transition([c], state, t0 + timedelta(hours=h))[0] is False
+        assert blocked_transition([a, c], state, t0 + timedelta(hours=h))[0] is False
 
 
 def test_按工作流取run_一次瞬时失败重试一次_两次都失败才抛():
@@ -638,3 +643,97 @@ def test_健康检查不许被后来的一班掐掉_推过没存状态会重推(
     block = body.split("\nconcurrency:", 1)[1].split("\njobs:", 1)[0]
     assert re.search(r"^\s+group:\s*pipeline-health\s*$", block, re.M), block
     assert re.search(r"^\s+cancel-in-progress:\s*false\s*$", block, re.M), block
+
+
+# ── 账号所有者 2026-09-27 ~23:00Z 对 Q9 的四条答复 ─────────────────────────────
+_BOT = {"login": "github-actions[bot]", "id": 41898282, "type": "Bot"}
+_OWNER = {"login": "robertyang87", "id": 257251572, "type": "User"}
+
+
+def _main_out(ph, monkeypatch, tmp_path, runs, state_name="state.json", completed=None):
+    """跑一趟 `main()`，返回 (GITHUB_OUTPUT 那几行, 报表)。`completed` 给了就当
+    `workflow_health` 那个端点（status=completed）的返回，趋势那一半才有数。"""
+    import io  # noqa: PLC0415
+    from contextlib import redirect_stdout  # noqa: PLC0415
+
+    base = _fake_github(runs)
+
+    def get(self, path):
+        if completed is not None and "status=completed" in path:
+            return {"workflow_runs": list(completed)}
+        return base(self, path)
+
+    monkeypatch.setattr(ph.GitHubAPI, "get", get)
+    monkeypatch.setattr(ph, "sla_health", lambda: (0, 0, 0.0))
+    monkeypatch.setattr(ph, "stale_publications", lambda: [])
+    monkeypatch.setattr(ph, "orchestrator_productivity", lambda: ("2026-09-27T00:00:00Z", 1.0))
+    out = tmp_path / "out.txt"
+    out.write_text("")
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        assert ph.main(["--repo", "o/r", "--token", "x", "--workflows", "match-reel.yml",
+                        "--step-runs", "0", "--alert-state", str(tmp_path / state_name)]) == 0
+    return dict(line.split("=", 1) for line in out.read_text("utf-8").splitlines()), buf.getvalue()
+
+
+def _real_run(rid, minutes, conclusion, title, who, event="workflow_dispatch", stem="match-reel"):
+    from datetime import datetime, timedelta, timezone  # noqa: PLC0415
+
+    now = datetime.now(timezone.utc)
+    iso = lambda m: (now - timedelta(minutes=m)).isoformat().replace("+00:00", "Z")  # noqa: E731
+    return {"id": rid, "name": stem, "path": f".github/workflows/{stem}.yml", "event": event,
+            "status": "completed", "conclusion": conclusion, "created_at": iso(minutes + 5),
+            "updated_at": iso(minutes), "html_url": f"https://github.com/o/r/actions/runs/{rid}",
+            "display_title": title, "actor": who, "triggering_actor": who}
+
+
+def test_会话手动拨的run红了不推微信_看板照旧红(tmp_path, monkeypatch):
+    """答复 (1)：只推无人值守链（schedule、编排器／队列派发）的红；会话手动拨的 run 红了，
+    报表和看板照旧列出来，微信不响。判据是 run 对象的 event ＋ triggering_actor
+    （实测数据见 `build_dashboard_snapshot` 顶注）。"""
+    import tools.pipeline_health as ph  # noqa: PLC0415
+
+    hand = _real_run(36333879418, 20, "failure", "match-reel · probe · medvedev-wong-hangzhou-2026-qf", _OWNER)
+    got, report = _main_out(ph, monkeypatch, tmp_path, [hand])
+    assert got["notify"] == "false", got
+    assert "medvedev-wong-hangzhou-2026-qf" in report and "会话手动拨的，不推微信" in report, report
+    assert ph.dashboard.blocked_runs([hand]), "看板那一头照旧算阻塞"
+
+    # 编排器派发的另一条也红了：推，只点名它
+    bot = _real_run(36337385713, 10, "failure", "match-reel · render · zverev-tien-laver-cup-2026", _BOT)
+    got, _ = _main_out(ph, monkeypatch, tmp_path, [hand, bot])
+    assert got["notify"] == "true", got
+    assert "zverev-tien-laver-cup-2026" in got["message"] and "medvedev-wong" not in got["message"], got
+
+    # schedule 的红：actor 是最后改 cron 的人，照样推
+    sched = _real_run(36352155523, 10, "failure", "reel-auto-ready", _OWNER, event="schedule",
+                      stem="reel-auto-ready")
+    got, _ = _main_out(ph, monkeypatch, tmp_path, [sched], state_name="s2.json")
+    assert got["notify"] == "true" and "reel-auto-ready" in got["message"], got
+
+
+def test_已按阻塞报过的工作流不再推它的趋势告警(tmp_path, monkeypatch):
+    """答复 (3)：Q9「不重复已有告警」——match-reel 这一班按阻塞推了，同一班它的
+    「近 N 次失败率」不再跟在后面推；下一班也不许以趋势的名义再推一遍。报表照旧全列。
+    别的工作流的趋势、编排器沉默这类不是同一件事，照推。"""
+    import json  # noqa: PLC0415
+
+    import tools.pipeline_health as ph  # noqa: PLC0415
+
+    fails = [_real_run(100 + i, 10 + i, "failure", "match-reel · render · alpha-beta-r1", _BOT)
+             for i in range(5)]
+    got, report = _main_out(ph, monkeypatch, tmp_path, fails[:1], completed=fails)
+    assert "match-reel.yml：近 5 次失败率 100%" in report, report
+    assert got["notify"] == "true" and "阻塞" in got["title"], got
+    assert "失败率" not in got["message"], got["message"]
+    state = json.loads((tmp_path / "state.json").read_text("utf-8"))
+    assert state["active_keys"] == [], state
+    got, _ = _main_out(ph, monkeypatch, tmp_path, fails[:1], completed=fails)
+    assert got["notify"] == "false", got
+
+    # 单元：只去掉被阻塞那条工作流的趋势行
+    alerts = ["match-reel.yml：近 5 次失败率 100%，连续失败 5",
+              "explainer.yml：近 5 次失败率 60%，连续失败 3", "编排器已 30 小时没点过 run（阈值 24h）"]
+    assert ph.trend_alerts_to_push(alerts, [{"workflow": "match-reel"}]) == alerts[1:]
+    assert ph.trend_alerts_to_push(alerts, []) == alerts

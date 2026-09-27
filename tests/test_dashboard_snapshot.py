@@ -617,8 +617,9 @@ def test_后一条别的mode绿了不许顶掉前一条mode的红(tmp_path):
     assert data["health"]["status"] == "failed" and stage["Spec"]["status"] == "failure"
     assert stage["渲染"]["status"] == "success"
 
-    # 同一个 mode 后一条绿了：那一处恢复（和阶段卡片看到的是同一条最近的 run）
-    render_ok_later = _run("match-reel", 5, rid=7, title="match-reel · render · a-b")
+    # 同一条片子同一个 mode 后一条绿了：那一处恢复（和阶段卡片看到的是同一条最近的 run）。
+    # 别的片子绿了不算——键里有 slug（账号所有者 2026-09-27 答复 (2)，见下面那条判据）
+    render_ok_later = _run("match-reel", 5, rid=7, title="match-reel · render · bu-majchrzak-hangzhou-2026-r2")
     data = _build(root, [fail, render_ok_later])
     assert data["health"]["status"] != "failed" and not data["health"].get("blocked")
     assert {s["label"]: s["status"] for s in data["stages"]}["渲染"] == "success"
@@ -813,3 +814,75 @@ def test_一格只剩被取代的红_卡片指向取代它的那一趟_不写暂
     stage = {s["label"]: s for s in data["stages"]}
     assert stage["Spec"]["status"] == "failure"
     assert stage["渲染"]["status"] == "warning" and "取代" in stage["渲染"]["detail"], stage["渲染"]
+
+
+# ── 账号所有者 2026-09-27 ~23:00Z 对 Q9 的四条答复 ─────────────────────────────
+_BOT = {"login": "github-actions[bot]", "id": 41898282, "type": "Bot"}
+_OWNER = {"login": "robertyang87", "id": 257251572, "type": "User"}
+
+
+def test_阻塞按片子去重_B绿了A照样红(tmp_path):
+    """答复 (2)：键是 工作流 × mode × slug。片子 A 的 render 红了，之后片子 B 的 render 绿了——
+    原来按「工作流 × mode」取最近一条，B 的绿把 A 的红顶掉，首屏转绿、微信也不响，而 A 根本
+    没渲出来。现在 A 照样阻塞，直到 A 自己绿了或滚出 24 小时；阶段卡片和首屏同一个判断。"""
+    root = _root(tmp_path)
+    a_fail = _run("match-reel", 60, "failure", rid=60, title="match-reel · render · alpha-beta-r1")
+    b_ok = _run("match-reel", 10, rid=10, title="match-reel · render · gamma-delta-r1")
+    (b,) = module.blocked_runs([a_fail, b_ok])
+    assert (b["slug"], b["key"]) == ("alpha-beta-r1", "match-reel:render@alpha-beta-r1"), b
+    data = _build(root, [a_fail, b_ok])
+    stage = {s["label"]: s for s in data["stages"]}
+    assert data["health"]["status"] == "failed", data["health"]
+    assert stage["渲染"]["status"] == "failure" and stage["渲染"]["url"].endswith("/60"), stage["渲染"]
+    # A 自己绿了：那一处恢复
+    a_ok = _run("match-reel", 5, rid=5, title="match-reel · render · alpha-beta-r1")
+    assert module.blocked_runs([a_fail, b_ok, a_ok]) == []
+    # 滚出 24 小时：不再算
+    later = module.datetime.now(module.timezone.utc) + timedelta(hours=24)
+    assert module.blocked_runs([a_fail, b_ok], later) == []
+    # 两条片子都红：各报各的
+    b_fail = _run("match-reel", 5, "failure", rid=6, title="match-reel · render · gamma-delta-r1")
+    assert [x["slug"] for x in module.blocked_runs([a_fail, b_fail])] == ["alpha-beta-r1", "gamma-delta-r1"]
+    # 没有 slug 的键照旧（cookies、老标题、不是出片工作流）
+    assert module.blocked_key("match-reel", "cookies") == "match-reel:cookies"
+    assert module.blocked_key("orchestrate") == "orchestrate"
+    assert module.blocked_key("explainer", None, "ranking-math") == "explainer@ranking-math"
+
+
+def test_老标题的红_晚开先跑完的绿不算取代(tmp_path):
+    """复核 nit：老标题的取代按 `updated_at`（跑完的时刻）排，不按 `created_at`。
+    老标题的红 T 开、T+10 分红；一趟新标题的 run T+2 秒开、T+5 分就绿了——它跑完的时候
+    老 run 还没红，证明不了「红了之后好了」，老的那一处照样阻塞。"""
+    t = module.datetime.now(module.timezone.utc) - timedelta(hours=2)
+    iso = lambda d: (t + d).isoformat().replace("+00:00", "Z")  # noqa: E731
+    legacy_fail = {**_run("interview-clip", 0, "failure", rid=1),
+                   "created_at": iso(timedelta(0)), "updated_at": iso(timedelta(minutes=10))}
+    quick_ok = {**_run("interview-clip", 0, rid=2, title="interview-clip · subs · sinner-press-2026"),
+                "created_at": iso(timedelta(seconds=2)), "updated_at": iso(timedelta(minutes=5))}
+    assert module.is_legacy_title(legacy_fail)
+    assert [(b["workflow"], b["mode"]) for b in module.blocked_runs([legacy_fail, quick_ok])] == \
+        [("interview-clip", None)]
+    # 对照：跑完在老 run 红了之后的那一趟，照样取代
+    slow_ok = {**quick_ok, "updated_at": iso(timedelta(minutes=12))}
+    assert module.blocked_runs([legacy_fail, slow_ok]) == []
+    assert module.superseded_ids([legacy_fail, slow_ok]) == {1: slow_ok}
+
+
+def test_无人值守按event和派发者认_会话手动拨的不算():
+    """答复 (1)：只推无人值守链的红。判据来自 2026-09-27 的真实 run（list_workflow_runs 只读）：
+    编排链派发的 `interview-clip` 36337385713 / `auto-push-interview` 36336727963 是
+    `github-actions[bot]`；会话拨的 `match-reel` 36333879418 是 `robertyang87`；
+    `reel-auto-ready` 的 schedule run 36352155523 的 actor 也是 `robertyang87`（最后改 cron
+    的人）——所以先看 event。run 标题里没有派发者标记，读不出来。"""
+    bot = {**_run("interview-clip", 1, "failure", title="interview-clip · render · a-b"),
+           "actor": _BOT, "triggering_actor": _BOT}
+    hand = {**_run("match-reel", 1, "failure", title="match-reel · probe · a-b"),
+            "actor": _OWNER, "triggering_actor": _OWNER}
+    sched = {**_run("reel-auto-ready", 1, "failure"), "event": "schedule",
+             "actor": _OWNER, "triggering_actor": _OWNER}
+    rerun_by_hand = {**bot, "triggering_actor": _OWNER}  # 编排器派发的、会话点了重跑
+    assert module.is_unattended(bot) and module.is_unattended(sched)
+    assert not module.is_unattended(hand) and not module.is_unattended(rerun_by_hand)
+    assert module.is_unattended({**hand, "actor": None, "triggering_actor": None}), "认不出派发者宁可多推"
+    got = {b["workflow"]: b["unattended"] for b in module.blocked_runs([bot, hand, sched])}
+    assert got == {"interview-clip": True, "match-reel": False, "reel-auto-ready": True}, got

@@ -4455,3 +4455,19 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
 
     git rm output/<日期>/reel/<slug>/pushed.json && 合并
     # 或 match-reel.yml mode=push push=true（同样要先删掉 pushed.json）
+
+## ⭐⭐ 2026-09-27：Q9 阻塞推微信的四条口径（账号所有者 ~23:00Z 答复）
+
+定义只有一份：`tools/build_dashboard_snapshot.py` 的 `blocked_runs`（顶注有全文和实测证据），
+`tools/pipeline_health.py` 每小时一班按它推「⛔ 网球流水线阻塞」。
+
+| | 口径 | 落在哪 |
+|---|---|---|
+| (1) 谁的红才推 | **只推无人值守链**：`event == schedule`，或 `triggering_actor` 是 `github-actions[bot]`（编排器／队列用 `github.token` 派发）；会话手动拨的（`robertyang87`）**不推**，看板照旧显示 | `is_unattended` / `pushable` |
+| (2) 去重 | 按 **工作流 × mode × slug**：A 的 render 红了、B 的 render 绿了，A 照样阻塞，直到 A 自己绿或滚出 24 小时 | `blocked_key` |
+| (3) 趋势告警 | 已按阻塞报的工作流，它的「近 N 次失败率」**不再推**；报表照旧全列 | `trend_alerts_to_push` |
+| (4) 6 小时冷却 | 按片子算（和去重同一个键） | `_key` |
+
+⚠️ 判「是不是手动」**先看 event**：schedule run 的 actor 是最后改 cron 的人（实测 `reel-auto-ready`
+36352155523 是 `robertyang87`）。run 标题里没有派发者标记，读不出来。
+⚠️ 老标题 run 的取代按 `updated_at` 排：晚 2 秒开、先跑完的绿证明不了「红了之后好了」。
