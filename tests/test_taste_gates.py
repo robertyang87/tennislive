@@ -103,6 +103,8 @@ RESULT_WORDING = [
     "连赢8局夺下冠军", "她夺得冠军", "夺得巡回赛冠军", "他登顶世界第一",
     "加冕新科冠军", "问鼎澳网", "他闯入八强", "她跻身四强", "一路杀入四强",
     "她不敌萨巴伦卡", "他惜败辛纳", "郑钦文憾负",
+    # 复审第二轮：收紧「争夺」「了抢七」之后，真结果照样认
+    "她夺冠了", "澳网夺冠", "他挺进了8强", "他杀入了决赛",
 ]
 
 
@@ -110,8 +112,10 @@ def test_轮次名和整场结果的说法都算结果():
     for line in RESULT_WORDING:
         assert T.has_match_result(line), f"认不出结果：{line!r}"
     # 反方向：「总决赛冠军」是身份；「这一球」「一分」仍然是过程
+    # 复审第二轮：「争夺冠军」是赛前说法；「了」夹在中间、「盘末」也是过程
     for line in ("总决赛冠军", "赢了这一球", "一局也没拿下", "他破了 再没输过一盘",
-                 "一路杀入决胜盘", "两人闯入抢七"):
+                 "一路杀入决胜盘", "两人闯入抢七", "两人争夺冠军", "杀入了抢七",
+                 "闯入盘末", "一路挺进决胜盘"):
         assert not T.has_match_result(line), f"把过程当成了结果：{line!r}"
 
 
@@ -319,13 +323,24 @@ def test_闸落地前已推的ACE钩子按原文冻结_改一个字就受管():
     可它已经发出去了——已发的不重渲，只能按原文冻结（豁免表上限 75 → 76）。
 
     ⚠️ 这一道闸合进 main 之前，每一条落到 main 上的手写 reel 都要这么过一遍：
-    真中了术语就按原文冻结、是词表漏了就补词表（fernandez-gibson 那条）。"""
-    spec = _reel("safiullin-bu-hangzhou-2026-qf")
-    assert "ACE" in T.jargon_hits(T._hook_text(spec))
+    真中了术语就按原文冻结、是词表漏了就补词表（fernandez-gibson 那条）。
+
+    ⚠️ 不读 `specs/reels/` 里那条活 spec（复审第二轮 nit）：它哪天重渲换成不带 ACE
+    的钩子，`test_口味豁免表只许减不许加` 就要求删掉豁免表那一条——读活 spec 的话
+    这条测试的第一句当场红，只能连测试一起删。所以从**豁免表里冻的原文**造一条
+    合成 spec；那一条删了就 skip（冻结这件事已经不用再验）。"""
+    slug = "safiullin-bu-hangzhou-2026-qf"
+    frozen = (T.load_legacy().get("hook_jargon") or {}).get(slug)
+    if frozen is None:
+        pytest.skip(f"{slug} 已经不在 hook_jargon 豁免表里（重渲换了钩子），冻结不用再验")
+    spec = _hook_spec(frozen, slug=slug)
+    assert "ACE" in T.jargon_hits(frozen)
     assert T.hook_jargon_problem(spec, legacy={}), "闸本身要认得出 ACE"
     assert T.hook_jargon_problem(spec) is None, "已推的那一版冻在豁免表里"
-    spec["cover"]["hook"] = spec["cover"]["hook"].replace("15", "16")
+    spec["cover"]["hook"] = frozen.replace("15", "16")
     assert T.hook_jargon_problem(spec), "改一个字就重新受管"
+    # 冻的是**原文**，不是 slug：换一个 slug 带同一句也照样拦
+    assert T.hook_jargon_problem(_hook_spec(frozen, slug="new-hand-written"))
 
 
 def test_小表的豁免真的还不合格():
