@@ -2763,7 +2763,8 @@ PR 正在改同一条工作流；把 `check_interview_copy_wording` 那个**零�
 
 - **人工请求**（`requests/interviews/*.json`）**不经过草稿**：`build_interview_request` 直接写
   正式 spec，`promote_all` 根本看不见它。闸在 `production_preflight.check_request`（build 那一刻，
-  ASR 和翻译之前）；`_claims` 写在请求里，`build_spec` 和「只改元数据」那条路都原样带进 spec
+  ASR 和翻译之前）；`_claims` 写在请求里，带进 spec（`build_spec` 整份抄，「只改元数据」那条路只带
+  改了的那几项、请求删了的 spec 里也删）
   （判据 `test_人工请求的_claims跟进正式spec_没认领在build那一刻就红`）
 - **手改过的草稿**（有人往 `.draft.json` 里补了 push／cover／takeaway）：`promote_all` 跟措辞
   判据坐同一个座位查，没认领就**留草稿、不转正**（判据

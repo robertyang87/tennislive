@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -326,6 +327,13 @@ def test_人工请求的_claims跟进正式spec_没认领在build那一刻就红
     assert A.interview_problem(written, slug) is None
     interview_source_gate.validate_source_contract(written)
 
+    # ④ 请求把那句断言连同认领一起撤掉：spec 里的 `_claims` 跟着删，不留一个 `null`
+    req_path.write_text(json.dumps(benign, ensure_ascii=False), encoding="utf-8")
+    B._build_one(req_path, object(), write=True)
+    written = json.loads(spec_path.read_text("utf-8"))
+    assert written["push"] == benign["push"]
+    assert "_claims" not in written, f"请求删了 `_claims`，spec 里剩下 {written.get('_claims')!r}"
+
 
 def test_采访线的全称断言在runner的前置检查里就红(tmp_path, monkeypatch):
     """`interview-clip.yml` 的「发布文案前置检查」跑的就是 production_preflight。"""
@@ -348,3 +356,158 @@ def test_采访线的全称断言在runner的前置检查里就红(tmp_path, mon
                                       "--column", "赛场之上"])
     PP.main()
     assert copies
+
+
+def _workflow_run(name: str) -> str:
+    """按 YAML 解析取某一步的 `run:`——不按文本切（注释里会提到步骤名）。"""
+    import yaml  # noqa: PLC0415
+
+    doc = yaml.safe_load((ROOT / ".github/workflows/interview-auto-render.yml")
+                         .read_text(encoding="utf-8"))
+    runs = [step["run"] for job in doc["jobs"].values() for step in job["steps"]
+            if step.get("name") == name and "run" in step]
+    assert len(runs) == 1, f"找不到（或不止一个）步骤「{name}」"
+    return runs[0]
+
+
+def test_一条人工请求没过闸_不连坐同一趟的其余请求(tmp_path, monkeypatch, capsys):
+    """`interview-auto-render.yml`「人工指定请求转写、切行并逐行翻译」原来单条红就整步
+    退出 1：同一趟后面的「补片头」「提交」全被跳过，别的请求白 build 一遍、没提交，每 10
+    分钟重来一趟，直到有人修好那一条（复审 2026-09-27）。
+
+    现在两条请求一起跑、其中一条带没认领的全称断言：
+    ① `build_interview_request --failed-list` 退出 0，好的那条照常落盘；坏的那条一个字节
+       都不写、`::error file=` 指回请求文件、记进失败清单；
+    ② 提交那一步跳过坏的那条的转写，好的照常 add（真跑那段 bash，git 打桩）；
+    ③ 最后一步读失败清单：有就写 run 摘要、把整趟标红；没有就绿。
+    """
+    import subprocess  # noqa: PLC0415
+
+    import build_interview_request as B  # noqa: PLC0415
+    import production_preflight as PP  # noqa: PLC0415
+    import tennislive.research.brief as brief  # noqa: PLC0415
+
+    # 产物目录照仓库的相对布局摆（output/interviews/<slug>），下面②那段 bash 就在 tmp_path 里跑
+    requests_dir, specs = tmp_path / "requests", tmp_path / "specs"
+    out = tmp_path / "output" / "interviews"
+    for folder in (requests_dir, specs):
+        folder.mkdir()
+    monkeypatch.setattr(B, "REQUESTS", requests_dir)
+    monkeypatch.setattr(B, "SPECS", specs)
+    monkeypatch.setattr(B, "OUTDIR", out)
+    monkeypatch.setattr(B, "_transcribe_request",
+                        lambda *a, **k: pytest.fail("只改元数据不许重跑 ASR"))
+    monkeypatch.setattr(PP, "check_copy", lambda *a, **k: None)
+
+    class _Ready:                                   # 只改元数据那条路不调模型
+        ready = True
+
+    monkeypatch.setattr(brief, "Chat", _Ready)
+
+    def seed(name: str, lead: str) -> tuple[str, Path]:
+        benign = json.loads((ROOT / "requests" / "interviews" / f"{name}.json")
+                            .read_text("utf-8"))
+        slug = benign["slug"]
+        (out / slug).mkdir(parents=True)
+        (out / slug / "cap_asr.json3").write_text("{}", encoding="utf-8")
+        existing = B.build_spec(benign, ["谢谢大家"], duration=300.0)
+        existing["_request_origin"] = {"request_sha256": "上一版",
+                                       "request": copy.deepcopy(benign), "duration": 300.0}
+        (specs / f"{slug}.json").write_text(json.dumps(existing, ensure_ascii=False),
+                                            encoding="utf-8")
+        (specs / f"{slug}.xhs.txt").write_text(str(benign.get("xhs") or ""), encoding="utf-8")
+        req = {**benign, "push": {**benign["push"], "lead": lead}}
+        (requests_dir / f"{name}.json").write_text(json.dumps(req, ensure_ascii=False),
+                                                   encoding="utf-8")
+        return slug, requests_dir / f"{name}.json"
+
+    bad_slug, bad_path = seed("alcaraz-fritz-laver-cup-2026-interview",
+                              "他此前六次打进正赛，六次全部首轮出局。")
+    good_slug, _ = seed("zverev-tien-laver-cup-2026-interview",
+                        "兹维列夫拿下决定性的 3 分，欧洲队夺回拉沃尔杯。")
+    bad_before = {p: p.read_bytes() for p in (specs / f"{bad_slug}.json",
+                                              specs / f"{bad_slug}.xhs.txt", bad_path)}
+    assert len(B.pending_paths()) == 2, "两条都该是待 build 的——不然下面测的不是「同一趟」"
+
+    # ① 一条红、一条照常写；退出码不因为单条变 1
+    failed = tmp_path / "request-failed.txt"
+    monkeypatch.setattr(sys, "argv", ["build_interview_request.py", "--write",
+                                      "--failed-list", str(failed)])
+    assert B.main() == 0
+    stdout = capsys.readouterr().out
+    rows = [line.split("\t") for line in failed.read_text("utf-8").splitlines()]
+    assert len(rows) == 1, rows
+    path_col, slug_col, reason = rows[0]
+    assert path_col.endswith(bad_path.name) and slug_col == bad_slug
+    assert "全称断言" in reason and f"requests/interviews/{bad_slug}.json" in reason
+    assert f"::error file={path_col}::" in stdout and "没过闸" in stdout
+    assert f"✅ {good_slug}" in stdout
+    good = json.loads((specs / f"{good_slug}.json").read_text("utf-8"))
+    assert good["push"]["lead"].startswith("兹维列夫拿下决定性的 3 分")
+    assert {p: p.read_bytes() for p in bad_before} == bad_before, "没过闸的那条不许落盘"
+
+    # 工作流真的把清单交给了这个工具，最后那一步 `always()` 且读的是同一个文件
+    import re  # noqa: PLC0415
+
+    import yaml  # noqa: PLC0415
+
+    build_step = _workflow_run("人工指定请求转写、切行并逐行翻译")
+    assert re.search(r"build_interview_request\.py --write\s*\\?\s*--failed-list "
+                     r"/tmp/request-failed\.txt", build_step), build_step
+    doc = yaml.safe_load((ROOT / ".github/workflows/interview-auto-render.yml")
+                         .read_text(encoding="utf-8"))
+    names = [step.get("name") for job in doc["jobs"].values() for step in job["steps"]]
+    report_name = "人工请求没过闸：其余已照常提交、dispatch，整趟标红"
+    assert names.index(report_name) > names.index("dispatch 未 render 的正式 spec（每 slug 一个 run，并行）")
+    report_if = next(step["if"] for job in doc["jobs"].values() for step in job["steps"]
+                     if step.get("name") == report_name)
+    assert "always()" in report_if, "前面哪一步红了，这一步也得跑到"
+
+    # ② 提交那一步：坏的那条的转写不进 add，好的照常（git 打桩，只记参数）
+    commit = _workflow_run("提交生成与提升结果")
+    start = commit.index('FAILED_SLUGS=""')
+    end = commit.index("\nfi", commit.index("done < /tmp/request-slugs.txt")) + 3
+    slugs = tmp_path / "request-slugs.txt"
+    slugs.write_text(f"{bad_slug}\n{good_slug}\n", encoding="utf-8")
+    loop = (commit[start:end].replace("/tmp/request-failed.txt", str(failed))
+            .replace("/tmp/request-slugs.txt", str(slugs)))
+    ran = subprocess.run(["bash", "-euo", "pipefail", "-c",
+                          'git() { echo "GIT $*"; }\n' + loop],
+                         cwd=tmp_path, capture_output=True, text=True, timeout=30)
+    assert ran.returncode == 0, ran.stderr
+    assert f"GIT add -f output/interviews/{good_slug}/cap_asr.json3" in ran.stdout
+    assert f"output/interviews/{bad_slug}/" not in ran.stdout.replace(f"[跳过] {bad_slug}", "")
+    assert f"[跳过] {bad_slug}" in ran.stdout
+
+    # ③ 最后一步：有失败就写摘要、整趟标红；清单空着就绿
+    report = _workflow_run(report_name)
+    summary = tmp_path / "summary.md"
+
+    def final(listing: str) -> subprocess.CompletedProcess:
+        failed.write_text(listing, encoding="utf-8")
+        summary.write_text("", encoding="utf-8")
+        return subprocess.run(
+            ["bash", "-eo", "pipefail", "-c", report.replace("/tmp/request-failed.txt", str(failed))],
+            capture_output=True, text=True, timeout=30,
+            env={**os.environ, "GITHUB_STEP_SUMMARY": str(summary)})
+
+    red = final("\t".join(rows[0]) + "\n")
+    assert red.returncode == 1 and "1 条人工请求没过闸" in red.stdout
+    assert path_col in summary.read_text("utf-8") and bad_slug in summary.read_text("utf-8")
+    green = final("")
+    assert green.returncode == 0 and summary.read_text("utf-8") == ""
+
+
+def test_check_request逐条调用不许把sys_path越撑越长(monkeypatch):
+    """一趟 build 逐条请求各调一次 `check_request`；原来每调一次就往 sys.path 头上插一次
+    tools/（复审 2026-09-27 的 nit）。"""
+    import production_preflight as PP  # noqa: PLC0415
+
+    monkeypatch.setattr(PP, "check_copy", lambda *a, **k: None)
+    req = json.loads((ROOT / "requests" / "interviews"
+                      / "zverev-tien-laver-cup-2026-interview.json").read_text("utf-8"))
+    PP.check_request(req)
+    before = list(sys.path)
+    for _ in range(3):
+        PP.check_request(req)
+    assert sys.path == before

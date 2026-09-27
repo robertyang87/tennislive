@@ -555,7 +555,12 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
                     "topbar_layout", "interview_kind", "requested_content_type",
                     "_claims"):
             if req.get(key) != previous.get(key):
-                spec[key] = _apply_request_delta(spec.get(key), previous.get(key), req.get(key))
+                if key not in req:
+                    # 请求把这一项整个删了：spec 里也删，和下一层 `_apply_request_delta`
+                    # 删叶子是同一个口径——原来写成 `"_claims": null` 留在 spec 里。
+                    spec.pop(key, None)
+                else:
+                    spec[key] = _apply_request_delta(spec.get(key), previous.get(key), req[key])
         from interview_source_gate import finalize_source_contract, validate_source_contract
         finalize_source_contract(spec)
         validate_source_contract(spec)
@@ -655,13 +660,33 @@ def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
         return _build_one_unlocked(path, chat, write=True)
 
 
+def _rel(path: Path) -> str:
+    try:
+        return path.resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def _annotation(text: str) -> str:
+    """GitHub 工作流命令的消息体：换行要编码，不然 `::error::` 只认第一行。"""
+    return text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--count-pending", action="store_true")
     ap.add_argument("--pending-slugs", action="store_true")
     ap.add_argument("--slug", default="")
     ap.add_argument("--write", action="store_true")
+    ap.add_argument(
+        "--failed-list", default="",
+        help="单条请求失败记进这个文件（每行：请求路径<TAB>slug<TAB>原因），退出码不再"
+             "因为单条变 1——interview-auto-render 靠它让同一趟的其余请求照常提交，"
+             "整趟到最后一步再标红。整趟跑不起来（没配 key）照旧非 0。")
     args = ap.parse_args()
+    failed_list = Path(args.failed_list) if args.failed_list else None
+    if failed_list:
+        failed_list.write_text("", encoding="utf-8")
 
     paths = pending_paths(args.slug)
     if args.count_pending:
@@ -682,15 +707,29 @@ def main() -> int:
         print("::error::没配 DEEPSEEK_API_KEY，中文字幕无法生成")
         return 2
 
-    failed = 0
+    # 一条失败不连坐：每条请求各自 try，失败的那条**什么都不写**（所有落盘都排在
+    # `_build_one_unlocked` 末尾、所有闸之后），其余照常写。原来单条红就整步退出 1，
+    # 同一趟后面的「补片头」「提交」全被跳过，别的请求白转写一遍、每 10 分钟重来一趟。
+    failed: list[tuple[str, str, str]] = []
     for path in paths:
         try:
             slug, n_lines, duration = _build_one(path, chat, write=args.write)
             mode = "已写入" if args.write else "干跑"
             print(f"✅ {slug}: {n_lines} 行，源长 {duration:.1f}s，{mode}")
         except Exception as exc:  # noqa: BLE001 — 一条失败不吞掉后续请求
-            failed += 1
-            print(f"::error::{path.name}: {type(exc).__name__}: {exc}")
+            rel = _rel(path)
+            try:
+                slug = _slug(_read(path), path)
+            except Exception:  # noqa: BLE001 — 请求本身读不了，原因里已经写了
+                slug = ""
+            reason = f"{type(exc).__name__}: {exc}"
+            failed.append((rel, slug, reason))
+            print(f"::error file={rel}::{_annotation(f'{rel} 没过闸，不进这一趟的提交：{reason}')}")
+    if failed_list:
+        failed_list.write_text("".join(
+            f"{rel}\t{slug}\t{' ⏎ '.join(reason.split(chr(10)))}\n"
+            for rel, slug, reason in failed), encoding="utf-8")
+        return 0
     return 1 if failed else 0
 
 

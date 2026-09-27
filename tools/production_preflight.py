@@ -11,6 +11,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def _tools_on_path() -> None:
+    """`absolute_claims` 在 tools/ 下；只插一次——一趟 build 逐条请求都走这里。"""
+    tools = str(ROOT / 'tools')
+    if tools not in sys.path:
+        sys.path.insert(0, tools)
+
+
 def check_copy(copy: Path, column: str, *, date: str = '') -> None:
     date = date or datetime.now(timezone(timedelta(hours=8))).date().isoformat()
     subprocess.run([sys.executable, str(ROOT / 'tools/push_reel.py'), '--stage', 'check',
@@ -32,7 +39,7 @@ def check_request(req: dict) -> None:
     # 全称断言：人工请求**不经过草稿**，`build_interview_request` 直接写正式 spec，
     # 所以这道闸要在 build 这一刻（ASR／翻译之前）查，别等 render 前置检查
     # （`check_interview_claims`）才红。`_claims` 写在请求里，`build_spec` 原样带进 spec。
-    sys.path.insert(0, str(ROOT / 'tools'))
+    _tools_on_path()
     from absolute_claims import interview_problem  # noqa: PLC0415
     slug = str(req.get('slug') or '')
     problem = interview_problem(req, slug, where=f'requests/interviews/{slug}.json')
@@ -65,7 +72,7 @@ def check_interview_claims(spec_path: Path) -> None:
       `promote_interview_draft.promote_all` 转正前查，没认领就留草稿。
     哪天草稿开始带模型写的文案，先在 promote 那一关分流。
     """
-    sys.path.insert(0, str(ROOT / 'tools'))
+    _tools_on_path()
     from absolute_claims import interview_problem  # noqa: PLC0415
 
     spec = json.loads(spec_path.read_text(encoding='utf-8'))

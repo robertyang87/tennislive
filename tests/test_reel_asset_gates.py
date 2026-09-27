@@ -407,6 +407,7 @@ def test_豁免表只许减不许加(kind, check, cap):
 
 # ────────────────────────────────────────────────── 真的接上了：dry-run ──
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_validate_spec接了这道闸():
     spec = reel.load_spec(ROOT / "specs" / "reels" / "medvedev-royer-hangzhou-2026-r2.json")
     reel.validate_spec(spec)                       # 原样是绿的
@@ -415,6 +416,7 @@ def test_validate_spec接了这道闸():
         reel.validate_spec(spec)
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_dry_run的推送标题和runner同一个函数(tmp_path, monkeypatch, capsys):
     """原来 dry-run 自己拼标题、拿 `/tmp/dryrun` 调 `headline()`，永远取不到日期、
     退回占位标题——`push.summary` 写到 26 字位，本地退出 0，runner 上的
@@ -432,6 +434,57 @@ def test_dry_run的推送标题和runner同一个函数(tmp_path, monkeypatch, c
                                       "--outdir", str(tmp_path / "dry")])
     assert reel.main() == 1
     assert "推送文案前置检查不过" in capsys.readouterr().out
+
+
+def test_真账本多一笔_全库扫描和钉空账本的渲染入口都不许跟着红(
+        tmp_path, monkeypatch, _empty_reel_ledger):
+    """第一轮 BLOCKING 的同一类定时炸弹，这回在 ④ 封面复用上：它读发布账本和
+    `pushed.json`，原来又绑在 `def` 的默认参数上——`_empty_reel_ledger` 只钉住了
+    `reel_facts` 那一半，`validate_spec` 照样读真账本；全仓盘点口径
+    （`allow_published_legacy=True`，`test_每条spec的旁白都还估得下` 拿它扫全部
+    specs/reels、ReelError 一律往上抛）也读。一条还没发的 spec 撞上刚发出去的同一张图，
+    auto-push 那个账本提交在 main 上跑 CI 就红。
+
+    「真的发布记录」用模块默认口径模拟（`gates.LEDGER`／`OUTPUT`／`SPECS` 指到 tmp），
+    **不碰 data/ 和 output/ 下的真东西**。那一笔**账本和 `pushed.json` 各记一份**：
+    钉空账本要把两个出处一起钉住，漏一个照样红。先证明这一笔真的咬得到，再证明两个口径
+    都不跟着红。
+    """
+    slug = "rublev-gaston-hangzhou-2026-qf"
+    spec = reel.load_spec(ROOT / "specs" / "reels" / f"{slug}.json")
+    photo = spec["cover"]["portrait"]["image"]
+    assert (ROOT / photo).is_file(), f"{photo} 不在盘上——下面的「咬得到」会是空转"
+    specs, live, output = tmp_path / "specs", tmp_path / "live-ledger", tmp_path / "output"
+    twin = "__earlier-twin__"                       # 同栏目、同一张封面、先发出去的另一条
+    pushed = output / "2026-09-27" / "reel" / twin
+    for folder in (specs, live, pushed):
+        folder.mkdir(parents=True)
+    (specs / f"{twin}.json").write_text(json.dumps(
+        {"slug": twin, "cover": {"eyebrow": "赛场之上", "portrait": {"image": photo}}}),
+        encoding="utf-8")
+    (live / f"{twin}.json").write_text(json.dumps({"attempts": [
+        {"status": "sent", "at": "2026-09-27T10:00:00Z"}]}), encoding="utf-8")
+    (pushed / "pushed.json").write_text(json.dumps({"at": "2026-09-27T10:00:00Z"}),
+                                        encoding="utf-8")
+    monkeypatch.setattr(gates, "SPECS", specs)
+    monkeypatch.setattr(gates, "LEDGER", live)
+    monkeypatch.setattr(gates, "OUTPUT", output)
+
+    # 没钉账本：这一笔真的把渲染入口打红（不然下面两句放行是空转）
+    monkeypatch.delenv("TENNISLIVE_REEL_LEDGER_DIR")
+    with pytest.raises(reel.ReelError, match=f"已经在 `{twin}` 上发出去过"):
+        reel.validate_spec(json.loads(json.dumps(spec)))
+    # ① 全仓盘点口径不问「发没发过」——账本没钉也不红
+    reel.validate_spec(json.loads(json.dumps(spec)), allow_published_legacy=True)
+    # ② 钉空账本（fixture 设的环境变量）：模块早就 import 过了，调用那一刻照样认，
+    #    账本和 pushed.json 两个出处一起钉住
+    monkeypatch.setenv("TENNISLIVE_REEL_LEDGER_DIR", str(_empty_reel_ledger))
+    reel.validate_spec(json.loads(json.dumps(spec)))
+    assert gates.first_sent(twin) is None
+    # 显式传进来的出处照旧优先（封面复用自己的判据测试靠它）
+    assert gates.first_sent(twin, ledger=live) == "2026-09-27T10:00:00Z"
+    assert gates.first_sent(twin, ledger=_empty_reel_ledger, output=output) \
+        == "2026-09-27T10:00:00Z"
 
 
 def test_封面复用只有同一栏目才硬红_跨栏目只报(tmp_path, monkeypatch):
