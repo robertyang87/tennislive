@@ -1,17 +1,17 @@
 {
-  "scoreboard_qc_sha256": "f1f2d6715b1138709bb1b1cd7b05e28381921656052656e772c51d1aa1660fb6",
+  "scoreboard_qc_sha256": "f4b571f1fa59dbd5a78cfe82753fde3241671cdabd15f5f989bbf8e6f8d373b6",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
   "layout": "full",
-  "segments_seconds": 242.3,
+  "segments_seconds": 242.2,
   "topbar": {
     "line1": "2026 ATP250 成都 1/4决赛",
     "line2": "沙波瓦洛夫 6-7(6) 6-3 6-2 马纳里诺",
     "start": 1.2,
-    "end": 243.5
+    "end": 243.4
   },
-  "film_seconds": 247.36,
+  "film_seconds": 247.24,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -19,14 +19,15 @@
     "1": 13.248,
     "2": 10.056,
     "3": 7.44,
-    "4": 27.408,
+    "4": 27.816,
     "6": 10.056,
     "7": 13.512,
     "8": 12.24,
     "10": 18.528,
-    "11": 16.68,
-    "12": 15.024,
-    "13": 12.36
+    "11": 14.616,
+    "12": 2.448,
+    "13": 15.024,
+    "14": 12.36
   },
   "face_checks": {
     "cover": {
@@ -135,39 +136,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "mannarino-shapovalov-chengdu-2026-qf",
-    "received_at": "2026-09-27T14:45:33Z",
-    "artifact_ready_at": "2026-09-27T14:52:58Z",
-    "elapsed_seconds": 445.055,
+    "received_at": "2026-09-27T14:56:16Z",
+    "artifact_ready_at": "2026-09-27T15:04:02Z",
+    "elapsed_seconds": 466.484,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "6597b95dfcbf8b4bac53bc66affb65e1b98bef13e16c282b7b6918cc14b2d805",
-    "spec_sha256": "b9db4d9afb2e4bba5a64a377691e6c177dd537e71d26abc67d45700db8af0724",
-    "run_id": "36327070375",
+    "film_sha256": "2b54cd24cefb093e0d19f6f97f08b1e7d94b22e0e3b052c2c8b5ab1bca138607",
+    "spec_sha256": "aaf77b84941cc2f03feb9cd43f3187d9873f342f8c9591c05e017dd1e52b852b",
+    "run_id": "36327707739",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-27T14:47:10Z",
-        "run_id": "36327070375"
+        "at": "2026-09-27T14:58:11Z",
+        "run_id": "36327707739"
       }
     ],
-    "render_seconds": 348.055,
-    "pre_render_seconds": 97.0
+    "render_seconds": 351.484,
+    "pre_render_seconds": 115.0
   },
-  "film_sha256": "6597b95dfcbf8b4bac53bc66affb65e1b98bef13e16c282b7b6918cc14b2d805",
-  "film_bytes": 111723036,
-  "qc_attestation_sha256": "7a9f28103858cdb9d42d2e0b209e459675d70a430e3a035a49448614c104a816",
+  "film_sha256": "2b54cd24cefb093e0d19f6f97f08b1e7d94b22e0e3b052c2c8b5ab1bca138607",
+  "film_bytes": 111747589,
+  "qc_attestation_sha256": "a423fcefc0770b6c2778981566ab82bf00d103e4ef32bdc6ab6c33970a0df402",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-27T14:47:10Z",
-      "run_id": "36327070375"
+      "at": "2026-09-27T14:58:11Z",
+      "run_id": "36327707739"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-27T14:52:59Z",
-      "run_id": "36327070375"
+      "at": "2026-09-27T15:04:03Z",
+      "run_id": "36327707739"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-mannarino-shapovalov-chengdu-2026-qf/mannarino-shapovalov-chengdu-2026-qf.mp4",
-  "video_bytes": 111723036
+  "video_bytes": 111747589
 }
