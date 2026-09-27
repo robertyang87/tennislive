@@ -46,13 +46,13 @@
     "_subject_why": "封面放**卢布列夫**——这一场的赢家、钩子两行的主语。",
     "_heat_why": "账号所有者点名要做这一场（截图 TNNS 比分页，「盯这个比赛，然后做赛场之上视频」）。卢布列夫是前世界第 5、多年的前十常客、本站 2 号种子，刷到的人认得他；而且这是 1/4 决赛、三盘打了近三个小时，同栏目上一次讲他是美网第二轮先赢一盘被连扳三盘出局（`rublev-merida-us-open-2026-r2`），这一场正好反过来。",
     "portrait": {
-      "frame_at": 220.4,
-      "focus": 0.36,
-      "focus_y": 0.0,
-      "zoom": 1.2,
-      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 19:05~19:30，终场后约半小时）：① 官方图库——`tools/find_cover_photo.py --player Rublev --event Hangzhou --date 2026-09-27` WTA photo-resources、AP 都是 0 张；杭州公开赛没有可探的 WordPress 媒体库（`bu-zheng-hangzhou-2026-r1` 记过）。② 赛后稿：这一场刚打完半小时，ATP 官网（沙箱 403）和中文媒体还没有带图的稿。③ 主办方公众号当天战报未发。④ Getty / Imago 沙箱搜不了。\n**这一帧**：源片 220.4s，第四个赛点拿下之后切到的近景（frame-grab 逐 0.2 秒抽了 219.6~228.0，1920 宽）：**偏正面、双眼睁着、右拳捶在胸口**；220.6 起手挪到嘴边亲手、220.8~221.2 手臂举起挡住半张脸，221.4~222.0 正脸但手放下了、情绪淡；225.8~226.6 抓头发、226.8 起面无表情。粉紫色 K-Swiss 球衣、紫色头带，和本场所有镜头一致。",
-      "_low_res_why": "源片 1920×1080，zoom 1.2 取 675×900 铺 1080×1440，放大 1.6 倍（抽帧的理由见 `_frame_why`）。",
-      "_focus_why": "focus 0.36：这一帧脸的中心在源片横向约 690px（0.36），窗口宽 675 取约 352~1027；focus_y 0.0 从顶上取 0~900，左下角转播记分条（y 920 起）在窗外。纵向：头带 y≈150、眼睛 y≈270、下巴 y≈460，铺满后约 y 240 / 430 / 735——台头带（0~170）之下、钩子带（790 起）之上。"
+      "image": "assets/reel/rublev-gaston-hangzhou-2026-qf-afp.jpg",
+      "focus": 0.47,
+      "focus_y": 0.3,
+      "zoom": 1.0,
+      "_why": "**账号所有者 2026-09-27 推送后给的图**（「换这个做封面呢？」）。AFP 实拍（经 Getty 发行，AssetID 2296808078，摄影 STR），图片自带 EXIF/XMP 说明原文：「Russia's Andrey Rublev hits a return to France's Hugo Gaston during their men's singles quarter-final match at the Hangzhou Open tennis tournament in Hangzhou, in China's eastern Zhejiang province on September 27, 2026」——球员、对手、赛事、轮次、日期四要素全在说明里。画面：粉紫色 K-Swiss 球衣、紫色头带，和源片里他本场的着装一致；背景挡板印「界」「HANG…」，是杭州中心球场。\n四道闸门：① 精准 ✅（AFP 说明）；② 对得上——双手反手击球中，眼睛盯着球 ✅；③ 冲击力——中近景、咬牙发力 ✅；④ 清晰度见 `_low_res_why`。替换掉第一版的抽帧封面（源片 220.4s，赛点后捶胸）。",
+      "_low_res_why": "账号所有者给的就是这张 612×408（Getty 预览尺寸，无水印）。原图够不着：Getty `/detail/2296808078` 对沙箱 403，skill 记过 comp 图脱离页面一律 400 且带水印；WTA CDN 那条只挂 WTA 的图。按高铺 1080×1440 取 408×306 窗口，放大约 3.5 倍——他点名要这张，按「他给的无水印原图放大版」那条先例用。",
+      "_focus_why": "focus 0.47：脸的中心在原图横向约 245px、身体中线约 290px（0.47），3:4 窗口取约 135~441；右侧球拍和球（x≈450~560）在窗外。纵向：头带 y≈60、眼睛 y≈100、下巴 y≈140，铺满后约 y 210 / 350 / 495——台头带（0~170）之下、钩子带（790 起）之上。"
     },
     "scoreboard": {
       "court": "Center Court",
