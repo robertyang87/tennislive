@@ -1,5 +1,5 @@
 {
-  "status": "source_review_complete_render_pending",
+  "status": "render_and_visual_qc_complete_ci_pending",
   "source_sha256": "1646603e5fd793f4eeb6ca05fef5c07c2c01ee21367a9d229e2207cf8559f666",
   "source_probe_run": 36322312524,
   "duration": 124.296417,
@@ -13,17 +13,55 @@
     "official result and stats reconciled",
     "match-point and handshake included at ending",
     "second-set breakpoint at84.68-92.88 was SAVED by Bu; conversion absent from highlight and not mislabelled",
-    "original commentary captions bilingual; automated transcript basis disclosed"
+    "original commentary captions bilingual; automated transcript basis disclosed",
+    "final poster first frame centered hook and correct person",
+    "final actual MP4 overview and selected full-resolution frames checked",
+    "full_source tactical segments preserve sideline movement and volley",
+    "final match point and handshake retained; promotional card excluded",
+    "final stat card Bu 23/40 correctly displays 58%"
   ],
   "pending": [
-    "render",
-    "actual cropped-frame review",
-    "audio pronunciation listening",
-    "formal QC",
+    "current head CI",
     "merge and push receipt"
   ],
   "model_calls": {
     "DeepSeek": false,
     "MiniMax": false
-  }
+  },
+  "initial_render": {
+    "run": 36323101865,
+    "sha256": "e7bfaceb2e1e8bc85e5be960433e613e5796a13ad2bd4497ee7e10e6c9887c61",
+    "technical_qc": "pass",
+    "not_approved": "hook left aligned; narration timing premature"
+  },
+  "v2_render": {
+    "run": 36323549463,
+    "status": "failed",
+    "reason": "ffmpeg score mask 109px versus YUV crop108px"
+  },
+  "current_render_run": 36323849002,
+  "fixed": [
+    "cover hook center option",
+    "nine segments matched to exact TTS offsets",
+    "full_source framing for key lateral movement and volley",
+    "scorebox even110px height",
+    "stat-card percent half-up 23/40=58%"
+  ],
+  "local_validation": {
+    "stat_tests": "33 passed",
+    "narration": "8 actual Edge TTS segments fit; maximum gap3.86s; no >4s gap",
+    "pronunciation": "Actual nine words.json files scanned against repo FAKE_TOKENS: no hits. Eight narration segments fit; timing/pauses checked. Direct listening was unavailable; no auditory correctness claim."
+  },
+  "current_render": {
+    "run": 36323849002,
+    "film_sha256": "f2723e143cad05cba719479f0221a94e20f74a79a3a0911bac24c76826817e1f",
+    "film_bytes": 56471448,
+    "seconds": 118.88,
+    "formal_qc": "pass",
+    "final_evidence_run": 36323902530,
+    "downloaded_complete_and_hash_verified": true
+  },
+  "limitations": [
+    "Audio reviewed by generated word boundaries, silence/duration gates and timing, not direct listening; cold-open quote based on official automatic captions."
+  ]
 }

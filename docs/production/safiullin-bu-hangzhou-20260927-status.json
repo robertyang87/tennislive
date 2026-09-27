@@ -1,35 +1,7 @@
 {
-  "match": {
-    "date": "2026-09-27",
-    "event": "AITO Hangzhou Open",
-    "round": "Quarter-final",
-    "sid": "4713_2026_MS005",
-    "winner": "Roman Safiullin",
-    "loser": "Yunchaokete Bu",
-    "score": "6-3 6-3",
-    "duration_status": "1:10 in user screenshot; independent confirmation pending"
-  },
-  "evidence": {
-    "result": {
-      "url": "https://www.protennislive.com/posting/2026/4713/mds.pdf",
-      "document_released": "2026-09-27 20:09:20",
-      "status": "official draw confirms winner and score"
-    },
-    "source": {
-      "url": "https://www.youtube.com/watch?v=-i-__KqEvXE",
-      "title": "Roman Safiullin vs Yunchaokete Bu Highlights | Hangzhou 2026 Quarter-Final",
-      "status": "official channel listing confirmed; actual media acquisition pending"
-    },
-    "rejected_cover_photos": "TennisTV thumbnails dated September 24 and September 26 are not evidence of September 27 match"
-  },
-  "production": {
-    "source_probe_run": 36322312524,
-    "previous_run": 36322185796,
-    "previous_error": "YouTube requests sign-in; existing repository credential configuration now used",
-    "spec": "pending",
-    "render": "pending",
-    "qc": "pending",
-    "push": "not sent",
-    "models": "Codex only; do not call DeepSeek or MiniMax"
-  }
+  "status": "render_and_visual_qc_complete_ci_pending",
+  "source_url": "https://www.youtube.com/watch?v=-i-__KqEvXE",
+  "render_run": 36323849002,
+  "review": "docs/production/safiullin-bu-hangzhou-2026-qf-codex-review.json",
+  "pushed": false
 }
