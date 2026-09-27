@@ -747,6 +747,27 @@ def test_mode_cover不往旧render_json里记账(tmp_path, monkeypatch):
     assert '"${RENDER_JSON[@]}"' in run
 
 
+def test_dry_run认的主源和render是同一个_sources第一个键(tmp_path):
+    """复查 2026-09-27：dry-run 按 `spec.get("primary")` 拼 manifest 的键，而 spec 里没有
+    这个字段、`render()` 认的主源是 `sources` 的第一个键——主源叫 `main` 的三条
+    （bublik-jodar-laver-cup-2026 / zhiyenbayeva-bouzas-bjk-cup-2026 / shelton-tien-montreal-sf）
+    在 runner 上永远报「封面帧还没抓」，帧明明在。"""
+    from PIL import Image  # noqa: PLC0415
+    reel = _reel()
+    spec = _medvedev_spec("梅德韦杰夫") | {"slug": "main-src-test",
+                                        "sources": {"main": "https://example.invalid/a",
+                                                    "b": "https://example.invalid/b"}}
+    day = tmp_path / "repo" / "output" / "2026-09-26" / "reel" / spec["slug"]
+    cache = day / reel.COVER_SRC_DIR
+    cache.mkdir(parents=True)
+    Image.new("RGB", (8, 8)).save(cache / "portrait.jpg")
+    key = reel._cover_asset_key(spec["cover"]["portrait"], "main", "frame")
+    (cache / "manifest.json").write_text(json.dumps({"portrait": key}), encoding="utf-8")
+    got = reel._dry_run_cover_frame(spec, tmp_path / "dryrun", spec["cover"]["portrait"],
+                                    repo_root=tmp_path / "repo")
+    assert got == cache / "portrait.jpg", "主源键是 main 的 spec，dry-run 要找得到它自己的封面帧"
+
+
 def test_dry_run按slug找已经抓好的封面帧(model, tmp_path):
     """runner 上 dry-run 的 `--outdir` 是 /tmp/dryrun，只看 outdir 的话封面那一步
     **永远是空的**（评审 2026-09-27 nit 3）。按 slug 去 output/*/reel/<slug>/cover_src/

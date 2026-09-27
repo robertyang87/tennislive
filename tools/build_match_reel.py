@@ -4649,7 +4649,12 @@ def _dry_run_cover_frame(spec: dict, outdir: Path, art: dict,
     runner 上的 dry-run 用的是 `--outdir /tmp/dryrun`，只看 outdir 的话这一步在
     runner 上**永远是空的**（评审 2026-09-27 nit 3）；工作流在 dry-run 之前把这条
     slug 的 `cover_src/` 拉回来，这里按 slug 去找。"""
-    want = _cover_asset_key(art, str(spec.get("primary", "")), "frame")
+    # 和 render() 认同一个主源：sources 的第一个键（`primary` 不是 spec 字段，
+    # 按它取会拿到 "" ——主源键叫 `main` 的三条 spec 永远对不上 manifest）
+    # 不调 spec_sources：dry-run 的诊断不许被一份有毛病的 spec 带崩（见它的注释）
+    sources = spec.get("sources")
+    want = _cover_asset_key(art, next(iter(sources), "") if isinstance(sources, dict) else "",
+                            "frame")
     slug = str(spec.get("slug") or "").strip()
     root = repo_root or Path(__file__).resolve().parents[1]
     dirs = [outdir / COVER_SRC_DIR]
