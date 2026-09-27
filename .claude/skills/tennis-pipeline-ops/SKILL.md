@@ -366,7 +366,7 @@ ledger，等到了、还打开看了——**差点就报「发出去了」**：
 
 ⚠️ **而 `push.html` 本身只有 18704 字符，合规**。把它顶到 21404 的是
 `pin_asset_revision`：每张图有**三条**完整 URL（`src` / `data-src` /
-「点此打开原图」的 `<a href>`，都出自 `knowledge_push_html_from_parts`），
+「点此打开原图」的 `<a href>`——2026-09-27 起缩成「原图 ↗」，都出自 `knowledge_push_html_from_parts`），
 `@main`（5 字符）换成 `@<40 位 sha>`（41 字符）**每处多 36 字符，75 处 2700**。
 
 ⚠️⚠️ **这个膨胀只在发送那一刻发生**：本地打开 push.html 一切正常，`--dry-run`
