@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -129,6 +130,20 @@ def draft_segments(chat: Chat, *, captions_text: str, cuts: list[float],
     return clean_segments(data)
 
 
+_CJK = re.compile(r"[\u4e00-\u9fff]")
+
+
+def _bilingual_quote(item: object) -> str | None:
+    """一条原声字幕：恰好两行，一行带汉字、一行不带（和 `build_match_reel._bilingual`
+    同一个判法——原文可以是纯数字）。合格返回规整后的 `原文\n中文`，不合格返回 None。"""
+    if not isinstance(item, str):
+        return None
+    rows = [x.strip() for x in item.split("\n") if x.strip()]
+    if len(rows) != 2 or sorted(bool(_CJK.search(r)) for r in rows) != [False, True]:
+        return None
+    return "\n".join(rows)
+
+
 def clean_segments(data: dict, *, min_duration: float = 2.0) -> dict:
     """机械兜底：把模型产出的废段拦掉，不让零长度/超短窗口流进下游。
 
@@ -160,14 +175,22 @@ def clean_segments(data: dict, *, min_duration: float = 2.0) -> dict:
         # 「按标点自动切」那条老路（`build_match_reel._quote_cues` 对字符串返回空），
         # 英文和中文会被切成先后两条单语字幕；列表里的一个元素才是「这一条排两行」
         # 的双语字幕（`explicit_quote_cues`）。存量 162 条带 quote 的段 161 条是列表。
+        # ⚠️ 自动链里这份 quote 到不了 spec：`analyze_reel_visuals.apply_story` 只留带旁白的
+        # 段，冷开场换成 MiniMax 自己的（钉了 `at` 的双语原声）；这里的清洗是给
+        # `draft-segments-verify.yml` 和手工起草用的。自动链里真正的改善是：冷开场
+        # narration 为空，就不会作为正文第 2 段留下来、把结局提前重放一遍。
+        # schema 要的是字符串，模型偶尔回列表——列表里每一条照样要过双语那一关，
+        # 不合格的整段 quote 记进 bad_quotes，不静默丢掉。只有空串／空列表是「这段没原声」。
         if "quote" in s:
             q = s.get("quote")
-            rows = [x.strip() for x in q.split("\n") if x.strip()] if isinstance(q, str) else []
-            ok = len(rows) == 2 and not str(s.get("narration") or "").strip()
-            if ok:
-                s = {**s, "quote": ["\n".join(rows)]}
+            items = q if isinstance(q, list) else [q]
+            empty = all(isinstance(x, str) and not x.strip() for x in items) or q is None
+            cleaned = [_bilingual_quote(x) for x in items]
+            if (not empty and all(cleaned)
+                    and not str(s.get("narration") or "").strip()):
+                s = {**s, "quote": cleaned}
             else:
-                if isinstance(q, str) and q.strip():
+                if not empty:
                     bad_quotes += 1
                 s = {k: v for k, v in s.items() if k != "quote"}
         kept.append(s)
@@ -176,8 +199,8 @@ def clean_segments(data: dict, *, min_duration: float = 2.0) -> dict:
         print(f"[clean] 拦掉 {dropped} 段零长度/超短窗口（start>=end 或 <"
               f"{min_duration}s），剩 {len(kept)} 段")
     if bad_quotes:
-        print(f"[clean] 去掉 {bad_quotes} 条不合格的 quote（不是「原文\\n中文」两行，"
-              "或者和旁白叠在同一段）")
+        print(f"[clean] 去掉 {bad_quotes} 条不合格的 quote（不是「原文\\n中文」两行"
+              "——一行英文、一行中文，或者和旁白叠在同一段）")
     return {"segments": kept, "_dropped": dropped}
 
 
