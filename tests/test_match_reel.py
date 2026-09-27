@@ -6206,7 +6206,8 @@ def test_cookies和probe装依赖走轻装而TTS缓存只给会合语音的两�
     assert "webrender" not in pb, "probe 不渲 HTML 封面，playwright 用不上"
 
     # 全量那行必须还在（render / cover 走它），且排在所有轻装分支后面
-    full_at = install.index('".[webrender,visualqa,cutout]"')
+    # （2026-09-27 起多一个 `faces`：抽帧封面的认人＋睁眼，`tools/face_checks.py`）
+    full_at = install.index('".[webrender,visualqa,cutout,faces]"')
     assert full_at > install.index('= "cookies" ]')
     assert full_at > install.index('= "probe" ]')
 
@@ -7846,7 +7847,10 @@ def test_推送卡的台头跟着栏目走():
 
     # 标题和药丸要取同一个值，别一个走 column_of、一个另取默认
     src = Path("tools/push_reel.py").read_text(encoding="utf-8")
-    assert "column = args.column or column_of(Path(args.copy))" in src
+    # （2026-09-27：这一段挪进了 `prepare_copy`——dry-run 和三个 stage 共用——
+    #  `main` 把 `args.column` 传进去，同一个值原样还回来给药丸用）
+    assert "column = column or column_of(Path(copy_path))" in src
+    assert "column, title, copy_text = prepare_copy(" in src
     # ⚠️ 不锚在紧跟的 `)` 上——那道闸只在 `build_html(...)` 调用没有别的
     # 关键字参数（如后来加的 `stat_card=`）时才成立，加一个新参数就会把这条
     # 判据带崩，而它想拦的错（药丸另取默认值）跟这件事无关。
@@ -10437,8 +10441,10 @@ def _with_legacy_scoreboard(slug: str, spec: dict) -> dict:
     if slug not in _LEGACY_NO_SCOREBOARD:
         return spec
     patched = json.loads(json.dumps(spec))
+    # ⚠️ 占位写英文：2026-09-27 起场地名写中文在 `validate_spec` 第一道就红
+    # （账号所有者 Q13「场地名统一英文」，`versus_poster.court_language_problem`）
     patched["cover"]["scoreboard"] = {
-        "court": "（占位：这条 spec 发在 #368 之前，不会重渲）",
+        "court": "(placeholder: published before #368, never re-rendered)",
         "duration_source": {"url": "https://example.invalid/legacy"},
     }
     return patched
@@ -10602,8 +10608,11 @@ def test_封面正中不许压暗但文字那两条边要留(tmp_path):
             f"`{extra}` 这条路上正中那道椭圆还在：{block}")
 
     # ④ 文字的描边不许跟着一起削——它和那两条边一起托住可读性
+    # ⚠️ 2026-09-27 起钩子的阴影从 design_tokens 填（源码里是 `__SHADOW_HOOK__`
+    # 占位符），所以量**渲出来的 CSS**，不量源码
     src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
-    story = src.split(".storytitle{")[1].split("}")[0]
+    _, out_css = vp._solo_body(base)
+    story = out_css.split(".storytitle{")[1].split("}")[0]
     assert story.count("rgba(0,0,0") >= 2, (
         f"钩子的 text-shadow 被削了：{story}——中段基本不压暗，全靠它")
     head = src.split(".head{")[1].split("}")[0]
@@ -12583,7 +12592,7 @@ def test_顶栏赢家名字整块高亮而且没有比分就不涂():
             f"这一行里一盘比分都没有，不该涂任何颜色：{plain}"
 
 
-def test_顶栏赢家色跟着赛后开麦走():
+def test_顶栏赢家色跟着赛后开麦走(tmp_path):
     """赢家名字和赢盘的颜色，2026-08-18 起不再跟着比分板的 CSS 走。
 
     账号所有者拿"赛场之上"和"赛后开麦"两条线的顶栏截图对比，要求"赢的人的
@@ -12608,7 +12617,15 @@ def test_顶栏赢家色跟着赛后开麦走():
     assert reel.TOPBAR_WINNER_ASS == mark
 
     # 连字符和输盘这次没有改动范围，仍然跟着比分板的口径走
-    css = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    # ⚠️ 2026-09-27 起海报的颜色从 design_tokens 填（源码里是占位符），所以从
+    # **渲出来的 CSS** 里抠，不从源码抠
+    import versus_poster as vp  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    photo = tmp_path / "p.jpg"
+    Image.new("RGB", (1080, 1440), (90, 120, 90)).save(photo)
+    _, css = vp._solo_body({"eyebrow": "赛场之上", "subject": "某人", "hook": "一行钩子",
+                            "portrait": {"image": str(photo)}})
 
     def poster_hex(cls: str) -> str:
         hit = re.search(rf"^\.{cls}\{{{{?color:(#[0-9a-fA-F]{{6}})", css, re.M)
@@ -13468,6 +13485,11 @@ def test_算不出标题时文案字数不许估得比真推送松():
 
     反向验证：把退路改回 `text_with_title = text`，第二个断言当场红
     （少掉第一段的长度）。
+
+    ⭐ 2026-09-27：**退路整个拿掉了**。dry-run 现在调推送自己那个函数
+    （`reel_asset_gates.push_copy_check` → `push_reel.prepare_copy`，日期取北京今天），
+    算得出标题；算不出就是红（runner 上的 production_preflight 一样过不去）。
+    正文也是推送真发的那一份，所以「两条路量的是不是同一段字」从结构上就不再有两条路。
     """
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
@@ -13485,8 +13507,10 @@ def test_算不出标题时文案字数不许估得比真推送松():
     assert len(naive) < len(real), "老退路本来就偏松，这条断言证明差距真的存在"
 
     body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
-    assert 'text_with_title = f"（占位标题）\\n\\n{text}"' in body, (
-        "dry-run 算不出标题时必须拼占位标题，不能直接把文件第一段当标题甩掉")
+    assert 'text_with_title = f"{title}\\n\\n{pushed_body}"' in body, (
+        "dry-run 量正文要用推送真发的那一份（push_copy_check 返回的标题＋正文）")
+    assert "（占位标题）" not in body, (
+        "占位标题那条退路拿掉了：算不出标题就是红，别再让它悄悄估一个数")
 
 
 def test_推送成功那行印的字数要和那道闸量的是同一个数():
@@ -14625,8 +14649,8 @@ def test_带式的字幕锚顶栏角标都进带_全出血原样(monkeypatch):
 
     - 字幕默认锚：band 进底带（BAND_MARGIN_V=1124），full 仍是画面内 1284。
       `subtitle_top` 的人工覆盖不在这条判据里——那条口子归 render 里的读取
-    - 顶栏滤镜：band 不画那层半透明 drawbox（顶带已是实色，画了会在
-      y=126~132 露一道两色接缝）；full 照画（顶栏压在画面上要它保可读性）
+    - 顶栏滤镜：band 不画那层压暗（顶带已是实色，画了会在顶带下沿露一道
+      两色接缝）；full 照画（顶栏压在画面上要它保可读性，2026-09-27 起是渐变）
     - inset 角标：band 贴**画面带**的四角（纵向各让开一条带），full 贴画布四角
     """
     reel = _reel()
@@ -14640,7 +14664,8 @@ def test_带式的字幕锚顶栏角标都进带_全出血原样(monkeypatch):
     assert reel.BAND_MARGIN_V == reel.BAND_TOP + reel.BAND_PIC_H + 32
     assert reel.BAND_TOP >= reel.TOPBAR_H, "顶栏落不进顶带"
     g = reel.topbar_filtergraph(1.2, 10.0, Path("t.ass"), Path("s.ass"))
-    assert "drawbox" not in g, "带式的顶带已是实色，再画 drawbox 会露两色接缝"
+    assert "drawbox" not in g and "topbar_scrim" not in g, (
+        "带式的顶带已是实色，再垫一层压暗会露两色接缝")
     assert f"overlay={pad}:{reel.BAND_TOP + pad}" in reel._overlay_chain(
         "[0:v]null[base]", ins), "band 的 tl 角标要贴画面带顶角，不是画布顶角"
     assert f"H-h-{band_bot + pad}" in reel._overlay_chain(
@@ -14649,7 +14674,8 @@ def test_带式的字幕锚顶栏角标都进带_全出血原样(monkeypatch):
     monkeypatch.setattr(reel, "LAYOUT", "full")
     assert reel.default_margin_v() == reel._REEL_MARGIN_V
     g2 = reel.topbar_filtergraph(1.2, 10.0, Path("t.ass"), Path("s.ass"))
-    assert "drawbox" in g2, "全出血的顶栏要那层半透明黑保可读性"
+    # 2026-09-27 起那层压暗是渐变（评审 Q6），不再是 drawbox 实条
+    assert "[topbar_scrim]" in g2, "全出血的顶栏要那层压暗保可读性"
     assert f"overlay={pad}:{pad}" in reel._overlay_chain(
         "[0:v]null[base]", ins), "全出血的角标落位不许被带式改动牵动"
 
@@ -15041,7 +15067,8 @@ def test_赛场之上不画左上角角标而别的栏目照画():
 
     bar_off = reel.topbar_filtergraph(0.4, 0.6, Path("t.ass"), Path("s.ass"),
                                       foot_input=2, wm_input=None)
-    assert bar_off.count("overlay=") == 1, (
+    # （顶栏底下那层渐变压暗自己也是一次 overlay，2026-09-27 起，不算在这儿）
+    assert bar_off.count("overlay=") - bar_off.count("[topbar_scrim]overlay=") == 1, (
         f"有顶栏那条：不画角标时该只剩脚注那一次 overlay：{bar_off}")
     assert "match_foot" in bar_off, "底带脚注被一起拿掉了——它正是「下面已经有了」"
     assert "[out]" in bar_off

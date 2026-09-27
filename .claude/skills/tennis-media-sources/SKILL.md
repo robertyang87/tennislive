@@ -329,7 +329,7 @@ WTA 官方那三个分盘用时加起来和它自己的 `MatchTimeTotal` 差 1~3
 
     大满贯（含女子）  → flashscore 直接有，`stats` 块照 ATP 那套填
     ATP 巡回赛        → ⚠️ **见下面 08-15 那条修正，这一行是错的**
-    WTA 巡回赛        → 先碰 MCP、再碰编辑稿；两边都没有就写 `_no_stats_why`
+    WTA 巡回赛        → 先碰 MCP、再碰编辑稿；两边都没有就不写制胜分／UE 那两行（图照样要有，`_no_stats_why` 过不了推送和 --dry-run，见 tools/reel_asset_gates.stats_card_problem）
 
 最后那一条正是 `test_赛场之上要么带数据统计图要么说清为什么不带` 留的活口——
 **查不到就如实不画，别硬凑一张缺两项的图**。

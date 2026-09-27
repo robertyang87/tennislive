@@ -61,6 +61,14 @@ def _no_slam_feed_network(monkeypatch):
 
 
 @pytest.fixture(autouse=True)
+def _no_face_model_network(monkeypatch):
+    """`face_checks.fetch_models` 缺权重会去 GitHub Release 现下 127 MB 的包。
+    单元测试一律不许摸网——CI 在「备好人脸模型」那一步先下好、缓存住；本地
+    自己跑一次 `python tools/face_checks.py fetch`（和上下两条同一个形状）。"""
+    monkeypatch.setenv("TENNISLIVE_FACE_MODEL_FETCH", "0")
+
+
+@pytest.fixture(autouse=True)
 def _no_headshot_fetch_network(monkeypatch):
     """`headshot_index.resolve_headshots` 索引没命中会去 WTA 官方现抓头像（并把
     文件写进 assets/players/headshots/）。单元测试一律关掉——要测那条路的测试

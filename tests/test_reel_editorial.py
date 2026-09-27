@@ -726,25 +726,24 @@ def test_小红书标题的豁免表只许减不许加():
 # ⚠️ 存量 52/34 条挂在下面两张表里，**只许减不许加**，而且两张表都有自检：
 # 表里每个 slug 必须真的存在、而且必须真的还缺着——写错一个名字，豁免就
 # 成了一盏恒真的绿灯（本文件上面那两张表同样的做法）。
+#
+# ⭐ 2026-09-27：**`stats` 那一半不再接受 `_no_stats_why`**。2026-08-25 账号所有者定了
+# 「赛场之上的微信推送必须带全场技术统计图」（e8b3257a），`push_reel` 从那天起缺
+# `stat_card.jpg` 就拒发、不认任何认领——于是这张表认的 `_no_stats_why` 会一路绿到
+# 合并，然后在 auto-push-reel 上红（hu-kopriva run 35950951376 → 6a84ed2f 重渲）。
+# 判据现在只有一份：`tools/reel_asset_gates.stats_card_problem`，dry-run、这条测试、
+# 推送三处同一条规矩；存量表也挪到 `data/legacy_reel_asset_gates.json` 的 `no_stats`
+# （原来这 52 条 ＋ 写了 `_no_stats_why` 的 bartunkova-charaeva，共 53 条）。
 
-_STATS_LEGACY = frozenset({
-    "alexandrova-sabalenka", "anisimova-bartunkova", "bencic-eala",
-    "bencic-townsend", "chwalinska-gibson", "eala-fernandez", "eala-mcnally",
-    "eala-osaka", "eala-parks", "eala-pegula-final", "eala-svitolina",
-    "eala-zheng", "fernandez-andreeva", "fonseca-ruud", "fritz-jodar-final",
-    "gauff-korneeva", "gauff-sakkari", "gea-shapovalov", "landaluce-draper",
-    "medvedev-zandschulp", "nishikori-shang", "noskova-mcnally",
-    "osaka-fernandez", "osaka-mertens",
-    "pegula-rakhimova", "potapova-venus",
-    "rybakina-gauff-toronto-sf", "rybakina-kasatkina", "rybakina-li",
-    "rybakina-samsonova", "shang-darderi-montreal-2026", "shang-rublev",
-    "shang-vallejo", "shelton-fonseca", "shnaider-pegula",
-    "svitolina-alexandrova", "svitolina-anisimova", "swiatek-golubic",
-    "swiatek-kostyuk", "swiatek-rybakina-toronto-final", "swiatek-shnaider",
-    "tirante-fritz", "wang-kasatkina", "wang-pareja", "wang-samsonova",
-    "wong-brooksby", "wong-gea", "wong-lehecka", "zhang-ostapenko",
-    "zhang-putintseva", "zhang-sabalenka", "zverev-griekspoor",
-})
+def _stats_legacy() -> frozenset:
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from reel_asset_gates import legacy  # noqa: PLC0415
+
+    return legacy("no_stats")
+
+
+#: 原来这儿是一张 52 条的字面量表；现在只有一份，在 data/legacy_reel_asset_gates.json。
+_STATS_LEGACY = _stats_legacy()
 
 _AUTO_LEGACY = frozenset({
     "chwalinska-gibson", "eala-fernandez", "eala-mcnally", "eala-osaka",
@@ -771,8 +770,11 @@ def _court_specs():
 
 
 def _missing_stats():
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from reel_asset_gates import stats_card_problem  # noqa: PLC0415
+
     return {s for s, spec in _court_specs()
-            if "stats" not in spec and not spec.get("_no_stats_why")}
+            if stats_card_problem(spec, legacy_set=frozenset())}
 
 
 def _missing_auto():
@@ -786,13 +788,12 @@ def _missing_auto():
 
 
 def test_赛场之上要么带数据统计图要么说清为什么不带():
-    fresh = _missing_stats() - _STATS_LEGACY
+    fresh = _missing_stats() - _stats_legacy()
     assert not fresh, (
-        f"这几条「赛场之上」既没有 `stats` 块、也没写 `_no_stats_why`：{sorted(fresh)}。"
-        f"数据统计图是显式认领——**忘了写和想清楚了不写，在产物上分不出来**，"
-        f"而 render 在没有 `stats` 时一行代码都不跑、一个字都不说。"
-        f"ATP 那条线 flashscore 直接给 Winners/非受迫失误；WTA 那几场查不到就"
-        f"写一句 `_no_stats_why` 说明查过哪些源。"
+        f"这几条「赛场之上」没有 `stats` 块（或缺头像）：{sorted(fresh)}。"
+        f"推送那道闸（push_reel）缺 stat_card.jpg 就拒发，`_no_stats_why` 过不去"
+        f"——render 在没有 `stats` 时一行代码都不跑、一个字都不说，合并之后才红。"
+        f"查不到制胜分/非受迫失误就不写那两项，图照样要有。"
     )
     assert len(list(_court_specs())) >= 50, "一条 spec 都没扫到，判据的主语像是没了"
 

@@ -163,8 +163,11 @@ def main() -> int:
     # 的动作**，于是多源片子的本地迭代这条路等于关着，且没人看得出为什么。
     # 判据 test_本地渲封面要按spec的主源算素材键。
     try:
+        # `spec=` 给抽帧封面的认人／睁眼那道用（`reel_face_gate`）：本地复用的
+        # cover_src/ 那一帧照样过——换帧不用上 runner 才知道对不对
         payload, layout = resolve_cover_payload(
-            cover, outdir, sources=None, primary=str(spec.get("primary", "")))
+            cover, outdir, sources=None, primary=str(spec.get("primary", "")),
+            spec=spec)
     except ReelError as exc:
         raise SystemExit(str(exc)) from exc
 
