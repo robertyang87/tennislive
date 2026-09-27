@@ -37,12 +37,37 @@ def check_request(req: dict) -> None:
         check_copy(copy, '赛后开麦')
 
 
+def check_interview_claims(spec_path: Path) -> None:
+    """采访线的全称断言要认领两个独立源——和竖版短片、解说片同一份判据。
+
+    来路：这道闸原来只装在竖版短片那条线上（`build_match_reel.validate_spec`），
+    采访线一道都没有；2026-09-27 扫出 2 份已发的采访 spec 带着没认领的断言
+    （挂在 `absolute_claims.INTERVIEW_LEGACY`）。引号里的话是受访者说的，不算。
+
+    ⚠️ **自动转正的采访 spec 也硬拦，没有竖版短片那种「自动 spec 只报」的分流**——
+    那一刀是因为模型写不了 `_claims`，而采访线**没有模型写的文案**：
+    `draft_interview_spec` 不写 push/cover/takeaway，`promote_interview_draft` 只填模板
+    （模板里没有全称断言，`test_采访线自动转正的模板文案过得了全称断言那道闸` 钉着）；
+    带文案的草稿来自人工请求（`build_interview_request` 原样抄），人写得了 `_claims`。
+    哪天草稿开始带模型写的文案，先在 promote 那一关分流。
+    """
+    sys.path.insert(0, str(ROOT / 'tools'))
+    from absolute_claims import interview_problem  # noqa: PLC0415
+
+    spec = json.loads(spec_path.read_text(encoding='utf-8'))
+    problem = interview_problem(spec, spec_path.stem)
+    if problem:
+        raise SystemExit(problem)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--spec', required=True)
     ap.add_argument('--column', required=True)
     args = ap.parse_args()
     path = Path(args.spec)
+    if args.column == '赛后开麦' and path.is_file():
+        check_interview_claims(path)
     check_copy(path.with_suffix('.xhs.txt'), args.column)
 
 

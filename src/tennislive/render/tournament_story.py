@@ -1675,7 +1675,7 @@ STORIES = STORIES + (
     ),
     _trivia_story(
         slug="a-plus-wildcard",
-        title="ATP 500 有第 4 张外卡",
+        title="ATP500 有第 4 张外卡",
         subtitle="网球观察 · 规则篇",
         identity="中网那张外卡，规则上只能给一种人",
         chips=("外卡与入围", "ATP 500 · 32 签", "2026 ATP 规则书"),
