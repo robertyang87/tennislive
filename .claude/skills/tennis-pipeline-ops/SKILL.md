@@ -3633,6 +3633,35 @@ dry-run 的判据、判据的反向验证，还要把四条源片重 probe 一�
 **probe 那一头按 `−60 − 20log10(BED_LOUD)` ≈ −57 dB 再量一份「偏轻区间」**，
 让 dry-run 拿它和上面那个「没人说话」的区间求交集。**记在这儿，别忘了。**
 
+⭐⭐ **2026-09-27 补上了，形状比「再量一份 −57 dB 区间」更直接**（`tools/probe_audio.py`）：
+2026-09-06 ~ 09-25 这一类渲后红了 **20 趟、162.8 runner 分钟**（失败 run 头号）。
+probe 那一趟和 `silencedetect` **同一趟 ffmpeg** 顺手解出 QC 同口径（8 kHz 单声道）的
+**逐 0.05 秒 RMS**，存进 `probe.json` 的 `audio_levels`（只给可能落进死秒的块留数，
+其余记「响」按游程压）；`--dry-run` 按封面长度、每段成片起点、溶解底料、这一段的现场声
+增益（`BED_LOUD`×音床，`_seg_bed_gain`）把成片每一秒映射回源片、**按上界**算能量，
+交给 QC 自己的 `dead_seconds`。两道边界：
+
+| | 处置 |
+|---|---|
+| 无旁白段（冷开场、quote 段）实测够得着 | **硬**；看过要这么剪就在那一段写 `_digital_silence_why` |
+| 旁白尾巴（按离线估说完之后） | **只报**（R7／f7b2501），分「按最长估也盖不住＝必红」和「大概率」两档 |
+| 老 probe 没有 `audio_levels`、慢放段、mute 段、`spec.music` | 只报一句「这一层没查」 |
+
+⚠️ **量出来它只接得住 20 趟里的 4 趟**（noskova-boulter、zhang-cocciaretto、
+zheng-paolini 首趟、mensik-tien——死秒落在无旁白段；最后那条 −60.6 dB 夹在 −54 的两秒
+中间，上界多半漏给 QC）。**其余 15 趟的死秒全在旁白说完之后**，按 R7 只报——但原来
+一个字都不报，现在报得出「第 N 段旁白一停，成片第 X 秒 ≈ 源 a–b，最响一块 −YY dB」。
+老 probe 没有 `audio_levels`，**要重跑一趟 `mode=probe` 这一层才有数**。
+判据 `tests/test_probe_audio.py`（真跑一遍 AAC 分段 → 溶解 → 闪避混音的链，上界比成片高
+约 0.5 dB、一秒都没误报）。
+
+⭐ 同一轮顺手补的另一类：**多源片子的几何红 7 趟（38.9 分钟）**，runner 的 dry-run 全是
+「一份 probe.json 都没认领上」——4 趟的 probe 早就落了库，只是在别的 slug 目录下
+（`hsieh-chan-uso3`、`proz-mia25`、`quiet-src-*`）。`tools/probe_sources.py`：工作流按
+URL 把 probe.json 落盘（部分克隆一趟批量 fetch，实测 2 秒）；dry-run 拿 probe 的宽高帧率跑
+render 里**同一个** `check_sources_match`（硬，同一句报错）；**新的手写 spec 每条源都要能
+认领到 probe**（硬，`_no_probe_why` 认领，存量挂 `data/legacy_no_probe_sources.json`）。
+
 #### ⭐⭐ 上面那句「下一步」2026-08-27 做掉了：render 红了判据自动回喂，修一轮再自渲
 
 耗时审计定案之后账号所有者一句「那帮我处理吧」。链路本身每一跳早就是自触发的

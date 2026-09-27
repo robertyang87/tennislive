@@ -416,6 +416,12 @@ jobs:
             echo "::warning::仓库里还没有 output/*/reel/${SLUG}/probe.json——"
             echo "::warning::dry-run 的 probe 层（切点/死球/片长）这趟是哑的，先跑一趟 mode=probe"
           fi
+          # 多源片子的源常常 probe 在**别的 slug 目录**下（hsieh-chan-uso3、proz-mia25、
+          # quiet-src-*……）——上面按本 slug 拉不回来，7 趟几何红的 runner dry-run 因此
+          # 全是「一份 probe.json 都没认领上」。按源片 URL 把它们的 probe.json 落盘
+          # （只取 probe.json，不拉缩略图墙；一趟批量 fetch），见 tools/probe_sources.py。
+          python tools/probe_sources.py materialize "$SPEC" \
+            || echo "::warning::按 URL 认领 probe.json 失败——dry-run 的覆盖/几何这趟可能误报没 probe"
           python tools/build_match_reel.py render --dry-run \
             --spec "$SPEC" --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log
 
