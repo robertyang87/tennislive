@@ -57,12 +57,13 @@ def _corpus() -> list[tuple[str, str]]:
     out = [("outro", NARRATION)]
     for path in sorted((ROOT / "specs/reels").rglob("*.json")):
         spec = json.loads(path.read_text(encoding="utf-8"))
+        rel = path.relative_to(ROOT / "specs/reels").as_posix()   # pending/… 是自动链的草稿
         cover = spec.get("cover") or {}
         if isinstance(cover, dict) and isinstance(cover.get("narration"), str):
-            out.append((f"{path.name}:cover", cover["narration"]))
+            out.append((f"{rel}:cover", cover["narration"]))
         for i, seg in enumerate(spec.get("segments") or []):
             if isinstance(seg, dict) and isinstance(seg.get("narration"), str):
-                out.append((f"{path.name}:{i}", seg["narration"]))
+                out.append((f"{rel}:{i}", seg["narration"]))
     for path in sorted((ROOT / "specs/interviews").rglob("*.json")):
         spec = json.loads(path.read_text(encoding="utf-8"))
         for which, card in (spec.get("takeaway") or {}).items():
@@ -157,16 +158,38 @@ def test_换字只在量过的上下文里咬():
         "ACE 数十一个": "ACE 数十一个",
         "球场上空出了一道彩虹": "球场上空出了一道彩虹",
         "夜空着火一样": "夜空着火一样",
+        # 同日第二轮复查：动词＋空（kōng）、「这 N 中」、纱布塞住（sāi）
+        "他扑空在网前": "他扑空在网前",
+        "一拍扑空着地": "一拍扑空着地",
+        "他挥空出界": "他挥空出界",
+        "航空出行": "航空出行",
+        "这三十中一个都没进正赛": "这三十中一个都没进正赛",
+        "队医用纱布塞住他的鼻孔": "队医用纱布塞住他的鼻孔",
+        "毛巾布塞进包里": "毛巾布塞进包里",
+        # 挑→选 只在「换完还是同一个词」的地方换：tiǎo（挑起／挑回／挑高）和挑选、
+        # 挑剔意思的「可挑」换成「选」就是另一个词（laver-cup-history-2026、
+        # rybakina-sabalenka-us-open-2026-final、rublev-merida-us-open-2026-r2 的原句）
+        "成了名场面：对手挑起高球，两个人一起冲过去": "成了名场面：对手挑起高球，两个人一起冲过去",
+        "追上去，反手把球挑回底线。": "追上去，反手把球挑回底线。",
+        "高难度挑高球。": "高难度挑高球。",
+        "盘他打得没什么可挑的。": "盘他打得没什么可挑的。",
+        "挑选": "挑选",
         # 而量过的那几处照旧换（收窄不许收过头）
         "名单上空出一格": "名单上控出一格",
         "博尔热斯四中三": "博尔热斯四众三",
         "一年数十九个成绩": "一年署十九个成绩",
+        "你怎么看布塞这场比赛的表现？": "你怎么看布赛这场比赛的表现？",
+        "布塞赢球后的第一反应": "布赛赢球后的第一反应",
+        "球员发球前挑球，挑那颗最不毛的": "球员发球前选球，选那颗最不毛的",
+        "而且主队挑地点、挑场地。": "而且主队选地点、选场地。",
     }
     for text, want in cases.items():
         assert P.apply(text) == want, (text, P.apply(text))
         # 预检拿 `substitutions`／`covered_positions` 判「表里管了」——它俩和 `apply`
         # 必须是同一套命中，否则没换的字会被当成已经管了，预检就不出声
-        spots = {s for s, _, _, _ in P.substitutions(text)}
+        # （命中可能不止一个字——「布塞」→「布赛」只换第二个——所以按字位展开比）
+        spots = {i for s, e, orig, h in P.substitutions(text) for i in range(s, e)
+                 if orig[i - s] != h.replace[i - s]}
         assert spots == P.covered_positions(text) == {
             i for i, (a, b) in enumerate(zip(text, want)) if a != b}, text
 
@@ -294,21 +317,36 @@ def test_切词报告的专名按念出来的样子找():
 def test_老四条换字在全库旁白上和原实现一字不差_新条目只换量过的地方():
     """回归判据：挑→选、硬地→硬帝、〇→零、柏林→伯林 搬进表之后，在仓库里每一句
     会过 TTS 的原文上，输出和搬之前的实现逐字相同；新加的条目只在它自己咬上的
-    地方改字，且全库每一句换字前后字数都一样。"""
+    地方改字，且全库每一句换字前后字数都一样。
+
+    唯一许可的差别是 挑→选 的收窄（2026-09-27 复查：挑起／挑回／挑高 这类换成「选」
+    是另一个词）：原实现换成「选」、现在留着「挑」——**只许在「挑」那一个字位上**，
+    别的字一个都不许变。"""
     corpus = _corpus()
     assert len(corpus) > 3000, f"语料只扫到 {len(corpus)} 句——扫描面塌了"
     new_keys = [h.key for h in P.HOMOPHONES if h.key not in P.LEGACY_KEYS]
-    changed = 0
+    changed = kept_tiao = 0
     for where, raw in corpus:
         shown = readable(raw)
         old = _legacy_speakable(raw)
-        assert P.apply(shown, only=P.LEGACY_KEYS) == old, where
+        legacy_now = P.apply(shown, only=P.LEGACY_KEYS)
+        assert len(legacy_now) == len(old) == len(shown), where
+        diff = [i for i, (a, b) in enumerate(zip(legacy_now, old)) if a != b]
+        assert all(shown[i] == legacy_now[i] == "挑" and old[i] == "选" for i in diff), \
+            (where, [shown[max(0, i - 4):i + 5] for i in diff])
+        kept_tiao += len(diff)
         new = speakable(raw)
-        assert new == P.apply(old, only=new_keys), where
+        assert new == P.apply(legacy_now, only=new_keys), where
         assert len(new) == len(shown), (where, raw)
-        changed += new != old
-    # 2026-09-27 全库 5215 句：新条目在 35 句上咬（长回合 14、空出 7、鲁塞 6……），逐条读过
+        # 数的是**仓库里定稿的**那几份：pending/ 是自动链的草稿，天天在变，
+        # 拿它进这个数只会让窗口跟着编排器的产出晃
+        if not where.startswith("pending/"):
+            changed += new != legacy_now
+    # 2026-09-27 全库 5215 句：新条目在定稿的 spec 上咬 33 句（长回合、空出、鲁塞……，
+    # 逐条读过；pending 草稿另有 2 句，不进这个数）；挑→选 收窄在定稿里留下 3 处「挑」
+    # （挑起、挑回、可挑的）、草稿里 1 处（挑高球）
     assert 20 <= changed <= 120, f"新条目改了 {changed} 句——扫一眼是不是规则放宽了"
+    assert kept_tiao <= 12, f"挑→选 收窄留下了 {kept_tiao} 处——扫一眼是不是收过头了"
 
 
 # ------------------------------------------------ 4. 出片前的预检
@@ -334,6 +372,14 @@ def test_多音字预检只报换字表管不到的非常用读音():
     clean = C.static_report([C.Spoken("第 1 段", "他赢了。", "+6%")])[0]
     assert clean[0].startswith("[多音字] 没有"), clean
 
+    # 挑回（tiǎo）：换字表不再把它换成「选」，而它量过原样读 tiāo——只能改写句子。
+    # 给的是「改写」提醒（量过了），不是让人再去 `--measure` 的风险行
+    lines, risks = C.static_report([C.Spoken("第 7 段", readable("追上去，反手把球挑回底线。"),
+                                              "+6%")])
+    text = "\n".join(lines)
+    assert "挑" not in "".join(r.char for r in risks), risks
+    assert "这一句换个说法" in text and "念成「选」" not in text, text
+
 
 def test_多音字预检缺pypinyin要出声不许拖垮出片(monkeypatch):
     import check_polyphones as C  # noqa: PLC0415
@@ -341,6 +387,46 @@ def test_多音字预检缺pypinyin要出声不许拖垮出片(monkeypatch):
     monkeypatch.setitem(sys.modules, "pypinyin", None)
     lines = C.report_lines([C.Spoken("第 1 段", "那场雨", "+6%")])
     assert len(lines) == 1 and "没查" in lines[0] and "pypinyin" in lines[0], lines
+    # 预检座位的入口：缺 pypinyin 时连语料都不取（取语料要 import explainer）
+    called = []
+    assert C.preflight_lines(lambda: called.append(1) or []) == [C.NO_PYPINYIN]
+    assert not called, "缺 pypinyin 还去取了语料——白付 import 的钱"
+
+
+def test_采访片缺pypinyin时不为了一句没查去import_explainer():
+    """runner 上 pypinyin 恒缺（interview-clip.yml 的 pip 行没有它），采访片每个 stage
+    开头都要印一句「这趟没查」。取语料要 import `tennislive.video.explainer`（约 2.4 秒，
+    这个模块别处故意不 import 它）——**先问在不在，再取语料**。新进程里量，别的测试
+    早把 explainer import 过了。"""
+    code = (
+        "import sys; sys.modules['pypinyin'] = None\n"
+        "import build_interview_clip as I\n"
+        "assert 'tennislive.video.explainer' not in sys.modules\n"
+        "I.report_takeaway_polyphones({'slug': 'demo', 'takeaway': {'close': {'lead': '那场雨'}}})\n"
+        "print('EXPLAINER', 'tennislive.video.explainer' in sys.modules)\n")
+    proc = subprocess.run(
+        [sys.executable, "-c", code], cwd=ROOT, capture_output=True, text=True, timeout=120,
+        env={**__import__("os").environ,
+             "PYTHONPATH": f"{ROOT / 'src'}:{ROOT / 'tools'}"})
+    assert proc.returncode == 0, proc.stderr[-800:]
+    assert "这趟没查" in proc.stdout, proc.stdout
+    assert "EXPLAINER False" in proc.stdout, proc.stdout
+
+
+def test_采访片的多音字预检自己出错只出声不拖垮这一趟(monkeypatch, capsys):
+    """只报不拦：预检自己抛了，这一趟 stage 照样往下走（真合成那条路出错也只是退回
+    静音卡）。"""
+    import build_interview_clip as I  # noqa: PLC0415
+    import check_polyphones as C  # noqa: PLC0415
+
+    def boom(*a, **k):
+        raise RuntimeError("语料炸了")
+
+    monkeypatch.setattr(C, "pypinyin_available", lambda: True)
+    monkeypatch.setattr(C, "interview_texts", boom)
+    I.report_takeaway_polyphones({"slug": "demo", "takeaway": {"close": {"lead": "那场雨"}}})
+    out = capsys.readouterr().out
+    assert "没查完" in out and "语料炸了" in out, out
 
 
 def test_采访片每一趟开头报解读卡口播的多音字(capsys):
@@ -362,18 +448,32 @@ def test_采访片每一趟开头报解读卡口播的多音字(capsys):
 
 def test_dry_run真的印出多音字预检(tmp_path):
     """「写了」不等于「跑过」：真跑一遍 `render --dry-run`，旁白里塞一处表外的
-    多音字（「那场雨」的 cháng），它得出现在输出里——而且不改退出码（只报不拦）。"""
+    多音字（「那场雨」的 cháng），它得出现在输出里——而且不改退出码（只报不拦）。
+
+    ⚠️ 不断言退出码是 0：这条 spec 以后被哪一道**无关的**闸拦住（validate_spec、
+    查选段、估旁白……），这条多音字的判据不该跟着红。预检排在那些闸前面（措辞闸之后——
+    它对存量按 slug 豁免，文件名保留 slug 就不会红），所以只比「塞没塞那一处，
+    退出码一样不一样」。"""
     slug = "tiafoe-musetti-cincinnati-2026-qf"
     spec = json.loads((ROOT / f"specs/reels/{slug}.json").read_text(encoding="utf-8"))
+
+    def dry_run(name: str) -> subprocess.CompletedProcess:
+        path = tmp_path / name / f"{slug}.json"
+        path.parent.mkdir()
+        path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+        return subprocess.run(
+            [sys.executable, "tools/build_match_reel.py", "render", "--spec", str(path),
+             "--outdir", str(tmp_path / name / "out"), "--dry-run"],
+            cwd=ROOT, capture_output=True, text=True, timeout=120)
+
+    base = dry_run("base")
     last = [s for s in spec["segments"] if s.get("narration")][-1]
     last["narration"] = "那场雨，" + last["narration"]
-    path = tmp_path / f"{slug}.json"
-    path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
-    proc = subprocess.run(
-        [sys.executable, "tools/build_match_reel.py", "render", "--spec", str(path),
-         "--outdir", str(tmp_path / "out"), "--dry-run"],
-        cwd=ROOT, capture_output=True, text=True, timeout=120)
-    assert proc.returncode == 0, proc.stdout[-800:] + proc.stderr[-800:]
+    path = tmp_path / "rain" / f"{slug}.json"
+    proc = dry_run("rain")
+    assert proc.returncode == base.returncode, (
+        f"塞了一处多音字，退出码从 {base.returncode} 变成 {proc.returncode}——预检不许拦",
+        proc.stdout[-800:] + proc.stderr[-800:])
     # 只钉塞进去的那一处：这条 spec 以后改旁白、多报一处别的，不该让这条红
     m = re.search(r"\[多音字\] (\d+) 处", proc.stdout)
     assert m and int(m.group(1)) >= 1, proc.stdout

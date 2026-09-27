@@ -3121,16 +3121,26 @@ def report_takeaway_polyphones(spec: dict, spec_path: str | None = None) -> None
     换字本身在 `speakable()` 里（`_takeaway_voice` → `synthesize_narration` 走它）；
     这儿报的是表里**还没有**、读音又不是常用那个的字——和 `render --dry-run` 同一个
     函数（`tools/check_polyphones.py`），不另写一份。没有解读卡就不出声。
+
+    ⚠️ 走 `preflight_lines`：**先**问 pypinyin 在不在，再取语料——取语料要 import
+    `tennislive.video.explainer`（约 2.4 秒，这个模块别处故意不 import 它），而
+    runner 上 pypinyin 恒缺，每个 stage 为印一句「这趟没查」白付那几秒不值。
+    整段包在 try 里：这是只报不拦的预检，它自己出错不许把这一趟 stage 拖垮
+    （真合成那条路 `_takeaway_voice` 出错也只是退回静音卡）。
     """
     if not spec.get("takeaway"):
         return
-    sys.path.insert(0, str(ROOT / "tools"))
-    sys.path.insert(0, str(ROOT / "src"))
-    import check_polyphones  # noqa: PLC0415
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        sys.path.insert(0, str(ROOT / "src"))
+        import check_polyphones  # noqa: PLC0415
 
-    texts = check_polyphones.interview_texts(spec, speech=_takeaway_speech)
-    print("\n".join(check_polyphones.report_lines(texts, slug=spec.get("slug"),
-                                                  spec_path=spec_path)))
+        lines = check_polyphones.preflight_lines(
+            lambda: check_polyphones.interview_texts(spec, speech=_takeaway_speech),
+            slug=spec.get("slug"), spec_path=spec_path)
+    except Exception as exc:  # noqa: BLE001
+        lines = [f"[多音字] ⚠️ 这趟没查完：{type(exc).__name__}: {exc}"[:300]]
+    print("\n".join(lines))
 
 
 # yt-dlp 认的合流容器（`--merge-output-format` 的取值）。别往里加 `m4a`——

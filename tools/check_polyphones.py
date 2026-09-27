@@ -22,6 +22,11 @@
 表项。校准数据在那个工具的 docstring。
 
 ⚠️ 「列出来」不等于「读错了」：静态一半报的是**风险**。真要知道读没读错，跑 `--measure`。
+
+⚠️ **静态那一半实际只在会话里生效**：runner 的 pip 行（`match-reel.yml`、
+`interview-clip.yml`）不装 pypinyin，Actions 上的 dry-run 和采访片每一趟印的都是
+「这趟没查」——那是出声，不是覆盖。字卡线（解说片）没有自动座位，只有 `--slug`。
+写完 spec 在会话里跑一次 dry-run，这一半才真的查过。
 """
 from __future__ import annotations
 
@@ -106,7 +111,7 @@ INTENDED: tuple[tuple[str, str], ...] = (
     (r"(露)(?=怯|一手)", "lou4"),
     (r"(散)(?=了|开|去|不掉)", "san4"),
     (r"(削)(?=球)", "xiao1"),
-    # 挑：挑高球、挑起、挑回 tiǎo（换字表的 挑→选 会把这几处换掉——见 WORD_CHANGES）
+    # 挑：挑高球、挑起、挑回 tiǎo（换字表不换它；量过原样读 tiāo——见 REWRITE_ONLY）
     (r"(挑)(?=高|起|回)", "tiao3"),
     (r"(?<=连轴)(转)", "zhuan4"),
     # --- 人名、译名 ---
@@ -150,13 +155,15 @@ UNCERTAIN = (
     r"(当)(?=天|年|晚)",
 )
 
-#: 换字表换掉之后**词义变了**的位置（不是读音问题，是换字表自己的副作用）。
+#: **量过读错、换字表又没有能换的字**的位置：只能改写句子，逐条提醒（不再当「风险」
+#: 让人去 `--measure`——已经量过了）。
 #: 2026-09-27 量的：「把球挑回底线」原样喂给合成器读 tiāo（与 祧/佻 相同 0.003），
-#: 喂「选回底线」又成了另一个词；tiǎo 那头找不到读音稳定的单音字（窕/朓 自测不过），
-#: 所以没有进表的换法——改写句子（「把球挑高回…」→「把球高高挑回…」之类）是作者的事。
-WORD_CHANGES = (
-    (r"挑(?=[高起回])", "挑高球／挑起／挑回 的「挑」是 tiǎo（挑球那个动作），"
-                        "换字表的 挑→选 会把它念成「选」——这一句换个说法"),
+#: 要的是 tiǎo；tiǎo 那头找不到读音稳定的单音字（窕/朓 自测不过）。换字表的 挑→选
+#: 原来会把这几处换成「选」（成了另一个词），同日复查收窄之后不换了，读音偏的问题还在——
+#: 改写句子（「把球挑回底线」→「把球高高吊回底线」之类）是作者的事。
+REWRITE_ONLY = (
+    (r"挑(?=[高起回])", "挑高球／挑起／挑回 的「挑」是 tiǎo，原样喂给合成器量过读成 tiāo，"
+                        "换字表没有能换的字——这一句换个说法"),
 )
 
 # 量过读对的词（2026-09-27 三批普查，measure_polyphone，云见 +6%/+22%）：
@@ -458,10 +465,11 @@ def _measured_ok_positions(text: str) -> set[int]:
 
 
 def analyze(sp: Spoken) -> tuple[list[Risk], int, list[str]]:
-    """一段旁白：(换字表管不到的非常用读音, 落在量过读对的词上的处数, 词义被换字改掉的提醒)。"""
+    """一段旁白：(换字表管不到的非常用读音, 落在量过读对的词上的处数, 只能改写句子的提醒)。"""
     text = sp.text
     reading, word, lex_reading, _touched = _readings(text)
     covered = pronounce.covered_positions(text)
+    rewrite = {m.start() for p, _ in REWRITE_ONLY for m in re.finditer(p, text)}
     ok = _measured_ok_positions(text)
     unc = {m.start(1) for p in UNCERTAIN for m in re.finditer(p, text)}
     risks: list[Risk] = []
@@ -471,7 +479,8 @@ def analyze(sp: Spoken) -> tuple[list[Risk], int, list[str]]:
         if want is None:
             continue
         is_poly, defaults, live = poly_info(ch)
-        if not is_poly or want in defaults or want.endswith("5") or i in covered:
+        if (not is_poly or want in defaults or want.endswith("5") or i in covered
+                or i in rewrite):
             continue
         if i in ok or (ch, want) in MEASURED_OK_READINGS:
             skipped_ok += 1
@@ -482,7 +491,7 @@ def analyze(sp: Spoken) -> tuple[list[Risk], int, list[str]]:
             intended=want, default=defaults[0] if defaults else "", others=others,
             rate=sp.rate, lexicon=lex_reading[i] == want, uncertain=i in unc))
     notes = [f"{sp.label}「{text[max(0, m.start() - 4):m.end() + 4]}」：{why}"
-             for p, why in WORD_CHANGES for m in re.finditer(p, text)]
+             for p, why in REWRITE_ONLY for m in re.finditer(p, text)]
     return risks, skipped_ok, notes
 
 
@@ -611,19 +620,50 @@ def static_report(texts: list[Spoken], slug: str | None = None,
     return lines, risks
 
 
+NO_PYPINYIN = ("[多音字] ⚠️ 这趟没查：没装 pypinyin（pip install -e \".[polyphone]\"；"
+               "runner 上本来就不装，会话里跑 dry-run 才查得到）——**没查不等于没有**")
+
+
+def pypinyin_available() -> bool:
+    """只问装没装，不 import：缺它的时候（runner 上恒缺）别先付别的 import 的钱。"""
+    import importlib.util  # noqa: PLC0415
+    try:
+        return importlib.util.find_spec("pypinyin") is not None
+    except (ImportError, ValueError):
+        return False
+
+
+def _unfinished(exc: BaseException) -> str:
+    return f"[多音字] ⚠️ 这趟没查完：{type(exc).__name__}: {exc}"[:300]
+
+
 def report_lines(texts: list[Spoken], slug: str | None = None,
                  spec_path: str | Path | None = None) -> list[str]:
     """给出片前的预检座位用（`render --dry-run`、采访片每一趟开头）：只报不拦，
     查不了要**出声**——「没查」和「查过没有」在日志里不许长得一样。"""
-    try:
-        import pypinyin  # noqa: F401, PLC0415
-    except ImportError:
-        return ["[多音字] ⚠️ 这趟没查：没装 pypinyin（pip install -e \".[polyphone]\"）"
-                "——**没查不等于没有**"]
+    if not pypinyin_available():
+        return [NO_PYPINYIN]
     try:
         return static_report(texts, slug, spec_path)[0]
     except Exception as exc:  # noqa: BLE001 — 预检自己出错不许拖垮出片，但要说出来
-        return [f"[多音字] ⚠️ 这趟没查完：{type(exc).__name__}: {exc}"[:300]]
+        return [_unfinished(exc)]
+
+
+def preflight_lines(make_texts, slug: str | None = None,
+                    spec_path: str | Path | None = None) -> list[str]:
+    """出片前预检座位的唯一入口：**先**看 pypinyin 在不在，再取语料。
+
+    取语料要 import `tennislive.video.explainer`（约 2.4 秒）——采访片那个模块
+    故意不 import 它；runner 上 pypinyin 恒缺，每一趟为了印一句「这趟没查」先付
+    那 2.4 秒不值。取语料出错也只出声、不抛：这是只报不拦的预检，不许拖垮出片。
+    """
+    if not pypinyin_available():
+        return [NO_PYPINYIN]
+    try:
+        texts = make_texts()
+    except Exception as exc:  # noqa: BLE001
+        return [_unfinished(exc)]
+    return report_lines(texts, slug, spec_path)
 
 
 def _show(r: str) -> str:

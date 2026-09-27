@@ -12125,7 +12125,11 @@ def speakable(text: str) -> str:
 
     The guard list is what stops 挑战 (challenge, and the Gentlemen's
     trophy) from turning into 选战; those really are tiǎo and are already
-    read correctly.
+    read correctly. Since 2026-09-27 the guard also keeps 挑 wherever 选
+    would be a different word: 挑起 / 挑回 / 挑高球 (tiǎo, lifting the
+    ball), 挑选, 挑刺, 挑大梁, 挑毛病, and 没什么可挑的. The swap is only
+    made where the sentence still means the same thing (see
+    `pronounce.HOMOPHONES`, key `tiao-pick`).
 
     ### 硬地：地 是 dì，不是轻声的 de
 
