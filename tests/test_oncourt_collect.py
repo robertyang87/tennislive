@@ -1227,6 +1227,11 @@ def test_测试用到的第三方包都在dev依赖里():
             if (root / "tools" / f"{name}.py").exists() or \
                     (root / "src" / name).is_dir():
                 continue
+            # 同理，兄弟测试模块也是本地的（`from test_design_tokens import …`
+            # 复用另一份测试里的扫描函数）。只认 `test_` 开头且 tests/ 下真有这个
+            # 文件的名字，别的一概照旧当第三方查。
+            if name.startswith("test_") and (root / "tests" / f"{name}.py").exists():
+                continue
             if DIST.get(name, name).lower().replace("-", "").replace("_", "") not in declared:
                 missing.append(f"{path.name} import {name}")
     assert not missing, (
