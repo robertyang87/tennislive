@@ -141,7 +141,10 @@ from tennislive.video.explainer import (  # noqa: E402
     is_bilingual_cue,
     write_subtitles,
 )
-from tennislive.video.subtitle_text import drop_punctuation  # noqa: E402
+from tennislive.video.subtitle_text import (  # noqa: E402
+    drop_punctuation,
+    same_line_as_printed,
+)
 from tennislive.video.topbar_icon import COURT, icon_ass  # noqa: E402
 
 # **成片帧率跟着源片走，不要硬定 30。** 这份华盛顿的官方集锦是 25 fps，
@@ -8530,39 +8533,10 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
                         + "\n\n把 `end` 收回片长以内，或者换一条更长的源片。")
 
 
-_PRINTED_VS_SPOKEN_NOISE = re.compile(r"[？！?!\s]+")
-
-
-def same_line_as_printed(spoken: str, printed: str) -> bool:
-    """封面念的那句和海报上印的钩子，是不是同一句话。
-
-    判据是「一不一样」——一样就不另排字幕（大字已经印着了）。但「一样」要按
-    **说的是不是同一件事**判，不能按 `drop_punctuation` 之后逐字节比：那个函数
-    是给字幕显示用的，**故意留着「？！」**（换页表达得了停顿，表达不了「这是一问」），
-    于是钩子写成陈述句、旁白念成问句（`五天前出局，五天后赢了种子？`）会差一个
-    问号，被判成「另说了一件事」，封面那 3 秒多叠一行把钩子原样再写一遍的小字。
-    `bu-lucky-loser-story` 2026-09-03 就这么渲出去过一版。
-
-    所以这儿在 `drop_punctuation` 之上再抹掉 ？！ 和所有空白（钩子的换行、
-    标点换出来的空格）再比。真另说一件事的（`cincinnati-story` 那种）照旧不等。
-    """
-    def flat(text: str) -> str:
-        from tennislive.video.explainer import (  # noqa: PLC0415
-            arabic_numerals)
-        # ⚠️ 数字要先归一，**两边用同一套**。CLAUDE.md 那条「给人看的字一律
-        # 阿拉伯数字，只有 TTS 底稿写汉字」保证了钩子和 `cover.narration`
-        # **必然**一个写 `8张` 一个写 `八张`——逐字节比的话，凡是钩子里带数字的
-        # 封面都会被判成「另说了一件事」，于是在海报的大字上再叠一行小字把同一句话
-        # 写第二遍。`davis-cup-road-to-bologna` 第一趟渲出来就是这样（三行字摞在
-        # 一起），`bjk-cup-story`（`16个` vs `十六个`）也一直是这个毛病。
-        # 归一分两步：先 `arabic_numerals`（`十六`→`16`、`一百二十六`→`126`），
-        # 再把剩下的汉字数字逐字映成阿拉伯数字（`八`→`8`——`八张` 的「张」不在
-        # `_NUM_UNITS` 里，第一步够不着它）。**两边走同一条路**，所以哪怕映射
-        # 本身不讲道理（`第一次`→`第1次`）也不影响「一不一样」这个判断。
-        canon = str.maketrans("〇零一二三四五六七八九", "01123456789")
-        return _PRINTED_VS_SPOKEN_NOISE.sub(
-            "", drop_punctuation(arabic_numerals(str(text)))).translate(canon)
-    return flat(spoken) == flat(printed.replace("\n", " "))
+# `same_line_as_printed`（封面念的那句和海报上印的钩子是不是同一句）2026-09-27 搬进
+# 两条线共用的 `video/subtitle_text.py`：网球有故事字卡的封面同样要判这一件事
+# （UI/VI 评审量到 52 条字卡封面 41 条把大问题印了两遍）。一份判据写两处必分叉，
+# 所以这儿只留 import（见文件头），函数本体和来路都在那边的 docstring 里。
 
 
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
