@@ -71,7 +71,8 @@
 
 from __future__ import annotations
 
-import re
+import sys
+from pathlib import Path
 
 import pytest
 
@@ -83,8 +84,12 @@ from tennislive.video.explainer import (
     _SCRIPTS,
     explainer_column,
     explainer_script,
-    speakable,
 )
+
+# 首句预算、语速和两张豁免表的**唯一出处**是渲前预检（`tools/explainer_preflight.py`，
+# `explainer.yml` 的第一步）——这份测试扫全库，预检只查一条，用的是同一份函数。
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+import explainer_preflight as P  # noqa: E402
 
 # 字/秒。**2026-08-03 语速从 +28% 降到 +10%**（账号所有者：「语速太快了」），
 # 这个数跟着重量了一次：special-exempt 同一份 1129 字旁白，同一天两版成片——
@@ -98,15 +103,19 @@ from tennislive.video.explainer import (
 # ⚠️ 又一次证明模块开头那句「别按比例推」：按 1.10/1.28 折算是 5.78，实测 5.37，
 # 差 8%。⚠️ 这一档目前**只有一条成片**（上面那批是 n=3 的中位），所以这个数
 # 还会动；再多几条就按同样的量法重取中位。
-SPEECH_RATE = 5.98
+#
+# ⚠️ 2026-09-27 起这个数（和下面的首句预算、两张豁免表）只活在
+# `tools/explainer_preflight.py` 里——渲前预检和这份测试用的是同一份，
+# 写两处必分叉，而分叉的样子是「测试红、预检绿」。量法和来路照旧记在这儿。
+SPEECH_RATE = P.SPEECH_RATE
 
 BUDGET_SECONDS = 90
 # 首尾静音不走旁白，要从预算里扣掉。
 NARRATION_BUDGET = round((BUDGET_SECONDS - LEAD_SILENCE - TAIL_SILENCE) * SPEECH_RATE)
 
 # 决定窗口：抖音 5 秒内走掉 62%。片头静音占掉 0.6 秒，剩下的才归第一句。
-HOOK_SECONDS = 5.0
-HOOK_BUDGET = round((HOOK_SECONDS - LEAD_SILENCE) * SPEECH_RATE)
+HOOK_SECONDS = P.HOOK_SECONDS
+HOOK_BUDGET = P.HOOK_BUDGET
 
 # yellow-ball 出过名单，但不是因为有人改短了它：语速常数从 6.1 校准到实测的
 # 6.4 之后，90 秒对应的字数从 536 涨到 563，它那 538 字（≈85 秒）就落到线下了。
@@ -135,19 +144,12 @@ _OVER_BUDGET = {
 
 # 封面第一句超出决定窗口的。两条都是「开球之前」——这个格式开场要交代对阵、
 # 时间、来路，一句话就铺了三十多个字。知识解说那一栏的首句都在 10–17 字。
-_HOOK_TOO_LONG = {
-    "venus-potapova": 38,
-    "zheng-eala": 31,
-}
+_HOOK_TOO_LONG = P.HOOK_TOO_LONG
 
 
 def _chars(text: str) -> int:
-    """按合成器实际要念的字数算：走 speakable()，去掉空白。
-
-    `speakable` 里有给合成器纠音的替换（挑→选之类），念的是那一版，所以
-    字数也该按那一版数。标点不发音但会停顿，忽略它带来的误差在 ±5% 以内。
-    """
-    return len(re.sub(r"\s", "", speakable(text)))
+    """按合成器实际要念的字数算：走 speakable()，去掉空白（预检那一份，见 `P.spoken_chars`）。"""
+    return P.spoken_chars(text)
 
 
 def _total(slug: str) -> int:
@@ -155,8 +157,7 @@ def _total(slug: str) -> int:
 
 
 def _first_sentence(text: str) -> str:
-    parts = re.split(r"(?<=[。？！?!])", text.strip())
-    return next((p for p in parts if p.strip()), text)
+    return P.first_sentence(text)
 
 
 def _hook(slug: str) -> int:
@@ -249,16 +250,8 @@ def test_封面第一句要在决定窗口里说完(slug):
     卡的是**第一句**，不是整屏封面。整屏封面「开球之前」要 16–20 秒，那不是
     问题——问题是走掉的人有没有拿到一个完整的意思。
     """
-    got = _hook(slug)
-    if slug in _HOOK_TOO_LONG:
-        was = _HOOK_TOO_LONG[slug]
-        assert got <= was, (
-            f"{slug} 封面第一句从 {was} 字涨到 {got} 字，只许降不许升。")
-        return
-    assert got <= HOOK_BUDGET, (
-        f"{slug} 封面第一句 {got} 字 ≈ {got / SPEECH_RATE + LEAD_SILENCE:.1f} 秒，"
-        f"超出 {HOOK_SECONDS} 秒的决定窗口（上限 {HOOK_BUDGET} 字）。\n"
-        f"把第一句砍短，把交代挪到第二句——前 5 秒决定 62% 的人走不走。")
+    problems = P.hook_budget_problems(P.load_deck(slug))
+    assert not problems, "\n".join(problems)
 
 
 #: 封面那一问排不进一行、退回两行的片子。**只许减不许加。**
@@ -268,22 +261,12 @@ def test_封面第一句要在决定窗口里说完(slug):
 #: 把一个词劈开：「排名到了，为什么还打资格赛？」断成了「…为什 / 么…」。
 #: 所以新片子要么排得进一行，要么显式把自己加进这份名单——让「又断成两行」
 #: 变成一次看得见的决定，而不是渲出来才发现。
-_COVER_TWO_LINES = {
-    "comeback-middle",   # 伤好了打不出来，是低谷还是终点？
-    "thiem-football",    # 美网冠军退役两年后，在哪儿比赛？
-    "zheng-eala",        # 三年前钦文赢了那个人，这次呢？
-    "venus-potapova",    # 46 岁了，维纳斯为什么还在打？
-    "wildcard",          # 签表里名字旁的 WC，是谁给的？
-}
+_COVER_TWO_LINES = P.COVER_TWO_LINES
 
 
 def _cover_one_line_px(question: str) -> int:
     """这一问排成一行时字号会是多少——**调生产用的那个算式**，不另写一套。"""
-    from tennislive.video.explainer import (
-        W, _COVER_WIDTH_MARGIN, _cover_title_em,
-    )
-
-    return int((W - 140) * _COVER_WIDTH_MARGIN / _cover_title_em(question))
+    return P.cover_one_line_px(question)
 
 
 @pytest.mark.parametrize("slug", sorted(_OPENINGS))
@@ -299,19 +282,8 @@ def test_封面那一问要能排进一行(slug):
     缺的只是一条在渲之前出声的判据。那条断掉的算出来是 82px，就差 84 这道线
     两个像素——而这两个像素只有把片子渲出来才看得见。
     """
-    question = (_OPENINGS.get(slug) or {}).get("question")
-    if not question:
-        return
-    from tennislive.video.explainer import _COVER_MIN_ONE_LINE_PX
-
-    got = _cover_one_line_px(question)
-    if slug in _COVER_TWO_LINES:
-        return
-    assert got >= _COVER_MIN_ONE_LINE_PX, (
-        f"{slug} 的封面问题「{question}」排一行只能到 {got}px，"
-        f"低于 {_COVER_MIN_ONE_LINE_PX}px，会退回两行并在词中间断开。\n"
-        f"要么把它改短（每少一个全角字约多 {got // max(len(question) - 1, 1)}px），"
-        f"要么显式加进 _COVER_TWO_LINES 并说明为什么可以。")
+    problems = P.cover_one_line_problems(P.load_deck(slug))
+    assert not problems, "\n".join(problems)
 
 
 def test_两行名单只能变短而且每条都要真的排不进一行():

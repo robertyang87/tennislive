@@ -167,6 +167,8 @@ CLAUDE.md 早有一条「示意图的触发条件是照片讲不清，不是照�
 
 WTA / ATP 那两条路对大满贯**都不成立**——`photoresources.wtatennis.com` 不收大满贯
 （8 月下旬只有辛辛那提），赛事官网的 WordPress 图库是巡回赛站点才有的东西。
+⚠️⚠️ **前半句 2026-09-27 量翻了**：WTA 的赛后稿头图照样拍大满贯（`Zheng-Q3-Jimmie.jpg`
+4700×2916），见本文件末尾「三条『图一直在、工具没扫到』」那节。
 美网另有一套，**这一轮才挖出来，别再重找**：
 
     ① 接口表   https://www.usopen.org/en_US/json/gen/config_web.json
@@ -2350,3 +2352,75 @@ scratchpad 里，没进仓库；要重跑，上面三条命令就够。
 场馆、同一件队服，**差一天就是资料图**，四道闸门第一道过不了。ITF 的赛报是**一天一篇**
 （周五那篇 `date` 2026-09-19T08:30Z），所以**周六的图要等周六那篇 wrap-up**。
 这和「夜场的图要再等一整天」是同一个形状：**渠道有图 ≠ 你那一场有图**。
+
+
+### ⭐⭐ 2026-09-27：三条「图一直在、工具没扫到」补进 `find_cover_photo.py`
+
+全库复盘量出来的：封面返工里有一类是**更好的图早就挂在某个渠道上，只是工具没扫到**，
+而且三次都在首推之后才换——
+
+| slug | 推出去的 | 其实就在那儿的 | 漏在哪 |
+|---|---|---|---|
+| `zheng-pridankina-us-open-2026-q3` | 美网官方接口 1280×720（放大 2.0 倍） | WTA 赛后稿头图 `Zheng-Q3-Jimmie.jpg` **4700×2916**（64525b36） | 工具把 WTA 标成「不收大满贯」、一篇赛后稿都不读，**而且文件名过滤器把 `<姓>-<轮次>-<摄影师>.jpg` 这一类整个扔掉** |
+| `zverev-deminaur-laver-cup-2026` | 162.4s 抽帧（`_frame_why`：「扫最近 12 条」） | 媒体库同场 Getty `CB_38668…`，**首推前 25 分钟**上传（1a4f92d3） | 工具只看最近 100 条、只印前 8 张、不带说明 |
+| `bu-majchrzak-hangzhou-2026-r2` | 抽帧，推了三次 | 公众号「网球之家」本场赛后稿配图 1280×1829（5beecfa6） | 工具**一条中文渠道都没有** |
+
+    python3 tools/find_cover_photo.py --player Zheng --event "US Open" --date 2026-08-28
+    python3 tools/find_cover_photo.py --player "de Minaur" --site www.lavercup.com --date 2026-09-26
+    python3 tools/find_cover_photo.py --player Bu --zh 布云朝克特 --zh 迈赫扎克 --city 杭州 --date 2026-09-26
+
+**① WTA 赛后稿头图——走 WTA 自己的内容接口**（`sweep_wta_articles`，给了 `--player` 就跑）
+
+    GET https://api.wtatennis.com/content/wta/text/EN/?pageSize=40&page=N
+        → imageUrl（头图的 `/wta/photo/<它自己的 uuid>/` 路径，**原图**）
+          onDemandUrl（同一张图的 photo-resources 路径，`?width=4000` **封顶 4000px**）
+          leadMedia.title（「Zheng Qinwen, US Open 2026」）＋ leadMedia.originalDetails（原始尺寸）
+
+- ⚠️ `startDate`/`endDate` **被静默忽略**（加不加都是 18544 条）——日期只能自己翻页判
+- ✅ `references=TENNIS_PLAYER:<WTA id>` 真的在筛（18544 → 296），知道 id 就给 `--wta-id`
+- ⚠️ 一篇稿子常常讲三场：「提到这个名字」≠「头图是他」（同一窗口里另一篇的头图是蒙哥马利）。
+  工具把头图是本人的排前面，别人的标「头图是别人」
+- ⭐ **头图取 `imageUrl`，不取 `onDemandUrl`**（2026-09-27 review 复测；这一行原来写反了，写的是「`imageUrl` 带 `?width=` 是 403，只用 `onDemandUrl`」）：`imageUrl` 带不带 `?width=` 都是 200、给原图（4931×2774、5741×3827，和 `originalDetails` 一致）；`onDemandUrl?width=4000` 封顶 4000px，`?width=5000` 是 400。**403 的是把 photo-resources 的 uuid 套上 `/wta/photo/` 前缀**——上面 08-16 那条记的是这一种，两个前缀的 uuid 不通用。工具（`wta_lead_url`）文件名对得上才用 `imageUrl`，否则退回 `onDemandUrl?width=4000`
+- `fetch_wta_cover_photo.py` 要 WTA 的赛事 id ＋ MatchID，**大满贯两样都没有**——它对美网恒空
+
+**② 赛事 WP 媒体库——比赛日起 `--days`（默认 2）天上传的全部翻完，再按名字筛**
+
+- `after`/`before` 按上传时刻圈窗口、按 `X-WP-TotalPages` 翻到底（封顶 10 页，翻不完明说）
+- 名字在 title / caption / alt_text / 文件名 任一处（整词、去重音）就算命中，**命中的带说明印出来**
+- ⚠️ **找到 ≠ 能用**：那张同场 Getty 在拉沃尔杯媒体库里只有 **1200×727**（WP 的 full 就是它），
+  铺封面要放大 1.98 倍，比 1080p 抽帧还软。现在每张候选都标「铺满不放大 / 要放大 N×」
+  （`fill_note`）。它的用处是**确认这一场有 Getty 实拍、给出摄影师和上传时刻**，大图再去别处换
+- 2026-09-27 实测：拉沃尔杯 9/26 一天 59 张，名字对得上 de Minaur 的 8 张，含那张 Getty
+
+**③ 中文媒体——搜狗微信公众号 ＋ 当地省级网站**（`tools/cover_cn_media.py`，给了 `--zh` 才跑）
+
+- 搜狗微信：`weixin.sogou.com/weixin?type=2&query=…` → `/link?url=` 回一段 JS，把
+  `mp.weixin.qq.com` 的地址拆成十几段 `url += '…'`，拼回去就是文章（带着搜索那一趟的
+  cookie，几分钟就过期，所以当场解析、不存）→ `data-src` 的 mmbiz 图把尾巴换成
+  `/0?wx_fmt=jpeg` 就是原图（实测一篇「体坛报」稿里有 6000×3376）
+- ⚠️ 搜狗按词切分：「布云朝克特 八强」0 条、「布云朝克特 杭州」10 条——所以一次问三组
+  （名字＋对手／名字＋城市／名字）；同名的别人（「胡佳」查出一位心外科教授）按
+  **标题里有这个名字 ＋ 发文时刻在比赛日窗口里**两道筛，筛掉几条报出来
+- 当地网站只收有证据的：成都 → 四川在线 `ent.scol.com.cn/ty/`（hu-kopriva 那张出自这儿）。
+  ⚠️ `imgcdn.scol.com.cn` 的 **https 在沙箱握手就被重置，http 能取**；
+  而且它**见到 `mp.weixin.qq.com` 的 Referer 回 403**——Referer 只给 mmbiz
+- 杭州那一站的主办方公众号（「杭州市体育产业发展集团」）搜狗那条已经扫得到，表里没另开一行
+- ⚠️ **不替人认是不是这一场**：bu-majchrzak 那次拿 dHash 对首轮七篇稿子排除了资料图，
+  那一步照旧要做；工具只把发文时刻印出来——**发文在比赛之前的图一定不是这一场**
+
+⚠️ **「这一趟查了什么」那份清单现在多了两档**（WTA 赛后稿头图、中文媒体），没跑的照旧喊出来。
+写 `_frame_why` 照抄那份清单。判据 `tests/test_cover_channels.py`。
+⚠️ 「跑过」**每一档都按真取回来的页判**：抛异常算没跑，**回了一页 502/403 也算没跑**
+（`requests` 不抛，正文是一页 Bad Gateway，解析出 0 条——和「真的没有」一模一样）；
+WTA 图库和 AP 原来是写死的「跑过」，美网接口／当地报纸／WP 媒体库原来按「给没给 `--event`／报纸域名／`--site`」判（全断网照样三档全印「跑过」，美网那一档自己的 notes 还写着「没跑」），现在一律按取回页数判（`pages_read`；WP 媒体库第一页读不到就是没跑）。
+
+#### 封面比这条片子的源片旧——`--dry-run` 会提醒（只报不拦）
+
+`osaka-four-slams-2026` 九月一号发、源片 `walk` 当天上传，封面却是六月温网那张
+（EXIF 2026-06-29）；同一天 AP 的美网走场 4750×3167 就在（3a82caee）。
+`list_official_uploads.stale_cover_problem`：封面 EXIF 拍摄日比**这条片子自己的源片**
+（官方上传快照里的发布时刻）或 `_match` 的开球时刻早 3 天以上就提醒。只认 EXIF——
+`_why` 里的日期常常是引规矩的日期。讲历史、故意用当年的图，写 `cover.portrait._old_photo_why`。
+全库扫：306 条里封面带 EXIF 的 35 条，按 `_match` 判 0 条；拿「源片第一次 probe 的日期」代理再扫
+2 条，都是讲历史的（2025 戴杯捧杯、2024 奥运），正是那个认领口要放的。
+

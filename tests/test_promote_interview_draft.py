@@ -284,3 +284,42 @@ def test_promote的自动收尾卡_译名表里每个名字都放得下一行(to
     too_wide = [(win, tool.auto_takeaway_point(win)) for win in _top500_names()
                 if gates.point_width(tool.auto_takeaway_point(win)) > box]
     assert not too_wide, too_wide
+
+
+def test_手改过的草稿带着没认领的全称断言_转正时留草稿(tool, monkeypatch, tmp_path):
+    """转正之后 interview-clip 会被自动 dispatch，而前置检查里那道全称断言闸是
+    硬的（`production_preflight.check_interview_claims`）。有人往 `.draft.json`
+    里手补了文案、写了「N 次打进，N 次都…」却没在 `_claims` 认领两个源——拦在
+    promote 这一关，草稿留在原地等终审，别让它变成一趟红着的 render。认领够了照常转正。
+
+    ⚠️ 人工请求（`requests/interviews/*.json`）**不走这儿**：`build_interview_request`
+    直接写正式 spec，它的闸在 `check_request`（`tests/test_absolute_claims.py`
+    `test_人工请求的_claims跟进正式spec_没认领在build那一刻就红`）。"""
+    specs = tmp_path / "specs" / "interviews"
+    specs.mkdir(parents=True)
+    claim = "他此前六次打进正赛，六次全部首轮出局。"
+    base = {**_draft(), "_zh_draft": ["a"],
+            "source_title": "Cincinnati 2026 R3 Alexander Zverev Interview",
+            "push": {"lead": claim}}
+    draft_p = specs / "zverev-cincinnati-2026-r3.draft.json"
+    draft_p.write_text(json.dumps(base), encoding="utf-8")
+    monkeypatch.setattr(tool, "SPECS", specs)
+
+    class _Digest:
+        results = [_match("Zverev A.", "Atmane T.", winner_idx=0)]
+
+    monkeypatch.setattr(tool, "_collect_digests", lambda: [_Digest()])
+    monkeypatch.setattr(tool, "player_zh", lambda en: {
+        "Zverev A.": "兹维列夫", "Atmane T.": "阿特马内"}.get(en, en))
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted == [], promoted
+    assert any("全称断言" in s for s in skipped), skipped
+    assert draft_p.exists(), "拦下来的草稿要留在原地等终审"
+    assert not (specs / "zverev-cincinnati-2026-r3.json").exists()
+
+    # 认领了两个不同主机的源 → 照常转正（闸不是一刀切掉人写的文案）
+    draft_p.write_text(json.dumps({**base, "_claims": {
+        claim: "逐场表核过 https://a.example/x ；https://b.example/y"}}),
+        encoding="utf-8")
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted and not skipped, (promoted, skipped)

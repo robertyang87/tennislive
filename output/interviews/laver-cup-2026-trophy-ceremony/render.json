@@ -1,0 +1,141 @@
+{
+  "seams": {
+    "count": 5,
+    "transition": "dissolve",
+    "dissolve_s": 0.18
+  },
+  "film_sha256": "23a3e3b6db5885b5c7b0cca942ad7aa67df9d6c348386ff78e914cc698a25027",
+  "film_seconds": 296.0,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "laver-cup-2026-trophy-ceremony",
+    "received_at": "2026-09-27T17:48:19Z",
+    "artifact_ready_at": "2026-09-27T18:04:57Z",
+    "elapsed_seconds": 998.984,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "23a3e3b6db5885b5c7b0cca942ad7aa67df9d6c348386ff78e914cc698a25027",
+    "spec_sha256": "e5a956c9114cde286b85ece6f6663437f25236ef29c297c1b8e49d98b386643d",
+    "request_received_at": "2026-09-27T17:16:38Z",
+    "request_to_artifact_seconds": 2899.984,
+    "run_id": "36338290942",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-27T17:49:02Z",
+        "run_id": "36338290942"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-09-27T17:50:03Z",
+        "run_id": "36338290942"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-27T17:50:18Z",
+        "run_id": "36338290942"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-27T18:00:39Z",
+        "run_id": "36338290942"
+      }
+    ],
+    "render_seconds": 258.984,
+    "pre_render_seconds": 740.0
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "unknown",
+        "name": null,
+        "similarity": {},
+        "missing": [
+          "诺阿"
+        ],
+        "expected": [
+          "诺阿"
+        ],
+        "face": [
+          407,
+          155,
+          580,
+          369
+        ],
+        "face_px": 214.5,
+        "reason": "没有可比的官方头像：诺阿",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2137,
+        "ear_each": [
+          0.1883,
+          0.2392
+        ],
+        "face": [
+          407,
+          155,
+          580,
+          369
+        ],
+        "face_px": 214.5,
+        "reason": "眼睛纵横比 0.21 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "warnings": [
+        "认人拿不准：没有可比的官方头像：诺阿"
+      ]
+    },
+    "warnings": [
+      "认人拿不准：没有可比的官方头像：诺阿"
+    ]
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-27T17:49:02Z",
+      "run_id": "36338290942"
+    },
+    {
+      "stage": "cover_audit",
+      "at": "2026-09-27T17:50:03Z",
+      "run_id": "36338290942"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-27T17:50:18Z",
+      "run_id": "36338290942"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-27T18:00:39Z",
+      "run_id": "36338290942"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-27T18:04:59Z",
+      "run_id": "36338290942"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-27T18:04:59Z",
+      "run_id": "36338290942"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-laver-cup-2026-trophy-ceremony/laver-cup-2026-trophy-ceremony.mp4?v=23a3e3b6db5885b5",
+  "video_bytes": 137763600,
+  "release_asset_digest": "sha256:23a3e3b6db5885b5c7b0cca942ad7aa67df9d6c348386ff78e914cc698a25027",
+  "qc_attestation_sha256": "4bd744fdf53851e72d6657ea2b43ed067022983af22431cdc6cacb639aeb903c"
+}
