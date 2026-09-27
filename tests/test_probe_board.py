@@ -299,6 +299,13 @@ def test_标定框和全库spec用的框对得上():
                                      spec_tour(spec))
         if prof not in pb.CALIBRATED:
             continue
+        # `CALIBRATED` 是 1920×1080 源片的像素。按 URL 授权过的低清源（`source_quality_exceptions`
+        # 的 `min_height`）量出来的框是**同一条带**换了分辨率，先缩放回 1080 再比——
+        # `medvedev-wong-hangzhou-2026-qf` 的 720p 框 65,613,…,686 ×1.5 正好落在 ATP 那条带上。
+        heights = [c.get("min_height") for c in (spec.get("source_quality_exceptions") or {}).values()
+                   if isinstance(c, dict) and isinstance(c.get("min_height"), int)]
+        scale = pb.CALIBRATED_SOURCE[1] / min(heights) if heights else 1.0
+        box = [v * scale for v in box]
         seen.setdefault(prof, []).append(
             any(pb.same_box(box, cal) for cal in pb.CALIBRATED[prof]))
     for prof in ("atp", "wta", "itf-bjk", "lavercup"):
