@@ -217,7 +217,25 @@ def check_film(film: Path, spec: dict, ass: Path) -> int:
         bad += 0 if ok else 1
         print(f"[{'ok' if ok else '不合格'}] 片长 vs render.json film_seconds"
               f"（实测 {v_dur:.2f}s / 记录 {rec:.2f}s）")
+        report_seams(data)
     return bad
+
+
+def report_seams(data: dict) -> str:
+    """`render.json` 的 `seams`（`build_interview_clip.render` 写的）：接缝是溶解还是
+    **退回了硬切**。退回硬切时点名、带原因——片子照样能发（拼接那一步是故意兜底的，
+    重渲多半撞同一个原因），所以**不计不合格**，但不许不吭声（评审 WP3 nit 2：原来
+    只在渲染日志里有一行，没有任何闸看得见）。返回打出来的那一行（测试用）。"""
+    seams = data.get("seams")
+    if not isinstance(seams, dict):
+        line = "[跳过] render.json 没记接缝（`seams`）——2026-09-27 之前渲的片子没有这一项"
+    elif seams.get("transition") == "hard_cut":
+        line = (f"[注意] 接缝退回了硬切：{seams.get('count')} 个接缝一帧切过去，没溶解"
+                f"（{seams.get('fallback_reason') or '原因没记'}）")
+    else:
+        line = f"[ok] 接缝 {seams.get('transition')}（{seams.get('count')} 个）"
+    print(line)
+    return line
 
 
 def _sha256(path: Path) -> str:
@@ -348,6 +366,7 @@ def check_offline(spec: dict, outdir: Path) -> int:
         bad += 0 if ok else 1
         print(f"[{'ok' if ok else '不合格'}] 成片在 Release 上"
               f"（{nbytes / 1e6:.1f} MB，url {'有' if url else '无'}）")
+        report_seams(data)
     else:
         print("[跳过] 没有 render.json，成片落没落 Release 无从得知")
     ass = outdir / f"{spec['slug']}.ass"
