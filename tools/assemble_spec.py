@@ -62,7 +62,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from fetch_match_stats_fs import StatsError, find_match  # noqa: E402
 from match_feed import fs_feed, points, set_pairs  # noqa: E402
-from match_stat_hooks import collect, stats_block  # noqa: E402
+from match_stat_hooks import BODY_ONLY, BODY_ONLY_NOTE, collect, stats_block  # noqa: E402
 from find_turning_points import _label, rank_games  # noqa: E402
 from tennislive.research.brief import Chat  # noqa: E402
 from tennislive.zh import player_zh  # noqa: E402
@@ -157,10 +157,20 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
 
 
 def facts_text(hit_data: list[dict]) -> str:
-    """把狠数据候选拼成一段喂给 draft_spec 的 facts。"""
+    """把狠数据候选拼成一段喂给 draft_spec 的 facts。
+
+    带 `use: body_only` 的那一条（总分差）在行里注明「只进正文，不进钩子和推送
+    标题」——账号所有者 2026-09-13「不要写总分差距了」、09-19「不要把这个放在
+    封面的钩子上」。模型只看得见这段文本，边界不写在行里它就不知道。
+    """
     if not hit_data:
         return ""
-    return "\n".join(f"- {c.get('label', '')}: {c.get('detail', '')}" for c in hit_data)
+
+    def line(c: dict) -> str:
+        use = f"（{BODY_ONLY_NOTE}）" if c.get("use") == BODY_ONLY else ""
+        return f"- {c.get('label', '')}{use}: {c.get('detail', '')}"
+
+    return "\n".join(line(c) for c in hit_data)
 
 
 def final_set_scores(games: list[dict]) -> list[tuple[int, int]]:
@@ -235,7 +245,8 @@ def total_points_fact(stats: dict, matchup: list[dict]) -> str:
         return f"全场总得分：{a_name} {a}，{b_name} {b}，两人持平"
     leader, trailer = (a_name, b_name) if a > b else (b_name, a_name)
     return (f"全场总得分：{a_name} {a}，{b_name} {b}；{leader}比{trailer}"
-            f"多 {abs(a - b)} 分。禁止写成{trailer}总分领先")
+            f"多 {abs(a - b)} 分。禁止写成{trailer}总分领先。"
+            "这个数只供核对方向，不写进钩子和推送标题")
 
 
 def editorial_total_points_problem(
@@ -405,6 +416,11 @@ def upset_cover_brief(matchup: list[dict], scores: list[tuple[int, int]]) -> dic
 
     沿用选题层的爆冷口径：赢家排名比输家低至少 30 位；“明星球员”收窄为
     世界前 20。缺排名或赛果不完整时不猜，返回 None。
+
+    ⚠️ **拍输家拍他在拼，不拍他垮掉**（账号所有者 2026-08-15 arango-venus：
+    封面换成大威，否掉的是 152.5s 低头垮掉那一帧，选的是 240.5s 零比四落后
+    仍在握拳那一帧）。原来这里要的是「失落、落寞」的近景——正好是被否的那一种。
+    口味规则全文在 `.claude/skills/tennis-owner-taste/SKILL.md`「封面选图」。
     """
     if len(matchup) != 2 or not scores:
         return None
@@ -424,7 +440,7 @@ def upset_cover_brief(matchup: list[dict], scores: list[tuple[int, int]]) -> dic
     return {
         "reason": f"爆冷：世界第{winner_rank}击败世界第{loser_rank}",
         "preferred_subject": loser.get("name") or loser.get("name_en"),
-        "preferred_moment": "本场失利后失落、落寞或难以置信的高清近景",
+        "preferred_moment": "本场落后或失利时仍在拼的高清近景（握拳、咬牙、怒吼、奋力击球），不要低头垮掉的那一帧",
         "fallback_subject": winner.get("name") or winner.get("name_en"),
         "fallback_moment": "本场获胜后庆祝的高清近景",
         "requirements": ["必须是本场", "优先官方原图", "不得用旧赛资料图"],
@@ -889,9 +905,12 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             else:
                 beats = "\n".join(
                     (draft.get("editorial") or {}).get("beats", []))
+                hook = (draft.get("editorial") or {}).get("hook") or []
                 seg = draft_segments(chat, captions_text=caps, cuts=cuts,
                                      beats=beats, home=player_zh(home),
-                                     away=player_zh(away))
+                                     away=player_zh(away),
+                                     hook="／".join(str(x) for x in hook)
+                                     if isinstance(hook, list) else str(hook))
                 if seg and seg.get("segments"):
                     draft["segments"] = seg["segments"]
                     notes.append(f"窗口起草 {len(seg['segments'])} 段"

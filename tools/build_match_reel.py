@@ -4463,7 +4463,7 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
                 "focus, focus_y, zoom, fit}\n"
                 "四道闸门照旧；四类源都拿不到本场的，就从本场源片抓一帧。")
         return build_versus_poster(sources, primary, cover, dest, seconds,
-                                   tail=tail)
+                                   tail=tail, spec=spec)
     if not cover.get("versus"):
         raise ReelError(
             "封面缺 `cover.versus`：赛场之上的封面一律走固定海报模板，"
@@ -4481,12 +4481,12 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
     # 整条溶解链塌掉：成片 12.44s，段落加起来 114.46s（run 30752134514）。
     # 同一对函数（build_cover → build_versus_poster）栽的第三次。
     return build_versus_poster(sources, primary, cover, dest, seconds,
-                               tail=tail)
+                               tail=tail, spec=spec)
 
 
 def build_versus_poster(sources: dict[str, Path], primary: str,
                         cover: dict, dest: Path, seconds: float = COVER_SECONDS,
-                        *, tail: float = 0.0) -> Path:
+                        *, tail: float = 0.0, spec: dict | None = None) -> Path:
     """「赛场之上」的固定海报，版式在 `tools/versus_poster.py` 里定死。
 
     **这是栏目的固定封面，不是这一条片子的一次性设计。** 以前是在这儿现拼一张
@@ -4499,7 +4499,8 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
     场馆资料图、别场比赛和通用球场图都不能代替。
     """
     payload, layout = resolve_cover_payload(cover, dest.parent,
-                                            sources=sources, primary=primary)
+                                            sources=sources, primary=primary,
+                                            spec=spec)
     poster = dest.parent / POSTER_NAME
     with stage("封面海报"):
         render_poster(payload, poster, layout)
@@ -4540,9 +4541,175 @@ def _cover_asset_key(spot: dict, primary: str, kind: str) -> dict:
     }
 
 
+#: 这一趟的认人／睁眼结果，渲完写进 `render.json` 的 `face_checks`。
+#: 账号所有者 2026-09-27 批的 O2+O3；判据和门槛都在 `tools/face_checks.py`，
+#: 这条线怎么接在 `tools/reel_face_gate.py`——这里只留挂钩。
+_FACE_REPORT: dict = {}
+
+
+def _face_gate_key(spec: dict, frame: Path) -> str:
+    """同一张帧（逐字节）＋ 同一份封面合同（人名、头像、窗口几何、认领）＝同一个结论。
+    `render()` 开跑时查过的，渲封面那一步就不再查第二遍。"""
+    cover = spec.get("cover") or {}
+    heads = [((spec.get("stats") or {}).get(k) or {}).get("headshot") for k in ("a", "b")]
+    blob = json.dumps({"cover": cover, "heads": heads}, sort_keys=True,
+                      ensure_ascii=False, default=str).encode("utf-8")
+    return hashlib.sha256(Path(frame).read_bytes() + b"\0" + blob).hexdigest()
+
+
+def _gate_cover_face(spec: dict, frame: Path, spot: dict,
+                     sources: dict[str, Path] | None, primary: str,
+                     workdir: Path) -> None:
+    """抽帧封面：不是 `cover.subject` 那个人、闭眼／垂眼 → 当场拦，并扫出前后能换的秒数。"""
+    import reel_face_gate as gate  # noqa: PLC0415
+
+    key = _face_gate_key(spec, frame)
+    done = _FACE_REPORT.get("cover")
+    if done and done.get("_key") == key and not done.get("problems"):
+        done["frame"] = str(frame)
+        print("    [封面认人] 开跑时已经查过这一帧（同一个字节、同一份封面合同），不重查")
+        return
+    rep = gate.cover_frame_report(spec, frame)
+    rep["_key"] = key
+    _FACE_REPORT["cover"] = rep
+    for line in rep["warnings"]:
+        print(f"    [封面认人] ⚠️ {line}")
+    if rep["problems"]:
+        skey = str(spot.get("source", primary))
+        cands = (gate.nearby_passing(spec, sources[skey], float(spot["frame_at"]), workdir,
+                                     conform_vf_args(sources[skey]))
+                 if sources and skey in sources else None)
+        raise ReelError(gate.cover_error(rep, cands))
+    if rep.get("status") == "ok":
+        print(f"    [封面认人] {rep['identity']['reason']}｜{rep['eyes']['reason']}")
+
+
+def _solo_frame_cover(spec: dict) -> dict | None:
+    """这条 spec 的封面是不是**抽帧的 solo**（认人／睁眼只管这一种）。是就返回 portrait。"""
+    cover = spec.get("cover") or {}
+    art = cover.get("portrait") or {}
+    if (cover.get("approved_image") or str(cover.get("layout", "cutout")) != "solo"
+            or art.get("image") or art.get("frame_at") is None):
+        return None
+    return art
+
+
+def precheck_cover_face(spec: dict, sources: dict[str, Path], primary: str,
+                        outdir: Path) -> None:
+    """**源片一到手就查封面帧**——排在 TTS、比分板蒙版、跟踪、分段编码之前。
+
+    评审 2026-09-27 nit 3：原来这道闸挂在 `build_cover` 里，而 `build_cover` 排在
+    TTS ＋ 板蒙版 ＋ `track_shots` 之后（`render()` 里第 8542 行上下），一张抽错人的
+    封面要等一两分钟才红。封面帧只要源片，不要别的——所以抓一帧（`cover_src/`
+    里有这一版就直接用）当场查，红了就在「下完源片」后的第一秒红。
+
+    渲封面那一步（`resolve_cover_payload`）照旧会过这道闸：同一帧同一份合同就
+    跳过（`_face_gate_key`），换过就重查——两处不会各说各的。
+    """
+    art = _solo_frame_cover(spec)
+    if art is None:
+        return
+    cache = outdir / COVER_SRC_DIR
+    try:
+        manifest = json.loads((cache / "manifest.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        manifest = {}
+    frame = cache / "portrait.jpg"
+    temp = None
+    if manifest.get("portrait") != _cover_asset_key(art, primary, "frame") or not frame.is_file():
+        import reel_face_gate as gate  # noqa: PLC0415
+
+        key = str(art.get("source", primary))
+        if key not in sources:
+            return          # 源键写错由 resolve_cover_payload 报，那里的话说得更清楚
+        temp = outdir / "_face_precheck_portrait.jpg"
+        try:
+            with stage("封面认人（开跑先查）"):
+                frame = gate.grab_frame(sources[key], float(art["frame_at"]), temp,
+                                        conform_vf_args(sources[key]))
+        except (subprocess.SubprocessError, OSError) as exc:
+            # 抓不到帧不算过：渲封面那一步会再抓一次、再过同一道闸，抓不到就在那儿红
+            temp.unlink(missing_ok=True)
+            print(f"    [封面认人] ⚠️ 开跑先查没抓到 {art['frame_at']}s 那一帧"
+                  f"（{type(exc).__name__}），留到渲封面那一步再查")
+            return
+    try:
+        _gate_cover_face(spec, frame, art, sources, primary, outdir)
+    finally:
+        if temp is not None:
+            temp.unlink(missing_ok=True)
+
+
+def _dry_run_cover_frame(spec: dict, outdir: Path, art: dict,
+                         repo_root: Path | None = None) -> Path | None:
+    """`--dry-run` 能拿来查的那一帧：先看 `outdir/cover_src/`，再看仓库里这条 slug
+    **任何一天**留下的 `cover_src/`（新的在前）——只认 manifest 和这一版 `frame_at`
+    对得上的那份。
+
+    runner 上的 dry-run 用的是 `--outdir /tmp/dryrun`，只看 outdir 的话这一步在
+    runner 上**永远是空的**（评审 2026-09-27 nit 3）；工作流在 dry-run 之前把这条
+    slug 的 `cover_src/` 拉回来，这里按 slug 去找。"""
+    # 和 render() 认同一个主源：sources 的第一个键（`primary` 不是 spec 字段，
+    # 按它取会拿到 "" ——主源键叫 `main` 的三条 spec 永远对不上 manifest）
+    # 不调 spec_sources：dry-run 的诊断不许被一份有毛病的 spec 带崩（见它的注释）
+    sources = spec.get("sources")
+    want = _cover_asset_key(art, next(iter(sources), "") if isinstance(sources, dict) else "",
+                            "frame")
+    slug = str(spec.get("slug") or "").strip()
+    root = repo_root or Path(__file__).resolve().parents[1]
+    dirs = [outdir / COVER_SRC_DIR]
+    if slug:
+        dirs += sorted(root.glob(f"output/*/reel/{slug}/{COVER_SRC_DIR}"), reverse=True)
+    for cache in dirs:
+        try:
+            manifest = json.loads((cache / "manifest.json").read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        frame = cache / "portrait.jpg"
+        if manifest.get("portrait") == want and frame.is_file():
+            return frame
+    return None
+
+
+def _dry_run_cover_face(spec: dict, outdir: Path, *, repo_root: Path | None = None) -> bool:
+    """`--dry-run` 查**已经抓好的这一版**封面帧（本地 0.5 秒）。
+    还没抓过就说一声、交给 runner——「没查」和「查过没问题」不许长得一样。"""
+    art = _solo_frame_cover(spec)
+    if art is None:
+        return False
+    frame = _dry_run_cover_frame(spec, outdir, art, repo_root)
+    if frame is None:
+        print("[dry-run] 封面帧还没抓（cover_src/ 里没有这一版），认人／睁眼留到 runner 抓帧时查")
+        return False
+    print(f"[dry-run] 封面认人／睁眼查的是 {frame}")
+    try:
+        _gate_cover_face(spec, frame, art, None, "", outdir)
+    except ReelError as exc:
+        print(f"[dry-run] {exc}")
+        return True
+    return False
+
+
+def _face_checks_record(segment_future) -> dict:
+    """`render.json` 的 `face_checks`：封面那道的结果 ＋ 分段那道（只报）。出声。"""
+    import reel_face_gate as gate  # noqa: PLC0415
+
+    segs = gate.finish_segment_checks(segment_future)
+    for line in (segs or {}).get("warnings", []) + (segs or {}).get("findings", []):
+        print(f"  [分段认人] ⚠️ {line}")
+    if segs and segs.get("status") == "ok":
+        print(f"  [分段认人] 查了 {len(segs['segments'])} 段 {segs['frames']} 帧，"
+              f"{segs['faces']} 帧有够大的脸，{len(segs['findings'])} 处画面和旁白对不上（只报不拦）")
+    cover = {k: v for k, v in (_FACE_REPORT.get("cover") or {}).items()
+             if not k.startswith("_")}
+    return {"cover": cover or {"status": "not_applicable", "why": "封面不是抽帧"},
+            "segments": segs}
+
+
 def resolve_cover_payload(cover: dict, workdir: Path, *,
                           sources: dict[str, Path] | None = None,
-                          primary: str = "") -> tuple[dict, str]:
+                          primary: str = "",
+                          spec: dict | None = None) -> tuple[dict, str]:
     """把 `cover` 里的 `frame_at` / `cutout` 解成本地图片路径，返回 (payload, layout)。
 
     **抓下来的帧和抠好的人存进 `cover_src/` 并进仓库**（见 `COVER_SRC_DIR`
@@ -4632,6 +4799,10 @@ def resolve_cover_payload(cover: dict, workdir: Path, *,
     if layout == "solo":
         art = dict(cover["portrait"])
         art["image"] = _grab(art, "portrait")
+        if not cover["portrait"].get("image"):
+            # 抽帧封面（新抓的和 cover_src/ 里复用的都过）：认人＋睁眼，见 `_gate_cover_face`
+            _gate_cover_face(spec or {"cover": cover}, Path(art["image"]), art,
+                             sources, primary, cache_dir)
         cover = {**cover, "portrait": art}
     elif layout == "cutout":
         # 人物是官方抠图（本地 PNG），只有背景那张要抓帧。
@@ -7996,6 +8167,15 @@ def validate_spec(
             f"{detail}"
         )
     check_archival_fit(spec, segments)
+    # 素材与格式那几道（封面用时、数据统计图、图片解码、封面复用、字幕数字），
+    # 原来要等 render 甚至合并之后才红——逻辑和来路在 tools/reel_asset_gates.py，
+    # 这儿只接一刀。排在最后：别的闸先报，已有的判据报错顺序不变。
+    from reel_asset_gates import spec_asset_problems  # noqa: PLC0415
+    hard, soft = spec_asset_problems(spec)
+    for note in soft:
+        print(f"[素材] 自动 spec，只报不拦：{note}")
+    if hard:
+        raise ReelError("\n\n".join(hard))
     return segments
 
 
@@ -8280,6 +8460,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            source_override: Path | None = None,
            cover_only: bool = False) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
+    _FACE_REPORT.clear()          # 这一趟的认人结果只许是这一趟的
     # **先只看 spec，再看这台机器。** 两样都在下载之前，形状错和缺依赖都
     # 死在第 5 秒，不用等 392 MB 下完。
     validate_spec(spec)
@@ -8302,6 +8483,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     check_sources_match(sources, spec)
     primary = next(iter(sources))
     source = sources[primary]
+    # **抽帧封面的认人＋睁眼，源片一到手就查**（硬闸）——排在 TTS、板蒙版、跟踪、
+    # 分段编码之前，也排在只出封面那条路之前：抽错人／闭眼的帧死在这一秒，
+    # 不用等一两分钟的准备活干完（评审 2026-09-27 nit 3）。
+    precheck_cover_face(spec, sources, primary, outdir)
     # 网盘那份常常只有视频轨（DASH 的自适应流是分开的）。人另外传了 m4a 就在这儿
     # 合上——没有原声的成片只剩解说，球声和观众声全没了，片子会很平。
     audio = spec.get("source_audio")
@@ -8495,6 +8680,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
+    # 分段 3:4 画面的认人（只报不拦）和下面的分段编码**同时跑**，不占关键路径
+    import reel_face_gate  # noqa: PLC0415
+    face_segments = reel_face_gate.start_segment_checks(
+        spec, segments, sources, tracks, source_w=source_w, crop_w=CROP_W,
+        window=lambda x, seg: zoomed_window(x, seg.crop_zoom, seg.fill_y),
+        vf_for=lambda key: conform_vf_args(sources[key]), workdir=outdir)
 
     # **每一段都多切 SEG_FADE 秒留给下一个接缝，最后一段不留**——长度账见
     # `dissolve_filtergraph`。多出来的那几秒从来不单独播，它只在溶解里当底。
@@ -8868,6 +9059,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         "narration_backend": "azure" if azure_tts.available() else "edge-tts",
         "narration_seconds": {str(i): round(v, 3)
                               for i, v in sorted(spoken_of.items())},
+        # 认人／睁眼（封面抽帧硬拦、分段画面只报；模型不可用记 unavailable）
+        "face_checks": _face_checks_record(face_segments),
     }, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"成片 {final}（{probe_duration(final):.1f}s，"
           f"{final.stat().st_size / 1e6:.1f} MB）")
@@ -9230,6 +9423,17 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     """
     from reel_facts import (bare_tiebreak_problem, decider_tiebreak_problem,
                             result_direction_problem, verified_result_problem)
+    from versus_poster import cover_style_problems  # noqa: PLC0415
+
+    # 封面两道「新 spec 才拦」的闸（场地名统一英文 / 重点词不许整行，2026-09-27
+    # 评审 Q13 / R6）——放在这儿是因为这是 `validate_spec` 第一道、每条 spec 都
+    # 走（有没有顶栏都走），`--dry-run` 就报。判据和豁免表在 `versus_poster`。
+    auto_spec = (spec.get("_production") or {}).get("status") == "ready_for_render"
+    for problem in cover_style_problems(spec):
+        if auto_spec:
+            print(f"[封面] ⚠️ {problem}")
+        else:
+            raise ReelError(problem)
 
     verified_problem = verified_result_problem(spec)
     if verified_problem:
@@ -9309,10 +9513,37 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     return lines  # type: ignore[return-value]
 
 
+# ⭐ 2026-09-27 UI/VI 评审 WP5：顶栏的颜色一律从 `tennislive.design_tokens`
+# 换算（`ass()` 管字节序——CSS 的 #RRGGBB 在 ASS 里是 &HAABBGGRR，写反过一次，
+# 见下面 `TOPBAR_HEAD_HEX`）。接法是「值不变、只换出处」：三条真 spec 的
+# `topbar.ass` 换前换后逐字节相同。
+from tennislive.design_tokens import DARK, SCORE  # noqa: E402
+from tennislive.design_tokens import ass as _ass_colour  # noqa: E402
+from tennislive.design_tokens import ass_inline as _ass_inline  # noqa: E402
+
+#: HEAD 样式（第一行赛事行）的 PrimaryColour：近白正文 `foreground`。
+#:
+#: ⚠️ **2026-09-27 修的一个字节序错**：样式行里原来写死 `&H00F4FBF7`——那是把
+#: CSS 的 `#f4fbf7` 原样抄进了 ASS。ASS 是 `&HAABBGGRR`，于是渲出来是
+#: **#f7fbf4**（R、B 各差 3/255，偏暖一丝）。和赛后开麦中文字幕那支
+#: `#c3dc74`（本意 #74dcc3）是同一类错，只是这一处差得小到看不出来。现在经
+#: `ass()` 换算，字节序只有那一处出处。判据 `test_顶栏颜色都从token换算`。
+TOPBAR_HEAD_HEX = DARK["foreground"]
+TOPBAR_HEAD_COLOUR = _ass_colour(TOPBAR_HEAD_HEX)   # "&H00F7FBF4"
+
+#: 顶栏两行字的描边（px）。⚠️ **2026-09-27 起标题行也是 1.5**：原来 HEAD 是 0、
+#: BODY 是 1.5——第一行 54px 的得意黑压在亮画面（白球衣、白天的看台）上，
+#: 笔画边缘直接化进底色里（评审 `sim_topbar_flat.jpg`）。两行同一个数，
+#: 一个出处。透视球场图标自带 `\bord0`，不跟着描。
+TOPBAR_OUTLINE_PX = 1.5
+
 #: BODY 样式的 PrimaryColour。**一个出处**：样式行和"复位"标签都从它来——
 #: 写两处必分叉，而分叉的样子是「复位之后颜色和这一行本来的颜色差一点点」，
 #: 肉眼几乎看不出来。
-TOPBAR_BODY_COLOUR = "&H00DBE2D5"
+#: ⚠️ 这支近白（#d5e2db）**不在 token 里**：评审把它列进 `muted-foreground`
+#: （#cfe6d8）的待并名单，那是值变化，没并。
+TOPBAR_BODY_HEX = "#d5e2db"
+TOPBAR_BODY_COLOUR = _ass_colour(TOPBAR_BODY_HEX)   # "&H00DBE2D5"
 
 #: ASS 内联颜色标签（`&HBBGGRR&`，字节序和 CSS 的 `#RRGGBB` 相反）。
 #:
@@ -9334,11 +9565,11 @@ TOPBAR_BODY_COLOUR = "&H00DBE2D5"
 #: **输盘不压暗，靠色相区分**（这条没变）：输的那个数字用这一行正文本来的
 #: 颜色（`TOPBAR_BODY_COLOUR`），赢的给上面这支新绿，两者靠色相分开、
 #: 不靠明暗——顶栏是直接烧进 H.264 的，比静态海报更吃"压暗读不出来"这个问题。
-TOPBAR_SETWIN_ASS = r"{\c&H8CDC4A&}"
+TOPBAR_SETWIN_ASS = _ass_inline(SCORE["win_video"])   # r"{\c&H8CDC4A&}"
 TOPBAR_SETLOSE_ASS = "{\\c" + TOPBAR_BODY_COLOUR + "&}"
 #: 连字符仍然压暗一档——比分板那次**只改了比分本身**，`.setdash` 没动
 #: （「连字符是分隔符不是内容」）。
-TOPBAR_SETDASH_ASS = r"{\c&H009CA793&}"
+TOPBAR_SETDASH_ASS = "{\\c" + _ass_colour(SCORE["dash"]) + "&}"   # r"{\c&H009CA793&}"
 
 #: ⚠️ **复位不能用 `{\r}`，尽管 CLAUDE.md 那条规矩是这么写的。**
 #:
@@ -9574,8 +9805,8 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},&H00F4FBF7,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
-Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
+Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},{TOPBAR_HEAD_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,{TOPBAR_OUTLINE_PX},0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
+Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,{TOPBAR_OUTLINE_PX},0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -9628,7 +9859,8 @@ def watermark_xy(*, has_topbar: bool) -> tuple[int, int]:
 
     **纵向要让开顶部那条带**，不然角标压在顶栏的字上：
     - 带式：顶带是实色，画面从 `BAND_TOP` 才开始
-    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，底下垫着一层半透明黑
+    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，字底下垫着一层渐变压暗（`TOPBAR_SCRIM_*`，
+      顶上 0.62 淡到 200px 处 0——Q6 之前是一块 45% 半透明黑实条）
     - 全出血、没顶栏（网球有故事这类）：顶上是空的，直接贴
     """
     if LAYOUT == "band":
@@ -9653,8 +9885,9 @@ def inset_top_clear_y(spec: dict) -> int:
     topic = str(cover.get("topic", "")).strip()
     _wx, wy = watermark_xy(has_topbar=bool(spec.get("topbar")))
     # ⚠️ `watermark_xy` 给的是 PNG 的左上角，**阴影那一圈（SHADOW_PAD）已经减掉**
-    # ——墨的顶边要把它加回来，不然算出来比真值高 18px（第一版就这么错的，
-    # 判据 test_inset_animation 那条钉的是绝对值 151）。
+    # ——墨的顶边要把它加回来，不然算出来比真值高 `WATERMARK_SHADOW_PAD`（现在
+    # 11px ＝ 阴影 3×3 ＋ 描边 2；Q11 收紧阴影之前是 18px，第一版就这么错的）。
+    # 判据 test_inset_animation 那条钉的是绝对值 151（44+56+27+24），和 pad 无关。
     ink_top = wy + WATERMARK_SHADOW_PAD
     block_h = (TOPIC_INK_TOP_PX + TOPIC_TEXT_PX) if topic else BRAND_ICON_PX
     return ink_top + block_h + INSET_WATERMARK_GAP_PX
@@ -9815,6 +10048,46 @@ def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
     )
 
 
+#: 顶栏底下那层压暗（只有全出血有；带式的顶带本来就是实色）。
+#:
+#: ⭐ **2026-09-27 账号所有者选的（评审 Q6 方案 A）：实条换成渐变。** 原来是
+#: `drawbox` 一块 45% 黑、高 `TOPBAR_H`、**下边是硬的**——白天的比赛画面上，
+#: 比分行（薄荷 #4adc8c）只有 **1.9:1**，而那道硬边在画面上多出一条横线。
+#: 现在：顶上 `TOPBAR_SCRIM_ALPHA`（0.62）一直铺到 `TOPBAR_SCRIM_SOLID_PX`
+#: （两行字都压在满档上），再用 smoothstep 淡到 `TOPBAR_SCRIM_FADE_PX`（200）
+#: 处的 0——**没有硬边**，也就没有那条线。纯白底上标题行 6.1:1、比分行（薄荷）
+#: 3.62:1（老的 1.88:1），白底上相邻两行最多差 5/255（老的实条下沿一行跳 114）。
+#:
+#: ⚠️ **满档那一段量到比分行的行盒底（72+38）再多 2px 描边，不是评审图里的
+#: 100px。** 评审给账号所有者看的那一版（`grad_topbar.png`）满档只到 100，
+#: 而比分行的墨实测落在 y86~109——下面 9 行字压在已经开始变淡的底上，白底上
+#: 最亮那一行只剩 **3.31:1**，过不了他定的「比分行 ≥3.6:1」。延到 112 之后
+#: 整行都在满档上，淡出段 88px，仍然看不出边。
+#: ⚠️ **图在滤镜图里现生成，不另起一路输入**（`color` 源 ＋ `geq` 写 alpha，
+#: 一帧、1080×200，overlay 默认把最后一帧一直重复下去）——加一路输入就得改
+#: render 里拼 `-i` 的那两处，而那两处正是「加了一处漏一处」栽过的地方。
+#: 判据 `test_顶栏底是渐变压暗没有硬边_白底上比分行读得出`（真跑 ffmpeg 量）。
+TOPBAR_SCRIM_ALPHA = 0.62
+TOPBAR_SCRIM_SOLID_PX = TOPBAR_BODY_TOP + TOPBAR_BODY_SIZE + 2   # 112
+TOPBAR_SCRIM_FADE_PX = 200
+
+
+def topbar_scrim_source(label: str = "topbar_scrim") -> str:
+    """顶栏渐变压暗的那张图：滤镜图里的一条源链，输出 `[label]`（RGBA）。
+
+    alpha：`y ≤ SOLID` 恒为 `ALPHA`；`SOLID < y < FADE` 按 smoothstep 淡到 0。
+    smoothstep 两头的斜率都是 0，所以接缝处（SOLID、FADE 那两行）没有折角——
+    线性淡出在两个端点各有一道折角，亮画面上看得出是一条线（Mach 带）。
+    """
+    a = round(255 * TOPBAR_SCRIM_ALPHA)
+    s0, s1 = TOPBAR_SCRIM_SOLID_PX, TOPBAR_SCRIM_FADE_PX
+    t = f"(Y-{s0})/{s1 - s0}"
+    alpha = (f"if(lte(Y,{s0}),{a},if(gte(Y,{s1}),0,"
+             f"{a}*(1-{t}*{t}*(3-2*{t}))))")
+    return (f"color=c=black:s={VIDEO_W}x{s1}:r=1:d=1,format=rgba,"
+            f"geq=r='0':g='0':b='0':a='{alpha}'[{label}]")
+
+
 def topbar_filtergraph(cover_secs: float, segments_secs: float,
                        topbar_ass: Path, subtitles_ass: Path,
                        foot_input: int | None = None,
@@ -9871,13 +10144,14 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
         "setpts=PTS-STARTPTS,"
         f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
         f"crop={VIDEO_W}:{VIDEO_H},"
-        # 全出血：顶栏压在画面上，垫一层半透明黑保住可读性。
-        # 带式：顶带本来就是实色（BAND_BG），再画这层会在 y=126~132 露出
-        # 一道两色接缝（drawbox 高 126、顶带高 132，差 6px）。
-        + ("" if LAYOUT == "band" else
-           f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,")
-        + "setsar=1[match_flat];"
-        f"{canvas};"
+        # 全出血：顶栏压在画面上，垫一层渐变压暗保住可读性（`TOPBAR_SCRIM_*`）。
+        # 带式：顶带本来就是实色（BAND_BG），再垫这层会在顶带下沿露出一道
+        # 两色接缝。
+        + ("setsar=1[match_flat];" if LAYOUT == "band" else
+           "setsar=1[match_bare];"
+           f"{topbar_scrim_source('topbar_scrim')};"
+           "[match_bare][topbar_scrim]overlay=0:0,setsar=1[match_flat];")
+        + f"{canvas};"
         f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
         "[cover][match_canvas][outro]concat=n=3:v=1:a=0,setpts=PTS-STARTPTS[base];"
         f"[base]subtitles={topbar_path}:fontsdir={fontsdir},"
@@ -10180,6 +10454,7 @@ def main() -> int:
         # 渲染才发现**；郑钦文那条三处跨镜头**渲染一次都没报错**，直接发了出去。
         # 又一次「工具写出来了、判据算出来了、就是没人在该用的时候用它」。
         hard = probe_dry_run(spec, segments)
+        hard = _dry_run_cover_face(spec, Path(args.outdir)) or hard
         # **文案也在这儿校一遍。** 它的两道闸（正文 ≤1000 字、tag ≤5 个）原来
         # 只活在 `push_reel.py --stage page` 里，而那一步排在 **render 之后**
         # ——2026-08-05 `chwalinska-gibson` 那趟 6 个 tag，**渲完两分半才报**
@@ -10202,28 +10477,20 @@ def main() -> int:
             # 的字数比真推送少了一整段。bencic-townsend 就是这么骗过 dry-run 的：
             # 这儿报「959 字」，真推送报「1086 字，超过 1000 字上限」
             # （run 31249674110）。两处必须算同一件事，缺一步就分叉。
-            try:
-                column = push_reel.column_of(copy_path)
-                meta = push_reel.push_meta(copy_path)
-                title = push_reel.headline(
-                    Path(args.outdir), column, meta["matchup"], meta["score"],
-                    meta["event"], meta["summary"])
-                text_with_title = f"{title}\n\n{text}"
-            except SystemExit as exc:
-                # ⚠️ **退路不许把第一段甩掉。** 原来这儿写 `text_with_title =
-                # text`，于是 `split_copy` 把文件自己的第一段当标题免费扔了，
-                # 估出来比真推送少一整段——eala-story 那次这儿报 859 字、
-                # 真闸报 1019 字（run 31658290756，合并之后才红，微信没发出去
-                # 但白跑一趟）。它确实**打了警告**，可它同时给了一个具体数字，
-                # 而一个具体数字就是会被读成结论。
-                #
-                # 拼一个占位标题就够了：`split_copy` 甩掉的是第一行加空行，
-                # 标题本身本来就不算进 1000 字上限，所以**算出来的 body 长度
-                # 和真推送一模一样**——不是「估得保守一点」，是完全对得上。
-                print(f"[dry-run] ⚠️ 算不出真推送会拼的标题（{exc}）——"
-                      "**用占位标题估**：标题不算进 1000 字上限，所以正文字数"
-                      "和真推送一致，不会因此变松")
-                text_with_title = f"（占位标题）\n\n{text}"
+            # ⚠️ 标题和正文走**推送自己那个函数**（`push_reel.prepare_copy`，runner 上
+            # `production_preflight` 调的也是它），日期取北京今天。原来这儿自己拼标题、
+            # 拿 `--outdir /tmp/dryrun` 调 `headline()`——那个目录里没有日期，于是
+            # **每一趟**都撞上「取不到日期」、退回占位标题，标题那两道字数闸在本地一次
+            # 都没跑过（2026-09-27 取证）。现在算不出标题就是红：runner 上一样过不去。
+            # 正文也换成推送真发的那一份（补过活动 tag、去掉和标题重复的首行），
+            # 1000 字量的和真推送是同一段字（eala-story run 31658290756 那笔老账）。
+            from reel_asset_gates import push_copy_check  # noqa: PLC0415
+            title, pushed_body, problem = push_copy_check(copy_path)
+            if problem:
+                print(f"[dry-run] 推送文案前置检查不过（和 runner 上 production_preflight "
+                      f"同一个函数）：\n  {problem}")
+                return 1
+            text_with_title = f"{title}\n\n{pushed_body}"
             _title, body = push_reel.split_copy(text_with_title)
             print(f"[dry-run] 文案 {copy_path.name}："
                   f"正文 {len(body)} 字（上限 1000）、tag {tags} 个"

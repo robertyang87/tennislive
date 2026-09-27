@@ -53,6 +53,13 @@ def merge_states(base: dict, ours: dict, theirs: dict) -> dict:
         if base_d.get(slug) != entry:
             # 本趟新增或改写的条目：run 已经点出去了，必须落库
             dispatched[slug] = entry
+    # `blocked`（被别人的 probe 挡下、缓存着探到的源片）同一个合并法：本趟新挡下的加回。
+    # 丢了只是下一班多探一次，但没理由丢
+    base_b = base.get("blocked") or {}
+    ours_b = ours.get("blocked") or {}
+    for slug, entry in ours_b.items():
+        if base_b.get(slug) != entry:
+            merged.setdefault("blocked", {})[slug] = entry
     stamps = [s for s in (ours.get("last_dispatch_at"),
                           merged.get("last_dispatch_at")) if s]
     if stamps:
