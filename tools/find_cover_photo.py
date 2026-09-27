@@ -404,8 +404,15 @@ def getty_caption(gid: str) -> str | None:
     return re.split(r"\s*Get premium, high resolution", text)[0].strip()
 
 
-def sweep_wta(player: str | None, event: str | None, day: str | None) -> list[dict]:
-    """扫 WTA 的所有入口，返回每张图的路径 ＋（Getty 的话）说明。"""
+def sweep_wta(player: str | None, event: str | None, day: str | None, *,
+              stats: dict | None = None) -> list[dict]:
+    """扫 WTA 的所有入口，返回每张图的路径 ＋（Getty 的话）说明。
+
+    `stats` 给了就回填 `pages_read`（真取回来的页数）——「这一趟查了什么」按它判
+    这一档跑没跑：每一页都 403 时返回的也是 `[]`，和「今天真没发图」长得一模一样。
+    """
+    stats = stats if stats is not None else {}
+    stats["pages_read"] = 0
     pages = list(_WTA_PAGES)
     try:
         idx = _get(_WTA_PAGES[0])
@@ -420,6 +427,7 @@ def sweep_wta(player: str | None, event: str | None, day: str | None) -> list[di
             html = _get(url)
         except Exception:                                       # noqa: BLE001
             continue
+        stats["pages_read"] += 1
         for path in set(_PHOTO_RE.findall(html)):
             found.setdefault(path, set()).add(url.rsplit("/", 1)[-1])
 
@@ -878,7 +886,8 @@ def _event_key(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", text.lower())
 
 
-def sweep_ap(player: str | None, event: str | None, limit: int = 8) -> list[dict]:
+def sweep_ap(player: str | None, event: str | None, limit: int = 8, *,
+             stats: dict | None = None) -> list[dict]:
     """⭐⭐ **通讯社这一档：AP。这是唯一一条「换个赛事照样有」的高清渠道。**
 
     2026-08-17 挖出来的，来路是账号所有者那句「多找几个渠道，**不然下一个赛事
@@ -905,6 +914,9 @@ def sweep_ap(player: str | None, event: str | None, limit: int = 8) -> list[dict
     ⚠️ **版权是 AP 的**（属于四类源里第 ③ 档「新闻站／图片社转载」），
     署名照实记进 credits，发布前人工判断。
     """
+    # `stats["pages_read"]`：搜索页＋tennis 频道页真取回来几页（`sweep_wta` 同一个口径）
+    stats = stats if stats is not None else {}
+    stats["pages_read"] = 0
     want = (player or "").lower()
     queries = [q for q in (f"{player} tennis" if player else None,
                            f"{event} tennis" if event else None,
@@ -915,11 +927,13 @@ def sweep_ap(player: str | None, event: str | None, limit: int = 8) -> list[dict
             html = _get(f"{_AP}/search?q={urllib.parse.quote(q)}", timeout=40)
         except Exception:                                       # noqa: BLE001
             continue
+        stats["pages_read"] += 1
         for u in re.findall(r"https://apnews\.com/article/[a-z0-9-]+", html):
             if u not in slugs:
                 slugs.append(u)
     try:
         hub = _get(f"{_AP}/hub/tennis", timeout=40)
+        stats["pages_read"] += 1
         for u in re.findall(r"https://apnews\.com/article/[a-z0-9-]+", hub):
             if u not in slugs:
                 slugs.append(u)
@@ -1223,7 +1237,10 @@ def main() -> int:
                  f"`<球员>_-_Cincinnati_Open_2026_-_Day_N-DSC_1234.jpg`）")
 
     print("=== WTA photo-resources（文件名带四要素；Getty 的去查说明）")
-    rows = sweep_wta(args.player, args.event, args.day)
+    wta_stats: dict = {}
+    rows = sweep_wta(args.player, args.event, args.day, stats=wta_stats)
+    if not wta_stats.get("pages_read"):
+        print("  ⚠️ **这一档没跑**：WTA 的入口页一页都没取到——结果是**未知**，不是「没有」")
     # ⚠️ 路径里的日期是**上传日**。给了 --date 就按它筛——资料图（别站、上个月）
     # 和本场图在文件名上长得一样（`Liutova-QF.jpg` 挂在 2026/07/31），
     # **筛掉几张要报出来**（CLAUDE.md「打印被丢弃的原因和数量」）。
@@ -1273,7 +1290,10 @@ def main() -> int:
     # ⭐⭐ 通讯社这一档**每站都有**，所以它无条件跑——不像下面两档要先知道
     # 这一站在哪个城市、官网是不是 WordPress。
     print("\n=== AP 通讯社（唯一一条**又高清又跨得过赛事**的，原图 4700~8600px）")
-    ap = sweep_ap(args.player, args.event)
+    ap_stats: dict = {}
+    ap = sweep_ap(args.player, args.event, stats=ap_stats)
+    if not ap_stats.get("pages_read"):
+        print("  ⚠️ **这一档没跑**：AP 的搜索页和 tennis 频道页一页都没取到")
     if not ap:
         print("  没有对得上的。⚠️ AP 一天只发几场的图，**「这一场没有」不等于"
               "「这条渠道不行」**；隔几小时或换个赛事名再试。")
@@ -1418,8 +1438,12 @@ def main() -> int:
 
     # **这一趟到底查了哪几档，明着写出来。** 写 `cover.portrait._frame_why`
     # 的人要照抄这份清单，不许写成「四类源都翻过」——没跑的那一档不算翻过。
-    ran = ["WTA photo-resources", "AP 通讯社"]
-    skipped = []
+    # ⚠️ 这两档原来是**写死的「跑过」**——每一页都 403、断网，照样印进「跑过」。
+    # 现在和下面几档一个口径：按真取回来的页数判。
+    ran: list[str] = []
+    skipped: list[str] = []
+    (ran if wta_stats.get("pages_read") else skipped).append("WTA photo-resources")
+    (ran if ap_stats.get("pages_read") else skipped).append("AP 通讯社")
     (ran if arts_ran else skipped).append("WTA 赛后稿头图")
     (ran if is_uso else skipped).append("美网官方图片接口")
     (ran if paper else skipped).append("当地报纸每日图集")
@@ -1429,7 +1453,7 @@ def main() -> int:
     if not cn_ran and not cn_skipped:
         skipped.append("中文媒体（搜狗微信／当地网站）")
     print("\n=== 这一趟查了什么")
-    print(f"  跑过：{'、'.join(ran)}")
+    print(f"  跑过：{'、'.join(ran) or '（一档都没取到页——这一趟的结果全是未知）'}")
     if skipped:
         print(f"  ⚠️ **没跑**：{'、'.join(skipped)}——这几档的结果是**未知**，不是「没有」")
     return 0

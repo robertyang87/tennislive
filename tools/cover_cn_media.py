@@ -77,6 +77,26 @@ SOGOU = "https://weixin.sogou.com"
 CN_OUTLETS: dict[str, tuple[str, ...]] = {
     "成都": ("https://ent.scol.com.cn/ty/", "https://ent.scol.com.cn/ty/index_2.html"),
 }
+#: 列表页所在站点的中文名——「这一趟查了什么」按它印，那份清单要照抄进 `_frame_why`，
+#: 印一串裸 URL（「中文媒体·https://ent.scol.com.cn/ty/」）读的人还得自己翻译一遍
+CN_OUTLET_NAMES: dict[str, str] = {"ent.scol.com.cn": "四川在线"}
+
+
+def outlet_label(listing: str) -> str:
+    """`https://ent.scol.com.cn/ty/index_2.html` → `当地网站（四川在线 ty/index_2.html）`。"""
+    parts = urllib.parse.urlparse(listing)
+    name = CN_OUTLET_NAMES.get(parts.netloc, parts.netloc)
+    return f"当地网站（{name} {parts.path.lstrip('/') or '/'}）"
+
+
+def _http_failed(resp) -> int | None:
+    """回了一页但状态码 ≥ 400（502 Bad Gateway、403）——返回状态码；正常页返回 None。
+
+    ⚠️ 不抛异常的失败：`requests` 拿到 502 照样回一个 Response，`.text` 是一页
+    「Bad Gateway」，解析出 0 条——和「这一档真的没有」长得一模一样。
+    """
+    code = getattr(resp, "status_code", 200) or 200
+    return code if code >= 400 else None
 
 _SOGOU_ITEM = re.compile(r'<li id="sogou_vr_11002601_box_\d+".*?</li>', re.DOTALL)
 _MMBIZ = re.compile(r'data-src="(https://mmbiz\.qpic\.cn/[^"]+)"')
@@ -236,8 +256,9 @@ def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
                    session: requests.Session | None = None, sizes: bool = True) -> dict:
     """两条中文渠道一起扫。返回 `{"rows": [...], "notes": [...], "ran": [...], "skipped": [...]}`。
 
-    `ran` 只收**真拿回过一页结果**的那几档；取不到、撞反爬、没登记的进 `skipped`——
-    `find_cover_photo` 的「这一趟查了什么」按这两张单子印，而那份清单要照抄进 `_frame_why`。
+    `ran` 只收**真拿回过一页结果**的那几档；取不到（抛异常**或状态码 ≥ 400**）、撞反爬、
+    没登记的进 `skipped`——`find_cover_photo` 的「这一趟查了什么」按这两张单子印，
+    而那份清单要照抄进 `_frame_why`，所以当地网站按 `outlet_label` 记名字，不记裸 URL。
 
     `names[0]` 是**要找谁的封面**（标题里必须有它）；其余是对手，只用来拼查询词。
     日期窗口按**北京时间**：比赛日前 12 小时起、往后 `days` 天（赛后稿常常次日才发）。
@@ -275,6 +296,12 @@ def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
             notes.append(f"搜狗微信「{query}」撞上反爬（antispider）——**这一档没跑完，"
                          "不是没有**；隔几分钟再跑")
             break
+        # ⚠️ 回了页不等于回了结果页：502/403 也是一个 Response，不抛异常，
+        # 解析出 0 条，原来照样 `answered += 1`、记「跑过」
+        code = _http_failed(resp)
+        if code:
+            notes.append(f"搜狗微信「{query}」取不到（HTTP {code}）")
+            continue
         answered += 1
         hits = parse_sogou_results(resp.text)
         notes.append(f"搜狗微信「{query}」：{len(hits)} 条")
@@ -308,11 +335,16 @@ def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
         row = {"channel": "搜狗微信", "title": hit["title"], "account": hit["account"],
                "ts": hit["ts"], "article": None, "images": []}
         try:
-            js = session.get(hit["link"], headers={**UA, "Referer": hit["_ref"]},
-                             timeout=30).text
-            target = sogou_link_target(js)
+            jump = session.get(hit["link"], headers={**UA, "Referer": hit["_ref"]},
+                               timeout=30)
+            if _http_failed(jump):
+                raise RuntimeError(f"跳转页 HTTP {_http_failed(jump)}")
+            target = sogou_link_target(jump.text)
             if target:
-                art = weixin_article(session.get(target, headers=UA, timeout=40).text)
+                page = session.get(target, headers=UA, timeout=40)
+                if _http_failed(page):
+                    raise RuntimeError(f"HTTP {_http_failed(page)}")
+                art = weixin_article(page.text)
                 row["article"] = target.split("&signature=")[0] + "…（带时效签名，未存）"
                 row["images"] = [(u, image_size(u, session) if sizes else None)
                                  for u in art["images"][:12]]
@@ -332,23 +364,30 @@ def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
         skipped.append("当地网站（没给 --city）")
     seen_urls: set[str] = set()
     for listing in outlets:
+        label = outlet_label(listing)
         try:
             resp = session.get(listing, headers=UA, timeout=30)
+            code = _http_failed(resp)
+            if code:
+                raise RuntimeError(f"HTTP {code}")
             resp.encoding = resp.apparent_encoding
             arts = parse_outlet_listing(resp.text, listing)
         except Exception as exc:                                # noqa: BLE001
             notes.append(f"{listing} 取不到（{exc}）——这一页没跑")
-            skipped.append(listing)
+            # 进「没跑」的是**能照抄进 `_frame_why` 的名字**，不是裸 URL
+            skipped.append(label[:-1] + " 取不到）")
             continue
         mine = [(u, t) for u, t in arts if who in t and u not in seen_urls]
         seen_urls.update(u for u, _ in mine)
         notes.append(f"{listing}：{len(arts)} 篇，标题里有「{who}」的 {len(mine)} 篇")
-        ran.append(listing)
+        ran.append(label)
         for url, title in mine[:max_articles]:
             row = {"channel": urllib.parse.urlparse(listing).netloc, "title": title,
                    "account": "", "ts": None, "article": url, "images": []}
             try:
                 page = session.get(url, headers=UA, timeout=30)
+                if _http_failed(page):
+                    raise RuntimeError(f"HTTP {_http_failed(page)}")
                 page.encoding = page.apparent_encoding
                 imgs, when = outlet_article_images(page.text)
                 row["when"] = when

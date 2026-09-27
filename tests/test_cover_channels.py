@@ -164,9 +164,18 @@ def test_候选要标出铺封面要不要放大():
     assert fc.fill_note("?") == ""
 
 
+def _sweep_reading(pages):
+    """假的 `sweep_wta` / `sweep_ap`：回填 `stats["pages_read"]`，结果为空。"""
+    def fake(*a, stats=None, **k):
+        if stats is not None:
+            stats["pages_read"] = pages
+        return []
+    return fake
+
+
 def test_这一趟查了什么要列出中文媒体那一档(monkeypatch, capsys):
     for name in ("sweep_wta", "sweep_ap"):
-        monkeypatch.setattr(fc, name, lambda *a, **k: [])
+        monkeypatch.setattr(fc, name, _sweep_reading(3))
     monkeypatch.setattr(fc, "sweep_wta_articles",
                         lambda *a, **k: {"rows": [], "notes": [], "window": "w",
                                          "pages_read": 1})
@@ -176,13 +185,34 @@ def test_这一趟查了什么要列出中文媒体那一档(monkeypatch, capsys
     out = capsys.readouterr().out
     tail = out.split("=== 这一趟查了什么")[1]
     assert "WTA 赛后稿头图" in tail.split("没跑")[0]
+    for name in ("WTA photo-resources", "AP 通讯社"):
+        assert name in tail.split("没跑")[0], tail
     assert "中文媒体" in tail.split("没跑")[1], tail
+
+
+def test_WTA图库和AP按真取回的页数记跑过(monkeypatch):
+    """这两档原来在「这一趟查了什么」里写死成「跑过」——每一页都 403 也一样。"""
+    def down(url, timeout=30):
+        raise ConnectionError("403 Forbidden (proxy)")
+
+    monkeypatch.setattr(fc, "_get", down)
+    for sweep in (lambda st: fc.sweep_wta("Bu", None, None, stats=st),
+                  lambda st: fc.sweep_ap("Bu", None, stats=st)):
+        st: dict = {}
+        assert sweep(st) == [] and st["pages_read"] == 0
+    monkeypatch.setattr(fc, "_get", lambda url, timeout=30: "<html></html>")
+    st = {}
+    fc.sweep_wta("Bu", None, None, stats=st)
+    assert st["pages_read"] == len(fc._WTA_PAGES), st
+    st = {}
+    fc.sweep_ap("Bu", "Hangzhou", stats=st)
+    assert st["pages_read"] == 4, "三条搜索＋tennis 频道页"
 
 
 def test_这一趟查了什么_一页都没取到的那一档不许记成跑过(monkeypatch, capsys):
     """那份清单是要照抄进 `_frame_why` 的——第 0 页就取不到、搜狗全抛异常，都是「没跑」。"""
     for name in ("sweep_wta", "sweep_ap"):
-        monkeypatch.setattr(fc, name, lambda *a, **k: [])
+        monkeypatch.setattr(fc, name, _sweep_reading(0))
     monkeypatch.setattr(fc, "sweep_wta_articles",
                         lambda *a, **k: {"rows": [], "window": "w", "pages_read": 0,
                                          "notes": ["第 0 页取不到（403）——**这一档没翻完，不是没有**"]})
@@ -194,6 +224,8 @@ def test_这一趟查了什么_一页都没取到的那一档不许记成跑过(
     tail = capsys.readouterr().out.split("=== 这一趟查了什么")[1]
     ran, skipped = tail.split("没跑")[0], tail.split("没跑")[1]
     assert "WTA 赛后稿头图" not in ran and "WTA 赛后稿头图" in skipped, tail
+    for name in ("WTA photo-resources", "AP 通讯社"):
+        assert name not in ran and name in skipped, tail
     assert "搜狗微信" not in ran and "中文媒体·搜狗微信" in skipped, tail
     assert "当地网站（杭州没登记）" in skipped, tail
 
@@ -271,9 +303,10 @@ def test_当地网站列表页和文章页认得出():
 
 
 class _Resp:
-    def __init__(self, text, url="https://weixin.sogou.com/weixin?x"):
+    def __init__(self, text, url="https://weixin.sogou.com/weixin?x", status=200):
         self.text, self.url, self.encoding = text, url, "utf-8"
         self.apparent_encoding = "utf-8"
+        self.status_code, self.ok = status, status < 400
 
 
 class _Session:
@@ -346,6 +379,31 @@ def test_当地网站表里有证据的那一站能跑():
     scol = [r for r in res["rows"] if r["channel"] == "ent.scol.com.cn"]
     assert len(scol) == 1, "两页列表里同一篇要去重"
     assert scol[0]["images"][0][0].endswith("190418125794.jpg")
+    # 「跑过」印的是能照抄进 `_frame_why` 的名字，不是裸 URL
+    assert res["ran"] == ["搜狗微信", "当地网站（四川在线 ty/）",
+                          "当地网站（四川在线 ty/index_2.html）"], res["ran"]
+
+
+def test_中文媒体回了502页也不许记成跑过():
+    """502/403 不抛异常：`requests` 照样回一个 Response，正文是一页 Bad Gateway，解析出 0 条。
+
+    round 2 review 的复现：`sweep_cn_media(['郑钦文'], city='成都')` 回
+    `ran=['搜狗微信', 'https://ent.scol.com.cn/ty/', …]`、`skipped=[]`。
+    """
+    bad = _Resp("<html><h1>502 Bad Gateway</h1></html>", status=502)
+    res = cc.sweep_cn_media(["郑钦文"], city="成都", session=_Session([("", bad)]),
+                            sizes=False)
+    assert res["ran"] == [], res
+    assert res["skipped"] == ["搜狗微信", "当地网站（四川在线 ty/ 取不到）",
+                              "当地网站（四川在线 ty/index_2.html 取不到）"], res
+    assert any("HTTP 502" in n for n in res["notes"]), res["notes"]
+    # 列表页正常、文章页 502：这一篇记错误，不许当成「这篇没配图」
+    listing = '<a href="//ent.scol.com.cn/ty/202609/1.html">郑钦文成都首秀</a>'
+    res = cc.sweep_cn_media(["郑钦文"], city="成都", sizes=False, session=_Session([
+        ("weixin.sogou.com/weixin", "<ul></ul>"), ("ent.scol.com.cn/ty/2026", bad),
+        ("ent.scol.com.cn/ty/", listing)]))
+    art = [r for r in res["rows"] if r["channel"] == "ent.scol.com.cn"]
+    assert art and "HTTP 502" in art[0].get("error", ""), art
 
 
 def test_cover_photo_problem的报错要指到中文媒体那一档():
