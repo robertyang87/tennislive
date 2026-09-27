@@ -687,6 +687,20 @@ ASR 比全段，`check_human_quote` 拿赛事官网的人工引语比那几句�
 `probe_gap_speech` **不下第二个模型、不切音频**——它摊的是 `verify_transcript`
 已经跑完的那份结果，这几秒的答案本来就在里面。
 
+**⭐ 2026-09-27：第二份 ASR 和空档 VAD 挪到了 `mode=subs`**，报告在 render 之前就提交。
+来路是返工审计：10 趟 render（41.7 runner-分钟）红在「两份转写对不上」「空档没销账」，
+每趟都是装完依赖、下完源片才知道（alcaraz-fritz 三趟、tien-cobolli 两趟）。现在：
+
+- `mode=subs` 切行照旧先提交（lines.json 一分多钟就落库，写中文等的是它），**提交之后**
+  再跑 `--stage verify`，`transcript_diff.md` / `caption_gaps.md` /
+  `gap_vad_attestation.json` / 过了的话 `verify_fingerprint.json` 第二次提交——
+  **红了也先交报告再红**
+- `--stage verify` 不再要求 `zh` 已填（它比的是两份英文，指纹里本来就没有中文）
+- 空档闸挪成 `blocking_gaps`，`--stage verify` 和 `--stage render` 共用同一个函数：
+  subs 那一趟就按 render 的判据报出会红的键
+- render 照旧再验一遍；**指纹没变且 `transcript_verified: true` 才跳过**（老规矩，没放宽）。
+  所以 subs 报告看完、没改 `en_fixed` 就置上 `transcript_verified`，render 那 3~5 分钟就省了
+
 #### 但这道闸只是「让你看一眼」，不是「必须查实」
 
 账号所有者 2026-08-03（冠军版那条的两处空档）：「**没人说话很正常啊，可能是

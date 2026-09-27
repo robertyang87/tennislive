@@ -333,6 +333,21 @@ def validate_result(result: object, spec: dict) -> list[str]:
     return issues
 
 
+def audit_poster(poster: Path, spec: dict) -> tuple[dict, list[str]]:
+    """量一张海报、按当前 spec 判——返回 (证据, 不合格项)，空列表才是通过。
+
+    **`main()` 和候选帧扫描（`interview_cover_scan`）共用这一份。** 扫描要在
+    几十帧里挑出「过得了这道闸」的那几帧，它用的尺子必须和终审是同一把：
+    自己另抄一遍 `analyze_poster → contract → validate_result` 的话，两边的
+    阈值或构图合同迟早分叉，而分叉的样子是「扫描说能过、终审红了」——
+    正是扫描要省掉的那一趟 render。
+    """
+    result = analyze_poster(poster)
+    contract, _ = framing_contract(spec)
+    result["contract"] = contract
+    return result, validate_result(result, spec)
+
+
 def write_report(
     out: Path,
     spec_path: Path,
@@ -420,10 +435,7 @@ def main() -> int:
         return 2
 
     try:
-        result = analyze_poster(poster)
-        contract, _ = framing_contract(spec)
-        result["contract"] = contract
-        issues = validate_result(result, spec)
+        result, issues = audit_poster(poster, spec)
         write_report(out, spec_path, poster, expected, result, issues)
     except Exception as exc:  # noqa: BLE001 — 本地证据不足必须留下失败凭据
         error = f"{type(exc).__name__}: {exc}"

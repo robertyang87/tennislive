@@ -2168,14 +2168,20 @@ def test_每个mode都各干各的活():
     `subs` 是 2026-08-02 加的：沙箱连字幕都取不到了，切行只能搬到 runner 上。
     加之前只有 render 一条路，取个字幕要白装 Chromium + whisper + ffmpeg
     三分多钟，而且 `zh` 还空着的时候出片那步会空转，整趟红着结束。
+
+    2026-09-27 这张表按返工审计改过两处，**都是挪顺序，不是互相带着跑**：
+    subs 在切行提交之后多跑一步第二份 ASR（只要音轨，报告 render 之前就摊出来）；
+    render／cover 先出封面验视觉、再转写校验、再编码（封面红在编码之前）。
     """
     stage = {}                                  # mode -> 它跑到的那几个 --stage
-    for mode in ("subs", "render", "push"):
+    for mode in ("subs", "render", "cover", "push"):
         stage[mode] = [s.get("name") for s in _steps()
                        if _if_holds(s.get("if"), mode=mode)
                        and "--stage" in _step_run(s)]
-    assert stage["subs"] == ["取字幕切行"], stage["subs"]
-    assert stage["render"] == ["转写交叉校验", "剪 + 烧字幕"], stage["render"]
+    assert stage["subs"] == ["取字幕切行", "第二份 ASR 交叉校验并提交报告（subs）"], stage["subs"]
+    assert stage["render"] == ["出封面并验视觉（完全本地，排在转写和编码之前）",
+                               "转写交叉校验", "剪 + 烧字幕"], stage["render"]
+    assert stage["cover"] == ["出封面并验视觉（完全本地，排在转写和编码之前）"], stage["cover"]
     assert stage["push"] == [], stage["push"]
 
 
@@ -3785,8 +3791,10 @@ def test_只出海报那一档要够得着而且真的短():
     options = on["workflow_dispatch"]["inputs"]["mode"]["options"]
     assert "cover" in options, f"工作流的 mode 只有 {options}——CLI 加了也够不着"
 
-    step, = [s for s in _steps() if s.get("name") == "只出海报（不出片）"]
-    assert step.get("if") == "github.event.inputs.mode == 'cover'"
+    # 2026-09-27 起它和 render 的「封面前置」是**同一步**（同一份 `--stage cover`、
+    # 同一把像素闸）——按行为找：mode=cover 时成立、跑 `--stage cover` 的那一步。
+    step, = [s for s in _steps() if _if_holds(s.get("if"), mode="cover")
+             and "--stage cover " in _step_run(s) + " "]
     run = _step_run(step)
     assert "--stage cover" in run, "那一步没跑 `--stage cover`"
     # **短**的判据是它不碰这几样：碰了就说明有人把它写成了完整 render

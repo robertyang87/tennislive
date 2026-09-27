@@ -2118,6 +2118,24 @@ Release 拉回本地，在候选时间点前后逐帧抽样**（0.5~1 秒一格�
 过掉，再渲一版完整成片 → 成片走 Release → **拉回本地按秒抽帧**，用闸同一套
 参数逐帧打分，最后用眼睛在过闸的那几帧里挑。
 
+**⭐ 2026-09-27：「按秒抽帧、同一套参数逐帧打分」落成了 `mode=cover` 自己的一步**
+（`build_interview_clip.py --stage cover-scan`，实现在 `tools/interview_cover_scan.py`）。
+来路是返工审计：14 趟 run（74.8 runner-分钟）红在封面闸，monfils 前九趟在赌
+（fcc6c385），alcaraz-fritz 是手工抽帧逐帧过闸才定下 56.2（a4db65b4）。现在：
+
+- `mode=cover` 先扫 `frame_at` 前后各 2 秒、每 0.2 秒一格（要别的窗口写
+  `cover.scan_window: [a, b]` / `cover.scan_step`），**每格走 `cover_poster` ＋
+  `audit_poster`，和终审同一份实现**；落 `cover_candidates.json`（每格读数＋按余量
+  排的过闸名单）和 `cover_scan_sheet.jpg`（640 宽一格，**右上角贴原尺寸的脸**——
+  ①那条「闸放行 ≠ 睁眼」、fcc6c385 那条「过闸的里有看台观众」都还成立，最后一眼
+  照旧要人看，这面墙就是给那一眼的）。本地实测 11 格 32 秒
+- `mode=render` 的封面前置（在转写校验和编码**之前**）红了，会就地扫一段印进日志
+  再停——红的那一趟也换回「下一帧选哪个」
+- 提交过扫描记录的话，`cover.frame_at` 必须是其中**过闸**的那一格（render 前置那一步
+  和 `auto_push_interview_gate` 都对账，`interview_cover_scan.py --check --spec S`
+  本地 0.1 秒）。取景（源片／翻转／裁切／zoom／focus）变过的旧记录不管；真要用
+  一帧没扫过的，写 `cover._frame_scan_why`
+
 ⚠️ **Release 那一步的探法**：`curl -I`（HEAD）回 **401**——预签名 URL 是按
 GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: bytes=0-2047`
 的 GET 回 **206** ＋ 真的 mp4 头。**别拿 HEAD 的 401 得出「下不动」的结论。**

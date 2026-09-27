@@ -51,11 +51,16 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
 用法：
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage subs
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage sheet
+    python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage cover-scan
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage render
+
+`cover-scan` 把 `frame_at` 前后一段逐格渲成海报、逐格过封面闸，落
+`cover_candidates.json` ＋ 候选墙——见 `tools/interview_cover_scan.py`。
 """
 from __future__ import annotations
 
 import argparse
+import contextlib
 import difflib
 import hashlib
 import io
@@ -2316,6 +2321,29 @@ def auto_silent_gap_keys(spec: dict, lines: list[dict], outdir: Path) -> set[str
     return resolved
 
 
+def blocking_gaps(spec: dict, lines: list[dict],
+                  outdir: Path) -> list[tuple[float, float]]:
+    """render 那道空档闸**真正会拦**的那几处：人没销账、VAD 也没证明静音的。
+
+    `--stage verify` 和 `--stage render` 共用这一份——`mode=subs` 跑完第二份
+    ASR 就按出片的判据把会红的列出来，而不是另写一个「差不多」的版本。
+    """
+    auto_quiet = auto_silent_gap_keys(spec, lines, outdir)
+    return [g for g in _unresolved_gaps(spec, caption_gaps(spec, outdir))
+            if gap_key(*g) not in auto_quiet]
+
+
+def gap_block_message(spec_path: str, spec: dict,
+                      holes: list[tuple[float, float]]) -> str:
+    """空档闸红的那句话。键要印出来——`caption_gaps_ok` 的键是**源片**秒。"""
+    return (f"{spec_path} 有 {len(holes)} 处空档没销账："
+            + "、".join(f"{a - spec['start']:.1f}–{b - spec['start']:.1f} 秒（片内）"
+                        for a, b in holes) + "。\n"
+            "打开源片听这几秒：有人说话就是漏了，掌声／欢呼就不是。"
+            "结论写进 spec 的 `caption_gaps_ok`，键是 "
+            + "、".join(f"`{gap_key(a, b)}`" for a, b in holes) + "。")
+
+
 def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     """拿**独立的第二份 ASR** 校 YouTube 那份，把分歧摊出来。
 
@@ -2843,7 +2871,7 @@ def _cover_framing(cov: dict) -> tuple[float, float]:
     return zoom, focus_y
 
 
-def build_cover(spec: dict, frame: Path, dest: Path) -> Path:
+def build_cover(spec: dict, frame: Path, dest: Path, page=None) -> Path:
     """封面：本场抽一帧 + 文案，**字体走仓库那套**。
 
     标题用 `TL Display SC`（得意黑），和「赛场之上」的海报是同一支——
@@ -2919,28 +2947,45 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
 <div class=band><div class=title>{title}</div>
 <div class=sub>{cov.get('sub', '')}</div>
 <div class=tag><i></i><span>{tag}</span></div></div>"""
-    return _shoot(html, dest)
+    return _shoot(html, dest, page)
 
 
-def _shoot(html: str, dest: Path) -> Path:
+@contextlib.contextmanager
+def canvas_page():
+    """一张整幅画布大小的 Chromium 页面。**`_shoot` 和封面候选扫描共用这一份。**
+
+    扫描要连着渲几十张候选海报（`interview_cover_scan`），每张都重启一次
+    浏览器是白花秒数；可视口、缩放一旦和 `_shoot` 分叉，扫出来的那张就不是
+    终审审的那张——所以页面只在这儿开，两边拿同一个。
+    """
+    from playwright.sync_api import sync_playwright   # noqa: PLC0415
+
+    with sync_playwright() as pw:
+        b = pw.chromium.launch(executable_path=_chromium(), args=["--no-sandbox"])
+        try:
+            yield b.new_page(viewport={"width": CANVAS_W, "height": CANVAS_H},
+                             device_scale_factor=1)
+        finally:
+            b.close()
+
+
+def _shoot(html: str, dest: Path, page=None) -> Path:
     """HTML → 整幅画布的 PNG。**封面和解读卡共用这一份。**
 
     抽出来不是为了少写几行：这个仓库为「同一件事写两处」栽过好几次，而这儿
     分叉的表现最阴——两种卡的 `device_scale_factor` 或视口差一点，**两张图
     分开看都正常**，拼进同一条片子才看得出字号不一样。
-    """
-    from playwright.sync_api import sync_playwright   # noqa: PLC0415
 
-    page = dest.with_suffix(".html")
-    page.write_text(html, encoding="utf-8")
-    with sync_playwright() as pw:
-        b = pw.chromium.launch(executable_path=_chromium(), args=["--no-sandbox"])
-        pg = b.new_page(viewport={"width": CANVAS_W, "height": CANVAS_H},
-                        device_scale_factor=1)
-        pg.goto(page.as_uri())
-        pg.wait_for_timeout(700)
-        pg.screenshot(path=str(dest))
-        b.close()
+    `page` 给了就复用（封面候选扫描一趟渲几十张），不给就自己开一个。
+    """
+    if page is None:
+        with canvas_page() as pg:
+            return _shoot(html, dest, pg)
+    src = dest.with_suffix(".html")
+    src.write_text(html, encoding="utf-8")
+    page.goto(src.as_uri())
+    page.wait_for_timeout(700)
+    page.screenshot(path=str(dest))
     return dest
 
 
@@ -3381,7 +3426,27 @@ def _video_eq_filter(spec: dict, label: str = "spec") -> str:
     return "eq=" + ":".join(parts) + ","
 
 
-def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
+#: 出片、出海报、扫封面候选**下的是同一份源片**，格式串只写这一处。
+#: 三处各写一份的话，哪天一处改成 720p，扫出来的候选就不是终审审的那一帧。
+SOURCE_FMT = "bv*[height<=1080]+ba/b[height<=1080]"
+
+
+def _logo_filter(spec: dict, src: Path, outdir: Path) -> str:
+    """`logo_box` → `removelogo=…,` 滤镜片段；没写 `logo_box` 就是空串。
+
+    `--stage cover` 和 `--stage cover-scan` 共用——扫出来的候选帧要和
+    海报上那一帧去的是同一块水印，否则「候选里干净、海报上还有台标」。
+    """
+    if not (box := spec.get("logo_box")):
+        return ""
+    return ("removelogo=filename="
+            + str(logo_mask(src, box, outdir / "_logo_mask.png",
+                            bool(spec.get("mirrored")))) + ",")
+
+
+def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "", *,
+                 at: float | None = None, dest: Path | None = None,
+                 page=None) -> Path:
     """从源片抽一帧渲成 `poster.jpg`。**`render` 和 `--stage cover` 共用这一份。**
 
     抽出来是**独立的一个函数**，不是复制一份进快速预览——这个仓库为
@@ -3391,10 +3456,17 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
 
     ⚠️ **封面这一帧不走正片那条滤镜链**，`mirrored` 得在这儿再翻一次——
     漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
+
+    `at` / `dest` / `page` 只给封面候选扫描用（`interview_cover_scan`）：
+    同一份实现渲**别的时刻**、写到别处、复用同一个浏览器页面。
+    扫描不另抄一份抽帧＋渲海报，理由同上——扫的那张必须就是终审审的那张。
     """
     frame = outdir / "_cover_frame.jpg"
+    if dest is not None:           # 扫候选：每一格各用各的临时帧，别互相盖
+        frame = dest.with_suffix(".frame.jpg")
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                    "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
+                    "-ss", str(spec["cover"]["frame_at"] if at is None else at),
+                    "-i", str(src),
                     "-vf", (("hflip," if spec.get("mirrored") else "") + logo
                             + _video_eq_filter(spec)
                             + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
@@ -3403,7 +3475,7 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
                     "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
     # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
     # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
-    poster = build_cover(spec, frame, outdir / "poster.jpg")
+    poster = build_cover(spec, frame, dest or outdir / "poster.jpg", page=page)
     frame.unlink(missing_ok=True)
     return poster
 
@@ -4256,8 +4328,7 @@ def _side_segment(spec: dict, outdir: Path, key: str = "lead_in") -> Path | None
 
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     check_takeaway(spec)
-    src = yt_download(spec["url"], outdir / "source.mp4",
-                      "bv*[height<=1080]+ba/b[height<=1080]", spec)
+    src = yt_download(spec["url"], outdir / "source.mp4", SOURCE_FMT, spec)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)
@@ -4526,9 +4597,21 @@ def main() -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--spec", required=True)
     ap.add_argument("--stage",
-                    choices=["subs", "sheet", "verify", "cover", "render"],
+                    choices=["subs", "sheet", "verify", "cover", "cover-scan", "render"],
                     default="subs")
+    # 下面三个只给封面用：`cover-scan` 扫哪一段、隔多久一格；`--keep-source`
+    # 让 `cover`/`cover-scan` 把源片留给同一趟 job 里后面的出片（见 interview-clip.yml）。
+    ap.add_argument("--window", default="",
+                    help="cover-scan：扫描窗口 a:b（源片秒）；不给就读 cover.scan_window，"
+                         "再不给就是 frame_at 前后各 2 秒")
+    # 默认 None 不是 0.2：给了默认值的话命令行永远「给了」，spec 里写的
+    # `cover.scan_step` 就一次都轮不到——工作流那一步不传它，走的正是 spec 那条路
+    ap.add_argument("--step", type=float, default=None,
+                    help="cover-scan：候选帧间隔（秒）；不给就读 cover.scan_step，再不给 0.2")
+    ap.add_argument("--keep-source", action="store_true",
+                    help="cover / cover-scan 跑完不删 source.mp4")
     args = ap.parse_args()
+    keep_source = args.keep_source
 
     # 这台沙箱的出网走一个做 TLS 拦截的代理，而 edge-tts 认的是 certifi 自带
     # 的根证书——挂上代理那张 CA 当场就通。**runner 上是 no-op 且不出声**，
@@ -4557,6 +4640,14 @@ def main() -> int:
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
+
+    if args.stage == "cover-scan":
+        # **一趟扫一段，不再一趟试一帧。** 挑封面这件事不要字幕、不要中文，
+        # 所以排在取字幕之前；账和判据见 tools/interview_cover_scan.py 顶部。
+        sys.path.insert(0, str(ROOT / "tools"))
+        from interview_cover_scan import run_scan  # noqa: PLC0415
+        return run_scan(spec, outdir, sys.modules[__name__], window=args.window,
+                        step=args.step, keep_source=keep_source)
 
     if args.stage in ("subs", "sheet"):
         # **挑封面用的**：只在取字幕这一趟出，出片那趟不重复下
@@ -4593,12 +4684,19 @@ def main() -> int:
         for i, seg in enumerate(lines, 1):
             print(f"{i:2d}. {seg['a']:7.1f}  {seg['en']}")
         print(f"\n把 {len(lines)} 行中文按顺序填进 {args.spec} 的 zh 数组里再跑一次。")
-        return 0
-    write_ass(lines, zh, spec["start"], ass, spec,
-              duration=spec["end"] - spec["start"])
-    print(f"字幕 {len(lines)} 组双语 → {ass}")
-    # 核对表每次都出：它是人干活时看的那一份，落后于 spec 就没用了。
-    review_sheet(spec, lines, outdir)
+        # **只有 verify 能在没中文时往下走**：第二份 ASR 比的是两份**英文**，
+        # 指纹里也没有中文（`transcript_fingerprint`）。`mode=subs` 那一趟 zh
+        # 必然还空着，而那正是它该跑的时候——等中文写完、render 红了才知道英文
+        # 漏了一句，中文得跟着返工（2026-09-27 审计：10 趟 render 红在转写分歧／
+        # 空档上，41.7 runner-分钟，每趟外加一个来回）。
+        if args.stage != "verify":
+            return 0
+    else:
+        write_ass(lines, zh, spec["start"], ass, spec,
+                  duration=spec["end"] - spec["start"])
+        print(f"字幕 {len(lines)} 组双语 → {ass}")
+        # 核对表每次都出：它是人干活时看的那一份，落后于 spec 就没用了。
+        review_sheet(spec, lines, outdir)
     # **每一步都把没销账的空档喊出来**，不要只在 render 那一步拦。等到出片才知道
     # 少了三秒，前面配中文、调断行的功夫全是在一份缺了一块的稿子上做的。
     # ⚠️ **键要一起印出来。** 这一行原来只报「片内 37.4–40.0 秒」，而
@@ -4627,21 +4725,27 @@ def main() -> int:
             print(f"[verify] 转写指纹没变（{fp[:12]}…）且已人工核过"
                   "（transcript_verified: true），跳过第二份 ASR。"
                   "改一行 en_fixed / 换字幕源 / 换模型都会让指纹变、重新全跑。")
-            return 0
-        verify_transcript(spec, lines, outdir)
-        # **只在 verify 走完（没抛）之后落指纹**：分歧超闸抛 SystemExit 时
-        # 不许留下「这份验过了」的标记——那正是「记已推送要排在发微信之后」
-        # 的同一条顺序规矩。
-        fp_path.write_text(json.dumps({
-            "sha256": fp,
-            "status": "pass",
-            "method": "dual_asr",
-            "first_model": spec.get("asr_model") or "provider_captions",
-            "second_model": _second_model(spec),
-        }, indent=1) + "\n",
-                           encoding="utf-8")
-        print(f"[verify] 指纹已落 {fp_path.name}（{fp[:12]}…）——"
-              "下次转写没变且 transcript_verified 已置上时跳过 whisper。")
+        else:
+            verify_transcript(spec, lines, outdir)
+            # **只在 verify 走完（没抛）之后落指纹**：分歧超闸抛 SystemExit 时
+            # 不许留下「这份验过了」的标记——那正是「记已推送要排在发微信之后」
+            # 的同一条顺序规矩。
+            fp_path.write_text(json.dumps({
+                "sha256": fp,
+                "status": "pass",
+                "method": "dual_asr",
+                "first_model": spec.get("asr_model") or "provider_captions",
+                "second_model": _second_model(spec),
+            }, indent=1) + "\n",
+                               encoding="utf-8")
+            print(f"[verify] 指纹已落 {fp_path.name}（{fp[:12]}…）——"
+                  "下次转写没变且 transcript_verified 已置上时跳过 whisper。")
+        # **render 那道空档闸，verify 这一步就按同一个判据报。** 原来空档只在
+        # `--stage render` 开头拦——`mode=subs` 跑了第二份 ASR 也看不见它，
+        # 要等出片那趟装完依赖才红（tien-cobolli 那处 89.6–94.6 秒两趟 render
+        # 各红一次）。判据是同一个函数，不是抄一份。
+        if holes := blocking_gaps(spec, lines, outdir):
+            raise SystemExit(gap_block_message(args.spec, spec, holes))
         return 0
 
     if args.stage == "cover":
@@ -4655,20 +4759,19 @@ def main() -> int:
         # 挡在这儿只会逼人为了看一眼封面先把校验走完。
         if not spec.get("cover"):
             raise SystemExit(f"{args.spec} 没有 `cover` 块，没什么可预览的。")
-        src = yt_download(spec["url"], outdir / "source.mp4",
-                          "bv*[height<=1080]+ba/b[height<=1080]", spec)
-        logo = ""
-        if box := spec.get("logo_box"):
-            logo = ("removelogo=filename="
-                    + str(logo_mask(src, box, outdir / "_logo_mask.png",
-                                    bool(spec.get("mirrored")))) + ",")
-        poster = cover_poster(spec, src, outdir, logo)
+        src = yt_download(spec["url"], outdir / "source.mp4", SOURCE_FMT, spec)
+        poster = cover_poster(spec, src, outdir, _logo_filter(spec, src, outdir))
         # 源片不进仓库，也没必要留着——它是这一步唯一的大文件。
-        src.unlink(missing_ok=True)
+        # ⚠️ **`--keep-source` 只给 `mode=render` 的封面前置那一步用**：同一趟
+        # job 接下来还要出片，`render()` 的 `yt_download` 见文件在就直接复用，
+        # 删了等于同一条源片下两遍。清理照旧由「提交成片」那一步兜底。
+        if not keep_source:
+            src.unlink(missing_ok=True)
         (outdir / "_logo_mask.png").unlink(missing_ok=True)
         print(f"封面 {poster}（{spec['cover']['frame_at']} 秒那一帧）"
-              f"\n**没有出片**：确认好看再跑 `--stage render`，"
-              f"这样一条片子只往仓库里塞一个 mp4。")
+              + ("——源片留给同一趟后面的出片。" if keep_source else
+                 "\n**没有出片**：确认好看再跑 `--stage render`，"
+                 "这样一条片子只往仓库里塞一个 mp4。"))
         return 0
 
     if args.stage == "render":
@@ -4694,18 +4797,10 @@ def main() -> int:
         # **空档也要销账。** 上面那条闸盯的是「源说错了」，这条盯的是
         # 「源什么都没说」——伊埃拉那条 3.2 秒的空白就是从这个缝里漏出去的：
         # 没有词就没有分歧，两道旧闸全绿。
-        manual_holes = _unresolved_gaps(spec, caption_gaps(spec, outdir))
-        auto_quiet = auto_silent_gap_keys(spec, lines, outdir)
-        if auto_quiet:
+        if auto_quiet := auto_silent_gap_keys(spec, lines, outdir):
             print(f"[空档 VAD] {len(auto_quiet)} 处由当前指纹的语言无关无人声证明销账。")
-        if holes := [g for g in manual_holes if gap_key(*g) not in auto_quiet]:
-            raise SystemExit(
-                f"{args.spec} 有 {len(holes)} 处空档没销账："
-                + "、".join(f"{a - spec['start']:.1f}–{b - spec['start']:.1f} 秒（片内）"
-                            for a, b in holes) + "。\n"
-                "打开源片听这几秒：有人说话就是漏了，掌声／欢呼就不是。"
-                "结论写进 spec 的 `caption_gaps_ok`，键是 "
-                + "、".join(f"`{gap_key(a, b)}`" for a, b in holes) + "。")
+        if holes := blocking_gaps(spec, lines, outdir):
+            raise SystemExit(gap_block_message(args.spec, spec, holes))
         out = render(spec, ass, outdir)
         size = out.stat().st_size / 1e6
         # ⚠️ **两个数，别只报一个。** 这一行原来只印
