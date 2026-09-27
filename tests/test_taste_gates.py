@@ -63,6 +63,9 @@ ACCEPTED = [
     "去年被保利尼逆转\n今年2比0赢回来",
     "单打刚被逆转\n兹维列夫双打赢回来",
     "前10次机会全落空\n黄泽林挺进8强",
+    # fernandez-gibson 新加坡决赛（09-27 11:44Z 已推）——评审 B2：词表只认挨着的
+    # 「夺冠」，合进 main 当场把这条判红。补的是词表，不是冻结（规矩之后的钩子不进豁免表）
+    "首盘只差一分丢盘\n连赢8局夺下冠军",
 ]
 
 
@@ -96,6 +99,10 @@ RESULT_WORDING = [
     "他才把这场半决赛收进口袋", "她却带走胜利", "斩获生涯首冠", "她捧起奖杯",
     "卫冕成功", "两人会师决赛", "笑到最后",
     "萨巴伦卡赢下这场球", "她还是赢球了", "这场球她赢了",
+    # 评审 B2：「夺冠」两个字不挨着、以及输家那一侧的说法
+    "连赢8局夺下冠军", "她夺得冠军", "夺得巡回赛冠军", "他登顶世界第一",
+    "加冕新科冠军", "问鼎澳网", "他闯入八强", "她跻身四强", "一路杀入四强",
+    "她不敌萨巴伦卡", "他惜败辛纳", "郑钦文憾负",
 ]
 
 
@@ -103,7 +110,8 @@ def test_轮次名和整场结果的说法都算结果():
     for line in RESULT_WORDING:
         assert T.has_match_result(line), f"认不出结果：{line!r}"
     # 反方向：「总决赛冠军」是身份；「这一球」「一分」仍然是过程
-    for line in ("总决赛冠军", "赢了这一球", "一局也没拿下", "他破了 再没输过一盘"):
+    for line in ("总决赛冠军", "赢了这一球", "一局也没拿下", "他破了 再没输过一盘",
+                 "一路杀入决胜盘", "两人闯入抢七"):
         assert not T.has_match_result(line), f"把过程当成了结果：{line!r}"
 
 
@@ -298,11 +306,26 @@ def test_口味豁免表只许减不许加_冻的是原文():
                        "data/legacy_taste_gates.json 里删掉：" + "、".join(stale))
     # 只许减：数目只能往下走（2026-09-27 落地那天的数）
     assert len(legacy["hook_shape"]) <= 169      # 178 → 169：结果词表补全后 9 条老钩子本来就合格
-    assert len(legacy["hook_jargon"]) <= 75
+    assert len(legacy["hook_jargon"]) <= 76      # 75 → 76：safiullin-bu（ACE），闸落地前已推，见 _counts
     assert len(legacy["interview_title_jargon"]) <= 11
     assert len(legacy["explainer_question_jargon"]) <= 1
     for table, cap in ((T.BOARD_ANNOUNCE_LEGACY, 1), (T.ENDING_ORDER_LEGACY, 3)):
         assert len(table) <= cap
+
+
+def test_闸落地前已推的ACE钩子按原文冻结_改一个字就受管():
+    """评审 B2：safiullin-bu（#1114，2026-09-27 14:47Z 合进 main、已推送）的钩子
+    「15记ACE／萨菲乌林晋级4强」。09-22 那条规矩的 ❌ 列表里就有 ACE，闸判它是对的；
+    可它已经发出去了——已发的不重渲，只能按原文冻结（豁免表上限 75 → 76）。
+
+    ⚠️ 这一道闸合进 main 之前，每一条落到 main 上的手写 reel 都要这么过一遍：
+    真中了术语就按原文冻结、是词表漏了就补词表（fernandez-gibson 那条）。"""
+    spec = _reel("safiullin-bu-hangzhou-2026-qf")
+    assert "ACE" in T.jargon_hits(T._hook_text(spec))
+    assert T.hook_jargon_problem(spec, legacy={}), "闸本身要认得出 ACE"
+    assert T.hook_jargon_problem(spec) is None, "已推的那一版冻在豁免表里"
+    spec["cover"]["hook"] = spec["cover"]["hook"].replace("15", "16")
+    assert T.hook_jargon_problem(spec), "改一个字就重新受管"
 
 
 def test_小表的豁免真的还不合格():
@@ -348,7 +371,7 @@ def test_全库当前零误报():
 
 def test_全库判据不拿自动spec判红_手写的照红(tmp_path):
     """B1 的判据：同一个坏钩子，自动转正的只报、手写的红。"""
-    base = _reel("medvedev-royer-hangzhou-2026-r2")
+    base = _taste_spec("zz-auto-sim", "对手5次机会全落空\n梅德韦杰夫挺进8强")
     auto = dict(base, slug="zz-auto-sim",
                 cover=dict(base["cover"], hook="总分输4分\n她却带走胜利"),
                 _production={"status": "ready_for_render"})
@@ -363,50 +386,102 @@ def test_全库判据不拿自动spec判红_手写的照红(tmp_path):
     assert bad and not noted, "手写 spec 的坏钩子必须红"
 
 
+def test_cover不是对象时读得懂地红_不抛traceback():
+    """评审 N：`cover` 写成字符串（`requests/stories/*.cover-v2.json` 那种形状）原来是
+    一个 AttributeError 的 traceback；现在各道闸单独调都不抛，入口给一条硬发现（不放行）。"""
+    for bad in ("assets/reel/x.jpg", ["决胜盘一度落后", "他逆转了"]):
+        spec = {"slug": "new", "cover": bad, "push": {"summary": "两个盘点没给"},
+                "segments": [{"narration": "轮到他发球"}] * 6}
+        for gate in (T.hook_result_problem, T.hook_jargon_problem, T.hook_score_label_report,
+                     T.copy_count_problem, T.rank_claim_problem, T.set_coverage_report,
+                     T.story_band_problem, T.interview_title_jargon_problem):
+            gate(spec)                                   # 不抛
+        scoped = T.reel_taste_scoped(spec)
+        assert scoped and scoped[0][1] and "cover" in scoped[0][2], scoped
+        hard, _soft = T.interview_taste_findings(spec)
+        assert hard and "cover" in hard[0]
+    assert T.shape_problem({"slug": "ok", "cover": {"hook": "x"}, "push": None}) is None
+    assert T.shape_problem({"slug": "x", "_production": "ready_for_render"})
+
+
 # ════════════════════════ 入口：闸真的坐在该坐的地方 ════════════════════════
 
-def _hand_written(slug: str, hook: str) -> dict:
-    """一条已接受、`validate_spec` 全绿的手写 spec，只换钩子、换 slug（新片子不吃豁免）。
+def _taste_spec(slug: str, hook: str, *, narrated: int = 4) -> dict:
+    """一份**只喂口味闸**的合成 spec：钩子、封面口播和几段旁白。
 
-    medvedev-royer 是规矩之后（09-26）写的，封面是抽帧（lean 检出没有
-    assets/reel 也能过前面那些闸）。封面口播跟着钩子一起换——两处是一句话。
+    ⚠️ 不拿 live spec 当夹具（评审 N）：原来这里载 medvedev-royer 再过整条
+    `validate_spec`——main 上以后加的任何一道闸、或者那条 spec 被改一个字，都会把
+    口味闸的测试打红，而红的原因跟口味无关。判口味只调 `_owner_taste`；闸坐没坐在
+    `--dry-run` 上，由 `_validate_spec_reaches_owner_taste` 单独钉。
+    """
+    return {"slug": slug,
+            "cover": {"eyebrow": "赛场之上", "hook": hook, "narration": hook.replace("\n", "，")},
+            "segments": [{"narration": "他退台半步，把回发球兜回对角。"}] * narrated}
+
+
+#: 挑夹具时先试这条：规矩之后（09-26）写的，封面是抽帧，lean 检出没有 assets/reel 也过得了前面那些闸。
+_WIRING_PREFERRED = "medvedev-royer-hangzhou-2026-r2"
+
+
+def _validate_spec_reaches_owner_taste(monkeypatch) -> str:
+    """`--dry-run` 走的 `validate_spec` 真的调到 `_owner_taste`，而且不吞它的异常。
+
+    夹具**不钉死一条 live spec**：从已接受的手写 reel 里挑第一条能一路走到口味闸的
+    （先试 `_WIRING_PREFERRED`）。别的闸红了只说明这一条当不了夹具，换下一条。
     """
     import build_match_reel as reel
 
-    spec = reel.load_spec(Path("specs/reels/medvedev-royer-hangzhou-2026-r2.json"))
-    spec["slug"] = slug
-    spec["cover"]["hook"] = hook
-    spec["cover"]["narration"] = hook.replace("\n", "，")
-    return spec
+    class _Reached(Exception):
+        pass
+
+    def spy(spec: dict) -> None:
+        raise _Reached(spec.get("slug"))
+
+    monkeypatch.setattr(reel, "_owner_taste", spy)
+    paths = sorted(REELS, key=lambda p: p.stem != _WIRING_PREFERRED)
+    tried = []
+    for path in paths[:40]:
+        try:
+            spec = reel.load_spec(path)
+            if T.is_auto(spec):
+                continue
+            reel.validate_spec(spec)
+        except _Reached as hit:
+            return str(hit)
+        except (Exception, SystemExit) as err:  # noqa: BLE001 —— 当不了夹具，换下一条
+            tried.append(f"{path.stem}: {type(err).__name__} {str(err)[:60]}")
+            continue
+        tried.append(f"{path.stem}: validate_spec 走完了却没调口味闸")
+    pytest.fail("validate_spec 一次都没走到 _owner_taste：\n" + "\n".join(tried))
 
 
-def test_validate_spec手写的新spec当场红():
+def test_validate_spec手写的新spec当场红(monkeypatch):
     """`--dry-run` 走的就是 validate_spec：换上被否的钩子，第 0.2 秒就红。"""
     import build_match_reel as reel
 
-    ok = _hand_written("medvedev-royer-hangzhou-2026-r2", "对手5次机会全落空\n梅德韦杰夫挺进8强")
-    reel.validate_spec(ok)                          # 原样放行
+    reel._owner_taste(_taste_spec("new-hand", "对手5次机会全落空\n梅德韦杰夫挺进8强"))   # 原样放行
     for hook, why in (("对手5次机会全落空\n最后4分全是他的", "没交代结果"),
                       ("对手5个破发点全丢\n梅德韦杰夫挺进8强", "破发"),
                       ("首秀就被逼到4比6\n7分里拿下6分", "首秀")):
         with pytest.raises(reel.ReelError, match="口味") as err:
-            reel.validate_spec(_hand_written("medvedev-royer-hangzhou-2026-r2", hook))
+            reel._owner_taste(_taste_spec("new-hand", hook))
         assert why in str(err.value)
     # 已发的那一版钩子冻在豁免表里：同 slug、原文不变 → 放行；改一个字 → 受管
     legacy_slug = "wu-duckworth-us-open-2026-r2"
     frozen = T.load_legacy()["hook_shape"][legacy_slug]
     assert T.hook_result_problem(_hook_spec(frozen, slug=legacy_slug)) is None
     assert T.hook_result_problem(_hook_spec(frozen + "了", slug=legacy_slug))
+    # 闸坐在 --dry-run 上
+    assert _validate_spec_reaches_owner_taste(monkeypatch)
 
 
 def test_自动产的spec只报不拦(capsys):
     """自动 spec 的硬发现只报、不抛；日志行首 `[口味·<块>]` 只告诉人去哪一块改。"""
     import build_match_reel as reel
 
-    auto = _hand_written("medvedev-royer-hangzhou-2026-r2", "首秀就被逼到4比6\n7分里拿下6分")
+    auto = _taste_spec("new-auto", "首秀就被逼到4比6\n7分里拿下6分", narrated=6)
     auto["_production"] = {"status": "ready_for_render"}
-    narrated = [seg for seg in auto["segments"] if str(seg.get("narration") or "").strip()]
-    for seg in narrated:                      # 逐局报发球：旁白那一块
+    for seg in auto["segments"]:              # 逐局报发球：旁白那一块
         seg["narration"] = "轮到他发球，十五比零。"
     reel._owner_taste(auto)          # 不抛
     lines = [ln for ln in capsys.readouterr().out.splitlines() if ln.startswith("[口味·")]

@@ -51,13 +51,39 @@ LEGACY_PATH = ROOT / "data" / "legacy_taste_gates.json"
 ALLUSIONS_PATH = ROOT / "data" / "hook_allusions.json"
 
 
+#: 口味闸要当成对象读的顶层键。
+_OBJECT_KEYS = ("cover", "push", "_production")
+
+
+def _obj(spec: dict, key: str) -> dict:
+    """`spec[key]`，不是对象就当空的——各道闸单独调时不抛 AttributeError；
+    形状不对由入口的 `shape_problem` 当成硬发现报出来（fail closed，不放行）。"""
+    value = spec.get(key)
+    return value if isinstance(value, dict) else {}
+
+
+def shape_problem(spec: dict) -> str | None:
+    """`cover`／`push`／`_production` 写成了字符串或列表：口味闸读不了这份 spec。
+
+    评审 N（2026-09-27）：`requests/stories/zheng-usopen-icons.cover-v2.json` 那种
+    `cover` 是字符串的形状，原来喂进来是一个 AttributeError 的 traceback；现在
+    是一条读得懂的硬发现——手写的红、自动的报，**不静静放行**。
+    """
+    bad = [f"`{key}` 是 {type(spec[key]).__name__}" for key in _OBJECT_KEYS
+           if spec.get(key) is not None and not isinstance(spec[key], dict)]
+    if not bad:
+        return None
+    return ("口味闸读不了这份 spec：" + "、".join(bad)
+            + "——这几个键要写成对象（{...}），比如 `cover` 里放 eyebrow／hook／title")
+
+
 def is_auto(spec: dict) -> bool:
     """自动产的 spec：只报不拦（和 `_narration_craft` / `unvoiced_quote_problem` 同一个口径）。"""
-    return (spec.get("_production") or {}).get("status") == "ready_for_render"
+    return _obj(spec, "_production").get("status") == "ready_for_render"
 
 
 def _eyebrow(spec: dict) -> str:
-    cover = spec.get("cover") or {}
+    cover = _obj(spec, "cover")
     return str(cover.get("eyebrow") or spec.get("_column") or "")
 
 
@@ -71,7 +97,7 @@ def hook_lines_of(value) -> list[str]:
 
 
 def _hook_text(spec: dict) -> str:
-    return "\n".join(hook_lines_of((spec.get("cover") or {}).get("hook")))
+    return "\n".join(hook_lines_of(_obj(spec, "cover").get("hook")))
 
 
 # ── 豁免表 ──────────────────────────────────────────────────────────────
@@ -109,17 +135,27 @@ def _frozen(section: str, slug: str, text: str, legacy: dict | None) -> bool:
 # 设的 18 条钩子 **0 条红**；20 个被否的历史钩子版本红 15 个（专门因「没交代赛果」
 # 被否的 8 个红 7 个）；规矩之前的存量按原文冻进豁免表。同日评审后补全了结果词
 # （过关／锁定／收进口袋／轮次名…）：被否的那 20 个一个没漏，豁免表 178 → 169。
+# ⚠️ 规矩之后的钩子**补词表，不冻结**：豁免表只收规矩之前的存量（`_counts.hook_shape`
+# 那句「规矩之后设的钩子 0 条在内」要一直成立）——评审 B2 的 fernandez-gibson 就是
+# 这么处理的。
 
 #: 轮次名按 CLAUDE.md 的口径（决赛／半决赛／1/4决赛／1/8决赛／第N轮）：第二行点到
 #: 一个轮次，说的就是「走到哪一步」。「总决赛」是赛事名（「总决赛冠军」是身份），
 #: 不算。
 _ROUND_NAME = r"1/8决赛|1/4决赛|半决赛|(?<!总)决赛|第[一二三四1-4]轮|下一轮"
+#: 评审 B2（2026-09-27）：fernandez-gibson 新加坡决赛的钩子「连赢8局夺下冠军」
+#: 09-27 11:44Z 已推，而这张表只认两个字挨着的「夺冠」——合进 main 当场把一条
+#: 已接受的决赛钩子判红。同一批补上常见的结果说法：夺下/夺得…冠、登顶、加冕、
+#: 问鼎、闯入/杀入/挺入、跻身，以及输家那一侧的不敌/惜败/憾负。
+#: ⚠️ 「闯入/杀入」后面接的是盘或抢七（「一路杀入决胜盘」）就是过程，不算。
 _STRONG_RESULT = re.compile(
     r"淘汰|逆转|击败|掀翻|送走|横扫|翻盘|翻了?回来|赢了?回来|扳回来|晋级|挺进"
     r"|进了?(?:决赛|半决赛|\d+强|八强|四强|1/4决赛)|首进|夺冠|捧杯|捧起[^，,]{0,4}杯"
     r"|(?:拿下|赢下|拿到|第一个|第一)[^，,]{0,6}冠军?|出局|止步|告负|收官|战胜"
     r"|过关|锁定|收进口袋|胜利|首冠|卫冕|会师|笑到最后|" + _ROUND_NAME
-    + r"|胜(?![盘局分利])|负于|输给|赢(?:双打|单打)")
+    + r"|胜(?![盘局分利])|负于|输给|赢(?:双打|单打)"
+    r"|夺(?:下|得|取)?[^，,]{0,4}冠|登顶|加冕|问鼎"
+    r"|(?:闯|杀|挺)入(?!决胜|抢[七十]|第[一二三四五1-5]盘)|跻身|不敌|惜败|憾负")
 #: 让「赢/输/拿下」变成**过程**而不是结果的那些宾语：分、局、盘、点、球、拍。
 #: 「比分」「分钟」里的「分」不算（`(?<!比)分(?!钟)`）；「这场球」「赢球」「输球」
 #: 里的「球」说的是整场，不是一分（`(?<![场赢输])球`，紧跟动词的「赢球」在下面判）。
@@ -167,13 +203,13 @@ def hook_result_problem(spec: dict, *, legacy: dict | None = None) -> str | None
     """「赛场之上」钩子：第二行交代结果；钩子不比全场总分差。"""
     if _eyebrow(spec) != "赛场之上":
         return None
-    lines = hook_lines_of((spec.get("cover") or {}).get("hook"))
+    lines = hook_lines_of(_obj(spec, "cover").get("hook"))
     if not lines:
         return None
     slug = str(spec.get("slug") or "")
     if _frozen("hook_shape", slug, "\n".join(lines), legacy):
         return None
-    cover = spec.get("cover") or {}
+    cover = _obj(spec, "cover")
     bad = []
     if (len(lines) >= 2 and not has_match_result(lines[1])
             and not str(cover.get("_hook_shape_why") or "").strip()):
@@ -218,7 +254,7 @@ def hook_score_label_report(spec: dict, *, legacy: dict | None = None) -> str | 
     """
     if _eyebrow(spec) != "赛场之上":
         return None
-    lines = hook_lines_of((spec.get("cover") or {}).get("hook"))
+    lines = hook_lines_of(_obj(spec, "cover").get("hook"))
     if not lines:
         return None
     slug, text = str(spec.get("slug") or ""), "\n".join(lines)
@@ -293,7 +329,7 @@ def hook_jargon_problem(spec: dict, *, legacy: dict | None = None) -> str | None
     slug = str(spec.get("slug") or "")
     if _frozen("hook_jargon", slug, text, legacy):
         return None
-    cover = spec.get("cover") or {}
+    cover = _obj(spec, "cover")
     if (_eyebrow(spec) != "赛场之上"
             and str(cover.get("_hook_term_why") or "").strip()):
         return None
@@ -307,7 +343,7 @@ def hook_jargon_problem(spec: dict, *, legacy: dict | None = None) -> str | None
 
 def summary_jargon_report(spec: dict) -> str | None:
     """**只报**：推送标题里的术语（全库 300 条里 45 条有，做硬会成一条常年红）。"""
-    summary = str((spec.get("push") or {}).get("summary") or "")
+    summary = str(_obj(spec, "push").get("summary") or "")
     hits = jargon_hits(summary)
     if not hits:
         return None
@@ -321,7 +357,7 @@ def interview_title_jargon_problem(spec: dict, *, legacy: dict | None = None) ->
     按原文冻进豁免表；认领口 `cover._title_term_why` 给「受访者说的就是这个词、
     标题在引他的话」这一种。
     """
-    cover = spec.get("cover") or {}
+    cover = _obj(spec, "cover")
     text = "\n".join(hook_lines_of(cover.get("title")))
     if not text:
         return None
@@ -460,8 +496,8 @@ def copy_count_clash(hook: str, summary: str) -> list[str]:
 
 def copy_count_problem(spec: dict, *, title_key: str = "hook") -> str | None:
     """reel 用 `cover.hook`，采访线用 `cover.title`（`title_key="title"`）。"""
-    cover = spec.get("cover") or {}
-    push = spec.get("push") or {}
+    cover = _obj(spec, "cover")
+    push = _obj(spec, "push")
     hook = "\n".join(hook_lines_of(cover.get(title_key)))
     summary = str(push.get("summary") or "")
     if not hook or not summary or str(push.get("_summary_count_why") or "").strip():
@@ -500,12 +536,13 @@ def rank_claim_problem(spec: dict) -> str | None:
     现在坐进 `validate_spec`；测试 `test_钩子和文案里写的排名要和matchup对得上`
     改成调这里。
     """
-    cover = spec.get("cover") or {}
+    cover = _obj(spec, "cover")
     registered: set[int] = set()
     for who in cover.get("matchup") or []:
         if isinstance(who, dict) and isinstance(who.get("rank"), int):
             registered.add(who["rank"])
-    versus = cover.get("versus") or {}
+    versus = cover.get("versus")
+    versus = versus if isinstance(versus, dict) else {}
     for side in ("top", "bottom"):
         panel = versus.get(side) or {}
         if isinstance(panel, dict) and isinstance(panel.get("rank"), int):
@@ -514,7 +551,7 @@ def rank_claim_problem(spec: dict) -> str | None:
         return None
     bad = []
     for where, text in (("cover.hook", _hook_text(spec)),
-                        ("push.summary", str((spec.get("push") or {}).get("summary") or ""))):
+                        ("push.summary", str(_obj(spec, "push").get("summary") or ""))):
         for claimed in rank_claims(text):
             if claimed not in registered:
                 bad.append(f"{where} 写着世界第 {claimed}")
@@ -604,7 +641,7 @@ def set_coverage_report(spec: dict) -> str | None:
     """
     if _eyebrow(spec) != "赛场之上" or str(spec.get("_set_coverage_why") or "").strip():
         return None
-    result = (spec.get("cover") or {}).get("result")
+    result = _obj(spec, "cover").get("result")
     sets = re.findall(r"(\d{1,2})-(\d{1,2})(?:\((\d+)\))?", str(result or ""))
     n = len(sets)
     if n < 2:
@@ -707,7 +744,7 @@ _H2H_SLUG = re.compile(r"h2h|meetings")
 def is_h2h_story(spec: dict) -> bool:
     if _eyebrow(spec) != "网球有故事":
         return False
-    cover = spec.get("cover") or {}
+    cover = _obj(spec, "cover")
     if str(cover.get("story_kind") or "") == "h2h":
         return True
     blob = f"{cover.get('hook') or ''} {cover.get('topic') or ''}"
@@ -731,7 +768,8 @@ def story_band_problem(spec: dict) -> str | None:
     if not is_h2h_story(spec):
         return None
     segs = [s for s in spec.get("segments") or [] if isinstance(s, dict)]
-    group = _match_groups((spec.get("sources") or {}).keys())
+    sources = spec.get("sources")
+    group = _match_groups(sources.keys() if isinstance(sources, dict) else [])
     seen: set[str] = set()
     missing = []
     for i, seg in enumerate(segs):
@@ -764,6 +802,9 @@ def story_band_problem(spec: dict) -> str | None:
 def reel_taste_scoped(spec: dict) -> list[tuple[str, bool, str]]:
     """[(块, 硬不硬, 判据原文)]。块（钩子／文案／旁白／窗口／信息条）只是告诉人去哪儿改；
     硬的那几条对自动 spec 也只报，由调用方按 `is_auto` 分流。"""
+    shape = shape_problem(spec)
+    if shape:
+        return [("形状", True, shape)]
     hard = [(label, p) for label, p in (
         ("钩子", hook_result_problem(spec)),
         ("钩子", hook_jargon_problem(spec)),
@@ -798,6 +839,9 @@ def interview_taste_findings(spec: dict) -> tuple[list[str], list[str]]:
     （106 条已发标题里 11 条会中，「五比一 却被雨拖到抢七」这类），**账号所有者确认
     之前只报不拦**；确认了就把它挪进硬的那一组，豁免表已经冻好了。
     """
+    shape = shape_problem(spec)
+    if shape:
+        return [shape], []
     hard = [p for p in (copy_count_problem(spec, title_key="title"),) if p]
     soft = [p for p in (interview_title_jargon_problem(spec),) if p]
     return hard, soft
