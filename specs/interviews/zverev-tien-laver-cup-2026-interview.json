@@ -28,8 +28,8 @@
   "zh": [
     "萨沙 你的战绩是5胜1负",
     "拉沃尔杯胜负悬于一线时",
-    "为什么你总能在",
-    "这项赛事最关键的时刻顶住？",
+    "你为什么这么能扛",
+    "在这项赛事最关键的时刻？",
     "我不知道 我是说",
     "我两年没在这儿赢过一场了",
     "所以……",
@@ -62,8 +62,8 @@
     "最后",
     "你已经7次参加这项赛事",
     "比历史上任何球员都多",
-    "你最喜欢这项精彩赛事的",
-    "哪一部分",
+    "你最喜欢哪一部分",
+    "这项精彩的赛事",
     "在拉沃尔杯这里？",
     "作为一个团队赢球",
     "体育里没有比这更好的感觉",
@@ -468,11 +468,11 @@
     "duration": 129.1378125
   },
   "en_fixed": {
-    "1": "when the Laver Cup is on the line.",
-    "10": "to the entire Team World.",
-    "17": "How big was it for you?",
-    "28": "Credit to Learner as well.",
-    "38": "at the Laver Cup?"
+    "2": "when the Laver Cup is on the line.",
+    "11": "to the entire Team World.",
+    "18": "How big was it for you?",
+    "29": "Credit to Learner as well.",
+    "39": "at the Laver Cup?"
   },
-  "_en_fixed_why": "照第一份 ASR（cap_asr.json3，faster-whisper small.en）逐行改：第 1、38 行 `Labour Cup` 是 Laver Cup；第 10 行 `team world` 按专名大写 Team World；第 28 行 `Lerner` 是勒纳·钱的名字 Learner（集锦记分条 `LEARNER TIEN`）；第 17 行 `How big for it was you for you?` 是 ASR 把主持人一句打结的问话拼乱了，按下一句（双打先赢有没有帮你）的语境写成 `How big was it for you?`——没听音轨，render 的 medium.en 第二份 ASR 会核这一行。"
+  "_en_fixed_why": "照第一份 ASR（cap_asr.json3，faster-whisper small.en）逐行改，行号 1 起：第 2、39 行 `Labour Cup` 是 Laver Cup；第 11 行 `team world` 按专名大写 Team World；第 29 行 `Lerner` 是勒纳·钱的名字 Learner（集锦记分条 `LEARNER TIEN`）；第 18 行 `How big for it was you for you?` 是 ASR 把主持人一句打结的问话拼乱了，按下一句（双打先赢有没有帮你）的语境写成 `How big was it for you?`——没听音轨，render 的 medium.en 第二份 ASR 会核这一行。"
 }
