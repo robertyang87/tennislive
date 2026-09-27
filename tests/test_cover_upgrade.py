@@ -290,6 +290,15 @@ AP_NEWS_CONF = ("Coleman Wong of Hong Kong speaks during a news conference after
      "headshot"),
     (AP_CAPTION.replace("reacts after winning a point against",
                         "hits during a session ahead of his match against"), "hits during a session"),
+    # 评审第三轮 nit：团体赛里在场边看队友打——全名、对手、日期全在
+    (AP_CAPTION.replace("reacts after winning a point against",
+                        "reacts on the bench as teammate Zhang Zhizhen plays"), "on the bench"),
+    (AP_CAPTION.replace("reacts after winning a point against", "cheers on teammate Zhang against"),
+     "cheers on"),
+    (AP_CAPTION.replace("reacts after winning a point against", "watches on as his teammate plays"),
+     "watches on as"),
+    (AP_CAPTION.replace("reacts after winning a point against", "watches from the sidelines as Zhang plays"),
+     "watches from"),
 ])
 def test_说明不点对手或写的不是比赛本身_不换(caption, expect):
     """B1：同一个人在同一站不止一个时刻——发布会、训练、双打（拉沃尔杯单打双打都打）。
@@ -300,6 +309,11 @@ def test_说明不点对手或写的不是比赛本身_不换(caption, expect):
     # 对照组：AP 比赛图常写「during the night session」——裸的 session 不许拦
     night = AP_CAPTION.replace("during the Hangzhou Open", "during the night session of the Hangzhou Open")
     assert cu.metadata_problems(_ap(caption=night), _ctx()) == []
+    # 对照组：他自己在打的那一刻——裸的 cheers／watches、「cheers on court」不许拦
+    for mine in ("cheers after winning a point against", "cheers on court after beating",
+                 "watches the ball during his match against"):
+        own = AP_CAPTION.replace("reacts after winning a point against", mine)
+        assert cu.metadata_problems(_ap(caption=own), _ctx()) == [], mine
 
 
 def test_拉沃尔杯BS2_8696那张的说明过得了点名闸():
@@ -1082,3 +1096,259 @@ def test_最终那道闸在工作流的稀疏检出里和全量检出里判得�
     assert not diff, ("工作流的稀疏检出比全量多拦了这些（缺的素材要加进 "
                       "reel-cover-upgrade.yml 的 sparse-checkout）：\n"
                       + "\n".join(f"  {s}: {p}" for s, p in sorted(diff.items())[:8]))
+
+
+# ---------------------------------------------------------------- 评审第三轮
+
+def _load_collision_judge():
+    """CI 上那条判据本身（`tests/test_release_tag_collision.py`），换一个模块名载进来，
+    好把它的 `ROOT` 指到临时仓库——拿真判据判，不另写一份「差不多」的。"""
+    import importlib.util  # noqa: PLC0415
+
+    path = ROOT / "tests" / "test_release_tag_collision.py"
+    spec = importlib.util.spec_from_file_location("_release_tag_judge_under_test", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _commit(repo: Path, msg: str) -> None:
+    _git(repo, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", msg)
+
+
+def test_跨天重渲_新旧两格render_json都挂账_tag碰撞判据不红(tmp_path, monkeypatch):
+    """评审 NB1（在试合并上拿真 spec、真人脸模型、真 `_final_gate` 复现过）：最晚那一格
+    在前一天（北京）时 `stale_markers` 返回 []，工作流随后 `match-reel mode=render push=true`，
+    render 在**新的日期目录**写 render.json——Release 那一步 `--clobber` 传的是同一个 tag，
+    `video_url` 一样、`video_bytes` 不一样，两份都没 `_release_tag_note`，而 render 用
+    GITHUB_TOKEN 直推 main、CI 不跑，**下一个不相干的 PR 才红**。评审当时 `--plan` 的 6 条
+    目标里 4 条最晚那一格在前一天：跨天是常态。
+
+    判据：① 换图那一班就给旧的那格挂好账、进了索引（稀疏检出，`output/` 不在工作区）；
+    ② render 传完 Release，`release_tag_note.py current` 给新的那格挂账；
+    ③ 拿 CI 上那两条判据原样判这个仓库——挂账之前红、之后绿。"""
+    import release_tag_note as rtn  # noqa: PLC0415
+
+    url = f"https://github.com/o/r/releases/download/reel-{SLUG}/{SLUG}.mp4"
+    old = f"output/2026-09-26/reel/{SLUG}"            # NOW 是北京 9/27：最晚那一格在前一天
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))},
+                 {SLUG: [f"{old}/pushed.json"]})
+    records = {f"{old}/render.json": {"video_url": url, "video_bytes": 52300555}}
+    for i in range(20):                               # 判据自带「至少 20 份」的下限
+        other = f"filler-{i:02d}"
+        records[f"output/2026-09-20/reel/{other}/render.json"] = {
+            "video_url": f"https://github.com/o/r/releases/download/reel-{other}/{other}.mp4",
+            "video_bytes": 1000 + i}
+    for rel, data in records.items():
+        (repo / rel).parent.mkdir(parents=True, exist_ok=True)
+        (repo / rel).write_text(json.dumps(data, indent=2) + "\n", "utf-8")
+    _git(repo, "add", "-A")
+    _commit(repo, "renders")
+    _git(repo, "sparse-checkout", "set", "--no-cone", "/*", "!/output/")   # 和工作流一样
+    assert not (repo / old).exists()
+    assert cu.stale_markers(repo, SLUG, NOW) == [], "前提：跨天，没有同日的 pushed.json 要删"
+
+    got = _go(repo, NOW, final_gate=lambda spec: None)
+    assert got["upgraded"] == [SLUG], got["report"]
+    staged = json.loads(_git(repo, "show", f":{old}/render.json"))
+    note = str(staged.get(rtn.NOTE_KEY) or "")
+    assert f"reel-{SLUG}" in note and "2026-09-27" in note and "Content-Range" in note, (
+        f"① 换图那一班没给 tag 上的旧 render.json 挂账（或没进索引）：{staged}")
+    assert staged["video_bytes"] == 52300555, "挂账不许动原来记的数"
+    assert cu.load_ledger(repo)["upgrades"][SLUG]["tag_notes"] == [f"{old}/render.json"]
+    assert any("挂账" in line for line in got["report"]), got["report"]
+    _commit(repo, "upgrade")
+
+    # 派出去的 render 在北京 9/28 00:30 跑完：新的一格，同一个 tag，字节变了（封面换了）
+    new = f"output/2026-09-28/reel/{SLUG}"
+    (repo / new).mkdir(parents=True)
+    (repo / new / "render.json").write_text(
+        json.dumps({"video_url": url, "video_bytes": 52417311}, indent=2) + "\n", "utf-8")
+    _git(repo, "add", "--sparse", f"{new}/render.json")
+    judge = _load_collision_judge()
+    monkeypatch.setattr(judge, "ROOT", repo)
+    with pytest.raises(AssertionError, match=re.escape(new)):
+        # 对照组：新的那格没挂账，CI 上那条判据就是这么红的——判据看得见这个仓库
+        judge.test_同一个Release_tag被两份产物共用时每一份都要挂账()
+
+    rc = rtn.main(["current", "--render-json", str(repo / new / "render.json"),
+                   "--run-id", "36300000000", "--repo", str(repo),
+                   "--now", "2026-09-27T16:30:00Z"])
+    assert rc == 0
+    fresh = json.loads((repo / new / "render.json").read_text("utf-8"))
+    assert "run 36300000000" in str(fresh.get(rtn.NOTE_KEY)) and old in str(fresh.get(rtn.NOTE_KEY)), (
+        f"② 传完 Release 没给新的这一份挂账：{fresh}")
+    assert fresh["video_bytes"] == 52417311
+    _git(repo, "add", "--sparse", f"{new}/render.json")
+    judge.test_同一个Release_tag被两份产物共用时每一份都要挂账()
+    judge.test_挂账那句话不许写成一句空话()
+
+
+def test_旧render_json读不出来_动spec之前就退出_图不拉黑(tmp_path):
+    """挂账要先读旧的 render.json（稀疏检出下走 `git show :路径`）。读不出来（坏 JSON、git
+    跑不起来）时原来的顺序是：spec 和图已经写了，异常再从 `apply_upgrade` 冒出去——`run`
+    按「换完过不了闸」记一笔、**拉黑这张图**，而 spec 没退回。现在先读后写：读不出来就在
+    动 spec 之前退出，只退避、不拉黑（不是图的错）。"""
+    old = f"output/2026-09-26/reel/{SLUG}"
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))},
+                 {SLUG: [f"{old}/render.json"]})
+    (repo / old / "render.json").write_text("{坏的", "utf-8")
+    _git(repo, "add", "-A")
+    _commit(repo, "broken")
+    before = (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes()
+    got = _go(repo, NOW, final_gate=lambda spec: None)
+    assert got["reverted"] == [SLUG] and got["upgraded"] == [], got["report"]
+    assert (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes() == before
+    assert not (repo / "assets" / "reel" / f"{SLUG}-official.jpg").exists()
+    row = cu.load_ledger(repo)["attempts"][SLUG]
+    assert URL_A not in (row.get("tried") or []) and row["reverts"][-1]["blame_image"] is False
+    assert any("挂不了账" in line for line in got["report"]), got["report"]
+
+
+def test_Release挂账_不共用tag就不写_旧的没挂账要点名(tmp_path, capsys):
+    """`release_tag_note.py current` 的两头：第一次渲（没有别的记录共用这个 tag）一个字都
+    不写；会话手动跨天重渲（旧的那格没人挂账）——它不去改旧目录（一趟 render 只提交自己
+    那一格），但要打 `::warning::` 点名，别等下一个 PR 红了才知道。"""
+    import release_tag_note as rtn  # noqa: PLC0415
+
+    url = f"https://github.com/o/r/releases/download/reel-{SLUG}/{SLUG}.mp4"
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW)})
+    first = repo / f"output/2026-09-26/reel/{SLUG}/render.json"
+    first.parent.mkdir(parents=True)
+    first.write_text(json.dumps({"video_url": url, "video_bytes": 1}) + "\n", "utf-8")
+    assert rtn.mark_current(repo, first, "1", NOW) == (False, [])
+    assert rtn.NOTE_KEY not in json.loads(first.read_text("utf-8"))
+    _git(repo, "add", "-A")
+    _commit(repo, "first")
+    second = repo / f"output/2026-09-27/reel/{SLUG}/render.json"
+    second.parent.mkdir(parents=True)
+    second.write_text(json.dumps({"video_url": url, "video_bytes": 2}) + "\n", "utf-8")
+    assert rtn.main(["current", "--render-json", str(second), "--run-id", "2",
+                     "--repo", str(repo)]) == 0
+    out = capsys.readouterr().out
+    assert f"::warning::output/2026-09-26/reel/{SLUG}/render.json" in out, out
+    assert rtn.NOTE_KEY not in json.loads(first.read_text("utf-8")), "旧目录不归这一趟提交，不许改"
+    # 2026-08-13 之前的成片在 git 里、不走 Release：不会被换掉，`supersede` 不挂
+    raw = repo / f"output/2026-08-01/reel/{SLUG}/render.json"
+    raw.parent.mkdir(parents=True)
+    raw.write_text(json.dumps({"video_url": f"https://raw.githubusercontent.com/o/r/main/x/{SLUG}.mp4",
+                               "video_bytes": 3}) + "\n", "utf-8")
+    _git(repo, "add", "-A")
+    _commit(repo, "raw")
+    noted = rtn.supersede(repo, SLUG, NOW, "测试", stage=False)
+    assert noted == [f"output/2026-09-26/reel/{SLUG}/render.json",
+                     f"output/2026-09-27/reel/{SLUG}/render.json"], noted
+
+
+def test_plan不为怎么查都换不了的目标装依赖(tmp_path):
+    """评审 nit：`safiullin-bu-hangzhou-2026-qf` 没有 `_match.start_utc`、也没有
+    `flashscore_id`——判不了当地日期，一张图都换不上，而原来 `--plan` 照样把它算成目标，
+    48 小时里每 20 分钟为它装一遍 onnxruntime／opencv、拉一遍模型。对手英文名缺的同理
+    （点名闸要点对手）。有 `flashscore_id` 的（开赛时刻要联网才知道）照旧算目标。"""
+    no_time = _spec()
+    no_time["slug"] = "no-time"
+    no_time["_match"] = {}
+    no_opp = _spec()
+    no_opp["slug"] = "no-opp"
+    no_opp["cover"]["matchup"][1].pop("name_en")
+    live = _spec()
+    repo = _repo(tmp_path, {"no-time": (no_time, NOW - timedelta(hours=6)),
+                            "no-opp": (no_opp, NOW - timedelta(hours=6)),
+                            SLUG: (live, NOW - timedelta(hours=6))})
+    got = cu.plan(repo, NOW)
+    assert got["targets"] == [SLUG], got["report"]
+    text = "\n".join(got["report"])
+    assert "no-time：怎么查都换不了" in text and "开赛时刻" in text, text
+    assert "no-opp：怎么查都换不了" in text and "对手" in text, text
+    # run 那边同一个口径：对手不知道就不查（不再每张候选各报一遍）
+    calls: list = []
+    ran = cu.run(repo, NOW, apply=False, only="no-opp", sweeps_for=_one(_ap(), calls),
+                 times=lambda _id: (START, None), fetch=lambda _u: b"")
+    assert calls == [] and any("对手的英文名" in line for line in ran["report"]), ran["report"]
+
+
+def test_进程死在进清单和记账之间_下一班plan补记(tmp_path, monkeypatch):
+    """评审 nit：`apply_upgrade` 先进清单再记账（宁可提交上去的是「spec 换了、账没记」）。
+    可真死在两步之间，`OWNER_APPROVED_FRAME_COVERS` 减不掉这个 slug，`test_match_reel`
+    豁免表自检 ⑤ 一直红——而这一条已经不是抽帧、不再是目标，没有东西会去修。
+    下一班 `--plan --apply` 认出机器换过的 spec（`_why` 的开头），补记一笔，**不重派**。"""
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
+
+    class Died(BaseException):
+        pass
+
+    def die(*_a, **_k):
+        raise Died()
+    with monkeypatch.context() as m:
+        m.setattr(cu, "save_ledger", die)
+        with pytest.raises(Died):
+            _go(repo, NOW, final_gate=lambda spec: None)
+    assert cu.upgraded_slugs(repo) == set()
+    # 人手写的、图名也叫 -official 的（medvedev-damm 那种）不许被认成机器换的
+    hand = _spec()
+    hand["slug"] = "hand-made"
+    hand["cover"]["portrait"] = {"image": "assets/reel/hand-made-official.jpg",
+                                 "_why": "人挑的", "_gates": "人写的"}
+    (repo / "specs" / "reels" / "hand-made.json").write_text(json.dumps(hand), "utf-8")
+    later = NOW + timedelta(minutes=20)
+    dry = cu.plan(repo, later)
+    assert dry["reconciled"] == [SLUG] and cu.upgraded_slugs(repo) == set(), "干跑也写了账"
+    got = cu.plan(repo, later, apply=True)
+    assert got["reconciled"] == [SLUG], got["report"]
+    row = cu.load_ledger(repo)["upgrades"][SLUG]
+    assert row["status"] == "upgraded" and row["reconciled"] and row["image"].endswith("-official.jpg")
+    assert cu.upgraded_slugs(repo) == {SLUG}
+    assert any("补记" in line for line in got["report"]), got["report"]
+    # 不重派：那一班提交之后派发照常走过；拿补记的时刻去比发布账本会白重渲一趟
+    assert cu.redispatch_plan(repo, later + timedelta(hours=3))[0] == []
+    assert cu.plan(repo, later + timedelta(minutes=20), apply=True)["reconciled"] == [], "补了还补"
+
+
+def test_下到一半断掉的图不拉黑(monkeypatch):
+    """评审 nit：`evaluate` 把「图打不开」记成下过、永久拉黑——而连接中途断了、字节只下到
+    一半的图也解不开。字节数对不上 Content-Length 就当「下不下来」（不拉黑，下一班再下）。"""
+    import requests  # noqa: PLC0415
+
+    class Raw:
+        def __init__(self, blob):
+            self.blob = blob
+
+        def read(self, _n, decode_content=True):
+            return self.blob
+
+    class Resp:
+        def __init__(self, blob, headers):
+            self.raw, self.headers = Raw(blob), headers
+
+        def raise_for_status(self):
+            return None
+
+    full = _photo("ok")
+    cut = full[: len(full) // 2]
+    monkeypatch.setattr(requests, "get", lambda *_a, **_k: Resp(cut, {"Content-Length": str(len(full))}))
+    with pytest.raises(OSError, match="只下到"):
+        cu.fetch_image("https://assets.apnews.com/x/cut.jpg")
+    monkeypatch.setattr(requests, "get", lambda *_a, **_k: Resp(full, {"Content-Length": str(len(full))}))
+    assert cu.fetch_image("https://assets.apnews.com/x/ok.jpg") == full
+    # 压缩传输：Content-Length 是压缩后的长度，比不了，不比
+    monkeypatch.setattr(requests, "get", lambda *_a, **_k: Resp(
+        full, {"Content-Length": "10", "Content-Encoding": "gzip"}))
+    assert cu.fetch_image("https://assets.apnews.com/x/gz.jpg") == full
+    # evaluate 那一头：下不下来的**不**记成下过
+    target = cu.Target(slug=SLUG, spec=_spec(), first_sent=NOW, spec_path=Path("x"))
+
+    def fetch(_url):
+        raise OSError("只下到 1 / 2 字节（连接中途断了）")
+    chosen, rows = cu.evaluate(target, _ctx(), [_ap()], fetch=fetch, checker=_stub_checker)
+    assert chosen is None and not rows[0].get("tried"), rows
+    assert any("下不下来" in p for p in rows[0]["problems"]), rows
+
+
+def test_WTA赛后稿头图那一档拿掉了_photo_resources还在():
+    """评审 nit：Match Reaction 的 og:image 只带文件名、没有说明，全名／对手／日期凑不齐，
+    恒换不上，却每一班为每条 WTA 目标花一次 `find_match`。photo-resources 留着——
+    `GettyImages-*` 会去取 Getty 的说明。"""
+    labels = [label for label, _run in cu.default_sweeps(_ctx(tour="wta", site=None))]
+    assert "WTA photo-resources" in labels, labels
+    assert not any("赛后稿" in label for label in labels), labels
+    assert not hasattr(cu, "wta_article")

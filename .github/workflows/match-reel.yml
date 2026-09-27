@@ -1278,6 +1278,16 @@ jobs:
                           encoding="utf-8")
           print("render.json 记下 video_url")
           PY
+          # **挂账**（评审 NB1）：同一个 slug 跨天重渲，新旧两格 render.json 共用这一个 tag、
+          # 字节数对不上——`test_同一个Release_tag被两份产物共用时每一份都要挂账` 要每一份都写
+          # `_release_tag_note`。这一趟刚传完，**只有它知道此刻 tag 上是哪一份**，新的这份当场
+          # 写上；旧目录不归这一趟提交（只碰自己那一块），没挂账的点名打 ::warning::。O4 自动
+          # 换图那条路换图时就给旧的挂好了（cover_upgrade.apply_upgrade）。
+          # 挂账失败不许拖红一条已经传上去的成片，但要出声。
+          if ! python tools/release_tag_note.py current \
+               --render-json "$OUTDIR/render.json" --run-id "${{ github.run_id }}"; then
+            echo "::warning::$OUTDIR/render.json 的 Release tag 挂账没写成——合并前手写一句 _release_tag_note"
+          fi
           rm -f "$REEL"
 
       # ⚠️ **mode=push 不许走这一步。** push 那条路一个中间物都不产（复制页 +

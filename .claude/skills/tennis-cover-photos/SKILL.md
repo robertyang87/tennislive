@@ -2197,7 +2197,7 @@ GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: 
 把那一下接过来：
 
     近 48 小时推过（发布账本第一次 sent）、spec 的 cover.portrait 还是 frame_at 的「赛场之上」
-      → find_cover_photo 各档（WTA photo-resources ＋ 赛后稿头图 / AP / 当地报纸 / 赛事官网 WP）
+      → find_cover_photo 各档（WTA photo-resources / AP / 当地报纸 / 赛事官网 WP）
       → 机器闸全过才换 → spec ＋ assets/reel/<slug>-official.<ext> ＋ data/cover_upgrades.json 推 main
       → 同日的 pushed.json 删掉 → match-reel mode=render push=true
 
@@ -2240,6 +2240,24 @@ O4 授权的是「过了这几道就换」。换完拿**正式的** `validate_sp
 `test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样` 把那张单子按 cone 模式真的展开、拿全库
 「赛场之上」抽帧封面逐条对账（`validate_spec` 以后再多读一样东西，它自己会红）；退回时先问一句
 「换图之前的原 spec 在这个检出里过不过」——也过不了，拦的就不是图，只退避、不拉黑。
+
+⚠️⚠️ **跨天重渲会在 Release tag 上撞车**（2026-09-27 评审第三轮 BLOCKING NB1，试合并上拿真 spec 复现过）：
+`match-reel` 的 Release 那一步是 `TAG="reel-$SLUG"` ＋ `gh release upload --clobber`，重渲传的还是同一个 tag。
+最晚那一格在前一天（北京）时，新的 render.json 落进**新的日期目录**——和旧的那格同一个 `video_url`、不同的
+`video_bytes`，`test_同一个Release_tag被两份产物共用时每一份都要挂账` 要两份都写 `_release_tag_note`。
+render 用 GITHUB_TOKEN 直推 main、CI 不跑，**下一个不相干的 PR 才红**；而跨天是常态（当时 6 条目标里 4 条）。
+现在两头各挂自己知道的那一半（`tools/release_tag_note.py`）：换图时 `apply_upgrade` 给这个 slug 在 tag 上的
+**每一格旧 render.json** 挂账、`git add --sparse` 进同一个提交（同日那格也挂——北京 23 点后派的重渲会跑过午夜）；
+`match-reel.yml` 传完 Release、写完 `video_url` 当场给**新的这一格**挂（`release_tag_note.py current`，只有它知道
+此刻 tag 上是哪一份）。会话手动跨天重渲的旧格它不去改（一趟 render 只提交自己那一格），打 `::warning::` 点名。
+判据 `test_跨天重渲_新旧两格render_json都挂账_tag碰撞判据不红`（拿 CI 那条判据原样判临时仓库，挂账前红、后绿）。
+
+同一轮收掉的几处：Match Reaction 头图那一档拿掉了（只有 og:image 文件名、没有说明，点名闸恒过不了，却每班为每条
+WTA 目标花一次 `find_match`；photo-resources 留着，`GettyImages-*` 带 Getty 说明）；`--plan` 不再把**不联网就知道
+换不了**的算成目标（没有开赛时刻、对手英文名缺、赛事认不出……`static_problems`，原来 48 小时里每 20 分钟为它装一遍
+依赖）；进程死在「进清单」和「记账」之间时，下一班 `--plan` 认出机器换过的 spec（`_why` 开头）**补记**那一笔、不重派；
+下到一半断掉的图（字节对不上 Content-Length）记「下不下来」、不拉黑；点名闸加上「在场边看队友打」的说法
+（`on/from the bench`、`sideline`、`cheers on`、`watches on as/from`，裸的 cheers／watches 不收）。
 
 ⚠️ **按这套闸，拉沃尔杯官网那批图过不了**：`lavercup.com` 媒体库的上限是 1200 宽
 （`BS2_8696` 1200×927、`CB_34032` 1200×832、`BS2_9519` 1200×800），铺 1080×1440 要放大

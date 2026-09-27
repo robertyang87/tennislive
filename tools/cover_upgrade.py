@@ -23,7 +23,7 @@
    ⚠️ 判据是 spec 本身，不是 `OWNER_APPROVED_FRAME_COVERS` 那张表——表只是
    「允许抽帧」，spec 才是「现在是不是抽帧」。
 2. **查官方图**（`search`）：复用 `find_cover_photo.py` 的各档——WTA photo-resources
-   ＋ WTA 赛后稿头图（女子）、AP、当地报纸每日图集（按城市）、赛事官网 WP 媒体库
+   （女子；`GettyImages-*` 带 Getty 说明）、AP、当地报纸每日图集（按城市）、赛事官网 WP 媒体库
    （`EVENTS` 里登记了域名的）。每一档跑没跑、取没取到都记下来：「没跑」「取不到」
    和「查空」在报告里长得不一样。
 3. **机器闸，全过才换**（`evaluate`）——**任何一项拿不准都不换**：
@@ -47,7 +47,10 @@
    **这一笔同时让 `build_match_reel.OWNER_APPROVED_FRAME_COVERS` 减掉这个 slug**
    （那张表的自检要求「补上真图之后也该删」，机器不去改 Python 源码，改数据）。
 5. **重推**：同日重渲会撞上旧的 `pushed.json`，按 2026-09-22「重渲之后默认就是
-   重推……把它从仓库里删掉」删掉（`stale_markers`）；工作流随后
+   重推……把它从仓库里删掉」删掉（`stale_markers`）；这个 slug 在 Release tag 上的
+   每一份旧 `render.json` 挂一句 `_release_tag_note`（`release_tag_note.supersede`，
+   评审 NB1：跨天重渲是常态，新旧两格共用一个 tag、字节对不上，不挂账下一个 PR 就红；
+   新的那一格由 `match-reel.yml` 传完 Release 当场挂）；工作流随后
    `match-reel mode=render push=true` 走正常的渲 → 质检 → 推送。推完会话用
    `python3 tools/push_link.py --slug <slug>` 把新的推送网页发进对话。
    **派发会丢**（`gh workflow run` 失败、runner 被砍）：工作流重试三次；再不行，
@@ -58,6 +61,9 @@
 
 工作流第一步只读 json：要查图的目标有几条、要重派的 render 有几条。都是 0 就不装
 onnxruntime／opencv、不拉模型，直接收工（一天 72 班，绝大多数是 0 条）。
+不联网就知道怎么查都换不了的（没有开赛时刻、对手英文名缺、赛事认不出……`static_problems`）
+不算目标；spec 已经被机器换了图、账里却没有那一笔的（进程死在进清单和记账之间），
+补记（`reconcile_orphans`，不重派）。
 
 ## 查过的不重下，退回的要退避
 
@@ -441,6 +447,8 @@ def redispatch_plan(repo: Path, now: datetime) -> tuple[list[str], list[str]]:
     for slug, row in sorted(load_ledger(repo)["upgrades"].items()):
         if not isinstance(row, dict) or row.get("status") != "upgraded":
             continue
+        if row.get("reconciled"):
+            continue                # 补记的：派发在换图那一班走过（见 `reconcile_orphans`）
         at = _parse_utc(row.get("at") or "")
         if at is None or now - at > WINDOW:
             continue
@@ -461,6 +469,57 @@ def redispatch_plan(repo: Path, now: datetime) -> tuple[list[str], list[str]]:
         notes.append(f"{slug}：{at:%m-%d %H:%M}Z 换了图，{waited} 分钟了发布账本里没有新的推送尝试——"
                      f"当成派发丢了，重派 render（第 {len(sends) + 1} 次，最多 {MAX_REDISPATCH} 次）")
     return due, notes
+
+
+#: `upgraded_portrait` 写的 `_why` 开头。spec 是不是**机器**换的图只认这一句——`_gates`
+#: 人手写的 spec 里也有（`bu-zheng-hangzhou-2026-r1` 等），`<slug>-official.jpg` 这种图名
+#: 人也用过（`medvedev-damm`）。
+AUTO_WHY_PREFIX = "自动换图（账号所有者 2026-09-27 O4「自动换图重推」"
+
+
+def reconcile_orphans(repo: Path, now: datetime, *, apply: bool = False,
+                      only: str = "") -> tuple[list[str], list[str]]:
+    """spec 已经被机器换了图、账里却没有那一笔的——补记（评审 nit）。
+
+    `apply_upgrade` 故意**先进清单、再记账**：进程死在两步之间，提交上去的是 spec 和图、
+    没有账。不补的话 `OWNER_APPROVED_FRAME_COVERS` 减不掉这个 slug，`test_match_reel`
+    豁免表自检 ⑤（「补上真图之后也该删」）一直红，而机器这边它已经不是抽帧、不再是目标，
+    **没有东西会去修**。补一笔 `status: upgraded` ＋ `reconciled`。
+
+    ⚠️ 补记的**不重派 render**（`redispatch_plan` 跳过它）：那一班提交之后派发照常走过
+    （`upgraded.txt` 上有它、提交成了才派）；而补记的 `at` 是补记的时刻，拿它去比发布账本
+    会把早已推过的那次当成「没推」，白白重渲一趟。要是那一班连派发也失败了——这是对账
+    唯一猜不了的一格，报告里写着，要人看。
+    返回 (补记的 slug, 每一条的说明)。"""
+    ledger = load_ledger(repo)
+    rows = ledger["upgrades"]
+    found: list[str] = []
+    notes: list[str] = []
+    for path in sorted((repo / SPEC_DIR).glob("*.json")):
+        slug = path.stem
+        if (only and slug != only) or slug in rows:
+            continue                # 账里有这一条（哪怕是人改过的 status）：人管着，不动
+        try:
+            spec = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        art = ((spec.get("cover") or {}) if isinstance(spec, dict) else {}).get("portrait")
+        if not isinstance(art, dict):
+            continue
+        image = str(art.get("image") or "")
+        if not re.fullmatch(rf"assets/reel/{re.escape(slug)}-official\.(?:jpe?g|png)", image):
+            continue
+        if not str(art.get("_why") or "").startswith(AUTO_WHY_PREFIX):
+            continue
+        found.append(slug)
+        notes.append(f"{slug}：spec 已经自动换成 {image}，{LEDGER} 里却没有这一笔（进程死在进清单和"
+                     "记账之间）——补记 upgraded（豁免表才减得掉它）；不重派 render（那一班派过），"
+                     "成片要是还是抽帧，要人看那一班的派发")
+        rows[slug] = {"status": "upgraded", "at": _stamp(now), "image": image,
+                      "reconciled": f"{_stamp(now)} --plan 对账补记：spec 已换图、账里没这一笔"}
+    if apply and found:
+        save_ledger(repo, ledger, now)
+    return found, notes
 
 
 def mark_redispatched(repo: Path, slugs: Iterable[str], now: datetime) -> None:
@@ -588,6 +647,10 @@ def match_context(spec: dict, *, times: Callable[[str], tuple] = flashscore_time
             ctx.opponent_surname = last[-1] if last else ""
     if subject and not ctx.subject_en:
         ctx.problems.append(f"cover.matchup 里没有「{subject}」的英文名，查不了图")
+    elif subject and not ctx.opponent_surname:
+        # 点名闸要说明里点了对手才认是这一场（`metadata_problems`）——对手的英文名不在，
+        # 每一张候选都过不了，查了也白查
+        ctx.problems.append("cover.matchup 里没有对手的英文名——判不了是不是这一场，不换")
     tokens = _fold(ctx.subject_en).split()
     ctx.surname = tokens[-1] if tokens else ""
     try:
@@ -677,11 +740,19 @@ class Candidate:
 #: **photocall**」「**headshot**」「**hits during a session ahead of his match**」。
 #: 记者会、定妆、赛前练球的脸大、正、睁眼，`evaluate` 又挑最大的脸——正是这一类最该拦。
 #: ⚠️ 不收裸的 `session`：AP 的比赛图常写「during the night session」。
+#:
+#: 评审第二轮 nit：团体赛（拉沃尔杯、戴维斯杯、比利·简·金杯）里「X reacts **on the bench**
+#: as teammate … plays <对手>」全名、对手、日期全在——拍的是他在场边看别人打。只收**看别人
+#: 打**的说法（`on/from the bench`、`sideline`、`cheers on`、`watches on as`／`watches from`）：
+#: 裸的 `cheers`／`watches` 不收，「cheers after winning a point」「cheers on court」
+#: 「watches the ball」是他自己在打的那一刻。
 NOT_IN_MATCH = re.compile(
     r"\b(?:practi[cs]\w*|training|trains|warm\w*|(?:news|press) conferences?"
     r"|interview\w*|autograph\w*|arriv\w*|portraits?|pos(?:e|es|ed|ing)"
     r"|media|reporters?|journalists?|photo ?calls?|head ?shots?"
     r"|hit(?:s|ting)?(?: during an?)? sessions?|ahead of (?:his|her|their)"
+    r"|(?:on|from) the bench|sidelines?|cheer(?:s|ing)? on(?! (?:the )?court)"
+    r"|watch(?:es|ing)? (?:on as|from)"
     r"|doubles|mixed)\b")
 
 
@@ -821,7 +892,11 @@ def default_sweeps(ctx: MatchContext) -> list[tuple[str, Callable[[], Iterable[C
             Candidate("wta", r["url"], caption=r.get("caption") or "", name=r["name"],
                       page="、".join(r.get("seen_on") or []))
             for r in fcp.sweep_wta(ctx.surname, None, None)]))
-        sweeps.append(("WTA 赛后稿头图", lambda: wta_article(ctx)))
+        # ⚠️ 原来这里还有一档「WTA 赛后稿头图」（Match Reaction 的 og:image）：它只带
+        # 文件名（`<姓>-R2-<摄影师>.jpg`）、没有说明，点名闸要的全名／对手／日期一样都
+        # 凑不齐——**恒换不上**，却每一班为每条 WTA 目标花一次 `find_match`（评审 nit，
+        # 2026-09-27 拿掉）。photo-resources 那一档留着：里面的 `GettyImages-<id>.jpg`
+        # 会去取 Getty 的说明，全名、对手、赛事、日期都写在那句话里。
     sweeps.append(("AP 通讯社", lambda: fcp._get(f"{fcp._AP}/hub/tennis", timeout=40) and [
         Candidate("ap", r["url"], caption=r["caption"], page=r["article"],
                   credit=(re.search(r"\(([^()]*AP[^()]*)\)\s*$", r["caption"]) or [None, ""])[1])
@@ -850,41 +925,6 @@ def default_sweeps(ctx: MatchContext) -> list[tuple[str, Callable[[], Iterable[C
             return out
         sweeps.append((f"赛事官网 {ctx.site}", site_rows))
     return sweeps
-
-
-def wta_article(ctx: MatchContext) -> list[Candidate]:
-    """WTA 赛后稿（Match Reaction）的头图——`fetch_wta_cover_photo` 那条链的前半截，
-    **不下图**：图交给后面统一的闸去下、去认。"""
-    import requests  # noqa: PLC0415
-
-    from fetch_match_pbp import find_match  # noqa: PLC0415
-    from fetch_wta_cover_photo import _get, og_image, pick_article  # noqa: PLC0415
-
-    if ctx.start_utc is None:
-        return []
-    day = ctx.start_utc.date()
-    # 两个姓一起找：只拿「wang」去找会先撞上别的王（同一站常有两三个）
-    names = [n for n in (ctx.surname, ctx.opponent_surname) if n]
-    event_id, year, match_id, row = find_match(
-        requests.Session(), names, day - timedelta(days=1), day + timedelta(days=1))
-    city = re.sub(r"[^a-z0-9]+", "-", ctx.event_en.lower()).strip("-")
-    page = _get(f"https://www.wtatennis.com/tournament/{event_id}/{city}/{year}"
-                f"/scores/{match_id}").decode("utf-8", "replace")
-    links = sorted(set(re.findall(r'href="(/news/\d+[^"]+)"', page)))
-    opp = [str(row.get(k) or "") for k in ("PlayerNameLastA", "PlayerNameLastB")]
-    # slug 是连字符分词的（`…/alexandrova-sabalenka-…`），多词姓也按连字符拼
-    chosen = pick_article(links, [_fold(n).replace(" ", "-") for n in opp if n]
-                          or [ctx.surname])
-    if not chosen:
-        return []
-    art = _get("https://www.wtatennis.com" + chosen).decode("utf-8", "replace")
-    img = og_image(art)
-    if not img:
-        return []
-    # og:image 原样用——`fetch_wta_cover_photo` 就是这么取的（实测 4045×2685），
-    # 别自作主张拼 `?width=`
-    return [Candidate("wta-article", img, name=img.rsplit("/", 1)[-1],
-                      page="https://www.wtatennis.com" + chosen)]
 
 
 def search(ctx: MatchContext, *, sweeps=None) -> tuple[list[Candidate], list[str]]:
@@ -982,6 +1022,14 @@ def fetch_image(url: str) -> bytes:
     blob = resp.raw.read(MAX_BYTES + 1, decode_content=True)
     if len(blob) > MAX_BYTES:
         raise ValueError(f"超过 {MAX_BYTES // (1 << 20)} MB")
+    # 下到一半断掉的图解不开，会被判成「图打不开」、记成下过、**永久拉黑**（评审 nit）——
+    # 而那是网络的错，不是图的错。所以字节数要和 Content-Length 对得上才算下完；对不上
+    # 就抛，`evaluate` 记成「下不下来」（不拉黑，下一班再下）。压缩传输时 Content-Length
+    # 是压缩后的长度，比不了，不比。
+    declared = str(resp.headers.get("Content-Length") or "").strip()
+    encoding = str(resp.headers.get("Content-Encoding") or "identity").strip().lower()
+    if declared.isdigit() and encoding in ("", "identity") and len(blob) != int(declared):
+        raise OSError(f"只下到 {len(blob)} / {declared} 字节（连接中途断了）")
     return blob
 
 
@@ -1193,7 +1241,8 @@ def _gate(gate: Callable[[dict], str | None], spec: dict) -> str | None:
 
 
 class GateRejected(RuntimeError):
-    """换完过不了正式的封面闸、已退回。`blame_image`：是不是**这张图**的错。"""
+    """换完过不了正式的封面闸、已退回（或者动手之前就知道换不成：Release tag 上的旧
+    render.json 读不出来）。`blame_image`：是不是**这张图**的错。"""
 
     def __init__(self, message: str, *, blame_image: bool = True):
         super().__init__(message)
@@ -1204,12 +1253,28 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
                   considered: list[dict], now: datetime, *, final_gate=_final_gate,
                   baseline_gate=_baseline_gate, git_rm: bool = True,
                   out_slugs: Path | None = None) -> dict:
-    """写图、改 spec、删同日的 `pushed.json`、记账。过不了最终那道闸就全部退回去，
+    """写图、改 spec、删同日的 `pushed.json`、给 Release tag 上的旧 render.json 挂账、记账。
+    过不了最终那道闸就全部退回去，
     抛 `GateRejected`（带「是不是这张图的错」）。
 
     `out_slugs` 排在**记账之前**追加（评审第二轮）：进程要是死在两步之间，宁可提交上去
     的是「spec 换了图、账没记」（render 照样过，豁免表那条自检红一次），也不要「账记了
     upgraded、spec 没跟上」（豁免表减掉了、spec 还是抽帧，render 和 CI 一起红）。"""
+    # 评审 NB1：重渲传上 Release 时 `--clobber` 换掉 tag 上那份，旧的每一格 render.json
+    # 还记着自己那一版的 video_bytes——跨天（常态）时新旧两格共用一个 tag、字节对不上，
+    # `test_同一个Release_tag被两份产物共用时每一份都要挂账` 在下一个不相干的 PR 上红。
+    # 旧的这一半只有这里知道（重渲还没派），过闸之后和 pushed.json 一起挂；新的那一半由
+    # match-reel.yml 传完当场挂。**先读、后写**：旧记录读不出来（git、JSON）就在动 spec
+    # 之前退出——不留「spec 换了、账没挂」的半截，也不拉黑图（不是图的错）。
+    import release_tag_note  # noqa: PLC0415
+
+    try:
+        tag_rows = release_tag_note.superseded(
+            repo, target.slug, now, "O4 抽帧封面自动换成官方实拍（tools/cover_upgrade.py），"
+            "随后派发 match-reel mode=render push=true 重渲重推")
+    except (OSError, ValueError, RuntimeError) as exc:
+        raise GateRejected(f"{target.slug}：Release tag 上的旧 render.json 读不出来、挂不了账，"
+                           f"没换——{exc}", blame_image=False) from exc
     c: Candidate = chosen["candidate"]
     ext = Path(c.url.split("?", 1)[0]).suffix.lower()
     ext = ext if ext in (".jpg", ".jpeg", ".png") else ".jpg"
@@ -1250,6 +1315,7 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
     if git_rm and markers:
         subprocess.run(["git", "-C", str(repo), "rm", "-q", "--sparse", "--", *markers],
                        check=True)
+    tag_notes = release_tag_note.write_all(repo, tag_rows, stage=git_rm)
     ev = chosen["evidence"]
     entry = {
         "status": "upgraded",
@@ -1264,6 +1330,7 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
         "gates": {"size": ev["size"], "layout": ev["layout"], "face": ev["face"]},
         "previous_portrait": old,
         "removed_markers": markers,
+        "tag_notes": tag_notes,
         "considered": [{k: v for k, v in r.items() if k != "evidence"}
                        for r in considered[:20]],
     }
@@ -1356,6 +1423,7 @@ def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
             continue
         upgraded.append(target.slug)
         report.append(f"    → 已换成 {entry['image']}；删掉 {entry['removed_markers'] or '（没有同日的 pushed.json）'}；"
+                      f"给 tag 上的 {len(entry['tag_notes'])} 份旧 render.json 挂账；"
                       "接下来 match-reel mode=render push=true")
     return {"upgraded": upgraded, "reverted": reverted, "report": report}
 
@@ -1399,25 +1467,62 @@ def main(argv: list[str] | None = None) -> int:
     return 1 if got.get("reverted") else 0
 
 
+class _Offline(RuntimeError):
+    pass
+
+
+def _offline(_match_id: str) -> tuple:
+    raise _Offline("--plan 不联网")
+
+
+def static_problems(spec: dict) -> list[str]:
+    """**不联网就判得出**的「这一条怎么查都换不了」：主角／对手的英文名缺、双打、赛事
+    认不出、spec 里既没有 `_match.start_utc` 也没有 `flashscore_id`、时区不在表里。
+
+    `--plan` 据此不把它算成目标（评审 nit：`safiullin-bu-hangzhou-2026-qf` 这种没有开赛
+    时刻的，原来 48 小时里每 20 分钟为它装一遍 onnxruntime／opencv、拉一遍模型，而它
+    一张图都换不上）。开赛时刻要联网才知道的（有 `flashscore_id`）照旧算目标——
+    `match_context` 在这儿拿不到时刻就提前返回，它后面的检查一律不算「静态」。
+    只用标准库（`reel_facts` 是纯 Python），`--plan` 照样不装依赖。"""
+    ctx = match_context(spec, times=_offline)
+    return [p for p in ctx.problems if not p.startswith("flashscore 开赛时刻取不到")]
+
+
 def plan(repo: Path, now: datetime, *, apply: bool = False, only: str = "") -> dict:
     """工作流第一步（N4）：**不装依赖**先看有没有活——要查图的目标、要重派的 render。
     两样都没有，后面的装包、拉模型、查图全部跳过（原来每 20 分钟一班、一天 72 班，
-    每一班都装一遍 onnxruntime／opencv、拉一遍模型，而绝大多数班次是 0 条）。"""
+    每一班都装一遍 onnxruntime／opencv、拉一遍模型，而绝大多数班次是 0 条）。
+    不联网就知道换不了的（`static_problems`）不算目标；spec 已经换了图、账里却没有那一笔
+    的，补记（`reconcile_orphans`）。"""
     found, notes = targets(repo, now)
     due, dnotes = redispatch_plan(repo, now)
     if only:
         found = [t for t in found if t.slug == only]
         due = [s for s in due if s == only]
+    live: list[Target] = []
+    for t in found:
+        stuck = static_problems(t.spec)
+        if stuck:
+            notes.append(f"{t.slug}：怎么查都换不了——" + "；".join(stuck)
+                         + "（spec 补齐之前不为它装依赖）")
+        else:
+            live.append(t)
+    found = live
+    orphans, onotes = reconcile_orphans(repo, now, apply=apply, only=only)
     # `::warning::` 要顶格才是 Actions 的注解，前面加了标签就只是一行普通日志
     report = ([f"[跳过] {n}" for n in notes]
-              + [n if n.startswith("::") else f"[对账] {n}" for n in dnotes])
+              + [n if n.startswith("::") else f"[对账] {n}" for n in dnotes + onotes])
     report.append(f"[封面升级] 要查图的：{len(found)} 条" +
                   (f"（{'、'.join(t.slug for t in found)}）" if found else ""))
     report.append(f"[封面升级] 要重派 render 的：{len(due)} 条" +
                   (f"（{'、'.join(due)}）" if due else ""))
+    if orphans:
+        report.append(f"[封面升级] 补记换过图的账：{len(orphans)} 条（{'、'.join(orphans)}）"
+                      + ("" if apply else "（干跑，没写）"))
     if apply:
         mark_redispatched(repo, due, now)
-    return {"targets": [t.slug for t in found], "redispatch": due, "report": report}
+    return {"targets": [t.slug for t in found], "redispatch": due, "reconciled": orphans,
+            "report": report}
 
 
 if __name__ == "__main__":

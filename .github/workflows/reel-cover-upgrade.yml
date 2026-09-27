@@ -152,7 +152,9 @@ jobs:
       # always()：上一步可能因为「某一条换完过不了正式的封面闸、已退回」而红（红是为了
       # 让人看见），别的条换好的照样要推。upgraded.txt 是**换成一条就当场追加**的，
       # 上一步半路崩了，已经换好的那几条也在清单上（账和 spec 一起提交，不会只提交账）。
-      # 没换图也可能要提交账：对账重派记了一笔、下过没过闸的候选（下一班跳过）、退避。
+      # 没换图也可能要提交账：对账重派记了一笔、补记了一笔、下过没过闸的候选（下一班跳过）、退避。
+      # 换图那一步自己已经 `git add --sparse` 了两样：删掉的同日 pushed.json、给 Release
+      # tag 上的旧 render.json 挂的账（评审 NB1）——下面的 commit 一起带上。
       - name: 换了的、账变了的推上 main（都没变不制造空提交）
         id: commit
         if: always()
@@ -177,7 +179,7 @@ jobs:
           if [ -s "$RUNNER_TEMP/upgraded.txt" ]; then
             MSG="reel: 抽帧封面自动换成官方实拍（O4）$(paste -sd' ' "$RUNNER_TEMP/upgraded.txt")"
           else
-            MSG="reel: 封面自动换图的账（对账重派／下过的候选／退避）"
+            MSG="reel: 封面自动换图的账（对账重派／补记／下过的候选／退避）"
           fi
           git commit -m "$MSG"
           source tools/git_push_retry.sh
