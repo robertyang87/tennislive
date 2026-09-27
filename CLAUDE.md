@@ -55,6 +55,7 @@
 
 | skill | 撞上什么时候加载 |
 |---|---|
+| `tennis-owner-taste` | **做任何一条视频之前**：账号所有者的口味规则（选题、钩子、封面、旁白、剪辑、字幕、文案）和开工前清单 |
 | `tennis-cover-photos` | 挑封面、找配图、判断一张图能不能用、抽帧、查某个图库渠道 |
 | `tennis-poster-layout` | 改封面版式、比分板、台头、角标；渲出来版式不对 |
 | `tennis-media-sources` | 找源片；查比分、统计、排名、交手记录 |
@@ -62,6 +63,8 @@
 | `tennis-video-craft` | 剪窗口、调字幕、配音、改取景混音；成片听感观感不对 |
 | `tennis-editorial` | 写旁白和文案、定叙事结构、拿不准措辞口径 |
 | `tennis-dev-practices` | 写判据、做反向验证、排查测试或 CI 异常 |
+
+⭐⭐ **做视频之前先加载 `tennis-owner-taste`、过开工前清单，发 render 之前跑 `python3 tools/taste_preflight.py --slug <slug>`**（账号所有者 2026-09-27：「形成一个通用的规则在做视频前就拦掉，而不是说做了一半又返工」；钩子口径以它为准，含同日定的「钩子里破发、抢七也不用」）。
 
 **而「这个仓库里有什么、怎么跑起来」不在这儿，在 [`README.md`](README.md)**：
 「栏目」「三条视频生产线」（各自的 spec 与 mode）「发布链路」（成片走 Release、
