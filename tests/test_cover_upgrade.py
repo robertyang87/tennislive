@@ -299,6 +299,11 @@ AP_NEWS_CONF = ("Coleman Wong of Hong Kong speaks during a news conference after
      "watches on as"),
     (AP_CAPTION.replace("reacts after winning a point against", "watches from the sidelines as Zhang plays"),
      "watches from"),
+    # 评审第四轮 nit：收窄之后，看别人打的那几种照样拦
+    (AP_CAPTION.replace("reacts after winning a point against", "reacts on the sideline as teammate Zhang plays"),
+     "on the sideline"),
+    (AP_CAPTION.replace("reacts after winning a point against", "cheers on his teammate Zhang against"),
+     "cheers on his teammate"),
 ])
 def test_说明不点对手或写的不是比赛本身_不换(caption, expect):
     """B1：同一个人在同一站不止一个时刻——发布会、训练、双打（拉沃尔杯单打双打都打）。
@@ -310,8 +315,12 @@ def test_说明不点对手或写的不是比赛本身_不换(caption, expect):
     night = AP_CAPTION.replace("during the Hangzhou Open", "during the night session of the Hangzhou Open")
     assert cu.metadata_problems(_ap(caption=night), _ctx()) == []
     # 对照组：他自己在打的那一刻——裸的 cheers／watches、「cheers on court」不许拦
+    # 评审第四轮 nit（原来收宽了）：「cheers on <场地>」「down the sideline」也是他自己在打
     for mine in ("cheers after winning a point against", "cheers on court after beating",
-                 "watches the ball during his match against"):
+                 "watches the ball during his match against",
+                 "cheers on centre court after winning a point against",
+                 "cheers on Arthur Ashe Stadium after winning a point against",
+                 "hits a forehand down the sideline against"):
         own = AP_CAPTION.replace("reacts after winning a point against", mine)
         assert cu.metadata_problems(_ap(caption=own), _ctx()) == [], mine
 
@@ -1352,3 +1361,118 @@ def test_WTA赛后稿头图那一档拿掉了_photo_resources还在():
     assert "WTA photo-resources" in labels, labels
     assert not any("赛后稿" in label for label in labels), labels
     assert not hasattr(cu, "wta_article")
+
+
+# ---------------------------------------------------------------- 评审第四轮
+
+def test_半截失败的一档要报出来_不许报成查空(monkeypatch):
+    """评审第四轮 nit：`find_cover_photo` 的报纸档、官网档把「没翻完」写进 `notes`、不抛。
+    `default_sweeps` 原来只读 `rows`——一辑都没取到的报纸档报成「0 张」，和查空一模一样。
+    顺带：官网档给比赛日（翻完那几天的全部上传再按名字筛，alt_text／文件名里的名字也认得出），
+    不再只靠 WordPress 的 `search`。"""
+    import find_cover_photo as fcp  # noqa: PLC0415
+
+    calls: dict = {}
+    site_answer: dict = {}
+
+    def paper(dom, event, player, day):
+        calls["paper"] = (dom, day)
+        return {"rows": [], "pages_read": 0,
+                "notes": ["翻到 2 辑图集，一辑都没取到——**这一档没跑完，不是没有**"]}
+
+    def site(host, day, player=None, **kw):
+        calls["site"] = (host, day, kw.get("days"))
+        return dict(site_answer)
+
+    import inspect  # noqa: PLC0415
+
+    # 替身和真函数的签名对得上（替身收 **kw，真函数改了签名替身照样绿）
+    inspect.signature(fcp.sweep_tournament).bind("h", "2026-09-26", "wong", days=cu.SITE_UPLOAD_DAYS)
+    assert "pages_read" in inspect.getsource(fcp.sweep_local_paper)
+    monkeypatch.setattr(fcp, "sweep_local_paper", paper)
+    monkeypatch.setattr(fcp, "sweep_tournament", site)
+    ctx = _ctx(event_en="Cincinnati", site="cincinnatiopen.com", tour="atp")
+
+    def notes_for(answer: dict) -> list[str]:
+        site_answer.clear()
+        site_answer.update(answer)
+        picked = [s for s in cu.default_sweeps(ctx) if not s[0].startswith("AP")]
+        return cu.search(ctx, sweeps=picked)[1]
+
+    row = {"url": "https://cincinnatiopen.com/wp-content/uploads/2026/09/CW_0001.jpg",
+           "original": "", "wh": "4000x2667", "title": "", "alt": "Coleman Wong", "caption": "",
+           "date": "2026-09-26T21:00:00", "date_gmt": "2026-09-27T01:00:00"}
+    got = notes_for({"by_name": [row], "media": [row],
+                     "notes": ["第 2 页读不到（timeout）——**后面没翻，不是没有**"]})
+    paper_line = next(n for n in got if n.startswith("当地报纸"))
+    assert "取不到" in paper_line and "没跑完" in paper_line, got
+    site_line = next(n for n in got if n.startswith("赛事官网"))
+    assert site_line.startswith("赛事官网 cincinnatiopen.com：1 张（第 2 页读不到"), got
+    assert calls["site"] == ("cincinnatiopen.com", "2026-09-26", cu.SITE_UPLOAD_DAYS), calls
+    assert calls["paper"] == ("www.cincinnati.com", "2026-09-26"), calls
+
+    got = notes_for({"error": "媒体库读不到：HTTP Error 403: Forbidden", "by_name": []})
+    site_line = next(n for n in got if n.startswith("赛事官网"))
+    assert "取不到" in site_line and "403" in site_line, got
+    # 对照组：真查空（翻完了、没有这个人）照旧是「0 张」，不带括号
+    assert "赛事官网 cincinnatiopen.com：0 张" in notes_for({"by_name": [], "media": [], "notes": []})
+
+
+@pytest.mark.parametrize("sparse", [True, False])
+def test_过闸之后挂账那一步炸了_索引连spec一起全部退回(tmp_path, monkeypatch, sparse):
+    """评审第四轮 nit：工作流提交那一步是 always()、`git commit` 不带路径——提交**整个索引**。
+    `apply_upgrade` 过闸之后先 `git rm --sparse` 同日的 pushed.json、再给 tag 上的旧
+    render.json 挂账（`git add --sparse`），然后才进清单。挂账那一步抛个 `run` 不接的
+    `CalledProcessError`：原来 spec 和图留着换好的样子、索引里留着「pushed.json 删了、账挂了
+    一半」，而这一班别的条改了账——提交上去的就是没有 spec、也不派 render 的半截。
+    判据：退回之后**索引里什么都没有**、工作区和动手之前一样、清单上没有它；记一笔退避、
+    图不拉黑（不是图的错）。"""
+    import release_tag_note as rtn  # noqa: PLC0415
+
+    url = f"https://github.com/o/r/releases/download/reel-{SLUG}/{SLUG}.mp4"
+    today = f"output/2026-09-27/reel/{SLUG}"          # NOW 是北京 9/27：同日，要删 pushed.json
+    older = f"output/2026-09-26/reel/{SLUG}"
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))},
+                 {SLUG: [f"{today}/pushed.json"]})
+    for rel, size in ((f"{older}/render.json", 52300555), (f"{today}/render.json", 52417311)):
+        (repo / rel).parent.mkdir(parents=True, exist_ok=True)
+        (repo / rel).write_text(json.dumps({"video_url": url, "video_bytes": size}, indent=2)
+                                + "\n", "utf-8")
+    _git(repo, "add", "-A")
+    _commit(repo, "renders")
+    if sparse:
+        _git(repo, "sparse-checkout", "set", "--no-cone", "/*", "!/output/")   # 和工作流一样
+    assert cu.stale_markers(repo, SLUG, NOW) == [f"{today}/pushed.json"], "前提：同日"
+    spec_before = (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes()
+    tree_before = {p.relative_to(repo).as_posix(): p.read_bytes()
+                   for p in repo.rglob("*") if p.is_file() and ".git" not in p.parts}
+
+    real, seen = rtn.write, []
+
+    def flaky(repo_, rel, data, *, stage):
+        seen.append(rel)
+        if len(seen) == 2:                            # 第一份已经挂好、进了索引，第二份炸
+            raise subprocess.CalledProcessError(128, ["git", "add", "--sparse", "--", rel])
+        return real(repo_, rel, data, stage=stage)
+    monkeypatch.setattr(rtn, "write", flaky)
+    out = tmp_path / "upgraded.txt"
+    got = _go(repo, NOW, final_gate=lambda spec: None, out_slugs=out)
+
+    assert got["reverted"] == [SLUG] and got["upgraded"] == [], got["report"]
+    assert len(seen) == 2, f"前提：第二份挂账炸了（{seen}）"
+    assert _git(repo, "diff", "--cached", "--name-only") == "", (
+        "索引里还留着半截——工作流那句不带路径的 `git commit` 会把它提交上去")
+    assert _git(repo, "status", "--porcelain", "--", "output", "specs", "assets") == "", (
+        _git(repo, "status", "--porcelain"))
+    assert (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes() == spec_before
+    assert not (repo / "assets" / "reel" / f"{SLUG}-official.jpg").exists()
+    tree_after = {p.relative_to(repo).as_posix(): p.read_bytes()
+                  for p in repo.rglob("*") if p.is_file() and ".git" not in p.parts
+                  and p.relative_to(repo).as_posix() != str(cu.LEDGER)}
+    assert tree_after == tree_before
+    assert not out.exists() or out.read_text("utf-8") == "", "退回了还在清单上——会派 render"
+    row = cu.load_ledger(repo)["attempts"][SLUG]
+    assert URL_A not in (row.get("tried") or []) and row["reverts"][-1]["blame_image"] is False
+    assert SLUG not in cu.upgraded_slugs(repo)
+    assert any("全部退回" in line and "CalledProcessError" in line for line in got["report"]), \
+        got["report"]

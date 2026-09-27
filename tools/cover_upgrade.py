@@ -136,6 +136,10 @@ REVERT_BACKOFF = timedelta(hours=2)
 ATTEMPTS_TTL = timedelta(days=7)
 #: 下载体积上限：AP 原图 8 MB 级，再大就不是一张照片了。
 MAX_BYTES = 40 * 1024 * 1024
+#: 赛事官网媒体库从比赛日（当地）起翻几天的上传。目标在首推之后 48 小时里每一班都查
+#: （`WINDOW`），首推一般在比赛日当天或次日——3 天盖得住这个窗口的大半；`find_cover_photo`
+#: 命令行的缺省 2 天是给人当天查的，第三天（当地）才传上来的会漏。多翻一天约多一页（100 张）。
+SITE_UPLOAD_DAYS = 3
 #: 封面画布（`build_match_reel.COVER_FILL_W/H`，海报是 1080×1440）。
 CANVAS_W, CANVAS_H = 1080, 1440
 #: 放大档位：先试不放大，脸落进钩子带再推一档（CLAUDE.md「落进去就 zoom 1.1~1.3」）。
@@ -743,15 +747,22 @@ class Candidate:
 #:
 #: 评审第二轮 nit：团体赛（拉沃尔杯、戴维斯杯、比利·简·金杯）里「X reacts **on the bench**
 #: as teammate … plays <对手>」全名、对手、日期全在——拍的是他在场边看别人打。只收**看别人
-#: 打**的说法（`on/from the bench`、`sideline`、`cheers on`、`watches on as`／`watches from`）：
+#: 打**的说法（`on/from the bench`、`on/from the sideline(s)`、`cheers on teammate`、`watches on as`／`watches from`）：
 #: 裸的 `cheers`／`watches` 不收，「cheers after winning a point」「cheers on court」
 #: 「watches the ball」是他自己在打的那一刻。
+#:
+#: 评审第四轮 nit：上面那批收宽了，真比赛图也拦（安全方向——不换，但该换的没换上）：
+#: 「cheers **on centre court** after winning a point against Fritz」「cheers **on Arthur Ashe
+#: Stadium**」命中裸的 `cheers on`，「hits a forehand down **the sideline** against Zverev」命中
+#: 裸的 `sideline`。收窄成**看别人打**才有的那半句：`on/from the sideline(s)`、`cheers on
+#: (his/her/their) teammate/compatriot…`——「cheers on」后面跟的是场地，就是他自己在场上。
 NOT_IN_MATCH = re.compile(
     r"\b(?:practi[cs]\w*|training|trains|warm\w*|(?:news|press) conferences?"
     r"|interview\w*|autograph\w*|arriv\w*|portraits?|pos(?:e|es|ed|ing)"
     r"|media|reporters?|journalists?|photo ?calls?|head ?shots?"
     r"|hit(?:s|ting)?(?: during an?)? sessions?|ahead of (?:his|her|their)"
-    r"|(?:on|from) the bench|sidelines?|cheer(?:s|ing)? on(?! (?:the )?court)"
+    r"|(?:on|from) the (?:bench|sidelines?)"
+    r"|cheer(?:s|ed|ing)? on (?:(?:his|her|their) )?(?:teammate|compatriot)\w*"
     r"|watch(?:es|ing)? (?:on as|from)"
     r"|doubles|mixed)\b")
 
@@ -851,16 +862,31 @@ def _upload_problems(c: Candidate, ctx: MatchContext, shown: str) -> list[str]:
     return problems
 
 
+class Swept(list):
+    """一档查图的结果：候选 ＋ 这一档自己报的话。
+
+    `find_cover_photo` 的几档把「没翻完」写进 `notes`、不抛（`sweep_local_paper` 的
+    「一辑都没取到——这一档没跑完，不是没有」、`sweep_tournament` 的「第 2 页读不到——
+    后面没翻，不是没有」）。只读 `rows` 的话，半截失败的一档在报告里是「0 张」，
+    **和查空长得一模一样**（评审第四轮 nit）。"""
+
+    def __init__(self, rows: Iterable[Candidate] = (), notes: Iterable[object] = ()):
+        super().__init__(rows)
+        self.notes = [str(n) for n in notes if n]
+
+
 def _sweep_rows(label: str, run: Callable[[], Iterable[Candidate]],
                 notes: list[str]) -> list[Candidate]:
     try:
-        rows = list(run())
+        got = run()
+        rows = list(got)
     except BaseException as exc:                                  # noqa: BLE001
         if isinstance(exc, KeyboardInterrupt):
             raise
         notes.append(f"{label}：取不到（{type(exc).__name__}: {str(exc)[:120]}）——这一档没查成，不是查空")
         return []
-    notes.append(f"{label}：{len(rows)} 张")
+    said = getattr(got, "notes", None) or []
+    notes.append(f"{label}：{len(rows)} 张" + (f"（{'；'.join(said)}）" if said else ""))
     return rows
 
 
@@ -904,13 +930,22 @@ def default_sweeps(ctx: MatchContext) -> list[tuple[str, Callable[[], Iterable[C
     paper = next((dom for city, dom in fcp._LOCAL_PAPERS.items()
                   if city in ctx.event_en.lower()), None)
     if paper:
-        sweeps.append((f"当地报纸 {paper}", lambda: [
-            Candidate("paper", r["url"], caption=r["caption"], page=r["gallery"],
-                      credit=_credit(r.get("credit")))
-            for r in fcp.sweep_local_paper(paper, ctx.event_en, ctx.surname, day)["rows"]]))
+        def paper_rows() -> Swept:
+            got = fcp.sweep_local_paper(paper, ctx.event_en, ctx.surname, day)
+            if not got.get("pages_read"):
+                # 索引页、图集页一页都没取回来（`pages_read` 的 0 就是「这一档没跑」）
+                raise RuntimeError("；".join(got.get("notes") or []) or "索引页和图集页一页都没取回来")
+            return Swept((Candidate("paper", r["url"], caption=r["caption"], page=r["gallery"],
+                                    credit=_credit(r.get("credit")))
+                          for r in got.get("rows") or []), got.get("notes") or [])
+        sweeps.append((f"当地报纸 {paper}", paper_rows))
     if ctx.site:
-        def site_rows() -> list[Candidate]:
-            got = fcp.sweep_tournament(ctx.site, None, ctx.surname)
+        def site_rows() -> Swept:
+            # 给比赛日：比赛日起 `SITE_UPLOAD_DAYS` 天内上传的**全部翻完**再按名字筛——
+            # 名字只写在 alt_text／文件名里的也认得出（WordPress 的 `search` 两样都不搜）。
+            got = fcp.sweep_tournament(ctx.site, day, ctx.surname, days=SITE_UPLOAD_DAYS)
+            if got.get("error"):
+                raise RuntimeError(got["error"])
             out = []
             for r in got.get("by_name") or []:
                 w, _, h = str(r.get("wh") or "").partition("x")
@@ -922,7 +957,7 @@ def default_sweeps(ctx: MatchContext) -> list[tuple[str, Callable[[], Iterable[C
                     meta_utc=str(r.get("date_gmt") or ""), event_owned=True,
                     wh=(int(w), int(h)) if w.isdigit() and h.isdigit() and not r.get("original")
                     else None))
-            return out
+            return Swept(out, got.get("notes") or [])
         sweeps.append((f"赛事官网 {ctx.site}", site_rows))
     return sweeps
 
@@ -1249,13 +1284,48 @@ class GateRejected(RuntimeError):
         self.blame_image = blame_image
 
 
+def _snapshot(repo: Path, rels: Iterable[str]) -> dict[str, bytes | None]:
+    """这几条路径在工作区里现在的字节（不在工作区——稀疏检出的 `output/`——记 None）。"""
+    return {rel: ((repo / rel).read_bytes() if (repo / rel).is_file() else None) for rel in rels}
+
+
+def _undo_paths(repo: Path, before: dict[str, bytes | None], *, git: bool) -> None:
+    """把这几条路径的**索引**退回 HEAD、**工作区**退回 `before`。在异常处理里跑：尽力而为，
+    一律不抛（不许盖住原来那个异常）。
+
+    稀疏检出下（`reel-cover-upgrade.yml`）实测 git 2.43：`git rm --sparse` 删掉的 pushed.json，
+    `git reset -- 路径` 按 skip-worktree 放回索引；`git add --sparse` 过的 render.json 丢了
+    skip-worktree 位，reset 之后工作区里没有它就是一条「未暂存的删除」——动手之前它就不在
+    工作区（`before` 记 None），把 skip-worktree 位补回去，才和动手之前一模一样、`git status`
+    干净。"""
+    if not before:
+        return
+    try:
+        if git:
+            subprocess.run(["git", "-C", str(repo), "reset", "-q", "--", *before],
+                           capture_output=True, check=False)
+        for rel, blob in before.items():
+            path = repo / rel
+            if blob is not None:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(blob)
+                continue
+            path.unlink(missing_ok=True)
+            if git:
+                subprocess.run(["git", "-C", str(repo), "update-index", "-q",
+                                "--skip-worktree", "--", rel], capture_output=True, check=False)
+    except OSError:
+        pass
+
+
 def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
                   considered: list[dict], now: datetime, *, final_gate=_final_gate,
                   baseline_gate=_baseline_gate, git_rm: bool = True,
                   out_slugs: Path | None = None) -> dict:
     """写图、改 spec、删同日的 `pushed.json`、给 Release tag 上的旧 render.json 挂账、记账。
     过不了最终那道闸就全部退回去，
-    抛 `GateRejected`（带「是不是这张图的错」）。
+    抛 `GateRejected`（带「是不是这张图的错」）。过了闸之后删 pushed.json／挂账那一段
+    炸了也一样：spec、图、**索引**全部退回（工作流提交的是整个索引，评审第四轮）。
 
     `out_slugs` 排在**记账之前**追加（评审第二轮）：进程要是死在两步之间，宁可提交上去
     的是「spec 换了图、账没记」（render 照样过，豁免表那条自检红一次），也不要「账记了
@@ -1290,17 +1360,21 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
     target.spec_path.write_text(
         json.dumps(spec, ensure_ascii=False, indent=_indent_of(before_spec)) + "\n",
         encoding="utf-8")
+
+    def restore() -> None:
+        target.spec_path.write_text(before_spec, encoding="utf-8")
+        if had_image is None:
+            image_path.unlink(missing_ok=True)
+        else:
+            image_path.write_bytes(had_image)
+
     cwd = os.getcwd()
     baseline = None
     try:
         os.chdir(repo)             # spec 里的图路径是仓库相对路径
         problem = _gate(final_gate, spec)
         if problem:
-            target.spec_path.write_text(before_spec, encoding="utf-8")
-            if had_image is None:
-                image_path.unlink(missing_ok=True)
-            else:
-                image_path.write_bytes(had_image)
+            restore()
             baseline = _gate(baseline_gate, target.spec)
     finally:
         os.chdir(cwd)
@@ -1311,13 +1385,57 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
                 f"（换图之前的原 spec 在这个检出里也过不了：{baseline[:200]}——拦的不是这张图）",
                 blame_image=False)
         raise GateRejected(f"{target.slug}：换完过不了正式的封面闸，已退回——{problem}")
-    markers = stale_markers(repo, target.slug, now)
-    if git_rm and markers:
-        subprocess.run(["git", "-C", str(repo), "rm", "-q", "--sparse", "--", *markers],
-                       check=True)
-    tag_notes = release_tag_note.write_all(repo, tag_rows, stage=git_rm)
+    # 评审第四轮 nit：过闸之后这一段会**往索引里放东西**（删同日 pushed.json、给 tag 挂账），
+    # 而工作流的提交那一步是 always()、`git commit` 不带路径——提交的是**整个索引**。这里
+    # 抛个 `run` 不接的异常（`git add --sparse` 的 `CalledProcessError`），slug 还没进清单、
+    # 别的条又刚好改了账：提交上去的就是「pushed.json 删了、账挂了、spec 没换、也没派 render」。
+    # 所以这一段要么走完（进了清单），要么连索引一起全部退回，折成「不是图的错」的 GateRejected。
+    touched: dict[str, bytes | None] = {}
+    listed: int | None = None
+    markers: list[str] = []
+    try:
+        touched.update(_snapshot(repo, [rel for rel, _ in tag_rows]))
+        listed = out_slugs.stat().st_size if out_slugs is not None and out_slugs.is_file() else 0
+        markers = stale_markers(repo, target.slug, now)
+        touched.update({k: v for k, v in _snapshot(repo, markers).items() if k not in touched})
+        if git_rm and markers:
+            subprocess.run(["git", "-C", str(repo), "rm", "-q", "--sparse", "--", *markers],
+                           check=True)
+        tag_notes = release_tag_note.write_all(repo, tag_rows, stage=git_rm)
+        entry = _upgrade_entry(target, ctx, chosen, considered, now, image_rel, old,
+                               markers, tag_notes)
+        if out_slugs is not None:
+            with open(out_slugs, "a", encoding="utf-8") as fh:
+                fh.write(f"{target.slug}\n")
+    except BaseException as exc:                                  # noqa: BLE001
+        try:
+            restore()
+            if listed is not None and out_slugs is not None and out_slugs.is_file() \
+                    and out_slugs.stat().st_size > listed:
+                with open(out_slugs, "r+b") as fh:
+                    fh.truncate(listed)
+        except OSError:
+            pass
+        _undo_paths(repo, touched, git=git_rm)
+        if not isinstance(exc, Exception):
+            raise
+        raise GateRejected(
+            f"{target.slug}：过了闸之后删同日 pushed.json／给 tag 挂账那一步炸了"
+            f"（{type(exc).__name__}: {str(exc)[:160]}），spec、图、索引已全部退回",
+            blame_image=False) from exc
+    ledger = load_ledger(repo)
+    ledger["upgrades"][target.slug] = entry
+    ledger["attempts"].pop(target.slug, None)      # 换成了，查图的草稿账不用留
+    save_ledger(repo, ledger, now)
+    return entry
+
+
+def _upgrade_entry(target: Target, ctx: MatchContext, chosen: dict, considered: list[dict],
+                   now: datetime, image_rel: str, old: dict, markers: list[str],
+                   tag_notes: list[str]) -> dict:
+    c: Candidate = chosen["candidate"]
     ev = chosen["evidence"]
-    entry = {
+    return {
         "status": "upgraded",
         "at": now.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "first_sent": target.first_sent.strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -1334,14 +1452,6 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
         "considered": [{k: v for k, v in r.items() if k != "evidence"}
                        for r in considered[:20]],
     }
-    if out_slugs is not None:
-        with open(out_slugs, "a", encoding="utf-8") as fh:
-            fh.write(f"{target.slug}\n")
-    ledger = load_ledger(repo)
-    ledger["upgrades"][target.slug] = entry
-    ledger["attempts"].pop(target.slug, None)      # 换成了，查图的草稿账不用留
-    save_ledger(repo, ledger, now)
-    return entry
 
 
 # ---------------------------------------------------------------- 一趟

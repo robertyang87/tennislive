@@ -2292,7 +2292,18 @@ WTA 目标花一次 `find_match`；photo-resources 留着，`GettyImages-*` 带 
 换不了**的算成目标（没有开赛时刻、对手英文名缺、赛事认不出……`static_problems`，原来 48 小时里每 20 分钟为它装一遍
 依赖）；进程死在「进清单」和「记账」之间时，下一班 `--plan` 认出机器换过的 spec（`_why` 开头）**补记**那一笔、不重派；
 下到一半断掉的图（字节对不上 Content-Length）记「下不下来」、不拉黑；点名闸加上「在场边看队友打」的说法
-（`on/from the bench`、`sideline`、`cheers on`、`watches on as/from`，裸的 cheers／watches 不收）。
+（`on/from the bench`、`on/from the sideline(s)`、`cheers on (his/her) teammate/compatriot`、`watches on as/from`，
+裸的 cheers／watches 不收）。
+
+评审第四轮收掉的三处：① 点名闸原来收的是裸 `sideline` 和「`cheers on` 后面不是 court」——「cheers **on centre
+court** after winning a point」「hits a forehand down **the sideline**」这类**他自己在打**的比赛图也被拦（安全方向，
+但该换的没换上），收窄成看别人打才有的那半句；② 过闸之后「删同日 pushed.json → 给 tag 挂账 → 进清单」那一段抛个
+`run` 不接的异常（`git add --sparse` 的 `CalledProcessError`）时，工作流 always() 那句不带路径的 `git commit` 会把
+**整个索引**里的半截提交上去——现在这一段要么走完、要么连索引（稀疏检出下补回 skip-worktree 位）一起全部退回，记退避、
+不拉黑图，判据 `test_过闸之后挂账那一步炸了_索引连spec一起全部退回`；③ 报纸档、官网档把「没翻完」写在返回值的
+`notes` 里、不抛，原来只读 `rows`，半截失败报成「0 张」——现在一页都没取回来记「取不到」、翻了一半的把那句话接在
+张数后面；官网档给比赛日（翻完 `SITE_UPLOAD_DAYS`＝3 天的全部上传再按名字筛，alt_text／文件名里的名字也认得出，
+WordPress 的 `search` 两样都不搜），判据 `test_半截失败的一档要报出来_不许报成查空`。
 
 ⚠️ **按这套闸，拉沃尔杯官网那批图过不了**：`lavercup.com` 媒体库的上限是 1200 宽
 （`BS2_8696` 1200×927、`CB_34032` 1200×832、`BS2_9519` 1200×800），铺 1080×1440 要放大
