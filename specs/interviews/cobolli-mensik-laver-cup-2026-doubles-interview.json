@@ -145,7 +145,7 @@
   ],
   "_zh_draft_note": "第一份 faster-whisper small.en 逐词时间码经正式 segment() 切行后，由 DeepSeek 逐行翻译；render 时用 medium.en 做第二份独立 ASR。",
   "_notes": [
-    "push.auto 仍是 false：lead_in 删了等 attach 用修好的探测重配，重配出来的冷开场和封面帧要看过一遍再打开。"
+    "自动配的冷开场 bTgrCjgZ3bI 是第一天 Alcaraz/Mensik vs Fritz/Bublik（detect_highlights 双打只认最后一个搭档的姓、不认 ` v `，本 PR 修了），换成手填的 Sh_nYBqgQiA。push.auto 打开：原话、封面帧（29.4 候选墙看过）、冷开场都核过。"
   ],
   "_facts": [
     "赛果：科博利/门西克 7-5 6-3 胜德米纳尔/弗里茨，2026 拉沃尔杯第三天第一场（Match 9）。两个独立源：拉沃尔杯官网 lavercup.com/news/2026/09/27/doubling-down-cobolli-mensik-pad-team-europe-lead；ATP atptour.com/en/news/laver-cup-2026-sunday-report。官方采访与集锦标题都写 Match 9。",
@@ -227,7 +227,7 @@
     "event": "",
     "summary": "科博利：3年才赢第1场",
     "lead": "拉沃尔杯伦敦站第三天第一场，科博利搭档门西克 7-5、6-3 胜德米纳尔/弗里茨。科博利说这是他第三年来拉沃尔杯，「之前一场都没赢过，所以我真的很开心」。门西克说开局他们是「场上打得最差的」，发球找不到节奏，之后才进入状态。欧洲队 10-5 领先，随后兹维列夫胜勒纳·钱，欧洲队 13-5 捧杯。",
-    "auto": false
+    "auto": true
   },
   "match": {
     "id": "2026:laver-cup:match-9:cobolli-mensik-deminaur-fritz",
@@ -341,5 +341,163 @@
   },
   "_en_fixed_why": "照 runner 第一份 ASR（small.en）改四处：第 3、8 行 `Labour Cup` 是 Laver Cup；第 16 行 `double specialist` 补成 doubles；第 20 行 `Jakob` 是门西克的名 Jakub。",
   "_zh_fix_why": "DeepSeek 初译逐行重写：「劳动杯」是 ASR 把 Laver 听成 Labour 带进来的，改拉沃尔杯；第 5~6 行按中文语序对调；第 23 行 `not that you didn't come to the party` 是「科博利也打得好」，不是字面的聚会；第 51~53 行是一个问句。按字幕规矩去掉句中标点。说话人：7~19 行科博利；20 行起主持人问门西克（叫他 Jakub），31~49 行门西克答（第一天和阿尔卡拉斯搭档）；50 行主持人；51 行问科博利，54 行科博利答。",
-  "_lead_in_why": "自动配的 bTgrCjgZ3bI 是第一天 `Alcaraz/Mensik vs Fritz/Bublik`，不是这场：`detect_highlights` 双打只取最后一个搭档的姓（Mensik/Fritz）、又不认 ` v `。同一个 PR 修了，删掉让 attach 重配，应当配到 Sh_nYBqgQiA（`Cobolli/Mensik v de Minaur/Fritz Highlights | Laver Cup 2026 Match 9`）。"
+  "lead_in": {
+    "url": "https://www.youtube.com/watch?v=Sh_nYBqgQiA",
+    "start": 114.1,
+    "end": 152.7,
+    "verification": {
+      "match_id": "2026:laver-cup:match-9:cobolli-mensik-deminaur-fritz",
+      "winner_en": "Flavio Cobolli/Jakub Mensik",
+      "loser_en": "Alex de Minaur/Taylor Fritz",
+      "event_search": "Laver Cup",
+      "year": 2026,
+      "method": "official_exact_match_highlight",
+      "height": 1080,
+      "channel": "Laver Cup"
+    },
+    "subs": [
+      {
+        "a": 118.68,
+        "b": 120.04,
+        "en": "Game and match.",
+        "zh": "比赛结束"
+      },
+      {
+        "a": 120.04,
+        "b": 121.9,
+        "en": "Cobolli and Mensik,",
+        "zh": "科博利和门西克"
+      },
+      {
+        "a": 121.9,
+        "b": 123.88,
+        "en": "Team Europe have a commanding",
+        "zh": "欧洲队"
+      },
+      {
+        "a": 123.88,
+        "b": 127.07,
+        "en": "lead in the Laver Cup.",
+        "zh": "在拉沃尔杯大幅领先"
+      },
+      {
+        "a": 133.08,
+        "b": 136.36,
+        "en": "And a standout performance",
+        "zh": "表现太出色了"
+      },
+      {
+        "a": 136.36,
+        "b": 139.04,
+        "en": "from Team Europe",
+        "zh": "欧洲队"
+      },
+      {
+        "a": 139.04,
+        "b": 142.28,
+        "en": "and in particular Jakub Mensik.",
+        "zh": "尤其是雅库布·门西克"
+      },
+      {
+        "a": 142.28,
+        "b": 145.36,
+        "en": "Yeah, 100% he was the",
+        "zh": "没错 百分之百"
+      },
+      {
+        "a": 145.36,
+        "b": 147.56,
+        "en": "he was the MVP of this doubles match.",
+        "zh": "他是这场双打的MVP"
+      },
+      {
+        "a": 147.56,
+        "b": 149.76,
+        "en": "Give credit to Cobolli for weathering the",
+        "zh": "也要给科博利记一功"
+      },
+      {
+        "a": 149.76,
+        "b": 152.7,
+        "en": "early storm.",
+        "zh": "他顶住了开局的风暴"
+      }
+    ],
+    "source_captions": [
+      [
+        108.92,
+        ">> Oh!"
+      ],
+      [
+        110.8,
+        "Hello!"
+      ],
+      [
+        118.56,
+        ">> [cheering]"
+      ],
+      [
+        118.68,
+        ">> Game and match."
+      ],
+      [
+        120.04,
+        ">> Cabal"
+      ],
+      [
+        120.68,
+        "and Mensik Team Europe have a commanding"
+      ],
+      [
+        123.88,
+        "lead in the Laver Cup."
+      ],
+      [
+        127.07,
+        ">> [cheering]"
+      ],
+      [
+        133.08,
+        ">> And a standout performance"
+      ],
+      [
+        136.36,
+        "from Team Europe"
+      ],
+      [
+        139.04,
+        "and in particular Yakkub Mensik."
+      ],
+      [
+        142.28,
+        ">> Yeah, 100% he was the"
+      ],
+      [
+        145.36,
+        "he was the MVP of this doubles match."
+      ],
+      [
+        147.56,
+        "Give credit to Cabal for weathering the"
+      ],
+      [
+        149.76,
+        "early storm."
+      ],
+      [
+        152.76,
+        "And now they're on the cusp"
+      ],
+      [
+        155.04,
+        "of this Team Europe of clinching"
+      ],
+      [
+        158.48,
+        "this Laver Cup for 2026."
+      ]
+    ],
+    "subs_skip": {},
+    "why": "同场 Laver Cup 官方集锦 Sh_nYBqgQiA（`Cobolli/Mensik v de Minaur/Fritz Highlights | Laver Cup 2026 Match 9`，@LaverCup，1920×1080，165.1 秒；match-reel probe run 36331363124）。窗口（probe 缩略图墙 contact_01/02 逐格看过）：114.01 切点起是赛点那一分（记分条 MATCH POINT）→ 118.05 切点起门西克近景张臂 → 122.5~124.5 队友冲上来拥抱 → 126.5~140.5 网前握手、LED `TEAM EUROPE WINS` → 144.5~152.5 走回替补席、队友迎上来拥抱。收在 152.7：解说「Give credit to Cobolli for weathering the early storm.」说完；下一句 152.76 起，窗口上限 40 秒装不下它和后面的全队拥抱（162.06 起是片尾板）。解说照 probe captions.txt 逐句切，ASR 把 Cobolli 听成 `Cabal`、Jakub 听成 `Yakkub`，按人名写回；108.92 `Oh!`、110.80 `Hello!` 在窗口之前的上一分里。 120.04 那句一行放不下拆成两条：captions.txt 的分界是 120.68（`Cobolli` 单独一条太短），拆点 121.9 按词数在 120.68~123.88 之间估的，不是逐词量的。"
+  }
 }
