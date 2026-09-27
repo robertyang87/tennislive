@@ -220,7 +220,7 @@ def _empty_reel_ledger(monkeypatch, tmp_path):
 
     进程内改 `reel_facts.REEL_LEDGER_DIR`；`TENNISLIVE_REEL_LEDGER_DIR` 管子进程，
     也管 `reel_asset_gates`——它在**调用那一刻**读这个变量（`publication_record`），
-    设了就把整份发布记录（账本＋`pushed.json`）钉成这个空目录。判据
+    设了就把整份发布记录（账本＋`pushed.json`＋账本之前那批的冻结表）钉成这个空目录。判据
     `tests/test_reel_asset_gates.py::test_真账本多一笔_全库扫描和钉空账本的渲染入口都不许跟着红`。
     ⚠️ 不做成 autouse：`tests/test_time_sensitive_facts.py` 那几条测的就是账本，
     它们自己把账本建在 tmp_path 上。原来这个 fixture 在 `test_match_reel.py` 和

@@ -721,7 +721,10 @@ def main() -> int:
             try:
                 slug = _slug(_read(path), path)
             except Exception:  # noqa: BLE001 — 请求本身读不了，原因里已经写了
-                slug = ""
+                # 按文件名认（requests/interviews/<slug>.json，存量 17 条全是这个约定）。
+                # 空着的话 dispatch／提交那两道按 `cut -f2` 过滤的闸拦不住它上一版的正式 spec
+                # （复审 2026-09-27 nit）。
+                slug = path.stem
             reason = f"{type(exc).__name__}: {exc}"
             failed.append((rel, slug, reason))
             print(f"::error file={rel}::{_annotation(f'{rel} 没过闸，不进这一趟的提交：{reason}')}")

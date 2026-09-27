@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -205,8 +206,9 @@ def _reuse_world(tmp_path: Path) -> dict:
     (ledger / "wang-garland.json").write_text(json.dumps({"attempts": [
         {"status": "rejected", "at": "2026-09-24T09:00:00Z"},
         {"status": "sent", "at": "2026-09-24T10:41:46Z"}]}), encoding="utf-8")
+    # 冻结表指到一个不存在的文件：夹具世界只认自己摆的账本和 pushed.json，不串进真表
     return {"specs": specs, "ledger": ledger, "output": output, "root": tmp_path,
-            "legacy_set": NONE}
+            "pre_ledger": tmp_path / "no-pre-ledger.json", "legacy_set": NONE}
 
 
 def test_封面照片已经在另一条发出去过就红(tmp_path):
@@ -363,34 +365,49 @@ def _specs(folder: Path | None = None):
         yield str(spec.get("slug") or path.stem), spec
 
 
-#: 本地（带 `output/**/pushed.json`）量到 276 条发出去过、runner 视角（只剩账本）151 条。
+#: 本地（带 `output/**/pushed.json`）量到 276 条发出去过（其中 8 条自动产的不判）；runner
+#: 视角（没有 `output/`，靠账本＋`data/reel_pushed_before_ledger.json`）一样多。
 #: 下限只防「`first_sent` 读不到任何记录、封面复用那一格整个空转」，不追具体条数。
 _MIN_JUDGED_REUSE = 100
 
 
 def _corpus_reuse_hits(*, judge_output: Path | None = None, specs: Path | None = None,
                        ledger: Path | None = None, output: Path | None = None,
+                       pre_ledger: Path | None = None,
                        root: Path = ROOT) -> tuple[list[str], int]:
-    """全库封面复用：`(红了的, 判了几条)`，判法和渲染入口（`spec_asset_problems`）一致。
+    """全库封面复用：`(红了的, 按完整发布记录判了几条)`，判法和渲染入口
+    （`spec_asset_problems`）一致，而且**别人的一次推送翻不动任何一条的判词**。
 
-    两刀，都是复审（2026-09-27）在临时 worktree 里复现过的：
-    - **只算同一栏目**。跨栏目入口只报不拦（「同一件事，不同栏目各讲一次不算重复」）；
-      拿不分栏目的 `cover_reuse_problem` 判全库，会比入口严。
-    - **只判自己发出去过的**（「发没发过」按本地出处认，`judge_output` 只换判的那一步——
-      runner 视角那条要是也按账本认，08-24 之前只在 `pushed.json` 里的老片子一条都判不到，
-      它就空转了）。已发的片子判词是定死的：闸只看**比我先发**的那几条，以后谁再发都翻
-      不动它。没发过的那条，判词会随别人的一次推送翻面——`data/reel_publish_ledger/
-      eala-zheng.json` 落一笔 sent，`eala-washington-story` 就红了，而那一笔是
-      auto-push 在 main 上提交的，CI 红在一个没有 PR 可修的地方。没发过的由它自己
-      渲染那一刻的 dry-run 判（`spec_asset_problems` 的 `at_render`）。
+    - **只算同一栏目**：跨栏目入口只报不拦（「同一件事，不同栏目各讲一次不算重复」）。
+    - **自动产的 spec 不判**：入口对它同栏目也只报（`_production.status ==
+      ready_for_render`，那头没人写 `_why`）——这里判它就比入口严：渲染、推送都放行，
+      推送落账那一笔在 main 上跑 CI 才红，没有 PR 可修（复审 2026-09-27 nit）。
+    - **发出去过的**按完整发布记录判：闸只看**比我先发**的那几条，以后谁再发都翻不动它。
+    - **没发过的**只对**账本之前那批**判（`data/reel_pushed_before_ledger.json`，125 条、
+      最晚 2026-08-23T16:19:54Z）。那批不会再长——08-24 起每一次推送都同时写账本——所以
+      判词同样翻不动；而借了那批封面的同栏目新 spec，PR 的 CI 照样红。上一版只判已发的，
+      把它整个放过了（复审 2026-09-27 BLOCKING：借 noskova-tauson 封面的新 spec，全库
+      绿、runner 渲染放行，推送落账之后 main 反而红，还红在无辜的 noskova-tauson 上）。
+      没发过的借账本里那部分的图，判词会随别人的一次推送翻面（`eala-zheng` 落一笔
+      sent、`eala-washington-story` 就红）——留给它自己渲染那一刻的 dry-run 判。
+
+    `judge_output` 只换判的那一步（runner 视角）；「发没发过」照旧按本地出处认。
+    发布记录只读一遍（原来每条 spec 各读一遍账本和 278 个 `pushed.json`，慢 2.4 倍）。
     """
+    record = gates._record(ledger, output, pre_ledger)
+    published = gates._published(*record)
+    judge = published if judge_output is None else gates._published(
+        record[0], judge_output, record[2])
+    frozen = gates.pre_ledger_pushes(record[2]) if record[2] is not None else {}
     bad, judged = [], 0
     for slug, spec in _specs(specs):
-        if gates.first_sent(slug, ledger=ledger, output=output) is None:
+        if gates._auto(spec):
             continue
-        judged += 1
-        found = gates.cover_reuse_finding(spec, specs=specs, ledger=ledger, root=root,
-                                          output=output if judge_output is None else judge_output)
+        if slug in published:
+            judged += 1
+            found = gates.cover_reuse_finding(spec, specs=specs, root=root, published=judge)
+        else:
+            found = gates.cover_reuse_finding(spec, specs=specs, root=root, published=frozen)
         if found and found[1]:
             bad.append(f"{slug}: {found[0].splitlines()[0]}")
     return bad, judged
@@ -417,8 +434,8 @@ def test_全库存量对新闸零误报():
 
 
 def test_runner视角下封面复用那道闸和本地一样零误报():
-    """runner 上不检出 `output/`（只剩发布账本）。这道闸在那儿要么和本地一样判，
-    要么少报——**不许多报**：多报就是本地绿、runner 红，正是这次要消掉的分叉。"""
+    """runner 上不检出 `output/`（只剩发布账本和账本之前那批的冻结表）。这道闸在那儿
+    要么和本地一样判，要么少报——**不许多报**：多报就是本地绿、runner 红。"""
     bad, judged = _corpus_reuse_hits(judge_output=ROOT / "does-not-exist-output")
     assert judged >= _MIN_JUDGED_REUSE, f"封面复用只判到 {judged} 条——发布记录读不到了？"
     assert not bad, "runner 视角下这几条会红、本地却是绿的：\n  " + "\n  ".join(bad)
@@ -428,23 +445,31 @@ def test_别人的一次推送不许把全库扫描翻红(tmp_path):
     """复审复现的那一笔：账本给一条没发过的 spec 记一次 sent，全库那两条测试就红在
     **另一条**没发过、跨栏目的 spec 上。这里把几种形状摆在一起：没发过的两条（同栏目／
     跨栏目）不判；后发、跨栏目借图的只报不算；后发、同栏目借图的**照样红**——
-    证明扫描没被关掉，只是和渲染入口判得一样。"""
+    证明扫描没被关掉，只是和渲染入口判得一样。
+
+    自动产的那条（`_production.status == ready_for_render`）入口对它同栏目也只报：
+    渲染、推送都放行，推送落账之后全库扫描不许因此翻红（复审 2026-09-27 nit：
+    auto spec zheng-b-r3 借已发 zheng-a-r2 的图，入口 `hard=[]`，落账后 main 红）。"""
     specs, ledger, output = tmp_path / "specs", tmp_path / "ledger", tmp_path / "output"
     for folder in (specs, ledger, output, tmp_path / "assets"):
         folder.mkdir()
     _jpg(tmp_path / "assets" / "shared.jpg")
     cover = {"portrait": {"image": "assets/shared.jpg"}}
-    for slug, column, sent in (("just-sent", "赛场之上", "2026-09-28T01:00:00Z"),
-                               ("later-story", "网球有故事", "2026-09-28T05:00:00Z"),
-                               ("later-reel", "赛场之上", "2026-09-28T06:00:00Z"),
-                               ("never-reel", "赛场之上", None),
-                               ("never-story", "网球有故事", None)):
+    auto = {"_production": {"status": "ready_for_render"}}
+    for slug, column, sent, extra in (
+            ("just-sent", "赛场之上", "2026-09-28T01:00:00Z", {}),
+            ("later-story", "网球有故事", "2026-09-28T05:00:00Z", {}),
+            ("later-reel", "赛场之上", "2026-09-28T06:00:00Z", {}),
+            ("never-reel", "赛场之上", None, {}),
+            ("never-story", "网球有故事", None, {}),
+            ("zauto-reel", "赛场之上", None, auto)):
         (specs / f"{slug}.json").write_text(json.dumps(
-            {"slug": slug, "cover": {"eyebrow": column, **cover}}), encoding="utf-8")
+            {"slug": slug, "cover": {"eyebrow": column, **cover}, **extra}), encoding="utf-8")
         if sent:
             (ledger / f"{slug}.json").write_text(json.dumps(
                 {"attempts": [{"status": "sent", "at": sent}]}), encoding="utf-8")
-    kw = {"specs": specs, "ledger": ledger, "output": output, "root": tmp_path}
+    kw = {"specs": specs, "ledger": ledger, "output": output, "root": tmp_path,
+          "pre_ledger": tmp_path / "no-pre-ledger.json"}
     bad, judged = _corpus_reuse_hits(**kw)
     assert judged == 3
     assert [b.split(":")[0] for b in bad] == ["later-reel"], bad
@@ -452,6 +477,102 @@ def test_别人的一次推送不许把全库扫描翻红(tmp_path):
     never = json.loads((specs / "never-reel.json").read_text(encoding="utf-8"))
     found = gates.cover_reuse_finding(never, legacy_set=NONE, **kw)
     assert found and found[1] is True and "just-sent" in found[0]
+    # 自动产的那条：入口只报（不进 hard）……
+    zauto = json.loads((specs / "zauto-reel.json").read_text(encoding="utf-8"))
+    assert gates._auto(zauto)
+    # ……推送落账之后，全库扫描照样只红 later-reel
+    (ledger / "zauto-reel.json").write_text(json.dumps(
+        {"attempts": [{"status": "sent", "at": "2026-09-28T07:00:00Z"}]}), encoding="utf-8")
+    bad, judged = _corpus_reuse_hits(**kw)
+    assert [b.split(":")[0] for b in bad] == ["later-reel"], bad
+    assert judged == 3                               # 自动产的那条发了也不算进「判了」
+
+
+def test_没发过的同栏目spec借账本之前那批的封面_全库照样红_别人落账也翻不动(tmp_path):
+    """复审 2026-09-27 BLOCKING。上一版全库扫描只判已发的：一条**没发过**的赛场之上借了
+    `noskova-tauson`（08-18 发，只记在 pushed.json 里）的封面，全库绿；runner 的 dry-run
+    又看不见 pushed.json（稀疏检出不带 output/），渲染放行——同栏目复用的封面到了读者
+    手里，推送落账之后 main 反而红（还红在无辜的原主上）。
+
+    现在：没发过的只对**账本之前那批**（冻结表）判——那批不会再长，别人的推送翻不动这个
+    判词；runner 视角（没有 output/）靠冻结表一样看得见。"""
+    specs, ledger, output = tmp_path / "specs", tmp_path / "ledger", tmp_path / "output"
+    for folder in (specs, ledger, output, tmp_path / "assets"):
+        folder.mkdir()
+    _jpg(tmp_path / "assets" / "old.jpg")
+    _jpg(tmp_path / "assets" / "other.jpg")
+    (tmp_path / "assets" / "old").mkdir()
+    (tmp_path / "assets" / "old" / "copy.jpg").write_bytes(
+        (tmp_path / "assets" / "old.jpg").read_bytes())               # 换名、同内容
+    reel_col = {"eyebrow": "赛场之上"}
+    for slug, image in (("old-reel", "assets/old.jpg"),                # 账本之前发的原主
+                        ("new-reel", "assets/old/copy.jpg"),           # 没发过、同栏目借它
+                        ("bystander", "assets/other.jpg")):            # 不相干、马上要发
+        (specs / f"{slug}.json").write_text(json.dumps(
+            {"slug": slug, "cover": {**reel_col, "portrait": {"image": image}}}),
+            encoding="utf-8")
+    pushed = output / "2026-08-18" / "reel" / "old-reel"
+    pushed.mkdir(parents=True)
+    (pushed / "pushed.json").write_text(json.dumps({"at": "2026-08-18T09:00:00Z"}),
+                                        encoding="utf-8")
+    frozen = tmp_path / "pre-ledger.json"
+    frozen.write_text(json.dumps({"pushes": {"old-reel": "2026-08-18T09:00:00Z"}}),
+                      encoding="utf-8")
+    kw = {"specs": specs, "ledger": ledger, "output": output, "root": tmp_path,
+          "pre_ledger": frozen}
+
+    def red(**extra) -> list[str]:
+        return [b.split(":")[0] for b in _corpus_reuse_hits(**kw, **extra)[0]]
+
+    assert red() == ["new-reel"]
+    # runner 视角（没有 output/）：冻结表顶上，判得一样
+    assert red(judge_output=tmp_path / "no-output") == ["new-reel"]
+    # 别人发出去一条（auto-push 在 main 上记账）：判词不动
+    (ledger / "bystander.json").write_text(json.dumps(
+        {"attempts": [{"status": "sent", "at": "2026-09-28T03:00:00Z"}]}), encoding="utf-8")
+    assert red() == ["new-reel"]
+    assert red(judge_output=tmp_path / "no-output") == ["new-reel"]
+    # 渲染入口在 runner 上（没有 output/）也看得见原主：同栏目硬红，不再放行
+    new = json.loads((specs / "new-reel.json").read_text(encoding="utf-8"))
+    found = gates.cover_reuse_finding(new, legacy_set=NONE,
+                                      **{**kw, "output": tmp_path / "no-output"})
+    assert found and found[1] is True and "`old-reel`" in found[0], found
+    # 认领了（`_cover_reuse_why`）就不红——和入口一个口径
+    (specs / "new-reel.json").write_text(json.dumps(
+        {**new, "_cover_reuse_why": "系列片沿用"}), encoding="utf-8")
+    assert red() == []
+
+
+def test_账本之前发的那批冻成表_和pushed_json逐条对得上():
+    """`data/reel_pushed_before_ledger.json` 是从 `output/*/reel/*/pushed.json` 冻出来的
+    「账本之前那批」：runner 不带 `output/`，封面复用闸靠它看见这批。它必须
+    ① 覆盖 pushed.json 里每一条账本记不到的发布（时刻一字不差）——漏一条，runner 上
+       借那条封面的新 spec 又放行了；08-24 之后要是冒出一条只有 pushed.json、账本里没有
+       的推送，也红在这儿：那说明「每次推送都写账本」这个前提坏了，表会开始漏；
+    ② 每一条都早于账本的第一笔——它是冻住的历史，不许往里添新的。"""
+    doc = json.loads(gates.PRE_LEDGER.read_text(encoding="utf-8"))
+    frozen = gates.pre_ledger_pushes()
+    assert frozen and frozen == doc["pushes"], "冻结表读不到或格式变了——runner 上那道闸会静静失明"
+    ledger = gates._published(gates.LEDGER, None)
+    assert doc["ledger_start"] == min(ledger.values()) == "2026-08-24T00:48:43Z"
+    late = sorted(s for s, at in frozen.items() if at >= doc["ledger_start"])
+    assert not late, f"冻结表里有账本开始之后的条目：{late}"
+    assert not set(frozen) & set(ledger), "冻结表和账本记的是同一条——它只该记账本之前的"
+    assert len(frozen) <= 125, "账本之前那批是冻住的，只许减不许加"
+    pushed = sorted(gates.OUTPUT.glob("*/reel/*/pushed.json"))
+    if not pushed:
+        # 本地稀疏检出不带 output/ 时没法对账；CI 带着 output/**/*.json，照样对
+        if os.environ.get("GITHUB_ACTIONS"):
+            pytest.fail("CI 上找不到 output/*/reel/*/pushed.json——对账那一半空转了")
+        pytest.skip("这棵检出里没有 output/*/reel/*/pushed.json，只验了表本身")
+    from_output = gates._published(gates.PRE_LEDGER.parent / "no-such-ledger", gates.OUTPUT)
+    missing = {s: at for s, at in from_output.items()
+               if s not in ledger and frozen.get(s) != at}
+    assert not missing, ("pushed.json 里有账本记不到的发布，冻结表却没有（或时刻对不上）"
+                         f"——runner 上看不见它们：{missing}")
+    earlier = {s: (at, ledger[s]) for s, at in from_output.items()
+               if s in ledger and at < ledger[s]}
+    assert not earlier, f"pushed.json 比账本记得早——第一次发出去的时刻在 runner 上会错：{earlier}"
 
 
 @pytest.mark.parametrize("kind,check,cap", [
@@ -535,6 +656,7 @@ def test_真账本多一笔_全库扫描和钉空账本的渲染入口都不许�
     monkeypatch.setattr(gates, "SPECS", specs)
     monkeypatch.setattr(gates, "LEDGER", live)
     monkeypatch.setattr(gates, "OUTPUT", output)
+    monkeypatch.setattr(gates, "PRE_LEDGER", tmp_path / "no-pre-ledger.json")
 
     # 没钉账本：这一笔真的把渲染入口打红（不然下面两句放行是空转）
     monkeypatch.delenv("TENNISLIVE_REEL_LEDGER_DIR")

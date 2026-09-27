@@ -557,6 +557,33 @@ def test_一条人工请求没过闸_不连坐同一趟的其余请求(tmp_path,
     assert green.returncode == 0 and summary.read_text("utf-8") == ""
 
 
+def test_请求读不了时失败清单的slug列按文件名认_不许空着(tmp_path, monkeypatch):
+    """失败清单第二列是 dispatch／提交那两道闸 `cut -f2` 过滤用的 slug。请求在 build 那一刻
+    读不了（JSON 被改坏、slug 被删）时原来写 `""`——那两道就拦不住它上一版的正式 spec
+    （复审 2026-09-27 nit）。按文件名认：requests/interviews/<slug>.json。"""
+    import build_interview_request as B  # noqa: PLC0415
+    import tennislive.research.brief as brief  # noqa: PLC0415
+
+    requests_dir = tmp_path / "requests"
+    requests_dir.mkdir()
+    broken = requests_dir / "broken-interview.json"
+    broken.write_text("{ 这不是 JSON", encoding="utf-8")
+    no_slug = requests_dir / "no-slug-interview.json"
+    no_slug.write_text(json.dumps({"url": "https://example.com"}), encoding="utf-8")
+    monkeypatch.setattr(B, "pending_paths", lambda only="": [broken, no_slug])
+
+    class _Ready:
+        ready = True
+
+    monkeypatch.setattr(brief, "Chat", _Ready)
+    failed = tmp_path / "request-failed.txt"
+    monkeypatch.setattr(sys, "argv", ["build_interview_request.py", "--write",
+                                      "--failed-list", str(failed)])
+    assert B.main() == 0
+    rows = [line.split("\t") for line in failed.read_text("utf-8").splitlines()]
+    assert [row[1] for row in rows] == ["broken-interview", "no-slug-interview"], rows
+
+
 def test_check_request逐条调用不许把sys_path越撑越长(monkeypatch):
     """一趟 build 逐条请求各调一次 `check_request`；原来每调一次就往 sys.path 头上插一次
     tools/（复审 2026-09-27 的 nit）。"""
