@@ -86,9 +86,9 @@
       "focus_y": 0.5,
       "zoom": 1.0,
       "_owner_words": "账号所有者 2026-09-27：「用他举起奖杯的照片做封面吧」。",
-      "_frame_why": "⚠️ 抽帧，不是官方实拍——账号所有者点名要捧杯照（2026-09-27），走 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」）（素材是预裁进仓库的图，不走 `frame_at`，所以不用登记 `OWNER_APPROVED_FRAME_COVERS`）。\n捧杯的官方实拍查过（北京 20:20 前后，终场后约 1.5 小时）：WTA photo-resources 9/27 目录本场仍只有赛后稿头图一张（比赛中低头握拳，不是捧杯）；`find_cover_photo.py` AP 0 张；Yahoo／The Big Lead／TennisNow／CBC 的稿子配的都是旧图；比赛集锦 `972H4pIo248` 颁奖段只拍到捧花致辞、没有捧杯；赛事官网沙箱够不着。\n**这一帧**：WTA 官方 YouTube Short `oN3peuz8iaY`（「Your Champion, Leylah Annie Fernandez! 🏆」，1080×1920，frame-grab 落在 `output/2026-09-27/frames/fernandez-gibson-final-trophy/`）13.5s：她站在中心球场上双手把奖杯捧到胸前，**正脸、双眼睁着、笑**，身后是 `WTA500`、`THE KALLANG`、`OCBC ARENA` 挡板＝本场场地。0.5s 起每一帧都烧着英文字幕，13.5s 那一条 `BYE.` 落在源片 y≈1400~1480，所以预裁取 (90,170)–(990,1370)，字幕整条在框外；0s 那一帧没字幕但她张嘴说话，不如这一帧。",
-      "_low_res_why": "预裁 900×1200，铺 1080×1440 放大 1.2 倍（源是竖版 Short，只能在字幕上方裁 3:4）。",
-      "_focus_why": "预裁已经是 3:4，focus 居中即可：脸在封面 y≈440~700（台头带 0~170 之下），奖杯顶在 y≈830，钩子两行压在奖杯和上衣上、不压脸。"
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——账号所有者点名要捧杯照（2026-09-27），走 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」）（素材是预裁进仓库的图，不走 `frame_at`，所以不用登记 `OWNER_APPROVED_FRAME_COVERS`）。\n捧杯的官方实拍查过（北京 20:20 前后，终场后约 1.5 小时）：WTA photo-resources 9/27 目录本场仍只有赛后稿头图一张（比赛中低头握拳，不是捧杯）；`find_cover_photo.py` AP 0 张；Yahoo／The Big Lead／TennisNow／CBC 的稿子配的都是旧图；比赛集锦 `972H4pIo248` 颁奖段只拍到捧花致辞、没有捧杯；赛事官网沙箱够不着。\n**这一帧**：WTA 官方 YouTube Short `oN3peuz8iaY`（「Your Champion, Leylah Annie Fernandez! 🏆」，1080×1920，frame-grab 落在 `output/2026-09-27/frames/fernandez-gibson-final-trophy/`）13.5s：她站在中心球场上双手把奖杯捧到胸前，**正脸、双眼睁着、笑**，身后是 `WTA500`、`THE KALLANG`、`OCBC ARENA` 挡板＝本场场地。0.5s 起每一帧都烧着英文字幕，13.5s 那一条 `BYE.` 落在源片 y≈1400~1480，所以预裁取 (150,340)–(930,1380)，字幕整条在框外（账号所有者 2026-09-27「人物往上来一点」：窗口从 y170 下移到 y340，并排渲过三版取人最靠上的一版）；0s 那一帧没字幕但她张嘴说话，不如这一帧。",
+      "_low_res_why": "预裁 780×1040，铺 1080×1440 放大 1.38 倍（源是竖版 Short，只能在字幕上方裁 3:4；为了人物往上，窗口比上一版收紧）。",
+      "_focus_why": "预裁已经是 3:4，focus 居中即可：脸在封面 y≈260~560（台头带 0~170 之下），奖杯顶在 y≈400，钩子两行压在奖杯中段和上衣上、不压脸。"
     },
     "scoreboard": {
       "court": "OCBC Arena",
