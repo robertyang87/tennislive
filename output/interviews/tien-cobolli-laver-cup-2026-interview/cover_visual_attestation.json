@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-27T00:51:49Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "勒纳·钱",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "d78c03591a3ded048e9923130b3907992bd2d4c6fa235634f0008db36b81a094",
+  "poster_sha256": "462a0fca7df4f436c467e3b793854290926d531770cdfc6cdf1f3043082dbdf1",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        312,
+        238,
+        484,
+        484
+      ],
+      "detected_faces": 1,
+      "eyes": 3,
+      "face_height_ratio": 0.59753,
+      "face_area_ratio": 0.26778,
+      "center_x_ratio": 0.51296,
+      "center_y_ratio": 0.40741,
+      "sharpness": 968.427,
+      "contrast": 133.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 79.6,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}

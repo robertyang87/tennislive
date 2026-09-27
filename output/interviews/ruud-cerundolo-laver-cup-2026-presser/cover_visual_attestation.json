@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-27T00:55:54Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "鲁德",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "e6357dc3cf5e26ae6294f97c5b2b524627495282ba491c4c8b93c83c75c4af55",
+  "poster_sha256": "514ee1667ff997794a83633d36f955d1af901c3b54db9c201611249b7f477b2e",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        370,
+        312,
+        326,
+        326
+      ],
+      "detected_faces": 3,
+      "eyes": 2,
+      "face_height_ratio": 0.40247,
+      "face_area_ratio": 0.12149,
+      "center_x_ratio": 0.49352,
+      "center_y_ratio": 0.40123,
+      "sharpness": 281.52,
+      "contrast": 122.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 257.2,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
