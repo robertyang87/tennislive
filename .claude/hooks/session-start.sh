@@ -45,7 +45,10 @@ else
 fi
 
 echo "[启动] 装项目依赖（和 ci.yml 那一行对齐）…"
-pip install -q -e ".[dev,webrender,visualqa]"
+pip install -q -e ".[dev,webrender,visualqa,faces]"
+# 认人／睁眼的三个 onnx（21 MB，约 2 秒；和 ci.yml「备好人脸模型」那一步对齐）。
+# 备不上不拦启动——对应那几条测试在本机会跳过，而 CI 上缺模型是红
+python3 tools/face_checks.py fetch || echo "[启动] ⚠️ 人脸模型没下成，test_face_checks 会跳过"
 # `cffi` 是 rembg/onnxruntime 那条链上的，缺了它七条测试报
 # `pyo3_runtime.PanicException`——**和「这里跑不了」长得一模一样**。
 # `edge-tts` 是本地查旁白要的（`render --check-narration`，实测 29 秒）。
@@ -58,7 +61,7 @@ python3 - <<'PY'
 import shutil, subprocess, sys
 bad = []
 for mod in ("rich", "PIL", "cv2", "playwright", "pypdf", "cffi", "edge_tts",
-            "certifi", "numpy", "tennislive"):
+            "certifi", "numpy", "onnxruntime", "tennislive"):
     try:
         __import__(mod)
     except Exception as exc:                      # noqa: BLE001
