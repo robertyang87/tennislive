@@ -11970,6 +11970,8 @@ def test_全称断言必须认领一份能穷举的出处():
     和「看了几场就下结论」分开。
     """
     reel = _reel()
+    # 词表 2026-09-27 挪进了三条线共用的 `tools/absolute_claims.py`（`_reel()` 已把 tools/ 挂上）。
+    import absolute_claims  # noqa: PLC0415
 
     # ---- 豁免表自检：名字要真的存在，而且真的还带着那种断言 ----
     for slug in sorted(reel._LEGACY_UNSOURCED_CLAIMS):
@@ -11977,7 +11979,7 @@ def test_全称断言必须认领一份能穷举的出处():
         assert path.is_file(), f"豁免表里的 {slug} 不存在了——过期的名字就是恒真的绿灯"
         spec = json.loads(path.read_text(encoding="utf-8"))
         texts = reel.spec_outward_text(spec)
-        assert any(reel._ABSOLUTE_CLAIM_RE.search(t) for t in texts), (
+        assert absolute_claims.claim_phrases(texts), (
             f"{slug} 已经没有全称断言了，把它从 _LEGACY_UNSOURCED_CLAIMS 删掉（只许减不许加）")
 
     # ---- 存量里没被豁免的，一条都不许漏 ----

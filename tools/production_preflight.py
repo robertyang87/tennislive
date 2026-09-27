@@ -37,12 +37,30 @@ def check_request(req: dict) -> None:
         check_copy(copy, '赛后开麦')
 
 
+def check_interview_claims(spec_path: Path) -> None:
+    """采访线的全称断言要认领两个独立源——和竖版短片、解说片同一份判据。
+
+    来路：这道闸原来只装在竖版短片那条线上（`build_match_reel.validate_spec`），
+    采访线一道都没有；2026-09-27 扫出 2 份已发的采访 spec 带着没认领的断言
+    （挂在 `absolute_claims.INTERVIEW_LEGACY`）。引号里的话是受访者说的，不算。
+    """
+    sys.path.insert(0, str(ROOT / 'tools'))
+    from absolute_claims import interview_problem  # noqa: PLC0415
+
+    spec = json.loads(spec_path.read_text(encoding='utf-8'))
+    problem = interview_problem(spec, spec_path.stem)
+    if problem:
+        raise SystemExit(problem)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--spec', required=True)
     ap.add_argument('--column', required=True)
     args = ap.parse_args()
     path = Path(args.spec)
+    if args.column == '赛后开麦' and path.is_file():
+        check_interview_claims(path)
     check_copy(path.with_suffix('.xhs.txt'), args.column)
 
 

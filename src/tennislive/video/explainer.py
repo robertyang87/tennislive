@@ -10227,6 +10227,18 @@ _CAPTIONS: dict[str, dict] = {
 }
 
 
+#: 全称断言的出处认领：`{slug: {"<把那句话抄进键里>": "…核过的记录… https://A/… ；https://B/…"}}`。
+#:
+#: 「零胜／唯一一个／史上第一／从来没有」和「一共只进过三次决赛，三次全部拿下」这一族
+#: **一个反例就倒**，写了就要两个不同主机的穷举出处——和竖版短片 spec 的 `_claims`
+#: 同一个口径、同一份判据（`tools/absolute_claims.py`）。这张表 2026-09-27 才有：
+#: 之前解说片这条线一道闸都没有，`wawrinka-wildcard`「一共只进过三次大满贯决赛」
+#: 推了微信才被指出是四次（f58553ef）。装闸之前的存量挂在
+#: `absolute_claims.EXPLAINER_LEGACY`，只许减不许加；`tools/explainer_preflight.py`
+#: 在渲染之前就查（`explainer.yml` 第一步）。
+_CLAIMS: dict[str, dict[str, str]] = {}
+
+
 @dataclass(frozen=True)
 class Column:
     """A named strand of the account, printed on every card it produces.

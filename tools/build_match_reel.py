@@ -7889,6 +7889,14 @@ def validate_spec(
     _validate_editorial_contract(
         spec, required=_editorial_contract_required(spec, urls, topbar))
     _absolute_claims_need_a_source(spec)
+    # 写了「正式名单要等抽签日」就要回头查（davis-china 895dad7b），常青栏目不钉「今天」
+    # （qualifier-ceiling 2756cec3）。判据和量法在 `reel_facts.time_sensitive_problems`。
+    from reel_facts import time_sensitive_problems  # noqa: PLC0415
+    for problem in time_sensitive_problems(spec):
+        if (spec.get("_production") or {}).get("status") == "ready_for_render":
+            print(f"[时效] 自动 spec，只报不拦：{problem}")
+        else:
+            raise ReelError(problem)
     _players_are_worth_a_reel(spec)
     _hook_lines_fit_the_title(spec)
     voice = cover_voice_matches_hook_problem(spec)
@@ -8869,9 +8877,16 @@ def _ass_timestamp(seconds: float) -> str:
 #
 # ⚠️ **判据宁可窄，不可宽**：只认「零/没有/唯一/史上第一」这一族，
 # 不认「他这一场打得最好」这类主观话——那种机械挡不住（CLAUDE.md 记过几次）。
-_ABSOLUTE_CLAIM_RE = re.compile(
-    r"零胜|一场没赢过|一场都没赢|一次都没赢|没赢过一场|从没赢过|从未赢过"
-    r"|唯一一个|唯一一位|史上第一|历史上第一|从来没有")
+#
+# ⚠️ 2026-09-27 词表和认领口径挪进了 `tools/absolute_claims.py`（三条线共用一处；
+# 解说片那条线原来一道闸都没有），同时收进了「生涯动词 ＋ 同一个数说两遍」的
+# 计数式——`wawrinka-wildcard`「一共只进过三次大满贯决赛，三次全部拿下」那一类。
+# 量法和为什么没按词放宽，见那个模块的 docstring。
+from absolute_claims import (  # noqa: E402
+    REEL_COUNT_LEGACY,
+    problem_text as _absolute_claim_problem_text,
+    unsourced as _unsourced_claims,
+)
 
 # 出事之前就发出去的那些。**只许减不许加**，底下的判据会自检：名字要真的存在、
 # 而且真的还带着那种断言——写错一个名字，豁免就成了一盏恒真的绿灯。
@@ -8894,12 +8909,6 @@ def spec_outward_text(spec: dict) -> list[str]:
     return [t for t in out if t]
 
 
-def _claim_sources(value: object) -> set[str]:
-    """一条认领里引了几个**不同**的源——按主机名去重，同一个站点算一个。"""
-    return {m.group(1).lower()
-            for m in re.finditer(r"https?://([^/\s)）]+)", str(value))}
-
-
 def _absolute_claims_need_a_source(spec: dict) -> None:
     """写了全称断言，就必须在 `_claims` 里认领**两个独立源**的穷举出处。
 
@@ -8915,27 +8924,10 @@ def _absolute_claims_need_a_source(spec: dict) -> None:
     slug = str(spec.get("slug", "")).strip()
     if slug in _LEGACY_UNSOURCED_CLAIMS:
         return
-    claims = spec.get("_claims") or {}
-    found = sorted({m.group(0) for text in spec_outward_text(spec)
-                    for m in _ABSOLUTE_CLAIM_RE.finditer(text)})
-    missing = []
-    for phrase in found:
-        hosts: set[str] = set()
-        for key, value in claims.items():
-            if phrase in str(key):
-                hosts |= _claim_sources(value)
-        if len(hosts) < 2:
-            missing.append((phrase, len(hosts)))
+    missing = _unsourced_claims(spec_outward_text(spec), spec.get("_claims"),
+                                count_form=slug not in REEL_COUNT_LEGACY)
     if missing:
-        raise ReelError(
-            "这几句是**全称断言**，一个反例就能推翻——必须在 spec 的 `_claims` 里\n"
-            "认领**两个独立源**的穷举出处（各带 URL），而且要按断言本身的粒度逐行核：\n"
-            + "".join(f"  · {p}（现在只有 {n} 个源）\n" for p, n in missing)
-            + '  "_claims": {"<把那句话抄进来>": "…核过的记录… https://A/… ；https://B/…"}\n'
-            "⚠️ **断言的粒度 ≤ 查询的粒度**：说「轮次」就要查到轮次那一列。\n"
-            "  `chwalinska-gibson` 就是这么错的——「场地＋级别」的 6 胜 4 负分不出\n"
-            "  Q1/Q2 和 R32/R16，而轮次就在同一张表里；而第二个源（维基引 WTA 官方标题\n"
-            "  「…beats Marino for first hard-court win」）一句话就能推翻它。")
+        raise ReelError(_absolute_claim_problem_text(missing, "spec 的 `_claims`"))
 
 
 def _third_party_sources(urls: dict[str, str]) -> dict[str, str]:

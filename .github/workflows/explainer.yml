@@ -93,6 +93,27 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      # ⭐ **渲前预检排在所有安装步骤前面**——它只读稿子本身，几秒钟；后面装字体、
+      # Chromium、ffmpeg 那三步的最坏预算加起来 40 分钟。
+      #
+      # 来路（2026-09-27 全库取证）：这条线原来**一道渲前闸都没有**，编辑口径的判据
+      # 全活在 `tests/test_explainer*.py` 里，分支上的稿子带着红着的判据照样渲、照样推：
+      # f58553ef 瓦林卡「一共只进过三次大满贯决赛」（四次）、2c38adef 多哈迪拜「逐年轮换」
+      # （2024 年就停了），都是推了微信才被指出来；d18bba31 那道 1000 字的闸倒是有，
+      # 可它排在 `generate_explainer_video()` **之后**，红在那儿要白烧一整趟 TTS＋ffmpeg。
+      # 每一项是什么、为什么这么判，见 `tools/explainer_preflight.py` 的 docstring；
+      # 那些判据和 `tests/` 是同一份函数，不是抄一份。
+      #
+      # slug 的默认值和 `concurrency.group` 同一个写法（`|| 'hawkeye'`）。
+      # 判据 `tests/test_explainer_preflight.py::test_预检是工作流的第一道闸_排在所有安装之前`。
+      - name: 渲前预检（只读稿子，几秒钟）
+        timeout-minutes: 5
+        env:
+          SLUG: ${{ github.event.inputs.slug || 'hawkeye' }}
+        run: |
+          pip install -q -e .
+          python tools/explainer_preflight.py --slug "$SLUG"
+
       # ⚠️ apt 镜像会抽风且不是偶发（2026-08-04/18/19 多次撞上 `apt-get
       # update`/`install` 连着两次吃满 150 秒、零字节进度）——调重试参数治不了根，
       # 真正的杠杆是大多数 run 根本不碰这个镜像。`tools/ci_apt_install.sh`
