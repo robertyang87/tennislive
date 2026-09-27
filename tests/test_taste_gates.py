@@ -6,8 +6,9 @@
 
 1. 每一道闸**抓得住被否的那一版**，**放得过被接受的那一版**（两个方向都用真稿）
 2. 豁免表**只许减不许加**、**冻的是原文**，而且全库当前零误报
-3. 闸真的坐在入口上：`validate_spec`（`--dry-run`）、采访渲染入口、采访预检、
-   起草阶段的回喂重写——自动产的 spec 只报不拦
+3. 闸真的坐在入口上：`validate_spec`（`--dry-run`）、采访渲染入口、采访预检——
+   自动产的 spec 只报不拦；**不接任何模型**（账号所有者 2026-09-27「minimax 和
+   deepseek 都不要用，后续会拿掉」）
 """
 
 from __future__ import annotations
@@ -317,8 +318,8 @@ def _corpus_hard_findings(reel_paths, interview_paths) -> tuple[list[str], list[
     ⚠️ **自动 spec（`_production.status == ready_for_render`）只进第二组，不判 main 红。**
     `validate_spec` / `promote_reel_draft` 对它们本来就只报不拦，而 reel-auto-ready /
     finalize-reel 把转正的 spec **直接推上 main**：当天 121 份 pending 草稿里 103 份的钩子
-    过不了这两道闸，`_retry_hook_taste` 只重写一轮、没改善就留首稿——这里要是把它们
-    也算硬，第一条自动转正就把 main CI 打红，而豁免表只许减、根本没有出口
+    过不了这两道闸——这里要是把它们也算硬，第一条自动转正就把 main CI 打红，而豁免表
+    只许减、根本没有出口
     （评审 B1，和 explainer-preflight 同一天被拦的是同一类：推一次就红一次的全库判据）。
     自动 spec 过闸时只要求**不抛**。
 
@@ -398,12 +399,9 @@ def test_validate_spec手写的新spec当场红():
     assert T.hook_result_problem(_hook_spec(frozen + "了", slug=legacy_slug))
 
 
-def test_自动产的spec只报不拦_repair改得动的才带旁白窗口(capsys):
-    """自动 spec 只报；日志行首的标签按 `repair_reel_spec` 改不改得动来分（评审 N4）：
-    它只会挪窗口、删短旁白，所以只有「旁白」「窗口」两块让 `SALIENT` 挑去回喂，
-    钩子、文案那几条行首明说它改不动。"""
+def test_自动产的spec只报不拦(capsys):
+    """自动 spec 的硬发现只报、不抛；日志行首 `[口味·<块>]` 只告诉人去哪一块改。"""
     import build_match_reel as reel
-    import repair_reel_spec
 
     auto = _hand_written("medvedev-royer-hangzhou-2026-r2", "首秀就被逼到4比6\n7分里拿下6分")
     auto["_production"] = {"status": "ready_for_render"}
@@ -413,19 +411,28 @@ def test_自动产的spec只报不拦_repair改得动的才带旁白窗口(capsy
     reel._owner_taste(auto)          # 不抛
     lines = [ln for ln in capsys.readouterr().out.splitlines() if ln.startswith("[口味·")]
     hard = [ln for ln in lines if "自动 spec 只报不拦" in ln]
-    hook = [ln for ln in hard if ln.startswith("[口味·钩子")]
-    board = [ln for ln in hard if ln.startswith("[口味·旁白]")]
-    assert hook and board, lines
-    # 只报的那几条（每盘一句）同样按块打标签
-    assert all(repair_reel_spec.SALIENT.search(ln) for ln in lines
-               if ln.startswith(("[口味·旁白]", "[口味·窗口]"))), "旁白/窗口那几条要能被回喂"
-    for ln in hook:
-        assert "repair 改不动" in ln
-        prefix = ln.split("]", 1)[0] + "]"
-        assert not repair_reel_spec.SALIENT.search(prefix), "钩子那条的标签不许冒充旁白/窗口"
-    assert T.REPAIRABLE == {"旁白", "窗口"}
-    labels = {label for label, _h, _n in T.reel_taste_scoped(auto)}
-    assert labels >= {"钩子", "旁白"}
+    assert any(ln.startswith("[口味·钩子]") for ln in hard), lines
+    assert any(ln.startswith("[口味·旁白]") for ln in hard), lines
+    hand = dict(auto)
+    hand.pop("_production")
+    with pytest.raises(reel.ReelError, match="口味"):
+        reel._owner_taste(hand)       # 同一份稿子，手写的就红
+
+
+def test_口味闸不接模型():
+    """账号所有者 2026-09-27「minimax 和 deepseek 都不要用，后续会拿掉」：口味闸只读
+    spec，不回喂模型重写钩子（原来 `assemble_spec._retry_hook_taste` 那一轮），也不为
+    `repair_reel_spec` 的回喂去挑日志行首（原来的 `REPAIRABLE`）。自动链本身不在这儿拆，
+    那是账号所有者后面的一步——这里只钉住口味闸不往模型那头长。"""
+    for gone in ("hook_taste_problems", "REPAIRABLE"):
+        assert not hasattr(T, gone), f"taste_gates.{gone} 是给模型回喂用的，别加回来"
+    model_side = ("assemble_spec", "draft_spec", "draft_segments", "repair_reel_spec")
+    for name in model_side:
+        src = Path(f"tools/{name}.py").read_text(encoding="utf-8")
+        assert "taste_gates" not in src, f"{name} 不许把口味闸接进模型那一头"
+    owner = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    body = owner[owner.index("def _owner_taste("):owner.index("def scoreboard_profile(")]
+    assert "SALIENT" not in body and "REPAIRABLE" not in body
 
 
 def _clash_interview() -> dict:
@@ -492,34 +499,3 @@ def test_采访预检main在赛后开麦上跑口味闸(tmp_path, monkeypatch, c
     assert "只报" in capsys.readouterr().out and copies == ["赛后开麦"]
     run(_clash_interview(), "赛场之上")             # reel 那头由 validate_spec 管
     assert copies == ["赛后开麦", "赛场之上"]
-
-
-def test_起草阶段钩子不合口味就回喂重写一轮(monkeypatch):
-    import assemble_spec as a
-
-    calls = []
-
-    def fake(chat, **kw):
-        calls.append(kw["facts"])
-        if len(calls) == 1:
-            return {"hook": ["5比2被追成5比5", "她连拿最后2局"], "beats": ["b"]}
-        return {"hook": ["次盘5比2被追平", "她还是挺进了决赛"], "beats": ["b"]}
-
-    monkeypatch.setattr(a, "draft_editorial", fake)
-    draft = {"editorial": fake(None, facts="f"), "stats": {}, "cover": {}}
-    notes: list[str] = []
-    a._retry_hook_taste(draft, None, home="A", away="B", event="E", year=2026,
-                        fixture="", facts="f", background="", scores=[], notes=notes)
-    assert draft["editorial"]["hook"] == ["次盘5比2被追平", "她还是挺进了决赛"]
-    assert "不合账号所有者的口味" in calls[-1], "判据原文没回喂给模型"
-    assert notes and "重写后通过" in notes[0]
-
-    # 重写没改善：留首稿、只报，**不撤稿**（自动链不能被卡成「今天没有候选」）
-    calls.clear()
-    monkeypatch.setattr(a, "draft_editorial",
-                        lambda chat, **kw: {"hook": ["5比2被追成5比5", "她连拿最后2局"]})
-    draft = {"editorial": {"hook": ["5比2被追成5比5", "她连拿最后2局"]}, "stats": {}, "cover": {}}
-    notes = []
-    a._retry_hook_taste(draft, None, home="A", away="B", event="E", year=2026,
-                        fixture="", facts="f", background="", scores=[], notes=notes)
-    assert "editorial" in draft and "只报不拦" in notes[0]

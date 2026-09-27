@@ -25,10 +25,15 @@
 |---|---|
 | 手写的新 spec | **硬**——`--dry-run` 当场红 |
 | `data/legacy_taste_gates.json` 里已发的老片子 | 放行（已发的不重渲）；**钩子冻的是原文**，改一个字就重新受管 |
-| 自动产的 spec（`_production.status == ready_for_render`） | **只报**——那一头没有人写认领，做硬会把自动链卡成「今天没有候选」；判据文本照样印进日志：旁白／窗口那几条（`REPAIRABLE`）行首带这两个词，`repair_reel_spec` 回喂时读得到；钩子那几条在 `assemble_spec` 起草时就回喂模型重写一轮，日志里明说 repair 改不动 |
+| 自动产的 spec（`_production.status == ready_for_render`） | **只报**——那一头没有人写认领，做硬会把自动链卡成「今天没有候选」；判据文本照样印进日志（行首 `[口味·<块>]`） |
 
 采访线的封面大标题术语**只报**（规则书写的是 reel 和字卡，等账号所有者确认要不要做硬），
 见 `interview_taste_findings`。
+
+⚠️ **这些闸不接模型。** 账号所有者 2026-09-27：「minimax 和 deepseek 都不要用，后续会
+拿掉」——所以这里只读 spec（谁写的都一样判），**不回喂任何模型重写钩子，也不为
+`repair_reel_spec` 的回喂去挑日志行首的写法**。判据
+`tests/test_taste_gates.py::test_口味闸不接模型`。
 
 ⚠️ **钩子的豁免冻的是那一版钩子的原文，不是 slug。** 老规矩的豁免表按 slug
 放行，于是一条老片子重写钩子时照样不受管——而「重写钩子」正是这批规矩最该
@@ -756,15 +761,9 @@ def story_band_problem(spec: dict) -> str | None:
 # 入口
 # ════════════════════════════════════════════════════════════════════════
 
-#: 每条发现落在哪一块。`repair_reel_spec`（render 红了之后回喂模型修一轮）只会
-#: **挪段窗口、删短旁白**——所以只有「旁白」「窗口」这两块它改得动，日志行首才带
-#: 这两个词（`SALIENT` 按行挑回喂的判据）。钩子、文案、信息条它改不动：钩子在
-#: `assemble_spec._retry_hook_taste` 起草时就回喂过一轮，剩下的要人改。
-REPAIRABLE = frozenset({"旁白", "窗口"})
-
-
 def reel_taste_scoped(spec: dict) -> list[tuple[str, bool, str]]:
-    """[(块, 硬不硬, 判据原文)]。硬的那几条对自动 spec 也只报，由调用方按 `is_auto` 分流。"""
+    """[(块, 硬不硬, 判据原文)]。块（钩子／文案／旁白／窗口／信息条）只是告诉人去哪儿改；
+    硬的那几条对自动 spec 也只报，由调用方按 `is_auto` 分流。"""
     hard = [(label, p) for label, p in (
         ("钩子", hook_result_problem(spec)),
         ("钩子", hook_jargon_problem(spec)),
@@ -802,14 +801,3 @@ def interview_taste_findings(spec: dict) -> tuple[list[str], list[str]]:
     hard = [p for p in (copy_count_problem(spec, title_key="title"),) if p]
     soft = [p for p in (interview_title_jargon_problem(spec),) if p]
     return hard, soft
-
-
-def hook_taste_problems(hook, *, eyebrow: str = "赛场之上") -> list[str]:
-    """给起草阶段用：一份还没成 spec 的钩子（列表或字符串）按同一套判据判。
-
-    `assemble_spec` 拿它决定要不要把判据回喂模型重写一轮——那时还没有 slug，
-    也不该吃豁免表（新写的钩子一律按新规矩）。
-    """
-    spec = {"cover": {"eyebrow": eyebrow, "hook": "\n".join(hook_lines_of(hook))}}
-    return [p for p in (hook_result_problem(spec, legacy={}),
-                        hook_jargon_problem(spec, legacy={})) if p]

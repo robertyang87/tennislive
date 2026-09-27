@@ -8015,32 +8015,25 @@ def _owner_taste(spec: dict) -> None:
     |---|---|
     | 手写的新 spec | **硬**——各有各的改法／认领口 |
     | `data/legacy_taste_gates.json` 里已发的（钩子冻原文） | 放行 |
-    | 自动产的 spec（`_production.status == ready_for_render`） | **只报**——判据文本印进日志；钩子那几条在 `assemble_spec` 起草时就回喂模型重写一轮 |
+    | 自动产的 spec（`_production.status == ready_for_render`） | **只报**——判据文本印进日志 |
 
     「只报」那几条（第一行比分没说是哪一盘、推送标题里的术语、某一盘旁白
     一句没提）对谁都只报——它们在已接受的存量上有误报，做硬会成一条常年红。
 
-    ⚠️ 日志行首的标签**按 `repair_reel_spec` 改不改得动来分**：它只会挪段窗口、
-    删短旁白，所以只有「旁白」「窗口」两块（`taste_gates.REPAIRABLE`）行首带这两个词、
-    让 `SALIENT` 挑去回喂；钩子、文案、信息条的行首明说 repair 改不动——回喂给它
-    只是噪音，它也不该为了这几条去动窗口。
+    日志行首 `[口味·<块>]` 只告诉人去哪一块改。⚠️ 不为任何模型的回喂挑行首写法
+    （账号所有者 2026-09-27「minimax 和 deepseek 都不要用，后续会拿掉」）。
     """
-    from taste_gates import REPAIRABLE, is_auto, reel_taste_scoped  # noqa: PLC0415
-
-    def tag(label: str) -> str:
-        return (f"[口味·{label}]" if label in REPAIRABLE
-                else f"[口味·{label}｜repair 改不动，要回起草或人改]")
+    from taste_gates import is_auto, reel_taste_scoped  # noqa: PLC0415
 
     scoped = reel_taste_scoped(spec)
     for label, _hard, note in (x for x in scoped if not x[1]):
-        print(f"{tag(label)} 只报：{note}")
+        print(f"[口味·{label}] 只报：{note}")
     hard = [(label, note) for label, is_hard, note in scoped if is_hard]
     if not hard:
         return
     if is_auto(spec):
-        # 每条单独一行：`repair_reel_spec.SALIENT` 按行挑回喂的判据。
         for label, note in hard:
-            print(f"{tag(label)} 自动 spec 只报不拦：{note}")
+            print(f"[口味·{label}] 自动 spec 只报不拦：{note}")
         return
     body = "\n".join(f"  - {note}" for _label, note in hard)
     raise ReelError("不合账号所有者的口味（2026-09-27：做视频前就拦掉，"

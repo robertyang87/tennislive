@@ -317,52 +317,6 @@ def test_assemble有id时各块拼装(tool, monkeypatch):
     assert captured["fixture"] == "北京时间"
 
 
-def test_assemble起草时钩子不合口味就回喂重写一轮(tool, monkeypatch):
-    """`_retry_hook_taste` 的**座位**（评审 N3：把 assemble 里那一行换成 `if False:`，
-    只测函数本身的那条测试照样绿）。钩子第二行没交代结果 → 判据原文回喂 DeepSeek
-    重写一轮 → 新稿过了事实闸、口味问题变少才换上。"""
-    a = tool
-    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
-    monkeypatch.setattr(a, "matchup_order",
-                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
-    monkeypatch.setattr(a, "stats_block", lambda mid: {
-        "a": {"aces": 0}, "b": {"aces": 0},
-        "_missing_required": [], "_has_winners_ue": False})
-    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
-    monkeypatch.setattr(a, "points", lambda mid: [{
-        "set": "1", "home_games": "5", "away_games": "6",
-        "server": "home", "winner": "away", "broken": True,
-        "points": "HL|B2|", "break_points": 0, "set_points": 1,
-        "match_points": 0}])
-    monkeypatch.setattr(a, "rank_games", lambda games: [])
-
-    class FakeChat:
-        ready = True
-        channel = "deepseek · test"
-
-        def ask(self, *a, **kw):
-            return {}
-
-    calls = []
-    first = ["一度被逼到绝境", "她一分一分咬住"]          # 第二行只有过程，没交代结果
-    better = ["关键时刻一度落后", "伊埃拉逆转鲁塞"]
-
-    def fake_editorial(chat, **kw):
-        calls.append(kw)
-        return {"hook": list(first if len(calls) == 1 else better), "question": "q",
-                "thesis": "t", "beats": ["b"], "human_context": "", "narration": ["n"]}
-
-    monkeypatch.setattr(a, "Chat", lambda: FakeChat())
-    monkeypatch.setattr(a, "draft_editorial", fake_editorial)
-    draft = a.assemble(slug="x", home="Alexandra Eala", away="Elena-Gabriela Ruse",
-                       event="Cincinnati", year=2026, fixture="北京时间",
-                       flashscore_id="4CYI9Ick")
-    assert len(calls) == 2, "钩子不合口味要回喂重写一轮"
-    assert "不合账号所有者的口味" in calls[1]["facts"], "判据原文没回喂给模型"
-    assert draft["editorial"]["hook"] == better
-    assert any("钩子口味闸首稿不合" in n and "重写后通过" in n for n in draft["_notes"])
-
-
 def test_assemble把H2H自动喂进background(tool, monkeypatch):
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
