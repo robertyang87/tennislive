@@ -66,10 +66,23 @@ def test_有比分板时每条字幕都下锚_底边在板上方():
     class NoBoard:
         score_inset = None
 
-    bottom = reel.subtitle_bottom_for_boards([Seg(), NoBoard()])
+    bottom = reel.subtitle_bottom_for_boards([Seg(), NoBoard()], column="赛场之上")
     board_top = round(920 * reel.VIDEO_W / reel.CROP_W)
     assert bottom == reel.VIDEO_H - (board_top - reel.SCORE_INSET_GAP_PX)
-    assert reel.subtitle_bottom_for_boards([NoBoard()]) is None
+    assert reel.subtitle_bottom_for_boards([NoBoard()], column="赛场之上") is None
+
+
+def test_字幕下移只给赛场之上_别的栏目有板也不挪():
+    """账号所有者 2026-09-27：「字幕下移的只有赛场之上，因为他有比分板」。
+    网球有故事的剪辑片同样走 build_match_reel，借一段带板的画面也不许跟着挪。"""
+    import build_match_reel as reel
+
+    class Seg:
+        score_inset = (0, 920, 519, 1029)
+
+    assert reel.subtitle_bottom_for_boards([Seg()], column="赛场之上") is not None
+    for other in ("网球有故事", "开球之前", ""):
+        assert reel.subtitle_bottom_for_boards([Seg()], column=other) is None, other
 
 
 def test_bottom_margin给了就每条都下锚(tmp_path):
@@ -87,4 +100,5 @@ def test_bottom_margin给了就每条都下锚(tmp_path):
 
 def test_render把下锚接上了():
     src = (ROOT / "tools" / "build_match_reel.py").read_text(encoding="utf-8")
-    assert "bottom_margin=bottom" in src and "subtitle_bottom_for_boards(segments)" in src
+    assert "bottom_margin=bottom" in src
+    assert "subtitle_bottom_for_boards(segments, column=column)" in src

@@ -1106,8 +1106,13 @@ def subtitle_margin_for_boards(segments: list["Segment"], default_margin: int) -
         return default_margin
     lifted = min(tops) - SCORE_INSET_GAP_PX - SUB_BLOCK_H_PX
     return min(default_margin, max(0, lifted))
-def subtitle_bottom_for_boards(segments: list["Segment"]) -> int | None:
+def subtitle_bottom_for_boards(segments: list["Segment"], *, column: str) -> int | None:
     """全出血 + 回贴了比分板时，字幕**一律下锚**，底边钉在板顶上方 `SCORE_INSET_GAP_PX`。
+
+    ⚠️ **只管「赛场之上」**（账号所有者 2026-09-27：「字幕下移的只有赛场之上，因为他
+    有比分板」）。原来判的是「有没有段回贴了板」，碰巧只有赛场之上用 `score_inset`；
+    网球有故事的剪辑片哪天借一段带板的画面，字幕就会跟着被挪下去——所以按栏目卡死，
+    别的栏目一律 None，走老位置。
 
     账号所有者 2026-09-26：「**建议字幕可以往下来一点**」，看过并排对比选了这一版。
     原来是上锚在 `subtitle_margin_for_boards` 算的那条线上：为了万一折成两行也不压板，
@@ -1115,7 +1120,7 @@ def subtitle_bottom_for_boards(segments: list["Segment"]) -> int | None:
     板的正上方——单行下来约 68px、双语下来约 22px，折多少行都不会压到板。
     没开回贴、或者是带式，返回 None（照旧走上锚／`bilingual_bottom_margin`）。
     """
-    if LAYOUT == "band":
+    if LAYOUT == "band" or column != "赛场之上":
         return None
     tops = [int(round(seg.score_inset[1] * VIDEO_W / CROP_W))
             for seg in segments if seg.score_inset]
@@ -8612,7 +8617,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     if "subtitle_top" not in spec:
         margin_v = board_margin
     # 回贴了板的全出血片子：每条字幕都下锚、底边钉在板顶上方（人工 `subtitle_top` 照旧最大）。
-    bottom = None if "subtitle_top" in spec else subtitle_bottom_for_boards(segments)
+    column = str((spec.get("cover") or {}).get("eyebrow", "")
+                 or spec.get("_column", "")).strip()
+    bottom = (None if "subtitle_top" in spec
+              else subtitle_bottom_for_boards(segments, column=column))
     ass = write_subtitles(cues, outdir / "subtitles.ass",
                           height=VIDEO_H, margin_v=margin_v,
                           outline=SUB_OUTLINE_PX, shadow=SUB_SHADOW_PX,
