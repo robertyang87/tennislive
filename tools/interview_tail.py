@@ -63,6 +63,30 @@ pegula-gauff-cin2026-final-runnerup 1.7、tiafoe-fils-cin2026-final-runnerup 1.3
 
 ⚠️ 上面 7 条已发的**不挂豁免表**：这道闸只在重渲那一刻、源片在手时才跑，而它们
 一旦重渲，板和冻帧就该一起收掉——报错里给的就是该收到的终点。
+
+⚠️ 而 `FROZEN_SLACK`＝0.2 只校准过 1.1~1.7 秒那五条；越过 0.2~1 秒的老片子重渲时同样会红
+——**新闸撞旧内容**（review 那条）。不放松门槛，挂豁免表：2026-09-27 拉回全部 102 条已发正片
+量正片末尾逐帧相同的帧（相邻帧差 < 0.03，排除帧率换算的单帧重复和锁机位发布会的低动量），
+落在这个区间的只有两条，挂在 `data/legacy_interview_gates.json` 的 `frozen_tail_short`
+（`frozen_legacy_ok`：`end` 改了、或者越过超过 `LEGACY_FROZEN_MAX` 就不认）。
+
+## 四、`end` 是**自动默认值**时，闸直接收到它算出来的终点；人给的照旧红
+
+默认终点（第一节）是按逐词稿算的，它**看不见板**：alcaraz-fritz 那种话音一落就甩板
+（+0.11 秒）、拉沃尔杯四条主持人的话压在板上还在说，「最后一个词 ＋ 0.5」都落在板里。
+这道闸原来对所有 spec 一律红——而自动产出的 spec **没有人会来改 `end`**：它下完源片
+才红，picker 的 stale 规则每 70 分钟重投一次，一直红下去。闸自己已经算出了该收到的
+终点，所以：
+
+| `end` 从哪儿来 | 撞上板／冻帧 |
+|---|---|
+| 自动默认值（`end_is_auto`） | **当场收到算出来的终点**，日志和 `render.json["end_trim"]` 记一笔，接着出片 |
+| 人给的（请求里写了 `end`、或者有人改过 spec 的 `end`） | **照旧红**——人给的数是判断，不替人改 |
+
+「是不是自动默认值」按产物认，不按猜：生成器没拿到人给的 `end` 时把算出来的那个数
+记进 `_end_default`；`end` 还等于它就是没人动过。老 spec 没有这个键——请求里没写 `end`、
+而 `end` 还等于源片全长（`_request_origin.duration`，默认终点上线之前的 `else duration`）
+的，同样算自动。
 """
 from __future__ import annotations
 
@@ -91,6 +115,9 @@ CARD_TRANS_MAX_S = 1.5    # 板前面的黑场／淡入最多这么长
 CARD_CUT = 20.0           # 再往前那一帧和板的差大于它＝换了画面（真有一刀）
 CARD_MARGIN = 0.2         # 建议终点收在板前这么多秒
 FROZEN_SLACK = 0.2        # end 超出视频流末尾这么多以上才算冻帧
+#: `data/legacy_interview_gates.json` 的 `frozen_tail_short`（已发的 0.2~1 秒短冻帧）最多豁免到这儿——
+#: 校准过的那五条是 1.1~1.7 秒，照旧红。
+LEGACY_FROZEN_MAX = 1.05
 
 
 def _lexical(word: str) -> bool:
@@ -224,20 +251,67 @@ def _decode_gray(src: Path, a: float, b: float) -> list[bytes]:
     return [raw[k:k + n] for k in range(0, len(raw) - n + 1, n)]
 
 
-def end_card_problem(spec: dict, src: Path) -> str | None:
-    """runner 上源片到手、编码之前：`end` 冻帧或压进片尾板 → 一句带建议终点的话。"""
+def end_is_auto(spec: dict) -> bool:
+    """`end` 是生成器算的默认值、没人给过也没人改过 → True。判据见模块 docstring 第四节。"""
+    try:
+        end = float(spec["end"])
+    except (KeyError, TypeError, ValueError):
+        return False
+    default = spec.get("_end_default")
+    if isinstance(default, (int, float)) and not isinstance(default, bool):
+        return abs(end - float(default)) < 0.005
+    origin = spec.get("_request_origin") or {}
+    request = origin.get("request") if isinstance(origin, dict) else None
+    if isinstance(request, dict) and request.get("end") in (None, ""):
+        try:
+            return abs(end - round(float(origin.get("duration")), 2)) < 0.011
+        except (TypeError, ValueError):
+            return False
+    return False
+
+
+def frozen_legacy_ok(spec: dict, over: float) -> bool:
+    """已发的短冻帧豁免（`data/legacy_interview_gates.json` 的 `frozen_tail_short`）。
+
+    `FROZEN_SLACK` 只校准过 1.1~1.7 秒那五条；0.2~1 秒的老片子重渲时同样会红——新闸撞
+    旧内容。豁免只在 **`end` 还等于量的那一刻**、而且越过的秒数不超过 `LEGACY_FROZEN_MAX`
+    时生效：有人改了 `end`（新内容）就回到正常的闸。"""
+    import sys  # noqa: PLC0415
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from interview_spec_gates import legacy, legacy_table  # noqa: PLC0415
+
+    slug = str(spec.get("slug") or "")
+    if slug not in legacy("frozen_tail_short") or over > LEGACY_FROZEN_MAX:
+        return False
+    recorded = (legacy_table("frozen_tail_short").get("end") or {}).get(slug)
+    try:
+        return abs(float(spec["end"]) - float(recorded)) < 0.005
+    except (TypeError, ValueError):
+        return False
+
+
+def tail_verdict(spec: dict, src: Path) -> tuple[str | None, float | None]:
+    """runner 上源片到手、编码之前 → (问题 或 None, 该收到的终点 或 None)。"""
     end = float(spec["end"])
     vdur = _probe_video_seconds(src)
-    if end > vdur + FROZEN_SLACK and not str(spec.get("_frozen_tail_ok") or "").strip():
+    if end > vdur + FROZEN_SLACK and not str(spec.get("_frozen_tail_ok") or "").strip() \
+            and not frozen_legacy_ok(spec, end - vdur):
+        target = round(vdur - 0.1, 2)
         return (f"`end` {end:.2f} 超出源片画面 {vdur:.2f} 秒——成片最后 {end - vdur:.1f} 秒"
-                f"会是冻住的同一帧（已发的 5 条就是这样）。收到 {vdur - 0.1:.1f}；"
-                "真要留（后面还有要的声音）写 `_frozen_tail_ok`")
+                f"会是冻住的同一帧（已发的 5 条就是这样）。收到 {target:.1f}；"
+                "真要留（后面还有要的声音）写 `_frozen_tail_ok`"), target
     if str(spec.get("_end_board_ok") or "").strip() or vdur - end > CARD_LOOKBACK:
-        return None
+        return None, None
     lo = max(float(spec.get("start") or 0.0), vdur - CARD_LOOKBACK)
     card = trailing_card(_decode_gray(src, lo, vdur), lo)
     if card is None or end <= card + 1.0 / CARD_FPS:
-        return None
+        return None, None
+    target = round(max(card - CARD_MARGIN, 0.0), 2)
     return (f"源片 {card:.1f} 秒起是一张一直延续到结尾的静止片尾板，`end` {end:.2f} "
-            f"把 {end - card:.1f} 秒板剪了进来。收到 {max(card - CARD_MARGIN, 0):.1f}；"
-            "看过确认不是板（或板上有要的内容）写 `_end_board_ok`")
+            f"把 {end - card:.1f} 秒板剪了进来。收到 {target:.1f}；"
+            "看过确认不是板（或板上有要的内容）写 `_end_board_ok`"), target
+
+
+def end_card_problem(spec: dict, src: Path) -> str | None:
+    """runner 上源片到手、编码之前：`end` 冻帧或压进片尾板 → 一句带建议终点的话。"""
+    return tail_verdict(spec, src)[0]

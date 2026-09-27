@@ -4348,10 +4348,21 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
 
 | | 在哪儿 | 一句话 |
 |---|---|---|
-| 片尾板／冻帧 | `interview_tail.end_card_problem`，`render()` 下完源片、**编码之前** | 源片最后一张「硬切或黑场淡入之后一直不动」的板，`end` 压进去就红并给出该收到的终点；`end` 越过源片视频流也红（成片会冻住）。认领 `_end_board_ok` / `_frozen_tail_ok` |
-| 默认终点 | `interview_tail.default_end` | 自动链没给 `end` 时＝最后一个词的词尾 ＋ 0.5 秒，不再是源片全长 |
+| 片尾板／冻帧 | `interview_tail.tail_verdict`，`render()` 下完源片、**编码之前** | 源片最后一张「硬切或黑场淡入之后一直不动」的板，`end` 压进去就红并给出该收到的终点；`end` 越过源片视频流也红（成片会冻住）。认领 `_end_board_ok` / `_frozen_tail_ok`。⚠️ **`end` 是生成器算的默认值（`_end_default` 还等于 `end`）时不红，直接收到算出来的终点**，日志和 `render.json["end_trim"]` 记一笔——自动产的 spec 没人会来改 `end`，红了就是每 70 分钟重投一次；**人给的 `end` 照旧红** |
+| 默认终点 | `interview_tail.default_end` | 自动链没给 `end` 时＝最后一个词的词尾 ＋ 0.5 秒，不再是源片全长；生成器同时记 `_end_default` |
 | 拼接清单 | `interview_assembly`，`render()` 写进 `render.json["assembly"]`，`check_interview_landed --film` 照 spec 核 | 收尾卡口播没合上（退回静音卡）、品牌片尾渲不出来，原来都是绿着退的 |
-| 推送后修订 | `interview_revision.post_push_edit`，`pick_interview_renders.todo_slugs` | 推送后 24 小时内改了会进成片的字段（按 `qc_attestation.spec_content_sha256` 比，只改 `_` 注解不算）＝一次修订，自动重渲重推；过了窗口进等待名单，要重渲写 `_publication_revision` |
+| 推送后修订 | `interview_revision.post_push_edit`，`pick_interview_renders.todo_slugs` | 推送后 24 小时内改了**会进成片的字段**（`interview_revision.FILM_KEYS` 白名单，按 `qc_attestation.spec_content_sha256` 比）＝一次修订，自动重渲重推；过了窗口进等待名单，要重渲写 `_publication_revision`。⚠️ **是白名单不是「去掉 `_` 注解」**：`transcript_verified`／`caption_gaps_ok`／`whisper_model`／`match`／`source_verification`／`push.lead` 这些不进画面，改了不重渲——edge-tts 和 Chromium 不是逐字节确定的，重渲出来指纹一变就是微信上多一条一样的消息。加了会进成片的新字段要同时进白名单（`test_内容指纹白名单盖住出片读的每一个键` 替你记得） |
+
+⚠️ **auto-render 的「没活就早退」探针跑在 runner 的系统 python3 上，没有 PIL**
+（`pick_interview_renders.py --probe`）：不要 PIL 的闸照跑，量宽度那几项（解读卡一行、
+文案、字幕重切、冷开场双语字幕宽度）记成「判不了」，拿**上一趟全量预检同一份输入**记下的
+结论顶上（`VERDICT_CACHE`，actions/cache 带过去；键是判据代码＋spec＋文案＋字幕缓存＋日期
+的指纹）。没有就算待投、交给全量那一趟。原来一律抛，一条卡在量宽度上的红 spec 每 10 分钟
+逼一次全量 job。全库回放：全量 29 秒 → 探针 0.5 秒，待投／等待两份名单逐条一样。
+
+⚠️ `FROZEN_SLACK`＝0.2 只校准过 1.1~1.7 秒；已发的 0.2~1 秒短冻帧（从 Release 拉回 102 条
+已发正片量出来 2 条）挂在 `data/legacy_interview_gates.json` 的 `frozen_tail_short`，
+**只认量的那一刻的 `end`**，只许减不许加。
 
 ⚠️ 片尾板那道闸是拿真产物校过的：已发 101 条采访的正片尾巴里认出 2 条真板
 （`sabalenka-pegula-us-open-2026-sf-interview` 美网板、`ruud-cerundolo-laver-cup-2026-presser`

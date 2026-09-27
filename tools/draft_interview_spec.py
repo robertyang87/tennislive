@@ -453,6 +453,9 @@ def build_spec(candidate: dict, zh_draft: list[str], duration: float,
         # 不给就退回全长（老调用方）；`_build_one` 传的是最后一个词的词尾＋一口气，
         # 源片尾巴上的片尾板不再默认剪进来——见 interview_tail.default_end。
         "end": round(duration, 1) if end is None else round(end, 2),
+        # 草稿的终点从来不是人给的：记下这个数，`end` 还等于它就说明没人改过——
+        # 出片那一趟撞上片尾板时直接收到闸算出来的终点，不红（interview_tail 第四节）。
+        "_end_default": round(duration, 1) if end is None else round(end, 2),
         "asr_model": ASR_MODEL,
         # 第一份是 small.en；第二份必须换模型，否则“交叉验证”会恒为 0 分歧。
         "whisper_model": "medium.en",

@@ -179,6 +179,45 @@ def copy_problem(slug: str, date: str = "") -> str | None:
     return None
 
 
+def _spec_gates(clip) -> tuple:
+    """出片那一趟 `main()`／`render()` 开头的只读 spec 的闸，同一个顺序。"""
+    return (clip.check_source_contract, clip.check_topline_format,
+            clip.check_score_orientation, clip.check_opening,
+            clip.check_lead_in, clip.check_trail_in, clip.check_copy_page,
+            clip.check_takeaway)
+
+
+#: 缺 PIL／字体时判不了的那几项（`probe_problems` 原样报出来，不当成判过了）。
+NEEDS_RENDER_ENV = ("文案（push_reel --stage check）", "字幕重切（write_ass 量宽）")
+
+
+def probe_problems(spec: dict) -> tuple[list[str], list[str]]:
+    """**不要 PIL／字体**的那一半预检 → (红, 判不了的项)。
+
+    给 interview-auto-render 那个「没活就早退」的探针用：它跑在 runner 的系统
+    python3 上（没有 PIL，2026-09-09 的日志：`No module named 'PIL'`），`spec_problems`
+    在那儿一律抛 `PreflightUnavailable`，于是只要有一条 spec 过了便宜的几项，就逼着
+    整个 job 装一遍依赖——一条卡在量宽度上的红 spec 能让它每 10 分钟全量跑一趟。
+    这里只跑不要量宽度的闸（和 `spec_problems` **同一组函数、同一个顺序**）；
+    要 PIL 的那几项（解读卡一行放不放得下、文案、字幕重切）**记成判不了**，
+    由调用方决定怎么处理——`pick_interview_renders --probe` 拿上一趟全量预检记下的
+    结论顶上，没有就交给全量那一趟。
+    """
+    import build_interview_clip as clip  # noqa: PLC0415
+
+    problems: list[str] = []
+    unknown: list[str] = []
+    for gate in _spec_gates(clip):
+        try:
+            err, _ = _run_gate(gate, spec)
+        except PreflightUnavailable as exc:
+            unknown.append(f"{gate.__name__}（{exc}）")
+            continue
+        if err:
+            problems.append(f"{gate.__name__}：{err}")
+    return problems, unknown + list(NEEDS_RENDER_ENV)
+
+
 def spec_problems(spec: dict, *, copy: bool = True,
                   date: str = "") -> tuple[list[str], list[str]]:
     """一条 spec 的离线预检 → (红, 提示)。环境不全抛 `PreflightUnavailable`。"""
@@ -188,10 +227,7 @@ def spec_problems(spec: dict, *, copy: bool = True,
     problems: list[str] = []
     notes: list[str] = []
     slug = str(spec.get("slug") or "")
-    for gate in (clip.check_source_contract, clip.check_topline_format,
-                 clip.check_score_orientation, clip.check_opening,
-                 clip.check_lead_in, clip.check_trail_in, clip.check_copy_page,
-                 clip.check_takeaway):
+    for gate in _spec_gates(clip):
         err, _ = _run_gate(gate, spec)
         if err:
             problems.append(f"{gate.__name__}：{err}")

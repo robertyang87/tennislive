@@ -65,5 +65,20 @@
    "zverev-khachanov-us-open-2026-sf-presser",
    "zverev-vandezandschulp-us-open-2026-qf-interview"
   ]
+ },
+ "frozen_tail_short": {
+  "_why": "`end` 越过源片视频流 0.2~1 秒的已发片（interview_tail.FROZEN_SLACK＝0.2）。那道闸校准时只量过 1.1~1.7 秒的五条（那五条照旧红，重渲就该收掉），而 0.2~1 秒的短冻帧在重渲时同样会红——**新闸撞旧内容**。2026-09-27 从 Release 拉回全部 102 条已发采访正片、按正片末尾那一刀往前数逐帧相同（相邻帧差 < 0.03，排除 29.97→25 帧率换算出来的单帧重复、也排除锁机位发布会的低动量）的帧：落在 0.2~1 秒的只有这两条。豁免只在 `end` 还等于量的那一刻、且越过的秒数不超过 interview_tail.LEGACY_FROZEN_MAX 时生效——改了 `end` 就回到正常的闸。**只许减不许加**。",
+  "slugs": [
+   "pegula-navarro-us-open-2026-qf-interview",
+   "shelton-nakashima-mtl2026-final"
+  ],
+  "end": {
+   "pegula-navarro-us-open-2026-qf-interview": 115.3,
+   "shelton-nakashima-mtl2026-final": 252.0
+  },
+  "measured_frozen_s": {
+   "pegula-navarro-us-open-2026-qf-interview": 0.16,
+   "shelton-nakashima-mtl2026-final": 0.36
+  }
  }
 }

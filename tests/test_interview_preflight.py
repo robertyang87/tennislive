@@ -69,6 +69,25 @@ def test_收尾卡认领两行要写为什么():
     bic.check_takeaway(spec)
 
 
+def test_请求预检就拦收尾卡折行_不等自动链建完spec(monkeypatch):
+    """review 那条：`production_preflight.check_request` 不查这一项，请求里写长了要等
+    auto-render 把它建成 spec、picker 预检报红才知道，多一整趟循环。同一份判据，豁免表同样认。"""
+    import production_preflight as pp
+
+    copies = []
+    monkeypatch.setattr(pp, "check_copy", lambda *a, **k: copies.append(a))
+    long_req = {"slug": "new-one", "xhs": "正文",
+                "takeaway": {"close": {"point": "首秀赢完球 他先谢看台上的费德勒"}}}
+    with pytest.raises(ValueError, match="费 ／ 德勒"):
+        pp.check_request(long_req)
+    assert not copies, "折行那一项应该排在文案检查之前就拦下"
+    pp.check_request({**long_req, "takeaway": {"close": {"point": "赢完球 先谢看台上的费德勒"}}})
+    legacy = sorted(gates.legacy("takeaway_point_wrap"))[0]
+    pp.check_request({**long_req, "slug": legacy})          # 豁免表里的老 slug 和 render 一样放行
+    pp.check_request({"slug": "no-card", "xhs": "正文"})     # 没写解读卡的请求不判
+    assert len(copies) == 3
+
+
 def test_量卡片宽度和渲卡片用的是同一组常量(monkeypatch, tmp_path):
     """**一个数写两处必分叉**：改了卡片留白，闸得跟着变，渲出来的 CSS 也得跟着变。"""
     seen = {}
@@ -120,6 +139,21 @@ def test_顶栏比分写成输家视角就红():
     claimed = _score_spec("6-3 1-6 4-6")
     claimed["_score_orientation_why"] = "特殊赛制"
     bic.check_score_orientation(claimed)
+
+
+@pytest.mark.parametrize(("score", "red"), [
+    # 抢七注脚写全了：第一版只剥 `(\d+)`，`5-7` 被数成赢家丢的一盘，2:2 误红
+    ("6-7(5-7) 6-4 6-4", False),
+    ("6-7（5-7） 6-4 6-4", False),              # 全角括号
+    ("7-6(10-8) 3-6 6-2", False),
+    ("6-4 3-6 1-0(10-8)", False),               # 抢十代替决胜盘记成 1-0(10-8)
+    ("6-4 3-6 [10-8]", False),                  # 方括号的抢十盘算一盘
+    ("6-7(5-7) 4-6", True),                     # 注脚剥干净之后输家视角照样红
+    ("7-6(7-5) 3-6 6-7(4-7)", True),
+])
+def test_抢七注脚整个剥掉_不许被当成另一盘(score, red):
+    problem = gates.score_orientation_problem(_score_spec(score))
+    assert bool(problem) is red, (score, problem, gates.completed_sets(score))
 
 
 def test_全库顶栏比分都是赢家视角():
@@ -255,6 +289,138 @@ def test_预检判不了就抛_不许当成判过了(monkeypatch):
         pf.spec_problems({"slug": "x"}, copy=False)
 
 
+def _no_pil(monkeypatch):
+    """模拟 interview-auto-render 探针那台系统 python3：`import PIL` 必抛 ImportError。"""
+    monkeypatch.setitem(sys.modules, "PIL", None)
+    monkeypatch.setattr(gates, "_POINT_FONT_CACHE", {})
+
+
+def test_探针缺PIL时只跑不要量宽度的那几道_量宽度的记成判不了(monkeypatch, tmp_path):
+    """review 那条：runner 的系统 python3 没有 PIL，`spec_problems` 在探针里一律抛——
+    一条卡在量宽度上的红 spec 就每 10 分钟逼一次全量 job。`probe_problems` 不抛：
+    不要 PIL 的闸照跑（红了就是红），要 PIL 的几项**说出来是判不了**。"""
+    spec = _full_spec(monkeypatch, tmp_path)
+    _no_pil(monkeypatch)
+    with pytest.raises(pf.PreflightUnavailable):
+        pf.spec_problems(spec, copy=False)
+    red, unknown = pf.probe_problems(spec)
+    assert red == [], red
+    assert any(u.startswith("check_takeaway") for u in unknown), unknown
+    assert set(pf.NEEDS_RENDER_ENV) <= set(unknown)
+    spec["push"]["score"] = "6-3 1-6 4-6"                  # 不要 PIL 的闸：照样红
+    red, _ = pf.probe_problems(spec)
+    assert any(r.startswith("check_score_orientation") for r in red), red
+
+
+def _probe_picker(monkeypatch, tmp_path):
+    import interview_preflight
+    import pick_interview_renders as pick
+
+    specs = tmp_path / "specs"
+    specs.mkdir()
+    monkeypatch.setattr(pick, "SPECS", specs)
+    monkeypatch.setattr(pick, "OUTPUT", tmp_path / "output")
+    monkeypatch.setattr(pick, "STATE", tmp_path / "state.json")
+    monkeypatch.setattr(pick, "_rendered_slugs", lambda: set())
+    monkeypatch.setattr(pick, "validate_source_contract", lambda s: None)
+    monkeypatch.setattr(pick, "check_lead_in", lambda s: None)
+    monkeypatch.setattr(pick, "VERDICT_CACHE", tmp_path / "cache" / "verdicts.json")
+    monkeypatch.setattr(pick, "_VERDICTS", None)
+    monkeypatch.setattr(pick, "_VERDICTS_DIRTY", False)
+    monkeypatch.setattr(pick, "_UNKNOWN", [])
+    spec = {"slug": "p", "opening": {"kind": "none"}, "zh": ["a"], "transcript_verified": True,
+            "takeaway": {"close": {"point": "x"}}, "cover": {"frame_at": 1}}
+    (specs / "p.json").write_text(json.dumps(spec), encoding="utf-8")
+    (specs / "p.xhs.txt").write_text("文案", encoding="utf-8")
+    return pick, interview_preflight, specs
+
+
+def test_探针拿上一趟全量预检的结论顶判不了的那几项_输入一变就作废(monkeypatch, tmp_path):
+    pick, ipf, specs = _probe_picker(monkeypatch, tmp_path)
+    # ① 全量那一趟（dispatch 那一步）：判红，记进缓存
+    monkeypatch.setattr(ipf, "spec_problems",
+                        lambda s, **kw: (["check_takeaway：卡上折成两行\n折点"], []))
+    ready, waiting = pick.todo_slugs()
+    assert ready == [] and waiting == [("p", ["预检：check_takeaway：卡上折成两行"])]
+    pick.save_verdicts()
+    assert pick.VERDICT_CACHE.is_file()
+
+    # ② 下一趟探针（新进程、系统 python3 没有 PIL）：同一份输入 → 拿缓存的结论，不逼全量
+    def unavailable(s, **kw):
+        raise ipf.PreflightUnavailable("缺 PIL")
+    monkeypatch.setattr(ipf, "spec_problems", unavailable)
+    monkeypatch.setattr(ipf, "probe_problems", lambda s: ([], ["check_takeaway（缺 PIL）"]))
+    monkeypatch.setattr(pick, "PROBE", True)
+    monkeypatch.setattr(pick, "_VERDICTS", None)
+    ready, waiting = pick.todo_slugs()
+    assert ready == [], "同一份输入全量判过是红的，探针不许再把它算成待投（那就是每 10 分钟一趟全量）"
+    assert waiting and "上一趟全量预检" in waiting[0][1][0]
+
+    # ③ spec 改了一个字节：结论作废，判不了 → 算待投，交给全量那一趟
+    (specs / "p.json").write_text(json.dumps({**json.loads((specs / "p.json").read_text()),
+                                              "zh": ["b"]}), encoding="utf-8")
+    ready, waiting = pick.todo_slugs()
+    assert ready == ["p"] and waiting == []
+    assert pick._UNKNOWN == ["p"]
+
+    # ④ 不要 PIL 的那几道红了，就是红——不看缓存
+    monkeypatch.setattr(ipf, "probe_problems", lambda s: (["check_score_orientation：输家视角"], []))
+    assert pick.missing_for_render("p", json.loads((specs / "p.json").read_text())) == [
+        "预检：check_score_orientation：输家视角"]
+
+
+def test_全量模式判不了照旧抛_只有探针才降级(monkeypatch, tmp_path):
+    pick, ipf, specs = _probe_picker(monkeypatch, tmp_path)
+
+    def unavailable(s, **kw):
+        raise ipf.PreflightUnavailable("缺 PIL")
+    monkeypatch.setattr(ipf, "spec_problems", unavailable)
+    with pytest.raises(ipf.PreflightUnavailable):
+        pick.todo_slugs()
+
+
+def test_冷开场字幕要量宽度的那道在探针里同样记成判不了(monkeypatch, tmp_path):
+    """review 那条的括号里：带 `lead_in` 的 spec 原来在便宜那几项（`check_lead_in` 量双语
+    字幕宽度）就撞上缺 PIL，整个 picker 抛出去——探针同样只能「逼一趟全量」。"""
+    pick, ipf, specs = _probe_picker(monkeypatch, tmp_path)
+
+    def needs_pil(s):
+        raise ModuleNotFoundError("No module named 'PIL'")
+    monkeypatch.setattr(pick, "check_lead_in", needs_pil)
+    with pytest.raises(ImportError):                 # 全量模式：判不了照旧抛
+        pick.todo_slugs()
+    monkeypatch.setattr(pick, "check_lead_in", lambda s: None)
+    monkeypatch.setattr(ipf, "spec_problems", lambda s, **kw: ([], []))
+    assert pick.todo_slugs() == (["p"], [])          # 全量判过：绿，记下来
+    monkeypatch.setattr(pick, "check_lead_in", needs_pil)
+    monkeypatch.setattr(ipf, "probe_problems", lambda s: ([], []))
+    monkeypatch.setattr(pick, "PROBE", True)
+    assert pick.todo_slugs() == (["p"], []) and pick._UNKNOWN == [], "输入没变：用全量的绿"
+
+
+def test_auto_render的探针带probe_预检结论缓存前后两步路径对得上():
+    import yaml
+
+    wf = yaml.safe_load((ROOT / ".github/workflows/interview-auto-render.yml").read_text(
+        encoding="utf-8"))
+    steps = wf["jobs"]["auto"]["steps"]
+    names = [st.get("name", "") for st in steps]
+    gate = steps[names.index("没活就早退")]
+    assert "pick_interview_renders.py --probe" in gate["run"]
+    restore = [i for i, st in enumerate(steps) if st.get("uses") == "actions/cache/restore@v4"
+               and "tennislive-preflight" in str((st.get("with") or {}).get("path"))]
+    save = [i for i, st in enumerate(steps) if st.get("uses") == "actions/cache/save@v4"
+            and "tennislive-preflight" in str((st.get("with") or {}).get("path"))]
+    dispatch = next(i for i, n in enumerate(names) if n.startswith("dispatch 未 render"))
+    assert restore and restore[0] < names.index("没活就早退"), "探针之前要先取回上一趟的结论"
+    assert save and save[0] > dispatch, "全量那一趟判完（dispatch 那一步）才存"
+    assert "always()" in str(steps[save[0]].get("if")), "dispatch 那步红了也要存下已判的结论"
+    import pick_interview_renders as pick
+    cache_dir = steps[restore[0]]["with"]["path"].replace("~", str(Path.home()))
+    assert Path(cache_dir) in pick.VERDICT_CACHE.parents or \
+        str(pick.VERDICT_CACHE).startswith(cache_dir), (pick.VERDICT_CACHE, cache_dir)
+
+
 def test_采访工作流在取字幕之前跑离线预检():
     import yaml
 
@@ -267,6 +433,35 @@ def test_采访工作流在取字幕之前跑离线预检():
     assert "mode == 'render'" in steps[at].get("if", "")
     assert names.index("装系统依赖") < at, "量中文宽度的字体是那一步装的"
     assert at < names.index("取字幕切行"), "预检要排在取字幕、下源片之前"
+
+
+#: picker／预检 import 了、但改了也不改变「谁能投」的模块（只出提示）。
+_WAKE_EXEMPT = {"spec_wording": "预检里只拿它出 ⚠️ 提示，不进红的判据"}
+
+
+def test_auto_render被预检和picker的判据改动叫醒():
+    """review 那条：`interview-auto-render.yml` 的 `on.push.paths` 没列新加的几道闸，
+    修一道闸要干等最多 10 分钟的定时班次才重判等待名单。**按 import 推导**：picker 和
+    预检直接 import 的每一个本地工具模块、以及豁免表，都要在 paths 里。"""
+    import re as _re
+
+    import yaml
+
+    wf = yaml.safe_load((ROOT / ".github/workflows/interview-auto-render.yml").read_text(
+        encoding="utf-8"))
+    paths = set((wf.get(True) or wf.get("on"))["push"]["paths"])
+    local = {p.stem for p in (ROOT / "tools").glob("*.py")}
+    need = set()
+    for mod in ("pick_interview_renders", "interview_preflight"):
+        src = (ROOT / "tools" / f"{mod}.py").read_text(encoding="utf-8")
+        found = set(_re.findall(r"^\s*(?:from|import) ([a-z_]+)", src, _re.M)) & local
+        assert found, f"{mod} 一个本地 import 都没扫到——扫描面坏了"
+        need |= found | {mod}
+    need -= set(_WAKE_EXEMPT)
+    missing = sorted(f"tools/{m}.py" for m in need if f"tools/{m}.py" not in paths)
+    assert not missing, f"改了这些判据不会叫醒 picker：{missing}"
+    assert "data/legacy_interview_gates.json" in paths
+    assert len(wf[True]["push"]["paths"]) == len(paths), "paths 里有重复的条目"
 
 
 # ── 四、默认终点和片尾板 ─────────────────────────────────────────────────
@@ -416,6 +611,41 @@ def test_源片到手就量_end压进片尾板或越过画面都红(tmp_path):
     assert frozen and "冻住" in frozen
 
 
+def test_已发的短冻帧挂豁免表_end一改或越过太多照旧红(tmp_path, monkeypatch):
+    """review 那条：`FROZEN_SLACK` 0.2 秒只校准过 1.1~1.7 秒那五条，0.2~1 秒的老片子重渲时
+    也会红——新闸撞旧内容。不放松门槛，按量出来的名单豁免；豁免只认量的那一刻的 `end`。"""
+    src = _clip(tmp_path / "s.mp4", [("testsrc2", 4.0)])
+    table = tmp_path / "legacy.json"
+    table.write_text(json.dumps({"frozen_tail_short": {
+        "slugs": ["old-one", "long-one"], "end": {"old-one": 4.5, "long-one": 5.3}}}),
+        encoding="utf-8")
+    monkeypatch.setattr(gates, "LEGACY", table)
+    assert tail.end_card_problem({"slug": "old-one", "start": 0.0, "end": 4.5}, src) is None
+    changed = tail.end_card_problem({"slug": "old-one", "start": 0.0, "end": 4.6}, src)
+    assert changed and "冻住" in changed, "改了 end 就是新内容，回到正常的闸"
+    assert "冻住" in (tail.end_card_problem({"slug": "new-one", "start": 0.0, "end": 4.5},
+                                           src) or "")
+    too_long = tail.end_card_problem({"slug": "long-one", "start": 0.0, "end": 5.3}, src)
+    assert too_long and "冻住" in too_long, "越过 1 秒以上是校准过的那一类，照旧红"
+
+
+def test_短冻帧豁免表只许减不许加_名字要真的存在_end还是量的那一刻():
+    table = gates.legacy_table("frozen_tail_short")
+    slugs = gates.legacy("frozen_tail_short")
+    assert slugs, "豁免表读不到——路径或键名写错了，整条判据会静静失效"
+    assert len(slugs) <= 2, "只许减不许加：新片子的 end 要收在源片画面以内"
+    seen = {s["slug"]: s for s in _corpus()}
+    assert slugs <= set(seen), sorted(slugs - set(seen))
+    ends = table.get("end") or {}
+    moved = sorted(s for s in slugs if abs(float(seen[s]["end"]) - float(ends.get(s, -1))) >= 0.005)
+    assert not moved, f"这些的 end 已经改过了（豁免不再生效），从表里删掉：{moved}"
+    for s, v in (table.get("measured_frozen_s") or {}).items():
+        assert FROZEN_BAND[0] < v <= tail.LEGACY_FROZEN_MAX, (s, v)
+
+
+FROZEN_BAND = (0.1, 1.05)
+
+
 def test_正常结尾的源片不红(tmp_path):
     src = _clip(tmp_path / "s.mp4", [("testsrc2", 5.0)])
     assert tail.end_card_problem({"slug": "x", "start": 0.0, "end": 5.0}, src) is None
@@ -438,6 +668,97 @@ def test_片尾板那道闸排在编码之前(tmp_path, monkeypatch):
     spec = {"slug": "x", "url": "https://example.invalid/x", "start": 0.0, "end": 6.0}
     with pytest.raises(SystemExit, match="片尾板"):
         bic.render(spec, tmp_path / "x.ass", tmp_path)
+
+
+def test_自动默认的end撞上片尾板_直接收到算出来的终点_不红(tmp_path, capsys):
+    """review 那条：`default_end`（最后一个词 ＋ 0.5）看不见板——alcaraz-fritz 的板在词尾
+    ＋0.11 秒、拉沃尔杯四条主持人的话压在板上。自动产出的 spec 没人会来改 `end`，
+    红了就是每 70 分钟重投一次、永远红下去；闸已经算出了终点，就直接用它。"""
+    src = _clip(tmp_path / "s.mp4", [("testsrc2", 4.0), ("color=c=0x203040", 2.0)])
+    spec = {"slug": "x", "start": 0.0, "end": 6.0, "_end_default": 6.0}
+    assert tail.end_is_auto(spec)
+    trim = bic.check_tail(spec, src)
+    assert spec["end"] == pytest.approx(3.8)
+    assert trim and trim["from"] == 6.0 and trim["to"] == pytest.approx(3.8)
+    assert "自动收到 3.80" in capsys.readouterr().out, "收短要在日志里说一声"
+
+
+def test_自动默认的end越过画面又压着板_两道都收(tmp_path):
+    src = _clip(tmp_path / "s.mp4", [("testsrc2", 4.0), ("color=c=0x203040", 2.0)])
+    spec = {"slug": "x", "start": 0.0, "end": 7.5, "_end_default": 7.5}
+    trim = bic.check_tail(spec, src)
+    assert spec["end"] == pytest.approx(3.8) and len(trim["why"]) == 2
+
+
+@pytest.mark.parametrize("spec", [
+    {"end": 6.0},                                   # 人写的 end（没有 _end_default）
+    {"end": 6.0, "_end_default": 5.5},              # 生成器给过默认值，后来有人改了 end
+    {"end": 6.0, "_request_origin": {"request": {"end": 6.0}, "duration": 6.0}},
+])
+def test_人给的end撞上片尾板照旧红(tmp_path, spec):
+    src = _clip(tmp_path / "s.mp4", [("testsrc2", 4.0), ("color=c=0x203040", 2.0)])
+    spec = {"slug": "x", "start": 0.0, **spec}
+    assert not tail.end_is_auto(spec)
+    with pytest.raises(SystemExit, match="片尾板"):
+        bic.check_tail(spec, src)
+    assert spec["end"] == 6.0, "人给的数不许被悄悄改掉"
+
+
+def test_老spec_请求没写end而end还等于源片全长_算自动():
+    """默认终点上线之前请求没给 `end` 时一律取全长（`else duration`）——那一批的
+    `end` 就是源片全长，同样没人给过。"""
+    origin = {"request": {"url": "u"}, "duration": 119.1531875}
+    assert tail.end_is_auto({"end": 119.15, "_request_origin": origin})
+    assert not tail.end_is_auto({"end": 112.0, "_request_origin": origin})
+
+
+def test_生成器没拿到人给的end时记下默认值(monkeypatch, tmp_path):
+    """请求／草稿两条生成路都要把算出来的 `end` 记进 `_end_default`——出片那一趟
+    靠它分辨「没人给过」。请求里写了 `end` 的不记。"""
+    import build_interview_request as bir
+    import draft_interview_spec
+
+    path = tmp_path / "demo.json"
+    monkeypatch.setattr(bir, "_transcribe_request", lambda url, d, model: (_rows(50.0), 80.0))
+    monkeypatch.setattr(bic, "segment", lambda words, start, end, budget=None: (
+        [{"a": 0.0, "b": 1.0, "en": "hello"}]))
+    monkeypatch.setattr(draft_interview_spec, "translate",
+                        lambda rows, chat, max_zh_chars=None: ["你好"])
+    for req, marked in (({"slug": "demo", "url": "https://youtu.be/x"}, True),
+                        ({"slug": "demo", "url": "https://youtu.be/x", "end": 30.0}, False)):
+        built: dict = {}
+        monkeypatch.setattr(bir, "build_spec", lambda r, zh, duration, built=built: (
+            built.update(end=r["end"]) or built))
+        path.write_text(json.dumps(req), encoding="utf-8")
+        bir._build_one(path, object(), write=False)
+        assert ("_end_default" in built) is marked, (req, built)
+        if marked:
+            assert tail.end_is_auto(built)
+
+    import draft_interview_spec as dis
+    monkeypatch.setattr(dis, "SPECS", tmp_path / "specs")
+    monkeypatch.setattr(dis, "OUTDIR", tmp_path / "out")
+    monkeypatch.setattr(dis, "transcribe", lambda url, td: (_rows(50.0), 80.0))
+    monkeypatch.setattr(dis, "translate", lambda rows, chat: ["译文"] * len(rows))
+    cal = [{"en": "Cincinnati Open", "zh": "辛辛那提大师赛", "start": "08-16",
+            "end": "08-23", "pat": "cincinnati"}]
+    cand = {"title": "Cincinnati 2026 R3 Alexander Zverev Interview",
+            "url": "https://example.test/x"}
+    slug, ok, msg = dis._build_one(cand, None, cal, write=True)
+    assert ok, msg
+    draft = json.loads((tmp_path / "specs" / f"{slug}.draft.json").read_text(encoding="utf-8"))
+    assert tail.end_is_auto(draft), draft.get("_end_default")
+
+
+def test_收短记进render_json_没收短就把上一版那笔删掉(tmp_path):
+    (tmp_path / "render.json").write_text('{"video_url": "u", "end_trim": {"to": 1}}',
+                                          encoding="utf-8")
+    ia.record([], tmp_path)
+    data = json.loads((tmp_path / "render.json").read_text(encoding="utf-8"))
+    assert "end_trim" not in data and data["video_url"] == "u"
+    ia.record([], tmp_path, end_trim={"from": 6.0, "to": 3.8})
+    data = json.loads((tmp_path / "render.json").read_text(encoding="utf-8"))
+    assert data["end_trim"] == {"from": 6.0, "to": 3.8}
 
 
 # ── 五、拼接清单：解读卡的声音、品牌片尾 ─────────────────────────────────
@@ -512,6 +833,76 @@ def test_内容指纹不看注解():
     b = {**a, "_why": "二", "cover": {"frame_at": 1, "_why": "b"}}
     assert ir.content_sha256(a) == ir.content_sha256(b)
     assert ir.content_sha256(a) != ir.content_sha256({**a, "end": 9.0})
+
+
+#: 出片那条路会读、但**不进画面**的键（闸、认领、核验、推送正文）。和 `ir.FILM_KEYS`
+#: 一起必须盖住 `build_interview_clip` 读到的每一个键和全库出现过的每一个键——
+#: 新加一个字段，不分类就红，逼着人判一次「它进不进成片」。
+_NOT_FILM = frozenset({
+    "slug", "source_title", "cookies", "push",   # push 按子键另分（PUSH_FILM_KEYS）
+    "whisper_model", "whisper_vad_filter", "transcript_verified", "transcript_verification",
+    "transcript_disagree_ok", "suspect", "suspect_ok", "caption_gaps_ok",
+    "human_quote", "human_quote_ok", "opening", "requested_content_type", "match",
+    "source_verification", "featured_player", "interviewee", "max_zh_chars",
+})
+
+
+def test_内容指纹只认会进成片的键():
+    """review 那条：第一版把「去掉 `_` 注解」当成内容，推送后只改了 `transcript_verified`
+    `caption_gaps_ok` `suspect_ok` `whisper_model` `match` `source_verification` 也会重渲——
+    edge-tts／Chromium 不是逐字节确定的，新成片指纹一变，微信上就多一条一样的消息。"""
+    base = {"slug": "x", "url": "u", "start": 0.0, "end": 10.0, "zh": ["你好"],
+            "event": "2026 美网 第一轮", "cover": {"frame_at": 1.0},
+            "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4", "summary": "甲赢了",
+                     "lead": "正文", "auto": True},
+            "lead_in": {"url": "v", "start": 1.0, "end": 9.0, "subs": [], "why": "a",
+                        "verification": {"method": "m"}, "source_captions": []},
+            "takeaway": {"close": {"point": "一句话"}}}
+    h = ir.content_sha256(base)
+    for key, value in (("transcript_verified", True), ("caption_gaps_ok", {"1-2": "掌声"}),
+                       ("suspect_ok", {"3": "对的"}), ("whisper_model", "large-v3"),
+                       ("match", {"id": "m2"}), ("source_verification", {"status": "v"}),
+                       ("requested_content_type", "on_court"), ("opening", {"kind": "none"}),
+                       ("featured_player", "甲")):
+        assert ir.content_sha256({**base, key: value}) == h, f"改 `{key}` 不该算内容"
+    assert ir.content_sha256({**base, "push": {**base["push"], "lead": "改了正文",
+                                               "auto": False}}) == h
+    assert ir.content_sha256({**base, "lead_in": {**base["lead_in"], "why": "b",
+                                                  "verification": {"method": "n"}}}) == h
+    for changed in ({**base, "zh": ["您好"]}, {**base, "event": "2026 美网 第二轮"},
+                    {**base, "cover": {"frame_at": 2.0}},
+                    {**base, "push": {**base["push"], "score": "6-3 7-5"}},
+                    {**base, "push": {**base["push"], "summary": "乙输了"}},
+                    {**base, "lead_in": {**base["lead_in"], "start": 2.0}},
+                    {**base, "takeaway": {"close": {"point": "另一句"}}},
+                    {**base, "en_fixed": {"1": "Hi"}}, {**base, "crop_shift_x": 40}):
+        assert ir.content_sha256(changed) != h, changed
+
+
+def test_内容指纹白名单盖住出片读的每一个键():
+    """`build_interview_clip` 读到的键、全库 spec 里出现过的键，每一个都要被判过：
+    进成片（`ir.FILM_KEYS`）或不进（`_NOT_FILM`）。两边都不在＝新字段没人判过。"""
+    import re as _re
+
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    read = {k for k in _re.findall(r'spec(?:\.get\(|\[)"([a-z_]+)"', src)
+            if not k.startswith("_")}
+    seen = {k for spec in _corpus() for k in spec if not k.startswith("_")}
+    assert not (ir.FILM_KEYS & _NOT_FILM)
+    assert {"zh", "end", "cover", "takeaway"} <= read, "扫描面坏了：出片读的键一个都没扫到"
+    unclassified = sorted((read | seen) - ir.FILM_KEYS - _NOT_FILM)
+    assert not unclassified, f"这些键没判过进不进成片：{unclassified}"
+
+
+def test_推送后只改了不进成片的键_不重渲():
+    now = datetime(2026, 9, 27, 1, 0, tzinfo=timezone.utc)
+    spec = {"slug": "x", "end": 117.42, "zh": ["a"]}
+    qc = {"film_sha256": "F", "spec_content_sha256": ir.content_sha256(spec)}
+    pushed = {"film_sha256": "F", "at": "2026-09-26T18:57:00Z"}
+    for edit in ({"transcript_verified": True}, {"caption_gaps_ok": {"1-2": "掌声"}},
+                 {"suspect_ok": {"2": "对"}}, {"whisper_model": "large-v3"},
+                 {"match": {"id": "z"}}, {"source_verification": {"status": "verified"}}):
+        assert ir.post_push_edit({**spec, **edit}, pushed, qc, now) == (False, ""), edit
 
 
 def test_推送后改内容在窗口里就重渲_窗口外说一声_只改注解安静跳过():

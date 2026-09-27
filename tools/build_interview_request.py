@@ -626,6 +626,10 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
             raise RuntimeError(f"{slug}: 中英文行数不一致 {len(zh)} != {len(lines)}")
         # 默认终点按逐词稿算好再交给 build_spec（`_request_origin` 记的仍是原请求）
         spec = build_spec({**req, "end": end}, zh, duration)
+        if req.get("end") in (None, "") and "end" in spec:
+            # 请求没给 `end`：这个数是生成器算的。记下来，出片那一趟撞上片尾板时
+            # 按它认「没人给过」、直接收到闸算出来的终点（interview_tail 第四节）。
+            spec["_end_default"] = spec["end"]
     if write:
         if research_job is not None:
             spec["_tactical_research"] = research_job.result()

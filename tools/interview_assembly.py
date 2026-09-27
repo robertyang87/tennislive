@@ -82,12 +82,20 @@ def inventory(parts: list[Path]) -> list[dict]:
     return out
 
 
-def record(parts: list[Path], outdir: Path) -> dict:
-    """量完写进 `render.json["assembly"]`（合并写，不覆盖别的键），返回写进去的那份。"""
+def record(parts: list[Path], outdir: Path, *, end_trim: dict | None = None) -> dict:
+    """量完写进 `render.json["assembly"]`（合并写，不覆盖别的键），返回写进去的那份。
+
+    `end_trim`：这一趟 `check_tail` 把自动默认的 `end` 收短了就记一笔；没收短就把
+    上一趟留下的那笔删掉——outdir 里的 render.json 是仓库里上一版的，不删就是错账。
+    """
     assembly = {"parts": inventory(parts)}
     path = outdir / "render.json"
     data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
     data["assembly"] = assembly
+    if end_trim:
+        data["end_trim"] = end_trim
+    else:
+        data.pop("end_trim", None)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")
     shown = []

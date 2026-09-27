@@ -58,13 +58,19 @@ def _clip():
     return clip
 
 
-def legacy(kind: str) -> frozenset[str]:
-    """`data/legacy_interview_gates.json` 里某一张豁免表（只许减不许加）。"""
+def legacy_table(kind: str) -> dict:
+    """`data/legacy_interview_gates.json` 里某一张豁免表的整份内容（`slugs` 之外可能还记着量的数）。"""
     try:
         data = json.loads(LEGACY.read_text(encoding="utf-8"))
     except FileNotFoundError:
-        return frozenset()
-    return frozenset((data.get(kind) or {}).get("slugs") or ())
+        return {}
+    table = data.get(kind)
+    return table if isinstance(table, dict) else {}
+
+
+def legacy(kind: str) -> frozenset[str]:
+    """`data/legacy_interview_gates.json` 里某一张豁免表（只许减不许加）。"""
+    return frozenset(legacy_table(kind).get("slugs") or ())
 
 
 _POINT_FONT_CACHE: dict[int, object] = {}
@@ -118,8 +124,23 @@ def takeaway_point_problems(spec: dict) -> list[str]:
     return out
 
 
-_SET = re.compile(r"(\d+)-(\d+)")
+#: 一盘：`6-4`，后面可以跟一个抢七注脚——只写输家小分的 `7-6(5)`，也可能写全的
+#: `7-6(7-5)` / `7-6（10-8）`。**注脚整个吃掉，不许被当成另一盘**：第一版只剥 `(\d+)`，
+#: `6-7(5-7) 6-4 6-4` 里的 `5-7` 会被数成赢家丢的第二盘，2:2 → 误判成输家视角。
+#: 方括号不算注脚：`[10-8]` 是抢十代替的决胜盘，本来就该算一盘。
+_SET = re.compile(r"(\d+)\s*[-–]\s*(\d+)(\s*[(（]\s*\d+(?:\s*[-–:]\s*\d+)?\s*[)）])?")
 _RETIRED = re.compile(r"ret\.?|退赛|w\.?/?o\.?|walkover|不战而胜", re.I)
+
+
+def completed_sets(score: str) -> list[tuple[int, int]]:
+    """`push.score` → 打完的盘 [(赢家这边, 对面)]。抢七注脚不算盘；`1-0(10-8)` 这种
+    拿抢十代替决胜盘的写法算一盘。"""
+    out = []
+    for a, b, tb in _SET.findall(score):
+        a, b = int(a), int(b)
+        if max(a, b) >= 6 or (tb and {a, b} == {0, 1}):
+            out.append((a, b))
+    return out
 
 
 def score_orientation_problem(spec: dict) -> str | None:
@@ -129,8 +150,7 @@ def score_orientation_problem(spec: dict) -> str | None:
         return None
     if str(spec.get("_score_orientation_why") or "").strip():
         return None
-    sets = [(int(a), int(b)) for a, b in _SET.findall(re.sub(r"\(\d+\)", "", score))]
-    done = [(a, b) for a, b in sets if max(a, b) >= 6]
+    done = completed_sets(score)
     won = sum(a > b for a, b in done)
     lost = sum(b > a for a, b in done)
     if done and won <= lost:

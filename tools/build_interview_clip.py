@@ -4303,24 +4303,52 @@ def _side_segment(spec: dict, outdir: Path, key: str = "lead_in") -> Path | None
     return dest
 
 
-def check_tail(spec: dict, src: Path) -> None:
+def check_tail(spec: dict, src: Path) -> dict | None:
     """源片到手、**编码之前**：`end` 压进了源片的片尾板，或者越过了源片画面（冻帧）。
 
     拉沃尔杯七条采访有四条第一版把片尾板剪了进来、两条推上微信又重推，每次都是
     渲完把成片拉回来逐帧量才看见——而量法是机械的，源片在手就能量。判据和校准数据
     在 `interview_tail`（认领口 `_end_board_ok` / `_frozen_tail_ok`）。
+
+    ⚠️ **`end` 是生成器算的默认值时不红，直接收到闸算出来的终点**（改的是内存里的
+    `spec["end"]`，返回一份记录给 `render.json["end_trim"]`）：自动产出的 spec 没有人会
+    来改 `end`，红了就是每 70 分钟重投一次、永远红下去。**人给的 `end` 照旧红**——
+    判据见 `interview_tail` 第四节。字幕行是按原窗切的，收短之后落在新终点之后的
+    那几行只是不再出现在画面上，行数和 `zh` 仍然一一对应。
     """
+    import os  # noqa: PLC0415
+
     sys.path.insert(0, str(ROOT / "tools"))
-    from interview_tail import end_card_problem  # noqa: PLC0415
-    if problem := end_card_problem(spec, src):
-        raise SystemExit(f"{spec.get('slug', '?')}：{problem}")
+    from interview_tail import end_is_auto, tail_verdict  # noqa: PLC0415
+    auto = end_is_auto(spec)
+    original = float(spec["end"])
+    reasons = []
+    for _ in range(2):            # 先收冻帧、再看收完之后是不是还压在板里
+        problem, target = tail_verdict(spec, src)
+        if not problem:
+            break
+        start = float(spec.get("start") or 0.0)
+        if not auto or target is None or target <= start + 1.0:
+            raise SystemExit(f"{spec.get('slug', '?')}：{problem}")
+        reasons.append(problem.split("。")[0])
+        spec["end"] = target
+    if not reasons:
+        return None
+    trim = {"from": round(original, 2), "to": float(spec["end"]),
+            "why": reasons, "end_was": "auto_default"}
+    note = (f"`end` 是自动默认值（没人给过），{reasons[-1]}——自动收到 "
+            f"{spec['end']:.2f}（原 {original:.2f}），记进 render.json 的 end_trim")
+    print(f"[片尾] {note}")
+    if os.environ.get("GITHUB_ACTIONS"):
+        print(f"::notice title=片尾自动收短::{spec.get('slug', '?')}：{note}")
+    return trim
 
 
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     check_takeaway(spec)
     src = yt_download(spec["url"], outdir / "source.mp4",
                       "bv*[height<=1080]+ba/b[height<=1080]", spec)
-    check_tail(spec, src)
+    end_trim = check_tail(spec, src)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)
@@ -4451,7 +4479,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 绿着退的，L2（check_interview_landed）照 spec 核这份记录。见 interview_assembly。
     sys.path.insert(0, str(ROOT / "tools"))
     from interview_assembly import record as record_assembly  # noqa: PLC0415
-    record_assembly(parts, outdir)
+    record_assembly(parts, outdir, end_trim=end_trim)
 
     # ⚠️ **两个 return，两个都要记片长。** 这个文件里同一个形状栽过一次
     # （`build_cover` 委托链上只改了一个 return，成片当场塌成 12 秒），

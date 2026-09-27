@@ -23,9 +23,18 @@ on:
       - "tools/build_interview_request.py"
       - "tools/interview_zh_tail.py"
       - "tools/draft_interview_spec.py"
-      - "tools/draft_interview_spec.py"
       - "tools/interview_source_gate.py"
       - "tools/attach_interview_lead_in.py"
+      # dispatch 之前那道离线预检和推送后修订的判据：修了这几道闸，等待名单里被它们
+      # 拦下的 spec 要马上重判，不能干等下一趟定时班次（最多 10 分钟）。
+      # 判据 `test_auto_render被预检和picker的判据改动叫醒`（按 import 推导）。
+      - "tools/pick_interview_renders.py"
+      - "tools/interview_preflight.py"
+      - "tools/interview_spec_gates.py"
+      - "tools/interview_tail.py"
+      - "tools/interview_revision.py"
+      - "tools/production_preflight.py"
+      - "data/legacy_interview_gates.json"
       - ".github/workflows/interview-auto-render.yml"
   schedule:
     # 每 10 分钟接住新草稿、人工请求、片头重试和 dispatch；避开整点/半点。
@@ -58,6 +67,18 @@ jobs:
             tests
             tools
 
+      # 上一趟**全量**预检记下的结论（`pick_interview_renders.VERDICT_CACHE`）。探针跑在系统
+      # python3 上（没有 PIL），量宽度那几项判不了——同一份输入全量判过的就拿这份顶上，
+      # 不然一条卡在量宽度上的红 spec 每 10 分钟逼一次全量 job。键是「判据代码＋spec＋
+      # 文案＋字幕缓存＋日期」的指纹，存在文件里不在缓存键上：缓存丢了只是多跑一趟全量。
+      - name: 取预检结论缓存
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-preflight
+          key: interview-preflight-verdicts-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            interview-preflight-verdicts-v1-
+
       - name: 没活就早退
         id: gate
         run: |
@@ -81,7 +102,7 @@ jobs:
           )
           # This is only a cheap work probe. Full eligibility runs again after
           # dependencies and fonts are installed, before any dispatch.
-          if ! python3 tools/pick_interview_renders.py > /tmp/todo.txt 2> /tmp/waiting.txt; then
+          if ! python3 tools/pick_interview_renders.py --probe > /tmp/todo.txt 2> /tmp/waiting.txt; then
             cat /tmp/waiting.txt >&2
             echo 'Work probe needs rendering dependencies; continue to full validation.'
             echo 'work=true' >> "$GITHUB_OUTPUT"
@@ -301,6 +322,14 @@ jobs:
             echo "::error::（interview-clip 的 concurrency 按 slug 去重，代价是把正在跑的那趟掐了重跑）"
             exit 1
           fi
+
+      # 全量那一趟（dispatch 那一步）把每条 spec 的预检结论记进 VERDICT_CACHE，存给下一趟探针。
+      - name: 存预检结论缓存
+        if: always() && steps.gate.outputs.work == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/tennislive-preflight
+          key: interview-preflight-verdicts-v1-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: 顺手叫醒挨饿的编排/提升班次
         if: always()
