@@ -21,7 +21,10 @@ jobs:
           python-version: '3.11'
       - name: Install source tools
         run: |
-          pip install -q -e . "yt-dlp[default]"
+          pip install -q -e ".[visualqa]" "yt-dlp[default]"
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+          python -c "import cv2, numpy, requests"
           command -v ffmpeg
           node --version
       - name: Download official match and produce evidence
