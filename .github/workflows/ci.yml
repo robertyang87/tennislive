@@ -208,7 +208,20 @@ jobs:
         # 顺带把 `test_yt_download按格式落文件` 那条也从「这台机器没装 yt-dlp」
         # 的 skip 里捞回来——它在 CI 上一直没跑过。
         # ⚠️ `[default]` 不能省（`test_装yt_dlp一律要带default`）。
-        run: pip install -q -e ".[dev,webrender,visualqa]" "yt-dlp[default]"
+        # `faces`（onnxruntime，冷装 2.7 秒）：认人／睁眼的判据要拿**真模型**在仓库里
+        # 的真封面上跑（`tests/test_face_checks.py`）——CI 上不装，那几条只会常年跳过，
+        # 而一条常年跳过的检查和常年红是同一个毛病。
+        run: pip install -q -e ".[dev,webrender,visualqa,faces]" "yt-dlp[default]"
+      # 键钉在模型版本上（`test_人脸模型缓存键跟着模型版本走`）；没命中时现下约 2 秒。
+      - name: 缓存人脸模型
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive/face-models
+          key: face-models-buffalo_s-v0.7
+      # 这儿**不许降级**：CI 上模型不在，认人／睁眼那几条测试就测不到真东西——
+      # 测试那头在 `CI` 环境变量下缺模型是红，不是跳过。
+      - name: 备好人脸模型
+        run: python tools/face_checks.py fetch
       # 与 daily.yml 同环境：装上 Chromium 测真实 HTML 渲染路径，
       # Pillow 兜底路径由 test_cards_fallback_matches_deck_policy 显式覆盖
       - name: 缓存 Chromium（HTML 卡片渲染）

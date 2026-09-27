@@ -280,7 +280,11 @@ jobs:
           # 白拖一个大包；「只挑工作不挑准备等于没挑」在依赖粒度上同样成立。
           EXTRA_ASR=""
           if [ "$MODE" = "render" ]; then EXTRA_ASR="faster-whisper"; fi
-          pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright edge-tts $EXTRA_ASR
+          # `faces`（onnxruntime）是封面认人＋睁眼要的（2026-09-27 账号所有者批的
+          # O2+O3，`tools/face_checks.py`）。⚠️ **别换成 `pip install insightface`**：
+          # 它依赖的是 opencv-python 5.x，装上就把 cv2 换成没有 CascadeClassifier 的
+          # 那一版，Haar 这道闸当场废掉（量过，见 face_checks 顶部）。
+          pip install -q -e ".[visualqa,faces]" "yt-dlp[default]" playwright edge-tts $EXTRA_ASR
           # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
           # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
           # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
@@ -353,6 +357,25 @@ jobs:
             pw_retry
           fi
           node --version
+
+      # 封面认人＋睁眼的三个 onnx（insightface buffalo_s v0.7 里的 det_500m /
+      # w600k_mbf / 2d106det，21 MB）。键钉在模型版本上——换权重就改
+      # `face_checks.MODEL_VERSION`，`test_人脸模型缓存键跟着模型版本走` 会逼着这里一起改。
+      # 没命中时现下也只要约 2 秒（127 MB 的包里只解三个文件），缓存买的是
+      # 「GitHub Release 抽风那天不至于整条链降级」。
+      - name: 缓存人脸模型
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive/face-models
+          key: face-models-buffalo_s-v0.7
+      # 备不上**不许把整趟拖红**，也**不许不吭声**：账号所有者要的是「模型加载
+      # 不了就大声降级」——封面凭证和 render.json 里会记 `unavailable`，这里先打一条注解。
+      - name: 备好人脸模型
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        run: |
+          python tools/face_checks.py fetch \
+            || echo "::warning::人脸模型没备好——封面认人／睁眼会降级成 unavailable（写进封面凭证和 render.json）"
 
       # **取字幕这一阶段的准备，比出片少一大半。** 它不下媒体、不转写、不渲封面、
       # 不编码——只拉自动字幕、切行、量宽度。所以不装 Chromium / faster-whisper /

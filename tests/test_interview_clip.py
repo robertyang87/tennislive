@@ -2266,10 +2266,12 @@ _PROVIDES = {
     "faster_whisper": "faster-whisper",
     # 去水印的掩膜要 cv2（`logo_mask`）。**装 extra 别装裸包名**——
     # `pyproject` 把 opencv 钉在 `>=4.10,<5`，5.x 里 `CascadeClassifier` 没了
-    "cv2": '-e ".[visualqa]"',
+    # ⚠️ 只钉到 `.[visualqa` 为止：2026-09-27 那行 pip 多了 `faces`
+    # （`.[visualqa,faces]`，封面认人＋睁眼），extra 的组合变了，装的仍是这一份
+    "cv2": '-e ".[visualqa',
     # `logo_mask` 里跟 cv2 一起用，靠 opencv 带进来；测试那边刻意不 import 它
     # （dev 依赖里没有），所以只在这张表登记
-    "numpy": '-e ".[visualqa]"',
+    "numpy": '-e ".[visualqa',
 }
 
 

@@ -6206,7 +6206,8 @@ def test_cookies和probe装依赖走轻装而TTS缓存只给会合语音的两�
     assert "webrender" not in pb, "probe 不渲 HTML 封面，playwright 用不上"
 
     # 全量那行必须还在（render / cover 走它），且排在所有轻装分支后面
-    full_at = install.index('".[webrender,visualqa,cutout]"')
+    # （2026-09-27 起多一个 `faces`：抽帧封面的认人＋睁眼，`tools/face_checks.py`）
+    full_at = install.index('".[webrender,visualqa,cutout,faces]"')
     assert full_at > install.index('= "cookies" ]')
     assert full_at > install.index('= "probe" ]')
 

@@ -62,21 +62,29 @@ def test_候选帧不存在要报错(tmp_path: Path):
 
 
 def test_没装依赖要报清楚而不是裸ImportError(monkeypatch: pytest.MonkeyPatch):
-    """⚠️ CI 上没装 insightface，这条路**必然**被走到。
+    """没装 onnxruntime / 没下模型的机器上，这条路**必然**被走到。
 
-    第一版如果直接 `from insightface.app import FaceAnalysis` 摆在文件顶层，
-    整个模块在没装依赖的机器上 import 就崩，连参数校验都用不了；现在延迟到
-    `_load_embedder()` 里，且包成一句说得清楚的话（缺什么包、能装成什么样）。
+    第一版如果把模型导入摆在文件顶层，整个模块在没装依赖的机器上 import 就崩，
+    连参数校验都用不了；现在延迟到 `_load_embedder()` 里，且包成一句说得清楚的话
+    （装哪个 extra、怎么下模型、别装什么）。2026-09-27 起后端换成 `face_checks`
+    （账号所有者批的 O2+O3），缺的东西从 insightface 变成 onnxruntime。
     """
     import builtins
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+    import face_checks
 
     real_import = builtins.__import__
 
     def blocked(name, *a, **k):
-        if name in ("insightface", "insightface.app", "cv2"):
+        if name == "onnxruntime":
             raise ImportError(f"simulated: no module named {name!r}")
         return real_import(name, *a, **k)
 
+    face_checks._reset_for_tests()
     monkeypatch.setattr(builtins, "__import__", blocked)
-    with pytest.raises(SystemExit, match="insightface"):
-        ipf._load_embedder()
+    try:
+        with pytest.raises(SystemExit, match=r"faces.*别装 insightface"):
+            ipf._load_embedder()
+    finally:
+        face_checks._reset_for_tests()   # 别把「假装没装」的失败缓存留给同一进程的下一条

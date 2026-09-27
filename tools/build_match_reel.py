@@ -4463,7 +4463,7 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
                 "focus, focus_y, zoom, fit}\n"
                 "四道闸门照旧；四类源都拿不到本场的，就从本场源片抓一帧。")
         return build_versus_poster(sources, primary, cover, dest, seconds,
-                                   tail=tail)
+                                   tail=tail, spec=spec)
     if not cover.get("versus"):
         raise ReelError(
             "封面缺 `cover.versus`：赛场之上的封面一律走固定海报模板，"
@@ -4481,12 +4481,12 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
     # 整条溶解链塌掉：成片 12.44s，段落加起来 114.46s（run 30752134514）。
     # 同一对函数（build_cover → build_versus_poster）栽的第三次。
     return build_versus_poster(sources, primary, cover, dest, seconds,
-                               tail=tail)
+                               tail=tail, spec=spec)
 
 
 def build_versus_poster(sources: dict[str, Path], primary: str,
                         cover: dict, dest: Path, seconds: float = COVER_SECONDS,
-                        *, tail: float = 0.0) -> Path:
+                        *, tail: float = 0.0, spec: dict | None = None) -> Path:
     """「赛场之上」的固定海报，版式在 `tools/versus_poster.py` 里定死。
 
     **这是栏目的固定封面，不是这一条片子的一次性设计。** 以前是在这儿现拼一张
@@ -4499,7 +4499,8 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
     场馆资料图、别场比赛和通用球场图都不能代替。
     """
     payload, layout = resolve_cover_payload(cover, dest.parent,
-                                            sources=sources, primary=primary)
+                                            sources=sources, primary=primary,
+                                            spec=spec)
     poster = dest.parent / POSTER_NAME
     with stage("封面海报"):
         render_poster(payload, poster, layout)
@@ -4540,9 +4541,75 @@ def _cover_asset_key(spot: dict, primary: str, kind: str) -> dict:
     }
 
 
+#: 这一趟的认人／睁眼结果，渲完写进 `render.json` 的 `face_checks`。
+#: 账号所有者 2026-09-27 批的 O2+O3；判据和门槛都在 `tools/face_checks.py`，
+#: 这条线怎么接在 `tools/reel_face_gate.py`——这里只留挂钩。
+_FACE_REPORT: dict = {}
+
+
+def _gate_cover_face(spec: dict, frame: Path, spot: dict,
+                     sources: dict[str, Path] | None, primary: str,
+                     workdir: Path) -> None:
+    """抽帧封面：不是这场球的人、闭眼／垂眼 → 当场拦，并扫出前后能换的秒数。"""
+    import reel_face_gate as gate  # noqa: PLC0415
+
+    rep = gate.cover_frame_report(spec, frame)
+    _FACE_REPORT["cover"] = rep
+    for line in rep["warnings"]:
+        print(f"    [封面认人] ⚠️ {line}")
+    if rep["problems"]:
+        key = str(spot.get("source", primary))
+        cands = (gate.nearby_passing(spec, sources[key], float(spot["frame_at"]), workdir,
+                                     conform_vf_args(sources[key]))
+                 if sources and key in sources else None)
+        raise ReelError(gate.cover_error(rep, cands))
+    if rep.get("status") == "ok":
+        print(f"    [封面认人] {rep['identity']['reason']}｜{rep['eyes']['reason']}")
+
+
+def _dry_run_cover_face(spec: dict, outdir: Path) -> bool:
+    """`--dry-run` 查 `cover_src/` 里**已经抓好的这一版**封面帧（本地 0.5 秒）。
+    还没抓过就说一声、交给 runner——「没查」和「查过没问题」不许长得一样。"""
+    art = (spec.get("cover") or {}).get("portrait") or {}
+    if art.get("image") or art.get("frame_at") is None:
+        return False
+    cache = outdir / COVER_SRC_DIR
+    try:
+        manifest = json.loads((cache / "manifest.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        manifest = {}
+    frame = cache / "portrait.jpg"
+    if manifest.get("portrait") != _cover_asset_key(art, str(spec.get("primary", "")),
+                                                    "frame") or not frame.is_file():
+        print("[dry-run] 封面帧还没抓（cover_src/ 里没有这一版），认人／睁眼留到 runner 抓帧时查")
+        return False
+    try:
+        _gate_cover_face(spec, frame, art, None, "", outdir)
+    except ReelError as exc:
+        print(f"[dry-run] {exc}")
+        return True
+    return False
+
+
+def _face_checks_record(segment_future) -> dict:
+    """`render.json` 的 `face_checks`：封面那道的结果 ＋ 分段那道（只报）。出声。"""
+    import reel_face_gate as gate  # noqa: PLC0415
+
+    segs = gate.finish_segment_checks(segment_future)
+    for line in (segs or {}).get("warnings", []) + (segs or {}).get("findings", []):
+        print(f"  [分段认人] ⚠️ {line}")
+    if segs and segs.get("status") == "ok":
+        print(f"  [分段认人] 查了 {len(segs['segments'])} 段 {segs['frames']} 帧，"
+              f"{segs['faces']} 帧有够大的脸，{len(segs['findings'])} 处画面和旁白对不上（只报不拦）")
+    return {"cover": _FACE_REPORT.get("cover") or {"status": "not_applicable",
+                                                   "why": "封面不是抽帧"},
+            "segments": segs}
+
+
 def resolve_cover_payload(cover: dict, workdir: Path, *,
                           sources: dict[str, Path] | None = None,
-                          primary: str = "") -> tuple[dict, str]:
+                          primary: str = "",
+                          spec: dict | None = None) -> tuple[dict, str]:
     """把 `cover` 里的 `frame_at` / `cutout` 解成本地图片路径，返回 (payload, layout)。
 
     **抓下来的帧和抠好的人存进 `cover_src/` 并进仓库**（见 `COVER_SRC_DIR`
@@ -4632,6 +4699,10 @@ def resolve_cover_payload(cover: dict, workdir: Path, *,
     if layout == "solo":
         art = dict(cover["portrait"])
         art["image"] = _grab(art, "portrait")
+        if not cover["portrait"].get("image"):
+            # 抽帧封面（新抓的和 cover_src/ 里复用的都过）：认人＋睁眼，见 `_gate_cover_face`
+            _gate_cover_face(spec or {"cover": cover}, Path(art["image"]), art,
+                             sources, primary, cache_dir)
         cover = {**cover, "portrait": art}
     elif layout == "cutout":
         # 人物是官方抠图（本地 PNG），只有背景那张要抓帧。
@@ -8237,6 +8308,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            source_override: Path | None = None,
            cover_only: bool = False) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
+    _FACE_REPORT.clear()          # 这一趟的认人结果只许是这一趟的
     # **先只看 spec，再看这台机器。** 两样都在下载之前，形状错和缺依赖都
     # 死在第 5 秒，不用等 392 MB 下完。
     validate_spec(spec)
@@ -8452,6 +8524,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
+    # 分段 3:4 画面的认人（只报不拦）和下面的分段编码**同时跑**，不占关键路径
+    import reel_face_gate  # noqa: PLC0415
+    face_segments = reel_face_gate.start_segment_checks(
+        spec, segments, sources, tracks, source_w=source_w, crop_w=CROP_W,
+        window=lambda x, seg: zoomed_window(x, seg.crop_zoom, seg.fill_y),
+        vf_for=lambda key: conform_vf_args(sources[key]), workdir=outdir)
 
     # **每一段都多切 SEG_FADE 秒留给下一个接缝，最后一段不留**——长度账见
     # `dissolve_filtergraph`。多出来的那几秒从来不单独播，它只在溶解里当底。
@@ -8825,6 +8903,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         "narration_backend": "azure" if azure_tts.available() else "edge-tts",
         "narration_seconds": {str(i): round(v, 3)
                               for i, v in sorted(spoken_of.items())},
+        # 认人／睁眼（封面抽帧硬拦、分段画面只报；模型不可用记 unavailable）
+        "face_checks": _face_checks_record(face_segments),
     }, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"成片 {final}（{probe_duration(final):.1f}s，"
           f"{final.stat().st_size / 1e6:.1f} MB）")
@@ -10130,6 +10210,7 @@ def main() -> int:
         # 渲染才发现**；郑钦文那条三处跨镜头**渲染一次都没报错**，直接发了出去。
         # 又一次「工具写出来了、判据算出来了、就是没人在该用的时候用它」。
         hard = probe_dry_run(spec, segments)
+        hard = _dry_run_cover_face(spec, Path(args.outdir)) or hard
         # **文案也在这儿校一遍。** 它的两道闸（正文 ≤1000 字、tag ≤5 个）原来
         # 只活在 `push_reel.py --stage page` 里，而那一步排在 **render 之后**
         # ——2026-08-05 `chwalinska-gibson` 那趟 6 个 tag，**渲完两分半才报**
