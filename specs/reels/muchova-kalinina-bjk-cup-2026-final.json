@@ -1,0 +1,372 @@
+{
+  "slug": "muchova-kalinina-bjk-cup-2026-final",
+  "source_url": "https://www.youtube.com/watch?v=jSp_UwE-_co",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "平直的复盘叙述，一段 `style` 都没写；同一届的 `muchova-bouzas-bjk-cup-2026-sf` 也是 edge。",
+  "_source": "账号所有者给的 TNNS 截图（「盯这个比赛视频，然后做赛场之上」）。源片是比利·简·金杯官方 YouTube `jSp_UwE-_co`（oEmbed：标题 `Anhelina Kalinina (UKR) vs Karolina Muchova (CZE) | 2026 Billie Jean King Cup Finals | Highlights`，author `Billie Jean King Cup`），probe 在 `output/2026-09-27/reel/muchova-kalinina-bjk-cup-2026-final/`：1920×1080 / 25fps、504.4s。记分条逐格读过（`KALININA / MUCHOVA`），挡板 `2026 FINALS SHENZHEN`、`深圳湾`；比赛画面到 468.24（赛点落地），468~496 是赛点之后的近景、握手、捷克替补席、队长拥抱、看台，496.5 起是 WATCH MORE 片尾板；**没有场上采访**。",
+  "scorebox": [
+    145,
+    915,
+    600,
+    1012
+  ],
+  "_scorebox_why": "同一届同一块 ITF 转播板，和 `muchova-bouzas-bjk-cup-2026-sf` 同一个框；probe 的 itf-bjk 标定在这个框里认到了板（present 2284 帧）。",
+  "_match": {
+    "id": "2026:bjk-cup-finals:final:anhelina-kalinina-karolina-muchova",
+    "event": "2026 比利·简·金杯总决赛",
+    "event_search": "Billie Jean King Cup",
+    "round": "Final",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "穆霍娃",
+    "loser": "卡利尼娜",
+    "participants": [
+      "卡利尼娜",
+      "穆霍娃"
+    ],
+    "winner_en": "Karolina Muchova",
+    "loser_en": "Anhelina Kalinina",
+    "set_scores_home_away": [
+      [
+        2,
+        6
+      ],
+      [
+        3,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "_source": "三源一致：flashscore rg052Scl（home＝`AE÷Kalinina A.`、away＝`AF÷Muchova K.`，`BA/BB=2/6`、`BC/BD=3/6`）；金杯官网实时战报 `live-ukr-v-cze-2026-billie-jean-king-cup-final`「Karolina Muchova beat in-form Anhelina Kalinina in straight sets … clinch a 6-2 6-3 win in one hour and 10 minutes」；账号所有者的 TNNS 截图 6-2 6-3、1:10。画面自证：源片 468.24 赛点落地，解说 478.72「She puts Czechia one up in the final」。",
+    "_participants_why": "`participants` 跟 flashscore 的 home / away：[卡利尼娜, 穆霍娃]，和 `cover.matchup` 顺序相反；`set_scores_home_away` 同序。",
+    "source": "flashscore_points",
+    "source_id": "rg052Scl",
+    "flashscore_id": "rg052Scl",
+    "winner_result": "6-2 6-3",
+    "loser_result": "2-6 3-6"
+  },
+  "topbar": {
+    "line1": "2026 比利·简·金杯 决赛",
+    "line2": "穆霍娃 6-2 6-3 卡利尼娜"
+  },
+  "_topbar_why": "第二行和 `cover.winner` / `cover.result` / `cover.matchup` 机械一致。第一行：团体赛没有「级别＋站」，同一届 `muchova-bouzas-bjk-cup-2026-sf` 同一写法；轮次写 `决赛`（金杯官网 `…-final-preview`、实时战报标题 `Billie Jean King Cup Final`）。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "穆霍娃",
+        "name_en": "Karolina Muchova",
+        "country": "CZE",
+        "rank": 8
+      },
+      {
+        "name": "卡利尼娜",
+        "name_en": "Anhelina Kalinina",
+        "country": "UKR",
+        "rank": 48
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（`sources.rankings.fetch_rankings`，榜单日期 2026-09-21）：穆霍娃第 8（4683 分）、卡利尼娜第 48（1112 分）；金杯官网战报「The World No. 8」同向。",
+    "winner": "穆霍娃",
+    "result": "6-2 6-3",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "穆霍娃",
+    "_subject_why": "赢家、世界第八（顶级球员）；决赛（轮次本身够格）。",
+    "hook": "自己发球一局没丢\n穆霍娃为捷克先赢一场",
+    "hook_accent": "先赢一场",
+    "_hook_why": "第一行关键局面：她 8 个发球局全保，对手全场一个破发点都没拿到（flashscore `Break Points Saved` 客队 0/0、`Service games won` 8/8）；第二行结果：团体赛决赛第一场单打她赢了、捷克 1-0（「决赛」顶栏已经印着，钩子不复读）。没有排名、术语（不写「破发」），不用算数。",
+    "topic": "比利·简·金杯 决赛 · 穆霍娃 VS 卡利尼娜",
+    "_heat_why": "决赛（轮次本身够格）；穆霍娃世界第八。",
+    "portrait": {
+      "image": "assets/reel/muchova-bjk-cup-2026-final.jpg",
+      "focus": 0.5,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "_why": "**比利·简·金杯官方实拍（ITF，Contentful 图库）**，原文件 `LZ1_9099_ImROtRsq.JPG`（和 `muchova-bouzas` 那张 `LZ1_9355` 同一位摄影师、同一套编号），挂在本场实时战报 `https://www.billiejeankingcup.com/en/news/live-ukr-v-cze-2026-billie-jean-king-cup-final` 页头，alt 写着 **`Muchova celebrates in BJK Cup final`**，页标题 `LIVE: UKR 0-1 CZE`——人物、决赛都写死了。画面自证：蓝色无袖捷克队服、红裙、白色发带，和源片里她这场的着装一致；背景是看台鼓掌的观众。四道闸门：① 精准 ✅；② 对题（她赢下这场，握拳咬牙）✅；③ 冲击力——正面偏侧、双眼睁开、拳头在画面里 ✅；④ 清晰度——原图 2588×3883，铺 1080×1440 是缩小 ✅。竖图，focus_y 0 让脸落在台头带之下、钩子带之上。"
+    },
+    "scoreboard": {
+      "court": "Shenzhen Bay Sports Center",
+      "_court_why": "金杯官网战报「Sunday’s showpiece in Shenzhen」；同一届 `muchova-bouzas` 按维基信息框 `venue = Shenzhen Bay Sports Center`；源片挡板「深圳湾」。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A10%3A00%22%2C%20%22source%22%3A%20%22flashscore%20df_st_1%20rg052Scl%20%E5%85%A8%E5%9C%BA%201%3A10%EF%BC%880%3A33%2B0%3A37%EF%BC%89%22%2C%20%22cross_check%22%3A%20%22%E9%87%91%E6%9D%AF%E5%AE%98%E7%BD%91%E5%AE%9E%E6%97%B6%E6%88%98%E6%8A%A5%20one%20hour%20and%2010%20minutes%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore 分盘用时 0:33＋0:37＝1:10；金杯官网战报「one hour and 10 minutes」一致。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "match_id": "rg052Scl",
+    "field": "AD",
+    "value": 1790500800,
+    "beijing": "2026-09-27T17:20+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "flashscore `AD=1790500800` → 09:20Z＝北京 17:20，旁白说「下午五点多」。"
+  },
+  "stats": {
+    "a": {
+      "aces": 8,
+      "df": 2,
+      "first_in": 28,
+      "first_won": 24,
+      "second_total": 11,
+      "second_won": 8,
+      "bp_conv": 4,
+      "bp_chances": 5,
+      "pts_won": 61,
+      "pts_total": 99,
+      "first_total": 39,
+      "headshot": "assets/players/headshots/wta-322191.jpg"
+    },
+    "b": {
+      "aces": 0,
+      "df": 1,
+      "first_in": 35,
+      "first_won": 22,
+      "second_total": 25,
+      "second_won": 9,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 38,
+      "pts_total": 99,
+      "first_total": 60,
+      "headshot": "assets/players/headshots/wta-320567.jpg"
+    },
+    "_source": "flashscore rg052Scl `df_st_1`（`tools/match_stat_hooks.py rg052Scl --stats-block`）；a＝穆霍娃（flashscore 客队）、b＝卡利尼娜（主队），和 `cover.matchup` 同序。一发进球率 72%／58%、一发得分率 86%／63%、救破发点 0/0／1/5，和账号所有者给的 TNNS 截图逐项一致。",
+    "_winners_ue_why": "跑过 tnns-stats（run 36315684044，id=75081446），hasExtendedStats=False，TNNS 这场也没有这两行；flashscore 同样没有（第一趟 run 36315268029 Cloudflare 没过，带 date 重跑一次才认到这一场）。"
+  },
+  "_hit_data": "`match_feed.py show rg052Scl` 逐局：第一盘 1-1 卡利尼娜发球，占先被追平，穆霍娃唯一一个破发点兑现 → 2-1；之后 2-4 卡利尼娜发球 30-40 再被破 → 5-2；5-2 穆霍娃发球 40-15 第一个盘点拿下，6-2，33 分钟。第二盘前四局各自保发；2-2 卡利尼娜 40-30 领先被连拿两分，破发 → 3-2；3-2、4-3 穆霍娃保发；3-4 卡利尼娜救下一个破发点保发；5-3 卡利尼娜发球 15-40，第一个赛点拿下，6-3。官方统计：穆霍娃 8 个发球局全保、全场没给出一个破发点（`Break Points Saved` 0/0），一发得分率 86% 对 63%，ACE 8 对 0，破发 4/5。",
+  "_claims": {
+    "捷克离2018年之后的第一个冠军只差一场": "① 金杯官网实时战报 https://www.billiejeankingcup.com/en/news/live-ukr-v-cze-2026-billie-jean-king-cup-final 原文「Muchova’s victory puts Czechia one match away from claiming their first world title since 2018, and 12th overall」；② 转播解说原声（源片 481.92~487.36）「just one win away, winning their 12th Billie Jean King Cup title and their first since 2018」；2018 年捷克夺冠见维基 https://en.wikipedia.org/wiki/2018_Fed_Cup 。",
+    "卡利尼娜这届总决赛此前三场全胜": "① 金杯官网实时战报原文「Kalinina had won all five of her BJK Cup matches heading into Sunday’s showpiece in Shenzhen, including three at these Finals」；② 同页「Kalinina turned the tie around by winning both her singles and doubles matches against the 2001 winners … defeating teenager Tyra Grant in the opening singles of the semi-final」，仓库里 `grant-kalinina-bjk-cup-2026-sf` 也记着半决赛那场。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "自己发球一局没丢",
+      "穆霍娃为捷克先赢一场"
+    ],
+    "question": "决赛第一场，穆霍娃是怎么让一个这届总决赛全胜的对手，全场一个破发点都拿不到的？",
+    "thesis": "穆霍娃 8 个发球局全保，卡利尼娜一个破发点都没拿到；她自己在对手发球局里拿到 5 个破发点兑现 4 个。第一盘 1-1 靠一记接发打穿先破，2-4 再破，6-2；第二盘 2-2 破发，5-3 第一个赛点拿下，6-3，一小时十分。捷克 1-0 领先，离 2018 年之后的第一个冠军只差一场。",
+    "beats": [
+      "冷开场：赛点之后穆霍娃的近景和握手，解说「Pressure? What pressure?」。",
+      "落点：她 8 个发球局对手一个破发点都没拿到；坐标；卡利尼娜这届此前三场全胜。",
+      "1-1 破发点上一记接发打穿，2-1。",
+      "2-4 再破，5-2；第一个盘点拿下，6-2，33 分钟。",
+      "第二盘各自保发到 2-2，破发 3-2。",
+      "3-2 长回合，她在底线变线变节奏拿下。",
+      "卡利尼娜救下破发点保发 3-4；穆霍娃 5-3。",
+      "5-3 第一个赛点拿下，6-3；离冠军只差一场。"
+    ],
+    "chapters": [
+      "一个破发点都没有",
+      "接发打穿",
+      "第一个盘点",
+      "第一个赛点"
+    ],
+    "human_context": {
+      "angle": "世界第八穆霍娃在决赛第一场单打对上这届总决赛三场全胜的卡利尼娜：她的发球局对手一个破发点都没拿到。赢下来，捷克离 2018 年之后的第一个冠军只差一场。",
+      "facts": [
+        "flashscore rg052Scl：Muchova K. d Kalinina A. 6-2 6-3，分盘 0:33 / 0:37。",
+        "WTA 官方排名：穆霍娃第 8、卡利尼娜第 48。",
+        "金杯官网实时战报：1 小时 10 分、卡利尼娜此前本届三场全胜、捷克离 2018 年之后第一个冠军只差一场。"
+      ],
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_rg052Scl",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_rg052Scl",
+        "https://www.billiejeankingcup.com/en/news/live-ukr-v-cze-2026-billie-jean-king-cup-final"
+      ]
+    },
+    "narration": [
+      "对手一个破发点都没拿到。",
+      "一记接发打穿，先破。",
+      "第一个盘点拿下，六比二。",
+      "第一个赛点拿下，六比三。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 468.24,
+      "end": 481.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.1,
+          "text": "A magical and masterful performance from Karolina Muchova\n一场魔术般的统治级表演"
+        },
+        {
+          "at": 3.04,
+          "text": "Pressure? What pressure?\n压力？什么压力？"
+        },
+        {
+          "at": 10.48,
+          "text": "She puts Czechia one up in the final.\n她帮捷克在决赛先拿下一分"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "冷开场：第一个赛点落地之后穆霍娃握拳的那一刻（账号所有者 2026-09-25「视频从赢球后的冷开场……是全局的要求」）。不配旁白，只留解说原声＋中英字幕：captions.txt 468.00「A magical and masterful performance from」、471.28「Karolina Muka. Pressure. What pressure?」、478.72「She puts Sheia one up in the final.」，人名国名按本名写回，段内 at＝原时刻−468.24（第一句开口在段首之前 0.24 秒，at 取 0.1）。",
+      "crosses_cut": "468.24~481.6：她的近景 → 捷克替补席 → 网前握手，全在赛点之后。",
+      "point_end_ok": "比赛已经结束（赛点在 468.24 落地）。",
+      "_ending_payoff_required": true,
+      "_payoff_why": "冷开场里有赛点后的第一波庆祝，所以 true——倒数第二段（468.24→490.84）按时间顺序完整重放并接下去。"
+    },
+    {
+      "start": 2.64,
+      "end": 34.08,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "这一场，穆霍娃自己发球八局，对手一个破发点都没拿到。北京时间九月二十七号下午五点多，深圳，比利·简·金杯决赛，捷克对乌克兰第一场单打。世界第八的穆霍娃，对世界第四十八的卡利尼娜。穆霍娃这届此前只打过半决赛一场。这是乌克兰第一次走到金杯决赛，卡利尼娜这届总决赛此前三场全胜，第一分就压在她们两个人身上。",
+      "_why": "开场顺序「爆点 → 落点 → 坐标」：落点是全场的形状（flashscore `Break Points Saved` 客队 0/0、`Service games won` 8/8），再给坐标和对手的来路（金杯官网「including three at these Finals」）。画面是第一局卡利尼娜发球的一个回合（2.64 转播切点起，4.5~18.5 宽景对拉，22.5 起记分条 `0 15 / 0 30`），30.64 解说「That's a great volley」，34.08 这一分落地。「只打过半决赛一场」：金杯官网「Muchova replaced Bouzkova for the semi-final」，1/4决赛捷克单打是布兹科娃和诺斯科娃。",
+      "crosses_cut": "19.92 / 24.24 / 31.8 几处换镜头：分与分之间的近景。",
+      "point_end_ok": "段尾 34.08 是 probe 的 point_ends，截击那一分落地、记分条随后翻成 30-30。"
+    },
+    {
+      "start": 143.92,
+      "end": 156.0,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第三局，卡利尼娜先拿到占先，被追平。平分之后穆霍娃拿到破发点，接发这一拍她直接抽出去，一拍打穿，二比一。",
+      "_why": "记分条 136.5~146.5 `1 AD / 1 40`（卡利尼娜发球占先）、148.5~154.5 `1 40 / 1 AD`（穆霍娃占先＝破发点），156.5 翻成 `1 0 / 2 0`。flashscore 第 3 局 `…40:30, 40:40, A:40, 40:40, 40:A |B1|`：一个破发点，兑现。解说 151.28「It's a ripper of a return」、153.76「And what a time to find it」——破发点上是接发球直接得分。",
+      "crosses_cut": "143.92 穆霍娃近景（占先那一分之后），147.08 起破发点那一分的宽景，152.76 破发之后的近景。",
+      "point_end_ok": "段尾 156.0 是切点，point_ends 152.8 / 154.8 之后，记分条 156.5 已翻成 2-1。"
+    },
+    {
+      "start": 273.12,
+      "end": 289.72,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "卡利尼娜的下一个发球局，三十比四十。这一盘她自己发球，只拿到一半的分。穆霍娃在底线来回调动。最后一拍靠着手感轻轻处理，再破一次，五比二。",
+      "_why": "记分条 274.5~288.5 `2 30 / 4 40`（卡利尼娜发球，破发点），290.5 翻成 `2 0 / 5 15`。flashscore 第 7 局 `15:0, 15:15, 30:15, 30:30, 30:40 |B1|` 兑现。解说 285.44「I mean it's magical touch that Muka has」。「自己的发球分只拿到一半」：flashscore Set 1 `Service Points Won` 主队 50%（14/28）。",
+      "crosses_cut": "273.12~288.76 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 289.72 在 point_ends 288.8 / 289.76 这一分落地之后。"
+    },
+    {
+      "start": 289.72,
+      "end": 298.08,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "轮到她发球胜盘，第一个盘点就拿下，六比二，三十三分钟。",
+      "_why": "记分条 290.5~298.5 `2 0 / 5 15`（穆霍娃发球），300.5 已是第二盘 `2 0 40 / 6 0 30`。flashscore 第 8 局 `0:15, 0:30, 15:30, 15:40 |B2|`：40-15 第一个盘点兑现；分盘用时 0:33。",
+      "crosses_cut": "290.5 她发球前的近景，292.0 起回合宽景。",
+      "point_end_ok": "段尾 298.08 是 point_ends，盘点那一分落地。"
+    },
+    {
+      "start": 332.4,
+      "end": 343.32,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘前四局，两人都保住了发球局。穆霍娃的一发越打越稳，这一盘一发进了十四个，她拿下十三分。",
+      "_why": "记分条 300.5~326.5：`2 0 40/6 0 30` 卡利尼娜保发 1-0、`2 1 0/6 0 40` 穆霍娃保发、`2 1 40/6 1 15` 卡利尼娜保发 2-1；332.5~342.5 `2 2 15 / 6 1 40`（穆霍娃发球），344.5 翻成 `2 2 40 / 6 2 30`。解说 340.16「Again, the hand skills of Muka just sublime」。「十四个一发拿下十三分」：flashscore Set 2 `1st serve points won` 客队 93%（13/14）。",
+      "crosses_cut": "332.4 发球前近景，335.16 起回合宽景。",
+      "point_end_ok": "段尾 343.32 是切点，这一局在这里拿下。"
+    },
+    {
+      "start": 348.76,
+      "end": 373.16,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "接下来这一局，卡利尼娜四十比三十领先，穆霍娃连拿两分，拿到破发点。这一分她压在底线，借了一点网带的运气，还是把卡利尼娜逼到了死角，三比二。卡利尼娜全场第三次丢掉发球局。第二盘卡利尼娜的二发，十三分里被她拿走九分。",
+      "_why": "记分条 344.5~356.5 `2 2 40 / 6 2 30`、358.5~372.5 `2 2 40 / 6 2 AD`（破发点），374.5 翻成 `2 2 15 / 6 3 0`。flashscore 第 5 局 `…40:30, 40:40, 40:A |B1|`。解说 355.92「Oh, it's wondrous play from Muka」、368.48「A little bit of help from the net, but it was clinical in truth from Muka」。「二发十三分里拿走九分」：flashscore Set 2 `2nd return points won` 客队 69%（9/13）。",
+      "crosses_cut": "357.48 / 358.44 / 369.32 / 372.28 换镜头：平分那一分之后、破发之后穆霍娃近景。",
+      "point_end_ok": "段尾 373.16 在 point_ends 372.32 之后。"
+    },
+    {
+      "start": 381.12,
+      "end": 409.36,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "她的发球局里有全场最长的一个回合。两人在底线对拉，穆霍娃不停地变线、变节奏，一点点把卡利尼娜拉开，最后一拍把这一分收掉。这就是穆霍娃的球：不靠一拍打死，靠一拍接一拍的变化，把对手慢慢织进网里。全场她自己发球，拿下百分之八十二的分。",
+      "_why": "记分条 382.5~406.5 一直是 `2 2 15 / 6 3 15`——一个长回合（缩略图墙 384.5~404.5 都是宽景对拉），408.5 翻成 `15 / 40`（中间一分集锦没放）。解说 402.96「Oh, again the wondrous … from Muka just weaving her web」。「发球拿下百分之八十二的分」：flashscore `Service Points Won` 客队 82%（32/39）。",
+      "crosses_cut": "381.12~404.6 一个连续的回合宽景，404.6 / 408.08 是这一分之后的近景。",
+      "point_end_ok": "段尾 409.36 在 point_ends 408.08 / 409.36，这一分已经落地。"
+    },
+    {
+      "start": 435.96,
+      "end": 445.76,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "三十比四十，又一个破发点。卡利尼娜顶住了，连拿三分，保住这一局，三比四。",
+      "_why": "记分条 436.5 `2 2 30 / 6 4 40`；438.5~442.5 `AD / 40`（卡利尼娜占先），446.5 翻成 `2 3 15 / 6 4 15`。flashscore 第 7 局 `…30:40 |B1|, 40:40, A:40`：卡利尼娜救下全场唯一救下的那个破发点（`Break Points Saved` 1/5）。解说 441.68「Kalinina showing some fight here. That's a gutsy hold」。",
+      "crosses_cut": "435.96 / 437.76 / 439.0 / 443.6 / 444.6 换镜头，都在分与分之间。",
+      "point_end_ok": "段尾 445.76 是 point_ends，这一局在这里保住。"
+    },
+    {
+      "start": 452.04,
+      "end": 458.44,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "穆霍娃再保一局，五比三，离胜利只差一局。",
+      "_why": "记分条 450.5~456.5 `2 3 15 / 6 4 40`（穆霍娃发球），458.5 翻成 `2 3 15 / 6 5 40`。解说 456.48「one game away」。",
+      "crosses_cut": "452.04~455.84 回合宽景，455.84 这一分之后。",
+      "point_end_ok": "段尾 458.44 在 point_ends 457.28 之后，记分条已翻成 5-3。"
+    },
+    {
+      "start": 458.44,
+      "end": 468.24,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "最后一局，十五比四十，两个赛点。第一个，穆霍娃就拿下了。六比二，六比三。",
+      "_why": "记分条 458.5~468.5 `2 3 15 / 6 5 40`（卡利尼娜发球，两个赛点）。flashscore 最后一局 `15:0, 15:15, 15:30, 15:40 |B1| |B3|`，下一分就结束——第一个赛点兑现；`Match points saved` 主队 0。",
+      "crosses_cut": "458.44~468.24 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 468.24 是转播切点，赛点那一分在这里落地（point_ends 468.24）。"
+    },
+    {
+      "start": 468.24,
+      "end": 490.84,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.1,
+          "text": "A magical and masterful performance from Karolina Muchova\n一场魔术般的统治级表演"
+        },
+        {
+          "at": 3.04,
+          "text": "Pressure? What pressure?\n压力？什么压力？"
+        },
+        {
+          "at": 10.48,
+          "text": "She puts Czechia one up in the final.\n她帮捷克在决赛先拿下一分"
+        },
+        {
+          "at": 13.68,
+          "text": "They are just one win away from their 12th Billie Jean King Cup title\n捷克离第12座金杯冠军只差一场"
+        },
+        {
+          "at": 19.12,
+          "text": "and their first since 2018.\n也是2018年之后的第一座"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe `captions.txt`：468.00 / 471.28 / 478.72 同冷开场；481.92「It means that they are just one win」、483.68「away, winning their 12th Mill King Cup」、487.36「title and their first since 2018.」。人名赛事名按本名写回，段内 at＝原时刻−468.24。",
+      "_why": "赛点之后的原声，按时间顺序重放冷开场那一段并接下去：近景握拳 → 捷克替补席 → 网前握手 → 队长斯特里科娃（486.5 起鼓掌、488.5 拥抱）。",
+      "crosses_cut": "468.24~490.84 几处换镜头，全在赛点之后。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "start": 490.84,
+      "end": 495.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "两场一盘没丢，明年的穆霍娃，你看好吗？",
+      "_why": "收尾一问，往积极的方向落。「两场一盘没丢」：这届她只打了半决赛 7-5 6-4（`muchova-bouzas-bjk-cup-2026-sf`）和这场 6-2 6-3（金杯官网战报「Muchova replaced Bouzkova for the semi-final」，1/4决赛捷克派的是布兹科娃和诺斯科娃）。段尾 495.6 在 496.5 WATCH MORE 片尾板之前、497.67 静音之前。",
+      "crosses_cut": "490.84 起一个看台镜头。",
+      "point_end_ok": "比赛已经结束。"
+    }
+  ],
+  "_editing_why": "源片 504 秒，比赛画面到 468.24。按逐局数据挑了四个破发（1-1 接发打穿、2-4、2-2 网带）、两个盘点赛点、卡利尼娜唯一救下的破发点、一个长回合；第一局只用一个回合垫坐标。496.5 起是片尾板，一帧不收。",
+  "push": {
+    "matchup": "穆霍娃 vs 卡利尼娜",
+    "score": "6-2 6-3",
+    "summary": "穆霍娃替捷克拿下决赛首分",
+    "auto": true,
+    "lead": "2026 比利·简·金杯总决赛决赛，深圳湾体育中心，捷克对乌克兰第一场单打：世界第 8 的穆霍娃 6-2、6-3 胜世界第 48 的卡利尼娜，1 小时 10 分。卡利尼娜这届总决赛此前三场全胜，这一场她在穆霍娃的发球局里一个破发点都没拿到。第一盘 1-1，穆霍娃在破发点上一记接发直接打穿先破，4-2 再破，第一个盘点拿下 6-2；第二盘 2-2 再破，5-3 第一个赛点拿下。全场 ACE 8 比 0，一发得分率 86% 对 63%，破发 4/5。捷克 1-0 领先，离 2018 年之后的第一个冠军只差一场。"
+  }
+}
