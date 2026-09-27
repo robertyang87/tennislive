@@ -6299,7 +6299,18 @@ def test_挂代理CA要排在导入edge_tts之前(tmp_path, monkeypatch, capsys)
     之后再挂 CA 一点用都没有——而那种失败长得和「没挂」一模一样。
     所以两件事一起钉：调用排在最前面，且没有任何模块级的 `import edge_tts`。
     """
+    import certifi  # noqa: PLC0415
+    import certifi.core  # noqa: PLC0415
+
     from tennislive import localca  # noqa: PLC0415
+
+    # `trust_local_proxy_ca` 改的是**全局**的 `certifi.where`，monkeypatch 管不到。
+    # 同一个 xdist worker 里前面谁挂过一次，它就还指着那份 bundle——那份一不在，
+    # 下面第 ② 步 `read_text` 就 FileNotFoundError（全量里偶发、单跑必绿）。
+    # 先钉回真的那个，teardown 再还原，**两个方向都不漏**：别人漏给我的、我漏给别人的。
+    monkeypatch.setattr(certifi, "where", certifi.core.where)
+    for var in ("SSL_CERT_FILE", "REQUESTS_CA_BUNDLE"):
+        monkeypatch.delenv(var, raising=False)   # 第 ② 步直接写 os.environ，交给 teardown 还原
 
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     body = src[src.index("def main() -> int:"):]
@@ -6328,7 +6339,6 @@ def test_挂代理CA要排在导入edge_tts之前(tmp_path, monkeypatch, capsys)
     monkeypatch.setattr(localca, "_CACHE", tmp_path / "bundle.pem")
     monkeypatch.setenv("TENNISLIVE_EXTRA_CA", str(ca))
     got = localca.trust_local_proxy_ca()
-    import certifi  # noqa: PLC0415
     assert got == os.environ["SSL_CERT_FILE"] == os.environ["REQUESTS_CA_BUNDLE"]
     assert certifi.where() == got, "edge-tts 认的是 certifi.where()，它没被指过来"
     merged = Path(got).read_text(encoding="utf-8")
@@ -7717,8 +7727,13 @@ def test_重放不许把已经删掉的成片救活():
     每一个文件，`git rm` 把 `reset --hard` 刚救活的那份再删掉并进索引。
     """
     text = WORKFLOW.read_text(encoding="utf-8")
-    block = text[text.index("push 被拒（第 $attempt 次）"):]
-    block = block[:block.index("sleep $((attempt")]
+    # 重放抽成了一个函数（main 上的 probe 第一次 push 之前也要先重放一次）：
+    # 被拒之后那一段必须调它，删除那半的判据看函数体
+    retry = text[text.index("push 被拒（第 $attempt 次）"):]
+    retry = retry[:retry.index("sleep $((attempt")]
+    assert "replay_onto_latest" in retry, "被拒之后没有重放就直接 sleep 重推——同一个冲突撞十次"
+    block = text[text.index("replay_onto_latest() {"):]
+    block = block[:block.index("\n          }\n")]
     assert "--diff-filter=D rendered^ rendered" in block, (
         "重放没把「这次提交删掉的文件」再删一遍——reset --hard 救活的旧成片"
         "会一直留在仓库里（run 30727483963）")
@@ -11990,6 +12005,8 @@ def test_全称断言必须认领一份能穷举的出处():
     和「看了几场就下结论」分开。
     """
     reel = _reel()
+    # 词表 2026-09-27 挪进了三条线共用的 `tools/absolute_claims.py`（`_reel()` 已把 tools/ 挂上）。
+    import absolute_claims  # noqa: PLC0415
 
     # ---- 豁免表自检：名字要真的存在，而且真的还带着那种断言 ----
     for slug in sorted(reel._LEGACY_UNSOURCED_CLAIMS):
@@ -11997,7 +12014,7 @@ def test_全称断言必须认领一份能穷举的出处():
         assert path.is_file(), f"豁免表里的 {slug} 不存在了——过期的名字就是恒真的绿灯"
         spec = json.loads(path.read_text(encoding="utf-8"))
         texts = reel.spec_outward_text(spec)
-        assert any(reel._ABSOLUTE_CLAIM_RE.search(t) for t in texts), (
+        assert absolute_claims.claim_phrases(texts), (
             f"{slug} 已经没有全称断言了，把它从 _LEGACY_UNSOURCED_CLAIMS 删掉（只许减不许加）")
 
     # ---- 存量里没被豁免的，一条都不许漏 ----

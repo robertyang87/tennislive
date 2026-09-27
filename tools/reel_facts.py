@@ -7,6 +7,7 @@ Flashscore 的逐盘数据固定是 home/away 顺序；封面和顶栏固定是�
 from __future__ import annotations
 
 import re
+from pathlib import Path
 
 from spec_wording import outward_deep
 
@@ -697,3 +698,245 @@ def legacy_topline(kind: str) -> frozenset:
         return frozenset(_json.loads(path.read_text(encoding="utf-8")).get(kind) or ())
     except FileNotFoundError:
         return frozenset()
+
+
+# ── 时效性事实：写了「要等」就要回头查；常青栏目不许说「今天」 ─────────────
+#
+# 两条都是**写的时候成立、发出去之后过期**的话，渲染、质检、全量测试一律不出声。
+
+#: spec 的注解里写着「这件事还没定」的那几个说法。**只认说「名单／抽签／官宣」的**，
+#: 不认裸的「要等」——2026-09-27 量过：存量注解里「要等」有 27 处命中，只有
+#: `davis-cup-china-first-world-group-1` 那一处是「这件事还没定」，其余全是
+#: 「要等死球再切」「要等 runner 渲完」「要等板翻过来」这类工作流程里的等。
+#: 一条天天误报的闸会被人写豁免压掉（CLAUDE.md），所以宁可窄。
+WAITING_FACT_RE = re.compile(
+    r"要等(?:抽签|名单|官宣|公布)|待公布|待官宣|名单定了再|正式名单|抽签后")
+
+#: 装闸之前就发出去的。**只许减不许加**，自检在 `tests/test_time_sensitive_facts.py`。
+LEGACY_WAITING_FACT = frozenset({
+    # ⚠️ 就是出事的那条：前两版把 2 月的中国队名单当成这一周的阵容推了微信，
+    # 读者当众指出来；第三版（895dad7b）按 ITF 正式名单改对了。比赛已经打完，
+    # 不会再重渲——所以挂着，而不是往一份已发的 spec 里补字节（spec 的字节是
+    # QC 凭证的哈希链，改一个字就要重渲）。
+    "davis-cup-china-first-world-group-1",
+})
+
+
+def annotation_strings(spec: dict):
+    """spec 里**所有注解**（任意深度、`_` 开头的键）底下的字符串，带路径。"""
+    def _strings(value):
+        if isinstance(value, str):
+            yield value
+        elif isinstance(value, dict):
+            for item in value.values():
+                yield from _strings(item)
+        elif isinstance(value, list):
+            for item in value:
+                yield from _strings(item)
+
+    def _walk(node, path):
+        if isinstance(node, dict):
+            for key, value in node.items():
+                here = f"{path}.{key}" if path else str(key)
+                if str(key).startswith("_"):
+                    for text in _strings(value):
+                        yield here, text
+                else:
+                    yield from _walk(value, here)
+        elif isinstance(node, list):
+            for index, value in enumerate(node):
+                yield from _walk(value, f"{path}[{index}]")
+
+    yield from _walk(spec, "")
+
+
+def _utc(text):
+    """`2026-09-18T06:50Z` / `…:00+08:00` → aware datetime；认不出返回 None。"""
+    from datetime import datetime, timezone  # noqa: PLC0415
+
+    raw = str(text or "").strip()
+    if not raw:
+        return None
+    try:
+        when = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if when.tzinfo is None:
+        return None       # 没写时区的时刻比不了先后——要求写 Z 或 +08:00
+    return when.astimezone(timezone.utc)
+
+
+#: 竖版短片的发布账本。模块级常量是为了测试能把它指到 tmp_path——
+#: **判据测试一律不许读真账本**：真账本每推一条就变一次，读它的测试会跟着日历红。
+REEL_LEDGER_DIR = Path(__file__).resolve().parents[1] / "data" / "reel_publish_ledger"
+
+
+def newest_sent_at(slug: str, ledger_dir=None):
+    """发布账本里这条片子**最近一次 sent** 的时刻；没发过返回 None。"""
+    import json as _json
+
+    base = Path(ledger_dir) if ledger_dir else REEL_LEDGER_DIR
+    path = base / f"{slug}.json"
+    try:
+        attempts = _json.loads(path.read_text(encoding="utf-8")).get("attempts") or []
+    except FileNotFoundError:
+        return None
+    sent = [_utc(a.get("at")) for a in attempts
+            if isinstance(a, dict) and a.get("status") == "sent"]
+    sent = [s for s in sent if s is not None]
+    return max(sent) if sent else None
+
+
+def _waiting_hits(spec: dict) -> str:
+    """注解里「这件事还没定」的那几处，拼成一句；没有返回空串。"""
+    hits = sorted({(path, m.group(0)) for path, text in annotation_strings(spec)
+                   for m in WAITING_FACT_RE.finditer(text)})
+    return "、".join(f"{path}「{word}」" for path, word in hits[:4])
+
+
+def waiting_fact_problem(spec: dict) -> str | None:
+    """注解里写了「正式名单要等抽签日」这类话 → 每次渲之前都要回头查，并把查的时刻记下来。
+
+    来路：`davis-cup-china-first-world-group-1`（895dad7b）。第一版 `_facts` 里明明写着
+    「挪威 2 月鲁德退赛过——所以正式名单要等抽签日」，它管住了挪威那半边，没管住
+    中国那半边；第二版重发时 ITF 正式名单已经公布了 58 分钟，一次都没回头看。
+    **写了要等、没回头查**——CLAUDE.md「前瞻类事实要在它定下来之后再核一次」那节。
+
+    认领口：spec 顶层 `_rechecked_at`（带时区的 ISO 时刻，如 `2026-09-18T06:50Z`）。
+    闸替人查不了名单，它逼的是「查过」这件事留下一个可比的时刻。
+
+    ⚠️ **这一半是静态的**：只看 spec 自己，不读账本、不看时钟——全库扫描用的就是它。
+    「这个时刻要晚于上一次推送」那一半在 `waiting_fact_stale_problem`，**只在渲染入口跑**
+    （见那个函数的 docstring：为什么它不能进全库扫描）。
+    """
+    slug = str(spec.get("slug") or "").strip()
+    if slug in LEGACY_WAITING_FACT:
+        return None
+    said = _waiting_hits(spec)
+    if not said:
+        return None
+    raw = spec.get("_rechecked_at")
+    if _utc(raw) is not None:
+        return None
+    return (
+        f"注解里写着这件事还没定：{said}。\n"
+        "每次渲之前都要回头查它定了没——定了就按它改旁白和文案，没定就仍按「领衔」这类"
+        "不押具体阵容的写法；查完在 spec 顶层写 `_rechecked_at`（带时区，如 "
+        "\"2026-09-18T06:50Z\"）。"
+        + (f"现在写的是 {raw!r}，认不出时刻。" if raw else "")
+        + "\n来路：davis-cup-china 前两版写着「正式名单要等抽签日」，却把 2 月的名单"
+        "当成这一周的阵容推了两次（CLAUDE.md「前瞻类事实要在它定下来之后再核一次」）。")
+
+
+def waiting_fact_stale_problem(spec: dict, *, ledger_dir=None) -> str | None:
+    """`_rechecked_at` 不晚于账本里最近一次 `sent` → **重发之前没回头查**。
+
+    ⚠️⚠️ **只在渲染入口跑（`validate_spec` / `--dry-run`），不许进全库扫描。**
+    回头查永远排在渲之前、推送永远排在渲之后，所以一条**做对了**的片子，推送一落账
+    `_rechecked_at` 就必然早于那一笔 `sent`——放进全库扫描，它会在自己推送的那一刻
+    变红：auto-push 那个提交写账本、在 main 上跑 CI，main 红，之后每个 PR 都红
+    （2026-09-27 对抗 review 复现过：`_rechecked_at` 05:00Z、`sent` 05:40Z）。
+    这一半问的是「**这一趟**重渲之前查过没有」，只有正要渲的那一刻问得出意义。
+    """
+    slug = str(spec.get("slug") or "").strip()
+    if slug in LEGACY_WAITING_FACT:
+        return None
+    said = _waiting_hits(spec)
+    raw = spec.get("_rechecked_at")
+    when = _utc(raw)
+    if not said or when is None:
+        return None       # 没写「要等」不归这条管；没写时刻归静态那一半报
+    sent = newest_sent_at(slug, ledger_dir)
+    if sent is None or when > sent:
+        return None
+    return (
+        f"注解里写着这件事还没定（{said}），而 `_rechecked_at` = {raw} "
+        f"不晚于上一次推送（{sent:%Y-%m-%dT%H:%MZ}）——**重发之前没回头查**。\n"
+        "查一遍那件事现在定了没，按查到的改，再把 `_rechecked_at` 更新成这次查的时刻。")
+
+
+#: 「网球有故事」是常青栏目，**相对时间词一过那一天就是错的**。只认把某件事钉在
+#: 发布那一天的那几种说法：「北京时间今天」「今晚」「今天凌晨」「今天公布」「刚刚结束」。
+#: ⚠️ 裸的「今天／刚刚」不认——2026-09-27 量过（常青的那两条线：40 条剪辑片 ＋ 52 条
+#: 字卡稿）：裸词命中 30 条上下，大半是「到今天」「直到今天」「今天排在前十的那些人」
+#: （＝现在）和「才刚刚第一次挤进去」（＝勉强），都不过期；收成下面这几种之后命中
+#: 6 条，**6 条全是真的钉在发布那一天**（「北京时间今天凌晨，多伦多」「今天公布的
+#: 首批名单」「今晚，他又一次站上这里的决赛」…），零误伤。
+_DAY = r"(?:今天|明天|昨天)"
+_PERIOD = r"(?:凌晨|早上|早晨|上午|中午|下午|傍晚|晚上|夜里|夜间)"
+_EVENT = (r"(?:开打|开赛|开拍|开幕|揭幕|公布|官宣|出炉|宣布|进行|举行|对阵|迎战|出战"
+          r"|登场|亮相|收官|落幕)")
+DATED_WORD_RE = re.compile(
+    rf"北京时间{_DAY}|今晚|{_DAY}{_PERIOD}|{_DAY}的?{_EVENT}"
+    rf"|刚刚(?:结束|落幕|收官|夺冠|捧杯|官宣|宣布|公布|退赛)")
+
+#: 「网球有故事」剪辑片（`specs/reels/`）里装闸之前就发出去的。只许减不许加。
+LEGACY_DATED_WORDS = frozenset({
+    "osaka-grand-slam-outfits",   # 「今天早上的美网第一轮」
+    "tiafoe-story",               # 「今晚，他又一次站上这里的决赛」
+    "zheng-us-open-outlook",      # 「今晚，她想再走一次」
+})
+
+
+def dated_word_hits(texts) -> list[str]:
+    """这批文字里钉死在发布那一天的相对时间词（去重、排好序）。"""
+    return sorted({m.group(0) for text in texts
+                   for m in DATED_WORD_RE.finditer(str(text or ""))})
+
+
+def dated_words_problem(spec: dict) -> str | None:
+    """「网球有故事」剪辑片的钩子和旁白里不许有「北京时间今天／今晚」这类话。
+
+    来路：`qualifier-ceiling`（2756cec3）第 ① 屏写「北京时间今天，美网正赛开打」——
+    美网第一轮跨三天，按北京日历说「今天」对刷到的人有一半时候是错的；而常青栏目
+    过一天就作废。**讲一件已经发生的事写绝对日期（8 月 30 日），讲现在写「现在」。**
+    真要钉在发布那一天（比如片子本来就是冲着今晚那场去的），spec 顶层写 `_dated_why`。
+    ⚠️ 只管「网球有故事」：「赛场之上」本来就是当天的片子，「今晚」是它的正常说法。
+    字卡稿（`explainer._SCRIPTS`）那一面用同一个 `dated_word_hits`，
+    认领口是 `_OPENINGS[slug]["dated_why"]`，判据在 `tools/explainer_preflight.py`。
+    """
+    cover = spec.get("cover") if isinstance(spec.get("cover"), dict) else {}
+    if str(cover.get("eyebrow") or "").strip() != "网球有故事":
+        return None
+    slug = str(spec.get("slug") or "").strip()
+    if slug in LEGACY_DATED_WORDS or str(spec.get("_dated_why") or "").strip():
+        return None
+    texts = [cover.get("hook"), cover.get("narration")]
+    texts += [s.get("narration") for s in spec.get("segments") or [] if isinstance(s, dict)]
+    hits = dated_word_hits(texts)
+    if not hits:
+        return None
+    return (
+        f"「网球有故事」是常青栏目，旁白/钩子里却钉着发布那一天：{hits}。\n"
+        "过了那一天这句话就是错的——讲已经发生的事写绝对日期（「8 月 30 日」），"
+        "讲现状写「现在」。真要钉在发布那一天，spec 顶层写 `_dated_why` 说清楚。\n"
+        "来路：qualifier-ceiling 第 ① 屏「北京时间今天，美网正赛开打」（2756cec3）。")
+
+
+def is_auto_spec(spec: dict) -> bool:
+    """自动链产的 spec（`_production.status == ready_for_render`）——那一头没人写认领。"""
+    return (spec.get("_production") or {}).get("status") == "ready_for_render"
+
+
+def time_sensitive_problems(spec: dict, *, at_render: bool = True,
+                            ledger_dir=None) -> list[str]:
+    """上面几条一起跑。合格返回空列表。
+
+    `at_render=True` 是渲染入口的口径（`validate_spec`）：外加读账本的那一半
+    （`waiting_fact_stale_problem`）。`at_render=False` 是全库扫描的口径：**不读账本、
+    不看时钟**，只查 spec 自己——为什么两个口径不能合成一个，见
+    `waiting_fact_stale_problem` 的 docstring。
+    """
+    found = [waiting_fact_problem(spec)]
+    if at_render:
+        found.append(waiting_fact_stale_problem(spec, ledger_dir=ledger_dir))
+    found.append(dated_words_problem(spec))
+    return [p for p in found if p]
+
+
+def time_sensitive_gate(spec: dict, *, at_render: bool = True,
+                        ledger_dir=None) -> tuple[list[str], list[str]]:
+    """(拦的, 只报的)。手写 spec 硬拦；自动 spec 只报不拦——没人写认领，做成硬的会把
+    自动链卡成「今天没有候选」。`validate_spec` 和全库扫描共用这一刀，别各写一份。"""
+    problems = time_sensitive_problems(spec, at_render=at_render, ledger_dir=ledger_dir)
+    return ([], problems) if is_auto_spec(spec) else (problems, [])
