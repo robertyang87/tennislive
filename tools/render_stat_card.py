@@ -157,6 +157,12 @@ wang-vandewinkel 那场 flashscore 报范德温克尔发球总分 95、总得分
 
 （ACE 那一行没有英文，走 `.slabel--solo`，不参与这张表。）
 
+⚠️ **2026-09-27 数字换成 `TL Score` 之后重扫过一次**（Q15，数字的墨迹中心是这张表
+的另一头）：sakkari-gibson 九行，同一把尺子（行与行之间按分隔线切，2160 空间）
+Montserrat 那版平均 +1.9、`TL Score`（`.smain` 行高钉 62px）平均 +2.2——差 0.3px，
+−24px 仍然是对的那一档，没动。唯一变了的是破发点那一行（+4 → −3）：`TL Score` 的
+斜杠往基线下面伸，数字墨迹的中心低了一截，还在 ±4 的字形差别以内。
+
 剩下那 ±4px（2160 空间 ≈ 2 个 CSS 像素）是字形本身的差别（`%` 比纯数字高、
 `6/17` 那道斜杠更长），不是版式没对齐——**再调只会把一部分行调正、另一部分
 调歪**。判据在 `test_中英那一对的垂直位置是量出来的一组数`。
@@ -214,13 +220,50 @@ sys.path.insert(0, str(REPO_ROOT / "tools"))
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import versus_poster as vp  # noqa: E402
+from tennislive.design_tokens import BRAND_BAR_CSS, DARK, SCORE, rgb  # noqa: E402
 from tennislive.render.webcards import _font_css  # noqa: E402
 from tennislive.video.explainer import _data_uri  # noqa: E402
 
 W, H = 1080, 1920
 
+# design-tokens: enforced
+# ── 颜色：一律从 `tennislive.design_tokens` 取（UI/VI 评审 WP8，2026-09-27）──
+# 下面几个名字只是给 CSS 模板用的短名，**值都在 token 模块里**。token 里没有、
+# 又必须原样保留的，写在同一行的 `token-exempt:` 里说清为什么。
+FG = DARK["foreground"]            # 近白正文
+BRAND = DARK["primary"]            # 黄绿：品牌 ＋「这一项谁占优」
+WIN = SCORE["win_video"]           # 薄荷：只表示「这一方赢了」（赢下的那一盘）
+DASH = SCORE["dash"]               # 比分里的连字符和抢七小分
+
+
+def _rgba(hex_colour: str, alpha: float) -> str:
+    """token 实色 → `rgba(r,g,b,α)`。半透明叠色也从角色值派生，不另写一份。"""
+    r, g, b = rgb(hex_colour)
+    return f"rgba({r},{g},{b},{alpha:g})"
+
+
+# 台头副标题和英文名那一档浅绿灰，和 `versus_poster` 的 `.topic` 同值；token 里没有这一档。
+_TOPIC_FG = "#dcefe4"  # token-exempt: versus_poster 台头副标题同值，零视觉变化
+# 头像底下垫的那块浅灰（透明头像才看得见）。
+_HEADSHOT_BG = "#e9efe9"  # token-exempt: 头像透明处的垫底，不是界面色
+
+# 账号所有者 2026-09-27（UI/VI 评审 Q3）：底色从藏青 ＋ 四色径向光改成**品牌墨绿**，
+# 和片里其余几张卡（标题卡、片尾、字卡）同一支墨；光只留黄绿和薄荷两支——
+# 蓝、红两团光拿掉。这张图上的颜色从此只有两种意思：黄绿＝品牌／这一项谁占优，
+# 薄荷＝这一方赢了（赢盘、赢家描边，Q1）。判据 `tests/test_stat_card_palette.py`。
+_BG_BASE = f"linear-gradient(170deg,{DARK['card']} 0%,{DARK['background']} 55%)"
+
+# 台头（Q15）：栏目只有三个，这张图属于「赛场之上」——原来写的「数据复盘」
+# 是三个栏目之外的第四个名字。推送页那张的 footer 左边本来就是这一句。
+BRAND_LINE = "网球时差 · 赛场之上"
+# 赢家头像那一圈描边：它唯一的意思就是「这一方赢了」，所以和赢盘同一支薄荷
+# （Q1「凡是薄荷的地方都在说这一方赢了，其余品牌处一律黄绿」）。黄绿描边 ＋ 薄荷
+# 赢盘并排渲过：两支绿挨在一起，读不出哪支是「赢」——比较图在 WP8 的 scratchpad。
+RING_WIN = WIN
+
 # 两个变体（2026-09-03 review 路线 ④「证据上屏」）：
-#   poster —— 1080×1920，推送页/复制页那张（老样子，一个像素不动）
+#   poster —— 1080×1920，推送页/复制页那张（版式老样子；2026-09-27 按评审
+#             Q1/Q3/Q15 换了底色、赢盘色、台头和统计数字字体，三个变体一起换）
 #   film   —— 1080×1440，**剪进片子**那一段用的。画布就是成片的 3:4 画幅，
 #             cut_still_segment 缩进去正好铺满宽度；1920 那版缩进 1440 只剩 713px 宽。
 #             少掉 480px 的账：footer 不要（片里有品牌角标和片尾）、「全场数据对比」
@@ -497,16 +540,16 @@ def build(spec: dict, *, variant: str = "poster") -> str:
         return f"""<!doctype html><html><head><meta charset="utf-8"><style>
 {_font_css()}
 *{{box-sizing:border-box;margin:0}}html,body{{width:1080px;height:960px;overflow:hidden}}
-body{{background:#101525;color:#f4fbf7;font-family:'TL Sans SC',sans-serif;padding:28px 46px}}
-h1{{font-size:34px;text-align:center;color:#c6f65a;margin-bottom:14px}}
+body{{background:{DARK['background']};color:{FG};font-family:'TL Sans SC',sans-serif;padding:28px 46px}}
+h1{{font-size:34px;text-align:center;color:{BRAND};margin-bottom:14px}}
 .names{{display:flex;justify-content:space-between;font-size:46px;font-weight:700}}
 .score{{text-align:center;font-family:'TL Score',sans-serif;font-size:36px;margin:8px 0 20px}}
-.setwin{{color:#c6f65a;font-weight:700}}.setlose{{font-weight:300}}.tb{{font-size:.5em;vertical-align:super}}
-.srow{{height:76px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-top:1px solid #334052}}
-.sval{{display:flex;align-items:baseline;gap:8px;font-family:'TL Numeral',sans-serif}}
-.sval-r{{justify-content:flex-end}}.smain{{font-size:54px;color:#f4fbf7}}.sfrac{{font-size:20px;color:#b7c4d0}}
-.sval.lead .smain{{color:#c6f65a}}.band .slabel{{font-size:31px;font-weight:700;text-align:center;position:relative;top:-9px}}
-.band .slabel-en{{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:16px;font-weight:400;color:#b7c4d0}}
+.setwin{{color:{WIN};font-weight:700}}.setlose{{font-weight:300}}.tb{{font-size:.5em;vertical-align:super}}
+.srow{{height:76px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-top:1px solid {DARK['border']}}}
+.sval{{display:flex;align-items:baseline;gap:8px;font-family:'TL Score','TL Sans SC',sans-serif}}
+.sval-r{{justify-content:flex-end}}.smain{{font-size:54px;color:{FG}}}.sfrac{{font-size:20px;color:{DARK['subtle-foreground']}}}
+.sval.lead .smain{{color:{BRAND}}}.band .slabel{{font-size:31px;font-weight:700;text-align:center;position:relative;top:-9px}}
+.band .slabel-en{{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:16px;font-weight:400;color:{DARK['subtle-foreground']}}}
 .band .slabel--solo{{top:0}}
 </style></head><body class="band"><h1>全场数据复盘</h1><div class="names"><span>{names[0]}</span><span>{names[1]}</span></div>
 <div class="score">{score_line}</div>{rows_html}</body></html>"""
@@ -572,34 +615,31 @@ h1{{font-size:34px;text-align:center;color:#c6f65a;margin-bottom:14px}}
 {_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box}}
 html,body{{width:{canvas_w}px;height:{canvas_h}px;overflow:hidden}}
-body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
+body{{color:{FG};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
  background:
-  radial-gradient(1150px 800px at 8% -8%, rgba(198,246,90,.20), transparent 52%),
-  radial-gradient(1000px 900px at 106% 14%, rgba(75,184,255,.18), transparent 52%),
-  radial-gradient(900px 750px at 90% 96%, rgba(255,90,106,.11), transparent 50%),
-  radial-gradient(950px 700px at 20% 108%, rgba(55,226,154,.13), transparent 52%),
-  linear-gradient(170deg,#141a30 0%,#0d0f20 40%,#08091a 72%,#05050f 100%)}}
-.bar{{height:11px;background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,
- #ff5a6a 67%,#4bb8ff 100%)}}
+  radial-gradient(1150px 800px at 8% -8%, {_rgba(BRAND, .20)}, transparent 52%),
+  radial-gradient(950px 700px at 20% 108%, {_rgba(WIN, .13)}, transparent 52%),
+  {_BG_BASE}}}
+.bar{{height:11px;background:{BRAND_BAR_CSS}}}
 .head{{display:flex;align-items:center;gap:18px;padding:32px 74px 6px}}
 .brand-icon{{width:58px;height:58px;object-fit:contain}}
 .brandlines{{display:flex;flex-direction:column;gap:5px}}
 .brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:41px;
- font-weight:400;color:{vp.TEXT}}}
+ font-weight:400;color:{FG}}}
 .topic{{font-family:'TL Sans SC',sans-serif;font-size:28px;font-weight:700;
- color:#dcefe4;letter-spacing:.5px}}
+ color:{_TOPIC_FG};letter-spacing:.5px}}
 
-/* 头像＋比分夹在中间：官方头像给一圈描边，赢家那侧描边给品牌绿，
+/* 头像＋比分夹在中间：官方头像给一圈描边，赢家那侧描边给薄荷（`RING_WIN`），
    输的一侧给中性灰——不用另加一个"W"角标，赢没赢在描边上已经看得出来。 */
 .h2h{{display:flex;align-items:flex-start;justify-content:space-between;
  padding:36px 58px 0}}
 .h2h-side{{display:flex;flex-direction:column;align-items:center;width:284px}}
 .h2h-ring{{width:252px;height:252px;border-radius:50%;overflow:hidden;
- border:6px solid rgba(244,251,247,.32);box-shadow:0 14px 30px rgba(0,0,0,.5);
+ border:6px solid {_rgba(FG, .32)};box-shadow:0 14px 30px rgba(0,0,0,.5);
  flex:0 0 auto}}
-.h2h-ring.win{{border-color:#c6f65a;box-shadow:0 14px 34px rgba(198,246,90,.4)}}
+.h2h-ring.win{{border-color:{RING_WIN};box-shadow:0 14px 34px {_rgba(RING_WIN, .4)}}}
 .h2h-ring img{{width:100%;height:100%;object-fit:cover;object-position:50% 18%;
- background:#e9efe9}}
+ background:{_HEADSHOT_BG}}}
 /* 双打：两张小头像叠在同一个 252×252 footprint 里居中，不改
    `.h2h-mid` 的 padding-top（那个数是照 252px 高的头像量的）。
    两个圆各 150px、重叠 30px，视觉宽度和单人版的 252px 大致相当。 */
@@ -621,7 +661,7 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .h2h-flagrow .score-flag-slot{{width:43px;height:29px;flex:0 0 43px}}
 .h2h-flagrow .score-flag{{width:39px;height:26px}}
 .h2h-en{{font-family:'TL Sans SC',sans-serif;font-size:21px;letter-spacing:1.2px;
- color:#dcefe4;white-space:nowrap}}
+ color:{_TOPIC_FG};white-space:nowrap}}
 
 .h2h-mid{{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;
  padding-top:8px;min-width:170px}}
@@ -635,8 +675,8 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
    赛后开麦顶栏和这张卡从此读的是**同一批字模**（`assets/fonts/TLScore-*`）。
    ⚠️ 输掉那一盘用 **Light(300)**（「输掉那一盘的分数的数字需要再细一点」），
    字重从 `versus_poster` 读，写两处必分叉。
-   ⚠️ 这一条只管**比分**。底下 `.sval` 那些技术统计（Ace、双误）不是比分，
-   没跟着改——账号所有者说的是比分。 */
+   ⚠️ 2026-09-27 起底下 `.sval` 那些技术统计（Ace、双误）也走 `TL Score`
+   （UI/VI 评审 Q15：「统计数字也用 TL Score」）——这张卡上从此只有一副数字。 */
 /* ⚠️ 字号/行高不是常量，按盘数算（`h2h_set_row_style`）：≤3 盘 56px、
    4 盘 46px、5 盘 40px——整摞的高度钉在 `H2H_SETS_BUDGET_PX` 附近，
    五盘不再把底下的技术统计推出画布（画布定死且 overflow:hidden，
@@ -645,12 +685,14 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
  font-weight:{vp.SCORE_LOSE_WEIGHT};white-space:nowrap;text-align:center;
  line-height:{set_lh}}}
 .set{{display:inline-block}}
-/* 赢下那一盘：上绿**＋加粗**；输掉那一盘 Light。 */
-.setwin{{color:#c6f65a;font-weight:{vp.SCORE_WIN_WEIGHT}}}
-.setlose{{color:{vp.TEXT};font-weight:{vp.SCORE_LOSE_WEIGHT}}}
-.setdash{{color:#93a79c;margin:0 .05em;font-size:.7em}}
-.tb{{font-size:.42em;color:#93a79c;vertical-align:super;margin-left:.04em}}
-.setplain{{color:#c6f65a}}
+/* 赢下那一盘：薄荷**＋加粗**；输掉那一盘 Light。⚠️ 薄荷不是黄绿：
+   2026-09-27 账号所有者（Q1）定了薄荷只表示「这一方赢了」，和视频顶栏的赢盘
+   同一支（`SCORE["win_video"]`）；黄绿留给品牌和底下「这一项谁占优」。 */
+.setwin{{color:{WIN};font-weight:{vp.SCORE_WIN_WEIGHT}}}
+.setlose{{color:{FG};font-weight:{vp.SCORE_LOSE_WEIGHT}}}
+.setdash{{color:{DASH};margin:0 .05em;font-size:.7em}}
+.tb{{font-size:.42em;color:{DASH};vertical-align:super;margin-left:.04em}}
+.setplain{{color:{BRAND}}}
 /* 球场和用时分两行（账号所有者 2026-08-15）。⚠️ 第二行用 `h2h-meta2` 只压
    行距，**不再重复 `margin-top:18px`**——那 18px 是比分块和这一段之间的呼吸，
    不是行距；两行都带上会把用时那行推得像另一个板块。 */
@@ -660,7 +702,7 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 
 .wrap{{padding:52px 74px 0}}
 .section-title{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:38px;
- font-weight:400;color:{vp.TEXT};margin-bottom:30px;text-align:center}}
+ font-weight:400;color:{FG};margin-bottom:30px;text-align:center}}
 
 /* 无进度条：数字分两侧对齐画布边缘，标签居中，谁占优谁点亮。
    ⚠️ 没有固定配色的图例——高亮是按每一行的方向算出来的（谁数字大/小占优），
@@ -668,10 +710,10 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
    A 在自己占优的那几行也会变绿，和图例说的正好相反，所以干脆不画图例。 */
 .srow{{display:grid;grid-template-columns:1fr auto 1fr;align-items:baseline;
  gap:14px;margin-bottom:33px;padding-bottom:23px;
- border-bottom:1px solid rgba(244,251,247,.10)}}
+ border-bottom:1px solid {_rgba(FG, .10)}}}
 .srow:last-child{{border-bottom:none;margin-bottom:0;padding-bottom:0}}
 .sval{{display:inline-flex;align-items:baseline;gap:10px;white-space:nowrap;
- font-family:'TL Numeral','TL Sans SC',sans-serif}}
+ font-family:'TL Score','TL Sans SC',sans-serif}}
 .sval-l{{justify-content:flex-start}}
 .sval-r{{justify-content:flex-end}}
 /* 左列 DOM 顺序是 smain→sfrac，flex-start 贴左边，主数字天然贴边。
@@ -680,10 +722,15 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
    和左列对称。 */
 .sval-r .smain{{order:2}}
 .sval-r .sfrac{{order:1}}
-.smain{{font-size:51px;font-weight:400;color:rgba(244,251,247,.55)}}
-.sval.lead .smain{{color:#c6f65a;font-weight:700}}
-.sfrac{{font-size:23px;font-weight:400;color:rgba(244,251,247,.6)}}
-.sval.lead .sfrac{{color:rgba(198,246,90,.75)}}
+/* ⚠️ `line-height:62px` 不是随手写的：统计数字从 Montserrat 换成 `TL Score`
+   （2026-09-27 Q15）之后，`TL Score` 的上下伸比 Montserrat 高，`normal` 行高
+   让**每一行高出 12px**——film 版九行量到 1519px，溢出 1440 画布，最后一行
+   被静默裁掉。62px 把行距钉回换字体之前那一格（poster 每行 119、film 96，
+   逐行量过和 Montserrat 那版相同）。 */
+.smain{{font-size:51px;font-weight:400;line-height:62px;color:{_rgba(FG, .55)}}}
+.sval.lead .smain{{color:{BRAND};font-weight:700}}
+.sfrac{{font-size:23px;font-weight:400;color:{_rgba(FG, .6)}}}
+.sval.lead .sfrac{{color:{_rgba(BRAND, .75)}}}
 /* 中文标签 + 底下那行英文。⚠️ 两条都不许动，理由见模块 docstring
    「中文标签底下那行英文」那节：
    - `.slabel` 的 `top:-24px` 是 `position:relative` 的**视觉**位移，不改
@@ -695,16 +742,16 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
    `left:50%` + `translateX(-50%)` 而不是 `left:0;right:0`：这一格的宽度是
    中文撑出来的，英文更宽（`Break Points Converted`），撑在格子里会换行。 */
 .slabel{{font-family:'TL Sans SC',sans-serif;font-size:32px;font-weight:700;
- color:rgba(244,251,247,.92);letter-spacing:.3px;text-align:center;white-space:nowrap;
+ color:{_rgba(FG, .92)};letter-spacing:.3px;text-align:center;white-space:nowrap;
  position:relative;top:-24px}}
 .slabel-en{{position:absolute;top:100%;left:50%;transform:translateX(-50%);
  margin-top:4px;white-space:nowrap;font-size:24px;font-weight:400;
- letter-spacing:.7px;color:rgba(244,251,247,.46)}}
+ letter-spacing:.7px;color:{_rgba(FG, .46)}}}
 /* 没有英文的那一行（ACE）：只剩中文一行，−21px 会把它顶太高。solo 的
    位移单独量过（纯中文在 top:0 时比数字中心低 10.6px，所以取 −5px）。 */
 .slabel--solo{{top:-5px}}
 
-.footer{{margin-top:38px;padding-top:20px;border-top:1px solid rgba(244,251,247,.18);
+.footer{{margin-top:38px;padding-top:20px;border-top:1px solid {_rgba(FG, .18)};
  display:flex;justify-content:space-between;align-items:center;
  font-family:'TL Sans SC',sans-serif;font-size:23px;color:{vp.DIM};letter-spacing:.5px}}
 {film_css}
@@ -712,7 +759,7 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 <body>
 <div class="bar"></div>
 <div class="head">{icon_html}
-  <div class="brandlines"><span class="brand">网球时差 · 数据复盘</span>
+  <div class="brandlines"><span class="brand">{BRAND_LINE}</span>
   <span class="topic">{topic}</span></div>
 </div>
 
