@@ -358,7 +358,9 @@ jobs:
           # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
           # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
           # （`_preflight_cutout`，排在下载之前），但依赖这一行还是得同一个提交里改。
-          pip install -q -e ".[webrender,visualqa,cutout]"
+          # `faces` 是封面认人＋睁眼（onnxruntime）：cutout 本来就带着它，显式写上是
+          # 因为「别指望隐式带上的包永远够用」（visualqa 显式写 numpy 那条同一个理由）。
+          pip install -q -e ".[webrender,visualqa,cutout,faces]"
           # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
           # n challenge 要跑一段 JS。少了它不会报「装少了」，而是
           # `n challenge solving failed` + `Only images are available`，
@@ -383,6 +385,41 @@ jobs:
         env:
           SLUG: ${{ github.event.inputs.slug }}
         run: python tools/production_preflight.py --spec "specs/reels/$SLUG.json" --column 赛场之上
+
+      # 抽帧封面的认人＋睁眼（硬拦）和分段 3:4 画面的认人（只报）要的三个 onnx
+      # （insightface buffalo_s v0.7 里的 det_500m / w600k_mbf / 2d106det，21 MB；
+      # 账号所有者 2026-09-27 批的 O2+O3，见 tools/face_checks.py）。onnxruntime 本来就
+      # 跟着 cutout（rembg[cpu]）装着，这一档不多花装包的时间。键**按权重内容定址**
+      # （`face_checks.CACHE_KEY`），`test_人脸模型缓存键跟着模型版本走` 逼着这里逐字一致。
+      - name: 取人脸模型缓存
+        id: face-cache
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive/face-models
+          key: face-models-buffalo_s-v0.7-17d6bb6dfcd3
+      # 备不上**不许把整趟拖红**，也**不许不吭声**：账号所有者要的是「模型加载
+      # 不了就大声降级」——render.json 的 face_checks 里会记 `unavailable`，这里先打一条注解。
+      # `ok=true` 只在 fetch 真成功时写，下面存缓存那一步只认它。
+      - name: 备好人脸模型
+        id: face-models
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        run: |
+          if python tools/face_checks.py fetch; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::人脸模型没备好——封面认人／睁眼会降级成 unavailable（写进 render.json）"
+          fi
+      # **只在「备好」真成功、而且缓存没命中时才存。** 原来是一步 `actions/cache@v4`，
+      # 它的收尾保存不管 fetch 成没成——fetch 下到一半断掉（三个文件只写了一两个）
+      # 的半截目录会被钉进一个**不可变**的键里，之后每一趟都命中这份残缺的缓存
+      # （评审 2026-09-27 nit 7）。拆成 restore / save 两步，save 挂在 fetch 的 `ok` 上。
+      - name: 存人脸模型缓存
+        if: (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover') && steps.face-cache.outputs.cache-hit != 'true' && steps.face-models.outputs.ok == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/tennislive/face-models
+          key: face-models-buffalo_s-v0.7-17d6bb6dfcd3
 
       - name: dry-run — 先把 spec 的形状错拦在编码之前
         if: >-
@@ -415,6 +452,16 @@ jobs:
           else
             echo "::warning::仓库里还没有 output/*/reel/${SLUG}/probe.json——"
             echo "::warning::dry-run 的 probe 层（切点/死球/片长）这趟是哑的，先跑一趟 mode=probe"
+          fi
+          # 抽帧封面的认人／睁眼：dry-run 查的是这条 slug **已经抓好的那一帧**
+          # （`cover_src/`，一张 jpg 加一份 manifest）。`--outdir` 是 /tmp/dryrun，
+          # 不把它拉回来的话这一步在 runner 上**永远是空的**（评审 2026-09-27 nit 3）。
+          COVER_DIRS=$({ git ls-tree -r --name-only HEAD -- output 2>/dev/null \
+            | grep -E "^output/[^/]+/reel/${SLUG}/cover_src/manifest\.json$" || true; } \
+            | xargs -r -n1 dirname | sort -u)
+          if [ -n "$COVER_DIRS" ]; then
+            git sparse-checkout add $COVER_DIRS
+            echo "拉回封面帧（dry-run 先查认人／睁眼）：$COVER_DIRS"
           fi
           python tools/build_match_reel.py render --dry-run \
             --spec "$SPEC" --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log

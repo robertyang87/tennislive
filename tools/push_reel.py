@@ -782,6 +782,59 @@ word-break:break-word;margin:0 0 4px">{html.escape(body)}</div>
 </div></div></div>"""
 
 
+def prepare_copy(copy_path: Path, outdir: Path, *, column: str = "", date: str = "",
+                 args=None) -> tuple[str, str, str]:
+    """三个 stage 共用的那一段：文案收口、tag 上限、标题两道字数闸、正文去标题。
+
+    返回 `(栏目, 标题, 去掉标题之后的正文)`；哪一道不过都是 SystemExit。
+
+    ⚠️ **本地 `--dry-run` 调的也是这一个函数**（`reel_asset_gates.push_copy_check`）。
+    原来 dry-run 自己拼标题，拿 `--outdir /tmp/dryrun` 调 `headline()`——那个目录
+    里没有日期，于是**每一次**都撞上「取不到日期」的 SystemExit、退回占位标题，
+    标题的两道字数闸在本地一次都没跑过，只有 runner 上的 `production_preflight`
+    会拦（2026-09-27 返工取证：medvedev-royer 抄一份把 `push.summary` 写到
+    26 字位，dry-run 退出 0，`--stage check` 退出 1）。本地和 runner 从此是同一段代码。
+    """
+    # **三个 stage 共用这一处读**：复制页（`--stage page`）和微信正文
+    # （`--stage push`）必须是同一段字，否则推送里印的和复制页里粘到的对不上。
+    # 所以收口也收在这儿，别在下游各切一次。
+    copy_text = cut_at_tags(Path(copy_path).read_text(encoding="utf-8"))
+    if not copy_text:
+        raise SystemExit("文案是空的")
+    # **正文里的 tag 最多五个**，和知识帖那条线共用同一个上限。
+    # reel 的文案是手写的 spec，不像知识帖那样过 `limit_hashtags`，所以在这儿
+    # 拦一道——**发出去就收不回来**，宁可在推送之前报错。
+    tags = hashtag_count(copy_text)
+    if tags > MAX_HASHTAGS:
+        raise SystemExit(
+            f"{copy_path} 里有 {tags} 个 tag，超过 {MAX_HASHTAGS} 个。\n"
+            "删到五个以内再推——留最能被搜到的那几个（人名、赛事、账号）。")
+    # 活动期必带的 tag 在**上限检查之后**补：手写超了照旧报错（那是写的人的事），
+    # 没超的由这儿腾位置接上。复制页和微信正文都从这一段字出，spec 里手写的
+    # `.xhs.txt` 不用逐条改。补成什么样打印出来，别默默改。
+    before = copy_text
+    copy_text = with_campaign_tags(copy_text)
+    if copy_text != before:
+        print(f"[文案] 活动 tag 已补齐：{copy_text.splitlines()[-1]}")
+
+    # 格式化标题（`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`）
+    # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
+    # 标题单独复制；正文不再带一遍日期、栏目和标题。
+    # **算一次，两处共用。** 标题走 column_of、药丸另取一个默认值，就又回到了
+    # 「同一条推送里两个栏目名」——那正是 column_of 要修的那个错。
+    column = column or column_of(Path(copy_path))
+    # 而对阵/比分/概括的出处是 **spec**，命令行只作覆盖（`resolve_meta`）：
+    # 工作流那几个输入曾经挂着上一条片子的默认值，漏传一项就拿另一场球的
+    # 标题发出去。
+    meta = resolve_meta(Path(copy_path), args if args is not None else argparse.Namespace())
+    title = headline(outdir, column, meta["matchup"], meta["score"],
+                     meta["event"], meta["summary"], date)
+    copy_text = copy_body_only(copy_text, title)
+    if not copy_text:
+        raise SystemExit("正文去掉标题后为空")
+    return column, title, copy_text
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--stage", choices=("check", "page", "push"), default="push",
@@ -816,43 +869,8 @@ def main() -> int:
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
-    # **两个 stage 共用这一处读**：复制页（`--stage page`）和微信正文
-    # （`--stage push`）必须是同一段字，否则推送里印的和复制页里粘到的对不上。
-    # 所以收口也收在这儿，别在下游各切一次。
-    copy_text = cut_at_tags(Path(args.copy).read_text(encoding="utf-8"))
-    if not copy_text:
-        raise SystemExit("文案是空的")
-    # **正文里的 tag 最多五个**，和知识帖那条线共用同一个上限。
-    # reel 的文案是手写的 spec，不像知识帖那样过 `limit_hashtags`，所以在这儿
-    # 拦一道——**发出去就收不回来**，宁可在推送之前报错。
-    tags = hashtag_count(copy_text)
-    if tags > MAX_HASHTAGS:
-        raise SystemExit(
-            f"{args.copy} 里有 {tags} 个 tag，超过 {MAX_HASHTAGS} 个。\n"
-            "删到五个以内再推——留最能被搜到的那几个（人名、赛事、账号）。")
-    # 活动期必带的 tag 在**上限检查之后**补：手写超了照旧报错（那是写的人的事），
-    # 没超的由这儿腾位置接上。复制页和微信正文都从这一段字出，spec 里手写的
-    # `.xhs.txt` 不用逐条改。补成什么样打印出来，别默默改。
-    before = copy_text
-    copy_text = with_campaign_tags(copy_text)
-    if copy_text != before:
-        print(f"[文案] 活动 tag 已补齐：{copy_text.splitlines()[-1]}")
-
-    # 格式化标题（`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`）
-    # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
-    # 标题单独复制；正文不再带一遍日期、栏目和标题。
-    # **算一次，两处共用。** 标题走 column_of、药丸另取一个默认值，就又回到了
-    # 「同一条推送里两个栏目名」——那正是 column_of 要修的那个错。
-    column = args.column or column_of(Path(args.copy))
-    # 而对阵/比分/概括的出处是 **spec**，命令行只作覆盖（`resolve_meta`）：
-    # 工作流那几个输入曾经挂着上一条片子的默认值，漏传一项就拿另一场球的
-    # 标题发出去。
-    meta = resolve_meta(Path(args.copy), args)
-    title = headline(outdir, column, meta["matchup"], meta["score"],
-                     meta["event"], meta["summary"], args.date)
-    copy_text = copy_body_only(copy_text, title)
-    if not copy_text:
-        raise SystemExit("正文去掉标题后为空")
+    column, title, copy_text = prepare_copy(
+        Path(args.copy), outdir, column=args.column, date=args.date, args=args)
     if args.stage == "check":
         print(f"[preflight] title/tags/copy pass: {title}")
         return 0

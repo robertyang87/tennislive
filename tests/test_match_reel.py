@@ -6211,7 +6211,8 @@ def test_cookies和probe装依赖走轻装而TTS缓存只给会合语音的两�
     assert "webrender" not in pb, "probe 不渲 HTML 封面，playwright 用不上"
 
     # 全量那行必须还在（render / cover 走它），且排在所有轻装分支后面
-    full_at = install.index('".[webrender,visualqa,cutout]"')
+    # （2026-09-27 起多一个 `faces`：抽帧封面的认人＋睁眼，`tools/face_checks.py`）
+    full_at = install.index('".[webrender,visualqa,cutout,faces]"')
     assert full_at > install.index('= "cookies" ]')
     assert full_at > install.index('= "probe" ]')
 
@@ -7851,7 +7852,10 @@ def test_推送卡的台头跟着栏目走():
 
     # 标题和药丸要取同一个值，别一个走 column_of、一个另取默认
     src = Path("tools/push_reel.py").read_text(encoding="utf-8")
-    assert "column = args.column or column_of(Path(args.copy))" in src
+    # （2026-09-27：这一段挪进了 `prepare_copy`——dry-run 和三个 stage 共用——
+    #  `main` 把 `args.column` 传进去，同一个值原样还回来给药丸用）
+    assert "column = column or column_of(Path(copy_path))" in src
+    assert "column, title, copy_text = prepare_copy(" in src
     # ⚠️ 不锚在紧跟的 `)` 上——那道闸只在 `build_html(...)` 调用没有别的
     # 关键字参数（如后来加的 `stat_card=`）时才成立，加一个新参数就会把这条
     # 判据带崩，而它想拦的错（药丸另取默认值）跟这件事无关。
@@ -13473,6 +13477,11 @@ def test_算不出标题时文案字数不许估得比真推送松():
 
     反向验证：把退路改回 `text_with_title = text`，第二个断言当场红
     （少掉第一段的长度）。
+
+    ⭐ 2026-09-27：**退路整个拿掉了**。dry-run 现在调推送自己那个函数
+    （`reel_asset_gates.push_copy_check` → `push_reel.prepare_copy`，日期取北京今天），
+    算得出标题；算不出就是红（runner 上的 production_preflight 一样过不去）。
+    正文也是推送真发的那一份，所以「两条路量的是不是同一段字」从结构上就不再有两条路。
     """
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
@@ -13490,8 +13499,10 @@ def test_算不出标题时文案字数不许估得比真推送松():
     assert len(naive) < len(real), "老退路本来就偏松，这条断言证明差距真的存在"
 
     body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
-    assert 'text_with_title = f"（占位标题）\\n\\n{text}"' in body, (
-        "dry-run 算不出标题时必须拼占位标题，不能直接把文件第一段当标题甩掉")
+    assert 'text_with_title = f"{title}\\n\\n{pushed_body}"' in body, (
+        "dry-run 量正文要用推送真发的那一份（push_copy_check 返回的标题＋正文）")
+    assert "（占位标题）" not in body, (
+        "占位标题那条退路拿掉了：算不出标题就是红，别再让它悄悄估一个数")
 
 
 def test_推送成功那行印的字数要和那道闸量的是同一个数():

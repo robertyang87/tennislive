@@ -148,6 +148,10 @@ def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
           .replace("cancelled()", "False")
           .replace("always()", "True")
           .replace("steps.manual_reserve.outcome", repr("success"))
+          # 人脸模型缓存拆成 restore / save（评审 2026-09-27 nit 7）：存缓存那一步挂在
+          # 「没命中 ＋ fetch 成功」上。按冷缓存、fetch 成功那条路求值——也就是它真会跑的那条
+          .replace("steps.face-cache.outputs.cache-hit", repr(""))
+          .replace("steps.face-models.outputs.ok", repr("true"))
           # 「叫醒自动推送」那一步的 if 里有 ref_name——这套模拟按「跑在
           # main 上」求值：分支上的行为(那一步跳过)不在这套判据的主语里。
           .replace("github.ref_name", repr("main"))
@@ -2266,10 +2270,12 @@ _PROVIDES = {
     "faster_whisper": "faster-whisper",
     # 去水印的掩膜要 cv2（`logo_mask`）。**装 extra 别装裸包名**——
     # `pyproject` 把 opencv 钉在 `>=4.10,<5`，5.x 里 `CascadeClassifier` 没了
-    "cv2": '-e ".[visualqa]"',
+    # ⚠️ 只钉到 `.[visualqa` 为止：2026-09-27 那行 pip 多了 `faces`
+    # （`.[visualqa,faces]`，封面认人＋睁眼），extra 的组合变了，装的仍是这一份
+    "cv2": '-e ".[visualqa',
     # `logo_mask` 里跟 cv2 一起用，靠 opencv 带进来；测试那边刻意不 import 它
     # （dev 依赖里没有），所以只在这张表登记
-    "numpy": '-e ".[visualqa]"',
+    "numpy": '-e ".[visualqa',
 }
 
 

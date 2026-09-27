@@ -43,6 +43,7 @@ from pathlib import Path
 from typing import Callable, Sequence
 from ..cdn import jsdelivr_base
 from ..render.hashtags import with_campaign_tags
+from .numeral_halves import other_half_is_arabic
 from .subtitle_text import drop_punctuation
 
 # The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
@@ -12625,6 +12626,8 @@ def arabic_numerals(text: str) -> str:
             return m.group(0)
         if set(run) & _STRUCTURED:
             return value + nxt         # 十九、三十六、四百六十九
+        if other_half_is_arabic(text, m.start(), m.end(), run, nxt):
+            return value + nxt         # 两小时四十分钟 → 2小时40分钟（见 numeral_halves）
         if len(run) > 1:
             # **裸数字连成一串，不读成一个数。** 中文里除了年份没人这么写，
             # 而年份那一轮在上面已经单独处理过了。

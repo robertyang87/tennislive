@@ -9,6 +9,16 @@
 人物姓名来自已经过 L0 内容身份闸的 spec，不冒充人脸识别结果；本地闸证明的
 是「这张与 spec 绑定的封面有一张足够大、正面、睁眼且清晰的人脸」。正确人物
 由同源视频、精确 ``frame_at`` 和 spec 的 subject 合同共同约束。
+
+⭐ **2026-09-27 起多了认人和睁眼**（账号所有者在多选题里选的 O2+O3「两个都加」）：
+Haar 只数得出「有两只眼」，**认不出是谁、分不出眼睛是睁着还是垂着**——
+tien-cobolli 97.0 那帧是**阿加西**、ruud-cerundolo 245.0 那帧**低头闭眼**，
+两张都过了这道闸、推了出去才被换掉（9ae8918f）。所以 `analyze_poster` 给了
+`expected` 就顺手跑 `face_checks.check_frame`（insightface 的模型，onnxruntime 推理），
+结果记进凭证的 `result.face_model`，`validate_result` **从数重判**：不是本人、
+闭眼／垂眼都算不合格。模型加载不了记 `status: unavailable`、大声打 ⚠️、
+写进 render.json——**降级，不装作查过**。这一帧确实要用就在 spec 的
+`cover._face_check_why` 写清楚为什么。
 """
 from __future__ import annotations
 
@@ -140,6 +150,55 @@ def _overlap_ratio(
     right, bottom = min(ax + aw, bx + bw), min(ay + ah, by + bh)
     intersection = max(0, right - left) * max(0, bottom - top)
     return intersection / max(1, min(aw * ah, bw * bh))
+
+
+def face_model_evidence(photo, expected: str) -> dict:
+    """照片区那张脸：是不是 `expected`（双打「A/B」任一）、眼睛睁没睁。
+
+    **这一步出任何意外都不许把整道闸拖成 fail，也不许装作查过**：记成
+    `status: error` ＋ 原因，`problems_of` 会把它变成一条 ⚠️ 提示。
+    """
+    try:
+        import face_checks  # noqa: PLC0415
+
+        return face_checks.check_frame(photo, expected)
+    except Exception as exc:  # noqa: BLE001
+        return {"status": "error", "error": f"{type(exc).__name__}: {exc}",
+                "problems": [], "warnings": [f"认人／睁眼没跑完：{type(exc).__name__}: {exc}"]}
+
+
+def face_model_issues(result: dict, spec: dict) -> tuple[list[str], list[str]]:
+    """(不合格, 提示)。**从凭证里存的数重判**，不信存下来的 verdict 字符串。
+
+    没有 `face_model` 块＝2026-09-27 之前生成的凭证（那时还没有这道），不追溯。
+    """
+    block = result.get("face_model") if isinstance(result, dict) else None
+    if block is None:
+        return [], []
+    import face_checks  # noqa: PLC0415
+
+    problems, warnings = face_checks.problems_of(block)
+    why = str(((spec.get("cover") or {}).get("_face_check_why")) or "").strip()
+    if problems and why:
+        return [], warnings + [f"{p}（已认领：{why}）" for p in problems]
+    return problems, warnings
+
+
+def poster_face_model(poster: Path, expected: str) -> dict:
+    """成品海报的照片区（和 Haar 同一块 1080×810）认人＋睁眼。
+
+    单列一个函数、不塞进 `analyze_poster`：那个函数的「一个参数进、证据出」
+    是别处（测试、封面扫帧）打桩和复用的形状，改它的签名会连带一串。"""
+    try:
+        from PIL import Image  # noqa: PLC0415
+
+        with Image.open(poster) as image:
+            rgb = image.convert("RGB")
+            photo = rgb.crop((0, PHOTO_TOP, CANVAS[0], PHOTO_TOP + PHOTO_HEIGHT))
+    except Exception as exc:  # noqa: BLE001
+        return {"status": "error", "error": f"{type(exc).__name__}: {exc}",
+                "problems": [], "warnings": [f"认人／睁眼读不了海报：{exc}"]}
+    return face_model_evidence(photo, expected)
 
 
 def analyze_poster(poster: Path) -> dict:
@@ -330,6 +389,7 @@ def validate_result(result: object, spec: dict) -> list[str]:
     center_y = _number(face.get("center_y_ratio"))
     if not 0.08 <= center_x <= 0.92 or not 0.06 <= center_y <= 0.72:
         issues.append(f"人脸中心 ({center_x:.1%}, {center_y:.1%}) 不在近景安全区")
+    issues.extend(face_model_issues(result, spec)[0])
     return issues
 
 
@@ -342,13 +402,18 @@ def write_report(
     issues: list[str],
     *,
     error: str = "",
+    warnings: list[str] | None = None,
 ) -> Path:
+    face_model = result.get("face_model") if isinstance(result, dict) else None
+    identity = "L0-bound spec subject + same-source frame_at"
+    if isinstance(face_model, dict) and face_model.get("status") == "ok":
+        identity += f" + face model {face_model.get('model')} vs official headshot"
     payload = {
         "status": "pass" if not issues and not error else "fail",
         "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "auditor": LOCAL_AUDITOR,
         "expected_subject": expected,
-        "identity_evidence": "L0-bound spec subject + same-source frame_at",
+        "identity_evidence": identity,
         "spec_sha256": sha256(spec_path),
         "poster_sha256": sha256(poster),
         "thresholds": {
@@ -362,6 +427,8 @@ def write_report(
         },
         "result": result,
         "issues": issues,
+        # 认人拿不准、模型没加载上这类**不拦但必须看得见**的，落在这儿
+        "warnings": list(warnings or []),
     }
     if error:
         payload["error"] = error
@@ -385,7 +452,7 @@ def _evidence_line(result: object) -> str:
         return "没有人脸证据（照片区域一张正面脸都没检出）"
     box = face.get("box")
     box_text = "×".join(str(v) for v in box[2:]) if isinstance(box, list) and len(box) == 4 else "?"
-    return (
+    line = (
         f"脸 {box_text}px（检出 {face.get('detected_faces')} 张，"
         f"{face.get('detector')}）｜眼 {face.get('eyes')} 只｜"
         f"脸高 {_number(face.get('face_height_ratio')):.1%}｜"
@@ -395,6 +462,13 @@ def _evidence_line(result: object) -> str:
         f"脸心 ({_number(face.get('center_x_ratio')):.1%}, "
         f"{_number(face.get('center_y_ratio')):.1%})"
     )
+    model = result.get("face_model")
+    if isinstance(model, dict) and model.get("status") == "ok":
+        line += (f"｜和官方头像的相似度 {(model.get('identity') or {}).get('similarity')}"
+                 f"｜眼睛纵横比 {(model.get('eyes') or {}).get('ear')}")
+    elif isinstance(model, dict):
+        line += f"｜认人／睁眼没查（{model.get('status')}：{model.get('error')}）"
+    return line
 
 
 def main() -> int:
@@ -402,6 +476,12 @@ def main() -> int:
     parser.add_argument("--spec", required=True)
     parser.add_argument("--poster", required=True)
     parser.add_argument("--out", required=True)
+    # 只有 **render** 那一档才给：那时 render.json 是这一趟刚写的、描述的就是这张
+    # 海报所属的成片。`mode=cover` 只换海报，outdir 里躺着的 render.json 是**上一版
+    # 成片**的——往里写这张新海报的认人结果，就是在一份描述别的片子的产物上
+    # 记账（评审 2026-09-27 nit 8）。不给就不碰它，结果照样在封面凭证里。
+    parser.add_argument("--render-json", default="",
+                        help="把认人／睁眼结果并进这份 render.json（只在 render 那一档给）")
     args = parser.parse_args()
 
     spec_path, poster, out = Path(args.spec), Path(args.poster), Path(args.out)
@@ -423,8 +503,15 @@ def main() -> int:
         result = analyze_poster(poster)
         contract, _ = framing_contract(spec)
         result["contract"] = contract
+        result["face_model"] = poster_face_model(poster, expected)
         issues = validate_result(result, spec)
-        write_report(out, spec_path, poster, expected, result, issues)
+        warnings = face_model_issues(result, spec)[1]
+        write_report(out, spec_path, poster, expected, result, issues,
+                     warnings=warnings)
+        if args.render_json:
+            note_render_json(Path(args.render_json), result["face_model"], warnings)
+        for line in warnings:
+            print(f"⚠️ [封面认人] {line}")
     except Exception as exc:  # noqa: BLE001 — 本地证据不足必须留下失败凭据
         error = f"{type(exc).__name__}: {exc}"
         write_report(
@@ -453,11 +540,36 @@ def main() -> int:
         print(f"失败凭据 → {out}")
         return 1
     face = result["face"]
+    model = result.get("face_model") or {}
+    who = ((model.get("identity") or {}).get("reason")
+           if model.get("status") == "ok" else f"认人没查（{model.get('status')}）")
     print(
         f"[ok] 封面人物合同={expected}；脸高={face['face_height_ratio']:.1%}；"
-        f"双眼={face['eyes']}；本地凭据 → {out}"
+        f"双眼={face['eyes']}；{who}；本地凭据 → {out}"
     )
     return 0
+
+
+def note_render_json(path: Path, face_model: dict, warnings: list[str]) -> None:
+    """render 那一档 render.json 已经在了：把认人／睁眼的结果并进去（只加一个键）。
+
+    账号所有者 2026-09-27 的要求是「模型加载不了要在 render.json 里留警告」——
+    降级必须落在产物上，不能只活在一趟 run 的日志里。
+
+    ⚠️ **只由 `--render-json` 点名才写**：`mode=cover` 那一档 outdir 里常常躺着
+    上一版成片的 render.json（采访产物目录没有日期那一层），它描述的是另一条片子，
+    不许往里记这张新海报的账。结果照样在封面凭证里。"""
+    if not path.is_file():
+        return
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return
+    data["face_checks"] = {"cover": {k: v for k, v in face_model.items()
+                                     if k not in ("problems",)},
+                           "warnings": warnings}
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
 
 
 if __name__ == "__main__":

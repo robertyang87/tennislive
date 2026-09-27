@@ -1456,6 +1456,51 @@ def _scrim_css(dim_centre: bool = False) -> str:
     return f".scrim{{position:absolute;inset:0;background:{top_bottom}}}"
 
 
+def solo_photo_window(cover: dict, size: tuple[int, int]
+                      ) -> tuple[float, float, float, float]:
+    """solo 版式里主角那张图**在海报上真正露出来的那一块**，原图像素 (x0, y0, x1, y1)。
+
+    给封面认人／睁眼那道闸用（`reel_face_gate.cover_frame_report`）：它原来拿
+    整幅 1920×1080 的帧找最大的脸，而海报上看得见的只有 `focus`／`focus_y`／
+    `zoom`（和 `crop`）挪出来的那一扇 3:4 窗——窗外那张更大的脸（对手、教练、
+    看台）会替窗里的人去过闸（评审 2026-09-27 nit 4）。
+
+    ⚠️ **这里是 `_solo_body` 那几行 CSS 的同一套几何，不是另一套近似**：
+    `crop` 先裁（`_precrop`）；铺法三种——默认 `background-size:cover`、
+    `zoom` 不是 1 时 `auto <zoom×100>%`（按**画布高**缩放）、`fit:"width"` 时
+    `<zoom×100>% auto`；`portrait_above` 那一版主角在下格、那一格自己 cover；
+    `background-position` 的百分比＝(盒 − 图) × 百分比。改那边的 CSS 就要改这里，
+    判据 `test_封面认人只看海报上露出来的那一块` 拿 Chromium 真渲一张比对。
+    """
+    art = cover.get("portrait") or {}
+    iw, ih = float(size[0]), float(size[1])
+    ox = oy = 0.0
+    box = art.get("crop")
+    if box and len(box) == 4:
+        x0, y0, x1, y1 = (float(v) for v in box)
+        cx0, cy0 = round(x0 * iw), round(y0 * ih)
+        cx1, cy1 = round(x1 * iw), round(y1 * ih)
+        ox, oy, iw, ih = float(cx0), float(cy0), float(cx1 - cx0), float(cy1 - cy0)
+    focus = float(art.get("focus", 0.5))
+    focus_y = float(art.get("focus_y", 0.5))
+    zoom_pct = float(art.get("zoom", 1.0)) * 100
+    if cover.get("portrait_above"):
+        split = float(cover.get("split", 0.47))
+        bw, bh = float(VIDEO_W), VIDEO_H * (1 - split)
+        scale = max(bw / iw, bh / ih)
+    elif art.get("fit") == "width":
+        bw, bh = float(VIDEO_W), float(VIDEO_H)
+        scale = VIDEO_W * zoom_pct / 100 / iw
+    else:
+        bw, bh = float(VIDEO_W), float(VIDEO_H)
+        scale = (VIDEO_H * zoom_pct / 100 / ih) if zoom_pct != 100 else max(bw / iw, bh / ih)
+    sw, sh = iw * scale, ih * scale
+    offx, offy = (bw - sw) * focus, (bh - sh) * focus_y
+    vx0, vx1 = max(0.0, -offx), min(sw, bw - offx)
+    vy0, vy1 = max(0.0, -offy), min(sh, bh - offy)
+    return (ox + vx0 / scale, oy + vy0 / scale, ox + vx1 / scale, oy + vy1 / scale)
+
+
 def _solo_body(cover: dict) -> tuple[str, str]:
     """`solo`：**「网球有故事」的封面版式**——照片铺满整幅，钩子压在正中。
 
@@ -1830,6 +1875,7 @@ __SCRIM__
         # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
         # 追加在最后，同特异性下后写的赢。
         + (".storycopy{top:auto;bottom:96px;transform:none;gap:26px}"
+           ".storytitle{width:100%;text-align:center}"
            if above else "")
         # ⭐ 账号所有者 2026-09-05：「封面钩子文案可以下移，不遮住主体」。
         # 信箱式（`fit: "width"`）且没有比分板时，钩子让到照片下边缘之外——
