@@ -1,0 +1,149 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "7c012eeb458e19ada1d367b167329b8656bb419fe3fb375f6947ee87b71932bd",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "3.5-9.4",
+   "start": 3.48,
+   "end": 9.4,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "no_speech"
+  },
+  {
+   "key": "64.1-71.2",
+   "start": 64.06,
+   "end": 71.17,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "Not"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "83.9-86.4",
+   "start": 83.93,
+   "end": 86.41,
+   "speech_seconds": 1.488,
+   "second_asr_words": [
+    "Sometimes,"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "106.1-108.1",
+   "start": 106.09,
+   "end": 108.13,
+   "speech_seconds": 1.34,
+   "second_asr_words": [
+    "I"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "111.5-113.9",
+   "start": 111.53,
+   "end": 113.86,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "things"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "134.3-140.0",
+   "start": 134.32,
+   "end": 140.04,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "Team"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "179.1-182.8",
+   "start": 179.08,
+   "end": 182.8,
+   "speech_seconds": 2.142,
+   "second_asr_words": [
+    "made",
+    "my",
+    "players"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "189.4-194.0",
+   "start": 189.44,
+   "end": 194.0,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "And"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "204.4-207.0",
+   "start": 204.4,
+   "end": 206.98,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  },
+  {
+   "key": "207.7-211.3",
+   "start": 207.68,
+   "end": 211.26,
+   "speech_seconds": 2.118,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "speech_detected"
+  },
+  {
+   "key": "213.1-217.3",
+   "start": 213.08,
+   "end": 217.28,
+   "speech_seconds": 3.246,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "speech_detected"
+  },
+  {
+   "key": "220.3-223.8",
+   "start": 220.26,
+   "end": 223.85,
+   "speech_seconds": 1.378,
+   "second_asr_words": [
+    "I'm",
+    "sorry.",
+    "It"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  }
+ ]
+}

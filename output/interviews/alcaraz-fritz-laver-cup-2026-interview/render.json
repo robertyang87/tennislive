@@ -1,0 +1,67 @@
+{
+  "film_sha256": "4a3a4f361d10705e03ca1e87188b620b6e9f0e3a5d756188f1c04871f6ec29b2",
+  "film_seconds": 321.781,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "alcaraz-fritz-laver-cup-2026-interview",
+    "received_at": "2026-09-27T03:06:57Z",
+    "artifact_ready_at": "2026-09-27T03:16:17Z",
+    "elapsed_seconds": 560.234,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "4a3a4f361d10705e03ca1e87188b620b6e9f0e3a5d756188f1c04871f6ec29b2",
+    "spec_sha256": "cfa394ff40951dff89be6385677301c4003c9ec182f47a000b19ac83a91b98e3",
+    "run_id": "36290473318",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-27T03:07:36Z",
+        "run_id": "36290473318"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-27T03:09:23Z",
+        "run_id": "36290473318"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-27T03:12:20Z",
+        "run_id": "36290473318"
+      }
+    ],
+    "render_seconds": 237.234,
+    "pre_render_seconds": 323.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-27T03:07:36Z",
+      "run_id": "36290473318"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-27T03:09:23Z",
+      "run_id": "36290473318"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-27T03:12:20Z",
+      "run_id": "36290473318"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-27T03:16:18Z",
+      "run_id": "36290473318"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-27T03:16:18Z",
+      "run_id": "36290473318"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-alcaraz-fritz-laver-cup-2026-interview/alcaraz-fritz-laver-cup-2026-interview.mp4?v=4a3a4f361d10705e",
+  "video_bytes": 116461396,
+  "release_asset_digest": "sha256:4a3a4f361d10705e03ca1e87188b620b6e9f0e3a5d756188f1c04871f6ec29b2",
+  "qc_attestation_sha256": "18aa90e82f50043284744d38571526ab604495cf4e30cf8787e7fb8c4c3f3aa5"
+}
