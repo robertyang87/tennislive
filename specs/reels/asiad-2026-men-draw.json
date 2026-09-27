@@ -1,0 +1,240 @@
+{
+  "slug": "asiad-2026-men-draw",
+  "_column": "网球有故事；用户2026-09-27明确授权亚运男单独立前瞻。",
+  "_note": "生产草稿；窗口实帧、音频、更新赛果QC之后才可推送。依据9/25签表，非实时赛果快报。",
+  "sources": {
+    "wu": "https://youtu.be/cmv2c6nk_So",
+    "wong": "https://www.youtube.com/watch?v=Dv6-qq8jqO0"
+  },
+  "mixed_fps": {
+    "wong": "真实主源由sources插入顺序决定，第一项wu为30000/1001 fps；黄泽林杭州源wong原生25 fps，渲染时25→30000/1001重采样。两段黄源仅作明确标年的人物资料与现场氛围，共32.3秒，不承担逐拍动作或落点分析；保留原速，不把补帧说成原生流畅。开场包含运动回合，仍可能出现重复帧节奏，必须在成片QC实看；若明显发涩，则更换同帧率的已核黄泽林素材后重渲，不允许仅凭此说明放行。"
+  },
+  "_sources_why": "吴源US Open官方2026第二轮吴对达克沃斯；黄源Tennis TV 2026杭州日合集只选515.7–702.1黄对巴列霍。逐段资料标识持续显示。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "吴易昺",
+    "hook": "救过5个赛点的对手\n这次只能决赛见？",
+    "topic": "2026亚运男单 · 潜在对决",
+    "portrait": {
+      "image": "assets/asiad-2026-draws/wu-cover.jpg",
+      "fit": "width",
+      "focus": 0.5,
+      "zoom": 1.0,
+      "_why": "吴2026美网官方资料实拍，1280×720按宽1080缩小使用，不将横图硬撑竖幅。若改双人封面须模板渲染实看。",
+      "_low_res_why": "当前为官方2026美网实拍1280×720。显式fit:width、zoom:1.0按1080px宽缩小，保留整张横幅，上下为模板垫层；不声称可撑满竖幅。形状闸按1080×1440假设得到2倍放大，本稿实际不用这个裁法。最终封面必须抽看横幅与背景衔接，若改成铺满必须换高清原图，不能沿用本认领。"
+    },
+    "scrim": "clear"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "吴易昺与黄泽林能否在亚运男单决赛重逢？",
+    "thesis": "以真实2023交手为悬念，2026分区与轮空规则解释为信息增量；前三种子排名接近，吴黄重逢仅为决赛可能。",
+    "beats": [
+      "完整签表与轮空解释",
+      "吴易昺下半区路线",
+      "黄泽林上半区路线及孟凡茗",
+      "2023交手与2028资格条件"
+    ],
+    "human_context": {
+      "angle": "五个赛点逆转的真实记忆，连接到今年只能决赛相遇的签表结构。",
+      "facts": [
+        "2023黄救五赛点胜吴；2026两人分处两半区。",
+        "绵贯上届银牌，是黄泽林潜在八分之一决赛对手。"
+      ],
+      "sources": [
+        "https://www.tennishk.org/en/news-detail/19th-asian-games-hangzhou/",
+        "https://oca.asia/news/4380-chinas-zhang-rallies-for-asian-games-tennis-gold-after-slow-start.html"
+      ]
+    }
+  },
+  "push": {
+    "summary": "吴黄能在决赛重逢吗",
+    "lead": "亚运男单签表解读：吴易昺冲金路线、黄泽林潜在对手与孟凡茗的首场考验。所有后续对阵均以实际晋级为前提。",
+    "auto": false
+  },
+  "_claims": {
+    "draw": "https://www.sina.cn/news/detail/5347093469989065.html；原签2026-09-25 16:04:33逐格目视核验33人31轮空。",
+    "seeds": "https://www.tennishk.org/hk/news-detail/asian-games-2026-teamhk-aiming-for-breakthrough/",
+    "history": "https://www.tennishk.org/en/news-detail/19th-asian-games-hangzhou/",
+    "silver": "https://oca.asia/news/4380-chinas-zhang-rallies-for-asian-games-tennis-gold-after-slow-start.html",
+    "bronze": "https://indiantennisdaily.com/2026/09/25/two-roads-to-the-podium-nagal-and-dhakshineswar-learn-their-asian-games-paths/",
+    "olympics": "https://www.itftennis.com/en/news-and-media/articles/pacific-games-in-olympic-qualification-pathway-for-first-time/ （ITF说明2026亚运冠军洲际资格；原资格PDF当前404，因此成片仅说仍须满足资格条件，不在正文延伸具体排名门槛。）",
+    "wu2018": "https://www.tennishk.org/en/news-detail/19th-asian-games-hangzhou/ ：2018 Asian Games silver medalist Wu Yibing。"
+  },
+  "_no_quote_why": "当前可核素材为2026资料集锦；本片不讲这些比赛的过程，尚无与2023关键分匹配的已实听原声。不能用另一场精彩原声冒充历史。",
+  "_qc_pending": [
+    "主Agent成片画面复核：人物、资料时期、裁切及角标",
+    "全片配音实听待完成：吴易昺、孟凡茗、曾俊欣、松冈隼及抢七断句",
+    "更新发布时实际赛况",
+    "runner最终TTS装窗确认，Edge预检不能代替Azure实测"
+  ],
+  "segments": [
+    {
+      "source": "wong",
+      "start": 526.3,
+      "end": 544.7,
+      "fit": "crop",
+      "narration": "当年救回五个赛点的黄泽林，这一次，可能要到决赛才能再碰吴易昺。九月二十七号到十月三号，亚运网球在名古屋进行。男单谁能冲金？先把这张签表，和两个人的路线看清楚。",
+      "inset": {
+        "image": "assets/asiad-2026-draws/wong-period.png",
+        "corner": "tr",
+        "width": 0.56,
+        "pad": 0.085
+      },
+      "_why": "黄2026杭州第二轮首盘抢七完整第一分回合，先于后文同源赛点；资料角标常驻，讲真实历史悬念但不声称这个回合是2023亚运。",
+      "_ending_payoff_required": false,
+      "_ending_payoff_why": "开场为2026杭州首盘回合资料，正文同源随后展示2026同场赛点与庆祝；不冒充2023交手录像。"
+    },
+    {
+      "image": "assets/asiad-2026-draws/men-full-video.png",
+      "seconds": 10.9,
+      "narration": "先把完整签表放在这里，可以暂停看。黄泽林在上半区，吴易昺在下半区。后面画出的路线，全部是潜在对阵。",
+      "_why": "33人完整路线图，已看原始抽签图；9/25签表。"
+    },
+    {
+      "title_card": "33人参赛\n31人首轮轮空",
+      "kicker": "2026亚运男单 · 签表读法",
+      "seconds": 11.4,
+      "narration": "满屏的轮空，不是种子球员的特殊待遇。三十三人放进六十四签的框架，首轮实际只有一场比赛，其他三十一人都轮空。",
+      "_why": "文字事实示意，非比赛实拍。来源见_claims。"
+    },
+    {
+      "source": "wu",
+      "start": 2,
+      "end": 12,
+      "fit": "crop",
+      "narration": "吴易昺的首场球，对手是伊朗选手亚兹达尼。不是纳加尔，两人最早在四分之一决赛相遇。",
+      "inset": {
+        "image": "assets/asiad-2026-draws/wu-period.png",
+        "corner": "tr",
+        "width": 0.56,
+        "pad": 0.085
+      },
+      "_why": "仅作明确标年的球员资料画面，不证明2023历史或2026亚运已发生结果。黄源本轮contact已看；吴源有原spec窗口记录，待本轮下载后实帧核验。",
+      "_ending_payoff_required": false,
+      "_ending_payoff_why": "签表前瞻，不是一场比赛复盘，不制造亚运已赢球错觉。"
+    },
+    {
+      "image": "assets/asiad-2026-draws/men-wu-route-video.png",
+      "seconds": 12.6,
+      "narration": "按种子路线推演，吴易昺在八分之一决赛，可能遇到菲特里亚迪。过关后，才可能碰纳加尔。注意，纳加尔也得先赢下自己的比赛。",
+      "_why": "原签3/4区逐格核对，预测明确标潜在。"
+    },
+    {
+      "image": "assets/asiad-2026-draws/men-lower-video.png",
+      "seconds": 10.9,
+      "narration": "再往前看，舍甫琴科和松冈隼，在隔壁分区。吴易昺与他们，最早半决赛见。这两道分区之间，不能连错线。",
+      "_why": "原签下半区；舍甫琴科与松冈隼为4/4区。"
+    },
+    {
+      "source": "wu",
+      "start": 29,
+      "end": 41.5,
+      "fit": "crop",
+      "narration": "吴易昺曾在二〇一八年，拿到亚运男单银牌。这次想更进一步，就得尽量顺利闯过前面的比赛，把体能和状态，留给后半程。",
+      "inset": {
+        "image": "assets/asiad-2026-draws/wu-period.png",
+        "corner": "tr",
+        "width": 0.56,
+        "pad": 0.085
+      },
+      "_why": "仅作明确标年的球员资料画面，不证明2023历史或2026亚运已发生结果。黄源本轮contact已看；吴源有原spec窗口记录，待本轮下载后实帧核验。",
+      "_ending_payoff_required": false,
+      "_ending_payoff_why": "签表前瞻，不是一场比赛复盘，不制造亚运已赢球错觉。"
+    },
+    {
+      "title_card": "前三种子\n排名只差五位",
+      "kicker": "签表排名：108 / 109 / 113",
+      "seconds": 12.1,
+      "narration": "黄泽林第一百零八，舍甫琴科第一百零九，吴易昺第一百一十三。三个人挨得很近，头号种子，并不等于明显高出所有人一档。",
+      "_why": "文字事实示意，非比赛实拍。来源见_claims。"
+    },
+    {
+      "source": "wong",
+      "start": 682.2,
+      "end": 696.1,
+      "fit": "crop",
+      "narration": "再看黄泽林。他在八分之一决赛，就可能遇到绵贯阳介。十三号种子这个数字，容易让人低估他。上一届亚运会，他可是拿到男单银牌的人。",
+      "inset": {
+        "image": "assets/asiad-2026-draws/wong-period.png",
+        "corner": "br",
+        "width": 0.56,
+        "pad": 0.18
+      },
+      "_why": "仅作明确标年的球员资料画面，不证明2023历史或2026亚运已发生结果。黄源本轮contact已看；吴源有原spec窗口记录，待本轮下载后实帧核验。",
+      "_ending_payoff_required": false,
+      "_ending_payoff_why": "签表前瞻，不是一场比赛复盘，不制造亚运已赢球错觉。",
+      "crosses_cut": "682.2–696.1同一场2026杭州赛点与黄本人庆祝、观众反应，已由本轮contact_03.jpg实看。",
+      "_inset_review": "原上角资料标签在近景107.5秒遮眉，移到下方，底缘1246高于字幕1284；最终渲染须复核。"
+    },
+    {
+      "image": "assets/asiad-2026-draws/men-wong-route-video.png",
+      "seconds": 13.4,
+      "narration": "这一次又是在日本比赛，绵贯这一关值得提前留意。如果黄泽林继续晋级，四分之一决赛可能遇斯卡托夫，半决赛这一侧，还有权纯雨和曾俊欣。",
+      "_why": "原签上半区；主场是场地事实，不捏造胜率加成。"
+    },
+    {
+      "image": "assets/asiad-2026-draws/men-upper-video.png",
+      "seconds": 13.4,
+      "narration": "中国队另一位男单球员孟凡茗，也在上半区。他首场对手苏尔塔诺夫，是上届亚运会铜牌得主。过关之后，又可能遇到权纯雨，开局就不轻松。",
+      "_why": "原签孟凡茗22号位、苏尔塔诺夫24号位；事实与条件推演分开。"
+    },
+    {
+      "title_card": "抢七1比6落后\n连拿7分逆转",
+      "kicker": "2023杭州亚运 · 黄泽林对吴易昺",
+      "seconds": 13.1,
+      "narration": "回到二〇二三年杭州亚运会。黄泽林在决胜盘抢七，一比六落后。他救回五个赛点，连拿七分，最后八比六逆转。",
+      "_why": "文字事实示意，非比赛实拍。来源见_claims。"
+    },
+    {
+      "source": "wu",
+      "start": 178.7,
+      "end": 185.9,
+      "fit": "crop",
+      "narration": "吴易昺有争金机会。但签表上的每一个名字，都得真打过去。",
+      "inset": {
+        "image": "assets/asiad-2026-draws/wu-period.png",
+        "corner": "tr",
+        "width": 0.56,
+        "pad": 0.085
+      },
+      "_why": "主Agent与assets逐帧核对实际成片：源185.95秒开始旧比分动画，结束点185.9保留完整赛后走动并避开比分卡；7.2秒容纳6.288秒旁白。",
+      "_ending_payoff_required": false,
+      "_ending_payoff_why": "签表前瞻，不是一场比赛复盘，不制造亚运已赢球错觉。"
+    },
+    {
+      "image": "assets/asiad-2026-draws/men-full-video.png",
+      "seconds": 11.4,
+      "narration": "当时是八分之一决赛。如果今年两人都能连闯数关，再次交手，争的就可能是金牌。这个重逢，得靠双方自己打出来。",
+      "_why": "回归完整签表，决赛两侧留空；不将潜在决赛写成已确定。"
+    },
+    {
+      "title_card": "亚运金牌关联奥运资格",
+      "kicker": "仍须满足排名和名额等条件",
+      "seconds": 12.9,
+      "narration": "这枚金牌，还关联洛杉矶奥运会的洲际资格。球员届时仍要满足国际网联的资格、排名和代表团名额条件，不是拿了冠军，就无条件入围。",
+      "_why": "文字事实示意，非比赛实拍。来源见_claims。"
+    },
+    {
+      "image": "assets/asiad-2026-draws/men-wu-route-video.png",
+      "seconds": 9.8,
+      "narration": "你更想看到哪场对决？吴易昺对舍甫琴科，还是他与黄泽林在决赛重逢？先记住，都是潜在对阵。",
+      "_why": "以观众选择结束，不制造敌意，不给虚假确定性。"
+    }
+  ],
+  "_preflight_status": "本地形状、措辞及证据卡字幕几何dry-run通过。此前Edge证书问题已通过使用本机已安装系统CA修复；2026-09-27对修改后的第12段执行真实Edge合成与时长测量，具体结果见_local_tts_revision。选段probe尚未自动认领，不能当作画面已核。全片实听及主Agent成片复核仍待完成。",
+  "_source_order_why": "已按build_match_reel.spec_sources实际schema修正：sources第一项wu是主源；移除不被渲染读取的primary字段，不再用它推断帧率。mixed_fps只认领真实异帧率源wong。",
+  "_human_review_requirement": "用户新增硬约束：本任务禁用DeepSeek与MiniMax，由当前Agent直接分析，root亲自复核并决策。不得调用库内两者；不得将模型审查状态标为通过。",
+  "_local_tts_revision": {
+    "segment": 12,
+    "engine": "Edge zh-CN-YunjianNeural +6%",
+    "duration_seconds": 10.992,
+    "window_seconds": 13.1,
+    "fits": true,
+    "audio_path": "/tmp/asiad-men-revised-segment12-speakable.mp3",
+    "listening_status": "未完成实听；仅真实合成及ffprobe装窗核验，不宣称声调或人声自然度已通过。",
+    "boundary_evidence": "words.json用于辅助检查分词，不证明声调。",
+    "input_transform": "按生产入口speakable()转换，含〇→零；实际合成文本回到二零二三年杭州亚运会。黄泽林在决胜盘抢七，一比六落后。他救回五个赛点，连拿七分，最后八比六逆转。"
+  }
+}
