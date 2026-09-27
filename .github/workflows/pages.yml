@@ -17,17 +17,19 @@ on:
       - ".github/workflows/pages.yml"
   workflow_run:
     workflows:
-      # ⚠️ 这里认的是工作流的 `name:`，不是文件名：probe.yml 叫 probe-data-sources、
-      # explainer.yml 叫 explainer-video——原来写成文件名，这两条跑完从来没触发过部署。
+      # ⚠️ 这里认的是工作流的 `name:`，不是文件名：explainer.yml 叫 explainer-video
+      # ——原来写成文件名，它跑完从来没触发过部署。（probe.yml 是手动的数据源诊断，
+      # 不是 Spec 那一步，看板不盯它；Spec 那一格盯的是 reel-auto-ready。）
       # 判据 test_看板阶段表点名的工作流文件都存在_pages按名字订阅它们
       - orchestrate
       - oncourt-interviews
       - official-social-images
       - source-health
-      - probe-data-sources
+      - reel-auto-ready
       - reel-dispatch-queue
       - match-reel
       - interview-auto-render
+      - interview-clip
       - explainer-video
       - auto-push-reel
       - auto-push-interview

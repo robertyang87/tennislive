@@ -130,7 +130,8 @@ main { width: min(1120px, 100%); margin: 0 auto; padding: 16px 16px calc(32px + 
 .fail-what { display: flex; flex-direction: column; min-width: 0; }
 .fail-wf { font-size: var(--tl-text-sm); font-weight: 500; }
 .fail-slug, .fail-time { font-size: var(--tl-text-xs); color: var(--tl-subtle-foreground); }
-.fail-slug { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* 卡住的是哪条，是这一行存在的全部理由：折行，不许省略号吃掉（复核截图 failed_themes_m390） */
+.fail-slug { overflow-wrap: anywhere; word-break: break-word; }
 
 /* ── 芯片 ─────────────────────────────────────────────────── */
 .chip {

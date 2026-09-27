@@ -37,15 +37,45 @@ from pathlib import Path
 REPO = "robertyang87/tennislive"
 #: 阶段 → 工作流**文件名**（不带 .yml）。按文件名认，不按 `name:`——
 #: 判据 `test_看板阶段表点名的工作流文件都存在_pages按名字订阅它们`。
+#:
+#: ⚠️ Spec 这一格原来挂的是 `probe.yml`——它是 `probe-data-sources`，手动跑的
+#: Sportradar／RapidAPI 覆盖率诊断，不是写 spec 的那一步；它红了微信会报
+#: 「阻塞：Spec」，而真正把 pending 草稿提升成 spec 的 `reel-auto-ready`（每 10 分钟
+#: 一班）一直没人盯。`interview-clip`（手动拨的采访片出片线）原来也不在表里，
+#: 它红了既不上看板也不推微信。
+#: 出片那三条的 run 按 mode 另认阶段（`MODE_STAGES`），这里写的是认不出 mode 时的默认。
 WORKFLOW_GROUPS = [
     ("发现", ["oncourt-interviews", "official-social-images", "source-health"]),
     ("编排", ["orchestrate"]),
-    ("Spec", ["probe", "reel-dispatch-queue"]),
-    ("渲染", ["match-reel", "interview-auto-render", "explainer"]),
-    ("质检", ["match-reel", "interview-auto-render", "explainer"]),
+    ("Spec", ["reel-auto-ready", "reel-dispatch-queue"]),
+    ("渲染", ["match-reel", "interview-auto-render", "interview-clip", "explainer"]),
+    ("质检", ["match-reel", "interview-auto-render", "interview-clip", "explainer"]),
     ("推送", ["auto-push-reel", "auto-push-interview", "auto-push-explainer"]),
     ("监控", ["pipeline-health"]),
 ]
+#: 只由 workflow_dispatch 触发、`run-name` 是我们自己写死的出片工作流：标题按「 · 」
+#: 切开，第一段是 `name:`，后面每一段是哪个输入登记在这儿。**「哪条卡住」先从这儿按
+#: 段位读**，不靠 `slug_of` 去猜——两段的 slug（`zverev-sonego`、`ranking-math`，
+#: 自动链的 pending 草稿 126 条里 114 条是两段）按启发式永远认不出来，而
+#: `pipeline_health` 那边没有 spec 清单可以拿来当 `known`。
+#: 判据 `test_run标题的段位表和工作流里写的run_name对得上`（和 yml 对账，不许各写各的）。
+RUN_NAME_FIELDS = {
+    "match-reel": ("mode", "slug"),
+    "interview-clip": ("mode", "slug"),
+    "explainer": ("slug",),
+}
+#: 出片工作流的 mode → 阶段（mode 在 run 标题里）。match-reel 的 `probe` 是下载源片、
+#: 出缩略图墙，给写 spec 用的——它红了是 Spec 卡住，不是「渲染 / 质检」。
+#: 表里没有的 mode 退回 WORKFLOW_GROUPS 的默认。
+MODE_STAGES = {
+    "probe": ["Spec"],        # match-reel：下载源片、缩略图墙
+    "narration": ["Spec"],    # match-reel：只查 spec 的旁白装不装得下
+    "subs": ["Spec"],         # interview-clip：取字幕切行，写进 spec
+    "cookies": ["发现"],      # match-reel：只验 YouTube 还能不能下（和 source-health 同一类）
+    "cover": ["渲染"],        # 只出封面海报
+    "render": ["渲染", "质检"],
+    "push": ["推送"],
+}
 #: 阶段标签 → 内容条目上的字段（卡片上那颗「质检 ✓ · 下一步 推送」芯片用的是同一套词）
 STAGE_FIELDS = {"发现": "discovered", "编排": "orchestrated", "Spec": "spec",
                 "渲染": "rendered", "质检": "qc", "推送": "pushed"}
@@ -61,6 +91,8 @@ KIND_DIRS = {"reel": "reel", "interview": "interview", "interviews": "interview"
 SPEC_DIRS = {"reel": "reels", "interview": "interviews", "explainer": "explainers"}
 #: 小写连字符词（`bu-majchrzak-hangzhou-2026-r2`、`ranking-math`）
 _SLUGGY = re.compile(r"(?<![a-z0-9-])[a-z0-9]+(?:-[a-z0-9]+)+(?![a-z0-9-])")
+#: run 标题里按段位读出来的 slug：单段的也算（解说片有 `hawkeye`、`roof` 这种老 slug）
+_SLUG_EXACT = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
 def parse_time(value):
@@ -121,7 +153,10 @@ def slug_of(title: str, known=(), exclude=()) -> str | None:
     """run 标题里写的是哪条片子。先认仓库里真有的 slug（取最长的那个），
     再退回「至少三段」的连字符词（两段的 `alcaraz-fritz` 这种提交标题里的简称
     不够格）；工作流自己的文件名和 `name:`（`auto-push-reel`、`probe-data-sources`）
-    不算。都没有就是 None——**不猜**，页面和微信照实说「run 标题里没写是哪条」。"""
+    不算。都没有就是 None——**不猜**，页面和微信照实说「run 标题里没写是哪条」。
+
+    ⚠️ 这是**退路**：出片那三条（`RUN_NAME_FIELDS`）的标题是我们写死的 run-name，
+    `blocked_runs` 先按段位读（`run_name_fields`），两段的 slug 在这儿认不出来。"""
     text = str(title or "").lower()
     skip = MONITORED | SELF_WORKFLOWS | {str(e).lower() for e in exclude if e}
     tokens = [t for t in _SLUGGY.findall(text) if t not in skip]
@@ -129,6 +164,37 @@ def slug_of(title: str, known=(), exclude=()) -> str | None:
     hits = [t for t in tokens if t in known]
     pool = hits or [t for t in tokens if t.count("-") >= 2]
     return max(pool, key=len) if pool else None
+
+
+def run_name_fields(run: dict) -> dict[str, str]:
+    """按 `RUN_NAME_FIELDS` 把出片 run 的标题切成 {mode, slug}。
+
+    只认段数对得上、第一段就是这条工作流 `name:` 的标题（改 run-name 之前的老 run
+    标题就是一个 `match-reel`，切不出东西）；slug 那一段必须是小写连字符词。
+    切不出就是 {}——调用方再退回 `slug_of` 的启发式。
+    """
+    fields = RUN_NAME_FIELDS.get(workflow_of(run))
+    title = str(run.get("display_title") or "")
+    if not fields or not title:
+        return {}
+    parts = [p.strip() for p in title.split(" · ")]
+    if len(parts) != 1 + len(fields):
+        return {}
+    if run.get("name") and parts[0] != run["name"]:
+        return {}
+    out = {k: v for k, v in zip(fields, parts[1:]) if v}
+    if "slug" in out and not _SLUG_EXACT.match(out["slug"]):
+        out.pop("slug")
+    return out
+
+
+def run_stages(run: dict) -> list[str]:
+    """这条 run 算哪个（些）阶段：出片 run 按标题里的 mode 认，其余按工作流的默认。"""
+    mode = run_name_fields(run).get("mode")
+    if mode in MODE_STAGES:
+        return list(MODE_STAGES[mode])
+    wf = workflow_of(run)
+    return [label for label, names in WORKFLOW_GROUPS if wf in names]
 
 
 def blocked_runs(runs, now=None, *, self_run_id=None, known=()) -> list[dict]:
@@ -155,10 +221,13 @@ def blocked_runs(runs, now=None, *, self_run_id=None, known=()) -> list[dict]:
         if run.get("conclusion") not in FAILURES:
             continue
         title = run.get("display_title") or run.get("name") or wf
+        fields = run_name_fields(run)
         out.append({
             "workflow": wf,
-            "stages": [label for label, names in WORKFLOW_GROUPS if wf in names],
-            "slug": slug_of(title, known, exclude=(run.get("name"),)),
+            "mode": fields.get("mode"),
+            "stages": run_stages(run),
+            # 标题是我们写死的 run-name：按段位读；别的标题才退回启发式（不猜）
+            "slug": fields.get("slug") or slug_of(title, known, exclude=(run.get("name"),)),
             "title": title,
             "url": run.get("html_url"),
             "at": run.get("updated_at"),
@@ -272,16 +341,20 @@ def build(root: Path, token: str | None, *, self_run_id=None):
     blocked_by_wf = {b["workflow"]: b for b in blocked}
 
     by_workflow = defaultdict(list)
+    by_stage = defaultdict(list)
     for run in runs:
         by_workflow[workflow_of(run)].append(run)
+        for label in run_stages(run):
+            by_stage[label].append(run)
     for rows in by_workflow.values():
         rows.sort(key=lambda r: r.get("updated_at") or "", reverse=True)
 
     stages = []
-    for label, names in WORKFLOW_GROUPS:
-        failing = [blocked_by_wf[n] for n in names if n in blocked_by_wf]
+    for label, _names in WORKFLOW_GROUPS:
+        # 出片 run 按 mode 认阶段：match-reel 的 probe 红了是 Spec 这一格红
+        failing = [b for b in blocked if label in b["stages"]]
         # 取消的 run 已经被后一趟取代，不代表这一格现在的状态
-        candidates = [r for n in names for r in by_workflow.get(n, []) if r.get("conclusion") != "cancelled"]
+        candidates = [r for r in by_stage.get(label, []) if r.get("conclusion") != "cancelled"]
         candidates.sort(key=lambda r: r.get("updated_at") or "", reverse=True)
         running = [r for r in candidates if r.get("status") != "completed"]
         if failing:

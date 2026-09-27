@@ -371,3 +371,47 @@ def test_main把阻塞摘要写进GITHUB_OUTPUT(tmp_path, monkeypatch):
              "--step-runs", "0", "--alert-state", str(state)])
     got = dict(line.split("=", 1) for line in out.read_text("utf-8").splitlines())
     assert got["notify"] == "false"
+
+
+def test_两段的slug也要进微信摘要_不许说标题里没写(tmp_path, monkeypatch):
+    """复核 FIX ROUND 1 的 blocking：`main()` 调 `blocked_runs(runs)` 不给 `known`
+    （这条线的稀疏检出里没有 spec 清单），原来 `slug_of` 只认三段以上的连字符词——
+    自动链 pending 草稿 126 条里 114 条是两段（`zverev-sonego`），解说片账本 15 份里
+    7 份也是（`ranking-math`）。于是微信说「run 标题里没写是哪条」，而 run-name
+    明明写了——Q9 要的「哪条卡住」没答上，还说了一句假话。"""
+    from datetime import datetime, timedelta, timezone  # noqa: PLC0415
+
+    import tools.pipeline_health as ph  # noqa: PLC0415
+
+    now = datetime.now(timezone.utc)
+    iso = lambda m: (now - timedelta(minutes=m)).isoformat().replace("+00:00", "Z")  # noqa: E731
+
+    def run(rid, stem, name, title):
+        return {"id": rid, "name": name, "path": f".github/workflows/{stem}.yml",
+                "status": "completed", "conclusion": "failure", "created_at": iso(20 + rid),
+                "updated_at": iso(10 + rid), "html_url": f"https://github.com/o/r/actions/runs/{rid}",
+                "display_title": title}
+
+    runs = [run(1, "match-reel", "match-reel", "match-reel · probe · zverev-sonego"),
+            run(2, "explainer", "explainer-video", "explainer-video · ranking-math")]
+
+    def fake_get(self, path):
+        if path.startswith("actions/runs?"):
+            return {"workflow_runs": runs}
+        return {"workflow_runs": [], "jobs": []}
+
+    monkeypatch.setattr(ph.GitHubAPI, "get", fake_get)
+    monkeypatch.setattr(ph, "sla_health", lambda: (0, 0, 0.0))
+    monkeypatch.setattr(ph, "stale_publications", lambda: [])
+    monkeypatch.setattr(ph, "orchestrator_productivity", lambda: ("2026-09-27T00:00:00Z", 1.0))
+    out = tmp_path / "out.txt"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    assert ph.main(["--repo", "o/r", "--token", "x", "--workflows", "match-reel.yml",
+                    "--step-runs", "0", "--alert-state", str(tmp_path / "state.json")]) == 0
+    got = dict(line.split("=", 1) for line in out.read_text("utf-8").splitlines())
+    assert got["notify"] == "true"
+    assert "zverev-sonego" in got["message"] and "ranking-math" in got["message"], got["message"]
+    assert ph.NO_SLUG not in got["message"], got["message"]
+    # probe 红了是 Spec 卡住，不是「渲染 / 质检」；mode 也写进去
+    assert "Spec · match-reel（probe） 失败" in got["message"], got["message"]
+    assert "Spec" in got["title"]

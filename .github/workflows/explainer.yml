@@ -1,6 +1,8 @@
 name: explainer-video
 # run 标题带上 slug：看板首屏和阻塞微信（账号所有者 Q9）从标题里认「哪条卡住」——
 # 手动拨的 run 原来标题只有工作流名。判据 test_手动拨的出片工作流run标题带slug
+# ⚠️ 每一段是什么登记在 tools/build_dashboard_snapshot.py 的 RUN_NAME_FIELDS（按段位读，
+# 两段的 slug 才认得出来），改这一行要一起改——判据 test_run标题的段位表和工作流里写的run_name对得上
 run-name: "explainer-video · ${{ inputs.slug || 'hawkeye' }}"
 
 # 生成一条 AI 旁白知识解说视频（前因后果 / 技术原理 / 当今现状）。

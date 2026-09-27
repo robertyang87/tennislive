@@ -134,17 +134,22 @@ def test_看板不监控自己_pages和本趟run都不算(tmp_path):
 
 
 def test_阶段按工作流文件认_名字和文件名不一样的两条也认得出来(tmp_path):
-    """probe.yml 的 `name:` 是 probe-data-sources、explainer.yml 是 explainer-video。
-    原来按 `name` 认，Spec 那一格常年「暂无运行证据」、解说片失败进不了首屏。"""
+    """explainer.yml 的 `name:` 是 explainer-video。原来按 `name` 认，解说片失败
+    进不了首屏。
+
+    ⚠️ Spec 那一格原来挂的是 probe.yml（`probe-data-sources`）——手动跑的数据源
+    覆盖率诊断，不是写 spec 的那一步，它红了微信会报「阻塞：Spec」；真正把 pending
+    草稿提升成 spec 的 reel-auto-ready 反而没人盯（复核 FIX ROUND 1 的 nit）。"""
     root = _root(tmp_path)
     (root / "data/explainer_publish_ledger").mkdir(parents=True)
     (root / "data/explainer_publish_ledger/ranking-math.json").write_text('{"slug":"ranking-math","attempts":[]}')
-    runs = [_run("probe", 10, name="probe-data-sources"),
+    runs = [_run("reel-auto-ready", 10),
+            _run("probe", 3, "failure", name="probe-data-sources"),
             _run("explainer", 5, "failure", name="explainer-video", title="explainer-video · ranking-math")]
     data = _build(root, runs)
     spec = next(s for s in data["stages"] if s["label"] == "Spec")
-    assert spec["status"] == "success" and spec["detail"] == "probe"
-    assert [b["workflow"] for b in data["health"]["blocked"]] == ["explainer"]
+    assert spec["status"] == "success" and spec["detail"] == "reel-auto-ready"
+    assert [b["workflow"] for b in data["health"]["blocked"]] == ["explainer"], "诊断工具红了不是流水线阻塞"
     assert data["health"]["blocked"][0]["slug"] == "ranking-math"
 
 
@@ -231,9 +236,9 @@ def test_没有成片数据时达标率是空_页面显示破折号(tmp_path):
 def test_自动任务每个工作流只留最新一条_失败排前面(tmp_path):
     root = _root(tmp_path)
     runs = [_run("match-reel", 1, status="in_progress", rid=11), _run("match-reel", 5, rid=12),
-            _run("match-reel", 9, rid=13), _run("orchestrate", 30, "failure"), _run("probe", 0)]
+            _run("match-reel", 9, rid=13), _run("orchestrate", 30, "failure"), _run("reel-auto-ready", 0)]
     rows = _build(root, runs)["workflows"]
-    assert [r["workflow"] for r in rows] == ["orchestrate", "match-reel", "probe"], rows
+    assert [r["workflow"] for r in rows] == ["orchestrate", "match-reel", "reel-auto-ready"], rows
     reel = rows[1]
     assert reel["status"] == "running" and reel["url"].endswith("/11"), "要的是最新那一条"
 
@@ -359,6 +364,8 @@ def test_刷新失败保留上次状态并标过期():
     app = (DASH / "app.js").read_text(encoding="utf-8")
     catch = app.split("} catch (error) {", 1)[1].split("}", 1)[0]
     assert "if (snapshot) markStale(error)" in catch, "有旧数据时只能标过期，不许抹掉"
+    stale = app.split("function markStale(error) {", 1)[1].split("\n}", 1)[0]
+    assert "render(snapshot)" in stale, "过期时要按缓存快照重渲，相对时间不许冻住"
     assert "data-retry" in app and "data-retry" in (DASH / "index.html").read_text(encoding="utf-8")
 
 
@@ -398,8 +405,8 @@ def test_pages把本趟run_id交给快照():
 
 
 def test_看板阶段表点名的工作流文件都存在_pages按名字订阅它们():
-    """`workflow_run.workflows` 认的是 `name:`。原来写成文件名 `probe` / `explainer`，
-    而它们的名字是 probe-data-sources / explainer-video——这两条跑完从来没触发过部署。"""
+    """`workflow_run.workflows` 认的是 `name:`。原来写成文件名 `explainer`，
+    而它的名字是 explainer-video——跑完从来没触发过部署。"""
     import yaml  # noqa: PLC0415
 
     def name_of(stem):
@@ -413,7 +420,11 @@ def test_看板阶段表点名的工作流文件都存在_pages按名字订阅�
     for stem in sorted(module.MONITORED):
         assert stem in names, f"阶段表点名了不存在的工作流文件 {stem}.yml"
         assert names[stem] in subscribed, f"{stem}.yml（name: {names[stem]}）跑完不会触发看板重建"
-    assert names["probe"] == "probe-data-sources", "判据失效：这条本来就是为名字≠文件名写的"
+    assert "explainer" in module.MONITORED and names["explainer"] == "explainer-video", \
+        "判据失效：这条本来就是为名字≠文件名写的"
+    assert {"reel-auto-ready", "interview-clip"} <= module.MONITORED, \
+        "Spec 那一格盯提升草稿的 reel-auto-ready；手动拨的采访片出片线红了也要进阻塞"
+    assert "probe" not in module.MONITORED, "probe.yml 是手动的数据源诊断，它红了不是「阻塞：Spec」"
 
 
 # ── 真渲一遍：阻塞态、窄屏失败排前、刷新失败保留、筛选保焦点 ──────────────
@@ -423,7 +434,7 @@ def test_看板真渲出来_阻塞态_窄屏失败排前_刷新失败保留(tmp_
     from tennislive.chromium import launch_chromium  # noqa: PLC0415
 
     root = _root(tmp_path)
-    runs = [_run("match-reel", 8, "failure", rid=8, title="match-reel · render · a-b-c-d"),
+    runs = [_run("match-reel", 8, "failure", rid=8, title="match-reel · render · bu-majchrzak-hangzhou-2026-r2"),
             _run("orchestrate", 30), _run("pipeline-health", 12)]
     snap = {"body": json.dumps(_build(root, runs), ensure_ascii=False).encode()}
     files = {p.name: p for p in DASH.glob("*") if p.suffix in (".html", ".css", ".js")}
@@ -449,7 +460,9 @@ def test_看板真渲出来_阻塞态_窄屏失败排前_刷新失败保留(tmp_
         page.goto("https://dash.local/dashboard/index.html")
         page.wait_for_selector('#hero[data-status="failed"]')
         assert page.eval_on_selector("#hero .btn-primary", "a => a.href").endswith("/8")
-        assert "a-b-c-d" in page.inner_text("#hero")
+        assert "bu-majchrzak-hangzhou-2026-r2" in page.inner_text("#hero")
+        # 390 宽下卡住的 slug 要整条看得见：折行，不许被省略号吃掉（复核 failed_themes_m390）
+        assert page.eval_on_selector(".fail-slug", "e => e.scrollWidth <= e.clientWidth"), "slug 被截断了"
         assert page.eval_on_selector_all('a[href="#"]', "xs => xs.length") == 0
         # 窄屏：阶段是竖向列表，失败的排最前
         tops = page.eval_on_selector_all(
@@ -469,8 +482,11 @@ def test_看板真渲出来_阻塞态_窄屏失败排前_刷新失败保留(tmp_
         assert page.evaluate("document.activeElement.dataset.type") == "interview"
         # 刷新失败：阻塞态原样留着，标过期、给重试
         snap["body"] = None
+        # 刷新失败也要按缓存快照重渲：相对时间不许冻在上一次渲染的那一刻（复核 refreshfail_m390）
+        page.evaluate("document.querySelector('#hero .stamp').dataset.probe = 'old'")
         page.click("#refresh")
         page.wait_for_selector("#stale:not([hidden])", timeout=5000)
+        assert page.eval_on_selector("#hero .stamp", "e => e.dataset.probe || ''") == "", "过期时没重渲"
         assert page.get_attribute("#hero", "data-status") == "failed"
         assert "is-stale" in page.get_attribute("#freshness", "class")
         assert page.is_visible("#stale [data-retry]")
@@ -499,3 +515,58 @@ def test_手动拨的出片工作流run标题带slug():
         checked.append(stem)
         assert "inputs.slug" in str(spec.get("run-name") or ""), f"{stem}.yml 的 run 标题里没有 slug"
     assert {"match-reel", "explainer", "interview-clip"} <= set(checked), checked
+
+
+# ── FIX ROUND 1：两段的 slug、mode 决定阶段 ─────────────────────────────────
+def test_出片run按run_name段位读slug_两段的也认得出_mode决定阶段(tmp_path):
+    """复核量出来：`pipeline_health` 调 `blocked_runs(runs)` 不给 `known`，而
+    `slug_of` 的启发式只认三段以上的连字符词——自动链的 pending 草稿 126 条里
+    114 条、reel spec 305 条里 144 条、解说片账本 15 份里 7 份是两段的
+    （`zverev-sonego`、`ranking-math`），于是微信摘要照样说「run 标题里没写是哪条」，
+    而 run-name 明明写了。出片那三条的标题是我们写死的，按段位读，不猜。
+    同一个标题里的 mode 决定阶段：match-reel 的 probe 红了是 Spec 卡住。"""
+    runs = [_run("match-reel", 8, "failure", rid=8, title="match-reel · probe · zverev-sonego"),
+            _run("explainer", 6, "failure", rid=6, name="explainer-video",
+                 title="explainer-video · ranking-math"),
+            _run("interview-clip", 4, "failure", rid=4, title="interview-clip · render · eala-zheng"),
+            _run("auto-push-reel", 2, "failure", rid=2, title="reel: 预占推送 alcaraz-fritz")]
+    got = {b["workflow"]: b for b in module.blocked_runs(runs)}  # 不给 known：pipeline_health 就是这么调的
+    assert (got["match-reel"]["slug"], got["match-reel"]["mode"], got["match-reel"]["stages"]) == \
+        ("zverev-sonego", "probe", ["Spec"])
+    assert (got["explainer"]["slug"], got["explainer"]["stages"]) == ("ranking-math", ["渲染", "质检"])
+    assert (got["interview-clip"]["slug"], got["interview-clip"]["stages"]) == ("eala-zheng", ["渲染", "质检"])
+    assert got["auto-push-reel"]["slug"] is None, "不是我们写死的 run-name：照旧不猜两段的短名"
+    # 单段的老解说片 slug 也认（hawkeye / roof）；改 run-name 之前的老标题切不出东西
+    one = _run("explainer", 1, "failure", name="explainer-video", title="explainer-video · hawkeye")
+    assert module.blocked_runs([one])[0]["slug"] == "hawkeye"
+    old = _run("match-reel", 1, "failure", title="match-reel")
+    assert module.blocked_runs([old])[0]["slug"] is None
+    assert module.blocked_runs([old])[0]["stages"] == ["渲染", "质检"], "认不出 mode 退回默认阶段"
+    # 段数不对、首段不是 name、slug 段不像 slug：都不认
+    for title in ("match-reel · zverev-sonego", "other · probe · zverev-sonego",
+                  "match-reel · probe · Zverev Sonego"):
+        assert module.run_name_fields(_run("match-reel", 1, "failure", title=title)).get("slug") is None, title
+    # 看板首屏：probe 红了是 Spec 那一格红，渲染那一格不跟着红
+    data = _build(_root(tmp_path), runs[:1] + [_run("match-reel", 30, rid=30, title="match-reel · render · a-b")])
+    stage = {s["label"]: s for s in data["stages"]}
+    assert stage["Spec"]["status"] == "failure" and stage["Spec"]["slug"] == "zverev-sonego"
+    assert stage["渲染"]["status"] == "success", stage["渲染"]
+
+
+def test_run标题的段位表和工作流里写的run_name对得上():
+    """`RUN_NAME_FIELDS` 和 yml 里的 `run-name` 是同一件事的两处写法——改了一边
+    不改另一边，段位就读错位（把 mode 当成 slug）。每个 mode 选项也都要认得出阶段。"""
+    import yaml  # noqa: PLC0415
+
+    for stem, fields in module.RUN_NAME_FIELDS.items():
+        spec = yaml.safe_load((ROOT / f".github/workflows/{stem}.yml").read_text(encoding="utf-8"))
+        parts = str(spec["run-name"]).split(" · ")
+        assert parts[0] == spec["name"], f"{stem}.yml 的 run-name 第一段要是 name"
+        assert len(parts) == 1 + len(fields), f"{stem}.yml 的 run-name 段数和 RUN_NAME_FIELDS 对不上"
+        for field, part in zip(fields, parts[1:]):
+            assert f"inputs.{field}" in part, f"{stem}.yml run-name 第 {fields.index(field) + 2} 段不是 {field}"
+        inputs = spec[True]["workflow_dispatch"]["inputs"]
+        for mode in (inputs.get("mode") or {}).get("options") or []:
+            assert mode in module.MODE_STAGES, f"{stem}.yml 的 mode={mode} 红了不知道算哪个阶段"
+    labels = {label for label, _ in module.WORKFLOW_GROUPS}
+    assert all(set(v) <= labels for v in module.MODE_STAGES.values())

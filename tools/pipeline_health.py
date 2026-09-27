@@ -384,6 +384,12 @@ BLOCKED_REPEAT_COOLDOWN = timedelta(hours=6)
 NO_SLUG = "run 标题里没写是哪条"
 
 
+def _which(b: dict) -> str:
+    """`match-reel（probe）`：出片线同一个工作流跑的是哪一步，run 标题里写着就带上。"""
+    wf = str(b.get("workflow", ""))
+    return f"{wf}（{b['mode']}）" if b.get("mode") else wf
+
+
 def blocked_summary(blocked: list[dict], still: int = 0) -> tuple[str, str]:
     """短摘要：哪个阶段失败、哪条片子卡住、失败的 run 链接。HTML（PushPlus template=html）。"""
     stages = list(dict.fromkeys(s for b in blocked for s in b.get("stages") or []))
@@ -391,7 +397,7 @@ def blocked_summary(blocked: list[dict], still: int = 0) -> tuple[str, str]:
     lines = []
     for b in blocked:
         where = " / ".join(b.get("stages") or []) or b.get("workflow", "")
-        line = (f"{html.escape(where)} · {html.escape(str(b.get('workflow', '')))} 失败"
+        line = (f"{html.escape(where)} · {html.escape(_which(b))} 失败"
                 f" · 卡住：{html.escape(b.get('slug') or NO_SLUG)}")
         if b.get("url"):
             line += f' · <a href="{html.escape(b["url"], quote=True)}">打开失败的 run</a>'
@@ -456,11 +462,13 @@ def main(argv: list[str] | None = None) -> int:
     sla = sla_health()
     report, alerts = render_report(health, steps, sla, stale_publications(),
                                    orchestrator_productivity())
-    # 和看板同一份数据（最近 100 条 run）、同一个定义
+    # 和看板同一份数据（最近 100 条 run）、同一个定义。这儿的稀疏检出里没有 spec 清单，
+    # 不给 `known`——「哪条卡住」靠出片 run 的 run-name 按段位读（两段的 slug 也认得出），
+    # 判据 test_两段的slug也要进微信摘要_不许说标题里没写
     runs = api.get("actions/runs?per_page=100").get("workflow_runs") or []
     blocked = dashboard.blocked_runs(runs)
     report += "\n### 流水线阻塞（和看板同一个定义）\n\n" + ("\n".join(
-        f"- {' / '.join(b['stages'])} · {b['workflow']} · {b.get('slug') or NO_SLUG} · {b.get('url') or ''}"
+        f"- {' / '.join(b['stages'])} · {_which(b)} · {b.get('slug') or NO_SLUG} · {b.get('url') or ''}"
         for b in blocked) or "- 没有阻塞。") + "\n"
     print(report, end="")
     if args.summary:

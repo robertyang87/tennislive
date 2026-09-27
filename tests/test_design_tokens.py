@@ -541,8 +541,11 @@ def test_主题跟随系统_钉死的data_theme优先_裸root不写color_scheme(
       原来那句 `:root{color-scheme:dark}` 会把任何链接了 tokens.css、又没写
       `data-theme="light"` 的页面的浏览器画布翻成深色；
     - `data-theme="dark|light"` 钉死的两块，永远在；
-    - 跟随系统：`prefers-color-scheme` 浅／深两块，选择器是「没钉死」的 `:root`，
-      钉死了就让位；
+    - 跟随系统：浅色那块写在 `@media` 外面兜底、深色那块包在
+      `prefers-color-scheme: dark` 里、**排在浅色后面**（同特异度，后写的赢），
+      选择器都是「没钉死」的 `:root`，钉死了就让位。⚠️ 原来浅色也包在
+      `prefers-color-scheme: light` 里——认不出这条媒体查询的 WebView（老 Android／X5、
+      iOS < 12.1）两块都不生效，页面一个颜色都没有（WP1 复核的 nit）；
     - 浅色块声明的变量 = 深色块 − 画布专用的（`DARK_ONLY` 和图表），画布角色在
       任何一块浅色里都不出现（不会悄悄继承一个深色值）。
     """
@@ -553,22 +556,24 @@ def test_主题跟随系统_钉死的data_theme优先_裸root不写color_scheme(
     assert "color-scheme" not in by_sel[(":root",)]
     assert set(by_sel) >= {
         (":root",), (':root[data-theme="dark"]',), (':root[data-theme="light"]',),
-        ("@media (prefers-color-scheme: dark)", unpinned),
-        ("@media (prefers-color-scheme: light)", unpinned),
+        (unpinned,), ("@media (prefers-color-scheme: dark)", unpinned),
     }
     schemes = {sel: re.findall(r"color-scheme:\s*(\w+)", body) for sel, body in blocks}
     assert {sel: s for sel, s in schemes.items() if s} == {
         (':root[data-theme="dark"]',): ["dark"],
         (':root[data-theme="light"]',): ["light"],
+        (unpinned,): ["light"],
         ("@media (prefers-color-scheme: dark)", unpinned): ["dark"],
-        ("@media (prefers-color-scheme: light)", unpinned): ["light"],
-    }
+    }, "没钉死的颜色只许一块在 @media 外面（浅色兜底），否则认不出媒体查询的浏览器没颜色"
+    order = [sel for sel, _ in blocks]
+    assert order.index((unpinned,)) < order.index(("@media (prefers-color-scheme: dark)", unpinned)), \
+        "深色要排在浅色兜底后面，否则系统要深色时被浅色盖回去"
     dark_vars = _declared(by_sel[(':root[data-theme="dark"]',)])
     light_vars = _declared(by_sel[(':root[data-theme="light"]',)])
     assert light_vars == dark_vars - T.dark_only_vars()
     assert T.dark_only_vars() <= dark_vars
     assert _declared(by_sel[("@media (prefers-color-scheme: dark)", unpinned)]) == dark_vars
-    assert _declared(by_sel[("@media (prefers-color-scheme: light)", unpinned)]) == light_vars
+    assert _declared(by_sel[(unpinned,)]) == light_vars
 
     # 默认深色的消费方：深色块兼认「没钉死」，不跟随系统，裸 :root 照样不写
     dark_default = _css_blocks(T.tokens_css(default="dark"))

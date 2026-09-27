@@ -54,7 +54,7 @@ function renderHero(data) {
   const blocked = h.blocked || [];
   const list = blocked.length ? `<ul class="fail-list">${blocked.map((b) => `<li>${linkOrDiv(b.url, "fail-item",
     `<span class="fail-stage">${esc((b.stages || []).join(" · ") || b.workflow)}</span>`
-    + `<span class="fail-what"><span class="fail-wf">${esc(b.workflow)}</span>`
+    + `<span class="fail-what"><span class="fail-wf">${esc(b.mode ? `${b.workflow}（${b.mode}）` : b.workflow)}</span>`
     + `<span class="fail-slug">${esc(b.slug || "run 标题里没写是哪条")}</span></span>`
     + `<span class="fail-time">${relative(b.at)}</span>`)}</li>`).join("")}</ul>` : "";
   const action = safeUrl(h.action_url)
@@ -175,8 +175,11 @@ function markFresh(data) {
   f.textContent = `数据更新于 ${clock(data.generated_at)}`;
 }
 
-// 刷新失败：上一次的状态（尤其是「阻塞」）原样留着，只标过期
+// 刷新失败：上一次的状态（尤其是「阻塞」）原样留着，只标过期。
+// ⚠️ 要按缓存的快照重渲一遍：「刚刚」「3 分钟前」是渲染那一刻算的，不重渲就冻在那儿，
+// 和顶上「已过期 · 快照 08:43」互相矛盾（复核截图 refreshfail_m390）。
 function markStale(error) {
+  render(snapshot);
   $("stale-text").textContent = `刷新失败（${error.message}），下面是 ${clock(snapshot.generated_at)} 的快照，可能已过期`;
   $("stale").hidden = false;
   const f = $("freshness");
