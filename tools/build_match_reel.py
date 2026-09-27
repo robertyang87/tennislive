@@ -7156,7 +7156,7 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
 #: - `mannarino-shapovalov-chengdu-2026-qf`：2026-09-27 成都 ATP250 1/4决赛（北京 19:11
 #:   打完）。按上面那条常设授权走：终场后约 40 分钟，find_cover_photo 查 AP、WTA
-#:   photo-resources 都是 0，赛后稿和组委会图都还没有。用 205.5s 正脸吼出来的近景，
+#:   photo-resources 都是 0，赛后稿和组委会图都还没有。用 206.0s 正脸、双眼睁着的近景，
 #:   源片 1920×1080，放大 1.6 倍。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
     "wu-duckworth-us-open-2026-r2",
