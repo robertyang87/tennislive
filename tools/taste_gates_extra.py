@@ -31,6 +31,7 @@ CI 才红，挪进 `--dry-run` 之后 0.2 秒就红。⚠️ **自动链那一�
 """
 from __future__ import annotations
 
+import json
 import re
 import sys
 from datetime import datetime, timedelta, timezone
@@ -130,8 +131,15 @@ TOTAL_MARGIN_LEGACY = frozenset({
 })
 
 
+#: 这条管**比赛片**的钩子：账号所有者那两句（09-13、09-19 chung-nagal）说的都是一场球的
+#: 封面。「网球有故事」讲规则和来路，「总得分多却输了比赛」本身就是一个正经的计分故事，
+#: 不在这条里。`cover.eyebrow` 空着按「赛场之上」算（和 `build_cover` 同一个缺省，
+#: 自动草稿就是空的）；赛后开麦由 `interview_taste_extra` 带着栏目名进来。
+TOTAL_MARGIN_COLUMNS = frozenset({"", "赛场之上", "赛后开麦"})
+
+
 def total_margin_problem(spec: dict) -> str | None:
-    if _slug(spec) in TOTAL_MARGIN_LEGACY:
+    if _slug(spec) in TOTAL_MARGIN_LEGACY or _eyebrow(spec) not in TOTAL_MARGIN_COLUMNS:
         return None
     fields = (("钩子", _hook_text(spec)),
               ("推送标题", str((spec.get("push") or {}).get("summary") or "")))
@@ -171,24 +179,29 @@ def one_of_n_problem(spec: dict, xhs_text: str | None = None) -> str | None:
             "要写就写对手救下了几个（「约维奇连救两个」「五个赛点，一个没给」）。")
 
 
-# ──────────────────────────────────────────────────────────────── ③ 不提彭帅 ──
+# ─────────────────────────────────────────────── ③ 不提彭帅（只报，永不做成闸） ──
 
 PENG_SHUAI = re.compile(r"彭帅|Peng\s*Shuai|Shuai\s*Peng", re.I)
 
-#: 账号所有者本人点过头的例外。**只有账号所有者本人能往里加**——这条没有 `_why`
-#: 认领口，是有意的（finals-venues 为它重渲过一版、替换了同一个 Release 附件）。
-PENG_SHUAI_OWNER_APPROVED: frozenset[str] = frozenset()
 
+def peng_shuai_note(texts) -> str | None:
+    """**只报**。这条在口味规则书（`tennis-owner-taste`）里标的是「转述（09-16）」：
+    `research/wta-finals-venues-2026.md` 里会话记下的，**没有他的原话**。账号所有者
+    2026-09-27 选定：转述／推断来的规则只按自查过，**没有他的原话之前不许做成闸**
+    （SKILL 头部那段；`test_推断出来的口味规则永不做成闸` 钉的就是这个）。
 
-def peng_shuai_problem(slug: str, texts) -> str | None:
-    if slug in PENG_SHUAI_OWNER_APPROVED:
-        return None
+    所以三个入口（`spec_taste_extra`／`xhs_taste_extra`／`interview_taste_extra`）
+    都把它放进只报的那一半——硬的那一半注进「彭帅」和注进「李娜」必须一模一样
+    （`test_不提彭帅是转述来的_三个入口都只报不拦`）。做成硬闸的那一版会把一条
+    如实翻译球员提到彭帅的采访字幕拦在渲染入口、把含这句字幕的自动采访草稿挡在转正外。
+    """
     hits = _hits(PENG_SHUAI, texts)
     if not hits:
         return None
-    return (f"会发出去的字里提了彭帅：{hits}。账号所有者 2026-09-16：「这条线上不提彭帅」"
-            "（research/wta-finals-venues-2026.md）——讲深圳合同为什么断，只写到「疫情停办、"
-            "此后没再回去」。注解栏（`_` 开头的键）不管，那儿可以记。")
+    return (f"会发出去的字里提了彭帅：{hits}。口味规则书里这条是**转述**（09-16，"
+            "research/wta-finals-venues-2026.md 里会话记的，没有他的原话），只按自查过、"
+            "不拦：确认一下这里是不是真要提——讲深圳合同为什么断，写到「疫情停办、此后没再"
+            "回去」就够；采访字幕是当事人的原话，照实翻。注解栏（`_` 开头的键）不管。")
 
 
 # ─────────────────────────────────────── ④ 赛场之上封面不用 fit:width 的信箱式 ──
@@ -263,8 +276,12 @@ def solo_layout_problem(spec: dict) -> str | None:
 #: 只认「这件事还没公布」的那几种说法。**裸的「要等」不认**：全库 27 条 spec 的注解里
 #: 有「要等死球了再切」「具体帧要等 runner 渲完」这类，和事实没关系（量过：放宽到裸
 #: 「要等」，27 条里 26 条是误伤）。
+#:
+#: `TBD` 两边不许贴着字母数字：注解里抄进来的 YouTube／flashscore id、URL 是大小写
+#: 混排的随机串（`…xTbDq…`），`re.I` 下裸子串会撞上。不用 `\b`——Python 的 `\b`
+#: 把汉字也算单词字符，「名单TBD」反而认不出来。
 PENDING_MARK = re.compile(
-    r"待公布|名单定了再|公布后再|抽签后再|TBD|to be confirmed"
+    r"待公布|名单定了再|公布后再|抽签后再|(?<![A-Za-z0-9])TBD(?![A-Za-z0-9])|to be confirmed"
     r"|(名单|阵容|场序|签表|抽签)[^。；\n]{0,6}要等"
     r"|要等[^。；\n]{0,4}(抽签|名单|阵容|官宣|公布|场序)", re.I)
 
@@ -637,7 +654,7 @@ def xhs_markdown_problem(text: str | None) -> str | None:
             "不要用 markdown 格式，复制过去显示会有问题」——出口不渲染它，粘过去会原样露出来。")
 
 
-# ═══════════════════════════════════════════════════════════════ 只报的四道 ══
+# ═══════════════════════════ 只报的四道（③ 彭帅那条也只报，住在上面它自己那一节） ══
 
 #: 钩子写身份：非头号的种子号、「世界第 N」（N≠1）。「掀翻世界第一」「淘汰头号种子」
 #: 是结果行的重量，放行；其余的要自己确认它不是「只靠排名」。
@@ -694,8 +711,28 @@ SCREEN_COUNT = re.compile(
     r"(?=个|次|天|周|年|月|岁|局|盘|分(?!之)|场|拍|座|支|位|名|小时|号种子|连胜|连败|届|站|城)")
 
 
+#: 发布账本里记着「已经发出去」的状态（竖版短片账本写 `sent`，采访账本写 PushPlus 的 `accepted`）。
+_DELIVERED = frozenset({"sent", "accepted"})
+
+
+def already_published(slug: str, ledger: str) -> bool:
+    """`data/<ledger>/<slug>.json` 里有一条发出去了的记录。读一个文件，不扫目录。
+
+    只给「汉字数字」那条只报用：它在全库 307 条里报一半（规矩之前的写法），而已发的不为
+    文案重渲——对一条已经发出去的片子每趟 dry-run 都印一遍，只会把它训练成没人看的噪音
+    （review 量过：09-17 之后手改的 114 条里 35 条会印）。⚠️ 账本 2026-08-24 起才有，更早
+    发的那批查不到、照旧会印；那批本来就很少再被跑到。"""
+    try:
+        doc = json.loads((ROOT / "data" / ledger / f"{slug}.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    attempts = doc.get("attempts") if isinstance(doc, dict) else None
+    return any(isinstance(a, dict) and a.get("status") in _DELIVERED for a in attempts or [])
+
+
 def screen_numerals_note(fields) -> str | None:
-    """fields: [(字段名, 文本)]。只报：写成阿拉伯数字（账号所有者 2026-09-16）。"""
+    """fields: [(字段名, 文本)]。只报：写成阿拉伯数字（账号所有者 2026-09-16）。
+    已经发出去的片子由调用方跳过（`already_published`）。"""
     bad = [f"{name}「{str(text)[m.start():m.end() + 2]}」" for name, text in fields
            for m in SCREEN_COUNT.finditer(str(text or ""))]
     if not bad:
@@ -736,15 +773,16 @@ def spec_taste_extra(spec: dict, *, now: datetime | None = None,
                   winners_ue_problem, tennistv_trim_problem, quote_kind_problem):
         if problem := check(spec):
             hard.append(problem)
-    if problem := peng_shuai_problem(_slug(spec), _outward(spec)):
-        hard.append(problem)
+    if note := peng_shuai_note(_outward(spec)):
+        soft.append(note)                     # 转述来的规则：只报，永不做成闸（见 peng_shuai_note）
     pending_hard, pending_soft = pending_fact_findings(spec, now=now, check_age=check_age)
     hard += pending_hard
     soft += pending_soft
     cover, push = spec.get("cover") or {}, spec.get("push") or {}
-    for note in (hook_identity_note(spec), social_first_note(spec),
-                 screen_numerals_note([("钩子", cover.get("hook")), ("副标题", cover.get("topic")),
-                                       ("推送标题", push.get("summary"))]),
+    numerals = None if already_published(_slug(spec), "reel_publish_ledger") else \
+        screen_numerals_note([("钩子", cover.get("hook")), ("副标题", cover.get("topic")),
+                              ("推送标题", push.get("summary"))])
+    for note in (hook_identity_note(spec), social_first_note(spec), numerals,
                  nickname_note(sum((_quote_texts(s) for s in spec.get("segments") or []
                                     if isinstance(s, dict)), []))):
         if note:
@@ -759,9 +797,9 @@ def xhs_taste_extra(spec: dict, xhs_text: str | None) -> tuple[list[str], list[s
     if not xhs_text:
         return [], []
     hard = [p for p in (xhs_markdown_problem(xhs_text),
-                        one_of_n_problem({"slug": _slug(spec)}, xhs_text),
-                        peng_shuai_problem(_slug(spec), [xhs_text])) if p]
-    return ([], hard) if _auto(spec) else (hard, [])
+                        one_of_n_problem({"slug": _slug(spec)}, xhs_text)) if p]
+    soft = [n for n in (peng_shuai_note([xhs_text]),) if n]
+    return ([], hard + soft) if _auto(spec) else (hard, soft)
 
 
 def interview_taste_extra(spec: dict, xhs_text: str | None = None
@@ -770,7 +808,7 @@ def interview_taste_extra(spec: dict, xhs_text: str | None = None
     cover, push = spec.get("cover") or {}, spec.get("push") or {}
     title = cover.get("title")
     title = "".join(title) if isinstance(title, list) else str(title or "")
-    shadow = {"slug": _slug(spec), "cover": {"hook": title},
+    shadow = {"slug": _slug(spec), "cover": {"hook": title, "eyebrow": "赛后开麦"},
               "push": {"summary": push.get("summary")}}
     texts = [title] + [str(v) for k, v in push.items()
                        if not str(k).startswith("_") and isinstance(v, str)]
@@ -781,8 +819,9 @@ def interview_taste_extra(spec: dict, xhs_text: str | None = None
         one_of_n = (f"写了「N 个赛点／盘点只兑现了一个」：{hits}——赢家永远只兑现最后一个，"
                     "要写就写对手救下了几个（账号所有者 2026-08-19）。")
     hard = [p for p in (total_margin_problem(shadow), one_of_n,
-                        peng_shuai_problem(_slug(spec), texts + ([xhs_text] if xhs_text else [])),
                         xhs_markdown_problem(xhs_text)) if p]
-    soft = [n for n in (screen_numerals_note([("标题", title), ("推送标题", push.get("summary"))]),
+    soft = [n for n in (peng_shuai_note(texts + ([xhs_text] if xhs_text else [])),
+                        None if already_published(_slug(spec), "interview_publish_ledger") else
+                        screen_numerals_note([("标题", title), ("推送标题", push.get("summary"))]),
                         nickname_note([str(z) for z in spec.get("zh") or []])) if n]
     return hard, soft

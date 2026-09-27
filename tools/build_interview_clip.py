@@ -3950,8 +3950,8 @@ def check_topline_format(spec: dict) -> None:
 
 def check_taste_extra(spec: dict, spec_path: Path) -> None:
     """账号所有者口味规则里对采访线也成立的那几道（标题／推送标题拿总分差、赛点同义反复、
-    彭帅、小红书正文 markdown），判据和账在 tools/taste_gates_extra.py。只读 spec 和
-    `.xhs.txt`，第 0.2 秒就报。只报的（汉字数字、昵称音译）印出来不拦。"""
+    小红书正文 markdown），判据和账在 tools/taste_gates_extra.py。只读 spec 和
+    `.xhs.txt`，第 0.2 秒就报。只报的（汉字数字、昵称音译、转述来的那条）印出来不拦。"""
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from taste_gates_extra import interview_taste_extra  # noqa: PLC0415
     xhs = spec_path.with_suffix(".xhs.txt")

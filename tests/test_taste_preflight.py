@@ -207,7 +207,7 @@ def test_主入口的退出码(tp, tmp_path, monkeypatch, capsys):
 
 def test_采访的预检也跑口味闸(tp):
     """`build_interview_clip.main()` 第一道是 `check_taste_extra`（总分差、赛点同义反复、
-    彭帅、小红书 markdown）。预检按名字列采访线的闸——漏了它，预检会对一条 `main()`
+    小红书 markdown）。预检按名字列采访线的闸——漏了它，预检会对一条 `main()`
     当场拦下的采访报全绿。"""
     bad = {"slug": "x-interview", "cover": {"title": ["全场只多赢三分", "「我一直相信自己」"]},
            "push": {"summary": "兹维列夫只多赢三分"}}

@@ -66,6 +66,20 @@ def test_钩子和推送标题不拿全场总分差说事():
         assert not T.TOTAL_MARGIN.search(text), text
 
 
+def test_总分差只管比赛片_网球有故事讲计分故事不拦():
+    """账号所有者那两句（09-13、09-19 chung-nagal）说的都是一场球的封面。「总得分多却输了
+    比赛」在「网球有故事」里本身就是一个正经的计分故事，不能硬红。"""
+    story = _court(hook="总得分多\n却输了比赛")
+    assert T.total_margin_problem(story), "赛场之上照旧红"
+    story["cover"]["eyebrow"] = "网球有故事"
+    assert T.total_margin_problem(story) is None
+    story["cover"]["eyebrow"] = ""
+    assert T.total_margin_problem(story), "eyebrow 空着按赛场之上算（自动草稿就是空的）"
+    hard, _ = T.interview_taste_extra({"slug": "x-interview",
+                                       "cover": {"title": ["全场只多赢三分", "「我一直相信自己」"]}})
+    assert hard and "总分差" in hard[0], "赛后开麦照旧管"
+
+
 def test_总分差只有一份正则_预检摆事实用的就是它():
     """`taste_preflight` 原来自己抄了一份（一个漏「总分落后18分」、一个把「全场多次破发」
     摆成总分说法）。一个数写两处必分叉——钉住它们是同一个对象。"""
@@ -86,34 +100,82 @@ def test_赛点盘点只兑现一个是同义反复_破发点不算():
         assert T.one_of_n_problem(_court(hook=hook)) is None, hook
 
 
-# ──────────────────────────────────────────────────────────────── ③ 彭帅 ──
+# ─────────────────────────────────────────────────── ③ 彭帅（转述来的，只报） ──
 
-def test_会发出去的字里不提彭帅_注解不管():
+def test_会发出去的字里提了彭帅只报_注解不管():
+    """形状：会发出去的字里有就出一句提醒，注解栏不管。**它是一条提醒，不是闸**——
+    口味规则书里这条标的是「转述（09-16）」，没有账号所有者的原话；那种规则他 2026-09-27
+    定了只按自查过，没有原话之前不许做成闸（下一条测试钉行为）。"""
     spec = _court(hook="x")
     spec["segments"][0]["narration"] = "深圳撞上疫情，又撞上彭帅那件事。"
-    assert T.peng_shuai_problem("new-spec", T._outward(spec))
+    note = T.peng_shuai_note(T._outward(spec))
+    assert note and "转述" in note, note
+    assert "账号所有者 2026-09-16：「" not in note, "这条没有他的原话，提醒里不许写成引语"
     # 注解栏可以记（asian-games-vs-china-open 的 `_facts` 里就有「2010 彭帅」）
     noted = {**_court(hook="x"), "_facts": ["2010 彭帅"]}
-    assert T.peng_shuai_problem("new-spec", T._outward(noted)) is None
-    assert T.PENG_SHUAI_OWNER_APPROVED == frozenset(), "这张表只有账号所有者本人能加"
+    assert T.peng_shuai_note(T._outward(noted)) is None
 
 
-def test_解说片也一个字都不提彭帅():
-    """finals-venues（38a68bda^）的旁白就是在 `_SCRIPTS` 里写的——解说片没有 spec，
-    这条在 CI 上扫它的旁白、要点、标题、封面问句和小红书 hook。"""
-    from tennislive.video import explainer as E  # noqa: PLC0415
+def _mention(spec: dict, xhs: str, word: str) -> tuple[dict, str]:
+    """把「<word>那件事。」注进会发出去的几处：第一段旁白（注在末段会撞上「收尾一问」）、
+    推送导语、采访字幕、正文。"""
+    import copy  # noqa: PLC0415
 
-    texts = []
-    for beats in E._SCRIPTS.values():
-        for row in beats:
-            seg = E.ExplainerSegment(*row)
-            texts += [seg.narration, seg.title, seg.question, *seg.points]
-    for opening in E._OPENINGS.values():
-        texts += [str(opening.get(k) or "") for k in ("topic", "question", "narration", "gloss")]
-    texts += [str(c.get("hook") or "") for c in E._CAPTIONS.values()]
-    assert len(texts) > 300, "解说片一段文字都没扫到，判据的主语像是没了"
-    assert T.peng_shuai_problem("explainer", texts) is None
-    assert T.peng_shuai_problem("explainer", ["深圳撞上疫情，又撞上彭帅那件事"])
+    spec, line = copy.deepcopy(spec), f"{word}那件事。"
+    for seg in spec.get("segments") or []:
+        if isinstance(seg, dict) and seg.get("narration"):
+            seg["narration"] += line
+            break
+    push = spec.setdefault("push", {})
+    push["lead"] = str(push.get("lead") or "") + line
+    if isinstance(spec.get("zh"), list) and spec["zh"]:
+        spec["zh"][-1] = str(spec["zh"][-1]) + line
+    return spec, f"{xhs}\n{line}"
+
+
+def test_不提彭帅是转述来的_三个入口都只报不拦(tmp_path, capsys):
+    """review 复现过的阻塞：这条做成硬闸时，同一句话注「李娜」`validate_spec` 绿、注「彭帅」
+    红；采访线上一条如实翻译球员提到彭帅的字幕会停在渲染入口，含这句字幕的自动草稿转不了正。
+
+    判据：同形的对照词（两个字的中国球员名）和「彭帅」各注一遍——每个入口**硬的那一半
+    一模一样**，只报的那一半多出一句转述提醒。渲染入口（`validate_spec`、
+    `enforce_spec_wording`、`build_interview_clip.check_taste_extra`）照样过。"""
+    reel = pytest.importorskip("build_match_reel")
+    clip = pytest.importorskip("build_interview_clip")
+    slug = "medvedev-royer-hangzhou-2026-r2"
+    base = reel.load_spec(REELS / f"{slug}.json")
+    base_xhs = _xhs(slug) or ""
+    iv_path = INTERVIEWS / "tien-cobolli-laver-cup-2026-interview.json"
+    iv_base = json.loads(iv_path.read_text("utf-8"))
+    iv_xhs = iv_path.with_suffix(".xhs.txt").read_text("utf-8")
+
+    def verdicts(word: str) -> dict:
+        spec, xhs = _mention(base, base_xhs, word)
+        iv, ixhs = _mention(iv_base, iv_xhs, word)
+        where = tmp_path / word
+        where.mkdir()
+        path = where / f"{slug}.json"
+        path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+        path.with_suffix(".xhs.txt").write_text(xhs, encoding="utf-8")
+        reel.validate_spec(json.loads(json.dumps(spec)))            # 不抛
+        reel.enforce_spec_wording(json.loads(json.dumps(spec)), path)
+        ipath = where / iv_path.name
+        ipath.write_text(json.dumps(iv, ensure_ascii=False), encoding="utf-8")
+        ipath.with_suffix(".xhs.txt").write_text(ixhs, encoding="utf-8")
+        clip.check_taste_extra(iv, ipath)                           # 不 SystemExit
+        return {"spec": T.spec_taste_extra(spec, check_age=False),
+                "xhs": T.xhs_taste_extra(spec, xhs),
+                "interview": T.interview_taste_extra(iv, ixhs)}
+
+    control, probed = verdicts("李娜"), verdicts("彭帅")
+    for entry in ("spec", "xhs", "interview"):
+        assert probed[entry][0] == control[entry][0], (
+            f"{entry}_taste_extra：注进「彭帅」之后硬的那一半变了——转述来的规则只报，"
+            f"永不做成闸：{probed[entry][0]}")
+        extra = [n for n in probed[entry][1] if "彭帅" in n]
+        assert extra and "转述" in extra[0], f"{entry}_taste_extra 该多一句转述提醒：{probed[entry][1]}"
+        assert not [n for n in control[entry][1] if "彭帅" in n]
+    assert "彭帅" in capsys.readouterr().out, "渲染入口要把提醒印出来"
 
 
 # ────────────────────────────────────────────── ④ 赛场之上封面不用信箱式 ──
@@ -171,6 +233,11 @@ def test_写了要等名单就要回头查_还没定的过期要再查():
     assert T.pending_fact_findings(
         {"slug": "x", "_editing_why": "剪辑的时候要等死球了再去切", "cover": {
             "_why": "具体帧要等 runner 渲完 poster.jpg"}}, now=NOW) == ([], [])
+    # TBD 只认独立的那个词：注解里抄进来的 id／URL 是大小写混排的随机串，不许撞上
+    for noise in ("https://www.youtube.com/watch?v=aXtBdQ9kLmZ", "flashscore 比赛 id xTbD4Kp2"):
+        assert T.pending_fact_findings({"slug": "x", "_source": noise}, now=NOW) == ([], []), noise
+    for mark in ("场序 TBD", "决赛对手TBD", "order of play: tbd"):
+        assert T.pending_fact_findings({"slug": "x", "_facts": [mark]}, now=NOW)[0], mark
 
 
 # ───────────────────────── ⑦~⑪ 从 pytest 挪进 validate_spec 的那五道（形状测试） ──
@@ -255,6 +322,21 @@ def test_只报的四道真的会报_也不会报错好写法():
     assert T.nickname_note(["你支持的是凯斯还是我"]) is None
 
 
+def test_汉字数字那条只对还没发出去的片子出声():
+    """它在全库报一半（规矩之前的写法），而已发的不为文案重渲——对已经发出去的片子每趟
+    dry-run 都印一遍，只会把它训练成没人看的噪音。按发布账本认「发出去了」。"""
+    spec = _reels()["chung-nagal-davis-cup-2026"]
+    assert T.screen_numerals_note([("钩子", spec["cover"]["hook"])]), "底稿要真的有汉字计数"
+    assert T.already_published("chung-nagal-davis-cup-2026", "reel_publish_ledger")
+    _, soft = T.spec_taste_extra(spec, check_age=False)
+    assert not [n for n in soft if "汉字" in n], soft
+    _, soft = T.spec_taste_extra({**spec, "slug": "chung-nagal-new"}, check_age=False)
+    assert [n for n in soft if "汉字" in n], "没发过的照旧要报"
+    assert T.already_published("alcaraz-fritz-laver-cup-2026-interview",
+                               "interview_publish_ledger"), "采访账本写的是 accepted"
+    assert not T.already_published("no-such-slug", "reel_publish_ledger")
+
+
 # ═════════════════════════════════════════════ 全库误伤 0 ＋ 存量表只许减 ══
 
 def test_全库已发的spec一条都不红():
@@ -333,7 +415,7 @@ def test_前瞻事实的认领过一天不会让全库扫描变红():
 
 
 def test_小红书正文那一面接在措辞座位上(tmp_path):
-    """`validate_spec` 拿不到 `.xhs.txt`，markdown／赛点同义反复／彭帅的正文那一面坐在
+    """`validate_spec` 拿不到 `.xhs.txt`，markdown／赛点同义反复的正文那一面坐在
     `enforce_spec_wording`（dry-run / check-narration / render 三条路共用的那个座位）。"""
     reel = pytest.importorskip("build_match_reel")
     slug = "medvedev-royer-hangzhou-2026-r2"
