@@ -135,10 +135,19 @@ def test_数据图赢盘用薄荷_占优用黄绿(variant):
 def test_数据图台头是赛场之上_统计数字也用TL_Score(variant):
     """Q15：台头「网球时差 · 赛场之上」；技术统计数字和比分同一副 TL Score。"""
     html = _html(_SPECS[0], variant)
-    if variant != "film_band":     # 带式那一版没有台头（上面压着视频顶栏）
+    # 三个变体都查：带式那一版没有台头，但它的大标题原来也写着「全场数据复盘」——
+    # 评审 2026-09-27 抓到 Q15 那句「第四个栏目名」在带式卡上活了下来
+    assert "数据复盘" not in html, "还写着「数据复盘」——三个栏目之外的第四个名字"
+    if variant == "film_band":     # 带式那一版没有台头（上面压着视频顶栏）
+        assert "<h1>全场数据对比</h1>" in html, (
+            "带式那版的大标题不是「全场数据对比」——和 poster 的段标题分叉了")
+    else:
         assert '<span class="brand">网球时差 · 赛场之上</span>' in html, (
             "台头不是「网球时差 · 赛场之上」")
-        assert "数据复盘" not in html, "台头还写着「数据复盘」——三个栏目之外的第四个名字"
+        # 一张图上只印一次：poster 的 footer 左边原来也是这一句，台头换成它之后印了两遍
+        assert html.count("网球时差 · ") == 1, (
+            f"「网球时差 · 栏目」在一张图上印了 {html.count('网球时差 · ')} 遍——"
+            "footer 左边又把台头那句写了一遍？")
     families = [re.search(r"font-family:([^;]+)", body).group(1).split(",")[0].strip()
                 for sel, body in _rules(html)
                 if sel == ".sval" and "font-family" in body]
@@ -151,6 +160,23 @@ def test_数据图台头是赛场之上_统计数字也用TL_Score(variant):
         # 到 1519px、溢出 1440 画布（静默裁掉最后一行）。62px 把行距钉回原来那一格。
         assert _decl(html, ".smain", "line-height") == "62px", (
             "统计数字的行高没钉住——TL Score 的 normal 行高每行多 12px，film 版会溢出画布")
+
+
+@pytest.mark.parametrize("variant", ["poster", "film"])
+def test_数据图台头的栏目名跟着封面走(variant):
+    """台头读 `cover.eyebrow`（缺省「赛场之上」），和封面台头、正片常驻角标**同一处**
+    ——`build_match_reel` 常驻角标那段注释：各读各的，一部片子里就写着两个栏目。
+    写死「赛场之上」的话，一条「网球有故事」剪辑片挂了 `stat_card: true`，
+    数据图就在「网球有故事」的角标底下印出「赛场之上」。"""
+    spec = json.loads((ROOT / f"specs/reels/{_SPECS[0]}.json").read_text(encoding="utf-8"))
+    spec["cover"]["eyebrow"] = "网球有故事"
+    html = sc.build(spec, variant=variant)
+    assert '<span class="brand">网球时差 · 网球有故事</span>' in html, (
+        "封面写的是「网球有故事」，数据图台头没跟着走")
+    assert "赛场之上" not in html, "栏目名还有一处是写死的「赛场之上」"
+    del spec["cover"]["eyebrow"]
+    assert '<span class="brand">网球时差 · 赛场之上</span>' in sc.build(spec, variant=variant), (
+        "封面没写 eyebrow 时缺省应该是「赛场之上」（和封面、常驻角标的缺省一样）")
 
 
 def test_数据图打着token标记():

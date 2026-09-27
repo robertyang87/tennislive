@@ -254,8 +254,20 @@ _HEADSHOT_BG = "#e9efe9"  # token-exempt: 头像透明处的垫底，不是界�
 _BG_BASE = f"linear-gradient(170deg,{DARK['card']} 0%,{DARK['background']} 55%)"
 
 # 台头（Q15）：栏目只有三个，这张图属于「赛场之上」——原来写的「数据复盘」
-# 是三个栏目之外的第四个名字。推送页那张的 footer 左边本来就是这一句。
-BRAND_LINE = "网球时差 · 赛场之上"
+# 是三个栏目之外的第四个名字。
+# ⚠️ 栏目名读 `cover.eyebrow`（缺省「赛场之上」），和封面台头、正片常驻角标读的是
+# **同一处**（`build_match_reel` 常驻角标那段注释：各读各的，一部片子里就写着两个栏目）。
+# 2026-09-27 挂着 `stats` 的 210 条 spec 全是「赛场之上」，所以今天看不出差别；哪天一条
+# 「网球有故事」的剪辑片挂了 `stat_card: true`，写死的台头就会在「网球有故事」的角标
+# 底下印出「赛场之上」。
+DEFAULT_COLUMN = "赛场之上"
+
+
+def brand_line(cover: dict) -> str:
+    column = str(cover.get("eyebrow", "")).strip() or DEFAULT_COLUMN
+    return f"网球时差 · {column}"
+
+
 # 赢家头像那一圈描边：它唯一的意思就是「这一方赢了」，所以和赢盘同一支薄荷
 # （Q1「凡是薄荷的地方都在说这一方赢了，其余品牌处一律黄绿」）。黄绿描边 ＋ 薄荷
 # 赢盘并排渲过：两支绿挨在一起，读不出哪支是「赢」——比较图在 WP8 的 scratchpad。
@@ -551,7 +563,7 @@ h1{{font-size:34px;text-align:center;color:{BRAND};margin-bottom:14px}}
 .sval.lead .smain{{color:{BRAND}}}.band .slabel{{font-size:31px;font-weight:700;text-align:center;position:relative;top:-9px}}
 .band .slabel-en{{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:16px;font-weight:400;color:{DARK['subtle-foreground']}}}
 .band .slabel--solo{{top:0}}
-</style></head><body class="band"><h1>全场数据复盘</h1><div class="names"><span>{names[0]}</span><span>{names[1]}</span></div>
+</style></head><body class="band"><h1>全场数据对比</h1><div class="names"><span>{names[0]}</span><span>{names[1]}</span></div>
 <div class="score">{score_line}</div>{rows_html}</body></html>"""
 
     def side(meta: dict, raw: dict, where: str) -> str:
@@ -606,7 +618,9 @@ h1{{font-size:34px;text-align:center;color:{BRAND};margin-bottom:14px}}
                     ".srow{margin-bottom:20px;padding-bottom:13px}")
     else:
         section_title = '<div class="section-title">全场数据对比</div>'
-        footer = ('<div class="footer">\n    <span>网球时差 · 赛场之上</span>\n'
+        # footer 只留「场地 · 日期」。左边原来那句「网球时差 · 赛场之上」拿掉了：Q15 把台头
+        # 换成同一句之后，一张图上印了两遍（评审 2026-09-27）。
+        footer = ('<div class="footer">\n'
                   f'    <span>{footer_venue}{" · " + footer_date if footer_date else ""}</span>'
                   "\n  </div>")
         film_css = ""
@@ -751,15 +765,17 @@ body{{color:{FG};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
    位移单独量过（纯中文在 top:0 时比数字中心低 10.6px，所以取 −5px）。 */
 .slabel--solo{{top:-5px}}
 
+/* 只剩「场地 · 日期」一格，居中——和上面居中的中英标签、段标题一条中轴（左右两格
+   那版的左边是台头那句的重复，2026-09-27 拿掉；并排渲过左 / 右 / 居中三种，居中最稳）。 */
 .footer{{margin-top:38px;padding-top:20px;border-top:1px solid {_rgba(FG, .18)};
- display:flex;justify-content:space-between;align-items:center;
+ display:flex;justify-content:center;align-items:center;
  font-family:'TL Sans SC',sans-serif;font-size:23px;color:{vp.DIM};letter-spacing:.5px}}
 {film_css}
 </style></head>
 <body>
 <div class="bar"></div>
 <div class="head">{icon_html}
-  <div class="brandlines"><span class="brand">{BRAND_LINE}</span>
+  <div class="brandlines"><span class="brand">{html.escape(brand_line(cover))}</span>
   <span class="topic">{topic}</span></div>
 </div>
 
