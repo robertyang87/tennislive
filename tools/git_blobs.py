@@ -75,14 +75,33 @@ def is_shallow(cwd: Path | str | None = None) -> bool:
     return out.stdout.strip() == "true"
 
 
+def fetch_depth_args(remote: str, branch: str, cwd: Path | str | None = None) -> list[str]:
+    """`fetch_ref` 要不要带 `--depth=1`。**只有两种情况带**：
+
+    - runner 上（`GITHUB_ACTIONS=true`）的浅克隆：检出是 `--depth=1`，要的只是
+      最新那一个提交，每趟 probe 都 fetch，多取历史是白等
+    - 本地浅克隆里**还没有**这个 ref：不带 depth 的话，git 会一路往回取到和已有
+      浅边界接上为止（没有交点就是整条历史）
+
+    ⚠️ **本地已经有这个 ref 的浅克隆一律不带**：这台沙箱就是 `--depth=20` 的
+    浅克隆，带 `--depth=1` 会把 `origin/main` 截成一个提交——`git merge-base
+    <特性分支> origin/main` 当场返回空，下一次 rebase 就找不到分叉点
+    （2026-09-27 review 复现）。完整克隆（不浅）也一律不带：带了会把它变浅，丢历史。
+    """
+    if not is_shallow(cwd):
+        return []
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        return ["--depth=1"]
+    if rev(f"refs/remotes/{remote}/{branch}", cwd=cwd) is None:
+        return ["--depth=1"]
+    return []
+
+
 def fetch_ref(remote: str, branch: str, cwd: Path | str | None = None) -> str:
     """把 `<remote>/<branch>` 取到 `refs/remotes/<remote>/<branch>`，返回那个 ref 名。
-
-    ⚠️ 只在**本来就是浅克隆**时带 `--depth=1`：runner 的检出是浅的，要的只是
-    最新那一个提交；本地完整克隆里带 `--depth` 会把它变成浅克隆，丢历史。
-    """
+    带不带 `--depth=1` 见 `fetch_depth_args`——**绝不把一份深的浅克隆截短**。"""
     ref = f"refs/remotes/{remote}/{branch}"
-    depth = ["--depth=1"] if is_shallow(cwd) else []
+    depth = fetch_depth_args(remote, branch, cwd)
     git("fetch", "--quiet", *depth, remote, f"+refs/heads/{branch}:{ref}", cwd=cwd)
     return ref
 

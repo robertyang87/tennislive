@@ -176,15 +176,147 @@ def test_probe失败只摘自己那条认领_摘空了删文件(repo, monkeypatc
     assert _remote_claims(repo.remote) is None
 
 
+def _iso(dt):
+    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def test_认领过期不算先例():
     from datetime import datetime, timedelta, timezone
     now = datetime(2026, 9, 27, 6, 0, tzinfo=timezone.utc)
     doc = {"claims": [
-        {"slug": "old", "claimed_at": (now - timedelta(days=4)).strftime("%Y-%m-%dT%H:%M:%SZ")},
-        {"slug": "new", "claimed_at": (now - timedelta(hours=2)).strftime("%Y-%m-%dT%H:%M:%SZ")},
+        {"slug": "old", "claimed_at": _iso(now - timedelta(days=4)), "done_at": _iso(now - timedelta(days=4))},
+        {"slug": "new", "claimed_at": _iso(now - timedelta(hours=2)), "done_at": _iso(now - timedelta(hours=1))},
     ]}
     got = probe_claims._claim_priors(doc, ref="HEAD", now=now, days=probe_claims.DEDUPE_DAYS)
     assert [p.slug for p in got] == ["new"]
+
+
+def test_没标完成的认领开跑90分钟后作废_标了完成的活满三天(capsys):
+    """job 被取消／超时：`release` 挂在 failure() 上不跑、`done` 也没标——认领不许把这一场压三天。"""
+    from datetime import datetime, timedelta, timezone
+    now = datetime(2026, 9, 27, 6, 0, tzinfo=timezone.utc)
+    stale = probe_claims.CLAIM_STALE_MINUTES
+    doc = {"claims": [
+        {"slug": "cancelled", "claimed_at": _iso(now - timedelta(minutes=stale + 5))},
+        {"slug": "running", "claimed_at": _iso(now - timedelta(minutes=stale - 5))},
+        {"slug": "finished", "claimed_at": _iso(now - timedelta(hours=20)),
+         "done_at": _iso(now - timedelta(hours=19))},
+    ]}
+    got = probe_claims._claim_priors(doc, ref="HEAD", now=now, days=probe_claims.DEDUPE_DAYS)
+    assert sorted(p.slug for p in got) == ["finished", "running"]
+    assert "cancelled 的认领开跑" in capsys.readouterr().out, "作废要出声，别和「没人认领」长得一样"
+
+
+def test_认领时刻漏了时区_按UTC读_不许TypeError把整班带崩():
+    from datetime import datetime, timedelta, timezone
+    now = datetime(2026, 9, 27, 6, 0, tzinfo=timezone.utc)
+    naive = (now - timedelta(minutes=10)).replace(tzinfo=None).isoformat()     # 没有 Z
+    doc = {"claims": [{"slug": "naive", "claimed_at": naive}, {"slug": "junk", "claimed_at": 12345},
+                      "not-a-dict", {"slug": "none"}]}
+    got = probe_claims._claim_priors(doc, ref="HEAD", now=now, days=3)
+    assert [p.slug for p in got] == ["naive"]
+    out = probe_claims.with_claim(doc, key=KEY, url=YT, slug="x", branch="b", run_id="1",
+                                  outdir="o", now=now)
+    assert [c["slug"] for c in out["claims"]] == ["naive", "x"]
+    # now 自己是 naive 也不许炸
+    assert [p.slug for p in probe_claims._claim_priors(doc, ref="HEAD", now=now.replace(tzinfo=None),
+                                                        days=3)] == ["naive"]
+
+
+def test_分支上probe成功给认领标完成_main上看得见(repo, monkeypatch):
+    monkeypatch.chdir(repo.work)
+    assert probe_claims.main(["probe-step", "--url", YT, "--slug", "wang-garland-x",
+                              "--branch", "feature", "--run-id", "1"]) == 0
+    assert "done_at" not in _remote_claims(repo.remote)["claims"][0]
+    assert probe_claims.main(["done", "--url", YT, "--slug", "wang-garland-x"]) == 0
+    (claim,) = _remote_claims(repo.remote)["claims"]
+    assert claim["done_at"], "分支上的产物 main 上看不见，只能靠这一笔证明那趟跑完了"
+    # 没有这条认领（开跑那一推没推上）就不补写
+    assert probe_claims.main(["done", "--url", YT, "--slug", "nobody"]) == 0
+    assert [c["slug"] for c in _remote_claims(repo.remote)["claims"]] == ["wang-garland-x"]
+
+
+def test_probe那一步只fetch_main一次(repo, monkeypatch):
+    monkeypatch.chdir(repo.work)
+    real = git_blobs.fetch_ref
+    calls = []
+    monkeypatch.setattr(git_blobs, "fetch_ref",
+                        lambda r, b, cwd=None: calls.append(b) or real(r, b, cwd=cwd))
+    assert probe_claims.main(["probe-step", "--url", YT, "--slug", "a-b",
+                              "--branch", "feature", "--run-id", "1"]) == 0
+    assert calls == ["main"], "查先例前取过一次，推认领的第一趟不再取"
+    assert _remote_claims(repo.remote)["claims"][0]["slug"] == "a-b"
+
+
+def test_probe那一步什么错都只出声(repo, monkeypatch, capsys):
+    """认领是告示：cat-file 解析挂了（ValueError）、坏认领（TypeError）都不许让 probe 红。"""
+    monkeypatch.chdir(repo.work)
+
+    def boom(*a, **k):
+        raise ValueError("cat-file 输出对不上")
+
+    monkeypatch.setattr(probe_claims, "find_priors", boom)
+    monkeypatch.setattr(probe_claims, "push_to_main", lambda *a, **k: (_ for _ in ()).throw(TypeError("x")))
+    assert probe_claims.main(["probe-step", "--url", YT, "--slug", "a-b",
+                              "--branch", "feature", "--run-id", "1"]) == 0
+    out = capsys.readouterr().out
+    assert "这一趟**没查**：ValueError" in out and "认领没推上 main（TypeError" in out
+
+
+# ------------------------------------------------------------------ git_blobs.fetch_ref
+
+
+def _deep_shallow(tmp_path):
+    """main 上 5 个提交的远端 ＋ 一份 `--depth=3` 的本地浅克隆（这台沙箱就是这个形状），
+    本地在 main 上开了特性分支，远端 main 又往前走了一个提交。"""
+    remote = tmp_path / "deep.git"
+    _git(tmp_path, "init", "-q", "--bare", "-b", "main", str(remote))
+    seed = tmp_path / "deep-seed"
+    _git(tmp_path, "init", "-q", "-b", "main", str(seed))
+    _git(seed, "remote", "add", "origin", str(remote))
+    for i in range(5):
+        _write(seed, "n.txt", str(i))
+        _git(seed, "add", "-A")
+        _git(seed, "commit", "-q", "-m", f"c{i}")
+    _git(seed, "push", "-q", "origin", "main")
+    work = tmp_path / "deep-work"
+    _git(tmp_path, "clone", "-q", "--depth=3", f"file://{remote}", str(work))
+    fork = _git(work, "rev-parse", "HEAD").strip()
+    _git(work, "switch", "-q", "-c", "feat")
+    _write(work, "f.txt", "feat")
+    _git(work, "add", "-A")
+    _git(work, "commit", "-q", "-m", "feat")
+    _write(seed, "n.txt", "5")
+    _git(seed, "commit", "-q", "-am", "c5")
+    _git(seed, "push", "-q", "origin", "main")
+    assert git_blobs.is_shallow(work) and git_blobs.rev("refs/remotes/origin/main", cwd=work)
+    return work, fork
+
+
+def test_深的浅克隆fetch_main不许被截成一个提交(tmp_path, monkeypatch):
+    """review 复现：`--depth=20` 的沙箱里 fetch 一律带 `--depth=1`，origin/main 被截成一个
+    提交，`git merge-base feat origin/main` 当场返回空，下一次 rebase 就找不到分叉点。"""
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    work, fork = _deep_shallow(tmp_path)
+    git_blobs.fetch_ref("origin", "main", cwd=work)
+    res = subprocess.run(["git", "merge-base", "feat", "refs/remotes/origin/main"], cwd=work,
+                         capture_output=True, text=True)
+    assert res.returncode == 0 and res.stdout.strip() == fork, (
+        "origin/main 被截短了——特性分支和它找不到分叉点")
+    assert int(_git(work, "rev-list", "--count", "refs/remotes/origin/main")) >= 4
+
+
+def test_fetch_ref只在runner上或本地还没有这个ref时带depth1(tmp_path, monkeypatch, repo):
+    work, _fork = _deep_shallow(tmp_path)
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    assert git_blobs.fetch_depth_args("origin", "main", cwd=work) == []
+    assert git_blobs.fetch_depth_args("origin", "nosuch", cwd=work) == ["--depth=1"], (
+        "本地还没有这个 ref：不带 depth 会一路往回取到整条历史")
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    assert git_blobs.fetch_depth_args("origin", "main", cwd=work) == ["--depth=1"], (
+        "runner 的检出是 depth 1，要的只是最新那一个提交")
+    assert git_blobs.fetch_depth_args("origin", "main", cwd=repo.seed) == [], (
+        "完整克隆一律不带——带了会把它变浅")
 
 
 # ------------------------------------------------------------------ 编排器
@@ -219,6 +351,172 @@ def test_编排器_别人已经在做这一场就不点run_借源和自己不算
                      "sz-sfzverev",                          # 不带这场的姓
                      "wang-garland"):                        # 自己上一趟：归 state 管
         assert o.drop_already_probed(item, finder=lambda k, sn, s=harmless: [_prior(s)]) == item, harmless
+
+
+def test_编排器_故事片借同一条源片不许挡住这一场的赛场之上():
+    """review 抓到的误拦：`-src-` 不是故事片唯一的写法。这三条都是真实 slug，都和
+    同一场的赛场之上 probe 了同一条视频，slug 里都带着这场的姓、都没有 `src`——
+    按「slug 里带着姓」挡，故事片先 probe 了，这一场的赛场之上三天不点。"""
+    o = _orch()
+    for cand, story in (
+            (_cand("keys-zheng", "Madison Keys", "Qinwen Zheng"), "comebacks-zheng-keys"),
+            (_cand("eala-zheng", "Alexandra Eala", "Qinwen Zheng"), "zheng-us-open-outlook-zheng"),
+            (_cand("zheng-vekic", "Qinwen Zheng", "Donna Vekic"), "zheng-lanlana-hl-zheng-paris")):
+        item = [(cand, YT, "youtube")]
+        assert o.drop_already_probed(item, finder=lambda k, sn, s=story: [_prior(s, kind="probe")]) == item, story
+    # 开头两个词正好是这两个姓，但 spec 自己说是网球有故事：也不挡
+    keys = _cand("keys-zheng", "Madison Keys", "Qinwen Zheng")
+    story = probe_claims.Prior(slug="zheng-keys-story", kind="probe", where="w", ref="HEAD",
+                               at="2026-09-24", column="网球有故事")
+    assert o.drop_already_probed([(keys, YT, "y")], finder=lambda k, sn: [story]) == [(keys, YT, "y")]
+
+
+def test_编排器_有正面证据才挡_命名或栏目():
+    o = _orch()
+    keys = _cand("keys-zheng", "Madison Keys", "Qinwen Zheng")
+    item = [(keys, YT, "youtube")]
+    # 会话的命名：赢家在前 ＋ 站 ＋ 年 ＋ 轮
+    assert o.drop_already_probed(item, finder=lambda k, sn: [_prior("zheng-keys-us-open-2026-r3")]) == []
+    # 缩写名的自动草稿：slug 只带一个姓，但草稿自己说是赛场之上
+    full = _cand("pliskova-shnaider", "Karolina Pliskova", "Diana Shnaider")
+    draft = probe_claims.Prior(slug="ka.-shnaider", kind="probe", where="w", ref="HEAD",
+                               at="2026-09-03", column=probe_claims.MATCH_COLUMN)
+    assert o.drop_already_probed([(full, YT, "y")], finder=lambda k, sn: [draft]) == []
+    # 同一条视频上的赛场之上，slug 里一个姓都不带（合集视频里的另一场）：不挡
+    other = probe_claims.Prior(slug="sabalenka-x", kind="probe", where="w", ref="HEAD",
+                               at="2026-09-03", column=probe_claims.MATCH_COLUMN)
+    assert o.drop_already_probed([(full, YT, "y")], finder=lambda k, sn: [other]) == [(full, YT, "y")]
+
+
+def test_find_priors带出先例的栏目_赛场之上和故事片分得开(repo, monkeypatch):
+    """`blocks_dispatch` 靠栏目分赛场之上和故事片借源：栏目要从 spec／草稿里读出来——
+    编排器的检出是稀疏的，spec 在 main 上、不在工作区里也要按 git 对象读得到。"""
+    _git(repo.seed, "switch", "-q", "main")
+    _write(repo.seed, "specs/reels/wang-garland-singapore-2026-r2.json",
+           {"cover": {"eyebrow": "赛场之上"}})
+    # 开头两个词正好是这两个姓的故事片（命名认不出来，只有栏目认得出）
+    _write(repo.seed, f"output/{_today()}/reel/garland-wang-story/probe.json", {"url": YT})
+    _write(repo.seed, "specs/reels/garland-wang-story.json", {"cover": {"eyebrow": "网球有故事"}})
+    _git(repo.seed, "add", "-A")
+    _git(repo.seed, "commit", "-q", "-m", "specs")
+    _git(repo.seed, "push", "-q", "origin", "main")
+    git_blobs.fetch_ref("origin", "main", cwd=repo.work)
+    monkeypatch.chdir(repo.work)
+    got = probe_claims.find_priors(KEY, refs=["refs/remotes/origin/main"], root=repo.work,
+                                   surnames=["wang", "garland"])
+    assert sorted((p.slug, p.column) for p in got) == [
+        ("garland-wang-story", "网球有故事"), ("wang-garland-singapore-2026-r2", "赛场之上")]
+    blocking = [p.slug for p in got if probe_claims.blocks_dispatch(p, "wang-garland", ["wang", "garland"])]
+    assert blocking == ["wang-garland-singapore-2026-r2"]
+    assert probe_claims.spec_column({"cover": {"eyebrow": "网球有故事"}, "_column": "reel"}) == "网球有故事"
+    assert probe_claims.spec_column({"_column": "reel"}) == "赛场之上", "自动草稿只写 _column"
+    assert probe_claims.spec_column({"_column": "赛场之上。讲一场对决，赢家在前。"}) == "赛场之上"
+    assert probe_claims.spec_column({"cover": "x"}) == "" and probe_claims.spec_column(None) == ""
+
+
+def _state_entry(slug, at, video=KEY, date_="2026-09-24"):
+    return {"column": "reel", "score": 80, "date": date_, "video": video,
+            "dispatched_at": _iso(at)}
+
+
+def test_编排器_缩写名那趟被取消_认领和state过了钟_全名那条照样点():
+    """review 复现的死锁：编排器缩写名那趟被取消（63 分钟超时），`release` 挂在
+    failure() 上不跑，认领和 state 条目都留着；下一班同一场冒出全名 slug，老规则
+    按「slug 里带着姓」拿缩写名那条认领挡住它——两个 slug 三天里谁都不点。"""
+    from datetime import datetime, timedelta, timezone
+    o = _orch()
+    t0 = datetime(2026, 9, 24, 10, 0, tzinfo=timezone.utc)
+    full = _cand("pliskova-shnaider", "Karolina Pliskova", "Diana Shnaider")
+    item = [(full, YT, "youtube")]
+    claim_doc = {"claims": [{"slug": "ka.-shnaider", "branch": "main", "outdir": "o",
+                             "claimed_at": _iso(t0)}]}
+
+    def run(now):
+        state = {"dispatched": {"ka.-shnaider": _state_entry("ka.-shnaider", t0)}}
+        finder = lambda k, sn: probe_claims._claim_priors(claim_doc, ref="HEAD", now=now, days=3)  # noqa: E731
+        return o.drop_already_probed(item, finder=finder, state=state, now=now)
+
+    assert run(t0 + timedelta(minutes=30)) == [], "那一趟可能还在跑（30 分钟）：要挡"
+    assert run(t0 + timedelta(hours=2)) == item, "认领和 state 都过了钟、probe 也没落：不许再挡"
+    # 认领推不上的那趟（只有 state）：一样在钟内挡、过钟放
+    for minutes, want in ((30, []), (120, item)):
+        state = {"dispatched": {"ka.-shnaider": _state_entry("ka.-shnaider", t0)}}
+        got = o.drop_already_probed(item, finder=lambda k, sn: [], state=state,
+                                    now=t0 + timedelta(minutes=minutes))
+        assert got == want, minutes
+    # 那一趟真跑完了（probe.json 在 main 上）：多久以后都挡
+    done = probe_claims.Prior(slug="ka.-shnaider", kind="probe", where="w", ref="HEAD", at="2026-09-24")
+    state = {"dispatched": {"ka.-shnaider": _state_entry("ka.-shnaider", t0)}}
+    assert o.drop_already_probed(item, finder=lambda k, sn: [done], state=state,
+                                 now=t0 + timedelta(days=1)) == []
+    # 同一条源片、另一天的 state 条目（再交手）不算
+    state = {"dispatched": {"ka.-shnaider": _state_entry("ka.-shnaider", t0, date_="2026-09-10")}}
+    assert o.drop_already_probed(item, finder=lambda k, sn: [], state=state,
+                                 now=t0 + timedelta(minutes=30)) == item
+
+
+def test_编排器_被挡下的候选记进state_下一班不再跑find_highlight(monkeypatch, tmp_path):
+    """review：被挡下的候选每 10 分钟一班都重跑一遍 yt-dlp 搜索 ＋ vet。记进
+    `state["blocked"]`，下一班拿缓存的源片只复查先例；挡它的没了就照常点。"""
+    import datetime as dt
+    import json as _json
+    import subprocess as sp
+    o = _orch()
+    state_file = tmp_path / "state.json"
+    monkeypatch.setattr(o, "STATE_PATH", state_file)
+    monkeypatch.setattr(o, "SPECS_DIR", tmp_path / "specs")
+    today = dt.date.today().isoformat()
+    monkeypatch.setattr(o, "build_digest", lambda d: object())
+    monkeypatch.setattr(o, "candidates", lambda dig: [
+        {**_cand("wang-garland", "Xinyu Wang", "Caty Garland"), "date": today}])
+    searches = []
+    monkeypatch.setitem(sys.modules, "detect_highlights", type("M", (), {
+        "HighlightSourceError": RuntimeError,
+        "find_highlight": staticmethod(lambda h, a, e, y: searches.append(h) or (YT, "youtube"))})())
+    priors = [_prior("wang-garland-singapore-2026-r2")]
+    monkeypatch.setattr(o, "_prior_finder", lambda k, sn: list(priors))
+    calls = []
+    monkeypatch.setattr(sp, "run", lambda cmd, check=True, **kw: calls.append(cmd))
+    monkeypatch.setattr(sys, "argv", ["orchestrate.py", "--apply"])
+
+    class Clock(dt.datetime):                               # 每班之间过十分钟
+        t = [dt.datetime.now(dt.timezone.utc)]
+
+        @classmethod
+        def now(cls, tz=None):
+            cls.t[0] += dt.timedelta(minutes=10)
+            return cls.t[0]
+
+    monkeypatch.setattr(o, "datetime", Clock)
+
+    assert o.main() == 0 and calls == [] and len(searches) == 1
+    saved = _json.loads(state_file.read_text(encoding="utf-8"))
+    assert saved["blocked"]["wang-garland"]["url"] == YT
+    assert saved["blocked"]["wang-garland"]["by"] == "wang-garland-singapore-2026-r2"
+    assert "wang-garland" not in saved["dispatched"], "挡下不是点过：dashboard 按 dispatched 数"
+    before = state_file.read_bytes()
+
+    assert o.main() == 0 and calls == []
+    assert len(searches) == 1, "下一班又探了一遍源片"
+    assert state_file.read_bytes() == before, "挡它的没变：state 不许每班都改（每班都要提交）"
+
+    priors.clear()                                          # 那一趟被摘了／作废了
+    assert o.main() == 0 and len(searches) == 1
+    assert [x for cmd in calls for x in cmd if str(x).startswith("url=")] == [f"url={YT}"]
+    saved = _json.loads(state_file.read_text(encoding="utf-8"))
+    assert "wang-garland" not in saved["blocked"]
+    assert saved["dispatched"]["wang-garland"]["video"] == KEY, "记下视频 id，下一班换个 slug 也认得出"
+    assert saved["dispatched"]["wang-garland"]["dispatched_at"]
+
+
+def test_state三方合并带上本趟新挡下的候选():
+    sys.path.insert(0, str(ROOT / "tools"))
+    from merge_orchestration_state import merge_states
+    base = {"dispatched": {}}
+    ours = {"dispatched": {}, "blocked": {"a-b": {"url": YT, "by": "x"}}}
+    theirs = {"dispatched": {"c-d": {"date": "2026-09-24"}}}
+    merged = merge_states(base, ours, theirs)
+    assert merged["blocked"] == {"a-b": {"url": YT, "by": "x"}} and "c-d" in merged["dispatched"]
 
 
 def test_编排器_同一批两个slug指着同一条源片只点全名那条(capsys):
@@ -301,8 +599,17 @@ def test_match_reel的probe一开跑就认领_失败摘认领_表单不加输入
     deps = next(i for i, s in idx.items() if s.get("name") == "装依赖")
     assert claim < deps < download, "认领要排在装依赖之前——越早认领，两边同时点的窗口越窄"
     assert "mode == 'probe'" in steps[claim]["if"]
+    assert steps[claim].get("continue-on-error") is True, (
+        "认领是告示：2 分钟超时或脚本没接住的异常不许让 probe 红")
     release = find("probe_claims.py release")
     assert "failure()" in steps[release]["if"] and "mode == 'probe'" in steps[release]["if"]
+    done = find("probe_claims.py done")
+    commit = next(i for i, s in idx.items() if s.get("name") == "提交产物")
+    assert done > commit, "产物推上分支之后才能说「跑完了」"
+    cond = steps[done]["if"]
+    assert "success()" in cond and "mode == 'probe'" in cond and "ref_name != 'main'" in cond, (
+        "分支上 probe 成功才标完成——main 上的 probe.json 自己看得见")
+    assert steps[done].get("continue-on-error") is True
     assert "${{" not in steps[claim]["run"].split("--url")[1].split("--slug")[0], (
         "url 走 env 传，别把表单原文拼进 shell")
     wf = yaml.safe_load((ROOT / ".github" / "workflows" / "match-reel.yml").read_text(encoding="utf-8"))

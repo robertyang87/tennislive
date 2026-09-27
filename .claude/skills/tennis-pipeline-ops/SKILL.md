@@ -3826,9 +3826,9 @@ slug probe 过**；带自动备料的 144 趟 probe 里 8 趟撞了先例——`
 
 | 哪儿 | 做什么 |
 |---|---|
-| match-reel.yml probe 第一步 `probe_claims.py probe-step` | 按视频 id 查 main 上的 `data/probe_claims/<id>.json` 和近 3 天 probe 目录，别的 slug 做过就 `::warning::` 带出可复用的目录；然后把本趟认领**直接推到 main**（临时索引 ＋ `commit-tree`，不碰分支和工作区）。**只出声不拦**。失败时 `release` 摘掉自己那条 |
-| `orchestrate.drop_already_probed` | 探到源片之后、配额切片之前：同一批按视频 id 合组只点全名那条；别人已认领／已 probe 且 slug 带着这场的姓、又不是 `-src-` 借源 → 不点 run。查不出来按没做过处理并出声 |
-| `find_pending_draft.py` | 除了工作区 pending，还翻 `origin/main` 和近 3 天动过的 `origin/*`（`--url` 按视频 id、`--fs-id` 按 flashscore id、`--who` 按姓），同一场有更大的封面就喊 |
+| match-reel.yml probe 第一步 `probe_claims.py probe-step` | 按视频 id 查 main 上的 `data/probe_claims/<id>.json` 和近 3 天 probe 目录，别的 slug 做过就 `::warning::` 带出可复用的目录；然后把本趟认领**直接推到 main**（临时索引 ＋ `commit-tree`，不碰分支和工作区）。**只出声不拦**（`continue-on-error`）。失败时 `release` 摘掉自己那条；**分支上**成功时 `done` 标完成 |
+| `orchestrate.drop_already_probed` | 探到源片之后、配额切片之前：同一批按视频 id 合组只点全名那条；别人的 probe／认领要有**正面证据**是这一场的赛场之上才挡（spec／草稿的栏目是赛场之上且带着姓，或 slug **开头两个词**正好是这两个姓；编排器 state 里按同一条视频点过的别的 slug 也算）。挡下的记进 `state["blocked"]`，下一班复用源片、不再 `find_highlight`。查不出来按没做过处理并出声 |
+| `find_pending_draft.py` | 除了工作区 pending，还翻 `origin/main` 和近 3 天动过的 `origin/*`（`--url` 按视频 id、`--fs-id` 按 flashscore id、`--who` 按姓），同一场的**赛场之上**有更大的封面就喊。退出码 2 ＝ 没有能接着用的（老交手、只在自己分支上的那份只列不算） |
 
 - **写在开跑时、写到 main**：等产物落库再说「我做过了」，两分钟的并发永远赶不上；
   编排器只看得见 main，会话常在分支上 probe
@@ -3839,6 +3839,20 @@ slug probe 过**；带自动备料的 144 趟 probe 里 8 趟撞了先例——`
   草稿里是 5530×3687）
 - 判据 `tests/test_probe_claims.py`（部分克隆＋浅＋稀疏的现搭仓库）、
   `tests/test_find_pending_draft.py` 后半，17 个方向各自反向验证过
+
+⚠️ **同日 review 补的五处**（判据同上两份，22 个方向逐个反向验证过）：
+
+- **「slug 带着姓」不是赛场之上的证据**：`comebacks-zheng-keys`（和 `keys-zheng` 同一条视频）、
+  `zheng-us-open-outlook-zheng`、`zheng-lanlana-hl-zheng-paris` 都带着姓、都没有 `src`——
+  故事片先 probe 了，这一场的赛场之上三天不点。现在要开头两个词正好是这两个姓，或者栏目看得到
+- **认领会比 job 活得久**：job 被取消／超时时 `release`（挂在 `failure()` 上）不跑。没标 `done_at`
+  的认领开跑 90 分钟（`CLAIM_STALE_MINUTES`，probe 的 timeout 是 63）后作废；编排器 state 条目
+  同一个钟。不这样就是死锁：缩写名那趟被取消 → 全名 slug 被它挡 → 两个 slug 三天谁都不点
+- **`fetch_ref` 不许把深的浅克隆截短**：只在 runner 上（`GITHUB_ACTIONS`）或本地还没有那个 ref 时
+  带 `--depth=1`。这台沙箱是 `--depth=20`，截成一个提交后 `git merge-base 特性分支 origin/main` 为空
+- 认领时刻漏了时区按 UTC 读（原来 `now - at` 是 TypeError，一条坏认领带崩整班）
+- `find_pending_draft` 的退出码原来只要 origin/* 上有任何一份就是 0（含半年前那场、含会话自己
+  推上去的那份）
 
 ⚠️ **同一轮评估过、没做的一条：「渲染前拿 main 上最新的闸验分支 spec」。** 取证报告
 举的两个例子**都不成立**：`alcaraz-fritz` 那道「没配音要配中英字幕」的闸（df9fb05f，

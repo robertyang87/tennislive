@@ -287,10 +287,13 @@ jobs:
       # 排在装依赖之前：只要标准库 + git，越早认领，两边同时点的窗口越窄
       # （`wang-garland` 7fb9fa50 两边只差 2 分钟）。**只出声不拦**——会话有时就是
       # 要重 probe（换 scorebox、换区间、故事片借源）；拦不拦归编排器
-      # （`orchestrate.drop_already_probed`）。推不上 main 只告警，不让 probe 红。
+      # （`orchestrate.drop_already_probed`）。推不上 main 只告警，不让 probe 红——
+      # 脚本里什么错都接住了，`continue-on-error` 兜的是脚本接不住的那两种：
+      # 2 分钟超时、以及哪天又冒出一种没想到的异常。认领是告示，不是 probe 的一环。
       - name: probe — 认领源片（同一条集锦别 probe 两遍）
         if: github.event.inputs.mode == 'probe'
         timeout-minutes: 2
+        continue-on-error: true
         env:
           URL: ${{ github.event.inputs.url }}
           SLUG: ${{ github.event.inputs.slug }}
@@ -1464,6 +1467,19 @@ jobs:
           done
           echo "::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链"
           exit 1
+
+      # 分支上 probe 成功：给 main 上的认领标完成。产物落在分支上，编排器（只看 main）
+      # 看不见它——不标的话，认领开跑 90 分钟后按「job 被取消／超时」作废
+      # （`probe_claims.CLAIM_STALE_MINUTES`），编排器会把这一场再 probe 一遍。
+      # main 上的 probe 不用标：probe.json 自己就在 main 上。告示，不许让 probe 红。
+      - name: probe 成功给源片认领标完成
+        if: success() && github.event.inputs.mode == 'probe' && github.ref_name != 'main'
+        timeout-minutes: 2
+        continue-on-error: true
+        env:
+          URL: ${{ github.event.inputs.url }}
+          SLUG: ${{ github.event.inputs.slug }}
+        run: python tools/probe_claims.py done --url "$URL" --slug "$SLUG"
 
       # probe 只有在正式 spec 已由严格提升器落进 main 后才继续。pending/waiting
       # 是正常结果，不 dispatch；ready 则立即并行进入 render，不等下一班定时任务。

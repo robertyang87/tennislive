@@ -163,3 +163,83 @@ def test_fetch挂了要说可能是旧的_照样按本地已有的origin查(tmp_
     assert t.main() == 0
     out = capsys.readouterr().out
     assert "fetch origin 失败" in out and "swiatek-bouzkova-us-open-2026-r3" in out
+
+
+def _commit(repo, msg, when=None):
+    import os
+    env = {}
+    if when:
+        env = {"GIT_AUTHOR_DATE": when, "GIT_COMMITTER_DATE": when}
+    import subprocess
+    import sys
+    sys.path.insert(0, str(ROOT / "tools"))
+    import git_blobs  # noqa: PLC0415
+    _git(repo, "add", "-A")
+    res = subprocess.run(["git", "commit", "-q", "-m", msg], cwd=repo, capture_output=True, text=True,
+                         env={**os.environ, **git_blobs.BOT_ENV, **env})
+    assert res.returncode == 0, res.stderr
+
+
+def _exit_world(tmp_path):
+    """远端 main 上只有两人**上一次交手**的老 spec（半年前的提交）；会话自己的分支
+    `claude/mine` 上有它刚推上去的那份。工作区停在 `claude/mine`。"""
+    remote = tmp_path / "remote"
+    _git(tmp_path, "init", "-q", "-b", "main", str(remote))
+    (remote / "specs/reels").mkdir(parents=True)
+    (remote / "specs/reels/putintseva-bencic-2026-03.json").write_text(
+        _spec("putintseva-bencic-2026-03", ["Yulia Putintseva", "Belinda Bencic"], "assets/reel/old.jpg",
+              url="https://youtu.be/oldoldoldol"), encoding="utf-8")
+    _commit(remote, "old meeting", when="2026-03-01T00:00:00Z")
+    _git(remote, "switch", "-q", "-c", "claude/mine")
+    (remote / "specs/reels/putintseva-bencic-us-open-2026-r1.json").write_text(
+        _spec("putintseva-bencic-us-open-2026-r1", ["Yulia Putintseva", "Belinda Bencic"], "assets/reel/mine.jpg"),
+        encoding="utf-8")
+    _commit(remote, "mine")
+    _git(remote, "switch", "-q", "main")
+    local = tmp_path / "local"
+    _git(tmp_path, "clone", "-q", str(remote), str(local))
+    _git(local, "switch", "-q", "claude/mine")
+    return local
+
+
+def test_退出码_老交手和自己分支上的那份只列不算找到(tmp_path, monkeypatch, capsys):
+    """review：`found += _refs_section(...)` 只要 origin/* 上有任何一份就返回 0——包括
+    半年前那一场和会话自己刚推上去的那份；而 CLAUDE.md 说退出码 2 是「没有」。"""
+    t = _tool()
+    local = _exit_world(tmp_path)
+    monkeypatch.setattr(t, "ROOT", local)
+    monkeypatch.setattr(t, "PENDING", tmp_path / "none")
+    monkeypatch.setattr("sys.argv", ["find_pending_draft", "--who", "Putintseva,Bencic", "--no-fetch"])
+    assert t.main() == 2, "只有老交手和自己分支上的那份：没有能接着用的"
+    out = capsys.readouterr().out
+    assert "putintseva-bencic-2026-03.json" in out and "多半是两人上一次交手" in out, "照样要列出来"
+    assert "putintseva-bencic-us-open-2026-r1.json" in out and "当前分支自己推上去的" in out
+    # 同一份 spec 换个人来查（不在那条分支上）：它就是别人做的，算找到
+    _git(local, "switch", "-q", "-c", "claude/other")
+    monkeypatch.setattr("sys.argv", ["find_pending_draft", "--who", "Putintseva,Bencic", "--no-fetch"])
+    assert t.main() == 0
+
+
+def test_网球有故事的spec不拿来比封面(tmp_path, monkeypatch, capsys):
+    """matchup 正好是这两个人的故事片，封面讲的是另一件事——不许喊「更大的封面」。"""
+    t = _tool()
+    local = _origin_world(tmp_path)
+    remote = tmp_path / "remote"
+    (remote / "specs/reels/putintseva-bencic-rivalry.json").write_text(json.dumps({
+        "slug": "putintseva-bencic-rivalry",
+        "cover": {"eyebrow": "网球有故事", "portrait": {"image": "assets/reel/story.jpg"},
+                  "matchup": [{"name_en": "Yulia Putintseva"}, {"name_en": "Belinda Bencic"}]}}), encoding="utf-8")
+    _png(remote / "assets/reel/story.jpg", 5000, 4000)
+    _git(remote, "add", "-A")
+    _git(remote, "commit", "-q", "-m", "story")
+    _git(local, "fetch", "-q", "origin")
+    monkeypatch.setattr(t, "ROOT", local)
+    hits = t.ref_hits(t.recent_refs(cwd=local), ["Putintseva", "Bencic"], set(), set(), cwd=local)
+    story = [h for h in hits if h.slug == "putintseva-bencic-rivalry"]
+    assert story and story[0].column == "网球有故事"
+    t.report_refs(hits, t.local_cover(["Putintseva", "Bencic"], set(), set()))
+    out = capsys.readouterr().out
+    (warn,) = [line for line in out.splitlines() if line.startswith("::warning::有一张更大的封面")]
+    assert "story.jpg" not in warn, "故事片的 5000×4000 被当成同一场更大的封面"
+    assert "assets/reel/big.jpg 1600×1200" in warn, "赛场之上草稿里那张更大的照样要喊"
+    assert "网球有故事，不是赛场之上" in out

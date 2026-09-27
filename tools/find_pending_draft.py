@@ -20,8 +20,11 @@ probe 目录（缩略图墙 / 切点 / 死球 / 静音区都在里面）、结�
 找到了就**接着用**：`assemble_spec` 产的 `_match` / `stats` / `_hit_data` /
 `_turning_points` 直接搬进正式 spec，probe 目录直接指给 `--dry-run`。
 
-退出码：0 找到；2 没有——**没有也要出声**，「没找到」和「没查」在会话里
-长得一模一样。
+退出码：0 找到了能接着用的——工作区 pending 里的草稿，或 origin/* 上最近
+`REF_DAYS` 天动过的同一场的 spec／草稿；2 没有——**没有也要出声**，「没找到」和
+「没查」在会话里长得一模一样。**不算「找到」的**（照样列出来，只是不改退出码）：
+按姓认出、最近没动过的老 spec（两人上一次交手），以及只在**当前分支自己的**
+`origin/<分支>` 上的那份（会话自己推上去的，不是别人做的）。
 
 ⭐ 2026-09-27（P6）：**工作区里的 pending 只是三处里的一处。** 还要翻
 `origin/main` 和最近几天动过的 `origin/*` 分支上的正式 spec 和草稿——按两个姓、
@@ -142,6 +145,19 @@ class RefHit:
         self.cover_px: tuple[int, int] | None = None
         self.cover_ref = ""
         self.recent = True       # 按姓认出的老 spec 为 False：只列出来，不比封面
+        self.column = ""         # spec／草稿自己说的栏目（probe_claims.spec_column）
+        self.own = False         # 只在当前分支自己的 origin/<分支> 上：不算「找到」
+
+    @property
+    def reusable(self) -> bool:
+        """算不算「找到了」（退出码 0）：最近动过、又不是会话自己推上去的那份。"""
+        return self.recent and not self.own
+
+    @property
+    def match_column(self) -> bool:
+        """栏目看不出（老 spec 两样都没写）或者就是赛场之上——封面只在这些里比。"""
+        import probe_claims  # noqa: PLC0415
+        return self.column in ("", probe_claims.MATCH_COLUMN)
 
 
 def _spec_urls(doc: dict) -> list[str]:
@@ -210,6 +226,17 @@ def _image_px(raw: bytes | None) -> tuple[int, int] | None:
         return None
 
 
+def own_ref(cwd: Path = ROOT) -> str:
+    """当前分支自己的 `origin/<分支>`；main／detached 没有（main 上的是合并过的，不是「自己的」）。"""
+    import subprocess  # noqa: PLC0415
+    res = subprocess.run(["git", "symbolic-ref", "--quiet", "--short", "HEAD"], cwd=cwd,
+                         capture_output=True, text=True)
+    branch = res.stdout.strip()
+    if res.returncode != 0 or not branch or branch in ("main", "master"):
+        return ""
+    return f"refs/remotes/origin/{branch}"
+
+
 def recent_refs(days: int = REF_DAYS, cwd: Path = ROOT) -> list[str]:
     """`origin/main` 打头，再加最近 `days` 天动过的 `origin/*` 分支。"""
     sys.path.insert(0, str(ROOT / "tools"))
@@ -236,6 +263,8 @@ def ref_hits(refs: list[str], who: list[str], keys: set[str], fs_ids: set[str],
     """
     sys.path.insert(0, str(ROOT / "tools"))
     import git_blobs  # noqa: PLC0415
+    import probe_claims  # noqa: PLC0415
+    mine = own_ref(cwd)
     where: dict[str, list[tuple[str, str]]] = {}
     for ref in refs:
         for oid, path in git_blobs.ls_tree(ref, ["specs/reels"], cwd=cwd):
@@ -260,10 +289,12 @@ def ref_hits(refs: list[str], who: list[str], keys: set[str], fs_ids: set[str],
                 continue
             hit = hits.setdefault((path, oid), RefHit(path=path, slug=slug, by=by))
             hit.refs.append(ref)
+            hit.column = probe_claims.spec_column(doc)
             img = _cover_image(doc)
             if img and not hit.cover:
                 hit.cover, hit.cover_ref = img, ref
     for hit in hits.values():
+        hit.own = bool(mine) and set(hit.refs) == {mine}
         if hit.by == "两个姓":
             hit.recent = _touched_within(hit.refs[0], hit.path, REF_DAYS, cwd)
         if hit.cover:
@@ -282,11 +313,14 @@ def report_refs(hits: list[RefHit], local_cover: tuple[str, tuple[int, int] | No
         px = f"{h.cover_px[0]}×{h.cover_px[1]}" if h.cover_px else "?"
         refs = "、".join(_short(r) for r in h.refs[:3]) + ("…" if len(h.refs) > 3 else "")
         old = "" if h.recent else f"；最近 {REF_DAYS} 天没动过，多半是两人上一次交手"
-        print(f"    {h.path}（{refs}；按{h.by}认出{old}）封面 {h.cover or '（无）'} {px if h.cover else ''}")
-    # 只拿「同一场」的封面比：按姓（正好这两个人）或 flashscore id 认出的。只按视频 id
-    # 认出的多半是故事片借了这条源片——它的封面讲的是另一件事（全库回放：按视频 id
-    # 一起比，41 条正式 spec 里大半的「更大的封面」是这种串台）
-    covers = [h for h in hits if h.cover_px and h.recent and h.by != "视频 id"]
+        own = "；当前分支自己推上去的" if h.own else ""
+        col = "" if h.match_column else f"；{h.column}，不是赛场之上"
+        print(f"    {h.path}（{refs}；按{h.by}认出{old}{own}{col}）封面 {h.cover or '（无）'} {px if h.cover else ''}")
+    # 只拿「同一场的赛场之上」的封面比：按姓（正好这两个人）或 flashscore id 认出、栏目
+    # 不是别的。只按视频 id 认出的多半是故事片借了这条源片——它的封面讲的是另一件事
+    # （全库回放：按视频 id 一起比，41 条正式 spec 里大半的「更大的封面」是这种串台）；
+    # 按姓认出的也可能是网球有故事（matchup 正好这两个人），同理不比
+    covers = [h for h in hits if h.cover_px and h.recent and h.by != "视频 id" and h.match_column]
     if not covers:
         return
     best = max(covers, key=lambda h: h.cover_px[0] * h.cover_px[1])
@@ -306,6 +340,8 @@ def report_refs(hits: list[RefHit], local_cover: tuple[str, tuple[int, int] | No
 def local_cover(who: list[str], keys: set[str], fs_ids: set[str]) -> tuple[str, tuple[int, int] | None] | None:
     """工作区里同一场的正式 spec 用的封面（会话正在写的那份：同一场里最近改过的）。
     只认按姓／flashscore id 认出的——按视频 id 认出的可能是借源的故事片。"""
+    sys.path.insert(0, str(ROOT / "tools"))
+    import probe_claims  # noqa: PLC0415
     best = None
     for p in (ROOT / "specs" / "reels").glob("*.json"):
         try:
@@ -313,6 +349,8 @@ def local_cover(who: list[str], keys: set[str], fs_ids: set[str]) -> tuple[str, 
         except (json.JSONDecodeError, OSError):
             continue
         if _match_by(doc, p.stem, who, set(), fs_ids) not in ("两个姓", "flashscore id"):
+            continue
+        if probe_claims.spec_column(doc) not in ("", probe_claims.MATCH_COLUMN):
             continue
         img = _cover_image(doc)
         if img and (best is None or p.stat().st_mtime > best[0]):
@@ -360,6 +398,7 @@ def main() -> int:
 
 
 def _refs_section(who: list[str], keys: set[str], fs_ids: set[str], *, fetch: bool) -> int:
+    """翻 origin/*，返回**算「找到」的**那几份（`RefHit.reusable`）的份数。"""
     import git_blobs  # noqa: PLC0415
     if fetch:
         try:
@@ -377,7 +416,11 @@ def _refs_section(who: list[str], keys: set[str], fs_ids: set[str], *, fetch: bo
               "都没有这一场的 spec 或草稿（按姓／视频 id／flashscore id 查过）")
         return 0
     report_refs(hits, local_cover(who, keys, fs_ids))
-    return len(hits)
+    reusable = sum(h.reusable for h in hits)
+    if not reusable:
+        print(f"    上面 {len(hits)} 份都不算能接着用的（最近 {REF_DAYS} 天没动过的老交手，"
+              "或只在当前分支自己的那份）")
+    return reusable
 
 
 if __name__ == "__main__":
