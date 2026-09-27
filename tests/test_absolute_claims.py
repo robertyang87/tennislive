@@ -4,7 +4,8 @@
 - 解说片这条线原来一道闸都没有——`wawrinka-wildcard`「一共只进过三次大满贯决赛，
   三次全部拿下」推了微信才被指出是四次（f58553ef）；
 - 计数式按词放宽量过一次是 9 处命中 7 处误伤（tennis-editorial「我本来想把词表放宽，
-  是数据把它否掉的」），这次按「生涯动词 ＋ 同一个数说两遍」再量：13 处命中，零误伤。
+  是数据把它否掉的」），这次按「生涯动词 ＋ 同一个数说两遍」再量：闸扫的字段上 9 份命中、
+  再加小红书正文 13 份命中，都零误伤（两个面的数和量法见模块 docstring）。
 """
 
 from __future__ import annotations
@@ -211,6 +212,42 @@ def test_采访线的全称断言要认领_引号里的是受访者的话():
     assert A.interview_problem(quoted, "全新的一条") is None
     # 注解不算发出去的话
     assert A.interview_problem({"push": {"_why": "上一版写了「唯一一个」"}}, "x") is None
+
+
+def test_采访线自动转正的模板文案过得了全称断言那道闸():
+    """采访线的闸对自动转正的 spec 也是硬的（没有竖版短片「自动 spec 只报」那一刀）——
+    成立的前提是**自动草稿不带文案、promote 只填模板**。模板里哪天写进「唯一一个」
+    「N 次打进，N 次都」，自动 dispatch 的 render 会在前置检查上整批红，这里先红。
+
+    带着 push/takeaway 的草稿来自人工请求（人写得了 `_claims`），照旧硬拦。
+    """
+    import promote_interview_draft as PI  # noqa: PLC0415
+
+    draft = {
+        "_draft": True,
+        "slug": "brand-new-oncourt",
+        "url": "https://example.test/oncourt",
+        "requested_content_type": "on_court",
+        "interview_kind": "赛后场上采访",
+        "event": "2026 辛辛那提大师赛",
+        "zh": ["a"],
+        "match": {"id": "2026:cincinnati:r3:alexander-zverev", "event": "辛辛那提大师赛",
+                  "year": 2026, "round": "第三轮", "interviewee_en": "Alexander Zverev"},
+        "source_verification": {
+            "status": "verified", "detected_type": "on_court",
+            "method": "human_visual_verdict", "source_url": "https://example.test/oncourt",
+            "evidence": [{"kind": "visual_verdict", "by": "test"}]},
+    }
+    spec = PI.promote(draft, ("兹维列夫", "阿特马内", "兹维列夫 vs 阿特马内"))
+    texts = A.interview_texts(spec)
+    # 模板真的铺进了扫描面（不然下面那句放行是空转）
+    assert any("兹维列夫" in t for t in texts) and spec["takeaway"] and spec["cover"], texts
+    assert A.interview_problem(spec, spec["slug"]) is None, A.claim_phrases(texts)
+
+    # 人工请求带进来的文案 promote 原样保留——写了断言没认领，照旧红
+    asked = {**draft, "push": {"lead": "他此前六次打进正赛，六次全部首轮出局。"}}
+    spec = PI.promote(asked, ("兹维列夫", "阿特马内", "兹维列夫 vs 阿特马内"))
+    assert A.interview_problem(spec, spec["slug"]), "人写的文案不在自动分流里，要硬拦"
 
 
 def test_采访线的全称断言在runner的前置检查里就红(tmp_path, monkeypatch):

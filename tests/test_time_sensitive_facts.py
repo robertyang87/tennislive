@@ -204,6 +204,12 @@ def test_片子推送一落账_全库扫描不许跟着红_重渲入口照样拦
 
     # 全库扫描：推送落账之后照样绿
     assert _corpus_red({slug: copy.deepcopy(spec)}) == {}
+    # ……而且是**真的全库路径**：`test_match_reel.py::test_每条spec的旁白都还估得下`
+    # 拿 `validate_spec(spec, allow_published_legacy=True)` 扫全部 specs/reels，
+    # 除了源禁令之外的 ReelError 一律往上抛。第一轮修只挪走了本文件里那次账本比较，
+    # 这条路照旧读真账本——对抗 review 拿 cobolli-tien（9/26 15:03Z sent）补一句
+    # 「抽签后落库」＋ 14:30Z 回头查，复现出 main 红。
+    reel.validate_spec(copy.deepcopy(spec), allow_published_legacy=True)
     # 渲染入口（重渲／重推）：没回头查就拦
     with pytest.raises(reel.ReelError, match="重发之前没回头查"):
         reel.validate_spec(copy.deepcopy(spec))

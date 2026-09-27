@@ -7875,6 +7875,10 @@ def validate_spec(
       spec 就得先装 176 MB 的抠图模型。它留在 `render()` 里，照旧排在下载之前。
     - **要量源片才知道的**（裁切窗口越界、`frame_at` 超出片长）——这里做不了，
       别塞进来假装也提前了。
+
+    `allow_published_legacy=True` 只给全仓离线盘点：放过已发存量的豁免，而且
+    **不读发布账本**——「这一趟重渲之前回头查过没有」只有渲染入口问得出意义，
+    全库扫描读账本会让推送落账那一下把 main 打红。生产调用一律用默认 false。
     """
     # ⚠️ `spec_sources` 挪到最前面了：整改合同现在按**素材构成**判要不要填
     # （见 `_editorial_contract_required`），得先知道这条 spec 用了谁的画面。
@@ -7891,10 +7895,14 @@ def validate_spec(
     _absolute_claims_need_a_source(spec)
     # 写了「正式名单要等抽签日」就要回头查（davis-china 895dad7b），常青栏目不钉「今天」
     # （qualifier-ceiling 2756cec3）。判据和量法在 `reel_facts.time_sensitive_problems`。
-    # ⚠️ 这儿是**渲染入口**的口径：外加「回头查的时刻要晚于上一次推送」那一半（读账本）。
-    # 全库扫描用 `at_render=False`——那一半放进全库，片子推送一落账就会把 main 打红。
+    # ⚠️ 生产调用（渲染入口、--dry-run）是**渲染入口**的口径：外加「回头查的时刻要晚于
+    # 上一次推送」那一半（读 data/reel_publish_ledger）。`allow_published_legacy=True`
+    # 是全仓离线盘点（`test_每条spec的旁白都还估得下` 拿它扫全部 specs/reels）——那一半
+    # 放进全库，一条做对了的片子（渲前回头查、渲后推送）推送一落账就把 main 打红：
+    # auto-push 的账本提交在 main 上跑 CI（2026-09-27 对抗 review 拿 cobolli-tien 复现）。
     from reel_facts import time_sensitive_gate  # noqa: PLC0415
-    blocking, report_only = time_sensitive_gate(spec)
+    blocking, report_only = time_sensitive_gate(
+        spec, at_render=not allow_published_legacy)
     for problem in report_only:
         print(f"[时效] 自动 spec，只报不拦：{problem}")
     if blocking:
