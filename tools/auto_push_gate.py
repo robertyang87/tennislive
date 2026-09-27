@@ -181,6 +181,8 @@ def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
       那一段、再把 spec 字节补进凭证，就绕过去了）。普通渲染 spec 没变，这一步
       恒过、不花钱。素材字节这一半这里核不了（这条工作流稀疏检出，不拉
       assets/），它由 runner 那一步现算
+    - 清单是**旧口径**（`version` 比今天的 `render_inputs.VERSION` 小）写的：不重算
+      （拿新口径比旧清单只会误判），普通渲染退回 spec 字节那道；重核对凭证不认
     """
     digest = qc.get("render_inputs_sha256")
     if qc.get("reattest") and not digest:
@@ -207,6 +209,21 @@ def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
         raise Skip(f"{slug}：渲染输入清单描述的不是凭证里那份成片")
     if manifest.get("spec_sha256") != qc.get("spec_sha256") and not qc.get("reattest"):
         raise Skip(f"{slug}：{name} 记的 spec 和凭证记的不是同一份，而凭证不是重核对出的")
+    version = manifest.get("version")
+    if version != render_inputs.VERSION:
+        # 清单是旧口径写的：拿今天的 `project` 重算去比，比出来的差异是口径变了、不是
+        # spec 变了（v1→v2 那次「按原顺序比」就会把每一份 v1 清单判成「键的顺序变了」）。
+        # 重核对凭证判不了就不认（`reattest_check` 本来就不给旧清单出凭证）；普通渲染的
+        # 凭证照旧由上面那道 spec 字节逐字节钉着——退回的正是加清单之前的那道闸。
+        # 要借「改版本号」绕过去就得改清单、重钉三处 sha，而改得动清单的人本来就能把
+        # 投影一起改掉——重算防的是「只手搓凭证、没动清单」那一种，这里一点没松。
+        if qc.get("reattest"):
+            raise Skip(f"{slug}：重核对凭证钉的 {name} 是版本 {version!r}，"
+                       f"现在的口径是 {render_inputs.VERSION}——判不了，不认")
+        if not (isinstance(version, int) and not isinstance(version, bool)
+                and 0 < version < render_inputs.VERSION):
+            raise Skip(f"{slug}：{name} 的版本 {version!r} 不认")
+        return
     problems = render_inputs.spec_problems(spec_path.read_bytes(), manifest)
     if problems:
         what = "重核对凭证不成立" if qc.get("reattest") else "spec 和渲染那一刻的渲染输入对不上"

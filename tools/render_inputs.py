@@ -29,7 +29,8 @@
 
 - `_` 开头的键是注解（`build_match_reel._reject_underscored_fields` 那条约定），
   **除了** `RENDER_ANNOTATIONS` 里那几个——渲染路径上真有代码拿它们决定成片
-  长什么样（字幕下锚、比分板挑哪一套）
+  长什么样（字幕下锚、比分板挑哪一套）；以及 `sources` 表里的键——那张表的键全是
+  数据（`spec_sources` 一个都不跳），整张原样进投影
 - `push` 块只进推送不进成片，整块不算；渲染路径上**只许**在
   `PUBLISH_FIELDS["push"]` 列的那几个函数里读它
 - 判据 `tests/test_reattest.py::test_渲染路径读到的注解键都要归类`：从
@@ -150,8 +151,15 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                    "insert_chapter_cards"),
     "_chapter_cards_why": _gate("promote_reel_draft.insert_chapter_cards 写它（同上）",
                                 "insert_chapter_cards"),
+    "_board_on_screen_why": _gate(
+        "probe_board.board_findings：写着不贴、板却连着在画面里的认领（dry-run 读 probe）",
+        "board_findings", "segments[]._board_on_screen_why"),
     "_claims": _gate("_absolute_claims_need_a_source：全称断言要两个不同主机的出处",
                      "_absolute_claims_need_a_source", "_claims", truthy),
+    "_cover_reuse_why": _gate(
+        "reel_asset_gates.cover_reuse_finding：封面照片和已发的另一条同一张的认领"
+        "（也读别的 spec 的这一句，那不是本条的认领）",
+        "cover_reuse_finding", "_cover_reuse_why"),
     "_decider_why": _gate("reel_facts.decider_set_problem：大满贯提「决胜盘」的认领",
                           "decider_set_problem", "_decider_why"),
     "_durations": _gate("promote_reel_draft._duration（备料时读）", "_duration"),
@@ -167,6 +175,9 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                     "_seg_voice", "segments[].voice._heard"),
     "_heat_why": _gate("_players_are_worth_a_reel：热度闸的认领",
                        "_players_are_worth_a_reel", "cover._heat_why", text_str),
+    "_face_check_why": _gate(
+        "reel_face_gate._claim：抽帧封面认人／睁眼的认领（render 里源片到手才查，"
+        "dry-run 够不着——删掉就等于绕过）", "_claim", "cover.portrait._face_check_why"),
     "_hit_data": _gate("promote_reel_draft.promote（备料提升时读）", "promote"),
     "_import": _gate("main：导入成片拒绝重渲（只在非 dry-run 时 raise）——它是「拒绝」"
                      "不是「放行」，删了不绕过任何闸", "main"),
@@ -176,11 +187,15 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                       "music_problem", "music._license"),
     "_low_res_why": _gate("cover_photo_problem：封面低于门槛的认领",
                           "cover_photo_problem", "cover.portrait._low_res_why"),
-    "_match": _gate("reel_facts 的赛果/抢十闸拿它对账、promote_reel_draft 的撞车键",
+    "_match": _gate("reel_facts 的赛果/抢十闸拿它对账、reel_asset_gates._retired 判退赛"
+                    "（封面用时闸）、promote_reel_draft 的撞车键",
                     "verified_result_problem decider_tiebreak_problem waiting_reasons "
-                    "promote _source_urls _match_keys", "_match", truthy),
+                    "promote _source_urls _match_keys _retired", "_match", truthy),
     "_narration_why": _gate("cover_voice_matches_hook_problem：封面口播和钩子不同的认领",
                             "cover_voice_matches_hook_problem", "cover._narration_why"),
+    "_numeral_display_why": _gate(
+        "reel_asset_gates.numeral_display_problems：字幕数字换算半中半洋的认领",
+        "numeral_display_problems", "_numeral_display_why"),
     "_no_cold_open_why": _gate("cold_open_problem：源片里没有赢球后画面的认领",
                                "cold_open_problem", "_no_cold_open_why"),
     "_photo_caption_safety": _gate("parse_segments：全屏照片字幕不遮主体的目视依据",
@@ -195,6 +210,9 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
         "parse_segments / _seg_score_windows：比分板不回贴的认领（顶层那句是 promote "
         "写的说明，没有闸读）", "parse_segments _seg_score_windows promote",
         "segments[]._score_inset_why", text_str),
+    "_short_match_why": _gate(
+        "reel_asset_gates.duration_problem：封面用时短于门槛（又不是退赛）的认领",
+        "duration_problem", "_short_match_why"),
     "_tactics_why": _gate("reel_craft.shot_craft_problem：源片看不出球路的认领",
                           "shot_craft_problem", "_tactics_why"),
     "_topbar_format_why": _gate("_topbar_lines → tour_topline_problem：顶栏赛事行格式特例的认领",
@@ -279,6 +297,11 @@ def project(spec: dict) -> dict:
     out = walk(spec)
     for field in PUBLISH_FIELDS:
         out.pop(field, None)
+    # `sources` 是「键 → 源片」的表，**每个键都是数据**：`build_match_reel.spec_sources`
+    # 不按下划线跳过，`{"_why": "…", "r1": …}` 里的 `_why` 就是第一条、就是主源片。
+    # 这里不当注解剥（评审 2026-09-27：剥了之后插一句 `_why` 投影不变，主源片却换了人）。
+    if isinstance(spec.get("sources"), dict) and "sources" in out:
+        out["sources"] = json.loads(json.dumps(spec["sources"], ensure_ascii=False))
     return out
 
 

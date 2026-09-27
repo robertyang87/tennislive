@@ -259,6 +259,30 @@ def test_只调换源片的顺序也不许重核对(tmp_path):
     assert _assess(tmp_path, outdir).status == "reattest"
 
 
+def test_sources表里下划线开头的键也是源_不当注解剥(tmp_path):
+    """评审 2026-09-27（第二轮）：`spec_sources` 不按下划线跳过，`sources` 里插一句
+    `"_why"` 它就成了第一条、成了主源片——投影要是把它当注解剥掉，重核对会放过去。"""
+    import build_match_reel as bmr  # noqa: PLC0415
+
+    base = _spec()
+    del base["source_url"]
+    base["sources"] = {"r1": "https://www.youtube.com/watch?v=aaa",
+                       "r2": "https://www.youtube.com/watch?v=bbb"}
+    outdir = _rendered(tmp_path, base)
+
+    def annotate(spec):
+        spec["sources"] = {"_why": "两场集锦按出场排", **spec["sources"]}
+
+    spec_path = _edit(tmp_path, annotate, base)
+    new = json.loads(spec_path.read_bytes())
+    # 前提：渲染器真把这句 `_why` 当成了主源片（不是测试一厢情愿）
+    assert next(iter(bmr.spec_sources(new))) == "_why"
+    manifest = json.loads((outdir / ri.MANIFEST_NAME).read_text(encoding="utf-8"))
+    problems = ri.spec_problems(spec_path.read_bytes(), manifest)
+    assert any("sources" in p for p in problems), problems
+    assert _assess(tmp_path, outdir).status == "render"
+
+
 def _gated_spec() -> dict:
     """在样板上补几条**有闸读**的认领：配音参数、预制封面、全屏照片、退回 edge-tts。"""
     spec = _spec()
@@ -273,6 +297,13 @@ def _gated_spec() -> dict:
     spec["stats"] = {"_why": "数据来自 flashscore"}
     spec["editorial"] = {"_why": "技战术按官方逐分核过"}
     spec["_score_inset_why"] = "promote 写的说明：没有闸读顶层这一句"
+    # main 在 #1102 / #1104 加的四道 dry-run 闸的认领（2026-09-27 rebase 时归的类）
+    spec.update(_short_match_why="对手第一盘 0-3 退赛，官方用时 19 分钟",
+                _cover_reuse_why="同站两条共用一张官方赛后照，账号所有者认过",
+                _numeral_display_why="「四分之一决赛」是赛事名，不是数字")
+    spec["segments"][0]["_board_on_screen_why"] = "这几秒是慢镜回放，板是回放条不是比分"
+    # #1105（wp/face-eye-checks）合进 main 的封面认人／睁眼：只在 render 里查
+    spec["cover"]["portrait"]["_face_check_why"] = "讲的就是她闭眼流泪那一刻"
     return spec
 
 
@@ -286,6 +317,13 @@ def _gated_spec() -> dict:
     (lambda s: s["segments"][2].update(_photo_caption_safety=False),
      "segments[2]._photo_caption_safety"),
     (lambda s: s.update(_tts_backend_why=["Azure 401"]), "_tts_backend_why"),
+    (lambda s: s.pop("_short_match_why"), "_short_match_why"),
+    (lambda s: s.update(_cover_reuse_why="   "), "_cover_reuse_why"),
+    (lambda s: s.update(_numeral_display_why=None), "_numeral_display_why"),
+    (lambda s: s["segments"][0].pop("_board_on_screen_why"),
+     "segments[0]._board_on_screen_why"),
+    (lambda s: s["cover"]["portrait"].update(_face_check_why=""),
+     "cover.portrait._face_check_why"),
 ])
 def test_认领按那道闸自己的口径算数(tmp_path, change, claim):
     """评审 2026-09-27：原来的 `_filled` 认 `False`、认一串空格——`build_cover` 两个都拒。
@@ -511,6 +549,62 @@ def test_发布门禁每次都重算投影_不看凭证带不带reattest(tmp_pat
         gate.validate_qc(tmp_path, SLUG, outdir)
 
 
+def _repin_manifest(outdir: Path, change) -> None:
+    """改清单、再把凭证和 render.json 钉到改过的那一份上（造一份「旧口径渲的」产物）。"""
+    manifest_path = outdir / ri.MANIFEST_NAME
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    change(manifest)
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+                             encoding="utf-8")
+    qc_path = outdir / "qc_attestation.json"
+    qc = json.loads(qc_path.read_text(encoding="utf-8"))
+    meta = json.loads((outdir / "render.json").read_text(encoding="utf-8"))
+    qc["render_inputs_sha256"] = meta["render_inputs_sha256"] = _sha(manifest_path.read_bytes())
+    qc_path.write_text(json.dumps(qc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    meta["qc_attestation_sha256"] = _sha(qc_path.read_bytes())
+    (outdir / "render.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
+
+
+def _as_v1(manifest: dict) -> None:
+    """v1 的清单：投影 `sort_keys` 之后存（2026-09-27 之前的口径）。"""
+    manifest["version"] = 1
+    manifest["projection"] = json.loads(json.dumps(manifest["projection"], sort_keys=True))
+
+
+def test_旧口径的清单_普通渲染照发(tmp_path):
+    """评审 2026-09-27（第二轮）：门禁原来不看清单版本，一律按今天的口径重算——
+    VERSION 一升，升级之前渲、之后才推的片子就被判成「渲染输入对不上」（v1→v2 那次
+    「按原顺序比」会把每份 v1 清单都判成键的顺序变了）。
+
+    普通渲染的凭证照旧由 spec 字节逐字节钉着；重核对凭证判不了就不认。
+    """
+    _git(tmp_path, "init", "-q")
+    outdir = _rendered(tmp_path)
+    _repin_manifest(outdir, _as_v1)
+    _commit(tmp_path)
+    # 前提：拿今天的口径去比这份 v1 清单，确实会误判（不是测试一厢情愿）
+    manifest = json.loads((outdir / ri.MANIFEST_NAME).read_text(encoding="utf-8"))
+    spec_bytes = (tmp_path / "specs/reels" / f"{SLUG}.json").read_bytes()
+    assert any("键的顺序" in p for p in ri.spec_problems(spec_bytes, manifest))
+    assert gate.validate_qc(tmp_path, SLUG, outdir) == _sha(FILM)
+
+    # 版本号不是「比今天旧的一个整数」（将来的、乱写的）：不认
+    _repin_manifest(outdir, lambda m: m.update(version=ri.VERSION + 1))
+    _commit(tmp_path)
+    with pytest.raises(gate.Skip, match="的版本 .* 不认"):
+        gate.validate_qc(tmp_path, SLUG, outdir)
+
+
+def test_旧口径的清单_重核对凭证不认(reattested):
+    """同上一条：重核对出的凭证钉着旧口径的清单——判不了，不认。"""
+    repo, r_outdir = reattested
+    assert gate.validate_qc(repo, SLUG, r_outdir) == _sha(FILM)   # 前提：改之前是认的
+    _repin_manifest(r_outdir, _as_v1)
+    _commit(repo)
+    with pytest.raises(gate.Skip, match="判不了，不认"):
+        gate.validate_qc(repo, SLUG, r_outdir)
+
+
 def test_spec变了而凭证不是重核对出的_发布门禁不认(tmp_path):
     """只改了注解（投影不变）、却手搓凭证而不走 reattest：清单记的 spec 和凭证记的
     不是同一份——那等于绕过了 runner 那一步的素材字节和 Release 现算，不认。"""
@@ -663,6 +757,15 @@ def test_读取扫描认得出不是字面量的键(tmp_path):
     assert DYNAMIC_KEY not in ri.RENDER_ANNOTATIONS and DYNAMIC_KEY not in ri.GATE_ANNOTATIONS
 
 
+#: 渲染路径上读 `_` 键、但读的**不是 spec**（渲染自己攒的运行时字典）的地方。
+#: 按（键, 函数）逐处登记，不按键名整批放：同一个键哪天在别的函数里被当成 spec
+#: 字段读，照样要归类。
+_NOT_SPEC_READS: dict[tuple[str, str], str] = {
+    ("_key", "_gate_cover_face"): "`_FACE_REPORT[\"cover\"][\"_key\"]`：这一趟算过的封面帧"
+                                  "缓存键（`_face_gate_key`），渲染自己写、自己读",
+}
+
+
 def test_渲染路径读到的注解键都要归类():
     """O1 的 b 方案被否掉的理由是「要证明渲染器从不读被排除的键」——现在它是机械的。
 
@@ -679,10 +782,14 @@ def test_渲染路径读到的注解键都要归类():
 
     classified = set(ri.RENDER_ANNOTATIONS) | set(ri.GATE_ANNOTATIONS)
     seen: set[str] = set()
+    seen_runtime: set[tuple[str, str]] = set()
     stray: list[str] = []
     for module in modules:
         for key, fn, line in _key_reads(module):
             where = f"{module.relative_to(ROOT)}:{line} {fn}()"
+            if (key, fn) in _NOT_SPEC_READS:
+                seen_runtime.add((key, fn))
+                continue
             if key.startswith("_") and not key.startswith("__"):
                 seen.add(key)
                 if key not in classified:
@@ -699,6 +806,8 @@ def test_渲染路径读到的注解键都要归类():
     # 表自带自检：表里有、代码里没人读的，是过期条目——删掉，别让它看起来像在管事
     stale = sorted(classified - seen)
     assert not stale, f"这些键渲染/质检路径上已经没人读了，从表里删掉：{stale}"
+    stale_runtime = sorted(set(_NOT_SPEC_READS) - seen_runtime)
+    assert not stale_runtime, f"_NOT_SPEC_READS 里这几处已经没人读了，删掉：{stale_runtime}"
     assert not set(ri.RENDER_ANNOTATIONS) & set(ri.GATE_ANNOTATIONS)
     assert all(why.strip() for why in ri.RENDER_ANNOTATIONS.values())
     assert all(note.why.strip() for note in ri.GATE_ANNOTATIONS.values())
@@ -718,6 +827,8 @@ def test_按下划线整批跳过的地方只许在闸和推送里():
         ("spec_wording.py", "voiced_texts"), ("spec_wording.py", "outward_deep"),
         ("spec_wording.py", "outward_flat"),
         ("spec_wording.py", "interview_outward_texts"),           # 措辞闸
+        ("reel_asset_gates.py", "_images_in"),                    # 闸：图片解码，注解里的路径不算
+        ("build_match_reel.py", "_face_checks_record"),           # 写 render.json：剥掉运行时缓存键
     }
     found = set()
     for module in _render_path_modules():
