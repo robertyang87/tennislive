@@ -1732,9 +1732,26 @@ WP0 量过均差 0.173 的一次改色最大差 25。
   `.smain{line-height:62px}` 钉回原来那一格（poster 行距 119、film 96，逐行和 Montserrat 那版量过相同）；
   中英标签那个量出来的 `top:-24px` 按原量法重扫过（平均偏移 +1.9 → +2.2，不动）
 - 封面比分板**不在这条里**：美网蓝长条完整复刻、赢盘白色粗体照旧（锁定的决定）
-- 推送页那张（poster）台头和 footer 左边现在是同一句「网球时差 · 赛场之上」——footer 这次没动
+- **台头的栏目名读 `cover.eyebrow`**（`render_stat_card.brand_line`，缺省「赛场之上」），和封面台头、
+  正片常驻角标同一处——写死的话，一条「网球有故事」剪辑片挂上 `stat_card: true` 就会在「网球有故事」
+  的角标底下印出「赛场之上」（今天 210 条带 stats 的 spec 全是赛场之上，所以看不出来）
+- **poster 的 footer 只留「场地 · 日期」、居中**：左边原来那句「网球时差 · 赛场之上」和换过的台头
+  是同一句，一张图上印两遍（评审 2026-09-27）。左 / 右 / 居中并排渲过三条真 spec，居中和上面居中的
+  中英标签一条中轴，最稳
+- 带式（film_band）那版的大标题「全场数据复盘」→「全场数据对比」：Q15 那句「第四个栏目名」在带式卡上
+  活了下来（它没有台头，老判据跳过了它）
+- **footer 只剩一个重复的场地名时整格不渲**（`render_stat_card.footer_text`，评审第二轮）：没写
+  `footer_venue` / `footer_date` 的 spec（试合并树上 219 条里 138 条）原来退回 `court`，而场地名已经印在
+  比分底下——图底居中孤零零一个「Arthur Ashe Stadium」。日期不替它补：`_match` 里没有统一可信的比赛
+  日期（当地还是北京也没写）。判据 `test_poster的footer只重复场地名就整格不渲`
+- poster 最后一行统计底下那条分隔线和 footer 的上边线原来挨着成了两根（`.srow:last-child` 在 `.wrap`
+  里匹配不到，最后一个孩子是 footer）。`.srow:has(+ .footer)` 只拿掉线、不动间距，footer 那根线的
+  位置不变。判据在 Chromium 里量计算样式：`test_poster最后一行统计底下和footer之间只有一根线`
+- 台头的缺省栏目跟 `build_match_reel.DEFAULT_COLUMN`、那句格式跟 `watermark.brand_label`，
+  `render_stat_card` 里不另写一份（`test_数据图台头的缺省栏目和格式只有一处出处`）
 - 判据 `tests/test_stat_card_palette.py`：按**色相**判「只留黄绿和薄荷」（顶部四色彩条除外，锁定）、
-  `.setwin`／赢家描边 = 薄荷、占优 = 黄绿、台头、`.sval` 第一支字体、行高 62px、`design-tokens: enforced` 标记在。
+  `.setwin`／赢家描边 = 薄荷、占优 = 黄绿、台头（跟 `eyebrow` 走、一张图只印一次、三个变体都不许有
+  「数据复盘」）、`.sval` 第一支字体、行高 62px、`design-tokens: enforced` 标记在。
   颜色一律从 `tennislive.design_tokens` 取；接 token 那一步先单独做过，12 张渲图最大差 0
 - 已发的数据图不重渲，只管以后
 

@@ -139,34 +139,33 @@ def main() -> int:
     work = args.out.parent / "_outro_master_work"
     work.mkdir(parents=True, exist_ok=True)
 
-    if args.keep_voice:
-        clip = rebuild_picture_keep_voice(args.out, work)
-    else:
-        clip = outro_page.build_with_voice(
-            work, chromium=_chromium_executable(), dest=args.out,
-            fps=float(MASTER_FPS), audio_rate=MASTER_AUDIO_RATE,
-            preset="slow", crf=MASTER_CRF, audio_bitrate="192k", audio_channels=2,
-            # **必须现渲。** 不带它的话母版在时会从旧母版转码——改了口播重跑这个
-            # 工具，出来的还是旧文案，而且不报错（`--out` 指到别处时）。
-            fresh=True,
-        )
-
-    for junk in work.glob("*"):
-        if junk.is_file():
-            junk.unlink()
+    # ⚠️ 工作目录**失败了也要清**：它就在 `assets/brand/` 底下，`--keep-voice` 帧数对不上
+    # 报错时里面躺着 `_old_master.mp4`（旧母版的一份 1.4 MB 拷贝）和 `_picture.mp4`，
+    # 下一次 `git add -A` 会把它们一起提交上去。
+    try:
+        if args.keep_voice:
+            clip = rebuild_picture_keep_voice(args.out, work)
         else:
-            for f in junk.glob("*"):
-                f.unlink()
-            junk.rmdir()
-    work.rmdir()
+            clip = outro_page.build_with_voice(
+                work, chromium=_chromium_executable(), dest=args.out,
+                fps=float(MASTER_FPS), audio_rate=MASTER_AUDIO_RATE,
+                preset="slow", crf=MASTER_CRF, audio_bitrate="192k", audio_channels=2,
+                # **必须现渲。** 不带它的话母版在时会从旧母版转码——改了口播重跑这个
+                # 工具，出来的还是旧文案，而且不报错（`--out` 指到别处时）。
+                fresh=True,
+            )
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
 
     dur = subprocess.run(
         ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
          "stream=duration,r_frame_rate,width,height", "-of", "csv=p=0", str(clip)],
         check=True, capture_output=True, text=True).stdout.strip()
     size = clip.stat().st_size / 1048576
-    # `--out` 指到仓库外时 `relative_to` 会抛 ValueError（母版已经写好了，却在打印这一行炸掉）
-    shown = clip.relative_to(ROOT) if clip.resolve().is_relative_to(ROOT) else clip
+    # `--out` 指到仓库外时 `relative_to` 会抛 ValueError（母版已经写好了，却在打印这一行炸掉）。
+    # ⚠️ 两边都要 `resolve()`：在仓库根下跑 `--out assets/brand/outro_master.mp4`（相对路径）时
+    # `clip.resolve()` 在 ROOT 底下，而 `clip` 本身是相对的，`clip.relative_to(ROOT)` 照样抛。
+    shown = clip.resolve().relative_to(ROOT) if clip.resolve().is_relative_to(ROOT) else clip
     print(f"[母版] {shown}  {dur}  {size:.2f} MB")
     print("[母版] 提交上去，之后每条片子从它转码（约 1.9 秒），不再各渲一遍")
     return 0
