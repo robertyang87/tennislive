@@ -7175,6 +7175,10 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   photo-resources 都是 0。账号所有者 2026-09-28 选了封面放梅德韦杰夫（黄泽林在源片里
 #:   没有清楚的正脸）。用赛后梅德韦杰夫正脸近景（Tennis TV 1/4 决赛合集 384.4s），
 #:   源片 1920×1080，放大 1.33 倍。
+#: - `zverev-tien-laver-cup-2026`：2026-09-27 拉沃尔杯第三天第 10 场（夺冠一场，北京 23:14
+#:   打完）。按下面那条常设授权走：终场后约 45 分钟，拉沃尔杯官网 WordPress 媒体库本场只有
+#:   两张视频缩略图（Getty 第二天的图是次日 14:14Z 才批量上的），AP、WTA photo-resources 0。
+#:   用 126.0s 拉沃尔杯点之后张臂正脸的近景，源片 1920×1080，放大 1.33 倍。
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
@@ -7187,6 +7191,7 @@ OWNER_APPROVED_FRAME_COVERS = frozenset({
     "medvedev-royer-hangzhou-2026-r2",
     "wong-vallejo-hangzhou-2026-r2",
     "medvedev-wong-hangzhou-2026-qf",
+    "zverev-tien-laver-cup-2026",
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
