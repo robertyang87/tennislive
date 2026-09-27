@@ -34,7 +34,7 @@ from __future__ import annotations
 import html
 import re
 
-from ..design_tokens import FONT_WEB, LIGHT, RADIUS_WEB, TEXT_WEB, tokens_css
+from ..design_tokens import FONT_WEB, LIGHT, RADIUS_WEB, TEXT_WEB, css_vars, tokens_css
 
 #: 推送卡顶上那条红边——和卡底那颗红按钮同一支红（账号所有者 2026-08-31 定了不动）。
 PUSH_RED = "#ff2442"  # token-exempt: 推送红边／红按钮的红，账号所有者「不要改了」
@@ -55,12 +55,21 @@ def card(padding: str) -> str:
 
 
 #: 台头药丸：Q8 黄绿实底 + 墨色字。写**栏目名**，不写日期（标题第一格就是日期）。
+#:
+#: 改之前 → 改之后（颜色是 Q8 定的；**形状是按「视觉精美且优雅」这条口味顺手改的，
+#: 不是 Q8 的内容**，单列在这儿好让人一眼否掉）：
+#: `#e7f5ea` 底 `#087747` 字、12px bold、`padding:4px 8px`、**圆角 4px 的小方块** →
+#: `primary` 底 `primary-foreground` 字、12px/600、`3px 10px`、**整颗胶囊**（`full`）。
 PILL = (f"display:inline-block;background-color:{_L['primary']};"
         f"color:{_L['primary-foreground']};font-size:{TEXT_WEB['xs']}px;font-weight:600;"
         f"line-height:18px;padding:3px 10px;border-radius:{RADIUS_WEB['full']}px")
 #: 标题和正文整块可选（`user-select:all`）：长按一下选中整段，不用手指拖着选
 #: 一千字。评审 3.2「在推送里复制整段正文要手指拖选约 1000 字」。
 _SELECT_ALL = "-webkit-user-select:all;user-select:all"
+#: 大标题。改之前 → 改之后（同上：**字号字重不是 Q8 的内容**，是按口味规则收的一档）：
+#: `23px / 1.38 / 800 / #102d23`（深绿，不是正文色）→ `xl`=22px / 1.4 / **600** /
+#: `foreground` #17251f（和正文同一个墨色）。字重和复制页 `h1`、药丸同一档 600；
+#: 字阶里没有 23，就近落到 22。
 TITLE = (f"font-size:{TEXT_WEB['xl']}px;line-height:1.4;font-weight:600;"
          f"color:{_L['foreground']};margin:10px 0 4px;{_SELECT_ALL}")
 HINT = f"color:{_L['muted-foreground']};font-size:{TEXT_WEB['xs']}px"
@@ -167,8 +176,42 @@ def copy_page_tokens() -> str:
     """复制页自带的那份 token CSS（和看板 `dashboard/tokens.css` 同一个生成函数，
     默认跟随系统）。**内嵌，不链接**：复制页是单文件，挂在
     `output/<日期>/…/copy.html`，不依赖另一次部署、也不多一趟国内要绕境外的请求。
-    头注释去掉——那段写的是「由 gen_tokens_css.py 生成」，对这儿不成立。"""
-    return re.sub(r"\A/\*.*?\*/\n", "", tokens_css(default="system"), flags=re.S)
+    头注释去掉——那段写的是「由 gen_tokens_css.py 生成」，对这儿不成立。
+
+    ⚠️ **不认 `prefers-color-scheme` 的 WebView 也要是浅色**（2026-09-27 WP2 复核）：
+    `tokens_css("system")` 要是把浅色也包在 `@media (prefers-color-scheme: light)` 里，
+    那种 WebView 里每个 `--tl-*` 颜色都落空：按钮透明、只剩一行黑字，toast 透明（复核把
+    媒体特性改名模拟出来的，判据 `test_复制页不认prefers_color_scheme也是浅色` 就是那个
+    模拟）。老复制页在同一个模拟下还是浅色。
+
+    所以这里**先看** `@media` 外面、没钉 `data-theme` 的块里有没有整套浅色：有（看板那头
+    WP1 把浅色挪到 `@media` 外面之后就是这样）就原样用，不多垫一份死 CSS；没有才在最前面
+    垫一份 `css_vars("light", ":root")`。垫的这份选择器是 `:root`（0,1,0），**比两种主题
+    块都弱**——`[data-theme]` 是 (0,2,0)、跟随系统那块是 (0,3,0)——而且和 `css_base()`
+    那块一个变量都不重名，所以**排在哪儿都一样**：认这条查询的浏览器照旧按系统走，一个
+    像素都不变。`tokens_css()` 哪天换了排版也只是走「垫」那条路，不会在无人值守的出片
+    链上抛异常。只在复制页垫：看板那份 `tokens.css` 是另一个消费方。"""
+    css = re.sub(r"\A/\*.*?\*/\n", "", tokens_css(default="system"), flags=re.S)
+    light = css_vars("light", ":root")
+    have = _unconditional_decls(css)
+    if all(have.get(k) == v for k, v in _DECL.findall(light)):
+        return css
+    return light + "\n" + css
+
+
+_DECL = re.compile(r"(--[\w-]+):\s*([^;]+);")
+_MEDIA_BLOCK = re.compile(r"@media[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}")
+_PINNED_THEME = re.compile(r':root\[data-theme="(?:light|dark)"\]')
+
+
+def _unconditional_decls(css: str) -> dict[str, str]:
+    """`@media` 外面、选择器没钉 `data-theme` 的块里声明的变量——不认媒体查询的
+    WebView 只看得见这些。"""
+    decls: dict[str, str] = {}
+    for sel, body in re.findall(r"(?m)^([^\s{}@][^{}]*?)\s*\{([^{}]*)\}", _MEDIA_BLOCK.sub("", css)):
+        if not _PINNED_THEME.fullmatch(sel.strip()):
+            decls.update(_DECL.findall(body))
+    return decls
 
 
 #: 复制页自己的样式：**只写 `var(--tl-…)`**，不写一个色值
@@ -246,7 +289,9 @@ COPY_FAILED_TEXT = "复制失败，已帮你选中，长按拷贝"
 #: 2. **连点两次，第二条 toast 只停约 400ms**——第一次的 `setTimeout` 没清，到点把
 #:    第二条提前收走。现在每次 `clearTimeout` 后重新计时。
 #: 3. 按钮没有「已复制」状态：成功后按钮字换成「已复制 ✓」，1.4 秒后还原（同样
-#:    连点重新计时）。
+#:    连点重新计时）。**失败时当场还原**（2026-09-27 WP2 复核）：同一颗按钮还在
+#:    「已复制 ✓」那 1.4 秒里、下一次又失败了，原来 toast 说失败、按钮却还挂着
+#:    「已复制 ✓」——两句话打架。现在失败分支先清掉这颗按钮的计时、把字和样式还原。
 COPY_PAGE_JS = """\
 const toast = document.getElementById('toast');
 const labels = {body: '正文已复制', comment: '评论已复制'};
@@ -257,6 +302,11 @@ function say(text, ms) {
   toast.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove('show'), ms);
+}
+function restore(button) {
+  clearTimeout(buttonTimers.get(button));
+  if (button.dataset.label) button.textContent = button.dataset.label;
+  button.classList.remove('copied');
 }
 function selectAll(field) {
   field.focus();
@@ -274,6 +324,7 @@ async function copyText(id, button) {
     try { ok = document.execCommand('copy') === true; } catch (_) { ok = false; }
   }
   if (!ok) {
+    restore(button);
     selectAll(field);
     say('%(failed)s', 2600);
     return;
@@ -284,10 +335,7 @@ async function copyText(id, button) {
   button.textContent = '已复制 ✓';
   button.classList.add('copied');
   clearTimeout(buttonTimers.get(button));
-  buttonTimers.set(button, setTimeout(() => {
-    button.textContent = button.dataset.label;
-    button.classList.remove('copied');
-  }, 1400));
+  buttonTimers.set(button, setTimeout(() => restore(button), 1400));
 }
 document.querySelectorAll('[data-copy]').forEach((button) => {
   button.addEventListener('click', () => copyText(button.dataset.copy, button));

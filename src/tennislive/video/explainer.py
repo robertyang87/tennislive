@@ -13933,6 +13933,11 @@ def explainer_push_html(
     # 药丸写栏目名、按钮写「▶ 打开竖版成片」——都由 knowledge_push_html_from_parts
     # 自己出（2026-09-27 UI 评审 WP2：同一栏目的剪辑片推送和这条原来长得不一样，
     # 正是因为这两段文字是从这儿传进去的）。
+    #
+    # ⚠️ 栏目名**按这一条自己的登记传**，不吃那边的默认值：撤掉的「开球之前」名下
+    # 还有 9 条已发的（`_ARCHIVED_DECKS`），重渲时药丸要印当年那个栏目，而不是
+    # 「网球有故事」（WP2 复核；原来药丸写的是中性的「知识解说视频」，不会错栏目）。
+    # 产物目录名就是 slug（`output/<日期>/explainer/<slug>/`）。
     return knowledge_push_html_from_parts(
         image_urls=[
             f"{jsdelivr_base(_REPOSITORY)}/{rel}/{name}"
@@ -13941,6 +13946,7 @@ def explainer_push_html(
         xhs_text=xhs_text,
         copy_url=copy_url,
         video_url=video_url,
+        column=explainer_column(outdir.name),
     )
 
 
