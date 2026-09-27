@@ -32,9 +32,11 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
+          # v2 → v3（2026-09-27）：main 上 v2 这个前缀只剩 probe 存的 243 字节空壳，
+          # 见 match-reel.yml 同一步的注释（`test_apt缓存不许再认被空壳污染的前缀`）
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-${{ github.run_id }}
           restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-
 
       - name: 安装 ffmpeg（共享缓存与超时）
         timeout-minutes: 14

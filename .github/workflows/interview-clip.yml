@@ -254,8 +254,12 @@ jobs:
           # 于是每一趟仍要重新摸 apt 镜像。照 match-reel.yml 改成滚动键：
           # 先按稳定前缀恢复最近一份，跑完再用本次 run_id 回写（注释也抄）。
           key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-v2-${{ github.run_id }}
+          # 第二格退到 CI 在 main 上存的那份（cjk＋core＋emoji，这一步装的字体是它的
+          # 子集）：缓存按 ref 隔离，本线自己存的只有同一条分支看得见，每条新分支
+          # 的第一趟全靠这一格（2026-09-27，见 match-reel.yml 同一步的注释）
           restore-keys: |
             apt-pkgs-${{ runner.os }}-24.04-interview-clip-v2-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: 装系统依赖
         timeout-minutes: 15
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
@@ -406,8 +410,12 @@ jobs:
             ~/.cache/apt-lists
           # 滚动键 + restore-keys，理由同上面 render/cover 那份缓存的注释。
           key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v2-${{ github.run_id }}
+          # 第二格退到 CI 在 main 上存的那份（cjk＋core＋emoji，这一步装的字体是它的
+          # 子集）：缓存按 ref 隔离，本线自己存的只有同一条分支看得见，每条新分支
+          # 的第一趟全靠这一格（2026-09-27，见 match-reel.yml 同一步的注释）
           restore-keys: |
             apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v2-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: 装依赖（只取字幕）
         timeout-minutes: 15
         if: github.event.inputs.mode == 'subs'

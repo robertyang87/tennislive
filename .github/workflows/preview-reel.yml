@@ -109,8 +109,12 @@ jobs:
           # 半份缓存永远钉死，后面补装的包写不回去——形状照抄
           # match-reel.yml「缓存 apt 包」那一步（那儿有完整注释）。
           key: apt-pkgs-${{ runner.os }}-24.04-preview-reel-v2-${{ github.run_id }}
+          # 第二格退到 CI 在 main 上存的那份（cjk＋core＋emoji，这一步装的字体是它的
+          # 子集）：缓存按 ref 隔离，本线自己存的只有同一条分支看得见，每条新分支
+          # 的第一趟全靠这一格（2026-09-27，见 match-reel.yml 同一步的注释）
           restore-keys: |
             apt-pkgs-${{ runner.os }}-24.04-preview-reel-v2-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: 装 ffmpeg
         timeout-minutes: 15
         run: |

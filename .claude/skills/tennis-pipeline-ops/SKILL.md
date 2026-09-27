@@ -2242,7 +2242,19 @@ run 30973785219 就卡在「安装 Chromium」上。
 顺带：缓存快路加了 `--no-download`——原来那句「本地安装」缺 .deb 时会悄悄去下
 （run 32290505356 卡满 12 分钟），而且下了新包不算「走网络」，标脏就不准。
 沙箱复现过 `lock`/`partial` 的权限形状（root 跑 apt 到临时目录，uid 1001 跑 tar 同样
-`partial: Cannot open: Permission denied`）。
+`partial: Cannot open: Permission denied`）。沙箱对着真镜像跑过这份脚本（换一个小包 `ed`）：
+冷缓存 → 走网络、标脏；留着 .deb 再装 → 「缓存命中」、不标脏、1 秒；删掉 .deb 留着索引 →
+`--no-download` 当场报 `Unable to fetch some archives`，退到网络那条路、标脏。
+
+⚠️ **光存得上还不够——缓存按 ref 隔离。** 分支上的 run 只看得见**本分支**和 **main** 存的缓存，
+而各条线的键前缀各是各的：render / 采访 / 解说都在会话分支上跑，存进的是自己的分支，
+**每条新分支的第一趟照样是冷的**。main 上真有一份完整的只有 CI（`ci.yml` 每次合并都在 main 上跑，
+装 cjk ＋ core ＋ emoji），所以凡是装的字体是它子集的那几步，`restore-keys` 第二格退到
+`apt-pkgs-<os>-24.04-ci-v2-`；缓存目录的**顺序**要和 CI 一模一样（actions/cache 的版本号按顺序哈希，
+顺序一换就永远 miss、不报错）。match-reel 那一格只给 render / cover 开（probe、narration 不装字体，
+捞一百来 MB 回来白下）。**match-reel 的前缀从 v2 换成 v3**：main 上 v2 这个前缀底下只有 probe 存的
+243 字节空壳，按前缀退的时候它排在 CI 那一格前面，永远捞回空壳。判据
+`test_装字体的apt缓存都能退到CI在main上存的那份`、`test_apt缓存不许再认被空壳污染的前缀`。
 
 **Chromium 那一笔**：键是 `hashFiles('pyproject.toml')`，pyproject 写 `playwright>=1.40`、
 08-08 之后没动过，主键永远命中旧缓存（chromium-1234）；pip 装上的新 playwright 要 1243，

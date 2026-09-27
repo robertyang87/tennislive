@@ -410,8 +410,12 @@ jobs:
           # 固定键第一趟存下什么就永远是什么，改一次共享脚本才换一格；滚动键 ＋
           # 下面「真下了新包才存」，缺的包补一次就回写，命中的趟不重传。
           key: apt-pkgs-${{ runner.os }}-24.04-interview-draft-v1-${{ github.run_id }}
+          # 第二格退到 CI 在 main 上存的那份（cjk＋core＋emoji，这一步装的字体是它的
+          # 子集）：缓存按 ref 隔离，本线自己存的只有同一条分支看得见，每条新分支
+          # 的第一趟全靠这一格（2026-09-27，见 match-reel.yml 同一步的注释）
           restore-keys: |
             apt-pkgs-${{ runner.os }}-24.04-interview-draft-v1-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
 
       # ⚠️ **`ensure_ffmpeg` 不能漏。** `draft_interview_spec.py` 抽音频走的是
       # `yt-dlp -x --audio-format mp3`——`-x` 是 **postprocessing**，不管源是

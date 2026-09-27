@@ -444,9 +444,24 @@ jobs:
           # 和下面 TTS 内容缓存一样改成滚动键：先按稳定前缀恢复最近一份，跑完
           # 再用本次 run_id 回写「旧缓存 + 这趟补齐的包」。这样一次 render
           # 补齐字体后，下一趟才能真的吃到完整缓存。
-          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
+          #
+          # ⚠️⚠️ **2026-09-27：v2 → v3，外加退到 CI 那份。** 两件事，都是「缓存按 ref
+          # 隔离」逼出来的——分支上的 run 只看得见**本分支**和 **main** 存的缓存：
+          # - **v2 在 main 上只有空壳**：orchestrator 的 probe 全在 main 上跑、只
+          #   `ensure_ffmpeg`，存下的是 243 字节的空目录（run 36276804834 /
+          #   36216426100）；render 全在会话分支上跑，存进的是各自的分支。于是每条
+          #   新分支的第一趟 render 按前缀退到 main，捞回来的永远是那个空壳，排在它
+          #   后面的任何回退键都轮不到。换 v3 让那批空壳再也匹配不上
+          #   （`test_apt缓存不许再认被空壳污染的前缀`）。
+          # - **退到 CI 那份**：`ci.yml` 在 main 上每次合并都跑、装的是
+          #   cjk ＋ core ＋ emoji——这条线要的 cjk ＋ emoji 是它的子集，而 CI 的缓存
+          #   存在 main 上、所有分支都看得见。只给 render / cover 加这一格：probe、
+          #   narration 不装字体，捞一份一百来 MB 的缓存回来白下载。
+          #   判据 `test_装字体的apt缓存都能退到CI在main上存的那份`。
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-${{ github.run_id }}
           restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-
+            ${{ (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover') && format('apt-pkgs-{0}-24.04-ci-v2-', runner.os) || '' }}
       - name: 装 ffmpeg
         # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
         # subprocess **一个都没出现**，装它白花半分钟。

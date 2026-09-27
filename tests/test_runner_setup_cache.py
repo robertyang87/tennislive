@@ -173,6 +173,134 @@ def test_apt缓存只在这趟真下了新包时回写():
     assert restores >= 14, f"只扫到 {restores} 处 apt 缓存恢复，判据的主语像是没了"
 
 
+# ---- 缓存按 ref 隔离：分支上看得见的只有本分支和 main 的那几份 --------------
+
+_RUN_ID = "${{ github.run_id }}"
+_COND_KEY = re.compile(
+    r"\$\{\{\s*\((?P<cond>.+?)\)\s*&&\s*format\('(?P<fmt>[^']*)',\s*runner\.os\)"
+    r"\s*\|\|\s*''\s*\}\}")
+
+
+def _restore_keys(step) -> list[tuple[str, str | None]]:
+    """[(前缀, 条件或 None)]——`${{ (条件) && format('…{0}…', runner.os) || '' }}`
+    这种按 mode 开关的一格，按「条件成立时」的样子还原成字面前缀。"""
+    out = []
+    for line in str((step.get("with") or {}).get("restore-keys") or "").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        m = _COND_KEY.fullmatch(line)
+        if m:
+            out.append((m.group("fmt").replace("{0}", "${{ runner.os }}"),
+                        " ".join(m.group("cond").split())))
+        else:
+            out.append((line, None))
+    return out
+
+
+def _path_list(step) -> list[str]:
+    # actions/cache 的「版本」是**按顺序**拼起来的路径列表再哈希——顺序不同、
+    # 前缀再对也匹配不上（不报错，只是永远 miss）
+    return [p.strip() for p in _paths(step).splitlines() if p.strip()]
+
+
+def _apt_packages(steps) -> set[str]:
+    pkgs: set[str] = set()
+    for s in steps:
+        for m in re.finditer(r"(?<![\w-])apt_install_cached\s+([^\n;&|]+)", _code(s.get("run"))):
+            pkgs |= set(m.group(1).split())
+    return pkgs
+
+
+def _apt_restores():
+    for fname, job, steps in _jobs():
+        for step in steps:
+            if ("apt-archives" in _paths(step)
+                    and str(step.get("uses", "")).startswith("actions/cache/restore")):
+                yield fname, job, steps, step
+
+
+def test_装字体的apt缓存都能退到CI在main上存的那份():
+    """各条线的 apt 缓存键各是各的前缀（`…-ffmpeg-fonts-v3-` / `…-explainer-v2-`…），
+    而 **actions/cache 按 ref 隔离**：分支上的 run 只看得见本分支和 main 存的那几份。
+    render / 采访 / 解说都在会话分支上跑，存进的是各自的分支——**每条新分支的第一趟
+    都是冷的**，照样摸那个会抽风的镜像。
+
+    main 上真有一份完整的只有 CI：`ci.yml` 每次合并都在 main 上跑，装的是
+    cjk ＋ core ＋ emoji。所以凡是装的字体是它子集的那一步，restore-keys 里要有
+    CI 那个前缀，而且缓存目录的**顺序**要和 CI 一模一样（版本号按顺序哈希，
+    顺序一换就永远 miss，不报错）。
+
+    按 mode 开关的那一格（match-reel 只给 render / cover 加：probe、narration 不装
+    字体，捞一百来 MB 回来白下）——开关的条件必须和装字体那一步的 `if` 一字不差，
+    差一点就是「该退的时候不退」或者「白下」。
+    """
+    ci = [(steps, step) for fname, _job, steps, step in _apt_restores() if fname == "ci.yml"]
+    assert len(ci) == 1, f"ci.yml 里应该恰好有一处 apt 缓存恢复，找到 {len(ci)} 处"
+    ci_steps, ci_step = ci[0]
+    ci_key = str(ci_step["with"]["key"])
+    assert ci_key.endswith(_RUN_ID), f"CI 的 apt 缓存键不是滚动键：{ci_key}"
+    ci_prefix = ci_key[: -len(_RUN_ID)]
+    ci_pkgs = _apt_packages(ci_steps)
+    ci_paths = _path_list(ci_step)
+    assert ci_pkgs, "ci.yml 那个 job 一个包都不装了？判据的主语没了"
+
+    checked = []
+    for fname, job, steps, step in _apt_restores():
+        if fname == "ci.yml":
+            continue
+        pkgs = _apt_packages(steps)
+        if not pkgs or not pkgs <= ci_pkgs:
+            continue
+        where = f"{fname}::{job}「{step.get('name')}」"
+        keys = _restore_keys(step)
+        hit = [(p, cond) for p, cond in keys if p == ci_prefix]
+        assert hit, (
+            f"{where} 装的 {sorted(pkgs)} 是 CI 那份的子集，restore-keys 却退不到 "
+            f"{ci_prefix}——每条新分支的第一趟都是冷缓存：{keys}")
+        assert keys[0][0] != ci_prefix, (
+            f"{where} 的第一格是 CI 的前缀——本线自己存的（可能多装了包）要排在前面")
+        assert _path_list(step) == ci_paths, (
+            f"{where} 缓存的目录（或顺序）和 CI 不一样：{_path_list(step)} vs {ci_paths}"
+            "——版本号对不上，退到 CI 那一格永远 miss")
+        cond = hit[0][1]
+        if cond is not None:
+            installers = {" ".join(str(s.get("if") or "").split()) for s in steps
+                          if re.search(r"(?<![\w-])apt_install_cached\s", _code(s.get("run")))}
+            assert installers == {cond}, (
+                f"{where} 退到 CI 那一格的开关条件 {cond!r} 和装字体那一步的 if "
+                f"{sorted(installers)} 不一样")
+        checked.append(where)
+    assert len(checked) >= 6, f"只扫到 {len(checked)} 处装字体的 apt 缓存：{checked}"
+
+
+# 这些前缀在 **main** 上存着 probe 那几趟的空壳（`Cache Size: ~0 MB (243 B)`，
+# run 36276804834 / 36216426100）。空壳每被恢复一次就续一次命（7 天没人读才会被
+# 清），而按前缀退的时候它排在所有后面的回退键前面——认这个前缀，就永远捞回空壳。
+# **只许加不许减**：再发现一个被污染的前缀，加进来、换新版本号。
+_POLLUTED_APT_PREFIXES = frozenset({
+    "apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-",
+})
+
+
+def test_apt缓存不许再认被空壳污染的前缀():
+    """match-reel 的 v2 前缀在 main 上只有 probe 存的空目录：会话分支上每条新分支
+    的第一趟 render 按前缀退到 main，捞回来的就是它，排在后面的 CI 回退键轮不到。
+    换成 v3 之后，这条判据防的是有人照着旧注释把 v2 抄回来。"""
+    assert all(p.startswith("apt-pkgs-") and p.endswith("-") for p in _POLLUTED_APT_PREFIXES)
+    seen = 0
+    for fname, job, _steps, step in _apt_restores():
+        seen += 1
+        key = str(step["with"].get("key", ""))
+        for prefix in _POLLUTED_APT_PREFIXES:
+            assert not key.startswith(prefix), (
+                f"{fname}::{job} 的 apt 缓存键又用回了被空壳污染的前缀 {prefix}")
+            assert all(p != prefix for p, _c in _restore_keys(step)), (
+                f"{fname}::{job} 的 restore-keys 认 {prefix}——main 上那个前缀下只有"
+                "243 字节的空壳，捞回来就是冷缓存")
+    assert seen >= 14, f"只扫到 {seen} 处 apt 缓存恢复，判据的主语像是没了"
+
+
 # ---------------------------------------------------------------------------
 # 3. 共享脚本：交还所有权、标脏、--no-download（真跑一遍，拿桩代替 sudo/apt）
 # ---------------------------------------------------------------------------
