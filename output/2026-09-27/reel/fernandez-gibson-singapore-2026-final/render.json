@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "8f9cf6211092620303745ec077aa1b7959dc95519d1a4394f32cc323aa78be63",
+  "scoreboard_qc_sha256": "3df4e8d21fb54678f4928c6e4791d2b420ca46f4965f0557ba0798601ecad1dd",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
@@ -31,71 +31,8 @@
   },
   "face_checks": {
     "cover": {
-      "status": "ok",
-      "model": "buffalo_s-v0.7",
-      "identity": {
-        "verdict": "match",
-        "name": "费尔南德斯",
-        "similarity": {
-          "费尔南德斯": 0.443,
-          "吉布森": -0.0133
-        },
-        "missing": [],
-        "expected": [
-          "吉布森",
-          "费尔南德斯"
-        ],
-        "face": [
-          400,
-          221,
-          541,
-          427
-        ],
-        "face_px": 205.4,
-        "reason": "像 费尔南德斯（0.44 ≥ 0.34）",
-        "thresholds": {
-          "match": 0.34,
-          "mismatch": 0.15,
-          "min_face_px": 56
-        },
-        "target": [
-          "费尔南德斯"
-        ]
-      },
-      "eyes": {
-        "verdict": "open",
-        "ear": 0.2557,
-        "ear_each": [
-          0.2398,
-          0.2715
-        ],
-        "face": [
-          400,
-          221,
-          541,
-          427
-        ],
-        "face_px": 205.4,
-        "reason": "眼睛纵横比 0.26 ≥ 0.16",
-        "thresholds": {
-          "closed": 0.12,
-          "open": 0.16,
-          "min_face_px": 72
-        }
-      },
-      "problems": [],
-      "warnings": [],
-      "region": [
-        610,
-        0,
-        1420,
-        1080
-      ],
-      "frame": "output/2026-09-27/reel/fernandez-gibson-singapore-2026-final/cover_src/portrait.jpg",
-      "frame_at": 244.4,
-      "target": [
-        "费尔南德斯"
-      ]
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
     },
     "segments": {
       "status": "ok",
@@ -152,39 +89,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "fernandez-gibson-singapore-2026-final",
-    "received_at": "2026-09-27T11:44:59Z",
-    "artifact_ready_at": "2026-09-27T11:53:43Z",
-    "elapsed_seconds": 524.616,
+    "received_at": "2026-09-27T12:14:58Z",
+    "artifact_ready_at": "2026-09-27T12:23:09Z",
+    "elapsed_seconds": 491.547,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "accde2a770eb00f29b7d27a3b7186881ff99c0a149f5d9b6a0ed7fc6f283e977",
-    "spec_sha256": "b4554a127b8f57f877c09640a806216bc42e40ebb66ea6836280335c3cd7fcf3",
-    "run_id": "36316728670",
+    "film_sha256": "8673e8d8f7eb2f268efe9b8a396465bf552393b0a89e0879aabfb5664c18162d",
+    "spec_sha256": "355b508391c4ebd29c09b31b8743551a4fc4b0620564bd5b15abd24a9d73492c",
+    "run_id": "36318347403",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-27T11:47:37Z",
-        "run_id": "36316728670"
+        "at": "2026-09-27T12:17:12Z",
+        "run_id": "36318347403"
       }
     ],
-    "render_seconds": 366.616,
-    "pre_render_seconds": 158.0
+    "render_seconds": 357.547,
+    "pre_render_seconds": 134.0
   },
-  "film_sha256": "accde2a770eb00f29b7d27a3b7186881ff99c0a149f5d9b6a0ed7fc6f283e977",
-  "film_bytes": 142803472,
-  "qc_attestation_sha256": "377468361e7b7fb7b4dd914d01eaab88e8294240f916d42a52387cf0149bbba7",
+  "film_sha256": "8673e8d8f7eb2f268efe9b8a396465bf552393b0a89e0879aabfb5664c18162d",
+  "film_bytes": 142653826,
+  "qc_attestation_sha256": "5336ff37db504cfd9773702cbce57aaf0f76bff49e1e28587bfe03659d6a912d",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-27T11:47:37Z",
-      "run_id": "36316728670"
+      "at": "2026-09-27T12:17:12Z",
+      "run_id": "36318347403"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-27T11:53:44Z",
-      "run_id": "36316728670"
+      "at": "2026-09-27T12:23:10Z",
+      "run_id": "36318347403"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fernandez-gibson-singapore-2026-final/fernandez-gibson-singapore-2026-final.mp4",
-  "video_bytes": 142803472
+  "video_bytes": 142653826
 }
