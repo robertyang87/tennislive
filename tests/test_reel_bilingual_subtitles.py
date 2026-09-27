@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+from tennislive.video import explainer as E
 from tennislive.video.explainer import write_subtitles
 from tools.build_match_reel import explicit_quote_cues
 
@@ -55,6 +56,7 @@ def test_一行英文加多行中文仍按双语小字号排版(tmp_path: Path):
         margin_v=1284,
     )
     body = path.read_text("utf-8")
-    assert r"{\fs46}English reference line{\fs68}" in body
+    # 英文行换成 Inter SemiBold、细描边（2026-09-26 账号所有者选的），行尾把样式还给中文
+    assert E.ass_en_row("English reference line", outline=3) in body
     assert r"\N中文翻译第一行\N中文翻译第二行" in body
     assert "MarginV" in body

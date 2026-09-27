@@ -1106,6 +1106,24 @@ def subtitle_margin_for_boards(segments: list["Segment"], default_margin: int) -
         return default_margin
     lifted = min(tops) - SCORE_INSET_GAP_PX - SUB_BLOCK_H_PX
     return min(default_margin, max(0, lifted))
+def subtitle_bottom_for_boards(segments: list["Segment"]) -> int | None:
+    """全出血 + 回贴了比分板时，字幕**一律下锚**，底边钉在板顶上方 `SCORE_INSET_GAP_PX`。
+
+    账号所有者 2026-09-26：「**建议字幕可以往下来一点**」，看过并排对比选了这一版。
+    原来是上锚在 `subtitle_margin_for_boards` 算的那条线上：为了万一折成两行也不压板，
+    单行字幕和板之间常年空着一整行（约 92px）。下锚之后行数只往**上**长，底边钉死在
+    板的正上方——单行下来约 68px、双语下来约 22px，折多少行都不会压到板。
+    没开回贴、或者是带式，返回 None（照旧走上锚／`bilingual_bottom_margin`）。
+    """
+    if LAYOUT == "band":
+        return None
+    tops = [int(round(seg.score_inset[1] * VIDEO_W / CROP_W))
+            for seg in segments if seg.score_inset]
+    if not tops:
+        return None
+    return max(0, VIDEO_H - (min(tops) - SCORE_INSET_GAP_PX))
+
+
 # 一列要有多少行「不是球场色」才算板。板本身是实心图形，这个数很松。
 _BOARD_ROW_HIT = 0.5
 # 离球场色多远才算「不是球场」（RGB 欧氏距离）。
@@ -8587,9 +8605,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     board_margin = subtitle_margin_for_boards(segments, default_margin)
     if "subtitle_top" not in spec:
         margin_v = board_margin
+    # 回贴了板的全出血片子：每条字幕都下锚、底边钉在板顶上方（人工 `subtitle_top` 照旧最大）。
+    bottom = None if "subtitle_top" in spec else subtitle_bottom_for_boards(segments)
     ass = write_subtitles(cues, outdir / "subtitles.ass",
                           height=VIDEO_H, margin_v=margin_v,
-                          outline=SUB_OUTLINE_PX, shadow=SUB_SHADOW_PX)
+                          outline=SUB_OUTLINE_PX, shadow=SUB_SHADOW_PX,
+                          bottom_margin=bottom)
     moved = "" if margin_v == default_margin else (
         f"，比默认抬高 {default_margin - margin_v}px "
         + ("让开回贴在左下的记分条" if margin_v == board_margin != default_margin

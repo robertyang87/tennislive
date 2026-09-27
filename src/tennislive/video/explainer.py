@@ -13108,8 +13108,24 @@ _ASS_SIZE = 68                      # → 一个汉字约 46.6px，占屏宽 4.3
 _ASS_NUM_SIZE = 78
 # 双语原声字幕里，英文是原文参照，中文才是主读行。不能继续套上面给单行字幕
 # 数字/西文用的 78px：一句正常长度的英文会自动折成两三行，把显式写在下一行的
-# 中文顶出画布。采访线已经量过 46px 是英文参照行的可读档，这里沿用同一口径。
-_ASS_BILINGUAL_EN_SIZE = 46
+# 中文顶出画布。
+#
+# ⭐ 2026-09-26 账号所有者：「**我们的英文字幕字体感觉不够美观精致**」「要把所有
+# 英文字幕样式都改掉，保证以后统一」。原来英文行用的是思源黑体**自带的拉丁字母**
+# （为汉字配套画的，宽、重），又套着和中文一样 4px 的深色描边——46px 的小字被
+# 描边糊成一团，「What a way」几个字母粘在一起。他看过五款并排渲的对比图，选了
+# **Inter SemiBold**；描边减到 2.5px、字距拉开 0.6。三条线（赛场之上 / 网球有故事 /
+# 赛后开麦）英文一律走这一套，名字和文件只在这儿定一次。
+#
+# ⚠️ 字体文件在仓库里（`assets/fonts/Inter-SemiBold.ttf`，从 Google Fonts 的
+# `Inter[opsz,wght]` 按 wght=600 / opsz=24 实例化、只留拉丁子集），不是 apt 装的；
+# 所以每一个 `subtitles=` 滤镜都要带 `fontsdir=assets/fonts`，否则 libass
+# **不报错、静静回退**到别的字体。名字要写字体自己声明的 family（fc-scan 读的）。
+_ASS_EN_FONT = "Inter 24pt SemiBold"
+_ASS_EN_FONT_FILE = Path(__file__).resolve().parents[3] / "assets" / "fonts" / "Inter-SemiBold.ttf"
+_ASS_BILINGUAL_EN_SIZE = 44
+_ASS_EN_OUTLINE = 2.5
+_ASS_EN_SPACING = 0.6
 # 两行双语比单行字幕高，只抬双语事件本身；单行中文旁白仍保持账号既有上锚。
 # 不能借用 spec 的 subtitle_top：那个字段专门描述源片自带记分条的位置特例。
 _ASS_BILINGUAL_MARGIN_V = 1240
@@ -13218,10 +13234,25 @@ def bilingual_bottom_margin(height: int, margin_v: int) -> int:
     return max(0, height - top - _ASS_BILINGUAL_EN_SIZE - _ASS_SIZE)
 
 
+def ass_en_row(text: str, *, outline: float) -> str:
+    """双语字幕里那一行英文：换成 `_ASS_EN_FONT`、细描边、拉开字距，行尾把字体、
+    字重、字号、描边、字距全部还给中文那一行（样式泄到下一行就是中文也变细）。"""
+    return (f"{{\\fn{_ASS_EN_FONT}\\b0\\fs{_ASS_BILINGUAL_EN_SIZE}"
+            f"\\bord{_ASS_EN_OUTLINE:g}\\fsp{_ASS_EN_SPACING:g}}}{text}"
+            f"{{\\fn{_ASS_FONT}\\b1\\fs{_ASS_SIZE}\\bord{outline:g}\\fsp0}}")
+
+
 def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
                     *, height: int = VIDEO_H,
                     margin_v: int = _ASS_MARGIN_V,
-                    outline: float = 3, shadow: float = 0) -> Path:
+                    outline: float = 3, shadow: float = 0,
+                    bottom_margin: int | None = None) -> Path:
+    """`bottom_margin` 给了，就**每一条**都下锚（`\\an2`）、底边离画布底这么多——
+    全出血回贴了比分板的「赛场之上」用它把字幕钉在板的正上方
+    （`build_match_reel.subtitle_bottom_for_boards`）。没给照旧：单行上锚、双语下锚。"""
+    def en_row(text: str) -> str:
+        return ass_en_row(text, outline=outline)
+
     # **换行是「这一条要排两行」，不是一个空格。** 原来这儿写的是
     # `shown.replace(chr(10), ' ')`，于是中英双语那种「上英下中」的字幕被压成
     # 一行，只能靠 `WrapStyle=0` 自动折——折点落在最后一个装得下的空格上，
@@ -13239,9 +13270,7 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
             # 英文行不用 `_ass_text`：它会把每个拉丁词重新放大到 78px，外面套
             # 一个小字号也会被里面的标签逐词覆盖。中文行仍走原逻辑，数字照常
             # 放大；末尾还原 68px，避免样式泄到下一行。
-            return ([f"{{\\fs{_ASS_BILINGUAL_EN_SIZE}}}{rows[0]}"
-                     f"{{\\fs{_ASS_SIZE}}}"]
-                    + [_ass_text(row) for row in rows[1:]])
+            return ([en_row(rows[0])] + [_ass_text(row) for row in rows[1:]])
         return [_ass_text(row) for row in rows]
 
     # 双语那一档下锚（`\\an2` ＋ 底边距），别的照旧走样式里的上锚（MarginV=0
@@ -13249,8 +13278,11 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
     lines = []
     for start, end, shown in cues:
         bilingual = is_bilingual_cue(shown)
-        margin = bilingual_bottom_margin(height, margin_v) if bilingual else 0
-        anchor = r"{\an2}" if bilingual else ""
+        if bottom_margin is not None:
+            margin, anchor = bottom_margin, r"{\an2}"
+        else:
+            margin = bilingual_bottom_margin(height, margin_v) if bilingual else 0
+            anchor = r"{\an2}" if bilingual else ""
         lines.append(
             f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,"
             f"{margin},," + anchor + r"\N".join(ass_rows(shown)))
@@ -13540,7 +13572,8 @@ def assemble_explainer_video(
                     cues, output.parent / f"sub_{i:02d}.ass",
                     height=canvas_h, margin_v=margin_v,
                 )
-                chain += f",subtitles='{_filter_path(ass)}'"
+                chain += (f",subtitles='{_filter_path(ass)}'"
+                          f":fontsdir='{_filter_path(_ASS_EN_FONT_FILE.parent)}'")
         filters.append(f"{chain},format=yuv420p[v{i}]")
         # Silence the audio rather than the picture: adelay pushes the speech
         # later, apad hangs quiet on the end. The still stays on screen for the

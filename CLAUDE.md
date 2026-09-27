@@ -2810,6 +2810,17 @@ swiatek-kostyuk 各一段），共同点很整齐：**quote 窗口全部落在�
 - 判据 `build_match_reel.unvoiced_quote_problem`（`--dry-run` 就红；自动产的 spec 只报），不分栏目；
   已发的 223 条挂 `data/legacy_unvoiced_quote.json`，只许减不许加，`tests/test_unvoiced_quote.py` 自检
 
+### ⭐⭐ 英文字幕一律 Inter SemiBold；有比分板时字幕底边钉在板正上方
+
+账号所有者 2026-09-26：「**英文字幕字体感觉不够美观精致**」「要把所有英文字幕样式都改掉，保证以后统一」
+——五款并排对比选了 **Inter**；同一轮「**字幕可以往下来一点**」，选了「底边钉在比分板上方 24px」那版。
+
+- 英文行：`Inter 24pt SemiBold`、44px、描边 2.5px、字距 0.6（原来是思源黑体自带的拉丁字母＋4px 描边，字母被糊在一起）；
+  三条线共用 `explainer._ASS_EN_FONT` / `ass_en_row`。字体在仓库 `assets/fonts/`，**每个 `subtitles=` 都要带 `fontsdir`**，
+  否则 libass 静静回退
+- 全出血回贴了比分板：每条字幕下锚（`build_match_reel.subtitle_bottom_for_boards`），单行下来约 68px，折行往上长
+- 判据 `tests/test_en_subtitle_font.py`（含「和不存在的字体名比渲染结果」那一条）
+
 ### ⭐ 配音里不许说「解说说」——要引解说就留原声
 
 账号所有者 2026-09-26：「**配音的 tts 里不要再说解说说这三个字了**」。
