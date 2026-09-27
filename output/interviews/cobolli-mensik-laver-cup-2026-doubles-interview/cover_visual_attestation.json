@@ -1,0 +1,110 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-27T16:38:26Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "科博利/门西克",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at + face model buffalo_s-v0.7 vs official headshot",
+  "spec_sha256": "2ecadf4d85a86c751c9a43c975c4c7d587fa8fe9d5cf292b53f74cf854548611",
+  "poster_sha256": "518157681f4cb3f9bd863be170c4ccb2dba5b4bc5a9dc782dfcca671d75ee7d2",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        38,
+        168,
+        550,
+        550
+      ],
+      "detected_faces": 1,
+      "eyes": 4,
+      "face_height_ratio": 0.67901,
+      "face_area_ratio": 0.34579,
+      "center_x_ratio": 0.28981,
+      "center_y_ratio": 0.36173,
+      "sharpness": 436.614,
+      "contrast": 143.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 29.4,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    },
+    "face_model": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "科博利",
+        "similarity": {
+          "科博利": 0.5029,
+          "门西克": -0.0299
+        },
+        "missing": [],
+        "expected": [
+          "科博利",
+          "门西克"
+        ],
+        "face": [
+          232,
+          112,
+          517,
+          487
+        ],
+        "face_px": 375.3,
+        "reason": "像 科博利（0.50 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2625,
+        "ear_each": [
+          0.2217,
+          0.3033
+        ],
+        "face": [
+          232,
+          112,
+          517,
+          487
+        ],
+        "face_px": 375.3,
+        "reason": "眼睛纵横比 0.26 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": []
+    }
+  },
+  "issues": [],
+  "warnings": []
+}
