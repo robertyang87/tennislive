@@ -16,6 +16,10 @@
 照样放行。所以「值不变、只换出处」要看**最大差 = 0**（或逐字节相同）；
 均差只适合「允许一点重采样误差」的场合，而且要连最大差和变了多少像素一起报。
 
+⚠️ **透明度也算差。** 最大差和有差像素按 RGBA 四个通道量——只改 alpha 的改动
+（角标、半透明叠层）在 RGB 上是零，转成 RGB 再比就是一条恒真的「零变化」。均差
+仍按 RGB 三个通道平均（和各包已经在用的「均差 ≤x/255」同一个口径）。
+
 用法：
     # 一行：现状 | 方案
     python3 tools/design_compare_sheet.py before.png after.png -o sheet.jpg
@@ -72,53 +76,81 @@ def _font(size: int) -> ImageFont.ImageFont:
     return ImageFont.load_default()
 
 
-def _open(src: str | Path | Image.Image) -> Image.Image:
-    im = src if isinstance(src, Image.Image) else Image.open(src)
-    return im.convert("RGB")
+def _load(src: str | Path | Image.Image) -> Image.Image:
+    """读成 RGBA（透明度要参与比较），**读完就关文件**。
+
+    `Image.open` 是惰性的，文件句柄挂在返回的对象上；多帧的 GIF / APNG / TIFF
+    在 `convert` 之后句柄还开着，要等垃圾回收才关（会报 ResourceWarning）。
+    """
+    if isinstance(src, Image.Image):
+        return src.convert("RGBA")
+    with Image.open(src) as im:
+        return im.convert("RGBA")
+
+
+def _flatten(im: Image.Image) -> Image.Image:
+    """拼图用：RGBA 压到深底上（透明处露出底色，而不是露出被 alpha 盖住的 RGB）。"""
+    base = Image.new("RGBA", im.size, rgb(DARK["background"]) + (255,))
+    return Image.alpha_composite(base, im.convert("RGBA")).convert("RGB")
 
 
 def mean_abs_diff(a: str | Path | Image.Image, b: str | Path | Image.Image) -> dict:
-    """逐像素、逐通道的绝对差：均值（0–255 口径）、最大值、有差的像素占比。
+    """逐像素的绝对差：均值（RGB 三通道，0–255 口径）、最大值和有差像素占比
+    （**RGBA 四个通道**，只改透明度也算）、alpha 单独的最大差。
 
     尺寸不同时把 b 缩到 a 的尺寸再比，并在结果里标 `resized`——那种情况下
     均差里混着重采样误差，不能当「零视觉变化」的证据。
     """
-    ia, ib = _open(a), _open(b)
+    ia, ib = _load(a), _load(b)
     resized = ia.size != ib.size
     if resized:
         ib = ib.resize(ia.size, Image.LANCZOS)
     diff = ImageChops.difference(ia, ib)
-    hist = diff.histogram()  # 3 × 256
-    n = ia.size[0] * ia.size[1] * 3
-    total = sum(v * c for ch in range(3) for v, c in enumerate(hist[ch * 256:(ch + 1) * 256]))
-    peak = max((v for ch in range(3) for v, c in enumerate(hist[ch * 256:(ch + 1) * 256]) if c),
-               default=0)
+    hist = diff.histogram()  # 4 × 256：R G B A
+
+    def channel(ch: int) -> list[int]:
+        return hist[ch * 256:(ch + 1) * 256]
+
+    pixels = ia.size[0] * ia.size[1]
+    total_rgb = sum(v * c for ch in range(3) for v, c in enumerate(channel(ch)))
+    peaks = [max((v for v, c in enumerate(channel(ch)) if c), default=0) for ch in range(4)]
     # 任一通道有差就算这个像素变了（转灰度会把蓝通道差 1 四舍五入成 0）
-    r, g, b_ = diff.split()
-    changed = ia.size[0] * ia.size[1] - ImageChops.lighter(r, ImageChops.lighter(g, b_)).histogram()[0]
+    r, g, b_, a_ = diff.split()
+    any_ch = ImageChops.lighter(ImageChops.lighter(r, g), ImageChops.lighter(b_, a_))
+    changed = pixels - any_ch.histogram()[0]
     return {
-        "mean": total / n,
-        "max": peak,
-        "changed_ratio": changed / (ia.size[0] * ia.size[1]),
+        "mean": total_rgb / (pixels * 3),
+        "max": max(peaks),
+        "max_alpha": peaks[3],
+        "changed_ratio": changed / pixels,
         "resized": resized,
         "diff": diff,
     }
 
 
 def _diff_panel(diff: Image.Image) -> Image.Image:
-    return diff.point(lambda v: min(255, v * DIFF_GAIN))
+    """RGB 差放大 8 倍；alpha 的差叠成灰度（只改透明度的地方也亮）。"""
+    r, g, b, a = diff.split()
+    rgb_diff = Image.merge("RGB", (r, g, b))
+    alpha_diff = Image.merge("RGB", (a, a, a))
+    return ImageChops.lighter(rgb_diff, alpha_diff).point(lambda v: min(255, v * DIFF_GAIN))
 
 
 def compare_sheet(rows: list[list[tuple[str, str | Path | Image.Image]]], out: Path, *,
                   title: str = "", diff: bool = False, max_width: int = MAX_WIDTH,
                   quality: int = 88) -> list[dict]:
-    """拼图并写出 JPEG。`rows` 每行是若干 (标签, 图)。返回每行的差分统计（`diff=True` 时）。"""
+    """拼图并写出 JPEG。`rows` 每行是若干 (标签, 图)。返回每行的差分统计（`diff=True` 时）。
+
+    宽度上限 `MAX_WIDTH` 在这儿守，不只在命令行守——各包从 Python 里直接调它。
+    """
     if not rows or any(not r for r in rows):
         raise ValueError("至少要一行、每行至少一张图")
+    if max_width > MAX_WIDTH:
+        raise ValueError(f"宽度上限是 {MAX_WIDTH}（手机上看、发进对话都够了），拿到 {max_width}")
     stats: list[dict] = []
     grid: list[list[tuple[str, Image.Image]]] = []
     for row in rows:
-        cells = [(label, _open(src)) for label, src in row]
+        cells = [(label, _load(src)) for label, src in row]
         if diff:
             if len(cells) < 2:
                 raise ValueError("--diff 要每行至少两张图（第一张当基准）")
@@ -133,12 +165,14 @@ def compare_sheet(rows: list[list[tuple[str, str | Path | Image.Image]]], out: P
     cols = max(len(r) for r in grid)
     width = max_width
     cell_w = (width - 2 * MARGIN - (cols - 1) * GAP) // cols
+    if cell_w < 1:
+        raise ValueError(f"宽 {width} 排不下 {cols} 列")
     scaled: list[list[tuple[str, Image.Image]]] = []
     for cells in grid:
         row_scaled = []
         for label, im in cells:
             h = round(im.size[1] * cell_w / im.size[0])
-            row_scaled.append((label, im.resize((cell_w, h), Image.LANCZOS)))
+            row_scaled.append((label, _flatten(im).resize((cell_w, h), Image.LANCZOS)))
         scaled.append(row_scaled)
 
     top = MARGIN + (TITLE_H if title else 0)
@@ -191,7 +225,7 @@ def main() -> int:
     stats = compare_sheet(rows, args.out, title=args.title, diff=args.diff,
                           max_width=args.max_width)
     for i, s in enumerate(stats):
-        print(f"第 {i + 1} 行：均差 {s['mean']:.4f}/255，最大 {s['max']}，"
+        print(f"第 {i + 1} 行：均差 {s['mean']:.4f}/255，最大 {s['max']}（alpha {s['max_alpha']}），"
               f"有差像素 {s['changed_ratio']:.2%}" + ("（尺寸不同，已缩放）" if s["resized"] else ""))
     print(f"写了 {args.out}")
     return 0
