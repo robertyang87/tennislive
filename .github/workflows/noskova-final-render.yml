@@ -4,29 +4,18 @@ on:
     branches: [codex/noskova-svitolina-bjk-final-20260927]
     paths: [.github/workflows/noskova-final-render.yml]
 permissions:
-  contents: write
+  contents: read
   actions: write
 jobs:
   render:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - name: Save verified AP original and dispatch manually authored reel
+      - name: Dispatch corrected manually authored reel
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          mkdir -p assets/reel
-          curl --fail --location --retry 3 'https://media.zenfs.com/en/ap.org/44fbe253290f7271132339a7eef537f1.jpg' -o assets/reel/noskova-bjk-cup-2026-final.jpg
-          echo '51f58ac7e20673da8666515c0407bff1ee9318c855b9370b43eae61426a09f8f  assets/reel/noskova-bjk-cup-2026-final.jpg' | sha256sum --check
-          git config user.name 'Codex'
-          git config user.email 'noreply@openai.com'
-          git add assets/reel/noskova-bjk-cup-2026-final.jpg
-          if ! git diff --cached --quiet; then
-            git commit -m 'reel: verified final winner AP original'
-            git push
-          fi
           gh workflow run match-reel.yml --ref codex/noskova-svitolina-bjk-final-20260927 \
             -f mode=render \
             -f slug=noskova-svitolina-bjk-cup-2026-final \
