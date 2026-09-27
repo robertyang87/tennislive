@@ -1,0 +1,40 @@
+name: noskova-final-source-review
+on:
+  push:
+    branches: [codex/noskova-svitolina-bjk-final-20260927]
+    paths: [.github/workflows/noskova-final-source-review.yml]
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-noskova-svitolina-bjk-cup-2026-final-52dd52c7c7870196
+          fail-on-cache-miss: true
+      - name: Export this source and primary tie data for Codex review
+        run: |
+          mkdir review
+          python - <<'PY'
+          import hashlib,pathlib,shutil,urllib.request,json
+          url='https://www.youtube.com/watch?v=ZxGHdW5GnbY'
+          p=pathlib.Path.home()/'.cache/tennislive-sources'/(hashlib.sha1(url.encode()).hexdigest()[:16]+'.mp4')
+          assert p.stat().st_size > 1000000
+          shutil.copyfile(p,'review/source.mp4')
+          for tid in ['7681755a-cde8-4bcc-b4a4-f33b0a503b0e','c9789f83-0d32-4876-89a8-873d82bcfe4b']:
+              try:
+                  req=urllib.request.Request('https://api.itf-production.sports-data.stadion.io/custom/tieCentre/'+tid,headers={'User-Agent':'Mozilla/5.0','Origin':'https://www.billiejeankingcup.com','Referer':'https://www.billiejeankingcup.com/'})
+                  data=urllib.request.urlopen(req,timeout=20).read()
+                  json.loads(data)
+                  pathlib.Path('review',tid+'.json').write_bytes(data)
+              except Exception as e:
+                  pathlib.Path('review',tid+'.error.txt').write_text(str(e))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noskova-final-source-review
+          path: review/
+          retention-days: 3

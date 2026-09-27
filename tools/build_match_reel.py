@@ -990,6 +990,21 @@ def measure_point_ends(source: Path, scorebox: str,
     return ends, scorebox_guess, ends_guess
 
 
+def _video_frame_size(source: Path) -> tuple[int, int] | None:
+    """源片的宽高；读不出来就返回 None（不拦，交给后面照旧跑）。"""
+    try:
+        import cv2  # noqa: PLC0415
+    except ImportError:  # pragma: no cover
+        return None
+    cap = cv2.VideoCapture(str(source))
+    try:
+        w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    finally:
+        cap.release()
+    return (w, h) if w > 0 and h > 0 else None
+
+
 def point_end_candidates(source: Path, scorebox: str, *,
                          guessed: bool = False) -> list[float]:
     """量一遍死球时刻，写进 `probe.json`——**趁源片还在**。
@@ -1028,6 +1043,14 @@ def point_end_candidates(source: Path, scorebox: str, *,
     except ValueError:
         raise ReelError(
             f"--scorebox 要写成 x0,y0,x1,y1（源片像素），给的是「{scorebox}」")
+    # 2026-09-27 medvedev-wong（run 36331431180）：照搬 1080p 转播的框去 probe
+    # 一条只有 1280×720 的源片，框整个落在画面外，cv2 在第 57 行报一句
+    # `!_src.empty()` 的 traceback——看不出是「框和分辨率对不上」。
+    frame_size = _video_frame_size(source)
+    if frame_size and (box[2] > frame_size[0] or box[3] > frame_size[1]):
+        raise ReelError(
+            f"--scorebox {scorebox} 超出源片画面 {frame_size[0]}×{frame_size[1]}"
+            "——框是按别的分辨率量的，照源片像素重新给")
     with stage("量死球（猜的框）" if guessed else "量死球"):
         rows = fpe.scan(source, box, 0.1)
         ends = fpe.point_ends(rows, fpe.CHANGE, fpe.DARK_SHARE, fpe.MERGE)
@@ -3348,7 +3371,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "slug", "source_audio", "source_url", "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
              "editorial"),
-    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "layout", "matchup", "meta",
+    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_align", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
@@ -7172,16 +7195,28 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #: - `wong-vallejo-hangzhou-2026-r2`：2026-09-26 杭州 ATP250 第二轮（北京深夜打完）。
 #:   按下面那条常设授权走：find_cover_photo 查 AP、ATP 赛事图库都是 0，赛后稿没有图。
 #:   用源片（Tennis TV 第四比赛日合集最后一段）689.8s 赢球后正脸的近景。
+#: - `medvedev-wong-hangzhou-2026-qf`：2026-09-27 杭州 ATP250 1/4决赛（北京 22:47
+#:   打完）。按下面那条常设授权走：终场后近两小时 find_cover_photo 查 AP、WTA
+#:   photo-resources 都是 0。账号所有者 2026-09-28 选了封面放梅德韦杰夫（黄泽林在源片里
+#:   没有清楚的正脸）。用赛后梅德韦杰夫正脸近景（Tennis TV 1/4 决赛合集 384.4s），
+#:   源片 1920×1080，放大 1.33 倍。
+#: - `zverev-tien-laver-cup-2026`：2026-09-27 拉沃尔杯第三天第 10 场（夺冠一场，北京 23:14
+#:   打完）。按下面那条常设授权走：终场后约 45 分钟，拉沃尔杯官网 WordPress 媒体库本场只有
+#:   两张视频缩略图（Getty 第二天的图是次日 14:14Z 才批量上的），AP、WTA photo-resources 0。
+#:   用 126.0s 拉沃尔杯点之后张臂正脸的近景，源片 1920×1080，放大 1.33 倍。
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
+    "safiullin-bu-hangzhou-2026-qf",  # Standing authorization; source-frame evidence in spec.
     "wu-duckworth-us-open-2026-r2",
     "zhiyenbayeva-bouzas-bjk-cup-2026",
     "wang-prozorova-singapore-2026-qf",
     "bublik-jodar-laver-cup-2026",
     "medvedev-royer-hangzhou-2026-r2",
     "wong-vallejo-hangzhou-2026-r2",
+    "medvedev-wong-hangzhou-2026-qf",
+    "zverev-tien-laver-cup-2026",
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
@@ -7323,7 +7358,9 @@ def cover_photo_problem(spec: dict) -> str | None:
             "`--player` 要给文件名里的全名写法\n"
             "  ③ **再扩渠道**——Getty（`GettyImages-<id>.jpg` 走 WTA CDN "
             "`?width=4000`，说明页自带四要素）、WTA 单条集锦视频页的头图、"
-            "当地报纸的每日图集（原图 4800px 级）、球员和赛事的官方社媒\n"
+            "当地报纸的每日图集（原图 4800px 级）、球员和赛事的官方社媒；"
+            "**亚洲赛季加 `--zh <中文名> --zh <对手> --city <城市>`**（搜狗微信公众号＋"
+            "当地网站：hu-kopriva / zhang-wong / bu-majchrzak 换上的实拍都出自这一档）\n"
             "  ④ 真到了「翻到底就是没有」，那是一个**要说出来的结论**，"
             "不是一次静悄悄的跳过——把①②③各查了什么、结果如何写清楚")
     path = Path(str(image))
@@ -8084,6 +8121,10 @@ def validate_spec(
       spec 就得先装 176 MB 的抠图模型。它留在 `render()` 里，照旧排在下载之前。
     - **要量源片才知道的**（裁切窗口越界、`frame_at` 超出片长）——这里做不了，
       别塞进来假装也提前了。
+
+    `allow_published_legacy=True` 只给全仓离线盘点：放过已发存量的豁免，而且
+    **不读发布账本**——「这一趟重渲之前回头查过没有」只有渲染入口问得出意义，
+    全库扫描读账本会让推送落账那一下把 main 打红。生产调用一律用默认 false。
     """
     # ⚠️ `spec_sources` 挪到最前面了：整改合同现在按**素材构成**判要不要填
     # （见 `_editorial_contract_required`），得先知道这条 spec 用了谁的画面。
@@ -8098,6 +8139,20 @@ def validate_spec(
     _validate_editorial_contract(
         spec, required=_editorial_contract_required(spec, urls, topbar))
     _absolute_claims_need_a_source(spec)
+    # 写了「正式名单要等抽签日」就要回头查（davis-china 895dad7b），常青栏目不钉「今天」
+    # （qualifier-ceiling 2756cec3）。判据和量法在 `reel_facts.time_sensitive_problems`。
+    # ⚠️ 生产调用（渲染入口、--dry-run）是**渲染入口**的口径：外加「回头查的时刻要晚于
+    # 上一次推送」那一半（读 data/reel_publish_ledger）。`allow_published_legacy=True`
+    # 是全仓离线盘点（`test_每条spec的旁白都还估得下` 拿它扫全部 specs/reels）——那一半
+    # 放进全库，一条做对了的片子（渲前回头查、渲后推送）推送一落账就把 main 打红：
+    # auto-push 的账本提交在 main 上跑 CI（2026-09-27 对抗 review 拿 cobolli-tien 复现）。
+    from reel_facts import time_sensitive_gate  # noqa: PLC0415
+    blocking, report_only = time_sensitive_gate(
+        spec, at_render=not allow_published_legacy)
+    for problem in report_only:
+        print(f"[时效] 自动 spec，只报不拦：{problem}")
+    if blocking:
+        raise ReelError(blocking[0])
     _players_are_worth_a_reel(spec)
     _hook_lines_fit_the_title(spec)
     voice = cover_voice_matches_hook_problem(spec)
@@ -8122,6 +8177,14 @@ def validate_spec(
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)
+    # 当事人声明类「网球有故事」：X / Instagram 查过没有（sinner 97ebe27a）。
+    from reel_facts import social_search_problem  # noqa: PLC0415
+    social = social_search_problem(spec)
+    if social:
+        if (spec.get("_production") or {}).get("status") == "ready_for_render":
+            print(f"[当事人声明] 自动 spec，只报不拦：{social.splitlines()[0]}")
+        else:
+            raise ReelError(social)
     duplicate = duplicate_match_problem(spec)
     if duplicate:
         raise ReelError(duplicate)
@@ -9116,9 +9179,17 @@ def _ass_timestamp(seconds: float) -> str:
 #
 # ⚠️ **判据宁可窄，不可宽**：只认「零/没有/唯一/史上第一」这一族，
 # 不认「他这一场打得最好」这类主观话——那种机械挡不住（CLAUDE.md 记过几次）。
-_ABSOLUTE_CLAIM_RE = re.compile(
-    r"零胜|一场没赢过|一场都没赢|一次都没赢|没赢过一场|从没赢过|从未赢过"
-    r"|唯一一个|唯一一位|史上第一|历史上第一|从来没有")
+#
+# ⚠️ 2026-09-27 词表和认领口径挪进了 `tools/absolute_claims.py`（三条线共用一处；
+# 解说片那条线原来一道闸都没有），同时收进了「生涯动词 ＋ 同一个数说两遍」的
+# 计数式——`wawrinka-wildcard`「一共只进过三次大满贯决赛，三次全部拿下」那一类。
+# 量法和为什么没按词放宽，见那个模块的 docstring。
+from absolute_claims import (  # noqa: E402
+    REEL_COUNT_LEGACY,
+    is_count_phrase as _is_count_phrase,
+    problem_text as _absolute_claim_problem_text,
+    unsourced as _unsourced_claims,
+)
 
 # 出事之前就发出去的那些。**只许减不许加**，底下的判据会自检：名字要真的存在、
 # 而且真的还带着那种断言——写错一个名字，豁免就成了一盏恒真的绿灯。
@@ -9141,12 +9212,6 @@ def spec_outward_text(spec: dict) -> list[str]:
     return [t for t in out if t]
 
 
-def _claim_sources(value: object) -> set[str]:
-    """一条认领里引了几个**不同**的源——按主机名去重，同一个站点算一个。"""
-    return {m.group(1).lower()
-            for m in re.finditer(r"https?://([^/\s)）]+)", str(value))}
-
-
 def _absolute_claims_need_a_source(spec: dict) -> None:
     """写了全称断言，就必须在 `_claims` 里认领**两个独立源**的穷举出处。
 
@@ -9162,27 +9227,20 @@ def _absolute_claims_need_a_source(spec: dict) -> None:
     slug = str(spec.get("slug", "")).strip()
     if slug in _LEGACY_UNSOURCED_CLAIMS:
         return
-    claims = spec.get("_claims") or {}
-    found = sorted({m.group(0) for text in spec_outward_text(spec)
-                    for m in _ABSOLUTE_CLAIM_RE.finditer(text)})
-    missing = []
-    for phrase in found:
-        hosts: set[str] = set()
-        for key, value in claims.items():
-            if phrase in str(key):
-                hosts |= _claim_sources(value)
-        if len(hosts) < 2:
-            missing.append((phrase, len(hosts)))
+    missing = _unsourced_claims(spec_outward_text(spec), spec.get("_claims"),
+                                count_form=slug not in REEL_COUNT_LEGACY)
+    # ⚠️ 自动产的 spec：**计数式那一档只报不拦**，词表那一档照旧硬。
+    # 模型写不了 `_claims`（它没有两个源可引），计数式做成硬的，promote 就会把一条
+    # 写着「三次交手，三次都赢」的草稿静静跳过——自动链卡成「今天没有候选」，
+    # 和 `_narration_craft` / 时效那两道闸同一个理由。词表那一档（零胜／史上第一）
+    # 是出过事、而且存量里扫得干净的那一族，不跟着松。
+    if (spec.get("_production") or {}).get("status") == "ready_for_render":
+        counted = [(p, n) for p, n in missing if _is_count_phrase(p)]
+        for phrase, hosts in counted:
+            print(f"[全称断言] 自动 spec，计数式只报不拦：{phrase}（现在只有 {hosts} 个源）")
+        missing = [(p, n) for p, n in missing if not _is_count_phrase(p)]
     if missing:
-        raise ReelError(
-            "这几句是**全称断言**，一个反例就能推翻——必须在 spec 的 `_claims` 里\n"
-            "认领**两个独立源**的穷举出处（各带 URL），而且要按断言本身的粒度逐行核：\n"
-            + "".join(f"  · {p}（现在只有 {n} 个源）\n" for p, n in missing)
-            + '  "_claims": {"<把那句话抄进来>": "…核过的记录… https://A/… ；https://B/…"}\n'
-            "⚠️ **断言的粒度 ≤ 查询的粒度**：说「轮次」就要查到轮次那一列。\n"
-            "  `chwalinska-gibson` 就是这么错的——「场地＋级别」的 6 胜 4 负分不出\n"
-            "  Q1/Q2 和 R32/R16，而轮次就在同一张表里；而第二个源（维基引 WTA 官方标题\n"
-            "  「…beats Marino for first hard-court win」）一句话就能推翻它。")
+        raise ReelError(_absolute_claim_problem_text(missing, "spec 的 `_claims`"))
 
 
 def _third_party_sources(urls: dict[str, str]) -> dict[str, str]:
@@ -10514,6 +10572,17 @@ def main() -> int:
         else:
             print(f"[dry-run] ⚠️ 没有 {copy_path.name}——render 走到写复制页"
                   "那一步会直接报「找不到」。**现在补，别等渲完。**")
+        # 官方频道 36 小时内没用上的上传 ＋ 封面比源片旧——**只报不拦、离线读快照**
+        # （`list_official_uploads`：eala-jovic 5053eafb 漏了官方出场视频、
+        # osaka 3a82caee 六月的图当九月的封面）。报告自己出错也不许挡住 dry-run。
+        try:
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            import list_official_uploads  # noqa: PLC0415
+
+            for line in list_official_uploads.dry_run_lines(spec, args.spec):
+                print(line)
+        except Exception as exc:                          # noqa: BLE001 — 只报不拦
+            print(f"[官方上传] ⚠️ 报告出错（不影响 dry-run）：{type(exc).__name__}: {exc}")
         # **旁白写长了不用等 render，也不用等 TTS。** 这一条离线估，误差
         # ±1.5s（见 `speech_seconds` 的推导），所以只判「估得再乐观也装不下」；
         # 剩下的交给 `--check-narration` 拿真语音量。

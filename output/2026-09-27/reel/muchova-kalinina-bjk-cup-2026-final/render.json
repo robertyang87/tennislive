@@ -1,0 +1,126 @@
+{
+  "scoreboard_qc_sha256": "38a35f077cb71e62695cde31493375f884085b511fb3291d59f0bf4edcab39b0",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 198.76,
+  "topbar": {
+    "line1": "2026 比利·简·金杯 决赛",
+    "line2": "穆霍娃 6-2 6-3 卡利尼娜",
+    "start": 1.2,
+    "end": 199.96
+  },
+  "film_seconds": 203.8,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 27.984,
+    "2": 10.392,
+    "3": 14.4,
+    "4": 5.52,
+    "5": 9.6,
+    "6": 20.4,
+    "7": 21.744,
+    "8": 8.136,
+    "9": 4.536,
+    "10": 8.4,
+    "12": 4.392
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 6,
+          "named": "穆霍娃",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 9,
+          "named": "卡利尼娜",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 10,
+          "named": "穆霍娃",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 11,
+          "named": "穆霍娃",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 13,
+          "named": "穆霍娃",
+          "frames": 2,
+          "faces": 2,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 10,
+      "faces": 2
+    }
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "muchova-kalinina-bjk-cup-2026-final",
+    "received_at": "2026-09-27T11:37:03Z",
+    "artifact_ready_at": "2026-09-27T11:44:05Z",
+    "elapsed_seconds": 422.217,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "d2b18f339e336010d5bb2f0a11f6ca8f8a6a589b35ee600e435e863b8e2e96b5",
+    "spec_sha256": "03c87f2f27dffd08b6f7b9da3062a60c49cbeadff11bc0388dc530c40e05391e",
+    "run_id": "36316301575",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-27T11:39:12Z",
+        "run_id": "36316301575"
+      }
+    ],
+    "render_seconds": 293.217,
+    "pre_render_seconds": 129.0
+  },
+  "film_sha256": "d2b18f339e336010d5bb2f0a11f6ca8f8a6a589b35ee600e435e863b8e2e96b5",
+  "film_bytes": 102885808,
+  "qc_attestation_sha256": "b5366a874e8516b67fbb655c03b87b3b517650cdf5329e3d28c37bcb18151da5",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-27T11:39:12Z",
+      "run_id": "36316301575"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-27T11:44:06Z",
+      "run_id": "36316301575"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-muchova-kalinina-bjk-cup-2026-final/muchova-kalinina-bjk-cup-2026-final.mp4",
+  "video_bytes": 102885808
+}

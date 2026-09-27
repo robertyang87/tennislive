@@ -1,6 +1,7 @@
 import html
 import json
 import re
+import sys
 import types
 from pathlib import Path
 from unittest import mock
@@ -28,23 +29,32 @@ from tennislive.video.explainer import (
 # was fixed into rather than only being checked the day it ships.
 _SCRIPTED = tuple(_SCRIPTS)
 
+# 逐条稿子的编辑判据 2026-09-27 起**只活在渲前预检里**（`tools/explainer_preflight.py`，
+# `explainer.yml` 的第一步）：这份测试扫全库、预检只查一条，调的是同一份函数、
+# 同一张豁免表。写两处必分叉——「测试红、预检绿」或者反过来。
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+import explainer_preflight as P  # noqa: E402
+
+
+def _decks(date_label: str = P.WIDEST_DATE_LABEL):
+    """每条字卡稿按预检的口径装一遍（slug 没注册会在这儿当场炸，不会静静跳过）。
+
+    日期默认按**最宽**的那个（「12.28」）：标题字位跟着日期变，拿窄日期（7.26）量，
+    十月以后重渲的那一趟就没人替它量过（2026-09-27 对抗 review）。
+    """
+    return [P.load_deck(slug, date_label) for slug in _SCRIPTED]
+
+
+def _problems(check, *, having: str = "", date_label: str = P.WIDEST_DATE_LABEL) -> list[str]:
+    """全库跑一项预检；`having` 只留报错里带这几个字的那一类。"""
+    return [p for deck in _decks(date_label) for p in check(deck) if having in p]
+
 # 2026-09-17 之前用**字卡**做的 40 条「网球有故事」。⚠️ **只许减不许加**：
 # 新片的默认是**视频剪辑**那条路（`specs/reels/<slug>.json` ＋
 # `build_match_reel.py`，`cover.eyebrow` 写「网球有故事」）。真要走字卡，
 # 在 `_OPENINGS[slug]["cards_why"]` 里写清为什么，别往这张表里加名字。
-# 见 `test_新的网球有故事默认走视频剪辑_走字卡要认领理由`。
-_CARD_DECK_LEGACY = frozenset({
-    "ball-pick", "big-three", "bu-lucky-loser", "challenger-climb",
-    "comeback-middle", "cramp-timeout", "entry-deadline", "equal-pay",
-    "finals-venues", "gamesmanship", "gauff-right-coco", "golden-masters",
-    "hawkeye", "heat-rule", "kostyuk-champion-test", "longest-match",
-    "lucky-loser", "mandatory-1000", "masters-format", "nadal-academy",
-    "pr-allowance", "promotional-fees", "protected-ranking", "qualifier-ceiling",
-    "queue", "roof", "rufus", "second-serve-clock",
-    "shot-clock", "special-exempt", "svitolina-handshake", "ten-champions",
-    "thiem-football", "tour-balls", "wawrinka-wildcard", "weeks-at-no1",
-    "wildcard", "wimbledon-whites", "wuhan-alternate", "yellow-ball",
-})
+# 见 `test_新的网球有故事默认走视频剪辑_走字卡要认领理由`。表本身在预检模块里。
+_CARD_DECK_LEGACY = P.CARD_DECK_LEGACY
 
 
 def _beats(slug):
@@ -284,13 +294,12 @@ def test_知识卡右上角不写日期():
 
 def test_每屏都有提炼要点配合旁白():
     # 画面不能只有大标题：要点是给眼睛看的骨架，旁白是给耳朵的全文。
+    # 要点是提炼，不是把旁白整句搬上去；唯一放宽的是点名时间/地点/人物的那一行
+    # （≤30 字）。数量和长度那一半是渲前预检的一项（`P.beat_points_problems`）。
+    bad = _problems(P.beat_points_problems, having="要点")
+    assert not bad, "\n".join(bad)
     for story_slug in _SCRIPTED:
         for seg in _beats(story_slug):
-            assert 2 <= len(seg.points) <= 3, f"{seg.kind} 要点数量不对"
-            assert all(p.strip() for p in seg.points)
-            # 要点是提炼，不是把旁白整句搬上去。
-            # 要点是提炼；唯一放宽的是点名时间/地点/人物的那一行。
-            assert all(len(p) <= 30 for p in seg.points), f"{seg.kind} 要点太长"
             doc = _slide_html(0, seg)
             for point in seg.points:
                 assert point in doc
@@ -520,16 +529,23 @@ def test_文案标题带上品牌语且不超小红书上限():
     0.5), and a truncated headline loses the topic — the part that makes
     someone tap. Check every deck, not just the short ones.
     """
-    from tennislive.render.xiaohongshu import xhs_title_len
-    from tennislive.video.explainer import explainer_column, explainer_xiaohongshu
+    bad = _problems(P.copy_title_problems)      # 按最宽的日期量，不按今天
+    assert not bad, "\n".join(bad)
 
-    for slug in _SCRIPTED:
-        story = find_story_by_slug(slug)
-        head = explainer_xiaohongshu(story, explainer_script(story), "7.26").splitlines()[0]
-        column = explainer_column(slug)
-        assert head.startswith(f"🎾7.26 {column}｜"), f"{slug} 标题格式不对：{head}"
-        assert story.title in head
-        assert xhs_title_len(head) <= 20, f"{slug} 标题 {xhs_title_len(head)} 字，超小红书上限"
+    # 存量豁免表自检（只许降不许升）：名字要在、而且按最宽的日期量**真的还超**——
+    # 改短了就从表里删掉，否则它就是一盏恒真的绿灯。
+    from tennislive.render.xiaohongshu import xhs_title_len
+
+    # 2026-09-27 冻结后当天清零（`a-plus-wildcard` 改成「ATP 500 第 4 张外卡」，最宽 19.5）
+    frozen: dict[str, float] = {}           # 名单只许减、登记值只许降
+    for slug, registered in P.TITLE_TOO_WIDE.items():
+        assert slug in frozen and registered <= frozen[slug], (
+            f"TITLE_TOO_WIDE 只许减不许加、登记值只许降不许升：{slug} = {registered:g}")
+        assert slug in _SCRIPTED, f"{slug} 已经不是字卡稿了，从 TITLE_TOO_WIDE 里删掉"
+        head = P.load_deck(slug).xhs.splitlines()[0]
+        assert 20 < xhs_title_len(head) <= registered, (
+            f"{slug} 按 {P.WIDEST_DATE_LABEL} 量是 {xhs_title_len(head):g} 字位（登记 {registered:g}）"
+            "——不超了就从 TITLE_TOO_WIDE 里删掉，变宽了不许往上改登记值")
 
 
 def test_封面大标题声明了两行就真的断在那儿():
@@ -599,20 +615,17 @@ def test_每条片子都以问题开场():
     Every deck now leads with the question it answers - on screen, in the
     narration, and without a beat number, because it is not a beat.
     """
+    # ⚠️ 16 字这个上限管的是**一行**，不是整串。2026-09-15 起封面大标题可以
+    # 显式写成两行（`cover_title_lines`），而两行各自都得读得出来——按整串量
+    # 会把一条合法的两行标题误判成「太长」，而它每一行都没超。
+    # 文字这一半是渲前预检的一项（`P.cover_question_problems`）。
+    bad = _problems(P.cover_question_problems)
+    assert not bad, "\n".join(bad)
+    from tennislive.video.explainer import explainer_column
+
     for slug in _SCRIPTED:
         segments = explainer_script(find_story_by_slug(slug))
         cover = segments[0]
-        assert cover.kind == "cover", f"{slug} 第一屏不是开场问题卡"
-        assert cover.title.endswith("？"), f"{slug} 开场没有问出一个问题：{cover.title}"
-        # ⚠️ 16 字这个上限管的是**一行**，不是整串。2026-09-15 起封面大标题可以
-        # 显式写成两行（`cover_title_lines`），而两行各自都得读得出来——按整串量
-        # 会把一条合法的两行标题误判成「太长」，而它每一行都没超。
-        for line in cover_title_lines(cover.title):
-            assert len(line) <= 16, f"{slug} 开场问题有一行太长：{line}"
-        assert cover.title[:6] in cover.narration or "？" in cover.narration
-        assert not cover.points  # the cover states the question, nothing else
-
-        from tennislive.video.explainer import explainer_column
 
         doc = _slide_html(0, cover, column=explainer_column(slug))
         # 多行标题在页面里是用 <br> 接起来的，整串（带 \n）搜不到——逐行搜。
@@ -630,12 +643,10 @@ def test_每屏标题不能把自己的标签再说一遍():
     """
     from tennislive.video.explainer import explainer_xiaohongshu
 
+    bad = _problems(P.beat_points_problems, having="标签")
+    assert not bad, "\n".join(bad)
     for slug in _SCRIPTED:
         story = find_story_by_slug(slug)
-        for seg in _beats(slug):
-            assert seg.label not in seg.title, (
-                f"{slug}/{seg.kind} 标题里重复了标签「{seg.label}」：{seg.title}"
-            )
         caption = explainer_xiaohongshu(story, explainer_script(story), "7.26")
         for line in caption.splitlines():
             if "：" in line and line[:1].isdigit() is False and "️⃣" in line:
@@ -659,12 +670,8 @@ def test_配音把比分读成几比几而不是几杠几():
     assert speakable("2016-2026 共十届，2020 年停办") == "2016-2026 共十届，2020 年停办"
 
     # No deck may reach the voice with a bare score hyphen still in it.
-    for slug in _SCRIPTED:
-        for seg in explainer_script(find_story_by_slug(slug)):
-            spoken = speakable(seg.narration)
-            assert not re.search(r"(?<!\d)\d{1,3}\s*[-–—−]\s*\d{1,3}(?!\d)", spoken), (
-                f"{slug}/{seg.kind} 旁白里还有会被读成「杠」的比分：{spoken[:60]}"
-            )
+    bad = _problems(P.reading_problems, having="杠")
+    assert not bad, "\n".join(bad)
 
 
 def test_配音把挑球的挑读成一声():
@@ -681,13 +688,8 @@ def test_配音把挑球的挑读成一声():
     assert speakable("鹰眼挑战制") == "鹰眼挑战制"
     assert speakable("辛纳手里那只是男单挑战杯") == "辛纳手里那只是男单挑战杯"
 
-    for slug in _SCRIPTED:
-        for seg in explainer_script(find_story_by_slug(slug)):
-            spoken = speakable(seg.narration)
-            for hit in re.finditer(r"挑(.?)", spoken):
-                assert hit.group(1) in "战衅拨逗剔眉", (
-                    f"{slug}/{seg.kind} 旁白里还有会被读成三声的「挑」：{spoken[:60]}"
-                )
+    bad = _problems(P.reading_problems, having="三声")
+    assert not bad, "\n".join(bad)
 
 
 # 每个元组是同一个人的几种叫法。分组是必需的：「德约」和「德约科维奇」不是两个人，
@@ -1261,21 +1263,15 @@ def test_新的网球有故事默认走视频剪辑_走字卡要认领理由():
     否则它会悄悄变成一张过期的名单（本仓库「一个会过期的名单和一条常年红的
     检查是同一个毛病」）。
     """
-    from tennislive.video.explainer import (  # noqa: PLC0415
-        _ARCHIVED_DECKS,
-        _OPENINGS,
-    )
+    from tennislive.video.explainer import _ARCHIVED_DECKS  # noqa: PLC0415
 
     live = {s for s in _SCRIPTED if s not in _ARCHIVED_DECKS}
     # 主语没了就先出声：`live` 空掉的话，下面三条里最先红的会是「存量表全过期了」
     # ——那句话是假的，读的人会去删表。所以这一条排在最前面。
     assert len(live) >= 35, f"只扫到 {len(live)} 条字卡稿，判据失效了"
 
-    unclaimed = sorted(
-        s
-        for s in live - _CARD_DECK_LEGACY
-        if not str((_OPENINGS.get(s) or {}).get("cards_why", "")).strip()
-    )
+    # 判据是渲前预检的一项（`P.cards_why_problems`）——同一份函数、同一张存量表。
+    unclaimed = sorted(s for s in live if P.cards_why_problems(P.load_deck(s)))
     assert not unclaimed, (
         "这几条新的「网球有故事」走了字卡，却没说为什么："
         + "、".join(unclaimed)
@@ -1749,11 +1745,8 @@ def test_大标题里不能有冒号():
     「答案：维纳斯说：我回来是为了上保险」——念不通，看着也像排版出错。改成逗号即可，
     引号里的原话一个字不动。
     """
-    for slug in _SCRIPTED:
-        for seg in explainer_script(find_story_by_slug(slug)):
-            assert "：" not in seg.title and ":" not in seg.title, (
-                f"{slug}/{seg.kind} 大标题里有冒号：{seg.title}"
-            )
+    bad = _problems(P.title_mark_problems, having="冒号")
+    assert not bad, "\n".join(bad)
 
 
 def test_收尾那个问题一定要念出来():
@@ -1765,18 +1758,12 @@ def test_收尾那个问题一定要念出来():
     问号"判断，不靠逐字比对：好几条旁白早就问过意思一样、措辞不同的话，逐字比
     对匹配不上，补一遍就成了连问两遍。
     """
-    from tennislive.video.explainer import speakable
-
-    for slug in _SCRIPTED:
-        closer = explainer_script(find_story_by_slug(slug))[-1]
-        assert closer.question, f"{slug} 末屏没有互动提问"
-        spoken = speakable(closer.narration)
-        assert "？" in spoken[-40:], f"{slug} 旁白结尾没有问出来：…{spoken[-30:]}"
-        # 也不能把同一个问题问两遍。不查问号个数——鹰眼那条的旁白本来就连着
-        # 抛了两问（「法网还能坚持多久？什么时候也会换成电子司线？」），那是写稿
-        # 时的选择，不是重复。查的是末屏那一问有没有被补进去两次。
-        core = closer.question.rstrip("？?")
-        assert spoken.count(core) <= 1, f"{slug} 同一个问题问了两遍：{core}"
+    # 也不能把同一个问题问两遍。不查问号个数——鹰眼那条的旁白本来就连着
+    # 抛了两问（「法网还能坚持多久？什么时候也会换成电子司线？」），那是写稿
+    # 时的选择，不是重复。查的是末屏那一问有没有被补进去两次。
+    # 判据是渲前预检的一项（`P.closer_problems`），回声那一半归下面那条测试。
+    bad = [p for p in _problems(P.closer_problems) if "重了" not in p]
+    assert not bad, "\n".join(bad)
 
 
 def test_旁白里不能留下markdown记号():
@@ -1785,14 +1772,8 @@ def test_旁白里不能留下markdown记号():
     这些标记只对写稿的人有意义，对 edge-tts 没有——它不会跳过星号。画面文字
     同理，卡片是纯文本渲染，星号会原样印上去。
     """
-    for slug in _SCRIPTED:
-        for seg in explainer_script(find_story_by_slug(slug)):
-            for field, text in (("旁白", seg.narration), ("标题", seg.title)):
-                assert not re.search(r"[*`_#]", text), (
-                    f"{slug}/{seg.kind} 的{field}里有 markdown 记号：{text[:40]}"
-                )
-            for p in seg.points:
-                assert not re.search(r"[*`_#]", p), f"{slug}/{seg.kind} 要点里有记号：{p}"
+    bad = _problems(P.title_mark_problems, having="记号")
+    assert not bad, "\n".join(bad)
 
 
 def test_字幕补上耳朵那一份():
@@ -2235,26 +2216,9 @@ def test_末屏那一问不能是封面那一问的回声():
     判据用字集重合度，不逐字比对——两句话措辞不同、问的是同一件事，
     正是这条要拦的情形。
     """
-    from tennislive.video import explainer as E
-
-    drop = set("的了是在有和与也都就还你我他她它们这那什么吗呢啊，。？！、：；—…「」《》")
-
-    def chars(text: str) -> set[str]:
-        return {c for c in text if c not in drop and not c.isspace()}
-
-    for slug in E._SCRIPTS:
-        segs = E.explainer_script(find_story_by_slug(slug))
-        closer = (segs[-1].question or "").strip()
-        if not closer:
-            continue
-        cover = chars(f"{segs[0].title}{segs[0].question or ''}")
-        tail = chars(closer)
-        shared = cover & tail
-        ratio = len(shared) / len(cover | tail)
-        assert ratio < 0.5, (
-            f"{slug} 末屏那一问和封面重了（{ratio:.0%}）："
-            f"封面「{segs[0].title}」／末屏「{closer}」"
-        )
+    # 字集和阈值在渲前预检里（`P.closer_problems`，`P._ECHO_DROP`）。
+    bad = _problems(P.closer_problems, having="重了")
+    assert not bad, "\n".join(bad)
 
 
 def test_同一句里不许一个年份是中文另一个是阿拉伯数字():
@@ -2275,31 +2239,12 @@ def test_同一句里不许一个年份是中文另一个是阿拉伯数字():
     ⚠️ **判据只拦「混着」，不拦「没换」**，宁可窄不可宽：真正刺眼的是同一句里
     一个中文一个阿拉伯。写宽了就要配豁免表，而一条天天误报的闸会被人写豁免压掉。
     """
-    import re
-
-    from tennislive.render.tournament_story import find_story_by_slug
-    from tennislive.video.explainer import _SCRIPTS, arabic_numerals as A
-    from tennislive.video.explainer import explainer_script
-
-    # 中文年份和阿拉伯年份被一个连接词夹在一起，两个方向都要拦。
-    mixed = re.compile(
-        r"(?:[一二三四五六七八九〇]{4}\s*[到至和与、]\s*\d{4})"
-        r"|(?:\d{4}\s*年?\s*[到至和与、]\s*[一二三四五六七八九〇]{4})"
-    )
+    # 中文年份和阿拉伯年份被一个连接词夹在一起，两个方向都要拦——
+    # 正则在渲前预检里（`P.mixed_year_hits`）。
     checked, offenders = 0, []
-    for slug in _SCRIPTS:
-        story = find_story_by_slug(slug)
-        if story is None:
-            continue
-        try:
-            segments = explainer_script(story)
-        except Exception:  # noqa: BLE001 — 别让别的选题的毛病挡住这一条
-            continue
+    for deck in _decks():
         checked += 1
-        for index, segment in enumerate(segments):
-            shown = A(segment.narration)
-            for hit in mixed.finditer(shown):
-                offenders.append(f"{slug} 第 {index} 段：…{hit.group(0)}…")
+        offenders += P.mixed_year_hits(deck)
     # 防「选题一个都没扫到 → 恒真的绿灯」，这份文件里记过好几次。
     assert checked >= 20, f"只扫到 {checked} 个选题，判据没真的跑起来"
     assert offenders == [], "字幕里年份半中半洋（写成「二〇二五年到二〇二七年」）：" + str(
@@ -2308,10 +2253,7 @@ def test_同一句里不许一个年份是中文另一个是阿拉伯数字():
 
 
 # 定这条判据之前已经发出去的。⚠️ **只许减不许加**，表自带自检。
-_MIXED_RANK_LEGACY = frozenset({
-    "big-three",  # 「德约科维奇从第五掉到第12」，2026-09-15 已发
-})
-
+_MIXED_RANK_LEGACY = P.MIXED_RANK_LEGACY
 
 def test_同一句里的排名不许一个中文一个阿拉伯数字():
     """「弗里茨第十 蒂亚福第12」——渲完抽帧才看见的第二个形状。
@@ -2328,29 +2270,12 @@ def test_同一句里的排名不许一个中文一个阿拉伯数字():
     是序数，和阿拉伯数字的排名同句出现是正常的（「第二轮输给世界第109」），
     扫全库这种有 27 处，一处都不该拦。收窄之后全库只命中两处，一处是这条片子。
     """
-    import re
-
-    from tennislive.render.tournament_story import find_story_by_slug
-    from tennislive.video.explainer import _SCRIPTS, arabic_numerals as A
-    from tennislive.video.explainer import explainer_script
-
-    classifiers = "轮次盘个局场章届座条区号种批期周年岁天名位张代任"
-    cn = re.compile(rf"第[一二三四五六七八九十]+(?![一二三四五六七八九十\d{classifiers}])")
-    ar = re.compile(rf"第\s*\d+(?![\d{classifiers}])")
+    # 量词表和两个正则在渲前预检里（`P.mixed_rank_hits`）。
     checked, offenders = 0, {}
-    for slug in _SCRIPTS:
-        story = find_story_by_slug(slug)
-        if story is None:
-            continue
-        try:
-            segments = explainer_script(story)
-        except Exception:  # noqa: BLE001
-            continue
+    for deck in _decks():
         checked += 1
-        for index, segment in enumerate(segments):
-            for sentence in re.split(r"[。！？；]", A(segment.narration)):
-                if cn.search(sentence) and ar.search(sentence):
-                    offenders.setdefault(slug, []).append(f"第 {index} 段：{sentence}")
+        for hit in P.mixed_rank_hits(deck):
+            offenders.setdefault(deck.slug, []).append(hit)
     assert checked >= 20, f"只扫到 {checked} 个选题，判据没真的跑起来"
     new = {s: v for s, v in offenders.items() if s not in _MIXED_RANK_LEGACY}
     assert new == {}, (
@@ -2678,14 +2603,12 @@ def test_每条片子的标签都放满五个():
         f"_DEFAULT_TAGS 只有 {len(_DEFAULT_TAGS)} 个。它是漏写条目时的兜底，"
         "自己不满五个，那条片子就会无声地少几个标签。")
 
+    bad = _problems(P.tag_problems, date_label="7.29")
+    assert not bad, "\n".join(bad)
     for slug in sorted(_SCRIPTED):
         story = find_story_by_slug(slug)
         text = explainer_xiaohongshu(story, explainer_script(story), "7.29")
         tags = [w for w in text.split() if w.startswith("#")]
-        assert len(tags) == 5, (
-            f"{slug} 的文案里有 {len(tags)} 个标签：{' '.join(tags)}\n"
-            "小红书最多五个，要放满——在 _CAPTIONS 里给它写自己的五个。")
-        assert len(set(tags)) == 5, f"{slug} 的标签有重复：{' '.join(tags)}"
         if campaign_tags():
             # 活动期（到 2026-10-31）两格让给活动 tag，泛词 #网球 先让位，账号名留着。
             assert tags[-2:] == list(CAMPAIGN_TAGS) and "#网球时差" in tags, (
@@ -2969,6 +2892,10 @@ def test_复制页那道闸装在发的那一步不是渲的那一步():
 # 稿子里**故意**用的写法，不在译名表里但也不是笔误。加进来之前先想清楚：
 # 表里没有的名字，正确做法是补进 `zh/players.py`，这里只留「同一个人的另一种叫法」。
 _ON_PURPOSE = {
+    # 解说员帕特里克·麦肯罗（Patrick McEnroe，约翰·麦肯罗的弟弟），不是球员、不在译名表；
+    # 「帕特里克」和「施特里克」只差一个字，两个都对。2026-09-27
+    # `cobolli-mensik-laver-cup-2026-doubles-interview` 主持人提到他时第一次扫出来。
+    "帕特里克·麦肯罗",
     # Francisco Cerundolo 的完整姓名；表里用姓氏「塞伦多洛」。只遮完整真名，
     # 避免遮掉姓氏后「西斯科·」被误判成「西斯科娃」，不豁免错写的姓氏。
     "弗朗西斯科·塞伦多洛",
@@ -4695,12 +4622,7 @@ _FAKE_WORDS = FAKE_WORDS
 
 #: 上面那两个串在**已经发出去的**片子里各有一处。已发的不重渲（消息收不回来），
 #: 所以挂在这儿。**只许减不许加**，底下有自检。
-_FAKE_WORDS_LEGACY = {
-    # 挑战赛那条第 ④ 屏：「规则书写着挑战赛必须给正赛球员提供免费房间」。
-    ("challenger-climb", "floor", "规则书写"),
-    # 强制大师赛那条的**封面**旁白：「规则书写着自动生效、不可申诉」。
-    ("mandatory-1000", "__cover__", "规则书写"),
-}
+_FAKE_WORDS_LEGACY = P.FAKE_WORDS_LEGACY
 
 
 def _spoken_texts():
@@ -4713,16 +4635,9 @@ def _spoken_texts():
     """
     from tennislive.video import explainer as E  # noqa: PLC0415
 
-    for slug, beats in E._SCRIPTS.items():
-        for beat in beats:
-            narration = beat[3] if len(beat) > 3 else ""
-            if isinstance(narration, str) and narration:
-                yield slug, beat[0], narration
-    for slug, opening in E._OPENINGS.items():
-        narration = opening.get("narration", "")
-        if isinstance(narration, str) and narration:
-            yield slug, "__cover__", narration
-
+    for slug in dict.fromkeys([*E._SCRIPTS, *E._OPENINGS]):
+        for seg, narration in P.spoken_texts(slug):
+            yield slug, seg, narration
 
 def test_旁白里不许出现读音会变的假词():
     """切词器把这几个串念错，而**渲出来一个像素都看不出来**——只有耳朵和
@@ -4738,14 +4653,8 @@ def test_旁白里不许出现读音会变的假词():
     靠的还是渲完读一遍 `voice_NN.words.json`（`tennis-video-craft` 那节的
     「闭环是重渲之后再读一遍」）。
     """
-    hits = [
-        (slug, seg, pat, why)
-        for slug, seg, text in _spoken_texts()
-        for pat, why in _FAKE_WORDS.items()
-        if pat in text and (slug, seg, pat) not in _FAKE_WORDS_LEGACY
-    ]
-    assert not hits, "旁白里有会被念错的假词：\n" + "\n".join(
-        f"  {slug} / {seg}：「{pat}」——{why}" for slug, seg, pat, why in hits)
+    hits = _problems(P.fake_word_problems)
+    assert not hits, "旁白里有会被念错的假词：\n" + "\n".join(f"  {h}" for h in hits)
 
 
 def test_假词豁免表自证它豁免的还在违规():
@@ -4788,10 +4697,8 @@ def test_假词豁免表自证它豁免的还在违规():
 # 闸做得很窄（CLAUDE.md「判据宁可窄，不可宽」）：**不禁止提轮换**——那段历史
 # 是真的，而且是个好料；只要求**把它的终止年一起写出来**。这样「轮换过」永远
 # 讲得成，「还在轮换」永远讲不成。
-_ROTATION_STATIONS = re.compile(r"多哈|迪拜")
-_ROTATION_WORD = re.compile(r"轮换")
-#: 旁白喂 TTS 写汉字、上屏和正文写阿拉伯数字（CLAUDE.md），所以两种都认。
-_ROTATION_ENDED = re.compile(r"2024|二〇二四")
+#: 三个正则在渲前预检里（`P.rotation_problem`）：旁白喂 TTS 写汉字、上屏和正文写
+#: 阿拉伯数字（CLAUDE.md），所以终止年两种都认。这儿留的是**全仓库的扫描面**。
 
 
 def _outward_texts_everywhere():
@@ -4838,9 +4745,8 @@ def test_提多哈迪拜轮换必须写出它2024年就停了():
                      if where.startswith(("_SCRIPTS", "_OPENINGS", "_CAPTIONS",
                                           "STORY"))
                      else "specs")
-        if _ROTATION_STATIONS.search(text) and _ROTATION_WORD.search(text):
-            if not _ROTATION_ENDED.search(text):
-                offenders.append(f"{where}：{text[:120]}")
+        if P.rotation_problem(text):
+            offenders.append(f"{where}：{text[:120]}")
 
     # ⚠️⚠️ **自检要按「面」钉，不能只数条数。** 第一版写的是「扫到 >300 段」
     # ＋「见过一段同时含多哈和武网的」——反向验证里把 `_SCRIPTS` 整个掐掉，

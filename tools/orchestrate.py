@@ -275,6 +275,21 @@ def _prior_finder(key: str, surnames: list[str]) -> list:
     return probe_claims.find_priors(key, refs=["HEAD"], root=Path("."), surnames=surnames)
 
 
+def _pair_names(c: dict) -> list[str]:
+    """两个人的**整个姓**（`probe_claims.family_name`）——拿去认 slug。`_surname` 只取一个词，
+    复姓就丢了一半：`Jessica Bouzas Maneiro` 给 `maneiro`，会话的 slug 是 `muchova-bouzas-…`。"""
+    return [probe_claims.family_name(c.get("home", "")), probe_claims.family_name(c.get("away", ""))]
+
+
+def _same_match(a: dict, b: dict) -> bool:
+    """同一条源片上的两个候选是不是同一场：至少有一个人对得上。全名／缩写两个 slug
+    总有一边的姓一样（`ka.-shnaider` / `pliskova-shnaider`、`bouzas-rybakina` /
+    `maneiro-rybakina`）；合集视频里的另一场一个人都对不上——不查的话它会被当成
+    同一场挡下，而且挡它的 probe／认领还在，就一直挡着（`state["blocked"]` 只复查先例）。"""
+    return (probe_claims.names_hit(_pair_names(a), b["slug"])
+            or probe_claims.names_hit(_pair_names(b), a["slug"]))
+
+
 def _own_priors(state: dict | None, key: str, c: dict, priors: list, now: datetime) -> tuple[set, list]:
     """编排器 state 里按**同一条源片**点过的别的 slug（`mark_dispatched` 记了 `video`）。
 
@@ -285,13 +300,16 @@ def _own_priors(state: dict | None, key: str, c: dict, priors: list, now: dateti
     ⚠️ 同样不许压死：那一趟被取消／超时的话，state 条目摘不掉（自愈那步挂在
     `failure()` 上）。所以只在「它的 probe／认领还看得见」或「点出去不到
     `CLAIM_STALE_MINUTES` 分钟」时算数——和认领作废同一个钟。
+    ⚠️ 同一条源片不等于同一场（合集视频）：那个 slug 里至少要有这场的一个姓。
     """
     own: set[str] = set()
     extra = []
     seen = {p.slug for p in priors}
+    names = _pair_names(c)
     for slug, entry in ((state or {}).get("dispatched") or {}).items():
         if (slug == c["slug"] or not isinstance(entry, dict) or entry.get("video") != key
-                or not _same_match_day(entry.get("date"), c.get("date"))):
+                or not _same_match_day(entry.get("date"), c.get("date"))
+                or not probe_claims.names_hit(names, slug)):
             continue
         if slug in seen:
             own.add(slug)
@@ -347,13 +365,19 @@ def drop_already_probed(dispatchable: list[tuple[dict, str, str]], *,
     """
     finder = finder or _prior_finder
     now = probe_claims._aware(now or datetime.now(timezone.utc))
-    # 认不出视频 id 的（brightcove 等）各自一组，原样放行；dict 保序＝保分数顺序
-    groups: dict[object, list[tuple[dict, str, str]]] = {}
+    # 同一条源片、又至少有一个人对得上（`_same_match`）才合成一组；认不出视频 id 的
+    # （brightcove 等）各自一组，原样放行。列表保序＝保分数顺序
+    groups: list[tuple[str | None, list[tuple[dict, str, str]]]] = []
     for item in dispatchable:
         key = probe_claims.video_key(item[1])
-        groups.setdefault(key if key is not None else object(), []).append(item)
+        for gkey, group in groups:
+            if key is not None and gkey == key and any(_same_match(item[0], it[0]) for it in group):
+                group.append(item)
+                break
+        else:
+            groups.append((key, [item]))
     kept = []
-    for key, group in groups.items():
+    for key, group in groups:
         best = max(group, key=lambda it: _name_fullness(it[0]))
         for c, u, v in group:
             if c is not best[0]:
@@ -364,7 +388,7 @@ def drop_already_probed(dispatchable: list[tuple[dict, str, str]], *,
         if not isinstance(key, str):
             kept.append(best)
             continue
-        surnames = [_surname(c.get("home", "")).lower(), _surname(c.get("away", "")).lower()]
+        surnames = _pair_names(c)
         try:
             priors = list(finder(key, surnames))
         except Exception as exc:  # noqa: BLE001 —— 查不出来按没做过处理，但要出声

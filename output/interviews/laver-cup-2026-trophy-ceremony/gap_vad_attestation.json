@@ -1,0 +1,87 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "c4d4f54a50043ffbba5c2995baaaa5ff1098d25ea2b65fe87c03aa6d4f03e420",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "426.7-433.8",
+   "start": 426.74,
+   "end": 433.76,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "but"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "441.2-447.5",
+   "start": 441.16,
+   "end": 447.53,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "um"
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  },
+  {
+   "key": "475.2-477.3",
+   "start": 475.19,
+   "end": 477.29,
+   "speech_seconds": 0.888,
+   "second_asr_words": [
+    "and"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "486.5-488.7",
+   "start": 486.49,
+   "end": 488.73,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "I'm"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "497.7-504.8",
+   "start": 497.73,
+   "end": 504.83,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  },
+  {
+   "key": "555.4-559.5",
+   "start": 555.35,
+   "end": 559.51,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  },
+  {
+   "key": "577.5-617.5",
+   "start": 577.53,
+   "end": 617.5,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "no_speech"
+  }
+ ]
+}
