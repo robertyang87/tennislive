@@ -600,7 +600,7 @@
     "220.3-223.8": "第二份 ASR 在 220.3 听出「I'm sorry.」，第一份漏了——紧跟在他「what was the question?」后面，已经补进 en_fixed 第 86 行（中文「抱歉」）。之后到 223.8 主持人重复问题之前没有别的词。"
   },
   "transcript_disagree_ok": {
-    "rate": 0.159,
-    "why": "逐处看过 transcript_diff.md（run 36287538482）：58 处分歧里 40 处是第二份 ASR 丢掉「you know / I just / it's a」这类口头语和口吃重复（他这段英语说得很磕巴），不影响发出去的英文；实词分歧 8 处，第二份更对的已按它改进 en_fixed（shot or great points、tell every tournament、screens、pull off）；另外几处第一份更对、照原样：`the pressure`（第二份听成 depressed，上下文是 not feeling the pressure）、`must-win`（已改）、`losses`（已改）、`break one down, break one up`（第二份 breaking，意思同）、`six hours in time`（第二份 a tie，听不清，照第一份不猜）。"
+    "rate": 0.176,
+    "why": "render run 36289872829 重量为 17.5%（原认领 15.9%，run 36287538482），逐处重看 transcript_diff：新增的差额仍是第二份 ASR 丢口头语（you know / i just / it's a）以及 en_fixed 改过的几处和第二份的听法不同，没有新的实词分歧。逐处看过 transcript_diff.md（run 36287538482）：58 处分歧里 40 处是第二份 ASR 丢掉「you know / I just / it's a」这类口头语和口吃重复（他这段英语说得很磕巴），不影响发出去的英文；实词分歧 8 处，第二份更对的已按它改进 en_fixed（shot or great points、tell every tournament、screens、pull off）；另外几处第一份更对、照原样：`the pressure`（第二份听成 depressed，上下文是 not feeling the pressure）、`must-win`（已改）、`losses`（已改）、`break one down, break one up`（第二份 breaking，意思同）、`six hours in time`（第二份 a tie，听不清，照第一份不猜）。"
   }
 }
