@@ -15,5 +15,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # v2: centered hook, nine timing-aligned segments, full-court tactical shots
+          # v3: even score mask, complete tactical court, official percentage rounding
           gh workflow run match-reel.yml --repo robertyang87/tennislive --ref codex/safiullin-bu-hangzhou-20260927 -f mode=render -f slug=safiullin-bu-hangzhou-2026-qf -f push=false
