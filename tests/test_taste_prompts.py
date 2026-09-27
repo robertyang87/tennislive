@@ -1,6 +1,6 @@
 """喂给模型的教材和账号所有者的口味对齐：提示词不许教闸会拦的东西。
 
-账号所有者 2026-09-27：「形成一个通用的规则在做视频前就拦掉，而不是说做了一半又返工」。
+账号所有者 2026-09-27：「形成一个通用的规则在做视频前就烂掉，而不是说做了一半又返工」（原话如此，「烂掉」指拦掉）。
 挖口味规则那一轮量出来，**自动链自己的教材在跟自己的闸打架**：
 
 | 教材里写的 | 闸／口径要的 |
@@ -11,6 +11,14 @@
 | `match_stat_hooks` 把「总分差」当狠数据候选头一个吐出去 | 09-13「不要写总分差距了」、09-19「不要把这个放在封面的钩子上」 |
 | `upset_cover_brief` 要输家「失落、落寞」的近景 | 08-15 拍输家拍他在拼，不拍他垮掉 |
 | 赛后开麦 `SKILL.md`「新闻发布会……均拒绝」「MiniMax 负责视觉事实」 | L0 认发布会；生产链 08-30 起不再调 MiniMax |
+
+⚠️ 第二行在**自动链**里不是「会被自己的闸打回」：`analyze_reel_visuals.apply_story` 只留
+带旁白的段，再在最前面插它自己的 MiniMax 冷开场（带 `_ending_payoff_required` 和钉了 `at`
+的双语 quote）——起草出来的冷开场和 quote 到不了 spec，只在 `draft-segments-verify.yml`
+里看得见。真正改善的是：老教材那个**配了旁白的**「冷开场」窗口，不会再作为正文第 2 段
+留下来、把 MiniMax 的冷开场重复一遍（`test_自动链里起草的冷开场不会变成正文里的重复段`）。
+第四行爆冷封面同理还差一步：闸拿 MiniMax 的枚举去等 brief 里那句中文，永远等不上——
+现在比的是 `preferred_moment_key`（`test_爆冷封面的情绪键和MiniMax的枚举对得上`）。
 
 `specs/reels/pending/` 那 126 份自动草稿里 34 份（2026-09-27 按 `TOTAL_MARGIN` 量）钩子在拿总分说事——**教材教什么，
 模型就产什么**。这里每一条都钉在「拼出来的那份 prompt」或「代码真实行为」上，
@@ -121,6 +129,42 @@ def test_窗口起草把钩子交给模型_并清掉不合格的原声(capsys):
     assert "去掉 2 条不合格的 quote" in capsys.readouterr().out
 
 
+def test_窗口起草的原声_列表形式也要过双语那一关(capsys):
+    """schema 要字符串，模型偶尔回列表：合格的列表照收，不合格的要记数出声，不许静默丢；
+    两行都得有——一行带汉字、一行不带（和 `build_match_reel._bilingual` 同一个判法）。"""
+    ds = load("draft_segments")
+    out = ds.clean_segments({"segments": [
+        {"start": 0.0, "end": 5.0, "narration": "", "quote": ["What a shot!\n好球！"]},
+        {"start": 5.0, "end": 10.0, "narration": "", "quote": ["only english"]},
+        {"start": 10.0, "end": 15.0, "narration": "", "quote": "赛点！\n拿下了！"},
+        {"start": 15.0, "end": 20.0, "narration": "", "quote": "Match point!\nGame over!"},
+        {"start": 20.0, "end": 25.0, "narration": "", "quote": ""},
+        {"start": 25.0, "end": 30.0, "narration": "", "quote": []},
+    ]})
+    segs = out["segments"]
+    assert segs[0]["quote"] == ["What a shot!\n好球！"]
+    assert all("quote" not in s for s in segs[1:]), segs
+    assert "去掉 3 条不合格的 quote" in capsys.readouterr().out, "空串／空列表是没原声，不算不合格"
+
+
+def test_自动链里起草的冷开场不会变成正文里的重复段():
+    """起草的冷开场 narration 为空 → `apply_story` 只留带旁白的正文，冷开场用 MiniMax 自己的。
+    老教材的冷开场配了旁白，会作为正文第 2 段留下来、把结局提前放两遍。"""
+    ds = load("draft_segments")
+    visual = load("analyze_reel_visuals")
+    drafted = ds.clean_segments({"segments": [
+        {"start": 300.0, "end": 306.0, "narration": "", "quote": "Match point!\n赛点！"},
+        {"start": 10.0, "end": 16.0, "narration": "首盘她先丢发球局"},
+    ]})["segments"]
+    report = {"cold_open": {"start": 301.0, "end": 307.0, "reason": "赛点落地"},
+              "ending": {"start": 299.0, "end": 309.0, "reason": "握手"}}
+    story = visual.apply_story({"segments": drafted}, report,
+                               [(302.0, "Match point!")], [("Match point!", "赛点！")])
+    segs = story["segments"]
+    assert segs[0]["_ending_payoff_required"] is True and segs[0]["start"] == 301.0
+    assert [s["start"] for s in segs[1:-1]] == [10.0], "起草的冷开场不许作为正文再出现一次"
+
+
 def test_总分差只进正文_不当钩子候选(monkeypatch):
     sh = load("match_stat_hooks")
     idx = sh.index_stats([("Match", "Points", "Total Points Won", "49% (90/184)", "51% (94/184)")])
@@ -155,6 +199,59 @@ def test_爆冷封面要输家还在拼的那一帧():
         [{"name": "甲", "rank": 5}, {"name": "乙", "rank": 90}], [(4, 6), (3, 6)])
     assert brief["preferred_subject"] == "甲"
     assert "仍在拼" in brief["preferred_moment"] and "失落" not in brief["preferred_moment"]
+
+
+def test_爆冷封面的情绪键和MiniMax的枚举对得上(tmp_path, monkeypatch):
+    """闸比的是 MiniMax 返回的枚举 `cover.moment`。原来拿它去等 brief 里那句中文，
+    **哪个枚举值都等不上**——main 上 21 份爆冷草稿全卡在「封面情绪应为 本场……」。
+    现在 brief 带 `preferred_moment_key`，它必须是提示词里真的列出来的那个值，
+    而且照片真是「输家在拼」时闸要放行、「输家垮掉」时要拦。"""
+    import io
+    import json as _json
+
+    asm = load("assemble_spec")
+    visual = load("analyze_reel_visuals")
+    brief = asm.upset_cover_brief(
+        [{"name": "甲", "rank": 5}, {"name": "乙", "rank": 90}], [(4, 6), (3, 6)])
+    assert brief["preferred_moment_key"] == "loser_fighting"
+    assert brief["preferred_moment_key"] in visual.COVER_MOMENTS
+    assert brief["fallback_moment_key"] in visual.COVER_MOMENTS
+
+    # 提示词里给模型的枚举就是闸认的那一份（查拼出来的请求，不查源码）
+    sent = {}
+
+    def fake_urlopen(req, timeout=0):
+        sent["prompt"] = _json.loads(req.data)["messages"][0]["content"][0]["text"]
+        return io.BytesIO(_json.dumps({"choices": [{"message": {"content": "{}"}}]}).encode())
+
+    monkeypatch.setattr(visual.urllib.request, "urlopen", fake_urlopen)
+    draft = {"_match": {"winner": "乙"}, "_cover_brief": brief}
+    visual.ask_minimax(draft, [], None, {"duration": 300}, "k")
+    enum = re.search(r'"moment": "([a-z_|]+)"', sent["prompt"]).group(1).split("|")
+    assert brief["preferred_moment_key"] in enum and set(enum) == set(visual.COVER_MOMENTS)
+
+    cover = tmp_path / "cover.jpg"
+    cover.write_bytes(b"photo")
+    draft["cover"] = {"portrait": {"image": str(cover)}}
+
+    def moment_problems(moment, d=draft):
+        raw = {"cover": {"same_match": True, "subject": "甲", "moment": moment,
+                         "wrong_or_old": False, "reason": "本场", "confidence": .95}}
+        _, problems = visual.clean_report(raw, d, 300)
+        return [p for p in problems if "封面情绪" in p]
+
+    assert moment_problems("loser_fighting") == []
+    assert moment_problems("loser_disappointed"), "输家垮掉的那一帧正是 08-15 被否的"
+    # 存量草稿：brief 里只有旧的中文句子、没有键——照样按口味要「在拼」，而不是永远卡住
+    legacy = {**draft, "_cover_brief": {"preferred_subject": "甲",
+                                        "preferred_moment": "本场失利后失落、落寞或难以置信的高清近景"}}
+    assert moment_problems("loser_fighting", legacy) == []
+    # brief 点名的就是赢家、或者直接写了枚举值：按赢家庆祝／按那个值
+    assert visual.wanted_cover_moment({"_match": {"winner": "乙"},
+                                       "_cover_brief": {"preferred_subject": "乙"}}) == "winner_celebration"
+    assert visual.wanted_cover_moment({"_cover_brief": {"preferred_moment": "winner_celebration"}}) \
+        == "winner_celebration"
+    assert visual.wanted_cover_moment({}) == "winner_celebration"
 
 
 def test_reel的MiniMax教材带封面口味对照():
@@ -204,6 +301,12 @@ def test_口味规则skill在做视频前就加载():
                     "copy-fields-one-source-of-truth", "narration-match-flow-every-set",
                     "post-win-celebration-kept", "story-info-band-per-match"):
         assert f"〔在途闸〕`{rule_id}`" in text or f"〔闸〕`{rule_id}`" in text, rule_id
+    # O2+O3 封面认人＋睁眼（`face-eye-checks` 那一包）也是在途的闸，挂在「脸要正面」那条上，
+    # 别让读的人以为这条只能靠自查
+    face_rule = next(ln for ln in text.split("\n") if "pegula-anisimova 318.5s" in ln)
+    assert "〔在途闸〕O2+O3" in face_rule or "〔闸〕`precheck_cover_face`" in face_rule, face_rule
+    # 「转述」的规则是推出来的，不是原话——规则书要说清它们只做自查
+    assert "没有他的原话之前不许做成闸" in text
 
 
 def test_CLAUDE_md的目录表列着每一个skill():
