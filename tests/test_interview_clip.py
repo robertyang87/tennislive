@@ -151,7 +151,12 @@ def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
           # 「叫醒自动推送」那一步的 if 里有 ref_name——这套模拟按「跑在
           # main 上」求值：分支上的行为(那一步跳过)不在这套判据的主语里。
           .replace("github.ref_name", repr("main"))
+          # apt 缓存的回写（2026-09-27 拆成 restore ＋ 条件 save）：按「这趟摸了网」
+          # 求值，也就是最坏情况下 save 会跑；它引用的 cache-primary-key 在对应的
+          # restore 跑过时一定非空，而 save 自己的 if 里写着同一个 mode 条件
+          .replace("env.APT_CACHE_DIRTY", repr("1"))
           .replace("&&", " and ").replace("||", " or "))
+    py = re.sub(r"steps\.[\w-]+\.outputs\.cache-primary-key", repr("apt-pkgs-key"), py)
     if py.strip() == "always()":
         return True
     assert not re.search(r"[a-z_]+\(|github\.", py), f"这个 if 我还不会算：{expr}"

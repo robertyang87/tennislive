@@ -173,7 +173,8 @@ jobs:
       # `tools/ci_apt_install.sh` 把索引和下载缓存住，先试零网络的本地安装，
       # 缓存没命中才回退到会摸网的老路。CI 这条线跑得最勤，缓存也暖得最快。
       - name: 缓存 apt 包（中文字体 + ffmpeg，绕开镜像抽风）
-        uses: actions/cache@v4
+        id: apt_cache
+        uses: actions/cache/restore@v4
         with:
           path: |
             ~/.cache/apt-archives
@@ -198,6 +199,19 @@ jobs:
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk fonts-noto-core fonts-noto-color-emoji
           ensure_ffmpeg
+
+      # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
+      # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：
+      # 命中的趟白传一份、只装 ffmpeg 的趟把空目录存成最新那一格——见那份脚本
+      # 顶部 2026-09-27 那段。判据 `tests/test_runner_setup_cache.py`。
+      - name: 回写 apt 缓存（这趟真下了新包才存）
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
       - name: 安装依赖
         # ⚠️ `yt-dlp` 单列，不是随手加的：`test_问格式表的模板要是ytdlp真认得的
         # 语法` 要拿 yt-dlp **自己的模板求值器**离线验一次 `--print` 模板，
@@ -209,13 +223,32 @@ jobs:
         # 的 skip 里捞回来——它在 CI 上一直没跑过。
         # ⚠️ `[default]` 不能省（`test_装yt_dlp一律要带default`）。
         run: pip install -q -e ".[dev,webrender,visualqa]" "yt-dlp[default]"
+      # ⚠️⚠️ **Chromium 缓存键按装上的 playwright 版本算，不按 pyproject 的哈希**
+      # （2026-09-27）pyproject 写的是 `playwright>=1.40`、而且 08-08 之后没动过，
+      # 于是主键**永远命中**那份旧缓存（chromium-1234）；pip 装上的新 playwright 要
+      # 1243，launch 探针落空、每趟重下 187 MiB ＋ 114 MiB 还跑一遍 `--with-deps`
+      # 的 apt（run 36284220097）——而主键命中时 post 步骤「not saving cache」，
+      # 这份缓存**永远修不好自己**。「装 Chromium」这一步 09-15 前中位 1s、之后
+      # 18s（n=189）。按版本算：换版本那一趟主键落空、退到上一份、装完存新的一格。
+      # 判据 `tests/test_runner_setup_cache.py`。
+      - name: 算 Chromium 缓存键（装上的 playwright 版本）
+        id: pw_version
+        run: |
+          v=$(python -c 'import importlib.metadata as m; print(m.version("playwright"))')
+          echo "playwright $v"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
       # 与 daily.yml 同环境：装上 Chromium 测真实 HTML 渲染路径，
       # Pillow 兜底路径由 test_cards_fallback_matches_deck_policy 显式覆盖
       - name: 缓存 Chromium（HTML 卡片渲染）
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          key: playwright-chromium-${{ runner.os }}-pw${{ steps.pw_version.outputs.version }}
+          # ⚠️ 下面这段是 2026-08-05 键还钉在 pyproject 上时的账；2026-09-27 起键是
+          # 装上的 playwright 版本（见上一步）。`restore-keys` 照旧要：换版本那一趟
+          # 靠它退到上一份，`playwright install` 只补差的那一版。
+          #
           # ⚠️ **键钉在整份 `pyproject.toml` 上太宽。** 决定装哪个 Chromium 的
           # 只有 playwright 的版本，可这个键是**整份文件的哈希**——加一个依赖、
           # 改一行注释，六条工作流的 150 MB Chromium 缓存**同时失效**，

@@ -204,6 +204,23 @@ jobs:
           restore-keys: |
             faster-whisper-${{ runner.os }}-
 
+      # ⚠️⚠️ **Chromium 缓存键按装上的 playwright 版本算，不按 pyproject 的哈希**
+      # （2026-09-27）pyproject 写的是 `playwright>=1.40`、而且 08-08 之后没动过，
+      # 于是主键**永远命中**那份旧缓存（chromium-1234）；pip 装上的新 playwright 要
+      # 1243，launch 探针落空、每趟重下 187 MiB ＋ 114 MiB 还跑一遍 `--with-deps`
+      # 的 apt（run 36284220097）——而主键命中时 post 步骤「not saving cache」，
+      # 这份缓存**永远修不好自己**。「装 Chromium」这一步 09-15 前中位 1s、之后
+      # 18s（n=189）。按版本算：换版本那一趟主键落空、退到上一份、装完存新的一格。
+      # 判据 `tests/test_runner_setup_cache.py`。
+      - name: 算 Chromium 缓存键（装上的 playwright 版本）
+        id: pw_version
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        run: |
+          pip install -q playwright   # 这一步排在「装依赖」之前，先把它装上才读得到版本
+          v=$(python -c 'import importlib.metadata as m; print(m.version("playwright"))')
+          echo "playwright $v"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
       # match-reel 已经缓存同一版 Playwright Chromium；采访线以前仍每趟重装。
       # 共用键和目录，命中后下面真 launch 一次，成功就不再碰 apt。
       - name: 缓存 Chromium
@@ -211,7 +228,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          key: playwright-chromium-${{ runner.os }}-pw${{ steps.pw_version.outputs.version }}
           restore-keys: playwright-chromium-${{ runner.os }}-
 
       # 两个字体包都不能漏，而且**漏了的表现不一样，都不报错**：
@@ -225,8 +242,9 @@ jobs:
       # 真正的杠杆是大多数 run 根本不碰这个镜像。`tools/ci_apt_install.sh`
       # 把索引和下载缓存住，先试零网络的本地安装，缓存没命中才回退到老路。
       - name: 缓存 apt 包（字体 + ffmpeg，绕开镜像抽风）
+        id: apt_cache
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             ~/.cache/apt-archives
@@ -245,6 +263,21 @@ jobs:
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk fonts-noto-core
           ensure_ffmpeg
+
+      # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
+      # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：
+      # 命中的趟白传一份、只装 ffmpeg 的趟把空目录存成最新那一格——见那份脚本
+      # 顶部 2026-09-27 那段。判据 `tests/test_runner_setup_cache.py`。
+      - name: 回写 apt 缓存（这趟真下了新包才存）
+        # 这个 job 按 mode 分流、有两对 apt 缓存，所以 mode 也写进来——
+        # 「哪个 mode 跑哪几步」那套判据（`_if_holds`）才算得清
+        if: (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover') && env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
@@ -364,8 +397,9 @@ jobs:
       # 零字节进度）。调重试参数治不了根，真正的杠杆是大多数 run 根本不碰这个
       # 镜像，见 `tools/ci_apt_install.sh` 顶部注释。
       - name: 缓存 apt 包（字体，绕开镜像抽风）
+        id: apt_cache_subs
         if: github.event.inputs.mode == 'subs'
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             ~/.cache/apt-archives
@@ -381,6 +415,19 @@ jobs:
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk fonts-noto-core
           pip install -q -e . "yt-dlp[default]"
+
+      # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
+      # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：
+      # 命中的趟白传一份、只装 ffmpeg 的趟把空目录存成最新那一格——见那份脚本
+      # 顶部 2026-09-27 那段。判据 `tests/test_runner_setup_cache.py`。
+      - name: 回写 apt 缓存（这趟真下了新包才存）
+        if: github.event.inputs.mode == 'subs' && env.APT_CACHE_DIRTY == '1' && steps.apt_cache_subs.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache_subs.outputs.cache-primary-key }}
 
       - name: 开跑前预检（只取字幕）
         if: github.event.inputs.mode == 'subs'
