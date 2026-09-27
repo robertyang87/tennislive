@@ -105,8 +105,8 @@ def _release_ok(url: str) -> tuple[str, int]:
     return _sha(FILM), len(FILM)
 
 
-def _edit(repo: Path, change) -> Path:
-    spec = _spec()
+def _edit(repo: Path, change, base: dict | None = None) -> Path:
+    spec = json.loads(json.dumps(base)) if base is not None else _spec()
     change(spec)
     return _write_spec(repo, spec)
 
@@ -210,6 +210,147 @@ def test_删掉渲染时的认领注解就不许重核对(tmp_path):
     # 改写认领的**措辞**不算删（dry-run 照样重跑那些闸）
     _edit(tmp_path, lambda s: s["cover"].update(_layout_why="两张官方抠图都在（WTA 图库）"))
     assert _assess(tmp_path, outdir).status == "reattest"
+
+
+def test_只调换源片的顺序也不许重核对(tmp_path):
+    """评审 2026-09-27 拦下的阻断项：投影 `sort_keys` 之后比，键的顺序被抹平了。
+
+    渲染器按插入顺序取主源片（`next(iter(spec_sources(spec)))`，没写 `source` 的段都
+    从它取画面）。两个源调个儿、再补一句 `_why`——原来 `spec_problems` 返回 `[]`，
+    重核对会把「r1 当主源」渲出来的成片推给一份「r2 当主源」的 spec。
+    """
+    import build_match_reel as bmr  # noqa: PLC0415
+
+    base = _spec()
+    del base["source_url"]
+    base["sources"] = {"r1": "https://www.youtube.com/watch?v=aaa",
+                       "r2": "https://www.youtube.com/watch?v=bbb"}
+    base["segments"][1]["source"] = "r2"      # 第 1 段没写 source：从主源片取
+    outdir = _rendered(tmp_path, base)
+
+    def swap(spec):
+        spec["sources"] = {"r2": spec["sources"]["r2"], "r1": spec["sources"]["r1"]}
+        spec["_why"] = "源片顺序按出场排"
+
+    spec_path = _edit(tmp_path, swap, base)
+    new = json.loads(spec_path.read_bytes())
+    # 前提：渲染器自己认出来的主源片真的换了人（不是测试一厢情愿）
+    assert next(iter(bmr.spec_sources(base))) == "r1"
+    assert next(iter(bmr.spec_sources(new))) == "r2"
+
+    manifest = json.loads((outdir / ri.MANIFEST_NAME).read_text(encoding="utf-8"))
+    problems = ri.spec_problems(spec_path.read_bytes(), manifest)
+    assert any("键的顺序变了" in p and "sources" in p for p in problems), problems
+    # 清单里的投影指纹同样按原顺序算：换了顺序，指纹就不是那一个
+    assert manifest["projection_sha256"] != _sha(
+        ri.canonical(ri.project(new)).encode("utf-8"))
+    a = _assess(tmp_path, outdir)
+    assert a.status == "render", a.reasons
+    before = (outdir / "qc_attestation.json").read_bytes()
+    assert rc.apply(tmp_path, SLUG, outdir, spec_path, fetch=_release_ok).status == "render"
+    assert (outdir / "qc_attestation.json").read_bytes() == before
+
+    # 别处的键换顺序也算：宁可多判一次重渲，不一处处去证明哪张表的顺序无关
+    _edit(tmp_path, lambda s: s.update(cover=dict(reversed(list(s["cover"].items())))), base)
+    a = _assess(tmp_path, outdir)
+    assert a.status == "render" and any("cover" in r and "键的顺序" in r for r in a.reasons)
+    # 注解插在中间、不动其余键的相对顺序——不算换顺序
+    _edit(tmp_path, lambda s: s.update(cover={"_note": "x", **s["cover"]}), base)
+    assert _assess(tmp_path, outdir).status == "reattest"
+
+
+def _gated_spec() -> dict:
+    """在样板上补几条**有闸读**的认领：配音参数、预制封面、全屏照片、退回 edge-tts。"""
+    spec = _spec()
+    spec["cover"].update(approved_image="assets/reel/demo-approved.jpg",
+                         _approved_by_user=True)
+    spec["segments"][1]["voice"] = {"rate": "-8%", "_why": "这一段是崩盘，降速"}
+    spec["segments"].append({"image": "assets/reel/demo-photo.jpg", "image_kind": "photo",
+                             "seconds": 3, "narration": "赛后她跪在场上。",
+                             "_photo_source": "https://photos.example/1",
+                             "_photo_caption_safety": "字幕在下三分之一，脸在上半"})
+    spec.update(tts_backend="edge", _tts_backend_why="Azure 钥匙 401")
+    spec["stats"] = {"_why": "数据来自 flashscore"}
+    spec["editorial"] = {"_why": "技战术按官方逐分核过"}
+    spec["_score_inset_why"] = "promote 写的说明：没有闸读顶层这一句"
+    return spec
+
+
+@pytest.mark.parametrize("change, claim", [
+    (lambda s: s["cover"].update(_approved_by_user=False), "cover._approved_by_user"),
+    (lambda s: s["cover"].update(_layout_why="   "), "cover._layout_why"),
+    (lambda s: s["segments"][1]["voice"].pop("_why"), "segments[1].voice._why"),
+    (lambda s: s["segments"][1]["voice"].update(_why=None), "segments[1].voice._why"),
+    (lambda s: s["segments"][2].update(_photo_source="http://photos.example/1"),
+     "segments[2]._photo_source"),
+    (lambda s: s["segments"][2].update(_photo_caption_safety=False),
+     "segments[2]._photo_caption_safety"),
+    (lambda s: s.update(_tts_backend_why=["Azure 401"]), "_tts_backend_why"),
+])
+def test_认领按那道闸自己的口径算数(tmp_path, change, claim):
+    """评审 2026-09-27：原来的 `_filled` 认 `False`、认一串空格——`build_cover` 两个都拒。
+
+    认领「还在不在」要照那道闸自己的读法：`not cover.get("_approved_by_user")`、
+    `str(cover.get("_layout_why", "")).strip()`、`isinstance(why, str) and why.strip()`……
+    """
+    base = _gated_spec()
+    outdir = _rendered(tmp_path, base)
+    claims = json.loads((outdir / ri.MANIFEST_NAME).read_text(encoding="utf-8"))["claims"]
+    assert claim in {ri.path_str(p) for p in claims}, claims
+    _edit(tmp_path, change, base)
+    a = _assess(tmp_path, outdir)
+    assert a.status == "render", a.reasons
+    assert any("认领没了" in r and claim in r for r in a.reasons), a.reasons
+
+
+def test_同名的纯说明删了照样可以重核对(tmp_path):
+    """评审 2026-09-27：原来按键名在任意深度认领，`segments[i]._why` 一删就要重渲七分钟。
+
+    只有闸真读的那个位置算认领（`_seg_voice` 读的是 `segments[i].voice._why`）。
+    """
+    base = _gated_spec()
+    outdir = _rendered(tmp_path, base)
+    claims = {ri.path_str(p) for p in json.loads(
+        (outdir / ri.MANIFEST_NAME).read_text(encoding="utf-8"))["claims"]}
+    for documentary in ("segments[1]._why", "cover.portrait._why", "stats._why",
+                        "editorial._why", "_score_inset_why"):
+        assert documentary not in claims, f"{documentary} 没有闸读，不该记成认领"
+
+    def drop(spec):
+        del spec["segments"][1]["_why"], spec["cover"]["portrait"]["_why"]
+        del spec["stats"]["_why"], spec["editorial"]["_why"], spec["_score_inset_why"]
+        spec["segments"][1]["voice"]["_why"] = "改个说法：崩盘那一段，降速"   # 措辞改了不算删
+
+    _edit(tmp_path, drop, base)
+    a = _assess(tmp_path, outdir)
+    assert a.status == "reattest", a.reasons
+
+
+def test_注解表登记的读取函数和代码对得上():
+    """`Gate.where` 是照闸的读法手写的；谁在渲染路径上新读一处，这里红，逼着回头看位置。"""
+    actual: dict[str, set[str]] = {}
+    for module in _render_path_modules():
+        for key, fn, _ in _key_reads(module):
+            if key in ri.GATE_ANNOTATIONS:
+                actual.setdefault(key, set()).add(fn)
+    drift = {key: (sorted(note.read_by), sorted(actual.get(key, set())))
+             for key, note in ri.GATE_ANNOTATIONS.items()
+             if set(note.read_by) != actual.get(key, set())}
+    assert not drift, f"GATE_ANNOTATIONS 的 read_by（登记的 / 代码里的）对不上：{drift}"
+    for key, note in ri.GATE_ANNOTATIONS.items():
+        for pattern in note.where:
+            assert pattern.split(".")[-1] == key, f"{key} 的 where 写成了 {pattern}"
+
+
+def test_同一个路径换了一张图_spec没动也要报重渲(tmp_path, capsys):
+    """评审 2026-09-27：原来 spec 字节没变就先报「什么都不用做」，素材根本没核。"""
+    outdir = _rendered(tmp_path)
+    (tmp_path / "assets/reel/demo-cover.jpg").write_bytes(b"\xff\xd8 another photo")
+    a = _assess(tmp_path, outdir)
+    assert a.status == "render" and any("素材文件变了" in r for r in a.reasons), a.reasons
+    assert rc.main(["--slug", SLUG, "--repo", str(tmp_path)]) == 1
+    out = capsys.readouterr().out
+    assert "要重渲" in out and "什么都不用做" not in out
 
 
 # ── 链被动过手脚的，过不去 ─────────────────────────────────────────────────
@@ -331,6 +472,69 @@ def test_发布门禁不信重核对凭证的一面之词(reattested):
         gate.validate_qc(repo, SLUG, outdir)
 
 
+def _forge(outdir: Path, spec_path: Path, *, manifest_too: bool = False) -> None:
+    """手搓一张**不带 `reattest`** 的凭证：spec 字节补对、`render.json` 跟着指过去。
+
+    `manifest_too`：连清单记的 spec 字节也改掉、三处 sha 重新钉上——整条链自洽，
+    只剩「清单里的投影还是渲染那一刻的」这一处破绽。
+    """
+    spec_sha = _sha(spec_path.read_bytes())
+    meta = json.loads((outdir / "render.json").read_text(encoding="utf-8"))
+    qc_path = outdir / "qc_attestation.json"
+    qc = json.loads(qc_path.read_text(encoding="utf-8"))
+    if manifest_too:
+        manifest_path = outdir / ri.MANIFEST_NAME
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["spec_sha256"] = spec_sha
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+                                 encoding="utf-8")
+        qc["render_inputs_sha256"] = meta["render_inputs_sha256"] = _sha(
+            manifest_path.read_bytes())
+    qc["spec_sha256"] = spec_sha
+    qc_path.write_text(json.dumps(qc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    meta["qc_attestation_sha256"] = _sha(qc_path.read_bytes())
+    (outdir / "render.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
+
+
+def test_发布门禁每次都重算投影_不看凭证带不带reattest(tmp_path):
+    """评审 2026-09-27：原来只在凭证带 `reattest` 时才重算——手搓的凭证不写那一段就绕过去了。"""
+    _git(tmp_path, "init", "-q")
+    outdir = _rendered(tmp_path)
+    _commit(tmp_path)
+
+    # ① 偷改了旁白、整条链（清单 / 凭证 / render.json）都手搓自洽、凭证不带 reattest：
+    #    只剩重算投影这一道拦得住
+    spec_path = _edit(tmp_path, lambda s: s["segments"][1].update(narration="偷改的旁白"))
+    _forge(outdir, spec_path, manifest_too=True)
+    _commit(tmp_path)
+    with pytest.raises(gate.Skip, match="渲染输入对不上.*第 2 段旁白"):
+        gate.validate_qc(tmp_path, SLUG, outdir)
+
+
+def test_spec变了而凭证不是重核对出的_发布门禁不认(tmp_path):
+    """只改了注解（投影不变）、却手搓凭证而不走 reattest：清单记的 spec 和凭证记的
+    不是同一份——那等于绕过了 runner 那一步的素材字节和 Release 现算，不认。"""
+    _git(tmp_path, "init", "-q")
+    outdir = _rendered(tmp_path)
+    _commit(tmp_path)
+    spec_path = _edit(tmp_path, lambda s: s.update(_note="只改注解"))
+    _forge(outdir, spec_path)
+    _commit(tmp_path)
+    with pytest.raises(gate.Skip, match="而凭证不是重核对出的"):
+        gate.validate_qc(tmp_path, SLUG, outdir)
+
+
+def test_render_json钉的清单要和凭证钉的是同一份(tmp_path):
+    _git(tmp_path, "init", "-q")
+    outdir = _rendered(tmp_path)
+    meta = json.loads((outdir / "render.json").read_text(encoding="utf-8"))
+    meta["render_inputs_sha256"] = "0" * 64
+    (outdir / "render.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
+    _commit(tmp_path)
+    with pytest.raises(gate.Skip, match="render.json 钉的 render_inputs.json 和凭证钉的不是同一份"):
+        gate.validate_qc(tmp_path, SLUG, outdir)
+
+
 def test_清单在质检后被换过发布门禁也拦住(tmp_path):
     _git(tmp_path, "init", "-q")
     outdir = _rendered(tmp_path)
@@ -378,33 +582,85 @@ def _render_path_modules() -> list[Path]:
     return list(seen)
 
 
+#: 读法里拼出来的键（f"_{x}"、"_" + x）认不出是哪一个，一律记成这个——它不在任何
+#: 表里，所以必然报「没归类」，逼着把它改成字面键名。
+DYNAMIC_KEY = "_<拼出来的键>"
+
+
 def _key_reads(path: Path) -> list[tuple[str, str, int]]:
-    """(键, 所在函数, 行号)：`x["k"]`、`x.get/pop/setdefault("k")`、`"k" in x`。"""
+    """(键, 所在函数, 行号)：`x[K]`、`x.get/pop/setdefault(K)`、`K in x`。
+
+    K 不只认字面量（评审 2026-09-27：只认字面量是个潜在的洞）——还认模块顶层的
+    字符串常量（`KEY = "_why"` 然后 `x.get(KEY)`）、循环变量走的字面量序列
+    （`for k in ("_a", "_b"): x.get(k)`）；以 `_` 开头拼出来的键（f-string、`+`）
+    认不出是哪一个，记成 `DYNAMIC_KEY`。
+    """
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    names: dict[str, set[str]] = {}
+    for node in tree.body:
+        if (isinstance(node, ast.Assign) and isinstance(node.value, ast.Constant)
+                and isinstance(node.value.value, str)):
+            for target in node.targets:
+                if isinstance(target, ast.Name):
+                    names.setdefault(target.id, set()).add(node.value.value)
+    for node in ast.walk(tree):
+        if (isinstance(node, (ast.For, ast.comprehension)) and isinstance(node.target, ast.Name)
+                and isinstance(node.iter, (ast.Tuple, ast.List, ast.Set))):
+            names.setdefault(node.target.id, set()).update(
+                e.value for e in node.iter.elts
+                if isinstance(e, ast.Constant) and isinstance(e.value, str))
+
+    def keys_of(arg: ast.AST) -> set[str]:
+        if isinstance(arg, ast.Constant) and isinstance(arg.value, str):
+            return {arg.value}
+        if isinstance(arg, ast.Name):
+            return names.get(arg.id, set())
+        head = (arg.values[0] if isinstance(arg, ast.JoinedStr) and arg.values
+                else arg.left if isinstance(arg, ast.BinOp) else None)
+        if (isinstance(head, ast.Constant) and isinstance(head.value, str)
+                and head.value.startswith("_") and not head.value.startswith("__")):
+            return {DYNAMIC_KEY}
+        return set()
+
     out: list[tuple[str, str, int]] = []
 
     def visit(node: ast.AST, fn: str) -> None:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             fn = node.name
-        key = None
-        if (isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Constant)
-                and isinstance(node.slice.value, str)):
-            key = node.slice.value
+        arg = None
+        if isinstance(node, ast.Subscript):
+            arg = node.slice
         elif (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
-              and node.func.attr in ("get", "pop", "setdefault") and node.args
-              and isinstance(node.args[0], ast.Constant)
-              and isinstance(node.args[0].value, str)):
-            key = node.args[0].value
-        elif (isinstance(node, ast.Compare) and isinstance(node.left, ast.Constant)
-              and isinstance(node.left.value, str)
+              and node.func.attr in ("get", "pop", "setdefault") and node.args):
+            arg = node.args[0]
+        elif (isinstance(node, ast.Compare)
               and any(isinstance(op, (ast.In, ast.NotIn)) for op in node.ops)):
-            key = node.left.value
-        if key is not None:
-            out.append((key, fn, getattr(node, "lineno", 0)))
+            arg = node.left
+        if arg is not None:
+            for key in sorted(keys_of(arg)):
+                out.append((key, fn, getattr(node, "lineno", 0)))
         for child in ast.iter_child_nodes(node):
             visit(child, fn)
 
-    visit(ast.parse(path.read_text(encoding="utf-8")), "<module>")
+    visit(tree, "<module>")
     return out
+
+
+def test_读取扫描认得出不是字面量的键(tmp_path):
+    """上面那条归类判据的眼睛：常量、循环变量、拼出来的键都要看得见，否则是空转。"""
+    module = tmp_path / "m.py"
+    module.write_text(
+        'KEY = "_via_const"\n'
+        "def gate(spec, x):\n"
+        "    spec.get(KEY)\n"
+        '    for k in ("_via_loop", "plain"):\n'
+        "        spec[k]\n"
+        '    spec.get(f"_{x}_why")\n'
+        '    return ("_" + x) in spec\n', encoding="utf-8")
+    keys = {(key, fn) for key, fn, _ in _key_reads(module)}
+    assert {("_via_const", "gate"), ("_via_loop", "gate"), ("plain", "gate"),
+            (DYNAMIC_KEY, "gate")} <= keys, keys
+    assert DYNAMIC_KEY not in ri.RENDER_ANNOTATIONS and DYNAMIC_KEY not in ri.GATE_ANNOTATIONS
 
 
 def test_渲染路径读到的注解键都要归类():
@@ -444,7 +700,8 @@ def test_渲染路径读到的注解键都要归类():
     stale = sorted(classified - seen)
     assert not stale, f"这些键渲染/质检路径上已经没人读了，从表里删掉：{stale}"
     assert not set(ri.RENDER_ANNOTATIONS) & set(ri.GATE_ANNOTATIONS)
-    assert all(why.strip() for why in {**ri.RENDER_ANNOTATIONS, **ri.GATE_ANNOTATIONS}.values())
+    assert all(why.strip() for why in ri.RENDER_ANNOTATIONS.values())
+    assert all(note.why.strip() for note in ri.GATE_ANNOTATIONS.values())
 
 
 def test_按下划线整批跳过的地方只许在闸和推送里():

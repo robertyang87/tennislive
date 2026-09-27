@@ -39,9 +39,19 @@
   「它进不进成片？」——这一问正是 O1 的 b 方案被否掉的原因（「要证明渲染器
   从不读被排除的键」），现在它是机械的
 - 被读、但只进闸（raise / print）的注解归 `GATE_ANNOTATIONS`。它们的**值**不进
-  指纹（dry-run 在 reattest 那一趟照样重跑那些闸），但**渲染那一刻非空的，之后
-  必须仍然非空**——`build_cover` 的 `_layout_why` / `_approved_by_user` 这类闸只在
-  编码里跑、dry-run 够不着，删掉一条认领就等于绕过了它
+  指纹（dry-run 在 reattest 那一趟照样重跑那些闸），但**闸读它的那个位置上、按
+  那道闸自己的口径算数的认领，之后必须仍然算数**——`build_cover` 的
+  `_layout_why` / `_approved_by_user` 这类闸只在编码里跑、dry-run 够不着，删掉
+  （或改成 `false` / 一串空格）就等于绕过了它。**位置**和**口径**都照闸的读法写
+  （`Gate.where` / `Gate.rule`）：`segments[i]._why`、`cover.portrait._why` 这类
+  同名的纯说明没有闸读，删了不算绕过；`_approved_by_user: false`、
+  `_layout_why: "   "` 闸不认，也不算「还在」
+
+**键的顺序也是渲染输入**（v2，2026-09-27 评审拦下的）：渲染器按插入顺序取「第一个」
+——`sources` 的第一条就是主源片（`build_match_reel` 里 `next(iter(sources))`，
+没写 `source` 的段都从它取画面）。所以投影按原顺序存、按原顺序比
+（`canonical` 不排序，`diff_paths` 另报「键的顺序」），两个 spec 只差键的顺序
+**不算**同一份渲染输入。宁可多判一次重渲，不去一处处证明哪张表的顺序无关紧要。
 
 ⚠️ 这个模块**只用标准库**：`auto_push_gate`（稀疏检出、只装主依赖）也要 import
 它去复核重核对凭证。
@@ -54,10 +64,12 @@ import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable, NamedTuple
 
 MANIFEST_NAME = "render_inputs.json"
-VERSION = 1
+#: v2（2026-09-27）：投影按原顺序比（见模块 docstring「键的顺序」），认领按闸的
+#: 位置和口径记。v1 的清单按新口径判不了 → `reattest_check` 报「判不了」、照旧重渲。
+VERSION = 2
 
 #: 渲染路径上**会进成片**的 `_` 键。它们的值留在指纹里，改了就要重渲。
 RENDER_ANNOTATIONS: dict[str, str] = {
@@ -67,39 +79,135 @@ RENDER_ANNOTATIONS: dict[str, str] = {
                    "（ATP / WTA / 金杯 / 拉沃尔杯）——直接决定贴哪块板",
 }
 
+# ── 认领「还算不算数」：照每道闸自己的读法 ────────────────────────────────────
+# 闸的写法不止一种，「在不在」不是一个口径：`not cover.get(k)` 不认 `False`；
+# `str(x.get(k) or "").strip()` 不认 `None` 和一串空格；`str(x.get(k, "")).strip()`
+# 却认 `None`（写出来是 "None"）。认领的口径必须和闸一字不差，否则要么把闸会拒的
+# spec 放过去（`_approved_by_user: false`），要么把闸会认的拦下来。
+
+
+def truthy(value: Any) -> bool:
+    """`not x.get(k)` / `bool(x.get(k))`：`False`、`0`、`""`、`{}` 都不算。"""
+    return bool(value)
+
+
+def text(value: Any) -> bool:
+    """`str(x.get(k) or "").strip()`：`None` 和只有空白都不算。"""
+    return bool(str(value or "").strip())
+
+
+def text_str(value: Any) -> bool:
+    """`str(x.get(k, "")).strip()`：键在就按 `str()` 算，`None` 写出来是 "None"。"""
+    return bool(str(value).strip())
+
+
+def nonblank_str(value: Any) -> bool:
+    """`isinstance(why, str) and why.strip()`：非字符串一律不算。"""
+    return isinstance(value, str) and bool(value.strip())
+
+
+def https_url(value: Any) -> bool:
+    """`str(x.get(k, "")).startswith("https://")`。"""
+    return str(value).startswith("https://")
+
+
+def declared_bool(value: Any) -> bool:
+    """`k in x` ＋ `isinstance(x[k], bool)`：`false` 也是一句表态。"""
+    return isinstance(value, bool)
+
+
+class Gate(NamedTuple):
+    """一个只进闸的注解：哪道闸、在 spec 的哪儿读、按什么口径算数。
+
+    `where` 为空＝**不是认领**：只在备料（`promote_reel_draft`）时读、render 和
+    dry-run 都不调；或者它的出现是「拒绝」而不是「放行」（`_import`）。删了不绕过
+    任何闸，不记。
+
+    `where` 的写法：点分路径，`[]` 是列表里每一项、`[0]` 是第 0 项——
+    `segments[].voice._why` 就是「每一段的 voice 对象里那个 `_why`」。
+    `read_by` 是渲染/质检路径上**读它的函数**，测试按 import 图对账：谁新读了它，
+    那条测试红，逼着回头看一眼 `where` 还对不对。
+    """
+
+    why: str
+    read_by: frozenset[str]
+    where: tuple[str, ...] = ()
+    rule: Callable[[Any], bool] = text
+
+
+def _gate(why: str, read_by: str, where: str | tuple[str, ...] = (),
+          rule: Callable[[Any], bool] = text) -> Gate:
+    return Gate(why, frozenset(read_by.split()),
+                (where,) if isinstance(where, str) else where, rule)
+
+
 #: 渲染/质检路径上被读、但**只进闸不进成片**的 `_` 键（raise 或 print）。
-#: 值不进指纹；渲染那一刻非空的，重核对时必须仍然非空（见模块 docstring）。
-GATE_ANNOTATIONS: dict[str, str] = {
-    "_approved_by_user": "build_cover：approved_image 要有用户认领，缺了拒渲",
-    "_beat": "promote_reel_draft.insert_chapter_cards（备料提升时读，render 不调）",
-    "_chapter_cards_why": "promote_reel_draft.insert_chapter_cards（同上）",
-    "_claims": "_absolute_claims_need_a_source：全称断言要两个不同主机的出处",
-    "_decider_why": "reel_facts.decider_set_problem：大满贯提「决胜盘」的认领",
-    "_durations": "promote_reel_draft._duration（备料时读）",
-    "_ending_payoff_required": "ending_payoff_problem：冷开场要不要在正文兑现结局",
-    "_evidence_on_screen_why": "promote_reel_draft.note_evidence_on_screen（备料时读）",
-    "_head_open_why": "cold_open_problem：集锦开头恰好就是最后一球的认领",
-    "_heard": "_seg_voice：用了情绪风格要写谁听过",
-    "_heat_why": "_players_are_worth_a_reel：热度闸的认领",
-    "_hit_data": "promote_reel_draft.promote（备料提升时读）",
-    "_import": "main：导入成片拒绝重渲（只在非 dry-run 时 raise）",
-    "_layout_why": "build_cover：赛场之上退回 VS 版式要认领",
-    "_license": "music_problem：背景音乐要写授权",
-    "_low_res_why": "cover_photo_problem：封面低于门槛的认领",
-    "_match": "reel_facts 的赛果/抢十闸、promote_reel_draft 的撞车键",
-    "_narration_why": "cover_voice_matches_hook_problem：封面口播和钩子不同的认领",
-    "_no_cold_open_why": "cold_open_problem：源片里没有赢球后画面的认领",
-    "_photo_caption_safety": "parse_segments：全屏照片字幕不遮主体的目视依据",
-    "_photo_source": "parse_segments：全屏照片的来源（要 https）",
-    "_quote_skip_why": "unvoiced_quote_problem：不配原声字幕的认领",
-    "_revision_request": "duplicate_match_problem：同一场球重做的认领",
-    "_score_inset_why": "parse_segments / _seg_score_windows：比分板不回贴的认领",
-    "_tactics_why": "reel_craft.shot_craft_problem：源片看不出球路的认领",
-    "_topbar_format_why": "_topbar_lines：顶栏赛事行格式特例的认领",
-    "_topic_format_why": "reel_facts.cover_topic_problem：封面副标题格式特例的认领",
-    "_tts_backend_why": "apply_tts_backend：退回 edge-tts 的认领（后端本身是真字段 tts_backend）",
-    "_visual_evidence": "promote_reel_draft（备料提升时读）",
-    "_why": "_seg_voice：改了语速/音高要写为什么",
+#: 值不进指纹；闸读它的那个位置上算数的，重核对时必须仍然算数（见模块 docstring）。
+GATE_ANNOTATIONS: dict[str, Gate] = {
+    "_approved_by_user": _gate("build_cover：approved_image 要有用户认领，缺了拒渲（编码里才查）",
+                               "build_cover", "cover._approved_by_user", truthy),
+    "_beat": _gate("promote_reel_draft.insert_chapter_cards（备料提升时读，render 不调）",
+                   "insert_chapter_cards"),
+    "_chapter_cards_why": _gate("promote_reel_draft.insert_chapter_cards 写它（同上）",
+                                "insert_chapter_cards"),
+    "_claims": _gate("_absolute_claims_need_a_source：全称断言要两个不同主机的出处",
+                     "_absolute_claims_need_a_source", "_claims", truthy),
+    "_decider_why": _gate("reel_facts.decider_set_problem：大满贯提「决胜盘」的认领",
+                          "decider_set_problem", "_decider_why"),
+    "_durations": _gate("promote_reel_draft._duration（备料时读）", "_duration"),
+    "_ending_payoff_required": _gate(
+        "ending_payoff_problem：冷开场要不要在正文兑现结局（true / false 都是表态）",
+        "ending_payoff_problem waiting_reasons",
+        "segments[0]._ending_payoff_required", declared_bool),
+    "_evidence_on_screen_why": _gate("promote_reel_draft.note_evidence_on_screen（备料时读写）",
+                                     "note_evidence_on_screen"),
+    "_head_open_why": _gate("cold_open_problem：集锦开头恰好就是最后一球的认领",
+                            "cold_open_problem", "segments[0]._head_open_why"),
+    "_heard": _gate("_seg_voice：用了情绪风格要写谁听过",
+                    "_seg_voice", "segments[].voice._heard"),
+    "_heat_why": _gate("_players_are_worth_a_reel：热度闸的认领",
+                       "_players_are_worth_a_reel", "cover._heat_why", text_str),
+    "_hit_data": _gate("promote_reel_draft.promote（备料提升时读）", "promote"),
+    "_import": _gate("main：导入成片拒绝重渲（只在非 dry-run 时 raise）——它是「拒绝」"
+                     "不是「放行」，删了不绕过任何闸", "main"),
+    "_layout_why": _gate("build_cover：赛场之上退回 VS 版式要认领（编码里才查）",
+                         "build_cover", "cover._layout_why", text_str),
+    "_license": _gate("music_problem：背景音乐要写授权",
+                      "music_problem", "music._license"),
+    "_low_res_why": _gate("cover_photo_problem：封面低于门槛的认领",
+                          "cover_photo_problem", "cover.portrait._low_res_why"),
+    "_match": _gate("reel_facts 的赛果/抢十闸拿它对账、promote_reel_draft 的撞车键",
+                    "verified_result_problem decider_tiebreak_problem waiting_reasons "
+                    "promote _source_urls _match_keys", "_match", truthy),
+    "_narration_why": _gate("cover_voice_matches_hook_problem：封面口播和钩子不同的认领",
+                            "cover_voice_matches_hook_problem", "cover._narration_why"),
+    "_no_cold_open_why": _gate("cold_open_problem：源片里没有赢球后画面的认领",
+                               "cold_open_problem", "_no_cold_open_why"),
+    "_photo_caption_safety": _gate("parse_segments：全屏照片字幕不遮主体的目视依据",
+                                   "_one", "segments[]._photo_caption_safety", truthy),
+    "_photo_source": _gate("parse_segments：全屏照片的来源（要 https）",
+                           "_one", "segments[]._photo_source", https_url),
+    "_quote_skip_why": _gate("unvoiced_quote_problem：不配原声字幕的认领",
+                             "unvoiced_quote_problem", "segments[]._quote_skip_why"),
+    "_revision_request": _gate("duplicate_match_problem：同一场球重做的认领",
+                               "duplicate_match_problem", "_revision_request", truthy),
+    "_score_inset_why": _gate(
+        "parse_segments / _seg_score_windows：比分板不回贴的认领（顶层那句是 promote "
+        "写的说明，没有闸读）", "parse_segments _seg_score_windows promote",
+        "segments[]._score_inset_why", text_str),
+    "_tactics_why": _gate("reel_craft.shot_craft_problem：源片看不出球路的认领",
+                          "shot_craft_problem", "_tactics_why"),
+    "_topbar_format_why": _gate("_topbar_lines → tour_topline_problem：顶栏赛事行格式特例的认领",
+                                "_topbar_lines", "_topbar_format_why"),
+    "_topic_format_why": _gate("reel_facts.cover_topic_problem：封面副标题格式特例的认领",
+                               "cover_topic_problem", "_topic_format_why"),
+    "_tts_backend_why": _gate("apply_tts_backend：退回 edge-tts 的认领（后端本身是真字段 "
+                              "tts_backend）", "apply_tts_backend", "_tts_backend_why",
+                              nonblank_str),
+    "_visual_evidence": _gate("promote_reel_draft（备料提升时读）", "waiting_reasons promote"),
+    "_why": _gate("_seg_voice：改了语速/音高要写为什么。**只有 `voice._why` 有闸读**——"
+                  "`segments[i]._why`、`cover.portrait._why`、`stats._why` 都是纯说明",
+                  "_seg_voice", "segments[].voice._why"),
 }
 
 #: 只进推送、不进成片的真字段。整块不算渲染输入——而渲染/质检路径上**只许**在
@@ -144,12 +252,15 @@ def sha256_file(path: Path) -> str:
 
 
 def canonical(obj: Any) -> str:
-    """逐字节比较用的规范写法：键排序、无空白、中文原样。
+    """逐字节比较用的规范写法：**键保持原顺序**、无空白、中文原样。
 
+    ⚠️ **不许 `sort_keys`**：渲染器按插入顺序取第一个（`sources` 的第一条是主源片，
+    `build_match_reel` 里 `next(iter(sources))`），排了序，只调换两个源的 spec 就和
+    原来那份写出同一串字节——重核对会把旧成片认成新 spec 的产物（2026-09-27 评审拦下的）。
     ⚠️ `1` 和 `1.0` 在这里**不相等**（写出来是两串字节）——渲染里有把数直接拼进
     滤镜图字符串的地方，宁可多判一次「要重渲」，不赌它们等价。
     """
-    return json.dumps(obj, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
 
 
 def is_annotation(key: object) -> bool:
@@ -171,29 +282,50 @@ def project(spec: dict) -> dict:
     return out
 
 
-def _filled(value: Any) -> bool:
-    """认领「还在」：`False` 也算（`_ending_payoff_required: false` 是一句表态）。"""
-    return value is not None and value != "" and value != [] and value != {}
+def _expand(node: Any, parts: list[str], path: list[str | int]) -> list[list[str | int]]:
+    """把 `Gate.where` 的一条写法展开成 spec 里**真有这个键**的具体路径。"""
+    if not parts:
+        return [path]
+    head, rest = parts[0], parts[1:]
+    name, _, index = head.partition("[")
+    if not isinstance(node, dict) or name not in node:
+        return []
+    node, path = node[name], path + [name]
+    if not index:
+        return _expand(node, rest, path)
+    if not isinstance(node, list):
+        return []
+    index = index.rstrip("]")
+    picks = range(len(node)) if index == "" else [int(index)]
+    return [hit for i in picks if 0 <= i < len(node)
+            for hit in _expand(node[i], rest, path + [i])]
 
 
 def claim_paths(spec: dict) -> list[list[str | int]]:
-    """渲染那一刻**非空的闸用注解**在哪儿（推送块里的不算，它不进渲染路径）。"""
+    """渲染那一刻**闸认的**认领在哪儿：只看闸真读的位置，按那道闸自己的口径算数。
+
+    推送块不在任何 `where` 里（它不进渲染路径）；同名的纯说明（`segments[i]._why`、
+    `cover.portrait._why`）也不在——它们删了不绕过任何闸。
+    """
     found: list[list[str | int]] = []
-
-    def walk(value: Any, path: list[str | int]) -> None:
-        if isinstance(value, dict):
-            for k, v in value.items():
-                if not path and k in PUBLISH_FIELDS:
-                    continue
-                if isinstance(k, str) and k in GATE_ANNOTATIONS and _filled(v):
-                    found.append(path + [k])
-                walk(v, path + [k])
-        elif isinstance(value, list):
-            for i, v in enumerate(value):
-                walk(v, path + [i])
-
-    walk(spec, [])
+    for key, gate in GATE_ANNOTATIONS.items():
+        for pattern in gate.where:
+            for path in _expand(spec, pattern.split("."), []):
+                if path[-1] == key and gate.rule(value_at(spec, path)[1]):
+                    found.append(path)
     return found
+
+
+def claim_holds(spec: Any, path: list[str | int]) -> bool:
+    """渲染时记下的这条认领，在新 spec 里按同一道闸的口径还算不算数。
+
+    表里已经没有这个键（闸撤了）就不再要求；位置没了、值闸不认了都算「没了」。
+    """
+    gate = GATE_ANNOTATIONS.get(str(path[-1])) if path else None
+    if gate is None:
+        return True
+    found, value = value_at(spec, path)
+    return found and gate.rule(value)
 
 
 def value_at(spec: Any, path: list[str | int]) -> tuple[bool, Any]:
@@ -239,12 +371,22 @@ def asset_refs(projection: dict, repo: Path) -> dict[str, str | None]:
     return dict(sorted(refs.items()))
 
 
+#: `diff_paths` 报「这张表的键换了顺序」时挂在路径末尾的标记。
+ORDER = "(键的顺序)"
+
+
 def diff_paths(old: Any, new: Any, path: list[str | int] | None = None) -> list[list[str | int]]:
-    """两份投影哪几处不一样（逐字节口径，见 `canonical`）。"""
+    """两份投影哪几处不一样（逐字节口径，见 `canonical`）。
+
+    **键的顺序算一处**：两边都有的键排列不同，就报 `<这张表>.(键的顺序)`——
+    `sources` 调了个儿，主源片就换了人（模块 docstring「键的顺序」）。
+    """
     path = path or []
     if isinstance(old, dict) and isinstance(new, dict):
         out: list[list[str | int]] = []
-        for key in sorted(set(old) | set(new), key=str):
+        if [k for k in old if k in new] != [k for k in new if k in old]:
+            out.append(path + [ORDER])
+        for key in list(old) + [k for k in new if k not in old]:
             if key not in old or key not in new:
                 out.append(path + [key])
             else:
@@ -264,6 +406,10 @@ def describe(path: list[str | int]) -> str:
     """把一处差异翻成「它会动到成片的哪一块」。"""
     head = path[0] if path else ""
     where = path_str(path)
+    if path and path[-1] == ORDER:
+        hint = ("主源片换了人——没写 source 的段都从第一条取画面"
+                if path[:-1] == ["sources"] else "渲染器有按顺序取第一个的地方")
+        return f"键的顺序变了（{hint}）：{where}"
     if head == "segments" and len(path) >= 2 and isinstance(path[1], int):
         n = path[1] + 1
         field = str(path[2]) if len(path) > 2 else ""
@@ -339,16 +485,19 @@ def spec_problems(spec_bytes: bytes, manifest: dict) -> list[str]:
     problems = [f"渲染输入变了——{describe(p)}"
                 for p in diff_paths(manifest.get("projection"), project(spec))]
     for path in manifest.get("claims") or []:
-        found, value = value_at(spec, path)
-        if not found or not _filled(value):
+        if not claim_holds(spec, path):
             problems.append(
                 f"渲染那一刻有的认领没了：{path_str(path)}"
-                "（这类认领有的闸只在编码里跑、dry-run 够不着，删掉就等于绕过它）")
+                "（删了、或改成那道闸不认的值——`false` / 一串空格；这类认领有的闸"
+                "只在编码里跑、dry-run 够不着，改掉就等于绕过它）")
     return problems
 
 
 def asset_problems(spec_bytes: bytes, manifest: dict, repo: Path) -> list[str]:
-    spec = json.loads(spec_bytes)
+    try:
+        spec = json.loads(spec_bytes)
+    except (ValueError, UnicodeDecodeError):
+        return []                      # `spec_problems` 报「不是有效 JSON」，这里不重复
     now = asset_refs(project(spec), repo)
     then = manifest.get("assets") or {}
     return [f"引用的素材文件变了：{name}（渲染时 {str(then.get(name))[:12]}，"

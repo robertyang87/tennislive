@@ -12,8 +12,9 @@ run 30755226229）。43 秒不值得优化，真正的成本是**人的往返**�
 1. **路径形状**必须是 `output/<日期>/reel/<slug>/render.json`
 2. **L2 不可变凭证**必须与当前 spec、烧片字幕、成片 hash/bytes 以及 Release
    文件大小完全一致；`render.json` 只是流程信号，不能冒充“质检通过”。
-   `mode=reattest` 重出的凭证（2026-09-27）另外复核渲染输入清单和渲染投影，
-   见 `_validate_render_inputs`
+   凭证钉着渲染输入清单的（2026-09-27 起渲的都钉），另外复核清单、`render.json`
+   钉的那一份，并**每次**拿当前 spec 重算渲染投影——不只在 `mode=reattest` 重出的
+   凭证上算，见 `_validate_render_inputs`
 3. spec 里必须显式写 `"push": {"auto": true}` ——**默认关**，
    和 `mixed_fps` / `silent_source` 一个形状：认领这一步把「想清楚了」和
    「凑合一下」分开。**这是六道里唯一一道 `--forced` 放得宽的**（它问的是
@@ -157,13 +158,13 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
         raise Skip(f"{slug}：Release 文件大小与 QC 成片不一致")
     if not render.get("video_url"):
         raise Skip(f"{slug}：render.json 没有 Release video_url")
-    _validate_render_inputs(repo, slug, outdir, qc, spec_path)
+    _validate_render_inputs(repo, slug, outdir, qc, render, spec_path)
     return film_hash
 
 
 def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
-                            spec_path: Path) -> None:
-    """凭证钉着渲染输入清单时，清单本身也要对得上；重核对过的凭证**再核一遍**。
+                            render: dict, spec_path: Path) -> None:
+    """凭证钉着渲染输入清单时，清单本身也要对得上，而且**每次都重算一遍投影**。
 
     账号所有者 2026-09-27 选了「重核对，不重渲」（`match-reel mode=reattest`，
     `tools/reattest_check.py`）：spec 渲完之后只改注解/推送字段时，不重渲，
@@ -171,11 +172,15 @@ def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
     （spec / 字幕 / 成片 hash / Release 字节照旧逐一比），这里只**加**：
 
     - 凭证写了 `render_inputs_sha256`，仓库里那份 `render_inputs.json` 就必须
-      是它、而且描述的是同一份成片
-    - 凭证带 `reattest`（重核对出的），就不信它一面之词：拿当前 spec 按同一个
-      口径重算渲染投影和认领注解，和清单逐字节比——runner 那一步算错了、或者
-      有人手搓了一张凭证，在发微信之前这里再拦一次。素材字节这一半这里核不了
-      （这条工作流稀疏检出，不拉 assets/），它由 runner 那一步现算
+      是它、`render.json` 钉的也必须是它，而且描述的是同一份成片
+    - 清单记的 spec 和凭证记的 spec 不是同一份字节，就**只能**是重核对出的凭证
+      （带 `reattest`）——普通渲染里两者是同一个文件先后读两次，不一样就是链被
+      动过手脚
+    - **不看凭证带不带 `reattest`，一律**拿当前 spec 按同一个口径重算渲染投影和
+      认领、和清单逐字节比（评审 2026-09-27：原来只在带 `reattest` 时才算，删掉
+      那一段、再把 spec 字节补进凭证，就绕过去了）。普通渲染 spec 没变，这一步
+      恒过、不花钱。素材字节这一半这里核不了（这条工作流稀疏检出，不拉
+      assets/），它由 runner 那一步现算
     """
     digest = qc.get("render_inputs_sha256")
     if qc.get("reattest") and not digest:
@@ -185,22 +190,27 @@ def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import render_inputs  # noqa: PLC0415
 
-    manifest_path = outdir / render_inputs.MANIFEST_NAME
+    name = render_inputs.MANIFEST_NAME
+    if render.get("render_inputs_sha256") != digest:
+        raise Skip(f"{slug}：render.json 钉的 {name} 和凭证钉的不是同一份")
+    manifest_path = outdir / name
     if not tracked(repo, manifest_path):
-        raise Skip(f"{slug}：凭证钉着 {render_inputs.MANIFEST_NAME}，而它不在仓库里")
+        raise Skip(f"{slug}：凭证钉着 {name}，而它不在仓库里")
     manifest_bytes = _tracked_bytes(repo, manifest_path)
     if _sha256_bytes(manifest_bytes) != digest:
-        raise Skip(f"{slug}：{render_inputs.MANIFEST_NAME} 在质检后变过")
+        raise Skip(f"{slug}：{name} 在质检后变过")
     try:
         manifest = json.loads(manifest_bytes)
     except (ValueError, UnicodeDecodeError) as exc:
-        raise Skip(f"{slug}：{render_inputs.MANIFEST_NAME} 不是有效 JSON") from exc
+        raise Skip(f"{slug}：{name} 不是有效 JSON") from exc
     if manifest.get("film_sha256") != qc.get("film_sha256"):
         raise Skip(f"{slug}：渲染输入清单描述的不是凭证里那份成片")
-    if qc.get("reattest"):
-        problems = render_inputs.spec_problems(spec_path.read_bytes(), manifest)
-        if problems:
-            raise Skip(f"{slug}：重核对凭证不成立——" + "；".join(problems[:3]))
+    if manifest.get("spec_sha256") != qc.get("spec_sha256") and not qc.get("reattest"):
+        raise Skip(f"{slug}：{name} 记的 spec 和凭证记的不是同一份，而凭证不是重核对出的")
+    problems = render_inputs.spec_problems(spec_path.read_bytes(), manifest)
+    if problems:
+        what = "重核对凭证不成立" if qc.get("reattest") else "spec 和渲染那一刻的渲染输入对不上"
+        raise Skip(f"{slug}：{what}——" + "；".join(problems[:3]))
 
 
 def wants_auto_push(repo: Path, slug: str, outdir: Path,

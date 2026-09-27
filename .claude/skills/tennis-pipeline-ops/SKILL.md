@@ -123,8 +123,13 @@ tools/auto_push_gate.py`。
 `render_inputs.RENDER_ANNOTATIONS`（进成片：`_column` 管字幕下锚、`_production.event`
 挑比分板那一套）或 `GATE_ANNOTATIONS`（只进闸）里认领，`push` 只许在措辞闸/推送元数据
 那几个函数里读。**以后在渲染路径上新读一个 `_` 键，那条测试当场红**，逼着回答
-「它进不进成片」。只进闸的注解**值**不进指纹（dry-run 重跑那些闸），但渲染那一刻
-非空的必须仍然非空——`build_cover` 的 `_layout_why` 这类认领只在编码里查，删掉就等于绕过。
+「它进不进成片」。只进闸的注解**值**不进指纹（dry-run 重跑那些闸），但**闸读它的那个
+位置上、按那道闸自己的口径算数的认领，之后必须仍然算数**——`build_cover` 的 `_layout_why`
+这类认领只在编码里查，删掉就等于绕过。位置和口径都照闸的读法登记在 `Gate.where` /
+`Gate.rule`：`_approved_by_user: false`、`_layout_why: "   "` 闸不认，改成这样照样判
+render；而 `segments[i]._why`、`cover.portrait._why`、`stats._why` 这类同名的纯说明
+**没有闸读**（只有 `segments[i].voice._why` 有），删了照样可以重核对。读它的函数
+（`Gate.read_by`）由测试按 import 图对账，谁新读一处，逼着回头看一眼位置还对不对。
 
 **一个字都没松的**（「发出去的必须和质检过的是同一份」）：
 
@@ -134,12 +139,25 @@ tools/auto_push_gate.py`。
 - **发布账本按成片 hash 记**，重核对之后还是同一份成片——已经 `sent` 的照样拦住。
   「没有真改动就不该有新消息」（CLAUDE.md 9/22 那节），重核对**不是**重推的门路
 - 同一个路径换了一张图（O4 自动换图的形状）、动了旁白/窗口/钩子/`_column`、产物被换过、
-  Release 被别的一趟 `--clobber` 过——**一律判 render**
+  Release 被别的一趟 `--clobber` 过——**一律判 render**。换图那一条**spec 一个字节不动也判**
+  （本地 `--slug` 不会再报「什么都不用做」）
+- ⭐⭐ **键的顺序也是渲染输入**（清单 v2，评审 2026-09-27 拦下的阻断项）：渲染器按插入
+  顺序取第一个——`sources` 的第一条就是主源片（`next(iter(sources))`，没写 `source` 的段
+  都从它取画面），52 条 spec 挂着不止一个源。原来的投影 `sort_keys` 之后比，**只调换两个源
+  的 spec 和原来那份一模一样**，重核对会把旧成片推给一份已经换了主源片的 spec。现在按原顺序
+  存、按原顺序比，任何一张表的键换了顺序都报「键的顺序变了」、走 render
+- 发布门禁**每次都**拿当前 spec 重算投影和认领（不只在凭证带 `reattest` 时），`render.json`
+  钉的清单 sha 必须就是凭证钉的那一份；清单记的 spec 和凭证记的不一样，凭证又不是重核对
+  出的——拦
 
 ⚠️ 所以上面那句「注解要在发 `mode=render` 之前改完」仍然是**最便宜**的做法（一秒都不花）；
 重核对是**改晚了**时的出路：一趟只装主依赖、跑 dry-run、拉一份成片算 sha256 的 runner，
 而不是 7~10 分钟的重渲（2026-09-27 落地时**还没在 runner 上量过实际耗时**，第一趟跑完补在这儿）。
 ⚠️ 2026-09-27 之前渲的片子没有清单，重核对判不了，照旧重渲。
+⚠️ **和 render 共用并发组 `match-reel-<slug>-render`，cancel-in-progress——后派的顶掉先派的，
+不分 mode**：同一条片子 render 还在跑时派 reattest，**那趟 render 会被取消**（7~10 分钟白跑、
+成片没出）。先等 render 跑完再派；反过来（reattest 在跑时派 render）无害。不拆组是故意的：
+拆开之后两者能并行，render 的 `--clobber` 会在 reattest 核完之后换掉 Release 上的成片。
 
 #### ⭐⭐ 判据的扫描面，往往比规矩的适用面窄——#726 那条当天就撞上了
 

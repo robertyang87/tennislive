@@ -179,9 +179,16 @@ concurrency:
   # probe 最后一跳会自动派发同 slug 的 render。两者若共用旧的 slug-only 组，
   # render 一启动就会把尚未结束的 probe 取消，表现成“正式 spec 已落库但链路红”。
   # 同 mode 仍然只保留最新一趟；不同 mode 各写自己的产物阶段，可以顺序衔接。
-  # ⚠️ **reattest 和 render 共用一组**：它核的是「上一趟 render 落下的那条链」，
-  # 两者同时跑的话，render 的 `--clobber` 会在它核完之后换掉 Release 上的成片，
-  # 而它的提交会把旧凭证重放回来。同组 + cancel-in-progress：后派的顶掉先派的。
+  # ⚠️ **reattest 和 render 共用一组**（`match-reel-<slug>-render`）：它核的是
+  # 「上一趟 render 落下的那条链」，两者同时跑的话，render 的 `--clobber` 会在它
+  # 核完之后换掉 Release 上的成片，而它的提交会把旧凭证重放回来。
+  # 同组 + cancel-in-progress ＝ **后派的顶掉先派的，不分 mode**：
+  #   - render 还在跑时派 reattest → **那趟 render 被取消**（成片没出、7~10 分钟白跑）。
+  #     所以派 reattest 之前先确认同 slug 没有 render 在跑；`reattest_check.py`
+  #     本地那句派单提示里也印着这一条
+  #   - reattest 还在跑时派 render → reattest 被取消，无害（render 会出新凭证）
+  #   - 两个 reattest 前后脚 → 只留后一个，同样无害
+  # 不拆成两组的理由就是上面那个撞车：拆开之后两者能并行，比被顶掉一趟更坏。
   group: ${{ github.event.inputs.mode == 'push' && 'match-reel-publish' || format('match-reel-{0}-{1}', github.event.inputs.slug, github.event.inputs.mode == 'reattest' && 'render' || github.event.inputs.mode) }}
   cancel-in-progress: ${{ github.event.inputs.mode != 'push' }}
 

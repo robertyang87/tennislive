@@ -25,7 +25,9 @@
    和凭证一致）
 2. 渲染那一刻落下的产物（`subtitles.ass` / `poster.jpg` / `topbar.ass` /
    `stat_card.jpg` / `scoreboard_qc.json`）逐字节没动
-3. 新 spec 的渲染投影、认领注解、引用素材的字节和渲染那一刻逐字节相同
+3. 新 spec 的渲染投影（**键的顺序也算**：`sources` 的第一条是主源片）、闸读的那些
+   认领（按那道闸自己的口径还算数）、引用素材的字节，和渲染那一刻逐字节相同——
+   素材这一条 spec 一个字节没动也要核（同一个路径换了一张图）
 4. **Release 上那份成片现下载、现算 sha256**，必须就是凭证里那一份——跨天重渲
    会 `--clobber` 掉 tag 上的附件（CLAUDE.md「跨天重渲的另一半有闸」那节），
    按字节数猜不算数
@@ -148,11 +150,15 @@ def assess(repo: Path, slug: str, outdir: Path, spec_path: Path) -> Assessment:
     spec_bytes = spec_path.read_bytes()
     result = _with(Assessment("reattest"), qc, qc_bytes, render, manifest,
                    manifest_bytes, spec_bytes)
+    # 素材字节**先**核，不管 spec 变没变：同一个路径换一张图（O4 自动换图的形状）
+    # spec 一个字节都不动，凭证链照样通——而成片已经不是现在这份素材渲出来的了。
+    # 放在「spec 没变」那条早退之后，这种情形会被报成「什么都不用做」。
+    problems = ri.asset_problems(spec_bytes, manifest, repo)
     if ri.sha256_bytes(spec_bytes) == qc.get("spec_sha256"):
-        result.status = "same"
+        result.status = "render" if problems else "same"
+        result.reasons = problems
         return result
-    problems = (ri.spec_problems(spec_bytes, manifest)
-                + ri.asset_problems(spec_bytes, manifest, repo))
+    problems = ri.spec_problems(spec_bytes, manifest) + problems
     if problems:
         result.status = "render"
         result.reasons = problems
@@ -243,7 +249,9 @@ def _report(a: Assessment, slug: str, outdir: Path, *, applied: bool) -> int:
             print("[重核对] 渲染输入逐字节没动：改的只有注解/推送字段。派这一档就够，不用重渲：\n"
                   "  gh workflow run match-reel.yml --ref <分支> "
                   f"-f mode=reattest -f slug={slug}\n"
-                  "  （runner 上照旧先跑 production_preflight 和 --dry-run，红了就不会重核对）")
+                  "  （runner 上照旧先跑 production_preflight 和 --dry-run，红了就不会重核对）\n"
+                  "  ⚠️ 它和 render 共用并发组 match-reel-<slug>-render（cancel-in-progress）："
+                  "同一条片子有 render 在跑时派它，会把那趟 render 顶掉——先等 render 跑完")
         return 0
     if a.status == "render":
         print("[要重渲] 这次改动动到了渲染输入，成片会变——走 mode=render：")
