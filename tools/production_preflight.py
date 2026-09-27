@@ -43,8 +43,32 @@ class RequestNotReady(ValueError):
     写进 run 摘要并标红——没过前置检查的请求不会只剩一句被人略过的 warning。"""
 
 
+def check_taste(spec: dict) -> None:
+    """账号所有者的口味闸（采访线）：标题和推送标题的数字一致（硬）；封面大标题的
+    术语只报（等账号所有者确认，见 `taste_gates.interview_taste_findings`）。
+
+    2026-09-27「形成一个通用的规则在做视频前就拦掉，而不是说做了一半又返工」——
+    所以它排在任何下载、ASR、渲染之前。判据单一出处 tools/taste_gates.py。
+    """
+    sys.path.insert(0, str(ROOT / 'tools'))
+    from taste_gates import interview_taste_findings  # noqa: PLC0415
+    hard, soft = interview_taste_findings(spec)
+    for note in soft:
+        print(f"[口味] {spec.get('slug', '?')} 只报：{note}")
+    if hard:
+        raise ValueError('不合账号所有者的口味：' + '；'.join(hard))
+
+
 def check_request(req: dict) -> None:
+    """请求预检（任何下载之前）。
+
+    ⚠️ 口味闸读的必须是**这一趟真会写进 spec 的**标题和推送标题：调用方传进来的
+    `req` 在「只改元数据」那条路上是 `{**请求, **按请求差量改过的现有 spec}`
+    （现有 spec 手改过的标题赢），在重建那条路上就是请求本身（`build_spec` 原样
+    抄请求的 cover/push）。所以这里不另去读 specs/ 下的旧稿。
+    """
     # No download, fonts, browser or ASR import required here.
+    check_taste(req)
     cov = req.get('cover') or {}
     zoom, focus = float(cov.get('zoom', 1)), float(cov.get('focus_y', .5))
     if not 1 <= zoom <= 2.4 or not 0 <= focus <= 1:
@@ -138,6 +162,7 @@ def main() -> None:
     path = Path(args.spec)
     if args.column == '赛后开麦' and path.is_file():
         check_interview_claims(path)
+        check_taste(json.loads(path.read_text(encoding='utf-8')))
     check_copy(path.with_suffix('.xhs.txt'), args.column)
 
 

@@ -7105,37 +7105,17 @@ def test_封面上每个球员都要有国旗和即时排名():
 
 
 def _rank_claims(text: str) -> list[int]:
-    """把一段文案里**声称的排名**抠出来（阿拉伯和汉字都认）。
+    """把一段文案里**声称的排名**抠出来——单一出处在 `tools/taste_gates.rank_claims`
+    （2026-09-27 挪进 `validate_spec`，`--dry-run` 就报，不用等 CI）。
 
     ⚠️ **只认「世界第N」「世界排名N」「排名…N」这三种说法**，别放宽：
-
-    - `第N号种子` / `N号种子` 是**种子序号不是排名**。卢布列夫在蒙特利尔是
-      十号种子、世界第十六——两个数都对，混成一件事就成了假话
-    - 「第一次打进四强」「两个盘点」里的数跟排名无关，扫进来只会误伤
-
-    判据宁可窄，不可宽：扩大化的判据不吭声，它不会说「我拦错了」，
-    只会让下一个人把对的写法改成错的。
+    `第N号种子` 是**种子序号不是排名**（卢布列夫在蒙特利尔是十号种子、世界第十六）；
+    「第一次打进四强」「两个盘点」里的数跟排名无关。
     """
-    import re  # noqa: PLC0415
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from taste_gates import rank_claims  # noqa: PLC0415
 
-    sys.path.insert(0, str(Path("src").resolve()))
-    from tennislive.video.explainer import _num_value  # noqa: PLC0415
-
-    out: list[int] = []
-    # 「排名」和数字之间允许隔一个动词（掉到 / 升到 / 来到 / 是），
-    # 但**不允许隔任意字符**——隔开了就未必还在说同一件事
-    pat = re.compile(r"(?:世界第|世界排名|排名(?:掉到|升到|来到|是)?)"
-                     r"\s*([0-9]+|[一二三四五六七八九十百千两]+)")
-    for m in pat.finditer(text):
-        run = m.group(1)
-        if run.isdigit():
-            out.append(int(run))
-            continue
-        value = _num_value(run)
-        # 读不出来（比如「排名最高」被切到「高」）就跳过，别猜
-        if value is not None:
-            out.append(int(value))
-    return out
+    return rank_claims(text)
 
 
 def test_钩子和文案里写的排名要和matchup对得上():
@@ -7165,36 +7145,24 @@ def test_钩子和文案里写的排名要和matchup对得上():
     这两个人的当期名次；正文有几百字，同一个说法在那儿完全可以是三年前的。
     又一次「判据宁可窄，不可宽」——扫宽了它不会说「我拦错了」。
     """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from taste_gates import rank_claim_problem  # noqa: PLC0415
+
     checked = 0
     bad: dict[str, str] = {}
     for path in sorted(Path("specs/reels").glob("*.json")):
         spec = json.loads(path.read_text(encoding="utf-8"))
         cover = spec.get("cover") or {}
-        registered: set[int] = set()
-        for who in cover.get("matchup") or []:
-            if isinstance(who, dict) and isinstance(who.get("rank"), int):
-                registered.add(who["rank"])
-        versus = cover.get("versus") or {}
-        for side in ("top", "bottom"):
-            panel = versus.get(side) or {}
-            if isinstance(panel.get("rank"), int):
-                registered.add(panel["rank"])
-        if not registered:
-            continue
-
         push = spec.get("push") or {}
-        texts = {"cover.hook": str(cover.get("hook", "")),
-                 "push.summary": str(push.get("summary", ""))}
-        for where, text in texts.items():
-            for claimed in _rank_claims(text):
-                checked += 1
-                if claimed not in registered:
-                    bad[f"{path.name}:{where}"] = (
-                        f"写着世界第 {claimed}，而 matchup 登记的是 "
-                        f"{sorted(registered)}")
+        checked += len(_rank_claims(str(cover.get("hook", "")))
+                       + _rank_claims(str(push.get("summary", ""))))
+        # ⚠️ 判据本身在 `validate_spec` 里（`taste_gates.rank_claim_problem`），
+        # 这儿是 CI 那一面的镜像——扫全库、证明它真的扫到了东西。
+        if problem := rank_claim_problem(spec):
+            bad[path.name] = problem
     assert not bad, f"钩子/文案里的排名和 matchup 对不上：{bad}"
-    # **判据自己的判据。** 上面两个 `continue` 一旦写宽，或者 `_rank_claims`
-    # 的正则写死，这条测试会变成一盏恒真的绿灯——而它拦的正是「不吭声」那一类。
+    # **判据自己的判据。** `rank_claims` 的正则一旦写死（一个都抠不出来），
+    # 这条测试会变成一盏恒真的绿灯——而它拦的正是「不吭声」那一类。
     assert checked >= 1, "一处排名都没校到——是不是跳过的条件或正则写宽了？"
 
     # 抠取本身要正反都对：认得出该认的，也不许把种子序号当排名
@@ -9372,27 +9340,21 @@ def test_一段里的长留白要提示但不再阻断渲染():
         "超过 4 秒的旁白留白仍会阻断 render；有现场声时它只能提示")
 
 
-# 发在这条规矩之前的那一条，**只许减不许加**。它是那次翻车的现场，留着当锚点：
-# eala-svitolina 12 段里 7 段在报幕（58%），读者的原话是
-# 「她发球，她接发。。。她发球，她接发。她发球，对面接发。。。」——几乎是原文引用。
+# 判据（正则、25% 门槛、豁免表）的单一出处在 `tools/taste_gates.py`
+# （`ANNOUNCE` / `BOARD_SHARE_MAX` / `BOARD_ANNOUNCE_LEGACY`）：2026-09-27 挪进了
+# `validate_spec`，手写 spec `--dry-run` 0.2 秒就红，不再只活在 CI 里。
+# 这条测试留作 CI 那一面的镜像：扫全库、带锚点、豁免表自检。
 #
-# ⚠️ **名单里只有它一条，是量出来的，不是估的。** 我一开始按一个更宽的正则
-# （把「他的发球局」也算上）以为 eala-osaka 35%、wong-gea 30% 也超标，顺手写进
-# 了名单——`_BOARD_LEGACY` 那条自检当场报「wong-gea 已经不超标了」。
-# **豁免名单也要自证它豁免的是真的超标**，否则拦的是空气。
-_BOARD_LEGACY = {"eala-svitolina"}
-
-# 一条片子里最多多少段可以提「谁在发球」。
+# 豁免表里只有 eala-svitolina 一条，它是那次翻车的现场：12 段里 7 段在报幕（58%），
+# 读者的原话是「她发球，她接发。。。她发球，她接发。她发球，对面接发。。。」。
+# ⚠️ **名单里只有它一条，是量出来的，不是估的**——按更宽的正则一度以为
+# eala-osaka 35%、wong-gea 30% 也超标，自检当场报「wong-gea 已经不超标了」。
 #
-# **卡的是密度，不是单次出现**——单次往往是有信息的：「轮到自己发球，三十比
-# 四十——帕雷哈的第二个盘点」讲的是**保发被逼到悬崖**，和「没能兑现破发点」
-# 完全是两回事。第一版我禁了任何一次出现，当场误伤这句好台词。
-#
-# 量出来两档分得很开，25% 落在中间不贴边：
+# **卡的是密度，不是单次出现**：「轮到自己发球，三十比四十——帕雷哈的第二个
+# 盘点」讲的是保发被逼到悬崖，有信息。量出来两档分得很开，25% 落在中间：
 #
 #     ❌ eala-svitolina 58%（7/12）
 #     ✅ wong-gea 20%   wang-pareja 11%   gea-shapovalov 6%   最近三条 0%
-_BOARD_SHARE_MAX = 0.25
 
 
 def test_旁白不许把每一局都念一遍():
@@ -9405,61 +9367,37 @@ def test_旁白不许把每一局都念一遍():
     这和已经被禁的「画面里是」是**同一族**：把观众已经看见的东西再指一遍，
     只不过那条指的是画面，这条指的是**烧在画面上的记分条**。
 
-    ⚠️ **卡密度不卡单次，是踩出来的。** 第一版禁了任何一次出现，当场误伤
-    `wang-pareja` 那句「轮到自己发球，三十比四十——帕雷哈的第二个盘点」——
-    在**自己的发球局**被逼到盘点，和「破发点没兑现」是两件事，说清楚是有信息的。
-    又一次「判据宁可窄，不可宽」。
-
     ⚠️ **这条也不禁比分。** CLAUDE.md 早就救回过「5-6 落后，三个盘点她一个也
     没让」——比分在那儿是**制造张力**的手段。
 
-    ⚠️ **它拦不住「平淡」本身。** 顺序、有没有立场、钩子留没留，都是编辑判断，
-    机械挡不住（见 CLAUDE.md「最硬的那个事实放第 ① 屏」那条为什么故意没有
-    测试）。这条只拦一种**能量出来**的坏：把每一局按顺序念一遍。
-
-    根子记在 CLAUDE.md：仓库里「旁白要把比赛走向讲清楚」被我执行成了「把每一局
-    念一遍」。**走向是四个点**（谁领先 → 谁追上 → 转折在哪 → 怎么收），
-    不是九局流水。
+    ⚠️ **它拦不住「平淡」本身。** 这条只拦一种**能量出来**的坏：把每一局按顺序
+    念一遍。**走向是四个点**（谁领先 → 谁追上 → 转折在哪 → 怎么收），不是九局流水。
     """
-    announce = re.compile(
-        r"轮到.{0,4}发球"
-        r"|自己的?发球局"
-        r"|对面的?发球局"
-        r"|对面发球(?!局)"
-        r"|(?:紧接着|下一局|这一局)[^。；]{0,6}发球局")
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from taste_gates import (ANNOUNCE, BOARD_ANNOUNCE_LEGACY,  # noqa: PLC0415
+                             BOARD_SHARE_MAX, board_announce_problem,
+                             board_announce_share)
+
     bad = []
     for slug, spec in sorted(_reel_specs().items()):
-        if slug in _BOARD_LEGACY:
-            continue
-        segs = [s for s in spec["segments"] if (s.get("narration") or "").strip()]
-        if len(segs) < 5:
-            continue
-        hit = [s for s in segs
-               if announce.search((s.get("narration") or "")
-                                  + _quote_str(s.get("quote")))]
-        share = len(hit) / len(segs)
-        if share > _BOARD_SHARE_MAX:
-            bad.append(f"{slug}：{len(hit)}/{len(segs)} 段（{share:.0%}）在报"
-                       f"「谁在发球」，第一处 @{hit[0]['start']}")
+        spec = {**spec, "slug": slug}
+        if problem := board_announce_problem(spec):
+            bad.append(f"{slug}：{problem}")
     assert not bad, (
         "旁白把每一局按顺序念了一遍——记分条上一直写着，说了等于没说：\n  "
-        + "\n  ".join(bad)
-        + "\n\n走向讲**四个点**（谁领先 → 谁追上 → 转折在哪 → 怎么收），"
-          "不是每一局都交代一次开球权。")
+        + "\n  ".join(bad))
 
     # 反面锚点：这些必须**过**——比分和保发是制造张力的手段，不是报幕
     for keeper in ("五比六落后，三个盘点她一个也没让",
                    "先输一比六，再掀翻头号种子",
                    "赛点，黄泽林在二区发出内角 Ace。球落地，他放下球拍，双手掩面。"):
-        assert not announce.search(keeper), f"误伤了一句好台词：{keeper}"
+        assert not ANNOUNCE.search(keeper), f"误伤了一句好台词：{keeper}"
 
-    # 判据自己的判据：三条 legacy 必须真的超标，否则这条测试拦的是空气
-    for slug in _BOARD_LEGACY:
-        spec = _reel_specs()[slug]
-        segs = [s for s in spec["segments"] if (s.get("narration") or "").strip()]
-        hit = sum(1 for s in segs if announce.search(s.get("narration") or ""))
-        assert hit / len(segs) > _BOARD_SHARE_MAX, (
-            f"{slug} 已经不超标了，把它从 _BOARD_LEGACY 里去掉")
+    # 判据自己的判据：legacy 必须真的超标，否则这条测试拦的是空气
+    for slug in BOARD_ANNOUNCE_LEGACY:
+        _hit, _total, share = board_announce_share(_reel_specs()[slug])
+        assert share is not None and share > BOARD_SHARE_MAX, (
+            f"{slug} 已经不超标了，把它从 BOARD_ANNOUNCE_LEGACY 里去掉")
 
 
 # 离线估旁白长度 ------------------------------------------------------------

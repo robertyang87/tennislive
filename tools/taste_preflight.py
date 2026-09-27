@@ -52,6 +52,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT / "tools") not in sys.path:
+    sys.path.insert(0, str(ROOT / "tools"))
+import taste_gates as _taste_gates  # noqa: E402
+
 SKILL = ROOT / ".claude" / "skills" / "tennis-owner-taste" / "SKILL.md"
 REELS = ROOT / "specs" / "reels"
 INTERVIEWS = ROOT / "specs" / "interviews"
@@ -66,13 +70,13 @@ _ITEM = re.compile(
     r"　❌\s*(?P<bad>.+?)　✅\s*(?P<good>.+)$")
 
 #: 钩子里要解释才懂的词（账号所有者 2026-09-22「最后一局破发到 0 是啥意思」、
-#: 09-25「读不懂」、**09-27 定的 O6：钩子里「破发」「抢七」也不用**）。
-#: 赛点、盘点、决胜盘、局、盘不在里面——他自己写过「首盘错过4个盘点」。
-#: 这里只拿来把字段里的事实摆出来，不是闸。
-HOOK_TERMS = re.compile(
-    r"破发|抢七|抢十|(?<!第)一发(?!不可)|二发|ACE|[Aa]ce\b|爱司|爱局|[Ll]ove\b"
-    r"|接发球?局|得分率|决胜局|发球胜[赛盘]局|首秀|复仇|[\d一二两三四五六七八九十]+分里"
-    r"|说晚安")
+#: 09-25「读不懂」、**09-27 定的 O6：钩子里「破发」「抢七」也不用**）和全场总得分差
+#: （09-13「不要写总分差距了」、09-19「其实网球差距就在一两分的关键分」）。
+#: ⚠️ **词表只有一份，在 `tools/taste_gates.py`**（闸用的就是它）：这里原来自己抄了
+#: 一份，`ACE` 的边界写法和「至少/最多」那一刀当场就和闸分了叉——摆出来的事实和
+#: `--dry-run` 红的理由对不上。这里只拿来把字段里的事实摆出来，不是闸。
+HOOK_TERMS = _taste_gates.hook_terms_regex()
+TOTAL_MARGIN = _taste_gates.TOTAL_POINTS
 
 #: 推断出来的规则：SKILL 规则正文末尾写 ``〔推断·只自查，永不做成闸〕`<规则编号>```，
 #: 连着的 ``〔自查 C4〕`` 是它挂在清单上的编号。头部和图例里提到这个标记时后面不跟
@@ -82,14 +86,6 @@ _INFERRED = re.compile(
     r"〔推断·只自查，永不做成闸〕`(?P<id>[a-z0-9-]+)`"
     r"(?:〔自查 (?P<items>[A-D]\d{1,2}(?:[ 、][A-D]\d{1,2})*)〕)?")
 _RULE_TITLE = re.compile(r"^- \*\*(?P<title>.+?)\*\*")
-
-_N = r"[\d一二两三四五六七八九十百]+"
-#: 全场总得分差（账号所有者 2026-09-13「不要写总分差距了」、09-19「其实网球差距
-#: 就在一两分的关键分」）。⚠️ 故意不收「差 N 分」：「只差一分被拖进决胜盘」是他
-#: 接受过的钩子，那一分是关键分，不是总分。
-TOTAL_MARGIN = re.compile(
-    rf"总分|总得分|总小分|全场只?(?:多|少)赢?|(?:多|少)(?:赢|拿|得)?了?{_N}个?小?分(?!钟)"
-    rf"|{_N}个小分")
 
 #: 只活在 pytest 里的口味判据：`--dry-run` 看不见它们，会话手写的 spec 要等 CI
 #: 才红——正是「做了一半又返工」的来源之一。节点名写死，
@@ -562,8 +558,8 @@ def run_interview_checks(spec: dict, xhs: str) -> list[GateResult]:
     checks: list[tuple[str, Callable[[], object]]] = [
         (name, (lambda f=getattr(bic, name): f(spec)))
         for name in ("check_source_contract", "check_tennistv_logo", "check_topline_format",
-                     "check_score_orientation", "check_opening", "check_lead_in", "check_trail_in", "check_copy_page",
-                     "check_copy_bilingual", "check_cover_hook")
+                     "check_score_orientation", "check_opening", "check_lead_in", "check_trail_in",
+                     "check_copy_page", "check_copy_bilingual", "check_cover_hook", "check_taste")
     ]
     if spec.get("takeaway"):
         checks.append(("check_takeaway", lambda: bic.check_takeaway(spec)))
@@ -573,7 +569,9 @@ def run_interview_checks(spec: dict, xhs: str) -> list[GateResult]:
         try:
             with redirect_stdout(buf), redirect_stderr(buf):
                 call()
-            out.append(GateResult(name, "pass"))
+            # 只报的口味发现（采访封面大标题的术语）印在 stdout，通过也要摆出来
+            out.append(GateResult(name, "pass", _fmt(buf.getvalue(), 400)
+                                  if name == "check_taste" else ""))
         except BaseException as exc:  # noqa: BLE001 —— 闸用 SystemExit 报红
             if isinstance(exc, KeyboardInterrupt):
                 raise
@@ -631,8 +629,8 @@ def report(ctx: Ctx, filled, gates: list[GateResult] | None,
         for g in gates:
             note = _NOTE.get(g.status, "")
             rows.append(f"{_MARK.get(g.status, '?')} {g.name}" + (f"　（{note}）" if note else ""))
-            dry_run = g.name.startswith("build_match_reel")
-            if g.detail and (g.status in ("fail", "env") or dry_run):
+            shows_notes = g.name.startswith("build_match_reel") or g.name == "check_taste"
+            if g.detail and (g.status in ("fail", "env") or shows_notes):
                 rows.extend("      " + ln for ln in g.detail.split("\n") if ln.strip())
     return "\n".join(rows)
 

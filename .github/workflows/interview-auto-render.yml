@@ -37,6 +37,8 @@ on:
       # 全称断言那道闸（预检排在最前面的一道）和它的扫描面
       - "tools/absolute_claims.py"
       - "tools/spec_wording.py"
+      # 账号所有者的口味闸（`build_interview_clip.check_taste`，预检闸表里的一道）
+      - "tools/taste_gates.py"
       - "data/legacy_interview_gates.json"
       - ".github/workflows/interview-auto-render.yml"
   schedule:

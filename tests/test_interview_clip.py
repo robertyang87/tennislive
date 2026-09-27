@@ -6237,7 +6237,12 @@ def test_封面顶栏要和解说片那份台头是同一套值():
     import tools.build_interview_clip as clip
     from tennislive.video import explainer as E
 
-    badge = inspect.getsource(E._render_intro_badge)
+    from tennislive.video import explainer_card_palette as P
+
+    # 字卡解说接了 design token（wp/ui-explainer-cards ce1e6ec6f）：彩条写成 `{P.BRAND_BAR}`，
+    # 源码里不再有字面的四个色标。把 `{P.X}` 换成它生效的值再抠——比的仍是真正渲出来的那份。
+    badge = re.sub(r"\{P\.([A-Z_]+)\}", lambda m: str(getattr(P, m.group(1))),
+                   inspect.getsource(E._render_intro_badge))
     # 2026-09-27 台头 CSS 收成 `_LOCKUP_CSS`（封面和收尾卡共用，值走 design_tokens），
     # 抠的是**生效的那份字符串**，不再是 `build_cover` 的源码
     cover = clip._LOCKUP_CSS
