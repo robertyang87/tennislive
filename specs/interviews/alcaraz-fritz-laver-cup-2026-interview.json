@@ -66,13 +66,13 @@
     "有时候",
     "甚至不是我的比赛 不是我的球",
     "是对手的球",
-    "当他打出",
-    "非常精彩的分 我真的很喜欢",
+    "当那是一记特别精彩的球",
+    "或者一分 我真的很喜欢",
     "再看一遍",
     "为什么不呢？",
     "我觉得有一件",
-    "我要带去",
-    "每站比赛的事",
+    "我要去说一件事",
+    "跟每站比赛都说",
     "就是把所有屏幕都撤掉",
     "免得我",
     "在比赛里分心",
@@ -576,9 +576,14 @@
     "60": "but did you feel like it was a must-win match",
     "63": "and tough losses today.",
     "97": "when I'm enjoying the moment.",
-    "86": "Well, what was the question? I'm sorry."
+    "86": "Well, what was the question? I'm sorry.",
+    "41": "when it's a really, a really great shot",
+    "42": "or great points, I really like to, you know,",
+    "46": "one of the things that I'm going to tell,",
+    "48": "is to take off all the, you know, screens",
+    "108": "and pull off my great tennis"
   },
-  "_en_fixed_why": "照 runner 第一份 ASR（small.en）改四处：第 2 行 `Sarandhi Murray` 是 Sir Andy Murray（前一行是费德勒坐在前排）；第 60 行 `much win` 是 must-win；第 63 行 `loses` 是 losses；第 97 行 `joined at the moment` 是 enjoying the moment。第 48 行 `screens done` 听不清是不是 down，照原样不猜；第 102 行 `six hours` 照原样。（行号按 2026-09-27 英文字幕换 Inter SemiBold 之后的切行，114 行。） 第 86 行补上第二份 ASR 听出的「I'm sorry.」（220.3），为了一行放得下去掉了口头停顿「I just,」。",
+  "_en_fixed_why": "照 runner 第一份 ASR（small.en）改四处：第 2 行 `Sarandhi Murray` 是 Sir Andy Murray（前一行是费德勒坐在前排）；第 60 行 `much win` 是 must-win；第 63 行 `loses` 是 losses；第 97 行 `joined at the moment` 是 enjoying the moment。第 48 行 `screens done` 听不清是不是 down，照原样不猜；第 102 行 `six hours` 照原样。（行号按 2026-09-27 英文字幕换 Inter SemiBold 之后的切行，114 行。） 第 86 行补上第二份 ASR 听出的「I'm sorry.」（220.3），为了一行放得下去掉了口头停顿「I just,」。 第 41~42、46、48、108 行按第二份 ASR（medium.en）改：`great sort of great points` 是 `great shot or great points`；`I'm going to take, every tournament` 是 `going to tell every tournament`（整句是「每站比赛我都要跟他们说，把屏幕都撤掉」）；`screens done` 去掉 done；`pull out` 是 `pull off`。",
   "_zh_fix_why": "DeepSeek 初译逐行对着英文重写：第 2 行把 Sir Andy Murray 译成了「萨兰迪·穆雷」；第 109 行 `my great sauce`（他的绝活）译成了「出色的发球」；第 57~61、65~67、72~76 行串位；第 45~54 行那一段是他说「每站比赛都想把屏幕撤掉、免得看回放分心」，按每行英文重新对齐。",
   "caption_gaps_ok": {
     "3.5-9.4": "推的，没听音轨：主持人 3.2 说完「Sir Andy Murray in the front row.」，9.4 才接着问放小球；第二份 ASR（medium.en）在这几秒里一个词都没有，它报的 `I'm` 时间戳 9.4 就是下一行「I'm not even sure」的第一个词。提到费德勒和穆雷，多半是镜头给看台、观众鼓掌。",
@@ -590,8 +595,12 @@
     "179.1-182.8": "推的，没听音轨：第二份 ASR 把「made my players」记在 179.1~180.0，第一份记在第 73 行尾（made）和第 74 行开头（182.8 my players）——同一串词，两份时间戳错位，没有漏。",
     "189.4-194.0": "推的，没听音轨：他 188.9 说完「not feeling the pressure at all.」，主持人 194.0 才问微笑那一问；第二份 ASR 报的 `And` 就是下一行第一个词。答完之后的停顿。",
     "204.4-207.0": "推的，没听音轨：主持人 204.1 问完「during those tough times?」，207.0 他那句「What the hell?」之前；两份 ASR 在这几秒里都没词。标题就叫 Hilarious，这一段是他被问得笑场。",
-    "207.7-211.3": "推的，没听音轨：「What the hell?」之后到 211.3「I'm too young still」之间两份 ASR 都没词，接上下文是现场在笑。",
-    "213.1-217.3": "推的，没听音轨：「I'm too young still」之后到 217.3「what was the question?」之间两份 ASR 都没词——他笑完忘了问题，接着就问主持人问题是什么。",
+    "207.7-211.3": "量过，没听音轨：VAD 在这 3.6 秒里测到 2.1 秒人声、两份英文 ASR 都没词。把源片音轨这一段拿本地 faster-whisper small 分别用自动／西语／英语、错开两个窗口各跑一遍：一致是笑声（`Ha, ha, ha…` / `jajajaja`）——他「What the hell?」之后全场在笑，不是漏了哪句话。",
+    "213.1-217.3": "量过，没听音轨：VAD 测到 3.2 秒人声、两份英文 ASR 都没词。本地 faster-whisper small 错开三个窗口、三种语言设定各跑一遍，结果每次都不一样（`Yeah / Oh / I / Ah / jajaja`；自动识别有一次吐出幻觉「謝謝大家」），没有一次稳定出词——是笑声和现场声，不是一句被漏掉的话。之后 217.3 他才接「what was the question?」。",
     "220.3-223.8": "第二份 ASR 在 220.3 听出「I'm sorry.」，第一份漏了——紧跟在他「what was the question?」后面，已经补进 en_fixed 第 86 行（中文「抱歉」）。之后到 223.8 主持人重复问题之前没有别的词。"
+  },
+  "transcript_disagree_ok": {
+    "rate": 0.159,
+    "why": "逐处看过 transcript_diff.md（run 36287538482）：58 处分歧里 40 处是第二份 ASR 丢掉「you know / I just / it's a」这类口头语和口吃重复（他这段英语说得很磕巴），不影响发出去的英文；实词分歧 8 处，第二份更对的已按它改进 en_fixed（shot or great points、tell every tournament、screens、pull off）；另外几处第一份更对、照原样：`the pressure`（第二份听成 depressed，上下文是 not feeling the pressure）、`must-win`（已改）、`losses`（已改）、`break one down, break one up`（第二份 breaking，意思同）、`six hours in time`（第二份 a tie，听不清，照第一份不猜）。"
   }
 }
