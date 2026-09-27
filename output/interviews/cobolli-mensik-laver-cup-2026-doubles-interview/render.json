@@ -1,0 +1,137 @@
+{
+  "seams": {
+    "count": 4,
+    "transition": "dissolve",
+    "dissolve_s": 0.18
+  },
+  "film_sha256": "490a73602abba27f3d86d88ef7f037ae50335f63a422af9f2adfd26c2a876d2f",
+  "film_seconds": 194.64,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "cobolli-mensik-laver-cup-2026-doubles-interview",
+    "received_at": "2026-09-27T16:31:56Z",
+    "artifact_ready_at": "2026-09-27T16:38:25Z",
+    "elapsed_seconds": 389.381,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "490a73602abba27f3d86d88ef7f037ae50335f63a422af9f2adfd26c2a876d2f",
+    "spec_sha256": "2ecadf4d85a86c751c9a43c975c4c7d587fa8fe9d5cf292b53f74cf854548611",
+    "run_id": "36333590996",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-27T16:32:49Z",
+        "run_id": "36333590996"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-09-27T16:33:52Z",
+        "run_id": "36333590996"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-27T16:34:06Z",
+        "run_id": "36333590996"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-27T16:35:47Z",
+        "run_id": "36333590996"
+      }
+    ],
+    "render_seconds": 158.381,
+    "pre_render_seconds": 231.0
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "科博利",
+        "similarity": {
+          "科博利": 0.5029,
+          "门西克": -0.0299
+        },
+        "missing": [],
+        "expected": [
+          "科博利",
+          "门西克"
+        ],
+        "face": [
+          232,
+          112,
+          517,
+          487
+        ],
+        "face_px": 375.3,
+        "reason": "像 科博利（0.50 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2625,
+        "ear_each": [
+          0.2217,
+          0.3033
+        ],
+        "face": [
+          232,
+          112,
+          517,
+          487
+        ],
+        "face_px": 375.3,
+        "reason": "眼睛纵横比 0.26 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "warnings": []
+    },
+    "warnings": []
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-27T16:32:49Z",
+      "run_id": "36333590996"
+    },
+    {
+      "stage": "cover_audit",
+      "at": "2026-09-27T16:33:52Z",
+      "run_id": "36333590996"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-27T16:34:06Z",
+      "run_id": "36333590996"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-27T16:35:47Z",
+      "run_id": "36333590996"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-27T16:38:26Z",
+      "run_id": "36333590996"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-27T16:38:27Z",
+      "run_id": "36333590996"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-cobolli-mensik-laver-cup-2026-doubles-interview/cobolli-mensik-laver-cup-2026-doubles-interview.mp4?v=490a73602abba27f",
+  "video_bytes": 73589405,
+  "release_asset_digest": "sha256:490a73602abba27f3d86d88ef7f037ae50335f63a422af9f2adfd26c2a876d2f",
+  "qc_attestation_sha256": "260ca7054100a0a51a49a5a87cc64055cfe6573e1d2de77c9b22b33a0156a6c6"
+}
