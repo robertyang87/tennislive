@@ -431,3 +431,25 @@ def _print_template(d) -> list[str]:
     return [n.value for n in ast.walk(tree)
             if isinstance(n, ast.Constant) and isinstance(n.value, str)
             and "%(" in n.value]
+
+
+def test_双打集锦要每个搭档的姓都在标题里():
+    """2026-09-27 拉沃尔杯 Match 9（科博利/门西克 胜 德米纳尔/弗里茨）：老代码按
+    `split()[-1]` 取姓，双打一方只剩最后一个搭档（`Mensik` / `Fritz`），于是探回来
+    的是第一天 `Alcaraz/Mensik vs Fritz/Bublik`（bTgrCjgZ3bI）——两个名字都在，
+    自动冷开场就接了另一场球，`verification` 还写着 Match 9。标题照实抄。"""
+    dh = _tool()
+    home = "Flavio Cobolli/Jakub Mensik"
+    away = "Alex de Minaur/Taylor Fritz"
+    day1 = ("Alcaraz/Mensik vs Fritz/Bublik Highlights | Laver Cup 2026 Day 1",
+            "https://www.youtube.com/watch?v=bTgrCjgZ3bI")
+    right = ("Cobolli/Mensik v de Minaur/Fritz Highlights | Laver Cup 2026 Match 9",
+             "https://www.youtube.com/watch?v=Sh_nYBqgQiA")
+    assert dh.surnames(home) == ["Cobolli", "Mensik"]
+    assert dh.surnames(away) == ["Minaur", "Fritz"]
+    assert dh.pick_highlight([day1], home, away, "Laver Cup", 2026) is None
+    assert dh.pick_highlight([day1, right], home, away, "Laver Cup", 2026) == right[1]
+    q = dh.query_for(home, away, "Laver Cup", 2026)
+    assert all(n in q for n in ("Cobolli", "Mensik", "Minaur", "Fritz")), q
+    # 单打不变
+    assert dh.surnames("Alexandra Eala") == ["Eala"]
