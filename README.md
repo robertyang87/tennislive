@@ -60,7 +60,7 @@ tennislive content                  # 内容雷达：赛前焦点的完整小红
 | 线 | 工作流 | spec | mode |
 |---|---|---|---|
 | **赛场之上**（集锦复盘） | `match-reel.yml` | `specs/reels/<slug>.json` | `probe` 下源片出缩略图墙和死球切点 → `cover` 只出封面 → `narration` 只查旁白装不装得下 → `render` 出成片 → `push` 推已落库的成片 |
-| **赛后开麦**（采访） | `interview-clip.yml` | `specs/interviews/<slug>.json` | `subs` 取字幕切行 → `cover` → `render` → `push` |
+| **赛后开麦**（采访） | `interview-clip.yml` | `specs/interviews/<slug>.json` | `subs` 取字幕切行（之后顺手跑第二份 ASR、交报告）→ `cover` 扫一段封面候选（`cover_candidates.json` 进仓库，候选墙走 artifact）→ `render` 先验封面再转写校验再编码 → `push` |
 | **网球有故事**（解说） | `explainer.yml` | 脚本在 `video/explainer.py` 的 `_SCRIPTS` | 直接 `slug` 出片 |
 
 配套的小红书正文是同名的 `.xhs.txt`（改文案不用重渲，它不在渲染那条哈希链上）。
