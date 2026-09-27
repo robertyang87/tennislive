@@ -111,7 +111,7 @@
     "在那些艰难时刻还笑得出来？",
     "搞什么？",
     "不过我还太年轻了",
-    "嗯 我就是 问题是什么来着？",
+    "嗯 问题是什么来着？抱歉",
     "是说在有压力的时候",
     "你怎么做到一直笑着",
     "在任何时候？",
@@ -575,8 +575,23 @@
     "2": "Sir Andy Murray in the front row.",
     "60": "but did you feel like it was a must-win match",
     "63": "and tough losses today.",
-    "97": "when I'm enjoying the moment."
+    "97": "when I'm enjoying the moment.",
+    "86": "Well, what was the question? I'm sorry."
   },
-  "_en_fixed_why": "照 runner 第一份 ASR（small.en）改四处：第 2 行 `Sarandhi Murray` 是 Sir Andy Murray（前一行是费德勒坐在前排）；第 60 行 `much win` 是 must-win；第 63 行 `loses` 是 losses；第 97 行 `joined at the moment` 是 enjoying the moment。第 48 行 `screens done` 听不清是不是 down，照原样不猜；第 102 行 `six hours` 照原样。（行号按 2026-09-27 英文字幕换 Inter SemiBold 之后的切行，114 行。）",
-  "_zh_fix_why": "DeepSeek 初译逐行对着英文重写：第 2 行把 Sir Andy Murray 译成了「萨兰迪·穆雷」；第 109 行 `my great sauce`（他的绝活）译成了「出色的发球」；第 57~61、65~67、72~76 行串位；第 45~54 行那一段是他说「每站比赛都想把屏幕撤掉、免得看回放分心」，按每行英文重新对齐。"
+  "_en_fixed_why": "照 runner 第一份 ASR（small.en）改四处：第 2 行 `Sarandhi Murray` 是 Sir Andy Murray（前一行是费德勒坐在前排）；第 60 行 `much win` 是 must-win；第 63 行 `loses` 是 losses；第 97 行 `joined at the moment` 是 enjoying the moment。第 48 行 `screens done` 听不清是不是 down，照原样不猜；第 102 行 `six hours` 照原样。（行号按 2026-09-27 英文字幕换 Inter SemiBold 之后的切行，114 行。） 第 86 行补上第二份 ASR 听出的「I'm sorry.」（220.3），为了一行放得下去掉了口头停顿「I just,」。",
+  "_zh_fix_why": "DeepSeek 初译逐行对着英文重写：第 2 行把 Sir Andy Murray 译成了「萨兰迪·穆雷」；第 109 行 `my great sauce`（他的绝活）译成了「出色的发球」；第 57~61、65~67、72~76 行串位；第 45~54 行那一段是他说「每站比赛都想把屏幕撤掉、免得看回放分心」，按每行英文重新对齐。",
+  "caption_gaps_ok": {
+    "3.5-9.4": "推的，没听音轨：主持人 3.2 说完「Sir Andy Murray in the front row.」，9.4 才接着问放小球；第二份 ASR（medium.en）在这几秒里一个词都没有，它报的 `I'm` 时间戳 9.4 就是下一行「I'm not even sure」的第一个词。提到费德勒和穆雷，多半是镜头给看台、观众鼓掌。",
+    "64.1-71.2": "推的，没听音轨：他 63.7 说完「part of my game already.」，主持人 71.1 才开口问大屏幕；第二份 ASR 报的 `Not`（71.1）就是下一行「Not all stadiums」的第一个词，中间没有别的词。一答一问之间的停顿。",
+    "83.9-86.4": "推的，没听音轨：主持人 83.5 问完「that's not bad?」，他 85.8 答「Sometimes」；第二份 ASR 报的 `Sometimes,` 就是下一行第一个词，两份时间戳差 0.6 秒。",
+    "106.1-108.1": "推的，没听音轨：他 105.9 说完「Why not?」，108.0 起「I think one of the…」；第二份 ASR 报的 `I` 就是下一行第一个词。",
+    "111.5-113.9": "推的，没听音轨：「I think one of the, you know,」之后他停顿了一下，113.2 接「things that I'm going to take」；第二份 ASR 报的 `things` 在下一行里（第一份把它记在 114.1），时间戳错位，不是漏词。",
+    "134.3-140.0": "推的，没听音轨：他 133.7 说完「keep going.」，主持人 140.0 才问「Team World won both matches」；第二份 ASR 报的 `Team` 就是下一行第一个词，中间没有词。答完之后的停顿（多半是掌声）。",
+    "179.1-182.8": "推的，没听音轨：第二份 ASR 把「made my players」记在 179.1~180.0，第一份记在第 73 行尾（made）和第 74 行开头（182.8 my players）——同一串词，两份时间戳错位，没有漏。",
+    "189.4-194.0": "推的，没听音轨：他 188.9 说完「not feeling the pressure at all.」，主持人 194.0 才问微笑那一问；第二份 ASR 报的 `And` 就是下一行第一个词。答完之后的停顿。",
+    "204.4-207.0": "推的，没听音轨：主持人 204.1 问完「during those tough times?」，207.0 他那句「What the hell?」之前；两份 ASR 在这几秒里都没词。标题就叫 Hilarious，这一段是他被问得笑场。",
+    "207.7-211.3": "推的，没听音轨：「What the hell?」之后到 211.3「I'm too young still」之间两份 ASR 都没词，接上下文是现场在笑。",
+    "213.1-217.3": "推的，没听音轨：「I'm too young still」之后到 217.3「what was the question?」之间两份 ASR 都没词——他笑完忘了问题，接着就问主持人问题是什么。",
+    "220.3-223.8": "第二份 ASR 在 220.3 听出「I'm sorry.」，第一份漏了——紧跟在他「what was the question?」后面，已经补进 en_fixed 第 86 行（中文「抱歉」）。之后到 223.8 主持人重复问题之前没有别的词。"
+  }
 }

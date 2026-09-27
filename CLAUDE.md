@@ -2819,6 +2819,7 @@ swiatek-kostyuk 各一段），共同点很整齐：**quote 窗口全部落在�
   三条线共用 `explainer._ASS_EN_FONT` / `ass_en_row`。字体在仓库 `assets/fonts/`，**每个 `subtitles=` 都要带 `fontsdir`**，
   否则 libass 静静回退
 - 全出血回贴了比分板：每条字幕下锚（`build_match_reel.subtitle_bottom_for_boards`），单行下来约 68px，折行往上长
+- ⚠️ **字幕下移只有「赛场之上」**（账号所有者 2026-09-27：「字幕下移的只有赛场之上，因为他有比分板」）。按栏目卡死（`column=` 必传），网球有故事剪辑片借一段带板的画面也不挪；赛后开麦、字卡本来就不走这条
 - 判据 `tests/test_en_subtitle_font.py`（含「和不存在的字体名比渲染结果」那一条）
 
 ### ⭐ 配音里不许说「解说说」——要引解说就留原声
