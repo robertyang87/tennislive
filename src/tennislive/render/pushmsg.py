@@ -31,6 +31,7 @@ from .rating import (
     tonight_event_focus,
     top_results,
 )
+from .push_style import COPY_PAGE_CSS, COPY_PAGE_JS, copy_page_tokens
 from .titles import pick_headline_auto
 from ..cdn import (  # noqa: F401  ASSET_REVISION_PIN_LEN 是给判据和调用方的 re-export
     ASSET_REVISION_PIN_LEN,
@@ -39,38 +40,6 @@ from ..cdn import (  # noqa: F401  ASSET_REVISION_PIN_LEN 是给判据和调用�
 )
 
 logger = logging.getLogger(__name__)
-
-# 主题策略：内联浅色样式兜底 + <style> 媒体查询做深色覆盖。
-# 微信内置浏览器支持 prefers-color-scheme；若个别环境剥离 <style>，
-# 退回内联浅色版本，两种模式下都可读。
-_CARD = (
-    "background-color:#f4f7f5;color:#1c2b26;border-radius:12px;"
-    "padding:14px 16px;font-size:15px;line-height:1.9;"
-)
-_TITLE = "font-size:17px;font-weight:bold;color:#0b3d2e;"
-_HEAD = "color:#0a7d43;font-weight:bold;font-size:16px;"
-_SEC = "font-weight:bold;color:#0b3d2e;margin-top:6px;"
-_DIM = "color:#5f6f68;font-size:13px;"
-_HR = '<div class="tl-hr" style="border-top:1px solid #d8e2dc;margin:10px 0;"></div>'
-_COPY_BUTTON = (
-    "display:block;background-color:#0a7d43;color:#ffffff;"
-    "text-align:center;text-decoration:none;font-weight:bold;"
-    "padding:12px 16px;border-radius:8px;margin:8px 0;"
-)
-
-# 深色模式：品牌深绿底 + 荧光黄强调
-_DARK_CSS = """<style>
-@media (prefers-color-scheme: dark) {
-  .tl-card { background-color: #10201a !important; color: #e2e9e5 !important; }
-  .tl-title { color: #ccff00 !important; }
-  .tl-head { color: #b8e986 !important; }
-  .tl-sec { color: #ccff00 !important; }
-  .tl-dim { color: #93a39b !important; }
-  .tl-hr { border-top-color: #2a3a33 !important; }
-  .tl-copy { background-color: #0d1a15 !important; color: #dfe7e3 !important;
-             border-color: #2a3a33 !important; }
-}
-</style>"""
 
 
 def _short_side(players) -> str:
@@ -172,6 +141,14 @@ def to_copy_page(
     短片都调它），也是文案真正被粘到小红书的地方。AI 生成合成内容标识原来就是
     加在这儿的，**2026-08-15 起不加了**（账号所有者：「以后不要出现这些东西」，
     见 `ai_disclosure` 顶上那段）。
+
+    **样子不在这儿配**：颜色、圆角、字阶、动效从 `push_style`（→ `design_tokens`）
+    来，和推送正文同一套 token（2026-09-27 UI 评审 WP2）；这里只留页面骨架。
+    ⚠️ `<textarea id="title">` / `id="body"` 这两个 id 别改——`copy_page_fingerprint`
+    按它认「是不是这一版」。
+
+    台头写「发布文案」，不写「贴图发布文案」：四条线里三条发的是视频，「贴图」
+    只对知识帖成立（评审 3.2；判据 `test_复制页台头不写贴图_四条线都说得通`）。
     """
     title, body = split_xhs(xhs_text)
     safe_title = html.escape(title)
@@ -195,43 +172,16 @@ def to_copy_page(
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>复制贴图文案</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>复制发布文案</title>
   <style>
-    :root {{ color-scheme: light dark; }}
-    * {{ box-sizing: border-box; }}
-    body {{ margin: 0; background: #f4f7f5; color: #1c2b26;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
-    main {{ width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }}
-    h1 {{ margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }}
-    .sub {{ margin: 0 0 20px; color: #5f6f68; font-size: 14px; }}
-    section {{ margin-top: 18px; }}
-    .label {{ display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; margin-bottom: 8px; font-weight: 700; }}
-    button {{ border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
-      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }}
-    textarea {{ display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
-      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
-      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
-    #title {{ min-height: 76px; }}
-    .alt {{ min-height: 52px; }}
-    #body {{ min-height: 55vh; }}
-    #comment {{ min-height: 118px; }}
-    #toast {{ position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
-      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
-      opacity: 0; pointer-events: none; transition: opacity .18s ease; }}
-    #toast.show {{ opacity: 1; }}
-    @media (prefers-color-scheme: dark) {{
-      body {{ background: #10201a; color: #e2e9e5; }}
-      .sub {{ color: #93a39b; }}
-      textarea {{ background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }}
-      button {{ background: #b8e986; color: #10201a; }}
-    }}
-  </style>
+{copy_page_tokens()}  </style>
+  <style>
+{COPY_PAGE_CSS}  </style>
 </head>
 <body>
   <main>
-    <h1>贴图发布文案</h1>
+    <h1>发布文案</h1>
     <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
     <section>
       <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
@@ -243,25 +193,9 @@ def to_copy_page(
     </section>
     {comment_section}
   </main>
-  <div id="toast" role="status">已复制</div>
+  <div id="toast" role="status" aria-live="polite"></div>
   <script>
-    const toast = document.getElementById('toast');
-    async function copyText(id) {{
-      const field = document.getElementById(id);
-      try {{
-        await navigator.clipboard.writeText(field.value);
-      }} catch (_) {{
-        field.focus(); field.select(); document.execCommand('copy');
-      }}
-      const labels = {{body: '正文已复制', comment: '评论已复制'}};
-      toast.textContent = labels[id] || '标题已复制';
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 1400);
-    }}
-    document.querySelectorAll('[data-copy]').forEach((button) => {{
-      button.addEventListener('click', () => copyText(button.dataset.copy));
-    }});
-  </script>
+{COPY_PAGE_JS}  </script>
 </body>
 </html>
 """
@@ -383,7 +317,7 @@ def copy_page_fingerprint(path) -> str:
     取 `<textarea id="title">` 里那句——它是**当期文案的标题**
     （如「7.29 今日赛程 | 王欣瑜战萨姆索诺娃」），换一版必然跟着变。
 
-    ⚠️ **原来取的是 `<h1>`，而模板里 `<h1>` 写死是「贴图发布文案」**——
+    ⚠️ **原来取的是 `<h1>`，而模板里 `<h1>` 写死是「贴图发布文案」**（2026-09-27 起「发布文案」，仍是常量）——
     一个常量。于是这个函数对任何一天的复制页都返回同一句话，
     `drop_dead_copy_button(expect=...)` 里那句 `expect in response.text`
     **恒真**：线上还是上一版的内容，闸照样放行。

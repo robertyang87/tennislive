@@ -5778,7 +5778,13 @@ def test_装ffmpeg和字体一律先试本地缓存不能只靠重试():
         for name in _steps(body):
             block = _step_block(name, raw)
             block_yaml_only = _yaml_only(block)
-            if "actions/cache@v4" in block_yaml_only and "apt-archives" in block_yaml_only:
+            # 2026-09-27 起 apt 缓存拆成 `actions/cache/restore@v4` ＋ 只在摸了网时跑的
+            # `actions/cache/save@v4`（自动回写把空目录存成最新那一格，见
+            # `tests/test_runner_setup_cache.py`）——换了个 action 名，「前面有恢复
+            # 缓存那一步」这件事不变，两种写法都认
+            restores = ("actions/cache@v4" in block_yaml_only
+                        or "actions/cache/restore@v4" in block_yaml_only)
+            if restores and "apt-archives" in block_yaml_only:
                 cache_step_seen = True
                 continue
             calls_here = ("apt_install_cached" in block_yaml_only

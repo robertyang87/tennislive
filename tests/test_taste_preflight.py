@@ -206,6 +206,9 @@ def test_主入口的退出码(tp, tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(tp, "run_ci_tests", lambda slug: [
         tp.GateResult("别人的", "other"), tp.GateResult("环境", "env")])
     assert tp.main(["--slug", "demo"]) == 0, "红在别人身上、环境判不了，都不算这一条的红"
+    out = capsys.readouterr().out
+    # 但⚪不等于过了：全库判据在第一处红就停，别人的红会遮住这一条——要说出来
+    assert "被遮住" in out and "没证明这一条过了" in out, out
 
     monkeypatch.setattr(tp, "run_ci_tests", lambda slug: [tp.GateResult("我的", "fail")])
     assert tp.main(["--slug", "demo"]) == 1
