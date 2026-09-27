@@ -1,0 +1,18 @@
+name: safiullin-bu-render-dispatch
+on:
+  push:
+    branches: [codex/safiullin-bu-hangzhou-20260927]
+    paths: [.github/workflows/safiullin-bu-render-dispatch.yml]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Render complete final return position
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml --repo robertyang87/tennislive --ref codex/safiullin-bu-hangzhou-20260927 -f mode=render -f slug=safiullin-bu-hangzhou-2026-qf -f push=false
