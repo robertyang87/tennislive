@@ -3452,20 +3452,22 @@ def check_topline_format(spec: dict) -> None:
 
 
 def check_taste(spec: dict) -> None:
-    """账号所有者的口味闸（采访线那一半）：封面大标题不许有要解释的术语，
-    标题和推送标题同一个数只能有一个说法。
+    """账号所有者的口味闸（采访线那一半）：标题和推送标题同一个数只能有一个说法
+    （硬）；封面大标题里要解释的术语（**只报**，等账号所有者确认要不要做硬——
+    规则书那条管的是 reel 的钩子和字卡问句，见 `taste_gates.interview_taste_findings`）。
 
     账号所有者 2026-09-27「形成一个通用的规则在做视频前就拦掉，而不是说做了
     一半又返工」。判据单一出处在 `tools/taste_gates.py`（reel 和采访共用），
     和 `check_topline_format` 同一个座位：只读 spec，渲染入口第 0.2 秒就报。
-    规矩之前已发的标题按原文冻在 data/legacy_taste_gates.json，只许减不许加。
     """
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from taste_gates import interview_taste_findings  # noqa: PLC0415
-    problems = interview_taste_findings(spec)
-    if problems:
+    hard, soft = interview_taste_findings(spec)
+    for note in soft:
+        print(f"[口味] {spec.get('slug', '?')} 只报：{note}")
+    if hard:
         raise SystemExit(f"{spec.get('slug', '?')} 不合账号所有者的口味：\n  - "
-                         + "\n  - ".join(problems))
+                         + "\n  - ".join(hard))
 
 
 def check_source_contract(spec: dict) -> str:

@@ -85,6 +85,27 @@ def test_弱动词的宾语是分局盘时不算结果():
     assert T.has_match_result("阿尔卡拉斯击败弗里茨")
 
 
+#: 评审（2026-09-27）量出来 has_match_result 认不出的结果说法——其中 4 条是冻进
+#: 豁免表的老钩子的误报（「涉险过关」「锁定这场1/4决赛」「把这场半决赛收进口袋」），
+#: 新写的手写钩子照样会被误伤，于是人会拿 `_hook_shape_why` 硬推过去。
+RESULT_WORDING = [
+    "他闯进1/8决赛", "她打进1/4决赛", "两人会师半决赛", "他打进决赛",
+    "郑钦文打进第三轮", "梅德韦杰夫进第二轮", "她进了下一轮", "她是郑钦文下一轮对手",
+    "吴易昺过关", "二号种子涉险过关", "6-3锁定这场1/4决赛", "她连下最后八局锁定比赛",
+    "他才把这场半决赛收进口袋", "她却带走胜利", "斩获生涯首冠", "她捧起奖杯",
+    "卫冕成功", "两人会师决赛", "笑到最后",
+    "萨巴伦卡赢下这场球", "她还是赢球了", "这场球她赢了",
+]
+
+
+def test_轮次名和整场结果的说法都算结果():
+    for line in RESULT_WORDING:
+        assert T.has_match_result(line), f"认不出结果：{line!r}"
+    # 反方向：「总决赛冠军」是身份；「这一球」「一分」仍然是过程
+    for line in ("总决赛冠军", "赢了这一球", "一局也没拿下", "他破了 再没输过一盘"):
+        assert not T.has_match_result(line), f"把过程当成了结果：{line!r}"
+
+
 def test_钩子里比全场总分差要拦():
     assert T.hook_result_problem(_hook_spec("三盘打满\n全场只多赢一分，她赢了"), legacy={})
     assert T.hook_result_problem(_hook_spec("总分少拿五分\n他照样逆转"), legacy={})
@@ -137,12 +158,21 @@ def test_术语认领口只给网球有故事():
     assert T.hook_jargon_problem(reel, legacy={}), "赛场之上没有这个口（O6 点名禁的就是这一栏）"
 
 
-def test_采访封面标题同一条规矩():
+def test_采访封面标题的术语只报_数字一致才硬():
+    """规则书 `hook-no-jargon-or-allusion` 管的是 reel 和字卡、O6 说的是「钩子」——
+    采访大标题一起做硬是实现时自己延伸的（已发 106 条里 11 条会中），**账号所有者
+    确认之前只报**；`copy-fields-one-source-of-truth` 写明管三条线，照旧硬。"""
     spec = {"slug": "new-iv", "cover": {"title": ["20岁首秀 两盘拿下", "他先谢看台上的费德勒"]},
             "push": {"summary": "他说谢谢费德勒"}}
     assert T.interview_title_jargon_problem(spec, legacy={})
+    hard, soft = T.interview_taste_findings(spec)
+    assert not hard and soft, "术语只报"
     spec["cover"]["title"] = ["20岁第一次登场 两盘拿下", "他先谢看台上的费德勒"]
     assert T.interview_title_jargon_problem(spec, legacy={}) is None
+    clash = {"slug": "new-iv", "cover": {"title": ["三个赛点没兑现", "他说还会回来"]},
+             "push": {"summary": "两个赛点没兑现，他说还会回来"}}
+    hard, soft = T.interview_taste_findings(clash)
+    assert hard and not soft, "标题和推送标题一个数两个说法是硬的"
 
 
 def test_字卡封面问句同一条规矩():
@@ -266,7 +296,7 @@ def test_口味豁免表只许减不许加_冻的是原文():
     assert not stale, ("这些豁免已经不成立（改好了、改了原文或删了）——从 "
                        "data/legacy_taste_gates.json 里删掉：" + "、".join(stale))
     # 只许减：数目只能往下走（2026-09-27 落地那天的数）
-    assert len(legacy["hook_shape"]) <= 178
+    assert len(legacy["hook_shape"]) <= 169      # 178 → 169：结果词表补全后 9 条老钩子本来就合格
     assert len(legacy["hook_jargon"]) <= 75
     assert len(legacy["interview_title_jargon"]) <= 11
     assert len(legacy["explainer_question_jargon"]) <= 1
@@ -281,16 +311,55 @@ def test_小表的豁免真的还不合格():
         assert T.board_announce_problem(_reel(slug), legacy=frozenset()), f"{slug} 已经合格了，删掉"
 
 
+def _corpus_hard_findings(reel_paths, interview_paths) -> tuple[list[str], list[str]]:
+    """(手写 spec 的硬发现, 自动 spec 的发现)。
+
+    ⚠️ **自动 spec（`_production.status == ready_for_render`）只进第二组，不判 main 红。**
+    `validate_spec` / `promote_reel_draft` 对它们本来就只报不拦，而 reel-auto-ready /
+    finalize-reel 把转正的 spec **直接推上 main**：当天 121 份 pending 草稿里 103 份的钩子
+    过不了这两道闸，`_retry_hook_taste` 只重写一轮、没改善就留首稿——这里要是把它们
+    也算硬，第一条自动转正就把 main CI 打红，而豁免表只许减、根本没有出口
+    （评审 B1，和 explainer-preflight 同一天被拦的是同一类：推一次就红一次的全库判据）。
+    自动 spec 过闸时只要求**不抛**。
+
+    采访线没有自动标记要分：自动转正的标题是固定模板「{赢家}赢球之后／第一时间说了什么？」，
+    推送标题「{赢家}赢球后的场上采访」，两边都没有被计数的名词，硬的那一条（数字一致）
+    结构上碰不到它。
+    """
+    bad, auto = [], []
+    for path in reel_paths:
+        spec = _load(path)
+        hard, _soft = T.reel_taste_findings(spec)
+        (auto if T.is_auto(spec) else bad).extend(
+            f"{path.stem}: {h.splitlines()[0][:80]}" for h in hard)
+    for path in interview_paths:
+        hard, _soft = T.interview_taste_findings(_load(path))
+        bad += [f"{path.stem}: {h[:80]}" for h in hard]
+    return bad, auto
+
+
 def test_全库当前零误报():
-    """全部已发的 spec 过硬闸（带豁免表）一条都不许红——红了要么是闸写宽了，
-    要么是有人在豁免之后改了原文却没按新规矩写。"""
-    bad = []
-    for path in REELS:
-        hard, _soft = T.reel_taste_findings(_load(path))
-        bad += [f"{path.stem}: {h.splitlines()[0][:80]}" for h in hard]
-    for path in INTERVIEWS:
-        bad += [f"{path.stem}: {h[:80]}" for h in T.interview_taste_findings(_load(path))]
+    """全部手写的 spec 过硬闸（带豁免表）一条都不许红——红了要么是闸写宽了，
+    要么是有人在豁免之后改了原文却没按新规矩写。自动 spec 只报（见上）。"""
+    bad, _auto = _corpus_hard_findings(REELS, INTERVIEWS)
     assert not bad, "\n".join(bad)
+
+
+def test_全库判据不拿自动spec判红_手写的照红(tmp_path):
+    """B1 的判据：同一个坏钩子，自动转正的只报、手写的红。"""
+    base = _reel("medvedev-royer-hangzhou-2026-r2")
+    auto = dict(base, slug="zz-auto-sim",
+                cover=dict(base["cover"], hook="总分输4分\n她却带走胜利"),
+                _production={"status": "ready_for_render"})
+    hand = dict(auto, slug="zz-hand-sim")
+    hand.pop("_production")
+    for spec in (auto, hand):
+        (tmp_path / f"{spec['slug']}.json").write_text(
+            json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    bad, noted = _corpus_hard_findings([tmp_path / "zz-auto-sim.json"], [])
+    assert not bad and noted, "自动 spec 的坏钩子要只报、不判 main 红"
+    bad, noted = _corpus_hard_findings([tmp_path / "zz-hand-sim.json"], [])
+    assert bad and not noted, "手写 spec 的坏钩子必须红"
 
 
 # ════════════════════════ 入口：闸真的坐在该坐的地方 ════════════════════════
@@ -329,39 +398,100 @@ def test_validate_spec手写的新spec当场红():
     assert T.hook_result_problem(_hook_spec(frozen + "了", slug=legacy_slug))
 
 
-def test_自动产的spec只报不拦(capsys):
+def test_自动产的spec只报不拦_repair改得动的才带旁白窗口(capsys):
+    """自动 spec 只报；日志行首的标签按 `repair_reel_spec` 改不改得动来分（评审 N4）：
+    它只会挪窗口、删短旁白，所以只有「旁白」「窗口」两块让 `SALIENT` 挑去回喂，
+    钩子、文案那几条行首明说它改不动。"""
     import build_match_reel as reel
+    import repair_reel_spec
 
     auto = _hand_written("medvedev-royer-hangzhou-2026-r2", "首秀就被逼到4比6\n7分里拿下6分")
     auto["_production"] = {"status": "ready_for_render"}
+    narrated = [seg for seg in auto["segments"] if str(seg.get("narration") or "").strip()]
+    for seg in narrated:                      # 逐局报发球：旁白那一块
+        seg["narration"] = "轮到他发球，十五比零。"
     reel._owner_taste(auto)          # 不抛
-    out = capsys.readouterr().out
-    assert "[口味·旁白/窗口/钩子] 自动 spec 只报不拦" in out
-    # repair_reel_spec 回喂时按行挑判据：每一条都得被 SALIENT 认出来
-    import repair_reel_spec
-    lines = [ln for ln in out.splitlines() if ln.startswith("[口味·")]
-    assert lines and all(repair_reel_spec.SALIENT.search(ln) for ln in lines)
+    lines = [ln for ln in capsys.readouterr().out.splitlines() if ln.startswith("[口味·")]
+    hard = [ln for ln in lines if "自动 spec 只报不拦" in ln]
+    hook = [ln for ln in hard if ln.startswith("[口味·钩子")]
+    board = [ln for ln in hard if ln.startswith("[口味·旁白]")]
+    assert hook and board, lines
+    # 只报的那几条（每盘一句）同样按块打标签
+    assert all(repair_reel_spec.SALIENT.search(ln) for ln in lines
+               if ln.startswith(("[口味·旁白]", "[口味·窗口]"))), "旁白/窗口那几条要能被回喂"
+    for ln in hook:
+        assert "repair 改不动" in ln
+        prefix = ln.split("]", 1)[0] + "]"
+        assert not repair_reel_spec.SALIENT.search(prefix), "钩子那条的标签不许冒充旁白/窗口"
+    assert T.REPAIRABLE == {"旁白", "窗口"}
+    labels = {label for label, _h, _n in T.reel_taste_scoped(auto)}
+    assert labels >= {"钩子", "旁白"}
 
 
-def test_采访渲染入口和预检都过口味闸(tmp_path):
+def _clash_interview() -> dict:
+    return {"slug": "new-iv", "cover": {"title": ["三个赛点没兑现", "「一分一分找回节奏」"]},
+            "push": {"summary": "两个赛点没兑现，他说慢慢找回节奏"}}
+
+
+def _jargon_interview() -> dict:
+    return {"slug": "new-iv", "cover": {"title": ["五比一 却被拖到抢七", "「一分一分找回节奏」"]},
+            "push": {"summary": "他说慢慢找回节奏"}}
+
+
+def test_采访渲染入口和预检都过口味闸(capsys):
     import build_interview_clip as clip
+    import build_interview_request
     import production_preflight
 
-    spec = {"slug": "new-iv", "cover": {"title": ["五比一 却被拖到抢七", "「一分一分找回节奏」"]},
-            "push": {"summary": "他说慢慢找回节奏"}}
+    # 硬的：标题和推送标题一个数两个说法
     with pytest.raises(SystemExit, match="口味"):
-        clip.check_taste(spec)
+        clip.check_taste(_clash_interview())
     with pytest.raises(ValueError, match="口味"):
-        production_preflight.check_taste(spec)
-    ok = copy.deepcopy(spec)
-    ok["cover"]["title"] = ["五比一 却被拖到最后一局", "「一分一分找回节奏」"]
-    clip.check_taste(ok)
-    production_preflight.check_taste(ok)
+        production_preflight.check_taste(_clash_interview())
     # 预检的请求路径（build_interview_request 在任何下载之前调它）
     with pytest.raises(ValueError, match="口味"):
-        production_preflight.check_request(spec)
+        production_preflight.check_request(_clash_interview())
+    # 只报的：大标题里的术语（等账号所有者确认）
+    capsys.readouterr()
+    clip.check_taste(_jargon_interview())
+    production_preflight.check_taste(_jargon_interview())
+    out = capsys.readouterr().out
+    assert out.count("只报") == 2 and "抢七" in out
     import inspect
     assert "check_taste(spec)" in inspect.getsource(clip.main)
+    # 「只改元数据」那条路上，预检读的是按请求差量改过的**现有 spec** 的标题（spec 后铺、
+    # 手改过的标题赢），不是请求里那份可能过时的；重建那条路 build_spec 原样抄请求的
+    # cover/push，所以请求本身就是这一趟会写进去的标题。
+    src = inspect.getsource(build_interview_request._build_one_unlocked)
+    assert "check_request({**req, **spec" in src
+    assert '"cover": dict(req.get("cover") or {})' in inspect.getsource(
+        build_interview_request.build_spec)
+
+
+def test_采访预检main在赛后开麦上跑口味闸(tmp_path, monkeypatch, capsys):
+    """工作流那一步（interview-clip.yml：production_preflight.py --column 赛后开麦）
+    真的调了口味闸（评审 N2：删掉 main 里那两行，原来的测试一条都不红）。"""
+    import production_preflight
+
+    copies = []
+    monkeypatch.setattr(production_preflight, "check_copy",
+                        lambda copy, column, **kw: copies.append(column))
+
+    def run(spec: dict, column: str) -> None:
+        path = tmp_path / f"{column}.json"
+        path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+        monkeypatch.setattr(sys, "argv", ["production_preflight.py", "--spec", str(path),
+                                          "--column", column])
+        production_preflight.main()
+
+    with pytest.raises(ValueError, match="口味"):
+        run(_clash_interview(), "赛后开麦")
+    assert copies == [], "口味闸排在文案检查（和任何下载）之前"
+    capsys.readouterr()
+    run(_jargon_interview(), "赛后开麦")             # 术语只报：不拦，文案检查照走
+    assert "只报" in capsys.readouterr().out and copies == ["赛后开麦"]
+    run(_clash_interview(), "赛场之上")             # reel 那头由 validate_spec 管
+    assert copies == ["赛后开麦", "赛场之上"]
 
 
 def test_起草阶段钩子不合口味就回喂重写一轮(monkeypatch):

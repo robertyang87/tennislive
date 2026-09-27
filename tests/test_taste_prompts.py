@@ -198,12 +198,14 @@ def test_口味规则skill在做视频前就加载():
         assert dom in text, dom
     assert "破发」「抢七」也禁" in text, "09-27 的 O6 要写进去"
     assert "视觉精美且优雅" in text
-    # 语料上验证过的六道文案／结构闸由另一包实现；规则书要按规则编号点到它们，
-    # 并且挂在对应的那条规则上（不是只在图例里列一遍）
+    # 语料上验证过的六道文案／结构闸已经落在 tools/taste_gates.py：规则书要按规则编号
+    # 点到它们、标〔闸〕（不再是〔在途闸〕），并且挂在对应的那条规则上（不是只在图例
+    # 里列一遍）；点名的函数是真的由 `test_口味规则里点名的闸都真的存在` 钉住
+    assert "〔在途闸〕" not in text, "六道闸已经合进来了，〔在途闸〕要改成〔闸〕＋函数名"
     for rule_id in ("hook-key-moment-and-result", "hook-no-jargon-or-allusion",
                     "copy-fields-one-source-of-truth", "narration-match-flow-every-set",
                     "post-win-celebration-kept", "story-info-band-per-match"):
-        assert f"〔在途闸〕`{rule_id}`" in text or f"〔闸〕`{rule_id}`" in text, rule_id
+        assert f"〔闸〕`{rule_id}`" in text, rule_id
 
 
 def test_CLAUDE_md的目录表列着每一个skill():

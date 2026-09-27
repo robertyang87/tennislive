@@ -25,7 +25,10 @@
 |---|---|
 | 手写的新 spec | **硬**——`--dry-run` 当场红 |
 | `data/legacy_taste_gates.json` 里已发的老片子 | 放行（已发的不重渲）；**钩子冻的是原文**，改一个字就重新受管 |
-| 自动产的 spec（`_production.status == ready_for_render`） | **只报**——那一头没有人写认领，做硬会把自动链卡成「今天没有候选」；判据文本照样印进日志，`repair_reel_spec` 回喂时读得到，钩子那几条在 `assemble_spec` 起草时就回喂模型重写一轮 |
+| 自动产的 spec（`_production.status == ready_for_render`） | **只报**——那一头没有人写认领，做硬会把自动链卡成「今天没有候选」；判据文本照样印进日志：旁白／窗口那几条（`REPAIRABLE`）行首带这两个词，`repair_reel_spec` 回喂时读得到；钩子那几条在 `assemble_spec` 起草时就回喂模型重写一轮，日志里明说 repair 改不动 |
+
+采访线的封面大标题术语**只报**（规则书写的是 reel 和字卡，等账号所有者确认要不要做硬），
+见 `interview_taste_findings`。
 
 ⚠️ **钩子的豁免冻的是那一版钩子的原文，不是 slug。** 老规矩的豁免表按 slug
 放行，于是一条老片子重写钩子时照样不受管——而「重写钩子」正是这批规矩最该
@@ -82,7 +85,7 @@ def _frozen(section: str, slug: str, text: str, legacy: dict | None) -> bool:
 
 
 # ════════════════════════════════════════════════════════════════════════
-# ① 钩子第二行是结果：关键局面 ＋ 结果
+# ① 钩子第二行是结果：关键局面 ＋ 结果（口味规则 hook-key-moment-and-result）
 # ════════════════════════════════════════════════════════════════════════
 #
 # 账号所有者 2026-09-25（mensik-nakashima 连否三版之后）：「**以后钩子文案只讲
@@ -98,17 +101,24 @@ def _frozen(section: str, slug: str, text: str, legacy: dict | None) -> bool:
 #   弱词（赢 / 输 / 拿下 / 拿到）                    → 宾语不是分/局/盘/点才算
 #
 # 量出来的账（2026-09-27，263 条赛场之上）：规矩定下之后（2026-09-25 13:21Z）
-# 设的 18 条钩子 **0 条红**；20 条被否的历史版本里抓到 7 条（其中 5 条正是
-# 「没交代赛果」那一类被否的）；规矩之前的存量按原文冻进豁免表。
+# 设的 18 条钩子 **0 条红**；20 个被否的历史钩子版本红 15 个（专门因「没交代赛果」
+# 被否的 8 个红 7 个）；规矩之前的存量按原文冻进豁免表。同日评审后补全了结果词
+# （过关／锁定／收进口袋／轮次名…）：被否的那 20 个一个没漏，豁免表 178 → 169。
 
+#: 轮次名按 CLAUDE.md 的口径（决赛／半决赛／1/4决赛／1/8决赛／第N轮）：第二行点到
+#: 一个轮次，说的就是「走到哪一步」。「总决赛」是赛事名（「总决赛冠军」是身份），
+#: 不算。
+_ROUND_NAME = r"1/8决赛|1/4决赛|半决赛|(?<!总)决赛|第[一二三四1-4]轮|下一轮"
 _STRONG_RESULT = re.compile(
     r"淘汰|逆转|击败|掀翻|送走|横扫|翻盘|翻了?回来|赢了?回来|扳回来|晋级|挺进"
-    r"|进了?(?:决赛|半决赛|\d+强|八强|四强|1/4决赛)|首进|夺冠|捧杯"
+    r"|进了?(?:决赛|半决赛|\d+强|八强|四强|1/4决赛)|首进|夺冠|捧杯|捧起[^，,]{0,4}杯"
     r"|(?:拿下|赢下|拿到|第一个|第一)[^，,]{0,6}冠军?|出局|止步|告负|收官|战胜"
-    r"|胜(?![盘局分利])|负于|输给|赢(?:双打|单打)")
+    r"|过关|锁定|收进口袋|胜利|首冠|卫冕|会师|笑到最后|" + _ROUND_NAME
+    + r"|胜(?![盘局分利])|负于|输给|赢(?:双打|单打)")
 #: 让「赢/输/拿下」变成**过程**而不是结果的那些宾语：分、局、盘、点、球、拍。
-#: 「比分」「分钟」里的「分」不算（`(?<!比)分(?!钟)`）。
-_SUB_MATCH_UNIT = re.compile(r"局|(?<!比)分(?!钟)|盘|点|抢[七十]|球|拍|ACE")
+#: 「比分」「分钟」里的「分」不算（`(?<!比)分(?!钟)`）；「这场球」「赢球」「输球」
+#: 里的「球」说的是整场，不是一分（`(?<![场赢输])球`，紧跟动词的「赢球」在下面判）。
+_SUB_MATCH_UNIT = re.compile(r"局|(?<!比)分(?!钟)|盘|点|抢[七十]|(?<![场赢输])球|拍|ACE")
 _WEAK_RESULT = re.compile(r"赢(?:下|了|得)?|输(?:了|掉)?|拿(?:下|了下来)|拿到")
 
 
@@ -121,6 +131,8 @@ def has_match_result(line: str) -> bool:
         after = re.split(r"[，,。 ]", line[m.end():m.end() + 5])[0]
         if re.search(r"(?:多|少)$", before):      # 多赢/少赢 = 总分差，不是结果
             continue
+        if after.startswith("球"):               # 赢球 / 输球 = 整场
+            return True
         if _SUB_MATCH_UNIT.search(before) or _SUB_MATCH_UNIT.search(after):
             continue                             # 赢了一局 / 丢一盘 = 过程
         if after.startswith("过"):               # 一次都没赢过 = 交手史
@@ -217,7 +229,7 @@ def hook_score_label_report(spec: dict, *, legacy: dict | None = None) -> str | 
 
 
 # ════════════════════════════════════════════════════════════════════════
-# ② 钩子里不许有要解释的术语和梗
+# ② 钩子里不许有要解释的术语和梗（口味规则 hook-no-jargon-or-allusion）
 # ════════════════════════════════════════════════════════════════════════
 #
 # 账号所有者 2026-09-22：「最后一局破发到 0 是啥意思」——**连这个号的所有者都要
@@ -242,11 +254,18 @@ def hook_allusions() -> list[str]:
     return [str(x) for x in data.get("allusions") or [] if str(x).strip()]
 
 
+def hook_terms_regex() -> re.Pattern:
+    """`HOOK_JARGON` ＋ `data/hook_allusions.json` 里的典故拼成一条（典故那半不分大小写）。
+
+    词表只有这一份：闸（`jargon_hits`）和开工前预检（`taste_preflight.HOOK_TERMS`）
+    都从这里取——预检原来自己抄了一份，`ACE` 的边界写法已经和这里分了叉。
+    """
+    alts = "|".join(re.escape(a) for a in hook_allusions())
+    return re.compile(HOOK_JARGON.pattern + (f"|(?i:{alts})" if alts else ""))
+
+
 def jargon_hits(text: str) -> list[str]:
-    hits = [m.group(0) for m in HOOK_JARGON.finditer(text)]
-    low = text.lower()
-    hits += [a for a in hook_allusions() if a.lower() in low]
-    return list(dict.fromkeys(hits))
+    return list(dict.fromkeys(m.group(0) for m in hook_terms_regex().finditer(text)))
 
 
 _JARGON_FIX = (
@@ -334,7 +353,7 @@ def explainer_question_jargon_problem(slug: str, opening: dict, *,
 
 
 # ════════════════════════════════════════════════════════════════════════
-# ③ 同一个数只能有一个说法：钩子 × 推送标题
+# ③ 同一个数只能有一个说法：钩子 × 推送标题（口味规则 copy-fields-one-source-of-truth）
 # ════════════════════════════════════════════════════════════════════════
 #
 # wu-walton-us-open-2026-r1：钩子改成「三个盘点一个没给」，`push.summary` 还写着
@@ -503,6 +522,7 @@ def rank_claim_problem(spec: dict) -> str | None:
 
 # ════════════════════════════════════════════════════════════════════════
 # ④ 旁白讲清走向：不逐局报发球；每一盘至少一句（后者只报）
+#   （口味规则 narration-match-flow-every-set）
 # ════════════════════════════════════════════════════════════════════════
 
 #: 「轮到她发球」这类报幕。原来只活在 `test_旁白不许把每一局都念一遍` 里。
@@ -608,7 +628,7 @@ def set_coverage_report(spec: dict) -> str | None:
 
 
 # ════════════════════════════════════════════════════════════════════════
-# ⑤ 收在时间上最晚的那个镜头：握手之后不许再接回放
+# ⑤ 收在时间上最晚的那个镜头：握手之后不许再接回放（口味规则 post-win-celebration-kept）
 # ════════════════════════════════════════════════════════════════════════
 #
 # 账号所有者 2026-09-05（zheng-keys）「不要裁剪后面获胜后的镜头，要保留足够多的
@@ -667,7 +687,7 @@ def ending_order_problem(spec: dict, *, legacy: frozenset | None = None) -> str 
 
 
 # ════════════════════════════════════════════════════════════════════════
-# ⑥ 交手史片：每一场第一次出现都要贴 story_text 信息条
+# ⑥ 交手史片：每一场第一次出现都要贴 story_text 信息条（口味规则 story-info-band-per-match）
 # ════════════════════════════════════════════════════════════════════════
 #
 # 账号所有者 2026-09-11（sabalenka-rybakina-h2h 已发的 v1）：「**右上角，每场比赛
@@ -736,31 +756,52 @@ def story_band_problem(spec: dict) -> str | None:
 # 入口
 # ════════════════════════════════════════════════════════════════════════
 
+#: 每条发现落在哪一块。`repair_reel_spec`（render 红了之后回喂模型修一轮）只会
+#: **挪段窗口、删短旁白**——所以只有「旁白」「窗口」这两块它改得动，日志行首才带
+#: 这两个词（`SALIENT` 按行挑回喂的判据）。钩子、文案、信息条它改不动：钩子在
+#: `assemble_spec._retry_hook_taste` 起草时就回喂过一轮，剩下的要人改。
+REPAIRABLE = frozenset({"旁白", "窗口"})
+
+
+def reel_taste_scoped(spec: dict) -> list[tuple[str, bool, str]]:
+    """[(块, 硬不硬, 判据原文)]。硬的那几条对自动 spec 也只报，由调用方按 `is_auto` 分流。"""
+    hard = [(label, p) for label, p in (
+        ("钩子", hook_result_problem(spec)),
+        ("钩子", hook_jargon_problem(spec)),
+        ("文案", copy_count_problem(spec)),
+        ("文案", rank_claim_problem(spec)),
+        ("旁白", board_announce_problem(spec)),
+        ("窗口", ending_order_problem(spec)),
+        ("信息条", story_band_problem(spec)),
+    ) if p]
+    soft = [(label, p) for label, p in (
+        ("钩子", hook_score_label_report(spec) if not hard else None),
+        ("文案", summary_jargon_report(spec)),
+        ("旁白", set_coverage_report(spec)),
+    ) if p]
+    return [(lb, True, p) for lb, p in hard] + [(lb, False, p) for lb, p in soft]
+
+
 def reel_taste_findings(spec: dict) -> tuple[list[str], list[str]]:
     """(硬的, 只报的)。硬的那一组对自动 spec 也只报，由调用方按 `is_auto` 分流。"""
-    hard = [p for p in (
-        hook_result_problem(spec),
-        hook_jargon_problem(spec),
-        copy_count_problem(spec),
-        rank_claim_problem(spec),
-        board_announce_problem(spec),
-        ending_order_problem(spec),
-        story_band_problem(spec),
-    ) if p]
-    soft = [p for p in (
-        hook_score_label_report(spec) if not hard else None,
-        summary_jargon_report(spec),
-        set_coverage_report(spec),
-    ) if p]
+    scoped = reel_taste_scoped(spec)
+    return [p for _, h, p in scoped if h], [p for _, h, p in scoped if not h]
+
+
+def interview_taste_findings(spec: dict) -> tuple[list[str], list[str]]:
+    """采访线：(硬的, 只报的)。
+
+    硬：标题和推送标题同一个数只能有一个说法（规则书 `copy-fields-one-source-of-truth`
+    写明管 reel／采访／字卡三条线）。
+
+    只报：封面大标题里的术语。规则书 `hook-no-jargon-or-allusion` 管的是 reel 和字卡，
+    O6 说的也是「钩子」——把采访大标题一起做硬是实现这一包时自己延伸出去的
+    （106 条已发标题里 11 条会中，「五比一 却被雨拖到抢七」这类），**账号所有者确认
+    之前只报不拦**；确认了就把它挪进硬的那一组，豁免表已经冻好了。
+    """
+    hard = [p for p in (copy_count_problem(spec, title_key="title"),) if p]
+    soft = [p for p in (interview_title_jargon_problem(spec),) if p]
     return hard, soft
-
-
-def interview_taste_findings(spec: dict) -> list[str]:
-    """采访线：封面标题的术语 ＋ 标题和推送标题的数字一致。"""
-    return [p for p in (
-        interview_title_jargon_problem(spec),
-        copy_count_problem(spec, title_key="title"),
-    ) if p]
 
 
 def hook_taste_problems(hook, *, eyebrow: str = "赛场之上") -> list[str]:

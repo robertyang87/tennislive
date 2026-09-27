@@ -125,6 +125,19 @@ def test_O6的词表放行他自己用过的说法(tp):
         assert tp.TOTAL_MARGIN.search(bad), bad
 
 
+def test_预检的词表就是闸的那一份(tp):
+    """预检原来自己抄了一份术语和总分差的正则，`ACE` 的边界、「至少/最多」那一刀
+    都已经和 `tools/taste_gates.py` 分了叉——摆出来的事实和 `--dry-run` 红的理由对不上。
+    现在只从闸那里取。"""
+    import taste_gates as gates  # noqa: PLC0415
+
+    assert tp.TOTAL_MARGIN is gates.TOTAL_POINTS
+    assert tp.HOOK_TERMS.pattern == gates.hook_terms_regex().pattern
+    for text in ("二发Ace破局", "德约对看台说晚安", "至少3分", "多9分却输球", "世界第一发球"):
+        assert bool(tp.HOOK_TERMS.search(text)) == bool(gates.jargon_hits(text)), text
+        assert bool(tp.TOTAL_MARGIN.search(text)) == bool(gates.TOTAL_POINTS.search(text)), text
+
+
 def test_封面图被别的片子用过要列出来(tp, tmp_path, monkeypatch):
     reels = tmp_path / "reels"
     reels.mkdir()

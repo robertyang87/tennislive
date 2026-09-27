@@ -404,7 +404,7 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
         # 本来碰不到它，真碰到了也不能把自动链卡成「今天没有候选」；渲染入口
         # （build_interview_clip.check_taste / production_preflight）照旧硬拦。
         from taste_gates import interview_taste_findings  # noqa: PLC0415
-        for note in interview_taste_findings(spec):
+        for note in sum(interview_taste_findings(spec), []):
             print(f"[口味] {f.name} 只报不拦：{note}")
         if write:
             out = SPECS / f"{spec['slug']}.json"
