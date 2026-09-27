@@ -255,9 +255,10 @@ def _top500_names() -> list[str]:
     "米拉·安德烈耶娃", "亚历山德罗娃", "克雷吉茨科娃", "达维多维奇·福基纳",
 ])
 def test_promote的自动收尾卡长名字也放得下一行(tool, win):
-    """原模板 `{win}赢球后的第一反应` 在这几个名字上量出来 858~1002px，卡上一行只有
-    838px——提升出来的 spec 在 picker 预检和 render 的 check_takeaway 都红，而自动链
-    没有任何一步会替它改短，只能永久躺在等待名单里。"""
+    """原模板 `{win}赢球后的第一反应` 在这几个名字上量出来 858~1002px，卡上一行当时只有
+    838px（main 收左边距之后 860px，安德烈耶娃 940、福基纳 1002 照样放不下）——提升出来的
+    spec 在 picker 预检和 render 的 check_takeaway 都红，而自动链没有任何一步会替它改短，
+    只能永久躺在等待名单里。"""
     pytest.importorskip("PIL")
     import interview_spec_gates as gates  # noqa: PLC0415
 

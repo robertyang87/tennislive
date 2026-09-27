@@ -1,0 +1,24 @@
+name: noskova-final-review-export
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Retrieve actual rendered film
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          mkdir -p review
+          gh release download reel-noskova-svitolina-bjk-cup-2026-final --pattern '*.mp4' --dir review
+          sha256sum review/*.mp4 > review/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noskova-final-reviewed-film
+          path: review/
+          retention-days: 7

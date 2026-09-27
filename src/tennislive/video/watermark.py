@@ -26,7 +26,10 @@
 """
 from __future__ import annotations
 
+# design-tokens: enforced
 from pathlib import Path
+
+from tennislive.design_tokens import DARK, rgb
 
 #: ⚠️ **封面台头用的是球标（`icon.png`），不是横版 lockup。** 两个都在
 #: `assets/logo/brand/` 里，长得都像「网球时差的 logo」——拿错的样子是角标比
@@ -45,7 +48,9 @@ BRAND_ICON_PX = 52
 BRAND_GAP_PX = 14
 BRAND_TEXT_PX = 38
 BRAND_TRACKING_PX = 1
-BRAND_COLOUR = (244, 251, 247)
+BRAND_COLOUR = rgb(DARK["foreground"])   # (244, 251, 247)
+#: 角标文字的描边色：token 的深底（墨绿 #04120d）。见 `WATERMARK_TEXT_STROKE_PX`。
+STROKE_COLOUR = rgb(DARK["background"])
 
 #: 得意黑。封面写的是 `font-family:'TL Display SC'`，而 `TL Display SC` 这个族名
 #: 在 `render/webcards._font_css()` 里绑的就是这个文件——**量宽度和渲画面都要用
@@ -68,7 +73,11 @@ WATERMARK_TOP = 44
 #: ——而「用封面上的 logo 和位置」要的是**那一块**，不是那一行。
 TOPIC_FONT = "NotoSansSC-Bold-sub.ttf"
 TOPIC_TEXT_PX = 27
-TOPIC_COLOUR = (220, 239, 228)
+#: ⚠️ 这支近白偏绿**不在 token 里**：评审把它并进 `muted-foreground`（#cfe6d8），
+#: 那是值变化（副标题会暗一档），没并。**封面 `.topic` 和角标副标题共用这一个
+#: 出处**（`versus_poster.TOPIC_FG` 从这儿 import），写两份必分叉。
+TOPIC_HEX = "#dcefe4"  # token-exempt: 封面副标题色，并进 muted-foreground 是值变化
+TOPIC_COLOUR = rgb(TOPIC_HEX)   # (220, 239, 228)
 
 #: ⚠️ **三块墨离 `.head` 顶边多远，全是从真封面量的**——CSS 那头是行高和字体的
 #: ascent 算出来的，PIL 这边只能量。真封面（`.head{top:44px}`）：球标墨 y64~111、
@@ -91,12 +100,33 @@ TOPIC_INK_TOP_PX = 56
 #: 而播放画面上那一块可能是纯白。这正是本仓库记过的「抄了规则，没抄它依赖的
 #: 前提」——所以这儿的阴影比封面的重，数是在纯白上量出来的，不是抄的。
 #: **别为了「和封面一模一样」把它调回 .6，也别为了「干净」去掉。**
-WATERMARK_SHADOW_BLUR = 6
-WATERMARK_SHADOW_ALPHA = 180
+#:
+#: ⚠️ **2026-09-27 收紧了：6/180 → 3/140**（评审 Q11，见下面的描边）。可读性
+#: 从此主要靠那 2px 墨绿描边，阴影只负责把字从忙背景里再托出来一点——6px 那团
+#: 软雾在白底上把整块染成一片灰（「脏」），3px 贴着笔画走。四档并排比过
+#: （现状 / 描边＋6/180 / 描边＋4/150 / 描边＋3/140，白、米、天空、两帧实拍），
+#: 取最紧的那档：`scratchpad/ui/after/ui-reel-cover-watermark/q11_badge_variants.jpg`。
+WATERMARK_SHADOW_BLUR = 3
+WATERMARK_SHADOW_ALPHA = 140
+
+#: ⭐ **2026-09-27 账号所有者选的（评审 Q11 方案 A）：文字加 2px 墨绿描边、
+#: 阴影收紧。** 来路：剪辑片的常驻角标压在白色/米色画面上文字几乎看不见
+#: （评审 `sim_watermark_bright.jpg`）——上面那层阴影是一团 6px 的软雾，
+#: 亮底上只把字周围染灰，字的边缘本身还是近白贴近白。描边给每一笔一条
+#: 实边（和字幕同一个办法），阴影就不必再靠「糊得大」来撑可读性。
+#:
+#: - 描边色是 token 的深底 `background`（#04120d，墨绿），不是纯黑——和封面、
+#:   字幕的墨同一支
+#: - **只描字，不描球标**：球标是品牌绿实心圆，天然和白底有对比
+#: - 描边**先画、字后画**（两遍）：逐字排的时候每个字各带描边一起画，后一个字
+#:   的描边会压到前一个字的笔画上
+WATERMARK_TEXT_STROKE_PX = 2
 
 #: 阴影往四周溢出，所以 PNG 比 logo 本身大一圈。`overlay` 给的是 **PNG 的**
 #: 左上角，所以贴的时候要把这一圈减掉，logo 才真的落在封面那个位置上。
-WATERMARK_SHADOW_PAD = WATERMARK_SHADOW_BLUR * 3
+#: 描边往外又多出 `WATERMARK_TEXT_STROKE_PX`，阴影是从描边外沿起模糊的——
+#: 两样都得装进这一圈，不然最外那一丝阴影被 PNG 的边切掉。
+WATERMARK_SHADOW_PAD = WATERMARK_SHADOW_BLUR * 3 + WATERMARK_TEXT_STROKE_PX
 
 
 def brand_label(column: str) -> str:
@@ -156,15 +186,24 @@ def brand_watermark(dest: Path, column: str, topic: str = "") -> Path:
     big.paste(icon, (pad, pad + icon_top), icon)
     draw = ImageDraw.Draw(big)
     left = pad + icon.width + BRAND_GAP_PX
-    for text, font, advances, box, ink_top, colour in (
-            (head, hf, hadv, hbox, BRAND_INK_TOP_PX, BRAND_COLOUR),
-            (sub, sf, sadv, sbox, TOPIC_INK_TOP_PX, TOPIC_COLOUR)):
-        if not text:
-            continue
-        x, y = left, pad + ink_top - box[1]
-        for ch, adv in zip(text, advances):
-            draw.text((x, y), ch, font=font, fill=colour + (255,))
-            x += adv
+    lines = [(text, font, advances, pad + ink_top - box[1], colour)
+             for text, font, advances, box, ink_top, colour in (
+                 (head, hf, hadv, hbox, BRAND_INK_TOP_PX, BRAND_COLOUR),
+                 (sub, sf, sadv, sbox, TOPIC_INK_TOP_PX, TOPIC_COLOUR))
+             if text]
+    # 两遍：先整块描边，再整块填字（见 `WATERMARK_TEXT_STROKE_PX`）
+    stroke = STROKE_COLOUR + (255,)
+    for pass_ in ("stroke", "fill"):
+        for text, font, advances, y, colour in lines:
+            x = left
+            for ch, adv in zip(text, advances):
+                if pass_ == "stroke":
+                    draw.text((x, y), ch, font=font, fill=stroke,
+                              stroke_width=WATERMARK_TEXT_STROKE_PX,
+                              stroke_fill=stroke)
+                else:
+                    draw.text((x, y), ch, font=font, fill=colour + (255,))
+                x += adv
 
     # 阴影 ＝ 整块自己的 alpha 模糊之后压成黑。乘 1.7 再截顶，是为了让笔画
     # **内部**的影子够实——纯高斯出来的中心太淡，白底上仍然吃掉那几个字。

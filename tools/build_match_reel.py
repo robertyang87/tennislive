@@ -94,7 +94,7 @@ import shutil
 import subprocess
 import sys
 import time
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from fractions import Fraction
@@ -825,18 +825,23 @@ def stage(name: str):
 def report_timings() -> None:
     if not _TIMINGS:
         return
-    total = sum(s for _, s in _TIMINGS)
-    # 同名的步骤（每段切片、每段跟踪）合起来看，不然十一行淹掉重点
-    buckets: dict[str, tuple[int, float]] = {}
-    for name, spent in _TIMINGS:
-        key = name.split("#")[0].strip()
-        count, acc = buckets.get(key, (0, 0.0))
-        buckets[key] = (count + 1, acc + spent)
-    print(f"\n=== 耗时明细（合计 {total:.1f}s，{os.cpu_count()} 核）===")
-    for key, (count, acc) in sorted(buckets.items(), key=lambda kv: -kv[1][1]):
-        share = acc / total * 100 if total else 0
-        times = f" ×{count}" if count > 1 else ""
-        print(f"  {acc:7.1f}s  {share:5.1f}%  {key}{times}")
+    # 份额按**墙钟**算，并行累加（每段各记一行的那种）单列、不进合计——
+    # 原来一起加，四个 worker 的累加把「分段编码」撑到六成，整张表过 100%。
+    # 表的格式和台账共用一份（`pipeline_timing.stage_table`），两处各写必分叉。
+    print("\n" + stage_table(_TIMINGS))
+
+
+# 分段编码跑在线程池里：每一段各记一行（带 `PARALLEL_MARK`，是几个 worker 的
+# **累加**），外面再包一个 `stage("分段编码")` 记这一步的**墙钟**。原来只有
+# 每段那一行，台账把 4 个 worker 的累加当成这一步的耗时，份额 60% 以上，而
+# 真实墙钟只占 18%（见 `pipeline_timing` 里 PARALLEL_MARK 那段）。
+# ⚠️ 模块级的兄弟 import 要先自己挂上 `tools/`——测试按 `tools.build_match_reel`
+# 这个包名导入时它不在 `sys.path` 上（`test_测试按包名导入的tools模块要能在tools不在sys_path时导入`，
+# 下面 `reel_timing` 那处是同一个形状）。
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pipeline_timing import PARALLEL_MARK, stage_table  # noqa: E402
+
+SEGMENT_STAGE = "分段编码" + PARALLEL_MARK
 
 
 def run(*args: str, quiet: bool = True) -> subprocess.CompletedProcess:
@@ -3343,7 +3348,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "slug", "source_audio", "source_url", "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
              "editorial"),
-    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "layout", "matchup", "meta",
+    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_align", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
@@ -4006,7 +4011,7 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
         card, Image, full_bleed=seg.full_bleed, full_canvas=seg.full_canvas)
     still = dest.with_suffix(".evidence.png")
     canvas.convert("RGB").save(still)
-    with stage("分段编码"):
+    with stage(SEGMENT_STAGE):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-loop", "1", "-i", str(still), "-f", "lavfi",
             "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
@@ -4339,7 +4344,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                  f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}"])
     # ⚠️ **这儿不许再出现 `fade=`。** 淡入淡出收在拼接那一步的 `xfade`：
     # 在这儿淡是「各自淡到黑」，接缝中间必然有一帧全黑（量过，见 SEG_FADE）。
-    with stage("分段编码"):
+    with stage(SEGMENT_STAGE):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             # `-ss` 放在 `-i` **前面**（输入寻址）。这里原来放在后面，理由写的是
             # 「放前面只能定位到关键帧，可能偏几百毫秒」——那是 ffmpeg 2.1 之前的
@@ -7142,16 +7147,22 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #: - `wong-vallejo-hangzhou-2026-r2`：2026-09-26 杭州 ATP250 第二轮（北京深夜打完）。
 #:   按下面那条常设授权走：find_cover_photo 查 AP、ATP 赛事图库都是 0，赛后稿没有图。
 #:   用源片（Tennis TV 第四比赛日合集最后一段）689.8s 赢球后正脸的近景。
+#: - `zverev-tien-laver-cup-2026`：2026-09-27 拉沃尔杯第三天第 10 场（夺冠一场，北京 23:14
+#:   打完）。按下面那条常设授权走：终场后约 45 分钟，拉沃尔杯官网 WordPress 媒体库本场只有
+#:   两张视频缩略图（Getty 第二天的图是次日 14:14Z 才批量上的），AP、WTA photo-resources 0。
+#:   用 126.0s 拉沃尔杯点之后张臂正脸的近景，源片 1920×1080，放大 1.33 倍。
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
+    "safiullin-bu-hangzhou-2026-qf",  # Standing authorization; source-frame evidence in spec.
     "wu-duckworth-us-open-2026-r2",
     "zhiyenbayeva-bouzas-bjk-cup-2026",
     "wang-prozorova-singapore-2026-qf",
     "bublik-jodar-laver-cup-2026",
     "medvedev-royer-hangzhou-2026-r2",
     "wong-vallejo-hangzhou-2026-r2",
+    "zverev-tien-laver-cup-2026",
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
@@ -8617,31 +8628,35 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 「比分板的宽度会变化的，所以不能固定宽度去切，要自适应」。排在切片之前，
     # 和 track_shots 同一个位置：都是「先把整条量完，再逐段切」。
     profile = scoreboard_profile(spec, segments)
-    if profile == "us-open":
-        from scoreboard_geometry import resolve_masks
-        resolve_masks(sources, segments, outdir,
-                      Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
-                      FPS_EXPR, SEG_FADE)
-    elif profile == "atp":
-        # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
-        # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
-        from atp_scoreboard import resolve_masks as resolve_atp_masks
-        resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-    elif profile == "wta":
-        # ⭐ WTA 巡回赛转播：板不在的帧不贴、板多宽切多宽（见 wta_scoreboard）。
-        from wta_scoreboard import resolve_masks as resolve_wta_masks
-        resolve_wta_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-    elif profile == "itf-bjk":
-        # ⭐ 比利·简·金杯（ITF 转播）：宝蓝底＋浅青小分格＋发球小球（见 itf_scoreboard）。
-        from itf_scoreboard import resolve_masks as resolve_itf_masks
-        resolve_itf_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-    elif profile == "lavercup":
-        # ⭐ 拉沃尔杯转播（账号所有者 2026-09-25「比分板补一套适配，彻底解决」）：
-        # 蓝边一行＋红边一行＋金色标签，三块胶囊各切各的；宽版全名板不贴（见 lavercup_scoreboard）。
-        from lavercup_scoreboard import resolve_masks as resolve_laver_masks
-        resolve_laver_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-    elif profile == "band-legacy":
-        resolve_board_insets(sources, segments)
+    # **这一段要计时**（2026-09-27）：逐段解码扫板，board-inset 的片子中位 20 秒、
+    # 最长 40 秒，原来没有 stage 包着——报表上看不见，`last_stage` 也指不到它
+    # （「第 N 段一帧都认不出板」死在这儿时，台账记的是上一步 TTS）。
+    with stage("比分板蒙版") if profile else nullcontext():
+        if profile == "us-open":
+            from scoreboard_geometry import resolve_masks
+            resolve_masks(sources, segments, outdir,
+                          Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
+                          FPS_EXPR, SEG_FADE)
+        elif profile == "atp":
+            # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
+            # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
+            from atp_scoreboard import resolve_masks as resolve_atp_masks
+            resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "wta":
+            # ⭐ WTA 巡回赛转播：板不在的帧不贴、板多宽切多宽（见 wta_scoreboard）。
+            from wta_scoreboard import resolve_masks as resolve_wta_masks
+            resolve_wta_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "itf-bjk":
+            # ⭐ 比利·简·金杯（ITF 转播）：宝蓝底＋浅青小分格＋发球小球（见 itf_scoreboard）。
+            from itf_scoreboard import resolve_masks as resolve_itf_masks
+            resolve_itf_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "lavercup":
+            # ⭐ 拉沃尔杯转播（账号所有者 2026-09-25「比分板补一套适配，彻底解决」）：
+            # 蓝边一行＋红边一行＋金色标签，三块胶囊各切各的；宽版全名板不贴（见 lavercup_scoreboard）。
+            from lavercup_scoreboard import resolve_masks as resolve_laver_masks
+            resolve_laver_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "band-legacy":
+            resolve_board_insets(sources, segments)
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
@@ -8677,11 +8692,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 每个 ffmpeg 进程自己的 CPU，不在这条 Python 线程上。worker 数跟着核走，
     # 但**至少 1**：单核机器或只有一段时退回串行，别为并行而并行。
     workers = max(1, min(len(segments), os.cpu_count() or 2))
-    if workers > 1 and len(segments) > 1:
-        with ThreadPoolExecutor(max_workers=workers) as ex:
-            encoded = list(ex.map(_encode_one, enumerate(segments)))
-    else:
-        encoded = [_encode_one(e) for e in enumerate(segments)]
+    # 这一层记**墙钟**；每段那一行（SEGMENT_STAGE）是几个 worker 的累加
+    with stage("分段编码"):
+        if workers > 1 and len(segments) > 1:
+            with ThreadPoolExecutor(max_workers=workers) as ex:
+                encoded = list(ex.map(_encode_one, enumerate(segments)))
+        else:
+            encoded = [_encode_one(e) for e in enumerate(segments)]
     parts += [p for _, p in sorted(encoded, key=lambda t: t[0])]
     if outro_enabled:
         parts.append(build_outro(outdir, outro_secs, tail=0.0))
@@ -9388,6 +9405,17 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     """
     from reel_facts import (bare_tiebreak_problem, decider_tiebreak_problem,
                             result_direction_problem, verified_result_problem)
+    from versus_poster import cover_style_problems  # noqa: PLC0415
+
+    # 封面两道「新 spec 才拦」的闸（场地名统一英文 / 重点词不许整行，2026-09-27
+    # 评审 Q13 / R6）——放在这儿是因为这是 `validate_spec` 第一道、每条 spec 都
+    # 走（有没有顶栏都走），`--dry-run` 就报。判据和豁免表在 `versus_poster`。
+    auto_spec = (spec.get("_production") or {}).get("status") == "ready_for_render"
+    for problem in cover_style_problems(spec):
+        if auto_spec:
+            print(f"[封面] ⚠️ {problem}")
+        else:
+            raise ReelError(problem)
 
     verified_problem = verified_result_problem(spec)
     if verified_problem:
@@ -9467,10 +9495,37 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     return lines  # type: ignore[return-value]
 
 
+# ⭐ 2026-09-27 UI/VI 评审 WP5：顶栏的颜色一律从 `tennislive.design_tokens`
+# 换算（`ass()` 管字节序——CSS 的 #RRGGBB 在 ASS 里是 &HAABBGGRR，写反过一次，
+# 见下面 `TOPBAR_HEAD_HEX`）。接法是「值不变、只换出处」：三条真 spec 的
+# `topbar.ass` 换前换后逐字节相同。
+from tennislive.design_tokens import DARK, SCORE  # noqa: E402
+from tennislive.design_tokens import ass as _ass_colour  # noqa: E402
+from tennislive.design_tokens import ass_inline as _ass_inline  # noqa: E402
+
+#: HEAD 样式（第一行赛事行）的 PrimaryColour：近白正文 `foreground`。
+#:
+#: ⚠️ **2026-09-27 修的一个字节序错**：样式行里原来写死 `&H00F4FBF7`——那是把
+#: CSS 的 `#f4fbf7` 原样抄进了 ASS。ASS 是 `&HAABBGGRR`，于是渲出来是
+#: **#f7fbf4**（R、B 各差 3/255，偏暖一丝）。和赛后开麦中文字幕那支
+#: `#c3dc74`（本意 #74dcc3）是同一类错，只是这一处差得小到看不出来。现在经
+#: `ass()` 换算，字节序只有那一处出处。判据 `test_顶栏颜色都从token换算`。
+TOPBAR_HEAD_HEX = DARK["foreground"]
+TOPBAR_HEAD_COLOUR = _ass_colour(TOPBAR_HEAD_HEX)   # "&H00F7FBF4"
+
+#: 顶栏两行字的描边（px）。⚠️ **2026-09-27 起标题行也是 1.5**：原来 HEAD 是 0、
+#: BODY 是 1.5——第一行 54px 的得意黑压在亮画面（白球衣、白天的看台）上，
+#: 笔画边缘直接化进底色里（评审 `sim_topbar_flat.jpg`）。两行同一个数，
+#: 一个出处。透视球场图标自带 `\bord0`，不跟着描。
+TOPBAR_OUTLINE_PX = 1.5
+
 #: BODY 样式的 PrimaryColour。**一个出处**：样式行和"复位"标签都从它来——
 #: 写两处必分叉，而分叉的样子是「复位之后颜色和这一行本来的颜色差一点点」，
 #: 肉眼几乎看不出来。
-TOPBAR_BODY_COLOUR = "&H00DBE2D5"
+#: ⚠️ 这支近白（#d5e2db）**不在 token 里**：评审把它列进 `muted-foreground`
+#: （#cfe6d8）的待并名单，那是值变化，没并。
+TOPBAR_BODY_HEX = "#d5e2db"
+TOPBAR_BODY_COLOUR = _ass_colour(TOPBAR_BODY_HEX)   # "&H00DBE2D5"
 
 #: ASS 内联颜色标签（`&HBBGGRR&`，字节序和 CSS 的 `#RRGGBB` 相反）。
 #:
@@ -9492,11 +9547,11 @@ TOPBAR_BODY_COLOUR = "&H00DBE2D5"
 #: **输盘不压暗，靠色相区分**（这条没变）：输的那个数字用这一行正文本来的
 #: 颜色（`TOPBAR_BODY_COLOUR`），赢的给上面这支新绿，两者靠色相分开、
 #: 不靠明暗——顶栏是直接烧进 H.264 的，比静态海报更吃"压暗读不出来"这个问题。
-TOPBAR_SETWIN_ASS = r"{\c&H8CDC4A&}"
+TOPBAR_SETWIN_ASS = _ass_inline(SCORE["win_video"])   # r"{\c&H8CDC4A&}"
 TOPBAR_SETLOSE_ASS = "{\\c" + TOPBAR_BODY_COLOUR + "&}"
 #: 连字符仍然压暗一档——比分板那次**只改了比分本身**，`.setdash` 没动
 #: （「连字符是分隔符不是内容」）。
-TOPBAR_SETDASH_ASS = r"{\c&H009CA793&}"
+TOPBAR_SETDASH_ASS = "{\\c" + _ass_colour(SCORE["dash"]) + "&}"   # r"{\c&H009CA793&}"
 
 #: ⚠️ **复位不能用 `{\r}`，尽管 CLAUDE.md 那条规矩是这么写的。**
 #:
@@ -9732,8 +9787,8 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},&H00F4FBF7,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
-Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
+Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},{TOPBAR_HEAD_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,{TOPBAR_OUTLINE_PX},0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
+Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,{TOPBAR_OUTLINE_PX},0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -9786,7 +9841,8 @@ def watermark_xy(*, has_topbar: bool) -> tuple[int, int]:
 
     **纵向要让开顶部那条带**，不然角标压在顶栏的字上：
     - 带式：顶带是实色，画面从 `BAND_TOP` 才开始
-    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，底下垫着一层半透明黑
+    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，字底下垫着一层渐变压暗（`TOPBAR_SCRIM_*`，
+      顶上 0.62 淡到 200px 处 0——Q6 之前是一块 45% 半透明黑实条）
     - 全出血、没顶栏（网球有故事这类）：顶上是空的，直接贴
     """
     if LAYOUT == "band":
@@ -9811,8 +9867,9 @@ def inset_top_clear_y(spec: dict) -> int:
     topic = str(cover.get("topic", "")).strip()
     _wx, wy = watermark_xy(has_topbar=bool(spec.get("topbar")))
     # ⚠️ `watermark_xy` 给的是 PNG 的左上角，**阴影那一圈（SHADOW_PAD）已经减掉**
-    # ——墨的顶边要把它加回来，不然算出来比真值高 18px（第一版就这么错的，
-    # 判据 test_inset_animation 那条钉的是绝对值 151）。
+    # ——墨的顶边要把它加回来，不然算出来比真值高 `WATERMARK_SHADOW_PAD`（现在
+    # 11px ＝ 阴影 3×3 ＋ 描边 2；Q11 收紧阴影之前是 18px，第一版就这么错的）。
+    # 判据 test_inset_animation 那条钉的是绝对值 151（44+56+27+24），和 pad 无关。
     ink_top = wy + WATERMARK_SHADOW_PAD
     block_h = (TOPIC_INK_TOP_PX + TOPIC_TEXT_PX) if topic else BRAND_ICON_PX
     return ink_top + block_h + INSET_WATERMARK_GAP_PX
@@ -9973,6 +10030,46 @@ def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
     )
 
 
+#: 顶栏底下那层压暗（只有全出血有；带式的顶带本来就是实色）。
+#:
+#: ⭐ **2026-09-27 账号所有者选的（评审 Q6 方案 A）：实条换成渐变。** 原来是
+#: `drawbox` 一块 45% 黑、高 `TOPBAR_H`、**下边是硬的**——白天的比赛画面上，
+#: 比分行（薄荷 #4adc8c）只有 **1.9:1**，而那道硬边在画面上多出一条横线。
+#: 现在：顶上 `TOPBAR_SCRIM_ALPHA`（0.62）一直铺到 `TOPBAR_SCRIM_SOLID_PX`
+#: （两行字都压在满档上），再用 smoothstep 淡到 `TOPBAR_SCRIM_FADE_PX`（200）
+#: 处的 0——**没有硬边**，也就没有那条线。纯白底上标题行 6.1:1、比分行（薄荷）
+#: 3.62:1（老的 1.88:1），白底上相邻两行最多差 5/255（老的实条下沿一行跳 114）。
+#:
+#: ⚠️ **满档那一段量到比分行的行盒底（72+38）再多 2px 描边，不是评审图里的
+#: 100px。** 评审给账号所有者看的那一版（`grad_topbar.png`）满档只到 100，
+#: 而比分行的墨实测落在 y86~109——下面 9 行字压在已经开始变淡的底上，白底上
+#: 最亮那一行只剩 **3.31:1**，过不了他定的「比分行 ≥3.6:1」。延到 112 之后
+#: 整行都在满档上，淡出段 88px，仍然看不出边。
+#: ⚠️ **图在滤镜图里现生成，不另起一路输入**（`color` 源 ＋ `geq` 写 alpha，
+#: 一帧、1080×200，overlay 默认把最后一帧一直重复下去）——加一路输入就得改
+#: render 里拼 `-i` 的那两处，而那两处正是「加了一处漏一处」栽过的地方。
+#: 判据 `test_顶栏底是渐变压暗没有硬边_白底上比分行读得出`（真跑 ffmpeg 量）。
+TOPBAR_SCRIM_ALPHA = 0.62
+TOPBAR_SCRIM_SOLID_PX = TOPBAR_BODY_TOP + TOPBAR_BODY_SIZE + 2   # 112
+TOPBAR_SCRIM_FADE_PX = 200
+
+
+def topbar_scrim_source(label: str = "topbar_scrim") -> str:
+    """顶栏渐变压暗的那张图：滤镜图里的一条源链，输出 `[label]`（RGBA）。
+
+    alpha：`y ≤ SOLID` 恒为 `ALPHA`；`SOLID < y < FADE` 按 smoothstep 淡到 0。
+    smoothstep 两头的斜率都是 0，所以接缝处（SOLID、FADE 那两行）没有折角——
+    线性淡出在两个端点各有一道折角，亮画面上看得出是一条线（Mach 带）。
+    """
+    a = round(255 * TOPBAR_SCRIM_ALPHA)
+    s0, s1 = TOPBAR_SCRIM_SOLID_PX, TOPBAR_SCRIM_FADE_PX
+    t = f"(Y-{s0})/{s1 - s0}"
+    alpha = (f"if(lte(Y,{s0}),{a},if(gte(Y,{s1}),0,"
+             f"{a}*(1-{t}*{t}*(3-2*{t}))))")
+    return (f"color=c=black:s={VIDEO_W}x{s1}:r=1:d=1,format=rgba,"
+            f"geq=r='0':g='0':b='0':a='{alpha}'[{label}]")
+
+
 def topbar_filtergraph(cover_secs: float, segments_secs: float,
                        topbar_ass: Path, subtitles_ass: Path,
                        foot_input: int | None = None,
@@ -10029,13 +10126,14 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
         "setpts=PTS-STARTPTS,"
         f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
         f"crop={VIDEO_W}:{VIDEO_H},"
-        # 全出血：顶栏压在画面上，垫一层半透明黑保住可读性。
-        # 带式：顶带本来就是实色（BAND_BG），再画这层会在 y=126~132 露出
-        # 一道两色接缝（drawbox 高 126、顶带高 132，差 6px）。
-        + ("" if LAYOUT == "band" else
-           f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,")
-        + "setsar=1[match_flat];"
-        f"{canvas};"
+        # 全出血：顶栏压在画面上，垫一层渐变压暗保住可读性（`TOPBAR_SCRIM_*`）。
+        # 带式：顶带本来就是实色（BAND_BG），再垫这层会在顶带下沿露出一道
+        # 两色接缝。
+        + ("setsar=1[match_flat];" if LAYOUT == "band" else
+           "setsar=1[match_bare];"
+           f"{topbar_scrim_source('topbar_scrim')};"
+           "[match_bare][topbar_scrim]overlay=0:0,setsar=1[match_flat];")
+        + f"{canvas};"
         f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
         "[cover][match_canvas][outro]concat=n=3:v=1:a=0,setpts=PTS-STARTPTS[base];"
         f"[base]subtitles={topbar_path}:fontsdir={fontsdir},"

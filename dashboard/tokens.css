@@ -1,92 +1,181 @@
 /* 由 tools/gen_tokens_css.py 从 src/tennislive/design_tokens.py 生成——别手改。
    改颜色、圆角、字阶、动效去改那个模块，再重跑脚本；
-   判据 tests/test_design_tokens.py 要求两边逐字节相等。 */
+   判据 tests/test_design_tokens.py 要求两边逐字节相等。
+   变量一律带 --tl- 前缀（看板自己的 --muted / --radius 和这里同名不同义）。
+   主题：<html data-theme="dark|light"> 钉死；不写就跟随系统（prefers-color-scheme）。 */
 
 :root {
+  --tl-brand-bar: linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);
+  --tl-radius: 10px;
+  --tl-radius-sm: 6px;
+  --tl-radius-md: 8px;
+  --tl-radius-lg: 10px;
+  --tl-radius-xl: 14px;
+  --tl-radius-full: 999px;
+  --tl-radius-hairline: 2px;
+  --tl-text-xs: 12px;
+  --tl-text-sm: 13px;
+  --tl-text-base: 15px;
+  --tl-text-lg: 18px;
+  --tl-text-xl: 22px;
+  --tl-text-2xl: 28px;
+  --tl-font-sans: -apple-system,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;
+  --tl-duration-press: 120ms;
+  --tl-duration-quick: 150ms;
+  --tl-duration-fast: 250ms;
+  --tl-duration-medium: 350ms;
+  --tl-duration-slow: 400ms;
+  --tl-duration-emphasis: 500ms;
+  --tl-duration-stagger: 40ms;
+  --tl-ease-out: cubic-bezier(0.22,1,0.36,1);
+  --tl-ease-spring: cubic-bezier(0.34,1.35,0.64,1);
+}
+
+:root[data-theme="dark"] {
   color-scheme: dark;
-  --background: #04120d;
-  --card: #0c1d16;
-  --muted: #102d23;
-  --hero-glow: #155a41;
-  --foreground: #f4fbf7;
-  --subtitle-foreground: #e7f3ec;
-  --muted-foreground: #cfe6d8;
-  --subtle-foreground: #a9bcb2;
-  --border: #ffffff1a;
-  --input: #ffffff26;
-  --ring: #c6f65a8c;
-  --primary: #c6f65a;
-  --primary-foreground: #04120d;
-  --success: #4adc8c;
-  --warning: #ffd166;
-  --destructive: #ff5a6a;
-  --info: #4bb8ff;
-  --fill: #8fd6a8;
-  --success-chip: #143927;
-  --warning-chip: #2d3722;
-  --destructive-chip: #2d2623;
-  --info-chip: #143437;
-  --chart-1: #c6f65a;
-  --chart-2: #8fd6a8;
-  --chart-3: #8b9892;
-  --chart-4: #5d6b65;
-  --chart-5: #3a4a44;
-  --brand-bar: linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);
-  --shadow-card: 0 0 0 1px rgba(255,255,255,.10);
-  --shadow-raised: 0 0 0 1px rgba(255,255,255,.13),0 1px 2px rgba(0,0,0,.2),0 2px 6px rgba(0,0,0,.2);
-  --shadow-overlay: 0 0 0 1px rgba(255,255,255,.15),0 8px 28px rgba(0,0,0,.34);
-  --radius: 10px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
-  --radius-xl: 14px;
-  --radius-full: 999px;
-  --radius-hairline: 2px;
-  --text-xs: 12px;
-  --text-sm: 13px;
-  --text-base: 15px;
-  --text-lg: 18px;
-  --text-xl: 22px;
-  --text-2xl: 28px;
-  --font-sans: -apple-system,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;
-  --duration-press: 120ms;
-  --duration-quick: 150ms;
-  --duration-fast: 250ms;
-  --duration-medium: 350ms;
-  --duration-slow: 400ms;
-  --duration-emphasis: 500ms;
-  --duration-stagger: 40ms;
-  --ease-out: cubic-bezier(0.22,1,0.36,1);
-  --ease-spring: cubic-bezier(0.34,1.35,0.64,1);
+  --tl-background: #04120d;
+  --tl-card: #0c1d16;
+  --tl-muted: #102d23;
+  --tl-hero-glow: #155a41;
+  --tl-foreground: #f4fbf7;
+  --tl-subtitle-foreground: #e7f3ec;
+  --tl-muted-foreground: #cfe6d8;
+  --tl-subtle-foreground: #a9bcb2;
+  --tl-border: #ffffff1a;
+  --tl-input: #ffffff26;
+  --tl-ring: #c6f65a8c;
+  --tl-primary: #c6f65a;
+  --tl-primary-foreground: #04120d;
+  --tl-secondary: #102d23;
+  --tl-secondary-foreground: #f4fbf7;
+  --tl-link: #cfe6d8;
+  --tl-success: #4adc8c;
+  --tl-warning: #ffd166;
+  --tl-destructive: #ff5a6a;
+  --tl-info: #4bb8ff;
+  --tl-fill: #8fd6a8;
+  --tl-success-chip: #143927;
+  --tl-warning-chip: #2d3722;
+  --tl-destructive-chip: #2d2623;
+  --tl-info-chip: #143437;
+  --tl-chart-1: #c6f65a;
+  --tl-chart-2: #8fd6a8;
+  --tl-chart-3: #8b9892;
+  --tl-chart-4: #5d6b65;
+  --tl-chart-5: #3a4a44;
+  --tl-shadow-card: 0 0 0 1px rgba(255,255,255,.10);
+  --tl-shadow-raised: 0 0 0 1px rgba(255,255,255,.13),0 1px 2px rgba(0,0,0,.2),0 2px 6px rgba(0,0,0,.2);
+  --tl-shadow-overlay: 0 0 0 1px rgba(255,255,255,.15),0 8px 28px rgba(0,0,0,.34);
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --background: #f6f7f4;
-  --card: #ffffff;
-  --foreground: #17251f;
-  --muted-foreground: #5f6f68;
-  --border: #e6ebe8;
-  --input: #d8e2dc;
-  --primary: #087747;
-  --primary-foreground: #ffffff;
-  --secondary: #102d23;
-  --secondary-foreground: #ffffff;
-  --destructive: #c0392b;
-  --ring: #087747;
-  --shadow-card: 0 0 0 1px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
-  --shadow-overlay: 0 4px 42px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.06);
+  --tl-background: #f6f7f4;
+  --tl-card: #ffffff;
+  --tl-muted: #eef2ef;
+  --tl-foreground: #17251f;
+  --tl-muted-foreground: #5f6f68;
+  --tl-subtle-foreground: #5f6f68;
+  --tl-border: #e6ebe8;
+  --tl-input: #d8e2dc;
+  --tl-ring: #17251f;
+  --tl-primary: #c6f65a;
+  --tl-primary-foreground: #04120d;
+  --tl-secondary: #102d23;
+  --tl-secondary-foreground: #ffffff;
+  --tl-link: #5f6f68;
+  --tl-success: #087747;
+  --tl-warning: #846405;
+  --tl-destructive: #c0392b;
+  --tl-info: #0a6ea4;
+  --tl-success-chip: #e1efe9;
+  --tl-warning-chip: #f0ece1;
+  --tl-destructive-chip: #f7e7e6;
+  --tl-info-chip: #e2eef4;
+  --tl-shadow-card: 0 0 0 1px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --tl-shadow-raised: 0 0 0 1px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.06);
+  --tl-shadow-overlay: 0 4px 42px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+    --tl-background: #04120d;
+    --tl-card: #0c1d16;
+    --tl-muted: #102d23;
+    --tl-hero-glow: #155a41;
+    --tl-foreground: #f4fbf7;
+    --tl-subtitle-foreground: #e7f3ec;
+    --tl-muted-foreground: #cfe6d8;
+    --tl-subtle-foreground: #a9bcb2;
+    --tl-border: #ffffff1a;
+    --tl-input: #ffffff26;
+    --tl-ring: #c6f65a8c;
+    --tl-primary: #c6f65a;
+    --tl-primary-foreground: #04120d;
+    --tl-secondary: #102d23;
+    --tl-secondary-foreground: #f4fbf7;
+    --tl-link: #cfe6d8;
+    --tl-success: #4adc8c;
+    --tl-warning: #ffd166;
+    --tl-destructive: #ff5a6a;
+    --tl-info: #4bb8ff;
+    --tl-fill: #8fd6a8;
+    --tl-success-chip: #143927;
+    --tl-warning-chip: #2d3722;
+    --tl-destructive-chip: #2d2623;
+    --tl-info-chip: #143437;
+    --tl-chart-1: #c6f65a;
+    --tl-chart-2: #8fd6a8;
+    --tl-chart-3: #8b9892;
+    --tl-chart-4: #5d6b65;
+    --tl-chart-5: #3a4a44;
+    --tl-shadow-card: 0 0 0 1px rgba(255,255,255,.10);
+    --tl-shadow-raised: 0 0 0 1px rgba(255,255,255,.13),0 1px 2px rgba(0,0,0,.2),0 2px 6px rgba(0,0,0,.2);
+    --tl-shadow-overlay: 0 0 0 1px rgba(255,255,255,.15),0 8px 28px rgba(0,0,0,.34);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: light;
+    --tl-background: #f6f7f4;
+    --tl-card: #ffffff;
+    --tl-muted: #eef2ef;
+    --tl-foreground: #17251f;
+    --tl-muted-foreground: #5f6f68;
+    --tl-subtle-foreground: #5f6f68;
+    --tl-border: #e6ebe8;
+    --tl-input: #d8e2dc;
+    --tl-ring: #17251f;
+    --tl-primary: #c6f65a;
+    --tl-primary-foreground: #04120d;
+    --tl-secondary: #102d23;
+    --tl-secondary-foreground: #ffffff;
+    --tl-link: #5f6f68;
+    --tl-success: #087747;
+    --tl-warning: #846405;
+    --tl-destructive: #c0392b;
+    --tl-info: #0a6ea4;
+    --tl-success-chip: #e1efe9;
+    --tl-warning-chip: #f0ece1;
+    --tl-destructive-chip: #f7e7e6;
+    --tl-info-chip: #e2eef4;
+    --tl-shadow-card: 0 0 0 1px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+    --tl-shadow-raised: 0 0 0 1px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.06);
+    --tl-shadow-overlay: 0 4px 42px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.06);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --duration-press: .01ms;
-    --duration-quick: .01ms;
-    --duration-fast: .01ms;
-    --duration-medium: .01ms;
-    --duration-slow: .01ms;
-    --duration-emphasis: .01ms;
-    --duration-stagger: .01ms;
+    --tl-duration-press: .01ms;
+    --tl-duration-quick: .01ms;
+    --tl-duration-fast: .01ms;
+    --tl-duration-medium: .01ms;
+    --tl-duration-slow: .01ms;
+    --tl-duration-emphasis: .01ms;
+    --tl-duration-stagger: .01ms;
   }
   *, *::before, *::after {
     animation-duration: .01ms !important;

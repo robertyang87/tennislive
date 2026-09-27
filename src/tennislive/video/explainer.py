@@ -13855,6 +13855,9 @@ def explainer_push_html(
     """
     from ..render.knowledge import knowledge_push_html_from_parts
 
+    # `date` 原来只给药丸上「知识解说视频 · 9.26」那个日期用；药丸现在写栏目名
+    # （2026-09-27 UI 评审 WP2），参数留着，调用方不用跟着改。
+    del date
     slides = [f"slide_{i:02d}.jpg" for i in range(len(segments))]
     rel = outdir.as_posix()
     if "output/" in rel:
@@ -13915,16 +13918,17 @@ def explainer_push_html(
     # 「探过了没有」，按钮就无声消失了——正文里那段文案的唯一出口。
     if isinstance(copy_url, _Unset):
         copy_url = f"{_PAGES_URL}/{rel}/copy.html"
+    # 药丸写栏目名、按钮写「▶ 打开竖版成片」——都由 knowledge_push_html_from_parts
+    # 自己出（2026-09-27 UI 评审 WP2：同一栏目的剪辑片推送和这条原来长得不一样，
+    # 正是因为这两段文字是从这儿传进去的）。
     return knowledge_push_html_from_parts(
-        date=date,
         image_urls=[
             f"{jsdelivr_base(_REPOSITORY)}/{rel}/{name}"
             for name in slides
         ],
         xhs_text=xhs_text,
         copy_url=copy_url,
-        badge="知识解说视频",
-        extra_action=(video_url, "▶ 打开 9:16 成片"),
+        video_url=video_url,
     )
 
 

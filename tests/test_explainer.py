@@ -227,7 +227,8 @@ def test_推送里的图必须是绝对地址否则微信收到空图():
     assert all(u.startswith(f"https://{jsdelivr_host()}/") for u in found)
     assert all("@main/" in u for u in found)  # so pin_asset_revision can pin it
     # ...and it uses the knowledge post's layout, not a second one.
-    assert "第1张未显示？点此打开原图" in body
+    # （回退链接 2026-09-27 起是灰色「原图 ↗」，每张图一条，见 tests/test_push_visual.py）
+    assert body.count("原图 ↗") == len(segments)
     assert "分别复制标题 / 正文 / 置顶评论" in body
 
 
@@ -264,7 +265,8 @@ def test_文案本身要在推送里能长按复制():
         if len(line) > 8 and not line.startswith("#"):
             assert body.count(html.escape(line)) == 1, f"文案这行重复出现：{line}"
     assert "图片长按保存" in body
-    assert "▶ 打开 9:16 成片" in body
+    # 和同栏目剪辑片的推送同一个按钮（2026-09-27 UI 评审 WP2）
+    assert "▶ 打开竖版成片" in body
 
 
 def test_知识卡右上角不写日期():
@@ -2783,7 +2785,7 @@ def test_复制页可达但内容是旧版时也要摘掉按钮():
     #
     # 这条测试原来喂的是自己写的 `<html><h1>标题</h1></html>`，于是它证明的是
     # 「函数能从 h1 里抠字」，而不是「真页面的 h1 是当期标题」——**而真模板里
-    # `<h1>` 写死是「贴图发布文案」**（`pushmsg.py` 的 `<h1>贴图发布文案</h1>`）。
+    # `<h1>` 写死是一个常量**（当时是 `pushmsg.py` 的 `<h1>贴图发布文案</h1>`，2026-09-27 起「发布文案」）。
     # 结果：指纹对任何一天都返回同一句话，`expect in response.text` **恒真**，
     # 这道闸从上线那天起就没拦过任何东西，而测试一直是绿的。
     #
@@ -2967,6 +2969,10 @@ def test_复制页那道闸装在发的那一步不是渲的那一步():
 # 稿子里**故意**用的写法，不在译名表里但也不是笔误。加进来之前先想清楚：
 # 表里没有的名字，正确做法是补进 `zh/players.py`，这里只留「同一个人的另一种叫法」。
 _ON_PURPOSE = {
+    # 解说员帕特里克·麦肯罗（Patrick McEnroe，约翰·麦肯罗的弟弟），不是球员、不在译名表；
+    # 「帕特里克」和「施特里克」只差一个字，两个都对。2026-09-27
+    # `cobolli-mensik-laver-cup-2026-doubles-interview` 主持人提到他时第一次扫出来。
+    "帕特里克·麦肯罗",
     # Francisco Cerundolo 的完整姓名；表里用姓氏「塞伦多洛」。只遮完整真名，
     # 避免遮掉姓氏后「西斯科·」被误判成「西斯科娃」，不豁免错写的姓氏。
     "弗朗西斯科·塞伦多洛",

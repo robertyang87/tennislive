@@ -32,6 +32,13 @@ MODEL = "MiniMax-M3"
 AUDIT_VERSION = "panels-high-detail-v3"
 MIN_CONFIDENCE = 0.80
 ALLOWED_MOMENTS = {"match_point", "winning_shot", "winner_celebration", "aftermath"}
+#: 封面照片的情绪（MiniMax 返回的 `cover.moment`），提示词里的枚举和下面的闸都从这一份读。
+#: `loser_fighting` 是 2026-09-27 加的：爆冷封面要输家「落后或失利时仍在拼」（账号所有者
+#: 2026-08-15 arango-venus：否掉 152.5s 低头垮掉，选 240.5s 零比四落后仍在握拳）。原来的
+#: 枚举里输家只有 `loser_disappointed` 一个值，而 `_cover_brief.preferred_moment` 是一句中文，
+#: 闸拿枚举去等一句中文——**永远等不上**，main 上 21 份爆冷草稿全卡在这一道。
+COVER_MOMENTS = ("winner_celebration", "loser_fighting", "loser_disappointed", "other")
+COVER_MOMENT_ENUM = "|".join(COVER_MOMENTS)
 REPAIRABLE_VISUAL_ERRORS = (
     "没返回可解析的 JSON", "缺 cold_open", "缺 ending", "时间/置信度无法解析",
     "窗口 ", "必须是 3-30 秒", "不是赛点/制胜分/庆祝/余波",
@@ -123,6 +130,27 @@ def contact_panels(path: Path) -> list[dict]:
         return panels
 
 
+def wanted_cover_moment(draft: dict) -> str:
+    """这张封面该是哪种情绪——返回 `COVER_MOMENTS` 里的一个键，闸拿它和模型的枚举比。
+
+    先认 `_cover_brief.preferred_moment_key`；`preferred_moment` 本身就是枚举值的也认
+    （`wang-vekic-visual-diagnostic.yml` 那样直接写键的）。都没有时：没有 brief＝赢家庆祝；
+    brief 点名的人就是赢家＝赢家庆祝；否则是爆冷输家＝`loser_fighting`。**`preferred_moment`
+    那句中文只喂给模型看，不拿来比**——存量草稿里写的是旧的「失落、落寞」，照样按口味要「在拼」。
+    """
+    brief = draft.get("_cover_brief") or {}
+    for key in (brief.get("preferred_moment_key"), brief.get("preferred_moment")):
+        key = str(key or "").strip()
+        if key in COVER_MOMENTS:
+            return key
+    if not brief:
+        return "winner_celebration"
+    winner = str((draft.get("_match") or {}).get("winner") or "").strip()
+    if winner and str(brief.get("preferred_subject") or "").strip() == winner:
+        return "winner_celebration"
+    return "loser_fighting"
+
+
 def ask_minimax(draft: dict, frames: list[Path], cover: Path | None,
                 probe: dict, key: str, *, previous: dict | None = None,
                 validation_problems: list[str] | None = None) -> dict | None:
@@ -147,7 +175,7 @@ def ask_minimax(draft: dict, frames: list[Path], cover: Path | None,
     "kind": "match_point|winning_shot|winner_celebration|aftermath",
     "winner_visible": true/false, "reason": "画面证据", "confidence": 0到1}},
   "cover": {{"same_match": true/false, "subject": "中文名，认不出留空",
-    "moment": "winner_celebration|loser_disappointed|other",
+    "moment": "{COVER_MOMENT_ENUM}",
     "wrong_or_old": true/false, "reason": "为何是本场/为何不是旧图",
     "confidence": 0到1}}
 }}
@@ -157,7 +185,9 @@ def ask_minimax(draft: dict, frames: list[Path], cover: Path | None,
 ending 必须完整覆盖 cold_open 的时间窗口，保证正文末尾重新兑现结局；时间码只能
 来自图上烧录的时间和相邻切点，不能猜；reason 引用的每个时间点都必须落在自己
 返回的 start/end 窗口内。封面要核对人物、比分字样、赛事标识、
-服装/场景；无法证明“本场”就 same_match=false。爆冷时严格按封面选人规则，
+服装/场景；无法证明“本场”就 same_match=false。cover.moment 按照片里看得见的情绪选：
+winner_celebration＝赢家庆祝；loser_fighting＝输家落后或失利时仍在拼（握拳、咬牙、怒吼、
+奋力击球）；loser_disappointed＝输家低头垮掉、失落；都不是就 other。爆冷时严格按封面选人规则，
 不要因为赢家庆祝更好认就擅自换人。看不清就降低 confidence，不得编。
 {model_instructions("minimax")}
 """
@@ -321,9 +351,7 @@ def clean_report(raw: dict | None, draft: dict, duration: float) -> tuple[dict, 
             problems.append(f"封面人物应为 {wanted}，模型识别为 {cover.get('subject') or '空'}")
         # 默认仍是赢家庆祝；只有终审在 _cover_brief 明确认领时，才允许
         # 同场官方高清动作照等其他情绪，人物/同场/置信度三道闸照旧。
-        wanted_moment = str(brief.get("preferred_moment") or "").strip()
-        if not wanted_moment:
-            wanted_moment = "loser_disappointed" if brief else "winner_celebration"
+        wanted_moment = wanted_cover_moment(draft)
         if str(cover.get("moment") or "") != wanted_moment:
             problems.append(f"封面情绪应为 {wanted_moment}，现在是 {cover.get('moment')}")
 

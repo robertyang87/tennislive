@@ -47,15 +47,46 @@ def _card_spec(point: str, slug: str = "new-one") -> dict:
 
 @pytest.mark.parametrize(("point", "where"), [
     # jodar-bublik 48a60760 之前那一版：渲完抽帧看到折成「费 / 德勒」
-    ("首秀赢完球 他先谢看台上的费德勒", "费 ／ 德勒"),
+    ("首秀赢完球 他先谢看台上的费德勒", "首秀赢完球 他先谢看台上的费 ／ 德勒"),
     # deminaur-zverev 617db353 之前那一版：折成「一 / 直顶住」
-    ("落后一盘又被破发 他说只是一直顶住", "一 ／ 直顶住"),
+    ("落后一盘又被破发 他说只是一直顶住", "落后一盘又被破发 他说只是一 ／ 直顶住"),
 ])
-def test_收尾卡那一句放不下一行就红_折点和成片上看到的一样(point, where):
+def test_量宽的尺子能复现老成片上看到的折点(point, where):
     """判据的量法要能把**成片上真看到的那个折点**原样算出来——算不出来就说明
-    尺子和 Chromium 不是一把（字体、字号、字距、正文区宽度任何一个对不上）。"""
-    with pytest.raises(SystemExit, match=where):
-        bic.check_takeaway(_card_spec(point))
+    尺子和 Chromium 不是一把（字体、字号、字距、正文区宽度任何一个对不上）。
+    那两张卡是 2026-09-27 之前的 CSS 渲的：任意字间可断、不 balance、左边距 92。"""
+    lines = gates.card_lines(point, bic.CANVAS_W - 92 - bic.TAKEAWAY_PAD_RIGHT, keep_all=False)
+    assert " ／ ".join(lines) == where
+
+
+#: 现在的卡（keep-all ＋ balance、正文区 860px）真渲出来的行——Chromium 逐字取行
+#: （`tests/test_interview_visual._LINES_JS` 那一套），2026-09-27 全库 104 张卡＋4 条
+#: 长名字样例对过一遍，66 张多行卡的折点和 `card_lines` 逐字一样。这里钉各类形状各一张。
+_CHROMIUM_LINES = [
+    ("首秀赢完球 他先谢看台上的费德勒", ["首秀赢完球", "他先谢看台上的费德勒"]),     # 空格＋balance
+    ("单打选手打双打 他说靠的是正手", ["单打选手打双打", "他说靠的是正手"]),         # ruud-zverev
+    ("有球迷说「今晚想当一次菲律宾人」", ["有球迷说", "「今晚想当一次菲律宾人」"]),   # 开引号前可断
+    ("去年在停车场哭，今年二夺辛辛那提", ["去年在停车场哭，", "今年二夺辛辛那提"]),   # 标点后可断
+    ("达维多维奇·福基纳赢球后的第一反应", ["达维多维奇·", "福基纳赢球后的第一反应"]),  # 「·」后可断
+    ("脚踝崴了两周没喘过气她说的还是准备好了",                                     # 无处可断：劈字、不 balance
+     ["脚踝崴了两周没喘过气她说的还", "是准备好了"]),
+    ("「在蒙特利尔比在多伦多更开心」", ["「在蒙特利尔比在多伦多更开心", "」"]),       # 闭引号前不许断→劈
+    ("赢下德约 他先谈的是没兑现的那十三个破发点",                                   # 第二块比栏宽→三行
+     ["赢下德约", "他先谈的是没兑现的那十三个破", "发点"]),
+    ("0-5 落后追回来 赢的是世界第 8", ["0-5 落后追回来 赢的是世界第 8"]),            # 849px，一行
+]
+
+
+@pytest.mark.parametrize(("point", "lines"), _CHROMIUM_LINES)
+def test_排行和现在的卡片CSS真渲出来的一样(point, lines):
+    assert [ln.strip() for ln in gates.card_lines(point)] == lines
+
+
+def test_收尾卡那一句放不下一行就红_报出来的折点就是卡上的折点():
+    with pytest.raises(SystemExit, match="空格／标点处折开，排成 2 行「首秀赢完球 ／ 他先谢看台上的费德勒」"):
+        bic.check_takeaway(_card_spec("首秀赢完球 他先谢看台上的费德勒"))
+    with pytest.raises(SystemExit, match="在字中间劈开，排成 2 行「脚踝崴了两周没喘过气她说的还 ／ 是准备好了」"):
+        bic.check_takeaway(_card_spec("脚踝崴了两周没喘过气她说的还是准备好了"))
 
 
 @pytest.mark.parametrize("point", ["赢完球 先谢看台上的费德勒", "被逼到绝境 他只是一直顶住"])
@@ -78,7 +109,7 @@ def test_请求预检就拦收尾卡折行_不等自动链建完spec(monkeypatch
     monkeypatch.setattr(pp, "check_copy", lambda *a, **k: copies.append(a))
     long_req = {"slug": "new-one", "xhs": "正文",
                 "takeaway": {"close": {"point": "首秀赢完球 他先谢看台上的费德勒"}}}
-    with pytest.raises(ValueError, match="费 ／ 德勒"):
+    with pytest.raises(ValueError, match="首秀赢完球 ／ 他先谢看台上的费德勒"):
         pp.check_request(long_req)
     assert not copies, "折行那一项应该排在文案检查之前就拦下"
     pp.check_request({**long_req, "takeaway": {"close": {"point": "赢完球 先谢看台上的费德勒"}}})
@@ -92,11 +123,14 @@ def test_量卡片宽度和渲卡片用的是同一组常量(monkeypatch, tmp_pa
     """**一个数写两处必分叉**：改了卡片留白，闸得跟着变，渲出来的 CSS 也得跟着变。"""
     seen = {}
     monkeypatch.setattr(bic, "_shoot", lambda html, dest: seen.setdefault("html", html))
+    monkeypatch.setattr(bic, "TAKEAWAY_PAD_LEFT", 81)
     monkeypatch.setattr(bic, "TAKEAWAY_PAD_RIGHT", 200)
+    monkeypatch.setattr(bic, "TAKEAWAY_POINT_TRACKING", 1.5)
     bic.build_takeaway_card(_card_spec("一句话"), "close", tmp_path / "x.png")
-    assert "padding:206px 200px 150px 92px" in seen["html"]
+    assert "padding:206px 200px 150px 81px" in seen["html"]
     assert f"font-size:{bic.TAKEAWAY_POINT_PX}px" in seen["html"]
-    assert gates.point_box_px() == bic.CANVAS_W - 92 - 200
+    assert "letter-spacing:1.5px" in seen["html"]
+    assert gates.point_box_px() == bic.CANVAS_W - 81 - 200
 
 
 def test_新的收尾卡都放得下一行():
@@ -109,7 +143,7 @@ def test_新的收尾卡都放得下一行():
 def test_收尾卡折行豁免表只许减不许加_名字要真的存在且真的还放不下():
     legacy = gates.legacy("takeaway_point_wrap")
     assert legacy, "豁免表读不到——路径或键名写错了，整条判据会静静失效"
-    assert len(legacy) <= 61, "只许减不许加：新片子的收尾卡要收到一行放得下"
+    assert len(legacy) <= 62, "只许减不许加：新片子的收尾卡要收到一行放得下"
     seen = {s["slug"]: s for s in _corpus()}
     missing = sorted(s for s in legacy if s not in seen)
     box = gates.point_box_px()

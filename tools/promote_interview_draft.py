@@ -223,6 +223,9 @@ def find_opponent(digest, surname: str, draft: dict | None = None) -> tuple[str,
 #: 亚历山德罗娃 858px、克雷吉茨科娃 858px、达维多维奇·福基纳 1002px……），
 #: 提升出来的 spec 在 picker 预检和 render 的 check_takeaway 都会红，而自动链里
 #: 没有任何一步会替它改短，于是永久卡在等待名单里。
+#: （838px 是当时的正文区；同一天 main 把卡的左边距收到 70，正文区变成 860px，
+#: 亚历山德罗娃／克雷吉茨科娃 858px 刚好放得下，安德烈耶娃／福基纳照样放不下——
+#: 所以这里不写死任何宽度，只拿 `point_box_px()` 量。）
 AUTO_TAKEAWAY_POINTS = ("{win}赢球后的第一反应", "{win}赛后的第一反应",
                         "{win}的第一反应", "赢球后的第一反应")
 

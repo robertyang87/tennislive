@@ -63,18 +63,55 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from tennislive.design_tokens import (  # noqa: E402
+    BRAND_BAR_CSS,
+    DARK,
+    SCORE,
+    TEXT_SHADOW_CHROME,
+    TEXT_SHADOW_HOOK,
+    rgb,
+)
 from tennislive.render.webcards import _font_css  # noqa: E402
 from tennislive.video.explainer import _data_uri  # noqa: E402
+from tennislive.video.watermark import TOPIC_HEX  # noqa: E402
 
+# design-tokens: enforced
+#
+# ⭐ 2026-09-27 UI/VI 评审 WP6：这份海报的颜色**一律从 `tennislive.design_tokens`
+# 取**，不再每个文件各配各的（评审量出来全仓库 185 个 hex、73 簇）。接法是
+# 「值不变、只换出处」——五张真封面（wong-vallejo / zverev-deminaur /
+# medvedev-royer / svitolina-paolini / ruud-zverev-doubles）换前换后重渲，
+# 逐像素**最大差 = 0**（不是均差，均差会把局部改色稀释掉）。
+#
 # **海报和成片同一个画幅：3:4（1080×1440）。**
 # 小红书的视频静态展示就是 3:4——9:16 的海报在信息流里被裁掉上下两条，
 # 台头、比分、赛事行首当其冲，而那几行正是让人看懂这是哪一场的东西。
 # 画幅本身定成 3:4，就不用再留什么「安全区」，整张海报都露得出来。
 VIDEO_W, VIDEO_H = 1080, 1440
-BRAND = "#c6f65a"          # 品牌绿
-INK = "#04120d"            # 深底
-TEXT = "#f4fbf7"
-DIM = "#9fb4aa"
+BRAND = DARK["primary"]    # 品牌绿，唯一的强调色
+#: 深底。⚠️ **原来叫 `INK`，改名是因为那个词一词两义**：这儿（和 `outro_page`）
+#: 的 INK 指深底 #04120d，而 `video/diagram_palette.INK` 指近白正文 #f4fbf7。
+#: 同一个名字、两个相反的颜色，照着名字接 token 必然接反——所以这儿用
+#: token 的语义角色名。
+BG = DARK["background"]
+TEXT = DARK["foreground"]
+#: VS 老版式（已停，14 条存量）那一档灰。评审把它并进 `subtle-foreground`
+#: （#a9bcb2）——那是值变化，停产的版式不为它重渲，所以原值留着。
+#: `render_stat_card` 还在读 `vp.DIM`，名字不能动。
+DIM = "#9fb4aa"  # token-exempt: VS 老版式的灰，并进 subtle-foreground 是值变化
+#: 台头副标题（`.topic`）的颜色——**和常驻角标同一个出处**
+#: （`video/watermark.TOPIC_HEX`），两边写两份必分叉。
+TOPIC_FG = TOPIC_HEX
+SCORE_DASH = SCORE["dash"]
+#: 压暗层和钩子光晕用的两支墨，写成 `r,g,b` 串拼 `rgba()`。
+#: `BG_RGB` 就是深底；`GLOW_RGB`（#061c14）是 `TEXT_SHADOW_HOOK` /
+#: `TEXT_SHADOW_CHROME` 那两串 token 里的同一支——评审 2.1 要把它并进 `card`
+#: （#0c1d16），那是值变化，没并。
+BG_RGB = ",".join(str(c) for c in rgb(BG))
+GLOW_RGB = "6,28,20"
+BRAND_RGB = ",".join(str(c) for c in rgb(BRAND))
+#: 钩子（`.storytitle`）的阴影。封面禁用遮罩，这层阴影是钩子唯一的可读性保护。
+HOOK_SHADOW = TEXT_SHADOW_HOOK
 REPO_ROOT = Path(__file__).resolve().parents[1]
 #: 字体和 CSS 里那几条 `@font-face` 用的是同一批文件——量宽度必须量它们，
 #: 拿系统字体量出来的数和渲出来的画面对不上。
@@ -105,7 +142,7 @@ CUT_VS_Y = 0.40            # VS 圆压在两人胸口高度，不在脚下
 # 线下那一条是干净的暗底，名字才有地方待。
 CUT_SINK = -36
 # 半身抠图截在腰上，硬边一眼看得出来，所以底部这一段淡出去。
-CUT_FADE = "mask-image:linear-gradient(180deg,#000 80%,transparent 99%)"
+CUT_FADE = "mask-image:linear-gradient(180deg,#000 80%,transparent 99%)"  # token-exempt: 蒙版只认 alpha，#000 表示不透明度，不是颜色
 
 # **信箱式那几张的垫底层。** 照片按宽度铺（`fit: "width"`）时上下会空出来，
 # 底下垫同一张照片的放大版；`scale(1.2)` 给模糊留溢出量，否则边缘透底。
@@ -581,7 +618,7 @@ def _scoreboard_sets(result: str, where: str) -> tuple[list[tuple[int, int, str 
 #: 色，印在每条片子上等于拿别人的比分板当模板」。**账号所有者看过这个理由之后
 #: 仍然要求照原样复刻**——那就是他的决定，照做。下面这三个颜色**逐个是从参考图
 #: 上量的**（`d0123af0-image.jpg`，取纯色区的像素值），不是挑的：
-SCORE_BLUE = "#172786"       # 赢家那条长条：量到 rgb(23,39,134)，整条一个值
+SCORE_BLUE = SCORE["win_bar"]   # 赢家那条长条：量到 rgb(23,39,134)，整条一个值
 #: ⚠️ **参考图两端那两颗浅绿端帽 2026-08-29 拿掉了**（账号所有者：「可以不要
 #: 获胜方两边的绿色边条」「不要两边的绿色竖条了」，一条消息里说了两遍）。
 #: 也就是说这块板**不再是逐像素复刻**——版式、配色、字体照参考图，端帽是他
@@ -602,7 +639,7 @@ SCORE_BLUE = "#172786"       # 赢家那条长条：量到 rgb(23,39,134)，整�
 #: 也就是**从条子上沿往上约 280px 开始淡入，往下约 250px 才满**——总共 500 多
 #: 像素的坡，而且最后是**不透明**的（+240 那一行 L=19≈面板色本身）。
 #: 我们原来是 110px 淡到 0.86，坡陡了五倍，于是顶上有一道看得见的边。
-SCORE_PANEL_RGB = "9,17,38"
+SCORE_PANEL_RGB = SCORE["panel_rgb"]
 #: 淡入从 `.scoreboard` 上沿再往上这么多像素开始。⚠️ 这个数是从**参考图的
 #: 藏青条上沿**倒推的：那儿是 −280px，而我们的 `.scoreboard` 比条子上沿还高
 #: 出一个台头行（场地/用时，约 60px），所以是 280−60。
@@ -622,7 +659,7 @@ SCORE_PANEL_END_ALPHA = 0.78
 #: ⚠️ 文字**全部纯白**。参考图上 `ZHENG`/`QINWEN`/`PRIDANKINA`/`STADIUM 17`/
 #: `#USOPEN` 和六个数字，逐个取峰值都是 (255,255,255)——没有第二档灰。
 #: 我们原来那套 `#dcefe4`（英文名）、`#93a79c`（抢七小分）在复刻里一律去掉。
-SCORE_INK = "#ffffff"
+SCORE_INK = SCORE["ink"]
 SCORE_BOARD_W = 940          # `.storycopy` 的内宽：1080 − 左右各 70
 SCORE_FILL_PAD_L = 24        # 高亮条内的左内边距（国旗从这儿开始）
 #: 右内边距。⚠️ **2026-08-29 从 30 提到 40**：账号所有者「比分建议右对齐」，
@@ -634,6 +671,13 @@ SCORE_FILL_PAD_R = 40
 SCORE_FLAG_W = 86            # 矩形国旗（3:2）——账号所有者点名「国旗用矩形」
 SCORE_FLAG_H = 57
 SCORE_FLAG_GAP = 20
+#: 国旗的一圈描边和圆角（2026-09-27 评审 R1）。白色、低透明：深底上用低透明白
+#: 描边给旗子一条边，不抢旗面的颜色。澳大利亚旗是藏青底，没有这一圈的话压在
+#: 同样藏青的赢家长条上**整面旗消失**。⚠️ 旗子本身仍是矩形（账号所有者
+#: 「国旗用矩形」），3px 只是把直角的锯齿收一下。
+SCORE_FLAG_RING_PX = 1.5
+SCORE_FLAG_RING_ALPHA = 0.42
+SCORE_FLAG_RADIUS_PX = 3
 #: ⚠️ 每一盘一列的宽度 96 → **80**（账号所有者 2026-08-31：「每盘的比分之间
 #: 间隔，左右的间隔再小一点，不然名字长的球员就放不下了」）。数字墨宽 ~42px，
 #: 挤出来的 5×16=80px 全给名字那一格（五盘 290→370）。渲了 96/86/80/74 四档
@@ -710,9 +754,14 @@ SCORE_CN_MIN_PX = 28
 #: 账号所有者 2026-08-14「英文名可以字号小一些」。18px 是渲了五档摆一起
 #: 挑出来的，判据 `test_英文名要退成注脚但还读得出` 钉住上下两头。
 SCORE_EN_PX = 18
-#: `.score-rank` 是 `.62em`，`margin-left:4px`——量宽度要把这两样算进去。
+#: `.score-rank` 的字号（相对中文名的 em）和它左边那道缝（相对**排名自己**的
+#: em，CSS 的 margin 用的是元素自己的字号）——量宽度要把这两样算进去，
+#: CSS 和 `_name_width_px` 读的是同一对常量。
+#: ⚠️ 缝是**负的**（2026-09-27 评审 R10）：全角「（」的左半个字面是空的，原来
+#: `margin-left:4px` 叠上那半个空字面，名字和（排名）之间实量空出 31px。
+#: −0.28em 收掉 13px，剩下的是一个正常的字间距。
 SCORE_RANK_EM = 0.62
-SCORE_RANK_GAP_PX = 4
+SCORE_RANK_GAP_EM = -0.28
 #: PIL 量出来的宽度比 Chromium 稳定小 1~2px（见 `test_量名字宽度要和浏览器对得上`
 #: 那张冻结表）。留 3px，别贴着算。
 SCORE_NAME_SLACK_PX = 3
@@ -775,7 +824,7 @@ def _name_width_px(name: str, rank: object, px: int) -> float:
         rank_px = max(1, round(px * SCORE_RANK_EM))
         width += ImageFont.truetype(
             str(FONT_DIR / "NotoSansSC-Regular-sub.ttf"), rank_px
-        ).getlength(f"（{int(rank)}）") + SCORE_RANK_GAP_PX
+        ).getlength(f"（{int(rank)}）") + px * SCORE_RANK_EM * SCORE_RANK_GAP_EM
     return width
 
 
@@ -1151,10 +1200,11 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
    背景上就是一片纯黑——渲出来完全看不出人站在球场上。cutout 这一档把中段
    放开，只在斜线以下压住，给钩子一个能读的底。 */
 .cutshade{background:linear-gradient(180deg,
-  rgba(4,18,13,.34) 0%,rgba(4,18,13,.06) 24%,rgba(4,18,13,.06) 50%,
-  rgba(4,18,13,.70) 64%,rgba(4,18,13,.94) 78%)}
+  rgba(__BG_RGB__,.34) 0%,rgba(__BG_RGB__,.06) 24%,rgba(__BG_RGB__,.06) 50%,
+  rgba(__BG_RGB__,.70) 64%,rgba(__BG_RGB__,.94) 78%)}
 .cut{position:absolute;transform:translateX(-50%);z-index:3;
-  filter:drop-shadow(0 18px 40px rgba(0,0,0,.55));""" + CUT_FADE + "}")
+  filter:drop-shadow(0 18px 40px rgba(0,0,0,.55)); /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */""".replace("__BG_RGB__", BG_RGB)
+             + CUT_FADE + "}")
     return body, extra
 
 
@@ -1247,6 +1297,88 @@ def hook_html(lines: list[str], accent: str = "") -> str:
         else:
             out.append(f"<div>{html.escape(ln)}</div>")
     return "".join(out)
+
+
+# ── 两道「新 spec 才拦」的封面闸（2026-09-27 UI/VI 评审）────────────────────
+#
+# 都只读 spec、不渲图，坐在 `build_match_reel._topbar_lines` 里（`validate_spec`
+# 第一道就调它，`--dry-run` 0.2 秒就报）。手写 spec 红，自动产的 spec
+# （`_production.status == "ready_for_render"`）只报——和顶栏格式、副标题格式
+# 那两道同一个口径。已发的挂在下面两张豁免表里，**只许减不许加**
+# （判据 `tests/test_reel_cover_watermark.py` 自检：名字真存在、而且真的还犯着）。
+
+_CJK = re.compile("[\u3400-\u9fff]")
+
+#: 场地名写成中文、而且已经发出去的（2026-09-27 盘点：238 条带比分板的 spec 里
+#: 11 条，10 条是金杯深圳那一周）。已发的不重渲。
+LEGACY_ZH_COURT = frozenset({
+    "bouzkova-kartal-bjk-cup-2026-qf", "bucsa-noskova-bjk-cup-2026-sf",
+    "grant-kalinina-bjk-cup-2026-sf", "muchova-bouzas-bjk-cup-2026-sf",
+    "noskova-boulter-bjk-cup-2026-qf", "putintseva-bucsa-bjk-cup-2026",
+    "svitolina-paolini-bjk-cup-2026-sf", "wang-vandewinkel",
+    "zhang-cocciaretto-bjk-cup-2026-qf", "zheng-paolini-bjk-cup-2026-qf",
+    "zhiyenbayeva-bouzas-bjk-cup-2026",
+})
+
+#: `hook_accent` 等于钩子一整行、而且已经发出去的（2026-09-27 盘点：21 条带重点词
+#: 的 spec 里 2 条）。
+LEGACY_WHOLE_LINE_ACCENT = frozenset({
+    "grant-kalinina-bjk-cup-2026-sf", "svitolina-paolini-bjk-cup-2026-sf",
+})
+
+
+def court_language_problem(cover: dict) -> str | None:
+    """比分板场地名（`cover.scoreboard.court`）写了中文就报。
+
+    账号所有者 2026-09-27（评审 Q13）：**场地名统一英文**。来路：238 条里 227 条
+    英文、11 条中文（「深圳湾体育中心」「7 号球场」），同一个栏目两种写法。
+    比分板复刻的是转播记分条，那一行本来就是英文（Center Court / The O2 /
+    Stadium 17），和它头顶的英文名、底下的英文注脚是一套。
+    """
+    court = str(((cover.get("scoreboard") or {}).get("court")) or "").strip()
+    if court and _CJK.search(court):
+        return (f"cover.scoreboard.court「{court}」写成了中文。账号所有者 2026-09-27："
+                "比分板上的场地名统一英文（Center Court / The O2 / Stadium 17）——"
+                "照赛事官网或 flashscore 比赛页的 VEN 字段抄英文名"
+                "（例：深圳湾体育中心 → Shenzhen Bay Sports Center）。")
+    return None
+
+
+def hook_accent_problem(cover: dict) -> str | None:
+    """`cover.hook_accent` 等于钩子的**一整行**就报。
+
+    评审 3.3（`svitolina-paolini` 那张）：重点词是「让扫信息流的人第一眼落在
+    那几个字上」，整行点亮就没有「那几个字」了——一行全绿等于两行字各一个
+    颜色，读起来是版式，不是重点。挑这一行里真正的卖点（数字／第一次／结果），
+    剩下的字留白。
+    """
+    accent = str(cover.get("hook_accent") or "").strip()
+    if not accent:
+        return None
+    lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n") if ln.strip()]
+    if accent in lines:
+        return (f"cover.hook_accent「{accent}」是钩子的一整行——整行变绿就没有"
+                "「重点词」了（一屏只留一个强调色，要的是落在卖点那几个字上）。"
+                "只圈这一行里的卖点（数字／第一次／结果），比如「挺进8强」「2比0」。")
+    return None
+
+
+def cover_style_problems(spec: dict) -> list[str]:
+    """上面两道闸合起来，按 slug 扣掉已发的豁免。空列表 ＝ 没问题。"""
+    slug = str(spec.get("slug", "")).strip()
+    cover = spec.get("cover")
+    if not isinstance(cover, dict):
+        return []
+    out = []
+    if slug not in LEGACY_ZH_COURT:
+        problem = court_language_problem(cover)
+        if problem:
+            out.append(problem)
+    if slug not in LEGACY_WHOLE_LINE_ACCENT:
+        problem = hook_accent_problem(cover)
+        if problem:
+            out.append(problem)
+    return out
 
 
 def hook_line_width(line: str) -> float:
@@ -1450,9 +1582,10 @@ def _scrim_css(dim_centre: bool = False) -> str:
     ⚠️ **真遇到「顶上一片白天空」的素材，换图仍然是第一选择**（四道闸门第 3 道）
     ——这层边只兜得住剩下的那点差，兜不住一张整幅过曝的照片。
     """
-    top_bottom = ("linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,"
-                  "rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,"
-                  "rgba(6,28,20,.58) 100%)")
+    g = GLOW_RGB
+    top_bottom = (f"linear-gradient(180deg,rgba({g},.62) 0%,rgba({g},.16) 17%,"
+                  f"rgba({g},.08) 32%,rgba({g},.08) 66%,rgba({g},.22) 84%,"
+                  f"rgba({g},.58) 100%)")
     return f".scrim{{position:absolute;inset:0;background:{top_bottom}}}"
 
 
@@ -1647,18 +1780,18 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         + """
 __SCRIM__
 .bar{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
- background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%)}
+ background:__BRAND_BAR__}
 .head{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
- align-items:center;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+ align-items:center;text-shadow:0 2px 12px rgba(0,0,0,.6)} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .brandwrap{display:flex;align-items:center;gap:14px}
 .brandlines{display:flex;flex-direction:column;gap:2px}
 .brand-icon{width:52px;height:52px;object-fit:contain;
- filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))}
+ filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .brand{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:38px;
- font-weight:400;letter-spacing:1px;color:#f4fbf7}
+ font-weight:400;letter-spacing:1px;color:__FOREGROUND__}
 .topic{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
- color:#dcefe4;letter-spacing:1px;
- text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8)}
+ color:__TOPIC_FG__;letter-spacing:1px;
+ text-shadow:__SHADOW_CHROME__}
 /* **按台头药丸锚定，不再整块居中。** 居中的时候药丸的位置跟着内容浮动：
    同样两行钩子，`eala-parks`（老版一行赛果）药丸顶边在 y=502、`shang-rublev`
    在 536，而换上新版比分板之后 `zhang-sabalenka` 被顶到 **410**——比分板一变高
@@ -1677,27 +1810,26 @@ __SCRIM__
 .storycopy{position:absolute;left:70px;right:70px;top:__STORYCOPY_TOP__px;
  transform:none;z-index:5;display:flex;flex-direction:column;
  gap:34px;align-items:flex-start}
-.hseam{position:absolute;left:0;right:0;height:6px;background:#c6f65a;z-index:4;
- transform:translateY(-50%);box-shadow:0 0 26px rgba(0,0,0,.55)}
+.hseam{position:absolute;left:0;right:0;height:6px;background:__PRIMARY__;z-index:4;
+ transform:translateY(-50%);box-shadow:0 0 26px rgba(0,0,0,.55)} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .storytitle{font-family:'TL Display SC','TL Sans SC',sans-serif;
- line-height:1.24;font-weight:400;color:#f4fbf7;white-space:nowrap;
- text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
- 0 0 60px rgba(6,28,20,.7)}
+ line-height:1.24;font-weight:400;color:__FOREGROUND__;white-space:nowrap;
+ text-shadow:__SHADOW_HOOK__}
 /* 钩子里认领的那一截重点词（cover.hook_accent）：品牌绿，一屏只留一个强调色 */
-.storytitle .accent{color:#c6f65a}
+.storytitle .accent{color:__PRIMARY__}
 /* 标题底下那一行赛果。`.storycopy` 是 column flex 且 gap 34px，所以这一行
    自己不用再加 margin——加了就和钩子之间多出一截，看着像两块东西。 */
 .storyscore{display:flex;align-items:baseline;gap:20px;white-space:nowrap;
  font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:44px;
- font-weight:400;color:#f4fbf7;
- text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)}
+ font-weight:400;color:__FOREGROUND__;
+ text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 /* ⚠️ 这一行是**没有 `cover.scoreboard` 的老 solo 封面**才走的路（19 条已发
    spec 挂在 `_LEGACY_NO_SCOREBOARD` 里）。数字跟着 2026-08-29 那条「所有
    视频里的比分都用这种字体」一起换成 `TL Score`——已发的不重渲，改它是为了
    万一有人重渲那几条时不会渲出第二副数字。字重维持 700（这一行本来就没有
    输赢之分，整串一个色）。 */
 .storyscore .sets{font-family:'TL Score','TL Sans SC',sans-serif;
- font-weight:700;color:#c6f65a;letter-spacing:1px}
+ font-weight:700;color:__PRIMARY__;letter-spacing:1px}
 /* ⭐⭐ 「赛场之上」比分板：**照美网那张官方赛果图完整复刻**。
    账号所有者 2026-08-29：「要做出和原版一样的配色」「不要自己配色」
    「要完整复刻」「输的人那一行也是有背景色的」「整个比分板应该都有统一的
@@ -1770,14 +1902,19 @@ __SCRIM__
 .score-flag-slot{flex:0 0 __SCORE_FLAG_W__px;height:__SCORE_FLAG_H__px;
  margin-right:__SCORE_FLAG_GAP__px;display:flex;align-items:center;
  justify-content:center}
+/* ⭐ 国旗一律一圈白色细描边 ＋ 3px 圆角（2026-09-27 评审 R1，缺陷修复）。
+   来路：`zverev-deminaur` 的澳大利亚旗是藏青底，压在同样藏青的赢家长条上
+   **整面旗和长条融成一块**（评审 `crop_flag_aus_on_navy.jpg`）；单打原来没有
+   任何描边、双打那面压上去的旗却有一圈 2px 黑——两种做法。现在单打双打同一
+   道：白 .42、1.5px（深底上用低透明白描边，不抢旗面），旗子本身仍是矩形。
+   判据 `test_国旗一圈白描边_澳旗压在藏青长条上也看得出边`。 */
 .score-flag{display:block;width:__SCORE_FLAG_W__px;height:__SCORE_FLAG_H__px;
- object-fit:cover}
+ object-fit:cover;border-radius:__SCORE_FLAG_RADIUS__px;
+ box-shadow:0 0 0 __SCORE_FLAG_RING_PX__px rgba(__SCORE_INK_RGB__,__SCORE_FLAG_RING_ALPHA__)}
 .score-flag-pair{position:relative}
-.score-flag-pair .score-flag{position:absolute;width:72%;height:72%;
- border-radius:3px}
+.score-flag-pair .score-flag{position:absolute;width:72%;height:72%}
 .score-flag-pair .score-flag-a{left:0;top:0}
-.score-flag-pair .score-flag-b{right:0;bottom:0;
- box-shadow:0 0 0 2px rgba(0,0,0,.35)}
+.score-flag-pair .score-flag-b{right:0;bottom:0}
 /* 名字两行：**英文小字在上、中文大字在下**——参考图就是这个节奏（上面一行
    小号的名、下面一行大号的姓）。中文名是这一行的主语，占大字那一行。
    ⚠️ 中文名保留得意黑（我们的中文标题字体，参考图那支字没有中文）；英文名和
@@ -1797,8 +1934,12 @@ __SCRIM__
    `NotoSansSC[wght]` 实例化出来、只留 ASCII ＋ 全角括号的三档），所以画面上
    一个像素都不会变；改的是**「这块板上只有一支数字字体」这件事从此说得死**，
    判据钉得住。⚠️ 全角括号在字符集里，别把它从 `SCORE_CHARSET` 里删掉。 */
+/* ⚠️ 名字和（排名）之间的缝是**负的** `SCORE_RANK_GAP_EM`（2026-09-27 评审 R10）：
+   全角左括号「（」的墨只占字面右半，左半是空的——原来 `margin-left:4px` 加上
+   那半个空字面，梅德韦杰夫和（6）之间实量空出 **31px**，读起来像两样东西。
+   这个数和 `_name_width_px` 量宽度用的是同一个常量。 */
 .score-rank{font-family:'TL Score','TL Sans SC',sans-serif;font-weight:400;
- font-size:.62em;margin-left:4px}
+ font-size:__SCORE_RANK_EM__em;margin-left:__SCORE_RANK_GAP_EM__em}
 /* 盘分：每一盘一列、**列宽写死**。两行分开渲之后，只要两行留给名字的宽度差
    一点点，右边那几个数字就会上下错位——而错位在 HTML 字符串里看不出来，
    只有渲出来量才看得见（判据 `test_比分板两行的盘分要上下对齐`）。 */
@@ -1856,13 +1997,21 @@ __SCRIM__
    和顶栏那条路上，`.score-number.setwin` 的特异性更高，盖得住。 */
 .set{display:inline-block;margin-right:.42em}
 .set:last-child{margin-right:0}
-.setwin{color:#c6f65a;text-shadow:0 2px 8px rgba(0,0,0,.9),0 0 22px rgba(198,246,90,.65)}
-.setlose{color:#f4fbf7}
-.setdash{color:#93a79c;margin:0 .04em}
-.tb{font-size:.62em;color:#93a79c;vertical-align:super;margin-left:.06em}
-.setplain{color:#c6f65a;margin-right:.42em}
+.setwin{color:__PRIMARY__;text-shadow:0 2px 8px rgba(0,0,0,.9),0 0 22px rgba(__PRIMARY_RGB__,.65)} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
+.setlose{color:__FOREGROUND__}
+.setdash{color:__SCORE_DASH__;margin:0 .04em}
+.tb{font-size:.62em;color:__SCORE_DASH__;vertical-align:super;margin-left:.06em}
+.setplain{color:__PRIMARY__;margin-right:.42em}
 """
         .replace("__SCRIM__", _scrim_css(dim_centre))
+        .replace("__BRAND_BAR__", BRAND_BAR_CSS)
+        .replace("__PRIMARY_RGB__", BRAND_RGB)
+        .replace("__PRIMARY__", BRAND)
+        .replace("__FOREGROUND__", TEXT)
+        .replace("__TOPIC_FG__", TOPIC_FG)
+        .replace("__SCORE_DASH__", SCORE_DASH)
+        .replace("__SHADOW_HOOK__", HOOK_SHADOW)
+        .replace("__SHADOW_CHROME__", TEXT_SHADOW_CHROME)
         .replace("__STORYCOPY_TOP__", str(STORYCOPY_TOP))
         # ⚠️ 这儿曾经给 `.storytitle` 补一段 `margin-top`（`STORYCOPY_TITLE_GAP_EXTRA`），
         # 撑开的是**药丸到标题**那一截。药丸 2026-08-14 整块拿掉之后这个常量
@@ -1871,6 +2020,8 @@ __SCRIM__
         # **别再把它加回来**：现在标题就是第一个孩子，补 margin 只会把整块
         # 往下推，而下面只剩 11px 余量。
         + f".storytitle{{font-size:{title_px}px}}"
+        + (".storytitle{width:100%;text-align:center}"
+           if cover.get("hook_align") == "center" else "")
         # 上下叠一张时文案压到底部——**居中会正好骑在分界线上**，把上格的下半
         # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
         # 追加在最后，同特异性下后写的赢。
@@ -1922,7 +2073,13 @@ def _fill_score_layout(css: str, cover: dict) -> str:
         # 淡到满，正好落在场地那一行的中间——再晚，「Stadium 17」就压在
         # 还没压暗的照片上了。
 
+        "__SCORE_INK_RGB__": ",".join(str(c) for c in rgb(SCORE_INK)),
         "__SCORE_INK__": SCORE_INK,
+        "__SCORE_FLAG_RADIUS__": SCORE_FLAG_RADIUS_PX,
+        "__SCORE_FLAG_RING_PX__": SCORE_FLAG_RING_PX,
+        "__SCORE_FLAG_RING_ALPHA__": SCORE_FLAG_RING_ALPHA,
+        "__SCORE_RANK_EM__": SCORE_RANK_EM,
+        "__SCORE_RANK_GAP_EM__": SCORE_RANK_GAP_EM,
         "__SCORE_ROW_H__": SCORE_ROW_H,
         "__SCORE_ROW_GAP__": SCORE_ROW_GAP,
         "__SCORE_HEAD_PAD_L__": SCORE_HEAD_PAD_L,
@@ -2043,9 +2200,9 @@ def _feather(image: Path, panel: dict, height: float) -> str:
     # 7% 才化成一片渐暗，顺带给左上角那块台头腾出压得住字的底
     fade, stops = 7.0, []
     if pad_top > fade:
-        stops += [f"transparent {pad_top:.2f}%", f"#000 {pad_top + fade:.2f}%"]
+        stops += [f"transparent {pad_top:.2f}%", f"#000 {pad_top + fade:.2f}%"]  # token-exempt: 蒙版只认 alpha，#000 表示不透明度，不是颜色
     if pad_bot > fade:
-        stops += [f"#000 {100 - pad_bot - fade:.2f}%",
+        stops += [f"#000 {100 - pad_bot - fade:.2f}%",  # token-exempt: 蒙版只认 alpha，#000 表示不透明度，不是颜色
                   f"transparent {100 - pad_bot:.2f}%"]
     if not stops:
         return ""
@@ -2241,7 +2398,7 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
     html = f"""<!doctype html><meta charset="utf-8"><style>
 {_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box}}
-body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
+body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{BG};
   position:relative;font-family:'TL Sans SC',sans-serif}}
 .p{{position:absolute;left:0;right:0}}
 .p::before,.p::after{{content:'';position:absolute;inset:0;
@@ -2249,19 +2406,19 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 {panels}
 /* 压暗只压文字那一段：上面留给脸，糊了就看不出是谁 */
 .shade{{position:absolute;inset:0;background:linear-gradient(180deg,
-  rgba(4,18,13,.42) 0%,rgba(4,18,13,0) 18%,rgba(4,18,13,0) 52%,
-  rgba(4,18,13,.80) 72%,rgba(4,18,13,.96) 86%)}}
+  rgba({BG_RGB},.42) 0%,rgba({BG_RGB},0) 18%,rgba({BG_RGB},0) 52%,
+  rgba({BG_RGB},.80) 72%,rgba({BG_RGB},.96) 86%)}}
 .seam{{position:absolute;left:-6%;right:-6%;height:10px;background:{BRAND};
-  transform:translateY(-50%) rotate(-{SEAM_ANGLE}deg);box-shadow:0 0 40px rgba(0,0,0,.5)}}
+  transform:translateY(-50%) rotate(-{SEAM_ANGLE}deg);box-shadow:0 0 40px rgba(0,0,0,.5)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .vs{{position:absolute;left:50%;transform:translate(-50%,-50%);z-index:5;
-  width:176px;height:176px;border-radius:50%;background:{BRAND};color:{INK};
+  width:176px;height:176px;border-radius:50%;background:{BRAND};color:{BG};
   font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
   font-size:70px;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 12px 46px rgba(0,0,0,.5)}}
+  box-shadow:0 12px 46px rgba(0,0,0,.5)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .nm{{position:absolute;left:0;right:0;transform:translateY(-50%);z-index:4;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 66px;font-family:'TL Display SC','TL Sans SC',sans-serif;
-  font-size:62px;color:{TEXT};text-shadow:0 4px 26px rgba(0,0,0,.75)}}
+  font-size:62px;color:{TEXT};text-shadow:0 4px 26px rgba(0,0,0,.75)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .nm i{{flex:1}}
 /* **国旗 + 名字 +（即时世界排名）**（账号所有者 2026-08-02 定的）。
    排名压到 0.6em 并且降一档亮度：同字号并排会跟名字抢，而它是注脚不是主语。
@@ -2273,15 +2430,15 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .who em{{font-style:normal;font-size:.6em;opacity:.82;margin-left:.02em}}
 .na{{position:absolute;left:66px;z-index:4;font-size:62px;color:{TEXT};
   font-family:'TL Display SC','TL Sans SC',sans-serif;
-  text-shadow:0 4px 26px rgba(0,0,0,.75)}}
+  text-shadow:0 4px 26px rgba(0,0,0,.75)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .n-b{{left:auto;right:66px}}
 .top{{position:absolute;top:66px;left:66px;z-index:6;background:{BRAND};
-  color:{INK};font-size:30px;font-weight:800;letter-spacing:4px;
+  color:{BG};font-size:30px;font-weight:800;letter-spacing:4px;
   padding:11px 26px;border-radius:999px}}
 .copy{{position:absolute;left:66px;right:66px;bottom:150px;z-index:6}}
 .hook{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:{vs_hook_px}px;
-  line-height:1.14;color:{TEXT};text-shadow:0 4px 30px rgba(0,0,0,.6)}}
-.hook .accent{{color:#c6f65a}}
+  line-height:1.14;color:{TEXT};text-shadow:0 4px 30px rgba(0,0,0,.6)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
+.hook .accent{{color:{BRAND}}}
 .score{{margin-top:26px;font-family:'TL Numeral','TL Sans SC',sans-serif;
   font-weight:600;font-size:50px;color:{BRAND}}}
 .sub{{margin-top:12px;font-size:32px;color:{DIM};letter-spacing:2px}}
@@ -2289,7 +2446,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
    按 center 对齐会看出高低不齐（和字幕里数字要单独放大一档是同一回事）。 */
 .res{{margin-top:28px;display:flex;align-items:baseline;gap:22px}}
 .win{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
-  color:{TEXT};text-shadow:0 4px 22px rgba(0,0,0,.6)}}
+  color:{TEXT};text-shadow:0 4px 22px rgba(0,0,0,.6)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .sets{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
   font-size:62px;color:{BRAND};letter-spacing:1px}}
 /* 盘分上色，和 solo 那张共用同一套类名（账号所有者 2026-08-04：
@@ -2301,8 +2458,8 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .set:last-child{{margin-right:0}}
 .setwin{{color:{BRAND}}}
 .setlose{{color:{TEXT}}}
-.setdash{{color:#93a79c;margin:0 .04em}}
-.tb{{font-size:.62em;color:#93a79c;vertical-align:super;margin-left:.06em}}
+.setdash{{color:{SCORE_DASH};margin:0 .04em}}
+.tb{{font-size:.62em;color:{SCORE_DASH};vertical-align:super;margin-left:.06em}}
 .setplain{{color:{BRAND};margin-right:.42em}}
 /* 输的一方**要写，但置灰**：这一行是赛果，少一个人就不成句；灰是层次，不是删除 */
 .lose{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;

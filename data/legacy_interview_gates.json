@@ -1,7 +1,7 @@
 {
  "_why": "赛后开麦只读 spec 的新闸（interview_spec_gates）上线时（2026-09-27），已经发出去、按新判据会红的存量。已发的不为版式重渲（微信那条消息收不回来），**只许减不许加**：tests/test_interview_preflight.py 自检每个名字都真的存在、而且真的还不合格——改好了就从这里删掉。",
  "takeaway_point_wrap": {
-  "_why": "收尾卡 `point` 那一句超出卡上一行（838px，得意黑 76px ＋ 0.5px 字距），Chromium 在任意两个字之间折行，折点多半落在词中间（jodar-bublik 48a60760「费 ／ 德勒」、deminaur 617db353「一 ／ 直顶住」，两次都是渲完抽帧才看见）。判据 interview_spec_gates.takeaway_point_problems；上线当天全库 103 张卡里 61 张超一行。",
+  "_why": "收尾卡 `point` 那一句超出卡上一行（得意黑 76px ＋ 0.5px 字距）。上线当天（正文区 838px，Chromium 在任意两个字之间折行）折点多半落在词中间（jodar-bublik 48a60760「费 ／ 德勒」、deminaur 617db353「一 ／ 直顶住」，两次都是渲完抽帧才看见），全库 103 张卡里 61 张超一行。同一天 main 的评审 I2／I3 把卡改成 keep-all＋balance、左边距收到 70（正文区 860px）：rybakina-swiatek-tor2026-final（858px）、zheng-swiatek-us-open-2026-r4-interview（849px）放得下一行了，从表里删掉，剩 59 条。判据 interview_spec_gates.takeaway_point_problems。合并 main 时又补进 3 条：这张表初建之后 main 上并行发出去的 cobolli-mensik-laver-cup-2026-doubles-interview、fernandez-gibson-singapore-2026-final-ceremony、zverev-tien-laver-cup-2026-interview（都有 pushed.json；keep-all 下都在空格处折成两行）——闸在合并那一刻才上线，它们和那 59 条一样是上线时的存量，共 62 条。",
   "slugs": [
    "alexandrova-sabalenka-tor2026-r16",
    "arango-venus-cincinnati-2026-r1",
@@ -9,14 +9,16 @@
    "bu-jodar-us-open-2026-r1-interview",
    "bu-jodar-us-open-2026-r1-presser",
    "chwalinska-mertens-singapore-2026-qf-interview",
+   "cobolli-mensik-laver-cup-2026-doubles-interview",
    "cobolli-paul-cincinnati-2026-qf",
    "deminaur-fery-cincinnati-2026-r3",
    "djokovic-cincinnati-2026-presser",
-   "eala-mcnally-toronto-2026-r3-presser-full",
-   "eala-mcnally-toronto-2026-r3-presser",
    "eala-mcnally-toronto-2026-r3",
+   "eala-mcnally-toronto-2026-r3-presser",
+   "eala-mcnally-toronto-2026-r3-presser-full",
    "eala-parks-toronto-2026",
    "faria-shelton-cincinnati-2026-r2",
+   "fernandez-gibson-singapore-2026-final-ceremony",
    "fils-cobolli-cincinnati-2026-sf-interview",
    "fils-lehecka-cincinnati-2026-r3",
    "gauff-andreeva-us-open-2026-qf-interview",
@@ -41,7 +43,6 @@
    "rybakina-gauff-tor2026-sf",
    "rybakina-gauff-us-open-2026-sf-interview",
    "rybakina-osaka-tor2026-qf",
-   "rybakina-swiatek-tor2026-final",
    "rybakina-townsend-cincinnati-2026-r2",
    "rybakina-zheng-us-open-2026-qf-interview",
    "sabalenka-noskova-usopen-2026-qf-oncourt",
@@ -59,10 +60,10 @@
    "zheng-keys-us-open-2026-r3-presser",
    "zheng-keys-us-open-2026-r3-tennis-channel",
    "zheng-liutova-us-open-2026-r1-interview",
-   "zheng-swiatek-us-open-2026-r4-interview",
    "zverev-atmane-cincinnati-2026-r3",
    "zverev-khachanov-us-open-2026-sf-interview",
    "zverev-khachanov-us-open-2026-sf-presser",
+   "zverev-tien-laver-cup-2026-interview",
    "zverev-vandezandschulp-us-open-2026-qf-interview"
   ]
  },

@@ -279,6 +279,28 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      # **同一条源片别 probe 两遍**（2026-09-27 返工取证 P6）。一开跑就按视频 id
+      # 查 main 上的认领（data/probe_claims/<id>.json）和近三天的 probe 目录：别的
+      # slug 做过就 `::warning::` 带出可复用的目录，然后把这一趟的认领**推到 main**
+      # ——不管本趟跑在哪个分支上：编排器只看得见 main，而会话常在分支上 probe
+      # （`swiatek-zheng` 10dee4a6：会话那份落在分支上 8 分钟后，编排器又点了一遍）。
+      # 排在装依赖之前：只要标准库 + git，越早认领，两边同时点的窗口越窄
+      # （`wang-garland` 7fb9fa50 两边只差 2 分钟）。**只出声不拦**——会话有时就是
+      # 要重 probe（换 scorebox、换区间、故事片借源）；拦不拦归编排器
+      # （`orchestrate.drop_already_probed`）。推不上 main 只告警，不让 probe 红——
+      # 脚本里什么错都接住了，`continue-on-error` 兜的是脚本接不住的那两种：
+      # 2 分钟超时、以及哪天又冒出一种没想到的异常。认领是告示，不是 probe 的一环。
+      - name: probe — 认领源片（同一条集锦别 probe 两遍）
+        if: github.event.inputs.mode == 'probe'
+        timeout-minutes: 2
+        continue-on-error: true
+        env:
+          URL: ${{ github.event.inputs.url }}
+          SLUG: ${{ github.event.inputs.slug }}
+        run: |
+          python tools/probe_claims.py probe-step --url "$URL" --slug "$SLUG" \
+            --branch "${{ github.ref_name }}" --run-id "${{ github.run_id }}"
+
       # **装依赖和 dry-run 排在 apt 那两步前面。** dry-run 只读 spec 和
       # probe.json，一个 ffmpeg / 字体 / 抠图模型都不碰（沙箱里把 PATH 上的
       # ffmpeg 抽掉跑过一遍，0.2 秒照旧绿）；而 apt 那两步各带 15 分钟的最坏
@@ -477,8 +499,9 @@ jobs:
       # `tools/ci_apt_install.sh` 把 apt 的索引和下载缓存重定向到这里缓存住的
       # 目录，先试一次零网络的本地安装，缓存没命中才回退到会摸网的老路。
       - name: 缓存 apt 包（ffmpeg + 字体，绕开镜像抽风）
+        id: apt_cache
         if: github.event.inputs.mode != 'push'
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             ~/.cache/apt-archives
@@ -490,9 +513,24 @@ jobs:
           # 和下面 TTS 内容缓存一样改成滚动键：先按稳定前缀恢复最近一份，跑完
           # 再用本次 run_id 回写「旧缓存 + 这趟补齐的包」。这样一次 render
           # 补齐字体后，下一趟才能真的吃到完整缓存。
-          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
+          #
+          # ⚠️⚠️ **2026-09-27：v2 → v3，外加退到 CI 那份。** 两件事，都是「缓存按 ref
+          # 隔离」逼出来的——分支上的 run 只看得见**本分支**和 **main** 存的缓存：
+          # - **v2 在 main 上只有空壳**：orchestrator 的 probe 全在 main 上跑、只
+          #   `ensure_ffmpeg`，存下的是 243 字节的空目录（run 36276804834 /
+          #   36216426100）；render 全在会话分支上跑，存进的是各自的分支。于是每条
+          #   新分支的第一趟 render 按前缀退到 main，捞回来的永远是那个空壳，排在它
+          #   后面的任何回退键都轮不到。换 v3 让那批空壳再也匹配不上
+          #   （`test_apt缓存不许再认被空壳污染的前缀`）。
+          # - **退到 CI 那份**：`ci.yml` 在 main 上每次合并都跑、装的是
+          #   cjk ＋ core ＋ emoji——这条线要的 cjk ＋ emoji 是它的子集，而 CI 的缓存
+          #   存在 main 上、所有分支都看得见。只给 render / cover 加这一格：probe、
+          #   narration 不装字体，捞一份一百来 MB 的缓存回来白下载。
+          #   判据 `test_装字体的apt缓存都能退到CI在main上存的那份`。
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-${{ github.run_id }}
           restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-
+            ${{ (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover') && format('apt-pkgs-{0}-24.04-ci-v2-', runner.os) || '' }}
       - name: 装 ffmpeg
         # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
         # subprocess **一个都没出现**，装它白花半分钟。
@@ -531,6 +569,19 @@ jobs:
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk fonts-noto-color-emoji
 
+      # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
+      # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：
+      # 命中的趟白传一份、只装 ffmpeg 的趟把空目录存成最新那一格——见那份脚本
+      # 顶部 2026-09-27 那段。判据 `tests/test_runner_setup_cache.py`。
+      - name: 回写 apt 缓存（这趟真下了新包才存）
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+
       # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
       # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完
       # 64MB 源片、合完音之后才死——白跑一分半。
@@ -545,12 +596,32 @@ jobs:
           path: ~/.u2net
           key: rembg-isnet-general-use-${{ runner.os }}
 
+      # ⚠️⚠️ **Chromium 缓存键按装上的 playwright 版本算，不按 pyproject 的哈希**
+      # （2026-09-27）pyproject 写的是 `playwright>=1.40`、而且 08-08 之后没动过，
+      # 于是主键**永远命中**那份旧缓存（chromium-1234）；pip 装上的新 playwright 要
+      # 1243，launch 探针落空、每趟重下 187 MiB ＋ 114 MiB 还跑一遍 `--with-deps`
+      # 的 apt（run 36284220097）——而主键命中时 post 步骤「not saving cache」，
+      # 这份缓存**永远修不好自己**。「装 Chromium」这一步 09-15 前中位 1s、之后
+      # 18s（n=189）。按版本算：换版本那一趟主键落空、退到上一份、装完存新的一格。
+      # 判据 `tests/test_runner_setup_cache.py`。
+      - name: 算 Chromium 缓存键（装上的 playwright 版本）
+        id: pw_version
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        run: |
+          v=$(python -c 'import importlib.metadata as m; print(m.version("playwright"))')
+          echo "playwright $v"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
       - name: 缓存 Chromium
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          key: playwright-chromium-${{ runner.os }}-pw${{ steps.pw_version.outputs.version }}
+          # ⚠️ 下面这段是 2026-08-05 键还钉在 pyproject 上时的账；2026-09-27 起键是
+          # 装上的 playwright 版本（见上一步）。`restore-keys` 照旧要：换版本那一趟
+          # 靠它退到上一份，`playwright install` 只补差的那一版。
+          #
           # ⚠️ **键钉在整份 `pyproject.toml` 上太宽。** 决定装哪个 Chromium 的
           # 只有 playwright 的版本，可这个键是**整份文件的哈希**——加一个依赖、
           # 改一行注释，六条工作流的 150 MB Chromium 缓存**同时失效**，
@@ -1366,6 +1437,17 @@ jobs:
             !${{ steps.paths.outputs.outdir }}/frames/**
           retention-days: 14
 
+      # 开跑时推到 main 的**源片认领**，probe 没做成就摘掉：认领还挂着的话，编排器
+      # 三天之内都会以为「有人在做」而不点它。只摘本 slug 那一条（别人的认领不动）；
+      # 排在下面摘 state 那步之前——那步会 `git switch` 到远端最新，别让它改了脚下的树。
+      - name: probe 失败摘源片认领
+        if: failure() && github.event.inputs.mode == 'probe'
+        timeout-minutes: 2
+        env:
+          URL: ${{ github.event.inputs.url }}
+          SLUG: ${{ github.event.inputs.slug }}
+        run: python tools/probe_claims.py release --url "$URL" --slug "$SLUG"
+
       # probe 失败（下不动源片）时，把 slug 从编排器 state 里摘掉——否则它已被
       # 标记「已 dispatch」，下次 cron 跳过它、永不重试。摘掉之后下次 cron 会重新
       # 探测 + dispatch，这就是 probe 失败的自愈。
@@ -1481,6 +1563,19 @@ jobs:
           done
           echo "::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链"
           exit 1
+
+      # 分支上 probe 成功：给 main 上的认领标完成。产物落在分支上，编排器（只看 main）
+      # 看不见它——不标的话，认领开跑 90 分钟后按「job 被取消／超时」作废
+      # （`probe_claims.CLAIM_STALE_MINUTES`），编排器会把这一场再 probe 一遍。
+      # main 上的 probe 不用标：probe.json 自己就在 main 上。告示，不许让 probe 红。
+      - name: probe 成功给源片认领标完成
+        if: success() && github.event.inputs.mode == 'probe' && github.ref_name != 'main'
+        timeout-minutes: 2
+        continue-on-error: true
+        env:
+          URL: ${{ github.event.inputs.url }}
+          SLUG: ${{ github.event.inputs.slug }}
+        run: python tools/probe_claims.py done --url "$URL" --slug "$SLUG"
 
       # probe 只有在正式 spec 已由严格提升器落进 main 后才继续。pending/waiting
       # 是正常结果，不 dispatch；ready 则立即并行进入 render，不等下一班定时任务。

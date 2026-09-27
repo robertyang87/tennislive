@@ -11,21 +11,31 @@
     jodar-bublik  48a60760  「首秀赢完球 他先谢看台上的费德勒」   折成「…的费 ／ 德勒」
     deminaur      617db353  「落后一盘又被破发 他说只是一直顶住」 折成「…只是一 ／ 直顶住」
 
-卡片是 Chromium 按 CSS 自动折行的：中文可以在任意两个字之间断，所以一旦超出
-正文区，折点**只由宽度决定、不由词决定**。两次人工修法一样——收到一行放得下。
-CLAUDE.md「卡片是给人扫的」那节写的也是这句：**一条要换行才排得下，就说明它该被
-砍成两半或者删掉**。
+卡片是 Chromium 按 CSS 自动折行的。那两次的时候中文可以在任意两个字之间断，
+所以一旦超出正文区，折点**只由宽度决定、不由词决定**。两次人工修法一样——收到一行
+放得下。CLAUDE.md「卡片是给人扫的」那节写的也是这句：**一条要换行才排得下，就说明
+它该被砍成两半或者删掉**。
 
 量法和渲染同一把尺：`SmileySans-Oblique`（CSS 里的 TL Display SC）、
 `TAKEAWAY_POINT_PX` 字号、每个字加 `TAKEAWAY_POINT_TRACKING` 的字距，可用宽＝画布
-减去左右留白（这几个数就是 `build_takeaway_card` 的 CSS 用的那几个常量）。
-**拿这把尺把上面两条的折点原样复现出来了**（「费 ／ 德勒」「一 ／ 直顶住」），
-改短之后的两版量出来 750px，一行放得下。
+减去左右留白（这几个数就是 `takeaway_html` 的 CSS 用的那几个常量）。
+**拿这把尺把上面两条的折点原样复现出来了**（「费 ／ 德勒」「一 ／ 直顶住」，当时的
+CSS：任意字间可断、左边距 92、正文区 838px），改短之后的两版量出来 750px，一行放得下。
 
-全库量过：103 张卡里 61 张 `point` 超一行（折点几乎全落在词中间：「现 ／ 在」
-「菲律 ／ 宾人」「辛 ／ 辛那提」）——**已发的不重渲**，挂在
-`data/legacy_interview_gates.json` 的 `takeaway_point_wrap`，只许减不许加。
-真要两行（比如有意让折点落在空格上），在那张卡里写 `"_wrap_ok": "<为什么>"` 认领。
+⭐ 2026-09-27 评审 I2／I3 之后卡片 CSS 变了（`build_interview_clip._CARD_WRAP`）：
+`word-break:keep-all` 只在空格、标点、「·」处断，`text-wrap:balance` 把几行匀开，
+一个子句本身比栏宽还长才由 `overflow-wrap:anywhere` 在字中间兜底劈开；左边距跟台头
+收到 70，正文区 860px。`card_lines` 按这套规则排行——**全库 104 张卡加 4 条长名字
+样例真渲过一遍（Chromium 逐字取行），一行／多行的判断 108 张全对，66 张多行卡的每一个
+折点逐字一样**。所以报错里印的折点就是卡上会出现的那个。
+
+全库量过（860px，合并 main 那一刻）：104 张卡里 62 张 `point` 超一行，全是已发的——
+**已发的不重渲**，挂在 `data/legacy_interview_gates.json` 的 `takeaway_point_wrap`，只许减不许加。
+真要两行，在那张卡里写 `"_wrap_ok": "<为什么>"` 认领。
+
+⚠️ **「在空格处折成匀称的两行」算不算合格，是账号所有者还没定的口径**（2026-09-27
+复审提的：keep-all 之后超宽卡里 45 张会在空格处干净地折开，剩下的才劈词）。
+定之前闸照旧要求**一行放得下**，不替他放宽。
 
 ## 二、`push.score` 必须是赢家视角
 
@@ -92,13 +102,76 @@ def point_box_px() -> int:
     return clip.CANVAS_W - clip.TAKEAWAY_PAD_LEFT - clip.TAKEAWAY_PAD_RIGHT
 
 
-def greedy_break(text: str) -> tuple[str, str]:
-    """Chromium 在哪儿折这一行（中文任意两字之间可断，贪心排满）。只用来把折点印出来。"""
-    box = point_box_px()
-    k = len(text)
-    while k > 0 and point_width(text[:k].rstrip()) > box:
-        k -= 1
-    return text[:k], text[k:]
+#: `word-break:keep-all` 下的断点（Chromium 实测）：这些字**之后**可以断……
+_BREAK_AFTER = frozenset(" ，。、；：？！…」』）》·")
+#: ……这些字**之前**可以断（开引号、开括号跟着下一句走）
+_BREAK_BEFORE = frozenset("「『（《")
+#: 这些字前面不许断（闭引号、句读不许落到下一行行首）
+_NO_BREAK_BEFORE = frozenset("」』）》，。、；：？！…")
+
+
+def _chunks(text: str) -> list[str]:
+    """按 keep-all 的断点把一句切成不可再分的块（块尾的空格留在块里——它挂在行尾不占宽）。"""
+    out, cur = [], ""
+    for i, ch in enumerate(text):
+        if ch in _BREAK_BEFORE and cur and cur[-1] not in _BREAK_BEFORE:
+            out.append(cur)
+            cur = ""
+        cur += ch
+        nxt = text[i + 1] if i + 1 < len(text) else ""
+        if ch in _BREAK_AFTER and nxt and nxt not in _NO_BREAK_BEFORE and nxt != " ":
+            out.append(cur)
+            cur = ""
+    if cur:
+        out.append(cur)
+    return out
+
+
+def _fill(text: str, width: float, keep_all: bool) -> tuple[list[str], bool]:
+    """贪心排行 → (行, 有没有在字中间劈过)。一块比栏还宽就逐字劈（`overflow-wrap:anywhere`）。"""
+    lines, cur, forced = [], "", False
+    for chunk in (_chunks(text) if keep_all else list(text)):
+        if point_width((cur + chunk).rstrip()) <= width:
+            cur += chunk
+            continue
+        if cur:
+            lines.append(cur)
+            cur = ""
+        while len(chunk) > 1 and point_width(chunk.rstrip()) > width:
+            k = len(chunk)
+            while k > 1 and point_width(chunk[:k]) > width:
+                k -= 1
+            lines.append(chunk[:k])
+            chunk = chunk[k:]
+            forced = True
+        cur = chunk
+    if cur:
+        lines.append(cur)
+    return lines, forced
+
+
+def card_lines(text: str, box: float | None = None, *, keep_all: bool = True) -> list[str]:
+    """`.point` 这一句在卡上排成哪几行——照 `_CARD_WRAP` 那套 CSS 排。
+
+    `keep_all=True`（现在的卡）：只在 `_chunks` 的断点处断；能断的时候 `text-wrap:balance`
+    把宽度收到「行数不变的最窄」再排一遍（所以两行是匀的）；有一块得在字中间劈开时
+    Chromium 不做 balance，照贪心排（实测：「脚踝崴了两周没喘过气她说的还 ／ 是准备好了」）。
+    `keep_all=False`：2026-09-27 之前的卡——任意字间可断、不 balance（jodar-bublik、
+    deminaur 那两张成片上的折点就是这么来的）。
+    """
+    box = float(point_box_px() if box is None else box)
+    lines, forced = _fill(text, box, keep_all)
+    if not keep_all or forced or len(lines) < 2:
+        return lines
+    lo, hi = 0.0, box
+    for _ in range(30):
+        mid = (lo + hi) / 2
+        got, cut = _fill(text, mid, keep_all)
+        if len(got) == len(lines) and not cut:
+            hi = mid
+        else:
+            lo = mid
+    return _fill(text, hi, keep_all)[0]
 
 
 def takeaway_point_problems(spec: dict) -> list[str]:
@@ -115,10 +188,14 @@ def takeaway_point_problems(spec: dict) -> list[str]:
             continue
         text = str(card["point"])
         if (w := point_width(text)) > box:
-            head, tail = greedy_break(text)
+            lines = card_lines(text, box)
+            shown = " ／ ".join(ln.strip() for ln in lines)
+            _, cut = _fill(text, box, True)
+            how = ("有一段没有空格或标点可断，会在字中间劈开" if cut
+                   else "会在空格／标点处折开")
             out.append(
                 f"`takeaway.{which}.point` 量出来 {w:.0f}px，卡上一行只有 {box}px，"
-                f"会被 Chromium 折成「{head} ／ {tail}」——折点只看宽度不看词。"
+                f"{how}，排成 {len(lines)} 行「{shown}」。"
                 "收到一行放得下（jodar-bublik / deminaur 两次都是这么修的）；"
                 "真要两行就在这张卡里写 `_wrap_ok` 说清为什么")
     return out

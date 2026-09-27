@@ -23,7 +23,13 @@
 指出去哪拿，不静默空跑。
 
 产出的候选（不是每场都会全部凑齐，字段覆盖率随赛事级别浮动）：
-- **总分差**：`[Match/Points] Total Points Won` 算出来的净差
+- **总分差**：`[Match/Points] Total Points Won` 算出来的净差——⚠️ **只进正文，
+  不当钩子和推送标题的候选**（`use: body_only`，排在最后）。账号所有者 2026-09-13
+  「不要写总分差距了」、2026-09-19「以后尽量避免比较全场得分只差几分……其实网球
+  差距就在一两分的关键分……不要把这个放在封面的钩子上」。上面那段「来路」里头部
+  账号拿它开头，是这条被推翻之前的参考。2026-09-27 量的：`specs/reels/pending/`
+  126 份自动草稿的钩子里 34 份在拿总分说事（「总分多22分／怎么还是输了」），
+  所以这里要在源头标清楚，不能只靠提示词
 - **一发得分率摆动**：同一人在不同盘之间 `1st serve points won` 的落差，
   ≥10 个百分点才算候选，摆动小的没必要当"狠数据"用
 - **破发点兑现率**：`[Match/Return] Break Points Converted`
@@ -56,6 +62,12 @@ _VAL_PATTERNS = [
 ]
 
 FIRST_SERVE_SWING_THRESHOLD = 10   # 百分点，摆动小的不算"狠数据"
+
+#: 候选的用途标记。**只有总分差带它**：数还是真的、正文里可以当背景提一句，
+#: 但钩子和推送标题不许拿它说事（账号所有者 2026-09-13 / 09-19，见模块 docstring）。
+#: `assemble_spec.facts_text` 读到它就在那一行后面注明，模型看得见这条边界。
+BODY_ONLY = "body_only"
+BODY_ONLY_NOTE = "只进正文，不进钩子和推送标题"
 STREAK_THRESHOLD = 3               # 局，短于这个不值得单独提
 
 
@@ -99,6 +111,7 @@ def total_points_gap(idx: dict, home: str, away: str) -> dict | None:
         "detail": f"{home} {h} - {away} {a}，净差 {diff} 分" + (f"，{leader} 领先" if leader else "，打平"),
         "diff": diff,
         "source": "flashscore df_mh_1（总分）",
+        "use": BODY_ONLY,
     }
 
 
@@ -390,9 +403,6 @@ def collect(match_id: str, home: str, away: str) -> dict:
     idx = index_stats(stats(match_id))
     games = points(match_id)
     candidates = []
-    tp = total_points_gap(idx, home, away)
-    if tp:
-        candidates.append(tp)
     candidates += first_serve_swing(idx, home, away)
     candidates += break_point_conversion(idx, home, away)
     candidates += longest_streaks(games, home, away)
@@ -402,6 +412,10 @@ def collect(match_id: str, home: str, away: str) -> dict:
     form = recent_form_candidate(match_id)
     if form:
         candidates.append(form)
+    # 总分差排最后、带 body_only：它不再是钩子候选（账号所有者 2026-09-13 / 09-19）
+    tp = total_points_gap(idx, home, away)
+    if tp:
+        candidates.append(tp)
     return {"candidates": candidates, "durations": durations(match_id)}
 
 
@@ -482,7 +496,7 @@ def main() -> int:
             print("制胜分 / 非受迫失误：**flashscore 这场没有**——"
                   "⚠️ 这不等于拿不到。先去 TNNS 问一次：\n"
                   "    gh workflow run tnns-stats.yml -f who=<姓>,<姓>"
-                  f"    # 或 -f match_id=<TNNS 数字 id>\n"
+                  "    # 或 -f match_id=<TNNS 数字 id>\n"
                   "  （要真浏览器过 Cloudflare，只能在 runner 上跑；解法和判据见 "
                   "tools/tnns_stats.py）\n"
                   "  两边都没有，才照 render_stat_card 的 OPTIONAL_FIELDS 留空，"
@@ -502,7 +516,8 @@ def main() -> int:
     else:
         print(f"{len(result['candidates'])} 条候选（不是判定，挑哪条、怎么写仍然是人的事）：")
         for c in result["candidates"]:
-            print(f"  [{c['label']}] {c['detail']}  ← {c.get('source', '')}")
+            use = f"（{BODY_ONLY_NOTE}）" if c.get("use") == BODY_ONLY else ""
+            print(f"  [{c['label']}]{use} {c['detail']}  ← {c.get('source', '')}")
     print("\n分盘用时：")
     for name, t in result["durations"]:
         print(f"  {name}: {t}")
