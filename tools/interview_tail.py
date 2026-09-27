@@ -290,8 +290,22 @@ def frozen_legacy_ok(spec: dict, over: float) -> bool:
         return False
 
 
-def tail_verdict(spec: dict, src: Path) -> tuple[str | None, float | None]:
-    """runner 上源片到手、编码之前 → (问题 或 None, 该收到的终点 或 None)。"""
+def measured_speech_end(spans, start: float, end: float) -> float | None:
+    """窗口 [start, end] 里最后一个真词**量出来的**词尾（只认 `cap_asr.json3` 那种带词尾的
+    逐词稿；YouTube 自动字幕只有词头 → None，不拿估的数去挪终点）。"""
+    ends = [b for a, b, w in (spans or []) if b is not None and start <= a <= end and _lexical(w)]
+    return max(ends) if ends else None
+
+
+def tail_verdict(spec: dict, src: Path, *,
+                 speech_end: float | None = None) -> tuple[str | None, float | None]:
+    """runner 上源片到手、编码之前 → (问题 或 None, 该收到的终点 或 None)。
+
+    `speech_end`：最后一个词**量出来的**词尾（只有自动收短那条路传，`check_tail`）。
+    板紧贴着话尾甩出来时——alcaraz-fritz 的板在词尾 ＋0.11 秒——「板前 `CARD_MARGIN`」
+    会落进最后一个词里 0.09 秒，把字尾吃掉。这时终点托底在词尾，但不越过板前最后
+    一帧确定不是板的采样（`card - 1/CARD_FPS`）；话压在板上还在说的（词尾在板之后）不托底。
+    """
     end = float(spec["end"])
     vdur = _probe_video_seconds(src)
     if end > vdur + FROZEN_SLACK and not str(spec.get("_frozen_tail_ok") or "").strip() \
@@ -306,7 +320,10 @@ def tail_verdict(spec: dict, src: Path) -> tuple[str | None, float | None]:
     card = trailing_card(_decode_gray(src, lo, vdur), lo)
     if card is None or end <= card + 1.0 / CARD_FPS:
         return None, None
-    target = round(max(card - CARD_MARGIN, 0.0), 2)
+    target = card - CARD_MARGIN
+    if speech_end is not None and speech_end <= card:
+        target = max(target, min(speech_end, card - 1.0 / CARD_FPS))
+    target = round(max(target, 0.0), 2)
     return (f"源片 {card:.1f} 秒起是一张一直延续到结尾的静止片尾板，`end` {end:.2f} "
             f"把 {end - card:.1f} 秒板剪了进来。收到 {target:.1f}；"
             "看过确认不是板（或板上有要的内容）写 `_end_board_ok`"), target

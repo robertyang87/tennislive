@@ -398,6 +398,136 @@ def test_冷开场字幕要量宽度的那道在探针里同样记成判不了(m
     assert pick.todo_slugs() == (["p"], []) and pick._UNKNOWN == [], "输入没变：用全量的绿"
 
 
+def test_预检结论缓存的键跟着预检实际读的字幕走_工作区有目录就认工作区(monkeypatch, tmp_path):
+    """review 那条：`verdict_key` 原来按 `git ls-files`（index）记字幕，而 `_materialize_captions`
+    工作区有目录就**只**读工作区——auto-render 把待处理请求的产物格加回稀疏范围、只提交
+    `cap_asr.json3`，全量判的是没提交的 `cap_*`，记下的键却是下一趟 HEAD 原样复现的。"""
+    pick, ipf, specs = _probe_picker(monkeypatch, tmp_path)
+    out = tmp_path / "output" / "interviews"
+    monkeypatch.setattr(ipf, "OUTPUT", out)
+    monkeypatch.setattr(pick, "_code_fingerprint", lambda: "code")
+    from_head = pick.verdict_key("p")               # 没有目录：按 HEAD（这个 slug 在 HEAD 里没字幕）
+    assert from_head is not None
+    (out / "p").mkdir(parents=True)
+    (out / "p" / "cap_asr.json3").write_text('{"events": []}', encoding="utf-8")
+    (out / "p" / "notes.md").write_text("不是字幕", encoding="utf-8")
+    k1 = pick.verdict_key("p")
+    (out / "p" / "cap_abc.en.json3").write_text('{"events": [1]}', encoding="utf-8")  # 没提交的字幕
+    k2 = pick.verdict_key("p")
+    (out / "p" / "cap_asr.json3").write_text('{"events": [2]}', encoding="utf-8")    # 工作区改了一份
+    k3 = pick.verdict_key("p")
+    assert len({from_head, k1, k2, k3}) == 4, "预检读的字幕变了，键必须跟着变"
+    # 键里记的就是预检会放进去的那几份，一份不多一份不少
+    work = tmp_path / "materialized"
+    work.mkdir()
+    assert ipf._materialize_captions("p", work)
+    assert [c.split(":")[0] for c in ipf.caption_fingerprint("p")] == \
+        sorted(q.name for q in work.iterdir())
+
+
+def test_字幕指纹和HEAD同一个blob算法_内容没变不多逼一趟全量(monkeypatch, tmp_path):
+    data = b'{"events": [{"tStartMs": 1}]}'
+    blob = subprocess.run(["git", "hash-object", "--stdin"], input=data, capture_output=True,
+                          check=True).stdout.decode().strip()
+    assert pf._blob_id(data) == blob
+    # 真仓库里挑一条 HEAD 有字幕的：从 HEAD 放进工作区之后，两个分支给出同一份指纹
+    listing = subprocess.run(["git", "-C", str(ROOT), "ls-tree", "-r", "--name-only", "HEAD",
+                              "--", "output/interviews/"], capture_output=True, text=True).stdout
+    slug = next((ln.split("/")[2] for ln in listing.splitlines()
+                 if ln.rsplit("/", 1)[-1].startswith("cap_")), None)
+    if slug is None:
+        pytest.skip("HEAD 里没有采访字幕缓存")
+    monkeypatch.setattr(pf, "OUTPUT", tmp_path / "nowhere")
+    head = pf.caption_fingerprint(slug)
+    assert head
+    (tmp_path / "out" / slug).mkdir(parents=True)
+    assert pf._materialize_captions(slug, tmp_path / "out" / slug)
+    monkeypatch.setattr(pf, "OUTPUT", tmp_path / "out")
+    assert pf.caption_fingerprint(slug) == head
+
+
+def test_工具崩了的红不记进预检缓存_下一趟探针交给全量重判(monkeypatch, tmp_path):
+    """review 那条：`push_reel` 子进程偶发崩一次，全量记成红，探针就拿它当「同一份输入
+    判过是红的」一直重放到北京日期翻过去——那条采访一整天不投。"""
+    pick, ipf, specs = _probe_picker(monkeypatch, tmp_path)
+    monkeypatch.setattr(ipf, "spec_problems", lambda s, **kw: ([], []))
+    assert pick.todo_slugs() == (["p"], [])          # ① 全量判绿，记下来
+    crash = f"文案（push_reel --stage check）{ipf.CRASHED}：KeyError: 'x'"
+    monkeypatch.setattr(ipf, "spec_problems", lambda s, **kw: ([crash], []))
+    ready, waiting = pick.todo_slugs()               # ② 同一份输入，这一趟工具崩了
+    assert ready == [] and waiting, "崩了的这一趟照旧不投"
+    pick.save_verdicts()
+    saved = json.loads(pick.VERDICT_CACHE.read_text(encoding="utf-8"))
+    assert "p" not in saved, "崩溃不是判据的结论，不许记（连前一趟的绿也作废）"
+
+    def unavailable(s, **kw):
+        raise ipf.PreflightUnavailable("缺 PIL")
+    monkeypatch.setattr(ipf, "spec_problems", unavailable)
+    monkeypatch.setattr(ipf, "probe_problems", lambda s: ([], ["check_takeaway（缺 PIL）"]))
+    monkeypatch.setattr(pick, "PROBE", True)
+    monkeypatch.setattr(pick, "_VERDICTS", None)
+    assert pick.todo_slugs() == (["p"], []) and pick._UNKNOWN == ["p"], "③ 探针判不了，交给全量"
+
+
+def test_文案那一项分得清判据红和工具崩(monkeypatch):
+    import production_preflight
+
+    def fail(stderr):
+        def run(*a, **k):
+            raise subprocess.CalledProcessError(1, ["push_reel"], output="", stderr=stderr)
+        return run
+    monkeypatch.setattr(production_preflight, "check_copy",
+                        fail("Traceback (most recent call last):\n  File \"x\"\nKeyError: 'x'"))
+    assert pf.CRASHED in (pf.copy_problem("x", "2026-09-27") or "")
+    monkeypatch.setattr(production_preflight, "check_copy", fail("tag 超过 5 个（6）"))
+    verdict = pf.copy_problem("x", "2026-09-27") or ""
+    assert "tag" in verdict and pf.CRASHED not in verdict
+
+
+def test_探针里量宽度撞上缺字体的OSError也算判不了_不是红(monkeypatch, tmp_path):
+    """review 那条：探针排在 apt 装 fonts-noto-cjk 之前。哪天系统 python3 带上了 PIL，
+    `check_trail_in`／`check_lead_in` 量双语宽度撞的就是「中文字体不在」的 OSError——
+    记成红就是一次「没活就早退」的假早退。全量模式不放宽（`_require_env` 先查过字体）。"""
+    spec = _full_spec(monkeypatch, tmp_path)
+
+    def no_font(*a, **k):
+        raise OSError("cannot open resource")
+    monkeypatch.setattr(bic, "check_trail_in", no_font)
+    red, unknown = pf.probe_problems(spec)
+    assert red == [], red
+    assert any("cannot open resource" in u for u in unknown), unknown
+    err, _ = pf._run_gate(no_font, spec)
+    assert err and "OSError" in err, "全量模式：OSError 照旧记红"
+
+    pick, ipf, specs = _probe_picker(monkeypatch, tmp_path)
+    monkeypatch.setattr(pick, "check_lead_in", no_font)
+
+    def unavailable(s, **kw):
+        raise ipf.PreflightUnavailable("缺字体")
+    monkeypatch.setattr(ipf, "spec_problems", unavailable)
+    monkeypatch.setattr(ipf, "probe_problems", lambda s: ([], []))
+    with pytest.raises(OSError):                     # 全量模式：判不了照旧抛
+        pick.todo_slugs()
+    monkeypatch.setattr(pick, "PROBE", True)
+    assert pick.todo_slugs() == (["p"], []) and pick._UNKNOWN == ["p"], \
+        "探针：冷开场那道判不了——不崩、不记红，交给全量"
+
+
+def test_预检结论同样的内容写出同样的字节(monkeypatch, tmp_path):
+    """工作流按文件指纹判「结论有变才另存一份缓存」——插入顺序不同也要写出同样的字节。"""
+    import pick_interview_renders as pick
+
+    monkeypatch.setattr(pick, "VERDICT_CACHE", tmp_path / "v.json")
+    written = []
+    for rows in ({"a": {"key": "1", "missing": []}, "b": {"key": "2", "missing": ["x"]}},
+                 {"b": {"key": "2", "missing": ["x"]}, "a": {"key": "1", "missing": []}}):
+        monkeypatch.setattr(pick, "_VERDICTS", rows)
+        monkeypatch.setattr(pick, "_VERDICTS_DIRTY", True)
+        pick.save_verdicts()
+        written.append(pick.VERDICT_CACHE.read_bytes())
+    assert written[0] == written[1]
+
+
 def test_auto_render的探针带probe_预检结论缓存前后两步路径对得上():
     import yaml
 
@@ -415,6 +545,17 @@ def test_auto_render的探针带probe_预检结论缓存前后两步路径对得
     assert restore and restore[0] < names.index("没活就早退"), "探针之前要先取回上一趟的结论"
     assert save and save[0] > dispatch, "全量那一趟判完（dispatch 那一步）才存"
     assert "always()" in str(steps[save[0]].get("if")), "dispatch 那步红了也要存下已判的结论"
+    # review 那条：键带 run_id、一趟存一份——有草稿时每 10 分钟一趟全量，一天 144 条一样的缓存。
+    # 结论有变才存；键**仍然**带 run_id（写入后不可覆盖：按内容或日期定键，A→B→A 那一下存不进去，
+    # restore-keys 取回的「最新一份」就成了 B）。
+    changed = next(i for i, st in enumerate(steps) if st.get("id") == "verdicts")
+    assert dispatch < changed < save[0]
+    assert "steps.verdicts.outputs.changed == 'true'" in str(steps[save[0]].get("if"))
+    assert "verdicts_sha" in gate["run"].split("pick_interview_renders.py --probe")[0], \
+        "取回的那份的指纹要在探针之前记下"
+    assert "steps.gate.outputs.verdicts_sha" in steps[changed]["run"]
+    assert "always()" in str(steps[changed].get("if"))
+    assert "github.run_id" in steps[save[0]]["with"]["key"]
     import pick_interview_renders as pick
     cache_dir = steps[restore[0]]["with"]["path"].replace("~", str(Path.home()))
     assert Path(cache_dir) in pick.VERDICT_CACHE.parents or \
@@ -688,6 +829,31 @@ def test_自动默认的end越过画面又压着板_两道都收(tmp_path):
     spec = {"slug": "x", "start": 0.0, "end": 7.5, "_end_default": 7.5}
     trim = bic.check_tail(spec, src)
     assert spec["end"] == pytest.approx(3.8) and len(trim["why"]) == 2
+
+
+def test_自动收短时板紧贴话尾_终点托底在量出来的词尾_不吃字尾(tmp_path):
+    """review 那条：「板前 0.2 秒」在 alcaraz-fritz 那种板（词尾 ＋0.11 秒）上落进最后一个词里
+    0.09 秒。自动那条路拿 `cap_asr.json3` 量出来的词尾托底，但不越过板前最后一帧确定
+    不是板的采样；话压在板上还在说的不托底。人给的 end 那条路（红的那句话）不变。"""
+    src = _clip(tmp_path / "s.mp4", [("testsrc2", 4.0), ("color=c=0x203040", 2.0)])
+
+    def trimmed(words):
+        (tmp_path / "cap_asr.json3").write_text(json.dumps({"events": [
+            {"tStartMs": int(a * 1000), "dDurationMs": int(d * 1000), "segs": [{"utf8": w}]}
+            for a, d, w in words]}), encoding="utf-8")
+        spec = {"slug": "x", "start": 0.0, "end": 6.0, "_end_default": 6.0,
+                "asr_model": "small.en"}
+        bic.check_tail(spec, src, tmp_path)
+        return spec["end"]
+
+    assert trimmed([(3.0, 0.5, "thank"), (3.6, 0.29, "you.")]) == pytest.approx(3.89)
+    assert trimmed([(3.0, 0.5, "thank"), (4.2, 0.5, "everyone")]) == pytest.approx(3.8), \
+        "话压在板上：不托底"
+    assert trimmed([(3.0, 0.98, "thanks.")]) == pytest.approx(3.9), "托底不越过 card − 1/fps"
+    assert trimmed([(1.0, 0.4, "hi"), (3.2, 0.3, "[Music]")]) == pytest.approx(3.8), \
+        "最后一个真词离板很远：照旧板前 0.2"
+    assert "收到 3.8" in (tail.end_card_problem(
+        {"slug": "x", "start": 0.0, "end": 6.0}, src) or "")
 
 
 @pytest.mark.parametrize("spec", [

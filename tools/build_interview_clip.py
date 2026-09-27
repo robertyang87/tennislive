@@ -4303,7 +4303,7 @@ def _side_segment(spec: dict, outdir: Path, key: str = "lead_in") -> Path | None
     return dest
 
 
-def check_tail(spec: dict, src: Path) -> dict | None:
+def check_tail(spec: dict, src: Path, workdir: Path | None = None) -> dict | None:
     """源片到手、**编码之前**：`end` 压进了源片的片尾板，或者越过了源片画面（冻帧）。
 
     拉沃尔杯七条采访有四条第一版把片尾板剪了进来、两条推上微信又重推，每次都是
@@ -4315,16 +4315,28 @@ def check_tail(spec: dict, src: Path) -> dict | None:
     来改 `end`，红了就是每 70 分钟重投一次、永远红下去。**人给的 `end` 照旧红**——
     判据见 `interview_tail` 第四节。字幕行是按原窗切的，收短之后落在新终点之后的
     那几行只是不再出现在画面上，行数和 `zh` 仍然一一对应。
+
+    `workdir`（字幕缓存所在的产物目录）：自动收短时拿 `cap_asr.json3` 量出来的最后一个
+    词尾给终点托底——板紧贴着话尾时「板前 0.2 秒」会吃掉字尾（`tail_verdict` 的 docstring）。
     """
     import os  # noqa: PLC0415
 
     sys.path.insert(0, str(ROOT / "tools"))
-    from interview_tail import end_is_auto, tail_verdict  # noqa: PLC0415
+    from interview_tail import (  # noqa: PLC0415
+        cache_word_spans,
+        end_is_auto,
+        measured_speech_end,
+        tail_verdict,
+    )
     auto = end_is_auto(spec)
     original = float(spec["end"])
+    speech_end = None
+    if auto and workdir is not None:
+        speech_end = measured_speech_end(cache_word_spans(workdir, spec),
+                                         float(spec.get("start") or 0.0), original)
     reasons = []
     for _ in range(2):            # 先收冻帧、再看收完之后是不是还压在板里
-        problem, target = tail_verdict(spec, src)
+        problem, target = tail_verdict(spec, src, speech_end=speech_end)
         if not problem:
             break
         start = float(spec.get("start") or 0.0)
@@ -4348,7 +4360,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     check_takeaway(spec)
     src = yt_download(spec["url"], outdir / "source.mp4",
                       "bv*[height<=1080]+ba/b[height<=1080]", spec)
-    end_trim = check_tail(spec, src)
+    end_trim = check_tail(spec, src, outdir)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)

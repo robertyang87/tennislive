@@ -182,8 +182,9 @@ def missing_for_render(slug: str, spec: dict) -> list[str]:
         check_lead_in(spec)
     except SystemExit as exc:
         missing.append(f"lead_in（{str(exc).splitlines()[0]}）")
-    except ImportError:
-        # 冷开场那段的双语字幕要量宽度（PIL）——探针的系统 python3 上判不了。
+    except (ImportError, OSError):
+        # 冷开场那段的双语字幕要量宽度（PIL＋中文字体）——探针的系统 python3 上判不了：
+        # 没有 PIL 是 ImportError，有 PIL 没字体（探针排在 apt 装字体之前）是 OSError。
         # 全量模式照旧抛（判不了不许当成判过了）。
         if not PROBE:
             raise
@@ -240,8 +241,14 @@ def verdict_key(slug: str) -> str | None:
     替一个没判过的输入说话**。拿不到（没有 git）返回 None，不用缓存。"""
     if not (SPECS / f"{slug}.json").is_file():
         return None
+    import interview_preflight  # noqa: PLC0415 —— 顶层只 import 标准库，探针的系统 python3 能跑
+
     code = _code_fingerprint()
-    caps = _git("ls-files", "-s", f"output/interviews/{slug}/")
+    # ⚠️ 字幕按预检**实际读的那几份**取指纹（`caption_fingerprint` 和 `_materialize_captions`
+    # 同一个分支：工作区有目录就只认工作区）。原来按 `git ls-files` 记 index——auto-render
+    # 把请求的产物格加回稀疏范围、只提交 `cap_asr.json3`，全量判的是没提交的 `cap_*`，
+    # 记下的键却是下一趟 HEAD 能原样复现的（review 那条）。
+    caps = interview_preflight.caption_fingerprint(slug)
     if code is None or caps is None:
         return None
     xhs = SPECS / f"{slug}.xhs.txt"
@@ -250,7 +257,7 @@ def verdict_key(slug: str) -> str | None:
         "date": datetime.now(timezone(timedelta(hours=8))).date().isoformat(),
         "spec": _sha256(SPECS / f"{slug}.json"),
         "xhs": _sha256(xhs) if xhs.is_file() else "",
-        "captions": sorted(ln for ln in caps.splitlines() if "/cap_" in ln),
+        "captions": caps,
     }, sort_keys=True)
     return hashlib.sha256(blob.encode()).hexdigest()
 
@@ -273,7 +280,9 @@ def save_verdicts() -> None:
     try:
         VERDICT_CACHE.parent.mkdir(parents=True, exist_ok=True)
         tmp = VERDICT_CACHE.with_suffix(".tmp")
-        tmp.write_text(json.dumps(_verdicts(), ensure_ascii=False, indent=1), encoding="utf-8")
+        # sort_keys：同样的结论写出同样的字节——工作流按文件指纹判「有变才另存一份缓存」
+        tmp.write_text(json.dumps(_verdicts(), ensure_ascii=False, indent=1, sort_keys=True),
+                       encoding="utf-8")
         tmp.replace(VERDICT_CACHE)
     except OSError as exc:
         print(f"[预检缓存] 写不了 {VERDICT_CACHE}（{exc}）——下一趟探针判不了的会照常走全量",
@@ -281,8 +290,17 @@ def save_verdicts() -> None:
 
 
 def _remember(slug: str, missing: list[str]) -> None:
-    """全量那一趟判完一条：把「还缺什么」按 `verdict_key` 记下来（空列表＝判过、全绿）。"""
+    """全量那一趟判完一条：把「还缺什么」按 `verdict_key` 记下来（空列表＝判过、全绿）。
+
+    ⚠️ 有一项是**工具崩了**（`interview_preflight.CRASHED`，不是判据判的红）就不记，
+    连旧的一起删掉：偶发的崩溃记进去，探针会拿它当「同一份输入判过是红的」一直重放到
+    北京日期翻过去；不记，下一趟探针判不了、交给全量重判。"""
     global _VERDICTS_DIRTY
+    from interview_preflight import CRASHED  # noqa: PLC0415
+    if any(CRASHED in m for m in missing):
+        if _verdicts().pop(slug, None) is not None:
+            _VERDICTS_DIRTY = True
+        return
     if (key := verdict_key(slug)) is not None:
         _verdicts()[slug] = {"key": key, "missing": list(missing)}
         _VERDICTS_DIRTY = True

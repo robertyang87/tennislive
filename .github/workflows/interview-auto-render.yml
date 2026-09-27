@@ -83,6 +83,8 @@ jobs:
         id: gate
         run: |
           set -o pipefail
+          # 取回的那份预检结论的指纹——末尾「有变才存」拿它比（见「存预检结论缓存」）
+          echo "verdicts_sha=$(sha256sum ~/.cache/tennislive-preflight/interview_verdicts.json 2>/dev/null | cut -d' ' -f1 || true)" >> "$GITHUB_OUTPUT"
           DRAFTS=$(find specs/interviews -maxdepth 1 -name '*.draft.json' | wc -l)
           REQUESTS=$(python3 tools/build_interview_request.py --count-pending)
           NEEDS_LEAD=$(python3 - <<'PY'
@@ -324,8 +326,23 @@ jobs:
           fi
 
       # 全量那一趟（dispatch 那一步）把每条 spec 的预检结论记进 VERDICT_CACHE，存给下一趟探针。
-      - name: 存预检结论缓存
+      # ⚠️ **结论有变才另存一份**：有草稿时每 10 分钟一趟全量，一趟存一份就是一天 144 条
+      # 一样的缓存（review 那条）。键仍然带 run_id——缓存键一经写入不可覆盖，按日期或
+      # 内容定键的话，A→B→A 那一下存不进去，restore-keys 取回的「最新一份」就成了 B，
+      # 探针从此逢判不了就逼全量；带 run_id、只在内容变了才存，取回的永远是最后一份。
+      - name: 预检结论有没有变
+        id: verdicts
         if: always() && steps.gate.outputs.work == 'true'
+        run: |
+          NOW=$(sha256sum ~/.cache/tennislive-preflight/interview_verdicts.json 2>/dev/null | cut -d' ' -f1 || true)
+          if [ -n "$NOW" ] && [ "$NOW" != "${{ steps.gate.outputs.verdicts_sha }}" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "[预检缓存] 和取回的那份逐字节一样（或这趟没写出来），不另存"
+          fi
+
+      - name: 存预检结论缓存
+        if: always() && steps.verdicts.outputs.changed == 'true'
         uses: actions/cache/save@v4
         with:
           path: ~/.cache/tennislive-preflight
