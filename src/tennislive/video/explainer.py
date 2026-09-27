@@ -42,6 +42,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
 from ..cdn import jsdelivr_base
+from ..design_tokens import MOTION as _MOTION
 from ..render.hashtags import with_campaign_tags
 from .subtitle_text import drop_punctuation
 
@@ -11608,6 +11609,14 @@ def _assert_photo_integrity(path: Path) -> None:
             )
 
 
+#: 每屏编号药丸的序号：①–⑳（U+2460–U+2473）。原来只写到 ⑨，第 10 屏起变成裸的
+#: 「10」——同一条片子里前九屏带圈、第十屏不带（`ranking-math` 就是这样发出去的）。
+#: ⚠️ 子集字体 TL Sans SC 里**一个带圈数字都没有**，①–⑨ 本来就是回退到
+#: 「Noto Sans CJK SC」（CI 装 fonts-noto-cjk）画的，⑩–⑳ 在同一个字体里都有，
+#: 所以走的是同一条回退、同一副字形。判据 `tests/test_explainer_visual.py`。
+CHIP_NUMERALS = tuple(chr(0x2460 + i) for i in range(20))
+
+
 def _slide_html(
     index: int, segment: ExplainerSegment, *, theme: str = "dark", topic: str = "",
     column: str = DEFAULT_COLUMN,
@@ -11617,11 +11626,10 @@ def _slide_html(
     from . import explainer_card_palette as P
 
     cover = segment.kind == "cover"
-    circled = ("①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨")
     # The cover is not a beat, so it carries no number and the beats after it
     # still count from one.
     beat_no = index if cover else index - 1
-    number = circled[beat_no] if 0 <= beat_no < len(circled) else f"{beat_no + 1}"
+    number = CHIP_NUMERALS[beat_no] if 0 <= beat_no < len(CHIP_NUMERALS) else f"{beat_no + 1}"
     css = _font_css()
 
     icon_path = _REPO / "assets" / "logo" / "brand" / "icon.png"
@@ -11779,9 +11787,17 @@ def _slide_html(
     # 是噪点，而小字那份还多一个开赛时刻。所以封面有小字时台头让位，正文各屏照常。
     show_topic = topic and not (cover and segment.fixture)
     topic_html = f'<span class="topic">{html.escape(topic)}</span>' if show_topic else ""
+    # 正文各屏的编号药丸：**描边、中性色**（账号所有者 2026-09-27 Q5 ＋ Q1「一屏只留
+    # 一个强调色」）。原来是薄荷实底，和下面要点那条黄绿边线同屏两支绿；现在带颜色的
+    # 只剩黄绿那一支。描边 2px 从内边距里扣（12/28 → 10/26），药丸外框一个像素都不变，
+    # 标题不挪。⚠️ 这段说明不许写进下面的 CSS 注释：CSS 是原样进页面的，注释里的
+    # 日期会让 `test_知识卡右上角不写日期` 当成卡上印了日期（第一版就这么红过）。
+    #
+    # 封面**不再挂栏目药丸**（账号所有者 2026-09-27 Q5）：台头第一行已经写着
+    # 「网球时差 · 网球有故事」，底下再垫一颗同名的黄绿药丸，同一屏把栏目名印两遍
+    # ——赛场之上 08-14 删过一模一样的那颗。正文各屏的编号药丸照留。
     chip_html = (
-        f'<span class="kicker">{html.escape(column)}</span>'
-        if cover
+        "" if cover
         else f'<span class="chip">{number} {html.escape(segment.label)}</span>'
     )
     tail_html = ""
@@ -11847,8 +11863,10 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  font-size:38px;font-weight:400;letter-spacing:1px;}}
 .copy{{position:absolute;left:70px;right:70px;bottom:{CARD_COPY_BOTTOM}px;z-index:5;
  display:flex;flex-direction:column;gap:28px;}}
-.chip{{align-self:flex-start;background:#37e29a;color:#062018;font-size:32px;
- font-weight:700;letter-spacing:3px;padding:12px 28px;border-radius:999px;}}
+.chip{{align-self:flex-start;background:{P.CHIP_FILL};color:{P.CHIP_TEXT};
+ border:2px solid {P.CHIP_OUTLINE};font-size:32px;
+ font-weight:700;letter-spacing:3px;padding:10px 26px;border-radius:999px;
+ text-shadow:{P.SHADOW_CHROME};}}
 .title{{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:{title_px}px;line-height:1.2;font-weight:400;
  white-space:nowrap;text-shadow:0 4px 24px rgba(0,0,0,.75);}}
@@ -11917,8 +11935,6 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  linear-gradient(180deg,{ink(.62)} 0%,{ink(.16)} 17%,
   {ink(.08)} 32%,{ink(.08)} 54%,{ink(.34)} 70%,
   {ink(.62)} 88%,{ink(.70)} 100%);}}
-.kicker{{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
- font-weight:700;letter-spacing:4px;padding:11px 26px;border-radius:999px;}}
 .tail{{align-self:flex-start;font-size:34px;font-weight:700;color:{P.TAIL};
  text-shadow:0 3px 14px rgba(0,0,0,.75);}}
 .points{{align-self:stretch;display:flex;flex-direction:column;gap:16px;
@@ -11950,6 +11966,84 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 <div class="copy">{chip_html}
 <div class="title">{title_html}</div>{gloss_html}{fixture_html}{points_html}{question_html}{tail_html}</div>
 </div></body></html>"""
+
+
+#: 示意图**画出来的东西**的底边和文案块（编号药丸就是它的第一行）之间至少留多少像素
+#: （卡片 CSS 像素）。
+DIAGRAM_COPY_GAP = 16
+#: 为了让出这 16px，示意图最多缩到原高度的多少。再小就不是「让一让」了，是这一屏
+#: 字写多了——停下来改稿，别把图缩成邮票：900 单位 viewBox 里 26 号的正文（video-craft
+#: 「画出来的那一屏」定的下限）缩到 0.78 是 20px，再往下手机上就读不动了。
+#: 2026-09-27 量过 52 条存量共 112 屏示意图：38 屏要让，最狠的一屏
+#: （`ten-champions` 第 4 屏，压进药丸 125px）要缩到 0.80，都在这道线以内。
+DIAGRAM_MIN_SCALE = 0.78
+
+#: 渲染时在页面里跑的那一段：量示意图**实际画出来的东西**的底边（不是 SVG 盒子——
+#: viewBox 底下常留一截空白，那一截压在药丸后面看不见，拿盒子算会冤枉 38 屏之外的
+#: 另外 38 屏），压到了就把 SVG 的高度收到刚好让出 `gap`。宽度仍是 920px，viewBox
+#: 默认的 `xMidYMid meet` 让画面**等比**缩小、水平居中——不裁、不变形（112 屏的根
+#: `<svg>` 都只写 viewBox，没有一屏改 preserveAspectRatio）。没压到的一个像素都不动
+#: ——存量逐像素零差就靠这一条。
+FIT_DIAGRAM_JS = """(gap) => {
+  const svg = document.querySelector('.diagram-wrap svg');
+  const copy = document.querySelector('.copy');
+  if (!svg || !copy) return null;
+  const drawnBottom = () => {
+    let bottom = -Infinity;
+    for (const el of svg.querySelectorAll(
+        'text,rect,line,path,circle,ellipse,polygon,polyline,image,use,foreignObject')) {
+      if (el.closest('defs,clipPath,mask,pattern,marker,symbol')) continue;
+      const cs = getComputedStyle(el);
+      if (cs.visibility === 'hidden' || cs.display === 'none' || cs.opacity === '0') continue;
+      if (cs.fill === 'none' && cs.stroke === 'none'
+          && el.tagName !== 'image' && el.tagName !== 'text') continue;
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 && r.height === 0) continue;
+      bottom = Math.max(bottom, r.bottom);
+    }
+    return bottom === -Infinity ? svg.getBoundingClientRect().bottom : bottom;
+  };
+  const top = svg.getBoundingClientRect().top;
+  const natural = svg.getBoundingClientRect().height;
+  const limit = copy.getBoundingClientRect().top - gap;
+  const drawn = drawnBottom();
+  let fitted = false;
+  if (drawn > limit && drawn > top) {
+    // 等比缩：高度缩到 h 时，画面底边落在 top + (drawn - top) * h / natural
+    svg.style.height = (natural * (limit - top) / (drawn - top)) + 'px';
+    fitted = true;
+  }
+  return {top: top, bottom: drawnBottom(), height: svg.getBoundingClientRect().height,
+          natural: natural, copyTop: copy.getBoundingClientRect().top, fitted: fitted};
+}"""
+
+
+def diagram_fit_problem(fit: dict | None, *, gap: float = DIAGRAM_COPY_GAP,
+                        min_scale: float = DIAGRAM_MIN_SCALE) -> str:
+    """`FIT_DIAGRAM_JS` 量回来的那一份 → 有问题就返回一句话，没问题返回空串。
+
+    来路：2026-09-27 UI/VI 评审量到**编号药丸压在示意图上**（`bu-lucky-loser`
+    第 ② 屏：「② 大满贯怎么补」盖住了「2026 美网第一天：14 个人签到」那一行）。
+    示意图从 `top:210px` 起、按 920px 宽等比铺，**没有下界**；文案块贴底、往上长，
+    一屏的字多一点，两块就撞上。之前的对策是手工把 viewBox 高度钉在 640
+    （video-craft「viewBox 的高度也有上限」）——**只管得住记得这条的人**。
+
+    现在渲染时量：压到了就等比缩，缩不到 `min_scale` 以内就停下来改稿。
+    渲染入口（`render_explainer_slides`）每屏都过这一道，所以这是渲染时断言，
+    不是某次抽查。
+    """
+    if not fit:
+        return ""
+    clearance = fit["copyTop"] - fit["bottom"]
+    if clearance < gap - 0.5:
+        return (f"示意图底边离文案块只有 {clearance:.0f}px（至少 {gap}px）——"
+                "图压到了编号药丸或标题上")
+    natural = fit.get("natural") or 0
+    if natural and fit["height"] / natural < min_scale:
+        return (f"示意图要缩到原高度的 {fit['height'] / natural:.0%} 才放得下"
+                f"（下限 {min_scale:.0%}）——这一屏的字写多了，删一条要点，"
+                "或者把图的 viewBox 收矮")
+    return ""
 
 
 def render_explainer_slides(
@@ -11995,6 +12089,13 @@ def render_explainer_slides(
                         "Array.from(document.images).every(i => i.complete)",
                         timeout=15000,
                     )
+                    # 示意图不许压到编号药丸——字体落定之后量，放不下就等比缩，
+                    # 缩过头就停下来（见 `diagram_fit_problem`）。
+                    problem = diagram_fit_problem(
+                        page.evaluate(FIT_DIAGRAM_JS, DIAGRAM_COPY_GAP))
+                    if problem:
+                        raise ExplainerVideoError(
+                            f"第 {index} 屏 [{seg.label or '封面'}] {seg.title}：{problem}")
                     # JPEG，不是 PNG。卡片是**照片**铺满的 3:4 图，PNG 对它
                     # 是最坏的格式：七屏 2160×2880 存成 PNG 合计 **31 MB**，
                     # 换成 q86 的 JPEG 是 **3.9 MB**（12%），同一块文字区域
@@ -13071,6 +13172,44 @@ def subtitle_cues(
     return cues
 
 
+def drop_printed_cues(
+    cues: Sequence[tuple[float, float, str]], printed: str, *, max_run: int = 3,
+) -> list[tuple[float, float, str]]:
+    """把「念的就是这一屏大字印着的那句」的字幕条丢掉，其余原样。
+
+    来路：2026-09-27 UI/VI 评审——网球有故事字卡的**封面把大问题印两遍**：
+    96px 的大字「世界第 11 / 为什么要打资格赛？」底下，字幕又写了一遍
+    「世界第11 为什么要打资格赛？」（`fils-tokyo-qualifying`）。按
+    `same_line_as_printed` 扫 52 条存量封面，**41 条**都是这样。赛场之上的封面
+    早就不另排（`build_match_reel` 里那句「旁白就是海报上那句钩子，不另排字幕」），
+    这条线没跟上——判据现在两条线共用一份（`subtitle_text.same_line_as_printed`）。
+
+    - 只丢**和大字是同一句**的那几条，封面其余的话照旧出字幕（静音刷是默认状态）
+    - 大问题常常被切成两条字幕（「总决赛去过15座城市」＋「为什么没有一座留得住？」），
+      所以相邻 `max_run` 条拼起来是同一句的，一起丢
+    - 口播里多说了字的（「5天后赢了**12号**种子」对「5天后赢种子」）**不算同一句**，
+      字幕留着——那几个字画面上没有
+    """
+    if not printed.strip():
+        return list(cues)
+    from .subtitle_text import same_line_as_printed  # noqa: PLC0415
+
+    keep = list(cues)
+    i = 0
+    while i < len(keep):
+        # ⚠️ 上界写在 range 里，不许在循环体里 `break`：`for…else` 的 else 只在
+        # 循环**没被 break** 时走，越界那一下 break 掉，`i` 就再也不加——最后一两条
+        # 字幕上原地死循环（第一版就这么卡死过测试）。
+        for run in range(1, min(max_run, len(keep) - i) + 1):
+            spoken = "".join(c[2] for c in keep[i:i + run])
+            if same_line_as_printed(spoken, printed):
+                del keep[i:i + run]
+                break
+        else:
+            i += 1
+    return keep
+
+
 def _ass_stamp(seconds: float) -> str:
     cs = max(0, int(round(seconds * 100)))
     h, cs = divmod(cs, 360_000)
@@ -13390,12 +13529,46 @@ LEAD_SILENCE = 0.6
 TAIL_SILENCE = 1.5
 
 
+#: 字卡解说每个接缝的溶解时长（秒）。和赛场之上的 `SEG_FADE` 同一个数，出处是
+#: `design_tokens.MOTION["video_dissolve_s"]`。
+SLIDE_DISSOLVE = float(_MOTION["video_dissolve_s"])
+
+
+def dissolve_chain(labels: Sequence[str], lengths: Sequence[float],
+                   fade: float) -> list[str]:
+    """把几路画面按出场顺序**溶解**着接成 `[outv]` 的滤镜（`xfade=fade`）。
+
+    `lengths[k]` 是第 k 路的原长（不含为溶解垫的底料）；最后一路不用给长度。
+    第 k 个接缝的 offset ＝ 前 k 路原长之和，也就是第 k 路在成片里的起点——
+    和硬切时一模一样（每一路末尾垫的那一截底料正好被 `xfade` 吃掉）。
+    只有一路时原样透传。
+
+    ⚠️ `transition=fade` 是**溶解**（前一路直接化进后一路），不是 `fadeblack`
+    （各自碰黑）：「转场是溶解，中间一帧黑都不许有」是账号所有者的规矩，
+    赛场之上为「接缝有轻微的闪烁」栽过一次（video-craft「淡入淡出 ≠ 淡到黑」）。
+    """
+    if len(labels) == 1:
+        return [f"{labels[0]}null[outv]"]
+    if len(lengths) < len(labels) - 1:
+        raise ExplainerVideoError(
+            f"溶解要前 {len(labels) - 1} 路的长度，只拿到 {len(lengths)} 个")
+    out, prev, at = [], labels[0], 0.0
+    for k in range(1, len(labels)):
+        at += lengths[k - 1]
+        dst = "[outv]" if k == len(labels) - 1 else f"[vx{k}]"
+        out.append(f"{prev}{labels[k]}xfade=transition=fade:duration={fade:g}:"
+                   f"offset={at:.3f}{dst}")
+        prev = dst
+    return out
+
+
 def assemble_explainer_video(
     slides: Sequence[Path],
     audios: Sequence[Path],
     output: Path,
     *,
     captions: Sequence[str] | None = None,
+    printed: Sequence[str] | None = None,
     ffmpeg_bin: str = "ffmpeg",
     ffprobe_bin: str = "ffprobe",
     lead_silence: float = LEAD_SILENCE,
@@ -13452,6 +13625,26 @@ def assemble_explainer_video(
     本来就填满画布，一个像素的黑边都不会有。字幕的 `margin_v` 跟着
     `canvas_h` 重算（`_ass_header` 的 docstring 早写着这个参数「要能换」，
     是为赛场之上的 3:4 字幕留的，这次直接复用）。
+
+    ⭐ **2026-09-27：每个接缝都是 0.18 秒溶解，包括冷开场→封面和末屏→片尾**
+    （账号所有者 Q4：「字卡解说所有接缝 0.18s 溶解（含进片尾）……中间一帧黑都不许
+    有」）。原来是 `concat` 一帧硬切，末屏进片尾那一刀亮度一下跳 70/255。
+    画面走 `xfade=fade` 链，声音仍然 `concat`（v=0）——**旁白一个采样都不动**，
+    不拿 `acrossfade` 去削下一屏第一个字的起音。长度账和赛场之上
+    `dissolve_filtergraph` 同一个形状：除最后一路外，每一路画面末尾 `tpad` 克隆
+    出一截底料让 `xfade` 吃掉，第 k 个接缝的 offset 就是前面各路的原长之和，
+    所以**每一屏的起点、总长都和硬切时一样**，字幕 cue 一处不用改。
+    ⚠️ 这本账成立的前提是**每一路声音的长度正好等于它那一路画面的原长**——
+    原来 `concat` 每一段自己对齐（短的那条补静音），溶解之后声音单独 concat，
+    **差多少就往后累积多少**。所以每一路声音都按那一路画面的原长
+    `apad=whole_dur`＋`atrim` 锁死，冷开场、每一屏一样。不能指望「ffprobe 报的
+    时长就是解码出来的长度」：edge-tts / Azure 出的 CBR mp3 确实逐毫秒相同（量过
+    缓存里 8 个文件），可 **libmp3lame 编的 mp3 带 LAME 头，1.000 秒的声音
+    ffprobe 报 1.056**——2026-09-27 拿这种 mp3 拼的三屏样片，锁之前成片声音比画面
+    短 183ms（三屏各差 55~63ms，一屏一屏累加）；冷开场是 mp4，声画也常差几十毫秒。
+
+    `printed`：每一屏**画面上印着的那句大字**（封面的大问题）。字幕里念的正好是
+    那一句的，丢掉不排（`drop_printed_cues`）——大字已经印着了。
     """
     if not slides or len(slides) != len(audios):
         raise ExplainerVideoError("幻灯片与音频数量不匹配")
@@ -13473,8 +13666,12 @@ def assemble_explainer_video(
     # 前面下标）多出来的复杂度。
     offset = 0
     badge_idx = None
+    # 每一路画面的原长（秒），按出场顺序。溶解的 offset 全从这儿累加。
+    lengths: list[float] = []
+    fade = SLIDE_DISSOLVE
     if intro is not None:
         command.extend(["-i", str(Path(intro).resolve())])
+        lengths.append(_audio_seconds(Path(intro), ffprobe_bin, runner))
         offset = 1
         if intro_badge is not None and Path(intro_badge).is_file():
             # 静态图当叠加层：给个够长的 `-t`（片头从没超过一分钟），让它
@@ -13484,8 +13681,11 @@ def assemble_explainer_video(
             )
             badge_idx = offset
             offset += 1
+    slide_secs: list[float] = []
     for i, (slide, audio) in enumerate(zip(slides, audios)):
         seconds = _audio_seconds(Path(audio), ffprobe_bin, runner) + head[i] + tail[i]
+        lengths.append(float(f"{seconds:.3f}"))
+        slide_secs.append(float(f"{seconds:.3f}"))
         command.extend(
             ["-loop", "1", "-t", f"{seconds:.3f}", "-i", str(Path(slide).resolve())]
         )
@@ -13520,6 +13720,10 @@ def assemble_explainer_video(
             f"crop={VIDEO_W}:{canvas_h}:"
             f"x='clip(iw*{intro_cx}-ow/2\\,0\\,iw-ow)':y=0,setsar=1,fps=30"
         )
+        # 冷开场后面一定还有幻灯片，所以它一定要给下一个接缝留底料。
+        # 多垫一秒不是浪费：`xfade` 过了溶解窗口就把 A 路剩下的帧扔掉，
+        # 而 mp4 的画面有时比 ffprobe 报的整体时长短几十毫秒。
+        intro_tail = f",tpad=stop_mode=clone:stop_duration={fade + 1.0:.3f}"
         if badge_idx is not None:
             filters.append(f"{intro_chain}[introbg]")
             filters.append(f"[{badge_idx}:v]format=rgba[introbadge]")
@@ -13533,11 +13737,14 @@ def assemble_explainer_video(
             # 不许把片头拖到台头图那么长` 钉住这一条，反向验证过。
             filters.append(
                 "[introbg][introbadge]overlay=0:0:shortest=1:format=auto,"
-                "format=yuv420p[vintro]"
+                f"format=yuv420p{intro_tail}[vintro]"
             )
         else:
-            filters.append(f"{intro_chain},format=yuv420p[vintro]")
-        filters.append("[0:a]aresample=async=1[aintro]")
+            filters.append(f"{intro_chain},format=yuv420p{intro_tail}[vintro]")
+        # 声音按画面原长补齐/截齐：见 docstring 里那条前提。
+        filters.append(
+            f"[0:a]aresample=async=1,apad=whole_dur={lengths[0]:.3f},"
+            f"atrim=end={lengths[0]:.3f}[aintro]")
     # 卡片本来就是 1080×1440（`CARD_H`）渲的。`canvas_h` 等于 `CARD_H` 时，
     # 下面的 scale+pad 对卡片是个空操作（卡片已经等于目标画布），字幕的
     # `margin_v` 也要跟着新的画布高度重算——`card_top` 会变成 0，字幕锚点
@@ -13566,6 +13773,8 @@ def assemble_explainer_video(
                 boundaries=marks,
                 offset=head[i],
             )
+            if printed and i < len(printed):
+                cues = drop_printed_cues(cues, printed[i])
             if cues:
                 ass = write_subtitles(
                     cues, output.parent / f"sub_{i:02d}.ass",
@@ -13573,19 +13782,23 @@ def assemble_explainer_video(
                 )
                 chain += (f",subtitles='{_filter_path(ass)}'"
                           f":fontsdir='{_filter_path(_ASS_EN_FONT_FILE.parent)}'")
-        filters.append(f"{chain},format=yuv420p[v{i}]")
+        # 后面还有一路（下一屏或片尾）就垫一截底料给溶解吃，见 docstring。
+        last = i == n - 1 and outro is None
+        pad_tail = "" if last else (
+            f",tpad=stop_mode=clone:stop_duration={fade + 0.1:.3f}")
+        filters.append(f"{chain},format=yuv420p{pad_tail}[v{i}]")
         # Silence the audio rather than the picture: adelay pushes the speech
         # later, apad hangs quiet on the end. The still stays on screen for the
         # whole padded length because its -t above already includes it.
+        # 末尾那段安静不再单写 `apad=pad_dur`：`whole_dur` 按这一屏画面的原长补齐
+        # （片尾静音已经算在原长里），`atrim` 再截齐——每一路声音锁成它那一路画面
+        # 的长度，溶解之后声音才不会一屏一屏往前漂（见 docstring 那条前提）。
         steps = []
         if head[i]:
             steps.append(f"adelay={round(head[i] * 1000)}:all=1")
-        if tail[i]:
-            steps.append(f"apad=pad_dur={tail[i]:.3f}")
-        filters.append(
-            f"[{2 * i + 1 + offset}:a]{','.join(steps)}[a{i}]" if steps
-            else f"[{2 * i + 1 + offset}:a]anull[a{i}]"
-        )
+        steps.append(f"apad=whole_dur={slide_secs[i]:.3f}")
+        steps.append(f"atrim=end={slide_secs[i]:.3f}")
+        filters.append(f"[{2 * i + 1 + offset}:a]{','.join(steps)}[a{i}]")
     beats = n
     if outro is not None:
         # 片尾走**和幻灯片一模一样**的 scale+pad+fps 链——片尾卡是 3:4，
@@ -13602,11 +13815,12 @@ def assemble_explainer_video(
         # 对不上时 ffmpeg 不报错，只会拼出一段爆音或者干脆没声。
         filters.append(f"[{vi}:a]aresample=async=1[a{n}]")
         beats = n + 1
-    concat_inputs = ("[vintro][aintro]" if intro is not None else "") + "".join(
-        f"[v{i}][a{i}]" for i in range(beats)
-    )
-    beats += 1 if intro is not None else 0
-    filters.append(f"{concat_inputs}concat=n={beats}:v=1:a=1[outv][outa]")
+    vlabels = (["[vintro]"] if intro is not None else []) + [
+        f"[v{i}]" for i in range(beats)]
+    alabels = (["[aintro]"] if intro is not None else []) + [
+        f"[a{i}]" for i in range(beats)]
+    filters.extend(dissolve_chain(vlabels, lengths, fade))
+    filters.append(f"{''.join(alabels)}concat=n={len(alabels)}:v=0:a=1[outa]")
 
     command.extend(
         [
@@ -13788,6 +14002,8 @@ def generate_explainer_video(
         return assemble_explainer_video(
             slides, audios, outdir / "explainer.mp4",
             captions=[seg.narration for seg in segments],
+            # 封面的大问题印在画面上，念到那一句时不再另排字幕（见 `drop_printed_cues`）。
+            printed=[seg.title if seg.kind == "cover" else "" for seg in segments],
             intro=intro,
             intro_badge=intro_badge,
             intro_cx=intro_cx,
@@ -13839,6 +14055,7 @@ def explainer_push_html(
     xhs_text: str,
     video_name: str = "explainer.mp4",
     copy_url: str | None | _Unset = _UNSET,
+    story=None,
 ) -> str:
     """Build the WeChat push using the knowledge post's own template.
 
@@ -13849,7 +14066,7 @@ def explainer_push_html(
     the same publication, and append the link to the finished video, which is
     the one thing a knowledge post does not have.
     """
-    from ..render.knowledge import knowledge_push_html_from_parts
+    from ..render.knowledge import knowledge_column, knowledge_push_html_from_parts
 
     slides = [f"slide_{i:02d}.jpg" for i in range(len(segments))]
     rel = outdir.as_posix()
@@ -13919,8 +14136,14 @@ def explainer_push_html(
         ],
         xhs_text=xhs_text,
         copy_url=copy_url,
-        badge="知识解说视频",
-        extra_action=(video_url, "▶ 打开 9:16 成片"),
+        # 台头药丸写**栏目名**，和知识帖、片子台头「网球时差 · 网球有故事」同一个
+        # 出处（2026-09-27 UI/VI 评审：两个模板的药丸原来各写各的，这边是
+        # 「知识解说视频」）。按钮原来写「打开 9:16 成片」——2026-09-16 起默认画布
+        # 已经是 3:4，那个比例写在按钮上就是错的，改成不带比例的「竖版成片」。
+        # ⚠️ 红按钮（#ff2442 那颗「分别复制标题 / 正文 / 置顶评论」）在
+        # `knowledge_push_html_from_parts` 里，这儿一个字节都不碰。
+        badge=knowledge_column(story),
+        extra_action=(video_url, "▶ 打开竖版成片"),
     )
 
 
