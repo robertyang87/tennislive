@@ -29,8 +29,9 @@
 
 ⚠️ **扫描记录一旦提交，推送前要对得上**（`record_problem`，auto_push_interview_gate
 和 render 前置那一步都调它）：当前 `cover.frame_at` 必须是记录里**过闸**的那一格。
-取景（源片、翻转、裁切、zoom/focus）变了的记录管不到当前海报，不拦；没有记录也
-不拦——存量和自动链都没有这份记录。真要用一帧没扫过的，写 `cover._frame_scan_why`。
+取景（源片、翻转、裁切、zoom/focus）变了的记录管不到当前海报，不拦；尺子（审核器
+版本、阈值）变了的记录说的不是今天这道闸，也不拦；没有记录也不拦——存量和自动链
+都没有这份记录。真要用一帧没扫过的，写 `cover._frame_scan_why`。
 
 用法：
 
@@ -51,9 +52,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 
+import audit_interview_cover as _auditor  # noqa: E402
 from audit_interview_cover import (  # noqa: E402
     CANVAS,
-    LOCAL_AUDITOR,
     MIN_CLOSE_UP_FACE_HEIGHT_RATIO,
     MIN_FACE_AREA_RATIO,
     MIN_FACE_CONTRAST,
@@ -132,8 +133,10 @@ def candidate_times(a: float, b: float, step: float,
                     include: tuple[float, ...] = (), end: float | None = None) -> list[float]:
     """窗口里的候选时刻，外加 `include` 里的（spec 现在的 `frame_at` 一定要在里面）。
 
-    `end` 是源片时长：`ffmpeg -ss` 越过片尾不报错，只是一帧都不出，下游渲海报
-    才炸——所以片尾之后的格子先剔掉，别让一个越界的格子拖垮整趟扫描。
+    `end` 是源片**视频流**的时长（`probe_video_duration`，不是容器时长——音轨
+    可以比画面长）：`ffmpeg -ss` 越过最后一帧不报错，只是一帧都不出，下游渲海报
+    才炸——所以片尾之后的格子先剔掉。剔完还撞上的（低帧率源最后一帧早于
+    `end - 0.05`）由 `measure` 记成一格「没有画面」，不拖垮整趟扫描。
     """
     n = int(math.floor((b - a) / step + 1e-6)) + 1
     times = {_round(a + i * step) for i in range(n)}
@@ -170,6 +173,43 @@ def framing(spec: dict) -> dict:
     }
 
 
+def ruler() -> dict:
+    """这把尺子的身份：审核器版本 ＋ 全部判定阈值。扫描记录带着它落盘。
+
+    阈值**从审核模块自己推**：模块级大写名字里，值是数、或一串数的，都算
+    （`MIN_*`、照片区几何、人脸中心安全区……）——以后加一条阈值自动进来，
+    不维护名单（名单会过期，而过期的样子是「阈值改了、旧记录照样拦」）。
+    """
+    thresholds = {}
+    for name, value in vars(_auditor).items():
+        if not name.isupper() or isinstance(value, bool):
+            continue
+        if isinstance(value, int | float):
+            thresholds[name] = value
+        elif (isinstance(value, tuple) and value
+              and all(isinstance(v, int | float) and not isinstance(v, bool) for v in value)):
+            thresholds[name] = list(value)
+    return {"auditor": _auditor.LOCAL_AUDITOR,
+            "thresholds": dict(sorted(thresholds.items()))}
+
+
+def stale_ruler(record: dict) -> str:
+    """记录是不是**另一把尺子**量的；是就说变了什么，不是返回空串。
+
+    审核器版本或阈值变过，记录里每一格的 pass/fail 说的就不是今天这道闸——
+    旧的 fail 不许接着拦（阈值放宽后它可能早就过了），旧的 pass 也不许接着放。
+    """
+    now = ruler()
+    if record.get("auditor") != now["auditor"]:
+        return f"审核器 {record.get('auditor')} → {now['auditor']}"
+    if record.get("thresholds") != now["thresholds"]:
+        old = record.get("thresholds") or {}
+        changed = sorted(k for k in set(old) | set(now["thresholds"])
+                         if old.get(k) != now["thresholds"].get(k))
+        return "阈值变过：" + "、".join(changed[:5])
+    return ""
+
+
 def at_time(spec: dict, t: float) -> dict:
     """同一份 spec，只把 `cover.frame_at` 换成 `t`——构图合同按这一格判。"""
     out = copy.deepcopy(spec)
@@ -193,6 +233,10 @@ def margin(face: dict, shot_type: str) -> float:
     ), 3)
 
 
+class NoFrame(Exception):
+    """`poster_at` 用它说「源片在这一刻没有画面」——记一格不合格，不是工具坏了。"""
+
+
 def measure(spec: dict, times: list[float], poster_at, workdir: Path,
             audit=None) -> tuple[list[dict], dict[float, Path]]:
     """逐格渲海报、逐格量。`poster_at(t, dest)` 负责渲，`audit` 负责量。
@@ -204,6 +248,10 @@ def measure(spec: dict, times: list[float], poster_at, workdir: Path,
     ⚠️ 但**渲**不出来（ffmpeg / Chromium 挂了）照样抛：那是工具坏了，不是这一帧
     不行。吞成「这一格不合格」的话，整面墙会是一排 FAIL，读起来像「这段没有
     好帧」——兜底出事的时候不吭声，这个仓库栽过太多次。
+
+    唯一的例外是 `NoFrame`：这一刻**源片里就没有画面**（越过视频流最后一帧，
+    ffmpeg 退出码 0 一帧不出）。那是这一格的事实，不是工具坏了——记成不合格、
+    写明为什么，别让片尾一格拖垮整趟扫描（2026-09-27 review 复现过）。
     """
     audit = audit or audit_poster     # 调用时再取：测试替身要打在模块属性上才生效
     shot = (spec.get("cover") or {}).get("shot_type", "")
@@ -212,7 +260,13 @@ def measure(spec: dict, times: list[float], poster_at, workdir: Path,
     for i, t in enumerate(times):
         dest = workdir / f"cand_{i:03d}.jpg"
         entry: dict = {"frame_at": t}
-        poster_at(t, dest)
+        try:
+            poster_at(t, dest)
+        except NoFrame as exc:
+            entry.update({"status": "fail", "issues": [f"没有画面：{exc}"],
+                          "face": None, "margin": None})
+            entries.append(entry)
+            continue
         posters[t] = dest
         try:
             result, issues = audit(dest, at_time(spec, t))
@@ -246,7 +300,7 @@ def build_record(spec: dict, window: tuple[float, float], step: float,
     return {
         "slug": spec.get("slug"),
         "method": METHOD,
-        "auditor": LOCAL_AUDITOR,
+        **ruler(),          # auditor ＋ thresholds：换了尺子，这份记录就不再对账
         "scanned_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "framing": framing(spec),
         "window": [_round(window[0]), _round(window[1])],
@@ -273,7 +327,10 @@ def record_problem(record: dict | None, spec: dict) -> str:
     - 没有记录：不拦（这道闸落地时全库 0 份记录；自动链也不产，它只管扫过的）
     - 写了 `cover._frame_scan_why`：认领了，不拦
     - 记录的取景和当前不一样：它说的是另一张海报，管不到，不拦
-    - 取景一样：`frame_at` 必须是记录里**过闸**的那一格——没扫过＝没人看过这一帧
+    - 记录是另一把尺子量的（审核器版本或阈值变过，`stale_ruler`）：它的 pass/fail
+      说的不是今天这道闸，不拦——旧的 fail 接着拦就是拿过期的判决挡人
+    - 都一样：`frame_at` 必须是记录里**过闸**的那一格——没扫过＝没人在候选墙上
+      看过这一帧。红的时候只给两条出路：重扫，或写 `_frame_scan_why` 认领
     """
     if record is None:
         return ""
@@ -284,21 +341,23 @@ def record_problem(record: dict | None, spec: dict) -> str:
         return f"{RECORD_NAME} 不是 {METHOD} 写的记录，读不懂——重跑 mode=cover 重扫"
     if record.get("framing") != framing(spec):
         return ""
+    if stale_ruler(record):
+        return ""
     t = cover.get("frame_at")
     if t is None:
         return "spec 没有 cover.frame_at"
     entry = find_entry(record, t)
     window = record.get("window") or ["?", "?"]
+    escape = ("出路二选一：① 重扫——cover.scan_window 盖住它，跑一趟 mode=cover；"
+              "② 人看过这一帧、真要用它，就在 cover._frame_scan_why 写一句为什么。")
     if entry is None:
         best = (record.get("passing") or [])[:3]
         return (f"cover.frame_at={t} 不在已提交的 {RECORD_NAME} 里（扫的是 "
-                f"{window[0]}–{window[1]} 秒）——这一帧没扫过，也就没人在候选墙上看过它。"
-                f"改用过闸的 {best or '（窗口里一格都没过）'}，或把它扫进去"
-                "（cover.scan_window 盖住它、跑一趟 mode=cover），"
-                "真要用它就写 cover._frame_scan_why")
+                f"{window[0]}–{window[1]} 秒）——这一帧没扫过，没上过候选墙。{escape}"
+                f"（记录里过闸的：{best or '一格都没有'}）")
     if entry.get("status") != "pass":
         issues = "；".join(entry.get("issues") or []) or "原因没记"
-        return f"cover.frame_at={t} 在扫描里没过闸（{issues}）"
+        return f"cover.frame_at={t} 在扫描里没过闸（{issues}）。{escape}"
     return ""
 
 
@@ -433,14 +492,18 @@ def run_scan(spec: dict, outdir: Path, clip, *, window: str = "",
     a, b = scan_window(spec, window)
     step_s = scan_step(spec, step)
     src = clip.yt_download(spec["url"], outdir / "source.mp4", clip.SOURCE_FMT, spec)
+    # 片尾按**视频流**剔，不按容器时长（＝最长那条流，音轨可以比画面长）
     times = candidate_times(a, b, step_s, include=(cover.get("frame_at"),),
-                            end=clip.probe_duration(src))
+                            end=clip.probe_video_duration(src))
     logo = clip._logo_filter(spec, src, outdir)
     print(f"[封面扫描] {len(times)} 格，走 cover_poster ＋ audit_poster（和终审同一份实现）")
     with tempfile.TemporaryDirectory(prefix="cover_scan_") as tmp:
         with clip.canvas_page() as page:
             def poster_at(t: float, dest: Path) -> Path:
-                out = clip.cover_poster(spec, src, outdir, logo, at=t, dest=dest, page=page)
+                try:
+                    out = clip.cover_poster(spec, src, outdir, logo, at=t, dest=dest, page=page)
+                except clip.NoFrameAt as exc:      # 剔过片尾还撞上：低帧率源的最后半帧
+                    raise NoFrame(str(exc)) from exc
                 # 渲海报那份 HTML 内嵌整套字体（12 MB 一份），扫几十格就是几百 MB
                 # 的临时盘——截完图就没用了，当场删
                 dest.with_suffix(".html").unlink(missing_ok=True)
@@ -464,11 +527,22 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--spec", required=True)
     ap.add_argument("--check", action="store_true",
                     help="已提交的扫描记录和当前 cover.frame_at 对账（不下片、不渲）")
+    ap.add_argument("--report", action="store_true",
+                    help="把已落盘的扫描记录按排名再印一遍（mode=cover 红了收尾时用）")
     args = ap.parse_args(argv)
-    if not args.check:
-        ap.error("扫描本身走 build_interview_clip.py --stage cover-scan；这里只有 --check")
+    if not (args.check or args.report):
+        ap.error("扫描本身走 build_interview_clip.py --stage cover-scan；这里只有 --check / --report")
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
     record = load_record(OUTDIR / spec["slug"])
+    if args.report:
+        # **红着收尾时把排名印在错误旁边**：artifact 在沙箱里下不下来，日志是唯一
+        # 一定看得见的地方，而扫描那几行已经被后面海报＋像素闸的输出冲到上面去了。
+        if not isinstance(record, dict) or record.get("method") != METHOD:
+            print(f"[封面扫描] {spec['slug']}：没有可读的 {RECORD_NAME}——这一趟没扫成。")
+            return 0
+        print(report(record, None))
+        print(f"  候选墙 → artifact 里的 {SHEET_NAME}（不进仓库）；记录 → {RECORD_NAME}")
+        return 0
     if problem := record_problem(record, spec):
         print(f"::error::[封面扫描对账] {spec['slug']}：{problem}")
         return 1
@@ -477,6 +551,9 @@ def main(argv: list[str] | None = None) -> int:
     elif record.get("framing") != framing(spec):
         print(f"[封面扫描对账] {spec['slug']}：记录是另一种取景扫的（源片/翻转/裁切/zoom/"
               "focus 变过），管不到当前海报，不对账。要候选墙就重跑 mode=cover。")
+    elif why := stale_ruler(record):
+        print(f"[封面扫描对账] {spec['slug']}：记录是另一把尺子量的（{why}），它的"
+              "过闸名单说的不是今天这道闸，不对账。要候选墙就重跑 mode=cover。")
     else:
         print(f"[封面扫描对账] {spec['slug']}：frame_at 是扫描记录里过闸的那一格"
               + ("（已认领 _frame_scan_why）" if (spec.get('cover') or {}).get('_frame_scan_why')

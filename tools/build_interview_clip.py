@@ -2321,6 +2321,23 @@ def auto_silent_gap_keys(spec: dict, lines: list[dict], outdir: Path) -> set[str
     return resolved
 
 
+#: `--stage verify` **只因「人还没核」的发现**没过时的退出码：分歧超闸没认领／认领
+#: 过期／超天花板、空档没销账。`mode=subs` 那一步靠它把「报告里有要人看的」
+#: （人核之前的常态，`::warning::` 收尾、run 绿着）和「工具坏了」（下不动音轨、
+#: 模型起不来——照样红）分开。render 那一步不区分：非零就停在编码之前，和原来一样。
+VERIFY_FINDINGS_EXIT = 3
+
+
+class ReviewFindings(SystemExit):
+    """第二份 ASR 报出来、要人逐处看过才能销账的发现。
+
+    是 `SystemExit` 的子类：不关心这层区别的调用方行为不变——消息照印、退出码
+    非零。只有 `--stage verify` 接住它、和空档一起打印、换成 `VERIFY_FINDINGS_EXIT`
+    退出。**只给「人核之前的常态」用**：同一个模型跑两遍、下不动音轨这类是配置
+    或工具的毛病，照旧抛普通的 `SystemExit`，subs 那一趟照样红。
+    """
+
+
 def blocking_gaps(spec: dict, lines: list[dict],
                   outdir: Path) -> list[tuple[float, float]]:
     """render 那道空档闸**真正会拦**的那几处：人没销账、VAD 也没证明静音的。
@@ -2501,7 +2518,7 @@ def _check_disagree_claim(spec: dict, rate: float, path: Path,
     claim = spec.get("transcript_disagree_ok") or {}
     declared, why = claim.get("rate"), str(claim.get("why") or "").strip()
     if not (isinstance(declared, int | float) and why):
-        raise SystemExit(
+        raise ReviewFindings(
             f"两份转写对不上 {rate:.1%}，超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}。"
             f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。\n"
             "逐处看完、确认剩下的分歧不影响发出去的英文（长采访多半是 whisper "
@@ -2513,7 +2530,7 @@ def _check_disagree_claim(spec: dict, rate: float, path: Path,
             f'  "transcript_disagree_ok": {{"rate": {math.ceil(rate * 1000) / 1000}, '
             '"why": "逐处看过：……"}')
     if rate > declared:
-        raise SystemExit(
+        raise ReviewFindings(
             f"分歧 {rate:.1%} 比认领的 {declared:.1%} 还高——认领是钉在当时那次观测上的，"
             "现在变差了。重新逐处看过再更新 `transcript_disagree_ok.rate`。")
     # **短转写按差了几个词判，长转写按比例判。** 分母小的时候比例量的不是
@@ -2522,12 +2539,12 @@ def _check_disagree_claim(spec: dict, rate: float, path: Path,
     off = round(rate * max(first_words, 1))
     if short:
         if off > SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS:
-            raise SystemExit(
+            raise ReviewFindings(
                 f"两份转写差了 {off} 个词（共 {first_words} 词，{rate:.1%}），"
                 f"超过短转写的天花板 {SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS} 个词。\n"
                 "这条转写本来就短，差这么多必然有整段对不上——认领挡不住，去查源。")
     elif rate > TRANSCRIPT_DISAGREE_CEILING:
-        raise SystemExit(
+        raise ReviewFindings(
             f"分歧 {rate:.1%} 超过认领的天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}。"
             "这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。")
     scale = (f"短转写：{first_words} 词里差 {off} 个，"
@@ -3444,6 +3461,15 @@ def _logo_filter(spec: dict, src: Path, outdir: Path) -> str:
                             bool(spec.get("mirrored")))) + ",")
 
 
+class NoFrameAt(RuntimeError):
+    """`ffmpeg -ss t` 退出码 0 却一帧都没抽出来：`t` 落在视频流最后一帧之后。
+
+    单独一个类型，不用 `FileNotFoundError`：ffmpeg 根本没装时 `subprocess.run`
+    抛的也是它——封面扫描要把「这一刻没画面」记成一格不合格，而「工具坏了」
+    必须照样抛出去（`interview_cover_scan.measure` 的 docstring）。
+    """
+
+
 def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "", *,
                  at: float | None = None, dest: Path | None = None,
                  page=None) -> Path:
@@ -3464,8 +3490,10 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "", *,
     frame = outdir / "_cover_frame.jpg"
     if dest is not None:           # 扫候选：每一格各用各的临时帧，别互相盖
         frame = dest.with_suffix(".frame.jpg")
+    t = spec["cover"]["frame_at"] if at is None else at
+    frame.unlink(missing_ok=True)  # 上一趟留下的同名帧会让下面那道判断假绿
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                    "-ss", str(spec["cover"]["frame_at"] if at is None else at),
+                    "-ss", str(t),
                     "-i", str(src),
                     "-vf", (("hflip," if spec.get("mirrored") else "") + logo
                             + _video_eq_filter(spec)
@@ -3473,6 +3501,11 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "", *,
                                          float(spec.get("crop_keep_top", 1.0)),
                                          float(spec.get("crop_shift_x", 0.0)))),
                     "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
+    if not frame.is_file():
+        # 退出码 0、一帧没出：原来一路走到 `build_cover` 的 `read_bytes()` 才炸成
+        # FileNotFoundError，封面扫描整趟跟着红（2026-09-27 review 复现）
+        raise NoFrameAt(f"源片在 {t} 秒没有画面——ffmpeg 退出码 0 却一帧都没抽出来，"
+                        "多半越过了视频流的最后一帧（音轨可以比画面长）。")
     # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
     # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
     poster = build_cover(spec, frame, dest or outdir / "poster.jpg", page=page)
@@ -4493,6 +4526,33 @@ def probe_duration(path: Path) -> float:
     return float(out)
 
 
+def probe_video_duration(path: Path) -> float:
+    """**视频流**的时长（秒）——抽帧能取到的最后一刻，不是容器时长。
+
+    ⚠️ `probe_duration` 读的是 `format=duration`＝**最长的那条流**。音轨比画面长
+    的源片（2026-09-27 review 复现：8.0 秒画面 ＋ 8.3 秒音轨）按它剔片尾，8.1 秒那
+    一格照样留着，而 `ffmpeg -ss 8.1` **退出码 0、一帧都不出**——下游渲海报才炸。
+    所以封面扫描剔片尾要按这一个。mp4 给 `stream=duration`，mkv/webm 只在
+    `DURATION` 标签里给（`HH:MM:SS.xxx`）；两样都读不到就退回容器时长，并说一声。
+    """
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "stream=duration:stream_tags=DURATION", "-of", "json", str(path)],
+        check=True, capture_output=True, text=True, timeout=120).stdout
+    streams = json.loads(out or "{}").get("streams") or [{}]
+    for raw in (streams[0].get("duration"), (streams[0].get("tags") or {}).get("DURATION")):
+        try:
+            if raw and ":" in str(raw):
+                h, m, sec = str(raw).split(":")
+                return int(h) * 3600 + int(m) * 60 + float(sec)
+            if raw not in (None, "", "N/A"):
+                return float(raw)
+        except ValueError:
+            continue
+    print(f"⚠️ {path.name} 读不到视频流时长，按容器时长（最长那条流）剔片尾")
+    return probe_duration(path)
+
+
 def _record_film_seconds(out: Path, outdir: Path) -> Path:
     """把**成片**时长写进 `render.json`，然后原样返回 `out`。
 
@@ -4649,6 +4709,37 @@ def main() -> int:
         return run_scan(spec, outdir, sys.modules[__name__], window=args.window,
                         step=args.step, keep_source=keep_source)
 
+    # **封面这一档不要字幕、不要中文，排在取字幕之前**（和 cover-scan 同一个理由）。
+    # 它原来排在切行和 `if not zh: return 0` 后面——而「封面排在最前面、紧跟选题」
+    # 正是 zh 还空着的那一刻：`--stage cover` 于是 0 退出、一张海报都没出，下一步
+    # 的像素闸报「poster 不存在」，而扫描已经白跑了一分钟（2026-09-27 review）。
+    # 顺带省掉 cover 那一趟白拉的一次字幕。判据 `test_中文还空着也能出封面`。
+    if args.stage == "cover":
+        # **只出海报，不出片。** 2026-08-04 一晚上渲了五趟，**四趟是为了换封面**——
+        # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有
+        # 第一帧。量过：`.git` 6.4 GB 里 **2.9 GiB 是同一路径的旧版本**，
+        # 也就是这类返工的废料（`wong-gea.mp4` 存了 7 版、`official-highlight.mp4` 18 版）。
+        #
+        # **不设 `transcript_verified` 那几道闸**：它们防的是「发出一条错的片子」，
+        # 而这一步什么都不发——挑封面本来就该排在转写核对**之前**，
+        # 挡在这儿只会逼人为了看一眼封面先把校验走完。
+        if not spec.get("cover"):
+            raise SystemExit(f"{args.spec} 没有 `cover` 块，没什么可预览的。")
+        src = yt_download(spec["url"], outdir / "source.mp4", SOURCE_FMT, spec)
+        poster = cover_poster(spec, src, outdir, _logo_filter(spec, src, outdir))
+        # 源片不进仓库，也没必要留着——它是这一步唯一的大文件。
+        # ⚠️ **`--keep-source` 只给 `mode=render` 的封面前置那一步用**：同一趟
+        # job 接下来还要出片，`render()` 的 `yt_download` 见文件在就直接复用，
+        # 删了等于同一条源片下两遍。清理照旧由「提交成片」那一步兜底。
+        if not keep_source:
+            src.unlink(missing_ok=True)
+        (outdir / "_logo_mask.png").unlink(missing_ok=True)
+        print(f"封面 {poster}（{spec['cover']['frame_at']} 秒那一帧）"
+              + ("——源片留给同一趟后面的出片。" if keep_source else
+                 "\n**没有出片**：确认好看再跑 `--stage render`，"
+                 "这样一条片子只往仓库里塞一个 mp4。"))
+        return 0
+
     if args.stage in ("subs", "sheet"):
         # **挑封面用的**：只在取字幕这一趟出，出片那趟不重复下
         storyboard_sheet(spec["url"], outdir, spec)
@@ -4721,57 +4812,42 @@ def main() -> int:
                     fp_path.read_text(encoding="utf-8")).get("sha256", "")
             except (OSError, ValueError):
                 recorded = ""  # 读不了当成没记过，照常全跑
+        # **两类发现收齐了一起报**：原来分歧超闸一抛就退出，空档那一半根本没判——
+        # 人照着报告改完分歧，下一趟才看见空档，又是一个来回。
+        findings: list[str] = []
         if spec.get("transcript_verified") is True and recorded == fp:
             print(f"[verify] 转写指纹没变（{fp[:12]}…）且已人工核过"
                   "（transcript_verified: true），跳过第二份 ASR。"
                   "改一行 en_fixed / 换字幕源 / 换模型都会让指纹变、重新全跑。")
         else:
-            verify_transcript(spec, lines, outdir)
-            # **只在 verify 走完（没抛）之后落指纹**：分歧超闸抛 SystemExit 时
-            # 不许留下「这份验过了」的标记——那正是「记已推送要排在发微信之后」
-            # 的同一条顺序规矩。
-            fp_path.write_text(json.dumps({
-                "sha256": fp,
-                "status": "pass",
-                "method": "dual_asr",
-                "first_model": spec.get("asr_model") or "provider_captions",
-                "second_model": _second_model(spec),
-            }, indent=1) + "\n",
-                               encoding="utf-8")
-            print(f"[verify] 指纹已落 {fp_path.name}（{fp[:12]}…）——"
-                  "下次转写没变且 transcript_verified 已置上时跳过 whisper。")
+            try:
+                verify_transcript(spec, lines, outdir)
+            except ReviewFindings as exc:
+                findings.append(str(exc))
+            else:
+                # **只在 verify 走完（没有分歧发现）之后落指纹**：分歧超闸时不许留下
+                # 「这份验过了」的标记——那正是「记已推送要排在发微信之后」
+                # 的同一条顺序规矩。
+                fp_path.write_text(json.dumps({
+                    "sha256": fp,
+                    "status": "pass",
+                    "method": "dual_asr",
+                    "first_model": spec.get("asr_model") or "provider_captions",
+                    "second_model": _second_model(spec),
+                }, indent=1) + "\n", encoding="utf-8")
+                print(f"[verify] 指纹已落 {fp_path.name}（{fp[:12]}…）——"
+                      "下次转写没变且 transcript_verified 已置上时跳过 whisper。")
         # **render 那道空档闸，verify 这一步就按同一个判据报。** 原来空档只在
         # `--stage render` 开头拦——`mode=subs` 跑了第二份 ASR 也看不见它，
         # 要等出片那趟装完依赖才红（tien-cobolli 那处 89.6–94.6 秒两趟 render
         # 各红一次）。判据是同一个函数，不是抄一份。
         if holes := blocking_gaps(spec, lines, outdir):
-            raise SystemExit(gap_block_message(args.spec, spec, holes))
-        return 0
-
-    if args.stage == "cover":
-        # **只出海报，不出片。** 2026-08-04 一晚上渲了五趟，**四趟是为了换封面**——
-        # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有
-        # 第一帧。量过：`.git` 6.4 GB 里 **2.9 GiB 是同一路径的旧版本**，
-        # 也就是这类返工的废料（`wong-gea.mp4` 存了 7 版、`official-highlight.mp4` 18 版）。
-        #
-        # **不设 `transcript_verified` 那几道闸**：它们防的是「发出一条错的片子」，
-        # 而这一步什么都不发——挑封面本来就该排在转写核对**之前**，
-        # 挡在这儿只会逼人为了看一眼封面先把校验走完。
-        if not spec.get("cover"):
-            raise SystemExit(f"{args.spec} 没有 `cover` 块，没什么可预览的。")
-        src = yt_download(spec["url"], outdir / "source.mp4", SOURCE_FMT, spec)
-        poster = cover_poster(spec, src, outdir, _logo_filter(spec, src, outdir))
-        # 源片不进仓库，也没必要留着——它是这一步唯一的大文件。
-        # ⚠️ **`--keep-source` 只给 `mode=render` 的封面前置那一步用**：同一趟
-        # job 接下来还要出片，`render()` 的 `yt_download` 见文件在就直接复用，
-        # 删了等于同一条源片下两遍。清理照旧由「提交成片」那一步兜底。
-        if not keep_source:
-            src.unlink(missing_ok=True)
-        (outdir / "_logo_mask.png").unlink(missing_ok=True)
-        print(f"封面 {poster}（{spec['cover']['frame_at']} 秒那一帧）"
-              + ("——源片留给同一趟后面的出片。" if keep_source else
-                 "\n**没有出片**：确认好看再跑 `--stage render`，"
-                 "这样一条片子只往仓库里塞一个 mp4。"))
+            findings.append(gap_block_message(args.spec, spec, holes))
+        if findings:
+            print(f"\n[verify] {len(findings)} 类要人核的发现（render 会拦；subs 只报）：")
+            for text in findings:
+                print("  ⚠️ " + text.replace("\n", "\n     "))
+            return VERIFY_FINDINGS_EXIT
         return 0
 
     if args.stage == "render":

@@ -127,6 +127,8 @@ def _kinds(calls: list[str]) -> list[str]:
             out.append("audit")
         elif "interview_cover_scan.py --check" in c:
             out.append("check")
+        elif "interview_cover_scan.py --report" in c:
+            out.append("report")
         elif "--stage verify" in c:
             out.append("verify")
     return out
@@ -164,6 +166,8 @@ def test_出片档封面前置要留源片_红了就地扫候选再停(tmp_path)
     done, calls = _run_step(red, COVER_STEP, mode="render", env={"AUDIT_RC": "1"})
     assert done.returncode != 0, "封面闸红了这一步却退出 0——编码照样会开跑"
     assert _kinds(calls) == ["cover keep", "audit", "scan keep"], calls
+    # render 红了就地扫的那份不提交：自动链只拨 render，提交了记录它下一趟就得对账
+    assert not any(c.startswith("git commit") for c in calls), calls
 
 
 def test_预览档先扫一段再出海报再验(tmp_path):
@@ -173,11 +177,24 @@ def test_预览档先扫一段再出海报再验(tmp_path):
     assert done.returncode == 0, done.stderr
     assert _kinds(calls) == ["scan keep", "cover", "audit", "check"], calls
 
+    # 红了：记录**照样先提交**（下一帧挑哪个、推送前对账都要它），排名在错误
+    # 旁边再印一遍，然后才非零退出——红了之后「提交成片」那一步不会跑
     red = tmp_path / "red"
-    red.mkdir()
+    shutil.copytree(ROOT / "tools", red / "tools",
+                    ignore=lambda d, names: [n for n in names if n != "git_push_retry.sh"])
+    rec = red / "output" / "interviews" / "demo" / scan.RECORD_NAME
+    rec.parent.mkdir(parents=True)
+    rec.write_text('{"method": "cover_scan_v1"}', encoding="utf-8")
     done, calls = _run_step(red, COVER_STEP, mode="cover", env={"AUDIT_RC": "1"})
     assert done.returncode != 0
-    assert _kinds(calls) == ["scan keep", "cover", "audit"], calls
+    assert _kinds(calls) == ["scan keep", "cover", "audit", "report"], calls
+    adds = [c for c in calls if c.startswith("git add")]
+    assert adds == [f"git add output/interviews/demo/{scan.RECORD_NAME}"], (
+        f"红着退出前没把扫描记录交上去（或者连墙一起交了）：{calls}")
+    i_add = calls.index(adds[0])
+    i_commit = next(i for i, c in enumerate(calls) if c.startswith("git commit"))
+    i_push = next(i for i, c in enumerate(calls) if c.startswith("git push"))
+    assert i_add < i_commit < i_push, calls
 
 
 def test_第二份ASR在subs那一趟跑_排在切行提交之后(tmp_path):
@@ -202,9 +219,69 @@ def test_第二份ASR在subs那一趟跑_排在切行提交之后(tmp_path):
         f"第二份 ASR 的模型缓存 subs 和 render 要同一把键：{keys}")
 
 
+#: `--stage` 各档要不要 ffmpeg：会走 `yt_download` 下源片或音轨的要（Brightcove
+#: HLS、合流、抽帧都靠它）；只拉字幕／故事板的不要。新加一档必须在这儿归类——
+#: 下面那条先拿 argparse 的 `choices` 对一遍，漏归类当场红。
+_MEDIA_STAGES = {"verify", "cover", "cover-scan", "render"}
+_CAPTION_ONLY_STAGES = {"subs", "sheet"}
+
+
+def test_会下载媒体的每一档都先装ffmpeg():
+    """`test_会下载媒体的工作流都要装ffmpeg` 按 **job** 查——这条工作流只有一个
+    job，render/cover 那一步装了 ffmpeg，整个 job 就算「装了」。而 2026-09-27
+    第二份 ASR 挪进 `mode=subs` 之后，subs 那一档**一个 ffmpeg 都没装**，
+    job 级的判据照样绿（review 指出：tennistv.com 那 12 条是 Brightcove HLS）。
+
+    所以按 **mode** 推：对 dispatch 表单里的每一档，走一遍它真会跑的步骤，
+    凡是跑 `build_interview_clip.py --stage <要下媒体的那几档>` 的，前面必须
+    有一步真调了 `ensure_ffmpeg`（去掉注释再认——注释里写着 ffmpeg 不算装了）。"""
+    import ast  # noqa: PLC0415
+    import re  # noqa: PLC0415
+
+    import yaml  # noqa: PLC0415
+
+    tree = ast.parse((ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8"))
+    choices = next(
+        ast.literal_eval(kw.value) for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and getattr(node.func, "attr", "") == "add_argument"
+        and node.args and getattr(node.args[0], "value", None) == "--stage"
+        for kw in node.keywords if kw.arg == "choices")
+    assert set(choices) == _MEDIA_STAGES | _CAPTION_ONLY_STAGES, (
+        f"--stage 的档位变了（{choices}）：新的那一档要不要 ffmpeg，先在上面两张表里归类")
+
+    wf = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    modes = (wf.get("on") or wf[True])["workflow_dispatch"]["inputs"]["mode"]["options"]
+    checked = []
+    for mode in modes:
+        ready = False
+        for step in _steps():
+            code = "\n".join(ln for ln in str(step.get("run") or "").splitlines()
+                             if not ln.lstrip().startswith("#"))
+            # 只有「跑 --stage」和「装 ffmpeg」这两类步骤是主语；别的步骤的 if 里有
+            # push／ref_name／always() 这类 `_holds` 不认的写法，本来也不用算
+            if "build_interview_clip.py" not in code and "ensure_ffmpeg" not in code:
+                continue
+            if not _holds(step.get("if"), mode):
+                continue
+            for stage in re.findall(r"build_interview_clip\.py[^\n]*--stage\s+([\w-]+)", code):
+                if stage in _MEDIA_STAGES:
+                    checked.append(f"{mode}:{stage}")
+                    assert ready, (
+                        f"mode={mode} 的「{step.get('name')}」跑 --stage {stage}（要下媒体），"
+                        "前面却没有一步 `ensure_ffmpeg`——缺了它报的是 yt-dlp 下不动，"
+                        "看起来像源的问题")
+            if re.search(r"(?<![\w-])ensure_ffmpeg(?![\w-])", code):
+                ready = True
+    assert {"subs:verify", "render:verify", "cover:cover", "render:cover"} <= set(checked), (
+        f"判据的主语没了：只校到 {sorted(set(checked))}")
+
+
 def test_subs的第二份ASR红了也要先交报告再红(tmp_path):
-    """真跑那一步：verify 红了（退出 3），报告照样 add → commit → push，
-    然后这一步以 verify 的退出码结束。红着把报告扔掉，这一趟就白跑了。"""
+    """真跑那一步：verify 没跑成（退出 1），报告照样 add → commit → push，
+    然后这一步以 verify 的退出码结束。红着把报告扔掉，这一趟就白跑了。
+
+    ⚠️ 只报了分歧／空档（`VERIFY_FINDINGS_EXIT`）**不算红**——那是人核之前的常态，
+    红了会把 pipeline_health 的失败率顶上去、推微信告警。见下一条。"""
     shutil.copytree(ROOT / "tools", tmp_path / "tools",
                     ignore=lambda d, names: [n for n in names if n != "git_push_retry.sh"])
     outdir = tmp_path / "output" / "interviews" / "demo"
@@ -213,8 +290,9 @@ def test_subs的第二份ASR红了也要先交报告再红(tmp_path):
     (outdir / "whisper.json").write_text("[]", encoding="utf-8")
     (outdir / "transcript_diff.md").write_text("# diff", encoding="utf-8")
     done, calls = _run_step(tmp_path, SUBS_VERIFY_STEP, mode="subs",
-                            env={"VERIFY_RC": "3"}, cwd=tmp_path)
-    assert done.returncode == 3, (done.returncode, done.stdout, done.stderr)
+                            env={"VERIFY_RC": "1"}, cwd=tmp_path)
+    assert done.returncode == 1, (done.returncode, done.stdout, done.stderr)
+    assert "::error::" in done.stdout
     order = [c.split()[0] + " " + c.split()[1] for c in calls]
     assert "pip install" in order[0], calls
     i_verify = next(i for i, c in enumerate(calls) if "--stage verify" in c)
@@ -233,20 +311,125 @@ def test_subs的第二份ASR红了也要先交报告再红(tmp_path):
     assert done.returncode == 0, done.stderr
 
 
+def _git(cwd: Path, *args: str) -> str:
+    return subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t",
+                           *args], cwd=cwd, check=True, capture_output=True,
+                          text=True).stdout
+
+
+def _commit_step_in_real_git(tmp_path: Path, mode: str, *,
+                             race: bool = False) -> tuple[subprocess.CompletedProcess,
+                                                          Path, Path]:
+    """「提交成片」那一步在**真 git 仓库**里跑一遍（只有 python/sleep 换替身）。
+
+    判的是**产物进没进仓库**，不是脚本里写没写 `rm`：候选墙在 `mode=cover` 要
+    留在盘上给 artifact、又不许进 git——两件事只有真 `git add` 一遍才分得清。
+    `race=True` 时远端先被别人推过一次，逼它走「重放到最新分支上」那条路。
+    """
+    remote, work = tmp_path / "remote.git", tmp_path / "work"
+    subprocess.run(["git", "init", "-q", "--bare", "-b", "main", str(remote)], check=True)
+    subprocess.run(["git", "init", "-q", "-b", "main", str(work)], check=True)
+    shutil.copy(ROOT / ".gitignore", work / ".gitignore")
+    _git(work, "add", ".gitignore")
+    _git(work, "commit", "-qm", "base")
+    _git(work, "remote", "add", "origin", str(remote))
+    _git(work, "push", "-q", "origin", "main")
+    if race:
+        other = tmp_path / "other"
+        subprocess.run(["git", "clone", "-q", str(remote), str(other)], check=True)
+        (other / "README.md").write_text("别人刚推过\n", encoding="utf-8")
+        _git(other, "add", "README.md")
+        _git(other, "commit", "-qm", "race")
+        _git(other, "push", "-q", "origin", "main")
+    outdir = work / "output" / "interviews" / "demo"
+    outdir.mkdir(parents=True)
+    (outdir / "poster.jpg").write_bytes(b"poster")
+    (outdir / scan.RECORD_NAME).write_text('{"method": "cover_scan_v1"}', encoding="utf-8")
+    (outdir / scan.SHEET_NAME).write_bytes(b"sheet" * 1000)
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    for name in ("python", "sleep"):
+        (bin_dir / name).write_text("#!/usr/bin/env bash\nexit 0\n", encoding="utf-8")
+        (bin_dir / name).chmod(0o755)
+    body = (str(_step("提交成片")["run"])
+            .replace("${{ github.event.inputs.slug }}", "demo")
+            .replace("${{ github.ref_name }}", "main"))
+    assert "${{" not in body, body
+    (tmp_path / "step.sh").write_text(body, encoding="utf-8")
+    env = dict(os.environ, PATH=f"{bin_dir}{os.pathsep}{os.environ['PATH']}",
+               MODE=mode, RUNNER_TEMP=str(tmp_path))
+    done = subprocess.run(["bash", "-e", str(tmp_path / "step.sh")], cwd=work, env=env,
+                          capture_output=True, text=True, timeout=120)
+    return done, remote, outdir
+
+
+@pytest.mark.parametrize("race", [False, True], ids=["直推", "撞车重放"])
+def test_候选墙只走artifact_扫描记录进仓库(tmp_path, race):
+    """`cover_scan_sheet.jpg` 一张约 0.6 MB、每趟 mode=cover 一张——和缩略图墙
+    同一种工作台，不许进 git（`test_缩略图墙两头都不许进仓库`）。几 KB 的
+    `cover_candidates.json` 要进（推送前对账的就是它）。
+
+    ⚠️ `mode=cover` 那趟墙还得**留在盘上**：「提交成片」排在 upload-artifact
+    之前，删了 artifact 里就没墙了——人挑帧两手空空。撞车重放那条路
+    （`rm -rf "$D"` 再从本趟提交里放回来）同样不许把它弄丢。"""
+    done, remote, outdir = _commit_step_in_real_git(tmp_path, "cover", race=race)
+    assert done.returncode == 0, (done.stdout, done.stderr)
+    tree = _git(remote, "ls-tree", "-r", "--name-only", "main").split()
+    assert f"output/interviews/demo/{scan.RECORD_NAME}" in tree, tree
+    assert "output/interviews/demo/poster.jpg" in tree, tree
+    assert not any(p.endswith(scan.SHEET_NAME) for p in tree), (
+        f"候选墙进了仓库：{tree}——每趟 mode=cover 往 git 里塞 0.6 MB")
+    assert (outdir / scan.SHEET_NAME).is_file(), (
+        "mode=cover 那趟把候选墙从盘上删了——upload-artifact 排在后面，人就看不到墙了")
+    if race:
+        assert "README.md" in tree, "重放没落在别人推过的那一版上"
+
+    other = tmp_path / "render"
+    other.mkdir()
+    done, remote, outdir = _commit_step_in_real_git(other, "render")
+    assert done.returncode == 0, (done.stdout, done.stderr)
+    assert not (outdir / scan.SHEET_NAME).exists(), "别的档留下了候选墙"
+
+
+def test_subs只报了要人核的发现不算红(tmp_path):
+    """`--stage verify` 退出 `VERIFY_FINDINGS_EXIT`＝只有分歧／空档，工具本身跑完了。
+
+    刚切出来、没人核过的转写有分歧是常态。第一版让这一步红，而
+    `tools/pipeline_health.py` 按 run 的 conclusion 数失败率（近 10 趟红 40% 或
+    连着红 3 趟就推微信）——常态红会把告警顶成狼来了。所以：报告照样提交，
+    `::warning::` 收尾，退出 0；render 那一步照旧拦。"""
+    import tools.build_interview_clip as clip  # noqa: PLC0415
+
+    shutil.copytree(ROOT / "tools", tmp_path / "tools",
+                    ignore=lambda d, names: [n for n in names if n != "git_push_retry.sh"])
+    outdir = tmp_path / "output" / "interviews" / "demo"
+    outdir.mkdir(parents=True)
+    (outdir / "transcript_diff.md").write_text("# diff", encoding="utf-8")
+    done, calls = _run_step(tmp_path, SUBS_VERIFY_STEP, mode="subs", cwd=tmp_path,
+                            env={"VERIFY_RC": str(clip.VERIFY_FINDINGS_EXIT)})
+    assert done.returncode == 0, (done.returncode, done.stdout, done.stderr)
+    assert "::warning::" in done.stdout and "::error::" not in done.stdout, done.stdout
+    assert any(c.startswith("git push") for c in calls), f"报告没交：{calls}"
+
+
 # ---------------------------------------------------------------- --stage verify
 
 def _drive_main(monkeypatch, tmp_path: Path, spec: dict, stage: str,
-                gaps: list[tuple[float, float]]) -> dict:
+                gaps: list[tuple[float, float]], verify_raises=None) -> dict:
     """直接跑 `build_interview_clip.main()`，网络和 whisper 那几样换成替身。"""
     import tools.build_interview_clip as clip  # noqa: PLC0415
 
-    calls: dict = {"verify": 0}
+    calls: dict = {"verify": 0, "fetch_words": 0}
     for name in ("check_source_contract", "check_topline_format", "check_opening",
                  "check_lead_in", "check_trail_in", "check_copy_page",
                  "check_human_quote", "storyboard_sheet"):
         monkeypatch.setattr(clip, name, lambda *a, **k: None)
     monkeypatch.setattr(clip, "OUTDIR", tmp_path / "out")
-    monkeypatch.setattr(clip, "fetch_words", lambda *a, **k: [])
+    def fake_fetch(*a, **k):
+        calls["fetch_words"] += 1
+        return []
+
+    monkeypatch.setattr(clip, "fetch_words", fake_fetch)
     monkeypatch.setattr(clip, "segment", lambda *a, **k: [
         {"a": 10.0, "b": 12.0, "en": "Thank you so much"},
         {"a": 16.0, "b": 18.0, "en": "It was a tough match"}])
@@ -254,6 +437,8 @@ def _drive_main(monkeypatch, tmp_path: Path, spec: dict, stage: str,
 
     def fake_verify(*a, **k):
         calls["verify"] += 1
+        if verify_raises is not None:
+            raise verify_raises
 
     monkeypatch.setattr(clip, "verify_transcript", fake_verify)
     spec_path = tmp_path / "spec.json"
@@ -284,23 +469,71 @@ def test_verify在中文还空着的时候也要跑第二份ASR(monkeypatch, tmp
     assert got["verify"] == 0 and got.get("rc") == 0
 
 
-def test_verify按出片那道空档闸把会红的报出来(monkeypatch, tmp_path):
+def test_verify按出片那道空档闸把会红的报出来(monkeypatch, tmp_path, capsys):
     """render 会红的空档，verify 这一步就按**同一个函数**报——键要印出来。
-    指纹照样先落（报告和指纹是 subs 那一趟要交的东西）。"""
+    指纹照样先落（报告和指纹是 subs 那一趟要交的东西）。退出码是
+    `VERIFY_FINDINGS_EXIT`：subs 那一步靠它分清「要人核」和「工具坏了」。"""
+    import tools.build_interview_clip as clip  # noqa: PLC0415
+
     got = _drive_main(monkeypatch, tmp_path, dict(_SPEC), "verify", [(12.0, 15.5)])
-    assert "12.0-15.5" in got.get("exit", ""), got
+    assert got.get("rc") == clip.VERIFY_FINDINGS_EXIT, got
+    assert "12.0-15.5" in capsys.readouterr().out, "空档的键没印出来——照着提示写不出销账"
     assert (got["outdir"] / "verify_fingerprint.json").is_file()
 
     settled = dict(_SPEC, caption_gaps_ok={"12.0-15.5": "听过：掌声"})
     got = _drive_main(monkeypatch, tmp_path, settled, "verify", [(12.0, 15.5)])
     assert "exit" not in got and got.get("rc") == 0, got
 
-    import tools.build_interview_clip as clip  # noqa: PLC0415
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
     render_stage = src.split('if args.stage == "render":')[1]
     assert "blocking_gaps(spec, lines, outdir)" in render_stage, (
         "render 那道空档闸没走 blocking_gaps——verify 报的和 render 拦的就不是同一个判据")
     assert clip.blocking_gaps  # 名字在
+
+
+def test_verify分歧和空档一起报_工具坏了照样抛(monkeypatch, tmp_path, capsys):
+    """分歧超闸（`ReviewFindings`）不再一抛就走：和空档收齐一起印、退出码
+    `VERIFY_FINDINGS_EXIT`、**不落指纹**（没验过的不许留「验过了」的标记）。
+    而配置／工具的毛病（同一个模型跑两遍、下不动音轨）是普通 `SystemExit`，
+    照样抛出去——subs 那一步对它照样红，不许混进「常态发现」里被 warning 吞掉。"""
+    import tools.build_interview_clip as clip  # noqa: PLC0415
+
+    got = _drive_main(monkeypatch, tmp_path, dict(_SPEC), "verify", [(12.0, 15.5)],
+                      verify_raises=clip.ReviewFindings("两份转写对不上 23.0%"))
+    out = capsys.readouterr().out
+    assert got.get("rc") == clip.VERIFY_FINDINGS_EXIT, got
+    assert "23.0%" in out and "12.0-15.5" in out, f"两类发现没收齐：{out}"
+    assert not (got["outdir"] / "verify_fingerprint.json").exists(), "分歧超闸还落了指纹"
+
+    (tmp_path / "broken").mkdir()
+    got = _drive_main(monkeypatch, tmp_path / "broken", dict(_SPEC), "verify", [],
+                      verify_raises=SystemExit("`whisper_model` 和 `asr_model` 都是 small.en"))
+    assert "small.en" in got.get("exit", "") and "rc" not in got, got
+    assert issubclass(clip.ReviewFindings, SystemExit), "render 那头靠它照样非零退出"
+
+
+def test_中文还空着也能出封面(monkeypatch, tmp_path):
+    """「封面排在最前面、紧跟选题」正是 zh 还空着的那一刻。`--stage cover` 原来
+    排在切行和 `if not zh: return 0` 后面——于是 0 退出、一张海报都没出，下一步
+    的像素闸报「poster 不存在」，扫描白跑一分钟。封面不要字幕：也不许为它拉字幕。"""
+    import tools.build_interview_clip as clip  # noqa: PLC0415
+
+    made: list[Path] = []
+    monkeypatch.setattr(clip, "yt_download", lambda url, dest, fmt, spec: dest)
+    monkeypatch.setattr(clip, "_logo_filter", lambda *a, **k: "")
+
+    def fake_poster(spec, src, outdir, logo="", **_k):
+        poster = outdir / "poster.jpg"
+        poster.write_bytes(b"jpg")
+        made.append(poster)
+        return poster
+
+    monkeypatch.setattr(clip, "cover_poster", fake_poster)
+    spec = dict(_SPEC, cover={"frame_at": 10.0})          # 没有 zh
+    got = _drive_main(monkeypatch, tmp_path, spec, "cover", [])
+    assert got.get("rc") == 0 and made and made[0].is_file(), (
+        f"zh 空着 --stage cover 没出海报：{got}")
+    assert got["fetch_words"] == 0, "出封面去拉了一趟字幕——封面不要字幕"
 
 
 def test_命令行不给step就轮到spec里的scan_step(monkeypatch, tmp_path):
@@ -391,9 +624,13 @@ def test_扫描记录对账():
 
     moved = json.loads(json.dumps(spec))
     moved["cover"]["frame_at"] = 7.0
-    assert "没扫过" in scan.record_problem(record, moved)
+    problem = scan.record_problem(record, moved)
+    assert "没扫过" in problem
+    # 记录外的帧：红的时候只给两条出路——重扫，或者认领（出路本身不许丢）
+    assert "mode=cover" in problem and "_frame_scan_why" in problem, problem
     moved["cover"]["frame_at"] = 2.5
-    assert "没过闸" in scan.record_problem(record, moved)
+    problem = scan.record_problem(record, moved)
+    assert "没过闸" in problem and "_frame_scan_why" in problem, problem
     moved["cover"]["_frame_scan_why"] = "候选墙外那一帧是颁奖瞬间，人工看过"
     assert scan.record_problem(record, moved) == "", "认领了还拦"
 
@@ -402,6 +639,38 @@ def test_扫描记录对账():
     assert scan.record_problem(record, reframed) == "", (
         "取景变了的记录说的是另一张海报，管不到当前这张")
     assert "读不懂" in scan.record_problem({"method": "x"}, spec)
+
+
+def test_换了尺子的旧记录不对账_旧的fail不许接着拦(monkeypatch):
+    """审核器版本或阈值变过，记录里每一格的 pass/fail 说的就不是今天这道闸了。
+
+    第一版 `record_problem` 只比取景、不比尺子：阈值放宽之后，一格旧的 `fail`
+    照样把一帧**今天过得了闸**的封面挡在推送外面（review 2026-09-27）。"""
+    spec = {"slug": "demo", "url": "u", "cover": {"frame_at": 2.5}}
+    entries = [{"frame_at": 2.5, "status": "fail", "issues": ["清晰度 40，必须 ≥ 45"],
+                "face": _face(40), "margin": 0.9}]
+    record = _record(spec, entries)
+    assert "没过闸" in scan.record_problem(record, spec), "同一把尺子下旧 fail 该拦"
+    assert not scan.stale_ruler(record)
+
+    import audit_interview_cover as auditor  # noqa: PLC0415
+
+    monkeypatch.setattr(auditor, "MIN_FACE_SHARPNESS", 35.0)        # 阈值放宽
+    assert "MIN_FACE_SHARPNESS" in scan.stale_ruler(record)
+    assert scan.record_problem(record, spec) == "", "阈值变了，旧的 fail 还在拦"
+    monkeypatch.undo()
+
+    monkeypatch.setattr(auditor, "FACE_CENTER_Y_RANGE", (0.06, 0.80))  # 不在 MIN_* 里的阈值也算
+    assert scan.record_problem(record, spec) == ""
+    monkeypatch.undo()
+
+    monkeypatch.setattr(auditor, "LOCAL_AUDITOR", "opencv-haar-v2")   # 换了审核器
+    assert "审核器" in scan.stale_ruler(record)
+    assert scan.record_problem(record, spec) == ""
+    monkeypatch.undo()
+
+    legacy = {k: v for k, v in record.items() if k != "thresholds"}  # 第一版写的记录
+    assert scan.record_problem(legacy, spec) == ""
 
 
 def test_候选墙贴原尺寸的脸(tmp_path):
@@ -442,8 +711,11 @@ def test_扫描走cover_poster和audit_poster同一份实现(tmp_path, monkeypat
             assert fmt == "fmt"
             return dest
 
+        class NoFrameAt(RuntimeError):
+            pass
+
         @staticmethod
-        def probe_duration(_src):
+        def probe_video_duration(_src):
             return 30.0
 
         @staticmethod
@@ -486,6 +758,85 @@ def test_扫描走cover_poster和audit_poster同一份实现(tmp_path, monkeypat
         assert own not in code, f"扫描自己写了一份 {own}——要走 cover_poster / audit_poster"
 
 
+@pytest.mark.skipif(not shutil.which("ffmpeg"), reason="要真 ffmpeg 造一条音轨比画面长的源片")
+def test_片尾按视频流剔_越过最后一帧记一格没有画面(tmp_path, monkeypatch):
+    """2026-09-27 review 复现：8.0 秒画面 ＋ 8.3 秒音轨，`ffmpeg -ss 8.1` 退出码 0、
+    一帧不出。原来按容器时长（＝最长那条流）剔片尾，8.1 那一格留着，渲海报时
+    `build_cover` 的 `read_bytes()` 抛 FileNotFoundError，整趟扫描红——而
+    `frame_at` 离片尾两秒以内时扫描窗口一定会盖到那儿。"""
+    import tools.build_interview_clip as clip  # noqa: PLC0415
+
+    src = tmp_path / "src.mp4"
+    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-f", "lavfi", "-i", "color=c=gray:s=320x240:d=8:r=25",
+                    "-f", "lavfi", "-i", "sine=d=8.3",
+                    "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac", str(src)],
+                   check=True, timeout=120)
+    assert abs(clip.probe_duration(src) - 8.3) < 0.05, "造出来的源片音轨没比画面长，前提不成立"
+    video_end = clip.probe_video_duration(src)
+    assert abs(video_end - 8.0) < 0.05, f"视频流时长读成了 {video_end}"
+    times = scan.candidate_times(7.6, 8.4, 0.1, include=(8.1,), end=video_end)
+    assert max(times) < 8.0 and 8.1 not in times, times
+
+    # 剔完还撞上（低帧率源最后一帧早于 end-0.05）：cover_poster 报一个**专门的**
+    # 类型，不是 FileNotFoundError——后者和「ffmpeg 没装」长得一样
+    with pytest.raises(clip.NoFrameAt, match="没有画面"):
+        clip.cover_poster({"cover": {"frame_at": 8.1}}, src, tmp_path,
+                          at=8.1, dest=tmp_path / "late.jpg")
+
+    # 扫描把它记成一格不合格，别的格照量；墙上没有它
+    def poster_at(t, dest):
+        if t > 7.95:
+            raise scan.NoFrame("越过视频流最后一帧")
+        dest.write_bytes(b"x")
+
+    def audit(_path, spec_t):
+        return {"face": _face(90)}, []
+
+    spec = {"slug": "demo", "cover": {"frame_at": 7.8}}
+    entries, posters = scan.measure(spec, [7.8, 7.9, 8.1], poster_at, tmp_path, audit)
+    by_t = {e["frame_at"]: e for e in entries}
+    assert by_t[8.1]["status"] == "fail" and "没有画面" in by_t[8.1]["issues"][0], by_t
+    assert by_t[7.8]["status"] == by_t[7.9]["status"] == "pass"
+    assert set(posters) == {7.8, 7.9}
+
+    # run_scan 那一层：cover_poster 抛 NoFrameAt → 换成 NoFrame，整趟照样落记录
+    def late_poster(spec, src, out, logo, *, at, dest, page):
+        if at > 7.95:
+            raise clip.NoFrameAt(f"源片在 {at} 秒没有画面")
+        from PIL import Image  # noqa: PLC0415
+        Image.new("RGB", scan.CANVAS, (30, 30, 30)).save(dest)
+        return dest
+
+    class Clip:
+        SOURCE_FMT = "fmt"
+        NoFrameAt = clip.NoFrameAt
+        cover_poster = staticmethod(late_poster)
+        yt_download = staticmethod(lambda url, dest, fmt, spec: src)
+        probe_video_duration = staticmethod(lambda _s: 8.3)   # 故意报长：逼它撞上
+        _logo_filter = staticmethod(lambda *a: "")
+
+        @staticmethod
+        def probe_duration(_s):
+            raise AssertionError("扫描按容器时长（最长那条流）剔片尾了——要按视频流")
+
+        @staticmethod
+        def canvas_page():
+            import contextlib  # noqa: PLC0415
+            return contextlib.nullcontext("page")
+
+    monkeypatch.setattr(scan, "audit_poster", audit)
+    outdir = tmp_path / "demo"
+    outdir.mkdir()
+    spec = {"slug": "demo", "url": "u",
+            "cover": {"frame_at": 7.8, "scan_window": [7.8, 8.2], "scan_step": 0.2}}
+    assert scan.run_scan(spec, outdir, Clip, keep_source=True) == 0
+    record = json.loads((outdir / scan.RECORD_NAME).read_text(encoding="utf-8"))
+    status = {e["frame_at"]: e["status"] for e in record["candidates"]}
+    assert status == {7.8: "pass", 8.0: "fail", 8.2: "fail"}, status
+    assert record["passing"] == [7.8]
+
+
 def test_check命令对账红了非零(tmp_path, monkeypatch, capsys):
     spec = {"slug": "demo", "url": "u", "cover": {"frame_at": 7.0}}
     outdir = tmp_path / "demo"
@@ -497,5 +848,9 @@ def test_check命令对账红了非零(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(scan, "OUTDIR", tmp_path)
     assert scan.main(["--check", "--spec", str(spec_path)]) == 1
     assert "没扫过" in capsys.readouterr().out
+    # --report：mode=cover 红着收尾时把排名印在错误旁边（artifact 沙箱里下不下来）
+    assert scan.main(["--report", "--spec", str(spec_path)]) == 0
+    out = capsys.readouterr().out
+    assert "过闸 1 格" in out and "余量最大的是 2 秒" in out, out
     (outdir / scan.RECORD_NAME).unlink()
     assert scan.main(["--check", "--spec", str(spec_path)]) == 0

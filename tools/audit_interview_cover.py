@@ -30,6 +30,12 @@ MIN_FACE_AREA_RATIO = 0.010
 MIN_FACE_SHARPNESS = 45.0
 MIN_FACE_CONTRAST = 32.0
 MIN_EYES = 2
+#: 人脸中心的近景安全区（照片区内的比例）。原来是 `validate_result` 里的裸数字——
+#: 抽成常量，封面扫描记录（`interview_cover_scan.ruler`）才认得出「阈值变过」。
+#: ⚠️ 这个模块的**模块级大写数字常量**都算这把尺子的阈值（`ruler` 自己推，不维护
+#: 名单）；改了检测器本身（Haar 参数之类）要连 `LOCAL_AUDITOR` 的版本号一起改。
+FACE_CENTER_X_RANGE = (0.08, 0.92)
+FACE_CENTER_Y_RANGE = (0.06, 0.72)
 REPORT_NAME = "cover_visual_attestation.json"
 
 
@@ -328,7 +334,8 @@ def validate_result(result: object, spec: dict) -> list[str]:
         issues.append(f"脸部明暗跨度 {contrast:g}，必须 ≥ {MIN_FACE_CONTRAST:g}")
     center_x = _number(face.get("center_x_ratio"))
     center_y = _number(face.get("center_y_ratio"))
-    if not 0.08 <= center_x <= 0.92 or not 0.06 <= center_y <= 0.72:
+    if (not FACE_CENTER_X_RANGE[0] <= center_x <= FACE_CENTER_X_RANGE[1]
+            or not FACE_CENTER_Y_RANGE[0] <= center_y <= FACE_CENTER_Y_RANGE[1]):
         issues.append(f"人脸中心 ({center_x:.1%}, {center_y:.1%}) 不在近景安全区")
     return issues
 

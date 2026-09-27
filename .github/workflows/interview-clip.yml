@@ -14,7 +14,7 @@ name: interview-clip
 #
 # 三个 mode 对应三个阶段，各装各的依赖——**只挑工作不挑准备等于没挑**：
 #   subs   取字幕 + 切行        字体 + yt-dlp                 ~1 分钟（行先落库）
-#          → 第二份 ASR 交报告   再加 faster-whisper            ＋3~5 分钟（2026-09-27）
+#          → 第二份 ASR 交报告   再加 ffmpeg ＋ faster-whisper   ＋3~5 分钟（2026-09-27）
 #   cover  下载 + 扫封面候选 + 海报  ffmpeg/Chromium              ~2~3 分钟
 #   render 下载 + 封面 + 转写校验 + 剪 + 烧  再加 whisper          ~9 分钟（封面先验）
 #   push   只发微信             只要 `-e .`                    ~20 秒
@@ -68,7 +68,9 @@ permissions:
 # `explainer.yml` 那边用血换来的（见那个文件同一位置的注释）。
 #
 # ⚠️ **group 故意不带 mode**，跟 `match-reel.yml` 对齐。代价是
-# `mode=push`/`cover`/`subs` 会掐掉同 slug 正在跑的那趟 render；收益是
+# `mode=push`/`cover`/`subs` 会掐掉同 slug 正在跑的那趟 render（反过来，
+# 2026-09-27 起 subs 在切行落库之后还要跑三到五分钟的第二份 ASR，这段时间里
+# 发同 slug 的 cover／render 也会把它掐掉、报告丢掉——见那一步的注释）；收益是
 # 「同一条采访永远只有一个 run」这条不变量最干净，而**带上 mode 只能解决
 # 一半**——同一个 slug 连发两趟 `render` 仍然会并行，也就是这次要修的那个
 # 问题原样还在。
@@ -513,8 +515,11 @@ jobs:
       #
       # 两个 mode 走**同一步**（同一份 `--stage cover`、同一把本地像素闸，不许分叉）：
       #   cover  —— 预览档：先 `--stage cover-scan` 把 frame_at 前后一段逐格过同一
-      #             道闸，`cover_candidates.json` ＋ 候选墙随这一趟提交——挑帧从
-      #             「一趟试一帧」变成「一趟扫一段」（monfils 那条前九趟都在赌）
+      #             道闸，`cover_candidates.json` 随这一趟提交、候选墙只走 artifact
+      #             ——挑帧从「一趟试一帧」变成「一趟扫一段」（monfils 那条前九趟
+      #             都在赌）。⚠️ **frame_at 没过闸、这一步红着退出时，记录照样先提交**：
+      #             那正是这份记录最有用的时候（下一帧该挑哪个），而红了之后
+      #             「提交成片」那一步不会跑。排名表在错误旁边再印一遍。
       #   render —— 出片档：`--keep-source` 把源片留给后面的「剪 + 烧字幕」
       #             （`yt_download` 见文件在就复用，不下第二遍）。闸红了就地扫一段
       #             候选印进日志再停——红的这一趟也要换回「下一帧该选哪个」
@@ -563,8 +568,27 @@ jobs:
               --poster "$OUTDIR/poster.jpg" \
               --out "$OUTDIR/cover_visual_attestation.json"; then
             if [ "$MODE" = "render" ]; then
+              # 这一份**不提交**：自动链（interview-auto-render）只拨 render，
+              # 提交了记录，它下一趟换的帧就得对这份账，而那头没人写得了
+              # `_frame_scan_why`——机器记录不许替自动链加一道它认领不了的闸。
               echo "::error::封面那一帧没过本地像素闸——停在转写校验和编码之前。就地扫 frame_at 前后一段（源片已在手上）："
               PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover-scan --keep-source
+            else
+              echo "::error::封面那一帧没过本地像素闸。扫描记录照样提交（下一趟挑帧、推送前对账都要它），候选排名再印一遍："
+              PYTHONPATH=src python tools/interview_cover_scan.py --report --spec "$SPEC"
+              REC="$OUTDIR/cover_candidates.json"
+              if [ -f "$REC" ]; then
+                git config user.name "Claude"
+                git config user.email "noreply@anthropic.com"
+                git add "$REC"
+                if ! git diff --cached --quiet; then
+                  python tools/check_staged_file_sizes.py
+                  git commit -m "interview: $SLUG 封面扫描记录（frame_at 没过闸）"
+                  source tools/git_push_retry.sh
+                  push_with_rebase_retry "${{ github.ref_name }}" 5 \
+                    || echo "::warning::扫描记录没推上去——上面那张排名表就是这一趟的全部产出"
+                fi
+              fi
             fi
             exit 1
           fi
@@ -868,6 +892,13 @@ jobs:
           # upload-artifact **之前**，subs 那趟删掉它，artifact 里就只剩
           # 字幕行，挑帧的人两手空空——「工作台」被自己的清理步骤收走了。
           if [ "$MODE" != "subs" ]; then rm -f "$D"/storyboard.jpg; fi
+          # 封面**候选墙**（`--stage cover-scan`）是同一种工作台，同一套处置：一张
+          # 约 0.6 MB、每趟 mode=cover 一张，只走 artifact；`.gitignore` 里
+          # `output/**/cover_scan_sheet.jpg` 挡着，`git add "$D"` 吃不进去。
+          # **`mode=cover` 那趟不删**——它正是那一趟要交给人看的东西，而这一步排在
+          # upload-artifact 之前。进仓库的是几 KB 的 `cover_candidates.json`
+          # （推送前对账要的就是它）。判据 `test_缩略图墙两头都不许进仓库`。
+          if [ "$MODE" != "cover" ]; then rm -f "$D"/cover_scan_sheet.jpg; fi
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           # 用 `$D`，别把这个路径再写一遍——下面重放那几行清的、放回来的、
@@ -920,8 +951,15 @@ jobs:
             # 那一步 `rm -f "$CLIP"` 之后本趟提交是带着 `delete mode` 的。
             # 合成仓库上验过——**漏掉这一行，被删掉的 mp4 当场被重放救活**，
             # 于是仓库里留着旧片、真片在 Release 上，两个地址两条片子。
+            # 两张工作台（缩略图墙、候选墙）不在 `rendered` 里（.gitignore 挡着），
+            # `rm -rf` 之后 checkout 不会把它们放回来——先挪到一边、放回来之后再
+            # add（`-A` 照样认 .gitignore），不然撞一次车 artifact 里就没墙了。
+            WB="$RUNNER_TEMP/workbench"
+            mkdir -p "$WB"
+            cp -f "$D"/storyboard.jpg "$D"/cover_scan_sheet.jpg "$WB"/ 2>/dev/null || true
             rm -rf "$D"
             git checkout rendered -- "$D"
+            cp -f "$WB"/*.jpg "$D"/ 2>/dev/null || true
             git add -A "$D"
             python tools/check_staged_file_sizes.py
             git diff --cached --quiet || git commit -m "$MSG"
@@ -942,10 +980,22 @@ jobs:
       # ⚠️ **排在「提交成片」之后，不是之前**：切好的英文行（lines.json）是写中文
       # 要等的那一份，它照旧一分多钟就落库；第二份 ASR 要三到五分钟，报告第二次
       # 提交。人在写中文的时候它在跑——「runner 在跑的时候别闲着」。
-      # ⚠️ **红了也要先交报告再红**：transcript_diff.md / caption_gaps.md /
+      # ⚠️ **先交报告再定颜色**：transcript_diff.md / caption_gaps.md /
       # gap_vad_attestation.json 正是修的依据，红着把它们扔掉这一趟就白跑了。
       # render 那头照旧再验（指纹没变且 transcript_verified 已置上才跳过，见
       # `transcript_fingerprint`）——这一步是**提前报**，不是替掉那道闸。
+      # ⚠️ **报出分歧／空档不算红**（退出码 `VERIFY_FINDINGS_EXIT`＝3）：刚切出来、
+      # 还没人核过的转写，有分歧、有没销账的空档是**常态**。第一版让它红，
+      # 而 `tools/pipeline_health.py` 按 run 的 conclusion 数失败率——近 10 趟
+      # 红 40% 或连着红 3 趟就推微信告警，一条天天喊狼来了的告警没人看。所以
+      # 发现逐条印进日志、`::warning::` 收尾、run 绿着；render 照旧拦。
+      # **工具坏了**（下不动音轨、模型起不来、同一个模型跑两遍）不是 3，照样红。
+      # ⚠️ **这一步要跑三到五分钟，而 concurrency 按 slug 分组、`cancel-in-progress`**：
+      # 这段时间里 dispatch 同 slug 的 `mode=cover`／`render` 会把这一趟掐掉，
+      # 报告就丢了（lines.json 已经在前面落库，丢的只是第二份 ASR 的报告；render
+      # 自己会再验一遍，丢的是「提前报」这份好处）。**同一个 slug 的几档串着发，
+      # 别叠在对方还在跑的时候**：按 CLAUDE.md「封面排在最前面」先发 cover（两三
+      # 分钟），它绿了再发 subs；反过来也行。不同 slug 之间互不掐，照样并行。
       # ⚠️ **模型缓存键和 render 同一把**（从「算第二份 ASR 模型」拿）：subs 下过的
       # 模型 render 直接用，反过来也一样。
       - name: 缓存第二份 ASR 模型（subs）
@@ -956,6 +1006,21 @@ jobs:
           key: faster-whisper-${{ runner.os }}-${{ steps.second_asr.outputs.model }}
           restore-keys: |
             faster-whisper-${{ runner.os }}-
+
+      # **subs 那一趟的第二份 ASR 要 ffmpeg**（2026-09-27 review）：`verify_transcript`
+      # 用 `yt-dlp -f ba` 下音轨，而 tennistv.com 那 12 条 spec 是 Brightcove HLS——
+      # 这条下载原来只在 render 跑，ffmpeg 一直在；挪到 subs 之后这一档什么都没装。
+      # 和别处同一个装法：`ensure_ffmpeg` 先拿静态构建、不碰 apt 镜像，落空才退回
+      # apt 老路（用的是上面 subs 那份 apt 缓存）——所以 timeout-minutes 要撑得住
+      # 880 秒的最坏预算（`test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用`）。
+      # ⚠️ **排在「提交成片」之后**，理由同下一步装 faster-whisper：lines.json 先落库，
+      # 写中文等的是它。判据 `test_会下载媒体的每一档都先装ffmpeg` 按 mode 推，不按 job。
+      - name: 装 ffmpeg（subs 的第二份 ASR 下音轨用）
+        if: github.event.inputs.mode == 'subs'
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
 
       - name: 第二份 ASR 交叉校验并提交报告（subs）
         if: github.event.inputs.mode == 'subs'
@@ -990,8 +1055,13 @@ jobs:
               exit 1
             fi
           fi
+          # 3 ＝ build_interview_clip.VERIFY_FINDINGS_EXIT：只有「要人核的发现」，工具本身跑完了
+          if [ "$STATUS" = 3 ]; then
+            echo "::warning::第二份 ASR 报了要人核的分歧／空档（上面逐条印着；报告已提交：$D/transcript_diff.md、caption_gaps.md、gap_vad_attestation.json）。人核之前这是常态，这一趟不算红；render 照旧会拦——修 en_fixed／认领 transcript_disagree_ok／销账 caption_gaps_ok"
+            exit 0
+          fi
           if [ "$STATUS" != 0 ]; then
-            echo "::error::第二份 ASR 交叉校验没过（报告已提交：$D/transcript_diff.md、caption_gaps.md、gap_vad_attestation.json）——render 之前先修 en_fixed／认领 transcript_disagree_ok／销账 caption_gaps_ok"
+            echo "::error::第二份 ASR 没跑成（退出码 $STATUS——不是「有分歧」，那是 3）：下不动音轨、模型起不来或 spec 配错了，看上面的报错"
             exit "$STATUS"
           fi
 
@@ -1187,6 +1257,8 @@ jobs:
       # 那一步里的 `rm -f "$D"/source.*` 此时没跑过**，于是整条源片跟着上传。
       # 按同一个 glob 排除掉；storyboard、字幕、render.json 照旧传——排查要的
       # 是这些。判据 `test_失败时的artifact不许带源片`。
+      # 封面候选墙 `cover_scan_sheet.jpg` **只从这儿走**（不进仓库，见「提交成片」），
+      # `mode=cover` 和 render 封面前置红了就地扫的那一张都在里面。
       - uses: actions/upload-artifact@v4
         if: always()
         with:
