@@ -2206,7 +2206,7 @@ GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: 
 | 闸 | 判据 | 为什么这么窄 |
 |---|---|---|
 | 点名 | 说明／文件名有主角的**姓和名**、有**对手的姓**、有赛事（赛事自己的 WP 媒体库由站点担保）、**当地**日期对上这一场（说明写了按说明；没写才看 WP 的 `date_gmt`，**上传时刻要晚于开赛**，只有日子没有时刻的不换；写了星期几也要对上） | 同一个人前一天、后一天各打一场时，认人认得出是他、认不出是哪一场；前一晚夜场的图过了午夜才传，**日子**和第二天一样；普利斯科娃是同卵双胞胎、塞伦多洛和西西帕斯是兄弟俩，认人闸分不开 |
-| 在比赛中 | 说明／文件名里有 practice／training／warm／news conference／press conference／interview／autograph／arriv／portrait／poses／doubles／mixed 一律不换（`NOT_IN_MATCH`） | 认人认得出是他、认不出他在干什么；挑「脸最大的」恰好偏爱发布会和定妆照。拉沃尔杯同一站单打双打都打（`alcaraz-mensik-doubles` 首日、`alcaraz-fritz` 第二天） |
+| 在比赛中 | 说明／文件名里有 practice／training／warm／news conference／press conference／interview／autograph／arriv／portrait／poses／media／reporters／photocall／headshot／hits during a session／ahead of his·her／doubles／mixed 一律不换（`NOT_IN_MATCH`；裸的 session 不拦——AP 比赛图常写 night session） | 认人认得出是他、认不出他在干什么；挑「脸最大的」恰好偏爱发布会和定妆照。拉沃尔杯同一站单打双打都打（`alcaraz-mensik-doubles` 首日、`alcaraz-fritz` 第二天） |
 | 当地日期 | flashscore `dc_1_<id>` 的 `DC÷`／`DD÷`（开赛／结束）＋ `EVENTS` 表的时区；夜场跨午夜两天都算 | **时区不在表里就不换**，不退回宽窗口；新赛事在 `cover_upgrade.EVENTS` 加一行 |
 | 分辨率 | 按选定 zoom 铺 1080×1440 **不放大**（`cover_photo_problem` 同一个式子） | 机器不写 `_low_res_why`——那是人替取舍认领 |
 | 认人 | `face_checks`：最大那张脸 match 到 `cover.subject`（认成对手、unknown、模型不可用都不换） | O2 的闸，门槛不另调 |
@@ -2225,10 +2225,21 @@ O4 授权的是「过了这几道就换」。换完拿**正式的** `validate_sp
 文件名既不写对手、URL 里也只有上传的日子，这一档基本换不上了；拉沃尔杯 `BS2_8696` 那种「against Fritz」
 的图注照样过（`test_拉沃尔杯BS2_8696那张的说明过得了点名闸`）。
 
-**一个 slug 最多换一次**：`data/cover_upgrades.json` 里 `status: upgraded` 的不再查（换回
-抽帧也不再动）；它同时让 `build_match_reel.OWNER_APPROVED_FRAME_COVERS` 减掉这个 slug
-（`auto_upgraded_frame_covers()`）——表的自检要求「补上真图之后也该删」，机器改账不改 Python。
-当面点过「就用这一帧」的，在 `cover.portrait._keep_frame_why` 写一句，这条就不换。
+**一个 slug 最多换一次**：`data/cover_upgrades.json` 里 `status: upgraded` 的不再查；它同时让
+`build_match_reel.OWNER_APPROVED_FRAME_COVERS` 减掉这个 slug（`auto_upgraded_frame_covers()`）——
+表的自检要求「补上真图之后也该删」，机器改账不改 Python。当面点过「就用这一帧」的，在
+`cover.portrait._keep_frame_why` 写一句，这条就不换。
+⚠️ **换过之后人要换回抽帧，三处一起改**：spec 换回 `frame_at`、账里那一笔 status 改成别的
+（`upgraded` 会让豁免表减掉它，spec 又是抽帧就当场红）、再写 `_keep_frame_why`（不写的话 48 小时
+窗口里它又是一条目标，下一班照样换）。
+
+⚠️ **最终那道闸跑在工作流的稀疏检出里**（2026-09-27 评审第二轮 BLOCKING）：main 的 #1104 让
+`validate_spec` 查比分板国旗（`assets/flags/<iso2>.png`），而 `reel-cover-upgrade.yml` 的
+`sparse-checkout` 没列 `assets/flags`——**每一条**换好的图都被「不在仓库里」退回，而且那张合格的官方图
+被记成下过、永久拉黑。现在两处都收了：单子里加了 `assets/flags`，并由
+`test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样` 把那张单子按 cone 模式真的展开、拿全库
+「赛场之上」抽帧封面逐条对账（`validate_spec` 以后再多读一样东西，它自己会红）；退回时先问一句
+「换图之前的原 spec 在这个检出里过不过」——也过不了，拦的就不是图，只退避、不拉黑。
 
 ⚠️ **按这套闸，拉沃尔杯官网那批图过不了**：`lavercup.com` 媒体库的上限是 1200 宽
 （`BS2_8696` 1200×927、`CB_34032` 1200×832、`BS2_9519` 1200×800），铺 1080×1440 要放大
@@ -2244,8 +2255,8 @@ O4 授权的是「过了这几道就换」。换完拿**正式的** `validate_sp
 
 **班次的账**（都在 `data/cover_upgrades.json`）：每一班先 `--plan`（只读 json、不装依赖）看有没有
 活，0 条就不装 onnxruntime／opencv、不拉模型；下过、闸没过的候选记进 `attempts.<slug>.tried`，下一班
-跳过它们接着往后下（不然第 11 张永远轮不到）；换完过不了正式封面闸的，那张图记成下过、这一条退避 2 小时
-起每次翻倍；派发 render 每条重试三次，还丢了的话下一班对账看到「换了图、一小时了发布账本里没有新的推送
+跳过它们接着往后下（不然第 11 张永远轮不到）；换完过不了正式封面闸的，这一条退避 2 小时起每次翻倍，
+那张图只在**是它的错**时记成下过（原 spec 过得了、换上它才过不了）；派发 render 每条重试三次，还丢了的话下一班对账看到「换了图、一小时了发布账本里没有新的推送
 尝试」就重派，最多两次，再不行打 `::warning::` 要人看。
 
 ⚠️ **AP／Getty 的授权没人看**（评审 N7）：`sweep_ap` 的 docstring 写的是「发布前人工判断」，而这条链

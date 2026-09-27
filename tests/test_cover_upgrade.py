@@ -21,6 +21,7 @@ from __future__ import annotations
 import io
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import date, datetime, timedelta, timezone
@@ -222,8 +223,9 @@ def test_说明点名三件事_人赛事日期缺一不换():
                          meta_date="2026-09-26", meta_utc="2026-09-26T13:40:00",
                          event_owned=True)
     assert cu.metadata_problems(owned, ctx) == []
-    owned.meta_date, owned.meta_utc = "2026-09-25", "2026-09-26T13:40:00"
-    assert any("元数据日期" in p for p in cu.metadata_problems(owned, ctx))
+    # 当地哪一天按上传时刻（UTC）换算到赛事时区，不看站点时区的 `date`（评审第二轮）
+    owned.meta_date, owned.meta_utc = "2026-09-26", "2026-09-27T13:40:00"
+    assert any("元数据日期 2026-09-27" in p for p in cu.metadata_problems(owned, ctx))
     owned.meta_date, owned.meta_utc = "", ""
     assert any("都没有日期" in p for p in cu.metadata_problems(owned, ctx))
     # WTA 文件名里是下划线——不先抹掉的话 \bswiatek\b 恒不命中。点名那一半认得出；
@@ -273,6 +275,21 @@ AP_NEWS_CONF = ("Coleman Wong of Hong Kong speaks during a news conference after
     (AP_CAPTION.replace("reacts after winning a point", "during a press conference after beating"),
      "press conference"),
     (AP_CAPTION.replace("reacts after winning a point", "during a training session with"), "training"),
+    # 评审第二轮：真 metadata_problems 在 wong-vallejo 上复现过、原来全过的六条——
+    # 全名、对手、Hangzhou Open、Sept. 26, 2026 全在，拍的是记者会／定妆／赛前练球
+    (AP_CAPTION.replace("reacts after winning a point against Adolfo Daniel Vallejo",
+                        "speaks to the media after his second-round win over Adolfo Daniel Vallejo"),
+     "media"),
+    (AP_CAPTION.replace("reacts after winning a point against", "talks to reporters after his win against"),
+     "reporters"),
+    (AP_CAPTION.replace("reacts after winning a point against",
+                        "attends a media session after beating"), "media"),
+    (AP_CAPTION.replace("reacts after winning a point against", "at a photocall before facing"),
+     "photocall"),
+    (AP_CAPTION.replace("reacts after winning a point against", "headshot, before his match against"),
+     "headshot"),
+    (AP_CAPTION.replace("reacts after winning a point against",
+                        "hits during a session ahead of his match against"), "hits during a session"),
 ])
 def test_说明不点对手或写的不是比赛本身_不换(caption, expect):
     """B1：同一个人在同一站不止一个时刻——发布会、训练、双打（拉沃尔杯单打双打都打）。
@@ -280,6 +297,9 @@ def test_说明不点对手或写的不是比赛本身_不换(caption, expect):
     got = cu.metadata_problems(_ap(caption=caption), _ctx())
     assert any(expect in p for p in got), got
     assert cu.metadata_problems(_ap(), _ctx()) == [], "对照组：AP 的比赛图（点了对手）要过"
+    # 对照组：AP 比赛图常写「during the night session」——裸的 session 不许拦
+    night = AP_CAPTION.replace("during the Hangzhou Open", "during the night session of the Hangzhou Open")
+    assert cu.metadata_problems(_ap(caption=night), _ctx()) == []
 
 
 def test_拉沃尔杯BS2_8696那张的说明过得了点名闸():
@@ -332,6 +352,16 @@ def test_中文的_production_event_不许把赛事认成美网():
     # 英文的照旧认；表里的名字**包含在** prod 里才算，残片「Open」不许认成 US Open
     assert cu.event_of({"_production": {"event": "US OPEN"}, "topbar": {}})[1] == "America/New_York"
     assert cu.event_of({"_production": {"event": "Open"}, "topbar": {}})[1] is None
+    # 评审第二轮：event_of 给了 tz None 之后，match_context 还会去官方 OOP 那张表按别名
+    # 补时区——原来那里也是子串匹配，「Open」认成「Prague Open」、时区 Europe/Prague，
+    # 赛事名那道闸拿 `open` 去比说明，成都那一站的图照样过
+    open_only = _spec()
+    open_only["_production"] = {"event": "Open"}
+    open_only["topbar"]["line1"] = "2026 ATP250 某个没登记的城市 第二轮"
+    ctx = cu.match_context(open_only, times=lambda _id: (START, None))
+    assert ctx.tz is None and any("时区不在" in p for p in ctx.problems), (ctx.tz, ctx.problems)
+    assert cu._registry_tz("Open") is None and cu._registry_tz("Prague") is None
+    assert cu._registry_tz("Prague Open") == "Europe/Prague", "整名相等的照旧认"
     # 中文 prod ＋ 顶栏也认不出：不猜
     assert cu.event_of({"_production": {"event": "美网资格赛"}, "topbar": {"line1": "x"}}) is None
     # 赛事名归一出来是空的：点名闸自己也要拦（fail closed），赛事官网担保的也一样
@@ -362,6 +392,16 @@ def test_说明没写日期时上传时刻要晚于开赛():
     assert cu.metadata_problems(owned(meta_utc="2026-09-26T13:40:00Z"), ctx) == []
     assert any("元数据日期 2026-09-27" in p
                for p in cu.metadata_problems(owned(meta_utc="2026-09-26T16:30:00Z"), ctx))
+    # 评审第二轮：WordPress 的 `date` 是**站点**时区的钟点，不是赛事当地。美网夜场
+    # 19:00 EDT 开打、21:30 EDT（01:30Z）传的图，站点设成 UTC 就把 `date` 记成第二天——
+    # 当地哪一天要按赛事时区从上传时刻算
+    ny = _ctx(tz="America/New_York", start_utc=datetime(2026, 9, 1, 23, 0, tzinfo=timezone.utc),
+              match_dates={date(2026, 9, 1)})
+    assert cu.metadata_problems(owned(meta_date="2026-09-02",
+                                      meta_utc="2026-09-02T01:30:00"), ny) == []
+    # 反过来：站点时区把第二天的上传记成这一天，也不许借它混过去
+    assert any("元数据日期 2026-09-02" in p for p in cu.metadata_problems(
+        owned(meta_date="2026-09-01", meta_utc="2026-09-02T05:00:00"), ny))
 
 
 def test_时区不知道就判不了同一天_不换():
@@ -397,6 +437,17 @@ def test_时区不知道就判不了同一天_不换():
     assert any("开赛时刻取不到" in p for p in cu.match_context(spec, times=boom).problems)
     doubles = _spec(subject="阿尔卡拉斯 / 门西克")
     assert any("双打" in p for p in cu.match_context(doubles).problems)
+    # 比利·简·金杯：2026 年只有 9 月的总决赛在深圳；4 月资格赛、11 月附加赛在别处，
+    # 时区不知道就不换（评审第二轮：原来整年都按上海算）
+    bjk = _spec()
+    bjk["topbar"]["line1"] = "2026 比利·简·金杯 半决赛"
+    finals = datetime(2026, 9, 26, 8, 0, tzinfo=timezone.utc)
+    ctx = cu.match_context(bjk, times=lambda _id: (finals, None))
+    assert ctx.tz == "Asia/Shanghai" and ctx.match_dates == {date(2026, 9, 26)}, ctx.problems
+    for elsewhere in (datetime(2026, 4, 11, 15, 0, tzinfo=timezone.utc),
+                      datetime(2026, 11, 14, 15, 0, tzinfo=timezone.utc)):
+        ctx = cu.match_context(bjk, times=lambda _id, s=elsewhere: (s, None))
+        assert ctx.tz is None and any("时区不在" in p for p in ctx.problems), (elsewhere, ctx.tz)
 
 
 # ---------------------------------------------------------------- 铺图几何（不要模型）
@@ -508,7 +559,7 @@ def test_日期对不上不下图(tmp_path):
 
 @pytest.mark.parametrize("kind, subject, headshots, expect", [
     ("low-res", "黄泽林", None, "分辨率不够"),
-    ("ok", "巴列霍", None, "认出来是黄泽林"),                   # 认成对手
+    ("ok", "巴列霍", None, "这张脸是黄泽林"),                   # 认成对手（cover_target 那一支）
     ("ok", "黄泽林", {"a": {}, "b": {}}, "认人没过（unknown）"),   # 没有官方头像：不敢判
     ("face-low", "黄泽林", None, "钩子带"),
     ("face-high", "黄泽林", None, "压进台头"),                     # N5：脸落在台头底下
@@ -559,7 +610,7 @@ def test_人脸模型不可用就不换(tmp_path):
     repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
     got = cu.run(repo, NOW, apply=True, sweeps_for=_one(_ap()),
                  times=lambda _id: (START, None), fetch=lambda _url: _photo("ok"),
-                 checker=lambda img, exp: {"status": "unavailable", "error": "没装 onnxruntime"},
+                 checker=lambda img, exp, **_kw: {"status": "unavailable", "error": "没装 onnxruntime"},
                  final_gate=lambda spec: None)
     assert got["upgraded"] == []
     assert any("人脸模型不可用" in line for line in got["report"])
@@ -570,7 +621,8 @@ def test_换完过不了正式的封面闸就全部退回(tmp_path, model):
     before = (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes()
     got = cu.run(repo, NOW, apply=True, sweeps_for=_one(_ap()),
                  times=lambda _id: (START, None), fetch=lambda _url: _photo("ok"),
-                 final_gate=lambda spec: "封面大图撑不满卡片")
+                 final_gate=lambda spec: "封面大图撑不满卡片",
+                 baseline_gate=lambda spec: None)
     assert got["upgraded"] == [] and got["reverted"] == [SLUG]
     assert any(line.startswith("::error::") and "已退回" in line for line in got["report"])
     assert (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes() == before
@@ -657,12 +709,25 @@ def test_没有目标就不装依赖_不拉模型():
     steps = [s for job in wf["jobs"].values() for s in job["steps"]]
     plan = next(s for s in steps if "--plan" in str(s.get("run") or ""))
     assert plan.get("id") == "plan" and "targets=" in plan["run"] and "GITHUB_OUTPUT" in plan["run"]
-    heavy = [s for s in steps if any(k in str(s.get("run") or "") + str(s.get("with") or {})
-                                     for k in ("pip install", "face-models", "face_checks.py fetch",
-                                               "tools/cover_upgrade.py"))]
-    assert len(heavy) == 4, [s.get("name") for s in heavy]
+    heavy = [s for s in steps
+             if str(s.get("uses") or "").startswith("actions/setup-python")
+             or any(k in str(s.get("run") or "") + str(s.get("with") or {})
+                    for k in ("pip install", "face-models", "face_checks.py fetch",
+                              "tools/cover_upgrade.py"))]
+    # setup-python、装包、取缓存、备好模型、存缓存、查图——六步
+    assert len(heavy) == 6, [s.get("name") or s.get("uses") for s in heavy]
     for step in heavy:
-        assert "steps.plan.outputs.targets != '0'" in str(step.get("if") or ""), step.get("name")
+        assert "steps.plan.outputs.targets != '0'" in str(step.get("if") or ""), (
+            step.get("name") or step.get("uses"))
+    # 评审第二轮：setup-python 的 pip 缓存还原每一班都跑（包括 0 条的）——`--plan`
+    # 用 runner 自带的 python3，排在 setup-python 之前；0 条那一班照样要提交账（对账
+    # 重派），提交那一步也只用 python3
+    i_plan = steps.index(plan)
+    i_setup = next(i for i, s in enumerate(steps) if "setup-python" in str(s.get("uses") or ""))
+    assert i_plan < i_setup and "python3 -m cover_upgrade" in plan["run"], "`--plan` 要在 setup-python 之前、用 python3"
+    commit = next(s for s in steps if "push_with_rebase_retry main" in str(s.get("run") or ""))
+    assert "python3 tools/check_staged_file_sizes.py" in commit["run"]
+    assert not re.search(r"(?m)^\s*python\s", commit["run"]), "0 条那一班没装 setup-python，裸 python 可能不在"
     # 真跑一遍 --plan：一个重模块都不许 import（装包那一步被跳过时它照样要能跑）
     probe = (
         "import sys; sys.path.insert(0, 'tools'); import cover_upgrade as cu; "
@@ -727,7 +792,7 @@ def _cands(n: int) -> list:
     return [_ap(url=f"https://assets.apnews.com/x/{i:02d}.jpg") for i in range(n)]
 
 
-def _stub_checker(img, expected):
+def _stub_checker(img, expected, **_kw):
     return {"status": "ok", "identity": {"verdict": "match", "name": "黄泽林",
                                          "face": [1275, 217, 1652, 718],
                                          "similarity": {"黄泽林": 0.6}},
@@ -759,7 +824,7 @@ def test_下过没过闸的记进账_下一班轮得到第11张(tmp_path):
     repo2 = _repo(tmp_path / "b", {SLUG: (_spec(), NOW - timedelta(hours=6))})
     got = cu.run(repo2, NOW, apply=True, sweeps_for=_one(_ap()), times=lambda _id: (START, None),
                  fetch=lambda _url: _photo("ok"),
-                 checker=lambda img, exp: {"status": "unavailable", "error": "没装"},
+                 checker=lambda img, exp, **_kw: {"status": "unavailable", "error": "没装"},
                  final_gate=lambda spec: None)
     assert got["upgraded"] == []
     assert SLUG not in cu.load_ledger(repo2)["attempts"], "模型不可用也记成下过了"
@@ -787,7 +852,8 @@ def test_退回的要退避_不许每班都红(tmp_path):
             return _photo("ok")
         return cu.run(repo, now, apply=True, sweeps_for=sweeps_for,
                       times=lambda _id: (START, None), fetch=fetch, checker=_stub_checker,
-                      final_gate=lambda spec: "封面大图撑不满卡片")
+                      final_gate=lambda spec: "封面大图撑不满卡片",
+                      baseline_gate=lambda spec: None)
 
     first = go(NOW)
     assert first["reverted"] == [SLUG]
@@ -806,3 +872,213 @@ def test_退回的要退避_不许每班都红(tmp_path):
     assert len(row["reverts"]) == 2
     assert row["next_at"] == (NOW + timedelta(hours=2, minutes=1) + timedelta(hours=4)) \
         .strftime("%Y-%m-%dT%H:%M:%SZ"), "第二次要翻倍"
+
+
+# ---------------------------------------------------------------- 评审第二轮
+
+URL_A = "https://assets.apnews.com/x/5f0c2a9e.jpg"
+FLAGS_MISSING = ("validate_spec 没过：`cover.matchup[0].country` 指的 assets/flags/hk.png "
+                 "不在仓库里")
+
+
+def _go(repo, now, **kw):
+    kw.setdefault("sweeps_for", _one(_ap(url=URL_A)))
+    kw.setdefault("fetch", lambda _url: _photo("ok"))
+    return cu.run(repo, now, apply=True, times=lambda _id: (START, None),
+                  checker=_stub_checker, **kw)
+
+
+def test_原spec本来就过不了的_退避但不拉黑那张图(tmp_path):
+    """评审第二轮：工作流少检出 `assets/flags` 那一次，每一条换好的图都被「assets/flags/hk.png
+    不在仓库里」退回——而原来退回一律把那张图记成下过（「这张图不再试」），每条的**第一张
+    合格官方图**被永久烧掉。判据：换图之前的原 spec 在这个检出里也过不了，拦的就不是图，
+    只退避、不拉黑。"""
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
+    before = (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes()
+    got = _go(repo, NOW, final_gate=lambda spec: FLAGS_MISSING,
+              baseline_gate=lambda spec: FLAGS_MISSING)
+    assert got["reverted"] == [SLUG] and got["upgraded"] == []
+    assert (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes() == before
+    row = cu.load_ledger(repo)["attempts"][SLUG]
+    assert URL_A not in (row.get("tried") or []), "不是图的错，图被拉黑了"
+    assert row["reverts"][-1]["blame_image"] is False and row["next_at"]
+    assert any("图不拉黑" in line for line in got["report"]), got["report"]
+    # 环境修好、退避期满：同一张图照样换得上
+    later = _go(repo, NOW + timedelta(hours=2, minutes=1), final_gate=lambda spec: None)
+    assert later["upgraded"] == [SLUG], later["report"]
+    # 对照：原 spec 过得了、换上它才过不了——是图的错，拉黑
+    repo2 = _repo(tmp_path / "b", {SLUG: (_spec(), NOW - timedelta(hours=6))})
+    _go(repo2, NOW, final_gate=lambda spec: "封面大图撑不满卡片",
+        baseline_gate=lambda spec: None)
+    assert URL_A in cu.load_ledger(repo2)["attempts"][SLUG]["tried"]
+
+
+def test_最终那道闸自己炸了_文件照样退回不穿出去(tmp_path):
+    """稀疏检出里缺个数据文件，`validate_spec` 抛的是 `FileNotFoundError`——原来只接
+    `ReelError / SystemExit / ValueError`，它从 `apply_upgrade` 里直接穿出去：spec 和图
+    **已经写了、没退回**，这一班后面的条也不查了。"""
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
+    before = (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes()
+
+    def boom(_spec):
+        raise FileNotFoundError("data/legacy_something.json")
+    got = _go(repo, NOW, final_gate=boom, baseline_gate=boom)
+    assert got["reverted"] == [SLUG]
+    assert (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes() == before
+    assert not (repo / "assets" / "reel" / f"{SLUG}-official.jpg").exists()
+    assert any("FileNotFoundError" in line for line in got["report"]), got["report"]
+
+
+def test_换好的slug先进清单再记账(tmp_path, monkeypatch):
+    """进程死在「记账」和「进清单」之间：原来先记账——提交那一步只推上去账（upgraded），
+    spec 没跟上，豁免表减掉了、spec 还是抽帧，render 和 CI 一起红。现在先进清单。"""
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
+    out = tmp_path / "upgraded.txt"
+
+    class Died(BaseException):
+        pass
+
+    def die(*_a, **_k):
+        raise Died()
+    monkeypatch.setattr(cu, "save_ledger", die)
+    with pytest.raises(Died):
+        _go(repo, NOW, final_gate=lambda spec: None, out_slugs=out)
+    assert out.read_text("utf-8").split() == [SLUG], "账还没写，清单上就该有这一条了"
+    assert not (repo / cu.LEDGER).exists()
+
+
+def test_认人只认封面主角_和封面闸同一个target():
+    """评审第二轮 nit：main 的 `check_frame` 有了 `target=`，换图这一头和封面闸
+    （`reel_face_gate.cover_target`）用同一个判法——对手的脸是 mismatch。"""
+    seen: list = []
+
+    def spy(img, expected, **kw):
+        seen.append(kw.get("target"))
+        return _stub_checker(img, expected)
+    got = cu.image_verdict(_photo("ok"), _spec(), _ctx(), checker=spy)
+    assert got["problems"] == [] and seen == [["黄泽林"]], (got, seen)
+    cu.image_verdict(_photo("ok"), _spec(subject="巴列霍"), _ctx(subject_zh="巴列霍"), checker=spy)
+    assert seen[-1] == ["巴列霍"]
+
+
+# ------------------------------------------- 最终那道闸：工作流的稀疏检出 vs 全量检出
+
+#: 工作流会往这儿写图，视图里它必须是真目录（全量视图里其余文件照旧链回仓库）
+_WRITES = "assets/reel"
+#: 视图里要**复制**、不能链接的：各模块的 ROOT 是 `Path(__file__).resolve().parents[…]`，
+#: 链接会被 resolve 回原仓库，等于没切
+_COPIED = ("tools", "src")
+
+
+def _workflow_sparse() -> list[str]:
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows" / "reel-cover-upgrade.yml")
+                        .read_text("utf-8"))
+    steps = [s for job in wf["jobs"].values() for s in job["steps"]]
+    co = next(s for s in steps if str(s.get("uses") or "").startswith("actions/checkout"))
+    opts = co.get("with") or {}
+    assert opts.get("sparse-checkout-cone-mode", True) is True, "下面按 cone 模式展开"
+    return [ln.strip().strip("/") for ln in str(opts["sparse-checkout"]).splitlines() if ln.strip()]
+
+
+def _checkout_view(dest: Path, cone: list[str] | None) -> Path:
+    """`ROOT` 的一份只读「检出」：`cone=None` 是全量，否则按 actions/checkout 的 cone
+    模式展开——列出的目录整棵、它们每一层上级目录里的**文件**、仓库根上的文件。"""
+    import shutil  # noqa: PLC0415
+
+    def covered(rel: str) -> bool:
+        return cone is None or any(rel == c or rel.startswith(c + "/") for c in cone)
+
+    def above(rel: str) -> bool:
+        return cone is not None and any(c.startswith(rel + "/") for c in cone)
+
+    def walk(src: Path, dst: Path, rel: str) -> None:
+        dst.mkdir(parents=True, exist_ok=True)
+        for child in sorted(src.iterdir()):
+            sub = f"{rel}/{child.name}" if rel else child.name
+            if child.name in (".git", "__pycache__", ".pytest_cache"):
+                continue
+            if child.is_dir() and not child.is_symlink():
+                writes = sub == _WRITES or _WRITES.startswith(sub + "/")
+                if sub in _COPIED and covered(sub):
+                    shutil.copytree(child, dst / child.name,
+                                    ignore=shutil.ignore_patterns("__pycache__"))
+                elif (writes and covered(sub)) or above(sub):
+                    walk(child, dst / child.name, sub)
+                elif covered(sub):
+                    (dst / child.name).symlink_to(child, target_is_directory=True)
+            elif rel == "" or covered(rel) or above(rel):
+                (dst / child.name).symlink_to(child)
+
+    walk(ROOT, dest, "")
+    (dest / _WRITES).mkdir(parents=True, exist_ok=True)
+    return dest
+
+
+#: 在视图里跑：每一条「赛场之上」抽帧封面按机器换图的形状换成一张 2560×1440 的图，
+#: 过**真的** `_final_gate`（`cover_photo_problem` ＋ `validate_spec`）。
+_GATE_PROBE = r"""
+import json, sys
+from pathlib import Path
+sys.path.insert(0, "tools")
+import cover_upgrade as cu
+from PIL import Image
+
+out = {}
+for path in sorted(Path("specs/reels").glob("*.json")):
+    try:
+        spec = json.loads(path.read_text(encoding="utf-8"))
+    except ValueError:
+        continue
+    cover = spec.get("cover") or {}
+    if not cu.is_frame_cover(spec) or str(cover.get("eyebrow") or "").strip() != "赛场之上":
+        continue
+    slug = str(spec.get("slug") or path.stem)
+    rel = f"assets/reel/{slug}-official.jpg"
+    Image.new("RGB", (2560, 1440), (90, 90, 90)).save(rel)
+    ctx = cu.MatchContext(slug=slug, subject_zh=str(cover.get("subject") or ""))
+    chosen = {"candidate": cu.Candidate("ap", "https://x/y.jpg"), "evidence": {
+        "size": [2560, 1440], "face": {"similarity": {}, "ear": 0.3},
+        "layout": {"zoom": 1.0, "focus": 0.6, "focus_y": 0.5,
+                   "face_out": [300, 300, 700, 700], "fill": 1.0}}}
+    spec["cover"]["portrait"] = cu.upgraded_portrait(cover.get("portrait") or {}, chosen, ctx, rel)
+    out[slug] = cu._final_gate(spec)
+print("GATES " + json.dumps(out, ensure_ascii=False))
+"""
+
+
+def test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样(tmp_path):
+    """评审第二轮 BLOCKING：main 的 #1104 让 `validate_spec` 查比分板国旗
+    （`reel_asset_gates.image_problems` 要 `assets/flags/<iso2>.png`），而工作流的稀疏检出
+    没列 `assets/flags`——**每一条**换好的图都被「assets/flags/hk.png 不在仓库里」退回。
+    `test_换出来的portrait过得了正式的封面闸` 抓不到它：那条在 CI 的全量检出里跑。
+
+    这条把工作流那张单子（`reel-cover-upgrade.yml` 的 `sparse-checkout`）按 cone 模式
+    真的展开成一个检出，拿仓库里**每一条**「赛场之上」抽帧封面换成图、过真的
+    `_final_gate`，和全量检出逐条比：稀疏检出**不许多出任何一个问题**。
+    不按字段名列素材清单——`validate_spec` 以后再多读一样东西，这里自己会红。"""
+    views = {"full": _checkout_view(tmp_path / "full", None),
+             "sparse": _checkout_view(tmp_path / "sparse", _workflow_sparse())}
+    procs = {}
+    for name, view in views.items():
+        env = {**os.environ, "PYTHONPATH": f"{view / 'src'}{os.pathsep}{view / 'tools'}",
+               "PYTHONDONTWRITEBYTECODE": "1"}
+        procs[name] = subprocess.Popen([sys.executable, "-c", _GATE_PROBE], cwd=view, env=env,
+                                       stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    got = {}
+    for name, proc in procs.items():
+        out, err = proc.communicate(timeout=600)
+        line = next((ln for ln in out.splitlines() if ln.startswith("GATES ")), None)
+        assert proc.returncode == 0 and line, f"{name}：{err[-2000:]}"
+        view = str(views[name])
+        got[name] = {slug: (p.replace(view, "<ROOT>") if p else p)
+                     for slug, p in json.loads(line[len("GATES "):]).items()}
+    full, sparse = got["full"], got["sparse"]
+    assert full and sorted(full) == sorted(sparse)
+    assert any(p is None for p in full.values()), (
+        "全量检出里一条都过不了最终那道闸——这条对账就成了空转，先看是哪道闸把它们全拦了")
+    diff = {slug: sparse[slug] for slug in full if sparse[slug] != full[slug]}
+    assert not diff, ("工作流的稀疏检出比全量多拦了这些（缺的素材要加进 "
+                      "reel-cover-upgrade.yml 的 sparse-checkout）：\n"
+                      + "\n".join(f"  {s}: {p}" for s, p in sorted(diff.items())[:8]))

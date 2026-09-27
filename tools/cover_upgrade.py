@@ -63,8 +63,9 @@ onnxruntime／opencv、不拉模型，直接收工（一天 72 班，绝大多�
 
 - 下过、闸没过的候选记进 `data/cover_upgrades.json` 的 `attempts.<slug>.tried`，
   下一班跳过它们接着往后下——`MAX_DOWNLOADS` 的「留给下一班」才是真的
-- 换完过不了正式封面闸（已退回）的：那张图记成下过，这一条按 `REVERT_BACKOFF`
-  退避（2 小时起、每次翻倍），不再每 20 分钟红一次
+- 换完过不了正式封面闸（已退回）的：这一条按 `REVERT_BACKOFF` 退避（2 小时起、
+  每次翻倍），不再每 20 分钟红一次；那张图只在**是它的错**时记成下过——原 spec 在这个
+  检出里也过不了（缺素材、main 上新加的闸），就不拉黑它
 
 ## ⚠️ 权利那一半机器不判（评审 N7，口径归账号所有者）
 
@@ -74,8 +75,14 @@ AP／Getty 的图过了这几道闸就会自动发出去，**没有人再看授�
 
 ## 一个 slug 最多换一次
 
-`data/cover_upgrades.json` 里 `status: upgraded` 的 slug 一律跳过——人后来又手动
-换回抽帧，机器也不会再动它（要重开就把那一笔改成别的 status）。spec 的
+`data/cover_upgrades.json` 里 `status: upgraded` 的 slug 一律跳过，机器不再动它。
+⚠️ **人要手动换回抽帧，三处一起改**（评审第二轮：原来这里写着「机器也不会再动它」，
+只说对了一半）：spec 换回 `frame_at`；账里那一笔的 status 改成别的（比如
+`reverted_by_owner`）——`status: upgraded` 会让这个 slug 从 `OWNER_APPROVED_FRAME_COVERS`
+里减掉，spec 又是抽帧的话 `cover_photo_problem` 当场红、
+`test_自动换过图的slug从抽帧豁免表里减掉` 也红；再在 `cover.portrait._keep_frame_why`
+写一句为什么——不写的话，48 小时窗口里它又是一条「抽帧、没换过」的目标，下一班照样换。
+（反过来，只改 status、不写 `_keep_frame_why`，就是「重开，让机器再换一次」。）spec 的
 `cover.portrait._keep_frame_why` 写了一句为什么，这条也不换（账号所有者当面点过
 「就用这一帧」的那种）。
 """
@@ -138,7 +145,8 @@ BEIJING = ZoneInfo("Asia/Shanghai")
 #: 开赛时刻是 UTC。时区不知道就判不了当地日期——**判不了就不换**，并在报告里说
 #: 「时区不在表里」，而不是退回一个两天宽的窗口（同一个人前一天、后一天各有一场
 #: 的时候，宽窗口会把别的那场的图放进来——认人认得出是他，认不出是哪一场）。
-#: 新赛事加一行；团体赛每年换城市，按年份写。
+#: 新赛事加一行；团体赛每年换城市，按年份写（`{2026: …}`），同一年里分阶段换地方的
+#: 按「年-月」写（`{"2026-09": …}`，先认它）。
 #: 域名只登记**实测开着 WP REST** 的（`find_cover_photo.discover` 扫过 11 个赛事官网，
 #: 只有辛辛那提；拉沃尔杯 2026-09-27 实测 `lavercup.com/wp-json/wp/v2/media` 200）。
 EVENTS: tuple[tuple[str, str, object, str | None], ...] = (
@@ -147,8 +155,10 @@ EVENTS: tuple[tuple[str, str, object, str | None], ...] = (
     ("法网", "Roland Garros", "Europe/Paris", None),
     ("温网", "Wimbledon", "Europe/London", None),
     ("拉沃尔杯", "Laver Cup", {2026: "Europe/London"}, "lavercup.com"),
-    # 2026 年总决赛在深圳（grant-kalinina / zhiyenbayeva-bouzas 两条 spec 写着）
-    ("比利·简·金杯", "Billie Jean King Cup", {2026: "Asia/Shanghai"}, None),
+    # 2026 年**总决赛**在深圳（9 月；grant-kalinina / zhiyenbayeva-bouzas 等写着）。
+    # 只登记这一个月：资格赛（4 月）、附加赛（11 月）各在各的主场，时区不知道就不换
+    # （评审第二轮：原来整年都按上海算，别处那几场的「当地同一天」会算错）。
+    ("比利·简·金杯", "Billie Jean King Cup", {"2026-09": "Asia/Shanghai"}, None),
     ("辛辛那提", "Cincinnati", "America/New_York", "cincinnatiopen.com"),
     ("蒙特利尔", "Montreal", "America/Toronto", None),
     ("多伦多", "Toronto", "America/Toronto", None),
@@ -322,14 +332,22 @@ def record_tried(repo: Path, slug: str, urls: Iterable[str], now: datetime) -> b
     return True
 
 
-def record_revert(repo: Path, slug: str, url: str, problem: str, now: datetime) -> datetime:
-    """换完过不了正式封面闸、已退回：这张图记成下过，这一条退避（N2）。返回下次再查的时刻。"""
+def record_revert(repo: Path, slug: str, url: str, problem: str, now: datetime, *,
+                  blame_image: bool = True) -> datetime:
+    """换完过不了正式封面闸、已退回：这一条退避（N2）。返回下次再查的时刻。
+
+    `blame_image`：拦下来的是**这张图**（原 spec 过得了、换上它就过不了）才把它记成
+    下过、不再试。原 spec 在这个检出里本来就过不了（稀疏检出少了素材、import 炸了、
+    main 上新加的闸拦的是 spec 别处）——那不是图的错，**只退避不拉黑**（评审第二轮：
+    原来一律拉黑，工作流少检出 `assets/flags` 那一次，每条的第一张合格官方图都被烧掉）。"""
     ledger = load_ledger(repo)
     row = ledger["attempts"].setdefault(slug, {})
     reverts = [r for r in row.get("reverts") or [] if isinstance(r, dict)]
-    reverts.append({"at": _stamp(now), "url": url, "problem": problem[:300]})
+    reverts.append({"at": _stamp(now), "url": url, "problem": problem[:300],
+                    "blame_image": blame_image})
     row["reverts"] = reverts
-    row["tried"] = sorted(set(row.get("tried") or []) | {url})
+    if blame_image:
+        row["tried"] = sorted(set(row.get("tried") or []) | {url})
     nxt = now + REVERT_BACKOFF * (2 ** (len(reverts) - 1))
     row["next_at"] = _stamp(nxt)
     row["updated"] = _stamp(now)
@@ -518,7 +536,11 @@ def _registry_tz(event_en: str) -> str | None:
     want = _key(event_en)
     for row in rows if isinstance(rows, list) else []:
         for alias in row.get("aliases") or []:
-            if want and (_key(alias) == want or want in _key(alias)):
+            # **只认整名相等**（评审第二轮）：原来还认 `want in _key(alias)`，`_production.event`
+            # 是残片「Open」时就认成了「Prague Open」、时区 Europe/Prague——而赛事名那道闸
+            # 拿 `open` 去比说明，任何「… Open」都过，成都那一站的图就能换上来。
+            # 和 `event_of` 修掉的是同一类子串病（B2），这里是它漏网的另一半。
+            if want and _key(alias) == want:
                 return row.get("timezone")
     return None
 
@@ -595,7 +617,10 @@ def match_context(spec: dict, *, times: Callable[[str], tuple] = flashscore_time
                                 "判不了当地日期，不换")
         return ctx
     if isinstance(tz, dict):
-        tz = tz.get(start.astimezone(timezone.utc).year)
+        # 团体赛每年换城市，而同一年里不同阶段也不在一个地方——比利·简·金杯 2026 的
+        # 总决赛在深圳（9 月），资格赛、附加赛在别处。按「年-月」登记的先认，再认整年。
+        utc = start.astimezone(timezone.utc)
+        tz = tz.get(f"{utc:%Y-%m}") or tz.get(utc.year)
     tz = tz or _registry_tz(ctx.event_en)
     if not tz:
         ctx.problems.append(f"「{ctx.event_en}」的时区不在 cover_upgrade.EVENTS 里——"
@@ -645,9 +670,18 @@ class Candidate:
 #: conference after his second-round match…」「…practices ahead of his match…」
 #: 原来都换上了，而 `evaluate` 挑脸最大的，恰好偏爱发布会和定妆照）。
 #: 在 `_fold` 之后的文本上匹配（小写、标点变空格），所以 `warm-up` 是 `warm up`。
+#:
+#: 评审第二轮补的一批（真 `metadata_problems` 在 wong-vallejo 上复现过：全名、对手、
+#: Hangzhou Open、Sept. 26, 2026 全在，照样过闸）：「speaks to the **media** after his
+#: second-round win」「talks to **reporters**」「attends a **media** session」「at a
+#: **photocall**」「**headshot**」「**hits during a session ahead of his match**」。
+#: 记者会、定妆、赛前练球的脸大、正、睁眼，`evaluate` 又挑最大的脸——正是这一类最该拦。
+#: ⚠️ 不收裸的 `session`：AP 的比赛图常写「during the night session」。
 NOT_IN_MATCH = re.compile(
     r"\b(?:practi[cs]\w*|training|trains|warm\w*|(?:news|press) conferences?"
     r"|interview\w*|autograph\w*|arriv\w*|portraits?|pos(?:e|es|ed|ing)"
+    r"|media|reporters?|journalists?|photo ?calls?|head ?shots?"
+    r"|hit(?:s|ting)?(?: during an?)? sessions?|ahead of (?:his|her|their)"
     r"|doubles|mixed)\b")
 
 
@@ -735,8 +769,10 @@ def _upload_problems(c: Candidate, ctx: MatchContext, shown: str) -> list[str]:
         problems.append(f"上传于 {stamp:%Y-%m-%dT%H:%M}Z，比这场开赛（"
                         f"{ctx.start_utc.astimezone(timezone.utc):%Y-%m-%dT%H:%M}Z）还早——"
                         "拍的是别的场")
-    local = (date.fromisoformat(c.meta_date[:10]) if _DATE_ISO.match(c.meta_date or "")
-             else stamp.astimezone(ZoneInfo(ctx.tz)).date() if ctx.tz else None)
+    # 当地哪一天按**赛事**的时区从上传时刻换算——WordPress 的 `date` 是**站点**设置的
+    # 时区（评审第二轮），和赛事所在地不一定是一个（美网夜场 21:30 EDT 传的图，站点
+    # 设成 UTC 就记成第二天）。
+    local = stamp.astimezone(ZoneInfo(ctx.tz)).date() if ctx.tz else None
     if local is None:
         problems.append("时区不知道，判不了上传是当地哪一天")
     elif local not in ctx.match_dates:
@@ -971,7 +1007,11 @@ def image_verdict(blob: bytes, spec: dict, ctx: MatchContext, *, checker=None) -
         problems.append(f"分辨率不够：{w}×{h} 铺 {CANVAS_W}×{CANVAS_H} 要放大 "
                         f"{1 / best_fill:.2f} 倍（官方图不许放大——cover_photo_problem）")
     expected = reel_face_gate.expected_players(spec)
-    rep = (checker or face_checks.check_frame)(img, expected)
+    # `target`：只认封面主角，和封面闸**同一个出处**（`reel_face_gate.cover_target`）——
+    # 对手的脸是 mismatch，不是「像两人之一就算过」。`cover.subject` 不在 matchup 里时
+    # 它给 None（退回两人之一）；下面按名字再核一遍，是双保险。
+    target, _note = reel_face_gate.cover_target(spec)
+    rep = (checker or face_checks.check_frame)(img, expected, target=target)
     ident, eyes = rep.get("identity") or {}, rep.get("eyes") or {}
     ev["face"] = {"status": rep.get("status"), "verdict": ident.get("verdict"),
                   "name": ident.get("name"), "similarity": ident.get("similarity"),
@@ -1103,26 +1143,73 @@ def stale_markers(repo: Path, slug: str, now: datetime) -> list[str]:
     return [marker] if tracked else []
 
 
+def _validate(spec: dict) -> str | None:
+    """`build_match_reel.validate_spec`，**任何**异常都折成一句问题（拿不准就不换）。
+
+    ⚠️ 原来只接 `ReelError / SystemExit / ValueError`：稀疏检出里缺个数据文件抛的
+    `FileNotFoundError` 会从 `apply_upgrade` 里直接穿出去——spec 和图**已经写了、没退回**，
+    这一班后面的条也不查了。"""
+    import build_match_reel as reel  # noqa: PLC0415
+
+    try:
+        reel.validate_spec(spec)
+    except BaseException as exc:                                  # noqa: BLE001
+        if isinstance(exc, KeyboardInterrupt):
+            raise
+        return f"validate_spec 没过：{type(exc).__name__}: {exc}"
+    return None
+
+
 def _final_gate(spec: dict) -> str | None:
     """写盘之后拿**正式的**两道闸再过一遍：`cover_photo_problem`（去掉 slug，绕开豁免
-    表，看它本身过不过）和 `validate_spec`。单一出处——前面 `place_face` 那套只是挑图。"""
+    表，看它本身过不过）和 `validate_spec`。单一出处——前面 `place_face` 那套只是挑图。
+
+    ⚠️ 它在**工作流的稀疏检出**里跑（`reel-cover-upgrade.yml`）：`validate_spec` 读到的
+    每一样素材都得在那张单子上，判据 `test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样`。"""
     import build_match_reel as reel  # noqa: PLC0415
 
     naked = copy.deepcopy(spec)
     naked.pop("slug", None)
     if (problem := reel.cover_photo_problem(naked)):
         return problem
+    return _validate(spec)
+
+
+def _baseline_gate(spec: dict) -> str | None:
+    """**换图之前**的原 spec 在这个检出里过不过 `validate_spec`。
+
+    最终那道闸拦下来之后问这一句：原 spec 也过不了，拦的就不是这张图（缺素材、
+    import 炸了、main 上新加的闸拦的是 spec 别处）——退避，但**不把图拉黑**。"""
+    return _validate(spec)
+
+
+def _gate(gate: Callable[[dict], str | None], spec: dict) -> str | None:
     try:
-        reel.validate_spec(spec)
-    except (reel.ReelError, SystemExit, ValueError) as exc:
-        return f"validate_spec 没过：{exc}"
-    return None
+        return gate(spec)
+    except BaseException as exc:                                  # noqa: BLE001
+        if isinstance(exc, KeyboardInterrupt):
+            raise
+        return f"闸自己炸了：{type(exc).__name__}: {exc}"
+
+
+class GateRejected(RuntimeError):
+    """换完过不了正式的封面闸、已退回。`blame_image`：是不是**这张图**的错。"""
+
+    def __init__(self, message: str, *, blame_image: bool = True):
+        super().__init__(message)
+        self.blame_image = blame_image
 
 
 def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
                   considered: list[dict], now: datetime, *, final_gate=_final_gate,
-                  git_rm: bool = True) -> dict:
-    """写图、改 spec、删同日的 `pushed.json`、记账。过不了最终那道闸就全部退回去。"""
+                  baseline_gate=_baseline_gate, git_rm: bool = True,
+                  out_slugs: Path | None = None) -> dict:
+    """写图、改 spec、删同日的 `pushed.json`、记账。过不了最终那道闸就全部退回去，
+    抛 `GateRejected`（带「是不是这张图的错」）。
+
+    `out_slugs` 排在**记账之前**追加（评审第二轮）：进程要是死在两步之间，宁可提交上去
+    的是「spec 换了图、账没记」（render 照样过，豁免表那条自检红一次），也不要「账记了
+    upgraded、spec 没跟上」（豁免表减掉了、spec 还是抽帧，render 和 CI 一起红）。"""
     c: Candidate = chosen["candidate"]
     ext = Path(c.url.split("?", 1)[0]).suffix.lower()
     ext = ext if ext in (".jpg", ".jpeg", ".png") else ".jpg"
@@ -1139,18 +1226,26 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
         json.dumps(spec, ensure_ascii=False, indent=_indent_of(before_spec)) + "\n",
         encoding="utf-8")
     cwd = os.getcwd()
+    baseline = None
     try:
         os.chdir(repo)             # spec 里的图路径是仓库相对路径
-        problem = final_gate(spec)
+        problem = _gate(final_gate, spec)
+        if problem:
+            target.spec_path.write_text(before_spec, encoding="utf-8")
+            if had_image is None:
+                image_path.unlink(missing_ok=True)
+            else:
+                image_path.write_bytes(had_image)
+            baseline = _gate(baseline_gate, target.spec)
     finally:
         os.chdir(cwd)
     if problem:
-        target.spec_path.write_text(before_spec, encoding="utf-8")
-        if had_image is None:
-            image_path.unlink(missing_ok=True)
-        else:
-            image_path.write_bytes(had_image)
-        raise RuntimeError(f"{target.slug}：换完过不了正式的封面闸，已退回——{problem}")
+        if baseline:
+            raise GateRejected(
+                f"{target.slug}：换完过不了正式的封面闸，已退回——{problem}"
+                f"（换图之前的原 spec 在这个检出里也过不了：{baseline[:200]}——拦的不是这张图）",
+                blame_image=False)
+        raise GateRejected(f"{target.slug}：换完过不了正式的封面闸，已退回——{problem}")
     markers = stale_markers(repo, target.slug, now)
     if git_rm and markers:
         subprocess.run(["git", "-C", str(repo), "rm", "-q", "--sparse", "--", *markers],
@@ -1172,6 +1267,9 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
         "considered": [{k: v for k, v in r.items() if k != "evidence"}
                        for r in considered[:20]],
     }
+    if out_slugs is not None:
+        with open(out_slugs, "a", encoding="utf-8") as fh:
+            fh.write(f"{target.slug}\n")
     ledger = load_ledger(repo)
     ledger["upgrades"][target.slug] = entry
     ledger["attempts"].pop(target.slug, None)      # 换成了，查图的草稿账不用留
@@ -1183,17 +1281,20 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
 
 def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
         sweeps_for=None, times=flashscore_times, fetch=fetch_image, checker=None,
-        final_gate=_final_gate, git_rm: bool = True, out_slugs: Path | None = None) -> dict:
+        final_gate=_final_gate, baseline_gate=_baseline_gate, git_rm: bool = True,
+        out_slugs: Path | None = None) -> dict:
     """返回 `{"upgraded": [slug…], "reverted": [slug…], "report": [行…]}`。
 
     一条换完过不了正式封面闸（`reverted`）不拖累别的条——它的文件已经退回，
     接着查下一条；`main` 最后按它返回 1，让这一班红出来（挑图的闸和正式的闸
     说法不一致，是代码的毛病，不是这张图的毛病）。那一条随后**退避**
-    （`REVERT_BACKOFF`，每次翻倍），那张图记成下过——不会每 20 分钟红一次（N2）。
+    （`REVERT_BACKOFF`，每次翻倍）——不会每 20 分钟红一次（N2）。那张图只在
+    **是它的错**时记成下过（`GateRejected.blame_image`：原 spec 过得了、换上它就过不了）；
+    原 spec 在这个检出里本来就过不了的，图不拉黑，环境修好之后还能换上。
 
-    `out_slugs`：换成一条就**当场**追加一行。工作流按它提交 spec 和图；要是后面哪条
-    把进程搞崩了，已经换好、账里记了 upgraded 的那几条照样在清单上——不然账会被单独
-    提交上去，而 spec 没跟上（豁免表减掉了、spec 还是抽帧，CI 当场红）。"""
+    `out_slugs`：换成一条就**当场**追加一行（在记账之前，见 `apply_upgrade`）。工作流按它
+    提交 spec 和图；要是后面哪条把进程搞崩了，已经换好、账里记了 upgraded 的那几条照样在
+    清单上——不然账会被单独提交上去，而 spec 没跟上（豁免表减掉了、spec 还是抽帧，CI 当场红）。"""
     report: list[str] = []
     upgraded: list[str] = []
     reverted: list[str] = []
@@ -1241,17 +1342,19 @@ def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
             continue
         try:
             entry = apply_upgrade(repo, target, ctx, chosen, rows, now,
-                                  final_gate=final_gate, git_rm=git_rm)
+                                  final_gate=final_gate, baseline_gate=baseline_gate,
+                                  git_rm=git_rm, out_slugs=out_slugs)
         except RuntimeError as exc:
+            blame = getattr(exc, "blame_image", True)
             reverted.append(target.slug)
-            nxt = record_revert(repo, target.slug, chosen["candidate"].url, str(exc), now)
+            nxt = record_revert(repo, target.slug, chosen["candidate"].url, str(exc), now,
+                                blame_image=blame)
             record_tried(repo, target.slug, tried, now)
-            report.append(f"::error::{exc}（这张图不再试；这一条退避到 {nxt:%m-%d %H:%M}Z 再查）")
+            report.append(f"::error::{exc}（"
+                          + ("这张图不再试" if blame else "图不拉黑，环境修好之后还会再试它")
+                          + f"；这一条退避到 {nxt:%m-%d %H:%M}Z 再查）")
             continue
         upgraded.append(target.slug)
-        if out_slugs is not None:
-            with open(out_slugs, "a", encoding="utf-8") as fh:
-                fh.write(f"{target.slug}\n")
         report.append(f"    → 已换成 {entry['image']}；删掉 {entry['removed_markers'] or '（没有同日的 pushed.json）'}；"
                       "接下来 match-reel mode=render push=true")
     return {"upgraded": upgraded, "reverted": reverted, "report": report}

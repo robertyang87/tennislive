@@ -58,7 +58,12 @@ jobs:
           # `import build_match_reel` 在 import 时就读（explainer 模块顶上画示意图），
           # 少了它最终那道封面闸 import 不进来——而那只在真有图过闸时才走到，所以
           # 工具在 --apply 开头先 import 一次，缺了当场红（2026-09-27 在 cone 检出里量的）。
+          # ⚠️ assets/flags：最终那道闸里的 `validate_spec` 查比分板国旗
+          # （`reel_asset_gates.image_problems`，#1104）——少了它**每一条**换好的图都被
+          # 「assets/flags/xx.png 不在仓库里」退回。这张单子由
+          # `test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样` 按真实 spec 逐条对账。
           sparse-checkout: |
+            assets/flags
             assets/players
             assets/venues
             assets/explainer/nadal-academy
@@ -68,16 +73,12 @@ jobs:
             src
             tools
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: pip
-
       # 先看有没有活，再装依赖（评审 N4）：这一步只读账和 spec（纯标准库），算出
-      # 要查图的目标、要重派 render 的 slug。两样都没有，后面的装包、拉模型、查图全部
-      # 跳过——一天 72 班，绝大多数是 0 条，原来每一班都装一遍 onnxruntime／opencv。
+      # 要查图的目标、要重派 render 的 slug。两样都没有，后面的 setup-python（连同它的
+      # pip 缓存还原）、装包、拉模型、查图全部跳过——一天 72 班，绝大多数是 0 条。
+      # 所以这一步用 runner 自带的 `python3`，排在 setup-python **之前**。
       # 带 --apply 时顺手把「这次要重派」记进账（下面的提交步骤一起推上去）。
-      # 按模块跑（`python -m cover_upgrade`）：这一步不碰人脸模型；
+      # 按模块跑（`python3 -m cover_upgrade`）：这一步不碰人脸模型；
       # `test_人脸模型缓存键跟着模型版本走` 认 `tools/cover_upgrade.py` 那一步为
       # 第一次用到模型，那一步排在缓存和「备好」之后。
       - name: 找目标、对账（不装依赖）
@@ -91,28 +92,49 @@ jobs:
                 --out-redispatch "$RUNNER_TEMP/redispatch.txt")
           [ "$APPLY" = "true" ] && ARGS+=(--apply)
           [ -n "$SLUG" ] && ARGS+=(--slug "$SLUG")
-          PYTHONPATH=tools python -m cover_upgrade "${ARGS[@]}"
+          PYTHONPATH=tools python3 -m cover_upgrade "${ARGS[@]}"
           echo "targets=$(grep -c . "$RUNNER_TEMP/targets.txt" || true)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-python@v5
+        if: steps.plan.outputs.targets != '0'
+        with:
+          python-version: "3.11"
+          cache: pip
 
       # visualqa 是 cv2（headless，<5），faces 是 onnxruntime——认人＋睁眼要这两个。
       - name: 装依赖
         if: steps.plan.outputs.targets != '0'
         run: pip install -q -e ".[visualqa,faces]"
 
-      # 认人＋睁眼的三个 onnx（face_checks.MODEL_VERSION）。键钉在模型版本上，
-      # `test_人脸模型缓存键跟着模型版本走` 逼着它和 face_checks 一起改。
-      - name: 缓存人脸模型
+      # 认人＋睁眼的三个 onnx。键**按权重内容定址**（`face_checks.CACHE_KEY`：版本号 ＋
+      # 三个 sha256 的摘要），`test_人脸模型缓存键跟着模型版本走` 逼着这里逐字一致。
+      # 和 interview-clip.yml 同一个形状（#1105）：拆成 restore / save 两步。
+      - name: 取人脸模型缓存
+        id: face-cache
         if: steps.plan.outputs.targets != '0'
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: ~/.cache/tennislive/face-models
-          key: face-models-buffalo_s-v0.7
+          key: face-models-buffalo_s-v0.7-17d6bb6dfcd3
       # 备不上不拖红：工具会把每张候选记成「人脸模型不可用」——**不换**，不是放行。
+      # `ok=true` 只在 fetch 真成功时写，下面存缓存那一步只认它。
       - name: 备好人脸模型
+        id: face-models
         if: steps.plan.outputs.targets != '0'
         run: |
-          python tools/face_checks.py fetch \
-            || echo "::warning::人脸模型没备好——这一班所有候选都会因「认人／睁眼没查」而不换"
+          if python tools/face_checks.py fetch; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::人脸模型没备好——这一班所有候选都会因「认人／睁眼没查」而不换"
+          fi
+      # 只在「备好」真成功、而且缓存没命中时才存：fetch 下到一半断掉的半截目录不许
+      # 钉进一个不可变的键里（评审 2026-09-27 nit 7，interview-clip.yml 同一段）。
+      - name: 存人脸模型缓存
+        if: steps.plan.outputs.targets != '0' && steps.face-cache.outputs.cache-hit != 'true' && steps.face-models.outputs.ok == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/tennislive/face-models
+          key: face-models-buffalo_s-v0.7-17d6bb6dfcd3
 
       - name: 查官方图、过闸、换
         if: steps.plan.outputs.targets != '0'
@@ -150,7 +172,8 @@ jobs:
             git add --sparse assets/reel/"$SLUG"-official.*
           done < "$RUNNER_TEMP/upgraded.txt"
           git add --sparse data/cover_upgrades.json
-          python tools/check_staged_file_sizes.py
+          # python3：0 条目标的那一班没跑 setup-python，而对账重派照样要提交账
+          python3 tools/check_staged_file_sizes.py
           if [ -s "$RUNNER_TEMP/upgraded.txt" ]; then
             MSG="reel: 抽帧封面自动换成官方实拍（O4）$(paste -sd' ' "$RUNNER_TEMP/upgraded.txt")"
           else
