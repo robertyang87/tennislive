@@ -27,7 +27,6 @@ from __future__ import annotations
 import ast
 import json
 import sys
-from datetime import date
 from pathlib import Path
 
 import pytest
@@ -181,7 +180,6 @@ def test_四条发布线的正文里都没有AI标识(tmp_path, monkeypatch):
 
     # ② 知识帖 / 解说片的微信正文（解说片的 explainer_push_html 委托给它）
     body = knowledge_push_html_from_parts(
-        date=date(2026, 8, 15),
         image_urls=[],
         xhs_text=text,
         copy_url="https://example.invalid/copy.html",

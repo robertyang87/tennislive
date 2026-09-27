@@ -1,0 +1,136 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:02:14.80,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 WTA500 新加坡 决赛
+Dialogue: 1,0:00:00.00,0:02:14.80,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}费尔南德斯 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}7{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}5 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}0{\r\fnNoto Sans CJK SC\fs38} 吉布森 · 赛后捧杯致辞
+Dialogue: 0,0:00:00.32,0:00:02.16,EN,,0,0,0,,Well, first of all, I would like
+Dialogue: 0,0:00:00.32,0:00:02.16,ZH,,0,0,0,,首先 我想
+Dialogue: 0,0:00:02.16,0:00:04.00,EN,,0,0,0,,to congratulate Talia and your team.
+Dialogue: 0,0:00:02.16,0:00:04.00,ZH,,0,0,0,,祝贺塔莉娅和你的团队
+Dialogue: 0,0:00:04.00,0:00:05.44,EN,,0,0,0,,You guys did an amazing job.
+Dialogue: 0,0:00:04.00,0:00:05.44,ZH,,0,0,0,,你们做得太棒了
+Dialogue: 0,0:00:05.44,0:00:06.88,EN,,0,0,0,,You're an amazing player
+Dialogue: 0,0:00:05.44,0:00:06.88,ZH,,0,0,0,,你是一位很出色的球员
+Dialogue: 0,0:00:06.88,0:00:08.80,EN,,0,0,0,,and an even better person.
+Dialogue: 0,0:00:06.88,0:00:08.80,ZH,,0,0,0,,人更出色
+Dialogue: 0,0:00:08.80,0:00:10.32,EN,,0,0,0,,So, congratulations.
+Dialogue: 0,0:00:08.80,0:00:10.32,ZH,,0,0,0,,所以 恭喜你
+Dialogue: 0,0:00:10.32,0:00:10.88,EN,,0,0,0,,I'm sure you're going
+Dialogue: 0,0:00:10.32,0:00:10.88,ZH,,0,0,0,,我相信你还会
+Dialogue: 0,0:00:10.88,0:00:12.48,EN,,0,0,0,,to have many more finals.
+Dialogue: 0,0:00:10.88,0:00:12.48,ZH,,0,0,0,,打进更多决赛
+Dialogue: 0,0:00:12.48,0:00:13.68,EN,,0,0,0,,And, hopefully you're going
+Dialogue: 0,0:00:12.48,0:00:13.68,ZH,,0,0,0,,也希望你
+Dialogue: 0,0:00:13.68,0:00:15.52,EN,,0,0,0,,to get a couple more titles, too.
+Dialogue: 0,0:00:13.68,0:00:15.52,ZH,,0,0,0,,再多拿几个冠军
+Dialogue: 0,0:00:15.52,0:00:16.24,EN,,0,0,0,,not against me,
+Dialogue: 0,0:00:15.52,0:00:16.24,ZH,,0,0,0,,别是对我就行
+Dialogue: 0,0:00:16.24,0:00:19.44,EN,,0,0,0,,but I know like you're playing amazing.
+Dialogue: 0,0:00:16.24,0:00:19.44,ZH,,0,0,0,,但我知道 你现在打得太好了
+Dialogue: 0,0:00:19.44,0:00:21.12,EN,,0,0,0,,So, continue on the right path.
+Dialogue: 0,0:00:19.44,0:00:21.12,ZH,,0,0,0,,所以 继续沿着这条路走
+Dialogue: 0,0:00:21.12,0:00:22.32,EN,,0,0,0,,You're doing good.
+Dialogue: 0,0:00:21.12,0:00:22.32,ZH,,0,0,0,,你做得很好
+Dialogue: 0,0:00:22.32,0:00:30.16,EN,,0,0,0,,I also want to thank my coach
+Dialogue: 0,0:00:22.32,0:00:30.16,ZH,,0,0,0,,我也想谢谢我的教练
+Dialogue: 0,0:00:30.16,0:00:31.28,EN,,0,0,0,,who is here.
+Dialogue: 0,0:00:30.16,0:00:31.28,ZH,,0,0,0,,他今天就在这里
+Dialogue: 0,0:00:31.28,0:00:33.28,EN,,0,0,0,,My coaches who are back home,
+Dialogue: 0,0:00:31.28,0:00:33.28,ZH,,0,0,0,,还有在家里的教练们
+Dialogue: 0,0:00:33.28,0:00:36.00,EN,,0,0,0,,my family who are back home,
+Dialogue: 0,0:00:33.28,0:00:36.00,ZH,,0,0,0,,在家里的家人
+Dialogue: 0,0:00:36.00,0:00:37.04,EN,,0,0,0,,my team members
+Dialogue: 0,0:00:36.00,0:00:37.04,ZH,,0,0,0,,还有我团队里的成员
+Dialogue: 0,0:00:37.04,0:00:38.16,EN,,0,0,0,,who are traveling around
+Dialogue: 0,0:00:37.04,0:00:38.16,ZH,,0,0,0,,他们正跟着
+Dialogue: 0,0:00:38.16,0:00:39.68,EN,,0,0,0,,the world helping out my sister
+Dialogue: 0,0:00:38.16,0:00:39.68,ZH,,0,0,0,,我妹妹和另一位球员
+Dialogue: 0,0:00:39.68,0:00:40.96,EN,,0,0,0,,and another player.
+Dialogue: 0,0:00:39.68,0:00:40.96,ZH,,0,0,0,,满世界跑
+Dialogue: 0,0:00:40.96,0:00:42.48,EN,,0,0,0,,Thank you so much for all the hard work,
+Dialogue: 0,0:00:40.96,0:00:42.48,ZH,,0,0,0,,谢谢你们所有的付出
+Dialogue: 0,0:00:42.48,0:00:43.60,EN,,0,0,0,,the sacrifices,
+Dialogue: 0,0:00:42.48,0:00:43.60,ZH,,0,0,0,,所有的牺牲
+Dialogue: 0,0:00:43.60,0:00:46.40,EN,,0,0,0,,and the day in and day out belief in me.
+Dialogue: 0,0:00:43.60,0:00:46.40,ZH,,0,0,0,,还有日复一日对我的信任
+Dialogue: 0,0:00:46.40,0:00:47.44,EN,,0,0,0,,It truly means a lot.
+Dialogue: 0,0:00:46.40,0:00:47.44,ZH,,0,0,0,,这对我意义重大
+Dialogue: 0,0:00:47.44,0:00:48.32,EN,,0,0,0,,So, thank you so much
+Dialogue: 0,0:00:47.44,0:00:48.32,ZH,,0,0,0,,所以 真的很感谢
+Dialogue: 0,0:00:48.32,0:00:50.56,EN,,0,0,0,,for always being in my corner and
+Dialogue: 0,0:00:48.32,0:00:50.56,ZH,,0,0,0,,你们一直站在我这边
+Dialogue: 0,0:00:50.56,0:00:54.76,EN,,0,0,0,,and pushing me forward.
+Dialogue: 0,0:00:50.56,0:00:54.76,ZH,,0,0,0,,推着我往前走
+Dialogue: 0,0:00:59.44,0:01:01.20,EN,,0,0,0,,I also want to thank everybody
+Dialogue: 0,0:00:59.44,0:01:01.20,ZH,,0,0,0,,我也想谢谢每一位
+Dialogue: 0,0:01:01.20,0:01:02.80,EN,,0,0,0,,who made this tournament possible.
+Dialogue: 0,0:01:01.20,0:01:02.80,ZH,,0,0,0,,让这项赛事得以举办的人
+Dialogue: 0,0:01:02.80,0:01:04.56,EN,,0,0,0,,the tournament directors,
+Dialogue: 0,0:01:02.80,0:01:04.56,ZH,,0,0,0,,赛事总监
+Dialogue: 0,0:01:04.56,0:01:07.36,EN,,0,0,0,,supervisors, chairs, ball kids,
+Dialogue: 0,0:01:04.56,0:01:07.36,ZH,,0,0,0,,督导 裁判 球童
+Dialogue: 0,0:01:07.36,0:01:12.24,EN,,0,0,0,,the volunteers, you guys truly made
+Dialogue: 0,0:01:07.36,0:01:12.24,ZH,,0,0,0,,志愿者 是你们
+Dialogue: 0,0:01:12.24,0:01:14.32,EN,,0,0,0,,this week super special, not only for myself,
+Dialogue: 0,0:01:12.24,0:01:14.32,ZH,,0,0,0,,让这一周变得特别 不只是对我
+Dialogue: 0,0:01:14.32,0:01:15.92,EN,,0,0,0,,but for every player who came to play
+Dialogue: 0,0:01:14.32,0:01:15.92,ZH,,0,0,0,,也对每一位来这里打球的球员
+Dialogue: 0,0:01:15.92,0:01:19.04,EN,,0,0,0,,in Singapore is an amazing experience
+Dialogue: 0,0:01:15.92,0:01:19.04,ZH,,0,0,0,,新加坡都是一段很棒的经历
+Dialogue: 0,0:01:19.04,0:01:21.52,EN,,0,0,0,,and hopefully we get to come back here
+Dialogue: 0,0:01:19.04,0:01:21.52,ZH,,0,0,0,,希望我们还能回到这里
+Dialogue: 0,0:01:21.52,0:01:24.08,EN,,0,0,0,,and experience this kind of level
+Dialogue: 0,0:01:21.52,0:01:24.08,ZH,,0,0,0,,再一次感受到
+Dialogue: 0,0:01:24.08,0:01:28.40,EN,,0,0,0,,of welcome, this level of professionalism
+Dialogue: 0,0:01:24.08,0:01:28.40,ZH,,0,0,0,,热情接待 这样的专业
+Dialogue: 0,0:01:28.40,0:01:31.12,EN,,0,0,0,,and also this level of love for many years
+Dialogue: 0,0:01:28.40,0:01:31.12,ZH,,0,0,0,,还有这样的热爱 很多很多年
+Dialogue: 0,0:01:31.12,0:01:34.36,EN,,0,0,0,,to come.
+Dialogue: 0,0:01:31.12,0:01:34.36,ZH,,0,0,0,,一直下去
+Dialogue: 0,0:01:38.16,0:01:40.48,EN,,0,0,0,,And then finally,
+Dialogue: 0,0:01:38.16,0:01:40.48,ZH,,0,0,0,,最后
+Dialogue: 0,0:01:40.48,0:01:43.04,EN,,0,0,0,,I would like to thank all the Singaporean fans
+Dialogue: 0,0:01:40.48,0:01:43.04,ZH,,0,0,0,,我想谢谢所有新加坡球迷
+Dialogue: 0,0:01:43.04,0:01:47.80,EN,,0,0,0,,and the Pinoy fans who came to watch
+Dialogue: 0,0:01:43.04,0:01:47.80,ZH,,0,0,0,,还有来看球的菲律宾球迷
+Dialogue: 0,0:01:49.44,0:01:51.36,EN,,0,0,0,,who came to watch this whole week.
+Dialogue: 0,0:01:49.44,0:01:51.36,ZH,,0,0,0,,这一整周都来看球的你们
+Dialogue: 0,0:01:51.36,0:01:52.80,EN,,0,0,0,,Not only my matches,
+Dialogue: 0,0:01:51.36,0:01:52.80,ZH,,0,0,0,,不只是看我的比赛
+Dialogue: 0,0:01:52.80,0:01:54.40,EN,,0,0,0,,but everybody's matches.
+Dialogue: 0,0:01:52.80,0:01:54.40,ZH,,0,0,0,,而是每个人的比赛
+Dialogue: 0,0:01:54.40,0:01:56.00,EN,,0,0,0,,You guys made
+Dialogue: 0,0:01:54.40,0:01:56.00,ZH,,0,0,0,,是你们
+Dialogue: 0,0:01:56.00,0:01:57.44,EN,,0,0,0,,this week extremely special
+Dialogue: 0,0:01:56.00,0:01:57.44,ZH,,0,0,0,,让这一周格外特别
+Dialogue: 0,0:01:57.44,0:01:58.80,EN,,0,0,0,,with all your encouragements,
+Dialogue: 0,0:01:57.44,0:01:58.80,ZH,,0,0,0,,你们的鼓励
+Dialogue: 0,0:01:58.80,0:02:01.20,EN,,0,0,0,,the energy and the positivity
+Dialogue: 0,0:01:58.80,0:02:01.20,ZH,,0,0,0,,你们带来的能量和正能量
+Dialogue: 0,0:02:01.20,0:02:02.96,EN,,0,0,0,,that you brought in everyone's matches.
+Dialogue: 0,0:02:01.20,0:02:02.96,ZH,,0,0,0,,带进了每一场比赛
+Dialogue: 0,0:02:02.96,0:02:04.00,EN,,0,0,0,,It truly meant a lot.
+Dialogue: 0,0:02:02.96,0:02:04.00,ZH,,0,0,0,,这对我意义重大
+Dialogue: 0,0:02:04.00,0:02:04.72,EN,,0,0,0,,Thank you for coming
+Dialogue: 0,0:02:04.00,0:02:04.72,ZH,,0,0,0,,谢谢你们来看
+Dialogue: 0,0:02:04.72,0:02:06.48,EN,,0,0,0,,to watch women's tennis
+Dialogue: 0,0:02:04.72,0:02:06.48,ZH,,0,0,0,,女子网球
+Dialogue: 0,0:02:06.48,0:02:07.60,EN,,0,0,0,,and hopefully you guys get
+Dialogue: 0,0:02:06.48,0:02:07.60,ZH,,0,0,0,,也希望你们
+Dialogue: 0,0:02:07.60,0:02:10.40,EN,,0,0,0,,to watch many more matches live
+Dialogue: 0,0:02:07.60,0:02:10.40,ZH,,0,0,0,,还能看更多场比赛
+Dialogue: 0,0:02:10.40,0:02:12.86,EN,,0,0,0,,and in person, too.
+Dialogue: 0,0:02:10.40,0:02:12.86,ZH,,0,0,0,,在现场亲眼看

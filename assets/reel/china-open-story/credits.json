@@ -1,0 +1,34 @@
+{
+  "checked_at": "2026-09-27",
+  "reference_used_only_for_research": "https://www.douyin.com/video/7689851671832581475",
+  "no_reference_media_used": true,
+  "video_sources": {
+    "promo": "https://www.tennistv.com/videos/4120368/watch-the-2024-china-open-live-on-tennis-tv",
+    "brand": "https://www.chinaopen.com/en/upload/videos/2026/6/c87f561a357dab35.mp4",
+    "gauff": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6362929392112",
+    "qf": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6362763886112"
+  },
+  "photo_sources": {
+    "diamond-official.jpg": "https://www.wtatennis.com/tournaments/china-open",
+    "alcaraz0.jpg": "https://www.chinaopen.com/cn/contents/281/591.html",
+    "alcaraz1.jpg": "https://www.chinaopen.com/cn/contents/281/591.html",
+    "alcaraz2.jpg": "https://www.chinaopen.com/cn/contents/281/591.html",
+    "guangcai.jpg": "https://www.xinhuanet.com/20241006/28cfc9d52931408d805bffa5b5f60673/c.html"
+  },
+  "template": "specs/reels/cincinnati-story.json + tools/build_match_reel.py",
+  "original_elements": [
+    "文案",
+    "问题与叙事结构",
+    "配音",
+    "字幕时序",
+    "素材选段与重组"
+  ],
+  "notes": [
+    "TennisTV宣传片2024发布但包含2023球员画面；全部作为历史资料画面，不作为2026阵容。",
+    "WTA高芙和八强素材均为2024中网。",
+    "中网2026品牌片含历年画面，已去掉末尾品牌广告页；不把历年冠军解释为2026成绩。",
+    "2024阿卡决赛使用赛事官方冠军照片，不以其他比赛回合冒充。",
+    "郑钦文段画面为2024第三轮，对阵波多罗斯卡；解说描述该届最终四强成绩。"
+  ],
+  "local_render_note": "本地系统缺少CJK字体，已使用仓库NotoSansSC字体的静态700字重实例；汉字覆盖检查无缺字，实烧字幕图像已核验。"
+}

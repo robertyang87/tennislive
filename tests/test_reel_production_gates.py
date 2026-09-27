@@ -69,7 +69,8 @@ def test_visual_gate要求结尾覆盖冷开场且封面选对爆冷输家(tmp_p
     assert report["status"] == "waiting"
     assert any("完整覆盖" in p for p in problems)
     assert any("封面人物应为 梅德韦杰夫" in p for p in problems)
-    assert any("loser_disappointed" in p for p in problems)
+    # 爆冷输家要「还在拼」的那一帧（08-15 arango-venus），不是垮掉的那一帧
+    assert any("封面情绪应为 loser_fighting" in p for p in problems)
 
 
 def test_visual_gate覆盖全片且保留最后两张收官证据(tmp_path):
@@ -276,8 +277,11 @@ def test_双语字幕调用也实际加载制作skill并纠正核实人名():
 
 
 def _ready_draft(tmp_path: Path) -> dict:
+    # 真图，不是占位字节：`validate_spec` 现在要把引用的每张图解到底
+    # （tools/reel_asset_gates.py，zheng-you 那张半截 PNG 白渲两趟之后加的）
+    from PIL import Image
     photo = tmp_path / "cover.jpg"
-    photo.write_bytes(b"photo")
+    Image.new("RGB", (1600, 2000), (40, 90, 60)).save(photo, "JPEG")  # 撑得满 1080×1440
     return {
         "_draft": True,
         "slug": "demo-match",

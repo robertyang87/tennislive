@@ -1,0 +1,116 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:03:31.20,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 拉沃尔杯 第三天
+Dialogue: 1,0:00:00.00,0:03:31.20,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}欧洲队 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}13{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}5{\r\fnNoto Sans CJK SC\fs38} 世界队 · 赛后捧杯致辞
+Dialogue: 0,0:00:00.16,0:00:01.74,EN,,0,0,0,,let's hear it
+Dialogue: 0,0:00:00.16,0:00:01.74,ZH,,0,0,0,,掌声送给
+Dialogue: 0,0:00:01.74,0:00:04.16,EN,,0,0,0,,for the Laver Cup champions, Team Europe,
+Dialogue: 0,0:00:01.74,0:00:04.16,ZH,,0,0,0,,拉沃尔杯冠军 欧洲队
+Dialogue: 0,0:00:04.16,0:00:06.88,EN,,0,0,0,,and they're led by Captain Yannick Noah,
+Dialogue: 0,0:00:04.16,0:00:06.88,ZH,,0,0,0,,队长雅尼克 诺阿
+Dialogue: 0,0:00:06.88,0:00:11.38,EN,,0,0,0,,Vice-Captain Tim Henman, Arthur Fery,
+Dialogue: 0,0:00:06.88,0:00:11.38,ZH,,0,0,0,,副队长亨曼 阿瑟 费里
+Dialogue: 0,0:00:11.38,0:00:14.38,EN,,0,0,0,,Casper Ruud, Jakub Mensik,
+Dialogue: 0,0:00:11.38,0:00:14.38,ZH,,0,0,0,,卡斯珀 鲁德 门西克
+Dialogue: 0,0:00:14.38,0:00:17.74,EN,,0,0,0,,Rafael Jodar, Flavio Cobolli,
+Dialogue: 0,0:00:14.38,0:00:17.74,ZH,,0,0,0,,霍达尔 科博利
+Dialogue: 0,0:00:17.74,0:00:22.84,EN,,0,0,0,,Carlos Alcaraz and Alexander Zverev.
+Dialogue: 0,0:00:17.74,0:00:22.84,ZH,,0,0,0,,阿尔卡拉斯和兹维列夫
+Dialogue: 0,0:00:27.46,0:00:28.24,EN,,0,0,0,,But before we get
+Dialogue: 0,0:00:27.46,0:00:28.24,ZH,,0,0,0,,不过在我们
+Dialogue: 0,0:00:28.24,0:00:32.26,EN,,0,0,0,,to lift the trophy we're all looking forward
+Dialogue: 0,0:00:28.24,0:00:32.26,ZH,,0,0,0,,举起奖杯之前 我们都很想
+Dialogue: 0,0:00:32.26,0:00:33.54,EN,,0,0,0,,to hearing from Yannick Noah
+Dialogue: 0,0:00:32.26,0:00:33.54,ZH,,0,0,0,,听听雅尼克 诺阿怎么说
+Dialogue: 0,0:00:33.54,0:00:42.45,EN,,0,0,0,,the microphone is yours first
+Dialogue: 0,0:00:33.54,0:00:42.45,ZH,,0,0,0,,话筒交给你 首先
+Dialogue: 0,0:00:42.45,0:00:46.49,EN,,0,0,0,,of all I would like to thank Roger
+Dialogue: 0,0:00:42.45,0:00:46.49,ZH,,0,0,0,,我要感谢罗杰
+Dialogue: 0,0:00:46.49,0:00:51.77,EN,,0,0,0,,for having this great idea years ago
+Dialogue: 0,0:00:46.49,0:00:51.77,ZH,,0,0,0,,多年前想出这个好主意
+Dialogue: 0,0:00:51.77,0:00:53.49,EN,,0,0,0,,to make this Laver Cup.
+Dialogue: 0,0:00:51.77,0:00:53.49,ZH,,0,0,0,,办起了拉沃尔杯
+Dialogue: 0,0:00:53.49,0:00:58.13,EN,,0,0,0,,so Roger congratulations I'm really grateful
+Dialogue: 0,0:00:53.49,0:00:58.13,ZH,,0,0,0,,罗杰 恭喜你 我真的很感激
+Dialogue: 0,0:00:58.13,0:01:02.53,EN,,0,0,0,,to participate in my humble way
+Dialogue: 0,0:00:58.13,0:01:02.53,ZH,,0,0,0,,能以我微薄的方式
+Dialogue: 0,0:01:02.53,0:01:05.49,EN,,0,0,0,,on this journey I would like
+Dialogue: 0,0:01:02.53,0:01:05.49,ZH,,0,0,0,,参与这段旅程 我还想
+Dialogue: 0,0:01:05.49,0:01:10.99,EN,,0,0,0,,to thank also Tony, all the team, Tony,
+Dialogue: 0,0:01:05.49,0:01:10.99,ZH,,0,0,0,,感谢托尼和整个团队 托尼
+Dialogue: 0,0:01:10.99,0:01:14.29,EN,,0,0,0,,and Andre I have a special message
+Dialogue: 0,0:01:10.99,0:01:14.29,ZH,,0,0,0,,还有安德烈 我有句话要对你说
+Dialogue: 0,0:01:14.29,0:01:16.65,EN,,0,0,0,,to you I really appreciate the fact
+Dialogue: 0,0:01:14.29,0:01:16.65,ZH,,0,0,0,,我真的很感激
+Dialogue: 0,0:01:16.65,0:01:23.25,EN,,0,0,0,,that you let me win once I'm really full
+Dialogue: 0,0:01:16.65,0:01:23.25,ZH,,0,0,0,,你让我赢了一次 我满怀
+Dialogue: 0,0:01:23.25,0:01:24.99,EN,,0,0,0,,of gratitude you know I know you're
+Dialogue: 0,0:01:23.25,0:01:24.99,ZH,,0,0,0,,感激 你知道 我知道你是
+Dialogue: 0,0:01:24.99,0:01:27.17,EN,,0,0,0,,a good guy at the beginning I thought you
+Dialogue: 0,0:01:24.99,0:01:27.17,ZH,,0,0,0,,好人 一开始我以为你
+Dialogue: 0,0:01:27.17,0:01:30.31,EN,,0,0,0,,were a good guy but now I know thank you
+Dialogue: 0,0:01:27.17,0:01:30.31,ZH,,0,0,0,,是好人 现在我确定了 谢谢你
+Dialogue: 0,0:01:30.31,0:01:39.97,EN,,0,0,0,,for letting us win I would like to thank
+Dialogue: 0,0:01:30.31,0:01:39.97,ZH,,0,0,0,,让我们赢 我想感谢
+Dialogue: 0,0:01:39.97,0:01:42.59,EN,,0,0,0,,my team you guys you know I don't know
+Dialogue: 0,0:01:39.97,0:01:42.59,ZH,,0,0,0,,我的队员们 你们知道 我不知道
+Dialogue: 0,0:01:42.59,0:01:43.25,EN,,0,0,0,,if I'm a captain
+Dialogue: 0,0:01:42.59,0:01:43.25,ZH,,0,0,0,,我算不算队长
+Dialogue: 0,0:01:43.25,0:01:45.37,EN,,0,0,0,,but most of all I think maybe you see me
+Dialogue: 0,0:01:43.25,0:01:45.37,ZH,,0,0,0,,但更重要的是 你们也许把我
+Dialogue: 0,0:01:45.37,0:01:45.95,EN,,0,0,0,,as your father
+Dialogue: 0,0:01:45.37,0:01:45.95,ZH,,0,0,0,,当成父亲
+Dialogue: 0,0:01:45.95,0:01:49.49,EN,,0,0,0,,or maybe your grandfather maybe
+Dialogue: 0,0:01:45.95,0:01:49.49,ZH,,0,0,0,,或者祖父 也许
+Dialogue: 0,0:01:49.49,0:01:52.89,EN,,0,0,0,,your uncle I'll never forget
+Dialogue: 0,0:01:49.49,0:01:52.89,ZH,,0,0,0,,是叔叔 我永远不会忘记
+Dialogue: 0,0:01:52.89,0:01:54.29,EN,,0,0,0,,this very special moment
+Dialogue: 0,0:01:52.89,0:01:54.29,ZH,,0,0,0,,这个非常特别的时刻
+Dialogue: 0,0:01:54.29,0:01:57.91,EN,,0,0,0,,that I share with you you know we all try
+Dialogue: 0,0:01:54.29,0:01:57.91,ZH,,0,0,0,,和你们一起分享 我们都努力
+Dialogue: 0,0:01:57.91,0:01:59.29,EN,,0,0,0,,to play we all have to play
+Dialogue: 0,0:01:57.91,0:01:59.29,ZH,,0,0,0,,去打 我们都得上场
+Dialogue: 0,0:01:59.29,0:02:01.75,EN,,0,0,0,,but sometimes winning feels good
+Dialogue: 0,0:01:59.29,0:02:01.75,ZH,,0,0,0,,但赢球的感觉真好
+Dialogue: 0,0:02:01.75,0:02:05.57,EN,,0,0,0,,so I'm really happy that for once you won
+Dialogue: 0,0:02:01.75,0:02:05.57,ZH,,0,0,0,,我真的很高兴 这一次你们
+Dialogue: 0,0:02:05.57,0:02:08.53,EN,,0,0,0,,for me so congratulations guys
+Dialogue: 0,0:02:05.57,0:02:08.53,ZH,,0,0,0,,为我赢了 恭喜你们 伙计们
+Dialogue: 0,0:02:08.53,0:02:13.59,EN,,0,0,0,,and thank you all for supporting
+Dialogue: 0,0:02:08.53,0:02:13.59,ZH,,0,0,0,,也谢谢大家的支持
+Dialogue: 0,0:02:13.59,0:02:16.13,EN,,0,0,0,,this unbelievable weekend we had
+Dialogue: 0,0:02:13.59,0:02:16.13,ZH,,0,0,0,,这个不可思议的周末
+Dialogue: 0,0:02:16.13,0:02:19.01,EN,,0,0,0,,some great matches as you all know it
+Dialogue: 0,0:02:16.13,0:02:19.01,ZH,,0,0,0,,精彩的比赛不少 你们都知道
+Dialogue: 0,0:02:19.01,0:02:21.57,EN,,0,0,0,,could have gone any any way and you know
+Dialogue: 0,0:02:19.01,0:02:21.57,ZH,,0,0,0,,结果本来怎样都有可能
+Dialogue: 0,0:02:21.57,0:02:23.67,EN,,0,0,0,,so we won some tiebreakers, we've
+Dialogue: 0,0:02:21.57,0:02:23.67,ZH,,0,0,0,,我们赢了几个抢七
+Dialogue: 0,0:02:23.67,0:02:26.43,EN,,0,0,0,,been lucky at times so I hope
+Dialogue: 0,0:02:23.67,0:02:26.43,ZH,,0,0,0,,有时候也有运气 希望
+Dialogue: 0,0:02:26.43,0:02:28.49,EN,,0,0,0,,to see you soon thank you very much bye
+Dialogue: 0,0:02:26.43,0:02:28.49,ZH,,0,0,0,,很快再见 非常感谢 再见
+Dialogue: 0,0:02:28.49,0:02:37.27,EN,,0,0,0,,bye well thank you Yannick well there's
+Dialogue: 0,0:02:28.49,0:02:37.27,ZH,,0,0,0,,再见 谢谢雅尼克
+Dialogue: 0,0:02:37.27,0:02:40.17,EN,,0,0,0,,only one thing left to do and Yannick if you
+Dialogue: 0,0:02:37.27,0:02:40.17,ZH,,0,0,0,,现在只剩最后一件事 雅尼克
+Dialogue: 0,0:02:40.17,0:02:41.87,EN,,0,0,0,,could come back down the line it is time
+Dialogue: 0,0:02:40.17,0:02:41.87,ZH,,0,0,0,,请你再走回来 是时候
+Dialogue: 0,0:02:41.87,0:02:45.67,EN,,0,0,0,,for you and your team to lift the Laver Cup
+Dialogue: 0,0:02:41.87,0:02:45.67,ZH,,0,0,0,,让你和队友们举起拉沃尔杯
+Dialogue: 0,0:02:45.67,0:02:51.73,EN,,0,0,0,,over to you. Come on, boys. It's one piece.
+Dialogue: 0,0:02:45.67,0:02:51.73,ZH,,0,0,0,,交给你们了 来吧伙计们

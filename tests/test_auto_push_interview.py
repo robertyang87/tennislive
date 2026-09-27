@@ -419,6 +419,48 @@ def test_海报在就照发(repo: Path):
     assert picked[0] == "demo"
 
 
+def _commit_cover_scan(repo: Path, frames: dict[float, str], slug: str = "demo") -> None:
+    """按 fixture 里那条 spec 的取景写一份 `cover_candidates.json` 并提交。"""
+    import interview_cover_scan as scan  # noqa: PLC0415
+
+    spec = json.loads((repo / f"specs/interviews/{slug}.json").read_text(encoding="utf-8"))
+    face = {"box": [380, 230, 180, 180], "eyes": 2, "face_height_ratio": 0.22,
+            "face_area_ratio": 0.037, "sharpness": 120.0, "contrast": 96.0}
+    entries = [{"frame_at": t, "status": status,
+                "issues": [] if status == "pass" else ["只检出 1 只眼"],
+                "face": face, "margin": 1.5} for t, status in frames.items()]
+    record = scan.build_record(spec, (18.0, 22.0), 0.2, entries)
+    (repo / f"output/interviews/{slug}" / scan.RECORD_NAME).write_text(
+        json.dumps(record, ensure_ascii=False), encoding="utf-8")
+    _commit_all(repo)
+
+
+def test_扫过封面的话推出去的那一帧必须是扫描里过闸的那一格(repo: Path, capsys):
+    """第 7 道闸（2026-09-27）：推出去的 spec 写着「没看过这一帧」而 auto 是 true。
+
+    `mode=cover` 现在逐格扫一段落 `cover_candidates.json`；提交了这份记录，
+    `cover.frame_at`（fixture 里是 20.0）就必须是其中**过闸**的那一格——
+    没扫过、或扫过但没过，都不发。"""
+    _spec(repo, {"auto": True})
+    _commit_cover_scan(repo, {19.8: "pass", 20.2: "pass"})     # 20.0 没扫过
+    assert gate.pick(CHANGED, repo) is None
+    assert "没扫过" in capsys.readouterr().out
+
+    _commit_cover_scan(repo, {20.0: "fail", 20.2: "pass"})     # 扫过但没过闸
+    assert gate.pick(CHANGED, repo) is None
+    assert "没过闸" in capsys.readouterr().out
+
+
+def test_扫描记录里过闸的那一格照发_没有记录不对账(repo: Path):
+    """反向验证上一条：同样的输入，frame_at 换成过闸的那一格就该发；
+    没有记录（存量全是这样）不许因为这道闸被拦——它只管扫过的。"""
+    _spec(repo, {"auto": True})
+    assert gate.pick(CHANGED, repo) is not None, "没有扫描记录却被拦了——存量会被这道闸一刀切"
+    _commit_cover_scan(repo, {20.0: "pass", 20.2: "pass"})
+    picked = gate.pick(CHANGED, repo)
+    assert picked is not None and picked[0] == "demo"
+
+
 def test_render必须绑定当前QC凭证(repo: Path, capsys):
     """旧 render 不能配一份后来替换的 pass QC 冒充同一轮质检。"""
     _spec(repo, {"auto": True})
@@ -982,3 +1024,48 @@ def test_只add自己那一格():
         assert ("steps.gate.outputs.outdir" in line
                 or "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json" in line), (
             f"add 的不是本次产物或本次独立账本：{line}")
+
+
+def _with_face_model(repo: Path, *, similarity: float, ear: float) -> None:
+    """往封面视觉凭证里放一块 `face_model`（判词字符串故意写成「过」），并把 QC /
+    render.json 的哈希链接好——只让「复核 face_model 的数」这一道有机会拦。"""
+    outdir = repo / "output/interviews/demo"
+    proof_path = outdir / "cover_visual_attestation.json"
+    proof = json.loads(proof_path.read_text(encoding="utf-8"))
+    proof["result"]["face_model"] = {
+        "status": "ok", "model": "buffalo_s-v0.7",
+        "identity": {"verdict": "match", "name": "赢家", "similarity": {"赢家": similarity},
+                     "missing": [], "face_px": 364.0},
+        "eyes": {"verdict": "open", "ear": ear, "face_px": 364.0},
+        "problems": [], "warnings": []}
+    proof_path.write_text(json.dumps(proof, ensure_ascii=False), encoding="utf-8")
+    qc_path = outdir / "qc_attestation.json"
+    qc = json.loads(qc_path.read_text(encoding="utf-8"))
+    qc["cover_visual_attestation_sha256"] = hashlib.sha256(proof_path.read_bytes()).hexdigest()
+    qc_path.write_text(json.dumps(qc), encoding="utf-8")
+    render_path = outdir / "render.json"
+    render = json.loads(render_path.read_text(encoding="utf-8"))
+    render["qc_attestation_sha256"] = hashlib.sha256(qc_path.read_bytes()).hexdigest()
+    render_path.write_text(json.dumps(render), encoding="utf-8")
+
+
+@pytest.mark.parametrize("similarity,ear,why", [
+    (-0.004, 0.28, "不是本人：阿加西那帧对勒纳·钱量到的数"),
+    (0.62, 0.097, "闭眼：鲁德低头那帧量到的数"),
+    (0.62, 0.14, "垂眼／半睁：0.12~0.16 那一档"),
+])
+def test_推送闸复核封面凭证里存的认人睁眼的数(repo: Path, capsys, similarity, ear, why):
+    """评审 2026-09-27 nit 1：推送闸调 `validate_result` 复核封面凭证，而认人／睁眼
+    那一段挪出 `validate_result` 之后全部测试照样绿。这里让它真的被走到。"""
+    _spec(repo, {"auto": True})
+    _with_face_model(repo, similarity=similarity, ear=ear)
+    assert gate.pick(CHANGED, repo) is None, why
+    assert "机械复核未通过" in capsys.readouterr().out
+
+
+def test_推送闸_封面凭证里认人睁眼的数是好的就照发(repo: Path):
+    """反向那一半：同样的哈希链，数是好的就该发——证明上一条拦下来的是那几个数。"""
+    _spec(repo, {"auto": True})
+    _with_face_model(repo, similarity=0.62, ear=0.28)
+    picked = gate.pick(CHANGED, repo)
+    assert picked is not None and picked[0] == "demo"

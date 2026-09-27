@@ -2118,9 +2118,108 @@ Release 拉回本地，在候选时间点前后逐帧抽样**（0.5~1 秒一格�
 过掉，再渲一版完整成片 → 成片走 Release → **拉回本地按秒抽帧**，用闸同一套
 参数逐帧打分，最后用眼睛在过闸的那几帧里挑。
 
+**⭐ 2026-09-27：「按秒抽帧、同一套参数逐帧打分」落成了 `mode=cover` 自己的一步**
+（`build_interview_clip.py --stage cover-scan`，实现在 `tools/interview_cover_scan.py`）。
+来路是返工审计：14 趟 run（74.8 runner-分钟）红在封面闸，monfils 前九趟在赌
+（fcc6c385），alcaraz-fritz 是手工抽帧逐帧过闸才定下 56.2（a4db65b4）。现在：
+
+- `mode=cover` 先扫 `frame_at` 前后各 2 秒、每 0.2 秒一格（要别的窗口写
+  `cover.scan_window: [a, b]` / `cover.scan_step`），**每格走 `cover_poster` ＋
+  `audit_poster`，和终审同一份实现**；落 `cover_candidates.json`（每格读数＋按余量
+  排的过闸名单，**进仓库**）和 `cover_scan_sheet.jpg`（640 宽一格，**右上角贴原尺寸的脸**——
+  ①那条「闸放行 ≠ 睁眼」、fcc6c385 那条「过闸的里有看台观众」都还成立，最后一眼
+  照旧要人看，这面墙就是给那一眼的；**它和缩略图墙一样是工作台，只走 artifact**，
+  `.gitignore` 挡着）。本地实测 11 格 32 秒
+- `mode=cover` 那一帧**没过闸（或 `--stage cover` 自己渲不出海报，比如 frame_at 越过
+  最后一帧）、这一步红着退出时，扫描记录照样先提交**，排名表在错误旁边再印一遍
+  （`interview_cover_scan.py --report`）——那正是这份记录最有用的时候。
+  `--stage cover` 排在取字幕之前，中文还空着也照样出海报
+- 片尾按**视频流**时长剔（`probe_video_duration`，音轨可以比画面长）；剔完还撞上最后
+  一帧之后的格子记成一格「没有画面」，不拖垮整趟扫描
+- `mode=render` 的封面前置（在转写校验和编码**之前**）红了，会就地扫一段印进日志
+  再停——红的那一趟也换回「下一帧选哪个」
+- 提交过扫描记录的话，`cover.frame_at` 必须是其中**过闸**的那一格（render 前置那一步
+  和 `auto_push_interview_gate` 都对账，`interview_cover_scan.py --check --spec S`
+  本地 0.1 秒）。取景（源片／翻转／裁切／zoom／focus）变过的旧记录不管；**尺子
+  （审核器版本、`audit_interview_cover` 的阈值、海报版式指纹 `layout()`、有了
+  `face_checks` 之后它的阈值和模型缓存键）变过的旧记录也不管**——旧的 fail
+  不许接着拦；真要用一帧没扫过的，重扫，或写 `cover._frame_scan_why`
+- ⚠️ **会话（沙箱）看不到候选墙**：它只走 artifact，而 artifact 在沙箱里下不下来
+  （tennis-dev-practices「这台沙箱的两条硬限制」）。会话手上只有两样：`get_job_logs`
+  拉到的排名表（扫描那一步和 `--report` 都印），和 `mode=cover` 提交进分支的那一张
+  `poster.jpg`（当前 `frame_at` 那一格）。所以会话挑帧＝按排名表挑余量最大的一格写进
+  `frame_at` → 再发一趟 `mode=cover` → `git pull` 之后 `Read` 打开 `poster.jpg` 看眼睛
+  和是不是本人；墙是给在浏览器里开得了 artifact 的人看的
+
 ⚠️ **Release 那一步的探法**：`curl -I`（HEAD）回 **401**——预签名 URL 是按
 GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: bytes=0-2047`
 的 GET 回 **206** ＋ 真的 mp4 头。**别拿 HEAD 的 401 得出「下不动」的结论。**
+
+#### ⭐⭐ 2026-09-27：认人＋睁眼有闸了——账号所有者批的 O2+O3（`tools/face_checks.py`）
+
+上面①那句「这道闸是必要条件不是充分条件，最后一道永远是打开看」——**账号所有者
+2026-09-27 在多选题里选了「两个都加」**（O2 认人、O3 睁眼），把「打开看」里能机械化的
+那两件事做成了闸。来路是同一个形状的两类事故，全是 Haar 放行、推出去才被人眼拦下：
+
+| | 放行的是什么 | 提交 |
+|---|---|---|
+| 认错人 | tien-cobolli 97.0 是**阿加西**；federer 家属席；sabalenka 审到教练席；asian-games / hsieh-chan / osaka-iverson / comeback 选错人 | 9ae8918f 13a2734c 3f7d68d1 c701f271 76c42ef5 2566185d 2e336f49 a15954fd |
+| 闭眼／垂眼 | ruud-cerundolo 245.0 低头闭眼；bu-jodar 264.4 垂眼（本节①） | 9ae8918f 47eed1de |
+
+**接在哪儿**（三处，一个判据出口 `face_checks.check_frame`）：
+
+| | 查什么 | 红了怎样 |
+|---|---|---|
+| 采访封面闸 `audit_interview_cover.py` | 海报照片区那张脸是不是 `expected_subject`、眼睛睁没睁 | **硬**：凭证 `fail`；推送闸复核时**从存下的数重判**（`problems_of`），手改 verdict 骗不过去 |
+| 「赛场之上」抽帧封面（`cover.portrait.frame_at`） | **海报上露出来的那扇 3:4 窗里**，是不是 `cover.subject` 那个人、睁眼 | **硬**：`ReelError`，报错里印出 `frame_at` 前后 ±1 秒能过的秒数。**源片一到手就查**（`precheck_cover_face`，排在 TTS／板蒙版／分段之前）；`cover_src/` 里复用的（`render_cover_local.py`、`--dry-run`，runner 上 dry-run 会先把这条 slug 的 `cover_src/` 拉回来）都过 |
+| 分段 3:4 画面 | 旁白只点了一个人的名，窗口里最大的脸是不是另一个人 | **只报不拦**，写进 `render.json` 的 `face_checks.segments`（精度没像封面那样量过，先攒数） |
+
+**门槛是量出来的**（数和来路写在 `face_checks.py` 常量的注释里，别顺手调）：
+
+- 认人：仓库 171 张官方头像两两比（14529 对不同的人）99.9 分位 0.308；仓库历史里
+  85 张真封面对本场头像（同一个人）最低 0.217。`match ≥ 0.34`、`mismatch < 0.15`，
+  中间一律 unknown（只提示）。**有人没官方头像就不判 mismatch**（费德勒、锦织圭这类）
+- 睁眼：106 点眼睑开口 ÷ 眼角距离。鲁德 245.0 **0.097**、郑钦文低头那张 **0.147**；
+  `< 0.12` 闭眼、`0.12~0.16` 垂眼，都拦。⚠️ 第一版的线是 0.18——阿尔卡拉斯**大笑眯眼**
+  （0.171）、胡佳咬牙（0.164）被判成垂眼，而情绪外露正是封面要的，所以收到 0.16
+
+⚠️⚠️ **认的是 `cover.subject`，不是「两个人之一」**（同日评审抓到的 BLOCKING）：第一版把
+`cover.matchup` 两个人都当「应该是的人」，`medvedev-royer` 那帧是梅德韦杰夫，把
+`cover.subject` 改成鲁瓦耶照样过——**对手的脸能上封面**。现在 `subject` 点了 matchup 里的人
+就只认他：对手像到 0.34 以上＝「这张脸是对手」，主角低于 0.15＝「不是他」，都硬拦；
+扫前后能换的帧也只认他。`subject` 没写／不在 matchup 里就退回「两人之一」，但出声。
+**看的也是海报上露出来的那一块**（`versus_poster.solo_photo_window`，和海报 CSS 同一套几何、
+拿 Chromium 真渲比对过）——窗外那张更大的脸不许替窗里的人去过闸。认人这一步自己抛异常
+＝`status: error`、当成没过（不崩、不放行）；模型加载不了才是 `unavailable`、大声降级。
+
+**认领口**：这一帧确实要用（讲的就是教练席那一幕、闭眼流泪就是要的情绪）——
+采访写 `cover._face_check_why`，赛场之上写 `cover.portrait._face_check_why`。
+硬问题降成提示，照旧出声。
+
+**模型加载不了＝大声降级**：凭证 / `render.json` 记 `status: unavailable`，日志打 ⚠️，
+工作流打 `::warning::`——不拖垮出片，也不装作查过（账号所有者原话要的就是这个）。
+
+**挑帧也用它**：`python tools/face_checks.py scan --expect <甲> --expect <乙> --subject <甲> 候选帧/*.jpg`
+按「是本人＋睁眼」排好，✅ 的才能进 `frame_at`；单张 `check`。**缩略图墙选姿态，
+这个选眼神**——③那句「格子里分辨不出眼睛」在这儿补上了。
+
+**量出来的代价**（2026-09-27，沙箱 4 核）：
+
+| | |
+|---|---|
+| 装 onnxruntime（干净 venv） | **2.7 s**；赛场之上那条本来就跟着 rembg 装着，零增量 |
+| 下模型（buffalo_s.zip 127.6 MB，只解 3 个 onnx，21 MB） | **1.6 s** 冷；缓存命中 0.1 s（键按内容定址 `face_checks.CACHE_KEY`；restore / save 拆开，**fetch 成功才存**，半截目录不会被钉进不可变的键；出片链路里 `load()` 不联网，只有「备好人脸模型」那一步和人手跑的命令行会下） |
+| 加载三个 session | **0.35 s** |
+| 每帧（检测＋向量＋106 点） | **0.1~0.3 s**（1920×1080 / 1080×1440） |
+| 分段那道 | 和分段编码**并行**跑（后台线程），不占关键路径 |
+
+⚠️ **别 `pip install insightface`**：它（2.0）依赖 `opencv-python`（非 headless），
+装上来是 **5.0.0.93**，`cv2.CascadeClassifier` 没了——Haar 那道闸当场废掉。实现只用
+它的**模型文件**，前后处理照抄，和 insightface 本身逐数对过（框 Δ0、向量余弦 ≥ 0.99995、
+106 点 Δ ≤ 0.05px）。判据 `tests/test_face_checks.py::test_不许装insightface包本身`。
+
+⚠️ **还不知道的**：bu-jodar 264.4 那张 poster 没进仓库，**它的 EAR 没量到**；
+「垂眼」这一档只靠眼睑开口判，头低着但眼睛睁着的帧（看得见瞳孔）照样放行。
 
 
 ### ⭐⭐ 2026-09-18：**比利·简·金杯官网的图在 Contentful 上，原图 5000~7000px**——页面是 JS 壳，图不是

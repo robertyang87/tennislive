@@ -33,9 +33,11 @@
 
 - **不判「选谁好看」**。谁的脸更清楚、姿态好不好、对不对题，仍然是
   `rank_frame_sharpness.py` 和人眼那两道闸门管的事。这个脚本只回答「这张脸是谁」。
-- **不接进 `pick_cover_frames.py` 的默认流程**。加它意味着往封面这条链路的
-  workflow 里添 `insightface` + `onnxruntime` 依赖（装依赖时间会跟着涨），
-  这是一个要花 CI 秒数换「自动挡住选错人」的取舍，留给账号所有者定，不擅自接。
+- ~~**不接进默认流程**，留给账号所有者定~~——**2026-09-27 他定了**（多选题 O2+O3
+  「两个都加」）：认人＋睁眼接进了采访封面闸、「赛场之上」抽帧封面和分段画面，
+  判据和门槛在 `tools/face_checks.py`。这个脚本现在也走那边的后端（同一套
+  buffalo_s 模型、onnxruntime 推理、**不装 insightface 包**——它会把 cv2 顶成 5.x，
+  见 face_checks 顶部），只保留「给几张参考、逐帧判给谁」这个人工用的入口。
 - **没有第三个人的先验**。给两个参考就只能分两类；给错参考（比如两张都是同一个人）
   它照样会算出一个「更像谁」，不会告诉你参考给错了——参考图要自己先确认过。
 
@@ -55,34 +57,45 @@ import numpy as np
 
 
 def _load_embedder():
-    """延迟导入：这两个包不在 pyproject 的任何 extra 里，没装就该在这儿报错，
-    而不是让 argparse 都跑完了才炸。"""
+    """延迟加载：模型在 `face_checks`（onnxruntime ＋ buffalo_s 的三个 onnx），
+    没装／没下就该在这儿报一句说得清楚的话，而不是让 argparse 都跑完了才炸。
+
+    2026-08-07 那次 26/26 用的是 buffalo_sc——它和 buffalo_s 里的
+    `det_500m.onnx` / `w600k_mbf.onnx` 是同一对文件（大小、压缩后大小逐字节相同），
+    换后端不换模型。"""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
     try:
-        import cv2  # noqa: F401
-        from insightface.app import FaceAnalysis
+        import face_checks  # noqa: PLC0415
+
+        return face_checks.load(fetch=True)   # 人手跑的工具：缺权重就现下
     except ImportError as exc:
+        raise SystemExit(f"读不了人脸模型：{exc}") from exc
+    except Exception as exc:  # noqa: BLE001 — ModelUnavailable 及其它，都要说清楚
         raise SystemExit(
-            "缺 insightface / onnxruntime / opencv-python-headless。\n"
-            "这几个包不在项目依赖里（故意的，见本文件顶部说明）——\n"
-            "临时装：pip install insightface onnxruntime opencv-python-headless"
+            f"人脸模型不可用：{exc}\n"
+            "装 extra：pip install -e \".[visualqa,faces]\"，再跑一次 "
+            "`python tools/face_checks.py fetch`。⚠️ 别装 insightface 包本身"
+            "（会把 cv2 换成 5.x，见 tools/face_checks.py 顶部）"
         ) from exc
-    app = FaceAnalysis(name="buffalo_sc", providers=["CPUExecutionProvider"])
-    app.prepare(ctx_id=0, det_size=(640, 640))
-    return app
 
 
 def embed(app, path: Path) -> np.ndarray | None:
-    """一张图里最大的那张脸的归一化向量；没检出脸返回 None。"""
-    import cv2
+    """一张图里最大的那张脸的归一化向量；没检出脸返回 None。
 
-    img = cv2.imread(str(path))
-    if img is None:
-        raise SystemExit(f"读不出图片：{path}")
-    faces = app.get(img)
-    if not faces:
-        return None
-    biggest = max(faces, key=lambda f: (f.bbox[2] - f.bbox[0]) * (f.bbox[3] - f.bbox[1]))
-    return biggest.normed_embedding
+    官方棚拍头像是满画幅大头，SCRFD 在 640 输入上检不出——检不到就补白边再检
+    （`face_checks.headshot_embedding` 同一个办法）。"""
+    import face_checks  # noqa: PLC0415
+
+    try:
+        img = face_checks.read_bgr(Path(path))
+    except Exception as exc:  # noqa: BLE001
+        raise SystemExit(f"读不出图片：{path}（{exc}）") from exc
+    for frac in (0.0, 0.5, 1.0):
+        probe = face_checks._pad(img, frac) if frac else img
+        face = face_checks.largest_face(app, probe)
+        if face is not None:
+            return app.embed(probe, face)
+    return None
 
 
 def classify(app, refs: dict[str, np.ndarray], candidates: list[Path]) -> list[dict]:

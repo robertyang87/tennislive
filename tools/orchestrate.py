@@ -38,6 +38,7 @@ from tennislive.render.rating import (  # noqa: E402
 from tennislive.zh import player_name_en  # noqa: E402
 from tennislive.zh.terms import round_zh  # noqa: E402
 
+import probe_claims  # noqa: E402  按视频 id 查「这条源片别人 probe 过没有」
 import slam_feed  # noqa: E402  大满贯官方 feed 补 round/court
 
 # 编排器按**北京时间**的「今天」抓 digest——凌晨结束的欧美比赛在 flashscore 算
@@ -254,14 +255,157 @@ def candidates(digest) -> list[dict]:
     dedup: dict[str, dict] = {}
 
     def _fuller(a: dict, b: dict) -> dict:
-        key = lambda x: (len(x["home"]) + len(x["away"])
-                         - (x["home"].count(".") + x["away"].count(".")))
-        return a if key(a) >= key(b) else b
+        return a if _name_fullness(a) >= _name_fullness(b) else b
 
     for c in out:
         prev = dedup.get(c["slug"])
         dedup[c["slug"]] = c if prev is None else _fuller(prev, c)
     return sorted(dedup.values(), key=lambda c: c["score"], reverse=True)
+
+
+def _name_fullness(c: dict) -> int:
+    """名字越长、越不含缩写点，越是 assemble / detect_highlights 要的全名版。"""
+    return (len(c["home"]) + len(c["away"])
+            - (c["home"].count(".") + c["away"].count(".") + c["slug"].count(".")))
+
+
+def _prior_finder(key: str, surnames: list[str]) -> list:
+    """编排器那份检出是稀疏的，`output/` 不在工作区：probe 目录按 HEAD 的 git 对象
+    读，认领按工作区的 `data/probe_claims/` 读（`data` 在稀疏范围里）。"""
+    return probe_claims.find_priors(key, refs=["HEAD"], root=Path("."), surnames=surnames)
+
+
+def _pair_names(c: dict) -> list[str]:
+    """两个人的**整个姓**（`probe_claims.family_name`）——拿去认 slug。`_surname` 只取一个词，
+    复姓就丢了一半：`Jessica Bouzas Maneiro` 给 `maneiro`，会话的 slug 是 `muchova-bouzas-…`。"""
+    return [probe_claims.family_name(c.get("home", "")), probe_claims.family_name(c.get("away", ""))]
+
+
+def _same_match(a: dict, b: dict) -> bool:
+    """同一条源片上的两个候选是不是同一场：至少有一个人对得上。全名／缩写两个 slug
+    总有一边的姓一样（`ka.-shnaider` / `pliskova-shnaider`、`bouzas-rybakina` /
+    `maneiro-rybakina`）；合集视频里的另一场一个人都对不上——不查的话它会被当成
+    同一场挡下，而且挡它的 probe／认领还在，就一直挡着（`state["blocked"]` 只复查先例）。"""
+    return (probe_claims.names_hit(_pair_names(a), b["slug"])
+            or probe_claims.names_hit(_pair_names(b), a["slug"]))
+
+
+def _own_priors(state: dict | None, key: str, c: dict, priors: list, now: datetime) -> tuple[set, list]:
+    """编排器 state 里按**同一条源片**点过的别的 slug（`mark_dispatched` 记了 `video`）。
+
+    编排器只点赛场之上，所以它们一定是这一场的 match probe——两个源一个全名一个
+    缩写（`ka.-shnaider` 上一班点了，这一班 `pliskova-shnaider` 才冒出来），slug
+    认不出、命名规则也认不出，只有 state 认得出。
+
+    ⚠️ 同样不许压死：那一趟被取消／超时的话，state 条目摘不掉（自愈那步挂在
+    `failure()` 上）。所以只在「它的 probe／认领还看得见」或「点出去不到
+    `CLAIM_STALE_MINUTES` 分钟」时算数——和认领作废同一个钟。
+    ⚠️ 同一条源片不等于同一场（合集视频）：那个 slug 里至少要有这场的一个姓。
+    """
+    own: set[str] = set()
+    extra = []
+    seen = {p.slug for p in priors}
+    names = _pair_names(c)
+    for slug, entry in ((state or {}).get("dispatched") or {}).items():
+        if (slug == c["slug"] or not isinstance(entry, dict) or entry.get("video") != key
+                or not _same_match_day(entry.get("date"), c.get("date"))
+                or not probe_claims.names_hit(names, slug)):
+            continue
+        if slug in seen:
+            own.add(slug)
+            continue
+        at = probe_claims._claimed_at({"claimed_at": entry.get("dispatched_at")})
+        if at is not None and now - at <= timedelta(minutes=probe_claims.CLAIM_STALE_MINUTES):
+            own.add(slug)
+            extra.append(probe_claims.Prior(
+                slug=slug, kind="state", where=f"output/<日期>/reel/{slug}", ref="state",
+                at=at.strftime("%Y-%m-%dT%H:%MZ"), column=probe_claims.MATCH_COLUMN))
+    return own, extra
+
+
+def _remember_block(state: dict | None, c: dict, url: str, via: str, key, by: str) -> None:
+    """被挡下的候选记进 `state["blocked"]`：下一班直接拿这次探到的源片复查先例，
+    **不再跑一遍 `find_highlight`**（yt-dlp 搜索 ＋ vet，一场几秒到十几秒，每 10 分钟
+    一班）。只在新挡下、或挡它的换了人时才写——每班都刷时刻，state 就每班都要提交。"""
+    if state is None or not isinstance(key, str):
+        return
+    blocked = state.setdefault("blocked", {})
+    prev = blocked.get(c["slug"]) or {}
+    if prev.get("by") == by and prev.get("url") == url:
+        return
+    blocked[c["slug"]] = {
+        "date": c.get("date") or date.today().isoformat(), "url": url, "via": via,
+        "video": key, "by": by,
+        "at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
+
+
+def drop_already_probed(dispatchable: list[tuple[dict, str, str]], *,
+                        finder=None, state: dict | None = None,
+                        now: datetime | None = None) -> list[tuple[dict, str, str]]:
+    """按**源片的视频 id** 去重：别的 slug 已经 probe／认领过这条源片，就不再点 run。
+
+    ⚠️ **放在 `find_highlight` 之后，不在 `dispatch_plan` 里**：视频 id 只有探到
+    源片之后才有，而 `dispatch_plan` 排在探测之前（它的去重是为了省探测）。
+
+    两层，都是 2026-09-27 回放历史 144 趟带自动备料的 probe 量出来的（8 趟撞了先例）：
+
+    1. **同一批里**两个 slug 指着同一条源片：两个源一个给全名一个给缩写，
+       `slug_for` 拼出 `bouzas-rybakina` / `maneiro-rybakina`、`pliskova-shnaider`
+       / `ka.-shnaider`——按 slug 去重认不出，按视频 id 一眼就是同一场。留全名那条
+    2. **别人先做了**：会话（或上一班）在 main 上认领／落了 probe 目录，而且
+       `probe_claims.blocks_dispatch` 有正面证据说那是这一场的赛场之上
+       （`wang-prozorova` 23 分钟、`swiatek-zheng` 8 分钟、`fernandez-chwalinska`
+       34 分钟、`zheng-liutova` 113 分钟之后编排器又点了一遍）；编排器自己上一班
+       按同一条源片点过的别的 slug 也算（`_own_priors`）
+
+    给了 `state` 就把挡下的记进 `state["blocked"]`（`_remember_block`），放行的摘掉。
+
+    ⚠️ 查不出来（git 读挂了）**按没做过处理并出声**：宁可重复一趟 probe，也别
+    因为一个读错把整班候选都吞掉——那和「今天没有候选」长得一模一样。
+    """
+    finder = finder or _prior_finder
+    now = probe_claims._aware(now or datetime.now(timezone.utc))
+    # 同一条源片、又至少有一个人对得上（`_same_match`）才合成一组；认不出视频 id 的
+    # （brightcove 等）各自一组，原样放行。列表保序＝保分数顺序
+    groups: list[tuple[str | None, list[tuple[dict, str, str]]]] = []
+    for item in dispatchable:
+        key = probe_claims.video_key(item[1])
+        for gkey, group in groups:
+            if key is not None and gkey == key and any(_same_match(item[0], it[0]) for it in group):
+                group.append(item)
+                break
+        else:
+            groups.append((key, [item]))
+    kept = []
+    for key, group in groups:
+        best = max(group, key=lambda it: _name_fullness(it[0]))
+        for c, u, v in group:
+            if c is not best[0]:
+                print(f"  [{c['slug']}] 和 {best[0]['slug']} 是同一条源片（{key}），"
+                      "同一场两个 slug——只点全名那条")
+                _remember_block(state, c, u, v, key, best[0]["slug"])
+        c, url, via = best
+        if not isinstance(key, str):
+            kept.append(best)
+            continue
+        surnames = _pair_names(c)
+        try:
+            priors = list(finder(key, surnames))
+        except Exception as exc:  # noqa: BLE001 —— 查不出来按没做过处理，但要出声
+            print(f"::warning::[{c['slug']}] 查源片 {key} 的认领失败"
+                  f"（{type(exc).__name__}: {exc}），按没人做过处理，照常点 run")
+            priors = []
+        own, extra = _own_priors(state, key, c, priors, now)
+        block = [p for p in priors + extra
+                 if probe_claims.blocks_dispatch(p, c["slug"], surnames, own=own)]
+        if block:
+            print(f"  [{c['slug']}] 这条源片（{key}）{block[0].describe()}——不再点 probe，接着用它")
+            _remember_block(state, c, url, via, key, block[0].slug)
+            continue
+        if state is not None:
+            (state.get("blocked") or {}).pop(c["slug"], None)
+        kept.append(best)
+    return kept
 
 
 def load_state() -> dict:
@@ -276,17 +420,28 @@ def load_state() -> dict:
         return {"dispatched": {}}
     state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
     cutoff = date.today() - timedelta(days=STATE_TTL_DAYS)
-    kept: dict = {}
-    for slug, entry in (state.get("dispatched") or {}).items():
-        try:
-            d = date.fromisoformat(str((entry or {}).get("date", "")))
-        except ValueError:
-            print(f"[state] {slug} 的 date 读不出来，按过期清掉")
+    # `blocked`（被别人的 probe 挡下的候选，缓存着探到的源片）跟 `dispatched` 同一个寿命；
+    # 没有这一栏就不凭空加（state 文件不变，就不多一次提交）
+    for part in ("dispatched", "blocked"):
+        if part == "blocked" and part not in state:
             continue
-        if d >= cutoff:
-            kept[slug] = entry
-    state["dispatched"] = kept
+        kept: dict = {}
+        for slug, entry in (state.get(part) or {}).items():
+            try:
+                d = date.fromisoformat(str((entry or {}).get("date", "")))
+            except (ValueError, AttributeError):
+                print(f"[state] {slug} 的 date 读不出来，按过期清掉")
+                continue
+            if d >= cutoff:
+                kept[slug] = entry
+        state[part] = kept
     return state
+
+
+def save_state(state: dict) -> None:
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2),
+                          encoding="utf-8")
 
 
 def _same_match_day(a: str | None, b: str | None) -> bool:
@@ -442,18 +597,25 @@ def mark_dispatched(state: dict, dispatched: list[dict]) -> None:
     而绿正是它坏掉的样子）。这个字段就是那个「看得见」。
     """
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     if dispatched:
-        state["last_dispatch_at"] = datetime.now(timezone.utc).strftime(
-            "%Y-%m-%dT%H:%M:%SZ")
+        state["last_dispatch_at"] = stamp
     for c in dispatched:
-        state.setdefault("dispatched", {})[c["slug"]] = {
+        entry = {
             "column": c["column"],
             "score": c["score"],
             # ⚠️ 记**比赛日期**不是 dispatch 日期——`dispatch_plan` 按它分辨
             # 「同一场」和「再交手」；记今天的话，跨午夜的场次下一班就对不上、
             # 同一场重复点 run。
             "date": c.get("date") or date.today().isoformat(),
+            # 源片视频 id ＋ 点出去的时刻：下一班同一条源片换了个 slug（全名／缩写）
+            # 也认得出是自己点过的（`_own_priors`），过了认领作废的钟就不再算
+            "dispatched_at": stamp,
         }
+        if c.get("video"):
+            entry["video"] = c["video"]
+        state.setdefault("dispatched", {})[c["slug"]] = entry
+        (state.get("blocked") or {}).pop(c["slug"], None)
     STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2),
                           encoding="utf-8")
 
@@ -533,8 +695,11 @@ def main() -> int:
         print("今天没有过门槛的候选（≥250 单打、本比赛日、热度预筛、分 ≥38）。")
         return 0
     print(f"{len(cands)} 条候选（门槛之上），其中 {len(fresh)} 条还没 dispatch：")
+    blocked = state.get("blocked") or {}
     for c in cands:
         mark = "→ 点 run" if c in fresh else "  （已做过）"
+        if c in fresh and c["slug"] in blocked:
+            mark = f"→ 复查（上一班被 {blocked[c['slug']].get('by')} 挡下）"
         print(f"  [{c['column']:8}] {c['score']:3}分  {c['slug']:30} "
               f"{c['home']} vs {c['away']}{mark}")
 
@@ -564,7 +729,16 @@ def main() -> int:
     # 时候这就是延迟。并行探测把 N 场的探测时间压成「最慢那一场」。
     # dispatch 保持串行——gh workflow run 本身快（1~2 秒），而且要顺序写 state、
     # 顺序点 run，并行 dispatch 反而容易撞 concurrency 和 state 写入。
+    blocked_before = json.dumps(state.get("blocked") or {}, sort_keys=True)
+
     def _probe(c: dict) -> tuple[dict, str | None, str, str]:
+        hit = (state.get("blocked") or {}).get(c["slug"])
+        if (isinstance(hit, dict) and hit.get("url")
+                and _same_match_day(hit.get("date"), c.get("date"))):
+            # 上一班探到了、被别人的 probe 挡下：源片不会变，只复查先例（几次 git 读），
+            # 不再跑一遍 yt-dlp 搜索 ＋ vet
+            print(f"  [{c['slug']}] 上一班被 `{hit.get('by')}` 挡下，复用那次探到的源片复查")
+            return c, hit["url"], hit.get("via") or "cached", ""
         try:
             url, via = find_highlight(c["home"], c["away"], c["event"], c["year"])
             return c, url, via, ""
@@ -589,6 +763,11 @@ def main() -> int:
             print(f"  [{c['slug']}] 集锦还没探到，跳过，下次再探")
             continue
         dispatchable.append((c, url, via))
+    # 同一条源片别人已经 probe／认领过就不再点——**排在配额切片之前**，
+    # 被去重掉的不许白占本班配额（和上面「探不到的不占配额」同一个道理）
+    dispatchable = drop_already_probed(dispatchable, state=state)
+    if json.dumps(state.get("blocked") or {}, sort_keys=True) != blocked_before:
+        save_state(state)
     overflow = len(dispatchable) - args.max
     if overflow > 0:
         skipped = "、".join(c["slug"] for c, _u, _v in dispatchable[args.max:])
@@ -623,6 +802,7 @@ def main() -> int:
         # 前 N-1 条已经点出去了——攒到最后一次性记的话，一条失败就让之前全部
         # 失忆，下一班同一场 probe 重复点。state 提交回仓库仍在工作流末尾一次。
         dispatched.append(c)
+        c["video"] = probe_claims.video_key(url)
         mark_dispatched(state, [c])
         # 备料不再在编排器本地跑——它没有 captions（probe 还没落库）也没 DeepSeek
         # key。probe 工作流里已经有「自动备料写 spec 草稿」一步（有 captions + key

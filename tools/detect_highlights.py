@@ -33,7 +33,10 @@ HIGHLIGHT_HINTS = re.compile(
 
 # 单场集锦的标题形状：`X vs Y …`。Day N 合集、球员特辑、Best points 这类
 # 没有 ` vs `——合集切不出连续窗口，根本不能当源片（CLAUDE.md「合集不算一条源」）。
-VS_RE = re.compile(r"\bvs\b", re.I)
+#
+# ⚠️ 拉沃尔杯官方频道写的是 ` v `（`Cobolli/Mensik v de Minaur/Fritz Highlights`），
+# 只认 `vs` 时正确那条被拒、只剩第一天那条 `vs` 的错场（2026-09-27）。
+VS_RE = re.compile(r"\bvs?\.?(?=\s)", re.I)
 
 # 官方频道白名单（小写比对）。三大官方之外还认**赛事自己的官方频道**
 # （频道名里含赛事简称的每个词，如 `Cincinnati Open`）——那一档每站一个名字，
@@ -77,8 +80,19 @@ def query_for(home: str, away: str, event: str, year: int) -> str:
     用姓不写全名——YouTube 标题里通常只有姓（`Eala vs Pegula`），写全名反而
     命中率低。赛事走 `short_event`（剥赞助商前缀）。
     """
-    surname = lambda n: (n or "").strip().split()[-1]  # noqa: E731
-    return f"{surname(home)} {surname(away)} {short_event(event)} {year} highlights"
+    names = " ".join(surnames(home) + surnames(away))
+    return f"{names} {short_event(event)} {year} highlights"
+
+
+def surnames(side: str) -> list[str]:
+    """一方的姓：单打一个，双打（`A/B`）每个搭档各一个。
+
+    ⚠️ 2026-09-27 之前是 `side.split()[-1]`——双打 `Flavio Cobolli/Jakub Mensik`
+    只剩 `Mensik`、`Alex de Minaur/Taylor Fritz` 只剩 `Fritz`，于是拉沃尔杯
+    Match 9 探回来的是第一天 `Alcaraz/Mensik vs Fritz/Bublik` 那场（门西克和
+    弗里茨两场都打了），`lead_in.verification` 还照样写着 Match 9。
+    """
+    return [p.strip().split()[-1] for p in (side or "").split("/") if p.strip()]
 
 
 def _opt(v: str | None) -> str | None:
@@ -188,8 +202,7 @@ def pick_highlight(results: list[tuple], home: str, away: str,
     顺手带 channel/duration，**知道就当场筛**（搬运号 / Day N 合集），
     不知道（flat 模式给 NA）留给 `vet_candidate` 对最终候选补一枪。
     """
-    hn = (home or "").strip().split()[-1].lower()
-    an = (away or "").strip().split()[-1].lower()
+    need = [n.lower() for n in surnames(home) + surnames(away)]
     # 赛事名可能是多词的（`Hong Kong`），逐词都要在标题里——`short_event` 已经
     # 把赞助商前缀剥掉了，剩下的就是地名。
     ev = [w for w in short_event(event or "").lower().split() if w]
@@ -198,7 +211,7 @@ def pick_highlight(results: list[tuple], home: str, away: str,
         channel = item[2] if len(item) > 2 else None
         duration = item[3] if len(item) > 3 else None
         t = title.lower()
-        if not (HIGHLIGHT_HINTS.search(t) and hn in t and an in t):
+        if not (HIGHLIGHT_HINTS.search(t) and all(n in t for n in need)):
             continue
         if not VS_RE.search(title):
             continue                      # 没有 ` vs ` 的是合集/特辑，不是单场
@@ -323,9 +336,8 @@ def tennistv_fallback(home: str, away: str, *, pages: int = 3) -> str | None:
     ⚠️ **取的是最近 N 页，不是全库**：这个函数服务的是「一场球刚打完」那一刻，
     而全库 58000 条翻不动。默认 3×100 条，够盖住好几天。
     """
-    hn = (home or "").strip().split()[-1].lower()
-    an = (away or "").strip().split()[-1].lower()
-    if not hn or not an:
+    need = [n.lower() for n in surnames(home) + surnames(away)]
+    if len(need) < 2:
         return None
     try:
         from tennistv_catalog import (  # noqa: PLC0415
@@ -350,7 +362,7 @@ def tennistv_fallback(home: str, away: str, *, pages: int = 3) -> str | None:
         if not is_real_short_highlight(item):
             continue
         slug = str(item.get("titleUrlSegment") or "").lower()
-        if hn in slug and an in slug:
+        if all(n in slug for n in need):
             return video_url(item)
     return None
 

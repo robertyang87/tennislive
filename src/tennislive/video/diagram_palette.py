@@ -20,30 +20,47 @@
 `.point` / `.point i` / `.foot` 那三行。判据 `test_示意图的颜色要和卡片本身
 是同一套` 直接从 `_slide_html` 的 CSS 里把它们抠出来比——CSS 改了这儿不改，
 当场红。
+
+⚠️ **2026-09-27 起值从 `tennislive.design_tokens` 来**（那轮 UI / VI 整体评审的
+WP0）：五个名字和含义一个都没变，只是数不再写在这儿——`INK` = `DARK["foreground"]`、
+`SOFT` = `DARK["muted-foreground"]`、`LIME` = `DARK["primary"]`、`FILL` =
+`DARK["fill"]`、`AMBER` = `DARK["warning"]`。重渲 `weeks-at-no1` / `golden-masters` /
+`heat-rule` 三条示意图，前后逐像素比均差 0。
+
+⚠️ 这儿的 `INK` 是**近白正文**，而 `versus_poster` / `outro_page` 的 `INK` 是
+**深底**——同名两义，所以 token 模块里不用 INK 这个词。这边的名字留着，是为了
+不动七个调用方。
+
+本文件打了 design-tokens 的 enforced 标记（见下面 import 上面那行注释）：代码行里
+不许再出现 6/8 位 hex 或 ASS 的 `&H` 颜色，要写就去 token 模块加角色。判据
+`tests/test_design_tokens.py`。
 """
 
 from __future__ import annotations
 
+# design-tokens: enforced
+from ..design_tokens import DARK
+
 #: 正文。和卡片 `.point` / `.slide` 的 `color:#f4fbf7` 同一个值。
-INK = "#f4fbf7"
+INK = DARK["foreground"]
 
 #: 次级说明（副标题、注脚、英文条文名）。和卡片 `.foot` 的 `#cfe6d8` 同一个值。
 #:
 #: ⚠️ **别再往暗里调。** CLAUDE.md 记着一次：「一度用到 `#7f958a`，反馈是
 #: 『文字有点模糊』——那不是分辨率问题，是对比度不够，眼睛对不上焦就读成
 #: 『糊』」。`#a9bcb2`（这一版之前用的）是同一个坑，只是浅一档。
-SOFT = "#cfe6d8"
+SOFT = DARK["muted-foreground"]
 
 #: 强调色。和卡片 `.point i` / `.ask` / `.kicker` 的 `#c6f65a` 同一个值。
 #:
 #: ⚠️ 「一屏只留一个强调色」那条照旧管用——这是**那一个**，不是多一个。
-LIME = "#c6f65a"
+LIME = DARK["primary"]
 
 #: 大面积填充（条形图的条、方框的底）。亮绿铺一大片会盖过文字，所以填充另用
 #: 一档薄荷绿，**只当底不当字**。写字一律用上面三个。
-FILL = "#8fd6a8"
+FILL = DARK["fill"]
 
 #: 第二强调色，只在**真的要分两类**时用（准／不准、现在／以后）。
 #: 比原来的 `#e0b13a` 亮一档——那个暗金压在深绿上，和 `#c6f65a` 摆一起就是
 #: 账号所有者说的「土」。
-AMBER = "#ffd166"
+AMBER = DARK["warning"]
