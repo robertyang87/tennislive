@@ -990,6 +990,21 @@ def measure_point_ends(source: Path, scorebox: str,
     return ends, scorebox_guess, ends_guess
 
 
+def _video_frame_size(source: Path) -> tuple[int, int] | None:
+    """源片的宽高；读不出来就返回 None（不拦，交给后面照旧跑）。"""
+    try:
+        import cv2  # noqa: PLC0415
+    except ImportError:  # pragma: no cover
+        return None
+    cap = cv2.VideoCapture(str(source))
+    try:
+        w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    finally:
+        cap.release()
+    return (w, h) if w > 0 and h > 0 else None
+
+
 def point_end_candidates(source: Path, scorebox: str, *,
                          guessed: bool = False) -> list[float]:
     """量一遍死球时刻，写进 `probe.json`——**趁源片还在**。
@@ -1028,6 +1043,14 @@ def point_end_candidates(source: Path, scorebox: str, *,
     except ValueError:
         raise ReelError(
             f"--scorebox 要写成 x0,y0,x1,y1（源片像素），给的是「{scorebox}」")
+    # 2026-09-27 medvedev-wong（run 36331431180）：照搬 1080p 转播的框去 probe
+    # 一条只有 1280×720 的源片，框整个落在画面外，cv2 在第 57 行报一句
+    # `!_src.empty()` 的 traceback——看不出是「框和分辨率对不上」。
+    frame_size = _video_frame_size(source)
+    if frame_size and (box[2] > frame_size[0] or box[3] > frame_size[1]):
+        raise ReelError(
+            f"--scorebox {scorebox} 超出源片画面 {frame_size[0]}×{frame_size[1]}"
+            "——框是按别的分辨率量的，照源片像素重新给")
     with stage("量死球（猜的框）" if guessed else "量死球"):
         rows = fpe.scan(source, box, 0.1)
         ends = fpe.point_ends(rows, fpe.CHANGE, fpe.DARK_SHARE, fpe.MERGE)
@@ -3348,7 +3371,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "slug", "source_audio", "source_url", "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
              "editorial"),
-    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "layout", "matchup", "meta",
+    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_align", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
@@ -7147,21 +7170,28 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #: - `wong-vallejo-hangzhou-2026-r2`：2026-09-26 杭州 ATP250 第二轮（北京深夜打完）。
 #:   按下面那条常设授权走：find_cover_photo 查 AP、ATP 赛事图库都是 0，赛后稿没有图。
 #:   用源片（Tennis TV 第四比赛日合集最后一段）689.8s 赢球后正脸的近景。
-#: - `rublev-gaston-hangzhou-2026-qf`：2026-09-27 杭州 ATP250 1/4决赛（北京 18:39
-#:   打完）。按下面那条常设授权走：终场后约半小时，find_cover_photo 查 AP、WTA
-#:   photo-resources 都是 0，赛后稿没有图、主办方战报未发。用 220.4s 赛点后偏正面、
-#:   右拳捶胸的近景，源片 1920×1080，zoom 1.2 放大 1.6 倍。
+#: - `medvedev-wong-hangzhou-2026-qf`：2026-09-27 杭州 ATP250 1/4决赛（北京 22:47
+#:   打完）。按下面那条常设授权走：终场后近两小时 find_cover_photo 查 AP、WTA
+#:   photo-resources 都是 0。账号所有者 2026-09-28 选了封面放梅德韦杰夫（黄泽林在源片里
+#:   没有清楚的正脸）。用赛后梅德韦杰夫正脸近景（Tennis TV 1/4 决赛合集 384.4s），
+#:   源片 1920×1080，放大 1.33 倍。
+#: - `zverev-tien-laver-cup-2026`：2026-09-27 拉沃尔杯第三天第 10 场（夺冠一场，北京 23:14
+#:   打完）。按下面那条常设授权走：终场后约 45 分钟，拉沃尔杯官网 WordPress 媒体库本场只有
+#:   两张视频缩略图（Getty 第二天的图是次日 14:14Z 才批量上的），AP、WTA photo-resources 0。
+#:   用 126.0s 拉沃尔杯点之后张臂正脸的近景，源片 1920×1080，放大 1.33 倍。
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
+    "safiullin-bu-hangzhou-2026-qf",  # Standing authorization; source-frame evidence in spec.
     "wu-duckworth-us-open-2026-r2",
     "zhiyenbayeva-bouzas-bjk-cup-2026",
     "wang-prozorova-singapore-2026-qf",
     "bublik-jodar-laver-cup-2026",
     "medvedev-royer-hangzhou-2026-r2",
     "wong-vallejo-hangzhou-2026-r2",
-    "rublev-gaston-hangzhou-2026-qf",
+    "medvedev-wong-hangzhou-2026-qf",
+    "zverev-tien-laver-cup-2026",
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
