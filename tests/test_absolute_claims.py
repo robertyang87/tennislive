@@ -288,6 +288,7 @@ def _interview_request(slug: str) -> dict:
     }
 
 
+@pytest.mark.usefixtures("_empty_interview_ledger")
 def test_人工请求的_claims跟进正式spec_没认领在build那一刻就红(tmp_path, monkeypatch):
     """人工请求**不经过草稿**：`build_interview_request` 直接写 specs/interviews/<slug>.json，
     `promote_all` 那道闸看不见它。所以要两件事——
@@ -332,6 +333,8 @@ def test_人工请求的_claims跟进正式spec_没认领在build那一刻就红
 
     # ③ 「只改元数据」那条路（转写相关的键没变，不重跑 ASR）：
     #    文案改成断言、没认领 → build 红、正式 spec 不动；补上认领 → 认领和文案一起落盘
+    #    ⚠️ `_protected` 认发布账本。slug 现在是内联请求的假 slug，照样钉空账本（上面那个
+    #    fixture）：测试不读真账本，哪天换回一条真的已发 slug 也不会红在「已确认版本受保护」上。
     specs, out = tmp_path / "specs", tmp_path / "output"
     (out / slug).mkdir(parents=True)
     specs.mkdir()

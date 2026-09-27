@@ -24,6 +24,7 @@ import tempfile
 import time
 
 from production_cache import atomic_json, cached_json, digest, file_digest
+from publication_ledger import interview_published
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
@@ -172,8 +173,81 @@ def _request_identity(req: dict) -> str:
 
 
 def _protected(spec: dict, slug: str) -> bool:
+    """这条正式 spec 已经不归自动链改了：人核过，或者**已经发出去**。
+
+    「发出去」认两处：**发布账本**（`data/interview_publish_ledger/<slug>.json`，
+    `auto_push_interview_gate` 称它为权威状态）里有任何一次发出/在发/状态不明，
+    或者老的 `pushed.json` 兼容标记。⚠️ 只认 `pushed.json` 漏过一条真的：
+    `nishikori-sakamoto-us-open-2026-q3-farewell` 账本 `sent`（2026-08-29 06:53Z，
+    run 33239487051）、账号所有者手改过（7c6110dd2），但 `pushed.json` 从来没有过——
+    于是 6 小时后自动链把这条已发、已精修的 spec 重建了一遍（519816362，给一条
+    `opening.why` 写着「按账号所有者明确要求不补冷开场」的片子挂上了 `lead_in`），
+    全库测试也把它当成「自动链还没核没发」只报。判据
+    `tests/test_interview_clip.py::test_自动spec的判据_章在而且没核没发才算`。
+    """
     return bool(spec.get("transcript_verified") or spec.get("_verified_clean")
-                or _exists_or_tracked(OUTDIR / slug / "pushed.json"))
+                or _exists_or_tracked(OUTDIR / slug / "pushed.json")
+                or (slug and interview_published(ROOT, slug)))
+
+
+#: 三个自动写手给采访 spec 盖的同一个章：本文件 `build_spec`、
+#: `draft_interview_spec`（草稿）、`promote_interview_draft`（草稿转正，原样保留）。
+#: ⚠️ **没有任何代码会把它改掉**——人工修 spec（#1130 修拉沃尔杯捧杯那条）也不改，
+#: main 上 17 条正式 spec 带着它、**17 条全都推过**（2026-09-27 晚按发布账本量的；
+#: 其中锦织圭那条只有账本、没有 `pushed.json`）。
+#: 所以「过没过那一关」不能只看这个章，要看 `_protected`：人核过
+#: （`transcript_verified` / `_verified_clean`）或已经推送（发布账本 / `pushed.json`）。
+AUTO_PENDING = "auto_pending"
+
+
+class UnverifiedAutoSpecFinding(UserWarning):
+    """全库测试里自动 spec 的发现：只报、不判 main 红（pytest 的 warnings 汇总里看得见）。"""
+
+
+def unverified_auto_spec(spec: dict, slug: str | None = None) -> bool:
+    """自动链直接提交到 main、还没过人工核对也还没发出去的采访 spec（含草稿）。
+
+    **全库测试对它只报，拦它的是渲染闸。** 来路（2026-09-27 17:33Z）：
+    `interview-auto-render` 把 `laver-cup-2026-trophy-ceremony` 的自动正式 spec
+    （01684ef0，`zh` 是 DeepSeek 初译，11 行超 952px）直接推上 main。GITHUB_TOKEN 推的
+    提交不触发 ci.yml，于是它不红在自己身上，红在下一个无关的人工合并上
+    （run 36337538392，#1127），再把所有开着的 PR 一起打红 38 分钟——而那条片子
+    **早就被渲染闸拦住了**（run 36337385713 停在 `write_ass` →「中文字幕过不了」），
+    全库测试只是把同一个缺陷重复报了一遍。9/20~9/27 这样的「自动正式 spec」提交
+    六次全红（main 四次、PR 两次），**六次渲染闸都先拦下了**。
+
+    判据只用已有的标记，不新发明：章是 `transcript_verification == "auto_pending"`，
+    销章是 `_protected`（人核过或已推送——发布账本或 `pushed.json`；也就是这条 spec
+    已经不归自动链改了，`is_pending` 用它挡重建，这里用它认「过了那一关」）。
+
+    ⚠️ 还有一段缝它认不出：自动 spec 被人手修过、但还没推（#1130 修拉沃尔杯那条，
+    ba28735dc 到推送之间约 19 分钟）。手修不改章，这段时间里对手修的回归全库测试
+    也只报——渲染闸照拦，只是 PR 上的绿不代表这几条判据查过它。
+
+    ⚠️ **只管那几条「渲染闸拦得住同一个缺陷」的全库测试**；没有渲染闸的（比如
+    `test_人名要以译名表为准`）照旧全判，别拿它当通用豁免。清单写在
+    `.claude/skills/tennis-pipeline-ops/SKILL.md`「自动链直接提交到 main 的草稿 spec
+    不许把 main 打红」那一节。判据 `tests/test_interview_clip.py::
+    test_自动链刚提交的采访spec只报_销章就红_渲染闸照拦`。
+    """
+    if spec.get("transcript_verification") != AUTO_PENDING:
+        return False
+    return not _protected(spec, str(slug or spec.get("slug") or ""))
+
+
+def report_unverified_auto(check: str, found: dict) -> None:
+    """把自动 spec 的发现**印出来并挂一条 warning**——只报不是不报。
+
+    `print` 在 pytest 里通过时会被吞掉，所以另挂一条 `UnverifiedAutoSpecFinding`：
+    CI 的 warnings 汇总里每一条都看得见是哪条 spec、哪个判据、差在哪。
+    """
+    import warnings  # noqa: PLC0415
+
+    for name in sorted(found):
+        msg = (f"[自动 spec 只报] {check} · {name}：{found[name]}"
+               "（渲染闸会拦它；人核过或推送之后这条判据对它照判）")
+        print(msg)
+        warnings.warn(msg, UnverifiedAutoSpecFinding, stacklevel=2)
 
 
 def _explicit_revision(req: dict, spec_path: Path, spec: dict) -> bool:
@@ -472,7 +546,7 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
         "whisper_model": "medium.en",
         "segment_budget_px": req.get("segment_budget_px"),
         "transcript_verified": False,
-        "transcript_verification": "auto_pending",
+        "transcript_verification": AUTO_PENDING,
         "column": "赛后开麦",
         "requested_content_type": requested,
         "interview_kind": str(req.get("interview_kind") or REQUESTED_KINDS[requested]),

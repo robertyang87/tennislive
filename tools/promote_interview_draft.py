@@ -290,6 +290,17 @@ def promote(draft: dict, opponent: tuple[str, str, str], details: dict | None = 
             "kind": "none",
             "why": "正文是独立场上采访产品；比赛结束画面必须从同场官方集锦以 lead_in 接入。",
         }
+    # Tennis TV 源片右上角有台标，`build_interview_clip.main()` 开头的 `check_tennistv_logo`
+    # 不写 `crop_shift_x`（也没走 `logo_box`）就拦出片。这个数是量到的台标左沿推出来的、
+    # 闸自己给的出路，不是编辑口味；转正时不补，自动链就一条条停在那道闸上
+    # （2026-09-27 评审：main 上 winston-salem 三份 Tennis TV 草稿都没有它）。
+    if ("tennistv.com" in str(spec.get("url", "")) and spec.get("crop_shift_x") is None
+            and not spec.get("logo_box")):
+        from build_interview_clip import TENNISTV_CROP_SHIFT  # noqa: PLC0415
+
+        spec["crop_shift_x"] = TENNISTV_CROP_SHIFT
+        spec["_crop_shift_why"] = ("Tennis TV 右上角台标（左沿 0.823）在居中 4:3 窗口里；"
+                                   "转正时按 check_tennistv_logo 的几何补的默认值。")
     return finalize_source_contract(spec)
 
 
@@ -395,10 +406,21 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
         # 同样绕过 CI（自动链直推 main），所以采访线的转正入口也要过全套。
         # 红一次好过豁免表长一格；跳过不炸，草稿留在原地等终审。
         copy_text = xhs_copy(spec)
-        from spec_wording import check_interview_copy_wording  # noqa: PLC0415
+        from spec_wording import (check_interview_copy_wording,  # noqa: PLC0415
+                                  non_annotation_strings, strength_round_hits)
         if problems := check_interview_copy_wording(spec, copy_text):
             skipped.append(
                 f"{f.name}: 措辞不合规矩（{'；'.join(problems)}），不提升")
+            continue
+        # 上面那道故意不扫 `zh`（译文），而全库测试 `test_轮次写分数式不写N强` 扫整份
+        # spec **含 `zh`**、对自动 spec 也是硬的：译文把 quarterfinals 写成「八强」，
+        # 转正直推 main 就是 main 红（评审 2026-09-27，bonzi-winston-salem-2026-r 草稿
+        # 「大概是八强左右」）。同一份面（`non_annotation_strings`），留草稿等人改译文——
+        # 不替他改，也不往翻译提示里加约束（账号所有者 2026-09-27：不再加强那两个模型）。
+        if hits := strength_round_hits(non_annotation_strings(spec)):
+            skipped.append(
+                f"{f.name}: 字幕或文案把轮次写成「N 强」（{'、'.join(hits)}），不提升"
+                "——改成 1/8决赛 / 1/4决赛 / 半决赛 / 决赛")
             continue
         # 全称断言（「唯一一个」「N 次打进，N 次都…」）同一个座位拦：转正之后
         # interview-clip 会被自动 dispatch，前置检查 `production_preflight`

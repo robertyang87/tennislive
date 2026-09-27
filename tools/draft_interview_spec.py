@@ -49,6 +49,8 @@ sys.path.insert(0, str(ROOT / "tools"))
 from oncourt_feed import parse_round  # noqa: E402
 from interview_skill import model_instructions  # noqa: E402
 from interview_zh_tail import has_dangling_tail  # noqa: E402
+# 自动章只定义一处：读它的 `unverified_auto_spec` 和盖它的三个写手用同一个常量。
+from build_interview_request import AUTO_PENDING  # noqa: E402
 
 CANDIDATES = ROOT / "data" / "interview_clip_candidates.json"
 SPECS = ROOT / "specs" / "interviews"
@@ -467,7 +469,7 @@ def build_spec(candidate: dict, zh_draft: list[str], duration: float,
         "_zh_draft_note": "已按 build_interview_clip.segment 的正式字幕行逐行翻译；"
                           "双 ASR 或实体核验出现红旗时才进入例外复核。",
         "transcript_verified": False,
-        "transcript_verification": "auto_pending",
+        "transcript_verification": AUTO_PENDING,
         "_candidate_id": candidate.get("id"),
         "source_verification": candidate.get("source_verification") or {},
         "match": {

@@ -91,6 +91,59 @@ def _specs() -> list[Path]:
                   if not p.name.endswith(".draft.json"))
 
 
+def _auto_marks():
+    """`build_interview_request`：「自动链刚提交、还没核也没发」的判据和只报的出口。
+
+    ⚠️ **只给那几条「渲染闸拦得住同一个缺陷」的全库测试用**——判据的 docstring
+    和 `.claude/skills/tennis-pipeline-ops/SKILL.md` 那一节列着是哪几条、各由哪道闸拦。
+    """
+    import sys  # noqa: PLC0415
+
+    tools = str(ROOT / "tools")
+    if tools not in sys.path:  # 每条参数化用例都会调一次，别把 sys.path 塞满重复项
+        sys.path.insert(0, tools)
+    import build_interview_request  # noqa: PLC0415
+
+    return build_interview_request
+
+
+def _split_auto(found: dict[str, object], check: str,
+                specs: dict[str, dict]) -> dict[str, object]:
+    """`found`（文件名 → 发现）里自动 spec 的那几条只报，回其余的（照判）。
+
+    `specs` 是 文件名主干 → spec；`.xhs.txt` 按同名的 `.json` 认。
+    """
+    req = _auto_marks()
+    auto, hard = {}, {}
+    for name, what in found.items():
+        stem = name.removesuffix(".json").removesuffix(".xhs.txt")
+        spec = specs.get(stem) or {}
+        (auto if req.unverified_auto_spec(spec, stem) else hard)[name] = what
+    req.report_unverified_auto(check, auto)
+    return hard
+
+
+def _gate_split(check: str, items, gate) -> int:
+    """对每条 (path, spec) 调**渲染入口那道闸** `gate(spec)`，回调过几条。
+
+    手写的、人核过的、已推送的照旧抛（测试红）；自动链刚提交、还没核也没发的，
+    `SystemExit` 只报——同一道闸在 `build_interview_clip.main()` / `render()` 里
+    照样拦它出片。
+    """
+    req = _auto_marks()
+    auto, n = {}, 0
+    for path, spec in items:
+        n += 1
+        try:
+            gate(spec)
+        except SystemExit as exc:
+            if not req.unverified_auto_spec(spec, path.stem):
+                raise
+            auto[path.name] = str(exc).split("\n", 1)[0]
+    req.report_unverified_auto(check, auto)
+    return n
+
+
 def _code_only(src: str) -> str:
     """只留可执行的那部分：整行注释和三引号块都去掉。
 
@@ -1655,8 +1708,11 @@ def test_横着挪窗口能把右上角的台标裁掉(tmp_path):
 
     # ⑤ 两个调用点都要传。漏一个的表现是「成片裁对了、封面没裁」——
     #    两张图分开看都正常，只有并排才发现台标还留在封面上
+    #    ⚠️ 数的是**带 0.0 缺省的那种读法**（裁切路径的形状）：渲染入口的
+    #    `tennistv_logo_problem` 也读这个字段，但它是闸不是裁切，不带缺省——
+    #    「没写」和「写了 0」对它是两回事。
     src_txt = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
-    assert src_txt.count('spec.get("crop_shift_x"') == 2, \
+    assert src_txt.count('spec.get("crop_shift_x", 0.0)') == 2, \
         "封面和成片两条路都要读 `crop_shift_x`，漏一个就只裁一半"
 
 
@@ -3366,19 +3422,10 @@ def test_轮次写分数式不写N强():
     里面正引着账号所有者那两句原话，含被废掉的旧叫法）——连它一起扫会把
     「把规矩记下来」判成「又违反了规矩」，同一个错这个仓库已经犯过好几次。
     """
+    from tools.spec_wording import non_annotation_strings as outward  # noqa: PLC0415
     from tools.spec_wording import strength_round_hits as bad  # noqa: PLC0415
-
-    def outward(obj):
-        if isinstance(obj, dict):
-            for k, v in obj.items():
-                if isinstance(k, str) and k.startswith("_"):
-                    continue
-                yield from outward(v)
-        elif isinstance(obj, list):
-            for v in obj:
-                yield from outward(v)
-        elif isinstance(obj, str):
-            yield obj
+    # ↑ 面和 `promote_interview_draft.promote_all` 的转正闸共用一份（含 `zh`）：
+    # 这条对自动 spec 也是硬的，转正闸各抄一份就会分叉成「转正放行、main 红」。
 
     offenders = {}
     for path in _specs():
@@ -3404,90 +3451,9 @@ def test_轮次写分数式不写N强():
         "清单只许减不许加——修好了就把它删掉，别留着变成一张许可证。")
 
 
-# 规矩定下来**之前**已经发出去的一批。已发的片子不为了措辞重渲——
-# `sabalenka-wang-cincinnati-2026-r3` 的 `_copy_note` 里账号所有者原话
-# 就是「这条只管以后」。**只许减不许加**：修好一个就从下面删掉一个，
-# 别让它变成一张许可证。
-_LEGACY_BILINGUAL_MENTION = {
-    'alexandrova-sabalenka-tor2026-r16.json',
-    'alexandrova-sabalenka-tor2026-r16.xhs.txt',
-    'arango-venus-cincinnati-2026-r1.json',
-    'arango-venus-cincinnati-2026-r1.xhs.txt',
-    'chwalinska-cincinnati-2026-studio.json',
-    'chwalinska-cincinnati-2026-studio.xhs.txt',
-    'deminaur-fery-cincinnati-2026-r3.json',
-    'deminaur-fery-cincinnati-2026-r3.xhs.txt',
-    'djokovic-cincinnati-2026-presser.json',
-    'djokovic-cincinnati-2026-presser.xhs.txt',
-    'djokovic-cincinnati-2026-return.json',
-    'djokovic-cincinnati-2026-return.xhs.txt',
-    'eala-mcnally-toronto-2026-r3-presser-full.json',
-    'eala-mcnally-toronto-2026-r3-presser-full.xhs.txt',
-    'eala-mcnally-toronto-2026-r3-presser.json',
-    'eala-mcnally-toronto-2026-r3-presser.xhs.txt',
-    'eala-mcnally-toronto-2026-r3.json',
-    'eala-mcnally-toronto-2026-r3.xhs.txt',
-    'eala-osaka-dc2026-sf-studio.json',
-    'eala-osaka-dc2026-sf-studio.xhs.txt',
-    'eala-osaka-dc2026-sf.json',
-    'eala-osaka-dc2026-sf.xhs.txt',
-    'eala-parks-toronto-2026.json',
-    'eala-parks-toronto-2026.xhs.txt',
-    'eala-pegula-dc2026-final-presser.json',
-    'eala-pegula-dc2026-final-presser.xhs.txt',
-    'eala-pegula-dc2026-final.json',
-    'eala-pegula-dc2026-final.xhs.txt',
-    'eala-svitolina-dc2026-qf.json',
-    'eala-svitolina-dc2026-qf.xhs.txt',
-    'faria-shelton-cincinnati-2026-r2.json',
-    'faria-shelton-cincinnati-2026-r2.xhs.txt',
-    'fils-lehecka-cincinnati-2026-r3.json',
-    'fils-lehecka-cincinnati-2026-r3.xhs.txt',
-    'gauff-samsonova-cincinnati-2026-r2.json',
-    'gauff-samsonova-cincinnati-2026-r2.xhs.txt',
-    'jodar-tabilo-cincinnati-2026-r3.json',
-    'jodar-tabilo-cincinnati-2026-r3.xhs.txt',
-    'mensik-hijikata-cincinnati-2026-r3.json',
-    'mensik-hijikata-cincinnati-2026-r3.xhs.txt',
-    'nakashima-shelton-mtl2026-final.json',
-    'nakashima-shelton-mtl2026-final.xhs.txt',
-    'noskova-boulter-cincinnati-2026-r2.json',
-    'noskova-boulter-cincinnati-2026-r2.xhs.txt',
-    'pegula-eala-dc2026-final.json',
-    'pegula-eala-dc2026-final.xhs.txt',
-    'rybakina-frech-cincinnati-2026-r3.json',
-    'rybakina-frech-cincinnati-2026-r3.xhs.txt',
-    'rybakina-gauff-tor2026-sf.json',
-    'rybakina-gauff-tor2026-sf.xhs.txt',
-    'rybakina-osaka-tor2026-qf.xhs.txt',
-    'rybakina-swiatek-tor2026-final-presser.json',
-    'rybakina-swiatek-tor2026-final-presser.xhs.txt',
-    'rybakina-swiatek-tor2026-final.json',
-    'rybakina-swiatek-tor2026-final.xhs.txt',
-    'rybakina-townsend-cincinnati-2026-r2.json',
-    'rybakina-townsend-cincinnati-2026-r2.xhs.txt',
-    'sabalenka-uchijima-tor2026-r64.json',
-    'sabalenka-uchijima-tor2026-r64.xhs.txt',
-    'sabalenka-zhang-tor2026-r3.json',
-    'sabalenka-zhang-tor2026-r3.xhs.txt',
-    'shang-rublev-mtl2026-r2.json',
-    'shang-rublev-mtl2026-r2.xhs.txt',
-    'shelton-mensik-mtl2026-qf.xhs.txt',
-    'shelton-nakashima-mtl2026-final.json',
-    'shelton-nakashima-mtl2026-final.xhs.txt',
-    'swiatek-arango-cincinnati-2026-r2.json',
-    'swiatek-arango-cincinnati-2026-r2.xhs.txt',
-    'swiatek-rybakina-tor2026-final-presser.json',
-    'swiatek-rybakina-tor2026-final-presser.xhs.txt',
-    'swiatek-rybakina-tor2026-final.json',
-    'swiatek-rybakina-tor2026-final.xhs.txt',
-    'swiatek-sakkari-cincinnati-2026-r3.json',
-    'swiatek-sakkari-cincinnati-2026-r3.xhs.txt',
-    'tirante-djokovic-cincinnati-2026-r2.json',
-    'tirante-djokovic-cincinnati-2026-r2.xhs.txt',
-    'zverev-atmane-cincinnati-2026-r3.json',
-    'zverev-atmane-cincinnati-2026-r3.xhs.txt',
-}
+# 豁免表连同式子搬进了 `build_interview_clip`（`_LEGACY_BILINGUAL_MENTION` /
+# `bilingual_copy_hits`）：渲染入口 `check_copy_bilingual` 和下面这条全库测试
+# 读同一份。**只许减不许加**的自检仍在下面这条测试里。
 
 
 def test_文案不许再提中英双语字幕():
@@ -3505,32 +3471,22 @@ def test_文案不许再提中英双语字幕():
     ⚠️ **已发的片子不重渲，微信消息发出去收不回来**——`_LEGACY_BILINGUAL_MENTION`
     收着规矩定下来之前的存量，只许减不许加。
     """
-    bad = re.compile(r"(中英)?双语字幕|字幕轨|中英字幕")
+    import tools.build_interview_clip as clip
 
-    def outward(obj):
-        if isinstance(obj, dict):
-            for k, v in obj.items():
-                if isinstance(k, str) and k.startswith("_"):
-                    continue
-                yield from outward(v)
-        elif isinstance(obj, list):
-            for v in obj:
-                yield from outward(v)
-        elif isinstance(obj, str):
-            yield obj
-
-    offenders = {}
+    offenders, specs = {}, {}
     for path in _specs():
-        hits = sorted({m.group(0) for text in outward(
-            json.loads(path.read_text(encoding="utf-8"))) for m in bad.finditer(text)})
-        if hits:
+        specs[path.stem] = json.loads(path.read_text(encoding="utf-8"))
+        if hits := clip.bilingual_copy_hits(specs[path.stem]):
             offenders[path.name] = hits
     for path in sorted(SPECS.glob("*.xhs.txt")):
-        hits = sorted({m.group(0) for m in bad.finditer(path.read_text(encoding="utf-8"))})
-        if hits:
+        if hits := clip.bilingual_copy_hits(path.read_text(encoding="utf-8")):
             offenders[path.name] = hits
+    _LEGACY_BILINGUAL_MENTION = clip._LEGACY_BILINGUAL_MENTION
 
-    fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_BILINGUAL_MENTION}
+    # 自动链刚提交、还没核也没发的那几条只报：渲染入口 `check_copy_bilingual`
+    # 读的是同一份式子和豁免表，它们出不了片（`test_自动链刚提交的采访spec只报_销章就红_渲染闸照拦`）。
+    hard = _split_auto(offenders, "文案不许再提中英双语字幕", specs)
+    fresh = {k: v for k, v in hard.items() if k not in _LEGACY_BILINGUAL_MENTION}
     assert not fresh, (
         f"这些地方还在提中英双语字幕：{fresh}。"
         "那是制作规格，不是这场球的内容，删掉。")
@@ -3576,9 +3532,9 @@ def test_字号涨了不许撑破已有的行():
     from tools.build_interview_clip import _FONT_CACHE, _LINE_PX, _zh_width
 
     _FONT_CACHE.clear()
-    over, checked = {}, 0
+    over, checked, specs = {}, 0, {}
     for path in _specs():
-        spec = _json.loads(path.read_text(encoding="utf-8"))
+        spec = specs[path.stem] = _json.loads(path.read_text(encoding="utf-8"))
         hits = []
         for i, line in enumerate(spec.get("zh") or [], 1):
             checked += 1
@@ -3588,7 +3544,12 @@ def test_字号涨了不许撑破已有的行():
             over[path.name] = hits
     assert checked >= 100, f"只量到 {checked} 行中文，判据大概没找对目录"
 
-    fresh = {k: v for k, v in over.items() if k not in _LEGACY_WIDE_AT_70}
+    # 自动链刚提交、还没核也没发的只报：渲染入口 `write_ass` → `zh_problems` 量的是
+    # 同一个 `_zh_width`，超宽一行就「中文字幕过不了」、出不了片。2026-09-27 17:33Z 的
+    # `laver-cup-2026-trophy-ceremony`（01684ef0，DeepSeek 初译 11 行超宽）就是渲染闸先
+    # 拦下、这条再把 main 打红 38 分钟的（`test_自动链刚提交的采访spec只报_销章就红_渲染闸照拦`）。
+    hard = _split_auto(over, "字号涨了不许撑破已有的行", specs)
+    fresh = {k: v for k, v in hard.items() if k not in _LEGACY_WIDE_AT_70}
     assert not fresh, (
         "字号撑破了这些行（且不在豁免表里），要么把字号调回去，"
         "要么把这些行改短：\n" + "\n".join(f"{k}: {v}" for k, v in fresh.items()))
@@ -3598,6 +3559,207 @@ def test_字号涨了不许撑破已有的行():
     assert not missing, (
         f"豁免表里这些条目其实没有超宽（或者文件名写错了）：{sorted(missing)}。"
         "清单只许减不许加——没有真的超宽就把它删掉。")
+
+
+#: 01684ef0（自动链 2026-09-27 17:33Z 直推 main 的 `laver-cup-2026-trophy-ceremony`）
+#: `zh` 第 7 行原文——DeepSeek 初译，量出来 1269px（可用 952）。那一版 11 行超宽，
+#: 这是最宽的一行；#1130 手修成「阿尔卡拉斯和兹维列夫」。
+_LAVER_AUTO_WIDE_ZH7 = "卡洛斯·阿尔卡拉斯和亚历山大·兹维列夫"
+
+
+def _laver_auto_sim(tmp_path: Path, **marks) -> Path:
+    """main 上那条捧杯致辞，第 7 行换回 01684ef0 的 DeepSeek 原文，盖着自动章。
+
+    ⚠️ slug 换掉：原名的 `pushed.json` 已经在仓库里（推过了），借它的名字就等于
+    借了它的「已发」——判据会把它当成过了那一关，测的就不是自动 spec 了。
+    """
+    base = json.loads((SPECS / "laver-cup-2026-trophy-ceremony.json").read_text("utf-8"))
+    spec = dict(base, slug="zz-auto-laver-sim", transcript_verified=False,
+                transcript_verification="auto_pending")
+    spec["zh"] = list(base["zh"])
+    spec["zh"][6] = _LAVER_AUTO_WIDE_ZH7
+    spec.update(marks)
+    path = tmp_path / "zz-auto-laver-sim.json"
+    path.write_text(json.dumps(spec, ensure_ascii=False, indent=1), encoding="utf-8")
+    return path
+
+
+def test_自动链刚提交的采访spec只报_销章就红_渲染闸照拦(tmp_path, monkeypatch, capsys):
+    """事故（2026-09-27 17:33Z）：`interview-auto-render` 把 01684ef0 直推 main，
+    GITHUB_TOKEN 推的提交不触发 CI，这条全库测试红在下一个无关的人工合并上
+    （run 36337538392，#1127），再把所有开着的 PR 一起打红 38 分钟——**而那条片子
+    渲染闸早拦下了**（run 36337385713 停在「中文字幕过不了」）。
+
+    三头都钉，缺一头就是换一种坏法：
+    ① 自动章在、没核没发：全库测试照绿，**而且报出来**（不报＝把缺陷藏了）；
+    ② 同一份销了章（人核过／已推送）：照红——只报的只能是「还归自动链管」的那几条；
+    ③ 渲染闸（`write_ass` → `zh_problems`）对同一份照拦——「只报」的前提是它出不了片。
+    """
+    import tools.build_interview_clip as clip
+
+    req = _auto_marks()
+    real = _specs()
+    path = _laver_auto_sim(tmp_path)
+    monkeypatch.setitem(globals(), "_specs", lambda: [*real, path])
+
+    # ① 全库测试照绿，而且那一行被点名报出来
+    with pytest.warns(req.UnverifiedAutoSpecFinding, match="zz-auto-laver-sim.json"):
+        test_字号涨了不许撑破已有的行()
+    assert "1269px" in capsys.readouterr().out
+
+    # ② 销章：人核过（`transcript_verified`）→ 红，红在这一条上
+    _laver_auto_sim(tmp_path, transcript_verified=True,
+                    transcript_verification="reviewed_dual_asr")
+    with pytest.raises(AssertionError, match="zz-auto-laver-sim.json"):
+        test_字号涨了不许撑破已有的行()
+    # ②′ 销章的另一条路：章还在（人工修 spec 从来不改它），但已经推出去了 → 照红
+    _laver_auto_sim(tmp_path)
+    monkeypatch.setattr(req, "OUTDIR", tmp_path / "out")
+    (tmp_path / "out" / "zz-auto-laver-sim").mkdir(parents=True)
+    (tmp_path / "out" / "zz-auto-laver-sim" / "pushed.json").write_text("{}", encoding="utf-8")
+    with pytest.raises(AssertionError, match="zz-auto-laver-sim.json"):
+        test_字号涨了不许撑破已有的行()
+
+    # ③ 渲染闸照拦同一份（真调用 `write_ass`，不是再量一遍宽）
+    spec = json.loads(_laver_auto_sim(tmp_path).read_text("utf-8"))
+    lines = [{"a": spec["start"] + i, "b": spec["start"] + i + 0.9, "en": "Thank you."}
+             for i in range(len(spec["zh"]))]
+    with pytest.raises(SystemExit, match="中文字幕过不了[\\s\\S]*#7 中文超宽 1269px"):
+        clip.write_ass(lines, spec["zh"], spec["start"], tmp_path / "x.ass", spec)
+    assert not (tmp_path / "x.ass").exists()
+
+
+def test_自动spec的判据_章在而且没核没发才算(tmp_path, monkeypatch):
+    """`unverified_auto_spec` 一份判据，三条线上的全库测试共用。
+
+    章是三个自动写手都盖的 `transcript_verification: auto_pending`；**没有代码会把它
+    改掉**，所以销章看 `_protected`：人核过或已推送。主语也钉住：main 上盖着章的
+    那一批**全都推过了**，判据要真的把它们认成「过了那一关」——认不出来就等于把
+    全库测试对它们全关了，一盏恒真的绿灯。
+
+    ⚠️「已推送」要认**发布账本**，不能只认 `pushed.json`：评审 2026-09-27 抓到
+    `nishikori-sakamoto-us-open-2026-q3-farewell` 账本 `sent`、`pushed.json` 从来没有，
+    第一版把这条已发、账号所有者手改过的 spec 当成「还没核没发」——全库测试对它只报。
+    """
+    req = _auto_marks()
+    monkeypatch.setattr(req, "OUTDIR", tmp_path / "out")
+    monkeypatch.setattr(req, "ROOT", tmp_path)
+    auto = {"slug": "zz-new", "transcript_verification": "auto_pending",
+            "transcript_verified": False}
+    assert req.unverified_auto_spec(auto)
+    assert req.unverified_auto_spec(dict(auto, _draft=True)), "草稿也是自动链的"
+    assert not req.unverified_auto_spec({"slug": "zz-hand"}), "手写的没有章"
+    assert not req.unverified_auto_spec(dict(auto, transcript_verification="reviewed_dual_asr"))
+    assert not req.unverified_auto_spec(dict(auto, transcript_verified=True))
+    assert not req.unverified_auto_spec(dict(auto, _verified_clean=True))
+
+    # 账本：发出/在发/状态不明都算推过；空账本不算；读不了的账本按「发过」算
+    ledger = tmp_path / "data" / "interview_publish_ledger" / "zz-new.json"
+    ledger.parent.mkdir(parents=True)
+    ledger.write_text('{"slug": "zz-new", "attempts": []}', encoding="utf-8")
+    assert req.unverified_auto_spec(auto), "空账本不是发过"
+    for status in ("sent", "accepted", "delivered", "sending", "uncertain"):
+        ledger.write_text(json.dumps({"slug": "zz-new", "attempts": [
+            {"key": "k", "status": status}]}), encoding="utf-8")
+        assert not req.unverified_auto_spec(auto), (
+            f"账本 {status}、没有 pushed.json——发布账本才是权威状态，这就是推过了")
+    ledger.write_text("{坏的", encoding="utf-8")
+    assert not req.unverified_auto_spec(auto), "账本读不了：状态不明，不当成自动链还没发"
+    ledger.unlink()
+
+    (tmp_path / "out" / "zz-new").mkdir(parents=True)
+    (tmp_path / "out" / "zz-new" / "pushed.json").write_text("{}", encoding="utf-8")
+    assert not req.unverified_auto_spec(auto), "推出去了就过了那一关"
+
+    monkeypatch.undo()
+    from publication_ledger import INTERVIEW_PUBLISHED  # noqa: PLC0415
+
+    ledger_dir = ROOT / "data" / "interview_publish_ledger"
+
+    def _sent(stem: str) -> bool:
+        """独立读账本（不走被测的那条路）：这条有没有任何一次发出/在发/状态不明。"""
+        path = ledger_dir / f"{stem}.json"
+        if not path.is_file():
+            return False
+        return any(a.get("status") in INTERVIEW_PUBLISHED
+                   for a in json.loads(path.read_text("utf-8")).get("attempts", []))
+
+    stamped = [p for p in _specs() if json.loads(p.read_text("utf-8"))
+               .get("transcript_verification") == "auto_pending"]
+    published = [p for p in stamped if _sent(p.stem)]
+    open_ = [p.stem for p in published
+             if req.unverified_auto_spec(json.loads(p.read_text("utf-8")), p.stem)]
+    assert len(stamped) >= 10, f"盖着自动章的正式 spec 只扫到 {len(stamped)} 条——主语没了"
+    assert len(published) >= 10, (
+        f"盖着章、账本里发过的正式 spec 只扫到 {len(published)} 条——主语没了")
+    assert "nishikori-sakamoto-us-open-2026-q3-farewell" in {p.stem for p in published}, (
+        "锦织圭那条（账本 sent、没有 pushed.json）是这条判据的来路，主语要在")
+    assert not open_, (
+        f"盖着章、账本里发过的 {len(published)} 条里 {len(open_)} 条被当成「还没核没发」："
+        f"{open_}。推过的认不出来，全库测试就对它们全关了——发布账本要算「已推送」")
+
+
+def test_字幕规格和TennisTV台标原来只在全库测试里_现在渲染入口就拦(tmp_path, monkeypatch):
+    """这两条原来**只**活在全库测试里（`test_文案不许再提中英双语字幕`、
+    `test_TennisTV的源片必须真的把台标挪出窗口`），渲染一个字都不查。全库测试对
+    自动 spec 改成只报之前，先得有一道闸替它们拦出片——这条钉的就是那道闸：
+    ① 判据本身两个方向都咬；② `main()` 真的调它，而且排在第一个联网步骤之前。
+    """
+    import sys
+
+    import tools.build_interview_clip as clip
+
+    # ① 判据
+    with pytest.raises(SystemExit, match="字幕轨"):
+        clip.check_copy_bilingual({"slug": "zz-new", "lead_in": {
+            "why": "Brightcove 源没有字幕轨"}})       # 2026-09-27 D 原文
+    clip.check_copy_bilingual({"slug": "zz-new", "_copy_note": "不要再提中英双语字幕"})
+    tv = {"slug": "zz-new", "url": "https://www.tennistv.com/videos/x"}
+    assert "crop_shift_x" in clip.tennistv_logo_problem(tv)
+    assert "还不够" in clip.tennistv_logo_problem(dict(tv, crop_shift_x=-0.02))
+    assert clip.tennistv_logo_problem(dict(tv, crop_shift_x=-0.06)) is None
+    assert clip.tennistv_logo_problem(dict(tv, logo_box=[1, 2, 3, 4])) is None
+    assert clip.tennistv_logo_problem(dict(tv, url="https://youtu.be/x")) is None
+
+    # ② 真跑 `main() --stage subs`，联网那几步换成桩：走到桩＝闸没拦住或排在了后面
+    class _Reached(Exception):
+        pass
+
+    def _stub(name):
+        def f(*a, **k):
+            raise _Reached(name)
+        return f
+
+    for name in ("storyboard_sheet", "fetch_words", "segment", "write_ass", "yt_download"):
+        monkeypatch.setattr(clip, name, _stub(name))
+    monkeypatch.setattr(clip, "OUTDIR", tmp_path / "out")
+
+    def run(spec: dict) -> str:
+        p = tmp_path / f"{spec['slug']}.json"
+        p.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+        monkeypatch.setattr(sys, "argv", ["build_interview_clip.py", "--spec", str(p),
+                                          "--stage", "subs"])
+        try:
+            clip.main()
+        except _Reached as e:
+            return f"走到了 {e}"
+        except SystemExit as e:
+            return f"拦下：{e}"
+        return "跑完了"
+
+    # 已发的合规 spec 当底（slug 不换：`check_copy_page` 要它的 `.xhs.txt` 在仓库里）
+    base = json.loads((SPECS / "ruud-zverev-laver-cup-2026-doubles-interview.json")
+                      .read_text(encoding="utf-8"))
+    assert run(base) == "走到了 storyboard_sheet", "对照组：合规的 spec 前面那排闸全放行"
+    bad = json.loads(json.dumps(base))
+    bad["push"]["lead"] += "中英双语字幕。"
+    assert run(bad).startswith("拦下：文案里提了字幕"), run(bad)
+    # TennisTV：身份那道闸（L0）换成空操作，好让台标这道排到最前面被看见
+    monkeypatch.setattr(clip, "check_source_contract", lambda spec: "")
+    tv_spec = dict(base, url="https://www.tennistv.com/videos/x")
+    tv_spec.pop("crop_shift_x", None)
+    tv_spec.pop("logo_box", None)
+    assert "Tennis TV" in run(tv_spec) and run(tv_spec).startswith("拦下："), run(tv_spec)
 
 
 def test_缩略图墙每一格都要标出秒数():
@@ -4363,7 +4525,7 @@ def test_新的采访片必须有解读卡而且引的是他真说过的话():
     """
     import tools.build_interview_clip as clip
 
-    checked = 0
+    todo = []
     for p in _iv_specs():
         d = json.loads(p.read_text("utf-8"))
         if p.stem in clip._NO_TAKEAWAY_LEGACY:
@@ -4379,8 +4541,11 @@ def test_新的采访片必须有解读卡而且引的是他真说过的话():
         # 所以有 `zh` 才要求有解读卡——`render()` 那道闸一个字没松。
         if not d.get("zh"):
             continue
-        checked += 1
-        clip.check_takeaway(d)          # 缺字段 / 引错话 / 占比不够都会抛
+        todo.append((p, d))
+    # 缺字段 / 引错话 / 超字数都会抛。自动链刚提交、还没核也没发的只报——同一个
+    # `check_takeaway` 排在 `render()` 第一行，它出不了片（2026-09-27 D：
+    # `alcaraz-fritz` 的 `takeaway.close` 35 字，渲染先拦、这条再红 main）。
+    checked = _gate_split("新的采访片必须有解读卡", todo, clip.check_takeaway)
     # 目前七条全在豁免名单里（都是规矩之前发的），所以 checked 可能是 0。
     # **但这条测试不许因此变成空转**——下面那两条用假 spec 证明闸真的咬得动。
     assert checked >= 0
@@ -5243,9 +5408,12 @@ def test_新的采访片必须认领怎么开头():
     """
     import tools.build_interview_clip as clip
 
-    for p in _iv_specs():
-        d = json.loads(p.read_text("utf-8"))
-        clip.check_opening(d)          # 缺字段 / kind 写错 / 没 why / lead_in 越界都会抛
+    # 缺字段 / kind 写错 / 没 why / lead_in 越界都会抛。自动链刚提交、还没核也没发的只报：
+    # 同一个 `check_opening` 在 `main()` 开头、下载之前照拦它出片（`promote_interview_draft`
+    # 只给三种核验方式补 `opening`，另外几种转正时 `opening` 是空的）。
+    _gate_split("新的采访片必须认领怎么开头",
+                ((p, json.loads(p.read_text("utf-8"))) for p in _iv_specs()),
+                clip.check_opening)
 
     ok = {"slug": "新片", "opening": {"kind": "match_end", "lead_in": 13.8,
                                       "why": "赛点落地 ＋ 解说报出赛果"}}
@@ -5309,9 +5477,11 @@ def test_不需要跨视频片头时check_lead_in是空操作():
     import tools.build_interview_clip as clip
 
     clip.check_lead_in({"slug": "x"})            # 没有 lead_in，不许抛
-    for p in _iv_specs():
-        d = json.loads(p.read_text("utf-8"))
-        clip.check_lead_in(d)                     # 新规和存量挂账一起全过
+    # 新规和存量挂账一起全过。自动链刚提交、`lead_in` 还没配上的那一条只报——
+    # `main()` 开头那排 spec 闸里就有 `check_lead_in`，它出不了片（2026-09-26
+    # `tien-cobolli` 在 `attach_interview_lead_in` 找到片头之前就被提交了）。
+    _gate_split("check_lead_in", [(p, json.loads(p.read_text("utf-8")))
+                                  for p in _iv_specs()], clip.check_lead_in)
 
 
 def test_独立赛后场上采访必须有同场比赛结尾片头():
@@ -6269,20 +6439,9 @@ def test_封面顶栏两行字都要是浅色(tmp_path):
         "`.brand` 又没有自己的 color 了——它会掉回 body，而封面的 body 没有 color")
 
 
-# 台标左沿在源片里的横向位置（归一）。**两条片子各量过一次**：
-# 德约那条赛前专访 0.823、霍达尔那条 0.827（四帧取最小，1058/1280）。
-# 同一个转播模板，取小的那个当判据。
-_TENNISTV_LOGO_LEFT = 0.823
-# 4:3 窗口在 16:9 源片上居中时保留 x 0.125–0.875，所以要躲开台标，
-# 窗口至少要往左挪这么多。**这个数是推出来的，不是拍的**——改上面那个量到的
-# 位置，它自己跟着走。
-_TENNISTV_MIN_SHIFT = _TENNISTV_LOGO_LEFT - 0.875
-
-# 这条规矩立起来之前发的两条。**只许减不许加**，而且下面自带自检。
-_LEGACY_TENNISTV_NO_SHIFT = {
-    "faria-shelton-cincinnati-2026-r2",
-    "shang-rublev-mtl2026-r2",
-}
+# 台标位置、窗口要挪多少、存量豁免表搬进了 `build_interview_clip`
+# （`_TENNISTV_LOGO_LEFT` / `_TENNISTV_MIN_SHIFT` / `_LEGACY_TENNISTV_NO_SHIFT`），
+# 判据是 `tennistv_logo_problem`：渲染入口 `check_tennistv_logo` 和下面这条读同一份。
 
 
 @pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
@@ -6304,23 +6463,15 @@ def test_TennisTV的源片必须真的把台标挪出窗口(path):
 
     ⚠️ 阈值从量到的台标位置推，不写死——改 `_TENNISTV_LOGO_LEFT` 它自己跟着走。
     """
-    spec = json.loads(path.read_text(encoding="utf-8"))
-    if "tennistv.com" not in str(spec.get("url", "")):
-        return
-    if spec["slug"] in _LEGACY_TENNISTV_NO_SHIFT:
-        return
-    if spec.get("logo_box"):
-        return
-    shift = spec.get("crop_shift_x")
-    assert isinstance(shift, int | float), (
-        f"{path.name} 的源片是 Tennis TV，右上角有台标，而 spec 没写 `crop_shift_x`。\n"
-        f"居中的 4:3 窗口保留 x 0.125–0.875，台标左沿在 {_TENNISTV_LOGO_LEFT}——"
-        "**它在窗口里面**。写 `\"crop_shift_x\": -0.06`（德约那条同一个转播模板用的就是这个），"
-        "或者走 `logo_box`。")
-    assert shift <= _TENNISTV_MIN_SHIFT + 1e-9, (
-        f"{path.name} 的 `crop_shift_x` = {shift}，还不够把台标挪出窗口："
-        f"至少要 {_TENNISTV_MIN_SHIFT:.3f}（台标左沿 {_TENNISTV_LOGO_LEFT}、"
-        "居中窗口右沿 0.875）。")
+    import tools.build_interview_clip as clip
+
+    # ⚠️ 这条原来只活在这儿，渲染不查——现在渲染入口有 `check_tennistv_logo`
+    # （同一个 `tennistv_logo_problem`），所以自动链刚提交、还没核也没发的只报：
+    # `promote_interview_draft` 收 `tennistv_structured_feed` 的草稿、不设
+    # `crop_shift_x`，转正直推 main 那一刻原来要么打红 main，要么带着台标出片。
+    _gate_split("TennisTV的源片必须真的把台标挪出窗口",
+                [(path, json.loads(path.read_text(encoding="utf-8")))],
+                clip.check_tennistv_logo)
 
 
 def test_那张TennisTV豁免表自己也要是真的():
@@ -6330,9 +6481,11 @@ def test_那张TennisTV豁免表自己也要是真的():
     写错一个名字，豁免就成了一盏恒真的绿灯；哪条补上了 `crop_shift_x` 还留在表里，
     这条会逼人把它删掉。
     """
+    import tools.build_interview_clip as clip
+
     seen = {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in _specs()}
     assert seen, "一条 spec 都没扫到——判据的主语没了"
-    for slug in sorted(_LEGACY_TENNISTV_NO_SHIFT):
+    for slug in sorted(clip._LEGACY_TENNISTV_NO_SHIFT):
         assert slug in seen, f"豁免表里的 {slug} 不存在，这一条豁免是空的"
         spec = seen[slug]
         assert "tennistv.com" in str(spec.get("url", "")), \

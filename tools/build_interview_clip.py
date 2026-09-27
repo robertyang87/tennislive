@@ -3981,6 +3981,68 @@ def check_topline_format(spec: dict) -> None:
         raise SystemExit(f"{slug} 的 `event`：{problem}")
 
 
+# 台标左沿在源片里的横向位置（归一）。**两条片子各量过一次**：
+# 德约那条赛前专访 0.823、霍达尔那条 0.827（四帧取最小，1058/1280）。
+# 同一个转播模板，取小的那个当判据。
+_TENNISTV_LOGO_LEFT = 0.823
+# 4:3 窗口在 16:9 源片上居中时保留 x 0.125–0.875，所以要躲开台标，
+# 窗口至少要往左挪这么多。**这个数是推出来的，不是拍的**——改上面那个量到的
+# 位置，它自己跟着走。
+_TENNISTV_MIN_SHIFT = _TENNISTV_LOGO_LEFT - 0.875
+# 实际写进 spec 的那个数：德约那条（同一个转播模板）用的就是它，比 `_TENNISTV_MIN_SHIFT`
+# 多留 0.008 余量。`promote_interview_draft` 转正 Tennis TV 草稿时照它补——这是几何推出来
+# 的数，不是编辑口味；不补的话自动链就停在 `check_tennistv_logo` 这道闸上。
+TENNISTV_CROP_SHIFT = -0.06
+
+# 这条规矩立起来之前发的两条。**只许减不许加**，自检在
+# `test_那张TennisTV豁免表自己也要是真的`。
+_LEGACY_TENNISTV_NO_SHIFT = {
+    "faria-shelton-cincinnati-2026-r2",
+    "shang-rublev-mtl2026-r2",
+}
+
+
+def tennistv_logo_problem(spec: dict) -> str | None:
+    """Tennis TV 源片右上角的台标躲没躲开窗口：躲开了（或不归这条管）回 None。
+
+    判据是**窗口的几何真的躲开了**——`crop_shift_x` 挪到台标左沿之外，或者显式走
+    `logo_box`（`removelogo`）——不是「spec 里写没写一句话」（霍达尔那条的
+    `_tennistv_trim` 写着「框不进来」，是推的，第一版成片右上角印着半个台标）。
+    """
+    if "tennistv.com" not in str(spec.get("url", "")):
+        return None
+    slug = str(spec.get("slug", "?"))
+    if slug in _LEGACY_TENNISTV_NO_SHIFT or spec.get("logo_box"):
+        return None
+    shift = spec.get("crop_shift_x")
+    if not isinstance(shift, int | float) or isinstance(shift, bool):
+        return (
+            f"{slug} 的源片是 Tennis TV，右上角有台标，而 spec 没写 `crop_shift_x`。\n"
+            f"居中的 4:3 窗口保留 x 0.125–0.875，台标左沿在 {_TENNISTV_LOGO_LEFT}——"
+            f"**它在窗口里面**。写 `\"crop_shift_x\": {TENNISTV_CROP_SHIFT}`（德约那条同一个"
+            "转播模板用的就是这个），或者走 `logo_box`。")
+    if shift > _TENNISTV_MIN_SHIFT + 1e-9:
+        return (
+            f"{slug} 的 `crop_shift_x` = {shift}，还不够把台标挪出窗口："
+            f"至少要 {_TENNISTV_MIN_SHIFT:.3f}（台标左沿 {_TENNISTV_LOGO_LEFT}、"
+            "居中窗口右沿 0.875）。")
+    return None
+
+
+def check_tennistv_logo(spec: dict) -> None:
+    """渲染入口：别人的台标不许烧进我们的片子（账号所有者 2026-08-16「把它的片尾和它的
+    logo 剪掉」）。
+
+    ⚠️ 原来这条只活在 `test_TennisTV的源片必须真的把台标挪出窗口` 里，渲染不查——
+    草稿转正（`promote_interview_draft` 收 `tennistv_structured_feed` 的草稿、原来不设
+    `crop_shift_x`）直推 main 的那一刻，要么把 main 打红，要么（测试对自动 spec 只报之后）
+    带着台标出片。所以挪到这儿：只读 spec，排在下载之前。转正现在按
+    `TENNISTV_CROP_SHIFT` 补上这一挪，这道闸兜的是手写和别的路进来的。
+    """
+    if problem := tennistv_logo_problem(spec):
+        raise SystemExit(problem)
+
+
 def check_source_contract(spec: dict) -> str:
     """L0：在任何下载、转写或渲染之前确认这是一条被验证过身份的赛后内容。
 
@@ -4610,6 +4672,148 @@ def check_takeaway(spec: dict) -> None:
 _COPY_PAGE_LEGACY: frozenset[str] = frozenset()
 """规矩生效之前已经渲完的 slug——只许减不许加，表自带自检。当前是空集，
 这条闸是补上去的（见下），发现时没有一条已发的 spec 撞上它。"""
+
+
+#: 文案里不许提字幕这类制作规格——账号所有者 2026-08-19：「以后不要再在文案里说
+#: 中英文字幕相关的文案」。**式子和豁免表只有这一份**：`test_文案不许再提中英双语字幕`
+#: 扫全库，`check_copy_bilingual` 在渲染入口扫这一条，两边读的是同一个东西。
+#:
+#: ⚠️ 原来它只活在那条测试里，渲染一个字都不查：2026-09-27 自动链把请求里一句
+#: `lead_in.why`「Brightcove 源没有字幕轨」原样写进正式 spec（610388394），能拦它的
+#: 只有全库测试——而自动链的提交不触发 CI，那条测试只能红在下一个无关的人工合并上
+#: （run 36285183697）。挪到渲染入口之后，自动 spec 在全库测试里就可以只报了。
+_BILINGUAL_COPY = re.compile(r"(中英)?双语字幕|字幕轨|中英字幕")
+
+# 规矩定下来**之前**已经发出去的一批。已发的片子不为了措辞重渲——
+# `sabalenka-wang-cincinnati-2026-r3` 的 `_copy_note` 里账号所有者原话
+# 就是「这条只管以后」。**只许减不许加**：修好一个就从下面删掉一个，
+# 别让它变成一张许可证。
+_LEGACY_BILINGUAL_MENTION = {
+    'alexandrova-sabalenka-tor2026-r16.json',
+    'alexandrova-sabalenka-tor2026-r16.xhs.txt',
+    'arango-venus-cincinnati-2026-r1.json',
+    'arango-venus-cincinnati-2026-r1.xhs.txt',
+    'chwalinska-cincinnati-2026-studio.json',
+    'chwalinska-cincinnati-2026-studio.xhs.txt',
+    'deminaur-fery-cincinnati-2026-r3.json',
+    'deminaur-fery-cincinnati-2026-r3.xhs.txt',
+    'djokovic-cincinnati-2026-presser.json',
+    'djokovic-cincinnati-2026-presser.xhs.txt',
+    'djokovic-cincinnati-2026-return.json',
+    'djokovic-cincinnati-2026-return.xhs.txt',
+    'eala-mcnally-toronto-2026-r3-presser-full.json',
+    'eala-mcnally-toronto-2026-r3-presser-full.xhs.txt',
+    'eala-mcnally-toronto-2026-r3-presser.json',
+    'eala-mcnally-toronto-2026-r3-presser.xhs.txt',
+    'eala-mcnally-toronto-2026-r3.json',
+    'eala-mcnally-toronto-2026-r3.xhs.txt',
+    'eala-osaka-dc2026-sf-studio.json',
+    'eala-osaka-dc2026-sf-studio.xhs.txt',
+    'eala-osaka-dc2026-sf.json',
+    'eala-osaka-dc2026-sf.xhs.txt',
+    'eala-parks-toronto-2026.json',
+    'eala-parks-toronto-2026.xhs.txt',
+    'eala-pegula-dc2026-final-presser.json',
+    'eala-pegula-dc2026-final-presser.xhs.txt',
+    'eala-pegula-dc2026-final.json',
+    'eala-pegula-dc2026-final.xhs.txt',
+    'eala-svitolina-dc2026-qf.json',
+    'eala-svitolina-dc2026-qf.xhs.txt',
+    'faria-shelton-cincinnati-2026-r2.json',
+    'faria-shelton-cincinnati-2026-r2.xhs.txt',
+    'fils-lehecka-cincinnati-2026-r3.json',
+    'fils-lehecka-cincinnati-2026-r3.xhs.txt',
+    'gauff-samsonova-cincinnati-2026-r2.json',
+    'gauff-samsonova-cincinnati-2026-r2.xhs.txt',
+    'jodar-tabilo-cincinnati-2026-r3.json',
+    'jodar-tabilo-cincinnati-2026-r3.xhs.txt',
+    'mensik-hijikata-cincinnati-2026-r3.json',
+    'mensik-hijikata-cincinnati-2026-r3.xhs.txt',
+    'nakashima-shelton-mtl2026-final.json',
+    'nakashima-shelton-mtl2026-final.xhs.txt',
+    'noskova-boulter-cincinnati-2026-r2.json',
+    'noskova-boulter-cincinnati-2026-r2.xhs.txt',
+    'pegula-eala-dc2026-final.json',
+    'pegula-eala-dc2026-final.xhs.txt',
+    'rybakina-frech-cincinnati-2026-r3.json',
+    'rybakina-frech-cincinnati-2026-r3.xhs.txt',
+    'rybakina-gauff-tor2026-sf.json',
+    'rybakina-gauff-tor2026-sf.xhs.txt',
+    'rybakina-osaka-tor2026-qf.xhs.txt',
+    'rybakina-swiatek-tor2026-final-presser.json',
+    'rybakina-swiatek-tor2026-final-presser.xhs.txt',
+    'rybakina-swiatek-tor2026-final.json',
+    'rybakina-swiatek-tor2026-final.xhs.txt',
+    'rybakina-townsend-cincinnati-2026-r2.json',
+    'rybakina-townsend-cincinnati-2026-r2.xhs.txt',
+    'sabalenka-uchijima-tor2026-r64.json',
+    'sabalenka-uchijima-tor2026-r64.xhs.txt',
+    'sabalenka-zhang-tor2026-r3.json',
+    'sabalenka-zhang-tor2026-r3.xhs.txt',
+    'shang-rublev-mtl2026-r2.json',
+    'shang-rublev-mtl2026-r2.xhs.txt',
+    'shelton-mensik-mtl2026-qf.xhs.txt',
+    'shelton-nakashima-mtl2026-final.json',
+    'shelton-nakashima-mtl2026-final.xhs.txt',
+    'swiatek-arango-cincinnati-2026-r2.json',
+    'swiatek-arango-cincinnati-2026-r2.xhs.txt',
+    'swiatek-rybakina-tor2026-final-presser.json',
+    'swiatek-rybakina-tor2026-final-presser.xhs.txt',
+    'swiatek-rybakina-tor2026-final.json',
+    'swiatek-rybakina-tor2026-final.xhs.txt',
+    'swiatek-sakkari-cincinnati-2026-r3.json',
+    'swiatek-sakkari-cincinnati-2026-r3.xhs.txt',
+    'tirante-djokovic-cincinnati-2026-r2.json',
+    'tirante-djokovic-cincinnati-2026-r2.xhs.txt',
+    'zverev-atmane-cincinnati-2026-r3.json',
+    'zverev-atmane-cincinnati-2026-r3.xhs.txt',
+}
+
+
+def _outward_strings(obj):
+    """会发出去的字符串：`_` 开头的键是注解，整棵跳过。
+
+    `_copy_note` 里正引着账号所有者那句原话——连它一起扫，会把「把规矩记下来」
+    判成「又违反了规矩」。
+    """
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if isinstance(k, str) and k.startswith("_"):
+                continue
+            yield from _outward_strings(v)
+    elif isinstance(obj, list):
+        for v in obj:
+            yield from _outward_strings(v)
+    elif isinstance(obj, str):
+        yield obj
+
+
+def bilingual_copy_hits(obj) -> list[str]:
+    """`obj`（spec dict，或 `.xhs.txt` 的全文）里提到字幕规格的那几个词，去重排序。"""
+    return sorted({m.group(0) for text in _outward_strings(obj)
+                   for m in _BILINGUAL_COPY.finditer(text)})
+
+
+def check_copy_bilingual(spec: dict, root: Path = ROOT) -> None:
+    """渲染入口：这条 spec 和它的小红书正文都不许提字幕规格（豁免表按文件名认）。
+
+    **排在下载之前**，和 `check_copy_page` 同一个座位：只读 spec 和正文，0.2 秒就报。
+    推送闸（`auto_push_interview_gate.wants_auto_push`）用 `root=<仓库>` 再调一次：
+    `.xhs.txt` 不在 QC 哈希链里，渲完到推之间手改它，渲染这道闸已经跑过了。
+    """
+    slug = str(spec.get("slug", ""))
+    found = {}
+    if hits := bilingual_copy_hits(spec):
+        found[f"{slug}.json"] = hits
+    copy_path = root / "specs" / "interviews" / f"{slug}.xhs.txt"
+    if copy_path.is_file() and (hits := bilingual_copy_hits(
+            copy_path.read_text(encoding="utf-8"))):
+        found[copy_path.name] = hits
+    fresh = {k: v for k, v in found.items() if k not in _LEGACY_BILINGUAL_MENTION}
+    if fresh:
+        raise SystemExit(
+            f"文案里提了字幕这类制作规格：{fresh}——那是制作规格，不是这场球的内容，"
+            "删掉（账号所有者 2026-08-19）。`_` 开头的注解键不扫，要留出处写进注解。")
 
 
 def check_copy_page(spec: dict) -> None:
@@ -5374,6 +5578,7 @@ def main() -> int:
     # L0 必须排在全部准备工作之前。技术成片再漂亮，也不能把演播室采访冒充成
     # 用户要的“本场场上采访”。
     check_source_contract(spec)
+    check_tennistv_logo(spec)
     check_topline_format(spec)
     # **排在最前面，每一趟都过。** 它只读 spec、不联网、不下源片——
     # 「这条片子怎么开头」是写 spec 那一刻就该定下来的事，让它在第 0.2 秒报，
@@ -5382,6 +5587,7 @@ def main() -> int:
     check_lead_in(spec)
     check_trail_in(spec)
     check_copy_page(spec)
+    check_copy_bilingual(spec)
     check_cover_hook(spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)

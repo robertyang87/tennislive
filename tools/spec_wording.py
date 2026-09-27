@@ -115,6 +115,27 @@ _REACHED_STAGE = re.compile(
 _REACHED_WINDOW = 14
 
 
+def non_annotation_strings(obj):
+    """整份 spec 里所有**非注解**的字符串（跳过 `_` 开头的键，dict/list 一路递归）。
+
+    采访线「轮次写 N 强」那条的面：`tests/test_interview_clip.py::test_轮次写分数式不写N强`
+    和 `promote_interview_draft.promote_all` 的转正闸共用这一份——**含 `zh` 字幕译文**
+    （`interview_outward_texts` 故意不扫 `zh`，两者的面不一样）。各抄一份就会分叉，
+    分叉的样子是「转正放行、全库测试把 main 打红」（2026-09-27 评审：
+    bonzi 草稿「大概是八强左右」）。
+    """
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            if isinstance(key, str) and key.startswith("_"):
+                continue
+            yield from non_annotation_strings(value)
+    elif isinstance(obj, list):
+        for value in obj:
+            yield from non_annotation_strings(value)
+    elif isinstance(obj, str):
+        yield obj
+
+
 def strength_round_hits(texts) -> list[str]:
     """把轮次名写成「N 强」的那几处——**这条规矩的判据，别用裸正则**。
 

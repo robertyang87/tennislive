@@ -241,3 +241,34 @@ def _empty_reel_ledger(monkeypatch, tmp_path):
     # `test_冷开场里的结局必须在正文重新兑现` 后半段就是这么走的，靠环境变量带过去。
     monkeypatch.setenv("TENNISLIVE_REEL_LEDGER_DIR", str(empty))
     return empty
+
+
+@pytest.fixture()
+def _empty_interview_ledger(monkeypatch, tmp_path):
+    """采访线的发布账本钉成空目录——给「把 `SPECS` / `OUTDIR` 指到 tmp_path、却拿真
+    slug 走 `build_interview_request`」的测试用（`@pytest.mark.usefixtures(...)`）。
+
+    `build_interview_request._protected` 认发布账本（`publication_ledger.interview_published`），
+    而账本路径跟着 `ROOT` 走、不跟着 `SPECS` / `OUTDIR` 走——只隔离了那两个的测试会
+    **静静读到真账本**：真 slug 已经推过，`_build_one` 就报「已确认版本受保护」，
+    顶掉测试真正要测的那道闸（2026-09-27 合并 main 时
+    `test_人工请求的_claims跟进正式spec_没认领在build那一刻就红` 就是这么红的）。
+    判据测试一律不许读真账本（`_empty_reel_ledger` 同一条）。
+
+    ⚠️ 不做成 autouse：全库扫描的那几条（`unverified_auto_spec` 分自动 / 人工）**要**读
+    真账本——锦织圭那条只有账本 `sent`、没有 `pushed.json`，空账本会把它认成「自动链
+    还没核没发」，全库测试对它只报，那是一盏假绿灯。
+    环境变量每次调用时读（`publication_ledger.INTERVIEW_LEDGER_ENV`），进程内和子进程都认。
+    """
+    import sys  # noqa: PLC0415
+    from pathlib import Path  # noqa: PLC0415
+
+    tools = str(Path(__file__).resolve().parents[1] / "tools")
+    if tools not in sys.path:
+        sys.path.insert(0, tools)
+    from publication_ledger import INTERVIEW_LEDGER_ENV  # noqa: PLC0415
+
+    empty = tmp_path / "empty-interview-ledger"
+    empty.mkdir()
+    monkeypatch.setenv(INTERVIEW_LEDGER_ENV, str(empty))
+    return empty

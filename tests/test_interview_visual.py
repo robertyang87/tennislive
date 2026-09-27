@@ -31,6 +31,19 @@ def _specs() -> list[dict]:
             for p in sorted(SPECS.glob("*.json")) if not p.name.endswith(".draft.json")]
 
 
+def _unverified_auto(spec: dict) -> bool:
+    """自动链刚提交、还没核也没发的采访 spec——判据只有一份，在 `build_interview_request`。"""
+    import build_interview_request  # noqa: PLC0415
+
+    return build_interview_request.unverified_auto_spec(spec)
+
+
+def _report_auto(check: str, found: dict) -> None:
+    import build_interview_request  # noqa: PLC0415
+
+    build_interview_request.report_unverified_auto(check, found)
+
+
 def _spec(slug: str) -> dict:
     return json.loads((SPECS / f"{slug}.json").read_text(encoding="utf-8"))
 
@@ -202,15 +215,24 @@ def test_字幕渲染字号换了一个行都不许多(monkeypatch):
                 w += f_zh.getlength(part)
         return w / ratio
 
-    worst, n = 0.0, 0
+    worst, n, auto = 0.0, 0, {}
     for spec in _specs():
         rows = list(spec.get("zh") or [])
         for key in ("lead_in", "trail_in"):
             rows += [c["zh"] for c in ((spec.get(key) or {}).get("subs") or [])]
+        # ③ 那一半只量**过了那一关**的：自动链刚提交、还没核也没发的（DeepSeek 初译）
+        # 超宽只报——渲染入口 `write_ass` → `zh_problems`（正文）和 `check_lead_in` /
+        # `check_trail_in`（片头片尾字幕）量的是同一个宽，它出不了片。① ② 是渲染器的性质，照判全部。
+        pending = _unverified_auto(spec)
         for cn in rows:
             got = rendered(clip.zh_display(cn))
             assert got <= clip._zh_width(cn) + 1, f"{spec['slug']}: {cn} 渲出来比量的还宽"
-            worst, n = max(worst, got), n + 1
+            n += 1
+            if pending and got > clip._LINE_PX:
+                auto.setdefault(f"{spec['slug']}.json", []).append(f"{got:.0f}px：{cn}")
+            elif not pending:
+                worst = max(worst, got)
+    _report_auto("字幕渲染字号换了一个行都不许多", auto)
     assert n > 1000, f"只扫到 {n} 行中文，判据的主语不够"
     assert worst <= clip._LINE_PX, f"最宽一行渲出来 {worst:.0f}px，超过 {clip._LINE_PX}"
 
@@ -379,8 +401,16 @@ def test_封面重点词写错了在spec闸就红_不等出封面(tmp_path, monk
     clip.check_cover_hook({"slug": "t", "cover": {"title": title, "hook_accent": "AI"}})
     clip.check_cover_hook({"slug": "t", "cover": {"title": title}})     # 没写＝零行为
     clip.check_cover_hook({"slug": "t"})
+    auto = {}
     for spec in _specs():
-        clip.check_cover_hook(spec)
+        try:
+            clip.check_cover_hook(spec)
+        except SystemExit as exc:
+            # 自动链刚提交、还没核也没发的只报：同一道闸在 `main()` 开头拦它出片（下面 run() 钉的就是这个座位）
+            if not _unverified_auto(spec):
+                raise
+            auto[f"{spec['slug']}.json"] = str(exc)
+    _report_auto("check_cover_hook", auto)
 
     # 真跑一遍 `main() --stage subs`（评审 WP3 修正轮 nit：源码里有这一行调用证明不了它
     # 真的跑、真的排在联网之前）。联网 / 下源片那几步换成桩：走到桩就说明闸没拦住，
