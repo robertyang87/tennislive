@@ -185,6 +185,8 @@ def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
       一样、渲染那一刻的口径指纹（`rules`）和今天的 `render_inputs.rules_digest()` 对不上
       （有人往 `RENDER_ANNOTATIONS` / `PUBLISH_FIELDS` 里加了键、没升版本号）：不重算
       （拿新口径比旧清单只会误判），普通渲染退回 spec 字节那道；重核对凭证不认
+    - spec 字节**就是**清单记的那一份：投影照算，认领**不**按今天的 `Gate.rule` 重判
+      （闸口径收严不进指纹，重判会把没动过的片子卡成不推）；spec 改过才重判
     """
     digest = qc.get("render_inputs_sha256")
     if qc.get("reattest") and not digest:
@@ -229,7 +231,15 @@ def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
                 and 0 < version <= render_inputs.VERSION):
             raise Skip(f"{slug}：{name} 的版本 {version!r} 不认")
         return
-    problems = render_inputs.spec_problems(spec_path.read_bytes(), manifest)
+    spec_bytes = spec_path.read_bytes()
+    # spec 字节**就是**清单记的那一份（普通渲染的常态）：认领不按今天的闸口径重判。
+    # 那一刻闸认了才渲得出来；之后哪条分支把某个 `Gate.rule` 收严（`text_str` → `text`）
+    # 而口径指纹不变（`GATE_ANNOTATIONS` 故意不进指纹），重判就会把一条 spec 一个字节
+    # 没动过的片子判成「认领没了」——自动链只印一行 `[跳过]`，永远不推（复审 fix 轮）。
+    # 投影照旧每次重算：清单里的 `spec_sha256` 手搓得动（`_forge(manifest_too=True)`），
+    # 投影才是那道拦得住的；而改得动清单的人本来也改得动清单里的认领表，这里不松什么。
+    same_spec = _sha256_bytes(spec_bytes) == manifest.get("spec_sha256")
+    problems = render_inputs.spec_problems(spec_bytes, manifest, claims=not same_spec)
     if problems:
         what = "重核对凭证不成立" if qc.get("reattest") else "spec 和渲染那一刻的渲染输入对不上"
         raise Skip(f"{slug}：{what}——" + "；".join(problems[:3]))

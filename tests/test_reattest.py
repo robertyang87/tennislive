@@ -4,8 +4,9 @@
 注解或推送字段时，不重渲，重出一张绑定新 spec 字节、指着同一份成片的凭证。
 
 来路（五趟 7~10 分钟、成片一个像素都没变的重渲）：eala-jovic 85b94e74、
-mensik-tien d338e77d、wong-paul d5bbc48c、medvedev-damm e15e73e5；gauff-jovic
-80bbdd1a 推送之后链就断着。
+mensik-tien d338e77d、medvedev-damm e15e73e5；gauff-jovic 80bbdd1a 推送之后链就
+断着。wong-paul d5bbc48c 也在那五趟里，但它改的是真字段 `editorial`，**重核对
+省不掉**（`test_editorial是真字段_改里面的数照旧重渲` 钉着这条边界）。
 
 **「发出去的必须和质检过的是同一份」一个字都不许松**——所以这里的测试一半在验
 「该过的过了」，一半在验「动了成片的、链被动过手脚的、Release 被换过的、
@@ -17,11 +18,14 @@ mensik-tien d338e77d、wong-paul d5bbc48c、medvedev-damm e15e73e5；gauff-jovic
 from __future__ import annotations
 
 import ast
+import functools
 import hashlib
+import http.client
 import json
 import re
 import subprocess
 import sys
+import urllib.error
 from pathlib import Path
 
 import pytest
@@ -190,6 +194,23 @@ def test_动了渲染输入就不许重核对(tmp_path, change, where):
     before = (outdir / "qc_attestation.json").read_bytes()
     assert rc.apply(tmp_path, SLUG, outdir, spec_path, fetch=_release_ok).status == "render"
     assert (outdir / "qc_attestation.json").read_bytes() == before, "拒绝的那一趟不许动凭证"
+
+
+def test_editorial是真字段_改里面的数照旧重渲(tmp_path):
+    """wong-paul d5bbc48c 的形状：加错的分钟数在 `editorial.human_context.facts` 里。
+
+    `editorial` 只进闸（`_validate_editorial_contract` / `ending_payoff_problem`），但它
+    是真字段、在投影里——重核对**不**替它省那一趟（评审拿真提交重放量过：报「渲染参数：
+    editorial.human_context.facts[3]」）。文档里曾把它算进「省得掉的五趟」，这条钉住边界：
+    哪天要放它，得先让归类扫描像管 `push` 那样管住谁读 `editorial`，再改这条。
+    """
+    base = dict(_spec(), editorial={"human_context": {"facts": ["四场合计 7 小时 01 分"]}})
+    outdir = _rendered(tmp_path, base)
+    _edit(tmp_path, lambda s: s["editorial"]["human_context"].update(
+        facts=["四场合计 8 小时 01 分"]), base)
+    a = _assess(tmp_path, outdir)
+    assert a.status == "render", a.reasons
+    assert any("editorial.human_context.facts[0]" in r for r in a.reasons), a.reasons
 
 
 def test_同一个路径换了一张图也不许重核对(tmp_path):
@@ -424,6 +445,33 @@ def test_Release上的成片被换过就不许重核对(tmp_path):
         a = rc.apply(tmp_path, SLUG, outdir, spec_path, fetch=lambda url, f=fetched: f)
         assert a.status == "unknown" and "Release" in a.reasons[0], a.reasons
     assert (outdir / "qc_attestation.json").read_bytes() == before
+
+
+@pytest.mark.parametrize("error", [
+    urllib.error.HTTPError("https://example.test/demo.mp4", 404, "Not Found", None, None),
+    urllib.error.URLError("Name or service not known"),
+    TimeoutError("read timed out"),
+    http.client.IncompleteRead(b"partial"),
+])
+def test_Release上的成片取不到_判不了而不是一屏traceback(tmp_path, capsys, monkeypatch, error):
+    """Release 附件被删（404）、断网、读到一半断：核不了它是不是那一份 → 判不了、凭证不动，
+    CLI 退出码照旧非零（--apply 那一步红），但报的是人话。"""
+    outdir = _rendered(tmp_path)
+    before = (outdir / "qc_attestation.json").read_bytes()
+    spec_path = _edit(tmp_path, lambda s: s.update(_note="只改注解"))
+
+    def unreachable(url):
+        raise error
+
+    a = rc.apply(tmp_path, SLUG, outdir, spec_path, fetch=unreachable)
+    assert a.status == "unknown", a.reasons
+    assert "取不到" in a.reasons[0] and type(error).__name__ in a.reasons[0], a.reasons
+    assert (outdir / "qc_attestation.json").read_bytes() == before
+    monkeypatch.setitem(rc.apply.__kwdefaults__, "fetch", unreachable)   # CLI 走默认的 fetch
+    code = rc.main(["--slug", SLUG, "--repo", str(tmp_path), "--outdir", str(outdir),
+                    "--apply"])
+    out = capsys.readouterr().out
+    assert code != 0 and "[判不了]" in out and "取不到" in out, out
 
 
 def test_CLI退出码_本地问一句就知道派哪一档(tmp_path, capsys):
@@ -700,6 +748,28 @@ def test_加一道闸不动口径指纹(monkeypatch):
     assert ri.rules_digest() == before
 
 
+def test_闸口径收严了_spec没动的片子照发_改过的照样按新口径判(tmp_path, monkeypatch):
+    """复审 fix 轮：`GATE_ANNOTATIONS` 故意不进口径指纹，于是某条分支把 `Gate.rule` 收严
+    （`text_str` → `text`）之后，门禁拿新口径重判渲染时记下的认领——spec 一个字节没动的
+    片子也会被判「认领没了」、自动链只印一行 `[跳过]`。spec 就是渲染那一份时不重判；
+    spec 改过（重核对）时照旧按今天的口径判。"""
+    _git(tmp_path, "init", "-q")
+    outdir = _rendered(tmp_path)
+    _commit(tmp_path)
+    strict = ri.GATE_ANNOTATIONS["_layout_why"]._replace(rule=lambda v: False)
+    monkeypatch.setitem(ri.GATE_ANNOTATIONS, "_layout_why", strict)
+    assert gate.validate_qc(tmp_path, SLUG, outdir) == _sha(FILM)
+
+    # 改过 spec 的（重核对出的凭证）：新口径照样咬
+    monkeypatch.undo()
+    spec_path = _edit(tmp_path, lambda s: s.update(_note="只改注解"))
+    assert rc.apply(tmp_path, SLUG, outdir, spec_path, fetch=_release_ok).status == "reattest"
+    _commit(tmp_path)
+    monkeypatch.setitem(ri.GATE_ANNOTATIONS, "_layout_why", strict)
+    with pytest.raises(gate.Skip, match="认领没了：cover._layout_why"):
+        gate.validate_qc(tmp_path, SLUG, outdir)
+
+
 def test_spec变了而凭证不是重核对出的_发布门禁不认(tmp_path):
     """只改了注解（投影不变）、却手搓凭证而不走 reattest：清单记的 spec 和凭证记的
     不是同一份——那等于绕过了 runner 那一步的素材字节和 Release 现算，不认。"""
@@ -776,6 +846,48 @@ def _render_path_modules() -> list[Path]:
 DYNAMIC_KEY = "_<拼出来的键>"
 
 
+def _const_strings(value: ast.AST | None) -> set[str] | None:
+    """模块顶层一个常量的字符串值：`"_x"`、`("_a", "_b")`、`frozenset({"_a"})`……不是返回 None。"""
+    if isinstance(value, ast.Constant) and isinstance(value.value, str):
+        return {value.value}
+    if (isinstance(value, ast.Call) and isinstance(value.func, ast.Name)
+            and value.func.id in ("frozenset", "set", "tuple", "list")
+            and len(value.args) == 1 and not value.keywords):
+        value = value.args[0]
+    if isinstance(value, (ast.Tuple, ast.List, ast.Set)):
+        return {e.value for e in value.elts
+                if isinstance(e, ast.Constant) and isinstance(e.value, str)}
+    return None
+
+
+def _module_consts(path: Path) -> dict[str, set[str]]:
+    """模块顶层 `NAME = <字符串或字符串序列>` → 值（`x.get(KEY)` / `for k in KEYS` 要用）。"""
+    stat = path.stat()
+    return {k: set(v) for k, v in _module_consts_cached(str(path), stat.st_mtime_ns,
+                                                        stat.st_size).items()}
+
+
+@functools.lru_cache(maxsize=None)
+def _module_consts_cached(path: str, _mtime: int, _size: int) -> dict[str, frozenset[str]]:
+    consts: dict[str, set[str]] = {}
+    for node in ast.parse(Path(path).read_text(encoding="utf-8")).body:
+        targets = (node.targets if isinstance(node, ast.Assign)
+                   else [node.target] if isinstance(node, ast.AnnAssign) else [])
+        values = _const_strings(getattr(node, "value", None))
+        if values is None:
+            continue
+        for target in targets:
+            if isinstance(target, ast.Name):
+                consts.setdefault(target.id, set()).update(values)
+    return {k: frozenset(v) for k, v in consts.items()}
+
+
+def _import_path(name: str, near: Path) -> Path | None:
+    """import 的模块名 → 文件：同目录的兄弟模块（测试里造的）优先，其次 tools/、src/。"""
+    sibling = near.parent / f"{name}.py"
+    return sibling if "." not in name and sibling.is_file() else _resolve(name)
+
+
 def _key_reads(path: Path) -> list[tuple[str, str, int]]:
     """(键, 所在函数, 行号)：`x[K]`、`x.get/pop/setdefault(K)`、`K in x`。
 
@@ -788,27 +900,56 @@ def _key_reads(path: Path) -> list[tuple[str, str, int]]:
     `for k, v in spec.items(): if k == "_x"`、`k in ("_x", "_y")`、
     `spec.keys() & {"_x"}` / `set(spec) >= {"_x"}`：比较或集合运算里出现的
     `_` 开头字面量（和只进推送的字段名）一律当成一次读。
+
+    **常量不只认字面量本身**（复审 fix 轮量出来的三个盲区，都拿合成模块复现过）：
+    模块顶层的序列常量（`KEYS = ("_a", "_b")` / `frozenset({...})`，然后
+    `for k in KEYS` 或 `k in KEYS`）、从别的模块 import 进来的常量
+    （`from m import KEY` / `import m` 再 `m.KEY`）——都按它们的值算。按后缀／前缀
+    批量读（`k.endswith("_why")`）不是单个键，归 `_affix_batches` 那张表管。
     """
     tree = ast.parse(path.read_text(encoding="utf-8"))
-    names: dict[str, set[str]] = {}
-    for node in tree.body:
-        if (isinstance(node, ast.Assign) and isinstance(node.value, ast.Constant)
-                and isinstance(node.value.value, str)):
-            for target in node.targets:
-                if isinstance(target, ast.Name):
-                    names.setdefault(target.id, set()).add(node.value.value)
+    consts = _module_consts(path)
+    modules: dict[str, dict[str, set[str]]] = {}      # `import m as alias` → m 的常量
     for node in ast.walk(tree):
-        if (isinstance(node, (ast.For, ast.comprehension)) and isinstance(node.target, ast.Name)
-                and isinstance(node.iter, (ast.Tuple, ast.List, ast.Set))):
-            names.setdefault(node.target.id, set()).update(
-                e.value for e in node.iter.elts
-                if isinstance(e, ast.Constant) and isinstance(e.value, str))
+        if isinstance(node, ast.ImportFrom) and node.module and not node.level:
+            source = _import_path(node.module, path)
+            if source is None:
+                continue
+            theirs = _module_consts(source)
+            for alias in node.names:
+                if alias.name in theirs:
+                    consts.setdefault(alias.asname or alias.name, set()).update(theirs[alias.name])
+        elif isinstance(node, ast.Import):
+            for alias in node.names:
+                # `import a.b.c` 绑定的是 `a`，`a.X` 不是 c 的常量——只认有别名或不带点的
+                source = _import_path(alias.name, path)
+                if source is not None and (alias.asname or "." not in alias.name):
+                    modules[alias.asname or alias.name] = _module_consts(source)
+    names: dict[str, set[str]] = {k: set(v) for k, v in consts.items()}
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.For, ast.comprehension)) and isinstance(node.target, ast.Name):
+            values = (_const_strings(node.iter)
+                      if isinstance(node.iter, (ast.Tuple, ast.List, ast.Set))
+                      else set(consts.get(node.iter.id, set()))
+                      if isinstance(node.iter, ast.Name) else None)
+            if values:
+                names.setdefault(node.target.id, set()).update(values)
+
+    def const_of(arg: ast.AST) -> set[str]:
+        """一个操作数若是常量（本模块顶层、import 进来的、`m.KEY`），它的值。"""
+        if isinstance(arg, ast.Name):
+            return consts.get(arg.id, set())
+        if isinstance(arg, ast.Attribute) and isinstance(arg.value, ast.Name):
+            return modules.get(arg.value.id, {}).get(arg.attr, set())
+        return set()
 
     def keys_of(arg: ast.AST) -> set[str]:
         if isinstance(arg, ast.Constant) and isinstance(arg.value, str):
             return {arg.value}
         if isinstance(arg, ast.Name):
             return names.get(arg.id, set())
+        if isinstance(arg, ast.Attribute):
+            return const_of(arg)
         head = (arg.values[0] if isinstance(arg, ast.JoinedStr) and arg.values
                 else arg.left if isinstance(arg, ast.BinOp) else None)
         if (isinstance(head, ast.Constant) and isinstance(head.value, str)
@@ -817,13 +958,16 @@ def _key_reads(path: Path) -> list[tuple[str, str, int]]:
         return set()
 
     def named_keys(operand: ast.AST) -> set[str]:
-        """比较/集合运算的一个操作数里，按名字点到的键：字面量本身，或字面量序列的元素。"""
+        """比较/集合运算的一个操作数里，按名字点到的键：字面量本身、字面量序列的元素，
+        或一个常量（顶层 / import 进来的）的值。循环变量**不**算——它按名字全模块共享，
+        拿来比较会把别的函数的键记到这个函数头上。"""
         elts = (operand.elts if isinstance(operand, (ast.Tuple, ast.List, ast.Set))
                 else [operand])
-        return {e.value for e in elts
-                if isinstance(e, ast.Constant) and isinstance(e.value, str)
-                and ((e.value.startswith("_") and not e.value.startswith("__"))
-                     or e.value in ri.PUBLISH_FIELDS)}
+        values = {e.value for e in elts
+                  if isinstance(e, ast.Constant) and isinstance(e.value, str)}
+        values |= const_of(operand)
+        return {v for v in values
+                if (v.startswith("_") and not v.startswith("__")) or v in ri.PUBLISH_FIELDS}
 
     out: list[tuple[str, str, int]] = []
 
@@ -844,7 +988,7 @@ def _key_reads(path: Path) -> list[tuple[str, str, int]]:
         elif (isinstance(node, ast.BinOp)
               and isinstance(node.op, (ast.BitAnd, ast.BitOr, ast.BitXor, ast.Sub))):
             for operand in (node.left, node.right):
-                if isinstance(operand, ast.Set):
+                if isinstance(operand, (ast.Set, ast.Name, ast.Attribute)):
                     keys |= named_keys(operand)
         for key in sorted(keys):
             out.append((key, fn, getattr(node, "lineno", 0)))
@@ -885,6 +1029,41 @@ def test_读取扫描认得出不是字面量的键(tmp_path):
             ("_via_set_cmp", "by_name"), ("push", "by_name")} <= keys, keys
     assert ("plain2", "by_name") not in keys, "普通字符串比较不是键读，别把噪音拉进来"
     assert DYNAMIC_KEY not in ri.RENDER_ANNOTATIONS and DYNAMIC_KEY not in ri.GATE_ANNOTATIONS
+
+
+def test_读取扫描认得出常量序列和import进来的键(tmp_path):
+    """复审 fix 轮拿合成模块复现的三个盲区里的两个：序列常量、import 进来的常量。
+
+    （第三个——按后缀批量读 `k.endswith("_why")`——不是单个键，见
+    `test_按前后缀批量读注解的扫描认得出`。）
+    """
+    (tmp_path / "keys_mod.py").write_text(
+        'KEY = "_via_import"\n'
+        'SEQ = frozenset({"_via_import_seq", "plain3"})\n'
+        'ATTR = "_via_module_attr"\n', encoding="utf-8")
+    module = tmp_path / "m.py"
+    module.write_text(
+        "import keys_mod\n"
+        "from keys_mod import KEY, SEQ as ALIASED\n"
+        'KEYS = ("_via_tuple_a", "_via_tuple_b")\n'
+        'FROZEN = frozenset({"_via_frozenset"})\n'
+        "def loops(spec):\n"
+        "    for k in KEYS:\n"
+        "        spec.get(k)\n"
+        "    return [spec[k] for k in ALIASED]\n"
+        "def by_name(spec):\n"
+        "    for k, v in spec.items():\n"
+        "        if k in FROZEN:\n"
+        "            pass\n"
+        "    return spec.keys() & FROZEN\n"
+        "def imported(spec):\n"
+        "    spec.get(KEY)\n"
+        "    return spec.get(keys_mod.ATTR)\n", encoding="utf-8")
+    keys = {(key, fn) for key, fn, _ in _key_reads(module)}
+    assert {("_via_tuple_a", "loops"), ("_via_tuple_b", "loops"),
+            ("_via_import_seq", "loops")} <= keys, keys
+    assert ("_via_frozenset", "by_name") in keys, keys
+    assert {("_via_import", "imported"), ("_via_module_attr", "imported")} <= keys, keys
 
 
 #: 渲染路径上读 `_` 键、但读的**不是 spec**（渲染自己攒的运行时字典）的地方。
@@ -943,12 +1122,48 @@ def test_渲染路径读到的注解键都要归类():
     assert all(note.why.strip() for note in ri.GATE_ANNOTATIONS.values())
 
 
+def _affix_batches(path: Path) -> set[tuple[str, str]]:
+    """(模块, 顶层函数)：里面有按 `_` 开头的前缀／后缀批量认键的地方。
+
+    `key.startswith("_")`（整批注解）、`k.endswith("_why")`（按后缀认一批认领，复审
+    fix 轮量出来的盲区）、`startswith(("_a", "_b"))`——**单个键**的扫描看不见这种写法。
+    `"__"` 开头的（dunder）不算。
+    """
+    found: set[tuple[str, str]] = set()
+    for top in ast.parse(path.read_text(encoding="utf-8")).body:
+        if not isinstance(top, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            continue
+        for node in ast.walk(top):
+            if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                    and node.func.attr in ("startswith", "endswith") and node.args):
+                continue
+            affixes = _const_strings(node.args[0]) or set()
+            if any(a.startswith("_") and not a.startswith("__") for a in affixes):
+                found.add((path.name, top.name))
+    return found
+
+
+def test_按前后缀批量读注解的扫描认得出(tmp_path):
+    module = tmp_path / "m.py"
+    module.write_text(
+        "def by_suffix(spec):\n"
+        '    return [v for k, v in spec.items() if k.endswith("_why")]\n'
+        "def by_prefix(spec):\n"
+        '    return [k for k in spec if str(k).startswith(("_claim", "x"))]\n'
+        "def dunder(name):\n"
+        '    return name.startswith("__")\n'
+        "def plain(name):\n"
+        '    return name.endswith(".json")\n', encoding="utf-8")
+    assert _affix_batches(module) == {("m.py", "by_suffix"), ("m.py", "by_prefix")}
+
+
 def test_按下划线整批跳过的地方只许在闸和推送里():
     """`key.startswith("_")` 是「按约定整批处理注解」——它出现在渲染代码里就要问一句。
 
     现在全部落在措辞闸、推送元数据、`_reject_underscored_fields` 和投影本身里，
     都是**跳过**注解；哪天渲染代码开始按前缀批量**读**注解（上面那条按字面键名扫的
     测试看不见这种写法），这张表会红。按顶层函数认，嵌套的 helper 跟着它走。
+    按后缀批量认（`k.endswith("_why")`）同样算（`_affix_batches`）。
     """
     allowed = {
         ("build_match_reel.py", "_reject_underscored_fields"),   # 闸：`_push` 这种假字段
@@ -959,18 +1174,12 @@ def test_按下划线整批跳过的地方只许在闸和推送里():
         ("spec_wording.py", "interview_outward_texts"),           # 措辞闸
         ("reel_asset_gates.py", "_images_in"),                    # 闸：图片解码，注解里的路径不算
         ("build_match_reel.py", "_face_checks_record"),           # 写 render.json：剥掉运行时缓存键
+        ("reel_facts.py", "annotation_strings"),                  # 闸：注解里的「要等」（waiting_fact_problem）
+        ("design_tokens.py", "css_base"),                         # 不是 spec：设计 token 名按 `_ms` 转 CSS 时长
     }
     found = set()
     for module in _render_path_modules():
-        for top in ast.parse(module.read_text(encoding="utf-8")).body:
-            if not isinstance(top, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                continue
-            for node in ast.walk(top):
-                if (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
-                        and node.func.attr == "startswith" and node.args
-                        and isinstance(node.args[0], ast.Constant)
-                        and node.args[0].value == "_"):
-                    found.add((module.name, top.name))
+        found |= _affix_batches(module)
     assert found - allowed == set(), (
         f"渲染路径上新出现了按下划线批量处理注解的函数：{sorted(found - allowed)}")
     assert allowed - found == set(), f"表里的条目已经不在了，删掉：{sorted(allowed - found)}"
@@ -988,12 +1197,13 @@ def test_清单里的产物名和渲染写的是同一个():
     assert landed.RENDER_INPUTS_NAME == ri.MANIFEST_NAME
 
 
-def test_渲完就写清单_只出封面不写(tmp_path, monkeypatch):
-    """跑真 `main()`：清单是 render() 之后那一行写的，不是文档里说的。"""
+def _run_main(tmp_path: Path, monkeypatch, *, cover_only: bool, tag: str) -> Path:
+    """跑真 `main()`（假 `render()`），spec 是本文件造的——不借仓库里的真 spec：
+    `main()` 在 `render()` 之前还有 `load_spec` / 措辞闸，哪天加一道硬闸拦了某条老片子，
+    这里不该跟着红（复审 fix 轮）。"""
     import build_match_reel as bmr  # noqa: PLC0415
 
-    spec_path = ROOT / "specs/reels/bu-majchrzak-hangzhou-2026-r2.json"
-    assert spec_path.is_file(), "样板 spec 不在了，换一条现存的"
+    spec_path = _write_spec(tmp_path, _spec())
 
     def fake_render(spec, outdir, **kw):
         outdir.mkdir(parents=True, exist_ok=True)
@@ -1009,18 +1219,57 @@ def test_渲完就写清单_只出封面不写(tmp_path, monkeypatch):
     # main() 开头会挂代理 CA、按 spec 设 TTS 后端的环境变量——别漏进同一个 worker 的别的测试
     monkeypatch.setattr(bmr.localca, "trust_local_proxy_ca", lambda: None)
     monkeypatch.delenv("TENNISLIVE_TTS_BACKEND", raising=False)
-    for cover_only, want in ((True, False), (False, True)):
-        outdir = tmp_path / ("cover" if cover_only else "full")
-        argv = ["build_match_reel.py", "render", "--spec", str(spec_path),
-                "--outdir", str(outdir)] + (["--cover-only"] if cover_only else [])
-        monkeypatch.setattr(sys, "argv", argv)
-        assert bmr.main() == 0
-        assert (outdir / ri.MANIFEST_NAME).is_file() is want
-    manifest = json.loads((tmp_path / "full" / ri.MANIFEST_NAME).read_text(encoding="utf-8"))
+    outdir = tmp_path / tag
+    argv = ["build_match_reel.py", "render", "--spec", str(spec_path),
+            "--outdir", str(outdir)] + (["--cover-only"] if cover_only else [])
+    monkeypatch.setattr(sys, "argv", argv)
+    assert bmr.main() == 0
+    return outdir
+
+
+def test_渲完就写清单_只出封面不写(tmp_path, monkeypatch):
+    """跑真 `main()`：清单是 render() 之后那一行写的，不是文档里说的。"""
+    assert not (_run_main(tmp_path, monkeypatch, cover_only=True, tag="cover")
+                / ri.MANIFEST_NAME).exists()
+    full = _run_main(tmp_path, monkeypatch, cover_only=False, tag="full")
+    spec_path = tmp_path / "specs/reels" / f"{SLUG}.json"
+    manifest = json.loads((full / ri.MANIFEST_NAME).read_text(encoding="utf-8"))
     assert manifest["spec_sha256"] == _sha(spec_path.read_bytes())
     assert manifest["film_sha256"] == _sha(FILM)
-    render = json.loads((tmp_path / "full/render.json").read_text(encoding="utf-8"))
-    assert render["render_inputs_sha256"] == _sha((tmp_path / "full" / ri.MANIFEST_NAME).read_bytes())
+    render = json.loads((full / "render.json").read_text(encoding="utf-8"))
+    assert render["render_inputs_sha256"] == _sha((full / ri.MANIFEST_NAME).read_bytes())
+
+
+def test_清单写不成不许把渲完的片子打红(tmp_path, monkeypatch, capsys):
+    """`record` 抛错（怪素材字符串让 `sha256_file` 抛 `OSError`）→ main 照样 0、只警告，
+    而且什么都不留：半截清单被质检钉进凭证、render.json 却没钉，门禁会不吭声地永远不推。"""
+    def broken(*_a, **_k):
+        raise OSError("怪素材路径")
+
+    monkeypatch.setattr(ri, "build", broken)
+    outdir = _run_main(tmp_path, monkeypatch, cover_only=False, tag="full")
+    assert not (outdir / ri.MANIFEST_NAME).exists()
+    assert "render_inputs_sha256" not in json.loads(
+        (outdir / "render.json").read_text(encoding="utf-8"))
+    assert "清单没写成" in capsys.readouterr().out
+
+
+def test_清单写到一半出错_不留半截(tmp_path):
+    """清单已经落盘、回写 render.json 那一步才出错：清单要删掉，别留一份没人钉的。"""
+    spec_path = _write_spec(tmp_path, _spec())
+    outdir = tmp_path / "out"
+    outdir.mkdir()
+    film = outdir / f"{SLUG}.mp4"
+    film.write_bytes(FILM)
+    (outdir / "subtitles.ass").write_text("Dialogue: 字幕\n", encoding="utf-8")
+    (outdir / "render.json").mkdir()          # 回写 render.json 必然 IsADirectoryError
+    assert ri.record_best_effort(spec_path, outdir, film, tmp_path) is None
+    assert not (outdir / ri.MANIFEST_NAME).exists()
+    # 质检那一头：盘上没有清单就不钉，发布门禁退回 spec 字节那一道
+    (outdir / "render.json").rmdir()
+    landed.write_attestation(film, spec_path, _spec())
+    qc = json.loads((outdir / "qc_attestation.json").read_text(encoding="utf-8"))
+    assert "render_inputs_sha256" not in qc
 
 
 # ── 工作流：够得着、够轻、和 render 不并行、落库后走同一道发布门禁 ──────────────

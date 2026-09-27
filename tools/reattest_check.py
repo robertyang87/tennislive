@@ -41,6 +41,7 @@
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
 import sys
 import urllib.request
@@ -205,7 +206,18 @@ def apply(repo: Path, slug: str, outdir: Path, spec_path: Path, *, run_url: str 
     if a.status != "reattest":
         return a
     film = str(a.qc["film_sha256"])
-    got_sha, got_size = fetch(str(a.render["video_url"]))
+    url = str(a.render["video_url"])
+    try:
+        got_sha, got_size = fetch(url)
+    except (OSError, ValueError, http.client.HTTPException) as exc:
+        # 404（Release 附件被删了）、断网、URL 写坏了：拿不到那一份就核不了它是不是
+        # 那一份——判不了，报一句人话，别甩一屏 traceback（复审 fix 轮）。
+        # `urllib.error.HTTPError` / `URLError` 都是 `OSError` 的子类；读到一半断掉的
+        # `IncompleteRead` 是 `HTTPException`。
+        a.status = "unknown"
+        a.reasons = [f"Release 上的成片取不到（{url}：{type(exc).__name__}: {exc}）——"
+                     "核不了它还是不是凭证里那一份，重核对不成立"]
+        return a
     if got_sha != film or got_size != int(a.qc.get("film_bytes") or 0):
         a.status = "unknown"
         a.reasons = [f"Release 上的成片已经不是凭证里那一份（现算 {got_sha[:12]}… / "

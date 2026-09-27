@@ -10,10 +10,16 @@
 
     eala-jovic     85b94e74   _why / _no_repeat 里两处段号交叉引用
     mensik-tien    d338e77d   stats._winners_ue_why
-    wong-paul      d5bbc48c   _facts 里一个加错的分钟数
     medvedev-damm  e15e73e5   push._no_auto_why → push.auto
     gauff-jovic    80bbdd1a   两段的 _score_inset_why（推送之后，链从此断着）
     （zheng-liutova 93df2572 是采访线，同一个形状，这里不管）
+
+⚠️ **wong-paul d5bbc48c 也是「重渲了、一个像素没变」，但重核对省不掉它**：那个加错的
+分钟数改在 `editorial.human_context.facts`——`editorial` 是**真字段**，只进闸
+（`_validate_editorial_contract` / `ending_payoff_problem`），却在投影里。拿真提交
+重放 `spec_problems`，报「渲染参数：editorial.human_context.facts[3]」，照旧走 render
+（判据 `test_editorial是真字段_改里面的数照旧重渲`）。要放它，得另开一类「只进闸的
+真字段」、让归类扫描像管 `push` 那样管住谁读它——没做，宁可多渲一趟。
 
 **「发出去的必须和质检过的是同一份」这条不许松**（tennis-pipeline-ops「哈希链」
 那几节）。所以不是把注解从凭证的哈希里摘掉（那是 O1 的 b 方案，账号所有者
@@ -120,6 +126,21 @@ def declared_bool(value: Any) -> bool:
     return isinstance(value, bool)
 
 
+def utc_time(value: Any) -> bool:
+    """`reel_facts._utc(x.get(k)) is not None`：带时区的 ISO 时刻（`2026-09-18T06:50Z`）。
+
+    没写时区、写成一句话、空串都不算——闸比不了先后的，认领也不算数。
+    """
+    raw = str(value or "").strip()
+    if not raw:
+        return False
+    try:
+        when = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return when.tzinfo is not None
+
+
 class Gate(NamedTuple):
     """一个只进闸的注解：哪道闸、在 spec 的哪儿读、按什么口径算数。
 
@@ -160,12 +181,16 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_board_on_screen_why": _gate(
         "probe_board.board_findings：写着不贴、板却连着在画面里的认领（dry-run 读 probe）",
         "board_findings", "segments[]._board_on_screen_why"),
-    "_claims": _gate("_absolute_claims_need_a_source：全称断言要两个不同主机的出处",
-                     "_absolute_claims_need_a_source", "_claims", truthy),
+    "_claims": _gate("_absolute_claims_need_a_source：全称断言要两个不同主机的出处"
+                     "（`absolute_claims.interview_problem` 是采访线的同一道闸，按模块走 "
+                     "import 图被拉进来，竖版短片不调）",
+                     "_absolute_claims_need_a_source interview_problem", "_claims", truthy),
     "_cover_reuse_why": _gate(
         "reel_asset_gates.cover_reuse_finding：封面照片和已发的另一条同一张的认领"
         "（也读别的 spec 的这一句，那不是本条的认领）",
         "cover_reuse_finding", "_cover_reuse_why"),
+    "_dated_why": _gate("reel_facts.dated_words_problem：「网球有故事」钉在发布那一天的认领"
+                        "（validate_spec，dry-run 就查）", "dated_words_problem", "_dated_why"),
     "_decider_why": _gate("reel_facts.decider_set_problem：大满贯提「决胜盘」的认领",
                           "decider_set_problem", "_decider_why"),
     "_draft": _gate("promote_reel_draft.promote：转正时按键名比出草稿块、剥掉它（备料，render "
@@ -196,11 +221,16 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_low_res_why": _gate("cover_photo_problem：封面低于门槛的认领",
                           "cover_photo_problem", "cover.portrait._low_res_why"),
     "_match": _gate("reel_facts 的赛果/抢十闸拿它对账、reel_asset_gates._retired 判退赛"
-                    "（封面用时闸）、promote_reel_draft 的撞车键",
+                    "（封面用时闸）、promote_reel_draft 的撞车键、list_official_uploads "
+                    "认人和开球日（dry-run 只报不拦的官方上传／封面日期报告）",
                     "verified_result_problem decider_tiebreak_problem waiting_reasons "
-                    "promote _source_urls _match_keys _retired", "_match", truthy),
+                    "promote _source_urls _match_keys _retired event_dates spec_surnames",
+                    "_match", truthy),
     "_narration_why": _gate("cover_voice_matches_hook_problem：封面口播和钩子不同的认领",
                             "cover_voice_matches_hook_problem", "cover._narration_why"),
+    "_old_photo_why": _gate(
+        "list_official_uploads.stale_cover_problem：封面照片比源片旧、故意用当年的图的认领"
+        "（dry-run 只报不拦）", "stale_cover_problem", "cover.portrait._old_photo_why"),
     "_numeral_display_why": _gate(
         "reel_asset_gates.numeral_display_problems：字幕数字换算半中半洋的认领",
         "numeral_display_problems", "_numeral_display_why"),
@@ -212,6 +242,10 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                            "_one", "segments[]._photo_source", https_url),
     "_quote_skip_why": _gate("unvoiced_quote_problem：不配原声字幕的认领",
                              "unvoiced_quote_problem", "segments[]._quote_skip_why"),
+    "_rechecked_at": _gate(
+        "reel_facts.waiting_fact_problem / waiting_fact_stale_problem：注解里写了「要等」，"
+        "回头查过的时刻（validate_spec，dry-run 就查；stale 那一半读账本）",
+        "waiting_fact_problem waiting_fact_stale_problem", "_rechecked_at", utc_time),
     "_revision_request": _gate("duplicate_match_problem：同一场球重做的认领",
                                "duplicate_match_problem", "_revision_request", truthy),
     "_score_inset_why": _gate(
@@ -221,6 +255,12 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_short_match_why": _gate(
         "reel_asset_gates.duration_problem：封面用时短于门槛（又不是退赛）的认领",
         "duration_problem", "_short_match_why"),
+    "_social_search": _gate(
+        "reel_facts.social_search_problem：当事人声明类「网球有故事」X / Instagram 各查了什么"
+        "（validate_spec，dry-run 就查；「两个平台都点到名」那一层闸自己在 dry-run 里判）",
+        "social_search_problem", "_social_search", truthy),
+    "_social_search_why": _gate("reel_facts.social_search_problem：标题层命中、其实不是声明类的认领",
+                                "social_search_problem", "_social_search_why"),
     "_tactics_why": _gate("reel_craft.shot_craft_problem：源片看不出球路的认领",
                           "shot_craft_problem", "_tactics_why"),
     "_topbar_format_why": _gate("_topbar_lines → tour_topline_problem：顶栏赛事行格式特例的认领",
@@ -245,6 +285,7 @@ PUBLISH_FIELDS: dict[str, frozenset[str]] = {
         "voiced_texts", "outward_deep", "outward_flat",
         "interview_outward_texts", "title_echo_problem",   # spec_wording：措辞闸
         "waiting_reasons", "xhs_copy",             # promote_reel_draft：备料
+        "statement_topic",                         # reel_facts：声明类选题认标题层（闸）
     }),
 }
 
@@ -554,11 +595,50 @@ def record(spec_path: Path, outdir: Path, film: Path, repo: Path) -> str:
     return digest
 
 
-def spec_problems(spec_bytes: bytes, manifest: dict) -> list[str]:
+def record_best_effort(spec_path: Path, outdir: Path, film: Path, repo: Path) -> str | None:
+    """`build_match_reel.main` 调的是这个：清单写不成**不许把一趟渲完的片子打红**。
+
+    清单是给「之后只改注解时省一趟」用的，不是这一趟成片合不合格的闸——一个怪素材
+    字符串让 `sha256_file` 抛个 `OSError`，就把 7~10 分钟的渲染判成失败，代价错了位
+    （复审 fix 轮）。出错就警告、**什么都不留**：清单删掉、`render.json` 里那个 sha 也
+    摘掉——半截留着更坏：质检会把盘上的清单钉进凭证，而 `render.json` 没钉它，发布门禁
+    就报「render.json 钉的清单和凭证钉的不是同一份」、自动链只印一行 `[跳过]`。
+    什么都不留，质检就不钉，门禁退回 spec 字节那一道照发；之后这一版只能 `mode=render`，
+    `reattest_check` 报「判不了」（没有清单）。`KeyboardInterrupt` 这类照样往外抛。
+    """
+    try:
+        return record(spec_path, outdir, film, repo)
+    except Exception as exc:                   # noqa: BLE001 — 清单写不成不许打红成片
+        _discard(outdir)
+        print(f"[渲染输入] ⚠️ 清单没写成（{type(exc).__name__}: {exc}）——成片照常；"
+              "这一版之后改 spec 只能 mode=render（reattest_check 会报判不了）")
+        return None
+
+
+def _discard(outdir: Path) -> None:
+    """把 `record` 可能留下的半截收干净：清单文件、`render.json` 里钉它的那个 sha。"""
+    try:
+        (outdir / MANIFEST_NAME).unlink(missing_ok=True)
+    except OSError as exc:
+        print(f"[渲染输入] ⚠️ 半截清单删不掉：{exc}")
+    meta_path = outdir / "render.json"
+    try:
+        data = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.is_file() else {}
+        if isinstance(data, dict) and data.pop("render_inputs_sha256", None) is not None:
+            meta_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                                 encoding="utf-8")
+    except (OSError, ValueError) as exc:
+        print(f"[渲染输入] ⚠️ render.json 里的清单 sha 摘不掉：{exc}")
+
+
+def spec_problems(spec_bytes: bytes, manifest: dict, *, claims: bool = True) -> list[str]:
     """新 spec 相对渲染那一刻：渲染投影和认领注解有没有变。空列表＝没变。
 
     不含素材字节（`asset_problems`）：`auto_push_gate` 跑在不检出 assets/ 的
     稀疏工作区里，它只复核这一半。
+
+    `claims=False`：只比投影、不按**今天的** `Gate.rule` 重判渲染时记下的认领——发布
+    门禁在 spec 字节就是渲染那一份时用（见 `auto_push_gate._validate_render_inputs`）。
     """
     try:
         spec = json.loads(spec_bytes)
@@ -566,7 +646,7 @@ def spec_problems(spec_bytes: bytes, manifest: dict) -> list[str]:
         return ["spec 不是有效 JSON"]
     problems = [f"渲染输入变了——{describe(p)}"
                 for p in diff_paths(manifest.get("projection"), project(spec))]
-    for path in manifest.get("claims") or []:
+    for path in (manifest.get("claims") or []) if claims else []:
         if not claim_holds(spec, path):
             problems.append(
                 f"渲染那一刻有的认领没了：{path_str(path)}"
