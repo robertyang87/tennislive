@@ -6,7 +6,7 @@
   "url": "https://www.youtube.com/watch?v=UdC3wvhTQpE",
   "source_title": "Hilarious Carlos Alcaraz On-Court Interview | Laver Cup 2026 Match 7",
   "start": 0.0,
-  "end": 286.7,
+  "end": 283.5,
   "asr_model": "small.en",
   "whisper_model": "medium.en",
   "segment_budget_px": null,
@@ -602,5 +602,6 @@
   "transcript_disagree_ok": {
     "rate": 0.176,
     "why": "render run 36289872829 重量为 17.5%（原认领 15.9%，run 36287538482），逐处重看 transcript_diff：新增的差额仍是第二份 ASR 丢口头语（you know / i just / it's a）以及 en_fixed 改过的几处和第二份的听法不同，没有新的实词分歧。逐处看过 transcript_diff.md（run 36287538482）：58 处分歧里 40 处是第二份 ASR 丢掉「you know / I just / it's a」这类口头语和口吃重复（他这段英语说得很磕巴），不影响发出去的英文；实词分歧 8 处，第二份更对的已按它改进 en_fixed（shot or great points、tell every tournament、screens、pull off）；另外几处第一份更对、照原样：`the pressure`（第二份听成 depressed，上下文是 not feeling the pressure）、`must-win`（已改）、`losses`（已改）、`break one down, break one up`（第二份 breaking，意思同）、`six hours in time`（第二份 a tie，听不清，照第一份不猜）。"
-  }
+  },
+  "_end_why": "第一版 end=286.7 发出去后把成片拉回来逐 0.2 秒量整幅亮度：成片 308.2 还是费德勒和穆雷鼓掌，308.4 起是 Laver Cup 片尾板（O2 夜景＋社媒账号），换算源片 ≈283.7（成片 − 封面 1.8 − 冷开场 22.8）。收到 283.5：主持人最后一句「Carlos Alcaraz.」之后、片尾板甩入之前。"
 }
