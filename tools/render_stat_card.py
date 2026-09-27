@@ -635,7 +635,7 @@ body{{color:{FG};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
  padding:36px 58px 0}}
 .h2h-side{{display:flex;flex-direction:column;align-items:center;width:284px}}
 .h2h-ring{{width:252px;height:252px;border-radius:50%;overflow:hidden;
- border:6px solid {_rgba(FG, .32)};box-shadow:0 14px 30px rgba(0,0,0,.5);
+ border:6px solid {_rgba(FG, .32)};box-shadow:0 14px 30px rgba(0,0,0,.5); /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
  flex:0 0 auto}}
 .h2h-ring.win{{border-color:{RING_WIN};box-shadow:0 14px 34px {_rgba(RING_WIN, .4)}}}
 .h2h-ring img{{width:100%;height:100%;object-fit:cover;object-position:50% 18%;

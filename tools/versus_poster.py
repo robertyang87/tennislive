@@ -142,7 +142,7 @@ CUT_VS_Y = 0.40            # VS 圆压在两人胸口高度，不在脚下
 # 线下那一条是干净的暗底，名字才有地方待。
 CUT_SINK = -36
 # 半身抠图截在腰上，硬边一眼看得出来，所以底部这一段淡出去。
-CUT_FADE = "mask-image:linear-gradient(180deg,#000 80%,transparent 99%)"
+CUT_FADE = "mask-image:linear-gradient(180deg,#000 80%,transparent 99%)"  # token-exempt: 蒙版只认 alpha，#000 表示不透明度，不是颜色
 
 # **信箱式那几张的垫底层。** 照片按宽度铺（`fit: "width"`）时上下会空出来，
 # 底下垫同一张照片的放大版；`scale(1.2)` 给模糊留溢出量，否则边缘透底。
@@ -1203,7 +1203,7 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
   rgba(__BG_RGB__,.34) 0%,rgba(__BG_RGB__,.06) 24%,rgba(__BG_RGB__,.06) 50%,
   rgba(__BG_RGB__,.70) 64%,rgba(__BG_RGB__,.94) 78%)}
 .cut{position:absolute;transform:translateX(-50%);z-index:3;
-  filter:drop-shadow(0 18px 40px rgba(0,0,0,.55));""".replace("__BG_RGB__", BG_RGB)
+  filter:drop-shadow(0 18px 40px rgba(0,0,0,.55)); /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */""".replace("__BG_RGB__", BG_RGB)
              + CUT_FADE + "}")
     return body, extra
 
@@ -1782,11 +1782,11 @@ __SCRIM__
 .bar{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
  background:__BRAND_BAR__}
 .head{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
- align-items:center;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+ align-items:center;text-shadow:0 2px 12px rgba(0,0,0,.6)} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .brandwrap{display:flex;align-items:center;gap:14px}
 .brandlines{display:flex;flex-direction:column;gap:2px}
 .brand-icon{width:52px;height:52px;object-fit:contain;
- filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))}
+ filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .brand{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:38px;
  font-weight:400;letter-spacing:1px;color:__FOREGROUND__}
 .topic{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
@@ -1811,7 +1811,7 @@ __SCRIM__
  transform:none;z-index:5;display:flex;flex-direction:column;
  gap:34px;align-items:flex-start}
 .hseam{position:absolute;left:0;right:0;height:6px;background:__PRIMARY__;z-index:4;
- transform:translateY(-50%);box-shadow:0 0 26px rgba(0,0,0,.55)}
+ transform:translateY(-50%);box-shadow:0 0 26px rgba(0,0,0,.55)} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .storytitle{font-family:'TL Display SC','TL Sans SC',sans-serif;
  line-height:1.24;font-weight:400;color:__FOREGROUND__;white-space:nowrap;
  text-shadow:__SHADOW_HOOK__}
@@ -1822,7 +1822,7 @@ __SCRIM__
 .storyscore{display:flex;align-items:baseline;gap:20px;white-space:nowrap;
  font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:44px;
  font-weight:400;color:__FOREGROUND__;
- text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)}
+ text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 /* ⚠️ 这一行是**没有 `cover.scoreboard` 的老 solo 封面**才走的路（19 条已发
    spec 挂在 `_LEGACY_NO_SCOREBOARD` 里）。数字跟着 2026-08-29 那条「所有
    视频里的比分都用这种字体」一起换成 `TL Score`——已发的不重渲，改它是为了
@@ -1997,7 +1997,7 @@ __SCRIM__
    和顶栏那条路上，`.score-number.setwin` 的特异性更高，盖得住。 */
 .set{display:inline-block;margin-right:.42em}
 .set:last-child{margin-right:0}
-.setwin{color:__PRIMARY__;text-shadow:0 2px 8px rgba(0,0,0,.9),0 0 22px rgba(__PRIMARY_RGB__,.65)}
+.setwin{color:__PRIMARY__;text-shadow:0 2px 8px rgba(0,0,0,.9),0 0 22px rgba(__PRIMARY_RGB__,.65)} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .setlose{color:__FOREGROUND__}
 .setdash{color:__SCORE_DASH__;margin:0 .04em}
 .tb{font-size:.62em;color:__SCORE_DASH__;vertical-align:super;margin-left:.06em}
@@ -2198,9 +2198,9 @@ def _feather(image: Path, panel: dict, height: float) -> str:
     # 7% 才化成一片渐暗，顺带给左上角那块台头腾出压得住字的底
     fade, stops = 7.0, []
     if pad_top > fade:
-        stops += [f"transparent {pad_top:.2f}%", f"#000 {pad_top + fade:.2f}%"]
+        stops += [f"transparent {pad_top:.2f}%", f"#000 {pad_top + fade:.2f}%"]  # token-exempt: 蒙版只认 alpha，#000 表示不透明度，不是颜色
     if pad_bot > fade:
-        stops += [f"#000 {100 - pad_bot - fade:.2f}%",
+        stops += [f"#000 {100 - pad_bot - fade:.2f}%",  # token-exempt: 蒙版只认 alpha，#000 表示不透明度，不是颜色
                   f"transparent {100 - pad_bot:.2f}%"]
     if not stops:
         return ""
@@ -2407,16 +2407,16 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{BG};
   rgba({BG_RGB},.42) 0%,rgba({BG_RGB},0) 18%,rgba({BG_RGB},0) 52%,
   rgba({BG_RGB},.80) 72%,rgba({BG_RGB},.96) 86%)}}
 .seam{{position:absolute;left:-6%;right:-6%;height:10px;background:{BRAND};
-  transform:translateY(-50%) rotate(-{SEAM_ANGLE}deg);box-shadow:0 0 40px rgba(0,0,0,.5)}}
+  transform:translateY(-50%) rotate(-{SEAM_ANGLE}deg);box-shadow:0 0 40px rgba(0,0,0,.5)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .vs{{position:absolute;left:50%;transform:translate(-50%,-50%);z-index:5;
   width:176px;height:176px;border-radius:50%;background:{BRAND};color:{BG};
   font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
   font-size:70px;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 12px 46px rgba(0,0,0,.5)}}
+  box-shadow:0 12px 46px rgba(0,0,0,.5)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .nm{{position:absolute;left:0;right:0;transform:translateY(-50%);z-index:4;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 66px;font-family:'TL Display SC','TL Sans SC',sans-serif;
-  font-size:62px;color:{TEXT};text-shadow:0 4px 26px rgba(0,0,0,.75)}}
+  font-size:62px;color:{TEXT};text-shadow:0 4px 26px rgba(0,0,0,.75)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .nm i{{flex:1}}
 /* **国旗 + 名字 +（即时世界排名）**（账号所有者 2026-08-02 定的）。
    排名压到 0.6em 并且降一档亮度：同字号并排会跟名字抢，而它是注脚不是主语。
@@ -2428,14 +2428,14 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{BG};
 .who em{{font-style:normal;font-size:.6em;opacity:.82;margin-left:.02em}}
 .na{{position:absolute;left:66px;z-index:4;font-size:62px;color:{TEXT};
   font-family:'TL Display SC','TL Sans SC',sans-serif;
-  text-shadow:0 4px 26px rgba(0,0,0,.75)}}
+  text-shadow:0 4px 26px rgba(0,0,0,.75)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .n-b{{left:auto;right:66px}}
 .top{{position:absolute;top:66px;left:66px;z-index:6;background:{BRAND};
   color:{BG};font-size:30px;font-weight:800;letter-spacing:4px;
   padding:11px 26px;border-radius:999px}}
 .copy{{position:absolute;left:66px;right:66px;bottom:150px;z-index:6}}
 .hook{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:{vs_hook_px}px;
-  line-height:1.14;color:{TEXT};text-shadow:0 4px 30px rgba(0,0,0,.6)}}
+  line-height:1.14;color:{TEXT};text-shadow:0 4px 30px rgba(0,0,0,.6)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .hook .accent{{color:{BRAND}}}
 .score{{margin-top:26px;font-family:'TL Numeral','TL Sans SC',sans-serif;
   font-weight:600;font-size:50px;color:{BRAND}}}
@@ -2444,7 +2444,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{BG};
    按 center 对齐会看出高低不齐（和字幕里数字要单独放大一档是同一回事）。 */
 .res{{margin-top:28px;display:flex;align-items:baseline;gap:22px}}
 .win{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
-  color:{TEXT};text-shadow:0 4px 22px rgba(0,0,0,.6)}}
+  color:{TEXT};text-shadow:0 4px 22px rgba(0,0,0,.6)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .sets{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
   font-size:62px;color:{BRAND};letter-spacing:1px}}
 /* 盘分上色，和 solo 那张共用同一套类名（账号所有者 2026-08-04：

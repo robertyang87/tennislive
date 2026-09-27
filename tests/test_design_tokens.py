@@ -399,9 +399,13 @@ _ENFORCED_FLOOR = (
     "src/tennislive/render/knowledge.py",    # WP2 推送：字卡那条推送正文
     "src/tennislive/render/push_style.py",   # WP2 推送 + 复制页的唯一样式出处
     "src/tennislive/video/diagram_palette.py",
+    "src/tennislive/video/outro_page.py",    # WP7 片尾
+    "src/tennislive/video/watermark.py",     # WP6 常驻角标
     "tools/design_compare_sheet.py",
     "tools/gen_tokens_css.py",
     "tools/push_reel.py",                    # WP2 推送：赛场之上／赛后开麦／剪辑片
+    "tools/render_stat_card.py",             # WP8 数据统计图
+    "tools/versus_poster.py",                # WP5 赛场之上封面
 )
 
 

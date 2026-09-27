@@ -3492,20 +3492,30 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "", *,
         frame = dest.with_suffix(".frame.jpg")
     t = spec["cover"]["frame_at"] if at is None else at
     frame.unlink(missing_ok=True)  # 上一趟留下的同名帧会让下面那道判断假绿
-    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                    "-ss", str(t),
-                    "-i", str(src),
-                    "-vf", (("hflip," if spec.get("mirrored") else "") + logo
-                            + _video_eq_filter(spec)
-                            + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
-                                         float(spec.get("crop_keep_top", 1.0)),
-                                         float(spec.get("crop_shift_x", 0.0)))),
-                    "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
+    grab = subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                           "-ss", str(t),
+                           "-i", str(src),
+                           "-vf", (("hflip," if spec.get("mirrored") else "") + logo
+                                   + _video_eq_filter(spec)
+                                   + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
+                                                float(spec.get("crop_keep_top", 1.0)),
+                                                float(spec.get("crop_shift_x", 0.0)))),
+                           "-frames:v", "1", "-q:v", "2", str(frame)],
+                          capture_output=True, text=True, timeout=300)
     if not frame.is_file():
-        # 退出码 0、一帧没出：原来一路走到 `build_cover` 的 `read_bytes()` 才炸成
-        # FileNotFoundError，封面扫描整趟跟着红（2026-09-27 review 复现）
-        raise NoFrameAt(f"源片在 {t} 秒没有画面——ffmpeg 退出码 0 却一帧都没抽出来，"
-                        "多半越过了视频流的最后一帧（音轨可以比画面长）。")
+        # 一帧没出：原来一路走到 `build_cover` 的 `read_bytes()` 才炸成
+        # FileNotFoundError，封面扫描整趟跟着红（2026-09-27 review 复现）。
+        # ⚠️ **退出码随 ffmpeg 版本变**：本地那版越过最后一帧是退出码 0、不出文件；
+        # runner 上那版是 234（编码器一帧没收到就打不开）。所以不按退出码认，
+        # 按「t 是不是已经越过视频流末尾」认；没越过就是别的毛病，照原样抛。
+        end = probe_video_duration(src)
+        if grab.returncode == 0 or (end and float(t) >= end - 0.05):
+            raise NoFrameAt(f"源片在 {t} 秒没有画面——ffmpeg 一帧都没抽出来（退出码 "
+                            f"{grab.returncode}，视频流到 {end:.2f} 秒），多半越过了"
+                            "视频流的最后一帧（音轨可以比画面长）。")
+    if grab.returncode != 0:
+        print(grab.stderr, file=sys.stderr)
+        raise subprocess.CalledProcessError(grab.returncode, grab.args, grab.stdout, grab.stderr)
     # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
     # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
     poster = build_cover(spec, frame, dest or outdir / "poster.jpg", page=page)

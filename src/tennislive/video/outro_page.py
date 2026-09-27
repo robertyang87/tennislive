@@ -146,7 +146,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;
 .wrap{{position:absolute;inset:0;display:flex;flex-direction:column;
  align-items:center;justify-content:center;z-index:5}}
 .ico{{width:200px;height:200px;margin-bottom:48px;opacity:{op('logo')};
- filter:drop-shadow(0 18px 52px rgba(0,0,0,.55))}}
+ filter:drop-shadow(0 18px 52px rgba(0,0,0,.55))}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .name{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
  font-size:158px;letter-spacing:6px;line-height:1;opacity:{op('name')}}}
 .name em{{font-style:normal;color:{BRAND}}}

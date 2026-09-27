@@ -854,3 +854,25 @@ def test_check命令对账红了非零(tmp_path, monkeypatch, capsys):
     assert "过闸 1 格" in out and "余量最大的是 2 秒" in out, out
     (outdir / scan.RECORD_NAME).unlink()
     assert scan.main(["--check", "--spec", str(spec_path)]) == 0
+
+
+def test_越过片尾不管ffmpeg退出码是几都记成没画面_别的错照样抛(tmp_path, monkeypatch):
+    """CI（run 36315327779）：runner 上那版 ffmpeg 越过视频流末尾是**退出码 234**
+    （编码器一帧没收到就打不开），不是本地那版的「退出码 0、不出文件」——
+    `check=True` 让它炸成 CalledProcessError，扫描那一格没被记成「没有画面」。
+    判据按「t 是不是越过了视频流末尾」认，不按退出码认；没越过的失败照原样抛。"""
+    import tools.build_interview_clip as clip  # noqa: PLC0415
+
+    def fake_run(args, **_kw):
+        return subprocess.CompletedProcess(args, 234, "", "Error while opening encoder")
+
+    monkeypatch.setattr(clip.subprocess, "run", fake_run)
+    monkeypatch.setattr(clip, "probe_video_duration", lambda _src: 8.0)
+    src = tmp_path / "src.mp4"
+    src.write_bytes(b"")
+    with pytest.raises(clip.NoFrameAt, match="没有画面"):
+        clip.cover_poster({"cover": {"frame_at": 8.1}}, src, tmp_path,
+                          at=8.1, dest=tmp_path / "late.jpg")
+    with pytest.raises(subprocess.CalledProcessError):
+        clip.cover_poster({"cover": {"frame_at": 3.0}}, src, tmp_path,
+                          at=3.0, dest=tmp_path / "mid.jpg")
