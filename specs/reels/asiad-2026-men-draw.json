@@ -6,9 +6,8 @@
     "wu": "https://youtu.be/cmv2c6nk_So",
     "wong": "https://www.youtube.com/watch?v=Dv6-qq8jqO0"
   },
-  "primary": "wong",
   "mixed_fps": {
-    "wu": "吴2026美网官方源29.97fps，黄杭州主源25fps；资料比赛片段需29.97转25，尚待成片运动流畅度实看。没有声称无损。"
+    "wong": "真实主源由sources插入顺序决定，第一项wu为30000/1001 fps；黄泽林杭州源wong原生25 fps，渲染时25→30000/1001重采样。两段黄源仅作明确标年的人物资料与现场氛围，共32.3秒，不承担逐拍动作或落点分析；保留原速，不把补帧说成原生流畅。开场包含运动回合，仍可能出现重复帧节奏，必须在成片QC实看；若明显发涩，则更换同帧率的已核黄泽林素材后重渲，不允许仅凭此说明放行。"
   },
   "_sources_why": "吴源US Open官方2026第二轮吴对达克沃斯；黄源Tennis TV 2026杭州日合集只选515.7–702.1黄对巴列霍。逐段资料标识持续显示。",
   "cover": {
@@ -224,5 +223,6 @@
       "_why": "以观众选择结束，不制造敌意，不给虚假确定性。"
     }
   ],
-  "_preflight_status": "2026-09-27本地dry-run通过形状/措辞/图片字幕几何；选段probe未自动认领，不等于已核。check-narration第一段Edge因证书链失败，无音频产出，须runner Azure实测；本地封面渲染缺Chromium，未宣称已预览。"
+  "_preflight_status": "2026-09-27本地dry-run通过形状/措辞/图片字幕几何；选段probe未自动认领，不等于已核。check-narration第一段Edge因证书链失败，无音频产出，须runner Azure实测；本地封面渲染缺Chromium，未宣称已预览。",
+  "_source_order_why": "已按build_match_reel.spec_sources实际schema修正：sources第一项wu是主源；移除不被渲染读取的primary字段，不再用它推断帧率。mixed_fps只认领真实异帧率源wong。"
 }
