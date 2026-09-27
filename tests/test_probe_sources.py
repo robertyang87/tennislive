@@ -41,6 +41,9 @@ def test_源片没probe_新手写spec硬_认领存量自动只报():
     probes = {"A": _probe("A")}
     hard, soft = ps.coverage_findings(_spec(), probes, legacy=NONE)
     assert len(hard) == 1 and "源 b" in hard[0] and "mode=probe" in hard[0], hard
+    # 精简检出里 probe 可能在仓库里、只是没落盘：先指 materialize，排在「重跑 probe」前面
+    hint = hard[0].find("probe_sources.py materialize")
+    assert 0 <= hint < hard[0].index("mode=probe"), hard
     hard, soft = ps.coverage_findings(_spec(_no_probe_why={"b": "私有录屏，下不下来"}),
                                       probes, legacy=NONE)
     assert not hard and any("已认领" in s for s in soft)

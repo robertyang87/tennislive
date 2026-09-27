@@ -29,7 +29,9 @@
   对谁都硬：这是 render 那道硬闸的提前预演，出路（`conform`／`archival`＋contain／
   `mixed_fps`）和那边一模一样。
 - **覆盖**（`coverage_findings`）：spec 里的每条源都要认领得到 probe.json。
-  没有就**硬**（新的手写 spec），`--dry-run` 那一刻就说「先跑一趟 mode=probe」；
+  没有就**硬**（新的手写 spec），`--dry-run` 那一刻就说「先跑一趟 mode=probe」——
+  前面先指一句 `materialize`：`claim_probes` 只扫盘，本地精简检出（没有 `output/`）
+  时 probe 明明在仓库里也认领不上（评审 2026-09-27 nit）；
   确实 probe 不了的源在 spec 顶层写 `"_no_probe_why": {"源键": "<为什么>"}` 认领。
   老 probe 没记宽高帧率只报不拦；自动产的 spec 只报（它们本来就先 probe 后 promote，
   真缺了是链路的毛病，硬了只会把自动链卡成「今天没有候选」）；
@@ -180,7 +182,9 @@ def coverage_findings(spec: dict, probes: dict[str, dict], *,
         elif demoted:
             soft.append(f"{line}（{demoted}）")
         else:
-            hard.append(f"{line}。\n    先跑一趟 `match-reel.yml mode=probe url=<这条>`"
+            hard.append(f"{line}。\n    本地没检出 output/（精简 worktree）时 probe 可能早就在"
+                        "仓库里：先 `python3 tools/probe_sources.py materialize <spec>` 按 URL 落盘"
+                        "再跑；落不出来才跑一趟 `match-reel.yml mode=probe url=<这条>`"
                         "（多源的每一条都要，可以并排拨）；真 probe 不了就在 spec 顶层写 "
                         f"`\"{CLAIM_KEY}\": {{\"{key}\": \"<为什么>\"}}` 认领")
     _dims, lacking = source_dims(spec, probes)

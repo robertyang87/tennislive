@@ -11,6 +11,7 @@ import io
 import math
 import subprocess
 import sys
+import warnings
 import wave
 from contextlib import redirect_stdout
 from pathlib import Path
@@ -334,42 +335,131 @@ def test_真跑一遍混音链_预测的静音秒成片里真的静音(tmp_path)
 
 # ── 十几段之后：δ 漂移、段界上的溶解尾巴、响→静的边沿 ─────────────────────────
 #
-# 评审 2026-09-27 的 BLOCKING：每个 part 的现场声解出来是整数个 AAC 帧，`acrossfade`
-# 把它们一路接在「解出来的末尾」上，第 k 段的现场声比画面晚 δ_k——老模型按名义
-# 起点算，冷开场后半截「源片刚变静」被判成必红，而成片那一秒里还有几十毫秒的响。
+# 评审 2026-09-27 的 BLOCKING：每个 part 的现场声解出来不一定正好是 `-t` 那么长，
+# `acrossfade` 把它们一路接在「解出来的末尾」上，第 k 段的现场声比画面错开 δ_k——
+# 老模型按名义起点算，冷开场后半截「源片刚变静」被判成必红，而成片那一秒里还有
+# 几十毫秒的响。
 #
-# 段长是挑过的（下面 `_long_plan` 自检）：
-# - 每段 (L+尾巴)×10 的小数 ≥ 0.25：10 fps 的画面尾巴比补满的 AAC 音轨至少晚 4ms，
-#   哪个 ffmpeg 的 `-shortest` 都截不到音轨——夹具里的 δ 就是「补满」那一笔（区间上端）
-# - 第 2/4/6 段各有一秒的真实起点落在 0.05 秒格子后 0.5~3ms：在格子前 10ms 放一道 −2 dB
-#   的响→静边沿。量源片时格子后面那块是干净的，而成片多过三代 AAC，编码器把响的能量
-#   往后抹过了格子——ALIGN_SLACK 归零，模型只读格子后面那块，上界就被打穿
+# ⚠️ **δ 不按公式算，按量**（评审 2026-09-27 第二轮 BLOCKING）：同一组 part，
+# 沙箱的 ffmpeg 6.1 解出来补满最后一帧 AAC（14 段累积 +0.2s），CI 和 runner 装的
+# BtbN master（`ensure_ffmpeg`）解出来**正好是 `-t` 那么长**（15 个 part 全是 +0.0ms）。
+# 夹具按 6.1 的「补满」公式摆，在 BtbN 上第 74 秒真的死了，自检报「夹具失效」。
+# 所以先从一条**时间结构一模一样的平源**把每个 part 切一遍、解码量长度（长度只看
+# 时间戳和样本数，和内容无关——成片那一趟再量一遍对账），δ 按量出来的摆。
+#
+# 专门压着的几处：
+# - E3 几段各挑一秒，它的真实起点落在 0.05 秒格子后 0~3ms（按量出来的 δ 挑段）：
+#   在格子前 10ms 放一道 −2 dB 的响→静边沿。量源片时格子后面那块是干净的，而成片
+#   多过三代 AAC，编码器把响的能量往后抹过了格子——ALIGN_SLACK 归零，模型只读
+#   格子后面那块，上界就被打穿。⚠️ 不靠挪源片起点的毫秒零头去凑：BtbN 上 `-ss`
+#   不落在帧上时 part 的画面从 0.1s 起，xfade 那条链整个断掉（成片只剩 17 秒画面）
+# - E1 第 13 段：真实窗口比名义窗口错开 |δ_13| ≥ 0.15s 时才摆得出「名义窗口全静、
+#   真实窗口还有响」——BtbN 上 δ≈0，没有可压的漂移，「拆 δ」那条自检跳过并说出来
 LONG_LENS = [4.55, 4.37, 7.01, 4.45, 6.36, 5.41, 4.88, 6.67, 5.29, 4.41, 7.10, 5.77, 4.99, 6.09]
 LONG_NARRATED = {1, 5, 8}
 LONG_FPS = 10
+LONG_SOURCE_SECONDS = 3.0 + 10 * len(LONG_LENS) + 5.0
+#: E1 要真实窗口里至少 30ms 的响（−25 dB 的 30ms 落进成片约 −43 dB，离 −60 很远）；
+#: 名义窗口外沿离静音起点留 0.12s（ALIGN_SLACK 一块 ＋ 压到的块整块算 ＋ 20ms）。
+E1_GAP = 0.12
+E1_MIN_DRIFT = E1_GAP + 0.03
 
 
-def _long_plan():
-    """段、源片响度的安排、以及每一处专门压着的那一秒。"""
+def _decoded_seconds(path: Path) -> float:
+    """这个文件的音轨**解出来**多长（48k 单声道 PCM 数样本）——成片拼接吃的就是它。"""
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-map", "0:a:0",
+                          "-ac", "1", "-ar", reel.AUDIO_RATE, "-f", "s16le", "-"],
+                         capture_output=True, check=True).stdout
+    return len(raw) / 2 / int(reel.AUDIO_RATE)
+
+
+def _ffmpeg_version() -> str:
+    out = subprocess.run(["ffmpeg", "-version"], capture_output=True, text=True).stdout
+    return (out.splitlines() or ["ffmpeg（版本读不出）"])[0]
+
+
+def _long_source(tmp_path, name: str, loud: list | None) -> Path:
+    """合成源片：限带白噪，默认 −25 dB，`loud` 里的 (源起, 源止, dB) 覆盖上去。
+    `loud=None` 是量 δ 用的平源：同样长、同样的编码参数，音轨全零（省掉合成噪声）。"""
+    np = pytest.importorskip("numpy")
+    sr = 44100
+    n = int(LONG_SOURCE_SECONDS * sr)
+    if loud is None:
+        audio = np.zeros(n)
+    else:
+        rng = np.random.default_rng(11)
+        mono = rng.standard_normal(n)
+        spec = np.fft.rfft(mono)
+        spec[int(3500 / (sr / 2) * len(spec)):] = 0
+        mono = np.fft.irfft(spec, n)
+        mono /= np.sqrt((mono ** 2).mean())
+        env = np.full(n, 10 ** (-25 / 20))
+        for lo, hi, db in loud:
+            env[int(round(lo * sr)):int(round(hi * sr))] = 10 ** (db / 20)
+        audio = np.clip(mono * env, -1, 1)
+    wav = tmp_path / f"{name}.wav"
+    with wave.open(str(wav), "wb") as w:
+        w.setnchannels(2)
+        w.setsampwidth(2)
+        w.setframerate(sr)
+        w.writeframes((np.stack([audio, audio], 1) * 32767).astype(np.int16).tobytes())
+    src = tmp_path / f"{name}.mp4"
+    _ffmpeg("-f", "lavfi", "-i",
+            f"testsrc2=size=64x64:rate={LONG_FPS}:duration={LONG_SOURCE_SECONDS}",
+            "-i", str(wav), "-c:v", "libx264", "-preset", "ultrafast",
+            "-c:a", "aac", "-b:a", "128k", "-shortest", str(src))
+    return src
+
+
+def _cover_part(tmp_path, tag: str) -> Path:
+    """封面 part：和 `_still_to_clip` 同一组音频参数（anullsrc、`-t`、`-shortest`）。"""
+    cover, fade = reel.COVER_SECONDS, reel.SEG_FADE
+    dest = tmp_path / f"{tag}_part_cover.mp4"
+    _ffmpeg("-f", "lavfi", "-i", f"color=black:size=64x64:rate={LONG_FPS}:duration={cover + fade}",
+            "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=48000",
+            "-t", f"{cover + fade:.3f}", "-c:v", "libx264", "-preset", "ultrafast",
+            "-c:a", "aac", "-b:a", "160k", "-ar", reel.AUDIO_RATE, "-shortest", str(dest))
+    return dest
+
+
+def _part_seconds(seg, last: bool) -> float:
+    """这个 part 的名义长度：段长 ＋ 多切的溶解底料（末段不留）。"""
+    return seg.length + (0.0 if last else reel.SEG_FADE)
+
+
+def _seg_part(tmp_path, tag: str, src: Path, k: int, seg, last: bool) -> Path:
+    """第 k 段的 part：和 `cut_segment` 同一组音频参数（`-ss`/`-t`/`-shortest`、AAC 48k）。"""
+    dest = tmp_path / f"{tag}_part_{k:02d}.mp4"
+    _ffmpeg("-ss", f"{seg.start:.3f}", "-i", str(src), "-t", f"{_part_seconds(seg, last):.3f}",
+            "-filter_complex", "[0:v]null[vout]", "-shortest", "-map", "[vout]",
+            "-map", "0:a:0", "-c:v", "libx264", "-preset", "ultrafast",
+            "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
+            "-ar", reel.AUDIO_RATE, str(dest))
+    return dest
+
+
+def _long_plan(tmp_path):
+    """段、源片响度的安排、每一处专门压着的那一秒，以及**量出来的**每个 part 多出来多长。
+
+    夹具的几何**自己算**，不借被测的 `film_starts`／`audio_drift`／`part_padding`——
+    否则拆掉 δ 的那一刀先把夹具摆歪，红在自检上，证明不了模型。δ 也不借公式：
+    从平源把每个 part 切一遍、解码量（见上面那段注释）。
+    """
     cover, fade = reel.COVER_SECONDS, reel.SEG_FADE
     segs = [reel.Segment(3.0 + 10 * k, 3.0 + 10 * k + length, None,
                          "这一段有旁白。" if k in LONG_NARRATED else "")
             for k, length in enumerate(LONG_LENS)]
-    for length in LONG_LENS:
-        assert round((length + fade) * LONG_FPS % 1, 6) >= 0.25, length
-
-    # 夹具的几何**自己算**，不借被测的 `film_starts`／`audio_drift`——否则拆掉 δ 的
-    # 那一刀先把夹具摆歪，红在自检上，证明不了模型。画面不截，δ 就是每个 part
-    # 「补满最后一帧 AAC」的那一截一路加上去（`-t` 按三位小数写）。
-    def filled(t: float) -> float:
-        return math.ceil(round(t, 3) * 48000 / 1024 - 1e-9) * 1024 / 48000 - t
-
-    starts, true_delta, t, d = [], [], cover, filled(cover + fade)
-    for length in LONG_LENS:
+    flat = _long_source(tmp_path, "flat", None)
+    pads = [_decoded_seconds(_cover_part(tmp_path, "flat")) - (cover + fade)]
+    for k, seg in enumerate(segs):
+        last = k == len(segs) - 1
+        pads.append(_decoded_seconds(_seg_part(tmp_path, "flat", flat, k, seg, last))
+                    - _part_seconds(seg, last))
+    starts, true_delta, t = [], [], cover
+    for k, seg in enumerate(segs):
         starts.append(t)
-        true_delta.append(d)
-        t += length
-        d += filled(length + fade)
+        true_delta.append(sum(pads[:k + 1]))       # 封面 ＋ 前 k 段
+        t += seg.length
 
     def true_src(k: int, second: int) -> float:
         return segs[k].start + second - (starts[k] + true_delta[k])
@@ -377,72 +467,54 @@ def _long_plan():
     loud: list[tuple[float, float, float]] = []          # (源起, 源止, dB)，默认 −25
     # A 冷开场（第 0 段）：−59 dB 那一截 silencedetect 看不见，成片第 3、4 秒必须接住
     loud.append((4.0, 7.4, -59.0))
-    # E1 第 13 段：名义窗口前 0.12s 起才静——δ_13 ≈ 0.2s，真实窗口里还有 80ms 的响
-    e1 = 74
+    # E1 第 13 段：静音比名义窗口早（δ>0）或晚（δ<0）E1_GAP 起止——名义窗口整秒静，
+    # 真实窗口开头（或结尾）还有 |δ_13| − E1_GAP 秒的响
+    e1: int | None = 74
     s_nom = segs[13].start + e1 - starts[13]
-    loud.append((s_nom - 0.12, s_nom - 0.12 + 1.3, -72.0))
+    if true_delta[13] >= E1_MIN_DRIFT:
+        loud.append((s_nom - E1_GAP, s_nom - E1_GAP + 1.3, -72.0))
+    elif true_delta[13] <= -E1_MIN_DRIFT:
+        loud.append((s_nom + 1 + E1_GAP - 1.3, s_nom + 1 + E1_GAP, -72.0))
+    else:
+        e1 = None
     # E2 第 9→10 段的接缝落在第 54 秒里：第 9 段本身静到段尾，多切的尾巴（源 +4.50 起）
     # 是 −20 dB 的响——它只在溶解里出现；第 10 段开头一路静
     e2 = 54
-    assert starts[10] + true_delta[10] - e2 > 0.5
+    assert starts[10] + true_delta[10] - e2 > 0.5, (starts[10], true_delta[10])
     loud.append((segs[9].start + 3.3, segs[9].start + 4.50, -72.0))
     loud.append((segs[9].start + 4.50, segs[9].start + 5.0, -20.0))
     loud.append((segs[10].start - 0.3, segs[10].start + 2.5, -72.0))
     # D 第 12 段通段静：区间漂得再宽，第 68、69 秒也必须接住
     loud.append((segs[12].start - 0.5, segs[12].end + 0.8, -72.0))
-    # E3 第 2/4/6 段：−2 dB 的响止于格子 B 前 10ms，真实窗口起点在 B 之后 0.5~3ms
-    e3 = {2: 11, 4: 23, 6: 35}
-    for k, second in e3.items():
+    # E3 −2 dB 的响止于格子前 10ms、真实窗口起点落在格子后 0~3ms 的那一秒。同一段里
+    # 每一秒离格子一样远（段起点、成片起点都差整数秒），所以按段挑：没旁白、没被
+    # 上面几处占用、离段头 ≥ 1 秒（响的那半秒整个落在这一段自己身上，不进溶解）、
+    # 后面还留得下两秒静。δ 是量的，挑中哪几段跟 ffmpeg 走（6.1 是 2/4/6，BtbN 是 6/11）。
+    e3: dict[int, int] = {}
+    for k in (2, 3, 4, 6, 7, 11):
+        second = math.ceil(starts[k] + 1.0 - 1e-9)
+        if second + 2 > starts[k] + segs[k].length:
+            continue
         t0 = true_src(k, second)
         edge = math.floor(t0 / pa.BLOCK_SECONDS + 1e-9) * pa.BLOCK_SECONDS
-        assert 0.0005 <= t0 - edge <= 0.003, (k, t0)
-        loud.append((edge - 0.5, edge - 0.010, -2.0))
-        loud.append((edge - 0.010, edge + 2.6, -72.0))
+        if t0 - edge <= 0.003:
+            e3[k] = second
+            loud.append((edge - 0.5, edge - 0.010, -2.0))
+            loud.append((edge - 0.010, edge + 2.6, -72.0))
+    assert len(e3) >= 2, f"夹具失效：量出来的 δ 下找不到两处落在格子后 0~3ms 的秒：{pads}"
     return segs, starts, loud, {"must_catch": {3, 4, 68, 69}, "e1": e1, "e2": e2,
-                                "e3": set(e3.values())}
+                                "e3": set(e3.values()), "pads": pads,
+                                "delta13": true_delta[13]}
 
 
 def _film(tmp_path, segs, loud, voices: dict[int, float]):
     """合成源片 → render 的音频链（和 `cut_segment` 同一组音频参数的 AAC 分段、真
-    `dissolve_filtergraph`、真 `duck_filtergraph`）→ 成片。返回 `(源片, 成片)`。"""
-    np = pytest.importorskip("numpy")
-    sr = 44100
-    rng = np.random.default_rng(11)
-    dur = max(s.end for s in segs) + 5.0
-    n = int(dur * sr)
-    mono = rng.standard_normal(n)
-    spec = np.fft.rfft(mono)
-    spec[int(3500 / (sr / 2) * len(spec)):] = 0
-    mono = np.fft.irfft(spec, n)
-    mono /= np.sqrt((mono ** 2).mean())
-    env = np.full(n, 10 ** (-25 / 20))
-    for lo, hi, db in loud:
-        env[int(round(lo * sr)):int(round(hi * sr))] = 10 ** (db / 20)
-    audio = np.clip(mono * env, -1, 1)
-    wav = tmp_path / "src.wav"
-    with wave.open(str(wav), "wb") as w:
-        w.setnchannels(2)
-        w.setsampwidth(2)
-        w.setframerate(sr)
-        w.writeframes((np.stack([audio, audio], 1) * 32767).astype(np.int16).tobytes())
-    src = tmp_path / "src.mp4"
-    _ffmpeg("-f", "lavfi", "-i", f"testsrc2=size=64x64:rate={LONG_FPS}:duration={dur}",
-            "-i", str(wav), "-c:v", "libx264", "-preset", "ultrafast",
-            "-c:a", "aac", "-b:a", "128k", "-shortest", str(src))
+    `dissolve_filtergraph`、真 `duck_filtergraph`）→ 成片。返回 `(源片, 成片, parts)`。"""
+    src = _long_source(tmp_path, "src", loud)
     cover, fade = reel.COVER_SECONDS, reel.SEG_FADE
-    parts = [tmp_path / "part_cover.mp4"]
-    _ffmpeg("-f", "lavfi", "-i", f"color=black:size=64x64:rate={LONG_FPS}:duration={cover + fade}",
-            "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=48000",
-            "-t", f"{cover + fade:.3f}", "-c:v", "libx264", "-preset", "ultrafast",
-            "-c:a", "aac", "-b:a", "160k", "-ar", reel.AUDIO_RATE, "-shortest", str(parts[0]))
-    for i, s in enumerate(segs):
-        tail = fade if i < len(segs) - 1 else 0.0
-        parts.append(tmp_path / f"part_{i:02d}.mp4")
-        _ffmpeg("-ss", f"{s.start:.3f}", "-i", str(src), "-t", f"{s.length + tail:.3f}",
-                "-filter_complex", "[0:v]null[vout]", "-shortest", "-map", "[vout]",
-                "-map", "0:a:0", "-c:v", "libx264", "-preset", "ultrafast",
-                "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
-                "-ar", reel.AUDIO_RATE, str(parts[-1]))
+    parts = [_cover_part(tmp_path, "film")]
+    for k, seg in enumerate(segs):
+        parts.append(_seg_part(tmp_path, "film", src, k, seg, k == len(segs) - 1))
     joined = tmp_path / "joined.mp4"
     _ffmpeg(*[a for p in parts for a in ("-i", str(p))],
             "-filter_complex", reel.dissolve_filtergraph([cover] + [s.length for s in segs], fade),
@@ -463,7 +535,7 @@ def _film(tmp_path, segs, loud, voices: dict[int, float]):
     _ffmpeg("-i", str(joined), *ins, "-filter_complex", reel.duck_filtergraph(filters, labels),
             "-map", "0:v:0", "-map", "[out]", "-c:v", "copy", "-c:a", "aac",
             "-b:a", "192k", "-ar", reel.AUDIO_RATE, "-shortest", str(mixed))
-    return src, mixed
+    return src, mixed, parts
 
 
 def test_十几段之后的漂移_段界溶解尾巴_响静边沿_真跑一遍混音链(tmp_path, monkeypatch):
@@ -474,13 +546,23 @@ def test_十几段之后的漂移_段界溶解尾巴_响静边沿_真跑一遍�
     （上界就是上界，不只在死秒上成立）。
     另外两条自检夹具还在压着该压的地方——**模型拆掉 δ、拆掉上一段的溶解尾巴，
     各自在这份夹具上误报**（第 74 秒 / 第 54 秒成片是响的，拆掉的模型说它死了）。
-    `ALIGN_SLACK` 归零那一刀靠第 11/23/35 秒的 −2 dB 边沿：模型只读格子后面那块，
+    「拆 δ」那条只在这个 ffmpeg 真有漂移（|δ_13| ≥ 0.15s，沙箱 6.1）时摆得出；
+    CI／runner 的 BtbN master 上 part 解出来正好是 `-t` 那么长，没有可压的漂移，
+    跳过并在 warning 里写出量到的 δ_13 和 ffmpeg 版本。
+    `ALIGN_SLACK` 归零那一刀靠 E3 那几秒的 −2 dB 边沿：模型只读格子后面那块，
     成片里编码器抹过来的能量把上界打穿（实测 0.6~13 dB）——抹多少和编码器版本有关，
     所以不写成自检，改在反向验证里验。
     """
     pytest.importorskip("numpy")
-    segs, starts, loud, marks = _long_plan()
-    src, mixed = _film(tmp_path, segs, loud, {k: 3.0 for k in LONG_NARRATED})
+    segs, starts, loud, marks = _long_plan(tmp_path)
+    src, mixed, parts = _film(tmp_path, segs, loud, {k: 3.0 for k in LONG_NARRATED})
+    # 夹具的前提：part 解出来多长只看时间结构、不看内容——平源量的 δ 就是成片的 δ
+    nominal = [reel.COVER_SECONDS + reel.SEG_FADE] + [
+        _part_seconds(s, k == len(segs) - 1) for k, s in enumerate(segs)]
+    got = [_decoded_seconds(p) - t for p, t in zip(parts, nominal)]
+    drift_ms = [round((g - p) * 1000, 2) for g, p in zip(got, marks["pads"])]
+    assert all(abs(x) < 0.05 for x in drift_ms), \
+        f"夹具失效：成片 part 解出来的长度和平源量的不一样（ms）：{drift_ms}"
     _spans, record = pa.measure(src, quietest_gain=reel.QUIETEST_BED_GAIN)
     levels = pa.decode_levels(record)
     assert levels is not None
@@ -496,8 +578,10 @@ def test_十几段之后的漂移_段界溶解尾巴_响静边沿_真跑一遍�
         return table, set(qc.dead_seconds(table, after, [])[0])
 
     table, predicted = predict()
-    shown = "\n".join(f"  {i:3d}s 成片 {db:6.1f}  预测上界 {table[i]:6.1f}"
-                      for i, db in enumerate(real) if i < len(table))
+    pads_ms = [round(p * 1000, 1) for p in marks["pads"]]
+    shown = f"  每个 part 解出来多出（ms）：{pads_ms}\n" + "\n".join(
+        f"  {i:3d}s 成片 {db:6.1f}  预测上界 {table[i]:6.1f}"
+        for i, db in enumerate(real) if i < len(table))
     assert predicted <= real_dead, f"预测红了、成片没红（误报）：{predicted - real_dead}\n{shown}"
     assert marks["must_catch"] <= predicted, \
         f"该接住的死秒没接住：{marks['must_catch'] - predicted}\n{shown}"
@@ -506,10 +590,16 @@ def test_十几段之后的漂移_段界溶解尾巴_响静边沿_真跑一遍�
             assert db - real[i] >= -0.05, f"第 {i} 秒上界比成片还低：\n{shown}"
 
     # 自检一：拆掉 δ（按名义起点摆现场声），第 74 秒被误判成死秒——成片那一秒是响的
-    assert marks["e1"] not in real_dead, f"夹具失效：第 {marks['e1']} 秒成片本来就死了\n{shown}"
-    with monkeypatch.context() as m:
-        m.setattr(pa, "audio_drift", lambda segments, *_a: [(0.0, 0.0)] * len(segments))
-        assert marks["e1"] in predict()[1], "夹具失效：不算 δ 也没误报，压不住漂移"
+    if marks["e1"] is None:
+        warnings.warn(f"「拆 δ」自检跳过：这个 ffmpeg 上量到 δ_13 = "
+                      f"{marks['delta13'] * 1000:+.1f} ms，不到 ±{E1_MIN_DRIFT * 1000:.0f} ms，"
+                      f"没有可压的漂移（{_ffmpeg_version()}）", stacklevel=1)
+    else:
+        assert marks["e1"] not in real_dead, \
+            f"夹具失效：第 {marks['e1']} 秒成片本来就死了\n{shown}"
+        with monkeypatch.context() as m:
+            m.setattr(pa, "audio_drift", lambda segments, *_a: [(0.0, 0.0)] * len(segments))
+            assert marks["e1"] in predict()[1], "夹具失效：不算 δ 也没误报，压不住漂移"
     # 自检二：拆掉上一段多切的溶解尾巴，第 54 秒被误判成死秒——尾巴的响在溶解里
     assert marks["e2"] not in real_dead, f"夹具失效：第 {marks['e2']} 秒成片本来就死了\n{shown}"
     with monkeypatch.context() as m:
@@ -530,12 +620,6 @@ def test_真的cut_segment解出来的音轨长度落在模型的区间里(tmp_p
     monkeypatch.setattr(reel, "FPS_EXPR", "25")
     monkeypatch.setattr(reel, "FPS", 25.0)
 
-    def decoded(path: Path) -> float:
-        raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-map", "0:a:0",
-                              "-ac", "1", "-ar", reel.AUDIO_RATE, "-f", "s16le", "-"],
-                             capture_output=True, check=True).stdout
-        return len(raw) / 2 / int(reel.AUDIO_RATE)
-
     seen = []
     for a, b in ((0.31, 1.86), (1.07, 4.25)):
         seg = reel.Segment(a, b, 0.5, "")
@@ -543,7 +627,7 @@ def test_真的cut_segment解出来的音轨长度落在模型的区间里(tmp_p
         reel.cut_segment(src, seg, dest, 1920, None, tail=reel.SEG_FADE)
         t = seg.length + reel.SEG_FADE
         lo, hi = pa.part_padding(t, 1 / 25)
-        got = decoded(dest) - t
+        got = _decoded_seconds(dest) - t
         seen.append((a, b, round(got * 1000, 1), round(lo * 1000, 1), round(hi * 1000, 1)))
         assert lo - 1e-4 <= got <= hi + 1e-4, seen
     still = tmp_path / "still.png"
@@ -552,5 +636,5 @@ def test_真的cut_segment解出来的音轨长度落在模型的区间里(tmp_p
                                 reel.COVER_SECONDS + reel.SEG_FADE)
     t = reel.COVER_SECONDS + reel.SEG_FADE
     lo, hi = pa.part_padding(t, 1 / 25)
-    assert lo - 1e-4 <= decoded(cover) - t <= hi + 1e-4
+    assert lo - 1e-4 <= _decoded_seconds(cover) - t <= hi + 1e-4
     assert int(reel.AUDIO_RATE) == pa.PART_AUDIO_RATE
