@@ -33,8 +33,9 @@
 认领的三个终点：probe 失败 `release` 摘掉；分支上 probe 成功 `done` 标完成（产物落在
 分支上，main 上看不见，只能靠这一笔）；**job 被取消／超时两样都做不了**——所以没标
 完成的认领开跑 `CLAIM_STALE_MINUTES` 分钟后作废，不许它把这一场压三天。标了完成的
-认领也有钟：完成之后 `DONE_CLAIM_SPEC_HOURS`（20）小时里 main 上还没有这个 slug 的
-正式 spec，就不再挡（账号所有者 2026-09-27 选定，和比赛日的新鲜窗同一个数）。
+认领也有钟：完成之后 `DONE_CLAIM_SPEC_HOURS`（20）小时里 main 上还没有这一场的
+正式 spec（这个 slug 的，或 `sources` 挂着这条源片的赛场之上 spec），就不再挡（账号所有者
+2026-09-27 选定，和比赛日的新鲜窗同一个数）。查不了 spec 一律照旧挡。
 
 用法::
 
@@ -70,8 +71,8 @@ CLAIM_TTL_DAYS = 7
 #: 压三天**（review 复现的死锁：编排器缩写名那趟被取消，认领还挂着，下一班同一场的
 #: 全名 slug 被它挡住，两个 slug 三天里谁都不点）。
 CLAIM_STALE_MINUTES = 90
-#: 标了完成（`done_at`）的认领挡多久：完成之后这么多小时里，main 上还是没有这个
-#: slug 的正式 spec（`FORMAL_SPEC`），认领就**不再挡**编排器。账号所有者 2026-09-27
+#: 标了完成（`done_at`）的认领挡多久：完成之后这么多小时里，main 上还是没有这一场的
+#: 正式 spec（这个 slug 的 `FORMAL_SPEC`，或源片是同一条的赛场之上 spec），认领就**不再挡**编排器。账号所有者 2026-09-27
 #: 选定：「和比赛日那道新鲜窗同一个数」——`orchestrate.FRESH_RESULT_HOURS` ＝
 #: `promote_reel_draft.PENDING_MAX_AGE` ＝ 20 小时（不 import：orchestrate 反过来
 #: import 这里；三个数由 `test_完成的认领20小时没有正式spec就不再挡` 钉成同一个）。
@@ -310,6 +311,49 @@ def _column_of(slug: str, *, root: Path | None, refs, cwd) -> str:
     return ""
 
 
+_FORMAL_SPEC_PATH = re.compile(r"^specs/reels/([^/]+)\.json$")
+
+
+def spec_video_keys(doc: dict | None) -> set[str]:
+    """spec 挂着的源片视频 id（`source_url`／`url`／`sources.*`，和
+    `find_pending_draft._spec_urls` 同一套字段）。"""
+    if not isinstance(doc, dict):
+        return set()
+    urls = [doc.get("source_url"), doc.get("url")]
+    sources = doc.get("sources")
+    for v in sources.values() if isinstance(sources, dict) else []:
+        urls.append(v.get("url") if isinstance(v, dict) else v)
+    return {k for u in urls if u and (k := video_key(str(u)))}
+
+
+def _match_spec_carries(key: str, *, root: Path | None, refs, cwd, wanted=None) -> bool:
+    """有没有哪份赛场之上正式 spec（`specs/reels/*.json`）的源片是这条视频。
+    `wanted(slug)`：只打开 slug 里带着这场姓的 spec（和 probe 目录同一个理由：
+    部分克隆里 300 份 spec 一份份懒取是 9 MB）。取不回内容就按「有」算——判不了 ≠ 没有。"""
+    def hit(doc) -> bool:
+        return spec_column(doc) == MATCH_COLUMN and key in spec_video_keys(doc)
+
+    wanted = wanted or (lambda _slug: True)
+    if root is not None:
+        for sp in sorted((Path(root) / "specs" / "reels").glob("*.json")):
+            if wanted(sp.stem) and hit(_load_json(sp.read_bytes())):
+                return True
+    for ref in refs:
+        try:
+            oids = [oid for oid, p in git_blobs.ls_tree(ref, ["specs/reels"], cwd=cwd)
+                    if (m := _FORMAL_SPEC_PATH.match(p)) and wanted(m.group(1))]
+            blobs = git_blobs.read_blobs(oids, cwd=cwd)
+        except git_blobs.GitError as exc:
+            print(f"[认领] 读不了 {ref} 上的 specs/reels（{exc}），照旧挡")
+            return True
+        if any(hit(_load_json(blobs.get(oid))) for oid in oids):
+            return True
+        if len(blobs) < len(set(oids)):
+            print(f"[认领] {ref} 上 {len(set(oids)) - len(blobs)} 份正式 spec 取不回内容，照旧挡")
+            return True
+    return False
+
+
 def find_priors(key: str, *, refs: list[str] = (), root: Path | None = None,
                 surnames: list[str] | None = None, slug_hint: str = "",
                 today: date | None = None, now: datetime | None = None,
@@ -335,16 +379,34 @@ def find_priors(key: str, *, refs: list[str] = (), root: Path | None = None,
     def add(p: Prior) -> None:
         seen.setdefault((p.slug, p.kind, p.where), p)
 
-    live_refs = []
+    live_refs = [r for r in refs if git_blobs.rev(r, cwd=cwd)]
     stale_seen: set = set()
+    same_video: dict[str, bool] = {}   # 这条源片有没有赛场之上正式 spec：一次查找只算一遍
 
     def has_spec(slug: str) -> bool:
-        # 工作区或任何一个给了的 ref 上有就算——编排器的 HEAD 就是 main；会话那头
-        # 连自己分支也算上，只会多挡、不会误放
+        """这一场有没有正式 spec。工作区或任何一个给了的 ref 上有就算——编排器的 HEAD
+        就是 main；会话那头连自己分支也算上，只会多挡、不会误放。
+
+        - 先按认领自己的 slug（`FORMAL_SPEC`）；再认 `sources` 里挂着**这条源片**的
+          赛场之上正式 spec——spec 另起了名（先 probe 短 slug）也是这一场做完了
+        - 按 ref 查存在**只看树**（`ls-tree`）：部分克隆（`--filter=blob:none`）里树在
+          本地、blob 要懒取，`cat-file` 懒取不到就读成「没有」、把认领放掉
+        - **查不了就照旧挡**：git 出错、要读的 spec 内容取不回来，一律按「有」算
+        """
         path = FORMAL_SPEC.format(slug)
         if root is not None and (Path(root) / path).is_file():
             return True
-        return any(git_blobs.show(r, path, cwd=cwd) is not None for r in refs)
+        try:
+            if any(p == path for r in live_refs
+                   for _oid, p in git_blobs.ls_tree(r, [path], cwd=cwd)):
+                return True
+        except git_blobs.GitError as exc:
+            print(f"[认领] 查不了 {path} 在不在（{exc}），照旧挡")
+            return True
+        if "hit" not in same_video:
+            same_video["hit"] = _match_spec_carries(key, root=root, refs=live_refs, cwd=cwd,
+                                                    wanted=wanted)
+        return same_video["hit"]
 
     dates = recent_dates(today, days)
     if root is not None:
@@ -364,10 +426,9 @@ def find_priors(key: str, *, refs: list[str] = (), root: Path | None = None,
                     add(Prior(slug=slug, kind="probe", where=str(pj.parent.relative_to(root)),
                               ref="工作区", at=d))
     for ref in refs:
-        if not git_blobs.rev(ref, cwd=cwd):
+        if ref not in live_refs:
             print(f"[认领] {ref} 在这份检出里不存在，跳过（没 fetch？）")
             continue
-        live_refs.append(ref)
         for p in _claim_priors(_load_json(git_blobs.show(ref, claim_path(key), cwd=cwd)),
                                ref=ref, now=now, days=days, has_spec=has_spec,
                                stale_seen=stale_seen):

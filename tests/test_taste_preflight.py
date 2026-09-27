@@ -237,10 +237,16 @@ _REGISTRY_DIRS = ("tools", "src", "data", ".github", "skills")
 #: 规则本身的字换不掉。新加一条推断规则不在这里给特征词，下面那条测试会红。
 _INFERRED_SIGNATURES: dict[str, re.Pattern] = {
     "peng-shuai-not-mentioned": re.compile(r"彭帅|Peng\s*Shuai|Shuai\s*Peng", re.I),
-    "compilation-thresholds": re.compile(r"局数落差|局差"),
+    # 「局差」单独一个词是通用的网球统计标签（评审 09-27 nit：以后哪个统计卡写个「局差」
+    # 就会被误报成「推断规则做成了闸」）；闸要拦门槛，必然带着比较和数
+    "compilation-thresholds": re.compile(r"局数落差|局差\s*(?:[≥>]=?|不少于|至少)\s*[\d四]"),
     "rework-offer-candidates-side-by-side": re.compile(
         r"并排候选|候选并排|[3三]\s*[～~–-]\s*[4四]\s*个(?:并排)?候选"),
 }
+#: 特征词自己的对照：通用的网球词不许命中（命中就是拿一个天天出现的词当特征，
+#: 迟早误报在不相干的 PR 上）。
+_GENERIC_TENNIS_WORDS = ("局差", "局差 +3", "局差：2", "盘差", "候选", "并排", "两个候选",
+                         "破发", "抢七", "李娜", "郑钦文", "张帅")
 #: 出现特征词也不是闸的文件：译名表（「彭帅」是一个要译对的名字）、预检（只列提醒）。
 _SIGNATURE_OK = frozenset({"src/tennislive/zh/players.py", "tools/taste_preflight.py"})
 #: 口味闸的公共入口住在这里：特征词可以在（只报的那一半要用），因为第 3 层把这个模块
@@ -252,7 +258,12 @@ _CODE_GLOBS = ("tools/**/*.py", "src/**/*.py", "tools/**/*.sh",
 #: 另外两条（合集门槛、被否后给并排候选）是选题和流程上的，没有能注进 spec 的字——
 #: 它们靠第 1、2 层。
 _INFERRED_PROBES = {"peng-shuai-not-mentioned": ("彭帅", "李娜")}
-_PROBE_REEL = ROOT / "specs" / "reels" / "cobolli-tien-laver-cup-2026.json"
+#: 底稿按顺序试，用第一条（注进对照词之后）过得了闸的——以后哪道新闸红了其中一条老 spec，
+#: 顺到下一条，而不是让这条测试红在那道闸不相干的 PR 上（评审 09-27 nit）。三条全红才红。
+#: 第一条 `test_quote的at超出段长在dry_run就红` 也钉着它原样过 `validate_spec`；
+#: 稀疏检出要带上 `assets/reel/<slug>.jpg`（`validate_spec` 查封面大图在不在）。
+_PROBE_REELS = tuple(ROOT / "specs" / "reels" / f"{s}.json" for s in (
+    "cobolli-tien-laver-cup-2026", "alcaraz-fritz-laver-cup-2026", "mensik-nakashima-laver-cup-2026"))
 _PROBE_INTERVIEW = ROOT / "specs" / "interviews" / "tien-cobolli-laver-cup-2026-interview.json"
 
 
@@ -347,6 +358,14 @@ def test_推断出来的口味规则永不做成闸(tp):
         f"缺 {sorted(set(ids) - set(_INFERRED_SIGNATURES))}，"
         f"多 {sorted(set(_INFERRED_SIGNATURES) - set(ids))}")
 
+    # 特征词自证：命中它自己那条规则的原文（不然是拿一个规则里根本没有的词当特征）、
+    # 不命中通用词（不然会误报在不相干的代码上）
+    for rid, sig in _INFERRED_SIGNATURES.items():
+        own = [b for b in blocks if f"`{rid}`" in b]
+        assert own and sig.search(own[0]), f"`{rid}` 的特征词在它自己那条规则里都找不到：{sig.pattern}"
+        generic = [w for w in _GENERIC_TENNIS_WORDS if sig.search(w)]
+        assert not generic, f"`{rid}` 的特征词命中了通用网球词 {generic}——收窄：{sig.pattern}"
+
     # ① 编号
     for rid in ids:
         assert text.count(f"`{rid}`") == 1, (
@@ -394,7 +413,7 @@ def _inject(spec: dict, xhs: str, word: str) -> tuple[dict, str]:
     return spec, f"{xhs}\n{line}"
 
 
-def _hard_verdicts(reel, word: str, tmp_path: Path) -> dict[str, object]:
+def _hard_verdicts(reel, word: str, tmp_path: Path, base_path: Path) -> dict[str, object]:
     """每个入口「硬的那一半」：validate_spec／enforce_spec_wording 抛不抛、抛什么；
     口味闸模块每个 `*_taste_extra` 返回的硬名单。注进去的词统一抹成〈词〉再比。"""
     def norm(x):
@@ -407,13 +426,13 @@ def _hard_verdicts(reel, word: str, tmp_path: Path) -> dict[str, object]:
             return norm(exc)
         return None
 
-    base = reel.load_spec(_PROBE_REEL)
-    spec, xhs = _inject(base, _PROBE_REEL.with_suffix(".xhs.txt").read_text(encoding="utf-8"), word)
+    base = reel.load_spec(base_path)
+    spec, xhs = _inject(base, base_path.with_suffix(".xhs.txt").read_text(encoding="utf-8"), word)
     out: dict[str, object] = {
         "validate_spec": outcome(lambda: reel.validate_spec(copy.deepcopy(spec)))}
     where = tmp_path / f"probe-{len(list(tmp_path.iterdir()))}"
     where.mkdir()
-    path = where / _PROBE_REEL.name
+    path = where / base_path.name
     path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
     path.with_suffix(".xhs.txt").write_text(xhs, encoding="utf-8")
     out["enforce_spec_wording"] = outcome(lambda: reel.enforce_spec_wording(copy.deepcopy(spec), path))
@@ -440,18 +459,24 @@ def _hard_verdicts(reel, word: str, tmp_path: Path) -> dict[str, object]:
 def test_推断规则在行为上也不拦_注进特征词硬闸一个都不变(tp, tmp_path):
     """第 3 层：只报（soft）可以因为特征词多一句，硬的那一半一个字都不许变。
 
-    底稿用 `cobolli-tien-laver-cup-2026`（`test_quote的at超出段长在dry_run就红` 钉着它
-    原样过 `validate_spec`）和同一场的赛后开麦。对照词和特征词同形（两个字的中国球员名），
-    所以其它闸对两者的反应一样——差出来的只能是冲着特征词去的那道闸。"""
+    底稿是 `_PROBE_REELS` 里第一条过得了闸的赛场之上，和 `cobolli-tien` 的赛后开麦。
+    对照词和特征词同形（两个字的中国球员名），所以其它闸对两者的反应一样——差出来的
+    只能是冲着特征词去的那道闸。"""
     sys.path.insert(0, str(TOOLS))
     import build_match_reel as reel  # noqa: PLC0415
 
     for rid, (word, neutral) in _INFERRED_PROBES.items():
-        control = _hard_verdicts(reel, neutral, tmp_path)
-        assert control["validate_spec"] is None and control["enforce_spec_wording"] is None, (
-            f"对照组（注进「{neutral}」）自己过不了闸——换一条过得了的底稿，否则这条对照是空的："
-            f"{control}")
-        probed = _hard_verdicts(reel, word, tmp_path)
+        base, tried = None, []
+        for cand in _PROBE_REELS:
+            control = _hard_verdicts(reel, neutral, tmp_path, cand)
+            if control["validate_spec"] is None and control["enforce_spec_wording"] is None:
+                base = cand
+                break
+            tried.append(f"{cand.stem}：{control}")
+        assert base is not None, (
+            f"对照组（注进「{neutral}」）在 _PROBE_REELS 每一条底稿上都过不了闸——补一条过得了的，"
+            f"否则这条对照是空的：\n  " + "\n  ".join(tried))
+        probed = _hard_verdicts(reel, word, tmp_path, base)
         changed = {k: (control[k], probed[k]) for k in control if control[k] != probed[k]}
         assert not changed, (
             f"推断规则 `{rid}`：注进「{word}」之后硬闸变了（对照「{neutral}」）——"

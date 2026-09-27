@@ -688,3 +688,88 @@ def test_完成的认领过了20小时_编排器按main上有没有正式spec决
     _git(repo.seed, "push", "-q", "origin", "main")
     git_blobs.fetch_ref("origin", "main", cwd=repo.work)
     assert blocking() == [slug], "正式 spec 落在 main 上了：这一场有人做完了，照旧挡"
+
+
+
+# 评审 2026-09-27 的两条 nit：
+# 1. `has_spec` 原来用 `cat-file blob` 查存在——部分克隆（`--filter=blob:none`）里 blob
+#    要懒取，懒取不到（断网、远端换了）就读成「没 spec」、把认领放掉，和「查不了 spec
+#    就照旧挡」正相反。改成 `ls-tree`（树在本地），git 出错一律照旧挡
+# 2. 原来只认认领自己的 slug：spec 另起了名（先 probe 短 slug）就会被放掉。现在
+#    `sources` 里挂着这条源片的**赛场之上**正式 spec 也算；故事片借源不算
+
+
+def _lapsed_claim(repo, monkeypatch, slug: str):
+    """工作区里一条 21 小时前标完成的认领；返回 (往 main 推一个文件, 编排器挡不挡这一场)。"""
+    from datetime import datetime, timedelta, timezone
+    now = datetime.now(timezone.utc)
+    _git(repo.seed, "switch", "-q", "main")
+    git_blobs.fetch_ref("origin", "main", cwd=repo.work)
+    monkeypatch.chdir(repo.work)
+    _write(repo.work, probe_claims.claim_path(KEY), {"video_key": KEY, "claims": [
+        {"slug": slug, "branch": "claude/x", "outdir": f"output/x/reel/{slug}",
+         "claimed_at": _iso(now - timedelta(hours=21, minutes=10)),
+         "done_at": _iso(now - timedelta(hours=21))}]})
+
+    def push(rel: str, body) -> None:
+        if body is None:
+            _git(repo.seed, "rm", "-q", rel)
+        else:
+            _write(repo.seed, rel, body)
+            _git(repo.seed, "add", "-A")
+        _git(repo.seed, "commit", "-q", "-m", rel)
+        _git(repo.seed, "push", "-q", "origin", "main")
+        git_blobs.fetch_ref("origin", "main", cwd=repo.work)
+
+    def blocking() -> list[str]:
+        priors = probe_claims.find_priors(KEY, refs=["refs/remotes/origin/main"], root=repo.work,
+                                          surnames=["wang", "garland"], now=now)
+        return [p.slug for p in priors if p.slug == slug
+                and probe_claims.blocks_dispatch(p, "wang-garland", ["wang", "garland"])]
+
+    assert blocking() == [], "前提自证：main 上什么 spec 都没有时，过了 20 小时放行"
+    return push, blocking
+
+
+def test_完成认领查正式spec_部分克隆懒取不到blob也照旧挡(repo, monkeypatch):
+    slug = "garland-wang"
+    push, blocking = _lapsed_claim(repo, monkeypatch, slug)
+    push(probe_claims.FORMAL_SPEC.format(slug), {"cover": {"eyebrow": "赛场之上"}})
+    _git(repo.work, "remote", "set-url", "origin", str(repo.remote.parent / "gone.git"))
+    assert git_blobs.show("refs/remotes/origin/main", probe_claims.FORMAL_SPEC.format(slug),
+                          cwd=repo.work) is None, "前提自证：blob 懒取不到（不然测的不是这条路）"
+    assert blocking() == [slug], "blob 取不回来不等于 spec 不在：树里有就照旧挡"
+
+
+def test_完成认领查正式spec_另起名的同一场赛场之上也算_故事片借源不算(repo, monkeypatch):
+    slug = "garland-wang"
+    push, blocking = _lapsed_claim(repo, monkeypatch, slug)
+    story = "wang-garland-src-comebacks"
+    push(probe_claims.FORMAL_SPEC.format(story),
+         {"cover": {"eyebrow": "网球有故事"}, "sources": {"a": {"url": YT}}})
+    assert blocking() == [], "故事片借同一条源片不是这一场的赛场之上：过了 20 小时照样放"
+    formal = "wang-garland-singapore-2026-r2"
+    push(probe_claims.FORMAL_SPEC.format(formal),
+         {"cover": {"eyebrow": "赛场之上"}, "source_url": f"https://youtu.be/{KEY}?si=x"})
+    assert blocking() == [slug], "赛场之上的正式 spec 另起了名、源片是同一条：这一场做完了，照旧挡"
+    other = "wang-garland-singapore-2026-sf"
+    push(probe_claims.FORMAL_SPEC.format(formal), None)
+    push(probe_claims.FORMAL_SPEC.format(other),
+         {"cover": {"eyebrow": "赛场之上"}, "sources": {"a": {"url": "https://youtu.be/uuLC8AhqDx0"}}})
+    assert blocking() == [], "同两个人的另一场（源片不同）不算这一场做完了"
+
+
+def test_完成认领查正式spec_git出错照旧挡(repo, monkeypatch, capsys):
+    slug = "garland-wang"
+    _push, blocking = _lapsed_claim(repo, monkeypatch, slug)
+    real_ls_tree = git_blobs.ls_tree
+
+    def broken(ref, pathspecs, cwd=None):
+        if any(p.startswith("specs/") for p in pathspecs):
+            raise git_blobs.GitError("git ls-tree 失败（128）：模拟")
+        return real_ls_tree(ref, pathspecs, cwd=cwd)
+
+    monkeypatch.setattr(git_blobs, "ls_tree", broken)
+    capsys.readouterr()
+    assert blocking() == [slug], "查不了 spec 在不在：照旧挡，不许因为「没查成」就放行"
+    assert "照旧挡" in capsys.readouterr().out, "照旧挡要出声"
