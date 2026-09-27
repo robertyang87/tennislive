@@ -1,0 +1,132 @@
+{
+  "title": "纳达尔回来了，老对手这次怎么组队？",
+  "column": "网球有故事",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+22%",
+  "as_of": "2026-09-27 13:42 Asia/Shanghai",
+  "beats": [
+    {
+      "source": "training",
+      "start": 0,
+      "label": "12岁交手 · 27年后同队",
+      "narration": "十二岁那年，加斯奎特赢过纳达尔。二十七年后，两个老对手要站到球网同一边。这是纳达尔重返球场，最有意思的一段故事。",
+      "duration": 10.832
+    },
+    {
+      "source": "announce",
+      "start": 3.5,
+      "label": "10月3日 · 马纳科尔",
+      "narration": "十月三日，纳达尔将在马纳科尔的学院参加十周年庆典，和老朋友打一场双打团体表演赛。",
+      "duration": 7.424
+    },
+    {
+      "source": "invite",
+      "start": 2,
+      "label": "一通电话 · 约老朋友打球",
+      "narration": "纳达尔给穆雷打了个电话，先约高尔夫，再提议各找几个朋友，到学院组队打网球。以前在大赛里争冠军，现在连赛前活动都约上了。",
+      "duration": 10.112
+    },
+    {
+      "source": "captains",
+      "start": 0,
+      "label": "纳达尔队 VS 穆雷队",
+      "narration": "纳达尔队有加斯奎特，穆雷队有蒂姆。两边的队员，和纳达尔都有一段跨越多年的交情。",
+      "duration": 7.28
+    },
+    {
+      "source": "juniors_x",
+      "start": 0,
+      "label": "1999 · 他们都是12岁",
+      "narration": "把时间拨回一九九九年，法国的少年网球赛事。纳达尔和加斯奎特都只有十二岁，一个用左手正拍，一个有漂亮的单手反拍。那场比赛，赢球的是加斯奎特。",
+      "duration": 13.064
+    },
+    {
+      "source": "juniors_x",
+      "start": 30,
+      "label": "从童年对手 · 到同队赴约",
+      "narration": "此后二十多年，他们在职业赛场一次次相遇。这次，加斯奎特加入纳达尔队。当年隔着球网较劲的两个孩子，终于要一起商量：下一分，怎么打。",
+      "duration": 11.72
+    },
+    {
+      "source": "thiem",
+      "start": 0,
+      "label": "蒂姆 · 加入穆雷队",
+      "narration": "蒂姆则站到了穆雷这一边。二零一八和二零一九年，他连续两次打进法网决赛，两次遇到纳达尔，两次留下亚军奖盘。如今，他们将在学院的表演赛再相见。",
+      "duration": 12.248000000000001
+    },
+    {
+      "source": "invite",
+      "start": 27,
+      "label": "",
+      "narration": "",
+      "duration": 13.328
+    },
+    {
+      "source": "fed",
+      "start": 0,
+      "label": "学院往事 · 费德勒两度到访",
+      "narration": "这所学院，也留下过费德勒的身影。二零一六年十月，学院正式揭幕，费德勒来到现场。今年七月，他又到访更新后的纳达尔博物馆，重看那些记录老对手职业生涯的奖杯。",
+      "duration": 13.52
+    },
+    {
+      "source": "announce",
+      "start": 3.5,
+      "label": "一所学院 · 走过10年",
+      "narration": "从揭幕到十周年，学院把纳达尔的职业记忆留在家乡，也让一批批年轻人在这里训练。这次庆典，老对手们又会拿起球拍，让看过他们比赛的球迷，再看一场熟悉的较量。",
+      "duration": 12.776
+    },
+    {
+      "source": "training",
+      "start": 15,
+      "label": "",
+      "narration": "",
+      "duration": 14.624
+    },
+    {
+      "source": "invite",
+      "start": 47,
+      "label": "",
+      "narration": "",
+      "duration": 13.928
+    },
+    {
+      "source": "training",
+      "start": 30,
+      "label": "北京时间 · 10月3日23:00",
+      "narration": "比赛定在北京时间十月三日晚上十一点，转播平台是西班牙的Movistar Plus。",
+      "duration": 5.912
+    },
+    {
+      "source": "invite",
+      "start": 54.5,
+      "label": "你最想看到 · 谁和谁同队",
+      "narration": "如果让你来组队，你最想看哪两位老对手站到同一边？这里是网球时差，网球有故事。",
+      "duration": 7.184
+    }
+  ],
+  "active_beats": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    9,
+    12,
+    13
+  ],
+  "template": {
+    "source": "tennislive/src/tennislive/video/explainer.py::_slide_html",
+    "outro": "assets/brand/outro_master.mp4",
+    "layout": "1080x1440 continuous footage",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+22%"
+  },
+  "excluded_beats": [
+    7,
+    10,
+    11
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "seams": {
+    "count": 4,
+    "transition": "dissolve",
+    "dissolve_s": 0.18
+  },
+  "film_sha256": "151616c598c46c7d55297f1aeaad40d859f579ee9abc9547a00f56b0b0678659",
+  "film_seconds": 175.28,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "zverev-tien-laver-cup-2026-interview",
+    "received_at": "2026-09-27T17:16:17Z",
+    "artifact_ready_at": "2026-09-27T17:22:37Z",
+    "elapsed_seconds": 380.195,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "151616c598c46c7d55297f1aeaad40d859f579ee9abc9547a00f56b0b0678659",
+    "spec_sha256": "63e108789bbfe687ff903fe915bb4ad577dd3923e26b2285bd34b740ef9e0c42",
+    "request_received_at": "2026-09-27T15:58:40Z",
+    "request_to_artifact_seconds": 5037.195,
+    "run_id": "36336313197",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-27T17:17:15Z",
+        "run_id": "36336313197"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-09-27T17:18:27Z",
+        "run_id": "36336313197"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-27T17:18:42Z",
+        "run_id": "36336313197"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-27T17:20:11Z",
+        "run_id": "36336313197"
+      }
+    ],
+    "render_seconds": 146.195,
+    "pre_render_seconds": 234.0
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "兹维列夫",
+        "similarity": {
+          "兹维列夫": 0.6011
+        },
+        "missing": [],
+        "expected": [
+          "兹维列夫"
+        ],
+        "face": [
+          368,
+          105,
+          653,
+          500
+        ],
+        "face_px": 395.3,
+        "reason": "像 兹维列夫（0.60 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.251,
+        "ear_each": [
+          0.251,
+          0.2509
+        ],
+        "face": [
+          368,
+          105,
+          653,
+          500
+        ],
+        "face_px": 395.3,
+        "reason": "眼睛纵横比 0.25 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "warnings": []
+    },
+    "warnings": []
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-27T17:17:15Z",
+      "run_id": "36336313197"
+    },
+    {
+      "stage": "cover_audit",
+      "at": "2026-09-27T17:18:27Z",
+      "run_id": "36336313197"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-27T17:18:42Z",
+      "run_id": "36336313197"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-27T17:20:11Z",
+      "run_id": "36336313197"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-27T17:22:38Z",
+      "run_id": "36336313197"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-27T17:22:38Z",
+      "run_id": "36336313197"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-zverev-tien-laver-cup-2026-interview/zverev-tien-laver-cup-2026-interview.mp4?v=151616c598c46c7d",
+  "video_bytes": 63837588,
+  "release_asset_digest": "sha256:151616c598c46c7d55297f1aeaad40d859f579ee9abc9547a00f56b0b0678659",
+  "qc_attestation_sha256": "3174a36b6106e788d1fc8b8c760ae55b168c48e28f3b0081144854dc555b8444"
+}

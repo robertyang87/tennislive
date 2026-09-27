@@ -66,7 +66,11 @@ def test_match_video_remains_full_bleed():
     # 管「比赛画面有没有铺满」的判据会因为一次纯粹的版式调整而红，读的人还得
     # 先弄明白 150 是打哪儿来的。顶栏该多高归
     # `test_顶栏盒子要装得下两行字并且留出余量` 管，那条真渲一帧量墨迹。
-    assert f"drawbox=x=0:y=0:w=iw:h={build_match_reel.TOPBAR_H}" in graph
+    # ⚠️ 2026-09-27 起顶栏底下那层是**渐变压暗**（评审 Q6），不再是 drawbox
+    # 实条——形状和「白底上读不读得出」归
+    # `test_reel_cover_watermark.py::test_顶栏底是渐变压暗没有硬边_白底上比分行读得出`。
+    assert "[match_bare][topbar_scrim]overlay=0:0" in graph
+    assert "drawbox" not in graph
     assert "scale=-2:1290" not in graph
     assert "match_bg_src" not in graph
     assert "overlay=(W-w)/2" not in graph
@@ -79,14 +83,20 @@ def test_match_video_remains_full_bleed():
 #: 决定字号，而**真正排版的是浏览器**——两边只要有一处对不上（换字体、改
 #: `.score-rank` 的 em、加了 letter-spacing），算出来的字号就会悄悄不够，
 #: 名字压到框线上而没有任何东西报错。
+#:
+#: ⚠️ **2026-09-27 重量过一遍**：`.score-rank` 的缝从 `margin-left:4px` 换成
+#: `-0.28em`（评审 R10，名字和（排名）之间原来空出 31px），每一条都窄了
+#: 9.7px。量法：同一份 `_font_css()`、`.score-cn{display:inline-block;33px}`，
+#: 先拿 4px 重量一遍——和下面被替换掉的老表逐项相同（226/200/200/200/173/173/147），
+#: 证明量法没变，再换成 −0.28em 量出现在这张。
 _BROWSER_NAME_PX_AT_33 = {
-    ("亚历山德罗娃", 19): 226,
-    ("安尼西莫娃", 10): 200,
-    ("巴图什科娃", 42): 200,
-    ("费尔南德斯", 34): 200,
-    ("麦克纳莉", 73): 173,
-    ("奥索里奥", 55): 173,
-    ("汤森德", 94): 147,
+    ("亚历山德罗娃", 19): 216,
+    ("安尼西莫娃", 10): 190,
+    ("巴图什科娃", 42): 190,
+    ("费尔南德斯", 34): 190,
+    ("麦克纳莉", 73): 163,
+    ("奥索里奥", 55): 163,
+    ("汤森德", 94): 137,
 }
 
 
@@ -1041,7 +1051,9 @@ def test_钩子重点词可选品牌绿_一屏只留一处(tmp_path):
             vp.hook_html(["银碗传了一百二十六年", "中国队第一次升上来"], bad)
     # VS 那一套也认（赛场之上的封面）
     src = Path("tools/versus_poster.py").read_text("utf-8")
-    assert ".hook .accent{{color:#c6f65a}}" in src, "VS 模板的 CSS 没给 accent 上色"
+    # 2026-09-27 起品牌绿从 token 取（`BRAND = DARK["primary"]`），源码里写的是名字
+    assert ".hook .accent{{color:{BRAND}}}" in src, "VS 模板的 CSS 没给 accent 上色"
+    assert vp.BRAND == "#c6f65a"
     assert src.count("hook_html(") >= 3, "solo 和 VS 两处钩子都要走 hook_html"
 
     # ④ 真渲一张，量钩子那一带有没有品牌绿

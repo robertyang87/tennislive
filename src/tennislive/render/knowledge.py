@@ -9,15 +9,20 @@
 - 栏目名与标题：`render/webcards.py` 拿 `knowledge_column` 印在卡的台头上，
   `tests/test_platform_title_limits.py` 拿两个标题函数卡小红书 20 字位 /
   公众号 64 字。
-- `knowledge_push_html_from_parts`：**视频解说片和采访线的微信推送正文都从
-  这儿出**（`video/explainer.py`、`publish/pushplus.py`），和知识帖无关。
+- `knowledge_push_html_from_parts`：**字卡解说片（「网球有故事」字卡那条产线）的
+  微信推送正文从这儿出**（`video/explainer.py`），和知识帖无关。⚠️ 原来这里写着
+  「采访线也从这儿出」——不对：赛场之上、赛后开麦、网球有故事剪辑片走的是
+  `tools/push_reel.py` 的 `build_html`。两个模板的样子现在都从 `render/push_style.py`
+  出（2026-09-27 UI 评审 WP2），同一栏目的两条产线推出来长得一样。
 """
 
 from __future__ import annotations
 
+# design-tokens: enforced
 import html
 
 from ..digest import Digest
+from . import push_style as ps
 from .tournament_story import TournamentStory
 from .xiaohongshu import xhs_title_len
 
@@ -81,12 +86,11 @@ def knowledge_wechat_title(story: TournamentStory, digest: Digest) -> str:
 
 def knowledge_push_html_from_parts(
     *,
-    date,
     image_urls: list[str],
     xhs_text: str,
     copy_url: str,
-    badge: str = "小红书知识帖",
-    extra_action: tuple[str, str] | None = None,
+    video_url: str = "",
+    column: str = _COLUMN_NAME,
 ) -> str:
     """The push body itself, given the pieces.
 
@@ -98,6 +102,21 @@ def knowledge_push_html_from_parts(
     ⚠️ **知识帖和解说片两条线的微信正文都从这儿出**。AI 生成合成内容标识
     原来就是加在这一处的（别在两个调用方各加一遍），**2026-08-15 起不加了**，
     见 `ai_disclosure` 顶上那段。
+
+    ⚠️ **「网球有故事」的两条产线推出来要长得一样**（2026-09-27 UI 评审 3.2）：
+    原来这儿的药丸写「知识解说视频 · 9.26」、没有标题提示行、按钮「▶ 打开 9:16
+    成片」，而同一栏目的剪辑片（`push_reel.build_html`）写的是栏目名、有提示行、
+    按钮「▶ 打开竖版成片」。**药丸文字和按钮文字原来是调用方传进来的**——
+    这正是它们分叉的原因。现在药丸只收栏目名（`column`，默认就是这一栏），
+    视频按钮只收链接，文字和样式都从 `push_style` 出。
+
+    每张图的回退链接是灰色「原图 ↗」，图的 `alt` 只写「第 N 页」——原来 alt 里
+    带着整句标题、链接写「第N张未显示？点此打开原图」，**每张图各印一遍**，
+    而推送有 2 万字的上限（`pushplus.check_content_length`），样式一加就挤掉
+    能发的图数（`test_字卡推送图多也装得下_每张图不比改之前更贵`）。
+
+    ⚠️⚠️ 卡底那颗红按钮是**字面写在这儿的**，逐字节不动（账号所有者 2026-08-31
+    「微信推送的红色按钮不要改了」；它比 `push_reel` 那颗多一个分号，那也不动）。
     """
     lines = xhs_text.strip().splitlines()
     title = html.escape(lines[0] if lines else "")
@@ -108,40 +127,23 @@ def knowledge_push_html_from_parts(
     # across-the-whole-screen job, and pairing pretty paragraphs with a second
     # copyable copy of the same text just sent everything twice. pre-wrap keeps
     # the blank lines between beats, so it reads the same and selects as one.
-    body_block = (
-        '<div style="color:#7a8580;font-size:12px;margin:0 0 8px;">'
-        "👇 正文全文如下，长按整段即可复制</div>"
-        '<div style="font-size:15px;line-height:1.85;white-space:pre-wrap;'
-        'word-break:break-word;margin:0 0 4px;">'
-        f"{html.escape(body)}</div>"
-    )
-    images = []
-    for index, card_url in enumerate(image_urls, 1):
-        images.append(
-            f'<img src="{card_url}" data-src="{card_url}" width="100%" '
-            f'alt="{title} · 第{index}页" referrerpolicy="no-referrer" '
-            'style="width:100%;border-radius:6px;margin:0 0 10px;display:block;" />'
-            f'<div style="text-align:center;margin:0 0 16px;"><a href="{card_url}" '
-            'style="color:#087747;font-size:13px;text-decoration:none;">'
-            f'第{index}张未显示？点此打开原图</a></div>'
-        )
-    action = ""
-    if extra_action:
-        href, label = extra_action
-        action = (
-            f'<a href="{href}" style="display:block;background-color:#102d23;'
-            'color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;'
-            'padding:13px 16px;border-radius:6px;margin:0 0 7px;">'
-            f'{html.escape(label)}</a>'
-        )
-    return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">
-<div style="max-width:680px;margin:0 auto;background-color:#ffffff;border-top:5px solid #ff2442;padding:18px 16px 22px;">
-  <div style="display:inline-block;background-color:#e7f5ea;color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">{badge} · {date.month}.{date.day}</div>
-  <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;margin:10px 0 14px;">{title}</div>
+    images = [
+        ps.image(url, f"第{index}页", ps.SLIDE_RATIO, rounded=True, data_src=True)
+        + ps.original_link(url)
+        for index, url in enumerate(image_urls, 1)
+    ]
+    action = ps.video_button(video_url) if video_url else ""
+    red = (f'<a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">'  # token-exempt: 红按钮逐字节不动（2026-08-31）
+           "分别复制标题 / 正文 / 置顶评论</a>")
+    return f"""<div lang="zh-CN" style="{ps.PAGE}">
+<div style="{ps.card("18px 16px 22px")}">
+  {ps.pill(column)}
+  {ps.title_block(title)}
+  {ps.title_hint()}
   {''.join(images)}
-  {body_block}
-  <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
-  {action}<a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
-  <div style="text-align:center;color:#7a8580;font-size:12px;">图片长按保存</div>
+  {ps.body_block(body)}
+  <div style="{ps.DIVIDER}"></div>
+  {action}{red}
+  {ps.foot()}
 </div>
 </div>"""

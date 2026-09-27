@@ -48,6 +48,10 @@ tools/broll/
 # 又是「两处各配一遍必分叉」：规矩只写在了 runner 那一半。
 # 判据落在 test_缩略图墙两头都不许进仓库（.gitignore 和工作流的 rm 都要在）。
 output/**/storyboard.jpg
+# 封面候选墙（`--stage cover-scan`，2026-09-27）是**同一种工作台**：一张约 0.6 MB，
+# 每趟 mode=cover 一张。它只走 artifact；进仓库的是那份几 KB 的
+# `cover_candidates.json`（每格读数＋过闸名单，推送前要对账的就是它）。
+output/**/cover_scan_sheet.jpg
 
 # 本地预览产物：看一眼就丢。**`output/` 本身是要提交的**，所以这两样不挡的话，
 # 某次 `git add output/<日期>/reel/<slug>` 就会把它们一起带进去——而仓库里

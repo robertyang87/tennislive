@@ -28,8 +28,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from tennislive.design_tokens import BRAND_BAR_CSS, DARK, rgb
 from tennislive.render.webcards import _font_css
 from tennislive.video.explainer import _data_uri
+
+# design-tokens: enforced
 
 # 仓库根：src/tennislive/video/outro_page.py → parents[3]
 ROOT = Path(__file__).resolve().parents[3]
@@ -53,10 +56,19 @@ VIDEO_W, VIDEO_H = 1080, 1440
 # 检出把 output 挡在外面（「测试不许拿 output 当判据的主语」那条）。
 MASTER = ROOT / "assets/brand/outro_master.mp4"
 
-BRAND = "#c6f65a"      # 品牌绿（台标球身那个黄绿）
-INK = "#04120d"        # 深底
-TEXT = "#f4fbf7"
-SUB = "#a9bcb2"        # 次级灰绿（文字最多两级）
+# 颜色一律从 `tennislive.design_tokens` 取（UI/VI 评审 WP7，2026-09-27，值一个没动）。
+# 这四个名字留着是因为 `render_title_card` 在用；⚠️ `INK` 在这儿指**深底**，
+# 和 `diagram_palette.INK`（近白正文）不是一回事——token 模块里一律叫角色名。
+BRAND = DARK["primary"]             # 品牌绿（台标球身那个黄绿）
+INK = DARK["background"]            # 深底
+TEXT = DARK["foreground"]
+SUB = DARK["subtle-foreground"]     # 次级灰绿（文字最多两级）
+
+
+def _rgba(hex_colour: str, alpha: float) -> str:
+    """token 实色 → `rgba(r,g,b,α)`。"""
+    r, g, b = rgb(hex_colour)
+    return f"rgba({r},{g},{b},{alpha:g})"
 ICON = ROOT / "assets/logo/brand/icon-512.png"
 
 # 屏幕上印的那句。**口播比它多一句「关注网球时差」**，而那六个字正是屏幕上
@@ -97,6 +109,19 @@ LAYERS: list[tuple[str, float, float, int]] = [
 MIN_HOLD = 0.9
 PUSH = 1.030           # 整屏极缓推的终点倍率
 
+# 推镜的超采样倍数（UI/VI 评审 WP7，2026-09-27）。
+#
+# `zoompan` 的裁切框**只认整数像素**（`vf_zoompan.c` 里 x / y / 宽 / 高全是 int，
+# 截断取整），而 1.03 倍的推镜一帧只走零点零几个像素——于是框的左上角和宽度
+# 各自独立地一跳一跳，画面每一帧都在 1~2px 之间来回抖。量过（黄绿图标的亚像素
+# 质心，60 帧）：老母版水平来回 **1.9px**、纵向 59 步里 18 步往回跳。
+#
+# 先放大 4 倍（4320×5760）再推、再缩回 1080×1440，整数步长就变成 0.25px；
+# 但只放大还不够——宽和横坐标各自截断，水平仍漂 0.18px、纵向照样来回跳（实测）。
+# 所以裁切框**按宽高比成对地缩**：每一步宽少 2×3、高少 2×4、左上角各挪 3 / 4，
+# 框心恒在画布正中、比例恒为 3:4——水平一动不动，纵向只会单调地走。
+SUPERSAMPLE = 4
+
 
 def _page(visible: str | None) -> str:
     """`visible=None` 渲底层；否则只让那一层可见。
@@ -115,13 +140,13 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;
  background:{'transparent' if visible else INK};
  position:relative;font-family:'TL Sans SC',sans-serif;color:{TEXT}}}
 .bar{{position:absolute;top:0;left:0;right:0;height:12px;z-index:9;opacity:{base};
- background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%)}}
+ background:{BRAND_BAR_CSS}}}
 .glow{{position:absolute;inset:0;opacity:{base};background:
- radial-gradient(120% 80% at 50% 38%,rgba(198,246,90,.13) 0%,rgba(4,18,13,0) 62%)}}
+ radial-gradient(120% 80% at 50% 38%,{_rgba(BRAND, .13)} 0%,{_rgba(INK, 0)} 62%)}}
 .wrap{{position:absolute;inset:0;display:flex;flex-direction:column;
  align-items:center;justify-content:center;z-index:5}}
 .ico{{width:200px;height:200px;margin-bottom:48px;opacity:{op('logo')};
- filter:drop-shadow(0 18px 52px rgba(0,0,0,.55))}}
+ filter:drop-shadow(0 18px 52px rgba(0,0,0,.55))}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .name{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
  font-size:158px;letter-spacing:6px;line-height:1;opacity:{op('name')}}}
 .name em{{font-style:normal;color:{BRAND}}}
@@ -203,10 +228,46 @@ def motion_filter(secs: float, fps_expr: str, fps: float) -> str:
     # ⚠️ `setsar` 要写在**滤镜图里**，不能在外面加 `-vf`——`-vf` 和
     # `-filter_complex` 同时给，ffmpeg 会拒绝（而 `concat` 那一步要求所有
     # part 的 SAR 一致，漏掉它就是拼出坏流）。
-    parts.append(f"{prev}zoompan=z='1+({PUSH}-1)*on/{frames}':"
-                 f"d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
-                 f"s={VIDEO_W}x{VIDEO_H}:fps={fps_expr},setsar=1[vout]")
+    parts.append(f"{prev}{push_filter(frames, fps_expr)},setsar=1[vout]")
     return ";".join(parts)
+
+
+def push_filter(frames: int, fps_expr: str, *, supersample: int = SUPERSAMPLE) -> str:
+    """整屏极缓推（1 → `PUSH`），亚像素平滑。见 `SUPERSAMPLE` 那段注释。
+
+    `lanczos` 放大到 4 倍网格 → 裁切框在 4 倍网格上走整数步、`zoompan` 按 4 倍尺寸
+    出 → `lanczos` 整 4 倍缩回 1080×1440。放大/缩回的滤镜是并排量过挑的（真层、
+    推满那几帧文字区的拉普拉斯能量，老画面＝100；台标质心按母版同样的编码量）：
+
+    - `neighbor`→`area` 74%——字边发虚一圈
+    - `lanczos`→`zoompan` 直接出 1080×1440 84%、最省——**但编进母版后台标横向一跳
+      0.24px**（缩小倍数跟着 m 变，滤波核的相位一步一个样；rawvideo 上量不出来，
+      x264 的 1/4 像素运动补偿把它放大成整 0.25 的跳）。缩回必须是**整数倍**
+    - **`lanczos`→`lanczos`（整 4 倍）92%，母版上横向 0.03px**——选它。代价是每帧
+      多一次整幅 4 倍缩放（生成母版 CPU 45s → 113s），生产渲染走母版转码不付这个钱
+
+    推镜第 0 帧不再和老画面逐像素一样（两次 lanczos 的振铃，最大差落在字边上）。
+
+    ⚠️ 三个数钉死「框心恒在正中、比例恒为 3:4」，缺一个都会退回抖动：
+
+    - 第 m 步的框 = (`sw`−2·ax·m) × (`sh`−2·ay·m)、左上角 (ax·m, ay·m)，
+      ax:ay = 3:4 是画幅比，两边各缩同样多，框心不动
+    - `zoompan` 自己用 `iw/zoom` 截断算宽高，所以 zoom 写成
+      `sw / (sw−2·ax·m + 0.3)`：分母多出的那 0.3（高那一侧是 0.4）落在两个整数
+      中间，截断稳稳落在要的那个整数上，不会被浮点误差带偏一格
+    - x / y 写成 `ax·m + 0.5`：同一个理由，截断落在 ax·m 上
+    """
+    from math import gcd  # noqa: PLC0415
+
+    sw, sh = VIDEO_W * supersample, VIDEO_H * supersample
+    k = gcd(VIDEO_W, VIDEO_H)
+    ax, ay = VIDEO_W // k, VIDEO_H // k
+    # 连续的推镜倍率 → 这一帧该缩到第几步（四舍五入到最近的一步）
+    m = f"round({sw}/{2 * ax}*(1-1/(1+({PUSH}-1)*on/{frames})))"
+    return (f"format=rgb24,scale={sw}:{sh}:flags=lanczos,"
+            f"zoompan=z='{sw}/({sw}-{2 * ax}*{m}+0.3)':d=1:"
+            f"x='{ax}*{m}+0.5':y='{ay}*{m}+0.5':s={sw}x{sh}:fps={fps_expr},"
+            f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos")
 
 
 def render_clip(

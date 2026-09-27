@@ -18,8 +18,10 @@ run-name: "interview-clip · ${{ inputs.mode }} · ${{ inputs.slug }}"
 # 这条留着是因为它会再变：哪天沙箱又通了，`--stage subs` 本地照样跑得动。
 #
 # 三个 mode 对应三个阶段，各装各的依赖——**只挑工作不挑准备等于没挑**：
-#   subs   取字幕 + 切行        字体 + yt-dlp                 ~1 分钟
-#   render 下载 + 剪 + 烧 + 封面  再加 ffmpeg/Chromium/whisper   ~9 分钟
+#   subs   取字幕 + 切行        字体 + yt-dlp                 ~1 分钟（行先落库）
+#          → 第二份 ASR 交报告   再加 ffmpeg ＋ faster-whisper   ＋3~5 分钟（2026-09-27）
+#   cover  下载 + 扫封面候选 + 海报  ffmpeg/Chromium              ~2~3 分钟
+#   render 下载 + 封面 + 转写校验 + 剪 + 烧  再加 whisper          ~9 分钟（封面先验）
 #   push   只发微信             只要 `-e .`                    ~20 秒
 #
 # 用法：dispatch 时给 slug，spec 从 specs/interviews/<slug>.json 读。
@@ -31,7 +33,7 @@ on:
         required: true
         default: "eala-svitolina-dc2026-qf"
       mode:
-        description: "subs=只取字幕切行｜cover=只出海报不出片｜render=出片（可同时推送）｜push=只推送已在仓库里的成片"
+        description: "subs=取字幕切行＋第二份ASR报告｜cover=扫封面候选＋出海报，不出片｜render=出片（封面先验，可同时推送）｜push=只推送已在仓库里的成片"
         type: choice
         options: [subs, cover, render, push]
         default: render
@@ -59,7 +61,7 @@ permissions:
 # **2026-08-13 补的，而且这条线从来就没有过**（`git log -p` 全历史里
 # `concurrency` 零命中，不是被谁删掉的）。窗口是这条线的**设计工作方式**，
 # 不是理论：同一个 slug 反复 dispatch 换封面正是常规操作（下面
-# 「只出海报（不出片）」那一步的注释就记着「2026-08-04 一晚渲了五趟，
+# 「只出海报（不出片）」那一步——2026-09-27 起并进了「出封面并验视觉」——的注释就记着「2026-08-04 一晚渲了五趟，
 # 四趟是为了换封面」——⚠️ 这句原来写着指向「成片发到 Release」那一步，
 # 复查时核过，它在 `mode=cover` 那一步的注释里，指错了一步），而
 # `mode=render` 要 ~9 分钟。两趟撞上时下面那个提交循环会在
@@ -71,7 +73,9 @@ permissions:
 # `explainer.yml` 那边用血换来的（见那个文件同一位置的注释）。
 #
 # ⚠️ **group 故意不带 mode**，跟 `match-reel.yml` 对齐。代价是
-# `mode=push`/`cover`/`subs` 会掐掉同 slug 正在跑的那趟 render；收益是
+# `mode=push`/`cover`/`subs` 会掐掉同 slug 正在跑的那趟 render（反过来，
+# 2026-09-27 起 subs 在切行落库之后还要跑三到五分钟的第二份 ASR，这段时间里
+# 发同 slug 的 cover／render 也会把它掐掉、报告丢掉——见那一步的注释）；收益是
 # 「同一条采访永远只有一个 run」这条不变量最干净，而**带上 mode 只能解决
 # 一半**——同一个 slug 连发两趟 `render` 仍然会并行，也就是这次要修的那个
 # 问题原样还在。
@@ -184,9 +188,13 @@ jobs:
       # 第二份 ASR 是开麦链路最大单项：最新成功样本 5m44s。模型本身过去每趟
       # 都从 Hugging Face 重下；这既不增加校验信息，也把成片推到 10m09s。
       # 按模型名缓存，small.en / medium.en 仍是两份独立模型，精度闸不变。
+      #
+      # ⚠️ **subs 那一趟也要算**：第二份 ASR 挪到了 subs（见「第二份 ASR 交叉校验
+      # 并提交报告（subs）」），它的模型缓存键从这一步拿——两个 mode 同一把键，
+      # 同一份模型文件，不许 subs 另下一份。
       - name: 算第二份 ASR 模型
         id: second_asr
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'subs'
         env:
           SLUG: ${{ github.event.inputs.slug }}
         run: |
@@ -209,6 +217,23 @@ jobs:
           restore-keys: |
             faster-whisper-${{ runner.os }}-
 
+      # ⚠️⚠️ **Chromium 缓存键按装上的 playwright 版本算，不按 pyproject 的哈希**
+      # （2026-09-27）pyproject 写的是 `playwright>=1.40`、而且 08-08 之后没动过，
+      # 于是主键**永远命中**那份旧缓存（chromium-1234）；pip 装上的新 playwright 要
+      # 1243，launch 探针落空、每趟重下 187 MiB ＋ 114 MiB 还跑一遍 `--with-deps`
+      # 的 apt（run 36284220097）——而主键命中时 post 步骤「not saving cache」，
+      # 这份缓存**永远修不好自己**。「装 Chromium」这一步 09-15 前中位 1s、之后
+      # 18s（n=189）。按版本算：换版本那一趟主键落空、退到上一份、装完存新的一格。
+      # 判据 `tests/test_runner_setup_cache.py`。
+      - name: 算 Chromium 缓存键（装上的 playwright 版本）
+        id: pw_version
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        run: |
+          pip install -q playwright   # 这一步排在「装依赖」之前，先把它装上才读得到版本
+          v=$(python -c 'import importlib.metadata as m; print(m.version("playwright"))')
+          echo "playwright $v"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
       # match-reel 已经缓存同一版 Playwright Chromium；采访线以前仍每趟重装。
       # 共用键和目录，命中后下面真 launch 一次，成功就不再碰 apt。
       - name: 缓存 Chromium
@@ -216,7 +241,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          key: playwright-chromium-${{ runner.os }}-pw${{ steps.pw_version.outputs.version }}
           restore-keys: playwright-chromium-${{ runner.os }}-
 
       # 两个字体包都不能漏，而且**漏了的表现不一样，都不报错**：
@@ -230,8 +255,9 @@ jobs:
       # 真正的杠杆是大多数 run 根本不碰这个镜像。`tools/ci_apt_install.sh`
       # 把索引和下载缓存住，先试零网络的本地安装，缓存没命中才回退到老路。
       - name: 缓存 apt 包（字体 + ffmpeg，绕开镜像抽风）
+        id: apt_cache
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             ~/.cache/apt-archives
@@ -241,8 +267,12 @@ jobs:
           # 于是每一趟仍要重新摸 apt 镜像。照 match-reel.yml 改成滚动键：
           # 先按稳定前缀恢复最近一份，跑完再用本次 run_id 回写（注释也抄）。
           key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-v2-${{ github.run_id }}
+          # 第二格退到 CI 在 main 上存的那份（cjk＋core＋emoji，这一步装的字体是它的
+          # 子集）：缓存按 ref 隔离，本线自己存的只有同一条分支看得见，每条新分支
+          # 的第一趟全靠这一格（2026-09-27，见 match-reel.yml 同一步的注释）
           restore-keys: |
             apt-pkgs-${{ runner.os }}-24.04-interview-clip-v2-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: 装系统依赖
         timeout-minutes: 15
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
@@ -250,6 +280,21 @@ jobs:
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk fonts-noto-core
           ensure_ffmpeg
+
+      # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
+      # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：
+      # 命中的趟白传一份、只装 ffmpeg 的趟把空目录存成最新那一格——见那份脚本
+      # 顶部 2026-09-27 那段。判据 `tests/test_runner_setup_cache.py`。
+      - name: 回写 apt 缓存（这趟真下了新包才存）
+        # 这个 job 按 mode 分流、有两对 apt 缓存，所以 mode 也写进来——
+        # 「哪个 mode 跑哪几步」那套判据（`_if_holds`）才算得清
+        if: (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover') && env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
@@ -285,7 +330,11 @@ jobs:
           # 白拖一个大包；「只挑工作不挑准备等于没挑」在依赖粒度上同样成立。
           EXTRA_ASR=""
           if [ "$MODE" = "render" ]; then EXTRA_ASR="faster-whisper"; fi
-          pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright edge-tts $EXTRA_ASR
+          # `faces`（onnxruntime）是封面认人＋睁眼要的（2026-09-27 账号所有者批的
+          # O2+O3，`tools/face_checks.py`）。⚠️ **别换成 `pip install insightface`**：
+          # 它依赖的是 opencv-python 5.x，装上就把 cv2 换成没有 CascadeClassifier 的
+          # 那一版，Haar 这道闸当场废掉（量过，见 face_checks 顶部）。
+          pip install -q -e ".[visualqa,faces]" "yt-dlp[default]" playwright edge-tts $EXTRA_ASR
           # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
           # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
           # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
@@ -359,6 +408,41 @@ jobs:
           fi
           node --version
 
+      # 封面认人＋睁眼的三个 onnx（insightface buffalo_s v0.7 里的 det_500m /
+      # w600k_mbf / 2d106det，21 MB）。键**按权重内容定址**（`face_checks.CACHE_KEY`：
+      # 版本号 ＋ 三个 sha256 的摘要），`test_人脸模型缓存键跟着模型版本走` 逼着这里逐字一致。
+      # 没命中时现下也只要约 2 秒（127 MB 的包里只解三个文件），缓存买的是
+      # 「GitHub Release 抽风那天不至于整条链降级」。
+      - name: 取人脸模型缓存
+        id: face-cache
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive/face-models
+          key: face-models-buffalo_s-v0.7-17d6bb6dfcd3
+      # 备不上**不许把整趟拖红**，也**不许不吭声**：账号所有者要的是「模型加载
+      # 不了就大声降级」——封面凭证（render 那一档还有 render.json）里会记 `unavailable`，这里先打一条注解。
+      # `ok=true` 只在 fetch 真成功时写，下面存缓存那一步只认它。
+      - name: 备好人脸模型
+        id: face-models
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        run: |
+          if python tools/face_checks.py fetch; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::人脸模型没备好——封面认人／睁眼会降级成 unavailable（写进封面凭证）"
+          fi
+      # **只在「备好」真成功、而且缓存没命中时才存。** 原来是一步 `actions/cache@v4`，
+      # 它的收尾保存不管 fetch 成没成——fetch 下到一半断掉（三个文件只写了一两个）
+      # 的半截目录会被钉进一个**不可变**的键里，之后每一趟都命中这份残缺的缓存
+      # （评审 2026-09-27 nit 7）。拆成 restore / save 两步，save 挂在 fetch 的 `ok` 上。
+      - name: 存人脸模型缓存
+        if: (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover') && steps.face-cache.outputs.cache-hit != 'true' && steps.face-models.outputs.ok == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/tennislive/face-models
+          key: face-models-buffalo_s-v0.7-17d6bb6dfcd3
+
       # **取字幕这一阶段的准备，比出片少一大半。** 它不下媒体、不转写、不渲封面、
       # 不编码——只拉自动字幕、切行、量宽度。所以不装 Chromium / faster-whisper /
       # ffmpeg，省下三分多钟。
@@ -369,23 +453,47 @@ jobs:
       # 零字节进度）。调重试参数治不了根，真正的杠杆是大多数 run 根本不碰这个
       # 镜像，见 `tools/ci_apt_install.sh` 顶部注释。
       - name: 缓存 apt 包（字体，绕开镜像抽风）
+        id: apt_cache_subs
         if: github.event.inputs.mode == 'subs'
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
           # 滚动键 + restore-keys，理由同上面 render/cover 那份缓存的注释。
           key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v2-${{ github.run_id }}
+          # 第二格退到 CI 在 main 上存的那份（cjk＋core＋emoji，这一步装的字体是它的
+          # 子集）：缓存按 ref 隔离，本线自己存的只有同一条分支看得见，每条新分支
+          # 的第一趟全靠这一格（2026-09-27，见 match-reel.yml 同一步的注释）
           restore-keys: |
             apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v2-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: 装依赖（只取字幕）
         timeout-minutes: 15
         if: github.event.inputs.mode == 'subs'
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk fonts-noto-core
+          # subs 那一趟的第二份 ASR 要 ffmpeg（`verify_transcript` 用 `yt-dlp -f ba` 下音轨，
+          # tennistv.com 那 12 条是 Brightcove HLS；2026-09-27 review）。装在这儿而不是
+          # 提交 lines.json 之后：`ensure_ffmpeg` 落空时退回 apt，得夹在这一对 apt 缓存
+          # restore/save 中间才存得进去（`test_apt缓存只在这趟真下了新包时回写`）；
+          # 先走静态构建、不碰镜像，多花的是几秒下载。
+          ensure_ffmpeg
           pip install -q -e . "yt-dlp[default]"
+
+      # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
+      # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：
+      # 命中的趟白传一份、只装 ffmpeg 的趟把空目录存成最新那一格——见那份脚本
+      # 顶部 2026-09-27 那段。判据 `tests/test_runner_setup_cache.py`。
+      - name: 回写 apt 缓存（这趟真下了新包才存）
+        if: github.event.inputs.mode == 'subs' && env.APT_CACHE_DIRTY == '1' && steps.apt_cache_subs.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache_subs.outputs.cache-primary-key }}
 
       - name: 开跑前预检（只取字幕）
         if: github.event.inputs.mode == 'subs'
@@ -502,6 +610,109 @@ jobs:
           SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
           PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage subs
 
+      # **封面排在最前面，紧跟源片下载——在转写校验和编码之前就验掉。**
+      #
+      # 来路（2026-09-27 返工审计）：「验封面视觉」原来排在「剪 + 烧字幕」**后面**，
+      # 14 趟 run（74.8 runner-分钟）红在那儿，每一趟都先付了一整趟编码（中位
+      # 148 秒，`bu-jodar` 那趟 487.9 秒）才知道封面那一帧不行——而这道闸只要
+      # poster.jpg，源片一下完就有。CLAUDE.md「封面排在最前面，紧跟选题」说的
+      # 就是这件事：唯一可能整条卡住的输入，别放在链条末端。
+      #
+      # 两个 mode 走**同一步**（同一份 `--stage cover`、同一把本地像素闸，不许分叉）：
+      #   cover  —— 预览档：先 `--stage cover-scan` 把 frame_at 前后一段逐格过同一
+      #             道闸，`cover_candidates.json` 随这一趟提交、候选墙只走 artifact
+      #             ——挑帧从「一趟试一帧」变成「一趟扫一段」（monfils 那条前九趟
+      #             都在赌）。⚠️ **frame_at 没过闸（或者渲不出海报）、这一步红着退出时，记录照样先提交**：
+      #             那正是这份记录最有用的时候（下一帧该挑哪个），而红了之后
+      #             「提交成片」那一步不会跑。排名表在错误旁边再印一遍。
+      #   render —— 出片档：`--keep-source` 把源片留给后面的「剪 + 烧字幕」
+      #             （`yt_download` 见文件在就复用，不下第二遍）。闸红了就地扫一段
+      #             候选印进日志再停——红的这一趟也要换回「下一帧该选哪个」
+      # 出片之后「终审封面视觉」再对最终海报量一次（render 会重渲 poster.jpg，
+      # 质检凭证绑的是那一份的哈希）。
+      #
+      # cookie 从 `COOKIES` 环境变量走（`cookie_args()` 读它）。
+      # 原来是把路径**写进 spec**、跑完再 `git checkout --` 撤掉——两个毛病：
+      # 上一步 verify 拿不到（那段注入只在这一步），而且 secret 的路径会短暂
+      # 落到仓库里的文件上。现在两步都只靠环境变量，那套动作整个删了。
+      # **只出海报，不出片。** 2026-08-04 一晚渲了五趟，四趟是为了换封面——
+      # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有第一帧。
+      # 走这一档：下源片 → 抽帧 → 渲海报 → 删源片，**一个 mp4 都不产生**。
+      #
+      # ⚠️ **这一步也要 `COOKIES`，它一样要下源片。** 上面那句「两步都只靠环境
+      # 变量」是 `verify` / `render` 两步时代写的，而 `cover` 是后来加的
+      # （#174），**加的时候没跟着注入**——又一次「加新能力就要同时改三处」。
+      # 它躺了三天没出声，因为在此之前走这条线的都是 Brightcove 源（不要
+      # cookie）；换成 YouTube 的第一条（`sabalenka-zhang-tor2026-r3`）连撞三趟
+      # `Sign in to confirm you're not a bot`，而日志上一行写着「已写入
+      # cookies（25 行）」、下一行写着「COOKIES=未设置」。
+      # 判据 `test_会下源片的每一步都要拿到cookie` 自己推导，不维护白名单。
+      - name: 出封面并验视觉（完全本地，排在转写和编码之前）
+        if: >-
+          github.event.inputs.mode == 'render' ||
+          github.event.inputs.mode == 'cover'
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+          MODE: ${{ github.event.inputs.mode }}
+        run: |
+          set -o pipefail
+          SLUG="${{ github.event.inputs.slug }}"
+          SPEC="specs/interviews/$SLUG.json"
+          OUTDIR="output/interviews/$SLUG"
+          KEEP=""
+          if [ "$MODE" = "render" ]; then
+            KEEP="--keep-source"
+            python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase cover_audit
+          fi
+          # cover 档红着退出之前**先交扫描记录**。两条红路都走它：`--stage cover`
+          # 自己红（比如 frame_at 越过视频流最后一帧抛 NoFrameAt——而扫描刚把
+          # 那一格记成「没有画面」，正是最该交上去的那份）和像素闸没过。
+          # 写成函数、两处调同一份：原来提交那几行只写在像素闸那一支里，
+          # `--stage cover` 一红，`bash -e` 当场结束这一步，刚写好的记录跟着
+          # runner 一起没了（review 2026-09-27）。
+          commit_scan_record() {
+            echo "::error::$1 扫描记录照样提交（下一趟挑帧、推送前对账都要它），候选排名再印一遍："
+            PYTHONPATH=src python tools/interview_cover_scan.py --report --spec "$SPEC" \
+              || echo "::warning::排名表没印出来（记录读不了）"
+            REC="$OUTDIR/cover_candidates.json"
+            [ -f "$REC" ] || return 0
+            git config user.name "Claude"
+            git config user.email "noreply@anthropic.com"
+            git add "$REC"
+            git diff --cached --quiet && return 0
+            python tools/check_staged_file_sizes.py
+            git commit -m "interview: $SLUG 封面扫描记录（$2）"
+            source tools/git_push_retry.sh
+            push_with_rebase_retry "${{ github.ref_name }}" 5 \
+              || echo "::warning::扫描记录没推上去——上面那张排名表就是这一趟的全部产出"
+          }
+          if [ "$MODE" = "cover" ]; then
+            PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover-scan --keep-source
+          fi
+          if ! PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover $KEEP; then
+            if [ "$MODE" = "cover" ]; then
+              commit_scan_record "封面没渲出来（--stage cover 自己红了，见上面的报错）。" "frame_at 渲不出海报"
+            fi
+            exit 1
+          fi
+          if ! PYTHONPATH=src python tools/audit_interview_cover.py \
+              --spec "$SPEC" \
+              --poster "$OUTDIR/poster.jpg" \
+              --out "$OUTDIR/cover_visual_attestation.json"; then
+            if [ "$MODE" = "render" ]; then
+              # 这一份**不提交**：自动链（interview-auto-render）只拨 render，
+              # 提交了记录，它下一趟换的帧就得对这份账，而那头没人写得了
+              # `_frame_scan_why`——机器记录不许替自动链加一道它认领不了的闸。
+              echo "::error::封面那一帧没过本地像素闸——停在转写校验和编码之前。就地扫 frame_at 前后一段（源片已在手上）："
+              PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover-scan --keep-source
+            else
+              commit_scan_record "封面那一帧没过本地像素闸。" "frame_at 没过闸"
+            fi
+            exit 1
+          fi
+          # 扫描记录提交过的话，frame_at 必须是其中过闸的那一格；推送前 auto_push_interview_gate 再对一次
+          PYTHONPATH=src python tools/interview_cover_scan.py --check --spec "$SPEC"
+
       # **先验转写，再出片。** 这是英语学习素材，发错的英文比没有更糟。
       # YouTube 的自动字幕实测错得不轻（人名、整句语法不成立、`respect to her`
       # 其实是 `for her`），而它自己那两条轨（en / en-orig）逐词完全一致，
@@ -531,31 +742,6 @@ jobs:
           python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase asr_verify
           PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage verify
 
-      # cookie 从 `COOKIES` 环境变量走（`cookie_args()` 读它）。
-      # 原来是把路径**写进 spec**、跑完再 `git checkout --` 撤掉——两个毛病：
-      # 上一步 verify 拿不到（那段注入只在这一步），而且 secret 的路径会短暂
-      # 落到仓库里的文件上。现在两步都只靠环境变量，那套动作整个删了。
-      # **只出海报，不出片。** 2026-08-04 一晚渲了五趟，四趟是为了换封面——
-      # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有第一帧。
-      # 走这一档：下源片 → 抽帧 → 渲海报 → 删源片，**一个 mp4 都不产生**。
-      #
-      # ⚠️ **这一步也要 `COOKIES`，它一样要下源片。** 上面那句「两步都只靠环境
-      # 变量」是 `verify` / `render` 两步时代写的，而 `cover` 是后来加的
-      # （#174），**加的时候没跟着注入**——又一次「加新能力就要同时改三处」。
-      # 它躺了三天没出声，因为在此之前走这条线的都是 Brightcove 源（不要
-      # cookie）；换成 YouTube 的第一条（`sabalenka-zhang-tor2026-r3`）连撞三趟
-      # `Sign in to confirm you're not a bot`，而日志上一行写着「已写入
-      # cookies（25 行）」、下一行写着「COOKIES=未设置」。
-      # 判据 `test_会下源片的每一步都要拿到cookie` 自己推导，不维护白名单。
-      - name: 只出海报（不出片）
-        if: github.event.inputs.mode == 'cover'
-        env:
-          COOKIES: ${{ steps.cookies.outputs.path }}
-        run: |
-          set -o pipefail
-          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
-          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover
-
       - name: 剪 + 烧字幕
         if: github.event.inputs.mode == 'render'
         env:
@@ -581,21 +767,28 @@ jobs:
 
       # 直接审核最终 poster，而不是相信 cover._why 或缩略图墙。两者都曾写着
       # 「费德勒本人中近景」，最终海报却一版是家属席、一版是人物很小的全景。
-      # render/cover 两档都会生成 poster，所以都必须过同一把本地像素闸；
       # 不调用 DeepSeek/MiniMax，不需要外部 key。OpenCV 不可用、尺寸/解码失败、
       # 人脸不够正/大/清楚或近景 zoom/focus 合同不合格，一律红灯。
-      - name: 验封面视觉（完全本地，生产硬闸）
-        if: >-
-          github.event.inputs.mode == 'render' ||
-          github.event.inputs.mode == 'cover'
+      # ⚠️ **拦人的那一道已经挪到「出封面并验视觉」**（编码之前，cover/render
+      # 两档都过）。这一步只剩 render：`render()` 会从同一帧**重渲**一遍
+      # poster.jpg，而 L2 质检凭证绑的是最终那份的哈希——对最终海报再量一次、
+      # 重写凭证，一秒钟。
+      - name: 终审封面视觉（出片后的最终海报，完全本地）
+        if: github.event.inputs.mode == 'render'
         run: |
           SLUG="${{ github.event.inputs.slug }}"
           SPEC="specs/interviews/$SLUG.json"
           OUTDIR="output/interviews/$SLUG"
+          # 认人／睁眼的结果只并进**这一趟刚写的** render.json：`mode=cover` 只换海报，
+          # outdir 里那份 render.json 是上一版成片的，不许往里记这张新海报的账。
+          RENDER_JSON=()
+          if [ "${{ github.event.inputs.mode }}" = "render" ]; then
+            RENDER_JSON=(--render-json "$OUTDIR/render.json")
+          fi
           PYTHONPATH=src python tools/audit_interview_cover.py \
             --spec "$SPEC" \
             --poster "$OUTDIR/poster.jpg" \
-            --out "$OUTDIR/cover_visual_attestation.json"
+            --out "$OUTDIR/cover_visual_attestation.json" "${RENDER_JSON[@]}"
 
       # **查产物，不查信号。** 步骤 success 不等于成片存在——探一下文件和时长。
       # 2026-08-15 起升级成完整 L2 成片落地闸（docs/qa-contract.md §三）：
@@ -823,6 +1016,13 @@ jobs:
           # upload-artifact **之前**，subs 那趟删掉它，artifact 里就只剩
           # 字幕行，挑帧的人两手空空——「工作台」被自己的清理步骤收走了。
           if [ "$MODE" != "subs" ]; then rm -f "$D"/storyboard.jpg; fi
+          # 封面**候选墙**（`--stage cover-scan`）是同一种工作台，同一套处置：一张
+          # 约 0.6 MB、每趟 mode=cover 一张，只走 artifact；`.gitignore` 里
+          # `output/**/cover_scan_sheet.jpg` 挡着，`git add "$D"` 吃不进去。
+          # **`mode=cover` 那趟不删**——它正是那一趟要交给人看的东西，而这一步排在
+          # upload-artifact 之前。进仓库的是几 KB 的 `cover_candidates.json`
+          # （推送前对账要的就是它）。判据 `test_缩略图墙两头都不许进仓库`。
+          if [ "$MODE" != "cover" ]; then rm -f "$D"/cover_scan_sheet.jpg; fi
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           # 用 `$D`，别把这个路径再写一遍——下面重放那几行清的、放回来的、
@@ -875,8 +1075,15 @@ jobs:
             # 那一步 `rm -f "$CLIP"` 之后本趟提交是带着 `delete mode` 的。
             # 合成仓库上验过——**漏掉这一行，被删掉的 mp4 当场被重放救活**，
             # 于是仓库里留着旧片、真片在 Release 上，两个地址两条片子。
+            # 两张工作台（缩略图墙、候选墙）不在 `rendered` 里（.gitignore 挡着），
+            # `rm -rf` 之后 checkout 不会把它们放回来——先挪到一边、放回来之后再
+            # add（`-A` 照样认 .gitignore），不然撞一次车 artifact 里就没墙了。
+            WB="$RUNNER_TEMP/workbench"
+            mkdir -p "$WB"
+            cp -f "$D"/storyboard.jpg "$D"/cover_scan_sheet.jpg "$WB"/ 2>/dev/null || true
             rm -rf "$D"
             git checkout rendered -- "$D"
+            cp -f "$WB"/*.jpg "$D"/ 2>/dev/null || true
             git add -A "$D"
             python tools/check_staged_file_sizes.py
             git diff --cached --quiet || git commit -m "$MSG"
@@ -885,6 +1092,87 @@ jobs:
           done
           echo "::error::连续 10 次推送失败；本条采访没有落库，别把它当成已发"
           exit 1
+
+      # **第二份 ASR 在 subs 这一趟就跑，报告 render 之前就摊到桌上。**
+      #
+      # 来路（2026-09-27 返工审计）：第二份 ASR（spec 的 `whisper_model`）和空档
+      # VAD 原来只在 `mode=render` 跑——10 趟 render 红在「两份转写对不上」「空档
+      # 没销账」上（41.7 runner-分钟），每趟都是装完依赖、下完源片才知道英文漏了
+      # 一句，中文跟着返工（alcaraz-fritz 三趟、tien-cobolli 两趟、chwalinska 一趟）。
+      # 这两样只要音轨，跟出片无关。
+      #
+      # ⚠️ **排在「提交成片」之后，不是之前**：切好的英文行（lines.json）是写中文
+      # 要等的那一份，它照旧一分多钟就落库；第二份 ASR 要三到五分钟，报告第二次
+      # 提交。人在写中文的时候它在跑——「runner 在跑的时候别闲着」。
+      # ⚠️ **先交报告再定颜色**：transcript_diff.md / caption_gaps.md /
+      # gap_vad_attestation.json 正是修的依据，红着把它们扔掉这一趟就白跑了。
+      # render 那头照旧再验（指纹没变且 transcript_verified 已置上才跳过，见
+      # `transcript_fingerprint`）——这一步是**提前报**，不是替掉那道闸。
+      # ⚠️ **报出分歧／空档不算红**（退出码 `VERIFY_FINDINGS_EXIT`＝3）：刚切出来、
+      # 还没人核过的转写，有分歧、有没销账的空档是**常态**。第一版让它红，
+      # 而 `tools/pipeline_health.py` 按 run 的 conclusion 数失败率——近 10 趟
+      # 红 40% 或连着红 3 趟就推微信告警，一条天天喊狼来了的告警没人看。所以
+      # 发现逐条印进日志、`::warning::` 收尾、run 绿着；render 照旧拦。
+      # **工具坏了**（下不动音轨、模型起不来、同一个模型跑两遍）不是 3，照样红。
+      # ⚠️ **这一步要跑三到五分钟，而 concurrency 按 slug 分组、`cancel-in-progress`**：
+      # 这段时间里 dispatch 同 slug 的 `mode=cover`／`render` 会把这一趟掐掉，
+      # 报告就丢了（lines.json 已经在前面落库，丢的只是第二份 ASR 的报告；render
+      # 自己会再验一遍，丢的是「提前报」这份好处）。**同一个 slug 的几档串着发，
+      # 别叠在对方还在跑的时候**：按 CLAUDE.md「封面排在最前面」先发 cover（两三
+      # 分钟），它绿了再发 subs；反过来也行。不同 slug 之间互不掐，照样并行。
+      # ⚠️ **模型缓存键和 render 同一把**（从「算第二份 ASR 模型」拿）：subs 下过的
+      # 模型 render 直接用，反过来也一样。
+      - name: 缓存第二份 ASR 模型（subs）
+        if: github.event.inputs.mode == 'subs'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: faster-whisper-${{ runner.os }}-${{ steps.second_asr.outputs.model }}
+          restore-keys: |
+            faster-whisper-${{ runner.os }}-
+
+      - name: 第二份 ASR 交叉校验并提交报告（subs）
+        if: github.event.inputs.mode == 'subs'
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          SPEC="specs/interviews/$SLUG.json"
+          D="output/interviews/$SLUG"
+          # 装在这儿不装在「装依赖（只取字幕）」：那一步排在取字幕之前，
+          # 多装一个大包就把 lines.json 落库往后推——而写中文等的正是它。
+          pip install -q faster-whisper
+          python -c "import faster_whisper"
+          set +e
+          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage verify
+          STATUS=$?
+          set -e
+          # 中间物和「提交成片」同一套清法：`_` 开头的（_audio.m4a）、whisper.json、源片
+          rm -rf "$D"/_*
+          rm -f "$D"/source.* "$D"/whisper.json
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add "$D"
+          if git diff --cached --quiet; then
+            echo "第二份 ASR 的报告没有变化"
+          else
+            python tools/check_staged_file_sizes.py
+            git commit -m "interview: $SLUG 第二份 ASR 交叉校验报告"
+            source tools/git_push_retry.sh
+            if ! push_with_rebase_retry "${{ github.ref_name }}" 5; then
+              echo "::error::第二份 ASR 的报告推不上去——render 会重新验，但这一趟的报告没落库"
+              exit 1
+            fi
+          fi
+          # 3 ＝ build_interview_clip.VERIFY_FINDINGS_EXIT：只有「要人核的发现」，工具本身跑完了
+          if [ "$STATUS" = 3 ]; then
+            echo "::warning::第二份 ASR 报了要人核的分歧／空档（上面逐条印着；报告已提交：$D/transcript_diff.md、caption_gaps.md、gap_vad_attestation.json）。人核之前这是常态，这一趟不算红；render 照旧会拦——修 en_fixed／认领 transcript_disagree_ok／销账 caption_gaps_ok"
+            exit 0
+          fi
+          if [ "$STATUS" != 0 ]; then
+            echo "::error::第二份 ASR 没跑成（退出码 $STATUS——不是「有分歧」，那是 3）：下不动音轨、模型起不来或 spec 配错了，看上面的报错"
+            exit "$STATUS"
+          fi
 
       # **叫醒自动推送——render 提交自己永远触发不了它。** 上一步的 push 用的
       # 是仓库自带的 GITHUB_TOKEN，GitHub 明文规定这种 push 不创建 workflow run
@@ -1078,6 +1366,8 @@ jobs:
       # 那一步里的 `rm -f "$D"/source.*` 此时没跑过**，于是整条源片跟着上传。
       # 按同一个 glob 排除掉；storyboard、字幕、render.json 照旧传——排查要的
       # 是这些。判据 `test_失败时的artifact不许带源片`。
+      # 封面候选墙 `cover_scan_sheet.jpg` **只从这儿走**（不进仓库，见「提交成片」），
+      # `mode=cover` 和 render 封面前置红了就地扫的那一张都在里面。
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -31,6 +31,7 @@
 
 from __future__ import annotations
 
+# design-tokens: enforced
 import argparse
 import html
 import json
@@ -51,6 +52,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 # 分叉不报错，只是国内取图慢。
 from tennislive.cdn import jsdelivr_base  # noqa: E402
 from tennislive.publish.pushplus import push, write_receipt  # noqa: E402
+from tennislive.render import push_style as ps  # noqa: E402
 from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
@@ -678,15 +680,22 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
     """推送正文，**版式照着知识解说那条推送**（账号所有者指定的参照）：
 
         白卡（顶上一条 #ff2442 红边）
-          台头小药丸  →  大标题
+          台头小药丸（栏目名）  →  大标题  →  「☝️ 标题，长按这一行即可复制」
           海报，**铺满整卡宽，左右不留白边**
-          「图片没显示？点此打开原图」
+          灰色「原图 ↗」（图没显示时的回退）
           「👇 正文全文如下，长按整段即可复制」
           正文（pre-wrap，一整段）
           ── 分隔线 ──
           ▶ 打开竖版成片
           分别复制标题 / 正文
           图片长按保存
+
+    ⚠️ **样子不在这儿配**（2026-09-27 UI 评审 WP2）：药丸、标题、提示行、「原图 ↗」、
+    视频按钮都从 `render/push_style.py` 的同一组函数出，颜色是 `design_tokens.LIGHT`
+    ——和字卡那条推送（`knowledge_push_html_from_parts`）、复制页同一套。
+    **只有卡底那颗红按钮是字面写在这儿的**，逐字节不动（账号所有者 2026-08-31
+    「微信推送的红色按钮不要改了」），判据 `tests/test_push_visual.py` 拿真产出和
+    金样逐字节比。
 
     两处和参照不同，都是这条线自己的教训：
 
@@ -722,64 +731,101 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
     # **导语给空就不占那一行。** 详细概括现在写在文案正文的第一行（账号所有者的
     # 要求：标题精炼，讲不完的放正文第一行详细总结），导语再印一遍同样的意思
     # 就是「同一段印两遍」那个老毛病。
-    lead_el = (f'<div style="font-size:15px;line-height:1.8;color:#25342e;'
-               f'margin:0 0 14px">{html.escape(lead.strip())}</div>'
+    lead_el = (f'<div style="{ps.LEAD}">{html.escape(lead.strip())}</div>'
                if lead.strip() else "")
     img = ""
     if poster:
-        img = (f'<img src="{poster}" width="100%" alt="{html.escape(title)}"'
-               f' referrerpolicy="no-referrer"'
-               f' style="width:100%;display:block;margin:0 0 10px">'
-               f'<div style="text-align:center;margin:0 0 16px;{pad}">'
-               f'<a href="{poster}" style="color:#087747;font-size:13px;'
-               f'text-decoration:none">封面没显示？点此打开原图</a></div>')
+        img = (ps.image(poster, html.escape(title), ps.POSTER_RATIO, rounded=False)
+               + ps.original_link(poster, f";{pad}"))
 
     # 和海报一样铺满整卡宽（不留左右白边），但排在正文之后——先讲故事，
     # 再给数据，第一屏仍然留给海报。
     stat_card_el = ""
     if stat_card:
         stat_card_el = (
-            f'<div style="{pad};margin:4px 0 8px">'
-            f'<div style="color:#7a8580;font-size:12px">📊 数据统计对照</div></div>'
-            f'<img src="{stat_card}" width="100%" alt="数据统计对照图"'
-            f' referrerpolicy="no-referrer"'
-            f' style="width:100%;display:block;margin:0 0 10px">'
-            f'<div style="text-align:center;margin:0 0 16px;{pad}">'
-            f'<a href="{stat_card}" style="color:#087747;font-size:13px;'
-            f'text-decoration:none">数据图没显示？点此打开原图</a></div>')
+            ps.section_label("📊 数据统计对照", pad)
+            + ps.image(stat_card, "数据统计对照图", ps.STAT_CARD_RATIO, rounded=False)
+            + ps.original_link(stat_card, f";{pad}"))
 
-    def btn(url: str, text: str, bg: str, fg: str = "#ffffff") -> str:
+    # ⚠️ 红按钮：这个函数和它产出的那一串**逐字节不动**，只给红按钮用。
+    def btn(url: str, text: str, bg: str, fg: str = "#ffffff") -> str:  # token-exempt: 红按钮的白字，逐字节不动
         return (f'<a href="{url}" style="display:block;background-color:{bg};'
                 f'color:{fg};text-align:center;text-decoration:none;'
                 f'font-weight:bold;padding:13px 16px;border-radius:6px;'
                 f'margin:0 0 7px">{text}</a>')
 
-    return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;\
-font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
-<div style="max-width:680px;margin:0 auto;background-color:#ffffff;\
-border-top:5px solid #ff2442;padding:18px 0 22px">
-<div style="{pad}"><div style="display:inline-block;background-color:#e7f5ea;\
-color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px">\
-{html.escape(column)}</div>
-<div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;\
-margin:10px 0 4px">{html.escape(title)}</div>
-<div style="color:#7a8580;font-size:12px;margin:0 0 14px">\
-☝️ 标题，长按这一行即可复制</div></div>
+    red = btn(copy_url, "分别复制标题 / 正文", "#ff2442")  # token-exempt: 红按钮逐字节不动（2026-08-31）
+
+    return f"""<div lang="zh-CN" style="{ps.PAGE}">
+<div style="{ps.card("18px 0 22px")}">
+<div style="{pad}">{ps.pill(column)}
+{ps.title_block(html.escape(title))}
+{ps.title_hint()}</div>
 {img}
 <div style="{pad}">
 {lead_el}
-<div style="color:#7a8580;font-size:12px;margin:0 0 8px">\
-👇 正文全文如下，长按整段即可复制</div>
-<div style="font-size:15px;line-height:1.85;white-space:pre-wrap;\
-word-break:break-word;margin:0 0 4px">{html.escape(body)}</div>
+{ps.body_block(body)}
 </div>
 {stat_card_el}
 <div style="{pad}">
-<div style="border-top:1px solid #e6ebe8;margin:18px 0 12px"></div>
-{btn(video_url, "▶ 打开竖版成片", "#102d23")}
-{btn(copy_url, "分别复制标题 / 正文", "#ff2442")}
-<div style="text-align:center;color:#7a8580;font-size:12px">图片长按保存</div>
+<div style="{ps.DIVIDER}"></div>
+{ps.video_button(video_url)}
+{red}
+{ps.foot()}
 </div></div></div>"""
+
+
+def prepare_copy(copy_path: Path, outdir: Path, *, column: str = "", date: str = "",
+                 args=None) -> tuple[str, str, str]:
+    """三个 stage 共用的那一段：文案收口、tag 上限、标题两道字数闸、正文去标题。
+
+    返回 `(栏目, 标题, 去掉标题之后的正文)`；哪一道不过都是 SystemExit。
+
+    ⚠️ **本地 `--dry-run` 调的也是这一个函数**（`reel_asset_gates.push_copy_check`）。
+    原来 dry-run 自己拼标题，拿 `--outdir /tmp/dryrun` 调 `headline()`——那个目录
+    里没有日期，于是**每一次**都撞上「取不到日期」的 SystemExit、退回占位标题，
+    标题的两道字数闸在本地一次都没跑过，只有 runner 上的 `production_preflight`
+    会拦（2026-09-27 返工取证：medvedev-royer 抄一份把 `push.summary` 写到
+    26 字位，dry-run 退出 0，`--stage check` 退出 1）。本地和 runner 从此是同一段代码。
+    """
+    # **三个 stage 共用这一处读**：复制页（`--stage page`）和微信正文
+    # （`--stage push`）必须是同一段字，否则推送里印的和复制页里粘到的对不上。
+    # 所以收口也收在这儿，别在下游各切一次。
+    copy_text = cut_at_tags(Path(copy_path).read_text(encoding="utf-8"))
+    if not copy_text:
+        raise SystemExit("文案是空的")
+    # **正文里的 tag 最多五个**，和知识帖那条线共用同一个上限。
+    # reel 的文案是手写的 spec，不像知识帖那样过 `limit_hashtags`，所以在这儿
+    # 拦一道——**发出去就收不回来**，宁可在推送之前报错。
+    tags = hashtag_count(copy_text)
+    if tags > MAX_HASHTAGS:
+        raise SystemExit(
+            f"{copy_path} 里有 {tags} 个 tag，超过 {MAX_HASHTAGS} 个。\n"
+            "删到五个以内再推——留最能被搜到的那几个（人名、赛事、账号）。")
+    # 活动期必带的 tag 在**上限检查之后**补：手写超了照旧报错（那是写的人的事），
+    # 没超的由这儿腾位置接上。复制页和微信正文都从这一段字出，spec 里手写的
+    # `.xhs.txt` 不用逐条改。补成什么样打印出来，别默默改。
+    before = copy_text
+    copy_text = with_campaign_tags(copy_text)
+    if copy_text != before:
+        print(f"[文案] 活动 tag 已补齐：{copy_text.splitlines()[-1]}")
+
+    # 格式化标题（`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`）
+    # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
+    # 标题单独复制；正文不再带一遍日期、栏目和标题。
+    # **算一次，两处共用。** 标题走 column_of、药丸另取一个默认值，就又回到了
+    # 「同一条推送里两个栏目名」——那正是 column_of 要修的那个错。
+    column = column or column_of(Path(copy_path))
+    # 而对阵/比分/概括的出处是 **spec**，命令行只作覆盖（`resolve_meta`）：
+    # 工作流那几个输入曾经挂着上一条片子的默认值，漏传一项就拿另一场球的
+    # 标题发出去。
+    meta = resolve_meta(Path(copy_path), args if args is not None else argparse.Namespace())
+    title = headline(outdir, column, meta["matchup"], meta["score"],
+                     meta["event"], meta["summary"], date)
+    copy_text = copy_body_only(copy_text, title)
+    if not copy_text:
+        raise SystemExit("正文去掉标题后为空")
+    return column, title, copy_text
 
 
 def main() -> int:
@@ -816,43 +862,8 @@ def main() -> int:
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
-    # **两个 stage 共用这一处读**：复制页（`--stage page`）和微信正文
-    # （`--stage push`）必须是同一段字，否则推送里印的和复制页里粘到的对不上。
-    # 所以收口也收在这儿，别在下游各切一次。
-    copy_text = cut_at_tags(Path(args.copy).read_text(encoding="utf-8"))
-    if not copy_text:
-        raise SystemExit("文案是空的")
-    # **正文里的 tag 最多五个**，和知识帖那条线共用同一个上限。
-    # reel 的文案是手写的 spec，不像知识帖那样过 `limit_hashtags`，所以在这儿
-    # 拦一道——**发出去就收不回来**，宁可在推送之前报错。
-    tags = hashtag_count(copy_text)
-    if tags > MAX_HASHTAGS:
-        raise SystemExit(
-            f"{args.copy} 里有 {tags} 个 tag，超过 {MAX_HASHTAGS} 个。\n"
-            "删到五个以内再推——留最能被搜到的那几个（人名、赛事、账号）。")
-    # 活动期必带的 tag 在**上限检查之后**补：手写超了照旧报错（那是写的人的事），
-    # 没超的由这儿腾位置接上。复制页和微信正文都从这一段字出，spec 里手写的
-    # `.xhs.txt` 不用逐条改。补成什么样打印出来，别默默改。
-    before = copy_text
-    copy_text = with_campaign_tags(copy_text)
-    if copy_text != before:
-        print(f"[文案] 活动 tag 已补齐：{copy_text.splitlines()[-1]}")
-
-    # 格式化标题（`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`）
-    # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
-    # 标题单独复制；正文不再带一遍日期、栏目和标题。
-    # **算一次，两处共用。** 标题走 column_of、药丸另取一个默认值，就又回到了
-    # 「同一条推送里两个栏目名」——那正是 column_of 要修的那个错。
-    column = args.column or column_of(Path(args.copy))
-    # 而对阵/比分/概括的出处是 **spec**，命令行只作覆盖（`resolve_meta`）：
-    # 工作流那几个输入曾经挂着上一条片子的默认值，漏传一项就拿另一场球的
-    # 标题发出去。
-    meta = resolve_meta(Path(args.copy), args)
-    title = headline(outdir, column, meta["matchup"], meta["score"],
-                     meta["event"], meta["summary"], args.date)
-    copy_text = copy_body_only(copy_text, title)
-    if not copy_text:
-        raise SystemExit("正文去掉标题后为空")
+    column, title, copy_text = prepare_copy(
+        Path(args.copy), outdir, column=args.column, date=args.date, args=args)
     if args.stage == "check":
         print(f"[preflight] title/tags/copy pass: {title}")
         return 0

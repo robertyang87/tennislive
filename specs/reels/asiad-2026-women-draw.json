@@ -19,19 +19,23 @@
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
-    "subject": "王曦雨",
+    "subject": "张帅、王曦雨",
     "hook": "金花能否会师？\n先闯过这两关",
     "narration": "金花能否会师？先闯过这两关。",
     "topic": "2026 亚运女单 · 金花冲金路线",
     "portrait": {
       "image": "assets/asiad-2026-draws/wang-cover.jpg",
-      "fit": "width",
       "focus": 0.5,
-      "focus_y": 0.43,
-      "zoom": 1.05,
-      "_why": "WTA官方2026辛辛那提王曦雨握拳照片5656×3771，assets agent本轮实看。人物代表封面，不冒充亚运现场。"
+      "focus_y": 0.5,
+      "_why": "2026-09-27用户要求双人主题封面两人拼接、照片铺满。上下半幅采用实拍原图cover裁切，不垫模糊背景。"
     },
-    "scrim": "clear"
+    "scrim": "clear",
+    "portrait_above": {
+      "image": "assets/asiad-2026-draws/zhang-cover.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5
+    },
+    "split": 0.5
   },
   "editorial": {
     "mode": "match_review",

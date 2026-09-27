@@ -51,11 +51,16 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
 用法：
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage subs
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage sheet
+    python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage cover-scan
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage render
+
+`cover-scan` 把 `frame_at` 前后一段逐格渲成海报、逐格过封面闸，落
+`cover_candidates.json` ＋ 候选墙——见 `tools/interview_cover_scan.py`。
 """
 from __future__ import annotations
 
 import argparse
+import contextlib
 import difflib
 import hashlib
 import io
@@ -69,6 +74,31 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTDIR = ROOT / "output" / "interviews"
+
+# design-tokens: enforced
+# ⭐ 2026-09-27 UI / VI 评审 WP3：这条线出画面的颜色一律从 `tennislive.design_tokens`
+# 取——评审量出来一部赛后开麦片子里同时有 **4 支绿**（品牌黄绿、顶栏薄荷、中文字幕
+# 那支淡黄绿、封面标签的青绿），而它们没有一个共同出处。`design_tokens` 是纯常量
+# 模块（不拉别的包），所以这里在模块级就挂 `src`，不像别的依赖那样进函数才挂。
+if str(ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(ROOT / "src"))
+from tennislive.design_tokens import (  # noqa: E402
+    BRAND_BAR_CSS, DARK, MOTION, SCORE, TEXT_SHADOW_CHROME, TEXT_SHADOW_HOOK,
+    ass, ass_inline, rgb,
+)
+from tennislive.video.subtitle_text import drop_punctuation  # noqa: E402
+
+# 这条线自己的几支色：`design_tokens` 里**没有同值的角色**。评审把它们登记成「合并」
+# 对象（#06140f → background #04120d、#cfe3d9 / #dcefe4 → muted-foreground #cfe6d8、
+# #0d2b21 → muted #102d23），可合并是**改值不是换出处**，要账号所有者点头
+# （WP0 评审 nit 2：「均差 ≤2/255」放得过一次看得见的改色）。所以值原样留在这儿，
+# 一处定义、各处引用；真要合并，改这几行、重渲比对，再单独走一次选择题。
+_INK_BG = "#06140f"      # token-exempt: 采访线深底（字幕带、封面、收尾卡），并入 background 属改值
+_TOPIC_FG = "#dcefe4"    # token-exempt: 封面台头第二行，和 versus_poster 的 .topic 同值
+_SOFT_FG = "#cfe3d9"     # token-exempt: 封面 .sub、收尾卡 .facts 的次级字
+_CARD_GLOW = "#0d2b21"   # token-exempt: 收尾卡顶上那团径向光
+_TOPBAR_BODY = "#d5e2db"  # token-exempt: 顶栏次行，= build_match_reel.TOPBAR_BODY_COLOUR
+_ASS_BLACK = "&H00000000"  # token-exempt: ASS 描边/底色占位（描边 0、BorderStyle 1 不画底）
 
 # **这条线原来只认一个源**：`@wta` 的逐场集锦（YouTube）。2026-08-05 商竣程那条
 # 起多了第二个——Tennis TV，因为 **ATP 男子的场上采访结构性地不上 YouTube**：
@@ -237,6 +267,27 @@ _SCORE_LOSE_WEIGHT = 300
 # rybakina-osaka-tor2026-qf 等）——不为字号重渲，挂进
 # `test_字号涨了不许撑破已有的行` 的豁免表。
 _FONT_SIZE = {"en": 46, "zh": 70}
+# ⭐ 2026-09-27 账号所有者 Q17「赛后开麦的顶栏和字幕向赛场之上对齐：英文 44 近白、
+# 中文 68 并放大数字；断行仍按 46 量，不许错行」。所以**量和渲从这天起是两个数**：
+#
+#     量（切行、宽度闸）   `_FONT_SIZE`    en 46 / zh 70     ← 一个字节都没动
+#     渲（ASS 的 Style）   下面这三个     en 44 / zh 68，数字和西文 78
+#
+# ⚠️ **为什么渲得小了反而不会错行**：切行是 `segment()` 按 46 现切的，行怎么分
+# 只看 `_FONT_SIZE`，渲染字号改了也是同一份行；而每一个字形渲出来的步进都比量的
+# 那个小——libass 的字号是「winAscent+winDescent 那么高」，思源黑体 1.448 em、
+# Inter 1.430 em（`_libass_em_ratio`），所以 78 号的数字实际只有 53.9px 的 em，
+# 比量宽用的 70 还窄。判据 `test_字幕渲染字号换了一个行都不许多`（拿存量 spec
+# 每一行量渲染宽度）。
+# 三个数和「赛场之上」原声字幕是**同一套**（`explainer._ASS_BILINGUAL_EN_SIZE` /
+# `_ASS_SIZE` / `_ASS_NUM_SIZE`），判据钉两边相等——写两处必分叉。
+_EN_RENDER_PX = 44
+_ZH_RENDER_PX = 68
+_ZH_NUM_PX = 78
+# 中英字幕一个颜色：近白 #e7f3ec（Q2，= 赛场之上原声字幕）。原来中文是
+# `&H0074DCC3`——想写 #74dcc3 青绿，ASS 的字节序是 BGR，渲出来是 #c3dc74
+# 那支淡黄绿，和顶栏的薄荷在同一帧里打架。现在一律走 `design_tokens.ass()`。
+_SUB_FG = DARK["subtitle-foreground"]
 # 顶栏两行：主行永远是这条内容的**识别标题**，次行补赛事语境。
 #
 # 普通赛后采访沿用「赛事＋轮次 / 对阵＋采访类型」；没有比赛对阵的典礼不能把
@@ -269,6 +320,62 @@ def _measure_at(kind: str, size: int, text: str) -> float:
                 "和渲出来的对不上，而这件事不报错。")
         _FONT_CACHE[key] = ImageFont.truetype(path, size)
     return _FONT_CACHE[key].getlength(text)
+
+
+_EM_RATIO_CACHE: dict[str, tuple[int, int, int]] = {}
+
+
+def _win_metrics(kind: str) -> tuple[int, int, int]:
+    """字体自己的 (unitsPerEm, winAscent, winDescent)，libass 按它缩放和排行高。
+
+    读的是字体文件的 OS/2 表，不写死：换一支字体，比值跟着走。win 两项为 0 的
+    老字体退回 hhea（libass 同样的退路）。
+    """
+    if kind not in _EM_RATIO_CACHE:
+        import struct  # noqa: PLC0415
+
+        data = Path(_FONT_FILES[kind][0]).read_bytes()
+        off = struct.unpack(">I", data[12:16])[0] if data[:4] == b"ttcf" else 0
+        n = struct.unpack(">H", data[off + 4:off + 6])[0]
+        tables = {}
+        for i in range(n):
+            tag, _, t_off, _ = struct.unpack(
+                ">4sIII", data[off + 12 + 16 * i:off + 28 + 16 * i])
+            tables[tag] = t_off
+        upem = struct.unpack(">H", data[tables[b"head"] + 18:tables[b"head"] + 20])[0]
+        o = tables[b"OS/2"]
+        win_a, win_d = struct.unpack(">HH", data[o + 74:o + 78])
+        if not win_a + win_d:
+            h = tables[b"hhea"]
+            asc, desc = struct.unpack(">hh", data[h + 4:h + 8])
+            win_a, win_d = asc, -desc
+        _EM_RATIO_CACHE[kind] = (upem, win_a, win_d)
+    return _EM_RATIO_CACHE[kind]
+
+
+def _libass_em_ratio(kind: str) -> float:
+    """libass 把 `Fontsize` 当成字体 **winAscent+winDescent** 那么高来缩放，
+    所以一个字形真正的 em 是 `Fontsize / 这个比值`。
+
+    ⚠️ PIL 的 `getlength` 是按 em＝字号量的，**比 libass 渲出来的宽 1.2~1.45 倍**
+    （思源黑体 / TL Score 1.448、Inter 1.430、得意黑 1.200）。2026-09-27 评审拿真帧
+    量过：英文最宽一行 PIL 说 945px、渲出来 682px；双打的顶栏第二行 PIL 说 968px
+    （贴着 984 的闸），于是被无谓地缩到 35/41 号，而它真渲出来只有 689px 宽。
+
+    """
+    upem, win_a, win_d = _win_metrics(kind)
+    return (win_a + win_d) / upem
+
+
+def _topbar_width(kind: str, size: int, text: str) -> float:
+    """顶栏这一段**渲出来**有多宽：PIL 的步进除以 libass 的 em 比值。
+
+    ⚠️ **只给顶栏用。** 字幕那一半（`_en_width` / `_zh_width` / `segment()`）照旧
+    按 PIL 的 em 量——那把尺子一换，`segment()` 切出来的行就变了，`en_fixed` 的
+    行号整套失准（`_FONT_SIZE` 那段注释记的账）。顶栏不参与切行，量准它只影响
+    「要不要缩字号」和「超没超宽」这两件事（评审 I9，2026-09-27）。
+    """
+    return _measure_at(kind, size, text) / _libass_em_ratio(kind)
 
 
 def _en_width(text: str) -> float:
@@ -704,7 +811,7 @@ CAPTION_GAP_SECS = 2.0
 #         把"跟着画面摆"这条摆脱掉：不用再猜这条片子的球衣、广告牌、场地
 #         是什么颜色，字幕带永远是同一块干净的深绿，和封面/解读卡也对得上
 #         同一套视觉语言
-_BG_COLOUR = "0x06140f"
+_BG_COLOUR = "0x" + _INK_BG.removeprefix("#")   # ffmpeg 的 color= 认 0xRRGGBB
 
 
 def _caption_spans(workdir: Path) -> list[list[float]]:
@@ -1113,7 +1220,7 @@ def _run_width(kind: str, size: int, text: str) -> float:
         sys.path.insert(0, str(ROOT / "src"))
         from tennislive.video.topbar_icon import icon_advance  # noqa: PLC0415
         return icon_advance(text, _HEAD_ICON_H)
-    return _measure_at(kind, size, text)
+    return _topbar_width(kind, size, text)
 # 渲后顶栏像素闸。顶栏所在的 0–150px 是纯品牌深绿底，不受源片内容影响，
 # 因而可以稳定地数「接近白色」的文字像素。分界取两行上锚之间：HEADA 的墨迹
 # 实测落在 24–71，HEADB 落在 98–126；84px 留足抗锯齿和编码余量。
@@ -1145,17 +1252,30 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: EN,{_EN_FONT},{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,{_EN_TOP},1
-Style: ZH,{_ZH_FONT},{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
-Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
-Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,{_HEAD_B_TOP},1
+Style: EN,{_EN_FONT},{_EN_RENDER_PX},{ass(_SUB_FG)},{_ASS_BLACK},{_ASS_BLACK},0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,{_EN_TOP},1
+Style: ZH,{_ZH_FONT},{_ZH_RENDER_PX},{ass(_SUB_FG)},{_ASS_BLACK},{_ASS_BLACK},1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
+Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},{ass(DARK['foreground'])},{_ASS_BLACK},{_ASS_BLACK},0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
+Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},{ass(_TOPBAR_BODY)},{_ASS_BLACK},{_ASS_BLACK},0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,{_HEAD_B_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
 
 
-_MARK_COLOUR = r"\c&H8CDC4A&"
+#: 顶栏的「这一方赢了」：麦克风、赢家名字、赢下那一盘的数字。薄荷 `SCORE["win_video"]`
+#: （= `build_match_reel.TOPBAR_SETWIN_ASS`，2026-08-18 两条线定成同一支；Q1 2026-09-27
+#: 「薄荷只表示这一方赢了」）。内联标签的内容，不带外层花括号。
+_MARK_COLOUR = ass_inline(SCORE["win_video"]).strip("{}")
+#: 英文字幕里 `highlight_en` 标出来的固定搭配：品牌黄绿 `primary`，**不借薄荷**。
+#: Q1（2026-09-27）：「黄绿是唯一品牌色，薄荷只表示这一方赢了」——一句英文里的
+#: 短语不是「谁赢了」，染薄荷就是在同一帧里让「赢」多了一种读法（评审 WP3 nit 1）。
+_PHRASE_COLOUR = ass_inline(DARK["primary"]).strip("{}")
+#: 比分里的连字符压暗一档（Q17 2026-09-27，和赛场之上 `TOPBAR_SETDASH_ASS` 同一支
+#: `SCORE["dash"]`）：它是分隔符不是内容，也不跟着赢盘加粗、输盘转细——走常规档。
+_DASH_TAG = ass_inline(SCORE["dash"]).strip("{}") + r"\b0"
+#: 顶栏主行的字色：近白 `foreground` #f4fbf7（评审 3.4，和赛场之上 HEAD 同一支；
+#: 原来是纯白 #fff）。人物主标题那条路要**显式**写它（见 `header_runs`）。
+_HEADA_COLOUR = ass_inline(DARK["foreground"]).strip("{}")
 # 比分那一段：**一盘里，只有赢的那一方自己的数字上绿**——不是整条一个颜色，
 # 也不是整盘一个颜色。账号所有者 2026-08-18 三句话逐步收窄定下来的：
 #
@@ -1173,7 +1293,11 @@ _MARK_COLOUR = r"\c&H8CDC4A&"
 # Barlow Condensed 是窄身，同字号下墨迹比汉字矮，不放大会显得比旁边的名字
 # 小一号。44 是渲出来比的（32 偏小，44 就开始抢戏）——字号对两个数字一视
 # 同仁，只有颜色分谁赢了这一盘。
-_SCORE_PX = 44
+# ⭐ 2026-09-27 账号所有者 Q17：两条线的顶栏对齐「赛场之上」——**比分 40**
+# （= `build_match_reel.TOPBAR_SCORE_SIZE`），连字符压暗（`_DASH_TAG`）。
+# 44 那一档是 Barlow 时代量的；换成 TL Score 之后同字号墨高已经和中文名对齐，
+# 两条线一个 40、一个 44 是评审 3.4 量出来的分叉。判据钉两边相等。
+_SCORE_PX = 40
 _SCORE_SIZE_TAG = rf"\fs{_SCORE_PX}"
 # ⚠️ `push.score` 的记法是**从整场比赛赢家视角连续写下来的**——每一盘前面
 # 那个数永远是整场赢家自己的局数（`alexandrova-sabalenka-tor2026-r16.json`
@@ -1193,8 +1317,9 @@ def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, in
     返回的每一段仍然是 `header_runs` 那种 `(文本, kind, 标签, 字号)` 四元组，
     `kind` 一律 `"num"`（走 `TL Score`，量宽度按数字字体的尺子）——
     这样 `header_lines` 那句 `sum(_measure_at(...))` 不用跟着改，因为总字符
-    和总 kind 没变，只是原来一整段现在拆成了好几小段。短横线跟着**前一个**
-    数字走（"6-" 是一段，"4" 是下一段），冒号左右各自独立上色。
+    和总 kind 没变，只是原来一整段现在拆成了好几小段。短横线**单独一段**
+    （"6"、"-"、"4"），压暗、常规档——2026-09-27 Q17 对齐赛场之上之前它跟着
+    前一个数字走，于是跟着那个数字一起绿、一起粗。
 
     ⚠️ `px` 默认 `_SCORE_PX`，**双打那一行整体缩小时** `header_runs` 会传一个
     更小的值进来——两个数字和名字必须缩同一个比例，不然比分和名字大小对不上。
@@ -1217,14 +1342,16 @@ def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, in
         # 需要再细一点，和加粗的区分开」）。
         # ⚠️ 两边都要显式写字重，一个都不能省——ASS 的标签是粘连的，省一次
         # 后面那一段就跟着粗或者跟着细。
-        # ⚠️ 连字符跟着**前一个**数字走（见下面那句 `f"{n1}-"`），所以它会跟着
-        # 那个数字的粗细。这条线的顶栏比分是一整块小字，肉眼分不出连字符的
-        # 字重；match-reel 那条顶栏字大，连字符单独复位成常规档。
+        # ⚠️ 连字符**单独一段**（2026-09-27 Q17）：压暗成 `SCORE["dash"]`、常规档，
+        # 和 match-reel 顶栏同一个做法——原来它跟着前一个数字走，于是赢盘那边
+        # 的连字符也是绿的、粗的，读起来像比分的一部分。
         w1 = r"\b1" if n1_won else rf"\b{_SCORE_LOSE_WEIGHT}"
         w2 = rf"\b{_SCORE_LOSE_WEIGHT}" if n1_won else r"\b1"
         tag1 = (_MARK_COLOUR if n1_won else "") + w1 + tag
         tag2 = (_MARK_COLOUR if not n1_won else "") + w2 + tag
-        runs.append((f"{n1}-", "num", tag1, px))
+        runs.append((n1, "num", tag1, px))
+        # 连字符单独一段：压暗、常规档（Q17，和赛场之上 `.setdash` 同一个理由）
+        runs.append(("-", "num", _DASH_TAG, px))
         if paren:
             # 抢七小分：**裸数字、印在大分的右上角**（账号所有者 2026-08-31，
             # 全站一个口径——match-reel 顶栏同一天同款）。写的是 `TL Score`
@@ -1354,7 +1481,7 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
              # 人物主标题一次移除三个变量，收敛为**一个可见 run**：
              # 同一 Noto Regular、白色、54px；主次由 54/38 的确定字号建立，
              # 不再用装饰竖条或切换字重触发版本敏感路径。
-             (f"{name} · {kind}", "zh", r"\c&HFFFFFF&", _HEAD_SIZE["a"])],
+             (f"{name} · {kind}", "zh", _HEADA_COLOUR, _HEAD_SIZE["a"])],
             [(ev, "zh", "", _HEAD_SIZE["b"])],
         )
 
@@ -1379,9 +1506,9 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
         lose = next(s for s in sides if s != win)
         # 赢的那个名字要**看得出来**是赢家——账号所有者：「谢尔顿要高亮吧，
         # 赢球的人」。**重用 `_MARK_COLOUR`，不新开一支颜色**：那正是顶栏
-        # 最前面那支麦克风（原来是竖条 `▍`）在用的那支品牌绿，也是 `highlight_en()` 高亮关键
-        # 短语时用的同一支——「一屏（这条片子从头到尾算一屏）只留一个强调色」，
-        # 见 `highlight_en` 的 docstring 和 CLAUDE.md。输的那个名字和比分
+        # 最前面那支麦克风（原来是竖条 `▍`）在用的那支薄荷——Q1（2026-09-27）定死它
+        # 只表示「这一方赢了」，所以 `highlight_en()` 高亮英文短语改用品牌黄绿
+        # `_PHRASE_COLOUR`，不再借它。输的那个名字和比分
         # 前后的「· 赛后场上采访」都留默认色，不然满行都是重点等于没有重点。
         # 比分本身按盘拆分上色，见 `_score_runs`——不是整条一个颜色。
         score_px = round(_SCORE_PX * scale)
@@ -1396,7 +1523,11 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
     # 同一个形状：**字号是算出来的，不是写死的**——先按默认字号量一次，
     # 装不下再按超出的比例整体缩小（名字和比分一起缩，不然大小对不上）。
     line_b = _build_line_b()
-    w = sum(_measure_at(k, size, text) for text, k, _, size in line_b)
+    # ⚠️ 量的是**渲出来**的宽（`_topbar_width`，除掉 libass 的 em 比值）。原来拿
+    # PIL 的 em 量，多量了 1.448 倍，双打那两条（ruud-zverev / alcaraz-mensik）
+    # 被量成 958~968px、缩到 35/41 号，而真渲出来只有 689px——单打和双打的顶栏
+    # 字号无缘无故不一样（评审 I9，2026-09-27）。
+    w = sum(_topbar_width(k, size, text) for text, k, _, size in line_b)
     if w > _HEAD_PX:
         # 留 2% 余量：四舍五入到整数字号之后，量出来的宽度可能比算出来的
         # 缩放比例贴着算得更宽一点点。
@@ -1415,17 +1546,33 @@ def header_lines(spec: dict) -> tuple[str, str]:
     长一点（「2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔」）就够了。
     每一段按**它自己那支字体**量，比分那段是窄身的 Barlow，按中文的尺子量
     会高估三成。可用宽是 1080 减两边各 48。
+
+    ⚠️ **两种版式，两把尺子——跟着「谁来画」走。** 普通赛后采访的顶栏是 libass
+    画的，按 `_run_width`（PIL 步进 ÷ libass 的 em 比值，评审 I9）量；**人物主标题
+    （`subject_primary`）不走 libass**，是 `_subject_topbar_png` 拿 PIL 按字号＝em
+    直接画成像素的，量它就得用画它的那一支字体、那个字号（`_subject_head_width`）。
+    2026-09-27 修评审阻塞项时量过：「阿格涅什卡·拉德万斯卡 · 国际网球名人堂入选致辞」
+    按 libass 的尺子只有 842px、闸放行，而 PNG 上真画出来 1266px，两头各被 1080
+    的画布切掉一截——那张 PNG 的像素闸只数「够不够亮」，切掉一半照样过。
     """
+    subject = topbar_layout(spec) == "subject_primary"
     out = []
     for runs in header_runs(spec):
         # **按每一段自己的字号量。** 比分那段是 `\fs38` 渲的，拿 32 去量会
         # 少算两成——闸就成了摆设，而溢出照样不报错。
-        w = sum(_run_width(kind, size, text) for text, kind, _, size in runs)
+        w = sum(_subject_head_width(size, text) if subject
+                else _run_width(kind, size, text)
+                for text, kind, _, size in runs)
         text = "".join(t for t, kind, _, _ in runs if kind != "icon")
         if w > _HEAD_PX:
             raise SystemExit(
-                f"顶栏这行 {w:.0f}px，超过可用的 {_HEAD_PX}px，会折到下一行上：{text}\n"
-                "把 `event` 写短一点（赛事＋级别＋轮次就够，别再加国别、场地）。")
+                f"顶栏这行 {w:.0f}px，超过可用的 {_HEAD_PX}px，"
+                + ("两头会被画布切掉" if subject else "会折到下一行上")
+                + f"：{text}\n"
+                + ("把 `subject.name` / `interview_kind` 写短一点（人物主标题这一行就是"
+                   "「名字 · 采访类型」；典礼全名第二行 `event` 里已经有了，别再塞进 `interview_kind`）。"
+                   if subject else
+                   "把 `event` 写短一点（赛事＋级别＋轮次就够，别再加国别、场地）。"))
         out.append(text)
     return out[0], out[1]
 
@@ -1484,15 +1631,45 @@ def header_ass(spec: dict) -> tuple[str, str]:
     return (_line(main, _HEAD_A_TOP), _line(context, _HEAD_B_TOP))
 
 
+def event_matchup_topic(spec: dict) -> str:
+    """「赛事 · A VS B」：顶栏赛事行去掉年份 ＋「 · 」＋ 赢家 VS 输家。拼不出返回空串。
+
+    ⭐ 2026-09-27 账号所有者 Q7「赛后开麦封面对齐赛场之上……副标题写『赛事 ·
+    A VS B』」。格式就是「赛场之上」那条全局规则（`reel_facts.cover_topic`，
+    2026-09-26）：`拉沃尔杯 第二天 · 鲁德 / 兹维列夫 VS 布勃利克 / 中岛布兰登`。
+    双打的搭档用「 / 」连（两边带空格，和那边一样）。
+
+    - **赢家在前**：和顶栏第二行「赢家 比分 输家」一个顺序，`push.matchup` 的词序
+      是签位，不保证胜者在前（`header_runs` 那段记过）。没写 `winner` 才照签位
+    - 评审量过，原来这一行退到 `push.summary`，9 条里 6 条和下面的钩子**说的是
+      同一句话**（「鲁德：场边看比上场紧张」压在「场边看比上场还紧张」上面）
+
+    判据 `test_封面副标题和赛场之上是同一个格式`（拿 `reel_facts.cover_topic` 比）。
+    """
+    event = re.sub(r"^\d{4}\s+", "", str(spec.get("event") or "").strip())
+    mu = str((spec.get("push") or {}).get("matchup") or "").strip()
+    sides = [x.strip() for x in re.split(r"\bvs\.?\b", mu, flags=re.I) if x.strip()]
+    if not event or len(sides) != 2:
+        return ""
+    win = str(spec.get("winner") or "").strip()
+    if win in sides:
+        sides = [win, next(x for x in sides if x != win)]
+    names = [re.sub(r"\s*/\s*", " / ", x) for x in sides]
+    return f"{event} · {names[0]} VS {names[1]}"
+
+
 def cover_topic(spec: dict, cover: dict | None = None) -> str:
     """封面台头第二行。**只有这一处出处**，封面和常驻角标都从这儿取。
 
-    ⚠️ 它**有退路**：`cover.topic` 没写就取 `push.summary`（那正是微信推送的
-    标题）。角标那头不跟着退的话，就会出现「封面写一句、正片里写另一句」，
-    而那不报错——「一个数写两处必分叉」的又一个实例。
+    顺序：spec 里写了 `cover.topic` 就用它 → 没写就拼「赛事 · A VS B」
+    （`event_matchup_topic`，Q7 2026-09-27）→ 拼不出（名人堂、没有对阵的发布会）
+    才退到 `push.summary`。
+
+    ⚠️ 它**有退路**，所以角标那头也必须走这个函数：角标不跟着退的话，就会出现
+    「封面写一句、正片里写另一句」，而那不报错——「一个数写两处必分叉」。
     """
     cov = cover if cover is not None else (spec.get("cover") or {})
-    return str(cov.get("topic")
+    return str(cov.get("topic") or event_matchup_topic(spec)
                or (spec.get("push") or {}).get("summary", "")).strip()
 
 
@@ -1546,6 +1723,36 @@ def watermark_filter(outdir: Path, spec: dict, *,
             f"[{src}][wm]overlay={x}:{y}[{dst}]")
 
 
+_SUBJECT_FONT_CACHE: dict[int, object] = {}
+
+
+def _subject_head_font(size: int):
+    """人物主标题顶栏那张 PNG **画字用的那一支字体**：NotoSansCJK-Regular.ttc 的
+    index 2（简体中文）。量宽（`header_lines` 的闸）和画（`_subject_topbar_png`）
+    共用这一份——⚠️ 别拿 `_measure_at("zh", …)` 顶：它读的是同一个 TTC 的
+    **index 0（日文）**，「·」在两个 face 里步进不同，那条 1266px 的顶栏它只量出
+    1219px，贴着 984 的时候会差出一个误判。
+    """
+    if size not in _SUBJECT_FONT_CACHE:
+        from PIL import ImageFont  # noqa: PLC0415
+
+        font_path = Path(_FONT_FILES["zh"][0])
+        if not font_path.exists():
+            raise SystemExit(
+                f"人物顶栏预栅格需要 {font_path}；不能拿回退字体生成正式标题。")
+        try:
+            # Ubuntu 的 NotoSansCJK-Regular.ttc：index 2 是 Simplified Chinese。
+            _SUBJECT_FONT_CACHE[size] = ImageFont.truetype(str(font_path), size, index=2)
+        except OSError as exc:
+            raise SystemExit(f"无法从 {font_path} 加载简体中文 Noto 字体：{exc}") from exc
+    return _SUBJECT_FONT_CACHE[size]
+
+
+def _subject_head_width(size: int, text: str) -> float:
+    """人物主标题顶栏这一段**画在 PNG 上**有多宽：PIL 按字号＝em，不除 libass 的比值。"""
+    return _subject_head_font(size).getlength(text)
+
+
 def _subject_topbar_png(spec: dict, outdir: Path) -> Path | None:
     """把人物主标题顶栏预栅格为透明 PNG，绕开生产 libass 的顶边差异。
 
@@ -1557,27 +1764,20 @@ def _subject_topbar_png(spec: dict, outdir: Path) -> Path | None:
     if not wants_topbar(spec) or topbar_layout(spec) != "subject_primary":
         return None
 
-    from PIL import Image, ImageDraw, ImageFont  # noqa: PLC0415
+    from PIL import Image, ImageDraw  # noqa: PLC0415
 
     main, context = header_lines(spec)
-    font_path = Path(_FONT_FILES["zh"][0])
-    if not font_path.exists():
-        raise SystemExit(
-            f"人物顶栏预栅格需要 {font_path}；不能拿回退字体生成正式标题。")
-    try:
-        # Ubuntu 的 NotoSansCJK-Regular.ttc：index 2 是 Simplified Chinese。
-        main_font = ImageFont.truetype(str(font_path), _HEAD_SIZE["a"], index=2)
-        context_font = ImageFont.truetype(str(font_path), _HEAD_SIZE["b"], index=2)
-    except OSError as exc:
-        raise SystemExit(f"无法从 {font_path} 加载简体中文 Noto 字体：{exc}") from exc
+    main_font = _subject_head_font(_HEAD_SIZE["a"])
+    context_font = _subject_head_font(_HEAD_SIZE["b"])
 
     image = Image.new("RGBA", (CANVAS_W, VIDEO_TOP), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
+    # 两行的颜色和 ASS 那条路同一个出处（HEADA = foreground、HEADB = 顶栏次行色），
+    # 不再各写一份 RGB 元组——原来这儿写的是纯白，ASS 那头是 BGR 的 &H00DBE2D5。
     draw.text((CANVAS_W // 2, _HEAD_A_TOP), main, font=main_font,
-              fill=(255, 255, 255, 255), anchor="mt")
-    # ASS 的 &H00DBE2D5& 是 BGR；对应 RGB 为 D5/E2/DB。
+              fill=(*rgb(DARK["foreground"]), 255), anchor="mt")
     draw.text((CANVAS_W // 2, _HEAD_B_TOP), context, font=context_font,
-              fill=(213, 226, 219, 255), anchor="mt")
+              fill=(*rgb(_TOPBAR_BODY), 255), anchor="mt")
 
     # 在保存和交给 ffmpeg 前先用与成片相同的双带区判据查真实像素。
     proof = Image.new("RGB", image.size, (0, 18, 11))
@@ -1745,16 +1945,62 @@ def _ts(x: float) -> str:
     return f"{int(x // 3600)}:{int(x % 3600 // 60):02d}:{x % 60:05.2f}"
 
 
+#: 中文字幕里要放大的那几段（数字和西文）。**和 `explainer._ASS_RUN` 是同一个式子**，
+#: 故意抄一份而不是 import：`tennislive.video.explainer` 一 import 就是 ~2.4 秒（本文件
+#: 自己 ~0.6 秒），而本文件每一步（`--stage subs` / 测试收集）都要 import——为一个正则把
+#: 最快那一步拖慢四倍不值。两边分叉由 `test_中文字幕放大数字和赛场之上是同一个式子`
+#: 当场报（式子逐字相等 ＋ 同一批句子烧出来的标记逐字节相等；评审 WP3 nit 6）。
+_ZH_RUN = re.compile(r"[0-9A-Za-z]+")
+
+
+def zh_display(cn: str) -> str:
+    """中文字幕那一行**烧上屏的样子**。spec 里的 `zh` 原样不动，只改画出来的那一份。
+
+    - **去标点，只留 ？！**（`subtitle_text.drop_punctuation`，全站一份）。这个文件
+      开头的 docstring 一直写着「中文按仓库规矩去标点」，**可 `write_ass` 从来没做**：
+      评审 2026-09-27 量出已发的 24 条 spec 共 972 行中文带着全角标点烧进了画面
+      （「我们会非常非常快就输掉。」）。英文那行照旧保留标点——它是学习对象本身。
+    - **数字和西文放大一档**（68 → 78），和「赛场之上」原声字幕同一套
+      （`explainer._ass_text`）：同字号下思源黑体的西文比汉字矮一截，并排像换了
+      一支字体（Q17）。
+
+    ⚠️ 一整行只有标点（「……」）时退回原文，不画一条空字幕——L2 闸要求中英
+    逐 cue 成对，空文本会被当成「这一句没有中文」。
+    """
+    shown = drop_punctuation(cn) or cn.strip()
+    return _ZH_RUN.sub(
+        lambda m: rf"{{\fs{_ZH_NUM_PX}}}{m.group(0)}{{\fs{_ZH_RENDER_PX}}}", shown)
+
+
+def _zh_margin_v(shown: str) -> int:
+    """这一条中文的 MarginV（0 ＝ 用 Style 里那个 `_ZH_TOP`）。
+
+    ⚠️ 中文是**上锚**（Alignment 8）：libass 按这一行里**最大的那个字号**排行高，
+    放大到 78 的数字把整行的 ascent 撑高 (78−68)×winAscent/(winAscent+winDescent)
+    ≈ 8px，于是**带数字的那一条整行往下掉 8px**——字幕在 cue 之间上下跳。
+    所以带放大段的那一条往上提同样的量，汉字的基线一个像素都不动。
+    判据 `test_中文字幕带数字的那一条基线不许跳`（真渲，量汉字墨迹）。
+    """
+    if rf"\fs{_ZH_NUM_PX}" not in shown:
+        return 0
+    _, win_a, win_d = _win_metrics("zh")
+    return _ZH_TOP - round((_ZH_NUM_PX - _ZH_RENDER_PX) * win_a / (win_a + win_d))
+
+
 def highlight_en(text: str, phrases: list[str]) -> tuple[str, set[str]]:
-    """把 `phrases` 里每一个字面短语，在 `text` 里原样出现的地方包上品牌绿。
+    """把 `phrases` 里每一个字面短语，在 `text` 里原样出现的地方包上品牌黄绿。
 
     **只上色，不放大。** 放大要改 `\\fs`，会动这一行的实际占宽——而这一行的
     宽度是按固定字号卡死量出来的（见 `_LINE_PX` / `_en_width`），改宽度就要
     重新过一遍那道闸。上色用 `\\c`，字符前进量一个像素都不变，`_en_width`
     在这一步**之前**量过的数照样作数。
 
-    **重用 `_MARK_COLOUR`，不新开一个强调色。** 顶栏那条竖杠已经在用它——
-    一屏（这条片子从头到尾算一屏）只留一个强调色，见 CLAUDE.md。
+    **颜色是 `_PHRASE_COLOUR`（品牌黄绿 `primary`），不是顶栏的 `_MARK_COLOUR`。**
+    原来这儿「重用 `_MARK_COLOUR`，不新开一个强调色」——那是薄荷，而 Q1
+    （2026-09-27）定死薄荷只表示「这一方赢了」（顶栏赢家、赢盘）；黄绿才是这个号
+    唯一的品牌强调色，封面的 `hook_accent` 用的也是它。一句英文里的固定搭配不是
+    「赢」，所以用黄绿（评审 WP3 nit 1；写这条时存量 spec 没有一条用 `highlight_en`，
+    已发的片子一帧不变）。
 
     ⚠️ **先找完所有短语的匹配区间，再一次性拼出结果**，不是挨个 `str.replace`。
     短语之间可能有包含关系（比如 `stay focused` 和某个恰好取了 `focused` 的
@@ -1784,7 +2030,7 @@ def highlight_en(text: str, phrases: list[str]) -> tuple[str, set[str]]:
     matched: set[str] = set()
     for s, e, phrase in spans:
         out.append(text[cursor:s])
-        out.append(rf"{{{_MARK_COLOUR}}}{text[s:e]}{{\r}}")
+        out.append(rf"{{{_PHRASE_COLOUR}}}{text[s:e]}{{\r}}")
         matched.add(phrase)
         cursor = e
     out.append(text[cursor:])
@@ -1864,9 +2110,11 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
             if phrases:
                 en, hit = highlight_en(en, phrases)
                 unmatched -= hit
-            # 英文在上、中文在下，两行同起同落
+            # 英文在上、中文在下，两行同起同落。中文烧上屏之前过 `zh_display`
+            # （去标点、数字放大）——只改画出来的那一份，spec 里的 `zh` 不动。
             ev.append(f"Dialogue: 0,{a},{b},EN,,0,0,0,,{en}")
-            ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,0,,{cn}")
+            shown = zh_display(cn)
+            ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,{_zh_margin_v(shown)},,{shown}")
         if unmatched:
             raise SystemExit(
                 "`highlight_en` 里这几个短语，字幕里一处都没找到：\n  "
@@ -1960,6 +2208,39 @@ TRANSCRIPT_MAX_DISAGREE = 0.12
 # ⚠️ **不去紧邻重复的磕巴**（`I I`、`more than more than`）：那要靠猜边界，
 # 而「very very good」这种是真内容。填词这一档已经够，多做一步就越界了。
 _COMPARE_FILLERS = frozenset({"uh", "uhh", "um", "umm", "erm"})
+
+
+def en_fixed_misaligned(lines: list[dict], en_fixed: dict) -> list[str]:
+    """`en_fixed` 是按 **1 起** 的行号整行替换；写成 0 起就整体错一行，而且不吭声。
+
+    2026-09-27 `cobolli-mensik-laver-cup-2026-doubles-interview` 就这么发出去了：
+    四处订正全挂到了上一行——`You're just one match away` 被换成
+    `from winning the Laver Cup,`，而真正该改的 `Labour Cup` 原样烧进了画面。
+    整行替换本来就允许大改（ASR 把一句听成乱码），所以只看「和原行像不像」会误伤；
+    判据收窄到**错位的形状**：和自己那一行几乎不像（< 0.5），却和相邻某一行很像
+    （≥ 0.7，且比自己那行高）。返回每处的说明，空列表＝没问题。
+    """
+    out = []
+    def sim(a: str, b: str) -> float:
+        return difflib.SequenceMatcher(
+            None, compare_tokens(a), compare_tokens(b)).ratio()
+    for k, v in en_fixed.items():
+        idx = int(k) - 1
+        if not 0 <= idx < len(lines):
+            continue
+        own = sim(lines[idx]["en"], v)
+        if own >= 0.5:
+            continue
+        for j in (idx - 1, idx + 1):
+            if 0 <= j < len(lines):
+                near = sim(lines[j]["en"], v)
+                if near >= 0.7 and near > own:
+                    out.append(
+                        f"`en_fixed[{k}]` = {v!r}：第 {k} 行是 {lines[idx]['en']!r}"
+                        f"（相似 {own:.2f}），第 {j + 1} 行 {lines[j]['en']!r} 才像它"
+                        f"（{near:.2f}）")
+                    break
+    return out
 
 
 def compare_tokens(text: str) -> list[str]:
@@ -2316,6 +2597,46 @@ def auto_silent_gap_keys(spec: dict, lines: list[dict], outdir: Path) -> set[str
     return resolved
 
 
+#: `--stage verify` **只因「人还没核」的发现**没过时的退出码：分歧超闸没认领／认领
+#: 过期／超天花板、空档没销账。`mode=subs` 那一步靠它把「报告里有要人看的」
+#: （人核之前的常态，`::warning::` 收尾、run 绿着）和「工具坏了」（下不动音轨、
+#: 模型起不来——照样红）分开。render 那一步不区分：非零就停在编码之前，和原来一样。
+VERIFY_FINDINGS_EXIT = 3
+
+
+class ReviewFindings(SystemExit):
+    """第二份 ASR 报出来、要人逐处看过才能销账的发现。
+
+    是 `SystemExit` 的子类：不关心这层区别的调用方行为不变——消息照印、退出码
+    非零。只有 `--stage verify` 接住它、和空档一起打印、换成 `VERIFY_FINDINGS_EXIT`
+    退出。**只给「人核之前的常态」用**：同一个模型跑两遍、下不动音轨这类是配置
+    或工具的毛病，照旧抛普通的 `SystemExit`，subs 那一趟照样红。
+    """
+
+
+def blocking_gaps(spec: dict, lines: list[dict],
+                  outdir: Path) -> list[tuple[float, float]]:
+    """render 那道空档闸**真正会拦**的那几处：人没销账、VAD 也没证明静音的。
+
+    `--stage verify` 和 `--stage render` 共用这一份——`mode=subs` 跑完第二份
+    ASR 就按出片的判据把会红的列出来，而不是另写一个「差不多」的版本。
+    """
+    auto_quiet = auto_silent_gap_keys(spec, lines, outdir)
+    return [g for g in _unresolved_gaps(spec, caption_gaps(spec, outdir))
+            if gap_key(*g) not in auto_quiet]
+
+
+def gap_block_message(spec_path: str, spec: dict,
+                      holes: list[tuple[float, float]]) -> str:
+    """空档闸红的那句话。键要印出来——`caption_gaps_ok` 的键是**源片**秒。"""
+    return (f"{spec_path} 有 {len(holes)} 处空档没销账："
+            + "、".join(f"{a - spec['start']:.1f}–{b - spec['start']:.1f} 秒（片内）"
+                        for a, b in holes) + "。\n"
+            "打开源片听这几秒：有人说话就是漏了，掌声／欢呼就不是。"
+            "结论写进 spec 的 `caption_gaps_ok`，键是 "
+            + "、".join(f"`{gap_key(a, b)}`" for a, b in holes) + "。")
+
+
 def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     """拿**独立的第二份 ASR** 校 YouTube 那份，把分歧摊出来。
 
@@ -2352,8 +2673,7 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # ——而那正是 CI 那台（PR #198 的 run 30980157757：本地绿、CI 报
     # `No module named 'faster_whisper'`）。又一次「本地装着不等于 CI 装着」，
     # 也是「形状校验里不许混进环境检查」的镜像：**环境依赖不许挡在形状校验前面。**
-    import difflib
-
+    # （`difflib` 模块顶上已经 import 过，这儿原来那句重复的 import 是 ruff F401。）
     from faster_whisper import WhisperModel  # noqa: PLC0415
 
     # 走同一个下载口：`-o` 是模板不是保证，落到别的后缀要认出来。
@@ -2473,7 +2793,7 @@ def _check_disagree_claim(spec: dict, rate: float, path: Path,
     claim = spec.get("transcript_disagree_ok") or {}
     declared, why = claim.get("rate"), str(claim.get("why") or "").strip()
     if not (isinstance(declared, int | float) and why):
-        raise SystemExit(
+        raise ReviewFindings(
             f"两份转写对不上 {rate:.1%}，超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}。"
             f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。\n"
             "逐处看完、确认剩下的分歧不影响发出去的英文（长采访多半是 whisper "
@@ -2485,7 +2805,7 @@ def _check_disagree_claim(spec: dict, rate: float, path: Path,
             f'  "transcript_disagree_ok": {{"rate": {math.ceil(rate * 1000) / 1000}, '
             '"why": "逐处看过：……"}')
     if rate > declared:
-        raise SystemExit(
+        raise ReviewFindings(
             f"分歧 {rate:.1%} 比认领的 {declared:.1%} 还高——认领是钉在当时那次观测上的，"
             "现在变差了。重新逐处看过再更新 `transcript_disagree_ok.rate`。")
     # **短转写按差了几个词判，长转写按比例判。** 分母小的时候比例量的不是
@@ -2494,12 +2814,12 @@ def _check_disagree_claim(spec: dict, rate: float, path: Path,
     off = round(rate * max(first_words, 1))
     if short:
         if off > SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS:
-            raise SystemExit(
+            raise ReviewFindings(
                 f"两份转写差了 {off} 个词（共 {first_words} 词，{rate:.1%}），"
                 f"超过短转写的天花板 {SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS} 个词。\n"
                 "这条转写本来就短，差这么多必然有整段对不上——认领挡不住，去查源。")
     elif rate > TRANSCRIPT_DISAGREE_CEILING:
-        raise SystemExit(
+        raise ReviewFindings(
             f"分歧 {rate:.1%} 超过认领的天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}。"
             "这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。")
     scale = (f"短转写：{first_words} 词里差 {off} 个，"
@@ -2843,7 +3163,174 @@ def _cover_framing(cov: dict) -> tuple[float, float]:
     return zoom, focus_y
 
 
-def build_cover(spec: dict, frame: Path, dest: Path) -> Path:
+#: 封面标题（钩子）的字号：**94，和「赛场之上」冻结的那一档同一个数**
+#: （`versus_poster.HOOK_TITLE_PX`，账号所有者 2026-08-31 全局统一）。
+#:
+#: ⭐ 2026-09-27 账号所有者 Q7：「赛后开麦封面对齐赛场之上：标题 94px，可选一个
+#: 黄绿重点词，副标题『赛事 · A VS B』，删掉底部重复标签」。原来是 74px，从这个栏目
+#: 上线起就没动过，也没有谁定过它——在 270px 宽的信息流缩略图上，赛后开麦的标题
+#: 约 18.5px，赛场之上约 23.5px，同一个号的两个栏目看着像两家。
+#:
+#: 一行写长了（存量里 106 条有 21 条按 74px 写的、到 94px 超出 940px 可用宽）
+#: **整行等比缩到刚好放下**，不折行——折成三行会把副标题挤出画布。
+#: 以后写新钩子照「赛场之上」那条：每行 ≤ 10 个字，才吃得满 94。
+_TITLE_PX = 94
+#: 封面左右边距 70：和台头 `.head{left:70px}` 同一条竖线（评审 I11：原来 `.band`
+#: 是 64，标题墨迹比台头图标左偏 3~9px，一眼看得出没对齐）。
+_COVER_PAD_X = 70
+_TITLE_W = CANVAS_W - 2 * _COVER_PAD_X
+#: 底下那条渐变带有多高（从画布底往上）。它比字幕带（视频下沿以下 480px）高 40px，
+#: 让照片的下沿先沉进去；标题块在视频下沿以下那 480px 里上下居中。
+_COVER_BAND_H = 520
+
+
+def _title_px(lines: list[str]) -> int:
+    """标题字号：94 放得下就 94，放不下按最宽那行等比缩（量的是得意黑本身）。
+
+    量用 PIL：Chromium 的 CSS px 就是 em，和 PIL 的 `getlength` 同一把尺子——
+    **不是** libass 那种按 winAscent+winDescent 缩放的字号（见 `_libass_em_ratio`）。
+    """
+    widest = max((_measure_at("head", _TITLE_PX, ln) for ln in lines), default=0.0)
+    return _TITLE_PX if widest <= _TITLE_W else int(_TITLE_PX * _TITLE_W / widest)
+
+
+def hook_accent_problem(lines: list[str], accent: str) -> str | None:
+    """`cover.hook_accent` 合不合规矩；合规回 None，不合回一句能照着改的话。
+
+    `_title_html`（渲封面）和 `check_cover_hook`（`main()` 开头那排 spec 闸）
+    共用这一处——原来只有渲封面时才查，写错了要等到出封面那一步才红
+    （评审 WP3 nit 5）。
+    """
+    accent = str(accent or "").strip()
+    if not accent:
+        return None
+    hits = sum(ln.count(accent) for ln in lines)
+    if hits != 1:
+        return (f"cover.hook_accent「{accent}」在标题里出现了 {hits} 次，要正好一次"
+                "（0 次＝什么都没高亮，2 次＝两处都亮，一屏只留一个强调色）。"
+                f"标题是：{' / '.join(lines)}")
+    if any(ln.strip() == accent for ln in lines):
+        return (f"cover.hook_accent「{accent}」是一整行——重点词是**一个词**，"
+                "整行都亮就没有重点了。挑这一行里最该被看见的那几个字。")
+    return None
+
+
+def check_cover_hook(spec: dict) -> None:
+    """spec 闸：`cover.hook_accent` 写了就得合规矩。只读 spec，排在 `main()` 最前面
+    那排检查里，`--stage subs` 第一秒就报，不等出封面。没写 `hook_accent` 是零行为。"""
+    cov = spec.get("cover") or {}
+    accent = str(cov.get("hook_accent") or "").strip()
+    if not accent:
+        return
+    if problem := hook_accent_problem([str(x) for x in cov.get("title") or []], accent):
+        raise SystemExit(f"{spec.get('slug', '?')}：{problem}")
+
+
+def _title_html(lines: list[str], accent: str = "") -> str:
+    """标题那几行：每行一个 `<div>`；`cover.hook_accent` 那一截包成 `.accent`（黄绿）。
+
+    和「赛场之上」同一个字段名、同一个口径（`versus_poster.hook_html`）：一条片子
+    **最多一处**，必须在标题里**正好出现一次**（0 次＝以为亮了其实没亮，2 次＝
+    两处都亮），而且**不许是整行**——「一个重点词」，整行都亮等于没有重点
+    （评审 R6，一屏只留一个强调色）。
+    """
+    import html as _html  # noqa: PLC0415
+
+    accent = str(accent or "").strip()
+    if not accent:
+        return "".join(f"<div>{_html.escape(ln)}</div>" for ln in lines)
+    if problem := hook_accent_problem(lines, accent):
+        raise SystemExit(problem)
+    out = []
+    for ln in lines:
+        if accent in ln:
+            a, b = ln.split(accent, 1)
+            out.append(f"<div>{_html.escape(a)}<span class=accent>"
+                       f"{_html.escape(accent)}</span>{_html.escape(b)}</div>")
+        else:
+            out.append(f"<div>{_html.escape(ln)}</div>")
+    return "".join(out)
+
+
+#: 台头（彩条 ＋ 52px 图标 ＋「网球时差 · 栏目」＋ 副标题）的 CSS。**封面和收尾卡
+#: 共用这一份**（评审 I3：收尾卡原来另起一套——64px 图标、青绿斜体眉题「赛后开麦」、
+#: 位置 (92,96)，同一条片子第一屏和最后一屏的品牌块位置、大小、颜色、字全不一样）。
+#: 数值和解说片 `_render_intro_badge`、`versus_poster` 的台头逐项相同，判据
+#: `test_封面顶栏要和解说片那份台头是同一套值` 从这里现抠。
+_LOCKUP_CSS = f""".bar{{position:absolute;top:0;left:0;right:0;height:12px;
+ background:{BRAND_BAR_CSS}}}
+.head{{position:absolute;top:44px;left:70px;right:70px;display:flex;align-items:center;
+ text-shadow:0 2px 12px rgba(0,0,0,.6)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
+.brandwrap{{display:flex;align-items:center;gap:14px}}
+.brandlines{{display:flex;flex-direction:column;gap:2px}}
+.topic{{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
+ color:{_TOPIC_FG};letter-spacing:1px;
+ text-shadow:{TEXT_SHADOW_CHROME}}}
+.brand-icon{{width:52px;height:52px;object-fit:contain;
+ filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
+.brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
+ font-size:38px;font-weight:400;letter-spacing:1px;color:{DARK['foreground']}}}
+"""
+
+
+def _lockup_html(column: str, topic: str = "") -> str:
+    """台头的 HTML。`topic` 空着就只印品牌行（收尾卡）。"""
+    import base64  # noqa: PLC0415
+
+    icon = ROOT / "assets" / "logo" / "brand" / "icon.png"
+    brand_icon = (
+        f'<img class=brand-icon src="data:image/png;base64,'
+        f'{base64.b64encode(icon.read_bytes()).decode()}">' if icon.is_file() else ""
+    )
+    topic_html = f"\n<span class=topic>{topic}</span>" if topic else ""
+    return (f"<div class=bar></div>\n<div class=head><div class=brandwrap>{brand_icon}"
+            f"<div class=brandlines>\n<span class=brand>网球时差 · {column}</span>"
+            f"{topic_html}</div></div></div>")
+
+
+def cover_html(spec: dict, frame: Path) -> str:
+    """封面那一页的 HTML（`build_cover` 截图用；测试直接读它，不必起浏览器）。"""
+    import base64  # noqa: PLC0415
+
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.render.webcards import _font_css  # noqa: PLC0415
+
+    cov = spec["cover"]
+    zoom, focus_y = _cover_framing(cov)
+    b64 = base64.b64encode(frame.read_bytes()).decode()
+    lines = [str(x) for x in cov["title"]]
+    column = spec.get("column", "赛后开麦")
+    # 顶栏第二行（副标题）：「赛事 · A VS B」，见 `cover_topic`。
+    topic = cover_topic(spec, cov)
+    ink = ",".join(str(c) for c in rgb(_INK_BG))
+    sub = str(cov.get("sub", "")).strip()
+    sub_html = f"\n<div class=sub>{sub}</div>" if sub else ""
+    return f"""<!doctype html><meta charset=utf-8><style>{_font_css()}
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
+ font-family:'TL Sans SC',sans-serif;background:{_INK_BG}}}
+.bg{{position:absolute;inset:0;background:url(data:image/jpeg;base64,{b64}) center/cover;
+ filter:blur(46px) brightness(.34);transform:scale(1.25)}}
+{_LOCKUP_CSS}.shot{{position:absolute;top:{VIDEO_TOP}px;left:0;width:{CANVAS_W}px;height:{VIDEO_H}px;
+ overflow:hidden}}
+.shot img{{position:absolute;left:50%;top:{focus_y * 100:g}%;
+ transform:translate(-50%,-50%);height:{zoom * 100:g}%}}
+.band{{position:absolute;left:0;bottom:0;width:{CANVAS_W}px;height:{_COVER_BAND_H}px;
+ background:linear-gradient(180deg,rgba({ink},0) 0%,rgba({ink},.46) 16%,
+ rgba({ink},.62) 46%,rgba({ink},.66) 100%);
+ padding:{_COVER_BAND_H - (CANVAS_H - _BAND_TOP)}px {_COVER_PAD_X}px 0;display:flex;flex-direction:column;
+ justify-content:center}}
+.title{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
+ font-size:{_title_px(lines)}px;line-height:1.24;color:{DARK['foreground']};white-space:nowrap;
+ text-shadow:{TEXT_SHADOW_HOOK}}}
+.title .accent{{color:{DARK['primary']}}}
+.sub{{margin-top:26px;font-size:38px;color:{_SOFT_FG};text-shadow:0 2px 16px rgba(0,0,0,.8)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
+</style><div class=bg></div><div class=shot><img src="data:image/jpeg;base64,{b64}"></div>
+{_lockup_html(column, topic)}
+<div class=band><div class=title>{_title_html(lines, str(cov.get("hook_accent", "")))}</div>{sub_html}</div>"""
+
+
+def build_cover(spec: dict, frame: Path, dest: Path, page=None) -> Path:
     """封面：本场抽一帧 + 文案，**字体走仓库那套**。
 
     标题用 `TL Display SC`（得意黑），和「赛场之上」的海报是同一支——
@@ -2852,96 +3339,113 @@ def build_cover(spec: dict, frame: Path, dest: Path) -> Path:
 
     底板是**渐变不是实色块**：实色块会在画面上切出一条硬边，
     渐变让球场自然沉进文字区。0 → .46 → .62。
+
+    ⭐ 2026-09-27 Q7「对齐赛场之上」：标题 94px（`_TITLE_PX`）、可选一个黄绿重点词
+    （`cover.hook_accent`）、副标题「赛事 · A VS B」（`cover_topic`）、**删掉底部
+    那颗标签**（`cover.tag`，青绿竖条 ＋ 「2026 拉沃尔杯 · 阿尔卡拉斯」——评审量的：
+    一张封面五层字把同一件事说了三遍，而那颗标签在 270px 缩略图上约 8px，只剩噪点）。
+    标题和副标题这一块在视频下沿之下的 480px 里上下居中。
+
+    ⚠️ **栏目名只印一次**：它在左上角那行 `网球时差 · 赛后开麦` 里——「赛场之上」
+    的黄色药丸就是因为印第二遍被账号所有者整块删掉的（CLAUDE.md「台头药丸不许
+    自己回来」）。`cover.tag` 留在存量 spec 里不读，已发的不重渲。
     """
-    import base64
-    sys.path.insert(0, str(ROOT / "src"))
-    from tennislive.render.webcards import _font_css  # noqa: PLC0415
+    return _shoot(cover_html(spec, frame), dest, page)
+
+
+@contextlib.contextmanager
+def canvas_page():
+    """一张整幅画布大小的 Chromium 页面。**`_shoot` 和封面候选扫描共用这一份。**
+
+    扫描要连着渲几十张候选海报（`interview_cover_scan`），每张都重启一次
+    浏览器是白花秒数；可视口、缩放一旦和 `_shoot` 分叉，扫出来的那张就不是
+    终审审的那张——所以页面只在这儿开，两边拿同一个。
+    """
     from playwright.sync_api import sync_playwright   # noqa: PLC0415
 
-    cov = spec["cover"]
-    zoom, focus_y = _cover_framing(cov)
-    b64 = base64.b64encode(frame.read_bytes()).decode()
-    title = "<br>".join(cov["title"])
-    column = spec.get("column", "赛后开麦")
-    # ⚠️ **栏目名只印一次。** 它现在在左上角那行 `网球时差 · 赛后开麦` 里，
-    # 底部那颗 tag 再写一遍就是白占位置——「赛场之上」的黄色药丸就是因为
-    # 这个被账号所有者整块删掉的（CLAUDE.md「台头药丸不许自己回来」）。
-    tag = cov.get("tag", "")
-    # 顶栏第二行：这条片子的标题。默认取 `push.summary`——那正是微信那条
-    # 推送的标题，**一个出处**，不让人再敲一遍（CLAUDE.md「推送元数据的
-    # 出处是 spec，不是命令行」是同一条）。
-    topic = cover_topic(spec, cov)
-    icon = ROOT / "assets" / "logo" / "brand" / "icon.png"
-    brand_icon = (
-        f'<img class=brand-icon src="data:image/png;base64,'
-        f'{base64.b64encode(icon.read_bytes()).decode()}">' if icon.is_file() else ""
-    )
-    html = f"""<!doctype html><meta charset=utf-8><style>{_font_css()}
-*{{margin:0;padding:0;box-sizing:border-box}}
-body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
- font-family:'TL Sans SC',sans-serif;background:#06140f}}
-.bg{{position:absolute;inset:0;background:url(data:image/jpeg;base64,{b64}) center/cover;
- filter:blur(46px) brightness(.34);transform:scale(1.25)}}
-.bar{{position:absolute;top:0;left:0;right:0;height:12px;
- background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%)}}
-.head{{position:absolute;top:44px;left:70px;right:70px;display:flex;align-items:center;
- text-shadow:0 2px 12px rgba(0,0,0,.6)}}
-.brandwrap{{display:flex;align-items:center;gap:14px}}
-.brandlines{{display:flex;flex-direction:column;gap:2px}}
-.topic{{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
- color:#dcefe4;letter-spacing:1px;
- text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8)}}
-.brand-icon{{width:52px;height:52px;object-fit:contain;
- filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))}}
-.brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
- font-size:38px;font-weight:400;letter-spacing:1px;color:#f4fbf7}}
-.shot{{position:absolute;top:{VIDEO_TOP}px;left:0;width:{CANVAS_W}px;height:{VIDEO_H}px;
- overflow:hidden}}
-.shot img{{position:absolute;left:50%;top:{focus_y * 100:g}%;
- transform:translate(-50%,-50%);height:{zoom * 100:g}%}}
-.band{{position:absolute;left:0;bottom:0;width:{CANVAS_W}px;height:520px;
- background:linear-gradient(180deg,rgba(6,20,15,0) 0%,rgba(6,20,15,.46) 16%,
- rgba(6,20,15,.62) 46%,rgba(6,20,15,.66) 100%);
- padding:76px 64px 0;display:flex;flex-direction:column}}
-.title{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
- font-size:74px;line-height:1.22;color:#f4fbf7;letter-spacing:1px;
- text-shadow:0 4px 26px rgba(0,0,0,.85)}}
-.sub{{margin-top:26px;font-size:38px;color:#cfe3d9;text-shadow:0 2px 16px rgba(0,0,0,.8)}}
-.tag{{margin-top:auto;margin-bottom:56px;display:flex;align-items:center;gap:18px}}
-.tag i{{width:9px;height:38px;background:#74dcc3;border-radius:2px}}
-.tag span{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:32px;
- color:#74dcc3;letter-spacing:1.5px}}
-</style><div class=bg></div><div class=shot><img src="data:image/jpeg;base64,{b64}"></div>
-<div class=bar></div>
-<div class=head><div class=brandwrap>{brand_icon}<div class=brandlines>
-<span class=brand>网球时差 · {column}</span>
-<span class=topic>{topic}</span></div></div></div>
-<div class=band><div class=title>{title}</div>
-<div class=sub>{cov.get('sub', '')}</div>
-<div class=tag><i></i><span>{tag}</span></div></div>"""
-    return _shoot(html, dest)
+    with sync_playwright() as pw:
+        b = pw.chromium.launch(executable_path=_chromium(), args=["--no-sandbox"])
+        try:
+            yield b.new_page(viewport={"width": CANVAS_W, "height": CANVAS_H},
+                             device_scale_factor=1)
+        finally:
+            b.close()
 
 
-def _shoot(html: str, dest: Path) -> Path:
+def _shoot(html: str, dest: Path, page=None) -> Path:
     """HTML → 整幅画布的 PNG。**封面和解读卡共用这一份。**
 
     抽出来不是为了少写几行：这个仓库为「同一件事写两处」栽过好几次，而这儿
     分叉的表现最阴——两种卡的 `device_scale_factor` 或视口差一点，**两张图
     分开看都正常**，拼进同一条片子才看得出字号不一样。
-    """
-    from playwright.sync_api import sync_playwright   # noqa: PLC0415
 
-    page = dest.with_suffix(".html")
-    page.write_text(html, encoding="utf-8")
-    with sync_playwright() as pw:
-        b = pw.chromium.launch(executable_path=_chromium(), args=["--no-sandbox"])
-        pg = b.new_page(viewport={"width": CANVAS_W, "height": CANVAS_H},
-                        device_scale_factor=1)
-        pg.goto(page.as_uri())
-        pg.wait_for_timeout(700)
-        pg.screenshot(path=str(dest))
-        b.close()
+    `page` 给了就复用（封面候选扫描一趟渲几十张），不给就自己开一个。
+    """
+    if page is None:
+        with canvas_page() as pg:
+            return _shoot(html, dest, pg)
+    src = dest.with_suffix(".html")
+    src.write_text(html, encoding="utf-8")
+    page.goto(src.as_uri())
+    page.wait_for_timeout(700)
+    page.screenshot(path=str(dest))
     return dest
+
+
+#: 解读卡上所有成段的字（lead / point / facts / ask）的断行方式。
+#:
+#: ⭐ 2026-09-27 评审 I2：Chromium 缺省把中文**任意两个字之间**都当成可断点，
+#: 于是 76px 的 `point` 在 838px 的栏里贪心排满、把词劈开——已推的 ruud-zverev
+#: 收尾卡上是「单打选手打双打 他说靠的是正／手」，chwalinska-mertens「滋／味」、
+#: tien-cobolli「他说谁／都有机会」。deminaur-zverev 和 jodar-bublik 的
+#: `takeaway._why` 里记着同一个病（「一／直顶住」「费／德勒」），当时的解法是
+#: **把文案砍到 12 个字**——那是拿文案去迁就一个版式 bug。
+#:
+#: - `word-break:keep-all`：汉字之间不再是断点，**只在空格（文案里代替标点的那个）
+#:   和标点处断**——账号所有者「连在一起的词不要分开」
+#: - `text-wrap:balance`：几行长短匀开，不出「11 ＋ 1」的孤字
+#: - `overflow-wrap:anywhere`：一个子句本身比栏宽还长时的兜底，宁可断也不溢出画布
+#:
+#: 判据 `test_收尾卡断行只在空格处_不劈词`（真渲，拿 DOM 逐字取行）。
+_CARD_WRAP = "word-break:keep-all;text-wrap:balance;overflow-wrap:anywhere"
+#: 收尾卡正文左边距：和台头 `.head{left:70px}` 同一条竖线（I3 台头换成封面那一套
+#: 之后，原来的 92 会让正文比品牌块右错 22px）。右边距 150 不动——那是给小红书
+#: 右侧点赞/收藏/评论那一列让的（CLAUDE.md「解读卡的版式」）。
+_CARD_PAD_L = 70
+
+
+def takeaway_html(spec: dict, which: str) -> str:
+    """解读卡那一页的 HTML（`build_takeaway_card` 截图用；测试直接读它）。"""
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.render.webcards import _font_css  # noqa: PLC0415
+
+    card = (spec.get("takeaway") or {})[which]
+    facts = "".join(f"<li>{f}</li>" for f in (card.get("facts") or []))
+    body = "".join([
+        f'<div class=lead>{card["lead"]}</div>' if card.get("lead") else "",
+        f'<div class=point>{card["point"]}</div>' if card.get("point") else "",
+        f"<ul class=facts>{facts}</ul>" if facts else "",
+        f'<div class=ask>{card["ask"]}</div>' if card.get("ask") else "",
+    ])
+    return f"""<!doctype html><meta charset=utf-8><style>{_font_css()}
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
+ background:radial-gradient(120% 90% at 50% 12%,{_CARD_GLOW} 0%,{_INK_BG} 62%);
+ font-family:'TL Sans SC',sans-serif;color:{DARK['foreground']};
+ padding:206px 150px 150px {_CARD_PAD_L}px;display:flex;flex-direction:column;
+ justify-content:center}}
+{_LOCKUP_CSS}.lead{{font-size:42px;line-height:1.5;color:{DARK['subtle-foreground']};margin-bottom:34px;
+ {_CARD_WRAP}}}
+.point{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
+ font-size:76px;line-height:1.36;letter-spacing:.5px;{_CARD_WRAP}}}
+.facts{{list-style:none;margin-top:56px;display:flex;flex-direction:column;gap:22px}}
+.facts li{{font-size:40px;line-height:1.42;color:{_SOFT_FG};padding-left:30px;
+ position:relative;{_CARD_WRAP}}}
+.facts li:before{{content:'';position:absolute;left:0;top:.52em;width:14px;
+ height:14px;border-radius:3px;background:{DARK['primary']}}}
+.ask{{margin-top:64px;font-size:54px;line-height:1.45;color:{DARK['primary']};
+ font-family:'TL Display SC','TL Sans SC',sans-serif;{_CARD_WRAP}}}
+</style>{_lockup_html(spec.get("column", "赛后开麦"))}{body}"""
 
 
 def build_takeaway_card(spec: dict, which: str, dest: Path) -> Path:
@@ -2963,57 +3467,27 @@ def build_takeaway_card(spec: dict, which: str, dest: Path) -> Path:
     看得出不是转播画面，否则「我们的解读」和「他们的素材」在观感上糊成一片，
     等于白加。
 
+    ⭐ 2026-09-27 评审 I3 ＋ Q1：左上角的品牌块**就是封面那一块**（`_LOCKUP_CSS`：
+    彩条、52px 图标在 (70,44)、「网球时差 · 赛后开麦」近白 38px），原来那颗青绿
+    斜体的「赛后开麦」眉题删掉——一屏只剩黄绿一支强调色（`ask` 和要点方块）。
+    断行只在空格处（`_CARD_WRAP`，评审 I2）。
+
     ⚠️ **`point`/`ask` 字号 2026-08-12 从 64/46 调到 76/54**——账号所有者看
     谢尔顿那条的收尾卡截图，原话「这里的字体可以再大一些？」。本地渲了三档
     （64/46 现状、76/54、82/58）加一份 34 字满档压力测试，选 76/54：比现状
     明显更大，满档（point 17 字＋ask 34 字，两行都会自动换行）仍然留在画布
     内不溢出，82/58 那档满档时逼近安全边距，留的余量更薄。
     """
-    import base64  # noqa: PLC0415
-    sys.path.insert(0, str(ROOT / "src"))
-    from tennislive.render.webcards import _font_css  # noqa: PLC0415
-
-    card = (spec.get("takeaway") or {})[which]
-    icon = ROOT / "assets/logo/brand/icon-512.png"
-    mark = (f'<img class=mk src="data:image/png;base64,'
-            f'{base64.b64encode(icon.read_bytes()).decode()}">'
-            if icon.exists() else "")
-    facts = "".join(f"<li>{f}</li>" for f in (card.get("facts") or []))
-    body = "".join([
-        f'<div class=lead>{card["lead"]}</div>' if card.get("lead") else "",
-        f'<div class=point>{card["point"]}</div>' if card.get("point") else "",
-        f"<ul class=facts>{facts}</ul>" if facts else "",
-        f'<div class=ask>{card["ask"]}</div>' if card.get("ask") else "",
-    ])
-    html = f"""<!doctype html><meta charset=utf-8><style>{_font_css()}
-*{{margin:0;padding:0;box-sizing:border-box}}
-body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
- background:radial-gradient(120% 90% at 50% 12%,#0d2b21 0%,#06140f 62%);
- font-family:'TL Sans SC',sans-serif;color:#f4fbf7;
- padding:206px 150px 150px 92px;display:flex;flex-direction:column;
- justify-content:center}}
-.mk{{position:absolute;top:96px;left:92px;width:64px;height:64px;opacity:.9}}
-.eyebrow{{position:absolute;top:112px;left:180px;font-size:32px;color:#74dcc3;
- font-family:'TL Display SC','TL Sans SC',sans-serif;letter-spacing:2px}}
-.lead{{font-size:42px;line-height:1.5;color:#a9bcb2;margin-bottom:34px}}
-.point{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
- font-size:76px;line-height:1.36;letter-spacing:.5px}}
-.facts{{list-style:none;margin-top:56px;display:flex;flex-direction:column;gap:22px}}
-.facts li{{font-size:40px;line-height:1.42;color:#cfe3d9;padding-left:30px;
- position:relative}}
-.facts li:before{{content:'';position:absolute;left:0;top:.52em;width:14px;
- height:14px;border-radius:3px;background:#c6f65a}}
-.ask{{margin-top:64px;font-size:54px;line-height:1.45;color:#c6f65a;
- font-family:'TL Display SC','TL Sans SC',sans-serif}}
-</style>{mark}<div class=eyebrow>{spec.get("column", "赛后开麦")}</div>{body}"""
-    return _shoot(html, dest)
+    return _shoot(takeaway_html(spec, which), dest)
 
 
 def _still_segment(png: Path, secs: float, dest: Path,
-                   audio: Path | None = None) -> Path:
+                   audio: Path | None = None, audio_delay: float = 0.0) -> Path:
     """一张静图 → 一段 mp4。**封面和两张解读卡共用这一份。**
 
     `audio` 给了就用它当音轨（解读卡的口播），没给就补数字静音（封面）。
+    `audio_delay`：口播往后挪几秒——解读卡开头那一下是溶解（Q4），口播要等画面
+    化开了再开口，不然第一个字会被 crossfade 淡掉。
 
     ⚠️ **参数逐项和正片一致**：这条线走 `concat` demuxer + `-c copy`，帧率、
     采样率、**声道数**差一项就静默丢流，成片从某一秒起没声音，而 ffmpeg
@@ -3043,8 +3517,11 @@ def _still_segment(png: Path, secs: float, dest: Path,
          "-loop", "1", "-t", str(secs), "-i", str(png), *a_in,
          # 口播比画面短（末尾留了一口气），**补静音到画面那么长**——
          # 不补的话 `-shortest` 会按音轨截掉画面，卡就少了那口气。
-         "-af", f"apad=whole_dur={secs}",
+         "-af", (f"adelay={round(audio_delay * 1000)}:all=1," if audio_delay else "")
+         + f"apad=whole_dur={secs}",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         # 够长的静图（收尾卡）也在头尾强制关键帧：拼接时只重编它贴着接缝的那一秒
+         *_seam_keyframes(secs),
          "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
          "-shortest", str(dest)], check=True, timeout=600)
@@ -3381,7 +3858,36 @@ def _video_eq_filter(spec: dict, label: str = "spec") -> str:
     return "eq=" + ":".join(parts) + ","
 
 
-def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
+#: 出片、出海报、扫封面候选**下的是同一份源片**，格式串只写这一处。
+#: 三处各写一份的话，哪天一处改成 720p，扫出来的候选就不是终审审的那一帧。
+SOURCE_FMT = "bv*[height<=1080]+ba/b[height<=1080]"
+
+
+def _logo_filter(spec: dict, src: Path, outdir: Path) -> str:
+    """`logo_box` → `removelogo=…,` 滤镜片段；没写 `logo_box` 就是空串。
+
+    `--stage cover` 和 `--stage cover-scan` 共用——扫出来的候选帧要和
+    海报上那一帧去的是同一块水印，否则「候选里干净、海报上还有台标」。
+    """
+    if not (box := spec.get("logo_box")):
+        return ""
+    return ("removelogo=filename="
+            + str(logo_mask(src, box, outdir / "_logo_mask.png",
+                            bool(spec.get("mirrored")))) + ",")
+
+
+class NoFrameAt(RuntimeError):
+    """`ffmpeg -ss t` 退出码 0 却一帧都没抽出来：`t` 落在视频流最后一帧之后。
+
+    单独一个类型，不用 `FileNotFoundError`：ffmpeg 根本没装时 `subprocess.run`
+    抛的也是它——封面扫描要把「这一刻没画面」记成一格不合格，而「工具坏了」
+    必须照样抛出去（`interview_cover_scan.measure` 的 docstring）。
+    """
+
+
+def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "", *,
+                 at: float | None = None, dest: Path | None = None,
+                 page=None) -> Path:
     """从源片抽一帧渲成 `poster.jpg`。**`render` 和 `--stage cover` 共用这一份。**
 
     抽出来是**独立的一个函数**，不是复制一份进快速预览——这个仓库为
@@ -3391,19 +3897,43 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
 
     ⚠️ **封面这一帧不走正片那条滤镜链**，`mirrored` 得在这儿再翻一次——
     漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
+
+    `at` / `dest` / `page` 只给封面候选扫描用（`interview_cover_scan`）：
+    同一份实现渲**别的时刻**、写到别处、复用同一个浏览器页面。
+    扫描不另抄一份抽帧＋渲海报，理由同上——扫的那张必须就是终审审的那张。
     """
     frame = outdir / "_cover_frame.jpg"
-    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                    "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
-                    "-vf", (("hflip," if spec.get("mirrored") else "") + logo
-                            + _video_eq_filter(spec)
-                            + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
-                                         float(spec.get("crop_keep_top", 1.0)),
-                                         float(spec.get("crop_shift_x", 0.0)))),
-                    "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
+    if dest is not None:           # 扫候选：每一格各用各的临时帧，别互相盖
+        frame = dest.with_suffix(".frame.jpg")
+    t = spec["cover"]["frame_at"] if at is None else at
+    frame.unlink(missing_ok=True)  # 上一趟留下的同名帧会让下面那道判断假绿
+    grab = subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                           "-ss", str(t),
+                           "-i", str(src),
+                           "-vf", (("hflip," if spec.get("mirrored") else "") + logo
+                                   + _video_eq_filter(spec)
+                                   + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
+                                                float(spec.get("crop_keep_top", 1.0)),
+                                                float(spec.get("crop_shift_x", 0.0)))),
+                           "-frames:v", "1", "-q:v", "2", str(frame)],
+                          capture_output=True, text=True, timeout=300)
+    if not frame.is_file():
+        # 一帧没出：原来一路走到 `build_cover` 的 `read_bytes()` 才炸成
+        # FileNotFoundError，封面扫描整趟跟着红（2026-09-27 review 复现）。
+        # ⚠️ **退出码随 ffmpeg 版本变**：本地那版越过最后一帧是退出码 0、不出文件；
+        # runner 上那版是 234（编码器一帧没收到就打不开）。所以不按退出码认，
+        # 按「t 是不是已经越过视频流末尾」认；没越过就是别的毛病，照原样抛。
+        end = probe_video_duration(src)
+        if grab.returncode == 0 or (end and float(t) >= end - 0.05):
+            raise NoFrameAt(f"源片在 {t} 秒没有画面——ffmpeg 一帧都没抽出来（退出码 "
+                            f"{grab.returncode}，视频流到 {end:.2f} 秒），多半越过了"
+                            "视频流的最后一帧（音轨可以比画面长）。")
+    if grab.returncode != 0:
+        print(grab.stderr, file=sys.stderr)
+        raise subprocess.CalledProcessError(grab.returncode, grab.args, grab.stdout, grab.stderr)
     # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
     # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
-    poster = build_cover(spec, frame, outdir / "poster.jpg")
+    poster = build_cover(spec, frame, dest or outdir / "poster.jpg", page=page)
     frame.unlink(missing_ok=True)
     return poster
 
@@ -4248,16 +4778,232 @@ def _side_segment(spec: dict, outdir: Path, key: str = "lead_in") -> Path | None
          "-filter_complex", chain,
          "-map", "[out]", "-map", "0:a:0?",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         *_seam_keyframes(dur),
          "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2", str(dest)],
         check=True, timeout=600)
     return dest
 
 
+# ── 接缝溶解（Q4，2026-09-27）──────────────────────────────────────────────
+#
+# 账号所有者 Q4：「赛后开麦只溶解 封面→冷开场→正文、正文→收尾卡→片尾 这几刀，
+# **长正文照旧直拷，不增加渲染时长**。中间一帧黑都不许有。」
+#
+# 评审量的：这条线每一个接缝都是一帧硬切（ruud-zverev 封面→冷开场一帧里亮度跳
+# 31.4、冷开场→正文 27.9、正文→收尾卡 22.2），而「赛场之上」每个接缝是 0.18 秒
+# 溶解（`build_match_reel.SEG_FADE`）。
+#
+# **做法：只重编接缝两边那一小截，正文中间那一大段照旧 `-c copy`。**
+#
+#   - 源片段（冷开场 / 正文 / 捧杯）编码时在离头尾 `_SEAM_KEY_S` 秒处**强制一个
+#     关键帧**（`_seam_keyframes`，x264 默认闭 GOP，从这一帧起可以干净地切）
+#   - 拼接时每个源片段切成三截：头一截、中间、尾一截。中间按关键帧 `-c copy`，
+#     一个字节不重编；头尾那一截和相邻的静图（封面、收尾卡）、片尾一起重编成
+#     「接缝块」，块里用 `xfade`（画面）接起来
+#   - **声音整条单独做一遍**：每一段的音轨按它画面的帧数截齐，相邻两段
+#     `acrossfade`，一次编成 AAC。AAC 是几秒钟的事；这样拼缝处没有「两份不同编码的
+#     AAC 首尾相接」的咔哒，也没有逐段累积的音画漂移
+#
+# 多花的编码量＝每个接缝两边各 ~1 秒画面 ＋ 封面、收尾卡、片尾（静图，x264 在静帧
+# 上几乎不花时间）。正文 200 秒那一大段一帧都不重编。
+#
+# ⚠️ 0.18 秒在 25 fps 上是 4.5 帧。`xfade` 的 duration 照 0.18 写（和赛场之上同一个
+# 数），**画面和声音的重叠统一取整到帧**（`_OVERLAP_S` = 5 帧 = 0.20 秒）：offset
+# 落在帧格上，后一段的帧不会被挪到半帧处再被 `-r 25` 丢一帧或补一帧；声音的
+# crossfade 也按 0.20 走，两条轨的总长逐采样对得上。0.18 和 0.20 在 25 fps 上都是
+# 4 个过渡帧，肉眼没有区别。
+_DISSOLVE_S = float(MOTION["video_dissolve_s"])
+_FPS = 25
+_OVERLAP_FRAMES = math.ceil(_DISSOLVE_S * _FPS - 1e-9)
+_OVERLAP_S = _OVERLAP_FRAMES / _FPS
+#: 源片段头尾各在这儿强制一个关键帧，拼接时从这里切开。1 秒：比重叠（0.2）宽得多，
+#: 又不至于多重编多少。
+_SEAM_KEY_S = 1.0
+#: 找切点时认的最小头尾长度：短于它的一截不够垫一次溶解，那一段整段进接缝块。
+_SEAM_MIN_S = 0.5
+#: 一段片子比这短，就不切了——整段进接缝块重编（静图、片尾本来就是这样）。
+_SPLIT_MIN_S = 2 * _SEAM_KEY_S + 1.0
+
+_X264 = ["-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-r", str(_FPS), "-pix_fmt", "yuv420p", "-color_range", "tv"]
+
+
+def _seam_keyframes(dur: float) -> list[str]:
+    """给源片段编码时加的参数：离头尾 `_SEAM_KEY_S` 秒处各强制一个关键帧。
+
+    片段太短（切不出三截）就不加，拼接时整段进接缝块。
+    """
+    if dur < _SPLIT_MIN_S:
+        return []
+    return ["-force_key_frames", f"{_SEAM_KEY_S:g},{dur - _SEAM_KEY_S:.3f}"]
+
+
+def _probe_frames(path: Path) -> tuple[int, list[float]]:
+    """这一段的帧数，和所有关键帧的时刻（秒，相对这一段自己的起点）。"""
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "packet=pts_time,flags", "-of", "csv=p=0", str(path)],
+        check=True, capture_output=True, text=True, timeout=120).stdout
+    times, keys = [], []
+    for row in out.splitlines():
+        t, _, flags = row.partition(",")
+        try:
+            ts = float(t)
+        except ValueError:
+            continue
+        times.append(ts)
+        if "K" in flags:
+            keys.append(ts)
+    if not times:
+        raise SystemExit(f"{path.name} 里读不出一帧画面")
+    t0 = min(times)
+    return len(times), sorted(round(k - t0, 3) for k in keys)
+
+
+def seam_plan(parts: list[tuple[int, list[float]]]) -> list[tuple[str, int, int, int]]:
+    """按帧数和关键帧把各段排成「接缝块 / 直拷」两种件。纯函数，测试直接喂数。
+
+    `parts[i] = (帧数, 关键帧时刻表)`。返回 `(kind, 第几段, 起始帧, 结束帧)` 的列表，
+    kind 是 `"run"`（进接缝块重编）或 `"copy"`（`-c copy`）。相邻的 `"run"` 件属于
+    同一个接缝块。每一段都要么整段进块，要么切成「头 run ＋ 中 copy ＋ 尾 run」
+    （第一段没有头、最后一段没有尾）。
+    """
+    n = len(parts)
+    plan: list[tuple[str, int, int, int]] = []
+    for i, (frames, keys) in enumerate(parts):
+        length = frames / _FPS
+        need_head, need_tail = i > 0, i < n - 1
+        head = next((k for k in keys if _SEAM_MIN_S <= k <= _SEAM_KEY_S + 2.0), None)
+        tail = next((k for k in reversed(keys)
+                     if length - _SEAM_KEY_S - 2.0 <= k <= length - _SEAM_MIN_S), None)
+        h = round(head * _FPS) if need_head and head is not None else 0
+        t = round(tail * _FPS) if need_tail and tail is not None else frames
+        splittable = (length >= _SPLIT_MIN_S
+                      and (not need_head or head is not None)
+                      and (not need_tail or tail is not None)
+                      and 0 <= h < t <= frames and t - h >= _FPS)
+        if not splittable:
+            plan.append(("run", i, 0, frames))
+            continue
+        if h:
+            plan.append(("run", i, 0, h))
+        plan.append(("copy", i, h, t))
+        if t < frames:
+            plan.append(("run", i, t, frames))
+    return plan
+
+
+def _encode_run(files: list[Path], dest: Path) -> None:
+    """一个接缝块：几截画面用 `xfade` 接起来，只出画面（声音另做一整条）。"""
+    args, chains, lengths = [], [], []
+    for j, path in enumerate(files):
+        args += ["-i", str(path)]
+        chains.append(f"[{j}:v]setpts=PTS-STARTPTS,fps={_FPS}[p{j}]")
+        lengths.append(_probe_frames(path)[0] / _FPS)
+    prev, acc = "[p0]", lengths[0]
+    for j in range(1, len(files)):
+        out = "[vout]" if j == len(files) - 1 else f"[x{j}]"
+        chains.append(f"{prev}[p{j}]xfade=transition=fade:duration={_DISSOLVE_S:g}:"
+                      f"offset={acc - _OVERLAP_S:.4f}{out}")
+        acc += lengths[j] - _OVERLAP_S
+        prev = out
+    if len(files) == 1:
+        chains.append("[p0]null[vout]")
+    subprocess.run(
+        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", *args,
+         "-filter_complex", ";".join(chains), "-map", "[vout]", "-an", *_X264,
+         str(dest)], check=True, timeout=900)
+
+
+def _split_video(part: Path, cuts: list[int], stem: Path) -> list[Path]:
+    """按关键帧把一段的**画面**直拷切成几截（`segment` 封装器按帧号切，不重编）。
+
+    切点都是强制出来的关键帧（x264 闭 GOP），所以每一截从 IDR 开始、自成一体。
+    切完逐截数帧，对不上就报错——宁可退回硬切，也不拼一条错位的片子。
+    """
+    subprocess.run(
+        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(part),
+         "-map", "0:v:0", "-an", "-c:v", "copy", "-f", "segment",
+         "-segment_frames", ",".join(str(c) for c in cuts),
+         "-segment_format", "mp4", "-reset_timestamps", "1",
+         f"{stem}_%d.mp4"], check=True, timeout=300)
+    outs = [Path(f"{stem}_{k}.mp4") for k in range(len(cuts) + 1)]
+    bounds = [0, *cuts, _probe_frames(part)[0]]
+    for k, o in enumerate(outs):
+        want = bounds[k + 1] - bounds[k]
+        if not o.is_file() or _probe_frames(o)[0] != want:
+            raise SystemExit(f"{part.name} 在关键帧处直拷切开之后第 {k} 截帧数不对"
+                             f"（要 {want}），不能拿它拼")
+    return outs
+
+
+def dissolve_concat(parts: list[Path], out: Path) -> Path:
+    """把各段**溶解**着接起来，正文中间那一大段 `-c copy`。见上面那段注释。"""
+    info = [_probe_frames(p) for p in parts]
+    plan = seam_plan(info)
+    work = out.parent / "_seams"
+    work.mkdir(exist_ok=True)
+    # 每一段要切的帧号（它自己那几件的边界）
+    cuts: dict[int, list[int]] = {}
+    for kind, i, f0, f1 in plan:
+        if kind == "copy":
+            cuts[i] = [c for c in (f0, f1) if 0 < c < info[i][0]]
+    split = {i: _split_video(parts[i], c, work / f"part{i}") for i, c in cuts.items() if c}
+    pieces, run, made = [], [], []
+    for kind, i, f0, f1 in plan + [("end", -1, 0, 0)]:
+        if kind != "run" and run:
+            dest = work / f"run_{len(pieces):02d}.mp4"
+            _encode_run(run, dest)
+            pieces.append(dest)
+            run = []
+        if kind == "end":
+            break
+        if i in split:
+            bounds = [0, *cuts[i], info[i][0]]
+            piece = split[i][bounds.index(f0)]
+        else:
+            piece = parts[i]
+        (run.append(piece) if kind == "run" else pieces.append(piece))
+    for files in split.values():
+        made += files
+    # 声音：每段按自己画面的帧数截齐，相邻两段交叉 `_OVERLAP_S`
+    ains, achains = [], []
+    for i, (p, (frames, _)) in enumerate(zip(parts, info)):
+        ains += ["-i", str(p)]
+        achains.append(f"[{i}:a]aresample=48000,apad,"
+                       f"atrim=end_sample={round(frames / _FPS * 48000)},"
+                       f"asetpts=PTS-STARTPTS[a{i}]")
+    prev = "[a0]"
+    for i in range(1, len(parts)):
+        nxt = "[aout]" if i == len(parts) - 1 else f"[ax{i}]"
+        achains.append(f"{prev}[a{i}]acrossfade=d={_OVERLAP_S:g}:c1=tri:c2=tri{nxt}")
+        prev = nxt
+    audio = work / "audio.m4a"
+    subprocess.run(
+        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", *ains,
+         "-filter_complex", ";".join(achains), "-map", "[aout]",
+         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2", str(audio)],
+        check=True, timeout=600)
+    lst = work / "_concat.txt"
+    lst.write_text("".join(f"file '{p.resolve()}'\n" for p in pieces), encoding="utf-8")
+    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-f", "concat", "-safe", "0", "-i", str(lst), "-i", str(audio),
+                    "-map", "0:v:0", "-map", "1:a:0", "-c", "copy",
+                    "-movflags", "+faststart", str(out)],
+                   check=True, timeout=600)
+    for tmp in (*pieces, *made, audio, lst):
+        if tmp.parent == work:
+            tmp.unlink(missing_ok=True)
+    for leftover in work.iterdir():
+        leftover.unlink()
+    work.rmdir()
+    return out
+
+
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     check_takeaway(spec)
-    src = yt_download(spec["url"], outdir / "source.mp4",
-                      "bv*[height<=1080]+ba/b[height<=1080]", spec)
+    src = yt_download(spec["url"], outdir / "source.mp4", SOURCE_FMT, spec)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)
@@ -4340,6 +5086,9 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
          # 而且**它不报错**，只是不生效。
          "-map", "[out]", "-map", "0:a:0?",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         # 离头尾 1 秒处各强制一个关键帧：拼接时从这儿直拷切开，只重编接缝那一小截
+         # （`dissolve_concat`，Q4）。多两个 I 帧，编码量不变。
+         *_seam_keyframes(dur),
          # `-color_range tv` 显式钉死——理由见 `_still_segment` 那份注释。
          "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
@@ -4369,8 +5118,9 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 第三次，所以这次把清单收成一份：**每一段只有一处决定它进不进去。**
     parts: list[Path] = []
     if spec.get("cover"):
+        # 多留一个溶解的长度：封面照样整整停 `COVER_SECONDS`，最后那 0.2 秒化进冷开场
         parts.append(_still_segment(cover_poster(spec, src, outdir, logo),
-                                    COVER_SECONDS, outdir / "_cover.mp4"))
+                                    COVER_SECONDS + _OVERLAP_S, outdir / "_cover.mp4"))
     parts += _takeaway_segments(spec, outdir, "open")
     if (lead := _side_segment(spec, outdir, "lead_in")) is not None:
         parts.append(lead)
@@ -4390,6 +5140,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 所以两条出路都走同一个 `_record_film_seconds`，别在这儿各写一遍。
     if len(parts) == 1:
         body.replace(out)
+        _record_seams(outdir, {"count": 0, "transition": "none"})
         return _record_film_seconds(out, outdir)
     # ⚠️ **不给 `+faststart`，`moov` 会落在文件末尾——账号所有者
     # 2026-08-22 报的「视频号封面显示不出来」根子就在这儿。** ffmpeg 的
@@ -4402,15 +5153,49 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 是这个仓库里**唯一没接 `+faststart`** 的成片编码路径，`build_match_reel.py`
     # 和 `explainer.py` 早就在用。加上这一行之后合成小样本验过：
     # `ftyp moov free mdat`，moov 挪到了最前面。
-    lst = outdir / "_concat.txt"
-    lst.write_text("".join(f"file '{p.name}'\n" for p in parts), encoding="utf-8")
-    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                    "-f", "concat", "-safe", "0", "-i", str(lst),
-                    "-c", "copy", "-movflags", "+faststart", str(out)],
-                   check=True, timeout=600)
-    for tmp in (*parts, lst):
+    #
+    # ⭐ 2026-09-27 Q4：接缝一律溶解（`dissolve_concat`），正文中间那一大段照旧直拷。
+    # ⚠️ **溶解的是 `parts` 里相邻两段之间的每一刀**——账号所有者点名的是
+    # 封面→冷开场→正文、正文→收尾卡→片尾；可选的开头落点卡（`takeaway.open`）
+    # 和捧杯（`trail_in`）也在 `parts` 里，它们两边同样溶解（评审 WP3 nit 2 要求写明）。
+    #
+    # 溶解那条路出任何岔子（切出来帧数不对、某一段切不开）就**退回原来的硬切**，
+    # 而且要出声——「没溶解」和「溶解了」必须分得开。⚠️ 光打一行日志不够：日志
+    # 没人回头翻，**闸只看得见产物**。所以接法写进 `render.json` 的 `seams`：
+    # `{"count": 接缝数, "transition": "dissolve" | "hard_cut" | "none", "fallback_reason": …}`，
+    # `check_interview_landed` 读它、退回硬切时点名（评审 WP3 nit 2）。
+    n = len(parts) - 1
+    try:
+        dissolve_concat(parts, out)
+        print(f"[拼接] {len(parts)} 段，{n} 个接缝溶解 {_DISSOLVE_S:g}s，正文中间直拷")
+        seams = {"count": n, "transition": "dissolve", "dissolve_s": _DISSOLVE_S}
+    except (Exception, SystemExit) as exc:  # noqa: BLE001 - 正文已经编完，拼接不许把整条带崩
+        reason = f"{type(exc).__name__}: {exc}"
+        print(f"[拼接] ⚠️ 溶解没做成，这一条退回硬切：{reason}")
+        import shutil  # noqa: PLC0415
+        shutil.rmtree(outdir / "_seams", ignore_errors=True)
+        lst = outdir / "_concat.txt"
+        lst.write_text("".join(f"file '{p.name}'\n" for p in parts), encoding="utf-8")
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        "-f", "concat", "-safe", "0", "-i", str(lst),
+                        "-c", "copy", "-movflags", "+faststart", str(out)],
+                       check=True, timeout=600)
+        lst.unlink(missing_ok=True)
+        seams = {"count": n, "transition": "hard_cut", "fallback_reason": reason[:500]}
+    _record_seams(outdir, seams)
+    for tmp in parts:
         tmp.unlink(missing_ok=True)
     return _record_film_seconds(out, outdir)
+
+
+def _record_seams(outdir: Path, seams: dict) -> None:
+    """`seams` 合并写进 `render.json`（和 `_record_film_seconds` 同一个规矩：先读后写，
+    不覆盖工作流之后写的 `video_url` / `video_bytes`）。"""
+    path = outdir / "render.json"
+    data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+    data["seams"] = seams
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
 
 
 def probe_duration(path: Path) -> float:
@@ -4420,6 +5205,33 @@ def probe_duration(path: Path) -> float:
          "-of", "default=nw=1:nk=1", str(path)],
         check=True, capture_output=True, text=True, timeout=120).stdout.strip()
     return float(out)
+
+
+def probe_video_duration(path: Path) -> float:
+    """**视频流**的时长（秒）——抽帧能取到的最后一刻，不是容器时长。
+
+    ⚠️ `probe_duration` 读的是 `format=duration`＝**最长的那条流**。音轨比画面长
+    的源片（2026-09-27 review 复现：8.0 秒画面 ＋ 8.3 秒音轨）按它剔片尾，8.1 秒那
+    一格照样留着，而 `ffmpeg -ss 8.1` **退出码 0、一帧都不出**——下游渲海报才炸。
+    所以封面扫描剔片尾要按这一个。mp4 给 `stream=duration`，mkv/webm 只在
+    `DURATION` 标签里给（`HH:MM:SS.xxx`）；两样都读不到就退回容器时长，并说一声。
+    """
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "stream=duration:stream_tags=DURATION", "-of", "json", str(path)],
+        check=True, capture_output=True, text=True, timeout=120).stdout
+    streams = json.loads(out or "{}").get("streams") or [{}]
+    for raw in (streams[0].get("duration"), (streams[0].get("tags") or {}).get("DURATION")):
+        try:
+            if raw and ":" in str(raw):
+                h, m, sec = str(raw).split(":")
+                return int(h) * 3600 + int(m) * 60 + float(sec)
+            if raw not in (None, "", "N/A"):
+                return float(raw)
+        except ValueError:
+            continue
+    print(f"⚠️ {path.name} 读不到视频流时长，按容器时长（最长那条流）剔片尾")
+    return probe_duration(path)
 
 
 def _record_film_seconds(out: Path, outdir: Path) -> Path:
@@ -4489,8 +5301,12 @@ def _takeaway_segments(spec: dict, outdir: Path, which: str) -> list[Path]:
         # 带崩**，不是退回静音卡。
         spoken = _audio_seconds(voice, "ffprobe", subprocess.run)
         secs, how = round(spoken + TAKEAWAY_TAIL, 2), "跟着口播"
-    print(f"[解读卡] {which} {secs:.2f}s（{how}）")
-    return [_still_segment(png, secs, outdir / f"_takeaway_{which}.mp4", voice)]
+    # 卡是**溶解着进来**的（Q4）：前面多垫一个溶解的长度，口播等画面化开了再开口。
+    # 末尾那口气（`TAKEAWAY_TAIL` 0.35）本来就比溶解长，出去那一下吃不到字。
+    secs = round(secs + _OVERLAP_S, 2)
+    print(f"[解读卡] {which} {secs:.2f}s（{how}，含开头溶解 {_OVERLAP_S:g}s）")
+    return [_still_segment(png, secs, outdir / f"_takeaway_{which}.mp4", voice,
+                           audio_delay=_OVERLAP_S)]
 
 
 def _build_outro(outdir: Path) -> Path | None:
@@ -4526,9 +5342,21 @@ def main() -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--spec", required=True)
     ap.add_argument("--stage",
-                    choices=["subs", "sheet", "verify", "cover", "render"],
+                    choices=["subs", "sheet", "verify", "cover", "cover-scan", "render"],
                     default="subs")
+    # 下面三个只给封面用：`cover-scan` 扫哪一段、隔多久一格；`--keep-source`
+    # 让 `cover`/`cover-scan` 把源片留给同一趟 job 里后面的出片（见 interview-clip.yml）。
+    ap.add_argument("--window", default="",
+                    help="cover-scan：扫描窗口 a:b（源片秒）；不给就读 cover.scan_window，"
+                         "再不给就是 frame_at 前后各 2 秒")
+    # 默认 None 不是 0.2：给了默认值的话命令行永远「给了」，spec 里写的
+    # `cover.scan_step` 就一次都轮不到——工作流那一步不传它，走的正是 spec 那条路
+    ap.add_argument("--step", type=float, default=None,
+                    help="cover-scan：候选帧间隔（秒）；不给就读 cover.scan_step，再不给 0.2")
+    ap.add_argument("--keep-source", action="store_true",
+                    help="cover / cover-scan 跑完不删 source.mp4")
     args = ap.parse_args()
+    keep_source = args.keep_source
 
     # 这台沙箱的出网走一个做 TLS 拦截的代理，而 edge-tts 认的是 certifi 自带
     # 的根证书——挂上代理那张 CA 当场就通。**runner 上是 no-op 且不出声**，
@@ -4554,9 +5382,49 @@ def main() -> int:
     check_lead_in(spec)
     check_trail_in(spec)
     check_copy_page(spec)
+    check_cover_hook(spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
+
+    if args.stage == "cover-scan":
+        # **一趟扫一段，不再一趟试一帧。** 挑封面这件事不要字幕、不要中文，
+        # 所以排在取字幕之前；账和判据见 tools/interview_cover_scan.py 顶部。
+        sys.path.insert(0, str(ROOT / "tools"))
+        from interview_cover_scan import run_scan  # noqa: PLC0415
+        return run_scan(spec, outdir, sys.modules[__name__], window=args.window,
+                        step=args.step, keep_source=keep_source)
+
+    # **封面这一档不要字幕、不要中文，排在取字幕之前**（和 cover-scan 同一个理由）。
+    # 它原来排在切行和 `if not zh: return 0` 后面——而「封面排在最前面、紧跟选题」
+    # 正是 zh 还空着的那一刻：`--stage cover` 于是 0 退出、一张海报都没出，下一步
+    # 的像素闸报「poster 不存在」，而扫描已经白跑了一分钟（2026-09-27 review）。
+    # 顺带省掉 cover 那一趟白拉的一次字幕。判据 `test_中文还空着也能出封面`。
+    if args.stage == "cover":
+        # **只出海报，不出片。** 2026-08-04 一晚上渲了五趟，**四趟是为了换封面**——
+        # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有
+        # 第一帧。量过：`.git` 6.4 GB 里 **2.9 GiB 是同一路径的旧版本**，
+        # 也就是这类返工的废料（`wong-gea.mp4` 存了 7 版、`official-highlight.mp4` 18 版）。
+        #
+        # **不设 `transcript_verified` 那几道闸**：它们防的是「发出一条错的片子」，
+        # 而这一步什么都不发——挑封面本来就该排在转写核对**之前**，
+        # 挡在这儿只会逼人为了看一眼封面先把校验走完。
+        if not spec.get("cover"):
+            raise SystemExit(f"{args.spec} 没有 `cover` 块，没什么可预览的。")
+        src = yt_download(spec["url"], outdir / "source.mp4", SOURCE_FMT, spec)
+        poster = cover_poster(spec, src, outdir, _logo_filter(spec, src, outdir))
+        # 源片不进仓库，也没必要留着——它是这一步唯一的大文件。
+        # ⚠️ **`--keep-source` 只给 `mode=render` 的封面前置那一步用**：同一趟
+        # job 接下来还要出片，`render()` 的 `yt_download` 见文件在就直接复用，
+        # 删了等于同一条源片下两遍。清理照旧由「提交成片」那一步兜底。
+        if not keep_source:
+            src.unlink(missing_ok=True)
+        (outdir / "_logo_mask.png").unlink(missing_ok=True)
+        print(f"封面 {poster}（{spec['cover']['frame_at']} 秒那一帧）"
+              + ("——源片留给同一趟后面的出片。" if keep_source else
+                 "\n**没有出片**：确认好看再跑 `--stage render`，"
+                 "这样一条片子只往仓库里塞一个 mp4。"))
+        return 0
 
     if args.stage in ("subs", "sheet"):
         # **挑封面用的**：只在取字幕这一趟出，出片那趟不重复下
@@ -4572,6 +5440,11 @@ def main() -> int:
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
     # ASR 会把整句说得语法不成立（`The crazy Yes. round of applause.`），
     # 那种句子照发出去，这个号的英语素材就没有可信度了。
+    bad = en_fixed_misaligned(lines, spec.get("en_fixed") or {})
+    if bad:
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 的 `en_fixed` 行号像是挂错了行（键是 **1 起** 的行号）：\n  "
+            + "\n  ".join(bad))
     for k, v in (spec.get("en_fixed") or {}).items():
         idx = int(k) - 1
         if 0 <= idx < len(lines):
@@ -4593,12 +5466,19 @@ def main() -> int:
         for i, seg in enumerate(lines, 1):
             print(f"{i:2d}. {seg['a']:7.1f}  {seg['en']}")
         print(f"\n把 {len(lines)} 行中文按顺序填进 {args.spec} 的 zh 数组里再跑一次。")
-        return 0
-    write_ass(lines, zh, spec["start"], ass, spec,
-              duration=spec["end"] - spec["start"])
-    print(f"字幕 {len(lines)} 组双语 → {ass}")
-    # 核对表每次都出：它是人干活时看的那一份，落后于 spec 就没用了。
-    review_sheet(spec, lines, outdir)
+        # **只有 verify 能在没中文时往下走**：第二份 ASR 比的是两份**英文**，
+        # 指纹里也没有中文（`transcript_fingerprint`）。`mode=subs` 那一趟 zh
+        # 必然还空着，而那正是它该跑的时候——等中文写完、render 红了才知道英文
+        # 漏了一句，中文得跟着返工（2026-09-27 审计：10 趟 render 红在转写分歧／
+        # 空档上，41.7 runner-分钟，每趟外加一个来回）。
+        if args.stage != "verify":
+            return 0
+    else:
+        write_ass(lines, zh, spec["start"], ass, spec,
+                  duration=spec["end"] - spec["start"])
+        print(f"字幕 {len(lines)} 组双语 → {ass}")
+        # 核对表每次都出：它是人干活时看的那一份，落后于 spec 就没用了。
+        review_sheet(spec, lines, outdir)
     # **每一步都把没销账的空档喊出来**，不要只在 render 那一步拦。等到出片才知道
     # 少了三秒，前面配中文、调断行的功夫全是在一份缺了一块的稿子上做的。
     # ⚠️ **键要一起印出来。** 这一行原来只报「片内 37.4–40.0 秒」，而
@@ -4623,52 +5503,42 @@ def main() -> int:
                     fp_path.read_text(encoding="utf-8")).get("sha256", "")
             except (OSError, ValueError):
                 recorded = ""  # 读不了当成没记过，照常全跑
+        # **两类发现收齐了一起报**：原来分歧超闸一抛就退出，空档那一半根本没判——
+        # 人照着报告改完分歧，下一趟才看见空档，又是一个来回。
+        findings: list[str] = []
         if spec.get("transcript_verified") is True and recorded == fp:
             print(f"[verify] 转写指纹没变（{fp[:12]}…）且已人工核过"
                   "（transcript_verified: true），跳过第二份 ASR。"
                   "改一行 en_fixed / 换字幕源 / 换模型都会让指纹变、重新全跑。")
-            return 0
-        verify_transcript(spec, lines, outdir)
-        # **只在 verify 走完（没抛）之后落指纹**：分歧超闸抛 SystemExit 时
-        # 不许留下「这份验过了」的标记——那正是「记已推送要排在发微信之后」
-        # 的同一条顺序规矩。
-        fp_path.write_text(json.dumps({
-            "sha256": fp,
-            "status": "pass",
-            "method": "dual_asr",
-            "first_model": spec.get("asr_model") or "provider_captions",
-            "second_model": _second_model(spec),
-        }, indent=1) + "\n",
-                           encoding="utf-8")
-        print(f"[verify] 指纹已落 {fp_path.name}（{fp[:12]}…）——"
-              "下次转写没变且 transcript_verified 已置上时跳过 whisper。")
-        return 0
-
-    if args.stage == "cover":
-        # **只出海报，不出片。** 2026-08-04 一晚上渲了五趟，**四趟是为了换封面**——
-        # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有
-        # 第一帧。量过：`.git` 6.4 GB 里 **2.9 GiB 是同一路径的旧版本**，
-        # 也就是这类返工的废料（`wong-gea.mp4` 存了 7 版、`official-highlight.mp4` 18 版）。
-        #
-        # **不设 `transcript_verified` 那几道闸**：它们防的是「发出一条错的片子」，
-        # 而这一步什么都不发——挑封面本来就该排在转写核对**之前**，
-        # 挡在这儿只会逼人为了看一眼封面先把校验走完。
-        if not spec.get("cover"):
-            raise SystemExit(f"{args.spec} 没有 `cover` 块，没什么可预览的。")
-        src = yt_download(spec["url"], outdir / "source.mp4",
-                          "bv*[height<=1080]+ba/b[height<=1080]", spec)
-        logo = ""
-        if box := spec.get("logo_box"):
-            logo = ("removelogo=filename="
-                    + str(logo_mask(src, box, outdir / "_logo_mask.png",
-                                    bool(spec.get("mirrored")))) + ",")
-        poster = cover_poster(spec, src, outdir, logo)
-        # 源片不进仓库，也没必要留着——它是这一步唯一的大文件。
-        src.unlink(missing_ok=True)
-        (outdir / "_logo_mask.png").unlink(missing_ok=True)
-        print(f"封面 {poster}（{spec['cover']['frame_at']} 秒那一帧）"
-              f"\n**没有出片**：确认好看再跑 `--stage render`，"
-              f"这样一条片子只往仓库里塞一个 mp4。")
+        else:
+            try:
+                verify_transcript(spec, lines, outdir)
+            except ReviewFindings as exc:
+                findings.append(str(exc))
+            else:
+                # **只在 verify 走完（没有分歧发现）之后落指纹**：分歧超闸时不许留下
+                # 「这份验过了」的标记——那正是「记已推送要排在发微信之后」
+                # 的同一条顺序规矩。
+                fp_path.write_text(json.dumps({
+                    "sha256": fp,
+                    "status": "pass",
+                    "method": "dual_asr",
+                    "first_model": spec.get("asr_model") or "provider_captions",
+                    "second_model": _second_model(spec),
+                }, indent=1) + "\n", encoding="utf-8")
+                print(f"[verify] 指纹已落 {fp_path.name}（{fp[:12]}…）——"
+                      "下次转写没变且 transcript_verified 已置上时跳过 whisper。")
+        # **render 那道空档闸，verify 这一步就按同一个判据报。** 原来空档只在
+        # `--stage render` 开头拦——`mode=subs` 跑了第二份 ASR 也看不见它，
+        # 要等出片那趟装完依赖才红（tien-cobolli 那处 89.6–94.6 秒两趟 render
+        # 各红一次）。判据是同一个函数，不是抄一份。
+        if holes := blocking_gaps(spec, lines, outdir):
+            findings.append(gap_block_message(args.spec, spec, holes))
+        if findings:
+            print(f"\n[verify] {len(findings)} 类要人核的发现（render 会拦；subs 只报）：")
+            for text in findings:
+                print("  ⚠️ " + text.replace("\n", "\n     "))
+            return VERIFY_FINDINGS_EXIT
         return 0
 
     if args.stage == "render":
@@ -4694,18 +5564,10 @@ def main() -> int:
         # **空档也要销账。** 上面那条闸盯的是「源说错了」，这条盯的是
         # 「源什么都没说」——伊埃拉那条 3.2 秒的空白就是从这个缝里漏出去的：
         # 没有词就没有分歧，两道旧闸全绿。
-        manual_holes = _unresolved_gaps(spec, caption_gaps(spec, outdir))
-        auto_quiet = auto_silent_gap_keys(spec, lines, outdir)
-        if auto_quiet:
+        if auto_quiet := auto_silent_gap_keys(spec, lines, outdir):
             print(f"[空档 VAD] {len(auto_quiet)} 处由当前指纹的语言无关无人声证明销账。")
-        if holes := [g for g in manual_holes if gap_key(*g) not in auto_quiet]:
-            raise SystemExit(
-                f"{args.spec} 有 {len(holes)} 处空档没销账："
-                + "、".join(f"{a - spec['start']:.1f}–{b - spec['start']:.1f} 秒（片内）"
-                            for a, b in holes) + "。\n"
-                "打开源片听这几秒：有人说话就是漏了，掌声／欢呼就不是。"
-                "结论写进 spec 的 `caption_gaps_ok`，键是 "
-                + "、".join(f"`{gap_key(a, b)}`" for a, b in holes) + "。")
+        if holes := blocking_gaps(spec, lines, outdir):
+            raise SystemExit(gap_block_message(args.spec, spec, holes))
         out = render(spec, ass, outdir)
         size = out.stat().st_size / 1e6
         # ⚠️ **两个数，别只报一个。** 这一行原来只印

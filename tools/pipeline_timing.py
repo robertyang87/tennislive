@@ -38,7 +38,76 @@ from pathlib import Path
 # 是 `if: always()` 的，这一行仍然躺在构件里，要查的时候下得到。
 TIMING_NAME = "timing.json"
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
+
+# ⭐⭐ **墙钟 vs 并行累加**（2026-09-27，schema 1 → 2）。
+#
+# `分段编码` 那一步是 4 个 worker 的线程池（`build_match_reel.render`），而
+# 原来 `stage("分段编码")` 包的是**每一段**——台账里记下的是 13 段各自耗时的
+# **总和**，不是这一步占掉的墙钟。于是报表把它排成「最慢的一步」：最近 40 条
+# 成功的 `timing.json`（09-27 量）占整趟墙钟的份额 分段编码 63.3% ＋ 烧字幕
+# 52.0% ＋ 拼接 15.1%，**加起来超过 100%**。拿 14 份 stage 齐全的成功 render
+# 日志（09-22 之后）按 `[耗时]` 时间戳重建墙钟：烧字幕＋成片 **51%**（中位
+# 120s）、分段编码墙钟 **18%**（中位 42s，累加却是 150s）、拼接 14%、
+# **没有任何 stage 包着的一段 8%**（中位 20s，最长 40s——比分板蒙版那次
+# 逐段扫描，`resolve_*_masks` 一直没计时；run 36284220097 里 TTS 之后到封面
+# 之间 29 秒一行 `[耗时]` 都没有）。照旧报表去优化的人会去砍一个只占 18% 的
+# 东西，而真正的大头和那段看不见的时间都不在榜上。
+#
+# 所以现在两件事分开记：
+# - 名字里带 `PARALLEL_MARK` 的 stage 是**多个 worker 的累加**（每一段各记一行，
+#   留着按「第几段特别慢」查），**不进墙钟合计、不进「哪一步最慢」**；
+#   它外面另有一个同名不带记号的 stage 记这一步的**墙钟**；
+# - `untimed_seconds` ＝ 整趟墙钟 − 各墙钟 stage 之和：没被 stage 包住的时间
+#   从此在报表里有名有姓，下一次再有人漏包一段扫描，它会自己冒出来。
+PARALLEL_MARK = "·并行"
+
+#: 报表里「没被任何 stage 包住的时间」那一行的名字
+UNTIMED = "（未计时：没有 stage 包着）"
+
+# schema 1 的台账里，`分段编码` 就是上面说的那个累加（那时还没有墙钟那一行）。
+# **只许减不许加**：新的并行 stage 一律带 `PARALLEL_MARK`，别往这张表里塞。
+_LEGACY_PARALLEL_STAGES = frozenset({"分段编码"})
+
+
+def is_parallel_stage(name: str, schema: int = SCHEMA_VERSION) -> bool:
+    """这一行记的是多个 worker 的累加（不是墙钟）吗。"""
+    if PARALLEL_MARK in name:
+        return True
+    return schema < 2 and name in _LEGACY_PARALLEL_STAGES
+
+
+def split_stages(stage_seconds: dict[str, float], schema: int = SCHEMA_VERSION
+                 ) -> tuple[dict[str, float], dict[str, float]]:
+    """拆成 (墙钟那些, 并行累加那些)。"""
+    wall: dict[str, float] = {}
+    parallel: dict[str, float] = {}
+    for name, spent in stage_seconds.items():
+        (parallel if is_parallel_stage(name, schema) else wall)[name] = float(spent)
+    return wall, parallel
+
+
+def stage_table(stages: list[tuple[str, float]]) -> str:
+    """`build_match_reel.report_timings()` 打的那张表。**份额按墙钟算**，
+    并行累加单列在后面、不进合计——原来一起算，四个 worker 的累加能把一步
+    撑到 60% 以上，整张表加起来超过 100%。"""
+    buckets: dict[str, tuple[int, float]] = {}
+    for name, spent in stages:
+        key = str(name).split("#")[0].strip()
+        count, acc = buckets.get(key, (0, 0.0))
+        buckets[key] = (count + 1, acc + float(spent))
+    wall = {k: v for k, v in buckets.items() if not is_parallel_stage(k)}
+    parallel = {k: v for k, v in buckets.items() if is_parallel_stage(k)}
+    total = sum(acc for _, acc in wall.values())
+    lines = [f"=== 耗时明细（墙钟合计 {total:.1f}s，{os.cpu_count()} 核）==="]
+    for key, (count, acc) in sorted(wall.items(), key=lambda kv: -kv[1][1]):
+        share = acc / total * 100 if total else 0
+        times = f" ×{count}" if count > 1 else ""
+        lines.append(f"  {acc:7.1f}s  {share:5.1f}%  {key}{times}")
+    for key, (count, acc) in sorted(parallel.items(), key=lambda kv: -kv[1][1]):
+        lines.append(f"  {acc:7.1f}s  （并行累加 ×{count}，已含在上面的墙钟里，不计份额）"
+                     f"  {key}")
+    return "\n".join(lines)
 
 
 def _utc_now() -> str:
@@ -57,6 +126,8 @@ def build_record(*, pipeline: str, slug: str, mode: str, outcome: str,
     merged: dict[str, list[float]] = {}
     for name, spent in stages:
         merged.setdefault(str(name).split("#")[0].strip(), []).append(float(spent))
+    stage_seconds = {k: round(sum(v), 3) for k, v in merged.items()}
+    wall, _parallel = split_stages(stage_seconds)
     return {
         "schema": SCHEMA_VERSION,
         "at": _utc_now(),
@@ -68,8 +139,12 @@ def build_record(*, pipeline: str, slug: str, mode: str, outcome: str,
         "elapsed_seconds": round(float(elapsed_seconds), 3),
         # **最后一步走到哪儿** —— 失败那一趟全靠它定位「死在哪」。
         "last_stage": stages[-1][0] if stages else None,
-        "stage_seconds": {k: round(sum(v), 3) for k, v in merged.items()},
+        "stage_seconds": stage_seconds,
         "stage_counts": {k: len(v) for k, v in merged.items()},
+        # 哪几行是并行累加（不是墙钟）——读台账的人不用背这条约定
+        "parallel_stages": sorted(k for k in stage_seconds if is_parallel_stage(k)),
+        # 没被任何 stage 包住的墙钟：漏计时的那一段在这儿现形
+        "untimed_seconds": round(max(0.0, float(elapsed_seconds) - sum(wall.values())), 3),
         # 机器和运行环境：跨趟比耗时之前先看看是不是同一档机器
         "cpu_count": os.cpu_count(),
         "run_id": os.environ.get("GITHUB_RUN_ID"),
@@ -146,17 +221,31 @@ def summarize(rows: list[dict]) -> str:
         for name, count in sorted(died.items(), key=lambda kv: -kv[1]):
             lines.append(f"  ×{count}  {name}")
 
-    # 哪一步最慢：只拿成功那些趟算，失败那趟是半截的，混进来会把中位数拉偏
+    # 哪一步最慢：只拿成功那些趟算，失败那趟是半截的，混进来会把中位数拉偏。
+    # **只排墙钟**——并行累加不是这一步占掉的时间，排进来会把优化引到错的地方
+    # （见 `PARALLEL_MARK` 那段）；没被 stage 包住的那段以「（未计时）」上榜。
     if ok:
         per_stage: dict[str, list[float]] = {}
+        per_parallel: dict[str, list[float]] = {}
         for row in ok:
-            for name, spent in (row.get("stage_seconds") or {}).items():
-                per_stage.setdefault(name, []).append(float(spent))
+            wall, parallel = split_stages(row.get("stage_seconds") or {},
+                                          int(row.get("schema") or 1))
+            for name, spent in wall.items():
+                per_stage.setdefault(name, []).append(spent)
+            for name, spent in parallel.items():
+                per_parallel.setdefault(name, []).append(spent)
+            if row.get("untimed_seconds") is not None:
+                per_stage.setdefault(UNTIMED, []).append(float(row["untimed_seconds"]))
         if per_stage:
-            lines.append("\n哪一步最慢（只算成功的趟，中位）：")
+            lines.append("\n哪一步最慢（只算成功的趟，墙钟中位）：")
             ranked = sorted(per_stage.items(),
                             key=lambda kv: -_median(kv[1]))[:8]
             for name, values in ranked:
+                lines.append(f"  {_median(values):7.1f}s  ×{len(values):<3d} {name}")
+        if per_parallel:
+            lines.append("\n并行累加（几个 worker 同时跑的总和，不是墙钟——别拿它排优先级）：")
+            for name, values in sorted(per_parallel.items(),
+                                       key=lambda kv: -_median(kv[1])):
                 lines.append(f"  {_median(values):7.1f}s  ×{len(values):<3d} {name}")
     return "\n".join(lines)
 
