@@ -2339,14 +2339,15 @@ scratchpad 里，没进仓库；要重跑，上面三条命令就够。
 **① WTA 赛后稿头图——走 WTA 自己的内容接口**（`sweep_wta_articles`，给了 `--player` 就跑）
 
     GET https://api.wtatennis.com/content/wta/text/EN/?pageSize=40&page=N
-        → onDemandUrl（头图的 photo-resources 路径，`?width=4000` 取原图）
+        → imageUrl（头图的 `/wta/photo/<它自己的 uuid>/` 路径，**原图**）
+          onDemandUrl（同一张图的 photo-resources 路径，`?width=4000` **封顶 4000px**）
           leadMedia.title（「Zheng Qinwen, US Open 2026」）＋ leadMedia.originalDetails（原始尺寸）
 
 - ⚠️ `startDate`/`endDate` **被静默忽略**（加不加都是 18544 条）——日期只能自己翻页判
 - ✅ `references=TENNIS_PLAYER:<WTA id>` 真的在筛（18544 → 296），知道 id 就给 `--wta-id`
 - ⚠️ 一篇稿子常常讲三场：「提到这个名字」≠「头图是他」（同一窗口里另一篇的头图是蒙哥马利）。
   工具把头图是本人的排前面，别人的标「头图是别人」
-- ⚠️ 只用 `onDemandUrl`（photo-resources 前缀），`imageUrl` 那个 `/wta/photo/` 前缀带 `?width=` 是 403
+- ⭐ **头图取 `imageUrl`，不取 `onDemandUrl`**（2026-09-27 review 复测；这一行原来写反了，写的是「`imageUrl` 带 `?width=` 是 403，只用 `onDemandUrl`」）：`imageUrl` 带不带 `?width=` 都是 200、给原图（4931×2774、5741×3827，和 `originalDetails` 一致）；`onDemandUrl?width=4000` 封顶 4000px，`?width=5000` 是 400。**403 的是把 photo-resources 的 uuid 套上 `/wta/photo/` 前缀**——上面 08-16 那条记的是这一种，两个前缀的 uuid 不通用。工具（`wta_lead_url`）文件名对得上才用 `imageUrl`，否则退回 `onDemandUrl?width=4000`
 - `fetch_wta_cover_photo.py` 要 WTA 的赛事 id ＋ MatchID，**大满贯两样都没有**——它对美网恒空
 
 **② 赛事 WP 媒体库——比赛日起 `--days`（默认 2）天上传的全部翻完，再按名字筛**
@@ -2378,7 +2379,7 @@ scratchpad 里，没进仓库；要重跑，上面三条命令就够。
 写 `_frame_why` 照抄那份清单。判据 `tests/test_cover_channels.py`。
 ⚠️ 「跑过」**每一档都按真取回来的页判**：抛异常算没跑，**回了一页 502/403 也算没跑**
 （`requests` 不抛，正文是一页 Bad Gateway，解析出 0 条——和「真的没有」一模一样）；
-WTA 图库和 AP 原来是写死的「跑过」，现在也按取回页数判。
+WTA 图库和 AP 原来是写死的「跑过」，美网接口／当地报纸／WP 媒体库原来按「给没给 `--event`／报纸域名／`--site`」判（全断网照样三档全印「跑过」，美网那一档自己的 notes 还写着「没跑」），现在一律按取回页数判（`pages_read`；WP 媒体库第一页读不到就是没跑）。
 
 #### 封面比这条片子的源片旧——`--dry-run` 会提醒（只报不拦）
 

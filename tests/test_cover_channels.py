@@ -52,10 +52,15 @@ def test_列表页扫到的头图_赛事不写在文件名里也不许被赛事�
     assert fc.sweep_wta("Swiatek", "Cincinnati", None)
 
 
-def _wta_item(i, when, title, lead_title, photo, seg="x", body=""):
+def _wta_item(i, when, title, lead_title, photo, seg="x", body="", image=True):
+    """接口真实的形状：`imageUrl` 是 `/wta/photo/<它自己的 uuid>/<同一个文件名>`（原图），
+    `onDemandUrl` 是 `photo-resources/<另一个 uuid>/…`（`?width=4000` 封顶 4000px）。"""
+    day, name = photo.rsplit("/", 2)[0], photo.rsplit("/", 1)[-1]
     return {"id": 4568000 + i, "date": when, "title": title, "description": "",
             "titleUrlSegment": seg, "tags": [{"label": "Match Reaction"}],
             "onDemandUrl": f"https://photoresources.wtatennis.com/photo-resources/{photo}",
+            "imageUrl": (f"https://photoresources.wtatennis.com/wta/photo/{day}/wta-uuid/{name}"
+                         if image else None),
             "leadMedia": {"type": "photo", "title": lead_title,
                           "originalDetails": {"width": 4700, "height": 2916}},
             "body": body}
@@ -91,8 +96,9 @@ def test_WTA赛后稿走内容接口_大满贯也有_头图是本人的排前面
     assert got == [("Zheng Qinwen, US Open 2026", True),
                    ("Robin Montgomery, US Open 2026", False)], got
     top = res["rows"][0]
-    assert top["url"].endswith("/Zheng-Q3-Jimmie.jpg?width=4000")
-    assert top["url"].startswith("https://photoresources.wtatennis.com/photo-resources/")
+    # 头图取 `imageUrl`：原图，和 `wh` 那一栏的原始尺寸对得上（`onDemandUrl?width=4000` 封顶 4000px）
+    assert top["url"] == ("https://photoresources.wtatennis.com/wta/photo/2026/08/28/"
+                          "wta-uuid/Zheng-Q3-Jimmie.jpg"), top["url"]
     assert top["wh"] == "4700x2916"
     assert asked == [0, 1, 2], "翻到窗口起点之前就该停——第 2 页已经早于窗口"
     assert not res["notes"]
@@ -100,6 +106,27 @@ def test_WTA赛后稿走内容接口_大满贯也有_头图是本人的排前面
     # 翻满还没翻到窗口起点：要明说「更早的没查」
     res = fc.sweep_wta_articles("Zheng", "2026-08-28", fetch=fetch, max_pages=1)
     assert res["notes"] and "没查" in res["notes"][0]
+
+
+
+def test_WTA赛后稿头图取imageUrl原图_对不上才退回onDemandUrl():
+    """2026-09-27 review 复测：`imageUrl`（/wta/photo/）带不带 `?width=` 都是 200、给原图；
+    `onDemandUrl?width=4000` 封顶 4000px。原来的注释写反成「imageUrl 是 403，只用 onDemandUrl」。"""
+    od = "https://photoresources.wtatennis.com/photo-resources/2026/09/27/od-uuid/GettyImages-1.jpg"
+    iu = "https://photoresources.wtatennis.com/wta/photo/2026/09/27/iu-uuid/GettyImages-1.jpg"
+    assert fc.wta_lead_url(iu, od) == iu
+    assert fc.wta_lead_url(iu + "?width=4000", od) == iu, "参数剥掉：原图不需要 width"
+    # 没给 / 不是 /wta/photo/ 前缀 / 文件名对不上（指的不是同一张图）→ 退回 onDemandUrl?width=4000
+    for other in (None, "", od, iu.replace("GettyImages-1", "GettyImages-2")):
+        assert fc.wta_lead_url(other, od) == od + "?width=4000", other
+    assert fc.wta_lead_url(None, od + "?width=640") == od + "?width=4000"
+
+    item = _wta_item(1, "2026-08-28T18:31:00Z", "Zheng qualifies", "Zheng Qinwen, US Open 2026",
+                     "2026/08/28/c69dbe44/Zheng-Q3-Jimmie.jpg", image=False)
+    res = fc.sweep_wta_articles("Zheng", "2026-08-28",
+                                fetch=lambda url: {"content": [item] if "page=0" in url else []})
+    assert res["rows"][0]["url"] == ("https://photoresources.wtatennis.com/photo-resources/"
+                                     "2026/08/28/c69dbe44/Zheng-Q3-Jimmie.jpg?width=4000")
 
 
 # ——— WP 媒体库 ———
@@ -200,10 +227,13 @@ def test_WTA图库和AP按真取回的页数记跑过(monkeypatch):
                   lambda st: fc.sweep_ap("Bu", None, stats=st)):
         st: dict = {}
         assert sweep(st) == [] and st["pages_read"] == 0
-    monkeypatch.setattr(fc, "_get", lambda url, timeout=30: "<html></html>")
+    asked = []
+    monkeypatch.setattr(fc, "_get", lambda url, timeout=30: asked.append(url) or "<html></html>")
     st = {}
     fc.sweep_wta("Bu", None, None, stats=st)
     assert st["pages_read"] == len(fc._WTA_PAGES), st
+    # 入口页取回来就复用——原来先取一遍当 `idx`、下面那一圈又取一遍
+    assert sorted(asked) == sorted(fc._WTA_PAGES), asked
     st = {}
     fc.sweep_ap("Bu", "Hangzhou", stats=st)
     assert st["pages_read"] == 4, "三条搜索＋tennis 频道页"
@@ -228,6 +258,75 @@ def test_这一趟查了什么_一页都没取到的那一档不许记成跑过(
         assert name not in ran and name in skipped, tail
     assert "搜狗微信" not in ran and "中文媒体·搜狗微信" in skipped, tail
     assert "当地网站（杭州没登记）" in skipped, tail
+
+
+
+def test_美网_当地报纸_WP媒体库全断网不许记成跑过(monkeypatch, capsys):
+    """review 第三轮复现：这三档原来按「给没给 `--event US Open`／报纸域名／`--site`」判，
+    全断网照样印「跑过：美网官方图片接口、当地报纸每日图集、赛事官网 WordPress 媒体库」
+    ——而美网那一档自己的 notes 写着「这一档没跑，别读成查空」。"""
+    def down(*a, **k):
+        raise ConnectionError("403 Forbidden (proxy)")
+
+    for name in ("_get", "_get_json"):
+        monkeypatch.setattr(fc, name, down)
+    monkeypatch.setattr(fc.requests, "get", down)
+    monkeypatch.setattr(fc.requests, "Session", down)
+    monkeypatch.setattr(fc.time, "sleep", lambda s: None)
+    monkeypatch.setattr(sys, "argv", ["find_cover_photo.py", "--player", "Svitolina",
+                                      "--event", "US Open", "--site", "cincinnatiopen.com",
+                                      "--date", "2026-08-16"])
+    assert fc.main() == 0
+    tail = capsys.readouterr().out.split("=== 这一趟查了什么")[1]
+    ran, skipped = tail.split("没跑")[0], tail.split("没跑")[1]
+    for name in ("美网官方图片接口", "当地报纸每日图集", "赛事官网 WordPress 媒体库",
+                 "WTA photo-resources", "AP 通讯社", "WTA 赛后稿头图"):
+        assert name not in ran and name in skipped, tail
+    assert "一档都没取到" in ran, tail
+
+
+def test_美网接口按真取回的照片页数记跑过(monkeypatch):
+    players = json.dumps({"players": [{"id": "wta1", "first_name": "Elina",
+                                       "last_name": "Svitolina", "nation_code": "UKR"}]})
+    photos = json.dumps({"totalRows": 1, "content": [{
+        "cmsId": "c1", "displayDate": 1787875200000, "title": "t", "description": "d",
+        "images": [{"xlarge": "https://x/f_1.jpg", "credit": "USTA"}]}]})
+    replies = {"players.json": players, "tag?": photos}
+
+    def fake(url, timeout=40):
+        for key, body in replies.items():
+            if key in url:
+                return body
+        raise AssertionError(url)
+
+    monkeypatch.setattr(fc, "_uso_get", fake)
+    res = fc.sweep_usopen("Svitolina", None, "2026")
+    assert res["pages_read"] == 1 and len(res["rows"]) == 1, res
+    # 查无此人：没有一页照片被读过——没跑，notes 里让人先怀疑查询词
+    res = fc.sweep_usopen("Nobody", None, "2026")
+    assert res["pages_read"] == 0 and "先怀疑查询词" in res["notes"][0], res
+    # tag 页回的不是 JSON：原来 `rows, total = []` 当场 ValueError，现在记「这一页没读到」
+    replies["tag?"] = "<html>Access Denied</html>"
+    res = fc.sweep_usopen("Svitolina", None, "2026")
+    assert res["pages_read"] == 0 and "不是 JSON" in res["notes"][-1], res
+
+
+def test_当地报纸按真取回的页数记跑过(monkeypatch):
+    # 索引页都取回来了、这一天没有图集：答过了（「这一天没有」是答案）
+    monkeypatch.setattr(fc, "_get", lambda url, timeout=30: "")
+    got = fc.sweep_local_paper("www.usatoday.com", "US Open", "Svitolina", "2026-08-16")
+    assert got["pages_read"] == 2 and not got["rows"], got
+    # 翻到了图集、图集页一辑都取不到：没跑完，不许拿索引页凑数
+    gallery = "/picture-gallery/sports/tennis/2026/08/16/us-open-day-1/123/"
+
+    def half(url, timeout=30):
+        if "/picture-gallery/" in url:
+            raise ConnectionError("403 Forbidden (proxy)")
+        return f'<a href="{gallery}">x</a>'
+
+    monkeypatch.setattr(fc, "_get", half)
+    got = fc.sweep_local_paper("www.usatoday.com", "US Open", "Svitolina", "2026-08-16")
+    assert got["pages_read"] == 0 and "一辑都没取到" in got["notes"][-1], got
 
 
 # ——— 中文媒体 ———

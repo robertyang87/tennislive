@@ -414,8 +414,10 @@ def sweep_wta(player: str | None, event: str | None, day: str | None, *,
     stats = stats if stats is not None else {}
     stats["pages_read"] = 0
     pages = list(_WTA_PAGES)
+    # 入口页取回来就留着给下面那一圈用——原来下面又取了一遍，每趟白发一个请求
+    got: dict[str, str] = {}
     try:
-        idx = _get(_WTA_PAGES[0])
+        got[_WTA_PAGES[0]] = idx = _get(_WTA_PAGES[0])
         for vid, slug in sorted(set(re.findall(r"/videos/(\d+)/([a-z0-9-]+)", idx))):
             pages.append(f"https://www.wtatennis.com/videos/{vid}/{slug}")
     except Exception:                                           # noqa: BLE001
@@ -423,10 +425,13 @@ def sweep_wta(player: str | None, event: str | None, day: str | None, *,
 
     found: dict[str, set[str]] = {}
     for url in pages:
-        try:
-            html = _get(url)
-        except Exception:                                       # noqa: BLE001
-            continue
+        if url in got:
+            html = got[url]
+        else:
+            try:
+                html = _get(url)
+            except Exception:                                   # noqa: BLE001
+                continue
         stats["pages_read"] += 1
         for path in set(_PHOTO_RE.findall(html)):
             found.setdefault(path, set()).add(url.rsplit("/", 1)[-1])
@@ -477,6 +482,21 @@ def in_window(day: str | None, date: str | None, days: int = 2) -> bool:
 _WTA_CONTENT = "https://api.wtatennis.com/content/wta/text/EN/"
 
 
+def wta_lead_url(image_url: str | None, on_demand: str) -> str:
+    """赛后稿头图取哪个地址：`imageUrl` 是原图，`onDemandUrl?width=4000` 封顶 4000px。
+
+    只在 `imageUrl` 是 `/wta/photo/` 前缀、**文件名和 `onDemandUrl` 同一个**时用它
+    ——两个字段指的得是同一张图；对不上、或者没给，退回 `onDemandUrl?width=4000`
+    （不带 width 是 400）。量法见 `sweep_wta_articles`「取哪个地址」。
+    """
+    base = on_demand.split("?", 1)[0]
+    img = str(image_url or "").split("?", 1)[0]
+    if ("/wta/photo/" in img and img.startswith("https://")
+            and img.rsplit("/", 1)[-1] == base.rsplit("/", 1)[-1]):
+        return img
+    return base + "?width=4000"
+
+
 def sweep_wta_articles(player: str | None, date: str | None = None, *,
                        days: int = 2, wta_id: str | None = None,
                        fetch=None, page_size: int = 40, max_pages: int = 6,
@@ -494,15 +514,29 @@ def sweep_wta_articles(player: str | None, date: str | None = None, *,
 
         GET https://api.wtatennis.com/content/wta/text/EN/?pageSize=40&page=0
             → content[]：date（发稿 UTC）、title、titleUrlSegment、tags、
-              **onDemandUrl**（头图的 photo-resources 路径，`?width=4000` 取原图）、
+              **imageUrl**（头图的 `/wta/photo/<它自己的 uuid>/` 路径——**原图**）、
+              onDemandUrl（同一张图的 photo-resources 路径，`?width=4000` 封顶 4000px）、
               leadMedia.title（`Zheng Qinwen, US Open 2026`）、
               leadMedia.originalDetails（**原始尺寸**，4700×2916）
             ⚠️ `startDate`/`endDate` **被静默忽略**（加不加都是 18544 条）——
               日期只能按 `date` 字段自己翻页判，别以为参数生效了
             ✅ `references=TENNIS_PLAYER:<WTA id>` 真的在筛（18544 → 296 条），
               知道 id 就给 `--wta-id`，翻得快
-            ⚠️ `imageUrl` 那个 `/wta/photo/<另一个 uuid>/` 前缀带 `?width=` 是 403，
-              **只用 `onDemandUrl`**（CLAUDE.md 记过这两种前缀）
+
+    ## 取哪个地址（2026-09-27 review 第三轮复测，沙箱 requests ＋ `_UA`）
+
+    ⚠️ **这一段原来写反了**：写的是「`imageUrl` 带 `?width=` 是 403，只用 `onDemandUrl`」。
+    实测同一篇稿子的三个地址：
+
+        imageUrl（/wta/photo/<它的 uuid>/…）        200，**原图** 4931×2774 / 5741×3827，
+                                                    带不带 `?width=4000` 一个样
+        onDemandUrl?width=4000（photo-resources/）  200，**封顶 4000px**；不带 width 400、
+                                                    `?width=5000` 也是 400
+        photo-resources 的 uuid 换上 /wta/photo/ 前缀  **403**——08-16 那条记的是这一种，
+                                                    两个前缀的 uuid 不通用
+
+    所以 `imageUrl` 是 `/wta/photo/` 前缀、文件名和 `onDemandUrl` 同一个时用它
+    （原图，和 `wh` 那一栏印的原始尺寸对得上）；否则退回 `onDemandUrl?width=4000`。
 
     一页 100 条约是三周、1.4 MB、10 秒——所以默认一页 40 条，翻到窗口起点就停；
     **翻满 `max_pages` 还没翻到就明说**，别让「没翻到」长得像「没有」。
@@ -561,7 +595,7 @@ def sweep_wta_articles(player: str | None, date: str | None = None, *,
                                                photo.rsplit("/", 1)[-1]),
                     "article": article, "date": str(it.get("date")),
                     "title": it.get("title") or "", "caption": lead.get("title") or "",
-                    "url": photo.split("?", 1)[0] + "?width=4000",
+                    "url": wta_lead_url(it.get("imageUrl") or lead.get("imageUrl"), photo),
                     "path_date": wta_path_date(photo),
                     "wh": (f"{orig.get('width')}x{orig.get('height')}"
                            if isinstance(orig, dict) and orig.get("width") else ""),
@@ -668,9 +702,13 @@ def sweep_local_paper(paper: str, event: str | None, player: str | None,
     于是这条渠道只对辛辛那提成立；现在从 `_LOCAL_PAPERS` 查或者用 `--paper` 给。
     `day` 给 `2026-08-16` 这种；不给就把索引页上翻得到的图集都看一遍。
 
-    返回 `{"rows": [...], "notes": [...]}`。⚠️ **`notes` 不是装饰**：这一档
+    返回 `{"rows": [...], "notes": [...], "pages_read": N}`。⚠️ **`notes` 不是装饰**：这一档
     一天能翻出十几辑（USA TODAY 2025-09-06 那天连棒球带网球一起），按赛事名
     筛掉的那些必须报出数来——CLAUDE.md「打印被丢弃的原因和数量」。
+
+    `pages_read` 给「这一趟查了什么」用：翻到了图集就数**真取回来的图集页**，
+    没翻到就数**真取回来的索引页**（搜索页／sitemap 答了「这一天没有图集」也是答案）。
+    0 就是这一档没跑——原来 main 按「给没给报纸域名」判，每一页都 403 也印「跑过」。
     """
     # ⚠️ 原来写的是 `paper.lstrip('https://')`——`lstrip` 剥的是**字符集**
     # {h,t,p,s,:,/}，不是前缀：`--paper providencejournal.com`（表里那份不带 www
@@ -680,8 +718,10 @@ def sweep_local_paper(paper: str, event: str | None, player: str | None,
     query = (event or "tennis").replace(" ", "%20")
     days = [day] if day else None
     galleries: list[str] = []
+    index_read = 0
     try:
         idx = _get(f"{site}/search/?q=photos%20{query}", timeout=40)
+        index_read += 1
         galleries += _GALLERY_RE.findall(idx)
     except Exception:                                           # noqa: BLE001
         pass
@@ -691,6 +731,7 @@ def sweep_local_paper(paper: str, event: str | None, player: str | None,
                  "october november december").split()[int(m) - 1]
         try:
             sm = _get(f"{site}/sitemap/{y}/{month}/{int(d)}/", timeout=40)
+            index_read += 1
             galleries += _GALLERY_RE.findall(sm)
         except Exception:                                       # noqa: BLE001
             pass
@@ -718,11 +759,13 @@ def sweep_local_paper(paper: str, event: str | None, player: str | None,
                          f"「{slug}」**——下面这些是同日全部图集，自己看对不对题")
 
     out: list[dict] = []
+    gallery_read = 0
     for path in picked:
         try:
             html = _get(site + path, timeout=60)
         except Exception:                                       # noqa: BLE001
             continue
+        gallery_read += 1
         for blob in re.findall(r"<script type=application/ld\+json>(.*?)</script>",
                                html, re.S):
             try:
@@ -745,7 +788,10 @@ def sweep_local_paper(paper: str, event: str | None, player: str | None,
                         "credit": img.get("copyrightHolder"),
                         "url": gannett_original(img["url"]),
                     })
-    return {"rows": out, "notes": notes}
+    if picked and not gallery_read:
+        notes.append(f"翻到 {len(picked)} 辑图集，一辑都没取到——**这一档没跑完，不是没有**")
+    return {"rows": out, "notes": notes,
+            "pages_read": gallery_read if picked else index_read}
 
 
 _AP = "https://apnews.com"
@@ -814,12 +860,22 @@ def sweep_usopen(player: str | None, date: str | None, year: str) -> dict:
          Fan Week as part of the 2026 US Open at USTA Billie Jean King National
          Tennis Center on Monday, August 24, 2026 in Flushing, NY.
          (Photo by David Nemec/USTA)」
+
+    返回的 `pages_read` 是**真取回来的照片页数**（按人查的 tag 页、按日期扫的
+    byType 页）——「这一趟查了什么」按它判。players.json 取不到、查无此人、
+    每一页都 403 或回的不是 JSON，都是 0：**这一档没跑**，不是查空。
+    原来 main 按「`--event` 里有没有 US Open」判，notes 里写着「这一档没跑」，
+    末尾清单照样印「跑过：美网官方图片接口」。
     """
-    def rows_of(payload: str) -> list[dict]:
+    def rows_of(payload: str) -> tuple[list[dict] | None, object]:
+        # ⚠️ 回的不是 JSON 时原来 `return []`，调用方 `rows, total = …` 当场
+        # ValueError（解包 0 个值）——现在回 `None`，调用方记成「这一页没读到」
         try:
             body = json.loads(payload)
         except Exception:                                       # noqa: BLE001
-            return []
+            return None, None
+        if not isinstance(body, dict):
+            return None, None
         out = []
         for it in body.get("content") or []:
             imgs = (it.get("images") or [{}])[0]
@@ -837,6 +893,7 @@ def sweep_usopen(player: str | None, date: str | None, year: str) -> dict:
 
     found: list[dict] = []
     notes: list[str] = []
+    pages_read = 0
     try:
         who = usopen_player_ids(player, year) if player else []
     except UsoPlayersUnavailable as exc:
@@ -856,6 +913,11 @@ def sweep_usopen(player: str | None, date: str | None, year: str) -> dict:
             notes.append(f"{person['name']}（{person['id']}）取不到：{exc}")
             continue
         rows, total = rows_of(payload)
+        if rows is None:
+            notes.append(f"{person['name']}（{person['id']}）回的不是 JSON——"
+                         "**这一页没读到**，不是没有")
+            continue
+        pages_read += 1
         mine = [r for r in rows if r["date"].startswith(year)]
         notes.append(f"{person['name']}（{person['id']}，{person['country']}）"
                      f"：全部 {total} 条，其中 {year} 年 {len(mine)} 条")
@@ -868,6 +930,9 @@ def sweep_usopen(player: str | None, date: str | None, year: str) -> dict:
             except Exception:                                   # noqa: BLE001
                 break
             rows, _ = rows_of(payload)
+            if rows is None:
+                break
+            pages_read += 1
             found.extend(rows)
     if date:
         found = [r for r in found if r["date"] == date]
@@ -878,7 +943,7 @@ def sweep_usopen(player: str | None, date: str | None, year: str) -> dict:
         seen.add(r["cms"])
         uniq.append(r)
     uniq.sort(key=lambda r: r["date"], reverse=True)
-    return {"rows": uniq, "notes": notes}
+    return {"rows": uniq, "notes": notes, "pages_read": pages_read}
 
 
 def _event_key(text: str) -> str:
@@ -1305,11 +1370,16 @@ def main() -> int:
     # 上面 WTA 赛后稿那一档**大满贯也有**（2026-09-27 更正），下面赛事官网那一档要
     # WordPress，而美网不是 WordPress 站。
     is_uso = bool(args.event and "us open" in args.event.lower())
+    uso_ran = paper_ran = site_ran = False
     if is_uso:
         print("\n=== 美网官方图片接口（保底：每场都有；⚠️ 封顶 1280×720）")
         res = sweep_usopen(args.player, args.date, args.year)
+        uso_ran = res.get("pages_read", 0) > 0
         for n in res["notes"]:
             print(f"  · {n}")
+        if not uso_ran:
+            print("  ⚠️ **这一档没跑**：一页照片都没取到（原因见上面几行）——"
+                  "结果是**未知**，不是「没有」")
         rows = res["rows"]
         if not rows:
             print("  没有对得上的。⚠️ 分清两件事：**「还没发」**（夜场的官方图约 24 "
@@ -1341,9 +1411,13 @@ def main() -> int:
     if paper:
         print(f"\n=== {paper} 每日图集（说明自带四要素，原图 4800px 级）")
         got = sweep_local_paper(paper, args.event, args.player, args.date)
+        paper_ran = got.get("pages_read", 0) > 0
         enq = got["rows"]
         for note in got["notes"]:
             print(f"  ⚠️ {note}")
+        if not paper_ran:
+            print("  ⚠️ **这一档没跑**：搜索页、sitemap、图集页一页都没取到——"
+                  "结果是**未知**，不是「没有」")
         if not enq:
             print("  没有对得上的。⚠️ 这一辑**按比赛日出**，当天的往往次日才上线；"
                   "而且它和赛事图库一样偏主球场——**有这条渠道不等于有这个人**。")
@@ -1374,8 +1448,10 @@ def main() -> int:
     if args.site:
         print(f"\n=== {args.site} 的 WordPress 媒体库")
         res = sweep_tournament(args.site, args.date, args.player, days=args.days)
+        # `error` 就是媒体库第一页都没读到（`sweep_tournament` 只在那时设它）
+        site_ran = not res.get("error")
         if res.get("error"):
-            print("  " + res["error"])
+            print(f"  ⚠️ **这一档没跑**：{res['error']}——结果是**未知**，不是「没有」")
         else:
             for n in res.get("notes") or []:
                 print(f"  · ⚠️ {n}")
@@ -1438,16 +1514,19 @@ def main() -> int:
 
     # **这一趟到底查了哪几档，明着写出来。** 写 `cover.portrait._frame_why`
     # 的人要照抄这份清单，不许写成「四类源都翻过」——没跑的那一档不算翻过。
-    # ⚠️ 这两档原来是**写死的「跑过」**——每一页都 403、断网，照样印进「跑过」。
-    # 现在和下面几档一个口径：按真取回来的页数判。
+    # ⚠️ **每一档都按真取回来的页判**，不按「给没给参数」判：WTA 图库和 AP 原来是
+    # 写死的「跑过」，美网／当地报纸／WP 媒体库原来按 `--event`／报纸域名／`--site`
+    # 在不在判——每一页都 403、断网，照样印进「跑过」（review 第三轮复现：
+    # `--site cincinnatiopen.com --event 'US Open'` 全断网，三档全印「跑过」，
+    # 而美网那一档自己的 notes 写着「这一档没跑」）。
     ran: list[str] = []
     skipped: list[str] = []
     (ran if wta_stats.get("pages_read") else skipped).append("WTA photo-resources")
     (ran if ap_stats.get("pages_read") else skipped).append("AP 通讯社")
     (ran if arts_ran else skipped).append("WTA 赛后稿头图")
-    (ran if is_uso else skipped).append("美网官方图片接口")
-    (ran if paper else skipped).append("当地报纸每日图集")
-    (ran if args.site else skipped).append("赛事官网 WordPress 媒体库")
+    (ran if uso_ran else skipped).append("美网官方图片接口")
+    (ran if paper_ran else skipped).append("当地报纸每日图集")
+    (ran if site_ran else skipped).append("赛事官网 WordPress 媒体库")
     ran.extend(f"中文媒体·{c}" for c in cn_ran)
     skipped.extend(f"中文媒体·{c}" for c in cn_skipped)
     if not cn_ran and not cn_skipped:
