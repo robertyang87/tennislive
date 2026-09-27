@@ -3227,14 +3227,14 @@ def _title_html(lines: list[str], accent: str = "") -> str:
 _LOCKUP_CSS = f""".bar{{position:absolute;top:0;left:0;right:0;height:12px;
  background:{BRAND_BAR_CSS}}}
 .head{{position:absolute;top:44px;left:70px;right:70px;display:flex;align-items:center;
- text-shadow:0 2px 12px rgba(0,0,0,.6)}}
+ text-shadow:0 2px 12px rgba(0,0,0,.6)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .brandwrap{{display:flex;align-items:center;gap:14px}}
 .brandlines{{display:flex;flex-direction:column;gap:2px}}
 .topic{{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
  color:{_TOPIC_FG};letter-spacing:1px;
  text-shadow:{TEXT_SHADOW_CHROME}}}
 .brand-icon{{width:52px;height:52px;object-fit:contain;
- filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))}}
+ filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 .brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:38px;font-weight:400;letter-spacing:1px;color:{DARK['foreground']}}}
 """
@@ -3291,7 +3291,7 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
  font-size:{_title_px(lines)}px;line-height:1.24;color:{DARK['foreground']};white-space:nowrap;
  text-shadow:{TEXT_SHADOW_HOOK}}}
 .title .accent{{color:{DARK['primary']}}}
-.sub{{margin-top:26px;font-size:38px;color:{_SOFT_FG};text-shadow:0 2px 16px rgba(0,0,0,.8)}}
+.sub{{margin-top:26px;font-size:38px;color:{_SOFT_FG};text-shadow:0 2px 16px rgba(0,0,0,.8)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
 </style><div class=bg></div><div class=shot><img src="data:image/jpeg;base64,{b64}"></div>
 {_lockup_html(column, topic)}
 <div class=band><div class=title>{_title_html(lines, str(cov.get("hook_accent", "")))}</div>{sub_html}</div>"""

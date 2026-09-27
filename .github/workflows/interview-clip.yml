@@ -469,6 +469,12 @@ jobs:
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk fonts-noto-core
+          # subs 那一趟的第二份 ASR 要 ffmpeg（`verify_transcript` 用 `yt-dlp -f ba` 下音轨，
+          # tennistv.com 那 12 条是 Brightcove HLS；2026-09-27 review）。装在这儿而不是
+          # 提交 lines.json 之后：`ensure_ffmpeg` 落空时退回 apt，得夹在这一对 apt 缓存
+          # restore/save 中间才存得进去（`test_apt缓存只在这趟真下了新包时回写`）；
+          # 先走静态构建、不碰镜像，多花的是几秒下载。
+          ensure_ffmpeg
           pip install -q -e . "yt-dlp[default]"
 
       # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
@@ -1106,21 +1112,6 @@ jobs:
           key: faster-whisper-${{ runner.os }}-${{ steps.second_asr.outputs.model }}
           restore-keys: |
             faster-whisper-${{ runner.os }}-
-
-      # **subs 那一趟的第二份 ASR 要 ffmpeg**（2026-09-27 review）：`verify_transcript`
-      # 用 `yt-dlp -f ba` 下音轨，而 tennistv.com 那 12 条 spec 是 Brightcove HLS——
-      # 这条下载原来只在 render 跑，ffmpeg 一直在；挪到 subs 之后这一档什么都没装。
-      # 和别处同一个装法：`ensure_ffmpeg` 先拿静态构建、不碰 apt 镜像，落空才退回
-      # apt 老路（用的是上面 subs 那份 apt 缓存）——所以 timeout-minutes 要撑得住
-      # 880 秒的最坏预算（`test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用`）。
-      # ⚠️ **排在「提交成片」之后**，理由同下一步装 faster-whisper：lines.json 先落库，
-      # 写中文等的是它。判据 `test_会下载媒体的每一档都先装ffmpeg` 按 mode 推，不按 job。
-      - name: 装 ffmpeg（subs 的第二份 ASR 下音轨用）
-        if: github.event.inputs.mode == 'subs'
-        timeout-minutes: 15
-        run: |
-          source tools/ci_apt_install.sh
-          ensure_ffmpeg
 
       - name: 第二份 ASR 交叉校验并提交报告（subs）
         if: github.event.inputs.mode == 'subs'

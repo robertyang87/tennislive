@@ -401,6 +401,7 @@ _ENFORCED_FLOOR = (
     "src/tennislive/video/diagram_palette.py",
     "src/tennislive/video/outro_page.py",    # WP7 片尾
     "src/tennislive/video/watermark.py",     # WP6 常驻角标
+    "tools/build_interview_clip.py",         # WP3 赛后开麦封面、收尾卡、字幕
     "tools/design_compare_sheet.py",
     "tools/gen_tokens_css.py",
     "tools/push_reel.py",                    # WP2 推送：赛场之上／赛后开麦／剪辑片
