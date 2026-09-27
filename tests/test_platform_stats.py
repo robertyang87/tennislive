@@ -81,12 +81,13 @@ def _item(title, day, mp4=None, film_seconds=None, dir=Path("x")):
 
 def _copy_html(outdir: Path, title: str, body: str = "正文") -> Path:
     """复制页，照真产物的形状写：标题在 `<textarea id="title">`，而 `<h1>`
-    是写死的常量「贴图发布文案」——两者一起摆进来，判据才拦得住「又去读 h1」。
+    是写死的常量「发布文案」（2026-09-27 之前的产物是「贴图发布文案」）——两者一起摆进来，
+    判据才拦得住「又去读 h1」。
     """
     outdir.mkdir(parents=True, exist_ok=True)
     path = outdir / "copy.html"
     path.write_text(
-        "<html><body><h1>贴图发布文案</h1>"
+        "<html><body><h1>发布文案</h1>"
         f'<textarea id="title">{title}</textarea>'
         f'<textarea id="body">{body}</textarea></body></html>',
         encoding="utf-8")
@@ -354,7 +355,7 @@ def test_竖版视频线也要进产物索引(tmp_path):
 
 
 def test_复制页的标题要从textarea抠不是从h1(tmp_path):
-    """`<h1>` 写死是「贴图发布文案」一个常量，对任何一天的复制页都一样。
+    """`<h1>` 写死是「发布文案」一个常量（老产物是「贴图发布文案」），对任何一天的复制页都一样。
 
     仓库为它栽过一次：一道「是不是这一版」的闸拿 `<h1>` 当指纹，恒真了一个月。
     这里再取一次 h1，156 份产物会全归成同一个标题，然后每条作品都匹配到它。
@@ -364,7 +365,7 @@ def test_复制页的标题要从textarea抠不是从h1(tmp_path):
     _copy_html(root / "2026-08-12" / "reel" / "b", "8.12 赛场之上 | 乙")
     titles = sorted(it["title"] for it in ps.index_output(root))
     assert titles == ["8.12 赛场之上 | 乙", "8.12 赛场之上 | 甲"]
-    assert "贴图发布文案" not in titles
+    assert "发布文案" not in titles
 
 
 # --------------------------------------------------------------- 片长出处
