@@ -1,0 +1,67 @@
+{
+  "film_sha256": "401083a71e663eed0702b2258898a9c4b34fa736d602aa8b0d12f19db560e9f3",
+  "film_seconds": 99.361,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "ruud-zverev-laver-cup-2026-doubles-interview",
+    "received_at": "2026-09-27T02:06:27Z",
+    "artifact_ready_at": "2026-09-27T02:11:03Z",
+    "elapsed_seconds": 276.139,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "401083a71e663eed0702b2258898a9c4b34fa736d602aa8b0d12f19db560e9f3",
+    "spec_sha256": "9f845004fcfa8736d0c6671d0b2cb3668226b5b218ff663dfd0759b31e892a11",
+    "run_id": "36287539860",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-27T02:07:08Z",
+        "run_id": "36287539860"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-27T02:08:59Z",
+        "run_id": "36287539860"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-27T02:09:48Z",
+        "run_id": "36287539860"
+      }
+    ],
+    "render_seconds": 75.139,
+    "pre_render_seconds": 201.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-27T02:07:08Z",
+      "run_id": "36287539860"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-27T02:08:59Z",
+      "run_id": "36287539860"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-27T02:09:48Z",
+      "run_id": "36287539860"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-27T02:11:03Z",
+      "run_id": "36287539860"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-27T02:11:04Z",
+      "run_id": "36287539860"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-ruud-zverev-laver-cup-2026-doubles-interview/ruud-zverev-laver-cup-2026-doubles-interview.mp4?v=401083a71e663eed",
+  "video_bytes": 34467452,
+  "release_asset_digest": "sha256:401083a71e663eed0702b2258898a9c4b34fa736d602aa8b0d12f19db560e9f3",
+  "qc_attestation_sha256": "44716d0ca3ec19a4476837acad5a4f48eecb72076ee329624b97b19e2581a4c8"
+}

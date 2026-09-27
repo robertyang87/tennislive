@@ -1,6 +1,6 @@
 # 转写核对表：ruud-zverev-laver-cup-2026-doubles-interview
 
-源片 https://www.youtube.com/watch?v=r0ZRDB70EFU　采访段 0.0–85.2 秒（共 47 行）
+源片 https://www.youtube.com/watch?v=r0ZRDB70EFU　采访段 0.0–79.9 秒（共 45 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
@@ -49,8 +49,6 @@
 | 43 | 1:16.8 | [▶](https://youtu.be/r0ZRDB70EFU?t=76) | And I'm very happy | 我也很高兴 |  |
 | 44 | 1:18.2 | [▶](https://youtu.be/r0ZRDB70EFU?t=78) | that we finished the day off with a win | 我们也以一场胜利 |  |
 | 45 | 1:19.5 | [▶](https://youtu.be/r0ZRDB70EFU?t=79) | as well. | 结束了这一天 |  |
-| 46 | 1:19.9 | [▶](https://youtu.be/r0ZRDB70EFU?t=79) | And now we're ahead going | 现在我们领先着 |  |
-| 47 | 1:21.2 | [▶](https://youtu.be/r0ZRDB70EFU?t=81) | into the last day. | 进入最后一天 |  |
 
 ## 还欠着的
 
