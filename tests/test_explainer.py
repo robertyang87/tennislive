@@ -534,7 +534,7 @@ def test_文案标题带上品牌语且不超小红书上限():
     # 改短了就从表里删掉，否则它就是一盏恒真的绿灯。
     from tennislive.render.xiaohongshu import xhs_title_len
 
-    # 2026-09-27 冻结后当天清零（`a-plus-wildcard` 改成「ATP500 有第 4 张外卡」，最宽 20.0）
+    # 2026-09-27 冻结后当天清零（`a-plus-wildcard` 改成「ATP 500 第 4 张外卡」，最宽 19.5）
     frozen: dict[str, float] = {}           # 名单只许减、登记值只许降
     for slug, registered in P.TITLE_TOO_WIDE.items():
         assert slug in frozen and registered <= frozen[slug], (

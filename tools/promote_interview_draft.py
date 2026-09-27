@@ -400,6 +400,16 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
             skipped.append(
                 f"{f.name}: 措辞不合规矩（{'；'.join(problems)}），不提升")
             continue
+        # 全称断言（「唯一一个」「N 次打进，N 次都…」）同一个座位拦：转正之后
+        # interview-clip 会被自动 dispatch，前置检查 `production_preflight`
+        # 那道闸是硬的——放过去就是一趟红着的 render。模板本身过得了这道闸
+        # （`test_采访线自动转正的模板文案过得了全称断言那道闸`），会撞上的只有
+        # 人工请求带进来、却没在 `_claims` 认领两个源的文案：留草稿等终审。
+        from absolute_claims import interview_problem  # noqa: PLC0415
+        if interview_problem(spec, spec["slug"]):
+            skipped.append(
+                f"{f.name}: 全称断言没认领两个独立源（`_claims`），不提升")
+            continue
         if write:
             out = SPECS / f"{spec['slug']}.json"
             out.write_text(json.dumps(spec, ensure_ascii=False, indent=2),

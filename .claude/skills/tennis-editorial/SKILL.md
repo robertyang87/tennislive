@@ -2737,7 +2737,8 @@ PR 正在改同一条工作流；把 `check_interview_copy_wording` 那个**零�
 「五次破发点，五次都…」「三次被逼到赛点，三次都…」），或者一本规则书之内
 （「一共出现三次，三次都」）。闸扫的面上那 9 份就是下面两张存量表里的 8 ＋ 1。
 ⚠️ **三条线的闸都不扫小红书正文**（竖版短片 `spec_outward_text`、采访 `interview_texts`、
-解说片只扫 `_CAPTIONS` 的 hook），要扩三条一起扩。
+解说片 `explainer_preflight.outward_texts`——它扫每屏的标题／旁白／问句／小标／示意图／
+注释／要点和封面台头，**小红书那一面只扫 `_CAPTIONS` 的 hook**，正文不扫），要扩三条一起扩。
 
 所以词表**没有按词放宽**，是加了这一个形状；上面那句「留给写的时候自己问那一句」仍然管
 它认不出的那一半（`zverev-norrie`「八次全输」只说一遍数；示意图标题「三次大满贯决赛，
@@ -2753,8 +2754,10 @@ PR 正在改同一条工作流；把 `check_interview_copy_wording` 那个**零�
 不写 push／cover／takeaway，`promote_interview_draft` 只填模板，模板里没有全称断言
 （`test_采访线自动转正的模板文案过得了全称断言那道闸` 钉着）；带着文案的草稿来自**人工请求**
 （`build_interview_request` 从请求里原样抄 push／takeaway），人写的就该和手写 spec 一样硬拦——
-人写得了 `_claims`。哪天草稿开始带模型写的文案，要先在 promote 那一关分流，否则红在自动
-dispatch 的 render 前置检查上（红得出声，不是静默）。
+人写得了 `_claims`。**promote 那一关也先查一遍**（`promote_all` 跟措辞判据坐同一个座位）：
+人工请求带着没认领的断言，就**留草稿、不转正**，而不是转正之后在自动 dispatch 的 render
+前置检查上红一趟（判据 `test_人工请求带着没认领的全称断言_转正时留草稿`）。哪天草稿开始带
+模型写的文案，要在 promote 那一关另做分流——模型写不了 `_claims`，照现在这样会被静静留成草稿。
 
 存量：竖版短片 8 条挂 `REEL_COUNT_LEGACY`（**只豁免计数式那一句**，词表那一档照旧要认领），
 解说片 9 条挂 `EXPLAINER_LEGACY`、采访 2 条挂 `INTERVIEW_LEGACY`，都只许减不许加。

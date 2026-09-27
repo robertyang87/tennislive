@@ -49,7 +49,8 @@ def check_interview_claims(spec_path: Path) -> None:
     `draft_interview_spec` 不写 push/cover/takeaway，`promote_interview_draft` 只填模板
     （模板里没有全称断言，`test_采访线自动转正的模板文案过得了全称断言那道闸` 钉着）；
     带文案的草稿来自人工请求（`build_interview_request` 原样抄），人写得了 `_claims`。
-    哪天草稿开始带模型写的文案，先在 promote 那一关分流。
+    `promote_interview_draft.promote_all` 转正前先查同一道闸：没认领就留草稿，
+    不会转正之后在这儿红一趟。哪天草稿开始带模型写的文案，先在 promote 那一关分流。
     """
     sys.path.insert(0, str(ROOT / 'tools'))
     from absolute_claims import interview_problem  # noqa: PLC0415

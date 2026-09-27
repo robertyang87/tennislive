@@ -610,6 +610,25 @@ def _reel():
     return build_match_reel
 
 
+@pytest.fixture()
+def _empty_reel_ledger(monkeypatch, tmp_path):
+    """发布账本钉成空目录——给「拿真的已发 spec 测别的闸」的测试用。
+
+    `validate_spec(spec)` 的默认口径是渲染入口，会读 `data/reel_publish_ledger`
+    （`reel_facts.waiting_fact_stale_problem`：`_facts` 里写着「抽签后／正式名单」
+    这类要等的事、`_rechecked_at` 又早于最近一次推送，就红）。哪天有人给这几条已发
+    spec 补上那两个字段，它们会先红在时效那道闸上：写了 `match=` 的对不上，没写的
+    （`pytest.raises(ReelError)`）是假绿。测的不是账本，就别读账本。
+    """
+    _reel()
+    import reel_facts  # noqa: PLC0415
+
+    empty = tmp_path / "empty-reel-ledger"
+    empty.mkdir()
+    monkeypatch.setattr(reel_facts, "REEL_LEDGER_DIR", empty)
+    return empty
+
+
 def test_tts内容键同文同参数同键不同文不同键():
     """缓存键按内容算：改一个字、换一把嗓子、改一个参数都要换键——
     「改了字」和「没改字」只有内容 hash 分得开。"""
@@ -9072,6 +9091,7 @@ def test_屏幕上的数字不许把字吃掉():
             "一个没写完的数")
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_旁白里的百分号要在dry_run前拦住():
     """屏幕可以写 49%，中文配音原文必须写「百分之四十九」。"""
     reel = _reel()
@@ -14047,6 +14067,7 @@ def test_换取签名URL拉受控流这条源禁掉():
         "多出来说明判据放宽了、误伤了合规的源。")
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_签名源那道闸排在下载之前():
     """又是「闸装在哪一步」那条老账——**只测行为拦不住位置错**。
 
@@ -17589,6 +17610,7 @@ def test_轮次分数在字幕里写成1斜杠N决赛():
     assert A("百分之六十四") == "64%"
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_quote的at超出段长在dry_run就红():
     """`explicit_quote_cues` 原来要等全部分段编完、拼接写字幕时才报——
     zverev-deminaur-laver-cup-2026 第二趟 render 就这么白跑了两分钟。
