@@ -19,10 +19,13 @@
 - **只报的**：判断题，机器只负责把它摆到眼前（``[口味] 只报``），不替人决定
 
 几条是从 pytest 里**挪过来**的（收尾一问、推送标题剥完为空、制胜分/UE 认领、Tennis TV
-片尾认领、quote 段认领、小红书 markdown）：它们原来只在 CI 上跑，而自动出片链直推
-main **不触发 CI**——`andreeva-gauff` 就是这么带着一句「停在数据上的收尾」发进微信的
-（那条存量注释自己写着「这一类的修法是把判据搬进那道闸」）。挪过来之后**判据和存量表
-只有这一个出处**，测试 import 这里的，不再各抄一份（「一个数写两处必分叉」）。
+片尾认领、quote 段认领、小红书 markdown）：它们原来只在 CI 上跑，会话手写的 spec 要等
+CI 才红，挪进 `--dry-run` 之后 0.2 秒就红。⚠️ **自动链那一头这次只多了「看得见」，没多
+「拦得住」**：自动出片链直推 main 不触发 CI（`andreeva-gauff` 就是这么带着一句「停在数据
+上的收尾」发进微信的），而自动 spec 在这里一律只报不拦——同样那条 spec 今天会在 run 日志
+里多印一行 `[口味] 只报`，照样发得出去。要真拦住自动链，得在自动链自己的闸上做，不在这儿。
+挪过来之后**判据和存量表只有这一个出处**，测试 import 这里的，不再各抄一份（「一个数写
+两处必分叉」）。
 
 存量表一律**只许减不许加**，自检在 ``tests/test_taste_gates_extra.py``。
 """
@@ -84,12 +87,29 @@ def _hits(pattern: re.Pattern, texts) -> list[str]:
 
 # ───────────────────────────────────────── ① 钩子／推送标题不拿全场总分差说事 ──
 
+_N = r"[\d一二两三四五六七八九十百零]+"
 #: 「全场只多赢一分」「总分九十七平」「她少赢了七个小分」。三盘球的总得分永远接近，
-#: 这个数说不出这场球的形状（账号所有者 2026-09-19，chung-nagal 第一版钩子）。
+#: 这个数说不出这场球的形状（账号所有者 2026-09-13「不要写总分差距了」、2026-09-19
+#: chung-nagal 第一版钩子「其实网球差距就在一两分的关键分」）。
+#:
+#: **这是这条规矩唯一的一份正则**——`taste_preflight` 摆事实用的也是它（原来各写一份，
+#: 一个漏「总分落后18分」、一个把「全场多次破发」摆成总分说法）。四个形状：
+#:
+#: - 「总分／总得分／总小分」**裸词就算**：钩子和推送标题里出现它，说的只能是总得分。
+#:   全库量过：已发的 12 条全在存量表里；自动草稿 126 份里 19 份（「高芙总分落后18分」
+#:   「科斯秋克总得分领先遭逆转」「克维多总分打平」）——旧版只认得 8 份
+#: - 「全场」**必须带一个「N 分」**（「全场落后9分」）：裸的「全场状态差」「全场一直领先」
+#:   「全场发球差强人意」说的是状态，不是总分（review 探出来的三个误伤）
+#: - 「多／少(赢|拿|得) N 分」：「多9分却输球」。前面是「至／最／不」的（至少三分）、
+#:   后面跟「钟／之」的（多花十分钟、四分之一）不算
+#: - 「N 个小分」
+#:
+#: ⚠️ 故意不收裸的「差 N 分」：「只差一分被拖进决胜盘」是他接受过的钩子，那一分是关键分。
 TOTAL_MARGIN = re.compile(
-    r"(全场|总分|总得分)[^\n，。]{0,8}(多赢|少赢|领先|只差|差|平)"
-    r"|(多|少)(赢|拿)了?[\d一二三四五六七八九十两]+个?小?分"
-    r"|[\d一二三四五六七八九十百]+个小分")
+    rf"总分|总得分|总小分"
+    rf"|全场[^\n，。]{{0,8}}?(?:领先|落后|只差|差){_N}个?小?分(?!钟|之)"
+    rf"|(?<![至最不])(?:多|少)(?:赢|拿|得)?了?{_N}个?小?分(?!钟|之)"
+    rf"|{_N}个小分")
 
 #: 2026-09-19 那条规矩之前已经发出去的。全库量过：钩子／推送标题里写总分差的 12 条，
 #: **最晚一条是 09-12**，规矩之后 0 条——也就是说这 12 条全是规矩定下之前的写法，
@@ -131,7 +151,9 @@ def total_margin_problem(spec: dict) -> str | None:
 #: 赛点／盘点是「兑现即终止」的点：赢家永远只兑现最后一个，「N 个只兑现了一个」
 #: 不是短板，是同义反复（账号所有者 2026-08-19「这种文案是有问题的，以后杜绝类似
 #: 的弱智文案」）。**只认赛点和盘点**——破发点分散在十几个发球局里，2/13 是真会
-#: 变的效率（berrettini-wawrinka「十三个破发点／他只兑现两个」是好钩子）。
+#: 变的效率，不是「N 选 1」的同义反复（berrettini-wawrinka「十三个破发点／他只兑现两个」
+#: 这道闸不拦）。⚠️ 这只说它**不是同义反复**，不说它是好钩子：2026-09-27 起钩子里
+#: 「破发」「抢七」都不用（O6），那是另一道判据的事。
 ONE_OF_N = re.compile(r"(赛点|盘点)[^。！？\n]{0,8}只(兑现|转化|拿下|把握住?)了?[一1]个")
 
 #: 就是账号所有者点名的那一条，已发。
@@ -246,8 +268,15 @@ PENDING_MARK = re.compile(
     r"|(名单|阵容|场序|签表|抽签)[^。；\n]{0,6}要等"
     r"|要等[^。；\n]{0,4}(抽签|名单|阵容|官宣|公布|场序)", re.I)
 
-#: 认领之后多久要再查一次。账号所有者 2026-09-18（戴维斯杯中国队阵容）：第二版重发时
-#: 名单已经公布了 58 分钟，一次都没回头看。
+#: `still_pending` 的认领多久之后要再查一次。账号所有者 2026-09-18（戴维斯杯中国队阵容）：
+#: 第二版重发时名单已经公布了 58 分钟，一次都没回头看。
+#:
+#: ⚠️ **只管 `still_pending`，`resolved` 不过期**：规矩是「先查那件事定了没——定了就按它
+#: 改」，定了就是定了，没有「再查一次」这回事。而且过期判据**读的是墙上的钟**——
+#: 让它管 `resolved`，一条照规矩写好、已经发出去的 spec 在 24 小时后会被 CI 的全库扫描
+#: （`validate_spec(allow_published_legacy=True)`）判红，main 从此每个 PR 都红
+#: （fix round 1 复现过：同一条 spec，checked_at 早 1 小时绿、早 25 小时红）。
+#: 所以年龄只在**要出片的那一刻**查：`check_age=False` 给全库盘点用。
 PENDING_MAX_AGE = timedelta(hours=24)
 
 #: 第三版已经按 ITF 正式名单改对、推过了；它的注解里正记着这次事故（marker 就在
@@ -291,15 +320,17 @@ def _parse_time(text: str) -> datetime | None:
     return stamp if stamp.tzinfo else stamp.replace(tzinfo=timezone.utc)
 
 
-def pending_fact_findings(spec: dict, *, now: datetime | None = None
-                          ) -> tuple[list[str], list[str]]:
+def pending_fact_findings(spec: dict, *, now: datetime | None = None,
+                          check_age: bool = True) -> tuple[list[str], list[str]]:
     """(硬的, 只报的)。认领写在 spec 顶层 `_pending_resolved`：
 
         [{"marker": "正式名单要等抽签日", "status": "resolved" | "still_pending",
           "checked_at": "2026-09-17T12:27Z", "source": "https://…"}]
 
-    `marker` 是注解里那句话的一段原文；`checked_at` 超过 24 小时就要回头再查一次。
-    `still_pending` 放行，但只报一句：旁白不许押具体阵容。
+    `marker` 是注解里那句话的一段原文。`resolved` 查过就算数，不过期。
+    `still_pending` 放行，但只报一句（旁白不许押具体阵容）；它的 `checked_at` 超过
+    24 小时就要回头再查一次——**只在 `check_age` 时判**（dry-run / render），
+    全库盘点传 `check_age=False`，否则判据会随墙上的钟自己变红。
     """
     if _slug(spec) in PENDING_LEGACY:
         return [], []
@@ -329,10 +360,11 @@ def pending_fact_findings(spec: dict, *, now: datetime | None = None
                 status not in ("resolved", "still_pending"):
             hard.append(f"{where}：`_pending_resolved` 那一条缺 checked_at（ISO）／"
                         "source（URL）／status（resolved|still_pending）。")
-        elif now - stamp > PENDING_MAX_AGE:
-            hard.append(f"{where}：上一次查是 {claim['checked_at']}，已经超过 "
+        elif status == "still_pending" and check_age and now - stamp > PENDING_MAX_AGE:
+            hard.append(f"{where}：上一次查是 {claim['checked_at']}（还没定），已经超过 "
                         f"{int(PENDING_MAX_AGE.total_seconds() // 3600)} 小时——每次渲之前、"
-                        "每次重发之前都要回头再查一次，然后更新 `checked_at`。")
+                        "每次重发之前都要回头再查一次：定了就按它改、改成 resolved；"
+                        "还没定就更新 `checked_at`。")
         elif status == "still_pending":
             soft.append(f"{where} 还没定（{claim['checked_at']} 查过）：旁白和钩子只能用"
                         "「领衔」这类不押具体阵容的写法。")
@@ -650,10 +682,16 @@ def social_first_note(spec: dict) -> str | None:
 #: （抢七／抢十）、「世界第一」、「一个没给」「两个赛点」这类惯用说法不在里面——
 #: `arabic_numerals` 直接喂手写字段会把「抢十」换成「抢10」、把「第180三盘」粘成
 #: 「第1803盘」，所以这里只认「二~九开头、后面跟量词」的计数。
+#:
+#: 两个不是计数的形状要让开（review 探出来的）：副词「十分漂亮」（「十分钟」照旧算——
+#: 「三十四分钟」写进钩子正该是「34分钟」）、分数「四分之一」（轮次另有「1/4决赛」那道闸）。
+#: ⚠️ 全库 307 条里约一半会报——**那不是误伤率**：抽出来全是「五局」「三个赛点」这类真计数，
+#: 是 2026-09-16 那条规矩之前的写法（spec 里没有可靠的日期字段，按日期切不了）。
+#: 只报的闸只对手上这一条出声，新写的 spec 报了就是真该改。
 SCREEN_COUNT = re.compile(
-    r"(?<![第抢世界星期周礼拜一二三四五六七八九十百千万两〇零])"
+    r"(?<![第抢世界星期周礼拜一二三四五六七八九十百千万两〇零])(?!十分(?!钟))"
     r"([二三四五六七八九十][一二三四五六七八九十百千]*|一[十百千][一二三四五六七八九十百千]*)"
-    r"(?=个|次|天|周|年|月|岁|局|盘|分|场|拍|座|支|位|名|小时|号种子|连胜|连败|届|站|城)")
+    r"(?=个|次|天|周|年|月|岁|局|盘|分(?!之)|场|拍|座|支|位|名|小时|号种子|连胜|连败|届|站|城)")
 
 
 def screen_numerals_note(fields) -> str | None:
@@ -684,9 +722,13 @@ def nickname_note(texts) -> str | None:
 
 # ═══════════════════════════════════════════════════════════════════ 接入口 ══
 
-def spec_taste_extra(spec: dict, *, now: datetime | None = None
-                     ) -> tuple[list[str], list[str]]:
-    """`validate_spec` 只接这一刀：返回 `(硬的, 只报的)`。自动 spec 的硬项降成只报。"""
+def spec_taste_extra(spec: dict, *, now: datetime | None = None,
+                     check_age: bool = True) -> tuple[list[str], list[str]]:
+    """`validate_spec` 只接这一刀：返回 `(硬的, 只报的)`。自动 spec 的硬项降成只报。
+
+    `check_age=False`：全库盘点（`validate_spec(allow_published_legacy=True)`、CI 的
+    全库扫描）用——凡是读墙上的钟的判据都不跑，免得已发的 spec 过一天自己变红。
+    """
     hard: list[str] = []
     soft: list[str] = []
     for check in (total_margin_problem, one_of_n_problem, cover_fit_problem,
@@ -696,7 +738,7 @@ def spec_taste_extra(spec: dict, *, now: datetime | None = None
             hard.append(problem)
     if problem := peng_shuai_problem(_slug(spec), _outward(spec)):
         hard.append(problem)
-    pending_hard, pending_soft = pending_fact_findings(spec, now=now)
+    pending_hard, pending_soft = pending_fact_findings(spec, now=now, check_age=check_age)
     hard += pending_hard
     soft += pending_soft
     cover, push = spec.get("cover") or {}, spec.get("push") or {}

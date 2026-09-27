@@ -69,13 +69,11 @@ HOOK_TERMS = re.compile(
     r"|接发球?局|得分率|决胜局|发球胜[赛盘]局|首秀|复仇|[\d一二两三四五六七八九十]+分里"
     r"|说晚安")
 
-_N = r"[\d一二两三四五六七八九十百]+"
 #: 全场总得分差（账号所有者 2026-09-13「不要写总分差距了」、09-19「其实网球差距
-#: 就在一两分的关键分」）。⚠️ 故意不收「差 N 分」：「只差一分被拖进决胜盘」是他
-#: 接受过的钩子，那一分是关键分，不是总分。
-TOTAL_MARGIN = re.compile(
-    rf"总分|总得分|总小分|全场只?(?:多|少)赢?|(?:多|少)(?:赢|拿|得)?了?{_N}个?小?分(?!钟)"
-    rf"|{_N}个小分")
+#: 就在一两分的关键分」）。**单一出处在 `taste_gates_extra.TOTAL_MARGIN`**——那是
+#: `--dry-run` 真拦的那一份；这里摆事实用同一份，清单上摆出来的就是闸会红的。
+#: 原来两边各写一份，一个把「全场多次破发」摆成总分说法、另一个漏了「总分落后18分」。
+from taste_gates_extra import TOTAL_MARGIN  # noqa: E402
 
 #: 只活在 pytest 里的口味判据：`--dry-run` 看不见它们，会话手写的 spec 要等 CI
 #: 才红——正是「做了一半又返工」的来源之一。节点名写死，
@@ -541,6 +539,13 @@ def run_interview_checks(spec: dict, xhs: str) -> list[GateResult]:
     problems = check_interview_copy_wording(spec, xhs or None)
     out.append(GateResult("check_interview_copy_wording",
                           "fail" if problems else "pass", "；".join(problems)))
+    # `build_interview_clip.check_taste_extra`（渲染入口第一道）读的是 spec 旁边的
+    # `.xhs.txt`；这里正文已经在手上，直接调它背后那一刀。不列进来，预检会对一条
+    # `main()` 当场拦下的采访报全绿。
+    from taste_gates_extra import interview_taste_extra  # noqa: PLC0415
+    hard, _ = interview_taste_extra(spec, xhs or None)
+    out.append(GateResult("check_taste_extra", "fail" if hard else "pass",
+                          _fmt("；".join(hard), 400) if hard else ""))
     return out
 
 

@@ -596,7 +596,7 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 名单上哪儿拿（ITF tieCentre 接口、第二源 flashscore、中文媒体当天没有跟进稿）记在
 `tennis-media-sources`「戴维斯杯的正式名单和抽签」。
 判据 `taste_gates_extra.pending_fact_findings`（`--dry-run` 就红）：注解里写了「名单要等／待公布」，
-顶层 `_pending_resolved` 就要有一条 {marker, status, checked_at, source}，查过超过 24 小时要再查。
+顶层 `_pending_resolved` 就要有一条 {marker, status, checked_at, source}；`resolved` 查过就算数，`still_pending` 超过 24 小时要再查（只在出片路径判，全库盘点不读钟——否则已发的 spec 隔天自己把 CI 变红）。
 
 ## ⭐ 「这就去做 X」说出口，就必须在同一个回合里做掉
 

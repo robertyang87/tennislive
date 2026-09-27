@@ -2560,13 +2560,24 @@ def test_赛场之上的封面一律用solo():
     with pytest.raises(reel.ReelError, match="一律用 solo"):
         reel.build_cover({"": Path("x.mp4")}, "", {"cover": vs},
                          Path("y.mp4"), 1920)
-    # **写了判据就放行。** 反向验证这一支真的走过去了：它必须**越过栏目那道
-    # 闸**、死在后面别的地方——只断言「不抛『一律用 solo』」证明不了这个，
-    # 那句话改一个字就假绿。
+    # ⚠️ **「赛场之上」写了 `_layout_why` 也不放行**（2026-09-24 起）：账号所有者否掉的
+    # shang-mannarino 42cfae85 正写着一句认领。和 `validate_spec` 里的
+    # `taste_gates_extra.solo_layout_problem` 是同一份判据，报错不许再把人指去写认领。
     declared = {**vs, "_layout_why": "这一条两个人的戏份一样重，退回 VS"}
-    with pytest.raises(reel.ReelError, match="frame_at|找不到|ffmpeg|封面|图"):
+    with pytest.raises(reel.ReelError, match="一律用 solo") as caught:
         reel.build_cover({"": Path("x.mp4")}, "", {"cover": declared},
                          Path("y.mp4"), 1920)
+    assert "没有认领口" in str(caught.value), "报错还在把人指去写 `_layout_why`"
+    # **认领口只剩「网球有故事」：写了判据就放行。** 反向验证这一支真的走过去了：
+    # 它必须**越过栏目那道闸**、死在后面别的地方——只断言「不抛『一律用 solo』」
+    # 证明不了这个，那句话改一个字就假绿。
+    story = {**declared, "eyebrow": "网球有故事"}
+    with pytest.raises(reel.ReelError, match="frame_at|找不到|ffmpeg|封面|图"):
+        reel.build_cover({"": Path("x.mp4")}, "", {"cover": story},
+                         Path("y.mp4"), 1920)
+    with pytest.raises(reel.ReelError, match="_layout_why"):
+        reel.build_cover({"": Path("x.mp4")}, "",
+                         {"cover": {**vs, "eyebrow": "网球有故事"}}, Path("y.mp4"), 1920)
     # **老片子按 slug 豁免**，同样要验它真的越过了栏目那道闸。
     with pytest.raises(reel.ReelError, match="frame_at|找不到|ffmpeg|封面|图"):
         reel.build_cover({"": Path("x.mp4")}, "",

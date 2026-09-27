@@ -4455,18 +4455,35 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
     # ⚠️ 这一行原来写死成 `eyebrow == "赛场之上"`。2026-09-06 给「网球有故事」
     # 放开 cutout 的那一刻，**认领这道闸对新栏目就是哑的**——表放宽了、闸没
     # 跟上，于是「手头正好有两张抠图就顺手退回 VS」那个滑坡在新栏目上没人管。
+    #
+    # ⚠️ 2026-09-24 起「赛场之上」这一栏的 `_layout_why` **不再放行**：账号所有者否掉的
+    # shang-mannarino（42cfae85）正写着一句认领（「solo 要的本场官方实拍出片时不存在」），
+    # 他的回答是「不要用这种封面……还不如从比赛画面中截取抽帧去做」。判据和存量表在
+    # `taste_gates_extra.solo_layout_problem`（`validate_spec` 里就红），这里跟它用同一份，
+    # 不另写一套——否则这句报错会把人指进一条注定红的路。认领口只剩「网球有故事」
+    # （讲两个人的交手史可以用 H2H 双人版）。
     if layout != "solo" and eyebrow in SOLO_DEFAULT_COLUMNS \
-            and str(spec.get("slug", "")) not in _LEGACY_VS_COVERS \
-            and not str(cover.get("_layout_why", "")).strip():
-        raise ReelError(
-            f"「{eyebrow}」的封面一律用 solo"
-            "（赛场之上 2026-08-04 起；网球有故事默认讲一个人）。\n"
-            f"这条 spec 写的是 layout={layout!r}。\n"
-            "改成 `\"layout\": \"solo\"` + `cover.portrait`（本场源片抓一帧就行），"
-            "赛果写在 `cover.result` + `cover.matchup`，"
-            "会渲成标题底下那一行「🇨🇳 张帅（57） 6-4 6-1 🇰🇿 普汀塞娃（81）」。\n"
-            "**确实要退回 VS 版式，就写一句 `cover._layout_why` 说清楚为什么**"
-            "——一句话就行，但必须写；不写就是手滑，不是决定。")
+            and str(spec.get("slug", "")) not in _LEGACY_VS_COVERS:
+        if eyebrow == "赛场之上":
+            from taste_gates_extra import solo_layout_problem  # noqa: PLC0415
+            blocked = solo_layout_problem(spec) is not None
+            escape = ("「赛场之上」**没有认领口**（`_layout_why` 2026-09-24 起不放行，"
+                      "`taste_gates_extra.solo_layout_problem`）：没有本场官方实拍就用 "
+                      "`cover.portrait.frame_at` 挑一帧清晰、偏正面的抽帧。")
+        else:
+            blocked = not str(cover.get("_layout_why", "")).strip()
+            escape = ("「网球有故事」**确实要退回双人版式（讲两个人的交手史），就写一句 "
+                      "`cover._layout_why` 说清楚为什么**——一句话就行，但必须写；"
+                      "不写就是手滑，不是决定。")
+        if blocked:
+            raise ReelError(
+                f"「{eyebrow}」的封面一律用 solo"
+                "（赛场之上 2026-08-04 起；网球有故事默认讲一个人）。\n"
+                f"这条 spec 写的是 layout={layout!r}。\n"
+                "改成 `\"layout\": \"solo\"` + `cover.portrait`（本场源片抓一帧就行），"
+                "赛果写在 `cover.result` + `cover.matchup`，"
+                "会渲成标题底下那一行「🇨🇳 张帅（57） 6-4 6-1 🇰🇿 普汀塞娃（81）」。\n"
+                + escape)
     if layout == "solo":
         if not (cover.get("portrait") or {}).get("image") and \
                 (cover.get("portrait") or {}).get("frame_at") is None:
@@ -8156,9 +8173,10 @@ def validate_spec(
         raise ReelError("\n\n".join(hard))
     # 账号所有者口味规则里量过全库、留下来的那几道（总分差、赛点同义反复、彭帅、信箱式
     # 封面、VS 封面、前瞻事实回头查、收尾一问……）。判据、存量表和误伤/真阳的账都在
-    # tools/taste_gates_extra.py；自动 spec 只报不拦。
+    # tools/taste_gates_extra.py；自动 spec 只报不拦。全库盘点（allow_published_legacy）
+    # 不跑读墙上的钟的那几条——否则已发的 spec 过一天自己变红，main 上每个 PR 跟着红。
     from taste_gates_extra import spec_taste_extra  # noqa: PLC0415
-    taste_hard, taste_soft = spec_taste_extra(spec)
+    taste_hard, taste_soft = spec_taste_extra(spec, check_age=not allow_published_legacy)
     for note in taste_soft:
         print(f"[口味] 只报：{note}")
     if taste_hard:
@@ -9814,7 +9832,8 @@ BAND_FOOT_LABEL = "网球时差 · 赛场之上"
 
 #: `cover.eyebrow` 空着时按哪个栏目算——和 `build_cover`、render 那两处
 #: `or "赛场之上"` 是同一个缺省。
-# 默认走 solo 封面的栏目——**非 solo 要写 `cover._layout_why` 认领**。
+# 默认走 solo 封面的栏目——**非 solo 要写 `cover._layout_why` 认领**（只剩「网球有故事」；
+# 「赛场之上」2026-09-24 起认领不放行，见 `taste_gates_extra.solo_layout_problem`）。
 # 「赛场之上」2026-08-04 翻成 solo 默认；「网球有故事」2026-09-06 放开 cutout
 # 之后同样落在这一档（账号所有者：郑钦文与斯瓦泰克那条「封面可以用两人 h2h
 # 方式」——那个栏目讲的不一定是一个人，交手史的主体本来就是两个）。
