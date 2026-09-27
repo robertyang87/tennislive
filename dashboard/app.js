@@ -214,8 +214,10 @@ async function load() {
     const response = await fetch(`./snapshot.json?t=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
-    snapshot = data;
+    // 先渲成功再记成「上一次的快照」：一份坏快照渲到一半抛错时，catch 里按旧快照重渲
+    // 回来、标过期——先赋值的话 markStale 会拿这份坏的再渲一次，在 catch 里再抛一次
     render(data);
+    snapshot = data;
     markFresh(data);
   } catch (error) {
     if (snapshot) markStale(error); else renderError(error);

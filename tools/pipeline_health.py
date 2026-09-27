@@ -375,7 +375,7 @@ def _stamp(at: datetime) -> str:
 #
 # 只在**转入**阻塞时推，恢复不推（他要的是「卡住了」这一声，不是来回播报）。
 # 两道防刷屏：
-# - 同一条工作流恢复后又在 BLOCKED_REPEAT_COOLDOWN 内红回来（来回抖），不再推，
+# - 同一处（工作流 × mode，`_key`）恢复后又在 BLOCKED_REPEAT_COOLDOWN 内红回来（来回抖），不再推，
 #   记成已知——否则一条时好时坏的线一天能刷十几条
 # - 两次阻塞推送之间至少隔 BLOCKED_MIN_INTERVAL：被压下的新阻塞**不记成已推**，
 #   下一班过了间隔还阻塞就补推，不会丢
@@ -384,10 +384,15 @@ BLOCKED_REPEAT_COOLDOWN = timedelta(hours=6)
 NO_SLUG = "run 标题里没写是哪条"
 
 
-def _which(b: dict) -> str:
-    """`match-reel（probe）`：出片线同一个工作流跑的是哪一步，run 标题里写着就带上。"""
-    wf = str(b.get("workflow", ""))
-    return f"{wf}（{b['mode']}）" if b.get("mode") else wf
+# 说法和键都用看板那一份：「match-reel（probe）」、`match-reel:probe`
+_which = dashboard.which
+
+
+def _key(b: dict) -> str:
+    """去重按「工作流 × mode」，和 `blocked_runs` 取「最近一条」的键是同一个。
+    ⚠️ 原来按工作流去重：match-reel 的 render 已经报过、之后它的 probe 也红了，
+    第二条会被当成「已知」吞掉。"""
+    return dashboard.blocked_key(str(b.get("workflow") or ""), b.get("mode"))
 
 
 def blocked_summary(blocked: list[dict], still: int = 0) -> tuple[str, str]:
@@ -403,20 +408,20 @@ def blocked_summary(blocked: list[dict], still: int = 0) -> tuple[str, str]:
             line += f' · <a href="{html.escape(b["url"], quote=True)}">打开失败的 run</a>'
         lines.append(line)
     if still:
-        lines.append(f"另有 {still} 条工作流此前已报过、仍在阻塞")
+        lines.append(f"另有 {still} 条此前已报过、仍在阻塞")
     return title, "<br>".join(lines)
 
 
 def blocked_transition(blocked: list[dict], state_path: Path,
                        now: datetime | None = None) -> tuple[bool, str, str]:
-    """看板从「不阻塞」转入「阻塞」（或多了一条新阻塞的工作流）时推一次。"""
+    """看板从「不阻塞」转入「阻塞」（或多了一处新阻塞：工作流 × mode）时推一次。"""
     now = now or datetime.now(timezone.utc)
     state = _read_state(state_path)
     known = {str(k) for k in state.get("blocked_active") or []}
     last_push = {str(k): str(v) for k, v in (state.get("blocked_last_push") or {}).items()}
     pushed_at = instant(state.get("blocked_pushed_at"))
 
-    current = {b["workflow"]: b for b in blocked}
+    current = {_key(b): b for b in blocked}
     new = [w for w in current if w not in known]
     flapping = [w for w in new if (at := instant(last_push.get(w)))
                 and now - at < BLOCKED_REPEAT_COOLDOWN]

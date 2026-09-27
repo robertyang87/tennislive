@@ -490,6 +490,18 @@ def test_看板真渲出来_阻塞态_窄屏失败排前_刷新失败保留(tmp_
         assert page.get_attribute("#hero", "data-status") == "failed"
         assert "is-stale" in page.get_attribute("#freshness", "class")
         assert page.is_visible("#stale [data-retry]")
+        # 取到了、却是一份渲不出来的坏快照：照样退回上一次的状态、标过期。
+        # 原来先把坏的记成 snapshot 再渲——渲染抛错进 catch，markStale 拿同一份坏的
+        # 再渲一次、在 catch 里再抛，过期条永远不出来（复核 FIX ROUND 2 的 nit）
+        good = json.dumps(_build(root, runs), ensure_ascii=False).encode()
+        snap["body"] = good
+        page.click("#refresh")
+        page.wait_for_selector("#stale[hidden]", state="attached", timeout=5000)
+        snap["body"] = b'{"health": null, "generated_at": "2026-09-27T00:00:00Z"}'
+        page.click("#refresh")
+        page.wait_for_selector("#stale:not([hidden])", timeout=5000)
+        assert page.get_attribute("#hero", "data-status") == "failed"
+        assert "bu-majchrzak-hangzhou-2026-r2" in page.inner_text("#hero")
         browser.close()
 
 
@@ -570,3 +582,89 @@ def test_run标题的段位表和工作流里写的run_name对得上():
             assert mode in module.MODE_STAGES, f"{stem}.yml 的 mode={mode} 红了不知道算哪个阶段"
     labels = {label for label, _ in module.WORKFLOW_GROUPS}
     assert all(set(v) <= labels for v in module.MODE_STAGES.values())
+
+
+# ── FIX ROUND 2：阻塞按「工作流 × mode」认，和阶段卡片同一个键 ─────────────────
+def test_后一条别的mode绿了不许顶掉前一条mode的红(tmp_path):
+    """复核 FIX ROUND 2 的 blocking：阶段卡片按 mode 认阶段，`blocked_runs` 却按工作流
+    **文件**只留最近一条。自动链最常见的形状——match-reel 的 render 红了，之后另一条
+    片子的 probe 绿了——那条绿的 probe 把红的 render 顶掉：首屏写「流水线运行正常」，
+    底下渲染／质检两格是红的，微信也不响（复核截图 rv_dash_contradiction_m390）。"""
+    root = _root(tmp_path)
+    fail = _run("match-reel", 30, "failure", rid=30, title="match-reel · render · bu-majchrzak-hangzhou-2026-r2")
+    probe_ok = _run("match-reel", 5, rid=5, title="match-reel · probe · zverev-sonego")
+    data = _build(root, [fail, probe_ok])
+    h = data["health"]
+    assert h["status"] == "failed", h
+    assert [(b["workflow"], b["mode"], b["slug"]) for b in h["blocked"]] == \
+        [("match-reel", "render", "bu-majchrzak-hangzhou-2026-r2")]
+    stage = {s["label"]: s for s in data["stages"]}
+    for label in ("渲染", "质检"):
+        assert stage[label]["status"] == "failure" and stage[label]["url"].endswith("/30"), stage[label]
+        assert stage[label]["slug"] == "bu-majchrzak-hangzhou-2026-r2"
+        assert stage[label]["detail"] == "match-reel（render）", "和首屏、微信同一个说法"
+    assert stage["Spec"]["status"] == "success" and stage["Spec"]["slug"] == "zverev-sonego"
+    # 「自动任务」那一行：红标签指向真失败的那条，不指向最新那条绿的 probe
+    row = next(w for w in data["workflows"] if w["workflow"] == "match-reel")
+    assert row["status"] == "failure" and row["url"].endswith("/30"), row
+    assert "bu-majchrzak-hangzhou-2026-r2" in row["detail"], row
+
+    # 镜像：probe 红了、之后别的片子 render 绿了——Spec 照样红，首屏照样阻塞
+    probe_fail = _run("match-reel", 30, "failure", rid=31, title="match-reel · probe · zverev-sonego")
+    render_ok = _run("match-reel", 5, rid=6, title="match-reel · render · a-b")
+    data = _build(root, [probe_fail, render_ok])
+    stage = {s["label"]: s for s in data["stages"]}
+    assert data["health"]["status"] == "failed" and stage["Spec"]["status"] == "failure"
+    assert stage["渲染"]["status"] == "success"
+
+    # 同一个 mode 后一条绿了：那一处恢复（和阶段卡片看到的是同一条最近的 run）
+    render_ok_later = _run("match-reel", 5, rid=7, title="match-reel · render · a-b")
+    data = _build(root, [fail, render_ok_later])
+    assert data["health"]["status"] != "failed" and not data["health"].get("blocked")
+    assert {s["label"]: s["status"] for s in data["stages"]}["渲染"] == "success"
+
+    # 两处都红：各报各的，不合成一条
+    both = module.blocked_runs([fail, probe_fail])
+    assert sorted((b["mode"], b["slug"]) for b in both) == \
+        [("probe", "zverev-sonego"), ("render", "bu-majchrzak-hangzhou-2026-r2")]
+
+
+def test_首屏和阶段卡片永远是同一个判断_乱序的run也一样(tmp_path):
+    """「阻塞在这儿只定义一次」是个不变式，不是一条样例：24 小时窗口里随便怎么排
+    run，首屏说阻塞 ⟺ 至少一格阶段是红的，而且每一格红都能在 `blocked` 里找到出处。
+    按工作流只留一条的那一版，这 200 组里有 7 组首屏和卡片说的不是一回事。"""
+    import random  # noqa: PLC0415
+
+    root = _root(tmp_path)
+    shapes = [("match-reel", m) for m in ("probe", "render", "cover", "narration", "push", "cookies")] + \
+             [("interview-clip", m) for m in ("subs", "render", "push")] + \
+             [("explainer", None), ("orchestrate", None), ("reel-auto-ready", None),
+              ("auto-push-reel", None), ("match-reel", None)]
+    rng = random.Random(20260927)
+    for case in range(200):
+        runs = []
+        for i in range(rng.randint(1, 8)):
+            wf, mode = rng.choice(shapes)
+            slug = rng.choice(["zverev-sonego", "bu-majchrzak-hangzhou-2026-r2", "ranking-math"])
+            title = {"match-reel": f"match-reel · {mode} · {slug}",
+                     "interview-clip": f"interview-clip · {mode} · {slug}",
+                     "explainer": f"explainer-video · {slug}"}.get(wf, wf) if mode or wf == "explainer" else wf
+            status = "in_progress" if rng.random() < 0.1 else "completed"
+            conclusion = rng.choice(["success", "failure", "failure", "cancelled"])
+            runs.append(_run(wf, rng.randint(0, 20 * 60), conclusion, status=status, rid=case * 100 + i + 1,
+                             name="explainer-video" if wf == "explainer" else None, title=title))
+        data = _build(root, runs)
+        red = [s for s in data["stages"] if s["status"] == "failure"]
+        blocked = data["health"].get("blocked") or []
+        assert (data["health"]["status"] == "failed") == bool(red), (case, runs, red)
+        for s in red:
+            assert any(s["label"] in b["stages"] and s["url"] == b["url"] for b in blocked), (case, s, blocked)
+
+
+def test_cookies模式不针对哪条片子_不读slug():
+    """match-reel 的 slug 是 required、默认 `eala-zheng`，拨 cookies 时没人改它——
+    照读就会在微信里说「卡住：eala-zheng」，还把那条片子的卡片标成「发现 ✕」。"""
+    run = _run("match-reel", 3, "failure", title="match-reel · cookies · eala-zheng")
+    assert module.run_name_fields(run) == {"mode": "cookies"}
+    (b,) = module.blocked_runs([run], known={"eala-zheng"})
+    assert (b["mode"], b["stages"], b["slug"]) == ("cookies", ["发现"], None), b

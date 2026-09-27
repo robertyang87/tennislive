@@ -364,7 +364,8 @@ def test_main把阻塞摘要写进GITHUB_OUTPUT(tmp_path, monkeypatch):
     got = dict(line.split("=", 1) for line in out.read_text("utf-8").splitlines())
     assert got["notify"] == "true" and "阻塞" in got["title"]
     assert "bu-majchrzak-hangzhou-2026-r2" in got["message"] and "runs/8" in got["message"]
-    assert json.loads(state.read_text("utf-8"))["blocked_active"] == ["match-reel"]
+    # 去重的键是「工作流 × mode」（`blocked_key`），和看板取「最近一条」的键是同一个
+    assert json.loads(state.read_text("utf-8"))["blocked_active"] == ["match-reel:render"]
     # 下一班还是同一条阻塞：不再推
     out.write_text("")
     ph.main(["--repo", "o/r", "--token", "x", "--workflows", "match-reel.yml",
@@ -415,3 +416,64 @@ def test_两段的slug也要进微信摘要_不许说标题里没写(tmp_path, m
     # probe 红了是 Spec 卡住，不是「渲染 / 质检」；mode 也写进去
     assert "Spec · match-reel（probe） 失败" in got["message"], got["message"]
     assert "Spec" in got["title"]
+
+
+# ── FIX ROUND 2：阻塞按「工作流 × mode」认 ───────────────────────────────────
+def test_render红了之后别的片子probe绿了_微信照样推(tmp_path, monkeypatch):
+    """复核 FIX ROUND 2 的 blocking 在微信这一头的样子：`blocked_runs` 原来按工作流
+    文件只留最近一条，match-reel 的 render 红了、之后另一条片子的 probe 绿了，
+    这一班就算「没有阻塞」——看板底下两格红着，微信一声不响（Q9 要的正是这一声）。"""
+    from datetime import datetime, timedelta, timezone  # noqa: PLC0415
+
+    import tools.pipeline_health as ph  # noqa: PLC0415
+
+    now = datetime.now(timezone.utc)
+    iso = lambda m: (now - timedelta(minutes=m)).isoformat().replace("+00:00", "Z")  # noqa: E731
+
+    def run(rid, minutes, conclusion, title):
+        return {"id": rid, "name": "match-reel", "path": ".github/workflows/match-reel.yml",
+                "status": "completed", "conclusion": conclusion, "created_at": iso(minutes + 5),
+                "updated_at": iso(minutes), "html_url": f"https://github.com/o/r/actions/runs/{rid}",
+                "display_title": title}
+
+    runs = [run(5, 5, "success", "match-reel · probe · zverev-sonego"),       # 最新的一条是绿的
+            run(30, 30, "failure", "match-reel · render · bu-majchrzak-hangzhou-2026-r2")]
+
+    def fake_get(self, path):
+        if path.startswith("actions/runs?"):
+            return {"workflow_runs": runs}
+        return {"workflow_runs": [], "jobs": []}
+
+    monkeypatch.setattr(ph.GitHubAPI, "get", fake_get)
+    monkeypatch.setattr(ph, "sla_health", lambda: (0, 0, 0.0))
+    monkeypatch.setattr(ph, "stale_publications", lambda: [])
+    monkeypatch.setattr(ph, "orchestrator_productivity", lambda: ("2026-09-27T00:00:00Z", 1.0))
+    out = tmp_path / "out.txt"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    assert ph.main(["--repo", "o/r", "--token", "x", "--workflows", "match-reel.yml",
+                    "--step-runs", "0", "--alert-state", str(tmp_path / "state.json")]) == 0
+    got = dict(line.split("=", 1) for line in out.read_text("utf-8").splitlines())
+    assert got["notify"] == "true", got
+    assert "bu-majchrzak-hangzhou-2026-r2" in got["message"] and "runs/30" in got["message"], got["message"]
+    assert "渲染 / 质检 · match-reel（render） 失败" in got["message"], got["message"]
+    assert "zverev-sonego" not in got["message"], "绿的那条 probe 不是阻塞"
+
+
+def test_同一个工作流另一个mode也红了_是新的一处_不许当成已知吞掉(tmp_path):
+    """去重按「工作流 × mode」：match-reel 的 render 已经报过，之后它的 probe 也红了——
+    那是另一处卡住（Spec），要推；而 render 那条还红着，只一句带过、不重报。"""
+    from datetime import datetime, timedelta, timezone  # noqa: PLC0415
+
+    from tools.pipeline_health import blocked_transition  # noqa: PLC0415
+
+    state = tmp_path / "alert.json"
+    t0 = datetime(2026, 9, 27, 8, 0, tzinfo=timezone.utc)
+    render = {**_blocked(), "mode": "render"}
+    probe = {**_blocked(slug="zverev-sonego", stages=("Spec",)), "mode": "probe"}
+    assert blocked_transition([render], state, t0)[0] is True
+    notify, title, message = blocked_transition([render, probe], state, t0 + timedelta(hours=1))
+    assert notify and "Spec" in title, (notify, title)
+    assert "match-reel（probe）" in message and "zverev-sonego" in message, message
+    assert "bu-majchrzak" not in message and "另有 1 条" in message, message
+    # 两处都还红着：下一班不再推
+    assert blocked_transition([render, probe], state, t0 + timedelta(hours=2))[0] is False

@@ -76,6 +76,10 @@ MODE_STAGES = {
     "render": ["渲染", "质检"],
     "push": ["推送"],
 }
+#: 这几个 mode 不针对哪一条片子：`match-reel` 的 slug 输入是 required、默认
+#: `eala-zheng`，cookies 模式拨的时候没人改它——照读就会在微信里说
+#: 「卡住：eala-zheng」，还把那条片子的卡片标成「发现 ✕」。
+SLUGLESS_MODES = {"cookies"}
 #: 阶段标签 → 内容条目上的字段（卡片上那颗「质检 ✓ · 下一步 推送」芯片用的是同一套词）
 STAGE_FIELDS = {"发现": "discovered", "编排": "orchestrated", "Spec": "spec",
                 "渲染": "rendered", "质检": "qc", "推送": "pushed"}
@@ -183,7 +187,7 @@ def run_name_fields(run: dict) -> dict[str, str]:
     if run.get("name") and parts[0] != run["name"]:
         return {}
     out = {k: v for k, v in zip(fields, parts[1:]) if v}
-    if "slug" in out and not _SLUG_EXACT.match(out["slug"]):
+    if "slug" in out and (not _SLUG_EXACT.match(out["slug"]) or out.get("mode") in SLUGLESS_MODES):
         out.pop("slug")
     return out
 
@@ -197,11 +201,32 @@ def run_stages(run: dict) -> list[str]:
     return [label for label, names in WORKFLOW_GROUPS if wf in names]
 
 
+def blocked_key(workflow: str, mode: str | None = None) -> str:
+    """一处「阻塞」的身份：工作流文件 ＋ 出片 mode（`match-reel:render`）；没有 mode
+    的工作流就是文件名。`blocked_runs` 按它取「最近一条」，`pipeline_health` 按它
+    去重微信——两处同一个键，才不会一边说阻塞、一边说没事。"""
+    return f"{workflow}:{mode}" if mode else workflow
+
+
+def which(b: dict) -> str:
+    """`match-reel（probe）`：同一个工作流跑的是哪一步。首屏、阶段卡片、微信同一个说法。"""
+    wf = str(b.get("workflow") or "")
+    return f"{wf}（{b['mode']}）" if b.get("mode") else wf
+
+
 def blocked_runs(runs, now=None, *, self_run_id=None, known=()) -> list[dict]:
-    """「流水线阻塞」的唯一定义：每个受监控的工作流，取 24 小时内最近一条
-    **有结论、不是取消**的 run；它失败了，这条工作流就算阻塞。按最早失败排前。
+    """「流水线阻塞」的唯一定义：每个受监控的**工作流 × 出片 mode**
+    （`blocked_key`），取 24 小时内最近一条**有结论、不是取消**的 run；它失败了，
+    这一处就算阻塞。按最早失败排前。
 
     看板首屏和 `pipeline_health` 的微信推送都用它（Q9）。
+
+    ⚠️ 键里必须有 mode（复核 FIX ROUND 2 的 blocking）：阶段卡片按 mode 认阶段
+    （`run_stages`），原来这儿却按工作流**文件**只留一条——自动链最常见的形状
+    「match-reel render 红了，之后另一条片子的 probe 绿了」里，那条绿的 probe 把红的
+    render 顶掉，首屏写「流水线运行正常」，底下渲染／质检两格是红的，微信也不响。
+    阶段是 (工作流, mode) 的函数，所以按这个键分组，同一阶段里「最近一条」和阶段卡片
+    看到的是同一条——判据 `test_后一条别的mode绿了不许顶掉前一条mode的红`。
     """
     now = now or datetime.now(timezone.utc)
     latest: dict[str, dict] = {}
@@ -214,20 +239,24 @@ def blocked_runs(runs, now=None, *, self_run_id=None, known=()) -> list[dict]:
         created = parse_time(run.get("created_at"))
         if created is None or created < now - BLOCKED_WINDOW:
             continue
-        if wf not in latest or (run.get("updated_at") or "") > (latest[wf].get("updated_at") or ""):
-            latest[wf] = run
+        key = blocked_key(wf, run_name_fields(run).get("mode"))
+        if key not in latest or (run.get("updated_at") or "") > (latest[key].get("updated_at") or ""):
+            latest[key] = run
     out = []
-    for wf, run in latest.items():
+    for run in latest.values():
         if run.get("conclusion") not in FAILURES:
             continue
+        wf = workflow_of(run)
         title = run.get("display_title") or run.get("name") or wf
         fields = run_name_fields(run)
+        slugless = fields.get("mode") in SLUGLESS_MODES  # 标题里那个默认 slug 也不许被启发式捡回来
         out.append({
             "workflow": wf,
             "mode": fields.get("mode"),
             "stages": run_stages(run),
             # 标题是我们写死的 run-name：按段位读；别的标题才退回启发式（不猜）
-            "slug": fields.get("slug") or slug_of(title, known, exclude=(run.get("name"),)),
+            "slug": None if slugless else (
+                fields.get("slug") or slug_of(title, known, exclude=(run.get("name"),))),
             "title": title,
             "url": run.get("html_url"),
             "at": run.get("updated_at"),
@@ -338,7 +367,11 @@ def build(root: Path, token: str | None, *, self_run_id=None):
     content, state, spec_slugs = collect_content(root)
     known = {x["slug"] for x in content} | spec_slugs
     blocked = blocked_runs(runs, now, known=known)
-    blocked_by_wf = {b["workflow"]: b for b in blocked}
+    # 一个工作流可以有好几处阻塞（match-reel 的 render 和 probe 各红一条）：
+    # 「自动任务」那一行指向最早那条失败，不指向恰好最新的那条绿 run
+    first_blocked: dict[str, dict] = {}
+    for b in blocked:
+        first_blocked.setdefault(b["workflow"], b)
 
     by_workflow = defaultdict(list)
     by_stage = defaultdict(list)
@@ -359,16 +392,16 @@ def build(root: Path, token: str | None, *, self_run_id=None):
         running = [r for r in candidates if r.get("status") != "completed"]
         if failing:
             worst = failing[0]
-            stages.append({"label": label, "status": "failure", "detail": worst["workflow"],
+            # 和首屏、微信同一个说法：「match-reel（probe）」
+            stages.append({"label": label, "status": "failure", "detail": which(worst),
                            "slug": worst["slug"], "updated_at": worst["at"], "url": worst["url"]})
-        elif running:
-            r = running[0]
-            stages.append({"label": label, "status": "running", "detail": workflow_of(r), "slug": None,
-                           "updated_at": r.get("updated_at"), "url": r.get("html_url")})
-        elif candidates:
-            r = candidates[0]
-            status, _ = run_state(r)
-            stages.append({"label": label, "status": status, "detail": workflow_of(r), "slug": None,
+        elif running or candidates:
+            r = (running or candidates)[0]
+            status = "running" if running else run_state(r)[0]
+            fields = run_name_fields(r)
+            stages.append({"label": label, "status": status,
+                           "detail": which({"workflow": workflow_of(r), "mode": fields.get("mode")}),
+                           "slug": fields.get("slug"),
                            "updated_at": r.get("updated_at"), "url": r.get("html_url")})
         else:
             stages.append({"label": label, "status": "warning", "detail": "暂无运行证据", "slug": None,
@@ -383,16 +416,20 @@ def build(root: Path, token: str | None, *, self_run_id=None):
             continue
         run = rows[0]
         status, status_label = run_state(run)
-        if wf in blocked_by_wf and status != "running":
-            status, status_label = "failure", "失败"
         name = run.get("name") or wf
         title = run.get("display_title") or ""
-        workflow_rows.append({
+        row = {
             "label": name, "workflow": wf,
             "detail": title if title and title != name else (run.get("event") or ""),
             "status": status, "status_label": status_label, "updated_at": run.get("updated_at"),
             "url": run.get("html_url"),
-        })
+        }
+        if wf in first_blocked and status != "running":
+            # 最新一条是别的 mode 的绿 run 时，红标签要指向真失败的那一条，不指向这条绿的
+            b = first_blocked[wf]
+            row.update({"status": "failure", "status_label": "失败", "updated_at": b["at"], "url": b["url"],
+                        "detail": b["title"] if b["title"] != name else row["detail"]})
+        workflow_rows.append(row)
     workflow_rows.sort(key=lambda x: x.get("updated_at") or "", reverse=True)
     workflow_rows.sort(key=lambda x: rank.get(x["status"], 2))
 
