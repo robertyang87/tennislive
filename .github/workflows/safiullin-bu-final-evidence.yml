@@ -1,0 +1,63 @@
+name: safiullin-bu-final-evidence
+on:
+  push:
+    branches: [codex/safiullin-bu-hangzhou-20260927]
+    paths: [.github/workflows/safiullin-bu-final-evidence.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools
+      - name: Await the exact reviewed render
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in $(seq 1 45); do
+            STATUS=$(gh api repos/robertyang87/tennislive/actions/runs/36324598388 --jq .status)
+            if [ "$STATUS" = completed ]; then
+              test "$(gh api repos/robertyang87/tennislive/actions/runs/36324598388 --jq .conclusion)" = success
+              exit $?
+            fi
+            sleep 10
+          done
+          exit 1
+      - name: Fetch actual final file and prepare inspection material
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+          mkdir -p audit/frames parts
+          gh release download reel-safiullin-bu-hangzhou-2026-qf --repo robertyang87/tennislive --pattern '*.mp4' --dir media
+          VIDEO=media/safiullin-bu-hangzhou-2026-qf.mp4
+          sha256sum "$VIDEO" > audit/film.sha256
+          ffprobe -v error -show_format -show_streams -of json "$VIDEO" > audit/ffprobe.json
+          for T in 0 4 18 37 44 57 74 85 94 98 102 106 111 114 117; do
+            ffmpeg -hide_banner -loglevel error -ss "$T" -i "$VIDEO" -frames:v 1 "audit/frames/frame-$T.jpg"
+          done
+          ffmpeg -hide_banner -loglevel error -i "$VIDEO" -vf "fps=1/5,scale=270:-1,tile=5x5" -frames:v 1 audit/overview.jpg
+          ffmpeg -hide_banner -loglevel error -i "$VIDEO" -vn -c:a libmp3lame -b:a 128k audit/final-audio.mp3
+          split -b 28M "$VIDEO" parts/film.part-
+      - uses: actions/upload-artifact@v4
+        with:
+          name: safiullin-bu-final-audit
+          path: audit/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: safiullin-bu-final-film-a
+          path: parts/film.part-aa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: safiullin-bu-final-film-b
+          path: parts/film.part-ab
+      - uses: actions/upload-artifact@v4
+        with:
+          name: safiullin-bu-final-film-c
+          path: parts/film.part-ac
+          if-no-files-found: ignore
