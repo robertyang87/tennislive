@@ -1,0 +1,92 @@
+name: bu-vertical-revision-push
+# Owner explicitly requested this revised WeChat send after public GitHub hosting disclosure.
+on:
+  push:
+    branches: [codex/bu-cover-left-20260928]
+    paths: [.github/workflows/bu-vertical-revision-push.yml]
+permissions:
+  contents: write
+concurrency:
+  group: push-bu-vertical-20260928
+  cancel-in-progress: false
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            tools
+            src
+            specs/reels
+            output/revisions/bu-vertical-20260928
+            output/2026-09-27/reel/safiullin-bu-hangzhou-2026-qf
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install push dependencies
+        run: pip install -e .
+      - name: Reserve this explicitly authorized revision send
+        id: reserve
+        run: |
+          test -f output/revisions/bu-vertical-20260928/render.json
+          python - <<'PY'
+          import json,pathlib,os
+          d=pathlib.Path('output/revisions/bu-vertical-20260928')
+          if (d/'pushed.json').exists(): raise SystemExit('This revision already has a PushPlus receipt; no duplicate send')
+          if (d/'push-attempt.json').exists(): raise SystemExit('Prior send attempt is reserved; inspect it before retrying')
+          q=json.loads((d/'render.json').read_text()); assert q['status']=='pass'
+          (d/'push-attempt.json').write_text(json.dumps({'status':'reserved','run_id':os.environ['GITHUB_RUN_ID'],'film_sha256':q['film_sha256'],'owner_authorized':True},indent=2))
+          PY
+          git config user.name Codex
+          git config user.email codex@users.noreply.github.com
+          git add --sparse output/revisions/bu-vertical-20260928/push-attempt.json
+          git commit -m "reel: reserve owner-authorized Bu vertical revision send"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+      - name: Send revised video and cover to WeChat
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+          PUSHPLUS_ACCESS_KEY: ${{ secrets.PUSHPLUS_ACCESS_KEY }}
+        run: |
+          python - <<'PY'
+          import sys,json,pathlib,subprocess,os
+          sys.path[:0]=['tools','src']
+          from push_reel import build_html,wait_for_video,wait_for_copy_page,copy_page_url
+          from tennislive.publish.pushplus import push,write_receipt
+          d=pathlib.Path('output/revisions/bu-vertical-20260928')
+          rev=subprocess.check_output(['git','rev-parse','HEAD']).decode().strip()
+          os.environ['TENNISLIVE_ASSET_REV']=rev
+          q=json.loads((d/'render.json').read_text())
+          video=q['video_url']
+          wait_for_video(video)
+          copy_url=copy_page_url(pathlib.Path('output/2026-09-27/reel/safiullin-bu-hangzhou-2026-qf'))
+          wait_for_copy_page(copy_url)
+          cdn=f'https://cdn.jsdelivr.net/gh/robertyang87/tennislive@{rev}/{d.as_posix()}'
+          copy=pathlib.Path('specs/reels/safiullin-bu-hangzhou-2026-qf.xhs.txt').read_text()
+          body=build_html(video,copy_url,'',copy,cdn+'/poster.jpg','赛场之上',stat_card=cdn+'/stat_card.jpg')
+          receipt=push('网球时差｜赛场之上｜小布遗憾止步八强（修正版）',body,asset_dir=d)
+          write_receipt(d/'pushed.json',receipt)
+          p=json.loads((d/'pushed.json').read_text());p.update({'film_sha256':q['film_sha256'],'video_url':video,'run_id':os.environ['GITHUB_RUN_ID'],'channel':'wechat'})
+          (d/'pushed.json').write_text(json.dumps(p,ensure_ascii=False,indent=2))
+          a=json.loads((d/'push-attempt.json').read_text());a['status']='sent';a['receipt']=receipt
+          (d/'push-attempt.json').write_text(json.dumps(a,indent=2))
+          print(json.dumps(p,ensure_ascii=False))
+          PY
+      - name: Commit actual PushPlus receipt
+        if: always()
+        run: |
+          if test -f output/revisions/bu-vertical-20260928/pushed.json; then
+            git add --sparse output/revisions/bu-vertical-20260928
+            git commit -m "reel: record Bu vertical revision PushPlus receipt"
+            source tools/git_push_retry.sh
+            push_with_rebase_retry main 5
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-vertical-revision-push-receipt
+          path: output/revisions/bu-vertical-20260928/*json
