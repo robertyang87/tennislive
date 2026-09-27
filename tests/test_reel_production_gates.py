@@ -69,7 +69,8 @@ def test_visual_gate要求结尾覆盖冷开场且封面选对爆冷输家(tmp_p
     assert report["status"] == "waiting"
     assert any("完整覆盖" in p for p in problems)
     assert any("封面人物应为 梅德韦杰夫" in p for p in problems)
-    assert any("loser_disappointed" in p for p in problems)
+    # 爆冷输家要「还在拼」的那一帧（08-15 arango-venus），不是垮掉的那一帧
+    assert any("封面情绪应为 loser_fighting" in p for p in problems)
 
 
 def test_visual_gate覆盖全片且保留最后两张收官证据(tmp_path):

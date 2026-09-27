@@ -30,7 +30,7 @@
 ⚠️ **扫描记录一旦提交，推送前要对得上**（`record_problem`，auto_push_interview_gate
 和 render 前置那一步都调它）：当前 `cover.frame_at` 必须是记录里**过闸**的那一格。
 取景（源片、翻转、裁切、zoom/focus）变了的记录管不到当前海报，不拦；尺子（审核器
-版本、阈值）变了的记录说的不是今天这道闸，也不拦；没有记录也不拦——存量和自动链
+版本、阈值、海报版式、人脸模型）变了的记录说的不是今天这道闸，也不拦；没有记录也不拦——存量和自动链
 都没有这份记录。真要用一帧没扫过的，写 `cover._frame_scan_why`。
 
 用法：
@@ -41,7 +41,10 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import copy
+import functools
+import hashlib
 import json
 import math
 import sys
@@ -173,31 +176,127 @@ def framing(spec: dict) -> dict:
     }
 
 
-def ruler() -> dict:
-    """这把尺子的身份：审核器版本 ＋ 全部判定阈值。扫描记录带着它落盘。
-
-    阈值**从审核模块自己推**：模块级大写名字里，值是数、或一串数的，都算
-    （`MIN_*`、照片区几何、人脸中心安全区……）——以后加一条阈值自动进来，
-    不维护名单（名单会过期，而过期的样子是「阈值改了、旧记录照样拦」）。
-    """
-    thresholds = {}
-    for name, value in vars(_auditor).items():
+def _numeric_constants(module) -> dict:
+    """模块级大写名字里，值是数、或一串数的——一个模块的判定阈值，自己推、不列名单。"""
+    out = {}
+    for name, value in vars(module).items():
         if not name.isupper() or isinstance(value, bool):
             continue
         if isinstance(value, int | float):
-            thresholds[name] = value
+            out[name] = value
         elif (isinstance(value, tuple) and value
               and all(isinstance(v, int | float) and not isinstance(v, bool) for v in value)):
-            thresholds[name] = list(value)
+            out[name] = list(value)
+    return dict(sorted(out.items()))
+
+
+#: 「一帧进来、一张海报出去」由 `build_interview_clip.py` 里的这几段决定：海报模板
+#: （照片区位置、钩子那条渐变带压多深）、抽帧那条滤镜链（翻转／去台标／调色／裁切）、
+#: 截图的视口。**改了其中任何一段，同一个 frame_at 渲出来的就是另一张海报**，
+#: 扫描记录里那一格的 pass/fail 说的就不是它了——而审核模块的阈值一个都没动，
+#: 只比阈值的话，旧记录看起来还是新的，一格旧的 fail 照样拦（review 2026-09-27：
+#: 待合的 UI 包 Q7/Q17 正要改赛后开麦封面的版式）。
+#: ⚠️ 2026-09-27 UI 包 WP3 把封面 HTML 从 `build_cover` 抽进了 `cover_html`（＋ 标题、
+#: 台头两个小函数和几条版式常量）——不跟着列进来，`build_cover` 只剩一行转调，
+#: 指纹就管不到模板了（合并时 `test_版式指纹跟着海报模板和画布几何走_只改说明不动` 抓到的）。
+LAYOUT_FUNCS = ("build_cover", "cover_html", "_title_html", "_title_px", "_lockup_html",
+                "cover_poster", "_cover_framing", "_crop_expr",
+                "_video_eq_filter", "_logo_filter", "logo_mask", "canvas_page", "_shoot")
+LAYOUT_CONSTS = ("CANVAS_W", "CANVAS_H", "CROP_RATIO", "VIDEO_TOP", "VIDEO_H",
+                 "_TITLE_PX", "_COVER_BAND_H", "_BAND_TOP", "_COVER_PAD_X", "_INK_BG",
+                 "_LOCKUP_CSS", "_SOFT_FG", "_TOPIC_FG")
+CLIP_SOURCE = ROOT / "tools" / "build_interview_clip.py"
+
+
+def _code_lines(all_lines: list[str], node) -> list[str]:
+    """一段定义的代码行：去掉 docstring、整行注释、空行——只改说明不改代码，指纹不动。
+
+    行内注释留着（`#06140f` 这种颜色也是 `#` 开头，剥行内注释会剥坏模板）。
+    """
+    lines = all_lines[node.lineno - 1:node.end_lineno]
+    body = getattr(node, "body", None)
+    if (body and isinstance(body[0], ast.Expr) and isinstance(body[0].value, ast.Constant)
+            and isinstance(body[0].value.value, str) and body[0].lineno > node.lineno):
+        lo, hi = body[0].lineno - node.lineno, body[0].end_lineno - node.lineno
+        lines = lines[:lo] + lines[hi + 1:]
+    return [ln.rstrip() for ln in lines if ln.strip() and not ln.lstrip().startswith("#")]
+
+
+def _segment(all_lines: list[str], node) -> str:
+    """一条语句本身的源码（不带同一行后面的注释）。`ast.get_source_segment` 在五千行的
+    文件上每调一次要逐字符重切一遍整份文本（实测一次近 0.1 秒），这里按行号直接切。
+    列号是 UTF-8 字节偏移，所以按字节切。"""
+    seg = [ln.encode() for ln in all_lines[node.lineno - 1:node.end_lineno]]
+    seg[-1] = seg[-1][:node.end_col_offset]
+    seg[0] = seg[0][node.col_offset:]
+    return b"\n".join(seg).decode().strip()
+
+
+@functools.lru_cache(maxsize=None)
+def layout(source: Path = CLIP_SOURCE) -> str:
+    """海报版式指纹：`LAYOUT_FUNCS` 的代码 ＋ `LAYOUT_CONSTS` 那几行赋值的 sha256 前 16 位。
+
+    按**源码文本**算（`ast` 只用来找段落的行号），不 import 那个模块：它以
+    `__main__` 跑的时候再 import 一次就是第二份模块对象；也不按字节码算——
+    记录在 runner 上写、在沙箱里对账，Python 小版本一变字节码就变。
+    名单里的名字找不到（改名了）就大声报错：悄悄少算一段，指纹就管不到它了。
+    """
+    text = Path(source).read_text(encoding="utf-8")
+    all_lines = text.split("\n")      # 和 ast 的行号同一种数法（splitlines 还认 \x0c 等）
+    parts: dict[str, list[str]] = {}
+    for node in ast.parse(text).body:
+        if isinstance(node, ast.FunctionDef) and node.name in LAYOUT_FUNCS:
+            parts[node.name] = _code_lines(all_lines, node)
+        elif isinstance(node, ast.Assign):
+            names = sorted(n.id for t in node.targets for n in ast.walk(t)
+                           if isinstance(n, ast.Name) and n.id in LAYOUT_CONSTS)
+            if names:
+                parts["=" + ",".join(names)] = [_segment(all_lines, node)]
+    found = set(parts) | {n for k in parts if k.startswith("=") for n in k[1:].split(",")}
+    if missing := [n for n in LAYOUT_FUNCS + LAYOUT_CONSTS if n not in found]:
+        raise SystemExit(f"{Path(source).name} 里找不到 {missing}——改名了就把 "
+                         "interview_cover_scan.LAYOUT_FUNCS / LAYOUT_CONSTS 跟着改，"
+                         "别让版式指纹悄悄少算一段。")
+    blob = json.dumps(parts, ensure_ascii=False, sort_keys=True).encode()
+    return hashlib.sha256(blob).hexdigest()[:16]
+
+
+def _face_model_ruler() -> dict | None:
+    """人脸模型（`face_checks`：insightface 认人 ＋ 睁眼）那一半尺子：阈值 ＋ 模型缓存键。
+
+    这个文件在 main 上（2026-09-27 并进来），这条分支上还没有——没有就是 `None`，
+    有了自动算进来：它一旦并进 `audit_poster`，它的阈值和权重也决定一格过不过。
+    `CACHE_KEY` 按权重内容定址，换权重（哪怕版本号没改）它就变。
+    """
+    try:
+        import face_checks  # noqa: PLC0415
+    except ImportError:
+        return None
+    return {"cache_key": getattr(face_checks, "CACHE_KEY", None),
+            "thresholds": _numeric_constants(face_checks)}
+
+
+def ruler() -> dict:
+    """这把尺子的身份：审核器版本 ＋ 全部判定阈值 ＋ 海报版式 ＋ 人脸模型。
+    扫描记录带着它落盘。
+
+    阈值**从审核模块自己推**（`_numeric_constants`）：模块级大写名字里，值是数、
+    或一串数的，都算（`MIN_*`、照片区几何、人脸中心安全区……）——以后加一条阈值
+    自动进来，不维护名单（名单会过期，而过期的样子是「阈值改了、旧记录照样拦」）。
+    版式和人脸模型同一个理由：它们变了，同一帧量出来的就不是同一个结果。
+    """
     return {"auditor": _auditor.LOCAL_AUDITOR,
-            "thresholds": dict(sorted(thresholds.items()))}
+            "thresholds": _numeric_constants(_auditor),
+            "layout": layout(),
+            "face_model": _face_model_ruler()}
 
 
 def stale_ruler(record: dict) -> str:
     """记录是不是**另一把尺子**量的；是就说变了什么，不是返回空串。
 
-    审核器版本或阈值变过，记录里每一格的 pass/fail 说的就不是今天这道闸——
-    旧的 fail 不许接着拦（阈值放宽后它可能早就过了），旧的 pass 也不许接着放。
+    审核器版本、阈值、海报版式或人脸模型变过，记录里每一格的 pass/fail 说的就不是
+    今天这道闸——旧的 fail 不许接着拦（阈值放宽后它可能早就过了），旧的 pass 也不许
+    接着放。没带某一项的旧记录（比这一项早）一律算变过。
     """
     now = ruler()
     if record.get("auditor") != now["auditor"]:
@@ -207,6 +306,11 @@ def stale_ruler(record: dict) -> str:
         changed = sorted(k for k in set(old) | set(now["thresholds"])
                          if old.get(k) != now["thresholds"].get(k))
         return "阈值变过：" + "、".join(changed[:5])
+    if record.get("layout") != now["layout"]:
+        return (f"海报版式变过（{record.get('layout')} → {now['layout']}："
+                "build_interview_clip 里的封面模板／抽帧滤镜／画布几何改过）")
+    if record.get("face_model") != now["face_model"]:
+        return "人脸模型变过（face_checks 的阈值或权重）"
     return ""
 
 
@@ -300,7 +404,7 @@ def build_record(spec: dict, window: tuple[float, float], step: float,
     return {
         "slug": spec.get("slug"),
         "method": METHOD,
-        **ruler(),          # auditor ＋ thresholds：换了尺子，这份记录就不再对账
+        **ruler(),          # 审核器／阈值／版式／人脸模型：换了尺子，这份记录就不再对账
         "scanned_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "framing": framing(spec),
         "window": [_round(window[0]), _round(window[1])],
@@ -327,7 +431,7 @@ def record_problem(record: dict | None, spec: dict) -> str:
     - 没有记录：不拦（这道闸落地时全库 0 份记录；自动链也不产，它只管扫过的）
     - 写了 `cover._frame_scan_why`：认领了，不拦
     - 记录的取景和当前不一样：它说的是另一张海报，管不到，不拦
-    - 记录是另一把尺子量的（审核器版本或阈值变过，`stale_ruler`）：它的 pass/fail
+    - 记录是另一把尺子量的（审核器版本／阈值／海报版式／人脸模型变过，`stale_ruler`）：它的 pass/fail
       说的不是今天这道闸，不拦——旧的 fail 接着拦就是拿过期的判决挡人
     - 都一样：`frame_at` 必须是记录里**过闸**的那一格——没扫过＝没人在候选墙上
       看过这一帧。红的时候只给两条出路：重扫，或写 `_frame_scan_why` 认领

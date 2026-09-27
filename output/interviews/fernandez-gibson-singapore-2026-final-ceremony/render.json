@@ -1,0 +1,135 @@
+{
+  "seams": {
+    "count": 4,
+    "transition": "dissolve",
+    "dissolve_s": 0.18
+  },
+  "film_sha256": "02e257f20fe545dce2d9ff5ef2d6fbacd0a7a9c758f150a62d1240da820942dc",
+  "film_seconds": 164.44,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "fernandez-gibson-singapore-2026-final-ceremony",
+    "received_at": "2026-09-27T12:11:54Z",
+    "artifact_ready_at": "2026-09-27T12:17:24Z",
+    "elapsed_seconds": 330.699,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "02e257f20fe545dce2d9ff5ef2d6fbacd0a7a9c758f150a62d1240da820942dc",
+    "spec_sha256": "0f83e56e6ae152ccb5f27f5b1d679d625dd504bb5878416a5add0bf8cde233f5",
+    "run_id": "36318179820",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-27T12:12:41Z",
+        "run_id": "36318179820"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-09-27T12:13:50Z",
+        "run_id": "36318179820"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-27T12:14:07Z",
+        "run_id": "36318179820"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-27T12:15:19Z",
+        "run_id": "36318179820"
+      }
+    ],
+    "render_seconds": 125.699,
+    "pre_render_seconds": 205.0
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "费尔南德斯",
+        "similarity": {
+          "费尔南德斯": 0.5613
+        },
+        "missing": [],
+        "expected": [
+          "费尔南德斯"
+        ],
+        "face": [
+          444,
+          75,
+          619,
+          336
+        ],
+        "face_px": 261.0,
+        "reason": "像 费尔南德斯（0.56 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2898,
+        "ear_each": [
+          0.2764,
+          0.3033
+        ],
+        "face": [
+          444,
+          75,
+          619,
+          336
+        ],
+        "face_px": 261.0,
+        "reason": "眼睛纵横比 0.29 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "warnings": []
+    },
+    "warnings": []
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-27T12:12:41Z",
+      "run_id": "36318179820"
+    },
+    {
+      "stage": "cover_audit",
+      "at": "2026-09-27T12:13:50Z",
+      "run_id": "36318179820"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-27T12:14:07Z",
+      "run_id": "36318179820"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-27T12:15:19Z",
+      "run_id": "36318179820"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-27T12:17:25Z",
+      "run_id": "36318179820"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-27T12:17:26Z",
+      "run_id": "36318179820"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-fernandez-gibson-singapore-2026-final-ceremony/fernandez-gibson-singapore-2026-final-ceremony.mp4?v=02e257f20fe545dc",
+  "video_bytes": 52098386,
+  "release_asset_digest": "sha256:02e257f20fe545dce2d9ff5ef2d6fbacd0a7a9c758f150a62d1240da820942dc",
+  "qc_attestation_sha256": "a17e477cf71fa8a2764b3ad82b970cf59902636a80cbe22b270ddd79985f763a"
+}

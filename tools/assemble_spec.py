@@ -441,8 +441,11 @@ def upset_cover_brief(matchup: list[dict], scores: list[tuple[int, int]]) -> dic
         "reason": f"爆冷：世界第{winner_rank}击败世界第{loser_rank}",
         "preferred_subject": loser.get("name") or loser.get("name_en"),
         "preferred_moment": "本场落后或失利时仍在拼的高清近景（握拳、咬牙、怒吼、奋力击球），不要低头垮掉的那一帧",
+        # 闸比的是这个键（`analyze_reel_visuals.COVER_MOMENTS` 里的枚举），不是上面那句中文
+        "preferred_moment_key": "loser_fighting",
         "fallback_subject": winner.get("name") or winner.get("name_en"),
         "fallback_moment": "本场获胜后庆祝的高清近景",
+        "fallback_moment_key": "winner_celebration",
         "requirements": ["必须是本场", "优先官方原图", "不得用旧赛资料图"],
     }
 

@@ -2229,6 +2229,59 @@ run 30973785219 就卡在「安装 Chromium」上。
 身上的实例。收紧前量过：9 个 job 全过，零误伤。
 
 
+##### ⭐⭐ 2026-09-27：这份 apt 缓存从上线起一次都没命中过——同一轮还抓到 Chromium 和 ffmpeg 两笔
+
+84 份 run 日志（match-reel 成败都有、CI、采访线）：「缓存命中：零网络」**0 次**，
+「缓存没有或不全」**84 次**。两个根子，都只是一行 warning：
+
+| | 症状 | 修法 |
+|---|---|---|
+| render 存不上 | `sudo apt-get` 在缓存目录里留下 root 的 `lock`（0640）和 `partial/`（0700），post 步骤是 runner 用户跑 tar：`Cannot open: Permission denied` → `Failed to save` | 共享脚本每次 apt 跑完 `chown -R` 交还调用者（`_apt_cache_handback`） |
+| probe 存的是空的 | probe 只 `ensure_ffmpeg`（静态构建，不碰 apt），目录空、runner 自己的，**反而存得上**——243 字节的空缓存挂在滚动键最新那一格，下一趟 render 恢复的就是它 | 工作流拆成 `actions/cache/restore` ＋ 显式 `actions/cache/save`，save 只在 `env.APT_CACHE_DIRTY == '1'`（共享脚本只在「走网络」那条路装成功后置位） |
+
+顺带：缓存快路加了 `--no-download`——原来那句「本地安装」缺 .deb 时会悄悄去下
+（run 32290505356 卡满 12 分钟），而且下了新包不算「走网络」，标脏就不准。
+沙箱复现过 `lock`/`partial` 的权限形状（root 跑 apt 到临时目录，uid 1001 跑 tar 同样
+`partial: Cannot open: Permission denied`）。沙箱对着真镜像跑过这份脚本（换一个小包 `ed`）：
+冷缓存 → 走网络、标脏；留着 .deb 再装 → 「缓存命中」、不标脏、1 秒；删掉 .deb 留着索引 →
+`--no-download` 当场报 `Unable to fetch some archives`，退到网络那条路、标脏。
+
+⚠️ **光存得上还不够——缓存按 ref 隔离。** 分支上的 run 只看得见**本分支**和 **main** 存的缓存，
+而各条线的键前缀各是各的：render / 采访 / 解说都在会话分支上跑，存进的是自己的分支，
+**每条新分支的第一趟照样是冷的**。main 上真有一份完整的只有 CI（`ci.yml` 每次合并都在 main 上跑，
+装 cjk ＋ core ＋ emoji），所以凡是装的字体是它子集的那几步，`restore-keys` 第二格退到
+`apt-pkgs-<os>-24.04-ci-v2-`；缓存目录的**顺序**要和 CI 一模一样（actions/cache 的版本号按顺序哈希，
+顺序一换就永远 miss、不报错）。match-reel 那一格只给 render / cover 开（probe、narration 不装字体，
+捞一百来 MB 回来白下）。**match-reel 的前缀从 v2 换成 v3**：main 上 v2 这个前缀底下只有 probe 存的
+243 字节空壳，按前缀退的时候它排在 CI 那一格前面，永远捞回空壳。判据
+`test_装字体的apt缓存都能退到CI在main上存的那份`、`test_apt缓存不许再认被空壳污染的前缀`。
+
+**Chromium 那一笔**：键是 `hashFiles('pyproject.toml')`，pyproject 写 `playwright>=1.40`、
+08-08 之后没动过，主键永远命中旧缓存（chromium-1234）；pip 装上的新 playwright 要 1243，
+launch 探针落空、每趟重下 187 MiB ＋ 114 MiB 还跑 `--with-deps` 的 apt——主键命中时
+post 步骤「not saving cache」，**永远修不好自己**。「装 Chromium」09-15 前中位 1s（n=10）、
+之后 18s（n=189）；解说片 9s → 17s。现在五条工作流前面各有一步读装上的 playwright 版本，
+键是 `playwright-chromium-<os>-pw<版本>`，`restore-keys` 照旧（换版本那趟退到上一份）。
+⚠️ 采访线那一步排在「装依赖」之前，所以它先 `pip install -q playwright` 再读版本。
+⚠️ 缓存按 ref 隔离：分支上的 run 只看得见本分支和 main 的缓存。新键第一次写进 main
+要等 main 上跑一趟（`ci.yml` 的 push 触发会装 Chromium）；在那之前每个新分支的第一趟
+仍会装一次、存进自己的分支。
+
+**ffmpeg 那一笔**：`ensure_ffmpeg` 每趟 30s（p90 31s，n=188 render/cover ＋ 228 probe），
+下载只占 1.3s——两遍 `tar -tJf` 把 518 MB 解完找名字、再整包解一遍取两个文件。
+包里的顺序是 presets/ doc/ … bin/ffmpeg bin/ffprobe bin/ffplay（176 MB 在最后）。现在成员名
+按包名算死、`--occurrence=1` 拿够就停、`xz -T0` 多线程解（22 个 24 MiB 的块）；
+结构变了才退回「列一遍」（只列一遍）。沙箱 4 核同一个包：老办法 99.1s、`--occurrence`
+32.4s、再加 `xz -T0` 15.0s（沙箱被占着，绝对值偏大，比例才是要看的）。
+⚠️ **没做「缓存解出来的二进制」**：`latest` 每天重编，键要么按天滚（每天第一趟照样下），
+要么钉死（等于冻住 ffmpeg 版本——那是另一个口径，不是速度问题）；解包压到十几秒以内之后，
+缓存再省的那几秒换不来 350 MB 的池子占用。
+
+判据 `tests/test_runner_setup_cache.py`：Chromium 键跟版本走（四头）、apt 缓存每个调用点
+都夹在一对 restore／条件 save 之间、共享脚本拿桩真跑一遍（命中不标脏／走网络才标脏／
+每次交还所有权／快路带 `--no-download`）、`_ffmpeg_extract` 拿记参数的 tar/xz 真解一个
+小包（快路零列表、`--occurrence=1`、`-T0`；改名退回时只列一遍）。
+
 ### ⭐ 选段的机械判据早就算好并落库了，只是没人在写 spec 的时候用
 
 账号所有者 2026-08-05 问「返工这块还有什么好的办法做约束」。查下来答案很难看：
@@ -2673,6 +2726,34 @@ outdir 里，成功那趟工作流本来就 `git add "$OUTDIR"`；失败那趟 o
 **机器时间**；而当天从 probe 到推送 3h19min 里，机器时间只占 11%，其余是
 两次失败之间那 57 分钟和 53 分钟——诊断、读日志、改代码、跑本地全量。
 那一半目前没有任何埋点，这份台账**不覆盖它**，也不该被引用成覆盖了。
+
+##### ⭐⭐ 2026-09-27：台账里「分段编码」那一行是 4 个 worker 的累加，不是墙钟
+
+`stage("分段编码")` 原来包的是**每一段**，而分段编码跑在 4 个 worker 的线程池里——
+台账记下的是十几段各自耗时的**总和**。最近 40 条成功的 `timing.json`：分段编码占整趟
+墙钟 63.3% ＋ 烧字幕 52.0% ＋ 拼接 15.1%，**加起来超过 100%**。拿 14 份 stage 齐全的
+成功日志按 `[耗时]` 时间戳重建墙钟：
+
+| | 墙钟份额 | 中位 |
+|---|---|---|
+| 烧字幕＋成片 | **51%** | 120s |
+| 分段编码（墙钟） | 18% | 42s（累加 150s） |
+| 拼接 | 14% | 32s |
+| **没有 stage 包着** | 8% | 20s，最长 40s |
+
+那段没包着的是**比分板蒙版**的逐段扫描（`resolve_{atp,wta,itf,laver}_masks`）：
+run 36284220097 里 TTS 之后到封面海报之间 29 秒，一行 `[耗时]` 都没有。照旧报表去优化，
+会去砍一个只占 18% 的东西，真正的大头和那段看不见的时间都不在榜上。
+
+现在：每段那一行叫 `分段编码·并行`（带 `pipeline_timing.PARALLEL_MARK`，不进墙钟合计、
+不进「哪一步最慢」），外面另包一个 `stage("分段编码")` 记墙钟；蒙版扫描包进
+`stage("比分板蒙版")`；台账多记 `untimed_seconds`（整趟墙钟 − 墙钟 stage 之和），
+报表以「（未计时）」上榜——下一次再有人漏包一段，它自己冒出来。schema 1 的旧行里
+「分段编码」按累加处理（`_LEGACY_PARALLEL_STAGES`）。判据
+`tests/test_runner_setup_cache.py` 的两条计时测试。
+
+⚠️ **这条只修仪器，不动编码**：crf / preset / 单趟 filter_complex / 60 fps 那几笔账
+上面都算过（「单趟 filter_complex：省 9%，不值得」等），这里一个参数没碰。
 
 
 ### ⭐⭐ 2026-09-27：比分板回贴在 probe 那一趟逐帧量，`--dry-run` 就知道哪一段会红

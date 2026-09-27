@@ -155,7 +155,12 @@ def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
           # 「叫醒自动推送」那一步的 if 里有 ref_name——这套模拟按「跑在
           # main 上」求值：分支上的行为(那一步跳过)不在这套判据的主语里。
           .replace("github.ref_name", repr("main"))
+          # apt 缓存的回写（2026-09-27 拆成 restore ＋ 条件 save）：按「这趟摸了网」
+          # 求值，也就是最坏情况下 save 会跑；它引用的 cache-primary-key 在对应的
+          # restore 跑过时一定非空，而 save 自己的 if 里写着同一个 mode 条件
+          .replace("env.APT_CACHE_DIRTY", repr("1"))
           .replace("&&", " and ").replace("||", " or "))
+    py = re.sub(r"steps\.[\w-]+\.outputs\.cache-primary-key", repr("apt-pkgs-key"), py)
     if py.strip() == "always()":
         return True
     assert not re.search(r"[a-z_]+\(|github\.", py), f"这个 if 我还不会算：{expr}"
@@ -886,12 +891,14 @@ def test_顶栏最前面是麦克风矢量不赌字体():
 def test_顶栏太长要报错不许悄悄折行():
     """`WrapStyle=0` 会自动折行，**一折就压到下面那行上，而且不报错**。
 
-    赛事名长一点就够了——「2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔」
-    实测 1003px，超过可用的 984px。
+    ⚠️ 2026-09-27 这条的例子换了：原来那句「2026 加拿大公开赛 WTA1000 女单 1/4 决赛
+    蒙特利尔」说是「实测 1003px」，那是 PIL 按 em 量的——libass 按 winAscent+winDescent
+    缩放，得意黑真渲只有 1003÷1.2≈836px，**根本不会折行**（评审 I9，`_topbar_width`）。
+    量准之后要拿一条真渲也超过 984 的来验这道闸还在。
     """
     spec = {"slug": "t", "push": {"matchup": "甲 vs 乙"},
             "interview_kind": "赛后场上采访",
-            "event": "2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔"}
+            "event": "2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔 国家银行公开赛 第三场 夜场"}
     with pytest.raises(SystemExit, match="顶栏"):
         header_lines(spec)
 
@@ -943,7 +950,9 @@ def test_名人堂顶栏以人物内容为大标题_典礼为小标题(monkeypat
         "不能再次引入尚未被 artifact 隔离的粗体/多 run 组合")
     assert context_ass.count(r"\fnNoto Sans CJK SC") == 1
     assert context_ass.count(r"\fn") == 1 and r"\b" not in context_ass
-    assert r"\c&HFFFFFF&" in main_ass, "主标题要显式写白，不能只靠 \\r 复位竖条绿"
+    # 2026-09-27 主行的颜色从纯白换成近白 foreground #f4fbf7（评审 3.4，和赛场之上
+    # HEAD 同一支）；这条钉的仍然是「显式写出来」，不是某一个值
+    assert clip._HEADA_COLOUR in main_ass, "主标题要显式写颜色，不能只靠 \\r 复位竖条绿"
     assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_A_TOP})" in main_ass
     assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_B_TOP})" in context_ass
     assert "▍" not in main_ass
@@ -1188,9 +1197,9 @@ def test_顶栏赢家的名字要高亮不是输家():
     两个名字原来一个颜色，谁赢谁输全靠看比分自己算，赢家没有任何视觉上的
     突出。
 
-    **重用 `_MARK_COLOUR`，不新开一支颜色**：那正是顶栏竖条 `▍` 和
-    `highlight_en()` 高亮关键短语用的同一支品牌绿——「一屏（这条片子从头
-    到尾算一屏）只留一个强调色」，见 `highlight_en` 的 docstring。
+    **重用 `_MARK_COLOUR`，不新开一支颜色**：那正是顶栏竖条 `▍`（现在是麦克风）
+    用的那支薄荷。2026-09-27 Q1 起它只表示「这一方赢了」，`highlight_en()` 的短语
+    改染品牌黄绿 `_PHRASE_COLOUR`，见 `highlight_en` 的 docstring。
 
     ⚠️ 这条只管**名字**。比分本身按数字上色的判据在
     `test_顶栏比分一盘里只有赢的那个数字绿`——两件事分开测，别在一条测试里
@@ -1228,8 +1237,10 @@ def test_顶栏比分一盘里只有赢的那个数字绿():
     straight = header_runs({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
                             "interview_kind": "赛后场上采访",
                             "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}})[1]
-    score_runs = [(text, tags) for text, kind, tags, _ in straight if kind == "num"]
-    assert [t for t, _ in score_runs] == ["6-", "3 ", "6-", "4"]
+    # 2026-09-27 Q17：连字符单独一段、压暗（和赛场之上一致），这里只看两个数字
+    score_runs = [(text, tags) for text, kind, tags, _ in straight
+                  if kind == "num" and text != "-"]
+    assert [t for t, _ in score_runs] == ["6", "3 ", "6", "4"]
     winning_digits, losing_digits = score_runs[0::2], score_runs[1::2]
     assert all(_MARK_COLOUR in tags for _, tags in winning_digits), (
         f"每一盘前面那个数（甲自己赢下的）该带 {_MARK_COLOUR}：{winning_digits}")
@@ -1246,8 +1257,8 @@ def test_顶栏比分一盘里只有赢的那个数字绿():
                            "interview_kind": "赛后场上采访",
                            "push": {"matchup": "甲 vs 乙", "score": "7-6(3) 4-6 6-4"}})[1]
     score_runs2 = [(text, tags, size) for text, kind, tags, size in dropped
-                   if kind == "num"]
-    assert [t for t, _, _ in score_runs2] == ["7-", "6", "³ ", "4-", "6 ", "6-", "4"]
+                   if kind == "num" and text != "-"]
+    assert [t for t, _, _ in score_runs2] == ["7", "6", "³ ", "4", "6 ", "6", "4"]
     s1a, s1b, s1tb, s2a, s2b, s3a, s3b = score_runs2
     assert _MARK_COLOUR in s1a[1] and _MARK_COLOUR not in s1b[1], (
         f"第一盘「7-6(3)」甲自己赢的，绿的该是「7」不是「6」：{s1a} {s1b}")
@@ -1267,9 +1278,9 @@ def test_顶栏比分一盘里只有赢的那个数字绿():
     _, line_b = header_ass({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
                             "interview_kind": "赛后场上采访",
                             "push": {"matchup": "甲 vs 乙", "score": "7-6(3) 4-6 6-4"}})
-    tag_4 = re.search(r"(\{[^}]*\})4-", line_b).group(1)
+    tag_4 = re.search(r"(\{[^}]*\})4\{", line_b).group(1)
     assert _MARK_COLOUR not in tag_4, f"第二盘甲自己的「4」不该带颜色：{tag_4!r}"
-    tag_6b = re.search(r"4-(\{[^}]*\})6 ", line_b).group(1)
+    tag_6b = re.search(r"4\{[^}]*\}-(\{[^}]*\})6 ", line_b).group(1)
     assert _MARK_COLOUR in tag_6b, f"第二盘对手的「6」该带颜色：{tag_6b!r}"
 
 
@@ -1322,12 +1333,13 @@ def test_英文也要过宽度闸(tmp_path):
 def test_高亮短语上色不放大且不改变周边文字():
     """**只上色，不放大**——放大会改这一行的实际占宽，得重新过宽度闸；
     上色用 `\\c`，字符前进量一个像素不变。"""
-    from tools.build_interview_clip import _MARK_COLOUR, highlight_en
+    # 2026-09-27 Q1：短语染品牌黄绿 `_PHRASE_COLOUR`，薄荷 `_MARK_COLOUR` 只表示「赢」
+    from tools.build_interview_clip import _PHRASE_COLOUR, highlight_en
 
     out, hit = highlight_en("It was tough to face when you want to finish.",
                             ["tough to face"])
     assert hit == {"tough to face"}
-    assert out == ("It was " + f"{{{_MARK_COLOUR}}}tough to face{{\\r}}"
+    assert out == ("It was " + f"{{{_PHRASE_COLOUR}}}tough to face{{\\r}}"
                    + " when you want to finish.")
     # 把标签一律去掉之后必须还原成原文，一个字都不能多或少
     assert re.sub(r"\{[^}]*\}", "", out) == \
@@ -1383,7 +1395,7 @@ def test_没写highlight_en字段行为不变(tmp_path):
 def test_高亮短语跨多行各自匹配不误报未命中(tmp_path):
     """两个短语分别落在不同行——不能因为「这一行没找到」就报错，
     要等**所有行**都扫完，真的一次都没中的才算数。"""
-    from tools.build_interview_clip import _MARK_COLOUR
+    from tools.build_interview_clip import _PHRASE_COLOUR
 
     lines = _lines(["stay focused please.", "tough to face today."])
     spec = {"highlight_en": ["stay focused", "tough to face"],
@@ -1392,7 +1404,7 @@ def test_高亮短语跨多行各自匹配不误报未命中(tmp_path):
     path = tmp_path / "t.ass"
     write_ass(lines, ["一", "二"], 0.0, path, spec)  # 不许抛
     body = path.read_text(encoding="utf-8")
-    assert body.count(f"{{{_MARK_COLOUR}}}") == 2
+    assert body.count(f"{{{_PHRASE_COLOUR}}}") == 2
 
 
 def test_翻转和裁角标要作用到封面帧上():
@@ -2728,11 +2740,16 @@ def test_字幕带背景色和封面解读卡是同一支品牌绿():
         f"`_BG_COLOUR` 现在是 {_BG_COLOUR!r}，和封面/解读卡用的品牌深绿 "
         "#06140f 不一样了——三处理应是同一支颜色，改了一处要么是笔误，"
         "要么另外两处（`build_cover` / `build_takeaway_card`）也要跟着改。")
-    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
-    body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
-    assert body.count("#06140f") >= 2, (
-        "`build_cover` 和 `build_takeaway_card` 至少各该出现一次 #06140f——"
-        "如果这两支颜色换了，`_BG_COLOUR` 要跟着一起改，不能只改字幕带这一处。")
+    # 2026-09-27 三处改成同一个名字 `_INK_BG`（UI/VI 评审 WP3 接 token），所以判据从
+    # 「源码里数字面量」换成「渲出来的那两页 HTML 真的用了它」。
+    import tools.build_interview_clip as clip
+
+    frame = ROOT / "assets" / "logo" / "brand" / "icon.png"
+    spec = {"slug": "t", "cover": {"title": ["一", "二"]}, "push": {"summary": "s"},
+            "takeaway": {"close": {"point": "一句", "ask": "一问？"}}}
+    assert f"background:{clip._INK_BG}" in clip.cover_html(spec, frame)
+    assert f"{clip._INK_BG} 62%" in clip.takeaway_html(spec, "close")
+    assert _BG_COLOUR == "0x" + clip._INK_BG.removeprefix("#")
 
 
 def test_字幕带的背景不再从模糊视频派生():
@@ -2754,7 +2771,7 @@ def test_字幕带的背景不再从模糊视频派生():
     # 所以判据改成**推导**，不再写死一个会过期的数字：十六进制字面量本身
     # 只许出现一次（定义那一行），凡是 `color=c=` 垫底源都要走 `_BG_COLOUR`
     # 这个名字——多少处引用都行，只要没人抄一遍字面量。
-    assert body.count('"0x06140f"') == 1, (
+    assert body.count('"#06140f"') == 1, (
         "背景色的十六进制字面量出现了不止一次——该走 `_BG_COLOUR` 这个名字，"
         "不是各处各写一遍")
     colour_lines = [ln for ln in body.splitlines() if "color=c=" in ln]
@@ -4680,7 +4697,8 @@ def test_解读卡字号不许退回2026年8月之前的更小档位():
 
     import tools.build_interview_clip as clip
 
-    src = inspect.getsource(clip.build_takeaway_card)
+    # 2026-09-27 CSS 挪进 `takeaway_html`（封面和收尾卡共用台头之后），判据跟着读它
+    src = inspect.getsource(clip.takeaway_html)
     assert "font-size:76px" in src, "解读卡 .point 字号不许退回 64px 那档"
     assert "font-size:54px" in src, "解读卡 .ask 字号不许退回 46px 那档"
     """这台沙箱的出网走一个做 TLS 拦截的代理，而 edge-tts 认 certifi 的根证书。
@@ -6106,7 +6124,9 @@ def test_封面顶栏要和解说片那份台头是同一套值():
     from tennislive.video import explainer as E
 
     badge = inspect.getsource(E._render_intro_badge)
-    cover = inspect.getsource(clip.build_cover)
+    # 2026-09-27 台头 CSS 收成 `_LOCKUP_CSS`（封面和收尾卡共用，值走 design_tokens），
+    # 抠的是**生效的那份字符串**，不再是 `build_cover` 的源码
+    cover = clip._LOCKUP_CSS
 
     def 抠(src, pat, 什么):
         m = re.search(pat, src)
@@ -6143,21 +6163,22 @@ def test_封面顶栏印栏目名底部就不许再印一遍():
     赛后开麦的封面 2026-08-16 加上顶栏之后是同一个形状：底部那颗 tag 原来写的是
     `赛后开麦 · 2026 辛辛那提 · 阿朗戈`，前半截现在在顶栏了。
 
-    判据钉两头：**顶栏必须印**（不然这次改动等于没做），**底部那颗 tag 不许再拼
-    column 进去**（不然又印两遍）。
-    """
-    import inspect
+    判据钉两头：**顶栏必须印**（不然这次改动等于没做），**底部不许再印一遍**。
 
+    ⚠️ 2026-09-27 Q7 那颗底部 tag **整个删了**（评审：五层字把同一件事说三遍），
+    所以判据从「tag 不许拼 column」收紧成「渲出来的封面里栏目名正好一次、没有 tag」，
+    读的是 `cover_html` 生效的那一页，不再抠源码。
+    """
     import tools.build_interview_clip as clip
 
-    src = inspect.getsource(clip.build_cover)
-    assert "网球时差 · {column}" in src, (
+    spec = {"slug": "t", "column": "赛后开麦",
+            "cover": {"title": ["一", "二"], "tag": "赛后开麦 · 2026 辛辛那提 · 阿朗戈"},
+            "push": {"summary": "s"}}
+    html = clip.cover_html(spec, ROOT / "assets" / "logo" / "brand" / "icon.png")
+    assert "网球时差 · 赛后开麦" in html, (
         "封面顶栏没印栏目名——账号所有者要的就是「顶栏标明栏目名」")
-    m = re.search(r"^\s*tag = (.+)$", src, re.M)
-    assert m, "抠不出底部那颗 tag 是怎么拼的——这条判据的主语没了"
-    assert "column" not in m.group(1), (
-        f"底部 tag 又把栏目名拼进去了：`{m.group(1).strip()}`\n"
-        "顶栏已经印过一次了，这是第二遍——和被删掉的那颗黄色药丸同一个形状。")
+    assert html.count("赛后开麦") == 1, "栏目名印了不止一遍——和被删掉的那颗黄色药丸同一个形状"
+    assert "class=tag" not in html and "阿朗戈" not in html, "底部那颗 tag 不许回来"
 
 
 def test_封面顶栏两行字都要是浅色(tmp_path):
@@ -6183,7 +6204,6 @@ def test_封面顶栏两行字都要是浅色(tmp_path):
 
     两档差一个数量级，门槛落在中间。
     """
-    import inspect
 
     import numpy as np
     from PIL import Image
@@ -6243,8 +6263,9 @@ def test_封面顶栏两行字都要是浅色(tmp_path):
         "封面底被调亮了，这条判据分不开黑字和白字，等于没装")
 
     # 顺带钉住：这一行的 color 必须是显式写出来的，不许再退回继承。
-    src = inspect.getsource(clip.build_cover)
-    assert re.search(r"\.brand\{\{[^}]*color:#", src), (
+    # （2026-09-27 起读生效的 `_LOCKUP_CSS`，颜色走 design_tokens）
+    src = clip._LOCKUP_CSS
+    assert re.search(r"\.brand\{[^}]*color:#", src), (
         "`.brand` 又没有自己的 color 了——它会掉回 body，而封面的 body 没有 color")
 
 
