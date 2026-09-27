@@ -374,9 +374,14 @@ def _stamp(at: datetime) -> str:
 # 「阻塞」的定义是看板那一份（`dashboard.blocked_runs`），不在这儿另写。
 #
 # 只在**转入**阻塞时推，恢复不推（他要的是「卡住了」这一声，不是来回播报）。
-# 两道防刷屏：
-# - 同一处（工作流 × mode，`_key`）恢复后又在 BLOCKED_REPEAT_COOLDOWN 内红回来（来回抖），不再推，
-#   记成已知——否则一条时好时坏的线一天能刷十几条
+# 两道防刷屏，**都是推迟、不是丢掉**：
+# - 同一处（工作流 × mode，`_key`）恢复后又在 BLOCKED_REPEAT_COOLDOWN 内红回来（来回抖），
+#   冷却期内不推——否则一条时好时坏的线一天能刷十几条；但**不记成已知**：过了冷却还红着，
+#   就当一次新的转入推出去。
+#   ⚠️ 原来是记成已知，于是永远不推（复核 FIX ROUND 1 的 nit）：键里没有 slug，08:00 render A
+#   红了（推过）、09:00 片子 B 的 render 绿了、10:00 片子 C 的 render 红了一直卡着——
+#   他收到的唯一一条微信点的是 A，C 在 10:00、16:00、28:00 都不响。
+#   判据 test_冷却期内红回来是推迟不是丢_过了冷却还红就推
 # - 两次阻塞推送之间至少隔 BLOCKED_MIN_INTERVAL：被压下的新阻塞**不记成已推**，
 #   下一班过了间隔还阻塞就补推，不会丢
 BLOCKED_MIN_INTERVAL = timedelta(minutes=30)
@@ -428,7 +433,9 @@ def blocked_transition(blocked: list[dict], state_path: Path,
     fresh = [w for w in new if w not in flapping]
     notify = bool(fresh) and (pushed_at is None or now - pushed_at >= BLOCKED_MIN_INTERVAL)
 
-    active = (known & set(current)) | set(flapping)  # 恢复了的自动出列：再红就是新的转入
+    # 恢复了的自动出列：再红就是新的转入。来回抖的（flapping）也不进——它只是推迟，
+    # 过了冷却还红着就是 fresh（见上面那段注）
+    active = known & set(current)
     title = message = ""
     if notify:
         still = len(active)
@@ -467,10 +474,13 @@ def main(argv: list[str] | None = None) -> int:
     sla = sla_health()
     report, alerts = render_report(health, steps, sla, stale_publications(),
                                    orchestrator_productivity())
-    # 和看板同一份数据（最近 100 条 run）、同一个定义。这儿的稀疏检出里没有 spec 清单，
-    # 不给 `known`——「哪条卡住」靠出片 run 的 run-name 按段位读（两段的 slug 也认得出），
-    # 判据 test_两段的slug也要进微信摘要_不许说标题里没写
-    runs = api.get("actions/runs?per_page=100").get("workflow_runs") or []
+    # 和看板同一份数据（每条受监控工作流 24 小时内的 run）、同一个定义。
+    # ⚠️ 原来取的是全仓最近 100 条——忙时只够回溯一个半小时，而这一班实际两三个小时
+    # 才来一趟，一处没人重试的失败滚出列表就永远不推（`monitored_runs` 顶注）。
+    # 读失败就让它抛：「读不到」≠「没阻塞」，监控失明要红给人看（模块顶注）。
+    # 这儿的稀疏检出里没有 spec 清单，不给 `known`——「哪条卡住」靠出片 run 的 run-name
+    # 按段位读（两段的 slug 也认得出），判据 test_两段的slug也要进微信摘要_不许说标题里没写
+    runs = dashboard.monitored_runs(api.get)
     blocked = dashboard.blocked_runs(runs)
     report += "\n### 流水线阻塞（和看板同一个定义）\n\n" + ("\n".join(
         f"- {' / '.join(b['stages'])} · {_which(b)} · {b.get('slug') or NO_SLUG} · {b.get('url') or ''}"

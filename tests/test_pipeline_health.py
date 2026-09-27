@@ -261,6 +261,30 @@ def test_监控名单不许点名不存在的工作流():
 # 看板在 github.io，他在国内打不开；阻塞摘要推到微信、网页留作备用。
 # 扩的是这条已有的告警链（同一步 PushPlus、同一份跨 run 去重状态），不另起一条。
 
+def _fake_github(runs, global_runs=None):
+    """GitHub API 的桩：按工作流取 run（`actions/workflows/<文件>.yml/runs?…created=>=…`，
+    `monitored_runs` 走的那个端点）按 `path` 分给各条工作流、只给第一页、按 `created`
+    过滤；全仓那个列表（`actions/runs?`）给 `global_runs`（不给就是全部）；
+    `workflow_health` 那条（不带 `created=`）一律空——趋势那一半不是这几条测的东西。"""
+    import re  # noqa: PLC0415
+    import urllib.parse  # noqa: PLC0415
+
+    def get(self, path):
+        if path.startswith("actions/runs?"):
+            return {"workflow_runs": list(runs if global_runs is None else global_runs)}
+        m = re.match(r"actions/workflows/([^/?]+)\.yml/runs\?(.*)$", path)
+        if m and "created=" in m.group(2):
+            q = urllib.parse.parse_qs(m.group(2))
+            if q.get("page", ["1"])[0] != "1":
+                return {"workflow_runs": []}
+            since = q["created"][0].removeprefix(">=")
+            return {"workflow_runs": [r for r in runs
+                                      if r["path"] == f".github/workflows/{m.group(1)}.yml"
+                                      and r["created_at"] >= since]}
+        return {"workflow_runs": [], "jobs": []}
+    return get
+
+
 def _blocked(workflow="match-reel", slug="bu-majchrzak-hangzhou-2026-r2", stages=("渲染", "质检")):
     return {"workflow": workflow, "stages": list(stages), "slug": slug,
             "url": f"https://github.com/o/r/actions/runs/{abs(hash(workflow)) % 1000}",
@@ -286,16 +310,19 @@ def test_看板转阻塞时推一条短摘要_只在转入时推(tmp_path):
     assert blocked_transition([b], state, t0 + timedelta(hours=1))[0] is False
     # 恢复：不推（他要的是「卡住了」这一声）
     assert blocked_transition([], state, t0 + timedelta(hours=2))[0] is False
-    # 6 小时内又红回来（来回抖）：不推，记成已知
+    # 6 小时内又红回来（来回抖）：冷却期内不推
     assert blocked_transition([b], state, t0 + timedelta(hours=3))[0] is False
-    assert blocked_transition([b], state, t0 + timedelta(hours=10))[0] is False, "已知的仍在阻塞，不补推"
+    assert blocked_transition([b], state, t0 + timedelta(hours=5))[0] is False
+    # 过了冷却还红着：推迟的那一声补上（原来记成已知、永远不推——FIX ROUND 1 的 nit）
+    assert blocked_transition([b], state, t0 + timedelta(hours=10))[0] is True, "推迟不是丢"
+    assert blocked_transition([b], state, t0 + timedelta(hours=11))[0] is False, "补过一次就是已知"
     # 恢复、过了冷却再红：是新的一次转入，推
-    blocked_transition([], state, t0 + timedelta(hours=11))
-    assert blocked_transition([b], state, t0 + timedelta(hours=12))[0] is True
+    blocked_transition([], state, t0 + timedelta(hours=12))
+    assert blocked_transition([b], state, t0 + timedelta(hours=16, minutes=30))[0] is True
 
     # 另一条工作流也红了，但离上一条阻塞推送不到 30 分钟：先压着、不丢
     other = _blocked("orchestrate", None, ("编排",))
-    t1 = t0 + timedelta(hours=12, minutes=10)
+    t1 = t0 + timedelta(hours=16, minutes=40)
     assert blocked_transition([b, other], state, t1)[0] is False
     notify, title, message = blocked_transition([b, other], state, t1 + timedelta(minutes=25))
     assert notify and "编排" in title and "run 标题里没写是哪条" in message, "slug 不知道就照实说"
@@ -347,12 +374,7 @@ def test_main把阻塞摘要写进GITHUB_OUTPUT(tmp_path, monkeypatch):
                "updated_at": iso(10), "html_url": "https://github.com/o/r/actions/runs/8",
                "display_title": "match-reel · render · bu-majchrzak-hangzhou-2026-r2"}
 
-    def fake_get(self, path):
-        if path.startswith("actions/runs?"):
-            return {"workflow_runs": [failing]}
-        return {"workflow_runs": [], "jobs": []}
-
-    monkeypatch.setattr(ph.GitHubAPI, "get", fake_get)
+    monkeypatch.setattr(ph.GitHubAPI, "get", _fake_github([failing]))
     monkeypatch.setattr(ph, "sla_health", lambda: (0, 0, 0.0))
     monkeypatch.setattr(ph, "stale_publications", lambda: [])
     monkeypatch.setattr(ph, "orchestrator_productivity", lambda: ("2026-09-27T00:00:00Z", 1.0))
@@ -396,12 +418,7 @@ def test_两段的slug也要进微信摘要_不许说标题里没写(tmp_path, m
     runs = [run(1, "match-reel", "match-reel", "match-reel · probe · zverev-sonego"),
             run(2, "explainer", "explainer-video", "explainer-video · ranking-math")]
 
-    def fake_get(self, path):
-        if path.startswith("actions/runs?"):
-            return {"workflow_runs": runs}
-        return {"workflow_runs": [], "jobs": []}
-
-    monkeypatch.setattr(ph.GitHubAPI, "get", fake_get)
+    monkeypatch.setattr(ph.GitHubAPI, "get", _fake_github(runs))
     monkeypatch.setattr(ph, "sla_health", lambda: (0, 0, 0.0))
     monkeypatch.setattr(ph, "stale_publications", lambda: [])
     monkeypatch.setattr(ph, "orchestrator_productivity", lambda: ("2026-09-27T00:00:00Z", 1.0))
@@ -439,12 +456,7 @@ def test_render红了之后别的片子probe绿了_微信照样推(tmp_path, mon
     runs = [run(5, 5, "success", "match-reel · probe · zverev-sonego"),       # 最新的一条是绿的
             run(30, 30, "failure", "match-reel · render · bu-majchrzak-hangzhou-2026-r2")]
 
-    def fake_get(self, path):
-        if path.startswith("actions/runs?"):
-            return {"workflow_runs": runs}
-        return {"workflow_runs": [], "jobs": []}
-
-    monkeypatch.setattr(ph.GitHubAPI, "get", fake_get)
+    monkeypatch.setattr(ph.GitHubAPI, "get", _fake_github(runs))
     monkeypatch.setattr(ph, "sla_health", lambda: (0, 0, 0.0))
     monkeypatch.setattr(ph, "stale_publications", lambda: [])
     monkeypatch.setattr(ph, "orchestrator_productivity", lambda: ("2026-09-27T00:00:00Z", 1.0))
@@ -477,3 +489,97 @@ def test_同一个工作流另一个mode也红了_是新的一处_不许当成�
     assert "bu-majchrzak" not in message and "另有 1 条" in message, message
     # 两处都还红着：下一班不再推
     assert blocked_transition([render, probe], state, t0 + timedelta(hours=2))[0] is False
+
+
+# ── 复核 FIX ROUND 1（第二轮复核）：滚出全仓最近 100 条的失败、推迟不是丢 ────────────
+def test_失败滚出全仓最近100条_按工作流取回来照样推(tmp_path, monkeypatch):
+    """复核的 blocking：`main()` 原来只取**全仓**最近 100 条 run——忙时只回溯 80~119 分钟
+    （pages 31%、ci 25%），而 pipeline-health 的「每小时」一班实际 145~402 分钟一趟。
+    09:00 一条没人重试的 render 红了，14:19 那一班全仓列表只回到 12:00——按
+    `blocked_runs` 自己的定义它仍是 `match-reel:render` 最近的一条，微信却一声不响。
+    这里全仓列表是 100 条更新的 ci，失败只有按工作流取才拿得回来：必须推。"""
+    from datetime import datetime, timedelta, timezone  # noqa: PLC0415
+
+    import tools.pipeline_health as ph  # noqa: PLC0415
+
+    now = datetime.now(timezone.utc)
+    iso = lambda m: (now - timedelta(minutes=m)).isoformat().replace("+00:00", "Z")  # noqa: E731
+    failing = {"id": 900, "name": "match-reel", "path": ".github/workflows/match-reel.yml",
+               "status": "completed", "conclusion": "failure", "created_at": iso(5 * 60 + 25),
+               "updated_at": iso(5 * 60 + 19), "html_url": "https://github.com/o/r/actions/runs/900",
+               "display_title": "match-reel · render · bu-majchrzak-hangzhou-2026-r2"}
+    ci = [{"id": 1000 + i, "name": "ci", "path": ".github/workflows/ci.yml", "status": "completed",
+           "conclusion": "success", "created_at": iso(i), "updated_at": iso(i),
+           "html_url": f"https://github.com/o/r/actions/runs/{1000 + i}", "display_title": "ci"}
+          for i in range(100)]
+    monkeypatch.setattr(ph.GitHubAPI, "get", _fake_github([failing, *ci], global_runs=ci))
+    monkeypatch.setattr(ph, "sla_health", lambda: (0, 0, 0.0))
+    monkeypatch.setattr(ph, "stale_publications", lambda: [])
+    monkeypatch.setattr(ph, "orchestrator_productivity", lambda: ("2026-09-27T00:00:00Z", 1.0))
+    out = tmp_path / "out.txt"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    assert ph.main(["--repo", "o/r", "--token", "x", "--workflows", "match-reel.yml",
+                    "--step-runs", "0", "--alert-state", str(tmp_path / "state.json")]) == 0
+    got = dict(line.split("=", 1) for line in out.read_text("utf-8").splitlines())
+    assert got["notify"] == "true", got
+    assert "bu-majchrzak-hangzhou-2026-r2" in got["message"] and "runs/900" in got["message"], got
+
+    # 24 小时之外的不算（和 `blocked_runs` 的窗口是同一个）
+    old = {**failing, "id": 901, "created_at": iso(25 * 60), "updated_at": iso(25 * 60 - 5)}
+    monkeypatch.setattr(ph.GitHubAPI, "get", _fake_github([old, *ci], global_runs=ci))
+    out.write_text("")
+    ph.main(["--repo", "o/r", "--token", "x", "--workflows", "match-reel.yml",
+             "--step-runs", "0", "--alert-state", str(tmp_path / "state2.json")])
+    got = dict(line.split("=", 1) for line in out.read_text("utf-8").splitlines())
+    assert got["notify"] == "false", got
+
+
+def test_按工作流取run_每条受监控的都问到了_翻页有顶():
+    """`monitored_runs` 是看板和健康检查共用的那一份：14 条受监控的工作流每条都问、
+    都带 24 小时的 `created` 过滤；一页满了才翻，翻到顶还满就出声，不静默截断。"""
+    from datetime import datetime, timezone  # noqa: PLC0415
+
+    import tools.pipeline_health as ph  # noqa: PLC0415
+
+    d = ph.dashboard
+    now = datetime(2026, 9, 27, 14, 19, 12, tzinfo=timezone.utc)
+    asked = []
+
+    def get(path):
+        asked.append(path)
+        if path.startswith("actions/workflows/match-reel.yml/"):
+            base = 100 * int(path.split("&page=")[1].split("&")[0])
+            return {"workflow_runs": [{"id": base + i} for i in range(d.RUNS_PER_PAGE)]}
+        return {"workflow_runs": [{"id": 1}]}  # 同一个 id 各条都给：按 id 合并
+
+    runs = d.monitored_runs(get, now)
+    wfs = {p.split("/")[2].removesuffix(".yml") for p in asked}
+    assert wfs == d.MONITORED, wfs ^ d.MONITORED
+    assert all("created=%3E%3D2026-09-26T14:19:12Z" in p for p in asked), asked[:2]
+    reel = [p for p in asked if "/match-reel.yml/" in p]
+    assert len(reel) == d.MAX_PAGES, reel
+    assert len(runs) == len({r["id"] for r in runs}), "按 id 合并"
+
+
+def test_冷却期内红回来是推迟不是丢_过了冷却还红就推(tmp_path):
+    """复核的 nit，复现原样：08:00 render A 红了（推过）、09:00 片子 B 的 render 绿了、
+    10:00 片子 C 的 render 红了一直卡着。去重键是「工作流 × mode」、没有 slug，
+    C 落在 A 那一声的 6 小时冷却里——原来记成已知，10:00／11:00／16:00／22:00／28:00
+    一次都不推，他收到的唯一一条微信点的是 A。冷却是**推迟**：过了冷却还红着就推，点名 C。"""
+    from datetime import datetime, timedelta, timezone  # noqa: PLC0415
+
+    from tools.pipeline_health import blocked_transition  # noqa: PLC0415
+
+    state = tmp_path / "alert.json"
+    t0 = datetime(2026, 9, 27, 8, 0, tzinfo=timezone.utc)
+    a = {**_blocked(slug="alpha-beta-r1"), "mode": "render"}
+    c = {**_blocked(slug="gamma-delta-r1"), "mode": "render"}
+    assert blocked_transition([a], state, t0)[0] is True
+    assert blocked_transition([], state, t0 + timedelta(hours=1))[0] is False   # B 的 render 绿了
+    assert blocked_transition([c], state, t0 + timedelta(hours=2))[0] is False, "冷却期内先压着"
+    assert blocked_transition([c], state, t0 + timedelta(hours=3))[0] is False
+    notify, _title, message = blocked_transition([c], state, t0 + timedelta(hours=8))
+    assert notify and "gamma-delta-r1" in message and "alpha-beta-r1" not in message, (notify, message)
+    # 补过一次就是已知：之后每一班不再轰
+    for h in (14, 20):
+        assert blocked_transition([c], state, t0 + timedelta(hours=h))[0] is False

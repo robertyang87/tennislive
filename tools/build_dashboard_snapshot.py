@@ -80,6 +80,14 @@ MODE_STAGES = {
 #: `eala-zheng`，cookies 模式拨的时候没人改它——照读就会在微信里说
 #: 「卡住：eala-zheng」，还把那条片子的卡片标成「发现 ✕」。
 SLUGLESS_MODES = {"cookies"}
+#: 同一条片子（同一个工作流 × 同一个 slug）后来 render **成功**了，它前面那几步的红就已经
+#: 被取代：render 自己要过 spec、旁白装不装得下、封面那几道闸，它绿了就说明 probe／
+#: narration／cover／subs 那一红修好了。和取消同一个待遇——不算阻塞、不占阶段卡片、
+#: 不占「自动任务」那一行（复核 FIX ROUND 1 的 nit：narration 红了、改完 spec 同一条
+#: render 绿了，Spec 那一格和首屏还一直写阻塞，微信点名一条已经渲出来的片子）。
+#: ⚠️ render 的红**不**让之后的 push 绿取代：推出去的可能是上一版成片，这一版没落地。
+#: 判据 `test_同一条片子后来render绿了_前面几步的红不再算阻塞`。
+SUPERSEDED_BY = {"render": frozenset({"probe", "narration", "cover", "subs"})}
 #: 阶段标签 → 内容条目上的字段（卡片上那颗「质检 ✓ · 下一步 推送」芯片用的是同一套词）
 STAGE_FIELDS = {"发现": "discovered", "编排": "orchestrated", "Spec": "spec",
                 "渲染": "rendered", "质检": "qc", "推送": "pushed"}
@@ -112,14 +120,80 @@ def read_json(path: Path, default):
         return default
 
 
-def github_runs(token: str | None):
-    url = f"https://api.github.com/repos/{REPO}/actions/runs?per_page=100"
+#: 按工作流取 run 时一页多少条、最多翻几页（24 小时里 match-reel 实测 64 条，一页就够；
+#: 翻到顶还满就出声，不静默截断）
+RUNS_PER_PAGE = 100
+MAX_PAGES = 3
+
+
+def monitored_runs(get, now=None) -> list[dict]:
+    """每条受监控工作流在 `BLOCKED_WINDOW`（24 小时）里的全部 run，按 id 合并。
+
+    `get(path)` 拿 `repos/<repo>/` 之后的那一截路径、返回解析好的 JSON；读失败就抛——
+    「读不到」≠「没失败」，调用方自己决定怎么出声。看板（`github_runs`）和每小时的
+    `pipeline_health` 都从这儿取，**同一份数据、同一个定义**。
+
+    ⚠️ 原来两边都只取**全仓**最近 100 条（复核 FIX ROUND 1 的 blocking）：忙时 100 条
+    只回溯 80~119 分钟（pages 占 31%、ci 占 25%），夜里 169~283 分钟；而
+    pipeline-health 的「每小时」一班实际 145~402 分钟才来一趟（schedule 被 GitHub 丢弃）。
+    一处没人重试的失败，只要不落在某一班之前那一百来分钟里，就滚出列表、永远不推——
+    而按 `blocked_runs` 自己的定义它仍是那一处最近的一条。看板首屏同一个根子：
+    一个半小时后转绿，还写「最近 24 小时未发现生产工作流失败」。
+    按工作流取用的是 `nudge_stale_ticks.sh`／`workflow_health` 同一个端点，一班 14 次调用。
+    判据 `test_失败滚出全仓最近100条_按工作流取回来照样推`。
+    """
+    now = now or datetime.now(timezone.utc)
+    since = (now - BLOCKED_WINDOW).astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    pages = []
+    for wf in sorted(MONITORED):
+        for page in range(1, MAX_PAGES + 1):
+            rows = get(f"actions/workflows/{wf}.yml/runs?per_page={RUNS_PER_PAGE}&page={page}"
+                       f"&created=%3E%3D{since}").get("workflow_runs") or []
+            pages.append(rows)
+            if len(rows) < RUNS_PER_PAGE:
+                break
+        else:
+            print(f"::warning::{wf} 24 小时内超过 {RUNS_PER_PAGE * MAX_PAGES} 条 run，"
+                  "只取了最近这些——更早的失败看不见")
+    return merge_runs(*pages)
+
+
+def merge_runs(*lists) -> list[dict]:
+    """几份 run 列表按 id 合并（先出现的留下）；没有 id 的照留，不猜它是不是重复。"""
+    seen, out = set(), []
+    for rows in lists:
+        for run in rows or []:
+            rid = run.get("id")
+            if rid is not None:
+                if rid in seen:
+                    continue
+                seen.add(rid)
+            out.append(run)
+    return out
+
+
+def _api_get(token: str | None):
     headers = {"Accept": "application/vnd.github+json", "User-Agent": "tennislive-dashboard"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
-    try:
+
+    def get(path: str) -> dict:
+        url = f"https://api.github.com/repos/{REPO}/{path.lstrip('/')}"
         with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=20) as response:
-            return json.load(response).get("workflow_runs", [])
+            return json.load(response)
+    return get
+
+
+def github_runs(token: str | None):
+    """全仓最近 100 条（「运行中」要数到不受监控的 ci 这类）∪ 受监控工作流 24 小时内的
+    全部 run（`monitored_runs`，阻塞和阶段卡片靠它）。
+
+    任何一次读失败都整份当「读不到」：只拿到一半就写「最近 24 小时未发现失败」，
+    比首屏老实说「Actions 状态暂不可见」坏得多。"""
+    get = _api_get(token)
+    try:
+        return merge_runs(get("actions/runs?per_page=100").get("workflow_runs") or [],
+                          monitored_runs(get))
     except Exception as exc:  # snapshot still ships repo-backed evidence
         print(f"::warning::dashboard could not read Actions: {exc}")
         return []
@@ -201,6 +275,32 @@ def run_stages(run: dict) -> list[str]:
     return [label for label, names in WORKFLOW_GROUPS if wf in names]
 
 
+def superseded_ids(runs) -> set:
+    """被同一条片子后来那趟成功的 render 取代了的失败 run 的 id（`SUPERSEDED_BY`）。
+    `blocked_runs` 和阶段卡片都按它跳过——两边跳的是同一批，首屏和卡片才不会各说各的。"""
+    later_ok: dict[tuple[str, str], list[tuple[str, str]]] = defaultdict(list)
+    failed = []
+    for run in runs:
+        if run.get("status") != "completed":
+            continue
+        fields = run_name_fields(run)
+        if not fields.get("slug") or not fields.get("mode"):
+            continue
+        key = (workflow_of(run), fields["slug"])
+        if run.get("conclusion") == "success" and fields["mode"] in SUPERSEDED_BY:
+            later_ok[key].append((fields["mode"], run.get("created_at") or ""))
+        elif run.get("conclusion") in FAILURES:
+            failed.append((run, key, fields["mode"]))
+    out = set()
+    for run, key, mode in failed:
+        at_fail = run.get("created_at") or ""
+        if run.get("id") is not None and any(
+                mode in SUPERSEDED_BY[ok_mode] and at_ok > at_fail
+                for ok_mode, at_ok in later_ok.get(key, ())):
+            out.add(run["id"])
+    return out
+
+
 def blocked_key(workflow: str, mode: str | None = None) -> str:
     """一处「阻塞」的身份：工作流文件 ＋ 出片 mode（`match-reel:render`）；没有 mode
     的工作流就是文件名。`blocked_runs` 按它取「最近一条」，`pipeline_health` 按它
@@ -230,12 +330,15 @@ def blocked_runs(runs, now=None, *, self_run_id=None, known=()) -> list[dict]:
     """
     now = now or datetime.now(timezone.utc)
     latest: dict[str, dict] = {}
+    replaced = superseded_ids(runs)
     for run in runs:
         wf = workflow_of(run)
         if wf not in MONITORED or is_self(run, self_run_id):
             continue
         if run.get("status") != "completed" or run.get("conclusion") == "cancelled":
             continue
+        if run.get("id") in replaced:
+            continue  # 同一条片子后来 render 绿了：和取消一样，已经被后一趟取代
         created = parse_time(run.get("created_at"))
         if created is None or created < now - BLOCKED_WINDOW:
             continue
@@ -375,7 +478,10 @@ def build(root: Path, token: str | None, *, self_run_id=None):
 
     by_workflow = defaultdict(list)
     by_stage = defaultdict(list)
+    replaced = superseded_ids(runs)  # 和 blocked_runs 跳的是同一批（SUPERSEDED_BY）
     for run in runs:
+        if run.get("id") in replaced:
+            continue
         by_workflow[workflow_of(run)].append(run)
         for label in run_stages(run):
             by_stage[label].append(run)

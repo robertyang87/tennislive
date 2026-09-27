@@ -668,3 +668,84 @@ def test_cookies模式不针对哪条片子_不读slug():
     assert module.run_name_fields(run) == {"mode": "cookies"}
     (b,) = module.blocked_runs([run], known={"eala-zheng"})
     assert (b["mode"], b["stages"], b["slug"]) == ("cookies", ["发现"], None), b
+
+
+# ── 复核 FIX ROUND 1（第二轮复核）────────────────────────────────────────────
+def test_看板按工作流取run_滚出全仓最近100条的失败首屏照样红(tmp_path):
+    """blocking 在看板这一头的样子：原来只取全仓最近 100 条，忙时只回溯一个半小时，
+    一处没人重试的失败一滚出去，首屏就转绿、还写「最近 24 小时未发现生产工作流失败」。
+    现在全仓那 100 条（「运行中」要数 ci）∪ 每条受监控工作流 24 小时内的 run。"""
+    import io  # noqa: PLC0415
+    import urllib.parse  # noqa: PLC0415
+
+    root = _root(tmp_path)
+    failing = _run("match-reel", 5 * 60, "failure", rid=900,
+                   title="match-reel · render · bu-majchrzak-hangzhou-2026-r2")
+    ci = [_run("ci", i, rid=1000 + i) for i in range(100)]
+    asked = []
+
+    def fake_urlopen(req, timeout=None):
+        url = req.full_url
+        asked.append(url)
+        path = url.split(f"/repos/{module.REPO}/", 1)[1]
+        if path.startswith("actions/runs?"):
+            rows = ci
+        else:
+            wf = path.split("/")[2].removesuffix(".yml")
+            q = urllib.parse.parse_qs(path.split("?", 1)[1])
+            assert q["created"][0].startswith(">="), path
+            rows = [r for r in [failing] if r["path"].endswith(f"/{wf}.yml")]
+        return io.BytesIO(json.dumps({"workflow_runs": rows}).encode())
+
+    with patch.object(module.urllib.request, "urlopen", fake_urlopen):
+        runs = module.github_runs("t")
+        data = module.build(root, "t")
+    assert {r["id"] for r in runs} >= {900, 1000}, "全仓那 100 条和按工作流取回来的都要在"
+    h = data["health"]
+    assert h["status"] == "failed", h
+    assert [b["slug"] for b in h["blocked"]] == ["bu-majchrzak-hangzhou-2026-r2"], h
+    assert sum("/actions/workflows/" in u for u in asked) >= len(module.MONITORED)
+
+    # 读失败整份当「读不到」：拿到一半就写「24 小时未发现失败」比老实说看不见坏
+    def half(req, timeout=None):
+        if "/actions/workflows/" in req.full_url:
+            raise OSError("rate limited")
+        return io.BytesIO(json.dumps({"workflow_runs": ci}).encode())
+
+    with patch.object(module.urllib.request, "urlopen", half):
+        assert module.github_runs("t") == []
+
+
+def test_同一条片子后来render绿了_前面几步的红不再算阻塞(tmp_path):
+    """复核的 nit：narration（或 cover／probe／subs）红了，改完 spec 同一条片子 render 绿了——
+    按「工作流 × mode」取最近一条，narration 那一处还是红的：Spec 那一格和首屏写阻塞、
+    微信点名一条已经渲出来的片子。render 要过旁白、封面、spec 的闸，它绿了前面就被取代了。"""
+    root = _root(tmp_path)
+    narr_fail = _run("match-reel", 60, "failure", rid=60, title="match-reel · narration · zverev-sonego")
+    render_ok = _run("match-reel", 10, rid=10, title="match-reel · render · zverev-sonego")
+    data = _build(root, [narr_fail, render_ok])
+    assert data["health"]["status"] != "failed", data["health"]
+    stage = {s["label"]: s for s in data["stages"]}
+    assert stage["Spec"]["status"] != "failure", stage["Spec"]
+    assert stage["渲染"]["status"] == "success"
+    row = next(w for w in data["workflows"] if w["workflow"] == "match-reel")
+    assert row["status"] != "failure", row
+    # 采访线同一个形状：subs 红了、同一条 render 绿了
+    subs_fail = _run("interview-clip", 60, "failure", rid=61, title="interview-clip · subs · zverev-sonego")
+    clip_ok = _run("interview-clip", 10, rid=11, title="interview-clip · render · zverev-sonego")
+    assert module.blocked_runs([subs_fail, clip_ok]) == []
+
+    # 反向四头：别的片子 render 绿了、render 比那一红还早、render 的红被 push 绿、不同工作流——都照样红
+    other_ok = _run("match-reel", 10, rid=12, title="match-reel · render · bu-majchrzak-hangzhou-2026-r2")
+    assert [b["slug"] for b in module.blocked_runs([narr_fail, other_ok])] == ["zverev-sonego"]
+    early_ok = _run("match-reel", 120, rid=13, title="match-reel · render · zverev-sonego")
+    assert [b["mode"] for b in module.blocked_runs([narr_fail, early_ok])] == ["narration"]
+    render_fail = _run("match-reel", 60, "failure", rid=62, title="match-reel · render · zverev-sonego")
+    push_ok = _run("match-reel", 10, rid=14, title="match-reel · push · zverev-sonego")
+    assert [b["mode"] for b in module.blocked_runs([render_fail, push_ok])] == ["render"], (
+        "推出去的可能是上一版成片——render 的红不让 push 的绿取代")
+    assert [b["mode"] for b in module.blocked_runs([subs_fail, render_ok])] == ["subs"]
+    # 首屏和卡片照旧同一个判断
+    data = _build(root, [narr_fail, other_ok])
+    stage = {s["label"]: s for s in data["stages"]}
+    assert data["health"]["status"] == "failed" and stage["Spec"]["status"] == "failure"

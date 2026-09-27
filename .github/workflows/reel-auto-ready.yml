@@ -173,3 +173,5 @@ jobs:
         run: |
           source tools/nudge_stale_ticks.sh
           nudge_if_stale orchestrate.yml 20 -f apply=true
+          # 监控班次自己也挨饿（实测 145~402 分钟一趟）：它是阻塞推微信的那一班
+          nudge_if_stale pipeline-health.yml 90
