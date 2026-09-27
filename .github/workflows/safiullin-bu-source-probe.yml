@@ -1,0 +1,40 @@
+name: safiullin-bu-source-probe
+on:
+  push:
+    branches: [codex/safiullin-bu-hangzhou-20260927]
+    paths: [.github/workflows/safiullin-bu-source-probe.yml]
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            tools
+            assets
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install source tools
+        run: |
+          pip install -q -e . "yt-dlp[default]"
+          command -v ffmpeg
+          node --version
+      - name: Download official match and produce evidence
+        timeout-minutes: 10
+        run: |
+          python tools/build_match_reel.py probe --url "https://www.youtube.com/watch?v=-i-__KqEvXE" --outdir source-probe
+          find source-probe -maxdepth 2 -type f -printf '%f %s bytes\n'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: safiullin-bu-source-evidence
+          path: |
+            source-probe/
+            .cache/tennislive-sources/
+          retention-days: 3
+          include-hidden-files: true
