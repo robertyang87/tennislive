@@ -248,6 +248,11 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                                 "cover._hook_identity_why"),
     "_hook_shape_why": _gate("taste_gates.hook_result_problem：钩子第二行不交代结果的认领"
                              "（dry-run）", "hook_result_problem", "cover._hook_shape_why"),
+    "_one_of_n_why": _gate("taste_gates_extra.one_of_n：盘点跨盘的「N 个里只兑现一个」这类说法的认领"
+                           "（dry-run，也随小红书正文一起查）", "_one_of_n_claimed xhs_taste_extra",
+                           "_one_of_n_why"),
+    "_verified_clean": _gate("taste_gates.interview_is_auto：采访 spec 人工核过的标记——有它口味闸按手写判硬，"
+                             "删了就退成只报，所以要登记", "interview_is_auto", "_verified_clean", truthy),
     "_hook_term_why": _gate("taste_gates.hook_jargon_problem：钩子里用术语的认领（dry-run）",
                             "hook_jargon_problem", "cover._hook_term_why"),
     "_import": _gate("main：导入成片拒绝重渲（只在非 dry-run 时 raise）；"
