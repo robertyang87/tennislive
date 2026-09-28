@@ -482,7 +482,11 @@ def test_接缝真跑ffmpeg_没有黑帧没有单帧跳变_声画对得上(tmp_p
         return float(f"{E._audio_seconds(Path(p), 'ffprobe', subprocess.run):.3f}")
 
     a_len = [probe(a) for a in audios]
-    assert a_len[0] > 1.03, f"这条 mp3 ffprobe 报 {a_len[0]}——对照组要的是「报长了」的那种"
+    # 对照组要的是「ffprobe 报长了」的 mp3（源是 d=1.0 生成的）。报长多少看 ffmpeg 版本：
+    # Ubuntu 6.1 报 1.056、CI 的 BtbN nightly 报 1.022——所以不写死 1.03。要的是**不锁
+    # 画面长度的装配会被下面的间隔断言逮到**：第 3 屏漂两倍的报长量，得超过那 0.02 的容差。
+    over = a_len[0] - 1.0
+    assert 2 * over > 0.02, f"这条 mp3 ffprobe 报 {a_len[0]}——报长量太小，对照组逮不住漂移"
     c0 = probe(intro)
     c1 = c0 + a_len[0] + E.LEAD_SILENCE
     c2 = c1 + a_len[1]
