@@ -1,0 +1,173 @@
+# Review-only draft: not installed, committed, dispatched, or published.
+# Uses the same YT_COOKIES_TXT -> RUNNER_TEMP file pattern as match-reel.yml.
+name: Download official public tennis footage
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - codex/beijing-men-2026-footage
+    paths:
+      - .github/workflows/download-public-footage.yml
+
+permissions:
+  contents: read
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - id: V0o1CQ2KMvQ
+            channel_id: UCbcxFkd6B9xUU54InHv4Tig
+            label: miami-2025-mensik-djokovic
+            section: '*00:03:00-00:13:00'
+            trim_origin: 180
+            trim_duration: 600
+            url: https://www.youtube.com/watch?v=V0o1CQ2KMvQ
+          - id: UtdkZ-J21Lw
+            channel_id: UCNa8NxMgSm7m4Ii9d4QGk1Q
+            label: wimbledon-2026-deminaur-cobolli
+            url: https://www.youtube.com/watch?v=UtdkZ-J21Lw
+          - id: hQhffT5ptLE
+            channel_id: UCbcxFkd6B9xUU54InHv4Tig
+            label: halle-2026-faa-tien
+            url: https://www.youtube.com/watch?v=hQhffT5ptLE
+          - id: hY1epQDmhGQ
+            channel_id: UCXbboag48Qlr78zzz6SkzkQ
+            label: usopen-2026-zverev-shelton
+            url: https://www.youtube.com/watch?v=hY1epQDmhGQ
+    steps:
+      # No checkout and no repository mutations are needed for these fixed URLs.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install downloader and media tools
+        run: |
+          python -m pip install --disable-pip-version-check 'yt-dlp[default]'
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Materialize existing YouTube cookie secret
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          set -euo pipefail
+          umask 077
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          else
+            echo '::notice::YT_COOKIES_TXT is not configured; attempting public download without cookies.'
+          fi
+
+      - name: Download fixed official source at 1080p or higher
+        env:
+          SOURCE_URL: ${{ matrix.url }}
+          SOURCE_ID: ${{ matrix.id }}
+          EXPECTED_CHANNEL: ${{ matrix.channel_id }}
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          SOURCE_SECTION: ${{ matrix.section }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/source-download" "$GITHUB_WORKSPACE/verified-footage"
+          cookie_args=()
+          if [ -n "$YT_COOKIES" ]; then
+            cookie_args=(--cookies "$YT_COOKIES")
+          fi
+          section_args=()
+          if [ -n "$SOURCE_SECTION" ]; then
+            section_args=(--download-sections "$SOURCE_SECTION")
+          fi
+          # Prefer 1080p AVC+AAC for broad editor compatibility. Never fall back below 1080p.
+          python -m yt_dlp "${cookie_args[@]}" "${section_args[@]}" \
+            --js-runtimes node --no-playlist --no-progress \
+            --retries 3 --fragment-retries 3 --socket-timeout 30 \
+            --match-filter "channel_id = ${EXPECTED_CHANNEL}" \
+            -f 'bv[height=1080][vcodec^=avc1]+ba[ext=m4a]/bv[height=1080]+ba/bv[height>=1080]+ba/b[height>=1080]' \
+            --merge-output-format mp4 --remux-video mp4 --write-info-json \
+            -o "$RUNNER_TEMP/source-download/%(id)s.%(ext)s" \
+            "$SOURCE_URL"
+          test -s "$RUNNER_TEMP/source-download/$SOURCE_ID.mp4"
+          test -s "$RUNNER_TEMP/source-download/$SOURCE_ID.info.json"
+
+      - name: Verify actual media and write safe source metadata
+        id: verify
+        env:
+          TRIM_ORIGIN: ${{ matrix.trim_origin }}
+          TRIM_DURATION: ${{ matrix.trim_duration }}
+          SOURCE_URL: ${{ matrix.url }}
+          SOURCE_ID: ${{ matrix.id }}
+          EXPECTED_CHANNEL: ${{ matrix.channel_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os, shutil, subprocess
+          from pathlib import Path
+          uid = os.environ['SOURCE_ID']
+          src = Path(os.environ['RUNNER_TEMP']) / 'source-download'
+          out = Path(os.environ['GITHUB_WORKSPACE']) / 'verified-footage'
+          video = src / f'{uid}.mp4'
+          raw = json.loads((src / f'{uid}.info.json').read_text())
+          assert raw.get('id') == uid, 'Unexpected video ID'
+          assert raw.get('channel_id') == os.environ['EXPECTED_CHANNEL'], 'Unexpected channel'
+          probe = json.loads(subprocess.check_output([
+              'ffprobe', '-v', 'error', '-show_entries',
+              'stream=codec_type,codec_name,width,height:format=duration',
+              '-of', 'json', str(video)]))
+          streams = probe.get('streams', [])
+          v = next(s for s in streams if s.get('codec_type') == 'video')
+          assert v['height'] >= 1080, 'Downloaded media is below 1080p'
+          assert any(s.get('codec_type') == 'audio' for s in streams), 'Audio stream missing'
+          actual = float(probe['format']['duration'])
+          source_duration = float(raw.get('duration') or 0)
+          expected = float(os.environ.get('TRIM_DURATION') or source_duration)
+          assert actual > 3, 'Media is unexpectedly short'
+          assert expected > 0 and abs(actual - expected) <= max(3, expected * .01), 'Incomplete source duration'
+          subprocess.run(['ffmpeg', '-v', 'error', '-i', str(video), '-t', '3',
+                          '-f', 'null', '-'], check=True)
+          # Whitelist metadata: do not upload cookies, temporary logs, HTTP headers,
+          # signed media URLs, or yt-dlp format records.
+          fields = ['id', 'title', 'channel', 'channel_id', 'uploader', 'uploader_id',
+                    'channel_url', 'upload_date', 'duration', 'description', 'license']
+          meta = {k: raw.get(k) for k in fields}
+          meta['webpage_url'] = os.environ['SOURCE_URL']
+          meta['media_probe'] = probe
+          meta['trim_origin'] = float(os.environ.get('TRIM_ORIGIN') or 0)
+          meta['trim_requested_duration'] = float(os.environ.get('TRIM_DURATION') or source_duration)
+          meta['source_duration'] = source_duration
+          meta['trim_note'] = 'Requested source interval; stream-copy cuts may differ slightly at keyframes.'
+          with video.open('rb') as handle:
+              meta['sha256'] = hashlib.file_digest(handle, 'sha256').hexdigest()
+          shutil.move(str(video), out / video.name)
+          (out / f'{uid}.info.json').write_text(json.dumps(meta, ensure_ascii=False, indent=2))
+          print(f'Verified {uid}: {v["width"]}x{v["height"]}, {actual:.2f}s')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as handle:
+              handle.write('ready=true\n')
+          PY
+
+      - name: Upload verified source files only
+        if: steps.verify.outputs.ready == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-footage-${{ matrix.label }}-${{ github.run_id }}
+          path: |
+            verified-footage/*.mp4
+            verified-footage/*.info.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
+      - name: Remove temporary cookie file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/yt-cookies.txt"
