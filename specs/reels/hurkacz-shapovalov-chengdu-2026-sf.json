@@ -358,17 +358,35 @@
     "line2": "胡尔卡奇 6-7(8) 6-3 6-3 沙波瓦洛夫"
   },
   "stats": {
-    "_source": "2026-09-28 Flashscore Point by Point 逐分推导：胡尔卡奇破发 3/8、沙波瓦洛夫 0/4（tennis.com 终表 3/5、0/3 口径不同，不混写，以逐分为准）。a=胡尔卡奇、b=沙波瓦洛夫。一发/二发/ACE/双误：逐分未覆盖，不编造。胡尔卡奇头像从本场 ATP 官方 IG 实拍封面裁切（atp-HB71.png）；沙波瓦洛夫头像沿用仓库已有 atp-SU55.png。",
+    "_source": "2026-09-28 Flashscore Point by Point 逐分推导：胡尔卡奇破发 3/8、沙波瓦洛夫 0/4（tennis.com 终表 3/5、0/3 口径不同，不混写，以逐分为准）。a=胡尔卡奇、b=沙波瓦洛夫。一发/二发/ACE/双误/总得分：取 flashscore 终表 df_st_1 C6o9VCJH（`tools/match_stat_hooks.py C6o9VCJH --home Hurkacz --away Shapovalov --stats-block`，2026-09-28 18:5x 查；home＝胡尔卡奇），破发点仍按逐分、不用终表的 3/5、0/3。胡尔卡奇头像从本场 ATP 官方 IG 实拍封面裁切（atp-HB71.png）；沙波瓦洛夫头像沿用仓库已有 atp-SU55.png。",
     "_winners_ue_why": "三个规定来源（flashscore df_st_1、TNNS、ATP赛后稿）都没有本场 winners/UE，按仓库要求不编造。",
     "a": {
       "bp_chances": 8,
       "bp_conv": 3,
-      "headshot": "assets/players/headshots/atp-HB71.png"
+      "headshot": "assets/players/headshots/atp-HB71.png",
+      "aces": 8,
+      "df": 3,
+      "first_in": 62,
+      "first_won": 53,
+      "second_total": 35,
+      "second_won": 19,
+      "pts_won": 110,
+      "pts_total": 206,
+      "first_total": 97
     },
     "b": {
       "bp_chances": 4,
       "bp_conv": 0,
-      "headshot": "assets/players/headshots/atp-SU55.png"
+      "headshot": "assets/players/headshots/atp-SU55.png",
+      "aces": 14,
+      "df": 4,
+      "first_in": 73,
+      "first_won": 53,
+      "second_total": 36,
+      "second_won": 18,
+      "pts_won": 96,
+      "pts_total": 206,
+      "first_total": 109
     }
   }
 }
