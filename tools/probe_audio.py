@@ -38,34 +38,22 @@
   `dead_seconds`——**同一个函数、同一个门槛、同一个起算秒**。
   两头各放宽一整块（0.05s）而不是几毫秒：AAC 的一帧就有 21ms，响块的能量会被
   编码器和重采样抹进相邻几十毫秒——紧挨着响块的那一秒不许判成静音。
-- **时间轴要按 render 的真实账算，不是按名义段长**（`audio_drift`，评审 2026-09-27
-  抓的 BLOCKING）：`acrossfade` 没有 offset，每一路现场声接在前一路**解出来的末尾**
-  上——只要一个 part 解出来不正好是 `-t {L+尾巴:.3f}` 那么长，后面每一段的现场声就和
-  画面、旁白、字幕错开 δ_k = Σ_{j<k}（封面算第 0 个 part）每个 part 多出／少掉的那一截。
-  **往哪边错跟 ffmpeg 版本走**，两版都量过（真调 `cut_segment`，25／29.97／50→25／
-  60→30 fps 各 8 刀）：
-
-  | | 解出来比 `-t` | 累积 |
-  |---|---|---|
-  | 沙箱的 ffmpeg 6.1 | 补满最后一帧 AAC：`-t 5.18` → 5.184s，+2~+19 ms／刀 | 14 段 **+0.16~0.2 s** |
-  | **CI 和 runner 的 BtbN master**（`ensure_ffmpeg`，出片走的就是它） | **不补**，一刀都没多 | 只剩下面那种截短，**往负走**（评审量的 25 fps 真链：三刀各截 −20.7／−20.7／−28.7 ms，到第 12 段累积 −70 ms） |
-
-  截短两版都有：每个 part 带 `-shortest`，`-ss` 落在两帧之间时画面少一帧，音轨跟着
-  少 1~2 帧 AAC（32 刀里 4 刀：25 和 50→25 各 −23.3 ms，60→30 −19.3／−6.0 ms，两版
-  同一刀同一个数）。哪一刀补、哪一刀截 dry-run 看不见，所以按 `part_padding` 的区间
-  算，这一秒可能对上的源片取所有对齐的并集。**「+」那一端只在 6.1 上兑现**——生产上
-  从来碰不到，留着是因为本地 dry-run 跑在 6.1 上，两边都不许误报。
-  **查全的代价**：区间每个 part 往负那头放宽 1/fps ＋ 21 ms、往正那头最多 21 ms，
-  十三段之后并集窗口宽出约 1 秒——后段的短静音判不死（评审在 runner 的 ffmpeg、
-  25／29.97 fps 上复现：一整段全静的后段，最后一个死秒漏到了 QC），那是漏给 QC 兜底，
-  不是误报；而 BtbN 上量过的刀里，正那头一次都没兑现过。不算 δ 的话，冷开场后半截「源片刚变静」
-  会被判成必红，而成片那一秒里还有几十毫秒的响（评审在 6.1 上复现）。
+- **时间轴：现场声和画面同一本账，δ 恒为零**（2026-09-28）。评审 2026-09-27 抓过的
+  BLOCKING：`acrossfade` 没有 offset，每一路现场声接在前一路**解出来的末尾**上，而 part
+  解出来不正好是 `-t` 那么长（`-shortest` 截短 −6~−29 ms／刀，两版 ffmpeg 都有；沙箱 6.1
+  还补满最后一帧 +2~+19 ms），第 k 段的现场声就和画面错开 δ_k。原来这里按 δ 的**最坏
+  区间**取并集——每个 part 往负那头放宽 1/fps ＋ 1 帧 AAC，十三段之后窗口宽出约 1 秒，
+  后段的短静音一律判不死：09-20~27 渲后静音红的 16 趟回放下来，这一项一个就挡掉了一半
+  的预判。现在 `dissolve_filtergraph` 在每一路进 `acrossfade` 之前按**样本数**
+  （`apad whole_len` ＋ `atrim end_sample`）钉成名义长度，δ 由构造归零，这里按名义起点摆，
+  不再取区间。判据 `::test_真cut_segment刀刀截短_溶解钉回名义长度_成片不漂`（真
+  `cut_segment` 造出九刀截短，成片的现场声照样落在名义时刻；拆掉那一钉就误报）。
 - **量的那一路要和 `-ss` 同一条时间轴**：音轨比画面晚开始的源片（容器里 audio
   start_time > 0），裸 PCM 的第 0 个样本是音轨自己的第一个样本，而 `-ss` 按文件
   时间轴寻址——实测 56ms 的源片整条错开 56ms。`aresample=first_pts=0` 补齐。
 
 **上界只在这几个前提都成立时才是上界**——这是它会不会误报的全部条件，不是一句保证：
-① 时间轴按上面那本账（δ 的区间、first_pts）；② 编码／重采样把响块能量抹开的范围不超过
+① 时间轴按上面那本账（溶解钉回名义长度、first_pts）；② 编码／重采样把响块能量抹开的范围不超过
 `ALIGN_SLACK`（成片比量源片时多过三代 AAC——实测 −2 dB 的响→静边沿，格子后面那块
 量源片时是干净的，成片里却抹进来 0.6~13 dB）；③ 增益按 render 那一趟真走的混音分支
 （`_mix_ducks`）。render 改了 part 的编码（采样率、编码器、`-t`／`-shortest` 的写法）或者
@@ -77,28 +65,40 @@
 `::test_十几段之后的漂移_段界溶解尾巴_响静边沿_真跑一遍混音链`（14 段）——合成源片把 render
 的真音频链（AAC 分段 → `dissolve_filtergraph` → `duck_filtergraph` → AAC）跑一遍，再用
 QC 的 `per_second_db` 量：**这两份夹具里**没有一秒被预测成静音而实际不是、给出了数的秒
-一秒都不低于成片；源片 −58.5 dB（silencedetect 看不见）那一截被预测到。14 段夹具的 δ
-**按量**（平源逐 part 解码，不借公式——评审 2026-09-27 第二轮：按 6.1 的补满公式摆的夹具
-在 BtbN 上自己就塌了）；第 9→10 段接缝上的溶解尾巴、−2 dB 的响→静边沿各有一秒专门压着，
-第 13 段漂过 ±0.15 秒时（6.1）也压一秒——拆掉 δ（6.1）、拆掉溶解尾巴（两版）、
-`ALIGN_SLACK` 归零（6.1），各红一条。BtbN 上 δ≈0，「拆 δ」没东西可压，测试跳过那条并
-warning 出 ffmpeg 版本；`ALIGN_SLACK` 那一刀在 BtbN 上也不红——δ 区间正那头从不兑现的
-余量先把边沿盖住了。
-`::test_真的cut_segment解出来的音轨长度落在模型的区间里`：δ 区间的两头拿**真的**
-`cut_segment`／`_still_to_clip` 量。
+一秒都不低于成片；源片 −58.5 dB（silencedetect 看不见）那一截被预测到。14 段夹具里
+第 9→10 段接缝上的溶解尾巴、−2 dB 的响→静边沿各有一秒专门压着——拆掉溶解尾巴、
+`ALIGN_SLACK` 归零，各红一条。
 
-## 硬不硬（R7：旁白尾巴那一类不做硬闸）
+## 硬不硬
 
 | 这一秒落在哪 | 处置 |
 |---|---|
 | 无旁白的视频段（冷开场、原声段、quote 段），实测够得着 | **硬**——实测值，不是估算；封面定长时相位也是确定的 |
 | 同上，但封面跟着配音走（相位要等 TTS 才定） | 扫一整个周期，每个相位都红才**硬**，否则只报 |
-| 有旁白的段、按离线估旁白说完之后的尾巴 | **只报不拦**——旁白长度是估的（±`SPEECH_EST_ERR`），f7b2501 那次把这一类定成「拿真实产物判」；报的时候分「按最长估也盖不住」和「按点估盖不住」两档 |
+| 有旁白的段、旁白按**上包络**（`speech_ceiling`）也说不到这儿 | **手写 spec 硬**（2026-09-28），自动 spec 只报 |
+| 有旁白的段、按离线**点估**说完之后、上包络之前 | 只报，并给出 `--check-narration` 那条命令——离线估判不了 |
+| `--check-narration` 合了真语音（`measured`），按真语音说完之后 | **手写 spec 硬**，自动 spec 只报 |
 | 看过、确认要这么剪 | 那一段写 `"_digital_silence_why": "<为什么>"` 认领，降成只报 |
-| 老 probe 没有 `audio_levels`、慢放段、mute 段 | 只报一句「这一层没查」——「没量」和「量过没事」不许长一样 |
+| 老 probe 没有 `audio_levels`、慢放段、mute 段 | 只报一句「这一层没查」＋重 probe 的原命令——「没量」和「量过没事」不许长一样 |
 
-⚠️ 自动产的 spec 同样是硬的——和 `silence_findings` 对无旁白段的口径一致（那一头是
+⚠️ 无旁白段对自动产的 spec 同样是硬的——和 `silence_findings` 对无旁白段的口径一致（那一头是
 模型，render 红了之后 `repair_reel_spec` 拿 dry-run 当复检闸，改窗口比烧一趟渲染便宜）。
+
+### 旁白尾巴为什么从「只报」改成手写 spec 硬（2026-09-28 返工审计）
+
+R7（f7b2501）把旁白尾巴定成只报，理由是「旁白长度是估的」。审计量出来的账是另一回事：
+09-20 ~ 09-27 渲后「数字静音」红了 **16 趟、12 条片子、117 runner 分钟，渲前 0 趟拦住**；
+50 个死秒里 **43 个落在有旁白那段的尾巴上**、7 个在无旁白段（按失败 run 的 artifact 里
+render.json 记的真封面长逐秒定位；审计按 1.2 秒封面估的「37＋4 个图卡段＋2 个没定位上」，
+那几个其实都是封面跟着配音走的片子里的旁白尾巴）。「长度是估的」只说明**点估**判不了，
+不说明**上包络**判不了——旁白按最长也说不到的那一秒，成片里就是现场声本身，和无旁白段
+一样是实测值。所以分成两截：上包络之外硬、点估与上包络之间只报并指到 `--check-narration`
+（真语音一合，这一截也变成确定的，那边同样硬）。
+
+⚠️ **上包络不是 `est + SPEECH_EST_ERR`**：那条带子是按 Azure 拟合的，而 runner 现在走
+edge-tts（main 上 09-15 之后 80 份 render.json 全是 `edge-tts`），它慢得和句长成正比——
+1595 段里 16 段超出 `est + 2.20`，最坏 +4.85 秒（43 秒的长段）。平移盖不住，要带斜率，
+见 `HARD_EST_SLOPE`。
 
 ⚠️ 这套只在 probe（量）和 dry-run（读）两处出现，render 路径一个字节都不多解
 （`test_音频那套不许接进出片流程` 那条老规矩：解音轨拖慢出片）。
@@ -131,21 +131,67 @@ DIGITAL_SILENCE_DB = -99.0
 #: edge-tts 的 mp3 末尾那一截固定静音（`tennis-pipeline-ops`「说到 ＝ 段起点 ＋
 #: mp3 时长 − 0.83」，逐段对过）。离线估的是 mp3 时长，真说完要再往前挪这么多。
 TTS_TAIL = 0.83
-#: 编码器／重采样把响块能量抹开的余量：窗口两头各放宽一整块。时间轴的账（δ 区间、
-#: first_pts）另算，这一格只管「抹」——成片比量源片时多过三代 AAC，响→静边沿后面
-#: 十几毫秒里成片沾到的能量比量出来的多（14 段夹具在 ffmpeg 6.1 上实测，归零就把上界
-#: 打穿 0.6~13 dB；BtbN 上 δ 区间正那头从不兑现的余量先盖住了边沿，那份夹具压不到它）。
+#: 编码器／重采样把响块能量抹开的余量：窗口两头各放宽一整块。时间轴的账（溶解钉回
+#: 名义长度、first_pts）另算，这一格只管「抹」——成片比量源片时多过三代 AAC，响→静
+#: 边沿后面十几毫秒里成片沾到的能量比量出来的多（14 段夹具实测，归零就把上界打穿
+#: 0.6~13 dB）。
 ALIGN_SLACK = BLOCK_SECONDS
 #: 段级认领键：看过、确认这几秒就是要这样剪（写了降成只报）。
 CLAIM_KEY = "_digital_silence_why"
-#: render 的每个 part（封面、分段、证据段、片尾）音轨都是 `-c:a aac -ar 48000`
-#: （`build_match_reel.AUDIO_RATE`，测试钉着两边一样），AAC 一帧 1024 个样本。
-PART_AUDIO_RATE = 48000
-AAC_FRAME = 1024
-#: 成片帧率最低能到多少（`resolve_fps` 不认 10 fps 以下）——不知道帧率时按它算
-#: δ 往少那头最远能漂多远（`part_padding`）。
-SLOWEST_FPS = 10.0
+#: 旁白**最晚**说到哪儿（硬的那一档用）：真 mp3 ≤ 离线估 ×（1 + 斜率）＋ `est_err`。
+#: 2026-09-28 量的：main 上每份 render.json 的 `narration_seconds`（真 mp3 秒数）对
+#: **今天的**离线估（含 lead_pause），3921 段——
+#:
+#: | 后端 | 段数 | 中位 | 最坏 | 超出 est+2.20 | 斜率 0.10 时要的常数 |
+#: |---|---|---|---|---|---|
+#: | edge-tts（runner 现在走的） | 1595 | +0.55 | **+4.85** | **16** | 1.33 |
+#: | azure | 2289 | +0.05 | +2.19 | 0 | 0.85 |
+#: | 没记后端 | 37 | +0.78 | +1.43 | 0 | 0.70 |
+#:
+#: edge-tts 的偏差跟句长成正比（43 秒的长段 +4.85、2 秒的短段 +0.9），光平移盖不住；
+#: 斜率 0.10 ＋ `est_err`（2.20）对三档各留 0.87／1.35／1.50 秒余量。azure 的 mp3 尾巴就算
+#: 没有那 0.83 秒静音（按 0 算），`1.10·est + 2.20 − TTS_TAIL` 也还比它要的 0.85 宽 0.52 秒。
+#: 判据 `tests/test_probe_audio.py::test_上包络盖得住每一段真语音`（冻结最坏的几段）。
+HARD_EST_SLOPE = 0.10
+#: 真语音「说完了」按多轻算：逐块 RMS 低于它的尾巴算没人说话。成片里旁白是
+#: `amix normalize=0` 原样叠上去的，−80 dB 的一块一秒最多贡献门槛能量的 1%，
+#: 压不翻一个 −60 的死秒。
+VOICE_FLOOR_DB = -80.0
+#: 真语音说完之后再让出多少秒才算没人说话：mp3 解码的起点对齐、`adelay` 取整到毫秒、
+#: AAC 把最后一个字抹进后面二十来毫秒，一起按 0.1 秒算。
+MEASURED_GUARD = 0.1
 
+
+def speech_ceiling(est: float, est_err: float) -> float:
+    """离线估 `est` 秒（含 lead_pause）的旁白，真 mp3 最长可能多长——见 `HARD_EST_SLOPE`。"""
+    return est * (1 + HARD_EST_SLOPE) + est_err
+
+
+def voice_speech_end(path: Path) -> float | None:
+    """一条语音文件里真正有声音的最后一刻（秒，从文件第 0 个样本算，含 lead_pause 那段
+    `<break>`）。和 QC 同一个量法（8 kHz 单声道逐块 RMS），高于 `VOICE_FLOOR_DB` 的最后
+    一块的末尾；解不出来返回 None（调用方退回上包络，**不许**当成没说话）。"""
+    proc = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-nostats", "-i", str(path), "-map", "0:a:0",
+         "-ac", "1", "-ar", str(RATE), "-f", "s16le", "pipe:1"],
+        capture_output=True)
+    if proc.returncode or not proc.stdout:
+        return None
+    levels = block_levels(proc.stdout)
+    last = max((i for i, db in enumerate(levels) if db > VOICE_FLOOR_DB), default=-1)
+    return (last + 1) * BLOCK_SECONDS
+
+
+def reprobe_command(url: str, slug: str, probe: dict | None, ref: str) -> str:
+    """把一条老 probe 按原样重跑一遍的命令（区间、记分条框照抄上一趟）。
+    `ref` 要含 d8fb15b74（#1134）——从那一版起 probe 才写 `audio_levels`。"""
+    probe = probe or {}
+    parts = [f"gh workflow run match-reel.yml --ref {ref} -f mode=probe",
+             f"-f slug={slug}", f"-f url={url}"]
+    for key in ("clip_from", "clip_to", "scorebox"):
+        if probe.get(key) not in (None, ""):
+            parts.append(f"-f {key}={probe[key]}")
+    return " ".join(parts)
 _ENC_HOW = ("逐 0.05 秒 RMS（8 kHz 单声道，同 check_reel_landed.per_second_db），"
             "dB 向上取整到 0.1；任何含它的 window 秒窗口按 quietest_gain 都红不了"
             "成片的块只记「响」，按游程写成 L<块数>")
@@ -351,49 +397,13 @@ def source_energy(levels: Sequence[float], lo: float, hi: float,
 
 def film_starts(segments, cover: float) -> list[float]:
     """每段在成片上的起点——和 `dissolve_filtergraph` 的长度账同一笔：溶解吃掉的
-    是每段多切的那 `SEG_FADE` 秒尾巴，起点一个不变。**这是画面（以及旁白 adelay、
-    字幕）的时间轴**；现场声还要再错开 `audio_drift` 那么多。"""
+    是每段多切的那 `SEG_FADE` 秒尾巴，起点一个不变。画面、旁白 adelay、字幕和
+    现场声（溶解前每一路钉回名义长度，见 `dissolve_filtergraph`）都是这一本账。"""
     out, t = [], cover
     for seg in segments:
         out.append(t)
         t += seg.length
     return out
-
-
-def aac_padding(seconds: float) -> float:
-    """一个 part 按 `-t {seconds:.3f}` 编成 AAC 48k 之后，解出来**最多**比名义长多少秒。
-
-    ffmpeg 6.1 上 AAC 最后一帧补零补满、解码不裁，解出来是整数帧：`-t 5.18` → 5.184s、
-    `7.01` → 7.0187s、`4.55` → 4.5653s（评审 2026-09-27 实测）。`-t` 按三位小数写，这一笔
-    零头也算进来。⚠️ CI 和 runner 的 BtbN master 解出来**正好是 `-t`**，这一端在生产上
-    从不兑现——它只是区间的上沿，不是预期值。
-    """
-    cut = round(seconds, 3)
-    frames = math.ceil(cut * PART_AUDIO_RATE / AAC_FRAME - 1e-9)
-    return frames * AAC_FRAME / PART_AUDIO_RATE - seconds
-
-
-def part_padding(seconds: float, frame_seconds: float) -> tuple[float, float]:
-    """一个 part 解出来比名义 `seconds` 长多少秒：`(最少, 最多)`，最少可以是负的。
-
-    - **最多** `aac_padding`：`-t` 截到 `seconds`，最后一帧补满。
-    - **最少**：每个 part 都带 `-shortest`，音频不越过视频那一路的尾巴。视频是
-      `fps=` 之后按 `-t` 截的，`-ss` 落在两帧之间时会少一帧，尾巴 ≥ `seconds − 1/fps`；
-      音频截到不越过它的整帧，再少一帧 AAC。
-
-    实测（2026-09-27，真调 `cut_segment`，源片 25／29.97／50／60 fps 按 `target_fps`
-    出 25／29.97／25／30，各 8 刀，两版 ffmpeg）：
-    - 6.1：除截短的那几刀外全是「补满」（+2~+19 ms）；
-    - **BtbN master（CI、runner）：一刀都不补**，不截的刀正好是 `-t`；
-    - 截短两版一样：25 和 50→25 各一刀 −23.3 ms，60→30 两刀 −19.3／−6.0 ms
-      （评审量的 25 fps 真链里三刀各截 −20.7／−20.7／−28.7 ms）。
-    全部落在区间里。**哪一刀补、哪一刀截，dry-run 看不见**（取决于 `-ss` 的相位和
-    ffmpeg 版本），所以按区间算——代价是每个 part 往负那头放宽 1/fps ＋ 1 帧 AAC，
-    后段的窗口越来越宽（查全，不是误报）。
-    """
-    hi = aac_padding(seconds)
-    lo = -(frame_seconds + AAC_FRAME / PART_AUDIO_RATE)
-    return min(lo, hi), hi
 
 
 def part_audio_seconds(seg, fade: float) -> float:
@@ -404,46 +414,24 @@ def part_audio_seconds(seg, fade: float) -> float:
     return seg.length + fade
 
 
-def audio_drift(segments, cover: float, fade: float,
-                frame_seconds: float) -> list[tuple[float, float]]:
-    """第 k 段的现场声在成片上比画面错开多少秒（正＝晚）：`[(δ_k 最少, δ_k 最多), …]`。
-
-    `acrossfade` 没有 offset，每一路都接在前一路**解出来**的末尾上（见
-    `dissolve_filtergraph` 的长度账），所以 δ_k = 封面 part 的补齐 + Σ_{j<k} 第 j 段的
-    补齐（`part_padding`）。第 k 段之前的 part 都不是末段，尾巴一律是 `fade`。
-    旁白是在拼好之后按名义起点 `adelay` 上去的，**不漂**；只有现场声漂。
-    """
-    lo, hi = part_padding(cover + fade, frame_seconds)
-    out = []
-    for seg in segments:
-        out.append((lo, hi))
-        d_lo, d_hi = part_padding(seg.length + fade, frame_seconds)
-        lo, hi = lo + d_lo, hi + d_hi
-    return out
-
-
 def predict_levels(segments, levels_by_source: dict[str, Sequence[float] | None],
                    cover: float, voiced_until: Sequence[float],
                    gain: Callable[[object], float], fade: float,
-                   judged: Callable[[object], bool] = lambda seg: True,
-                   *, frame_seconds: float = 1 / SLOWEST_FPS) -> list[float]:
+                   judged: Callable[[object], bool] = lambda seg: True) -> list[float]:
     """成片逐秒响度的**上界**预测，形状和 `per_second_db` 的输出一样。
 
     `voiced_until[k]`：第 k 段在成片上有人声盖着的终点（绝对秒，画面时间轴）；
-    无旁白段就是它自己的起点。压到人声、整屏证据段、封面、片尾，或者源片没量到、
+    无旁白段就是它自己的起点。压到人声、封面、片尾，或者源片没量到、
     `judged` 说判不了的段的秒记 +inf——判不了就当响，**不许**判成静音。
+    整屏证据段在人声之外按 anullsrc 算零，豁免交给 `dead_seconds` 的证据窗口（QC 口径）。
 
-    现场声按**真实的音频时间轴**摆：第 k 个 part 的音轨从成片 `起点 + δ_k` 开始，
-    本地第 t 秒是源片 `seg.start + t`，一直到 `L + fade`（再往后是补齐的零）——溶解
-    那一段两路都在，三角曲线的权重 ≤ 1，所以**各自整份相加**就是上界。δ_k 只知道
-    区间（`audio_drift`），这一秒可能对上的源片取**所有对齐的并集**。
-    `frame_seconds`：成片一帧多长（`1/fps`），决定 δ 往少那头能漂多远；不知道就按
-    `resolve_fps` 认的最低帧率算最坏。
+    现场声按成片时间轴摆：第 k 个 part 的音轨从成片起点开始（溶解前钉回名义长度，
+    δ 恒为零），本地第 t 秒是源片 `seg.start + t`，一直到 `L + fade`（再往后是补齐的
+    零）——溶解那一段两路都在，三角曲线的权重 ≤ 1，所以**各自整份相加**就是上界。
     """
     starts = film_starts(segments, cover)
     end = starts[-1] + segments[-1].length if segments else cover
     out = [math.inf] * max(0, math.ceil(end - 1e-9))
-    drift = audio_drift(segments, cover, fade, frame_seconds)
 
     def piece(k: int, local_lo: float, local_hi: float) -> float | None:
         """第 k 个 part 自己时间轴上 [lo, hi) 这一截（×增益²）的能量上界。"""
@@ -457,10 +445,16 @@ def predict_levels(segments, levels_by_source: dict[str, Sequence[float] | None]
         return None if e is None else e * gain(seg) ** 2
 
     def masked(i: int) -> bool:
-        """这一秒压到人声（旁白按画面时间轴 adelay）或整屏证据段——判不了。"""
+        """这一秒压到人声（旁白按画面时间轴 adelay）——判不了。
+
+        整屏证据段（image／stat_card／title_card）**不整段遮**，和 QC 同一个口径
+        （2026-09-28）：它的底轨是 anullsrc，旁白说完之后就是真的零；整秒落在它的窗口
+        （两头各 0.3 秒）里的，`dead_seconds` 按 QC 自己的 `in_ev` 豁免，跨出窗口的那
+        一秒（证据段口播说完 ＋ 下一段安静的开头）QC 照样数，这里也得数——原来整段一遮，
+        那一秒永远判不到。"""
         for k, (a, seg) in enumerate(zip(starts, segments)):
             lo, hi = max(i, a), min(i + 1, a + seg.length)
-            if hi > lo and (seg.image or lo < voiced_until[k] - 1e-9):
+            if hi > lo and lo < voiced_until[k] - 1e-9:
                 return True
         return False
 
@@ -471,13 +465,12 @@ def predict_levels(segments, levels_by_source: dict[str, Sequence[float] | None]
             continue
         energy, ok = 0.0, True
         # 封面 part 的底轨是 anullsrc，能量 0，不用算。
-        for k, (a, seg, (d_lo, d_hi)) in enumerate(zip(starts, segments, drift)):
-            # 这个 part 的本地时间里，哪一截可能落进成片 [i, i+1)：音轨最晚在
-            # a+d_hi 接上、最早在 a+d_lo 接上，两头各取最宽的那一种。
+        for k, (a, seg) in enumerate(zip(starts, segments)):
+            # 这个 part 的本地时间里，哪一截落进成片 [i, i+1)。
             # 过了 `part_audio_seconds` 就是补齐的零——源片后面那一截根本没切进来；
             # 它之前那 `fade` 秒是溶解底料，落在下一段开头（上一段的尾巴也算这里）。
-            local_lo = max(0.0, i - (a + d_hi))
-            local_hi = min(part_audio_seconds(seg, fade), i + 1 - (a + d_lo))
+            local_lo = max(0.0, i - a)
+            local_hi = min(part_audio_seconds(seg, fade), i + 1 - a)
             if local_hi <= local_lo:
                 continue
             e = piece(k, local_lo, local_hi)
@@ -492,7 +485,7 @@ def predict_levels(segments, levels_by_source: dict[str, Sequence[float] | None]
 
 def _describe(seg, start: float, second: int, levels, predicted: float,
               gain_value: float) -> str:
-    """`start` 是这一段现场声在成片上的起点（画面起点 + δ_k）。"""
+    """`start` 是这一段在成片上的起点（现场声和画面同一个起点）。"""
     src = seg.start + max(0.0, second - start)
     lo = max(0, math.floor(src / BLOCK_SECONDS))
     window = [db for db in (levels or [])[lo:lo + round(1 / BLOCK_SECONDS)]
@@ -507,18 +500,20 @@ def digital_silence_findings(
         spec: dict, segments, probes: dict, urls: dict, *,
         gain: Callable[[object], float], fade: float,
         cover_exact: float | None, cover_estimate: float,
-        estimates: dict[int, float], est_err: float,
-        frame_seconds: float = 1 / SLOWEST_FPS) -> tuple[list[str], list[str]]:
+        estimates: dict[int, float], est_err: float, strict: bool = False,
+        measured: dict[int, float] | None = None,
+        reprobe: dict[str, str] | None = None) -> tuple[list[str], list[str]]:
     """probe_dry_run 的第 ⑥ 条后半：按成片口径重放数字静音闸，返回 `(硬, 软)`。
 
-    - `frame_seconds`：成片一帧多长（主源 probe 的帧率按 `resolve_fps` 折算），
-      给 `audio_drift` 定 δ 的区间；不知道就按最低帧率算最坏
-
-    - `cover_exact`：封面定长时的秒数（赛场之上恒为 `COVER_SECONDS`）；跟着
-      配音走时传 None，`cover_estimate` 是离线估，从它起扫一整个周期的相位
-    - `estimates`：`{段序号: 离线估旁白秒数}`（`narration_estimates` 的口径，
-      含 lead_pause）——只用来估「旁白尾巴」那一档，那一档只报不拦；
-      `est_err` 是离线估的误差带（`SPEECH_EST_ERR`），分「必红／大概率」两档
+    - `cover_exact`：封面定长时的秒数（赛场之上恒为 `COVER_SECONDS`；`--check-narration`
+      合过封面配音时是真长度）；跟着配音走又没合过时传 None，`cover_estimate` 是离线估，
+      从它起扫一整个周期的相位
+    - `estimates`：`{段序号: 离线估旁白秒数}`（`narration_estimates` 的口径，含 lead_pause）
+    - `est_err`：离线估的误差带（`SPEECH_EST_ERR`）；上包络见 `speech_ceiling`
+    - `strict`：旁白尾巴那两档（上包络／真语音）硬不硬——手写的 spec 硬，自动 spec 只报
+    - `measured`：`{段序号: 真语音说到段内第几秒}`（`--check-narration` 合过真语音时给，
+      `voice_speech_end` 的口径）；给了就不再报「点估」那一档
+    - `reprobe`：`{源片 URL: 重 probe 的原命令}`，老 probe 没有 `audio_levels` 时照印
     """
     hard: list[str] = []
     soft: list[str] = []
@@ -537,11 +532,18 @@ def digital_silence_findings(
         levels_by_source[seg.source] = decode_levels((probe or {}).get("audio_levels"))
         if probe is not None and levels_by_source[seg.source] is None \
                 and probe.get("silent_audio") is not None:
-            unmeasured.append(seg.source or "(主源)")
+            unmeasured.append(seg.source)
     if unmeasured:
-        soft.append(f"  源 {'、'.join(unmeasured)}：逐 0.05 秒响度还没量过（probe 早于"
-                    "`audio_levels`）——「源片不算静音、成片这一秒是」那一类这一层没查，"
-                    "重跑一趟 mode=probe 就有")
+        lines = [f"  源 {'、'.join(k or '(主源)' for k in unmeasured)}：逐 0.05 秒响度还没量过"
+                 "（probe 早于 `audio_levels`——d8fb15b74／#1134 起 probe 才写这一格，更早的"
+                 "probe、以及从更早的分支拨的 probe 都没有）。按成片口径重放数字静音这一层"
+                 "**没查**（09-20~27 渲后数字静音红 16 趟，渲前 0 趟拦住）。重 probe 一趟就有："]
+        for key in unmeasured:
+            url = urls.get(key, "")
+            lines.append("    " + ((reprobe or {}).get(url) or
+                                   f"gh workflow run match-reel.yml --ref <分支> -f mode=probe "
+                                   f"-f slug=<slug> -f url={url}"))
+        soft.append("\n".join(lines))
     if not any(levels_by_source.values()):
         return hard, soft
 
@@ -558,79 +560,127 @@ def digital_silence_findings(
     options = ([cover_exact] if cover_exact is not None else
                [round(cover_estimate + step / 20, 3) for step in range(20)])
     narrated = [bool(seg.narration.strip()) for seg in segments]
+
+    def spoken_to(kind: str, k: int, seg) -> float | None:
+        """第 k 段旁白在这一把尺子下说到段内第几秒；None＝整段算有人声。"""
+        est = estimates.get(k, seg.length)
+        if kind == "bare":
+            return None
+        if kind == "measured" and measured is not None and k in measured:
+            return measured[k] + MEASURED_GUARD
+        if kind == "maybe":
+            return max(0.0, est - TTS_TAIL)
+        return max(0.0, speech_ceiling(est, est_err) - TTS_TAIL)    # sure／没量到的 measured
+
+    # 尺子：旁白段整段算有人声（只剩无旁白段）／旁白按上包络说完之后／按点估说完之后；
+    # 合过真语音（`--check-narration`）时后两把换成「按真语音说完之后」一把——真长度在手，
+    # 上包络只会更松（它要是比真语音短，反倒会把还在说话的一秒判成静音）。
+    kinds = ["bare", "measured"] if measured is not None else ["bare", "sure", "maybe"]
     runs = []
     for cover in options:
         starts = film_starts(segments, cover)
-        # 三把尺子：旁白段整段算有人声（只剩无旁白段）／旁白按最长估说完之后／
-        # 按点估说完之后。后两把只用来给「旁白尾巴」分档，那一类只报不拦。
         # 整屏证据段的窗口：和 `check_reel_landed.evidence_windows` 同一笔账
         # （那边读 spec 的 `seconds`／`end-start`，这里读解析好的段长，数一样）。
         evidence = [(a, a + seg.length) for a, seg in zip(starts, segments) if seg.image]
-        extra = {"bare": None, "sure": est_err, "maybe": 0.0}
         found: dict[str, tuple[set[int], list[float]]] = {}
-        for name, err in extra.items():
-            voiced = [a if not said else a + seg.length if err is None else
-                      a + max(0.0, estimates.get(k, seg.length) + err - TTS_TAIL)
-                      for k, (a, seg, said) in enumerate(zip(starts, segments, narrated))]
+        for kind in kinds:
+            voiced = []
+            for k, (a, seg, said) in enumerate(zip(starts, segments, narrated)):
+                to = spoken_to(kind, k, seg) if said else 0.0
+                voiced.append(a + seg.length if to is None else a + to)
             table = predict_levels(segments, levels_by_source, cover, voiced,
-                                   gain, fade, judged, frame_seconds=frame_seconds)
-            found[name] = (set(dead_seconds(table, math.ceil(cover) + 1, evidence)[0]),
+                                   gain, fade, judged)
+            found[kind] = (set(dead_seconds(table, math.ceil(cover) + 1, evidence)[0]),
                            table)
-        bare, strict = found["bare"]
-        sure, sure_table = found["sure"]
-        maybe, loose = found["maybe"]
-        runs.append((cover, starts, bare, sure - bare, maybe - sure,
-                     strict, sure_table, loose))
+        # 每一档只记「上一档没有、这一档才冒出来的」秒：bare ⊆ sure ⊆ maybe；bare ⊆ measured
+        tiers: dict[str, tuple[set[int], list[float]]] = {}
+        seen: set[int] = set()
+        for kind in kinds:
+            seconds, table = found[kind]
+            tiers[kind] = (seconds - seen, table)
+            seen |= seconds
+        runs.append((cover, starts, tiers))
 
-    # 相位定不下来时（封面跟着配音走），拿**第一个有死秒的相位**来描述——拿离线估
-    # 那一个的话，它恰好躲过去就一个字都不报，而别的相位照样会红。
-    dead_phases = sum(1 for run in runs if run[2])
-    every_phase = dead_phases == len(runs)
-    shown = next((run for run in runs if run[2]),
-                 next((run for run in runs if run[3] or run[4]), runs[0]))
-    cover, starts, bare, sure, maybe, strict, sure_table, loose = shown
-    drift = [hi for _lo, hi in audio_drift(segments, cover, fade, frame_seconds)]
+    # 相位定不下来时（封面跟着配音走），每一档各自数「几个相位有死秒」；描述拿**第一个
+    # 有死秒的相位**——拿离线估那一个的话，它恰好躲过去就一个字都不报，而别的相位照样会红。
+    phases_with = {kind: sum(1 for run in runs if run[2][kind][0]) for kind in kinds}
+    shown = next((run for kind in kinds for run in runs if run[2][kind][0]), runs[0])
+    cover, starts, tiers = shown
 
-    def owner(second: int) -> int:
-        return max(range(len(segments)),
-                   key=lambda k: min(second + 1, starts[k] + segments[k].length)
-                   - max(second, starts[k]))
+    def owner(second: int, kind: str) -> int:
+        """这一秒记在哪一段名下：压得最多的那段；旁白尾巴那几档记在压到它的**有旁白**
+        那段名下（是那一段的旁白说完了才露出来的，改也改那一段）。"""
+        overlap = {k: min(second + 1, starts[k] + segments[k].length) - max(second, starts[k])
+                   for k in range(len(segments))}
+        pool = [k for k, v in overlap.items() if v > 0]
+        said = [k for k in pool if narrated[k]]
+        return max(said if kind != "bare" and said else pool or list(overlap),
+                   key=lambda k: overlap[k])
 
+    def phase(kind: str) -> str:
+        if cover_exact is not None:
+            return ""
+        n = phases_with[kind]
+        return (f"（封面跟着配音走，按封面 {cover:.2f}s 摆的相位"
+                + ("；扫过一整个周期，**每个相位都有死秒**）" if n == len(runs) else
+                   f"；一个周期 {len(runs)} 个相位里 {n} 个有死秒，"
+                   "换个相位可能躲得过，所以只报）"))
+
+    slug = str(spec.get("slug") or "<slug>")
+    check_cmd = (f"python3 tools/build_match_reel.py render --check-narration "
+                 f"--spec specs/reels/{slug}.json")
     grouped: dict[tuple[int, str], list[str]] = {}
-    for kind, seconds, table in (("bare", bare, strict), ("sure", sure, sure_table),
-                                 ("maybe", maybe, loose)):
+    for kind in kinds:
+        seconds, table = tiers[kind]
         for second in sorted(seconds):
-            k = owner(second)
+            k = owner(second, kind)
             grouped.setdefault((k, kind), []).append(_describe(
-                segments[k], starts[k] + drift[k], second,
+                segments[k], starts[k], second,
                 levels_by_source.get(segments[k].source), table[second], gain(segments[k])))
-    phase = ("" if cover_exact is not None else
-             f"（封面跟着配音走，按封面 {cover:.2f}s 摆的相位"
-             + ("；扫过一整个周期，**每个相位都有死秒**）" if every_phase else
-                f"；一个周期 {len(runs)} 个相位里 {dead_phases} 个有死秒，"
-                "换个相位可能躲得过，所以只报）"))
-    for (k, kind), lines in sorted(grouped.items()):
+    for (k, kind), lines in sorted(grouped.items(), key=lambda item: (
+            item[0][0], kinds.index(item[0][1]))):
         seg = segments[k]
         head = f"  第 {k + 1} 段 {seg.start:.1f}–{seg.end:.1f}s"
         body = "\n    ".join(lines)
         claim = str((raw[k] if k < len(raw) and isinstance(raw[k], dict) else {})
                     .get(CLAIM_KEY) or "").strip()
+        decided = cover_exact is not None or phases_with[kind] == len(runs)
+        if kind == "bare":
+            where, cure = "（无旁白）", ("收窗口避开这一截、给这一段配一句旁白盖住")
+            if claim:
+                soft.append(f"{head}{where}：按实测会漏出数字静音{phase(kind)}\n    {body}\n"
+                            f"    已认领 {CLAIM_KEY}：{claim}")
+            elif decided:
+                hard.append(f"{head}{where}：按实测源片响度重放 QC，渲后数字静音闸"
+                            f"**必红**{phase(kind)}\n    {body}\n"
+                            f"    {cure}，或者看过之后在这一段写 "
+                            f"`\"{CLAIM_KEY}\": \"<为什么>\"` 认领")
+            else:
+                soft.append(f"{head}{where}：按实测会漏出数字静音{phase(kind)}\n    {body}")
+            continue
+        if kind == "maybe":
+            soft.append(f"{head}（旁白按离线点估说完之后）：现场声按成片口径掉到 −60 dB "
+                        f"以下，渲后数字静音闸**大概率红**{phase(kind)}——离线估判不了这一截，"
+                        f"拿真语音长度重放一遍（约 1 分钟，要联网；手写 spec 在那儿按真长度是硬的）：\n"
+                        f"    {check_cmd}\n"
+                        f"    （或 match-reel.yml mode=narration；本地精简 worktree 先 "
+                        f"`python3 tools/probe_sources.py materialize specs/reels/{slug}.json`）\n    {body}")
+            continue
         if kind == "sure":
-            soft.append(f"{head}（旁白按最长估也说不到这儿）：现场声按成片口径掉到 "
-                        f"−60 dB 以下，渲后数字静音闸**必红**{phase}——把旁白写长盖住，"
-                        f"或把窗口收在这一截之前（R7：旁白尾巴只报不拦）\n    {body}")
-        elif kind == "maybe":
-            soft.append(f"{head}（旁白按离线估说完之后）：现场声按成片口径掉到 "
-                        f"−60 dB 以下，渲后数字静音闸**大概率红**{phase}——"
-                        f"跑一次 --check-narration 拿真时长再看\n    {body}")
-        elif claim:
-            soft.append(f"{head}（无旁白）：按实测会漏出数字静音{phase}\n    {body}\n"
-                        f"    已认领 {CLAIM_KEY}：{claim}")
-        elif cover_exact is not None or every_phase:
-            hard.append(f"{head}（无旁白）：按实测源片响度重放 QC，渲后数字静音闸"
-                        f"**必红**{phase}\n    {body}\n"
-                        "    收窗口避开这一截、给这一段配一句旁白盖住，或者看过之后在"
-                        f"这一段写 `\"{CLAIM_KEY}\": \"<为什么>\"` 认领")
+            where = ("（旁白按上包络也说不到这儿：离线估 "
+                     f"{estimates.get(k, 0.0):.1f}s ×{1 + HARD_EST_SLOPE:.2f} ＋ {est_err}s）")
         else:
-            soft.append(f"{head}（无旁白）：按实测会漏出数字静音{phase}\n    {body}")
+            where = (f"（按真语音，旁白说到段内 {measured.get(k, 0.0):.2f}s）"
+                     if measured and k in measured else "（按上包络，这一段没合出真语音）")
+        line = (f"{head}{where}：现场声按成片口径掉到 −60 dB 以下，渲后数字静音闸"
+                f"**必红**{phase(kind)}\n    {body}")
+        cure = ("把旁白写长盖住、或把窗口收在这一截之前；看过确认要这么剪就在这一段写 "
+                f"`\"{CLAIM_KEY}\": \"<为什么>\"` 认领")
+        if claim:
+            soft.append(f"{line}\n    已认领 {CLAIM_KEY}：{claim}")
+        elif strict and decided:
+            hard.append(f"{line}\n    {cure}（手写 spec 硬闸，2026-09-28：渲后这一类红了 16 趟、"
+                        "渲前 0 趟拦住）")
+        else:
+            soft.append(f"{line}\n    {cure}" + ("" if strict else "（自动产的 spec 只报）"))
     return hard, soft
