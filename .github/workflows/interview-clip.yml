@@ -705,18 +705,36 @@ jobs:
             push_with_rebase_retry "${{ github.ref_name }}" 5 \
               || echo "::warning::扫描记录没推上去——上面那张排名表就是这一趟的全部产出"
           }
-          # render 的自动换帧一格都挑不出来（`--autopick` 退出 3）→ 记一笔停车账：同一个封面
-          # 连着 3 趟挑不出来，picker 就不再投（D2，`pick_interview_renders.PARK_AFTER`）——
-          # 同一个封面再投一趟量出来的是同一批格子，不停就是 70 分钟一趟、永远红。只提交
-          # 状态文件；扫描记录照旧**不**提交（红着的 render 不留记录，见下面换帧那一段）。
+          # render 红在封面这一步、而同一个封面再投一趟照样红 → 记一笔停车账：同一个封面连着
+          # 3 趟，picker 就不再投（D2，`pick_interview_renders.PARK_AFTER`）——不停就是 70 分钟
+          # 一趟、永远红。三种红记同一个计数器（参数是 `PARK_KINDS`）：
+          #   autopick —— 自动换帧一格都挑不出来（`--autopick` 退出 3）
+          #   audit    —— 自动换上的那一帧终审还红（扫描和终审分叉）
+          #   check    —— 终审过了、推送前对账红（D3 的边：记录说没过，runner 上却过了）
+          # 人脸模型整趟不可用（退出 4）和工具自己坏了（别的非零）**故意不记**：环境／工具的事。
+          # **只在 main 上记**：picker 只在 main 上投、只读 main 上的账；分支上记一笔会推到分支、
+          # 跟着合并进 main，替一条在 main 上没红过的封面停车——分支上只告警。
+          # 指纹按**派发时**那份 spec 算（HEAD 里的；自动换帧会就地改写工作区那份，picker 比的是
+          # main 上的）。只提交状态文件；扫描记录照旧**不**提交（红着的 render 不留记录）。
           # 记不上／推不上只告警：多烧一趟，不会卡死。
           note_autopick_failure() {
+            local kind="$1"
+            if [ "${{ github.ref_name }}" != "main" ]; then
+              echo "::warning::这一趟跑在 ${{ github.ref_name }} 上，不记停车账（$kind）——picker 只在 main 上投、只读 main 上的账，分支上记一笔会跟着合并替 main 停车"
+              return 0
+            fi
             local state="data/interview_render_dispatched.json"
             local base="$RUNNER_TEMP/interview_dispatch_base.json"
             local ours="$RUNNER_TEMP/interview_dispatch_ours.json"
+            local dispatched="$RUNNER_TEMP/interview_spec_as_dispatched.json"
             git show "HEAD:$state" > "$base" 2>/dev/null \
               || echo '{"slugs": [], "at": {}, "spec_sha256": {}}' > "$base"
-            if ! PYTHONPATH=src python tools/pick_interview_renders.py --autopick-failed "$SLUG"; then
+            if ! git show "HEAD:$SPEC" > "$dispatched"; then
+              echo "::warning::取不到派发时那份 spec，停车账没记上——下一趟 picker 照旧会重投（多烧一趟，不会卡死）"
+              return 0
+            fi
+            if ! PYTHONPATH=src python tools/pick_interview_renders.py --autopick-failed "$SLUG" \
+                --kind "$kind" --dispatched-spec "$dispatched"; then
               echo "::warning::停车账没记上——下一趟 picker 照旧会重投（多烧一趟，不会卡死）"
               return 0
             fi
@@ -725,7 +743,7 @@ jobs:
             git config user.email "noreply@anthropic.com"
             git add "$state"
             git diff --cached --quiet && return 0
-            git commit -m "data: $SLUG 封面自动换帧一格都没挑到（停车账）"
+            git commit -m "data: $SLUG 封面那一步红了（$kind，停车账）"
             source tools/git_push_retry.sh
             push_interview_dispatch_retry "${{ github.ref_name }}" "$base" "$ours" 5 \
               || echo "::warning::停车账没推上去——下一趟 picker 照旧会重投（多烧一趟，不会卡死）"
@@ -760,7 +778,7 @@ jobs:
             if [ "$rc" -ne 0 ]; then
               if [ "$rc" -eq 3 ]; then
                 echo "::error::扫过的格子里没有一格同时过闸、认得出是封面主角（文案点了名的人）、眼睛睁着——停在转写校验和编码之前。上面那张排名表就是下一帧的候选（✓ 那一列）。记一笔停车账（同一个封面满 3 趟就不再自动投）："
-                note_autopick_failure
+                note_autopick_failure autopick
               elif [ "$rc" -eq 4 ]; then
                 echo "::error::人脸模型整趟不可用，一格都没认成人——环境的事，不记停车账，下一趟照常重投。"
               else
@@ -768,15 +786,31 @@ jobs:
               fi
               exit 1
             fi
-            if ! audit_cover; then
+            rc=0
+            audit_cover || rc=$?
+            if [ "$rc" -ne 0 ]; then
               echo "::error::自动换上的那一帧终审没过——扫描和终审是同一份实现，分叉了就是 bug，不许带着它出片。"
+              # 同一个封面再投一趟换上的还是这一帧、终审还红：退出 1（判了不合格）才记停车账；
+              # 2 是输入缺了（找不到海报／spec），不是封面的事
+              if [ "$rc" -eq 1 ]; then note_autopick_failure audit; fi
               exit 1
             fi
             touch "$RUNNER_TEMP/cover-autopicked"
             echo "::warning::封面自动换帧了（新旧秒数和理由见上面 [封面自动换帧] 那一行，记在 spec 的 cover._frame_autopick）——改过的 spec 跟成片一起提交"
           fi
-          # 扫描记录提交过的话，frame_at 必须是其中过闸的那一格；推送前 auto_push_interview_gate 再对一次
-          PYTHONPATH=src python tools/interview_cover_scan.py --check --spec "$SPEC"
+          # 扫描记录提交过的话，frame_at 必须是其中过闸的那一格；推送前 auto_push_interview_gate 再对一次。
+          # render 红在这儿也记停车账（check）：D3 放行的那种——已提交的记录说 frame_at 没过、记录里
+          # 有一格 render 会换上的，可 runner 上这一帧过了闸、不换帧，对账拿那份记录一比就红；
+          # 同一份封面＋同一份记录再投一趟还是红。重扫（mode=cover）一换记录就从头数
+          rc=0
+          PYTHONPATH=src python tools/interview_cover_scan.py --check --spec "$SPEC" || rc=$?
+          if [ "$rc" -ne 0 ]; then
+            if [ "$MODE" = "render" ] && [ "$rc" -eq 1 ]; then
+              echo "::error::封面过了终审、推送前对账红了（原因见上一行）——记一笔停车账（同一个封面、同一份扫描记录满 3 趟就不再自动投）："
+              note_autopick_failure check
+            fi
+            exit "$rc"
+          fi
 
       # **先验转写，再出片。** 这是英语学习素材，发错的英文比没有更糟。
       # YouTube 的自动字幕实测错得不轻（人名、整句语法不成立、`respect to her`

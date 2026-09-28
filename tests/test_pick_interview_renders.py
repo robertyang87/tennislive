@@ -400,7 +400,8 @@ def test_封面自动换帧连着三趟挑不出来就停车_换了封面从头�
     """D2（2026-09-28）：render 的自动换帧一格都挑不出来（主角没头像、整段闭眼／是别人），
     同一个封面再投一趟量出来的是同一批格子——原来 70 分钟一趟、永远红。interview-clip 每红
     一趟记一笔（`note_autopick_failure`），同一个封面指纹满 `PARK_AFTER` 趟就停车：不进名单、
-    进等待名单和 `--parked`、不算 stale。改的不是封面（中文字幕）照旧停着；改了封面从头数。"""
+    进 `--parked`（run 摘要 🅿️ 那一栏）、不算 stale。改的不是封面（中文字幕）照旧停着；改了
+    封面从头数。"""
     now = datetime(2026, 9, 28, 12, 0, tzinfo=timezone.utc)
     long_ago = (now - timedelta(minutes=tool.STALE_MINUTES + 1)).strftime("%FT%TZ")
     tool.mark_one("b-todo", now=long_ago)
@@ -411,9 +412,9 @@ def test_封面自动换帧连着三趟挑不出来就停车_换了封面从头�
         assert "b-todo" in tool.todo_slugs(now=now)[0], f"才 {n} 趟就停了车"
     row = tool.note_autopick_failure("b-todo", now=long_ago)
     assert row["count"] == tool.PARK_AFTER and "闭眼" in row["why"], row
-    ready, waiting = tool.todo_slugs(now=now)
+    ready, _waiting = tool.todo_slugs(now=now)
     assert "b-todo" not in ready, "满 3 趟还在投"
-    why = dict(waiting)["b-todo"][0]
+    why = tool.parked_slugs()["b-todo"]
     assert "停车" in why and "no frame passes identity/eyes" in why and "闭眼" in why, why
     assert "b-todo" not in dict(tool.stale_dispatches(now=now)), "停车是故意不投，不是「投了没产物」"
     monkeypatch.setattr(sys, "argv", ["pick_interview_renders.py", "--parked"])
@@ -467,6 +468,119 @@ def test_停车账和指纹只用标准库(tmp_path):
     moved = json.loads(json.dumps(spec))
     moved["cover"]["frame_at"] = float(moved["cover"]["frame_at"]) + 1.0
     assert scan.cover_fingerprint(moved) != scan.cover_fingerprint(spec)
+
+
+def test_封面指纹跟着主角和同场的人的头像走_别人补头像不算(monkeypatch):
+    """停车账的出路之一是「补主角的官方头像」——补上之后指纹要变，picker 才会重投；同场的人
+    （对手／搭档，`co_present`）补了头像同理：认人换了一批人一起比，挑出来的可能不一样。
+    反过来，仓库里**别人**补了头像不许动这条的指纹（不然任何一条赛场之上 spec 多一张头像，
+    全库停车一起解开）。头像索引打桩：只看名字和路径，不看文件在不在。"""
+    sys.path.insert(0, str(_TOOLS))
+    import interview_cover_scan as scan  # noqa: PLC0415
+
+    spec = {"slug": "fp", "subject": "甲", "cover": {"frame_at": 3.0, "tag": "测试赛 · 甲"},
+            "match": {"winner": "甲", "loser": "乙", "participants": ["甲", "乙"]},
+            "start": 0.0, "end": 60.0}
+
+    def fp(index: dict) -> str:
+        monkeypatch.setattr(scan, "_headshot_index", lambda: dict(index))
+        return scan.cover_fingerprint(spec)
+
+    base = {"丙": "assets/players/c.png"}
+    none = fp(base)
+    with_subject = fp({**base, "甲": "assets/players/a.png"})
+    assert with_subject != none, "补了主角的官方头像，指纹没变——停车的那条永远不会重投"
+    with_rival = fp({**base, "乙": "assets/players/b.png"})
+    assert with_rival != none, "补了同场对手的官方头像，指纹没变"
+    both = fp({**base, "甲": "assets/players/a.png", "乙": "assets/players/b.png"})
+    assert both not in (with_subject, with_rival)
+    assert fp({**base, "甲": "assets/players/a-2026.png"}) != with_subject, "主角换了一版头像，指纹没变"
+    assert fp({**base, "丁": "assets/players/d.png"}) == none, (
+        "别人补了头像也动了这条的指纹——全库停车会被一张不相干的头像一起解开")
+
+
+def _park(tool, kind: str, *, dispatched: Path | None = None) -> dict:
+    return tool.note_autopick_failure("b-todo", kind=kind, dispatched=dispatched)
+
+
+def test_换上的终审还红和对账红也记同一个停车计数_指纹按派发时那份spec算(tool, monkeypatch, capsys):
+    """render 红在封面那一步、再投一趟照样红的另外两条路（2026-09-28 复审）也记进同一个计数：
+
+    - `audit`：自动换上的那一帧终审还红——那时工作区的 spec 已经被就地改写（frame_at 换了），
+      指纹要按**派发时**那份算（interview-clip 从 HEAD 取、`--dispatched-spec` 递过来），
+      否则 picker 拿 main 上那份比永远对不上、永远不停车
+    - `check`：终审过了、推送前对账红（D3 的边）
+
+    三种红混着数，满 `PARK_AFTER` 趟停车；停车那一句按最近一趟是哪种红说出路。"""
+    spec_path = tool.SPECS / "b-todo.json"
+    original = spec_path.read_text(encoding="utf-8")
+    dispatched = spec_path.parent.parent / "as_dispatched.json"
+    dispatched.write_text(original, encoding="utf-8")
+    _closed_record(tool, "b-todo")
+
+    # 第 1 趟：挑不出来；第 2 趟：换上了 7.5 秒那一格、终审还红（工作区 spec 已改写）
+    assert _park(tool, "autopick")["count"] == 1
+    rewritten = json.loads(original)
+    rewritten["cover"]["frame_at"] = 7.5
+    spec_path.write_text(json.dumps(rewritten, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(sys, "argv", ["pick_interview_renders.py", "--autopick-failed", "b-todo",
+                                      "--kind", "audit", "--dispatched-spec", str(dispatched)])
+    assert tool.main() == 0
+    assert "第 2 趟" in capsys.readouterr().out
+    # 第 3 趟：对账红
+    row = _park(tool, "check", dispatched=dispatched)
+    assert row["count"] == tool.PARK_AFTER and row["kind"] == "check", row
+    assert "对账" in row["why"], row
+    # picker 在 main 上：spec 还是派发时那份
+    spec_path.write_text(original, encoding="utf-8")
+    parked = tool.parked_slugs()
+    assert "b-todo" in parked, "指纹拿改写过的 spec 算了——picker 比的是 main 上那份，永远不停车"
+    fix = parked["b-todo"].rsplit("——停车，不再投；", 1)[-1]
+    assert "对账" in parked["b-todo"] and "mode=cover" in fix, ("停车那一句没按对账红说出路", parked)
+    assert "b-todo" not in tool.todo_slugs()[0]
+
+    # 换帧之后终审还红那一句：说的是分叉，不是「一格都挑不出来」
+    tool.note_autopick_failure("b-todo", kind="audit", dispatched=dispatched)
+    why = tool.parked_slugs()["b-todo"]
+    assert "终审还红" in why and "no frame passes" not in why, why
+    assert "工具" in why.rsplit("——停车，不再投；", 1)[-1], why
+    with pytest.raises(ValueError):
+        tool.note_autopick_failure("b-todo", kind="model")   # 模型不可用（退出 4）故意不记
+
+
+def test_对账红停车之后_重扫换了记录就从头数(tool, monkeypatch):
+    """`check` 那种红的出路是 mode=cover 重扫——**只换已提交的扫描记录、不动 spec**。停车账的键
+    只有封面指纹的话，重扫完照旧停着、永远不会重投。键里带着 HEAD 里那份记录的 blob 号
+    （`_committed_record_blob`，只认 HEAD：runner 上 outdir 里那份是这一趟刚写、没提交的）。"""
+    blob = {"b-todo": "1111"}
+    monkeypatch.setattr(tool, "_committed_record_blob", lambda slug: blob.get(slug, ""))
+    _closed_record(tool, "b-todo")
+    for _ in range(tool.PARK_AFTER):
+        tool.note_autopick_failure("b-todo", kind="check")
+    assert "b-todo" in tool.parked_slugs()
+    blob["b-todo"] = "2222"                   # mode=cover 重扫，main 上的记录换了
+    assert "b-todo" not in tool.parked_slugs(), "重扫换了记录还停着"
+    assert "b-todo" in tool.todo_slugs()[0]
+    assert tool.note_autopick_failure("b-todo", kind="check")["count"] == 1, "换了记录没从头数"
+
+
+def test_停车的只列在停车那一栏_等待名单里不再列一遍(tool, monkeypatch, capsys):
+    """auto-render 的 run 摘要里 🅿️ 那一栏是 `--parked` 印的，⏳ 那一栏是 picker 的 stderr
+    （等待名单）——原来停车的 slug 两栏各列一遍。停车的不进等待名单，picker 的题头数一句
+    「另有 N 条停车」（stdout 第一行，workflow 切名单时跳过它），原因只在 `--parked` 里说。"""
+    _closed_record(tool, "b-todo")
+    for _ in range(tool.PARK_AFTER):
+        tool.note_autopick_failure("b-todo")
+    ready, waiting = tool.todo_slugs()
+    assert "b-todo" not in ready and "b-todo" in tool.parked_slugs()
+    assert "b-todo" not in dict(waiting), f"停车的又进了 ⏳ 等待名单：{waiting}"
+    monkeypatch.setattr(tool, "save_verdicts", lambda: None)
+    monkeypatch.setattr(sys, "argv", ["pick_interview_renders.py"])
+    assert tool.main() == 0
+    got = capsys.readouterr()
+    head, *slugs = got.out.splitlines()
+    assert "b-todo" not in slugs and "b-todo" not in got.err, got
+    assert "另有 1 条封面自动换帧停车" in head and "--parked" in head, head
 
 
 def test_auto_render的run摘要单列停车那一栏():

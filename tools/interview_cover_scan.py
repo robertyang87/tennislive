@@ -71,8 +71,9 @@ cobolli-mensik 30 秒那一帧红了、就地扫出来的排名第一是 29.4—
 - 人圈了 `cover.scan_window`：先在这一段里挑（`near_plan`），一格都换不了才整段粗扫，
   换上的那一格在 `_frame_autopick.left_scan_window` 里写明离开了人圈的窗口
 - 一格都挑不出来退出 `AUTOPICK_NONE`，interview-clip 记一笔停车账（`cover_fingerprint`，
-  同一个封面满 3 趟 picker 不再投——`pick_interview_renders.PARK_AFTER`）；人脸模型整趟
-  不可用退出 `AUTOPICK_NO_MODEL`，不记
+  同一个封面满 3 趟 picker 不再投——`pick_interview_renders.PARK_AFTER`；换上的那一帧终审
+  还红、`--check` 对账红也记同一笔，只在 main 上记）；人脸模型整趟不可用退出
+  `AUTOPICK_NO_MODEL`，故意不记（环境的事）
 - dispatch 之前的预检：记录里已经有一格 render 会自动换上的（`render_would_swap`），不拦
 - 换上之后，人给原来那一帧写的认领（`_face_check_why`／`_frame_scan_why`）挪进
   `cover._frame_autopick.dropped`，`cover._why` 前面标一句「说的是原来那一帧」——

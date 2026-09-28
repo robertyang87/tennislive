@@ -4930,10 +4930,16 @@ render 的封面前置那一步红了会就地扫、自动换一格（tennis-cov
 
 | | 做法 |
 |---|---|
-| 记账 | interview-clip 退出 3 时 `pick_interview_renders.py --autopick-failed <slug>` 记进 `data/interview_render_dispatched.json` 的 `autopick_failed[slug] = {cover, count, at, why}`，只提交这一个文件、走 `push_interview_dispatch_retry`（`merge_interview_states` 会把本趟那一笔加回去）。**扫描记录照旧不提交**（红着的 render 不留记录）。退出 4（人脸模型整趟不可用）和别的非零（工具坏了）不记 |
-| 指纹 | `interview_cover_scan.cover_fingerprint`：`cover` 整块＋取景＋推主角的字段＋主角和同场的人的头像**路径**（不看文件在不在——auto-render 的检出没有 `assets/players`，两头要算出同一个数）＋`start/end`＋尺子。人改了封面／主角、补了头像、尺子变了，从 1 数起；改中文字幕不算 |
-| 停车 | 同一个指纹 `count ≥ PARK_AFTER`（3）→ 不进 dispatch 名单、进等待名单、**不算 stale**（是故意不投），auto-render 的 run 摘要单列「🅿️ 封面自动换帧停车」一栏（`--parked`）。当前 spec 已经出过片的不算 |
+| 记账 | interview-clip 的 render 红在封面那一步、再投一趟照样红时 `pick_interview_renders.py --autopick-failed <slug> --kind …` 记进 `data/interview_render_dispatched.json` 的 `autopick_failed[slug] = {cover, record, count, kind, at, why}`，只提交这一个文件、走 `push_interview_dispatch_retry`（`merge_interview_states` 会把本趟那一笔加回去）。三种红记**同一个计数**：`autopick`（`--autopick` 退出 3）、`audit`（换上的那一帧终审还红，只认退出 1）、`check`（终审过了、`--check` 对账红，只认退出 1、只在 render 档）。**扫描记录照旧不提交**（红着的 render 不留记录）。**只在 main 上记**：分支上的 render 只印 `::warning::`——picker 只在 main 上投、只读 main 上的账，分支上那一笔合并进来会替 main 停一条它没红过的封面 |
+| 故意不记 | 退出 4（人脸模型整趟不可用）：环境的事，模型备好了下一趟就过，记了反倒要人给一条没毛病的封面解停车。别的非零（工具坏了）、终审／对账退出 2（输入缺了）也不记 |
+| 指纹 | `interview_cover_scan.cover_fingerprint`：`cover` 整块＋取景＋推主角的字段＋主角和同场的人的头像**路径**（不看文件在不在——auto-render 的检出没有 `assets/players`，两头要算出同一个数；别人补头像不动它）＋`start/end`＋尺子，按**派发时**那份 spec 算（interview-clip 从 `HEAD` 取、`--dispatched-spec` 递——`audit`／`check` 可能红在自动换帧之后，工作区那份已被改写）。键的另一半是 `HEAD` 里那份扫描记录的 blob 号（`_committed_record_blob`，不读工作区）：`check` 的出路是 mode=cover 重扫，只换记录不动 spec。人改了封面／主角、补了头像、重扫了记录、尺子变了，从 1 数起；改中文字幕不算 |
+| 停车 | 同一个键 `count ≥ PARK_AFTER`（3）→ 不进 dispatch 名单、**不算 stale**（是故意不投），**只列在** auto-render run 摘要的「🅿️ 封面自动换帧停车」一栏（`--parked`，那一句按最近一趟是哪种红说出路）；⏳ 等待名单里不再列一遍（原来两栏各列一次），picker 题头只数一句「另有 N 条停车」。当前 spec 已经出过片的不算 |
+| D3 拦得保守 | 已提交的记录说 `frame_at` 没过、记录里过闸能换的那一格却在 render 的近处窗口（`near_plan(autopick=True)`）**外面**——比如早先一趟更宽的 mode=cover 扫出来的——预检照旧拦、报出那一格让人抄。render 重扫只保证量到近处那几格，窗口外的换不换得上判不准：**保守，不是 bug** |
 
 ⚠️ 没接进 `pipeline_health`／微信：停车只在 auto-render 的 run 摘要里看得见。判据
 `test_封面自动换帧连着三趟挑不出来就停车_换了封面从头数`、`test_停车账和指纹只用标准库`、
-`test_停车账撞上dispatch提交不丢`、`test_出片档封面前置要留源片_红了就地扫候选自动换帧`（退出码分支）。
+`test_封面指纹跟着主角和同场的人的头像走_别人补头像不算`、
+`test_换上的终审还红和对账红也记同一个停车计数_指纹按派发时那份spec算`、`test_对账红停车之后_重扫换了记录就从头数`、
+`test_停车的只列在停车那一栏_等待名单里不再列一遍`、`test_停车账撞上dispatch提交不丢`、
+`test_出片档封面前置要留源片_红了就地扫候选自动换帧`（退出码分支）、`test_换上的终审还红和对账红也记同一笔停车账`、
+`test_停车账只在main上记_分支上只告警`。

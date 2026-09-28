@@ -76,6 +76,7 @@ case "$*" in
       exit "$rc"
     fi
     exit "${AUDIT_RC:-0}" ;;
+  *"interview_cover_scan.py --check"*) exit "${CHECK_RC:-0}" ;;
   *"--stage cover-scan"*) exit "${SCAN_RC:-0}" ;;
   *"--stage cover"*) exit "${COVER_RC:-0}" ;;
   *"--stage verify"*) exit "${VERIFY_RC:-0}" ;;
@@ -90,11 +91,13 @@ exit 0
 
 
 def _run_step(tmp_path: Path, name: str, *, mode: str, env: dict | None = None,
-              cwd: Path | None = None) -> tuple[subprocess.CompletedProcess, list[str]]:
+              cwd: Path | None = None,
+              ref: str = "main") -> tuple[subprocess.CompletedProcess, list[str]]:
     """把一步的 `run:` 原文用 `bash -e`（Actions 的默认 shell）真跑一遍。
 
     `python` / `pip` / `git` 换成只记账的替身：要验的是**调用顺序和退出码**，
     不是工具本身。`${{ }}` 一律替换掉，替不掉就报错——跑的必须是真脚本。
+    `ref` 是 `github.ref_name`（默认 main；停车账只在 main 上记）。
     """
     bin_dir = tmp_path / "bin"
     bin_dir.mkdir(exist_ok=True)
@@ -109,7 +112,7 @@ def _run_step(tmp_path: Path, name: str, *, mode: str, env: dict | None = None,
         f.chmod(0o755)
     body = (str(_step(name)["run"])
             .replace("${{ github.event.inputs.slug }}", "demo")
-            .replace("${{ github.ref_name }}", "main"))
+            .replace("${{ github.ref_name }}", ref))
     assert "${{" not in body, f"「{name}」里还有没替换的表达式：{body}"
     script = tmp_path / "step.sh"
     script.write_text(body, encoding="utf-8")
@@ -172,7 +175,7 @@ def test_出片档封面前置要留源片_红了就地扫候选自动换帧(tmp
     cobolli-mensik 就地扫出的第一名正是人后来写进 spec 的那一格）：换上之后**同一把
     终审再过一遍**、再对账，然后接着出片（退出 0）并留下「换过帧」的标记给「提交成片」。
     扫不出能换的（`--autopick` 非零）、或者换上的那一帧终审还红，才非零退出。
-    这一步里一律不 `git commit`——换过的 spec 和记录跟成片一起提交。"""
+    这一步里不提交 spec 和扫描记录——换过的 spec 和记录跟成片一起提交；红了只提交停车账。"""
     done, calls = _run_step(tmp_path, COVER_STEP, mode="render")
     assert done.returncode == 0, done.stderr
     assert _kinds(calls) == ["cover keep", "audit", "check"], calls
@@ -192,7 +195,9 @@ def test_出片档封面前置要留源片_红了就地扫候选自动换帧(tmp
     assert _kinds(calls) == ["cover keep", "audit", "scan keep autopick"], calls
     assert not (none / "cover-autopicked").exists()
     # 退出 3（一格都挑不出来）才记停车账：只提交状态文件，推的是 dispatch 账本那条合并重试（D2）
-    assert "python tools/pick_interview_renders.py --autopick-failed demo" in calls, calls
+    assert _parked_kinds(calls) == ["autopick"], calls
+    assert any(c.startswith("python tools/pick_interview_renders.py --autopick-failed demo --kind autopick")
+               for c in calls), calls
     commits = [c for c in calls if c.startswith("git commit")]
     assert len(commits) == 1 and "停车账" in commits[0], calls
     assert "git add data/interview_render_dispatched.json" in calls, calls
@@ -206,25 +211,95 @@ def test_出片档封面前置要留源片_红了就地扫候选自动换帧(tmp
         assert not any("--autopick-failed" in c for c in calls), (rc, calls)
         assert not any(c.startswith("git commit") for c in calls), (rc, calls)
 
-    diverged = tmp_path / "diverged"
-    diverged.mkdir()
+    diverged = _parking_dir(tmp_path / "diverged")
     done, calls = _run_step(diverged, COVER_STEP, mode="render", env={"AUDIT_SEQ": "1 1"})
     assert done.returncode != 0, "换上的那一帧终审还红，却接着出片了"
     assert _kinds(calls) == ["cover keep", "audit", "scan keep autopick", "audit"], calls
     assert not (diverged / "cover-autopicked").exists()
-    assert not any(c.startswith("git commit") for c in calls), calls
+    # 换上的那一帧终审还红也记停车账（同一个封面再投一趟换上的还是它）——只提交状态文件
+    assert _parked_kinds(calls) == ["audit"], calls
+    commits = [c for c in calls if c.startswith("git commit")]
+    assert len(commits) == 1 and "停车账" in commits[0], calls
 
 
-def _run_autopick_failure(where: Path, scan_rc: str):
-    """封面前置那一步在 render 档红、`--autopick` 以 `scan_rc` 退出。停车账那一支要
-    `source tools/git_push_retry.sh`、`cp` 状态文件，所以工作目录里备一份。"""
+def _parking_dir(where: Path) -> Path:
+    """停车账那一支要 `source tools/git_push_retry.sh`、`cp` 状态文件，工作目录里备一份。"""
     (where / "tools").mkdir(parents=True)
     shutil.copy(ROOT / "tools" / "git_push_retry.sh", where / "tools" / "git_push_retry.sh")
     (where / "data").mkdir()
     (where / "data" / "interview_render_dispatched.json").write_text(
         '{"slugs": [], "at": {}, "spec_sha256": {}}', encoding="utf-8")
-    return _run_step(where, COVER_STEP, mode="render",
+    return where
+
+
+def _parked_kinds(calls: list[str]) -> list[str]:
+    """替身记下的停车账调用 → 各是哪种红（`--kind`）。"""
+    return [c.split("--kind ")[1].split()[0] for c in calls if "--autopick-failed" in c]
+
+
+def _run_autopick_failure(where: Path, scan_rc: str, ref: str = "main"):
+    """封面前置那一步在 render 档红、`--autopick` 以 `scan_rc` 退出。"""
+    return _run_step(_parking_dir(where), COVER_STEP, mode="render", ref=ref,
                      env={"AUDIT_RC": "1", "SCAN_RC": scan_rc})
+
+
+def test_换上的终审还红和对账红也记同一笔停车账(tmp_path):
+    """复审 2026-09-28：只在 `--autopick` 退出 3 时记账，另外两条「再投一趟照样红」的路照旧
+    70 分钟一趟、永远红——
+
+    - 自动换上的那一帧终审还红（扫描和终审分叉）
+    - 终审过了、`--check` 对账红：D3 的边——已提交的记录说 frame_at 没过、预检因为「render
+      会换上一格」放行，runner 上这一帧却过了闸、不换帧，对账拿那份记录一比就红
+
+    两条都记进同一个计数（`--kind audit／check`），指纹按**派发时**那份 spec（HEAD 里的）
+    算；只认退出 1（判了不合格），2（输入缺了）不记；cover 档不记（picker 不投 cover 档）。"""
+    cases = {
+        # 名字: (mode, env, 该记哪种, 调用顺序)
+        "check": ("render", {"CHECK_RC": "1"}, ["check"], ["cover keep", "audit", "check"]),
+        "swap_check": ("render", {"AUDIT_SEQ": "1 0", "CHECK_RC": "1"}, ["check"],
+                       ["cover keep", "audit", "scan keep autopick", "audit", "check"]),
+        "audit_rc2": ("render", {"AUDIT_SEQ": "1 2"}, [],
+                      ["cover keep", "audit", "scan keep autopick", "audit"]),
+        "check_rc2": ("render", {"CHECK_RC": "2"}, [], ["cover keep", "audit", "check"]),
+        "cover_mode": ("cover", {"CHECK_RC": "1"}, [], ["scan keep", "cover", "audit", "check"]),
+    }
+    for name, (mode, env, kinds, order) in cases.items():
+        done, calls = _run_step(_parking_dir(tmp_path / name), COVER_STEP, mode=mode, env=env)
+        assert done.returncode != 0, (name, "封面那一步红了却退出 0")
+        assert _kinds(calls) == order, (name, calls)
+        assert _parked_kinds(calls) == kinds, (name, calls)
+        commits = [c for c in calls if c.startswith("git commit")]
+        assert len(commits) == len(kinds), (name, calls)
+        if kinds:
+            rec = next(c for c in calls if "--autopick-failed" in c)
+            i_show = calls.index("git show HEAD:specs/interviews/demo.json")
+            assert i_show < calls.index(rec), (name, "指纹要按派发时（HEAD）那份 spec 算", calls)
+            assert "--dispatched-spec" in rec, (name, rec)
+            assert any(c.startswith("git push origin HEAD:main") for c in calls), (name, calls)
+
+
+def test_停车账只在main上记_分支上只告警(tmp_path):
+    """picker 只在 main 上投、只读 main 上的账。分支上跑的 render（会话在分支上 `push=false`
+    渲一版）红在封面那一步，记一笔会推到分支、跟着合并进 main，替一条在 main 上没红过的封面
+    停车——分支上不记、不提交、不推，只印一行 `::warning::`。三种红都一样。"""
+    runs = {
+        "autopick": lambda d: _run_autopick_failure(d, "3", ref="wp/some-branch"),
+        "audit": lambda d: _run_step(_parking_dir(d), COVER_STEP, mode="render",
+                                     ref="wp/some-branch", env={"AUDIT_SEQ": "1 1"}),
+        "check": lambda d: _run_step(_parking_dir(d), COVER_STEP, mode="render",
+                                     ref="wp/some-branch", env={"CHECK_RC": "1"}),
+    }
+    for kind, run in runs.items():
+        done, calls = run(tmp_path / kind)
+        assert done.returncode != 0, kind
+        assert not any("--autopick-failed" in c for c in calls), (kind, "分支上记了停车账", calls)
+        assert not any(c.split()[:2] in (["git", "commit"], ["git", "add"], ["git", "push"])
+                       for c in calls), (kind, calls)
+        assert "::warning::" in done.stdout and "不记停车账" in done.stdout, (kind, done.stdout)
+        assert "wp/some-branch" in done.stdout, (kind, done.stdout)
+    # 同一个红在 main 上照记（对照组）
+    done, calls = _run_autopick_failure(tmp_path / "main", "3")
+    assert _parked_kinds(calls) == ["autopick"], calls
 
 
 def test_预览档先扫一段再出海报再验(tmp_path):
