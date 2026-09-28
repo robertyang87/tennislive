@@ -81,14 +81,12 @@
     "_subject_why": "赢家、冠军；账号所有者点名封面用捧杯照（2026-09-27）。",
     "_heat_why": "决赛（2026-08-12：半决赛级别的都要做）；账号所有者亲口点的题（截图）。",
     "portrait": {
-      "image": "assets/reel/fernandez-gibson-final-trophy.jpg",
-      "focus": 0.5,
+      "image": "assets/reel/fernandez-gibson-singapore-2026-final-official.jpg",
+      "focus": 0.577,
       "focus_y": 0.5,
       "zoom": 1.0,
-      "_owner_words": "账号所有者 2026-09-27：「用他举起奖杯的照片做封面吧」。",
-      "_frame_why": "⚠️ 抽帧，不是官方实拍——账号所有者点名要捧杯照（2026-09-27），走 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」）（素材是预裁进仓库的图，不走 `frame_at`，所以不用登记 `OWNER_APPROVED_FRAME_COVERS`）。\n捧杯的官方实拍查过（北京 20:20 前后，终场后约 1.5 小时）：WTA photo-resources 9/27 目录本场仍只有赛后稿头图一张（比赛中低头握拳，不是捧杯）；`find_cover_photo.py` AP 0 张；Yahoo／The Big Lead／TennisNow／CBC 的稿子配的都是旧图；比赛集锦 `972H4pIo248` 颁奖段只拍到捧花致辞、没有捧杯；赛事官网沙箱够不着。\n**这一帧**：WTA 官方 YouTube Short `oN3peuz8iaY`（「Your Champion, Leylah Annie Fernandez! 🏆」，1080×1920，frame-grab 落在 `output/2026-09-27/frames/fernandez-gibson-final-trophy/`）13.5s：她站在中心球场上双手把奖杯捧到胸前，**正脸、双眼睁着、笑**，身后是 `WTA500`、`THE KALLANG`、`OCBC ARENA` 挡板＝本场场地。0.5s 起每一帧都烧着英文字幕，13.5s 那一条 `BYE.` 落在源片 y≈1400~1480，所以预裁取 (150,340)–(930,1380)，字幕整条在框外（账号所有者 2026-09-27「人物往上来一点」：窗口从 y170 下移到 y340，并排渲过三版取人最靠上的一版）；0s 那一帧没字幕但她张嘴说话，不如这一帧。",
-      "_low_res_why": "预裁 780×1040，铺 1080×1440 放大 1.38 倍（源是竖版 Short，只能在字幕上方裁 3:4；为了人物往上，窗口比上一版收紧）。",
-      "_focus_why": "预裁已经是 3:4，focus 居中即可：脸在封面 y≈260~560（台头带 0~170 之下），奖杯顶在 y≈400，钩子两行压在奖杯中段和上衣上、不压脸。"
+      "_why": "自动换图（账号所有者 2026-09-27 O4「自动换图重推」，tools/cover_upgrade.py）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/09/27/ac75a74a-0bd1-409f-93c5-b6e4d068cd3f/270927-singles-vc-5.jpg（条目 #4582447，接口发布 2026-09-27T12:05:19Z，EXIF 拍摄 2026:09:27 19:18:58+08:00（UTC 2026-09-27T11:18:58Z），原图 6562×4377），说明原文「Leylah Fernandez, Singapore 2026」，署名 Ashok Kumar/WTA。替换推送时用的 预裁的抽帧 assets/reel/fernandez-gibson-final-trophy.jpg。",
+      "_gates": "① 点名：说明／文件名有「Leylah Fernandez」「Singapore」，日期对上当地 2026-09-27（Asia/Singapore；日期来源 flashscore dc_1_pdeE2ZJE）（放宽：标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-27 19:18:58，落在这场的窗口 当地 09-27 17:00~19:33（决赛：结束后 45 分钟内算颁奖） 里（wta-photos #4582447））；EXIF 拍摄 2026:09:27 19:18:58+08:00。② 分辨率：6562×4377，zoom 1 铺 1080×1440 是 3.04×（不放大）。③ 认人：最大那张脸像 费尔南德斯 0.53（≥ 0.34）。④ 睁眼：EAR 0.2388（≥ 0.16）。⑤ 钩子带：脸落在 y258~558，钩子顶边 790。排序：[True, True, False, True, True, 300, 0.5323]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。"
     },
     "scoreboard": {
       "court": "OCBC Arena",

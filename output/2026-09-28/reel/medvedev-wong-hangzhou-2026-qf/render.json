@@ -160,5 +160,6 @@
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-wong-hangzhou-2026-qf/medvedev-wong-hangzhou-2026-qf.mp4",
-  "video_bytes": 72141138
+  "video_bytes": 72141138,
+  "_release_tag_note": "2026-09-28T20:53:04Z O4 抽帧封面自动换成官方实拍（tools/cover_upgrade.py），随后派发 match-reel mode=render push=true 重渲重推：重渲一传上 Release（`gh release upload --clobber`），tag `reel-medvedev-wong-hangzhou-2026-qf` 上的附件就换成新渲的那一份（记在北京 2026-09-29 或更晚那一格 output/<日期>/reel/medvedev-wong-hangzhou-2026-qf/render.json），这里记的 video_bytes 72141138 那一版就不在 tag 上了。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
 }

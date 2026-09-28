@@ -1,0 +1,689 @@
+{
+  "upgrades": {
+    "fernandez-gibson-singapore-2026-final": {
+      "status": "upgraded",
+      "at": "2026-09-28T20:53:04Z",
+      "first_sent": "2026-09-27T14:57:07Z",
+      "image": "assets/reel/fernandez-gibson-singapore-2026-final-official.jpg",
+      "source": {
+        "channel": "wta-photos",
+        "url": "https://photoresources.wtatennis.com/wta/photo/2026/09/27/ac75a74a-0bd1-409f-93c5-b6e4d068cd3f/270927-singles-vc-5.jpg",
+        "page": "",
+        "caption": "Leylah Fernandez, Singapore 2026",
+        "credit": "Ashok Kumar/WTA",
+        "item_id": "4582447",
+        "publish_utc": "2026-09-27T12:05:19Z",
+        "exif_taken": "2026:09:27 19:18:58+08:00",
+        "exif_taken_utc": "2026-09-27T11:18:58Z",
+        "original_wh": [
+          6562,
+          4377
+        ]
+      },
+      "match": {
+        "subject": "费尔南德斯",
+        "subject_en": "Leylah Fernandez",
+        "event": "Singapore",
+        "tz": "Asia/Singapore",
+        "dates": [
+          "2026-09-27"
+        ]
+      },
+      "gates": {
+        "size": [
+          6562,
+          4377
+        ],
+        "layout": {
+          "ok": true,
+          "zoom": 1.0,
+          "focus": 0.577,
+          "focus_y": 0.5,
+          "face_out": [
+            411,
+            258,
+            669,
+            558
+          ],
+          "fill": 3.04,
+          "why": ""
+        },
+        "face": {
+          "status": "ok",
+          "verdict": "match",
+          "name": "费尔南德斯",
+          "similarity": {
+            "费尔南德斯": 0.5323,
+            "吉布森": 0.0267
+          },
+          "face": [
+            3141,
+            785,
+            3928,
+            1695
+          ],
+          "face_px": 909.5,
+          "eyes": "open",
+          "ear": 0.2388,
+          "pose": {
+            "eye_span": 0.383,
+            "sharp": 1034.2,
+            "frontal": true,
+            "clear": true
+          }
+        }
+      },
+      "previous_portrait": {
+        "image": "assets/reel/fernandez-gibson-final-trophy.jpg",
+        "focus": 0.5,
+        "focus_y": 0.5,
+        "zoom": 1.0,
+        "_owner_words": "账号所有者 2026-09-27：「用他举起奖杯的照片做封面吧」。",
+        "_frame_why": "⚠️ 抽帧，不是官方实拍——账号所有者点名要捧杯照（2026-09-27），走 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」）（素材是预裁进仓库的图，不走 `frame_at`，所以不用登记 `OWNER_APPROVED_FRAME_COVERS`）。\n捧杯的官方实拍查过（北京 20:20 前后，终场后约 1.5 小时）：WTA photo-resources 9/27 目录本场仍只有赛后稿头图一张（比赛中低头握拳，不是捧杯）；`find_cover_photo.py` AP 0 张；Yahoo／The Big Lead／TennisNow／CBC 的稿子配的都是旧图；比赛集锦 `972H4pIo248` 颁奖段只拍到捧花致辞、没有捧杯；赛事官网沙箱够不着。\n**这一帧**：WTA 官方 YouTube Short `oN3peuz8iaY`（「Your Champion, Leylah Annie Fernandez! 🏆」，1080×1920，frame-grab 落在 `output/2026-09-27/frames/fernandez-gibson-final-trophy/`）13.5s：她站在中心球场上双手把奖杯捧到胸前，**正脸、双眼睁着、笑**，身后是 `WTA500`、`THE KALLANG`、`OCBC ARENA` 挡板＝本场场地。0.5s 起每一帧都烧着英文字幕，13.5s 那一条 `BYE.` 落在源片 y≈1400~1480，所以预裁取 (150,340)–(930,1380)，字幕整条在框外（账号所有者 2026-09-27「人物往上来一点」：窗口从 y170 下移到 y340，并排渲过三版取人最靠上的一版）；0s 那一帧没字幕但她张嘴说话，不如这一帧。",
+        "_low_res_why": "预裁 780×1040，铺 1080×1440 放大 1.38 倍（源是竖版 Short，只能在字幕上方裁 3:4；为了人物往上，窗口比上一版收紧）。",
+        "_focus_why": "预裁已经是 3:4，focus 居中即可：脸在封面 y≈260~560（台头带 0~170 之下），奖杯顶在 y≈400，钩子两行压在奖杯中段和上衣上、不压脸。"
+      },
+      "removed_markers": [],
+      "tag_notes": [
+        "output/2026-09-27/reel/fernandez-gibson-singapore-2026-final/render.json"
+      ],
+      "considered": [
+        {
+          "channel": "wta-photos",
+          "url": "https://photoresources.wtatennis.com/wta/photo/2026/09/28/e120f883-d483-4162-8edb-b51128bb89c0/GettyImages-2296821755.jpg",
+          "caption": "leylah fernandez singapore 2026 · Canada's Leylah Fernandez celebrates after beating Australia's Talia Gibson to win the WTA Singapore Open tennis final in Singapore on September 27, 2026. (Photo by Roslan RAHMAN / AFP)",
+          "problems": [],
+          "rank": [
+            true,
+            false,
+            true,
+            true,
+            true,
+            331,
+            0.5283
+          ]
+        },
+        {
+          "channel": "wta-photos",
+          "url": "https://photoresources.wtatennis.com/wta/photo/2026/09/28/28a36d31-5fb0-4cff-bb3d-55c81b0b6563/Fernandez-SF.jpg",
+          "caption": "Leylah Fernandez, Singapore 2026",
+          "problems": [
+            "EXIF 拍摄于当地 09-26 18:43:47，不在这场的窗口 当地 09-27 17:00~19:33（决赛：结束后 45 分钟内算颁奖） 里——拍的是别的场"
+          ]
+        },
+        {
+          "channel": "wta-photos",
+          "url": "https://photoresources.wtatennis.com/wta/photo/2026/09/28/3ace61d4-0cf0-46b7-9c4c-b78970cb0013/Fernandez-trophy.jpg",
+          "caption": "Leylah Fernandez, Singapore 2026",
+          "problems": [],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-27 19:08:18，落在这场的窗口 当地 09-27 17:00~19:33（决赛：结束后 45 分钟内算颁奖） 里（wta-photos #4582917）"
+          ],
+          "rank": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            126,
+            0.5901
+          ]
+        },
+        {
+          "channel": "wta-photos",
+          "url": "https://photoresources.wtatennis.com/wta/photo/2026/09/27/ac75a74a-0bd1-409f-93c5-b6e4d068cd3f/270927-singles-vc-5.jpg",
+          "caption": "Leylah Fernandez, Singapore 2026",
+          "problems": [],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-27 19:18:58，落在这场的窗口 当地 09-27 17:00~19:33（决赛：结束后 45 分钟内算颁奖） 里（wta-photos #4582447）"
+          ],
+          "rank": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            300,
+            0.5323
+          ]
+        },
+        {
+          "channel": "wta-photos",
+          "url": "https://photoresources.wtatennis.com/wta/photo/2026/09/27/c4abc863-15e0-4c24-ae27-39211af86324/270927-l-fernandez-vs-t-gibson-5.jpg",
+          "caption": "Leylah Fernandez, Singapore 2026",
+          "problems": [],
+          "rank": [
+            false,
+            false,
+            false,
+            true,
+            true,
+            201,
+            0.3958
+          ]
+        },
+        {
+          "channel": "wta",
+          "url": "https://photoresources.wtatennis.com/photo-resources/2026/09/21/72fad755-5d52-49a2-a41a-9c7d2793c68c/Fernandez-Okamura.jpeg?width=4000",
+          "caption": "",
+          "problems": [
+            "说明／文件名里只有姓「fernandez」、没有名「leylah」——同姓的兄弟姐妹（普利斯科娃、塞伦多洛、西西帕斯）认人闸分不开，不换",
+            "说明／文件名里没有对手「gibson」，判不了是不是这一场",
+            "说明／文件名里没有赛事「Singapore」",
+            "说明没写日期，元数据只有上传日子 2026-09-21、没有上传时刻——判不了是不是这场开赛之后拍的（前一晚夜场的图过了午夜才传，日子一样），不换"
+          ]
+        },
+        {
+          "channel": "wta",
+          "url": "https://photoresources.wtatennis.com/photo-resources/2026/09/25/0945252b-2a28-422c-8d4d-de276d896de5/Fernandez-QF.jpg?width=4000",
+          "caption": "",
+          "problems": [
+            "说明／文件名里只有姓「fernandez」、没有名「leylah」——同姓的兄弟姐妹（普利斯科娃、塞伦多洛、西西帕斯）认人闸分不开，不换",
+            "说明／文件名里没有对手「gibson」，判不了是不是这一场",
+            "说明／文件名里没有赛事「Singapore」",
+            "说明没写日期，元数据只有上传日子 2026-09-25、没有上传时刻——判不了是不是这场开赛之后拍的（前一晚夜场的图过了午夜才传，日子一样），不换"
+          ]
+        },
+        {
+          "channel": "wta",
+          "url": "https://photoresources.wtatennis.com/photo-resources/2026/09/28/738eb69f-27c3-42e9-b1cd-c7f57669f4b1/Fernandez-SF.jpg?width=4000",
+          "caption": "",
+          "problems": [
+            "说明／文件名里只有姓「fernandez」、没有名「leylah」——同姓的兄弟姐妹（普利斯科娃、塞伦多洛、西西帕斯）认人闸分不开，不换",
+            "说明／文件名里没有对手「gibson」，判不了是不是这一场",
+            "说明／文件名里没有赛事「Singapore」",
+            "说明没写日期，元数据只有上传日子 2026-09-28、没有上传时刻——判不了是不是这场开赛之后拍的（前一晚夜场的图过了午夜才传，日子一样），不换"
+          ]
+        },
+        {
+          "channel": "wta",
+          "url": "https://photoresources.wtatennis.com/photo-resources/2026/09/28/e672ac96-9a11-4426-a2c4-5a4de5bd56d7/Fernandez-trophy.jpg?width=4000",
+          "caption": "",
+          "problems": [
+            "说明／文件名里只有姓「fernandez」、没有名「leylah」——同姓的兄弟姐妹（普利斯科娃、塞伦多洛、西西帕斯）认人闸分不开，不换",
+            "说明／文件名里没有对手「gibson」，判不了是不是这一场",
+            "说明／文件名里没有赛事「Singapore」",
+            "说明没写日期，元数据只有上传日子 2026-09-28、没有上传时刻——判不了是不是这场开赛之后拍的（前一晚夜场的图过了午夜才传，日子一样），不换"
+          ]
+        }
+      ]
+    },
+    "medvedev-safiullin-hangzhou-2026-sf": {
+      "status": "upgraded",
+      "at": "2026-09-28T20:53:04Z",
+      "first_sent": "2026-09-28T18:55:45Z",
+      "image": "assets/reel/medvedev-safiullin-hangzhou-2026-sf-official.jpg",
+      "source": {
+        "channel": "atp-media",
+        "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/9699d363-a482-43ed-9636-c96ec87184dd/Daniil-Medvedev-027.jpg",
+        "page": "",
+        "caption": "2026 Hangzhou Medvedev",
+        "credit": "WangZheng",
+        "item_id": "4583146",
+        "publish_utc": "2026-09-28T13:40:22Z",
+        "exif_taken": "2026:09:28 21:05:01",
+        "exif_taken_utc": "2026-09-28T13:05:01Z",
+        "original_wh": [
+          4808,
+          3205
+        ]
+      },
+      "match": {
+        "subject": "梅德韦杰夫",
+        "subject_en": "Daniil Medvedev",
+        "event": "Hangzhou",
+        "tz": "Asia/Shanghai",
+        "dates": [
+          "2026-09-28"
+        ]
+      },
+      "gates": {
+        "size": [
+          4808,
+          3205
+        ],
+        "layout": {
+          "ok": true,
+          "zoom": 1.0,
+          "focus": 0.62,
+          "focus_y": 0.5,
+          "face_out": [
+            460,
+            305,
+            620,
+            534
+          ],
+          "fill": 2.226,
+          "why": ""
+        },
+        "face": {
+          "status": "ok",
+          "verdict": "match",
+          "name": "梅德韦杰夫",
+          "similarity": {
+            "梅德韦杰夫": 0.5324,
+            "萨菲乌林": 0.1003
+          },
+          "face": [
+            2516,
+            678,
+            2871,
+            1189
+          ],
+          "face_px": 510.8,
+          "eyes": "open",
+          "ear": 0.2836,
+          "pose": {
+            "eye_span": 0.454,
+            "sharp": 1812.0,
+            "frontal": true,
+            "clear": true
+          }
+        }
+      },
+      "previous_portrait": {
+        "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 2026-09-28 21:40 ~ 23:30）：① 官方图库——`tools/find_cover_photo.py` Getty/AFP 这一场 0 张可用；② ATP 赛后稿当时未配可用大图；③ ATP Tour 官方微博当晚半决赛帖未找到可用原图；④ Tennis TV 官方 Instagram 图片帖 `https://www.instagram.com/p/Dd1StgJszdN/` 有大面积榜单压字，不合格；⑤ Tennis TV 官方 YouTube 缩略图 （https://img.youtube.com/vi/nSaTYP-T8sM/maxresdefault.jpg，1280x720）有大面积 HIGHLIGHTS/HANGZHOU SEMI-FINALS 压字，不符合「禁止大面积 baked-in 文案」要求。\n抽帧选 514.0s（原 502.0s 认人／睁眼闸实测不过：眼睛纵横比 0.0296<0.16，赛后长出一口气时闭眼，前后±1秒无可用帧）：赛后离场时与球迷互动的中景，梅德韦杰夫正脸、眼睛睁开，持拍，和钩子「挺进决赛」同一个人同一场，清晰偏正面。",
+        "focus": 0.5,
+        "focus_y": 0.45,
+        "frame_at": 514.0,
+        "zoom": 1.0
+      },
+      "removed_markers": [
+        "output/2026-09-29/reel/medvedev-safiullin-hangzhou-2026-sf/pushed.json"
+      ],
+      "tag_notes": [
+        "output/2026-09-29/reel/medvedev-safiullin-hangzhou-2026-sf/render.json"
+      ],
+      "considered": [
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/db93a2ff-9b68-408d-9dca-2429fef014ec/Daniil-Medvedev-030.jpg",
+          "caption": "2026 Hangzhou Medvedev Safiullin",
+          "problems": [
+            "标题／引用里除了主角还有 safiullin、球员 id SX50——两人同框（握手、合影）最大那张脸不一定是他，不换"
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/9699d363-a482-43ed-9636-c96ec87184dd/Daniil-Medvedev-027.jpg",
+          "caption": "2026 Hangzhou Medvedev",
+          "problems": [],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-28 21:05:01，落在这场的窗口 当地 09-28 19:35~21:38 里（atp-media #4583146）"
+          ],
+          "rank": [
+            true,
+            false,
+            false,
+            true,
+            true,
+            229,
+            0.5324
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/9bb16a86-50f7-42ef-841b-1bd3d47ae298/Daniil-Medvedev-006.jpg",
+          "caption": "2026 Hangzhou Medvedev Safiullin",
+          "problems": [
+            "标题／引用里除了主角还有 safiullin、球员 id SX50——两人同框（握手、合影）最大那张脸不一定是他，不换"
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/1531ba60-493c-446a-ba21-f0f63e9196bf/Daniil-Medvedev-021.jpg",
+          "caption": "2026 Hangzhou Medvedev",
+          "problems": [
+            "认人没过（unknown）：没检出人脸",
+            "睁眼没过（unknown）：没检出人脸"
+          ],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-28 20:44:25，落在这场的窗口 当地 09-28 19:35~21:38 里（atp-media #4583144）"
+          ],
+          "tried": true
+        }
+      ]
+    },
+    "medvedev-wong-hangzhou-2026-qf": {
+      "status": "upgraded",
+      "at": "2026-09-28T20:53:04Z",
+      "first_sent": "2026-09-27T17:36:59Z",
+      "image": "assets/reel/medvedev-wong-hangzhou-2026-qf-official.jpg",
+      "source": {
+        "channel": "atp-media",
+        "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/cc67edbf-a9ac-4a03-83c4-77ccc4f36d3c/Daniil-Medvedev-022.jpg",
+        "page": "",
+        "caption": "2026 Hangzhou Medvedev",
+        "credit": "",
+        "item_id": "4582617",
+        "publish_utc": "2026-09-27T15:17:45Z",
+        "exif_taken": "2026:09:27 22:18:34",
+        "exif_taken_utc": "2026-09-27T14:18:34Z",
+        "original_wh": [
+          6400,
+          4264
+        ]
+      },
+      "match": {
+        "subject": "梅德韦杰夫",
+        "subject_en": "Daniil Medvedev",
+        "event": "Hangzhou",
+        "tz": "Asia/Shanghai",
+        "dates": [
+          "2026-09-27"
+        ]
+      },
+      "gates": {
+        "size": [
+          6400,
+          4264
+        ],
+        "layout": {
+          "ok": true,
+          "zoom": 1.0,
+          "focus": 0.541,
+          "focus_y": 0.5,
+          "face_out": [
+            495,
+            292,
+            585,
+            415
+          ],
+          "fill": 2.961,
+          "why": ""
+        },
+        "face": {
+          "status": "ok",
+          "verdict": "match",
+          "name": "梅德韦杰夫",
+          "similarity": {
+            "梅德韦杰夫": 0.5981,
+            "黄泽林": -0.027
+          },
+          "face": [
+            3198,
+            865,
+            3466,
+            1230
+          ],
+          "face_px": 365.4,
+          "eyes": "open",
+          "ear": 0.2949,
+          "pose": {
+            "eye_span": 0.407,
+            "sharp": 997.8,
+            "frontal": true,
+            "clear": true
+          }
+        }
+      },
+      "previous_portrait": {
+        "frame_at": 384.4,
+        "focus": 0.48,
+        "focus_y": 0.5,
+        "zoom": 1.0,
+        "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`；放梅德韦杰夫是账号所有者 2026-09-28 选的。\n四类源各查过（北京 23:20 ~ 09-28 00:40）：① 官方图库——`tools/find_cover_photo.py --player Wong/Medvedev --event Hangzhou --date 2026-09-27` WTA photo-resources、AP 都是 0 张；杭州公开赛没有可探的 WordPress 媒体库。② 赛后稿：这一场的赛后稿还没发。③ 主办方公众号当天战报未发。④ Getty / Imago 沙箱搜不了。\n**这一帧**：源片 384.4s，赛点拿下之后切到的近景（`contact_06` 384.5s 那格）：**正脸直视镜头、双眼睁着**，蓝色 Lacoste 球衣，和本场所有镜头一致；背景是「杭体」挡板。386.5 起黄泽林的后脑勺进了前景，不用。",
+        "_low_res_why": "源片 1920×1080，铺 1080×1440 按高算放大 1.33 倍（抽帧的理由见 `_frame_why`）。",
+        "_focus_why": "focus 0.48：这一帧脸的中心在源片横向约 0.48（contact_06 384.5s 那格量），3:4 窗口取 528~1338，左下角记分条（右缘约 440）和右上角 Tennis TV 台标都在窗外。纵向：头顶约 0.12、眼睛约 0.30、下巴约 0.52，铺满后约 y 175 / 430 / 750——台头带（0~170）之下、钩子带（790 起）之上。"
+      },
+      "removed_markers": [],
+      "tag_notes": [
+        "output/2026-09-28/reel/medvedev-wong-hangzhou-2026-qf/render.json"
+      ],
+      "considered": [
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/db93a2ff-9b68-408d-9dca-2429fef014ec/Daniil-Medvedev-030.jpg",
+          "caption": "2026 Hangzhou Medvedev Safiullin",
+          "problems": [
+            "标题／引用里除了主角还有 safiullin、球员 id SX50——两人同框（握手、合影）最大那张脸不一定是他，不换",
+            "EXIF 拍摄于当地 09-28 21:23:12，不在这场的窗口 当地 09-27 20:20~23:02 里——拍的是别的场"
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/9699d363-a482-43ed-9636-c96ec87184dd/Daniil-Medvedev-027.jpg",
+          "caption": "2026 Hangzhou Medvedev",
+          "problems": [
+            "EXIF 拍摄于当地 09-28 21:05:01，不在这场的窗口 当地 09-27 20:20~23:02 里——拍的是别的场"
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/9bb16a86-50f7-42ef-841b-1bd3d47ae298/Daniil-Medvedev-006.jpg",
+          "caption": "2026 Hangzhou Medvedev Safiullin",
+          "problems": [
+            "标题／引用里除了主角还有 safiullin、球员 id SX50——两人同框（握手、合影）最大那张脸不一定是他，不换",
+            "EXIF 拍摄于当地 09-28 19:35:15，不在这场的窗口 当地 09-27 20:20~23:02 里——拍的是别的场"
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/1531ba60-493c-446a-ba21-f0f63e9196bf/Daniil-Medvedev-021.jpg",
+          "caption": "2026 Hangzhou Medvedev",
+          "problems": [
+            "EXIF 拍摄于当地 09-28 20:44:25，不在这场的窗口 当地 09-27 20:20~23:02 里——拍的是别的场"
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/cc67edbf-a9ac-4a03-83c4-77ccc4f36d3c/Daniil-Medvedev-022.jpg",
+          "caption": "2026 Hangzhou Medvedev",
+          "problems": [],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-27 22:18:34，落在这场的窗口 当地 09-27 20:20~23:02 里（atp-media #4582617）"
+          ],
+          "rank": [
+            true,
+            false,
+            false,
+            true,
+            true,
+            123,
+            0.5981
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/49cc9286-6445-4560-a4ef-014765a04a4c/Daniil-Medvedev-024.jpg",
+          "caption": "2026 Hangzhou Medvedev",
+          "problems": [],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-27 22:33:28，落在这场的窗口 当地 09-27 20:20~23:02 里（atp-media #4582616）"
+          ],
+          "rank": [
+            true,
+            false,
+            false,
+            false,
+            true,
+            108,
+            0.4927
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/d57cbb29-7dd5-480e-9ec9-1a2c79becdc0/Daniil-Medvedev-019.jpg",
+          "caption": "2026 Hangzhou Medvedev",
+          "problems": [],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-27 21:25:40，落在这场的窗口 当地 09-27 20:20~23:02 里（atp-media #4582615）"
+          ],
+          "rank": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            155,
+            0.434
+          ]
+        }
+      ]
+    },
+    "rublev-jacquet-hangzhou-2026-sf": {
+      "status": "upgraded",
+      "at": "2026-09-28T20:53:04Z",
+      "first_sent": "2026-09-28T15:07:06Z",
+      "image": "assets/reel/rublev-jacquet-hangzhou-2026-sf-official.jpg",
+      "source": {
+        "channel": "atp-media",
+        "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/034f5d4f-1cb3-4c54-a50d-7d79811d3457/Andrey-Rublev-040.jpg",
+        "page": "",
+        "caption": "2026 Hangzhou Rublev",
+        "credit": "",
+        "item_id": "4583125",
+        "publish_utc": "2026-09-28T12:06:45Z",
+        "exif_taken": "2026:09:28 19:03:52",
+        "exif_taken_utc": "2026-09-28T11:03:52Z",
+        "original_wh": [
+          5513,
+          3676
+        ]
+      },
+      "match": {
+        "subject": "卢布列夫",
+        "subject_en": "Andrey Rublev",
+        "event": "Hangzhou",
+        "tz": "Asia/Shanghai",
+        "dates": [
+          "2026-09-28"
+        ]
+      },
+      "gates": {
+        "size": [
+          5513,
+          3676
+        ],
+        "layout": {
+          "ok": true,
+          "zoom": 1.0,
+          "focus": 0.764,
+          "focus_y": 0.5,
+          "face_out": [
+            457,
+            262,
+            623,
+            508
+          ],
+          "fill": 2.553,
+          "why": ""
+        },
+        "face": {
+          "status": "ok",
+          "verdict": "match",
+          "name": "卢布列夫",
+          "similarity": {
+            "卢布列夫": 0.506,
+            "雅凯": 0.0195
+          },
+          "face": [
+            3271,
+            669,
+            3697,
+            1297
+          ],
+          "face_px": 627.3,
+          "eyes": "open",
+          "ear": 0.347,
+          "pose": {
+            "eye_span": 0.318,
+            "sharp": 1232.2,
+            "frontal": true,
+            "clear": true
+          }
+        }
+      },
+      "previous_portrait": {
+        "frame_at": 33.5,
+        "focus": 0.45,
+        "focus_y": 0.5,
+        "zoom": 1.0,
+        "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 20:20 ~ 22:10）：① 官方图库——`tools/find_cover_photo.py --player Rublev --event Hangzhou --date 2026-09-28` WTA photo-resources、WTA 赛后稿头图都是 0 张，AP 页面两趟都没取到；杭州公开赛没有可探的 WordPress 媒体库。② 赛后稿：没有。③ 中文媒体：搜狗微信第一趟列出这一场的两篇（09-28 19:08、21:38），两篇都没有列出可用大图，列出的图全出自 11:03 那篇、是 1/4 决赛对加斯东；第二、三趟撞反爬。④ Getty / Imago 沙箱搜不了。官方图一上线 `reel-cover-upgrade` 会自动换图重推。\n**这一帧**：源片 33.5s，首盘 3-2 他发球拿下 40-0 之后的近景（frame-grab 0.5 秒一帧逐格看过 32.0~36.0，33.0~34.5 连着 1.5 秒都是正脸）：**正脸直视镜头、双眼睁着、合焦**，神情专注，粉紫色 K-Swiss 球衣、紫色头带，和本场所有镜头一致。先试过赛点后的 237.0s：runner 抓到的那一帧他眼睛斜向一侧、半眯，而且脸在画面偏下，下巴落进钩子带，调不开就换了这一帧。",
+        "_low_res_why": "源片 1920×1080，铺 1080×1440 按高算放大 1.33 倍（抽帧的理由见 `_frame_why`）。",
+        "_focus_why": "focus 0.45：这一帧脸的中心在源片横向约 0.45（frame-grab 33.5 那张量），3:4 窗口取约 459~1269，左下角记分条（右缘约 370）和右上角 Tennis TV 台标都在窗外。纵向：头带约 0.17、眼睛约 0.27、下巴约 0.47，铺满后约 y 245 / 390 / 680——台头带（0~170）之下、钩子带（790 起）之上。"
+      },
+      "removed_markers": [],
+      "tag_notes": [
+        "output/2026-09-28/reel/rublev-jacquet-hangzhou-2026-sf/render.json"
+      ],
+      "considered": [
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/84b553f4-5f30-42ba-9f9a-05666a1077d4/Andrey-Rublev-021.jpg",
+          "caption": "2026 Hangzhou Rublev",
+          "problems": [],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-28 17:47:02，落在这场的窗口 当地 09-28 17:35~19:18 里（atp-media #4583127）"
+          ],
+          "rank": [
+            true,
+            false,
+            false,
+            true,
+            true,
+            144,
+            0.439
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/4de63179-d528-47ec-ad18-4ada9d443be7/Andrey-Rublev-024.jpg",
+          "caption": "2026 Hangzhou Rublev",
+          "problems": [
+            "认人没过（unknown）：和封面主角卢布列夫只有 0.30，介于 0.15~0.34"
+          ],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-28 18:00:40，落在这场的窗口 当地 09-28 17:35~19:18 里（atp-media #4583126）"
+          ],
+          "tried": true
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/034f5d4f-1cb3-4c54-a50d-7d79811d3457/Andrey-Rublev-040.jpg",
+          "caption": "2026 Hangzhou Rublev",
+          "problems": [],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-28 19:03:52，落在这场的窗口 当地 09-28 17:35~19:18 里（atp-media #4583125）"
+          ],
+          "rank": [
+            true,
+            false,
+            true,
+            true,
+            true,
+            246,
+            0.506
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/cd3994a2-9040-4aee-9ac2-060b5f7e995a/Andrey-Rublev-032.jpg",
+          "caption": "2026 Hangzhou Rublev",
+          "problems": [],
+          "relaxed": [
+            "标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-28 18:16:21，落在这场的窗口 当地 09-28 17:35~19:18 里（atp-media #4583124）"
+          ],
+          "rank": [
+            true,
+            false,
+            false,
+            false,
+            true,
+            362,
+            0.5199
+          ]
+        },
+        {
+          "channel": "atp-media",
+          "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/d334f23f-f598-4044-b019-e49ab8583eb2/Andrey-Rublev-007.jpg",
+          "caption": "2026 Hangzhou Rublev Jacquet",
+          "problems": [
+            "标题／引用里除了主角还有 jacquet——两人同框（握手、合影）最大那张脸不一定是他，不换"
+          ]
+        }
+      ]
+    }
+  },
+  "_why": "tools/cover_upgrade.py 自动把抽帧封面换成官方实拍的账（账号所有者 2026-09-27 O4「自动换图重推」）。upgrades：status=upgraded 的 slug 不再换第二次，而且从 build_match_reel.OWNER_APPROVED_FRAME_COVERS 里减掉；dispatches 是对账重派 render 的时刻。attempts：还没换成的——tried 是下过、闸没过的候选（下一班跳过），reverts／next_at 是换完过不了正式封面闸之后的退避。"
+}

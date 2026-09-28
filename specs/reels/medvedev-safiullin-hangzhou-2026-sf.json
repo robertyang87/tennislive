@@ -71,11 +71,12 @@
       }
     ],
     "portrait": {
-      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 2026-09-28 21:40 ~ 23:30）：① 官方图库——`tools/find_cover_photo.py` Getty/AFP 这一场 0 张可用；② ATP 赛后稿当时未配可用大图；③ ATP Tour 官方微博当晚半决赛帖未找到可用原图；④ Tennis TV 官方 Instagram 图片帖 `https://www.instagram.com/p/Dd1StgJszdN/` 有大面积榜单压字，不合格；⑤ Tennis TV 官方 YouTube 缩略图 （https://img.youtube.com/vi/nSaTYP-T8sM/maxresdefault.jpg，1280x720）有大面积 HIGHLIGHTS/HANGZHOU SEMI-FINALS 压字，不符合「禁止大面积 baked-in 文案」要求。\n抽帧选 514.0s（原 502.0s 认人／睁眼闸实测不过：眼睛纵横比 0.0296<0.16，赛后长出一口气时闭眼，前后±1秒无可用帧）：赛后离场时与球迷互动的中景，梅德韦杰夫正脸、眼睛睁开，持拍，和钩子「挺进决赛」同一个人同一场，清晰偏正面。",
-      "focus": 0.5,
-      "focus_y": 0.45,
-      "frame_at": 514.0,
-      "zoom": 1.0
+      "image": "assets/reel/medvedev-safiullin-hangzhou-2026-sf-official.jpg",
+      "focus": 0.62,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_why": "自动换图（账号所有者 2026-09-27 O4「自动换图重推」，tools/cover_upgrade.py）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/28/9699d363-a482-43ed-9636-c96ec87184dd/Daniil-Medvedev-027.jpg（条目 #4583146，接口发布 2026-09-28T13:40:22Z，EXIF 拍摄 2026:09:28 21:05:01（UTC 2026-09-28T13:05:01Z），原图 4808×3205），说明原文「2026 Hangzhou Medvedev」，署名 WangZheng。替换推送时用的 514.0s 抽帧。",
+      "_gates": "① 点名：说明／文件名有「Daniil Medvedev」「Hangzhou」，日期对上当地 2026-09-28（Asia/Shanghai；日期来源 flashscore dc_1_QmOLdkIG）（放宽：标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 09-28 21:05:01，落在这场的窗口 当地 09-28 19:35~21:38 里（atp-media #4583146））；EXIF 拍摄 2026:09:28 21:05:01。② 分辨率：4808×3205，zoom 1 铺 1080×1440 是 2.23×（不放大）。③ 认人：最大那张脸像 梅德韦杰夫 0.53（≥ 0.34）。④ 睁眼：EAR 0.2836（≥ 0.16）。⑤ 钩子带：脸落在 y305~534，钩子顶边 790。排序：[True, False, False, True, True, 229, 0.5324]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。"
     },
     "result": "7-5 6-4",
     "scoreboard": {
