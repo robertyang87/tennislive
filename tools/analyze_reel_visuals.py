@@ -377,11 +377,18 @@ def recheck_after_facts_change(draft: dict) -> str | None:
     爆冷那一半反过来：probe 那一趟按 winner_celebration 把 loser_fighting 判不合格
     （retryable false），补上 brief 之后再没人重审，卡到过期、不告警。
 
-    处置（只动 `_visual_evidence`）：
-    - 拿**存着的那份模型回答**按新赛果重跑 `clean_report` 的核对：现在不过 → waiting，
-      `input_sha256` 留着（同一张照片、同一份回答，照片里是谁不随赛果变；换图后工作流照旧重审）
-    - 现在过 → 这份结论是在不知道赛果时给的，**作废**：摘掉 `input_sha256`（`main` 按它复用 pass
-      ——不摘就算重审也原样复用）、`retryable` 置 true、状态 waiting，reel-auto-ready 走原来那条重审路
+    处置（只动 `_visual_evidence`）：**一律作废，走原来那条重审路**——摘掉 `input_sha256`（`main` 按它
+    复用 pass，不摘就算重审也原样复用）、`retryable` 置 true、状态 waiting。
+    - 拿**存着的那份模型回答**按新赛果重跑 `clean_report` 的核对，不过的那几条跟 `STALE_VERDICT` 一起
+      留在 `problems` 里给人看；**不能拿它当「同一张照片不再问」的理由**（第四轮复审）：那份回答是
+      **瞎答的**——prompt 里 `_match` 只有 flashscore_id、没有 `_cover_brief`，模型拿不到球员名字和赢家，
+      `ask_minimax` 让它「认不出留空」。它的 `subject` 空着／写了表外译名、`winner_visible` 蒙错，
+      都不说明照片里是输家。那一版留着哈希、`retryable` false：工作流不重审、`refresh_reel_cover`
+      见「已有封面」不换图、`_feed_retry` 在 healed 时摘掉——**不告警、躺到 PENDING_MAX_AGE**
+      （回放 rv5r_stuck_after_heal.py：空 subject／莎巴伦卡／winner_visible=false 三种全卡）。
+      `main` 上同一个 503 让 probe 红、自愈放掉 slug、重 probe 时带着完整 `_match` 审——不丢这场
+    - 代价至多**每份补齐的草稿多一次**走原路的重审：重审那一趟 `clean_report` 把 `retryable` 写回
+      false、哈希钉上新的，真是输家的照片就停在 waiting（和 `main` 一样），不会反复问
     - `visual_status == "error"`（接口失败）不动：它本来就会重审
 
     时长传无穷：窗口越没越出源片，probe 那一趟已经按真时长核过，和赛果无关。
@@ -391,17 +398,14 @@ def recheck_after_facts_change(draft: dict) -> str | None:
             or previous.get("visual_status") == "error":
         return None
     _, problems = clean_report(previous, draft, float("inf"))
-    report = {**previous, "status": "waiting", "visual_status": "waiting"}
-    if problems:
-        report.update(retryable=False, problems=problems)
-        note = ("⚠️ 赛果补齐之后，probe 那一趟的视觉结论按新赛果不过闸："
-                + "；".join(problems) + "——留在 waiting")
-    else:
-        report.pop("input_sha256", None)
-        report.update(retryable=True, problems=[STALE_VERDICT])
-        note = ("赛果补齐之后作废 probe 那一趟的视觉结论（当时不知道赢家）——"
-                "reel-auto-ready 下一步按新赛果重审")
+    report = {key: value for key, value in previous.items() if key != "input_sha256"}
+    report.update(status="waiting", visual_status="waiting", retryable=True,
+                  problems=[STALE_VERDICT, *problems])
     draft["_visual_evidence"] = report
+    note = ("赛果补齐之后作废 probe 那一趟的视觉结论（当时不知道赢家）——"
+            "reel-auto-ready 下一步按新赛果重审")
+    if problems:
+        note += "；那份回答按新赛果本来也不过：" + "；".join(problems)
     return note
 
 

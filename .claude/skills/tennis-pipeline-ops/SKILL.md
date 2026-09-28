@@ -5005,8 +5005,16 @@ promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角
 （retryable false），补上 brief 之后永不重审、卡到过期不告警。main 上不会：probe 红 → 重 probe 时 `_match` 已经在了。
 
 - `retry_feed_blocks` 这一趟改了 `_match`／`_cover_brief`、**且赛果定下来了**（`result_verified`；没定的 promote 本来不收，
-  这时作废只会拿半截赛果再问一次模型）→ `analyze_reel_visuals.recheck_after_facts_change`（**不调模型**）：存着的回答按新赛果重跑 `clean_report` 的核对，不过 → waiting（哈希留着，同一张照片不再问）；
-  过 → 作废：摘 `input_sha256`（`main` 按它复用 pass）、`retryable: true`、waiting，走原来那条重审路。`error` 的不动
+  这时作废只会拿半截赛果再问一次模型）→ `analyze_reel_visuals.recheck_after_facts_change`（**不调模型**）：**一律作废**——
+  摘 `input_sha256`（`main` 按它复用 pass）、`retryable: true`、waiting，走原来那条重审路；存着的回答按新赛果重跑
+  `clean_report` 的核对，不过的那几条跟「按新赛果重审」一起留在 `problems` 里给人看。`error` 的不动
+- ⚠️ 第四轮复审改掉了「不过 → 哈希留着，同一张照片不再问」：那份回答是**瞎答的**（prompt 里没名字、没赢家，
+  `ask_minimax` 让它「认不出留空」），`subject` 空着／表外译名／`winner_visible` 蒙错都不说明照片里是输家——
+  留着哈希就不重审、`refresh_reel_cover` 见「已有封面」不换图、`_feed_retry` 在 healed 时摘掉，**不告警地躺到过期**
+  （`rv5r_stuck_after_heal.py` 三种全卡；带着赢家审过的 125 份 pending 草稿里 `cover.subject` 空着的有 66 份（2026-09-28 实测））。
+  代价至多每份补齐的草稿多一次重审：重审那一趟 `clean_report` 把 `retryable` 写回 false、钉上新哈希，真是输家就停在
+  waiting（和 main 一样），不反复问。判据 `test_赛果补齐之后_probe时瞎答的赢家照片_不许凭那份回答判死`、
+  `test_赛果补齐之后_重审只多一次_真是输家的照片停在waiting不反复问`
 - `apply_story` 认得上一趟自己写的结尾兑现段（`_why` 以 `ENDING_WHY` 开头），重审第二次走到它时结尾不再放两遍
 
 几处小补（同一轮 nit）：
@@ -5014,7 +5022,7 @@ promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角
 | 原来 | 现在 |
 |---|---|
 | 撤了文案报 `healed`、`_feed_retry` 摘掉，没有告警（没有东西会再起草它）；`dropped` 只打 `::warning::` | `copy_dropped`／`dropped`／重跑崩了都记 `_feed_retry.needs_human`（跨班留着）：`::warning::` ＋ run 摘要**只打第一次**，`pipeline_health.feed_retry_stuck` 按它点名 |
-| flashscore 挂住不回，一趟重跑 2~6 分钟，3 份草稿就能把 15 分钟的 job 拖超时，`tries` 永远不涨 | 工作流 `timeout 120`，被掐（124）另起 `--timed-out 120` 补记一趟（`tries`＋1，试满停手）；写草稿先写临时文件再换名 |
+| flashscore 挂住不回，一趟重跑 2~6 分钟，3 份草稿就能把 15 分钟的 job 拖超时，`tries` 永远不涨 | 工作流 `timeout 120`，被掐（124）另起 `--timed-out 120` 补记一趟（`tries`＋1，试满停手）；写草稿先写临时文件再换名。第四轮：每份 120s 盖不住「五六份同一班到期」，整班再加 `FEED_RETRY_BUDGET=480` 秒的累计预算（过了剩下的打 `[later]`、不记次数、下一班再来）；落库前 `rm -f specs/reels/pending/*.tmp` |
 | 连着三班（≈ 半小时）花光三次 | 退避：第一次下一班就来，之后隔 20、40 分钟（`FEED_RETRY_BACKOFF × 2**tries`，命令行那层判，返回 `later`） |
 | 试满后每一班照旧进这一步、刷 warning | `exhausted_at` 在就不进；`exhausted` 不再打 warning |
 | 崩了只 `echo`，不涨次数、不点名 | 从盘上那份草稿记 `exhausted_at` ＋ `needs_human`（不写改了一半的），返回 `broken` |
@@ -5023,4 +5031,6 @@ promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角
 **人处置完怎么让它重来**：`python tools/retry_feed_blocks.py --draft specs/reels/pending/<slug>.draft.json --rearm --write`，
 推 main（`tries` 清零、摘 `exhausted_at`／`needs_human`；账上已没有要重读的块就整个摘掉——撤了文案那种重读补不回来，
 要么手写 `editorial`，要么照编排器那条 `match-reel.yml mode=probe` 重新备料）。pipeline_health 的报表里印着这一句。
-⚠️ 转正要 `hit_data`：`_durations` 只有这一块写，缺了 waiting 报「比赛时长没有结构化来源」。判据 `tests/test_feed_retry.py`（25 条）。
+⚠️ 转正要 `hit_data`：`_durations` 只有这一块写，缺了 waiting 报「比赛时长没有结构化来源」。判据 `tests/test_feed_retry.py`。
+⚠️ `pipeline_health.render_report` 的 `feed_stuck` **只收关键字**：`wp/interview-subs-before-render` 在同一个位置加了
+`parked_subs`，两边都按位置传，合并时留下两个形参就会串栏（点名点错一栏、不报错）。

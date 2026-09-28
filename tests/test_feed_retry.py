@@ -313,8 +313,24 @@ def test_reel_auto_ready每一班先重跑欠着的备料_再补封面和转正(
     assert "|| FEED_RC=$?" in line, "被掐掉不许让 bash -e 带崩整个循环"
     fallback = run[at:at + 600]
     assert '"$FEED_RC" = "124"' in fallback and "--timed-out" in fallback, "被掐掉（124）要补记一趟"
-    guard = run[run.rindex("if [", 0, at):at]
+    guard = run[run.rindex("._feed_retry.blocks", 0, at):at]
     assert "._feed_retry.exhausted_at" in guard, "停手了的不再进这一步（不然每一班刷一遍 warning）"
+    # 第四轮复审 nit：每份 120s 只包住一份；同一班五六份一起到期、flashscore 挂住不回，累计冲过
+    # job 的 timeout-minutes → 落库那步不跑、tries 不涨、下一班原样重演。整班要有累计预算
+    budget = run[run.rindex("if [", 0, at):at]
+    assert '"$SECONDS" -ge "$FEED_RETRY_BUDGET"' in budget, "过了整班预算，剩下的这一班不重跑"
+    assert budget.index("[later]") < budget.index("else"), "预算用满那一支不能跑重跑"
+    import re  # noqa: PLC0415
+    import yaml  # noqa: PLC0415
+    seconds = int(re.search(r"^\s*FEED_RETRY_BUDGET=(\d+)$", run, re.M).group(1))
+    assert run.index("FEED_RETRY_BUDGET=") < run.index("for DRAFT in"), "预算是整班的，不是每份的"
+    wf = yaml.safe_load((ROOT / ".github/workflows/reel-auto-ready.yml").read_text(encoding="utf-8"))
+    minutes = wf["jobs"]["ready"]["timeout-minutes"]
+    # 最后一份在预算边上开跑还要 120s（＋补记一趟）；再留 3 分钟给装依赖和后面的审核、落库
+    assert seconds + 120 + 30 + 180 <= minutes * 60, (seconds, minutes)
+    # 第四轮复审 nit：先写临时文件再换名，被掐在两步之间留下的 .tmp 不许被 git add 带进去
+    commit = run[run.index("git add specs/reels") - 200:run.index("git add specs/reels")]
+    assert "rm -f specs/reels/pending/*.tmp" in commit
 
 
 # ── pipeline_health 点名 ───────────────────────────────────────────────────
@@ -345,7 +361,7 @@ def test_健康检查点名试满仍没读通的新鲜草稿_过期的和还在�
     assert len(stuck) == 2 and "stuck-one" in stuck[1] and "points" in stuck[1]
     assert "copy-gone" in stuck[0] and "文案对不上" in stuck[0]
     stuck = stuck[1:]
-    _report, alerts = ph.render_report([], [], (0, 0, 0.0), [], None, stuck)
+    _report, alerts = ph.render_report([], [], (0, 0, 0.0), [], None, feed_stuck=stuck)
     assert stuck[0] in alerts and "stuck-one" in _report
     assert "--rearm --write" in _report, "告警要带上怎么让它重来，不让人去翻 skill"
     # 去重按 slug：同一份草稿换了一句错误文字，不算新告警
@@ -359,7 +375,12 @@ def test_健康检查的稀疏检出带着草稿和新鲜窗的出处():
     assert "specs/reels/pending/*.draft.json" in checkout
     assert "tools/promote_reel_draft.py" in checkout, "feed_retry_stuck import 它的 PENDING_MAX_AGE"
     body = (ROOT / "tools/pipeline_health.py").read_text(encoding="utf-8")
-    assert "orchestrator_productivity(), feed_retry_stuck())" in body, "main 要真的把它交给报表"
+    assert "orchestrator_productivity(), feed_stuck=feed_retry_stuck())" in body, "main 要真的把它交给报表"
+    # 第四轮复审 nit：只收关键字——别的分支在同一个位置加了列表参数，按位置传会串栏
+    import inspect  # noqa: PLC0415
+    import tools.pipeline_health as ph  # noqa: PLC0415
+    kind = inspect.signature(ph.render_report).parameters["feed_stuck"].kind
+    assert kind is inspect.Parameter.KEYWORD_ONLY
 
 
 # ── 账本本身：只在草稿上，转正剥掉，拼错也拦得住 ───────────────────────────
@@ -387,10 +408,10 @@ def test_账本字段_转正剥掉_不是真字段所以不会被下划线闸误
 import analyze_reel_visuals as visual  # noqa: E402
 
 
-def _probe_verdict(draft: dict, *, subject: str, moment: str) -> dict:
+def _probe_verdict(draft: dict, *, subject: str, moment: str, winner_visible: bool = True) -> dict:
     """probe 那一趟：模型按看得见的给答案，`clean_report` 按**当时**的草稿核，钉上图片哈希。"""
     draft["cover"]["portrait"] = {"image": "assets/reel/sabalenka-noskova-cover.jpg"}
-    window = {"start": 100, "end": 110, "kind": "match_point", "winner_visible": True,
+    window = {"start": 100, "end": 110, "kind": "match_point", "winner_visible": winner_visible,
               "reason": "赛点 105s 落地", "confidence": 0.9}
     raw = {"cold_open": dict(window), "ending": dict(window),
            "cover": {"same_match": True, "subject": subject, "moment": moment,
@@ -430,9 +451,85 @@ def test_赛果补齐之后_probe时给的封面人物是输家_不许带着旧p
     assert ev["visual_status"] == "waiting" and ev["status"] == "waiting", (
         "赛果补齐之后旧 pass 原样留着——promote 会把输家抄进 cover.subject、自动渲、自动推")
     assert any("封面人物应为 诺斯科娃" in x for x in ev["problems"]), ev["problems"]
+    assert visual.STALE_VERDICT in ev["problems"]
     assert "MiniMax 冷开场/结尾/封面视觉证据未通过" in promote.waiting_reasons(draft)
-    assert not _workflow_rereviews(draft), "同一张照片、同一份回答：不再花一次模型（换图时工作流照旧重审）"
-    assert "按新赛果不过闸" in "\n".join(draft["_notes"])
+    # 第四轮复审：原来这里断言「同一张照片、同一份回答：不再花一次模型」——那份回答是 probe 那一趟
+    # **瞎答的**（prompt 里没名字、没赢家），不能凭它判定照片里是输家；不重审就不告警地躺到过期
+    assert _workflow_rereviews(draft) and "input_sha256" not in ev and ev["retryable"] is True
+    assert not _analyze_reuses(draft)
+    assert "本来也不过" in "\n".join(draft["_notes"])
+
+
+def test_赛果补齐之后_重审只多一次_真是输家的照片停在waiting不反复问(flash, tmp_path, monkeypatch):
+    """代价的上界：作废之后走的是**原来那条**重审路，`analyze_reel_visuals.main` 按新赛果核完把
+    `retryable` 写回 false、哈希钉上——真是输家的照片停在 waiting（和 main 一样），下一班不再问。"""
+    flash.down = {"df_mh_1"}
+    draft = _assemble()
+    _probe_verdict(draft, subject="萨巴伦卡", moment="winner_celebration")
+    flash.down.clear()
+    assert a.retry_feed_blocks(draft) == "healed"
+
+    cover = tmp_path / "cover.jpg"
+    cover.write_bytes(b"official photo")
+    for i in range(2):
+        (tmp_path / f"contact_{i:03d}.jpg").write_bytes(b"frame%d" % i)
+    (tmp_path / "probe.json").write_text(json.dumps({"duration": 200.0}), encoding="utf-8")
+    draft["cover"]["portrait"] = {"image": str(cover)}
+    draft["_visual_evidence"]["cover_image"] = str(cover)
+    path = tmp_path / "d.draft.json"
+    path.write_text(json.dumps(draft, ensure_ascii=False), encoding="utf-8")
+    current = visual.evidence_hash(visual.select_contact_sheets(list(tmp_path.glob("contact_*.jpg"))), cover)
+    assert _workflow_rereviews(draft, current)
+
+    asked = []
+
+    def model(draft, frames, cover, probe, key):  # 这一趟 prompt 里带着完整 _match：它认出了输家
+        asked.append(draft["_match"]["winner"])
+        window = {"start": 100, "end": 110, "kind": "match_point", "winner_visible": True,
+                  "reason": "赛点 105s 落地", "confidence": 0.9}
+        return visual.clean_report({"cold_open": dict(window), "ending": dict(window),
+                                    "cover": {"same_match": True, "subject": "萨巴伦卡",
+                                              "moment": "winner_celebration",
+                                              "reason": "同场、握拳", "confidence": 0.9}},
+                                   draft, float(probe["duration"]))
+
+    monkeypatch.setattr(visual, "verified_minimax_report", model)
+    monkeypatch.setenv("MINIMAX_API_KEY", "k")
+    monkeypatch.setattr(sys, "argv", ["analyze_reel_visuals.py", "--draft", str(path),
+                                      "--outdir", str(tmp_path), "--write"])
+    assert visual.main() == 0 and asked == ["诺斯科娃"]
+    after = json.loads(path.read_text(encoding="utf-8"))
+    ev = after["_visual_evidence"]
+    assert ev["visual_status"] == "waiting" and ev["retryable"] is False
+    assert any("封面人物应为 诺斯科娃" in x for x in ev["problems"])
+    assert not _workflow_rereviews(after, current), "重审过一次就停——不许每一班再问一遍"
+
+
+@pytest.mark.parametrize("subject, winner_visible", [
+    ("", True),            # 模型当时不认得这张脸，按提示「认不出留空」
+    ("诺斯柯娃", True),     # 表外译名
+    ("诺斯科娃", False),    # 当时不知道谁赢，winner_visible 蒙成 false
+], ids=["subject空", "表外译名", "winner_visible蒙错"])
+def test_赛果补齐之后_probe时瞎答的赢家照片_不许凭那份回答判死(flash, subject, winner_visible):
+    """第四轮复审：probe 那一趟 `_match` 只有 flashscore_id、没有 `_cover_brief`，prompt 里一个名字都没有。
+    照片**就是赢家**（诺斯科娃），模型只是没认出来——按新赛果核那份回答必然不过；这时留着哈希、
+    `retryable` false，工作流不重审、`refresh_reel_cover` 见「已有封面」不换、`_feed_retry` 在 healed
+    时摘掉，**不告警地躺到 PENDING_MAX_AGE**（回放 rv5r_stuck_after_heal.py，三种全卡）。"""
+    flash.down = {"df_mh_1"}
+    draft = _assemble()
+    ev = _probe_verdict(draft, subject=subject, moment="winner_celebration",
+                        winner_visible=winner_visible)
+    # probe 那一趟：subject 核不了（不知道赢家）→ pass；winner_visible 蒙成 false → waiting、不可重试
+    assert ev["visual_status"] == ("pass" if winner_visible else "waiting")
+    assert not _workflow_rereviews(draft), "哈希钉着、不可重试：不补赛果就不会再审"
+    flash.down.clear()
+    assert a.retry_feed_blocks(draft) == "healed" and "_feed_retry" not in draft
+    ev = draft["_visual_evidence"]
+    assert len(ev["problems"]) > 1, "那份回答按新赛果本来也不过——两句都留着给人看"
+    assert ev["visual_status"] == "waiting", "旧回答不过，照样不许转正"
+    assert "MiniMax 冷开场/结尾/封面视觉证据未通过" in promote.waiting_reasons(draft)
+    assert _workflow_rereviews(draft), "不重审就是不告警地丢掉这一场"
+    assert not _analyze_reuses(draft)
 
 
 def test_赛果补齐之后_旧结论对得上也作废_走原来那条重审路(flash):

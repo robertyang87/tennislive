@@ -307,8 +307,10 @@ def feed_retry_stuck(now: datetime | None = None) -> list[str]:
 def render_report(health: list[WorkflowHealth], steps: list[dict],
                   sla: tuple[int, int, float], stale: list[str],
                   orchestrator: tuple[str | None, float | None] | None = None,
-                  feed_stuck: list[str] | None = None,
+                  *, feed_stuck: list[str] | None = None,
                   ) -> tuple[str, list[str]]:
+    # `feed_stuck` 只收关键字：别的分支也在这个位置后面加列表参数（采访字幕停车那一项），两边都留下
+    # 合并时，按位置传的那一份会落进对方的形参——报表点名点错一栏，不报错。
     alerts: list[str] = []
     lines = ["## 自动视频流水线健康度", "", "| 工作流 | 样本 | 成功 | 失败率 | 中位耗时 | 连续失败 |",
              "|---|---:|---:|---:|---:|---:|"]
@@ -563,7 +565,7 @@ def main(argv: list[str] | None = None) -> int:
         steps.extend(these_steps)
     sla = sla_health()
     report, alerts = render_report(health, steps, sla, stale_publications(),
-                                   orchestrator_productivity(), feed_retry_stuck())
+                                   orchestrator_productivity(), feed_stuck=feed_retry_stuck())
     # 和看板同一份数据（每条受监控工作流 24 小时内的 run）、同一个定义。
     # ⚠️ 原来取的是全仓最近 100 条——忙时只够回溯一个半小时，而这一班实际两三个小时
     # 才来一趟，一处没人重试的失败滚出列表就永远不推（`monitored_runs` 顶注）。
