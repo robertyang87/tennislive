@@ -674,22 +674,22 @@ def test_配音把比分读成几比几而不是几杠几():
     assert not bad, "\n".join(bad)
 
 
-def test_配音把挑球的挑读成一声():
-    """挑球 is tiāo — to pick one out. The voice read it tiǎo, as in 挑战.
-
-    edge-tts takes no pronunciation hints, so the spoken copy swaps in 选,
-    which means the same thing and has one reading. On-screen text keeps 挑.
-    挑战 is genuinely tiǎo and must survive untouched — including the
-    Gentlemen's 挑战杯, which would otherwise become 选战杯.
+def test_挑原样进合成器_不再换成选():
+    """The 挑→选 swap was dropped on 2026-09-27. 挑球 already reads tiāo
+    without it (measured: calib 挑球a/b/c correct). Where 挑 means a lob,
+    选 is a different word: 一记挑球过顶 would be heard as 一记选球过顶.
+    So 挑 now reaches the voice unchanged, in both senses. 挑战 (and the
+    Gentlemen's 挑战杯) always did.
     """
     from tennislive.video.explainer import speakable
 
-    assert speakable("球员发球前挑球，挑那颗最不毛的") == "球员发球前选球，选那颗最不毛的"
+    for text in ("球员发球前挑球，挑那颗最不毛的", "一记挑球过顶", "网前被他轻轻一挑",
+                 "把球挑过对手头顶", "挑到底线", "而且主队挑地点、挑场地。"):
+        assert speakable(text) == text, text
     assert speakable("鹰眼挑战制") == "鹰眼挑战制"
     assert speakable("辛纳手里那只是男单挑战杯") == "辛纳手里那只是男单挑战杯"
-
-    bad = _problems(P.reading_problems, having="三声")
-    assert not bad, "\n".join(bad)
+    # 预检不再要求「挑」被换掉（前提随 挑→选 一起拿掉了）
+    assert not _problems(P.reading_problems, having="挑")
 
 
 # 每个元组是同一个人的几种叫法。分组是必需的：「德约」和「德约科维奇」不是两个人，
