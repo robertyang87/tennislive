@@ -131,3 +131,28 @@ def test_一条源片的意外只算它自己待下一轮_同批的照常落盘(
     assert "::warning::bad 冷开场待下一轮：KeyError" in out, out
     assert json.loads((specs / "good.json").read_text("utf-8"))["lead_in"]["subs"]
     assert "lead_in" not in json.loads((specs / "bad.json").read_text("utf-8"))
+
+
+def test_冷开场译文把轮次写成N强_不写_下一轮重配(tmp_path, monkeypatch, capsys):
+    """复审 nit（2026-09-27）：`lead_in.subs[].zh` 是模型译的，全库测试 `test_轮次写分数式不写N强`
+    扫它、对自动 spec 也是硬的，而这一步直推 main——写进去就是下一个 PR 把 main 打红。
+    和 `build_interview_request`、promote 转正闸同一个判据：不写，这条留到下一轮。
+    「打进 8 强」这种成绩说法照写。"""
+    specs = tmp_path / "interviews"
+    specs.mkdir()
+    base = {"opening": {"kind": "none"}, "requested_content_type": "on_court"}
+    for slug in ("round-name", "reached"):
+        (specs / f"{slug}.json").write_text(json.dumps({**base, "slug": slug}), "utf-8")
+    monkeypatch.setattr(lead, "SPECS", specs)
+    said = {"round-name": "这是一场美网八强的较量", "reached": "他打进8强了"}
+    monkeypatch.setattr(lead, "attach", lambda spec, chat: {
+        **spec, "lead_in": {"subs": [{"en": "x", "zh": said[spec["slug"]]}]}})
+    import tennislive.research.brief as brief
+    monkeypatch.setattr(brief, "Chat", lambda: type("C", (), {"ready": True})())
+    monkeypatch.setattr(sys, "argv", ["attach", "--write", "--max-parallel", "1"])
+
+    assert lead.main() == 0
+    out = capsys.readouterr().out
+    assert "::warning::round-name 冷开场待下一轮：冷开场译文把轮次写成「N 强」（八强）" in out, out
+    assert "lead_in" not in json.loads((specs / "round-name.json").read_text("utf-8"))
+    assert json.loads((specs / "reached.json").read_text("utf-8"))["lead_in"]["subs"]

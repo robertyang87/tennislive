@@ -239,6 +239,16 @@ def main() -> int:
             # ——摘要一行都不打，退出码非零，而已经 --write 落盘的那几条谁也不
             # 知道。一条源片的意外只该算它自己「待下一轮」。
             return path, None, f"{type(exc).__name__}: {exc}"
+        # 冷开场字幕的中文是模型译的，而全库测试 `test_轮次写分数式不写N强` 扫 `lead_in.subs[].zh`
+        # （`non_annotation_strings`）、对自动 spec 也是硬的；这一步由 GITHUB_TOKEN 直推 main、
+        # CI 不跑——写进去就是下一个不相干的 PR 把 main 打红（复审 nit，和
+        # `build_interview_request._round_name_review`、promote 转正闸同一个判据）。
+        # 不写，这条留到下一轮再配；不往翻译提示里加约束（账号所有者 2026-09-27）。
+        from spec_wording import (non_annotation_strings,  # noqa: PLC0415
+                                  strength_round_hits)
+        if hits := strength_round_hits(list(non_annotation_strings(updated.get("lead_in")))):
+            return path, None, (f"冷开场译文把轮次写成「N 强」（{'、'.join(hits)}），不写，"
+                                "下一轮重配")
         if args.write:
             if file_digest(path) != observed:
                 return path, None, "正式稿已更新，拒绝用旧片头覆盖"

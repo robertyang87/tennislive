@@ -227,13 +227,23 @@ _BRACKET = re.compile(r"(\s*)[\[［]\s*(\d+)\s*([-–:])\s*(\d+)\s*[\]］]")
 _RETIRED = re.compile(r"ret\.?|退赛|w\.?/?o\.?|walkover|不战而胜", re.I)
 
 
+_PREV_SET = re.compile(r"(\d+)\s*[-–]\s*(\d+)\s*$")
+
+
 def _bracket_notes(score: str) -> str:
-    """方括号 → 注脚还是一盘：紧贴前一盘（中间没有空格）的改写成圆括号注脚，交给 `_SET`
-    整个吃掉（`1-0[10-8]` 于是和 `1-0(10-8)` 一样算一盘）；单独一格但到不了 10 分的，
-    只可能是抢七小分，删掉；单独一格、到 10 分的是抢十盘，原样留着。"""
+    """方括号 → 注脚还是一盘：紧贴前一盘（中间没有空格）、**而且前一盘是抢七盘
+    （{7,6}）或 `1-0` 那种抢十占位**的，改写成圆括号注脚，交给 `_SET` 整个吃掉
+    （`6-7[5-7]` 是那一盘的抢七小分，`1-0[10-8]` 和 `1-0(10-8)` 一样算一盘）；
+    其余一律按单独一格判——到不了 10 分的只可能是抢七小分，删掉；到 10 分的是抢十盘，
+    原样留着（`_SET` 会把它当一盘数）。
+
+    ⚠️ 复审 nit（2026-09-27）：原来「紧贴」就一律当注脚，`6-4 3-6[10-8]`（抢十盘直接贴在
+    前一盘后面）被当成 3-6 那一盘的注脚，数成 1:1、报成输家视角——假红。"""
     def one(m: re.Match) -> str:
         if m.start() > 0 and not m.group(1):
-            return f"({m.group(2)}{m.group(3)}{m.group(4)})"
+            prev = _PREV_SET.search(score[:m.start()])
+            if prev and {int(prev.group(1)), int(prev.group(2))} in ({6, 7}, {0, 1}):
+                return f"({m.group(2)}{m.group(3)}{m.group(4)})"
         if max(int(m.group(2)), int(m.group(4))) < 10:
             return m.group(1)
         return m.group(0)

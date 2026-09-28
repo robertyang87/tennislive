@@ -256,12 +256,27 @@ def _explicit_revision(req: dict, spec_path: Path, spec: dict) -> bool:
                 and req.get("expected_spec_sha256") == file_digest(spec_path))
 
 
+def _awaiting_round_review(req: dict, slug: str) -> bool:
+    """同一份请求上一趟建出来的 spec 因为机器译文把轮次写成「N 强」，落成了
+    `<slug>.draft.json`＋`manual_review_required`，在等人改译文——别每一趟再建一遍、
+    把人改到一半的草稿盖掉（见 `_round_name_review`）。请求一改（身份变了）就照常重建。"""
+    draft = SPECS / f"{slug}.draft.json"
+    if not draft.is_file():
+        return False
+    try:
+        doc = _read(draft)
+    except (OSError, ValueError):
+        return False
+    return bool(doc.get("manual_review_required")) and (
+        (doc.get("_request_origin") or {}).get("request_sha256") == _request_identity(req))
+
+
 def is_pending(path: Path) -> bool:
     req = _read(path)
     slug = _slug(req, path)
     spec_path = SPECS / f"{slug}.json"
     if not _exists_or_tracked(spec_path):
-        return True
+        return not _awaiting_round_review(req, slug)
     # A sparse or unreadable formal spec is not permission to overwrite it.
     if not spec_path.is_file():
         return False
@@ -290,7 +305,9 @@ def pending_paths(only_slug: str = "") -> list[Path]:
         try:
             slug = _slug(_read(path), path)
             pending = is_pending(path)   # 正式 spec 坏了也抛——一样交给 build 那一步报
-        except (OSError, ValueError):   # JSONDecodeError 是 ValueError
+        except Exception:  # noqa: BLE001 —— 读不了、形状不对（`"start": null` 在
+            # `_request_contract_changed` 里是 TypeError，复审 nit 复现过）一律照样列进来，
+            # 交给 build 那个逐条 try 记进失败清单；这里一抛就是整趟连名单一起炸
             pass
         if only_slug and slug != only_slug:
             continue
@@ -629,6 +646,25 @@ def _apply_request_delta(current, before, after):
     return result
 
 
+def _round_name_review(req: dict, spec: dict, existing: dict, copy_text: str,
+                       existing_copy: str) -> tuple[list[str], list[str]]:
+    """这一趟要写的 spec 新带进来的「N 强」轮次名：(请求自己写的, 只在机器译文里的)。
+
+    全库测试 `test_轮次写分数式不写N强` 扫整份正式 spec **含 `zh`**、对自动 spec 也是硬的，
+    而这里写的正式 spec 由 GITHUB_TOKEN 直推 main（CI 不跑）——放过去就是下一个不相干的 PR
+    把 main 打红（复审 nit，01684ef0 那条事故的同一条路）。和 `promote_interview_draft`
+    同一份面（`non_annotation_strings`）、同一个判据（`strength_round_hits`）。
+    已经在现有正式 spec 里的（存量豁免）不算「新带进来」。"""
+    from spec_wording import non_annotation_strings, strength_round_hits  # noqa: PLC0415
+
+    def hits(obj, text: str) -> set[str]:
+        return set(strength_round_hits([*non_annotation_strings(obj), text or ""]))
+
+    fresh = hits(spec, copy_text) - hits(existing, existing_copy)
+    from_request = fresh & hits(req, str(req.get("xhs") or ""))
+    return sorted(from_request), sorted(fresh - from_request)
+
+
 def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
     from build_interview_clip import segment, strip_hesitation_lines  # noqa: PLC0415
     from draft_interview_spec import cap_json3, translate  # noqa: PLC0415
@@ -726,6 +762,41 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
             # 请求没给 `end`：这个数是生成器算的。记下来，出片那一趟撞上片尾板时
             # 按它认「没人给过」、直接收到闸算出来的终点（interview_tail 第四节）。
             spec["_end_default"] = spec["end"]
+    copy_file = SPECS / f"{slug}.xhs.txt"
+    existing_copy = copy_file.read_text(encoding="utf-8") if copy_file.is_file() else ""
+    copy_text = (str(req.get("xhs") or "") if not metadata_only or req.get("xhs") != previous.get("xhs")
+                 else existing_copy)
+    from_request, from_machine = _round_name_review(req, spec, existing, copy_text, existing_copy)
+    if from_request or (from_machine and metadata_only):
+        from production_preflight import RequestNotReady  # noqa: PLC0415
+        raise RequestNotReady(
+            f"请求里把轮次写成「N 强」（{'、'.join(from_request or from_machine)}）——"
+            "改成 1/8决赛 / 1/4决赛 / 半决赛 / 决赛（「打进 8 强」这种成绩说法可以）")
+    if from_machine:
+        # 只在机器译文（`zh`）里：请求改不了它。不写正式 spec（直推 main 就是 main 红），
+        # 落成 `<slug>.draft.json`＋`manual_review_required` 等人改译文——和 promote 转正闸
+        # 见到译文「N 强」留草稿同一个处置；promote 见到这个键也不提升。
+        print(f"::warning::{slug}: 机器译文把轮次写成「N 强」（{'、'.join(from_machine)}），"
+              f"正式 spec 不写，落成 {slug}.draft.json 等人改译文")
+        if write:
+            if any(file_digest(p) != sha for p, sha in observed.items()):
+                raise RuntimeError(f"{slug}: 输入或正式稿已被另一任务修改，拒绝覆盖")
+            if research_job is not None:
+                spec["_tactical_research"] = research_job.result()
+            spec["manual_review_required"] = (
+                "字幕译文把轮次写成了 N 强：改 zh 里那几行（1/8决赛 / 1/4决赛 / 半决赛 / 决赛），"
+                f"删掉这个键，文件改名成 {slug}.json，再把 `_xhs` 存成 {slug}.xhs.txt")
+            spec["_round_name_hits"] = from_machine
+            spec["_xhs"] = copy_text
+            spec["_request_origin"] = {
+                "request_sha256": _request_identity(req), "request": {
+                    k: v for k, v in req.items() if k not in {"_rebuild_once", "expected_spec_sha256"}},
+                "revision": req.get("revision"), "duration": duration,
+            }
+            atomic_json(SPECS / f"{slug}.draft.json", spec)
+            if rows is not None:
+                atomic_json(OUTDIR / slug / "cap_asr.json3", cap_json3(rows))
+        return slug, len(lines), duration
     if write:
         if research_job is not None:
             spec["_tactical_research"] = research_job.result()
@@ -744,6 +815,15 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
             "revision": req.get("revision"), "duration": duration,
         }
         atomic_json(spec_path, spec)
+        # 上一版因为译文「N 强」落下的待复核草稿：正式 spec 写出来了，它就作废了——留着的话
+        # promote 天天报「已标记人工复核」、自动链的草稿计数也一直不为 0。只删自己落的那种。
+        stale = SPECS / f"{slug}.draft.json"
+        if stale.is_file():
+            try:
+                if "_round_name_hits" in _read(stale):
+                    stale.unlink()
+            except (OSError, ValueError):
+                pass
         copy_path = SPECS / f"{slug}.xhs.txt"
         if not metadata_only or req.get("xhs") != previous.get("xhs"):
             copy_path.write_text(str(req.get("xhs") or "").rstrip() + "\n", encoding="utf-8")

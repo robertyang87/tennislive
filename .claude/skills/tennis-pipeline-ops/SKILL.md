@@ -4666,8 +4666,15 @@ spec 也不改），销章看 `_protected`：人核过（`transcript_verified` /
 ⚠️ 其中「N 强」那条**草稿转正那条路堵上了一半**（评审 2026-09-27：main 上真草稿
 `bonzi-winston-salem-2026-r` 的 DeepSeek 译文「大概是八强左右」，转正 `check_interview_copy_wording`
 返回空、全库测试红）：`promote_all` 按全库测试同一份面（`spec_wording.non_annotation_strings`，**含 `zh`**）
-跑 `strength_round_hits`，命中就留草稿。**人工请求那条路（`build_interview_request` 直接写正式 spec）
-仍然不查**——译文命中时是让 build 红、还是标 `manual_review_required`，没替账号所有者定。
+跑 `strength_round_hits`，命中就留草稿。**人工请求那条路 2026-09-27 晚也堵上了**（确定性的一刀，
+和 promote 同一个处置，不碰模型提示词）：`build_interview_request._round_name_review` 在写正式 spec 之前
+按同一份面判，**只在机器译文里**的「N 强」→ 正式 spec 不写，落成 `<slug>.draft.json`＋`manual_review_required`
+（promote 见到这个键不提升；`is_pending` 认得它在等人、同一份请求不重建；人改好 `zh`、删掉键、改名成
+`<slug>.json`、把 `_xhs` 存成 `.xhs.txt`；正式 spec 一写出来这份草稿自动删掉）；**请求自己写的**「N 强」
+→ `RequestNotReady`，改请求。`attach_interview_lead_in` 配出来的 `lead_in.subs[].zh` 命中就不写、下一轮重配。
+判据 `test_机器译文把轮次写成N强_正式spec不写_落草稿等人工复核`、`test_冷开场译文把轮次写成N强_不写_下一轮重配`。
+⚠️ 这份草稿也算进 `interview-auto-render` 早退探针的 `DRAFTS`，人没处理之前每 10 分钟跑一趟全量——
+和 promote 留下的草稿同一个老毛病，没在这一刀里改。
 ⚠️ **这些「照判」拦不住出片，只守 main 的绿**：GITHUB_TOKEN 推的提交不触发 ci.yml，自动链提交完
 渲染已经派出去了，全库测试是之后才跑的。所以「照判」的意思是「这条缺陷只有它在查，红给下一个人工
 PR 看」，不是「它挡在出片前面」。

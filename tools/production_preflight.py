@@ -120,7 +120,20 @@ def check_request(req: dict) -> None:
         base.with_suffix('.json').write_text(json.dumps(req, ensure_ascii=False))
         copy = base.with_suffix('.xhs.txt')
         copy.write_text(str(req.get('xhs') or ''), encoding='utf-8')
-        check_copy(copy, '赛后开麦')
+        try:
+            check_copy(copy, '赛后开麦', quiet=True)
+        except subprocess.CalledProcessError as exc:
+            # 文案超限（tag > 5、标题 > 20 字位）是**确定性的**请求问题——不改请求每一趟都一样红，
+            # 和解读卡、全称断言同一类：`RequestNotReady`，只红这一条、不连坐别的 spec 的
+            # 提交和 dispatch（复审 nit：原来抛 CalledProcessError，算 failed、整趟退 1）。
+            # 判「判据红」还是「工具崩了」用和 `interview_preflight.copy_problem`／`CRASHED`
+            # 同一个办法：输出里有 Traceback 就是崩了，原样往上抛（照旧让 step 红）。
+            out = f"{exc.stdout or ''}{exc.stderr or ''}"
+            if 'Traceback (most recent call last)' in out:
+                sys.stderr.write(out)
+                raise
+            tail = ' / '.join(out.strip().splitlines()[-3:]) or f'退出码 {exc.returncode}'
+            raise RequestNotReady(f'发布文案过不了 push_reel --stage check：{tail}') from exc
 
 
 def _takeaway_wrap(req: dict) -> list[str]:
