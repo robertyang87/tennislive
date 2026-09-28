@@ -6597,7 +6597,10 @@ def narration_fingerprint(seg) -> str:
     ⚠️ `speakable()`（换字表、比分里的「-」）**故意不进指纹**：它换的是同音字和「-」→「比」，
     念出来的音节数不变；而换字表改得勤（09-27 一天扩到十几条），进了指纹，改一次表就把
     全库已发片子的账一起作废、下一个无关 PR 红在 `test_豁免表外的手写spec误差带里的段都量过`
-    上（2026-09-28 修正轮）。"""
+    上（2026-09-28 修正轮）。
+    ⚠️ 指纹吃的是 `parse_segments`／`_seg_voice` **解析之后**的值——改它们的默认值（没写 `voice`
+    时的四个空串、`lead_pause` 的 0.0）会一次作废全部冻结指纹和已落的账（`legacy_narration_unchecked.json`、
+    `data/narration_checks/`）：实测把没写 `voice` 时的 rate 默认改成 `+0%`，豁免表 300 条认得上的变成 0 条。"""
     raw = json.dumps([seg.narration.strip(), seg.voice_rate, seg.voice_pitch, seg.voice_style,
                       seg.voice_styledegree, round(float(seg.voice_lead_pause or 0.0), 3)],
                      ensure_ascii=False)

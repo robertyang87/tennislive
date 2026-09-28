@@ -4890,6 +4890,8 @@ H 那种「warning ＋ 绿」只剩不带清单的手动调法。
 `test_旁白没量过真TTS的豁免表只许减`／`test_没量板的豁免表只许减` 就红在下一个无关 PR 上。
 补完账／重跑完 probe，**同一个提交里**把那个 slug 从豁免表删掉。
 
+⚠️ **Azure 钥匙修好那天，先在分支上把已发、没冻的手写片子重量一遍**（`mode=narration`，账头换成 azure）：否则 edge-tts 量的账整份不认，O4（`reel-cover-upgrade` 派的 `mode=render push=true --ref main`）会在 dry-run 上红死——main 上那一趟 narration 不提交，补不上账；CI 不比后端，这一步不会提前红。
+
 ## ⭐⭐ 2026-09-27：赛后开麦 dispatch 之前的离线预检、片尾板、拼接清单、推送后修订
 
 **写完或改完一条采访 spec，dispatch 之前先跑一条命令**（秒级、不联网、不下源片）：

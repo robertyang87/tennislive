@@ -548,8 +548,14 @@ jobs:
           # 覆盖那道闸只在 mode=render 硬：cover／narration 这两趟用不到 probe，
           # 时效第一、封面排最前，别让一条还没 probe 的源挡住出封面。
           export REEL_DRY_RUN_FOR="${{ github.event.inputs.mode }}"
+          # --voice／--rate 和 narration、render 两步传同一对表单值：误差带那道闸拿它们比账头
+          # （`narration_record_mismatch`），不传就恒比 CLI 默认值——表单上换了音色，
+          # narration 量的账和 dry-run 的期望各说各的。判据 `test_runner三步传同一对音色语速`。
           python tools/build_match_reel.py render --dry-run \
-            --spec "$SPEC" --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log
+            --spec "$SPEC" \
+            --voice "${{ github.event.inputs.voice }}" \
+            --rate "${{ github.event.inputs.rate }}" \
+            --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log
 
       # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
       # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个

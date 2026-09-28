@@ -313,6 +313,38 @@ def test_runner的dry_run和render挂同一对Azure钥匙():
     assert "pip install -q azure-cognitiveservices-speech" in deps.split('= "probe" ]')[1]
 
 
+def test_runner三步传同一对音色语速():
+    """修正轮 3：账头里的音色／语速是 narration 那一步拿表单值量的、render 那一步拿表单值合成的，
+    dry-run 那一步原来不传，`narration_record_mismatch` 就恒拿 CLI 默认值去比——表单上换一把嗓子，
+    narration 量的账在 dry-run 眼里永远「音色对不上」。三步只认 `build_match_reel.py render`
+    那条命令本身（续行拼起来、不看注释），别被注释里提到的参数名满足。"""
+    yml = WORKFLOW.read_text(encoding="utf-8")
+
+    def command(name: str) -> str:
+        body = yml[yml.index(f"- name: {name}"):]
+        body = body[:body.index("\n      - name:")]
+        lines = body.splitlines()
+        start = next(i for i, ln in enumerate(lines)
+                     if ln.strip().startswith("python tools/build_match_reel.py render"))
+        cmd = []
+        for ln in lines[start:]:
+            cmd.append(ln.strip().rstrip("\\"))
+            if not ln.rstrip().endswith("\\"):
+                break
+        return " ".join(cmd)
+
+    def pair(cmd: str) -> tuple[list[str], list[str]]:
+        return (re.findall(r'--voice\s+"([^"]*)"', cmd), re.findall(r'--rate\s+"([^"]*)"', cmd))
+
+    got = {name: pair(command(name)) for name in (
+        "dry-run — 先把 spec 的形状错拦在编码之前",
+        "narration — 只查旁白装不装得下",
+        "render — 出成片")}
+    want = (["${{ github.event.inputs.voice }}"], ["${{ github.event.inputs.rate }}"])
+    assert all(v == want for v in got.values()), got
+    assert "--dry-run" in command("dry-run — 先把 spec 的形状错拦在编码之前")
+
+
 def test_check_narration落账带上合成用的基调():
     src = inspect.getsource(reel.main)
     check = src[src.index("if args.check_narration:"):]
