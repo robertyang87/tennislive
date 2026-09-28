@@ -237,7 +237,7 @@ def _code_fingerprint() -> str | None:
 
 
 def verdict_key(slug: str) -> str | None:
-    """全量预检这条 spec 的全部输入的指纹：判据代码、spec、文案、字幕缓存、北京日期
+    """全量预检这条 spec 的全部输入的指纹：判据代码、spec、文案、字幕缓存、封面扫描记录、北京日期
     （文案标题带日期）。任何一样变了，缓存的结论就作废——**缓存只省 runner，不许
     替一个没判过的输入说话**。拿不到（没有 git）返回 None，不用缓存。"""
     if not (SPECS / f"{slug}.json").is_file():
@@ -259,6 +259,9 @@ def verdict_key(slug: str) -> str | None:
         "spec": _sha256(SPECS / f"{slug}.json"),
         "xhs": _sha256(xhs) if xhs.is_file() else "",
         "captions": caps,
+        # 封面扫描记录（预检的 `cover_scan_problem` 读它）：重扫或 render 自动换帧之后
+        # 记录变了，缓存里「frame_at 没过闸」那条结论就作废
+        "cover_record": interview_preflight.cover_record_fingerprint(slug),
     }, sort_keys=True)
     return hashlib.sha256(blob.encode()).hexdigest()
 

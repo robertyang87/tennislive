@@ -67,8 +67,16 @@ def _holds(expr, mode: str) -> bool:
 _PY_SHIM = """#!/usr/bin/env bash
 echo "python $*" >> "$SHIM_LOG"
 case "$*" in
-  *audit_interview_cover.py*) exit "${AUDIT_RC:-0}" ;;
-  *"--stage cover-scan"*) exit 0 ;;
+  *audit_interview_cover.py*)
+    # AUDIT_SEQ：一次一个退出码按顺序吐（「第一次红、换帧之后绿」）；没给就用 AUDIT_RC
+    if [ -n "$AUDIT_SEQ" ]; then
+      set -- $AUDIT_SEQ
+      k=$(grep -c audit_interview_cover.py "$SHIM_LOG")
+      eval "rc=\\${$k:-0}"
+      exit "$rc"
+    fi
+    exit "${AUDIT_RC:-0}" ;;
+  *"--stage cover-scan"*) exit "${SCAN_RC:-0}" ;;
   *"--stage cover"*) exit "${COVER_RC:-0}" ;;
   *"--stage verify"*) exit "${VERIFY_RC:-0}" ;;
 esac
@@ -122,7 +130,8 @@ def _kinds(calls: list[str]) -> list[str]:
     out = []
     for c in calls:
         if "--stage cover-scan" in c:
-            out.append("scan" + (" keep" if "--keep-source" in c else ""))
+            out.append("scan" + (" keep" if "--keep-source" in c else "")
+                       + (" autopick" if "--autopick" in c else ""))
         elif "--stage cover" in c:
             out.append("cover" + (" keep" if "--keep-source" in c else ""))
         elif "audit_interview_cover.py" in c:
@@ -156,19 +165,41 @@ def test_封面前置排在转写校验和编码之前():
     assert "audit_interview_cover.py" in str(final.get("run"))
 
 
-def test_出片档封面前置要留源片_红了就地扫候选再停(tmp_path):
-    """真跑那一步：render 档必须 `--keep-source`（后面的编码复用，不下第二遍），
-    闸红了先扫候选再非零退出——红的这一趟也要换回「下一帧该选哪个」。"""
+def test_出片档封面前置要留源片_红了就地扫候选自动换帧(tmp_path):
+    """真跑那一步：render 档必须 `--keep-source`（后面的编码复用，不下第二遍）。
+
+    闸红了**就地扫并自动换帧**（`--autopick`，rework_audit_0928：9 趟 run 红在封面帧，
+    cobolli-mensik 就地扫出的第一名正是人后来写进 spec 的那一格）：换上之后**同一把
+    终审再过一遍**、再对账，然后接着出片（退出 0）并留下「换过帧」的标记给「提交成片」。
+    扫不出能换的（`--autopick` 非零）、或者换上的那一帧终审还红，才非零退出。
+    这一步里一律不 `git commit`——换过的 spec 和记录跟成片一起提交。"""
     done, calls = _run_step(tmp_path, COVER_STEP, mode="render")
     assert done.returncode == 0, done.stderr
     assert _kinds(calls) == ["cover keep", "audit", "check"], calls
+    assert not (tmp_path / "cover-autopicked").exists(), "没换帧却留了换帧标记"
 
-    red = tmp_path / "red"
-    red.mkdir()
-    done, calls = _run_step(red, COVER_STEP, mode="render", env={"AUDIT_RC": "1"})
-    assert done.returncode != 0, "封面闸红了这一步却退出 0——编码照样会开跑"
-    assert _kinds(calls) == ["cover keep", "audit", "scan keep"], calls
-    # render 红了就地扫的那份不提交：自动链只拨 render，提交了记录它下一趟就得对账
+    swap = tmp_path / "swap"
+    swap.mkdir()
+    done, calls = _run_step(swap, COVER_STEP, mode="render", env={"AUDIT_SEQ": "1 0"})
+    assert done.returncode == 0, (done.stdout, done.stderr)
+    assert _kinds(calls) == ["cover keep", "audit", "scan keep autopick", "audit", "check"], calls
+    assert (swap / "cover-autopicked").is_file(), "换过帧却没留标记——提交成片那一步不会带上 spec"
+    assert not any(c.startswith("git commit") for c in calls), calls
+
+    none = tmp_path / "none"
+    none.mkdir()
+    done, calls = _run_step(none, COVER_STEP, mode="render",
+                            env={"AUDIT_RC": "1", "SCAN_RC": "3"})
+    assert done.returncode != 0, "一格都换不了，这一步却退出 0——编码照样会开跑"
+    assert _kinds(calls) == ["cover keep", "audit", "scan keep autopick"], calls
+    assert not (none / "cover-autopicked").exists()
+
+    diverged = tmp_path / "diverged"
+    diverged.mkdir()
+    done, calls = _run_step(diverged, COVER_STEP, mode="render", env={"AUDIT_SEQ": "1 1"})
+    assert done.returncode != 0, "换上的那一帧终审还红，却接着出片了"
+    assert _kinds(calls) == ["cover keep", "audit", "scan keep autopick", "audit"], calls
+    assert not (diverged / "cover-autopicked").exists()
     assert not any(c.startswith("git commit") for c in calls), calls
 
 
@@ -578,14 +609,15 @@ def test_命令行不给step就轮到spec里的scan_step(monkeypatch, tmp_path):
     默认值要是 0.2，spec 那条路就一次都轮不到。"""
     got: dict = {}
 
-    def fake_run_scan(spec, outdir, clip, *, window, step, keep_source):
-        got.update(step=step, window=window, keep=keep_source)
+    def fake_run_scan(spec, outdir, clip, *, window, step, keep_source, autopick, spec_path):
+        got.update(step=step, window=window, keep=keep_source, autopick=autopick)
         return 0
 
     monkeypatch.setattr(scan, "run_scan", fake_run_scan)
     spec = dict(_SPEC, cover={"frame_at": 10.0, "scan_step": 0.5})
     res = _drive_main(monkeypatch, tmp_path, spec, "cover-scan", [])
     assert res.get("rc") == 0 and got["step"] is None and got["keep"] is False, got
+    assert got["autopick"] is False, "没给 --autopick 就改写了 spec——mode=cover 只扫不换"
     assert scan.scan_step(spec, got["step"]) == 0.5
 
 
@@ -850,7 +882,8 @@ def test_扫描走cover_poster和audit_poster同一份实现(tmp_path, monkeypat
 
     measured = []
 
-    def fake_audit(path, spec_t):
+    def fake_audit(path, spec_t, *, face=False):
+        assert face is True, "扫描那一格没跑认人＋睁眼——扫描的 pass 就不是终审的 pass"
         measured.append(spec_t["cover"]["frame_at"])
         return {"face": _face(90)}, []
 
@@ -903,7 +936,7 @@ def test_片尾按视频流剔_越过最后一帧记一格没有画面(tmp_path,
             raise scan.NoFrame("越过视频流最后一帧")
         dest.write_bytes(b"x")
 
-    def audit(_path, spec_t):
+    def audit(_path, spec_t, **_kw):
         return {"face": _face(90)}, []
 
     spec = {"slug": "demo", "cover": {"frame_at": 7.8}}

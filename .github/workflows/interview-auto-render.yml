@@ -45,6 +45,11 @@ on:
       - "data/legacy_interview_gates.json"
       # 已发采访切行的老尺子表（`build_interview_clip.segment_ruler`，预检重切字幕按它）
       - "data/legacy_interview_segment_metric.json"
+      # 封面扫描记录对账（预检的 `cover_scan_problem`）和它的尺子：审核器阈值、人脸模型
+      # 阈值变了，旧记录作不作数跟着变（`interview_cover_scan.stale_ruler`）
+      - "tools/interview_cover_scan.py"
+      - "tools/audit_interview_cover.py"
+      - "tools/face_checks.py"
       # 「这份草稿停着没」的判据（早退探针和 promote 共用）和用它的 promote：改了判据，
       # 停着的草稿要马上重判，不能干等定时班次（GitHub 还会丢 schedule 事件）。
       - "tools/interview_draft_hold.py"

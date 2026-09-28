@@ -5881,6 +5881,12 @@ def main() -> int:
                     help="cover-scan：候选帧间隔（秒）；不给就读 cover.scan_step，再不给 0.2")
     ap.add_argument("--keep-source", action="store_true",
                     help="cover / cover-scan 跑完不删 source.mp4")
+    # 只给 render 的封面前置那一步：frame_at 没过封面闸时，扫出来的格子里挑一格
+    # 「过闸＋认得出是封面主角＋睁眼」的，就地改写 --spec 那份的 cover.frame_at、
+    # 按新帧重渲海报（见 tools/interview_cover_scan.py 顶部「2026-09-28」那段）
+    ap.add_argument("--autopick", action="store_true",
+                    help="cover-scan：挑一格机器能换的写进 --spec（改写文件）并重渲海报；"
+                         "一格都挑不出来退出码 3")
     args = ap.parse_args()
     keep_source = args.keep_source
 
@@ -5925,7 +5931,8 @@ def main() -> int:
         sys.path.insert(0, str(ROOT / "tools"))
         from interview_cover_scan import run_scan  # noqa: PLC0415
         return run_scan(spec, outdir, sys.modules[__name__], window=args.window,
-                        step=args.step, keep_source=keep_source)
+                        step=args.step, keep_source=keep_source,
+                        autopick=args.autopick, spec_path=Path(args.spec))
 
     # **封面这一档不要字幕、不要中文，排在取字幕之前**（和 cover-scan 同一个理由）。
     # 它原来排在切行和 `if not zh: return 0` 后面——而「封面排在最前面、紧跟选题」
