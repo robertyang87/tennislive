@@ -215,7 +215,7 @@ def cover_scan_problem(spec: dict) -> str | None:
 
     判据就是 runner 那一步 `interview_cover_scan.py --check` 和推送闸 `cover_scan_gate`
     调的同一个 `record_problem`（取景变过、尺子变过的旧记录都不管）。红的时候把记录里
-    **机器能直接换上**的那一格（过闸＋认得出是封面主角＋睁眼，`interview_cover_scan.pick`）
+    **机器能直接换上**的那一格（过闸＋认得出是封面主角、而且是文案点了名的人＋睁眼，`interview_cover_scan.pick`）
     一起报出来——改一个数就能 dispatch，不用再跑一趟 `mode=cover`。
     """
     from interview_cover_scan import pick, record_problem  # noqa: PLC0415
@@ -230,10 +230,10 @@ def cover_scan_problem(spec: dict) -> str | None:
     problem = record_problem(record, spec)
     if not problem:
         return None
-    best = pick(record)
+    best = pick(record, spec)
     hint = (f"记录里过闸、认得出是封面主角、眼睛睁着、余量最大的是 {best['frame_at']:g} 秒——"
             "改成它就行" if best is not None else
-            "记录里没有一格同时过闸、认得出是封面主角、眼睛睁着——换一段（cover.scan_window）重扫")
+            "记录里没有一格同时过闸、认得出是封面主角（文案点了名的人）、眼睛睁着——换一段（cover.scan_window）重扫")
     return f"{problem}（{hint}）"
 
 

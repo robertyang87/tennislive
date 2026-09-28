@@ -640,7 +640,7 @@ jobs:
       #   render —— 出片档：`--keep-source` 把源片留给后面的「剪 + 烧字幕」
       #             （`yt_download` 见文件在就复用，不下第二遍）。闸红了就地扫一段
       #             **并自动换帧**（`--autopick`，2026-09-28）：扫出来的格子里挑一格
-      #             过闸＋认得出是封面主角（match）＋睁眼（open）的，改写 spec 的
+      #             过闸＋认得出是封面主角（match，而且是文案点了名的人）＋睁眼（open）的，改写 spec 的
       #             `cover.frame_at`、重渲海报、再过一遍同一把终审，接着出片；近处
       #             没有就整段采访粗扫一遍。一格都挑不出来才红。来路：9 趟 run（46.5
       #             runner-分钟）红在封面帧，cobolli-mensik 那趟就地扫出的第一名 29.4
@@ -730,7 +730,7 @@ jobs:
             # frame_at 就是记录里挑出来的那一格，推送前对账（cover_scan_gate）正要它。
             echo "::warning::封面那一帧没过本地像素闸——就地扫 frame_at 前后一段，挑一格过闸、认得出是封面主角、眼睛睁着的自动换上（近处没有就整段采访粗扫一遍）："
             if ! PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover-scan --keep-source --autopick; then
-              echo "::error::扫过的格子里没有一格同时过闸、认得出是封面主角、眼睛睁着——停在转写校验和编码之前。上面那张排名表就是下一帧的候选（✓ 那一列）。"
+              echo "::error::扫过的格子里没有一格同时过闸、认得出是封面主角（文案点了名的人）、眼睛睁着——停在转写校验和编码之前。上面那张排名表就是下一帧的候选（✓ 那一列）。"
               exit 1
             fi
             if ! audit_cover; then
@@ -1129,15 +1129,24 @@ jobs:
             git add -A "$D"
             # 换帧改过的 spec：只在别人**没动过**它的时候放回本趟那一版（比
             # `rendered^` 和最新分支上的 blob）。别人改过就留别人的——盖掉就是
-            # 吞掉一次人工修改；这一趟的凭证于是对不上新 spec，picker 会按新 spec
-            # 重渲（那一趟封面再红会再换），推送闸也不会拿旧凭证推。
+            # 吞掉一次人工修改；这一趟的凭证于是对不上新 spec，推送闸不会拿旧凭证推。
+            # ⚠️ **留别人的 spec，就连扫描记录也退回分支上那一份**（没有就不留）：
+            # 本趟的记录要是落了库，别人那版 spec 的 frame_at（多半还是原来红的那一格）
+            # 在 dispatch 之前的预检（`cover_scan_problem`）就红，picker 把它停进
+            # waiting、等人改——本来按新 spec 重渲一趟、封面再红再自动换就行了
+            # （2026-09-28 复审复现：「cover.frame_at=30.0 在扫描里没过闸」）。
             if [ -n "$AUTOPICK_SPEC" ]; then
               if [ "$(git rev-parse "rendered^:$AUTOPICK_SPEC")" = "$(git rev-parse "HEAD:$AUTOPICK_SPEC")" ]; then
                 git checkout rendered -- "$AUTOPICK_SPEC"
                 git add "$AUTOPICK_SPEC"
               else
-                echo "::warning::$AUTOPICK_SPEC 在 $BRANCH 上被别人改过——不覆盖；本趟成片绑的是换帧后的那一版 spec，picker 会按新 spec 重渲"
+                REC="$D/cover_candidates.json"
+                git rm -q --cached --ignore-unmatch -- "$REC"
+                rm -f "$REC"
+                if git cat-file -e "HEAD:$REC" 2>/dev/null; then git checkout HEAD -- "$REC"; fi
+                echo "::warning::$AUTOPICK_SPEC 在 $BRANCH 上被别人改过——不覆盖，扫描记录也留 $BRANCH 上那一份；本趟成片绑的是换帧后的那一版 spec，picker 会按新 spec 重渲（封面再红会再扫、再换）"
                 AUTOPICK_SPEC=""
+                MSG="interview: ${{ github.event.inputs.slug }} 双语字幕成片（封面换过帧，但 spec 撞上别人的修改、留了别人的）"
               fi
             fi
             python tools/check_staged_file_sizes.py

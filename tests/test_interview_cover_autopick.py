@@ -4,13 +4,15 @@
 46.5 runner-分钟）红在封面帧**，另有两条认错人／闭眼的推了出去才换
 （tien-cobolli 97.0 是阿加西、ruud-cerundolo 245.0 低头闭眼，9ae8918f）。09-27 把封面
 挪到转写和编码之前之后红得早了，可红了照样整趟作废——cobolli-mensik 那趟就地扫出的
-第一名 29.4，正是人后来写进 spec 的那一格（8edfe15a），又等了一整趟。
+第一名 29.4，正是人后来写进 spec 的那一格（23ed3bfb9），又等了一整趟。
 
 判据分四组：
 1. **真像素**：拿仓库里真发过的那几张海报（`tests/fixtures/faces/`）当源片的帧，
    走真的 `audit_poster(face=True)`——认错人、闭眼的那一格不换，挑本人睁眼的写进 spec
-2. 机器换帧只认 `match` ＋ `open`（比终审严一档：这一帧没有人看过）
-3. 改写 spec 只动 `cover.frame_at` 和 `cover._frame_autopick`（全库 spec 逐条改一遍验）
+2. 机器换帧只认 `match` ＋ `open`（比终审严一档：这一帧没有人看过），而且认出来的人
+   必须是封面文案点了名的（`expected_subject` 退回 winner 会落到对手身上：佩古拉亚军致辞）
+3. 改写 spec 只动 `cover.frame_at`、`cover._why` 那一句标注和 `cover._frame_autopick`
+   （全库 spec 逐条改一遍验）；人给原来那一帧写的认领挪进 `_frame_autopick.dropped`
 4. 「提交成片」把换过的 spec 跟成片一起提交；撞车重放时别人改过 spec 就不覆盖
 5. dispatch 之前的离线预检：已提交的扫描记录说 frame_at 不行就红，顺手报能换的那一格
 """
@@ -167,17 +169,24 @@ def test_真海报_认错人和闭眼的那一格不换_换上本人睁眼的(mo
     _res, issues = auditor.audit_poster(outdir / "poster.jpg", new, face=True)
     assert issues == [], issues
     assert scan.record_problem(record, new) == ""
-    # 别的字段一个没动
+    # `_why` 前面标了一句「说的是原来那一帧」，原话一字不少；别的字段一个没动
+    assert new["cover"]["_why"].startswith(scan.WHY_MARK), new["cover"]["_why"]
+    assert new["cover"]["_why"].endswith(spec["cover"]["_why"])
     before = copy.deepcopy(spec)
-    before["cover"].update(frame_at=t, **{scan.AUTOPICK_KEY: note})
+    before["cover"].update(frame_at=t, _why=new["cover"]["_why"], **{scan.AUTOPICK_KEY: note})
     assert new == before
 
 
+#: `_entry` 默认认出来的是鲁德——文案点了鲁德的名，机器才换得了
+DEMO = {"slug": "demo", "url": "u", "cover": {"frame_at": 10.0, "tag": "2026 拉沃尔杯 · 鲁德"}}
+
+
 def _entry(t: float, *, status="pass", verdict="match", sim=0.6, ear=0.3, face_px=300.0,
-           model_status="ok", margin=3.0) -> dict:
+           model_status="ok", margin=3.0, sims=None) -> dict:
     block = {"status": model_status}
     if model_status == "ok":
-        block.update(identity={"verdict": verdict, "name": "鲁德", "similarity": {"鲁德": sim},
+        block.update(identity={"verdict": verdict, "name": "鲁德",
+                               "similarity": sims or {"鲁德": sim},
                                "missing": [], "face_px": face_px},
                      eyes={"verdict": "open", "ear": ear, "face_px": face_px})
     else:
@@ -203,12 +212,12 @@ def test_机器换帧只认match和open_拿不准的一律不换(kw, why):
     """终审把「认人拿不准」「睁眼量不了」记成提示——人挑的那一帧人看过。机器换上的
     那一帧没人看过，所以比终审严一档。判定从存下的数重算：手改 verdict 字符串骗不过去。"""
     entry = _entry(10.0, **kw)
-    got = scan.autopick_problem(entry)
+    got = scan.autopick_problem(entry, DEMO)
     assert (got == "") if not why else (why in got), (kw, got)
     forged = _entry(10.0, sim=0.05)
     forged["face_model"]["identity"]["verdict"] = "match"       # 手改字符串
-    assert "认不出" in scan.autopick_problem(forged)
-    assert "没跑认人" in scan.autopick_problem({**_entry(1.0), "face_model": None})
+    assert "认不出" in scan.autopick_problem(forged, DEMO)
+    assert "没跑认人" in scan.autopick_problem({**_entry(1.0), "face_model": None}, DEMO)
 
 
 def _record(spec: dict, entries: list[dict], **kw) -> dict:
@@ -216,14 +225,14 @@ def _record(spec: dict, entries: list[dict], **kw) -> dict:
 
 
 def test_挑过闸名单里第一个机器能换的_余量大的在前():
-    spec = {"slug": "demo", "url": "u", "cover": {"frame_at": 10.0}}
+    spec = DEMO
     entries = [_entry(10.0, status="fail"), _entry(10.2, sim=0.25, margin=9.0),
                _entry(10.4, margin=4.0), _entry(10.6, margin=5.0)]
     record = _record(spec, entries)
     assert record["passing"][0] == 10.2, "排序按余量，这一格余量最大"
-    assert scan.pick(record)["frame_at"] == 10.6, "余量最大的那格认人拿不准，该跳过去"
-    assert scan.pick(_record(spec, [_entry(10.0, status="fail")])) is None
-    assert scan.pick(None) is None
+    assert scan.pick(record, spec)["frame_at"] == 10.6, "余量最大的那格认人拿不准，该跳过去"
+    assert scan.pick(_record(spec, [_entry(10.0, status="fail")]), spec) is None
+    assert scan.pick(None, spec) is None
 
 
 def test_扫描说spec那一帧能过却被终审红了_不换照原样红(tmp_path, capsys):
@@ -242,7 +251,7 @@ def test_近处没有就整段粗扫_一格都没有才退出3_spec不动(tmp_pa
     """近处 ±2 秒一格都换不了 → 整段采访（start–end）粗扫（≤ 40 格、跳过近处）；
     粗扫也没有 → `AUTOPICK_NONE`，spec 一个字节不动。"""
     spec = {"slug": "demo", "url": "u", "start": 0.0, "end": 100.0,
-            "cover": {"frame_at": 50.0, "scan_step": 0.5}}
+            "cover": {"frame_at": 50.0, "scan_step": 0.5, "tag": "2026 拉沃尔杯 · 鲁德"}}
     grid, span, step = scan.sweep_plan(spec, scan.scan_window(spec), 120.0)
     assert span == (0.0, 100.0) and step >= scan.SWEEP_MIN_STEP
     assert len(grid) <= scan.SWEEP_MAX_FRAMES
@@ -313,10 +322,94 @@ def test_旧记录没逐格跑认人就不对账(monkeypatch):
     assert scan.record_problem(legacy, spec) == ""
 
 
+def _headshot_poster(name: str, dest: Path) -> Path:
+    """拿官方头像拼一张海报（照片区 1080×810，和 `cover_poster` 出的同一块几何）。
+    像素是合成的，相似度会偏高——判的是「认出来是谁之后换不换」，不是认人准不准。"""
+    from PIL import Image  # noqa: PLC0415
+
+    head = Image.open(face_checks.headshot_path(name)).convert("RGB")
+    w = int(head.width * auditor.PHOTO_HEIGHT / head.height)
+    canvas = Image.new("RGB", auditor.CANVAS, (20, 30, 40))
+    canvas.paste(head.resize((w, auditor.PHOTO_HEIGHT), Image.LANCZOS),
+                 ((auditor.CANVAS[0] - w) // 2, auditor.PHOTO_TOP))
+    canvas.save(dest, quality=95)
+    return dest
+
+
+def test_真spec_佩古拉亚军致辞_冠军那一格认人match也不许换(model, monkeypatch, tmp_path):
+    """复审 BLOCKING（2026-09-28）：`pegula-eala-dc2026-final` 是佩古拉的亚军致辞（tag
+    「2026 华盛顿决赛 · 佩古拉」），可 spec 没写 `subject`／`match.loser`，
+    `expected_subject` 退回 `winner`＝伊埃拉。人挑的那一帧（佩古拉）终审判 mismatch 红，
+    原来的 autopick 接着把近处一格冠军的脸（match、睁眼）换上去、终审 match、推送闸也
+    match——给亚军致辞配上冠军的脸，一道都拦不住。现在：认出来的人必须是文案点了名的。"""
+    _memo_pixels(monkeypatch)
+    slug = "pegula-eala-dc2026-final"
+    spec = json.loads((SPECS / f"{slug}.json").read_text(encoding="utf-8"))
+    assert auditor.expected_subject(spec) == "伊埃拉" and "佩古拉" in spec["cover"]["tag"], (
+        "前提变了：这条 spec 的主角推断已经不落在对手身上，这条判据要换一条真 spec")
+    pegula = _headshot_poster("佩古拉", tmp_path / "pegula.jpg")
+    eala = _headshot_poster("伊埃拉", tmp_path / "eala.jpg")
+    at = float(spec["cover"]["frame_at"])
+
+    def frames(t: float) -> Path:        # 近处有一段切给冠军的镜头
+        return eala if at - 1.0 <= t < at else pegula
+
+    spec["cover"]["scan_step"] = 0.4
+    spec_path = tmp_path / f"{slug}.json"
+    text = json.dumps(spec, ensure_ascii=False, indent=2) + "\n"
+    spec_path.write_text(text, encoding="utf-8")
+    outdir = tmp_path / slug
+    outdir.mkdir()
+    clip = _FakeClip(frames, end=float(spec["end"]) + 5.0, outdir=outdir)
+    rc = scan.run_scan(spec, outdir, clip, keep_source=True, autopick=True, spec_path=spec_path)
+    record = json.loads((outdir / scan.RECORD_NAME).read_text(encoding="utf-8"))
+    champ = [e for e in record["candidates"] if frames(e["frame_at"]) == eala]
+    assert champ and all(e["status"] == "pass" for e in champ), (
+        "前提没了：冠军那几格本该过得了终审（认人 match、睁眼）——这条判据要的就是这种格子")
+    for e in champ:
+        assert "封面文案" in scan.autopick_problem(e, spec), scan.autopick_problem(e, spec)
+    assert rc == scan.AUTOPICK_NONE, "冠军的脸被换上了亚军致辞的封面"
+    assert spec_path.read_text(encoding="utf-8") == text, "没换帧却改了 spec"
+    assert "sweep" not in record, "主角都不是文案点名的人，整段粗扫只会白烧一分半钟"
+
+
+def test_双打只换文案点了名的那个搭档():
+    """`alcaraz-mensik` 的主角推断是「阿尔卡拉斯/门西克」（两人之一就 match），而文案只点了
+    阿尔卡拉斯（「阿尔卡拉斯笑着拿下」）：门西克那一格机器不许换。"""
+    spec = json.loads((SPECS / "alcaraz-mensik-laver-cup-2026-interview.json")
+                      .read_text(encoding="utf-8"))
+    assert "门西克" not in scan.cover_copy(spec) and "阿尔卡拉斯" in scan.cover_copy(spec)
+    mensik = _entry(10.0, sims={"阿尔卡拉斯": 0.05, "门西克": 0.6})
+    alcaraz = _entry(10.2, sims={"阿尔卡拉斯": 0.6, "门西克": 0.05})
+    assert "封面文案" in scan.autopick_problem(mensik, spec)
+    assert scan.autopick_problem(alcaraz, spec) == ""
+    record = _record({**spec, "cover": {**spec["cover"], "frame_at": 10.0}},
+                     [mensik, {**alcaraz, "margin": 1.0}])
+    assert record["passing"][0] == 10.0, "前提：门西克那一格余量更大、排第一"
+    assert scan.pick(record, spec)["frame_at"] == 10.2
+
+
+def test_主角推断落在对手身上的存量spec_整段粗扫之前就认出来():
+    """全库量（2026-09-28）：108 条认得出主角的采访 spec 里 104 条的文案点了主角的名；
+    没点的 4 条是三条主角推断落到对手身上的，加上主角没官方头像的颁奖礼。"""
+    flagged, named = set(), 0
+    for path in sorted(SPECS.glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(spec.get("cover"), dict):
+            continue
+        if scan.subject_unnamed(spec):
+            flagged.add(path.stem)
+        elif auditor.expected_subject(spec):
+            named += 1
+    assert {"pegula-eala-dc2026-final", "nakashima-shelton-mtl2026-final",
+            "williams-sisters-cincinnati-2026-r1-presser"} <= flagged, flagged
+    assert named >= 100, f"只有 {named} 条文案点了主角的名——机器换帧会被大面积误拦"
+
+
 # ---------------------------------------------------------------- 三、改写 spec
 
 def test_改写spec只动frame_at和换帧记录_全库每一条都验():
-    """认得出原文是哪种 `json.dumps` 写法的，diff 只有 frame_at 那一行加上新增的
+    """认得出原文是哪种 `json.dumps` 写法的，diff 只有 frame_at、`_why` 那两行加上新增的
     `_frame_autopick` 那几行；认不出的（手排过的）退回缩进 2，但解析出来必须一模一样。"""
     note = {"from": 1.0, "to": 2.5, "at": "2026-09-28T00:00:00Z", "why": "只检出 1 只眼",
             "chosen": {"margin": 3.1, "name": "某某", "similarity": 0.5, "ear": 0.3},
@@ -328,12 +421,21 @@ def test_改写spec只动frame_at和换帧记录_全库每一条都验():
         if not isinstance(data.get("cover"), dict) or "frame_at" not in data["cover"]:
             continue
         out = scan.rewrite_frame_at(text, 12.34, note)
+        got = json.loads(out)
         want = copy.deepcopy(data)
         want["cover"].update(frame_at=12.34, **{scan.AUTOPICK_KEY: note})
-        assert json.loads(out) == want, path.name
-        removed = [ln for ln in difflib.ndiff(text.splitlines(), out.splitlines())
-                   if ln.startswith("- ")]
-        if len(removed) <= 2:           # frame_at 那一行（＋ 上一行补的逗号）
+        if isinstance(data["cover"].get("_why"), str) and data["cover"]["_why"].strip():
+            why = got["cover"]["_why"]
+            assert why.startswith(scan.WHY_MARK) and why.endswith(data["cover"]["_why"]), why
+            assert f"{data['cover']['frame_at']} 秒那一帧" in why, why
+            want["cover"]["_why"] = why
+        assert got == want, path.name
+        diff = list(difflib.ndiff(text.splitlines(), out.splitlines()))
+        removed = [ln for ln in diff if ln.startswith("- ")]
+        added = {ln[2:] for ln in diff if ln.startswith("+ ")}
+        # frame_at、_why 那两行，外加（新键接在 cover 末尾时）上一行补的逗号
+        rest = [ln for ln in removed if '"frame_at"' not in ln and '"_why"' not in ln]
+        if len(rest) <= 1 and all(ln[2:] + "," in added for ln in rest):
             minimal += 1
             assert any('"frame_at"' in ln for ln in removed), (path.name, removed)
         else:
@@ -342,6 +444,33 @@ def test_改写spec只动frame_at和换帧记录_全库每一条都验():
     assert reformatted <= 12, reformatted
     with pytest.raises(json.JSONDecodeError):
         scan.rewrite_frame_at("{坏的", 1.0, note)
+
+
+def test_换帧之后人给原来那一帧写的认领挪走_why标一句_再换一次不叠两层():
+    """`_face_check_why`／`_frame_scan_why` 是给人看过的那一帧写的：留在 cover 上，下次尺子
+    一变就替一帧没人看过的开脱。挪进 `_frame_autopick.dropped`（原话不丢）；`_why` 前面
+    标一句它说的是哪一帧。连换两次：标注只一层、第一次挪走的认领接着留着。"""
+    spec = {"slug": "demo", "cover": {"frame_at": 30, "_why": "30 秒正脸，笑着",
+                                      "_face_check_why": "教练席那一幕，要的就是他",
+                                      "_frame_scan_why": "人看过"}}
+    note = {"from": 30, "to": 29.4}
+    once = json.loads(scan.rewrite_frame_at(json.dumps(spec, ensure_ascii=False, indent=2) + "\n",
+                                            29.4, note))
+    cover = once["cover"]
+    assert not set(scan.STALE_CLAIMS) & set(cover), cover
+    assert cover[scan.AUTOPICK_KEY]["dropped"] == {
+        "_face_check_why": "教练席那一幕，要的就是他", "_frame_scan_why": "人看过"}
+    assert cover["_why"].startswith(scan.WHY_MARK) and cover["_why"].endswith("30 秒正脸，笑着")
+    assert "30 秒那一帧" in cover["_why"] and "29.4 秒是机器换的" in cover["_why"]
+    twice = json.loads(scan.rewrite_frame_at(json.dumps(once, ensure_ascii=False, indent=2),
+                                             31.0, {"from": 29.4, "to": 31.0}))["cover"]
+    assert twice["_why"].count(scan.WHY_MARK) == 1, twice["_why"]
+    assert "30 秒那一帧" in twice["_why"], "第二次标注把人挑的那一帧说成了机器换的那一帧"
+    assert twice["_why"].endswith("30 秒正脸，笑着")
+    assert twice[scan.AUTOPICK_KEY]["dropped"] == cover[scan.AUTOPICK_KEY]["dropped"]
+    # 没有认领、没有 _why 的：什么都不多加
+    bare = json.loads(scan.rewrite_frame_at('{"cover": {"frame_at": 1}}', 2.0, {"to": 2.0}))
+    assert bare == {"cover": {"frame_at": 2.0, scan.AUTOPICK_KEY: {"to": 2.0}}}
 
 
 # ---------------------------------------------------------------- 四、提交成片
@@ -353,7 +482,7 @@ def _git(cwd: Path, *args: str) -> str:
 
 def _commit_step(tmp_path: Path, *, autopicked: bool, race: str = "") -> tuple:
     """「提交成片」在真 git 仓库里跑一遍。`race`：'' 直推；'other' 别人推过无关文件；
-    'spec' 别人推过同一份 spec（人工修改）。"""
+    'spec' 别人推过同一份 spec（人工修改）；'spec_rec' 别人连 spec 带一份扫描记录一起推过。"""
     import yaml  # noqa: PLC0415
 
     remote, work = tmp_path / "remote.git", tmp_path / "work"
@@ -372,7 +501,11 @@ def _commit_step(tmp_path: Path, *, autopicked: bool, race: str = "") -> tuple:
         subprocess.run(["git", "clone", "-q", str(remote), str(other)], check=True)
         target = other / ("README.md" if race == "other" else spec_rel)
         target.write_text('{\n  "cover": {\n    "frame_at": 44.4\n  }\n}\n'
-                          if race == "spec" else "别人刚推过\n", encoding="utf-8")
+                          if race.startswith("spec") else "别人刚推过\n", encoding="utf-8")
+        if race == "spec_rec":
+            theirs = other / "output" / "interviews" / "demo" / scan.RECORD_NAME
+            theirs.parent.mkdir(parents=True)
+            theirs.write_text('{"method": "cover_scan_v1", "who": "theirs"}', encoding="utf-8")
         _git(other, "add", ".")
         _git(other, "commit", "-qm", "race")
         _git(other, "push", "-q", "origin", "main")
@@ -426,15 +559,28 @@ def test_换过帧的spec跟成片一起提交(tmp_path, race):
     assert _remote_frame(remote) == 30, "没换帧却动了 spec"
 
 
-def test_撞车重放时别人改过spec就不覆盖(tmp_path):
+@pytest.mark.parametrize("race", ["spec", "spec_rec"], ids=["分支上没有记录", "分支上有别人的记录"])
+def test_撞车重放时别人改过spec就不覆盖_扫描记录也留分支上那一份(tmp_path, race):
     """重放把本趟那一版 spec 放回去之前，比一下别人动没动过它：动过就留别人的
-    （盖掉就是吞掉一次人工修改），出声，凭证对不上的那一半交给 picker 按新 spec 重渲。"""
-    done, remote = _commit_step(tmp_path, autopicked=True, race="spec")
+    （盖掉就是吞掉一次人工修改），出声，凭证对不上的那一半交给 picker 按新 spec 重渲。
+
+    **扫描记录也退回分支上那一份**（复审 2026-09-28 复现）：本趟的记录要是落了库，别人那版
+    spec 的 frame_at（多半还是原来红的那一格）在 dispatch 之前的预检就红——picker 把它停进
+    waiting 等人改，而不是按新 spec 重渲、封面再红再自动换。"""
+    done, remote = _commit_step(tmp_path, autopicked=True, race=race)
     assert done.returncode == 0, (done.stdout, done.stderr)
     assert _remote_frame(remote) == 44.4, "重放把别人刚改的 spec 盖掉了"
     assert "被别人改过" in done.stdout, done.stdout
     tree = _git(remote, "ls-tree", "-r", "--name-only", "main").split()
     assert "output/interviews/demo/poster.jpg" in tree
+    rec = f"output/interviews/demo/{scan.RECORD_NAME}"
+    if race == "spec":
+        assert rec not in tree, "留了别人的 spec，却把本趟的扫描记录落了库"
+    else:
+        assert json.loads(_git(remote, "show", f"main:{rec}")).get("who") == "theirs", (
+            "留了别人的 spec，扫描记录却不是分支上那一份")
+    log = _git(remote, "log", "-1", "--format=%s", "main")
+    assert "留了别人的" in log, log
 
 
 # ---------------------------------------------------------------- 五、dispatch 之前
@@ -445,7 +591,7 @@ def test_预检按已提交的扫描记录拦没过闸的frame_at_顺手报能�
     out = tmp_path / "output" / "interviews"
     (out / "demo").mkdir(parents=True)
     monkeypatch.setattr(pf, "OUTPUT", out)
-    spec = {"slug": "demo", "url": "u", "cover": {"frame_at": 10.0}}
+    spec = DEMO
     assert pf.cover_scan_problem(spec) is None, "没有记录不许拦——存量一份记录都没有"
     record = _record(spec, [_entry(10.0, status="fail"), _entry(10.2, sim=0.25, margin=9),
                             _entry(10.4)])
@@ -469,7 +615,7 @@ def test_没有产物目录就从HEAD读记录_预检缓存的键跟着记录走
     repo = tmp_path / "repo"
     rec_dir = repo / "output" / "interviews" / "demo"
     rec_dir.mkdir(parents=True)
-    spec = {"slug": "demo", "url": "u", "cover": {"frame_at": 10.0}}
+    spec = DEMO
     (rec_dir / scan.RECORD_NAME).write_text(
         json.dumps(_record(spec, [_entry(10.0, status="fail"), _entry(10.4)])), encoding="utf-8")
     subprocess.run(["git", "init", "-q", str(repo)], check=True)
@@ -498,3 +644,23 @@ def test_没有产物目录就从HEAD读记录_预检缓存的键跟着记录走
     k1 = pick.verdict_key("demo")
     monkeypatch.setattr(pf, "cover_record_fingerprint", lambda slug: "another-blob")
     assert pick.verdict_key("demo") != k1, "扫描记录换了，预检缓存的键没变"
+
+
+def test_记录里那一格只红在认人睁眼上_人写了face_check_why就不拦():
+    """扫描之后人看过那一帧、写了 `_face_check_why` 认领：终审（`face_model_issues`）对它
+    放行，扫描记录的对账也得放行——否则记录和终审说两句话，只能重扫或再写一句
+    `_frame_scan_why`。认领只管认人／睁眼：记录里那一格还有 Haar／构图的毛病，照样拦。"""
+    closed = _entry(10.0, ear=0.09)
+    face_red = face_checks.problems_of(closed["face_model"])[0]
+    assert face_red and all(p.startswith("这张脸") for p in face_red), face_red
+    closed.update(status="fail", issues=list(face_red))
+    haar_too = {**closed, "issues": [*face_red, "只检出 1 只眼，正面睁眼合同要求 ≥ 2"]}
+    claimed = {**DEMO, "cover": {**DEMO["cover"], "_face_check_why": "低头那一下就是这段采访的落点"}}
+    record = _record(DEMO, [closed, _entry(10.2)])
+    assert "没过闸" in scan.record_problem(record, DEMO), "没认领的闭眼帧不许放"
+    assert scan.record_problem(record, claimed) == ""
+    record = _record(DEMO, [haar_too, _entry(10.2)])
+    assert "没过闸" in scan.record_problem(record, claimed), "认领认人／睁眼，却把 Haar 的毛病一起放了"
+    # 存下来的 issues 字符串是手改的（和存的数对不上）：不信字符串，照样拦
+    forged = {**closed, "issues": ["这张脸闭眼：随便写的"]}
+    assert "没过闸" in scan.record_problem(_record(DEMO, [forged]), claimed)

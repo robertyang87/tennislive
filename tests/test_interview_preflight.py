@@ -382,6 +382,8 @@ def test_全量预检也按已提交的封面扫描记录拦frame_at(monkeypatch
     import interview_cover_scan as scan
 
     spec = _full_spec(monkeypatch, tmp_path)
+    # 机器能换的那一格还得是文案点了名的人（`interview_cover_scan.named_in_copy`）
+    spec["cover"]["tag"] = "2026 美网 · 莱巴金娜"
     block = {"status": "ok", "identity": {"verdict": "match", "name": "莱巴金娜",
                                           "similarity": {"莱巴金娜": 0.6}, "missing": [],
                                           "face_px": 300.0},

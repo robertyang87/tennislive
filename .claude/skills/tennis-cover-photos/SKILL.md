@@ -2152,17 +2152,18 @@ Release 拉回本地，在候选时间点前后逐帧抽样**（0.5~1 秒一格�
 来路是返工审计 rework_audit_0928：interview-clip **9 趟 run（7 条 slug，46.5 runner-分钟）红在封面帧**，
 其中 7 趟红在「剪 + 烧字幕」之后；挪到编码之前（09-27）之后照样整趟作废——`cobolli-mensik`
 （run 36330845471）30 秒那一帧 Haar 数到 0 只眼、就地扫出的第一名 29.4，正是人后来写进 spec 的那一格
-（8edfe15a）；`zverev-tien`（run 36333320670）30 秒 Haar 数到 1 只眼、扫出 15 格过闸，人换的 31.6 是第 4 名。
+（23ed3bfb9）；`zverev-tien`（run 36333320670）30 秒 Haar 数到 1 只眼、扫出 15 格过闸，人换的 31.6 是第 4 名。
 **这两帧的人脸模型都说睁眼、是本人**（EAR 0.29 / 0.32，相似度 0.43 / 0.45）——红在 Haar 的眼睛计数上。
 
 | | 做法 |
 |---|---|
 | 扫描的尺子 | 每格 `audit_poster(face=True)`——**和终审一模一样**，记录的 `pass` 就是终审的 `pass`。人脸模型一格 0.1 秒上下（沙箱：检测 62 ms＋向量 23 ms＋106 点 10 ms），渲一格海报 2 秒（runner：21 格 43 秒），不是瓶颈 |
-| 机器能换的 | 过闸 ＋ 认人 **match**（不是 unknown）＋ 睁眼 **open**（不是量不了）。比终审严一档：人挑的那一帧人看过，机器换的没有。判定从存下的数重算；`_face_check_why` 不外借 |
+| 机器能换的 | 过闸 ＋ 认人 **match**（不是 unknown）＋ 睁眼 **open**（不是量不了）＋ **认出来的人是封面文案（tag／sub／topic／title）点了名的**。比终审严一档：人挑的那一帧人看过，机器换的没有。判定从存下的数重算；`_face_check_why` 不外借 |
+| ⚠️ 为什么要文案点名 | 认人的「本人」是 `expected_subject` 推的，手写 spec 没写 `subject`／`match.loser` 就退回 `winner`：`pegula-eala-dc2026-final`（佩古拉亚军致辞）落到伊埃拉、`nakashima-shelton-mtl2026-final` 落到谢尔顿、`williams-sisters-cincinnati-2026-r1-presser` 落到对手。人挑的本人那一帧终审 mismatch 红，机器接着把冠军那一格（match、睁眼）换上去，终审、推送闸全说 match（09-28 复审拿真 spec＋真人脸模型复现过）。全库 108 条认得出主角的采访 spec 里 104 条的文案点了主角的名，没点的 4 条就是这三条＋主角没头像的颁奖礼。双打 `alcaraz-mensik` 文案只点了阿尔卡拉斯，门西克那一格不换。主角一个都不在文案里时连整段粗扫都不跑（`subject_unnamed`） |
 | 挑哪一格 | 过闸名单（余量排序）里第一个机器能换的；近处（±2 秒）没有就把整段采访 `start`–`end` 粗扫 ≤ 40 格（108 条正式 spec 里 107 条的 `frame_at` 在这一段里） |
-| 换了之后 | 就地改写 spec 的 `cover.frame_at`、记 `cover._frame_autopick`（从哪到哪、原帧为什么不行、新帧读数）→ 按新帧重渲海报 → **同一把终审再过一遍** → 接着出片。「提交成片」**把改过的 spec 和扫描记录跟成片一起提交**（只交产物的话 main 上 spec 哈希对不上 QC 凭证：推送闸不推，picker 每 70 分钟重投一趟、再红再换，永远落不了地）；撞车重放时 spec 被别人改过就留别人的 |
+| 换了之后 | 就地改写 spec 的 `cover.frame_at`、记 `cover._frame_autopick`（从哪到哪、原帧为什么不行、新帧读数）→ 按新帧重渲海报 → **同一把终审再过一遍** → 接着出片。人给原来那一帧写的 `_face_check_why`／`_frame_scan_why` 挪进 `_frame_autopick.dropped`、`cover._why` 前面标一句「说的是原来那一帧」（留着会替一帧没人看过的开脱）。「提交成片」**把改过的 spec 和扫描记录跟成片一起提交**（只交产物的话 main 上 spec 哈希对不上 QC 凭证：推送闸不推，picker 每 70 分钟重投一趟、再红再换，永远落不了地）；撞车重放时 spec 被别人改过就留别人的，**扫描记录也留分支上那一份**（本趟的落了库，别人那版的 frame_at 在 dispatch 预检就红、停进 waiting，而不是重渲再换——复审复现过） |
 | 一格都换不了 | 人脸模型不可用、主角没官方头像（`laver-cup-2026-trophy-ceremony` 那种）、整段都闭眼／别人——照旧红，日志里 ✓ 那一列就是候选 |
-| dispatch 之前 | `interview_preflight` 读已提交的记录（工作区没有就读 HEAD）：`frame_at` 是记录里没过闸的、或记录外没扫过的就红，并报出记录里机器能换的那一格；探针（系统 python3）也跑，picker 的预检缓存键带上记录的 blob 号 |
+| dispatch 之前 | `interview_preflight` 读已提交的记录（工作区没有就读 HEAD）：`frame_at` 是记录里没过闸的、或记录外没扫过的就红，并报出记录里机器能换的那一格；探针（系统 python3）也跑，picker 的预检缓存键带上记录的 blob 号。那一格**只**红在认人／睁眼上、人又写了 `_face_check_why`：和终审同一个口径，不拦（原因从记录存的数重算） |
 
 实测：拿仓库里真发过的两张错封面（阿加西那张、鲁德闭眼那张）和换过的那两张拼成源片，真 ffmpeg ＋ Chromium ＋
 人脸模型跑 `run_scan(autopick)`：两条都换到了本人睁眼的那一格、终审 `[ok]`（沙箱 26 格 133~160 秒）。
