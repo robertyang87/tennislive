@@ -111,6 +111,9 @@ class Query:
     tz: str | None = None               # 赛事当地时区——EXIF 是当地钟点
     final: bool = False                 # 决赛：结束后 45 分钟内算颁奖
     start_lower_bound: bool = False     # 开赛只是列出来的时间（下界）：不按 EXIF 绑
+    #: 这一趟的墙钟总账（`official_photo_apis.Budget`）：自动链每份草稿给一个，照片接口那两档的翻页、
+    #: 读头都从它扣；None＝不限（人查、O4 有自己的 job 超时）
+    budget: object = None
 
 
 @dataclass
@@ -126,6 +129,9 @@ class ChannelResult:
     detail: str = ""                     # 标签后面的细节（报纸域名、官网域名）
     ran_parts: list[str] = field(default_factory=list)      # 中文媒体分几路
     skipped_parts: list[str] = field(default_factory=list)
+    #: ran 了、但**没查完**（照片接口：翻页中途出错／预算用完／翻满封顶、有候选的头没读）——
+    #: 0 张时不许报「查空」，「查成的 N 档里没有一张全过」也不算它（2026-09-28 复审 nit：只讲确认过的）
+    partial: bool = False
 
     @property
     def name(self) -> str:
@@ -196,7 +202,7 @@ def _api_query(q: Query) -> dict:
             "surname": toks[-1] if toks else None, "player_id": q.player_id, "event": q.event,
             "year": (str(q.start_utc.year) if q.start_utc else (q.date or "")[:4] or q.year),
             "start": q.start_utc, "end": q.end_utc, "tz": q.tz, "final": q.final,
-            "start_lower_bound": q.start_lower_bound, "until": until}
+            "start_lower_bound": q.start_lower_bound, "until": until, "budget": q.budget}
 
 
 def _sweep_api(key: str, label: str, run, q: Query) -> ChannelResult:
@@ -205,7 +211,7 @@ def _sweep_api(key: str, label: str, run, q: Query) -> ChannelResult:
     skipped = got.get("skipped") or {}
     if skipped:
         notes.append("筛掉 " + "、".join(f"{why} {n} 张" for why, n in skipped.items()))
-    res = ChannelResult(key, label, "ran", raw=got, notes=notes)
+    res = ChannelResult(key, label, "ran", raw=got, notes=notes, partial=bool(got.get("incomplete")))
     if not got.get("pages_read"):
         res.status = "blocked"
         res.why = "；".join(got.get("notes") or []) or "接口一页都没取回来"
@@ -450,6 +456,9 @@ def status_line(res: ChannelResult) -> str:
     """一档一行：**查了 N 张／查空／没查成／没跑／O4 不查**，五种长得不一样。"""
     if res.status == "ran":
         extra = f"（{'；'.join(res.notes)}）" if res.notes else ""
+        if res.partial:
+            return (f"{res.name}：{len(res.rows)} 张{extra}——**没查完**"
+                    + ("" if res.rows else "，不是查空"))
         if res.rows:
             return f"{res.name}：{len(res.rows)} 张{extra}"
         return f"{res.name}：0 张{extra}——查空（取回来了，没有对得上的）"
@@ -462,9 +471,11 @@ def status_line(res: ChannelResult) -> str:
 
 def tally(results: list[ChannelResult]) -> str:
     """这一趟每一档落在哪一格——末尾那一行。"""
-    groups = {"查了": [], "查空": [], "没查成": [], "没跑": [], "O4 不查": []}
+    groups = {"查了": [], "查空": [], "没查完": [], "没查成": [], "没跑": [], "O4 不查": []}
     for r in results:
-        if r.status == "ran":
+        if r.status == "ran" and r.partial:
+            groups["没查完"].append(r.label)
+        elif r.status == "ran":
             groups["查了" if r.rows else "查空"].append(r.label)
         elif r.status == "blocked":
             groups["没查成"].append(r.label)

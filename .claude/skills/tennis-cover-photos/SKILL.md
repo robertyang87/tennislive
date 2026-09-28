@@ -2279,8 +2279,8 @@ GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: 
 | 睁眼 | EAR ≥ 0.16 | O3 的闸 |
 | 钩子带／台头 | 真实铺图数学算脸落在哪：下沿在 `STORYCOPY_TOP` 之上、上沿不压进台头（y 0~170）；zoom 从 1.0 推到 1.3，推一档要过一次分辨率 | 本节「挑封面之前先把钩子那条带叠上去」；图在纵向没余量时偏移被夹住，脸会照原位落进台头 |
 
-全过的里面挑**脸最大**的（近景特写优先）。⚠️ 2026-09-28 起排序是 `taste_key`：决赛主角赢了捧杯照排最前 → 赢球那一刻
-（EXIF 在终场前 2 分钟～后 15 分钟）→ 偏正面 → 脸清楚 → 脸大 → 更像他（见下面照片接口那一节）。**情绪对不对题机器判不了，就是不判**——
+全过的里面挑**脸最大**的（近景特写优先）。⚠️ 2026-09-28 起排序是 `taste_key`：眼睛睁开（EAR 不压在睁眼线上 0.02 以内）→
+决赛主角赢了捧杯照排最前 → 赢球那一刻（EXIF 在终场前 2 分钟～后 15 分钟）→ 偏正面 → 脸清楚 → 脸大 → 更像他（见下面照片接口那一节）。**情绪对不对题机器判不了，就是不判**——
 O4 授权的是「过了这几道就换」。换完拿**正式的** `validate_spec` ＋ `cover_photo_problem`
 （去掉 slug，不走豁免表）再过一遍，不过就把写过的文件全部退回、这一班红出来。
 
@@ -2454,9 +2454,9 @@ WTA 的标题是「Leylah Fernandez, Singapore 2026」。**两个都不带对手
 
 | 闸 | 判据 | 实测 |
 |---|---|---|
-| 发布限制 | 说明／署名／特别说明（列表页上的，和**原图里嵌的 IPTC**）里有「/ China OUT」「/ Norway OUT」「NO USE IN …」——不换（`restriction_problem`、`official_photo_apis.restriction`） | 杭州那 32 张 AFP（Getty）图注全带 China OUT，这个号在国内发。⚠️ 已发的 `rublev-gaston` 和 `mannarino-shapovalov-chengdu` 两张封面（账号所有者当面给的 AFP 612 预览）原图里就嵌着 China OUT——已发的不重渲，记在这儿 |
+| 发布限制 | 说明／署名／特别说明（列表页上的，和**原图里嵌的 EXIF／IPTC／XMP 每一格**——`parse_head` 的 `texts`，原图整张读、不只前 128 KB）里有「/ China OUT」「/ Norway OUT」「, China OUT」「-- China OUT」「/ China and Taiwan OUT」「/ China Out」「NO USE IN …」——不换（`restriction_problem`、`official_photo_apis.restriction`；「Out of」不算） | 杭州那 32 张 AFP（Getty）图注全带 China OUT，这个号在国内发。⚠️ 已发的 `rublev-gaston` 和 `mannarino-shapovalov-chengdu` 两张封面（账号所有者当面给的 AFP 612 预览）原图里就嵌着 China OUT——已发的不重渲，记在这儿 |
 | 两人同框 | 标题里除了主角还有别人（「2026 Hangzhou Medvedev Royer」）、`references` 里有第二个球员 id；下下来之后第二张脸 ≥ 最大那张的 0.6（`second_face`，`face_checks.check_frame(all_faces=True)` 的 `faces`） | 握手照 Medvedev-026：标题点了鲁瓦耶、第二张脸 0.81 |
-| 排序（`taste_key`） | 决赛主角赢了：捧杯（文件名／说明 trophy／champion／`vc`，或 EXIF 在终场 5 分钟之后）→ 赢球那一刻（终场前 2 ～后 15 分钟）→ **偏正面**（两眼间距 ÷ 脸宽 ≥ 0.30）→ **脸清楚**（脸框 112×112 灰度拉普拉斯方差 ≥ 300）→ 脸大 → 更像他 | medvedev-wong 三张：挑正脸清楚的 022（0.41／998），不挑脸最大但动感模糊的侧脸 019（0.17／198）；fernandez、jovic 都挑捧杯 |
+| 排序（`taste_key`） | **眼睛睁开**（EAR ≥ 0.16 ＋ 0.02；压线的过得了睁眼闸、排在所有睁开的后面）→ 决赛主角赢了：捧杯（文件名／说明 trophy／champion／`vc`，或 EXIF 在终场 5 分钟之后）→ 赢球那一刻（终场前 2 ～后 15 分钟）→ **偏正面**（两眼间距 ÷ 脸宽 ≥ 0.30）→ **脸清楚**（脸框 112×112 灰度拉普拉斯方差 ≥ 300）→ 脸大 → 更像他 | medvedev-wong 三张：挑正脸清楚的 022（0.41／998），不挑脸最大但动感模糊的侧脸 019（0.17／198）；fernandez、jovic 都挑捧杯。⚠️ `270927-l-fernandez-vs-t-gibson-5` EAR 0.1628（真模型真原图），脸部裁出来眼皮垂着、往下看——10:47Z～12:05Z 只有它能过，**那段时间里照样会挑它**（压线只管排序，不拦：「低头但睁着眼的照样过」） |
 
 ⚠️ 认人闸会**漏换**，不会错换：Bu-035 最大那张「脸」是横幅上的汉字（检测器误检，相似度 −0.11，mismatch）；黄泽林
 Coleman-Wong-010 那张脸隔着拍线（0.24，unknown）；卢布列夫怒吼仰头那张检不出脸——都不换，安全方向。
@@ -2486,15 +2486,71 @@ Coleman-Wong-010 那张脸隔着拍线（0.24，unknown）；卢布列夫怒吼�
 **截止规则——谁等、等多久、等不到怎么办**：
 
 - **会话**：probe／render 跑着的时候挂一条 `python3 tools/find_cover_photo.py --slug <slug> --wait-until +45`（每 5 分钟查一次首选那一档，
-  最多 6 小时；绑上一张退出 0，到点退出 2）。有了就 `cover_upgrade.py --preflight --slug <slug> --write`；render 那一步的渲前预检也会
-  拿同一套渠道再查一遍，**手写 spec 有一张全过就不许发抽帧**。到点没有就**抽帧照发**（2026-09-26 的授权），推出去之后 O4 接着查 48 小时
-- **自动链**：reel-auto-ready 每 10 分钟一班，草稿还没封面（或卡死在视觉审核没过、不会重审的那张上）就先查这两档（`refresh_reel_cover`
+  最多 6 小时；到点退出 2）。点名层绑上的（◎：EXIF 绑上、没别人、没限制）**当场下原图过认人／睁眼／两人同框／钩子带**
+  （`slug_verifier`，O4 同一个 `evaluate`），**全过才退出 0**，都没过接着等；本机没装认人依赖就只到点名层、退出 0 时明说「认人没查」。
+  退出 0 之后 `cover_upgrade.py --preflight --slug <slug> --write`（正式封面闸、写图）；render 那一步的渲前预检也会
+  拿同一套渠道再查一遍，**手写 spec 有一张全过就不许发抽帧**。到点没有就**抽帧照发**（2026-09-26 的授权），推出去之后 O4 接着查 48 小时。
+  ⚠️ 原来点名层一过就打 ✅、退出 0——Bu-035（横幅上的字当成脸）、Coleman-Wong-010（认人 0.24）都会让等待提前结束（复审 nit）
+- ⚠️ **渲前预检也拦预裁的抽帧**（`is_frame_cover` 2026-09-28 起认 `image` ＋「抽帧…」`_frame_why`／「源片 N×N…」`_low_res_why`）：
+  手写、还没推过的 spec 封面是预裁进仓库的抽帧，第一次 render 照样会搜、有一张全过就退出 3 拦下——和「封面一律官方高清实拍」一致；
+  当面点过「就用这一帧」的写 `cover.portrait._keep_frame_why`
+- **自动链**：reel-auto-ready 每 10 分钟一班，草稿还没封面（或卡死在视觉审核没过、不会重审的那张上）就先查照片接口（`refresh_reel_cover`
   → `cover_upgrade.pick_for_draft`，同一套机器闸）；**查不到从来不拦**——照原来的 Tennis TV 页头图／WTA 赛后稿接着走，和改之前一样。
-  认人要的 onnxruntime／opencv／三个 onnx 只在有这种草稿的班次才装（`refresh_reel_cover.py --need-faces`）
+  认人要的 onnxruntime／opencv／三个 onnx 只在有这种草稿、而且这一档查得了（`draft_api_blocker`）的班次才装（`refresh_reel_cover.py --need-faces`）。
+  墙钟上限、只跑一档、被判掉的不再挑，见下一段
 - **O4**：推出去之后 48 小时里每 20 分钟一班，同样先查这两档
 - 实测的节奏：ATP Media 终场后中位 +28 分钟（+15 分～+2 小时 45 分）；WTA 赢家比赛中那张终场前后几分钟、捧杯 +30～77 分钟；
   输家基本没有。研究给的提案「封面最晚在集锦上线 + 20 分钟定」账号所有者**还没表态**——现在的做法不等：首推时有就用、没有就抽帧、
   O4 事后换，不为封面多等一分钟
+
+###### ⭐⭐ 2026-09-28 复审 FIX ROUND 1：自动链那一档**有墙钟上限**，被视觉审核判掉的图**不再挑**
+
+**① 挂住会拖垮整班**（BLOCKING）。reel-auto-ready 的 `refresh_reel_cover` 原来没有任何时间上限：flashscore `dc_1` 走 `match_feed._get` 的
+3 × 40 秒（老的补图那条路从来不问它）、照片接口每页／每个头 40 秒、每张原图 60 秒最多 10 张。复审实测：flashscore 挂住时 bondar-birrell 一份
+**128.7 秒**、照片接口挂住时 jacquet-etcheverry 一份 **80.1 秒**（`spec_tour` 是 None，两档都跑）；拿基线草稿回放 30 天，72% 的班次至少一份
+要跑这一档、21% 至少 5 份、最多 18 份——一次挂住就冲过 `timeout-minutes: 15`，落库和派发 render 两步不跑，**封面早就好了的草稿也一起挡住**，
+挂多久重演多久。现在：
+
+| | |
+|---|---|
+| 整班 | 和 `FEED_RETRY_BUDGET` 同一个 `$SECONDS` 钟：过了 `COVER_API_DEADLINE`（420 秒）剩下的草稿 `--no-api`（只走原来那两条路） |
+| 每份 | `--api-budget min(60, 剩下的)`：`official_photo_apis.Budget` 一个总账，flashscore、翻页、读头、下原图都从它扣，每个请求的超时不超过剩下的；外面再包 `timeout 180`（原来那两条路改之前也没有上限） |
+| flashscore | 只试一次、10 秒（`FS_QUICK_TIMEOUT`）；问到的开赛／结束记进草稿 `_cover_api.times`，下一班不再问 |
+| 单次超时 | 翻页 20 秒、读头 15 秒（原来 40）——100 条一页二三百 KB、头 128 KB，正常一两秒 |
+| 只跑一档 | `resolve_tour`：官方头像 → 主角英文全名在 top500 的 ATP／WTA 哪一张 → 赛事只属于一个巡回赛（`TOURNAMENT_LEVEL`）。129 份自动草稿里 `spec_tour` 是 None 的 52 份：51 份按名字、1 份按赛事认出来；认不出的**不查**（`draft_api_blocker`，也不为它装认人依赖）。名字排在赛事前面：ATP 250 合办站的女子赛事可能是 WTA 125 |
+
+判据 `test_自动链封面那一步有墙钟上限_挂住也不冲过job`（假钟：flashscore、翻页、原图一起挂住，一份花的不超过 60 秒；工作流的几个数加起来留得出 3 分钟）。
+真墙钟也量过（2026-09-28 沙箱：本机起一个只收连接、永不回话的端口，flashscore 和两个接口都指过去，原来那两条路 stub 掉）：
+bondar-birrell **30.1 秒**、jacquet-etcheverry **30.0 秒**（给 60 秒：flashscore 10 ＋ 第 0 页 20，这一档记「没查成」就停；jacquet 按 top500 认成 ATP，只翻一档）；
+给 20 秒的那一趟 **20.0 秒**。
+
+**② 被判掉的那张每一班重挑**（BLOCKING）。原来 `pick_for_draft` 的 `Target.tried` 是空的：medvedev-royer（录下来的数据，09-26 14:30Z）第 1 班
+挑 #4582136 Daniil-Medvedev-012，视觉审核判「封面情绪应为 winner_celebration」（25 份卡住的草稿里 14 份是这个理由）之后，第 2~4 班每一班
+重挑同一张、草稿一个字节不变、Tennis TV 那条路一次没走（改之前第 1 班就会走）、`--need-faces` 一直 true。现在：
+
+- 照片接口挑的封面在 portrait 里记 `_source_url`；卡住时进 `_cover_api.rejected`，挑图时排除——medvedev-royer 第 2 班挑 #4582138 Daniil-Medvedev-014
+- 照片接口没有别的能换、卡住的正是照片接口那张：**接着走原来那条路**（Tennis TV 页头图／WTA 赛后稿）
+- 卡住的这个状态（封面 URL ＋ 审它的 `input_sha256`）完整查过一遍、没有能换的：记 `_cover_api.stuck_checked`，**不再每一班查、不再装认人依赖**；
+  重审过（哈希变了）是新状态，再查一遍
+- 下过、结论确定没过的原图记 `_cover_api.tried`，下一班不再下（复审 nit：bondar-birrell 原来每一班重下两张、5.8 MB）
+- 换上的图写的是同一个路径（`assets/reel/<slug>-cover.jpg`），挂着的旧结论 `cover_image` 照样对得上：换图时记下当时那份结论的
+  `input_sha256`（`_cover_api.replaced_under`），结论没变就是**新图还没审**，不算卡住——不然这一班审核那一步挂了，下一班会把没审过的新图记进 `rejected`
+- `_cover_api` 只在学到新东西时写草稿（按内容比，不按字节比），转正时剥掉（`promote_reel_draft`）
+- `--need-faces` 只看 HEAD 上有 probe 的草稿（循环里没 probe 的这一班本来就跳过）
+
+判据 `test_自动链_卡在视觉审核上的照片接口图_不再挑它_没有别的就走原来的路_查完了不再要认人`、`test_自动链_卡在照片接口图上_原来的路也没有_查完了不再每班查接口`、
+`test_自动链_下过没过的原图不再下`。
+
+**③ 顺手收的几处**（复审 nit）：`pages()` 出错不再落到「翻满 15 页」、第 1 页之后出错这一档记「没查完」（`ChannelResult.partial`）不记「查成」；
+「年终总决赛 小组赛」「比利·简·金杯总决赛 首轮」「Finals Group B」不算决赛（`is_final` 先抹掉赛事名里的「总决赛／… Finals」）；
+EXIF 那条路的赛事名、NOT_IN_MATCH，决赛放宽的日期要求，原来各有一个变异活着（M9／M11／M14），现在各有判据。
+反向验证 35 处（墙钟上限 9、卡住那张 8、发布限制 5、其余 13），各红在自己的断言上；第一轮有 3 处活着（原图下载不从预算扣、
+名字认男女被赛事那一格兜住、`_NOT_FINAL` 被「总决赛」抹掉那一步兜住），补了判据再跑是红的。
+
+**④ 没改、记在这儿的**：窗口从 flashscore 开赛 − 5 分钟起，而 flashscore 的开赛是整 5 分钟——回放挑中的 `Yunchaokete-Bu-012` 拍在列出的开赛后
+**1 秒**、`Daniil-Medvedev-012` 后 **22 秒**，画面都是击球，**看不出是热身还是第一分**（没有比分牌；2026-09-28 下原图看过）。反方向（复审看过的）：瓜达拉哈拉 `Jovic-f`（16:45:33-06:00）
+和 AFP 2295584300 图注写着「during the final」，拍在 flashscore 开赛前十几二十分钟，复审看着像入场／热身——EXIF 那条路的 −5 分钟挡住了，
+**说明那条路不看拍摄的钟点**（`_caption_problems` 只核日期，`exif_date_problem` 只核当地哪一天），这种图注会被放过。没有改窗口。
 
 ### ⭐⭐ 2026-09-18：**比利·简·金杯官网的图在 Contentful 上，原图 5000~7000px**——页面是 JS 壳，图不是
 

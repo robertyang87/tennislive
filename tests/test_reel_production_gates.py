@@ -1734,5 +1734,8 @@ def test_promote转正时剥掉备料重跑的账(tmp_path):
     draft["_feed_retry"] = {"blocks": ["hit_data"], "errors": {"hit_data": "SystemExit: HTTP 503"},
                             "tries": 3, "last_at": "2026-09-28T07:00:00Z",
                             "exhausted_at": "2026-09-28T07:00:00Z"}
+    # 照片接口那一档的账（`refresh_reel_cover`：问过的开赛时刻、下过没过的、被视觉审核判掉的）同理
+    draft["_cover_api"] = {"tried": ["https://x/a.jpg"], "rejected": ["https://x/b.jpg"],
+                           "stuck_checked": "https://x/b.jpg#h1"}
     spec = promote.promote(draft)
-    assert "_feed_retry" not in spec and "_draft" not in spec
+    assert "_feed_retry" not in spec and "_draft" not in spec and "_cover_api" not in spec

@@ -49,8 +49,12 @@ jobs:
         run: pip install -q -e .
 
       # 封面那一步的第一档是 ATP Media／WTA 照片接口（`refresh_reel_cover` → `cover_upgrade.pick_for_draft`，
-      # 2026-09-28），和 O4 同一套机器闸——认人／睁眼要 onnxruntime ＋ opencv ＋ 三个 onnx。**只在有新鲜的
-      # 自动草稿还没封面（或卡死在现在那张上）时才装**：绝大多数班次不用，别为它每 10 分钟多花十几秒。
+      # 2026-09-28），和 O4 同一套机器闸——认人／睁眼要 onnxruntime ＋ opencv ＋ 三个 onnx。只在有新鲜的
+      # 自动草稿**查得了**（男女认得出、赛事／时区认得出）而且还没封面、或卡死在现在那张上、这个卡住的状态还没
+      # 完整查过一遍时才装（`refresh_reel_cover.py --need-faces`）。⚠️ 这不是「绝大多数班次不用」——复审拿
+      # 基线那批草稿回放 30 天：**72% 的班次**（3127/4320）至少有一份新鲜的没封面／卡住的草稿带着 probe，这是
+      # 上限（不算男女／赛事认不出、卡住的查过就不再查这两刀）。候选下过、闸没过的记进草稿 `_cover_api.tried`，
+      # 下一班不再下原图。
       # 备不上不拦：那一档的候选全记「人脸模型不可用」、一张不用，封面照原来那两条路走。
       - name: 这一班要不要认人
         id: need
@@ -99,6 +103,17 @@ jobs:
           # 挂住不回时累计能冲过 job 的 15 分钟——落库那步不跑，tries／last_at 不涨，下一班原样重演，
           # 连别的草稿的转正和 render 派发一起挡住。过了预算剩下的这一班不重跑、不记一次，下一班再来。
           FEED_RETRY_BUDGET=480
+          # 封面那一步的照片接口档（2026-09-28 复审 BLOCKING）：原来没有任何时间上限——flashscore `dc_1`
+          # 3 × 40 秒、照片接口每页／每个头 40 秒、每张原图 60 秒，挂住时一份 80~130 秒，一班最多 18 份，
+          # 冲过 job 的 15 分钟，落库和派发两步不跑，**封面早就好了的草稿也一起挡住**，接口挂多久就重演多久。
+          # 和 FEED_RETRY_BUDGET 同一个 $SECONDS 钟：过了 COVER_API_DEADLINE 这一班剩下的不查接口（--no-api，
+          # 原来那两条路照走）；没过就给这一份 min(COVER_API_PER_DRAFT, 剩下的) 秒，进程里每个请求的超时都
+          # 不超过剩下的（`official_photo_apis.Budget`）。外面再包一层 timeout：接口 ＋ 原来那两条路（Tennis TV／
+          # WTA 赛后稿，改之前就没有上限）合计 COVER_REFRESH_TIMEOUT 秒，被掐掉这一份跳过，下一班再来。
+          # 判据 tests/test_official_photo_apis.py::test_自动链封面那一步有墙钟上限_挂住也不冲过job
+          COVER_API_DEADLINE=420
+          COVER_API_PER_DRAFT=60
+          COVER_REFRESH_TIMEOUT=180
           for DRAFT in specs/reels/pending/*.draft.json; do
             SLUG=$(jq -r '.slug' "$DRAFT")
             KIND=$(jq -r '._production.kind // ""' "$DRAFT")
@@ -166,8 +181,16 @@ jobs:
 
             # 每份草稿各自隔离：一份炸了（模型接口 4xx、坏 JSON）不许把这一班
             # 剩下的草稿一起跳过——整段是 bash -e 的 for 循环，不隔离就是这个后果。
-            python tools/refresh_reel_cover.py --draft "$DRAFT" --write \
-              || { echo "::warning::$SLUG refresh_reel_cover 失败，这一份跳过"; continue; }
+            API_LEFT=$((COVER_API_DEADLINE - SECONDS))
+            if [ "$API_LEFT" -ge 15 ]; then
+              API_ARGS="--api-budget $(( API_LEFT < COVER_API_PER_DRAFT ? API_LEFT : COVER_API_PER_DRAFT ))"
+            else
+              API_ARGS="--no-api"
+              echo "[later] $SLUG 这一班照片接口已用满 ${COVER_API_DEADLINE}s 预算，只走原来的路，下一班再查"
+            fi
+            # shellcheck disable=SC2086
+            timeout "$COVER_REFRESH_TIMEOUT" python tools/refresh_reel_cover.py --draft "$DRAFT" --write $API_ARGS \
+              || { echo "::warning::$SLUG refresh_reel_cover 失败或超时（退出码 $?），这一份跳过"; continue; }
 
             PORTRAIT=$(jq -r '.cover.portrait.image // ""' "$DRAFT")
             REVIEWED=$(jq -r '._visual_evidence.cover_image // "__missing__"' "$DRAFT")

@@ -341,22 +341,33 @@ def test_决赛捧杯排最前_赢球那一刻其次_然后正脸_清楚_脸大(
             "layout": {"face_out": [0, 300, 100, 300 + h]},
             "face": {"similarity": {"a": sim}, "pose": {"frontal": frontal, "clear": clear}}}}
     trophy = p("270927-singles-vc-5.jpg", "2026-09-27T11:18:58Z", 200)
-    inmatch = p("270927-l-fernandez-vs-t-gibson-5.jpg", "2026-09-27T09:10:41Z", 400)
+    inmatch = p("x-inmatch.jpg", "2026-09-27T09:10:41Z", 400)
     moment = p("a.jpg", "2026-09-27T10:49:00Z", 150)
     blur = p("b.jpg", "2026-09-27T09:30:00Z", 500, clear=False)
     side = p("c.jpg", "2026-09-27T09:30:00Z", 450, frontal=False)
-    ranked = sorted([inmatch, blur, side, moment, trophy], reverse=True, key=lambda x: cu.taste_key(x, ctx))
+    # 复审 nit：`270927-l-fernandez-vs-t-gibson-5` 真模型 EAR 0.1628——过睁眼线（0.16），眼皮是垂着的。
+    # 不拦，排在所有眼睛睁开的后面（它比赛中、脸最大，原来排第三）
+    lowered = p("270927-l-fernandez-vs-t-gibson-5.jpg", "2026-09-27T09:10:41Z", 600)
+    lowered["evidence"]["face"]["ear"] = 0.1628
+    ranked = sorted([inmatch, blur, lowered, side, moment, trophy], reverse=True,
+                    key=lambda x: cu.taste_key(x, ctx))
     assert [x["candidate"].filename for x in ranked] == [
-        "270927-singles-vc-5.jpg", "a.jpg", "270927-l-fernandez-vs-t-gibson-5.jpg", "b.jpg", "c.jpg"]
+        "270927-singles-vc-5.jpg", "a.jpg", "x-inmatch.jpg", "b.jpg", "c.jpg",
+        "270927-l-fernandez-vs-t-gibson-5.jpg"]
+    # 压线的捧杯照也排在睁眼的比赛图后面；离线 0.02 以外（0.181）不算压线
+    trophy["evidence"]["face"]["ear"] = 0.17
+    assert cu.taste_key(trophy, ctx) < cu.taste_key(inmatch, ctx)
+    trophy["evidence"]["face"]["ear"] = 0.181
+    assert cu.taste_key(trophy, ctx) > cu.taste_key(moment, ctx)
     # 不是决赛：没有捧杯这一格；主角输了：没有「赢球那一刻」
     ctx.final = False
-    assert cu.taste_key(trophy, ctx)[0] is False
+    assert cu.taste_key(trophy, ctx)[1] is False
     ctx.subject_won = False
-    assert cu.taste_key(moment, ctx)[1] is False
-    # 替身／老凭证没有 pose：退回原来的「脸最大」
+    assert cu.taste_key(moment, ctx)[2] is False
+    # 替身／老凭证没有 pose、没有 EAR：退回原来的「脸最大」
     bare = p("d.jpg", "", 300)
     bare["evidence"]["face"].pop("pose")
-    assert cu.taste_key(bare, ctx)[2:4] == (True, True)
+    assert cu.taste_key(bare, ctx)[0] is True and cu.taste_key(bare, ctx)[3:5] == (True, True)
 
 
 # ---------------------------------------------------------------- ⑥ 决赛的图注不写对手
@@ -517,32 +528,34 @@ def test_自动链_照片接口那一档先查_找到了写原图_没有就照�
     import refresh_reel_cover as rrc  # noqa: PLC0415
 
     monkeypatch.setattr(rrc, "ROOT", tmp_path)
+    monkeypatch.chdir(tmp_path)
     blob = _plain_jpeg(5402, 3601)
     c = cu.Candidate("atp-media", "https://x/Daniil-Medvedev-012.jpg", item_id="4582136")
     found = {"chosen": {"candidate": c, "blob": blob}, "report": ["[照片接口] …"],
              "portrait": {"focus": 0.6, "focus_y": 0.4, "zoom": 1.0, "_why": "自动链照片接口…", "_gates": "g"}}
-    draft, note = rrc.refresh(_draft(), pick=lambda d, now: found)
+    draft, note = rrc.refresh(_draft(), pick=lambda d, now, **kw: found)
     por = draft["cover"]["portrait"]
     assert por["image"] == "assets/reel/medvedev-royer-cover.jpg" and por["focus"] == 0.6, por
     assert (tmp_path / por["image"]).read_bytes() == blob, "存原图字节，不重编码"
     assert por["_portrait_why"].startswith("自动链照片接口") and "4582136" in note
+    assert por["_source_url"] == c.url, "记下挑的是哪一张：视觉审核判掉之后要排除它"
     # 没有：照原来那条路（Tennis TV 页头图）
     called = []
     monkeypatch.setattr(rrc, "fetch_tennistv_cover",
                         lambda url, event, out: called.append(url) or "Tennis TV 头图")
     d2, note2 = rrc.refresh(_draft(source_url="https://www.tennistv.com/videos/x"),
-                            pick=lambda d, now: {"chosen": None, "report": []})
+                            pick=lambda d, now, **kw: {"chosen": None, "report": []})
     assert called and note2 == "Tennis TV 头图"
     # 那一档炸了也照原来的路走，不拦
     called.clear()
 
-    def boom(d, now):
+    def boom(d, now, **kw):
         raise RuntimeError("接口挂了")
     rrc.refresh(_draft(source_url="https://www.tennistv.com/videos/x"), pick=boom)
     assert called
     # 不带 --write：只报，不写图
     (tmp_path / "assets/reel/medvedev-royer-cover.jpg").unlink()
-    rrc.refresh(_draft(), pick=lambda d, now: found, write=False)
+    rrc.refresh(_draft(), pick=lambda d, now, **kw: found, write=False)
     assert not (tmp_path / "assets/reel/medvedev-royer-cover.jpg").exists()
 
 
@@ -553,7 +566,7 @@ def test_自动链_已有封面不换_只有卡死在视觉审核上的才换(tm
     img.write_bytes(_plain_jpeg(100, 100))
     asked = []
 
-    def pick(d, now):
+    def pick(d, now, **kw):
         asked.append(d["slug"])
         return {"chosen": None, "report": []}
     has = _draft(cover={**_draft()["cover"], "portrait": {"image": str(img)}})
@@ -642,3 +655,492 @@ def test_splice替身本身读得回说明():
     from PIL import Image  # noqa: PLC0415
     assert Image.open(io.BytesIO(blob)).size == (50, 40)
     assert date(2026, 9, 27) in cu.caption_dates(apis.parse_head(blob)["caption"])
+
+
+# ---------------------------------------------------------------- ⑩ 复审 FIX ROUND 1：墙钟上限
+
+class _Clock:
+    """假的墙钟：挂住的请求按它拿到的超时往前拨，测「一份草稿最多花多少秒」不用真等。"""
+
+    def __init__(self):
+        self.t = 1000.0
+
+    def __call__(self) -> float:
+        return self.t
+
+
+def _hang(clock: _Clock, log: list, kind: str):
+    """一个挂住的请求：按给它的超时把钟往前拨，然后超时。"""
+    import requests  # noqa: PLC0415
+
+    def call(url, *a, timeout=None, **kw):
+        log.append((kind, url, timeout))
+        clock.t += float(timeout)
+        raise requests.exceptions.ReadTimeout(f"{kind} 挂住了（{timeout}s）")
+    return call
+
+
+def test_自动链封面那一步有墙钟上限_挂住也不冲过job(monkeypatch):
+    """复审 BLOCKING 1：`refresh_reel_cover --draft` 没有任何时间上限——flashscore `dc_1` 走 `match_feed._get`
+    的 3 × 40 秒、照片接口每页／每个头 40 秒、每张原图 60 秒，挂住时一份草稿 80~130 秒，一班最多 18 份，
+    冲过 job 的 15 分钟，落库和派发两步不跑，**封面早就好了的草稿也一起挡住**。
+
+    ① 一份草稿的总账（`Budget`）：flashscore 和照片接口**一起**挂住，假钟上花掉的不超过给它的秒数；
+       flashscore 只问一次、10 秒；男女认得出（这份草稿没有官方头像，按 top500 认）只翻一档
+    ② 草稿里记过开赛／结束（`_cover_api.times`）就不问 flashscore
+    ③ 工作流：和 FEED_RETRY_BUDGET 同一个 `$SECONDS` 钟的整班截止、每份的上限、外面一层 timeout，
+       加起来留得出装依赖和落库、派发的时间"""
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    clock, log = _Clock(), []
+    monkeypatch.setattr(apis, "get_json", _hang(clock, log, "page"))
+    monkeypatch.setattr(apis, "get_head", _hang(clock, log, "head"))
+    monkeypatch.setattr(cu, "fetch_image", _hang(clock, log, "original"))
+
+    def fs(match_id, *, attempts=3, timeout=40):
+        log.append(("flashscore", match_id, (attempts, timeout)))
+        clock.t += attempts * timeout
+        raise RuntimeError("flashscore 挂住了")
+    monkeypatch.setattr(cu, "flashscore_times", fs)
+    draft = _draft(stats={})                                      # 没有官方头像：spec_tour 是 None
+    assert cu.draft_tour(draft) == "atp"                          # 按 top500 认得出 Daniil Medvedev
+    budget = apis.Budget(60, clock=clock)
+    t0 = clock.t
+    got = cu.pick_for_draft(draft, _u("2026-09-26T14:30:00Z"), budget=budget)
+    spent = clock.t - t0
+    assert spent <= 60, (spent, log)
+    assert [x[2] for x in log if x[0] == "flashscore"] == [(1, cu.FS_QUICK_TIMEOUT)], log
+    pages = [x[1] for x in log if x[0] == "page"]
+    assert pages and all(u.startswith(apis.ATP_MEDIA_API) for u in pages), pages   # 只翻一档
+    assert all(x[2] <= apis.PAGE_TIMEOUT for x in log if x[0] == "page"), log
+    assert got["chosen"] is None and got["complete"] is False, "挂住的这一趟是「没查完」，不是「查过、没有」"
+    assert "没查完" in got["report"][-1] or "没查成" in got["report"][-1], got["report"]
+    # 同一个账再来一趟：两趟合起来还是不超过 60 秒；用完之后一个请求都不再发
+    got = cu.pick_for_draft(draft, _u("2026-09-26T14:30:00Z"), budget=budget)
+    assert clock.t - t0 <= 60 and budget.spent, (clock.t - t0, log)
+    n = len(log)
+    got = cu.pick_for_draft(draft, _u("2026-09-26T14:30:00Z"), budget=budget)
+    assert len(log) == n and not got["complete"], log[n:]
+    # ② 记过开赛／结束：不问 flashscore
+    log.clear()
+    known = {"flashscore_id": "OWZ0gYVj", "start_utc": "2026-09-26T11:35:00Z", "end_utc": "2026-09-26T13:20:51Z"}
+    got = cu.pick_for_draft(draft, _u("2026-09-26T14:30:00Z"), budget=apis.Budget(30, clock=clock),
+                            known_times=known)
+    assert not [x for x in log if x[0] == "flashscore"], log
+    assert got["ctx"].date_source.startswith("flashscore dc_1_OWZ0gYVj"), got["ctx"].date_source
+    # 下原图也从同一个账里扣：页和头都正常（录下来的），两张能过点名闸的原图挂住——只下得了预算里那一张
+    log.clear()
+    k = replay.kit(_u("2026-09-26T14:30:00Z"))
+    t1 = clock.t
+    got = cu.pick_for_draft(draft, _u("2026-09-26T14:30:00Z"), budget=apis.Budget(60, clock=clock),
+                            known_times=known, sweeps_for=k["sweeps_for"], checker=k["checker"])
+    originals = [x for x in log if x[0] == "original"]
+    assert originals and all(x[2] <= cu.ORIGINAL_TIMEOUT for x in originals), log
+    assert clock.t - t1 <= 60 and not got["complete"], (clock.t - t1, log)
+
+    # ③ 工作流
+    import re  # noqa: PLC0415
+
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github/workflows/reel-auto-ready.yml").read_text(encoding="utf-8"))
+    run = "\n".join(str(st.get("run") or "") for st in wf["jobs"]["ready"]["steps"])
+    num = {k: int(re.search(rf"^\s*{k}=(\d+)$", run, re.M).group(1))
+           for k in ("FEED_RETRY_BUDGET", "COVER_API_DEADLINE", "COVER_API_PER_DRAFT", "COVER_REFRESH_TIMEOUT")}
+    loop = run.index("for DRAFT in")
+    assert all(run.index(f"{k}=") < loop for k in num), "预算是整班的，不是每份的"
+    call = next(line for line in run.splitlines() if "tools/refresh_reel_cover.py --draft" in line)
+    assert call.lstrip().startswith('timeout "$COVER_REFRESH_TIMEOUT"') and "$API_ARGS" in call, call
+    around = run[run.index("API_LEFT=$((COVER_API_DEADLINE - SECONDS))"):run.index(call)]
+    assert "--api-budget" in around and "--no-api" in around, around
+    assert num["COVER_API_DEADLINE"] <= num["FEED_RETRY_BUDGET"], "接口档不许比备料重跑的截止还晚"
+    assert num["COVER_REFRESH_TIMEOUT"] >= num["COVER_API_PER_DRAFT"] + 60, "外面那层要留出原来那两条路的时间"
+    minutes = wf["jobs"]["ready"]["timeout-minutes"]
+    # 截止前最后一份：接口在截止前停（进程内预算），原来那两条路再跑到 timeout；留 3 分钟给装依赖、审核、落库、派发
+    assert num["COVER_API_DEADLINE"] + num["COVER_REFRESH_TIMEOUT"] + 180 <= minutes * 60, num
+
+
+def test_命令行_no_api不查接口_api_budget传进去_没学到东西不写草稿(tmp_path, monkeypatch, capsys):
+    import refresh_reel_cover as rrc  # noqa: PLC0415
+
+    monkeypatch.chdir(tmp_path)
+    path = tmp_path / "medvedev-royer.draft.json"
+    draft = _draft()
+    # 原来的格式和 json.dumps 不一样（紧凑写法）：什么都没学到时不许被「重排版」写一遍
+    path.write_text(json.dumps(draft, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    seen = []
+
+    def pick(d, now, **kw):
+        seen.append(kw)
+        return {"chosen": None, "report": [], "complete": False}
+    monkeypatch.setattr(cu, "pick_for_draft", pick)
+    monkeypatch.setattr(rrc, "fetch_tennistv_cover", lambda *a: (_ for _ in ()).throw(RuntimeError("x")))
+    import fetch_match_pbp  # noqa: PLC0415
+    monkeypatch.setattr(fetch_match_pbp, "find_match", lambda *a, **k: (_ for _ in ()).throw(RuntimeError("离线")))
+    before = path.read_bytes()
+    monkeypatch.setattr(sys, "argv", ["x", "--draft", str(path), "--write", "--no-api"])
+    assert rrc.main() == 0 and seen == [] and path.read_bytes() == before
+    monkeypatch.setattr(sys, "argv", ["x", "--draft", str(path), "--write", "--api-budget", "42"])
+    assert rrc.main() == 0 and seen[-1]["budget"] == 42.0 and path.read_bytes() == before
+    # 学到了（问到开赛／结束）：记进 `_cover_api`，写草稿；下一班 pick 拿到 known_times
+    times = {"flashscore_id": "OWZ0gYVj", "start_utc": "2026-09-26T11:35:00Z",
+             "end_utc": "2026-09-26T13:20:51Z", "source": "flashscore dc_1_OWZ0gYVj（DC／DD）"}
+    monkeypatch.setattr(cu, "pick_for_draft",
+                        lambda d, now, **kw: seen.append(kw) or {"chosen": None, "report": [], "times": times})
+    assert rrc.main() == 0
+    saved = json.loads(path.read_text(encoding="utf-8"))
+    assert saved["_cover_api"]["times"] == times and "cover" in saved and "portrait" not in saved["cover"]
+    assert "[waiting]" in capsys.readouterr().out
+    assert rrc.main() == 0 and seen[-1]["known_times"] == times
+
+
+def test_命令行_need_faces_只看有probe的新鲜草稿(tmp_path, monkeypatch, capsys):
+    """工作流「这一班要不要认人」：循环里没有已落库 probe 的草稿这一班跳过，不为它装认人依赖。"""
+    import refresh_reel_cover as rrc  # noqa: PLC0415
+
+    fresh = _draft(_production={**_draft()["_production"],
+                                "received_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")})
+    path = tmp_path / "medvedev-royer.draft.json"
+    path.write_text(json.dumps(fresh, ensure_ascii=False), encoding="utf-8")
+    for probed, want in ((set(), "false"), ({"medvedev-royer"}, "true"), (None, "true")):
+        monkeypatch.setattr(rrc, "slugs_with_probe", lambda probed=probed: probed)
+        monkeypatch.setattr(sys, "argv", ["x", "--need-faces", str(path)])
+        assert rrc.main() == 0 and capsys.readouterr().out.strip() == want, probed
+
+
+def test_自动链_下过没过的原图不再下(tmp_path, monkeypatch):
+    """复审 nit：`pick_for_draft` 不记得下过什么，闸没过的原图每一班重下（bondar-birrell 每班两张、5.8 MB）。
+    wong-vallejo 录下来的：Coleman-Wong-010 认人 0.24（unknown）——结论确定，记进 `_cover_api.tried`，下一班不下。"""
+    import refresh_reel_cover as rrc  # noqa: PLC0415
+
+    monkeypatch.setattr(rrc, "ROOT", tmp_path)
+    monkeypatch.chdir(tmp_path)
+    m = next(x for x in replay.MATCHES if x.slug.startswith("wong-vallejo"))
+    spec = replay.spec_of(m.slug)
+    draft = {"slug": "wong-vallejo", "_production": {"kind": "orchestrated_reel", "event": "Hangzhou",
+                                                     "received_at": m.end, "round": "第二轮"},
+             "_match": {"flashscore_id": "x", "winner": spec["cover"]["subject"]},
+             "cover": {"matchup": spec["cover"]["matchup"]}, "stats": spec["stats"]}
+    k = replay.kit(_u(m.first_push))
+
+    def pick(d, now, **kw):
+        return cu.pick_for_draft(d, now, sweeps_for=k["sweeps_for"], fetch=k["fetch"], checker=k["checker"],
+                                 times=lambda _i: (_u(m.start), _u(m.end)), **kw)
+    rrc.refresh(draft, now=_u(m.first_push), pick=pick)
+    first = list(k["calls"]["downloads"])
+    assert first and all(u.endswith("Coleman-Wong-010.jpg") for u in first), first
+    assert draft["_cover_api"]["tried"] == first
+    rrc.refresh(draft, now=_u(m.first_push), pick=pick)
+    assert k["calls"]["downloads"] == first, "下过、结论确定没过的不再下"
+
+
+def _reject(draft: dict, sha: str) -> None:
+    """视觉审核判掉现在这张封面（最常见的那一种理由：25 份卡住的草稿里 14 份）、不会重审。"""
+    draft["_visual_evidence"] = {"status": "waiting", "visual_status": "waiting", "retryable": False,
+                                 "cover_image": draft["cover"]["portrait"]["image"], "input_sha256": sha,
+                                 "problems": ["封面情绪应为 winner_celebration，现在是 other"]}
+
+
+def test_自动链_卡在视觉审核上的照片接口图_不再挑它_没有别的就走原来的路_查完了不再要认人(tmp_path, monkeypatch):
+    """复审 BLOCKING 2（录下来的数据，medvedev-royer，09-26 14:30Z）：第 1 班挑中 #4582136
+    Daniil-Medvedev-012，视觉审核判掉之后，第 2~4 班**每一班重挑同一张**、草稿一个字节不变、
+    `fetch_tennistv_cover` 一次没调、`needs_official_pick` 一直是 True（每 10 分钟装一遍认人依赖，最长 20 小时）。
+    改之前的基线第 1 班就会走 Tennis TV。现在：
+    - 被判掉的记 `_cover_api.rejected`，挑图时排除——第 2 班挑的是另一张（#4582138 Daniil-Medvedev-014）
+    - 照片接口没有别的能换、而卡住的是照片接口那张：接着走原来那条路（Tennis TV 页头图）
+    - 卡在 Tennis TV 那张上：照片接口完整查一遍，没有能换的就记 `stuck_checked`——之后不再查、不再要认人"""
+    import refresh_reel_cover as rrc  # noqa: PLC0415
+
+    monkeypatch.setattr(rrc, "ROOT", tmp_path)
+    monkeypatch.chdir(tmp_path)
+    now = _u("2026-09-26T14:30:00Z")
+    k = replay.kit(now)
+    picks = []
+
+    def pick(d, at, **kw):
+        picks.append(kw)
+        return cu.pick_for_draft(d, at, sweeps_for=k["sweeps_for"], fetch=k["fetch"], checker=k["checker"],
+                                 times=lambda _i: (R2["start"], R2["end"]), **kw)
+    ttv = []
+
+    def tennistv(url, event, out):
+        ttv.append(url)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_bytes(_plain_jpeg(1600, 2000))
+        return "Tennis TV 头图"
+    monkeypatch.setattr(rrc, "fetch_tennistv_cover", tennistv)
+    draft = _draft(source_url="https://www.tennistv.com/videos/x")
+    # 第 1 班：照片接口挑 012
+    draft, note = rrc.refresh(draft, now=now, pick=pick)
+    first = draft["cover"]["portrait"]["_source_url"]
+    assert first.endswith("Daniil-Medvedev-012.jpg") and "4582136" in note, note
+    assert not rrc.needs_official_pick(draft, now)
+    # 第 2 班：012 被判掉——不再挑它，挑 014
+    _reject(draft, "h1")
+    assert rrc.stuck_on_cover(draft) and rrc.needs_official_pick(draft, now)
+    draft, note = rrc.refresh(draft, now=now, pick=pick)
+    assert draft["_cover_api"]["rejected"] == [first]
+    second = draft["cover"]["portrait"]["_source_url"]
+    assert second.endswith("Daniil-Medvedev-014.jpg") and second != first, second
+    assert first not in k["calls"]["downloads"][2:], "被判掉的那张不再下"
+    assert ttv == []
+    # 换上了、这一班审核那一步没跑（旧结论还挂在同一个路径上）：新图**还没审**，不算卡住、不许记进 rejected
+    n = len(picks)
+    assert not rrc.stuck_on_cover(draft) and not rrc.needs_official_pick(draft, now)
+    draft, note = rrc.refresh(draft, now=now, pick=pick)
+    assert note == "已有封面" and len(picks) == n and draft["_cover_api"]["rejected"] == [first]
+    # 第 3 班：014 也被判掉——照片接口没有别的了，卡住的是照片接口那张：走原来那条路
+    _reject(draft, "h2")
+    draft, note = rrc.refresh(draft, now=now, pick=pick)
+    assert ttv == ["https://www.tennistv.com/videos/x"] and note == "Tennis TV 头图", note
+    assert draft["cover"]["portrait"]["_portrait_why"].startswith("Tennis TV")
+    assert draft["_cover_api"]["rejected"] == [first, second]
+    # 换成 Tennis TV 那张、还没审：同样不算卡住
+    assert not rrc.stuck_on_cover(draft) and not rrc.needs_official_pick(draft, now)
+    # 第 4 班：Tennis TV 那张也被判掉——照片接口查一遍（两张都判过了），查完了记下来，不再走 Tennis TV
+    _reject(draft, "h3")
+    assert rrc.needs_official_pick(draft, now)
+    n = len(picks)
+    draft, note = rrc.refresh(draft, now=now, pick=pick)
+    assert len(picks) == n + 1 and "卡在视觉审核上" in note and ttv == ["https://www.tennistv.com/videos/x"]
+    assert draft["_cover_api"]["stuck_checked"] == rrc.stuck_key(draft)
+    assert not rrc.needs_official_pick(draft, now), "查完了、没有能换的：不再为它装认人依赖"
+    # 第 5 班：不再查
+    draft, note = rrc.refresh(draft, now=now, pick=pick)
+    assert len(picks) == n + 1 and "卡在视觉审核上" in note
+    # 重审之后（input_sha256 变了）是新的状态，再查一遍
+    _reject(draft, "h4")
+    assert rrc.needs_official_pick(draft, now)
+
+
+def test_自动链_卡在照片接口图上_原来的路也没有_查完了不再每班查接口(tmp_path, monkeypatch):
+    """原来那条路也没有（不是 Tennis TV 的源片，WTA 赛后稿那条也找不到）：草稿照旧卡着——
+    但照片接口那一档查完了就不再每一班查、不再要认人；原来那条路照旧每一班试（和改之前一样）。"""
+    import fetch_match_pbp  # noqa: PLC0415
+    import refresh_reel_cover as rrc  # noqa: PLC0415
+
+    monkeypatch.setattr(rrc, "ROOT", tmp_path)
+    monkeypatch.chdir(tmp_path)
+    old_path = []
+    monkeypatch.setattr(fetch_match_pbp, "find_match",
+                        lambda *a, **k: old_path.append(1) or (_ for _ in ()).throw(RuntimeError("没有")))
+    blob = _plain_jpeg(5402, 3601)
+    url = "https://x/Daniil-Medvedev-012.jpg"
+    picks = []
+
+    def pick(d, now, **kw):
+        picks.append(kw)
+        if url in kw["rejected"]:
+            return {"chosen": None, "report": [], "complete": True}
+        return {"chosen": {"candidate": cu.Candidate("atp-media", url, item_id="4582136"), "blob": blob},
+                "report": [], "portrait": {"_why": cu.AUTO_DRAFT_WHY_PREFIX + "：…", "_source_url": url}}
+    now = _u("2026-09-26T14:30:00Z")
+    draft, _n = rrc.refresh(_draft(), now=now, pick=pick)
+    _reject(draft, "h1")
+    draft, note = rrc.refresh(draft, now=now, pick=pick)
+    assert picks[-1]["rejected"] == [url] and old_path == [1], "照片接口没有别的：原来那条路接着试"
+    assert draft["cover"]["portrait"]["_source_url"] == url and draft["_cover_api"]["stuck_checked"]
+    assert not rrc.needs_official_pick(draft, now)
+    draft, note = rrc.refresh(draft, now=now, pick=pick)
+    assert len(picks) == 2 and old_path == [1, 1]
+
+
+# ---------------------------------------------------------------- ⑪ 复审 FIX ROUND 1：nits
+
+def test_男女认得出就只跑一档_认不出不查():
+    """复审 nit：129 份自动草稿 52 份 `spec_tour` 是 None，两档都跑。`resolve_tour`：官方头像 → top500 → 赛事。"""
+    assert cu.resolve_tour({}, "Daniil Medvedev")[0] == "atp"
+    assert cu.resolve_tour({}, "Leylah Fernandez")[0] == "wta"
+    # 大满贯、男女同站：赛事认不出，名字认得出
+    assert cu.resolve_tour({"_production": {"event": "US Open"}}, "Daniil Medvedev")[0] == "atp"
+    assert cu.resolve_tour({"_production": {"event": "Beijing"}}, "Leylah Fernandez")[0] == "wta"
+    assert cu.resolve_tour({"_production": {"event": "MONTERREY"}}, "Nobody Known")[0] == "wta"
+    assert cu.resolve_tour({"_production": {"event": "Hangzhou"}}, "Nobody Known")[0] == "atp"
+    for ev in ("US Open", "Beijing", "Laver Cup", ""):
+        assert cu.resolve_tour({"_production": {"event": ev}}, "Nobody Known")[0] is None, ev
+    # 头像前缀优先（名字对不上也按头像）
+    assert cu.resolve_tour({"stats": {"a": {"headshot": "x/wta-1.jpg"}}}, "Daniil Medvedev")[0] == "wta"
+    # 认不出：照片接口那一档不查（一个请求都不发），`needs_official_pick` 也不为它装依赖
+    d = _draft(stats={}, _production={**_draft()["_production"], "event": "US Open"},
+               cover={"matchup": [{"name": "梅德韦杰夫", "name_en": "nobody known"},
+                                  {"name": "鲁瓦耶", "name_en": "valentin royer"}]})
+    swept = []
+    got = cu.pick_for_draft(d, _u("2026-09-26T14:00:00Z"), times=lambda _i: (R2["start"], R2["end"]),
+                            sweeps_for=lambda ctx: swept.append(1) or [])
+    assert swept == [] and got["complete"] and "认不出是男子还是女子" in got["report"][-1]
+    assert cu.draft_api_blocker(d, _u("2026-09-26T14:00:00Z"))
+    import refresh_reel_cover as rrc  # noqa: PLC0415
+    assert not rrc.needs_official_pick(d, _u("2026-09-26T14:00:00Z"))
+
+
+@pytest.mark.parametrize("text, hit", [
+    ("… on September 27, 2026. (Photo by STR / AFP), China OUT", "China OUT"),
+    ("… on September 27, 2026. (Photo by STR / AFP) -- China OUT", "China OUT"),
+    ("… (Photo by STR / AFP via Getty Images) / China and Taiwan OUT", "China and Taiwan OUT"),
+    ("… (Photo by STR / AFP via Getty Images) / China Out", "China Out"),
+    ("REUTERS/Stringer CHINA AND TAIWAN OUT", "CHINA AND TAIWAN OUT"),
+    # 不许误伤
+    ("Tennis / Nadal Out of Wimbledon with injury", ""),
+    ("Coleman Wong reacts, out of breath, after the point", ""),
+    ("(AP Photo/Andy Wong)", ""),
+])
+def test_发布限制的几种少见写法也认得出(text, hit):
+    got = apis.restriction(text)
+    assert bool(got) == bool(hit) and hit in got, (text, got)
+
+
+def _app(marker: int, payload: bytes) -> bytes:
+    return bytes([0xFF, marker]) + (len(payload) + 2).to_bytes(2, "big") + payload
+
+
+def _iptc_app13(**records: str) -> bytes:
+    """IPTC-IIM（APP13 / Photoshop IRB 0x0404）：`caption=` → 2:120、`instructions=` → 2:40。"""
+    ds = {"caption": 120, "instructions": 40}
+    body = b"".join(b"\x1c\x02" + bytes([ds[k]]) + len(v.encode()).to_bytes(2, "big") + v.encode()
+                    for k, v in records.items())
+    irb = b"8BIM" + (0x0404).to_bytes(2, "big") + b"\x00\x00" + len(body).to_bytes(4, "big") + body
+    irb += b"\x00" * (len(body) % 2)
+    return _app(0xED, b"Photoshop 3.0\x00" + irb)
+
+
+def _exif_app1(caption: str) -> bytes:
+    from PIL import Image  # noqa: PLC0415
+
+    exif = Image.Exif()
+    exif[0x010E] = caption
+    return _app(0xE1, b"Exif\x00\x00" + exif.tobytes())
+
+
+def test_发布限制每一格说明都扫_原图整张读():
+    """复审 nit：`parse_head` 只留先读到的那一格说明、`restriction` 只扫它；`image_verdict` 只读前 128 KB。
+    录下来的 wta-4578951：EXIF 那格结尾「/ AFP)」，IPTC 那格「/ AFP via Getty Images)」——Getty 的
+    「/ China OUT」正追加在 IPTC 这一格。"""
+    rec = apis.parse_head(_head("wta-4578951"))
+    assert len(rec["texts"]) >= 2 and rec["texts"][0] != rec["texts"][1], rec["texts"]
+    clean = "Leylah Fernandez hits a return during the final (Photo by X / AFP)"
+    head = (b"\xff\xd8" + _exif_app1(clean)
+            + _iptc_app13(caption=clean.replace(")", " via Getty Images) / China OUT")))
+    got = apis.parse_head(head)
+    assert got["caption"] == clean, "给人看的那一格照旧是先读到的"
+    assert apis.restriction(got["caption"]) == "" and "China OUT" in apis.restriction(*got["texts"])
+    # sweep 的行、image_verdict 都扫到了
+    item = {"id": 1, "title": "2026 Hangzhou Medvedev", "publishFrom": 1790429735000,
+            "imageUrl": "https://x/Daniil-Medvedev-012.jpg", "originalDetails": {"width": 5402, "height": 3601}}
+    row = apis.sweep_atp_media(full_name="Daniil Medvedev", surname="Medvedev", player_id="MM58",
+                               event="Hangzhou", year="2026", **R2, fetch=lambda u: {"content": [item]},
+                               head=lambda u: head)["rows"][0]
+    assert "China OUT" in row["restriction"], row
+    # 限制那一格排在 128 KB 之后（前面几段大 APP 段）：原来 blob[:128 KB] 读不到
+    pad = b"".join(_app(0xE2, b"ICC_PROFILE\x00" + b"\x00" * 60000) for _ in range(3))
+    blob = head[:2] + _exif_app1(clean) + pad + head[2 + len(_exif_app1(clean)):] + _plain_jpeg(5000, 3300)[2:]
+    assert blob.index(b"China OUT") > apis.HEAD_BYTES
+    got = cu.image_verdict(blob, _spec_rublev(), _ctx_rublev(), checker=_checker("卢布列夫"))
+    assert any("原图嵌的说明里" in p and "China OUT" in p for p in got["problems"]), got["problems"]
+
+
+def test_翻页出错不说成翻满_中途出错是没查完不是查空():
+    """复审 nit：`pages()` 出错 `break` 之后落到 `truncated = True`——挂住那一趟报「第 0 页：ReadTimeout；
+    翻满 15 页还没翻到开赛前两小时」；第 1 页之后出错，这一档还记「查成」。"""
+    def boom(_url):
+        raise ConnectionError("reset")
+    items, stats = apis.pages(apis.ATP_MEDIA_API, _u("2026-09-26T09:35:00Z"), fetch=boom)
+    assert stats["pages_read"] == 0 and not stats["truncated"] and stats["incomplete"], stats
+    fresh = [{"id": i, "title": "x", "publishFrom": 1_900_000_000_000, "imageUrl": f"https://x/{i}.jpg"}
+             for i in range(3)]
+
+    def second_fails(url):
+        if url.endswith("page=0"):
+            return {"content": fresh}
+        raise ConnectionError("reset")
+    got = apis.sweep_atp_media(full_name="Daniil Medvedev", surname="Medvedev", player_id="MM58",
+                               event="Hangzhou", year="2026", **R2, fetch=second_fails,
+                               head=lambda u: b"")
+    assert got["pages_read"] == 1 and got["incomplete"], got
+    assert not any("翻满" in n for n in got["notes"]) and any("没翻完" in n for n in got["notes"]), got["notes"]
+    res = cch._sweep_api("atp-media", "ATP Media 照片接口", lambda **kw: got, cch.Query(player="Medvedev"))
+    assert res.status == "ran" and res.partial and "没查完" in cch.status_line(res), cch.status_line(res)
+    assert "——查空" not in cch.status_line(res) and "没查完 1" in cch.tally([res])
+    assert "没查完" in cu.verdict_line([], [res]) and "查成的" not in cu.verdict_line([], [res])
+
+
+def test_EXIF那条路_赛事名和在不在比赛_各自拦得住():
+    """复审 nit：变异 M9（拆掉 `exif_bound_problems` 的赛事名那道）、M11（拆掉 EXIF 那条路的 NOT_IN_MATCH）
+    原来都活着——渠道那头的标题过滤把 M9 藏住了，M11 是 WTA 那种嵌着「press conference」「practice」的图注
+    落在决赛 end+45 窗口里时唯一的一道。这里直接喂 `metadata_problems`（绕开渠道那头）。"""
+    ctx = _ctx_medvedev()
+    base = dict(bind="exif", taken="2026:09:26 19:35:22", publish_utc="2026-09-26T13:35:35Z")
+    ok = cu.Candidate("atp-media", "https://x/Daniil-Medvedev-012.jpg", caption="2026 Hangzhou Medvedev", **base)
+    assert cu.metadata_problems(ok, ctx) == []
+    other = cu.Candidate("atp-media", "https://x/Daniil-Medvedev-012.jpg", caption="2026 Chengdu Medvedev", **base)
+    assert any("没有赛事" in p for p in cu.metadata_problems(other, ctx)), cu.metadata_problems(other, ctx)
+    for words in ("speaks at a press conference", "practices on court", "warms up"):
+        c = cu.Candidate("atp-media", "https://x/Daniil-Medvedev-012.jpg",
+                         caption=f"2026 Hangzhou Medvedev · Daniil Medvedev {words} in Hangzhou", **base)
+        assert any("不是这场单打在打的时刻" in p for p in cu.metadata_problems(c, ctx)), words
+
+
+def test_决赛放宽_说明没写日期_真接口那种带上传时刻的也不放():
+    """复审 nit：变异 M14（拆掉 `final_opponent_ok` 的日期要求）活着——原来的反例 Candidate 没有 `meta_utc`，
+    而真接口的行带 `meta_utc＝publish_utc`：不写日期、只写「final」的图注会凭上传时刻过 `_upload_problems`。"""
+    ctx = cu.match_context(replay.spec_of("jovic-stearns-guadalajara-2026-final"),
+                           times=lambda _id: (_u("2026-09-19T23:05:00Z"), _u("2026-09-20T00:35:20Z")))
+    cap = ("US Iva Jovic lifts the trophy after winning the women's singles final match of the WTA "
+           "Guadalajara Open tournament at the Panamerican Tennis Center in Zapopan, Mexico. (Photo by AFP)")
+    c = cu.Candidate("wta-photos", "https://x/t.jpg", caption=cap, meta_utc="2026-09-20T00:44:18Z",
+                     publish_utc="2026-09-20T00:44:18Z")
+    assert any("对手" in p for p in cu.metadata_problems(c, ctx)), cu.metadata_problems(c, ctx)
+
+
+def test_年终总决赛和团体赛总决赛的小组赛不是决赛():
+    """复审 nit：含「决赛」两个字就算——「年终总决赛 小组赛」会把 EXIF 窗口放到结束后 45 分钟、打开捧杯排序。"""
+    for line in ("2026 WTA 年终总决赛 小组赛", "2026 ATP 年终总决赛 循环赛", "2026 比利·简·金杯总决赛 首轮",
+                 "2026 戴维斯杯总决赛 1/4决赛"):
+        assert not cu.is_final({"topbar": {"line1": line}}), line
+    for rnd in ("ATP Finals Round Robin", "WTA Finals Group Stage", "Davis Cup Finals", "Finals Group B",
+                "Finals - Round Robin"):
+        assert not cu.is_final({"_match": {"round": rnd}}), rnd
+    assert cu.is_final({"topbar": {"line1": "2026 WTA 年终总决赛 决赛"}})
+    assert cu.is_final({"_match": {"round": "Final"}}) and cu.is_final({"_match": {"round": "Women's Singles Final"}})
+
+
+def test_人查挂着等_带slug时绑上的要过图的闸才退出0(capsys):
+    """复审 nit：`--wait-until` 点名层一过就打 ✅、退出 0——Bu-035（横幅上的字当成脸）、Coleman-Wong-010
+    （认人 0.24）都会让等待提前结束。带 `--slug` 时过图的闸（`slug_verifier`），都没过接着等。"""
+    import find_cover_photo as fcp  # noqa: PLC0415
+
+    clock = [datetime(2026, 9, 26, 13, 20, tzinfo=UTC)]
+    runs = {"n": 0}
+
+    def fake_run(ch, q, o4=False):
+        runs["n"] += 1
+        raw = {"rows": [{"bound": True, "others": [], "restriction": "", "item_id": str(runs["n"]),
+                         "title": "t", "name": "n.jpg", "wh": (5000, 3300), "publish_utc": "",
+                         "bind_why": "w", "url": f"https://x/{runs['n']}.jpg"}], "pages_read": 1}
+        return cch.ChannelResult(ch.key, ch.label, "ran", raw=raw, rows=[{}])
+
+    verdicts = iter([("no", ["  - 认人没过"]), ("no", ["  - 睁眼没过"]), ("ok", ["  → 过了"])])
+    q = cch.Query(player="Medvedev", tour="atp", start_utc=clock[0])
+    orig = cch.run_channel
+    cch.run_channel = fake_run
+    try:
+        got = fcp.wait_for_photo(q, "+60", now=lambda: clock[0], sleep=lambda s: None,
+                                 verify=lambda res: next(verdicts))
+        assert got == 0 and runs["n"] == 3, runs
+        out = capsys.readouterr().out
+        assert out.count("接着等") == 2 and "✅" not in out and "◎" in out, out
+        # 本机没人脸模型：点名层过了照样退出 0，但明说认人没查
+        assert fcp.wait_for_photo(q, "+60", now=lambda: clock[0], sleep=lambda s: None,
+                                  verify=lambda res: ("unchecked", [])) == 0
+        assert "认人／睁眼／钩子带没查" in capsys.readouterr().out
+    finally:
+        cch.run_channel = orig
+    # 真的 verifier：Bu-035（录下来的真模型结果：最大那张「脸」是横幅上的字）过不了
+    rec = next((u, v) for u, v in replay.load_faces().items() if u.endswith("Yunchaokete-Bu-035.jpg"))
+    verify = fcp.slug_verifier("bu-majchrzak-hangzhou-2026-r2")
+    row = cch._row(rec[0], caption="2026 Hangzhou Bu · Yunchaokete Bu", name="Yunchaokete-Bu-035.jpg",
+                   meta_utc="2026-09-26T12:00:00Z", wh=tuple(rec[1]["size"]), bind="exif",
+                   taken="2026:09:26 18:30:00", publish_utc="2026-09-26T12:00:00Z")
+    res = cch.ChannelResult("atp-media", "ATP Media 照片接口", "ran", rows=[row])
+    state, lines = verify(res, checker=lambda *a, **k: rec[1]["rep"],
+                          fetch=lambda url: apis.blank_jpeg(*rec[1]["size"]))
+    assert state == "no", (state, lines)

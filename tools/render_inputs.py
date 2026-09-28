@@ -227,6 +227,9 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_feed_retry": _gate("promote_reel_draft.promote：转正时和 `_draft` 一起剥掉——草稿专用的"
                          "flashscore 重跑账（assemble_spec.record_feed_retry），render 和 dry-run "
                          "都不调", "promote"),
+    "_cover_api": _gate("promote_reel_draft.promote：转正时和 `_draft` 一起剥掉——草稿专用的"
+                        "照片接口那一档的账（refresh_reel_cover：问过的开赛时刻、下过没过的原图、"
+                        "被视觉审核判掉的图、卡住的状态查没查完），render 和 dry-run 都不调", "promote"),
     "_editing_why": _gate(
         "taste_gates_extra.uses_tennistv：`_source`／`_editing_why` 里写着 Tennis TV 就要求"
         "认领 `_tennistv_trim`（dry-run）——它是**触发**不是认领，写了只会多一道闸；"

@@ -64,6 +64,7 @@ from __future__ import annotations
 import io
 import re
 import struct
+import time
 import unicodedata
 from datetime import date, datetime, timedelta, timezone
 from difflib import SequenceMatcher
@@ -89,6 +90,12 @@ FINAL_END_SLACK = timedelta(minutes=45)
 NO_END_SPAN = timedelta(minutes=50)
 PUBLISH_TOLERANCE = timedelta(minutes=2)
 
+#: 单次请求的超时（秒）。原来一律 40：自动链（reel-auto-ready，job 才 15 分钟）一份草稿翻两页、读十来张头，
+#: 接口挂住时一份就是好几分钟（2026-09-28 复审：`pick_for_draft` 在照片接口挂住时实测 80.1 秒）。
+#: 100 条一页的 JSON 二三百 KB、128 KB 的头，正常都是一两秒——收短不会误伤；再往上还有 `Budget` 管总账。
+PAGE_TIMEOUT = 20
+HEAD_TIMEOUT = 15
+
 _UA = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -103,6 +110,48 @@ class NetworkOff(RuntimeError):
     """`TENNISLIVE_PHOTO_API_FETCH=0`（单元测试的 autouse，`tests/conftest.py`）：这两个接口不许联网。"""
 
 
+class BudgetSpent(RuntimeError):
+    """这一趟的墙钟预算（`Budget`）用完了——不是接口的错，下一班再来。"""
+
+
+class Budget:
+    """一趟查图的**墙钟总账**（秒）：自动链每份草稿给一个（`refresh_reel_cover --api-budget`），
+    翻页、读头、下原图、问 flashscore 开赛时刻都从这一个账里扣——每个请求的超时取「它自己的上限」和
+    「剩下的」里小的那个，剩得不够一个请求（`MIN_CALL` 秒）就不发，抛 `BudgetSpent`。
+
+    来路（2026-09-28 复审 BLOCKING）：reel-auto-ready 的 `refresh_reel_cover` 没有任何时间上限，
+    flashscore 或照片接口挂住时一份草稿 80~130 秒，一班最多 18 份——冲过 job 的 15 分钟，落库和派发
+    render 那两步不跑，**连封面早就好了的草稿一起挡住**，而且接口挂多久就每一班重演多久。"""
+
+    MIN_CALL = 2.0
+
+    def __init__(self, seconds: float, *, clock: Callable[[], float] = time.monotonic):
+        self.clock = clock
+        self.seconds = float(seconds)
+        self.end = clock() + self.seconds
+        #: 有一次请求因为预算不够没发——这一趟**没查完**（调用方据此不下「查过、没有」的结论）
+        self.hit = False
+
+    def left(self) -> float:
+        return self.end - self.clock()
+
+    @property
+    def spent(self) -> bool:
+        return self.hit or self.left() < self.MIN_CALL
+
+    def timeout(self, cap: float) -> float:
+        """这一次请求的超时：`min(cap, 剩下的)`；剩下的不够一个请求就抛 `BudgetSpent`。"""
+        left = self.left()
+        if left < self.MIN_CALL:
+            self.hit = True
+            raise BudgetSpent(f"这一趟的 {self.seconds:.0f} 秒预算用完了——没查完，下一班再来")
+        return min(float(cap), left)
+
+
+def _timeout(budget: "Budget | None", cap: float) -> float:
+    return budget.timeout(cap) if budget is not None else cap
+
+
 def _guard(url: str) -> None:
     import os  # noqa: PLC0415
 
@@ -110,7 +159,7 @@ def _guard(url: str) -> None:
         raise NetworkOff(f"TENNISLIVE_PHOTO_API_FETCH=0：不联网（{url[:80]}）")
 
 
-def get_json(url: str, timeout: int = 40) -> dict:
+def get_json(url: str, timeout: float = PAGE_TIMEOUT) -> dict:
     import requests  # noqa: PLC0415
 
     _guard(url)
@@ -120,7 +169,7 @@ def get_json(url: str, timeout: int = 40) -> dict:
     return resp.json()
 
 
-def get_head(url: str, nbytes: int = HEAD_BYTES, timeout: int = 40) -> bytes:
+def get_head(url: str, nbytes: int = HEAD_BYTES, timeout: float = HEAD_TIMEOUT) -> bytes:
     """原图的前 `nbytes` 字节（Range）。S3／CloudFront 回 206；不认 Range 的回 200 整张——只读前 n 字节。"""
     import requests  # noqa: PLC0415
 
@@ -150,27 +199,35 @@ def iso(ts: datetime | None) -> str:
 
 
 def pages(api: str, until: datetime, *, fetch: Callable[[str], dict] | None = None,
-          max_pages: int = MAX_PAGES) -> tuple[list[dict], dict]:
+          max_pages: int = MAX_PAGES, budget: Budget | None = None) -> tuple[list[dict], dict]:
     """从第 0 页往后翻，翻到这一页最早的 `publishFrom` 比 `until` 还早就停。
 
-    返回 (条目, 统计)：统计里 `pages_read`（真取回来的页数）、`errors`、`truncated`（翻满
-    `max_pages` 还没翻到 `until`——**没翻完**，要报出来，不是查空）。"""
-    fetch = fetch or get_json
+    返回 (条目, 统计)：统计里 `pages_read`（真取回来的页数）、`errors`（第几页出错、为什么）、
+    `truncated`（翻满 `max_pages` 还没翻到 `until`）、`incomplete`（**没翻完**：出错停下的、
+    预算用完停下的、翻满封顶的——都要报出来，不是查空）。
+
+    ⚠️ 2026-09-28 复审 nit：原来出错是 `break`，落到循环后面那句 `truncated = True`——挂住的那一趟
+    报的是「第 0 页：ReadTimeout…；翻满 15 页还没翻到开赛前两小时」，第二句是假的。出错**当场返回**。"""
+    fetch = fetch or (lambda url: get_json(url, timeout=_timeout(budget, PAGE_TIMEOUT)))
     items: list[dict] = []
-    stats: dict = {"pages_read": 0, "errors": [], "truncated": False}
+    stats: dict = {"pages_read": 0, "errors": [], "truncated": False, "incomplete": False}
     for page in range(max_pages):
         try:
+            if budget is not None and budget.left() < Budget.MIN_CALL:
+                budget.hit = True
+                raise BudgetSpent(f"这一趟的 {budget.seconds:.0f} 秒预算用完了——没查完，下一班再来")
             got = fetch(page_url(api, page))
         except Exception as exc:                                  # noqa: BLE001
             stats["errors"].append(f"第 {page} 页：{type(exc).__name__}: {str(exc)[:100]}")
-            break
+            stats["incomplete"] = True
+            return items, stats
         rows = [r for r in (got or {}).get("content") or [] if isinstance(r, dict)]
         stats["pages_read"] += 1
         items += rows
         stamps = [t for t in (_ms(r.get("publishFrom")) for r in rows) if t]
         if not rows or not stamps or min(stamps) < until:
             return items, stats
-    stats["truncated"] = True
+    stats["truncated"] = stats["incomplete"] = True
     return items, stats
 
 
@@ -251,11 +308,18 @@ _XMP_FIELDS = {
 
 def parse_head(blob: bytes) -> dict:
     """原图前缀里的元数据：`taken`（EXIF `DateTimeOriginal` 原文）、`offset`（`OffsetTimeOriginal`）、
-    `caption`（EXIF ImageDescription／IPTC 2:120／XMP dc:description）、`instructions`（IPTC 2:40
-    「特别说明」——发布限制常写在这儿）、`credit`（IPTC 2:110／2:80、EXIF Artist／Copyright）。
-    读不出的键是空串——**没有就不判**，调用方按「没有 EXIF」处理。"""
+    `caption`（EXIF ImageDescription／IPTC 2:120／XMP dc:description，**先读到的那一格**，给人看）、
+    `instructions`（IPTC 2:40「特别说明」——发布限制常写在这儿）、`credit`（IPTC 2:110／2:80、EXIF
+    Artist／Copyright）、`texts`（**每一格**说明和特别说明的原文，发布限制那道闸扫它）。
+    读不出的键是空串——**没有就不判**，调用方按「没有 EXIF」处理。
+
+    ⚠️ `texts` 为什么要每一格（2026-09-28 复审 nit）：三格说明**真的不一样**——录下来的 WTA AFP 原图
+    `wta-4578951`，EXIF 那格结尾是「(Photo by ULISES RUIZ / AFP)」，IPTC 那格是「… / AFP via Getty
+    Images)」，而 Getty 的「/ China OUT」正是追加在这个位置。只扫先读到的那一格，限制只写在
+    IPTC／XMP 里的图就漏过去了。"""
     got = {"taken": "", "offset": "", "caption": "", "instructions": "", "credit": "",
-           "segments": 0}
+           "segments": 0, "texts": []}
+    texts: list[str] = []
     try:
         from PIL import Image  # noqa: PLC0415
     except ImportError:                                           # pragma: no cover
@@ -273,11 +337,13 @@ def parse_head(blob: bytes) -> dict:
             got["taken"] = got["taken"] or _text(sub.get(0x9003) or exif.get(0x9003))
             got["offset"] = got["offset"] or _text(sub.get(0x9011))
             got["caption"] = got["caption"] or _text(exif.get(0x010E))
+            texts.append(_text(exif.get(0x010E)))
             credits += [_text(exif.get(0x013B)), _text(exif.get(0x8298))]
         elif marker == 0xED and data.startswith(b"Photoshop 3.0\x00"):
             rec = _iptc(data[14:])
             got["caption"] = got["caption"] or " ".join(rec.get((2, 120), []))
             got["instructions"] = got["instructions"] or " ".join(rec.get((2, 40), []))
+            texts += rec.get((2, 120), []) + rec.get((2, 40), []) + rec.get((2, 105), [])
             credits += rec.get((2, 110), []) + rec.get((2, 80), []) + rec.get((2, 116), [])
         elif marker == 0xE1 and data.startswith(b"http://ns.adobe.com/xap/1.0/\x00"):
             xmp = data.decode("utf-8", errors="replace")
@@ -290,7 +356,9 @@ def parse_head(blob: bytes) -> dict:
                     credits.append(val)
                 else:
                     got[key] = got[key] or _text(val)
+                    texts.append(_text(val))
     got["credit"] = "；".join(dict.fromkeys(c for c in credits if c))
+    got["texts"] = list(dict.fromkeys(t for t in texts if t))
     if re.fullmatch(r"0{4}:0{2}:0{2} 0{2}:0{2}:0{2}", got["taken"]):
         got["taken"] = ""
     return got
@@ -303,9 +371,15 @@ def parse_head(blob: bytes) -> dict:
 #: 要求 `OUT` 全大写、前面是一到三个大写开头的词，而且跟在 `/`、`;`、`)`、句号或行首后面——
 #: 句子里的「… figures out …」「… out of …」都不中。**任何地区**的限制都算：限制写在哪一格
 #: 都说明这张图带着授权条件，而机器判不了条件满没满足。
+#:
+#: 2026-09-28 复审 nit 补的写法（真数据里都没见过，真形状是「/ China OUT」＋ IPTC 2:40——这里是加固）：
+#: 前面是逗号（「(Photo by STR / AFP), China OUT」）、双连字符（「-- China OUT」）；中间带
+#: and／&（「/ China and Taiwan OUT」）；首字母大写的「Out」（「/ China Out」）——但「Out of」不算
+#: （「… / Nadal Out of Wimbledon」是标题，不是限制）。
 RESTRICTION_RE = re.compile(
-    r"(?:^|[/;)\].]|\s-\s)\s*((?:[A-Z][A-Za-z.'-]*\s+){1,3}OUT)\b"
-    r"|\b([A-Z]{3,}(?:\s+[A-Z]{2,}){0,2}\s+OUT)\b"
+    r"(?:^|[/;),\].]|\s-{1,2}\s|--)\s*"
+    r"((?:[A-Z][A-Za-z.'-]*\s+(?:(?:and|&)\s+)?){1,4}(?:OUT|Out))\b(?!\s+of\b)"
+    r"|\b([A-Z]{3,}(?:\s+(?:[A-Z]{2,}|AND|&))*\s+OUT)\b"
     r"|\b(NO\s+(?:USE|SALES?|DISTRIBUTION)\s+IN\s+[A-Z][A-Za-z ]+)"
     r"|\b(NOT\s+FOR\s+(?:USE|SALE|PUBLICATION|DISTRIBUTION)\s+IN\s+[A-Z][A-Za-z ]+)")
 
@@ -473,19 +547,24 @@ def sweep(api: str, *, tour: str, full_name: str | None, surname: str | None,
           start: datetime | None, end: datetime | None, tz: str | None, final: bool = False,
           start_lower_bound: bool = False, until: datetime | None = None,
           fetch: Callable[[str], dict] | None = None, head: Callable[[str], bytes] | None = None,
-          max_heads: int = MAX_HEADS) -> dict:
+          max_heads: int = MAX_HEADS, budget: Budget | None = None) -> dict:
     """翻接口、按标题／球员 id 认主角和赛事、Range 读原图的头、按 EXIF 绑场次。
 
-    返回 `{"rows": [...], "pages_read", "notes", "skipped": {原因: 张数}}`。`rows` 里每一张都**点名了
-    主角和赛事**（按标题／文件名／球员 id），绑没绑上场次写在 `bound`／`bind_why`——O4 的点名闸
-    （`cover_upgrade.metadata_problems`）拿同一个 `window_verdict` 再判一遍。"""
-    head = head or get_head
+    返回 `{"rows": [...], "pages_read", "notes", "skipped": {原因: 张数}, "incomplete"}`。`rows` 里每一张都
+    **点名了主角和赛事**（按标题／文件名／球员 id），绑没绑上场次写在 `bound`／`bind_why`——O4 的点名闸
+    （`cover_upgrade.metadata_problems`）拿同一个 `window_verdict` 再判一遍。`incomplete`：没翻完
+    （出错／预算用完／翻满封顶）或者有候选的头因为预算没读——这一档**没查完**，不许报成「查空」。
+
+    `budget`（`Budget`）：翻页和读头都从它扣，每个请求的超时不超过剩下的。"""
+    head = head or (lambda url: get_head(url, timeout=_timeout(budget, HEAD_TIMEOUT)))
     ref_type = "ATP_PLAYER" if tour == "atp" else "TENNIS_PLAYER"
     anchor = start or until or (datetime.now(timezone.utc) - timedelta(days=1))
-    items, stats = pages(api, (until or anchor) - LOOKBACK, fetch=fetch)
-    out: dict = {"rows": [], "pages_read": stats["pages_read"], "notes": [], "skipped": {}}
+    items, stats = pages(api, (until or anchor) - LOOKBACK, fetch=fetch, budget=budget)
+    out: dict = {"rows": [], "pages_read": stats["pages_read"], "notes": [], "skipped": {},
+                 "incomplete": bool(stats["incomplete"])}
     if stats["errors"]:
-        out["notes"] += stats["errors"][:2]
+        out["notes"] += [e + ("——**没翻完**，再早的没看" if stats["pages_read"] else "")
+                         for e in stats["errors"][:2]]
     if stats["truncated"]:
         out["notes"].append(f"翻满 {MAX_PAGES} 页还没翻到开赛前两小时——**没翻完**，再早的没看")
     ev_toks = event_tokens(event)
@@ -531,14 +610,18 @@ def sweep(api: str, *, tour: str, full_name: str | None, surname: str | None,
             continue
         others = others_in_title(title, full_name=full_name, surname=surname, event=event, year=year)
         others += [f"球员 id {r}" for r in refs if player_id and r != str(player_id)]
-        meta = {"taken": "", "offset": "", "caption": "", "instructions": "", "credit": ""}
+        meta = {"taken": "", "offset": "", "caption": "", "instructions": "", "credit": "", "texts": []}
         head_note = ""
         if heads >= max_heads:
             head_note = f"这一趟已经读了 {max_heads} 张的头，留给下一班"
+            out["incomplete"] = True
         else:
             heads += 1
             try:
                 meta = parse_head(head(url))
+            except BudgetSpent as exc:
+                head_note = f"原图的头没读（{exc}）"
+                out["incomplete"] = True
             except Exception as exc:                              # noqa: BLE001
                 head_note = f"原图的头读不出来（{type(exc).__name__}: {str(exc)[:80]}）"
         credit = "；".join(dict.fromkeys(c for c in (
@@ -555,7 +638,8 @@ def sweep(api: str, *, tour: str, full_name: str | None, surname: str | None,
             "publish_utc": iso(published), "wh": (w, h) if w and h else None,
             "refs": refs, "others": others, "taken": meta["taken"], "offset": meta["offset"],
             "taken_utc": iso(taken_utc), "bound": ok, "bind_why": why,
-            "restriction": restriction(title, meta["caption"], meta["instructions"], credit),
+            "restriction": restriction(title, meta["caption"], meta["instructions"],
+                                       *meta.get("texts") or [], credit),
         })
     return out
 
@@ -569,10 +653,15 @@ def sweep_wta_photos(**kw) -> dict:
 
 
 def dump_rows(rows: Iterable[dict]) -> list[str]:
-    """人读的一张一行（`find_cover_photo` 印）。"""
+    """人读的一张一行（`find_cover_photo` 印）。
+
+    ◎ ＝**点名层**过了：EXIF 绑上这一场、标题里没有别人、没有发布限制。⚠️ **不是「能用」**——认人／睁眼／
+    两人同框（脸）／钩子带要下原图才判得了（`cover_upgrade.py --preflight`）。原来这里打 ✅，2026-09-28
+    复审 nit：Bu-035（最大那张「脸」是横幅上的字）、Coleman-Wong-010（隔着拍线认不出）在这一层都是 ✅，
+    信了 ✅ 的会话会拿一张用不了的图去等、去换。"""
     out = []
     for r in rows:
-        mark = "✅" if r.get("bound") and not r.get("others") and not r.get("restriction") else "  "
+        mark = "◎" if r.get("bound") and not r.get("others") and not r.get("restriction") else "  "
         wh = r.get("wh")
         size = f"{wh[0]}×{wh[1]}" if wh else "?"
         out.append(f"  {mark} [{r.get('item_id')}] {r.get('title')} · {r.get('name')} · {size} · "

@@ -50,8 +50,8 @@
    说明那条路过不了的，**按照片自己的 EXIF 拍摄时刻绑场次**（`exif_bound_problems`）——当地钟点落在
    [开赛 − 5 分, 结束 + 15 分]（决赛 + 45 分）里；没 EXIF、时差对不上、开赛只是下界的一律不绑。
 
-   全过的里面按 `taste_key` 排：决赛捧杯 → 赢球那一刻 → 偏正面 → 脸清楚 → 脸大（「优先近景特写」）→
-   更像他。**「情绪对不对题」机器只认得捧杯和赢球那一刻两种**，别的不判——O4 授权的是「官方图过了这几道就换」。
+   全过的里面按 `taste_key` 排：眼睛睁开（EAR 不压在睁眼线上 0.02 以内）→ 决赛捧杯 → 赢球那一刻 →
+   偏正面 → 脸清楚 → 脸大（「优先近景特写」）→ 更像他。**「情绪对不对题」机器只认得捧杯和赢球那一刻两种**，别的不判——O4 授权的是「官方图过了这几道就换」。
 4. **换**（`apply_upgrade`）：原图字节存进 `assets/reel/<slug>-official.<ext>`
    （不重编码，「封面图一律存原图」），spec 的 `cover.portrait` 换成
    `image`＋算好的 `focus`/`focus_y`/`zoom`＋`_why`（出处、说明原文、每道闸的数），
@@ -110,7 +110,8 @@ AP／Getty 的图过了这几道机器闸就**自动换、自动重推**，不�
 
 `data/cover_upgrades.json` 里 `status: upgraded` 的 slug 一律跳过，机器不再动它。
 ⚠️ **人要手动换回抽帧，三处一起改**（评审第二轮：原来这里写着「机器也不会再动它」，
-只说对了一半）：spec 换回 `frame_at`；账里那一笔的 status 改成别的（比如
+只说对了一半）：spec 换回原来那张抽帧（`frame_at`，或者预裁进仓库的那张 `image` ＋ 原样的
+`_frame_why`／`_low_res_why`——`is_frame_cover` 认的就是这两个开头，2026-09-28 起它也是抽帧）；账里那一笔的 status 改成别的（比如
 `reverted_by_owner`）——`status: upgraded` 会让这个 slug 从 `OWNER_APPROVED_FRAME_COVERS`
 里减掉，spec 又是抽帧的话 `cover_photo_problem` 当场红、
 `test_自动换过图的slug从抽帧豁免表里减掉` 也红；再在 `cover.portrait._keep_frame_why`
@@ -599,6 +600,8 @@ class MatchContext:
     site: str | None = None
     tz: str | None = None
     tour: str | None = None
+    #: `tour` 是怎么认的（`resolve_tour`）
+    tour_source: str = ""
     start_utc: datetime | None = None
     end_utc: datetime | None = None
     match_dates: set[date] = field(default_factory=set)
@@ -675,15 +678,19 @@ def _registry_tz(event_en: str) -> str | None:
     return None
 
 
-def flashscore_times(match_id: str) -> tuple[datetime | None, datetime | None]:
+def flashscore_times(match_id: str, *, attempts: int = 3,
+                     timeout: float = 40) -> tuple[datetime | None, datetime | None]:
     """flashscore `dc_1_<id>`：`DC÷` 开赛、`DD÷` 结束（unix 秒）。
 
     2026-09-27 实测（`hheFZ9KN`，拉沃尔杯首日霍达尔—布勃利克）：
-    `DC÷1790360700`＝09-25 18:25Z、`DD÷1790365740`＝19:49Z。"""
+    `DC÷1790360700`＝09-25 18:25Z、`DD÷1790365740`＝19:49Z。
+
+    `attempts`／`timeout`：自动链（`pick_for_draft`）只试一次、超时从预算里扣——默认的 3 × 40 秒
+    在 flashscore 挂住时一份草稿两分钟（复审实测 128.7 秒）。"""
     from match_feed import fs_feed  # noqa: PLC0415
 
     try:
-        text = fs_feed("dc_1", match_id)
+        text = fs_feed("dc_1", match_id, attempts=attempts, timeout=timeout)
     except SystemExit as exc:      # match_feed 取不到就 SystemExit（带原因）
         raise RuntimeError(str(exc)) from exc
     return parse_dc_feed(text)
@@ -767,8 +774,13 @@ def roster_matches(roster: dict, surname: str, days: Iterable[date]) -> list[dic
             and any(_last(p) == surname for side in m.get("sides") or [] for p in side)]
 
 
-#: 顶栏／轮次里认「决赛」——但半决赛、1/4、1/8、资格赛决胜轮都不是
-_NOT_FINAL = re.compile(r"半决赛|1/\d+\s*决赛|四分之一|八分之一|十六分之一|资格|semi|quarter", re.I)
+#: 顶栏／轮次里认「决赛」——但半决赛、1/4、1/8、资格赛决胜轮、年终总决赛／团体赛总决赛的小组赛都不是
+_NOT_FINAL = re.compile(r"半决赛|1/\d+\s*决赛|四分之一|八分之一|十六分之一|资格|小组|循环|"
+                        r"semi|quarter|round[\s-]*robin|group", re.I)
+#: 赛事名里的「总决赛」／「Finals」（年终总决赛、戴维斯杯总决赛、比利·简·金杯总决赛）——是**赛事**不是**轮次**，
+#: 认决赛之前先抹掉：「2026 年终总决赛 小组赛」「2026 比利·简·金杯总决赛 首轮」都不是决赛（2026-09-28 复审 nit：
+#: 原来含「决赛」两个字就算，年终总决赛的小组赛会被当成决赛——EXIF 窗口放到结束后 45 分钟、捧杯排序打开）
+_EVENT_FINALS = re.compile(r"总决赛|\b(?:atp|wta|nitto|cup|tour)\s+finals\b|\bnext\s*gen\s+finals\b", re.I)
 
 
 def is_final(spec: dict) -> bool:
@@ -779,9 +791,75 @@ def is_final(spec: dict) -> bool:
                  str(prod.get("round") or "")):
         if not text or _NOT_FINAL.search(text):
             continue
+        text = _EVENT_FINALS.sub(" ", text)
         if "决赛" in text or re.search(r"\bfinals?\b", text, re.I):
             return True
     return False
+
+
+#: 仓库的 top500 译名表：ATP、WTA 各一张——认得出一个英文全名是男是女
+TOP500 = Path("src/tennislive/zh/player_names_top500.json")
+
+
+def name_tour(name_en: str) -> str | None:
+    """英文全名在 top500 译名表的哪一张（`atp`／`wta`）；两张都没有、两张都有（撞名）返回 None。"""
+    want = _fold(name_en)
+    if not want or " " not in want:
+        return None
+    try:
+        data = json.loads((ROOT / TOP500).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    hits = {str(tour).lower() for tour, rows in (data.get("tours") or {}).items()
+            for row in rows or [] if isinstance(row, dict) and _fold(row.get("name_en") or "") == want}
+    return hits.pop() if len(hits) == 1 and hits <= {"atp", "wta"} else None
+
+
+def event_tour(event: str) -> str | None:
+    """赛事名只属于一个巡回赛时是哪一个（`tennislive.zh.tournaments.TOURNAMENT_LEVEL`：「250」「M1000」只有
+    ATP、「W500」只有 WTA）；男女同站（「W1000/500」）、大满贯、团体赛、认不出的返回 None。"""
+    try:
+        if str(ROOT / "src") not in sys.path:
+            sys.path.insert(0, str(ROOT / "src"))
+        from tennislive.zh.tournaments import TOURNAMENT_LEVEL  # noqa: PLC0415
+    except ImportError:
+        return None
+    key = str(event or "").strip().lower()
+    hit = next((v for k, v in sorted(TOURNAMENT_LEVEL.items(), key=lambda kv: -len(kv[0]))
+                if k and k in key), None)
+    if not hit:
+        return None
+    tokens = [t.strip() for t in hit.split("/") if t.strip()]
+    if any(t in ("GS", "Finals", "TeamCup") for t in tokens):
+        return None
+    atp = any(t == "M1000" or t.isdigit() for t in tokens)
+    wta = any(t.startswith("W") for t in tokens)
+    return "atp" if atp and not wta else "wta" if wta and not atp else None
+
+
+def resolve_tour(spec: dict, subject_en: str = "") -> tuple[str | None, str]:
+    """(男子还是女子, 怎么认的)。`reel_facts.spec_tour`（`stats.tour`／官方头像前缀）→ 主角英文全名在
+    top500 哪一张 → 赛事只属于一个巡回赛。
+
+    来路（2026-09-28 复审 nit）：129 份自动草稿里 52 份 `spec_tour` 是 None（没有官方头像）——照片接口
+    **两档都跑**（WTA 的比赛也翻 ATP Media），每份草稿的花费和挂住的风险翻倍。名字排在赛事前面：
+    ATP 250 合办站的女子赛事可能是 WTA 125（`tournaments._resolve_level_token` 那句），按赛事认会认成男子；
+    名字认的是人。"""
+    try:
+        from reel_facts import spec_tour  # noqa: PLC0415
+        tour = spec_tour(spec)
+    except Exception:                                             # noqa: BLE001
+        tour = None
+    if tour:
+        return tour, "stats／官方头像"
+    if (tour := name_tour(subject_en)):
+        return tour, f"「{subject_en}」在 top500 {tour.upper()} 那张表里"
+    prod = str((spec.get("_production") or {}).get("event") or "").strip()
+    for ev in (prod, *(en for zh, en, _tz in EVENTS
+                       if zh in str((spec.get("topbar") or {}).get("line1") or ""))):
+        if ev and (tour := event_tour(ev)):
+            return tour, f"赛事「{ev}」只有 {tour.upper()}"
+    return None, ""
 
 
 def subject_player_id(spec: dict, subject: str) -> str:
@@ -835,11 +913,7 @@ def match_context(spec: dict, *, times: Callable[[str], tuple] = flashscore_time
         ctx.problems.append("cover.matchup 里没有对手的英文名——判不了是不是这一场，不换")
     tokens = _fold(ctx.subject_en).split()
     ctx.surname = tokens[-1] if tokens else ""
-    try:
-        from reel_facts import spec_tour  # noqa: PLC0415
-        ctx.tour = spec_tour(spec)
-    except Exception:                                             # noqa: BLE001
-        ctx.tour = None
+    ctx.tour, ctx.tour_source = resolve_tour(spec, ctx.subject_en)
     ctx.final = is_final(spec)
     ctx.player_id = subject_player_id(spec, subject)
     played = spec.get("_match") if isinstance(spec.get("_match"), dict) else {}
@@ -1398,8 +1472,9 @@ def _sweep_rows(label: str, run: Callable[[], object], notes: list[str],
     return rows
 
 
-def o4_query(ctx: MatchContext):
-    """O4 这一条要查什么——和人查（`find_cover_photo`）同一个 `Query` 形状。"""
+def o4_query(ctx: MatchContext, *, budget=None):
+    """O4 这一条要查什么——和人查（`find_cover_photo`）同一个 `Query` 形状。`budget`：
+    `official_photo_apis.Budget`（自动链每份草稿一个），照片接口那两档从它扣。"""
     import cover_channels  # noqa: PLC0415
 
     day = min(ctx.match_dates).isoformat() if ctx.match_dates else None
@@ -1409,14 +1484,15 @@ def o4_query(ctx: MatchContext):
                                 days=SITE_UPLOAD_DAYS, site=ctx.site, tour=ctx.tour,
                                 full_name=ctx.subject_en or None, player_id=ctx.player_id or None,
                                 start_utc=ctx.start_utc, end_utc=ctx.end_utc, tz=ctx.tz,
-                                final=ctx.final, start_lower_bound=ctx.start_lower_bound)
+                                final=ctx.final, start_lower_bound=ctx.start_lower_bound,
+                                budget=budget)
 
 
 #: 自动链（`refresh_reel_cover`）只开这两档：确定性（不问模型）、按 EXIF 绑场次、原图铺满不放大
 API_CHANNELS = ("atp-media", "wta-photos")
 
 
-def default_sweeps(ctx: MatchContext, keys: Iterable[str] | None = None
+def default_sweeps(ctx: MatchContext, keys: Iterable[str] | None = None, *, budget=None
                    ) -> list[tuple[str, Callable[[], object]]]:
     """**`cover_channels.CHANNELS` 那一份清单，一档不落**（别在这儿另抄一份）。
 
@@ -1432,7 +1508,7 @@ def default_sweeps(ctx: MatchContext, keys: Iterable[str] | None = None
     if not hasattr(fcp._get, "cache_info"):
         # 同一趟里几条目标会反复拉同一批 WTA 页面和 Getty 说明——进程内缓存一次
         fcp._get = functools.lru_cache(maxsize=1024)(fcp._get)
-    q = o4_query(ctx)
+    q = o4_query(ctx, budget=budget)
     want = set(keys) if keys is not None else None
     return [(ch.name(q), functools.partial(cover_channels.run_channel, ch, q, o4=True))
             for ch in cover_channels.CHANNELS if want is None or ch.key in want]
@@ -1460,10 +1536,13 @@ def search(ctx: MatchContext, *, sweeps=None) -> tuple[list[Candidate], list[str
 
 def verdict_line(rows: list[dict], results: list) -> str:
     """「不换」那一行要分清：**一档都没查成**（结果未知）和**查成了、没有一张全过**。"""
-    ran = [r for r in results if r.status == "ran"]
+    ran = [r for r in results if r.status == "ran" and not getattr(r, "partial", False)]
+    partial = [r.label for r in results if r.status == "ran" and getattr(r, "partial", False)]
+    tail = f"；{'、'.join(partial)} 没查完（结果未知）" if partial else ""
     if not ran:
-        return ("    → 不换：能查的渠道一档都没查成——**结果未知，不是没有官方图**（下一班再查）")
-    return f"    → 不换：查成的 {len(ran)} 档里 {len(rows)} 张候选没有一张全过（下一班再查）"
+        return ("    → 不换：能查的渠道一档都没查" + ("完" if partial else "成")
+                + "——**结果未知，不是没有官方图**（下一班再查）")
+    return f"    → 不换：查成的 {len(ran)} 档里 {len(rows)} 张候选没有一张全过{tail}（下一班再查）"
 
 
 # ---------------------------------------------------------------- 铺图几何
@@ -1537,12 +1616,16 @@ def place_face(w: int, h: int, face: Iterable[float], top: int) -> dict:
 
 # ---------------------------------------------------------------- 下图 ＋ 闸
 
-def fetch_image(url: str) -> bytes:
+#: 下一张原图的超时上限（秒）。自动链从 `Budget` 里扣，不超过剩下的
+ORIGINAL_TIMEOUT = 60
+
+
+def fetch_image(url: str, timeout: float = ORIGINAL_TIMEOUT) -> bytes:
     import requests  # noqa: PLC0415
 
     from find_cover_photo import _UA  # noqa: PLC0415
 
-    resp = requests.get(url, headers={**_UA, "Accept": "image/*"}, timeout=60, stream=True)
+    resp = requests.get(url, headers={**_UA, "Accept": "image/*"}, timeout=timeout, stream=True)
     resp.raise_for_status()
     blob = resp.raw.read(MAX_BYTES + 1, decode_content=True)
     if len(blob) > MAX_BYTES:
@@ -1645,9 +1728,12 @@ def image_verdict(blob: bytes, spec: dict, ctx: MatchContext, *, checker=None) -
     # 常常只写在这儿——任何渠道的图都核一遍
     import official_photo_apis as apis  # noqa: PLC0415
 
-    embedded = apis.parse_head(blob[:apis.HEAD_BYTES])
+    # 整张图读（`jpeg_segments` 读到 SOS 就停，不会去解压像素），不只前 128 KB：APP 段超过 128 KB 的
+    # 图（Lightroom 导出带大段 XMP 历史）后面那几段也要读到；三格说明（EXIF／IPTC／XMP）每一格都扫
+    # （复审 nit：限制只写在 IPTC 或 XMP 那一格的，原来漏过去）
+    embedded = apis.parse_head(blob)
     if (bad := restriction_problem(embedded["caption"], embedded["instructions"],
-                                   embedded["credit"])):
+                                   *embedded.get("texts") or [], embedded["credit"])):
         problems.append(f"原图嵌的说明里：{bad}")
     if embedded["caption"]:
         ev["embedded_caption"] = embedded["caption"][:300]
@@ -1730,7 +1816,12 @@ def taste_key(p: dict, ctx: MatchContext) -> tuple:
     5. **脸大**（「在情绪对题之内，优先近景特写」）
     6. 认人相似度（同一张脸大小时，更像他的那张）
 
-    3、4 两格没量（替身、老凭证没有 `pose`）一律算 True，退回原来的「脸最大」。"""
+    3、4 两格没量（替身、老凭证没有 `pose`）一律算 True，退回原来的「脸最大」。
+
+    **最前面还有一格：眼睛是不是睁得开**（EAR ≥ 睁眼线 ＋ `EAR_MARGIN`）。压在线上的（0.16~0.18）
+    过得了睁眼闸，但画面上是眼皮耷拉、往下看——`270927-l-fernandez-vs-t-gibson-5` EAR 0.1628，真模型
+    真原图量的，脸部裁出来眼皮是垂着的（2026-09-28 复审 nit）。**不拦**（SKILL：低头但睁着眼的照样过），
+    只让它排在所有眼睛睁开的后面：有别的能过的就不挑它。没量 EAR 的算睁开。"""
     c: Candidate = p["candidate"]
     ev = p["evidence"]
     lay = ev["layout"]
@@ -1745,8 +1836,22 @@ def taste_key(p: dict, ctx: MatchContext) -> tuple:
     moment = bool(won and taken is not None and end is not None
                   and end - timedelta(minutes=2) <= taken <= end + timedelta(minutes=15))
     pose = ev["face"].get("pose") or {}
-    return (trophy, moment, pose.get("frontal", True) is not False,
+    ear = ev["face"].get("ear")
+    eyes = not isinstance(ear, (int, float)) or ear >= _eye_open_ear() + EAR_MARGIN
+    return (eyes, trophy, moment, pose.get("frontal", True) is not False,
             pose.get("clear", True) is not False, face_h, sim)
+
+
+#: 睁眼线之上多少以内算「压线」（taste_key 第一格）
+EAR_MARGIN = 0.02
+
+
+def _eye_open_ear() -> float:
+    try:
+        import face_checks  # noqa: PLC0415
+        return float(face_checks.EYE_OPEN_EAR)
+    except Exception:                                             # noqa: BLE001
+        return 0.16
 
 
 def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
@@ -1803,7 +1908,7 @@ def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
     if not passed:
         return None, rows
     # `sorted(reverse=True)` 是稳定的：并列时照旧取排在前面的那张（和原来的 `max` 一样）。
-    # 排法见 `taste_key`：决赛捧杯 → 赢球那一刻 → 脸大 → 更像他。没有 EXIF／没有结束时刻的候选
+    # 排法见 `taste_key`：眼睛睁开 → 决赛捧杯 → 赢球那一刻 → 脸大 → 更像他。没有 EXIF／没有结束时刻的候选
     # 前两格都是 False，退回原来的「脸最大」
     ranked = sorted(passed, reverse=True, key=lambda p: taste_key(p, ctx))
     for p in ranked:
@@ -1858,7 +1963,7 @@ def upgraded_portrait(old: dict, chosen: dict, ctx: MatchContext, image_rel: str
              f" 是 {lay['fill']:.2f}×（不放大）。③ 认人：最大那张脸像 {ctx.subject_zh} "
              f"{sim if sim is None else f'{sim:.2f}'}（≥ 0.34）。④ 睁眼：EAR {face.get('ear')}（≥ 0.16）。"
              f"⑤ 钩子带：脸落在 y{lay['face_out'][1]}~{lay['face_out'][3]}，钩子顶边 {hook_top()}。"
-             + (f"排序：{chosen['row'].get('rank')}（决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。"
+             + (f"排序：{chosen['row'].get('rank')}（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。"
                 if (chosen.get("row") or {}).get("rank") else "")
              + "⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。")
     return {"image": image_rel, "focus": lay["focus"], "focus_y": lay["focus_y"],
@@ -2139,8 +2244,9 @@ def _upgrade_entry(target: Target, ctx: MatchContext, chosen: dict, considered: 
 
 # ---------------------------------------------------------------- 一趟
 
-def candidate_lines(rows: list[dict], limit: int = 12) -> list[str]:
-    """每张候选一行，闸没过的把前三条理由列出来；放宽过的也列出来（放宽不是默认）。"""
+def candidate_lines(rows: list[dict], limit: int = 12, ledger: str = f"{LEDGER} 的 attempts") -> list[str]:
+    """每张候选一行，闸没过的把前三条理由列出来；放宽过的也列出来（放宽不是默认）。
+    `ledger`：跳过的那几张记在哪本账上（O4 是 `data/cover_upgrades.json`，自动链是草稿的 `_cover_api`）。"""
     out: list[str] = []
     shown = [r for r in rows if not r.get("skipped")]
     for r in shown[:limit]:
@@ -2153,7 +2259,10 @@ def candidate_lines(rows: list[dict], limit: int = 12) -> list[str]:
     if len(shown) > limit:
         out.append(f"    …另外 {len(shown) - limit} 张没列")
     if len(rows) > len(shown):
-        out.append(f"    · 跳过 {len(rows) - len(shown)} 张前几班下过、闸没过的（{LEDGER} 的 attempts）")
+        skipped = [r for r in rows if r.get("skipped")]
+        why = "；".join(dict.fromkeys(r["problems"][0] for r in skipped if r.get("problems")))
+        out.append(f"    · 跳过 {len(skipped)} 张前几班下过、闸没过的（{ledger}）"
+                   + (f"：{why}" if why and "视觉审核" in why else ""))
     return out
 
 
@@ -2242,42 +2351,139 @@ def draft_subject(draft: dict) -> str:
     return str(brief.get("preferred_subject") or match.get("winner") or "").strip()
 
 
-def pick_for_draft(draft: dict, now: datetime, *, sweeps_for=None, times=flashscore_times,
-                   fetch=fetch_image, checker=None) -> dict:
-    """reel-auto-ready 每一班（`refresh_reel_cover`）：自动草稿还没有封面时，照片接口那两档
-    （`API_CHANNELS`）查一遍，**和 O4 同一套机器闸**（`metadata_problems` ＋ `image_verdict`：
-    EXIF 绑场次、全名、两人同框、发布限制、铺满不放大、认人、睁眼、钩子带）全过的才用，排序同
-    `taste_key`。返回 `{"chosen", "ctx", "rows", "report", "portrait"}`；没有就 `chosen` 是 None，
-    调用方照原来那条路走（**不拦**：这一步查不到从来不是等下去的理由）。"""
+#: 自动链问 flashscore 开赛／结束时刻：**只试一次**、超时上限这么多秒（预算剩得更少就按剩下的）。
+#: 问到了记进草稿（`refresh_reel_cover` 写 `_cover_api.times`），下一班不再问。
+FS_QUICK_TIMEOUT = 10
+
+
+def draft_spec(draft: dict) -> dict:
+    """自动草稿当 spec 用（`match_context` 认的形状）：封面主角按 `draft_subject`。"""
     spec = copy.deepcopy(draft)
     cover = spec.setdefault("cover", {})
     cover["subject"] = draft_subject(draft)
     cover.setdefault("eyebrow", "赛场之上")
+    return spec
+
+
+def draft_tour(draft: dict) -> str | None:
+    """自动草稿的封面主角是男子还是女子（`resolve_tour`）；认不出 None——照片接口那一档不查。"""
+    spec = draft_spec(draft)
+    subject = spec["cover"]["subject"]
+    en = next((str(e.get("name_en") or "").strip() for e in spec["cover"].get("matchup") or []
+               if isinstance(e, dict) and str(e.get("name") or "").strip() == subject), "")
+    return resolve_tour(spec, en)[0]
+
+
+def draft_api_blocker(draft: dict, now: datetime) -> str:
+    """这份草稿照片接口那一档**根本查不了**的原因（不联网：缺英文名、认不出赛事／时区、认不出男女）；
+    查得了返回空串。工作流「这一班要不要认人」据此不为查不了的草稿装依赖（`refresh_reel_cover.needs_official_pick`）。"""
+    ctx = match_context(draft_spec(draft), times=_offline, pushed_at=now)
+    if ctx.problems:
+        return "；".join(ctx.problems)
+    if ctx.tour not in ("atp", "wta"):
+        return "认不出是男子还是女子"
+    return ""
+
+
+def pick_for_draft(draft: dict, now: datetime, *, sweeps_for=None, times=None, fetch=None,
+                   checker=None, budget=None, tried: Iterable[str] = (),
+                   rejected: Iterable[str] = (), known_times: dict | None = None) -> dict:
+    """reel-auto-ready 每一班（`refresh_reel_cover`）：自动草稿还没有封面（或卡死在视觉审核没过的那张上）时，
+    照片接口那一档（`API_CHANNELS` 里**按男女只跑一档**）查一遍，**和 O4 同一套机器闸**（`metadata_problems`
+    ＋ `image_verdict`：EXIF 绑场次、全名、两人同框、发布限制、铺满不放大、认人、睁眼、钩子带）全过的才用，
+    排序同 `taste_key`。没有就 `chosen` 是 None，调用方照原来那条路走（**不拦**）。
+
+    **有墙钟上限**（2026-09-28 复审 BLOCKING）：`budget`（秒，或 `official_photo_apis.Budget`）是这一份草稿的
+    总账——flashscore 只试一次（`FS_QUICK_TIMEOUT`），翻页、读头、下原图的超时都不超过剩下的，用完就停、
+    这一趟记「没查完」。`known_times`：草稿里记过的开赛／结束（`_cover_api.times`），有就不问 flashscore。
+    男女认不出（`draft_tour`）的**不查**：原来两档都跑，花费和挂住的风险翻倍。
+
+    `tried`：前几班下过、闸没过、结论确定的 URL（不再下）；`rejected`：视觉审核判过没过的那张（不再挑它，
+    原来 `Target` 的 `tried` 是空的——同一张被判掉的图每一班重挑、草稿一个字节不变、永远卡着）。
+
+    返回 `{"chosen", "ctx", "rows", "report", "portrait", "times", "tried", "complete"}`：
+    `times` 是这一趟从 flashscore 问到的（记进草稿）；`tried` 是这一趟新下过、结论确定的 URL；
+    `complete`：**查完了、确实没有**（每一档都查成且翻完、预算没用完、没有「留给下一班」「下不下来」
+    「人脸模型不可用」的候选、开赛时刻不是这一趟没问到）——卡在视觉审核上的草稿据此不再每一班查。"""
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    bud = (budget if budget is None or isinstance(budget, apis.Budget)
+           else apis.Budget(float(budget)))
+    spec = draft_spec(draft)
     slug = str(draft.get("slug") or "")
     report: list[str] = []
-    out = {"chosen": None, "ctx": None, "rows": [], "report": report, "portrait": None}
-    ctx = match_context(spec, times=times, pushed_at=now)
+    out = {"chosen": None, "ctx": None, "rows": [], "report": report, "portrait": None,
+           "times": None, "tried": [], "complete": False}
+    asked: dict = {}
+
+    def quick_times(match_id: str) -> tuple:
+        known = known_times if isinstance(known_times, dict) else {}
+        if (str(known.get("flashscore_id") or "") == str(match_id)
+                and (a := _parse_utc(str(known.get("start_utc") or "")))
+                and (b := _parse_utc(str(known.get("end_utc") or "")))):
+            return a, b
+        limit = FS_QUICK_TIMEOUT if bud is None else bud.timeout(FS_QUICK_TIMEOUT)
+        got = flashscore_times(match_id, attempts=1, timeout=limit)
+        asked["times"] = (match_id, *got)
+        return got
+
+    ctx = match_context(spec, times=times or quick_times, pushed_at=now)
     out["ctx"] = ctx
+    if (hit := asked.get("times")) and hit[1] and hit[2]:
+        out["times"] = {"flashscore_id": str(hit[0]), "start_utc": _stamp(hit[1]),
+                        "end_utc": _stamp(hit[2]), "source": f"flashscore dc_1_{hit[0]}（DC／DD）"}
     head = f"[照片接口] {slug} 主角 {ctx.subject_zh or '?'}（{ctx.subject_en or '?'}）"
     if ctx.problems:
+        # 这几种都是草稿自己的形状（缺英文名、认不出赛事／时区），不是网络——再查一班也一样
         report.append(f"{head}：查不了——" + "；".join(ctx.problems))
+        out["complete"] = True
         return out
+    if ctx.tour not in ("atp", "wta"):
+        report.append(f"{head}：认不出是男子还是女子（没有官方头像、top500 里没有「{ctx.subject_en}」、"
+                      f"赛事「{ctx.event_en}」男女同站）——照片接口那一档不查，照原来的路走")
+        out["complete"] = True
+        return out
+    if fetch is None:
+        def fetch(url: str) -> bytes:
+            limit = ORIGINAL_TIMEOUT if bud is None else bud.timeout(ORIGINAL_TIMEOUT)
+            return fetch_image(url, timeout=limit)
     cands, notes, results = search(ctx, sweeps=(sweeps_for(ctx) if sweeps_for
-                                                else default_sweeps(ctx, API_CHANNELS)))
-    report.append(f"{head} · {ctx.event_en} · 当地 "
-                  f"{'／'.join(d.isoformat() for d in sorted(ctx.match_dates))}（{ctx.tz}）")
+                                                else default_sweeps(ctx, API_CHANNELS, budget=bud)))
+    report.append(f"{head}（{ctx.tour.upper()}：{ctx.tour_source}）· {ctx.event_en} · 当地 "
+                  f"{'／'.join(d.isoformat() for d in sorted(ctx.match_dates))}（{ctx.tz}；"
+                  f"日期来源 {ctx.date_source or '?'}）")
     report += [f"    · {n}" for n in notes]
-    target = Target(slug=slug, spec=spec, first_sent=now, spec_path=Path(f"{slug}.draft.json"))
+    rejected = {str(u) for u in rejected if u}
+    target = Target(slug=slug, spec=spec, first_sent=now, spec_path=Path(f"{slug}.draft.json"),
+                    tried={str(u) for u in tried if u} | rejected)
     chosen, rows = evaluate(target, ctx, cands, fetch=fetch, checker=checker)
+    for row in rows:
+        if row.get("skipped") and row["url"] in rejected:
+            row["problems"] = ["视觉审核判过、没过的就是这张（草稿 `_visual_evidence`）——不再挑它"]
     out["rows"] = rows
-    report += candidate_lines(rows)
+    out["tried"] = [r["url"] for r in rows if r.get("tried")]
+    ledger = "草稿 `_cover_api` 的 tried／rejected"
+    unfinished = [
+        why for why, bad in (
+            ("预算用完", bud is not None and bud.spent),
+            ("有一档没查成／没翻完", any(r.status == "blocked" or getattr(r, "partial", False)
+                                    for r in results)),
+            ("开赛时刻这一趟没问到", "flashscore 开赛时刻取不到" in ctx.date_source),
+            ("有候选没下成／留给下一班／人脸模型不可用",
+             any(p.startswith(("下不下来", "这一趟已经下了", "人脸模型不可用"))
+                 for r in rows for p in r["problems"])))
+        if bad]
+    report += candidate_lines(rows, ledger=ledger)
     if chosen is None:
+        out["complete"] = not unfinished
         report.append(verdict_line(rows, results).replace("→ 不换", "→ 这一班没有")
-                      .replace("（下一班再查）", "——下一班再查，别的路照走"))
+                      .replace("（下一班再查）", "——下一班再查，别的路照走")
+                      + (f"（没查完：{'；'.join(unfinished)}）" if unfinished else ""))
         return out
     out["chosen"] = chosen
     portrait = upgraded_portrait({}, chosen, ctx, "", prefix=AUTO_DRAFT_WHY_PREFIX)
     portrait.pop("image", None)
+    portrait["_source_url"] = chosen["candidate"].url
     out["portrait"] = portrait
     report.append(f"    → 用 {chosen['candidate'].url}")
     return out
@@ -2452,7 +2658,8 @@ def preflight(repo: Path, slug: str, now: datetime, *, spec: dict | None = None,
            "report": report, "portrait": None, "chosen": None, "image_rel": ""}
     cover = spec.get("cover") or {}
     if not is_frame_cover(spec):
-        report.append(f"[渲前预检] {slug}：封面不是抽帧（cover.portrait 没有 frame_at 或已经有 image），不查")
+        report.append(f"[渲前预检] {slug}：封面不是抽帧（cover.portrait 没有 frame_at；有 image 的，"
+                      "`_frame_why` 不以「抽帧」开头、`_low_res_why` 不以「源片 N×N」开头——`is_frame_cover`），不查")
         return out
     if cover.get("eyebrow") != "赛场之上":
         report.append(f"[渲前预检] {slug}：不是「赛场之上」（{cover.get('eyebrow')}）——"

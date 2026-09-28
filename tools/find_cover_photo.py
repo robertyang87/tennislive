@@ -88,7 +88,10 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
 
 - ATP 的标题只有「2026 Hangzhou Medvedev」（全名在文件名 `Daniil-Medvedev-012.jpg` 里），不带对手和日期——
   场次**按 EXIF 拍摄时刻**绑：当地钟点落在 [开赛 − 5 分, 结束 + 15 分]（决赛 + 45 分）里才算这一场
-- ✅ 那一行才是绑上了的；标题里还有别人（握手照）、说明里带「China OUT」的标 ⚠️
+- ◎ 那一行是**点名层**过了（EXIF 绑上、标题里没别人、没发布限制）——**不是「能用」**：认人／睁眼／钩子带
+  要下原图才判得了（`cover_upgrade.py --preflight`）；标题里还有别人（握手照）、说明里带「China OUT」的标 ⚠️
+- `--wait-until` 带 `--slug` 时，绑上的每一张当场过 O4 同一套图的闸（认人／睁眼／两人同框／钩子带），**全过才退出 0**；
+  本机没装认人依赖（`pip install -e ".[faces]"`）就只到点名层，退出 0 时明说认人没查
 - 不给 `--start/--end/--tz`（或 `--slug`）就绑不了场次，只列出来——人自己核 EXIF
 
 ## 查得通的渠道（都实测过）
@@ -1343,7 +1346,8 @@ def main() -> int:
     ap.add_argument("--player-id", help="主角的 ATP／WTA 球员 id（头像文件名 atp-MM58.png 那一段）")
     ap.add_argument("--wait-until",
                     help="挂着等首选那一档（ATP Media／WTA 照片接口）每 5 分钟再查一遍，直到这个时刻"
-                         "（UTC ISO，或 +分钟数）；绑上了一张就退出 0，到点还没有退出 2。"
+                         "（UTC ISO，或 +分钟数）；带 --slug 时绑上的要过认人／睁眼／钩子带才退出 0"
+                         "（本机没装认人依赖就只到点名层、明说没查），到点还没有退出 2。"
                          f"最多等 {WAIT_MAX_MINUTES} 分钟")
     args = ap.parse_args()
 
@@ -1383,7 +1387,8 @@ def main() -> int:
               f"{query.event} · 当地 {query.date} · {query.tz} · 开赛 {query.start_utc} · 结束 {query.end_utc}"
               + ("（决赛）" if query.final else ""))
     if args.wait_until:
-        return wait_for_photo(query, args.wait_until)
+        return wait_for_photo(query, args.wait_until,
+                              verify=slug_verifier(args.slug) if args.slug else None)
     results = []
     for ch in cover_channels.CHANNELS:
         res = cover_channels.run_channel(ch, query)
@@ -1407,7 +1412,8 @@ def main() -> int:
                 skipped.append("中文媒体（搜狗微信／当地网站）")
             continue
         # 清单里的名字（`Channel.label`）要照抄进 `_frame_why`，别随手改
-        (ran if res.status == "ran" else skipped).append(res.label)
+        (ran if res.status == "ran" else skipped).append(
+            res.label + ("（没查完）" if res.status == "ran" and res.partial else ""))
     print("\n=== 这一趟查了什么")
     print(f"  跑过：{'、'.join(ran) or '（一档都没取到页——这一趟的结果全是未知）'}")
     if skipped:
@@ -1472,11 +1478,52 @@ def preferred_channels(q) -> list:
     return [cover_channels.channel(k) for k in keys]
 
 
-def wait_for_photo(q, until: str, *, now=None, sleep=time.sleep, poll: int = WAIT_POLL_SECONDS) -> int:
+def slug_verifier(slug: str):
+    """`--wait-until --slug`：绑上的那几张当场过 O4 同一套**图的闸**（`cover_upgrade.evaluate`：下原图、
+    认人／睁眼／两人同框／钩子带），返回 `verify(res) -> (状态, 行)`：状态 `ok`（有一张全过）／`no`（都没过）／
+    `unchecked`（本机人脸模型不可用，只到点名层）。下过、结论确定没过的记住，下一轮不再下。
+
+    来路（2026-09-28 复审 nit）：原来点名层一过就打 ✅、退出 0——Bu-035（最大那张「脸」是横幅上的字，
+    认人 mismatch）、Coleman-Wong-010（隔着拍线，0.24 unknown）都会让等待提前结束，信了 ✅ 的会话拿着
+    一张用不了的图去 `--preflight`。"""
+    import json as _json  # noqa: PLC0415
+    from pathlib import Path  # noqa: PLC0415
+
+    import cover_upgrade as cu  # noqa: PLC0415
+
+    root = Path(__file__).resolve().parent.parent
+    path = root / "specs" / "reels" / f"{slug}.json"
+    spec = _json.loads(path.read_text(encoding="utf-8"))
+    tried: set[str] = set()
+
+    def verify(res, *, checker=None, fetch=None):
+        now = _dt.datetime.now(_dt.timezone.utc)
+        ctx = cu.match_context(spec, pushed_at=now)
+        if ctx.problems:
+            return "unchecked", [f"  ⚠️ 图的闸判不了：{'；'.join(ctx.problems)}"]
+        cands = [cu.Candidate(res.key, **row) for row in res.rows]
+        target = cu.Target(slug, spec, now, path, tried=set(tried))
+        chosen, rows = cu.evaluate(target, ctx, cands, checker=checker,
+                                   **({"fetch": fetch} if fetch else {}))
+        tried.update(r["url"] for r in rows if r.get("tried"))
+        lines = cu.candidate_lines(rows)
+        if chosen is not None:
+            return "ok", lines + [f"  → 过了图的闸：{chosen['candidate'].url}"]
+        if any(p.startswith("人脸模型不可用") for r in rows for p in r["problems"]):
+            return "unchecked", lines + ["  ⚠️ 本机人脸模型不可用——认人／睁眼／钩子带没查（pip install -e \".[faces]\""
+                                         " ＋ python3 tools/face_checks.py fetch）"]
+        return "no", lines
+    return verify
+
+
+def wait_for_photo(q, until: str, *, now=None, sleep=time.sleep, poll: int = WAIT_POLL_SECONDS,
+                   verify=None) -> int:
     """挂着等：每 `poll` 秒把首选那一档再查一遍，**绑上了一张**（EXIF 落在窗口里、标题里没有别人、
-    没有发布限制）就退出 0；到点还没有退出 2。给会话在 probe／render 跑着时挂在后台用
-    （CLAUDE.md「runner 在跑的时候别闲着」）——找到了就接着跑 `cover_upgrade.py --preflight`，
-    认人／睁眼／钩子带那几道要原图才判得了。
+    没有发布限制）就看图的闸：给了 `verify`（`--slug` 时 `slug_verifier`）就下原图过认人／睁眼／两人同框／
+    钩子带，**全过才退出 0**，都没过接着等；没给（只有 `--start/--end`，没有 spec 认不了人）或本机人脸
+    模型不可用，点名层过了就退出 0，**明说认人没查**。到点还没有退出 2。给会话在 probe／render 跑着时
+    挂在后台用（CLAUDE.md「runner 在跑的时候别闲着」）——退出 0 之后接着跑 `cover_upgrade.py --preflight`
+    （正式封面闸、写图）。
 
     ⚠️ 不给开赛时刻（`--start` 或 `--slug`）就绑不了场次，等也白等——直接退出 2 并说清楚。"""
     import cover_channels  # noqa: PLC0415
@@ -1497,15 +1544,23 @@ def wait_for_photo(q, until: str, *, now=None, sleep=time.sleep, poll: int = WAI
             raw = res.raw if isinstance(res.raw, dict) else {}
             hits = [r for r in raw.get("rows") or []
                     if r.get("bound") and not r.get("others") and not r.get("restriction")]
-            print(f"[{stamp:%H:%M:%SZ} 第 {rounds} 次] {cover_channels.status_line(res)}；绑上 {len(hits)} 张",
+            print(f"[{stamp:%H:%M:%SZ} 第 {rounds} 次] {cover_channels.status_line(res)}；点名层绑上 {len(hits)} 张",
                   flush=True)
-            if hits:
-                print("\n".join(apis.dump_rows(hits)))
-                print("→ 接着跑 python3 tools/cover_upgrade.py --preflight --slug <slug>"
-                      "（认人／睁眼／钩子带要原图才判得了；过了就 --write）")
-                return 0
+            if not hits:
+                continue
+            print("\n".join(apis.dump_rows(hits)))
+            state, lines = verify(res) if verify is not None else ("unchecked", [])
+            print("\n".join(lines))
+            if state == "no":
+                print("  → 绑上的这几张图的闸都没过（上面每一张写着为什么）——接着等")
+                continue
+            if state == "unchecked":
+                print("⚠️ 只过了点名层（EXIF 绑上、没别人、没限制）——**认人／睁眼／钩子带没查**，不等于能用")
+            print("→ 接着跑 python3 tools/cover_upgrade.py --preflight --slug <slug>"
+                  "（正式封面闸；过了就 --write）")
+            return 0
         if clock() + _dt.timedelta(seconds=poll) > deadline:
-            print(f"到 {deadline:%H:%M:%SZ} 还没有绑得上的——抽帧照发（2026-09-26 的授权），推出去之后 O4 接着查")
+            print(f"到 {deadline:%H:%M:%SZ} 还没有一张过得了闸的——抽帧照发（2026-09-26 的授权），推出去之后 O4 接着查")
             return 2
         sleep(poll)
 
@@ -1513,7 +1568,8 @@ def wait_for_photo(q, until: str, *, now=None, sleep=time.sleep, poll: int = WAI
 def _show_api(args, res, title: str) -> None:
     import official_photo_apis as apis  # noqa: PLC0415
 
-    print(f"\n=== {title}（按 EXIF 拍摄时刻绑场次；✅＝绑上了）")
+    print(f"\n=== {title}（按 EXIF 拍摄时刻绑场次；◎＝点名层过了，认人／睁眼／钩子带没查——"
+          "`cover_upgrade.py --preflight` 判）")
     if res.status == "skipped":
         print(f"  ⚠️ **这一档没跑**：{res.why}")
         return

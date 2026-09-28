@@ -150,9 +150,12 @@ def context(m: Match):
     return spec, cu.match_context(spec, times=times, pushed_at=_u(m.first_push or m.end))
 
 
-def run_at(m: Match, as_of: datetime, *, faces: dict | None = None, heads: dict | None = None,
-           items: dict | None = None, full_fetch=None) -> dict:
-    """`as_of` 那一刻跑一趟（和 O4／渲前预检同一个 `search` ＋ `evaluate`），只开照片接口那两档。"""
+def kit(as_of: datetime, *, faces: dict | None = None, heads: dict | None = None,
+        items: dict | None = None, full_fetch=None, calls: dict | None = None) -> dict:
+    """录下来的数据拼成 `cover_upgrade` 那几个可替换的口子：`sweeps_for(ctx)`（照片接口那两档，接口按
+    `as_of` 那一刻重新分页、头按录下来的现造）、`fetch(url)`（同尺寸空图带录下来的 EXIF）、`checker`
+    （录下来的真模型结果）。`calls`：给了就记每个口子被调了几次（测「下过的不再下」）。
+    `run_at`（O4／预检那条路）和自动链的测试（`pick_for_draft`）共用。"""
     import cover_channels  # noqa: PLC0415
     import cover_upgrade as cu  # noqa: PLC0415
     import official_photo_apis as apis  # noqa: PLC0415
@@ -161,13 +164,11 @@ def run_at(m: Match, as_of: datetime, *, faces: dict | None = None, heads: dict 
     faces = faces if faces is not None else load_faces()
     items = items if items is not None else {"atp": load_items("atp_media_items.json.gz"),
                                              "wta": load_items("wta_photo_items.json.gz")}
-    spec, ctx = context(m)
-    if ctx.problems:
-        return {"ctx": ctx, "chosen": None, "rows": [], "notes": ctx.problems}
-    q = cu.o4_query(ctx)
+    calls = calls if calls is not None else {}
     wanted = {"atp-media": ("atp", apis.sweep_atp_media), "wta-photos": ("wta", apis.sweep_wta_photos)}
 
-    def sweeps_for(_ctx):
+    def sweeps_for(ctx):
+        q = cu.o4_query(ctx)
         out = []
         for ch in cover_channels.CHANNELS:
             if ch.key not in wanted:
@@ -179,6 +180,7 @@ def run_at(m: Match, as_of: datetime, *, faces: dict | None = None, heads: dict 
                 why = ch.skip(q)
                 if why:
                     return cover_channels.ChannelResult(ch.key, ch.label, "skipped", why=why)
+                calls[ch.key] = calls.get(ch.key, 0) + 1
                 return cover_channels._sweep_api(
                     ch.key, ch.label,
                     lambda **kw: fn(**kw, fetch=fetch, head=lambda u: synth_head(heads.get(u))), q)
@@ -204,11 +206,24 @@ def run_at(m: Match, as_of: datetime, *, faces: dict | None = None, heads: dict 
 
     def tracking_fetch(url: str) -> bytes:
         _current["url"] = url
+        calls.setdefault("downloads", []).append(url)
         return fetch_full(url)
 
-    cands, notes, _results = cu.search(ctx, sweeps=sweeps_for(ctx))
+    return {"sweeps_for": sweeps_for, "fetch": tracking_fetch, "checker": checker, "calls": calls}
+
+
+def run_at(m: Match, as_of: datetime, *, faces: dict | None = None, heads: dict | None = None,
+           items: dict | None = None, full_fetch=None) -> dict:
+    """`as_of` 那一刻跑一趟（和 O4／渲前预检同一个 `search` ＋ `evaluate`），只开照片接口那两档。"""
+    import cover_upgrade as cu  # noqa: PLC0415
+
+    spec, ctx = context(m)
+    if ctx.problems:
+        return {"ctx": ctx, "chosen": None, "rows": [], "notes": ctx.problems}
+    k = kit(as_of, faces=faces, heads=heads, items=items, full_fetch=full_fetch)
+    cands, notes, _results = cu.search(ctx, sweeps=k["sweeps_for"](ctx))
     target = cu.Target(m.slug, spec, _u(m.first_push or m.end), ROOT / "specs" / "reels" / f"{m.slug}.json")
-    chosen, rows = cu.evaluate(target, ctx, cands, fetch=tracking_fetch, checker=checker)
+    chosen, rows = cu.evaluate(target, ctx, cands, fetch=k["fetch"], checker=k["checker"])
     return {"ctx": ctx, "chosen": chosen, "rows": rows, "notes": notes}
 
 
