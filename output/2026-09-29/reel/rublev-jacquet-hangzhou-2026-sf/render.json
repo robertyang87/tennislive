@@ -1,0 +1,97 @@
+{
+  "scoreboard_qc_sha256": "b4edda84459d3564361e0bb36589903fcd7405c9e2903a0f703bc8b5bbe94c2e",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 156.1,
+  "topbar": {
+    "line1": "2026 ATP250 杭州 半决赛",
+    "line2": "卢布列夫 7-6(0) 6-1 雅凯",
+    "start": 1.2,
+    "end": 157.3
+  },
+  "film_seconds": 161.16,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 13.8,
+    "2": 9.672,
+    "3": 11.304,
+    "4": 11.472,
+    "5": 10.32,
+    "6": 9.792,
+    "7": 15.384,
+    "8": 15.48,
+    "9": 4.344,
+    "10": 9.552,
+    "11": 5.712,
+    "12": 9.672
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 10,
+          "named": "雅凯",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 2,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "1a3804b25a468df9da333d863fe8db484a637cf5a83231dd51f52cd511f05054",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "rublev-jacquet-hangzhou-2026-sf",
+    "received_at": "2026-09-28T20:53:55Z",
+    "artifact_ready_at": "2026-09-28T21:00:11Z",
+    "elapsed_seconds": 376.1,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "3c47b3fed08b648f3b788b665fc6875aede69e7e39a3ec0c458b1944bfdedd17",
+    "spec_sha256": "5975eee3924381c20e2e4e765723883c1691fe2ba9847c9c5add50f72d6140cb",
+    "run_id": "36482422855",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-28T20:55:52Z",
+        "run_id": "36482422855"
+      }
+    ],
+    "render_seconds": 259.1,
+    "pre_render_seconds": 117.0
+  },
+  "film_sha256": "3c47b3fed08b648f3b788b665fc6875aede69e7e39a3ec0c458b1944bfdedd17",
+  "film_bytes": 77406065,
+  "qc_attestation_sha256": "d1710db4dd9ebbeda08cf90ed120ce713c8527175ab569fc3d086b74739676c2",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-28T20:55:52Z",
+      "run_id": "36482422855"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-28T21:00:12Z",
+      "run_id": "36482422855"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-rublev-jacquet-hangzhou-2026-sf/rublev-jacquet-hangzhou-2026-sf.mp4",
+  "video_bytes": 77406065,
+  "_release_tag_note": "2026-09-28T21:00:16Z run 36482422855 把这一份（video_bytes 77406065）传上 tag `reel-rublev-jacquet-hangzhou-2026-sf`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-09-28/reel/rublev-jacquet-hangzhou-2026-sf 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+}
