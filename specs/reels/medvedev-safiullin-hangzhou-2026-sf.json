@@ -71,10 +71,10 @@
       }
     ],
     "portrait": {
-      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 2026-09-28 21:40 ~ 23:30）：① 官方图库——`tools/find_cover_photo.py` Getty/AFP 这一场 0 张可用（封面 helper 实测）；② 赛后稿：ATP 赛后稿当时未配可用大图；③ 中文媒体：ATP Tour 官方微博当晚半决赛帖未找到可用原图；④ Tennis TV 官方 Instagram 图片帖 `https://www.instagram.com/p/Dd1StgJszdN/`（431 万粉，梅德韦杰夫晋级照）已定位，但 instagram-cli 取不到原图直链、embed 403、browser 抓取 403——已交回 root 派 browser task 提取，拿到 ≥1000px 宽干净无压字原图后走 `reel-cover-upgrade` 换图重推。\n抽帧选 502.0s：赛点拿下后的近景（杭体集团背景板），梅德韦杰夫正脸、握拳后长出一口气，和钩子「挺进决赛」同一个人同一刻，清晰偏正面。",
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 2026-09-28 21:40 ~ 23:30）：① 官方图库——`tools/find_cover_photo.py` Getty/AFP 这一场 0 张可用；② ATP 赛后稿当时未配可用大图；③ ATP Tour 官方微博当晚半决赛帖未找到可用原图；④ Tennis TV 官方 Instagram 图片帖 `https://www.instagram.com/p/Dd1StgJszdN/` 有大面积榜单压字，不合格；⑤ Tennis TV 官方 YouTube 缩略图 （https://img.youtube.com/vi/nSaTYP-T8sM/maxresdefault.jpg，1280x720）有大面积 HIGHLIGHTS/HANGZHOU SEMI-FINALS 压字，不符合「禁止大面积 baked-in 文案」要求。\n抽帧选 514.0s（原 502.0s 认人／睁眼闸实测不过：眼睛纵横比 0.0296<0.16，赛后长出一口气时闭眼，前后±1秒无可用帧）：赛后离场时与球迷互动的中景，梅德韦杰夫正脸、眼睛睁开，持拍，和钩子「挺进决赛」同一个人同一场，清晰偏正面。",
       "focus": 0.5,
       "focus_y": 0.45,
-      "frame_at": 502.0,
+      "frame_at": 514.0,
       "zoom": 1.0
     },
     "result": "7-5 6-4",
