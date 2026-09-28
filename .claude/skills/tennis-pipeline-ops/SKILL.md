@@ -4791,6 +4791,7 @@ spec 也不改），销章看 `_protected`：人核过（`transcript_verified` /
 | `test_interview_clip::test_新的采访片必须认领怎么开头` | `main()` 开头 `check_opening`（`promote_interview_draft` 只给三种核验方式补 `opening`） |
 | `test_interview_clip::test_文案不许再提中英双语字幕` | **这次新装**：`main()` 的 `check_copy_bilingual`（式子和 78 个文件的豁免表搬进 `build_interview_clip`，测试和闸读同一份）；`.xhs.txt` 不在 QC 哈希链里，所以**推送闸 `wants_auto_push` 再查一次**（渲完到推之间手改正文；拦下时打 `::error::`，不混进一串 `[跳过]`） |
 | `test_interview_clip::test_TennisTV的源片必须真的把台标挪出窗口` | **这次新装**：`main()` 的 `check_tennistv_logo`；`promote_interview_draft` 转正 Tennis TV 草稿时按 `TENNISTV_CROP_SHIFT`（−0.06，台标左沿推出来的）补上，自动链不再停在这道闸上 |
+| `test_interview_segment_ruler::test_已渲的采访spec按钉死的尺子重切_行一行不差` | `main()` 切完行先查 `en_fixed_misaligned`，再 `write_ass`（行数对齐、`en_problems`） |
 
 ⚠️ **没有渲染闸的照判，不许拿这个判据当通用豁免**：`test_explainer::test_人名要以译名表为准`
 （「勒纳·田」「帕特里克」那两次）渲染一个字都不查，对自动 spec 照旧判红——要让它也只报，得先把
