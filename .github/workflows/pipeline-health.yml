@@ -31,6 +31,10 @@ jobs:
             data/reel_publish_ledger/*.json
             data/explainer_publish_ledger/*.json
             output/**/render.json
+            # 自动草稿的 flashscore 备料重跑试满仍没读通的，这儿点名（feed_retry_stuck）；
+            # 新鲜窗的唯一出处是 promote_reel_draft.PENDING_MAX_AGE，它只 import 标准库
+            specs/reels/pending/*.draft.json
+            tools/promote_reel_draft.py
             tools/pipeline_health.py
             # 「阻塞」的唯一定义在看板那边，pipeline_health import 它（Q9 阻塞推微信）。
             # 判据 test_健康检查的阻塞定义就是看板那一份_工作流检出了它

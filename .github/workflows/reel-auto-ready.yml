@@ -85,6 +85,15 @@ jobs:
               echo "[expired] $SLUG 已超过 PENDING_MAX_AGE 或缺 received_at，不再追旧比赛"
               continue
             fi
+            # probe 那一趟 flashscore 读失败（5xx／超时）的块记在 `_feed_retry`：编排器认得
+            # 这份草稿、永不重 probe，所以在这儿**只重跑那几块**——不 probe、不下源片、
+            # 不碰模型，最多 FEED_RETRY_MAX 次；试满了打 warning、写 run 摘要，
+            # pipeline_health 另外点名。排在补封面／视觉证据之前：补上的赛果这一班就能转正。
+            # 判据 tests/test_feed_retry.py。
+            if [ "$(jq -r '(._feed_retry.blocks // []) | length' "$DRAFT")" != "0" ]; then
+              python tools/retry_feed_blocks.py --draft "$DRAFT" --write \
+                || echo "::warning::$SLUG retry_feed_blocks 崩了（不是没读到），这一步跳过"
+            fi
             PROBE=$(git ls-tree -r --name-only HEAD \
               | grep -E "^output/[^/]+/reel/${SLUG}/probe.json$" | tail -n 1 || true)
             if [ -z "$PROBE" ]; then

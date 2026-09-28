@@ -219,6 +219,9 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_draft": _gate("promote_reel_draft.promote：转正时按键名比出草稿块、剥掉它（备料，render "
                     "和 dry-run 都不调）", "promote"),
     "_durations": _gate("promote_reel_draft._duration（备料时读）", "_duration"),
+    "_feed_retry": _gate("promote_reel_draft.promote：转正时和 `_draft` 一起剥掉——草稿专用的"
+                         "flashscore 重跑账（assemble_spec.record_feed_retry），render 和 dry-run "
+                         "都不调", "promote"),
     "_editing_why": _gate(
         "taste_gates_extra.uses_tennistv：`_source`／`_editing_why` 里写着 Tennis TV 就要求"
         "认领 `_tennistv_trim`（dry-run）——它是**触发**不是认领，写了只会多一道闸；"

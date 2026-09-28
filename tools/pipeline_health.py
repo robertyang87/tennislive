@@ -260,9 +260,45 @@ def stale_publications(now: datetime | None = None, hours: float = 1.5) -> list[
     return stale
 
 
+PENDING_DRAFTS = "specs/reels/pending/*.draft.json"
+#: `feed_retry_stuck` 那一类告警的开头——`alert_keys` 按它认，按 slug 去重
+FEED_RETRY_ALERT = "flashscore 备料重跑试满仍没读到"
+
+
+def feed_retry_stuck(now: datetime | None = None) -> list[str]:
+    """自动草稿里 flashscore 备料**重跑试满仍没读通**、而这场球还新鲜的那几份。
+
+    来路（2026-09-28 复审 D1）：probe 那一趟 flashscore 抖一下，草稿照写、留在 waiting；
+    编排器认得草稿、永不重 probe。reel-auto-ready 现在按 `_feed_retry` 只重跑读失败的块，
+    最多 `FEED_RETRY_MAX` 次——试满了它就不再碰，这儿接着点名：**不能静静地躺到
+    PENDING_MAX_AGE 过期**（那时这场球已经不做了，告警也跟着消失）。
+
+    过期了的不报：`promote_reel_draft.PENDING_MAX_AGE` 是新鲜窗唯一的出处（reel-auto-ready
+    也 import 它）。判据 `tests/test_feed_retry.py`。"""
+    from promote_reel_draft import PENDING_MAX_AGE  # noqa: PLC0415
+
+    now = now or datetime.now(timezone.utc)
+    out: list[str] = []
+    for draft in _tracked_jsons(PENDING_DRAFTS):
+        ledger = draft.get("_feed_retry") if isinstance(draft, dict) else None
+        if not isinstance(ledger, dict) or not ledger.get("exhausted_at") \
+                or not ledger.get("blocks"):
+            continue
+        try:
+            received = instant(str((draft.get("_production") or {}).get("received_at") or ""))
+        except ValueError:
+            received = None
+        if received is None or now - received > PENDING_MAX_AGE:
+            continue
+        out.append(f"{FEED_RETRY_ALERT}：{draft.get('slug') or '?'}"
+                   f"（{'、'.join(ledger['blocks'])}，{ledger['exhausted_at']} 放弃自动重跑）")
+    return sorted(out)
+
+
 def render_report(health: list[WorkflowHealth], steps: list[dict],
                   sla: tuple[int, int, float], stale: list[str],
                   orchestrator: tuple[str | None, float | None] | None = None,
+                  feed_stuck: list[str] | None = None,
                   ) -> tuple[str, list[str]]:
     alerts: list[str] = []
     lines = ["## 自动视频流水线健康度", "", "| 工作流 | 样本 | 成功 | 失败率 | 中位耗时 | 连续失败 |",
@@ -295,6 +331,10 @@ def render_report(health: list[WorkflowHealth], steps: list[dict],
     if stale:
         alerts.extend(stale)
         lines += ["", "### 发布账本待核实", *[f"- {item}" for item in stale]]
+    if feed_stuck:
+        alerts.extend(feed_stuck)
+        lines += ["", "### 自动草稿的 flashscore 备料没读通（reel-auto-ready 已不再重跑）",
+                  *[f"- {item}" for item in feed_stuck]]
     slow = sorted(steps, key=lambda row: row["seconds"], reverse=True)[:10]
     lines += ["", "### 最近最慢步骤", "", "| 工作流 / job / step | 耗时 | 结果 |",
               "|---|---:|---|"]
@@ -321,6 +361,8 @@ def alert_keys(alerts: list[str]) -> list[str]:
             keys.add("orchestrator")
         elif ": sending 已持续" in item:
             keys.add("publication:" + item.split(": sending 已持续", 1)[0])
+        elif item.startswith(FEED_RETRY_ALERT + "："):
+            keys.add("feed_retry:" + item.split("：", 1)[1].split("（", 1)[0])
         elif "：近 " in item and "失败率" in item:
             keys.add("workflow:" + item)
         else:
@@ -511,7 +553,7 @@ def main(argv: list[str] | None = None) -> int:
         steps.extend(these_steps)
     sla = sla_health()
     report, alerts = render_report(health, steps, sla, stale_publications(),
-                                   orchestrator_productivity())
+                                   orchestrator_productivity(), feed_retry_stuck())
     # 和看板同一份数据（每条受监控工作流 24 小时内的 run）、同一个定义。
     # ⚠️ 原来取的是全仓最近 100 条——忙时只够回溯一个半小时，而这一班实际两三个小时
     # 才来一趟，一处没人重试的失败滚出列表就永远不推（`monitored_runs` 顶注）。

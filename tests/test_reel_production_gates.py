@@ -1724,3 +1724,15 @@ def test_df_sui_1的每盘数字解析出IG_IH对():
             "~AC÷Set 3¬IG÷6¬RE÷0:36¬"
             "~RB÷4:36¬")
     assert mf._parse_set_pairs(text) == [(5, 7), (3, 6), (-1, -1)]
+
+
+def test_promote转正时剥掉备料重跑的账(tmp_path):
+    """`_feed_retry` 是草稿专用的账（flashscore 哪几块还欠着，reel-auto-ready 重跑用）。
+    转正之后没有哪一班再重跑正式 spec，账留着只会让读的人以为还欠着什么（2026-09-28 D1）。"""
+    promote = load("promote_reel_draft")
+    draft = _ready_draft(tmp_path)
+    draft["_feed_retry"] = {"blocks": ["hit_data"], "errors": {"hit_data": "SystemExit: HTTP 503"},
+                            "tries": 3, "last_at": "2026-09-28T07:00:00Z",
+                            "exhausted_at": "2026-09-28T07:00:00Z"}
+    spec = promote.promote(draft)
+    assert "_feed_retry" not in spec and "_draft" not in spec

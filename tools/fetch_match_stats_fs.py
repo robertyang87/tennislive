@@ -86,6 +86,15 @@ class StatsError(RuntimeError):
     pass
 
 
+class FeedUnavailable(StatsError):
+    """**没读到**，不是**没有**：5xx／网络抖动重试完仍不通，或者近期赛果有页读失败、
+    而剩下那几页里没找到这场（那一页里可能正好就有它——空结果先自证是真空）。
+
+    和 4xx（明确拒绝）、「扫完了确实没有」分开：`assemble_spec` 拿它判「这一块下一班
+    值得再试」（`_feed_retry`，reel-auto-ready 只重跑读失败的那几块）。是 `StatsError`
+    的子类，原来 `except StatsError` 的调用方照旧接得住。"""
+
+
 # 快做链通常命中昨天/今天/明天，先扫这三页；如果上游赛果的时刻缺失、源站
 # 晚挂集锦或编排班次积压，再向前补扫一周。2026-08-26 的
 # Medvedev–Damm（Winston-Salem R2）就是三页之外的真实样本：源片已经上线，
@@ -107,6 +116,7 @@ def feed(name: str, *, attempts: int = FEED_ATTEMPTS, sleep=time.sleep) -> str:
     连接被重置**（`URLError`、`TimeoutError`）根本不是 `StatsError`，穿过
     `find_match` 的线程池、穿过 `assemble_spec.resolve_match_id` 的 `except StatsError`，
     把「自动备料写 spec 草稿」整步带崩（2026-09-28 返工审计「上游 HTTP 500」那一类）。
+    重试完仍不通报 `FeedUnavailable`（`StatsError` 子类，「没读到」）；4xx 报 `StatsError`。
     判据 `test_flashscore喂料5xx先重试_还不行才报StatsError`。"""
     req = urllib.request.Request(NINJA + name, headers=HEADERS)
     last = ""
@@ -123,7 +133,7 @@ def feed(name: str, *, attempts: int = FEED_ATTEMPTS, sleep=time.sleep) -> str:
             last = f"{type(exc).__name__}: {exc}"
         if attempt < attempts:
             sleep(FEED_RETRY_SLEEP * attempt)
-    raise StatsError(f"Flashscore {last}（{name}，试了 {attempts} 次）")
+    raise FeedUnavailable(f"Flashscore {last}（{name}，试了 {attempts} 次）")
 
 
 def _fields(record: str) -> dict[str, str]:
@@ -172,12 +182,12 @@ def find_match(
                 if all(w in blob for w in want):
                     return row.get("AA", ""), home, away
     if tried and len(failures) == len(tried):
-        raise StatsError("近期赛果喂料全部读取失败：" + "；".join(failures))
-    # 空结果先自证是真空：报出扫了多少场
-    raise StatsError(
-        f"近期 offsets={tried} 共 {scanned} 场里没有同时出现 {names} 的比赛"
-        + (f"（另有 {len(failures)} 页读取失败）" if failures else "")
-    )
+        raise FeedUnavailable("近期赛果喂料全部读取失败：" + "；".join(failures))
+    # 空结果先自证是真空：报出扫了多少场。有页没读到时「没找到」证明不了「没有」——
+    # 这场可能正好在读失败的那一页上，按 FeedUnavailable 报（调用方会再试）。
+    msg = (f"近期 offsets={tried} 共 {scanned} 场里没有同时出现 {names} 的比赛"
+           + (f"（另有 {len(failures)} 页读取失败）" if failures else ""))
+    raise (FeedUnavailable if failures else StatsError)(msg)
 
 
 def _feed_result(offset: int) -> tuple[int, str, str]:

@@ -50,17 +50,20 @@ from __future__ import annotations
 
 import argparse
 import html
+import http.client
 import json
 import re
 import sys
-from datetime import date
+import urllib.error
+from dataclasses import dataclass, field
+from datetime import date, datetime, timezone
 from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from fetch_match_stats_fs import StatsError, find_match  # noqa: E402
+from fetch_match_stats_fs import FeedUnavailable, StatsError, find_match  # noqa: E402
 from match_feed import fs_feed, points, set_pairs  # noqa: E402
 from match_stat_hooks import BODY_ONLY, BODY_ONLY_NOTE, collect, stats_block  # noqa: E402
 from find_turning_points import _label, rank_games  # noqa: E402
@@ -104,7 +107,90 @@ class MatchupOrderUnverified(Exception):
     让 probe 红（没草稿、没错数据），把它接住之后这条退路就成了「萨巴伦卡 6-4 6-3
     诺斯科娃」——赢的是 flashscore 的 home 诺斯科娃（2026-09-28 复审回放）。
     所以核不出就抛它，由 `assemble` 把依赖顺序的几块整块跳过、草稿留在 waiting。
-    判据 `test_df_hh_1读不到时不许出result_verified`。"""
+    判据 `test_df_hh_1读不到时不许出result_verified`。
+
+    `transient`：**没读到**（feed 读失败、这场的记录还没挂出来）＝下一班值得再试，记进
+    `_feed_retry`；**认不出**（同姓两个 Wang、同一场给出两种顺序）重读一百遍也一样，不试。"""
+
+    def __init__(self, message: str, *, transient: bool) -> None:
+        super().__init__(message)
+        self.transient = transient
+
+
+# ── flashscore 备料的几块：读失败只报 ＋ 记账，reel-auto-ready 只重跑这几块 ────────
+#
+# 来路（2026-09-28 复审 D1）：上面那道「读失败只报、草稿留在 waiting」把 probe 从红
+# 里救了出来，却把它送进了另一个死角——编排器的 `_already_specced` 认得这份草稿，
+# **永不重 probe**；reel-auto-ready 只补封面和视觉证据，**不重跑备料**。于是 flashscore
+# 抖一下（df_mh_1 一次 503），这场球就静静躺在 pending 里，直到 PENDING_MAX_AGE 过期
+# （回放 `rv2_park_repro.py`：base 上 SystemExit 让 probe 红 → 失败自愈摘 state → 下一班
+# 重 probe；分支上草稿照写、留在 waiting，然后再没有人碰它）。重 probe 要重下源片，
+# 贵；读 feed 只要几个 HTTP 请求——所以**只重跑便宜的那一半**：
+#
+#     assemble 读失败（可重试的）→ 草稿记 `_feed_retry`（哪几块、为什么、试过几次）
+#     reel-auto-ready 每一班   → `tools/retry_feed_blocks.py` 只重跑这几块，不 probe、不下源片
+#     试满 FEED_RETRY_MAX 次仍不通 → 不再试，pipeline_health／run 摘要点名，不静静等到过期
+#
+# 判据 `tests/test_feed_retry.py`。
+
+#: 备料里读 flashscore 的几块——`_feed_retry.blocks` 只许是这几个名字，顺序即依赖：
+#: 没有 `match_id` 什么都读不了；`matchup` 核不出，按 home/away 排的后几块一块不许写；
+#: `points`（df_mh_1）给逐盘局数，`tiebreaks`（df_sui_1）拿它对抢七小分，赛果事实由这两块算。
+FEED_BLOCKS = ("match_id", "matchup", "stats", "hit_data", "points", "tiebreaks")
+#: 上游一块没成，下游这一趟**根本没跑**——重跑时要连它们一起。
+_FEED_DOWNSTREAM = {
+    "match_id": ("matchup", "stats", "hit_data", "points"),
+    "matchup": ("stats", "hit_data", "points"),
+}
+#: reel-auto-ready 最多替一份草稿重跑几次（probe 那一趟不算）。reel-auto-ready 10 分钟
+#: 一班（GitHub 会丢 schedule，实际更稀），三次 ≈ 半小时以上——够等过一次 flashscore
+#: 抖动；还不通就是源站真出事了，该叫人，不该再悄悄试到过期。
+FEED_RETRY_MAX = 3
+#: 「没读到」的异常：`match_feed._get` 重试完抛的 SystemExit（5xx／网络／4xx 被挡）、
+#: `fetch_match_stats_fs` 的 StatsError（含 `FeedUnavailable`）、裸网络异常。
+#: ValueError／KeyError 这类**解析**错不在里面——同一份 feed 重读一遍还是同一个错。
+_TRANSIENT_FEED = (SystemExit, StatsError, urllib.error.URLError, TimeoutError,
+                   ConnectionError, http.client.HTTPException)
+
+
+def is_transient_feed_error(exc: BaseException) -> bool:
+    """这一块下一班值不值得再读一遍。"""
+    if isinstance(exc, MatchupOrderUnverified):
+        return exc.transient
+    return isinstance(exc, _TRANSIENT_FEED)
+
+
+def _one_line(exc: BaseException) -> str:
+    text = " ".join(x.strip() for x in str(exc).splitlines() if x.strip())
+    return f"{type(exc).__name__}: {text}"[:300]
+
+
+@dataclass
+class FeedState:
+    """一趟备料读 flashscore 的状态（assemble 和 `retry_feed_blocks` 共用）。"""
+
+    mid: str | None = None
+    order_verified: bool = False
+    home_zh: str = ""
+    away_zh: str = ""
+    scores: list = field(default_factory=list)
+    tiebreaks: list | None = None
+    #: 这一趟逐局表读成了（赛果事实要按它重算）
+    scores_read: bool = False
+    #: 可重试的失败：块 → 一行错误
+    failed: dict = field(default_factory=dict)
+    #: 没读通、但重读也一样的块（解析错、按姓认不出、扫完了确实没有）
+    dropped: list = field(default_factory=list)
+
+    def fail(self, block: str, exc: BaseException) -> None:
+        if is_transient_feed_error(exc):
+            self.failed[block] = _one_line(exc)
+        else:
+            self.dropped.append(block)
+
+
+def _stamp() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _surname(full: str) -> str:
@@ -115,10 +201,15 @@ def _surname(full: str) -> str:
 
 
 def resolve_match_id(home: str, away: str) -> str | None:
-    """按两个球员姓反查 flashscore id。查不到返回 None（不抛，调用方出声）。"""
+    """按两个球员姓反查 flashscore id。查不到返回 None（不抛，调用方出声）。
+
+    ⚠️ **没读到**（`FeedUnavailable`：近期赛果那几页 5xx／超时）照旧抛——那不是「没有这场」，
+    assemble 把它记进 `_feed_retry`，下一班再查。"""
     try:
         mid, _, _ = find_match([_surname(home), _surname(away)])
         return mid or None
+    except FeedUnavailable:
+        raise
     except StatsError:
         return None
 
@@ -160,11 +251,12 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
             f = dict(zip(("FH", "FK"), next(iter(pairs)))) if len(pairs) == 1 else {}
         fs_home, fs_away = f.get("FH", ""), f.get("FK", "")
     except _FEED_ERRORS as exc:  # noqa: BLE001 —— 读不到就是核不出，不是命令行顺序
-        detail = " ".join(x.strip() for x in str(exc).splitlines() if x.strip())
         raise MatchupOrderUnverified(
-            f"flashscore df_hh_1 没读出本场 home/away（{type(exc).__name__}: {detail}）") from exc
+            f"flashscore df_hh_1 没读出本场 home/away（{_one_line(exc)}）",
+            transient=is_transient_feed_error(exc)) from exc
     if not fs_home or not fs_away:
-        raise MatchupOrderUnverified("flashscore df_hh_1 没给本场的 FH/FK")
+        # 读到了、只是这一场的记录还没挂出来——赛后刚打完常见，下一班再读
+        raise MatchupOrderUnverified("flashscore df_hh_1 没给本场的 FH/FK", transient=True)
     # 按「谁的姓出现在 flashscore 的 home 里」归位，而不是按整名相等——feed 是
     # 「Baez S.」缩写，命令行是「Sebastian Baez」，整名对不上。
     def side_is(fs_name: str, full: str) -> bool:
@@ -182,7 +274,7 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
     if len(ordered) == 2 and ordered[0][0] != ordered[1][0]:
         return ordered
     raise MatchupOrderUnverified(
-        f"按姓认不出 home/away（FH={fs_home!r} FK={fs_away!r}）")
+        f"按姓认不出 home/away（FH={fs_home!r} FK={fs_away!r}）", transient=False)
 
 
 def facts_text(hit_data: list[dict]) -> str:
@@ -559,6 +651,287 @@ def build_background(home: str, away: str, hit_data: list[dict]) -> tuple[str, l
     return ("\n".join(parts) if parts else ""), notes
 
 
+def _matchup_block(draft: dict, home: str, away: str, feed: FeedState,
+                   notes: list[str]) -> None:
+    """`matchup`：按 df_hh_1 的 home/away 把 `cover.matchup` 归位。
+
+    ⚠️ 拿到 id 就立刻重排 matchup——stats.a 跟的是 flashscore 的 home，而
+    render_stat_card 的 a 跟 cover.matchup[0]，顺序不一致数据图会把赢家印成输家
+    （CLAUDE.md 记过的坑）。归位是**搬动已有的两条**（按英文名认），不重建——
+    重跑时它们身上已经挂着排名、国别。"""
+    try:
+        ordered = matchup_order(home, away, feed.mid)
+    except MatchupOrderUnverified as exc:
+        # 顺序核不出：matchup 照原样留着（只是两个名字，不带任何归属），而按 feed
+        # home/away 排的几块（stats、狠数据、转折局、逐盘比分 → 赛果事实）一块都不写
+        # ——写了就是把 feed home 的数挂在命令行 matchup[0] 名下。草稿留在 waiting
+        # （「结构化赛果尚未 verified」）。
+        feed.order_verified = False
+        notes.append(
+            f"⚠️ matchup 顺序没核上 flashscore 的 home/away（{exc}）——stats 块"
+            "／狠数据／转折局／赛果事实都按 feed 的 home/away 排，顺序不认就"
+            "一块都不写（写了会把赢家印成输家），草稿留在 waiting；df_hh_1 "
+            "恢复后重跑备料")
+        if exc.transient:
+            feed.failed["matchup"] = str(exc)[:300]
+        else:
+            feed.dropped.append("matchup")
+        return
+    feed.order_verified = True
+    feed.home_zh, feed.away_zh = ordered[0][1], ordered[1][1]
+    pair = (draft.get("cover") or {}).get("matchup") or []
+    before = [str(p.get("name") or "") for p in pair]
+    by_en = {norm_name(str(p.get("name_en") or "")): p for p in pair}
+    draft.setdefault("cover", {})["matchup"] = [
+        {**by_en.get(norm_name(en), {}), "name": zh, "name_en": en} for en, zh in ordered]
+    if [x[1] for x in ordered] != before:
+        notes.append("matchup 按 flashscore home/away 重排："
+                     + " vs ".join(x[1] for x in ordered))
+
+
+def _feed_data_blocks(draft: dict, feed: FeedState, notes: list[str],
+                      blocks: set[str]) -> None:
+    """`stats`／`hit_data`／`points`／`tiebreaks`：**只跑 `blocks` 里点名的**。
+
+    前提是 matchup 已经按 feed 的 home/away 归位（`feed.order_verified`）。`tiebreaks`
+    要 `points` 的逐盘局数——只点了 `tiebreaks` 时逐局表照读（算局数用），但不动已有的
+    `_turning_points`。每一块读失败只报一句 note；可重试的记进 `feed.failed`。"""
+    mid = feed.mid
+    if "stats" in blocks:
+        # ② stats 块（数据图）。
+        try:
+            blk = stats_block(mid)
+        except _FEED_ERRORS as exc:  # noqa: BLE001 —— 网络/格式都别拖垮整份草稿
+            notes.append(f"⚠️ stats 块没成（{type(exc).__name__}: {exc}）")
+            feed.fail("stats", exc)
+            blk = None
+        if blk is not None:
+            draft["stats"] = {"a": blk["a"], "b": blk["b"]}
+            if blk["_missing_required"]:
+                notes.append("⚠️ stats 块必填项没解出来："
+                             + "、".join(blk["_missing_required"]))
+            notes.append("制胜分/非受迫失误：" + (
+                "这场有，已填进 stats" if blk["_has_winners_ue"]
+                else "接口里没有——照 render_stat_card 的 OPTIONAL_FIELDS 留空"))
+            # ②′ 数据图头像——没有它 render 最后一步（渲给推送用的数据图）是
+            #    SystemExit。已发 spec 里认过的人复用，WTA 现抓，ATP 留空出声
+            #    （promote 那头的闸会把草稿留在 waiting）。
+            try:
+                from headshot_index import resolve_headshots  # noqa: PLC0415
+                notes.extend(resolve_headshots(draft))
+            except Exception as exc:  # noqa: BLE001 —— 头像失败不拖垮整份草稿
+                notes.append(f"⚠️ 数据图头像没补上（{type(exc).__name__}: {exc}）")
+
+    if "hit_data" in blocks:
+        # ③ 狠数据候选。
+        try:
+            # ⚠️ 名字按 **feed 的 home/away** 给（collect 拿 home 的名字去标 SH
+            # 那一列的数），不是命令行顺序——matchup 重排过的场次，传命令行顺序
+            # 就是把赢家的总分、破发点兑现标在输家名下，还喂进文案 facts。
+            hit = collect(mid, feed.home_zh, feed.away_zh)
+            draft["_hit_data"] = hit["candidates"]
+            draft["_durations"] = hit["durations"]
+            notes.append(f"狠数据候选 {len(hit['candidates'])} 条"
+                         + ("" if hit["candidates"] else "（分盘统计字段可能没铺全）"))
+        except _FEED_ERRORS as exc:  # noqa: BLE001
+            notes.append(f"⚠️ 狠数据没成（{type(exc).__name__}: {exc}）")
+            feed.fail("hit_data", exc)
+
+    if "points" in blocks or "tiebreaks" in blocks:
+        # ④ 转折局候选（逐局表同时给出逐盘局数，赛果事实靠它）。
+        try:
+            match_games = points(mid)
+            feed.scores = final_set_scores(match_games)
+            feed.scores_read = True
+            if "points" in blocks:
+                ranked = rank_games(match_games)
+                draft["_turning_points"] = [
+                    {"label": _label(g, feed.home_zh, feed.away_zh),
+                     "density": g["density"], "tags": g["tags"]}
+                    for g in ranked[:TURNING_POINT_TOP]
+                ]
+                notes.append(f"转折局候选 {len(ranked)} 局，取前 {TURNING_POINT_TOP}")
+        except _FEED_ERRORS as exc:  # noqa: BLE001
+            notes.append(f"⚠️ 转折局没成（{type(exc).__name__}: {exc}）")
+            feed.fail("points" if "points" in blocks else "tiebreaks", exc)
+
+    # 抢七小分＋补上抢七盘的洞：df_mh_1 不列抢七那一局，final_set_scores 对
+    # 抢七盘只能取到 6-6（老链上带抢七的比赛整场判不出赢家）；df_sui_1 的
+    # IG/IH 把两件事一次补齐（语义与判据见 reel_facts.reconcile_sets）。
+    if feed.scores:
+        try:
+            reconciled = reconcile_sets(feed.scores, set_pairs(mid))
+            if reconciled:
+                feed.scores, feed.tiebreaks = reconciled
+            else:
+                notes.append("⚠️ df_sui_1 的每盘数字和逐局表对不上，"
+                             "抢七小分没拿到（对不上就不猜）")
+        except _FEED_ERRORS as exc:  # noqa: BLE001
+            notes.append(f"⚠️ 抢七小分没拿到（{type(exc).__name__}: {exc}）——"
+                         "带抢七的比赛会过不了 result_verified/小分闸，属于该红")
+            feed.fail("tiebreaks", exc)
+
+
+def _match_fact_block(draft: dict, feed: FeedState, notes: list[str]) -> None:
+    """赛果事实（赢家视角逐盘比分）＋爆冷封面口径——都从 `feed.scores` 机械算。"""
+    match_fact = verified_match_fact(
+        draft.get("cover", {}).get("matchup", []), feed.scores,
+        str(feed.mid or ""), tiebreaks=feed.tiebreaks)
+    if match_fact:
+        draft["_match"] = match_fact
+        draft["cover"].update({
+            "winner": match_fact["winner"],
+            "result": match_fact["winner_result"],
+        })
+        notes.append(
+            f"赛果事实闸：{match_fact['winner']} "
+            f"{match_fact['winner_result']} {match_fact['loser']}（赢家视角）")
+    elif feed.mid and feed.order_verified:
+        notes.append("⚠️ 逐局数据不足以确定赢家和逐盘比分；不生成正式 spec")
+
+    cover_brief = upset_cover_brief(
+        draft.get("cover", {}).get("matchup", []), feed.scores)
+    if cover_brief:
+        draft["_cover_brief"] = cover_brief
+        notes.append(
+            "爆冷封面：优先明星输家赛后失落高清近景；找不到再退赢家庆祝照")
+    else:
+        draft.pop("_cover_brief", None)
+
+
+def _feed_retry_blocks(failed: dict) -> list[str]:
+    """读失败的块 ＋ 因为它没成而这一趟根本没跑的下游，按 `FEED_BLOCKS` 的顺序。"""
+    want = set(failed)
+    for block in failed:
+        want.update(_FEED_DOWNSTREAM.get(block, ()))
+    return [b for b in FEED_BLOCKS if b in want]
+
+
+def record_feed_retry(draft: dict, feed: FeedState, *, tries: int) -> None:
+    """把这一趟可重试的失败记进 `_feed_retry`；全读通了就摘掉它。
+
+    形状（机器读，`tools/retry_feed_blocks.py` 和 `pipeline_health` 都认它）::
+
+        "_feed_retry": {"blocks": ["points"],            # 下一班要重跑的块（FEED_BLOCKS 里的名字）
+                        "errors": {"points": "SystemExit: …HTTP 503…"},
+                        "tries": 0,                      # reel-auto-ready 已经重跑过几次
+                        "last_at": "2026-09-28T07:00:00Z"}
+
+    `_` 开头：是给下一班看的账，不进成片；promote 转正时剥掉
+    （`render_inputs.GATE_ANNOTATIONS["_feed_retry"]`）。"""
+    if not feed.failed:
+        draft.pop("_feed_retry", None)
+        return
+    draft["_feed_retry"] = {
+        "blocks": _feed_retry_blocks(feed.failed),
+        "errors": {b: feed.failed[b] for b in FEED_BLOCKS if b in feed.failed},
+        "tries": tries,
+        "last_at": _stamp(),
+    }
+
+
+def _recheck_copy(draft: dict, feed: FeedState, notes: list[str]) -> None:
+    """重跑补上了比分／统计之后，拿**同几道机械闸**把已经起草的文案再核一遍。
+
+    probe 那一趟文案是在没有这几块的情况下起草的（`score_fact` / `total_points_fact`
+    没喂进去），`editorial_score_problem` 当时拿空比分放行了它。补齐之后不核，就是
+    一份没对过比分的文案被自动转正。**只核不重写**：起草那一步走模型，账号所有者
+    2026-09-27 定了不再加强模型链——对不上就撤下，草稿留在 waiting，不猜。"""
+    matchup = draft.get("cover", {}).get("matchup", [])
+    stats = draft.get("stats", {})
+    editorial = draft.get("editorial")
+    if isinstance(editorial, dict):
+        problem = (editorial_score_problem(editorial, feed.scores)
+                   or editorial_total_points_problem(editorial, stats, matchup, feed.scores)
+                   or arithmetic_claim_problem(editorial))
+        if problem:
+            draft.pop("editorial", None)
+            draft.pop("push", None)
+            notes.append(f"⚠️ 备料补齐之后文案对不上：{problem}——撤下 editorial 和 push"
+                         "（不重写，草稿留在 waiting）")
+            return
+    push = draft.get("push")
+    if isinstance(push, dict):
+        problem = (editorial_total_points_problem(push, stats, matchup, feed.scores)
+                   or arithmetic_claim_problem(push))
+        if problem:
+            draft.pop("push", None)
+            notes.append(f"⚠️ 备料补齐之后推送文案{problem}；已撤下 push，禁止发送")
+
+
+def retry_feed_blocks(draft: dict) -> str:
+    """reel-auto-ready 的一班：**只重跑 `_feed_retry.blocks` 里那几块**——不 probe、
+    不下源片、不碰模型。原地改 `draft`，返回这一班的结果：
+
+    | 返回 | 意思 |
+    |---|---|
+    | `none` | 没有账（或账是空的），什么都没做 |
+    | `exhausted` | 已经试满 `FEED_RETRY_MAX` 次，这一班不再读——该叫人了 |
+    | `healed` | 这一趟全读通了，`_feed_retry` 摘掉 |
+    | `dropped` | 读到了，但剩下的是**重读也一样**的错（解析错、按姓认不出、扫完了确实没有这场）——照旧只写 note、从账上划掉，草稿留在 waiting 等人 |
+    | `retry` | 还有没读通的，`tries`＋1，下一班再来 |
+    | `gave_up` | 这一趟刚好试满、仍没读通（`exhausted_at` 记上时刻）|"""
+    ledger = draft.get("_feed_retry")
+    if not isinstance(ledger, dict) or not ledger.get("blocks"):
+        return "none"
+    tries = int(ledger.get("tries") or 0)
+    if tries >= FEED_RETRY_MAX:
+        return "exhausted"
+    blocks = {b for b in ledger.get("blocks") or () if b in FEED_BLOCKS}
+    pair = (draft.get("cover") or {}).get("matchup") or []
+    if len(pair) != 2 or not all(p.get("name_en") for p in pair):
+        raise ValueError("草稿 cover.matchup 不是两位带英文名的球员，没法重跑备料")
+    home, away = (str(p["name_en"]) for p in pair)
+    feed = FeedState(mid=(draft.get("_match") or {}).get("flashscore_id") or None,
+                     order_verified="matchup" not in blocks and "match_id" not in blocks,
+                     home_zh=str(pair[0].get("name") or ""),
+                     away_zh=str(pair[1].get("name") or ""))
+    notes = [f"── 备料重跑 第 {tries + 1}/{FEED_RETRY_MAX} 次（{_stamp()}）："
+             + "、".join(b for b in FEED_BLOCKS if b in blocks)]
+    if "match_id" in blocks:
+        try:
+            mid = resolve_match_id(home, away)
+        except FeedUnavailable as exc:
+            mid = None
+            feed.fail("match_id", exc)
+            notes.append(f"⚠️ flashscore 近期赛果仍没读到（{_one_line(exc)}）")
+        if mid:
+            feed.mid = mid
+            draft["_match"] = {**(draft.get("_match") or {}), "flashscore_id": mid}
+            notes.append(f"flashscore id：{mid}（按球员姓反查）")
+        elif "match_id" not in feed.failed:
+            feed.dropped.append("match_id")
+            notes.append("⚠️ 扫完了近期赛果，确实没有这一场——不再重跑")
+    elif not feed.mid:
+        feed.dropped.append("match_id")
+        notes.append("⚠️ 账上没记 match_id，草稿里却没有 _match.flashscore_id——没法重跑")
+    if feed.mid and "matchup" in blocks:
+        _matchup_block(draft, home, away, feed, notes)
+    if feed.mid and feed.order_verified:
+        _feed_data_blocks(draft, feed, notes, blocks - {"match_id", "matchup"})
+        if feed.scores_read:
+            _match_fact_block(draft, feed, notes)
+        if feed.scores_read or "stats" in blocks:
+            _recheck_copy(draft, feed, notes)
+    record_feed_retry(draft, feed, tries=tries + 1)
+    if feed.failed:
+        status = "gave_up" if tries + 1 >= FEED_RETRY_MAX else "retry"
+    else:
+        status = "dropped" if feed.dropped else "healed"
+    if status == "gave_up":
+        draft["_feed_retry"]["exhausted_at"] = draft["_feed_retry"]["last_at"]
+        notes.append(f"⚠️ flashscore 备料重跑 {FEED_RETRY_MAX} 次仍没读到："
+                     + "、".join(draft["_feed_retry"]["blocks"])
+                     + "——不再自动重跑，pipeline_health 会点名")
+    elif status == "healed":
+        notes.append("备料重跑读通了，_feed_retry 摘掉")
+    elif status == "dropped":
+        notes.append("⚠️ 备料重跑读到了，但 " + "、".join(dict.fromkeys(feed.dropped))
+                     + " 是重读也一样的错——从账上划掉，草稿留在 waiting 等人")
+    draft["_notes"] = [*(draft.get("_notes") or []), *notes]
+    return status
+
+
 def assemble(*, slug: str, home: str, away: str, event: str, year: int,
              fixture: str, flashscore_id: str | None,
              round_name: str = "", court: str = "",
@@ -576,9 +949,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
     research_job = start_research(home=home, away=away, event=event, year=year) if tactical_packet is None else None
     background_param = background
     notes: list[str] = []
-    feed_home_zh, feed_away_zh = player_zh(home), player_zh(away)
-    order_verified = False
-    authoritative_scores: list[tuple[int, int]] = []
+    feed = FeedState(home_zh=player_zh(home), away_zh=player_zh(away))
     draft: dict = {
         "_draft": True,
         "slug": slug,
@@ -607,41 +978,22 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         draft["source_url"] = source_url
 
     # ① flashscore id：给了就用，没给就反查。
-    mid = flashscore_id or resolve_match_id(home, away)
+    mid = flashscore_id
+    if not mid:
+        try:
+            mid = resolve_match_id(home, away)
+        except FeedUnavailable as exc:
+            mid = None
+            feed.fail("match_id", exc)
+            notes.append(f"⚠️ flashscore 近期赛果没读到（{_one_line(exc)}）——这不是「没有这场」，"
+                         "id 没反查成，stats 块 / 狠数据 / 转折局本轮跳过")
+    feed.mid = mid
     if mid:
         draft["_match"] = {"flashscore_id": mid}
         notes.append(f"flashscore id：{mid}"
                      + ("（给定）" if flashscore_id else "（按球员姓反查）"))
-        # ⚠️ 拿到 id 就立刻重排 matchup——stats.a 跟的是 flashscore 的 home，
-        # 而 render_stat_card 的 a 跟 cover.matchup[0]，顺序不一致数据图会
-        # 把赢家印成输家（CLAUDE.md 记过的坑）。
-        try:
-            ordered = matchup_order(home, away, mid)
-            order_verified = True
-        except MatchupOrderUnverified as exc:
-            # 顺序核不出：matchup 照命令行写（只是两个名字，不带任何归属），而
-            # 按 feed home/away 排的几块（stats、狠数据、转折局、逐盘比分 →
-            # 赛果事实）一块都不写——写了就是把 feed home 的数挂在命令行
-            # matchup[0] 名下。草稿留在 waiting（「结构化赛果尚未 verified」）。
-            ordered = [(home, player_zh(home)), (away, player_zh(away))]
-            order_verified = False
-            notes.append(
-                f"⚠️ matchup 顺序没核上 flashscore 的 home/away（{exc}）——stats 块"
-                "／狠数据／转折局／赛果事实都按 feed 的 home/away 排，顺序不认就"
-                "一块都不写（写了会把赢家印成输家），草稿留在 waiting；df_hh_1 "
-                "恢复后重跑备料")
-        feed_home_zh, feed_away_zh = ordered[0][1], ordered[1][1]
-        if order_verified and [x[1] for x in ordered] != [player_zh(home), player_zh(away)]:
-            notes.append("matchup 按 flashscore home/away 重排："
-                         + " vs ".join(x[1] for x in ordered))
-        supplied = {
-            norm_name(home): {"country": home_country or None, "rank": home_rank},
-            norm_name(away): {"country": away_country or None, "rank": away_rank},
-        }
-        draft["cover"]["matchup"] = [
-            {"name": zh, "name_en": en, **supplied.get(norm_name(en), {})}
-            for en, zh in ordered]
-    else:
+        _matchup_block(draft, home, away, feed, notes)
+    elif "match_id" not in feed.failed:
         notes.append("⚠️ 没反查到 flashscore id——stats 块 / 狠数据 / 转折局"
                      "都依赖它，这三块本轮跳过。用 tools/match_feed.py find 拿到 id "
                      "后补进 _match.flashscore_id 重跑。")
@@ -658,94 +1010,17 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
     except Exception as exc:  # noqa: BLE001 —— 排名失败不能拖垮整份草稿
         notes.append(f"⚠️ 封面排名没成（{type(exc).__name__}: {exc}）")
 
-    if mid and order_verified:
-        # ② stats 块（数据图）。
-        try:
-            blk = stats_block(mid)
-        except _FEED_ERRORS as exc:  # noqa: BLE001 —— 网络/格式都别拖垮整份草稿
-            notes.append(f"⚠️ stats 块没成（{type(exc).__name__}: {exc}）")
-            blk = None
-        if blk is not None:
-            draft["stats"] = {"a": blk["a"], "b": blk["b"]}
-            if blk["_missing_required"]:
-                notes.append("⚠️ stats 块必填项没解出来："
-                             + "、".join(blk["_missing_required"]))
-            notes.append("制胜分/非受迫失误：" + (
-                "这场有，已填进 stats" if blk["_has_winners_ue"]
-                else "接口里没有——照 render_stat_card 的 OPTIONAL_FIELDS 留空"))
-            # ②′ 数据图头像——没有它 render 最后一步（渲给推送用的数据图）是
-            #    SystemExit。已发 spec 里认过的人复用，WTA 现抓，ATP 留空出声
-            #    （promote 那头的闸会把草稿留在 waiting）。
-            try:
-                from headshot_index import resolve_headshots  # noqa: PLC0415
-                notes.extend(resolve_headshots(draft))
-            except Exception as exc:  # noqa: BLE001 —— 头像失败不拖垮整份草稿
-                notes.append(f"⚠️ 数据图头像没补上（{type(exc).__name__}: {exc}）")
-
-        # ③ 狠数据候选。
-        try:
-            # ⚠️ 名字按 **feed 的 home/away** 给（collect 拿 home 的名字去标 SH
-            # 那一列的数），不是命令行顺序——matchup 重排过的场次，传命令行顺序
-            # 就是把赢家的总分、破发点兑现标在输家名下，还喂进文案 facts。
-            hit = collect(mid, feed_home_zh, feed_away_zh)
-            draft["_hit_data"] = hit["candidates"]
-            draft["_durations"] = hit["durations"]
-            notes.append(f"狠数据候选 {len(hit['candidates'])} 条"
-                         + ("" if hit["candidates"] else "（分盘统计字段可能没铺全）"))
-        except _FEED_ERRORS as exc:  # noqa: BLE001
-            notes.append(f"⚠️ 狠数据没成（{type(exc).__name__}: {exc}）")
-
-        # ④ 转折局候选。
-        try:
-            match_games = points(mid)
-            authoritative_scores = final_set_scores(match_games)
-            ranked = rank_games(match_games)
-            draft["_turning_points"] = [
-                {"label": _label(g, feed_home_zh, feed_away_zh),
-                 "density": g["density"], "tags": g["tags"]}
-                for g in ranked[:TURNING_POINT_TOP]
-            ]
-            notes.append(f"转折局候选 {len(ranked)} 局，取前 {TURNING_POINT_TOP}")
-        except _FEED_ERRORS as exc:  # noqa: BLE001
-            notes.append(f"⚠️ 转折局没成（{type(exc).__name__}: {exc}）")
-
-    # 抢七小分＋补上抢七盘的洞：df_mh_1 不列抢七那一局，final_set_scores 对
-    # 抢七盘只能取到 6-6（老链上带抢七的比赛整场判不出赢家）；df_sui_1 的
-    # IG/IH 把两件事一次补齐（语义与判据见 reel_facts.reconcile_sets）。
-    authoritative_tiebreaks: list[tuple[int, int] | None] | None = None
-    if mid and authoritative_scores:
-        try:
-            reconciled = reconcile_sets(authoritative_scores, set_pairs(mid))
-            if reconciled:
-                authoritative_scores, authoritative_tiebreaks = reconciled
-            else:
-                notes.append("⚠️ df_sui_1 的每盘数字和逐局表对不上，"
-                             "抢七小分没拿到（对不上就不猜）")
-        except _FEED_ERRORS as exc:  # noqa: BLE001
-            notes.append(f"⚠️ 抢七小分没拿到（{type(exc).__name__}: {exc}）——"
-                         "带抢七的比赛会过不了 result_verified/小分闸，属于该红")
-
-    match_fact = verified_match_fact(
-        draft.get("cover", {}).get("matchup", []), authoritative_scores,
-        str(mid or ""), tiebreaks=authoritative_tiebreaks)
-    if match_fact:
-        draft["_match"] = match_fact
-        draft["cover"].update({
-            "winner": match_fact["winner"],
-            "result": match_fact["winner_result"],
-        })
+    if mid and feed.order_verified:
+        _feed_data_blocks(draft, feed, notes, {"stats", "hit_data", "points", "tiebreaks"})
+    _match_fact_block(draft, feed, notes)
+    record_feed_retry(draft, feed, tries=0)
+    if feed.failed:
         notes.append(
-            f"赛果事实闸：{match_fact['winner']} "
-            f"{match_fact['winner_result']} {match_fact['loser']}（赢家视角）")
-    elif mid and order_verified:
-        notes.append("⚠️ 逐局数据不足以确定赢家和逐盘比分；不生成正式 spec")
-
-    cover_brief = upset_cover_brief(
-        draft.get("cover", {}).get("matchup", []), authoritative_scores)
-    if cover_brief:
-        draft["_cover_brief"] = cover_brief
-        notes.append(
-            "爆冷封面：优先明星输家赛后失落高清近景；找不到再退赢家庆祝照")
+            "⚠️ flashscore 备料没读到：" + "、".join(draft["_feed_retry"]["blocks"])
+            + f"——记进 _feed_retry，reel-auto-ready 下一班只重跑这几块（不 probe、"
+            f"不下源片），最多 {FEED_RETRY_MAX} 次")
+    authoritative_scores = feed.scores
+    feed_home_zh, feed_away_zh = feed.home_zh, feed.away_zh
 
     # Research is optional and timeboxed. A saved packet can carry reviewed,
     # timecoded claims; freshly discovered articles are not automatically facts.

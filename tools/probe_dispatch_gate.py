@@ -6,9 +6,15 @@
 | spec | 动作 | 退出码 |
 |---|---|---|
 | `specs/reels/<slug>.json` 不存在 | `waiting`：严格生产证据未齐，正常结果 | 0 |
-| **手写 spec**（没有 `_production`） | `skip`：会话自己写的、自己派 render，probe 不替它派 | 0 |
+| **手写 spec**（`_production.kind` 不是 `orchestrated_reel`，含没有 `_production` 的） | `skip`：会话自己写的、自己派 render，probe 不替它派 | 0 |
 | 自动 spec，`_production.status == "ready_for_render"` 且 `push.auto is True` | `dispatch` | 0 |
 | 自动 spec 但不是 ready / 没有 push.auto | 合同对不上，红 | 1 |
+
+**「是不是自动 spec」认 `_production.kind == "orchestrated_reel"`**，不认「有没有 `_production`」：
+`assemble_spec` 给每一份自动草稿写这个 kind，promote 转正时原样带过去（main 上 8 条自动 spec
+全带着）；而手写 spec 也会有 `_production`——`asiad-2026-women-draw` 写的是
+`{"status": "draft", "review_required": [...]}`（没有 kind），按「有 `_production` 就是自动的」
+判，会话在 main 上重 probe 它，这一步就拿自动链的合同把它打红（2026-09-28 复审 nit）。
 
 来路（2026-09-28 返工审计）：run 36331363124，会话为 `cobolli-mensik-doubles-laver-cup-2026`
 （手写 spec，307 条手写里的一条）在 main 上重 probe，这一步把 spec 当成自动链的产物去
@@ -27,16 +33,19 @@ import json
 import sys
 from pathlib import Path
 
+#: 自动链的 spec 身上的记号（`assemble_spec.assemble` 写进草稿，promote 原样带进正式 spec）。
+ORCHESTRATED = "orchestrated_reel"
+
 
 def decide(spec: dict | None) -> tuple[str, str]:
     """`(动作, 说明)`；动作是 waiting / skip / dispatch / error。"""
     if spec is None:
         return "waiting", "[waiting] 严格生产证据未齐；本次不 dispatch render"
     production = spec.get("_production")
-    if not production:
-        return "skip", ("[skip] 手写 spec（没有 `_production`）：它由会话自己派 render，"
-                        "probe 不替它派——这一趟 probe 的产物已经提交")
-    status = (production or {}).get("status") if isinstance(production, dict) else None
+    if not isinstance(production, dict) or production.get("kind") != ORCHESTRATED:
+        return "skip", ("[skip] 手写 spec（`_production.kind` 不是 orchestrated_reel）：它由会话"
+                        "自己派 render，probe 不替它派——这一趟 probe 的产物已经提交")
+    status = production.get("status")
     if status != "ready_for_render":
         return "error", (f"自动 spec 的 `_production.status` 是 {status!r}，不是 ready_for_render"
                          "——promote 只该把 ready 的草稿落成正式 spec，合同对不上")

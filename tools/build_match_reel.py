@@ -995,10 +995,22 @@ def fit_scorebox_to_frame(scorebox: str, frame: tuple[int, int] | None,
       1080p 左上角的框（`60,40,520,140`）碰巧装得进 720p，都会原样用、量错地方、
       **不报**——量出来零跳变时 `point_end_candidates` 会把 moved 分布打出来，
       那是唯一的线索。框要按这一趟源片的像素给
-    - 框出界 → 找一档**比源片高、装得下这个框、宽高比和源片一样**的参考高度
-      （`SCOREBOX_REF_HEIGHTS`），按 源片高/参考高 等比缩——1080→720 就是 ×2/3，
-      `98,920,519,1029` → `65,613,346,686`
-    - 哪一档都装不下 → 返回空串，调用方退回 `suggest_scorebox` 猜框那条路
+    - 框出界 → 两种读法，各算一个候选：
+      · **等比缩**：找一档**比源片高、装得下这个框、宽高比和源片一样**的参考高度
+        （`SCOREBOX_REF_HEIGHTS`），按 源片高/参考高 缩——1080→720 就是 ×2/3，
+        `98,920,519,1029` → `65,613,346,686`
+      · **平移**（源片比 16:9 窄、框的高装得下、只有宽出界时）：框是在**同一高度、左右
+        加了黑边的 16:9 画面**上量的——YouTube 播放器里截的 4:3 老转播就是这样——减去
+        一侧黑边宽。1440×1080 源配 1920×1080 量的框，平移 240，**y 不动**
+      · 只有一个候选装得进源片 → 用它（等比缩那一档照旧；平移只在「更高一档都装不下」
+        时才是唯一解，比如 2880×2160 的 4:3 源配 3840×2160 量的框）
+      · **两个都装得进 → 不猜，返回空串**。同一个框、同一个源片尺寸，两种读法的答案
+        差出一整块（1440×1080 上 `1500,900,1650,1000` → 缩成 `1125,675,1238,750`、
+        平移成 `1260,900,1410,1000`），而光凭两组宽高**分不出是哪一种**。量错位置的框
+        写进 `point_ends`——那是手写 spec「段尾切在一分打完之前」硬闸的数据——比退回
+        猜框（`point_ends_guess`，dry-run 标明是猜的）糟得多（2026-09-28 复审 nit：
+        原来这里一律按 ×0.75 缩，连 y 一起缩，平移那种读法下必然量错）
+    - 哪一种都装不下 → 返回空串，调用方退回 `suggest_scorebox` 猜框那条路
       （`point_ends_guess`），**probe 照样出完、照样提交**
 
     格式错（不是四个整数、x0≥x1）不在这儿：那是表单问题，工作流第一步
@@ -1012,6 +1024,7 @@ def fit_scorebox_to_frame(scorebox: str, frame: tuple[int, int] | None,
     w, h = frame
     if x1 <= w and y1 <= h:
         return text, None
+    scaled = scaled_ref = None
     for ref_h in SCOREBOX_REF_HEIGHTS:
         if ref_h <= h:
             continue
@@ -1021,9 +1034,27 @@ def fit_scorebox_to_frame(scorebox: str, frame: tuple[int, int] | None,
             fitted = [round(x0 * k), round(y0 * k), round(x1 * k), round(y1 * k)]
             fitted[2] = min(fitted[2], w)
             fitted[3] = min(fitted[3], h)
-            box = ",".join(str(v) for v in fitted)
-            return box, (f"--scorebox {text} 超出源片画面 {w}×{h}——按 {ref_w}×{ref_h} 量的框，"
-                         f"等比缩到这一档：{box}（spec 里的 `scorebox` 仍按渲染那一趟的源片像素写）")
+            scaled, scaled_ref = ",".join(str(v) for v in fitted), (ref_w, ref_h)
+            break
+    shifted = wide = None
+    wide_w = round(h * 16 / 9)
+    if y1 <= h and w < wide_w:
+        bar = (wide_w - w) // 2
+        if x0 >= bar and x1 - bar <= w:
+            shifted, wide = f"{x0 - bar},{y0},{x1 - bar},{y1}", (wide_w, h)
+    tail = "（spec 里的 `scorebox` 仍按渲染那一趟的源片像素写）"
+    if scaled and shifted:
+        return "", (f"--scorebox {text} 超出源片画面 {w}×{h}，而两种读法都装得进、答案不一样："
+                    f"在左右加了黑边的 {wide[0]}×{wide[1]} 上量的（平移 → {shifted}），或者在 "
+                    f"{scaled_ref[0]}×{scaled_ref[1]} 上量的（等比缩 → {scaled}）——光凭宽高分不出，"
+                    "不猜：这个框不用，退回猜框（point_ends_guess）；照源片像素重新给一次再 probe")
+    if scaled:
+        return scaled, (f"--scorebox {text} 超出源片画面 {w}×{h}——按 {scaled_ref[0]}×{scaled_ref[1]} "
+                        f"量的框，等比缩到这一档：{scaled}{tail}")
+    if shifted:
+        return shifted, (f"--scorebox {text} 超出源片画面 {w}×{h}——按左右加了黑边的 "
+                         f"{wide[0]}×{wide[1]} 量的框（更高一档都装不下，只剩这一种读法），"
+                         f"减去一侧黑边平移：{shifted}{tail}")
     return "", (f"--scorebox {text} 超出源片画面 {w}×{h}，按哪一档参考高度都装不下——"
                 "这个框不用，退回猜框（point_ends_guess）；照源片像素重新给一次再 probe")
 

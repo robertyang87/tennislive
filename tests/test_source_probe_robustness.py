@@ -432,6 +432,67 @@ def test_回放medvedev_wong_1080p的框按高度缩到720p():
     assert box == "" and "退回猜框" in note
 
 
+#: 同一个框、同一个源片尺寸（640×480 是库里真有的一档）：高装得下、只有宽出界
+PILLAR_BOX, PILLAR_FRAME = "607,380,707,440", (640, 480)
+
+
+def test_只宽出界的框_平移和等比缩都装得进_不猜退回猜框():
+    """2026-09-28 复审 nit：1920×1080 量的框配 1440×1080 源，原来一律按 ×0.75 缩——连 y 一起缩。
+    两种读法各给一个候选，都装得进源片就不猜（note 把两个候选都写出来，人照源片像素重给）。"""
+    box, note = reel.fit_scorebox_to_frame("1500,900,1650,1000", (1440, 1080))
+    assert box == "", f"两种读法都说得通时不许挑一个：{box}"
+    assert "1260,900,1410,1000" in note and "1125,675,1238,750" in note and "退回猜框" in note
+    box, note = reel.fit_scorebox_to_frame(PILLAR_BOX, PILLAR_FRAME)
+    assert box == "" and "501,380,601,440" in note and "405,253,471,293" in note
+    # 更高一档都装不下时，平移是唯一的读法：2880×2160 的 4:3 源配 3840×2160 量的框
+    box, note = reel.fit_scorebox_to_frame("3000,1900,3300,2000", (2880, 2160))
+    assert box == "2520,1900,2820,2000" and "平移" in note
+    # 源片本来就是 16:9：没有黑边可言，只宽出界照旧按更高一档等比缩（4K 量的右上角框）
+    assert reel.fit_scorebox_to_frame("3000,60,3700,200", (1920, 1080))[0] == "1500,30,1850,100"
+    # 框压在黑边上（x0 < 一侧黑边宽）：平移那种读法不成立，只剩等比缩
+    assert reel.fit_scorebox_to_frame("40,900,1500,1000", (1440, 1080))[0] == "30,675,1125,750"
+
+
+def _box_video(path: Path, size: str, box: tuple[int, int, int, int], scale: str = "") -> None:
+    """灰底上一块每秒翻一次黑的「记分条」；`scale` 给了就缩到那个尺寸（更高一档量的那种读法）。"""
+    x0, y0, x1, y1 = box
+    vf = (f"drawbox=x={x0}:y={y0}:w={x1 - x0}:h={y1 - y0}:color=black:t=fill:"
+          "enable='lt(mod(t,2),1)'" + (f",scale={scale}" if scale else ""))
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", f"color=c=gray:s={size}:r=25:d=4",
+         "-vf", vf, "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", str(path)],
+        check=True)
+
+
+def test_同一组宽高两种读法各自量对一半_所以光凭宽高分不出(tmp_path):
+    """上一条「不猜」的证据，拿真像素量：同一个框、同一个 640×480 源片尺寸，造两个世界——
+
+    · 黑边世界：框是在左右加了黑边的 853×480 上量的，源片是去掉黑边的那 640 宽
+    · 更高一档世界：框是在 960×720 上量的，源片是它等比缩到 640×480
+
+    平移的候选只在前一个世界量得到翻牌，等比缩的候选只在后一个世界量得到——**各对一半**。
+    原来一律等比缩，在黑边世界里量的是一块静止的球场，`point_ends` 记下零次翻牌，而那是
+    手写 spec「段尾切在一分打完之前」硬闸的数据。"""
+    pytest.importorskip("cv2")
+    if not shutil.which("ffmpeg"):
+        pytest.skip("没有 ffmpeg")
+    import find_point_ends as fpe  # noqa: PLC0415
+
+    _box, note = reel.fit_scorebox_to_frame(PILLAR_BOX, PILLAR_FRAME)
+    shifted, scaled = (501, 380, 601, 440), (405, 253, 471, 293)
+    assert "501,380,601,440" in note and "405,253,471,293" in note
+    pillar = tmp_path / "pillar.mp4"
+    _box_video(pillar, "640x480", shifted)
+    taller = tmp_path / "taller.mp4"
+    _box_video(taller, "960x720", tuple(int(v) for v in PILLAR_BOX.split(",")), scale="640:480")
+
+    def flips(video: Path, box: tuple[int, int, int, int]) -> float:
+        return max(r["moved"] for r in fpe.scan(video, box, 0.1))
+
+    assert flips(pillar, shifted) > 0.5 and flips(pillar, scaled) == 0
+    assert flips(taller, scaled) > 0.5 and flips(taller, shifted) == 0
+
+
 def _flip_video(path: Path, size: str = "320x240") -> None:
     subprocess.run(
         ["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", f"color=c=gray:s={size}:r=25:d=4",
@@ -504,12 +565,27 @@ def test_回放_手写spec重probe不再裸assert(tmp_path, capsys):
     assert gate.main(["--spec", str(path)]) == 0
     assert capsys.readouterr().out.strip() == "skip"
     assert gate.decide(None)[0] == "waiting"
-    ready = {"_production": {"status": "ready_for_render"}, "push": {"auto": True}}
+    auto = {"kind": "orchestrated_reel"}
+    ready = {"_production": {**auto, "status": "ready_for_render"}, "push": {"auto": True}}
     assert gate.decide(ready)[0] == "dispatch"
     assert gate.decide({**ready, "push": {}})[0] == "error"
-    assert gate.decide({**ready, "_production": {"status": "waiting"}})[0] == "error"
+    assert gate.decide({**ready, "_production": {**auto, "status": "waiting"}})[0] == "error"
     missing = tmp_path / "none.json"
     assert gate.main(["--spec", str(missing)]) == 0 and capsys.readouterr().out.strip() == "waiting"
+
+
+def test_手写spec带着_production也跳过_认自动链的是kind():
+    """2026-09-28 复审 nit：`asiad-2026-women-draw` 是手写的，带着 `_production`
+    （`{"status": "draft", "review_required": [...]}`，没有 kind）。原来按「有 `_production`
+    就是自动 spec」判，会话在 main 上重 probe 它，这一步拿自动链的合同把它打红。"""
+    path = ROOT / "specs/reels/asiad-2026-women-draw.json"
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    assert spec["_production"].get("status") == "draft" and "kind" not in spec["_production"], (
+        "回放的前提变了：这条 spec 不再是「手写、带 _production、没有 kind」")
+    assert gate.decide(spec)[0] == "skip"
+    # 形状一样的合成件：连 push.auto 都没有，照样是 skip 不是 error
+    assert gate.decide({"_production": {"status": "draft"}, "push": {"auto": False}})[0] == "skip"
+    assert gate.decide({"_production": "draft"})[0] == "skip"
 
 
 def test_全库自动spec都派得出去_手写spec一律跳过():
@@ -524,10 +600,12 @@ def test_全库自动spec都派得出去_手写spec一律跳过():
         else:
             kinds[action] += 1
     assert kinds["dispatch"] >= 1 and kinds["skip"] >= 100, kinds
-    # 带 _production 却不是 ready 的（历史上留下的）照旧红——那是合同对不上，不是这次放宽的
-    for slug in kinds["error"]:
-        spec = json.loads((ROOT / f"specs/reels/{slug}.json").read_text(encoding="utf-8"))
-        assert spec.get("_production"), slug
+    # 自动链产的（kind=orchestrated_reel）一条都不许红：它们全是 promote 落成 ready 的
+    assert kinds["error"] == [], kinds["error"]
+    auto = [p.stem for p in (ROOT / "specs/reels").glob("*.json")
+            if isinstance(s := json.loads(p.read_text(encoding="utf-8")), dict)
+            and (s.get("_production") or {}).get("kind") == gate.ORCHESTRATED]
+    assert len(auto) == kinds["dispatch"], (auto, kinds)
 
 
 def test_派发那一步读判据工具_不再裸assert():

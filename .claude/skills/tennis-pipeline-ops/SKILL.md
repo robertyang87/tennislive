@@ -4938,8 +4938,8 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 | cookies 自检填了搜索词（1，run 35478525370） | `ytsearch8:…` 搜出 0 条，报「没下到媒体流」 | 第一步红：「是搜索词不是视频」（`tools/source_url_check.py`） |
 | probe 空 URL＋默认 slug（1，run 36304133786） | 第 1.4 分钟红在 `curl: (3)` | match-reel 表单自检（setup-python 之后、认领源片和装依赖之前），两处都点名；`build_match_reel probe` 下载之前也拦空地址和坏框 |
 | X CDN 直链 403（2） | 一句 curl 403 | 帖子地址下载时现解、直链只当 `source_fallbacks`（tennis-media-sources「X 和 Instagram 是第一手源」） |
-| 1080p 的框配 720p 源（2，medvedev-wong） | 源片下完才红（cv2 `!_src.empty()` / ReelError），probe 产物一个字节没提交 | `fit_scorebox_to_frame`：按源片高度找一档装得下的参考高度等比缩（`98,920,519,1029`@1280×720 → `65,613,346,686`；同一 slug 后来下到 1080p 那趟这个框量出 97 个死球），缩不进退回猜框；`probe.json` 记 `scorebox_fitted`。⚠️ **只认得出「出界」**：720p 的框配 1080p 源、1080p 左上角的框碰巧装得进 720p，都原样用、量错地方、不报——框照这一趟源片的像素给；`--scorebox` 给了却量不了时 `point_ends` 记 `null`（不是 `[]`，`[]` 是量过零次）。全库 94 条 spec 的框对 probe 过的源片：108 次原样、1 次要缩（`zheng-rybakina` 的 720p 那趟）、0 次丢 |
-| 派发 render 的 assert 撞手写 spec（1，run 36331363124） | 裸 `AssertionError` | `tools/probe_dispatch_gate.py`：没 spec → waiting，手写（无 `_production`）→ skip，自动 spec 的 ready ＋ `push.auto` 合同照旧硬 |
+| 1080p 的框配 720p 源（2，medvedev-wong） | 源片下完才红（cv2 `!_src.empty()` / ReelError），probe 产物一个字节没提交 | `fit_scorebox_to_frame`：按源片高度找一档装得下的参考高度等比缩（`98,920,519,1029`@1280×720 → `65,613,346,686`；同一 slug 后来下到 1080p 那趟这个框量出 97 个死球），缩不进退回猜框；`probe.json` 记 `scorebox_fitted`。⚠️ **只认得出「出界」**：720p 的框配 1080p 源、1080p 左上角的框碰巧装得进 720p，都原样用、量错地方、不报——框照这一趟源片的像素给；**只宽出界、源片比 16:9 窄**（4:3 老转播）时平移（黑边世界）和等比缩（更高一档）两种读法都装得进就不猜、退回猜框，见下面第二轮复审；`--scorebox` 给了却量不了时 `point_ends` 记 `null`（不是 `[]`，`[]` 是量过零次）。全库 94 条 spec 的框对 probe 过的源片：108 次原样、1 次要缩（`zheng-rybakina` 的 720p 那趟）、0 次丢 |
+| 派发 render 的 assert 撞手写 spec（1，run 36331363124） | 裸 `AssertionError` | `tools/probe_dispatch_gate.py`：没 spec → waiting，手写（`_production.kind` 不是 `orchestrated_reel`，含没有 `_production` 的）→ skip，自动 spec 的 ready ＋ `push.auto` 合同照旧硬 |
 | frame-grab 推送 5 次失败（1，run 36317540680） | 手搓循环睡在 fetch 和 push 之间（13~28 秒），远端每一轮都往前走一格 | 改用共享 `push_with_rebase_retry`；**共享脚本本身也改成「先退避、再 rebase、立刻推」**（原来同样睡在 rebase 和 push 之间），同 slug 的 frame-grab 排队 |
 | 上游 HTTP 5xx（1，run 35708122768） | 审计标成 flashscore，**日志里其实是 MiniMax 读比分板 500**——base 的 47f9f2b6d 已降级只报（`test_scoreboard_http_failure_does_not_write_partial_alignment`），账号所有者 09-27 定了不给模型加重试，没加 | flashscore 这一侧补上同形的洞：`fetch_match_stats_fs.feed` 5xx／网络抖动重试 3 次、最后一律 `StatsError`；`assemble_spec` 读 feed 的四块（stats／狠数据／转折局／抢七小分）接住 `match_feed._get` 抛的 `SystemExit`（原来穿过每一处 `except Exception`，一次 500 就让 probe 整趟不提交）；**matchup 归位那一块不降级**，见下 |
 
@@ -4970,3 +4970,27 @@ waiting（「结构化赛果尚未 verified」）。`check_draft_matchup_order` 
 出现第一条才被推导出来）；表单默认 slug `eala-zheng` 的认领口是 `url` 填它 spec 里那条源片（原来这条
 已发片子一趟都重 probe 不了）；`pipeline_health.workflow_health` 按 run-name 的 mode 把 `cookies` 自检
 滤出出片趋势（`SELF_CHECK_MODES`，一趟定时的 cookies 绿会把 render 的连续失败清零）。
+
+### ⭐⭐ 第二轮复审（同日）：**flashscore 抖一下，这场球不许静静地躺到过期**
+
+上一轮把「读失败」降成只报，probe 不再红——可编排器的 `_already_specced` 认得这份草稿、**永不重 probe**，
+reel-auto-ready 只补封面和视觉证据、**不重跑备料**。回放（df_hh_1 正常、只有 df_mh_1 一次 503）：
+08a3fd1da SystemExit 穿出 → probe 红 → 失败自愈摘 state → 重 probe；dc80fd22d 草稿留在 waiting、再没人碰。
+重 probe 要重下源片，所以**只重跑便宜的那一半**（选了 D1，没退回「probe 非零退出」那条 b 路）：
+
+- `assemble_spec` 读失败**且可重试**（`match_feed._get` 的 SystemExit、`StatsError`/`FeedUnavailable`、网络异常；
+  解析错、同姓认不出不算）→ 草稿记 `_feed_retry: {blocks, errors, tries, last_at}`，`blocks` 连带这一趟没跑的下游
+  （`match_id` → 全部；`matchup` → stats／hit_data／points；`points` 顺带 tiebreaks）。反查 id 也算一块：
+  `find_match` 有页读失败时没找到报 `FeedUnavailable`（那一页里可能就有它），原来吞成「没反查到 id」
+- reel-auto-ready 每一班（过期检查之后、认领 probe 和转正之前）跑 `tools/retry_feed_blocks.py`：**只重跑账上那几块**，
+  不 probe、不下源片、不碰模型；补上比分／统计之后拿同几道机械闸（`editorial_score_problem` 等）把已经起草的
+  文案再核一遍，对不上就撤、不重写。最多 `FEED_RETRY_MAX = 3` 次
+- 试满仍没读通：`exhausted_at` 记上，`::warning::` ＋ run 摘要，`pipeline_health.feed_retry_stuck` 对还新鲜
+  （`PENDING_MAX_AGE`）的草稿按 slug 告警一次。promote 转正时剥掉 `_feed_retry`（登记在 `GATE_ANNOTATIONS`）
+
+两个 nit：`probe_dispatch_gate` 认自动 spec 改认 `_production.kind == "orchestrated_reel"`（`asiad-2026-women-draw`
+手写、带 `_production` 没 kind，原来重 probe 会被自动链的合同打红）；`fit_scorebox_to_frame` 只宽出界时两种读法
+各算一个候选——两个都装得进源片就不猜（同一个 640×480、同一个框，拿真像素造两个世界，平移只在黑边世界量得到翻牌、
+等比缩只在更高一档世界量得到，各对一半）；只剩一种装得进才用它。全库 391 对「框 × probe 过的源片尺寸」新老两版
+结果逐一相同。判据 `tests/test_feed_retry.py`、`test_只宽出界的框_平移和等比缩都装得进_不猜退回猜框`、
+`test_同一组宽高两种读法各自量对一半_所以光凭宽高分不出`、`test_手写spec带着_production也跳过_认自动链的是kind`。
