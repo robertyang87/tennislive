@@ -62,8 +62,12 @@ jobs:
           shopt -s nullglob
           echo "faces=$(python tools/refresh_reel_cover.py --need-faces specs/reels/pending/*.draft.json)" >> "$GITHUB_OUTPUT"
 
+      # ⚠️ continue-on-error（2026-09-28 复审 FIX ROUND 2 nit）：上面那句「备不上不拦」原来只对模型那一步成立——
+      # 这一步 pip 一红，job 在循环之前就失败，这一班**已经 ready 的草稿也不转正、不派发**。装不上时照片接口那一档
+      # 拿到的是 `face_checks.ModelUnavailable`（「人脸模型不可用」：不记 tried、不算查完），封面照原来那两条路走。
       - name: 装认人依赖
         if: steps.need.outputs.faces == 'true'
+        continue-on-error: true
         run: pip install -q -e ".[visualqa,faces]"
 
       # 键**按权重内容定址**（`face_checks.CACHE_KEY`），`test_人脸模型缓存键跟着模型版本走` 逼着这里逐字一致。

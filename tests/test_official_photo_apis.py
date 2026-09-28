@@ -23,8 +23,12 @@ import cover_channels as cch  # noqa: E402
 import cover_upgrade as cu  # noqa: E402
 import official_photo_apis as apis  # noqa: E402
 import official_photo_replay as replay  # noqa: E402
+# 钩子带那道闸（`cover_upgrade.hook_top`）第一次调用时才 import 它，而它 import 时按**相对路径**读场馆图
+# （`masters_grid.nine_masters_grid`）——几条判据 chdir 到 tmp_path 之后才第一次走到那儿就炸成「没查成」。
+# 整个文件一起跑时前面的判据已经 import 过，单跑一条（`-k`）才现形（FIX ROUND 2 顺手查到的）。
+import versus_poster  # noqa: E402,F401
 
-FIX = ROOT / "tests" / "fixtures" / "official_photo_apis"
+FIX =ROOT / "tests" / "fixtures" / "official_photo_apis"
 HEADS = FIX / "heads"
 UTC = timezone.utc
 
@@ -575,7 +579,12 @@ def test_自动链_已有封面不换_只有卡死在视觉审核上的才换(tm
                 {"status": "waiting", "cover_image": str(img), "retryable": True},   # 还会重审：不动
                 {"status": "waiting", "cover_image": "other.jpg", "retryable": False}):
         assert not rrc.stuck_on_cover({**has, "_visual_evidence": vis}), vis
-    stuck = {**has, "_visual_evidence": {"status": "waiting", "cover_image": str(img), "retryable": False}}
+    # 没过、不重审，但理由里没有封面（FIX ROUND 2 BLOCKING：badosa-gauff 那种）：不动
+    only_window = {"status": "waiting", "cover_image": str(img), "retryable": False,
+                   "problems": ["ending 必须是 3-30 秒的完整收官窗口"]}
+    assert not rrc.stuck_on_cover({**has, "_visual_evidence": only_window})
+    stuck = {**has, "_visual_evidence": {"status": "waiting", "cover_image": str(img), "retryable": False,
+                                         "problems": ["封面情绪应为 winner_celebration，现在是 other"]}}
     assert rrc.stuck_on_cover(stuck)
     _d, note = rrc.refresh(stuck, pick=pick)
     assert asked == ["medvedev-royer"] and "卡在视觉审核上" in note
@@ -808,6 +817,68 @@ def test_命令行_need_faces_只看有probe的新鲜草稿(tmp_path, monkeypatc
         assert rrc.main() == 0 and capsys.readouterr().out.strip() == want, probed
 
 
+
+def test_自动链问flashscore_只试一次_超时从预算里扣_一路传到urlopen(monkeypatch):
+    """复审 FIX ROUND 2 nit（M1 活着）：`flashscore_times` 不把 attempts／timeout 往下传、`match_feed._get` 写死
+    40 秒，216 条判据照样全绿——墙钟那条判据把 `cu.flashscore_times` 整个 mock 掉了，修掉 128.7 秒那一挂的这段
+    管子一次都没被走到。这里只 mock 最底下的 `urlopen`，从 `pick_for_draft` 一路走下去。"""
+    import urllib.error  # noqa: PLC0415
+
+    import match_feed  # noqa: PLC0415
+
+    calls = []
+
+    def urlopen(req, timeout=None):
+        calls.append((req.full_url, timeout))
+        raise urllib.error.URLError("挂住（假的）")
+    monkeypatch.setattr(match_feed.urllib.request, "urlopen", urlopen)
+    monkeypatch.setattr(match_feed.time, "sleep", lambda s: None)
+    now = _u("2026-09-26T14:00:00Z")
+    for budget, cap in ((None, cu.FS_QUICK_TIMEOUT), (4.0, 4.0)):
+        calls.clear()
+        got = cu.pick_for_draft(_draft(), now, sweeps_for=lambda ctx: [], budget=budget)
+        assert len(calls) == 1 and "dc_1_OWZ0gYVj" in calls[0][0], calls
+        assert 0 < calls[0][1] <= cap, (budget, calls)
+        assert got["chosen"] is None and not got["complete"], "开赛时刻这一趟没问到：不算查完"
+    # 默认（O4、渲前预检、人查）照旧 3 次 × 40 秒
+    calls.clear()
+    with pytest.raises(RuntimeError):
+        cu.flashscore_times("OWZ0gYVj")
+    assert [c[1] for c in calls] == [40, 40, 40]
+
+
+def test_认人依赖只在要认人的班次装_装不上不拦():
+    """复审 FIX ROUND 2 nit：
+    - M8 活着：删掉「装认人依赖」那一步的 `if: steps.need.outputs.faces == 'true'`（每一班都装 onnxruntime／opencv），
+      157 条判据全绿——而这道 if 就是 runner 分钟数的那道闸（上限 72% 的班次）
+    - 那一步没有 `continue-on-error`：注释写着「备不上不拦」，其实 pip 一红 job 就在循环之前失败，
+      这一班已经 ready 的草稿也不转正、不派发"""
+    import re  # noqa: PLC0415
+
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github/workflows/reel-auto-ready.yml").read_text(encoding="utf-8"))
+    steps = wf["jobs"]["ready"]["steps"]
+    names = [str(st.get("name") or "") for st in steps]
+    need = steps[names.index("这一班要不要认人")]
+    assert need.get("id") == "need" and "refresh_reel_cover.py --need-faces" in need["run"]
+    assert "faces=" in need["run"] and "GITHUB_OUTPUT" in need["run"]
+    gate = "steps.need.outputs.faces == 'true'"
+    heavy = [st for st in steps
+             if re.search(r"faces\]|visualqa|onnxruntime|opencv|face_checks\.py fetch|face-models",
+                          json.dumps(st, ensure_ascii=False))]
+    assert len(heavy) >= 4, [st.get("name") for st in heavy]
+    for st in heavy:
+        assert gate in str(st.get("if") or ""), f"「{st.get('name')}」没挂在「这一班要不要认人」后面：{st.get('if')}"
+    install = steps[names.index("装认人依赖")]
+    assert ".[visualqa,faces]" in install["run"] and install.get("continue-on-error") is True
+    base = steps[names.index("安装生产闸依赖")]
+    assert "faces" not in base["run"] and "visualqa" not in base["run"] and not base.get("if")
+    loop = next(i for i, st in enumerate(steps) if "for DRAFT in" in str(st.get("run") or ""))
+    assert all(steps.index(st) < loop for st in heavy), "要在循环之前备好"
+    # 装不上时那一档拿到的是「人脸模型不可用」：不记 tried、不算查完（下一班再试），也不拦原来那两条路
+    assert "人脸模型不可用" in open(ROOT / "tools/cover_upgrade.py", encoding="utf-8").read()
+
 def test_自动链_下过没过的原图不再下(tmp_path, monkeypatch):
     """复审 nit：`pick_for_draft` 不记得下过什么，闸没过的原图每一班重下（bondar-birrell 每班两张、5.8 MB）。
     wong-vallejo 录下来的：Coleman-Wong-010 认人 0.24（unknown）——结论确定，记进 `_cover_api.tried`，下一班不下。"""
@@ -943,6 +1014,111 @@ def test_自动链_卡在照片接口图上_原来的路也没有_查完了不�
     assert not rrc.needs_official_pick(draft, now)
     draft, note = rrc.refresh(draft, now=now, pick=pick)
     assert len(picks) == 2 and old_path == [1, 1]
+
+
+# ---------------------------------------------------------------- ⑩b 复审 FIX ROUND 2：卡住要是卡在**封面**上
+
+#: `badosa-gauff` 的视觉审核（specs/reels/pending/badosa-gauff.draft.json，2026-09-28 录下来的）：封面判过了，
+#: 唯一没过的是结尾窗口
+_BADOSA_GAUFF_REVIEW = {
+    "model": "MiniMax-M3", "status": "waiting", "visual_status": "waiting", "retryable": False,
+    "cover": {"same_match": True, "subject": "高芙", "moment": "winner_celebration", "wrong_or_old": False,
+              "reason": "高芙侧面近景握拳……可确认属本场，非旧图。", "confidence": 0.88},
+    "problems": ["ending 必须是 3-30 秒的完整收官窗口"],
+    "model_attempts": 2,
+    "input_sha256": "31ebe6e1bf5cc2fe2fd7261a91f11305725801b45ea3feb9468e1925a3c38c09",
+    "cover_image": "assets/reel/badosa-gauff-cover.jpg"}
+
+
+def _visual_raw(**cover) -> dict:
+    window = {"start": 100.0, "end": 110.0, "kind": "match_point", "winner_visible": True,
+              "reason": "赛点 105s 落地", "confidence": 0.9}
+    return {"cold_open": dict(window), "ending": dict(window),
+            "cover": {"same_match": True, "subject": "梅德韦杰夫", "moment": "winner_celebration",
+                      "wrong_or_old": False, "reason": "同场、握拳", "confidence": 0.9, **cover}}
+
+
+def test_视觉审核只判了窗口没判封面_不算卡在封面上():
+    """`cover_problems` 的分界拿 `analyze_reel_visuals.clean_report` **真出的话**钉：封面那一段的每一种不过都认得出，
+    冷开场／结尾窗口的每一种都不认（换封面解不开它们）。"""
+    import analyze_reel_visuals as visual  # noqa: PLC0415
+    import refresh_reel_cover as rrc  # noqa: PLC0415
+
+    draft = _draft(cover={**_draft()["cover"], "portrait": {"image": "assets/reel/medvedev-royer-cover.jpg"}})
+    _r, ok = visual.clean_report(_visual_raw(), draft, 200.0)
+    assert ok == [] and rrc.cover_problems({"problems": ok}) == []
+    # 封面那一段：每一种都要认得出
+    for bad in ({"same_match": False}, {"wrong_or_old": True}, {"confidence": 0.5}, {"reason": ""},
+                {"subject": "鲁瓦耶"}, {"moment": "other"}):
+        _r, probs = visual.clean_report(_visual_raw(**bad), draft, 200.0)
+        assert probs and rrc.cover_problems({"problems": probs}) == probs, (bad, probs)
+    _r, probs = visual.clean_report(_visual_raw(), {**draft, "cover": _draft()["cover"]}, 200.0)
+    assert rrc.cover_problems({"problems": probs}) == [rrc.NO_COVER_PROBLEM], probs
+    # 窗口那一段：一种都不许认
+    for name in ("cold_open", "ending"):
+        for bad in ({"end": 140.0}, {"end": 101.0}, {"kind": "rally"}, {"winner_visible": False},
+                    {"confidence": 0.5}, {"reason": ""}, {"end": 250.0}):
+            raw = _visual_raw()
+            raw[name] = {**raw[name], **bad}
+            _r, probs = visual.clean_report(raw, draft, 200.0)
+            assert probs and rrc.cover_problems({"problems": probs}) == [], (name, bad, probs)
+    # main 在视觉过了之后追加的双语字幕那几句（status waiting、retryable false）也不是封面
+    for reason in ("冷开场窗口没有来自源站字幕轨的英文转播原声", "没有可用的 DEEPSEEK_API_KEY，双语字幕未生成"):
+        assert rrc.cover_problems({"problems": [reason]}) == []
+
+
+def test_封面审过了只有结尾窗口不过_照片接口不换图_不装认人依赖(tmp_path, monkeypatch):
+    """FIX ROUND 2 BLOCKING 的复现（录下来的 badosa-gauff 审核结论，received_at 挪到现在）：原来
+    `stuck_on_cover` True、`needs_official_pick` True（这一班装认人依赖）、`refresh` 用接口图把审过的 WTA 赛后稿头图
+    换掉；下一班重审过了封面、结尾照旧不过，刚审过的接口图进 `rejected`、再换下一张，一班一张直到候选用完。"""
+    import refresh_reel_cover as rrc  # noqa: PLC0415
+
+    monkeypatch.setattr(rrc, "ROOT", tmp_path)
+    monkeypatch.chdir(tmp_path)
+    img = tmp_path / "assets/reel/badosa-gauff-cover.jpg"
+    img.parent.mkdir(parents=True)
+    old_bytes = _plain_jpeg(1200, 1600)
+    img.write_bytes(old_bytes)
+    now = _u("2026-09-28T16:00:00Z")
+    portrait = {"image": "assets/reel/badosa-gauff-cover.jpg", "_portrait_why": "WTA 官方赛后稿头图，自动抓取"}
+    draft = {"slug": "badosa-gauff",
+             "_production": {"kind": "orchestrated_reel", "event": "US Open", "received_at": "2026-09-28T15:50:00Z"},
+             "_match": {"flashscore_id": "x", "winner": "高芙"},
+             "cover": {"matchup": [{"name": "巴多萨", "name_en": "Paula Badosa"},
+                                   {"name": "高芙", "name_en": "Coco Gauff"}], "portrait": dict(portrait)},
+             "_visual_evidence": json.loads(json.dumps(_BADOSA_GAUFF_REVIEW))}
+    assert cu.draft_api_blocker(draft, now) == "", "这份草稿照片接口那一档是查得了的——不是被别的闸挡住才绿"
+    picks = []
+
+    def pick(d, at, **kw):
+        picks.append(kw)
+        url = f"https://images.wtatennis.com/photo/GettyImages-{len(picks)}.jpg"
+        return {"chosen": {"candidate": cu.Candidate("wta-photos", url, item_id=str(len(picks))),
+                           "blob": _plain_jpeg(4000, 3000)},
+                "report": [], "portrait": {"_why": cu.AUTO_DRAFT_WHY_PREFIX + "：…", "_source_url": url}}
+    assert not rrc.stuck_on_cover(draft) and not rrc.needs_official_pick(draft, now)
+    before = json.loads(json.dumps(draft))
+    for _tick in range(3):
+        draft, note = rrc.refresh(draft, now=now, pick=pick)
+        assert note == "已有封面", note
+    assert picks == [] and draft == before, "封面审过了：一个字节都不动，不记 `_cover_api`"
+    assert img.read_bytes() == old_bytes
+
+    # 同一张封面被判「封面情绪不对」＋结尾窗口也不过：这才换（13 份草稿是这种）；换上的接口图重审过了封面、
+    # 结尾照旧不过——不再算卡住，接口图**不进** `rejected`、不再换下一张
+    draft["_visual_evidence"]["problems"] = ["ending 必须是 3-30 秒的完整收官窗口",
+                                             "封面情绪应为 winner_celebration，现在是 other"]
+    assert rrc.stuck_on_cover(draft) and rrc.needs_official_pick(draft, now)
+    draft, note = rrc.refresh(draft, now=now, pick=pick)
+    first = draft["cover"]["portrait"]["_source_url"]
+    assert len(picks) == 1 and first.endswith("GettyImages-1.jpg"), note
+    draft["_visual_evidence"] = {**json.loads(json.dumps(_BADOSA_GAUFF_REVIEW)), "input_sha256": "after-swap"}
+    assert not rrc.stuck_on_cover(draft) and not rrc.needs_official_pick(draft, now)
+    for _tick in range(2):
+        draft, note = rrc.refresh(draft, now=now, pick=pick)
+        assert note == "已有封面", note
+    assert len(picks) == 1 and draft["cover"]["portrait"]["_source_url"] == first
+    assert first not in (draft.get("_cover_api") or {}).get("rejected", []), "审过了的那张不许记成被判掉的"
 
 
 # ---------------------------------------------------------------- ⑪ 复审 FIX ROUND 1：nits

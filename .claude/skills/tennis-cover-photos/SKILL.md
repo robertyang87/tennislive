@@ -895,7 +895,7 @@ WP 的 `date` 是**站点本地时间**（这个站是 EDT，UTC−4），`date_
 | 试过什么 | 结果 |
 |---|---|
 | **`atptour.com` 换 `requests` ＋ 浏览器 UA** | ❌ 仍然 **403**（首页、新闻页、`/en/media/photos` 三个都试了）。⚠️ 这一条专门试是因为 Gannett 那次的真因是「urllib 的头名大小写」——**这次不是**，ATP 是真的挡 |
-| `photoresources.atptour.com` | ❌ 域名不存在（WTA 有，ATP 没有对应物） |
+| `photoresources.atptour.com` | ❌ 域名不存在（WTA 有）。⚠️ 2026-09-28 量翻了「ATP 没有对应物」：对应物在另一个域名——ATP Media 照片接口 `api.prod.atpmedia.pulselive.com`（tennistv.com 背后那套 CMS），见「2026-09-28：ATP Media／WTA 照片接口」 |
 | `atpfiles.blob.core.windows.net` | ❌ 400 |
 | Getty 搜索页 / editorial 按赛事 | ❌ 403（只有 `/detail/<id>` 那条还能用，见上面 Getty 那节） |
 | **Imagn（USA Today Sports Images）** | ❌ 200 但是 JS 壳，`/api/search` 404，页面里抠不出任何图链 |
@@ -2494,8 +2494,10 @@ Coleman-Wong-010 那张脸隔着拍线（0.24，unknown）；卢布列夫怒吼�
 - ⚠️ **渲前预检也拦预裁的抽帧**（`is_frame_cover` 2026-09-28 起认 `image` ＋「抽帧…」`_frame_why`／「源片 N×N…」`_low_res_why`）：
   手写、还没推过的 spec 封面是预裁进仓库的抽帧，第一次 render 照样会搜、有一张全过就退出 3 拦下——和「封面一律官方高清实拍」一致；
   当面点过「就用这一帧」的写 `cover.portrait._keep_frame_why`
-- **自动链**：reel-auto-ready 每 10 分钟一班，草稿还没封面（或卡死在视觉审核没过、不会重审的那张上）就先查照片接口（`refresh_reel_cover`
-  → `cover_upgrade.pick_for_draft`，同一套机器闸）；**查不到从来不拦**——照原来的 Tennis TV 页头图／WTA 赛后稿接着走，和改之前一样。
+- **自动链**：reel-auto-ready 每 10 分钟一班，草稿还没封面（或卡死在视觉审核**因为封面**没过、不会重审的那张上）就先查照片接口（`refresh_reel_cover`
+  → `cover_upgrade.pick_for_draft`，同一套机器闸）；**还没封面的查不到从来不拦**——照原来的 Tennis TV 页头图／WTA 赛后稿接着走，和改之前一样。
+  ⚠️ **已经有封面的不是「和改之前一样」**：基线从不碰已有的封面；这一档会换掉视觉审核的 `problems` 里**有一条说的是封面**的那张
+  （`refresh_reel_cover.cover_problems`），封面审过了、只有冷开场／结尾／字幕没过的一律不动（FIX ROUND 2，见下面 ⑤）
   认人要的 onnxruntime／opencv／三个 onnx 只在有这种草稿、而且这一档查得了（`draft_api_blocker`）的班次才装（`refresh_reel_cover.py --need-faces`）。
   墙钟上限、只跑一档、被判掉的不再挑，见下一段
 - **O4**：推出去之后 48 小时里每 20 分钟一班，同样先查这两档
@@ -2551,6 +2553,54 @@ EXIF 那条路的赛事名、NOT_IN_MATCH，决赛放宽的日期要求，原来
 **1 秒**、`Daniil-Medvedev-012` 后 **22 秒**，画面都是击球，**看不出是热身还是第一分**（没有比分牌；2026-09-28 下原图看过）。反方向（复审看过的）：瓜达拉哈拉 `Jovic-f`（16:45:33-06:00）
 和 AFP 2295584300 图注写着「during the final」，拍在 flashscore 开赛前十几二十分钟，复审看着像入场／热身——EXIF 那条路的 −5 分钟挡住了，
 **说明那条路不看拍摄的钟点**（`_caption_problems` 只核日期，`exif_date_problem` 只核当地哪一天），这种图注会被放过。没有改窗口。
+
+###### ⭐⭐ 2026-09-28 复审 FIX ROUND 2：**「卡住」要卡在封面上**，不是随便哪条没过
+
+**⑤ 封面审过了也被换**（BLOCKING）。FIX ROUND 1 的 `stuck_on_cover` 只看「视觉审核审的是这张、没过、不重审」，**不看没过的是什么**。
+复现（仓库里的 `specs/reels/pending/badosa-gauff.draft.json`，`received_at` 挪到现在）：审核把封面判过了（same_match、高芙、
+winner_celebration、0.88），唯一一条是「ending 必须是 3-30 秒的完整收官窗口」——照样 `stuck_on_cover` True、`needs_official_pick` True
+（这一班装认人依赖）、`refresh` 用接口图把审过的 WTA 赛后稿头图换掉（**同一个路径**）。下一班重审过了新图的封面、结尾照旧不过，
+于是刚审过的接口图进 `_cover_api.rejected`、换下一张，第 3 班再换——每换一次重审一次 MiniMax（`EVIDENCE_CHANGED`，冷开场／结尾跟着重掷）、
+往 main 提交一张 4.7~9.6 MB（复审量的）的原图，直到候选用完；中途哪次重掷过了，转正的是排在后面的那张（前面审过的都记成了「被判掉」）。
+
+| | 草稿数（2026-09-28 仓库里的 pending） |
+|---|---|
+| 原来判「卡住」 | 25 |
+| 只因为封面没过 | 9 |
+| 封面和别的一起没过 | 13 |
+| **一条封面问题都没有**（badosa-gauff、sabalenka-pegula、sabalenka-townsend） | **3** ← 现在不算卡住 |
+
+现在：`problems` 里要有一条**说的是封面**（`cover_problems`：开头是「封面」——`clean_report` 封面那一段的每一句都这么开头——或者
+「没有官方高清封面候选」）才算卡住，`rejected` 也只在卡住时记。冷开场／结尾窗口、缺某段证据、双语字幕那几句都不算：**换封面解不开它们**。
+「缺 cover 视觉证据」（模型没回封面那一块）也不算——那是模型没答，不是封面不对，照基线不动。判据
+`test_视觉审核只判了窗口没判封面_不算卡在封面上`（拿 `clean_report` 真出的话钉分界：封面 6 种不过全认、两个窗口各 7 种不过一种不认）、
+`test_封面审过了只有结尾窗口不过_照片接口不换图_不装认人依赖`（录下来的 badosa-gauff 审核结论；封面＋结尾一起没过的换一次，换上的审过了封面就停）。
+
+**⑥ 同一轮收的 nit**：
+- 「装认人依赖」挂 `continue-on-error: true`：原来注释写着「备不上不拦」，其实 pip 一红 job 就在循环之前失败，这一班已经 ready 的草稿也不转正、
+  不派发。装不上时那一档拿到的是 `ModelUnavailable`（「人脸模型不可用」：不记 tried、不算查完），封面照原来那两条路走
+- 反向验证活着的两个补了判据：M1（`flashscore_times` 不往下传 attempts／timeout、`_get` 写死 40 秒——墙钟判据把 `cu.flashscore_times` 整个
+  mock 了，这段管子没走到；现在只 mock `urlopen`，从 `pick_for_draft` 一路走下去，`test_自动链问flashscore_只试一次_超时从预算里扣_一路传到urlopen`）、
+  M8（删掉「装认人依赖」的 `if:`，每一班都装；`test_认人依赖只在要认人的班次装_装不上不拦`）
+- `tests/test_official_photo_apis.py` 顶上 import `versus_poster`：它 import 时按相对路径读场馆图，几条判据 chdir 到 tmp_path 之后才第一次走到
+  钩子带那道闸就炸成「没查成」——整个文件一起跑时是绿的，`-k` 单跑一条才红
+
+**⑦ O4 那句「新旧一条不多一条不少」是错的**（FIX ROUND 1 的提交信息；它比的是 ROUND 0 和 ROUND 1，不是基线 50b3b4c4d）。对基线量
+（`targets()` 一行没改，差别全在 `is_frame_cover` 认了预裁进 `image` 的抽帧）：**全部时间里新认出 5 条已推的「赛场之上」**——
+`cerundolo-zhou-chengdu-2026-r1`、`shang-mannarino-chengdu-2026-r1`、`tabilo-mannarino-chengdu-2026-r2`、`vacherot-harris-chengdu-2026-r2`、
+`fernandez-gibson-singapore-2026-final`；09-26T20Z 多 tabilo／vacherot 两条，09-27T20Z 多 fernandez／vacherot，09-28T14Z 和 16:21Z 只多 fernandez
+（成都四条首推在 09-24~09-26，已经出了 48 小时窗口）。五条的 `_frame_why`／`_low_res_why` 自己写着是抽帧（源片 1920×1080、竖版 Short 预裁
+780×1040），都在 O4「推过、封面还是抽帧」的规则里——基线是漏认，不是多认；没有一条写过 `_keep_frame_why`。成都那句账号所有者的原话
+（「不要用这种封面……还不如从那个比赛画面中截取那个抽帧去做」）否的是 VS 抠图版，不是官方实拍。
+
+**⑧ 没改、记在这儿的**（复审 nit，量过代价）：
+- **ready 的草稿要等别的草稿的接口档**：循环是串行的、派发在循环之后，同一班里已经 ready 的草稿要等认人依赖装完（复审量的：冷装 7.5 秒＋21 MB 模型缓存）
+  和排在它前面的每一份草稿的接口档（复审 O4 实跑 5 份 55 秒、约 11 秒一份；接口慢时最坏 `COVER_API_DEADLINE` 420 秒＋`timeout 180`）。
+  真修要把「落库＋派发」挪到两轮之间（先跑不用接口的、落库派发，再装依赖跑接口那一轮、再落库派发），而认人依赖的缓存是 `uses:` 那一步、挪不进循环——
+  这是工作流结构的改动，这一轮没做
+- **视觉审核判掉接口图之后，回到 Tennis TV／WTA 赛后稿那条路要多一班**：每判掉一张接口图，下一班先挑下一张接口图（一次 MiniMax 重审），
+  接口没有别的了才走原来那条路——medvedev-royer 回放里第 3 班才走到，基线第 1 班就走。故意的：Tennis TV 页头图那条路只核赛事名、挡不住
+  前几轮的图（上面「别拿 tennistv 视频页的缩略图当本场证据」），接口图 EXIF 绑了场次
 
 ### ⭐⭐ 2026-09-18：**比利·简·金杯官网的图在 Contentful 上，原图 5000~7000px**——页面是 JS 壳，图不是
 

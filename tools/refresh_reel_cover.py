@@ -8,7 +8,9 @@
 ⭐⭐ 2026-09-28 起**第一档是 ATP Media／WTA 照片接口**（`cover_upgrade.pick_for_draft`，和 O4 同一套
 机器闸：EXIF 拍摄时刻绑场次、全名、两人同框、发布限制、铺满不放大、认人、睁眼、钩子带）。封面时效实测：
 10 条抽帧首推里 6 条，首推之前这两个接口里就有主角对的官方原图。每一班（10 分钟）都再查一遍，直到有；
-**查不到从来不拦**——照原来那两条路（Tennis TV 页头图、WTA 赛后稿）接着走，和改之前一样。
+**还没封面的草稿查不到从来不拦**——照原来那两条路（Tennis TV 页头图、WTA 赛后稿）接着走，和改之前一样。
+⚠️ **已经有封面的草稿不是「和改之前一样」**：基线从不碰已有的封面，这一档会换掉**视觉审核因为封面判没过**
+的那张（见下面「卡在视觉审核上的那张」）——只有这一种，封面判过了、别的没过的一律不动。
 
 ## 有墙钟上限（2026-09-28 复审 BLOCKING）
 
@@ -23,8 +25,10 @@
 
 ## 卡在视觉审核上的那张（2026-09-28 复审 BLOCKING）
 
-已经有封面的只在一种情况下换：**这张封面被视觉审核判过、没过、而且不会重审**（`_visual_evidence`
-的 `cover_image` 就是它、`status` 不是 pass、`retryable` 是 false）。原来这里写着「换一张只会解开」——
+已经有封面的只在一种情况下换：**这张封面被视觉审核判过、没过、不会重审，而且没过的理由里有封面**（`_visual_evidence`
+的 `cover_image` 就是它、`status` 不是 pass、`retryable` 是 false、`problems` 里有一条说的是封面——`cover_problems`）。
+⚠️ 最后那个条件是 FIX ROUND 2 补的：原来不看理由，`badosa-gauff` 封面审过了、只有结尾窗口不过，照样被换图，
+换上的接口图下一班审过了又因为同一个结尾窗口进 `rejected`，一张接一张换到候选用完（`stuck_on_cover` 的注释）。原来这里写着「换一张只会解开」——
 **对照片接口挑的那张不成立**：挑图不记得被判掉的是哪张，每一班重挑同一张（medvedev-royer 回放：第 2~4 班
 都是 #4582136、草稿一个字节不变），也不再走 Tennis TV 那条路。现在：
 - 照片接口挑的封面在 portrait 里记 `_source_url`；卡住时它进 `_cover_api.rejected`，挑图时排除
@@ -64,8 +68,33 @@ API_STATE = "_cover_api"
 TRIED_MAX = 60
 
 
+#: 视觉审核（`analyze_reel_visuals.clean_report`）在没有封面时写的那一句
+NO_COVER_PROBLEM = "没有官方高清封面候选"
+
+
+def cover_problems(visual: dict | None) -> list[str]:
+    """视觉审核的 `problems` 里**说的是封面**的那几条：开头是「封面」（同场／旧图、置信度、证据、人物、情绪——
+    `clean_report` 的封面那一段全是这么开头的），或者 `NO_COVER_PROBLEM`。
+
+    冷开场／结尾窗口、缺某一段证据、双语字幕（`main` 追加的那几句）都不算——**换封面解不开它们**。
+    判据 `test_视觉审核只判了窗口没判封面_不算卡在封面上`：拿 `clean_report` 真出的每一种话钉住这个分界。"""
+    if not isinstance(visual, dict):
+        return []
+    return [p for p in visual.get("problems") or []
+            if isinstance(p, str) and (p.startswith("封面") or p.strip() == NO_COVER_PROBLEM)]
+
+
 def stuck_on_cover(draft: dict) -> bool:
-    """草稿是不是**卡死在现在这张封面上**：视觉审核审过的就是它、没过、不会重审。
+    """草稿是不是**卡死在现在这张封面上**：视觉审核审过的就是它、没过、不会重审，**而且没过的理由里有封面**
+    （`cover_problems`）。
+
+    ⚠️⚠️ 最后那半句是 2026-09-28 复审 FIX ROUND 2 的 BLOCKING：原来只看「没过、不重审」，**不看没过的是什么**——
+    `badosa-gauff` 的视觉审核把封面判过了（same_match、高芙、winner_celebration、0.88），唯一一条是
+    「ending 必须是 3-30 秒的完整收官窗口」，也被当成卡在封面上：照片接口把审过的 WTA 赛后稿头图换掉（同一个路径），
+    下一班重审过了封面、结尾窗口照旧不过，于是刚审过的那张接口图又进 `rejected`、再换下一张——每换一次重审一次模型
+    （冷开场／结尾的结论跟着重掷）、往 main 提交一张 4.7~9.6 MB（复审量的）的原图，直到候选用完；中途哪次重掷过了，转正的是
+    排在后面的那张。改之前的基线从不碰已有的封面。25 份被判「卡住」的草稿里 3 份（badosa-gauff、sabalenka-pegula、
+    sabalenka-townsend）一条封面问题都没有、13 份封面和别的一起没过。
 
     ⚠️ 换图写的是**同一个路径**（`assets/reel/<slug>-cover.jpg`），`cover_image == image` 认不出审的是不是
     这一张：刚换上、还没重审（这一班审核那一步挂了）的时候，旧结论还挂着。换图时记下当时那份结论的
@@ -76,7 +105,8 @@ def stuck_on_cover(draft: dict) -> bool:
     stuck = bool(portrait.get("image") and visual
                  and visual.get("cover_image") == portrait.get("image")
                  and visual.get("status") != "pass" and visual.get("visual_status") != "error"
-                 and visual.get("retryable") is False)
+                 and visual.get("retryable") is False
+                 and cover_problems(visual))
     state = api_state(draft)
     if stuck and "replaced_under" in state and str(visual.get("input_sha256") or "") == state["replaced_under"]:
         return False

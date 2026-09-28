@@ -2388,7 +2388,7 @@ def draft_api_blocker(draft: dict, now: datetime) -> str:
 def pick_for_draft(draft: dict, now: datetime, *, sweeps_for=None, times=None, fetch=None,
                    checker=None, budget=None, tried: Iterable[str] = (),
                    rejected: Iterable[str] = (), known_times: dict | None = None) -> dict:
-    """reel-auto-ready 每一班（`refresh_reel_cover`）：自动草稿还没有封面（或卡死在视觉审核没过的那张上）时，
+    """reel-auto-ready 每一班（`refresh_reel_cover`）：自动草稿还没有封面（或卡死在视觉审核**因为封面**没过的那张上，`refresh_reel_cover.stuck_on_cover`）时，
     照片接口那一档（`API_CHANNELS` 里**按男女只跑一档**）查一遍，**和 O4 同一套机器闸**（`metadata_problems`
     ＋ `image_verdict`：EXIF 绑场次、全名、两人同框、发布限制、铺满不放大、认人、睁眼、钩子带）全过的才用，
     排序同 `taste_key`。没有就 `chosen` 是 None，调用方照原来那条路走（**不拦**）。
