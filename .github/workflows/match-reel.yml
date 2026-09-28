@@ -293,6 +293,7 @@ jobs:
           # ⚠️ 排除的**只有** output/。assets 155 MB 是渲染真要读的东西
           # （抠图、示意图、字体），少一个就是第 5 分钟才炸的 FileNotFoundError。
           sparse-checkout: |
+            .github
             assets
             data
             docs
