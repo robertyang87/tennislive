@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "9fa61eb2488351d6c122f332d46bffec5349cf12844f4254ee81f51e3ee67a92",
+  "scoreboard_qc_sha256": "428645401558c709778d27d0881bc004a56a856f8e44d0caca186ce541d96bb7",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
@@ -17,7 +17,7 @@
   "narration_backend": "edge-tts",
   "narration_seconds": {
     "1": 9.552,
-    "2": 10.128,
+    "2": 10.512,
     "3": 10.968,
     "4": 6.048,
     "5": 9.312,
@@ -33,71 +33,8 @@
   },
   "face_checks": {
     "cover": {
-      "status": "ok",
-      "model": "buffalo_s-v0.7",
-      "identity": {
-        "verdict": "match",
-        "name": "梅德韦杰夫",
-        "similarity": {
-          "梅德韦杰夫": 0.5493,
-          "萨菲乌林": 0.0346
-        },
-        "missing": [],
-        "expected": [
-          "梅德韦杰夫",
-          "萨菲乌林"
-        ],
-        "face": [
-          348,
-          135,
-          456,
-          285
-        ],
-        "face_px": 149.9,
-        "reason": "像 梅德韦杰夫（0.55 ≥ 0.34）",
-        "thresholds": {
-          "match": 0.34,
-          "mismatch": 0.15,
-          "min_face_px": 56
-        },
-        "target": [
-          "梅德韦杰夫"
-        ]
-      },
-      "eyes": {
-        "verdict": "open",
-        "ear": 0.2314,
-        "ear_each": [
-          0.2135,
-          0.2494
-        ],
-        "face": [
-          348,
-          135,
-          456,
-          285
-        ],
-        "face_px": 149.9,
-        "reason": "眼睛纵横比 0.23 ≥ 0.16",
-        "thresholds": {
-          "closed": 0.12,
-          "open": 0.16,
-          "min_face_px": 72
-        }
-      },
-      "problems": [],
-      "warnings": [],
-      "region": [
-        555,
-        0,
-        1365,
-        1080
-      ],
-      "frame": "output/2026-09-29/reel/medvedev-safiullin-hangzhou-2026-sf/cover_src/portrait.jpg",
-      "frame_at": 514.0,
-      "target": [
-        "梅德韦杰夫"
-      ]
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
     },
     "segments": {
       "status": "ok",
@@ -145,45 +82,44 @@
       "faces": 3
     }
   },
-  "render_inputs_sha256": "4f5ccf8613a024364cf41132049d16c8df69c33a1580746e821093fe2a293609",
+  "render_inputs_sha256": "23c093fd047b7e5ac1e8bdb0c003d9c9cd6781fbdb2e87116b1441a7e62f4c54",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "medvedev-safiullin-hangzhou-2026-sf",
-    "received_at": "2026-09-28T18:47:48Z",
-    "artifact_ready_at": "2026-09-28T18:54:23Z",
-    "elapsed_seconds": 395.895,
+    "received_at": "2026-09-28T20:53:52Z",
+    "artifact_ready_at": "2026-09-28T21:00:16Z",
+    "elapsed_seconds": 384.789,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "457b9f0ae621bcafa6942a60c1798d2fd627ae11db774f5f9101f9e19f61eb54",
-    "spec_sha256": "3598083083f10d111a5dbf8f868c927d39117562212df5f1286cbfdbe543b43f",
-    "run_id": "36467699172",
+    "film_sha256": "d57a338002bad3d972f2ea259086dc45ee51607c15e167c39c140db5f3fcd438",
+    "spec_sha256": "5a2c8ff17c9e7cf9fc721684fdff4d1caf0799bc5b423c1b8321b6eb32e23329",
+    "run_id": "36482415333",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-28T18:49:33Z",
-        "run_id": "36467699172"
+        "at": "2026-09-28T20:55:37Z",
+        "run_id": "36482415333"
       }
     ],
-    "render_seconds": 290.895,
+    "render_seconds": 279.789,
     "pre_render_seconds": 105.0
   },
-  "film_sha256": "457b9f0ae621bcafa6942a60c1798d2fd627ae11db774f5f9101f9e19f61eb54",
-  "film_bytes": 94356925,
-  "qc_attestation_sha256": "c94b437fb3a62990ac8683a8bbec6849c80fb39823bb10ef41018c5d80e5a613",
+  "film_sha256": "d57a338002bad3d972f2ea259086dc45ee51607c15e167c39c140db5f3fcd438",
+  "film_bytes": 94402403,
+  "qc_attestation_sha256": "c0dd0f0b974f9d692166f15c45db09c0b83820d6f8e7f795a80842b58747c380",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-28T18:49:33Z",
-      "run_id": "36467699172"
+      "at": "2026-09-28T20:55:37Z",
+      "run_id": "36482415333"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-28T18:54:24Z",
-      "run_id": "36467699172"
+      "at": "2026-09-28T21:00:17Z",
+      "run_id": "36482415333"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-safiullin-hangzhou-2026-sf/medvedev-safiullin-hangzhou-2026-sf.mp4",
-  "video_bytes": 94356925,
-  "_release_tag_note": "2026-09-28T20:53:04Z O4 抽帧封面自动换成官方实拍（tools/cover_upgrade.py），随后派发 match-reel mode=render push=true 重渲重推：重渲一传上 Release（`gh release upload --clobber`），tag `reel-medvedev-safiullin-hangzhou-2026-sf` 上的附件就换成新渲的那一份（记在北京 2026-09-29 或更晚那一格 output/<日期>/reel/medvedev-safiullin-hangzhou-2026-sf/render.json），这里记的 video_bytes 94356925 那一版就不在 tag 上了。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+  "video_bytes": 94402403
 }
