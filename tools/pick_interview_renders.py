@@ -92,9 +92,12 @@ STALE_MINUTES = 70
 
 # 「先投 subs」的重投窗口和次数上限。subs 一趟（取字幕＋第二份 ASR）实测 5~8 分钟；
 # 40 分钟还没交判定＝那趟死了或被同 slug 的 dispatch 掐了（concurrency 是
-# cancel-in-progress），再投一次。同一份 spec 投满 `SUBS_MAX_TRIES` 趟还没判定就停下、
+# cancel-in-progress），再投一次。同一份转写输入投满 `SUBS_MAX_TRIES` 趟还没判定就停下、
 # 进等待名单喊人——下不动源片这类毛病，每 40 分钟重投一趟也修不好，只会刷红
-# pipeline-health。spec 一改（指纹变了）次数清零。
+# pipeline-health。**转写输入**（`build_interview_clip.SUBS_INPUT_KEYS`：url／start／end／
+# en_fixed／word_fix／切行宽度／两份 ASR 的模型）一改，次数清零；改 zh／封面／文案不算——
+# 那些不动转写，而每次提交 spec 都会经 on:push 叫醒这里，按整份 spec 认的话，
+# 一趟还在跑的 subs 会被同 slug 的重投掐掉（cancel-in-progress）、从头再来。
 SUBS_STALE_MINUTES = 40
 SUBS_MAX_TRIES = 3
 
@@ -405,37 +408,50 @@ def needs_subs_only(missing: list[str]) -> bool:
     return bool(missing) and all(NEEDS_SUBS in m for m in missing)
 
 
+def _subs_inputs(slug: str) -> str:
+    """这条 spec 的**转写输入**指纹（`build_interview_clip.transcript_inputs_sha`）；读不了是空串。"""
+    from build_interview_clip import transcript_inputs_sha  # noqa: PLC0415 —— 顶层只 import 标准库
+
+    try:
+        spec = json.loads((SPECS / f"{slug}.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError, UnicodeDecodeError):
+        return ""
+    return transcript_inputs_sha(spec) if isinstance(spec, dict) else ""
+
+
 def subs_dispatch_block(slug: str, *, now: datetime,
                         state: dict | None = None) -> str | None:
     """这条该投 subs 时，有什么理由**先不投** → 理由（None＝投）。
 
-    认领按 spec 指纹：spec 一改（新的转写要重新量），上一趟 subs 的认领就不算数——
-    同 slug 的新 dispatch 会把还在跑的旧那趟掐掉（cancel-in-progress），量旧版本本来也没用。"""
+    认领按**转写输入**的指纹（`_subs_inputs`），不按整份 spec：转写输入一改（新的转写要
+    重新量），上一趟 subs 的认领就不算数；只改了 zh／封面／文案，认领照旧——不然每次
+    提交 spec 都把还在跑的那趟 subs 掐掉重来（同 slug 的 concurrency 是 cancel-in-progress）。"""
     rec = ((state or _load_state()).get("subs") or {}).get(slug) or {}
-    spec_path = SPECS / f"{slug}.json"
-    if not isinstance(rec, dict) or not spec_path.is_file() \
-            or rec.get("spec_sha256") != _sha256(spec_path):
+    inputs = _subs_inputs(slug)
+    if not isinstance(rec, dict) or not inputs or rec.get("inputs_sha256") != inputs:
         return None
     at = _utc(rec.get("at"))
     if at is not None and now - at < timedelta(minutes=SUBS_STALE_MINUTES):
         return f"已投 subs（{rec.get('at')}），等它交判定"
     tries = int(rec.get("tries") or 0)
     if tries >= SUBS_MAX_TRIES:
-        return (f"同一份 spec 已投 {tries} 趟 subs 都没交判定——去看 "
-                f"「interview-clip · subs · {slug}」的日志（下不动源片／字幕多半是这个），"
-                "修好之后改一下 spec 或手动 dispatch 一次 mode=subs")
+        return (f"同一份转写输入已投 {tries} 趟 subs，预检还是认不出当前指纹的判定。两种可能："
+                f"① 那几趟没交判定——去看「interview-clip · subs · {slug}」的日志"
+                "（下不动源片／字幕多半是这个）；② 交了，但判定绑的指纹和预检按仓库里的字幕缓存"
+                f"重切出来的对不上——比一下 output/interviews/{slug}/second_asr_verdict.json 的 "
+                "`sha256`／`window` 和本地 `python tools/interview_preflight.py --slug "
+                f"{slug} --require-subs` 报的。修好之后手动 dispatch 一次 mode=subs")
     return None
 
 
 def mark_subs(slug: str, *, now: str = "") -> None:
     """X 的 `mode=subs` dispatch **成功之后**记一笔（先投后记，和 `mark_one` 同一个顺序）。"""
     state = _load_state()
-    spec_path = SPECS / f"{slug}.json"
-    sha = _sha256(spec_path) if spec_path.is_file() else ""
+    inputs = _subs_inputs(slug)
     rec = (state.setdefault("subs", {}).get(slug) or {})
-    tries = int(rec.get("tries") or 0) + 1 if rec.get("spec_sha256") == sha else 1
+    tries = int(rec.get("tries") or 0) + 1 if rec.get("inputs_sha256") == inputs else 1
     state["subs"][slug] = {"at": now or datetime.now(timezone.utc).strftime("%FT%TZ"),
-                           "spec_sha256": sha, "tries": tries}
+                           "inputs_sha256": inputs, "tries": tries}
     STATE.parent.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2),
                      encoding="utf-8")

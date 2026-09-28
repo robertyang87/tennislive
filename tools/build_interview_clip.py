@@ -2571,8 +2571,11 @@ def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
     进指纹的每一样都是「变了就该重验」的：
 
     - `cap_*.json3` 的字节——第一份转写的源。换源片/重拉字幕都会变
-    - 切出来的每一行 `en`——`word_fix`/`en_fixed`/去语气词/改 start·end
-      全都落在这上面（`en_fixed` 另外单独进一份，防「行数变了恰好互相抵消」）
+    - 切出来的每一行 `en`——`word_fix`/`en_fixed`/去语气词全都落在这上面
+      （`en_fixed` 另外单独进一份，防「行数变了恰好互相抵消」）。⚠️ **`start`/`end`
+      本身不进指纹**：挪到两句话之间的静默里，切出来的行一字不差，指纹也一字不差。
+      所以按区间量的东西要自己绑区间——第二份 ASR 的分歧量数记 `window`
+      （`verdict_window`），空档证据按空档键逐行认（区间一挪、键就变、那一行就没了）
     - 第一份/第二份用的模型名——换了 `whisper_model`，上一次的核对
       证明不了新配置
     """
@@ -2587,6 +2590,29 @@ def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
                         ensure_ascii=False).encode("utf-8"))
     h.update(f"{spec.get('asr_model', '')}|{_second_model(spec)}".encode())
     return h.hexdigest()
+
+
+def verdict_window(spec: dict) -> list[float]:
+    """第二份 ASR 这一趟量的是哪一段（源片秒）——分歧量数要绑它，光绑指纹不够。
+
+    `verify_transcript` 只拿 `[start, end]` 里的词去比，而 `start`/`end` 不进
+    `transcript_fingerprint`：把 `end` 往后挪进一段没有自动字幕的尾巴，行一字不差、
+    指纹一字不差，第二份 ASR 那边却可能多出一截话——旧区间量的分歧率不能替新区间作数。"""
+    return [round(float(spec.get("start") or 0), 3), round(float(spec.get("end") or 0), 3)]
+
+
+#: 「这一版转写要不要重新量」只取决于这几样（外加仓库里的字幕缓存）：源、区间、切行前后的
+#: 人工订正、切行宽度、两份 ASR 的模型和 VAD 开关。自动链「先投 subs」的账按它们认
+#: （`pick_interview_renders.subs_dispatch_block`）——改 zh／封面／文案不动转写，不该清零重投。
+SUBS_INPUT_KEYS = ("url", "start", "end", "en_fixed", "word_fix", "segment_budget_px",
+                   "asr_model", "whisper_model", "whisper_vad_filter")
+
+
+def transcript_inputs_sha(spec: dict) -> str:
+    """spec 里转写输入（`SUBS_INPUT_KEYS`）的指纹。"""
+    return hashlib.sha256(json.dumps({k: spec.get(k) for k in SUBS_INPUT_KEYS},
+                                     sort_keys=True, ensure_ascii=False).encode("utf-8")
+                          ).hexdigest()
 
 
 def transcript_auto_verified(spec: dict, lines: list[dict], outdir: Path) -> bool:
@@ -2871,6 +2897,7 @@ def record_second_asr(spec: dict, lines: list[dict], outdir: Path, rate: float,
     path = outdir / SECOND_ASR_VERDICT
     path.write_text(json.dumps({
         "sha256": transcript_fingerprint(spec, lines, outdir),
+        "window": verdict_window(spec),
         "method": "dual_asr_rate",
         "first_model": spec.get("asr_model") or "provider_captions",
         "second_model": _second_model(spec),
@@ -2917,12 +2944,18 @@ def subs_verdict(spec: dict, lines: list[dict], outdir: Path) -> SubsVerdict:
     判据全部复用出片那一趟的函数，不抄第二份：
 
     1. **分歧**：人工核过且指纹没变（`transcript_verified` ＋ `verify_fingerprint.json`）→ 过；
-       否则读 `second_asr_verdict.json` 的量数（绑指纹），超闸门就过一遍
-       `_check_disagree_claim`——认领不进指纹，量完再认领照样作数；老产物只有
-       `verify_fingerprint.json` 的 pass 也算过。都没有 → 缺判定。
+       否则读 `second_asr_verdict.json` 的量数（绑指纹**和区间** `verdict_window`），超闸门就过一遍
+       `_check_disagree_claim`——认领不进指纹，量完再认领照样作数；`verify_fingerprint.json`
+       的 pass 在指纹和区间都对得上时也算过。都没有 → 缺判定。
+       ⚠️ 区间要单独绑：`start`/`end` 不进指纹，挪进一段没字幕的静默，行和指纹都不变，
+       而第二份 ASR 只比 `[start, end]` 里的词。老产物的 pass 没记区间 → 缺判定（重量一趟，
+       不猜它当年量的是哪一段）。
     2. **空档**：`caption_gaps` 里人没销账（`caption_gaps_ok`）、VAD 也没证明不用听
-       （`auto_gap_closures`）的——证据是当前指纹的就是红（和 `blocking_gaps` 同一个判据），
-       证据没有或旧了 → 缺判定。
+       （`auto_gap_closures`）的——**当前指纹的证据里这一处记着 `speech_detected`** 才是红
+       （VAD 真听到了人声，要人听）；证据没有、旧了，或者证据里**没有这一处的键**
+       （改了 `start`/`end`，空档的边界跟着挪，键就变了）→ 缺判定，再投一趟 subs 让 VAD
+       重新作证。原来「证据文件是当前指纹的」就把没有行的新键判红——一段 VAD 证明过的静默，
+       `start` 从 3.0 挪到 5.0 就要人去听、去认领（2026-09-28 复审 startcase／endcase）。
 
     ⚠️ **第二份 ASR 不是确定性的**（同一个指纹两趟 2.7% / 3.9%），所以 render 那一趟
     在判定 ok 时不再重量（见 `main()` 的 verify 分支）——放行和出片看的是同一份量数。
@@ -2931,11 +2964,12 @@ def subs_verdict(spec: dict, lines: list[dict], outdir: Path) -> SubsVerdict:
     reds: list[str] = []
     pending: list[str] = []
     notes: list[str] = []
+    window = verdict_window(spec)
     passed = _read_json(outdir / VERIFY_FP)
     measured = _read_json(outdir / SECOND_ASR_VERDICT)
     if spec.get("transcript_verified") is True and passed.get("sha256") == fp:
         notes.append("分歧：人工核过（transcript_verified）且转写指纹没变")
-    elif (measured.get("sha256") == fp
+    elif (measured.get("sha256") == fp and measured.get("window") == window
             and isinstance(measured.get("rate"), int | float)):
         rate = float(measured["rate"])
         if rate <= TRANSCRIPT_MAX_DISAGREE:
@@ -2953,23 +2987,29 @@ def subs_verdict(spec: dict, lines: list[dict], outdir: Path) -> SubsVerdict:
                 reds.append(f"第二份 ASR 在当前转写指纹上量到：{exc}")
             else:
                 notes.append(f"分歧：{rate:.1%} 超闸门，`transcript_disagree_ok` 认领覆盖")
-    elif passed.get("status") == "pass" and passed.get("sha256") == fp:
-        notes.append("分歧：当前转写指纹的双 ASR 已通过（verify_fingerprint.json）")
+    elif (passed.get("status") == "pass" and passed.get("sha256") == fp
+            and passed.get("window") == window):
+        notes.append("分歧：当前转写指纹和区间的双 ASR 已通过（verify_fingerprint.json）")
     else:
-        pending.append("当前转写指纹没有第二份 ASR 的分歧量数"
-                       f"（{SECOND_ASR_VERDICT}／{VERIFY_FP} 没有或是旧指纹的）")
+        pending.append(f"当前转写指纹＋区间 {window[0]:g}–{window[1]:g} 秒没有第二份 ASR 的分歧量数"
+                       f"（{SECOND_ASR_VERDICT}／{VERIFY_FP} 没有、是旧指纹的，或量的是另一段区间）")
     gaps = caption_gaps(spec, outdir)
     human = spec.get("caption_gaps_ok") or {}
     open_gaps = _unresolved_gaps(spec, gaps)
     auto = auto_gap_closures(spec, lines, outdir, fp) if open_gaps else {}
     left = [g for g in open_gaps if gap_key(*g) not in auto]
-    if left:
-        if _gap_attestation(spec, lines, outdir, fp) is not None:
-            reds.append(gap_block_message(f"specs/interviews/{spec.get('slug')}.json",
-                                          spec, left))
-        else:
-            pending.append(f"{len(left)} 处空档没有当前转写指纹的 VAD 证据"
-                           f"（{GAP_VAD_ATTESTATION}）：" + "、".join(gap_key(*g) for g in left))
+    attest = _gap_attestation(spec, lines, outdir, fp) if left else None
+    results = (attest or {}).get("results")
+    rows = {str(r.get("key")): r for r in (results if isinstance(results, list) else [])
+            if isinstance(r, dict)}
+    heard = [g for g in left if (rows.get(gap_key(*g)) or {}).get("status") == "speech_detected"]
+    unproven = [g for g in left if g not in heard]
+    if heard:
+        reds.append(gap_block_message(f"specs/interviews/{spec.get('slug')}.json", spec, heard))
+    if unproven:
+        pending.append(f"{len(unproven)} 处空档在当前转写指纹的 VAD 证据（{GAP_VAD_ATTESTATION}）"
+                       "里没有对应的一行（证据没有、是旧指纹的，或改过 start／end 之后空档键变了）："
+                       + "、".join(gap_key(*g) for g in unproven))
     if gaps:
         notes.append(f"空档 {len(gaps)} 处：人工销账 {sum(gap_key(*g) in human for g in gaps)}、"
                      f"VAD 自动销账 {len([g for g in open_gaps if gap_key(*g) in auto])}、"
@@ -6245,9 +6285,11 @@ def main() -> int:
         findings: list[str] = []
         verdict = subs_verdict(spec, lines, outdir)
         if (spec.get("transcript_verified") is True and recorded == fp
-                and verdict.state != "needs_subs"):
-            # ⚠️ 「人核过」只管分歧那一半；空档还缺当前指纹的 VAD 证据（needs_subs）时照样
-            # 跑——不然 subs 那一趟永远补不上证据，自动链只能一趟趟重投
+                and not verdict.pending):
+            # ⚠️ 「人核过」只管分歧那一半；空档还缺当前指纹的 VAD 证据（有 pending）时照样
+            # 跑——不然 subs 那一趟永远补不上证据，自动链只能一趟趟重投。判 `pending`
+            # 不判 `state`：一处 VAD 听到人声（red）旁边再挂一处没证据的新键，state 是 red，
+            # 可那处新键同样要这一趟去补
             print(f"[verify] 转写指纹没变（{fp[:12]}…）且已人工核过"
                   "（transcript_verified: true），跳过第二份 ASR。"
                   "改一行 en_fixed / 换字幕源 / 换模型都会让指纹变、重新全跑。")
@@ -6258,11 +6300,14 @@ def main() -> int:
             print(f"[verify] 当前转写指纹（{fp[:12]}…）已有 subs 交的判定，跳过第二份 ASR：")
             for note in verdict.notes:
                 print(f"  {note}")
-            if not transcript_auto_verified(spec, lines, outdir):
+            prior = _read_json(fp_path)
+            if not (prior.get("status") == "pass" and prior.get("sha256") == fp
+                    and prior.get("window") == verdict_window(spec)):
                 # 认领是量完之后才写的（不进指纹）：那一趟没落 pass，这里补上——
-                # 和 `verify_transcript` 在认领覆盖时落的是同一份东西
+                # 和 `verify_transcript` 在认领覆盖时落的是同一份东西（带区间）
                 fp_path.write_text(json.dumps({
                     "sha256": fp,
+                    "window": verdict_window(spec),
                     "status": "pass",
                     "method": "dual_asr",
                     "first_model": spec.get("asr_model") or "provider_captions",
@@ -6280,6 +6325,9 @@ def main() -> int:
                 # 的同一条顺序规矩。
                 fp_path.write_text(json.dumps({
                     "sha256": fp,
+                    # 第二份 ASR 只比 [start, end] 里的词，而区间不进指纹：
+                    # 记下来，`subs_verdict` 拿它认「量的是不是这一段」
+                    "window": verdict_window(spec),
                     "status": "pass",
                     "method": "dual_asr",
                     "first_model": spec.get("asr_model") or "provider_captions",

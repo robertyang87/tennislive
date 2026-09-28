@@ -11,6 +11,8 @@
 1. `build_interview_clip.subs_verdict`：按仓库里的判定（`second_asr_verdict.json` 的量数、
    `gap_vad_attestation.json` 的 VAD 证据，都绑 `transcript_fingerprint`）给出
    ok／needs_subs／red——量过和没量过分得开，认领（不进指纹）量完再写照样作数；
+   `start`/`end` 不进指纹，所以分歧量数另绑区间（`window`），空档证据里**没有那一行**
+   （区间挪了、键变了）是缺判定不是红——红只留给 `speech_detected`（复审 2026-09-28）；
 2. `--stage verify` 在判定 ok 时**不重量**（第二份 ASR 不是确定性的），VAD 自动销账留理由；
 3. `interview_preflight` 的 dispatch 口径（`require_subs`）把缺缓存、缺判定记成带
    `NEEDS_SUBS` 的红；`pick_interview_renders` 只卡在这一类上的先投 subs；
@@ -131,6 +133,85 @@ def test_人工核过且指纹没变不要量数(tmp_path):
     assert clip.subs_verdict(spec, _LINES, out).state == "ok"
 
 
+def _three_captions(tmp_path: Path) -> Path:
+    """复审那份 startcase：0~1、10~11、16~17 秒各一句，中间两段静默。"""
+    out = tmp_path / "out3"
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "cap_asr.json3").write_text(json.dumps({"events": [
+        {"tStartMs": t * 1000, "dDurationMs": 1000, "segs": [{"utf8": w}]}
+        for t, w in ((0, "and the winner"), (10, "Thank you"), (16, "great match"))]}),
+        encoding="utf-8")
+    return out
+
+
+def _lines(spec: dict, out: Path) -> list[dict]:
+    lines = clip.segment(clip.cached_words(spec["url"], out, spec), spec["start"], spec["end"],
+                         ruler=clip.segment_ruler(spec))
+    clip.strip_hesitation_lines(lines)
+    return lines
+
+
+def _attest_all(spec: dict, lines: list[dict], out: Path, status: str = "no_speech") -> None:
+    rows = [{"key": clip.gap_key(*g), "start": g[0], "end": g[1], "speech_seconds": 0.0,
+             "second_asr_words": [], "transcript_covered": False,
+             "caption_timeline_covered": False, "status": status}
+            for g in clip.caption_gaps(spec, out)]
+    (out / clip.GAP_VAD_ATTESTATION).write_text(json.dumps({
+        "status": "pass", "method": "silero_vad_plus_dual_asr_coverage",
+        "sha256": clip.transcript_fingerprint(spec, lines, out), "results": rows}),
+        encoding="utf-8")
+
+
+@pytest.mark.parametrize("moved", [{"start": 5.0}, {"end": 15.5}, {"start": 4.0, "end": 15.0}])
+def test_挪start或end进证过的静默_是缺判定不是红(tmp_path, moved):
+    """`start`/`end` 不进指纹：挪进一段 VAD 证过的静默，行一字不差、指纹一字不差，空档的
+    边界却跟着挪、键变了——证据里**没有那一行**。那是「没量过」（再投一趟 subs，VAD 重新
+    作证），不是「量出来有人声」。判成红的话，一段机器销得掉的静默就得人去听、去认领，
+    手动 render 还会停在 `--require-subs` 那道预检上（2026-09-28 复审 startcase／endcase）。"""
+    out = _three_captions(tmp_path)
+    spec = {"slug": "demo", "url": "https://example.test/x", "start": 3.0, "end": 14.0,
+            "asr_model": "small.en", "whisper_model": "medium.en"}
+    lines = _lines(spec, out)
+    clip.record_second_asr(spec, lines, out, 0.02, 4, 4)
+    _attest_all(spec, lines, out)
+    assert clip.subs_verdict(spec, lines, out).state == "ok"
+    moved_spec = dict(spec, **moved)
+    moved_lines = _lines(moved_spec, out)
+    assert [x["en"] for x in moved_lines] == [x["en"] for x in lines]
+    assert clip.transcript_fingerprint(moved_spec, moved_lines, out) == \
+        clip.transcript_fingerprint(spec, lines, out), "前提：挪区间指纹不变"
+    got = clip.subs_verdict(moved_spec, moved_lines, out)
+    assert got.state == "needs_subs" and got.reds == [], got
+    assert any("空档键变了" in p for p in got.pending), got.pending
+    # 真听到人声的那一行照旧是红——红只留给证据里记着 speech_detected 的
+    _attest_all(moved_spec, moved_lines, out, status="speech_detected")
+    got = clip.subs_verdict(moved_spec, moved_lines, out)
+    assert got.state == "red" and got.reds, got
+
+
+def test_分歧量数绑区间_挪了区间老量数不作数(tmp_path):
+    """第二份 ASR 只比 `[start, end]` 里的词。`end` 伸进一段没有自动字幕的尾巴，行和指纹都
+    不变，那一截话却可能只在第二份里——旧区间量的分歧率不能替新区间放行，render 的 verify
+    也就不能凭它跳过重量。`verify_fingerprint.json` 的 pass 同理（老产物没记区间 → 缺判定）。"""
+    out = _outdir(tmp_path)
+    spec = dict(_SPEC, caption_gaps_ok={GAP: "听过"})
+    clip.record_second_asr(spec, _LINES, out, 0.02, 300, 300)
+    assert clip.subs_verdict(spec, _LINES, out).state == "ok"
+    longer = dict(spec, end=12.0)
+    assert clip.transcript_fingerprint(longer, _LINES, out) == \
+        clip.transcript_fingerprint(spec, _LINES, out)
+    got = clip.subs_verdict(longer, _LINES, out)
+    assert got.state == "needs_subs" and any("区间" in p for p in got.pending), got
+    fp = clip.transcript_fingerprint(spec, _LINES, out)
+    (out / clip.SECOND_ASR_VERDICT).unlink()
+    (out / clip.VERIFY_FP).write_text(json.dumps({"sha256": fp, "status": "pass"}))
+    assert clip.subs_verdict(spec, _LINES, out).state == "needs_subs", "没记区间的 pass 不作数"
+    (out / clip.VERIFY_FP).write_text(json.dumps({"sha256": fp, "status": "pass",
+                                                  "window": clip.verdict_window(spec)}))
+    assert clip.subs_verdict(spec, _LINES, out).state == "ok"
+    assert clip.subs_verdict(longer, _LINES, out).state == "needs_subs"
+
+
 # ---------------------------------------------------------------- --stage verify
 
 def _drive_verify(monkeypatch, tmp_path: Path, spec: dict, gaps: list) -> dict:
@@ -169,6 +250,9 @@ def test_判定ok时verify不重量_补落pass指纹让render认(monkeypatch, tm
     # 缺判定：照常跑第二份 ASR
     got = _drive_verify(monkeypatch, tmp_path, spec, [])
     assert got["verify"] == 1 and got.get("rc") == 0, got
+    # 落的 pass 带着区间：区间不进指纹，`subs_verdict` 拿它认「量的是不是这一段」
+    window = json.loads((out / clip.VERIFY_FP).read_text(encoding="utf-8")).get("window")
+    assert window == clip.verdict_window(spec), window
     (out / clip.VERIFY_FP).unlink()
     # subs 量到 13.5%（超闸门），人随后认领了 14%——判定 ok：不重量，补落 pass 指纹
     clip.record_second_asr(spec, _LINES, out, 0.135, 300, 280)
@@ -176,6 +260,8 @@ def test_判定ok时verify不重量_补落pass指纹让render认(monkeypatch, tm
     assert got["verify"] == 0 and got.get("rc") == 0, got
     assert "跳过第二份 ASR" in capsys.readouterr().out
     assert clip.transcript_auto_verified(spec, _LINES, out), "render 那一步认的 pass 指纹没落"
+    assert json.loads((out / clip.VERIFY_FP).read_text(encoding="utf-8")).get("window") \
+        == clip.verdict_window(spec), "补落的 pass 也要带区间"
     # 判定红（认领低于实测）：照常重量——不许拿红判定当跳过的理由
     got = _drive_verify(monkeypatch, tmp_path, dict(spec, transcript_disagree_ok={
         "rate": 0.13, "why": "逐处看过"}), [])
@@ -195,6 +281,14 @@ def test_人核过也要补空档的VAD证据_空档销过才跳过(monkeypatch,
     got = _drive_verify(monkeypatch, tmp_path, dict(spec, caption_gaps_ok={GAP: "听过：掌声"}),
                         [(1.0, 6.0)])
     assert got["verify"] == 0 and got.get("rc") == 0, got
+    # 一处 VAD 听到了人声（red）＋一处挪区间之后新出现、证据里没有的键：state 是 red，
+    # 可那处新键同样要这一趟去补——判 pending，不判 state
+    _attest(spec, out, "speech_detected", 2.1)
+    got = _drive_verify(monkeypatch, tmp_path, spec, [(1.0, 6.0), (6.5, 9.0)])
+    assert got["verify"] == 1 and got.get("rc") == clip.VERIFY_FINDINGS_EXIT, got
+    # 只剩那处听到人声的：证据齐了，人核过的分歧不重量，红照报
+    got = _drive_verify(monkeypatch, tmp_path, spec, [(1.0, 6.0)])
+    assert got["verify"] == 0 and got.get("rc") == clip.VERIFY_FINDINGS_EXIT, got
 
 
 def _fake_faster_whisper(monkeypatch, words: list[tuple[float, float, str]]) -> None:
@@ -286,11 +380,11 @@ def test_预检dispatch口径_缺缓存缺判定都算红带NEEDS_SUBS(monkeypat
     clip.record_second_asr(spec, lines, out, 0.03, 9, 9)
     assert pf.subtitle_findings(spec, require_subs=True)[0] == []
 
-    # 判定是红的：两种口径都是红（render 那一步必红）
+    # 判定是红的：两种口径都是红
     clip.record_second_asr(spec, lines, out, 0.3, 9, 6)
     for strict in (False, True):
         bad, _ = pf.subtitle_findings(spec, require_subs=strict)
-        assert bad and all(b.startswith("转写（render") for b in bad), (strict, bad)
+        assert bad and all(b.startswith(pf.SUBS_RED) for b in bad), (strict, bad)
 
     # 仓库里连字幕缓存都没有：dispatch 口径下是 NEEDS_SUBS 的红，不是一句 ⚠️
     shutil.rmtree(out)
@@ -339,7 +433,7 @@ def test_已发的采访_当前判定一条都不红():
             continue
         bad, _ = pf.subtitle_findings(json.loads(path.read_text(encoding="utf-8")),
                                       require_subs=True)
-        red += [f"{slug}：{b.splitlines()[0]}" for b in bad if b.startswith("转写（render")]
+        red += [f"{slug}：{b.splitlines()[0]}" for b in bad if b.startswith(pf.SUBS_RED)]
     assert red == [], red
 
 
@@ -387,7 +481,7 @@ def test_只缺subs判定的先投subs_混着别的红进等待(pick):
     assert pick.todo_slugs(now=_NOW)[0] == ["clean"]
 
 
-def test_subs投过在窗口里不重投_超窗重投_同一份spec满三趟停_改spec清零(pick):
+def test_subs投过在窗口里不重投_超窗重投_满三趟停_只有转写输入改了才清零(pick):
     at = lambda m: (_NOW + timedelta(minutes=m)).strftime("%FT%TZ")  # noqa: E731
     pick.mark_subs("needs", now=at(0))
     _, waiting, subs = pick.todo_plan(now=_NOW + timedelta(minutes=10))
@@ -397,14 +491,45 @@ def test_subs投过在窗口里不重投_超窗重投_同一份spec满三趟停_
     pick.mark_subs("needs", now=at(50))
     pick.mark_subs("needs", now=at(100))
     _, waiting, subs = pick.todo_plan(now=_NOW + timedelta(minutes=200))
-    assert subs == [] and any("都没交判定" in w[1][0] for w in waiting if w[0] == "needs"), waiting
+    assert subs == [] and any("预检还是认不出" in w[1][0] for w in waiting if w[0] == "needs"), waiting
     assert json.loads(pick.STATE.read_text())["subs"]["needs"]["tries"] == pick.SUBS_MAX_TRIES
+    # 两种卡法都要点名：没交判定，和交了但绑的指纹跟预检重切出来的对不上
+    why = next(w[1][0] for w in waiting if w[0] == "needs")
+    assert "日志" in why and "second_asr_verdict.json" in why and "--require-subs" in why, why
     path = pick.SPECS / "needs.json"
+    # 只改 zh（不动转写）：认领照旧——每次提交 spec 都经 on:push 叫醒 pick，按整份 spec
+    # 认的话，还在跑的那趟 subs 会被同 slug 的重投掐掉（cancel-in-progress）
     path.write_text(path.read_text().replace('"a"', '"改过的中文"'), encoding="utf-8")
-    _, _, subs = pick.todo_plan(now=_NOW + timedelta(minutes=201))
-    assert subs == ["needs"], "spec 改了：上一份的认领不算数"
-    pick.mark_subs("needs", now=at(202))
+    _, waiting, subs = pick.todo_plan(now=_NOW + timedelta(minutes=201))
+    assert subs == [] and "needs" in dict(waiting), "只改了 zh 就清零重投"
+    pick.mark_subs("needs", now=at(10))            # 窗口里：改 zh 也不重投
+    _, waiting, subs = pick.todo_plan(now=_NOW + timedelta(minutes=20))
+    assert subs == [] and "已投 subs" in dict(waiting)["needs"][0], waiting
+    # 改转写输入（这里挪 end）：上一份的认领不算数，次数清零
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    path.write_text(json.dumps(dict(spec, end=42.0)), encoding="utf-8")
+    _, _, subs = pick.todo_plan(now=_NOW + timedelta(minutes=21))
+    assert subs == ["needs"], "转写输入改了：上一份的认领不算数"
+    pick.mark_subs("needs", now=at(22))
     assert json.loads(pick.STATE.read_text())["subs"]["needs"]["tries"] == 1
+
+
+def test_转写输入的键和出片那一趟切行读的字段对得上():
+    """`SUBS_INPUT_KEYS` 漏一个，改那个字段就不清零；多一个（比如 zh），改中文就清零重投。
+    按 `main()` 真正读的字段钉：切行（segment 的参数）、订正、两份 ASR 的模型和 VAD 开关。"""
+    import inspect  # noqa: PLC0415
+
+    src = inspect.getsource(clip.main)
+    seg = src[src.index("lines = segment("):src.index("strip_hesitation_lines(lines)")]
+    for key in ("url", "start", "end", "segment_budget_px", "word_fix", "en_fixed"):
+        assert f'spec["{key}"]' in seg or f'spec.get("{key}")' in seg, key
+        assert key in clip.SUBS_INPUT_KEYS, key
+    assert {"asr_model", "whisper_model", "whisper_vad_filter"} <= set(clip.SUBS_INPUT_KEYS)
+    assert not {"zh", "cover", "push", "takeaway", "caption_gaps_ok",
+                "transcript_disagree_ok"} & set(clip.SUBS_INPUT_KEYS)
+    base = dict(_SPEC, zh=["一"])
+    assert clip.transcript_inputs_sha(base) == clip.transcript_inputs_sha(dict(base, zh=["二"]))
+    assert clip.transcript_inputs_sha(base) != clip.transcript_inputs_sha(dict(base, end=9.0))
 
 
 def test_main把先投subs的写进文件_stdout名单只有render(pick, monkeypatch, capsys, tmp_path):
@@ -449,12 +574,12 @@ def test_撞车合并时本趟投的subs账不丢():
     from merge_orchestration_state import merge_interview_states  # noqa: PLC0415
 
     base = {"slugs": [], "at": {}, "spec_sha256": {}}
-    ours = dict(base, subs={"a": {"at": "2026-09-28T04:00:00Z", "spec_sha256": "x", "tries": 1}})
+    ours = dict(base, subs={"a": {"at": "2026-09-28T04:00:00Z", "inputs_sha256": "x", "tries": 1}})
     theirs = {"slugs": ["z"], "at": {"z": "2026-09-28T03:00:00Z"}, "spec_sha256": {"z": "y"},
-              "subs": {"b": {"at": "2026-09-28T03:30:00Z", "spec_sha256": "w", "tries": 2}}}
+              "subs": {"b": {"at": "2026-09-28T03:30:00Z", "inputs_sha256": "w", "tries": 2}}}
     merged = merge_interview_states(base, ours, theirs)
     assert merged["subs"] == {**theirs["subs"], **ours["subs"]} and merged["slugs"] == ["z"]
-    newer = dict(theirs, subs={"a": {"at": "2026-09-28T05:00:00Z", "spec_sha256": "x2",
+    newer = dict(theirs, subs={"a": {"at": "2026-09-28T05:00:00Z", "inputs_sha256": "x2",
                                      "tries": 1}})
     assert merge_interview_states(base, ours, newer)["subs"] == newer["subs"], "远端更新的让远端"
 

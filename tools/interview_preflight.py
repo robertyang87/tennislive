@@ -206,6 +206,10 @@ def caption_fingerprint(slug: str) -> list[str] | None:
 #: `pick_interview_renders` 见到一条 spec 只卡在这一类上，就先投 `mode=subs`
 #: 而不是 render（也不是干等人）；别的红混在里面就照旧进等待名单。
 NEEDS_SUBS = "［要先跑 subs］"
+#: subs 已在当前转写指纹上量出来的红（分歧超闸没认领够、VAD 在空档里听到了人声）的前缀。
+#: ⚠️ 不写「render 会红在这儿」：render 的 verify 在判定不是 ok 时会**重量**一遍
+#: （第二份 ASR 不是确定性的），它红不红要看那一趟——这里只说量出来了什么。
+SUBS_RED = "转写（subs 在当前转写指纹上量出来的）："
 
 
 def subtitle_findings(spec: dict, *, require_subs: bool = False
@@ -264,7 +268,7 @@ def subtitle_findings(spec: dict, *, require_subs: bool = False
         # **转写那两道闸（分歧、空档）按 subs 交的判定判**——和 render 的 verify 一步
         # 同一个函数、同一份行（`main()` 在同一个位置算指纹）。
         verdict = clip.subs_verdict(spec, lines, work)
-        problems += [f"转写（render 的 verify 那一步会红在这儿）：{r}" for r in verdict.reds]
+        problems += [f"{SUBS_RED}{r}" for r in verdict.reds]
         if verdict.state == "needs_subs":
             not_yet("；".join(verdict.pending))
         err, _ = _run_gate(clip.check_human_quote, spec, lines, work)
