@@ -377,3 +377,104 @@ def test_探针的import链只用标准库(tmp_path):
                           env=env, capture_output=True, text=True, timeout=300)
     assert proc.returncode == 0, proc.stderr[-2000:]
     assert proc.stdout.startswith("待 dispatch"), proc.stdout[:500]
+
+
+def _closed_record(tool, slug: str) -> None:
+    """render 红在封面自动换帧那一趟就地写下的扫描记录（红着的 render 不提交它，可停车账
+    要从它读原因）：近处全是闭眼。"""
+    import interview_cover_scan as scan  # noqa: PLC0415
+
+    spec = json.loads((tool.SPECS / f"{slug}.json").read_text(encoding="utf-8"))
+    block = {"status": "ok", "identity": {"similarity": {"赢家": 0.6}, "missing": [],
+                                          "face_px": 300.0, "verdict": "match", "name": "赢家"},
+             "eyes": {"verdict": "closed", "ear": 0.09, "face_px": 300.0}}
+    entries = [{"frame_at": t, "status": "fail", "issues": ["这张脸闭眼"], "face": None,
+                "margin": 2.0, "face_model": block} for t in (1.0, 1.2)]
+    out = tool.OUTPUT / slug
+    out.mkdir(parents=True, exist_ok=True)
+    (out / scan.RECORD_NAME).write_text(
+        json.dumps(scan.build_record(spec, (0.0, 3.0), 0.2, entries)), encoding="utf-8")
+
+
+def test_封面自动换帧连着三趟挑不出来就停车_换了封面从头数(tool, monkeypatch, capsys):
+    """D2（2026-09-28）：render 的自动换帧一格都挑不出来（主角没头像、整段闭眼／是别人），
+    同一个封面再投一趟量出来的是同一批格子——原来 70 分钟一趟、永远红。interview-clip 每红
+    一趟记一笔（`note_autopick_failure`），同一个封面指纹满 `PARK_AFTER` 趟就停车：不进名单、
+    进等待名单和 `--parked`、不算 stale。改的不是封面（中文字幕）照旧停着；改了封面从头数。"""
+    now = datetime(2026, 9, 28, 12, 0, tzinfo=timezone.utc)
+    long_ago = (now - timedelta(minutes=tool.STALE_MINUTES + 1)).strftime("%FT%TZ")
+    tool.mark_one("b-todo", now=long_ago)
+    _closed_record(tool, "b-todo")
+    assert tool.PARK_AFTER == 3
+    for n in range(1, tool.PARK_AFTER):
+        assert tool.note_autopick_failure("b-todo", now=long_ago)["count"] == n
+        assert "b-todo" in tool.todo_slugs(now=now)[0], f"才 {n} 趟就停了车"
+    row = tool.note_autopick_failure("b-todo", now=long_ago)
+    assert row["count"] == tool.PARK_AFTER and "闭眼" in row["why"], row
+    ready, waiting = tool.todo_slugs(now=now)
+    assert "b-todo" not in ready, "满 3 趟还在投"
+    why = dict(waiting)["b-todo"][0]
+    assert "停车" in why and "no frame passes identity/eyes" in why and "闭眼" in why, why
+    assert "b-todo" not in dict(tool.stale_dispatches(now=now)), "停车是故意不投，不是「投了没产物」"
+    monkeypatch.setattr(sys, "argv", ["pick_interview_renders.py", "--parked"])
+    assert tool.main() == 0
+    out = capsys.readouterr().out
+    assert out.splitlines()[0].startswith("封面自动换帧停车") and "  b-todo：" in out, out
+
+    spec_path = tool.SPECS / "b-todo.json"
+    body = json.loads(spec_path.read_text(encoding="utf-8"))
+    body["zh"] = ["改过的第一行"]           # 不是封面：同一批格子，照旧停着
+    spec_path.write_text(json.dumps(body, ensure_ascii=False), encoding="utf-8")
+    assert "b-todo" not in tool.todo_slugs(now=now)[0], "改的不是封面却放行了——再投一趟还是红"
+    body["cover"]["frame_at"] = 2.5          # 人换了封面：新的一局
+    spec_path.write_text(json.dumps(body, ensure_ascii=False), encoding="utf-8")
+    assert "b-todo" in tool.todo_slugs(now=now)[0], "换了封面还停着"
+    assert tool.note_autopick_failure("b-todo", now=long_ago)["count"] == 1, "换了封面没从头数"
+    # 当前 spec 已经出过片（没 QC 的老产物按已出片算）：不算停车
+    for _ in range(2):
+        tool.note_autopick_failure("b-todo", now=long_ago)
+    assert "b-todo" in tool.parked_slugs()
+    monkeypatch.setattr(tool, "_rendered_slugs", lambda: {"a-done", "b-todo"})
+    assert "b-todo" not in tool.parked_slugs()
+
+
+def test_停车账和指纹只用标准库(tmp_path):
+    """interview-auto-render 的探针（系统 python3）和 `--parked` 都要算封面指纹——
+    `interview_cover_scan.cover_fingerprint` 那一串 import 只许标准库，而且两头（interview-clip
+    记账、auto-render 判停车）算出同一个数：不看头像文件在不在（auto-render 的检出没有
+    assets/players）。"""
+    import os
+    import subprocess
+
+    root = _TOOLS.parent
+    code = _STDLIB_ONLY.split("sys.meta_path.insert(0, OnlyStdlib())")[0] + (
+        "sys.meta_path.insert(0, OnlyStdlib())\n"
+        "sys.path.insert(0, str(tools))\n"
+        "import json, interview_cover_scan as scan\n"
+        "spec = json.loads((tools.parent / 'specs/interviews/tien-cobolli-laver-cup-2026-interview.json')"
+        ".read_text(encoding='utf-8'))\n"
+        "print(scan.cover_fingerprint(spec))\n")
+    env = {**os.environ, "PYTHONPATH": f"{root / 'src'}{os.pathsep}{_TOOLS}"}
+    proc = subprocess.run([sys.executable, "-c", code, str(_TOOLS)], cwd=root, env=env,
+                          capture_output=True, text=True, timeout=120)
+    assert proc.returncode == 0, proc.stderr[-2000:]
+    sys.path.insert(0, str(_TOOLS))
+    import interview_cover_scan as scan  # noqa: PLC0415
+
+    spec = json.loads((root / "specs/interviews/tien-cobolli-laver-cup-2026-interview.json")
+                      .read_text(encoding="utf-8"))
+    assert proc.stdout.strip() == scan.cover_fingerprint(spec)
+    moved = json.loads(json.dumps(spec))
+    moved["cover"]["frame_at"] = float(moved["cover"]["frame_at"]) + 1.0
+    assert scan.cover_fingerprint(moved) != scan.cover_fingerprint(spec)
+
+
+def test_auto_render的run摘要单列停车那一栏():
+    """停车的要人动封面，不是等一等就好——run 摘要单列一栏（`--parked`），和「投了很久没产物」
+    （本轮自动重投）分开。"""
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load(Path(".github/workflows/interview-auto-render.yml").read_text(encoding="utf-8"))
+    gate = next(s for s in wf["jobs"]["auto"]["steps"] if s.get("id") == "gate")
+    body = str(gate["run"])
+    assert "pick_interview_renders.py --parked" in body and "封面自动换帧停车" in body, body

@@ -187,12 +187,24 @@ def test_出片档封面前置要留源片_红了就地扫候选自动换帧(tmp
     assert not any(c.startswith("git commit") for c in calls), calls
 
     none = tmp_path / "none"
-    none.mkdir()
-    done, calls = _run_step(none, COVER_STEP, mode="render",
-                            env={"AUDIT_RC": "1", "SCAN_RC": "3"})
+    done, calls = _run_autopick_failure(none, "3")
     assert done.returncode != 0, "一格都换不了，这一步却退出 0——编码照样会开跑"
     assert _kinds(calls) == ["cover keep", "audit", "scan keep autopick"], calls
     assert not (none / "cover-autopicked").exists()
+    # 退出 3（一格都挑不出来）才记停车账：只提交状态文件，推的是 dispatch 账本那条合并重试（D2）
+    assert "python tools/pick_interview_renders.py --autopick-failed demo" in calls, calls
+    commits = [c for c in calls if c.startswith("git commit")]
+    assert len(commits) == 1 and "停车账" in commits[0], calls
+    assert "git add data/interview_render_dispatched.json" in calls, calls
+    assert not any(c.startswith("git add") and "cover_candidates" in c for c in calls), (
+        "红着的 render 提交了扫描记录")
+    assert any(c.startswith("git push origin HEAD:main") for c in calls), calls
+    # 模型整趟不可用（4）、扫描工具自己坏了（别的非零）：环境／工具的事，不记停车账
+    for rc in ("4", "1"):
+        done, calls = _run_autopick_failure(tmp_path / f"rc{rc}", rc)
+        assert done.returncode != 0, rc
+        assert not any("--autopick-failed" in c for c in calls), (rc, calls)
+        assert not any(c.startswith("git commit") for c in calls), (rc, calls)
 
     diverged = tmp_path / "diverged"
     diverged.mkdir()
@@ -201,6 +213,18 @@ def test_出片档封面前置要留源片_红了就地扫候选自动换帧(tmp
     assert _kinds(calls) == ["cover keep", "audit", "scan keep autopick", "audit"], calls
     assert not (diverged / "cover-autopicked").exists()
     assert not any(c.startswith("git commit") for c in calls), calls
+
+
+def _run_autopick_failure(where: Path, scan_rc: str):
+    """封面前置那一步在 render 档红、`--autopick` 以 `scan_rc` 退出。停车账那一支要
+    `source tools/git_push_retry.sh`、`cp` 状态文件，所以工作目录里备一份。"""
+    (where / "tools").mkdir(parents=True)
+    shutil.copy(ROOT / "tools" / "git_push_retry.sh", where / "tools" / "git_push_retry.sh")
+    (where / "data").mkdir()
+    (where / "data" / "interview_render_dispatched.json").write_text(
+        '{"slugs": [], "at": {}, "spec_sha256": {}}', encoding="utf-8")
+    return _run_step(where, COVER_STEP, mode="render",
+                     env={"AUDIT_RC": "1", "SCAN_RC": scan_rc})
 
 
 def test_预览档先扫一段再出海报再验(tmp_path):
@@ -882,7 +906,7 @@ def test_扫描走cover_poster和audit_poster同一份实现(tmp_path, monkeypat
 
     measured = []
 
-    def fake_audit(path, spec_t, *, face=False):
+    def fake_audit(path, spec_t, *, face=False, rivals=()):
         assert face is True, "扫描那一格没跑认人＋睁眼——扫描的 pass 就不是终审的 pass"
         measured.append(spec_t["cover"]["frame_at"])
         return {"face": _face(90)}, []

@@ -66,6 +66,14 @@ cobolli-mensik 30 秒那一帧红了、就地扫出来的排名第一是 29.4—
   是谁、亚军内容写了 `match.loser`、文案只点了一个参赛者）仍认整份文案。全库 108 条认得出
   主角的采访 spec 里 100 条过得了这一道（63 条主角是兜底猜的）；不过的 8 条：上面三条、这两条、
   tag 只写「2026 美网 · 赛后开麦」而主角又是兜底猜的两条，加上主角没官方头像的颁奖礼
+- 认人时**同场的人一起比**（`co_present`，复审 nit）：只认主角（`target`），更像对手／搭档的
+  那一格是 unknown，机器不换；终审那一份（`identity`）不变，多比的只进 `rivals` 那一块
+- 人圈了 `cover.scan_window`：先在这一段里挑（`near_plan`），一格都换不了才整段粗扫，
+  换上的那一格在 `_frame_autopick.left_scan_window` 里写明离开了人圈的窗口
+- 一格都挑不出来退出 `AUTOPICK_NONE`，interview-clip 记一笔停车账（`cover_fingerprint`，
+  同一个封面满 3 趟 picker 不再投——`pick_interview_renders.PARK_AFTER`）；人脸模型整趟
+  不可用退出 `AUTOPICK_NO_MODEL`，不记
+- dispatch 之前的预检：记录里已经有一格 render 会自动换上的（`render_would_swap`），不拦
 - 换上之后，人给原来那一帧写的认领（`_face_check_why`／`_frame_scan_why`）挪进
   `cover._frame_autopick.dropped`，`cover._why` 前面标一句「说的是原来那一帧」——
   那几句是给人看过的那一帧写的，挂在一帧没人看过的上面，下次尺子一变就会替它开脱
@@ -126,13 +134,22 @@ TILE_W, TILE_H, LABEL_H, FACE_BOX = 640, 480, 44, 220
 #: 扫描每一格都跑认人＋睁眼（`audit_poster(face=True)`）。进尺子（`ruler`）：这一项之前的
 #: 旧记录，`pass` 只说明 Haar 过了——可能是闭眼、可能是别人，不许拿来对账、更不许拿来自动换。
 FACE_IN_SCAN = True
+#: 认人时**同场的人一起比**（`co_present`，2026-09-28 复审 nit）：只拿封面主角一个人比，
+#: 一张更像对手／搭档的脸只要和主角也到了 `MATCH_SIM` 就是 match——复审量过，同场别人
+#: 离主角最近的 0.32，`MATCH_SIM` 是 0.34，差 0.02。进尺子：这一项之前的旧记录不许拿来
+#: 预测 render 会换哪一格（`render_would_swap`）。
+RIVALS_IN_SCAN = 1
 #: 近处一格都换不了时，整段采访（spec 的 `start`–`end`）粗扫几格、至少隔几秒。
 #: 40 格 × 2 秒/格（runner 实测 21 格 43 秒）≈ 一分半——一趟封面失败原来要赔上整趟 run
 #: （装依赖到出封面 113 秒，`zverev-tien` 那趟 job 日志）外加一个来回。
 SWEEP_MAX_FRAMES = 40
 SWEEP_MIN_STEP = 1.0
-#: `--autopick` 扫过的里一格都挑不出来：退出码（工作流据此红，别的非零是工具坏了）。
+#: `--autopick` 扫过的里一格都挑不出来：退出码（工作流据此红，**并记一笔停车账**——
+#: `pick_interview_renders.note_autopick_failure`，同一个封面连着 `PARK_AFTER` 趟就不再投）。
 AUTOPICK_NONE = 3
+#: 挑不出来、而且是因为**人脸模型整个不可用**（一格都没认成人）：环境的事，不是封面的事——
+#: 工作流照样红，但**不记停车账**（下一趟 picker 照常重投，模型备好了就过）。
+AUTOPICK_NO_MODEL = 4
 AUTOPICK_KEY = "_frame_autopick"
 #: 人给**原来那一帧**写的认领：换帧之后挪进 `_frame_autopick.dropped`，不留在 cover 上。
 #: `_frame_scan_why` 留着会替以后任何一帧免掉扫描对账，`_face_check_why` 留着会替机器
@@ -208,6 +225,24 @@ def candidate_times(a: float, b: float, step: float,
             f"（一格约 2.5 秒，这么扫要 {len(out) * 2.5 / 60:.0f} 分钟）。"
             "收窄 cover.scan_window，或者把 cover.scan_step 放大。")
     return out
+
+
+def near_plan(spec: dict, window: str = "", step: float | None = None, *,
+              autopick: bool = False) -> tuple[float, float, float, bool]:
+    """先扫哪一段 → (a, b, 间隔, 是不是人圈的窗口)。窗口和间隔见 `scan_window`／`scan_step`。
+
+    ⚠️ **人圈了 `cover.scan_window`、render 又要自动换帧**（2026-09-28 复审 nit）：先在人圈的
+    这一段里扫满——格子数超了 `MAX_CANDIDATES` 不许整趟红（`mode=cover` 那样让人收窄是对的：
+    人在场；render 是自动链，红了只会每 70 分钟重投一趟），把间隔放粗到装得下、**仍在这一段里**。
+    这一段一格都换不了才出去整段粗扫（`sweep_plan`），换上的那一格在 `_frame_autopick.left_scan_window`
+    里记着它离开了人圈的窗口（`apply_autopick`）。"""
+    a, b = scan_window(spec, window)
+    step_s = scan_step(spec, step)
+    declared = bool(window) or (spec.get("cover") or {}).get("scan_window") is not None
+    if autopick and declared and math.floor((b - a) / step_s + 1e-6) + 2 > MAX_CANDIDATES:
+        # 网格 ≤ MAX_CANDIDATES - 1 格，再加上 frame_at 那一格
+        step_s = math.ceil((b - a) / (MAX_CANDIDATES - 2) * 1000) / 1000
+    return a, b, step_s, declared
 
 
 def framing(spec: dict) -> dict:
@@ -344,7 +379,8 @@ def ruler() -> dict:
             "thresholds": _numeric_constants(_auditor),
             "layout": layout(),
             "face_model": _face_model_ruler(),
-            "face_in_scan": FACE_IN_SCAN}
+            "face_in_scan": FACE_IN_SCAN,
+            "rivals_in_scan": RIVALS_IN_SCAN}
 
 
 def stale_ruler(record: dict) -> str:
@@ -369,6 +405,8 @@ def stale_ruler(record: dict) -> str:
         return "人脸模型变过（face_checks 的阈值或权重）"
     if record.get("face_in_scan") != now["face_in_scan"]:
         return "扫描那时还没逐格跑认人＋睁眼（旧记录的 pass 只说明 Haar 过了）"
+    if record.get("rivals_in_scan") != now["rivals_in_scan"]:
+        return "扫描那时认人还没拿同场的人一起比（旧记录的 match 可能更像别人）"
     return ""
 
 
@@ -417,10 +455,12 @@ def measure(spec: dict, times: list[float], poster_at, workdir: Path,
 
     默认的尺子是 `audit_poster(face=True)`——终审（`audit_interview_cover.main`）那一整把：
     Haar ＋ 认人 ＋ 睁眼。每一格的认人／睁眼读数记进 `face_model`，`autopick_problem`
-    从这几个数重判，不信存下来的 verdict 字符串。
+    从这几个数重判，不信存下来的 verdict 字符串。认人时**同场的人一起比**
+    （`rivals=co_present(spec)`）：`pass`／`issues` 和终审一样（`face_checks.restrict_identity`），
+    多出的 `rivals` 那一块只给机器换帧读。
     """
     # 调用时再取：测试替身要打在模块属性上才生效
-    audit = audit or functools.partial(audit_poster, face=True)
+    audit = audit or functools.partial(audit_poster, face=True, rivals=co_present(spec))
     shot = (spec.get("cover") or {}).get("shot_type", "")
     entries: list[dict] = []
     posters: dict[float, Path] = {}
@@ -464,7 +504,8 @@ def ranked_passing(entries: list[dict], frame_at: float) -> list[float]:
 
 
 def build_record(spec: dict, window: tuple[float, float], step: float,
-                 entries: list[dict], sweep: dict | None = None) -> dict:
+                 entries: list[dict], sweep: dict | None = None,
+                 declared: bool = False) -> dict:
     frame_at = _round((spec.get("cover") or {}).get("frame_at", 0.0))
     record = {
         "slug": spec.get("slug"),
@@ -473,6 +514,8 @@ def build_record(spec: dict, window: tuple[float, float], step: float,
         "scanned_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "framing": framing(spec),
         "window": [_round(window[0]), _round(window[1])],
+        # 窗口是人圈的（`cover.scan_window`／`--window`）：换上的那一格落在外面要记一笔
+        "window_declared": bool(declared),
         "step": step,
         "spec_frame_at": frame_at,
         "candidates": sorted(entries, key=lambda e: e["frame_at"]),
@@ -500,9 +543,12 @@ def face_model_summary(block: object) -> dict | None:
         return out
     ident = block.get("identity") or {}
     eyes = block.get("eyes") or {}
-    out["identity"] = {k: ident.get(k) for k in (
-        "verdict", "name", "similarity", "missing", "face_px", "target") if k in ident}
+    keys = ("verdict", "name", "similarity", "missing", "face_px", "target")
+    out["identity"] = {k: ident.get(k) for k in keys if k in ident}
     out["eyes"] = {k: eyes.get(k) for k in ("verdict", "ear", "face_px")}
+    if isinstance(rivals := block.get("rivals"), dict):
+        # 同一张脸拿主角＋同场的人一起认、只认主角（`target`）：机器换帧看这一份
+        out["rivals"] = {k: rivals.get(k) for k in keys if k in rivals}
     return out
 
 
@@ -566,6 +612,73 @@ def named_in_copy(spec: dict, name: str | None) -> str:
             f"——「{text[:40]}」说的是别人，换上去就是给别人的采访配了{name}的脸")
 
 
+def subject_names(spec: dict) -> list[str]:
+    """认人要找的封面主角（`expected_subject`，双打「A/B」拆开）；推不出来就是空。"""
+    try:
+        want = _auditor.expected_subject(spec)
+    except Exception:  # noqa: BLE001 —— 认不出主角就交给逐格那一道（它会 unknown）
+        return []
+    return [n.strip() for n in str(want or "").replace("／", "/").split("/") if n.strip()]
+
+
+@functools.lru_cache(maxsize=1)
+def _headshot_index() -> dict[str, str]:
+    """中文名 → 官方头像的相对路径：`face_checks.headshot_path` 查的就是这一张
+    （`headshot_index.index_from_specs`，从已发的赛场之上 spec 推）。只读名字和路径，
+    不看文件在不在——interview-auto-render 的稀疏检出没有 `assets/players`，停车账的
+    指纹（`cover_fingerprint`）在两头必须算出同一个数。"""
+    from headshot_index import index_from_specs  # noqa: PLC0415 —— 只要标准库
+
+    return dict(index_from_specs())
+
+
+def co_present(spec: dict) -> tuple[str, ...]:
+    """认人时拿来和封面主角**一起比**的别人：同场的参赛者（`match.participants`／winner／
+    loser，双打拆开）＋封面文案点了名的人，只留仓库里有官方头像的，去掉主角自己。
+
+    来路（2026-09-28 复审 nit）：扫描原来只拿主角一个人比——一张对手的脸只要和主角也到了
+    `MATCH_SIM`（0.34）就是 match，复审量过同场别人离主角最近 0.32。现在同一张脸和他们一起
+    认、`target` 只认主角（`face_checks._targeted_verdict`）：更像别人的是 unknown／mismatch，
+    机器不换。终审那一份（`identity`）不变——多比的人只进 `rivals` 那一块。"""
+    mine = set(subject_names(spec))
+    match = spec.get("match") if isinstance(spec.get("match"), dict) else {}
+    raw = [*(match.get("participants") or []), match.get("winner"), match.get("loser"),
+           spec.get("winner"), spec.get("loser")]
+    names = {part.strip() for v in raw if isinstance(v, str)
+             for part in v.replace("／", "/").split("/")}
+    index = _headshot_index()
+    text = cover_copy(spec)
+    names |= {n for n in index if n and n in text}
+    return tuple(sorted(n for n in names if n and n in index and n not in mine))
+
+
+#: `expected_subject` 推主角读的那几个字段（改了主角就可能换人）。
+SUBJECT_KEYS = ("subject", "interviewee", "speaker", "winner", "loser", "match",
+                "requested_content_type", "interview_kind", "source_title",
+                "source_verification")
+
+
+def cover_fingerprint(spec: dict) -> str:
+    """「这条的封面」的指纹：机器换帧一格都挑不出来时，**它不变，再投一趟结果也一样**。
+
+    进来的是决定「挑不挑得出来」的全部输入：`cover` 整块（frame_at、scan_window、文案……）、
+    取景（`framing`）、推主角的字段、主角和同场的人各自的头像路径（`_headshot_index`，补了
+    头像就是新的一局）、整段粗扫的范围（start／end）、尺子（`ruler`：阈值、版式、人脸模型）。
+    人改了其中任何一样＝换了封面，停车账从头数（`pick_interview_renders.PARK_AFTER`）。
+    只用标准库，interview-clip 记账和 interview-auto-render 判停车两头算的是同一个数。"""
+    index = _headshot_index()
+    blob = {
+        "cover": spec.get("cover"),
+        "framing": framing(spec),
+        "subject": {k: spec.get(k) for k in SUBJECT_KEYS},
+        "faces": {n: index.get(n) for n in (*subject_names(spec), *co_present(spec))},
+        "span": [spec.get("start"), spec.get("end")],
+        "ruler": ruler(),
+    }
+    raw = json.dumps(blob, ensure_ascii=False, sort_keys=True, default=str).encode()
+    return hashlib.sha256(raw).hexdigest()[:16]
+
+
 def autopick_problem(entry: dict, spec: dict) -> str:
     """这一格能不能由**机器**换上封面：空串＝能，否则说为什么不能。
 
@@ -573,7 +686,8 @@ def autopick_problem(entry: dict, spec: dict) -> str:
     这里**只认 match ＋ open**——自动换上的这一帧没有人看过。判定从存下的数重算，
     不信 `verdict` 字符串；`cover._face_check_why` 不管这里（它认领的是人看过的那一帧）。
     match 了还要**是封面文案点了名的那个人**（`named_in_copy`）——`spec` 必传，
-    没有文案就没法判这张脸该不该是他。
+    没有文案就没法判这张脸该不该是他。记录里有 `rivals` 那一块（同场的人一起比、只认主角）
+    的，那一块也得是 match：更像对手／搭档的脸不换。
     """
     if entry.get("status") != "pass":
         return "没过闸：" + ("；".join(entry.get("issues") or []) or "原因没记")
@@ -599,6 +713,19 @@ def autopick_problem(entry: dict, spec: dict) -> str:
         return f"认人／睁眼的读数坏了（{exc}）"
     if verdict != "match":
         return f"认不出是封面主角（{why}）"
+    if isinstance(rivals := block.get("rivals"), dict):
+        # 同一张脸和同场的人一起认、只认主角：更像别人（unknown）或就是别人（mismatch）都不换
+        try:
+            rverdict, rname, rwhy = face_checks.identity_verdict(
+                {str(k): float(v) for k, v in (rivals.get("similarity") or {}).items()},
+                [str(n) for n in rivals.get("missing") or []],
+                float(rivals.get("face_px") or 0.0),
+                [str(n) for n in rivals.get("target") or []] or None)
+        except (TypeError, ValueError) as exc:
+            return f"和同场的人一起比的读数坏了（{exc}）"
+        if rverdict != "match":
+            return f"和同场的人一起比，不算封面主角（{rwhy}）"
+        name = rname or name
     if unnamed := named_in_copy(spec, name):
         return unnamed
     if everdict != "open":
@@ -624,11 +751,8 @@ def subject_unnamed(spec: dict) -> str:
     否则空串。**近处一格都挑不出来时拿它决定要不要整段粗扫**：主角都不是文案里那个人，
     粗扫四十格也只会挑出一张张「不许换」的脸，白烧一分半钟。逐格那一道（`named_in_copy`）
     照样在，这里只是省时间。"""
-    try:
-        want = _auditor.expected_subject(spec)
-    except Exception:  # noqa: BLE001 —— 认不出主角就交给逐格那一道（它会 unknown）
-        return ""
-    names = [n for n in str(want or "").replace("／", "/").split("/") if n.strip()]
+    names = subject_names(spec)
+    want = "/".join(names)
     text, where = naming_copy(spec)
     if not names or any(n in text for n in names):
         return ""
@@ -742,6 +866,17 @@ def apply_autopick(spec_path: Path, spec: dict, chosen: dict, record: dict) -> d
                    "ear": ((chosen.get("face_model") or {}).get("eyes") or {}).get("ear")},
         "record": RECORD_NAME,
     }
+    win = record.get("window") or []
+    if (record.get("window_declared") and len(win) == 2
+            and not win[0] - MATCH_TOLERANCE <= chosen["frame_at"] <= win[1] + MATCH_TOLERANCE):
+        # 人圈过窗口、换上的却在外面：人圈它总有理由（那一段的情绪、那一句话），说清楚出去了
+        inside = [e for e in record.get("candidates") or []
+                  if win[0] - MATCH_TOLERANCE <= e.get("frame_at", -1) <= win[1] + MATCH_TOLERANCE]
+        note["left_scan_window"] = {
+            "window": list(win),
+            "why": (f"人圈的 cover.scan_window {win[0]:g}–{win[1]:g} 秒里扫了 {len(inside)} 格，"
+                    f"没有一格机器能换（{blocked_summary(inside, spec)}），整段粗扫才挑到这一格"),
+        }
     text = spec_path.read_text(encoding="utf-8")
     spec_path.write_text(rewrite_frame_at(text, chosen["frame_at"], note), encoding="utf-8")
     return json.loads(spec_path.read_text(encoding="utf-8"))
@@ -751,11 +886,13 @@ def autopick_line(note: dict, record: dict, spec: dict) -> str:
     """换帧那一行（日志里大声说）。"""
     ch = note.get("chosen") or {}
     eligible = sum(1 for e in record.get("candidates") or [] if not autopick_problem(e, spec))
+    left = note.get("left_scan_window")
     return (f"::warning::[封面自动换帧] cover.frame_at {note.get('from')} → {note.get('to')}："
             f"原帧「{note.get('why')}」；新帧过闸余量 {ch.get('margin')}、像{ch.get('name')} "
             f"{ch.get('similarity')}、眼睛纵横比 {ch.get('ear')}（扫了 "
             f"{len(record.get('candidates') or [])} 格，机器能换的 {eligible} 格）。"
-            "spec 已就地改写（记在 cover._frame_autopick），这一趟的海报、成片、凭证都按新帧。")
+            + (f"⚠️ 离开了人圈的窗口：{left['why']}。" if isinstance(left, dict) else "")
+            + "spec 已就地改写（记在 cover._frame_autopick），这一趟的海报、成片、凭证都按新帧。")
 
 
 def find_entry(record: dict, t: float) -> dict | None:
@@ -993,8 +1130,7 @@ def run_scan(spec: dict, outdir: Path, clip, *, window: str = "",
         raise SystemExit("spec 没有 `cover` 块，没什么可扫的。")
     if autopick and spec_path is None:
         raise SystemExit("--autopick 要知道改写哪一份 spec")
-    a, b = scan_window(spec, window)
-    step_s = scan_step(spec, step)
+    a, b, step_s, declared = near_plan(spec, window, step, autopick=autopick)
     src = clip.yt_download(spec["url"], outdir / "source.mp4", clip.SOURCE_FMT, spec)
     # 片尾按**视频流**剔，不按容器时长（＝最长那条流，音轨可以比画面长）
     video_end = clip.probe_video_duration(src)
@@ -1015,13 +1151,14 @@ def run_scan(spec: dict, outdir: Path, clip, *, window: str = "",
                 return out
 
             entries, posters = measure(spec, times, poster_at, Path(tmp))
-            record = build_record(spec, (a, b), step_s, entries)
+            record = build_record(spec, (a, b), step_s, entries, declared=declared)
             unnamed = subject_unnamed(spec) if autopick else ""
             if autopick and pick(record, spec) is None and unnamed:
                 print(f"[封面自动换帧] 不整段粗扫：{unnamed}")
             elif autopick and pick(record, spec) is None:
                 more_t, span, sweep_step = sweep_plan(spec, (a, b), video_end)
-                print(f"[封面自动换帧] {a:g}–{b:g} 秒里没有一格机器能换（过闸＋认得出是封面主角"
+                print(f"[封面自动换帧] {'人圈的 cover.scan_window ' if declared else ''}"
+                      f"{a:g}–{b:g} 秒里没有一格机器能换（过闸＋认得出是封面主角"
                       f"＋睁眼），把整段采访 {span[0]:g}–{span[1]:g} 秒每 {sweep_step:g} 秒一格"
                       f"粗扫 {len(more_t)} 格")
                 if more_t:
@@ -1030,7 +1167,8 @@ def run_scan(spec: dict, outdir: Path, clip, *, window: str = "",
                     more, more_posters = measure(spec, more_t, poster_at, sweep_dir)
                     posters.update(more_posters)
                     record = build_record(spec, (a, b), step_s, entries + more,
-                                          sweep={"window": list(span), "step": sweep_step})
+                                          sweep={"window": list(span), "step": sweep_step},
+                                          declared=declared)
         sheet = contact_sheet(record, posters, outdir / SHEET_NAME)
     (outdir / RECORD_NAME).write_text(
         json.dumps(record, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
@@ -1056,24 +1194,83 @@ def _autopick(spec: dict, spec_path: Path, record: dict, render_poster) -> int:
         return AUTOPICK_NONE
     chosen = pick(record, spec)
     if chosen is None:
-        why = _blocked_by(record, spec)
-        print(f"[封面自动换帧] 扫过的 {len(record.get('candidates') or [])} 格里没有一格同时过闸、"
-              f"认得出是封面主角（文案点了名的人）、眼睛睁着——不换。挡住的主要是：{why}")
-        return AUTOPICK_NONE
+        print(f"[封面自动换帧] 不换。{failure_why(record, spec)}")
+        return AUTOPICK_NO_MODEL if model_unavailable(record) else AUTOPICK_NONE
     new_spec = apply_autopick(spec_path, spec, chosen, record)
     render_poster(new_spec)
     print(autopick_line(new_spec["cover"][AUTOPICK_KEY], record, new_spec))
     return 0
 
 
-def _blocked_by(record: dict, spec: dict, n: int = 3) -> str:
-    """没挑出来的时候，挡住最多的几条原因（按原因的开头归类）。"""
+def blocked_summary(entries: list[dict], spec: dict, n: int = 3) -> str:
+    """一批格子为什么机器换不了：挡住最多的几条原因（按原因的开头归类）。"""
     from collections import Counter  # noqa: PLC0415
 
-    reasons = Counter(autopick_problem(e, spec).split("（")[0].split("：")[0]
-                      for e in record.get("candidates") or [])
+    def head(problem: str) -> str:
+        # 「没过闸：这张脸闭眼：眼睛纵横比…」→「没过闸：这张脸闭眼」——光说「没过闸」等于没说
+        parts = problem.split("（")[0].split("：")
+        if parts[0] == "没过闸" and len(parts) > 1:
+            return f"没过闸：{parts[1].split('，')[0].split('；')[0][:24]}"
+        return parts[0]
+
+    reasons = Counter(head(autopick_problem(e, spec)) for e in entries if isinstance(e, dict))
     reasons.pop("", None)
     return "；".join(f"{k} ×{v}" for k, v in reasons.most_common(n)) or "（没有记录）"
+
+
+def _blocked_by(record: dict, spec: dict, n: int = 3) -> str:
+    """没挑出来的时候，挡住最多的几条原因（整份记录）。"""
+    return blocked_summary(record.get("candidates") or [], spec, n)
+
+
+def failure_why(record: dict | None, spec: dict) -> str:
+    """`--autopick` 挑不出来的那一句（日志里印、停车账里记）。"""
+    if not isinstance(record, dict):
+        return "没有扫描记录（这一趟没扫成）"
+    old = find_entry(record, (spec.get("cover") or {}).get("frame_at", -1))
+    if old is not None and old.get("status") == "pass":
+        return "扫描说 spec 现在那一帧能过、终审却红了——扫描和终审分叉了（工具的 bug）"
+    return (f"扫过的 {len(record.get('candidates') or [])} 格里没有一格同时过闸、认得出是封面主角"
+            f"（文案点了名的人）、眼睛睁着——挡住的主要是：{_blocked_by(record, spec)}")
+
+
+def model_unavailable(record: dict | None) -> bool:
+    """人脸模型整趟都不可用（有格子跑到了认人那一步，却没有一格认成）：环境的事，不记停车账。"""
+    blocks = [e.get("face_model") for e in (record or {}).get("candidates") or []
+              if isinstance(e, dict) and isinstance(e.get("face_model"), dict)]
+    return (any(b.get("status") == "unavailable" for b in blocks)
+            and not any(b.get("status") == "ok" for b in blocks))
+
+
+def render_would_swap(record: dict | None, spec: dict) -> dict | None:
+    """已提交的记录说 `frame_at` 没过闸：render 的封面前置那一步会不会**自动换上**记录里的一格
+    → 那一格；判不准就 None（D3，2026-09-28）。
+
+    render 红了就地重扫：窗口和间隔按 `near_plan(spec, autopick=True)`。取景（`framing`）和尺子
+    （`stale_ruler`）都没变、窗口和间隔也对得上的话，它量的就是这份记录里那几格——同一份
+    `cover_poster`、同一把 `audit_poster`，同一帧渲出来的是同一张海报——挑出来的就是
+    **窗口里**按 `pick` 排第一的那一格。窗口或间隔对不上（记录之后改过 `scan_window`／
+    `scan_step`、命令行给过 `--window`），或者窗口里没有能换的（要靠整段粗扫，粗扫的格子
+    这份记录里未必有），都判不准，返回 None——预检照旧拦。"""
+    if not isinstance(record, dict) or record.get("method") != METHOD:
+        return None
+    if record.get("framing") != framing(spec) or stale_ruler(record):
+        return None
+    entry = find_entry(record, (spec.get("cover") or {}).get("frame_at", -1))
+    if entry is None or entry.get("status") == "pass":
+        return None
+    try:
+        a, b, step, _declared = near_plan(spec, autopick=True)
+    except SystemExit:
+        return None
+    win = record.get("window") or [None, None]
+    if not (_same_t(win[0], a) and _same_t(win[1], b) and _same_t(record.get("step"), step)):
+        return None
+    near = [e for e in record.get("candidates") or []
+            if isinstance(e, dict) and a - MATCH_TOLERANCE <= float(e.get("frame_at", -1)) <= b + MATCH_TOLERANCE]
+    near_t = {e["frame_at"] for e in near}
+    return pick({"candidates": near,
+                 "passing": [t for t in record.get("passing") or [] if t in near_t]}, spec)
 
 
 def main(argv: list[str] | None = None) -> int:

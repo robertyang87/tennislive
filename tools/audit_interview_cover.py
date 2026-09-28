@@ -158,8 +158,11 @@ def _overlap_ratio(
     return intersection / max(1, min(aw * ah, bw * bh))
 
 
-def face_model_evidence(photo, expected: str) -> dict:
+def face_model_evidence(photo, expected: str, rivals: tuple[str, ...] = ()) -> dict:
     """照片区那张脸：是不是 `expected`（双打「A/B」任一）、眼睛睁没睁。
+
+    `rivals`（只有候选帧扫描给）：同场的别人，多出一块 `rivals` 给机器换帧读；
+    `identity`／`problems` 和不给时一样（`face_checks.check_frame` 的 docstring）。
 
     **这一步出任何意外都不许把整道闸拖成 fail，也不许装作查过**：记成
     `status: error` ＋ 原因，`problems_of` 会把它变成一条 ⚠️ 提示。
@@ -167,7 +170,7 @@ def face_model_evidence(photo, expected: str) -> dict:
     try:
         import face_checks  # noqa: PLC0415
 
-        return face_checks.check_frame(photo, expected)
+        return face_checks.check_frame(photo, expected, rivals=rivals)
     except Exception as exc:  # noqa: BLE001
         return {"status": "error", "error": f"{type(exc).__name__}: {exc}",
                 "problems": [], "warnings": [f"认人／睁眼没跑完：{type(exc).__name__}: {exc}"]}
@@ -190,7 +193,7 @@ def face_model_issues(result: dict, spec: dict) -> tuple[list[str], list[str]]:
     return problems, warnings
 
 
-def poster_face_model(poster: Path, expected: str) -> dict:
+def poster_face_model(poster: Path, expected: str, rivals: tuple[str, ...] = ()) -> dict:
     """成品海报的照片区（和 Haar 同一块 1080×810）认人＋睁眼。
 
     单列一个函数、不塞进 `analyze_poster`：那个函数的「一个参数进、证据出」
@@ -204,7 +207,7 @@ def poster_face_model(poster: Path, expected: str) -> dict:
     except Exception as exc:  # noqa: BLE001
         return {"status": "error", "error": f"{type(exc).__name__}: {exc}",
                 "problems": [], "warnings": [f"认人／睁眼读不了海报：{exc}"]}
-    return face_model_evidence(photo, expected)
+    return face_model_evidence(photo, expected, rivals)
 
 
 def analyze_poster(poster: Path) -> dict:
@@ -400,7 +403,8 @@ def validate_result(result: object, spec: dict) -> list[str]:
     return issues
 
 
-def audit_poster(poster: Path, spec: dict, *, face: bool = False) -> tuple[dict, list[str]]:
+def audit_poster(poster: Path, spec: dict, *, face: bool = False,
+                 rivals: tuple[str, ...] = ()) -> tuple[dict, list[str]]:
     """量一张海报、按当前 spec 判——返回 (证据, 不合格项)，空列表才是通过。
 
     **`main()` 和候选帧扫描（`interview_cover_scan`）共用这一份。** 扫描要在
@@ -415,8 +419,10 @@ def audit_poster(poster: Path, spec: dict, *, face: bool = False) -> tuple[dict,
     # `face=True`：终审（main）再加认人＋睁眼（O2+O3，insightface），`validate_result`
     # 见到 `face_model` 就把它的不合格项并进来。候选扫描默认不跑——几十帧各跑一遍
     # 人脸模型会吃掉扫描的时间预算；扫描挑出来的那一帧照样要过这道终审。
+    # `rivals`：候选帧扫描拿同场的人一起比（`interview_cover_scan.co_present`），终审不给——
+    # 判定（`validate_result`）只读 `identity`，给不给它都一样，多出的 `rivals` 块只给机器换帧读。
     if face:
-        result["face_model"] = poster_face_model(poster, expected_subject(spec))
+        result["face_model"] = poster_face_model(poster, expected_subject(spec), tuple(rivals))
     return result, validate_result(result, spec)
 
 

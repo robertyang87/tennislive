@@ -73,10 +73,10 @@ def _memo_pixels(monkeypatch):
             cache[k] = real_analyze(poster)
         return copy.deepcopy(cache[k])
 
-    def face(poster, expected):
-        k = key(poster, "face", expected)
+    def face(poster, expected, rivals=()):
+        k = key(poster, "face", expected, tuple(rivals))
         if k not in cache:
-            cache[k] = real_face(poster, expected)
+            cache[k] = real_face(poster, expected, tuple(rivals))
         return copy.deepcopy(cache[k])
 
     monkeypatch.setattr(auditor, "analyze_poster", analyze)
@@ -272,7 +272,7 @@ def test_近处没有就整段粗扫_一格都没有才退出3_spec不动(tmp_pa
     assert len(grid) <= scan.SWEEP_MAX_FRAMES
     good_at: set[float] = {grid[7]}
 
-    def audit(path, spec_t, *, face=False):
+    def audit(path, spec_t, *, face=False, rivals=()):
         assert face, "扫描那一格没跑认人＋睁眼"
         t = spec_t["cover"]["frame_at"]
         e = _entry(t)
@@ -733,26 +733,68 @@ def test_撞车重放时别人改过spec就不覆盖_扫描记录也留分支上
 
 # ---------------------------------------------------------------- 五、dispatch 之前
 
-def test_预检按已提交的扫描记录拦没过闸的frame_at_顺手报能换的那一格(monkeypatch, tmp_path):
+def test_预检按已提交的扫描记录拦没过闸的frame_at_render会自动换的不拦(monkeypatch, tmp_path):
+    """D3（2026-09-28）：记录说 frame_at 没过闸，**可记录里已经有一格 render 会自动换上的**——
+    同一个窗口、同一个间隔、取景和尺子没变，render 红了就地重扫量出来的就是这几格——不拦，
+    只提示（拦下来等人把那个数抄进 spec，只是多等一个来回）。判不准 render 扫不扫得到
+    （记录的窗口／间隔和现在的对不上）、或者一格都换不了，照旧拦。"""
     import interview_preflight as pf  # noqa: PLC0415
 
     out = tmp_path / "output" / "interviews"
     (out / "demo").mkdir(parents=True)
+    rec = out / "demo" / scan.RECORD_NAME
     monkeypatch.setattr(pf, "OUTPUT", out)
     spec = DEMO
     assert pf.cover_scan_problem(spec) is None, "没有记录不许拦——存量一份记录都没有"
     record = _record(spec, [_entry(10.0, status="fail"), _entry(10.2, sim=0.25, margin=9),
                             _entry(10.4)])
-    (out / "demo" / scan.RECORD_NAME).write_text(json.dumps(record), encoding="utf-8")
+    assert (record["window"], record["step"]) == ([8.0, 12.0], 0.2), "前提：记录就是 render 会扫的那一段"
+    rec.write_text(json.dumps(record), encoding="utf-8")
+    assert pf.cover_scan_problem(spec) is None, "记录里有一格 render 会自动换上的，预检却拦了"
+    red, note = pf.cover_scan_verdict(spec)
+    assert red is None and note and "10.4 秒" in note and "render" in note, note
+    # 另一头：人后来圈了窗口（render 要扫的不是记录里这一段）——判不准，照旧拦、报出能换的那一格
+    moved = {**spec, "cover": {**spec["cover"], "scan_window": [9.0, 11.0]}}
+    red = pf.cover_scan_problem(moved)
+    assert red and "没过闸" in red and "10.4 秒" in red and "改成它" in red, red
+    # 一格机器能换的都没有：拦
+    rec.write_text(json.dumps(_record(spec, [_entry(10.0, status="fail"),
+                                             _entry(10.2, sim=0.25, margin=9)])), encoding="utf-8")
     red = pf.cover_scan_problem(spec)
-    assert red and "没过闸" in red and "10.4 秒" in red, red
-    assert pf.cover_scan_problem({**spec, "cover": {"frame_at": 10.4}}) is None
-    unscanned = pf.cover_scan_problem({**spec, "cover": {"frame_at": 33.0}})
+    assert red and "没过闸" in red, red
+    assert pf.cover_scan_problem({**spec, "cover": {**spec["cover"], "frame_at": 10.2}}) is None
+    unscanned = pf.cover_scan_problem({**spec, "cover": {**spec["cover"], "frame_at": 33.0}})
     assert unscanned and "没扫过" in unscanned, unscanned
     # 探针（系统 python3，没有 PIL）也跑这一道：它只要标准库
     monkeypatch.setitem(sys.modules, "PIL", None)
     red_probe, _unknown = pf.probe_problems(spec)
     assert any(r.startswith("_check_cover_scan") for r in red_probe), red_probe
+    rec.write_text(json.dumps(record), encoding="utf-8")
+    red_probe, _unknown = pf.probe_problems(spec)
+    assert not any(r.startswith("_check_cover_scan") for r in red_probe), red_probe
+
+
+def test_预检红的时候_过闸的有而机器换不了就列出过闸的那几格_不叫人重扫(monkeypatch, tmp_path):
+    """复审 nit 3：主角没官方头像（`laver-cup-2026-trophy-ceremony` 那种）、认人拿不准的，
+    过闸的格子是有的，只是机器不许换——叫人「换一段重扫」扫出来的还是这几格。列出来让人挑；
+    一格都没过闸才叫人重扫。"""
+    import interview_preflight as pf  # noqa: PLC0415
+
+    out = tmp_path / "output" / "interviews"
+    (out / "demo").mkdir(parents=True)
+    rec = out / "demo" / scan.RECORD_NAME
+    monkeypatch.setattr(pf, "OUTPUT", out)
+    nohead = _entry(10.2, margin=4.0)
+    nohead["face_model"]["identity"].update(similarity={}, missing=["鲁德"])
+    rec.write_text(json.dumps(_record(DEMO, [
+        _entry(10.0, status="fail"), nohead, _entry(10.4, sim=0.25, margin=9)])), encoding="utf-8")
+    red = pf.cover_scan_problem(DEMO)
+    assert red and "过闸的有 10.4、10.2 秒" in red and "换一段" not in red, red
+    assert "认不出是封面主角" in red, red
+    rec.write_text(json.dumps(_record(DEMO, [_entry(10.0, status="fail"),
+                                             _entry(10.2, status="fail")])), encoding="utf-8")
+    red = pf.cover_scan_problem(DEMO)
+    assert red and "一格都没过闸" in red and "换一段" in red, red
 
 
 def test_没有产物目录就从HEAD读记录_预检缓存的键跟着记录走(monkeypatch, tmp_path):
@@ -764,8 +806,10 @@ def test_没有产物目录就从HEAD读记录_预检缓存的键跟着记录走
     rec_dir = repo / "output" / "interviews" / "demo"
     rec_dir.mkdir(parents=True)
     spec = DEMO
+    # 10.4 过闸、认人拿不准（机器不换）：预检照旧红，把过闸的那一格列出来
     (rec_dir / scan.RECORD_NAME).write_text(
-        json.dumps(_record(spec, [_entry(10.0, status="fail"), _entry(10.4)])), encoding="utf-8")
+        json.dumps(_record(spec, [_entry(10.0, status="fail"), _entry(10.4, sim=0.25)])),
+        encoding="utf-8")
     subprocess.run(["git", "init", "-q", str(repo)], check=True)
     _git(repo, "add", ".")
     _git(repo, "commit", "-qm", "r")
@@ -812,3 +856,191 @@ def test_记录里那一格只红在认人睁眼上_人写了face_check_why就�
     # 存下来的 issues 字符串是手改的（和存的数对不上）：不信字符串，照样拦
     forged = {**closed, "issues": ["这张脸闭眼：随便写的"]}
     assert "没过闸" in scan.record_problem(_record(DEMO, [forged]), claimed)
+
+
+# ---------------------------------------------------------------- 六、同场的人一起比（复审 nit 1）
+
+def _rival_entry(t: float, subj: float, other: float, **kw) -> dict:
+    """主角（鲁德）一个人比是 `subj`；和同场的兹维列夫一起比、只认鲁德的那一块（`rivals`）。"""
+    e = _entry(t, sims={"鲁德": subj}, **kw)
+    e["face_model"]["rivals"] = {"verdict": "match", "name": "鲁德",
+                                 "similarity": {"鲁德": subj, "兹维列夫": other},
+                                 "missing": [], "face_px": 300.0, "target": ["鲁德"]}
+    return e
+
+
+def test_同场的人一起比_更像别人的那一格机器不换():
+    """复审 nit 1（2026-09-28）：扫描原来只拿主角一个人比——同场别人离主角最近 0.32，
+    `MATCH_SIM` 0.34，一张更像对手的脸只要和主角也到了 0.34 就是 match、就会被换上。
+    现在同一张脸和同场的人一起认、只认主角：更像别人就是 unknown，机器不换。
+    判定从存下的数重判（手改那一块的 verdict 字符串骗不过去）。"""
+    assert scan.autopick_problem(_entry(10.0, sims={"鲁德": 0.40}), DEMO) == "", (
+        "前提：只拿鲁德一个人比，0.40 就是 match")
+    both = scan.autopick_problem(_rival_entry(10.0, 0.40, 0.45), DEMO)
+    assert "和同场的人一起比" in both and "兹维列夫" in both, both
+    assert scan.autopick_problem(_rival_entry(10.0, 0.40, 0.10), DEMO) == ""
+    record = _record(DEMO, [_entry(10.0, status="fail"),
+                            _rival_entry(10.2, 0.40, 0.45, margin=9.0), _entry(10.4)])
+    assert record["passing"][0] == 10.2, "前提：更像别人的那一格余量最大、排第一"
+    assert scan.pick(record, DEMO)["frame_at"] == 10.4
+
+
+def test_check_frame多比几个人_终审那一份逐字段不变_多出的那一块只认主角(model, monkeypatch, tmp_path):
+    """同场的人只进 `rivals` 那一块：`identity`／`problems`／`warnings` 和只拿主角比时逐字段一样
+    （`face_checks.restrict_identity`）——扫描记录的 pass 照旧就是终审的 pass。真像素、真人脸模型。"""
+    spec = _spec_at("tien-cobolli-laver-cup-2026-interview", 97.0)
+    rivals = scan.co_present(spec)
+    assert "科博利" in rivals and "勒纳·钱" not in rivals, rivals
+    for poster in (TIEN_OK, AGASSI, RUUD_CLOSED):
+        plain_res, plain_issues = auditor.audit_poster(poster, spec, face=True)
+        wide_res, wide_issues = auditor.audit_poster(poster, spec, face=True, rivals=rivals)
+        assert wide_issues == plain_issues, poster.name
+        block = wide_res["face_model"]
+        assert {k: v for k, v in block.items() if k != "rivals"} == plain_res["face_model"], poster.name
+        assert block["rivals"]["target"] == ["勒纳·钱"], block["rivals"]
+        assert set(block["rivals"]["similarity"]) >= {"勒纳·钱", "科博利"}, block["rivals"]
+    # 那一帧就是对手：多出的那一块认出来是科博利，机器不换
+    cobolli = _headshot_poster("科博利", tmp_path / "cobolli.jpg")
+    entries, _ = scan.measure(spec, [97.0], lambda _t, dest: shutil.copy(cobolli, dest), tmp_path)
+    assert "rivals" in entries[0]["face_model"], "扫描没拿同场的人一起比（measure 没给 rivals）"
+    rv = entries[0]["face_model"]["rivals"]
+    assert rv["verdict"] == "mismatch" and rv["name"] == "科博利", rv
+    assert scan.autopick_problem(entries[0], spec), "对手的脸被当成能换的了"
+
+
+def test_同场的人_只留有官方头像的别人_全库主角都不在里面():
+    """`co_present`：同场参赛者＋封面文案点了名的人，只留仓库里有官方头像的（和
+    `face_checks.headshot_path` 同一张索引），去掉主角自己——主角进了「别人」那一栏，
+    他自己的脸就成了「更像别人」。全库每一条都验。"""
+    index = scan._headshot_index()
+    seen = 0
+    for path in sorted(SPECS.glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(spec.get("cover"), dict):
+            continue
+        rivals = scan.co_present(spec)
+        assert not set(rivals) & set(scan.subject_names(spec)), path.name
+        assert all(n in index for n in rivals), (path.name, rivals)
+        seen += bool(rivals)
+    assert seen >= 50, f"只有 {seen} 条采访有同场的人可比——co_present 取人那一步坏了"
+    alc = json.loads((SPECS / "alcaraz-mensik-laver-cup-2026-interview.json").read_text(encoding="utf-8"))
+    assert set(scan.subject_names(alc)) == {"阿尔卡拉斯", "门西克"}, "前提：双打的主角是两个人"
+
+
+def test_旧记录没拿同场的人一起比就算另一把尺子():
+    """`rivals_in_scan` 之前写的记录：它的 match 可能更像别人——不许拿来对账、更不许拿来预测
+    render 会换哪一格（`render_would_swap`）。"""
+    record = _record(DEMO, [_entry(10.0, status="fail"), _entry(10.4)])
+    assert scan.render_would_swap(record, DEMO)["frame_at"] == 10.4
+    legacy = {k: v for k, v in record.items() if k != "rivals_in_scan"}
+    assert "同场" in scan.stale_ruler(legacy)
+    assert scan.record_problem(legacy, DEMO) == "" and scan.render_would_swap(legacy, DEMO) is None
+
+
+# ---------------------------------------------------------------- 七、人圈的 scan_window（复审 nit 2）
+
+def _margin_face(m: float) -> dict:
+    """余量正好是 `m` 的一张脸（清晰度卡在 m 倍，其余几条都宽裕）。"""
+    return {"box": [1, 200, 3, 4], "eyes": 2, "sharpness": m * auditor.MIN_FACE_SHARPNESS,
+            "contrast": 10 * auditor.MIN_FACE_CONTRAST,
+            "face_height_ratio": 10 * auditor.MIN_CLOSE_UP_FACE_HEIGHT_RATIO,
+            "face_area_ratio": 10 * auditor.MIN_FACE_AREA_RATIO}
+
+
+def _scan_with(tmp_path, monkeypatch, spec: dict, good: dict[float, float]) -> tuple[int, dict, dict]:
+    """`run_scan(autopick)` 走一遍：`good` 里的秒数（→余量）是本人睁眼、机器能换的，其余闭眼。"""
+    def audit(path, spec_t, *, face=False, rivals=()):
+        t = spec_t["cover"]["frame_at"]
+        e = _entry(t)
+        ok = t in good
+        block = {"status": "ok", "identity": e["face_model"]["identity"],
+                 "eyes": {**e["face_model"]["eyes"], "ear": 0.3 if ok else 0.1}}
+        return ({"face": _margin_face(good.get(t, 3.0)), "face_model": block},
+                [] if ok else ["这张脸闭眼：眼睛纵横比 0.10 < 0.12"])
+
+    monkeypatch.setattr(scan, "audit_poster", audit)
+    monkeypatch.setattr(scan, "contact_sheet", lambda *a, **k: None)
+    outdir = tmp_path / "demo"
+    outdir.mkdir(exist_ok=True)
+    path = tmp_path / "demo.json"
+    path.write_text(json.dumps(spec, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    class Clip(_FakeClip):
+        def cover_poster(self, spec, src, out, logo="", *, at=None, dest=None, page=None):
+            dest = dest or out / "poster.jpg"
+            dest.write_bytes(b"x")
+            return dest
+
+    rc = scan.run_scan(spec, outdir, Clip(None, end=120.0, outdir=outdir), keep_source=True,
+                       autopick=True, spec_path=path)
+    return (rc, json.loads((outdir / scan.RECORD_NAME).read_text(encoding="utf-8")),
+            json.loads(path.read_text(encoding="utf-8")))
+
+
+def test_人圈了scan_window_先在里面换_里面没有才出去并记下离开了(tmp_path, monkeypatch):
+    """复审 nit 2：人圈 `cover.scan_window` 总有理由（那一段的情绪、那一句话）。render 自动换帧
+    先在这一段里挑——外面有余量更大的也不去；这一段一格都换不了才整段粗扫，换上的那一格在
+    `_frame_autopick.left_scan_window` 里说清楚离开了人圈的窗口。"""
+    spec = {"slug": "demo", "url": "u", "start": 0.0, "end": 100.0,
+            "cover": {"frame_at": 50.0, "scan_window": [40.0, 44.0], "scan_step": 0.5,
+                      "tag": "2026 拉沃尔杯 · 鲁德"}}
+    grid, _span, _step = scan.sweep_plan(spec, (40.0, 44.0), 120.0)
+    outside = grid[20]
+    assert not 40.0 <= outside <= 44.0 and outside != 50.0
+    (tmp_path / "in").mkdir()
+    rc, record, new = _scan_with(tmp_path / "in", monkeypatch, spec, {42.0: 2.0, outside: 9.0})
+    assert rc == 0 and new["cover"]["frame_at"] == 42.0, new["cover"]
+    assert "sweep" not in record, "窗口里就有能换的，还去整段粗扫了"
+    assert "left_scan_window" not in new["cover"][scan.AUTOPICK_KEY]
+    assert record["window"] == [40.0, 44.0] and record["window_declared"] is True
+
+    (tmp_path / "out").mkdir()
+    rc, record, new = _scan_with(tmp_path / "out", monkeypatch, spec, {outside: 9.0})
+    assert rc == 0 and new["cover"]["frame_at"] == outside and record.get("sweep"), new["cover"]
+    left = new["cover"][scan.AUTOPICK_KEY].get("left_scan_window")
+    assert left and left["window"] == [40.0, 44.0] and "人圈的" in left["why"], left
+    assert "9 格" in left["why"], left      # 40–44 每 0.5 秒 9 格（50.0 那一格在窗口外）
+
+    # 没圈窗口（frame_at 前后各 2 秒）：出去粗扫是常规动作，不记「离开」
+    bare = {**spec, "cover": {k: v for k, v in spec["cover"].items() if k != "scan_window"}}
+    (tmp_path / "bare").mkdir()
+    rc, record, new = _scan_with(tmp_path / "bare", monkeypatch, bare, {outside: 9.0})
+    assert rc == 0 and new["cover"]["frame_at"] == outside
+    assert record["window_declared"] is False
+    assert "left_scan_window" not in new["cover"][scan.AUTOPICK_KEY]
+
+
+def test_人圈的窗口太宽_render自动换帧放粗步长_还在这一段里():
+    """`mode=cover` 窗口给宽了照旧报错让人收窄（人在场）；render 是自动链，红了只会每 70 分钟
+    重投一趟——放粗步长把人圈的这一段扫完，格子数不超 `MAX_CANDIDATES`。"""
+    spec = {"cover": {"frame_at": 150.3, "scan_window": [100.0, 200.0]}}
+    a, b, step, declared = scan.near_plan(spec)
+    assert (a, b, step, declared) == (100.0, 200.0, scan.DEFAULT_STEP, True)
+    with pytest.raises(SystemExit, match="收窄"):
+        scan.candidate_times(a, b, step, include=(150.3,))
+    a, b, step, declared = scan.near_plan(spec, autopick=True)
+    times = scan.candidate_times(a, b, step, include=(150.3,))
+    assert (a, b) == (100.0, 200.0) and len(times) <= scan.MAX_CANDIDATES
+    assert times[0] == 100.0 and times[-1] >= 199.0, "放粗之后没把人圈的这一段扫完"
+    narrow = {"cover": {"frame_at": 10.0, "scan_window": [9.0, 11.0]}}
+    assert scan.near_plan(narrow, autopick=True)[2] == scan.DEFAULT_STEP, "装得下的不许放粗"
+
+
+# ---------------------------------------------------------------- 八、挑不出来：停车账要的退出码（D2）
+
+def test_挑不出来退出3_人脸模型整趟不可用退出4(tmp_path):
+    """interview-clip 只在退出 3 时记停车账（同一个封面满 3 趟不再投）；模型整趟不可用是环境
+    的事（4），不记——模型备好了下一趟就过，记了反而会把一条能换的停掉。"""
+    spec = {"slug": "demo", "url": "u", "cover": {"frame_at": 10.0, "tag": "2026 拉沃尔杯 · 鲁德"}}
+    path = tmp_path / "s.json"
+    text = json.dumps(spec)
+    path.write_text(text, encoding="utf-8")
+    closed = _record(spec, [_entry(10.0, status="fail"), _entry(10.2, ear=0.09)])
+    assert scan._autopick(spec, path, closed, lambda s: None) == scan.AUTOPICK_NONE
+    assert "没有一格同时过闸" in scan.failure_why(closed, spec)
+    blind = _record(spec, [_entry(10.0, status="fail", model_status="unavailable"),
+                           _entry(10.2, model_status="unavailable")])
+    assert scan.model_unavailable(blind) and not scan.model_unavailable(closed)
+    assert scan._autopick(spec, path, blind, lambda s: None) == scan.AUTOPICK_NO_MODEL
+    assert path.read_text(encoding="utf-8") == text
+    assert "没有扫描记录" in scan.failure_why(None, spec)

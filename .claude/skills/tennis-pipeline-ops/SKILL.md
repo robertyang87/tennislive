@@ -4921,3 +4921,19 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 拉沃尔杯板，都已推送），发布会（机位锁死、相邻帧差 < 0.5 能连着 9 秒）0 条误认；
 另有 5 条正片最后 1.1~1.7 秒是冻帧（`end` 越过了源片画面）。这 7 条不挂豁免：闸只在重渲
 那一刻才跑，重渲时就该一起收掉。量法和名单在 `tools/interview_tail.py` 的 docstring。
+
+#### ⭐⭐ 2026-09-28：封面自动换帧挑不出来就停车——同一个封面满 3 趟不再投（D2）
+
+render 的封面前置那一步红了会就地扫、自动换一格（tennis-cover-photos「扫描逐格认人＋睁眼」）；
+**一格都挑不出来**（主角没官方头像、整段闭眼／是别人）时 `--autopick` 退出 3——而 picker 只看
+「投了 70 分钟没产物」，同一个封面再投一趟量出来的是同一批格子，**70 分钟一趟、永远红**。
+
+| | 做法 |
+|---|---|
+| 记账 | interview-clip 退出 3 时 `pick_interview_renders.py --autopick-failed <slug>` 记进 `data/interview_render_dispatched.json` 的 `autopick_failed[slug] = {cover, count, at, why}`，只提交这一个文件、走 `push_interview_dispatch_retry`（`merge_interview_states` 会把本趟那一笔加回去）。**扫描记录照旧不提交**（红着的 render 不留记录）。退出 4（人脸模型整趟不可用）和别的非零（工具坏了）不记 |
+| 指纹 | `interview_cover_scan.cover_fingerprint`：`cover` 整块＋取景＋推主角的字段＋主角和同场的人的头像**路径**（不看文件在不在——auto-render 的检出没有 `assets/players`，两头要算出同一个数）＋`start/end`＋尺子。人改了封面／主角、补了头像、尺子变了，从 1 数起；改中文字幕不算 |
+| 停车 | 同一个指纹 `count ≥ PARK_AFTER`（3）→ 不进 dispatch 名单、进等待名单、**不算 stale**（是故意不投），auto-render 的 run 摘要单列「🅿️ 封面自动换帧停车」一栏（`--parked`）。当前 spec 已经出过片的不算 |
+
+⚠️ 没接进 `pipeline_health`／微信：停车只在 auto-render 的 run 摘要里看得见。判据
+`test_封面自动换帧连着三趟挑不出来就停车_换了封面从头数`、`test_停车账和指纹只用标准库`、
+`test_停车账撞上dispatch提交不丢`、`test_出片档封面前置要留源片_红了就地扫候选自动换帧`（退出码分支）。

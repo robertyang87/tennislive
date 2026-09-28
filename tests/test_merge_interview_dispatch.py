@@ -77,3 +77,20 @@ def test_real_git_conflict_recovery_preserves_remote_other_file(tmp_path):
     assert json.loads((other / ledger).read_text()) == state(
         zheng=('2026-09-09T02:00:00Z', 'z'), rybakina=('2026-09-09T03:00:00Z', 'r'))
     assert (other / 'unrelated.txt').read_text() == 'keep remote content'
+
+
+def test_停车账撞上dispatch提交不丢():
+    """interview-clip 记的停车账（`autopick_failed`）撞上 auto-render 的 dispatch 提交：以远端为底
+    重放的时候要把本趟那一笔加回去，远端刚记的也不许被本趟（没碰它的）盖掉。"""
+    base = state(old=('2026-09-09T01:00:00Z', 'old'))
+    ours = {**state(old=('2026-09-09T01:00:00Z', 'old')),
+            'autopick_failed': {'x': {'cover': 'fp', 'count': 2, 'at': '2026-09-28T01:00:00Z'}}}
+    theirs = state(old=('2026-09-09T01:00:00Z', 'old'), new=('2026-09-28T02:00:00Z', 'n'))
+    merged = merge_interview_states(base, ours, theirs)
+    assert merged.get('autopick_failed') == ours['autopick_failed'], ('停车账这一笔丢了', merged)
+    assert 'new' in merged['slugs']
+    # 反过来：本趟是 dispatch（没碰停车账），远端刚记了一笔
+    theirs2 = {**theirs, 'autopick_failed': {'y': {'cover': 'fp', 'count': 1, 'at': 'z'}}}
+    ours2 = state(old=('2026-09-09T01:00:00Z', 'old'), zheng=('2026-09-28T03:00:00Z', 'z'))
+    merged = merge_interview_states(base, ours2, theirs2)
+    assert merged['autopick_failed'] == theirs2['autopick_failed'] and 'zheng' in merged['slugs']

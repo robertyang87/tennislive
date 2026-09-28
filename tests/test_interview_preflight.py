@@ -392,12 +392,19 @@ def test_全量预检也按已提交的封面扫描记录拦frame_at(monkeypatch
                 "face": None, "margin": 2.0, "face_model": block},
                {"frame_at": 1.2, "status": "pass", "issues": [], "face": None,
                 "margin": 3.0, "face_model": block}]
-    record = scan.build_record(spec, (0.0, 3.0), 0.2, entries)
-    (pf.OUTPUT / spec["slug"] / scan.RECORD_NAME).write_text(
-        json.dumps(record, ensure_ascii=False), encoding="utf-8")
+    # 记录的窗口（0.5–2.5）不是 render 现在会扫的那一段（frame_at 前后各 2 秒＝0–3）：
+    # 判不准 render 扫不扫得到 1.2，拦下来、报出那一格
+    record = scan.build_record(spec, (0.5, 2.5), 0.2, entries)
+    path = pf.OUTPUT / spec["slug"] / scan.RECORD_NAME
+    path.write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
     problems, _ = pf.spec_problems(spec, copy=False)
     hit = [p for p in problems if p.startswith("_check_cover_scan")]
     assert len(hit) == 1 and "没过闸" in hit[0] and "1.2 秒" in hit[0], problems
+    # 同一段、同一个间隔（D3）：render 红了会自动换上 1.2——不拦，提示里说一声
+    path.write_text(json.dumps(scan.build_record(spec, (0.0, 3.0), 0.2, entries),
+                               ensure_ascii=False), encoding="utf-8")
+    problems, notes = pf.spec_problems(spec, copy=False)
+    assert problems == [] and any("1.2 秒" in n and "render" in n for n in notes), (problems, notes)
     spec["cover"]["frame_at"] = 1.2
     assert pf.spec_problems(spec, copy=False)[0] == []
 

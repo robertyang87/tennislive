@@ -798,14 +798,43 @@ def problems_of(block: object) -> tuple[list[str], list[str]]:
     return problems, warnings
 
 
+def restrict_identity(ident: Mapping, names: Sequence[str],
+                      target: Sequence[str] | None = None) -> dict:
+    """同一张脸对一批候选的 `identify` 结果 → **只拿 `names` 这几个人去认**的那一份。
+
+    相似度是逐人各算各的（同一张脸的向量 · 各自头像的向量），所以只留 `names` 的相似度、
+    缺头像名单，再按 `target` 重判一次，和 `identify(image, names, target=target)`
+    **逐字段一样**——`check_frame(rivals=…)` 靠它让「多比了几个人」不改动终审那一份。"""
+    keep = [str(n) for n in names]
+    sims = {n: v for n, v in (ident.get("similarity") or {}).items() if n in keep}
+    missing = sorted({str(n) for n in ident.get("missing") or [] if n in keep})
+    want = sorted(str(n) for n in (target or []) if str(n) in keep)
+    verdict, name, reason = identity_verdict(sims, missing, float(ident.get("face_px") or 0.0),
+                                             want or None)
+    out = {**{k: v for k, v in ident.items() if k != "target"},
+           "verdict": verdict, "name": name, "similarity": sims, "missing": missing,
+           "expected": sorted(keep), "reason": reason}
+    if want:
+        out["target"] = want
+    return out
+
+
 def check_frame(image, expected_players, *, model: FaceModel | None = None,
-                target: Sequence[str] | None = None) -> dict:
+                target: Sequence[str] | None = None,
+                rivals: Sequence[str] = ()) -> dict:
     """封面帧一次查两件事（同一张脸）。给 `audit_interview_cover` 和
     `reel_face_gate` 共用——**两条线一个出口，别写两份**。
 
     返回 `{"status": "ok"|"unavailable", "identity": {...}, "eyes": {...},
     "problems": [...], "warnings": [...]}`；`problems` 只放**硬结论**
     （mismatch / closed / downcast），unknown 进 `warnings`。
+
+    `rivals`：同场、同框可能出现的**别人**（对手、搭档、文案里点了名的冠军……）。给了就
+    多出一块 `rivals`：同一张脸拿 `expected_players ＋ rivals` 一起认、`target` 只认
+    `expected_players`——「更像别人」的脸在那一块里是 unknown／mismatch。`identity`、
+    `problems`、`warnings` **和不给 rivals 时逐字段一样**（`restrict_identity`）：终审
+    那一份不因为多比了几个人而变，要更严一档的调用方（赛后开麦封面的机器换帧）自己读
+    `rivals` 那一块。只支持按名字给的候选（str／名单），显式头像路径的 Mapping 不混用。
     """
     try:
         model = model or load()
@@ -815,10 +844,19 @@ def check_frame(image, expected_players, *, model: FaceModel | None = None,
         return {**block, "problems": problems, "warnings": warnings}
     img = read_bgr(image)
     face = largest_face(model, img)
-    block = {"status": "ok", "model": MODEL_VERSION,
-             "identity": identify(img, expected_players, face=face, model=model,
-                                  target=target),
+    refs = resolve_expected(expected_players)
+    others = [str(r) for r in rivals if str(r).strip() and str(r) not in refs]
+    if others:
+        full = identify(img, {**refs, **resolve_expected(others)}, face=face, model=model,
+                        target=list(target or refs))
+        ident = restrict_identity(full, list(refs), target)
+    else:
+        full, ident = None, identify(img, expected_players, face=face, model=model,
+                                     target=target)
+    block = {"status": "ok", "model": MODEL_VERSION, "identity": ident,
              "eyes": eyes_open(img, face, model=model)}
+    if full is not None:
+        block["rivals"] = full
     problems, warnings = problems_of(block)
     return {**block, "problems": problems, "warnings": warnings}
 

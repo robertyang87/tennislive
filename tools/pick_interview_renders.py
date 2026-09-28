@@ -34,6 +34,8 @@ QC 的仍按已 render 兼容，避免上线时把几十条存量一起重跑。
     python tools/pick_interview_renders.py               # 打印待 dispatch 的
     python tools/pick_interview_renders.py --mark-one X  # X dispatch 成功后记一笔
     python tools/pick_interview_renders.py --stale       # 投了很久没产物的（查产物）
+    python tools/pick_interview_renders.py --parked      # 封面自动换帧连着 3 趟挑不出来、停车的
+    python tools/pick_interview_renders.py --autopick-failed X   # interview-clip 记停车账
 
 stdout 协议（workflow 靠它切）：第一行是给人看的题头，**第二行起每行一个
 待 dispatch 的 slug**；「等自动补齐 / 例外复核」走 stderr，不混进这份名单。
@@ -77,6 +79,17 @@ LEGACY_INPUT_BASELINE = ROOT / "data" / "interview_render_legacy_baseline.json"
 # `cancel-in-progress`，窗口比 job 超时短的话，一趟还在跑的长片会在第 60 分钟
 # 被重投的那趟掐掉——同一个形状这文件头部记过一次（45 对 49）。
 STALE_MINUTES = 70
+
+# **封面自动换帧连着几趟一格都挑不出来，就停车不再投**（2026-09-28 D2）。render 的封面前置
+# 那一步红了会就地扫、自动换一格（`interview_cover_scan --autopick`）；一格都挑不出来（主角没
+# 官方头像、整段都闭眼／是别人）时它退出 3，而同一个封面再投一趟**量出来的是同一批格子**——
+# 不停的话，70 分钟一趟、一天 20 趟 runner，永远红。所以 interview-clip 每红一趟记一笔
+# （`note_autopick_failure`，记在本文件的状态里：`autopick_failed[slug] = {cover, count, at, why}`），
+# 同一个封面指纹（`interview_cover_scan.cover_fingerprint`）攒满 `PARK_AFTER` 趟就停车：不进
+# dispatch 名单、进「等补齐／复核」和 run 摘要的停车那一栏，也不算 stale（不是「投了没产物」，
+# 是故意不投）。人改了封面（frame_at／scan_window／文案／主角）、补了头像、或者尺子变了，
+# 指纹一变就从头数。⚠️ 扫描记录那条老规矩不变：红着的 render 不提交 `cover_candidates.json`。
+PARK_AFTER = 3
 
 
 def _sha256(path: Path) -> str:
@@ -367,7 +380,65 @@ def _load_state() -> dict:
     data.setdefault("spec_sha256", {})
     if not isinstance(data["spec_sha256"], dict):
         data["spec_sha256"] = {}
+    if "autopick_failed" in data and not isinstance(data["autopick_failed"], dict):
+        data["autopick_failed"] = {}
     return data
+
+
+def _write_state(state: dict) -> None:
+    STATE.parent.mkdir(parents=True, exist_ok=True)
+    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _cover_fingerprint(spec: dict) -> str:
+    import interview_cover_scan  # noqa: PLC0415 —— 只要标准库，探针的系统 python3 import 得动
+
+    return interview_cover_scan.cover_fingerprint(spec)
+
+
+def note_autopick_failure(slug: str, *, now: str = "") -> dict:
+    """interview-clip 的 render 自动换帧一格都挑不出来（`--autopick` 退出 3）→ 记一笔停车账。
+
+    同一个封面指纹接着数，指纹变了（人改了封面、补了头像、尺子变了）从 1 数起。原因从这一趟
+    刚写的扫描记录里读（`failure_why`），读不到就照实说读不到。返回记下的那一条。"""
+    import interview_cover_scan as scan  # noqa: PLC0415
+
+    spec = json.loads((SPECS / f"{slug}.json").read_text(encoding="utf-8"))
+    fp = scan.cover_fingerprint(spec)
+    state = _load_state()
+    rows = state.setdefault("autopick_failed", {})
+    prev = rows.get(slug) if isinstance(rows.get(slug), dict) else {}
+    count = int(prev.get("count") or 0) + 1 if prev.get("cover") == fp else 1
+    rows[slug] = {"cover": fp, "count": count,
+                  "at": now or datetime.now(timezone.utc).strftime("%FT%TZ"),
+                  "why": scan.failure_why(scan.load_record(OUTPUT / slug), spec)[:400]}
+    _write_state(state)
+    return rows[slug]
+
+
+def parked_slugs(*, rendered: set[str] | None = None) -> dict[str, str]:
+    """停车的 slug → 为什么（给人读的一句）。当前 spec 已经出过片的不算。"""
+    rows = _load_state().get("autopick_failed") or {}
+    rendered = _current_rendered_slugs() if rendered is None else rendered
+    out: dict[str, str] = {}
+    for slug, row in sorted(rows.items()):
+        if not isinstance(row, dict) or slug in rendered or not (SPECS / f"{slug}.json").is_file():
+            continue
+        # 账坏了、指纹算不出来：**当没停车**（多投一趟，不许一条坏账把整个 picker 带崩、
+        # 把别的 slug 也挡在门外）
+        try:
+            if int(row.get("count") or 0) < PARK_AFTER:
+                continue
+            spec = json.loads((SPECS / f"{slug}.json").read_text(encoding="utf-8"))
+            same = row.get("cover") == _cover_fingerprint(spec)
+        except (Exception, SystemExit):  # noqa: BLE001
+            continue
+        if same:
+            out[slug] = (f"封面自动换帧连着 {row['count']} 趟一格都挑不出来（no frame passes "
+                         f"identity/eyes，最近一趟 {row.get('at') or '?'}）：{row.get('why') or '原因没记'}"
+                         "——停车，不再投；改封面（frame_at／cover.scan_window／文案点名／subject）"
+                         "或补主角的官方头像，封面指纹一变自动重投")
+    return out
 
 
 def _fresh_dispatches(*, now: datetime, rendered: set[str],
@@ -413,6 +484,7 @@ def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[st
         changed_inputs=changed_inputs)
     ready: list[str] = []
     waiting: list[tuple[str, list[str]]] = []
+    parked = parked_slugs(rendered=current_rendered)
     for p in sorted(SPECS.glob("*.json")):
         if p.name.endswith(".draft.json") or p.stem in blocked:
             continue
@@ -449,6 +521,10 @@ def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[st
                     if why:
                         waiting.append((p.stem, [why]))
                     continue
+        if p.stem in parked:
+            # 停车：同一个封面再投一趟量出来的是同一批格子，不白烧 runner（D2）
+            waiting.append((p.stem, [parked[p.stem]]))
+            continue
         missing = missing_for_render(p.stem, spec)
         if missing:
             waiting.append((p.stem, missing))
@@ -467,9 +543,7 @@ def mark_one(slug: str, *, now: str = "") -> None:
     spec_path = SPECS / f"{slug}.json"
     if spec_path.is_file():
         state["spec_sha256"][slug] = _sha256(spec_path)
-    STATE.parent.mkdir(parents=True, exist_ok=True)
-    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2),
-                     encoding="utf-8")
+    _write_state(state)
 
 
 def stale_dispatches(*, now: datetime | None = None) -> list[tuple[str, str]]:
@@ -482,10 +556,11 @@ def stale_dispatches(*, now: datetime | None = None) -> list[tuple[str, str]]:
     """
     state = _load_state()
     rendered = _current_rendered_slugs()
+    parked = parked_slugs(rendered=rendered)   # 故意不投的，不是「投了没产物」
     now = now or datetime.now(timezone.utc)
     out: list[tuple[str, str]] = []
     for slug in state.get("slugs", []):
-        if slug in rendered:
+        if slug in rendered or slug in parked:
             continue
         at_raw = state.get("at", {}).get(slug, "")
         if at_raw:
@@ -508,6 +583,10 @@ def main() -> int:
                     help="配合 --mark-one：写入这次 dispatch 的 UTC 时刻")
     ap.add_argument("--stale", action="store_true",
                     help="列出投了超过 %d 分钟还没有当前成片的" % STALE_MINUTES)
+    ap.add_argument("--autopick-failed", default="",
+                    help="interview-clip：这条 render 的封面自动换帧一格都挑不出来，记一笔停车账")
+    ap.add_argument("--parked", action="store_true",
+                    help="列出封面自动换帧连着 %d 趟挑不出来、停车不再投的" % PARK_AFTER)
     ap.add_argument("--probe", action="store_true",
                     help="「没活就早退」的探针：缺 PIL 时量宽度那几项拿上一趟全量预检的结论顶，"
                          "没有就算待投（只数数，不 dispatch）")
@@ -518,6 +597,20 @@ def main() -> int:
     if args.mark_one:
         mark_one(args.mark_one, now=args.at)
         print(f"已记：{args.mark_one}")
+        return 0
+
+    if args.autopick_failed:
+        row = note_autopick_failure(args.autopick_failed, now=args.at)
+        print(f"停车账：{args.autopick_failed} 这个封面第 {row['count']} 趟挑不出来"
+              + (f"——满 {PARK_AFTER} 趟，停车不再投" if row["count"] >= PARK_AFTER
+                 else f"（满 {PARK_AFTER} 趟停车）"))
+        return 0
+
+    if args.parked:
+        parked = parked_slugs()
+        print(f"封面自动换帧停车（连着 {PARK_AFTER} 趟一格都挑不出来，不再投）：{len(parked)} 条")
+        for slug, why in parked.items():
+            print(f"  {slug}：{why}")
         return 0
 
     if args.stale:

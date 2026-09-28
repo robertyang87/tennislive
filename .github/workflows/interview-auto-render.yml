@@ -158,6 +158,16 @@ jobs:
               tail -n +2 /tmp/stale.txt | sed 's/^  /- /'
             } >> "$GITHUB_STEP_SUMMARY"
           fi
+          # 封面自动换帧连着 3 趟一格都挑不出来的（D2）：停车不再投，单列一栏——它们要人动封面
+          # （frame_at／scan_window／文案点名／subject）或补头像，不是等一等就好的那种
+          if python3 tools/pick_interview_renders.py --parked > /tmp/parked.txt \
+             && [ "$(tail -n +2 /tmp/parked.txt | grep -c .)" -gt 0 ]; then
+            {
+              echo "## 🅿️ 封面自动换帧停车（连着 3 趟一格都挑不出来，不再投；改封面或补头像之后自动重投）"
+              echo ""
+              tail -n +2 /tmp/parked.txt | sed 's/^  /- /'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
           if [ -s /tmp/waiting.txt ]; then
             {
               echo "## ⏳ 等自动补齐 / 例外复核（不 dispatch）"
