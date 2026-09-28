@@ -29,6 +29,9 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from render_inputs import MANIFEST_NAME as RENDER_INPUTS_NAME  # noqa: E402
+
 # 成片画布。**赛场之上从 9:16 改成 3:4 之后这儿漏改了**，于是每跑一次都报
 # 「分辨率 1080×1440，要 1080×1920」——一条常年红的检查等于没有检查。
 # 判据钉在 test_检查工具认的画布要和成片的画布是同一个，免得再分叉一次。
@@ -77,6 +80,13 @@ def write_attestation(film: Path, spec_path: Path, spec: dict) -> Path:
             "audio_tail_max_s": 1.0,
         },
     }
+    # 渲染输入清单（`render_inputs.py`，账号所有者 2026-09-27「重核对，不重渲」）：
+    # 凭证把它一起钉住，之后 spec 只改注解/推送字段时 `mode=reattest` 才认得出
+    # 「这份清单就是这一次渲染写的」。老片子没有清单就不写这一项——重核对对它们
+    # 判「不了」，照旧重渲。
+    inputs = outdir / RENDER_INPUTS_NAME
+    if inputs.is_file():
+        payload["render_inputs_sha256"] = _sha256(inputs)
     path = outdir / "qc_attestation.json"
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")

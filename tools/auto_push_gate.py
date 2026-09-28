@@ -11,7 +11,10 @@ run 30755226229）。43 秒不值得优化，真正的成本是**人的往返**�
 
 1. **路径形状**必须是 `output/<日期>/reel/<slug>/render.json`
 2. **L2 不可变凭证**必须与当前 spec、烧片字幕、成片 hash/bytes 以及 Release
-   文件大小完全一致；`render.json` 只是流程信号，不能冒充“质检通过”
+   文件大小完全一致；`render.json` 只是流程信号，不能冒充“质检通过”。
+   凭证钉着渲染输入清单的（2026-09-27 起渲的都钉），另外复核清单、`render.json`
+   钉的那一份，并**每次**拿当前 spec 重算渲染投影——不只在 `mode=reattest` 重出的
+   凭证上算，见 `_validate_render_inputs`
 3. spec 里必须显式写 `"push": {"auto": true}` ——**默认关**，
    和 `mixed_fps` / `silent_source` 一个形状：认领这一步把「想清楚了」和
    「凑合一下」分开。**这是六道里唯一一道 `--forced` 放得宽的**（它问的是
@@ -155,7 +158,91 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
         raise Skip(f"{slug}：Release 文件大小与 QC 成片不一致")
     if not render.get("video_url"):
         raise Skip(f"{slug}：render.json 没有 Release video_url")
+    _validate_render_inputs(repo, slug, outdir, qc, render, spec_path)
     return film_hash
+
+
+def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
+                            render: dict, spec_path: Path) -> None:
+    """凭证钉着渲染输入清单时，清单本身也要对得上，而且**每次都重算一遍投影**。
+
+    账号所有者 2026-09-27 选了「重核对，不重渲」（`match-reel mode=reattest`，
+    `tools/reattest_check.py`）：spec 渲完之后只改注解/推送字段时，不重渲，
+    重出一张绑定新 spec 字节、指着同一份成片的凭证。**上面那几道一道都没松**
+    （spec / 字幕 / 成片 hash / Release 字节照旧逐一比），这里只**加**：
+
+    - 凭证写了 `render_inputs_sha256`，仓库里那份 `render_inputs.json` 就必须
+      是它、`render.json` 钉的也必须是它，而且描述的是同一份成片
+    - 清单记的 spec 和凭证记的 spec 不是同一份字节，就**只能**是重核对出的凭证
+      （带 `reattest`）——普通渲染里两者是同一个文件先后读两次，不一样就是链被
+      动过手脚
+    - **不看凭证带不带 `reattest`，一律**拿当前 spec 按同一个口径重算渲染投影和
+      认领、和清单逐字节比（评审 2026-09-27：原来只在带 `reattest` 时才算，删掉
+      那一段、再把 spec 字节补进凭证，就绕过去了）。普通渲染 spec 没变，这一步
+      恒过、不花钱。素材字节这一半这里核不了（这条工作流稀疏检出，不拉
+      assets/），它由 runner 那一步现算
+    - 清单是**旧口径**写的——`version` 比今天的 `render_inputs.VERSION` 小，或者版本号
+      一样、渲染那一刻的口径指纹（`rules`）和今天的 `render_inputs.rules_digest()` 对不上
+      （有人往 `RENDER_ANNOTATIONS` / `PUBLISH_FIELDS` 里加了键、没升版本号）：不重算
+      （拿新口径比旧清单只会误判），普通渲染退回 spec 字节那道；重核对凭证不认
+    - spec 字节**就是**清单记的那一份：投影照算，认领**不**按今天的 `Gate.rule` 重判
+      （闸口径收严不进指纹，重判会把没动过的片子卡成不推）；spec 改过才重判
+    """
+    digest = qc.get("render_inputs_sha256")
+    if qc.get("reattest") and not digest:
+        raise Skip(f"{slug}：重核对凭证没有钉住渲染输入清单，不认")
+    if not digest:
+        return
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import render_inputs  # noqa: PLC0415
+
+    name = render_inputs.MANIFEST_NAME
+    if render.get("render_inputs_sha256") != digest:
+        raise Skip(f"{slug}：render.json 钉的 {name} 和凭证钉的不是同一份")
+    manifest_path = outdir / name
+    if not tracked(repo, manifest_path):
+        raise Skip(f"{slug}：凭证钉着 {name}，而它不在仓库里")
+    manifest_bytes = _tracked_bytes(repo, manifest_path)
+    if _sha256_bytes(manifest_bytes) != digest:
+        raise Skip(f"{slug}：{name} 在质检后变过")
+    try:
+        manifest = json.loads(manifest_bytes)
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise Skip(f"{slug}：{name} 不是有效 JSON") from exc
+    if manifest.get("film_sha256") != qc.get("film_sha256"):
+        raise Skip(f"{slug}：渲染输入清单描述的不是凭证里那份成片")
+    if manifest.get("spec_sha256") != qc.get("spec_sha256") and not qc.get("reattest"):
+        raise Skip(f"{slug}：{name} 记的 spec 和凭证记的不是同一份，而凭证不是重核对出的")
+    version = manifest.get("version")
+    if not render_inputs.same_rules(manifest):
+        # 清单是旧口径写的：拿今天的 `project` 重算去比，比出来的差异是口径变了、不是
+        # spec 变了（v1→v2 那次「按原顺序比」就会把每一份 v1 清单判成「键的顺序变了」；
+        # 往 `RENDER_ANNOTATIONS` 加一个键而没升版本号，也会把改之前渲的每一份判成
+        # 「渲染参数变了」——评审 2026-09-27 第三轮复现的，自动链上只印一行 `[跳过]`）。
+        # 重核对凭证判不了就不认（`reattest_check` 本来就不给旧清单出凭证）；普通渲染的
+        # 凭证照旧由上面那道 spec 字节逐字节钉着——退回的正是加清单之前的那道闸。
+        # 要借「改版本号」绕过去就得改清单、重钉三处 sha，而改得动清单的人本来就能把
+        # 投影一起改掉——重算防的是「只手搓凭证、没动清单」那一种，这里一点没松。
+        if qc.get("reattest"):
+            raise Skip(f"{slug}：重核对凭证钉的 {name} 是旧口径（版本 {version!r}、口径指纹 "
+                       f"{str(manifest.get('rules'))[:12]}），现在的口径是版本 "
+                       f"{render_inputs.VERSION}——判不了，不认")
+        if not (isinstance(version, int) and not isinstance(version, bool)
+                and 0 < version <= render_inputs.VERSION):
+            raise Skip(f"{slug}：{name} 的版本 {version!r} 不认")
+        return
+    spec_bytes = spec_path.read_bytes()
+    # spec 字节**就是**清单记的那一份（普通渲染的常态）：认领不按今天的闸口径重判。
+    # 那一刻闸认了才渲得出来；之后哪条分支把某个 `Gate.rule` 收严（`text_str` → `text`）
+    # 而口径指纹不变（`GATE_ANNOTATIONS` 故意不进指纹），重判就会把一条 spec 一个字节
+    # 没动过的片子判成「认领没了」——自动链只印一行 `[跳过]`，永远不推（复审 fix 轮）。
+    # 投影照旧每次重算：清单里的 `spec_sha256` 手搓得动（`_forge(manifest_too=True)`），
+    # 投影才是那道拦得住的；而改得动清单的人本来也改得动清单里的认领表，这里不松什么。
+    same_spec = _sha256_bytes(spec_bytes) == manifest.get("spec_sha256")
+    problems = render_inputs.spec_problems(spec_bytes, manifest, claims=not same_spec)
+    if problems:
+        what = "重核对凭证不成立" if qc.get("reattest") else "spec 和渲染那一刻的渲染输入对不上"
+        raise Skip(f"{slug}：{what}——" + "；".join(problems[:3]))
 
 
 def wants_auto_push(repo: Path, slug: str, outdir: Path,
