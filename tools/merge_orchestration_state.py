@@ -120,6 +120,20 @@ def merge_interview_states(base: dict, ours: dict, theirs: dict) -> dict:
             (merged.get("subs") or {}).pop(slug, None)
         else:
             merged.setdefault("subs", {})[slug] = mine
+    # 停车账（`pick_interview_renders.note_autopick_failure`，interview-clip 的 render 红在封面
+    # 自动换帧时记）：本趟改过的条目加回去——不加的话 interview-clip 记账撞上 auto-render 的
+    # dispatch 提交，重放以远端为底，这一笔就丢了，停车永远攒不满（D2）。两边都改过同一条
+    # 取 `at` 晚的那一份（同一个 slug 的 render 按 concurrency 串行，晚的就是后记的）。
+    base_f = base.get("autopick_failed") or {}
+    theirs_f = theirs.get("autopick_failed") or {}
+    for slug, entry in (ours.get("autopick_failed") or {}).items():
+        if base_f.get(slug) == entry:
+            continue
+        remote = theirs_f.get(slug)
+        if (isinstance(remote, dict) and remote != base_f.get(slug) and isinstance(entry, dict)
+                and str(remote.get("at") or "") > str(entry.get("at") or "")):
+            continue
+        merged.setdefault("autopick_failed", {})[slug] = entry
     return merged
 
 
@@ -144,7 +158,8 @@ def main() -> int:
                     or not isinstance(state.get("slugs", []), list)
                     or not isinstance(state.get("at", {}), dict)
                     or not isinstance(state.get("spec_sha256", {}), dict)
-                    or not isinstance(state.get("subs", {}), dict)):
+                    or not isinstance(state.get("subs", {}), dict)
+                    or not isinstance(state.get("autopick_failed", {}), dict)):
                 raise ValueError("Invalid interview dispatch state")
         merged = merge_interview_states(*snapshots)
     else:

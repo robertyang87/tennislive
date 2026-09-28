@@ -45,6 +45,11 @@ on:
       - "data/legacy_interview_gates.json"
       # 已发采访切行的老尺子表（`build_interview_clip.segment_ruler`，预检重切字幕按它）
       - "data/legacy_interview_segment_metric.json"
+      # 封面扫描记录对账（预检的 `cover_scan_problem`）和它的尺子：审核器阈值、人脸模型
+      # 阈值变了，旧记录作不作数跟着变（`interview_cover_scan.stale_ruler`）
+      - "tools/interview_cover_scan.py"
+      - "tools/audit_interview_cover.py"
+      - "tools/face_checks.py"
       # 「这份草稿停着没」的判据（早退探针和 promote 共用）和用它的 promote：改了判据，
       # 停着的草稿要马上重判，不能干等定时班次（GitHub 还会丢 schedule 事件）。
       - "tools/interview_draft_hold.py"
@@ -155,6 +160,18 @@ jobs:
               echo "## ⚠️ 有采访投出去超过 70 分钟还没有当前成片（本轮自动重投；窗口和 tools/pick_interview_renders.py 的 STALE_MINUTES 同一个数）"
               echo ""
               tail -n +2 /tmp/stale.txt | sed 's/^  /- /'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          # 同一个封面连着 3 趟红在封面那一步的（D2：一格都挑不出来／换上的终审还红／对账红）：
+          # 停车不再投，单列一栏——它们要人动封面（frame_at／scan_window／文案点名／subject）、
+          # 补头像或重扫，不是等一等就好的那种。**只列在这一栏**：picker 不把它们放进 ⏳ 那份
+          # 等待名单（stderr），同一条不说两遍
+          if python3 tools/pick_interview_renders.py --parked > /tmp/parked.txt \
+             && [ "$(tail -n +2 /tmp/parked.txt | grep -c .)" -gt 0 ]; then
+            {
+              echo "## 🅿️ 封面自动换帧停车（同一个封面连着 3 趟红在封面那一步，不再投；改封面、补头像或重扫之后自动重投）"
+              echo ""
+              tail -n +2 /tmp/parked.txt | sed 's/^  /- /'
             } >> "$GITHUB_STEP_SUMMARY"
           fi
           if [ -s /tmp/waiting.txt ]; then

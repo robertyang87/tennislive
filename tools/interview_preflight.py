@@ -37,7 +37,11 @@ spec 的 `end` 离最后一个词太远**（`interview_tail.quiet_tail_problem`�
 `check_taste_extra`：总分差、赛点同义反复、小红书正文 markdown）、解读卡（含「一行放得下」）、
 文案的 tag／标题（`push_reel --stage check`，和 runner 的「发布文案前置检查」同一条命令）、以及
 **按仓库里的字幕缓存重切一遍行**之后走 `write_ass` 那一整套（`en_fixed` 行号错位、
-行数对齐、中英超宽、吊尾虚词、顶栏宽度、`highlight_en`）。
+行数对齐、中英超宽、吊尾虚词、顶栏宽度、`highlight_en`）；以及**已提交的封面扫描记录**
+（`cover_candidates.json`）和 `cover.frame_at` 对不对得上（`cover_scan_problem`，2026-09-28）——
+记录外没扫过的一格、或者记录里明写着没过闸**而 render 自动换帧也救不了**的那一格，runner 的
+`--check`／推送闸一样拦，不必等装完依赖、下完源片（红的时候顺手报出记录里能换的那一格，
+或者过闸的那几格）；记录里已经有一格 render 会自动换上的，不拦、只提示（D3，`render_would_swap`）。
 
 **⚠️（只报不拦）**：没有字幕缓存所以行数没对上号；`end` 离最后一个词还有好几秒
 （片尾板要在出片那一趟按帧量，见 `interview_tail`）；转正那道措辞闸的口径。
@@ -325,6 +329,107 @@ def copy_problem(slug: str, date: str = "") -> str | None:
     return None
 
 
+def _cover_record_raw(slug: str) -> bytes | None:
+    """已提交的封面扫描记录原文。**和字幕缓存同一个分支口径**（`_materialize_captions`）：
+    工作区有这条的产物目录就只认工作区，没有就从 HEAD 取——interview-auto-render 的稀疏
+    检出不带 output/，而 HEAD 的树里全量都在。没有记录返回 None。"""
+    from interview_cover_scan import RECORD_NAME  # noqa: PLC0415
+
+    src = OUTPUT / slug
+    if src.is_dir():
+        path = src / RECORD_NAME
+        return path.read_bytes() if path.is_file() else None
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(ROOT), "show", f"HEAD:output/interviews/{slug}/{RECORD_NAME}"],
+            capture_output=True, check=False, timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return proc.stdout if proc.returncode == 0 else None
+
+
+def cover_record_fingerprint(slug: str) -> str:
+    """封面扫描记录的 blob 号（没有就是空串）。`pick_interview_renders.verdict_key` 要它：
+    记录一换（`mode=cover` 重扫、render 自动换帧），缓存里那条预检结论就作废。"""
+    raw = _cover_record_raw(slug)
+    return "" if raw is None else _blob_id(raw)
+
+
+def cover_scan_verdict(spec: dict) -> tuple[str | None, str | None]:
+    """已提交的封面扫描记录和 `cover.frame_at` → (红的原因, 提示)。对得上（或没有记录）→ (None, None)。
+
+    判据就是 runner 那一步 `interview_cover_scan.py --check` 和推送闸 `cover_scan_gate`
+    调的同一个 `record_problem`（取景变过、尺子变过的旧记录都不管）。
+
+    ⭐ **frame_at 在记录里没过闸、可记录里已经有一格 render 会自动换上的**（`render_would_swap`：
+    同一个窗口、同一个间隔、取景和尺子都没变，render 红了就地重扫量出来的就是这几格）→
+    **不拦**，只给一条提示：render 的封面前置那一步自己会换（2026-09-28 D3）。拦下来等人
+    把那个数抄进 spec，只是多等一个来回——时效第一。
+
+    红的时候：记录里有机器能换、但 render 未必扫得到的一格（窗口／间隔对不上）→ 报出来，
+    改一个数就能 dispatch；**过闸的有、机器一格都换不了**（主角没官方头像、认人拿不准……）→
+    把过闸的那几格列出来让人挑，不说「换一段重扫」——重扫扫出来的还是这几格；一格都没过闸
+    才叫人换一段（cover.scan_window）重扫。
+    """
+    from interview_cover_scan import (  # noqa: PLC0415
+        blocked_summary,
+        find_entry,
+        pick,
+        record_problem,
+        render_would_swap,
+    )
+
+    raw = _cover_record_raw(str(spec.get("slug") or ""))
+    if raw is None:
+        return None, None
+    try:
+        record = json.loads(raw)
+    except (ValueError, UnicodeDecodeError):
+        record = {"method": "unreadable"}
+    problem = record_problem(record, spec)
+    if not problem:
+        return None, None
+    swap = render_would_swap(record, spec)
+    if swap is not None:
+        return None, (f"封面 cover.frame_at={(spec.get('cover') or {}).get('frame_at')} 在已提交的扫描记录里"
+                      f"没过闸，记录里已经有一格 render 会自动换上的（{swap['frame_at']:g} 秒：过闸、认得出是"
+                      "封面主角、眼睛睁着）——不拦，render 的封面前置那一步自己换")
+    best = pick(record, spec) if isinstance(record, dict) else None
+    passing = [t for t in (record.get("passing") or [])] if isinstance(record, dict) else []
+    if best is not None:
+        hint = (f"记录里过闸、认得出是封面主角、眼睛睁着、余量最大的是 {best['frame_at']:g} 秒——"
+                "改成它就行")
+    elif passing:
+        entries = [e for t in passing if (e := find_entry(record, t)) is not None]
+        hint = (f"记录里过闸的有 {'、'.join(f'{t:g}' for t in passing[:5])} 秒"
+                f"（按余量排{'，共 ' + str(len(passing)) + ' 格' if len(passing) > 5 else ''}），"
+                f"可没有一格机器能自动换（{blocked_summary(entries, spec)}）——在这几格里挑一格写进"
+                " frame_at（mode=cover 的候选墙上看过眼睛和是不是本人；认人拿不准的写 cover._face_check_why）")
+    else:
+        hint = "记录里一格都没过闸——换一段（cover.scan_window）重扫"
+    return f"{problem}（{hint}）", None
+
+
+def cover_scan_problem(spec: dict) -> str | None:
+    """`cover_scan_verdict` 的红那一半（dispatch 之前拦不拦）。"""
+    return cover_scan_verdict(spec)[0]
+
+
+def _cover_scan_note(spec: dict) -> str | None:
+    """`cover_scan_verdict` 的提示那一半（不拦）；判不了（坏记录抛了）就不提示——红那一半
+    在 `_check_cover_scan` 里照样跑、照样记。"""
+    try:
+        return cover_scan_verdict(spec)[1]
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _check_cover_scan(spec: dict) -> None:
+    """`cover_scan_problem` 的闸形状（红就 SystemExit），给 `_run_gate` 用。"""
+    if problem := cover_scan_problem(spec):
+        raise SystemExit(problem)
+
+
 def _spec_gates(clip) -> tuple:
     """runner 上只读 spec 的闸，**同一份函数、同一个顺序**：
 
@@ -373,7 +478,7 @@ def probe_problems(spec: dict) -> tuple[list[str], list[str]]:
 
     problems: list[str] = []
     unknown: list[str] = []
-    for gate in _spec_gates(clip):
+    for gate in (*_spec_gates(clip), _check_cover_scan):
         try:
             err, _ = _run_gate(gate, spec, env_errors=(ImportError, OSError))
         except PreflightUnavailable as exc:
@@ -396,10 +501,14 @@ def spec_problems(spec: dict, *, copy: bool = True, date: str = "",
     problems: list[str] = []
     notes: list[str] = []
     slug = str(spec.get("slug") or "")
-    for gate in _spec_gates(clip):
+    # 封面扫描记录那一道不在 `_spec_gates` 里（那一排按 ast 钉死是 `main()` 开头那几个
+    # `check_*`）；它在 runner 上是封面前置那一步的 `--check`，不要 PIL，探针也跑
+    for gate in (*_spec_gates(clip), _check_cover_scan):
         err, _ = _run_gate(gate, spec)
         if err:
             problems.append(f"{gate.__name__}：{err}")
+    if (note := _cover_scan_note(spec)):
+        notes.append(note)
     if copy and (SPECS / f"{slug}.xhs.txt").is_file():
         if err := copy_problem(slug, date):
             problems.append(err)

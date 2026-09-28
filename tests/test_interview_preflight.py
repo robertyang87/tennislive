@@ -389,6 +389,40 @@ def test_预检全绿的合成采访(monkeypatch, tmp_path):
     assert problems == [], problems
 
 
+def test_全量预检也按已提交的封面扫描记录拦frame_at(monkeypatch, tmp_path):
+    """rework_audit_0928：封面帧那一类在 dispatch 之前一道都没有，9 趟全是装完依赖、下完
+    源片才红。记录（`mode=cover` 提交的、render 自动换帧提交的）已经说了哪一格不行，
+    就在 dispatch 之前红，并把能直接换的那一格报出来。全量和探针两条路都要有。"""
+    import interview_cover_scan as scan
+
+    spec = _full_spec(monkeypatch, tmp_path)
+    # 机器能换的那一格还得是文案点了名的人（`interview_cover_scan.named_in_copy`）
+    spec["cover"]["tag"] = "2026 美网 · 莱巴金娜"
+    block = {"status": "ok", "identity": {"verdict": "match", "name": "莱巴金娜",
+                                          "similarity": {"莱巴金娜": 0.6}, "missing": [],
+                                          "face_px": 300.0},
+             "eyes": {"verdict": "open", "ear": 0.3, "face_px": 300.0}}
+    entries = [{"frame_at": 1.0, "status": "fail", "issues": ["只检出 1 只眼"],
+                "face": None, "margin": 2.0, "face_model": block},
+               {"frame_at": 1.2, "status": "pass", "issues": [], "face": None,
+                "margin": 3.0, "face_model": block}]
+    # 记录的窗口（0.5–2.5）不是 render 现在会扫的那一段（frame_at 前后各 2 秒＝0–3）：
+    # 判不准 render 扫不扫得到 1.2，拦下来、报出那一格
+    record = scan.build_record(spec, (0.5, 2.5), 0.2, entries)
+    path = pf.OUTPUT / spec["slug"] / scan.RECORD_NAME
+    path.write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
+    problems, _ = pf.spec_problems(spec, copy=False)
+    hit = [p for p in problems if p.startswith("_check_cover_scan")]
+    assert len(hit) == 1 and "没过闸" in hit[0] and "1.2 秒" in hit[0], problems
+    # 同一段、同一个间隔（D3）：render 红了会自动换上 1.2——不拦，提示里说一声
+    path.write_text(json.dumps(scan.build_record(spec, (0.0, 3.0), 0.2, entries),
+                               ensure_ascii=False), encoding="utf-8")
+    problems, notes = pf.spec_problems(spec, copy=False)
+    assert problems == [] and any("1.2 秒" in n and "render" in n for n in notes), (problems, notes)
+    spec["cover"]["frame_at"] = 1.2
+    assert pf.spec_problems(spec, copy=False)[0] == []
+
+
 @pytest.mark.parametrize(("mutate", "expect"), [
     (lambda s: s["zh"].pop(), "对不上"),                                      # 117:114 那种
     (lambda s: s["zh"].__setitem__(0, "非" * 20), "中文超宽"),
