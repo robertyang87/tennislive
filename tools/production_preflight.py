@@ -43,16 +43,20 @@ class RequestNotReady(ValueError):
     写进 run 摘要并标红——没过前置检查的请求不会只剩一句被人略过的 warning。"""
 
 
-def check_taste(spec: dict) -> None:
+def check_taste(spec: dict, *, auto: bool | None = None) -> None:
     """账号所有者的口味闸（采访线）：标题和推送标题的数字一致（硬）；封面大标题的
-    术语只报（等账号所有者确认，见 `taste_gates.interview_taste_findings`）。
+    术语（账号所有者 2026-09-27 答复做硬：手写的硬、自动链没核没发的只报，见
+    `taste_gates.interview_taste_findings`）。
+
+    `auto=False`：人工请求那条路（`check_request`）——标题是人写在请求里的，一律按手写判，
+    哪怕「只改元数据」那条路上铺进来的现有 spec 带着自动链的章。
 
     2026-09-27「形成一个通用的规则在做视频前就拦掉，而不是说做了一半又返工」——
     所以它排在任何下载、ASR、渲染之前。判据单一出处 tools/taste_gates.py。
     """
     _tools_on_path()
     from taste_gates import interview_taste_findings  # noqa: PLC0415
-    hard, soft = interview_taste_findings(spec)
+    hard, soft = interview_taste_findings(spec, auto=auto)
     for note in soft:
         print(f"[口味] {spec.get('slug', '?')} 只报：{note}")
     if hard:
@@ -70,7 +74,7 @@ def check_request(req: dict) -> None:
     抄请求的 cover/push）。所以这里不另去读 specs/ 下的旧稿。
     """
     # No download, fonts, browser or ASR import required here.
-    check_taste(req)
+    check_taste(req, auto=False)
     # 出片那一趟 `build_interview_clip.main()` 开头还有两道**只读 spec 文本**的闸：
     # 比分赢家视角（`check_score_orientation`）和另一半口味闸（`check_taste_extra`）。
     # 原来请求这一步不查它们——`interview-auto-render` 用 GITHUB_TOKEN 把 spec 直推 main

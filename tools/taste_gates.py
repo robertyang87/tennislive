@@ -27,8 +27,8 @@
 | `data/legacy_taste_gates.json` 里已发的老片子 | 放行（已发的不重渲）；**钩子冻的是原文**，改一个字就重新受管 |
 | 自动产的 spec（`_production.status == ready_for_render`） | **只报**——那一头没有人写认领，做硬会把自动链卡成「今天没有候选」；判据文本照样印进日志（行首 `[口味·<块>]`） |
 
-采访线的封面大标题术语**只报**（规则书写的是 reel 和字卡，等账号所有者确认要不要做硬），
-见 `interview_taste_findings`。
+采访线的封面大标题术语：账号所有者 2026-09-27 ~23:00Z 答复**做硬**——手写的硬、
+自动链没核没发的只报（和钩子同一个分法），见 `interview_taste_findings`。
 
 ⚠️ **这些闸不接模型。** 账号所有者 2026-09-27：「minimax 和 deepseek 都不要用，后续会
 拿掉」——所以这里只读 spec（谁写的都一样判），**不回喂任何模型重写钩子，也不为
@@ -840,20 +840,39 @@ def reel_taste_findings(spec: dict) -> tuple[list[str], list[str]]:
     return [p for _, h, p in scoped if h], [p for _, h, p in scoped if not h]
 
 
-def interview_taste_findings(spec: dict) -> tuple[list[str], list[str]]:
+def interview_is_auto(spec: dict) -> bool:
+    """自动链写的、还没人核也还没发的采访 spec——和 `build_interview_request.
+    unverified_auto_spec` 是**同一个判据**（章 `auto_pending` ＋ 没被 `_protected`
+    销章），不另写一份。读不到那个模块就当手写的（fail closed：硬）。"""
+    if not isinstance(spec, dict) or spec.get("transcript_verification") != "auto_pending":
+        return False
+    try:
+        from build_interview_request import unverified_auto_spec  # noqa: PLC0415
+    except ImportError:
+        return False
+    return unverified_auto_spec(spec)
+
+
+def interview_taste_findings(spec: dict, *, auto: bool | None = None
+                             ) -> tuple[list[str], list[str]]:
     """采访线：(硬的, 只报的)。
 
     硬：标题和推送标题同一个数只能有一个说法（规则书 `copy-fields-one-source-of-truth`
-    写明管 reel／采访／字卡三条线）。
+    写明管 reel／采访／字卡三条线）——谁写的都硬（自动转正的模板标题结构上碰不到它）。
 
-    只报：封面大标题里的术语。规则书 `hook-no-jargon-or-allusion` 管的是 reel 和字卡，
-    O6 说的也是「钩子」——把采访大标题一起做硬是实现这一包时自己延伸出去的
-    （106 条已发标题里 11 条会中，「五比一 却被雨拖到抢七」这类），**账号所有者确认
-    之前只报不拦**；确认了就把它挪进硬的那一组，豁免表已经冻好了。
+    封面大标题里的术语：账号所有者 2026-09-27 ~23:00Z 答复**做硬**（原来只报，
+    因为规则书那条写的是 reel 和字卡、O6 说的是「钩子」，实现时自己延伸的要等他确认）。
+    分法和「赛场之上」的钩子一样：**手写的硬，自动链没核没发的只报**
+    （`interview_is_auto`；`auto` 显式传进来就按它）。已发的 11 条按原文冻在
+    `legacy_taste_gates.json` 的 `interview_title_jargon`，只许减不许加。
     """
     shape = shape_problem(spec)
     if shape:
         return [shape], []
     hard = [p for p in (copy_count_problem(spec, title_key="title"),) if p]
-    soft = [p for p in (interview_title_jargon_problem(spec),) if p]
-    return hard, soft
+    jargon = interview_title_jargon_problem(spec)
+    if not jargon:
+        return hard, []
+    if interview_is_auto(spec) if auto is None else auto:
+        return hard, [jargon]
+    return hard + [jargon], []

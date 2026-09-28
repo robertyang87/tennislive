@@ -180,15 +180,25 @@ def test_术语认领口只给网球有故事():
     assert T.hook_jargon_problem(reel, legacy={}), "赛场之上没有这个口（O6 点名禁的就是这一栏）"
 
 
-def test_采访封面标题的术语只报_数字一致才硬():
-    """规则书 `hook-no-jargon-or-allusion` 管的是 reel 和字卡、O6 说的是「钩子」——
-    采访大标题一起做硬是实现时自己延伸的（已发 106 条里 11 条会中），**账号所有者
-    确认之前只报**；`copy-fields-one-source-of-truth` 写明管三条线，照旧硬。"""
+def test_采访封面标题的术语_手写的硬_自动的只报():
+    """账号所有者 2026-09-27 ~23:00Z 答复：采访大标题的术语**做硬**（原来只报，因为规则书
+    那条写的是 reel 和字卡）。分法和「赛场之上」的钩子一样：手写的硬，自动链没核没发的
+    （`auto_pending` 章、没被 `_protected` 销章）只报——那一头没人写认领。
+    `copy-fields-one-source-of-truth` 写明管三条线，照旧对谁都硬。"""
     spec = {"slug": "new-iv", "cover": {"title": ["20岁首秀 两盘拿下", "他先谢看台上的费德勒"]},
             "push": {"summary": "他说谢谢费德勒"}}
     assert T.interview_title_jargon_problem(spec, legacy={})
     hard, soft = T.interview_taste_findings(spec)
-    assert not hard and soft, "术语只报"
+    assert hard and not soft, "手写的采访大标题术语是硬的"
+    auto = {**spec, "transcript_verification": "auto_pending"}
+    assert T.interview_is_auto(auto)
+    hard, soft = T.interview_taste_findings(auto)
+    assert not hard and soft, "自动链没核没发的只报"
+    verified = {**auto, "transcript_verified": True}
+    assert not T.interview_is_auto(verified), "人核过就销章"
+    assert T.interview_taste_findings(verified)[0], "销了章就按手写判"
+    # 显式传 auto 的调用方（人工请求那条路恒按手写判）
+    assert T.interview_taste_findings(auto, auto=False)[0]
     spec["cover"]["title"] = ["20岁第一次登场 两盘拿下", "他先谢看台上的费德勒"]
     assert T.interview_title_jargon_problem(spec, legacy={}) is None
     clash = {"slug": "new-iv", "cover": {"title": ["三个赛点没兑现", "他说还会回来"]},
@@ -370,9 +380,10 @@ def _corpus_hard_findings(reel_paths, interview_paths) -> tuple[list[str], list[
     （评审 B1，和 explainer-preflight 同一天被拦的是同一类：推一次就红一次的全库判据）。
     自动 spec 过闸时只要求**不抛**。
 
-    采访线没有自动标记要分：自动转正的标题是固定模板「{赢家}赢球之后／第一时间说了什么？」，
-    推送标题「{赢家}赢球后的场上采访」，两边都没有被计数的名词，硬的那一条（数字一致）
-    结构上碰不到它。
+    采访线：数字一致那一条对谁都硬——自动转正的标题是固定模板「{赢家}赢球之后／第一时间
+    说了什么？」，推送标题「{赢家}赢球后的场上采访」，两边都没有被计数的名词，结构上碰不到它。
+    大标题术语（2026-09-27 做硬）由 `interview_taste_findings` 自己按 `interview_is_auto`
+    分：自动链没核没发的落进只报那一组，这里不用再分。
     """
     bad, auto = [], []
     for path in reel_paths:
@@ -552,17 +563,27 @@ def test_采访渲染入口和预检都过口味闸(capsys):
     # 硬的：标题和推送标题一个数两个说法
     with pytest.raises(SystemExit, match="口味"):
         clip.check_taste(_clash_interview())
-    with pytest.raises(ValueError, match="口味"):
+    # 批次复审 nit：钉 `RequestNotReady`（确定性的请求问题，--failed-list 那条路靠它不连坐），
+    # 不是它的父类 ValueError——退回 ValueError 原来 170 条一条都不红
+    with pytest.raises(production_preflight.RequestNotReady, match="口味"):
         production_preflight.check_taste(_clash_interview())
     # 预检的请求路径（build_interview_request 在任何下载之前调它）
-    with pytest.raises(ValueError, match="口味"):
+    with pytest.raises(production_preflight.RequestNotReady, match="口味"):
         production_preflight.check_request(_clash_interview())
-    # 只报的：大标题里的术语（等账号所有者确认）
+    # 大标题里的术语：手写的硬（账号所有者 2026-09-27 答复），自动链没核没发的只报
+    with pytest.raises(SystemExit, match="抢七"):
+        clip.check_taste(_jargon_interview())
+    with pytest.raises(production_preflight.RequestNotReady, match="抢七"):
+        production_preflight.check_taste(_jargon_interview())
+    auto = {**_jargon_interview(), "transcript_verification": "auto_pending"}
     capsys.readouterr()
-    clip.check_taste(_jargon_interview())
-    production_preflight.check_taste(_jargon_interview())
+    clip.check_taste(auto)
+    production_preflight.check_taste(auto)
     out = capsys.readouterr().out
     assert out.count("只报") == 2 and "抢七" in out
+    # 人工请求那条路：标题是人写的，铺进来的现有 spec 带着章也照样硬
+    with pytest.raises(production_preflight.RequestNotReady, match="抢七"):
+        production_preflight.check_request(auto)
     import inspect
     assert "check_taste(spec)" in inspect.getsource(clip.main)
     # 「只改元数据」那条路上，预检读的是按请求差量改过的**现有 spec** 的标题（spec 后铺、
@@ -593,8 +614,11 @@ def test_采访预检main在赛后开麦上跑口味闸(tmp_path, monkeypatch, c
     with pytest.raises(ValueError, match="口味"):
         run(_clash_interview(), "赛后开麦")
     assert copies == [], "口味闸排在文案检查（和任何下载）之前"
+    with pytest.raises(ValueError, match="抢七"):
+        run(_jargon_interview(), "赛后开麦")         # 手写 spec 的术语：硬（09-27 答复）
+    assert copies == []
     capsys.readouterr()
-    run(_jargon_interview(), "赛后开麦")             # 术语只报：不拦，文案检查照走
-    assert "只报" in capsys.readouterr().out and copies == ["赛后开麦"]
+    run({**_jargon_interview(), "transcript_verification": "auto_pending"}, "赛后开麦")
+    assert "只报" in capsys.readouterr().out and copies == ["赛后开麦"], "自动的只报，文案检查照走"
     run(_clash_interview(), "赛场之上")             # reel 那头由 validate_spec 管
     assert copies == ["赛后开麦", "赛场之上"]

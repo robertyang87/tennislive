@@ -4591,6 +4591,11 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
     git rm output/<日期>/reel/<slug>/pushed.json && 合并
     # 或 match-reel.yml mode=push push=true（同样要先删掉 pushed.json）
 
+⭐ **已发片子只改推送文字（`push.summary`／`push.lead`）不重推**——账号所有者 2026-09-27 ~23:00Z
+答复 reattest 评审那一问，确认了。成片没变（指纹没变），发布账本和 `pushed.json` 照拦，
+和 09-22「没有真改动就不该有新消息」同一句话；改掉的文字只落进仓库（复制页、下一次重渲）。
+真要让改过的文字发出去，就得有进成片的改动、重渲出新指纹，走上面那条「重渲默认重推」。
+
 ## ⭐⭐ 2026-09-27：Q9 阻塞推微信的四条口径（账号所有者 ~23:00Z 答复）
 
 定义只有一份：`tools/build_dashboard_snapshot.py` 的 `blocked_runs`（顶注有全文和实测证据），
@@ -4757,8 +4762,9 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 `TAKEAWAY_POINT_PX/TRACKING`）。2026-09-27 main 的评审 I2／I3 把卡改成 `keep-all`＋`balance`、
 左边距跟台头收到 70（正文区 860px），合并时 CSS 改成读这组常量——不然闸按 838 量、卡按 860 排，
 正是「写两处必分叉」。`interview_spec_gates.card_lines` 照这套 CSS 排行，全库 104 张卡＋4 条样例
-真渲对过，折点逐字一样，报错里印的就是卡上的折点。⚠️ **「在空格处折成匀称的两行」算不算合格
-是账号所有者还没定的口径**，定之前照旧要求一行。
+真渲对过，折点逐字一样，报错里印的就是卡上的折点。⭐ **「在空格处折成匀称的两行」不算合格**——
+账号所有者 2026-09-27 ~23:00Z 答复：收尾卡那一句**一行放得下，写不下就写短**。闸本来就这么判，
+不放宽；真要两行照旧在那张卡里写 `_wrap_ok` 认领。
 
 ⚠️ `FROZEN_SLACK`＝0.2 只校准过 1.1~1.7 秒；已发的 0.2~1 秒短冻帧（从 Release 拉回 102 条
 已发正片量出来 2 条）挂在 `data/legacy_interview_gates.json` 的 `frozen_tail_short`，
