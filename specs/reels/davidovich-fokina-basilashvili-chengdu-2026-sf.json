@@ -1,0 +1,403 @@
+{
+  "slug": "davidovich-fokina-basilashvili-chengdu-2026-sf",
+  "_column": "赛场之上",
+  "sources": {
+    "ttv": "https://www.tennistv.com/videos/4583103/chengdu-2026-sf-basilashvili-davidovich-fokina-short-highlights"
+  },
+  "primary": "ttv",
+  "_source": "Tennis TV 官网免费短集锦 `4583103`《chengdu-2026-sf-basilashvili-davidovich-fokina-short-highlights》（`tools/tennistv_catalog.py recent` 列出，match=7581_2026_MS003，157s）。probe（run 36420027459）1920×1080、25fps、157.25s；比赛画面到 148.3s，148.34 起是 Tennis TV 片尾宣传和下载卡。渠道比较（2026-09-28 12:05Z 量的）：① ATP Tour YouTube `hRqMlCD2Y6c`（同一个剪辑，时间轴逐格一致，163.4s 含 YouTube 片尾卡）——probe run 36419627483 只下到 **1280×720**（web 客户端报 format not available，mweb 给 720p），按「源片 ≥1080p」不用，只借它的自动英文字幕给原声段做双语；② Tennis TV YouTube——频道最新只到 1/4决赛；③ tennistv.com 短集锦——就是这一条，1080p。四要素自证：记分条 `BASILASHVILI / DAVIDOVICH FOKINA` 逐格读过（1-0 40-15、5-4 40-15、第二盘 0-1 15-40、4-4、4-5 15-40、第三盘 2-0 40-15、2-5 15-0、3-5 15-40、终局 `6 4 3 / 4 6 6`），和 flashscore 44CREdmB 逐分一致；场地挡板 `CHENGDU 成都`、`ATP 250`；解说 139.12「a seventh ATP tour level final」。没有场上采访。",
+  "_tennistv_trim": "**片尾**：148.34 起是 Tennis TV 的 `LIVE / SCORES / BEHIND THE SCENES` 宣传片和 `THE BEST SEAT IN TENNIS` 下载卡；用到的最后一段收在 148.2。**台标**：Tennis TV 台标烧在右上角（源片 x≈1580~1900），3:4 取景窗 cx=0.5 只取 555~1365，角上那块在窗外。",
+  "mixed_fps": {
+    "ttv": "tennistv.com 1080p，probe 在 runner 上报 25fps。单一源片，没有混帧率。"
+  },
+  "scorebox": [
+    98,
+    920,
+    641,
+    1029
+  ],
+  "_scorebox_why": "同一站同一套 ATP 转播比分板，左缘、上下沿沿用 `mannarino-shapovalov-chengdu-2026-qf` 实测的 98 / 920 / 1029；右缘按这一场最宽那一档写到 641——dry-run 在第三盘赛点那一段（带三列盘分＋分数）量到板右缘 641，第二盘几段 589~602。",
+  "_match": {
+    "id": "2026:chengdu:mens-sf:alejandro-davidovich-fokina-nikoloz-basilashvili",
+    "event": "2026 ATP250 成都",
+    "event_search": "Chengdu",
+    "round": "Men's Singles Semifinals",
+    "year": 2026,
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "44CREdmB",
+    "flashscore_id": "44CREdmB",
+    "participants": [
+      "达维多维奇·福基纳",
+      "巴西拉什维利"
+    ],
+    "set_scores_home_away": [
+      [
+        4,
+        6
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "winner": "达维多维奇·福基纳",
+    "loser": "巴西拉什维利",
+    "winner_en": "Alejandro Davidovich Fokina",
+    "loser_en": "Nikoloz Basilashvili",
+    "winner_result": "4-6 6-4 6-3",
+    "loser_result": "6-4 4-6 3-6",
+    "_order_why": "flashscore 这一场 home=Basilashvili N.、away=Davidovich Fokina A.；这里 participants 按 cover.matchup 的版式顺序（达维多维奇·福基纳在前），盘分已经按这个顺序对调过。",
+    "_source": "三源一致：flashscore 44CREdmB 当日总表 `BA/BB 6/4, BC/BD 4/6, BE/BF 3/6`（home=巴西拉什维利）与逐分（首盘第一局巴西拉什维利破发、第二盘 0-2 与 4-5 两次破发、第三盘 0-2 破发）；tennisexplorer 选手页「Davidovich Fokina A. - Basilashvili N. SF 4-6, 6-4, 6-3」；TNNS 比赛页（账号所有者给的截图同一页）`4 6 6 / 6 4 3`；源片记分条终局 `BASILASHVILI 6 4 3 / DAVIDOVICH FOKINA 4 6 6`。"
+  },
+  "_result_why": "见 `_match._source`。",
+  "topbar": {
+    "line1": "2026 ATP250 成都 半决赛",
+    "line2": "达维多维奇·福基纳 4-6 6-4 6-3 巴西拉什维利"
+  },
+  "_topbar_why": "按账号所有者 2026-09-24／09-26 定的格式「<年份> <巡回赛><级别> <城市> <轮次>」：成都公开赛是 ATP250（官方签表页眉 `250 pts`）。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/dc_1_44CREdmB",
+    "match_id": "44CREdmB",
+    "field": "DC",
+    "value": 1790586600,
+    "beijing": "2026-09-28T17:10+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `dc_1` 的 `DC=1790586600` → 09:10Z＝北京 17:10；`DD=1790593693`（北京 19:08）是结束时刻。旁白说「下午五点多」。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "达维多维奇·福基纳",
+    "hook": "先丢一盘又被追平\n达维多维奇逆转进决赛",
+    "hook_accent": "逆转进决赛",
+    "_hook_why": "第一行关键局面、第二行结果（账号所有者 2026-09-25「只讲重点或关键内容，以及结果」）。①「先丢一盘又被追平」：首盘 4-6（第一局就被破发），第二盘他 4-1 领先被巴西拉什维利连扳三局追到 4-4（flashscore 逐分：2-4 保发、3-4 破发、4-4 保发；源片 48.5s 记分条 `6 4 / 4 4`）。②「达维多维奇逆转进决赛」：之后 5-4 破发拿下第二盘、决胜盘 6-3。两行都是他这一条线上的铺垫→落点；8 字、10 字；没有破发、抢七这类术语，没有排名和种子。名字用简称「达维多维奇」是 10 字位装不下全名（旁白、比分板、副标题里都是全名）。",
+    "topic": "ATP250 成都 半决赛 · 达维多维奇·福基纳 VS 巴西拉什维利",
+    "winner": "达维多维奇·福基纳",
+    "result": "4-6 6-4 6-3",
+    "matchup": [
+      {
+        "name": "达维多维奇·福基纳",
+        "name_en": "Alejandro Davidovich Fokina",
+        "country": "ESP",
+        "rank": 28
+      },
+      {
+        "name": "巴西拉什维利",
+        "name_en": "Nikoloz Basilashvili",
+        "country": "GEO",
+        "rank": 121
+      }
+    ],
+    "_matchup_rank_why": "ATP 排名 2026-09-28 那一期（今天，比赛当天的官方现行榜）：`fetch_rankings()`（tennisexplorer，atp_at=28.09.2026）达维多维奇·福基纳 28、巴西拉什维利 121。对照：官方签表 mds.pdf 种子表（报名那一期）`2 Davidovich Fokina, Alej… 29`；巴西拉什维利是资格赛球员（签表与 TNNS 截图都标 Q）。",
+    "_name_why": "译名表 `src/tennislive/zh/players.py` 与 `player_names_top500.json`：Alejandro Davidovich Fokina → 达维多维奇·福基纳，Nikoloz Basilashvili → 巴西拉什维利。",
+    "_heat_why": "账号所有者亲自给的截图（「做这个赛场之上」）；轮次是半决赛（账号所有者 2026-08-12「半决赛级别的都要做视频的」）。另一层：他离开赛场两个半月（tennisexplorer：7/16 于马格 1/4决赛之后，下一场就是 9/26 成都第二轮；解说 139.12 同一句），回来第一站就打进决赛。",
+    "_subject_why": "封面放达维多维奇·福基纳：他是赢家（默认赢家），钩子两行也都从他的视角写。",
+    "scoreboard": {
+      "court": "Center Court",
+      "_court_why": "TNNS 比赛页（账号所有者截图）`Center Court`；源片场地挡板 `CHENGDU 成都` 中心球场。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A58%3A13%22%2C%20%22source%22%3A%20%22flashscore%20dc_1%EF%BC%8844CREdmB%EF%BC%89%E5%BC%80%E8%B5%9B%20DC%3D1790586600%EF%BC%8809%3A10%3A00Z%EF%BC%89%E3%80%81%E5%AE%8C%E8%B5%9B%20DD%3D1790593693%EF%BC%8811%3A08%3A13Z%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%87%8F%201%3A58%3A13%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_sui_1%20%E5%88%86%E7%9B%98%200%3A36%2B0%3A41%2B0%3A40%3D1%3A57%EF%BC%9BTNNS%20%E6%AF%94%E8%B5%9B%E9%A1%B5%201%3A59%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore 自己的开赛/完赛时间戳相减 1:58:13，印 1:58；分盘用时合计 1:57、TNNS 1:59，差在一两分钟的取整。"
+    },
+    "portrait": {
+      "frame_at": 47.1,
+      "focus": 0.5,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`；官方图一上线 `reel-cover-upgrade.yml` 自动换图重推（O4）。\n四类源各查过（2026-09-28 12:10~12:25Z，终场后约一小时）：① 官方图库——`tools/find_cover_photo.py --player \"Davidovich Fokina\" --event Chengdu --date 2026-09-28` WTA photo-resources 0、WTA 赛后稿 0；AP 那一档搜索页没取到（工具报「没跑」）；成都公开赛没有可探的 WordPress 媒体库。② 中文媒体：四川在线体育频道两页 70 篇标题里没有「福基纳」；搜狗微信撞反爬。③ 赛后稿还没发。④ Getty / Imago 沙箱搜不了。\n**这一帧**：源片 47.1s（本地按 50fps 原片 45.6~47.3 逐 0.1 秒拉了 18 帧、按边缘能量比过，46.7~47.1 一段最锐；47.1 眼睛睁得最开、脸最正），第二盘他破发到 2-0 之后走回底线的近景（记分条 `6 0 / 4 2`）：**正脸直视镜头、双眼睁着、合焦**，粉色 adidas 球衣、酒红色头带和护腕，和本场所有镜头一致；背景是球网和 Emirates 挡板。情绪是「刚把局面扳回来、盯着下一分」——对上钩子的「逆转」。",
+      "_low_res_why": "源片 1920×1080，铺 1080×1440 按高算放大 1.33 倍（抽帧的理由见 `_frame_why`）。",
+      "_focus_why": "focus 0.5：脸的中心在源片横向约 x=960（0.5），3:4 窗口取 555~1365，左下角转播记分条（98~537）和右上角 Tennis TV 台标（≈1580 起）都在窗外。纵向满高：头顶约 y=90、眼睛约 y=270、下巴约 y=390（源片）→ 铺满后约 120 / 360 / 520——眼睛到下巴在台头带（0~170）之下、钩子带（790 起）之上。"
+    }
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "aces": 6,
+      "df": 3,
+      "first_in": 66,
+      "first_won": 50,
+      "second_total": 34,
+      "second_won": 16,
+      "bp_conv": 3,
+      "bp_chances": 5,
+      "pts_won": 86,
+      "pts_total": 170,
+      "first_total": 100,
+      "winners": 35,
+      "ue": 24,
+      "headshot": "assets/players/headshots/atp-DH50.png"
+    },
+    "b": {
+      "aces": 13,
+      "df": 1,
+      "first_in": 41,
+      "first_won": 32,
+      "second_total": 29,
+      "second_won": 18,
+      "bp_conv": 2,
+      "bp_chances": 9,
+      "pts_won": 84,
+      "pts_total": 170,
+      "first_total": 70,
+      "winners": 41,
+      "ue": 44,
+      "headshot": "assets/players/headshots/atp-BG23.png"
+    },
+    "_source": "`python tools/match_stat_hooks.py 44CREdmB --stats-block` 机器抄的 flashscore df_st_1 全场统计。a/b 跟 cover.matchup 的顺序（a=达维多维奇·福基纳、b=巴西拉什维利）；flashscore 这一场 home=Basilashvili N.、away=Davidovich Fokina A.，**顺序相反，已对调**。制胜分／非受迫失误 flashscore 没有，取 TNNS（tnns-stats.yml run 36420040088，id 74753314）全场值：制胜分 41/35、非受迫失误 44/24（巴西拉什维利/达维多维奇·福基纳）——和账号所有者给的 TNNS 截图 Key stats 一格一格对得上（Winners 41/35、Unforced Errors 44/24、Break Points Saved 40% (2/5) / 78% (7/9) 与 flashscore 一致）。⚠️ 工具的自证报了分盘合计对不上（制胜分分盘 [33,18]、非受迫失误 [45,27]），所以**只用全场值、不用分盘值**：全场值有 TNNS 自己的汇总页（截图）作证，分盘那一层是工具解析的问题。头像：达维多维奇·福基纳 `atp-DH50.png`（`fetch_official_headshot.py atp --id DH50` 这次取的，打开看过是他；⚠️ 仓库里的 `atp-DH58` 是德米纳尔，别挂错），巴西拉什维利 `atp-BG23.png`（`fetch_official_headshot.py atp --id BG23` 这次取的，打开看过是他）。",
+    "_winners_ue_why": "制胜分／非受迫失误 flashscore 这场没有（`match_stat_hooks.py 44CREdmB` 报「flashscore 这场没有」），取 TNNS 全场值（run 36420040088），见 `stats._source`：分盘值工具自证对不上，没用；全场值与账号所有者给的 TNNS 截图一致。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py 44CREdmB` 和 `match_feed.py show 44CREdmB`（flashscore home=Basilashvili、away=Davidovich Fokina）。进旁白和钩子的：**全场 9 个破发点救下 7 个**（df_st_1 Break Points Saved 7/9，TNNS 截图 78% (7/9)），**决胜盘 6 个一个没丢**（第三局一口气 4 个、5-2 那局 2 个）；**第二盘 4-1 领先被连扳三局到 4-4**；**4-5 巴西拉什维利发球 15-40 第一个盘点就兑现**；非受迫失误 24 对 44（TNNS）。没进旁白的：巴西拉什维利 13 个 ACE。",
+  "_turning_points": [
+    "首盘第一局达维多维奇·福基纳发球被破，之后五个发球局全保，首盘 4-6（源片 0.3~17.8 是 1-0 那一局 40-15 的一分，18.4~25.1 是 5-4 的盘点）。",
+    "第二盘第二局（巴西拉什维利发球）15-40 第一个破发点就兑现，2-0（源片 30.8~44.6）。",
+    "第二盘 4-1 领先，巴西拉什维利连拿三局（2-4 保发、3-4 破发、4-4 保发）追到 4-4（源片 48.5 记分条 `6 4 / 4 4`，比赛画面里没有这三局）。",
+    "4-4 达维多维奇·福基纳发球第一分的长回合（源片 49.3~83.4），保发 5-4；4-5 巴西拉什维利发球 15-40，第一个盘点兑现，6-4（源片 87.4~97.3）。",
+    "决胜盘 2-0 他发球 15-40，巴西拉什维利一口气拿到 3 个破发点、占先后又一个，四个全被救（源片 97.6~115.5 是第二个）；5-2 那局又救两个；5-3 发球胜赛，第一个赛点兑现（源片 128.4~137.1）。"
+  ],
+  "_claims": [
+    {
+      "claim": "这是达维多维奇·福基纳生涯第七次打进巡回赛决赛，前六次只赢下一次（2026 年 6 月马略卡）",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alejandro_Davidovich_Fokina（Singles: 6 (1 title, 5 runner-ups) 表：2022 蒙特卡洛、2025 德尔雷海滩、阿卡普尔科、华盛顿、巴塞尔五次亚军，2026 马略卡冠军，下一行 Pending 就是成都）",
+        "https://www.tennisexplorer.com/player/davidovich-fokina/（Titles - singles：Main tournaments 只有 2026 Mallorca 一个）"
+      ],
+      "note": "解说 139.12~145.12 也说了「roaring into a seventh ATP tour level final」。"
+    },
+    {
+      "claim": "他离开赛场两个半月",
+      "sources": [
+        "https://www.tennisexplorer.com/player/davidovich-fokina/（2026 赛季逐场：7/16 于马格 1/4决赛负莫尔坎，下一场是 9/26 成都第二轮）",
+        "解说 139.12「two and a half months off the match court」（ATP Tour YouTube hRqMlCD2Y6c 自动字幕，与 Tennis TV 版同一条音轨）"
+      ],
+      "note": "只说离开了多久，不说原因——原因没有查到出处。"
+    }
+  ],
+  "_no_repeat": "同栏目做过这一站的 `mannarino-shapovalov-chengdu-2026-qf`（半决赛另一半签的沙波瓦洛夫）、`vacherot-harris-chengdu-2026-r2` 等；达维多维奇·福基纳、巴西拉什维利都是这一站第一次做。",
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+  "push": {
+    "summary": "丢首盘后达维多维奇进决赛",
+    "lead": "成都公开赛半决赛，2 号种子达维多维奇·福基纳 4-6 6-4 6-3 逆转资格赛打上来的巴西拉什维利，打进决赛。首盘第一局就被破发、4-6 先丢一盘；第二盘 4-1 领先被连扳三局到 4-4，他在 4-5 第一个盘点破发扳回。决胜盘巴西拉什维利 6 个破发点，他一个没给，全场 9 个救下 7 个。离开赛场两个半月，回来第一站，这是他生涯第七个巡回赛决赛。",
+    "matchup": "达维多维奇·福基纳 vs 巴西拉什维利",
+    "score": "4-6 6-4 6-3",
+    "auto": true
+  },
+  "_push_summary_why": "12 字位（标题前缀「9.28 赛场之上 | 」占 8 个，整句上限 20），主语是达维多维奇·福基纳（装不下全名，用常见简称）；「丢首盘后」＋「进决赛」是这一场的形状。标题里不写排名。",
+  "segments": [
+    {
+      "source": "ttv",
+      "start": 137.4,
+      "end": 148.2,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 1.72,
+          "text": "Well, two and a half months off the match court\n离开赛场两个半月"
+        },
+        {
+          "at": 3.56,
+          "text": "but it's not stopped Alejandro Davidovich Fokina\n也没挡住达维多维奇·福基纳"
+        },
+        {
+          "at": 5.9,
+          "text": "from roaring into a seventh ATP Tour level final.\n杀进生涯第七个巡回赛决赛"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：赛点落地之后（137.2 记分条翻成终局 `6 4 3 / 4 6 6`），137.4~139.7 宽景里他走向球网，139.74 切到他握拳的近景，141.58 起溶解到包厢里两位教练击掌，145.34 切到两人网前握手；148.34 起是 Tennis TV 片尾宣传，段尾 148.2 收在它之前。不配旁白，只留解说原声＋中英字幕：ATP Tour 同一剪辑 `hRqMlCD2Y6c` 的自动字幕 139.12「Well, two and a half months off the / match court, but it's not stopped / Alejandro Dividovic Fina from roaring / into a seventh ATP tour level final.」（自动字幕把名字拼坏了，按他的全名改），段内 at = 原时刻 − 137.4。",
+      "_payoff_why": "最后一段（127.4→148.2）按时间顺序完整重放赛点那一分、落地、教练席和握手，覆盖本段 137.4~148.2 整段。",
+      "point_end_ok": "比赛已经结束：赛点在 137.2 翻牌前落地；之后没有新的一分。",
+      "crosses_cut": "139.74 宽景切到他的近景、141.58 溶解到教练席、145.34 切到网前握手：都是赛点之后同一段庆祝。"
+    },
+    {
+      "source": "ttv",
+      "start": 0.3,
+      "end": 17.8,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "差一点，他就停在了半决赛。北京时间九月二十八号下午五点多，成都公开赛半决赛，二号种子达维多维奇·福基纳，对从资格赛打上来的巴西拉什维利。离开赛场两个半月，这是他回来的第一站。",
+      "_why": "首盘 1-0（巴西拉什维利第一局就破了他的发球）之后第二局的一分，记分条 `1 40 / 0 15`，巴西拉什维利在近端发球。解说 17.44「That's beautiful」。开场顺序照「画面爆点 → 落点 → 坐标」：第 1 段是冷开场，这一段先一句落点，再给坐标。",
+      "_start_time_why": "开球时刻见顶层 `_opening_time_source`：北京 17:10，只说「下午五点多」。",
+      "point_end_ok": "这一分在 17.5 前打完；18.3 前后溶解到 5-4 的盘点（记分条宽度不变，所以 board 扫描看不出这次换分），段尾 17.8 收在溶解之前。"
+    },
+    {
+      "source": "ttv",
+      "start": 18.5,
+      "end": 24.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "首盘四比六，开局就被破发，他一直没追回来。",
+      "_why": "首盘 5-4 巴西拉什维利发球 40-15（记分条 `5 40 / 4 15`），第一个盘点兑现：flashscore 首盘最后一局 `0:15, 15:15, 30:15, 40:15 |B2|`；25.2 记分条翻成 `6 0 / 4 0`。解说 23.92「It's a great second serve」。",
+      "point_end_ok": "盘点在 25.1 前打完，25.24 切到看台，段尾在切点之前。"
+    },
+    {
+      "source": "ttv",
+      "start": 25.3,
+      "end": 30.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 1.1,
+          "text": "And the qualifier continues to roll here in Chengdu.\n这位资格赛球员还在一路向前"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "首盘结束后的过场：25.24 看台、28.16 切到巴西拉什维利的近景；30.7 切到第二盘第二局。解说 26.40「And the qualifier continues to roll here / in Changdu」（自动字幕），段内 at = 26.40 − 25.3。",
+      "point_end_ok": "这一段没有比赛画面（看台和近景）；30.7 切回比赛，段尾 30.6 在它之前。",
+      "crosses_cut": "28.16 从看台切到巴西拉什维利近景：盘间过场，没有比赛。"
+    },
+    {
+      "source": "ttv",
+      "start": 30.8,
+      "end": 44.5,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘第二局，巴西拉什维利发球，十五比四十。他回发球就压上去，把对手在底线左右调动，第一个破发点就兑现，二比零。",
+      "_why": "第二盘 1-0 巴西拉什维利发球 15-40（记分条 `6 0 15 / 4 1 40`，30.7 那格他在近端发球的近景）。本地 50fps 原片逐 0.5 秒帧：巴西拉什维利在近端底线，34.5 被调到右侧、38 到左侧底线角、40.5~42 又被拉回左右两边，达维多维奇·福基纳在远端；44.2 记分条翻成 `6 0 / 4 2`。解说 42.24「So good from Alejandro Davidovich. Excellent return that he hit.」。flashscore 第二盘第二局 `0:15, 0:30, 15:30, 15:40 |B1|`——第一个破发点兑现。",
+      "point_end_ok": "这一分在 43.5 前打完，44.2 翻牌在段内；段尾 44.6 在 44.74 切点之前。"
+    },
+    {
+      "source": "ttv",
+      "start": 44.9,
+      "end": 49.1,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "四比一领先，却被连扳三局，四平。",
+      "_why": "44.74 切到他走回底线的近景（记分条 `6 0 / 4 2`），47.4 溶解到他在 4-4 准备发球（记分条 `6 4 / 4 4`）。之间那三局比赛画面里没有：flashscore 第二盘 `2-4` 巴西拉什维利保发、`3-4` 破发、`4-4` 保发，他从 4-1 被追到 4-4。",
+      "point_end_ok": "近景里没有新的一分；段尾 49.1 在 49.18（loose 切点）之前。",
+      "crosses_cut": "47.4 前后从他走回底线溶解到他在 4-4 准备发球：两个近景之间没有比赛画面。"
+    },
+    {
+      "source": "ttv",
+      "start": 50.4,
+      "end": 85.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 31.76,
+          "text": "Oh, made it. Just dropped in.\n进了 刚好压在里面"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "第二盘 4-4 他发球第一分（记分条 `6 4 / 4 4`，点数 0-0 不显示），全片最长的一个回合：本地原片逐帧，他在近端、巴西拉什维利在远端，底线对拉一直到 81.5 前后；86.5 记分条是 `4 0 / 4 15`——这一分是他的。解说 82.16「Oh, made it. Just dropped in. It looked / for all the world that that ball was / going long.」，段内 at = 82.16 − 50.4。83.5 切到他的近景。不配旁白：让这一个回合和现场声自己走完，前一段旁白已经交代了「四平」。 段首取 50.4 不取 49.3：49.2~51.1 是他抛球前的准备，源片这一截只有 −64~−67 dB（数字静音闸的下沿），51.2 发球起才有现场声。",
+      "point_end_ok": "这一分在 82.2 前打完（解说在评落点）；83.5 切到近景，段尾 85.6 在 85.66 切点之前。",
+      "crosses_cut": "83.5 从宽景切到他的近景：这一分已经打完。"
+    },
+    {
+      "source": "ttv",
+      "start": 85.8,
+      "end": 97.3,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "这一局他保住了，五比四。巴西拉什维利接着发球，十五比四十。他拿到盘点，第一个就兑现，六比四，扳回一盘。",
+      "_why": "85.66 切到包厢，教练在鼓掌（记分条 `4 0 / 4 15`），87.5 前后溶解到第二盘 4-5 巴西拉什维利发球 15-40（记分条 `6 4 15 / 4 5 40`）；97.4 记分条翻成第三盘。flashscore 第二盘最后一局 `0:15, 0:30, 15:30, 15:40 |B1| |B2|`——第一个盘点兑现。",
+      "point_end_ok": "盘点在 97.3 前打完（board 扫描 97.4 翻牌）；段尾 97.3 在翻牌之前。",
+      "crosses_cut": "87.5 前后从教练席溶解到 4-5 那一局：教练席是 4-4 保发之后。"
+    },
+    {
+      "source": "ttv",
+      "start": 97.7,
+      "end": 111.5,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "决胜盘他先破发。下一局，巴西拉什维利连拿三个破发点，这是第二个。达维多维奇·福基纳被调动到右边滑步，又追到左边底线，拿下这一分。",
+      "_why": "第三盘 2-0 他发球 15-40（记分条 `6 4 0 40 / 4 6 2 15`，巴西拉什维利 40）。flashscore 第三盘第三局 `15:0, 30:0, 40:0 |B1|, 40:15 |B1|, 40:30 |B1|, 40:40, 40:A, 40:40, A:40 |B1|, 40:40, 40:A`（home=巴西拉什维利）——这一分是第二个破发点。本地原片逐帧：他在近端，102.8~104 被拉到右边滑步，105~106.3 又追到左边；114.5 记分条是 `0 40 / 2 30`——这一分是他的。解说 109.92「Oh, he's done brilliantly to get out of that point」。第三盘第二局 `0:15, 0:30, 0:40 |B1|, 15:40 |B1|` 他第二个破发点破发，2-0。",
+      "point_end_ok": "这一分在 109.9 前打完（解说已在评这一分）；111.8 是切到他近景的切点，段尾 111.5 离切点留足溶解的 0.18 秒。"
+    },
+    {
+      "source": "ttv",
+      "start": 111.9,
+      "end": 115.3,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.3,
+          "text": "Davidovich Fokina. Two saved, one still to come.\n救下两个 还有一个"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "111.8 他握拍的近景、113.36 切到看台鼓掌（记分条 `0 40 / 2 30`）。解说 112.08「Davidovich Fokina. Two / saved, one still to come.」（自动字幕），段内 at = 112.2 − 111.9。",
+      "point_end_ok": "这一段没有比赛画面；115.5 前后溶解到 2-5 那一局，段尾 115.3 在溶解之前。",
+      "crosses_cut": "113.36 从近景切到看台：上一分已经打完。"
+    },
+    {
+      "source": "ttv",
+      "start": 115.9,
+      "end": 127.1,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第三个、第四个破发点，他也全救了下来。五比二那局又救两个，决胜盘巴西拉什维利六次机会，一次都没兑现。",
+      "_why": "第三盘 2-5 巴西拉什维利发球 15-0（记分条 `6 4 2 15 / 4 6 5 0`），他在近端保发，3-5。flashscore 第三盘：第三局巴西拉什维利 4 个破发点全没兑现（见上一段），第七局（他发球）`40:30 |B1|` 和 `A:40 |B1|` 两个也没兑现——决胜盘 6 个；全场 df_st_1 Break Points Saved（他）7/9。解说 126.24「So good」。",
+      "point_end_ok": "这一分在 126.3 前打完；127.24 溶解到巴西拉什维利的近景，段尾 127.1 在溶解之前。"
+    },
+    {
+      "source": "ttv",
+      "start": 127.4,
+      "end": 148.2,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "五比三，他发球胜赛。四十比十五，第一个赛点就拿下，他攥紧了拳头。全场九个破发点，他救下七个，打进了生涯第七个巡回赛决赛。决赛对手，是胡尔卡奇和沙波瓦洛夫之间的胜者。这一次，他能把冠军留在成都吗？",
+      "_why": "127.24 巴西拉什维利的近景（记分条 `3 15 / 5 40`），128.3 切到宽景：第三盘 5-3 他发球 40-15 赛点，他在近端；137.2 记分条翻成终局；之后是冷开场那一段（走向球网、握拳近景、教练席、握手）。flashscore 最后一局 `0:15, 15:15, 15:30, 15:40 |B3|`——第一个赛点兑现。「第七个巡回赛决赛」「两个半月」出处见 `_claims`。决赛对手：写 spec 时胡尔卡奇对沙波瓦洛夫那一场还在打（flashscore C6o9VCJH，首盘 6-5）。",
+      "point_end_ok": "比赛在 137.2 翻牌前结束；之后没有新的一分，段尾 148.2 在 148.34 片尾宣传之前。",
+      "crosses_cut": "128.3 从巴西拉什维利近景切到赛点那一分的宽景、139.74 切到他握拳、141.58 溶解到教练席、145.34 切到握手：赛点和赛点之后。"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "先丢一盘又被追平",
+      "达维多维奇逆转进决赛"
+    ],
+    "question": "首盘开局就被破发、第二盘 4-1 又被追平，达维多维奇·福基纳是怎么把这场半决赛拿回来的？",
+    "thesis": "资格赛打上来的巴西拉什维利首盘第一局就破发，6-4 先拿一盘；第二盘达维多维奇·福基纳 2-0、4-1 领先又被连扳三局到 4-4，靠一个长回合保发、4-5 第一个盘点破发扳回；决胜盘先破发，然后把巴西拉什维利的 6 个破发点一个一个救掉，5-3 第一个赛点收下，离开赛场两个半月后打进生涯第七个巡回赛决赛。",
+    "beats": [
+      "冷开场：赛点之后的握拳、教练席和握手，解说「离开赛场两个半月……第七个巡回赛决赛」。",
+      "落点＋坐标：北京时间 9 月 28 日下午五点多，成都公开赛半决赛。",
+      "首盘：开局被破发，4-6。",
+      "第二盘：第二局破发 2-0；4-1 被追到 4-4；4-4 长回合保发；4-5 第一个盘点破发，6-4。",
+      "决胜盘：2-0 之后救下 4 个破发点；5-2 再救两个；6 次机会一次没丢。",
+      "赛点：第一个兑现；全场 9 救 7；决赛对手待定；能不能把冠军留在成都。"
+    ],
+    "human_context": {
+      "angle": "这场球的主语是**达维多维奇·福基纳的关键分**：首盘开局就丢发球局、第二盘 4-1 被追平，决胜盘巴西拉什维利 6 个破发点他一个没给。来路是「离开赛场两个半月，回来第一站」。",
+      "facts": [
+        "flashscore 44CREdmB：Basilashvili N. 6-4 4-6 3-6 Davidovich Fokina A.；dc_1 DC=1790586600（北京 17:10）、DD=1790593693（北京 19:08）。",
+        "flashscore df_st_1（达维多维奇·福基纳／巴西拉什维利）：ACE 6/13、双误 3/1、破发点救下 7/9 对 2/5。TNNS 制胜分 35/41、非受迫失误 24/44。",
+        "排名：tennisexplorer 2026-09-28 期 28 / 121；签表 2 号种子，巴西拉什维利资格赛。",
+        "tennisexplorer 2026 逐场：7/16 于马格 1/4决赛之后，下一场就是 9/26 成都。",
+        "维基生涯决赛表：6 次（1 冠 5 亚），成都是第 7 次；解说同一句。"
+      ],
+      "sources": [
+        "https://www.flashscore.com/match/tennis/44CREdmB/",
+        "https://www.tennisexplorer.com/player/davidovich-fokina/",
+        "https://en.wikipedia.org/wiki/Alejandro_Davidovich_Fokina",
+        "https://www.protennislive.com/posting/2026/7581/mds.pdf",
+        "https://www.tennistv.com/videos/4583103/chengdu-2026-sf-basilashvili-davidovich-fokina-short-highlights",
+        "https://www.youtube.com/watch?v=hRqMlCD2Y6c"
+      ]
+    }
+  },
+  "_editing_why": "单一源片（tennistv.com 短集锦 1080p），比赛画面到 148.3，之后片尾宣传；没有场上采访。认人：达维多维奇·福基纳粉色 adidas 球衣、酒红色头带和护腕；巴西拉什维利白衣、深色短裤、白头带、络腮胡。段落端点取自 probe 的 `scene_cuts`／`scene_cuts_loose`／board 扫描（这条源片 point_ends 只量到 142 秒以后，前面的翻牌按 board 宽度变化和本地原片逐帧定），球路来自本地 50fps 原片逐 0.5 秒帧和 ATP Tour 同一剪辑的自动字幕。集锦没播的局（第二盘 2-4 到 4-4 那三局、决胜盘第三局其余几分）只在旁白里按 flashscore 逐局一句带过。",
+  "_tactics_why_note": "球路写在第 5 段（回发球压上、底线左右调动）、第 9 段（右边滑步救球、再追到左边）。",
+  "_quote_why_global": "四段原声：冷开场「two and a half months off the match court… a seventh ATP Tour level final」、盘间「the qualifier continues to roll」、长回合「Oh, made it. Just dropped in」、救破发点之后「Two saved, one still to come」。"
+}

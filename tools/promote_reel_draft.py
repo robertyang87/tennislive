@@ -482,7 +482,10 @@ def promote(draft: dict, probe: dict | None = None) -> dict:
         },
     })
 
-    spec = {k: v for k, v in draft.items() if k != "_draft"}
+    # `_feed_retry` 是草稿专用的账（flashscore 哪几块还欠着，reel-auto-ready 重跑用），
+    # 转正时和 `_draft` 一起剥掉：正式 spec 不再被任何一班重跑，留着只会让读的人以为
+    # 还欠着什么。欠着的块在 `_notes` 里照旧写着。
+    spec = {k: v for k, v in draft.items() if k not in ("_draft", "_feed_retry")}
     spec.update({
         "cover": cover,
         "editorial": editorial,

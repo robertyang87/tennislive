@@ -1,0 +1,27 @@
+{
+ "_why": "渲前预检（tools/cover_upgrade.py --preflight）只拦「手写、还没推过」的第一次渲染；already_pushed 认的两处凭据——发布账本 data/reel_publish_ledger/（首笔 2026-08-24T00:48:43Z）和 git 跟踪的 output/*/reel/<slug>/pushed.json（只有 push.auto 那条自动推送路写，#160 起；手动 mode=push 只改 copy.html，如 d605a0a41「reel: push wang-kasatkina」）——都认不出这 22 条：2026-08-02~08-08 合进 main 的抽帧封面「赛场之上」（那时的终点就是渲 → 合并 → 推，render.json／copy.html 都在 output/2026-08-0X/reel/<slug>/ 下跟踪着）。不登记的话它们重渲时会被当成第一次渲染拦下、甚至 --write 改已发的 spec（复审：81 条抽帧封面「赛场之上」里漏 22 条）。怎么算的：specs/reels 里 is_frame_cover ＋ eyebrow=赛场之上 的 81 条，逐条跑 already_pushed，返回空串的就是这 22 条。只许减不许加：推过的新片子由发布账本认；某条换了实拍、进了账本或有了 pushed.json 就从这儿删。自检 tests/test_o4_channels.py::test_发布账本之前推过的抽帧封面_登记表只许减_每条都查得到",
+ "reels": [
+  "bencic-townsend",
+  "chwalinska-gibson",
+  "eala-mcnally",
+  "eala-parks",
+  "eala-pegula-final",
+  "fernandez-andreeva",
+  "fritz-jodar-final",
+  "gauff-sakkari",
+  "gea-shapovalov",
+  "medvedev-zandschulp",
+  "noskova-mcnally",
+  "pegula-rakhimova",
+  "rybakina-kasatkina",
+  "rybakina-li",
+  "shang-rublev",
+  "shang-vallejo",
+  "tirante-fritz",
+  "wang-kasatkina",
+  "zhang-ostapenko",
+  "zhang-putintseva",
+  "zhang-sabalenka",
+  "zverev-griekspoor"
+ ]
+}

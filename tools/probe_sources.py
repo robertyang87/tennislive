@@ -32,7 +32,9 @@
   没有就**硬**（新的手写 spec），`--dry-run` 那一刻就说「先跑一趟 mode=probe」——
   前面先指一句 `materialize`：`claim_probes` 只扫盘，本地精简检出（没有 `output/`）
   时 probe 明明在仓库里也认领不上（评审 2026-09-27 nit）；
-  确实 probe 不了的源在 spec 顶层写 `"_no_probe_why": {"源键": "<为什么>"}` 认领。
+  确实 probe 不了的源在 spec 顶层写 `"_no_probe_why": {"源键": "<为什么>"}` 认领；
+  **多源 spec 的认领要写成对象、带上宽高帧率**（`{"why", "width", "height", "fps"}`，
+  2026-09-28），几何预演拿它照跑——一句话的认领会把几何这层整个关掉，手写的红。
   老 probe 没记宽高帧率只报不拦；自动产的 spec 只报（它们本来就先 probe 后 promote，
   真缺了是链路的毛病，硬了只会把自动链卡成「今天没有候选」）；
   定规矩之前已有的挂在 `data/legacy_no_probe_sources.json`，**只许减不许加**。
@@ -89,6 +91,39 @@ def legacy_no_probe(path: Path = LEGACY_PATH) -> dict[str, list[str]]:
     return {str(k): sorted(v) for k, v in (data.get("reels") or {}).items()}
 
 
+def claim_why(value: object) -> str:
+    """`_no_probe_why` 里一条认领的理由：老写法是一句话，新写法是对象的 `why`。"""
+    if isinstance(value, dict):
+        return str(value.get("why") or "").strip()
+    return str(value or "").strip()
+
+
+def claimed_geometry(value: object) -> tuple[int, int, str, float] | None:
+    """认领里写的宽高帧率 → `(宽, 高, fps 写法, fps 数值)`；没写全／写坏了 → None。
+
+    2026-09-28 返工审计：认领 `_no_probe_why` 原来只要一句话，**认领一条就把几何这层
+    整个关掉**（`geometry_findings` 缺一条源的宽高就不判）——sinner-beijing-withdrawal-2026
+    的 xvid 480×852 就是这么没被预演，render 下完源片才红（run 36133328467）。
+    所以多源 spec 的认领要写成 `{"why": "...", "width": W, "height": H, "fps": "30000/1001"}`，
+    几何预演拿这三个数照跑。"""
+    if not isinstance(value, dict):
+        return None
+    try:
+        width, height = int(value["width"]), int(value["height"])
+        expr = str(value["fps"]).strip()
+        fps = _fps_value(expr, expr)
+    except (KeyError, TypeError, ValueError, ZeroDivisionError):
+        return None
+    if width <= 0 or height <= 0 or not 1.0 <= fps <= 240.0:
+        return None
+    return width, height, expr, fps
+
+
+def _claims(spec: dict) -> dict:
+    claims = spec.get(CLAIM_KEY) or {}
+    return claims if isinstance(claims, dict) else {}
+
+
 def missing_probe_keys(spec: dict, probes: dict[str, dict]) -> list[str]:
     """认领不到 probe.json 的源键（按 URL）。"""
     return sorted(k for k, url in spec_urls(spec).items() if url not in probes)
@@ -118,9 +153,13 @@ def source_dims(spec: dict, probes: dict[str, dict],
     """
     dims: dict[str, tuple[int, int, str, float]] = {}
     lacking: list[str] = []
+    claims = _claims(spec)
     for key, url in spec_urls(spec).items():
         probe = probes.get(url)
         if probe is None:
+            # 没 probe 的源：认领里写了宽高帧率就拿它预演（`claimed_geometry`）
+            if (claimed := claimed_geometry(claims.get(key))) is not None:
+                dims[key] = claimed
             continue
         try:
             expr = str(probe["fps"])
@@ -139,10 +178,18 @@ def source_dims(spec: dict, probes: dict[str, dict],
     return dims, lacking
 
 
+def dry_run_mode(env: dict | None = None) -> str:
+    """工作流 dry-run 那一步是替哪个 mode 跑的；不传（本地）按 render 算。
+    `probe_audio.mode_demoted`（数字静音那几档）读的是同一个口径——两道闸只在
+    mode=render 硬，判法写一处。"""
+    env = os.environ if env is None else env
+    return str(env.get(MODE_ENV) or "render").strip() or "render"
+
+
 def coverage_demoted(env: dict | None = None) -> str:
     """这一趟覆盖那道闸为什么降成只报；空串＝照常（硬）。"""
     env = os.environ if env is None else env
-    mode = str(env.get(MODE_ENV) or "render").strip() or "render"
+    mode = dry_run_mode(env)
     if mode != "render":
         return (f"这一趟是 mode={mode}，用不到 probe——覆盖只在 mode=render 硬，"
                 "别让它挡住出封面／查旁白")
@@ -164,16 +211,29 @@ def coverage_findings(spec: dict, probes: dict[str, dict], *,
     demoted = coverage_demoted(env)
     legacy = legacy_no_probe() if legacy is None else legacy
     grandfathered = set(legacy.get(str(spec.get("slug") or ""), []))
-    claims = spec.get(CLAIM_KEY) or {}
-    if not isinstance(claims, dict):
-        claims = {}
+    claims = _claims(spec)
     urls = spec_urls(spec)
     for key in missing_probe_keys(spec, probes):
         label = key or "(主源)"
-        why = str(claims.get(key) or "").strip()
+        why = claim_why(claims.get(key))
         line = (f"  源 {label}（{urls[key][:90]}）一份 probe.json 都认领不上——"
                 "宽高帧率、切点、死球、静音这几层对它全是哑的")
-        if why:
+        if why and len(urls) > 1 and claimed_geometry(claims.get(key)) is None:
+            # 多源：认领不带宽高帧率＝几何预演整层关掉（见 `claimed_geometry`）
+            need = (f"{line}\n    已认领 {CLAIM_KEY}：{why}\n    **但没写宽高帧率**——多源片子"
+                    "认领一条就把几何预演整个关掉（sinner-beijing-withdrawal-2026 的 xvid 480×852 "
+                    "就是下完源片才红的）。写成 "
+                    f"`\"{CLAIM_KEY}\": {{\"{key}\": {{\"why\": \"...\", \"width\": W, "
+                    "\"height\": H, \"fps\": \"30000/1001\"}}}`（`ffprobe` 或源站标的数）")
+            if key in grandfathered:
+                soft.append(f"{line}（定规矩之前就有的，挂在 legacy_no_probe_sources）")
+            elif is_auto(spec):
+                soft.append(f"{need}（自动产的 spec 只报）")
+            elif demoted:
+                soft.append(f"{need}（{demoted}）")
+            else:
+                hard.append(need)
+        elif why:
             soft.append(f"{line}\n    已认领 {CLAIM_KEY}：{why}")
         elif key in grandfathered:
             soft.append(f"{line}（定规矩之前就有的，挂在 legacy_no_probe_sources）")
@@ -186,7 +246,9 @@ def coverage_findings(spec: dict, probes: dict[str, dict], *,
                         "仓库里：先 `python3 tools/probe_sources.py materialize <spec>` 按 URL 落盘"
                         "再跑；落不出来才跑一趟 `match-reel.yml mode=probe url=<这条>`"
                         "（多源的每一条都要，可以并排拨）；真 probe 不了就在 spec 顶层写 "
-                        f"`\"{CLAIM_KEY}\": {{\"{key}\": \"<为什么>\"}}` 认领")
+                        f"`\"{CLAIM_KEY}\": {{\"{key}\": \"<为什么>\"}}` 认领"
+                        + ("（多源片子写成对象、带上 width/height/fps，几何预演照跑）"
+                           if len(urls) > 1 else ""))
     _dims, lacking = source_dims(spec, probes)
     for key in lacking if len(urls) > 1 else ():     # 单源没有「对得上」可比
         soft.append(f"  源 {key or '(主源)'}：probe.json 是老的，没记宽高帧率——"

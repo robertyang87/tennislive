@@ -1,0 +1,171 @@
+{
+  "scoreboard_qc_sha256": "1421bf00ac8634b5f08ecea05af036cb7736cc892fd64f6289389f34316675f2",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 153.8,
+  "topbar": {
+    "line1": "2026 ATP250 成都 半决赛",
+    "line2": "达维多维奇·福基纳 4-6 6-4 6-3 巴西拉什维利",
+    "start": 1.2,
+    "end": 155.0
+  },
+  "film_seconds": 158.84,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 16.08,
+    "2": 4.68,
+    "4": 10.56,
+    "5": 4.104,
+    "7": 10.512,
+    "8": 13.128,
+    "10": 10.008,
+    "11": 19.92
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "达维多维奇·福基纳",
+        "similarity": {
+          "达维多维奇·福基纳": 0.5601,
+          "巴西拉什维利": 0.0882
+        },
+        "missing": [],
+        "expected": [
+          "巴西拉什维利",
+          "达维多维奇·福基纳"
+        ],
+        "face": [
+          363,
+          187,
+          522,
+          396
+        ],
+        "face_px": 209.1,
+        "reason": "像 达维多维奇·福基纳（0.56 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        },
+        "target": [
+          "达维多维奇·福基纳"
+        ]
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.3009,
+        "ear_each": [
+          0.2813,
+          0.3204
+        ],
+        "face": [
+          363,
+          187,
+          522,
+          396
+        ],
+        "face_px": 209.1,
+        "reason": "眼睛纵横比 0.30 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": [],
+      "region": [
+        555,
+        0,
+        1365,
+        1080
+      ],
+      "frame": "output/2026-09-28/reel/davidovich-fokina-basilashvili-chengdu-2026-sf/cover_src/portrait.jpg",
+      "frame_at": 47.1,
+      "target": [
+        "达维多维奇·福基纳"
+      ]
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 5,
+          "named": "巴西拉什维利",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 8,
+          "named": "巴西拉什维利",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 11,
+          "named": "巴西拉什维利",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 6,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "313ba19d6e948400198d60c4b3933f899be5f7e8c364f454a94b0c015972a0a4",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "davidovich-fokina-basilashvili-chengdu-2026-sf",
+    "received_at": "2026-09-28T13:16:14Z",
+    "artifact_ready_at": "2026-09-28T13:22:26Z",
+    "elapsed_seconds": 372.654,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "5af6c45c46015e954d5befc64b2a9d5e9bc4646fa59918c9a8f8cc2db8e82bf6",
+    "spec_sha256": "0057a7f495d1906e9fbbc30f5278858fac4951fd5f07077633d762de0b829abe",
+    "run_id": "36427395522",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-28T13:17:58Z",
+        "run_id": "36427395522"
+      }
+    ],
+    "render_seconds": 268.654,
+    "pre_render_seconds": 104.0
+  },
+  "film_sha256": "5af6c45c46015e954d5befc64b2a9d5e9bc4646fa59918c9a8f8cc2db8e82bf6",
+  "film_bytes": 94447611,
+  "qc_attestation_sha256": "c27a42d69c70970530b527817f155db03a4967baaac32ac0c944eb2ed29a2cbc",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-28T13:17:58Z",
+      "run_id": "36427395522"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-28T13:22:27Z",
+      "run_id": "36427395522"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-davidovich-fokina-basilashvili-chengdu-2026-sf/davidovich-fokina-basilashvili-chengdu-2026-sf.mp4",
+  "video_bytes": 94447611
+}

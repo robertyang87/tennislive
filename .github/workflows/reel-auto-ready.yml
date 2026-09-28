@@ -55,6 +55,10 @@ jobs:
         run: |
           : > /tmp/reel-ready
           shopt -s nullglob
+          # 备料重跑整班的墙钟预算（秒）：每份 timeout 120 只包住一份，同一班五六份一起到期、flashscore
+          # 挂住不回时累计能冲过 job 的 15 分钟——落库那步不跑，tries／last_at 不涨，下一班原样重演，
+          # 连别的草稿的转正和 render 派发一起挡住。过了预算剩下的这一班不重跑、不记一次，下一班再来。
+          FEED_RETRY_BUDGET=480
           for DRAFT in specs/reels/pending/*.draft.json; do
             SLUG=$(jq -r '.slug' "$DRAFT")
             KIND=$(jq -r '._production.kind // ""' "$DRAFT")
@@ -84,6 +88,32 @@ jobs:
             then
               echo "[expired] $SLUG 已超过 PENDING_MAX_AGE 或缺 received_at，不再追旧比赛"
               continue
+            fi
+            # probe 那一趟 flashscore 读失败（5xx／超时）的块记在 `_feed_retry`：编排器认得
+            # 这份草稿、永不重 probe，所以在这儿**只重跑那几块**——不 probe、不下源片、
+            # 不碰模型，最多 FEED_RETRY_MAX 次；试满了打 warning、写 run 摘要，
+            # pipeline_health 另外点名。排在补封面／视觉证据之前：补上的赛果这一班就能转正
+            # （赛果变了，probe 那一趟的视觉结论它自己作废，下面那道重审条件会接上）。
+            # - 已经停手（exhausted_at：试满／崩了）的不进这一步——pipeline_health 在点名，
+            #   不必每一班再刷一遍 warning
+            # - 墙钟上限：flashscore 挂住不回时一趟能拖 2~6 分钟，整个 job 才 15 分钟；被掐掉
+            #   （124）另起一次 --timed-out 补记这一趟（tries＋1），不然落库那步不跑、tries 不涨、
+            #   每一班重演，连别的草稿的转正和 render 派发一起挡住
+            # 判据 tests/test_feed_retry.py。
+            if [ "$(jq -r '(._feed_retry.blocks // []) | length' "$DRAFT")" != "0" ] \
+              && [ -z "$(jq -r '._feed_retry.exhausted_at // ""' "$DRAFT")" ]; then
+              if [ "$SECONDS" -ge "$FEED_RETRY_BUDGET" ]; then
+                echo "[later] $SLUG 这一班备料重跑已用满 ${FEED_RETRY_BUDGET}s 预算，下一班再来"
+              else
+                FEED_RC=0
+                timeout 120 python tools/retry_feed_blocks.py --draft "$DRAFT" --write || FEED_RC=$?
+                if [ "$FEED_RC" = "124" ]; then
+                  python tools/retry_feed_blocks.py --timed-out 120 --draft "$DRAFT" --write \
+                    || echo "::warning::$SLUG 备料重跑超时，补记这一趟也失败了"
+                elif [ "$FEED_RC" != "0" ]; then
+                  echo "::warning::$SLUG retry_feed_blocks 读不了这份草稿（退出码 $FEED_RC），这一步跳过"
+                fi
+              fi
             fi
             PROBE=$(git ls-tree -r --name-only HEAD \
               | grep -E "^output/[^/]+/reel/${SLUG}/probe.json$" | tail -n 1 || true)
@@ -139,6 +169,8 @@ jobs:
         run: |
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
+          # retry_feed_blocks 先写 <slug>.draft.json.tmp 再换名：被掐在两步之间会留下它，别提交进去
+          rm -f specs/reels/pending/*.tmp
           git add specs/reels assets/reel
           if git diff --cached --quiet; then
             echo "没有新证据/正式 spec"

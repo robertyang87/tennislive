@@ -98,9 +98,15 @@ def build_html(card: dict) -> str:
         body = _timeline_body(card)
     elif kind == "versus":
         body = _versus_body(card)
+    elif kind == "tiles":
+        body = _tiles_body(card)
+    elif kind == "draw":
+        body = _draw_body(card)
+    elif kind == "bracket":
+        body = _bracket_body(card)
     else:
         raise SystemExit(
-            f"不认识的 kind: {kind!r}——只有 quote / facts / timeline / versus 四种")
+            f"不认识的 kind: {kind!r}——只有 quote / facts / timeline / versus / tiles / draw / bracket 七种")
     return f"""<!doctype html>
 <meta charset="utf-8">
 <style>
@@ -174,6 +180,42 @@ def build_html(card: dict) -> str:
   .vs-seg.win {{ background: {GREEN}; }}
   .vs-seg.lose {{ background: rgba(231,243,236,.22); }}
   .vs-seg.tie {{ background: rgba(231,243,236,.40); }}
+  /* ── tiles：每行一个图标（赛事 logo／官方头像）＋ 一句话，**一行放完不换行**。
+     账号所有者 2026-09-28 看 timeline 版：「最好不要换行」「减少点文案」
+     「字体能精美一些同时配上 logo 或图片」。所以台头走得意黑、每行一句 ≤12 字，
+     放不下就当场报错（见 render 里的溢出检查），不让它悄悄折成两行。 */
+  .t-title {{ font-family: "Smiley Sans", "Noto Sans CJK SC", sans-serif;
+              font-size: 120px; color: {INK}; line-height: 1.1;
+              margin-bottom: 84px; letter-spacing: 0.02em; }}
+  .t-title b {{ color: {GREEN}; font-weight: inherit; }}
+  .tile {{ display: flex; align-items: center; gap: 64px; margin-bottom: 64px;
+           padding: 36px 48px; border-radius: 64px;
+           background: rgba(231,243,236,.07); }}
+  .tile:last-of-type {{ margin-bottom: 0; }}
+  .tile.hi {{ background: rgba(184,233,134,.16); }}
+  .t-img {{ flex: none; width: 240px; height: 240px; border-radius: 50%;
+            object-fit: cover; object-position: 50% 18%; display: block;
+            box-shadow: 0 0 0 6px rgba(231,243,236,.20); background: #fff; }}
+  .t-img.logo {{ border-radius: 48px; object-fit: contain; padding: 26px; }}
+  .t-txt {{ display: flex; flex-direction: column; gap: 10px; min-width: 0; }}
+  .t-when {{ font-family: "Smiley Sans", "Noto Sans CJK SC", sans-serif;
+             font-size: 96px; color: {GREEN}; line-height: 1.05; white-space: nowrap; }}
+  .t-what {{ font-size: 88px; color: {INK}; line-height: 1.2; font-weight: 700;
+             white-space: nowrap; }}
+  .t-note {{ margin-top: 96px; font-size: 52px; color: {MUTED}; white-space: nowrap; }}
+  /* ── draw：签表示意——一根竖着的签表切成四个四分之一区，种子落在哪一格一眼看见 */
+  .d-wrap {{ display: flex; gap: 72px; align-items: stretch; }}
+  .d-rail {{ flex: none; width: 36px; border-radius: 18px;
+             background: linear-gradient({GREEN}, rgba(184,233,134,.25) 50%, {GREEN}); }}
+  .d-q {{ display: flex; flex-direction: column; gap: 28px; flex: 1; }}
+  .d-cell {{ display: flex; align-items: center; justify-content: space-between;
+             padding: 44px 64px; border-radius: 56px; background: rgba(231,243,236,.07); }}
+  .d-cell.hi {{ background: rgba(184,233,134,.16); }}
+  .d-seed {{ font-family: "Smiley Sans", "Noto Sans CJK SC", sans-serif;
+             font-size: 132px; color: {INK}; line-height: 1; white-space: nowrap; }}
+  .d-cell.hi .d-seed {{ color: {GREEN}; }}
+  .d-where {{ font-size: 76px; color: {MUTED}; font-weight: 700; white-space: nowrap; }}
+  .d-cell.hi .d-where {{ color: {INK}; }}
 </style>
 <div id="card">{body}</div>
 """
@@ -291,6 +333,164 @@ def _versus_body(card: dict) -> str:
     return "".join(out)
 
 
+#: tiles 每行一句的字数上限。2030 宽的卡减去图标和内边距，88px 的字一行放 13 个上下；
+#: 留一个字的余量。超了当场报错，比渲出来才发现换行便宜。
+TILE_MAX_CHARS = 12
+
+
+def _tiles_body(card: dict) -> str:
+    rows = card.get("rows") or []
+    if not rows:
+        raise SystemExit("tiles 卡要有 rows")
+    out = []
+    if card.get("title"):
+        # 台头里用【】包起来的那几个字给品牌绿——一屏只这一处强调
+        t = _esc(card["title"]).replace("【", "<b>").replace("】", "</b>")
+        out.append(f'<div class="t-title">{t}</div>')
+    for r in rows:
+        what = str(r.get("what", "")).strip()
+        if len(what) > TILE_MAX_CHARS:
+            raise SystemExit(f"tiles 一行最多 {TILE_MAX_CHARS} 个字（不换行），这一行 {len(what)} 个：{what}")
+        img = ""
+        if r.get("logo"):
+            img = _img(r["logo"], "t-img logo")
+        elif r.get("photo"):
+            img = _img(r["photo"], "t-img")
+        hi = " hi" if r.get("hi") else ""
+        out.append(f'<div class="tile{hi}">{img}<div class="t-txt">'
+                   + (f'<div class="t-when">{_esc(r["when"])}</div>' if r.get("when") else "")
+                   + f'<div class="t-what">{_esc(what)}</div></div></div>')
+    if card.get("note"):
+        out.append(f'<div class="t-note">{_esc(card["note"])}</div>')
+    return "".join(out)
+
+
+def _draw_body(card: dict) -> str:
+    rows = card.get("rows") or []
+    if not rows:
+        raise SystemExit("draw 卡要有 rows（从签表最上面往下排）")
+    out = []
+    if card.get("title"):
+        t = _esc(card["title"]).replace("【", "<b>").replace("】", "</b>")
+        out.append(f'<div class="t-title">{t}</div>')
+    cells = []
+    for r in rows:
+        hi = " hi" if r.get("hi") else ""
+        cells.append(f'<div class="d-cell{hi}"><div class="d-seed">{_esc(r.get("seed", ""))}</div>'
+                     f'<div class="d-where">{_esc(r.get("where", ""))}</div></div>')
+    out.append('<div class="d-wrap"><div class="d-rail"></div><div class="d-q">'
+               + "".join(cells) + "</div></div>")
+    if card.get("note"):
+        out.append(f'<div class="t-note">{_esc(card["note"])}</div>')
+    return "".join(out)
+
+
+def _bracket_body(card: dict) -> str:
+    """一张签表图：左右各 8 个签位的药丸，按对阵两两收拢，在正中汇成一点。
+
+    账号所有者 2026-09-28 发来 TennisTV 的北京签表图：「用类似的签表图」。
+    版式照着它：左右两列签位、括号线往中间收、正中一个标签；背景是一张压暗的
+    场馆图（**不用球员照**——同一天「不要用郑钦文做图片」）。
+    每个签位 `{"name": "郑钦文", "tag": "外卡", "hi": true}`，`muted` 给轮空。
+    """
+    left, right = card.get("left") or [], card.get("right") or []
+    if len(left) != 8 or len(right) != 8:
+        raise SystemExit("bracket 卡左右各要 8 个签位（一个 1/8 区的两半）")
+    W = CARD_W - 240                       # #card 左右各 120 padding
+    pw, ph = 640, 104                      # 药丸
+    top = 470
+    ys = []
+    y = top
+    for i in range(8):
+        ys.append(y)
+        y += ph + (28 if i % 2 == 0 else 74)
+    H = ys[-1] + ph + 260
+    xl, xr = 40, W - 40 - pw
+    col = {"line": "rgba(231,243,236,.55)"}
+    svg = []
+
+    def pill(x, y, e):
+        name = _esc(e.get("name", ""))
+        tag = _esc(e.get("tag", ""))
+        if e.get("hi"):
+            fill, stroke, ink = GREEN, GREEN, "#0c281e"
+        elif e.get("muted"):
+            fill, stroke, ink = "rgba(12,40,30,.55)", "rgba(231,243,236,.25)", MUTED
+        else:
+            fill, stroke, ink = "rgba(12,40,30,.72)", "rgba(231,243,236,.85)", INK
+        t = name + (f"（{tag}）" if tag else "")
+        svg.append(f'<rect x="{x}" y="{y}" width="{pw}" height="{ph}" rx="{ph // 2}" '
+                   f'fill="{fill}" stroke="{stroke}" stroke-width="5"/>'
+                   f'<text x="{x + pw / 2}" y="{y + ph / 2 + 22}" text-anchor="middle" '
+                   f'font-size="62" font-weight="800" fill="{ink}">{t}</text>')
+
+    def brackets(ys_, x_edge, sgn):
+        # sgn=+1 往右收（左列），-1 往左收（右列）
+        pts = [y_ + ph / 2 for y_ in ys_]
+        step = 64
+        x0 = x_edge
+        level = pts
+        for _ in range(3):
+            nxt = []
+            x1 = x0 + sgn * step
+            for a, b in zip(level[0::2], level[1::2]):
+                svg.append(f'<path d="M{x0} {a}H{x1}V{b}H{x0}" fill="none" '
+                           f'stroke="{col["line"]}" stroke-width="5"/>')
+                nxt.append((a + b) / 2)
+            level, x0 = nxt, x1
+        return x0, level[0]
+
+    for y_, e in zip(ys, left):
+        pill(xl, y_, e)
+    for y_, e in zip(ys, right):
+        pill(xr, y_, e)
+    lx, ly = brackets(ys, xl + pw, +1)
+    rx, ry = brackets(ys, xr, -1)
+    mid = W / 2
+    svg.append(f'<path d="M{lx} {ly}H{mid - 150}M{rx} {ry}H{mid + 150}" stroke="{GREEN}" stroke-width="6"/>')
+    center = _esc(card.get("center", ""))
+    if center:
+        svg.append(f'<rect x="{mid - 150}" y="{ly - 64}" width="300" height="128" rx="64" fill="#0c281e" '
+                   f'stroke="{GREEN}" stroke-width="5"/><text x="{mid}" y="{ly + 22}" text-anchor="middle" '
+                   f'font-size="62" font-weight="800" fill="{GREEN}">{center}</text>')
+    title = _esc(card.get("title", ""))
+    sub = _esc(card.get("subtitle", ""))
+    note = _esc(card.get("note", ""))
+    bg = ""
+    if card.get("bg"):
+        path = Path(card["bg"])
+        path = path if path.is_absolute() else REPO / path
+        if not path.is_file():
+            raise SystemExit(f"背景图不在：{card['bg']}")
+        bg = (f'<image href="{path.resolve().as_uri()}" x="0" y="0" width="{W}" height="{H}" '
+              f'preserveAspectRatio="xMidYMid slice" opacity=".38"/>'
+              f'<rect width="{W}" height="{H}" fill="url(#fade)"/>')
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" '
+            f'style="display:block;font-family:\'Noto Sans CJK SC\',sans-serif">'
+            f'<defs><clipPath id="r"><rect width="{W}" height="{H}" rx="80"/></clipPath>'
+            f'<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">'
+            f'<stop offset="0" stop-color="#0c281e" stop-opacity=".92"/>'
+            f'<stop offset=".45" stop-color="#0c281e" stop-opacity=".35"/>'
+            f'<stop offset="1" stop-color="#0c281e" stop-opacity=".92"/></linearGradient></defs>'
+            f'<g clip-path="url(#r)"><rect width="{W}" height="{H}" fill="#0c281e"/>{bg}</g>'
+            f'<text x="{W / 2}" y="210" text-anchor="middle" font-family="Smiley Sans" font-size="170" '
+            f'fill="{INK}">{title}</text>'
+            f'<text x="{W / 2}" y="330" text-anchor="middle" font-size="68" font-weight="700" '
+            f'fill="{GREEN}">{sub}</text>'
+            + "".join(svg)
+            + f'<text x="{W / 2}" y="{H - 100}" text-anchor="middle" font-size="52" fill="{MUTED}">{note}</text>'
+            '</svg>')
+
+
+def _img(rel, cls: str) -> str:
+    path = Path(rel)
+    if not path.is_absolute():
+        path = REPO / rel
+    if not path.is_file():
+        raise SystemExit(f"图片文件不在：{rel}（找的是 {path}）")
+    return f'<img class="{cls}" src="{path.resolve().as_uri()}" alt="">'
+
+
 def _photo_uri(rel) -> str:
     """仓库相对路径 → 一个 `<img>`；不给就返回空串。
 
@@ -328,6 +528,13 @@ def render(html: str, out: Path) -> Path:
                                device_scale_factor=1)
         tab.goto(page.resolve().as_uri())
         tab.wait_for_timeout(400)
+        # 「最好不要换行」：凡是标了 nowrap 的字，撑出卡外就是放不下——报错，不裁
+        over = tab.evaluate("""() => [...document.querySelectorAll('.t-what,.t-when,.t-note,.d-where,.d-seed,.t-title')]
+            .filter(e => e.getBoundingClientRect().right > document.querySelector('#card').getBoundingClientRect().right - 100)
+            .map(e => e.textContent)""")
+        if over:
+            browser.close()
+            raise SystemExit(f"这几行放不下一行（会撑出卡外）：{over}")
         tab.locator("#card").screenshot(path=str(out), omit_background=True)
         browser.close()
     page.unlink(missing_ok=True)
