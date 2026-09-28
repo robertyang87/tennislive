@@ -278,10 +278,10 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_low_res_why": _gate("cover_photo_problem：封面低于门槛的认领",
                           "cover_photo_problem", "cover.portrait._low_res_why"),
     "_match": _gate("reel_facts 的赛果/抢十闸拿它对账、reel_asset_gates._retired 判退赛"
-                    "（封面用时闸）、promote_reel_draft 的撞车键、list_official_uploads "
+                    "（封面用时闸）、promote_reel_draft 的撞车键（合集源片按场次 id 分开，`_compilation_only`）、list_official_uploads "
                     "认人和开球日（dry-run 只报不拦的官方上传／封面日期报告）",
                     "verified_result_problem decider_tiebreak_problem waiting_reasons "
-                    "promote _source_urls _match_keys _retired event_dates spec_surnames",
+                    "promote _source_urls _match_keys _flashscore_id _retired event_dates spec_surnames",
                     "_match", truthy),
     "_narration_why": _gate("cover_voice_matches_hook_problem：封面口播和钩子不同的认领",
                             "cover_voice_matches_hook_problem", "cover._narration_why"),
