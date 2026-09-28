@@ -90,14 +90,20 @@ def _fake_master(dest: Path, colour: str, frames: int, tone: int) -> None:
         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-ac", "2", str(dest))
 
 
-@pytest.mark.parametrize("picture_frames", [30, 29])
-def test_母版只换画面时口播逐字节沿用_画面照样现渲(tmp_path, monkeypatch, picture_frames):
+@pytest.mark.parametrize(("picture_frames", "out_style"),
+                         [(30, "abs"), (30, "rel"), (29, "abs")])
+def test_母版只换画面时口播逐字节沿用_画面照样现渲(tmp_path, monkeypatch, picture_frames,
+                                                   out_style):
     """`--keep-voice`（2026-09-27 修片尾推镜抖动时加的）：只改动效、不改口播时，
     画面**现渲**（`render_clip` 不给 `layers` ＝ 现起 Chromium），口播那一轨从旧母版
     `-c copy`——逐字节不动，「每条片子结尾一模一样的那一下」不用去赌 TTS 这次合得一样。
 
-    三件事一起钉：① 音轨 md5 和旧母版相同；② 画面是新渲的（不是旧母版转码）；
-    ③ 帧数对不上就报错、旧母版原样留着（参数化的 29 帧那一组）。
+    四件事一起钉：① 音轨 md5 和旧母版相同；② 画面是新渲的（不是旧母版转码）；
+    ③ 帧数对不上就报错、旧母版原样留着、**工作目录照样清掉**（29 帧那一组——它就在
+    `assets/brand/` 底下，留着 `_old_master.mp4` 会被下一次 `git add -A` 带进仓库）；
+    ④ `--out` 写相对路径也不许在收尾那行炸（`rel` 那一组：在仓库根下跑
+    `--out assets/brand/outro_master.mp4`，母版写完了却在打印路径时抛 ValueError、
+    退出码非零——评审 2026-09-27 复现过）。
     """
     import shutil  # noqa: PLC0415
 
@@ -122,12 +128,22 @@ def test_母版只换画面时口播逐字节沿用_画面照样现渲(tmp_path,
     monkeypatch.setattr(bom.outro_page, "render_clip", fake_render_clip)
     monkeypatch.setattr(bom, "_chromium_executable", lambda: "")
     monkeypatch.setattr(bom.localca, "trust_local_proxy_ca", lambda **k: None)
-    monkeypatch.setattr(sys, "argv", ["build_outro_master.py", "--keep-voice", "--out", str(master)])
+    out_arg = str(master)
+    if out_style == "rel":
+        # 「仓库根」换成 tmp_path，在它底下用相对路径跑——和在真仓库根下跑
+        # `--out assets/brand/outro_master.mp4` 是同一个形状，但不碰真母版
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setattr(bom, "ROOT", tmp_path.resolve())
+        out_arg = master.name
+    monkeypatch.setattr(sys, "argv", ["build_outro_master.py", "--keep-voice", "--out", out_arg])
 
     if picture_frames != 30:
         with pytest.raises(SystemExit, match="帧"):
             bom.main()
         assert master.read_bytes() == old_bytes, "帧数对不上还是把母版改写了"
+        assert not (tmp_path / "_outro_master_work").exists(), (
+            "报错之后工作目录没清——`_old_master.mp4` / `_picture.mp4` 留在母版旁边，"
+            "下一次 `git add -A` 会把它们提交上去")
         return
 
     assert bom.main() == 0

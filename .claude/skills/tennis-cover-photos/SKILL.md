@@ -1508,7 +1508,8 @@ entrance of all-time? 🥶》打开是**费德勒**——标题不带球员名�
 `focus_y`（zoom=1.0 时本来就是死的）都推不动。**能动的只有横向**：把脑袋挪到台头那行
 字的右边（这条实测：台头文字收在 x≈420、帽子从 x≈450 起，留 30px）。
 
-⚠️ 真想把人整个往下挪只有 **`fit: "width"`** 那条路（整幅 16:9 都在、上下垫模糊放大版、
+⚠️ 真想把人整个往下挪只有 **`fit: "width"`** 那条路（⚠️ 2026-08-31 起**「赛场之上」不许走**，
+`--dry-run` 就红——账号所有者「封面要全铺满」；下面这段只对「网球有故事」还成立）（整幅 16:9 都在、上下垫模糊放大版、
 `focus_y` 这时才活）——渲过四版，拳头和球拍全露出来、所有文字带都躲开了，
 **代价是人小一大圈**，撞上 2026-08-18「优先近景特写、放大到接近铺满」。取舍写进
 `_zoom_why`，别让下一个人重推一遍。
@@ -2222,6 +2223,114 @@ GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: 
 
 ⚠️ **还不知道的**：bu-jodar 264.4 那张 poster 没进仓库，**它的 EAR 没量到**；
 「垂眼」这一档只靠眼睑开口判，头低着但眼睛睁着的帧（看得见瞳孔）照样放行。
+
+#### ⭐⭐ 2026-09-27 O4：抽帧封面推出去之后，官方图一到自动换图重推（`tools/cover_upgrade.py`）
+
+账号所有者在多选题里选的 O4「自动换图重推」。来路是三次同一个形状的手动补救——
+`alcaraz-fritz`（20:53:42Z 推送，拉沃尔杯官网 20:57:38Z 就上传了本场 `BS2_8696`，
+6b49049b）、`bu-majchrzak`（5beecfa6）、`zverev-deminaur`（1a4f92d3）：都是他在
+微信里看见、开口，会话才去换。定时班次 `reel-cover-upgrade.yml`（20 分钟一班）
+把那一下接过来：
+
+    近 48 小时推过（发布账本第一次 sent）、spec 的 cover.portrait 还是 frame_at 的「赛场之上」
+      → find_cover_photo 各档（WTA photo-resources / AP / 当地报纸 / 赛事官网 WP）
+      → 机器闸全过才换 → spec ＋ assets/reel/<slug>-official.<ext> ＋ data/cover_upgrades.json 推 main
+      → 同日的 pushed.json 删掉 → match-reel mode=render push=true
+
+**闸（全是机器判得了的，任何一项拿不准都不换）**：
+
+| 闸 | 判据 | 为什么这么窄 |
+|---|---|---|
+| 点名 | 说明／文件名有主角的**姓和名**、有**对手的姓**、有赛事（赛事自己的 WP 媒体库由站点担保）、**当地**日期对上这一场（说明写了按说明；没写才看 WP 的 `date_gmt`，**上传时刻要晚于开赛**，只有日子没有时刻的不换；写了星期几也要对上） | 同一个人前一天、后一天各打一场时，认人认得出是他、认不出是哪一场；前一晚夜场的图过了午夜才传，**日子**和第二天一样；普利斯科娃是同卵双胞胎、塞伦多洛和西西帕斯是兄弟俩，认人闸分不开 |
+| 在比赛中 | 说明／文件名里有 practice／training／warm／news conference／press conference／interview／autograph／arriv／portrait／poses／media／reporters／photocall／headshot／hits during a session／ahead of his·her／doubles／mixed 一律不换（`NOT_IN_MATCH`；裸的 session 不拦——AP 比赛图常写 night session） | 认人认得出是他、认不出他在干什么；挑「脸最大的」恰好偏爱发布会和定妆照。拉沃尔杯同一站单打双打都打（`alcaraz-mensik-doubles` 首日、`alcaraz-fritz` 第二天） |
+| 当地日期 | flashscore `dc_1_<id>` 的 `DC÷`／`DD÷`（开赛／结束）＋ `EVENTS` 表的时区；夜场跨午夜两天都算 | **时区不在表里就不换**，不退回宽窗口；新赛事在 `cover_upgrade.EVENTS` 加一行 |
+| 分辨率 | 按选定 zoom 铺 1080×1440 **不放大**（`cover_photo_problem` 同一个式子） | 机器不写 `_low_res_why`——那是人替取舍认领 |
+| 认人 | `face_checks`：最大那张脸 match 到 `cover.subject`（认成对手、unknown、模型不可用都不换） | O2 的闸，门槛不另调 |
+| 睁眼 | EAR ≥ 0.16 | O3 的闸 |
+| 钩子带／台头 | 真实铺图数学算脸落在哪：下沿在 `STORYCOPY_TOP` 之上、上沿不压进台头（y 0~170）；zoom 从 1.0 推到 1.3，推一档要过一次分辨率 | 本节「挑封面之前先把钩子那条带叠上去」；图在纵向没余量时偏移被夹住，脸会照原位落进台头 |
+
+全过的里面挑**脸最大**的（近景特写优先）。**情绪对不对题机器判不了，就是不判**——
+O4 授权的是「过了这几道就换」。换完拿**正式的** `validate_spec` ＋ `cover_photo_problem`
+（去掉 slug，不走豁免表）再过一遍，不过就把写过的文件全部退回、这一班红出来。
+
+⚠️ **2026-09-27 评审（BLOCKING）之后收紧的几处**，都是「认人认得出是他、认不出是哪一场／在干什么」
+那一类：第一版只要姓＋赛事＋同一天，`…speaks during a news conference after his second-round match…`
+和 `…practices ahead of his match…` 实跑都换上了；中文的 `_production.event`（仓库里有「美网」）归一
+出来是空串，空串是任何串的子串，于是**任何中文赛事名都被认成美网、纽约时区**，赛事那道闸也恒过——
+现在空的当没写、回退顶栏，点名闸遇到空赛事名直接不换。**代价**：WTA 图床的 `<球员>_-_<赛事>_-_Day_N-DSC_…`
+文件名既不写对手、URL 里也只有上传的日子，这一档基本换不上了；拉沃尔杯 `BS2_8696` 那种「against Fritz」
+的图注照样过（`test_拉沃尔杯BS2_8696那张的说明过得了点名闸`）。
+
+**一个 slug 最多换一次**：`data/cover_upgrades.json` 里 `status: upgraded` 的不再查；它同时让
+`build_match_reel.OWNER_APPROVED_FRAME_COVERS` 减掉这个 slug（`auto_upgraded_frame_covers()`）——
+表的自检要求「补上真图之后也该删」，机器改账不改 Python。当面点过「就用这一帧」的，在
+`cover.portrait._keep_frame_why` 写一句，这条就不换。
+⚠️ **换过之后人要换回抽帧，三处一起改**：spec 换回 `frame_at`、账里那一笔 status 改成别的
+（`upgraded` 会让豁免表减掉它，spec 又是抽帧就当场红）、再写 `_keep_frame_why`（不写的话 48 小时
+窗口里它又是一条目标，下一班照样换）。
+
+⚠️ **最终那道闸跑在工作流的稀疏检出里**（2026-09-27 评审第二轮 BLOCKING）：main 的 #1104 让
+`validate_spec` 查比分板国旗（`assets/flags/<iso2>.png`），而 `reel-cover-upgrade.yml` 的
+`sparse-checkout` 没列 `assets/flags`——**每一条**换好的图都被「不在仓库里」退回，而且那张合格的官方图
+被记成下过、永久拉黑。现在两处都收了：单子里加了 `assets/flags`，并由
+`test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样` 把那张单子按 cone 模式真的展开、拿全库
+「赛场之上」抽帧封面逐条对账（`validate_spec` 以后再多读一样东西，它自己会红）；退回时先问一句
+「换图之前的原 spec 在这个检出里过不过」——也过不了，拦的就不是图，只退避、不拉黑。
+
+⚠️⚠️ **跨天重渲会在 Release tag 上撞车**（2026-09-27 评审第三轮 BLOCKING NB1，试合并上拿真 spec 复现过）：
+`match-reel` 的 Release 那一步是 `TAG="reel-$SLUG"` ＋ `gh release upload --clobber`，重渲传的还是同一个 tag。
+最晚那一格在前一天（北京）时，新的 render.json 落进**新的日期目录**——和旧的那格同一个 `video_url`、不同的
+`video_bytes`，`test_同一个Release_tag被两份产物共用时每一份都要挂账` 要两份都写 `_release_tag_note`。
+render 用 GITHUB_TOKEN 直推 main、CI 不跑，**下一个不相干的 PR 才红**；而跨天是常态（当时 6 条目标里 4 条）。
+现在两头各挂自己知道的那一半（`tools/release_tag_note.py`）：换图时 `apply_upgrade` 给这个 slug 在 tag 上的
+**每一格旧 render.json** 挂账、`git add --sparse` 进同一个提交（同日那格也挂——北京 23 点后派的重渲会跑过午夜）；
+`match-reel.yml` 传完 Release、写完 `video_url` 当场给**新的这一格**挂（`release_tag_note.py current`，只有它知道
+此刻 tag 上是哪一份）。会话手动跨天重渲的旧格它不去改（一趟 render 只提交自己那一格），打 `::warning::` 点名。
+判据 `test_跨天重渲_新旧两格render_json都挂账_tag碰撞判据不红`（拿 CI 那条判据原样判临时仓库，挂账前红、后绿）。
+
+同一轮收掉的几处：Match Reaction 头图那一档拿掉了（只有 og:image 文件名、没有说明，点名闸恒过不了，却每班为每条
+WTA 目标花一次 `find_match`；photo-resources 留着，`GettyImages-*` 带 Getty 说明）；`--plan` 不再把**不联网就知道
+换不了**的算成目标（没有开赛时刻、对手英文名缺、赛事认不出……`static_problems`，原来 48 小时里每 20 分钟为它装一遍
+依赖）；进程死在「进清单」和「记账」之间时，下一班 `--plan` 认出机器换过的 spec（`_why` 开头）**补记**那一笔、不重派；
+下到一半断掉的图（字节对不上 Content-Length）记「下不下来」、不拉黑；点名闸加上「在场边看队友打」的说法
+（`on/from the bench`、`on/from the sideline(s)`、`cheers on (his/her) teammate/compatriot`、`watches on as/from`，
+裸的 cheers／watches 不收）。
+
+评审第四轮收掉的三处：① 点名闸原来收的是裸 `sideline` 和「`cheers on` 后面不是 court」——「cheers **on centre
+court** after winning a point」「hits a forehand down **the sideline**」这类**他自己在打**的比赛图也被拦（安全方向，
+但该换的没换上），收窄成看别人打才有的那半句；② 过闸之后「删同日 pushed.json → 给 tag 挂账 → 进清单」那一段抛个
+`run` 不接的异常（`git add --sparse` 的 `CalledProcessError`）时，工作流 always() 那句不带路径的 `git commit` 会把
+**整个索引**里的半截提交上去——现在这一段要么走完、要么连索引（稀疏检出下补回 skip-worktree 位）一起全部退回，记退避、
+不拉黑图，判据 `test_过闸之后挂账那一步炸了_索引连spec一起全部退回`；③ 报纸档、官网档把「没翻完」写在返回值的
+`notes` 里、不抛，原来只读 `rows`，半截失败报成「0 张」——现在一页都没取回来记「取不到」、翻了一半的把那句话接在
+张数后面；官网档给比赛日（翻完 `SITE_UPLOAD_DAYS`＝3 天的全部上传再按名字筛，alt_text／文件名里的名字也认得出，
+WordPress 的 `search` 两样都不搜），判据 `test_半截失败的一档要报出来_不许报成查空`。
+
+⚠️ **按这套闸，拉沃尔杯官网那批图过不了**：`lavercup.com` 媒体库的上限是 1200 宽
+（`BS2_8696` 1200×927、`CB_34032` 1200×832、`BS2_9519` 1200×800），铺 1080×1440 要放大
+1.55~1.80 倍——6b49049b 是人写了 `_low_res_why` 认领的。2026-09-27 对 `bublik-jodar`
+实跑：23 张候选，本场那两张日期、说明全对，卡在分辨率。要让机器接这一档，得账号所有者
+先定「放大到几倍以内可以自动换」，**这是口径，不是 bug**。
+
+**实测过的端点（2026-09-27，沙箱）**：flashscore `dc_1_hheFZ9KN` 200（`DC÷1790360700`
+＝09-25 18:25Z）；`lavercup.com/wp-json/wp/v2/media?search=…&_fields=…caption,alt_text`
+200，caption／alt／date 都在；`wtatennis.com/videos/highlights` 200；**AP 沙箱 403**
+（`sweep_ap` 自己把失败吞成空列表，所以工具先敲一次 `/hub/tennis`，敲不开记「取不到」，
+不记「0 张」）；Getty `/detail/<id>` 301 跳到带说明的页。runner 上 AP 通不通没验过。
+
+**班次的账**（都在 `data/cover_upgrades.json`）：每一班先 `--plan`（只读 json、不装依赖）看有没有
+活，0 条就不装 onnxruntime／opencv、不拉模型；下过、闸没过的候选记进 `attempts.<slug>.tried`，下一班
+跳过它们接着往后下（不然第 11 张永远轮不到）；换完过不了正式封面闸的，这一条退避 2 小时起每次翻倍，
+那张图只在**是它的错**时记成下过（原 spec 过得了、换上它才过不了）；派发 render 每条重试三次，还丢了的话下一班对账看到「换了图、一小时了发布账本里没有新的推送
+尝试」就重派，最多两次，再不行打 `::warning::` 要人看。
+
+⚠️ **AP／Getty 的授权没人看**（评审 N7）：`sweep_ap` 的 docstring 写的是「发布前人工判断」，而这条链
+过了机器闸就发。O4 授权的是「自动换图重推」，这一半交不交给机器是账号所有者的口径，代码没替他改。
+
+    python3 tools/cover_upgrade.py                    # 只查、只报告（不写）
+    python3 tools/cover_upgrade.py --slug <slug>      # 只查一条
+    python3 tools/cover_upgrade.py --plan             # 只看有没有活（目标、要重派的 render），不查图
+    # 工作流：定时班次带 --apply；推完会话用 tools/push_link.py --slug <slug> 取新推送网页
 
 
 ### ⭐⭐ 2026-09-18：**比利·简·金杯官网的图在 Contentful 上，原图 5000~7000px**——页面是 JS 壳，图不是

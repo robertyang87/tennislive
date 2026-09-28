@@ -24,6 +24,7 @@ import tempfile
 import time
 
 from production_cache import atomic_json, cached_json, digest, file_digest
+from publication_ledger import interview_published
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
@@ -172,8 +173,81 @@ def _request_identity(req: dict) -> str:
 
 
 def _protected(spec: dict, slug: str) -> bool:
+    """这条正式 spec 已经不归自动链改了：人核过，或者**已经发出去**。
+
+    「发出去」认两处：**发布账本**（`data/interview_publish_ledger/<slug>.json`，
+    `auto_push_interview_gate` 称它为权威状态）里有任何一次发出/在发/状态不明，
+    或者老的 `pushed.json` 兼容标记。⚠️ 只认 `pushed.json` 漏过一条真的：
+    `nishikori-sakamoto-us-open-2026-q3-farewell` 账本 `sent`（2026-08-29 06:53Z，
+    run 33239487051）、账号所有者手改过（7c6110dd2），但 `pushed.json` 从来没有过——
+    于是 6 小时后自动链把这条已发、已精修的 spec 重建了一遍（519816362，给一条
+    `opening.why` 写着「按账号所有者明确要求不补冷开场」的片子挂上了 `lead_in`），
+    全库测试也把它当成「自动链还没核没发」只报。判据
+    `tests/test_interview_clip.py::test_自动spec的判据_章在而且没核没发才算`。
+    """
     return bool(spec.get("transcript_verified") or spec.get("_verified_clean")
-                or _exists_or_tracked(OUTDIR / slug / "pushed.json"))
+                or _exists_or_tracked(OUTDIR / slug / "pushed.json")
+                or (slug and interview_published(ROOT, slug)))
+
+
+#: 三个自动写手给采访 spec 盖的同一个章：本文件 `build_spec`、
+#: `draft_interview_spec`（草稿）、`promote_interview_draft`（草稿转正，原样保留）。
+#: ⚠️ **没有任何代码会把它改掉**——人工修 spec（#1130 修拉沃尔杯捧杯那条）也不改，
+#: main 上 17 条正式 spec 带着它、**17 条全都推过**（2026-09-27 晚按发布账本量的；
+#: 其中锦织圭那条只有账本、没有 `pushed.json`）。
+#: 所以「过没过那一关」不能只看这个章，要看 `_protected`：人核过
+#: （`transcript_verified` / `_verified_clean`）或已经推送（发布账本 / `pushed.json`）。
+AUTO_PENDING = "auto_pending"
+
+
+class UnverifiedAutoSpecFinding(UserWarning):
+    """全库测试里自动 spec 的发现：只报、不判 main 红（pytest 的 warnings 汇总里看得见）。"""
+
+
+def unverified_auto_spec(spec: dict, slug: str | None = None) -> bool:
+    """自动链直接提交到 main、还没过人工核对也还没发出去的采访 spec（含草稿）。
+
+    **全库测试对它只报，拦它的是渲染闸。** 来路（2026-09-27 17:33Z）：
+    `interview-auto-render` 把 `laver-cup-2026-trophy-ceremony` 的自动正式 spec
+    （01684ef0，`zh` 是 DeepSeek 初译，11 行超 952px）直接推上 main。GITHUB_TOKEN 推的
+    提交不触发 ci.yml，于是它不红在自己身上，红在下一个无关的人工合并上
+    （run 36337538392，#1127），再把所有开着的 PR 一起打红 38 分钟——而那条片子
+    **早就被渲染闸拦住了**（run 36337385713 停在 `write_ass` →「中文字幕过不了」），
+    全库测试只是把同一个缺陷重复报了一遍。9/20~9/27 这样的「自动正式 spec」提交
+    六次全红（main 四次、PR 两次），**六次渲染闸都先拦下了**。
+
+    判据只用已有的标记，不新发明：章是 `transcript_verification == "auto_pending"`，
+    销章是 `_protected`（人核过或已推送——发布账本或 `pushed.json`；也就是这条 spec
+    已经不归自动链改了，`is_pending` 用它挡重建，这里用它认「过了那一关」）。
+
+    ⚠️ 还有一段缝它认不出：自动 spec 被人手修过、但还没推（#1130 修拉沃尔杯那条，
+    ba28735dc 到推送之间约 19 分钟）。手修不改章，这段时间里对手修的回归全库测试
+    也只报——渲染闸照拦，只是 PR 上的绿不代表这几条判据查过它。
+
+    ⚠️ **只管那几条「渲染闸拦得住同一个缺陷」的全库测试**；没有渲染闸的（比如
+    `test_人名要以译名表为准`）照旧全判，别拿它当通用豁免。清单写在
+    `.claude/skills/tennis-pipeline-ops/SKILL.md`「自动链直接提交到 main 的草稿 spec
+    不许把 main 打红」那一节。判据 `tests/test_interview_clip.py::
+    test_自动链刚提交的采访spec只报_销章就红_渲染闸照拦`。
+    """
+    if spec.get("transcript_verification") != AUTO_PENDING:
+        return False
+    return not _protected(spec, str(slug or spec.get("slug") or ""))
+
+
+def report_unverified_auto(check: str, found: dict) -> None:
+    """把自动 spec 的发现**印出来并挂一条 warning**——只报不是不报。
+
+    `print` 在 pytest 里通过时会被吞掉，所以另挂一条 `UnverifiedAutoSpecFinding`：
+    CI 的 warnings 汇总里每一条都看得见是哪条 spec、哪个判据、差在哪。
+    """
+    import warnings  # noqa: PLC0415
+
+    for name in sorted(found):
+        msg = (f"[自动 spec 只报] {check} · {name}：{found[name]}"
+               "（渲染闸会拦它；人核过或推送之后这条判据对它照判）")
+        print(msg)
+        warnings.warn(msg, UnverifiedAutoSpecFinding, stacklevel=2)
 
 
 def _explicit_revision(req: dict, spec_path: Path, spec: dict) -> bool:
@@ -205,13 +279,22 @@ def is_pending(path: Path) -> bool:
 
 
 def pending_paths(only_slug: str = "") -> list[Path]:
+    """待 build 的请求。读不了的（JSON 坏了、顶层不是对象、slug 缺或非法）**照样列进来**，
+    按文件名认 slug（`requests/interviews/<slug>.json`，存量全是这个约定）：交给 `main`
+    那个逐条 try 记进失败清单、`::error file=` 指回它，同一趟其余请求照常 build。
+    原来这里一抛，整趟连 `--count-pending` / `--pending-slugs` 一起炸，那个逐条兜底
+    根本走不到——一条坏请求每 10 分钟卡死一整趟（复审 2026-09-27 nit）。"""
     out = []
     for path in _request_paths():
-        req = _read(path)
-        slug = _slug(req, path)
+        slug, pending = path.stem, True
+        try:
+            slug = _slug(_read(path), path)
+            pending = is_pending(path)   # 正式 spec 坏了也抛——一样交给 build 那一步报
+        except (OSError, ValueError):   # JSONDecodeError 是 ValueError
+            pass
         if only_slug and slug != only_slug:
             continue
-        if is_pending(path):
+        if pending:
             out.append(path)
     return out
 
@@ -429,8 +512,31 @@ def _verification(req: dict) -> dict:
     }
 
 
+def request_window(req: dict, duration: float,
+                   rows: list[dict] | None = None) -> tuple[float, float]:
+    """请求的时间窗。**没给 `end` 时不再取源片全长**，取最后一个词的词尾 ＋ 一口气
+    （`interview_tail.default_end`）——拉沃尔杯那批第一版把片尾板剪进成片、两条推上
+    微信又重推，全是 `else duration` 这一行默认出来的。切行（`_build_one_unlocked`）
+    和写进 spec 的 `end`（`build_spec`）必须是同一个数，所以只算这一处。"""
+    from interview_tail import default_end  # noqa: PLC0415
+
+    start = max(0.0, float(req.get("start") or 0.0))
+    requested_end = req.get("end")
+    if requested_end not in (None, ""):
+        end = float(requested_end)
+    elif rows:
+        end = default_end(rows, duration, start)
+    else:
+        end = float(duration)
+    return start, min(float(duration), end)
+
+
 def build_spec(req: dict, zh: list[str], duration: float) -> dict:
-    """已经正式切行的中文 + 请求元数据 → 带 L0 签名的正式 spec。"""
+    """已经正式切行的中文 + 请求元数据 → 带 L0 签名的正式 spec。
+
+    时间窗走 `request_window`；`_build_one_unlocked` 按逐词稿算好默认终点后
+    以 `{**req, "end": end}` 传进来，所以切行用的窗和写进 spec 的是同一个数。
+    """
     from interview_source_gate import (  # noqa: PLC0415
         REQUESTED_KINDS,
         finalize_source_contract,
@@ -441,10 +547,7 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
     requested = str(req["requested_content_type"])
     if requested not in REQUESTED_KINDS:
         raise ValueError(f"未登记的 requested_content_type：{requested}")
-    start = max(0.0, float(req.get("start") or 0.0))
-    requested_end = req.get("end")
-    end = float(requested_end) if requested_end not in (None, "") else float(duration)
-    end = min(float(duration), end)
+    start, end = request_window(req, duration)
     if end <= start:
         raise ValueError(f"无效时间窗：{start}-{end}（源长 {duration}）")
     if not zh:
@@ -463,7 +566,7 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
         "whisper_model": "medium.en",
         "segment_budget_px": req.get("segment_budget_px"),
         "transcript_verified": False,
-        "transcript_verification": "auto_pending",
+        "transcript_verification": AUTO_PENDING,
         "column": "赛后开麦",
         "requested_content_type": requested,
         "interview_kind": str(req.get("interview_kind") or REQUESTED_KINDS[requested]),
@@ -555,7 +658,12 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
                     "topbar_layout", "interview_kind", "requested_content_type",
                     "_claims"):
             if req.get(key) != previous.get(key):
-                spec[key] = _apply_request_delta(spec.get(key), previous.get(key), req.get(key))
+                if key not in req:
+                    # 请求把这一项整个删了：spec 里也删，和下一层 `_apply_request_delta`
+                    # 删叶子是同一个口径——原来写成 `"_claims": null` 留在 spec 里。
+                    spec.pop(key, None)
+                else:
+                    spec[key] = _apply_request_delta(spec.get(key), previous.get(key), req[key])
         from interview_source_gate import finalize_source_contract, validate_source_contract
         finalize_source_contract(spec)
         validate_source_contract(spec)
@@ -589,10 +697,7 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
 
         if not rows:
             raise RuntimeError(f"{slug}: 第一份 ASR 为空")
-        start = max(0.0, float(req.get("start") or 0.0))
-        requested_end = req.get("end")
-        end = float(requested_end) if requested_end not in (None, "") else float(duration)
-        end = min(float(duration), end)
+        start, end = request_window(req, duration, rows)
         lines = segment(
             [(row["t"], row["text"]) for row in rows], start, end,
             budget=req.get("segment_budget_px"),
@@ -615,7 +720,12 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
         }, translate_once) if write else translate_once())
         if len(zh) != len(lines):
             raise RuntimeError(f"{slug}: 中英文行数不一致 {len(zh)} != {len(lines)}")
-        spec = build_spec(req, zh, duration)
+        # 默认终点按逐词稿算好再交给 build_spec（`_request_origin` 记的仍是原请求）
+        spec = build_spec({**req, "end": end}, zh, duration)
+        if req.get("end") in (None, "") and "end" in spec:
+            # 请求没给 `end`：这个数是生成器算的。记下来，出片那一趟撞上片尾板时
+            # 按它认「没人给过」、直接收到闸算出来的终点（interview_tail 第四节）。
+            spec["_end_default"] = spec["end"]
     if write:
         if research_job is not None:
             spec["_tactical_research"] = research_job.result()
@@ -655,13 +765,33 @@ def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
         return _build_one_unlocked(path, chat, write=True)
 
 
+def _rel(path: Path) -> str:
+    try:
+        return path.resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def _annotation(text: str) -> str:
+    """GitHub 工作流命令的消息体：换行要编码，不然 `::error::` 只认第一行。"""
+    return text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--count-pending", action="store_true")
     ap.add_argument("--pending-slugs", action="store_true")
     ap.add_argument("--slug", default="")
     ap.add_argument("--write", action="store_true")
+    ap.add_argument(
+        "--failed-list", default="",
+        help="单条请求失败记进这个文件（每行：请求路径<TAB>slug<TAB>原因），退出码不再"
+             "因为单条变 1——interview-auto-render 靠它让同一趟的其余请求照常提交，"
+             "整趟到最后一步再标红。整趟跑不起来（没配 key）照旧非 0。")
     args = ap.parse_args()
+    failed_list = Path(args.failed_list) if args.failed_list else None
+    if failed_list:
+        failed_list.write_text("", encoding="utf-8")
 
     paths = pending_paths(args.slug)
     if args.count_pending:
@@ -669,7 +799,12 @@ def main() -> int:
         return 0
     if args.pending_slugs:
         for path in paths:
-            print(_slug(_read(path), path))
+            try:
+                print(_slug(_read(path), path))
+            except (OSError, ValueError) as exc:
+                # 不进 stdout（那是给 sparse-checkout add 的 slug 清单）；build 那一步会把它
+                # 记进失败清单并 `::error`，这里只在日志里留一句
+                print(f"[跳过] {_rel(path)} 读不了：{exc}", file=sys.stderr)
         return 0
     if not paths:
         print("没有待生成的人工采访请求。")
@@ -682,15 +817,54 @@ def main() -> int:
         print("::error::没配 DEEPSEEK_API_KEY，中文字幕无法生成")
         return 2
 
-    failed = 0
+    return build_all(paths, chat, write=args.write, failed_list=failed_list)
+
+
+def build_all(paths: list[Path], chat, *, write: bool,
+              failed_list: Path | None = None) -> int:
+    """逐条建 spec → 退出码。一条失败不连坐：每条请求各自 try，失败的那条**什么都不写**
+    （所有落盘都排在 `_build_one_unlocked` 末尾、所有闸之后），其余照常写。原来单条红就
+    整步退出 1，同一趟后面的「补片头」「提交」全被跳过，别的请求白转写一遍、每 10 分钟重来一趟。
+
+    ⚠️ 请求自己没过前置检查（`production_preflight.RequestNotReady`：解读卡写长了、
+    全称断言没认领、时间窗无效……）**不算这一步失败**：这条留在待生成名单、报一句
+    `::warning::`，退出码照旧看别的失败。这一步红了，工作流后面的提交和 dispatch 会被
+    隐式的 success() 一起跳过——一条写错的请求会把所有别的 spec 每 10 分钟卡一趟。
+
+    带 `failed_list`（interview-auto-render 的 `--failed-list`）时，**所有**失败——含
+    `RequestNotReady`——都记进清单、`::error file=` 指回请求文件，退出码一律 0：提交和
+    dispatch 按清单第二列跳过这几条，最后一步读清单写 run 摘要、把整趟标红。两种调法
+    都不连坐；清单那条路上没过前置检查的请求也不会只剩一句被人略过的 warning。
+    """
+    from production_preflight import RequestNotReady  # noqa: PLC0415
+
+    failed: list[tuple[str, str, str]] = []
     for path in paths:
         try:
-            slug, n_lines, duration = _build_one(path, chat, write=args.write)
-            mode = "已写入" if args.write else "干跑"
+            slug, n_lines, duration = _build_one(path, chat, write=write)
+            mode = "已写入" if write else "干跑"
             print(f"✅ {slug}: {n_lines} 行，源长 {duration:.1f}s，{mode}")
         except Exception as exc:  # noqa: BLE001 — 一条失败不吞掉后续请求
-            failed += 1
-            print(f"::error::{path.name}: {type(exc).__name__}: {exc}")
+            if isinstance(exc, RequestNotReady) and failed_list is None:
+                print(f"::warning::{path.name}: 请求没过前置检查，留在待生成名单"
+                      f"（改好请求下一趟自动接上，别的请求照常走）：{exc}")
+                continue
+            rel = _rel(path)
+            try:
+                slug = _slug(_read(path), path)
+            except Exception:  # noqa: BLE001 — 请求本身读不了，原因里已经写了
+                # 按文件名认（requests/interviews/<slug>.json，存量 17 条全是这个约定）。
+                # 空着的话 dispatch／提交那两道按 `cut -f2` 过滤的闸拦不住它上一版的正式 spec
+                # （复审 2026-09-27 nit）。
+                slug = path.stem
+            reason = f"{type(exc).__name__}: {exc}"
+            failed.append((rel, slug, reason))
+            print(f"::error file={rel}::{_annotation(f'{rel} 没过闸，不进这一趟的提交：{reason}')}")
+    if failed_list:
+        failed_list.write_text("".join(
+            f"{rel}\t{slug}\t{' ⏎ '.join(reason.split(chr(10)))}\n"
+            for rel, slug, reason in failed), encoding="utf-8")
+        return 0
     return 1 if failed else 0
 
 

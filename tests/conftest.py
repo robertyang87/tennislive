@@ -206,14 +206,22 @@ def _empty_reel_ledger(monkeypatch, tmp_path):
     """竖版短片的发布账本钉成空目录——给「拿真的已发 spec 测别的闸」的测试用
     （`@pytest.mark.usefixtures("_empty_reel_ledger")`）。
 
-    `validate_spec(spec)` 的默认口径是渲染入口，会读 `data/reel_publish_ledger`
-    （`reel_facts.waiting_fact_stale_problem`：`_facts` 里写着「抽签后／正式名单」
-    这类要等的事、`_rechecked_at` 又早于最近一次推送，就红）。哪天有人给那几条已发
-    spec 补上那两个字段，它们会先红在时效那道闸上：写了 `match=` 的对不上，没写的
-    （`pytest.raises(ReelError)`）是假绿。测的不是账本，就别读账本
-    （`reel_facts.REEL_LEDGER_DIR` 那行注释：判据测试一律不许读真账本）。
+    `validate_spec(spec)` 的默认口径是渲染入口，有**两处**读发布记录：
 
-    进程内改 `reel_facts.REEL_LEDGER_DIR`，子进程靠 `TENNISLIVE_REEL_LEDGER_DIR`。
+    - `reel_facts.waiting_fact_stale_problem`：`_facts` 里写着「抽签后／正式名单」
+      这类要等的事、`_rechecked_at` 又早于最近一次推送，就红；
+    - `reel_asset_gates.cover_reuse_finding`（④ 封面复用）：封面照片和一条**比它先
+      发出去**的片子是同一张，就红——读账本，也读 `output/*/reel/*/pushed.json`。
+
+    哪天账本多一笔（推送落账）、或者有人给那几条已发 spec 补上时效那两个字段，它们会先
+    红在这两道闸上：写了 `match=` 的对不上，没写的（`pytest.raises(ReelError)`）是
+    假绿。测的不是账本，就别读账本（`reel_facts.REEL_LEDGER_DIR` 那行注释：判据测试
+    一律不许读真账本）。
+
+    进程内改 `reel_facts.REEL_LEDGER_DIR`；`TENNISLIVE_REEL_LEDGER_DIR` 管子进程，
+    也管 `reel_asset_gates`——它在**调用那一刻**读这个变量（`publication_record`），
+    设了就把整份发布记录（账本＋`pushed.json`＋账本之前那批的冻结表）钉成这个空目录。判据
+    `tests/test_reel_asset_gates.py::test_真账本多一笔_全库扫描和钉空账本的渲染入口都不许跟着红`。
     ⚠️ 不做成 autouse：`tests/test_time_sensitive_facts.py` 那几条测的就是账本，
     它们自己把账本建在 tmp_path 上。原来这个 fixture 在 `test_match_reel.py` 和
     `test_unvoiced_quote.py` 各抄了一份，挪到这儿只留一份。
@@ -232,4 +240,35 @@ def _empty_reel_ledger(monkeypatch, tmp_path):
     # 子进程（`build_match_reel.py render --dry-run`）重新 import，monkeypatch 够不着——
     # `test_冷开场里的结局必须在正文重新兑现` 后半段就是这么走的，靠环境变量带过去。
     monkeypatch.setenv("TENNISLIVE_REEL_LEDGER_DIR", str(empty))
+    return empty
+
+
+@pytest.fixture()
+def _empty_interview_ledger(monkeypatch, tmp_path):
+    """采访线的发布账本钉成空目录——给「把 `SPECS` / `OUTDIR` 指到 tmp_path、却拿真
+    slug 走 `build_interview_request`」的测试用（`@pytest.mark.usefixtures(...)`）。
+
+    `build_interview_request._protected` 认发布账本（`publication_ledger.interview_published`），
+    而账本路径跟着 `ROOT` 走、不跟着 `SPECS` / `OUTDIR` 走——只隔离了那两个的测试会
+    **静静读到真账本**：真 slug 已经推过，`_build_one` 就报「已确认版本受保护」，
+    顶掉测试真正要测的那道闸（2026-09-27 合并 main 时
+    `test_人工请求的_claims跟进正式spec_没认领在build那一刻就红` 就是这么红的）。
+    判据测试一律不许读真账本（`_empty_reel_ledger` 同一条）。
+
+    ⚠️ 不做成 autouse：全库扫描的那几条（`unverified_auto_spec` 分自动 / 人工）**要**读
+    真账本——锦织圭那条只有账本 `sent`、没有 `pushed.json`，空账本会把它认成「自动链
+    还没核没发」，全库测试对它只报，那是一盏假绿灯。
+    环境变量每次调用时读（`publication_ledger.INTERVIEW_LEDGER_ENV`），进程内和子进程都认。
+    """
+    import sys  # noqa: PLC0415
+    from pathlib import Path  # noqa: PLC0415
+
+    tools = str(Path(__file__).resolve().parents[1] / "tools")
+    if tools not in sys.path:
+        sys.path.insert(0, tools)
+    from publication_ledger import INTERVIEW_LEDGER_ENV  # noqa: PLC0415
+
+    empty = tmp_path / "empty-interview-ledger"
+    empty.mkdir()
+    monkeypatch.setenv(INTERVIEW_LEDGER_ENV, str(empty))
     return empty

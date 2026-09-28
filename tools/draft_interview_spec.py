@@ -49,6 +49,8 @@ sys.path.insert(0, str(ROOT / "tools"))
 from oncourt_feed import parse_round  # noqa: E402
 from interview_skill import model_instructions  # noqa: E402
 from interview_zh_tail import has_dangling_tail  # noqa: E402
+# 自动章只定义一处：读它的 `unverified_auto_spec` 和盖它的三个写手用同一个常量。
+from build_interview_request import AUTO_PENDING  # noqa: E402
 
 CANDIDATES = ROOT / "data" / "interview_clip_candidates.json"
 SPECS = ROOT / "specs" / "interviews"
@@ -425,7 +427,7 @@ def translate(rows: list[dict], chat, max_zh_chars: int | None = None) -> list[s
 
 
 def build_spec(candidate: dict, zh_draft: list[str], duration: float,
-               cal: list[dict]) -> dict:
+               cal: list[dict], end: float | None = None) -> dict:
     """候选条目 + 机器译文 → spec 草稿（终审提升时补 cover/takeaway/_facts）。
 
     受访者从名册认（`interviewee_en`），认不出就 ValueError——slug 和 promote
@@ -450,7 +452,12 @@ def build_spec(candidate: dict, zh_draft: list[str], duration: float,
         "url": candidate.get("url", ""),
         "source_title": title,
         "start": 0.0,
-        "end": round(duration, 1),
+        # 不给就退回全长（老调用方）；`_build_one` 传的是最后一个词的词尾＋一口气，
+        # 源片尾巴上的片尾板不再默认剪进来——见 interview_tail.default_end。
+        "end": round(duration, 1) if end is None else round(end, 2),
+        # 草稿的终点从来不是人给的：记下这个数，`end` 还等于它就说明没人改过——
+        # 出片那一趟撞上片尾板时直接收到闸算出来的终点，不红（interview_tail 第四节）。
+        "_end_default": round(duration, 1) if end is None else round(end, 2),
         "asr_model": ASR_MODEL,
         # 第一份是 small.en；第二份必须换模型，否则“交叉验证”会恒为 0 分歧。
         "whisper_model": "medium.en",
@@ -467,7 +474,7 @@ def build_spec(candidate: dict, zh_draft: list[str], duration: float,
         "_zh_draft_note": "已按 build_interview_clip.segment 的正式字幕行逐行翻译；"
                           "双 ASR 或实体核验出现红旗时才进入例外复核。",
         "transcript_verified": False,
-        "transcript_verification": "auto_pending",
+        "transcript_verification": AUTO_PENDING,
         "_candidate_id": candidate.get("id"),
         "source_verification": candidate.get("source_verification") or {},
         "match": {
@@ -513,12 +520,14 @@ def _build_one(c: dict, chat, cal: list[dict], *, write: bool) -> tuple[str, boo
             # 旧版翻译 whisper 原始 segments，正式出片却重新 segment，导致 zh
             # 行数天然对不上、每一条都必须人工返工，自动化在这里结构性断链。
             from build_interview_clip import segment  # noqa: PLC0415
-            lines = segment([(r["t"], r["text"]) for r in rows], 0.0, duration)
+            from interview_tail import default_end  # noqa: PLC0415
+            end = default_end(rows, duration)
+            lines = segment([(r["t"], r["text"]) for r in rows], 0.0, end)
             if not lines:
                 return c.get("title", "?"), False, "正式切行结果是空的"
             zh_draft = translate(
                 [{"t": row["a"], "text": row["en"]} for row in lines], chat)
-        spec = build_spec(c, zh_draft, duration, cal)
+        spec = build_spec(c, zh_draft, duration, cal, end)
         if not write:
             return spec["slug"], True, "干跑（不写草稿也不写 cap_asr.json3）"
         # 占 slug + 写草稿放在一把锁里：并行的两条候选可能算出同一个 slug，

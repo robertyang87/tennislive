@@ -180,7 +180,8 @@ def make_cards(spec, out):
 
 def encode_beat(iv,spec,out):
     i,b=iv;audio=out/f'voice_{i:02d}.mp3';d=seconds(audio);duration=d+0.22
-    cues=E.subtitle_cues(E.speakable(b['narration']),d,boundaries=json.loads(audio.with_suffix('.words.json').read_text()),offset=0.08)
+    # 字幕用显示那份（readable），不是喂合成器那份（speakable 换过字：硬地→硬帝 之类）。
+    cues=E.subtitle_cues(E.readable(b['narration']),d,boundaries=json.loads(audio.with_suffix('.words.json').read_text()),offset=0.08)
     sub=out/f'sub_{i:02d}.ass';E.write_subtitles(cues,sub,height=1440,margin_v=1284)
     # One native card is a backdrop; the source video is composited into its reserved photo slot.
     cmd=['ffmpeg','-v','error','-threads','2','-filter_complex_threads','1','-loop','1','-framerate','25','-i',str(out/f'card_{i:02d}.png'),'-i',str(audio)]

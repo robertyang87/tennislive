@@ -87,6 +87,12 @@ def tool(monkeypatch, tmp_path):
         p, "LEGACY_INPUT_BASELINE",
         tmp_path / "data" / "interview_render_legacy_baseline.json")
     monkeypatch.setattr(p, "_rendered_slugs", lambda: {"a-done"})
+    # 夹具里的 spec 只有「过得了三道编辑闸」的骨架，没有字幕、文案、顶栏——真跑
+    # dispatch 前的离线预检必红。预检的接线由 `test_预检红的spec不dispatch_进等待名单`
+    # 单独钉，其余测试钉的是状态与指纹逻辑，这里让预检放行。
+    import interview_preflight  # noqa: PLC0415
+    monkeypatch.setattr(interview_preflight, "spec_problems",
+                        lambda spec, **kw: ([], []))
     return p
 
 
@@ -329,3 +335,45 @@ def test_已推送的旧请求覆盖不能触发自动重渲(tool):
     path.write_text(json.dumps(spec))
     ready, _ = tool.todo_slugs()
     assert "a-done" not in ready
+
+
+_STDLIB_ONLY = r"""
+import importlib.abc, runpy, sys
+from pathlib import Path
+tools = Path(sys.argv[1])
+ok = set(sys.stdlib_module_names) | {"tennislive"} | {p.stem for p in tools.glob("*.py")}
+
+class OnlyStdlib(importlib.abc.MetaPathFinder):
+    def find_spec(self, name, path=None, target=None):
+        top = name.split(".")[0]
+        # `_sysconfigdata_*` 是标准库按平台生成的私有模块，不在 stdlib_module_names 里
+        if top not in ok and not top.startswith("_sysconfigdata"):
+            raise ModuleNotFoundError(f"No module named {name!r}（探针的系统 python3 上没有）")
+        return None
+
+sys.meta_path.insert(0, OnlyStdlib())
+sys.argv = [str(tools / "pick_interview_renders.py"), "--probe"]
+runpy.run_path(sys.argv[0], run_name="__main__")
+"""
+
+
+def test_探针的import链只用标准库(tmp_path):
+    """interview-auto-render 的「没活就早退」跑在 runner 的**系统 python3** 上（没有 PIL，
+    也没有别的第三方包）——`pick_interview_renders --probe` 连 import 带跑一遍，只许用
+    标准库和仓库自己的代码；量宽度要 PIL 的那几项在函数里 import、判不了记成 unknown。
+
+    来路：合并 main 时 `build_interview_clip` 顶层多了一行
+    `from tennislive.video.subtitle_text import drop_punctuation`——那个模块只用标准库，
+    可 `tennislive/video/__init__.py` 会把 pipeline → research → digest → sources → requests
+    整串拉进来；探针一 import 就崩，workflow 退回「Work probe needs rendering dependencies」、
+    每 10 分钟一趟全量 job，探针那一轮修正白做。"""
+    import os
+    import subprocess
+
+    root = _TOOLS.parent
+    env = {**os.environ, "PYTHONPATH": f"{root / 'src'}{os.pathsep}{_TOOLS}",
+           "INTERVIEW_PREFLIGHT_CACHE": str(tmp_path / "verdicts.json")}
+    proc = subprocess.run([sys.executable, "-c", _STDLIB_ONLY, str(_TOOLS)], cwd=root,
+                          env=env, capture_output=True, text=True, timeout=300)
+    assert proc.returncode == 0, proc.stderr[-2000:]
+    assert proc.stdout.startswith("待 dispatch"), proc.stdout[:500]

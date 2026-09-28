@@ -216,6 +216,39 @@ def find_opponent(digest, surname: str, draft: dict | None = None) -> tuple[str,
     return found["winner"], found["loser"], found["matchup"]
 
 
+#: 自动收尾卡 `point` 的候选，从长到短。**第一个一行放得下的就用它**——量法和
+#: 渲染入口那道闸是同一把尺（`interview_spec_gates.point_width`）。
+#: 来路：原来只有第一条，而 `{win}赢球后的第一反应` 在 6 个字以上的中文名上超出
+#: 838px 的正文区——top-500 译名表量过，top-100 里 16 位（米拉·安德烈耶娃 940px、
+#: 亚历山德罗娃 858px、克雷吉茨科娃 858px、达维多维奇·福基纳 1002px……），
+#: 提升出来的 spec 在 picker 预检和 render 的 check_takeaway 都会红，而自动链里
+#: 没有任何一步会替它改短，于是永久卡在等待名单里。
+#: （838px 是当时的正文区；同一天 main 把卡的左边距收到 70，正文区变成 860px，
+#: 亚历山德罗娃／克雷吉茨科娃 858px 刚好放得下，安德烈耶娃／福基纳照样放不下——
+#: 所以这里不写死任何宽度，只拿 `point_box_px()` 量。）
+AUTO_TAKEAWAY_POINTS = ("{win}赢球后的第一反应", "{win}赛后的第一反应",
+                        "{win}的第一反应", "赢球后的第一反应")
+
+
+def auto_takeaway_point(win: str) -> str:
+    """自动收尾卡那一句：按候选从长到短，取第一个量出来一行放得下的。
+
+    量不了（缺 PIL／字体——interview-auto-render 的提升那一步排在装依赖之后，
+    正常不会走到这儿）就退到**不带名字**的那一句：它在 76px 下只有 490px，任何
+    名字都不会让它折行，宁可少一个名字也不产一条必红的 spec。
+    """
+    try:
+        from interview_spec_gates import point_box_px, point_width  # noqa: PLC0415
+        box = point_box_px()
+        for tpl in AUTO_TAKEAWAY_POINTS:
+            text = tpl.format(win=win)
+            if point_width(text) <= box:
+                return text
+    except (ImportError, OSError):
+        pass
+    return AUTO_TAKEAWAY_POINTS[-1].format(win=win)
+
+
 def promote(draft: dict, opponent: tuple[str, str, str], details: dict | None = None) -> dict:
     """草稿 + 对手 → 正式 spec（补 winner/push，剥 `_draft` 标记）。
 
@@ -274,7 +307,7 @@ def promote(draft: dict, opponent: tuple[str, str, str], details: dict | None = 
     if not spec.get("takeaway"):
         spec["takeaway"] = {
             "close": {
-                "point": f"{win}赢球后的第一反应",
+                "point": auto_takeaway_point(win),
                 "ask": f"你怎么看{win}这场比赛的表现？",
             }
         }
@@ -290,6 +323,17 @@ def promote(draft: dict, opponent: tuple[str, str, str], details: dict | None = 
             "kind": "none",
             "why": "正文是独立场上采访产品；比赛结束画面必须从同场官方集锦以 lead_in 接入。",
         }
+    # Tennis TV 源片右上角有台标，`build_interview_clip.main()` 开头的 `check_tennistv_logo`
+    # 不写 `crop_shift_x`（也没走 `logo_box`）就拦出片。这个数是量到的台标左沿推出来的、
+    # 闸自己给的出路，不是编辑口味；转正时不补，自动链就一条条停在那道闸上
+    # （2026-09-27 评审：main 上 winston-salem 三份 Tennis TV 草稿都没有它）。
+    if ("tennistv.com" in str(spec.get("url", "")) and spec.get("crop_shift_x") is None
+            and not spec.get("logo_box")):
+        from build_interview_clip import TENNISTV_CROP_SHIFT  # noqa: PLC0415
+
+        spec["crop_shift_x"] = TENNISTV_CROP_SHIFT
+        spec["_crop_shift_why"] = ("Tennis TV 右上角台标（左沿 0.823）在居中 4:3 窗口里；"
+                                   "转正时按 check_tennistv_logo 的几何补的默认值。")
     return finalize_source_contract(spec)
 
 
@@ -395,10 +439,24 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
         # 同样绕过 CI（自动链直推 main），所以采访线的转正入口也要过全套。
         # 红一次好过豁免表长一格；跳过不炸，草稿留在原地等终审。
         copy_text = xhs_copy(spec)
-        from spec_wording import check_interview_copy_wording  # noqa: PLC0415
-        if problems := check_interview_copy_wording(spec, copy_text):
+        from spec_wording import (check_interview_copy_wording,  # noqa: PLC0415
+                                  non_annotation_strings, strength_round_hits)
+        from taste_gates_extra import interview_taste_extra  # noqa: PLC0415
+        problems = check_interview_copy_wording(spec, copy_text)
+        problems += interview_taste_extra(spec, copy_text)[0]
+        if problems:
             skipped.append(
                 f"{f.name}: 措辞不合规矩（{'；'.join(problems)}），不提升")
+            continue
+        # 上面那道故意不扫 `zh`（译文），而全库测试 `test_轮次写分数式不写N强` 扫整份
+        # spec **含 `zh`**、对自动 spec 也是硬的：译文把 quarterfinals 写成「八强」，
+        # 转正直推 main 就是 main 红（评审 2026-09-27，bonzi-winston-salem-2026-r 草稿
+        # 「大概是八强左右」）。同一份面（`non_annotation_strings`），留草稿等人改译文——
+        # 不替他改，也不往翻译提示里加约束（账号所有者 2026-09-27：不再加强那两个模型）。
+        if hits := strength_round_hits(non_annotation_strings(spec)):
+            skipped.append(
+                f"{f.name}: 字幕或文案把轮次写成「N 强」（{'、'.join(hits)}），不提升"
+                "——改成 1/8决赛 / 1/4决赛 / 半决赛 / 决赛")
             continue
         # 全称断言（「唯一一个」「N 次打进，N 次都…」）同一个座位拦：转正之后
         # interview-clip 会被自动 dispatch，前置检查 `production_preflight`
@@ -412,6 +470,19 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
             skipped.append(
                 f"{f.name}: 全称断言没认领两个独立源（`_claims`），不提升")
             continue
+        # 口味闸（tools/taste_gates.py）：模板标题本来碰不到它；碰到了的只可能是**手改过的
+        # 草稿**（「救下3个赛点／兹维列夫赢了」配推送「兹维列夫救下2个赛点」）。硬的那一组
+        # 留草稿、不提升——原来只报：转出去的 spec 渲染入口的 `check_taste` 照拦、永远渲不成，
+        # 全库测试 `test_全库当前零误报` 对采访又是硬的（批次 4 复审 nit），和上面
+        # `interview_taste_extra` 那一半同一个处置。只报的那一组照旧只报。
+        from taste_gates import interview_taste_findings  # noqa: PLC0415
+        taste_hard, taste_soft = interview_taste_findings(spec)
+        if taste_hard:
+            skipped.append(
+                f"{f.name}: 口味闸不过（{'；'.join(taste_hard)}），不提升")
+            continue
+        for note in taste_soft:
+            print(f"[口味] {f.name} 只报不拦：{note}")
         if write:
             out = SPECS / f"{spec['slug']}.json"
             out.write_text(json.dumps(spec, ensure_ascii=False, indent=2),

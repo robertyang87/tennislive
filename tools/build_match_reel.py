@@ -141,7 +141,10 @@ from tennislive.video.explainer import (  # noqa: E402
     is_bilingual_cue,
     write_subtitles,
 )
-from tennislive.video.subtitle_text import drop_punctuation  # noqa: E402
+from tennislive.video.subtitle_text import (  # noqa: E402
+    drop_punctuation,
+    same_line_as_printed,
+)
 from tennislive.video.topbar_icon import COURT, icon_ass  # noqa: E402
 
 # **成片帧率跟着源片走，不要硬定 30。** 这份华盛顿的官方集锦是 25 fps，
@@ -466,6 +469,9 @@ MUTE_FLOOR = 0.05
 # 只有「原样」和「压到地板（mute）」两档。倍率是听着定的：0.5 把人声之外的
 # 底噪退成背景，1.35 让欢呼顶到旁白同一档但不爆（BED_LOUD 0.72 × 1.35 ≈ 0.97）。
 BED_TIERS = {"low": 0.5, "high": 1.35}
+#: 现场声在成片里最轻会乘到多少（mute 除外）——probe 存逐块响度时按它决定哪些块
+#: 值得留数（`probe_audio.encode_levels`），重放时比它还轻的段判不了、要出声。
+QUIETEST_BED_GAIN = BED_LOUD * min(BED_TIERS.values())
 # **段与段之间要淡入淡出，不能硬切。** 账号所有者：「音频和视频切换或转场的时候，
 # 要有淡入淡出，而不是要突然一下从这里切过来，就是感觉给人的观感不好，或者听感
 # 不好。」画面和**现场声**都要——现场声硬切时球场的底噪会「啪」地换一个，
@@ -944,20 +950,18 @@ def silent_audio_spans(path: Path, floor_db: float = -60.0,
 
     和 `point_ends` 同一个道理：**趁源片还在的时候量**（渲完就删），写进
     probe.json，`--dry-run` 拿旁白离线估去对（见 `silence_findings`）。
-    门槛对齐 `check_reel_landed.SILENCE_FLOOR_DB`（-60）：QC 渲后按逐秒
-    max ≤ -60 数静音秒，这儿量的是同一种东西的源头；0.8s 是为了抓得住
+    门槛对齐 `check_reel_landed.SILENCE_FLOOR_DB`（-60）；0.8s 是为了抓得住
     「一个整秒」而不被亚秒的剪辑缝刷屏。
+
+    ⚠️ 2026-09-27：它量的是**源片峰值**，QC 数的是**成片逐秒 RMS**（现场声已乘
+    `BED_LOUD`）——源片 −60~−57 dB 那一截它看不见，20 趟渲后 QC 红就栽在这儿。
+    probe 那一趟现在走 `probe_audio.measure`：**同一趟 ffmpeg** 顺手解出逐 0.05 秒
+    响度（`audio_levels`），dry-run 按成片口径重放 QC。这个函数只剩前一半。
     """
-    if not _has_audio(path):
-        return None
-    out = run("ffmpeg", "-hide_banner", "-i", str(path), "-vn", "-af",
-              f"silencedetect=noise={floor_db}dB:d={min_silence}",
-              "-f", "null", os.devnull).stderr
-    starts = [float(m) for m in re.findall(r"silence_start:\s*(-?[\d.]+)", out)]
-    ends = [float(m) for m in re.findall(r"silence_end:\s*(-?[\d.]+)", out)]
-    if len(starts) > len(ends):
-        ends.append(probe_duration(path))   # 贴着文件末尾的静音没打 end
-    return [[round(a, 2), round(b, 2)] for a, b in zip(starts, ends)]
+    import probe_audio  # noqa: PLC0415
+
+    return probe_audio.measure(path, quietest_gain=QUIETEST_BED_GAIN,
+                               floor_db=floor_db, min_silence=min_silence)[0]
 
 
 def measure_point_ends(source: Path, scorebox: str,
@@ -1855,6 +1859,14 @@ def resolve_fps(path: Path) -> tuple[str, float]:
     raw = run("ffprobe", "-v", "error", "-select_streams", "v:0",
               "-show_entries", "stream=r_frame_rate",
               "-of", "default=nw=1:nk=1", str(path)).stdout.strip()
+    return target_fps(raw)
+
+
+def target_fps(raw: str, *, quiet: bool = False) -> tuple[str, float]:
+    """`resolve_fps` 的规则本身：源片报的帧率写法 → 成片帧率。拆出来是给
+    `--dry-run` 用的——它手里只有 probe.json 里记的 `fps`，没有源片（`probe_audio`
+    要按成片帧率定每个 part 的音轨能被 `-shortest` 截短多少）。规则只此一份。"""
+    say = (lambda *_a, **_k: None) if quiet else print
     try:
         num, den = (raw.split("/") + ["1"])[:2]
         source = Fraction(int(num), int(den))
@@ -1863,7 +1875,7 @@ def resolve_fps(path: Path) -> tuple[str, float]:
         value = 0.0
         source = Fraction(0, 1)
     if not 10.0 <= value <= 120.0:
-        print(f"[fps] 源片报的帧率是 {raw!r}，不合常理，退回 30")
+        say(f"[fps] 源片报的帧率是 {raw!r}，不合常理，退回 30")
         return "30", 30.0
     if value > 30.5:
         divisor = max(2, round(value / 30.0))
@@ -1872,12 +1884,12 @@ def resolve_fps(path: Path) -> tuple[str, float]:
         if 23.5 <= target_value <= 30.5:
             expr = (str(target.numerator) if target.denominator == 1 else
                     f"{target.numerator}/{target.denominator}")
-            print(f"[fps] 高帧率源整除降采样：{raw} / {divisor} → "
-                  f"{expr} = {target_value:.3f}")
+            say(f"[fps] 高帧率源整除降采样：{raw} / {divisor} → "
+                f"{expr} = {target_value:.3f}")
             return expr, target_value
-        print(f"[fps] 高帧率源 {raw} 找不到 24~30 fps 的整数除数，退回 30")
+        say(f"[fps] 高帧率源 {raw} 找不到 24~30 fps 的整数除数，退回 30")
         return "30", 30.0
-    print(f"[fps] 成片跟着源片走：{raw} = {value:.3f}")
+    say(f"[fps] 成片跟着源片走：{raw} = {value:.3f}")
     return raw, value
 
 
@@ -2757,6 +2769,30 @@ def _seg_audio_chain(seg: "Segment") -> str:
     return ",".join(parts)
 
 
+def _seg_bed_gain(seg: "Segment", *, ducked: bool = True) -> float:
+    """这一段的现场声在成片里乘了多少：`_seg_audio_chain` 的 mute／音床 ×
+    `duck_filtergraph` 的 `BED_LOUD`。`--dry-run` 按它把源片实测响度换算成成片
+    口径（`probe_audio`）——和上面那条链写在一起，改一处就看得见另一处。
+
+    `ducked=False`：render 混音那一步**一路人声都没有**（`_mix_ducks` 为假）时走的
+    是不闪避那条分支，现场声原样转码、`BED_LOUD` 根本没乘——按 0.72 算会把成片
+    估轻 2.85 dB，反过来误报（评审 2026-09-27 nit）。"""
+    return ((BED_LOUD if ducked else 1.0) * (MUTE_FLOOR if seg.mute else 1.0)
+            * (BED_TIERS[seg.bed] if seg.bed else 1.0))
+
+
+def _mix_ducks(spec: dict, segments: list["Segment"]) -> bool:
+    """render 混音那一步走不走闪避（`filters` 非空）：封面配了音、任何一段（原声段
+    除外）配了旁白、或者开着片尾口播，三样占一样就走 `duck_filtergraph`；
+    一样都没有就是 `-vn -c:a aac` 原样转码那条分支。和 render 里拼 `filters`
+    的三处同一个判法——改那边就要改这儿（`test_不闪避那条分支现场声不乘BED_LOUD`）。"""
+    if str((spec.get("cover") or {}).get("narration") or "").strip():
+        return True
+    if spec.get("outro", True) is not False:
+        return True
+    return any(seg.narration.strip() and not seg.quote for seg in segments)
+
+
 def _seg_audio_needs_filter(seg: "Segment") -> bool:
     """这一段的音轨要不要走滤镜（慢放 / mute / 音床）——cut_segment 那两处
     `-map` 判据的单一出处。原来写成 `seg.speed != 1 or seg.mute` 两遍，加音床
@@ -3517,6 +3553,14 @@ def enforce_spec_wording(spec: dict, spec_path: Path) -> None:
             print(f"    [文案] ⚠️ {echo}")
         else:
             raise ReelError(echo)
+    # 小红书正文那一面的口味闸（markdown、赛点同义反复；转述来的那条只报）：validate_spec
+    # 拿不到 `.xhs.txt`，所以坐这个座位。判据在 tools/taste_gates_extra.py。
+    from taste_gates_extra import xhs_taste_extra  # noqa: PLC0415
+    taste_hard, taste_soft = xhs_taste_extra(spec, xhs_text)
+    for note in taste_soft:
+        print(f"    [口味] ⚠️ {note}")
+    if taste_hard:
+        raise ReelError("小红书正文不合规矩：\n  - " + "\n  - ".join(taste_hard))
 
 
 def _normalize_stat_card_segments(spec: dict) -> None:
@@ -4470,18 +4514,35 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
     # ⚠️ 这一行原来写死成 `eyebrow == "赛场之上"`。2026-09-06 给「网球有故事」
     # 放开 cutout 的那一刻，**认领这道闸对新栏目就是哑的**——表放宽了、闸没
     # 跟上，于是「手头正好有两张抠图就顺手退回 VS」那个滑坡在新栏目上没人管。
+    #
+    # ⚠️ 2026-09-24 起「赛场之上」这一栏的 `_layout_why` **不再放行**：账号所有者否掉的
+    # shang-mannarino（42cfae85）正写着一句认领（「solo 要的本场官方实拍出片时不存在」），
+    # 他的回答是「不要用这种封面……还不如从比赛画面中截取抽帧去做」。判据和存量表在
+    # `taste_gates_extra.solo_layout_problem`（`validate_spec` 里就红），这里跟它用同一份，
+    # 不另写一套——否则这句报错会把人指进一条注定红的路。认领口只剩「网球有故事」
+    # （讲两个人的交手史可以用 H2H 双人版）。
     if layout != "solo" and eyebrow in SOLO_DEFAULT_COLUMNS \
-            and str(spec.get("slug", "")) not in _LEGACY_VS_COVERS \
-            and not str(cover.get("_layout_why", "")).strip():
-        raise ReelError(
-            f"「{eyebrow}」的封面一律用 solo"
-            "（赛场之上 2026-08-04 起；网球有故事默认讲一个人）。\n"
-            f"这条 spec 写的是 layout={layout!r}。\n"
-            "改成 `\"layout\": \"solo\"` + `cover.portrait`（本场源片抓一帧就行），"
-            "赛果写在 `cover.result` + `cover.matchup`，"
-            "会渲成标题底下那一行「🇨🇳 张帅（57） 6-4 6-1 🇰🇿 普汀塞娃（81）」。\n"
-            "**确实要退回 VS 版式，就写一句 `cover._layout_why` 说清楚为什么**"
-            "——一句话就行，但必须写；不写就是手滑，不是决定。")
+            and str(spec.get("slug", "")) not in _LEGACY_VS_COVERS:
+        if eyebrow == "赛场之上":
+            from taste_gates_extra import solo_layout_problem  # noqa: PLC0415
+            blocked = solo_layout_problem(spec) is not None
+            escape = ("「赛场之上」**没有认领口**（`_layout_why` 2026-09-24 起不放行，"
+                      "`taste_gates_extra.solo_layout_problem`）：没有本场官方实拍就用 "
+                      "`cover.portrait.frame_at` 挑一帧清晰、偏正面的抽帧。")
+        else:
+            blocked = not str(cover.get("_layout_why", "")).strip()
+            escape = ("「网球有故事」**确实要退回双人版式（讲两个人的交手史），就写一句 "
+                      "`cover._layout_why` 说清楚为什么**——一句话就行，但必须写；"
+                      "不写就是手滑，不是决定。")
+        if blocked:
+            raise ReelError(
+                f"「{eyebrow}」的封面一律用 solo"
+                "（赛场之上 2026-08-04 起；网球有故事默认讲一个人）。\n"
+                f"这条 spec 写的是 layout={layout!r}。\n"
+                "改成 `\"layout\": \"solo\"` + `cover.portrait`（本场源片抓一帧就行），"
+                "赛果写在 `cover.result` + `cover.matchup`，"
+                "会渲成标题底下那一行「🇨🇳 张帅（57） 6-4 6-1 🇰🇿 普汀塞娃（81）」。\n"
+                + escape)
     if layout == "solo":
         if not (cover.get("portrait") or {}).get("image") and \
                 (cover.get("portrait") or {}).get("frame_at") is None:
@@ -5285,7 +5346,14 @@ def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list, str
 
     ⚠️ **喂进去的必须是 `speakable()` 之后那份**——合成器念的是它，不是 spec 里
     写的那份。拿原文去 find token，「硬地」那种替换过的字一个都对不上。
+
+    ⚠️ **要保护的名字也得换成念出来的样子**（2026-09-27 换字表扩到十几条之后）：
+    名字里有字被换（「鲁塞」→「鲁赛」），拿原名去换过字的那份里找，一处都找不到，
+    `word_split_report` 就当这段没有这个名字——**保护静默失效**。按字位从合成那份
+    里切（`pronounce.spoken_forms`），两份字数 1:1。
     """
+    from tennislive.video.pronounce import spoken_forms  # noqa: PLC0415
+
     out = []
     names = _protected_names(spec)
     for index, seg in enumerate(segments):
@@ -5296,7 +5364,8 @@ def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list, str
         if not marks:
             continue
         spoken = speakable(text)
-        line, crossing, inside = word_split_report(spoken, marks, names)
+        line, crossing, inside = word_split_report(
+            spoken, marks, spoken_forms(readable(text), names))
         tokens = [t for t in (str(m.get("text", "")).strip() for m in marks) if t]
         out.append((index, line, crossing, inside, spoken, tokens))
     return out
@@ -5911,6 +5980,8 @@ def silence_findings(spec: dict, segments, probes: dict,
     「必红」（旁白按最长估也盖不住 ≥2 秒——足够压满一个 QC 计数的整秒）
     对谁都是硬的：那是确定性的渲后失败，让它跑完渲染只是多付 8 分钟学费。
     """
+    import probe_audio  # noqa: PLC0415
+
     hard: list[str] = []
     soft: list[str] = []
     strict = (spec.get("_production") or {}).get("status") == "ready_for_render"
@@ -5932,6 +6003,9 @@ def silence_findings(spec: dict, segments, probes: dict,
         spans = probe.get("silent_audio")
         if spans is None:
             continue    # 源片没有音轨——silent_source 认领那道闸管，别重复报
+        if not seg.narration.strip() and probe_audio.judges(
+                seg, probe, _seg_bed_gain(seg, ducked=_mix_ducks(spec, segments))):
+            continue    # 无旁白段按成片口径逐块重放（probe_audio），同一截别报两遍
         spoken = ests.get(index)
         for lo, hi, certain, probable in silence_risk(
                 seg.start, seg.end, spoken, spans):
@@ -6075,6 +6149,9 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     | 源片分辨率不到 1080p | `height` | **硬**，2026-08-23 补的，见下 |
     | 段窗口撞源片静音区、旁白盖不住 | `silent_audio` | 必红的对谁都硬；大概率红的**自动 spec 硬、手写只报**（`silence_findings`） |
     | 回贴开关和板对不上（开着却一帧板都没有／关着而板连着在） | `board` | 见 `probe_board.board_findings`（2026-09-27） |
+    | 按成片口径重放 QC 的数字静音闸 | `audio_levels` | **无旁白段硬**，旁白尾巴只报（`probe_audio`，2026-09-27） |
+    | 源片没 probe | 按 URL 认领不到 | **新的手写 spec 硬**，存量／自动 spec 只报（`probe_sources`，2026-09-27） |
+    | 多源尺寸／帧率对不上 | `width`／`height`／`fps` | **硬**——render 里 `check_sources_match` 的预演（`probe_sources`） |
 
     ⚠️ **1080p 那条 2026-08-18 就定了，实现晚了五天。** 「视频一定要选
     1080p 及以上的清晰度，如果没有的话就等」是账号所有者说得最重的一条，
@@ -6106,19 +6183,28 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
 
     ⚠️ **一份都没查成要出声**，别让「没有 probe」和「全都合格」长得一样。
     """
+    import probe_sources  # noqa: PLC0415
+
     quality_claims = source_quality_exceptions(spec)
     probes, missing = probes_for_spec(spec)
+    # ⓪ 每条源都要先 probe（新的手写 spec 硬）——排在「一份都没认领上」之前，
+    #    否则最该拦的那一类（一条都没 probe）会从下面那个早退里溜走。见 `probe_sources`。
+    hard, soft = probe_sources.coverage_findings(spec, probes)
     if not probes:
         print("\n[查选段] **一份 probe.json 都没认领上**——这一段没查。\n"
               "  probe 把切点、死球、片长都算好并提交进仓库了，按源片 URL 认领；"
               "认不上多半是还没跑过 probe，或者 spec 里的 `source_url` 换过了。")
-        return False
+        if hard:
+            print("\n[查选段] 下面这些**过不去**：\n" + "\n".join(hard))
+        return bool(hard)
     print(f"\n[查选段] 认领到 {len(probes)} 份 probe.json"
           + (f"，**没查成的源：{missing}**" if missing else ""))
 
-    hard: list[str] = []
-    soft: list[str] = []
     urls = dict(spec.get("sources") or {}) or {"": str(spec.get("source_url", ""))}
+    # ⓪b 多源的宽高帧率：拿 probe 的数跑 render 里同一道 `check_sources_match`，
+    #    别等源片全下完（中位 230 秒）才红——7 趟几何红都是这么烧掉的。
+    hard.extend(probe_sources.geometry_findings(
+        spec, probes, check_sources_match, ReelError)[0])
 
     # ① 写过源片末尾。ffmpeg 的 `-ss`/`-t` 越界**不报错**，只安安静静出一段
     #    短的，而后面每一句旁白和字幕都跟着整体错位。
@@ -6233,6 +6319,26 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     s_hard, s_soft = silence_findings(spec, segments, probes, urls)
     hard.extend(s_hard)
     soft.extend(s_soft)
+    # ⑥b 按成片口径重放数字静音闸：源片逐块响度 × 这一段的现场声增益，交给 QC
+    #    自己的 `dead_seconds`（`probe_audio`）。无旁白段实测够得着就硬，旁白尾巴只报。
+    import probe_audio  # noqa: PLC0415
+
+    cover_text = str((spec.get("cover") or {}).get("narration") or "").strip()
+    # 成片帧率跟着主源（sources 的第一个键，和 render() 认的同一条）走——
+    # 它定每个 part 的音轨能被 `-shortest` 截短多少；probe 没记就按最坏算。
+    primary_fps = str((probes.get(next(iter(urls.values()), "")) or {}).get("fps") or "")
+    frame_seconds = (1 / target_fps(primary_fps, quiet=True)[1] if primary_fps
+                     else 1 / probe_audio.SLOWEST_FPS)
+    d_hard, d_soft = probe_audio.digital_silence_findings(
+        spec, segments, probes, urls, fade=SEG_FADE,
+        gain=lambda seg, _ducked=_mix_ducks(spec, segments): _seg_bed_gain(
+            seg, ducked=_ducked),
+        cover_exact=None if cover_text else COVER_SECONDS,
+        cover_estimate=speech_seconds(speakable(cover_text)) + COVER_TAIL,
+        estimates={i: est for i, est, _room in narration_estimates(segments)},
+        est_err=SPEECH_EST_ERR, frame_seconds=frame_seconds)
+    hard.extend(d_hard)
+    soft.extend(d_soft)
 
     # ⑦ 回贴的开关在镜头中间翻转——2026-09-13 补的，理由见
     #    `board_paste_flips_mid_shot` 的 docstring。**只报不拦。**
@@ -6275,7 +6381,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
         print("\n[查选段] 下面这些**过不去**：")
         print("\n".join(hard))
         return True
-    print("  选段这一层没有硬伤（片长、分辨率）。**挑段仍然要看缩略图墙**——"
+    print("  选段这一层没有硬伤（片长、分辨率、几何、数字静音）。**挑段仍然要看缩略图墙**——"
           "「近端是谁」「情绪对不对题」机器判不了。")
     return False
 
@@ -6766,7 +6872,9 @@ def conform_sources(paths: dict[str, Path], spec: dict | None) -> None:
               f"（等比放大铺满再中央裁，切到哪几秒做哪几秒，不落盘）——{why}")
 
 
-def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> None:
+def check_sources_match(paths: dict[str, Path], spec: dict | None = None,
+                        dims: dict[str, tuple[int, int, str, float]] | None = None,
+                        ) -> None:
     """多源要对得上，不一致就在这儿报，别渲到一半。**两样的严重程度不同：**
 
     - **尺寸**：裁切窗口按源片宽高算（`resolve_crop`），对不上就是**裁错**。
@@ -6790,7 +6898,10 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> Non
     if len(paths) < 2:
         return
     # 尺寸按 `effective_size`：认领了 conform 的源在滤镜链里就是基准尺寸。
-    seen = {k: (*effective_size(p), *resolve_fps(p)) for k, p in paths.items()}
+    # `dims` 是 `--dry-run` 那条入口：宽高帧率从 probe.json 读（probe_sources），
+    # **规则还是这一份**——7 趟几何红全在源片下完之后才红（run 36260393395 等）。
+    seen = dims if dims is not None else {
+        k: (*effective_size(p), *resolve_fps(p)) for k, p in paths.items()}
     ref_key = next(iter(seen))
     rw, rh, rf, rfv = seen[ref_key]
     rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}"
@@ -7182,6 +7293,9 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
+#: - **2026-09-27 起**抽帧推出去之后官方图一到，`reel-cover-upgrade.yml` 自动换图
+#:   重推（O4）；换过的 slug 由 `auto_upgraded_frame_covers()` 从这张表里减掉，
+#:   不用回来删行。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
     "safiullin-bu-hangzhou-2026-qf",  # Standing authorization; source-frame evidence in spec.
     "wu-duckworth-us-open-2026-r2",
@@ -7236,6 +7350,28 @@ LEGACY_SOFT_COVERS = frozenset({
     "svitolina-valentova", "trungelliti-medvedev", "tsitsipas-auger-aliassime",
     "wangxiyu-fernandez", "zhang-day", "zhang-li", "zverev-norrie",
 })
+
+
+def auto_upgraded_frame_covers(path: Path | None = None) -> frozenset:
+    """`tools/cover_upgrade.py` 已经自动换成官方实拍的 slug（`data/cover_upgrades.json`
+    里 `status: upgraded` 的那些）。
+
+    账号所有者 2026-09-27 O4「自动换图重推」：抽帧封面推出去之后官方图一到，定时
+    班次自己换图、重渲、重推。`OWNER_APPROVED_FRAME_COVERS` 的自检要求「补上真图
+    之后也该删」——**机器不去改这个 Python 文件，改的是那份账**，这里减掉。
+    方向只会收紧（豁免变少），账读不到就当没换过（豁免照旧，闸不会因此变松）。
+    """
+    path = path or Path(__file__).resolve().parents[1] / "data" / "cover_upgrades.json"
+    try:
+        rows = json.loads(path.read_text(encoding="utf-8")).get("upgrades") or {}
+    except (OSError, ValueError, AttributeError):
+        return frozenset()
+    return frozenset(slug for slug, row in rows.items()
+                     if isinstance(row, dict) and row.get("status") == "upgraded")
+
+
+# 表里的字面量留着（那是账号所有者逐条授权的来路），自动换过图的在这儿减掉。
+OWNER_APPROVED_FRAME_COVERS = OWNER_APPROVED_FRAME_COVERS - auto_upgraded_frame_covers()
 
 
 def cover_photo_problem(spec: dict) -> str | None:
@@ -8036,6 +8172,42 @@ def _narration_craft(spec: dict) -> None:
     raise ReelError("旁白手艺不合格（读者 2026-09-19：文案不专业、技战术交代不清楚）：\n" + body)
 
 
+def _owner_taste(spec: dict) -> None:
+    """⭐⭐ 账号所有者的口味闸：钩子、文案一致、旁白走向、收尾、交手史信息条。
+
+    账号所有者 2026-09-27：「**总结我的口味和品味这种个性化的要求，形成一个
+    通用的规则在做视频前就拦掉，而不是说做了一半又返工**」。判据、来路和量出来
+    的账都在 `tools/taste_gates.py` 的模块 docstring 里，这儿只管接线。
+
+    | 谁写的 | 怎么办 |
+    |---|---|
+    | 手写的新 spec | **硬**——各有各的改法／认领口 |
+    | `data/legacy_taste_gates.json` 里已发的（钩子冻原文） | 放行 |
+    | 自动产的 spec（`_production.status == ready_for_render`） | **只报**——判据文本印进日志 |
+
+    「只报」那几条（第一行比分没说是哪一盘、推送标题里的术语、某一盘旁白
+    一句没提）对谁都只报——它们在已接受的存量上有误报，做硬会成一条常年红。
+
+    日志行首 `[口味·<块>]` 只告诉人去哪一块改。⚠️ 不为任何模型的回喂挑行首写法
+    （账号所有者 2026-09-27「minimax 和 deepseek 都不要用，后续会拿掉」）。
+    """
+    from taste_gates import is_auto, reel_taste_scoped  # noqa: PLC0415
+
+    scoped = reel_taste_scoped(spec)
+    for label, _hard, note in (x for x in scoped if not x[1]):
+        print(f"[口味·{label}] 只报：{note}")
+    hard = [(label, note) for label, is_hard, note in scoped if is_hard]
+    if not hard:
+        return
+    if is_auto(spec):
+        for label, note in hard:
+            print(f"[口味·{label}] 自动 spec 只报不拦：{note}")
+        return
+    body = "\n".join(f"  - {note}" for _label, note in hard)
+    raise ReelError("不合账号所有者的口味（2026-09-27：做视频前就拦掉，"
+                    "而不是做了一半又返工）：\n" + body)
+
+
 def scoreboard_profile(spec: dict, segments: list | None = None) -> str | None:
     """这条片子的比分板回贴走哪套逐帧判据；没开回贴返回 None。
 
@@ -8167,6 +8339,7 @@ def validate_spec(
     if music:
         raise ReelError(music)
     _narration_craft(spec)
+    _owner_taste(spec)
     # ⚠️ 排在 `parse_segments` **之前**：0.2 秒就报，别等渲完拉回成片抽帧才看见。
     # 这道闸拦的是几何上必然发生的一整类（居中铺的卡 vs 上锚的字幕），
     # 而四道本地闸一道都拦不住它——详见 `evidence_card_overlaps_subtitle`。
@@ -8203,12 +8376,23 @@ def validate_spec(
     # 素材与格式那几道（封面用时、数据统计图、图片解码、封面复用、字幕数字），
     # 原来要等 render 甚至合并之后才红——逻辑和来路在 tools/reel_asset_gates.py，
     # 这儿只接一刀。排在最后：别的闸先报，已有的判据报错顺序不变。
+    # ⚠️ 全仓盘点口径不问「发没发过」（封面复用读发布账本，同上面时效那一刀的理由）。
     from reel_asset_gates import spec_asset_problems  # noqa: PLC0415
-    hard, soft = spec_asset_problems(spec)
+    hard, soft = spec_asset_problems(spec, at_render=not allow_published_legacy)
     for note in soft:
         print(f"[素材] 自动 spec，只报不拦：{note}")
     if hard:
         raise ReelError("\n\n".join(hard))
+    # 账号所有者口味规则里量过全库、留下来的那几道（总分差、赛点同义反复、信箱式
+    # 封面、VS 封面、收尾一问……；转述来的规则只报，永不做成闸）。判据、存量表和
+    # 误伤/真阳的账都在 tools/taste_gates_extra.py；自动 spec 只报不拦。前瞻事实回头查
+    # 不在那儿——上面 `time_sensitive_gate` 那一刀管（`_rechecked_at`），别再写第二份。
+    from taste_gates_extra import spec_taste_extra  # noqa: PLC0415
+    taste_hard, taste_soft = spec_taste_extra(spec)
+    for note in taste_soft:
+        print(f"[口味] 只报：{note}")
+    if taste_hard:
+        raise ReelError("\n\n".join(taste_hard))
     return segments
 
 
@@ -8454,39 +8638,10 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
                         + "\n\n把 `end` 收回片长以内，或者换一条更长的源片。")
 
 
-_PRINTED_VS_SPOKEN_NOISE = re.compile(r"[？！?!\s]+")
-
-
-def same_line_as_printed(spoken: str, printed: str) -> bool:
-    """封面念的那句和海报上印的钩子，是不是同一句话。
-
-    判据是「一不一样」——一样就不另排字幕（大字已经印着了）。但「一样」要按
-    **说的是不是同一件事**判，不能按 `drop_punctuation` 之后逐字节比：那个函数
-    是给字幕显示用的，**故意留着「？！」**（换页表达得了停顿，表达不了「这是一问」），
-    于是钩子写成陈述句、旁白念成问句（`五天前出局，五天后赢了种子？`）会差一个
-    问号，被判成「另说了一件事」，封面那 3 秒多叠一行把钩子原样再写一遍的小字。
-    `bu-lucky-loser-story` 2026-09-03 就这么渲出去过一版。
-
-    所以这儿在 `drop_punctuation` 之上再抹掉 ？！ 和所有空白（钩子的换行、
-    标点换出来的空格）再比。真另说一件事的（`cincinnati-story` 那种）照旧不等。
-    """
-    def flat(text: str) -> str:
-        from tennislive.video.explainer import (  # noqa: PLC0415
-            arabic_numerals)
-        # ⚠️ 数字要先归一，**两边用同一套**。CLAUDE.md 那条「给人看的字一律
-        # 阿拉伯数字，只有 TTS 底稿写汉字」保证了钩子和 `cover.narration`
-        # **必然**一个写 `8张` 一个写 `八张`——逐字节比的话，凡是钩子里带数字的
-        # 封面都会被判成「另说了一件事」，于是在海报的大字上再叠一行小字把同一句话
-        # 写第二遍。`davis-cup-road-to-bologna` 第一趟渲出来就是这样（三行字摞在
-        # 一起），`bjk-cup-story`（`16个` vs `十六个`）也一直是这个毛病。
-        # 归一分两步：先 `arabic_numerals`（`十六`→`16`、`一百二十六`→`126`），
-        # 再把剩下的汉字数字逐字映成阿拉伯数字（`八`→`8`——`八张` 的「张」不在
-        # `_NUM_UNITS` 里，第一步够不着它）。**两边走同一条路**，所以哪怕映射
-        # 本身不讲道理（`第一次`→`第1次`）也不影响「一不一样」这个判断。
-        canon = str.maketrans("〇零一二三四五六七八九", "01123456789")
-        return _PRINTED_VS_SPOKEN_NOISE.sub(
-            "", drop_punctuation(arabic_numerals(str(text)))).translate(canon)
-    return flat(spoken) == flat(printed.replace("\n", " "))
+# `same_line_as_printed`（封面念的那句和海报上印的钩子是不是同一句）2026-09-27 搬进
+# 两条线共用的 `video/subtitle_text.py`：网球有故事字卡的封面同样要判这一件事
+# （UI/VI 评审量到 52 条字卡封面 41 条把大问题印了两遍）。一份判据写两处必分叉，
+# 所以这儿只留 import（见文件头），函数本体和来路都在那边的 docstring 里。
 
 
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
@@ -9855,7 +10010,8 @@ BAND_FOOT_LABEL = "网球时差 · 赛场之上"
 
 #: `cover.eyebrow` 空着时按哪个栏目算——和 `build_cover`、render 那两处
 #: `or "赛场之上"` 是同一个缺省。
-# 默认走 solo 封面的栏目——**非 solo 要写 `cover._layout_why` 认领**。
+# 默认走 solo 封面的栏目——**非 solo 要写 `cover._layout_why` 认领**（只剩「网球有故事」；
+# 「赛场之上」2026-09-24 起认领不放行，见 `taste_gates_extra.solo_layout_problem`）。
 # 「赛场之上」2026-08-04 翻成 solo 默认；「网球有故事」2026-09-06 放开 cutout
 # 之后同样落在这一档（账号所有者：郑钦文与斯瓦泰克那条「封面可以用两人 h2h
 # 方式」——那个栏目讲的不一定是一个人，交手史的主体本来就是两个）。
@@ -10349,7 +10505,13 @@ def main() -> int:
         # **音频静音区间也趁源片还在的时候量**（见 silent_audio_spans 的来路）。
         # 三种结果都要出声：「没音轨」「量过为空」「有区间」在 probe.json 里
         # 分别是 None / [] / [[a,b]...]，读的人不用猜。
-        silent_audio = silent_audio_spans(source)
+        # ⚠️ 2026-09-27：**同一趟 ffmpeg** 顺手量逐 0.05 秒响度（`audio_levels`）——
+        # `silent_audio` 量的是源片峰值，而 QC 数的是成片逐秒 RMS（×BED_LOUD），
+        # 20 趟渲后数字静音红它一趟都没预判到（`probe_audio` 的来路）。
+        import probe_audio  # noqa: PLC0415
+
+        silent_audio, audio_levels = probe_audio.measure(
+            source, quietest_gain=QUIETEST_BED_GAIN)
         if silent_audio is None:
             print("[静音] 源片没有音轨（或量不出来）——silent_source 那道闸会管")
         elif silent_audio:
@@ -10376,6 +10538,9 @@ def main() -> int:
             # 源片音频的静音区间（None=没音轨；[]=量过没有）。dry-run 拿它
             # 预判「段窗口撞静音、旁白盖不住」那一类渲后必红（silence_findings）。
             "silent_audio": silent_audio,
+            # 逐 0.05 秒 RMS（QC 同口径，只给可能落进死秒的块留数；None=没音轨）。
+            # dry-run 按成片增益和时间轴重放 QC 的数字静音闸（`probe_audio`）。
+            "audio_levels": audio_levels,
             # 只看了一段就记下来——**下一个人拿 probe.json 排窗口时，
             # 「切点少」和「只扫了一段」长得一模一样**。
             "clip_from": clip_from or None,
@@ -10410,6 +10575,24 @@ def main() -> int:
     # 三条路一个 seat 全过，0.2 秒就红。豁免表按 slug 查，老 spec 照旧绿。
     enforce_spec_wording(spec, Path(args.spec))
     apply_tts_backend(spec)
+    if args.dry_run:
+        # **多音字：换字表管不到的，出片前列出来。** 账号所有者 2026-09-27「配音 tts
+        # 里的多音字最好在生成语音时候替换成同音的字」——换字表（video/pronounce.py）
+        # 只收量过读错的；新写的旁白里冒出来的新词，在这儿（0.x 秒、不联网）先报一声，
+        # 要真合成比对就照它印的那行跑 `check_polyphones.py --measure`。**只报不拦**：
+        # 静态这一半是 pypinyin 的代理，不是合成器本身，做成硬闸就是一条常年红。
+        # 排在措辞闸之后、validate_spec 和之后所有会红的闸（查选段、估旁白……）前面：
+        # 哪一道先红，这几行都照样印；判据 `test_dry_run真的印出多音字预检` 也因此不跟
+        # 那条 spec 以后会不会被别的闸拦住绑在一起。不排到措辞闸前面：从成片导入那道
+        # 守卫到 `enforce_spec_wording` 之间不许插任何东西（`test_finished_master_guard`
+        # 拿最小的命名空间跑真 `main()`），而措辞闸对存量按 slug 豁免，本来就不会红。
+        # ⚠️ runner 上不装 pypinyin，Actions 上这儿恒印「这趟没查」——在会话里跑才查得到。
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import check_polyphones  # noqa: PLC0415
+
+        print("\n".join(check_polyphones.preflight_lines(
+            lambda: check_polyphones.reel_texts(spec), slug=Path(args.spec).stem,
+            spec_path=args.spec)) + "\n")
     if args.check_narration:
         # **一个源片字节都不碰。** 这道闸比的是「TTS 时长 vs spec 里的段长」，
         # 两样都不需要源片；而跑一趟 render 去问同一个问题，在通过的情况下会

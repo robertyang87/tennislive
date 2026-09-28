@@ -400,6 +400,7 @@ _ENFORCED_FLOOR = (
     "src/tennislive/render/knowledge.py",    # WP2 推送：字卡那条推送正文
     "src/tennislive/render/push_style.py",   # WP2 推送 + 复制页的唯一样式出处
     "src/tennislive/video/diagram_palette.py",
+    "src/tennislive/video/explainer_card_palette.py",  # WP4 字卡
     "src/tennislive/video/outro_page.py",    # WP7 片尾
     "src/tennislive/video/watermark.py",     # WP6 常驻角标
     "tools/build_interview_clip.py",         # WP3 赛后开麦封面、收尾卡、字幕
