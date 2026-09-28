@@ -225,6 +225,42 @@ def test_取消的run不算失败():
     assert h2.latest_failure, "取消之后紧接着就是真失败，必须仍报异常"
 
 
+def test_自检mode不进出片工作流的趋势():
+    """source-health 每 6 小时派一趟 `match-reel mode=cookies`（2026-09-28）。它的红绿
+    由阻塞那一路按 `match-reel:cookies` 报；混进 match-reel 的趋势里，一趟 cookies 绿
+    会把 render 的连续失败清零——两趟 render 红着，报表说「最新一趟正常」。"""
+    from tools.pipeline_health import workflow_health  # noqa: PLC0415
+
+    def run(i, mode, conclusion):
+        return {"id": i, "conclusion": conclusion, "name": "match-reel",
+                "path": ".github/workflows/match-reel.yml",
+                "display_title": f"match-reel · {mode} · wong-vallejo-hangzhou-2026-r2",
+                "created_at": "2026-09-28T00:00:00Z",
+                "updated_at": "2026-09-28T00:00:30Z" if mode == "cookies"
+                else "2026-09-28T00:10:00Z"}
+
+    rows = [run(1, "cookies", "success"), run(2, "render", "failure"),
+            run(3, "cookies", "failure"), run(4, "render", "failure"),
+            run(5, "render", "success")]
+    asked = []
+
+    class _FakeApi:
+        def get(self, path):
+            asked.append(path)
+            if "/runs?" in path:
+                return {"workflow_runs": rows}
+            return {"jobs": []}
+
+    h, _ = workflow_health(_FakeApi(), "match-reel.yml", limit=10, step_runs=0)
+    assert (h.runs, h.failures, h.consecutive_failures) == (3, 2, 2), h
+    assert h.latest_failure, "最新一趟 cookies 绿，把两趟 render 的红遮住了"
+    assert h.median_seconds == 600, "三十秒的自检拉偏了出片中位耗时"
+    # 取的条数要够滤掉自检之后仍凑满 limit
+    assert "per_page=20" in asked[0], asked
+    h3, _ = workflow_health(_FakeApi(), "match-reel.yml", limit=2, step_runs=0)
+    assert (h3.runs, h3.failures) == (2, 2), "limit=2 取到的应是两趟 render，不是自检"
+
+
 def test_监控名单不许点名不存在的工作流():
     """**删了工作流不改它的消费者**——这个仓库的老形状，2026-09-15 又犯一次。
 

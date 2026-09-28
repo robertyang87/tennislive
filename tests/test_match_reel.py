@@ -1882,10 +1882,14 @@ def test_cookies模式不产任何产物():
         block = _step_block(step, text)
         assert "mode != 'cookies'" in block, step
     # 必须**真下媒体流**再看字节数：不带 cookie 也拿得到标题和格式表，
-    # 只查「命令有没有报错」会把「被挡住」读成「可用」
+    # 只查「命令有没有报错」会把「被挡住」读成「可用」。
+    # 这段 2026-09-28 抽进 tools/yt_cookie_check.sh（source-health 定时派发同一档），
+    # 判据跟着搬过去：步骤只许调脚本，脚本里真下、量字节、不够就红。
     check = _step_block("cookies — 只验", text)
-    assert "--download-sections" in check
-    assert "stat -c%s" in check and "exit 1" in check
+    assert "bash tools/yt_cookie_check.sh" in check
+    script = Path("tools/yt_cookie_check.sh").read_text(encoding="utf-8")
+    assert "--download-sections" in script
+    assert "stat -c%s" in script and "exit 1" in script
 
 
 def test_push模式不许跑清理那一步():
@@ -1933,9 +1937,12 @@ def test_yt_dlp装default才解得了n_challenge():
     text = WORKFLOW.read_text(encoding="utf-8")
     assert '"yt-dlp[default]"' in text
     check = _step_block("cookies — 只验", text)
-    # 报错要分因：撞机器人验证 / 解不了 challenge，是两件事
-    assert "n challenge solving failed" in check
-    assert "not a bot" in check
+    assert "bash tools/yt_cookie_check.sh" in check
+    # 报错要分因：撞机器人验证 / 解不了 challenge，是两件事。
+    # 分因那段 2026-09-28 跟着检查一起搬进了共享脚本（source-health 定时派发同一档）
+    script = Path("tools/yt_cookie_check.sh").read_text(encoding="utf-8")
+    assert "n challenge solving failed" in script
+    assert "not a bot" in script
 
 
 def test_回合镜头也铺满不走contain():
@@ -16826,7 +16833,10 @@ def test_没给scorebox时probe要按猜的框顺手量一遍死球(monkeypatch)
     # ⚠️ probe 那条路必须真的走这个函数，并把 point_ends_guess 写进 probe.json
     # ——闸写出来了没人调，这个仓库栽过（find_point_ends 零调用方一个月）
     src = inspect.getsource(reel.main)
-    assert "measure_point_ends(source, args.scorebox)" in src, "probe 没接上 measure_point_ends"
+    # 2026-09-28：先按源片高度把 --scorebox 对上这一趟的分辨率（fit_scorebox_to_frame），
+    # 再交给 measure_point_ends
+    assert "measure_point_ends(source, scorebox)" in src, "probe 没接上 measure_point_ends"
+    assert "fit_scorebox_to_frame(args.scorebox, (w, h))" in src
     assert '"point_ends_guess": ends_guess' in src, "point_ends_guess 没写进 probe.json"
 
 

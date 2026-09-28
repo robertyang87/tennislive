@@ -4727,6 +4727,11 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
 **红一次 → 重试**（多半就过）；**红两次、而且是两台不同的 runner → 别再重试了**，
 去跑 `mode=cookies`，然后按它说的办。
 
+⭐ **2026-09-28 起有定时自检**：`source-health.yml` 的 `youtube-cookies` job 每 6 小时派发一趟
+`match-reel mode=cookies`（派发者 `github-actions[bot]` → 无人值守），红了由 pipeline-health 按
+`match-reel:cookies` 推一次阻塞（Q9，不重复推）。这一轮 5 趟全是会话手动拨的，按 Q9 本来就不推——
+所以当时没有任何东西叫醒人。见文末「源片与 probe 的七处不稳」。
+
 **修法只有一个，而且我做不了**：从一个登录过 YouTube 的浏览器重新导一份 cookies.txt，
 更新仓库 Secret `YT_COOKIES_TXT`（工作流第 23 步会把它落成文件并通过 `YT_COOKIES` 传进去；
 日志里那句 `带 cookie 试（25 行）` 说明**文件是在的**——**「cookie 存在」和「cookie 有效」
@@ -5010,3 +5015,111 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 拉沃尔杯板，都已推送），发布会（机位锁死、相邻帧差 < 0.5 能连着 9 秒）0 条误认；
 另有 5 条正片最后 1.1~1.7 秒是冻帧（`end` 越过了源片画面）。这 7 条不挂豁免：闸只在重渲
 那一刻才跑，重渲时就该一起收掉。量法和名单在 `tools/interview_tail.py` 的 docstring。
+
+## ⭐⭐ 2026-09-28：源片与 probe 的七处不稳（返工审计「22 趟不回放」那一类）
+
+审计（09-20~09-28，82 趟失败 run）里 22 趟是 probe／外部源／基础设施，当时判为「不回放」。按形状拆开，
+每一类都有一个便宜的判据；判据全在 `tests/test_source_probe_robustness.py`，每条拿当时那一趟的真实输入回放。
+
+| 类（趟数） | 当时 | 现在 |
+|---|---|---|
+| YouTube cookie 失效（5） | 09-19 17:15–22:52Z 只有会话手动拨的 run 在红，Q9 不推，没人被叫醒 | `source-health.yml` 的 `youtube-cookies` job 每 6 小时派发 `match-reel mode=cookies`，红了按 `match-reel:cookies` 推一次；检查本体只有一份 `tools/yt_cookie_check.sh`（match-reel 的 cookies 步骤也调它） |
+| cookies 自检填了搜索词（1，run 35478525370） | `ytsearch8:…` 搜出 0 条，报「没下到媒体流」 | 第一步红：「是搜索词不是视频」（`tools/source_url_check.py`） |
+| probe 空 URL＋默认 slug（1，run 36304133786） | 第 1.4 分钟红在 `curl: (3)` | match-reel 表单自检（setup-python 之后、认领源片和装依赖之前），两处都点名；`build_match_reel probe` 下载之前也拦空地址和坏框 |
+| X CDN 直链 403（2） | 一句 curl 403 | 帖子地址下载时现解、直链只当 `source_fallbacks`（tennis-media-sources「X 和 Instagram 是第一手源」） |
+| 1080p 的框配 720p 源（2，medvedev-wong） | 源片下完才红（cv2 `!_src.empty()` / ReelError），probe 产物一个字节没提交 | `fit_scorebox_to_frame`：按源片高度找一档装得下的参考高度等比缩（`98,920,519,1029`@1280×720 → `65,613,346,686`；同一 slug 后来下到 1080p 那趟这个框量出 97 个死球），缩不进退回猜框；`probe.json` 记 `scorebox_fitted`。⚠️ **只认得出「出界」**：720p 的框配 1080p 源、1080p 左上角的框碰巧装得进 720p，都原样用、量错地方、不报——框照这一趟源片的像素给；**只宽出界、源片比 16:9 窄**（4:3 老转播）时平移（黑边世界）和等比缩（更高一档）两种读法都装得进就不猜、退回猜框，见下面第二轮复审；`--scorebox` 给了却量不了时 `point_ends` 记 `null`（不是 `[]`，`[]` 是量过零次）。全库 94 条 spec 的框对 probe 过的源片：108 次原样、1 次要缩（`zheng-rybakina` 的 720p 那趟）、0 次丢 |
+| 派发 render 的 assert 撞手写 spec（1，run 36331363124） | 裸 `AssertionError` | `tools/probe_dispatch_gate.py`：没 spec → waiting，手写（`_production.kind` 不是 `orchestrated_reel`，含没有 `_production` 的）→ skip，自动 spec 的 ready ＋ `push.auto` 合同照旧硬 |
+| frame-grab 推送 5 次失败（1，run 36317540680） | 手搓循环睡在 fetch 和 push 之间（13~28 秒），远端每一轮都往前走一格 | 改用共享 `push_with_rebase_retry`；**共享脚本本身也改成「先退避、再 rebase、立刻推」**（原来同样睡在 rebase 和 push 之间），同 slug 的 frame-grab 排队 |
+| 上游 HTTP 5xx（1，run 35708122768） | 审计标成 flashscore，**日志里其实是 MiniMax 读比分板 500**——base 的 47f9f2b6d 已降级只报（`test_scoreboard_http_failure_does_not_write_partial_alignment`），账号所有者 09-27 定了不给模型加重试，没加 | flashscore 这一侧补上同形的洞：`fetch_match_stats_fs.feed` 5xx／网络抖动重试 3 次、最后一律 `StatsError`；`assemble_spec` 读 feed 的四块（stats／狠数据／转折局／抢七小分）接住 `match_feed._get` 抛的 `SystemExit`（原来穿过每一处 `except Exception`，一次 500 就让 probe 整趟不提交）；**matchup 归位那一块不降级**，见下 |
+
+`assemble_spec --year ''`（3 趟）在 base 的 09e091851 已修，`test_match_reel_optional_int_inputs` 钉着。
+
+⚠️ 判据宁可窄：`source_url_check` 扫过 main 上 640 份 probe.json 的 `url`、94 条 spec 的 `scorebox`、
+281 个 `scorebox_guess`，零误伤。X 直链那道闸全库 0 条手写硬红（4 条存量挂表）。
+⚠️ 回放的上限：X 那两条 403 当时的帖子地址仓库里没有，**现在的办法能不能把它们救回来没验证过**——
+能证明的只是「写帖子地址的 spec 下载时现解，不会再因为钉死的直链失效而红」。
+
+### ⭐⭐ 复审补丁（同日）：**matchup 顺序核不出，就一块按 home/away 排的都不写**
+
+`matchup_order` 读不到 df_hh_1 时原来退回命令行顺序、只 print 一句。base 上 SystemExit 穿出去让
+probe 红（没草稿）；接住之后，逐局表和统计照样按 flashscore 的 home/away 来，`verified_match_fact`
+拿 feed home 的比分配命令行的 `matchup[0]`——回放「只有 df_hh_1 503、home 是诺斯科娃 6-4 6-3」：
+草稿写成 `_match.status=result_verified winner=萨巴伦卡 6-4 6-3 loser=诺斯科娃`，stats.a 挂在萨巴伦卡
+名下，`verified_result_problem` 拿 `_match` 自己的字段反推，一道都不响。
+
+现在核不出（feed 读不到、没给本场 FH/FK、同姓按姓认不出）就抛 `MatchupOrderUnverified`：matchup
+照命令行写两个名字，**stats／狠数据／转折局／赛果事实整块不写**，`_notes` 写明原因，草稿留在
+waiting（「结构化赛果尚未 verified」）。`check_draft_matchup_order` 碰上它记「没法判」，不再拿
+命令行顺序去比。顺手修了同一个形状：`collect` / `_label` 原来传命令行顺序的名字，而它们拿 home
+那个名字标 feed 的 SH／server=home——matchup 重排过的场次，赢家的总分、破发点兑现标在输家名下，
+还喂进文案 facts。判据 `test_df_hh_1读不到时不许出result_verified`（带对照组）、
+`test_matchup_order核不出顺序就抛_不退回命令行顺序`、`test_狠数据和转折局的名字按feed的home_away给`。
+
+同一轮三个小补：`source_fallbacks` 进 `_REAL_FIELDS["spec"]`（写成 `_source_fallbacks` 要红，别等语料里
+出现第一条才被推导出来）；表单默认 slug `eala-zheng` 的认领口是 `url` 填它 spec 里那条源片（原来这条
+已发片子一趟都重 probe 不了）；`pipeline_health.workflow_health` 按 run-name 的 mode 把 `cookies` 自检
+滤出出片趋势（`SELF_CHECK_MODES`，一趟定时的 cookies 绿会把 render 的连续失败清零）。
+
+### ⭐⭐ 第二轮复审（同日）：**flashscore 抖一下，这场球不许静静地躺到过期**
+
+上一轮把「读失败」降成只报，probe 不再红——可编排器的 `_already_specced` 认得这份草稿、**永不重 probe**，
+reel-auto-ready 只补封面和视觉证据、**不重跑备料**。回放（df_hh_1 正常、只有 df_mh_1 一次 503）：
+08a3fd1da SystemExit 穿出 → probe 红 → 失败自愈摘 state → 重 probe；dc80fd22d 草稿留在 waiting、再没人碰。
+重 probe 要重下源片，所以**只重跑便宜的那一半**（选了 D1，没退回「probe 非零退出」那条 b 路）：
+
+- `assemble_spec` 读失败**且可重试**（`match_feed._get` 的 SystemExit、`FeedUnavailable`、网络异常；
+  解析错、同姓认不出、**带 4xx 状态码的**不算——4xx 里只有 408/425/429 算，见第三轮）→ 草稿记 `_feed_retry: {blocks, errors, tries, last_at}`，`blocks` 连带这一趟没跑的下游
+  （`match_id` → 全部；`matchup` → stats／hit_data／points；`points` 顺带 tiebreaks）。反查 id 也算一块：
+  `find_match` 有页读失败时没找到报 `FeedUnavailable`（那一页里可能就有它），原来吞成「没反查到 id」
+- reel-auto-ready 每一班（过期检查之后、认领 probe 和转正之前）跑 `tools/retry_feed_blocks.py`：**只重跑账上那几块**，
+  不 probe、不下源片、不碰模型；补上比分／统计之后拿同几道机械闸（`editorial_score_problem` 等）把已经起草的
+  文案再核一遍，对不上就撤、不重写。最多 `FEED_RETRY_MAX = 3` 次
+- 试满仍没读通：`exhausted_at` 记上，`::warning::` ＋ run 摘要，`pipeline_health.feed_retry_stuck` 对还新鲜
+  （`PENDING_MAX_AGE`）的草稿按 slug 告警一次。promote 转正时剥掉 `_feed_retry`（登记在 `GATE_ANNOTATIONS`）
+
+两个 nit：`probe_dispatch_gate` 认自动 spec 改认 `_production.kind == "orchestrated_reel"`（`asiad-2026-women-draw`
+手写、带 `_production` 没 kind，原来重 probe 会被自动链的合同打红）；`fit_scorebox_to_frame` 只宽出界时两种读法
+各算一个候选——两个都装得进源片就不猜（同一个 640×480、同一个框，拿真像素造两个世界，平移只在黑边世界量得到翻牌、
+等比缩只在更高一档世界量得到，各对一半）；只剩一种装得进才用它。全库 391 对「框 × probe 过的源片尺寸」新老两版
+结果逐一相同。判据 `tests/test_feed_retry.py`、`test_只宽出界的框_平移和等比缩都装得进_不猜退回猜框`、
+`test_同一组宽高两种读法各自量对一半_所以光凭宽高分不出`、`test_手写spec带着_production也跳过_认自动链的是kind`。
+
+### ⭐⭐ 第三轮复审（同日）：**补上的赛果会让 probe 那一趟的视觉结论过时**
+
+probe 在 assemble 之后**同一趟**跑 `analyze_reel_visuals`；df_mh_1／df_hh_1／反查 id 读失败时，MiniMax 看到的 `_match`
+只有 flashscore_id、没有 `_cover_brief`——`clean_report` 不核封面人物、情绪退回 winner_celebration。重跑补上赛果之后，
+reel-auto-ready 要不要重审只看封面路径／状态／retryable／`evidence_hash`（**只含图片字节，不含 `_match`**）→ 不重审 →
+promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角，自动渲、自动推**（回放 `rv5_stale_visual_repro.py`：
+封面诺斯科娃、赢家萨巴伦卡，改前重审条件 False、waiting 里没有视觉闸）。爆冷反过来：loser_fighting 当时被判不合格
+（retryable false），补上 brief 之后永不重审、卡到过期不告警。main 上不会：probe 红 → 重 probe 时 `_match` 已经在了。
+
+- `retry_feed_blocks` 这一趟改了 `_match`／`_cover_brief`、**且赛果定下来了**（`result_verified`；没定的 promote 本来不收，
+  这时作废只会拿半截赛果再问一次模型）→ `analyze_reel_visuals.recheck_after_facts_change`（**不调模型**）：**一律作废**——
+  摘 `input_sha256`（`main` 按它复用 pass）、`retryable: true`、waiting，走原来那条重审路；存着的回答按新赛果重跑
+  `clean_report` 的核对，不过的那几条跟「按新赛果重审」一起留在 `problems` 里给人看。`error` 的不动
+- ⚠️ 第四轮复审改掉了「不过 → 哈希留着，同一张照片不再问」：那份回答是**瞎答的**（prompt 里没名字、没赢家，
+  `ask_minimax` 让它「认不出留空」），`subject` 空着／表外译名／`winner_visible` 蒙错都不说明照片里是输家——
+  留着哈希就不重审、`refresh_reel_cover` 见「已有封面」不换图、`_feed_retry` 在 healed 时摘掉，**不告警地躺到过期**
+  （`rv5r_stuck_after_heal.py` 三种全卡；带着赢家审过的 125 份 pending 草稿里 `cover.subject` 空着的有 66 份（2026-09-28 实测））。
+  代价至多每份补齐的草稿多一次重审：重审那一趟 `clean_report` 把 `retryable` 写回 false、钉上新哈希，真是输家就停在
+  waiting（和 main 一样），不反复问。判据 `test_赛果补齐之后_probe时瞎答的赢家照片_不许凭那份回答判死`、
+  `test_赛果补齐之后_重审只多一次_真是输家的照片停在waiting不反复问`
+- `apply_story` 认得上一趟自己写的结尾兑现段（`_why` 以 `ENDING_WHY` 开头），重审第二次走到它时结尾不再放两遍
+
+几处小补（同一轮 nit）：
+
+| 原来 | 现在 |
+|---|---|
+| 撤了文案报 `healed`、`_feed_retry` 摘掉，没有告警（没有东西会再起草它）；`dropped` 只打 `::warning::` | `copy_dropped`／`dropped`／重跑崩了都记 `_feed_retry.needs_human`（跨班留着）：`::warning::` ＋ run 摘要**只打第一次**，`pipeline_health.feed_retry_stuck` 按它点名 |
+| flashscore 挂住不回，一趟重跑 2~6 分钟，3 份草稿就能把 15 分钟的 job 拖超时，`tries` 永远不涨 | 工作流 `timeout 120`，被掐（124）另起 `--timed-out 120` 补记一趟（`tries`＋1，试满停手）；写草稿先写临时文件再换名。第四轮：每份 120s 盖不住「五六份同一班到期」，整班再加 `FEED_RETRY_BUDGET=480` 秒的累计预算（过了剩下的打 `[later]`、不记次数、下一班再来）；落库前 `rm -f specs/reels/pending/*.tmp` |
+| 连着三班（≈ 半小时）花光三次 | 退避：第一次下一班就来，之后隔 20、40 分钟（`FEED_RETRY_BACKOFF × 2**tries`，命令行那层判，返回 `later`） |
+| 试满后每一班照旧进这一步、刷 warning | `exhausted_at` 在就不进；`exhausted` 不再打 warning |
+| 崩了只 `echo`，不涨次数、不点名 | 从盘上那份草稿记 `exhausted_at` ＋ `needs_human`（不写改了一半的），返回 `broken` |
+| `StatsError`／任何 SystemExit 都算可重试 | 带 4xx 状态码的不算（`match_feed._get` 自己说「4xx 是明确拒绝」），408/425/429 除外；`StatsError` 本身不算，`FeedUnavailable` 算 |
+
+**人处置完怎么让它重来**：`python tools/retry_feed_blocks.py --draft specs/reels/pending/<slug>.draft.json --rearm --write`，
+推 main（`tries` 清零、摘 `exhausted_at`／`needs_human`；账上已没有要重读的块就整个摘掉——撤了文案那种重读补不回来，
+要么手写 `editorial`，要么照编排器那条 `match-reel.yml mode=probe` 重新备料）。pipeline_health 的报表里印着这一句。
+⚠️ 转正要 `hit_data`：`_durations` 只有这一块写，缺了 waiting 报「比赛时长没有结构化来源」。判据 `tests/test_feed_retry.py`。
+⚠️ `pipeline_health.render_report` 的 `feed_stuck` **只收关键字**：`wp/interview-subs-before-render` 在同一个位置加了
+`parked_subs`，两边都按位置传，合并时留下两个形参就会串栏（点名点错一栏、不报错）。

@@ -15,6 +15,35 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # **YouTube cookie 的定时存活检查**（2026-09-28 返工审计）：09-19 17:15Z cookie 失效，
+  # 一直到 22:52Z 都只是**会话手动拨的** probe / cookies 在红（5 趟，run 35457535761 起）——
+  # 手动拨的红按 Q9 不推微信，没有任何定时的东西在看它，发现全靠下一条片子撞上。
+  #
+  # 这里**不自己验**，而是派发 `match-reel.yml mode=cookies`：
+  #   - 真下三秒媒体流那段只许有一份（tools/yt_cookie_check.sh），YT_COOKIES_TXT 和
+  #     「落 cookies」那步也只在 match-reel 里配着
+  #   - 派发者是 github-actions[bot] → `is_unattended` 认它是无人值守链；它红了，
+  #     pipeline_health 按 `match-reel:cookies` 这一处**只在转入阻塞时推一次**
+  #     （账号所有者 Q9：只推无人值守链、按处去重、不重复推），看板「发现」那一格跟着红
+  #   - cookie 换好之后手动拨一趟 cookies 绿了，这一处自己出列
+  # 放在 source-health 而不是另起一条定时：它本来就是「外部数据源还活不活」的定时检查，
+  # 看板和 pages 的订阅都已经接着它；和比分源那个 job 互不影响（各红各的）。
+  # 判据 tests/test_source_probe_robustness.py::test_cookie自检只有一份_定时派发走阻塞推送
+  youtube-cookies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - name: 派发 match-reel mode=cookies（真下三秒媒体流）
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml --repo "${{ github.repository }}" --ref main \
+            -f mode=cookies
+          echo "[dispatch] match-reel mode=cookies——红了由 pipeline-health 按阻塞推送"
+
   probe:
     runs-on: ubuntu-latest
     # 常规四个源（ESPN/SofaScore/Flashscore/WtaLive）全灭时，fetch_day 会

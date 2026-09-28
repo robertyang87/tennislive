@@ -54,7 +54,14 @@ def scan(video: Path, box: tuple[int, int, int, int], step: float) -> list[dict]
         if not ok:
             break
         if idx % stride == 0:
-            roi = cv2.cvtColor(frame[y0:y1, x0:x1], cv2.COLOR_BGR2GRAY)
+            crop = frame[y0:y1, x0:x1]
+            if crop.size == 0:
+                # 框整个落在画面外（1080p 量的框配 720p 源片）：cv2 在这儿只会报一句
+                # `!_src.empty()`，看不出是框和分辨率对不上（medvedev-wong run 36331431180）
+                h, w = frame.shape[:2]
+                cap.release()
+                raise ValueError(f"框 {box} 落在 {w}×{h} 的画面外——框是按别的分辨率量的")
+            roi = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
             dark = float((roi < 90).mean())
             if prev is not None:
                 moved = float((np.abs(roi.astype(np.int16)
