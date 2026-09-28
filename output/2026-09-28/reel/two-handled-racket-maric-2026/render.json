@@ -4,9 +4,9 @@
   "cover_narrated": true,
   "outro_seconds": 3.827,
   "layout": "full",
-  "segments_seconds": 84.8,
+  "segments_seconds": 81.3,
   "topbar": null,
-  "film_seconds": 92.9,
+  "film_seconds": 89.4,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -18,7 +18,7 @@
     "5": 10.128,
     "6": 8.424,
     "7": 7.104,
-    "8": 6.144
+    "8": 5.232
   },
   "face_checks": {
     "cover": {
@@ -93,44 +93,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "e1292c4fdb151ba338d419918c6d6d5c49ca5fe75f65847a3c0e8130f79c5f25",
+  "render_inputs_sha256": "a237dc4074929aea817d6624bd82b05500de69dfd2e3807d8f253e096674db5c",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "two-handled-racket-maric-2026",
-    "received_at": "2026-09-28T05:09:52Z",
-    "artifact_ready_at": "2026-09-28T05:14:10Z",
-    "elapsed_seconds": 258.229,
+    "received_at": "2026-09-28T05:16:35Z",
+    "artifact_ready_at": "2026-09-28T05:20:37Z",
+    "elapsed_seconds": 242.649,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "1a30a0db0ebfa8b88d5d221af5ec5da2421e0cdd3abb9d943c439d3ced4dd5fa",
-    "spec_sha256": "8c7ecf75dcc7aeac8c4c5f28d093e78a5fc5187117782db99a2fa6394358bb82",
-    "run_id": "36380693145",
+    "film_sha256": "9123c8822fe58a15406c46adb535fb58c0ab39a95132459f1659b07d94e95795",
+    "spec_sha256": "49c75331d6135860a823016efa6a8ee42f8a76739a413bb7ccf0cf5f23af6cf9",
+    "run_id": "36381196213",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-28T05:11:53Z",
-        "run_id": "36380693145"
+        "at": "2026-09-28T05:18:29Z",
+        "run_id": "36381196213"
       }
     ],
-    "render_seconds": 137.229,
-    "pre_render_seconds": 121.0
+    "render_seconds": 128.649,
+    "pre_render_seconds": 114.0
   },
-  "film_sha256": "1a30a0db0ebfa8b88d5d221af5ec5da2421e0cdd3abb9d943c439d3ced4dd5fa",
-  "film_bytes": 143907792,
-  "qc_attestation_sha256": "70566473489b53e8127d927dfe446f68b189e7b46617af6b38390bfa60ab10ad",
+  "film_sha256": "9123c8822fe58a15406c46adb535fb58c0ab39a95132459f1659b07d94e95795",
+  "film_bytes": 140341783,
+  "qc_attestation_sha256": "bfadff43c29ec0a33a3d0d597b64962301e2a516dd17a11702d906d7b0248d81",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-28T05:11:53Z",
-      "run_id": "36380693145"
+      "at": "2026-09-28T05:18:29Z",
+      "run_id": "36381196213"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-28T05:14:10Z",
-      "run_id": "36380693145"
+      "at": "2026-09-28T05:20:38Z",
+      "run_id": "36381196213"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-two-handled-racket-maric-2026/two-handled-racket-maric-2026.mp4",
-  "video_bytes": 143907792
+  "video_bytes": 140341783
 }

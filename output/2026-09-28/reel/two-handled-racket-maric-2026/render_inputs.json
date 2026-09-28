@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "two-handled-racket-maric-2026",
-  "written_at": "2026-09-28T05:14:10Z",
-  "code_sha": "55700a4c4d8a3fa40f01314b6a5292086b5c3125",
-  "spec_sha256": "8c7ecf75dcc7aeac8c4c5f28d093e78a5fc5187117782db99a2fa6394358bb82",
-  "film_sha256": "1a30a0db0ebfa8b88d5d221af5ec5da2421e0cdd3abb9d943c439d3ced4dd5fa",
-  "film_bytes": 143907792,
-  "projection_sha256": "88cc621a87f59e6375d22fae8fd5d36a87eb615b6ee9de267dd2be494654863a",
+  "written_at": "2026-09-28T05:20:37Z",
+  "code_sha": "0ae08df9dab1829b78ae1eece5caf76b35fe2d78",
+  "spec_sha256": "49c75331d6135860a823016efa6a8ee42f8a76739a413bb7ccf0cf5f23af6cf9",
+  "film_sha256": "9123c8822fe58a15406c46adb535fb58c0ab39a95132459f1659b07d94e95795",
+  "film_bytes": 140341783,
+  "projection_sha256": "f3d481cf47de16c54664fb955f426af51bb4bbf6d27e782f6e5e8d89c8fa82a6",
   "claims": [
     [
       "segments",
@@ -36,7 +36,7 @@
   ],
   "assets": {},
   "artifacts": {
-    "subtitles.ass": "a3a05769332ccd2ea4df980ebc509af0cce109f975cdde42bb52257b06eca993",
+    "subtitles.ass": "622751ff64f835850f4c850c5a2e79754b7ec7205b00972dc36f1fb5fe1ebaef",
     "poster.jpg": "f0f83e3cc275edcb05429890ebb3970229c4cbd7d6232438b1239ea5f3646a91"
   },
   "projection": {
@@ -120,23 +120,25 @@
       },
       {
         "source": "rf",
-        "start": 20.0,
-        "end": 31.0,
+        "start": 26.0,
+        "end": 37.0,
         "fit": "crop",
-        "crop_zoom": 1.5,
+        "crop_zoom": 1.3,
         "narration": "这样的球拍，正式比赛里能用吗？能。二零零七年，国际网联给厂家回过一封信：两个握柄，不违反网球规则。",
         "point_end_ok": "练习对拉，没有记分条。",
-        "fill_y": 0.2
+        "fill_y": 0.2,
+        "cx": 0.6
       },
       {
         "source": "rf",
-        "start": 36.0,
-        "end": 48.0,
+        "start": 37.0,
+        "end": 49.0,
         "fit": "crop",
-        "crop_zoom": 1.5,
+        "crop_zoom": 1.3,
         "narration": "因为规则管的是拍面：要平，两面打起来一样，拍线只许一层；长不过七十三点七厘米，宽不过三十一点七厘米。拍柄有几个，没写。",
         "point_end_ok": "练习对拉，没有记分条。",
-        "fill_y": 0.2
+        "fill_y": 0.2,
+        "cx": 0.6
       },
       {
         "source": "tl",
@@ -149,31 +151,34 @@
       },
       {
         "source": "rf",
-        "start": 48.0,
-        "end": 58.0,
+        "start": 49.0,
+        "end": 57.5,
         "fit": "crop",
-        "crop_zoom": 1.5,
+        "crop_zoom": 1.3,
         "narration": "两个握柄的球拍，发明人叫莱昂内尔·伯特。把它带上职业赛场的，是美国的巴蒂斯通兄弟。",
         "point_end_ok": "练习对拉，没有记分条。",
-        "fill_y": 0.2
+        "fill_y": 0.2,
+        "cx": 0.58
       },
       {
         "source": "rf",
-        "start": 58.0,
-        "end": 66.0,
+        "start": 57.5,
+        "end": 65.5,
         "fit": "crop",
-        "crop_zoom": 1.5,
+        "crop_zoom": 1.3,
         "narration": "哥哥布莱恩双打最高到过世界第八十八，二零一二年，还拿着它打了美网混双。",
         "point_end_ok": "练习对拉，没有记分条。",
-        "fill_y": 0.2
+        "fill_y": 0.2,
+        "cx": 0.6
       },
       {
         "source": "rf",
-        "start": 66.0,
+        "start": 68.0,
         "end": 73.2,
         "fit": "crop",
-        "narration": "拍柄可以有两个，拍线只能有一层。换你，敢拿它上场吗？",
-        "point_end_ok": "练习对拉，片子到 73.5s 结束。"
+        "narration": "拍柄两个，拍线一层。换你，敢拿它上场吗？",
+        "point_end_ok": "练习对拉，片子到 73.5s 结束。",
+        "cx": 0.25
       }
     ],
     "archival": {
