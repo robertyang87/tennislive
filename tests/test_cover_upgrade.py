@@ -1322,6 +1322,57 @@ def test_Release挂账_不共用tag就不写_旧的没挂账要点名(tmp_path, 
                      f"output/2026-09-27/reel/{SLUG}/render.json"], noted
 
 
+def test_会话手动跨天重渲_派发前跑supersede_合并时tag碰撞判据不红(tmp_path, monkeypatch, capsys):
+    """2026-09-28 `wang-prozorova` 换开赛时刻跨天重渲：旧的那格没人挂账，PR 的 CI 红了一轮
+    （`test_同一个Release_tag被两份产物共用时每一份都要挂账`），手写一句才过。O4 那条路换图时
+    自己挂（`cover_upgrade.apply_upgrade`），会话手动重渲这条路原来只有 `current` 事后点名。
+
+    判据：派发之前跑 `release_tag_note.py supersede --slug`，旧的那格挂好、进索引；render 传完
+    `current` 给新的挂上——CI 那两条判据原样判这个仓库，全绿；没有旧记录时也要出声。"""
+    import release_tag_note as rtn  # noqa: PLC0415
+
+    url = f"https://github.com/o/r/releases/download/reel-{SLUG}/{SLUG}.mp4"
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(days=2))})
+    assert rtn.main(["supersede", "--slug", SLUG, "--repo", str(repo)]) == 0
+    assert "没有旧记录，不用挂账" in capsys.readouterr().out, "没什么可挂也要出声"
+
+    old = f"output/2026-09-25/reel/{SLUG}"
+    records = {f"{old}/render.json": {"video_url": url, "video_bytes": 111000111}}
+    for i in range(20):                               # 判据自带「至少 20 份」的下限
+        other = f"filler-{i:02d}"
+        records[f"output/2026-09-20/reel/{other}/render.json"] = {
+            "video_url": f"https://github.com/o/r/releases/download/reel-{other}/{other}.mp4",
+            "video_bytes": 1000 + i}
+    for rel, data in records.items():
+        (repo / rel).parent.mkdir(parents=True, exist_ok=True)
+        (repo / rel).write_text(json.dumps(data, indent=2) + "\n", "utf-8")
+    _git(repo, "add", "-A")
+    _commit(repo, "renders")
+    _git(repo, "sparse-checkout", "set", "--no-cone", "/*", "!/output/")   # 和工作流一样
+
+    assert rtn.main(["supersede", "--slug", SLUG, "--why", "改开赛时刻重渲", "--repo", str(repo),
+                     "--now", "2026-09-28T04:40:00Z"]) == 0
+    assert f"挂账：{old}/render.json" in capsys.readouterr().out
+    staged = json.loads(_git(repo, "show", f":{old}/render.json"))
+    note = str(staged.get(rtn.NOTE_KEY) or "")
+    assert "改开赛时刻重渲" in note and "2026-09-28" in note and "Content-Range" in note, staged
+    assert staged["video_bytes"] == 111000111, "挂账不许动原来记的数"
+    _commit(repo, "spec + 旧的挂账")
+
+    new = f"output/2026-09-28/reel/{SLUG}"
+    (repo / new).mkdir(parents=True)
+    (repo / new / "render.json").write_text(
+        json.dumps({"video_url": url, "video_bytes": 111826692}, indent=2) + "\n", "utf-8")
+    assert rtn.main(["current", "--render-json", str(repo / new / "render.json"),
+                     "--run-id", "36424112503", "--repo", str(repo)]) == 0
+    assert "::warning::" not in capsys.readouterr().out, "旧的已经挂过，不该再点名"
+    _git(repo, "add", "--sparse", f"{new}/render.json")
+    judge = _load_collision_judge()
+    monkeypatch.setattr(judge, "ROOT", repo)
+    judge.test_同一个Release_tag被两份产物共用时每一份都要挂账()
+    judge.test_挂账那句话不许写成一句空话()
+
+
 def test_plan不为怎么查都换不了的目标装依赖(tmp_path):
     """评审 nit：`safiullin-bu-hangzhou-2026-qf` 没有 `_match.start_utc`、也没有
     `flashscore_id`——判不了当地日期，一张图都换不上，而原来 `--plan` 照样把它算成目标，

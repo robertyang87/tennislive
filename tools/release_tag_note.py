@@ -21,10 +21,17 @@ CI 不跑，**下一个不相干的 PR 才红**，而且没有任何东西会去
 |---|---|---|
 | `cover_upgrade.apply_upgrade`（`supersede`） | 换完图、派发重渲之前 | 这个 slug 在 tag 上的**每一份旧记录**：「重渲一传上来，这份记的那一版就不在 tag 上了」 |
 | `match-reel.yml`「成片发到 Release」（`current`） | 刚传完、刚写完 `video_url` | **新的这一份**：「那一刻 tag 上就是我」——只有这一趟知道 |
+| 会话手动跨天重渲（`supersede --slug`） | 派发 `mode=render` 之前，和改 spec 同一个提交 | 同 `cover_upgrade`：这个 slug 在 tag 上的每一份旧记录 |
 
 ⚠️ `current` **不去改旧目录**：一趟 render 只提交自己那一格（CLAUDE.md「并行的生成
 任务：只碰自己那一块」）。旧的没挂账的（会话手动跨天重渲），它打一行 `::warning::`
-点名，合并前手写一句——和原来一样，只是不再等 CI 红了才知道。
+点名——不再等 CI 红了才知道。
+
+会话手动重渲（换封面、改旁白）在**派发之前**跑一次
+`python3 tools/release_tag_note.py supersede --slug <slug> --why "<为什么重渲>"`，
+和改 spec 一起提交：旧的那几格就挂好了，PR 的 CI 不会为这件事红一轮（2026-09-28
+`wang-prozorova` 那次就红了一轮，手写一句才过）。同日重渲也照样跑——北京 23 点以后
+派的会在跑到一半时翻进第二天，事先分不出是哪一种（`superseded` 的 docstring）。
 
 ⚠️ **别在仓库里猜 tag 上是哪一份**（按日期、按字节数都挑反过，见那条测试的 docstring）：
 挂账的话只写「这一趟做了什么、在什么时刻」，量法照抄——`Range: bytes=0-1` 读
@@ -186,16 +193,31 @@ def main(argv: list[str] | None = None) -> int:
     cur.add_argument("--run-id", default="?")
     cur.add_argument("--repo", default=str(ROOT))
     cur.add_argument("--now", default="", help="ISO 时刻（测试用）")
+    sup = sub.add_parser("supersede", help="重渲派发之前，给这个 slug 在 tag 上的每一份旧记录挂账（会话手动重渲用）")
+    sup.add_argument("--slug", required=True)
+    sup.add_argument("--why", default="会话手动重渲", help="写进挂账的那句「为什么重渲」")
+    sup.add_argument("--repo", default=str(ROOT))
+    sup.add_argument("--now", default="", help="ISO 时刻（测试用）")
+    sup.add_argument("--no-stage", action="store_true", help="只写工作区、不 git add")
     args = ap.parse_args(argv)
     now = (datetime.fromisoformat(args.now.replace("Z", "+00:00")) if args.now
            else datetime.now(timezone.utc))
+    if args.cmd == "supersede":
+        noted = supersede(Path(args.repo), args.slug, now, args.why, stage=not args.no_stage)
+        for path in noted:
+            print(f"[release-tag] 挂账：{path}")
+        if not noted:
+            # 第一次渲、或者只有 2026-08-13 之前走 git 的老成片——没有要挂的，也要出声
+            print(f"[release-tag] {args.slug} 在 Release tag 上没有旧记录，不用挂账")
+        return 0
     wrote, unnoted = mark_current(Path(args.repo), Path(args.render_json), args.run_id, now)
     print(f"[release-tag] {args.render_json}：" + (
         "同一个 tag 还被别的记录共用，已挂账" if wrote else "这个 tag 没有别的记录共用，不用挂账"))
     for path in unnoted:
         # 旧目录不归这一趟 render 提交（只碰自己那一块）——点名，别等 CI 红
         print(f"::warning::{path} 和这一趟共用 Release tag、字节数多半对不上，却没挂账——"
-              f"合并前给它写一句 {NOTE_KEY}（test_同一个Release_tag被两份产物共用时每一份都要挂账 会红）")
+              f"合并前给它写一句 {NOTE_KEY}（test_同一个Release_tag被两份产物共用时每一份都要挂账 会红）；"
+              f"下次派发重渲之前先跑 tools/release_tag_note.py supersede --slug {Path(args.render_json).parent.name}")
     return 0
 
 

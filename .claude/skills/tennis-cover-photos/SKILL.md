@@ -2311,6 +2311,9 @@ render 用 GITHUB_TOKEN 直推 main、CI 不跑，**下一个不相干的 PR 才
 `match-reel.yml` 传完 Release、写完 `video_url` 当场给**新的这一格**挂（`release_tag_note.py current`，只有它知道
 此刻 tag 上是哪一份）。会话手动跨天重渲的旧格它不去改（一趟 render 只提交自己那一格），打 `::warning::` 点名。
 判据 `test_跨天重渲_新旧两格render_json都挂账_tag碰撞判据不红`（拿 CI 那条判据原样判临时仓库，挂账前红、后绿）。
+⭐ **会话手动重渲（换封面、改旁白）派发之前跑** `python3 tools/release_tag_note.py supersede --slug <slug> --why "<为什么>"`，
+和改 spec 同一个提交（2026-09-28 `wang-prozorova` 跨天重渲没挂，PR 的 CI 红了一轮）。同日也跑——翻不翻午夜事先分不出。
+判据 `test_会话手动跨天重渲_派发前跑supersede_合并时tag碰撞判据不红`。
 
 同一轮收掉的几处：Match Reaction 头图那一档拿掉了（只有 og:image 文件名、没有说明，点名闸恒过不了，却每班为每条
 WTA 目标花一次 `find_match`；photo-resources 留着，`GettyImages-*` 带 Getty 说明）；`--plan` 不再把**不联网就知道
