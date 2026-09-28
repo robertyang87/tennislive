@@ -93,44 +93,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "a237dc4074929aea817d6624bd82b05500de69dfd2e3807d8f253e096674db5c",
+  "render_inputs_sha256": "9e63bb0560bdb40b21b3f66157bb79f6a714bb43378ae4c5f9d12092dec9cfd1",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "two-handled-racket-maric-2026",
-    "received_at": "2026-09-28T05:16:35Z",
-    "artifact_ready_at": "2026-09-28T05:20:37Z",
-    "elapsed_seconds": 242.649,
+    "received_at": "2026-09-28T05:22:23Z",
+    "artifact_ready_at": "2026-09-28T05:27:01Z",
+    "elapsed_seconds": 278.954,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "9123c8822fe58a15406c46adb535fb58c0ab39a95132459f1659b07d94e95795",
-    "spec_sha256": "49c75331d6135860a823016efa6a8ee42f8a76739a413bb7ccf0cf5f23af6cf9",
-    "run_id": "36381196213",
+    "film_sha256": "74af947af049ad375cc770a4398f31073a127b01223e2822291e48486ca28f3a",
+    "spec_sha256": "1b402ea121df355945e9f144556848c3f1886466d0873e1ae357a9376f9098f8",
+    "run_id": "36381617484",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-28T05:18:29Z",
-        "run_id": "36381196213"
+        "at": "2026-09-28T05:24:25Z",
+        "run_id": "36381617484"
       }
     ],
-    "render_seconds": 128.649,
-    "pre_render_seconds": 114.0
+    "render_seconds": 156.954,
+    "pre_render_seconds": 122.0
   },
-  "film_sha256": "9123c8822fe58a15406c46adb535fb58c0ab39a95132459f1659b07d94e95795",
-  "film_bytes": 140341783,
-  "qc_attestation_sha256": "bfadff43c29ec0a33a3d0d597b64962301e2a516dd17a11702d906d7b0248d81",
+  "film_sha256": "74af947af049ad375cc770a4398f31073a127b01223e2822291e48486ca28f3a",
+  "film_bytes": 140223626,
+  "qc_attestation_sha256": "aa3ea1fcf69441d9347d16ba320d0b118059fff8156c124cb3de3feb545f3bf3",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-28T05:18:29Z",
-      "run_id": "36381196213"
+      "at": "2026-09-28T05:24:25Z",
+      "run_id": "36381617484"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-28T05:20:38Z",
-      "run_id": "36381196213"
+      "at": "2026-09-28T05:27:02Z",
+      "run_id": "36381617484"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-two-handled-racket-maric-2026/two-handled-racket-maric-2026.mp4",
-  "video_bytes": 140341783
+  "video_bytes": 140223626
 }
