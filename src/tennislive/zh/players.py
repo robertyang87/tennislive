@@ -505,6 +505,13 @@ PLAYER_ZH: dict[str, str] = {
     "Steffi Graf": "格拉芙",
     "Monica Seles": "塞莱斯",
     "Chris Evert": "埃弗特",
+    # ===== 双柄球拍（two-handled-racket-maric，2026-09-28）补的人物 =====
+    "Marko Maric": "马里奇",
+    "Brian Battistone": "布莱恩·巴蒂斯通",
+    "Dann Battistone": "丹·巴蒂斯通",
+    "Ilie Nastase": "纳斯塔塞",
+    "Guillermo Vilas": "维拉斯",
+    "Georges Goven": "戈旺",
     # ===== 比利·简·金杯介绍片（bjk-cup-story，2026-09-18）补的历史人物 =====
     "Arantxa Sanchez Vicario": "桑切斯·维卡里奥",
     "Conchita Martinez": "康奇塔·马丁内斯",
