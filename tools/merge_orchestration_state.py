@@ -98,6 +98,19 @@ def merge_interview_states(base: dict, ours: dict, theirs: dict) -> dict:
             else:
                 target[slug] = value
     merged["slugs"] = sorted(slugs)
+    # 「先投 subs」的账（`pick_interview_renders.mark_subs`）同一个规矩：本趟改过的条目
+    # 重放上去，远端同一条更新（时刻不早于本趟）就让远端的。不重放的话，一撞车这趟投的
+    # subs 就没记上，下一趟又投一次——同 slug 的 concurrency 是 cancel-in-progress，
+    # 重投会把还在跑的那趟掐掉。
+    base_subs = base.get("subs") or {}
+    theirs_subs = theirs.get("subs") or {}
+    for slug, rec in (ours.get("subs") or {}).items():
+        if rec == base_subs.get(slug):
+            continue
+        remote = theirs_subs.get(slug) or {}
+        if remote and str(remote.get("at") or "") >= str(rec.get("at") or ""):
+            continue
+        merged.setdefault("subs", {})[slug] = rec
     return merged
 
 
@@ -121,7 +134,8 @@ def main() -> int:
             if (not isinstance(state, dict)
                     or not isinstance(state.get("slugs", []), list)
                     or not isinstance(state.get("at", {}), dict)
-                    or not isinstance(state.get("spec_sha256", {}), dict)):
+                    or not isinstance(state.get("spec_sha256", {}), dict)
+                    or not isinstance(state.get("subs", {}), dict)):
                 raise ValueError("Invalid interview dispatch state")
         merged = merge_interview_states(*snapshots)
     else:

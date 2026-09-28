@@ -70,6 +70,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from typing import NamedTuple
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -2536,6 +2537,13 @@ def _second_model(spec: dict) -> str:
 
 VERIFY_FP = "verify_fingerprint.json"
 GAP_VAD_ATTESTATION = "gap_vad_attestation.json"
+#: 第二份 ASR **每跑一次**都落的那份量数（分歧率＋词数，绑当前转写指纹）。
+#: `verify_fingerprint.json` 只在没有分歧发现时才落——「量过、超了闸」和「从没量过」
+#: 在它那儿长得一样，dispatch 那头分不清该等人认领还是该先跑一趟 subs。见 `subs_verdict`。
+SECOND_ASR_VERDICT = "second_asr_verdict.json"
+#: subs 那一趟交的判定＝这三份（都进仓库、都绑 `transcript_fingerprint`）。预检按字幕缓存
+#: 重切行时要一起放进去，预检结论缓存的键也要跟着它们变（`interview_preflight.caption_fingerprint`）。
+SUBS_VERDICT_FILES = (VERIFY_FP, SECOND_ASR_VERDICT, GAP_VAD_ATTESTATION)
 GAP_VAD_EDGE_PAD_SECS = 0.35
 GAP_VAD_MAX_SPEECH_SECS = 0.12
 GAP_CONTEXT_PAD_SECS = 8.0
@@ -2553,6 +2561,12 @@ def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
     下一趟 verify 时指纹没变 **且** 人已核过（`transcript_verified: true`）
     才跳过——**两个条件缺一不可**：只看指纹的话，一条从没人核过的转写也会
     被「上次 verify 跑过」放行。
+
+    ⚠️ 2026-09-28 起多一条跳过的路：**subs 那一趟在当前指纹上交的判定是 ok**
+    （`subs_verdict`：分歧在闸门内或被认领覆盖、空档全销账）。自动链只在这个
+    判定 ok 时才投 render，render 那一趟再量一遍只会量出「另一份」——第二份 ASR
+    **不是确定性的**（tien-cobolli 同一个指纹 40e2f923 两趟量出 2.7% 和 3.9%），
+    重量一次的唯一作用是让放行过的片子在编码前随机红一次。
 
     进指纹的每一样都是「变了就该重验」的：
 
@@ -2692,7 +2706,7 @@ def attest_gap_silence(spec: dict, lines: list[dict], outdir: Path,
         status = ("transcript_covered" if covered else
                   "caption_timeline_covered" if timeline_covered else
                   "no_speech" if no_speech else "speech_detected")
-        results.append({
+        row = {
             "key": gap_key(*gap),
             "start": gap[0],
             "end": gap[1],
@@ -2701,7 +2715,11 @@ def attest_gap_silence(spec: dict, lines: list[dict], outdir: Path,
             "transcript_covered": covered,
             "caption_timeline_covered": timeline_covered,
             "status": status,
-        })
+        }
+        # **自动销账要留一句理由**，和人写进 `caption_gaps_ok` 的那句同一个位置、同一个
+        # 用途：回头查「这几秒为什么放行了」的人，不该去翻 speech_seconds 自己算。
+        row["reason"] = gap_row_reason(row, _second_model(spec))
+        results.append(row)
     payload = {
         "status": "pass",
         "method": "silero_vad_plus_dual_asr_coverage",
@@ -2724,39 +2742,87 @@ def attest_gap_silence(spec: dict, lines: list[dict], outdir: Path,
             words = " ".join(row["second_asr_words"]) or "—"
             print(f"[空档 VAD] 保持红灯 {row['key']}：人声 {row['speech_seconds']:.3f}s，"
                   f"第二 ASR 词={words}")
+        else:
+            print(f"[空档 VAD] 自动销账 {row['key']}：{row['reason']}")
     return path
 
 
-def auto_silent_gap_keys(spec: dict, lines: list[dict], outdir: Path) -> set[str]:
-    """读取与当前转写指纹绑定的空档证明；旧证据一律不复用。"""
+def gap_row_reason(row: dict, second_model: str = "") -> str:
+    """空档证明里的一行 → 一句人读得懂的结论（自动销账的理由，或为什么还红着）。
+
+    `attest_gap_silence` 落盘时写进 `reason`；老证据没有这个键，读的时候按同一份函数
+    现算——**理由只有这一处出处**，报告、日志、预检印的是同一句。"""
+    words = " ".join(row.get("second_asr_words") or [])
+    who = f"第二份 ASR（{second_model}）" if second_model else "第二份 ASR"
+    secs = float(row.get("speech_seconds", 0) or 0)
+    status = row.get("status")
+    if status == "no_speech":
+        heard = f"只听到非词的「{words}」" if words else "一个词都没听到"
+        return (f"VAD 在核心区只测到 {secs:.3f}s 人声（≤{GAP_VAD_MAX_SPEECH_SECS}s），"
+                f"{who}{heard}——没人说话，自动销账")
+    if status == "transcript_covered":
+        return (f"{who}在这几秒听到的「{words}」已按原顺序出现在前后 "
+                f"{GAP_CONTEXT_PAD_SECS:.0f} 秒的成品字幕里——是两套时间码的边界漂移，"
+                "不是漏了，自动销账")
+    if status == "caption_timeline_covered":
+        return "成品字幕的时间轴已经盖住这段空档的核心区——自动销账"
+    return (f"VAD 测到 {secs:.3f}s 人声，{who}"
+            + (f"听到「{words}」" if words else "没听出词")
+            + "——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`")
+
+
+def _gap_attestation(spec: dict, lines: list[dict], outdir: Path,
+                     fp: str | None = None) -> dict | None:
+    """和**当前**转写指纹绑定的空档证明；没有、读不了、方法不对、指纹旧了都是 None。"""
     path = outdir / GAP_VAD_ATTESTATION
     if not path.is_file():
-        return set()
+        return None
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
-        return set()
-    if (payload.get("status") != "pass"
+        return None
+    if (not isinstance(payload, dict)
+            or payload.get("status") != "pass"
             or payload.get("method") != "silero_vad_plus_dual_asr_coverage"
-            or payload.get("sha256") != transcript_fingerprint(spec, lines, outdir)):
-        return set()
-    resolved = set()
+            or payload.get("sha256") != (fp or transcript_fingerprint(spec, lines, outdir))):
+        return None
+    return payload
+
+
+def auto_gap_closures(spec: dict, lines: list[dict], outdir: Path,
+                      fp: str | None = None) -> dict[str, str]:
+    """VAD／双 ASR 证明**不用人听**的空档 → {键: 理由}。只认当前指纹的证据，旧证据一律不复用。
+
+    ⚠️ **不往 spec 的 `caption_gaps_ok` 里写**：那张表的语义是「人听过并作出了决定」
+    （`_unresolved_gaps`），机器替人写进去，下一个人就分不清哪条是听过的；
+    而且 runner 改 spec 会跟人手上的改动撞车。机器的结论留在 `gap_vad_attestation.json`
+    （绑指纹、进仓库），人的结论留在 spec——人销过的账永远优先，机器不覆盖。"""
+    payload = _gap_attestation(spec, lines, outdir, fp)
+    if payload is None:
+        return {}
+    resolved: dict[str, str] = {}
     for row in payload.get("results", []):
+        if not isinstance(row, dict):
+            continue
         lexical = [word for word in compare_tokens(
             " ".join(row.get("second_asr_words") or []))
             if word not in GAP_NONLEXICAL_WORDS]
-        if (row.get("status") == "no_speech"
+        if ((row.get("status") == "no_speech"
                 and not lexical
-                and float(row.get("speech_seconds", 1)) <= GAP_VAD_MAX_SPEECH_SECS):
-            resolved.add(str(row.get("key")))
-        elif (row.get("status") == "transcript_covered"
-              and row.get("transcript_covered") is True
-              and row.get("second_asr_words")):
-            resolved.add(str(row.get("key")))
-        elif (row.get("status") == "caption_timeline_covered"
-              and row.get("caption_timeline_covered") is True):
-            resolved.add(str(row.get("key")))
+                and float(row.get("speech_seconds", 1)) <= GAP_VAD_MAX_SPEECH_SECS)
+                or (row.get("status") == "transcript_covered"
+                    and row.get("transcript_covered") is True
+                    and row.get("second_asr_words"))
+                or (row.get("status") == "caption_timeline_covered"
+                    and row.get("caption_timeline_covered") is True)):
+            resolved[str(row.get("key"))] = (str(row.get("reason") or "")
+                                             or gap_row_reason(row, _second_model(spec)))
     return resolved
+
+
+def auto_silent_gap_keys(spec: dict, lines: list[dict], outdir: Path) -> set[str]:
+    """读取与当前转写指纹绑定的空档证明；旧证据一律不复用。理由见 `auto_gap_closures`。"""
+    return set(auto_gap_closures(spec, lines, outdir))
 
 
 #: `--stage verify` **只因「人还没核」的发现**没过时的退出码：分歧超闸没认领／认领
@@ -2797,6 +2863,120 @@ def gap_block_message(spec_path: str, spec: dict,
             "打开源片听这几秒：有人说话就是漏了，掌声／欢呼就不是。"
             "结论写进 spec 的 `caption_gaps_ok`，键是 "
             + "、".join(f"`{gap_key(a, b)}`" for a, b in holes) + "。")
+
+
+def record_second_asr(spec: dict, lines: list[dict], outdir: Path, rate: float,
+                      first_words: int, second_words: int) -> Path:
+    """第二份 ASR 这一趟量到的分歧，绑当前转写指纹落进 `second_asr_verdict.json`。"""
+    path = outdir / SECOND_ASR_VERDICT
+    path.write_text(json.dumps({
+        "sha256": transcript_fingerprint(spec, lines, outdir),
+        "method": "dual_asr_rate",
+        "first_model": spec.get("asr_model") or "provider_captions",
+        "second_model": _second_model(spec),
+        "rate": rate,
+        "first_words": first_words,
+        "second_words": second_words,
+        "threshold": TRANSCRIPT_MAX_DISAGREE,
+    }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    return path
+
+
+def _read_json(path: Path) -> dict:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+class SubsVerdict(NamedTuple):
+    """subs 那一趟交的判定，**按当前转写指纹**读出来的结论。
+
+    - `state`：`ok`（可以投 render）／`needs_subs`（当前指纹缺判定，先投 subs）／
+      `red`（当前指纹上已经量出来、render 必红的——等人改或认领）
+    - `reds`：红的每一处（和 `--stage verify` 报的同一句）
+    - `pending`：缺哪份判定
+    - `notes`：销账明细（人工几处、VAD 自动几处和理由），给人看
+    """
+    state: str
+    reds: list[str]
+    pending: list[str]
+    notes: list[str]
+
+
+def subs_verdict(spec: dict, lines: list[dict], outdir: Path) -> SubsVerdict:
+    """**render 之前**按仓库里落着的判定，回答「这一版转写 render 过不过得了转写那两道闸」。
+
+    来路（2026-09-28 返工审计）：「赛后开麦」9/20~9/28 有 6 趟 render 红在
+    「字幕空档没销账／转写分歧超阈」（alcaraz-fritz ×3、tien-cobolli ×2、
+    chwalinska-mertens ×1，25.4 runner-分钟），**0/6 在 dispatch 之前拦得住**——
+    第二份 ASR 的结论只活在 runner 上，dispatch 那头看不见。9/27 起它挪到了
+    `mode=subs`、报告进了仓库，可自动链照样直接投 render，没人读那份报告。
+
+    判据全部复用出片那一趟的函数，不抄第二份：
+
+    1. **分歧**：人工核过且指纹没变（`transcript_verified` ＋ `verify_fingerprint.json`）→ 过；
+       否则读 `second_asr_verdict.json` 的量数（绑指纹），超闸门就过一遍
+       `_check_disagree_claim`——认领不进指纹，量完再认领照样作数；老产物只有
+       `verify_fingerprint.json` 的 pass 也算过。都没有 → 缺判定。
+    2. **空档**：`caption_gaps` 里人没销账（`caption_gaps_ok`）、VAD 也没证明不用听
+       （`auto_gap_closures`）的——证据是当前指纹的就是红（和 `blocking_gaps` 同一个判据），
+       证据没有或旧了 → 缺判定。
+
+    ⚠️ **第二份 ASR 不是确定性的**（同一个指纹两趟 2.7% / 3.9%），所以 render 那一趟
+    在判定 ok 时不再重量（见 `main()` 的 verify 分支）——放行和出片看的是同一份量数。
+    """
+    fp = transcript_fingerprint(spec, lines, outdir)
+    reds: list[str] = []
+    pending: list[str] = []
+    notes: list[str] = []
+    passed = _read_json(outdir / VERIFY_FP)
+    measured = _read_json(outdir / SECOND_ASR_VERDICT)
+    if spec.get("transcript_verified") is True and passed.get("sha256") == fp:
+        notes.append("分歧：人工核过（transcript_verified）且转写指纹没变")
+    elif (measured.get("sha256") == fp
+            and isinstance(measured.get("rate"), int | float)):
+        rate = float(measured["rate"])
+        if rate <= TRANSCRIPT_MAX_DISAGREE:
+            notes.append(f"分歧：{rate:.1%}（闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}）")
+        else:
+            try:
+                with contextlib.redirect_stdout(io.StringIO()):
+                    # 报错里印仓库里那份报告的路径（预检跑在临时目录里，印 outdir 就是个 /tmp 路径）
+                    report = OUTDIR / str(spec.get("slug") or "") / "transcript_diff.md"
+                    with contextlib.suppress(ValueError):
+                        report = report.relative_to(ROOT)
+                    _check_disagree_claim(spec, rate, report,
+                                          int(measured.get("first_words") or 0))
+            except ReviewFindings as exc:
+                reds.append(f"第二份 ASR 在当前转写指纹上量到：{exc}")
+            else:
+                notes.append(f"分歧：{rate:.1%} 超闸门，`transcript_disagree_ok` 认领覆盖")
+    elif passed.get("status") == "pass" and passed.get("sha256") == fp:
+        notes.append("分歧：当前转写指纹的双 ASR 已通过（verify_fingerprint.json）")
+    else:
+        pending.append("当前转写指纹没有第二份 ASR 的分歧量数"
+                       f"（{SECOND_ASR_VERDICT}／{VERIFY_FP} 没有或是旧指纹的）")
+    gaps = caption_gaps(spec, outdir)
+    human = spec.get("caption_gaps_ok") or {}
+    open_gaps = _unresolved_gaps(spec, gaps)
+    auto = auto_gap_closures(spec, lines, outdir, fp) if open_gaps else {}
+    left = [g for g in open_gaps if gap_key(*g) not in auto]
+    if left:
+        if _gap_attestation(spec, lines, outdir, fp) is not None:
+            reds.append(gap_block_message(f"specs/interviews/{spec.get('slug')}.json",
+                                          spec, left))
+        else:
+            pending.append(f"{len(left)} 处空档没有当前转写指纹的 VAD 证据"
+                           f"（{GAP_VAD_ATTESTATION}）：" + "、".join(gap_key(*g) for g in left))
+    if gaps:
+        notes.append(f"空档 {len(gaps)} 处：人工销账 {sum(gap_key(*g) in human for g in gaps)}、"
+                     f"VAD 自动销账 {len([g for g in open_gaps if gap_key(*g) in auto])}、"
+                     f"未销账 {len(left)}")
+        notes += [f"  {k}：{v}" for k, v in auto.items()]
+    state = "red" if reds else "needs_subs" if pending else "ok"
+    return SubsVerdict(state, reds, pending, notes)
 
 
 def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
@@ -2888,9 +3068,14 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 于是「跑成功了」和「我知道它比出了什么」之间差了一整趟往返。
     print("\n".join(report))
     print(f"转写分歧 {rate:.1%} → {path}")
+    # **量数本身落盘，不管过没过闸**（排在认领那道闸会抛之前）。`verify_fingerprint.json`
+    # 只在过了才落，「量过、超了」和「没量过」在它那儿长得一样——dispatch 那头就分不清
+    # 该等人认领（认领不进指纹，这份量数认领之后照样作数）还是该再投一趟 subs。
+    record_second_asr(spec, lines, outdir, rate, len(theirs), len(ours))
     # 空档单独探一次。**放在分歧率之前**：分歧率超标会抛，而空档那份报告
     # 恰恰是这一趟最贵的产出（要下音频、要跑模型），抛之前先把它印出来。
-    probe_gap_speech(spec, caption_gaps(spec, outdir), mine, outdir)
+    probe_gap_speech(spec, caption_gaps(spec, outdir), mine, outdir,
+                     auto=auto_gap_closures(spec, lines, outdir))
     if rate > TRANSCRIPT_MAX_DISAGREE:
         _check_disagree_claim(spec, rate, path, len(theirs))
     return path
@@ -2991,8 +3176,22 @@ def _check_disagree_claim(spec: dict, rate: float, path: Path,
           f"但 spec 里认领了（≤{declared:.1%}；{scale}）：{why[:60]}…")
 
 
+def _gap_closure_text(spec: dict, key: str, auto: dict[str, str] | None) -> str:
+    """报告里「已销账」那一格：人销的账原样印（优先），VAD 自动销的印理由，都没有是 **否**。
+
+    原来只读 `caption_gaps_ok`，VAD 自动销掉的那几处在 caption_gaps.md 和核对表里
+    一律印「**否**」——报告说没销、闸却放行了，读报告的人只能自己去翻证明文件。"""
+    human = (spec.get("caption_gaps_ok") or {}).get(key)
+    if human:
+        return str(human)
+    if auto and key in auto:
+        return f"VAD 自动销账（{GAP_VAD_ATTESTATION}）：{auto[key]}"
+    return "**否**"
+
+
 def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
-                     en_words: list[tuple[float, str]], outdir: Path) -> Path | None:
+                     en_words: list[tuple[float, str]], outdir: Path,
+                     auto: dict[str, str] | None = None) -> Path | None:
     """把每个空档摊开：**第二份 ASR 在这几秒里听到了什么。**
 
     用的是 `verify_transcript` **已经跑完的那一份**（spec 的 `whisper_model`，
@@ -3037,7 +3236,7 @@ def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
             + (f"`{' '.join(en_here)}`　→ **第一份（{_first_source_label(spec)}）"
                "漏了英语，补进 `en_fixed`**"
                if en_here else "**什么都没有** → 人去听：没人说话，还是不是英语？"),
-            f"- 已销账：{(spec.get('caption_gaps_ok') or {}).get(gap_key(a, b), '**否**')}",
+            f"- 已销账：{_gap_closure_text(spec, gap_key(a, b), auto)}",
             ""]
     path = outdir / "caption_gaps.md"
     path.write_text("\n".join(report) + "\n", encoding="utf-8")
@@ -3235,14 +3434,14 @@ def review_sheet(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # **空档单独列一节。** 上面那张表逐行走的是「源说了什么」，走不到
     # 「源什么都没说」的地方——那几秒在表里根本不占一行，翻一百遍也看不见。
     gaps = caption_gaps(spec, outdir)
-    ok = spec.get("caption_gaps_ok") or {}
+    auto = auto_gap_closures(spec, lines, outdir) if gaps else {}
     tail += ["", f"## 自动字幕的空档（≥{CAPTION_GAP_SECS:.0f} 秒连一个事件都没有）", ""]
     # 销账那段常常写成好几行（判据要写全），而这里是一条列表项——
     # 换行会把它折断成一堆游离的段落。压成一行。
     tail += [f"- **{a - clip0:.1f}–{b - clip0:.1f} 秒**（片内，{b - a:.1f} 秒空白，"
              f"{_jump_md(spec['url'], a, '跳过去')}）　"
-             + (ok[gap_key(a, b)].replace("\n", "　") if gap_key(a, b) in ok
-                else "**还没销账**")
+             + _gap_closure_text(spec, gap_key(a, b), auto).replace(
+                 "**否**", "**还没销账**").replace("\n", "　")
              for a, b in gaps] or ["（无）"]
     tail += ["", "打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。"
              "结论写进 spec 的 `caption_gaps_ok`（键 "
@@ -6044,10 +6243,32 @@ def main() -> int:
         # **两类发现收齐了一起报**：原来分歧超闸一抛就退出，空档那一半根本没判——
         # 人照着报告改完分歧，下一趟才看见空档，又是一个来回。
         findings: list[str] = []
-        if spec.get("transcript_verified") is True and recorded == fp:
+        verdict = subs_verdict(spec, lines, outdir)
+        if (spec.get("transcript_verified") is True and recorded == fp
+                and verdict.state != "needs_subs"):
+            # ⚠️ 「人核过」只管分歧那一半；空档还缺当前指纹的 VAD 证据（needs_subs）时照样
+            # 跑——不然 subs 那一趟永远补不上证据，自动链只能一趟趟重投
             print(f"[verify] 转写指纹没变（{fp[:12]}…）且已人工核过"
                   "（transcript_verified: true），跳过第二份 ASR。"
                   "改一行 en_fixed / 换字幕源 / 换模型都会让指纹变、重新全跑。")
+        elif verdict.state == "ok":
+            # **subs 那一趟已在这个指纹上交了 ok 的判定**——自动链正是凭它投的 render。
+            # 再量一遍量出来的是「另一份」（第二份 ASR 不是确定性的），只会让放行过的
+            # 片子在编码前随机红一次；判定和出片要看同一份量数。
+            print(f"[verify] 当前转写指纹（{fp[:12]}…）已有 subs 交的判定，跳过第二份 ASR：")
+            for note in verdict.notes:
+                print(f"  {note}")
+            if not transcript_auto_verified(spec, lines, outdir):
+                # 认领是量完之后才写的（不进指纹）：那一趟没落 pass，这里补上——
+                # 和 `verify_transcript` 在认领覆盖时落的是同一份东西
+                fp_path.write_text(json.dumps({
+                    "sha256": fp,
+                    "status": "pass",
+                    "method": "dual_asr",
+                    "first_model": spec.get("asr_model") or "provider_captions",
+                    "second_model": _second_model(spec),
+                    "from": SECOND_ASR_VERDICT,
+                }, indent=1) + "\n", encoding="utf-8")
         else:
             try:
                 verify_transcript(spec, lines, outdir)
@@ -6102,8 +6323,10 @@ def main() -> int:
         # **空档也要销账。** 上面那条闸盯的是「源说错了」，这条盯的是
         # 「源什么都没说」——伊埃拉那条 3.2 秒的空白就是从这个缝里漏出去的：
         # 没有词就没有分歧，两道旧闸全绿。
-        if auto_quiet := auto_silent_gap_keys(spec, lines, outdir):
-            print(f"[空档 VAD] {len(auto_quiet)} 处由当前指纹的语言无关无人声证明销账。")
+        if auto_quiet := auto_gap_closures(spec, lines, outdir):
+            print(f"[空档 VAD] {len(auto_quiet)} 处由当前指纹的语言无关无人声证明销账：")
+            for key, why in auto_quiet.items():
+                print(f"  {key}：{why}")
         if holes := blocking_gaps(spec, lines, outdir):
             raise SystemExit(gap_block_message(args.spec, spec, holes))
         out = render(spec, ass, outdir)

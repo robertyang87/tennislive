@@ -1,0 +1,549 @@
+"""赛后开麦：render 之前先要 subs 那一趟在**当前转写指纹**上交的判定（2026-09-28）。
+
+来路（返工审计 rework_audit_0928）：9/20~9/28 有 6 趟 `interview-clip` render 红在
+「字幕空档没销账／转写分歧超阈」——alcaraz-fritz ×3、tien-cobolli ×2、chwalinska-mertens ×1，
+25.4 runner-分钟，**0/6 在 dispatch 之前拦得住**，其中 4 趟是 interview-auto-render 投的。
+第二份 ASR 的结论只活在 runner 上：9/27 起它挪进了 `mode=subs`、报告也进了仓库，
+可自动链照样直接投 render，而 dispatch 前的离线预检在没有字幕缓存时只报一句 ⚠️。
+
+这里钉四件事，每件都反向验证过：
+
+1. `build_interview_clip.subs_verdict`：按仓库里的判定（`second_asr_verdict.json` 的量数、
+   `gap_vad_attestation.json` 的 VAD 证据，都绑 `transcript_fingerprint`）给出
+   ok／needs_subs／red——量过和没量过分得开，认领（不进指纹）量完再写照样作数；
+2. `--stage verify` 在判定 ok 时**不重量**（第二份 ASR 不是确定性的），VAD 自动销账留理由；
+3. `interview_preflight` 的 dispatch 口径（`require_subs`）把缺缓存、缺判定记成带
+   `NEEDS_SUBS` 的红；`pick_interview_renders` 只卡在这一类上的先投 subs；
+4. 两条工作流的接线：auto-render 投 subs、记账、探针数它当活；interview-clip 的 render
+   预检带 `--require-subs`，subs 判定干净就叫醒 auto-render。
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import subprocess
+import sys
+import types
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+
+import build_interview_clip as clip  # noqa: E402
+import interview_preflight as pf  # noqa: E402
+
+GAP = "1.0-6.0"
+
+
+# ---------------------------------------------------------------- subs_verdict
+
+def _outdir(tmp_path: Path) -> Path:
+    """一份字幕缓存：0~1 秒一句、6~7 秒一句，中间 5 秒空档（键 `1.0-6.0`）。"""
+    out = tmp_path / "out"
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "cap_asr.json3").write_text(json.dumps({"events": [
+        {"tStartMs": 0, "dDurationMs": 1000, "segs": [{"utf8": "Thank you"}]},
+        {"tStartMs": 6000, "dDurationMs": 1000, "segs": [{"utf8": "great match"}]},
+    ]}), encoding="utf-8")
+    return out
+
+
+_LINES = [{"a": 0.0, "b": 1.0, "en": "Thank you"}, {"a": 6.0, "b": 7.0, "en": "great match"}]
+_SPEC = {"slug": "demo", "url": "https://example.test/x", "start": 0.0, "end": 8.0,
+         "asr_model": "small.en", "whisper_model": "medium.en"}
+
+
+def _attest(spec: dict, out: Path, status: str, secs: float = 0.0,
+            words: list[str] | None = None) -> None:
+    row = {"key": GAP, "start": 1.0, "end": 6.0, "speech_seconds": secs,
+           "second_asr_words": words or [], "transcript_covered": False,
+           "caption_timeline_covered": False, "status": status}
+    row["reason"] = clip.gap_row_reason(row, "medium.en")
+    (out / clip.GAP_VAD_ATTESTATION).write_text(json.dumps({
+        "status": "pass", "method": "silero_vad_plus_dual_asr_coverage",
+        "sha256": clip.transcript_fingerprint(spec, _LINES, out), "results": [row]}),
+        encoding="utf-8")
+
+
+def test_没量过是缺判定_量过就按量数判(tmp_path):
+    out = _outdir(tmp_path)
+    spec = dict(_SPEC)
+    got = clip.subs_verdict(spec, _LINES, out)
+    assert got.state == "needs_subs" and not got.reds, got
+    assert any(clip.SECOND_ASR_VERDICT in p for p in got.pending), got.pending
+    assert any(GAP in p for p in got.pending), "没有 VAD 证据的空档要点名"
+
+    clip.record_second_asr(spec, _LINES, out, 0.05, 300, 290)
+    _attest(spec, out, "no_speech")
+    got = clip.subs_verdict(spec, _LINES, out)
+    assert got.state == "ok", got
+    assert any("没人说话，自动销账" in n for n in got.notes), "VAD 自动销账要带着理由"
+
+
+def test_VAD听到人声是红_人销过的账优先(tmp_path):
+    out = _outdir(tmp_path)
+    spec = dict(_SPEC)
+    clip.record_second_asr(spec, _LINES, out, 0.05, 300, 290)
+    _attest(spec, out, "speech_detected", 2.1)
+    got = clip.subs_verdict(spec, _LINES, out)
+    assert got.state == "red" and any(GAP in r for r in got.reds), got
+    # 人听过、写了结论：不管 VAD 怎么说，都算销了（机器不覆盖人）
+    got = clip.subs_verdict(dict(spec, caption_gaps_ok={GAP: "听过：全场在笑"}), _LINES, out)
+    assert got.state == "ok", got
+
+
+def test_分歧超闸是红_量完再认领照样作数_认领低于实测照红(tmp_path):
+    out = _outdir(tmp_path)
+    spec = dict(_SPEC, caption_gaps_ok={GAP: "听过"})
+    clip.record_second_asr(spec, _LINES, out, 0.159, 750, 651)
+    got = clip.subs_verdict(spec, _LINES, out)
+    assert got.state == "red" and "15.9%" in got.reds[0], got
+    assert "output/interviews/demo/transcript_diff.md" in got.reds[0] or "/demo/" in got.reds[0]
+    claimed = dict(spec, transcript_disagree_ok={"rate": 0.159, "why": "逐处看过：虚词"})
+    assert clip.subs_verdict(claimed, _LINES, out).state == "ok"
+    low = dict(spec, transcript_disagree_ok={"rate": 0.15, "why": "逐处看过"})
+    got = clip.subs_verdict(low, _LINES, out)
+    assert got.state == "red" and "还高" in got.reds[0], got
+
+
+def test_改了en_fixed指纹就变_旧判定不作数(tmp_path):
+    out = _outdir(tmp_path)
+    spec = dict(_SPEC, caption_gaps_ok={GAP: "听过"})   # 只看分歧那一半
+    clip.record_second_asr(spec, _LINES, out, 0.02, 300, 300)
+    _attest(spec, out, "no_speech")
+    assert clip.subs_verdict(spec, _LINES, out).state == "ok"
+    fixed = dict(spec, en_fixed={"2": "great match!"})
+    lines = [dict(_LINES[0]), dict(_LINES[1], en="great match!")]
+    got = clip.subs_verdict(fixed, lines, out)
+    assert got.state == "needs_subs" and any(clip.SECOND_ASR_VERDICT in p for p in got.pending), got
+
+
+def test_人工核过且指纹没变不要量数(tmp_path):
+    out = _outdir(tmp_path)
+    spec = dict(_SPEC, transcript_verified=True, caption_gaps_ok={GAP: "听过"})
+    (out / clip.VERIFY_FP).write_text(json.dumps({
+        "sha256": clip.transcript_fingerprint(spec, _LINES, out), "status": "pass"}))
+    assert clip.subs_verdict(spec, _LINES, out).state == "ok"
+
+
+# ---------------------------------------------------------------- --stage verify
+
+def _drive_verify(monkeypatch, tmp_path: Path, spec: dict, gaps: list) -> dict:
+    """直接跑 `main()` 的 verify 分支，网络和 whisper 换成替身（同 test_interview_cover_first）。"""
+    calls: dict = {"verify": 0}
+    for name in ("check_source_contract", "check_topline_format", "check_opening",
+                 "check_lead_in", "check_trail_in", "check_copy_page",
+                 "check_human_quote", "storyboard_sheet"):
+        monkeypatch.setattr(clip, name, lambda *a, **k: None)
+    monkeypatch.setattr(clip, "OUTDIR", tmp_path / "out")
+    monkeypatch.setattr(clip, "fetch_words", lambda *a, **k: [])
+    monkeypatch.setattr(clip, "segment", lambda *a, **k: [dict(x) for x in _LINES])
+    monkeypatch.setattr(clip, "caption_gaps", lambda *a, **k: list(gaps))
+
+    def fake_verify(*a, **k):
+        calls["verify"] += 1
+
+    monkeypatch.setattr(clip, "verify_transcript", fake_verify)
+    spec_path = tmp_path / "spec.json"
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(sys, "argv", ["build_interview_clip.py", "--spec", str(spec_path),
+                                      "--stage", "verify"])
+    try:
+        calls["rc"] = clip.main()
+    except SystemExit as exc:
+        calls["exit"] = str(exc)
+    return calls
+
+
+def test_判定ok时verify不重量_补落pass指纹让render认(monkeypatch, tmp_path, capsys):
+    """第二份 ASR 不是确定性的（tien-cobolli 同一个指纹 40e2f923 两趟量出 2.7%／3.9%）：
+    自动链凭 subs 的判定投了 render，render 再量一遍只会让放行过的片子随机红一次。"""
+    spec = dict(_SPEC, transcript_disagree_ok={"rate": 0.14, "why": "逐处看过"})
+    out = tmp_path / "out" / "demo"
+    out.mkdir(parents=True)
+    # 缺判定：照常跑第二份 ASR
+    got = _drive_verify(monkeypatch, tmp_path, spec, [])
+    assert got["verify"] == 1 and got.get("rc") == 0, got
+    (out / clip.VERIFY_FP).unlink()
+    # subs 量到 13.5%（超闸门），人随后认领了 14%——判定 ok：不重量，补落 pass 指纹
+    clip.record_second_asr(spec, _LINES, out, 0.135, 300, 280)
+    got = _drive_verify(monkeypatch, tmp_path, spec, [])
+    assert got["verify"] == 0 and got.get("rc") == 0, got
+    assert "跳过第二份 ASR" in capsys.readouterr().out
+    assert clip.transcript_auto_verified(spec, _LINES, out), "render 那一步认的 pass 指纹没落"
+    # 判定红（认领低于实测）：照常重量——不许拿红判定当跳过的理由
+    got = _drive_verify(monkeypatch, tmp_path, dict(spec, transcript_disagree_ok={
+        "rate": 0.13, "why": "逐处看过"}), [])
+    assert got["verify"] == 1, got
+
+
+def test_人核过也要补空档的VAD证据_空档销过才跳过(monkeypatch, tmp_path):
+    """`transcript_verified` 只管分歧那一半。空档还缺当前指纹的 VAD 证据时照样跑第二份 ASR——
+    不然 subs 那一趟永远补不上证据，自动链只能一趟趟重投。"""
+    spec = dict(_SPEC, transcript_verified=True)
+    out = tmp_path / "out" / "demo"
+    out.mkdir(parents=True)
+    (out / clip.VERIFY_FP).write_text(json.dumps({
+        "sha256": clip.transcript_fingerprint(spec, _LINES, out), "status": "pass"}))
+    got = _drive_verify(monkeypatch, tmp_path, spec, [(1.0, 6.0)])
+    assert got["verify"] == 1 and got.get("rc") == clip.VERIFY_FINDINGS_EXIT, got
+    got = _drive_verify(monkeypatch, tmp_path, dict(spec, caption_gaps_ok={GAP: "听过：掌声"}),
+                        [(1.0, 6.0)])
+    assert got["verify"] == 0 and got.get("rc") == 0, got
+
+
+def _fake_faster_whisper(monkeypatch, words: list[tuple[float, float, str]]) -> None:
+    """一个假的 faster_whisper：转写给定的词，VAD 一段人声都没有。"""
+    word_objs = [types.SimpleNamespace(start=a, end=b, word=w) for a, b, w in words]
+
+    class Model:
+        def __init__(self, *a, **k):
+            pass
+
+        def transcribe(self, *a, **k):
+            return [types.SimpleNamespace(words=word_objs)], None
+
+    pkg = types.ModuleType("faster_whisper")
+    pkg.WhisperModel = Model
+    audio = types.ModuleType("faster_whisper.audio")
+    audio.decode_audio = lambda *a, **k: [0.0] * 16
+    vad = types.ModuleType("faster_whisper.vad")
+    vad.VadOptions = lambda **k: k
+    vad.get_speech_timestamps = lambda *a, **k: []
+    for name, mod in (("faster_whisper", pkg), ("faster_whisper.audio", audio),
+                      ("faster_whisper.vad", vad)):
+        monkeypatch.setitem(sys.modules, name, mod)
+
+
+def test_verify超闸也先落量数_VAD自动销账写理由(monkeypatch, tmp_path, capsys):
+    """量数排在认领那道闸会抛之前落盘——「量过、超了」和「没量过」要分得开。"""
+    out = _outdir(tmp_path)
+    monkeypatch.setattr(clip, "yt_download", lambda url, dest, fmt, spec: dest)
+    # 第二份只听到一半的词 → 分歧 50%，远超闸门
+    _fake_faster_whisper(monkeypatch, [(0.1, 0.4, "Thank"), (0.5, 0.9, "you")])
+    spec = dict(_SPEC)
+    with pytest.raises(clip.ReviewFindings):
+        clip.verify_transcript(spec, _LINES, out)
+    rec = json.loads((out / clip.SECOND_ASR_VERDICT).read_text(encoding="utf-8"))
+    assert rec["sha256"] == clip.transcript_fingerprint(spec, _LINES, out)
+    assert rec["rate"] > clip.TRANSCRIPT_MAX_DISAGREE and rec["first_words"] == 4
+    printed = capsys.readouterr().out
+    assert f"[空档 VAD] 自动销账 {GAP}" in printed and "没人说话" in printed
+    gaps_md = (out / "caption_gaps.md").read_text(encoding="utf-8")
+    assert "VAD 自动销账" in gaps_md and "**否**" not in gaps_md, (
+        "VAD 销掉的空档在报告里还印「否」——报告说没销、闸却放行了")
+    got = clip.subs_verdict(spec, _LINES, out)
+    assert got.state == "red" and "50.0%" in got.reds[0], got
+
+
+# ---------------------------------------------------------------- 预检（dispatch 口径）
+
+def _spec_with_cache(monkeypatch, tmp_path) -> dict:
+    """一条合成采访 ＋ 仓库外的字幕缓存（和 test_interview_preflight 的 `_full_spec` 同形）。"""
+    try:
+        pf._require_env()
+    except pf.PreflightUnavailable as exc:
+        pytest.skip(f"量宽度的环境不全：{exc}")
+    spec = {"slug": "subs-first-fixture", "url": "https://example.test/oncourt",
+            "start": 0.0, "end": 6.0, "asr_model": "small.en",
+            "event": "2026 美网 1/4决赛", "winner": "莱巴金娜", "interview_kind": "赛后场上采访",
+            "push": {"matchup": "郑钦文 vs 莱巴金娜", "score": "3-6 6-1 6-4"},
+            "zh": ["非常感谢大家", "这是一场精彩的比赛"]}
+    out = tmp_path / "output" / "interviews"
+    (out / spec["slug"]).mkdir(parents=True)
+    words = [(1.0, "Thank"), (1.3, "you"), (1.6, "so"), (1.9, "much."),
+             (4.0, "It"), (4.3, "was"), (4.6, "a"), (4.9, "great"), (5.2, "match")]
+    (out / spec["slug"] / "cap_asr.json3").write_text(json.dumps({"events": [
+        {"tStartMs": int(t * 1000), "dDurationMs": 250, "segs": [{"utf8": w}]}
+        for t, w in words]}), encoding="utf-8")
+    monkeypatch.setattr(pf, "OUTPUT", out)
+    return spec
+
+
+def _lines_as_main(spec: dict, work: Path) -> list[dict]:
+    """`main()` 算指纹那一刻的行：缓存 → 切行 → en_fixed → 去犹豫音。"""
+    lines = clip.segment(clip.cached_words(spec["url"], work, spec), spec["start"], spec["end"],
+                         ruler=clip.segment_ruler(spec))
+    clip.strip_hesitation_lines(lines)
+    return lines
+
+
+def test_预检dispatch口径_缺缓存缺判定都算红带NEEDS_SUBS(monkeypatch, tmp_path):
+    spec = _spec_with_cache(monkeypatch, tmp_path)
+    out = pf.OUTPUT / spec["slug"]
+    bad, notes = pf.subtitle_findings(spec)                  # 本地 CLI 默认口径：只提示
+    assert bad == [] and any(clip.SECOND_ASR_VERDICT in n for n in notes), (bad, notes)
+    bad, _ = pf.subtitle_findings(spec, require_subs=True)
+    assert bad and all(b.startswith(pf.NEEDS_SUBS) for b in bad), bad
+
+    # 判定落库（绑当前指纹）、干净：dispatch 口径也放行
+    lines = _lines_as_main(spec, out)
+    clip.record_second_asr(spec, lines, out, 0.03, 9, 9)
+    assert pf.subtitle_findings(spec, require_subs=True)[0] == []
+
+    # 判定是红的：两种口径都是红（render 那一步必红）
+    clip.record_second_asr(spec, lines, out, 0.3, 9, 6)
+    for strict in (False, True):
+        bad, _ = pf.subtitle_findings(spec, require_subs=strict)
+        assert bad and all(b.startswith("转写（render") for b in bad), (strict, bad)
+
+    # 仓库里连字幕缓存都没有：dispatch 口径下是 NEEDS_SUBS 的红，不是一句 ⚠️
+    shutil.rmtree(out)
+    bad, _ = pf.subtitle_findings(spec, require_subs=True)
+    assert len(bad) == 1 and bad[0].startswith(pf.NEEDS_SUBS) and "字幕缓存" in bad[0], bad
+    assert pf.subtitle_findings(spec)[0] == []
+
+
+def test_预检结论缓存的键跟着subs判定变(monkeypatch, tmp_path):
+    """一趟 subs 落了新判定、字幕缓存一个字节没变——键不变的话，探针会拿「当时还缺判定」
+    那份旧结论一直顶到北京日期翻过去。"""
+    out = tmp_path / "output" / "interviews"
+    (out / "p").mkdir(parents=True)
+    (out / "p" / "cap_asr.json3").write_text('{"events": []}', encoding="utf-8")
+    monkeypatch.setattr(pf, "OUTPUT", out)
+    before = pf.caption_fingerprint("p")
+    (out / "p" / clip.SECOND_ASR_VERDICT).write_text('{"rate": 0.02}', encoding="utf-8")
+    after = pf.caption_fingerprint("p")
+    assert before != after and any(clip.SECOND_ASR_VERDICT in c for c in after)
+    work = tmp_path / "work"
+    work.mkdir()
+    assert pf._materialize_captions("p", work)
+    assert (work / clip.SECOND_ASR_VERDICT).is_file(), "预检读不到判定，就判不了指纹"
+
+
+def test_已发的采访_当前判定一条都不红():
+    """存量扫描：HEAD 上已推送（有 pushed.json）的采访，按它们仓库里的判定重判——
+    **0 条红**。needs_subs（发出去之后又改过转写、或者 verify 指纹那一代之前的老片）
+    不是红：重渲时自动链会先投 subs，不需要豁免表。"""
+    try:
+        pf._require_env()
+    except pf.PreflightUnavailable as exc:
+        pytest.skip(f"量宽度的环境不全：{exc}")
+    listing = subprocess.run(["git", "-C", str(ROOT), "ls-tree", "-r", "--name-only", "HEAD",
+                              "--", "output/interviews/"], capture_output=True, text=True)
+    if listing.returncode != 0:
+        pytest.skip("git 用不了")
+    published = sorted({ln.split("/")[2] for ln in listing.stdout.splitlines()
+                        if ln.endswith("/pushed.json")})
+    if not published:
+        pytest.skip("HEAD 里没有已推送的采访")
+    red = []
+    for slug in published:
+        path = ROOT / "specs" / "interviews" / f"{slug}.json"
+        if not path.is_file():
+            continue
+        bad, _ = pf.subtitle_findings(json.loads(path.read_text(encoding="utf-8")),
+                                      require_subs=True)
+        red += [f"{slug}：{b.splitlines()[0]}" for b in bad if b.startswith("转写（render")]
+    assert red == [], red
+
+
+# ---------------------------------------------------------------- picker
+
+@pytest.fixture()
+def pick(monkeypatch, tmp_path):
+    import interview_preflight  # noqa: PLC0415
+    import pick_interview_renders as p  # noqa: PLC0415
+
+    specs = tmp_path / "specs"
+    specs.mkdir()
+    for name, attr in (("SPECS", specs), ("OUTPUT", tmp_path / "output"),
+                       ("STATE", tmp_path / "state.json"),
+                       ("VERDICT_CACHE", tmp_path / "cache" / "verdicts.json")):
+        monkeypatch.setattr(p, name, attr)
+    monkeypatch.setattr(p, "_rendered_slugs", lambda: set())
+    monkeypatch.setattr(p, "validate_source_contract", lambda s: None)
+    monkeypatch.setattr(p, "check_lead_in", lambda s: None)
+    monkeypatch.setattr(p, "_VERDICTS", None)
+    monkeypatch.setattr(p, "_VERDICTS_DIRTY", False)
+    monkeypatch.setattr(p, "_UNKNOWN", [])
+    monkeypatch.setattr(p, "PROBE", False)
+    for slug in ("needs", "mixed", "clean"):
+        spec = {"slug": slug, "opening": {"kind": "none"}, "zh": ["a"],
+                "transcript_verified": True, "takeaway": {"close": {"point": "x"}},
+                "cover": {"frame_at": 1}}
+        (specs / f"{slug}.json").write_text(json.dumps(spec), encoding="utf-8")
+        (specs / f"{slug}.xhs.txt").write_text("文案", encoding="utf-8")
+    need = f"{interview_preflight.NEEDS_SUBS}当前转写指纹没有第二份 ASR 的分歧量数"
+    verdicts = {"needs": [need], "mixed": [need, "字幕（write_ass）：中文超宽"], "clean": []}
+    monkeypatch.setattr(interview_preflight, "spec_problems",
+                        lambda spec, **kw: (list(verdicts[spec["slug"]]), []))
+    return p
+
+
+_NOW = datetime(2026, 9, 28, 4, 0, tzinfo=timezone.utc)
+
+
+def test_只缺subs判定的先投subs_混着别的红进等待(pick):
+    ready, waiting, subs = pick.todo_plan(now=_NOW)
+    assert ready == ["clean"] and subs == ["needs"], (ready, subs)
+    assert [s for s, _ in waiting] == ["mixed"], waiting
+    # 老接口不变：todo_slugs 不把「先投 subs」的混进 render 名单
+    assert pick.todo_slugs(now=_NOW)[0] == ["clean"]
+
+
+def test_subs投过在窗口里不重投_超窗重投_同一份spec满三趟停_改spec清零(pick):
+    at = lambda m: (_NOW + timedelta(minutes=m)).strftime("%FT%TZ")  # noqa: E731
+    pick.mark_subs("needs", now=at(0))
+    _, waiting, subs = pick.todo_plan(now=_NOW + timedelta(minutes=10))
+    assert subs == [] and any("已投 subs" in w[1][0] for w in waiting if w[0] == "needs")
+    _, _, subs = pick.todo_plan(now=_NOW + timedelta(minutes=pick.SUBS_STALE_MINUTES + 1))
+    assert subs == ["needs"], "投出去超过窗口还没判定：再投一次"
+    pick.mark_subs("needs", now=at(50))
+    pick.mark_subs("needs", now=at(100))
+    _, waiting, subs = pick.todo_plan(now=_NOW + timedelta(minutes=200))
+    assert subs == [] and any("都没交判定" in w[1][0] for w in waiting if w[0] == "needs"), waiting
+    assert json.loads(pick.STATE.read_text())["subs"]["needs"]["tries"] == pick.SUBS_MAX_TRIES
+    path = pick.SPECS / "needs.json"
+    path.write_text(path.read_text().replace('"a"', '"改过的中文"'), encoding="utf-8")
+    _, _, subs = pick.todo_plan(now=_NOW + timedelta(minutes=201))
+    assert subs == ["needs"], "spec 改了：上一份的认领不算数"
+    pick.mark_subs("needs", now=at(202))
+    assert json.loads(pick.STATE.read_text())["subs"]["needs"]["tries"] == 1
+
+
+def test_main把先投subs的写进文件_stdout名单只有render(pick, monkeypatch, capsys, tmp_path):
+    listing = tmp_path / "subs.txt"
+    monkeypatch.setattr(sys, "argv", ["pick_interview_renders.py", "--subs-list", str(listing)])
+    assert pick.main() == 0
+    lines = capsys.readouterr().out.splitlines()
+    assert lines[0].startswith("待 dispatch") and "needs" in lines[0]
+    assert lines[1:] == ["clean"], lines
+    assert listing.read_text(encoding="utf-8") == "needs\n"
+    monkeypatch.setattr(sys, "argv", ["pick_interview_renders.py", "--mark-subs", "needs",
+                                      "--at", "2026-09-28T04:00:00Z"])
+    assert pick.main() == 0
+    rec = json.loads(pick.STATE.read_text())["subs"]["needs"]
+    assert rec["at"] == "2026-09-28T04:00:00Z" and rec["tries"] == 1
+
+
+def test_探针拿缓存里的缺判定结论_投过subs就不叫醒全量(pick, monkeypatch):
+    """探针（系统 python3，没 PIL）判不了指纹：拿上一趟全量记下的结论；那份结论是
+    「缺 subs 判定」时，subs 刚投过就不算活（不叫醒全量），过了窗口才算。"""
+    import interview_preflight  # noqa: PLC0415
+
+    monkeypatch.setattr(pick, "_code_fingerprint", lambda: "code")
+    monkeypatch.setattr(interview_preflight, "caption_fingerprint", lambda slug: [])
+    pick.todo_plan(now=_NOW)                                  # 全量那一趟：记结论
+    pick.save_verdicts()
+
+    def unavailable(s, **kw):
+        raise interview_preflight.PreflightUnavailable("缺 PIL")
+    monkeypatch.setattr(interview_preflight, "spec_problems", unavailable)
+    monkeypatch.setattr(interview_preflight, "probe_problems", lambda s: ([], ["量宽度"]))
+    monkeypatch.setattr(pick, "PROBE", True)
+    monkeypatch.setattr(pick, "_VERDICTS", None)
+    ready, _, subs = pick.todo_plan(now=_NOW)
+    assert subs == ["needs"] and "needs" not in ready, (ready, subs)
+    pick.mark_subs("needs", now=_NOW.strftime("%FT%TZ"))
+    ready, waiting, subs = pick.todo_plan(now=_NOW + timedelta(minutes=10))
+    assert subs == [] and "needs" not in ready and "needs" in dict(waiting)
+
+
+def test_撞车合并时本趟投的subs账不丢():
+    from merge_orchestration_state import merge_interview_states  # noqa: PLC0415
+
+    base = {"slugs": [], "at": {}, "spec_sha256": {}}
+    ours = dict(base, subs={"a": {"at": "2026-09-28T04:00:00Z", "spec_sha256": "x", "tries": 1}})
+    theirs = {"slugs": ["z"], "at": {"z": "2026-09-28T03:00:00Z"}, "spec_sha256": {"z": "y"},
+              "subs": {"b": {"at": "2026-09-28T03:30:00Z", "spec_sha256": "w", "tries": 2}}}
+    merged = merge_interview_states(base, ours, theirs)
+    assert merged["subs"] == {**theirs["subs"], **ours["subs"]} and merged["slugs"] == ["z"]
+    newer = dict(theirs, subs={"a": {"at": "2026-09-28T05:00:00Z", "spec_sha256": "x2",
+                                     "tries": 1}})
+    assert merge_interview_states(base, ours, newer)["subs"] == newer["subs"], "远端更新的让远端"
+
+
+# ---------------------------------------------------------------- 工作流接线
+
+def _wf(name: str) -> list[dict]:
+    import yaml  # noqa: PLC0415
+
+    doc = yaml.safe_load((ROOT / ".github" / "workflows" / name).read_text(encoding="utf-8"))
+    return next(iter(doc["jobs"].values()))["steps"]
+
+
+def _run(name: str, step: str) -> str:
+    return next(str(s["run"]) for s in _wf(name) if s.get("name") == step)
+
+
+def test_auto_render按名单投subs_投成了才记_没过闸的不投(tmp_path):
+    body = _run("interview-auto-render.yml", "dispatch 未 render 的正式 spec（每 slug 一个 run，并行）")
+    for path in ("/tmp/todo.txt", "/tmp/subs.txt", "/tmp/request-failed.txt",
+                 "/tmp/subs-dispatched.md"):
+        body = body.replace(path, str(tmp_path / Path(path).name))
+    subs_file = tmp_path / "subs.txt"
+    stubs = (
+        'python() { case "$*" in\n'
+        f'  *--mark-subs*) echo "MARKSUBS $3 $5" ;;\n'
+        f'  *--mark-one*) echo "MARK $3" ;;\n'
+        f'  *--subs-list*) printf "待 dispatch 0 条：\\n"; printf "needs\\nblocked\\n" > {subs_file} ;;\n'
+        '  *) : ;; esac; }\n'
+        'gh() { echo "GH $*"; [ "${GH_FAIL:-}" = 1 ] && return 1; return 0; }\n'
+        'git() { if [ "$1 $2 $3" = "diff --cached --quiet" ]; then return 0; fi; echo "GIT $*"; }\n')
+    (tmp_path / "request-failed.txt").write_text("requests/x.json\tblocked\t没过闸\n",
+                                                 encoding="utf-8")
+    env = {**os.environ, "GITHUB_STEP_SUMMARY": str(tmp_path / "summary.md")}
+    ran = subprocess.run(["bash", "-eo", "pipefail", "-c", stubs + body], cwd=tmp_path,
+                         env=env, capture_output=True, text=True, timeout=30)
+    assert ran.returncode == 0, ran.stderr + ran.stdout
+    assert "GH workflow run interview-clip.yml --ref main -f slug=needs -f mode=subs" \
+        in ran.stdout.splitlines(), ran.stdout
+    assert "MARKSUBS needs" in ran.stdout
+    assert "slug=blocked" not in ran.stdout and "[跳过] blocked" in ran.stdout
+    assert "mode=render" not in ran.stdout, "名单里没有 render 的，一条都不许投"
+    assert "needs" in (tmp_path / "summary.md").read_text(encoding="utf-8")
+    ran = subprocess.run(["bash", "-eo", "pipefail", "-c", stubs + body], cwd=tmp_path,
+                         env={**env, "GH_FAIL": "1"}, capture_output=True, text=True, timeout=30)
+    assert ran.returncode == 0 and "MARKSUBS" not in ran.stdout, "投失败的不许记（先投后记）"
+
+
+def test_auto_render探针把先投subs的当成活(tmp_path):
+    """探针 stdout 那份 render 名单是空的，可有一条要先投 subs——不叫醒全量，这条就一直没人投。"""
+    root = tmp_path / "repo"
+    (root / "tools").mkdir(parents=True)
+    (root / "specs" / "interviews").mkdir(parents=True)
+    shutil.copy(ROOT / "tools" / "interview_draft_hold.py", root / "tools")
+    (root / "tools" / "build_interview_request.py").write_text("print(0)\n", encoding="utf-8")
+    scratch = tmp_path / "tmp"
+    scratch.mkdir()
+    (root / "tools" / "pick_interview_renders.py").write_text(
+        "import sys\n"
+        "if '--probe' in sys.argv:\n"
+        "    print('待 dispatch 0 条：')\n"
+        "    open(sys.argv[sys.argv.index('--subs-list') + 1], 'w').write('needs\\n')\n"
+        "elif '--stale' in sys.argv:\n"
+        "    print('投出去超过 70 分钟还没有当前成片的：0 条')\n", encoding="utf-8")
+    gate = next(s for s in _wf("interview-auto-render.yml") if s.get("name") == "没活就早退")
+    body = str(gate["run"]).replace("/tmp/", f"{scratch}/")
+    out = tmp_path / "gh_output"
+    env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
+    env.update({"GITHUB_OUTPUT": str(out), "GITHUB_STEP_SUMMARY": str(tmp_path / "s.md"),
+                "HOME": str(tmp_path / "home")})
+    ran = subprocess.run(["bash", "-e", "-c", body], cwd=root, env=env,
+                         capture_output=True, text=True, timeout=120)
+    assert ran.returncode == 0, ran.stderr
+    assert "work=true" in out.read_text(encoding="utf-8"), ran.stdout
+    assert "待先跑 subs=1" in ran.stdout
+
+
+def test_interview_clip的render预检要subs判定_subs干净就叫醒auto_render():
+    steps = _wf("interview-clip.yml")
+    pre = next(s for s in steps if "tools/interview_preflight.py" in str(s.get("run")))
+    assert "--require-subs" in pre["run"] and "mode == 'render'" in pre["if"]
+    names = [s.get("name") for s in steps]
+    verify = names.index("第二份 ASR 交叉校验并提交报告（subs）")
+    assert steps[verify].get("id") == "subs_verify"
+    run = str(steps[verify]["run"])
+    # 「只报了要人核的发现」那一支在写 clean 之前就 exit 0：有发现不叫醒
+    assert run.index('if [ "$STATUS" = 3 ]') < run.index("clean=true")
+    wake = steps[names.index("叫醒自动出片（subs 交了干净的判定）")]
+    assert wake["if"].count("steps.subs_verify.outputs.clean == 'true'") == 1
+    assert "mode == 'subs'" in wake["if"] and "github.ref_name == 'main'" in wake["if"]
+    assert "gh workflow run interview-auto-render.yml --ref main" in wake["run"]
+    assert names.index("叫醒自动出片（subs 交了干净的判定）") > verify

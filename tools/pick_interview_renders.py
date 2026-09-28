@@ -30,13 +30,25 @@ dispatch 失败的那条从此再也不会被投，而且不吭声。
 `qc_attestation.spec_sha256 == 当前 spec sha256` 才算已 render；历史产物没有
 QC 的仍按已 render 兼容，避免上线时把几十条存量一起重跑。
 
+⚠️ **render 之前先要 subs 那一趟的判定**（2026-09-28）。`interview_preflight` 在
+dispatch 口径（`require_subs`）下，缺字幕缓存、缺**当前转写指纹**的第二份 ASR
+判定都记成红、带 `NEEDS_SUBS`——一条 spec 只卡在这一类上，就进「先投 subs」名单
+（`--subs-list`），workflow 投 `mode=subs`、`--mark-subs` 记一笔；判定落库之后
+下一趟再判：干净就投 render，量出分歧／空档就进等待名单等人改或认领。
+来路：9/20~9/28 六趟 render 红在「空档没销账／转写分歧超阈」（alcaraz-fritz ×3、
+tien-cobolli ×2、chwalinska ×1，25.4 runner-分钟），**0/6 在 dispatch 之前拦得住**，
+其中四趟是这里投的——第二份 ASR 的结论只活在 runner 上。
+
 用法：
     python tools/pick_interview_renders.py               # 打印待 dispatch 的
+    python tools/pick_interview_renders.py --subs-list F # 另把「先投 subs」的写进 F
     python tools/pick_interview_renders.py --mark-one X  # X dispatch 成功后记一笔
+    python tools/pick_interview_renders.py --mark-subs X # X 的 subs dispatch 成功后记一笔
     python tools/pick_interview_renders.py --stale       # 投了很久没产物的（查产物）
 
 stdout 协议（workflow 靠它切）：第一行是给人看的题头，**第二行起每行一个
 待 dispatch 的 slug**；「等自动补齐 / 例外复核」走 stderr，不混进这份名单。
+「先投 subs」的**不进 stdout**（那份名单是投 render 的），只写 `--subs-list` 那个文件。
 """
 
 from __future__ import annotations
@@ -77,6 +89,14 @@ LEGACY_INPUT_BASELINE = ROOT / "data" / "interview_render_legacy_baseline.json"
 # `cancel-in-progress`，窗口比 job 超时短的话，一趟还在跑的长片会在第 60 分钟
 # 被重投的那趟掐掉——同一个形状这文件头部记过一次（45 对 49）。
 STALE_MINUTES = 70
+
+# 「先投 subs」的重投窗口和次数上限。subs 一趟（取字幕＋第二份 ASR）实测 5~8 分钟；
+# 40 分钟还没交判定＝那趟死了或被同 slug 的 dispatch 掐了（concurrency 是
+# cancel-in-progress），再投一次。同一份 spec 投满 `SUBS_MAX_TRIES` 趟还没判定就停下、
+# 进等待名单喊人——下不动源片这类毛病，每 40 分钟重投一趟也修不好，只会刷红
+# pipeline-health。spec 一改（指纹变了）次数清零。
+SUBS_STALE_MINUTES = 40
+SUBS_MAX_TRIES = 3
 
 
 def _sha256(path: Path) -> str:
@@ -343,7 +363,7 @@ def _preflight_problems(slug: str, spec: dict) -> tuple[list[str], bool]:
         spec_problems,
     )
     try:
-        problems, _notes = spec_problems(spec)
+        problems, _notes = spec_problems(spec, require_subs=True)
         return [f"预检：{p.splitlines()[0]}" for p in problems], False
     except PreflightUnavailable:
         if not PROBE:
@@ -364,7 +384,61 @@ def _load_state() -> dict:
     data.setdefault("spec_sha256", {})
     if not isinstance(data["spec_sha256"], dict):
         data["spec_sha256"] = {}
+    if not isinstance(data.get("subs", {}), dict):
+        data["subs"] = {}
     return data
+
+
+def _utc(raw: object) -> datetime | None:
+    try:
+        return datetime.strptime(str(raw), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    except (TypeError, ValueError):
+        return None
+
+
+def needs_subs_only(missing: list[str]) -> bool:
+    """这条 spec 是不是**只**卡在「当前指纹还缺 subs 的判定」上（别的红一条都没有）。
+
+    混着别的红（字幕超宽、en_fixed 挂错行……）就不投 subs：人改完那一处，转写指纹
+    多半跟着变，这一趟 subs 量的就是旧的那一版。"""
+    from interview_preflight import NEEDS_SUBS  # noqa: PLC0415 —— 顶层只 import 标准库
+    return bool(missing) and all(NEEDS_SUBS in m for m in missing)
+
+
+def subs_dispatch_block(slug: str, *, now: datetime,
+                        state: dict | None = None) -> str | None:
+    """这条该投 subs 时，有什么理由**先不投** → 理由（None＝投）。
+
+    认领按 spec 指纹：spec 一改（新的转写要重新量），上一趟 subs 的认领就不算数——
+    同 slug 的新 dispatch 会把还在跑的旧那趟掐掉（cancel-in-progress），量旧版本本来也没用。"""
+    rec = ((state or _load_state()).get("subs") or {}).get(slug) or {}
+    spec_path = SPECS / f"{slug}.json"
+    if not isinstance(rec, dict) or not spec_path.is_file() \
+            or rec.get("spec_sha256") != _sha256(spec_path):
+        return None
+    at = _utc(rec.get("at"))
+    if at is not None and now - at < timedelta(minutes=SUBS_STALE_MINUTES):
+        return f"已投 subs（{rec.get('at')}），等它交判定"
+    tries = int(rec.get("tries") or 0)
+    if tries >= SUBS_MAX_TRIES:
+        return (f"同一份 spec 已投 {tries} 趟 subs 都没交判定——去看 "
+                f"「interview-clip · subs · {slug}」的日志（下不动源片／字幕多半是这个），"
+                "修好之后改一下 spec 或手动 dispatch 一次 mode=subs")
+    return None
+
+
+def mark_subs(slug: str, *, now: str = "") -> None:
+    """X 的 `mode=subs` dispatch **成功之后**记一笔（先投后记，和 `mark_one` 同一个顺序）。"""
+    state = _load_state()
+    spec_path = SPECS / f"{slug}.json"
+    sha = _sha256(spec_path) if spec_path.is_file() else ""
+    rec = (state.setdefault("subs", {}).get(slug) or {})
+    tries = int(rec.get("tries") or 0) + 1 if rec.get("spec_sha256") == sha else 1
+    state["subs"][slug] = {"at": now or datetime.now(timezone.utc).strftime("%FT%TZ"),
+                           "spec_sha256": sha, "tries": tries}
+    STATE.parent.mkdir(parents=True, exist_ok=True)
+    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2),
+                     encoding="utf-8")
 
 
 def _fresh_dispatches(*, now: datetime, rendered: set[str],
@@ -397,19 +471,31 @@ def _fresh_dispatches(*, now: datetime, rendered: set[str],
 
 
 def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[str, list[str]]]]:
-    """→ (该 dispatch 的, [(还差自动补齐/复核的 slug, 缺什么)])。
+    """→ (该 dispatch render 的, [(还差自动补齐/复核的 slug, 缺什么)])。「先投 subs」的见 `todo_plan`。"""
+    ready, waiting, _subs = todo_plan(now=now)
+    return ready, waiting
 
-    两份都不含「已 render」和「最近刚 dispatch」的。dispatch 超过 STALE_MINUTES 仍无
+
+def todo_plan(*, now: datetime | None = None
+              ) -> tuple[list[str], list[tuple[str, list[str]]], list[str]]:
+    """→ (该 dispatch render 的, [(还差自动补齐/复核的 slug, 缺什么)], 该先 dispatch subs 的)。
+
+    三份都不含「已 render」和「最近刚 dispatch」的。dispatch 超过 STALE_MINUTES 仍无
     render.json 的自动释放回 ready；再次 mark 会刷新时刻，实现环境抖动自愈。
+    **只**卡在「当前指纹缺 subs 判定」上的进第三份（`needs_subs_only`），刚投过 subs、
+    还在窗口里的进等待名单说一声（`subs_dispatch_block`）。
     """
+    now = now or datetime.now(timezone.utc)
+    state = _load_state()
     rendered = _rendered_slugs()
     current_rendered = _current_rendered_slugs(rendered)
     changed_inputs = rendered - current_rendered
     blocked = current_rendered | _fresh_dispatches(
-        now=now or datetime.now(timezone.utc), rendered=current_rendered,
+        now=now, rendered=current_rendered,
         changed_inputs=changed_inputs)
     ready: list[str] = []
     waiting: list[tuple[str, list[str]]] = []
+    subs: list[str] = []
     for p in sorted(SPECS.glob("*.json")):
         if p.name.endswith(".draft.json") or p.stem in blocked:
             continue
@@ -440,18 +526,22 @@ def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[st
                 except (ValueError, UnicodeDecodeError):
                     qc = None
                 revise, why = post_push_edit(
-                    spec, pushed, qc if isinstance(qc, dict) else None,
-                    now or datetime.now(timezone.utc))
+                    spec, pushed, qc if isinstance(qc, dict) else None, now)
                 if not revise:
                     if why:
                         waiting.append((p.stem, [why]))
                     continue
         missing = missing_for_render(p.stem, spec)
-        if missing:
+        if missing and needs_subs_only(missing):
+            if why := subs_dispatch_block(p.stem, now=now, state=state):
+                waiting.append((p.stem, [why]))
+            else:
+                subs.append(p.stem)
+        elif missing:
             waiting.append((p.stem, missing))
         else:
             ready.append(p.stem)
-    return ready, waiting
+    return ready, waiting, subs
 
 
 def mark_one(slug: str, *, now: str = "") -> None:
@@ -508,6 +598,11 @@ def main() -> int:
     ap.add_argument("--probe", action="store_true",
                     help="「没活就早退」的探针：缺 PIL 时量宽度那几项拿上一趟全量预检的结论顶，"
                          "没有就算待投（只数数，不 dispatch）")
+    ap.add_argument("--subs-list", default="",
+                    help="把「当前指纹还缺 subs 判定、先投 mode=subs」的 slug 写进这个文件"
+                         "（每行一个；没有也写一个空文件）")
+    ap.add_argument("--mark-subs", default="",
+                    help="这条 slug 的 mode=subs dispatch 成功了，记进状态")
     args = ap.parse_args()
     global PROBE
     PROBE = bool(args.probe)
@@ -515,6 +610,10 @@ def main() -> int:
     if args.mark_one:
         mark_one(args.mark_one, now=args.at)
         print(f"已记：{args.mark_one}")
+        return 0
+    if args.mark_subs:
+        mark_subs(args.mark_subs, now=args.at)
+        print(f"已记 subs：{args.mark_subs}")
         return 0
 
     if args.stale:
@@ -525,13 +624,17 @@ def main() -> int:
                   "或人工重新 dispatch")
         return 0
 
-    ready, waiting = todo_slugs()
+    ready, waiting, subs = todo_plan()
     if not PROBE:
         save_verdicts()
+    if args.subs_list:
+        Path(args.subs_list).write_text("".join(f"{s}\n" for s in subs), encoding="utf-8")
     unknown = [s for s in ready if s in _UNKNOWN]
     print(f"待 dispatch {len(ready)} 条：" + (
         f"（其中 {len(unknown)} 条量宽度那几项这里判不了、也没有同一份输入的全量结论，"
-        f"交给全量那一趟判：{'、'.join(unknown)}）" if unknown else ""))
+        f"交给全量那一趟判：{'、'.join(unknown)}）" if unknown else "") + (
+        f"［另有 {len(subs)} 条当前转写指纹还缺 subs 的判定，先投 mode=subs："
+        f"{'、'.join(subs)}］" if subs else ""))
     for s in ready:
         print(s)
     # 等自动补齐/例外复核的走 stderr：stdout 第二行起是给 workflow 切的名单，混进去就会把

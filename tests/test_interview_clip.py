@@ -205,6 +205,8 @@ def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
           # 「没命中 ＋ fetch 成功」上。按冷缓存、fetch 成功那条路求值——也就是它真会跑的那条
           .replace("steps.face-cache.outputs.cache-hit", repr(""))
           .replace("steps.face-models.outputs.ok", repr("true"))
+          # 「叫醒自动出片」挂在 subs 那一步判定干净上（2026-09-28）：按干净那条路求值
+          .replace("steps.subs_verify.outputs.clean", repr("true"))
           # 「叫醒自动推送」那一步的 if 里有 ref_name——这套模拟按「跑在
           # main 上」求值：分支上的行为(那一步跳过)不在这套判据的主语里。
           .replace("github.ref_name", repr("main"))

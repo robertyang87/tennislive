@@ -844,6 +844,18 @@ ASR 比全段，`check_human_quote` 拿赛事官网的人工引语比那几句�
   subs 那一趟就按 render 的判据报出会红的键
 - render 照旧再验一遍；**指纹没变且 `transcript_verified: true` 才跳过**（老规矩，没放宽）。
   所以 subs 报告看完、没改 `en_fixed` 就置上 `transcript_verified`，render 那 3~5 分钟就省了
+- ⭐ **2026-09-28 多一条跳过：subs 在当前转写指纹上交的判定是 ok**（`subs_verdict`：
+  `second_asr_verdict.json` 的量数在闸门内或被 `transcript_disagree_ok` 覆盖、空档全销账），
+  render 的 verify 直接用它、不再重量，并补落 `verify_fingerprint.json` 的 pass。
+  **第二份 ASR 不是确定性的**：tien-cobolli 同一个指纹 `40e2f923` 两趟量出 2.7% 和 3.9%
+  （run 36262863085／36263172795）——放行和出片要看同一份量数，重量只会随机红。
+  量数**每跑一次都落**（排在认领那道闸会抛之前），所以「量过、超了」和「没量过」分得开；
+  认领不进指纹，量完再写认领照样作数。改 `en_fixed`／`start`／`end` 指纹就变，判定作废、要重跑 subs
+- ⭐ **VAD 自动销账留理由**：`gap_vad_attestation.json` 每行带 `reason`（「VAD 在核心区只测到
+  0.000s 人声（≤0.12s），第二份 ASR 一个词都没听到——没人说话，自动销账」），verify／render
+  的日志、`caption_gaps.md` 和核对表的「已销账」印的是同一句（原来一律印「**否**」，报告说没销、
+  闸却放行了）。**不写进 spec 的 `caption_gaps_ok`**——那张表是「人听过的决定」，机器写进去就分不清；
+  人销过的账永远优先，VAD 说有人声也不覆盖
 
 #### 但这道闸只是「让你看一眼」，不是「必须查实」
 

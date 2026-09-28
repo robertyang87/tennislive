@@ -39,6 +39,13 @@ runner 上必红的那些「只看 spec 就判得出」的错在 dispatch 之前
 
 **⚠️（只报不拦）**：没有字幕缓存所以行数没对上号；`end` 离最后一个词还有好几秒
 （片尾板要在出片那一趟按帧量，见 `interview_tail`）；转正那道措辞闸的口径。
+
+**转写那两道闸（分歧、空档）按 subs 交的判定判**（2026-09-28，`build_interview_clip.subs_verdict`）：
+当前转写指纹上已经量出来的红，两种口径都是红；**缺**判定（没有字幕缓存、没有当前指纹的
+第二份 ASR 量数或 VAD 证据）在本地默认口径下只提示，`--require-subs`（dispatch 口径：
+interview-clip 的 render 那一趟、`pick_interview_renders` 自动 dispatch 之前）下是带
+`NEEDS_SUBS` 的红——自动链见到只卡在这一类上的，先投 `mode=subs`。来路：9/20~9/28 六趟
+render 红在「空档没销账／转写分歧超阈」，0/6 在 dispatch 之前拦得住。
 """
 from __future__ import annotations
 
@@ -115,8 +122,18 @@ def _is_caption(name: str) -> bool:
     return name.startswith("cap_") and name.endswith(".json3")
 
 
+def _is_subs_input(name: str) -> bool:
+    """预检离线要读的那几份：字幕缓存，外加 subs 那一趟交的判定（`SUBS_VERDICT_FILES`）。
+
+    判定文件名从 `build_interview_clip` 取、函数里 import——顶层只许标准库（探针的系统
+    python3），而名单只许有一份（写两处必分叉）。"""
+    from build_interview_clip import SUBS_VERDICT_FILES  # noqa: PLC0415
+    return _is_caption(name) or name in SUBS_VERDICT_FILES
+
+
 def _head_captions(slug: str) -> list[tuple[str, str]] | None:
-    """HEAD 里这条的字幕缓存 → [(文件名, blob 号)]；git 用不了返回 None。
+    """HEAD 里这条的字幕缓存和 subs 判定（`_is_subs_input`）→ [(文件名, blob 号)]；
+    git 用不了返回 None。
 
     interview-auto-render 的稀疏检出不带 output/，而 HEAD 的树里全量都在。"""
     try:
@@ -132,7 +149,7 @@ def _head_captions(slug: str) -> list[tuple[str, str]] | None:
         meta, _, rel = ln.partition("\t")
         parts = meta.split()
         name = rel.rsplit("/", 1)[-1]
-        if len(parts) == 3 and parts[1] == "blob" and _is_caption(name):
+        if len(parts) == 3 and parts[1] == "blob" and _is_subs_input(name):
             rows.append((name, parts[2]))
     return rows
 
@@ -146,16 +163,16 @@ def _materialize_captions(slug: str, dest: Path) -> bool:
     found = False
     if src.is_dir():
         for p in src.iterdir():
-            if p.is_file() and _is_caption(p.name):
+            if p.is_file() and _is_subs_input(p.name):
                 shutil.copy2(p, dest / p.name)
-                found = True
+                found = found or _is_caption(p.name)
         return found
     for name, blob_id in _head_captions(slug) or []:
         blob = subprocess.run(["git", "-C", str(ROOT), "cat-file", "blob", blob_id],
                               capture_output=True, check=False, timeout=30)
         if blob.returncode == 0:
             (dest / name).write_bytes(blob.stdout)
-            found = True
+            found = found or _is_caption(name)
     return found
 
 
@@ -172,32 +189,57 @@ def caption_fingerprint(slug: str) -> list[str] | None:
     产物格加回稀疏范围、只提交其中的 `cap_asr.json3`，于是全量预检吃的是没提交的
     `cap_*`，记的却是下一趟 HEAD 一模一样能复现的键。现在两边走同一个分支；工作区的
     文件按 git 的 blob 算法取指纹，内容和 HEAD 一样时键也一样（不多逼一趟全量）。
-    git 用不了返回 None（不用缓存）。"""
+    git 用不了返回 None（不用缓存）。
+
+    ⚠️ **subs 交的判定（`SUBS_VERDICT_FILES`）也在里面**（2026-09-28）：预检要读它判
+    「这一版转写能不能投 render」，一趟 subs 落了新判定、字幕缓存一个字节没变——
+    键不跟着变的话，探针会拿「当时还缺判定」那份旧结论一直顶到北京日期翻过去。"""
     src = OUTPUT / slug
     if src.is_dir():
         return sorted(f"{p.name}:{_blob_id(p.read_bytes())}" for p in src.iterdir()
-                      if p.is_file() and _is_caption(p.name))
+                      if p.is_file() and _is_subs_input(p.name))
     rows = _head_captions(slug)
     return None if rows is None else sorted(f"{name}:{blob}" for name, blob in rows)
 
 
-def subtitle_findings(spec: dict) -> tuple[list[str], list[str]]:
-    """按仓库里的字幕缓存重切一遍行，再走出片那一趟的 `write_ass` 全套 → (红, 提示)。"""
+#: 「当前这一版还缺 subs 那一趟的判定」——不是 spec 写错了，是**还没量**。
+#: `pick_interview_renders` 见到一条 spec 只卡在这一类上，就先投 `mode=subs`
+#: 而不是 render（也不是干等人）；别的红混在里面就照旧进等待名单。
+NEEDS_SUBS = "［要先跑 subs］"
+
+
+def subtitle_findings(spec: dict, *, require_subs: bool = False
+                      ) -> tuple[list[str], list[str]]:
+    """按仓库里的字幕缓存重切一遍行，再走出片那一趟的 `write_ass` 全套 → (红, 提示)。
+
+    `require_subs`（dispatch 那一刻的口径，2026-09-28）：**缺字幕缓存、缺当前转写指纹
+    的 subs 判定都记成红**（带 `NEEDS_SUBS`），不再只是提示——原来缺缓存只报一句 ⚠️，
+    自动链照投 render，于是字幕排版那一整套闸和转写那两道闸都要等 runner 装完依赖、
+    下完源片才判（interview 线第一趟就成的只有 2/13）。本地 CLI 默认仍是提示，
+    `--require-subs` 打开；**已经量出来的红**（`subs_verdict` 判 red）两种口径都是红。"""
     import build_interview_clip as clip  # noqa: PLC0415
     from interview_tail import cache_word_spans, quiet_tail_note  # noqa: PLC0415
 
     slug = str(spec.get("slug") or "")
     problems: list[str] = []
     notes: list[str] = []
+
+    def not_yet(msg: str) -> None:
+        if require_subs:
+            problems.append(f"{NEEDS_SUBS}{msg}——先投 `mode=subs`（取字幕切行＋第二份 ASR），"
+                            "判定落库了再投 render")
+        else:
+            notes.append(msg)
+
     with tempfile.TemporaryDirectory() as td:
         work = Path(td)
         if not _materialize_captions(slug, work):
-            notes.append("仓库里没有这条的字幕缓存（cap_*.json3），行数对齐和字幕宽度"
-                         "要等 runner 的 `--stage subs` 取完字幕才判得了")
+            not_yet("仓库里没有这条的字幕缓存（cap_*.json3），行数对齐、字幕宽度和转写那两道闸"
+                    "要等 runner 的 `--stage subs` 取完字幕才判得了")
             return problems, notes
         words = clip.cached_words(str(spec.get("url") or ""), work, spec)
         if words is None:
-            notes.append("字幕缓存和这条 URL 对不上（换过候选视频？），行数对齐没法离线判")
+            not_yet("字幕缓存和这条 URL 对不上（换过候选视频？），行数对齐没法离线判")
             return problems, notes
         if note := quiet_tail_note(spec, cache_word_spans(work, spec)):
             notes.append(note)
@@ -219,6 +261,12 @@ def subtitle_findings(spec: dict) -> tuple[list[str], list[str]]:
                 lines[idx]["en"] = v
         with contextlib.redirect_stdout(io.StringIO()):
             clip.strip_hesitation_lines(lines)
+        # **转写那两道闸（分歧、空档）按 subs 交的判定判**——和 render 的 verify 一步
+        # 同一个函数、同一份行（`main()` 在同一个位置算指纹）。
+        verdict = clip.subs_verdict(spec, lines, work)
+        problems += [f"转写（render 的 verify 那一步会红在这儿）：{r}" for r in verdict.reds]
+        if verdict.state == "needs_subs":
+            not_yet("；".join(verdict.pending))
         err, _ = _run_gate(clip.check_human_quote, spec, lines, work)
         if err:
             problems.append(f"人工引语对不上：{err}")
@@ -312,9 +360,12 @@ def probe_problems(spec: dict) -> tuple[list[str], list[str]]:
     return problems, unknown + list(NEEDS_RENDER_ENV)
 
 
-def spec_problems(spec: dict, *, copy: bool = True,
-                  date: str = "") -> tuple[list[str], list[str]]:
-    """一条 spec 的离线预检 → (红, 提示)。环境不全抛 `PreflightUnavailable`。"""
+def spec_problems(spec: dict, *, copy: bool = True, date: str = "",
+                  require_subs: bool = False) -> tuple[list[str], list[str]]:
+    """一条 spec 的离线预检 → (红, 提示)。环境不全抛 `PreflightUnavailable`。
+
+    `require_subs`：dispatch 口径——缺字幕缓存／缺当前指纹的 subs 判定也算红
+    （带 `NEEDS_SUBS`），见 `subtitle_findings`。"""
     _require_env()
     import build_interview_clip as clip  # noqa: PLC0415
 
@@ -329,7 +380,7 @@ def spec_problems(spec: dict, *, copy: bool = True,
         if err := copy_problem(slug, date):
             problems.append(err)
     try:
-        sub_bad, sub_notes = subtitle_findings(spec)
+        sub_bad, sub_notes = subtitle_findings(spec, require_subs=require_subs)
     except ImportError as exc:
         raise PreflightUnavailable(f"字幕重切：{exc}") from exc
     except Exception as exc:  # noqa: BLE001 —— 同 `_run_gate`：坏 spec 记红，不带崩调用方
@@ -352,11 +403,15 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--skip-copy", action="store_true",
                     help="不跑 push_reel --stage check（工作流前面那一步已经跑过）")
     ap.add_argument("--date", default="", help="标题里的日期，默认今天（北京时间）")
+    ap.add_argument("--require-subs", action="store_true",
+                    help="dispatch render 的口径：缺字幕缓存、缺当前转写指纹的 subs 判定也算红"
+                         "（interview-clip 的 render 那一趟和自动链都这么判）")
     args = ap.parse_args(argv)
     path = Path(args.spec) if args.spec else SPECS / f"{args.slug}.json"
     spec = json.loads(path.read_text(encoding="utf-8"))
     try:
-        problems, notes = spec_problems(spec, copy=not args.skip_copy, date=args.date)
+        problems, notes = spec_problems(spec, copy=not args.skip_copy, date=args.date,
+                                        require_subs=args.require_subs)
     except PreflightUnavailable as exc:
         print(f"[预检] 判不了：{exc}")
         return 2

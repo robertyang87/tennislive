@@ -302,11 +302,18 @@ jobs:
       # 中文字幕上）。判据和本地 `python tools/interview_preflight.py --slug X`、
       # 自动链 dispatch 前的 `pick_interview_renders` 是同一份函数；量宽度的中文字体
       # 就是上一步装的 fonts-noto-cjk，所以排在它后面。文案那一项上面已经跑过。
+      #
+      # ⚠️ **`--require-subs`**（2026-09-28）：当前转写指纹没有 subs 那一趟交的判定
+      # （第二份 ASR 的分歧量数、空档的 VAD 证据），或者判定是红的，**在这儿就停**——
+      # 不装大依赖、不下源片、不跑转写。9/20~9/28 六趟 render 红在「空档没销账／转写
+      # 分歧超阈」，都是装完依赖、下完源片、跑完三五分钟 whisper 才知道；判定在仓库里
+      # 的话，这一步第 1 秒就判得出。缺判定就先 dispatch `mode=subs`（它交判定，
+      # render 那一趟的 verify 在判定 ok 时直接用它、不再重量）。
       - name: 采访 spec 离线预检（秒级）
         if: github.event.inputs.mode == 'render'
         env:
           SLUG: ${{ github.event.inputs.slug }}
-        run: PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy
+        run: PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy --require-subs
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
@@ -1144,6 +1151,7 @@ jobs:
             faster-whisper-${{ runner.os }}-
 
       - name: 第二份 ASR 交叉校验并提交报告（subs）
+        id: subs_verify
         if: github.event.inputs.mode == 'subs'
         env:
           COOKIES: ${{ steps.cookies.outputs.path }}
@@ -1184,6 +1192,27 @@ jobs:
           if [ "$STATUS" != 0 ]; then
             echo "::error::第二份 ASR 没跑成（退出码 $STATUS——不是「有分歧」，那是 3）：下不动音轨、模型起不来或 spec 配错了，看上面的报错"
             exit "$STATUS"
+          fi
+          echo "clean=true" >> "${GITHUB_OUTPUT:-/dev/null}"
+
+      # **判定干净就叫醒自动出片，不干等定时班次。** 自动链（interview-auto-render）
+      # 缺判定时先投的就是这一趟 subs；判定落库之后要它再判一次才会投 render——
+      # 而这一步的提交用的是 GITHUB_TOKEN，**不触发**它的 on:push（`pages.yml` 那条规则），
+      # 定时班次最多 10 分钟一趟、GitHub 还会丢 schedule 事件（CLAUDE.md 记过 25 小时没点过）。
+      # 有要人核的发现（退出码 3）就不叫：它醒了也只会把这条放进等待名单。
+      # 叫不醒不许把这趟打红——判定已经落库，下一趟定时班次照样接得上。
+      - name: 叫醒自动出片（subs 交了干净的判定）
+        if: >-
+          github.event.inputs.mode == 'subs' &&
+          steps.subs_verify.outputs.clean == 'true' &&
+          github.ref_name == 'main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh workflow run interview-auto-render.yml --ref main; then
+            echo "[自动出片] 已叫醒 interview-auto-render——判定干净，它会按当前指纹投 render"
+          else
+            echo "::warning::叫不醒 interview-auto-render——判定已落库，下一趟定时班次照样接得上"
           fi
 
       # **叫醒自动推送——render 提交自己永远触发不了它。** 上一步的 push 用的
