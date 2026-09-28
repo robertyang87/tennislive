@@ -184,65 +184,6 @@ def caption_fingerprint(slug: str) -> list[str] | None:
     return None if rows is None else sorted(f"{name}:{blob}" for name, blob in rows)
 
 
-def _cover_record_raw(slug: str) -> bytes | None:
-    """已提交的封面扫描记录原文。**和字幕缓存同一个分支口径**（`_materialize_captions`）：
-    工作区有这条的产物目录就只认工作区，没有就从 HEAD 取——interview-auto-render 的稀疏
-    检出不带 output/，而 HEAD 的树里全量都在。没有记录返回 None。"""
-    from interview_cover_scan import RECORD_NAME  # noqa: PLC0415
-
-    src = OUTPUT / slug
-    if src.is_dir():
-        path = src / RECORD_NAME
-        return path.read_bytes() if path.is_file() else None
-    try:
-        proc = subprocess.run(
-            ["git", "-C", str(ROOT), "show", f"HEAD:output/interviews/{slug}/{RECORD_NAME}"],
-            capture_output=True, check=False, timeout=30)
-    except (OSError, subprocess.SubprocessError):
-        return None
-    return proc.stdout if proc.returncode == 0 else None
-
-
-def cover_record_fingerprint(slug: str) -> str:
-    """封面扫描记录的 blob 号（没有就是空串）。`pick_interview_renders.verdict_key` 要它：
-    记录一换（`mode=cover` 重扫、render 自动换帧），缓存里那条预检结论就作废。"""
-    raw = _cover_record_raw(slug)
-    return "" if raw is None else _blob_id(raw)
-
-
-def cover_scan_problem(spec: dict) -> str | None:
-    """已提交的封面扫描记录说 `cover.frame_at` 不行 → 红的原因；对得上（或没有记录）→ None。
-
-    判据就是 runner 那一步 `interview_cover_scan.py --check` 和推送闸 `cover_scan_gate`
-    调的同一个 `record_problem`（取景变过、尺子变过的旧记录都不管）。红的时候把记录里
-    **机器能直接换上**的那一格（过闸＋认得出是封面主角、而且是文案点了名的人＋睁眼，`interview_cover_scan.pick`）
-    一起报出来——改一个数就能 dispatch，不用再跑一趟 `mode=cover`。
-    """
-    from interview_cover_scan import pick, record_problem  # noqa: PLC0415
-
-    raw = _cover_record_raw(str(spec.get("slug") or ""))
-    if raw is None:
-        return None
-    try:
-        record = json.loads(raw)
-    except (ValueError, UnicodeDecodeError):
-        record = {"method": "unreadable"}
-    problem = record_problem(record, spec)
-    if not problem:
-        return None
-    best = pick(record, spec)
-    hint = (f"记录里过闸、认得出是封面主角、眼睛睁着、余量最大的是 {best['frame_at']:g} 秒——"
-            "改成它就行" if best is not None else
-            "记录里没有一格同时过闸、认得出是封面主角（文案点了名的人）、眼睛睁着——换一段（cover.scan_window）重扫")
-    return f"{problem}（{hint}）"
-
-
-def _check_cover_scan(spec: dict) -> None:
-    """`cover_scan_problem` 的闸形状（红就 SystemExit），给 `_run_gate` 用。"""
-    if problem := cover_scan_problem(spec):
-        raise SystemExit(problem)
-
-
 def subtitle_findings(spec: dict) -> tuple[list[str], list[str]]:
     """按仓库里的字幕缓存重切一遍行，再走出片那一趟的 `write_ass` 全套 → (红, 提示)。"""
     import build_interview_clip as clip  # noqa: PLC0415
@@ -313,6 +254,65 @@ def copy_problem(slug: str, date: str = "") -> str | None:
         crashed = CRASHED if "Traceback (most recent call last)" in out else ""
         return f"文案（push_reel --stage check）{crashed}：" + " / ".join(tail)
     return None
+
+
+def _cover_record_raw(slug: str) -> bytes | None:
+    """已提交的封面扫描记录原文。**和字幕缓存同一个分支口径**（`_materialize_captions`）：
+    工作区有这条的产物目录就只认工作区，没有就从 HEAD 取——interview-auto-render 的稀疏
+    检出不带 output/，而 HEAD 的树里全量都在。没有记录返回 None。"""
+    from interview_cover_scan import RECORD_NAME  # noqa: PLC0415
+
+    src = OUTPUT / slug
+    if src.is_dir():
+        path = src / RECORD_NAME
+        return path.read_bytes() if path.is_file() else None
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(ROOT), "show", f"HEAD:output/interviews/{slug}/{RECORD_NAME}"],
+            capture_output=True, check=False, timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return proc.stdout if proc.returncode == 0 else None
+
+
+def cover_record_fingerprint(slug: str) -> str:
+    """封面扫描记录的 blob 号（没有就是空串）。`pick_interview_renders.verdict_key` 要它：
+    记录一换（`mode=cover` 重扫、render 自动换帧），缓存里那条预检结论就作废。"""
+    raw = _cover_record_raw(slug)
+    return "" if raw is None else _blob_id(raw)
+
+
+def cover_scan_problem(spec: dict) -> str | None:
+    """已提交的封面扫描记录说 `cover.frame_at` 不行 → 红的原因；对得上（或没有记录）→ None。
+
+    判据就是 runner 那一步 `interview_cover_scan.py --check` 和推送闸 `cover_scan_gate`
+    调的同一个 `record_problem`（取景变过、尺子变过的旧记录都不管）。红的时候把记录里
+    **机器能直接换上**的那一格（过闸＋认得出是封面主角、而且是文案点了名的人＋睁眼，`interview_cover_scan.pick`）
+    一起报出来——改一个数就能 dispatch，不用再跑一趟 `mode=cover`。
+    """
+    from interview_cover_scan import pick, record_problem  # noqa: PLC0415
+
+    raw = _cover_record_raw(str(spec.get("slug") or ""))
+    if raw is None:
+        return None
+    try:
+        record = json.loads(raw)
+    except (ValueError, UnicodeDecodeError):
+        record = {"method": "unreadable"}
+    problem = record_problem(record, spec)
+    if not problem:
+        return None
+    best = pick(record, spec)
+    hint = (f"记录里过闸、认得出是封面主角、眼睛睁着、余量最大的是 {best['frame_at']:g} 秒——"
+            "改成它就行" if best is not None else
+            "记录里没有一格同时过闸、认得出是封面主角（文案点了名的人）、眼睛睁着——换一段（cover.scan_window）重扫")
+    return f"{problem}（{hint}）"
+
+
+def _check_cover_scan(spec: dict) -> None:
+    """`cover_scan_problem` 的闸形状（红就 SystemExit），给 `_run_gate` 用。"""
+    if problem := cover_scan_problem(spec):
+        raise SystemExit(problem)
 
 
 def _spec_gates(clip) -> tuple:

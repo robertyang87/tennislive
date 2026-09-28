@@ -326,6 +326,20 @@ def test_整段粗扫的格子数和窗口():
     assert scan.sweep_plan({"start": 5.0, "end": 5.0}, (0, 1), None)[0] == []
 
 
+def test_autopick不给spec路径_下源片之前就停(tmp_path):
+    """`--autopick` 要就地改写 spec：不知道改哪一份就在下源片之前停（复审第三轮：拆掉这道守卫
+    测试照样 32 passed）。拆掉的话走到 `yt_download`，这里的桩当场抛——红在 `pytest.raises` 上。"""
+    class Clip:
+        SOURCE_FMT = "best"
+
+        def yt_download(self, *_a, **_k):
+            raise AssertionError("没说改写哪份 spec，却去下源片了")
+
+    spec = {"slug": "demo", "url": "u", "cover": {"frame_at": 10.0}}
+    with pytest.raises(SystemExit, match="--autopick"):
+        scan.run_scan(spec, tmp_path, Clip(), autopick=True)
+
+
 def test_旧记录没逐格跑认人就不对账(monkeypatch):
     """`face_in_scan` 之前写的记录，`pass` 只说明 Haar 过了——可能闭眼、可能是别人，
     不许拿它挡人，也不许拿它自动换（`pick` 看的是 `face_model`，旧记录里没有）。"""
@@ -544,12 +558,19 @@ def test_main上已经换过帧的spec_全库那条判据照样绿(tmp_path, mon
                                   "issues": ["这张脸只检出 1 只眼"]}, chosen]}
         return scan.apply_autopick(path, spec, chosen, record)
 
+    def human_of(slug: str) -> object:
+        # **人挑的那一格按工具的口径读（`human_pick`），不读 `frame_at`**（复审第三轮 BLOCKING）：
+        # 这条判据本身就是为「main 上已经换过帧」写的——tien 那条在 main 上真换过一次
+        # （79.6 → 79.8）之后，`frame_at` 是机器那一格，拿它当人挑的，测试自己就红了
+        return scan.human_pick(json.loads((SPECS / f"{slug}.json").read_text(encoding="utf-8"))["cover"])
+
     cob = "cobolli-mensik-laver-cup-2026-doubles-interview"
-    human = json.loads((SPECS / f"{cob}.json").read_text(encoding="utf-8"))["cover"]["frame_at"]
-    swap(cob, round(human + 0.2, 3))                     # 复审复现的那一次
+    human = human_of(cob)
+    once = swap(cob, round(human + 0.2, 3))              # 复审复现的那一次
+    assert f"人挑的 {human} 秒那一帧" in once["cover"]["_why"], once["cover"]["_why"]
     swap("ruud-cerundolo-laver-cup-2026-presser", 257.4)
     tien = "tien-cobolli-laver-cup-2026-interview"
-    tien_human = json.loads((SPECS / f"{tien}.json").read_text(encoding="utf-8"))["cover"]["frame_at"]
+    tien_human = human_of(tien)
     swap(tien, 79.8)
     twice = swap(tien, 80.0)
     assert f"人挑的 {tien_human} 秒那一帧" in twice["cover"]["_why"], twice["cover"]["_why"]
