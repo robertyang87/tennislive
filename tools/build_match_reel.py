@@ -6996,7 +6996,7 @@ def narration_estimates(segments) -> list[tuple[int, float, float]]:
 # 每条新的手写 spec 都要先多拨一趟 `mode=narration`（约 1.5 分钟 runner ＋ 一次提交回分支）
 # 才过得了 dry-run。而 render 在**编码之前**本来就有一道真 TTS 的硬闸（`render()` 里
 # `narration_overruns` 那一处，「TTS 和旁白超长那道闸，挪到编码之前」）：同一个错在那儿红，
-# 一个像素都没编（zverev-deminaur 那一趟白烧 2.9 分钟）——**只在真超了的那几条上付**，而不是
+# 还没开始编码（源片下载和合成配音照付，zverev-deminaur 那一趟白烧 2.9 分钟）——**只在真超了的那几条上付**，而不是
 # 每条都先付一趟。所以这一层只负责「让人早点看见、给现成命令」，不拍板。
 # 冻结表 `data/legacy_narration_unchecked.json` 跟着删了（它冻的那道闸不存在了）。
 # 判据 `tests/test_small_gates.py`。
@@ -7199,7 +7199,7 @@ def narration_check_findings(spec: dict, segments, tight: list[int], *,
             "真 TTS 时长（没量过，或者量完又改过字）。离线估判不了——zverev-deminaur 第 9 段"
             "就是这么在 runner 上红的（估的余量看着宽，runner 上 edge-tts 实测超了 0.2s）。"
             + (f"（账本在，但量的不是出片那一套：{mismatch}——整份不认）" if mismatch else "")
-            + "不拦：render 编码之前那道真 TTS 的旁白闸照样兜底（红在编码之前，一个像素都没编）。"
+            + "不拦：render 编码之前那道真 TTS 的旁白闸照样兜底（红在编码之前；源片下载和合成配音照付）。"
             "想在发 render 之前就知道，先量：\n" + check_narration_commands(spec, spec_path)
             + (f"\n    （{soft_reason}）" if soft_reason else ""))
     return hard, soft, ok

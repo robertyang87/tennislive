@@ -94,3 +94,26 @@ def test_停车账撞上dispatch提交不丢():
     ours2 = state(old=('2026-09-09T01:00:00Z', 'old'), zheng=('2026-09-28T03:00:00Z', 'z'))
     merged = merge_interview_states(base, ours2, theirs2)
     assert merged['autopick_failed'] == theirs2['autopick_failed'] and 'zheng' in merged['slugs']
+
+
+def test_账本里哪一本类型坏了都不许当空合并(tmp_path):
+    """subs / autopick_failed / subs_red 任一本不是 dict 就报错退出，
+    不许静默当成空、再把远端那份覆盖掉（账本损坏时保留快照供恢复）。"""
+    import pytest
+    tool = Path(__file__).resolve().parents[1] / 'tools' / 'merge_orchestration_state.py'
+    good = state(zheng=('2026-09-09T02:00:00Z', 'z'))
+    for book in ('subs', 'autopick_failed', 'subs_red'):
+        bad = dict(good, **{book: ['not', 'a', 'dict']})
+        paths = []
+        for name, content in (('base', good), ('ours', bad), ('theirs', good)):
+            p = tmp_path / f'{book}-{name}.json'
+            p.write_text(json.dumps(content))
+            paths.append(p)
+        out = tmp_path / f'{book}-out.json'
+        r = subprocess.run([sys.executable, str(tool), '--kind', 'interview',
+                            '--base', str(paths[0]), '--ours', str(paths[1]),
+                            '--theirs', str(paths[2]), '--out', str(out)],
+                           capture_output=True, text=True)
+        assert r.returncode != 0, f'{book} 不是 dict 却合并成功了'
+        assert 'Invalid interview dispatch state' in r.stderr, r.stderr[-400:]
+        assert not out.exists(), f'{book} 坏了还写出了合并结果'

@@ -58,7 +58,7 @@ render 红在「空档没销账／转写分歧超阈」，0/6 在 dispatch 之�
 采访里 46 条在 dispatch 口径下是 `NEEDS_SUBS`（判定是老产物、没记区间和源——wp/round3-int
 HEAD 上按 `subtitle_findings(require_subs=True)` 实测），手动重渲一条就得先多拨一趟
 `mode=subs`（取字幕约 1 分钟＋第二份 ASR 3~5 分钟，工作流顶上那张表）。
-手动拨的（派发者是个人）缺判定只提示，同一个 job 里「转写交叉校验」那一步现量第二份 ASR
+手动拨的（派发者是个人）缺判定只提示，同一个 job 里「转写交叉校验」那一步在判定不是 ok 时现量第二份 ASR
 （上线 subs 之前的老路，`--stage verify` 在判定不是 ok 时本来就重量）；**已经量出来的红照旧红**。
 """
 from __future__ import annotations
@@ -578,7 +578,7 @@ def main(argv: list[str] | None = None) -> int:
         require_subs = require_subs or auto
         print(f"[预检] 派发者 {args.dispatched_by or '（认不出）'}："
               + ("自动链派发——缺 subs 判定算红（pick 投之前就是这么判的）" if auto else
-                 "手动拨的——缺 subs 判定只提示，「转写交叉校验」那一步在这一趟里现量第二份 ASR"))
+                 "手动拨的——缺 subs 判定只提示，「转写交叉校验」那一步在判定不是 ok 时现量第二份 ASR"))
     try:
         problems, notes = spec_problems(spec, copy=not args.skip_copy, date=args.date,
                                         require_subs=require_subs)
