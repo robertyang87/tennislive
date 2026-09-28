@@ -36,7 +36,8 @@
    | 闸 | 判据 |
    |---|---|
    | 说明／元数据点名 | 封面主角的**姓和名**（同姓的兄弟姐妹认人闸分不开）＋ **对手的姓**（点了对手才知道是哪一场）＋ 赛事（或图就在赛事自己的官网媒体库里）＋ **这场球的当地日期**（说明里写了日期就按说明；没写才看元数据的**上传时刻**，要晚于开赛——只有日子没有时刻的不换；写了星期几也要对得上） |
-   | 在比赛中 | 说明／文件名里出现训练、热身、发布会、采访、签名、抵达、定妆、双打／混双（`NOT_IN_MATCH`）一律不换——CLAUDE.md 选图第 2 道闸门 |
+   | 在比赛中 | 说明／文件名里出现训练、热身、发布会、采访、签名、抵达、定妆、替补席／看台（`bench`、`support`、`crowd`、`fans`）、双打／混双（`NOT_IN_MATCH`）一律不换——CLAUDE.md 选图第 2 道闸门；团体赛放宽过的，图注**最先点名**的名单上的人必须是主角（`relaxed_subject_problem`） |
+   | 拍摄日期 | 照片有 EXIF `DateTimeOriginal` 就必须落在这场的当地日子（`exif_date_problem`；前一天的图晚传上来，上传那道闸拦不住） |
    | 分辨率 | 按选定的 `zoom` 铺 1080×1440 **不放大**（`build_match_reel.cover_photo_problem` 那道闸，不写 `_low_res_why`——机器不替人认领放大） |
    | 认人 | `face_checks`：最大那张脸**认得出是封面主角**（match ≥ 0.34）；认成对手、`unknown`、模型不可用一律不换 |
    | 睁眼 | `face_checks` 的 EAR ≥ 0.16（闭眼、垂眼、量不了一律不换） |
@@ -64,10 +65,12 @@
 
 ## 渲前预检（`--preflight --slug <slug>`，match-reel render 那一步跑）
 
-同一套渠道、同一套机器闸，在**第一次 render 之前**问一句：抽帧封面的这一条，官方图是不是
-其实已经在了？有一张全过——手写 spec 退出码 `PREFLIGHT_FOUND`（3），报告里是换图的原话
-（`image`／`focus`／`focus_y`／`zoom`，`--write` 一条命令写进去）；自动 spec 只报。一张都没全过、
-渠道一档都没查成、判不了当地日期、`_keep_frame_why` 认领过的——都不拦（2026-09-26 的授权）。
+同一套渠道、同一套机器闸，再加 `--write` 用的那道正式封面闸（`_formal_gate_on`，挑图时试一遍、
+试完退回），在**第一次 render 之前**问一句：抽帧封面的这一条，官方图是不是其实已经在了？有一张
+全过——**手写、还没推过**的 spec 退出码 `PREFLIGHT_FOUND`（3），报告里是换图的原话
+（`image`／`focus`／`focus_y`／`zoom`，`--write` 一条命令写进去，而且一定写得进去）；自动 spec 只报；
+**已经推过的只报、不试写、不改 spec**（`already_pushed`：发布账本／`pushed.json`；推出去之后归 O4）。
+一张都没全过、渠道一档都没查成、判不了当地日期、`_keep_frame_why` 认领过的——都不拦（2026-09-26 的授权）。
 来路：返工审计 2026-09-28，66 条里 11 条第一次推的是抽帧封面、4 条换实拍又重推了 5 次。
 
 ## 每一班先对账、先看有没有活（`--plan`，不装依赖）
@@ -576,6 +579,9 @@ class MatchContext:
     #: True：spec 里没有开赛时刻，当地日期是按首推时刻推的**两天窗口**——
     #: 这时说明里必须点对手（团体赛那条放宽也不给），没写日期的说明一律不换
     date_window: bool = False
+    #: True：`start_utc` 只是开赛时刻的**下界**（`_start_time_source.reported_utc` 这种列出来的
+    #: 开赛时间）——「上传晚于开赛」照旧拿它比（更松），团体赛「不写对手」的放宽不给
+    start_lower_bound: bool = False
     #: 团体赛的名单和逐日出场（`data/team_event_rosters.json` 里这一届那一段）
     roster: dict | None = None
     roster_name: str = ""
@@ -655,14 +661,24 @@ def parse_dc_feed(text: str) -> tuple[datetime | None, datetime | None]:
     return stamp("DC"), stamp("DD")
 
 
+#: 只是开赛时刻**下界**的出处（列出来的开赛时间，不是首球计时）——`recorded_start` 按它认。
+LOWER_BOUND_START_KEYS = ("reported_utc",)
+
+
 def recorded_start(spec: dict) -> tuple[datetime | None, str]:
     """spec 自己**记下来的**开赛时刻，和它记在哪儿。
 
     2026-09-28：O4 第一班 `safiullin-bu-hangzhou-2026-qf` 被「spec 里没有开赛时刻」挡掉——
     它没有 `_match.start_utc`、也没有 `flashscore_id`，可开赛时刻明明记着：
     `_start_time_source.reported_utc = 2026-09-27T10:45:00Z`（sofascore 比赛中心列的，
-    `qualification` 写着「不是首球计时」）。认它当开赛时刻——「上传晚于开赛」那道闸拿
-    列出来的开赛时刻去比，真开赛只会更晚，这一格只会更严不会更松。"""
+    `qualification` 写着「不是首球计时」）。认它当开赛时刻，**但只当下界**：
+
+    ⚠️ 方向（复审 nit 1 改正了原来那句「只会更严」）：列出来的开赛时间 ≤ 真开赛，
+    「上传晚于开赛」那道闸拿**更早**的时刻去比，放过的只会**更多**——这一格是**更松**，
+    不是更严（上传于列出来的开赛之后、真开赛之前的图也放过去了）。所以：
+    - 当地日期照旧按它算（`match_dates` 只有这一天，夜场拖过午夜的那一半不认——安全方向）；
+    - 它**不给团体赛那条「不写对手」的放宽**（`team_opponent_ok` 要真开赛时刻算出来的日期，
+      `MatchContext.start_lower_bound`）。"""
     match = spec.get("_match") if isinstance(spec.get("_match"), dict) else {}
     if match.get("start_utc") and (got := _parse_utc(match["start_utc"])):
         return got, "_match.start_utc"
@@ -766,6 +782,10 @@ def match_context(spec: dict, *, times: Callable[[str], tuple] = flashscore_time
     ctx.event_en, tz, ctx.site = event
     match = spec.get("_match") if isinstance(spec.get("_match"), dict) else {}
     start, ctx.date_source = recorded_start(spec)
+    ctx.start_lower_bound = any(ctx.date_source.startswith(f"_start_time_source.{key}")
+                                for key in LOWER_BOUND_START_KEYS)
+    if ctx.start_lower_bound:
+        ctx.date_source += "——列出来的开赛时间，只当下界"
     end = None
     fs_failed = ""
     if start is None and match.get("flashscore_id"):
@@ -864,6 +884,15 @@ class Candidate:
 #: Stadium**」命中裸的 `cheers on`，「hits a forehand down **the sideline** against Zverev」命中
 #: 裸的 `sideline`。收窄成**看别人打**才有的那半句：`on/from the sideline(s)`、`cheers on
 #: (his/her/their) teammate/compatriot…`——「cheers on」后面跟的是场地，就是他自己在场上。
+#:
+#: 2026-09-28 复审 D3(a)：团体赛放宽（名单认姓、官网图注不写对手）之后，zverev-tien 那 8 张
+#: 官网候选里 7 张过了点名闸，**认错人只剩认人闸一道**。两张拍的是替补席／看台：
+#: 「The Team Europe **bench** rise to celebrate Zverev's Cup-clinching moment」（-scaled 原图，
+#: 下下来认人 mismatch 0.13）、「Team World **support** Learner Tien against Zverev.」。
+#: 所以收**裸的**替补席／看台名词：`bench`、`support…`（supporters 也在里面）、`crowd`、
+#: `fan(s)`、`spectator(s)`——画面的主体是一群人，最大那张脸不一定是他。安全方向：
+#: 「celebrates with the crowd」这种他本人的图也一起不换（拿不准就算没过）。
+#: `on the bench` 那一格留着排在前面，报错里照旧写整半句。
 NOT_IN_MATCH = re.compile(
     r"\b(?:practi[cs]\w*|training|trains|warm\w*|(?:news|press) conferences?"
     r"|interview\w*|autograph\w*|arriv\w*|portraits?|pos(?:e|es|ed|ing)"
@@ -872,6 +901,7 @@ NOT_IN_MATCH = re.compile(
     r"|(?:on|from) the (?:bench|sidelines?)"
     r"|cheer(?:s|ed|ing)? on (?:(?:his|her|their) )?(?:teammate|compatriot)\w*"
     r"|watch(?:es|ing)? (?:on as|from)"
+    r"|bench(?:es)?|support(?:s|ed|ing|ers?)?|crowds?|fans?|spectators?"
     r"|doubles|mixed)\b")
 
 
@@ -929,12 +959,14 @@ def team_opponent_ok(c: Candidate, text: str, ctx: MatchContext) -> str | None:
     「必须点对手」在这一档上挑出来的正好是错的图。所以团体赛放宽成按名单判：
 
     - 只认**赛事官网自己的媒体库**（`event_owned`）——AP／Getty 的比赛图照旧点对手
-    - 当地日期是**开赛时刻**算出来的（`date_window` 那种两天窗口不给放宽）
+    - 当地日期是**真开赛时刻**算出来的（`date_window` 那种两天窗口不给放宽；
+      `_start_time_source.reported_utc` 那种列出来的开赛时间只是下界，也不给——复审 nit 1）
     - 名单上他这一天（当地）**只打了一场**，而且那一场的对手就是 `cover.matchup` 里那个——
       同一天单打双打都打的（兹维列夫 9/26：第 6 场单打、第 8 场双打）照旧要点对手
     - 图注里**没点名单上的别人**（「Zverev cheers on Cobolli」是在看队友打）
     """
-    if not ctx.roster or not c.event_owned or ctx.date_window or not ctx.surname:
+    if (not ctx.roster or not c.event_owned or ctx.date_window or ctx.start_lower_bound
+            or not ctx.surname):
         return None
     games = roster_matches(ctx.roster, ctx.surname, ctx.match_dates)
     if len(games) != 1:
@@ -954,15 +986,52 @@ def team_opponent_ok(c: Candidate, text: str, ctx: MatchContext) -> str | None:
             f"{'／'.join(other)}），图注里也没点名单上的别人")
 
 
+def first_roster_named(text: str, roster: dict) -> str | None:
+    """图注里**最先**点名的名单上的人（归一后的姓）；一个都没点返回 None。
+
+    位置按「全名」和「姓」里靠前的那个算（`_fold` 之后的文本）：「Team World's Learner Tien
+    returns another Zverev smash.」最先点名的是 tien。"""
+    best: tuple[int, str] | None = None
+    for person in roster_people(roster):
+        last = _last(person)
+        if not last:
+            continue
+        spots = [m.start() for pat in (" ".join(_fold(person).split()), last)
+                 if (m := re.search(rf"\b{re.escape(pat)}\b", text))]
+        if spots and (best is None or min(spots) < best[0]):
+            best = (min(spots), last)
+    return best[1] if best else None
+
+
+def relaxed_subject_problem(c: Candidate, ctx: MatchContext) -> str | None:
+    """放宽过（名单认姓／官网图注不写对手）时，**图注最先点名的名单上的人必须是封面主角**。
+
+    2026-09-28 复审 D3(b)：放宽之后 zverev-tien 那 8 张里，写了对手的两张拍的恰恰是对手那边——
+    「Team World's Learner Tien returns another Zverev smash.」「Team World support Learner Tien
+    against Zverev.」。主语是勒纳·钱，兹维列夫只是宾语；原来它们只靠姓 zverev 就过了点名闸，
+    认错人只剩认人闸一道。英文图注的主语在前：先点名的那个人才是画面主体。
+    没放宽的（全名 ＋ 对手都点了）不走这一条——AP 那种「X reacts … against Y」照旧。"""
+    if not ctx.roster:
+        return None
+    first = (first_roster_named(_fold(c.caption), ctx.roster)
+             or first_roster_named(_fold(c.text()), ctx.roster))
+    if first is None or first == ctx.surname:
+        return None
+    return (f"图注里最先点名的是名单上的「{first}」，不是封面主角「{ctx.surname}」——"
+            "放宽（名单认姓／不写对手）只认拍他本人的图，主语是别人的不换")
+
+
 def metadata_problems(c: Candidate, ctx: MatchContext,
                       relaxed: list[str] | None = None) -> list[str]:
     """说明／元数据有没有**点名**这场球：人（全名）、对手、赛事、日期，而且拍的是
     比赛本身。只看文字，不下图。**拿不准就算没过**——任何一项缺了都不换。
 
     团体赛（有名单的那几届）两处按名单放宽：只写姓（`surname_only_ok`）、官网图注不写对手
-    （`team_opponent_ok`）。放宽了哪一条写进 `relaxed`，换图时照抄进 `_gates`。"""
+    （`team_opponent_ok`）。放宽了哪一条写进 `relaxed`，换图时照抄进 `_gates`；放宽过的，
+    图注最先点名的名单上的人必须是封面主角（`relaxed_subject_problem`）。"""
     problems: list[str] = []
     relaxed = relaxed if relaxed is not None else []
+    before = len(relaxed)
     text = _fold(c.text())
     if (bad := name_problem(text, ctx.subject_en)):
         if "只有姓" in bad and (ok := surname_only_ok(text, ctx)):
@@ -981,9 +1050,11 @@ def metadata_problems(c: Candidate, ctx: MatchContext,
             problems.append(f"说明／文件名里没有对手「{ctx.opponent_surname}」，判不了是不是这一场"
                             + ("（spec 没有开赛时刻，按首推时刻推的两天窗口——必须点对手）"
                                if ctx.date_window else ""))
+    if len(relaxed) > before and (who := relaxed_subject_problem(c, ctx)):
+        problems.append(who)
     if (hit := NOT_IN_MATCH.search(text)):
         problems.append(f"说明里有「{hit.group(0)}」——不是这场单打在打的时刻"
-                        "（训练／热身／发布会／采访／签名／抵达／定妆／双打一律不换）")
+                        "（训练／热身／发布会／采访／签名／抵达／定妆／替补席／看台／双打一律不换）")
     event_key = _key(ctx.event_en)
     if not event_key:
         # 空串是任何串的子串——不拦就恒过（评审 B2）
@@ -1223,8 +1294,59 @@ def fetch_image(url: str) -> bytes:
     return blob
 
 
+_EXIF_DT = re.compile(r"^(\d{4}):(\d\d):(\d\d)[ T](\d\d):(\d\d):(\d\d)")
+_EXIF_OFFSET = re.compile(r"^([+-])(\d\d):(\d\d)$")
+
+
+def exif_taken(raw) -> tuple[datetime | None, str]:
+    """照片自己的 EXIF `DateTimeOriginal`（按下快门那一刻）和 `OffsetTimeOriginal`。
+
+    返回 (时刻, 原文)：有时差的是带时区的时刻；**没写时差的当成赛事当地的钟点**（naive）。
+    读不出、没有、全零（`0000:00:00 00:00:00`）的返回 (None, "")——**没有就不判**。"""
+    try:
+        exif = raw.getexif()
+        sub = exif.get_ifd(0x8769)
+    except Exception:                                             # noqa: BLE001
+        return None, ""
+    raw_dt = str(sub.get(0x9003) or exif.get(0x9003) or "").strip().strip("\x00")
+    m = _EXIF_DT.match(raw_dt)
+    if not m:
+        return None, ""
+    try:
+        taken = datetime(*(int(g) for g in m.groups()))
+    except ValueError:
+        return None, ""
+    offset = str(sub.get(0x9011) or "").strip().strip("\x00")
+    if (o := _EXIF_OFFSET.match(offset)):
+        delta = timedelta(hours=int(o.group(2)), minutes=int(o.group(3)))
+        taken = taken.replace(tzinfo=timezone(delta if o.group(1) == "+" else -delta))
+        return taken, f"{raw_dt}{offset}"
+    return taken, raw_dt
+
+
+def exif_date_problem(taken: datetime | None, shown: str, ctx: MatchContext) -> str | None:
+    """EXIF 拍摄时刻落在当地哪一天——**必须是这场的当地日子**（±0 天），否则不换。
+
+    2026-09-28 复审 D3(c)：说明没写日期时只能拿上传时刻判，而「前一天的图第二天才批量传上来」
+    是真事（拉沃尔杯官网第二天的 Getty 图是次日 14:14Z 才上传的，比第三天那场开赛还晚——
+    `_upload_problems` 拦不住）。照片自己记着按快门的那一刻，有就拿它再核一遍。
+    带时差的换算到赛事时区；没写时差的当成当地钟点（相机钟没调对的会被误拦——安全方向，不换）。"""
+    if taken is None:
+        return None
+    if taken.tzinfo is not None:
+        if not ctx.tz:
+            return "照片 EXIF 带时差，而赛事时区不知道——判不了拍摄是当地哪一天"
+        day = taken.astimezone(ZoneInfo(ctx.tz)).date()
+    else:
+        day = taken.date()
+    if day in ctx.match_dates:
+        return None
+    return (f"照片 EXIF 拍摄时刻是当地 {day.isoformat()}，这场是 {shown}——"
+            "拍的是别的比赛日（前一天的图晚传上来的那一种），不换")
+
+
 def image_verdict(blob: bytes, spec: dict, ctx: MatchContext, *, checker=None) -> dict:
-    """下下来的这张图过不过分辨率、认人、睁眼、钩子带四道闸。**四道都算完**再报，
+    """下下来的这张图过不过拍摄日期（EXIF 有才判）、分辨率、认人、睁眼、钩子带五道闸。**都算完**再报，
     一张图被拦的理由全写出来（别只报第一道，那样下一个人会以为只差这一样）。"""
     from PIL import Image, ImageOps  # noqa: PLC0415
 
@@ -1235,11 +1357,17 @@ def image_verdict(blob: bytes, spec: dict, ctx: MatchContext, *, checker=None) -
     ev: dict = {}
     try:
         with Image.open(io.BytesIO(blob)) as raw:
+            taken, taken_raw = exif_taken(raw)
             img = ImageOps.exif_transpose(raw).convert("RGB")
     except Exception as exc:                                      # noqa: BLE001
         return {"problems": [f"图打不开：{type(exc).__name__}"], "evidence": ev}
     w, h = img.size
     ev["size"] = [w, h]
+    if taken_raw:
+        ev["exif_taken"] = taken_raw
+    shown = "／".join(d.isoformat() for d in sorted(ctx.match_dates)) or "?"
+    if (bad := exif_date_problem(taken, shown, ctx)):
+        problems.append(bad)
     best_fill = fill_ratio(w, h, 1.0)
     if best_fill < 1.0:
         problems.append(f"分辨率不够：{w}×{h} 铺 {CANVAS_W}×{CANVAS_H} 要放大 "
@@ -1276,8 +1404,14 @@ def image_verdict(blob: bytes, spec: dict, ctx: MatchContext, *, checker=None) -
 
 
 def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
-             fetch=fetch_image, checker=None) -> tuple[dict | None, list[dict]]:
-    """(选中的那张, 每一张的判决)。选中的里面挑**脸最大的**（近景特写优先）。"""
+             fetch=fetch_image, checker=None,
+             accept: Callable[[dict], str | None] | None = None) -> tuple[dict | None, list[dict]]:
+    """(选中的那张, 每一张的判决)。选中的里面挑**脸最大的**（近景特写优先）。
+
+    `accept`：全过机器闸的按「脸大」从大到小再过这一道（返回问题就换下一张）。渲前预检拿它接
+    **正式的**封面闸（`_formal_gate_on`，和 `--write` 同一个函数）——复审 nit 2：原来预检只过
+    机器闸就报「找到了」（退出码 3），`--write` 再过正式闸，两道判得不一样时手写 spec 被拦住、
+    照着报告换又换不上。O4 的 `run` 不给（它换完自己过正式闸，过不了退回并退避）。"""
     rows: list[dict] = []
     passed: list[dict] = []
     downloads = 0
@@ -1313,18 +1447,27 @@ def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
         row["evidence"] = got["evidence"]
         if not row["problems"]:
             passed.append({"candidate": c, "blob": blob, "evidence": got["evidence"],
-                           "relaxed": relaxed})
+                           "relaxed": relaxed, "row": row})
         elif ((got["evidence"].get("face") or {}).get("status") == "ok"
-              or any(p.startswith(("图打不开", "分辨率不够")) for p in got["problems"])):
+              or any(p.startswith(("图打不开", "分辨率不够", "照片 EXIF 拍摄时刻"))
+                     for p in got["problems"])):
             # 结论是确定的（图本身的毛病），下一班不用再下；模型没加载上的不算——
             # 那一班什么都没查成，下一班还要再试
             row["tried"] = True
     if not passed:
         return None, rows
-    best = max(passed, key=lambda p: (
+    # `sorted(reverse=True)` 是稳定的：脸一样大时照旧取排在前面的那张（和原来的 `max` 一样）
+    ranked = sorted(passed, reverse=True, key=lambda p: (
         (p["evidence"]["layout"]["face_out"][3] - p["evidence"]["layout"]["face_out"][1]),
         max((p["evidence"]["face"]["similarity"] or {}).values(), default=0.0)))
-    return best, rows
+    if accept is None:
+        return ranked[0], rows
+    for p in ranked:
+        problem = accept(p)
+        if not problem:
+            return p, rows
+        p["row"]["problems"].append(f"正式封面闸没过（`--write` 也会被它拦）：{problem[:300]}")
+    return None, rows
 
 
 # ---------------------------------------------------------------- 换
@@ -1358,7 +1501,9 @@ def upgraded_portrait(old: dict, chosen: dict, ctx: MatchContext, image_rel: str
               f"。替换推送时用的 {old.get('frame_at')}s 抽帧。"))
     relaxed = "".join(f"（放宽：{r}）" for r in chosen.get("relaxed") or [])
     gates = (f"① 点名：说明／文件名有「{ctx.subject_en}」「{ctx.event_en}」，日期对上当地 {dates}"
-             f"（{ctx.tz}；日期来源 {ctx.date_source or '?'}）{relaxed}。② 分辨率：{w}×{h}，zoom {lay['zoom']:g} 铺 {CANVAS_W}×{CANVAS_H}"
+             f"（{ctx.tz}；日期来源 {ctx.date_source or '?'}）{relaxed}"
+             + (f"；EXIF 拍摄 {ev['exif_taken']}" if ev.get("exif_taken") else "")
+             + f"。② 分辨率：{w}×{h}，zoom {lay['zoom']:g} 铺 {CANVAS_W}×{CANVAS_H}"
              f" 是 {lay['fill']:.2f}×（不放大）。③ 认人：最大那张脸像 {ctx.subject_zh} "
              f"{sim if sim is None else f'{sim:.2f}'}（≥ 0.34）。④ 睁眼：EAR {face.get('ear')}（≥ 0.16）。"
              f"⑤ 钩子带：脸落在 y{lay['face_out'][1]}~{lay['face_out'][3]}，钩子顶边 {hook_top()}。"
@@ -1724,20 +1869,100 @@ def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
 #: 工作流要分得开「找到了，拦」和「工具自己炸了，不拦」。
 PREFLIGHT_FOUND = 3
 
-#: 定规矩那天（2026-09-28）已经推出去、抽帧封面、而渲前预检当天就找得到一张能过机器闸的
-#: 官方图的「赛场之上」——**只许减不许加**。它们要重渲时预检只报不拦（已发的不重渲；
-#: 近 48 小时里的那几条归 O4 自动换）。判据 `test_渲前预检豁免表只许减不许加_每条都还是已发的抽帧封面`。
-#: 当天在沙箱里对全库 83 条抽帧封面跑过一遍（AP 是挑战页、中文媒体 O4 不查），命中 0 条。
-PREFLIGHT_LEGACY: frozenset[str] = frozenset()
+#: 渲前预检这一步给多少秒（`--preflight-budget` 印出来，match-reel 那一步拿去喂 `timeout`）。
+#: 复审 nit 3：match-reel 各步骤声明的最坏预算之和原来是 62（job 63），这一步从 5 分钟收到
+#: 2 分钟、留出 ≥ 3 分钟余量——**会拦的**（手写 spec 的第一次渲染）给 100 秒，**只报不拦的**
+#: （自动 spec、已经推过的）给 60 秒。2026-09-28 全库 83 条抽帧封面实测单条最慢 17.1 秒。
+PREFLIGHT_BUDGET_BLOCKING = 100
+PREFLIGHT_BUDGET_REPORT = 60
 
 
 def _is_auto(spec: dict) -> bool:
     return (spec.get("_production") or {}).get("status") == "ready_for_render"
 
 
+def already_pushed(repo: Path, slug: str) -> str:
+    """这条片子推没推过：空串是没推过，否则是凭据（一句话）。
+
+    认仓库里本来就拿来认「推过」的两处：
+    - 发布账本 `data/reel_publish_ledger/<slug>.json` 里有一笔 `publication_ledger.BLOCKING`
+      （sending／sent／uncertain）——`auto_push_gate` 挡重发认的就是它。**账本读不了算推过**
+      （状态不明时宁可只报不拦，`publication_ledger.interview_published` 同一个口径）
+    - git 跟踪着 `output/<日期>/reel/<slug>/pushed.json`（自动推送那条路留下的标记；
+      按 `git ls-files` 查，稀疏检出下 `output/` 不在工作区也查得到）"""
+    import publication_ledger  # noqa: PLC0415
+
+    try:
+        attempts = publication_ledger.load(repo, "reel", slug)["attempts"]
+    except (ValueError, UnicodeDecodeError, AttributeError, TypeError) as exc:
+        return f"发布账本读不了（{str(exc)[:80]}），状态不明按推过算"
+    hit = next((a for a in attempts if isinstance(a, dict)
+                and a.get("status") in publication_ledger.BLOCKING), None)
+    if hit:
+        return f"发布账本 {PUBLISH_LEDGER.as_posix()}/{slug}.json 有一笔 {hit.get('status')}（{hit.get('at') or '?'}）"
+    listed = subprocess.run(
+        ["git", "-C", str(repo), "ls-files", "--", f"output/*/reel/{slug}/pushed.json"],
+        capture_output=True, text=True, check=False).stdout.split()
+    marker = next((p for p in listed if re.match(
+        rf"^output/\d{{4}}-\d\d-\d\d/reel/{re.escape(slug)}/pushed\.json$", p)), None)
+    return f"仓库里有 {marker}" if marker else ""
+
+
+def preflight_budget(repo: Path, slug: str) -> int:
+    """这一条渲前预检给多少秒：会拦的（手写、没推过）`PREFLIGHT_BUDGET_BLOCKING`，其余
+    `PREFLIGHT_BUDGET_REPORT`。spec 读不了按只报的给（预检自己会报读不了）。"""
+    try:
+        spec = json.loads((repo / SPEC_DIR / f"{slug}.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return PREFLIGHT_BUDGET_REPORT
+    if _is_auto(spec) or already_pushed(repo, slug):
+        return PREFLIGHT_BUDGET_REPORT
+    return PREFLIGHT_BUDGET_BLOCKING
+
+
+def _preflight_image_rel(slug: str, c: Candidate) -> str:
+    ext = Path(c.url.split("?", 1)[0]).suffix.lower()
+    return f"assets/reel/{slug}-official{ext if ext in ('.jpg', '.jpeg', '.png') else '.jpg'}"
+
+
+def _formal_gate_on(repo: Path, slug: str, portrait: dict, blob: bytes, image_rel: str,
+                    final_gate=None, *, keep: bool) -> str | None:
+    """图落进 `image_rel`、spec 的 portrait 换成 `portrait`，过**正式的**封面闸（`_final_gate`：
+    `cover_photo_problem` ＋ `validate_spec`），返回问题或 None。
+
+    `keep=False`（渲前预检挑图时试一遍）：过没过都把图退回，spec 文件一个字节不动；
+    `keep=True`（`--write`）：过了才把 spec 写盘，没过把图退回。**两处是同一个函数、同一份
+    输入**——复审 nit 2：退出码 3 只在 `--write` 会成功时出现。"""
+    spec_path = repo / SPEC_DIR / f"{slug}.json"
+    before = spec_path.read_text(encoding="utf-8")
+    spec = json.loads(before)
+    spec["cover"]["portrait"] = portrait
+    image_path = repo / image_rel
+    had = image_path.read_bytes() if image_path.is_file() else None
+    image_path.parent.mkdir(parents=True, exist_ok=True)
+    image_path.write_bytes(blob)
+    passed = False
+    cwd = os.getcwd()
+    try:
+        os.chdir(repo)             # spec 里的图路径是仓库相对路径
+        problem = _gate(final_gate or _final_gate, spec)
+        passed = problem is None
+    finally:
+        os.chdir(cwd)
+        if not (passed and keep):
+            if had is None:
+                image_path.unlink(missing_ok=True)
+            else:
+                image_path.write_bytes(had)
+    if passed and keep:
+        spec_path.write_text(json.dumps(spec, ensure_ascii=False, indent=_indent_of(before)) + "\n",
+                             encoding="utf-8")
+    return problem
+
+
 def preflight(repo: Path, slug: str, now: datetime, *, spec: dict | None = None,
               sweeps_for=None, times=flashscore_times, fetch=fetch_image,
-              checker=None) -> dict:
+              checker=None, final_gate=None) -> dict:
     """**渲之前**：抽帧封面的这一条，官方图是不是其实已经在了？
 
     来路（2026-09-28 返工审计）：窗口里推过的 66 条「赛场之上」，**11 条第一次推的是抽帧封面**，
@@ -1746,17 +1971,20 @@ def preflight(repo: Path, slug: str, now: datetime, *, spec: dict | None = None,
     图才到」；而图**推之前就在**的那一种（zverev-deminaur：官网那张 Getty 比首推早 25 分钟），
     应该在第一次 render 就拦下来。
 
-    和 O4 **同一套渠道、同一套机器闸**（`search` ＋ `evaluate`）：一张全过就返回
-    `found=True` ＋ 算好的 portrait（`image`／`focus`／`focus_y`／`zoom`／`_why`／`_gates`）。
-    **拦不拦由调用方按 spec 定**：手写的拦（`PREFLIGHT_FOUND`），自动的只报；
-    `_keep_frame_why` 认领过的、不是抽帧的、判不了当地日期的、一张都没全过的、渠道一档都没
-    查成的——**都不拦**（2026-09-26 账号所有者：没有高清大图时抽帧可以直接用）。"""
+    和 O4 **同一套渠道、同一套机器闸**（`search` ＋ `evaluate`），再加**正式的封面闸**
+    （`_formal_gate_on`，和 `--write` 同一个函数）：一张全过就返回 `found=True` ＋ 算好的
+    portrait（`image`／`focus`／`focus_y`／`zoom`／`_why`／`_gates`）。
+    **拦不拦由调用方按 spec 定**（`preflight_exit`）：只有**手写、还没推过**的第一次渲染拦
+    （`PREFLIGHT_FOUND`）；自动 spec 只报；**已经推过的只报、不试写、不改 spec**（复审 D2：
+    推出去之后换图归 O4，它认 `_keep_frame_why`）。`_keep_frame_why` 认领过的、不是抽帧的、
+    判不了当地日期的、一张都没全过的、渠道一档都没查成的——**都不拦**（2026-09-26 账号所有者：
+    没有高清大图时抽帧可以直接用）。认领口只有 `_keep_frame_why` 一个。"""
     path = repo / SPEC_DIR / f"{slug}.json"
     if spec is None:
         spec = json.loads(path.read_text(encoding="utf-8"))
     report: list[str] = []
-    out = {"slug": slug, "found": False, "auto": _is_auto(spec), "report": report,
-           "portrait": None, "chosen": None, "image_rel": "", "legacy": slug in PREFLIGHT_LEGACY}
+    out = {"slug": slug, "found": False, "auto": _is_auto(spec), "pushed": "",
+           "report": report, "portrait": None, "chosen": None, "image_rel": ""}
     cover = spec.get("cover") or {}
     if not is_frame_cover(spec):
         report.append(f"[渲前预检] {slug}：封面不是抽帧（cover.portrait 没有 frame_at 或已经有 image），不查")
@@ -1769,9 +1997,7 @@ def preflight(repo: Path, slug: str, now: datetime, *, spec: dict | None = None,
     if keep:
         report.append(f"[渲前预检] {slug}：`cover.portrait.{KEEP_FRAME_WHY}` 认领了这一帧（{keep}），不查")
         return out
-    if out["legacy"]:
-        report.append(f"[渲前预检] {slug}：在 PREFLIGHT_LEGACY 里（定规矩之前已发），不查")
-        return out
+    out["pushed"] = already_pushed(repo, slug)
     ctx = match_context(spec, times=times, pushed_at=now)
     head = f"[渲前预检] {slug} 主角 {ctx.subject_zh}（{ctx.subject_en or '?'}）"
     if ctx.problems:
@@ -1781,23 +2007,35 @@ def preflight(repo: Path, slug: str, now: datetime, *, spec: dict | None = None,
     report.append(f"{head} · {ctx.event_en} · 当地 "
                   f"{'／'.join(d.isoformat() for d in sorted(ctx.match_dates))}（{ctx.tz}；"
                   f"日期来源 {ctx.date_source}）")
+    if out["pushed"]:
+        report.append(f"    · 已经推过（{out['pushed']}）——这一趟只报不拦、不试写、不改 spec；"
+                      f"推出去之后换图归 O4（`cover.portrait.{KEEP_FRAME_WHY}` 认领过的它不换）")
     cands, notes, results = search(ctx, sweeps=sweeps_for(ctx) if sweeps_for else None)
     report += [f"    · {n}" for n in notes]
     target = Target(slug=slug, spec=spec, first_sent=now, spec_path=path)
-    chosen, rows = evaluate(target, ctx, cands, fetch=fetch, checker=checker)
+    old = copy.deepcopy(cover.get("portrait") or {})
+
+    def formal(p: dict) -> str | None:
+        rel = _preflight_image_rel(slug, p["candidate"])
+        portrait = upgraded_portrait(old, p, ctx, rel, prefix=PREFLIGHT_WHY_PREFIX)
+        return _formal_gate_on(repo, slug, portrait, p["blob"], rel, final_gate, keep=False)
+
+    chosen, rows = evaluate(target, ctx, cands, fetch=fetch, checker=checker,
+                            accept=None if out["pushed"] else formal)
     report += candidate_lines(rows)
     if chosen is None:
         report.append(verdict_line(rows, results).replace("→ 不换", "→ 不拦")
                       .replace("（下一班再查）", "——抽帧照发"))
         return out
     c: Candidate = chosen["candidate"]
-    ext = Path(c.url.split("?", 1)[0]).suffix.lower()
-    ext = ext if ext in (".jpg", ".jpeg", ".png") else ".jpg"
-    image_rel = f"assets/reel/{slug}-official{ext}"
-    old = copy.deepcopy(cover.get("portrait") or {})
+    image_rel = _preflight_image_rel(slug, c)
     portrait = upgraded_portrait(old, chosen, ctx, image_rel, prefix=PREFLIGHT_WHY_PREFIX)
     out.update(found=True, chosen=chosen, portrait=portrait, image_rel=image_rel)
-    report.append(f"    → 官方图 {c.url} 已过机器闸（点名／在比赛中／分辨率／认人／睁眼／钩子带）")
+    if out["pushed"]:
+        report.append(f"    → 官方图 {c.url} 已过机器闸（正式封面闸没试：已推过的 spec 不动）")
+        return out
+    report.append(f"    → 官方图 {c.url} 已过机器闸和正式封面闸（点名／在比赛中／拍摄日期／分辨率／认人／"
+                  "睁眼／钩子带；cover_photo_problem ＋ validate_spec）")
     report.append("    → 换法：原图（不重编码）存到 " + image_rel + "，spec 的 cover.portrait 换成 "
                   + json.dumps({k: v for k, v in portrait.items() if not k.startswith("_")},
                                ensure_ascii=False)
@@ -1808,44 +2046,31 @@ def preflight(repo: Path, slug: str, now: datetime, *, spec: dict | None = None,
 
 
 def write_preflight(repo: Path, got: dict, *, final_gate=None) -> str | None:
-    """`--write`：把预检找到的那张图落进 `assets/reel/`、spec 的 portrait 换掉，再过一遍正式的
-    封面闸——过不了就全部退回、返回那句问题。首推之前用：**不记 O4 的账、不删 pushed.json**。"""
-    slug = got["slug"]
-    spec_path = repo / SPEC_DIR / f"{slug}.json"
-    before = spec_path.read_text(encoding="utf-8")
-    spec = json.loads(before)
-    spec["cover"]["portrait"] = got["portrait"]
-    image_path = repo / got["image_rel"]
-    had = image_path.read_bytes() if image_path.is_file() else None
-    image_path.parent.mkdir(parents=True, exist_ok=True)
-    image_path.write_bytes(got["chosen"]["blob"])
-    spec_path.write_text(json.dumps(spec, ensure_ascii=False, indent=_indent_of(before)) + "\n",
-                         encoding="utf-8")
-    cwd = os.getcwd()
-    try:
-        os.chdir(repo)
-        problem = _gate(final_gate or _final_gate, spec)
-    finally:
-        os.chdir(cwd)
-    if problem:
-        spec_path.write_text(before, encoding="utf-8")
-        if had is None:
-            image_path.unlink(missing_ok=True)
-        else:
-            image_path.write_bytes(had)
-    return problem
+    """`--write`：把预检找到的那张图落进 `assets/reel/`、spec 的 portrait 换掉——**和预检挑图时
+    过的是同一道正式封面闸**（`_formal_gate_on`），过不了就全部退回、返回那句问题。
+    首推之前用：**不记 O4 的账、不删 pushed.json**；**已经推过的一律不写**（复审 D2）。"""
+    if got.get("pushed"):
+        return (f"已经推过（{got['pushed']}）——渲前预检不改已发的 spec；推出去之后换图归 O4"
+                f"（`cover.portrait.{KEEP_FRAME_WHY}` 认领过的它不换）")
+    return _formal_gate_on(repo, got["slug"], got["portrait"], got["chosen"]["blob"],
+                           got["image_rel"], final_gate, keep=True)
 
 
 def preflight_exit(got: dict) -> tuple[int, str]:
-    """(退出码, 最后那一行)。手写的找到了：拦；自动的、存量豁免的：只报。"""
+    """(退出码, 最后那一行)。**只有手写、还没推过的第一次渲染**找到了才拦；自动 spec、
+    已经推过的只报（复审 D2）。"""
     if not got["found"]:
         return 0, ""
     url = got["chosen"]["candidate"].url
+    if got.get("pushed"):
+        return 0, (f"::warning::{got['slug']}（已经推过：{got['pushed']}）：官方图 {url} 已过机器闸——"
+                   "这里只报不拦、不改已发的 spec；推出去之后换图归 O4"
+                   f"（`cover.portrait.{KEEP_FRAME_WHY}` 认领过的它不换）")
     if got["auto"]:
         return 0, (f"::warning::{got['slug']}（自动 spec）：官方图 {url} 已过机器闸，这一趟还是抽帧封面"
                    "——自动 spec 只报不拦；推出去之后 O4 会自动换")
     return PREFLIGHT_FOUND, (
-        f"::error::{got['slug']}：官方图 {url} 已过机器闸，不许发抽帧封面（2026-09-26 的授权只管"
+        f"::error::{got['slug']}：官方图 {url} 已过机器闸和正式封面闸，不许发抽帧封面（2026-09-26 的授权只管"
         "「没有高清大图」的时候）。按上面「换法」那一行换掉再渲；当面点过「就用这一帧」的写 "
         f"cover.portrait.{KEEP_FRAME_WHY}")
 
@@ -1869,18 +2094,29 @@ def main(argv: list[str] | None = None) -> int:
                     help="渲前预检（要 --slug）：抽帧封面这一条，官方图是不是已经在了——"
                          f"手写 spec 找到了退出码 {PREFLIGHT_FOUND}（match-reel render 那一步据此拦）")
     ap.add_argument("--write", action="store_true",
-                    help="--preflight 找到了就直接把图和 portrait 写进去（首推之前用，不记 O4 的账）")
+                    help="--preflight 找到了就直接把图和 portrait 写进去（首推之前用，不记 O4 的账；"
+                         "已经推过的不写）")
+    ap.add_argument("--preflight-budget", action="store_true",
+                    help="印这一条渲前预检给多少秒（要 --slug）：会拦的 "
+                         f"{PREFLIGHT_BUDGET_BLOCKING}，只报的 {PREFLIGHT_BUDGET_REPORT}（match-reel 喂给 timeout）")
     args = ap.parse_args(argv)
     now = _parse_utc(args.now) if args.now else datetime.now(timezone.utc)
     if now is None:
         ap.error(f"--now 要带时区的 ISO 时刻：{args.now!r}")
     repo = Path(args.repo)
+    if args.preflight_budget:
+        if not args.slug:
+            ap.error("--preflight-budget 要 --slug")
+        print(preflight_budget(repo, args.slug))
+        return 0
     if args.preflight:
         if not args.slug:
             ap.error("--preflight 要 --slug")
         got = preflight(repo, args.slug, now)
         code, last = preflight_exit(got)
-        if got["found"] and args.write:
+        if got["found"] and args.write and got["pushed"]:
+            got["report"].append(f"    → 没写：{write_preflight(repo, got)}")
+        elif got["found"] and args.write:
             problem = write_preflight(repo, got)
             got["report"].append(f"    → 已写：{got['image_rel']} ＋ spec 的 cover.portrait" if not problem
                                  else f"::error::写进去之后过不了正式的封面闸，已退回——{problem}")

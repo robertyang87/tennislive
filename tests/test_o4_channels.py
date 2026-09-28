@@ -11,6 +11,11 @@
 外加返工审计：窗口里 11 条第一次推的是抽帧封面——渲前预检（`cover_upgrade.preflight`）
 在 match-reel render 那一步查一遍，有一张全过就不许发抽帧（手写拦、自动只报、没有就不拦）。
 
+复审（同日）补的：只拦**第一次**渲染、推过的只报（D2）；团体赛放宽之后替补席／看台不换、
+图注主语是别人的不换、EXIF 拍摄日期不是这场的不换（D3，zverev-tien 那 8 张真图注前后对照）；
+列出来的开赛时间只当下界（nit 1）；预检和 `--write` 过同一道正式封面闸（nit 2）；
+这一步的秒数装得进 job 预算（nit 3）。
+
 全部走录下来的数据，**测试里不联网**。
 """
 from __future__ import annotations
@@ -188,6 +193,8 @@ def test_没有开赛时刻_按spec记下的或首推时刻推当地日期_并�
     assert not ctx.problems and ctx.match_dates == {date(2026, 9, 27)}, ctx
     assert ctx.date_source.startswith("_start_time_source.reported_utc（www.sofascore.com")
     assert not ctx.date_window and ctx.start_utc == datetime(2026, 9, 27, 10, 45, tzinfo=timezone.utc)
+    # 复审 nit 1：列出来的开赛时间 ≤ 真开赛，只是**下界**——报告里说出来
+    assert ctx.start_lower_bound and "只当下界" in ctx.date_source, ctx.date_source
     assert cu.static_problems(spec) == [], "有记下的开赛时刻，--plan 不许再把它挡掉"
     # ② 什么都没记：按首推时刻推两天窗口（北京＝当地），说是哪一个
     bare = _hangzhou_spec()
@@ -212,6 +219,7 @@ def test_没有开赛时刻_按spec记下的或首推时刻推当地日期_并�
     ctx = cu.match_context(fs, times=lambda _id: (datetime(2026, 9, 27, 10, 50, tzinfo=timezone.utc),
                                                   None), pushed_at=pushed)
     assert ctx.date_source == "flashscore dc_1_FYZsCJbc" and not ctx.date_window
+    assert not ctx.start_lower_bound
 
 
 # ---------------------------------------------------------------- ④ 团体赛名单
@@ -326,6 +334,137 @@ def test_只写姓_名单上撞姓就不认_不是团体赛照旧要全名():
     assert any("只有姓" in p for p in cu.metadata_problems(ap, wong))
 
 
+#: zverev-tien 那 8 张官网候选（`_laver_candidates`，录的原样）**复审 D3 之后**的点名闸：
+#: None＝点名闸过了（接着卡分辨率）；否则是报错里必须有的几句。
+#: 之前：7 张过点名闸、6 张卡 1200 宽，剩下那张（-scaled 替补席）下下来只有认人闸拦得住（mismatch 0.13）。
+ZT_AFTER = {
+    "GettyImages-2297411314.jpg": None,               # Zverev celebrates with the Laver Cup trophy
+    "TD2_6943_UhmuiH5g_20260927042054.jpg": None,     # 全名 ＋ 对手都点了，没放宽
+    "CB_36487_4jVq5VqG_20260927041747.jpg": None,     # players and captains get around Zverev
+    "JF1_7191_pmjUPNSQ_20260927042135.jpg": None,     # Alexander Zverev adds another Laver Cup title
+    "JF2_5479_oQpjCT2q_20260927052924.jpg": ("最先点名的是名单上的「tien」", "「support」"),
+    "JF1_6497_6vkUqRmf_20260927035914.jpg": ("最先点名的是名单上的「tien」",),
+    "TD2_6943_vfR8lRDz_20260927042054-scaled.jpg": ("「bench」",),
+    "JF1_3198_miqrpdia_20260926042538.jpg": ("说明写的是 2026-09-26",),
+}
+
+
+def test_拉沃尔杯官网8张_放宽之后替补席看台和主语是别人的不换_一张都不用下(monkeypatch):
+    """复审 D3(a)(b)：团体赛放宽（名单认姓、官网图注不写对手）之后，认错人原来只剩认人闸一道——
+    「Team World's Learner Tien returns another Zverev smash.」「Team World support Learner Tien against
+    Zverev.」主语是勒纳·钱；「The Team Europe bench rise to celebrate Zverev's …」拍的是替补席
+    （那张 -scaled 原图下下来认人 mismatch 0.13）。现在三张都在点名闸上就拦住，剩下 4 张全是
+    图注最先点名兹维列夫、而且全卡 1200 宽——**一张都不用下**。"""
+    ctx = cu.match_context(_laver_spec(), times=lambda _id: cu.parse_dc_feed(ZT_FEED))
+    cands = {c.filename: c for c in _laver_candidates(monkeypatch, "zverev")}
+    assert set(cands) == set(ZT_AFTER), sorted(cands)
+    for name, want in ZT_AFTER.items():
+        probs = cu.metadata_problems(cands[name], ctx)
+        if want is None:
+            assert probs == [], (name, probs)
+        else:
+            for says in want:
+                assert any(says in p for p in probs), (name, says, probs)
+    _chosen, rows = cu.evaluate(cu.Target("zverev-tien-laver-cup-2026", _laver_spec(),
+                                          datetime.now(timezone.utc), Path("x")),
+                                ctx, list(cands.values()),
+                                fetch=lambda _u: pytest.fail("这 8 张一张都不该下"))
+    assert all(r["problems"] for r in rows), rows
+    # (b) 只管**放宽过**的：全名 ＋ 对手都点了的（AP 那种「Y … against X」）照旧交给认人闸
+    ap = cu.Candidate("ap", "https://assets.apnews.com/t.jpg",
+                      caption="Learner Tien of Team World returns to Alexander Zverev of Team Europe "
+                              "at the Laver Cup in London on Sunday, Sept. 27, 2026. (AP Photo)")
+    assert cu.metadata_problems(ap, ctx) == []
+    # 主语是别人、只是没放宽的那一半（名单认姓）也要拦：只写姓 ＋ 点了对手
+    tien_first = cu.Candidate("event-site", "https://lavercup.com/t2.jpg", event_owned=True,
+                              caption="Tien chases down a Zverev drop shot.",
+                              meta_utc="2026-09-27T14:00:00")
+    assert any("最先点名的是名单上的「tien」" in p for p in cu.metadata_problems(tien_first, ctx))
+    assert cu.first_roster_named("team europe players and captains get around zverev",
+                                 ctx.roster) == "zverev"
+    assert cu.first_roster_named("alex de minaur and taylor fritz pair up", ctx.roster) == "minaur"
+
+
+def test_列出来的开赛时间只当下界_团体赛不写对手的放宽不给():
+    """复审 nit 1：`_start_time_source.reported_utc`（sofascore 那种列出来的开赛时间）≤ 真开赛——
+    「上传晚于开赛」拿它比是**更松**；团体赛「不写对手」的放宽要真开赛时刻算出来的日期，不给。"""
+    zt = _laver_spec()
+    zt["_match"] = {}
+    zt["_start_time_source"] = {"url": "https://www.sofascore.com/x", "reported_utc": "2026-09-27T13:00:00Z"}
+    ctx = cu.match_context(zt, times=lambda _id: pytest.fail("记着开赛时刻，不问 flashscore"))
+    assert not ctx.problems and ctx.start_lower_bound and ctx.match_dates == {date(2026, 9, 27)}
+    no_opp = cu.Candidate("event-site", "https://lavercup.com/wp-content/uploads/2026/09/z.jpg",
+                          event_owned=True, meta_utc="2026-09-27T15:42:44",
+                          caption="Alexander Zverev adds another Laver Cup title to his resume.")
+    assert any("对手" in p for p in cu.metadata_problems(no_opp, ctx))
+    # 对照组：flashscore 给的是真开赛时刻——放宽照给
+    real = cu.match_context(_laver_spec(), times=lambda _id: cu.parse_dc_feed(ZT_FEED))
+    assert not real.start_lower_bound and cu.metadata_problems(no_opp, real) == []
+
+
+def _exif_photo(taken: str | None, offset: str | None = None) -> bytes:
+    from PIL import Image  # noqa: PLC0415
+
+    img = Image.new("RGB", (2560, 1600), (40, 60, 40))
+    exif = Image.Exif()
+    if taken:
+        sub = exif.get_ifd(0x8769)
+        sub[0x9003] = taken
+        if offset:
+            sub[0x9011] = offset
+    buf = io.BytesIO()
+    img.save(buf, "JPEG", quality=90, exif=exif)
+    return buf.getvalue()
+
+
+def _zverev_checker(img, expected, target=None):
+    return {"status": "ok",
+            "identity": {"verdict": "match", "name": "兹维列夫", "similarity": {"兹维列夫": 0.55},
+                         "face": [1180, 420, 1380, 660], "face_px": 240},
+            "eyes": {"verdict": "open", "ear": 0.24}}
+
+
+@pytest.mark.parametrize("taken, offset, bad", [
+    ("2026:09:26 20:00:00", None, "2026-09-26"),      # 前一天的图（没写时差：当地钟点）
+    ("2026:09:27 14:05:00", None, None),               # 这一天
+    ("2026:09:26 23:30:00", "+00:00", None),           # UTC 23:30＝伦敦 9/27 00:30（夏令时）
+    ("2026:09:27 00:30:00", "+03:00", "2026-09-26"),   # 换到伦敦是 9/26 22:30
+    (None, None, None),                                # 没有 EXIF：不判
+    ("0000:00:00 00:00:00", None, None),               # 全零：当没有
+])
+def test_照片EXIF拍摄日期不是这场的当地日子就不换(taken, offset, bad):
+    """复审 D3(c)：说明没写日期时只能拿上传时刻判——而前一天的图第二天才批量传上来是真事
+    （拉沃尔杯官网第二天的图 9/27 14:14Z 才上传，比第三天那场 13:25Z 开赛还晚，上传那道闸放行）。
+    照片自己记着按快门的那一刻：有 `DateTimeOriginal` 就必须落在这场的当地日子（±0 天）。"""
+    ctx = cu.match_context(_laver_spec(), times=lambda _id: cu.parse_dc_feed(ZT_FEED))
+    got = cu.image_verdict(_exif_photo(taken, offset), _laver_spec(), ctx, checker=_zverev_checker)
+    exif = [p for p in got["problems"] if "EXIF" in p]
+    if bad:
+        assert exif and bad in exif[0], got["problems"]
+    else:
+        assert exif == [], got["problems"]
+    if taken and taken[0] != "0":
+        assert got["evidence"]["exif_taken"].startswith(taken), got["evidence"]
+
+
+def test_前一天的图晚传上来_上传那道闸放行_EXIF拦住():
+    """端到端：图注不写日期、上传时刻晚于这场开赛（`_upload_problems` 过了），团体赛放宽也给了——
+    只有 EXIF 说它是前一天拍的。对照组：同一张换成当天的 EXIF 就选中。"""
+    ctx = cu.match_context(_laver_spec(), times=lambda _id: cu.parse_dc_feed(ZT_FEED))
+    late = cu.Candidate("event-site", "https://lavercup.com/wp-content/uploads/2026/09/late.jpg",
+                        event_owned=True, meta_utc="2026-09-27T14:14:41",
+                        caption="Alexander Zverev pumps his fist.")
+    assert cu.metadata_problems(late, ctx) == []
+    target = cu.Target("zverev-tien-laver-cup-2026", _laver_spec(), datetime.now(timezone.utc), Path("x"))
+    chosen, rows = cu.evaluate(target, ctx, [late], checker=_zverev_checker,
+                               fetch=lambda _u: _exif_photo("2026:09:26 19:40:00"))
+    assert chosen is None and any("EXIF" in p for p in rows[0]["problems"]), rows
+    assert rows[0].get("tried"), "EXIF 日期不对是图本身的毛病，下一班不用再下"
+    chosen, _rows = cu.evaluate(target, ctx, [late], checker=_zverev_checker,
+                                fetch=lambda _u: _exif_photo("2026:09:27 14:02:00"))
+    assert chosen is not None
+
+
 def test_团体赛名单自洽_和仓库里拉沃尔杯的spec对得上():
     """名单是从官网抄的，抄错一个姓，放宽就放错人。拿仓库里自己的拉沃尔杯 spec 对一遍：
     每条单打 spec 的两个人都在名单上，每一场的每个姓在名单上恰好对得上一个人。"""
@@ -402,7 +541,10 @@ def _wong_spec(**extra) -> dict:
     return spec
 
 
-def _preflight(tmp_path, spec, cands, *, calls=None, slug="wong-vallejo-hangzhou-2026-r2"):
+def _preflight(tmp_path, spec, cands, *, calls=None, slug="wong-vallejo-hangzhou-2026-r2",
+               final_gate=lambda spec: None):
+    """正式封面闸默认放行（它要 `import build_match_reel` 读一整套素材，测试里用替身；
+    「预检和 `--write` 过的是同一道闸」由 `test_渲前预检拦下的那张_write一定写得进去` 钉）。"""
     (tmp_path / "specs" / "reels").mkdir(parents=True, exist_ok=True)
     (tmp_path / "specs" / "reels" / f"{slug}.json").write_text(
         json.dumps(spec, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -413,7 +555,7 @@ def _preflight(tmp_path, spec, cands, *, calls=None, slug="wong-vallejo-hangzhou
         return [("测试渠道", lambda: list(cands))]
     return cu.preflight(tmp_path, slug, NOW, spec=spec, sweeps_for=sweeps_for,
                         times=lambda _id: (START, START + timedelta(hours=2)),
-                        fetch=lambda _u: _big_photo(), checker=_ok_checker)
+                        fetch=lambda _u: _big_photo(), checker=_ok_checker, final_gate=final_gate)
 
 
 def test_渲前预检_有一张全过就拦手写的_给出换法(tmp_path):
@@ -485,14 +627,97 @@ def test_渲前预检write_写图改spec_过不了正式封面闸就全部退回
     assert cu.reconcile_orphans(tmp_path, NOW)[0] == []
 
 
-def test_渲前预检豁免表只许减不许加_每条都还是已发的抽帧封面():
-    """定规矩那天（2026-09-28）对全库抽帧封面在沙箱跑过一遍，命中 0 条——表是空的。
-    以后要往里加，说明那一条推出去之后渲前预检才有了能换的官方图：那是 O4 的活，不是豁免。"""
-    assert len(cu.PREFLIGHT_LEGACY) <= 0, "只许减不许加（定规矩那天 0 条）"
-    for slug in sorted(cu.PREFLIGHT_LEGACY):
-        spec = json.loads((ROOT / "specs" / "reels" / f"{slug}.json").read_text(encoding="utf-8"))
-        assert cu.is_frame_cover(spec), f"{slug} 已经不是抽帧封面，从豁免表删掉"
-        assert cu.first_sent(ROOT, slug), f"{slug} 没推过，不是存量"
+def _sent(tmp_path, slug="wong-vallejo-hangzhou-2026-r2", status="sent") -> None:
+    ledger = tmp_path / "data" / "reel_publish_ledger" / f"{slug}.json"
+    ledger.parent.mkdir(parents=True, exist_ok=True)
+    ledger.write_text(json.dumps({"slug": slug, "channel": "pushplus", "attempts": [
+        {"key": f"pushplus:reel:{slug}:abc", "status": status, "at": "2026-09-26T14:10:00Z"}]}),
+        encoding="utf-8")
+
+
+def _tree(tmp_path) -> dict[str, bytes]:
+    return {p.relative_to(tmp_path).as_posix(): p.read_bytes()
+            for p in sorted(tmp_path.rglob("*")) if p.is_file() and ".git" not in p.parts}
+
+
+def test_渲前预检只拦第一次渲染_推过的只报_不试写不改spec(tmp_path, capsys):
+    """复审 D2：拦的是**第一次**渲染（发布账本和 pushed.json 都没有）；已经推过的只报——推出去之后
+    换图归 O4（它认 `_keep_frame_why`），这里不试写、不改已发的 spec，`--write` 也不写。"""
+    slug = "wong-vallejo-hangzhou-2026-r2"
+    ap = [cu.Candidate("ap", "https://assets.apnews.com/x.jpg", caption=AP_OK)]
+    got = _preflight(tmp_path, _wong_spec(), ap)
+    assert got["pushed"] == "" and cu.preflight_exit(got)[0] == cu.PREFLIGHT_FOUND
+    assert cu.preflight_budget(tmp_path, slug) == cu.PREFLIGHT_BUDGET_BLOCKING
+    # 账本里只有 rejected：没发出去过，照旧是第一次
+    _sent(tmp_path, status="rejected")
+    assert cu.preflight_exit(_preflight(tmp_path, _wong_spec(), ap))[0] == cu.PREFLIGHT_FOUND
+    # 推过了（账本 sent）：只报、不试写
+    _sent(tmp_path)
+    before = _tree(tmp_path)
+    gate_calls: list = []
+    got = _preflight(tmp_path, _wong_spec(), ap, final_gate=lambda spec: gate_calls.append(1))
+    code, last = cu.preflight_exit(got)
+    assert got["found"] and "sent" in got["pushed"], got["pushed"]
+    assert code == 0 and last.startswith("::warning::") and "O4" in last, last
+    assert gate_calls == [], "推过的不试写（试写会动 assets/reel）"
+    assert _tree(tmp_path) == before, "推过的 spec 和素材一个字节都不许动"
+    refused = cu.write_preflight(tmp_path, got, final_gate=lambda spec: None)
+    assert refused and "已经推过" in refused and _tree(tmp_path) == before, refused
+    assert cu.preflight_budget(tmp_path, slug) == cu.PREFLIGHT_BUDGET_REPORT
+    assert cu.main(["--preflight-budget", "--slug", slug, "--repo", str(tmp_path)]) == 0
+    assert capsys.readouterr().out.strip() == str(cu.PREFLIGHT_BUDGET_REPORT)
+    # 账本读不了：状态不明按推过算（只报）
+    (tmp_path / "data" / "reel_publish_ledger" / f"{slug}.json").write_text("{坏", encoding="utf-8")
+    assert "状态不明" in cu.already_pushed(tmp_path, slug)
+    # 推过的另一处凭据：git 跟踪着的 output/<日期>/reel/<slug>/pushed.json
+    (tmp_path / "data" / "reel_publish_ledger" / f"{slug}.json").unlink()
+    assert cu.already_pushed(tmp_path, slug) == ""
+    marker = tmp_path / "output" / "2026-09-26" / "reel" / slug / "pushed.json"
+    marker.parent.mkdir(parents=True)
+    marker.write_text("{}", encoding="utf-8")
+    for cmd in (["init", "-q"], ["add", "output"]):
+        subprocess.run(["git", "-C", str(tmp_path), *cmd], check=True, capture_output=True)
+    assert cu.already_pushed(tmp_path, slug) == f"仓库里有 output/2026-09-26/reel/{slug}/pushed.json"
+    assert cu.preflight_exit(_preflight(tmp_path, _wong_spec(), ap))[0] == 0
+    # 自动 spec 也只报：秒数给只报那一档
+    auto_slug = "wong-auto"
+    (tmp_path / "specs" / "reels" / f"{auto_slug}.json").write_text(json.dumps(
+        _wong_spec(_production={"status": "ready_for_render"})), encoding="utf-8")
+    assert cu.preflight_budget(tmp_path, auto_slug) == cu.PREFLIGHT_BUDGET_REPORT
+
+
+def test_渲前预检拦下的那张_write一定写得进去_同一道正式封面闸(tmp_path):
+    """复审 nit 2：预检原来只过机器闸就报「找到了」（退出码 3），`--write` 再过正式封面闸——两道判得
+    不一样时，手写 spec 被拦住、照着报告换又换不上。现在预检挑图时就拿 `--write` 那个函数试一遍
+    （`_formal_gate_on`，同一份输入、试完退回）：退出码 3 只在 `--write` 会成功时出现。"""
+    slug = "wong-vallejo-hangzhou-2026-r2"
+    a = cu.Candidate("ap", "https://assets.apnews.com/a.jpg", caption=AP_OK)
+    b = cu.Candidate("ap", "https://assets.apnews.com/b.png", caption=AP_OK)
+    seen: list[str] = []
+
+    def gate(spec):
+        art = spec["cover"]["portrait"]
+        assert Path(art["image"]).is_file(), "正式闸看到的得是真写下去的那张图（cwd＝仓库）"
+        seen.append(art["image"])
+        return "封面闸：a 不许" if "/a.jpg" in art["_why"] else None
+
+    got = _preflight(tmp_path, _wong_spec(), [a, b], final_gate=gate)
+    assert got["found"] and got["chosen"]["candidate"] is b, got["report"]
+    assert seen == [f"assets/reel/{slug}-official.jpg", f"assets/reel/{slug}-official.png"], seen
+    assert "正式封面闸没过" in "\n".join(got["report"]), got["report"]
+    assert not (tmp_path / "assets" / "reel" / f"{slug}-official.png").exists(), "试完要退回"
+    assert cu.preflight_exit(got)[0] == cu.PREFLIGHT_FOUND
+    assert cu.write_preflight(tmp_path, got, final_gate=gate) is None
+    spec = json.loads((tmp_path / "specs" / "reels" / f"{slug}.json").read_text(encoding="utf-8"))
+    assert spec["cover"]["portrait"]["image"] == f"assets/reel/{slug}-official.png"
+    # 正式闸一张都不放：不拦（机器闸过了也不算找到），spec 和素材原样
+    spec_path = tmp_path / "specs" / "reels" / f"{slug}.json"
+    spec_path.write_text(json.dumps(_wong_spec(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (tmp_path / "assets" / "reel" / f"{slug}-official.png").unlink()
+    before = _tree(tmp_path)
+    got = _preflight(tmp_path, _wong_spec(), [a, b], final_gate=lambda spec: "封面闸：都不许")
+    assert not got["found"] and cu.preflight_exit(got) == (0, ""), got["report"]
+    assert _tree(tmp_path) == before
 
 
 def _preflight_step() -> dict:
@@ -519,22 +744,46 @@ def test_渲前预检接在match_reel的render那一步_排在人脸模型和dry
     assert "render-findings" not in code, "换图不归模型管：别把预检的话喂给判据回喂"
 
 
-@pytest.mark.parametrize("rc, exit_code, says", [
-    (0, 0, ""), (3, 1, ""), (124, 0, "超时"), (1, 0, "自己出错"), (2, 0, "自己出错")])
-def test_渲前预检那一步只在找到了才红(tmp_path, rc, exit_code, says):
-    """真跑那段 bash：退出码 3（找到了、手写）才红；超时、工具炸了一律只告警不拦。"""
+@pytest.mark.parametrize("rc, exit_code, says, budget", [
+    (0, 0, "", "100"), (3, 1, "", "100"), (124, 0, "超时（100 秒）", "100"),
+    (124, 0, "超时（60 秒）", "60"), (124, 0, "超时（60 秒）", "炸了"),
+    (1, 0, "自己出错", "100"), (2, 0, "自己出错", "100")])
+def test_渲前预检那一步只在找到了才红(tmp_path, rc, exit_code, says, budget):
+    """真跑那段 bash：退出码 3（找到了、手写、第一次渲染）才红；超时、工具炸了一律只告警不拦。
+    秒数是 `--preflight-budget` 印的，印不出数就按 60（`budget="炸了"`）。"""
     script = _preflight_step()["step"]["run"].replace("${{ github.event.inputs.slug }}", "x")
     stub = tmp_path / "bin"
     stub.mkdir()
-    (stub / "python").write_text(f"#!/bin/sh\nexit {rc}\n", encoding="utf-8")
+    printed = f"echo {budget}; exit 0" if budget.isdigit() else "echo Traceback >&2; exit 1"
+    (stub / "python").write_text(
+        f'#!/bin/sh\ncase "$*" in *--preflight-budget*) {printed} ;; esac\n'
+        f'echo "args: $*"\nexit {rc}\n', encoding="utf-8")
     (stub / "python").chmod(0o755)
     env = {**os.environ, "PATH": f"{stub}:{os.environ['PATH']}",
            "GITHUB_STEP_SUMMARY": str(tmp_path / "summary.md")}
     run = subprocess.run(["bash", "-e", "-c", script], capture_output=True, text=True, env=env,
                          cwd=tmp_path)
     assert run.returncode == exit_code, (run.stdout, run.stderr)
+    assert "args: tools/cover_upgrade.py --preflight --slug x" in run.stdout, run.stdout
     if says:
         assert says in run.stdout and "::warning::" in run.stdout, run.stdout
+
+
+def test_渲前预检那一步的秒数装得进步骤超时_job留足三分钟余量():
+    """复审 nit 3：match-reel 各步骤声明的最坏预算之和原来 62、job 63——只剩 1 分钟。这一步收到
+    2 分钟：会拦的 100 秒、只报的（自动 spec、已经推过的）60 秒，外加 python 起进程的余量。"""
+    import yaml  # noqa: PLC0415
+
+    got = _preflight_step()
+    limit = int(got["step"]["timeout-minutes"]) * 60
+    assert cu.PREFLIGHT_BUDGET_REPORT <= 60, cu.PREFLIGHT_BUDGET_REPORT
+    assert cu.PREFLIGHT_BUDGET_BLOCKING + 15 <= limit, (cu.PREFLIGHT_BUDGET_BLOCKING, limit)
+    code = "\n".join(ln for ln in got["step"]["run"].splitlines() if not ln.lstrip().startswith("#"))
+    assert "--preflight-budget" in code and 'timeout "$LIMIT"' in code, code
+    wf = yaml.safe_load((ROOT / ".github" / "workflows" / "match-reel.yml").read_text(encoding="utf-8"))
+    job = wf["jobs"]["reel"]
+    steps = sum(int(s.get("timeout-minutes") or 0) for s in job["steps"])
+    assert int(job["timeout-minutes"]) - steps >= 3, (job["timeout-minutes"], steps)
 
 
 def test_人查的时候_给了赛事名就自动带上登记过的官网(monkeypatch, capsys):

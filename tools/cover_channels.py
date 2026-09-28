@@ -332,8 +332,11 @@ CHANNELS: tuple[Channel, ...] = (
     Channel("cn-media", "中文媒体",
             skip=lambda q: (None if q.zh else "没给中文名（--zh）"),
             sweep=_sweep_cn,
-            o4_off=("公众号／当地网站的配图没有图注，认不出是哪一场——bu-majchrzak 那张要拿 dHash "
-                    "对首轮七篇稿子排资料图（5beecfa6），这一步机器闸没有；换图要人挑")),
+            # 2026-09-28 定了（不是悬着的口径）：O4 不用这一档。配图没有图注，时间地点人物自证不了——
+            # CLAUDE.md「出处以来源自己的描述为准，不靠看图推断」；人查（`--zh`）照旧跑。
+            o4_off=("公众号／当地网站的配图没有图注，时间地点人物自证不了（出处以来源自己的描述为准，"
+                    "不靠看图推断）——bu-majchrzak 那张要拿 dHash 对首轮七篇稿子排资料图（5beecfa6）；"
+                    "换图要人挑")),
 )
 
 
