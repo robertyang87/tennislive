@@ -22,10 +22,15 @@
    （`cover.portrait.frame_at`，没有 `image`）的「赛场之上」。
    ⚠️ 判据是 spec 本身，不是 `OWNER_APPROVED_FRAME_COVERS` 那张表——表只是
    「允许抽帧」，spec 才是「现在是不是抽帧」。
-2. **查官方图**（`search`）：复用 `find_cover_photo.py` 的各档——WTA photo-resources
-   （女子；`GettyImages-*` 带 Getty 说明）、AP、当地报纸每日图集（按城市）、赛事官网 WP 媒体库
-   （`EVENTS` 里登记了域名的）。每一档跑没跑、取没取到都记下来：「没跑」「取不到」
-   和「查空」在报告里长得不一样。
+2. **查官方图**（`search`）：`cover_channels.CHANNELS` 那一份渠道清单，**和人查的
+   `find_cover_photo.py` 同一份**（2026-09-28 之前这里手抄了四档，O4 第一班杭州三条只查了
+   AP、别的渠道在报告里根本不出现）。每一档一行：**查了 N 张／查空／没查成／没跑／O4 不查**
+   （`cover_channels.status_line`）；O4 不查的几档（赛后稿头图、美网官方接口、中文媒体）写着
+   为什么——机器闸在那一档的候选上恒过不了，不发请求。AP 在 runner 上是 Cloudflare 人机挑战，
+   记「没查成」，不算查过。最后那一行分得清「一档都没查成（结果未知）」和「查成了、没有一张全过」。
+   当地日期：`_match.start_utc` → `_start_time_source` → flashscore → 首推时刻推的两天窗口，
+   报告里说是哪一个（`match_context`）；团体赛按 `data/team_event_rosters.json` 的名单放宽
+   「只写姓」「官网图注不写对手」（`surname_only_ok`／`team_opponent_ok`）。
 3. **机器闸，全过才换**（`evaluate`）——**任何一项拿不准都不换**：
 
    | 闸 | 判据 |
@@ -56,6 +61,14 @@
    **派发会丢**（`gh workflow run` 失败、runner 被砍）：工作流重试三次；再不行，
    下一班的对账（`redispatch_plan`）看到「换了图、一小时了发布账本里没有新的推送
    尝试」就重派，最多两次。
+
+## 渲前预检（`--preflight --slug <slug>`，match-reel render 那一步跑）
+
+同一套渠道、同一套机器闸，在**第一次 render 之前**问一句：抽帧封面的这一条，官方图是不是
+其实已经在了？有一张全过——手写 spec 退出码 `PREFLIGHT_FOUND`（3），报告里是换图的原话
+（`image`／`focus`／`focus_y`／`zoom`，`--write` 一条命令写进去）；自动 spec 只报。一张都没全过、
+渠道一档都没查成、判不了当地日期、`_keep_frame_why` 认领过的——都不拦（2026-09-26 的授权）。
+来路：返工审计 2026-09-28，66 条里 11 条第一次推的是抽帧封面、4 条换实拍又重推了 5 次。
 
 ## 每一班先对账、先看有没有活（`--plan`，不装依赖）
 
@@ -152,7 +165,7 @@ HEAD_BAND = 170
 #: 北京时间——`match-reel` 的产物目录按它的日期起名（`OUT_DATE=$(TZ=Asia/Shanghai date +%F)`）。
 BEIJING = ZoneInfo("Asia/Shanghai")
 
-#: 顶栏里认得出的赛事 → (查图用的英文名, 当地时区, 赛事官网 WP 媒体库域名)。
+#: 顶栏里认得出的赛事 → (查图用的英文名, 当地时区)。
 #:
 #: ⚠️ **时区是「同一天」那道闸的前提**：图注写的是**当地**日期，而 flashscore 给的
 #: 开赛时刻是 UTC。时区不知道就判不了当地日期——**判不了就不换**，并在报告里说
@@ -160,51 +173,51 @@ BEIJING = ZoneInfo("Asia/Shanghai")
 #: 的时候，宽窗口会把别的那场的图放进来——认人认得出是他，认不出是哪一场）。
 #: 新赛事加一行；团体赛每年换城市，按年份写（`{2026: …}`），同一年里分阶段换地方的
 #: 按「年-月」写（`{"2026-09": …}`，先认它）。
-#: 域名只登记**实测开着 WP REST** 的（`find_cover_photo.discover` 扫过 11 个赛事官网，
-#: 只有辛辛那提；拉沃尔杯 2026-09-27 实测 `lavercup.com/wp-json/wp/v2/media` 200）。
-EVENTS: tuple[tuple[str, str, object, str | None], ...] = (
-    ("美网", "US Open", "America/New_York", None),
-    ("澳网", "Australian Open", "Australia/Melbourne", None),
-    ("法网", "Roland Garros", "Europe/Paris", None),
-    ("温网", "Wimbledon", "Europe/London", None),
-    ("拉沃尔杯", "Laver Cup", {2026: "Europe/London"}, "lavercup.com"),
+#: 赛事官网（WP 媒体库）的域名**不在这儿**：它和人查的 `find_cover_photo` 共用
+#: `cover_channels.EVENT_SITES`（2026-09-28 合成一份，原来是这张表的第四列）。
+EVENTS: tuple[tuple[str, str, object], ...] = (
+    ("美网", "US Open", "America/New_York"),
+    ("澳网", "Australian Open", "Australia/Melbourne"),
+    ("法网", "Roland Garros", "Europe/Paris"),
+    ("温网", "Wimbledon", "Europe/London"),
+    ("拉沃尔杯", "Laver Cup", {2026: "Europe/London"}),
     # 2026 年**总决赛**在深圳（9 月；grant-kalinina / zhiyenbayeva-bouzas 等写着）。
     # 只登记这一个月：资格赛（4 月）、附加赛（11 月）各在各的主场，时区不知道就不换
     # （评审第二轮：原来整年都按上海算，别处那几场的「当地同一天」会算错）。
-    ("比利·简·金杯", "Billie Jean King Cup", {"2026-09": "Asia/Shanghai"}, None),
-    ("辛辛那提", "Cincinnati", "America/New_York", "cincinnatiopen.com"),
-    ("蒙特利尔", "Montreal", "America/Toronto", None),
-    ("多伦多", "Toronto", "America/Toronto", None),
-    ("华盛顿", "Washington", "America/New_York", None),
-    ("温斯顿-塞勒姆", "Winston-Salem", "America/New_York", None),
-    ("克利夫兰", "Cleveland", "America/New_York", None),
-    ("蒙特雷", "Monterrey", "America/Monterrey", None),
-    ("瓜达拉哈拉", "Guadalajara", "America/Mexico_City", None),
-    ("印第安维尔斯", "Indian Wells", "America/Los_Angeles", None),
-    ("迈阿密", "Miami", "America/New_York", None),
-    ("杭州", "Hangzhou", "Asia/Shanghai", None),
-    ("成都", "Chengdu", "Asia/Shanghai", None),
-    ("北京", "Beijing", "Asia/Shanghai", None),
-    ("中网", "China Open", "Asia/Shanghai", None),
-    ("上海", "Shanghai", "Asia/Shanghai", None),
-    ("武汉", "Wuhan", "Asia/Shanghai", None),
-    ("宁波", "Ningbo", "Asia/Shanghai", None),
-    ("广州", "Guangzhou", "Asia/Shanghai", None),
-    ("九江", "Jiujiang", "Asia/Shanghai", None),
-    ("香港", "Hong Kong", "Asia/Hong_Kong", None),
-    ("新加坡", "Singapore", "Asia/Singapore", None),
-    ("东京", "Tokyo", "Asia/Tokyo", None),
-    ("大阪", "Osaka", "Asia/Tokyo", None),
-    ("首尔", "Seoul", "Asia/Seoul", None),
-    ("阿拉木图", "Almaty", "Asia/Almaty", None),
-    ("维也纳", "Vienna", "Europe/Vienna", None),
-    ("巴塞尔", "Basel", "Europe/Zurich", None),
-    ("巴黎", "Paris", "Europe/Paris", None),
-    ("斯德哥尔摩", "Stockholm", "Europe/Stockholm", None),
-    ("安特卫普", "Antwerp", "Europe/Brussels", None),
-    ("布鲁塞尔", "Brussels", "Europe/Brussels", None),
-    ("梅斯", "Metz", "Europe/Paris", None),
-    ("雅典", "Athens", "Europe/Athens", None),
+    ("比利·简·金杯", "Billie Jean King Cup", {"2026-09": "Asia/Shanghai"}),
+    ("辛辛那提", "Cincinnati", "America/New_York"),
+    ("蒙特利尔", "Montreal", "America/Toronto"),
+    ("多伦多", "Toronto", "America/Toronto"),
+    ("华盛顿", "Washington", "America/New_York"),
+    ("温斯顿-塞勒姆", "Winston-Salem", "America/New_York"),
+    ("克利夫兰", "Cleveland", "America/New_York"),
+    ("蒙特雷", "Monterrey", "America/Monterrey"),
+    ("瓜达拉哈拉", "Guadalajara", "America/Mexico_City"),
+    ("印第安维尔斯", "Indian Wells", "America/Los_Angeles"),
+    ("迈阿密", "Miami", "America/New_York"),
+    ("杭州", "Hangzhou", "Asia/Shanghai"),
+    ("成都", "Chengdu", "Asia/Shanghai"),
+    ("北京", "Beijing", "Asia/Shanghai"),
+    ("中网", "China Open", "Asia/Shanghai"),
+    ("上海", "Shanghai", "Asia/Shanghai"),
+    ("武汉", "Wuhan", "Asia/Shanghai"),
+    ("宁波", "Ningbo", "Asia/Shanghai"),
+    ("广州", "Guangzhou", "Asia/Shanghai"),
+    ("九江", "Jiujiang", "Asia/Shanghai"),
+    ("香港", "Hong Kong", "Asia/Hong_Kong"),
+    ("新加坡", "Singapore", "Asia/Singapore"),
+    ("东京", "Tokyo", "Asia/Tokyo"),
+    ("大阪", "Osaka", "Asia/Tokyo"),
+    ("首尔", "Seoul", "Asia/Seoul"),
+    ("阿拉木图", "Almaty", "Asia/Almaty"),
+    ("维也纳", "Vienna", "Europe/Vienna"),
+    ("巴塞尔", "Basel", "Europe/Zurich"),
+    ("巴黎", "Paris", "Europe/Paris"),
+    ("斯德哥尔摩", "Stockholm", "Europe/Stockholm"),
+    ("安特卫普", "Antwerp", "Europe/Brussels"),
+    ("布鲁塞尔", "Brussels", "Europe/Brussels"),
+    ("梅斯", "Metz", "Europe/Paris"),
+    ("雅典", "Athens", "Europe/Athens"),
 )
 
 _MONTHS = {m: i for i, m in enumerate(
@@ -558,6 +571,14 @@ class MatchContext:
     end_utc: datetime | None = None
     match_dates: set[date] = field(default_factory=set)
     problems: list[str] = field(default_factory=list)
+    #: 当地日期从哪儿来的（`_match.start_utc`／`_start_time_source`／flashscore／首推时刻）
+    date_source: str = ""
+    #: True：spec 里没有开赛时刻，当地日期是按首推时刻推的**两天窗口**——
+    #: 这时说明里必须点对手（团体赛那条放宽也不给），没写日期的说明一律不换
+    date_window: bool = False
+    #: 团体赛的名单和逐日出场（`data/team_event_rosters.json` 里这一届那一段）
+    roster: dict | None = None
+    roster_name: str = ""
 
 
 def event_of(spec: dict) -> tuple[str, object, str | None] | None:
@@ -574,21 +595,23 @@ def event_of(spec: dict) -> tuple[str, object, str | None] | None:
     - 只认「表里的英文名**包含在** `prod` 里」，挑最长的——反方向（`prod` 是表里某个名
       的子串）会让「Open」这种残片认成 US Open；
     - `prod` 认不出、顶栏认得出，就按顶栏（顶栏是人看过的那一行）。"""
+    from cover_channels import event_site  # noqa: PLC0415
+
     prod = str((spec.get("_production") or {}).get("event") or "").strip()
     pkey = _key(prod)
     if pkey:
-        hits = [(len(_key(en)), en, tz, site) for _zh, en, tz, site in EVENTS
+        hits = [(len(_key(en)), en, tz) for _zh, en, tz in EVENTS
                 if _key(en) and _key(en) in pkey]
         if hits:
-            _n, _en, tz, site = max(hits, key=lambda h: h[0])
-            return prod, tz, site
+            _n, en, tz = max(hits, key=lambda h: h[0])
+            return prod, tz, event_site(en)
     line1 = str((spec.get("topbar") or {}).get("line1") or "")
-    hits = [(len(zh), en, tz, site) for zh, en, tz, site in EVENTS if zh in line1]
+    hits = [(len(zh), en, tz) for zh, en, tz in EVENTS if zh in line1]
     if hits:
-        _n, en, tz, site = max(hits, key=lambda h: h[0])
-        return en, tz, site
+        _n, en, tz = max(hits, key=lambda h: h[0])
+        return en, tz, event_site(en)
     if pkey:
-        return prod, None, None
+        return prod, None, event_site(prod)
     return None
 
 
@@ -632,9 +655,78 @@ def parse_dc_feed(text: str) -> tuple[datetime | None, datetime | None]:
     return stamp("DC"), stamp("DD")
 
 
-def match_context(spec: dict, *, times: Callable[[str], tuple] = flashscore_times
-                  ) -> MatchContext:
-    """封面主角是谁、哪个赛事、当地哪一天——**缺一样就记进 `problems`，不换**。"""
+def recorded_start(spec: dict) -> tuple[datetime | None, str]:
+    """spec 自己**记下来的**开赛时刻，和它记在哪儿。
+
+    2026-09-28：O4 第一班 `safiullin-bu-hangzhou-2026-qf` 被「spec 里没有开赛时刻」挡掉——
+    它没有 `_match.start_utc`、也没有 `flashscore_id`，可开赛时刻明明记着：
+    `_start_time_source.reported_utc = 2026-09-27T10:45:00Z`（sofascore 比赛中心列的，
+    `qualification` 写着「不是首球计时」）。认它当开赛时刻——「上传晚于开赛」那道闸拿
+    列出来的开赛时刻去比，真开赛只会更晚，这一格只会更严不会更松。"""
+    match = spec.get("_match") if isinstance(spec.get("_match"), dict) else {}
+    if match.get("start_utc") and (got := _parse_utc(match["start_utc"])):
+        return got, "_match.start_utc"
+    src = spec.get("_start_time_source")
+    if isinstance(src, dict):
+        for key in ("start_utc", "reported_utc"):
+            if src.get(key) and (got := _parse_utc(src[key])):
+                where = str(src.get("url") or "").split("/")[2:3]
+                return got, (f"_start_time_source.{key}" + (f"（{where[0]}）" if where else ""))
+    return None, ""
+
+
+#: 团体赛的名单（`data/team_event_rosters.json`）
+ROSTERS = Path("data/team_event_rosters.json")
+
+
+def team_roster(event_en: str, year: int | None) -> tuple[dict | None, str]:
+    """这一届团体赛的名单和逐日出场——没登记的 (None, "")。按赛事英文名认（归一后包含）。"""
+    try:
+        data = json.loads((ROOT / ROSTERS).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None, ""
+    want = _key(event_en)
+    for name, years in data.items():
+        if name.startswith("_") or not isinstance(years, dict) or not _key(name):
+            continue
+        if _key(name) in want and year is not None and isinstance(years.get(str(year)), dict):
+            return years[str(year)], f"{name} {year}"
+    return None, ""
+
+
+def _last(name: str) -> str:
+    toks = _fold(name).split()
+    return toks[-1] if toks else ""
+
+
+def roster_people(roster: dict) -> list[str]:
+    """名单上的每一个人（球员、替补、队长）——撞姓就按他们算。"""
+    people: list[str] = []
+    for team in (roster.get("teams") or {}).values():
+        for key in ("players", "alternates", "captains"):
+            people += [str(p) for p in team.get(key) or []]
+    return people
+
+
+def roster_matches(roster: dict, surname: str, days: Iterable[date]) -> list[dict]:
+    """名单里这个姓在这几天（当地）打的每一场。"""
+    want = {d.isoformat() for d in days}
+    return [m for m in roster.get("matches") or []
+            if str(m.get("date")) in want
+            and any(_last(p) == surname for side in m.get("sides") or [] for p in side)]
+
+
+def match_context(spec: dict, *, times: Callable[[str], tuple] = flashscore_times,
+                  pushed_at: datetime | None = None) -> MatchContext:
+    """封面主角是谁、哪个赛事、当地哪一天——**缺一样就记进 `problems`，不换**。
+
+    当地日期按这个顺序找，**报告里说是哪一个**（`date_source`）：`_match.start_utc` →
+    `_start_time_source`（`recorded_start`）→ flashscore `dc_1_<flashscore_id>` →
+    `pushed_at`（首推时刻；渲前预检时是「现在」）推的两天窗口。最后那一格只给日子、不给
+    时刻，而且是两天宽：它只在说明**点了对手**时才用（一站淘汰赛里同一对对手只碰一次），
+    说明没写日期、只能拿上传时刻判的一律不换（`_upload_problems` 要开赛时刻）。
+    来路：CLAUDE.md「只做今天这个比赛日……上一个比赛日的也不做」——片子推出去的时候，
+    这场球要么是当地今天、要么是当地昨天（夜场过了午夜才推）。"""
     slug = str(spec.get("slug") or "")
     ctx = MatchContext(slug=slug)
     cover = spec.get("cover") or {}
@@ -673,23 +765,26 @@ def match_context(spec: dict, *, times: Callable[[str], tuple] = flashscore_time
         return ctx
     ctx.event_en, tz, ctx.site = event
     match = spec.get("_match") if isinstance(spec.get("_match"), dict) else {}
-    start = _parse_utc(match.get("start_utc")) if match.get("start_utc") else None
+    start, ctx.date_source = recorded_start(spec)
     end = None
+    fs_failed = ""
     if start is None and match.get("flashscore_id"):
         try:
             start, end = times(str(match["flashscore_id"]))
+            ctx.date_source = f"flashscore dc_1_{match['flashscore_id']}"
         except Exception as exc:                                  # noqa: BLE001
-            ctx.problems.append(f"flashscore 开赛时刻取不到（{exc}）——判不了当地日期，不换")
+            fs_failed = f"flashscore 开赛时刻取不到（{exc}）"
     ctx.start_utc, ctx.end_utc = start, end
-    if start is None:
-        if not any("flashscore" in p for p in ctx.problems):
-            ctx.problems.append("spec 里没有开赛时刻（_match.start_utc / flashscore_id），"
-                                "判不了当地日期，不换")
+    anchor = start or pushed_at
+    if anchor is None:
+        ctx.problems.append((f"{fs_failed}——判不了当地日期，不换" if fs_failed else
+                             "spec 里没有开赛时刻（_match.start_utc / _start_time_source / "
+                             "flashscore_id），判不了当地日期，不换"))
         return ctx
     if isinstance(tz, dict):
         # 团体赛每年换城市，而同一年里不同阶段也不在一个地方——比利·简·金杯 2026 的
         # 总决赛在深圳（9 月），资格赛、附加赛在别处。按「年-月」登记的先认，再认整年。
-        utc = start.astimezone(timezone.utc)
+        utc = anchor.astimezone(timezone.utc)
         tz = tz.get(f"{utc:%Y-%m}") or tz.get(utc.year)
     tz = tz or _registry_tz(ctx.event_en)
     if not tz:
@@ -698,10 +793,20 @@ def match_context(spec: dict, *, times: Callable[[str], tuple] = flashscore_time
         return ctx
     ctx.tz = tz
     zone = ZoneInfo(tz)
-    ctx.match_dates = {start.astimezone(zone).date()}
-    if end is not None:
-        # 夜场跨过当地午夜：两天都是**这一场**，不是别的场
-        ctx.match_dates.add(end.astimezone(zone).date())
+    if start is not None:
+        ctx.match_dates = {start.astimezone(zone).date()}
+        if end is not None:
+            # 夜场跨过当地午夜：两天都是**这一场**，不是别的场
+            ctx.match_dates.add(end.astimezone(zone).date())
+    else:
+        day = pushed_at.astimezone(zone).date()
+        ctx.match_dates = {day - timedelta(days=1), day}
+        ctx.date_window = True
+        ctx.date_source = ((f"{fs_failed}；" if fs_failed else "spec 里没有开赛时刻；")
+                           + f"按首推时刻 {pushed_at.astimezone(timezone.utc):%m-%d %H:%M}Z "
+                           "推的两天窗口（说明必须点对手、写日期）")
+    year = min(ctx.match_dates).year if ctx.match_dates else None
+    ctx.roster, ctx.roster_name = team_roster(ctx.event_en, year)
     return ctx
 
 
@@ -791,20 +896,91 @@ def name_problem(text: str, full_en: str) -> str | None:
     return None
 
 
-def metadata_problems(c: Candidate, ctx: MatchContext) -> list[str]:
+def surname_only_ok(text: str, ctx: MatchContext) -> str | None:
+    """说明只写了姓：团体赛名单上这个姓**只有他一个人**，就认——返回放行的理由，否则 None。
+
+    账号所有者 2026-09-27 的 O4 口径是「说明点名全名」（普利斯科娃双胞胎、塞伦多洛兄弟，
+    认人闸分不开）。团体赛有名单：拉沃尔杯 2026 两队 12 人 ＋ 2 替补 ＋ 4 队长，姓全不撞
+    （`data/team_event_rosters.json`）。名单上只有一个 Cerundolo（Francisco），只写姓也认得出是谁；
+    认人闸照旧要认出是**他**那张脸（`image_verdict` 的 match，不是 unknown）。"""
+    if not ctx.roster or not ctx.surname or not _has_word(text, ctx.surname):
+        return None
+    same = [p for p in roster_people(ctx.roster) if _last(p) == ctx.surname]
+    if len(same) != 1:
+        return None
+    return (f"说明只写了姓「{ctx.surname}」——{ctx.roster_name} 名单上姓 {ctx.surname} 的只有 "
+            f"{same[0]} 一个人（认人闸还要认出是他）")
+
+
+def team_opponent_ok(c: Candidate, text: str, ctx: MatchContext) -> str | None:
+    """团体赛官网自己的图注不写对手时，按名单认「这一天他只打了这一场」——放行的理由，否则 None。
+
+    2026-09-28 拉沃尔杯 lavercup.com 9/27 的真图注（媒体库 `search`／按日期翻取回来的）：
+
+    | 图注 | 拍的是谁 |
+    |---|---|
+    | Alexander Zverev adds another Laver Cup title to his resume. | 兹维列夫 |
+    | Team Europe players and captains get around Zverev. | 兹维列夫 |
+    | The Team Europe bench rise to celebrate Zverev's Cup-clinching moment on Sunday. | 欧洲队替补席 |
+    | Team World's Learner Tien returns another Zverev smash. | **勒纳·钱（对手）** |
+    | Team World support Learner Tien against Zverev. | **世界队替补席** |
+
+    官网自己写的图注，拍的是他本人时**从来不写对手**；写了对手的两张，拍的恰恰是对手那边——
+    「必须点对手」在这一档上挑出来的正好是错的图。所以团体赛放宽成按名单判：
+
+    - 只认**赛事官网自己的媒体库**（`event_owned`）——AP／Getty 的比赛图照旧点对手
+    - 当地日期是**开赛时刻**算出来的（`date_window` 那种两天窗口不给放宽）
+    - 名单上他这一天（当地）**只打了一场**，而且那一场的对手就是 `cover.matchup` 里那个——
+      同一天单打双打都打的（兹维列夫 9/26：第 6 场单打、第 8 场双打）照旧要点对手
+    - 图注里**没点名单上的别人**（「Zverev cheers on Cobolli」是在看队友打）
+    """
+    if not ctx.roster or not c.event_owned or ctx.date_window or not ctx.surname:
+        return None
+    games = roster_matches(ctx.roster, ctx.surname, ctx.match_dates)
+    if len(games) != 1:
+        return None
+    game = games[0]
+    other = [p for side in game.get("sides") or [] for p in side
+             if not any(_last(q) == ctx.surname for q in side)]
+    if not any(_last(p) == ctx.opponent_surname for p in other):
+        return None
+    named = sorted({_last(p) for p in roster_people(ctx.roster)
+                    if _last(p) not in (ctx.surname, ctx.opponent_surname)
+                    and _has_word(text, _last(p))})
+    if named:
+        return None
+    return (f"团体赛官网图注不写对手——{ctx.roster_name} 名单：{ctx.surname} 当地 "
+            f"{game.get('date')} 只打了第 {game.get('no')} 场（{game.get('kind')}，对 "
+            f"{'／'.join(other)}），图注里也没点名单上的别人")
+
+
+def metadata_problems(c: Candidate, ctx: MatchContext,
+                      relaxed: list[str] | None = None) -> list[str]:
     """说明／元数据有没有**点名**这场球：人（全名）、对手、赛事、日期，而且拍的是
-    比赛本身。只看文字，不下图。**拿不准就算没过**——任何一项缺了都不换。"""
+    比赛本身。只看文字，不下图。**拿不准就算没过**——任何一项缺了都不换。
+
+    团体赛（有名单的那几届）两处按名单放宽：只写姓（`surname_only_ok`）、官网图注不写对手
+    （`team_opponent_ok`）。放宽了哪一条写进 `relaxed`，换图时照抄进 `_gates`。"""
     problems: list[str] = []
+    relaxed = relaxed if relaxed is not None else []
     text = _fold(c.text())
     if (bad := name_problem(text, ctx.subject_en)):
-        problems.append(bad)
+        if "只有姓" in bad and (ok := surname_only_ok(text, ctx)):
+            relaxed.append(ok)
+        else:
+            problems.append(bad)
     # 对手也要在：同一个人在同一站可能有好几场（单打／双打、前一轮、后一轮），
     # 说明里点了对手才知道拍的是**这一场**。拉沃尔杯那张 BS2_8696 写的就是
     # 「takes the singles against Fritz」，AP 的比赛图也都点对手。
     if not ctx.opponent_surname:
         problems.append("不知道对手是谁（cover.matchup 里没有对手的英文名），判不了是不是这一场")
     elif not _has_word(text, ctx.opponent_surname):
-        problems.append(f"说明／文件名里没有对手「{ctx.opponent_surname}」，判不了是不是这一场")
+        if (ok := team_opponent_ok(c, text, ctx)):
+            relaxed.append(ok)
+        else:
+            problems.append(f"说明／文件名里没有对手「{ctx.opponent_surname}」，判不了是不是这一场"
+                            + ("（spec 没有开赛时刻，按首推时刻推的两天窗口——必须点对手）"
+                               if ctx.date_window else ""))
     if (hit := NOT_IN_MATCH.search(text)):
         problems.append(f"说明里有「{hit.group(0)}」——不是这场单打在打的时刻"
                         "（训练／热身／发布会／采访／签名／抵达／定妆／双打一律不换）")
@@ -865,118 +1041,94 @@ def _upload_problems(c: Candidate, ctx: MatchContext, shown: str) -> list[str]:
     return problems
 
 
-class Swept(list):
-    """一档查图的结果：候选 ＋ 这一档自己报的话。
+def _sweep_rows(label: str, run: Callable[[], object], notes: list[str],
+                results: list | None = None) -> list[Candidate]:
+    """跑一档、记一行。`run` 回 `cover_channels.ChannelResult`（正式的渠道清单）或一串
+    `Candidate`（测试替身）；抛异常的记「取不到」。"""
+    import cover_channels  # noqa: PLC0415
 
-    `find_cover_photo` 的几档把「没翻完」写进 `notes`、不抛（`sweep_local_paper` 的
-    「一辑都没取到——这一档没跑完，不是没有」、`sweep_tournament` 的「第 2 页读不到——
-    后面没翻，不是没有」）。只读 `rows` 的话，半截失败的一档在报告里是「0 张」，
-    **和查空长得一模一样**（评审第四轮 nit）。"""
-
-    def __init__(self, rows: Iterable[Candidate] = (), notes: Iterable[object] = ()):
-        super().__init__(rows)
-        self.notes = [str(n) for n in notes if n]
-
-
-def _sweep_rows(label: str, run: Callable[[], Iterable[Candidate]],
-                notes: list[str]) -> list[Candidate]:
+    results = results if results is not None else []
     try:
         got = run()
-        rows = list(got)
     except BaseException as exc:                                  # noqa: BLE001
         if isinstance(exc, KeyboardInterrupt):
             raise
-        notes.append(f"{label}：取不到（{type(exc).__name__}: {str(exc)[:120]}）——这一档没查成，不是查空")
+        import find_cover_photo as fcp  # noqa: PLC0415
+        res = cover_channels.ChannelResult(label, label, "blocked", why=fcp.fetch_failure(exc))
+        results.append(res)
+        notes.append(f"{label}：取不到（{res.why}）——这一档没查成，不是查空")
         return []
+    if isinstance(got, cover_channels.ChannelResult):
+        results.append(got)
+        notes.append(cover_channels.status_line(got))
+        if got.status != "ran":
+            return []
+        return [Candidate(got.key, **row) for row in got.rows]
+    rows = list(got)
     said = getattr(got, "notes", None) or []
+    results.append(cover_channels.ChannelResult(label, label, "ran", rows=[{}] * len(rows),
+                                                notes=list(said)))
     notes.append(f"{label}：{len(rows)} 张" + (f"（{'；'.join(said)}）" if said else ""))
     return rows
 
 
-def _credit(value: object) -> str:
-    if isinstance(value, dict):
-        return str(value.get("name") or "")
-    if isinstance(value, list):
-        return "、".join(_credit(v) for v in value)
-    return str(value or "")
+def o4_query(ctx: MatchContext):
+    """O4 这一条要查什么——和人查（`find_cover_photo`）同一个 `Query` 形状。"""
+    import cover_channels  # noqa: PLC0415
+
+    day = min(ctx.match_dates).isoformat() if ctx.match_dates else None
+    # 给比赛日：官网档翻比赛日起 `SITE_UPLOAD_DAYS` 天内上传的**全部**再按名字筛——
+    # 名字只写在 alt_text／文件名里的也认得出（WordPress 的 `search` 两样都不搜）。
+    return cover_channels.Query(player=ctx.surname, event=ctx.event_en, date=day,
+                                days=SITE_UPLOAD_DAYS, site=ctx.site, tour=ctx.tour)
 
 
-def default_sweeps(ctx: MatchContext) -> list[tuple[str, Callable[[], Iterable[Candidate]]]]:
-    """真联网的那几档，全部复用 `find_cover_photo`（别在这儿另写一套爬法）。"""
+def default_sweeps(ctx: MatchContext) -> list[tuple[str, Callable[[], object]]]:
+    """**`cover_channels.CHANNELS` 那一份清单，一档不落**（别在这儿另抄一份）。
+
+    2026-09-28 之前这里是手抄的四档（WTA 只给女子、AP、当地报纸、官网），O4 第一班
+    杭州三条只查了 AP、而 AP 在 runner 上是 Cloudflare 挑战页——报告里别的渠道**根本不出现**，
+    和「查过、没有」分不出来。现在每一档都出一行：查了 N 张／查空／没查成／没跑／O4 不查
+    （`cover_channels.status_line`）；O4 不查的那几档不发请求（`run_channel(o4=True)`）。"""
     import functools  # noqa: PLC0415
 
+    import cover_channels  # noqa: PLC0415
     import find_cover_photo as fcp  # noqa: PLC0415
 
     if not hasattr(fcp._get, "cache_info"):
         # 同一趟里几条目标会反复拉同一批 WTA 页面和 Getty 说明——进程内缓存一次
         fcp._get = functools.lru_cache(maxsize=1024)(fcp._get)
-    day = min(ctx.match_dates).isoformat() if ctx.match_dates else None
-    sweeps: list[tuple[str, Callable[[], Iterable[Candidate]]]] = []
-    # ⚠️ `sweep_wta` / `sweep_ap` 自己把取数失败吞成空列表——「被挡」和「查空」
-    # 在它们的返回值上长得一模一样（沙箱里 AP 恒 403，报出来是「0 张」）。
-    # 所以先拿同一个入口敲一次门（`_get` 有进程内缓存，不多花一次请求），
-    # 敲不开就抛，`_sweep_rows` 记成「取不到」。
-    if ctx.tour == "wta":
-        sweeps.append(("WTA photo-resources", lambda: fcp._get(fcp._WTA_PAGES[0]) and [
-            Candidate("wta", r["url"], caption=r.get("caption") or "", name=r["name"],
-                      page="、".join(r.get("seen_on") or []))
-            for r in fcp.sweep_wta(ctx.surname, None, None)]))
-        # ⚠️ 原来这里还有一档「WTA 赛后稿头图」（Match Reaction 的 og:image）：它只带
-        # 文件名（`<姓>-R2-<摄影师>.jpg`）、没有说明，点名闸要的全名／对手／日期一样都
-        # 凑不齐——**恒换不上**，却每一班为每条 WTA 目标花一次 `find_match`（评审 nit，
-        # 2026-09-27 拿掉）。photo-resources 那一档留着：里面的 `GettyImages-<id>.jpg`
-        # 会去取 Getty 的说明，全名、对手、赛事、日期都写在那句话里。
-    sweeps.append(("AP 通讯社", lambda: fcp._get(f"{fcp._AP}/hub/tennis", timeout=40) and [
-        Candidate("ap", r["url"], caption=r["caption"], page=r["article"],
-                  credit=(re.search(r"\(([^()]*AP[^()]*)\)\s*$", r["caption"]) or [None, ""])[1])
-        for r in fcp.sweep_ap(ctx.surname, ctx.event_en)]))
-    paper = next((dom for city, dom in fcp._LOCAL_PAPERS.items()
-                  if city in ctx.event_en.lower()), None)
-    if paper:
-        def paper_rows() -> Swept:
-            got = fcp.sweep_local_paper(paper, ctx.event_en, ctx.surname, day)
-            if not got.get("pages_read"):
-                # 索引页、图集页一页都没取回来（`pages_read` 的 0 就是「这一档没跑」）
-                raise RuntimeError("；".join(got.get("notes") or []) or "索引页和图集页一页都没取回来")
-            return Swept((Candidate("paper", r["url"], caption=r["caption"], page=r["gallery"],
-                                    credit=_credit(r.get("credit")))
-                          for r in got.get("rows") or []), got.get("notes") or [])
-        sweeps.append((f"当地报纸 {paper}", paper_rows))
-    if ctx.site:
-        def site_rows() -> Swept:
-            # 给比赛日：比赛日起 `SITE_UPLOAD_DAYS` 天内上传的**全部翻完**再按名字筛——
-            # 名字只写在 alt_text／文件名里的也认得出（WordPress 的 `search` 两样都不搜）。
-            got = fcp.sweep_tournament(ctx.site, day, ctx.surname, days=SITE_UPLOAD_DAYS)
-            if got.get("error"):
-                raise RuntimeError(got["error"])
-            out = []
-            for r in got.get("by_name") or []:
-                w, _, h = str(r.get("wh") or "").partition("x")
-                out.append(Candidate(
-                    "event-site", r.get("original") or r["url"],
-                    caption=" ".join(str(r.get(k) or "") for k in ("title", "alt", "caption")),
-                    name=str(r["url"]).rsplit("/", 1)[-1], page=f"https://{ctx.site}",
-                    meta_date=str(r.get("date") or "")[:10],
-                    meta_utc=str(r.get("date_gmt") or ""), event_owned=True,
-                    wh=(int(w), int(h)) if w.isdigit() and h.isdigit() and not r.get("original")
-                    else None))
-            return Swept(out, got.get("notes") or [])
-        sweeps.append((f"赛事官网 {ctx.site}", site_rows))
-    return sweeps
+    q = o4_query(ctx)
+    return [(ch.name(q), functools.partial(cover_channels.run_channel, ch, q, o4=True))
+            for ch in cover_channels.CHANNELS]
 
 
-def search(ctx: MatchContext, *, sweeps=None) -> tuple[list[Candidate], list[str]]:
+def search(ctx: MatchContext, *, sweeps=None) -> tuple[list[Candidate], list[str], list]:
+    """(候选, 每一档一行, 每一档的 `ChannelResult`)。"""
+    import cover_channels  # noqa: PLC0415
+
     notes: list[str] = []
+    results: list = []
     rows: list[Candidate] = []
     for label, run in (sweeps if sweeps is not None else default_sweeps(ctx)):
-        rows += _sweep_rows(label, run, notes)
+        rows += _sweep_rows(label, run, notes, results)
+    if results:
+        notes.append("这一趟：" + cover_channels.tally(results))
     seen, uniq = set(), []
     for c in rows:
         if c.url in seen:
             continue
         seen.add(c.url)
         uniq.append(c)
-    return uniq, notes
+    return uniq, notes, results
+
+
+def verdict_line(rows: list[dict], results: list) -> str:
+    """「不换」那一行要分清：**一档都没查成**（结果未知）和**查成了、没有一张全过**。"""
+    ran = [r for r in results if r.status == "ran"]
+    if not ran:
+        return ("    → 不换：能查的渠道一档都没查成——**结果未知，不是没有官方图**（下一班再查）")
+    return f"    → 不换：查成的 {len(ran)} 档里 {len(rows)} 张候选没有一张全过（下一班再查）"
 
 
 # ---------------------------------------------------------------- 铺图几何
@@ -1130,8 +1282,11 @@ def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
     passed: list[dict] = []
     downloads = 0
     for c in candidates:
+        relaxed: list[str] = []
         row = {"channel": c.channel, "url": c.url, "caption": c.caption[:240],
-               "problems": metadata_problems(c, ctx)}
+               "problems": metadata_problems(c, ctx, relaxed)}
+        if relaxed:
+            row["relaxed"] = relaxed
         if not row["problems"] and c.wh and fill_ratio(*c.wh, 1.0) < 1.0:
             row["problems"].append(f"分辨率不够：元数据 {c.wh[0]}×{c.wh[1]}，铺 "
                                    f"{CANVAS_W}×{CANVAS_H} 要放大 {1 / fill_ratio(*c.wh, 1.0):.2f} 倍")
@@ -1157,7 +1312,8 @@ def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
         row["problems"] += got["problems"]
         row["evidence"] = got["evidence"]
         if not row["problems"]:
-            passed.append({"candidate": c, "blob": blob, "evidence": got["evidence"]})
+            passed.append({"candidate": c, "blob": blob, "evidence": got["evidence"],
+                           "relaxed": relaxed})
         elif ((got["evidence"].get("face") or {}).get("status") == "ok"
               or any(p.startswith(("图打不开", "分辨率不够")) for p in got["problems"])):
             # 结论是确定的（图本身的毛病），下一班不用再下；模型没加载上的不算——
@@ -1178,21 +1334,31 @@ def _indent_of(text: str) -> int:
     return len(m.group(1)) if m else 2
 
 
-def upgraded_portrait(old: dict, chosen: dict, ctx: MatchContext, image_rel: str) -> dict:
+#: 渲前预检（`--preflight`）给出的 portrait 的 `_why` 开头——**和 `AUTO_WHY_PREFIX` 不一样**：
+#: 那一句是「机器在推送之后换过图」的记号，`reconcile_orphans` 按它补账；渲前预检是首推之前
+#: 会话自己换的，不进 O4 的账。
+PREFLIGHT_WHY_PREFIX = "渲前预检找到的官方实拍（tools/cover_upgrade.py --preflight）"
+
+
+def upgraded_portrait(old: dict, chosen: dict, ctx: MatchContext, image_rel: str, *,
+                      prefix: str = "") -> dict:
     c: Candidate = chosen["candidate"]
     ev = chosen["evidence"]
     lay, face = ev["layout"], ev["face"]
     w, h = ev["size"]
     sim = (face.get("similarity") or {}).get(ctx.subject_zh)
     dates = "／".join(d.isoformat() for d in sorted(ctx.match_dates))
-    why = (f"自动换图（账号所有者 2026-09-27 O4「自动换图重推」，tools/cover_upgrade.py）："
+    head = prefix or "自动换图（账号所有者 2026-09-27 O4「自动换图重推」，tools/cover_upgrade.py）"
+    why = (f"{head}："
            f"{c.channel} 渠道 {c.url}"
            + (f"（出处 {c.page}）" if c.page else "")
            + (f"，说明原文「{c.caption.strip()[:300]}」" if c.caption.strip() else "")
            + (f"，署名 {c.credit}" if c.credit else "")
-           + f"。替换推送时用的 {old.get('frame_at')}s 抽帧。")
+           + (f"。替换 {old.get('frame_at')}s 抽帧（首推之前）。" if prefix else
+              f"。替换推送时用的 {old.get('frame_at')}s 抽帧。"))
+    relaxed = "".join(f"（放宽：{r}）" for r in chosen.get("relaxed") or [])
     gates = (f"① 点名：说明／文件名有「{ctx.subject_en}」「{ctx.event_en}」，日期对上当地 {dates}"
-             f"（{ctx.tz}）。② 分辨率：{w}×{h}，zoom {lay['zoom']:g} 铺 {CANVAS_W}×{CANVAS_H}"
+             f"（{ctx.tz}；日期来源 {ctx.date_source or '?'}）{relaxed}。② 分辨率：{w}×{h}，zoom {lay['zoom']:g} 铺 {CANVAS_W}×{CANVAS_H}"
              f" 是 {lay['fill']:.2f}×（不放大）。③ 认人：最大那张脸像 {ctx.subject_zh} "
              f"{sim if sim is None else f'{sim:.2f}'}（≥ 0.34）。④ 睁眼：EAR {face.get('ear')}（≥ 0.16）。"
              f"⑤ 钩子带：脸落在 y{lay['face_out'][1]}~{lay['face_out'][3]}，钩子顶边 {hook_top()}。"
@@ -1459,6 +1625,24 @@ def _upgrade_entry(target: Target, ctx: MatchContext, chosen: dict, considered: 
 
 # ---------------------------------------------------------------- 一趟
 
+def candidate_lines(rows: list[dict], limit: int = 12) -> list[str]:
+    """每张候选一行，闸没过的把前三条理由列出来；放宽过的也列出来（放宽不是默认）。"""
+    out: list[str] = []
+    shown = [r for r in rows if not r.get("skipped")]
+    for r in shown[:limit]:
+        mark = "✅" if not r["problems"] else "  "
+        out.append(f"    {mark} {r['channel']} {r['url'][:110]}")
+        for p in r["problems"][:3]:
+            out.append(f"         - {p}")
+        for why in r.get("relaxed") or []:
+            out.append(f"         · 放宽：{why}")
+    if len(shown) > limit:
+        out.append(f"    …另外 {len(shown) - limit} 张没列")
+    if len(rows) > len(shown):
+        out.append(f"    · 跳过 {len(rows) - len(shown)} 张前几班下过、闸没过的（{LEDGER} 的 attempts）")
+    return out
+
+
 def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
         sweeps_for=None, times=flashscore_times, fetch=fetch_image, checker=None,
         final_gate=_final_gate, baseline_gate=_baseline_gate, git_rm: bool = True,
@@ -1490,32 +1674,25 @@ def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
     if not found:
         report.append("[封面升级] 近 48 小时发过、封面还是抽帧的「赛场之上」：0 条")
     for target in found:
-        ctx = match_context(target.spec, times=times)
+        ctx = match_context(target.spec, times=times, pushed_at=target.first_sent)
         head = f"[{target.slug}] 主角 {ctx.subject_zh}（{ctx.subject_en or '?'}）"
         if ctx.problems:
             report.append(f"{head}：不换——" + "；".join(ctx.problems))
             continue
         report.append(f"{head} · {ctx.event_en} · 当地 "
-                      f"{'／'.join(d.isoformat() for d in sorted(ctx.match_dates))}（{ctx.tz}）")
-        cands, sweep_notes = search(
+                      f"{'／'.join(d.isoformat() for d in sorted(ctx.match_dates))}（{ctx.tz}；"
+                      f"日期来源 {ctx.date_source}）"
+                      + (f" · 团体赛名单 {ctx.roster_name}" if ctx.roster else ""))
+        cands, sweep_notes, results = search(
             ctx, sweeps=sweeps_for(ctx) if sweeps_for else None)
         report += [f"    · {n}" for n in sweep_notes]
         chosen, rows = evaluate(target, ctx, cands, fetch=fetch, checker=checker)
-        shown = [r for r in rows if not r.get("skipped")]
-        for r in shown[:12]:
-            mark = "✅" if not r["problems"] else "  "
-            report.append(f"    {mark} {r['channel']} {r['url'][:110]}")
-            for p in r["problems"][:3]:
-                report.append(f"         - {p}")
-        if len(shown) > 12:
-            report.append(f"    …另外 {len(shown) - 12} 张没列")
-        if len(rows) > len(shown):
-            report.append(f"    · 跳过 {len(rows) - len(shown)} 张前几班下过、闸没过的（{LEDGER} 的 attempts）")
+        report += candidate_lines(rows)
         tried = [r["url"] for r in rows if r.get("tried")]
         if apply and tried and chosen is None:
             record_tried(repo, target.slug, tried, now)
         if chosen is None:
-            report.append(f"    → 不换：{len(rows)} 张候选没有一张全过（下一班再查）")
+            report.append(verdict_line(rows, results))
             continue
         if not apply:
             report.append(f"    → 会换成 {chosen['candidate'].url}（干跑，没写）")
@@ -1541,6 +1718,138 @@ def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
     return {"upgraded": upgraded, "reverted": reverted, "report": report}
 
 
+# ---------------------------------------------------------------- 渲前预检
+
+#: 渲前预检找到一张能过机器闸的官方图时的退出码。**不用 1**：Python 没接住的异常也是 1，
+#: 工作流要分得开「找到了，拦」和「工具自己炸了，不拦」。
+PREFLIGHT_FOUND = 3
+
+#: 定规矩那天（2026-09-28）已经推出去、抽帧封面、而渲前预检当天就找得到一张能过机器闸的
+#: 官方图的「赛场之上」——**只许减不许加**。它们要重渲时预检只报不拦（已发的不重渲；
+#: 近 48 小时里的那几条归 O4 自动换）。判据 `test_渲前预检豁免表只许减不许加_每条都还是已发的抽帧封面`。
+#: 当天在沙箱里对全库 83 条抽帧封面跑过一遍（AP 是挑战页、中文媒体 O4 不查），命中 0 条。
+PREFLIGHT_LEGACY: frozenset[str] = frozenset()
+
+
+def _is_auto(spec: dict) -> bool:
+    return (spec.get("_production") or {}).get("status") == "ready_for_render"
+
+
+def preflight(repo: Path, slug: str, now: datetime, *, spec: dict | None = None,
+              sweeps_for=None, times=flashscore_times, fetch=fetch_image,
+              checker=None) -> dict:
+    """**渲之前**：抽帧封面的这一条，官方图是不是其实已经在了？
+
+    来路（2026-09-28 返工审计）：窗口里推过的 66 条「赛场之上」，**11 条第一次推的是抽帧封面**，
+    其中 4 条之后换实拍又重推了 5 次（alcaraz-fritz、bu-majchrzak ×2、rublev-gaston、
+    zverev-deminaur）——每次都是一整趟 render ＋ 一条多出来的微信。O4 管的是「推出去之后
+    图才到」；而图**推之前就在**的那一种（zverev-deminaur：官网那张 Getty 比首推早 25 分钟），
+    应该在第一次 render 就拦下来。
+
+    和 O4 **同一套渠道、同一套机器闸**（`search` ＋ `evaluate`）：一张全过就返回
+    `found=True` ＋ 算好的 portrait（`image`／`focus`／`focus_y`／`zoom`／`_why`／`_gates`）。
+    **拦不拦由调用方按 spec 定**：手写的拦（`PREFLIGHT_FOUND`），自动的只报；
+    `_keep_frame_why` 认领过的、不是抽帧的、判不了当地日期的、一张都没全过的、渠道一档都没
+    查成的——**都不拦**（2026-09-26 账号所有者：没有高清大图时抽帧可以直接用）。"""
+    path = repo / SPEC_DIR / f"{slug}.json"
+    if spec is None:
+        spec = json.loads(path.read_text(encoding="utf-8"))
+    report: list[str] = []
+    out = {"slug": slug, "found": False, "auto": _is_auto(spec), "report": report,
+           "portrait": None, "chosen": None, "image_rel": "", "legacy": slug in PREFLIGHT_LEGACY}
+    cover = spec.get("cover") or {}
+    if not is_frame_cover(spec):
+        report.append(f"[渲前预检] {slug}：封面不是抽帧（cover.portrait 没有 frame_at 或已经有 image），不查")
+        return out
+    if cover.get("eyebrow") != "赛场之上":
+        report.append(f"[渲前预检] {slug}：不是「赛场之上」（{cover.get('eyebrow')}）——"
+                      "点名闸认的是一场球，这条不归它管，不查")
+        return out
+    keep = str(((cover.get("portrait") or {}).get(KEEP_FRAME_WHY)) or "").strip()
+    if keep:
+        report.append(f"[渲前预检] {slug}：`cover.portrait.{KEEP_FRAME_WHY}` 认领了这一帧（{keep}），不查")
+        return out
+    if out["legacy"]:
+        report.append(f"[渲前预检] {slug}：在 PREFLIGHT_LEGACY 里（定规矩之前已发），不查")
+        return out
+    ctx = match_context(spec, times=times, pushed_at=now)
+    head = f"[渲前预检] {slug} 主角 {ctx.subject_zh}（{ctx.subject_en or '?'}）"
+    if ctx.problems:
+        report.append(f"{head}：机器闸判不了——" + "；".join(ctx.problems)
+                      + "（不拦：这不是「没有官方图」，是这一条机器查不了，抽帧照发）")
+        return out
+    report.append(f"{head} · {ctx.event_en} · 当地 "
+                  f"{'／'.join(d.isoformat() for d in sorted(ctx.match_dates))}（{ctx.tz}；"
+                  f"日期来源 {ctx.date_source}）")
+    cands, notes, results = search(ctx, sweeps=sweeps_for(ctx) if sweeps_for else None)
+    report += [f"    · {n}" for n in notes]
+    target = Target(slug=slug, spec=spec, first_sent=now, spec_path=path)
+    chosen, rows = evaluate(target, ctx, cands, fetch=fetch, checker=checker)
+    report += candidate_lines(rows)
+    if chosen is None:
+        report.append(verdict_line(rows, results).replace("→ 不换", "→ 不拦")
+                      .replace("（下一班再查）", "——抽帧照发"))
+        return out
+    c: Candidate = chosen["candidate"]
+    ext = Path(c.url.split("?", 1)[0]).suffix.lower()
+    ext = ext if ext in (".jpg", ".jpeg", ".png") else ".jpg"
+    image_rel = f"assets/reel/{slug}-official{ext}"
+    old = copy.deepcopy(cover.get("portrait") or {})
+    portrait = upgraded_portrait(old, chosen, ctx, image_rel, prefix=PREFLIGHT_WHY_PREFIX)
+    out.update(found=True, chosen=chosen, portrait=portrait, image_rel=image_rel)
+    report.append(f"    → 官方图 {c.url} 已过机器闸（点名／在比赛中／分辨率／认人／睁眼／钩子带）")
+    report.append("    → 换法：原图（不重编码）存到 " + image_rel + "，spec 的 cover.portrait 换成 "
+                  + json.dumps({k: v for k, v in portrait.items() if not k.startswith("_")},
+                               ensure_ascii=False)
+                  + f"（`_why`／`_gates` 照抄；一条命令：python3 tools/cover_upgrade.py --preflight "
+                  f"--slug {slug} --write）。当面点过「就用这一帧」的，写 "
+                  f"cover.portrait.{KEEP_FRAME_WHY}")
+    return out
+
+
+def write_preflight(repo: Path, got: dict, *, final_gate=None) -> str | None:
+    """`--write`：把预检找到的那张图落进 `assets/reel/`、spec 的 portrait 换掉，再过一遍正式的
+    封面闸——过不了就全部退回、返回那句问题。首推之前用：**不记 O4 的账、不删 pushed.json**。"""
+    slug = got["slug"]
+    spec_path = repo / SPEC_DIR / f"{slug}.json"
+    before = spec_path.read_text(encoding="utf-8")
+    spec = json.loads(before)
+    spec["cover"]["portrait"] = got["portrait"]
+    image_path = repo / got["image_rel"]
+    had = image_path.read_bytes() if image_path.is_file() else None
+    image_path.parent.mkdir(parents=True, exist_ok=True)
+    image_path.write_bytes(got["chosen"]["blob"])
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False, indent=_indent_of(before)) + "\n",
+                         encoding="utf-8")
+    cwd = os.getcwd()
+    try:
+        os.chdir(repo)
+        problem = _gate(final_gate or _final_gate, spec)
+    finally:
+        os.chdir(cwd)
+    if problem:
+        spec_path.write_text(before, encoding="utf-8")
+        if had is None:
+            image_path.unlink(missing_ok=True)
+        else:
+            image_path.write_bytes(had)
+    return problem
+
+
+def preflight_exit(got: dict) -> tuple[int, str]:
+    """(退出码, 最后那一行)。手写的找到了：拦；自动的、存量豁免的：只报。"""
+    if not got["found"]:
+        return 0, ""
+    url = got["chosen"]["candidate"].url
+    if got["auto"]:
+        return 0, (f"::warning::{got['slug']}（自动 spec）：官方图 {url} 已过机器闸，这一趟还是抽帧封面"
+                   "——自动 spec 只报不拦；推出去之后 O4 会自动换")
+    return PREFLIGHT_FOUND, (
+        f"::error::{got['slug']}：官方图 {url} 已过机器闸，不许发抽帧封面（2026-09-26 的授权只管"
+        "「没有高清大图」的时候）。按上面「换法」那一行换掉再渲；当面点过「就用这一帧」的写 "
+        f"cover.portrait.{KEEP_FRAME_WHY}")
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--apply", action="store_true", help="真换：写图、改 spec、删同日 pushed.json、记账")
@@ -1556,11 +1865,32 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out-redispatch", default="", help="--plan：要重派 render 的 slug 一行一个")
     ap.add_argument("--out-assets", default="",
                     help="--plan：目标 spec 点名的素材文件一行一个（工作流只检出这几张，见 spec_assets）")
+    ap.add_argument("--preflight", action="store_true",
+                    help="渲前预检（要 --slug）：抽帧封面这一条，官方图是不是已经在了——"
+                         f"手写 spec 找到了退出码 {PREFLIGHT_FOUND}（match-reel render 那一步据此拦）")
+    ap.add_argument("--write", action="store_true",
+                    help="--preflight 找到了就直接把图和 portrait 写进去（首推之前用，不记 O4 的账）")
     args = ap.parse_args(argv)
     now = _parse_utc(args.now) if args.now else datetime.now(timezone.utc)
     if now is None:
         ap.error(f"--now 要带时区的 ISO 时刻：{args.now!r}")
     repo = Path(args.repo)
+    if args.preflight:
+        if not args.slug:
+            ap.error("--preflight 要 --slug")
+        got = preflight(repo, args.slug, now)
+        code, last = preflight_exit(got)
+        if got["found"] and args.write:
+            problem = write_preflight(repo, got)
+            got["report"].append(f"    → 已写：{got['image_rel']} ＋ spec 的 cover.portrait" if not problem
+                                 else f"::error::写进去之后过不了正式的封面闸，已退回——{problem}")
+            code, last = (0, "") if not problem else (1, "")
+        text = "\n".join(got["report"] + ([last] if last else []))
+        print(text)
+        if args.summary:
+            with open(args.summary, "a", encoding="utf-8") as fh:
+                fh.write("## 抽帧封面渲前预检：官方图是不是已经在了\n\n```\n" + text + "\n```\n")
+        return code
     if args.plan:
         got = plan(repo, now, apply=args.apply, only=args.slug)
         title = "抽帧封面自动换官方图 · 找目标／对账"
@@ -1591,16 +1921,20 @@ def _offline(_match_id: str) -> tuple:
     raise _Offline("--plan 不联网")
 
 
-def static_problems(spec: dict) -> list[str]:
+def static_problems(spec: dict, pushed_at: datetime | None = None) -> list[str]:
     """**不联网就判得出**的「这一条怎么查都换不了」：主角／对手的英文名缺、双打、赛事
-    认不出、spec 里既没有 `_match.start_utc` 也没有 `flashscore_id`、时区不在表里。
+    认不出、时区不在表里；`pushed_at` 不给时还有「spec 里既没有开赛时刻也没有 `flashscore_id`」。
+
+    2026-09-28：给了首推时刻（`plan` 给的都是）就不再因为「没有开赛时刻」挡掉——
+    `match_context` 先认 `_start_time_source`，再退回首推时刻推的两天窗口（说明必须点对手、
+    写日期），`safiullin-bu-hangzhou-2026-qf` 这种从此照样查。
 
     `--plan` 据此不把它算成目标（评审 nit：`safiullin-bu-hangzhou-2026-qf` 这种没有开赛
     时刻的，原来 48 小时里每 20 分钟为它装一遍 onnxruntime／opencv、拉一遍模型，而它
     一张图都换不上）。开赛时刻要联网才知道的（有 `flashscore_id`）照旧算目标——
     `match_context` 在这儿拿不到时刻就提前返回，它后面的检查一律不算「静态」。
     只用标准库（`reel_facts` 是纯 Python），`--plan` 照样不装依赖。"""
-    ctx = match_context(spec, times=_offline)
+    ctx = match_context(spec, times=_offline, pushed_at=pushed_at)
     return [p for p in ctx.problems if not p.startswith("flashscore 开赛时刻取不到")]
 
 
@@ -1647,7 +1981,7 @@ def plan(repo: Path, now: datetime, *, apply: bool = False, only: str = "") -> d
         due = [s for s in due if s == only]
     live: list[Target] = []
     for t in found:
-        stuck = static_problems(t.spec)
+        stuck = static_problems(t.spec, pushed_at=t.first_sent)
         if stuck:
             notes.append(f"{t.slug}：怎么查都换不了——" + "；".join(stuck)
                          + "（spec 补齐之前不为它装依赖）")

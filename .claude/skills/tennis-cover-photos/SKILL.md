@@ -2333,6 +2333,36 @@ WordPress 的 `search` 两样都不搜），判据 `test_半截失败的一档�
     python3 tools/cover_upgrade.py --plan             # 只看有没有活（目标、要重派的 render），不查图
     # 工作流：定时班次带 --apply；推完会话用 tools/push_link.py --slug <slug> 取新推送网页
 
+##### ⭐⭐ 2026-09-28：O4 第一班一张都没换成——渠道合成一份、AP 是挑战页、没开赛时刻也能推日期、团体赛按名单、渲前预检
+
+第一班（run 36378419750，apply=false）的账：杭州三条**只查了 AP**（403），别的渠道在报告里根本不出现；
+`safiullin-bu` 因为 spec 没有 `_match.start_utc`／`flashscore_id` 被挡；`zverev-tien` 官网 8 张全卡在
+「只写姓」「没写对手」。改了四处：
+
+| | 现在 | 判据 |
+|---|---|---|
+| 渠道 | `tools/cover_channels.py` 的 `CHANNELS` **一份**，`find_cover_photo`（人查）和 `cover_upgrade`（O4）共用；官网域名也只在 `EVENT_SITES` 登记（人查给 `--event "Laver Cup"` 就自动带上 lavercup.com）。每档一行：**查了 N 张／查空／没查成／没跑／O4 不查**，末行分清「一档都没查成＝结果未知」和「查成了、没有全过」 | `test_渠道只登记一份_人查和O4用同一张单子` |
+| AP | 沙箱实测是 **Cloudflare 人机挑战**（403 ＋ `cf-mitigated: challenge`，`/hub/tennis`、`/search`、`.rss`、`news-sitemap` 全一样；它的 robots.txt 对 ClaudeBot／Claude-User 也写着 `Disallow: /`），runner 那一班同一地址也是 403——**不绕**，第一页认出来就停、记「没查成」 | `test_AP的Cloudflare挑战页记没查成_第一页就停` |
+| 当地日期 | `_match.start_utc` → `_start_time_source`（safiullin-bu 记着 sofascore 的 `reported_utc`）→ flashscore → **首推时刻推的两天窗口**（片子只做今天／昨天的比赛日；窗口下说明必须点对手、写日期，只能靠上传时刻判的不换），报告里写「日期来源」 | `test_没有开赛时刻_按spec记下的或首推时刻推当地日期_并说是哪一个` |
+| 团体赛 | `data/team_event_rosters.json`（拉沃尔杯 2026：官网 9/21 那篇的名单 ＋ 10 场「Match Highlights – A v B (Match N)」，和仓库 10 条拉沃尔杯 spec 逐条对得上）。**只写姓**：名单上这个姓只有他一人就认（认人闸还要认出是他）；**官网图注不写对手**：只认官网自己的图、日期是开赛时刻算的、他那天只打这一场且对手对得上、图注没点名单上的别人 | `test_拉沃尔杯官网真图注_…`（9/27 真图注录在 `tests/fixtures/cover_upgrade/`） |
+
+⚠️ **为什么团体赛放宽对手**：官网自己写的图注，拍他本人时**从来不写对手**（「Alexander Zverev adds another
+Laver Cup title to his resume.」「Team Europe players and captains get around Zverev.」）；写了对手的两张拍的
+恰恰是对手那边（「Team World's Learner Tien returns another Zverev smash.」）。兹维列夫 9/26 单打双打都打
+（第 6、第 8 场），那一天照旧要点对手。
+
+**渲前预检**（返工审计：66 条里 11 条首推是抽帧、4 条换实拍重推了 5 次）：match-reel render 那一步
+`python tools/cover_upgrade.py --preflight --slug <slug>`，同一套渠道和机器闸——有一张全过，**手写 spec 红**
+（退出码 3，报告里是 `image`／`focus`／`focus_y`／`zoom`，`--write` 一条命令写进去），自动 spec 只报；
+没有、判不了、渠道没查成、超时（240 秒）、工具自己炸了都不拦。会话发 render 之前自己也跑一遍。
+
+**回放的数（别读成「修好了」）**：11 条首推按首推那一刻重跑（上传晚于首推的剔掉）**0 条会被拦**——杭州 6 条
+机器能用的渠道一档都没有（AP 挑战页；中文媒体是这一站唯一出过实拍的一档，而 O4 不查它）；拉沃尔杯 4 条
+名单放宽之后点名闸过了 20 张（其中 10 张靠名单），**20 张全卡在官网 1200 宽**、1 张卡认人（替补席）；
+比利·简·金杯 1 条 WTA 查空。全库 83 条抽帧封面今天跑一遍：硬红 0，单条最慢 17 秒。
+还卡着的两件是**口径，要账号所有者定**：中文媒体要不要让机器用（配图没图注，要一道排资料图的闸）；
+拉沃尔杯官网 1200 宽放大到几倍以内可以自动换。
+
 
 ### ⭐⭐ 2026-09-18：**比利·简·金杯官网的图在 Contentful 上，原图 5000~7000px**——页面是 JS 壳，图不是
 
