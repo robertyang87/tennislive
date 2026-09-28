@@ -863,7 +863,7 @@ def test_请求生成器切行和写进spec的是同一个默认终点(monkeypat
     path.write_text('{"slug":"demo","url":"https://youtu.be/x"}', encoding="utf-8")
     monkeypatch.setattr(bir, "_transcribe_request", lambda url, d, model: (_rows(50.0), 80.0))
     windows, seen = [], {}
-    monkeypatch.setattr(bic, "segment", lambda words, start, end, budget=None: (
+    monkeypatch.setattr(bic, "segment", lambda words, start, end, budget=None, ruler=None: (
         windows.append((start, end)) or [{"a": 0.0, "b": 1.0, "en": "hello"}]))
     monkeypatch.setattr(draft_interview_spec, "translate",
                         lambda rows, chat, max_zh_chars=None: ["你好"])
@@ -1129,7 +1129,7 @@ def test_生成器没拿到人给的end时记下默认值(monkeypatch, tmp_path)
 
     path = tmp_path / "demo.json"
     monkeypatch.setattr(bir, "_transcribe_request", lambda url, d, model: (_rows(50.0), 80.0))
-    monkeypatch.setattr(bic, "segment", lambda words, start, end, budget=None: (
+    monkeypatch.setattr(bic, "segment", lambda words, start, end, budget=None, ruler=None: (
         [{"a": 0.0, "b": 1.0, "en": "hello"}]))
     monkeypatch.setattr(draft_interview_spec, "translate",
                         lambda rows, chat, max_zh_chars=None: ["你好"])

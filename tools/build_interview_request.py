@@ -671,7 +671,11 @@ def _round_name_review(req: dict, spec: dict, existing: dict, copy_text: str,
 
 
 def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
-    from build_interview_clip import segment, strip_hesitation_lines  # noqa: PLC0415
+    from build_interview_clip import (  # noqa: PLC0415
+        segment,
+        segment_ruler,
+        strip_hesitation_lines,
+    )
     from draft_interview_spec import cap_json3, translate  # noqa: PLC0415
 
     req = _read(path)
@@ -739,9 +743,11 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
         if not rows:
             raise RuntimeError(f"{slug}: 第一份 ASR 为空")
         start, end = request_window(req, duration, rows)
+        # 尺子和出片那一趟同一把：已渲过的 slug（显式修订重建）按它当年那把切，
+        # 不然这里切出来、按行号写进 `zh` 的行，渲染时按老尺子重切就对不上
         lines = segment(
             [(row["t"], row["text"]) for row in rows], start, end,
-            budget=req.get("segment_budget_px"),
+            budget=req.get("segment_budget_px"), ruler=segment_ruler({"slug": slug}),
         )
         # render/verify 会在切行后清掉 um/uh 等犹豫音；初次翻译必须走完全相同的
         # 正文行，否则长讲话会出现“中文 656 行、英文 673 行”这种必然无法渲染的
