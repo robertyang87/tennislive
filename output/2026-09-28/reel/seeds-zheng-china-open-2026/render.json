@@ -82,5 +82,6 @@
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-seeds-zheng-china-open-2026/seeds-zheng-china-open-2026.mp4",
-  "video_bytes": 74676281
+  "video_bytes": 74676281,
+  "_release_tag_note": "2026-09-28T17:40:00Z 会话量过：同一个 slug 在北京 9/29 重渲（output/2026-09-29/reel/seeds-zheng-china-open-2026，run 传 Release 时 `gh release upload --clobber` 换掉了 tag `reel-seeds-zheng-china-open-2026` 上的附件），此刻 Range: bytes=0-1 回来的 Content-Range 总长是 76568785，和 9/29 那一份的 video_bytes 一样；这里记的 video_bytes 74676281 那一版已经不在 tag 上了。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
 }

@@ -145,8 +145,12 @@ def test_AP的Cloudflare挑战页记没查成_第一页就停(monkeypatch):
 
 def test_O4第一班那三条杭州ATP_每一档都有一行_一档都没查成不许说成查过(monkeypatch):
     """run 36378419750 的报告里杭州三条只有一行「AP 通讯社：取不到」，别的渠道根本不出现。
-    现在七档都出一行，结论分得清「一档都没查成（结果未知）」和「查成了、没有全过」。"""
+    现在九档都出一行，结论分得清「一档都没查成（结果未知）」和「查成了、没有全过」。
+    （2026-09-28 加了 ATP Media／WTA 照片接口两档：ATP 的比赛前一档跑、后一档按 tour 跳过。）"""
+    import official_photo_apis as apis  # noqa: PLC0415
+
     monkeypatch.setattr(fcp, "_get", _challenge)
+    monkeypatch.setattr(apis, "get_json", _challenge)
     for name in ("sweep_wta", "sweep_local_paper", "sweep_tournament", "sweep_usopen",
                  "sweep_wta_articles"):
         monkeypatch.setattr(fcp, name, lambda *a, **k: pytest.fail("这一档在杭州 ATP 上不该发请求"))
@@ -158,10 +162,11 @@ def test_O4第一班那三条杭州ATP_每一档都有一行_一档都没查成�
     cands, notes, results = cu.search(ctx)
     assert cands == []
     by = {r.key: r.status for r in results}
-    assert by == {"wta": "skipped", "wta-articles": "off", "ap": "blocked", "usopen": "off",
+    assert by == {"atp-media": "blocked", "wta-photos": "skipped",
+                  "wta": "skipped", "wta-articles": "off", "ap": "blocked", "usopen": "off",
                   "paper": "skipped", "event-site": "skipped", "cn-media": "off"}, by
-    assert len([n for n in notes if "：" in n]) == 7 + 1, notes          # 七档 ＋ 末尾那一行
-    assert notes[-1].startswith("这一趟：没查成 1（AP 通讯社）"), notes[-1]
+    assert len([n for n in notes if "：" in n]) == 9 + 1, notes          # 九档 ＋ 末尾那一行
+    assert notes[-1].startswith("这一趟：没查成 2（ATP Media 照片接口、AP 通讯社）"), notes[-1]
     assert "结果未知" in cu.verdict_line([], results)
     # 对照组：真查成了、只是没有一张全过
     ok = [cch.ChannelResult("event-site", "赛事官网 WordPress 媒体库", "ran", rows=[{}])]

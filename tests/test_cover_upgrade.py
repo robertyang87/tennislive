@@ -639,6 +639,30 @@ def test_人脸模型不可用就不换(tmp_path):
     assert any("人脸模型不可用" in line for line in got["report"])
 
 
+def test_人脸模型不可用_这一班只下第一张_剩下的不下也不记tried(tmp_path):
+    """复审 nit（2026-09-28）：「装认人依赖」装不上的那一班，原来照样把过了元数据的原图挨张
+    下满 `MAX_DOWNLOADS`——一张都判不了、一张都不记 tried，下一班又下一遍。"""
+    urls = [f"https://assets.apnews.com/x/{i:08x}.jpg" for i in range(4)]
+    fetched: list[str] = []
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
+
+    def sweeps_for(_ctx):
+        return [("测试渠道", lambda: [_ap(u) for u in urls])]
+
+    def fetch(url):
+        fetched.append(url)
+        return _photo("ok")
+
+    got = cu.run(repo, NOW, apply=True, sweeps_for=sweeps_for,
+                 times=lambda _id: (START, None), fetch=fetch,
+                 checker=lambda img, exp, **_kw: {"status": "unavailable", "error": "没装 onnxruntime"},
+                 final_gate=lambda spec: None)
+    assert got["upgraded"] == []
+    assert fetched == urls[:1], f"模型不可用之后还在下：{fetched}"
+    assert sum("这一班不再下" in line for line in got["report"]) >= 1, "\n".join(got["report"])
+    assert not (cu.load_ledger(repo)["attempts"].get(SLUG) or {}).get("tried"), "模型不可用不许记 tried"
+
+
 def test_换完过不了正式的封面闸就全部退回(tmp_path, model):
     repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
     before = (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes()
@@ -1320,6 +1344,57 @@ def test_Release挂账_不共用tag就不写_旧的没挂账要点名(tmp_path, 
     noted = rtn.supersede(repo, SLUG, NOW, "测试", stage=False)
     assert noted == [f"output/2026-09-26/reel/{SLUG}/render.json",
                      f"output/2026-09-27/reel/{SLUG}/render.json"], noted
+
+
+def test_会话手动跨天重渲_派发前跑supersede_合并时tag碰撞判据不红(tmp_path, monkeypatch, capsys):
+    """2026-09-28 `wang-prozorova` 换开赛时刻跨天重渲：旧的那格没人挂账，PR 的 CI 红了一轮
+    （`test_同一个Release_tag被两份产物共用时每一份都要挂账`），手写一句才过。O4 那条路换图时
+    自己挂（`cover_upgrade.apply_upgrade`），会话手动重渲这条路原来只有 `current` 事后点名。
+
+    判据：派发之前跑 `release_tag_note.py supersede --slug`，旧的那格挂好、进索引；render 传完
+    `current` 给新的挂上——CI 那两条判据原样判这个仓库，全绿；没有旧记录时也要出声。"""
+    import release_tag_note as rtn  # noqa: PLC0415
+
+    url = f"https://github.com/o/r/releases/download/reel-{SLUG}/{SLUG}.mp4"
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(days=2))})
+    assert rtn.main(["supersede", "--slug", SLUG, "--repo", str(repo)]) == 0
+    assert "没有旧记录，不用挂账" in capsys.readouterr().out, "没什么可挂也要出声"
+
+    old = f"output/2026-09-25/reel/{SLUG}"
+    records = {f"{old}/render.json": {"video_url": url, "video_bytes": 111000111}}
+    for i in range(20):                               # 判据自带「至少 20 份」的下限
+        other = f"filler-{i:02d}"
+        records[f"output/2026-09-20/reel/{other}/render.json"] = {
+            "video_url": f"https://github.com/o/r/releases/download/reel-{other}/{other}.mp4",
+            "video_bytes": 1000 + i}
+    for rel, data in records.items():
+        (repo / rel).parent.mkdir(parents=True, exist_ok=True)
+        (repo / rel).write_text(json.dumps(data, indent=2) + "\n", "utf-8")
+    _git(repo, "add", "-A")
+    _commit(repo, "renders")
+    _git(repo, "sparse-checkout", "set", "--no-cone", "/*", "!/output/")   # 和工作流一样
+
+    assert rtn.main(["supersede", "--slug", SLUG, "--why", "改开赛时刻重渲", "--repo", str(repo),
+                     "--now", "2026-09-28T04:40:00Z"]) == 0
+    assert f"挂账：{old}/render.json" in capsys.readouterr().out
+    staged = json.loads(_git(repo, "show", f":{old}/render.json"))
+    note = str(staged.get(rtn.NOTE_KEY) or "")
+    assert "改开赛时刻重渲" in note and "2026-09-28" in note and "Content-Range" in note, staged
+    assert staged["video_bytes"] == 111000111, "挂账不许动原来记的数"
+    _commit(repo, "spec + 旧的挂账")
+
+    new = f"output/2026-09-28/reel/{SLUG}"
+    (repo / new).mkdir(parents=True)
+    (repo / new / "render.json").write_text(
+        json.dumps({"video_url": url, "video_bytes": 111826692}, indent=2) + "\n", "utf-8")
+    assert rtn.main(["current", "--render-json", str(repo / new / "render.json"),
+                     "--run-id", "36424112503", "--repo", str(repo)]) == 0
+    assert "::warning::" not in capsys.readouterr().out, "旧的已经挂过，不该再点名"
+    _git(repo, "add", "--sparse", f"{new}/render.json")
+    judge = _load_collision_judge()
+    monkeypatch.setattr(judge, "ROOT", repo)
+    judge.test_同一个Release_tag被两份产物共用时每一份都要挂账()
+    judge.test_挂账那句话不许写成一句空话()
 
 
 def test_plan不为怎么查都换不了的目标装依赖(tmp_path):

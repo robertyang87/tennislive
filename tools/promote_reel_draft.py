@@ -96,6 +96,32 @@ def _match_keys(spec: dict) -> set[str]:
     return keys
 
 
+def _flashscore_id(spec: dict) -> str:
+    match = spec.get("_match")
+    return str(match.get("flashscore_id") or "").strip() if isinstance(match, dict) else ""
+
+
+def _compilation_only(spec: dict, key: str, other: str, root: Path | None = None) -> bool:
+    """撞上的只是一条**合集源片**、其实是两场球吗？
+
+    Tennis TV 会把同一天的两场半决赛剪进同一条集锦（2026-09-28 杭州：`nSaTYP-T8sM`
+    「Rublev vs Jacquet & Medvedev vs Safiullin」）。源片那把钥匙于是对上了，而
+    `rublev-jacquet`（已推）和 `medvedev-safiullin` 讲的是两场球——`_match` 里的
+    flashscore 场次 id 一个是 `M7514hNb`、一个是 `QmOLdkIG`。
+
+    只在**两条都记了场次 id、而且 id 不一样**时放行；缺一个 id 就照旧按源片判（老 spec
+    的 `_match` 是散文、没有 id，那时只剩源片认得出——`_match_keys` 那条）。
+    场次 id 那把钥匙自己对上的（`fs:`），永远是同一场球。"""
+    if key.startswith("fs:"):
+        return False
+    try:
+        prior = json.loads(((root or FORMAL) / f"{other}.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    mine, theirs = _flashscore_id(spec), _flashscore_id(prior if isinstance(prior, dict) else {})
+    return bool(mine and theirs and mine != theirs)
+
+
 def _published_reel_matches(root: Path | None = None) -> dict[str, str]:
     """已经落库的「赛场之上」讲过哪几场球 → 那条 spec 的 slug。
 
@@ -208,7 +234,8 @@ def waiting_reasons(draft: dict) -> list[str]:
     # 01:55 产的 `swiatek-wang` 和人写的 `wangxiyu-swiatek-us-open-2026-r1`
     # 是同一场球、同一条源片，只是视角不同。
     published = _published_reel_matches()
-    hit = sorted({published[key] for key in _match_keys(draft) if key in published})
+    hit = sorted({published[key] for key in _match_keys(draft) if key in published
+                  and not _compilation_only(draft, key, published[key])})
     if hit:
         reasons.append("这一场已经有正式「赛场之上」了（" + "、".join(hit)
                        + "），同一个栏目不发第二条；这份草稿可以删掉")
@@ -484,8 +511,9 @@ def promote(draft: dict, probe: dict | None = None) -> dict:
 
     # `_feed_retry` 是草稿专用的账（flashscore 哪几块还欠着，reel-auto-ready 重跑用），
     # 转正时和 `_draft` 一起剥掉：正式 spec 不再被任何一班重跑，留着只会让读的人以为
-    # 还欠着什么。欠着的块在 `_notes` 里照旧写着。
-    spec = {k: v for k, v in draft.items() if k not in ("_draft", "_feed_retry")}
+    # 还欠着什么。欠着的块在 `_notes` 里照旧写着。`_cover_api` 同理（照片接口那一档的账：
+    # 问过的开赛时刻、下过没过的候选、被视觉审核判掉的图——`refresh_reel_cover`）。
+    spec = {k: v for k, v in draft.items() if k not in ("_draft", "_feed_retry", "_cover_api")}
     spec.update({
         "cover": cover,
         "editorial": editorial,

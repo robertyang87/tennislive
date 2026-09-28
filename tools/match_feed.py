@@ -68,17 +68,21 @@ AO_DAY = ("https://prod-scores-api.ausopen.com/year/{year}/period/{period}"
 
 
 def _get(url: str, headers: dict | None = None, data: bytes | None = None,
-         attempts: int = 3) -> bytes:
+         attempts: int = 3, timeout: float = 40) -> bytes:
     """拉一个 feed。**只重试「没送到」**：网络异常和 HTTP 5xx 是抖动，重试；
     HTTP 4xx 是明确拒绝（404 不存在 / 403 被挡），当场 SystemExit——
     别把「被挡」重试成「它在路上」。一次 IncompleteRead 就裸崩会把整条
     `match_stat_hooks --from-spec` 带倒（2026-08-14 实测踩过）。
+
+    `attempts`／`timeout`：定时班次里有墙钟预算的调用方（reel-auto-ready 的封面那一步，
+    `cover_upgrade.pick_for_draft`）只试一次、超时收短——默认的 3 × 40 秒在 flashscore 挂住时
+    一份草稿就是两分钟（2026-09-28 复审：`refresh()` 在 flashscore 挂住时实测 128.7 秒）。
     """
     req = urllib.request.Request(url, data=data, headers={
         "User-Agent": UA, "Accept": "*/*", **(headers or {})})
     for i in range(attempts):
         try:
-            with urllib.request.urlopen(req, timeout=40) as fh:
+            with urllib.request.urlopen(req, timeout=timeout) as fh:
                 return fh.read()
         except urllib.error.HTTPError as exc:
             if 500 <= exc.code < 600 and i + 1 < attempts:
@@ -96,10 +100,11 @@ def _get(url: str, headers: dict | None = None, data: bytes | None = None,
     raise SystemExit(f"{url}\n  连了 {attempts} 次都失败")
 
 
-def fs_feed(name: str, match_id: str) -> str:
+def fs_feed(name: str, match_id: str, *, attempts: int = 3, timeout: float = 40) -> str:
     return _get(f"{FS_FEED}{name}_{match_id}",
                 {"x-fsign": FS_SIGN,
-                 "Referer": "https://www.flashscore.com/"}).decode("utf-8", "replace")
+                 "Referer": "https://www.flashscore.com/"},
+                attempts=attempts, timeout=timeout).decode("utf-8", "replace")
 
 
 def find(tour: str, event: str, who: str) -> list[dict]:
