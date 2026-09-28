@@ -8835,7 +8835,7 @@ def duplicate_match_problem(spec: dict, root: Path | None = None) -> str | None:
         return None
     try:
         sys.path.insert(0, str(Path(__file__).resolve().parent))
-        from promote_reel_draft import _match_keys, _published_reel_matches
+        from promote_reel_draft import _compilation_only, _match_keys, _published_reel_matches
     except Exception:
         return None          # 拿不到就不判——闸缺席好过误报
     keys = _match_keys(spec)
@@ -8844,6 +8844,8 @@ def duplicate_match_problem(spec: dict, root: Path | None = None) -> str | None:
     published = _published_reel_matches(root)
     for key in sorted(keys):
         other = published.get(key)
+        if other and _compilation_only(spec, key, other, root):
+            continue             # 合集源片里的另一场球（场次 id 不同）——不是同一场
         if other and other != slug and other not in _LEGACY_SAME_MATCH_TWICE:
             # A requested replacement retains both versions for review. It is not
             # an unsolicited second story: require an explicit one-hop relationship,

@@ -10121,6 +10121,22 @@ def test_同一场球不许在赛场之上发第二条(tmp_path):
         published), \
         "`watch?v=` 和 `youtu.be/` 没归一到同一把钥匙——认不出的样子和没发过一样"
 
+    # ④b 合集源片：Tennis TV 把同一天两场半决赛剪进一条（2026-09-28 杭州 `nSaTYP-T8sM`
+    #    「Rublev vs Jacquet & Medvedev vs Safiullin」）。两条都记了场次 id、id 不同——
+    #    两场球，放行；同一个 id——同一场，照拦；新的这条没记 id——只剩源片，照拦
+    write("合集里的第一场", "赛场之上", "https://www.youtube.com/watch?v=nSaTYP-T8sM", "M7514hNb")
+    assert reel.duplicate_match_problem(
+        spec("合集里的第二场", "赛场之上", "https://youtu.be/nSaTYP-T8sM", "QmOLdkIG"),
+        published) is None, \
+        "合集源片里的另一场球（场次 id 不同）被当成同一场拦了——这道闸扫宽了"
+    assert reel.duplicate_match_problem(
+        spec("合集里第一场的反视角", "赛场之上", "https://youtu.be/nSaTYP-T8sM", "M7514hNb"),
+        published), "合集源片、同一个场次 id——就是同一场，要拦"
+    assert reel.duplicate_match_problem(
+        {"slug": "没记场次id", "cover": {"eyebrow": "赛场之上"},
+         "source_url": "https://youtu.be/nSaTYP-T8sM"}, published), \
+        "没记场次 id 时只剩源片认得出——不许因为「可能是合集」就放行"
+
     # ⑤ 位置：dry-run 那条路真的走得到
     assert "duplicate_match_problem(" in inspect.getsource(reel.validate_spec), \
         "validate_spec 没调这道闸——手写 spec 那条路还是拦不住，" \

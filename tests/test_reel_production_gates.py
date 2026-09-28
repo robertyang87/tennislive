@@ -544,6 +544,31 @@ def test_promote不许在同一个栏目里发第二条讲同一场球的片子(
         promote.promote(draft)
 
 
+def test_promote_合集源片里的另一场球不算同一场(tmp_path, monkeypatch):
+    """Tennis TV 把同一天两场半决赛剪进一条集锦（2026-09-28 杭州 `nSaTYP-T8sM`「Rublev vs
+    Jacquet & Medvedev vs Safiullin」）：源片那把钥匙对上了，两条讲的却是两场球。两条都记了
+    flashscore 场次 id、id 不同就放行；同一个 id、或者草稿没记 id，照旧拦。"""
+    promote = load("promote_reel_draft")
+    published = tmp_path / "formal"
+    published.mkdir()
+    (published / "rublev-jacquet.json").write_text(json.dumps({
+        "slug": "rublev-jacquet", "source_url": "https://www.youtube.com/watch?v=nSaTYP-T8sM",
+        "_match": {"flashscore_id": "M7514hNb"}, "cover": {"eyebrow": "赛场之上"},
+    }, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(promote, "FORMAL", published)
+
+    def reasons(fsid):
+        draft = _ready_draft(tmp_path)
+        draft["sources"] = {"ttv": "https://youtu.be/nSaTYP-T8sM"}
+        draft["source_url"] = "https://youtu.be/nSaTYP-T8sM"
+        draft["_match"]["flashscore_id"] = fsid
+        return [r for r in promote.waiting_reasons(draft) if "已经有正式" in r]
+
+    assert reasons("QmOLdkIG") == [], "合集源片里的另一场球被当成同一场拦了"
+    assert reasons("M7514hNb"), "同一个场次 id——就是同一场，要拦"
+    assert reasons(""), "没记场次 id 时只剩源片认得出——不许放行"
+
+
 def test_promote拒绝没有新鲜度证据的自动草稿(tmp_path):
     promote = load("promote_reel_draft")
     draft = _ready_draft(tmp_path)
