@@ -380,11 +380,17 @@ jobs:
               echo "[跳过] $slug 这一趟人工请求没过闸，不投上一版 spec"
               continue
             fi
-            RECEIVED_AT=$(date -u +%FT%TZ)
-            echo "[dispatch] interview-clip render $slug"
+            DISPATCHED_AT=$(date -u +%FT%TZ)
+            # 10 分钟成片时钟的起点：这趟 render 是先投 subs 换来的，就从那趟 subs 派发算起
+            # （`render_received_at`）——不然 subs 那一跳整段不进 SLA。取不到就用现在，
+            # 不许因为它把整趟打红。记账（--mark-one）照旧记真正的派发时刻：70 分钟的重投窗口按它算。
+            RECEIVED_AT=$(python tools/pick_interview_renders.py --received-at "$slug" \
+              --at "$DISPATCHED_AT") || RECEIVED_AT="$DISPATCHED_AT"
+            [ -n "$RECEIVED_AT" ] || RECEIVED_AT="$DISPATCHED_AT"
+            echo "[dispatch] interview-clip render $slug（SLA 起点 $RECEIVED_AT）"
             if gh workflow run interview-clip.yml --ref main \
               -f "slug=$slug" -f mode=render -f "received_at=$RECEIVED_AT"; then
-              python tools/pick_interview_renders.py --mark-one "$slug" --at "$RECEIVED_AT"
+              python tools/pick_interview_renders.py --mark-one "$slug" --at "$DISPATCHED_AT"
             else
               FAILED+=("$slug")
             fi

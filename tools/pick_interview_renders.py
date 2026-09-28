@@ -44,6 +44,7 @@ tien-cobolli ×2、chwalinska ×1，25.4 runner-分钟），**0/6 在 dispatch �
     python tools/pick_interview_renders.py --subs-list F # 另把「先投 subs」的写进 F
     python tools/pick_interview_renders.py --mark-one X  # X dispatch 成功后记一笔
     python tools/pick_interview_renders.py --mark-subs X # X 的 subs dispatch 成功后记一笔
+    python tools/pick_interview_renders.py --received-at X --at T  # X 投 render 时的 SLA 起点
     python tools/pick_interview_renders.py --stale       # 投了很久没产物的（查产物）
 
 stdout 协议（workflow 靠它切）：第一行是给人看的题头，**第二行起每行一个
@@ -100,6 +101,10 @@ STALE_MINUTES = 70
 # 一趟还在跑的 subs 会被同 slug 的重投掐掉（cancel-in-progress）、从头再来。
 SUBS_STALE_MINUTES = 40
 SUBS_MAX_TRIES = 3
+# render 那一趟 10 分钟成片时钟（interview-clip 的 `received_at`）往前拨到「先投的那趟 subs」，
+# 只认这么近的一趟：subs 实测 5~8 分钟，判定干净就叫醒 auto-render 当场投 render。再早的
+# 那趟中间多半隔着人（判定红了、人改完认领才投的 render）——人等的那几个小时不是流水线的时间。
+SUBS_SLA_MINUTES = SUBS_STALE_MINUTES
 
 
 def _sha256(path: Path) -> str:
@@ -444,6 +449,29 @@ def subs_dispatch_block(slug: str, *, now: datetime,
     return None
 
 
+def render_received_at(slug: str, *, now: datetime, state: dict | None = None) -> str:
+    """auto-render 投 render 时传给 interview-clip 的 `received_at`（10 分钟成片时钟的起点）。
+
+    这趟 render 是**先投 subs** 换来的，起点就是那趟 subs 的派发时刻——原来一律取投 render
+    那一刻，subs 那一跳（派发、5~8 分钟、叫醒）整段不进 SLA，挪出去的第二份 ASR 看着像
+    省掉了（复审 2026-09-28）。只认：同一份转写输入（`_subs_inputs`）、晚于这条上一次
+    render 派发、离现在不超过 `SUBS_SLA_MINUTES`；其余一律取现在（和原来一样）。
+    ⚠️ 记账里的 `at` 是**最后一趟** subs 的派发时刻：重投过的，前面死掉的那几趟不算进来。"""
+    fallback = now.strftime("%FT%TZ")
+    state = state or _load_state()
+    rec = (state.get("subs") or {}).get(slug)
+    inputs = _subs_inputs(slug)
+    if not isinstance(rec, dict) or not inputs or rec.get("inputs_sha256") != inputs:
+        return fallback
+    at = _utc(rec.get("at"))
+    if at is None or at > now or now - at > timedelta(minutes=SUBS_SLA_MINUTES):
+        return fallback
+    last_render = _utc((state.get("at") or {}).get(slug))
+    if last_render is not None and last_render >= at:
+        return fallback
+    return at.strftime("%FT%TZ")
+
+
 def mark_subs(slug: str, *, now: str = "") -> None:
     """X 的 `mode=subs` dispatch **成功之后**记一笔（先投后记，和 `mark_one` 同一个顺序）。"""
     state = _load_state()
@@ -608,7 +636,11 @@ def main() -> int:
     ap.add_argument("--mark-one", default="",
                     help="这条 slug dispatch 成功了，记进状态（投一条记一条）")
     ap.add_argument("--at", default="",
-                    help="配合 --mark-one：写入这次 dispatch 的 UTC 时刻")
+                    help="配合 --mark-one／--mark-subs：写入这次 dispatch 的 UTC 时刻；"
+                         "配合 --received-at：「现在」")
+    ap.add_argument("--received-at", default="",
+                    help="打印这条 slug 投 render 时 10 分钟成片时钟的起点（先投过 subs 的，"
+                         "是那趟 subs 的派发时刻；见 `render_received_at`）")
     ap.add_argument("--stale", action="store_true",
                     help="列出投了超过 %d 分钟还没有当前成片的" % STALE_MINUTES)
     ap.add_argument("--probe", action="store_true",
@@ -623,6 +655,10 @@ def main() -> int:
     global PROBE
     PROBE = bool(args.probe)
 
+    if args.received_at:
+        now = _utc(args.at) or datetime.now(timezone.utc)
+        print(render_received_at(args.received_at, now=now))
+        return 0
     if args.mark_one:
         mark_one(args.mark_one, now=args.at)
         print(f"已记：{args.mark_one}")

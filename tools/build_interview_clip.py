@@ -2577,7 +2577,7 @@ def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
       所以按区间量的东西要自己绑区间——第二份 ASR 的分歧量数记 `window`
       （`verdict_window`），空档证据按空档键逐行认（区间一挪、键就变、那一行就没了）
     - 第一份/第二份用的模型名——换了 `whisper_model`，上一次的核对
-      证明不了新配置
+      证明不了新配置；第二份的 VAD 开关（`whisper_vad_filter`）关掉时同理
     """
     h = hashlib.sha256()
     for cap in sorted(outdir.glob("cap_*.json3")):
@@ -2589,6 +2589,12 @@ def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
     h.update(json.dumps(spec.get("en_fixed") or {}, sort_keys=True,
                         ensure_ascii=False).encode("utf-8"))
     h.update(f"{spec.get('asr_model', '')}|{_second_model(spec)}".encode())
+    # 第二份 ASR 的 VAD 开关同理：它决定 whisper 听不听得见停顿里的词，分歧率和空档证据
+    # （`second_asr_words`）都跟着变。它在 `SUBS_INPUT_KEYS` 里（改了 subs 的账清零），不进
+    # 这里的话只改它：账清零、判定照旧 ok，render 跳过重量、拿旧开关量的数出片（复审
+    # 2026-09-28）。**只在关掉时进**——默认开着的指纹和加这一条之前一字不差，存量判定不作废。
+    if not spec.get("whisper_vad_filter", True):
+        h.update(b"|second_vad=off")
     return h.hexdigest()
 
 

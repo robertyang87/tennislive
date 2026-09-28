@@ -4940,8 +4940,11 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 - 判定＝三份进仓库的文件，都绑 `transcript_fingerprint`：`second_asr_verdict.json`（新，第二份 ASR
   **每跑一次都落**的分歧量数）、`gap_vad_attestation.json`（每行带自动销账的 `reason`）、
   `verify_fingerprint.json`。认领（`transcript_disagree_ok`、`caption_gaps_ok`）不进指纹，
-  量完再写照样作数。**指纹变**＝切出来的 `en` 行变、`en_fixed` 变、字幕缓存变、换模型——
-  这时判定作废、自动链再投一趟 subs
+  量完再写照样作数。**指纹变**＝切出来的 `en` 行变、`en_fixed` 变、字幕缓存变、换模型、
+  关掉第二份的 VAD（`whisper_vad_filter: false`；开着时指纹和加它之前一字不差）——这时判定作废、
+  自动链再投一趟 subs。`SUBS_INPUT_KEYS` 里每一样都要绑得上判定（进指纹、进 `window`、或经切行），
+  表自带自检：复审量到 VAD 开关漏绑——只改它，subs 的账清零、判定却照旧 ok，render 跳过重量、
+  拿旧开关量的数出片（`eala-parks-toronto-2026`、`gauff-kostyuk-cincinnati-2026-qf` 写着 false）
 - ⚠️ **`start`／`end` 不进指纹**（复审 2026-09-28 实测：挪进两句话之间的静默，行一字不差、指纹
   一字不差）。所以按区间量的东西各自绑区间：分歧量数和 `verify_fingerprint.json` 的 pass 记
   `window`，对不上＝缺判定；空档证据按**空档键**逐行认——区间一挪、空档边界跟着挪、键就变了，
@@ -4954,21 +4957,31 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
   那份旧结论顶；探针里「缺判定」的那条 subs 刚投过就不算活，不叫醒全量
 - 手动流程：**同一个 slug 先 subs、判定落库了再 render**；两档别叠着发（concurrency 会互相掐）
 
-回放（`scratchpad/isubs/replay6.py`，六趟失败各自 head_sha 上的 spec＋当时仓库里的产物，现在的代码）：
+回放（`scratchpad/isubs/replay6.py <worktree> <outdir>`——判定文件带 `window`、按 `SUBS_RED` 认红；
+六趟失败各自 head_sha 上的 spec＋当时仓库里的产物，现在的代码；复审 2026-09-28 发现盘上那份还是
+没带 `window`、按旧前缀认红的旧版，跑出来 B 一条都不是红，已改好并在修正后的代码上重跑）：
 **6/6 不再投 render**（旧预检 0 处字幕红 → 新口径 6 条全是 needs_subs → 投 subs）；把那一趟
 render 日志里量到的分歧率／红着的空档写成判定之后 **6/6 红**（仍不投）；换到随后那次人手修正的
 提交：只加了认领的 3 条变 ok，改了 `en_fixed` 的 3 条指纹变了、回到 needs_subs（照实）。
-存量：110 条正式 spec 按仓库里的判定重判，**红 0**。已推送的 54 条：10 条 ok（都是
-`transcript_verified: true`、人核过的分歧不看区间，老规矩没动），44 条 needs_subs——其中 43 条是
+存量：110 条正式 spec 按仓库里的判定重判，**红 0**。已推送的 54 条：9 条 ok（都是
+`transcript_verified: true`、人核过的分歧不看区间，老规矩没动），45 条 needs_subs——其中 43 条是
 `verify_fingerprint.json` 没记 `window` 的老 pass（绑区间之前落的，**不猜它当年量的是哪一段**，
 重渲时先投一趟 subs 重量），`ruud-cerundolo-laver-cup-2026-presser` 是推送后 `en_fixed` 重挂过行号
-（83ff6b6a5）。没推送记录的 56 条全是 needs_subs（49 条是 `verify_fingerprint.json` 那一代之前渲的
+（83ff6b6a5），`gauff-kostyuk-cincinnati-2026-qf` 写着 `whisper_vad_filter: false`、它的人核指纹是
+VAD 开关进指纹之前落的（复审第二轮只有它一条从 ok 变 needs_subs，按 `isubs/corpus_scan.py` 前后对照）。
+没推送记录的 56 条全是 needs_subs（49 条是 `verify_fingerprint.json` 那一代之前渲的
 老片、没有量数；5 条是没记 `window` 的老 pass；`sabalenka-zhang-tor2026-r3` 的字幕缓存是换 URL
 之前那条的；`swiatek-shnaider-tor2026-qf` 是 08-21 那条只有骨架的 spec）——重渲时自动链会先投
 subs，**不挂豁免表**：这不是内容红，是没量过。真 picker 在当前 HEAD 上实跑：投 render 0 条、投 subs
 0 条，等待名单只有 `swiatek-shnaider-tor2026-qf`（L0 缺字段）——合并不会重渲重推任何一条。
-回放（同上六趟，判定文件补上 `window`）结论不变：A 6/6 needs_subs、B 6/6 红、C 3 ok／3 needs_subs。
-⚠️ 「先投 subs 多一跳」的端到端代价**没量过**（没有一条走完这条新路的 run）；
+⚠️ **dispatch 口径要一路传到 pick**：`_preflight_problems` 退回 `spec_problems(spec)`（复审 M9）的话，
+只缺判定的 spec 在 pick 眼里是干净的、投 render，runner 上 `--require-subs` 却红——
+每 70 分钟重投一趟 render，`mode=subs` 永远不投。原来测试的桩无视 `require_subs`、这么改照样绿；
+现在桩按口径分红和提示，另加一条不打桩的真预检判据。
+⚠️ 「先投 subs 多一跳」的端到端代价**还没有一条 run 量过**；从这一版起 auto-render 投 render 时
+`received_at`（10 分钟成片时钟起点）取那趟 subs 的派发时刻（`render_received_at`：同一份转写输入、
+晚于上一次 render 派发、40 分钟以内，否则取现在），所以 `video_sla` 的 elapsed／pre_render 会把这一跳
+算进去；`--mark-one` 照旧记真正的派发时刻（70 分钟重投窗口按它算）。
 render 那一趟判定 ok 时照旧装 faster-whisper、恢复模型缓存，只是不再跑第二份 ASR。
 判据 `tests/test_interview_subs_first.py`。
 

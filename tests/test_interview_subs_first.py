@@ -9,15 +9,16 @@
 这里钉四件事，每件都反向验证过：
 
 1. `build_interview_clip.subs_verdict`：按仓库里的判定（`second_asr_verdict.json` 的量数、
-   `gap_vad_attestation.json` 的 VAD 证据，都绑 `transcript_fingerprint`）给出
+   `gap_vad_attestation.json` 的 VAD 证据，都绑 `transcript_fingerprint`——`SUBS_INPUT_KEYS`
+   里每一样都要绑得上，第二份的 VAD 开关关掉也进指纹）给出
    ok／needs_subs／red——量过和没量过分得开，认领（不进指纹）量完再写照样作数；
    `start`/`end` 不进指纹，所以分歧量数另绑区间（`window`），空档证据里**没有那一行**
    （区间挪了、键变了）是缺判定不是红——红只留给 `speech_detected`（复审 2026-09-28）；
 2. `--stage verify` 在判定 ok 时**不重量**（第二份 ASR 不是确定性的），VAD 自动销账留理由；
 3. `interview_preflight` 的 dispatch 口径（`require_subs`）把缺缓存、缺判定记成带
    `NEEDS_SUBS` 的红；`pick_interview_renders` 只卡在这一类上的先投 subs；
-4. 两条工作流的接线：auto-render 投 subs、记账、探针数它当活；interview-clip 的 render
-   预检带 `--require-subs`，subs 判定干净就叫醒 auto-render。
+4. 两条工作流的接线：auto-render 投 subs、记账、探针数它当活、投 render 时 SLA 从那趟 subs
+   算起；interview-clip 的 render 预检带 `--require-subs`，subs 判定干净就叫醒 auto-render。
 """
 
 from __future__ import annotations
@@ -131,6 +132,47 @@ def test_人工核过且指纹没变不要量数(tmp_path):
     (out / clip.VERIFY_FP).write_text(json.dumps({
         "sha256": clip.transcript_fingerprint(spec, _LINES, out), "status": "pass"}))
     assert clip.subs_verdict(spec, _LINES, out).state == "ok"
+
+
+#: 不经切行、直接绑在判定上的转写输入 → 换成的另一个值（指纹或区间要跟着变）
+_BOUND_DIRECTLY = {"asr_model": "base.en", "whisper_model": "large-v3",
+                   "whisper_vad_filter": False, "start": 0.5, "end": 9.0,
+                   "en_fixed": {"2": "great match!"}}
+#: 经切行进指纹的（`main()` 切行读它们、行一变指纹就变）——
+#: `test_转写输入的键和出片那一趟切行读的字段对得上` 钉
+_BOUND_VIA_LINES = {"url", "segment_budget_px", "word_fix"}
+
+
+def test_每个转写输入都绑在判定上_只改它旧判定不作数(tmp_path):
+    """`SUBS_INPUT_KEYS` 里的一样改了，subs 的账清零；它要是不绑判定（不进指纹、不进区间、
+    也不经切行），判定照旧 ok——render 跳过重量，拿旧配置量的数出片。`whisper_vad_filter`
+    就是这么漏的（复审 2026-09-28：2 条 spec 写了它）。表自带自检：新加一样转写输入，
+    要在这两份名单里说清它怎么绑。"""
+    assert set(clip.SUBS_INPUT_KEYS) == set(_BOUND_DIRECTLY) | _BOUND_VIA_LINES, (
+        "新加的转写输入要说清它怎么绑判定")
+    out = _outdir(tmp_path)
+    spec = dict(_SPEC)
+    clip.record_second_asr(spec, _LINES, out, 0.02, 300, 300)
+    _attest(spec, out, "no_speech")
+    assert clip.subs_verdict(spec, _LINES, out).state == "ok"
+    for key, value in _BOUND_DIRECTLY.items():
+        got = clip.subs_verdict(dict(spec, **{key: value}), _LINES, out)
+        assert got.state == "needs_subs" and not got.reds, (key, got)
+
+
+def test_VAD开关默认开着时指纹和加它之前一字不差():
+    """`whisper_vad_filter` 只在关掉时进指纹：默认（不写或写 true）的指纹钉死在加它之前
+    的值上——一改全量，仓库里所有 `verify_fingerprint.json` 一起作废、重渲全要重量。"""
+    import tempfile  # noqa: PLC0415
+
+    with tempfile.TemporaryDirectory() as td:
+        out = _outdir(Path(td))
+        pinned = "09b1d46302f77b0bf9e35823e4da7d5a88318c27d957f0df9e3b6700725d889b"
+        assert clip.transcript_fingerprint(_SPEC, _LINES, out) == pinned
+        assert clip.transcript_fingerprint(dict(_SPEC, whisper_vad_filter=True),
+                                           _LINES, out) == pinned
+        assert clip.transcript_fingerprint(dict(_SPEC, whisper_vad_filter=False),
+                                           _LINES, out) != pinned
 
 
 def _three_captions(tmp_path: Path) -> Path:
@@ -393,6 +435,22 @@ def test_预检dispatch口径_缺缓存缺判定都算红带NEEDS_SUBS(monkeypat
     assert pf.subtitle_findings(spec)[0] == []
 
 
+def test_自动链dispatch前的预检走dispatch口径_不打桩(monkeypatch, tmp_path):
+    """不打桩 `spec_problems`：一条有字幕缓存、没有 subs 判定的 spec，`pick_interview_renders`
+    dispatch 之前那道预检必须报出 `NEEDS_SUBS`——和 interview-clip render 那一趟的
+    `--require-subs` 同一个结论。退回本地默认口径（复审 M9）的话，只缺判定的 spec 在 pick
+    眼里是干净的、投 render，runner 上 `--require-subs` 却红，每 70 分钟重投一趟 render，
+    `mode=subs` 永远不投——两边口径一分叉就是死锁。"""
+    import pick_interview_renders as p  # noqa: PLC0415
+
+    spec = _spec_with_cache(monkeypatch, tmp_path)
+    monkeypatch.setattr(p, "PROBE", False)
+    got, partial = p._preflight_problems(spec["slug"], spec)
+    assert not partial and any(pf.NEEDS_SUBS in g for g in got), got
+    runner, _ = pf.subtitle_findings(spec, require_subs=True)
+    assert runner and all(r.startswith(pf.NEEDS_SUBS) for r in runner), runner
+
+
 def test_预检结论缓存的键跟着subs判定变(monkeypatch, tmp_path):
     """一趟 subs 落了新判定、字幕缓存一个字节没变——键不变的话，探针会拿「当时还缺判定」
     那份旧结论一直顶到北京日期翻过去。"""
@@ -465,8 +523,20 @@ def pick(monkeypatch, tmp_path):
         (specs / f"{slug}.xhs.txt").write_text("文案", encoding="utf-8")
     need = f"{interview_preflight.NEEDS_SUBS}当前转写指纹没有第二份 ASR 的分歧量数"
     verdicts = {"needs": [need], "mixed": [need, "字幕（write_ass）：中文超宽"], "clean": []}
-    monkeypatch.setattr(interview_preflight, "spec_problems",
-                        lambda spec, **kw: (list(verdicts[spec["slug"]]), []))
+
+    def fake(spec, **kw):
+        """和真函数同一个口径开关：缺判定**只在** dispatch 口径（`require_subs=True`）下
+        是红，本地默认口径下只是提示（`subtitle_findings` 的 `not_yet`）。原来这里无视
+        `require_subs`、一律当红——`_preflight_problems` 把它退回 `spec_problems(spec)`
+        （复审 M9）测试照样绿，而真预检下那条只缺判定的 spec 会被当成 ready 投 render，
+        红在 interview-clip 的 `--require-subs`，每 70 分钟重投一趟、subs 永远不投。"""
+        rows = verdicts[spec["slug"]]
+        if kw.get("require_subs") is True:
+            return list(rows), []
+        need_it = interview_preflight.NEEDS_SUBS
+        return ([r for r in rows if need_it not in r],
+                [r.replace(need_it, "") for r in rows if need_it in r])
+    monkeypatch.setattr(interview_preflight, "spec_problems", fake)
     return p
 
 
@@ -512,6 +582,30 @@ def test_subs投过在窗口里不重投_超窗重投_满三趟停_只有转写�
     assert subs == ["needs"], "转写输入改了：上一份的认领不算数"
     pick.mark_subs("needs", now=at(22))
     assert json.loads(pick.STATE.read_text())["subs"]["needs"]["tries"] == 1
+
+
+def test_render的SLA起点从先投的那趟subs算起(pick, monkeypatch, capsys):
+    """先投 subs 换来的 render，10 分钟成片时钟从那趟 subs 派发算起——原来一律取投 render
+    那一刻，subs 那一跳（派发、5~8 分钟、叫醒）整段不进 SLA（复审 2026-09-28）。只认同一份
+    转写输入、晚于上一次 render 派发、`SUBS_SLA_MINUTES` 以内的；其余取现在。"""
+    at = lambda m: (_NOW + timedelta(minutes=m)).strftime("%FT%TZ")  # noqa: E731
+    now = _NOW + timedelta(minutes=12)
+    assert pick.render_received_at("needs", now=now) == at(12), "没投过 subs：现在"
+    pick.mark_subs("needs", now=at(0))
+    assert pick.render_received_at("needs", now=now) == at(0)
+    monkeypatch.setattr(sys, "argv", ["pick_interview_renders.py", "--received-at", "needs",
+                                      "--at", at(12)])
+    assert pick.main() == 0 and capsys.readouterr().out.strip() == at(0), "CLI 和函数同一个结论"
+    late = _NOW + timedelta(minutes=pick.SUBS_SLA_MINUTES + 1)
+    assert pick.render_received_at("needs", now=late) == late.strftime("%FT%TZ"), (
+        "隔太久：中间多半隔着人（判定红了、人改完才投的 render）")
+    pick.mark_one("needs", now=at(5))       # 那趟 subs 之后已经投过一次 render：不是它换来的
+    assert pick.render_received_at("needs", now=now) == at(12)
+    pick.mark_subs("clean", now=at(0))
+    assert pick.render_received_at("clean", now=now) == at(0)
+    path = pick.SPECS / "clean.json"        # 转写输入改了：那趟 subs 量的不是这一版
+    path.write_text(json.dumps(dict(json.loads(path.read_text()), end=42.0)), encoding="utf-8")
+    assert pick.render_received_at("clean", now=now) == at(12)
 
 
 def test_转写输入的键和出片那一趟切行读的字段对得上():
@@ -626,6 +720,43 @@ def test_auto_render按名单投subs_投成了才记_没过闸的不投(tmp_path
     ran = subprocess.run(["bash", "-eo", "pipefail", "-c", stubs + body], cwd=tmp_path,
                          env={**env, "GH_FAIL": "1"}, capture_output=True, text=True, timeout=30)
     assert ran.returncode == 0 and "MARKSUBS" not in ran.stdout, "投失败的不许记（先投后记）"
+
+
+def test_auto_render投render的SLA起点取pick给的_记账取真正的派发时刻(tmp_path):
+    """`received_at` 要走 `--received-at`（先投过 subs 的从那趟算起），而 `--mark-one` 记的
+    得是真正的派发时刻——70 分钟的重投窗口按它算，拿往前拨过的起点记，长一点的 render
+    还没落地就会被重投。pick 取不到起点也不许把整趟打红：退回现在。"""
+    body = _run("interview-auto-render.yml", "dispatch 未 render 的正式 spec（每 slug 一个 run，并行）")
+    for path in ("/tmp/todo.txt", "/tmp/subs.txt", "/tmp/request-failed.txt",
+                 "/tmp/subs-dispatched.md"):
+        body = body.replace(path, str(tmp_path / Path(path).name))
+    subs_file = tmp_path / "subs.txt"
+    stubs = (
+        'python() { case "$*" in\n'
+        '  *--received-at*) [ "${RA_FAIL:-}" = 1 ] && return 1; echo "2026-09-28T03:48:00Z" ;;\n'
+        '  *--mark-subs*) echo "MARKSUBS $3 $5" ;;\n'
+        '  *--mark-one*) echo "MARK $3 $5" ;;\n'
+        f'  *--subs-list*) printf "待 dispatch 1 条：\\nready\\n"; : > {subs_file} ;;\n'
+        '  *) : ;; esac; }\n'
+        'gh() { echo "GH $*"; return 0; }\n'
+        'git() { if [ "$1 $2 $3" = "diff --cached --quiet" ]; then return 0; fi; echo "GIT $*"; }\n')
+    env = {**os.environ, "GITHUB_STEP_SUMMARY": str(tmp_path / "summary.md")}
+    for fail, want in (("", "2026-09-28T03:48:00Z"), ("1", None)):
+        ran = subprocess.run(["bash", "-eo", "pipefail", "-c", stubs + body], cwd=tmp_path,
+                             env={**env, "RA_FAIL": fail}, capture_output=True, text=True,
+                             timeout=30)
+        assert ran.returncode == 0, ran.stderr + ran.stdout
+        out = ran.stdout.splitlines()
+        gh = next(ln for ln in out if "mode=render" in ln)
+        mark = next(ln for ln in out if ln.startswith("MARK "))
+        dispatched = mark.split()[2]
+        assert gh.startswith("GH workflow run interview-clip.yml --ref main -f slug=ready "), gh
+        received = gh.rsplit("received_at=", 1)[1]
+        if want:
+            assert received == want and dispatched != want, (gh, mark)
+        else:
+            assert received == dispatched, "取不到起点就用现在"
+        assert datetime.strptime(dispatched, "%Y-%m-%dT%H:%M:%SZ"), mark
 
 
 def test_auto_render探针把先投subs的当成活(tmp_path):
