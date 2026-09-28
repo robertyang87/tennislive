@@ -202,6 +202,11 @@
 dry-run 自己那句话——**只要它报了「第 [N] 段落在估算的误差里」，就跑一次
 `--check-narration` 再发 render**，别赌。
 
+⚠️ **2026-09-28 改了：本地量得到就量，量不到就直接发 render，别为它多拨一趟 runner。**
+误差带里的片子占了九成以上，逐条先拨 `mode=narration` 等于每条多一趟；而 render 在
+编码之前本来就有真 TTS 的超长硬闸（`narration_overruns`），真超了在那儿红。
+dry-run 那句现在只提示、给现成命令，不拦（`tennis-pipeline-ops`「误差带没账只报」）。
+
 ### ⚠️⚠️ 2026-09-03：而这一轮最后是**撤稿收场**——同一场球被并发做了两遍
 
 📖 **tennis-pipeline-ops** · 正文 97 行

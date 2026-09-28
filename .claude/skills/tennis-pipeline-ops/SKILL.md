@@ -3852,6 +3852,9 @@ zheng-burel 的三连打回里两次是渲后数字静音闸（run 33000830101�
     说到      = 段起点 + mp3 时长 − 0.83
     没人说话  = 段长 − mp3 时长 + 0.83      ← **恒 ≥ 0.83s，闸要求 mp3 ≤ 段长**
 
+（⚠️ 2026-09-28：0.83 是 `words.json` 末事件的距离；按 QC 口径（−80 dB）量的**声学**尾巴是 0.70~0.79 秒——
+数字静音那套预判用后者，`probe_audio.TTS_TAIL`／`TTS_TAIL_MIN`，见本节末尾「同日收尾轮」。）
+
 拿它反推整条片子，逐秒表和时间轴**逐段对得上**（第 12 段 mp3 6.72s / 画面 10.0s
 → 4.11s 没人说话 → 113~116s 量到 −54.2/−50.9/−52.3/−39.7，正是那一段）——
 **这个式子就是「哪一秒该由谁负责」的判据**，别再从逐秒表往回猜。
@@ -3899,6 +3902,9 @@ zheng-paolini 首趟、mensik-tien——死秒落在无旁白段；最后那条 
 `-t {L+尾巴}` 那么长，第 k 段的现场声就和画面、旁白、字幕错开 δ_k。第一版不算它：评审在
 沙箱的 ffmpeg 6.1 上拿真链复现出「成片第 61 秒上界 −66.7 必红、成片实际 −45.9」。
 
+（⚠️ 2026-09-28 起下面这套「δ 按区间取并集」**被取代了**：溶解之前把每一路音轨按样本数钉回
+名义长度，δ 由构造归零——见本节末尾那一段。留着是为了知道 part 为什么会长短不齐。）
+
 ⚠️⚠️ **δ 往哪边错跟 ffmpeg 版本走，而出片用的不是沙箱那一版**（评审第二轮 BLOCKING：
 按 6.1 的数摆的 14 段夹具在 CI 上自己塌了）。真调 `cut_segment`，源片 25／29.97／50／60 fps
 各 8 刀、两版都量：
@@ -3931,6 +3937,51 @@ BtbN 上 δ≈0，「拆 δ」那条自检跳过并 warning 出 ffmpeg 版本—
 负那头都在 BtbN 上误报。另外两条同一轮的 nit：**片尾关掉、一句旁白都
 没有**时 render 走不闪避的分支，现场声不乘 `BED_LOUD`（`_mix_ducks`，按 0.72 算会估轻 2.85 dB
 误报）；`measure` 按块流式读 PCM（仓库里最长那条 8678 秒的源片整条读进内存要顶到约 1.1 GB）。
+
+⭐⭐ **2026-09-28：旁白尾巴改成手写 spec 硬闸，溶解把现场声钉回名义时间轴**（返工审计：09-20~27
+渲后「数字静音」红 **16 趟、12 条片子、117 runner 分钟，渲前 0 趟拦住**；按失败 run 的 artifact
+里 render.json 记的真封面长逐秒定位，50 个死秒 **43 个在旁白说完之后**、7 个在无旁白段、0 个在图卡段）。
+
+| 改了什么 | 为什么 / 证据 |
+|---|---|
+| 旁白尾巴按**上包络**（`probe_audio.speech_ceiling` ＝ 离线估×1.10 ＋ 2.20）也说不到的那一秒：**手写 spec 硬**、自动 spec 只报 | 「旁白长度是估的」只说明点估判不了。上包络按 main 上 3921 段真 mp3 定：runner 现在走 **edge-tts**（09-15 之后 80 份 render.json 全是），比按 Azure 拟合的离线估慢、而且和句长成正比——1595 段里 16 段超出 `est+2.2`，最坏 +4.85 s（43 秒的长段），平移盖不住，斜率 0.10 时 edge-tts 要 1.33、~~azure 要 0.85（azure 尾巴按 0 秒静音算也还剩 0.52）~~——azure 这个数过时了，按「说到哪儿」比的改正数是 **0.66**，见下面收尾轮「尾巴不是 0.83」那一行。冻结最贴的 11 段：`test_上包络盖得住每一段真语音`。老的 `silence_risk`「最长估」跟着换成同一个上包络 |
+| 点估和上包络之间：只报，**印出 `render --check-narration` 的原命令** | 离线估在这一截判不了 |
+| `--check-narration`（runner 的 mode=narration 跑的就是它）合完真语音，按**真语音说到哪儿**（`voice_speech_end`，QC 同口径 −80 dB 以下算说完，再让 0.1 s）＋真封面长重放同一套：手写 spec 硬 | 时效第一那条「悬的段跑一分钟 `--check-narration`」现在顺手把静音也判了 |
+| 整屏证据段（image／stat_card／title_card）不再整段遮住，按 QC 的 `in_ev`（窗口两头各 0.3 s）豁免 | 跨出窗口那一秒（证据段口播说完 ＋ 下一段安静的开头）QC 照样数 |
+| **`dissolve_filtergraph` 每一路进 `acrossfade` 之前 `apad whole_len`＋`atrim end_sample` 钉成名义长度**，`audio_drift`／`part_padding` 删掉 | δ 区间这一项单独就挡掉一半预判（十三段之后窗口宽一秒）；钉住之后现场声和画面同一本账（6.1 实测三路脉冲：不钉第二路晚 38.7 ms，钉了之后对齐到 0.1 ms 以内）。判据 `test_真cut_segment刀刀截短_溶解钉回名义长度_成片不漂`（拆掉那一钉就红在「预测红了、成片没红」） |
+| 老 probe 没有 `audio_levels`：只报，**印出重 probe 的原命令**（slug 取老 probe 的目录、区间和 `--scorebox` 照抄；probe.json 从这一版起记下给过的 `scorebox`） | main 上 640 份 probe.json **一份都没有** `audio_levels`：#1134 在 09-28 01:33Z 才合进 main，而 match-reel 最后一趟 run 是 09-27 17:14Z——到 09-28 04:40Z 查的时候，合并之后一趟 probe 都没跑；从更早的分支拨的 probe 同样没有 |
+
+**回放**（失败那一版 spec＋probe；源片在沙箱下不来，`audio_levels` 从**失败那趟的真成片**反推：没人
+说话的块按这一段的现场声增益倒推，人声／溶解／闪避回弹 0.75 s 记「判不了」）：dry-run 硬拦
+**6/16 趟（11 个死秒、45.6 分钟）**，`--check-narration` **10/16 趟（20 个死秒、81.3 分钟）**，
+闪避回弹也按成片算的乐观口径 13/16；预测成死秒而 QC 没红的 **0 秒**。同样的输入，改之前的代码 2/16。
+**不钉溶解、只加分档**时 dry-run 3/16——钉那一下是大头。本地真 edge-tts 端到端跑过一条：`muchova-bouzas` 失败那一版，dry-run 报「大概率红」并印出 `--check-narration` 的命令，`--check-narration` 退出码 1、红在成片第 91 秒——QC 那趟红的正是第 91 秒。漏掉的三类：mute 段（增益 0.036，
+`audio_levels` 只给 0.36 那一档留数，判不了）、只有一秒多的窄静音夹在响里（上界要放宽一块）、
+旁白刚停就静（闪避还在回弹，成片比模型按 `BED_LOUD` 算的更轻，模型接不住；回放保守口径把这 0.75 秒记成判不了，乐观口径多接 3 趟）。
+全库 316 条 spec 扫过：硬／软和改之前逐条一样（没有一份 probe 带 `audio_levels`，304 条多了
+「没量过」那一句）。~~⚠️ 已发的片子源片被重 probe 之后再走 reattest：那份成片是**钉之前**渲的
+（δ 最多几十毫秒），按 δ≡0 预判理论上能在贴边的一秒上误红~~——同日收尾轮定了「只在 mode=render
+硬」，reattest 那一趟这几档只报，这条顾虑不再成立（见下）。
+
+⭐ **同日收尾轮（复审 nit ＋ 会话定的两条）**：
+
+| 定了什么 | 怎么做 / 证据 |
+|---|---|
+| **D1 硬的几档只在 mode=render 硬**（无旁白段那一档和旁白尾巴上包络那一档都算） | `probe_audio.mode_demoted` 和源片覆盖那道**同一个口径**（`probe_sources.dry_run_mode`：工作流传的 `REEL_DRY_RUN_FOR`，本地不传按 render 算）。cover／narration／reattest 同一句照印、挂上「这一趟是 mode=…」、不红——时效第一、封面排最前；reattest 核的那份成片 QC 真量过。只有 dry-run 读这个环境变量，`--check-narration` 和 render 那一遍照硬。判据 `test_数字静音硬的几档只在mode_render硬_cover和narration照印不红`。⚠️ 集成第三轮补上：`silence_findings` 那道老的「必红」（`silent_audio` 静音区）原来漏在这个口径外面，cover 那一趟照样被它挡住——现在同一个 `probe_audio.demote`，判据 `test_老的静音区必红那道也只在mode_render硬_cover和narration照印不红` |
+| **D2 render 自己在 TTS 之后、分段编码之前按真语音重放**（`_render_silence_gate`） | 就是 `--check-narration` 那一档（真语音说到哪儿 `measured_speech_ends` ＋ 封面配音真长度），语音和封面长度是这一趟本来就合好的，**不多合一句、不多下一个字节**；手写 spec 硬伤当场 ReelError（原句和 dry-run 同一套），自动 spec 只报（连无旁白段那一档也只报——dry-run 那一步对它已经硬过）。match-reel 的 narration／render 两步调 build_match_reel 之前各自再 `probe_sources.py materialize` 一遍：dry-run 落的 probe.json 排在「算出目录」那一步的 `git sparse-checkout add` 前面，可能被清掉（已经在的不动，取不到只出声不拦）。判据 `test_render在TTS之后_分段编码之前按真语音重放数字静音`（真调 `render()`，假语音，走到比分板蒙版就停）、`test_narration和render那两步先按URL把probe落盘`。先认领 probe.json 再解语音：一份都认领不上时这一层本来不查，`measured_speech_ends` 不白解（`test_render那一遍先认领probe再解语音_认领不上不解码`） |
+| **尾巴不是 0.83**：点估扣 `TTS_TAIL`＝0.76（中位）、上包络扣 `TTS_TAIL_MIN`＝0.69（最短，`speech_end_ceiling`） | 0.83 是 `words.json` 末事件到 mp3 末尾的距离；按 QC 口径（−80 dB）量 16 趟失败 run 里 279 条真 edge-tts mp3 的**声学**尾巴：最短 0.698、中位 0.756、最长 0.794。硬的那一档比的是「说到哪儿」，余量要按它算：edge-tts **0.88**、azure **0.66**、没记后端 **0.81**（azure／没记后端的尾巴没量过，按 0 算）；扣 0.83 时是 0.74／0.52／0.67（评审重量的 0.74 就是这个） |
+| 重 probe 命令的框：老 probe 没记（bfc462b9a 之前的一份都没有）就退到 spec 顶层 `scorebox`（只给开了 `score_inset` 的段取画面的那几条源；一段都没开归主源），都没有就在命令后面明说「没记是哪个框」 | 仓库里 640 份 probe.json：`point_ends` 有数（给过 `--scorebox`）的 92 份，记了框的 0 份；按 URL 找得到 spec 顶层框的 67 份，其余 25 份照印那句明说。判据 `test_重probe的命令_老probe没记框就退到spec顶层_都没有要明说`、`test_probe那一趟真把逐块响度和给过的框写进probe_json`（真跑 `main()` probe，不是查源码文本） |
+
+**尾巴改完重跑回放**：dry-run **5/16 趟、10 个死秒、38.3 分钟**（比扣 0.83 少了 zhiyenbayeva-bouzas 第 92 秒：
+上包络让回去的那 0.14 秒正好盖住它）；`--check-narration`／render 那一遍 **10/16 趟、20 个死秒**（那 10 趟原来一共
+烧了 81.3 runner 分钟，render 那一遍省下的是编码往后那一截，下载和 TTS 照付），闪避回弹乐观口径 13/16、33 个。
+⚠️ **回放里「预测成死秒而 QC 没红 0 秒」是构造出来的，不是证据**：回放的 `audio_levels` 就是从失败那趟成片自己
+反推的，拿它预测同一份成片不可能多红。真正挡误红的是三样：main 上 3921 段真 mp3 定的上包络（冻结最贴的 11 段）、
+真跑 AAC 分段 → 溶解 → 闪避混音链的几条测试、以及**一条真源片**——`two-handled-racket-maric-2026`（09-28 渲完 QC
+过了、已推送，两条源的 probe 真带 `audio_levels`）：dry-run 0 硬 0 软，按 render.json 的真 mp3 长度扣 0~0.85 秒尾巴
+重放 0 硬。样本就这一条，别把它读成「不会误红」。
+⚠️ 留着没改的一个边角：`masked()` 只认每段自己窗口里的人声——旁白按 `narration_overruns` 的容差最多拖进下一段
+0.12 秒，那一截不算「压到人声」，理论上能在段界后、下一段恰好整秒安静的那一秒误红；两件事要同时发生，概率低。
 
 ⭐ 同一轮顺手补的另一类：**多源片子的几何红 7 趟（38.9 分钟）**，runner 的 dry-run 全是
 「一份 probe.json 都没认领上」——4 趟的 probe 早就落了库，只是在别的 slug 目录下
@@ -4676,6 +4727,11 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
 **红一次 → 重试**（多半就过）；**红两次、而且是两台不同的 runner → 别再重试了**，
 去跑 `mode=cookies`，然后按它说的办。
 
+⭐ **2026-09-28 起有定时自检**：`source-health.yml` 的 `youtube-cookies` job 每 6 小时派发一趟
+`match-reel mode=cookies`（派发者 `github-actions[bot]` → 无人值守），红了由 pipeline-health 按
+`match-reel:cookies` 推一次阻塞（Q9，不重复推）。这一轮 5 趟全是会话手动拨的，按 Q9 本来就不推——
+所以当时没有任何东西叫醒人。见文末「源片与 probe 的七处不稳」。
+
 **修法只有一个，而且我做不了**：从一个登录过 YouTube 的浏览器重新导一份 cookies.txt，
 更新仓库 Secret `YT_COOKIES_TXT`（工作流第 23 步会把它落成文件并通过 `YT_COOKIES` 传进去；
 日志里那句 `带 cookie 试（25 行）` 说明**文件是在的**——**「cookie 存在」和「cookie 有效」
@@ -4854,6 +4910,63 @@ PR 看」，不是「它挡在出片前面」。
 （别的请求照常提交、dispatch，这一条的旧 spec 按清单跳过；红是为了不让它只剩一句被略过的 warning），
 H 那种「warning ＋ 绿」只剩不带清单的手动调法。
 
+## ⭐⭐ 2026-09-28：返工审计的八道小闸——每一道都各烧过一整趟 render 或一次重推
+
+`rework_audit_0928`（09-20~09-28，82 趟失败 run ＋ 25 次推送后重推）里这八样**只看 spec
+和仓库里的 probe／字幕缓存就判得出**，却都等到 runner 下完源片（或推出去之后）才发现。
+全部挪到 `--dry-run`／`interview_preflight`：**手写 spec 硬、自动 spec 只报、已发的冻进豁免表
+（只许减、测试自检）**。判据 `tests/test_small_gates.py`，每道都反向验证过（拆掉红在自己那条断言上）。
+
+| 闸 | 在哪儿 | 来路（回放） | 豁免 |
+|---|---|---|---|
+| 章节卡 > 18 字 | `_normalize_title_card_segments`（load_spec），和 render 现渲卡同一个 `render_title_card.length_problem`；**谁写的都硬**——超了 render 必红，只报等于晚三分钟红 | china-open-withdrawals ca2d4829a（19 字，run 36296202661）、asiad-2026-men-draw 775d5d8d1（25 字，run 36296693320） | 全库 0 条 |
+| 写过源片末尾：容差 **0**（原来 +0.05s） | `segments_over_source_end`，`need ≤ 源片时长`；谁写的都硬（超了 render 必红） | hu-kopriva 466450041：143.4＋0.18＝143.58 对 probe 143.56，超 0.02s（run 35949569743）→ 红 | 无。⚠️ 第一版是「减一帧」，比证据严：已推送 5 段落在最后一帧里（差 0.014~0.038s）照样渲得出来（chengdu-ng-kouame cf73af107、eala-ruse 5f589d63f 的 spec 和 render.json 同一个提交），修正轮收回成 0、豁免表删掉 |
+| 误差带里的旁白要拿**真 TTS** 认账 | `narration_check_findings`（dry-run），账在 `data/narration_checks/<slug>.json`，按每段旁白的指纹认，**文件头的后端／栏目基调／音色／语速要和出片那一趟对得上**（`narration_record_mismatch`，修正轮补的：第一版记了不比）。**「出片那一趟」按出片那台机器算**（`render_tts_setup`＝`apply_tts_backend`＋`column_base_style` 的同一个判法），runner 的 dry-run 步挂和 render 步同一对 Azure 钥匙——修正轮 2：上一版按 spec 推（没写 `tts_backend` 就当 azure），而 runner 上两把钥匙是空的（run 36257658569 render 步 env 两项空、日志「[配音] 没有 Azure」；origin/main 上 09-25~09-28 的 44 份 render.json `narration_backend` 全是 edge-tts），`mode=narration` 量出来的 edge-tts 账一律不认，没写 `tts_backend` 的手写 spec（rebase 到 c127cdcd0 之后 317 条里 294 条）量完还是红、报错叫你再去量。全库扫描不比后端（CI 上没有 Azure）；换字表（`speakable`）故意不进指纹——同音字换音节数不变，进了就每改一次表全库的账作废；`--check-narration` 落账，runner 的 `mode=narration` 量完**自己提交回分支**（沙箱连不上 edge-tts） | zverev-deminaur 4a2eb32c4 第 9 段：画面 11.9s、runner 上 **edge-tts** 实测 12.10s（run 36257658569，那一趟没有 Azure）——dry-run 当时只印一句「悬」→ 红。⭐ **09-28 会话改成：没账只报（带补账命令），只有量过、装不下才红**，见表下那段 | 无。原来的 `data/legacy_narration_unchecked.json`（300 条按整条旁白指纹冻）随「没账就红」一起删了 |
+| 蒙版和裁框差 1px | `masked_board_patch`：`alphamerge` 之前把蒙版 `scale` 成裁框宽高（neighbor），两处回贴共用 | safiullin-bu 424×108 对 424×109（run 36323549463）；测试真跑 ffmpeg，两头都钉 | 不是闸，是修 |
+| 采访：已知带片尾板的源，话音后空 > 1.5s，**手写** spec | `interview_tail.quiet_tail_problem`（`interview_preflight` 里升红）；拉沃尔杯、Tennis TV（`source_verification.source`／请求的 `source`／`tennistv.com`）；认领 `_end_why` 或 `_end_board_ok` | alcaraz-fritz-interview 1b0b65ee5^（话音后 3.1s）、tien-cobolli 9ae8918fb^（5.4s）推出去又重推——⚠️ **回放拦不住**：两条都是自动 spec（`auto_pending`），这道闸只报；它们归出片那一趟的 `end_card_problem`＋自动终点撞板直接收（73aba4c1c／16bcfd336，09-27，事故之后才上线）。这道闸管的是以后手写的，把 runner 上同一个红提到 dispatch 前 | `legacy_interview_gates.json` 的 `end_board_quiet_tail`：2 条辛辛那提 Tennis TV 已推送 |
+| 钩子「送××进决赛」不算赛果 | `taste_gates.has_match_result` | bucsa-noskova 872c6dab6^（账号所有者原话「封面钩子文案没交代赛果啊」） | `legacy_taste_gates.json` 的 `hook_shape` ＋1：zverev-prizmic「77分钟送德国晋级」（09-20，规矩之前） |
+| 多源 `_no_probe_why` 要带宽高帧率 | `probe_sources.coverage_findings`／`claimed_geometry`：认领写成 `{"why","width","height","fps"}`，几何预演拿它照跑（每条源都没 probe、全靠认领时也跑——修正轮把它挪到「一份都没认领上」的早退之前）；一句话的认领手写红 | sinner-beijing-withdrawal 97ebe27a2 的 xvid 480×852（run 36133328467） | 全库 0 条用过 |
+| 开着 `score_inset`、probe 早于逐帧量板 | `probe_board.board_findings`：报错里给现成的 `gh workflow run match-reel.yml … mode=probe … scorebox=…` | prozorova-eala e04fb91b6（run 36020126044）、alcaraz-mensik-doubles e73bd17d4（run 36197683115） | `data/legacy_board_unprobed.json`：78 条已推送、84 条源 |
+
+**回放**（失败那一趟的 spec 版本、换新 slug、**按真实路径**调判据）：蒙版那条是修不是闸
+（测试真跑 ffmpeg 钉住），bu-majchrzak 的「N号种子」**按设计不做闸**（见 `tennis-owner-taste`）；
+其余该拦的 10 条拦住 **8 条**——没拦住的是采访片尾板那两条（自动 spec，只报，见上表）。
+⚠️ 第一版这里写的是「11 条里 10 条」：回放脚本给 `quiet_tail_problem` 硬塞了 `auto=False`，
+测的不是出片时真走的那条路。**回放要走真实路径，别替判据填参数。**
+全库扫描（specs/reels 315 条能解析的手写 spec、采访 110 条）：豁免表之外 **0 条硬红**。
+
+### ⭐⭐ 2026-09-28 会话决定：误差带那道闸**没账只报**——别往正常路径上加一趟 runner
+
+第一版让手写 spec「误差带里的段没账就红」，量出来这一刀落在几乎每一条新片子上：
+`SPEECH_EST_ERR`＝2.2s，specs/reels 下 **316 条能解析的 spec 里 305 条**至少有一段落在带里，
+`data/narration_checks/` 一份账都没有，全靠 300 条的冻结表撑着——**每条新的手写 spec 都要先
+多拨一趟 `mode=narration`**（约 1.5 分钟 runner ＋ 一次提交回分支）才过得了 dry-run。
+而 render 在**编码之前**本来就有一道真 TTS 的硬闸：`tools/build_match_reel.py:9565`
+（`render()` 里 `spoken_of, over = narration_overruns(segments, voices)`，超 `NARRATION_OVER_TOL`
+就 `ReelError`；本文件「TTS 和旁白超长那道闸，挪到编码之前」）——同一个错在那儿红，一个像素都
+没编（zverev-deminaur 那一趟白烧 2.9 分钟）。**只在真超了的那几条上付，而不是每条都先付一趟**，
+这就是「时效第一」在这儿的算法。
+
+| 情形 | 现在 |
+|---|---|
+| 误差带里的段没账（没量过／改过字／账头对不上） | **任何一趟都只报**，印两行现成的补账命令（runner 一行、本地一行） |
+| 账上量过、真时长比画面长 | 手写 spec 在 `mode=render` 的 dry-run 上**红**（真数，render 必红）；自动 spec 和 cover／narration 趟只报 |
+
+- 冻结表 `data/legacy_narration_unchecked.json` 和它的自检一起删了（它冻的那道闸不存在了）；
+  「每条误差带里的手写 spec 都有账」这条 CI 全库扫描也删了——别再加回来，它就是那一趟 runner
+- 账本的写（`--check-narration`／`mode=narration`，量完自己提交回分支，**main 上只报数不提交**）
+  和读（`narration_check_findings`、`load_narration_record`）都留着：想在发 render 之前就知道，照旧
+  `gh workflow run match-reel.yml --ref <分支> -f mode=narration -f slug=<slug>`
+- 判据 `tests/test_small_gates.py::test_新的手写spec误差带里没账_dry_run照样过_只报带命令`
+  （render／cover／narration 三趟都 exit 0 且印出命令；把「没账」退回「手写红」，render 那一格红）
+
+⚠️ **没量板那张豁免表的自检照旧会在没人动 spec 的时候变红**：重跑了冻着那条源的 probe（提交落在
+`output/**`，ci.yml 跳过），`test_没量板的豁免表只许减` 就红在下一个无关 PR 上。重跑完 probe，
+**同一个提交里**把那个 slug 从豁免表删掉。
+
+⚠️ **Azure 钥匙修好那天**，edge-tts 量的老账会整份不认——09-28 起那只是一句提示，不再红
+（O4 派的 `mode=render push=true --ref main` 不会卡在 dry-run 上）；真超了照旧红在 render 编码之前。
+
 ## ⭐⭐ 2026-09-27：赛后开麦 dispatch 之前的离线预检、片尾板、拼接清单、推送后修订
 
 **写完或改完一条采访 spec，dispatch 之前先跑一条命令**（秒级、不联网、不下源片）：
@@ -4921,3 +5034,284 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 拉沃尔杯板，都已推送），发布会（机位锁死、相邻帧差 < 0.5 能连着 9 秒）0 条误认；
 另有 5 条正片最后 1.1~1.7 秒是冻帧（`end` 越过了源片画面）。这 7 条不挂豁免：闸只在重渲
 那一刻才跑，重渲时就该一起收掉。量法和名单在 `tools/interview_tail.py` 的 docstring。
+
+#### ⭐⭐ 2026-09-28：封面自动换帧挑不出来就停车——同一个封面满 3 趟不再投（D2）
+
+render 的封面前置那一步红了会就地扫、自动换一格（tennis-cover-photos「扫描逐格认人＋睁眼」）；
+**一格都挑不出来**（主角没官方头像、整段闭眼／是别人）时 `--autopick` 退出 3——而 picker 只看
+「投了 70 分钟没产物」，同一个封面再投一趟量出来的是同一批格子，**70 分钟一趟、永远红**。
+
+| | 做法 |
+|---|---|
+| 记账 | interview-clip 的 render 红在封面那一步、再投一趟照样红时 `pick_interview_renders.py --autopick-failed <slug> --kind …` 记进 `data/interview_render_dispatched.json` 的 `autopick_failed[slug] = {cover, record, count, kind, at, why}`，只提交这一个文件、走 `push_interview_dispatch_retry`（`merge_interview_states` 会把本趟那一笔加回去）。三种红记**同一个计数**：`autopick`（`--autopick` 退出 3）、`audit`（换上的那一帧终审还红，只认退出 1）、`check`（终审过了、`--check` 对账红，只认退出 1、只在 render 档）。**扫描记录照旧不提交**（红着的 render 不留记录）。**只在 main 上记**：分支上的 render 只印 `::warning::`——picker 只在 main 上投、只读 main 上的账，分支上那一笔合并进来会替 main 停一条它没红过的封面 |
+| 故意不记 | 退出 4（人脸模型整趟不可用）：环境的事，模型备好了下一趟就过，记了反倒要人给一条没毛病的封面解停车。别的非零（工具坏了）、终审／对账退出 2（输入缺了）也不记 |
+| 指纹 | `interview_cover_scan.cover_fingerprint`：`cover` 整块＋取景＋推主角的字段＋主角和同场的人的头像**路径**（不看文件在不在——auto-render 的检出没有 `assets/players`，两头要算出同一个数；别人补头像不动它）＋`start/end`＋尺子，按**派发时**那份 spec 算（interview-clip 从 `HEAD` 取、`--dispatched-spec` 递——`audit`／`check` 可能红在自动换帧之后，工作区那份已被改写）。键的另一半是 `HEAD` 里那份扫描记录的 blob 号（`_committed_record_blob`，不读工作区）：`check` 的出路是 mode=cover 重扫，只换记录不动 spec。人改了封面／主角、补了头像、重扫了记录、尺子变了，从 1 数起；改中文字幕不算 |
+| 停车 | 同一个键 `count ≥ PARK_AFTER`（3）→ 不进 dispatch 名单、**不算 stale**（是故意不投），**只列在** auto-render run 摘要的「🅿️ 封面自动换帧停车」一栏（`--parked`，那一句按最近一趟是哪种红说出路）；⏳ 等待名单里不再列一遍（原来两栏各列一次），picker 题头只数一句「另有 N 条停车」。当前 spec 已经出过片的不算 |
+| D3 拦得保守 | 已提交的记录说 `frame_at` 没过、记录里过闸能换的那一格却在 render 的近处窗口（`near_plan(autopick=True)`）**外面**——比如早先一趟更宽的 mode=cover 扫出来的——预检照旧拦、报出那一格让人抄。render 重扫只保证量到近处那几格，窗口外的换不换得上判不准：**保守，不是 bug** |
+
+⚠️ 没接进 `pipeline_health`／微信：停车只在 auto-render 的 run 摘要里看得见。判据
+`test_封面自动换帧连着三趟挑不出来就停车_换了封面从头数`、`test_停车账和指纹只用标准库`、
+`test_封面指纹跟着主角和同场的人的头像走_别人补头像不算`、
+`test_换上的终审还红和对账红也记同一个停车计数_指纹按派发时那份spec算`、`test_对账红停车之后_重扫换了记录就从头数`、
+`test_停车的只列在停车那一栏_等待名单里不再列一遍`、`test_停车账撞上dispatch提交不丢`、
+`test_出片档封面前置要留源片_红了就地扫候选自动换帧`（退出码分支）、`test_换上的终审还红和对账红也记同一笔停车账`、
+`test_停车账只在main上记_分支上只告警`。
+
+## ⭐⭐ 2026-09-28：源片与 probe 的七处不稳（返工审计「22 趟不回放」那一类）
+
+审计（09-20~09-28，82 趟失败 run）里 22 趟是 probe／外部源／基础设施，当时判为「不回放」。按形状拆开，
+每一类都有一个便宜的判据；判据全在 `tests/test_source_probe_robustness.py`，每条拿当时那一趟的真实输入回放。
+
+| 类（趟数） | 当时 | 现在 |
+|---|---|---|
+| YouTube cookie 失效（5） | 09-19 17:15–22:52Z 只有会话手动拨的 run 在红，Q9 不推，没人被叫醒 | `source-health.yml` 的 `youtube-cookies` job 每 6 小时派发 `match-reel mode=cookies`，红了按 `match-reel:cookies` 推一次；检查本体只有一份 `tools/yt_cookie_check.sh`（match-reel 的 cookies 步骤也调它） |
+| cookies 自检填了搜索词（1，run 35478525370） | `ytsearch8:…` 搜出 0 条，报「没下到媒体流」 | 第一步红：「是搜索词不是视频」（`tools/source_url_check.py`） |
+| probe 空 URL＋默认 slug（1，run 36304133786） | 第 1.4 分钟红在 `curl: (3)` | match-reel 表单自检（setup-python 之后、认领源片和装依赖之前），两处都点名；`build_match_reel probe` 下载之前也拦空地址和坏框 |
+| X CDN 直链 403（2） | 一句 curl 403 | 帖子地址下载时现解、直链只当 `source_fallbacks`（tennis-media-sources「X 和 Instagram 是第一手源」） |
+| 1080p 的框配 720p 源（2，medvedev-wong） | 源片下完才红（cv2 `!_src.empty()` / ReelError），probe 产物一个字节没提交 | `fit_scorebox_to_frame`：按源片高度找一档装得下的参考高度等比缩（`98,920,519,1029`@1280×720 → `65,613,346,686`；同一 slug 后来下到 1080p 那趟这个框量出 97 个死球），缩不进退回猜框；`probe.json` 记 `scorebox_fitted`。⚠️ **只认得出「出界」**：720p 的框配 1080p 源、1080p 左上角的框碰巧装得进 720p，都原样用、量错地方、不报——框照这一趟源片的像素给；**只宽出界、源片比 16:9 窄**（4:3 老转播）时平移（黑边世界）和等比缩（更高一档）两种读法都装得进就不猜、退回猜框，见下面第二轮复审；`--scorebox` 给了却量不了时 `point_ends` 记 `null`（不是 `[]`，`[]` 是量过零次）。全库 94 条 spec 的框对 probe 过的源片：108 次原样、1 次要缩（`zheng-rybakina` 的 720p 那趟）、0 次丢 |
+| 派发 render 的 assert 撞手写 spec（1，run 36331363124） | 裸 `AssertionError` | `tools/probe_dispatch_gate.py`：没 spec → waiting，手写（`_production.kind` 不是 `orchestrated_reel`，含没有 `_production` 的）→ skip，自动 spec 的 ready ＋ `push.auto` 合同照旧硬 |
+| frame-grab 推送 5 次失败（1，run 36317540680） | 手搓循环睡在 fetch 和 push 之间（13~28 秒），远端每一轮都往前走一格 | 改用共享 `push_with_rebase_retry`；**共享脚本本身也改成「先退避、再 rebase、立刻推」**（原来同样睡在 rebase 和 push 之间），同 slug 的 frame-grab 排队——⚠️ 排队只排得下**一个**：GitHub 每组最多一个在跑、一个 pending，同 slug 连拨三趟，第三趟会把还在 pending 的第二趟取消（`cancel-in-progress: false` 只保在跑的那趟）；要抽不同区间就换 slug |
+| 上游 HTTP 5xx（1，run 35708122768） | 审计标成 flashscore，**日志里其实是 MiniMax 读比分板 500**——base 的 47f9f2b6d 已降级只报（`test_scoreboard_http_failure_does_not_write_partial_alignment`），账号所有者 09-27 定了不给模型加重试，没加 | flashscore 这一侧补上同形的洞：`fetch_match_stats_fs.feed` 5xx／网络抖动重试 3 次、最后一律 `StatsError`；`assemble_spec` 读 feed 的四块（stats／狠数据／转折局／抢七小分）接住 `match_feed._get` 抛的 `SystemExit`（原来穿过每一处 `except Exception`，一次 500 就让 probe 整趟不提交）；**matchup 归位那一块不降级**，见下 |
+
+`assemble_spec --year ''`（3 趟）在 base 的 09e091851 已修，`test_match_reel_optional_int_inputs` 钉着。
+
+⚠️ 判据宁可窄：`source_url_check` 扫过 main 上 640 份 probe.json 的 `url`、94 条 spec 的 `scorebox`、
+281 个 `scorebox_guess`，零误伤。X 直链那道闸全库 0 条手写硬红（4 条存量挂表）。
+⚠️ 回放的上限：X 那两条 403 当时的帖子地址仓库里没有，**现在的办法能不能把它们救回来没验证过**——
+能证明的只是「写帖子地址的 spec 下载时现解，不会再因为钉死的直链失效而红」。
+
+### ⭐⭐ 复审补丁（同日）：**matchup 顺序核不出，就一块按 home/away 排的都不写**
+
+`matchup_order` 读不到 df_hh_1 时原来退回命令行顺序、只 print 一句。base 上 SystemExit 穿出去让
+probe 红（没草稿）；接住之后，逐局表和统计照样按 flashscore 的 home/away 来，`verified_match_fact`
+拿 feed home 的比分配命令行的 `matchup[0]`——回放「只有 df_hh_1 503、home 是诺斯科娃 6-4 6-3」：
+草稿写成 `_match.status=result_verified winner=萨巴伦卡 6-4 6-3 loser=诺斯科娃`，stats.a 挂在萨巴伦卡
+名下，`verified_result_problem` 拿 `_match` 自己的字段反推，一道都不响。
+
+现在核不出（feed 读不到、没给本场 FH/FK、同姓按姓认不出）就抛 `MatchupOrderUnverified`：matchup
+照命令行写两个名字，**stats／狠数据／转折局／赛果事实整块不写**，`_notes` 写明原因，草稿留在
+waiting（「结构化赛果尚未 verified」）。`check_draft_matchup_order` 碰上它记「没法判」，不再拿
+命令行顺序去比。顺手修了同一个形状：`collect` / `_label` 原来传命令行顺序的名字，而它们拿 home
+那个名字标 feed 的 SH／server=home——matchup 重排过的场次，赢家的总分、破发点兑现标在输家名下，
+还喂进文案 facts。判据 `test_df_hh_1读不到时不许出result_verified`（带对照组）、
+`test_matchup_order核不出顺序就抛_不退回命令行顺序`、`test_狠数据和转折局的名字按feed的home_away给`。
+
+同一轮三个小补：`source_fallbacks` 进 `_REAL_FIELDS["spec"]`（写成 `_source_fallbacks` 要红，别等语料里
+出现第一条才被推导出来）；表单默认 slug `eala-zheng` 的认领口是 `url` 填它 spec 里那条源片（原来这条
+已发片子一趟都重 probe 不了）；`pipeline_health.workflow_health` 按 run-name 的 mode 把 `cookies` 自检
+滤出出片趋势（`SELF_CHECK_MODES`，一趟定时的 cookies 绿会把 render 的连续失败清零）。
+
+### ⭐⭐ 第二轮复审（同日）：**flashscore 抖一下，这场球不许静静地躺到过期**
+
+上一轮把「读失败」降成只报，probe 不再红——可编排器的 `_already_specced` 认得这份草稿、**永不重 probe**，
+reel-auto-ready 只补封面和视觉证据、**不重跑备料**。回放（df_hh_1 正常、只有 df_mh_1 一次 503）：
+08a3fd1da SystemExit 穿出 → probe 红 → 失败自愈摘 state → 重 probe；dc80fd22d 草稿留在 waiting、再没人碰。
+重 probe 要重下源片，所以**只重跑便宜的那一半**（选了 D1，没退回「probe 非零退出」那条 b 路）：
+
+- `assemble_spec` 读失败**且可重试**（`match_feed._get` 的 SystemExit、`FeedUnavailable`、网络异常；
+  解析错、同姓认不出、**带 4xx 状态码的**不算——4xx 里只有 408/425/429 算，见第三轮）→ 草稿记 `_feed_retry: {blocks, errors, tries, last_at}`，`blocks` 连带这一趟没跑的下游
+  （`match_id` → 全部；`matchup` → stats／hit_data／points；`points` 顺带 tiebreaks）。反查 id 也算一块：
+  `find_match` 有页读失败时没找到报 `FeedUnavailable`（那一页里可能就有它），原来吞成「没反查到 id」
+- reel-auto-ready 每一班（过期检查之后、认领 probe 和转正之前）跑 `tools/retry_feed_blocks.py`：**只重跑账上那几块**，
+  不 probe、不下源片、不碰模型；补上比分／统计之后拿同几道机械闸（`editorial_score_problem` 等）把已经起草的
+  文案再核一遍，对不上就撤、不重写。最多 `FEED_RETRY_MAX = 3` 次
+- 试满仍没读通：`exhausted_at` 记上，`::warning::` ＋ run 摘要，`pipeline_health.feed_retry_stuck` 对还新鲜
+  （`PENDING_MAX_AGE`）的草稿按 slug 告警一次。promote 转正时剥掉 `_feed_retry`（登记在 `GATE_ANNOTATIONS`）
+
+两个 nit：`probe_dispatch_gate` 认自动 spec 改认 `_production.kind == "orchestrated_reel"`（`asiad-2026-women-draw`
+手写、带 `_production` 没 kind，原来重 probe 会被自动链的合同打红）；`fit_scorebox_to_frame` 只宽出界时两种读法
+各算一个候选——两个都装得进源片就不猜（同一个 640×480、同一个框，拿真像素造两个世界，平移只在黑边世界量得到翻牌、
+等比缩只在更高一档世界量得到，各对一半）；只剩一种装得进才用它。全库 391 对「框 × probe 过的源片尺寸」新老两版
+结果逐一相同。判据 `tests/test_feed_retry.py`、`test_只宽出界的框_平移和等比缩都装得进_不猜退回猜框`、
+`test_同一组宽高两种读法各自量对一半_所以光凭宽高分不出`、`test_手写spec带着_production也跳过_认自动链的是kind`。
+
+### ⭐⭐ 第三轮复审（同日）：**补上的赛果会让 probe 那一趟的视觉结论过时**
+
+probe 在 assemble 之后**同一趟**跑 `analyze_reel_visuals`；df_mh_1／df_hh_1／反查 id 读失败时，MiniMax 看到的 `_match`
+只有 flashscore_id、没有 `_cover_brief`——`clean_report` 不核封面人物、情绪退回 winner_celebration。重跑补上赛果之后，
+reel-auto-ready 要不要重审只看封面路径／状态／retryable／`evidence_hash`（**只含图片字节，不含 `_match`**）→ 不重审 →
+promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角，自动渲、自动推**（判据 `test_赛果补齐之后_probe时给的封面人物是输家_不许带着旧pass转正`：
+封面上是输家，改前重审条件 False、waiting 里没有视觉闸）。爆冷反过来：loser_fighting 当时被判不合格
+（retryable false），补上 brief 之后永不重审、卡到过期不告警。main 上不会：probe 红 → 重 probe 时 `_match` 已经在了。
+
+- `retry_feed_blocks` 这一趟改了 `_match`／`_cover_brief`、**且赛果定下来了**（`result_verified`；没定的 promote 本来不收，
+  这时作废只会拿半截赛果再问一次模型）→ `analyze_reel_visuals.recheck_after_facts_change`（**不调模型**）：**一律作废**——
+  摘 `input_sha256`（`main` 按它复用 pass）、`retryable: true`、waiting，走原来那条重审路；存着的回答按新赛果重跑
+  `clean_report` 的核对，不过的那几条跟「按新赛果重审」一起留在 `problems` 里给人看。`error` 的不动
+- ⚠️ 第四轮复审改掉了「不过 → 哈希留着，同一张照片不再问」：那份回答是**瞎答的**（prompt 里没名字、没赢家，
+  `ask_minimax` 让它「认不出留空」），`subject` 空着／表外译名／`winner_visible` 蒙错都不说明照片里是输家——
+  留着哈希就不重审、`refresh_reel_cover` 见「已有封面」不换图、`_feed_retry` 在 healed 时摘掉，**不告警地躺到过期**
+  （空 subject／表外译名／`winner_visible` 蒙错三种改前全卡，`test_赛果补齐之后_probe时瞎答的赢家照片_不许凭那份回答判死` 的三个参数各是一种；带着赢家审过的 125 份
+  pending 草稿里 `cover.subject` 空着的有 66 份（2026-09-28 实测））。
+  代价至多每份补齐的草稿多一次重审：重审那一趟 `clean_report` 把 `retryable` 写回 false、钉上新哈希，真是输家就停在
+  waiting（和 main 一样），不反复问。判据 `test_赛果补齐之后_probe时瞎答的赢家照片_不许凭那份回答判死`、
+  `test_赛果补齐之后_重审只多一次_真是输家的照片停在waiting不反复问`
+- `apply_story` 认得上一趟自己写的结尾兑现段（`_why` 以 `ENDING_WHY` 开头），重审第二次走到它时结尾不再放两遍
+
+几处小补（同一轮 nit）：
+
+| 原来 | 现在 |
+|---|---|
+| 撤了文案报 `healed`、`_feed_retry` 摘掉，没有告警（没有东西会再起草它）；`dropped` 只打 `::warning::` | `copy_dropped`／`dropped`／重跑崩了都记 `_feed_retry.needs_human`（跨班留着）：`::warning::` ＋ run 摘要**只打第一次**，`pipeline_health.feed_retry_stuck` 按它点名 |
+| flashscore 挂住不回，一趟重跑 2~6 分钟，3 份草稿就能把 15 分钟的 job 拖超时，`tries` 永远不涨 | 工作流 `timeout 120`，被掐（124）另起 `--timed-out 120` 补记一趟（`tries`＋1，试满停手）；写草稿先写临时文件再换名。第四轮：每份 120s 盖不住「五六份同一班到期」，整班再加 `FEED_RETRY_BUDGET=480` 秒的累计预算（过了剩下的打 `[later]`、不记次数、下一班再来）；落库前 `rm -f specs/reels/pending/*.tmp` |
+| 连着三班（≈ 半小时）花光三次 | 退避：第一次下一班就来，之后隔 20、40 分钟（`FEED_RETRY_BACKOFF × 2**tries`，命令行那层判，返回 `later`） |
+| 试满后每一班照旧进这一步、刷 warning | `exhausted_at` 在就不进；`exhausted` 不再打 warning |
+| 崩了只 `echo`，不涨次数、不点名 | 从盘上那份草稿记 `exhausted_at` ＋ `needs_human`（不写改了一半的），返回 `broken` |
+| `StatsError`／任何 SystemExit 都算可重试 | 带 4xx 状态码的不算（`match_feed._get` 自己说「4xx 是明确拒绝」），408/425/429 除外；`StatsError` 本身不算，`FeedUnavailable` 算 |
+
+**人处置完怎么让它重来**：`python tools/retry_feed_blocks.py --draft specs/reels/pending/<slug>.draft.json --rearm --write`，
+推 main（`tries` 清零、摘 `exhausted_at`／`needs_human`；账上已没有要重读的块就整个摘掉——撤了文案那种重读补不回来，
+要么手写 `editorial`，要么照编排器那条 `match-reel.yml mode=probe` 重新备料）。pipeline_health 的报表里印着这一句。
+⚠️ 转正要 `hit_data`：`_durations` 只有这一块写，缺了 waiting 报「比赛时长没有结构化来源」。判据 `tests/test_feed_retry.py`。
+⚠️ `pipeline_health.render_report` 的 `feed_stuck` **只收关键字**：`wp/interview-subs-before-render` 在同一个位置加了
+`parked_subs`，两边都按位置传，合并时留下两个形参就会串栏（点名点错一栏、不报错）。
+
+## ⭐⭐ 2026-09-28：赛后开麦 render 之前先要 subs 在**当前转写指纹**上交的判定
+
+来路（返工审计 rework_audit_0928）：9/20~9/28 有 6 趟 render 红在「字幕空档没销账／转写分歧超阈」
+（alcaraz-fritz ×3、tien-cobolli ×2、chwalinska-mertens ×1，25.4 runner-分钟），**0/6 在 dispatch
+之前拦得住**，其中 4 趟是 interview-auto-render 自己投的。第二份 ASR 的结论只活在 runner 上；
+预检在仓库里没有字幕缓存时只报一句 ⚠️（这条线第一趟就成的只有 2/13）。
+
+现在的顺序，三处接线同一个判据（`build_interview_clip.subs_verdict`，ok／needs_subs／red）：
+
+| | 缺判定（needs_subs） | 判定红（red） | 判定 ok |
+|---|---|---|---|
+| **interview-auto-render** | 先投 `mode=subs`（`pick_interview_renders --subs-list`，`--mark-subs` 记账：70 分钟内不重投（大于 job 超时 65，第三轮）、同一份转写输入满 3 趟停下喊人、**转写输入**一改清零——改 zh／封面／文案不清零） | 进等待名单（和 verify 报的同一句） | 投 render |
+| **interview-clip render 那一趟，自动链派发的**（`github.triggering_actor` 以 `[bot]` 结尾） | 「采访 spec 离线预检」`--dispatched-by` 开 dispatch 口径，**第 1 秒就停**：先 dispatch `mode=subs` | 同左，停 | verify **不重量**，直接用判定 |
+| **interview-clip render 那一趟，手动拨的**（个人登录名／认不出，09-28 会话决定） | **只提示**，「转写交叉校验」在同一个 job 里现量第二份 ASR（老路） | 停 | verify **不重量** |
+| **本地** `interview_preflight.py --slug X` | 默认只提示；`--require-subs` 是 dispatch 口径 | 两种口径都红 | — |
+
+- 判定＝三份进仓库的文件，都绑 `transcript_fingerprint`：`second_asr_verdict.json`（新，第二份 ASR
+  **每跑一次都落**的分歧量数）、`gap_vad_attestation.json`（每行带自动销账的 `reason`）、
+  `verify_fingerprint.json`。认领（`transcript_disagree_ok`、`caption_gaps_ok`）不进指纹，
+  量完再写照样作数。**指纹变**＝切出来的 `en` 行变、`en_fixed` 变、字幕缓存变、换模型、
+  关掉第二份的 VAD（`whisper_vad_filter: false`；开着时指纹和加它之前一字不差）——这时判定作废、
+  自动链再投一趟 subs。`SUBS_INPUT_KEYS` 里每一样都要绑得上判定（进指纹、进 `window`、或经切行），
+  表自带自检：复审量到 VAD 开关漏绑——只改它，subs 的账清零、判定却照旧 ok，render 跳过重量、
+  拿旧开关量的数出片（`eala-parks-toronto-2026`、`gauff-kostyuk-cincinnati-2026-qf` 写着 false）
+- ⚠️ **`start`／`end` 不进指纹**（复审 2026-09-28 实测：挪进两句话之间的静默，行一字不差、指纹
+  一字不差）。所以按区间量的东西各自绑区间：分歧量数和 `verify_fingerprint.json` 的 pass 记
+  `window`，对不上＝缺判定；空档证据按**空档键**逐行认——区间一挪、空档边界跟着挪、键就变了，
+  证据里**没有那一行＝缺判定**（再投一趟 subs，VAD 重新作证），**不是红**。红只留给两种「量出来了」的：
+  分歧超闸没认领够，和证据里那一行记着 `speech_detected`（VAD 真听到了人声）。原来「证据文件是当前
+  指纹的」就把没有行的新键判红：一段 VAD 证过的静默，`start` 挪进去两秒就要人去听、去认领，
+  手动 render 停在 `--require-subs` 上——而 render 的 verify 走重量那一支本来会自动销掉它
+- subs 判定干净就**叫醒 interview-auto-render**（GITHUB_TOKEN 的提交触发不了它的 on:push）
+- 预检结论缓存的键带上这三份（`caption_fingerprint`）：subs 一落判定，探针就不再拿「缺判定」
+  那份旧结论顶；探针里「缺判定」的那条 subs 刚投过就不算活，不叫醒全量
+- 手动流程：重渲**直接拨 render** 就行（缺判定时转写在同一个 job 里现量，见下一节）；两档别叠着发（concurrency 会互相掐）
+
+回放（`scratchpad/isubs/replay6.py <worktree> <outdir>`——判定文件带 `window`、按 `SUBS_RED` 认红；
+六趟失败各自 head_sha 上的 spec＋当时仓库里的产物，现在的代码；复审 2026-09-28 发现盘上那份还是
+没带 `window`、按旧前缀认红的旧版，跑出来 B 一条都不是红，已改好并在修正后的代码上重跑）：
+**6/6 不再投 render**（旧预检 0 处字幕红 → 新口径 6 条全是 needs_subs → 投 subs）；把那一趟
+render 日志里量到的分歧率／红着的空档写成判定之后 **6/6 红**（仍不投）；换到随后那次人手修正的
+提交：只加了认领的 3 条变 ok，改了 `en_fixed` 的 3 条指纹变了、回到 needs_subs（照实）。
+存量：110 条正式 spec 按仓库里的判定重判，**红 0**。已推送的 54 条：9 条 ok（都是
+`transcript_verified: true`、人核过的分歧不看区间，老规矩没动），45 条 needs_subs——其中 43 条是
+`verify_fingerprint.json` 没记 `window` 的老 pass（绑区间之前落的，**不猜它当年量的是哪一段**，
+重渲时先投一趟 subs 重量），`ruud-cerundolo-laver-cup-2026-presser` 是推送后 `en_fixed` 重挂过行号
+（83ff6b6a5），`gauff-kostyuk-cincinnati-2026-qf` 写着 `whisper_vad_filter: false`、它的人核指纹是
+VAD 开关进指纹之前落的（复审第二轮只有它一条从 ok 变 needs_subs，按 `isubs/corpus_scan.py` 前后对照）。
+没推送记录的 56 条全是 needs_subs（49 条是 `verify_fingerprint.json` 那一代之前渲的
+老片、没有量数；5 条是没记 `window` 的老 pass；`sabalenka-zhang-tor2026-r3` 的字幕缓存是换 URL
+之前那条的；`swiatek-shnaider-tor2026-qf` 是 08-21 那条只有骨架的 spec）——重渲时自动链会先投
+subs，**不挂豁免表**：这不是内容红，是没量过。真 picker 在当前 HEAD 上实跑：投 render 0 条、投 subs
+0 条，等待名单只有 `swiatek-shnaider-tor2026-qf`（L0 缺字段）——合并不会重渲重推任何一条。
+⚠️ **dispatch 口径要一路传到 pick**：`_preflight_problems` 退回 `spec_problems(spec)`（复审 M9）的话，
+只缺判定的 spec 在 pick 眼里是干净的、投 render，runner 上 `--require-subs` 却红——
+每 70 分钟重投一趟 render，`mode=subs` 永远不投。原来测试的桩无视 `require_subs`、这么改照样绿；
+现在桩按口径分红和提示，另加一条不打桩的真预检判据。
+⚠️ 「先投 subs 多一跳」的端到端代价**还没有一条 run 量过**；从这一版起 auto-render 投 render 时
+`received_at`（10 分钟成片时钟起点）取那趟 subs 的派发时刻（`render_received_at`：同一份转写输入、
+晚于上一次 render 派发、40 分钟以内，否则取现在），所以 `video_sla` 的 elapsed／pre_render 会把这一跳
+算进去；`--mark-one` 照旧记真正的派发时刻（70 分钟重投窗口按它算）。
+render 那一趟判定 ok 时照旧装 faster-whisper、恢复模型缓存，只是不再跑第二份 ASR。
+判据 `tests/test_interview_subs_first.py`。
+
+### ⭐ 2026-09-28 会话决定：`--require-subs` 只对自动链派发的 render 开——手动重渲不先投 subs
+
+时效第一：别往正常路径上加一趟 runner。原来 interview-clip 的 render 预检**无条件** `--require-subs`，
+而 wp/round3-int HEAD 上已推送的 54 条采访里 **46 条**在 dispatch 口径下是 `NEEDS_SUBS`（判定是没记
+区间和源的老产物；按 `interview_preflight.subtitle_findings(require_subs=True)` 实测，8 条干净）——
+手动重渲任何一条都要先多拨一趟 `mode=subs`（取字幕约 1 分钟＋第二份 ASR 3~5 分钟）、等它落库再拨 render。
+
+- **信号**：`github.triggering_actor`（工作流里传 `--dispatched-by "$DISPATCHED_BY"`）。pick 用
+  `GH_TOKEN: secrets.GITHUB_TOKEN` 派发 → `github-actions[bot]`；会话／人拨的是个人登录名。和看板
+  `build_dashboard_snapshot.is_unattended` 同一个判法（那边实测过 interview-clip 36337385713 由编排链派发、
+  `triggering_actor` 是 `github-actions[bot]`）。**认不出按手动算**：手动那一支照样验转写，只是慢几分钟
+- 为什么不认 `received_at`：自动链必传它，但一次性派发工作流（`noskova-final-render.yml` 那种「手写的
+  重渲」）也传；而手动的人照样可能填它量 SLA。`triggering_actor` 还顺带让 GitHub 页面上人点的「重跑」算手动
+- **自动链不变**：pick 投 render 之前按同一个口径判过（缺判定先投 subs），runner 上那一步照旧 dispatch 口径
+- **手动那一支不跳过转写**：「转写交叉校验」那一步只看 `mode == 'render'`，`--stage verify` 在判定不是 ok
+  时现量第二份 ASR（上线 subs 之前的老路），faster-whisper 和模型缓存照装；**已经量出来的红两边都红**
+- 判据 `tests/test_interview_subs_first.py`：`test_render预检只对自动链派发的开dispatch口径_手动拨的缺判定只提示`
+  （真 `main()`、不打桩）、`test_认自动链派发者和看板的无人值守同一个判法`、
+  `test_手动拨的render照样在同一个job里验转写_自动链仍用GITHUB_TOKEN派发`；三个方向各反向验证过
+  （判法恒真、工作流退回 `--require-subs`、给「转写交叉校验」加条件）
+
+### ⭐ 2026-09-28 会话决定：采访线「停着、要人」的另外两种也进 pipeline-health（F3）
+
+`parked_interview_subs`（subs 投满次数停下）之外，还有两种一样是自动链自己修不好、会一直停着的，
+原来只在 auto-render 的 run 摘要／stderr 或看板 24 小时窗口里露一下：
+
+| | 谁判、谁记 | pipeline-health |
+|---|---|---|
+| **封面停车**（同一个封面连着 `PARK_AFTER` 趟红在封面那一步） | 停车那一刻 `note_autopick_failure` 给 `autopick_failed[slug]` 标 `parked`（停着的那条探针不当活，全量那一趟未必再来）；全量那一趟 `sync_waiting_marks` 按 `parked_slugs` 摘／补 | `parked_interview_covers`：只读标记，**每一班都列、不按时间窗**；唯一本地兜底：`render.json` 的成片时刻晚于最后一趟红（人手动重渲成了，不会叫醒全量来摘）不列 |
+| **转写判定红着等人**（第二份 ASR 分歧超闸没认领够、VAD 在空档里听到人声） | 只有 pick 全量那一趟判得出（要 PIL＋字体）：`sync_waiting_marks` 记 `subs_red[slug] = {since, inputs_sha256, why}`，同一份转写输入接着红 `since` 不动、转写输入改了重算、不红了删 | `interview_subs_red_waiting`：`since` 超过 `SUBS_RED_WAIT_HOURS`（6）才列 |
+
+- 两样都跟 `parked_interview_subs` 同一个形状：判法只在 pick 定义一次，pipeline-health 的稀疏检出只有
+  `data/interview_render_dispatched.json`（和 `output/**/render.json`），只读标记
+- `render_report` 新加的 `parked_covers`／`subs_red` **只收关键字**（`test_采访停着的几栏只收关键字`），
+  三栏同一个排法；`alert_keys` 按 slug 认（`interview-cover:`／`interview-subs-red:`）——「红着已 N 小时」
+  每班都长，按整句认就是每小时推一条「新故障」
+- 状态合并：`merge_interview_states` 带上 `subs_red`（本趟改过的带过去，远端动过听远端的）；
+  标记挂在 `autopick_failed` 那一行上，走那一栏原有的重放
+- 判据 `test_转写判定红着的记下从哪一刻起_超过6小时pipeline_health列出来`、
+  `test_封面停车标记给pipeline_health_不按时间窗_不停了就摘`、`test_红着的转写那本账撞车合并不丢_远端动过听远端的`；
+  反向验证过（`since` 每趟重置、停车那一刻不标、键按整句／不按 6 小时滤、main 不传）
+
+### 复审第三轮（2026-09-28）：定下来的两条口径 ＋ 四处收口
+
+按 CLAUDE.md「时效第一」和账号所有者「完全自动化」定的（口径选择已由会话拍板，记在这儿）：
+
+- **D1 ｜ `caption_timeline_covered` 照旧自动销账，报告说实话**：销不销账不变（老行为，不是这次返工的根子）；
+  变的是标签按依据分（`GAP_AUTO_LABELS`）——只有 `no_speech` 叫「VAD 自动销账」，另两种是「双 ASR 自动销账」
+  「字幕时间轴自动销账」，理由里照印 VAD 测到的人声秒数和第二份 ASR 听到的词、写明「不是 VAD 证明没人说话」。
+  量的：仓库里 32 行 `caption_timeline_covered`，14 行 VAD 测到 >0.12s 人声、9 行第二份 ASR 听到了词。
+  caption_gaps.md、核对表、verify／render 日志、`subs_verdict` 的明细读的是同一个函数（`gap_row_reason`）
+- **D2 ｜ 转写输入（`SUBS_REQUIRED_KEYS`：url／start／end）齐了就先投 subs，不等中文、解读卡、封面、小红书正文**：
+  `missing_for_render` 在这些缺着时也跑转写那一半的预检；挡 subs 的只有碰转写本身的红（`subs_blockers`：
+  L0、`en_fixed` 挂错行、人工引语对不上、切行崩了——`interview_preflight.TRANSCRIPT_REDS`）。为此
+  `main()` 开头那排出片闸和中文排版在 `TRANSCRIPT_STAGES`（subs／verify）**只报不拦**——不然缺一份小红书
+  正文（`check_copy_page`）subs 就死在第 0.2 秒；render／cover／sheet 照旧拦，render 之前的预检照旧逐道列全。
+  不变的：render 照旧要当前指纹上 ok 的判定；三份名单两两不相交；在跑的 subs 窗口里不重投、改中文封面不掐它；
+  render 在跑不投 subs；发布过的不投；subs 那一趟只提交 `output/interviews/<slug>/`（按 YAML 求值钉死）。
+  探针（没 PIL）见还缺中文的 spec、又没有同一份输入的全量结论，算「可能要先投 subs」叫醒全量——一天一趟为上限（键带日期）
+- **nit 1 ｜ 判定绑源**：写 `asr_model` 的 spec（110 条里 39 条）第一份读仓库里的 `cap_asr.json3`、不看 URL，
+  同区间换源片指纹不变、判定照旧 ok、render 跳过重量。现在量数、pass、空档证据都记 `url`，`verdict_bound`
+  （指纹＋区间＋源）一处认；**没记源的老量数不算**（退回重量）。默认指纹字节没动（`test_VAD开关默认开着时指纹和加它之前一字不差`）。
+  人核过那一支：老 pass 没记源照认，记了源对不上才不认。存量重判：110 条里只有 `sabalenka-noskova-usopen-2026-qf-oncourt`
+  （已发、人核、空档靠老 VAD 证据）从 ok 变缺判定；真 picker 实跑照旧投 render 0、投 subs 0——不会一趟趟重投
+  （发布过的不投；新跑的 subs 落的判定都带 `url`，判据 `test_subs那一趟落的判定都记着源_下一趟不再缺判定`）
+- **nit 2 ｜ `SUBS_STALE_MINUTES` 40 → 70**：和 `STALE_MINUTES` 同一条规矩，必须大于 interview-clip 的 job 超时（65）；
+  判据从 YAML 读。`SUBS_SLA_MINUTES` 不跟着放宽，单独 40
+- **nit 3 ｜ 投满次数停下的看得见**：`--sync-subs`（只在 dispatch 那一步带）给账上标 `parked`，
+  `pipeline_health.parked_interview_subs` 读它进报表和告警（pipeline-health 稀疏检出带上状态文件）
+- **nit 4 ｜ subs 的账会删**：render 那一份（`slugs`／`at`）从来不删；subs 这一份判定交上来、spec 没了、已出片就删
+  （只删过了重投窗口的），ok 且这趟要投 render 的留给 SLA 起点、`mark_one` 投出去那一刻删；撞车合并带着删除和标记
+
+### 复审第四轮（2026-09-28）
+
+- **人核那一支的「pass 记的源对不上就不认」原来没有判据**：拿掉它，老测试照样绿——那句断言红在空档证据
+  （它也记着旧源），不是这一支。补的断言让空档由人销账，只剩这一个条件挡着；render 那一跳
+  （`transcript_verified and recorded == fp and not verdict.pending`）同样钉了，两处各自反向验证变红
+- **停着（parked）的那条，探针判不了就算活**：判定文件在预检缓存的键里，人修好、手动投的 subs 一落判定，
+  探针缓存不命中、退回「判不了转写那一半」（`PROBE_SUBS_UNKNOWN`）；原来照旧判 parked、不叫醒全量，
+  `--sync-subs` 跑不到、标记一直挂着。全量判过之后缓存命中，真还停着的不再叫醒
+- **`片尾板：` 进 `TRANSCRIPT_REDS`**：那道红（另一条同期改动加的）要改 `end`，区间一变先投的 subs 白跑
+- **每一档喊「空档没销账」减掉自动销账的**：subs／verify 日志原来把闸已放行的空档印成没销账；
+  `pipeline_health.render_report` 新加的段按关键字传（`parked_subs=`），几条分支各加一段时合并不串位
+- 不改的：人核那一支的老 pass **没记源**照认（人的标记）。量过：人核、写 `asr_model` 的 spec 里 5 条的
+  `verify_fingerprint.json` 没记源（4 条老格式连 `status` 都没有），5 条都已发——以后修订其中一条时换源，照旧跳过重量

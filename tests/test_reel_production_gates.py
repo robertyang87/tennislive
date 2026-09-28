@@ -661,10 +661,14 @@ def test_workflow只有正式ready才从probe派发render():
     body = (ROOT / ".github/workflows/match-reel.yml").read_text(encoding="utf-8")
     step = body.split("probe 正式 spec 就绪后自动派发 render", 1)[1].split(
         "render 质检落库后读取 spec", 1)[0]
-    assert 'status") == "ready_for_render"' in step
+    # 判据 2026-09-28 挪进 tools/probe_dispatch_gate.py（手写 spec 不再裸 assert，
+    # run 36331363124）；ready ＋ push.auto 的合同在那边，这里钉接线
+    assert "tools/probe_dispatch_gate.py" in step
+    gate = (ROOT / "tools/probe_dispatch_gate.py").read_text(encoding="utf-8")
+    assert 'status != "ready_for_render"' in gate and '.get("auto") is not True' in gate
+    assert "[waiting]" in gate
     assert "gh workflow run match-reel.yml --ref main" in step
     assert "-f mode=render" in step
-    assert "[waiting]" in step
 
 
 def test_match_reel_dispatch表单绝不超过github的25项硬限制():
@@ -1720,3 +1724,15 @@ def test_df_sui_1的每盘数字解析出IG_IH对():
             "~AC÷Set 3¬IG÷6¬RE÷0:36¬"
             "~RB÷4:36¬")
     assert mf._parse_set_pairs(text) == [(5, 7), (3, 6), (-1, -1)]
+
+
+def test_promote转正时剥掉备料重跑的账(tmp_path):
+    """`_feed_retry` 是草稿专用的账（flashscore 哪几块还欠着，reel-auto-ready 重跑用）。
+    转正之后没有哪一班再重跑正式 spec，账留着只会让读的人以为还欠着什么（2026-09-28 D1）。"""
+    promote = load("promote_reel_draft")
+    draft = _ready_draft(tmp_path)
+    draft["_feed_retry"] = {"blocks": ["hit_data"], "errors": {"hit_data": "SystemExit: HTTP 503"},
+                            "tries": 3, "last_at": "2026-09-28T07:00:00Z",
+                            "exhausted_at": "2026-09-28T07:00:00Z"}
+    spec = promote.promote(draft)
+    assert "_feed_retry" not in spec and "_draft" not in spec

@@ -1,0 +1,32 @@
+{
+  "_why": "团体赛的名单和逐日出场（tools/cover_upgrade.py 的点名闸用）。团体赛官网自己的图注常常只写姓（「Team Europe players and captains get around Zverev.」）、不写对手（「Alexander Zverev adds another Laver Cup title to his resume.」）——按名单能机械地判两件事：①这个姓在这一届里是不是只有他一个人（只写姓也认得出是谁，认人闸再核一遍脸）；②他这一天是不是只打了这一场（图注不写对手也认得出是哪一场；同一天单打双打都打的，照旧要点对手）。只登记从官方页面抄下来的；新的一届或新的团体赛按同样的形状加一段，写清出处。",
+  "Laver Cup": {
+    "2026": {
+      "_source": "lavercup.com /wp-json/wp/v2/posts，2026-09-28 沙箱取：名单出自 2026-09-21 那篇 laver-cup-and-cleveland-clinic-extend-partnership-through-2027（「Team Europe, led by Captain Yannick Noah and Vice Captain Tim Henman, features … and alternate – World No. 36 Arthur Fery. Team World Captain Andre Agassi and Vice Captain Pat Rafter will lead … and alternate – World No. 35 Ignacio Buse.」）；逐场出自各场「Match Highlights – A v B (Match N)」的标题，日期按伦敦当地（赛期 9 月 25~27 日，Day 1~3）。",
+      "teams": {
+        "Team Europe": {
+          "players": ["Alexander Zverev", "Carlos Alcaraz", "Flavio Cobolli", "Rafael Jodar", "Jakub Mensik", "Casper Ruud"],
+          "alternates": ["Arthur Fery"],
+          "captains": ["Yannick Noah", "Tim Henman"]
+        },
+        "Team World": {
+          "players": ["Alex de Minaur", "Taylor Fritz", "Learner Tien", "Brandon Nakashima", "Alexander Bublik", "Francisco Cerundolo"],
+          "alternates": ["Ignacio Buse"],
+          "captains": ["Andre Agassi", "Pat Rafter"]
+        }
+      },
+      "matches": [
+        {"no": 1, "date": "2026-09-25", "kind": "singles", "sides": [["Ruud"], ["Cerundolo"]]},
+        {"no": 2, "date": "2026-09-25", "kind": "singles", "sides": [["Mensik"], ["Nakashima"]]},
+        {"no": 3, "date": "2026-09-25", "kind": "singles", "sides": [["Jodar"], ["Bublik"]]},
+        {"no": 4, "date": "2026-09-25", "kind": "doubles", "sides": [["Alcaraz", "Mensik"], ["Bublik", "Fritz"]]},
+        {"no": 5, "date": "2026-09-26", "kind": "singles", "sides": [["Cobolli"], ["Tien"]]},
+        {"no": 6, "date": "2026-09-26", "kind": "singles", "sides": [["Zverev"], ["de Minaur"]]},
+        {"no": 7, "date": "2026-09-26", "kind": "singles", "sides": [["Alcaraz"], ["Fritz"]]},
+        {"no": 8, "date": "2026-09-26", "kind": "doubles", "sides": [["Ruud", "Zverev"], ["Bublik", "Nakashima"]]},
+        {"no": 9, "date": "2026-09-27", "kind": "doubles", "sides": [["Cobolli", "Mensik"], ["de Minaur", "Fritz"]]},
+        {"no": 10, "date": "2026-09-27", "kind": "singles", "sides": [["Zverev"], ["Tien"]]}
+      ]
+    }
+  }
+}

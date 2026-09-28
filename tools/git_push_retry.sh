@@ -24,6 +24,13 @@
 #   把已经 commit 好的 HEAD 推到 origin/<ref>；被拒就 rebase 到最新再试。
 #   rebase 失败（冲突/锁）时 abort 干净再进下一轮——别把半截 rebase 留给
 #   下一次重试。全部失败返回 1，让调用方自己决定这算不算整步失败。
+#
+#   ⚠️ **退避睡在 rebase 之前，rebase 完立刻推**（2026-09-28）。原来是
+#   「push 被拒 → rebase → 睡 3~19 秒 → push」：睡在拿到远端和推之间，main 在
+#   那几秒里又被别的 run 推过，下一次 push 照样被拒。frame-grab 手搓的同形循环
+#   （睡 5~35 秒）在 run 36317540680 五次全红，每一轮远端都往前走了一格——main
+#   忙的时候十几秒一个提交。先睡、再 rebase、再立刻推，撞车窗口只剩 rebase 那一两秒。
+#   最后一轮被拒就不再白拉一趟。判据 test_共享的push重试脚本形状要对。
 push_with_rebase_retry() {
   local ref="$1"
   local attempts="${2:-5}"
@@ -32,12 +39,13 @@ push_with_rebase_retry() {
     if git push origin "HEAD:${ref}"; then
       return 0
     fi
-    echo "push 被拒（第 ${attempt}/${attempts} 次），rebase 到最新再试"
+    [ "$attempt" -lt "$attempts" ] || break
+    echo "push 被拒（第 ${attempt}/${attempts} 次），退避一会儿再 rebase 到最新、立刻重推"
+    sleep $((attempt * 2 + RANDOM % 4))
     # --autostash：工作树常有未跟踪/未暂存的产物（临时文件、别的步骤的
     # 中间物），没有它 rebase 会报 unstaged changes 直接失败（真踩过）。
     git pull --rebase --autostash origin "$ref" \
       || { git rebase --abort 2>/dev/null || true; }
-    sleep $((attempt * 3 + RANDOM % 5))
   done
   echo "::error::连续 ${attempts} 次都没能推上 origin/${ref}"
   return 1

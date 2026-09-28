@@ -2139,14 +2139,38 @@ Release 拉回本地，在候选时间点前后逐帧抽样**（0.5~1 秒一格�
   `--stage cover` 排在取字幕之前，中文还空着也照样出海报
 - 片尾按**视频流**时长剔（`probe_video_duration`，音轨可以比画面长）；剔完还撞上最后
   一帧之后的格子记成一格「没有画面」，不拖垮整趟扫描
-- `mode=render` 的封面前置（在转写校验和编码**之前**）红了，会就地扫一段印进日志
-  再停——红的那一趟也换回「下一帧选哪个」
-- 提交过扫描记录的话，`cover.frame_at` 必须是其中**过闸**的那一格（render 前置那一步
-  和 `auto_push_interview_gate` 都对账，`interview_cover_scan.py --check --spec S`
-  本地 0.1 秒）。取景（源片／翻转／裁切／zoom／focus）变过的旧记录不管；**尺子
+- `mode=render` 的封面前置（在转写校验和编码**之前**）红了，**就地扫一段并自动换帧**
+  （2026-09-28 起，见下一节）——一格都换不了才停，排名表照样印进日志
+- 提交过扫描记录的话，`cover.frame_at` 必须是其中**过闸**的那一格（render 前置那一步、
+  `auto_push_interview_gate`、**dispatch 之前的 `interview_preflight`** 都对账，
+  `interview_cover_scan.py --check --spec S` 本地 0.1 秒）。取景（源片／翻转／裁切／zoom／focus）变过的旧记录不管；**尺子
   （审核器版本、`audit_interview_cover` 的阈值、海报版式指纹 `layout()`、有了
-  `face_checks` 之后它的阈值和模型缓存键）变过的旧记录也不管**——旧的 fail
+  `face_checks` 之后它的阈值和模型缓存键、扫描有没有逐格跑认人）变过的旧记录也不管**——旧的 fail
   不许接着拦；真要用一帧没扫过的，重扫，或写 `cover._frame_scan_why`
+
+**⭐⭐ 2026-09-28：扫描逐格认人＋睁眼，render 的封面红了自动换帧**（`--stage cover-scan --autopick`）。
+来路是返工审计 rework_audit_0928：interview-clip **9 趟 run（7 条 slug，46.5 runner-分钟）红在封面帧**，
+其中 7 趟红在「剪 + 烧字幕」之后；挪到编码之前（09-27）之后照样整趟作废——`cobolli-mensik`
+（run 36330845471）30 秒那一帧 Haar 数到 0 只眼、就地扫出的第一名 29.4，正是人后来写进 spec 的那一格
+（23ed3bfb9）；`zverev-tien`（run 36333320670）30 秒 Haar 数到 1 只眼、扫出 15 格过闸，人换的 31.6 是第 4 名。
+**这两帧的人脸模型都说睁眼、是本人**（EAR 0.29 / 0.32，相似度 0.43 / 0.45）——红在 Haar 的眼睛计数上。
+
+| | 做法 |
+|---|---|
+| 扫描的尺子 | 每格 `audit_poster(face=True)`——**和终审一模一样**，记录的 `pass` 就是终审的 `pass`。人脸模型一格 0.1 秒上下（沙箱：检测 62 ms＋向量 23 ms＋106 点 10 ms），渲一格海报 2 秒（runner：21 格 43 秒），不是瓶颈 |
+| 机器能换的 | 过闸 ＋ 认人 **match**（不是 unknown）＋ 睁眼 **open**（不是量不了）＋ **认出来的人是封面文案（tag／sub／topic／title）点了名的**。比终审严一档：人挑的那一帧人看过，机器换的没有。判定从存下的数重算；`_face_check_why` 不外借。**同场的人一起比**（复审 nit，`co_present`：参赛者＋文案点了名的、有官方头像的别人，`target` 只认主角）：更像别人的那一格是 unknown，不换——原来只拿主角一个人比，复审量过同场别人离主角最近 0.32、`MATCH_SIM` 0.34。终审那一份（`identity`／`issues`）逐字段不变（`face_checks.restrict_identity`），多比的只进 `rivals` 那一块；仓库 13 张海报重量一遍 12 张照样能换、0 回归，同场别人最像的 0.21（`cobolli-mensik` 对弗里茨） |
+| ⚠️ 为什么要文案点名 | 认人的「本人」是 `expected_subject` 推的，手写 spec 没写 `subject`／`match.loser` 就退回 `winner`：`pegula-eala-dc2026-final`（佩古拉亚军致辞）落到伊埃拉、`nakashima-shelton-mtl2026-final` 落到谢尔顿、`williams-sisters-cincinnati-2026-r1-presser` 落到对手。人挑的本人那一帧终审 mismatch 红，机器接着把冠军那一格（match、睁眼）换上去，终审、推送闸全说 match（09-28 复审拿真 spec＋真人脸模型复现过）。双打 `alcaraz-mensik` 文案只点了阿尔卡拉斯，门西克那一格不换。⚠️ **「整份文案里有这个名字」只堵得住文案没提冠军的那几条**（第二轮复审）：亚军致辞的副标题常写着「不敌冠军」——`rybakina-swiatek-tor2026-final`（莱巴金娜亚军致辞，sub「6-2 6-3不敌斯瓦泰克」）和它的发布会兜底都落到斯瓦泰克，复审拿头像拼的海报跑 `run_scan(autopick)` 换上了斯瓦泰克、rc=0。所以**主角是 winner 兜底猜的（`subject_guessed`：拿掉 winner 再推一次推不出人）只认 tag 那一格**（「赛事 · 人名」，promote 拼的就是它）；主角有出处的（写了 `subject`、亚军内容写了 `match.loser`、文案只点了一个参赛者）仍认整份文案（`naming_copy`）。全库 108 条认得出主角的采访 spec，63 条是兜底猜的，100 条过得了这一道；不过的 8 条：上面三条、莱巴金娜那两条、tag 只写「2026 美网 · 赛后开麦」又是兜底猜的两条、主角没头像的颁奖礼。这 8 条换不了＝照旧红，人来挑。主角一个都不在该认的文案里时连整段粗扫都不跑（`subject_unnamed`） |
+| 挑哪一格 | 过闸名单（余量排序）里第一个机器能换的；近处（±2 秒）没有就把整段采访 `start`–`end` 粗扫 ≤ 40 格（108 条正式 spec 里 107 条的 `frame_at` 在这一段里）。⚠️ **按余量排、不按远近**（`ranked_passing` 是 main 上的口径，`margin()` 写着理由：卡线的一格经不起下一次轻微的时间偏移）：近处 0.2 秒外就有一格能换，也可能挑到 2 秒外余量更大的那格；粗扫能落到另一个时刻（颁奖礼放下奖杯之后那种）。要保「人挑的那一刻」就得改成先按远近排——**2026-09-28 定了：保持按余量排**（D1，会话按账号所有者「完全自动化＋时效第一」定的：挑卡线的那格，下一趟一抖就掉下去，又是一趟返工）。**人圈了 `cover.scan_window`**：先在这一段里挑（太宽放粗步长扫完，不整趟红——`near_plan`），这一段一格都换不了才整段粗扫，换上的那格在 `_frame_autopick.left_scan_window` 里写明离开了人圈的窗口、那一段扫了几格为什么都不行 |
+| 换了之后 | 就地改写 spec 的 `cover.frame_at`、记 `cover._frame_autopick`（从哪到哪、原帧为什么不行、新帧读数）→ 按新帧重渲海报 → **同一把终审再过一遍** → 接着出片。人给原来那一帧写的 `_face_check_why`／`_frame_scan_why` 挪进 `_frame_autopick.dropped`、`cover._why` 前面标一句「说的是原来那一帧」（留着会替一帧没人看过的开脱）。**再换一次**（换过的 spec 已经在 main 上）标注只一层、说的仍是**人挑的**那一帧：`frame_at` 还是上次机器换的那格就往回追（`human_pick`），人换过之后手改了 `frame_at` 就说人新挑的。⚠️ 换过的 spec 用 GITHUB_TOKEN 推上 main，**那一趟不跑 CI**——第二轮复审拿真 `apply_autopick` 在 `cobolli-mensik` 上换一次（29.4 → 29.6），全库改写那条判据当场红（它把标注当原话、把机器那格当人挑的），下一个不相干的 PR 跟着红。判据 `test_main上已经换过帧的spec_全库那条判据照样绿`：复制全库、真 spec 换一次／连换三次／换后手改，再跑全库那条。⚠️ 这条判据**自己**读「人挑的那一格」也得走 `human_pick`，不许读 `frame_at`——第三轮复审在 `tien-cobolli` 上真跑 `apply_autopick`（79.6 → 79.8，模拟它在 main 上换过一次），测试拿机器那格当人挑的，红在自己的断言上（1 failed, 31 passed）：为「main 上换过帧」写的判据，先得经得起它自己描述的那种 main。「提交成片」**把改过的 spec 和扫描记录跟成片一起提交**（只交产物的话 main 上 spec 哈希对不上 QC 凭证：推送闸不推，picker 每 70 分钟重投一趟、再红再换，永远落不了地）；撞车重放时 spec 被别人改过就留别人的，**扫描记录也留分支上那一份**（本趟的落了库，别人那版的 frame_at 在 dispatch 预检就红、停进 waiting，而不是重渲再换——复审复现过） |
+| 一格都换不了 | 人脸模型不可用、主角没官方头像（`laver-cup-2026-trophy-ceremony` 那种）、整段都闭眼／别人——照旧红，日志里 ✓ 那一列就是候选。退出 3 时记一笔**停车账**：同一个封面指纹满 3 趟，picker 不再投（D2，账和指纹见 tennis-pipeline-ops「封面自动换帧挑不出来就停车」）；人脸模型整趟不可用退出 4，不记（环境的事） |
+| dispatch 之前 | `interview_preflight` 读已提交的记录（工作区没有就读 HEAD）：`frame_at` 是记录外没扫过的就红；是记录里没过闸的——**记录里已经有一格 render 会自动换上的就不拦、只提示**（D3，`render_would_swap`：窗口、间隔、取景、尺子都和 render 现在会扫的一样，重扫量出来的就是这几格），换不了才红：有机器能换的（但 render 扫不到）就报那一格，**过闸的有、机器一格都换不了（没头像、认人拿不准）就把过闸的那几格列出来让人挑**，不叫人「换一段重扫」（重扫出来还是这几格），一格都没过闸才叫人重扫；探针（系统 python3）也跑，picker 的预检缓存键带上记录的 blob 号。那一格**只**红在认人／睁眼上、人又写了 `_face_check_why`：和终审同一个口径，不拦（原因从记录存的数重算） |
+
+实测：拿仓库里真发过的两张错封面（阿加西那张、鲁德闭眼那张）和换过的那两张拼成源片，真 ffmpeg ＋ Chromium ＋
+人脸模型跑 `run_scan(autopick)`：两条都换到了本人睁眼的那一格、终审 `[ok]`（沙箱 26 格 133~160 秒）。
+仓库里现有的 13 张采访 `poster.jpg` 拿当前 spec 量，12 张过得了「机器能换」那道（剩下那张是主角没官方头像）。
+⚠️ 还不知道的：09-27 之前那 7 趟（红在编码之后）没留像素，**救不救得回来回放不了**——人最后换的那一格离红的那一格
+3.1~41 秒，都在整段粗扫的范围里，粗扫的格子会不会正好落在一张能过的上，没法事后判。
+⚠️ **情绪对不对题机器判不了，就是不判**——和 O4 一个口径；换过的片子 `cover._frame_autopick` 在，要看就看那一格。
 - ⚠️ **会话（沙箱）看不到候选墙**：它只走 artifact，而 artifact 在沙箱里下不下来
   （tennis-dev-practices「这台沙箱的两条硬限制」）。会话手上只有两样：`get_job_logs`
   拉到的排名表（扫描那一步和 `--report` 都印），和 `mode=cover` 提交进分支的那一张
@@ -2309,8 +2333,8 @@ WordPress 的 `search` 两样都不搜），判据 `test_半截失败的一档�
 ⚠️ **按这套闸，拉沃尔杯官网那批图过不了**：`lavercup.com` 媒体库的上限是 1200 宽
 （`BS2_8696` 1200×927、`CB_34032` 1200×832、`BS2_9519` 1200×800），铺 1080×1440 要放大
 1.55~1.80 倍——6b49049b 是人写了 `_low_res_why` 认领的。2026-09-27 对 `bublik-jodar`
-实跑：23 张候选，本场那两张日期、说明全对，卡在分辨率。要让机器接这一档，得账号所有者
-先定「放大到几倍以内可以自动换」，**这是口径，不是 bug**。
+实跑：23 张候选，本场那两张日期、说明全对，卡在分辨率。**定了（2026-09-28）：机器不接**——
+O4 的规矩本来就写着「铺满不放大」，机器不替人写 `_low_res_why`；这一档要换只能人挑、人认领。
 
 **实测过的端点（2026-09-27，沙箱）**：flashscore `dc_1_hheFZ9KN` 200（`DC÷1790360700`
 ＝09-25 18:25Z）；`lavercup.com/wp-json/wp/v2/media?search=…&_fields=…caption,alt_text`
@@ -2332,6 +2356,61 @@ WordPress 的 `search` 两样都不搜），判据 `test_半截失败的一档�
     python3 tools/cover_upgrade.py --slug <slug>      # 只查一条
     python3 tools/cover_upgrade.py --plan             # 只看有没有活（目标、要重派的 render），不查图
     # 工作流：定时班次带 --apply；推完会话用 tools/push_link.py --slug <slug> 取新推送网页
+
+##### ⭐⭐ 2026-09-28：O4 第一班一张都没换成——渠道合成一份、AP 是挑战页、没开赛时刻也能推日期、团体赛按名单、渲前预检
+
+第一班（run 36378419750，apply=false）的账：杭州三条**只查了 AP**（403），别的渠道在报告里根本不出现；
+`safiullin-bu` 因为 spec 没有 `_match.start_utc`／`flashscore_id` 被挡；`zverev-tien` 官网 8 张全卡在
+「只写姓」「没写对手」。改了四处：
+
+| | 现在 | 判据 |
+|---|---|---|
+| 渠道 | `tools/cover_channels.py` 的 `CHANNELS` **一份**，`find_cover_photo`（人查）和 `cover_upgrade`（O4）共用；官网域名也只在 `EVENT_SITES` 登记（人查给 `--event "Laver Cup"` 就自动带上 lavercup.com）。每档一行：**查了 N 张／查空／没查成／没跑／O4 不查**，末行分清「一档都没查成＝结果未知」和「查成了、没有全过」 | `test_渠道只登记一份_人查和O4用同一张单子` |
+| AP | 沙箱实测是 **Cloudflare 人机挑战**（403 ＋ `cf-mitigated: challenge`，`/hub/tennis`、`/search`、`.rss`、`news-sitemap` 全一样；它的 robots.txt 对 ClaudeBot／Claude-User 也写着 `Disallow: /`），runner 那一班同一地址也是 403——**不绕**，第一页认出来就停、记「没查成」 | `test_AP的Cloudflare挑战页记没查成_第一页就停` |
+| 当地日期 | `_match.start_utc` → `_start_time_source`（safiullin-bu 记着 sofascore 的 `reported_utc`）→ flashscore → **首推时刻推的两天窗口**（片子只做今天／昨天的比赛日；窗口下说明必须点对手、写日期，只能靠上传时刻判的不换），报告里写「日期来源」 | `test_没有开赛时刻_按spec记下的或首推时刻推当地日期_并说是哪一个` |
+| 团体赛 | `data/team_event_rosters.json`（拉沃尔杯 2026：官网 9/21 那篇的名单 ＋ 10 场「Match Highlights – A v B (Match N)」，和仓库 10 条拉沃尔杯 spec 逐条对得上）。**只写姓**：名单上这个姓只有他一人就认（认人闸还要认出是他）；**官网图注不写对手**：只认官网自己的图、日期是开赛时刻算的、他那天只打这一场且对手对得上、图注没点名单上的别人 | `test_拉沃尔杯官网真图注_…`（9/27 真图注录在 `tests/fixtures/cover_upgrade/`） |
+
+⚠️ **为什么团体赛放宽对手**：官网自己写的图注，拍他本人时**从来不写对手**（「Alexander Zverev adds another
+Laver Cup title to his resume.」「Team Europe players and captains get around Zverev.」）；写了对手的两张拍的
+恰恰是对手那边（「Team World's Learner Tien returns another Zverev smash.」）。兹维列夫 9/26 单打双打都打
+（第 6、第 8 场），那一天照旧要点对手。
+
+**渲前预检**（返工审计：66 条里 11 条首推是抽帧、4 条换实拍重推了 5 次）：match-reel render 那一步
+`python tools/cover_upgrade.py --preflight --slug <slug>`，同一套渠道和机器闸——有一张全过，**手写 spec 的第一次
+渲染红**（退出码 3，报告里是 `image`／`focus`／`focus_y`／`zoom`，`--write` 一条命令写进去），自动 spec、已经推过的
+只报；没有、判不了、渠道没查成、超时（会拦的 100 秒、只报的 60 秒）、工具自己炸了都不拦。会话发 render 之前自己也跑一遍。
+
+**回放的数（别读成「修好了」）**：11 条首推按首推那一刻重跑（上传晚于首推的剔掉）**0 条会被拦**——杭州 6 条
+机器能用的渠道一档都没有（AP 挑战页；中文媒体是这一站唯一出过实拍的一档，而 O4 不查它）；拉沃尔杯 4 条
+名单放宽之后点名闸过了 20 张（其中 10 张靠名单），**20 张全卡在官网 1200 宽**、1 张卡认人（替补席）；
+比利·简·金杯 1 条 WTA 查空。全库 83 条抽帧封面今天跑一遍：硬红 0。单条耗时是个范围：机器闸判不了的
+（缺英文名、认不出赛事、没开赛时刻）和只剩 AP 一档的不到 1 秒；其余 1~24 秒（81 条
+「赛场之上」逐条量 1.2~21.4 秒、平均 11.8；bencic-townsend 同一条
+15.4／16.6／22.7 秒，复审时 24 秒——网络抖动，同一条能差 7 秒）。
+
+**两件定了（按仓库已有的规矩定，不是悬着的口径）**：
+- **中文媒体 O4 不用**：公众号／当地网站的配图没有图注，时间地点人物自证不了——CLAUDE.md「出处以来源自己的
+  描述为准，不靠看图推断」。人查照旧跑这一档（`--zh`），换上去要人挑（`cover_channels` 里的 `o4_off`）
+- **拉沃尔杯官网 1200 宽的图机器不换**：O4 的规矩是「铺满不放大」，机器不写 `_low_res_why`
+
+##### 同日复审：只拦第一次、放宽要再收三道、两道闸是同一道
+
+| | 现在 | 判据 |
+|---|---|---|
+| 渲前预检拦谁 | **只拦手写 spec 的第一次渲染**（`already_pushed`：发布账本里没有 sending／sent／uncertain、git 里没有 `output/*/reel/<slug>/pushed.json`）。推过的只报、不试写、`--write` 也不写——推出去之后换图归 O4（它认 `_keep_frame_why`，认领口只有这一个）；原来那张空的 `PREFLIGHT_LEGACY` 删了（它管的就是「推过的」） | `test_渲前预检只拦第一次渲染_推过的只报_不试写不改spec` |
+| 预检和 `--write` | 预检挑图时拿 `--write` 的同一个函数（`_formal_gate_on`：`cover_photo_problem` ＋ `validate_spec`）试一遍、试完退回——退出码 3 只在 `--write` 会成功时出现；正式闸不放的换下一张 | `test_渲前预检拦下的那张_write一定写得进去_同一道正式封面闸` |
+| 团体赛放宽 | 放宽之后认错人原来只剩认人闸：① 点名闸收裸的替补席／看台名词（`bench`、`support…`、`crowd`、`fan(s)`、`spectator(s)`）② 放宽过的，图注**最先点名**的名单上的人必须是主角（「Learner Tien returns another Zverev smash」主语是对手）③ 照片有 EXIF `DateTimeOriginal` 就必须落在这场的当地日子（前一天的图第二天才传上来，上传那道闸拦不住） | zverev-tien 那 8 张：点名闸过的从 **7 张→4 张**（4 张全是主角先点名、全卡 1200 宽），**要下图的从 1 张→0 张**；`test_拉沃尔杯官网8张_…`、`test_照片EXIF拍摄日期不是这场的当地日子就不换` |
+| 开赛时刻下界 | `_start_time_source.reported_utc`（列出来的开赛时间）≤ 真开赛：「上传晚于开赛」拿它比是**更松**（原注释写反了），团体赛「不写对手」的放宽不给 | `test_列出来的开赛时间只当下界_团体赛不写对手的放宽不给` |
+| 时间 | match-reel 那一步 5→2 分钟：会拦的 100 秒、只报的 60 秒（`--preflight-budget`）；各步骤预算之和 62→59，job 63 | `test_渲前预检那一步的秒数装得进步骤超时_job留足三分钟余量` |
+
+##### 复审第二轮：账本之前推的 22 条、团队当主语、看台词钉住、夜场 EXIF
+
+| | 现在 | 判据 |
+|---|---|---|
+| 账本之前推的 | 81 条抽帧封面「赛场之上」里 22 条 `already_pushed` 认不出——8/2~8/8 合进 main，发布账本首笔 8/24、`pushed.json` 只有 `push.auto` 那条路写（手动 `mode=push` 只改 `copy.html`）。冻进 `data/legacy_prepush_reels.json`，只许减不许加；读不了按推过算。量法：`is_frame_cover` ＋ eyebrow＝赛场之上，逐条跑 `already_pushed`，空串的就是 | `test_发布账本之前推过的抽帧封面_登记表只许减_每条都查得到` |
+| 团队当主语 | 图注里 `Team <X>` 后面跟的不是封面主角的名字（「Team Europe celebrate after Alexander Zverev …」「Team Europe players and captains get around Zverev」）——**不分放宽没放宽**都不换（`team_subject_problem`）；`of／with／for Team X`、`Team X's <他>`、`Team X player <他>` 照旧认。两个词的队名会误拦（安全方向） | `TD2_6943_UhmuiH5g`（全名＋对手＋日期都点了，和替补席那张同一个帧号）；zverev-tien 8 张点名闸过的 4→2；`test_团队当主语的图注_不分放宽没放宽都不认成拍他本人` |
+| 看台词 | `crowd(s)`／`fan(s)`／`spectator(s)` 没有真图注钉着，逐个参数化（删一个红一格；`fantastic`／`crowded` 不拦） | `test_看台那几个词_crowd_fan_spectator_单复数都拦` |
+| 夜场 EXIF | 只记了开赛时刻时 `match_dates` 只有开赛那天：过了当地午夜拍的图被拦、记进 `tried`——安全方向（漏换一张，不换成别的比赛日）；flashscore 给了结束时刻就两天都认 | `test_只有开赛时刻时_夜场过了午夜拍的图被EXIF拦下还记进tried_知道结束时刻就不拦` |
 
 
 ### ⭐⭐ 2026-09-18：**比利·简·金杯官网的图在 Contentful 上，原图 5000~7000px**——页面是 JS 壳，图不是

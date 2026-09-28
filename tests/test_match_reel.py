@@ -1882,10 +1882,14 @@ def test_cookies模式不产任何产物():
         block = _step_block(step, text)
         assert "mode != 'cookies'" in block, step
     # 必须**真下媒体流**再看字节数：不带 cookie 也拿得到标题和格式表，
-    # 只查「命令有没有报错」会把「被挡住」读成「可用」
+    # 只查「命令有没有报错」会把「被挡住」读成「可用」。
+    # 这段 2026-09-28 抽进 tools/yt_cookie_check.sh（source-health 定时派发同一档），
+    # 判据跟着搬过去：步骤只许调脚本，脚本里真下、量字节、不够就红。
     check = _step_block("cookies — 只验", text)
-    assert "--download-sections" in check
-    assert "stat -c%s" in check and "exit 1" in check
+    assert "bash tools/yt_cookie_check.sh" in check
+    script = Path("tools/yt_cookie_check.sh").read_text(encoding="utf-8")
+    assert "--download-sections" in script
+    assert "stat -c%s" in script and "exit 1" in script
 
 
 def test_push模式不许跑清理那一步():
@@ -1933,9 +1937,12 @@ def test_yt_dlp装default才解得了n_challenge():
     text = WORKFLOW.read_text(encoding="utf-8")
     assert '"yt-dlp[default]"' in text
     check = _step_block("cookies — 只验", text)
-    # 报错要分因：撞机器人验证 / 解不了 challenge，是两件事
-    assert "n challenge solving failed" in check
-    assert "not a bot" in check
+    assert "bash tools/yt_cookie_check.sh" in check
+    # 报错要分因：撞机器人验证 / 解不了 challenge，是两件事。
+    # 分因那段 2026-09-28 跟着检查一起搬进了共享脚本（source-health 定时派发同一档）
+    script = Path("tools/yt_cookie_check.sh").read_text(encoding="utf-8")
+    assert "n challenge solving failed" in script
+    assert "not a bot" in script
 
 
 def test_回合镜头也铺满不走contain():
@@ -2875,7 +2882,9 @@ def test_旁白不能比它那一段的画面长():
     assert 'print(f"[注意] 第' not in src, "还停在只 print 一句「注意」"
     assert "raise ReelError(" in src and "会和下一段的语音、字幕叠在一起" in src, (
         "旁白超长要报错，不是打印")
-    assert "seg.length + 0.12" in src, f"容差要收紧到 0.12s，0.35 拦不住 0.29s 的超出"
+    # 2026-09-28：这个数挪成常量 `NARRATION_OVER_TOL`，`--dry-run` 认真 TTS 的账用同一个
+    assert reel.NARRATION_OVER_TOL == 0.12 and "seg.length + NARRATION_OVER_TOL" in src, (
+        "容差要收紧到 0.12s，0.35 拦不住 0.29s 的超出")
     # 字幕收进本段窗口：末尾时刻要被 min(...) 夹住
     assert "min(b, limit)" in src, "字幕没有收进本段窗口"
 
@@ -6483,8 +6492,14 @@ def test_段落不许写过源片末尾(monkeypatch):
     # （下一段，或者片尾页），所以每段都要那 `SEG_FADE` 秒底料，需求变成 5.18。
     # 这条断言的**前提变了，不是它写错了**——跟着改基准，容差本身照旧验。
     need = 5.0 + reel.SEG_FADE
-    monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.02)
+    # ⚠️ 2026-09-28 容差从「+0.05s」收成 **0**（hu-kopriva-chengdu-2026-r1：
+    # 143.58 对 probe 的 143.56，老容差放行、render 报分段短了，run 35949569743）：
+    # 正好贴住源片末尾的放行（已推送的 5 段落在最后一帧里照样渲得出来），差 0.02s 的红。
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: need)
     reel._check_segments_fit([seg], {"": fake})
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.02)
+    with pytest.raises(reel.ReelError, match="超出"):
+        reel._check_segments_fit([seg], {"": fake})
 
     # 而超出容差的那一头仍然要炸：差 0.2s 已经够 xfade 落到流末尾之外
     monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.2)
@@ -16818,7 +16833,10 @@ def test_没给scorebox时probe要按猜的框顺手量一遍死球(monkeypatch)
     # ⚠️ probe 那条路必须真的走这个函数，并把 point_ends_guess 写进 probe.json
     # ——闸写出来了没人调，这个仓库栽过（find_point_ends 零调用方一个月）
     src = inspect.getsource(reel.main)
-    assert "measure_point_ends(source, args.scorebox)" in src, "probe 没接上 measure_point_ends"
+    # 2026-09-28：先按源片高度把 --scorebox 对上这一趟的分辨率（fit_scorebox_to_frame），
+    # 再交给 measure_point_ends
+    assert "measure_point_ends(source, scorebox)" in src, "probe 没接上 measure_point_ends"
+    assert "fit_scorebox_to_frame(args.scorebox, (w, h))" in src
     assert '"point_ends_guess": ends_guess' in src, "point_ends_guess 没写进 probe.json"
 
 

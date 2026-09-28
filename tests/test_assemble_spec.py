@@ -229,7 +229,10 @@ def test_matchup_order_selects_requested_match_before_historical_reverse(tool, m
     assert [name for name, _ in ordered] == ["Aryna Sabalenka", "Linda Noskova"]
 
 
-def test_matchup_order读不到feed退回命令行顺序(monkeypatch):
+def test_matchup_order核不出顺序就抛_不退回命令行顺序(monkeypatch):
+    """命令行顺序和 feed 的 home/away 是两回事：核不出就说核不出，由 assemble
+    跳过按 home/away 排的几块（原来退回命令行顺序，赛果事实会把赢家算反——
+    整条回放见 test_source_probe_robustness 的 `test_df_hh_1读不到时不许出result_verified`）。"""
     import importlib.util
     spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")
     mod = importlib.util.module_from_spec(spec)
@@ -238,10 +241,55 @@ def test_matchup_order读不到feed退回命令行顺序(monkeypatch):
     def _boom(name, mid):
         raise RuntimeError("net down")
 
-    monkeypatch.setattr(mod, "fs_feed", _boom)
-    ordered = mod.matchup_order("A E", "B R", "x")
-    assert [en for en, zh in ordered] == ["A E", "B R"], (
-        "读不到 feed 就退回命令行顺序——但那时 stats 块也没生成，谈不上错位")
+    def _exit(name, mid):
+        raise SystemExit("https://x/df_hh_1_x\n  HTTP 503 —— 被挡还是不存在")
+
+    for feed, want in ((_boom, "net down"), (_exit, "HTTP 503")):
+        monkeypatch.setattr(mod, "fs_feed", feed)
+        with pytest.raises(mod.MatchupOrderUnverified, match=want):
+            mod.matchup_order("A E", "B R", "x")
+    # 没给 FH/FK、同姓认不出（两个 Wang），都是核不出——不是命令行顺序
+    monkeypatch.setattr(mod, "fs_feed", lambda *_a: "SA÷2¬~")
+    with pytest.raises(mod.MatchupOrderUnverified, match="FH/FK"):
+        mod.matchup_order("A E", "B R", "x")
+    monkeypatch.setattr(mod, "fs_feed",
+                        lambda *_a: "KP÷x¬FH÷Wang Xin.¬FK÷Wang Xiy.¬~")
+    with pytest.raises(mod.MatchupOrderUnverified, match="按姓认不出"):
+        mod.matchup_order("Xinyu Wang", "Xiyu Wang", "x")
+
+
+def test_狠数据和转折局的名字按feed的home_away给(tool, monkeypatch):
+    """`collect` / `_label` 拿 home 那个名字去标 feed 里 SH / server=home 那一列。
+    matchup 重排过（命令行 --home 是 feed 的 away）时还按命令行顺序传，赢家的
+    总分、破发点兑现就标在输家名下，还喂进文案 facts。"""
+    a = tool
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(aw, a.player_zh(aw)), (h, a.player_zh(h))])
+    monkeypatch.setattr(a, "stats_block", lambda mid: {
+        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
+    got = {}
+    monkeypatch.setattr(a, "collect", lambda mid, h, aw: got.update(names=(h, aw)) or {
+        "candidates": [], "durations": []})
+    monkeypatch.setattr(a, "points", lambda mid: [{
+        "set": "1", "home_games": "5", "away_games": "6",
+        "server": "home", "winner": "away", "broken": True,
+        "points": "", "break_points": 1, "set_points": 0, "match_points": 0}])
+    monkeypatch.setattr(a, "rank_games", lambda games: [{
+        **games[0], "density": 2, "tags": []}])
+    monkeypatch.setattr(a, "set_pairs", lambda mid: [])
+
+    class NotReady:
+        ready = False
+
+    monkeypatch.setattr(a, "Chat", lambda: NotReady())
+    draft = a.assemble(slug="x", home="Alexandra Eala", away="Elena-Gabriela Ruse",
+                       event="Cincinnati", year=2026, fixture="北京时间",
+                       flashscore_id="4CYI9Ick", tactical_packet={"status": "skipped"})
+    eala, ruse = a.player_zh("Alexandra Eala"), a.player_zh("Elena-Gabriela Ruse")
+    assert [p["name"] for p in draft["cover"]["matchup"]] == [ruse, eala]
+    assert got["names"] == (ruse, eala), "collect 的 home 名字要是 feed 的 home（matchup[0]）"
+    label = draft["_turning_points"][0]["label"]
+    assert f"{ruse}发球，{eala}拿下" in label, label
 
 
 def test_assemble无id时跳过三块并出声(tool, monkeypatch):

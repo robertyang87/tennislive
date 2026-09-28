@@ -45,7 +45,10 @@ def test_dispatchers_pass_one_clock_edge_into_parallel_renders():
     auto = AUTO.read_text(encoding="utf-8")
     assert "received_at={received_at}" in queue
     assert '-f "received_at=$RECEIVED_AT"' in auto
-    assert '--mark-one "$slug" --at "$RECEIVED_AT"' in auto
+    # 先投过 subs 的 render，SLA 起点往前拨到那趟 subs（`render_received_at`，2026-09-28）；
+    # 记账照旧记真正的派发时刻——70 分钟的重投窗口按它算。
+    assert '--received-at "$slug"' in auto
+    assert '--mark-one "$slug" --at "$DISPATCHED_AT"' in auto
 
 
 def test_interview_heavy_dependencies_are_cached_without_quality_downgrade():

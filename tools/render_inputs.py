@@ -143,8 +143,11 @@ def utc_time(value: Any) -> bool:
 
 def any_text_value(value: Any) -> bool:
     """`{源键: 为什么}` 这种认领表（`probe_sources.coverage_findings` 读 `_no_probe_why`）：
-    至少一条 `str(v or "").strip()` 非空才算——一张全是空白的表闸一条都不认。"""
-    return isinstance(value, dict) and any(str(v or "").strip() for v in value.values())
+    至少一条理由非空才算——一张全是空白的表闸一条都不认。理由按 `probe_sources.claim_why`
+    的口径取：老写法是一句话，多源的新写法是对象的 `why`（带宽高帧率，2026-09-28）。"""
+    def _why(v: Any) -> str:
+        return str((v.get("why") if isinstance(v, dict) else v) or "").strip()
+    return isinstance(value, dict) and any(_why(v) for v in value.values())
 
 
 #: `taste_gates_extra.QUOTE_KINDS` 的一份抄本（这个模块只许用标准库，import 不了它）。
@@ -213,12 +216,17 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_decider_why": _gate("reel_facts.decider_set_problem：大满贯提「决胜盘」的认领",
                           "decider_set_problem", "_decider_why"),
     "_digital_silence_why": _gate(
-        "probe_audio.digital_silence_findings：无旁白段按实测会漏出数字静音的认领"
-        "（probe_dry_run，dry-run 读 probe；probe 没拉回来时这一层是哑的，所以记位置）",
+        "probe_audio.digital_silence_findings：按实测会漏出数字静音的认领——无旁白段，和旁白"
+        "说完之后的那一截（上包络／真语音那几档，2026-09-28 起手写 spec 硬）。dry-run 读 probe"
+        "（只在 mode=render 那一趟硬）；--check-narration 和 render 在 TTS 之后按真语音再判一遍；"
+        "probe 没拉回来时这一层是哑的，所以记位置",
         "digital_silence_findings", "segments[]._digital_silence_why"),
     "_draft": _gate("promote_reel_draft.promote：转正时按键名比出草稿块、剥掉它（备料，render "
                     "和 dry-run 都不调）", "promote"),
     "_durations": _gate("promote_reel_draft._duration（备料时读）", "_duration"),
+    "_feed_retry": _gate("promote_reel_draft.promote：转正时和 `_draft` 一起剥掉——草稿专用的"
+                         "flashscore 重跑账（assemble_spec.record_feed_retry），render 和 dry-run "
+                         "都不调", "promote"),
     "_editing_why": _gate(
         "taste_gates_extra.uses_tennistv：`_source`／`_editing_why` 里写着 Tennis TV 就要求"
         "认领 `_tennistv_trim`（dry-run）——它是**触发**不是认领，写了只会多一道闸；"
@@ -279,8 +287,8 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
         "（dry-run 只报不拦）", "stale_cover_problem", "cover.portrait._old_photo_why"),
     "_no_probe_why": _gate(
         "probe_sources.coverage_findings：`{源键: 为什么}`，某条源认领不到 probe.json 的认领"
-        "（probe_dry_run；新的手写 spec 硬）", "coverage_findings", "_no_probe_why",
-        any_text_value),
+        "（probe_dry_run；新的手写 spec 硬；多源的认领是对象、带宽高帧率，几何预演拿它照跑）",
+        "_claims", "_no_probe_why", any_text_value),
     "_numeral_display_why": _gate(
         "reel_asset_gates.numeral_display_problems：字幕数字换算半中半洋的认领",
         "numeral_display_problems", "_numeral_display_why"),
@@ -347,6 +355,9 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_winners_ue_why": _gate("taste_gates_extra.winners_ue_missing：数据图缺制胜分/UE 的认领"
                              "（dry-run）", "winners_ue_missing", "stats._winners_ue_why",
                              truthy),
+    "_x_cdn_why": _gate("build_match_reel.x_cdn_source_problem：主地址只剩 X 的 CDN 直链"
+                        "（帖子已删）的认领（validate_spec，dry-run 就查）",
+                        "x_cdn_source_problem", "_x_cdn_why"),
     "_why": _gate("_seg_voice：改了语速/音高要写为什么。**只有 `voice._why` 有闸读**——"
                   "`segments[i]._why`、`cover.portrait._why`、`stats._why` 都是纯说明",
                   "_seg_voice", "segments[].voice._why"),

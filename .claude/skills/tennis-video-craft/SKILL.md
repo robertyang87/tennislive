@@ -844,6 +844,26 @@ ASR 比全段，`check_human_quote` 拿赛事官网的人工引语比那几句�
   subs 那一趟就按 render 的判据报出会红的键
 - render 照旧再验一遍；**指纹没变且 `transcript_verified: true` 才跳过**（老规矩，没放宽）。
   所以 subs 报告看完、没改 `en_fixed` 就置上 `transcript_verified`，render 那 3~5 分钟就省了
+- ⭐ **2026-09-28 多一条跳过：subs 在当前转写指纹上交的判定是 ok**（`subs_verdict`：
+  `second_asr_verdict.json` 的量数在闸门内或被 `transcript_disagree_ok` 覆盖、空档全销账），
+  render 的 verify 直接用它、不再重量，并补落 `verify_fingerprint.json` 的 pass。
+  **第二份 ASR 不是确定性的**：tien-cobolli 同一个指纹 `40e2f923` 两趟量出 2.7% 和 3.9%
+  （run 36262863085／36263172795）——放行和出片要看同一份量数，重量只会随机红。
+  量数**每跑一次都落**（排在认领那道闸会抛之前），所以「量过、超了」和「没量过」分得开；
+  认领不进指纹，量完再写认领照样作数。改 `en_fixed`（或别的让切出来的行变了的改动）指纹就变，判定作废、
+  要重跑 subs。⚠️ **`start`／`end` 不进指纹**——挪进一段静默行和指纹都不变，所以分歧量数和 pass 另记
+  `window`、空档证据按空档键逐行认：区间挪了对不上＝缺判定（再跑一趟 subs），不是红
+- ⭐ **VAD 自动销账留理由**：`gap_vad_attestation.json` 每行带 `reason`（「VAD 在核心区只测到
+  0.000s 人声（≤0.12s），第二份 ASR 一个词都没听到——没人说话，自动销账」），verify／render
+  的日志、`caption_gaps.md` 和核对表的「已销账」印的是同一句（原来一律印「**否**」，报告说没销、
+  闸却放行了）。**不写进 spec 的 `caption_gaps_ok`**——那张表是「人听过的决定」，机器写进去就分不清；
+  人销过的账永远优先，VAD 说有人声也不覆盖
+- ⭐ **标签按依据分，只有 `no_speech` 叫「VAD 自动销账」**（2026-09-28 D1）：`transcript_covered` 是
+  「双 ASR 自动销账」、`caption_timeline_covered` 是「字幕时间轴自动销账」，理由里照印 VAD 测到的人声秒数
+  和听到的词——仓库里 32 行时间轴那一类有 14 行 VAD 其实测到了人声，报告不许读成「VAD 证过没人说话」
+- ⭐ **判定绑源**（2026-09-28）：量数、pass、空档证据都记 `url`（`verdict_bound`）——写 `asr_model` 的 spec
+  换源片指纹不变，没记源／源对不上一律当没量过。subs／verify 两档对封面、文案、中文排版的红只报不拦
+  （`TRANSCRIPT_STAGES`），第二份 ASR 和写中文并行跑
 
 #### 但这道闸只是「让你看一眼」，不是「必须查实」
 
@@ -1300,6 +1320,8 @@ pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/
 现在 `mode=narration` 只合语音、只报数：整趟 **1 分 31 秒**，语音落临时目录，
 `output/` 一个字节不动，清理/上传/提交三步全跳过。它**一次列全所有超长的段**，
 外加每段的余量（还标「很紧」）——比离线估准得多，见下。
+
+⭐ **2026-09-28 起 `--check-narration`／`mode=narration` 量完会落账**（`data/narration_checks/<slug>.json`，按每段旁白的指纹）：`--dry-run` 对「落在估算误差里」的段认这份账（zverev-deminaur 第 9 段：画面 11.9s、runner 上 edge-tts 实测 12.10s——那一趟没有 Azure 钥匙——dry-run 当时只印了一句「悬」）。**没账只报、带补账命令，不红**（09-28 会话决定：316 条里 305 条落在误差带里，红就是每条新片子多一趟 runner；render 编码之前那道真 TTS 旁白闸兜底）；量过、装不下才红。账头记着量它的 TTS 后端，只认和**出片那台机器**同一个后端量的（`render_tts_setup`；runner 的 dry-run 和 render 挂同一对钥匙）。runner 那一趟把账自己提交回分支，这是 `mode=narration` 唯一写进仓库的东西。量法、豁免见 `tennis-pipeline-ops`「返工审计的八道小闸」。
 
 #### ⚠️⚠️ 本地 `--check-narration` 和 runner 上的 render **不是同一个 TTS**，而 runner 那个更快
 

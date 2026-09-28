@@ -166,14 +166,20 @@ def test_右缘量不出或x1写窄了_巡回赛转播只报():
 
 
 def test_没有数据或者框对不上_这一层只报没查():
-    """老 probe（逐帧量板之前）、框对不上、量板失败：一律只报「没查」，**不许不吭声**
-    ——「没查」和「查过没问题」在 dry-run 里要长得不一样。"""
+    """框对不上、量板失败：只报「没查」，**不许不吭声**——「没查」和「查过没问题」在
+    dry-run 里要长得不一样。老 probe（逐帧量板之前）而这一段开着回贴：2026-09-28 起
+    手写的新 spec 红（带重跑 probe 的命令），见 `tests/test_small_gates.py`。"""
     spec = _atp_spec([_seg(5.5, 9.5, True)])
-    for board, word in ((None, "早于逐帧量板"),
-                        (_board("atp", ON_THEN_OFF, box=(98, 870, 519, 980)), "对不上"),
+    for board, word in ((_board("atp", ON_THEN_OFF, box=(98, 870, 519, 980)), "对不上"),
                         ({"version": 1, "error": "ffmpeg 解板失败"}, "ffmpeg 解板失败")):
         hard, soft = _findings(spec, board, "atp")
         assert hard == [] and any(word in s for s in soft), (word, soft)
+    hard, soft = _findings(spec, None, "atp")
+    assert len(hard) == 1 and "早于逐帧量板" in hard[0] and "mode=probe" in hard[0], hard
+    # 自动产的 spec 照旧只报
+    hard, soft = _findings(_atp_spec([_seg(5.5, 9.5, True)],
+                                     _production={"status": "ready_for_render"}), None, "atp")
+    assert hard == [] and any("早于逐帧量板" in s for s in soft), soft
 
 
 def test_probe_dry_run真的接上了回贴那一层(monkeypatch):
