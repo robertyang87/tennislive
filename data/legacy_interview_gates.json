@@ -271,7 +271,7 @@
   }
  },
  "end_board_quiet_tail": {
-  "_why": "「已知带片尾板的源（拉沃尔杯、Tennis TV）上，end 离最后一个词还有 1.5 秒以上」在 dispatch 前的预检里对手写 spec 升成红（interview_tail.quiet_tail_problem，2026-09-28；来路 alcaraz-fritz 1b0b65ee5、tien-cobolli 9ae8918fb 两条推出去又重推）。上线时全库 110 条采访、19 条来自这两家，按字幕缓存量出来红 2 条，都是 8 月辛辛那提已推送的 Tennis TV 场上采访（copy.html 在），不为这条重渲。改了 end 或补了 _end_why 就从这里删掉。",
+  "_why": "「已知带片尾板的源（拉沃尔杯、Tennis TV）上，end 离最后一个词还有 1.5 秒以上」在 dispatch 前的预检里对手写 spec 升成红（interview_tail.quiet_tail_problem，2026-09-28；来路 alcaraz-fritz 1b0b65ee5、tien-cobolli 9ae8918fb 两条推出去又重推——那两条是自动 spec，这道闸对它们只报，归出片那一趟的 end_card_problem）。上线时全库 110 条采访、19 条来自这两家，按字幕缓存量出来红 2 条，都是 8 月辛辛那提已推送的 Tennis TV 场上采访（copy.html 在），不为这条重渲。改了 end 或补了 _end_why 就从这里删掉。",
   "slugs": [
    "faria-shelton-cincinnati-2026-r2",
    "jodar-tabilo-cincinnati-2026-r3"

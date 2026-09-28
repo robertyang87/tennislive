@@ -1866,33 +1866,6 @@ def resolve_fps(path: Path) -> tuple[str, float]:
     return target_fps(raw)
 
 
-def source_fps_value(path: Path) -> float | None:
-    """源片**自己**的帧率（不是成片降采样之后的），给「写过源片末尾」那道闸算一帧多长。
-    读不出来返回 None（闸按 `SOURCE_END_FALLBACK_FPS` 算）。"""
-    try:
-        raw = run("ffprobe", "-v", "error", "-select_streams", "v:0",
-                  "-show_entries", "stream=r_frame_rate",
-                  "-of", "default=nw=1:nk=1", str(path)).stdout.strip()
-        value = float(Fraction(raw))
-    except (ValueError, ZeroDivisionError, ReelError, OSError):
-        return None
-    return value if 10.0 <= value <= 120.0 else None
-
-
-def _probe_fps_value(probe: dict | None) -> float | None:
-    """probe.json 记的源片帧率（分数式优先，和 `probe_sources._fps_value` 同一个口径）。"""
-    if not probe:
-        return None
-    for raw in (probe.get("fps"), probe.get("fps_value")):
-        try:
-            value = float(Fraction(str(raw)))
-        except (ValueError, ZeroDivisionError, TypeError):
-            continue
-        if 10.0 <= value <= 120.0:
-            return value
-    return None
-
-
 def target_fps(raw: str, *, quiet: bool = False) -> tuple[str, float]:
     """`resolve_fps` 的规则本身：源片报的帧率写法 → 成片帧率。拆出来是给
     `--dry-run` 用的——它手里只有 probe.json 里记的 `fps`，没有源片（`probe_audio`
@@ -6226,6 +6199,13 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     # ⓪ 每条源都要先 probe（新的手写 spec 硬）——排在「一份都没认领上」之前，
     #    否则最该拦的那一类（一条都没 probe）会从下面那个早退里溜走。见 `probe_sources`。
     hard, soft = probe_sources.coverage_findings(spec, probes)
+    # ⓪b 多源的宽高帧率：拿 probe 的数跑 render 里同一道 `check_sources_match`，
+    #    别等源片全下完（中位 230 秒）才红——7 趟几何红都是这么烧掉的。
+    #    ⚠️ 排在「一份都没认领上」的早退**之前**：每条源都没 probe、全靠
+    #    `_no_probe_why` 带宽高帧率认领时，几何预演只有认领的数可比，早退会把它整个跳过
+    #    （2026-09-28 修正轮）。
+    hard.extend(probe_sources.geometry_findings(
+        spec, probes, check_sources_match, ReelError)[0])
     if not probes:
         print("\n[查选段] **一份 probe.json 都没认领上**——这一段没查。\n"
               "  probe 把切点、死球、片长都算好并提交进仓库了，按源片 URL 认领；"
@@ -6237,10 +6217,6 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
           + (f"，**没查成的源：{missing}**" if missing else ""))
 
     urls = dict(spec.get("sources") or {}) or {"": str(spec.get("source_url", ""))}
-    # ⓪b 多源的宽高帧率：拿 probe 的数跑 render 里同一道 `check_sources_match`，
-    #    别等源片全下完（中位 230 秒）才红——7 趟几何红都是这么烧掉的。
-    hard.extend(probe_sources.geometry_findings(
-        spec, probes, check_sources_match, ReelError)[0])
 
     # ① 写过源片末尾。ffmpeg 的 `-ss`/`-t` 越界**不报错**，只安安静静出一段
     #    短的，而后面每一句旁白和字幕都跟着整体错位。
@@ -6252,9 +6228,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
         {seg.source: (float(probe["duration"])
                       if (probe := probes.get(urls.get(seg.source, "")))
                       and probe.get("duration") else None)
-         for seg in segments},
-        {seg.source: _probe_fps_value(probes.get(urls.get(seg.source, "")))
-         for seg in segments}, slug=str(spec.get("slug") or "")))
+         for seg in segments}))
     for tag, spot in _cover_frame_spots(spec):
         probe = probes.get(urls.get(str(spot.get("source", "")), ""))
         if probe and probe.get("duration") \
@@ -6614,8 +6588,15 @@ LEGACY_NARRATION_UNCHECKED_PATH = (Path(__file__).resolve().parents[1] / "data"
 
 
 def narration_fingerprint(seg) -> str:
-    """一段旁白喂给合成器的全部输入（原文＋这一段的语速／音高／风格／段首停顿）的指纹。
-    改一个字、换一个风格，真时长就可能变——指纹跟着变，老账不认。"""
+    """一段旁白在 spec 里的全部输入（原文＋这一段的语速／音高／风格／段首停顿）的指纹。
+    改一个字、换一个风格，真时长就可能变——指纹跟着变，老账不认。
+
+    **整条片子共用的那几样不在这儿，在账本的文件头上比**（`narration_record_mismatch`）：
+    工作流的音色／语速、TTS 后端、栏目基调——它们一变，这条片子的每一段都要重量。
+    ⚠️ `speakable()`（换字表、比分里的「-」）**故意不进指纹**：它换的是同音字和「-」→「比」，
+    念出来的音节数不变；而换字表改得勤（09-27 一天扩到十几条），进了指纹，改一次表就把
+    全库已发片子的账一起作废、下一个无关 PR 红在 `test_豁免表外的手写spec误差带里的段都量过`
+    上（2026-09-28 修正轮）。"""
     raw = json.dumps([seg.narration.strip(), seg.voice_rate, seg.voice_pitch, seg.voice_style,
                       seg.voice_styledegree, round(float(seg.voice_lead_pause or 0.0), 3)],
                      ensure_ascii=False)
@@ -6632,18 +6613,56 @@ def narration_record_path(slug: str) -> Path:
     return NARRATION_CHECKS_DIR / f"{slug}.json"
 
 
-def load_narration_record(slug: str) -> dict[str, dict]:
-    """`{指纹: {"segment": 段号, "spoken": 秒, "picture": 秒}}`；没量过返回空。"""
+def _narration_record_file(slug: str) -> dict:
     try:
         data = json.loads(narration_record_path(slug).read_text(encoding="utf-8"))
     except (FileNotFoundError, ValueError):
         return {}
-    segs = data.get("segments") if isinstance(data, dict) else None
+    return data if isinstance(data, dict) else {}
+
+
+def load_narration_record(slug: str) -> dict[str, dict]:
+    """`{指纹: {"segment": 段号, "spoken": 秒, "picture": 秒}}`；没量过返回空。"""
+    segs = _narration_record_file(slug).get("segments")
     return segs if isinstance(segs, dict) else {}
 
 
+def expected_narration_setup(spec: dict) -> tuple[str, list[str]]:
+    """出片那一趟会用的 `(TTS 后端, [栏目基调, styledegree])`——按 spec 推，不看这台机器有没有钥匙。
+
+    runner 上 render 有 Azure 钥匙，所以没写 `tts_backend` 的就是 `azure`，基调按栏目
+    （`column_base_style` 在有 Azure 时取的同一个 `base_style_for`）；写了 `tts_backend: edge`
+    的是 `edge-tts`、没有基调（`column_base_style` 在没 Azure 时返回空）。"""
+    if spec.get("tts_backend") == "edge":
+        return "edge-tts", ["", ""]
+    column = str(spec.get("column") or (spec.get("cover") or {}).get("eyebrow") or "").strip()
+    return "azure", list(azure_tts.base_style_for(column))
+
+
+def narration_record_mismatch(data: dict, spec: dict, *, voice: str | None = None,
+                              rate: str | None = None) -> str | None:
+    """账本的文件头（后端、栏目基调、音色、语速）和出片那一趟对不上 → 一句为什么不认；对得上 None。
+
+    修正轮（2026-09-28）：第一版把这几样记进了账却从来不比——edge-tts 量的账会被当成
+    Azure 出片的真时长认下来，而这条闸要防的正是「量的不是出片那个 TTS」。
+    `voice`／`rate` 给了才比（`--dry-run` 传它自己的参数，默认值和工作流的默认值是
+    一对，`test_match_reel` 钉着）。"""
+    if not data:
+        return None
+    backend, base = expected_narration_setup(spec)
+    got = [("TTS 后端", str(data.get("backend") or ""), backend),
+           ("栏目基调", list(data.get("base_style") or ["", ""]), base)]
+    if voice is not None:
+        got.append(("音色", str(data.get("voice") or ""), voice))
+    if rate is not None:
+        got.append(("语速", str(data.get("rate") or ""), rate))
+    off = [f"{name}账上是 {have!r}、出片是 {want!r}" for name, have, want in got if have != want]
+    return "；".join(off) or None
+
+
 def write_narration_record(slug: str, segments, spoken: dict[int, float], *,
-                           voice: str, rate: str, backend: str) -> Path:
+                           voice: str, rate: str, backend: str,
+                           base_style: tuple[str, str] | list[str] = ("", "")) -> Path:
     """`--check-narration` 量完落账（**只记这一趟量到的**，改过字的老指纹自然掉出去）。"""
     from datetime import datetime, timezone  # noqa: PLC0415
     path = narration_record_path(slug)
@@ -6651,7 +6670,7 @@ def write_narration_record(slug: str, segments, spoken: dict[int, float], *,
     data = {
         "slug": slug,
         "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "voice": voice, "rate": rate, "backend": backend,
+        "voice": voice, "rate": rate, "backend": backend, "base_style": list(base_style),
         "_why": ("--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段"
                  "按旁白指纹认这份账（build_match_reel.narration_check_findings）"),
         "segments": {narration_fingerprint(segments[i]): {
@@ -6686,16 +6705,25 @@ def check_narration_commands(spec: dict, spec_path: str | Path | None = None) ->
 def narration_check_findings(spec: dict, segments, tight: list[int], *,
                              spec_path: str | Path | None = None,
                              record: dict | None = None, legacy: dict | None = None,
-                             env: dict | None = None) -> tuple[list[str], list[str], list[str]]:
+                             env: dict | None = None, voice: str | None = None,
+                             rate: str | None = None) -> tuple[list[str], list[str], list[str]]:
     """「落在估算误差里」的段认真 TTS 的账 → `(红, 只报, 认过账的)`。
 
     | 情形 | 手写 spec | 自动 spec／runner 的 cover·narration 趟／冻着的老片 |
     |---|---|---|
     | 误差带里的段，账上没有这段旁白（没量过、改过字） | **红** | 只报 |
     | 账上量过、真时长比画面长 `NARRATION_OVER_TOL` 以上（误差带里外都算） | **红** | 只报 |
+
+    账本的文件头和出片那一趟对不上（`narration_record_mismatch`：后端、栏目基调、音色、
+    语速）→ 整份账不认，误差带里的段按「没量过」算。`record` 显式给了就不查文件头（测试用）。
     """
     slug = str(spec.get("slug") or (Path(spec_path).stem if spec_path else ""))
-    record = load_narration_record(slug) if record is None else record
+    mismatch = None
+    if record is None:
+        data = _narration_record_file(slug)
+        mismatch = narration_record_mismatch(data, spec, voice=voice, rate=rate)
+        segs = data.get("segments")
+        record = {} if mismatch or not isinstance(segs, dict) else segs
     env = os.environ if env is None else env
     mode = str(env.get("REEL_DRY_RUN_FOR") or "render").strip() or "render"
     auto = (spec.get("_production") or {}).get("status") == "ready_for_render"
@@ -6730,8 +6758,9 @@ def narration_check_findings(spec: dict, segments, tight: list[int], *,
         line = (f"  第 {[i + 1 for i in unchecked]} 段落在估算的误差里，而 "
                 f"data/narration_checks/{slug or '<slug>'}.json 里没有这几段**现在这版旁白**的"
                 "真 TTS 时长（没量过，或者量完又改过字）。离线估判不了——zverev-deminaur 第 9 段"
-                "就是这么在 runner 上红的（估的余量看着宽，Azure 实测超了 0.2s）。先量：\n"
-                + check_narration_commands(spec, spec_path))
+                "就是这么在 runner 上红的（估的余量看着宽，Azure 实测超了 0.2s）。"
+                + (f"（账本在，但量的不是出片那一套：{mismatch}——整份不认）" if mismatch else "")
+                + "先量：\n" + check_narration_commands(spec, spec_path))
         if soft_reason:
             soft.append(line + f"\n    （{soft_reason}）")
         else:
@@ -8685,32 +8714,8 @@ OVER_SOURCE_END_HEAD = (
     "于是它后面每一句旁白和字幕都会整体错位：\n")
 
 
-#: 源片帧率不知道时，「一帧」按 25 fps 算（0.04s）：常见转播帧率里最长的一帧，
-#: 宁可多收一点。
-SOURCE_END_FALLBACK_FPS = 25.0
-
-
-#: 「减一帧」之前已经写好的段（还在老容差 +0.05s 以内），按 `slug → {段号: end}` 冻住；
-#: `end` 改了就不认。只许减不许加，自检 `test_写过源片末尾减一帧的豁免表只许减`。
-LEGACY_SOURCE_END_PATH = Path(__file__).resolve().parents[1] / "data" / "legacy_source_end_frame.json"
-#: 老容差：豁免表里的段只在这之内放行（原来的判据，一个字不改）。
-_LEGACY_SOURCE_END_SLACK = 0.05
-
-
-def legacy_source_end() -> dict[str, dict[str, float]]:
-    try:
-        data = json.loads(LEGACY_SOURCE_END_PATH.read_text(encoding="utf-8"))
-    except FileNotFoundError:
-        return {}
-    return {str(k): {str(i): float(e) for i, e in (v or {}).items()}
-            for k, v in (data.get("reels") or {}).items()}
-
-
 def segments_over_source_end(segments: list[Segment],
-                             durations: dict[str, float | None],
-                             fps: dict[str, float | None] | None = None,
-                             *, slug: str = "",
-                             legacy: dict[str, dict[str, float]] | None = None) -> list[str]:
+                             durations: dict[str, float | None]) -> list[str]:
     """哪几段写过了源片末尾——**`--dry-run` 和 render 那道闸共用这一个函数**。
 
     ⚠️ **它存在的理由是一次白跑的 render（run 680，2026-08-15）。** 在那之前
@@ -8727,35 +8732,27 @@ def segments_over_source_end(segments: list[Segment],
     `durations` 的值可以是 None（那条源片没探过）——**探不到就不判**，
     宁可漏报也别拿一个不存在的时长去拦。
 
-    **容差是「减一帧」，不是「加 0.05s」**（2026-09-28 返工审计）：容器报的时长
-    （ffprobe `format=duration`）比最后一帧**能取到**的时刻长一帧以上是常态——
-    hu-kopriva-chengdu-2026-r1 末段 143.4 ＋ 0.18 底料 ＝ 143.58，probe 报源片
-    143.56，老容差 +0.05 放行，render 在 runner 上报「有分段比要求的短」
-    （run 35949569743，白烧 4.1 分钟）。`fps` 给了按那条源的一帧算，没给按
-    `SOURCE_END_FALLBACK_FPS`。判据 `tests/test_small_gates.py`。
+    **容差是 0，不是「加 0.05s」**（2026-09-28 返工审计）：hu-kopriva-chengdu-2026-r1
+    末段 143.4 ＋ 0.18 底料 ＝ 143.58，probe 报源片 143.56——**超出 0.02s**，老容差 +0.05
+    放行，render 在 runner 上报「有分段比要求的短」（run 35949569743，白烧 4.1 分钟）。
+    ⚠️ 第一版改成了「减一帧」，比证据要的严：已推送的 4 条 5 段 `end＋SEG_FADE` 落在
+    源片最后一帧里（离容器时长 0.014~0.038s），照样渲得出来——chengdu-ng-kouame
+    （cf73af107）、eala-ruse（5f589d63f）的 spec 和 render.json 是同一个提交落的。
+    所以判据就是 `need ≤ 源片时长`，不需要帧率、也不需要豁免表；它对谁写的 spec 都硬
+    （超了 render 必红）。判据 `tests/test_small_gates.py`。
     """
     over: list[str] = []
-    fps = fps or {}
-    frozen = (legacy_source_end() if legacy is None else legacy).get(slug, {}) if slug else {}
     for index, seg in enumerate(segments):
         if seg.image:
             continue                      # 整屏证据段不消耗源片
         limit = durations.get(seg.source)
         need = seg.end + SEG_FADE
-        rate = fps.get(seg.source) or SOURCE_END_FALLBACK_FPS
-        if limit is None or need <= limit - 1.0 / float(rate) + 1e-6:   # 浮点：贴着一帧的边算放行
+        if limit is None or need <= limit + 1e-6:   # 浮点：正好贴住末尾算放行
             continue
-        was = frozen.get(str(index + 1))
-        if was is not None and abs(was - seg.end) < 1e-6 \
-                and need <= limit + _LEGACY_SOURCE_END_SLACK:
-            continue                      # 已发的、end 没动过、还在老容差里
-        frame = 1.0 / float(rate)
-        how = (f"超出 {need - limit:.2f}s" if need > limit else
-               f"离末尾只剩 {limit - need:.2f}s，不到一帧（{frame:.3f}s）——超出能取到的最后一帧")
         over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s"
                     f"（溶解还要往后多取 {need - seg.end:.2f}s）"
                     f"，而源片{('（' + seg.source + '）') if seg.source else ''}"
-                    f"只有 {limit:.2f}s（最后能取到的一帧在 {limit - frame:.2f}s），{how}")
+                    f"只有 {limit:.2f}s，超出 {need - limit:.2f}s")
     return over
 
 
@@ -8834,8 +8831,7 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
     return out_segments
 
 
-def _check_segments_fit(segments: list[Segment], sources: dict[str, Path],
-                        *, slug: str = "") -> None:
+def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> None:
     """段落不许写过源片的末尾。
 
     **ffmpeg 越界时退出码是 0。** `-ss`/`-t` 指到片尾之后，它安安静静出一个
@@ -8846,7 +8842,7 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path],
     源片时长 `probe_duration` 本来就在 render 里算了五次，却从来没跟段落比过。
     比一次是毫秒级的事，而漏掉一次就是一整轮六分钟的重渲加上人反复回看。
 
-    容差是**减一帧**（2026-09-28，原来是 +0.05s，理由见 `segments_over_source_end`）。
+    容差是 **0**（2026-09-28，原来是 +0.05s，理由见 `segments_over_source_end`）。
 
     ⚠️ **每一段都要多留 `SEG_FADE` 秒**：溶解的底料是这一段之后的自然延续
     （见 `dissolve_filtergraph`）。取不到那几秒时 ffmpeg 照样退出码 0，
@@ -8861,9 +8857,7 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path],
     `test_片尾接上之后每个分段都要留溶解底料`。
     """
     durations = {key: probe_duration(path) for key, path in sources.items()}
-    over = segments_over_source_end(segments, durations,
-                                    {key: source_fps_value(path)
-                                     for key, path in sources.items()}, slug=slug)
+    over = segments_over_source_end(segments, durations)
     if over:
         raise ReelError(OVER_SOURCE_END_HEAD + "\n".join(over)
                         + "\n\n把 `end` 收回片长以内，或者换一条更长的源片。")
@@ -8970,7 +8964,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     segments = parse_segments(spec, sources, primary)
     segments = _materialize_stat_card(spec, segments, outdir)
     segments = _materialize_title_cards(spec, segments, outdir)
-    _check_segments_fit(segments, sources, slug=str(spec.get("slug") or ""))
+    _check_segments_fit(segments, sources)
     global _INSET_TOP_CLEAR_Y
     _INSET_TOP_CLEAR_Y = inset_top_clear_y(spec)
     if _INSET_TOP_CLEAR_Y and any(s.inset for s in segments):
@@ -10850,9 +10844,10 @@ def main() -> int:
         import tempfile  # noqa: PLC0415
 
         segments = validate_spec(spec)
+        # 基调取一次、合成和落账用同一份：`--dry-run` 认账时比的就是它（`narration_record_mismatch`）
+        base_style = column_base_style(spec)
         with tempfile.TemporaryDirectory() as tmp:
-            voices = synthesize(segments, Path(tmp), args.voice, args.rate,
-                                *column_base_style(spec))
+            voices = synthesize(segments, Path(tmp), args.voice, args.rate, *base_style)
             spoken, over = narration_overruns(segments, voices)
             splits = _word_splits(spec, segments, voices)
             # ⚠️ **必须在这个 `with` 里量。** 语音只在临时目录里活着，出了这个
@@ -10872,7 +10867,8 @@ def main() -> int:
         record_path = write_narration_record(
             str(spec.get("slug") or Path(args.spec).stem), segments, spoken,
             voice=args.voice, rate=args.rate,
-            backend=tts_backend if isinstance(tts_backend, str) else str(tts_backend))
+            backend=tts_backend if isinstance(tts_backend, str) else str(tts_backend),
+            base_style=base_style)
         total = sum(s.length for s in segments)
         print(f"[查旁白] {len(spoken)} 段有旁白，画面共 {total:.1f}s"
               f"（音色 {args.voice} {args.rate}），片尾 {outro_secs:.2f}s")
@@ -11040,7 +11036,7 @@ def main() -> int:
             # **误差带里的段要拿真 TTS 认账**（`narration_check_findings`）：原来这儿只印
             # 一句「开跑之前用真语音量一次」，zverev-deminaur 第 9 段就是读了这句没去量。
             n_hard, n_soft, n_ok = narration_check_findings(
-                spec, segments, tight, spec_path=args.spec)
+                spec, segments, tight, spec_path=args.spec, voice=args.voice, rate=args.rate)
             if n_ok:
                 print("\n[估旁白] 误差带里这几段已经拿真 TTS 量过（"
                       f"data/narration_checks/{spec.get('slug') or Path(args.spec).stem}.json）：\n"

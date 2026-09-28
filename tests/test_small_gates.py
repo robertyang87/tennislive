@@ -4,10 +4,10 @@
 | # | 闸 | 来路 |
 |---|---|---|
 | 1 | 章节卡超 18 字在 `--dry-run` 就红 | china-open-withdrawals（run 36296202661）、asiad-2026-men-draw（run 36296693320） |
-| 2 | 「写过源片末尾」容差改成减一帧 | hu-kopriva-chengdu-2026-r1（run 35949569743） |
+| 2 | 「写过源片末尾」容差从 +0.05s 收成 0 | hu-kopriva-chengdu-2026-r1（run 35949569743） |
 | 3 | 误差带里的旁白要拿真 TTS 认账 | zverev-deminaur-laver-cup-2026 第 9 段（run 36257658569） |
 | 4 | 蒙版先缩成裁框尺寸再 alphamerge | safiullin-bu-hangzhou-2026-qf（run 36323549463，424×108 对 424×109） |
-| 5 | 已知带片尾板的源，话音后空太久，手写采访红 | alcaraz-fritz-interview（1b0b65ee5）、tien-cobolli（9ae8918fb） |
+| 5 | 已知带片尾板的源，话音后空太久，手写采访红 | alcaraz-fritz-interview（1b0b65ee5）、tien-cobolli（9ae8918fb）——⚠️ 这两条是自动 spec，这道闸只报、拦不住（归出片那一趟的 `end_card_problem`） |
 | 6 | 钩子「送××进决赛」不算赛果；「N号种子」只报 | bucsa-noskova（872c6dab6）；bu-majchrzak（61e62b8a5） |
 | 7 | 多源 `_no_probe_why` 要带宽高帧率 | sinner-beijing-withdrawal-2026（run 36133328467） |
 | 8 | 开着回贴、probe 没量板，手写红 | prozorova-eala（run 36020126044）、alcaraz-mensik-doubles（run 36197683115） |
@@ -101,81 +101,33 @@ def test_全库章节卡都装得下():
     assert not bad, bad
 
 
-# ═══════════════════════════ ② 写过源片末尾：减一帧 ═══════════════════════════
+# ═══════════════════════════ ② 写过源片末尾：容差 0 ═══════════════════════════
 
 def _seg(start: float, end: float, source: str = ""):
     return reel.parse_segments({"source_url": "u", "segments": [
         {"start": start, "end": end, "narration": "一句。"}]}, {"": "u"}, "")[0]
 
 
-def test_写过源片末尾_容差是减一帧_hu_kopriva那一趟():
-    """hu-kopriva-chengdu-2026-r1（466450041）末段 139.1–143.4，ttv 源片 probe 报 143.56、
-    25 fps：143.4＋0.18＝143.58，老容差 +0.05 放行，render 报「分段比要求的短」。"""
-    seg = _seg(139.1, 143.4)
-    assert reel.segments_over_source_end([seg], {"": 143.56}, {"": 25.0}, legacy={})
-    assert reel.segments_over_source_end([seg], {"": 143.56}, legacy={}), "帧率不知道也要按一帧算"
-    # 留够一帧就放行；刚好贴着一帧的边也放行
-    assert not reel.segments_over_source_end([_seg(139.1, 143.34)], {"": 143.56}, {"": 25.0},
-                                             legacy={})
-    # 帧率越高一帧越短：50 fps 时 143.54 以内都行
-    assert not reel.segments_over_source_end([_seg(139.1, 143.36)], {"": 143.56}, {"": 50.0},
-                                             legacy={})
-    assert reel.segments_over_source_end([_seg(139.1, 143.36)], {"": 143.56}, {"": 25.0},
-                                         legacy={})
+def test_写过源片末尾_容差是0_hu_kopriva那一趟():
+    """hu-kopriva-chengdu-2026-r1（466450041）末段 139.1–143.4，ttv 源片 probe 报 143.56：
+    143.4＋0.18＝143.58，超出 0.02s，老容差 +0.05 放行，render 报「分段比要求的短」。"""
+    assert reel.segments_over_source_end([_seg(139.1, 143.4)], {"": 143.56})
+    # 正好贴住末尾的放行（浮点）
+    assert not reel.segments_over_source_end([_seg(139.1, 143.56 - reel.SEG_FADE)],
+                                             {"": 143.56})
+    # 第一版「减一帧」会误伤的那一档：已推送、落在源片最后一帧里照样渲出来的段
+    # （chengdu-ng-kouame 第 38 段 cf73af107、eala-ruse 第 22 段 5f589d63f——spec 和
+    # render.json 同一个提交落的），容差 0 放行
+    for end, limit in ((122.5, 122.69424), (183.7, 183.902041), (258.0, 258.218333)):
+        assert not reel.segments_over_source_end([_seg(end - 4.0, end)], {"": limit}), end
+    assert reel.segments_over_source_end([_seg(139.1, 143.4)], {"": 143.57}), "超 0.01s 也红"
 
 
-def test_写过源片末尾的豁免只认没动过的end():
-    seg = _seg(139.1, 143.4)
-    frozen = {"x": {"1": 143.4}}
-    assert not reel.segments_over_source_end([seg], {"": 143.6}, {"": 25.0}, slug="x",
-                                             legacy=frozen), "冻住的、老容差以内的放行"
-    assert reel.segments_over_source_end([seg], {"": 143.6}, {"": 25.0}, slug="y",
-                                         legacy=frozen), "别的 slug 不认"
-    assert reel.segments_over_source_end([_seg(139.1, 143.41)], {"": 143.6}, {"": 25.0},
-                                         slug="x", legacy=frozen), "end 改过就回到新判据"
-    assert reel.segments_over_source_end([seg], {"": 143.3}, {"": 25.0}, slug="x",
-                                         legacy=frozen), "老容差以外的冻住也不认"
-
-
-def test_写过源片末尾的两个调用方都传了帧率和slug():
-    src = inspect.getsource(reel)
-    dry = src[src.index("def probe_dry_run("):src.index("def probe_dry_run(") + 12000]
-    call = dry[dry.index("hard.extend(segments_over_source_end("):]
-    call = call[:call.index("for tag, spot in")]
-    assert "_probe_fps_value" in call and "slug=" in call, call
-    fit = inspect.getsource(reel._check_segments_fit)
-    assert "source_fps_value" in fit and "slug=slug" in fit
-    render = inspect.getsource(reel.render)
-    assert "_check_segments_fit(segments, sources, slug=" in render
-
-
-def test_写过源片末尾减一帧的豁免表只许减():
-    legacy = reel.legacy_source_end()
-    assert legacy, "豁免表读不到——路径或键名写错了"
-    probes = _disk_probes()
-    specs = {str(_load(p).get("slug") or p.stem): _load(p) for p in REELS}
-    stale = []
-    for slug, ends in legacy.items():
-        spec = specs.get(slug)
-        if spec is None:
-            stale.append(f"{slug}（spec 没了）")
-            continue
-        segs = _segments(spec)
-        urls = reel.spec_sources(spec)
-        for number, end in ends.items():
-            seg = segs[int(number) - 1] if int(number) <= len(segs) else None
-            if seg is None or abs(seg.end - end) > 1e-6:
-                stale.append(f"{slug} 第 {number} 段（end 改过了）")
-                continue
-            probe = probes.get(urls.get(seg.source, ""))
-            if not probes:
-                continue
-            if probe is None or not reel.segments_over_source_end(
-                    [seg], {seg.source: float(probe["duration"])},
-                    {seg.source: reel._probe_fps_value(probe)}, legacy={}):
-                stale.append(f"{slug} 第 {number} 段（按新判据已经不红）")
-    assert not stale, "从 data/legacy_source_end_frame.json 删掉：" + "、".join(stale)
-    assert len(legacy) <= 4 and sum(map(len, legacy.values())) <= 5
+def test_写过源片末尾只有两个参数_不要帧率也不要豁免表():
+    """容差 0 不需要帧率、也不需要「减一帧之前已发的」豁免表（2026-09-28 修正轮）。"""
+    assert list(inspect.signature(reel.segments_over_source_end).parameters) == [
+        "segments", "durations"]
+    assert not (ROOT / "data" / "legacy_source_end_frame.json").exists()
 
 
 # ═══════════════════════════ ③ 误差带里的旁白认真 TTS 的账 ═══════════════════════════
@@ -258,6 +210,57 @@ def test_check_narration落账_dry_run读回来(tmp_path, monkeypatch):
     assert record[reel.narration_fingerprint(segs[0])]["spoken"] == 11.4
     hard, _soft, ok = reel.narration_check_findings(spec, segs, [0], legacy={}, env={})
     assert not hard and ok
+
+
+def test_账本量的不是出片那一套_整份不认(tmp_path, monkeypatch):
+    """修正轮（2026-09-28）：第一版账上记了后端／音色／语速却从来不比——edge-tts 量的账会被
+    当成 Azure 出片的真时长认下来。现在文件头要和出片那一趟对得上。"""
+    monkeypatch.setattr(reel, "NARRATION_CHECKS_DIR", tmp_path)
+    spec, segs = _zverev_spec()
+    voice, rate = "zh-CN-YunjianNeural", "+6%"
+
+    def verdict(**kw):
+        return reel.narration_check_findings(spec, segs, [0], legacy={}, env={}, **kw)
+
+    reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate=rate,
+                                backend="edge-tts")
+    hard, _soft, ok = verdict(voice=voice, rate=rate)
+    assert hard and not ok and "TTS 后端" in hard[0] and "'edge-tts'" in hard[0], hard
+    # spec 自己认领了 edge-tts，同一份账就认
+    edge = dict(spec, tts_backend="edge", _tts_backend_why="x")
+    assert not reel.narration_check_findings(edge, segs, [0], legacy={}, env={},
+                                             voice=voice, rate=rate)[0]
+    reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice="zh-CN-YunxiNeural",
+                                rate=rate, backend="azure")
+    hard, _soft, _ok = verdict(voice=voice, rate=rate)
+    assert hard and "音色" in hard[0], hard
+    assert not verdict()[0], "没给音色语速就不比这两样（全库扫描走这条）"
+    reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate="+0%",
+                                backend="azure")
+    assert "语速" in verdict(voice=voice, rate=rate)[0][0]
+    # 栏目基调变了（表改了，或者 spec 换了栏目）：老账不认
+    reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate=rate,
+                                backend="azure")
+    assert not verdict(voice=voice, rate=rate)[0]
+    monkeypatch.setitem(reel.azure_tts.COLUMN_BASE_STYLE, "赛场之上", ("excited", "1.2"))
+    styled = dict(spec, cover={"eyebrow": "赛场之上"})
+    hard = reel.narration_check_findings(styled, segs, [0], legacy={}, env={},
+                                         voice=voice, rate=rate)[0]
+    assert hard and "栏目基调" in hard[0], hard
+    reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate=rate,
+                                backend="azure", base_style=("excited", "1.2"))
+    assert not reel.narration_check_findings(styled, segs, [0], legacy={}, env={},
+                                             voice=voice, rate=rate)[0], "按新基调重量过就认"
+
+
+def test_check_narration落账带上合成用的基调():
+    src = inspect.getsource(reel.main)
+    check = src[src.index("if args.check_narration:"):]
+    check = check[:check.index("if args.dry_run:")]
+    assert "base_style = column_base_style(spec)" in check
+    assert "*base_style)" in check and "base_style=base_style" in check
+    dry = src[src.index("n_hard, n_soft, n_ok = narration_check_findings("):]
+    assert "voice=args.voice, rate=args.rate" in dry[:300]
 
 
 def test_误差带那道闸接在dry_run里_check_narration落账():
@@ -382,10 +385,34 @@ def test_已知带片尾板的源_话音后空太久_手写的红():
     assert set(END_BOARD_SOURCES) == {"Laver Cup", "Tennis TV"}
 
 
-def test_采访预检把片尾板这一条接成红():
+def _caption_cache(root: Path, slug: str, words: str, start_ms: int) -> None:
+    """合成一份 `cap_asr.json3`（每个词一个事件，带词长）。"""
+    (root / slug).mkdir(parents=True)
+    events = [{"tStartMs": start_ms + 400 * i, "dDurationMs": 300, "segs": [{"utf8": w}]}
+              for i, w in enumerate(words.split())]
+    (root / slug / "cap_asr.json3").write_text(json.dumps({"events": events}), encoding="utf-8")
+
+
+def test_采访预检把片尾板这一条接成红(tmp_path, monkeypatch):
+    """走 `interview_preflight.subtitle_findings` 真实那条路（字幕缓存 → `quiet_tail_problem`
+    → 红／提示），不是查源码里有没有 `problems.append`（修正轮：那样写，把红改成提示照样绿）。"""
     import interview_preflight as ip  # noqa: PLC0415
-    src = inspect.getsource(ip.subtitle_findings)
-    assert "quiet_tail_problem(" in src and "problems.append" in src.split("quiet_tail_problem(")[1]
+    slug = "zz-new-laver-cup-2026-interview"
+    _caption_cache(tmp_path, slug, "It was a great match today and I am really happy "
+                   "with the level I played Thank you all", 270000)
+    monkeypatch.setattr(ip, "OUTPUT", tmp_path)
+    spec = {"slug": slug, "url": "https://www.youtube.com/watch?v=zzzzzzzzzzz",
+            "start": 269.5, "end": 286.7, "asr_model": "large-v3",
+            "source_verification": {"source": "Laver Cup"}}
+    problems, notes = ip.subtitle_findings(spec)
+    assert [p for p in problems if p.startswith("片尾板：")], (problems, notes)
+    # 自动链写的、没人核过的（来路那两条的形状）：只报
+    problems, notes = ip.subtitle_findings(dict(spec, transcript_verification="auto_pending"))
+    assert not [p for p in problems if "片尾板" in p], problems
+    assert any("自动 spec 只报" in n for n in notes), notes
+    # 话音一落就收（≤1.5 秒）：红和提示都没有
+    problems, notes = ip.subtitle_findings(dict(spec, end=277.9))
+    assert not [p for p in problems + notes if "片尾板" in p or "`end` 还要再往后" in p]
 
 
 def _interview_specs() -> dict[str, dict]:
@@ -434,6 +461,11 @@ def test_送别人进决赛不算交代赛果():
     for line in ("这次送走卫冕冠军", "卫冕冠军被她送走", "首轮送走2024冠军",
                  "淘汰头号种子送中国队进决赛", "直落两盘进半决赛", "直落两盘"):
         assert T.has_match_result(line), line
+    # 「送」后面不是被送进去的那一方——第一版把这些本来说了结果的行一起拿掉了（修正轮）
+    for line in ("送出8记ACE挺进决赛", "连送三个双误还是进了决赛", "连送双误还是进了决赛",
+                 "送别恩师后首进决赛", "靠对手送分挺进决赛", "送给对手8个破发点仍挺进决赛"):
+        assert T.has_match_result(line), line
+    assert not T.has_match_result("直落两盘送捷克共和国队进决赛")
     spec = _load(ROOT / "specs" / "reels" / "bucsa-noskova-bjk-cup-2026-sf.json")
     spec["cover"] = dict(spec["cover"], hook="首盘5比2被追平\n直落两盘送捷克进决赛")
     spec["cover"].pop("_hook_shape_why", None)
@@ -491,6 +523,20 @@ def test_多源认领不带宽高帧率_手写的红_带了几何照跑():
     for bad in ({"why": "x", "width": "宽", "height": 852, "fps": "30/1"},
                 {"why": "x", "width": 480, "height": 852}):
         assert ps.claimed_geometry(bad) is None
+
+
+def test_每条源都没probe_全靠认领时几何预演照跑(monkeypatch, capsys):
+    """修正轮（2026-09-28）：`probe_dry_run` 在「一份 probe.json 都没认领上」那一步早退，
+    几何预演排在它后面——多源全都没 probe、全靠带宽高帧率的认领时，认领的数一次都没用上。"""
+    main = {"why": "私有录屏", "width": 1920, "height": 1080, "fps": "25/1"}
+    xvid = {"why": "X 上的视频，probe 不了", "width": 480, "height": 852, "fps": "30/1"}
+    spec = _two_sources({"main": main, "xvid": xvid})
+    monkeypatch.setattr(reel, "probes_for_spec", lambda _spec: ({}, ["main", "xvid"]))
+    assert reel.probe_dry_run(spec, _segments(spec)) is True
+    out = capsys.readouterr().out
+    assert "一份 probe.json 都没认领上" in out and "check_sources_match" in out, out
+    same = _two_sources({"main": main, "xvid": dict(xvid, width=1920, height=1080, fps="25/1")})
+    assert reel.probe_dry_run(same, _segments(same)) is False, capsys.readouterr().out
 
 
 # ═══════════════════════════ ⑧ 开着回贴、probe 没量板 ═══════════════════════════
@@ -567,9 +613,7 @@ def test_全库写过源片末尾零误报():
         over = reel.segments_over_source_end(
             segs,
             {s.source: (float(p["duration"]) if (p := probes.get(urls.get(s.source, "")))
-                        and p.get("duration") else None) for s in segs},
-            {s.source: reel._probe_fps_value(probes.get(urls.get(s.source, ""))) for s in segs},
-            slug=str(spec.get("slug") or ""))
+                        and p.get("duration") else None) for s in segs})
         bad += [f"{path.stem}: {line.strip()[:80]}" for line in over]
     assert not bad, "\n".join(bad)
 

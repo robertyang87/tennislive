@@ -204,14 +204,20 @@ def quiet_tail_problem(spec: dict, spans, *, auto: bool | None = None,
     """`end` 离最后一个词还有 `QUIET_TAIL_NOTE` 秒以上 → `(红, 只报)`，最多一边有值。
 
     一般的源**只报**（话音后的庆祝／掌声是真内容，docstring 一）；而**已知带片尾板的源**
-    （`END_BOARD_SOURCES`）上，手写 spec 的这段空**就是板**的概率高到该在 dispatch 之前拦：
-    2026-09-25~27 七条拉沃尔杯采访四条把板剪进了成片，两条推上微信又重推
-    （alcaraz-fritz 1b0b65ee5、tien-cobolli 9ae8918fb）——出片那一趟的
-    `end_card_problem` 要等源片下完才拦得住，dispatch 前的预检只印了一行 ⚠️。
+    （`END_BOARD_SOURCES`：2026-09-25~27 七条拉沃尔杯采访四条把板剪进了成片；Tennis TV
+    的源片末尾是订阅／品牌卡，`tennis-media-sources` 2026-08-16）上，**手写** spec 的这段空
+    是板的概率高到该在 dispatch 之前拦——人给的 `end` 落进板里，出片那一趟的
+    `end_card_problem` 照样红（docstring 四），只是要等源片下完；这里把同一个红提前。
     认领口：`_end_why`（看过画面，那几秒是庆祝／掌声）或 `_end_board_ok`（和出片那道同一个键）。
-    自动 spec（`taste_gates.interview_is_auto`）只报——它的 `end` 是默认值，出片那一趟
-    撞上板会当场收到板前（docstring 四）。已发的挂 `legacy_interview_gates.json` 的
-    `end_board_quiet_tail`，只许减不许加。判据 `tests/test_small_gates.py`。
+
+    ⚠️ **来路那两条它拦不住**（2026-09-28 修正轮按真实路径回放）：alcaraz-fritz
+    （1b0b65ee5^）、tien-cobolli（9ae8918fb^）推出去又重推，可两条都是自动链写的 spec
+    （`transcript_verification: auto_pending`，没人核过），这里对它们返回 `(None, 提示)`。
+    自动 spec（`taste_gates.interview_is_auto`）**只报**：它的 `end` 是默认值，归出片那一趟管——
+    `end_card_problem` 按帧认板（73aba4c1c）、自动终点撞板直接收到板前（16bcfd336，
+    docstring 四），两样都是 09-27 两次事故之后才上线的。
+    已发的手写 spec 挂 `legacy_interview_gates.json` 的 `end_board_quiet_tail`，只许减不许加。
+    判据 `tests/test_small_gates.py`。
     """
     note = quiet_tail_note(spec, spans)
     if not note:
@@ -233,8 +239,8 @@ def quiet_tail_problem(spec: dict, spans, *, auto: bool | None = None,
         legacy = _legacy("end_board_quiet_tail")
     if str(spec.get("slug") or "") in legacy:
         return None, note + "（已发，挂在 legacy_interview_gates 的 end_board_quiet_tail）"
-    return (note + f"。**{who} 的源片一律以片尾板收尾**（拉沃尔杯四条、Tennis TV 都剪进过板，"
-            "两条推出去又重推）——话音之后这几秒是板的概率最高。把 `end` 收到最后一个词之后"
+    return (note + f"。**{who} 的源片一律以片尾板收尾**（拉沃尔杯 09-25~27 七条采访四条剪进过板，"
+            "Tennis TV 末尾是订阅／品牌卡）——话音之后这几秒是板的概率最高。把 `end` 收到最后一个词之后"
             f"≤{QUIET_TAIL_NOTE:g} 秒；看过画面确认是庆祝／掌声就写 `_end_why`"), None
 
 
