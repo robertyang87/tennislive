@@ -2875,7 +2875,9 @@ def test_旁白不能比它那一段的画面长():
     assert 'print(f"[注意] 第' not in src, "还停在只 print 一句「注意」"
     assert "raise ReelError(" in src and "会和下一段的语音、字幕叠在一起" in src, (
         "旁白超长要报错，不是打印")
-    assert "seg.length + 0.12" in src, f"容差要收紧到 0.12s，0.35 拦不住 0.29s 的超出"
+    # 2026-09-28：这个数挪成常量 `NARRATION_OVER_TOL`，`--dry-run` 认真 TTS 的账用同一个
+    assert reel.NARRATION_OVER_TOL == 0.12 and "seg.length + NARRATION_OVER_TOL" in src, (
+        "容差要收紧到 0.12s，0.35 拦不住 0.29s 的超出")
     # 字幕收进本段窗口：末尾时刻要被 min(...) 夹住
     assert "min(b, limit)" in src, "字幕没有收进本段窗口"
 
@@ -6483,8 +6485,14 @@ def test_段落不许写过源片末尾(monkeypatch):
     # （下一段，或者片尾页），所以每段都要那 `SEG_FADE` 秒底料，需求变成 5.18。
     # 这条断言的**前提变了，不是它写错了**——跟着改基准，容差本身照旧验。
     need = 5.0 + reel.SEG_FADE
-    monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.02)
+    # ⚠️ 2026-09-28 容差从「+0.05s」改成**减一帧**（hu-kopriva-chengdu-2026-r1：
+    # 143.58 对 probe 的 143.56，老容差放行、render 报分段短了，run 35949569743）：
+    # 源片够长一帧（帧率不知道按 25 fps 算，0.04s）才放行，差 0.02s 的现在是红。
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: need + 1.0 / 25)
     reel._check_segments_fit([seg], {"": fake})
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.02)
+    with pytest.raises(reel.ReelError, match="超出"):
+        reel._check_segments_fit([seg], {"": fake})
 
     # 而超出容差的那一头仍然要炸：差 0.2s 已经够 xfade 落到流末尾之外
     monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.2)

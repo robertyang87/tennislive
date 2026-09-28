@@ -373,6 +373,33 @@ def legacy_board_on_screen() -> frozenset:
         return frozenset()
 
 
+def legacy_board_unprobed() -> dict[str, list[str]]:
+    """「开着回贴、probe 却没量板」那道闸（2026-09-28）之前已经写好的手写 spec：
+    `slug → [源键]`，只许减不许加（自检 `tests/test_small_gates.py`）。"""
+    import json  # noqa: PLC0415
+    path = Path(__file__).resolve().parents[1] / "data" / "legacy_board_unprobed.json"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return {}
+    return {str(k): [str(x) for x in v] for k, v in (data.get("reels") or {}).items()}
+
+
+def reprobe_command(spec: dict, source_key: str, url: str, probe: dict | None) -> str:
+    """重跑一趟 probe 的那一行命令（带上老 probe 的区间和 spec 的 scorebox）。"""
+    slug = str(spec.get("slug") or "<slug>")
+    parts = [f"gh workflow run match-reel.yml --ref <分支> -f mode=probe -f slug={slug}",
+             f"-f url={url}"]
+    for key, flag in (("clip_from", "clip_from"), ("clip_to", "clip_to")):
+        value = (probe or {}).get(key)
+        if value not in (None, ""):
+            parts.append(f"-f {flag}={value}")
+    box = spec.get("scorebox")
+    if isinstance(box, (list, tuple)) and len(box) == 4:
+        parts.append("-f scorebox=" + ",".join(str(int(v)) for v in box))
+    return " ".join(parts)
+
+
 def _pick_scan(board: dict, spec_box, profile: str) -> tuple[dict | None, str]:
     """probe 里和 spec 的 scorebox 对得上、而且跑过这家判据的那一份扫描。"""
     boxes = []
@@ -424,8 +451,11 @@ def board_findings(spec: dict, segments, probes: dict, urls: dict, *,
     slug = str(spec.get("slug") or "")
     auto = (spec.get("_production") or {}).get("status") == "ready_for_render"
     strict_off = not auto and slug not in legacy_board_on_screen()
+    unprobed_legacy = set(legacy_board_unprobed().get(slug, ())) if not auto else set()
     raw_segments = spec.get("segments") or []
     told: set[str] = set()
+    # 开着回贴、而 probe 早于逐帧量板（没有 `board` 这一栏）的段：按源收拢，循环后一起报
+    unprobed_on: dict[str, list[int]] = {}
     for index, seg in enumerate(segments):
         if seg.image:
             continue
@@ -436,6 +466,9 @@ def board_findings(spec: dict, segments, probes: dict, urls: dict, *,
         if probe is None:
             continue
         board = probe.get("board")
+        if not board and on:
+            unprobed_on.setdefault(seg.source, []).append(index + 1)
+            continue
         if not board or board.get("error") or board.get("skipped"):
             if label not in told:
                 told.add(label)
@@ -524,4 +557,23 @@ def board_findings(spec: dict, segments, probes: dict, urls: dict, *,
             hard.append(f"{line}，或看过缩略图墙后写 `\"_board_on_screen_why\": \"<为什么>\"` 认领")
         else:
             soft.append(line)
+    # **开着回贴、probe 却没量板**（2026-09-28 返工审计）：`prozorova-eala` 第 13 段
+    # （run 36020126044）、`alcaraz-mensik-doubles` 第 9 段（run 36197683115）都是这个形状——
+    # 老 probe 没有 `board`，上面那条「一帧板都没认出」判不了，只报一句「没查」，render
+    # 下完源片在 `resolve_masks` 红。手写 spec 硬：重跑一趟 probe（五分钟）换来的是
+    # 把一趟七分钟的 render 红提前到 0.2 秒；自动 spec 和定规矩之前已有的只报。
+    for source, numbers in sorted(unprobed_on.items()):
+        label = source or "(主源)"
+        url = urls.get(source, "")
+        cmd = reprobe_command(spec, source, url, probes.get(url))
+        line = (f"  源 {label}：第 {numbers} 段开着 score_inset，可这份 probe 早于逐帧量板"
+                "（没有 `board`，probe_board 2026-09-27 之前跑的）——render 会不会在 "
+                "`resolve_masks` 报「一帧都没认出比分板」，dry-run 判不了。重跑一趟 probe：\n"
+                f"    {cmd}")
+        if auto:
+            soft.append(line + "（自动产的 spec 只报）")
+        elif source in unprobed_legacy:
+            soft.append(line + "（定规矩之前就有的，挂在 legacy_board_unprobed）")
+        else:
+            hard.append(line)
     return hard, soft

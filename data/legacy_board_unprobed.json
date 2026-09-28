@@ -1,0 +1,245 @@
+{
+ "_why": "「开着 score_inset、而认领到的 probe.json 早于逐帧量板（没有 board）」在 --dry-run 里对手写 spec 升成红（probe_board.board_findings，2026-09-28；来路 prozorova-eala-singapore-2026-r2 run 36020126044、alcaraz-mensik-doubles-laver-cup-2026 run 36197683115，render 下完源片在 resolve_masks 才红）。上线时全库手写 spec 命中 78 条、84 条源，全部已推送（发布账本 sent／reel_pushed_before_ledger／pushed.json），不为这条重 probe 重渲：slug → 源键冻住。只许减不许加——重跑过 probe（有了 board）、关掉回贴或删了源就从这里删掉；自检 tests/test_small_gates.py::test_没量板的豁免表只许减。",
+ "reels": {
+  "alcaraz-faria-us-open-2026-r2": [
+   ""
+  ],
+  "alcaraz-fritz-laver-cup-2026": [
+   "main"
+  ],
+  "alcaraz-mensik-doubles-laver-cup-2026": [
+   "main"
+  ],
+  "andreeva-bartunkova-us-open-2026-r3": [
+   ""
+  ],
+  "berrettini-wawrinka-us-open-2026-r1": [
+   ""
+  ],
+  "bu-jodar-us-open-2026-r1": [
+   ""
+  ],
+  "bu-majchrzak-hangzhou-2026-r2": [
+   "ttv"
+  ],
+  "bu-zheng-hangzhou-2026-r1": [
+   "ttv"
+  ],
+  "bu-zhengmichael-us-open-2026-r2": [
+   ""
+  ],
+  "bublik-jodar-laver-cup-2026": [
+   "main"
+  ],
+  "bucsa-gauff-us-open-2026-r3": [
+   ""
+  ],
+  "bucsa-noskova-bjk-cup-2026-sf": [
+   ""
+  ],
+  "cerundolo-zhou-chengdu-2026-r1": [
+   "ttv"
+  ],
+  "chwalinska-mertens-singapore-2026-qf": [
+   ""
+  ],
+  "chwalinska-townsend-us-open-2026-r1": [
+   ""
+  ],
+  "cobolli-tien-laver-cup-2026": [
+   "main"
+  ],
+  "djokovic-navone-us-open-2026-r1": [
+   "main"
+  ],
+  "eala-jovic-us-open-2026-r3": [
+   "main"
+  ],
+  "eala-stoiana-us-open-2026-r1": [
+   ""
+  ],
+  "fernandez-andreeva-singapore-2026-qf": [
+   ""
+  ],
+  "fernandez-chwalinska-singapore-2026-sf": [
+   ""
+  ],
+  "fritz-cerundolo-us-open-2026-r3": [
+   ""
+  ],
+  "gauff-jovic-us-open-2026-r4": [
+   ""
+  ],
+  "gea-van-de-zandschulp-us-open-2026-r4": [
+   ""
+  ],
+  "grant-kalinina-bjk-cup-2026-sf": [
+   ""
+  ],
+  "keys-bondar-us-open-2026-r2": [
+   ""
+  ],
+  "khachanov-blockx-us-open-2026-qf": [
+   ""
+  ],
+  "medvedev-royer-hangzhou-2026-r2": [
+   "ttv"
+  ],
+  "mensik-nakashima-laver-cup-2026": [
+   "main"
+  ],
+  "monfils-vallejo-us-open-2026-r1": [
+   "main"
+  ],
+  "muchova-bouzas-bjk-cup-2026-sf": [
+   ""
+  ],
+  "osaka-mertens-us-open-2026-r3": [
+   ""
+  ],
+  "potapova-anisimova-us-open-2026-r3": [
+   ""
+  ],
+  "prozorova-eala-singapore-2026-r2": [
+   ""
+  ],
+  "putintseva-bencic-us-open-2026-r1": [
+   ""
+  ],
+  "rakhimova-krejcikova-us-open-2026-r1": [
+   ""
+  ],
+  "rublev-merida-us-open-2026-r2": [
+   ""
+  ],
+  "rublev-virtanen-us-open-2026-r1": [
+   "main"
+  ],
+  "ruud-cerundolo-laver-cup-2026": [
+   "main"
+  ],
+  "ruud-zverev-doubles-laver-cup-2026": [
+   "main"
+  ],
+  "rybakina-gauff-us-open-2026-sf": [
+   ""
+  ],
+  "rybakina-osaka-us-open-2026-r4": [
+   ""
+  ],
+  "rybakina-sabalenka-us-open-2026-final": [
+   "champ",
+   "drop",
+   "pom",
+   "set1",
+   "set2"
+  ],
+  "sabalenka-pegula-us-open-2026-sf": [
+   ""
+  ],
+  "safiullin-alcaraz-us-open-2026-r1": [
+   "main"
+  ],
+  "sakkari-gibson-singapore-2026-qf": [
+   ""
+  ],
+  "shang-mannarino-chengdu-2026-r1": [
+   "ttv"
+  ],
+  "shelton-tiafoe-us-open-2026-sf": [
+   "main"
+  ],
+  "svitolina-paolini-bjk-cup-2026-sf": [
+   ""
+  ],
+  "swiatek-bouzkova-us-open-2026-r3": [
+   ""
+  ],
+  "tabilo-mannarino-chengdu-2026-r2": [
+   "atp",
+   "ttv"
+  ],
+  "tien-monfils-us-open-2026-r2": [
+   ""
+  ],
+  "tsitsipas-fils-us-open-2026-r1": [
+   ""
+  ],
+  "vacherot-harris-chengdu-2026-r2": [
+   "tv"
+  ],
+  "wang-arango-us-open-2026-r1": [
+   ""
+  ],
+  "wang-kalinskaya-us-open-2026-r2": [
+   ""
+  ],
+  "wang-prozorova-singapore-2026-qf": [
+   ""
+  ],
+  "wangxiyu-swiatek-us-open-2026-r1": [
+   ""
+  ],
+  "williams-kenin-us-open-2026-r1": [
+   ""
+  ],
+  "wong-paul-us-open-2026-r1": [
+   ""
+  ],
+  "wong-vallejo-hangzhou-2026-r2": [
+   "ttv"
+  ],
+  "wu-alcaraz-us-open-2026-r3": [
+   ""
+  ],
+  "wu-duckworth-us-open-2026-r2": [
+   ""
+  ],
+  "wu-walton-us-open-2026-r1": [
+   ""
+  ],
+  "zhang-cocciaretto-bjk-cup-2026-qf": [
+   "main"
+  ],
+  "zhang-fernandez-us-open-2026-r1": [
+   ""
+  ],
+  "zhang-wong-hangzhou-2026-r1": [
+   "yt"
+  ],
+  "zheng-keys-us-open-2026-r3": [
+   ""
+  ],
+  "zheng-liutova-us-open-2026-r1": [
+   ""
+  ],
+  "zheng-paolini-bjk-cup-2026-qf": [
+   "main"
+  ],
+  "zheng-pridankina-us-open-2026-q3": [
+   ""
+  ],
+  "zheng-putintseva-us-open-2026-r2": [
+   ""
+  ],
+  "zheng-swiatek-us-open-2026-r4": [
+   "main",
+   "open"
+  ],
+  "zverev-deminaur-laver-cup-2026": [
+   "main"
+  ],
+  "zverev-khachanov-us-open-2026-sf": [
+   "main"
+  ],
+  "zverev-shelton-us-open-2026-final": [
+   "main"
+  ],
+  "zverev-sonego-us-open-2026-r1": [
+   "main"
+  ],
+  "zverev-vandezandschulp-us-open-2026-qf": [
+   "main"
+  ]
+ }
+}

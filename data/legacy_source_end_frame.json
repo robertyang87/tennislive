@@ -1,0 +1,18 @@
+{
+ "_why": "「写过源片末尾」那道闸（build_match_reel.segments_over_source_end）2026-09-28 把容差从「+0.05s」改成「减一帧」（hu-kopriva-chengdu-2026-r1 run 35949569743：143.4+0.18=143.58 对 probe 的 143.56，老容差放行、render 报分段短了）。改之前已经推送、还在老容差以内的段按 slug → {段号: end} 冻住：end 一改就回到新判据。已发的不重渲；只许减不许加，自检 tests/test_small_gates.py::test_写过源片末尾减一帧的豁免表只许减。",
+ "reels": {
+  "chengdu-ng-kouame": {
+   "38": 122.5
+  },
+  "davis-cup-china-first-world-group-1": {
+   "9": 515.8,
+   "12": 620.9
+  },
+  "eala-ruse": {
+   "22": 183.7
+  },
+  "wang-vandewinkel": {
+   "14": 258.0
+  }
+ }
+}

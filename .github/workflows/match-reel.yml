@@ -1216,11 +1216,32 @@ jobs:
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          set +e
           python tools/build_match_reel.py render --check-narration \
             --spec "$SPEC" \
             --voice "${{ github.event.inputs.voice }}" \
             --rate "${{ github.event.inputs.rate }}" \
             --outdir "${{ steps.paths.outputs.outdir }}"
+          rc=$?
+          set -e
+          # **量到的真时长落账，提交回这条分支**（2026-09-28）：`--dry-run` 对「落在估算
+          # 误差里」的段按旁白指纹认 data/narration_checks/<slug>.json，手写 spec 没这份账
+          # 就红（`narration_check_findings`）。沙箱连不上 edge-tts（WSS 被代理挡），这一趟
+          # 是会话里补账的路——不提交的话量完就丢。只 add 这一个小 JSON，装不下（rc=1）
+          # 也照样落账：真时长本身没错，改画面长度不用重量。
+          REC="data/narration_checks/${{ github.event.inputs.slug }}.json"
+          if [ -f "$REC" ]; then
+            git config user.name "Claude"
+            git config user.email "noreply@anthropic.com"
+            git add "$REC"
+            if ! git diff --cached --quiet; then
+              git commit -q -m "reel: narration ${{ github.event.inputs.slug }} 真 TTS 时长落账"
+              source tools/git_push_retry.sh
+              push_with_rebase_retry "${{ github.ref_name }}" \
+                || echo "::warning::真 TTS 时长的账没推上去——日志里那张表照抄进 $REC 再提交"
+            fi
+          fi
+          exit $rc
 
       - name: cover — 只出封面海报
         if: github.event.inputs.mode == 'cover'

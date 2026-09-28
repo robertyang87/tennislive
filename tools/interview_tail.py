@@ -174,8 +174,74 @@ def cache_word_spans(workdir: Path, spec: dict) -> list[tuple[float, float | Non
     return None if words is None else [(t, None, w) for t, w in words]
 
 
+#: 已知**一定以片尾板收尾**的源：按 `source_verification.source`／请求里的 `source`
+#: 认，Tennis TV 另按 `tennistv.com` 的地址认。量过的账见 `quiet_tail_problem`。
+END_BOARD_SOURCES = ("Laver Cup", "Tennis TV")
+
+
+def end_board_source(spec: dict) -> str | None:
+    """这条采访的源片是不是已知带片尾板的那几家（拉沃尔杯、Tennis TV）。"""
+    verification = spec.get("source_verification")
+    origin = spec.get("_request_origin")
+    request = origin.get("request") if isinstance(origin, dict) else None
+    names = [str((verification or {}).get("source") or "") if isinstance(verification, dict) else "",
+             str((request or {}).get("source") or "") if isinstance(request, dict) else ""]
+    norm = {n.strip().lower().replace(" ", "") for n in names if n.strip()}
+    for known in END_BOARD_SOURCES:
+        if known.lower().replace(" ", "") in norm:
+            return known
+    if "tennistv.com" in str(spec.get("url") or ""):
+        return "Tennis TV"
+    return None
+
+
+def _end_claimed(spec: dict) -> bool:
+    return any(str(spec.get(k) or "").strip() for k in ("_end_why", "_end_board_ok"))
+
+
+def quiet_tail_problem(spec: dict, spans, *, auto: bool | None = None,
+                       legacy: frozenset | None = None) -> tuple[str | None, str | None]:
+    """`end` 离最后一个词还有 `QUIET_TAIL_NOTE` 秒以上 → `(红, 只报)`，最多一边有值。
+
+    一般的源**只报**（话音后的庆祝／掌声是真内容，docstring 一）；而**已知带片尾板的源**
+    （`END_BOARD_SOURCES`）上，手写 spec 的这段空**就是板**的概率高到该在 dispatch 之前拦：
+    2026-09-25~27 七条拉沃尔杯采访四条把板剪进了成片，两条推上微信又重推
+    （alcaraz-fritz 1b0b65ee5、tien-cobolli 9ae8918fb）——出片那一趟的
+    `end_card_problem` 要等源片下完才拦得住，dispatch 前的预检只印了一行 ⚠️。
+    认领口：`_end_why`（看过画面，那几秒是庆祝／掌声）或 `_end_board_ok`（和出片那道同一个键）。
+    自动 spec（`taste_gates.interview_is_auto`）只报——它的 `end` 是默认值，出片那一趟
+    撞上板会当场收到板前（docstring 四）。已发的挂 `legacy_interview_gates.json` 的
+    `end_board_quiet_tail`，只许减不许加。判据 `tests/test_small_gates.py`。
+    """
+    note = quiet_tail_note(spec, spans)
+    if not note:
+        return None, None
+    who = end_board_source(spec)
+    if who is None or _end_claimed(spec):
+        return None, note
+    if auto is None:
+        import sys  # noqa: PLC0415
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from taste_gates import interview_is_auto  # noqa: PLC0415
+        auto = interview_is_auto(spec)
+    if auto:
+        return None, note + f"（{who} 的源片以片尾板收尾；自动 spec 只报，出片那一趟会按帧收到板前）"
+    if legacy is None:
+        import sys  # noqa: PLC0415
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from interview_spec_gates import legacy as _legacy  # noqa: PLC0415
+        legacy = _legacy("end_board_quiet_tail")
+    if str(spec.get("slug") or "") in legacy:
+        return None, note + "（已发，挂在 legacy_interview_gates 的 end_board_quiet_tail）"
+    return (note + f"。**{who} 的源片一律以片尾板收尾**（拉沃尔杯四条、Tennis TV 都剪进过板，"
+            "两条推出去又重推）——话音之后这几秒是板的概率最高。把 `end` 收到最后一个词之后"
+            f"≤{QUIET_TAIL_NOTE:g} 秒；看过画面确认是庆祝／掌声就写 `_end_why`"), None
+
+
 def quiet_tail_note(spec: dict, spans) -> str | None:
-    """`end` 离最后一个词还有多远——**只报不拦**（真内容也可能在那儿，见 docstring 一）。"""
+    """`end` 离最后一个词还有多远——**只报不拦**（真内容也可能在那儿，见 docstring 一）。
+
+    已知带片尾板的源在 `quiet_tail_problem` 里对手写 spec 升成红。"""
     if not spans or str(spec.get("_end_why") or "").strip():
         return None
     start, end = float(spec.get("start") or 0.0), float(spec["end"])

@@ -182,8 +182,24 @@ _SUB_MATCH_UNIT = re.compile(r"局|(?<!比)分(?!钟)|盘|点|抢[七十]|(?<![�
 _WEAK_RESULT = re.compile(r"赢(?:下|了|得)?|输(?:了|掉)?|拿(?:下|了下来)|拿到")
 
 
+#: 「送××进决赛／送××晋级」：走到那一步的是**别人**（队伍、国家），没说这一场赢了谁。
+#: 账号所有者 2026-09-25 看 bucsa-noskova 那一版「首盘5比2被追平／直落两盘送捷克进决赛」：
+#: 「**封面钩子文案没交代赛果啊**」（872c6dab6 改成「2比0胜布克沙进决赛」）。这一行在老词表里
+#: 同时命中三处（直落两盘、进决赛、决赛），全是那个「送」字带出来的——所以「送××进…」整段
+#: 不算结果，而且挂在它上面的「直落N盘」（怎么送的）也不算：规矩 B1「第二行是结果（谁赢了谁／
+#: 走到哪一步）」，走到哪一步说的是本人。「送走××」是淘汰（有宾语、说了赢了谁），照旧是结果。
+#: 判据 `tests/test_small_gates.py::test_送别人进决赛不算交代赛果`；上线时全库命中的已发钩子
+#: 只有 zverev-prizmic-davis-cup-2026-q2「77分钟送德国晋级」（09-20，规矩之前）→ 冻进 hook_shape。
+_SEND_OTHER = re.compile(
+    r"送(?!走)[^，,。\s走]{1,8}?(?:杀|挺|闯)?(?:进了?|晋级|入)[^，,。\s]{0,6}")
+_STRAIGHT_SETS = re.compile(r"直落[两三2-3]盘")
+
+
 def has_match_result(line: str) -> bool:
     """这一行说出了**整场**的结果没有。"""
+    if _SEND_OTHER.search(line):
+        # 「送××进…」和挂在它上面的「直落N盘」拿掉之后，剩下的还得自己说出结果
+        line = _STRAIGHT_SETS.sub(" ", _SEND_OTHER.sub(" ", line))
     if _STRONG_RESULT.search(line):
         return True
     for m in _WEAK_RESULT.finditer(line):

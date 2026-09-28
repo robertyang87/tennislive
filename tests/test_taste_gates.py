@@ -373,8 +373,11 @@ def test_口味豁免表只许减不许加_冻的是原文():
     assert not stale, ("这些豁免已经不成立（改好了、改了原文或删了）——从 "
                        "data/legacy_taste_gates.json 里删掉：" + "、".join(stale))
     # 只许减：数目只能往下走（2026-09-27 落地那天的数）
-    assert len(legacy["hook_shape"]) <= 168      # 178 → 169：结果词表补全后 9 条老钩子本来就合格；
+    assert len(legacy["hook_shape"]) <= 169      # 178 → 169：结果词表补全后 9 条老钩子本来就合格；
     #                                              169 → 168（09-27 晚补「直落」：auger-aliassime-cerundolo）
+    #                                              168 → 169（09-28「送××进决赛」不算赛果——账号所有者
+    #                                              09-25 否 bucsa-noskova 那一版的原话；规矩之前 09-20 已发的
+    #                                              zverev-prizmic「77分钟送德国晋级」冻进来，仍是规矩之前的存量）
     assert len(legacy["hook_jargon"]) <= 76      # 75 → 76：safiullin-bu（ACE），闸落地前已推，见 _counts
     assert len(legacy["interview_title_jargon"]) <= 11
     assert len(legacy["explainer_question_jargon"]) <= 1

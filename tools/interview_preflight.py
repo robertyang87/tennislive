@@ -38,7 +38,9 @@ runner 上必红的那些「只看 spec 就判得出」的错在 dispatch 之前
 行数对齐、中英超宽、吊尾虚词、顶栏宽度、`highlight_en`）。
 
 **⚠️（只报不拦）**：没有字幕缓存所以行数没对上号；`end` 离最后一个词还有好几秒
-（片尾板要在出片那一趟按帧量，见 `interview_tail`）；转正那道措辞闸的口径。
+（片尾板要在出片那一趟按帧量，见 `interview_tail`——**已知带片尾板的源（拉沃尔杯、
+Tennis TV）上的手写 spec 这一条是红**，`interview_tail.quiet_tail_problem`，认领 `_end_why`）；
+转正那道措辞闸的口径。
 """
 from __future__ import annotations
 
@@ -184,7 +186,7 @@ def caption_fingerprint(slug: str) -> list[str] | None:
 def subtitle_findings(spec: dict) -> tuple[list[str], list[str]]:
     """按仓库里的字幕缓存重切一遍行，再走出片那一趟的 `write_ass` 全套 → (红, 提示)。"""
     import build_interview_clip as clip  # noqa: PLC0415
-    from interview_tail import cache_word_spans, quiet_tail_note  # noqa: PLC0415
+    from interview_tail import cache_word_spans, quiet_tail_problem  # noqa: PLC0415
 
     slug = str(spec.get("slug") or "")
     problems: list[str] = []
@@ -199,8 +201,11 @@ def subtitle_findings(spec: dict) -> tuple[list[str], list[str]]:
         if words is None:
             notes.append("字幕缓存和这条 URL 对不上（换过候选视频？），行数对齐没法离线判")
             return problems, notes
-        if note := quiet_tail_note(spec, cache_word_spans(work, spec)):
-            notes.append(note)
+        tail_red, tail_note = quiet_tail_problem(spec, cache_word_spans(work, spec))
+        if tail_red:
+            problems.append(f"片尾板：{tail_red}")
+        if tail_note:
+            notes.append(tail_note)
         with contextlib.redirect_stdout(io.StringIO()):
             lines = clip.segment(words, spec["start"], spec["end"],
                                  budget=spec.get("segment_budget_px"),
