@@ -870,14 +870,22 @@ def check_frame(image, expected_players, *, model: FaceModel | None = None,
     return {**block, "problems": problems, "warnings": warnings}
 
 
-#: 「偏正面」：两眼间距 ÷ 脸框宽 ≥ 这个数。2026-09-28 杭州／新加坡／瓜达拉哈拉 20 张官方原图量的：
-#: 正脸 0.38~0.46（Medvedev-022 0.41、Safiullin-022 0.42、捧杯 vc-5 0.38），四分之三侧 0.25~0.33
-#: （Medvedev-014 0.25），侧脸 < 0.23（Medvedev-019 0.17、-024 0.22、握手照 0.18）
-FRONTAL_EYE_SPAN = 0.30
-#: 「脸是清楚的」：脸框缩到 112×112 灰度后的拉普拉斯方差 ≥ 这个数。同一批量的：清楚的 460~3141，
-#: 动感模糊的 Medvedev-019 193、背景里的小脸 230~255、横幅上的误检 63。**只拿来排序**（`cover_upgrade.taste_key`），
-#: 不是闸——不同镜头的方差不可比（`rank_frame_sharpness` 那条），所以门槛放得很低，只分「糊透了」
-SHARP_FACE_LAPLACIAN = 300.0
+class PoseRank:
+    """O4 挑图**只拿来排序**的两把尺子（`cover_upgrade.taste_key`），不是闸。
+
+    ⚠️ 故意不写成模块级常量：`interview_cover_scan.ruler()` 把本模块**所有**模块级大写数值
+    常量当成「人脸模型的阈值」收进尺子，尺子一变，采访线每一份封面扫描记录都判成「人脸模型
+    变过」、要重扫一趟——而这两个数一道采访闸都不进（2026-09-28 合并照片接口那一包时量出来的）。
+    哪天它们真要进闸，挪回模块级，让尺子自己收进去。"""
+
+    #: 「偏正面」：两眼间距 ÷ 脸框宽 ≥ 这个数。2026-09-28 杭州／新加坡／瓜达拉哈拉 20 张官方原图量的：
+    #: 正脸 0.38~0.46（Medvedev-022 0.41、Safiullin-022 0.42、捧杯 vc-5 0.38），四分之三侧 0.25~0.33
+    #: （Medvedev-014 0.25），侧脸 < 0.23（Medvedev-019 0.17、-024 0.22、握手照 0.18）
+    FRONTAL_EYE_SPAN = 0.30
+    #: 「脸是清楚的」：脸框缩到 112×112 灰度后的拉普拉斯方差 ≥ 这个数。同一批量的：清楚的 460~3141，
+    #: 动感模糊的 Medvedev-019 193、背景里的小脸 230~255、横幅上的误检 63。**只拿来排序**（`cover_upgrade.taste_key`），
+    #: 不是闸——不同镜头的方差不可比（`rank_frame_sharpness` 那条），所以门槛放得很低，只分「糊透了」
+    SHARP_FACE_LAPLACIAN = 300.0
 
 
 def face_pose(img, face: Face | None) -> dict | None:
@@ -901,8 +909,8 @@ def face_pose(img, face: Face | None) -> dict | None:
                           interpolation=cv2.INTER_AREA)
         sharp = round(float(cv2.Laplacian(gray, cv2.CV_64F).var()), 1)
     return {"eye_span": round(eye_span, 3), "sharp": sharp,
-            "frontal": eye_span >= FRONTAL_EYE_SPAN,
-            "clear": sharp is not None and sharp >= SHARP_FACE_LAPLACIAN}
+            "frontal": eye_span >= PoseRank.FRONTAL_EYE_SPAN,
+            "clear": sharp is not None and sharp >= PoseRank.SHARP_FACE_LAPLACIAN}
 
 
 def rank_frames(frames: Iterable[tuple[str, object]], expected_players, *,

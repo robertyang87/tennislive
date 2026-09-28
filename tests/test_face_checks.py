@@ -799,3 +799,16 @@ def test_dry_run按slug找已经抓好的封面帧(model, tmp_path):
     dry = dry[:dry.index("\n      - name:", 10)]
     assert "cover_src/manifest" in dry and "git sparse-checkout add $COVER_DIRS" in dry, (
         "工作流的 dry-run 要先把这条 slug 的 cover_src/ 拉回来")
+
+
+def test_只拿来排序的姿态尺子不进采访封面扫描那把尺子():
+    """`interview_cover_scan.ruler()` 把 face_checks 所有模块级大写数值常量当成「人脸模型的阈值」，
+    尺子一变，采访线每一份 `cover_candidates.json` 都判成「人脸模型变过」、要重扫一趟，
+    `autopick_failed` 的停车账也从头数。O4 排序用的两把尺子（`PoseRank`）一道采访闸都不进，
+    不许把它们挪回模块级（2026-09-28 合并照片接口那一包时量出来的）。"""
+    import interview_cover_scan  # noqa: PLC0415  （tools/ 已在 sys.path 上，见文件头）
+
+    thresholds = (interview_cover_scan.ruler().get("face_model") or {}).get("thresholds") or {}
+    assert thresholds, "前提：尺子里要有人脸模型的阈值（face_checks 能 import）"
+    leaked = sorted(set(thresholds) & {n for n in vars(face_checks.PoseRank) if n.isupper()})
+    assert not leaked, f"只拿来排序的常量进了采访封面扫描的尺子：{leaked}"
