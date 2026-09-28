@@ -7298,6 +7298,10 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   法国业余选手，没有任何官方图库；Natural Tennis 官网那张只有约 520px 宽。按下面那条
 #:   常设授权走，用 Tennis Legend 竖版源片 5.0s 正手引拍、脸偏正面睁眼那一帧，源片 608×1080，
 #:   放大 1.78 倍（spec 的 `_frame_why` / `_low_res_why` 写全了）。
+#: - `rublev-jacquet-hangzhou-2026-sf`：2026-09-28 杭州 ATP250 半决赛（北京 19:10 前后
+#:   打完）。按下面那条常设授权走：终场后约三小时 find_cover_photo 查 WTA photo-resources、
+#:   赛后稿头图 0，AP 页面没取到，搜狗微信列出的图都是前一天 1/4 决赛的。用 Tennis TV
+#:   半决赛合集 237.0s 赛点后正脸睁眼的近景，源片 1920×1080，放大 1.33 倍。
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
@@ -7315,6 +7319,7 @@ OWNER_APPROVED_FRAME_COVERS = frozenset({
     "medvedev-wong-hangzhou-2026-qf",
     "zverev-tien-laver-cup-2026",
     "two-handled-racket-maric-2026",
+    "rublev-jacquet-hangzhou-2026-sf",
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
