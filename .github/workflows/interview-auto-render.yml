@@ -45,6 +45,10 @@ on:
       - "data/legacy_interview_gates.json"
       # 已发采访切行的老尺子表（`build_interview_clip.segment_ruler`，预检重切字幕按它）
       - "data/legacy_interview_segment_metric.json"
+      # 「这份草稿停着没」的判据（早退探针和 promote 共用）和用它的 promote：改了判据，
+      # 停着的草稿要马上重判，不能干等定时班次（GitHub 还会丢 schedule 事件）。
+      - "tools/interview_draft_hold.py"
+      - "tools/promote_interview_draft.py"
       - ".github/workflows/interview-auto-render.yml"
   schedule:
     # 每 10 分钟接住新草稿、人工请求、片头重试和 dispatch；避开整点/半点。
@@ -95,7 +99,25 @@ jobs:
           set -o pipefail
           # 取回的那份预检结论的指纹——末尾「有变才存」拿它比（见「存预检结论缓存」）
           echo "verdicts_sha=$(sha256sum ~/.cache/tennislive-preflight/interview_verdicts.json 2>/dev/null | cut -d' ' -f1 || true)" >> "$GITHUB_OUTPUT"
-          DRAFTS=$(find specs/interviews -maxdepth 1 -name '*.draft.json' | wc -l)
+          # 只数**全量那一趟动得了**的草稿——判据和 promote_interview_draft.promote_all 是
+          # 同一个函数（tools/interview_draft_hold.py）。原来按文件数：挂着人工复核、过了
+          # 赛果窗口的草稿让 DRAFTS 恒 > 0，9/25~9/28 那 60 趟里 39 趟跑满全量、提升 0 条、
+          # 什么都没提交。停着的照旧印进日志和 run 摘要；标记一去掉，下一趟就数得到。
+          # 判据跑不起来就退回按文件数（宁可多跑一趟全量，不许把活漏掉）。
+          if ! DRAFTS=$(python3 tools/interview_draft_hold.py --count-actionable 2> /tmp/held-drafts.txt); then
+            cat /tmp/held-drafts.txt >&2
+            echo "::warning::草稿停车判据跑不起来，这一趟按草稿文件数算"
+            DRAFTS=$(find specs/interviews -maxdepth 1 -name '*.draft.json' | wc -l)
+            : > /tmp/held-drafts.txt
+          fi
+          if [ -s /tmp/held-drafts.txt ]; then
+            head -n 1 /tmp/held-drafts.txt
+            {
+              echo "## 🅿️ 停着的草稿（全量那一趟也动不了，不叫醒它；标记去掉或改好的下一趟自动接上）"
+              echo ""
+              tail -n +2 /tmp/held-drafts.txt | sed 's/^  /- /'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
           REQUESTS=$(python3 tools/build_interview_request.py --count-pending)
           NEEDS_LEAD=$(python3 - <<'PY'
           import json
@@ -140,10 +162,10 @@ jobs:
           fi
           if [ "$DRAFTS" -eq 0 ] && [ "$REQUESTS" -eq 0 ] \
              && [ "$READY" -eq 0 ] && [ "$NEEDS_LEAD" -eq 0 ]; then
-            echo "[早退] 没有草稿、人工请求、待补片头或待 dispatch 的正式 spec。"
+            echo "[早退] 没有能提升的草稿、人工请求、待补片头或待 dispatch 的正式 spec。"
             echo "work=false" >> "$GITHUB_OUTPUT"
           else
-            echo "草稿=$DRAFTS，人工请求=$REQUESTS，待 dispatch=$READY，待同场冷开场=$NEEDS_LEAD"
+            echo "能提升的草稿=$DRAFTS，人工请求=$REQUESTS，待 dispatch=$READY，待同场冷开场=$NEEDS_LEAD"
             echo "work=true" >> "$GITHUB_OUTPUT"
           fi
 
