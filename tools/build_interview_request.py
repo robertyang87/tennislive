@@ -31,6 +31,8 @@ from urllib.parse import parse_qs, urlparse
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
+# 自动链的探测那一步在装依赖（pip install -e .）之前就 import 这里，tennislive 包要能从源码树找到。
+sys.path.insert(0, str(ROOT / "src"))
 
 REQUESTS = ROOT / "requests" / "interviews"
 SPECS = ROOT / "specs" / "interviews"
@@ -200,8 +202,9 @@ def _protected(spec: dict, slug: str) -> bool:
 AUTO_PENDING = "auto_pending"
 
 
-class UnverifiedAutoSpecFinding(UserWarning):
-    """全库测试里自动 spec 的发现：只报、不判 main 红（pytest 的 warnings 汇总里看得见）。"""
+# 类定义在 tennislive 包里：pytest-xdist 主控要按 __module__ 重新 import 它才能反序列化
+# worker 发回的 warning，而主控的 sys.path 里没有 tools/（来路见 tennislive/findings.py）。
+from tennislive.findings import UnverifiedAutoSpecFinding  # noqa: E402,F401
 
 
 def unverified_auto_spec(spec: dict, slug: str | None = None) -> bool:

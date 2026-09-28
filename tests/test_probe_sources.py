@@ -44,8 +44,12 @@ def test_源片没probe_新手写spec硬_认领存量自动只报():
     # 精简检出里 probe 可能在仓库里、只是没落盘：先指 materialize，排在「重跑 probe」前面
     hint = hard[0].find("probe_sources.py materialize")
     assert 0 <= hint < hard[0].index("mode=probe"), hard
+    # 多源的认领要带宽高帧率（2026-09-28）：一句话的认领会把几何预演整层关掉，手写的红
     hard, soft = ps.coverage_findings(_spec(_no_probe_why={"b": "私有录屏，下不下来"}),
                                       probes, legacy=NONE)
+    assert len(hard) == 1 and "没写宽高帧率" in hard[0], hard
+    claim = {"b": {"why": "私有录屏，下不下来", "width": 1920, "height": 1080, "fps": "25/1"}}
+    hard, soft = ps.coverage_findings(_spec(_no_probe_why=claim), probes, legacy=NONE)
     assert not hard and any("已认领" in s for s in soft)
     hard, soft = ps.coverage_findings(_spec(), probes, legacy={"new-story": ["b"]})
     assert not hard and any("legacy_no_probe_sources" in s for s in soft)

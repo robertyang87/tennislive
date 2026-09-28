@@ -302,11 +302,27 @@ jobs:
       # 中文字幕上）。判据和本地 `python tools/interview_preflight.py --slug X`、
       # 自动链 dispatch 前的 `pick_interview_renders` 是同一份函数；量宽度的中文字体
       # 就是上一步装的 fonts-noto-cjk，所以排在它后面。文案那一项上面已经跑过。
+      #
+      # ⚠️ **自动链派发的 render 走 `--require-subs`**（2026-09-28）：当前转写指纹没有 subs 那一趟交的判定
+      # （第二份 ASR 的分歧量数、空档的 VAD 证据），或者判定是红的，**在这儿就停**——
+      # 不装大依赖、不下源片、不跑转写。9/20~9/28 六趟 render 红在「空档没销账／转写
+      # 分歧超阈」，都是装完依赖、下完源片、跑完三五分钟 whisper 才知道；判定在仓库里
+      # 的话，这一步第 1 秒就判得出。缺判定就先 dispatch `mode=subs`（它交判定，
+      # render 那一趟的 verify 在判定 ok 时直接用它、不再重量）。
+      #
+      # ⭐ **只对自动链派发的 run 开**（`--dispatched-by`，2026-09-28 会话决定，时效第一）：
+      # 已推送的 54 条里 46 条的判定是没记区间和源的老产物，手动重渲一条原来要先多拨一趟
+      # `mode=subs`（取字幕约 1 分钟＋第二份 ASR 3~5 分钟，工作流顶上那张表）。派发者按 `github.triggering_actor` 认——pick 用
+      # `GH_TOKEN: secrets.GITHUB_TOKEN` 派发，是 `github-actions[bot]`（interview-clip
+      # 36337385713 实测，见 build_dashboard_snapshot.is_unattended）；个人拨的缺判定只提示，
+      # 下面「转写交叉校验」那一步在同一个 job 里现量第二份 ASR（判定不是 ok 就重量，
+      # 上线 subs 之前的老路）。已经量出来的红，两种派发者都红。
       - name: 采访 spec 离线预检（秒级）
         if: github.event.inputs.mode == 'render'
         env:
           SLUG: ${{ github.event.inputs.slug }}
-        run: PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy
+          DISPATCHED_BY: ${{ github.triggering_actor }}
+        run: PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy --dispatched-by "$DISPATCHED_BY"
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
@@ -639,7 +655,14 @@ jobs:
       #             「提交成片」那一步不会跑。排名表在错误旁边再印一遍。
       #   render —— 出片档：`--keep-source` 把源片留给后面的「剪 + 烧字幕」
       #             （`yt_download` 见文件在就复用，不下第二遍）。闸红了就地扫一段
-      #             候选印进日志再停——红的这一趟也要换回「下一帧该选哪个」
+      #             **并自动换帧**（`--autopick`，2026-09-28）：扫出来的格子里挑一格
+      #             过闸＋认得出是封面主角（match，而且是文案点了名的人）＋睁眼（open）的，改写 spec 的
+      #             `cover.frame_at`、重渲海报、再过一遍同一把终审，接着出片；近处
+      #             没有就整段采访粗扫一遍。一格都挑不出来才红（并记一笔停车账：同一个
+      #             封面满 3 趟，picker 就不再投——D2）。来路：9 趟 run（46.5
+      #             runner-分钟）红在封面帧，cobolli-mensik 那趟就地扫出的第一名 29.4
+      #             正是人后来写进 spec 的那一格——又等了一整趟（rework_audit_0928）。
+      #             改过的 spec 由「提交成片」那一步和成片一起提交（见那一步的注释）
       # 出片之后「终审封面视觉」再对最终海报量一次（render 会重渲 poster.jpg，
       # 质检凭证绑的是那一份的哈希）。
       #
@@ -698,6 +721,49 @@ jobs:
             push_with_rebase_retry "${{ github.ref_name }}" 5 \
               || echo "::warning::扫描记录没推上去——上面那张排名表就是这一趟的全部产出"
           }
+          # render 红在封面这一步、而同一个封面再投一趟照样红 → 记一笔停车账：同一个封面连着
+          # 3 趟，picker 就不再投（D2，`pick_interview_renders.PARK_AFTER`）——不停就是 70 分钟
+          # 一趟、永远红。三种红记同一个计数器（参数是 `PARK_KINDS`）：
+          #   autopick —— 自动换帧一格都挑不出来（`--autopick` 退出 3）
+          #   audit    —— 自动换上的那一帧终审还红（扫描和终审分叉）
+          #   check    —— 终审过了、推送前对账红（D3 的边：记录说没过，runner 上却过了）
+          # 人脸模型整趟不可用（退出 4）和工具自己坏了（别的非零）**故意不记**：环境／工具的事。
+          # **只在 main 上记**：picker 只在 main 上投、只读 main 上的账；分支上记一笔会推到分支、
+          # 跟着合并进 main，替一条在 main 上没红过的封面停车——分支上只告警。
+          # 指纹按**派发时**那份 spec 算（HEAD 里的；自动换帧会就地改写工作区那份，picker 比的是
+          # main 上的）。只提交状态文件；扫描记录照旧**不**提交（红着的 render 不留记录）。
+          # 记不上／推不上只告警：多烧一趟，不会卡死。
+          note_autopick_failure() {
+            local kind="$1"
+            if [ "${{ github.ref_name }}" != "main" ]; then
+              echo "::warning::这一趟跑在 ${{ github.ref_name }} 上，不记停车账（$kind）——picker 只在 main 上投、只读 main 上的账，分支上记一笔会跟着合并替 main 停车"
+              return 0
+            fi
+            local state="data/interview_render_dispatched.json"
+            local base="$RUNNER_TEMP/interview_dispatch_base.json"
+            local ours="$RUNNER_TEMP/interview_dispatch_ours.json"
+            local dispatched="$RUNNER_TEMP/interview_spec_as_dispatched.json"
+            git show "HEAD:$state" > "$base" 2>/dev/null \
+              || echo '{"slugs": [], "at": {}, "spec_sha256": {}}' > "$base"
+            if ! git show "HEAD:$SPEC" > "$dispatched"; then
+              echo "::warning::取不到派发时那份 spec，停车账没记上——下一趟 picker 照旧会重投（多烧一趟，不会卡死）"
+              return 0
+            fi
+            if ! PYTHONPATH=src python tools/pick_interview_renders.py --autopick-failed "$SLUG" \
+                --kind "$kind" --dispatched-spec "$dispatched"; then
+              echo "::warning::停车账没记上——下一趟 picker 照旧会重投（多烧一趟，不会卡死）"
+              return 0
+            fi
+            cp "$state" "$ours"
+            git config user.name "Claude"
+            git config user.email "noreply@anthropic.com"
+            git add "$state"
+            git diff --cached --quiet && return 0
+            git commit -m "data: $SLUG 封面那一步红了（$kind，停车账）"
+            source tools/git_push_retry.sh
+            push_interview_dispatch_retry "${{ github.ref_name }}" "$base" "$ours" 5 \
+              || echo "::warning::停车账没推上去——下一趟 picker 照旧会重投（多烧一趟，不会卡死）"
+          }
           if [ "$MODE" = "cover" ]; then
             PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover-scan --keep-source
           fi
@@ -707,23 +773,60 @@ jobs:
             fi
             exit 1
           fi
-          if ! PYTHONPATH=src python tools/audit_interview_cover.py \
+          audit_cover() {
+            PYTHONPATH=src python tools/audit_interview_cover.py \
               --spec "$SPEC" \
               --poster "$OUTDIR/poster.jpg" \
-              --out "$OUTDIR/cover_visual_attestation.json"; then
-            if [ "$MODE" = "render" ]; then
-              # 这一份**不提交**：自动链（interview-auto-render）只拨 render，
-              # 提交了记录，它下一趟换的帧就得对这份账，而那头没人写得了
-              # `_frame_scan_why`——机器记录不许替自动链加一道它认领不了的闸。
-              echo "::error::封面那一帧没过本地像素闸——停在转写校验和编码之前。就地扫 frame_at 前后一段（源片已在手上）："
-              PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover-scan --keep-source
-            else
+              --out "$OUTDIR/cover_visual_attestation.json"
+          }
+          if ! audit_cover; then
+            if [ "$MODE" != "render" ]; then
               commit_scan_record "封面那一帧没过本地像素闸。" "frame_at 没过闸"
+              exit 1
             fi
-            exit 1
+            # render：就地扫、自动换帧。换上的那一帧由扫描记录作证，所以这份记录
+            # （连同改过的 spec）跟成片一起提交——原来「render 红了扫的那份不提交」
+            # 是因为 frame_at 还没换、自动链认领不了一份跟它对不上的记录；现在
+            # frame_at 就是记录里挑出来的那一格，推送前对账（cover_scan_gate）正要它。
+            echo "::warning::封面那一帧没过本地像素闸——就地扫 frame_at 前后一段，挑一格过闸、认得出是封面主角、眼睛睁着的自动换上（近处没有就整段采访粗扫一遍）："
+            rc=0
+            PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover-scan --keep-source --autopick || rc=$?
+            if [ "$rc" -ne 0 ]; then
+              if [ "$rc" -eq 3 ]; then
+                echo "::error::扫过的格子里没有一格同时过闸、认得出是封面主角（文案点了名的人）、眼睛睁着——停在转写校验和编码之前。上面那张排名表就是下一帧的候选（✓ 那一列）。记一笔停车账（同一个封面满 3 趟就不再自动投）："
+                note_autopick_failure autopick
+              elif [ "$rc" -eq 4 ]; then
+                echo "::error::人脸模型整趟不可用，一格都没认成人——环境的事，不记停车账，下一趟照常重投。"
+              else
+                echo "::error::封面扫描本身出错了（退出码 $rc，见上面的报错）——工具的事，不记停车账。"
+              fi
+              exit 1
+            fi
+            rc=0
+            audit_cover || rc=$?
+            if [ "$rc" -ne 0 ]; then
+              echo "::error::自动换上的那一帧终审没过——扫描和终审是同一份实现，分叉了就是 bug，不许带着它出片。"
+              # 同一个封面再投一趟换上的还是这一帧、终审还红：退出 1（判了不合格）才记停车账；
+              # 2 是输入缺了（找不到海报／spec），不是封面的事
+              if [ "$rc" -eq 1 ]; then note_autopick_failure audit; fi
+              exit 1
+            fi
+            touch "$RUNNER_TEMP/cover-autopicked"
+            echo "::warning::封面自动换帧了（新旧秒数和理由见上面 [封面自动换帧] 那一行，记在 spec 的 cover._frame_autopick）——改过的 spec 跟成片一起提交"
           fi
-          # 扫描记录提交过的话，frame_at 必须是其中过闸的那一格；推送前 auto_push_interview_gate 再对一次
-          PYTHONPATH=src python tools/interview_cover_scan.py --check --spec "$SPEC"
+          # 扫描记录提交过的话，frame_at 必须是其中过闸的那一格；推送前 auto_push_interview_gate 再对一次。
+          # render 红在这儿也记停车账（check）：D3 放行的那种——已提交的记录说 frame_at 没过、记录里
+          # 有一格 render 会换上的，可 runner 上这一帧过了闸、不换帧，对账拿那份记录一比就红；
+          # 同一份封面＋同一份记录再投一趟还是红。重扫（mode=cover）一换记录就从头数
+          rc=0
+          PYTHONPATH=src python tools/interview_cover_scan.py --check --spec "$SPEC" || rc=$?
+          if [ "$rc" -ne 0 ]; then
+            if [ "$MODE" = "render" ] && [ "$rc" -eq 1 ]; then
+              echo "::error::封面过了终审、推送前对账红了（原因见上一行）——记一笔停车账（同一个封面、同一份扫描记录满 3 趟就不再自动投）："
+              note_autopick_failure check
+            fi
+            exit "$rc"
+          fi
 
       # **先验转写，再出片。** 这是英语学习素材，发错的英文比没有更糟。
       # YouTube 的自动字幕实测错得不轻（人名、整句语法不成立、`respect to her`
@@ -1041,6 +1144,20 @@ jobs:
           # 重新 add 的必须**和这里 add 的是同一格**，写两处必分叉，而分叉的
           # 样子是「重放放回来的不是刚提交的那一格」，不报错。
           git add "$D"
+          # **封面前置那一步自动换过帧，改过的 spec 跟成片一起提交**（2026-09-28）。
+          # 这一趟的 QC／封面凭证绑的是**换帧之后**那一版 spec 的哈希：只提交产物不提交
+          # spec，main 上 spec 的哈希就对不上凭证——`auto_push_interview_gate` 报「spec
+          # 在质检后发生过变化」不推，`pick_interview_renders` 判「当前 spec 没出过片」
+          # 过 70 分钟又投一趟，那一趟再红、再换，**永远落不了地**。标记只由封面那一步写。
+          # O4（reel-cover-upgrade）换赛场之上的封面也是连 spec 一起提交的，同一个做法。
+          # ⚠️ 只在 render 档：标记本来只由 render 的封面那一步写，这里再按 MODE 拦一道，
+          # subs 那一档（和人改 spec 并行跑）就**结构上**碰不到 spec——判据
+          # `test_subs那一趟只提交自己那一格` 认的就是这个 MODE 守卫。
+          AUTOPICK_SPEC=""
+          if [ "$MODE" = "render" ] && [ -f "$RUNNER_TEMP/cover-autopicked" ]; then
+            AUTOPICK_SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+            git add "$AUTOPICK_SPEC"
+          fi
           git diff --cached --quiet && { echo "没有变化"; exit 0; }
           # **体积闸**：渲完一整趟才被 GitHub 拒收（推分支吃 HTTP 413）是最贵
           # 的失败方式，而这个仓库的 .git 已经 1.77 GiB。判据自动推导——凡是
@@ -1049,6 +1166,7 @@ jobs:
           python tools/check_staged_file_sizes.py
           BRANCH="${{ github.ref_name }}"
           MSG="interview: ${{ github.event.inputs.slug }} 双语字幕成片"
+          if [ -n "$AUTOPICK_SPEC" ]; then MSG="$MSG（封面自动换帧，spec 的 cover._frame_autopick 记着新旧秒数）"; fi
           git commit -m "$MSG"
           # ⚠️ **2026-08-13：这里原来是 `git pull --rebase` ＋ `&& break`，
           # 两个毛病叠在一起，而合成仓库上一跑就全现形了。**
@@ -1097,6 +1215,28 @@ jobs:
             git checkout rendered -- "$D"
             cp -f "$WB"/*.jpg "$D"/ 2>/dev/null || true
             git add -A "$D"
+            # 换帧改过的 spec：只在别人**没动过**它的时候放回本趟那一版（比
+            # `rendered^` 和最新分支上的 blob）。别人改过就留别人的——盖掉就是
+            # 吞掉一次人工修改；这一趟的凭证于是对不上新 spec，推送闸不会拿旧凭证推。
+            # ⚠️ **留别人的 spec，就连扫描记录也退回分支上那一份**（没有就不留）：
+            # 本趟的记录要是落了库，别人那版 spec 的 frame_at（多半还是原来红的那一格）
+            # 在 dispatch 之前的预检（`cover_scan_problem`）就红，picker 把它停进
+            # waiting、等人改——本来按新 spec 重渲一趟、封面再红再自动换就行了
+            # （2026-09-28 复审复现：「cover.frame_at=30.0 在扫描里没过闸」）。
+            if [ -n "$AUTOPICK_SPEC" ]; then
+              if [ "$(git rev-parse "rendered^:$AUTOPICK_SPEC")" = "$(git rev-parse "HEAD:$AUTOPICK_SPEC")" ]; then
+                git checkout rendered -- "$AUTOPICK_SPEC"
+                git add "$AUTOPICK_SPEC"
+              else
+                REC="$D/cover_candidates.json"
+                git rm -q --cached --ignore-unmatch -- "$REC"
+                rm -f "$REC"
+                if git cat-file -e "HEAD:$REC" 2>/dev/null; then git checkout HEAD -- "$REC"; fi
+                echo "::warning::$AUTOPICK_SPEC 在 $BRANCH 上被别人改过——不覆盖，扫描记录也留 $BRANCH 上那一份；本趟成片绑的是换帧后的那一版 spec，picker 会按新 spec 重渲（封面再红会再扫、再换）"
+                AUTOPICK_SPEC=""
+                MSG="interview: ${{ github.event.inputs.slug }} 双语字幕成片（封面换过帧，但 spec 撞上别人的修改、留了别人的）"
+              fi
+            fi
             python tools/check_staged_file_sizes.py
             git diff --cached --quiet || git commit -m "$MSG"
             # 退避带 jitter：固定间隔会让撞车的双方下一轮继续对撞。
@@ -1144,6 +1284,7 @@ jobs:
             faster-whisper-${{ runner.os }}-
 
       - name: 第二份 ASR 交叉校验并提交报告（subs）
+        id: subs_verify
         if: github.event.inputs.mode == 'subs'
         env:
           COOKIES: ${{ steps.cookies.outputs.path }}
@@ -1184,6 +1325,27 @@ jobs:
           if [ "$STATUS" != 0 ]; then
             echo "::error::第二份 ASR 没跑成（退出码 $STATUS——不是「有分歧」，那是 3）：下不动音轨、模型起不来或 spec 配错了，看上面的报错"
             exit "$STATUS"
+          fi
+          echo "clean=true" >> "${GITHUB_OUTPUT:-/dev/null}"
+
+      # **判定干净就叫醒自动出片，不干等定时班次。** 自动链（interview-auto-render）
+      # 缺判定时先投的就是这一趟 subs；判定落库之后要它再判一次才会投 render——
+      # 而这一步的提交用的是 GITHUB_TOKEN，**不触发**它的 on:push（`pages.yml` 那条规则），
+      # 定时班次最多 10 分钟一趟、GitHub 还会丢 schedule 事件（CLAUDE.md 记过 25 小时没点过）。
+      # 有要人核的发现（退出码 3）就不叫：它醒了也只会把这条放进等待名单。
+      # 叫不醒不许把这趟打红——判定已经落库，下一趟定时班次照样接得上。
+      - name: 叫醒自动出片（subs 交了干净的判定）
+        if: >-
+          github.event.inputs.mode == 'subs' &&
+          steps.subs_verify.outputs.clean == 'true' &&
+          github.ref_name == 'main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh workflow run interview-auto-render.yml --ref main; then
+            echo "[自动出片] 已叫醒 interview-auto-render——判定干净，它会按当前指纹投 render"
+          else
+            echo "::warning::叫不醒 interview-auto-render——判定已落库，下一趟定时班次照样接得上"
           fi
 
       # **叫醒自动推送——render 提交自己永远触发不了它。** 上一步的 push 用的

@@ -41,6 +41,22 @@ DEFAULT_SIZE = (1080, 1440)
 MAX_CHARS = 18
 
 
+def length_problem(text: str) -> str | None:
+    """章节卡那句话超没超 `MAX_CHARS`——**`build` 和 `--dry-run` 共用这一份**。
+
+    来路（2026-09-28 返工审计）：这道闸原来只活在 `build` 里，也就是 render 下完源片、
+    切段之前现渲卡的那一刻；`--dry-run` 只查 `editorial.chapters`，不查段落里的
+    `title_card`。于是 china-open-withdrawals-story-2026（ca2d4829a，19/22/29/24 字，
+    run 36296202661）和 asiad-2026-men-draw（775d5d8d1，25 字，run 36296693320）
+    各在 runner 上白烧一趟才红。判据 `tests/test_small_gates.py`。
+    """
+    text = str(text or "").strip()
+    if len(text) > MAX_CHARS:
+        return (f"章节卡那句话最多 {MAX_CHARS} 个字（一到两行大字），"
+                f"现在 {len(text)} 个：{text!r}——这是论点不是段落，写短点")
+    return None
+
+
 def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
           clear_bottom: int = 0) -> str:
     """`clear_bottom`：卡底要留空多少像素（字幕会压在这一段上）。全出血下卡铺满
@@ -50,9 +66,8 @@ def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
     text = str(text or "").strip()
     if not text:
         raise SystemExit("章节卡要有一句话（text 是空的）")
-    if len(text) > MAX_CHARS:
-        raise SystemExit(f"章节卡那句话最多 {MAX_CHARS} 个字（一到两行大字），"
-                         f"现在 {len(text)} 个：{text!r}——这是论点不是段落，写短点")
+    if problem := length_problem(text):
+        raise SystemExit(problem)
     w, h = size
     kicker_html = (f'<div class="kicker">{html.escape(str(kicker).strip())}</div>'
                    if str(kicker or "").strip() else "")

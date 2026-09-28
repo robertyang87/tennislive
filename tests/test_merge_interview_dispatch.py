@@ -77,3 +77,43 @@ def test_real_git_conflict_recovery_preserves_remote_other_file(tmp_path):
     assert json.loads((other / ledger).read_text()) == state(
         zheng=('2026-09-09T02:00:00Z', 'z'), rybakina=('2026-09-09T03:00:00Z', 'r'))
     assert (other / 'unrelated.txt').read_text() == 'keep remote content'
+
+
+def test_停车账撞上dispatch提交不丢():
+    """interview-clip 记的停车账（`autopick_failed`）撞上 auto-render 的 dispatch 提交：以远端为底
+    重放的时候要把本趟那一笔加回去，远端刚记的也不许被本趟（没碰它的）盖掉。"""
+    base = state(old=('2026-09-09T01:00:00Z', 'old'))
+    ours = {**state(old=('2026-09-09T01:00:00Z', 'old')),
+            'autopick_failed': {'x': {'cover': 'fp', 'count': 2, 'at': '2026-09-28T01:00:00Z'}}}
+    theirs = state(old=('2026-09-09T01:00:00Z', 'old'), new=('2026-09-28T02:00:00Z', 'n'))
+    merged = merge_interview_states(base, ours, theirs)
+    assert merged.get('autopick_failed') == ours['autopick_failed'], ('停车账这一笔丢了', merged)
+    assert 'new' in merged['slugs']
+    # 反过来：本趟是 dispatch（没碰停车账），远端刚记了一笔
+    theirs2 = {**theirs, 'autopick_failed': {'y': {'cover': 'fp', 'count': 1, 'at': 'z'}}}
+    ours2 = state(old=('2026-09-09T01:00:00Z', 'old'), zheng=('2026-09-28T03:00:00Z', 'z'))
+    merged = merge_interview_states(base, ours2, theirs2)
+    assert merged['autopick_failed'] == theirs2['autopick_failed'] and 'zheng' in merged['slugs']
+
+
+def test_账本里哪一本类型坏了都不许当空合并(tmp_path):
+    """subs / autopick_failed / subs_red 任一本不是 dict 就报错退出，
+    不许静默当成空、再把远端那份覆盖掉（账本损坏时保留快照供恢复）。"""
+    import pytest
+    tool = Path(__file__).resolve().parents[1] / 'tools' / 'merge_orchestration_state.py'
+    good = state(zheng=('2026-09-09T02:00:00Z', 'z'))
+    for book in ('subs', 'autopick_failed', 'subs_red'):
+        bad = dict(good, **{book: ['not', 'a', 'dict']})
+        paths = []
+        for name, content in (('base', good), ('ours', bad), ('theirs', good)):
+            p = tmp_path / f'{book}-{name}.json'
+            p.write_text(json.dumps(content))
+            paths.append(p)
+        out = tmp_path / f'{book}-out.json'
+        r = subprocess.run([sys.executable, str(tool), '--kind', 'interview',
+                            '--base', str(paths[0]), '--ours', str(paths[1]),
+                            '--theirs', str(paths[2]), '--out', str(out)],
+                           capture_output=True, text=True)
+        assert r.returncode != 0, f'{book} 不是 dict 却合并成功了'
+        assert 'Invalid interview dispatch state' in r.stderr, r.stderr[-400:]
+        assert not out.exists(), f'{book} 坏了还写出了合并结果'

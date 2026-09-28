@@ -30,13 +30,35 @@ dispatch 失败的那条从此再也不会被投，而且不吭声。
 `qc_attestation.spec_sha256 == 当前 spec sha256` 才算已 render；历史产物没有
 QC 的仍按已 render 兼容，避免上线时把几十条存量一起重跑。
 
+⚠️ **render 之前先要 subs 那一趟的判定**（2026-09-28）。`interview_preflight` 在
+dispatch 口径（`require_subs`）下，缺字幕缓存、缺**当前转写指纹**的第二份 ASR
+判定都记成红、带 `NEEDS_SUBS`——一条 spec 缺这个判定、又没有挡 subs 的红（L0、`en_fixed`
+挂错行、人工引语对不上：`subs_blockers`），就进「先投 subs」名单（`--subs-list`）——**中文、
+封面、小红书正文还缺着也投**（D2：第二份 ASR 和翻译并行，subs 那两档对它们只报不拦）；
+workflow 投 `mode=subs`、`--mark-subs` 记一笔；判定落库之后下一趟再判：干净就投 render，
+量出分歧／空档就进等待名单等人改或认领。`--sync-subs` 顺手收拾那本账（判定交上来的删、
+投满次数停下的标 `parked`，pipeline-health 读它）；同一趟还记下 pipeline-health 要列的另外两种
+「停着」：转写判定红着等人的（`subs_red`，记从哪一刻起红着）、封面停车的（`autopick_failed` 那一行
+标 `parked`）——`sync_waiting_marks`。
+来路：9/20~9/28 六趟 render 红在「空档没销账／转写分歧超阈」（alcaraz-fritz ×3、
+tien-cobolli ×2、chwalinska ×1，25.4 runner-分钟），**0/6 在 dispatch 之前拦得住**，
+其中四趟是这里投的——第二份 ASR 的结论只活在 runner 上。
+
 用法：
     python tools/pick_interview_renders.py               # 打印待 dispatch 的
+    python tools/pick_interview_renders.py --subs-list F # 另把「先投 subs」的写进 F
+    python tools/pick_interview_renders.py --subs-list F --sync-subs  # dispatch 那一步：顺手收拾 subs 的账＋停着的标记
     python tools/pick_interview_renders.py --mark-one X  # X dispatch 成功后记一笔
+    python tools/pick_interview_renders.py --mark-subs X # X 的 subs dispatch 成功后记一笔
+    python tools/pick_interview_renders.py --received-at X --at T  # X 投 render 时的 SLA 起点
     python tools/pick_interview_renders.py --stale       # 投了很久没产物的（查产物）
+    python tools/pick_interview_renders.py --parked      # 封面那一步连着 3 趟红、停车的
+    python tools/pick_interview_renders.py --autopick-failed X [--kind autopick|audit|check]
+                                         [--dispatched-spec P]   # interview-clip 记停车账
 
 stdout 协议（workflow 靠它切）：第一行是给人看的题头，**第二行起每行一个
 待 dispatch 的 slug**；「等自动补齐 / 例外复核」走 stderr，不混进这份名单。
+「先投 subs」的**不进 stdout**（那份名单是投 render 的），只写 `--subs-list` 那个文件。
 """
 
 from __future__ import annotations
@@ -60,6 +82,7 @@ from build_interview_clip import (  # noqa: E402
     _LEGACY_NO_OPENING,
     _NO_TAKEAWAY_LEGACY,
     check_lead_in,
+    has_transcript_inputs,
 )
 from interview_revision import post_push_edit  # noqa: E402
 from interview_source_gate import SourceContractError, validate_source_contract  # noqa: E402
@@ -77,6 +100,56 @@ LEGACY_INPUT_BASELINE = ROOT / "data" / "interview_render_legacy_baseline.json"
 # `cancel-in-progress`，窗口比 job 超时短的话，一趟还在跑的长片会在第 60 分钟
 # 被重投的那趟掐掉——同一个形状这文件头部记过一次（45 对 49）。
 STALE_MINUTES = 70
+
+# 「先投 subs」的重投窗口和次数上限。subs 一趟（取字幕＋第二份 ASR）实测 5~8 分钟；
+# 窗口过了还没交判定＝那趟死了或被同 slug 的 dispatch 掐了（concurrency 是
+# cancel-in-progress），再投一次。⚠️ 窗口和 `STALE_MINUTES` 同一条规矩：必须**大于**
+# interview-clip.yml 的 `timeout-minutes`（65）——subs 跑在同一个 job 里，窗口比 job 超时短，
+# 一趟慢的 subs（下源片、medium.en 冷启动）还在跑就被重投的那趟掐掉、从头再来。原来写的是 40
+# （复审 nit 2），判据 `test_subs重投窗口长于interview_clip的job超时` 从 YAML 里读那个数。
+# 同一份转写输入投满 `SUBS_MAX_TRIES` 趟还没判定就停下、进等待名单，并在账上标 `parked`
+# （pipeline-health 读它列出来，复审 nit 3）——下不动源片这类毛病，每一小时重投一趟也修不好，
+# 只会刷红 pipeline-health。**转写输入**（`build_interview_clip.SUBS_INPUT_KEYS`：url／start／end／
+# en_fixed／word_fix／切行宽度／两份 ASR 的模型）一改，次数清零；改 zh／封面／文案不算——
+# 那些不动转写，而每次提交 spec 都会经 on:push 叫醒这里，按整份 spec 认的话，
+# 一趟还在跑的 subs 会被同 slug 的重投掐掉（cancel-in-progress）、从头再来。
+SUBS_STALE_MINUTES = 70
+SUBS_MAX_TRIES = 3
+# render 那一趟 10 分钟成片时钟（interview-clip 的 `received_at`）往前拨到「先投的那趟 subs」，
+# 只认这么近的一趟：subs 实测 5~8 分钟，判定干净就叫醒 auto-render 当场投 render。再早的
+# 那趟中间多半隔着人（判定红了、人改完认领才投的 render）——人等的那几个小时不是流水线的时间。
+# ⚠️ 原来写成 `= SUBS_STALE_MINUTES`：重投窗口按 job 超时拉到 70 之后，它不该跟着放宽——
+# 两个数回答的不是同一个问题（一个是「那趟死没死」，一个是「中间隔没隔着人」）。
+SUBS_SLA_MINUTES = 40
+#: `validate_source_contract` 那一条红的开头——它挡 subs（下错了源，量出来的是别的片子）。
+L0_MISSING = "L0 本场场上采访身份"
+
+# **封面自动换帧连着几趟一格都挑不出来，就停车不再投**（2026-09-28 D2）。render 的封面前置
+# 那一步红了会就地扫、自动换一格（`interview_cover_scan --autopick`）；一格都挑不出来（主角没
+# 官方头像、整段都闭眼／是别人）时它退出 3，而同一个封面再投一趟**量出来的是同一批格子**——
+# 不停的话，70 分钟一趟、一天 20 趟 runner，永远红。所以 interview-clip 每红一趟记一笔
+# （`note_autopick_failure`，记在本文件的状态里：`autopick_failed[slug] = {cover, count, at, why}`），
+# 同一个封面指纹（`interview_cover_scan.cover_fingerprint`）＋同一份已提交的扫描记录
+# （`_committed_record_blob`）攒满 `PARK_AFTER` 趟就停车：不进 dispatch 名单、只进 run 摘要的
+# 🅿️ 那一栏（`--parked`；⏳ 等待名单里不再列一遍），也不算 stale（不是「投了没产物」，是故意
+# 不投）。人改了封面（frame_at／scan_window／文案／主角）、补了头像、重扫了记录（mode=cover）、
+# 或者尺子变了，就从头数。⚠️ 扫描记录那条老规矩不变：红着的 render 不提交 `cover_candidates.json`。
+#
+# 同一个计数器还记另外两种红（`PARK_KINDS`，2026-09-28 复审）——同一份封面再投一趟照样红，
+# 不记就是 70 分钟一趟、永远红：
+# - `audit`：自动换上的那一帧终审还红（扫描和终审分叉——工具的 bug，可再投一趟还是它）
+# - `check`：封面过了终审、推送前对账（`interview_cover_scan --check`）红——D3 的边：已提交的
+#   记录说 frame_at 没过、预检因为「render 会换上一格」放行，runner 上这一帧却过了闸，不换帧，
+#   对账拿那份记录一比就红
+# 人脸模型整趟不可用（`--autopick` 退出 4）**故意不记**：环境的事，模型备好了下一趟就过，记了
+# 反倒要人来给一条没毛病的封面解停车。只在 main 上记（interview-clip 那一步按 ref 拦）：picker
+# 只在 main 上投、只读 main 上的账，分支上的一笔合并进来会替 main 停一条它没红过的封面。
+PARK_AFTER = 3
+PARK_KINDS = ("autopick", "audit", "check")
+#: 状态文件里「转写判定红着等人」那本账（`sync_waiting_marks` 写、`pipeline_health` 读）：
+#: slug → {since, inputs_sha256, why}。`since` 是全量那一趟**第一次**见它红的时刻——同一份转写输入
+#: 一直红着就不动；转写输入一改（重量）或者不红了就从账上删。
+SUBS_RED_BOOK = "subs_red"
 
 
 def _sha256(path: Path) -> str:
@@ -160,7 +233,7 @@ def missing_for_render(slug: str, spec: dict) -> list[str]:
     try:
         validate_source_contract(spec)
     except SourceContractError as exc:
-        missing.append(f"L0 本场场上采访身份（{exc}）")
+        missing.append(f"{L0_MISSING}（{exc}）")
     if not spec.get("opening") and slug not in _LEGACY_NO_OPENING:
         missing.append("opening（开场认领，check_opening 那道闸）")
     if not spec.get("zh"):
@@ -190,16 +263,21 @@ def missing_for_render(slug: str, spec: dict) -> list[str]:
         if not PROBE:
             raise
         unknown = True
-    if not missing:
+    # **转写输入齐了就判转写那一半，不等中文、封面、文案**（2026-09-28 D2）：原来这几样缺
+    # 一样就不跑预检，于是「缺 subs 判定」根本判不出来，subs 要等所有文字工作做完才投——
+    # 第二份 ASR 就只能排在翻译后面，不能并行。挡 subs 的红（L0）已经在的就不必跑。
+    if not missing or (has_transcript_inputs(spec) and not subs_blockers(missing)):
         pre, pre_unknown = _preflight_problems(slug, spec)
         missing += pre
         unknown = unknown or pre_unknown
     if not PROBE:
         _remember(slug, missing)
         return missing
-    if missing or not unknown:
-        return missing          # 不要 PIL 的闸已经判红，或者这一趟本来就判得全
-    return _cached_verdict(slug)
+    if not unknown or subs_blockers(missing) or (missing and not has_transcript_inputs(spec)):
+        # 这一趟本来就判得全；或者便宜的那几道已经红了，而转写那一半要么判出了挡 subs 的红、
+        # 要么根本没有输入（不会投 subs）——都不必看缓存
+        return missing
+    return _cached_verdict(slug, missing)
 
 
 #: `--probe`：interview-auto-render「没活就早退」那一步（runner 的系统 python3，没有 PIL）。
@@ -211,6 +289,8 @@ VERDICT_CACHE = Path(os.environ.get("INTERVIEW_PREFLIGHT_CACHE")
 _VERDICTS: dict | None = None
 _VERDICTS_DIRTY = False
 _UNKNOWN: list[str] = []
+#: 这一趟 `todo_slugs` 停着没投的（只给 `main` 的题头数数；原因走 `--parked`）
+_PARKED: list[str] = []
 _CODE_FP: str | None = None
 
 
@@ -237,7 +317,7 @@ def _code_fingerprint() -> str | None:
 
 
 def verdict_key(slug: str) -> str | None:
-    """全量预检这条 spec 的全部输入的指纹：判据代码、spec、文案、字幕缓存、北京日期
+    """全量预检这条 spec 的全部输入的指纹：判据代码、spec、文案、字幕缓存、封面扫描记录、北京日期
     （文案标题带日期）。任何一样变了，缓存的结论就作废——**缓存只省 runner，不许
     替一个没判过的输入说话**。拿不到（没有 git）返回 None，不用缓存。"""
     if not (SPECS / f"{slug}.json").is_file():
@@ -259,6 +339,9 @@ def verdict_key(slug: str) -> str | None:
         "spec": _sha256(SPECS / f"{slug}.json"),
         "xhs": _sha256(xhs) if xhs.is_file() else "",
         "captions": caps,
+        # 封面扫描记录（预检的 `cover_scan_problem` 读它）：重扫或 render 自动换帧之后
+        # 记录变了，缓存里「frame_at 没过闸」那条结论就作废
+        "cover_record": interview_preflight.cover_record_fingerprint(slug),
     }, sort_keys=True)
     return hashlib.sha256(blob.encode()).hexdigest()
 
@@ -307,15 +390,25 @@ def _remember(slug: str, missing: list[str]) -> None:
         _VERDICTS_DIRTY = True
 
 
-def _cached_verdict(slug: str) -> list[str]:
-    """探针判不全的一条：同一份输入全量判过就用那一份，没有就当「要全量那一趟来判」。"""
+#: 探针顶上的那条「缺判定」不是判出来的，是**判不了**（`_cached_verdict`）——`todo_plan` 认它
+PROBE_SUBS_UNKNOWN = "探针判不了转写那一半"
+
+
+def _cached_verdict(slug: str, missing: list[str] | None = None) -> list[str]:
+    """探针判不全的一条：同一份输入全量判过就用那一份，没有就当「要全量那一趟来判」——
+    别的都齐了的算待投 render（原来的口径）；还缺中文、封面这类的（`missing`，不挡 subs），
+    算「可能要先投 subs」（带 `NEEDS_SUBS`，D2）：不然探针数不到它、不叫醒全量，subs 就一直没人投。"""
     key = verdict_key(slug)
     row = _verdicts().get(slug) or {}
     if key is not None and isinstance(row, dict) and row.get("key") == key \
             and isinstance(row.get("missing"), list):
         return [f"{m}（上一趟全量预检判的，输入没变）" for m in row["missing"]]
     _UNKNOWN.append(slug)
-    return []
+    if not missing:
+        return []
+    from interview_preflight import NEEDS_SUBS  # noqa: PLC0415
+    return [*missing, f"{NEEDS_SUBS}{PROBE_SUBS_UNKNOWN}（缺 PIL），当前转写指纹有没有 subs 的判定"
+                      "交给全量那一趟"]
 
 
 def _preflight_problems(slug: str, spec: dict) -> tuple[list[str], bool]:
@@ -343,7 +436,7 @@ def _preflight_problems(slug: str, spec: dict) -> tuple[list[str], bool]:
         spec_problems,
     )
     try:
-        problems, _notes = spec_problems(spec)
+        problems, _notes = spec_problems(spec, require_subs=True)
         return [f"预检：{p.splitlines()[0]}" for p in problems], False
     except PreflightUnavailable:
         if not PROBE:
@@ -364,7 +457,227 @@ def _load_state() -> dict:
     data.setdefault("spec_sha256", {})
     if not isinstance(data["spec_sha256"], dict):
         data["spec_sha256"] = {}
+    if not isinstance(data.get("subs", {}), dict):
+        data["subs"] = {}
+    if "autopick_failed" in data and not isinstance(data["autopick_failed"], dict):
+        data["autopick_failed"] = {}
+    if SUBS_RED_BOOK in data and not isinstance(data[SUBS_RED_BOOK], dict):
+        data[SUBS_RED_BOOK] = {}
     return data
+
+
+def _utc(raw: object) -> datetime | None:
+    try:
+        return datetime.strptime(str(raw), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    except (TypeError, ValueError):
+        return None
+
+
+def subs_blockers(missing: list[str]) -> list[str]:
+    """`missing` 里**挡 subs** 的那几条：L0，和碰转写本身的红（`interview_preflight.TRANSCRIPT_REDS`：
+    `en_fixed` 挂错行、人工引语对不上、切行崩了）。subs 那一趟自己也死在这几处，或者改完这一处
+    转写指纹多半跟着变、这一趟量的就是旧的那一版。"""
+    from interview_preflight import TRANSCRIPT_REDS  # noqa: PLC0415 —— 顶层只 import 标准库
+    return [m for m in missing if L0_MISSING in m or any(t in m for t in TRANSCRIPT_REDS)]
+
+
+def wants_subs(missing: list[str]) -> bool:
+    """当前转写指纹还缺 subs 的判定（`NEEDS_SUBS`），而且没有挡 subs 的红（`subs_blockers`）。
+
+    2026-09-28 D2：原来要**只**卡在缺判定上——中文还没写、封面没挑、小红书正文没有、字幕超宽，
+    subs 一律不投，第二份 ASR 只能排在所有文字工作之后。那些红不碰转写指纹、subs 那两档只报不拦
+    （`build_interview_clip.TRANSCRIPT_STAGES`），现在不挡；render 照旧要当前指纹上 ok 的判定。"""
+    from interview_preflight import NEEDS_SUBS  # noqa: PLC0415 —— 顶层只 import 标准库
+    return any(NEEDS_SUBS in m for m in missing) and not subs_blockers(missing)
+
+
+def _subs_inputs(slug: str) -> str:
+    """这条 spec 的**转写输入**指纹（`build_interview_clip.transcript_inputs_sha`）；读不了是空串。"""
+    from build_interview_clip import transcript_inputs_sha  # noqa: PLC0415 —— 顶层只 import 标准库
+
+    try:
+        spec = json.loads((SPECS / f"{slug}.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError, UnicodeDecodeError):
+        return ""
+    return transcript_inputs_sha(spec) if isinstance(spec, dict) else ""
+
+
+def subs_dispatch_block(slug: str, *, now: datetime,
+                        state: dict | None = None) -> str | None:
+    """这条该投 subs 时，有什么理由**先不投** → 理由（None＝投）。见 `_subs_block`。"""
+    got = _subs_block(slug, now=now, state=state)
+    return got[1] if got else None
+
+
+def _subs_block(slug: str, *, now: datetime,
+                state: dict | None = None) -> tuple[str, str] | None:
+    """→ (`in_flight`｜`parked`, 理由)；None＝投。
+
+    认领按**转写输入**的指纹（`_subs_inputs`），不按整份 spec：转写输入一改（新的转写要
+    重新量），上一趟 subs 的认领就不算数；只改了 zh／封面／文案，认领照旧——不然每次
+    提交 spec 都把还在跑的那趟 subs 掐掉重来（同 slug 的 concurrency 是 cancel-in-progress）。"""
+    rec = ((state or _load_state()).get("subs") or {}).get(slug) or {}
+    inputs = _subs_inputs(slug)
+    if not isinstance(rec, dict) or not inputs or rec.get("inputs_sha256") != inputs:
+        return None
+    at = _utc(rec.get("at"))
+    if at is not None and now - at < timedelta(minutes=SUBS_STALE_MINUTES):
+        return "in_flight", f"已投 subs（{rec.get('at')}），等它交判定"
+    tries = int(rec.get("tries") or 0)
+    if tries >= SUBS_MAX_TRIES:
+        return "parked", (f"同一份转写输入已投 {tries} 趟 subs，预检还是认不出当前指纹的判定。两种可能："
+                f"① 那几趟没交判定——去看「interview-clip · subs · {slug}」的日志"
+                "（下不动源片／字幕多半是这个）；② 交了，但判定绑的指纹和预检按仓库里的字幕缓存"
+                f"重切出来的对不上——比一下 output/interviews/{slug}/second_asr_verdict.json 的 "
+                "`sha256`／`window` 和本地 `python tools/interview_preflight.py --slug "
+                f"{slug} --require-subs` 报的。修好之后手动 dispatch 一次 mode=subs")
+    return None
+
+
+def render_received_at(slug: str, *, now: datetime, state: dict | None = None) -> str:
+    """auto-render 投 render 时传给 interview-clip 的 `received_at`（10 分钟成片时钟的起点）。
+
+    这趟 render 是**先投 subs** 换来的，起点就是那趟 subs 的派发时刻——原来一律取投 render
+    那一刻，subs 那一跳（派发、5~8 分钟、叫醒）整段不进 SLA，挪出去的第二份 ASR 看着像
+    省掉了（复审 2026-09-28）。只认：同一份转写输入（`_subs_inputs`）、晚于这条上一次
+    render 派发、离现在不超过 `SUBS_SLA_MINUTES`；其余一律取现在（和原来一样）。
+    ⚠️ 记账里的 `at` 是**最后一趟** subs 的派发时刻：重投过的，前面死掉的那几趟不算进来。"""
+    fallback = now.strftime("%FT%TZ")
+    state = state or _load_state()
+    rec = (state.get("subs") or {}).get(slug)
+    inputs = _subs_inputs(slug)
+    if not isinstance(rec, dict) or not inputs or rec.get("inputs_sha256") != inputs:
+        return fallback
+    at = _utc(rec.get("at"))
+    if at is None or at > now or now - at > timedelta(minutes=SUBS_SLA_MINUTES):
+        return fallback
+    last_render = _utc((state.get("at") or {}).get(slug))
+    if last_render is not None and last_render >= at:
+        return fallback
+    return at.strftime("%FT%TZ")
+
+
+def mark_subs(slug: str, *, now: str = "") -> None:
+    """X 的 `mode=subs` dispatch **成功之后**记一笔（先投后记，和 `mark_one` 同一个顺序）。"""
+    state = _load_state()
+    inputs = _subs_inputs(slug)
+    rec = (state.setdefault("subs", {}).get(slug) or {})
+    tries = int(rec.get("tries") or 0) + 1 if rec.get("inputs_sha256") == inputs else 1
+    state["subs"][slug] = {"at": now or datetime.now(timezone.utc).strftime("%FT%TZ"),
+                           "inputs_sha256": inputs, "tries": tries}
+    STATE.parent.mkdir(parents=True, exist_ok=True)
+    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2),
+                     encoding="utf-8")
+
+
+def _write_state(state: dict) -> None:
+    STATE.parent.mkdir(parents=True, exist_ok=True)
+    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _cover_fingerprint(spec: dict) -> str:
+    import interview_cover_scan  # noqa: PLC0415 —— 只要标准库，探针的系统 python3 import 得动
+
+    return interview_cover_scan.cover_fingerprint(spec)
+
+
+def _committed_record_blob(slug: str) -> str:
+    """HEAD 里这条的封面扫描记录的 blob 号（没有就是空串）——停车账的另一半键。
+
+    **只认 HEAD，不读工作区**：runner 上 outdir 里躺着这一趟 `--autopick` 刚写、红了不提交的
+    那一份，拿它算的话 interview-clip 记下的和 picker 比的就不是同一个数。要它是因为
+    `check` 那种红的出路是重扫（mode=cover 只换记录、不动 spec）——键里没有记录，重扫完照旧
+    停着。`git rev-parse` 只要 index 里的树，auto-render 的稀疏检出照样读得到。"""
+    return (_git("rev-parse", "--verify", "-q",
+                 f"HEAD:output/interviews/{slug}/cover_candidates.json") or "").strip()
+
+
+def note_autopick_failure(slug: str, *, now: str = "", kind: str = "autopick",
+                          dispatched: Path | None = None) -> dict:
+    """interview-clip 的 render 红在封面那一步 → 记一笔停车账（`kind` 见 `PARK_KINDS`）：
+
+    - `autopick`：自动换帧一格都挑不出来（`--autopick` 退出 3）
+    - `audit`：自动换上的那一帧终审还红
+    - `check`：终审过了、推送前对账（`--check`）红
+
+    同一个封面指纹＋同一份已提交的记录接着数，任何一样变了从 1 数起。指纹按 `dispatched`
+    （派发时那份 spec，interview-clip 从 HEAD 取）算：`audit`／`check` 可能红在自动换帧之后，
+    工作区里的 spec 已经被就地改写，拿它算，picker 拿 main 上那份比永远对不上、永远不停车。
+    原因按这一趟工作区里的 spec 和记录说（`--check` 刚比的就是它们）。返回记下的那一条。"""
+    import interview_cover_scan as scan  # noqa: PLC0415
+
+    if kind not in PARK_KINDS:
+        raise ValueError(f"停车账不认这种红：{kind}（只认 {'／'.join(PARK_KINDS)}）")
+    spec = json.loads((SPECS / f"{slug}.json").read_text(encoding="utf-8"))
+    as_dispatched = (json.loads(Path(dispatched).read_text(encoding="utf-8"))
+                     if dispatched else spec)
+    fp = scan.cover_fingerprint(as_dispatched)
+    blob = _committed_record_blob(slug)
+    record = scan.load_record(OUTPUT / slug)
+    if kind == "autopick":
+        why = scan.failure_why(record, spec)
+    elif kind == "audit":
+        why = ("自动换上的那一帧终审还红——扫描说它能过、终审不认，扫描和终审分叉了（工具的 bug），"
+               "同一个封面再投一趟换上的还是它")
+    else:
+        why = ("封面这一帧过了终审，推送前对账（interview_cover_scan --check）却红："
+               + (scan.record_problem(record, spec) or "对账的原因没算出来"))
+    state = _load_state()
+    rows = state.setdefault("autopick_failed", {})
+    prev = rows.get(slug) if isinstance(rows.get(slug), dict) else {}
+    same = prev.get("cover") == fp and str(prev.get("record") or "") == blob
+    count = int(prev.get("count") or 0) + 1 if same else 1
+    rows[slug] = {"cover": fp, "record": blob, "count": count, "kind": kind,
+                  "at": now or datetime.now(timezone.utc).strftime("%FT%TZ"),
+                  "why": why[:400]}
+    if count >= PARK_AFTER:
+        # 停车那一刻就标上（pipeline-health 只读标记）：停着的那条探针不当活，全量那一趟
+        # （`sync_waiting_marks`）未必再跑——等它来标，闲着的日子就永远没人知道
+        rows[slug]["parked"] = True
+    _write_state(state)
+    return rows[slug]
+
+
+def _parked_line(row: dict) -> str:
+    """停车那一句：按最近一趟是哪种红说出路。"""
+    head = {
+        "audit": f"封面自动换帧换上的那一帧终审还红，连着 {row['count']} 趟",
+        "check": f"封面过了终审、推送前对账红，连着 {row['count']} 趟",
+    }.get(str(row.get("kind") or "autopick"),
+          f"封面自动换帧连着 {row['count']} 趟一格都挑不出来（no frame passes identity/eyes）")
+    fix = {
+        "audit": "扫描和终审分叉是工具的 bug：修了工具（尺子一变）或改封面",
+        "check": "跑一趟 mode=cover 重扫（记录一换）、或在 cover._frame_scan_why 认领这一帧",
+    }.get(str(row.get("kind") or "autopick"),
+          "改封面（frame_at／cover.scan_window／文案点名／subject）或补主角的官方头像")
+    return (f"{head}（最近一趟 {row.get('at') or '?'}）：{row.get('why') or '原因没记'}"
+            f"——停车，不再投；{fix}，停车账的键一变自动重投")
+
+
+def parked_slugs(*, rendered: set[str] | None = None) -> dict[str, str]:
+    """停车的 slug → 为什么（给人读的一句）。当前 spec 已经出过片的不算。
+
+    键是「封面指纹＋HEAD 里那份扫描记录」（`note_autopick_failure` 记的同一对）。"""
+    rows = _load_state().get("autopick_failed") or {}
+    rendered = _current_rendered_slugs() if rendered is None else rendered
+    out: dict[str, str] = {}
+    for slug, row in sorted(rows.items()):
+        if not isinstance(row, dict) or slug in rendered or not (SPECS / f"{slug}.json").is_file():
+            continue
+        # 账坏了、指纹算不出来：**当没停车**（多投一趟，不许一条坏账把整个 picker 带崩、
+        # 把别的 slug 也挡在门外）
+        try:
+            if int(row.get("count") or 0) < PARK_AFTER:
+                continue
+            spec = json.loads((SPECS / f"{slug}.json").read_text(encoding="utf-8"))
+            same = (row.get("cover") == _cover_fingerprint(spec)
+                    and str(row.get("record") or "") == _committed_record_blob(slug))
+            line = _parked_line(row) if same else ""
+        except (Exception, SystemExit):  # noqa: BLE001
+            continue
+        if same:
+            out[slug] = line
+    return out
 
 
 def _fresh_dispatches(*, now: datetime, rendered: set[str],
@@ -397,19 +710,39 @@ def _fresh_dispatches(*, now: datetime, rendered: set[str],
 
 
 def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[str, list[str]]]]:
-    """→ (该 dispatch 的, [(还差自动补齐/复核的 slug, 缺什么)])。
+    """→ (该 dispatch render 的, [(还差自动补齐/复核的 slug, 缺什么)])。「先投 subs」的见 `todo_plan`。"""
+    ready, waiting, _subs = todo_plan(now=now)
+    return ready, waiting
 
-    两份都不含「已 render」和「最近刚 dispatch」的。dispatch 超过 STALE_MINUTES 仍无
+
+def todo_plan(*, now: datetime | None = None
+              ) -> tuple[list[str], list[tuple[str, list[str]]], list[str]]:
+    """→ (该 dispatch render 的, [(还差自动补齐/复核的 slug, 缺什么)], 该先 dispatch subs 的)。
+
+    三份都不含「已 render」和「最近刚 dispatch」的。dispatch 超过 STALE_MINUTES 仍无
     render.json 的自动释放回 ready；再次 mark 会刷新时刻，实现环境抖动自愈。
+    当前指纹缺 subs 判定、又没有挡 subs 的红的进第三份（`wants_subs`——中文、封面、文案还缺着
+    也进，D2），刚投过 subs、还在窗口里的、投满次数停下的进等待名单说一声（`subs_dispatch_block`）。
+    **三份两两不相交**：一条 slug 这一趟只会投一样（同 slug 的 concurrency 是 cancel-in-progress，
+    投两样就是后一个掐前一个）。
+    顺带把「先投 subs」那本账该留哪几条、哪几条停下了记进 `_SUBS_SYNC`，`sync_subs_state` 用。
     """
+    now = now or datetime.now(timezone.utc)
+    state = _load_state()
+    _SUBS_SYNC["keep"], _SUBS_SYNC["parked"], _SUBS_SYNC["others"] = set(), set(), {}
+    _SUBS_SYNC["red"], _SUBS_SYNC["cover_parked"] = {}, set()
     rendered = _rendered_slugs()
     current_rendered = _current_rendered_slugs(rendered)
     changed_inputs = rendered - current_rendered
     blocked = current_rendered | _fresh_dispatches(
-        now=now or datetime.now(timezone.utc), rendered=current_rendered,
+        now=now, rendered=current_rendered,
         changed_inputs=changed_inputs)
     ready: list[str] = []
     waiting: list[tuple[str, list[str]]] = []
+    subs: list[str] = []
+    parked = parked_slugs(rendered=current_rendered)
+    _SUBS_SYNC["cover_parked"] = set(parked)
+    _PARKED.clear()
     for p in sorted(SPECS.glob("*.json")):
         if p.name.endswith(".draft.json") or p.stem in blocked:
             continue
@@ -440,18 +773,143 @@ def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[st
                 except (ValueError, UnicodeDecodeError):
                     qc = None
                 revise, why = post_push_edit(
-                    spec, pushed, qc if isinstance(qc, dict) else None,
-                    now or datetime.now(timezone.utc))
+                    spec, pushed, qc if isinstance(qc, dict) else None, now)
                 if not revise:
                     if why:
                         waiting.append((p.stem, [why]))
                     continue
+        if p.stem in parked:
+            # 停车：同一个封面再投一趟量出来的是同一批格子，不白烧 runner（D2）。**不进 waiting**：
+            # run 摘要的 🅿️ 那一栏（`--parked`）单列了，⏳ 里再列一遍就是同一条说两次
+            _PARKED.append(p.stem)
+            continue
         missing = missing_for_render(p.stem, spec)
-        if missing:
-            waiting.append((p.stem, missing))
-        else:
+        from interview_preflight import SUBS_RED  # noqa: PLC0415 —— 顶层只 import 标准库
+        if reds := [m for m in missing if SUBS_RED in m]:
+            _SUBS_SYNC["red"][p.stem] = reds[0]   # 转写判定红着等人（`sync_waiting_marks` 记账）
+        if not missing:
             ready.append(p.stem)
-    return ready, waiting
+            _SUBS_SYNC["keep"].add(p.stem)    # render_received_at 要那趟 subs 的时刻，mark_one 再删
+            continue
+        from interview_preflight import NEEDS_SUBS  # noqa: PLC0415 —— 顶层只 import 标准库
+        if any(NEEDS_SUBS in m for m in missing):
+            _SUBS_SYNC["keep"].add(p.stem)    # 判定还缺着：账（次数、在跑的那趟）还有用
+        if not wants_subs(missing):
+            waiting.append((p.stem, missing))
+            continue
+        others = [m for m in missing if NEEDS_SUBS not in m]
+        if block := _subs_block(p.stem, now=now, state=state):
+            if PROBE and block[0] == "parked" and any(PROBE_SUBS_UNKNOWN in m for m in missing):
+                # 停着的那条，探针**判不了**它还缺不缺判定（缓存没命中：判定文件在键里，人修好
+                # 原因、手动投的 subs 一落判定，键就变了）。原来照旧按次数判 parked、不算活——
+                # 全量那一趟不醒，`--sync-subs` 跑不到，parked 标记一直挂着、pipeline-health
+                # 一直喊（复审第四轮）。算活、叫醒全量去判（探针只数数，不 dispatch）；全量判完
+                # 缓存命中，真还停着的下一趟探针就不再叫醒它
+                subs.append(p.stem)
+                continue
+            waiting.append((p.stem, [block[1], *others]))
+            if block[0] == "parked":
+                _SUBS_SYNC["parked"].add(p.stem)
+        else:
+            subs.append(p.stem)
+            _SUBS_SYNC["others"][p.stem] = others
+    return ready, waiting, subs
+
+
+#: `todo_plan` 最近一趟留下的：「先投 subs」那本账该留哪几条（`keep`）、哪几条停下了（`parked`）、
+#: 先投 subs 的那几条 render 另外还缺什么（`others`，只印给人看）；转写判定红着的（`red`：
+#: slug → 第一条红）、封面停车的（`cover_parked`）——后两样 `sync_waiting_marks` 用。
+_SUBS_SYNC: dict = {"keep": set(), "parked": set(), "others": {}, "red": {}, "cover_parked": set()}
+
+
+def sync_subs_state(*, now: datetime | None = None) -> list[str]:
+    """按 `todo_plan` 刚判完的结论收拾「先投 subs」那本账（全量那一趟、dispatch 之前）→ 删掉的 slug。
+
+    - **删**（复审 nit 4）：判定已经交上来的（不再缺判定——红了等人、ok 了投 render；ok 且这一趟
+      就要投 render 的留着，`render_received_at` 要它，`mark_one` 投出去那一刻删）、spec 没了、
+      已经出片、发布过不再投的……**只删过了重投窗口的**：还在窗口里的那趟可能还在跑，删了它，
+      挡它的红一消失就会再投一趟、把在跑的掐掉。render 那一份（`slugs`／`at`）从来不删，这一份
+      不学它：它的 `tries` 只在「同一份转写输入还缺判定」时有用，留着只会让账越滚越大。
+    - **标 `parked`**（复审 nit 3）：同一份转写输入投满 `SUBS_MAX_TRIES` 趟还没判定的——
+      pipeline-health 读这个标记列出来，不用去翻 auto-render 的 stderr；不再停着的摘掉标记。
+    """
+    now = now or datetime.now(timezone.utc)
+    state = _load_state()
+    book = state.get("subs") or {}
+    dropped: list[str] = []
+    changed = False
+    for slug in sorted(book):
+        rec = book[slug]
+        at = _utc(rec.get("at")) if isinstance(rec, dict) else None
+        in_flight = at is not None and now - at < timedelta(minutes=SUBS_STALE_MINUTES)
+        gone = not isinstance(rec, dict) or not (SPECS / f"{slug}.json").is_file()
+        if gone or (slug not in _SUBS_SYNC["keep"] and not in_flight):
+            del book[slug]
+            dropped.append(slug)
+            changed = True
+            continue
+        parked = slug in _SUBS_SYNC["parked"]
+        if bool(rec.get("parked")) != parked:
+            if parked:
+                rec["parked"] = True
+            else:
+                rec.pop("parked", None)
+            changed = True
+    if changed:
+        state["subs"] = book
+        STATE.parent.mkdir(parents=True, exist_ok=True)
+        STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+    return dropped
+
+
+def sync_waiting_marks(*, now: datetime | None = None) -> bool:
+    """按 `todo_plan` 刚判完的结论，给 pipeline-health 记下另外两种「停着、要人」→ 状态改没改。
+
+    2026-09-28 会话决定（F3）：这两种原来只印在 auto-render 的 run 摘要／stderr 里，要么不翻日志
+    看不见，要么只在看板的 24 小时窗口里露一下——而它们都是自动链自己修不好、会一直停着的。
+    和 `parked_interview_subs` 同一个形状：**pick 在这儿判、记标记，pipeline-health 只读标记**
+    （判法只在这边定义一次；pipeline-health 的稀疏检出只有这份状态文件）。
+
+    - **转写判定红着等人**（`subs_red`）：预检报 `SUBS_RED`（第二份 ASR 分歧超闸没认领够、VAD 在
+      空档里听到了人声）的 slug → `{since, inputs_sha256, why}`。同一份转写输入接着红，`since` 不动
+      （pipeline-health 按它算红了多久，超过 6 小时才喊）；转写输入改了（人改了 en_fixed／区间，
+      下一趟要重量）从现在重新算；不再红的删掉。
+    - **封面停车**：`parked_slugs` 判出来的，`autopick_failed[slug]` 那一行标 `parked: true`；不再停着
+      （换了封面、重扫了记录、当前 spec 出过片）摘掉。计数和停车条件只在 `parked_slugs` 里。
+      进停车那一刻 `note_autopick_failure` 已经标上了（停着的那条不算活，全量那一趟未必再来）；
+      摘标记靠这里——换封面／重扫记录都会让它回到待投、叫醒全量那一趟。
+    只在全量那一趟（`--sync-subs`）跑，探针不写状态。"""
+    now = now or datetime.now(timezone.utc)
+    stamp = now.strftime("%FT%TZ")
+    state = _load_state()
+    changed = False
+    book = state.get(SUBS_RED_BOOK) if isinstance(state.get(SUBS_RED_BOOK), dict) else {}
+    fresh: dict = {}
+    for slug, why in sorted(_SUBS_SYNC["red"].items()):
+        inputs = _subs_inputs(slug)
+        prev = book.get(slug) if isinstance(book.get(slug), dict) else {}
+        same = bool(prev) and prev.get("inputs_sha256") == inputs and _utc(prev.get("since"))
+        fresh[slug] = {"since": prev["since"] if same else stamp, "inputs_sha256": inputs,
+                       "why": str(why)[:300]}
+    if fresh != book:
+        if fresh:
+            state[SUBS_RED_BOOK] = fresh
+        else:
+            state.pop(SUBS_RED_BOOK, None)
+        changed = True
+    for slug, row in (state.get("autopick_failed") or {}).items():
+        if not isinstance(row, dict):
+            continue
+        parked = slug in _SUBS_SYNC["cover_parked"]
+        if bool(row.get("parked")) != parked:
+            if parked:
+                row["parked"] = True
+            else:
+                row.pop("parked", None)
+            changed = True
+    if changed:
+        _write_state(state)
+    return changed
 
 
 def mark_one(slug: str, *, now: str = "") -> None:
@@ -464,9 +922,10 @@ def mark_one(slug: str, *, now: str = "") -> None:
     spec_path = SPECS / f"{slug}.json"
     if spec_path.is_file():
         state["spec_sha256"][slug] = _sha256(spec_path)
-    STATE.parent.mkdir(parents=True, exist_ok=True)
-    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2),
-                     encoding="utf-8")
+    # 这趟 render 就是「先投 subs」等的那一下：那本账这一条用完了（SLA 起点已经在投之前
+    # 由 `render_received_at` 取走），删掉——不删的话账只进不出（复审 nit 4）
+    (state.get("subs") or {}).pop(slug, None)
+    _write_state(state)
 
 
 def stale_dispatches(*, now: datetime | None = None) -> list[tuple[str, str]]:
@@ -479,10 +938,11 @@ def stale_dispatches(*, now: datetime | None = None) -> list[tuple[str, str]]:
     """
     state = _load_state()
     rendered = _current_rendered_slugs()
+    parked = parked_slugs(rendered=rendered)   # 故意不投的，不是「投了没产物」
     now = now or datetime.now(timezone.utc)
     out: list[tuple[str, str]] = []
     for slug in state.get("slugs", []):
-        if slug in rendered:
+        if slug in rendered or slug in parked:
             continue
         at_raw = state.get("at", {}).get(slug, "")
         if at_raw:
@@ -502,19 +962,66 @@ def main() -> int:
     ap.add_argument("--mark-one", default="",
                     help="这条 slug dispatch 成功了，记进状态（投一条记一条）")
     ap.add_argument("--at", default="",
-                    help="配合 --mark-one：写入这次 dispatch 的 UTC 时刻")
+                    help="配合 --mark-one／--mark-subs：写入这次 dispatch 的 UTC 时刻；"
+                         "配合 --received-at：「现在」")
+    ap.add_argument("--received-at", default="",
+                    help="打印这条 slug 投 render 时 10 分钟成片时钟的起点（先投过 subs 的，"
+                         "是那趟 subs 的派发时刻；见 `render_received_at`）")
     ap.add_argument("--stale", action="store_true",
                     help="列出投了超过 %d 分钟还没有当前成片的" % STALE_MINUTES)
+    ap.add_argument("--autopick-failed", default="",
+                    help="interview-clip：这条 render 红在封面那一步，记一笔停车账")
+    ap.add_argument("--kind", choices=PARK_KINDS, default="autopick",
+                    help="配合 --autopick-failed：autopick＝一格都挑不出来，audit＝换上的那一帧"
+                         "终审还红，check＝终审过了、推送前对账红")
+    ap.add_argument("--dispatched-spec", default="",
+                    help="配合 --autopick-failed：派发时那份 spec（指纹按它算；自动换帧会就地改写工作区的）")
+    ap.add_argument("--parked", action="store_true",
+                    help="列出封面那一步连着 %d 趟红、停车不再投的" % PARK_AFTER)
     ap.add_argument("--probe", action="store_true",
                     help="「没活就早退」的探针：缺 PIL 时量宽度那几项拿上一趟全量预检的结论顶，"
                          "没有就算待投（只数数，不 dispatch）")
+    ap.add_argument("--subs-list", default="",
+                    help="把「当前指纹还缺 subs 判定、先投 mode=subs」的 slug 写进这个文件"
+                         "（每行一个；没有也写一个空文件）")
+    ap.add_argument("--mark-subs", default="",
+                    help="这条 slug 的 mode=subs dispatch 成功了，记进状态")
+    ap.add_argument("--sync-subs", action="store_true",
+                    help="判完顺手收拾「先投 subs」那本账：删判定已交上来的、标投满次数停下的"
+                         "（`sync_subs_state`），再记下转写判定红着等人的、封面停车的"
+                         "（`sync_waiting_marks`，pipeline-health 读）；只在 dispatch 那一步用——"
+                         "本地预览别带，免得改状态文件")
     args = ap.parse_args()
     global PROBE
     PROBE = bool(args.probe)
 
+    if args.received_at:
+        now = _utc(args.at) or datetime.now(timezone.utc)
+        print(render_received_at(args.received_at, now=now))
+        return 0
     if args.mark_one:
         mark_one(args.mark_one, now=args.at)
         print(f"已记：{args.mark_one}")
+        return 0
+    if args.mark_subs:
+        mark_subs(args.mark_subs, now=args.at)
+        print(f"已记 subs：{args.mark_subs}")
+        return 0
+
+    if args.autopick_failed:
+        row = note_autopick_failure(args.autopick_failed, now=args.at, kind=args.kind,
+                                    dispatched=Path(args.dispatched_spec) if args.dispatched_spec
+                                    else None)
+        print(f"停车账：{args.autopick_failed} 这个封面第 {row['count']} 趟红在封面那一步（{args.kind}）"
+              + (f"——满 {PARK_AFTER} 趟，停车不再投" if row["count"] >= PARK_AFTER
+                 else f"（满 {PARK_AFTER} 趟停车）"))
+        return 0
+
+    if args.parked:
+        parked = parked_slugs()
+        print(f"封面自动换帧停车（同一个封面连着 {PARK_AFTER} 趟红在封面那一步，不再投）：{len(parked)} 条")
+        for slug, why in parked.items():
+            print(f"  {slug}：{why}")
         return 0
 
     if args.stale:
@@ -525,13 +1032,23 @@ def main() -> int:
                   "或人工重新 dispatch")
         return 0
 
-    ready, waiting = todo_slugs()
+    ready, waiting, subs = todo_plan()
     if not PROBE:
         save_verdicts()
+        if args.sync_subs:
+            if dropped := sync_subs_state():
+                print(f"[subs 账] 删了 {len(dropped)} 条判定已交上来／用不上的：{'、'.join(dropped)}",
+                      file=sys.stderr)
+            sync_waiting_marks()
+    if args.subs_list:
+        Path(args.subs_list).write_text("".join(f"{s}\n" for s in subs), encoding="utf-8")
     unknown = [s for s in ready if s in _UNKNOWN]
     print(f"待 dispatch {len(ready)} 条：" + (
         f"（其中 {len(unknown)} 条量宽度那几项这里判不了、也没有同一份输入的全量结论，"
-        f"交给全量那一趟判：{'、'.join(unknown)}）" if unknown else ""))
+        f"交给全量那一趟判：{'、'.join(unknown)}）" if unknown else "") + (
+        f"［另有 {len(subs)} 条当前转写指纹还缺 subs 的判定，先投 mode=subs："
+        f"{'、'.join(subs)}］" if subs else "") + (
+        f"（另有 {len(_PARKED)} 条封面自动换帧停车、不投，原因见 --parked）" if _PARKED else ""))
     for s in ready:
         print(s)
     # 等自动补齐/例外复核的走 stderr：stdout 第二行起是给 workflow 切的名单，混进去就会把
@@ -540,6 +1057,11 @@ def main() -> int:
         print(f"[等自动补齐 / 例外复核] {len(waiting)} 条（不 dispatch）：", file=sys.stderr)
         for slug, missing in waiting:
             print(f"  {slug}：缺 {'、'.join(missing)}", file=sys.stderr)
+    # 先投 subs 的那几条 render 另外还缺什么：subs 不等它们（D2），可人要知道还剩哪几样
+    if later := {s: o for s, o in _SUBS_SYNC["others"].items() if o and s in subs}:
+        print(f"[先投 subs，render 另外还缺] {len(later)} 条：", file=sys.stderr)
+        for slug, others in later.items():
+            print(f"  {slug}：缺 {'、'.join(others)}", file=sys.stderr)
     return 0
 
 

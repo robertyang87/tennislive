@@ -27,10 +27,19 @@ atptour.com 上没有对应文章。我先在官网找、找不到就写成「�
 这次 ilgazzettino.it 和 sundayguardianlive.com 两家都嵌着 `x.com/janniksin/status/2103431955874226576`，
 **两家独立嵌同一条就是它真实存在的出处**。
 
-**怎么下**：`yt-dlp -F <x.com 帖子地址>` 在沙箱里直接能列格式（这条有 `http-10368` 1080×1920）；
-⚠️ **spec 的 `sources` 别直接写帖子地址**：match-reel 的选择器是 `bv*[height<=1080]`，
-对**竖版**只挑得到 480×852（run 36133328467，2026-09-25 实测）。写 `yt-dlp -g -f <最高那档 http-*>`
-解出来的 `video.twimg.com/...mp4` 直链，下载那步走 curl、拿到原画。
+**怎么下**：`yt-dlp -F <x.com 帖子地址>` 在沙箱里直接能列格式（这条有 `http-10368` 1080×1920）。
+⭐⭐ **2026-09-28 起 spec 的 `sources` 写帖子地址**（`https://x.com/<账号>/status/<id>`），下载那一刻
+由 yt-dlp 现解：X 帖子单走 `build_match_reel.X_FMT_SELECTOR`（`b[protocol^=http]/bv*+ba/b` ＋
+`-S res:1080`，res 按**短边**算），竖版拿得到 1080×1920——janniksin 那条老选择器挑 `hls-315`
+480×852、新选择器挑 `http-10368` 1080×1920；WTA／pavyg 两条横版和 720×960 不降档（沙箱 yt-dlp 2026.08.19 实测）。
+当时 `yt-dlp -g` 解出来的 `video.twimg.com/...mp4` 直链**只放进 `source_fallbacks`**（键和 `sources`
+一样，单源写 `source_url`）：主地址解不出（帖子删了、X 那头抖）才改下它。
+⚠️ **直链会失效**：jl-lc-eurosport / jl-tabilo-bag 两趟 probe 红在 `curl: (22) 403`（run 36231247557 /
+36231253272），2026-09-28 沙箱复测那两条仍 403，同一批另外两条是 206。原来这里教的是「spec 里写直链」
+（因为老选择器 `bv*[height<=1080]` 对竖版只挑 480×852，run 36133328467）——那是选择器的毛病，已修。
+闸 `build_match_reel.x_cdn_source_problem`（`--dry-run` 就红；自动 spec 只报）：主地址是 `video.twimg.com`
+就红，帖子已删只剩直链写 `_x_cdn_why`；定规矩前的 4 条挂 `LEGACY_X_CDN_PRIMARY`，只许减不许加。
+probe 表单填直链只 `::warning::`、照下（`tools/source_url_check.py`）。判据 `tests/test_source_probe_robustness.py`。
 竖版源和主源尺寸不同，要在 spec 顶层 `archival` 里认领、每段 `fit: "contain"`
 （`djokovic-beijing-return` 的 `announce`、`sinner-beijing-withdrawal-2026` 的 `xvid` 都是这么写的）。
 ⭐ **竖版源一律铺满画布**（账号所有者 2026-09-25：「下次用的竖屏的视频要铺满整个画布」）：

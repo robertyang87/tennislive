@@ -322,6 +322,35 @@ def _get(url: str, timeout: int = 30) -> str:
     return resp.text
 
 
+def _headers_of(exc: BaseException) -> tuple[int | None, dict]:
+    resp = getattr(exc, "response", None)
+    headers = getattr(resp, "headers", None) or {}
+    try:
+        low = {str(k).lower(): str(v) for k, v in dict(headers).items()}
+    except Exception:                                           # noqa: BLE001
+        low = {}
+    return getattr(resp, "status_code", None), low
+
+
+def is_challenge(exc: BaseException) -> bool:
+    """这次失败是不是 Cloudflare 的人机挑战页（`cf-mitigated: challenge`）。
+
+    2026-09-28 实测 AP：`/hub/tennis`、`/search`、`.rss`、`news-sitemap-content.xml`
+    全是 403 ＋ 这个头 ＋「Just a moment...」——**换 UA、换入口都过不去，也不该去绕**。
+    认出来是为了把它报成「没查成（挑战页）」，别和「查空」「偶发 403」混在一起。"""
+    _code, headers = _headers_of(exc)
+    return headers.get("cf-mitigated", "").lower() == "challenge"
+
+
+def fetch_failure(exc: BaseException) -> str:
+    """一次取数失败，报一句人读得懂的原因。"""
+    code, _headers = _headers_of(exc)
+    if is_challenge(exc):
+        return (f"Cloudflare 人机挑战（HTTP {code}，cf-mitigated: challenge）——"
+                "换 UA／换入口过不去")
+    return f"{type(exc).__name__}: {str(exc)[:100]}"
+
+
 def _get_json(url: str, timeout: int = 40) -> tuple[object, dict]:
     """取 JSON **连同响应头**——WP REST 的总页数在 `X-WP-TotalPages` 里，不在正文里。"""
     resp = requests.get(url, headers=_UA, timeout=timeout)
@@ -430,7 +459,8 @@ def sweep_wta(player: str | None, event: str | None, day: str | None, *,
         else:
             try:
                 html = _get(url)
-            except Exception:                                   # noqa: BLE001
+            except Exception as exc:                            # noqa: BLE001
+                stats.setdefault("errors", []).append(fetch_failure(exc))
                 continue
         stats["pages_read"] += 1
         for path in set(_PHOTO_RE.findall(html)):
@@ -814,6 +844,12 @@ def ap_original(dims_url: str) -> str | None:
     return got if got and got.startswith("http") else None
 
 
+def ap_credit(caption: str) -> str:
+    """AP 说明末尾括号里的署名（`(Christinne Muschi/The Canadian Press via AP)`）。"""
+    m = re.search(r"\(([^()]*AP[^()]*)\)\s*$", str(caption or ""))
+    return m.group(1) if m else ""
+
+
 def usopen_player_ids(player: str, year: str) -> list[dict]:
     """把球员名解析成美网的 `playerId`（`wta328120` / `atpn552` 这种）。
 
@@ -987,23 +1023,24 @@ def sweep_ap(player: str | None, event: str | None, limit: int = 8, *,
                            f"{event} tennis" if event else None,
                            "tennis") if q]
     slugs: list[str] = []
-    for q in queries:
+    # ⚠️ 2026-09-28：AP 整站在 Cloudflare 人机挑战后面（沙箱实测 `cf-mitigated: challenge`；
+    # runner 那一班 run 36378419750 同一个地址也是 403）。认出来就记 `blocked`、**当场停**——
+    # 后面几页只会是同一张挑战页，
+    # 原来四页各撞一次，报出来还是「0 张」（`fetch_failure`）。
+    for url in [f"{_AP}/search?q={urllib.parse.quote(q)}" for q in queries] + [f"{_AP}/hub/tennis"]:
         try:
-            html = _get(f"{_AP}/search?q={urllib.parse.quote(q)}", timeout=40)
-        except Exception:                                       # noqa: BLE001
+            html = _get(url, timeout=40)
+        except Exception as exc:                                # noqa: BLE001
+            why = fetch_failure(exc)
+            stats.setdefault("errors", []).append(why)
+            if is_challenge(exc):
+                stats["blocked"] = why
+                return []
             continue
         stats["pages_read"] += 1
         for u in re.findall(r"https://apnews\.com/article/[a-z0-9-]+", html):
             if u not in slugs:
                 slugs.append(u)
-    try:
-        hub = _get(f"{_AP}/hub/tennis", timeout=40)
-        stats["pages_read"] += 1
-        for u in re.findall(r"https://apnews\.com/article/[a-z0-9-]+", hub):
-            if u not in slugs:
-                slugs.append(u)
-    except Exception:                                           # noqa: BLE001
-        pass
 
     # 先按 slug 粗筛，别为了那 40 篇边栏稿去拉 70 个页面
     def looks_relevant(u: str) -> bool:
@@ -1301,11 +1338,57 @@ def main() -> int:
                  f"'Cincinnati' 这样的名字（图库文件名里写的是 "
                  f"`<球员>_-_Cincinnati_Open_2026_-_Day_N-DSC_1234.jpg`）")
 
+    # ⭐⭐ 渠道只在 `cover_channels.CHANNELS` 登记一次（O4 的 `cover_upgrade` 用同一份）：
+    # 这里逐档跑、逐档印细节，末尾「这一趟查了什么」也按那份清单列（2026-09-28）。
+    import cover_channels  # noqa: PLC0415
+
+    query = cover_channels.Query(
+        player=args.player, event=args.event, date=args.date, days=args.days, day=args.day,
+        site=args.site, paper=args.paper, zh=list(args.zh or []), city=args.city,
+        year=args.year, wta_id=args.wta_id)
+    results = []
+    for ch in cover_channels.CHANNELS:
+        res = cover_channels.run_channel(ch, query)
+        results.append(res)
+        _SHOW[ch.key](args, res)
+
+    # **这一趟到底查了哪几档，明着写出来。** 写 `cover.portrait._frame_why`
+    # 的人要照抄这份清单，不许写成「四类源都翻过」——没跑的那一档不算翻过。
+    # ⚠️ **每一档都按真取回来的页判**，不按「给没给参数」判：WTA 图库和 AP 原来是
+    # 写死的「跑过」，美网／当地报纸／WP 媒体库原来按 `--event`／报纸域名／`--site`
+    # 在不在判——每一页都 403、断网，照样印进「跑过」（review 第三轮复现：
+    # `--site cincinnatiopen.com --event 'US Open'` 全断网，三档全印「跑过」，
+    # 而美网那一档自己的 notes 写着「这一档没跑」）。
+    ran: list[str] = []
+    skipped: list[str] = []
+    for res in results:
+        if res.key == "cn-media":
+            ran.extend(f"中文媒体·{c}" for c in res.ran_parts)
+            skipped.extend(f"中文媒体·{c}" for c in res.skipped_parts)
+            if not res.ran_parts and not res.skipped_parts:
+                skipped.append("中文媒体（搜狗微信／当地网站）")
+            continue
+        # 清单里的名字（`Channel.label`）要照抄进 `_frame_why`，别随手改
+        (ran if res.status == "ran" else skipped).append(res.label)
+    print("\n=== 这一趟查了什么")
+    print(f"  跑过：{'、'.join(ran) or '（一档都没取到页——这一趟的结果全是未知）'}")
+    if skipped:
+        print(f"  ⚠️ **没跑**：{'、'.join(skipped)}——这几档的结果是**未知**，不是「没有」")
+    blocked = [f"{r.name}（{r.why}）" for r in results if r.status == "blocked"]
+    if blocked:
+        print(f"  · 没查成的原因：{'；'.join(blocked)}")
+    return 0
+
+
+def _show_wta(args, res) -> None:
     print("=== WTA photo-resources（文件名带四要素；Getty 的去查说明）")
-    wta_stats: dict = {}
-    rows = sweep_wta(args.player, args.event, args.day, stats=wta_stats)
-    if not wta_stats.get("pages_read"):
-        print("  ⚠️ **这一档没跑**：WTA 的入口页一页都没取到——结果是**未知**，不是「没有」")
+    if res.status == "skipped":
+        print(f"  ⚠️ **这一档没跑**：{res.why}")
+        return
+    if res.status == "blocked":
+        print("  ⚠️ **这一档没跑**：WTA 的入口页一页都没取到——结果是**未知**，不是「没有」"
+              f"（{res.why}）")
+    rows = list(res.raw or [])
     # ⚠️ 路径里的日期是**上传日**。给了 --date 就按它筛——资料图（别站、上个月）
     # 和本场图在文件名上长得一样（`Liutova-QF.jpg` 挂在 2026/07/31），
     # **筛掉几张要报出来**（CLAUDE.md「打印被丢弃的原因和数量」）。
@@ -1329,36 +1412,36 @@ def main() -> int:
             print(f"     说明：{r['caption']}")
         print(f"     {r['url']}")
 
+
+def _show_wta_articles(args, res) -> None:
     # ⭐⭐ WTA 赛后稿头图——**大满贯照样有**（zheng-pridankina 64525b36 那张就在这儿）。
     print("\n=== WTA 赛后稿头图（WTA 内容接口；大满贯也有，原图尺寸接口直接给）")
-    arts_ran = False
-    if args.player:
-        arts = sweep_wta_articles(args.player, args.date, days=args.days,
-                                  wta_id=args.wta_id)
-        arts_ran = arts.get("pages_read", 0) > 0
-        print(f"  · 发稿时刻窗口 {arts['window']}")
-        for n in arts["notes"]:
-            print(f"  · ⚠️ {n}")
-        if not arts["rows"]:
-            print("  没有对得上的。⚠️ 赛后稿一般赛后一小时内上线；夜场次日才有")
-        for r in arts["rows"][:10]:
-            print(f"  {r['date'][:16]}Z  {r['title'][:70]}")
-            lead = "" if r["lead_is_player"] else "　⚠️ **头图是别人**（稿子提到了这个名字）"
-            print(f"     头图说明：{r['caption'] or '—'}　{r['wh'] or ''} "
-                  f"{fill_note(r['wh']) if r['wh'] else ''}"
-                  f"　（上传 {r['path_date'] or '?'}）{lead}")
-            print(f"     {r['url']}")
-            print(f"     稿子：{r['article']}")
-    else:
-        print("  ⚠️ **这一档没跑**：没给 --player（按姓认头图是谁）")
+    if res.status == "skipped":
+        print(f"  ⚠️ **这一档没跑**：{res.why}")
+        return
+    arts = res.raw or {}
+    print(f"  · 发稿时刻窗口 {arts.get('window')}")
+    for n in arts.get("notes") or []:
+        print(f"  · ⚠️ {n}")
+    if not arts.get("rows"):
+        print("  没有对得上的。⚠️ 赛后稿一般赛后一小时内上线；夜场次日才有")
+    for r in (arts.get("rows") or [])[:10]:
+        print(f"  {r['date'][:16]}Z  {r['title'][:70]}")
+        lead = "" if r["lead_is_player"] else "　⚠️ **头图是别人**（稿子提到了这个名字）"
+        print(f"     头图说明：{r['caption'] or '—'}　{r['wh'] or ''} "
+              f"{fill_note(r['wh']) if r['wh'] else ''}"
+              f"　（上传 {r['path_date'] or '?'}）{lead}")
+        print(f"     {r['url']}")
+        print(f"     稿子：{r['article']}")
 
+
+def _show_ap(args, res) -> None:
     # ⭐⭐ 通讯社这一档**每站都有**，所以它无条件跑——不像下面两档要先知道
     # 这一站在哪个城市、官网是不是 WordPress。
     print("\n=== AP 通讯社（唯一一条**又高清又跨得过赛事**的，原图 4700~8600px）")
-    ap_stats: dict = {}
-    ap = sweep_ap(args.player, args.event, stats=ap_stats)
-    if not ap_stats.get("pages_read"):
-        print("  ⚠️ **这一档没跑**：AP 的搜索页和 tennis 频道页一页都没取到")
+    if res.status == "blocked":
+        print(f"  ⚠️ **这一档没跑**：AP 的搜索页和 tennis 频道页一页都没取到（{res.why}）")
+    ap = list(res.raw or [])
     if not ap:
         print("  没有对得上的。⚠️ AP 一天只发几场的图，**「这一场没有」不等于"
               "「这条渠道不行」**；隔几小时或换个赛事名再试。")
@@ -1366,71 +1449,67 @@ def main() -> int:
         print(f"  {r['caption'][:160]}")
         print(f"     {r['url']}")
 
+
+def _show_usopen(args, res) -> None:
     # ⭐⭐ **大满贯这一档：美网官方接口是保底——每场都有，但封顶 1280×720。**
     # 上面 WTA 赛后稿那一档**大满贯也有**（2026-09-27 更正），下面赛事官网那一档要
     # WordPress，而美网不是 WordPress 站。
-    is_uso = bool(args.event and "us open" in args.event.lower())
-    uso_ran = paper_ran = site_ran = False
-    if is_uso:
-        print("\n=== 美网官方图片接口（保底：每场都有；⚠️ 封顶 1280×720）")
-        res = sweep_usopen(args.player, args.date, args.year)
-        uso_ran = res.get("pages_read", 0) > 0
-        for n in res["notes"]:
-            print(f"  · {n}")
-        if not uso_ran:
-            print("  ⚠️ **这一档没跑**：一页照片都没取到（原因见上面几行）——"
-                  "结果是**未知**，不是「没有」")
-        rows = res["rows"]
-        if not rows:
-            print("  没有对得上的。⚠️ 分清两件事：**「还没发」**（夜场的官方图约 24 "
-                  "小时才上线）和**「真的没有」**——上面那行「全部 N 条，其中 <年> "
-                  "M 条」就是判据，M=0 才是这一年真没有。")
-        for r in rows[:10]:
-            print(f"  {r['date']}  {r['title'][:46]}")
-            print(f"     {r['caption'][:150]}")
-            print(f"     {r['credit']} · {r['url']}")
-        if rows:
-            print("  ⚠️ `xlarge`（`f_` 前缀）就是顶，1280×720，铺 1080×1440 只有 "
-                  "0.50×——**这一档的图默认要写 `cover.portrait._low_res_why`**。"
-                  "十二个前缀、六个目录、三种 `?width=` 参数都试过（第三组返回 200 "
-                  "但尺寸一个像素没变），别再重探。")
-    else:
+    if res.status == "skipped":
         print("\n=== 美网官方图片接口　⚠️ **这一档没跑**")
         print("  `--event` 里没有 `US Open`。大满贯不进 WTA/ATP 图库，"
               "美网另有自己的接口——查美网请传 --event \"US Open\"。")
+        return
+    print("\n=== 美网官方图片接口（保底：每场都有；⚠️ 封顶 1280×720）")
+    got = res.raw or {}
+    for n in got.get("notes") or []:
+        print(f"  · {n}")
+    if res.status != "ran":
+        print("  ⚠️ **这一档没跑**：一页照片都没取到（原因见上面几行）——"
+              "结果是**未知**，不是「没有」")
+    rows = got.get("rows") or []
+    if not rows:
+        print("  没有对得上的。⚠️ 分清两件事：**「还没发」**（夜场的官方图约 24 "
+              "小时才上线）和**「真的没有」**——上面那行「全部 N 条，其中 <年> "
+              "M 条」就是判据，M=0 才是这一年真没有。")
+    for r in rows[:10]:
+        print(f"  {r['date']}  {r['title'][:46]}")
+        print(f"     {r['caption'][:150]}")
+        print(f"     {r['credit']} · {r['url']}")
+    if rows:
+        print("  ⚠️ `xlarge`（`f_` 前缀）就是顶，1280×720，铺 1080×1440 只有 "
+              "0.50×——**这一档的图默认要写 `cover.portrait._low_res_why`**。"
+              "十二个前缀、六个目录、三种 `?width=` 参数都试过（第三组返回 200 "
+              "但尺寸一个像素没变），别再重探。")
 
+
+def _show_paper(args, res) -> None:
     # ⚠️ 这一档以前把 `cincinnati.com` 写死在代码里，也就是**只对辛辛那提成立**。
     # 现在按办赛城市查 `_LOCAL_PAPERS`，查不到就明说这一档没跑——
     # 跳过的那一档和查空的那一档在输出里长得一模一样（上面 `--site` 那次的教训）。
-    paper = args.paper
-    if not paper and args.event:
-        for city, dom in _LOCAL_PAPERS.items():
-            if city in args.event.lower():
-                paper = dom
-                break
-    if paper:
-        print(f"\n=== {paper} 每日图集（说明自带四要素，原图 4800px 级）")
-        got = sweep_local_paper(paper, args.event, args.player, args.date)
-        paper_ran = got.get("pages_read", 0) > 0
-        enq = got["rows"]
-        for note in got["notes"]:
-            print(f"  ⚠️ {note}")
-        if not paper_ran:
-            print("  ⚠️ **这一档没跑**：搜索页、sitemap、图集页一页都没取到——"
-                  "结果是**未知**，不是「没有」")
-        if not enq:
-            print("  没有对得上的。⚠️ 这一辑**按比赛日出**，当天的往往次日才上线；"
-                  "而且它和赛事图库一样偏主球场——**有这条渠道不等于有这个人**。")
-        for r in enq[:10]:
-            print(f"  {r['caption'][:150]}")
-            print(f"     {r['credit']} · {r['url']}")
-    else:
+    if res.status == "skipped":
         print("\n=== 当地报纸每日图集　⚠️ **这一档没跑**")
         print(f"  不知道这一站在哪个城市——`_LOCAL_PAPERS` 里现有 "
               f"{'、'.join(_LOCAL_PAPERS)}。")
         print("  补一句就有：--paper <报纸域名，如 www.cincinnati.com>；"
               "新城市查一次 Gannett／USA TODAY 网络里当地那份，加进 `_LOCAL_PAPERS`。")
+        return
+    print(f"\n=== {res.detail} 每日图集（说明自带四要素，原图 4800px 级）")
+    got = res.raw or {}
+    enq = got.get("rows") or []
+    for note in got.get("notes") or []:
+        print(f"  ⚠️ {note}")
+    if res.status != "ran":
+        print("  ⚠️ **这一档没跑**：搜索页、sitemap、图集页一页都没取到——"
+              "结果是**未知**，不是「没有」")
+    if not enq:
+        print("  没有对得上的。⚠️ 这一辑**按比赛日出**，当天的往往次日才上线；"
+              "而且它和赛事图库一样偏主球场——**有这条渠道不等于有这个人**。")
+    for r in enq[:10]:
+        print(f"  {r['caption'][:150]}")
+        print(f"     {r['credit']} · {r['url']}")
 
+
+def _show_site(args, res) -> None:
     # ⚠️⚠️ **不给 `--site` 时这一档整个不跑，而它正是三条里最常有图的一条。**
     # 2026-08-17 就是这么白判过一次：`--player Svitolina --event Cincinnati`
     # 只跑了上面两档、都报「没有对得上的」，我据此在 `_frame_why` 里写下
@@ -1438,104 +1517,82 @@ def main() -> int:
     # 和查空的那一档在输出里长得一模一样**（CLAUDE.md「空结果先自证是真空」／
     # 「扫得太窄和真的没有长得一模一样」）。所以现在**没跑的要出声**，
     # 而且末尾那份清单把「这一趟到底查了哪几档」逐条列出来。
-    if not args.site:
+    # 2026-09-28：`--event` 认得出登记过的赛事（`cover_channels.EVENT_SITES`）就不用再给 `--site`。
+    if res.status == "skipped":
         print("\n=== 赛事官网的 WordPress 媒体库　⚠️ **这一档没跑**")
-        print("  没给 `--site`，而它当日实拍最全（原图 2000px 级，"
-              "去掉 `-scaled` 能到 5541×3694）。")
+        print("  没给 `--site`，`--event` 也不在 `cover_channels.EVENT_SITES` 里，而它当日实拍最全"
+              "（原图 2000px 级，去掉 `-scaled` 能到 5541×3694）。")
         print("  补一句就有：--site <赛事域名，如 cincinnatiopen.com> "
               "--date <这场球的**当地**日期>")
         print("  ⚠️ 当地日期不是北京日期：夜场（当地 21:00 之后开打）在北京是次日。")
-    if args.site:
-        print(f"\n=== {args.site} 的 WordPress 媒体库")
-        res = sweep_tournament(args.site, args.date, args.player, days=args.days)
-        # `error` 就是媒体库第一页都没读到（`sweep_tournament` 只在那时设它）
-        site_ran = not res.get("error")
-        if res.get("error"):
-            print(f"  ⚠️ **这一档没跑**：{res['error']}——结果是**未知**，不是「没有」")
-        else:
-            for n in res.get("notes") or []:
-                print(f"  · ⚠️ {n}")
-            named = res.get("by_name") or []
-            if args.date:
-                # ⭐⭐ 比赛日起 N 天上传的**全部**翻完，再按名字筛——不是「最近 N 条」。
-                # zverev-deminaur 那张同场 Getty（1a4f92d3）就是被「最近 12 条」漏掉的。
-                print(f"  上传窗口 {res.get('window')}：翻了 {res['scanned']} 条，"
-                      f"图 {len(res['media'])} 张")
-            if args.player:
-                how = ("名字在 title/caption/alt/文件名 任一处" if args.date
-                       else f"`?search={args.player}` 按日期排")
-                print(f"  ⭐ 对得上 {args.player}（{how}）：{len(named)} 张")
-                for m in named[:12]:
-                    print(f"    {(m.get('date_gmt') or m['date'] or '')[:16]}Z  "
-                          f"{m['wh']:11} {fill_note(m['wh']):<22} "
-                          f"{m['url'].rsplit('/', 1)[-1][:52]}")
-                    cap = m.get("caption") or m.get("alt") or m.get("title") or ""
-                    if cap:
-                        print(f"      说明：{cap[:160]}")
-                    if m["original"]:
-                        print(f"      ⭐ 去掉 -scaled 才是原图：{m['original']}")
-                if not named:
-                    print("    没有。⚠️ 这不等于当天没图——多数文件名和说明不带球员名"
-                          "（辛辛那提那批），下面按日期那一批还要打开看。")
-                elif all(int(m["wh"].split("x")[0]) < 1200 for m in named):
-                    print("    ⚠️ **全是小图**（492×656 那种是官方头像，不是比赛照）。"
-                          "「search 有命中」不等于「有能用的图」。")
-            hits = res["media"]
-            if not args.player or not named:
-                print(f"  {args.date or '最近 100 条'}：{len(hits)} 张（前 8 张）")
-                for m in hits[:8]:
-                    print(f"    {m['date']}  {m['wh']:11} "
-                          f"{m['url'].rsplit('/', 1)[-1][:56]}")
-                    if m["original"]:
-                        print(f"      ⭐ 去掉 -scaled 才是原图（实测能到 5541×3694）："
-                              f"{m['original']}")
-            if res["galleries"]:
-                print("  图库上线时刻（判据：当天那一辑在次日 UTC 00:00–03:00 之间）：")
-                for g in sorted(res["galleries"], key=lambda x: x["date"])[-6:]:
-                    print(f"    {g['slug']:26} UTC {g['date_gmt']}")
+        return
+    print(f"\n=== {res.detail} 的 WordPress 媒体库")
+    got = res.raw or {}
+    if res.status != "ran":
+        print(f"  ⚠️ **这一档没跑**：{res.why}——结果是**未知**，不是「没有」")
+        return
+    for n in got.get("notes") or []:
+        print(f"  · ⚠️ {n}")
+    named = got.get("by_name") or []
+    if args.date:
+        # ⭐⭐ 比赛日起 N 天上传的**全部**翻完，再按名字筛——不是「最近 N 条」。
+        # zverev-deminaur 那张同场 Getty（1a4f92d3）就是被「最近 12 条」漏掉的。
+        print(f"  上传窗口 {got.get('window')}：翻了 {got.get('scanned')} 条，"
+              f"图 {len(got.get('media') or [])} 张")
+    if args.player:
+        how = ("名字在 title/caption/alt/文件名 任一处" if args.date
+               else f"`?search={args.player}` 按日期排")
+        print(f"  ⭐ 对得上 {args.player}（{how}）：{len(named)} 张")
+        for m in named[:12]:
+            print(f"    {(m.get('date_gmt') or m['date'] or '')[:16]}Z  "
+                  f"{m['wh']:11} {fill_note(m['wh']):<22} "
+                  f"{m['url'].rsplit('/', 1)[-1][:52]}")
+            cap = m.get("caption") or m.get("alt") or m.get("title") or ""
+            if cap:
+                print(f"      说明：{cap[:160]}")
+            if m["original"]:
+                print(f"      ⭐ 去掉 -scaled 才是原图：{m['original']}")
+        if not named:
+            print("    没有。⚠️ 这不等于当天没图——多数文件名和说明不带球员名"
+                  "（辛辛那提那批），下面按日期那一批还要打开看。")
+        elif all(int(m["wh"].split("x")[0]) < 1200 for m in named):
+            print("    ⚠️ **全是小图**（492×656 那种是官方头像，不是比赛照）。"
+                  "「search 有命中」不等于「有能用的图」。")
+    hits = got.get("media") or []
+    if not args.player or not named:
+        print(f"  {args.date or '最近 100 条'}：{len(hits)} 张（前 8 张）")
+        for m in hits[:8]:
+            print(f"    {m['date']}  {m['wh']:11} "
+                  f"{m['url'].rsplit('/', 1)[-1][:56]}")
+            if m["original"]:
+                print(f"      ⭐ 去掉 -scaled 才是原图（实测能到 5541×3694）："
+                      f"{m['original']}")
+    if got.get("galleries"):
+        print("  图库上线时刻（判据：当天那一辑在次日 UTC 00:00–03:00 之间）：")
+        for g in sorted(got["galleries"], key=lambda x: x["date"])[-6:]:
+            print(f"    {g['slug']:26} UTC {g['date_gmt']}")
 
+
+def _show_cn(args, res) -> None:
     # ⭐ 中文媒体（搜狗微信／当地网站）——亚洲赛季换上的照片一半出自这儿。
-    cn_ran: list[str] = []
-    cn_skipped: list[str] = []
-    if args.zh:
-        import cover_cn_media  # 只在给了 --zh 时才用
-
-        print("\n=== 中文媒体（搜狗微信公众号推文 ＋ 当地网站；原图 mmbiz `/0`）")
-        cn = cover_cn_media.sweep_cn_media(args.zh, date=args.date, days=args.days,
-                                           city=args.city)
-        print("\n".join(cover_cn_media.report(cn)))
-        cn_ran = cn["ran"]
-        cn_skipped = cn.get("skipped") or []
-    else:
+    if res.status == "skipped":
         print("\n=== 中文媒体（搜狗微信／当地网站）　⚠️ **这一档没跑**")
         print("  没给 `--zh <中文名>`。亚洲赛季（成都、杭州、北京、上海、武汉……）"
               "组委会的图常常只出现在中文稿里——hu-kopriva / zhang-wong / "
               "bu-majchrzak 换上的实拍都出自这一档。")
+        return
+    import cover_cn_media  # noqa: PLC0415 只在给了 --zh 时才用
 
-    # **这一趟到底查了哪几档，明着写出来。** 写 `cover.portrait._frame_why`
-    # 的人要照抄这份清单，不许写成「四类源都翻过」——没跑的那一档不算翻过。
-    # ⚠️ **每一档都按真取回来的页判**，不按「给没给参数」判：WTA 图库和 AP 原来是
-    # 写死的「跑过」，美网／当地报纸／WP 媒体库原来按 `--event`／报纸域名／`--site`
-    # 在不在判——每一页都 403、断网，照样印进「跑过」（review 第三轮复现：
-    # `--site cincinnatiopen.com --event 'US Open'` 全断网，三档全印「跑过」，
-    # 而美网那一档自己的 notes 写着「这一档没跑」）。
-    ran: list[str] = []
-    skipped: list[str] = []
-    (ran if wta_stats.get("pages_read") else skipped).append("WTA photo-resources")
-    (ran if ap_stats.get("pages_read") else skipped).append("AP 通讯社")
-    (ran if arts_ran else skipped).append("WTA 赛后稿头图")
-    (ran if uso_ran else skipped).append("美网官方图片接口")
-    (ran if paper_ran else skipped).append("当地报纸每日图集")
-    (ran if site_ran else skipped).append("赛事官网 WordPress 媒体库")
-    ran.extend(f"中文媒体·{c}" for c in cn_ran)
-    skipped.extend(f"中文媒体·{c}" for c in cn_skipped)
-    if not cn_ran and not cn_skipped:
-        skipped.append("中文媒体（搜狗微信／当地网站）")
-    print("\n=== 这一趟查了什么")
-    print(f"  跑过：{'、'.join(ran) or '（一档都没取到页——这一趟的结果全是未知）'}")
-    if skipped:
-        print(f"  ⚠️ **没跑**：{'、'.join(skipped)}——这几档的结果是**未知**，不是「没有」")
-    return 0
+    print("\n=== 中文媒体（搜狗微信公众号推文 ＋ 当地网站；原图 mmbiz `/0`）")
+    if isinstance(res.raw, dict):
+        print("\n".join(cover_cn_media.report(res.raw)))
+    else:
+        print(f"  ⚠️ **这一档没跑**：{res.why}")
+
+
+_SHOW = {"wta": _show_wta, "wta-articles": _show_wta_articles, "ap": _show_ap,
+         "usopen": _show_usopen, "paper": _show_paper, "event-site": _show_site,
+         "cn-media": _show_cn}
 
 
 if __name__ == "__main__":

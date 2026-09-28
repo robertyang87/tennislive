@@ -1338,10 +1338,14 @@ def test_plan不为怎么查都换不了的目标装依赖(tmp_path):
                             "no-opp": (no_opp, NOW - timedelta(hours=6)),
                             SLUG: (live, NOW - timedelta(hours=6))})
     got = cu.plan(repo, NOW)
-    assert got["targets"] == [SLUG], got["report"]
+    # 2026-09-28：没有开赛时刻的不再挡掉——按首推时刻推两天窗口照样查（说明必须点对手、写日期），
+    # 见 `test_没有开赛时刻_按spec记下的或首推时刻推当地日期_并说是哪一个`
+    assert got["targets"] == ["no-time", SLUG], got["report"]
     text = "\n".join(got["report"])
-    assert "no-time：怎么查都换不了" in text and "开赛时刻" in text, text
+    assert "no-time：怎么查都换不了" not in text, text
     assert "no-opp：怎么查都换不了" in text and "对手" in text, text
+    # 不联网也不知道首推时刻的时候（没给 pushed_at），照旧是静态判得出的「查不了」
+    assert any("开赛时刻" in p for p in cu.static_problems(no_time)), cu.static_problems(no_time)
     # run 那边同一个口径：对手不知道就不查（不再每张候选各报一遍）
     calls: list = []
     ran = cu.run(repo, NOW, apply=False, only="no-opp", sweeps_for=_one(_ap(), calls),
@@ -1426,13 +1430,24 @@ def test_下到一半断掉的图不拉黑(monkeypatch):
     assert any("下不下来" in p for p in rows[0]["problems"]), rows
 
 
-def test_WTA赛后稿头图那一档拿掉了_photo_resources还在():
+def test_WTA赛后稿头图那一档拿掉了_photo_resources还在(monkeypatch):
     """评审 nit：Match Reaction 的 og:image 只带文件名、没有说明，全名／对手／日期凑不齐，
     恒换不上，却每一班为每条 WTA 目标花一次 `find_match`。photo-resources 留着——
-    `GettyImages-*` 会去取 Getty 的说明。"""
-    labels = [label for label, _run in cu.default_sweeps(_ctx(tour="wta", site=None))]
-    assert "WTA photo-resources" in labels, labels
-    assert not any("赛后稿" in label for label in labels), labels
+    `GettyImages-*` 会去取 Getty 的说明。
+
+    2026-09-28 渠道合成一份（`cover_channels.CHANNELS`）之后，赛后稿那一档**照样列在报告里**
+    ——但是「O4 不查」、写着为什么，**一个请求都不发**（原来它根本不出现，和「查过、没有」
+    分不出来）。"""
+    import find_cover_photo as fcp  # noqa: PLC0415
+
+    def boom(*a, **k):
+        raise AssertionError("O4 不许为赛后稿那一档发请求")
+
+    monkeypatch.setattr(fcp, "sweep_wta_articles", boom)
+    sweeps = dict(cu.default_sweeps(_ctx(tour="wta", site=None)))
+    assert "WTA photo-resources" in sweeps, list(sweeps)
+    res = sweeps["WTA 赛后稿头图"]()
+    assert res.status == "off" and "对手" in res.why, res
     assert not hasattr(cu, "wta_article")
 
 
@@ -1487,8 +1502,10 @@ def test_半截失败的一档要报出来_不许报成查空(monkeypatch):
     got = notes_for({"error": "媒体库读不到：HTTP Error 403: Forbidden", "by_name": []})
     site_line = next(n for n in got if n.startswith("赛事官网"))
     assert "取不到" in site_line and "403" in site_line, got
-    # 对照组：真查空（翻完了、没有这个人）照旧是「0 张」，不带括号
-    assert "赛事官网 cincinnatiopen.com：0 张" in notes_for({"by_name": [], "media": [], "notes": []})
+    # 对照组：真查空（翻完了、没有这个人）照旧是「0 张」，不带括号，而且明说「查空」
+    empty = next(n for n in notes_for({"by_name": [], "media": [], "notes": []})
+                 if n.startswith("赛事官网"))
+    assert empty.startswith("赛事官网 cincinnatiopen.com：0 张——查空"), empty
 
 
 @pytest.mark.parametrize("sparse", [True, False])
