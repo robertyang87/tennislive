@@ -1,0 +1,253 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "medvedev-wong-hangzhou-2026-qf",
+  "written_at": "2026-09-28T21:00:18Z",
+  "code_sha": "9fa190c0a30e6be8c864c7452a79939ed0e58ddd",
+  "spec_sha256": "7702ab5b5f71c70867c84ddf56ae9cec1c3f3a6f47c5639a7b5f60f8f37e9408",
+  "film_sha256": "8606406995a1856f5e18726c340a23cb0996357159003413344239675b946b74",
+  "film_bytes": 80806308,
+  "projection_sha256": "5814f8adb0622ee9187da72c6028c14aeb6d9a891a029569d3533fb0f46e73d1",
+  "claims": [
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
+    ],
+    [
+      "cover",
+      "_heat_why"
+    ],
+    [
+      "_match"
+    ],
+    [
+      "segments",
+      0,
+      "_quote_skip_why"
+    ],
+    [
+      "_tennistv_trim"
+    ],
+    [
+      "stats",
+      "_winners_ue_why"
+    ]
+  ],
+  "assets": {
+    "assets/players/headshots/atp-MM58.png": "c39c671efe7fde8be71541e37d9bb7d79a21bd2ebc65c2922d97973b70c31910",
+    "assets/players/headshots/atp-W0BH.png": "dab7af34ea95154ce0cfab103a258f692beae73ad1ba35fe67fa1c085aa94f1a",
+    "assets/reel/medvedev-wong-hangzhou-2026-qf-official.jpg": "2a4bc74db3e82a7ba98ec89083c4c3c0f26204b32c7b36f43392460e6a15837c"
+  },
+  "artifacts": {
+    "subtitles.ass": "36a4dc9c35463fd21b64d21e60904ddf55587167006d5bacc13aa5f0098bab3f",
+    "topbar.ass": "e18b46c93f88397b1820ed550b51b58bdecc11c7631933e8c72aa1874c17e5ce",
+    "poster.jpg": "24d1494f73786cc0646e56be4436625d08e33caf35a4bae3893bcde93ea6ec5d",
+    "stat_card.jpg": "0967f117e5f670e7e53c115d723cd4e7dbd8538b67d54a1ba5046334ea17ec2e",
+    "scoreboard_qc.json": "9d77e653e981c851d5f4362c5b7997050ae895b0a8d9104d7c8197626a3f1d67"
+  },
+  "projection": {
+    "slug": "medvedev-wong-hangzhou-2026-qf",
+    "_column": "赛场之上",
+    "sources": {
+      "ttv": "https://www.youtube.com/watch?v=aINLTXtRWbE"
+    },
+    "primary": "ttv",
+    "mixed_fps": {
+      "ttv": "YouTube 1080p，probe 报 25fps。单一源片，没有混帧率。"
+    },
+    "scorebox": [
+      98,
+      920,
+      519,
+      1029
+    ],
+    "cover": {
+      "eyebrow": "赛场之上",
+      "layout": "solo",
+      "subject": "梅德韦杰夫",
+      "hook": "被抢走一盘\n梅德韦杰夫进4强",
+      "hook_accent": "进4强",
+      "topic": "ATP250 杭州 1/4决赛 · 梅德韦杰夫 VS 黄泽林",
+      "winner": "梅德韦杰夫",
+      "result": "6-3 6-7(2) 6-3",
+      "matchup": [
+        {
+          "name": "梅德韦杰夫",
+          "name_en": "Daniil Medvedev",
+          "country": "RUS",
+          "rank": 6
+        },
+        {
+          "name": "黄泽林",
+          "name_en": "Coleman Wong",
+          "country": "HKG",
+          "rank": 108
+        }
+      ],
+      "portrait": {
+        "image": "assets/reel/medvedev-wong-hangzhou-2026-qf-official.jpg",
+        "focus": 0.541,
+        "focus_y": 0.5,
+        "zoom": 1.0
+      },
+      "scoreboard": {
+        "court": "Center Court",
+        "duration_source": {
+          "url": "data:application/json,%7B%22duration%22%3A%20%222%3A18%3A00%22%2C%20%22source%22%3A%20%22TNNS%20app%20%E6%AF%94%E5%88%86%E9%A1%B5%EF%BC%88%E8%B4%A6%E5%8F%B7%E6%89%80%E6%9C%89%E8%80%85%E6%88%AA%E5%9B%BE%EF%BC%8C%E5%8C%97%E4%BA%AC%2023%3A19%EF%BC%89%E8%AE%A1%E6%97%B6%202%3A18%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_sui_1%EF%BC%88Qi8uCASp%EF%BC%89%E5%88%86%E7%9B%98%200%3A36%20%2B%201%3A00%20%2B%200%3A44%20%3D%202%3A20%22%7D",
+          "field": "duration"
+        }
+      }
+    },
+    "topbar": {
+      "line1": "2026 ATP250 杭州 1/4决赛",
+      "line2": "梅德韦杰夫 6-3 6-7(2) 6-3 黄泽林"
+    },
+    "editorial": {
+      "mode": "match_review",
+      "hook": [
+        "被抢走一盘",
+        "梅德韦杰夫进4强"
+      ],
+      "question": "上一轮刚淘汰五号种子的黄泽林，从头号种子梅德韦杰夫手里抢走了一盘，比赛是怎么在决胜盘分出胜负的？",
+      "thesis": "首盘梅德韦杰夫开局破发，黄泽林第三个破发点破回，他又破一次、救下两个破发点 6-3；第二盘谁都没丢发球局，黄泽林一发 18 分全拿，抢七 7-2 扳回一盘；决胜盘梅德韦杰夫发球局一个破发点没给，3-4 破掉黄泽林，第二个赛点收下。",
+      "beats": [
+        "冷开场：第二个赛点，他平静走开、网前握手。",
+        "落点＋坐标：北京时间 9 月 27 日晚上，杭州公开赛 1/4 决赛。",
+        "来路：黄泽林世界第 108，上一轮淘汰 5 号种子。首盘开局破发；黄泽林底线耗到网前拿下破发点破回；4-3 再破，5-3 发球胜盘救两个破发点。",
+        "第二盘：3-3 黄泽林被压在左半场还是守住；一发 18 个一个没丢；4-4 他的发球局打到平分保住。",
+        "抢七：7-2 扳回一盘。",
+        "决胜盘：梅德韦杰夫发球局滴水不漏；3-4 第二个破发点，梅德韦杰夫压到网前拿下。",
+        "赛点：第二个兑现。结尾：他没有庆祝；半决赛对萨菲乌林，一问。"
+      ],
+      "human_context": {
+        "angle": "头号种子的发球全场只丢过一局，而他还是被一个世界第 108 拖进了决胜盘：黄泽林第二盘一发一分没丢、抢七 7-2。上一轮他刚淘汰 5 号种子——`wong-vallejo-hangzhou-2026-r2` 的片尾问的就是「你觉得他能再赢一场吗」。",
+        "facts": [
+          "flashscore Qi8uCASp：Medvedev D. 6-3 6-7(2) 6-3 Wong C.；分盘用时 0:36 + 1:00 + 0:44 = 2:20，TNNS app 2:18；dc_1 DC=1790511900（12:25Z＝北京 20:25），DD=1790520443（14:47Z＝北京 22:47）。",
+          "flashscore df_st_1 全场（梅德韦杰夫／黄泽林）：ACE 18/10、双误 4/1、破发点兑现 3/7 对 1/6、发球局 15/16 对 11/14、黄泽林救下赛点 1。",
+          "flashscore df_mh_1：见 `_hit_data`。",
+          "排名（同一期两源）：tennisexplorer 6 / 108；ESPN 6（3770 分）/ 108（578 分）。梅德韦杰夫是 1 号种子（TNNS 比分页）。",
+          "下一轮：flashscore QmOLdkIG `Medvedev D. vs` 半决赛；另一场 1/4 决赛 WEI1ycLF Safiullin R. 6-3 6-3 Bu Y.，半决赛对萨菲乌林。"
+        ],
+        "sources": [
+          "https://www.flashscore.com/match/tennis/Qi8uCASp/",
+          "https://www.youtube.com/watch?v=aINLTXtRWbE",
+          "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings",
+          "https://www.tennisexplorer.com/ranking/atp-men/"
+        ]
+      }
+    },
+    "stats": {
+      "tour": "atp",
+      "a": {
+        "aces": 18,
+        "df": 4,
+        "first_in": 63,
+        "first_won": 50,
+        "second_total": 38,
+        "second_won": 19,
+        "bp_conv": 3,
+        "bp_chances": 7,
+        "pts_won": 98,
+        "pts_total": 186,
+        "first_total": 101,
+        "headshot": "assets/players/headshots/atp-MM58.png"
+      },
+      "b": {
+        "aces": 10,
+        "df": 1,
+        "first_in": 50,
+        "first_won": 39,
+        "second_total": 35,
+        "second_won": 17,
+        "bp_conv": 1,
+        "bp_chances": 6,
+        "pts_won": 88,
+        "pts_total": 186,
+        "first_total": 85,
+        "headshot": "assets/players/headshots/atp-W0BH.png"
+      }
+    },
+    "segments": [
+      {
+        "source": "ttv",
+        "start": 367.4,
+        "end": 389.0,
+        "cx": 0.5,
+        "narration": "",
+        "crosses_cut": "378.8 从赛点宽景切到他走开、386.78 切到网前握手：赛点之后同一刻的反应。",
+        "point_end_ok": "赛点那一分 378.8 前结束，之后是赛后画面；段尾 389.0 在 389.08 那一刀（过场卡）之前。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 245.2,
+        "end": 256.6,
+        "cx": 0.5,
+        "narration": "头号种子被逼进了决胜盘。北京时间九月二十七号晚上八点多，杭州公开赛四分之一决赛，梅德韦杰夫对黄泽林。",
+        "crosses_cut": "255.04 切到梅德韦杰夫近景：同一分打完之后，旁白讲的是这场比赛的坐标。",
+        "point_end_ok": "这一分 255.0 前结束，255.6/256.5 的翻牌在段内；段尾 256.6 在 256.68 那一刀之前。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 256.7,
+        "end": 296.9,
+        "cx": 0.5,
+        "narration": "世界第一百零八的黄泽林，上一轮刚淘汰五号种子巴列霍，这是两人第一次交手。第一盘梅德韦杰夫开局就破发。三比一，黄泽林拿到这一局的第三次机会。两人在底线来回对拉，他一直没急，找到机会压到网前，把这一分拿下。全场下来，这是他唯一一次，破掉梅德韦杰夫的发球局。可梅德韦杰夫马上又破一次。五比三发球胜盘，他先被逼到十五比四十，还是保住了。六比三，第一盘只打了三十六分钟。",
+        "crosses_cut": "277.76 切到换边、284.3 切到 4-3 那一局、291.12/291.98 切到盘点：旁白按顺序讲首盘的三次破发和他保住发球胜盘。",
+        "point_end_ok": "段内翻牌都在段内；段尾 296.9 在 297.06 那一刀之前，那一刀之后是包厢镜头（297~301，已经是第二盘 `6 0 / 3 0`），297.1~301.5 那几次「翻牌」是换镜头时板的淡入淡出，不是一分打完。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 301.2,
+        "end": 330.7,
+        "cx": 0.5,
+        "narration": "第二盘两人谁的发球局都没丢。三比三，黄泽林发球。两人在底线对拉，他一次次被压在左半场，还是一拍拍把球顶了回去。这一盘他的一发，送进去十八个，一个都没丢。梅德韦杰夫一个破发点都没拿到。这一盘打了整整一个小时，黄泽林低着头，一分一分地熬。",
+        "crosses_cut": "329.7 切到黄泽林近景：同一分之后，旁白讲的是整盘。",
+        "point_end_ok": "329.7/330.6 的翻牌在段内；段尾 330.7 在 330.78 那一刀之前。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 330.8,
+        "end": 345.6,
+        "cx": 0.5,
+        "narration": "四比四，他的发球局被拖到平分，还是保住了。抢七黄泽林一路领先，六比二自己发球，七比二，扳回一盘。",
+        "crosses_cut": "337.58/340.3 切到抢七、344.16 切到黄泽林近景：旁白按顺序讲 4-4 和抢七。",
+        "point_end_ok": "339.1/340.1/344.3/345.1 的翻牌在段内；段尾 345.6 在 345.68 那一刀之前。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 345.7,
+        "end": 366.2,
+        "cx": 0.5,
+        "narration": "决胜盘，梅德韦杰夫的发球局，一个破发点都没给。他的一发得分率回到了百分之七十七。黄泽林二比二那一局，救下了两次破发机会。三比四，又是他发球。第二个破发点，梅德韦杰夫一路压到网前，拿下这一分，三比五。",
+        "crosses_cut": "352.98 切到下一分、356.72 切到发球近景、364.04 切到他走回：旁白按顺序讲决胜盘怎么走到 3-5。",
+        "point_end_ok": "段尾 366.2 在 366.26 那一刀之前，那一刀之后是他赛点前发球的近景；下一次翻牌 383.0。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 367.4,
+        "end": 378.5,
+        "cx": 0.5,
+        "narration": "五比三，梅德韦杰夫发球胜赛。第一个赛点被黄泽林救了回来。第二个，两人在底线相持，这一分是他的。",
+        "point_end_ok": "赛点那一分 378.5 前结束；段尾 378.5 离 378.8 那一刀留出溶解底料，383.0 才翻成终局。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 378.5,
+        "end": 389.0,
+        "cx": 0.5,
+        "narration": "他没有庆祝，转身就走开了。半决赛，他对萨菲乌林。黄泽林下次再碰上他，能赢下来吗？",
+        "crosses_cut": "比赛已经结束：378.8 切到他走开、384.5 近景、386.78 切到网前握手，旁白先说他的反应，再落到片尾一问。",
+        "point_end_ok": "比赛已经结束。",
+        "score_inset": true
+      }
+    ]
+  }
+}
