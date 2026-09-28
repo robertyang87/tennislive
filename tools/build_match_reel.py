@@ -8044,6 +8044,7 @@ OWNER_APPROVED_FRAME_COVERS = frozenset({
     "two-handled-racket-maric-2026",
     "davidovich-fokina-basilashvili-chengdu-2026-sf",
     "rublev-jacquet-hangzhou-2026-sf",
+    "medvedev-safiullin-hangzhou-2026-sf",  # 2026-09-26 常设授权；官方图四类源查过无可用高清，见 spec _frame_why。
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
