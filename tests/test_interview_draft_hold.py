@@ -236,10 +236,13 @@ def test_自动草稿落盘时盖上建草稿的时刻(monkeypatch, tmp_path):
             "end": "08-23", "pat": "cincinnati"}]
     cand = {"title": "Cincinnati 2026 R3 Alexander Zverev Interview",
             "url": "https://example.test/x"}
+    before = h.beijing_today()
     slug, ok, msg = dis._build_one(cand, None, cal, write=True)
+    after = h.beijing_today()
     assert ok, msg
     draft = json.loads((tmp_path / "specs" / f"{slug}.draft.json").read_text(encoding="utf-8"))
-    assert h.drafted_day(draft) == h.beijing_today(), draft.get(h.DRAFTED_AT_KEY)
+    # 前后各取一次「今天」：正好跨过北京零点（16:00Z）时两个都算对（复审 nit：原来偶发红）
+    assert h.drafted_day(draft) in {before, after}, draft.get(h.DRAFTED_AT_KEY)
 
 
 # ── ③ 工作流那一步真跑一遍 ───────────────────────────────────────────────────

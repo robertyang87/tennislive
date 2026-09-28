@@ -164,7 +164,8 @@ def test_老尺子表只许减_每条都真的要它():
         pytest.skip("工作区没有 output/interviews（精简 worktree）")
     _pytest_needs_fonts()
     legacy = clip.legacy_segment_rulers()
-    assert legacy, "老尺子表读出来是空的——路径或键名写错了，整张表会静静失效"
+    # 不断言「非空」：表按规矩减到零是终点，不是故障。路径或尺子名写错不会读成空表——
+    # `legacy_segment_rulers` 读不到文件、认不出尺子名都当场 SystemExit（复审 nit）。
     assert len(legacy) <= _LEGACY_RULER_CAP, (
         f"老尺子表 {len(legacy)} 条，超过上限 {_LEGACY_RULER_CAP}——只许减不许加，"
         "新 spec 一律走默认尺子")
