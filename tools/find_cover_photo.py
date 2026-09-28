@@ -75,6 +75,22 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
 1523 条、萨巴伦卡 2110 条），但 `f_` 前缀就是顶，1280×720。**先走 USA TODAY，
 它没有这一场再退回官方接口并写 `_low_res_why`。**
 
+## ⭐⭐ 2026-09-28：排在最前面的两档——**ATP Media 照片接口**和 **WTA 照片接口**
+
+封面时效实测（17 条「赛场之上」）：10 条首推是抽帧，**其中 6 条首推之前**主角对、2579~8256px、
+铺满不放大的官方原图就已经在这两个接口里了，这个工具一个都没接。详见
+`tools/official_photo_apis.py` 的 docstring（接口、字段、按 EXIF 拍摄时刻绑场次的窗口）：
+
+    python3 tools/find_cover_photo.py --slug medvedev-royer-hangzhou-2026-r2     # 从 spec 带出全部参数
+    python3 tools/find_cover_photo.py --slug <slug> --wait-until +45            # probe／render 跑着时挂着等
+    python3 tools/find_cover_photo.py --player "Daniil Medvedev" --event Hangzhou --tour atp \
+        --start 2026-09-26T11:35:00Z --end 2026-09-26T13:20:51Z --tz Asia/Shanghai
+
+- ATP 的标题只有「2026 Hangzhou Medvedev」（全名在文件名 `Daniil-Medvedev-012.jpg` 里），不带对手和日期——
+  场次**按 EXIF 拍摄时刻**绑：当地钟点落在 [开赛 − 5 分, 结束 + 15 分]（决赛 + 45 分）里才算这一场
+- ✅ 那一行才是绑上了的；标题里还有别人（握手照）、说明里带「China OUT」的标 ⚠️
+- 不给 `--start/--end/--tz`（或 `--slug`）就绑不了场次，只列出来——人自己核 EXIF
+
 ## 查得通的渠道（都实测过）
 
 1. **WTA `photo-resources`**——文件名自带四要素
@@ -196,7 +212,7 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
 | `photos.` / `media.` `.cincinnatiopen.com` 子域 | 403，换 UA 无效 |
 | 网易／新浪等中文门户配的图 | 是**资料图**：实测 163 那两篇写这场球的稿子配的是她别站的旧照（960×640、1280×832），四道闸门第一道就过不了 |
 | Reuters 图片站 | **401** |
-| `api.wtatennis.com` 的 `media` / `photos` / `content` / `players/<id>/media` | 全 **404** |
+| `api.wtatennis.com` 的 `media` / `photos` / `players/<id>/media` | 全 **404**（⚠️ `content` 那一格**写错了**：`content/wta/photo/EN/` 和 `content/wta/text/EN/` 都通——前者 2026-09-28 接成「WTA 照片接口」那一档，见下一节） |
 | `wtatennis.com/galleries` | 404。`/photos` 有，但那是专题图集，不是当日比赛图 |
 | tennis.com 的比赛页 | 只有国旗和头像，没有比赛图 |
 | Flickr / Alamy / Imago / Zimbio | JS 渲染或带水印，取不到可用原图 |
@@ -1316,6 +1332,19 @@ def main() -> int:
                     help="中文名（可重复，第一个是要找谁的封面，其余是对手）："
                          "给了才跑中文媒体那一档（搜狗微信／当地网站）")
     ap.add_argument("--city", help="办赛城市（中文，如 杭州 / 成都）：中文媒体那一档用")
+    # ---- ATP Media／WTA 照片接口那两档：按 EXIF 拍摄时刻绑场次要的（2026-09-28）
+    ap.add_argument("--slug", help="从 specs/reels/<slug>.json 带出主角全名、赛事、开赛／结束（flashscore）、"
+                                   "时区、决赛、ATP/WTA 和球员 id——和 O4、渲前预检同一个 `match_context`")
+    ap.add_argument("--tour", choices=("atp", "wta"), help="男子／女子：照片接口那两档只跑对应的一档")
+    ap.add_argument("--start", help="开赛（UTC ISO，如 2026-09-26T11:35:00Z）")
+    ap.add_argument("--end", help="结束（UTC ISO）")
+    ap.add_argument("--tz", help="赛事当地时区（如 Asia/Shanghai）：EXIF 是当地钟点")
+    ap.add_argument("--final", action="store_true", help="决赛：窗口放到结束后 45 分钟（颁奖）")
+    ap.add_argument("--player-id", help="主角的 ATP／WTA 球员 id（头像文件名 atp-MM58.png 那一段）")
+    ap.add_argument("--wait-until",
+                    help="挂着等首选那一档（ATP Media／WTA 照片接口）每 5 分钟再查一遍，直到这个时刻"
+                         "（UTC ISO，或 +分钟数）；绑上了一张就退出 0，到点还没有退出 2。"
+                         f"最多等 {WAIT_MAX_MINUTES} 分钟")
     args = ap.parse_args()
 
     if args.discover:
@@ -1345,7 +1374,16 @@ def main() -> int:
     query = cover_channels.Query(
         player=args.player, event=args.event, date=args.date, days=args.days, day=args.day,
         site=args.site, paper=args.paper, zh=list(args.zh or []), city=args.city,
-        year=args.year, wta_id=args.wta_id)
+        year=args.year, wta_id=args.wta_id, tour=args.tour, tz=args.tz, final=args.final,
+        player_id=args.player_id, start_utc=_utc_arg(args.start), end_utc=_utc_arg(args.end),
+        full_name=args.player if args.player and len(args.player.split()) > 1 else None)
+    if args.slug:
+        query = query_from_slug(args.slug, query)
+        print(f"=== --slug {args.slug}：主角 {query.full_name}（{query.tour or '?'}，id {query.player_id or '?'}）· "
+              f"{query.event} · 当地 {query.date} · {query.tz} · 开赛 {query.start_utc} · 结束 {query.end_utc}"
+              + ("（决赛）" if query.final else ""))
+    if args.wait_until:
+        return wait_for_photo(query, args.wait_until)
     results = []
     for ch in cover_channels.CHANNELS:
         res = cover_channels.run_channel(ch, query)
@@ -1378,6 +1416,126 @@ def main() -> int:
     if blocked:
         print(f"  · 没查成的原因：{'；'.join(blocked)}")
     return 0
+
+
+#: `--wait-until` 最多挂多久、多久查一次。5 分钟：ATP Media 那一档终场后中位 28 分钟出图、
+#: WTA 赢家比赛中那张中位 4 分钟（2026-09-28 实测），5 分钟一班够密又不压接口。
+WAIT_POLL_SECONDS = 300
+WAIT_MAX_MINUTES = 360
+
+
+def _utc_arg(text: str | None) -> _dt.datetime | None:
+    if not text:
+        return None
+    got = _dt.datetime.fromisoformat(str(text).replace("Z", "+00:00"))
+    return got if got.tzinfo else got.replace(tzinfo=_dt.timezone.utc)
+
+
+def wait_deadline(text: str, now: _dt.datetime) -> _dt.datetime:
+    """`+45`（分钟）或 UTC ISO → 截止时刻；超过 `WAIT_MAX_MINUTES` 的截到那儿。"""
+    text = str(text).strip()
+    if text.startswith("+"):
+        deadline = now + _dt.timedelta(minutes=float(text[1:]))
+    else:
+        deadline = _utc_arg(text) or now
+    return min(deadline, now + _dt.timedelta(minutes=WAIT_MAX_MINUTES))
+
+
+def query_from_slug(slug: str, base=None):
+    """spec → 查图的参数：和 O4、渲前预检同一个 `cover_upgrade.match_context`／`o4_query`。"""
+    import json as _json  # noqa: PLC0415
+    from pathlib import Path  # noqa: PLC0415
+
+    import cover_upgrade as cu  # noqa: PLC0415
+
+    root = Path(__file__).resolve().parent.parent
+    spec = _json.loads((root / "specs" / "reels" / f"{slug}.json").read_text(encoding="utf-8"))
+    ctx = cu.match_context(spec, pushed_at=_dt.datetime.now(_dt.timezone.utc))
+    for problem in ctx.problems:
+        print(f"  ⚠️ {problem}")
+    q = cu.o4_query(ctx)
+    if base is not None:
+        q.zh = list(base.zh or []) or ([ctx.subject_zh] if ctx.subject_zh else [])
+        q.city = base.city
+        q.paper = base.paper or q.paper
+        q.site = base.site or q.site
+        q.year = base.year
+    q.days = 2 if base is None else base.days
+    return q
+
+
+def preferred_channels(q) -> list:
+    """`--wait-until` 盯哪一档：ATP 的比赛盯 ATP Media，WTA 的盯 WTA 照片接口，不知道就两档都盯。"""
+    import cover_channels  # noqa: PLC0415
+
+    keys = {"atp": ["atp-media"], "wta": ["wta-photos"]}.get(q.tour or "", ["atp-media", "wta-photos"])
+    return [cover_channels.channel(k) for k in keys]
+
+
+def wait_for_photo(q, until: str, *, now=None, sleep=time.sleep, poll: int = WAIT_POLL_SECONDS) -> int:
+    """挂着等：每 `poll` 秒把首选那一档再查一遍，**绑上了一张**（EXIF 落在窗口里、标题里没有别人、
+    没有发布限制）就退出 0；到点还没有退出 2。给会话在 probe／render 跑着时挂在后台用
+    （CLAUDE.md「runner 在跑的时候别闲着」）——找到了就接着跑 `cover_upgrade.py --preflight`，
+    认人／睁眼／钩子带那几道要原图才判得了。
+
+    ⚠️ 不给开赛时刻（`--start` 或 `--slug`）就绑不了场次，等也白等——直接退出 2 并说清楚。"""
+    import cover_channels  # noqa: PLC0415
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    clock = now or (lambda: _dt.datetime.now(_dt.timezone.utc))
+    deadline = wait_deadline(until, clock())
+    if q.start_utc is None:
+        print("::warning::没有开赛时刻（给 --start，或者 --slug）——照片接口那两档按 EXIF 绑场次，绑不了就等不出来")
+        return 2
+    chans = preferred_channels(q)
+    rounds = 0
+    while True:
+        rounds += 1
+        stamp = clock()
+        for ch in chans:
+            res = cover_channels.run_channel(ch, q)
+            raw = res.raw if isinstance(res.raw, dict) else {}
+            hits = [r for r in raw.get("rows") or []
+                    if r.get("bound") and not r.get("others") and not r.get("restriction")]
+            print(f"[{stamp:%H:%M:%SZ} 第 {rounds} 次] {cover_channels.status_line(res)}；绑上 {len(hits)} 张",
+                  flush=True)
+            if hits:
+                print("\n".join(apis.dump_rows(hits)))
+                print("→ 接着跑 python3 tools/cover_upgrade.py --preflight --slug <slug>"
+                      "（认人／睁眼／钩子带要原图才判得了；过了就 --write）")
+                return 0
+        if clock() + _dt.timedelta(seconds=poll) > deadline:
+            print(f"到 {deadline:%H:%M:%SZ} 还没有绑得上的——抽帧照发（2026-09-26 的授权），推出去之后 O4 接着查")
+            return 2
+        sleep(poll)
+
+
+def _show_api(args, res, title: str) -> None:
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    print(f"\n=== {title}（按 EXIF 拍摄时刻绑场次；✅＝绑上了）")
+    if res.status == "skipped":
+        print(f"  ⚠️ **这一档没跑**：{res.why}")
+        return
+    if res.status == "blocked":
+        print(f"  ⚠️ **这一档没跑**：{res.why}——结果是**未知**，不是「没有」")
+        return
+    raw = res.raw or {}
+    for n in res.notes:
+        print(f"  · {n}")
+    rows = raw.get("rows") or []
+    if not rows:
+        print("  没有点名主角和这一站的。⚠️ ATP 那一档终场后中位 28 分钟才有（杭州 +15 分钟～+2 小时 45 分）；"
+              "WTA 输家基本没有（王欣瑜那场到第二天都是 0）")
+    print("\n".join(apis.dump_rows(rows)))
+
+
+def _show_atp_media(args, res) -> None:
+    _show_api(args, res, "ATP Media 照片接口（tennistv.com 背后那套 CMS；原图 2579~8256px）")
+
+
+def _show_wta_photos(args, res) -> None:
+    _show_api(args, res, "WTA 照片接口（content/wta/photo；赢家比赛中那张终场前后几分钟、捧杯 +30~77 分钟）")
 
 
 def _show_wta(args, res) -> None:
@@ -1590,7 +1748,8 @@ def _show_cn(args, res) -> None:
         print(f"  ⚠️ **这一档没跑**：{res.why}")
 
 
-_SHOW = {"wta": _show_wta, "wta-articles": _show_wta_articles, "ap": _show_ap,
+_SHOW = {"atp-media": _show_atp_media, "wta-photos": _show_wta_photos,
+         "wta": _show_wta, "wta-articles": _show_wta_articles, "ap": _show_ap,
          "usopen": _show_usopen, "paper": _show_paper, "event-site": _show_site,
          "cn-media": _show_cn}
 

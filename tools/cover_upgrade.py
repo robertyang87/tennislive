@@ -19,7 +19,8 @@
 
 1. **找目标**（`targets`）：发布账本（`data/reel_publish_ledger/<slug>.json`）里
    **第一次 `sent` 在近 48 小时内**、spec 的封面**还是抽帧**
-   （`cover.portrait.frame_at`，没有 `image`）的「赛场之上」。
+   （`cover.portrait.frame_at`，没有 `image`；2026-09-28 起**预裁成 `image` 的抽帧**也算——
+   `_frame_why` 开头是「抽帧」或 `_low_res_why` 开头是「源片 1920×1080」，`is_frame_cover`）的「赛场之上」。
    ⚠️ 判据是 spec 本身，不是 `OWNER_APPROVED_FRAME_COVERS` 那张表——表只是
    「允许抽帧」，spec 才是「现在是不是抽帧」。
 2. **查官方图**（`search`）：`cover_channels.CHANNELS` 那一份渠道清单，**和人查的
@@ -42,9 +43,15 @@
    | 认人 | `face_checks`：最大那张脸**认得出是封面主角**（match ≥ 0.34）；认成对手、`unknown`、模型不可用一律不换 |
    | 睁眼 | `face_checks` 的 EAR ≥ 0.16（闭眼、垂眼、量不了一律不换） |
    | 钩子带／台头 | 按真实铺图数学（`fit: cover` ＋ `focus` / `focus_y` / `zoom`）算脸落在哪：脸的下沿要在钩子顶边（`versus_poster.STORYCOPY_TOP`）之上——钩子和比分板都在它下面；上沿不许压进左上角台头（y 0~170） |
+   | 发布限制（2026-09-28） | 说明／署名／特别说明、原图里嵌的 IPTC 带「China OUT」这类地区限制——任何渠道都不换（`restriction_problem`） |
+   | 两人同框（2026-09-28） | 标题／引用里还点了别人、或者第二张脸 ≥ 最大那张的 0.6（`second_face`）——握手、合影不换 |
 
-   全过的里面挑**脸最大**的（「优先近景特写」）。**「情绪对不对题」机器判不了**，
-   这一条就是不判——O4 授权的是「官方图过了这几道就换」。
+   ATP Media／WTA 照片接口那两档（`official_photo_apis`，2026-09-28 排在最前面）的标题不带对手和日期：
+   说明那条路过不了的，**按照片自己的 EXIF 拍摄时刻绑场次**（`exif_bound_problems`）——当地钟点落在
+   [开赛 − 5 分, 结束 + 15 分]（决赛 + 45 分）里；没 EXIF、时差对不上、开赛只是下界的一律不绑。
+
+   全过的里面按 `taste_key` 排：决赛捧杯 → 赢球那一刻 → 偏正面 → 脸清楚 → 脸大（「优先近景特写」）→
+   更像他。**「情绪对不对题」机器只认得捧杯和赢球那一刻两种**，别的不判——O4 授权的是「官方图过了这几道就换」。
 4. **换**（`apply_upgrade`）：原图字节存进 `assets/reel/<slug>-official.<ext>`
    （不重编码，「封面图一律存原图」），spec 的 `cover.portrait` 换成
    `image`＋算好的 `focus`/`focus_y`/`zoom`＋`_why`（出处、说明原文、每道闸的数），
@@ -402,9 +409,30 @@ def first_sent(repo: Path, slug: str) -> datetime | None:
     return min(stamps) if stamps else None
 
 
+#: 预裁进仓库的抽帧（`cover.portrait.image` 指着的是从视频里截出来的图）怎么认：spec 自己的认领
+#: 写着——`_frame_why` 开头就是「抽帧」（「⚠️ 抽帧，不是官方实拍」），或者 `_low_res_why` 开头是
+#: 「源片 1920×1080」（放大的是视频帧）。**只认开头**：官方实拍那几十条的 `_frame_why` 里也写着
+#: 「不是抽帧」「换掉了抽帧」「没有用 frame_at 抽帧」，扫全文会把它们认成抽帧。
+#: ⚠️ 「预裁」不算：`zverev-deminaur-laver-cup-2026` 的 `_low_res_why` 是「预裁窗口 860×1147（来自
+#: 2048×1365 原图）」——账号所有者给的 Getty 实拍预裁了一下，不是抽帧（第一版把它认成了抽帧）。
+_FRAME_WHY_HEAD = re.compile(r"^[\s⚠️*＊]*抽帧")
+_LOW_RES_FRAME_HEAD = re.compile(r"^[\s⚠️*＊]*源片\s*\d{3,4}\s*[×x]\s*\d{3,4}")
+
+
 def is_frame_cover(spec: dict) -> bool:
+    """封面现在是不是抽帧：`frame_at`（没有 `image`），或者**预裁进仓库的抽帧**写成了 `image`。
+
+    2026-09-28 封面时效实测：`fernandez-gibson-singapore-2026-final` 的抽帧（WTA YouTube Short 13.5s
+    预裁成 780×1040）是 `image`，原来这里只认 `frame_at`——O4 看不见它，而单人捧杯的官方原图
+    （6562×4377）比封面定下来还早 4 分钟就在 WTA 照片接口里了。成都那一站四条（账号所有者点名要
+    「从比赛画面中截取抽帧」，`_low_res_why` 写着「源片 1920×1080」）同一个形状。"""
     art = ((spec.get("cover") or {}).get("portrait")) or {}
-    return isinstance(art, dict) and art.get("frame_at") is not None and not art.get("image")
+    if not isinstance(art, dict):
+        return False
+    if not art.get("image"):
+        return art.get("frame_at") is not None
+    return bool(_FRAME_WHY_HEAD.match(str(art.get("_frame_why") or ""))
+                or _LOW_RES_FRAME_HEAD.match(str(art.get("_low_res_why") or "")))
 
 
 def targets(repo: Path, now: datetime) -> tuple[list[Target], list[str]]:
@@ -586,6 +614,12 @@ class MatchContext:
     #: 团体赛的名单和逐日出场（`data/team_event_rosters.json` 里这一届那一段）
     roster: dict | None = None
     roster_name: str = ""
+    #: 决赛（`is_final`）：EXIF 窗口放到结束后 45 分钟（颁奖），主角赢了的话捧杯照排最前
+    final: bool = False
+    #: 封面主角是不是这场的赢家（`cover.winner`／`_match.winner`；不知道是 None）
+    subject_won: bool | None = None
+    #: 封面主角的 ATP／WTA 球员 id（`stats.<a|b>.headshot` 那张官方头像的文件名：`atp-MM58.png`）
+    player_id: str = ""
 
 
 def event_of(spec: dict) -> tuple[str, object, str | None] | None:
@@ -733,6 +767,38 @@ def roster_matches(roster: dict, surname: str, days: Iterable[date]) -> list[dic
             and any(_last(p) == surname for side in m.get("sides") or [] for p in side)]
 
 
+#: 顶栏／轮次里认「决赛」——但半决赛、1/4、1/8、资格赛决胜轮都不是
+_NOT_FINAL = re.compile(r"半决赛|1/\d+\s*决赛|四分之一|八分之一|十六分之一|资格|semi|quarter", re.I)
+
+
+def is_final(spec: dict) -> bool:
+    """这条是不是**决赛**（顶栏「… 决赛」或 `_match.round`／`_production.round` 写着 Final）。"""
+    match = spec.get("_match") if isinstance(spec.get("_match"), dict) else {}
+    prod = spec.get("_production") if isinstance(spec.get("_production"), dict) else {}
+    for text in (str((spec.get("topbar") or {}).get("line1") or ""), str(match.get("round") or ""),
+                 str(prod.get("round") or "")):
+        if not text or _NOT_FINAL.search(text):
+            continue
+        if "决赛" in text or re.search(r"\bfinals?\b", text, re.I):
+            return True
+    return False
+
+
+def subject_player_id(spec: dict, subject: str) -> str:
+    """封面主角的 ATP／WTA 球员 id：`stats.<a|b>.headshot` 那张官方头像的文件名
+    （`atp-MM58.png` → `MM58`、`wta-326735.jpg` → `326735`）——ATP Media／WTA 照片接口
+    `references` 里的球员 id 就是这一段。matchup 第几个人对 stats 的 a／b（`reel_face_gate` 同一个对法）。"""
+    cover = spec.get("cover") or {}
+    stats = spec.get("stats") if isinstance(spec.get("stats"), dict) else {}
+    for key, entry in zip(("a", "b"), cover.get("matchup") or []):
+        if not isinstance(entry, dict) or str(entry.get("name") or "").strip() != subject:
+            continue
+        shot = (stats.get(key) or {}).get("headshot") if isinstance(stats.get(key), dict) else ""
+        m = re.search(r"(?:^|/)(?:atp|wta)-([A-Za-z0-9]+)\.(?:png|jpe?g|webp)$", str(shot or ""))
+        return m.group(1) if m else ""
+    return ""
+
+
 def match_context(spec: dict, *, times: Callable[[str], tuple] = flashscore_times,
                   pushed_at: datetime | None = None) -> MatchContext:
     """封面主角是谁、哪个赛事、当地哪一天——**缺一样就记进 `problems`，不换**。
@@ -774,6 +840,11 @@ def match_context(spec: dict, *, times: Callable[[str], tuple] = flashscore_time
         ctx.tour = spec_tour(spec)
     except Exception:                                             # noqa: BLE001
         ctx.tour = None
+    ctx.final = is_final(spec)
+    ctx.player_id = subject_player_id(spec, subject)
+    played = spec.get("_match") if isinstance(spec.get("_match"), dict) else {}
+    won = str(cover.get("winner") or played.get("winner") or "").strip()
+    ctx.subject_won = (won == subject) if (won and subject) else None
 
     event = event_of(spec)
     if event is None:
@@ -848,6 +919,20 @@ class Candidate:
     meta_utc: str = ""
     event_owned: bool = False
     wh: tuple[int, int] | None = None
+    # ---- ATP Media／WTA 照片接口那两档（`official_photo_apis`）多带的：标题不带对手和日期，
+    # `bind == "exif"` 的按照片自己的 EXIF 拍摄时刻绑场次（`exif_bound_problems`）
+    item_id: str = ""
+    title: str = ""
+    publish_utc: str = ""
+    taken: str = ""
+    offset: str = ""
+    taken_utc: str = ""
+    bind: str = ""
+    #: 标题／引用里除了主角还点了谁（「2026 Hangzhou Medvedev Royer」＝握手照）
+    others: list = field(default_factory=list)
+    instructions: str = ""
+    #: 说明／署名／特别说明里的发布限制原文（「China OUT」）
+    restriction: str = ""
 
     @property
     def filename(self) -> str:
@@ -987,6 +1072,37 @@ def team_opponent_ok(c: Candidate, text: str, ctx: MatchContext) -> str | None:
             f"{'／'.join(other)}），图注里也没点名单上的别人")
 
 
+_NOT_THE_FINAL = frozenset(("semi", "quarter", "semifinal", "quarterfinal", "semis", "qualifying",
+                            "qualifier", "doubles", "mixed"))
+
+
+def final_opponent_ok(c: Candidate, text: str, ctx: MatchContext) -> str | None:
+    """**决赛**的图注不写对手时，写了「final」＋这一场的当地日期，也认是这一场——放行的理由，否则 None。
+
+    同一站同一年一个人只打一场单打决赛：「US Iva Jovic lifts the trophy after winning the women's
+    singles final match of the WTA Guadalajara Open tournament … on September 19, 2026」（AFP，经 WTA
+    照片接口）——赛事、日期、决赛都点了，只是捧杯的图从来不写对手。要求：
+    - 这条 spec 本身是决赛（`is_final`），当地日期是开赛时刻算的（不是两天窗口）
+    - 说明里**写明了日期**、而且就是这一场的当地日子（没写日期不放宽——上传时刻那条路不给）
+    - 说明里有 `final`，前面不是 semi／quarter（`semi final` 折叠之后也是两个词）
+    赛事那道闸照旧在后面判。"""
+    if not ctx.final or ctx.date_window:
+        return None
+    said = caption_dates(c.caption) | caption_dates(c.filename)
+    if not said or not said & ctx.match_dates:
+        return None
+    words = text.split()
+    for i, w in enumerate(words):
+        if w in ("final", "finals") and not (i and words[i - 1] in _NOT_THE_FINAL):
+            break
+    else:
+        return None
+    if any(w in _NOT_THE_FINAL for w in words):
+        return None
+    return (f"决赛：说明写了 final ＋ 当地 {'／'.join(d.isoformat() for d in sorted(said & ctx.match_dates))}"
+            "——同一站同一年一个人只打一场单打决赛，不点对手也是这一场")
+
+
 def first_roster_named(text: str, roster: dict) -> str | None:
     """图注里**最先**点名的名单上的人（归一后的姓）；一个都没点返回 None。
 
@@ -1075,6 +1191,60 @@ def team_subject_problem(c: Candidate, ctx: MatchContext) -> str | None:
     return None
 
 
+def restriction_problem(*texts: str) -> str | None:
+    """说明／署名／特别说明里带发布限制（「/ China OUT」「/ Norway OUT」「NO USE IN …」）——不换。
+
+    2026-09-28 封面时效实测：杭州那 32 张 AFP（Getty）图注**全带「China OUT」**，而这个号在国内发。
+    **任何渠道**的候选都过这一道（AP、报纸、官网、照片接口），下下来之后再拿原图里嵌的 IPTC
+    说明／特别说明核一遍（`image_verdict`）。"""
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    hit = apis.restriction(*texts)
+    if not hit:
+        return None
+    return (f"说明／署名里带发布限制「{hit}」——这个号在国内发，带地区限制的图一律不换"
+            "（2026-09-28：杭州那批 AFP 图注全是「/ China OUT」）")
+
+
+def exif_bound_problems(c: Candidate, ctx: MatchContext) -> list[str]:
+    """照片接口那两档（`bind == "exif"`）的点名闸：标题／文件名点了主角**全名**和赛事，
+    场次按照片自己的 EXIF 拍摄时刻绑（`official_photo_apis.window_verdict`，渠道那头判过一遍，
+    这里拿 `ctx` 的开赛／结束／时区再判一遍——单一出处）。不要求说明点对手和日期：这两个接口的标题
+    从来不写（「2026 Hangzhou Medvedev」），**那道闸在它们上面恒过不了**。
+
+    ⚠️ 两人同框（标题／引用里还有别人）、发布限制在 `metadata_problems` 外面那一层判，两条路都过。"""
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    problems: list[str] = []
+    text = _fold(c.text())
+    if (bad := name_problem(text, ctx.subject_en)):
+        problems.append(bad)
+    if (hit := NOT_IN_MATCH.search(text)):
+        problems.append(f"标题／说明里有「{hit.group(0)}」——不是这场单打在打的时刻")
+    toks = apis.event_tokens(ctx.event_en)
+    if not toks:
+        problems.append(f"赛事名「{ctx.event_en}」认不出这一站的词，判不了是不是这一站")
+    elif not any(t in text.split() for t in toks):
+        problems.append(f"标题／文件名里没有赛事「{ctx.event_en}」")
+    ok, why = exif_window(c, ctx)
+    if not ok:
+        problems.append(why)
+    return problems
+
+
+def exif_window(c: Candidate, ctx: MatchContext) -> tuple[bool, str]:
+    """这张照片的 EXIF 拍摄时刻落不落在这场的窗口里（`official_photo_apis.window_verdict`）。"""
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    if ctx.date_window:
+        return False, "spec 里没有开赛时刻（按首推时刻推的两天窗口）——拍摄窗口算不出来，不按 EXIF 绑"
+    ok, why, _taken = apis.window_verdict(
+        c.taken, c.offset, tz=ctx.tz, start=ctx.start_utc, end=ctx.end_utc, final=ctx.final,
+        publish=_parse_utc(c.publish_utc) if c.publish_utc else None,
+        start_lower_bound=ctx.start_lower_bound)
+    return ok, why
+
+
 def metadata_problems(c: Candidate, ctx: MatchContext,
                       relaxed: list[str] | None = None) -> list[str]:
     """说明／元数据有没有**点名**这场球：人（全名）、对手、赛事、日期，而且拍的是
@@ -1082,7 +1252,35 @@ def metadata_problems(c: Candidate, ctx: MatchContext,
 
     团体赛（有名单的那几届）两处按名单放宽：只写姓（`surname_only_ok`）、官网图注不写对手
     （`team_opponent_ok`）。放宽了哪一条写进 `relaxed`，换图时照抄进 `_gates`；放宽过的，
-    图注最先点名的名单上的人必须是封面主角（`relaxed_subject_problem`）。"""
+    图注最先点名的名单上的人必须是封面主角（`relaxed_subject_problem`）。
+
+    照片接口那两档（`c.bind == "exif"`）：说明那条路（原图嵌的图注写全了四要素，比如 AFP）
+    过得了就按它；过不了按 EXIF 拍摄时刻绑（`exif_bound_problems`），绑上了记进 `relaxed`。
+    **两条路都先过**发布限制（`restriction_problem`）和两人同框（`c.others`）。"""
+    problems: list[str] = []
+    relaxed = relaxed if relaxed is not None else []
+    if (bad := restriction_problem(c.caption, c.credit, c.instructions, c.restriction)):
+        problems.append(bad)
+    if c.others:
+        problems.append(f"标题／引用里除了主角还有 {'、'.join(map(str, c.others))}——两人同框"
+                        "（握手、合影）最大那张脸不一定是他，不换")
+    before = len(relaxed)
+    said = _caption_problems(c, ctx, relaxed)
+    if c.bind == "exif" and said:
+        del relaxed[before:]
+        exif = exif_bound_problems(c, ctx)
+        if not exif:
+            _ok, why = exif_window(c, ctx)
+            relaxed.append(f"标题不带对手和日期，按照片 EXIF 绑场次：{why}"
+                           + (f"（{c.channel} #{c.item_id}）" if c.item_id else ""))
+            said = []
+        else:
+            said = exif
+    return problems + said
+
+
+def _caption_problems(c: Candidate, ctx: MatchContext, relaxed: list[str]) -> list[str]:
+    """`metadata_problems` 的说明那条路（2026-09-28 之前它就是整个 `metadata_problems`）。"""
     problems: list[str] = []
     relaxed = relaxed if relaxed is not None else []
     before = len(relaxed)
@@ -1098,7 +1296,7 @@ def metadata_problems(c: Candidate, ctx: MatchContext,
     if not ctx.opponent_surname:
         problems.append("不知道对手是谁（cover.matchup 里没有对手的英文名），判不了是不是这一场")
     elif not _has_word(text, ctx.opponent_surname):
-        if (ok := team_opponent_ok(c, text, ctx)):
+        if (ok := team_opponent_ok(c, text, ctx)) or (ok := final_opponent_ok(c, text, ctx)):
             relaxed.append(ok)
         else:
             problems.append(f"说明／文件名里没有对手「{ctx.opponent_surname}」，判不了是不是这一场"
@@ -1208,10 +1406,18 @@ def o4_query(ctx: MatchContext):
     # 给比赛日：官网档翻比赛日起 `SITE_UPLOAD_DAYS` 天内上传的**全部**再按名字筛——
     # 名字只写在 alt_text／文件名里的也认得出（WordPress 的 `search` 两样都不搜）。
     return cover_channels.Query(player=ctx.surname, event=ctx.event_en, date=day,
-                                days=SITE_UPLOAD_DAYS, site=ctx.site, tour=ctx.tour)
+                                days=SITE_UPLOAD_DAYS, site=ctx.site, tour=ctx.tour,
+                                full_name=ctx.subject_en or None, player_id=ctx.player_id or None,
+                                start_utc=ctx.start_utc, end_utc=ctx.end_utc, tz=ctx.tz,
+                                final=ctx.final, start_lower_bound=ctx.start_lower_bound)
 
 
-def default_sweeps(ctx: MatchContext) -> list[tuple[str, Callable[[], object]]]:
+#: 自动链（`refresh_reel_cover`）只开这两档：确定性（不问模型）、按 EXIF 绑场次、原图铺满不放大
+API_CHANNELS = ("atp-media", "wta-photos")
+
+
+def default_sweeps(ctx: MatchContext, keys: Iterable[str] | None = None
+                   ) -> list[tuple[str, Callable[[], object]]]:
     """**`cover_channels.CHANNELS` 那一份清单，一档不落**（别在这儿另抄一份）。
 
     2026-09-28 之前这里是手抄的四档（WTA 只给女子、AP、当地报纸、官网），O4 第一班
@@ -1227,8 +1433,9 @@ def default_sweeps(ctx: MatchContext) -> list[tuple[str, Callable[[], object]]]:
         # 同一趟里几条目标会反复拉同一批 WTA 页面和 Getty 说明——进程内缓存一次
         fcp._get = functools.lru_cache(maxsize=1024)(fcp._get)
     q = o4_query(ctx)
+    want = set(keys) if keys is not None else None
     return [(ch.name(q), functools.partial(cover_channels.run_channel, ch, q, o4=True))
-            for ch in cover_channels.CHANNELS]
+            for ch in cover_channels.CHANNELS if want is None or ch.key in want]
 
 
 def search(ctx: MatchContext, *, sweeps=None) -> tuple[list[Candidate], list[str], list]:
@@ -1434,6 +1641,16 @@ def image_verdict(blob: bytes, spec: dict, ctx: MatchContext, *, checker=None) -
     shown = "／".join(d.isoformat() for d in sorted(ctx.match_dates)) or "?"
     if (bad := exif_date_problem(taken, shown, ctx)):
         problems.append(bad)
+    # 原图里嵌的 IPTC 说明／特别说明（渠道列表页上看不到的那一半）：AFP 的「/ China OUT」
+    # 常常只写在这儿——任何渠道的图都核一遍
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    embedded = apis.parse_head(blob[:apis.HEAD_BYTES])
+    if (bad := restriction_problem(embedded["caption"], embedded["instructions"],
+                                   embedded["credit"])):
+        problems.append(f"原图嵌的说明里：{bad}")
+    if embedded["caption"]:
+        ev["embedded_caption"] = embedded["caption"][:300]
     best_fill = fill_ratio(w, h, 1.0)
     if best_fill < 1.0:
         problems.append(f"分辨率不够：{w}×{h} 铺 {CANVAS_W}×{CANVAS_H} 要放大 "
@@ -1443,12 +1660,17 @@ def image_verdict(blob: bytes, spec: dict, ctx: MatchContext, *, checker=None) -
     # 对手的脸是 mismatch，不是「像两人之一就算过」。`cover.subject` 不在 matchup 里时
     # 它给 None（退回两人之一）；下面按名字再核一遍，是双保险。
     target, _note = reel_face_gate.cover_target(spec)
-    rep = (checker or face_checks.check_frame)(img, expected, target=target)
+    import functools  # noqa: PLC0415
+
+    check = checker or functools.partial(face_checks.check_frame, all_faces=True)
+    rep = check(img, expected, target=target)
     ident, eyes = rep.get("identity") or {}, rep.get("eyes") or {}
     ev["face"] = {"status": rep.get("status"), "verdict": ident.get("verdict"),
                   "name": ident.get("name"), "similarity": ident.get("similarity"),
                   "face": ident.get("face"), "face_px": ident.get("face_px"),
                   "eyes": eyes.get("verdict"), "ear": eyes.get("ear")}
+    if rep.get("pose"):
+        ev["face"]["pose"] = rep["pose"]
     if rep.get("status") != "ok":
         problems.append(f"人脸模型不可用，认人／睁眼没查：{rep.get('error')}")
         return {"problems": problems, "evidence": ev}
@@ -1459,6 +1681,9 @@ def image_verdict(blob: bytes, spec: dict, ctx: MatchContext, *, checker=None) -
     if eyes.get("verdict") != "open":
         problems.append(f"睁眼没过（{eyes.get('verdict')}）：{eyes.get('reason')}")
     box = ident.get("face")
+    if box and (second := second_face(box, rep.get("faces") or [])):
+        problems.append(f"两人同框：还有一张 {second:.0%} 大小的脸（握手、合影、对手入画）——"
+                        "最大那张脸是他也不换，封面上会是两个人")
     if box:
         spot = place_face(w, h, box, hook_top())
         ev["layout"] = spot
@@ -1467,6 +1692,61 @@ def image_verdict(blob: bytes, spec: dict, ctx: MatchContext, *, checker=None) -
     elif not any("认人" in p for p in problems):
         problems.append("没检出人脸")
     return {"problems": problems, "evidence": ev}
+
+
+#: 第二张脸有最大那张的这么高，就算两人同框（握手、合影）。场边的球童、裁判、看台的脸在比赛图里
+#: 远小于主角——杭州那批近景里第二张脸最大到主角的 0.4 左右（`face_checks.check_frame` 的 `faces`）
+SECOND_FACE = 0.6
+
+
+def second_face(main: Iterable[float], faces: Iterable[Iterable[float]]) -> float | None:
+    """除了主角那张（`main`），还有没有一张高度 ≥ `SECOND_FACE` 倍的脸——有就返回它的倍数。"""
+    x1, y1, x2, y2 = (float(v) for v in main)
+    height = max(y2 - y1, 1e-6)
+    best = None
+    for other in faces:
+        ox1, oy1, ox2, oy2 = (float(v) for v in other)
+        if abs(ox1 - x1) < 2 and abs(oy1 - y1) < 2 and abs(ox2 - x2) < 2 and abs(oy2 - y2) < 2:
+            continue
+        ratio = (oy2 - oy1) / height
+        if ratio >= SECOND_FACE and (best is None or ratio > best):
+            best = ratio
+    return best
+
+
+_TROPHY = re.compile(r"\b(?:troph\w*|champion\w*|vc|victory ceremony|ceremony|lifts? the|hoists?)\b")
+
+
+def taste_key(p: dict, ctx: MatchContext) -> tuple:
+    """全过机器闸的几张怎么排（账号所有者的口味，`tennis-owner-taste`／`tennis-cover-photos`）：
+
+    1. **决赛、主角赢了**：捧杯照排最前（CLAUDE.md「这一屏讲的是夺冠时，捧杯照优先于击球中」；
+       fernandez-gibson 他亲口点的「用他举起奖杯的照片」）——文件名／说明里有 trophy／champion／
+       `vc`（WTA 摄影师给颁奖那一组的前缀），或者 EXIF 拍摄于结束 5 分钟之后（颁奖）
+    2. **赢球那一刻**（「情绪对题」）：主角赢了、EXIF 拍摄于结束前 2 分钟到结束后 15 分钟——
+       赛点落地、握拳、怒吼；抽帧封面挑的也都是「赛点之后切到的近景」
+    3. **正脸或偏正面**（2026-09-26「尽量清晰偏正面」；`face_checks.face_pose` 的 `frontal`）
+    4. **脸是清楚的**（没糊透；`clear`——动感模糊的 Medvedev-019 就排在这儿后面）
+    5. **脸大**（「在情绪对题之内，优先近景特写」）
+    6. 认人相似度（同一张脸大小时，更像他的那张）
+
+    3、4 两格没量（替身、老凭证没有 `pose`）一律算 True，退回原来的「脸最大」。"""
+    c: Candidate = p["candidate"]
+    ev = p["evidence"]
+    lay = ev["layout"]
+    face_h = lay["face_out"][3] - lay["face_out"][1]
+    sim = max((ev["face"].get("similarity") or {}).values(), default=0.0)
+    taken = _parse_utc(c.taken_utc) if c.taken_utc else None
+    end = ctx.end_utc
+    won = ctx.subject_won is not False
+    trophy = bool(ctx.final and won and (
+        _TROPHY.search(_fold(c.text()))
+        or (taken is not None and end is not None and taken >= end + timedelta(minutes=5))))
+    moment = bool(won and taken is not None and end is not None
+                  and end - timedelta(minutes=2) <= taken <= end + timedelta(minutes=15))
+    pose = ev["face"].get("pose") or {}
+    return (trophy, moment, pose.get("frontal", True) is not False,
+            pose.get("clear", True) is not False, face_h, sim)
 
 
 def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
@@ -1522,10 +1802,12 @@ def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
             row["tried"] = True
     if not passed:
         return None, rows
-    # `sorted(reverse=True)` 是稳定的：脸一样大时照旧取排在前面的那张（和原来的 `max` 一样）
-    ranked = sorted(passed, reverse=True, key=lambda p: (
-        (p["evidence"]["layout"]["face_out"][3] - p["evidence"]["layout"]["face_out"][1]),
-        max((p["evidence"]["face"]["similarity"] or {}).values(), default=0.0)))
+    # `sorted(reverse=True)` 是稳定的：并列时照旧取排在前面的那张（和原来的 `max` 一样）。
+    # 排法见 `taste_key`：决赛捧杯 → 赢球那一刻 → 脸大 → 更像他。没有 EXIF／没有结束时刻的候选
+    # 前两格都是 False，退回原来的「脸最大」
+    ranked = sorted(passed, reverse=True, key=lambda p: taste_key(p, ctx))
+    for p in ranked:
+        p["row"]["rank"] = list(taste_key(p, ctx))
     if accept is None:
         return ranked[0], rows
     for p in ranked:
@@ -1558,13 +1840,16 @@ def upgraded_portrait(old: dict, chosen: dict, ctx: MatchContext, image_rel: str
     sim = (face.get("similarity") or {}).get(ctx.subject_zh)
     dates = "／".join(d.isoformat() for d in sorted(ctx.match_dates))
     head = prefix or "自动换图（账号所有者 2026-09-27 O4「自动换图重推」，tools/cover_upgrade.py）"
+    frame = (f"{old.get('frame_at')}s 抽帧" if old.get("frame_at") is not None
+             else f"预裁的抽帧 {old.get('image')}" if old.get("image") else "（草稿还没有封面）")
     why = (f"{head}："
            f"{c.channel} 渠道 {c.url}"
            + (f"（出处 {c.page}）" if c.page else "")
+           + api_provenance(c)
            + (f"，说明原文「{c.caption.strip()[:300]}」" if c.caption.strip() else "")
            + (f"，署名 {c.credit}" if c.credit else "")
-           + (f"。替换 {old.get('frame_at')}s 抽帧（首推之前）。" if prefix else
-              f"。替换推送时用的 {old.get('frame_at')}s 抽帧。"))
+           + ("。" if not old else f"。替换 {frame}（首推之前）。" if prefix
+              else f"。替换推送时用的 {frame}。"))
     relaxed = "".join(f"（放宽：{r}）" for r in chosen.get("relaxed") or [])
     gates = (f"① 点名：说明／文件名有「{ctx.subject_en}」「{ctx.event_en}」，日期对上当地 {dates}"
              f"（{ctx.tz}；日期来源 {ctx.date_source or '?'}）{relaxed}"
@@ -1573,9 +1858,23 @@ def upgraded_portrait(old: dict, chosen: dict, ctx: MatchContext, image_rel: str
              f" 是 {lay['fill']:.2f}×（不放大）。③ 认人：最大那张脸像 {ctx.subject_zh} "
              f"{sim if sim is None else f'{sim:.2f}'}（≥ 0.34）。④ 睁眼：EAR {face.get('ear')}（≥ 0.16）。"
              f"⑤ 钩子带：脸落在 y{lay['face_out'][1]}~{lay['face_out'][3]}，钩子顶边 {hook_top()}。"
-             "⚠️ 情绪对不对题机器不判。")
+             + (f"排序：{chosen['row'].get('rank')}（决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。"
+                if (chosen.get("row") or {}).get("rank") else "")
+             + "⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。")
     return {"image": image_rel, "focus": lay["focus"], "focus_y": lay["focus_y"],
             "zoom": lay["zoom"], "_why": why, "_gates": gates}
+
+
+def api_provenance(c: Candidate) -> str:
+    """照片接口那两档的出处（条目 id、接口发布时刻、EXIF 拍摄时刻、原图尺寸）——`_why` 和账里照抄，
+    和别的渠道记「说明原文」「出处页」是同一件事：以后有人问「这张是哪一场的」，答案在这一行里。"""
+    if not (c.item_id or c.publish_utc or c.taken):
+        return ""
+    bits = [f"条目 #{c.item_id}" if c.item_id else "",
+            f"接口发布 {c.publish_utc}" if c.publish_utc else "",
+            (f"EXIF 拍摄 {c.taken}{c.offset}（UTC {c.taken_utc}）" if c.taken else ""),
+            f"原图 {c.wh[0]}×{c.wh[1]}" if c.wh else ""]
+    return "（" + "，".join(b for b in bits if b) + "）"
 
 
 def beijing_today(now: datetime) -> date:
@@ -1821,7 +2120,11 @@ def _upgrade_entry(target: Target, ctx: MatchContext, chosen: dict, considered: 
         "first_sent": target.first_sent.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "image": image_rel,
         "source": {"channel": c.channel, "url": c.url, "page": c.page,
-                   "caption": c.caption.strip()[:400], "credit": c.credit},
+                   "caption": c.caption.strip()[:400], "credit": c.credit,
+                   **{k: v for k, v in (("item_id", c.item_id), ("publish_utc", c.publish_utc),
+                                        ("exif_taken", f"{c.taken}{c.offset}" if c.taken else ""),
+                                        ("exif_taken_utc", c.taken_utc),
+                                        ("original_wh", list(c.wh) if c.wh else None)) if v}},
         "match": {"subject": ctx.subject_zh, "subject_en": ctx.subject_en,
                   "event": ctx.event_en, "tz": ctx.tz,
                   "dates": [d.isoformat() for d in sorted(ctx.match_dates)]},
@@ -1929,6 +2232,61 @@ def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
     return {"upgraded": upgraded, "reverted": reverted, "report": report}
 
 
+# ---------------------------------------------------------------- 自动链的封面那一步
+
+def draft_subject(draft: dict) -> str:
+    """自动草稿的封面该是谁：爆冷认领了明星输家（`_cover_brief.preferred_subject`）就是他，
+    否则是赢家（`_match.winner`）——和 `analyze_reel_visuals` 默认要的「赢家庆祝」同一个口径。"""
+    brief = draft.get("_cover_brief") if isinstance(draft.get("_cover_brief"), dict) else {}
+    match = draft.get("_match") if isinstance(draft.get("_match"), dict) else {}
+    return str(brief.get("preferred_subject") or match.get("winner") or "").strip()
+
+
+def pick_for_draft(draft: dict, now: datetime, *, sweeps_for=None, times=flashscore_times,
+                   fetch=fetch_image, checker=None) -> dict:
+    """reel-auto-ready 每一班（`refresh_reel_cover`）：自动草稿还没有封面时，照片接口那两档
+    （`API_CHANNELS`）查一遍，**和 O4 同一套机器闸**（`metadata_problems` ＋ `image_verdict`：
+    EXIF 绑场次、全名、两人同框、发布限制、铺满不放大、认人、睁眼、钩子带）全过的才用，排序同
+    `taste_key`。返回 `{"chosen", "ctx", "rows", "report", "portrait"}`；没有就 `chosen` 是 None，
+    调用方照原来那条路走（**不拦**：这一步查不到从来不是等下去的理由）。"""
+    spec = copy.deepcopy(draft)
+    cover = spec.setdefault("cover", {})
+    cover["subject"] = draft_subject(draft)
+    cover.setdefault("eyebrow", "赛场之上")
+    slug = str(draft.get("slug") or "")
+    report: list[str] = []
+    out = {"chosen": None, "ctx": None, "rows": [], "report": report, "portrait": None}
+    ctx = match_context(spec, times=times, pushed_at=now)
+    out["ctx"] = ctx
+    head = f"[照片接口] {slug} 主角 {ctx.subject_zh or '?'}（{ctx.subject_en or '?'}）"
+    if ctx.problems:
+        report.append(f"{head}：查不了——" + "；".join(ctx.problems))
+        return out
+    cands, notes, results = search(ctx, sweeps=(sweeps_for(ctx) if sweeps_for
+                                                else default_sweeps(ctx, API_CHANNELS)))
+    report.append(f"{head} · {ctx.event_en} · 当地 "
+                  f"{'／'.join(d.isoformat() for d in sorted(ctx.match_dates))}（{ctx.tz}）")
+    report += [f"    · {n}" for n in notes]
+    target = Target(slug=slug, spec=spec, first_sent=now, spec_path=Path(f"{slug}.draft.json"))
+    chosen, rows = evaluate(target, ctx, cands, fetch=fetch, checker=checker)
+    out["rows"] = rows
+    report += candidate_lines(rows)
+    if chosen is None:
+        report.append(verdict_line(rows, results).replace("→ 不换", "→ 这一班没有")
+                      .replace("（下一班再查）", "——下一班再查，别的路照走"))
+        return out
+    out["chosen"] = chosen
+    portrait = upgraded_portrait({}, chosen, ctx, "", prefix=AUTO_DRAFT_WHY_PREFIX)
+    portrait.pop("image", None)
+    out["portrait"] = portrait
+    report.append(f"    → 用 {chosen['candidate'].url}")
+    return out
+
+
+#: 自动链用照片接口填上的封面，`_why` 的开头（`refresh_reel_cover` 写进草稿）
+AUTO_DRAFT_WHY_PREFIX = "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）"
+
+
 # ---------------------------------------------------------------- 渲前预检
 
 #: 渲前预检找到一张能过机器闸的官方图时的退出码。**不用 1**：Python 没接住的异常也是 1，
@@ -1943,6 +2301,8 @@ PREFLIGHT_FOUND = 3
 #: 第一页就停）不到 1 秒，22 条；其余 59 条 1.2~21.4 秒、平均 11.8；
 #: 同一条 bencic-townsend 量了 15.4／16.6／22.7 秒，复审时 24 秒（网络抖动，同一条能差 7 秒）。
 #: 只报的 60 秒是最慢那次的 2.5 倍。
+#: ⚠️ 2026-09-28 加了照片接口两档之后（要下原图、认人）：medvedev-wong 14 秒、fernandez-gibson 36 秒
+#: （沙箱实测，两条都找到了图；时间主要花在下 6~7 MB 的原图和认人上）——还在预算里，余量变小了。
 PREFLIGHT_BUDGET_BLOCKING = 100
 PREFLIGHT_BUDGET_REPORT = 60
 

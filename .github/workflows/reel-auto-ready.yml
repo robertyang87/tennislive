@@ -48,6 +48,46 @@ jobs:
       - name: 安装生产闸依赖
         run: pip install -q -e .
 
+      # 封面那一步的第一档是 ATP Media／WTA 照片接口（`refresh_reel_cover` → `cover_upgrade.pick_for_draft`，
+      # 2026-09-28），和 O4 同一套机器闸——认人／睁眼要 onnxruntime ＋ opencv ＋ 三个 onnx。**只在有新鲜的
+      # 自动草稿还没封面（或卡死在现在那张上）时才装**：绝大多数班次不用，别为它每 10 分钟多花十几秒。
+      # 备不上不拦：那一档的候选全记「人脸模型不可用」、一张不用，封面照原来那两条路走。
+      - name: 这一班要不要认人
+        id: need
+        run: |
+          shopt -s nullglob
+          echo "faces=$(python tools/refresh_reel_cover.py --need-faces specs/reels/pending/*.draft.json)" >> "$GITHUB_OUTPUT"
+
+      - name: 装认人依赖
+        if: steps.need.outputs.faces == 'true'
+        run: pip install -q -e ".[visualqa,faces]"
+
+      # 键**按权重内容定址**（`face_checks.CACHE_KEY`），`test_人脸模型缓存键跟着模型版本走` 逼着这里逐字一致。
+      - name: 取人脸模型缓存
+        id: face-cache
+        if: steps.need.outputs.faces == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive/face-models
+          key: face-models-buffalo_s-v0.7-17d6bb6dfcd3
+
+      - name: 备好人脸模型
+        id: face-models
+        if: steps.need.outputs.faces == 'true'
+        run: |
+          if python tools/face_checks.py fetch; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::人脸模型没备好——照片接口那一档这一班一张都不用，封面照原来的路走"
+          fi
+
+      - name: 存人脸模型缓存
+        if: steps.need.outputs.faces == 'true' && steps.face-cache.outputs.cache-hit != 'true' && steps.face-models.outputs.ok == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/tennislive/face-models
+          key: face-models-buffalo_s-v0.7-17d6bb6dfcd3
+
       - name: 重试 pending 的官方封面、视觉证据和正式提升
         env:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}

@@ -1,0 +1,1580 @@
+{
+ "_why": "候选原图（全尺寸，imageUrl 直取）过 `face_checks.check_frame(all_faces=True)` 的结果——buffalo_s-v0.7 真模型、2026-09-28 沙箱实跑。回放（`tools/official_photo_replay.py`）不下原图，拿这一份当认人／睁眼／两人同框的结果；原图的尺寸也在这儿",
+ "faces": {
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/26/ff810a8a-ffeb-403b-815d-c1840f4ef7b4/Yunchaokete-Bu-035.jpg": {
+   "slug": "bu-majchrzak-hangzhou-2026-r2",
+   "size": [
+    7119,
+    4746
+   ],
+   "bytes": 12744492,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "mismatch",
+     "name": null,
+     "similarity": {
+      "布云朝克特": -0.1121,
+      "迈赫扎克": -0.0627
+     },
+     "missing": [],
+     "expected": [
+      "布云朝克特",
+      "迈赫扎克"
+     ],
+     "face": [
+      263,
+      1451,
+      1345,
+      2690
+     ],
+     "face_px": 1238.7,
+     "reason": "不是封面主角布云朝克特（和官方头像的相似度 布云朝克特 -0.11，< 0.15）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "布云朝克特"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2274,
+     "ear_each": [
+      0.2269,
+      0.228
+     ],
+     "face": [
+      263,
+      1451,
+      1345,
+      2690
+     ],
+     "face_px": 1238.7,
+     "reason": "眼睛纵横比 0.23 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      263,
+      1451,
+      1345,
+      2690
+     ],
+     [
+      2955,
+      661,
+      3611,
+      1504
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.457,
+     "sharp": 63.2,
+     "frontal": true,
+     "clear": false
+    },
+    "problems": [
+     "这张脸不是本人：不是封面主角布云朝克特（和官方头像的相似度 布云朝克特 -0.11，< 0.15）"
+    ],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/26/3fc09853-560b-41f2-aa2b-46f34f6d96b5/Yunchaokete-Bu-012.jpg": {
+   "slug": "bu-majchrzak-hangzhou-2026-r2",
+   "size": [
+    5566,
+    3711
+   ],
+   "bytes": 6636282,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "布云朝克特",
+     "similarity": {
+      "布云朝克特": 0.4505,
+      "迈赫扎克": 0.158
+     },
+     "missing": [],
+     "expected": [
+      "布云朝克特",
+      "迈赫扎克"
+     ],
+     "face": [
+      2211,
+      489,
+      2925,
+      1429
+     ],
+     "face_px": 939.9,
+     "reason": "像 布云朝克特（0.45 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "布云朝克特"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3017,
+     "ear_each": [
+      0.3008,
+      0.3026
+     ],
+     "face": [
+      2211,
+      489,
+      2925,
+      1429
+     ],
+     "face_px": 939.9,
+     "reason": "眼睛纵横比 0.30 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      2211,
+      489,
+      2925,
+      1429
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.412,
+     "sharp": 3148.8,
+     "frontal": true,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/26/be7b015c-4401-498b-b03d-1da68aac311a/Daniil-Medvedev-026.jpg": {
+   "slug": "medvedev-royer-hangzhou-2026-r2",
+   "size": [
+    7040,
+    4688
+   ],
+   "bytes": 9258552,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5508,
+      "鲁瓦耶": -0.0694
+     },
+     "missing": [],
+     "expected": [
+      "梅德韦杰夫",
+      "鲁瓦耶"
+     ],
+     "face": [
+      4992,
+      732,
+      5410,
+      1371
+     ],
+     "face_px": 639.3,
+     "reason": "像 梅德韦杰夫（0.55 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "梅德韦杰夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3841,
+     "ear_each": [
+      0.5501,
+      0.218
+     ],
+     "face": [
+      4992,
+      732,
+      5410,
+      1371
+     ],
+     "face_px": 639.3,
+     "reason": "眼睛纵横比 0.38 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      4992,
+      732,
+      5410,
+      1371
+     ],
+     [
+      2056,
+      1174,
+      2329,
+      1693
+     ],
+     [
+      937,
+      2162,
+      1145,
+      2458
+     ],
+     [
+      2059,
+      486,
+      2247,
+      719
+     ],
+     [
+      1265,
+      518,
+      1441,
+      754
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.181,
+     "sharp": 1051.7,
+     "frontal": false,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/26/87d84508-ff68-4d8a-8941-edcb27960e3a/Daniil-Medvedev-014.jpg": {
+   "slug": "medvedev-royer-hangzhou-2026-r2",
+   "size": [
+    5719,
+    3810
+   ],
+   "bytes": 8217107,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.3521,
+      "鲁瓦耶": -0.0792
+     },
+     "missing": [],
+     "expected": [
+      "梅德韦杰夫",
+      "鲁瓦耶"
+     ],
+     "face": [
+      2049,
+      832,
+      2655,
+      1447
+     ],
+     "face_px": 615.3,
+     "reason": "像 梅德韦杰夫（0.35 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "梅德韦杰夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2019,
+     "ear_each": [
+      0.1522,
+      0.2517
+     ],
+     "face": [
+      2049,
+      832,
+      2655,
+      1447
+     ],
+     "face_px": 615.3,
+     "reason": "眼睛纵横比 0.20 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      2049,
+      832,
+      2655,
+      1447
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.254,
+     "sharp": 1210.6,
+     "frontal": false,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/26/06b82433-1e7a-45e4-936a-4b9b9bdbc73a/Daniil-Medvedev-014.jpg": {
+   "slug": "medvedev-royer-hangzhou-2026-r2",
+   "size": [
+    5719,
+    3810
+   ],
+   "bytes": 8217107,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.3521,
+      "鲁瓦耶": -0.0792
+     },
+     "missing": [],
+     "expected": [
+      "梅德韦杰夫",
+      "鲁瓦耶"
+     ],
+     "face": [
+      2049,
+      832,
+      2655,
+      1447
+     ],
+     "face_px": 615.3,
+     "reason": "像 梅德韦杰夫（0.35 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "梅德韦杰夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2019,
+     "ear_each": [
+      0.1522,
+      0.2517
+     ],
+     "face": [
+      2049,
+      832,
+      2655,
+      1447
+     ],
+     "face_px": 615.3,
+     "reason": "眼睛纵横比 0.20 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      2049,
+      832,
+      2655,
+      1447
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.254,
+     "sharp": 1210.6,
+     "frontal": false,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/26/64d86649-71a9-4af3-9a81-66f494196531/Daniil-Medvedev-012.jpg": {
+   "slug": "medvedev-royer-hangzhou-2026-r2",
+   "size": [
+    5402,
+    3601
+   ],
+   "bytes": 4700517,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5728,
+      "鲁瓦耶": 0.0508
+     },
+     "missing": [],
+     "expected": [
+      "梅德韦杰夫",
+      "鲁瓦耶"
+     ],
+     "face": [
+      3271,
+      682,
+      3810,
+      1395
+     ],
+     "face_px": 712.8,
+     "reason": "像 梅德韦杰夫（0.57 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "梅德韦杰夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2072,
+     "ear_each": [
+      0.2302,
+      0.1841
+     ],
+     "face": [
+      3271,
+      682,
+      3810,
+      1395
+     ],
+     "face_px": 712.8,
+     "reason": "眼睛纵横比 0.21 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      3271,
+      682,
+      3810,
+      1395
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.376,
+     "sharp": 1099.6,
+     "frontal": true,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/26/adb8a2a1-2ef8-40de-8a0e-2faffeeae28f/Coleman-Wong-010.jpg": {
+   "slug": "wong-vallejo-hangzhou-2026-r2",
+   "size": [
+    2579,
+    1719
+   ],
+   "bytes": 1291753,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "unknown",
+     "name": "黄泽林",
+     "similarity": {
+      "黄泽林": 0.2381,
+      "巴列霍": -0.0576
+     },
+     "missing": [],
+     "expected": [
+      "巴列霍",
+      "黄泽林"
+     ],
+     "face": [
+      365,
+      33,
+      1287,
+      1148
+     ],
+     "face_px": 1115.4,
+     "reason": "和封面主角黄泽林只有 0.24，介于 0.15~0.34",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "黄泽林"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3096,
+     "ear_each": [
+      0.2854,
+      0.3339
+     ],
+     "face": [
+      365,
+      33,
+      1287,
+      1148
+     ],
+     "face_px": 1115.4,
+     "reason": "眼睛纵横比 0.31 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      365,
+      33,
+      1287,
+      1148
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.32,
+     "sharp": 559.0,
+     "frontal": true,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": [
+     "认人拿不准：和封面主角黄泽林只有 0.24，介于 0.15~0.34"
+    ]
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/75d498c9-3a75-4d30-8cd7-c40ecb7c47c8/Andrey-Rublev-034.jpg": {
+   "slug": "rublev-gaston-hangzhou-2026-qf",
+   "size": [
+    5629,
+    3751
+   ],
+   "bytes": 5060992,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "卢布列夫",
+     "similarity": {
+      "卢布列夫": 0.3926,
+      "加斯东": 0.0455
+     },
+     "missing": [],
+     "expected": [
+      "加斯东",
+      "卢布列夫"
+     ],
+     "face": [
+      3565,
+      1140,
+      4243,
+      2047
+     ],
+     "face_px": 907.7,
+     "reason": "像 卢布列夫（0.39 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "卢布列夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3397,
+     "ear_each": [
+      0.3676,
+      0.3117
+     ],
+     "face": [
+      3565,
+      1140,
+      4243,
+      2047
+     ],
+     "face_px": 907.7,
+     "reason": "眼睛纵横比 0.34 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      3565,
+      1140,
+      4243,
+      2047
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.374,
+     "sharp": 2209.3,
+     "frontal": true,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/a4053ee0-23a3-4654-ae2b-6dbd85954dd5/Andrey-Rublev-016.jpg": {
+   "slug": "rublev-gaston-hangzhou-2026-qf",
+   "size": [
+    5416,
+    3609
+   ],
+   "bytes": 3878316,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "unknown",
+     "name": "卢布列夫",
+     "similarity": {
+      "卢布列夫": 0.2443,
+      "加斯东": -0.0848
+     },
+     "missing": [],
+     "expected": [
+      "加斯东",
+      "卢布列夫"
+     ],
+     "face": [
+      2666,
+      837,
+      3117,
+      1633
+     ],
+     "face_px": 796.1,
+     "reason": "和封面主角卢布列夫只有 0.24，介于 0.15~0.34",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "卢布列夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 1.4756,
+     "ear_each": [
+      0.3346,
+      2.6166
+     ],
+     "face": [
+      2666,
+      837,
+      3117,
+      1633
+     ],
+     "face_px": 796.1,
+     "reason": "眼睛纵横比 1.48 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      2666,
+      837,
+      3117,
+      1633
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.035,
+     "sharp": 1672.0,
+     "frontal": false,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": [
+     "认人拿不准：和封面主角卢布列夫只有 0.24，介于 0.15~0.34"
+    ]
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/bbc51d3a-56ca-4ac3-9e81-6fb1c78485ae/Andrey-Rublev-018.jpg": {
+   "slug": "rublev-gaston-hangzhou-2026-qf",
+   "size": [
+    3985,
+    2657
+   ],
+   "bytes": 3355121,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "unknown",
+     "name": "卢布列夫",
+     "similarity": {
+      "卢布列夫": 0.299,
+      "加斯东": -0.0919
+     },
+     "missing": [],
+     "expected": [
+      "加斯东",
+      "卢布列夫"
+     ],
+     "face": [
+      1669,
+      446,
+      1816,
+      630
+     ],
+     "face_px": 184.2,
+     "reason": "和封面主角卢布列夫只有 0.30，介于 0.15~0.34",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "卢布列夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2379,
+     "ear_each": [
+      0.2069,
+      0.2689
+     ],
+     "face": [
+      1669,
+      446,
+      1816,
+      630
+     ],
+     "face_px": 184.2,
+     "reason": "眼睛纵横比 0.24 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      1669,
+      446,
+      1816,
+      630
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.318,
+     "sharp": 2114.8,
+     "frontal": true,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": [
+     "认人拿不准：和封面主角卢布列夫只有 0.30，介于 0.15~0.34"
+    ]
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/b11c7c87-bf11-4515-80b2-09d180573f7c/Andrey-Rublev-044.jpg": {
+   "slug": "rublev-gaston-hangzhou-2026-qf",
+   "size": [
+    3209,
+    2139
+   ],
+   "bytes": 944361,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [],
+     "expected": [
+      "加斯东",
+      "卢布列夫"
+     ],
+     "face": null,
+     "face_px": 0.0,
+     "reason": "没检出人脸",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "卢布列夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "unknown",
+     "ear": null,
+     "ear_each": null,
+     "face": null,
+     "face_px": 0.0,
+     "reason": "没检出人脸",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [],
+    "pose": null,
+    "problems": [],
+    "warnings": [
+     "认人拿不准：没检出人脸",
+     "睁眼量不了：没检出人脸"
+    ]
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/fd531703-a2c6-4f6e-9ec4-bbe0f1340f23/Roman-Safiullin-015.jpg": {
+   "slug": "safiullin-bu-hangzhou-2026-qf",
+   "size": [
+    8256,
+    5504
+   ],
+   "bytes": 9617995,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "mismatch",
+     "name": null,
+     "similarity": {
+      "萨菲乌林": -0.0802,
+      "布云朝克特": 0.0485
+     },
+     "missing": [],
+     "expected": [
+      "布云朝克特",
+      "萨菲乌林"
+     ],
+     "face": [
+      989,
+      1530,
+      1130,
+      1699
+     ],
+     "face_px": 169.3,
+     "reason": "不是封面主角萨菲乌林（和官方头像的相似度 萨菲乌林 -0.08，< 0.15）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "萨菲乌林"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3302,
+     "ear_each": [
+      0.3475,
+      0.313
+     ],
+     "face": [
+      989,
+      1530,
+      1130,
+      1699
+     ],
+     "face_px": 169.3,
+     "reason": "眼睛纵横比 0.33 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      989,
+      1530,
+      1130,
+      1699
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.37,
+     "sharp": 233.8,
+     "frontal": true,
+     "clear": false
+    },
+    "problems": [
+     "这张脸不是本人：不是封面主角萨菲乌林（和官方头像的相似度 萨菲乌林 -0.08，< 0.15）"
+    ],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/b1697453-e141-47e0-931b-b8b670c16621/Roman-Safiullin-022.jpg": {
+   "slug": "safiullin-bu-hangzhou-2026-qf",
+   "size": [
+    4979,
+    3322
+   ],
+   "bytes": 2081809,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "萨菲乌林",
+     "similarity": {
+      "萨菲乌林": 0.5612,
+      "布云朝克特": -0.1429
+     },
+     "missing": [],
+     "expected": [
+      "布云朝克特",
+      "萨菲乌林"
+     ],
+     "face": [
+      1328,
+      638,
+      1980,
+      1611
+     ],
+     "face_px": 972.5,
+     "reason": "像 萨菲乌林（0.56 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "萨菲乌林"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3341,
+     "ear_each": [
+      0.2911,
+      0.377
+     ],
+     "face": [
+      1328,
+      638,
+      1980,
+      1611
+     ],
+     "face_px": 972.5,
+     "reason": "眼睛纵横比 0.33 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      1328,
+      638,
+      1980,
+      1611
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.423,
+     "sharp": 1303.8,
+     "frontal": true,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/cc67edbf-a9ac-4a03-83c4-77ccc4f36d3c/Daniil-Medvedev-022.jpg": {
+   "slug": "medvedev-wong-hangzhou-2026-qf",
+   "size": [
+    6400,
+    4264
+   ],
+   "bytes": 5291832,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5981,
+      "黄泽林": -0.027
+     },
+     "missing": [],
+     "expected": [
+      "梅德韦杰夫",
+      "黄泽林"
+     ],
+     "face": [
+      3198,
+      865,
+      3466,
+      1230
+     ],
+     "face_px": 365.4,
+     "reason": "像 梅德韦杰夫（0.60 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "梅德韦杰夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2949,
+     "ear_each": [
+      0.3171,
+      0.2727
+     ],
+     "face": [
+      3198,
+      865,
+      3466,
+      1230
+     ],
+     "face_px": 365.4,
+     "reason": "眼睛纵横比 0.29 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      3198,
+      865,
+      3466,
+      1230
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.407,
+     "sharp": 997.8,
+     "frontal": true,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/49cc9286-6445-4560-a4ef-014765a04a4c/Daniil-Medvedev-024.jpg": {
+   "slug": "medvedev-wong-hangzhou-2026-qf",
+   "size": [
+    6400,
+    4264
+   ],
+   "bytes": 6235790,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.4927,
+      "黄泽林": 0.0092
+     },
+     "missing": [],
+     "expected": [
+      "梅德韦杰夫",
+      "黄泽林"
+     ],
+     "face": [
+      4347,
+      613,
+      4636,
+      932
+     ],
+     "face_px": 319.7,
+     "reason": "像 梅德韦杰夫（0.49 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "梅德韦杰夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3341,
+     "ear_each": [
+      0.4711,
+      0.1971
+     ],
+     "face": [
+      4347,
+      613,
+      4636,
+      932
+     ],
+     "face_px": 319.7,
+     "reason": "眼睛纵横比 0.33 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      4347,
+      613,
+      4636,
+      932
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.223,
+     "sharp": 452.6,
+     "frontal": false,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/27/d57cbb29-7dd5-480e-9ec9-1a2c79becdc0/Daniil-Medvedev-019.jpg": {
+   "slug": "medvedev-wong-hangzhou-2026-qf",
+   "size": [
+    6244,
+    4160
+   ],
+   "bytes": 3386242,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.434,
+      "黄泽林": 0.0129
+     },
+     "missing": [],
+     "expected": [
+      "梅德韦杰夫",
+      "黄泽林"
+     ],
+     "face": [
+      3172,
+      795,
+      3479,
+      1241
+     ],
+     "face_px": 445.8,
+     "reason": "像 梅德韦杰夫（0.43 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "梅德韦杰夫"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3733,
+     "ear_each": [
+      0.2314,
+      0.5152
+     ],
+     "face": [
+      3172,
+      795,
+      3479,
+      1241
+     ],
+     "face_px": 445.8,
+     "reason": "眼睛纵横比 0.37 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      3172,
+      795,
+      3479,
+      1241
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.168,
+     "sharp": 197.8,
+     "frontal": false,
+     "clear": false
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://photoresources.wtatennis.com/wta/photo/2026/09/27/ac75a74a-0bd1-409f-93c5-b6e4d068cd3f/270927-singles-vc-5.jpg": {
+   "slug": "fernandez-gibson-singapore-2026-final",
+   "size": [
+    6562,
+    4377
+   ],
+   "bytes": 3618005,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "费尔南德斯",
+     "similarity": {
+      "费尔南德斯": 0.5323,
+      "吉布森": 0.0267
+     },
+     "missing": [],
+     "expected": [
+      "吉布森",
+      "费尔南德斯"
+     ],
+     "face": [
+      3141,
+      785,
+      3928,
+      1695
+     ],
+     "face_px": 909.5,
+     "reason": "像 费尔南德斯（0.53 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "费尔南德斯"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2388,
+     "ear_each": [
+      0.2422,
+      0.2353
+     ],
+     "face": [
+      3141,
+      785,
+      3928,
+      1695
+     ],
+     "face_px": 909.5,
+     "reason": "眼睛纵横比 0.24 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      3141,
+      785,
+      3928,
+      1695
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.383,
+     "sharp": 1034.2,
+     "frontal": true,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://photoresources.wtatennis.com/wta/photo/2026/09/27/c4abc863-15e0-4c24-ae27-39211af86324/270927-l-fernandez-vs-t-gibson-5.jpg": {
+   "slug": "fernandez-gibson-singapore-2026-final",
+   "size": [
+    6769,
+    4515
+   ],
+   "bytes": 4657137,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "费尔南德斯",
+     "similarity": {
+      "费尔南德斯": 0.3958,
+      "吉布森": 0.0027
+     },
+     "missing": [],
+     "expected": [
+      "吉布森",
+      "费尔南德斯"
+     ],
+     "face": [
+      3095,
+      587,
+      3550,
+      1218
+     ],
+     "face_px": 630.9,
+     "reason": "像 费尔南德斯（0.40 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "费尔南德斯"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.1628,
+     "ear_each": [
+      0.1703,
+      0.1552
+     ],
+     "face": [
+      3095,
+      587,
+      3550,
+      1218
+     ],
+     "face_px": 630.9,
+     "reason": "眼睛纵横比 0.16 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      3095,
+      587,
+      3550,
+      1218
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.423,
+     "sharp": 537.4,
+     "frontal": true,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://photoresources.wtatennis.com/wta/photo/2026/09/20/74c6e74d-26ab-400e-adf9-471065bd8906/GettyImages-2295584327.jpg": {
+   "slug": "jovic-stearns-guadalajara-2026-final",
+   "size": [
+    5305,
+    3537
+   ],
+   "bytes": 13648923,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "约维奇",
+     "similarity": {
+      "约维奇": 0.5191,
+      "斯特恩斯": 0.0916
+     },
+     "missing": [],
+     "expected": [
+      "斯特恩斯",
+      "约维奇"
+     ],
+     "face": [
+      2851,
+      907,
+      3508,
+      1693
+     ],
+     "face_px": 786.5,
+     "reason": "像 约维奇（0.52 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "约维奇"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2431,
+     "ear_each": [
+      0.2319,
+      0.2543
+     ],
+     "face": [
+      2851,
+      907,
+      3508,
+      1693
+     ],
+     "face_px": 786.5,
+     "reason": "眼睛纵横比 0.24 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      2851,
+      907,
+      3508,
+      1693
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.447,
+     "sharp": 673.2,
+     "frontal": true,
+     "clear": true
+    },
+    "problems": [],
+    "warnings": []
+   }
+  },
+  "https://photoresources.wtatennis.com/wta/photo/2026/09/20/9d0266b6-cdbf-4617-82c7-462db90b283f/GettyImages-2295584300.jpg": {
+   "slug": "jovic-stearns-guadalajara-2026-final",
+   "size": [
+    2854,
+    1903
+   ],
+   "bytes": 2626945,
+   "rep": {
+    "status": "ok",
+    "model": "buffalo_s-v0.7",
+    "identity": {
+     "verdict": "match",
+     "name": "约维奇",
+     "similarity": {
+      "约维奇": 0.4128,
+      "斯特恩斯": 0.0377
+     },
+     "missing": [],
+     "expected": [
+      "斯特恩斯",
+      "约维奇"
+     ],
+     "face": [
+      1562,
+      347,
+      1737,
+      576
+     ],
+     "face_px": 229.1,
+     "reason": "像 约维奇（0.41 ≥ 0.34）",
+     "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+     },
+     "target": [
+      "约维奇"
+     ]
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3592,
+     "ear_each": [
+      0.2873,
+      0.4311
+     ],
+     "face": [
+      1562,
+      347,
+      1737,
+      576
+     ],
+     "face_px": 229.1,
+     "reason": "眼睛纵横比 0.36 ≥ 0.16",
+     "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+     }
+    },
+    "faces": [
+     [
+      1562,
+      347,
+      1737,
+      576
+     ]
+    ],
+    "pose": {
+     "eye_span": 0.332,
+     "sharp": 253.8,
+     "frontal": true,
+     "clear": false
+    },
+    "problems": [],
+    "warnings": []
+   }
+  }
+ }
+}

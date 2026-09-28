@@ -38,6 +38,11 @@ O4 自动换图上线后第一班（apply=false）一张都没换成，而原因
 **也不该去绕**——`find_cover_photo.sweep_ap` 认出挑战页就记 `blocked`（第一页就停，
 不再把后面三页也撞一遍），报告里是「没查成（Cloudflare 人机挑战）」，不算查过。
 
+⭐⭐ **2026-09-28 排到最前面的两档：ATP Media 照片接口、WTA 照片接口**（`official_photo_apis`）。封面时效实测：
+10 条抽帧首推里 6 条，首推之前这两个接口里就有主角对、铺满不放大的官方原图。标题不带对手和日期，按 EXIF
+拍摄时刻绑场次——窗口要开赛／结束／时区，所以 `Query` 多了 `start_utc`／`end_utc`／`tz`／`final`／`full_name`／
+`player_id`（O4 从 `match_context` 带，人查给 `--slug` 或 `--start/--end/--tz`）。
+
 ⚠️ fetch_atp_cover_photo.py（ATP 赛事官网的「Day N Best-of Photos」辑）不是单独一档：
 它和 `event-site` 是**同一个站**的两扇门，而它的文件名只有日期／摄影师、没有球员名
 （`081526_DAY-EIGHT_MIKE-BAKER-112-of-229.jpg`），点名闸恒过不了；按名字认人的那扇门
@@ -47,6 +52,7 @@ from __future__ import annotations
 
 import sys
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
 from typing import Callable
 
@@ -97,6 +103,14 @@ class Query:
     year: str = "2026"                  # 美网接口按哪一年
     wta_id: str | None = None
     tour: str | None = None             # "wta" / "atp" / None（人查时不知道）
+    # ---- ATP Media／WTA 照片接口按 EXIF 拍摄时刻绑场次要的（`official_photo_apis`）
+    full_name: str | None = None        # 主角英文全名（「Daniil Medvedev」）：姓和名都要在标题／文件名里
+    player_id: str | None = None        # 主角的 ATP／WTA 球员 id（仓库头像 `atp-MM58.png` 那一段）
+    start_utc: datetime | None = None   # 开赛（UTC）
+    end_utc: datetime | None = None     # 结束（UTC）
+    tz: str | None = None               # 赛事当地时区——EXIF 是当地钟点
+    final: bool = False                 # 决赛：结束后 45 分钟内算颁奖
+    start_lower_bound: bool = False     # 开赛只是列出来的时间（下界）：不按 EXIF 绑
 
 
 @dataclass
@@ -137,13 +151,21 @@ class Channel:
         return f"{self.short or self.label} {self.detail(q)}".strip()
 
 
+#: 照片接口那两档（`official_photo_apis`）多带的几个键——`cover_upgrade.Candidate` 同名字段收
+API_KEYS = ("item_id", "title", "publish_utc", "taken", "offset", "taken_utc", "bind", "others",
+            "instructions", "restriction")
+
+
 def _row(url: str, *, caption: str = "", name: str = "", page: str = "", credit: str = "",
          meta_date: str = "", meta_utc: str = "", event_owned: bool = False,
-         wh: tuple[int, int] | None = None) -> dict:
-    """统一的候选形状——`cover_upgrade.Candidate` 按这几个键收。"""
+         wh: tuple[int, int] | None = None, **api) -> dict:
+    """统一的候选形状——`cover_upgrade.Candidate` 按这几个键收。`api` 只收 `API_KEYS` 里的。"""
+    bad = sorted(set(api) - set(API_KEYS))
+    if bad:
+        raise TypeError(f"_row 不认这几个键：{bad}")
     return {"url": url, "caption": caption or "", "name": name or "", "page": page or "",
             "credit": credit or "", "meta_date": meta_date or "", "meta_utc": meta_utc or "",
-            "event_owned": bool(event_owned), "wh": wh}
+            "event_owned": bool(event_owned), "wh": wh, **api}
 
 
 def _credit(value: object) -> str:
@@ -160,6 +182,54 @@ def _blocked_why(stats: dict, default: str) -> str:
 
 
 # ---------------------------------------------------------------- 各档
+
+def _api_query(q: Query) -> dict:
+    """照片接口那两档的参数（`official_photo_apis.sweep`）。人查只给了 `--date` 时，翻到当地那一天
+    00:00 之前两小时；什么都没给翻一天。"""
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    until = None
+    if q.start_utc is None and q.date:
+        until = apis.local_day_start(q.date, q.tz)
+    toks = str(q.player or "").split()
+    return {"full_name": q.full_name or (q.player if len(toks) > 1 else None),
+            "surname": toks[-1] if toks else None, "player_id": q.player_id, "event": q.event,
+            "year": (str(q.start_utc.year) if q.start_utc else (q.date or "")[:4] or q.year),
+            "start": q.start_utc, "end": q.end_utc, "tz": q.tz, "final": q.final,
+            "start_lower_bound": q.start_lower_bound, "until": until}
+
+
+def _sweep_api(key: str, label: str, run, q: Query) -> ChannelResult:
+    got = run(**_api_query(q))
+    notes = list(got.get("notes") or [])
+    skipped = got.get("skipped") or {}
+    if skipped:
+        notes.append("筛掉 " + "、".join(f"{why} {n} 张" for why, n in skipped.items()))
+    res = ChannelResult(key, label, "ran", raw=got, notes=notes)
+    if not got.get("pages_read"):
+        res.status = "blocked"
+        res.why = "；".join(got.get("notes") or []) or "接口一页都没取回来"
+        return res
+    res.rows = [_row(r["url"], caption=r["caption"], name=r["name"], credit=r["credit"],
+                     meta_utc=r["publish_utc"], wh=r["wh"], item_id=r["item_id"], title=r["title"],
+                     publish_utc=r["publish_utc"], taken=r["taken"], offset=r["offset"],
+                     taken_utc=r["taken_utc"], bind="exif", others=list(r["others"]),
+                     instructions=r["instructions"], restriction=r["restriction"])
+                for r in got.get("rows") or []]
+    return res
+
+
+def _sweep_atp_media(q: Query) -> ChannelResult:
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    return _sweep_api("atp-media", "ATP Media 照片接口", apis.sweep_atp_media, q)
+
+
+def _sweep_wta_photos(q: Query) -> ChannelResult:
+    import official_photo_apis as apis  # noqa: PLC0415
+
+    return _sweep_api("wta-photos", "WTA 照片接口", apis.sweep_wta_photos, q)
+
 
 def _sweep_wta(q: Query) -> ChannelResult:
     import find_cover_photo as fcp  # noqa: PLC0415
@@ -304,6 +374,17 @@ def _sweep_cn(q: Query) -> ChannelResult:
 
 
 CHANNELS: tuple[Channel, ...] = (
+    # ⭐⭐ 2026-09-28 封面时效实测：10 条抽帧首推里 6 条，首推之前这两档里就有主角对、铺满不放大的
+    # 官方原图（`official_photo_apis` 模块 docstring 那张表）。ATP 的比赛它排第一、WTA 的比赛
+    # 下一档排第一（另一档按 `tour` 跳过）；**按 EXIF 拍摄时刻绑场次**，标题不带对手和日期。
+    Channel("atp-media", "ATP Media 照片接口",
+            skip=lambda q: (None if q.player else "没给 --player")
+            or ("WTA 的比赛——ATP Media 只收男子" if q.tour == "wta" else None),
+            sweep=_sweep_atp_media),
+    Channel("wta-photos", "WTA 照片接口",
+            skip=lambda q: (None if q.player else "没给 --player")
+            or ("ATP 的比赛——WTA 照片接口只收女子" if q.tour == "atp" else None),
+            sweep=_sweep_wta_photos),
     Channel("wta", "WTA photo-resources",
             skip=lambda q: ("ATP 的比赛——WTA 图库只收女子" if q.tour == "atp" else None),
             sweep=_sweep_wta),
