@@ -10,7 +10,7 @@
  "primary": "rf",
  "_primary_why": "rf＝Natural Tennis 意大利（Roberto Franchin）2026-08-28 上传的《Marko Maric hitting 2 forehands with the two-handled tennis racket》，1920×1080/30fps/73.5s（probe output/2026-09-28/reel/mm-rf）：红土场上两边正手的练习，人在画面右半边，当旁白底料。",
  "_sources_why": "tl＝Tennis Legend TV 2025-09-03 的竖版短片（probe output/2026-09-28/reel/mm-tl），runner 下到的是 608×1080/30fps/37.5s（1080×1920 那一档是 m3u8 付费格式，下不到）——比赛里的近景只有这一条。画面上方烧着 Tennis Legend 自己的一行字（『Marko Maric 🇫🇷 Ambidextrous with a two-handled racket』），fill_y=0.87 把它裁出画外（量法见 _crop_zoom_why）。⚠️ 没用的：Natural Tennis 2023 年那几条 720×1280 竖版（低于 1080p）；巴蒂斯通兄弟 2008 ATP 官方短片（438×326）、2012 美网那条（proTennisPhotos 1280×720）都低于 1080p；CULT TENNIS 那条 1080p 长片的比赛画面是它自己授权的 Getty／路透素材，不是一手源。 ⚠️ rf 画面里的人是 Natural Tennis 意大利在标题里点名的马里奇，和 tl 里那位没有第三方源对上——旁白压在 rf 上的几段只讲规则和历史，不指认画面里的人。",
- "_crop_zoom_why": "rf 是远机位固定画面，人只占画面三分之一高、站在上半部（y≈240~575/1080）：按段放大 1.5 倍（窗口 540×720），fill_y 0.2 往上取（y≈72~792），横向中心按运动质心自己定。最后一段 68s 起是近机位，不放大。tl 是竖版手机画面，fill_y 0.87：Tennis Legend 那行字在 1080×1920 坐标里下沿 y≈405，窗口从 y≈418 起，字裁在画外、头顶（y≈540）留着。",
+ "_crop_zoom_why": "rf 是手持远机位、镜头会晃，人只占画面三分之一高、站在上半部。按 frame-grab（output/2026-09-28/frames/mm-rf，每秒一帧）逐秒量过人的横向位置：26~66s 一直在 x≈0.47~0.72，所以这几段放大 1.3 倍（窗口约 0.32 宽）、cx 写死 0.58~0.6、fill_y 0.2；20~25s 他跑到 0.8~0.9 的右边缘，不用。第一版用运动质心自动定中心、放大 1.5 倍，run 36380693145 成片里 33s、67s、86s 三处把人切掉或整个框丢了。68s 起近机位不放大、cx 0.25。tl 是竖版手机画面，fill_y 0.87：Tennis Legend 那行字在 1080×1920 坐标里下沿 y≈405，窗口从 y≈418 起，字裁在画外、头顶（y≈540）留着。",
  "cover": {
   "eyebrow": "网球有故事",
   "layout": "solo",
@@ -27,7 +27,7 @@
    "focus": 0.5,
    "focus_y": 0.86,
    "zoom": 1.0,
-   "_frame_why": "官方高清实拍四类源 2026-09-28 查过：他是业余选手，AP、WTA photo-resources、ATP 都不适用；FFT 2025-08-29 那篇锦标赛稿没有他的图；Natural Tennis 官网首页轮播图里有一张他（slider/marko-maric-green.png），整张只有 980×505、他那半边约 520px 宽，而且是另一次练习；Tennis Legend、Natural Tennis 的 Facebook 帖子要登录。按 2026-09-26 常设授权用抽帧：tl 5.0s 他在罗兰·加洛斯正手引拍，脸四分之三朝前、双眼睁开、合焦，两只手分握两个柄，挡板上『CHAMPIONNATS DE FRANCE』半露。focus_y 0.86：窗口从 1080×1920 坐标的 y≈413 起，Tennis Legend 那行字（下沿 y≈405）裁在画外；眼睛落在封面 y≈270，台头带（0~170）只压到头顶发梢，钩子带（790 起）压在短裤一带。",
+   "_frame_why": "官方高清实拍四类源 2026-09-28 查过：他是业余选手，AP、WTA photo-resources、ATP 都不适用；FFT 2025-08-29 那篇锦标赛稿没有他的图；Natural Tennis 官网首页轮播图里有一张他（slider/marko-maric-green.png），整张只有 980×505、他那半边约 520px 宽，而且是另一次练习；Tennis Legend、Natural Tennis 的 Facebook 帖子要登录。按 2026-09-26 常设授权用抽帧：tl 5.0s 他在罗兰·加洛斯底线准备接球，脸四分之三朝前、双眼睁开、合焦，两只手分握两个柄、两个柄都看得清（run 36380693145 的 poster.jpg 核过），挡板上『CHAMPIONNATS DE FRANCE』半露。focus_y 0.86：窗口从 1080×1920 坐标的 y≈413 起，Tennis Legend 那行字（下沿 y≈405）裁在画外；眼睛落在封面 y≈270，台头带（0~170）只压到头顶发梢，钩子带（790 起）压在短裤一带。",
    "_low_res_why": "源片 runner 下到的是 608×1080（1080×1920 那一档下不到），铺 1080×1440 要放大约 1.78 倍，会比官方大图软。这件事没有更大的图（见 _frame_why）。"
   }
  },
@@ -100,25 +100,27 @@
   },
   {
    "source": "rf",
-   "start": 20.0,
-   "end": 31.0,
+   "start": 26.0,
+   "end": 37.0,
    "fit": "crop",
-   "crop_zoom": 1.5,
+   "crop_zoom": 1.3,
    "narration": "这样的球拍，正式比赛里能用吗？能。二零零七年，国际网联给厂家回过一封信：两个握柄，不违反网球规则。",
    "_why": "练习画面（Natural Tennis 意大利 2026-08-28）。认定信见 _facts 合规一条。",
    "point_end_ok": "练习对拉，没有记分条。",
-   "fill_y": 0.2
+   "fill_y": 0.2,
+   "cx": 0.6
   },
   {
    "source": "rf",
-   "start": 36.0,
-   "end": 48.0,
+   "start": 37.0,
+   "end": 49.0,
    "fit": "crop",
-   "crop_zoom": 1.5,
+   "crop_zoom": 1.3,
    "narration": "因为规则管的是拍面：要平，两面打起来一样，拍线只许一层；长不过七十三点七厘米，宽不过三十一点七厘米。拍柄有几个，没写。",
    "_why": "ITF《网球规则》附录二 ＋ Case 1（USTA 与 Tennis Canada 两份 2026 转载逐字一致）。『拍柄有几个，没写』：全书没有一条条文或案例提到握柄的数量。",
    "point_end_ok": "练习对拉，没有记分条。",
-   "fill_y": 0.2
+   "fill_y": 0.2,
+   "cx": 0.6
   },
   {
    "source": "tl",
@@ -132,35 +134,38 @@
   },
   {
    "source": "rf",
-   "start": 48.0,
-   "end": 58.0,
+   "start": 49.0,
+   "end": 57.5,
    "fit": "crop",
-   "crop_zoom": 1.5,
+   "crop_zoom": 1.3,
    "narration": "两个握柄的球拍，发明人叫莱昂内尔·伯特。把它带上职业赛场的，是美国的巴蒂斯通兄弟。",
    "_why": "发明人：Natural Tennis FAQ ＋ AP 2012；巴蒂斯通兄弟是美国人（维基 ＋ AP）。",
    "point_end_ok": "练习对拉，没有记分条。",
-   "fill_y": 0.2
+   "fill_y": 0.2,
+   "cx": 0.58
   },
   {
    "source": "rf",
-   "start": 58.0,
-   "end": 66.0,
+   "start": 57.5,
+   "end": 65.5,
    "fit": "crop",
-   "crop_zoom": 1.5,
+   "crop_zoom": 1.3,
    "narration": "哥哥布莱恩双打最高到过世界第八十八，二零一二年，还拿着它打了美网混双。",
    "_why": "维基 ＋ AP『reaching 88th』；2012 美网混双：AP 同稿 ＋ proTennisPhotos 2012 美网视频标题。",
    "point_end_ok": "练习对拉，没有记分条。",
-   "fill_y": 0.2
+   "fill_y": 0.2,
+   "cx": 0.6
   },
   {
    "source": "rf",
-   "start": 66.0,
+   "start": 68.0,
    "end": 73.2,
    "fit": "crop",
-   "narration": "拍柄可以有两个，拍线只能有一层。换你，敢拿它上场吗？",
-   "_why": "66s 远机位一拍、68.5s 起换成近机位。末屏一问落回读者自己，往积极的方向落。片子到 73.5s 结束，溶解要多取 0.18s，收在 73.2（同上，留一帧余量）。",
+   "narration": "拍柄两个，拍线一层。换你，敢拿它上场吗？",
+   "_why": "68s 起换成近机位，人在画面左侧（按 frame-grab 每秒一帧量，x≈0.1~0.35），cx 0.25、不放大。末屏一问落回读者自己，往积极的方向落。片子到 73.5s，溶解要多取 0.18s，收在 73.2。",
    "_ending_payoff_required": false,
-   "point_end_ok": "练习对拉，片子到 73.5s 结束。"
+   "point_end_ok": "练习对拉，片子到 73.5s 结束。",
+   "cx": 0.25
   }
  ],
  "archival": {
