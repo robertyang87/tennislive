@@ -93,6 +93,9 @@ MODE_STAGES = {
     "cover": ["渲染"],        # 只出封面海报
     "render": ["渲染", "质检"],
     "push": ["推送"],
+    # match-reel：只改注解的 spec 重核对、不重渲（O1）——重建 ASS／plan、逐字节比对、复用成片、
+    # 重发质检凭证，不编码。它绿了不代表那一条 render 的红修好了，所以不进「取代」那张表
+    "reattest": ["质检"],
 }
 #: 这几个 mode 不针对哪一条片子：`match-reel` 的 slug 输入是 required、默认
 #: `eala-zheng`，cookies 模式拨的时候没人改它——照读就会在微信里说
