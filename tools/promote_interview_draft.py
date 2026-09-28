@@ -25,7 +25,7 @@ import argparse
 import json
 import re
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -35,25 +35,17 @@ sys.path.insert(0, str(ROOT / "tools"))
 from tennislive.zh import player_zh  # noqa: E402
 from interview_source_gate import finalize_source_contract  # noqa: E402
 from spec_wording import round_display  # noqa: E402
+# 「这份草稿停着没」、赛果回看窗口（DIGEST_DAYS_BACK）和取姓只有一处定义：
+# auto-render 的早退探针（系统 python3、没装依赖）拿同一个函数数「能动的草稿」。
+from interview_draft_hold import (  # noqa: E402
+    DIGEST_DAYS_BACK,
+    _surname_en,
+    beijing_today,
+    interviewee_surname,
+)
+from interview_draft_hold import scan as scan_drafts  # noqa: E402
 
 SPECS = ROOT / "specs" / "interviews"
-
-# 赛果往回看几天。赛后采访就是这一两天做的，草稿也超不过候选窗口；
-# 3 天是给「夜场跨日 + 赛果源慢半天」留的余量。
-DIGEST_DAYS_BACK = 3
-
-
-def _surname_en(full: str) -> str:
-    """英文全名取姓（feed 里两种形状：`Zverev A.` 姓在前、`Alexander Zverev`
-    姓在最后）。缩写名（最后一个词是单字母）取第一个词——reel 的 slug_for 踩过
-    同一个坑。"""
-    words = re.sub(r"[.]", "", (full or "")).strip().split()
-    if not words:
-        return ""
-    last = words[-1]
-    if len(last) == 1:  # "Zverev A." → 姓在开头
-        return words[0].casefold()
-    return last.casefold()
 
 
 def _highlight_search_name(full: str) -> str:
@@ -73,13 +65,9 @@ def _draft_surname(draft: dict, fname: str) -> str:
     """草稿 → 受访者的姓（小写）。主路读 `_interviewee_en`；老草稿没有就退回
     标题猜——**退路要出声**：标题猜在真实标题上几乎全错，靠它查不到对手时
     先怀疑姓认错了，不是赛果没有。"""
-    who = (draft.get("_interviewee_en") or "").strip()
-    if who:
-        return _surname_en(who)
-    title = draft.get("source_title", "")
-    m = re.search(r"([A-Z][a-z]+)(?:\s+[A-Z][a-z]+)?$",
-                  title.split("Interview")[0].strip())
-    surname = (m.group(1) if m else "").casefold()
+    surname, guessed = interviewee_surname(draft)
+    if not guessed:
+        return surname
     print(f"::warning::{fname} 是老草稿（没有 _interviewee_en），退回从标题猜姓"
           f"＝{surname or '?'}——这条路在真实标题上几乎全错，查不到对手时先怀疑"
           "姓认错了", file=sys.stderr)
@@ -360,7 +348,7 @@ def _collect_digests() -> list:
     """
     from tennislive.digest import build_digest  # noqa: PLC0415
 
-    today = (datetime.now(timezone.utc) + timedelta(hours=8)).date()
+    today = beijing_today()
     out = []
     for back in range(DIGEST_DAYS_BACK + 1):
         day = today - timedelta(days=back)
@@ -378,42 +366,24 @@ def _collect_digests() -> list:
 def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
     """扫全部草稿，能查到对手的提升，查不到的列出原因。返回 (提升的, 跳过的)。
 
-    ⚠️ **先看有没有草稿，再去抓赛果**——反过来（旧版就是）等于每一趟定时
-    都白抓一轮网络赛果，而绝大多数趟根本没有草稿要提升。
+    ⚠️ **先看有没有能动的草稿，再去抓赛果**——反过来（旧版就是）等于每一趟定时
+    都白抓一轮网络赛果，而绝大多数趟根本没有草稿要提升。停着的那几类（读不了、
+    没译文、挂着人工复核、来源没核成 on_court、认不出受访者、过了赛果窗口）判在
+    `interview_draft_hold.draft_hold_reason`——auto-render 的早退探针数的是同一个函数，
+    这里改了判据，探针跟着变，不会一边说「有活」一边「提升 0 条」。
     """
-    drafts = sorted(SPECS.glob("*.draft.json"))
-    if not drafts:
-        return [], []
+    actionable, held = scan_drafts(SPECS)
+    promoted: list[str] = []
+    skipped: list[str] = [f"{f.name}: {why}" for f, why in held]
+    if not actionable:
+        return promoted, skipped
 
     digests = _collect_digests()
-    promoted: list[str] = []
-    skipped: list[str] = []
     if not digests:
-        return promoted, ["赛果抓不到，没有可提升的对手信息（等终审）"]
+        return promoted, skipped + ["赛果抓不到，没有可提升的对手信息（等终审）"]
 
-    for f in drafts:
-        try:
-            draft = json.loads(f.read_text(encoding="utf-8"))
-        except (OSError, ValueError):
-            skipped.append(f"{f.name}: 读不了")
-            continue
-        if not (draft.get("_zh_draft") or draft.get("zh")):
-            skipped.append(f"{f.name}: 连译文草稿都没有（翻译没成），等终审")
-            continue
-        if draft.get("manual_review_required"):
-            skipped.append(
-                f"{f.name}: 已标记人工复核（{draft['manual_review_required']}），不提升"
-            )
-            continue
-        verification = draft.get("source_verification") or {}
-        if verification.get("status") != "verified" or \
-                verification.get("detected_type") != "on_court":
-            skipped.append(f"{f.name}: 来源身份尚未确认是本场 on_court（不提升）")
-            continue
+    for f, draft in actionable:
         surname = _draft_surname(draft, f.name)
-        if not surname:
-            skipped.append(f"{f.name}: 认不出受访者（等终审）")
-            continue
         # 从最新那天往回找：**停在他第一次出现的那天**。那天他不是赢家就不提升
         # ——继续往更早翻只会翻到他早些轮次赢的另一场，对阵整个错掉
         opp = None
