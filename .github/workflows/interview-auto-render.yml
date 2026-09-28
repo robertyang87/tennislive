@@ -320,7 +320,7 @@ jobs:
             exit 1
           fi
 
-      - name: 顺手叫醒挨饿的编排/提升班次
+      - name: 顺手叫醒挨饿的编排/提升/监控班次
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
@@ -328,3 +328,5 @@ jobs:
           source tools/nudge_stale_ticks.sh
           nudge_if_stale orchestrate.yml 20 -f apply=true
           nudge_if_stale reel-auto-ready.yml 20
+          # 监控班次自己也挨饿（实测 145~402 分钟一趟）：它是阻塞推微信的那一班
+          nudge_if_stale pipeline-health.yml 90

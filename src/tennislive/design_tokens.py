@@ -65,9 +65,9 @@
   在白底上只有 1.26:1，浅底上永远不拿它当文字**——判据把浅色所有字色角色都量一遍。
   原来浅色 `primary` 的翡翠绿 #087747 腾出来当浅色的 `success`（白底 5.61）。
 - **Q10：看板跟随系统。** `tokens_css()` 按消费方声明的默认主题生成：跟随系统的
-  出 `prefers-color-scheme` 浅／深两块（`data-theme` 钉死时让位）；**裸 `:root`
-  上不写 `color-scheme`**——哪个消费方默认深色，要在 `tools/gen_tokens_css.py` 的
-  消费方表里写明。
+  浅色写在 `@media` **外面**当兜底、深色在 `prefers-color-scheme: dark` 里覆盖它
+  （`data-theme` 钉死时都让位）；**裸 `:root` 上不写 `color-scheme`**——哪个消费方
+  默认深色，要在 `tools/gen_tokens_css.py` 的消费方表里写明。
 
 网页端用 `tools/gen_tokens_css.py` 把这里生成成 CSS（现在只有 `dashboard/tokens.css`），
 变量一律带 `--tl-` 前缀（`css_var()`）：看板 `styles.css` 自己有 `--muted`（**字色**
@@ -432,7 +432,7 @@ REDUCED_MOTION_CSS = """@media (prefers-reduced-motion: reduce) {
     f"    {css_var('duration-' + k[:-3])}: .01ms;" for k in MOTION if k.endswith("_ms")))
 
 _DEFAULT_NOTE = {
-    "system": "不写就跟随系统（prefers-color-scheme）",
+    "system": "不写就跟随系统（prefers-color-scheme）；认不出系统偏好的浏览器按浅色",
     "dark": "不写就是深色（这个消费方默认深色）",
     "light": "不写就是浅色（这个消费方默认浅色）",
 }
@@ -451,8 +451,12 @@ def _header(default: str) -> str:
 def tokens_css(*, default: str) -> str:
     """一份 tokens.css 的全文。`default` 是**这个消费方**没钉 `data-theme` 时的主题：
 
-    - `system`：出 `@media (prefers-color-scheme: dark|light)` 两块，选择器是
-      「没钉死」的 `:root`——`data-theme` 写了 dark / light 就让位给钉死的那块。
+    - `system`：浅色那块写在 `@media` **外面**、深色那块包在
+      `@media (prefers-color-scheme: dark)` 里，选择器都是「没钉死」的 `:root`
+      （同特异度，后写的深色在系统要深色时赢）——`data-theme` 写了 dark / light
+      就让位给钉死的那块。⚠️ 原来浅色也包在 `@media (prefers-color-scheme: light)`
+      里：认不出这条媒体查询的 WebView（老 Android／X5、iOS < 12.1）两块都不生效，
+      页面**一个颜色都没有**，按钮和芯片全透明（UI 评审 WP1 复核的 nit）。
     - `dark` / `light`：那个主题的块同时认「没钉死」，不跟随系统。
 
     两种情况下深浅都只写在主题块里，裸 `:root` 那块（`css_base()`）永远不带
@@ -463,8 +467,9 @@ def tokens_css(*, default: str) -> str:
         raise ValueError(f"default 只认 {'/'.join(DEFAULTS)}，拿到 {default!r}")
     parts = [_header(default), css_base(), css_vars("dark"), css_vars("light")]
     if default == "system":
-        parts += [f"@media (prefers-color-scheme: {t}) {{\n"
-                  + _indent(css_vars(t, _UNPINNED)) + "}\n" for t in ("dark", "light")]
+        parts += [css_vars("light", _UNPINNED),
+                  "@media (prefers-color-scheme: dark) {\n"
+                  + _indent(css_vars("dark", _UNPINNED)) + "}\n"]
     else:
         parts.append(css_vars(default, _UNPINNED))
     parts.append(REDUCED_MOTION_CSS)

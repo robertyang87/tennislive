@@ -21,13 +21,17 @@ SCRIPT = Path("tools/nudge_stale_ticks.sh").resolve()
 
 #: 宿主 → 该叫醒谁。频繁 cron 的班次都当宿主，目标是内容链的两个时间敏感
 #: 班次；orchestrate/reel-auto-ready 互相叫（自己叫自己没有意义）。
+#: ⚠️ pipeline-health 也要被叫：它是「流水线阻塞 → 微信」那一班（账号所有者 Q9），
+#: 而它自己的「每小时」一班实测 145~402 分钟才来一趟（2026-09-22 起 30 班全是
+#: schedule，9/27 是 01:52 → 08:34 → 14:19）——监控挨饿，没人重试的失败就拖到下一班
+#: 才推（复核 FIX ROUND 1）。三条最勤的 cron 宿主顺手叫它，阈值 90 分钟。
 HOSTS = {
-    "orchestrate.yml": ["reel-auto-ready.yml"],
-    "reel-auto-ready.yml": ["orchestrate.yml"],
+    "orchestrate.yml": ["reel-auto-ready.yml", "pipeline-health.yml"],
+    "reel-auto-ready.yml": ["orchestrate.yml", "pipeline-health.yml"],
     "official-social-images.yml": ["orchestrate.yml", "reel-auto-ready.yml"],
     "pipeline-health.yml": ["orchestrate.yml", "reel-auto-ready.yml"],
     "oncourt-interviews.yml": ["orchestrate.yml", "reel-auto-ready.yml"],
-    "interview-auto-render.yml": ["orchestrate.yml", "reel-auto-ready.yml"],
+    "interview-auto-render.yml": ["orchestrate.yml", "reel-auto-ready.yml", "pipeline-health.yml"],
 }
 
 _STUB = """#!/usr/bin/env bash
@@ -114,6 +118,8 @@ def test_挨饿的定时班次要互相叫醒():
         if "orchestrate.yml" in targets:
             assert "nudge_if_stale orchestrate.yml 20 -f apply=true" in body, (
                 f"{host}: 叫醒 orchestrate 不带 apply=true 等于白叫")
+        if "pipeline-health.yml" in targets:
+            assert "nudge_if_stale pipeline-health.yml 90" in body, host
     # pipeline-health 原来只有 actions: read——gh workflow run 要 write，
     # 少了它 nudge 每次都「没成」，而那和「没挨饿」在结果上长得一样
     health = Path(".github/workflows/pipeline-health.yml").read_text("utf-8")

@@ -2,7 +2,7 @@
    改颜色、圆角、字阶、动效去改那个模块，再重跑脚本；
    判据 tests/test_design_tokens.py 要求两边逐字节相等。
    变量一律带 --tl- 前缀（看板自己的 --muted / --radius 和这里同名不同义）。
-   主题：<html data-theme="dark|light"> 钉死；不写就跟随系统（prefers-color-scheme）。 */
+   主题：<html data-theme="dark|light"> 钉死；不写就跟随系统（prefers-color-scheme）；认不出系统偏好的浏览器按浅色。 */
 
 :root {
   --tl-brand-bar: linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);
@@ -97,6 +97,35 @@
   --tl-shadow-overlay: 0 4px 42px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.06);
 }
 
+:root:not([data-theme="light"]):not([data-theme="dark"]) {
+  color-scheme: light;
+  --tl-background: #f6f7f4;
+  --tl-card: #ffffff;
+  --tl-muted: #eef2ef;
+  --tl-foreground: #17251f;
+  --tl-muted-foreground: #5f6f68;
+  --tl-subtle-foreground: #5f6f68;
+  --tl-border: #e6ebe8;
+  --tl-input: #d8e2dc;
+  --tl-ring: #17251f;
+  --tl-primary: #c6f65a;
+  --tl-primary-foreground: #04120d;
+  --tl-secondary: #102d23;
+  --tl-secondary-foreground: #ffffff;
+  --tl-link: #5f6f68;
+  --tl-success: #087747;
+  --tl-warning: #846405;
+  --tl-destructive: #c0392b;
+  --tl-info: #0a6ea4;
+  --tl-success-chip: #e1efe9;
+  --tl-warning-chip: #f0ece1;
+  --tl-destructive-chip: #f7e7e6;
+  --tl-info-chip: #e2eef4;
+  --tl-shadow-card: 0 0 0 1px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --tl-shadow-raised: 0 0 0 1px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.06);
+  --tl-shadow-overlay: 0 4px 42px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.06);
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
     color-scheme: dark;
@@ -133,37 +162,6 @@
     --tl-shadow-card: 0 0 0 1px rgba(255,255,255,.10);
     --tl-shadow-raised: 0 0 0 1px rgba(255,255,255,.13),0 1px 2px rgba(0,0,0,.2),0 2px 6px rgba(0,0,0,.2);
     --tl-shadow-overlay: 0 0 0 1px rgba(255,255,255,.15),0 8px 28px rgba(0,0,0,.34);
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    color-scheme: light;
-    --tl-background: #f6f7f4;
-    --tl-card: #ffffff;
-    --tl-muted: #eef2ef;
-    --tl-foreground: #17251f;
-    --tl-muted-foreground: #5f6f68;
-    --tl-subtle-foreground: #5f6f68;
-    --tl-border: #e6ebe8;
-    --tl-input: #d8e2dc;
-    --tl-ring: #17251f;
-    --tl-primary: #c6f65a;
-    --tl-primary-foreground: #04120d;
-    --tl-secondary: #102d23;
-    --tl-secondary-foreground: #ffffff;
-    --tl-link: #5f6f68;
-    --tl-success: #087747;
-    --tl-warning: #846405;
-    --tl-destructive: #c0392b;
-    --tl-info: #0a6ea4;
-    --tl-success-chip: #e1efe9;
-    --tl-warning-chip: #f0ece1;
-    --tl-destructive-chip: #f7e7e6;
-    --tl-info-chip: #e2eef4;
-    --tl-shadow-card: 0 0 0 1px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
-    --tl-shadow-raised: 0 0 0 1px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.06);
-    --tl-shadow-overlay: 0 4px 42px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.06);
   }
 }
 

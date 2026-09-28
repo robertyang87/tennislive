@@ -10,9 +10,13 @@ permissions:
   # read 是看板用的；write 是「顺手叫醒挨饿班次」那一步 gh workflow run 要的
   actions: write
 
+# ⚠️ 不许 cancel-in-progress：三个宿主（orchestrate / reel-auto-ready /
+# interview-auto-render）都会叫醒它，一趟迟到的 schedule 可能落在「推过微信、
+# 还没 actions/cache/save」之间把它掐掉——告警状态没存下，下一班同一条阻塞再推一遍。
+# 排队只多等几分钟。判据 test_健康检查不许被后来的一班掐掉_推过没存状态会重推。
 concurrency:
   group: pipeline-health
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   health:
@@ -28,6 +32,9 @@ jobs:
             data/explainer_publish_ledger/*.json
             output/**/render.json
             tools/pipeline_health.py
+            # 「阻塞」的唯一定义在看板那边，pipeline_health import 它（Q9 阻塞推微信）。
+            # 判据 test_健康检查的阻塞定义就是看板那一份_工作流检出了它
+            tools/build_dashboard_snapshot.py
             # ⚠️ 叫醒挨饿班次那一步 `source` 它。这条是**逐文件**列的
             # （不像 orchestrate / reel-auto-ready 那样整个 `tools`），
             # 漏了它那一步每小时 `No such file or directory` 一次——
@@ -54,7 +61,9 @@ jobs:
           python3 tools/pipeline_health.py --limit 10 --step-runs 3 \
             --alert-state "$RUNNER_TEMP/pipeline-health-alert.json"
 
-      - name: 趋势异常时推送微信告警
+      # 两类消息走同一步、同一份去重状态：趋势异常（变化/恢复各一次），
+      # 以及流水线转入阻塞（Q9：哪个阶段、哪条卡住、run 链接；恢复不推）。
+      - name: 趋势异常或流水线转入阻塞时推送微信告警
         if: steps.health.outputs.notify == 'true'
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}

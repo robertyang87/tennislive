@@ -3,46 +3,84 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#07140f">
+  <meta name="color-scheme" content="light dark">
+  <!-- 两个值是 design_tokens 的 LIGHT / DARK background（判据 test_看板品牌与主题跟着token走） -->
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f7f4">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#04120d">
   <meta name="description" content="网球时差内容流水线状态看板">
-  <title>网球时差 · 内容流水线</title>
+  <title>网球时差 · 流水线</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png">
+  <link rel="apple-touch-icon" href="./icon-180.png">
+  <link rel="stylesheet" href="./tokens.css">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <header class="topbar">
-    <div>
-      <p class="eyebrow">TENNIS TIMEZONE · OPS</p>
-      <h1>内容流水线</h1>
+    <div class="topbar-inner">
+      <div class="brand">
+        <img class="brand-icon" src="./icon-180.png" alt="" width="32" height="32">
+        <div>
+          <p class="brand-name">网球时差</p>
+          <p class="eyebrow">TENNIS JETLAG · 流水线</p>
+        </div>
+      </div>
+      <button id="refresh" class="btn btn-secondary refresh" type="button" aria-label="刷新数据">
+        <span class="spinner" aria-hidden="true"></span><span class="refresh-label">刷新</span>
+      </button>
     </div>
-    <button id="refresh" class="refresh" type="button" aria-label="刷新数据">刷新</button>
   </header>
 
   <main>
-    <section id="hero" class="hero skeleton" aria-live="polite"></section>
-    <section id="metrics" class="metrics" aria-label="关键指标"></section>
+    <div id="stale" class="notice" role="status" hidden>
+      <p id="stale-text">刷新失败，下面是上一次的快照</p>
+      <button class="btn btn-secondary btn-sm" type="button" data-retry>重试</button>
+    </div>
 
-    <section class="panel">
+    <section id="hero" class="hero" aria-live="polite" aria-busy="true">
+      <div class="sk sk-chip"></div>
+      <div class="sk sk-title"></div>
+      <div class="sk sk-line"></div>
+    </section>
+
+    <section id="metrics" class="metrics" aria-label="关键指标">
+      <div class="metric"><div class="sk sk-line"></div><div class="sk sk-value"></div></div>
+      <div class="metric"><div class="sk sk-line"></div><div class="sk sk-value"></div></div>
+      <div class="metric"><div class="sk sk-line"></div><div class="sk sk-value"></div></div>
+      <div class="metric"><div class="sk sk-line"></div><div class="sk sk-value"></div></div>
+    </section>
+
+    <section class="panel" aria-labelledby="stages-title">
       <div class="section-head">
-        <div><p class="eyebrow">LIVE PIPELINE</p><h2>流程状态</h2></div>
+        <div><p class="eyebrow">LIVE PIPELINE</p><h2 id="stages-title">流程状态</h2></div>
         <span id="freshness" class="freshness">读取中</span>
       </div>
-      <div id="stages" class="stages"></div>
+      <div id="stages" class="stages">
+        <div class="sk-block sk-stage"></div><div class="sk-block sk-stage"></div><div class="sk-block sk-stage"></div>
+      </div>
     </section>
 
-    <section class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">CONTENT</p><h2>最近内容</h2></div>
-        <div id="filters" class="filters" role="group" aria-label="内容筛选"></div>
+    <section class="panel" aria-labelledby="content-title">
+      <div class="section-head section-head-wrap">
+        <div><p class="eyebrow">CONTENT</p><h2 id="content-title">最近内容</h2></div>
+        <div id="filters" class="segmented" role="group" aria-label="按栏目筛选">
+          <span class="segmented-indicator" aria-hidden="true"></span>
+          <button type="button" data-type="all" aria-pressed="true">全部</button>
+          <button type="button" data-type="reel" aria-pressed="false">赛场之上</button>
+          <button type="button" data-type="interview" aria-pressed="false">赛后开麦</button>
+          <button type="button" data-type="explainer" aria-pressed="false">网球有故事</button>
+        </div>
       </div>
-      <div id="content-list" class="content-list"></div>
+      <div id="content-list" class="list">
+        <div class="sk-block sk-row"></div><div class="sk-block sk-row"></div><div class="sk-block sk-row"></div>
+      </div>
     </section>
 
-    <section class="panel">
+    <section class="panel" aria-labelledby="workflows-title">
       <div class="section-head">
-        <div><p class="eyebrow">GITHUB ACTIONS</p><h2>自动任务</h2></div>
-        <a class="link" href="https://github.com/robertyang87/tennislive/actions" target="_blank" rel="noreferrer">查看全部</a>
+        <div><p class="eyebrow">GITHUB ACTIONS</p><h2 id="workflows-title">自动任务</h2></div>
+        <a class="link" href="https://github.com/robertyang87/tennislive/actions" target="_blank" rel="noreferrer">查看全部 ↗</a>
       </div>
-      <div id="workflows" class="workflow-list"></div>
+      <div id="workflows" class="list"></div>
     </section>
 
     <section class="source-note">
@@ -51,7 +89,6 @@
     </section>
   </main>
 
-  <template id="empty-template"><div class="empty">暂无可展示记录</div></template>
   <script src="./app.js" defer></script>
 </body>
 </html>
