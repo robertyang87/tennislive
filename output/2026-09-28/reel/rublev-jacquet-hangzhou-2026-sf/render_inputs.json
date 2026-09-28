@@ -1,0 +1,308 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "rublev-jacquet-hangzhou-2026-sf",
+  "written_at": "2026-09-28T14:47:56Z",
+  "code_sha": "707ced71d80c233f84956aebaeca5062eadb02a6",
+  "spec_sha256": "68f5241a39c1c20c9c9022824295cdf7bf151797cde186f68810e6b459483685",
+  "film_sha256": "3bd2804c1a979fb261ad9182a0ff08afbd9ad7271381a94eaee8aaea944e7191",
+  "film_bytes": 65966476,
+  "projection_sha256": "5634e0dba844150f092ff37245b154182088703632a53cb5d853b0c10348c6a3",
+  "claims": [
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
+    ],
+    [
+      "cover",
+      "_heat_why"
+    ],
+    [
+      "cover",
+      "portrait",
+      "_low_res_why"
+    ],
+    [
+      "_match"
+    ],
+    [
+      "segments",
+      0,
+      "_quote_skip_why"
+    ],
+    [
+      "_tennistv_trim"
+    ]
+  ],
+  "assets": {
+    "assets/players/headshots/atp-J0AZ.png": "caed35e5dd2c91578ef87b1bc1898ad212b839d6be92a091c7b6cca39d9465a0",
+    "assets/players/headshots/atp-RE44.png": "6432009440ed7e752236ea0294138846851319d29ac924ea0523681a5ee1db60"
+  },
+  "artifacts": {
+    "subtitles.ass": "32afe01811100cfd8e15c4a0c70c4a50d4497dcfb45800e1bd22cc0e5ca0e931",
+    "topbar.ass": "786434341f60701dfd7400a31fdff131e571da0e00ce3aa7543ffad51692df6f",
+    "poster.jpg": "cf318befe54f56c0611184dd4f3295fe7b82cf74e67ab993ff94ccc0fe6c78c5",
+    "stat_card.jpg": "38928f9c5b60aec82e804425dab653a0254e8f2b1d228b622aceadd7f18f5305",
+    "scoreboard_qc.json": "1b7f32cc97cbcfee22487adf13364a2714e8a196de16d1239c1d9b9cfa450774"
+  },
+  "projection": {
+    "slug": "rublev-jacquet-hangzhou-2026-sf",
+    "_column": "赛场之上",
+    "sources": {
+      "ttv": "https://www.youtube.com/watch?v=nSaTYP-T8sM"
+    },
+    "primary": "ttv",
+    "mixed_fps": {
+      "ttv": "YouTube 1080p，probe 在 runner 上报 25fps。单一源片，没有混帧率。"
+    },
+    "scorebox": [
+      98,
+      920,
+      519,
+      1029
+    ],
+    "cover": {
+      "eyebrow": "赛场之上",
+      "layout": "solo",
+      "subject": "卢布列夫",
+      "hook": "首盘6平后7分全拿\n卢布列夫挺进决赛",
+      "hook_accent": "挺进决赛",
+      "topic": "ATP250 杭州 半决赛 · 卢布列夫 VS 雅凯",
+      "winner": "卢布列夫",
+      "result": "7-6(0) 6-1",
+      "matchup": [
+        {
+          "name": "卢布列夫",
+          "name_en": "Andrey Rublev",
+          "country": "RUS",
+          "rank": 24
+        },
+        {
+          "name": "雅凯",
+          "name_en": "Kyrian Jacquet",
+          "country": "FRA",
+          "rank": 86
+        }
+      ],
+      "portrait": {
+        "frame_at": 33.5,
+        "focus": 0.45,
+        "focus_y": 0.5,
+        "zoom": 1.0
+      },
+      "scoreboard": {
+        "court": "Center Court",
+        "duration_source": {
+          "url": "data:application/json,%7B%22duration%22%3A%20%221%3A22%3A00%22%2C%20%22source%22%3A%20%22TNNS%20app%20%E6%AF%94%E5%88%86%E9%A1%B5%EF%BC%88%E8%B4%A6%E5%8F%B7%E6%89%80%E6%9C%89%E8%80%85%E6%88%AA%E5%9B%BE%EF%BC%8C%E5%8C%97%E4%BA%AC%2020%3A13%EF%BC%89%E8%AE%A1%E6%97%B6%201%3A22%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_sui_1%EF%BC%88M7514hNb%EF%BC%89%E5%88%86%E7%9B%98%200%3A46%20%2B%200%3A31%20%3D%201%3A17%22%7D",
+          "field": "duration"
+        }
+      }
+    },
+    "topbar": {
+      "line1": "2026 ATP250 杭州 半决赛",
+      "line2": "卢布列夫 7-6(0) 6-1 雅凯"
+    },
+    "editorial": {
+      "mode": "match_review",
+      "hook": [
+        "首盘6平后7分全拿",
+        "卢布列夫挺进决赛"
+      ],
+      "question": "昨天打了快三个小时才赢，今天卢布列夫是怎么一个多小时就打进决赛的？",
+      "thesis": "首盘双方发球局全保，4-4 他两个破发点没拿下、4-5 自己保发；进了抢七，雅凯一分都没拿到，7-0；第二盘雅凯第 2 局四次平分后被破、第 4 局再被破，4-0；全场他 10 个发球局雅凯一个破发点都没拿到，6-1，第一个赛点收下，决赛对梅德韦杰夫。",
+      "beats": [
+        "冷开场：赛点，看台，他仰头，和雅凯拥抱。",
+        "落点＋坐标：一小时二十二分钟；北京时间 9 月 28 日下午，杭州半决赛，二号种子对世界第 86 的雅凯。",
+        "来路：昨天九个盘点才拿下一盘；今天首盘发球局全保。",
+        "4-4 两个破发点被救；4-5 他底线调动保发。",
+        "抢七 7-0。",
+        "第二盘：四次平分后破发 2-0；长相持雅凯摊手；再破 4-0；全场一个破发点没给。",
+        "赛点第一个兑现。结尾：决赛对梅德韦杰夫。"
+      ],
+      "human_context": {
+        "angle": "这场球的主语是**卢布列夫的效率**：昨天 1/4 决赛他打了 2 小时 52 分钟、第九个盘点才赢下一盘；今天首盘打到 6 平，抢七 7-0，第二盘一路 5-0，全场一个破发点都没给雅凯，一小时二十二分钟进决赛。",
+        "facts": [
+          "flashscore M7514hNb：Jacquet K. 6-7(0) 1-6 Rublev A.；分盘用时 0:46 + 0:31 = 1:17，TNNS app 1:22；当日表 AD=1790588400（09:40Z＝北京 17:40）。",
+          "flashscore df_st_1 全场（卢布列夫／雅凯）：ACE 5/6、双误 1/1、一发得分率 86%（32/37）对 70%（23/33）、破发点兑现 2/7 对 0/0、发球局 10/10 对 7/9、总得分 67/115 对 48/115。",
+          "TNNS app（账号所有者截图）：Winners 35/17、Unforced Errors 19/22、1st Serve In 66%/56%、1st Serve Win 86%/70%、Break Points Saved 雅凯 71%（5/7）——和 flashscore 一发、破发点两项一致。",
+          "排名：tennisexplorer `atp_at=28.09.2026` 24 / 86；ESPN 仍挂上一期 25 / 107。",
+          "昨天 1/4 决赛：`rublev-gaston-hangzhou-2026-qf`（已发）卢布列夫 6-7(6) 7-6(4) 6-1 加斯东，2 小时 52 分钟，第九个盘点才赢下一盘。",
+          "决赛：flashscore YRzVjjGE `Medvedev D. – Rublev A.`，AD=1790681400（9/29 11:30Z＝北京 19:30）；梅德韦杰夫半决赛 7-5 6-4 胜萨菲乌林（QmOLdkIG），头号种子（TNNS 截图名字旁 `1`）。"
+        ],
+        "sources": [
+          "https://www.flashscore.com/match/tennis/M7514hNb/",
+          "https://www.youtube.com/watch?v=nSaTYP-T8sM",
+          "https://www.tennisexplorer.com/ranking/atp-men/"
+        ]
+      }
+    },
+    "stats": {
+      "tour": "atp",
+      "a": {
+        "aces": 5,
+        "df": 1,
+        "winners": 35,
+        "ue": 19,
+        "first_in": 37,
+        "first_won": 32,
+        "second_total": 19,
+        "second_won": 13,
+        "bp_conv": 2,
+        "bp_chances": 7,
+        "pts_won": 67,
+        "pts_total": 115,
+        "first_total": 56,
+        "headshot": "assets/players/headshots/atp-RE44.png"
+      },
+      "b": {
+        "aces": 6,
+        "df": 1,
+        "winners": 17,
+        "ue": 22,
+        "first_in": 33,
+        "first_won": 23,
+        "second_total": 26,
+        "second_won": 14,
+        "bp_conv": 0,
+        "bp_chances": 0,
+        "pts_won": 48,
+        "pts_total": 115,
+        "first_total": 59,
+        "headshot": "assets/players/headshots/atp-J0AZ.png"
+      }
+    },
+    "segments": [
+      {
+        "source": "ttv",
+        "start": 228.7,
+        "end": 240.4,
+        "cx": 0.5,
+        "narration": "",
+        "point_end_ok": "赛点那一分 233.2 前结束，233.28 切到看台；之后是他本人近景和网前拥抱，比赛已经结束。",
+        "crosses_cut": "233.28 切到看台、234.88 切到他本人近景：赛点之后同一刻的反应。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 12.2,
+        "end": 26.2,
+        "cx": 0.5,
+        "narration": "一小时二十二分钟，卢布列夫打完了这场半决赛。北京时间九月二十八号下午五点多，杭州公开赛半决赛，二号种子卢布列夫，对阵世界第八十六的法国人雅凯。",
+        "point_end_ok": "第 2 局那一分 24.4 前结束，24.46 切到雅凯近景；25.7 的翻牌在段内，段尾 26.2 在 26.26 那一刀之前。",
+        "crosses_cut": "14.1 从雅凯近景接下一分、24.46 切到雅凯走回：旁白讲的是整场和坐标，不指认某一分。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 26.3,
+        "end": 36.4,
+        "cx": 0.5,
+        "narration": "昨天他打了快三个小时，第九个盘点才拿下一盘。今天第一盘，卢布列夫发球的三十五分，雅凯只拿到六分。",
+        "point_end_ok": "这一分 31.8 前结束，之后是他的近景；段内 32.7~36.2 的翻牌是近景里板的抖动，段尾 36.4 在 36.5 那一刀之前，下一次翻牌 49.4。",
+        "crosses_cut": "31.84（loose）切到卢布列夫近景：同一分打完之后。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 36.8,
+        "end": 49.5,
+        "cx": 0.5,
+        "narration": "四平，雅凯发球，卢布列夫打到十五比四十，手握两个破发点。雅凯连着顶了回来，保住了这一局。卢布列夫没有着急。",
+        "point_end_ok": "这一分 47.5 前结束，47.58 切到卢布列夫走回；point_ends 49.4，段尾 49.5 在 49.54 那一刀之前。",
+        "crosses_cut": "47.58（loose）切到卢布列夫走回：同一分之后。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 57.9,
+        "end": 69.9,
+        "cx": 0.5,
+        "narration": "四比五，卢布列夫发球保盘，三十平。他在底线把雅凯左右调动，雅凯滑出去救了一拍，没追上。他保住了，五平。",
+        "point_end_ok": "这一分 67.7 前结束，之后是他的近景；point_ends 69.2 在段内，70.1 离段尾 0.2 秒、是 70.08 那一刀之后的首帧。",
+        "crosses_cut": "67.8（loose）/ 69.12（loose）切到卢布列夫走回和近景：同一分打完之后，旁白说的正是他。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 70.2,
+        "end": 82.4,
+        "cx": 0.5,
+        "narration": "六平，进了抢七，这一段雅凯一分都没拿到。卢布列夫一路打到六比零，第一个盘点就兑现，七比零，先拿下第一盘。",
+        "point_end_ok": "盘点那一分 79.4 前结束，80.5 他走回；82.5 的翻牌离段尾 0.1 秒，是这一盘结束后板更新的那一刻。",
+        "crosses_cut": "75.16 / 76.5 / 76.78 / 79.44：抢七里接连两分和拿下这一盘后的走回，旁白讲的是整个抢七。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 120.5,
+        "end": 133.9,
+        "cx": 0.5,
+        "narration": "第二盘第二局，雅凯的发球局打出了四次平分。他两次占先，两次都没守住，卢布列夫的破发点一个接一个地来。",
+        "point_end_ok": "这一分 129.2 前结束，129.32 切到雅凯走回；132.5 板翻平分在段内，段尾 133.9 在 134.0 那一刀之前。",
+        "crosses_cut": "129.32 切到雅凯走回：丢掉这一分之后，旁白说的正是他。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 134.1,
+        "end": 151.4,
+        "cx": 0.5,
+        "narration": "卢布列夫的第三个破发点。两人在底线来回相持。他不急着下重手，把球一左一右地调动，雅凯从一侧跑到另一侧，来回跑了好几趟。最后一拍，雅凯没顶住。二比零。",
+        "point_end_ok": "这一分 149.8 前结束，149.86 切到雅凯近景；段内 141.4/142.4 的翻牌是转播板闪烁，段尾 151.4 在 151.44 那一刀之前、151.5 翻牌离段尾 0.1 秒。",
+        "crosses_cut": "149.86 切到雅凯近景：丢掉破发点之后的反应。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 164.6,
+        "end": 185.8,
+        "cx": 0.5,
+        "narration": "卢布列夫发球，十五平。又是一分漫长的底线相持，雅凯被调到场地两边，低下身子连着救球，最后还是丢了。他摊开双手，一脸无奈。到这里，他已经很难找到办法了。",
+        "point_end_ok": "这一分 184.4 前结束，184.5 切到雅凯的反应；point_ends 185.2 在段内，段尾 185.8 在 185.84 那一刀之前，下一次翻牌 208.7。",
+        "crosses_cut": "184.5 切到雅凯张开双手：丢掉这一分之后的反应，旁白说的正是他。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 204.8,
+        "end": 209.7,
+        "cx": 0.5,
+        "narration": "雅凯的下一个发球局，他再破一次，四比零。",
+        "point_end_ok": "破发点那一分 208.4 前结束，208.46 切到他近景；208.7 的翻牌在段内，209.9 离段尾 0.2 秒、是 209.82 那一刀之后的首帧。",
+        "crosses_cut": "208.46 切到卢布列夫近景：破发之后的反应。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 209.9,
+        "end": 220.4,
+        "cx": 0.5,
+        "narration": "雅凯保住一局，一比五。轮到卢布列夫发球胜赛。全场他的十个发球局，雅凯一个破发点都没拿到。",
+        "point_end_ok": "这一分 219.5 前结束，之后是两人走回；段尾 220.4 之后的下一次翻牌是 225.8（5.4 秒后，在他近景里）。",
+        "crosses_cut": "段内没有切点。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 228.7,
+        "end": 234.8,
+        "cx": 0.5,
+        "narration": "五比一，他发球胜赛，两个赛点。第一个，他就拿下了。",
+        "point_end_ok": "赛点那一分 233.2 前结束，233.28 切到看台；比赛已经结束。",
+        "crosses_cut": "233.28 切到看台：赛点之后同一刻。",
+        "score_inset": true
+      },
+      {
+        "source": "ttv",
+        "start": 234.9,
+        "end": 244.9,
+        "cx": 0.5,
+        "narration": "决赛是两个俄罗斯人的对决，对面是头号种子梅德韦杰夫。省下的力气留给明天，他能在杭州捧杯吗？",
+        "point_end_ok": "比赛已经结束。",
+        "crosses_cut": "240.58 从近景切到网前宽景：同一刻赛后的握手拥抱，旁白是片尾一问。",
+        "score_inset": true
+      }
+    ]
+  }
+}
