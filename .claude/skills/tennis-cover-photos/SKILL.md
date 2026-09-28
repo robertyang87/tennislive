@@ -2359,7 +2359,10 @@ Laver Cup title to his resume.」「Team Europe players and captains get around 
 **回放的数（别读成「修好了」）**：11 条首推按首推那一刻重跑（上传晚于首推的剔掉）**0 条会被拦**——杭州 6 条
 机器能用的渠道一档都没有（AP 挑战页；中文媒体是这一站唯一出过实拍的一档，而 O4 不查它）；拉沃尔杯 4 条
 名单放宽之后点名闸过了 20 张（其中 10 张靠名单），**20 张全卡在官网 1200 宽**、1 张卡认人（替补席）；
-比利·简·金杯 1 条 WTA 查空。全库 83 条抽帧封面今天跑一遍：硬红 0，单条最慢 17 秒。
+比利·简·金杯 1 条 WTA 查空。全库 83 条抽帧封面今天跑一遍：硬红 0。单条耗时是个范围：机器闸判不了的
+（缺英文名、认不出赛事、没开赛时刻）和只剩 AP 一档的不到 1 秒；其余 1~24 秒（81 条
+「赛场之上」逐条量 1.2~21.4 秒、平均 11.8；bencic-townsend 同一条
+15.4／16.6／22.7 秒，复审时 24 秒——网络抖动，同一条能差 7 秒）。
 
 **两件定了（按仓库已有的规矩定，不是悬着的口径）**：
 - **中文媒体 O4 不用**：公众号／当地网站的配图没有图注，时间地点人物自证不了——CLAUDE.md「出处以来源自己的
@@ -2375,6 +2378,15 @@ Laver Cup title to his resume.」「Team Europe players and captains get around 
 | 团体赛放宽 | 放宽之后认错人原来只剩认人闸：① 点名闸收裸的替补席／看台名词（`bench`、`support…`、`crowd`、`fan(s)`、`spectator(s)`）② 放宽过的，图注**最先点名**的名单上的人必须是主角（「Learner Tien returns another Zverev smash」主语是对手）③ 照片有 EXIF `DateTimeOriginal` 就必须落在这场的当地日子（前一天的图第二天才传上来，上传那道闸拦不住） | zverev-tien 那 8 张：点名闸过的从 **7 张→4 张**（4 张全是主角先点名、全卡 1200 宽），**要下图的从 1 张→0 张**；`test_拉沃尔杯官网8张_…`、`test_照片EXIF拍摄日期不是这场的当地日子就不换` |
 | 开赛时刻下界 | `_start_time_source.reported_utc`（列出来的开赛时间）≤ 真开赛：「上传晚于开赛」拿它比是**更松**（原注释写反了），团体赛「不写对手」的放宽不给 | `test_列出来的开赛时间只当下界_团体赛不写对手的放宽不给` |
 | 时间 | match-reel 那一步 5→2 分钟：会拦的 100 秒、只报的 60 秒（`--preflight-budget`）；各步骤预算之和 62→59，job 63 | `test_渲前预检那一步的秒数装得进步骤超时_job留足三分钟余量` |
+
+##### 复审第二轮：账本之前推的 22 条、团队当主语、看台词钉住、夜场 EXIF
+
+| | 现在 | 判据 |
+|---|---|---|
+| 账本之前推的 | 81 条抽帧封面「赛场之上」里 22 条 `already_pushed` 认不出——8/2~8/8 合进 main，发布账本首笔 8/24、`pushed.json` 只有 `push.auto` 那条路写（手动 `mode=push` 只改 `copy.html`）。冻进 `data/legacy_prepush_reels.json`，只许减不许加；读不了按推过算。量法：`is_frame_cover` ＋ eyebrow＝赛场之上，逐条跑 `already_pushed`，空串的就是 | `test_发布账本之前推过的抽帧封面_登记表只许减_每条都查得到` |
+| 团队当主语 | 图注里 `Team <X>` 后面跟的不是封面主角的名字（「Team Europe celebrate after Alexander Zverev …」「Team Europe players and captains get around Zverev」）——**不分放宽没放宽**都不换（`team_subject_problem`）；`of／with／for Team X`、`Team X's <他>`、`Team X player <他>` 照旧认。两个词的队名会误拦（安全方向） | `TD2_6943_UhmuiH5g`（全名＋对手＋日期都点了，和替补席那张同一个帧号）；zverev-tien 8 张点名闸过的 4→2；`test_团队当主语的图注_不分放宽没放宽都不认成拍他本人` |
+| 看台词 | `crowd(s)`／`fan(s)`／`spectator(s)` 没有真图注钉着，逐个参数化（删一个红一格；`fantastic`／`crowded` 不拦） | `test_看台那几个词_crowd_fan_spectator_单复数都拦` |
+| 夜场 EXIF | 只记了开赛时刻时 `match_dates` 只有开赛那天：过了当地午夜拍的图被拦、记进 `tried`——安全方向（漏换一张，不换成别的比赛日）；flashscore 给了结束时刻就两天都认 | `test_只有开赛时刻时_夜场过了午夜拍的图被EXIF拦下还记进tried_知道结束时刻就不拦` |
 
 
 ### ⭐⭐ 2026-09-18：**比利·简·金杯官网的图在 Contentful 上，原图 5000~7000px**——页面是 JS 壳，图不是

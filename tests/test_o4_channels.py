@@ -265,9 +265,17 @@ def test_拉沃尔杯官网真图注_只写姓按名单认_这一天只打一场
     # 「Alexander Zverev adds another Laver Cup title to his resume.」——全名、不写对手
     probs, relaxed = verdict("JF1_7191_pmjUPNSQ_20260927042135.jpg")
     assert probs == [] and any("只打了第 10 场" in r for r in relaxed), (probs, relaxed)
-    # 「Team Europe players and captains get around Zverev.」——只写姓、不写对手：两条都放宽
+    # 「Team Europe players and captains get around Zverev.」——只写姓、不写对手，两条都放宽了，
+    # 可主语是一群人（复审：团队当主语的不认成拍他本人，`team_subject_problem`）
     probs, relaxed = verdict("CB_36487_4jVq5VqG_20260927041747.jpg")
-    assert probs == [] and len(relaxed) == 2, (probs, relaxed)
+    assert len(relaxed) == 2 and len(probs) == 1 and "是团队（Team Europe）当主语" in probs[0], \
+        (probs, relaxed)
+    # 同样只写姓、不写对手、主语是他本人的：两条都放宽、点名闸过
+    alone = cu.Candidate("event-site", "https://lavercup.com/wp-content/uploads/2026/09/z1.jpg",
+                         event_owned=True, meta_utc="2026-09-27T15:10:00",
+                         caption="Zverev roars after clinching the Cup for Team Europe.")
+    relaxed = []
+    assert cu.metadata_problems(alone, ctx, relaxed) == [] and len(relaxed) == 2, relaxed
     # Getty 那张捧杯（说明写着 9 月 27 日、不写对手）
     assert verdict("GettyImages-2297411314.jpg")[0] == []
     # 前一天的图照旧挡在日期上
@@ -337,10 +345,12 @@ def test_只写姓_名单上撞姓就不认_不是团体赛照旧要全名():
 #: zverev-tien 那 8 张官网候选（`_laver_candidates`，录的原样）**复审 D3 之后**的点名闸：
 #: None＝点名闸过了（接着卡分辨率）；否则是报错里必须有的几句。
 #: 之前：7 张过点名闸、6 张卡 1200 宽，剩下那张（-scaled 替补席）下下来只有认人闸拦得住（mismatch 0.13）。
+#: 复审第二轮：「Team Europe celebrate after …」「Team Europe players and captains get around …」
+#: 团队当主语，也拦在点名闸上——过点名闸的剩 2 张（Getty 捧杯、JF1_7191），全卡 1200 宽。
 ZT_AFTER = {
     "GettyImages-2297411314.jpg": None,               # Zverev celebrates with the Laver Cup trophy
-    "TD2_6943_UhmuiH5g_20260927042054.jpg": None,     # 全名 ＋ 对手都点了，没放宽
-    "CB_36487_4jVq5VqG_20260927041747.jpg": None,     # players and captains get around Zverev
+    "TD2_6943_UhmuiH5g_20260927042054.jpg": ("是团队（Team Europe）当主语",),  # 全名＋对手都点了，没放宽
+    "CB_36487_4jVq5VqG_20260927041747.jpg": ("是团队（Team Europe）当主语",),  # players and captains …
     "JF1_7191_pmjUPNSQ_20260927042135.jpg": None,     # Alexander Zverev adds another Laver Cup title
     "JF2_5479_oQpjCT2q_20260927052924.jpg": ("最先点名的是名单上的「tien」", "「support」"),
     "JF1_6497_6vkUqRmf_20260927035914.jpg": ("最先点名的是名单上的「tien」",),
@@ -353,8 +363,9 @@ def test_拉沃尔杯官网8张_放宽之后替补席看台和主语是别人的
     """复审 D3(a)(b)：团体赛放宽（名单认姓、官网图注不写对手）之后，认错人原来只剩认人闸一道——
     「Team World's Learner Tien returns another Zverev smash.」「Team World support Learner Tien against
     Zverev.」主语是勒纳·钱；「The Team Europe bench rise to celebrate Zverev's …」拍的是替补席
-    （那张 -scaled 原图下下来认人 mismatch 0.13）。现在三张都在点名闸上就拦住，剩下 4 张全是
-    图注最先点名兹维列夫、而且全卡 1200 宽——**一张都不用下**。"""
+    （那张 -scaled 原图下下来认人 mismatch 0.13）。现在三张都在点名闸上就拦住；复审第二轮再收
+    「Team Europe celebrate after …」「Team Europe players and captains get around …」（团队当主语），
+    剩下 2 张（Getty 捧杯、JF1_7191）全卡 1200 宽——**一张都不用下**。"""
     ctx = cu.match_context(_laver_spec(), times=lambda _id: cu.parse_dc_feed(ZT_FEED))
     cands = {c.filename: c for c in _laver_candidates(monkeypatch, "zverev")}
     assert set(cands) == set(ZT_AFTER), sorted(cands)
@@ -384,6 +395,64 @@ def test_拉沃尔杯官网8张_放宽之后替补席看台和主语是别人的
                                  ctx.roster) == "zverev"
     assert cu.first_roster_named("alex de minaur and taylor fritz pair up", ctx.roster) == "minaur"
 
+
+
+def test_团队当主语的图注_不分放宽没放宽都不认成拍他本人(monkeypatch):
+    """复审第二轮：录下的 lavercup.com 9/27 媒体库里 `TD2_6943_UhmuiH5g` 的 Getty 图注是
+    「LONDON, ENGLAND – SEPTEMBER 27: Team Europe celebrate after Alexander Zverev of Team Europe defeats
+    Learner Tien of Team World …」——全名 ＋ 对手 ＋ 日期全点了、**一条放宽都没走**，原来点名闸放行；
+    而它和替补席那张 `TD2_6943_vfR8lRDz…-scaled` 是**同一个帧号**。团队当主语的一律不认成拍他本人、不下图，
+    不是团体赛（没有名单）也一样。"""
+    import dataclasses  # noqa: PLC0415
+
+    ctx = cu.match_context(_laver_spec(), times=lambda _id: cu.parse_dc_feed(ZT_FEED))
+    team = {c.filename: c for c in _laver_candidates(monkeypatch, "zverev")}[
+        "TD2_6943_UhmuiH5g_20260927042054.jpg"]
+    assert "SEPTEMBER 27: Team Europe celebrate after Alexander Zverev of Team Europe defeats Learner Tien" \
+        in team.caption, team.caption                    # 录的原样，不是手写的
+    relaxed: list[str] = []
+    probs = cu.metadata_problems(team, ctx, relaxed)
+    assert relaxed == [], "全名＋对手都点了——没走放宽，拦它的只能是这一条"
+    assert len(probs) == 1 and "是团队（Team Europe）当主语" in probs[0], probs
+    target = cu.Target("zverev-tien-laver-cup-2026", _laver_spec(), datetime.now(timezone.utc), Path("x"))
+    chosen, rows = cu.evaluate(target, ctx, [team], fetch=lambda _u: pytest.fail("团队当主语的不下图"))
+    assert chosen is None and rows[0]["problems"] == probs, rows
+    # 没有名单（不是团体赛的那条路）也拦
+    plain = dataclasses.replace(ctx, roster=None, roster_name="")
+    assert any("当主语" in p for p in cu.metadata_problems(team, plain)), "不分放宽没放宽"
+
+    def says(caption: str) -> str | None:
+        return cu.team_subject_problem(cu.Candidate("ap", "https://a/t.jpg", caption=caption), ctx)
+
+    # 团队只是他的头衔／定语：认
+    assert says("Alexander Zverev of Team Europe celebrates after defeating Learner Tien of Team World.") is None
+    assert says("Team Europe's Alexander Zverev celebrates his win over Learner Tien.") is None
+    assert says("Team Europe player Alexander Zverev celebrates his win over Learner Tien.") is None
+    assert says("Zverev roars after clinching the Cup for Team Europe.") is None
+    assert says("Alexander Zverev celebrates with his team after beating Learner Tien.") is None
+    # 团队当主语、或者主语是队里的别人：不认
+    assert "当主语" in says("Team Europe players and captains get around Zverev.")
+    assert "的别人" in says("Team Europe captain Yannick Noah embraces Alexander Zverev.")
+    assert "的别人" in says("Team World's Learner Tien returns another Zverev smash.")
+
+
+@pytest.mark.parametrize("word, hit", [
+    ("crowd", True), ("crowds", True), ("fan", True), ("fans", True),
+    ("spectator", True), ("spectators", True),
+    ("fantastic", False), ("crowded", False),             # 整词：不是这几个词就不拦
+])
+def test_看台那几个词_crowd_fan_spectator_单复数都拦(word, hit):
+    """复审 D3(a) 收进 `NOT_IN_MATCH` 的看台名词：画面主体是一群人，最大那张脸不一定是他。
+    bench／support 由拉沃尔杯那 8 张真图注钉着；这几个词没有真图注，在这儿逐个钉住（删掉哪个哪格红）。"""
+    ctx = cu.match_context(_laver_spec(), times=lambda _id: cu.parse_dc_feed(ZT_FEED))
+    c = cu.Candidate("ap", "https://assets.apnews.com/w.jpg",
+                     caption=f"Alexander Zverev of Team Europe plays in front of the {word} against Learner "
+                             "Tien of Team World at the Laver Cup in London on Sunday, Sept. 27, 2026.")
+    probs = cu.metadata_problems(c, ctx)
+    if hit:
+        assert len(probs) == 1 and f"说明里有「{word}」" in probs[0], probs
+    else:
+        assert probs == [], probs
 
 def test_列出来的开赛时间只当下界_团体赛不写对手的放宽不给():
     """复审 nit 1：`_start_time_source.reported_utc`（sofascore 那种列出来的开赛时间）≤ 真开赛——
@@ -464,6 +533,33 @@ def test_前一天的图晚传上来_上传那道闸放行_EXIF拦住():
                                 fetch=lambda _u: _exif_photo("2026:09:27 14:02:00"))
     assert chosen is not None
 
+
+
+def test_只有开赛时刻时_夜场过了午夜拍的图被EXIF拦下还记进tried_知道结束时刻就不拦():
+    """`exif_date_problem`／`image_verdict` docstring 那句：只记了开赛时刻（`_match.start_utc`）时
+    `match_dates` 只有开赛那一天——当地 22:30 开打的夜场，过了午夜拍的图 EXIF 是第二天，拦下、而且
+    记进 `tried`（安全方向：漏换一张，不换成别的比赛日）。知道结束时刻（flashscore 的 DD）就两天都认。"""
+    cap = ("Alexander Zverev of Team Europe reacts against Learner Tien of Team World at the Laver Cup "
+           "in London on Sunday, Sept. 27, 2026.")
+    cand = cu.Candidate("ap", "https://assets.apnews.com/night.jpg", caption=cap)
+    night = _exif_photo("2026:09:28 00:20:00")               # 当地（伦敦）9/28 00:20
+    spec = _laver_spec()
+    spec["_match"] = {"start_utc": "2026-09-27T21:30:00Z"}   # 伦敦 22:30 开打
+    ctx = cu.match_context(spec, times=lambda _id: pytest.fail("记着开赛时刻，不问 flashscore"))
+    assert ctx.match_dates == {date(2026, 9, 27)} and ctx.end_utc is None, ctx
+    assert cu.metadata_problems(cand, ctx) == []
+    target = cu.Target("zverev-tien-laver-cup-2026", spec, datetime.now(timezone.utc), Path("x"))
+    chosen, rows = cu.evaluate(target, ctx, [cand], checker=_zverev_checker, fetch=lambda _u: night)
+    assert chosen is None and any("EXIF" in p and "2026-09-28" in p for p in rows[0]["problems"]), rows
+    assert rows[0].get("tried"), "EXIF 日期对不上算图本身的毛病——记进 tried，下一班不再下"
+    # 对照组：flashscore 给了结束时刻（DD＝伦敦 9/28 00:40），两天都是这一场
+    both = _laver_spec()
+    ctx2 = cu.match_context(both, times=lambda _id: cu.parse_dc_feed("DC÷1790544600¬DD÷1790552400¬~"))
+    assert ctx2.match_dates == {date(2026, 9, 27), date(2026, 9, 28)}, ctx2.match_dates
+    chosen, _rows = cu.evaluate(cu.Target("zverev-tien-laver-cup-2026", both, datetime.now(timezone.utc),
+                                          Path("x")), ctx2, [cand], checker=_zverev_checker,
+                                fetch=lambda _u: night)
+    assert chosen is not None, _rows
 
 def test_团体赛名单自洽_和仓库里拉沃尔杯的spec对得上():
     """名单是从官网抄的，抄错一个姓，放宽就放错人。拿仓库里自己的拉沃尔杯 spec 对一遍：
@@ -685,6 +781,65 @@ def test_渲前预检只拦第一次渲染_推过的只报_不试写不改spec(t
         _wong_spec(_production={"status": "ready_for_render"})), encoding="utf-8")
     assert cu.preflight_budget(tmp_path, auto_slug) == cu.PREFLIGHT_BUDGET_REPORT
 
+
+
+#: 发布账本的第一笔（`data/reel_publish_ledger/fils-tiafoe-cincinnati-2026-final.json`，420d663cf）。
+LEDGER_START = "2026-08-24"
+
+
+def _tracked(*patterns: str) -> list[str]:
+    return subprocess.run(["git", "-C", str(ROOT), "ls-files", "--", *patterns],
+                          capture_output=True, text=True, check=True).stdout.split()
+
+
+def test_发布账本之前推过的抽帧封面_登记表只许减_每条都查得到(tmp_path):
+    """复审：`already_pushed` 只认发布账本和 `pushed.json`，81 条抽帧封面「赛场之上」里漏了 22 条——
+    2026-08-02~08-08 合进 main 的，那时账本还没有（首笔 2026-08-24）、`pushed.json` 只有 `push.auto`
+    那条路写。漏掉的重渲时会被当成第一次渲染拦下、`--write` 还会改已发的 spec。冻进
+    `data/legacy_prepush_reels.json`，**只许减不许加**，表自带自检。"""
+    legacy = cu.prepush_legacy(ROOT)
+    assert legacy, "登记表读不到——路径或键名写错了，整条判据会静静失效"
+    raw = json.loads((ROOT / cu.PREPUSH_LEGACY).read_text(encoding="utf-8"))
+    assert raw.get("_why") and raw["reels"] == sorted(set(raw["reels"])), "要写 _why；排好序、不重复"
+    assert len(legacy) <= 22, "只许减不许加——账本之后推的片子由发布账本认，不往这儿加"
+    renders: dict[str, list[str]] = {}
+    for path in _tracked("output/*/reel/*/render.json"):
+        parts = path.split("/")
+        renders.setdefault(parts[3], []).append(parts[1])
+    assert len(renders) > 100, f"只找到 {len(renders)} 条 render.json——git ls-files 是不是没看到 output/"
+    pushed = {p.split("/")[3] for p in _tracked("output/*/reel/*/pushed.json")}
+    for slug in sorted(legacy):
+        spec_path = ROOT / cu.SPEC_DIR / f"{slug}.json"
+        assert spec_path.is_file(), f"{slug}：specs/reels 里没有这条"
+        spec = json.loads(spec_path.read_text(encoding="utf-8"))
+        assert cu.is_frame_cover(spec) and spec["cover"].get("eyebrow") == "赛场之上", \
+            f"{slug}：不再是抽帧封面「赛场之上」了——预检不看它，从登记表删掉"
+        assert not (ROOT / cu.PUBLISH_LEDGER / f"{slug}.json").exists(), \
+            f"{slug}：发布账本里有了——账本认得出，从登记表删掉"
+        assert slug not in pushed, f"{slug}：有了 pushed.json——从登记表删掉"
+        assert min(renders.get(slug) or ["9999"]) < LEDGER_START, \
+            f"{slug}：没有账本之前就合进 main 的 render.json——登记的只能是账本之前推的"
+    # 反过来：账本之前就合进 main 的抽帧封面「赛场之上」，already_pushed 一条都不许漏
+    checked = 0
+    for spec_path in sorted((ROOT / cu.SPEC_DIR).glob("*.json")):
+        spec = json.loads(spec_path.read_text(encoding="utf-8"))
+        if not (isinstance(spec, dict) and cu.is_frame_cover(spec)
+                and (spec.get("cover") or {}).get("eyebrow") == "赛场之上"):
+            continue
+        if min(renders.get(spec_path.stem) or ["9999"]) >= LEDGER_START:
+            continue
+        checked += 1
+        assert cu.already_pushed(ROOT, spec_path.stem), \
+            f"{spec_path.stem}：账本之前就合进 main 的抽帧封面，already_pushed 认不出"
+    assert checked >= 60, f"只校了 {checked} 条（2026-09-28 是 72）——扫描面没了，这条会变成恒真的绿灯"
+    # 登记表本身：登记过的认、读不了的按推过算（只报不拦）
+    (tmp_path / "data").mkdir()
+    assert cu.already_pushed(tmp_path, "chwalinska-gibson") == ""
+    (tmp_path / cu.PREPUSH_LEGACY).write_text(json.dumps({"reels": ["chwalinska-gibson"]}), encoding="utf-8")
+    assert "登记过" in cu.already_pushed(tmp_path, "chwalinska-gibson")
+    assert cu.already_pushed(tmp_path, "someone-else") == ""
+    (tmp_path / cu.PREPUSH_LEGACY).write_text("{坏", encoding="utf-8")
+    assert "状态不明" in cu.already_pushed(tmp_path, "someone-else")
 
 def test_渲前预检拦下的那张_write一定写得进去_同一道正式封面闸(tmp_path):
     """复审 nit 2：预检原来只过机器闸就报「找到了」（退出码 3），`--write` 再过正式封面闸——两道判得

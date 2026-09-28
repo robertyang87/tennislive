@@ -36,7 +36,7 @@
    | 闸 | 判据 |
    |---|---|
    | 说明／元数据点名 | 封面主角的**姓和名**（同姓的兄弟姐妹认人闸分不开）＋ **对手的姓**（点了对手才知道是哪一场）＋ 赛事（或图就在赛事自己的官网媒体库里）＋ **这场球的当地日期**（说明里写了日期就按说明；没写才看元数据的**上传时刻**，要晚于开赛——只有日子没有时刻的不换；写了星期几也要对得上） |
-   | 在比赛中 | 说明／文件名里出现训练、热身、发布会、采访、签名、抵达、定妆、替补席／看台（`bench`、`support`、`crowd`、`fans`）、双打／混双（`NOT_IN_MATCH`）一律不换——CLAUDE.md 选图第 2 道闸门；团体赛放宽过的，图注**最先点名**的名单上的人必须是主角（`relaxed_subject_problem`） |
+   | 在比赛中 | 说明／文件名里出现训练、热身、发布会、采访、签名、抵达、定妆、替补席／看台（`bench`、`support`、`crowd`、`fans`）、双打／混双（`NOT_IN_MATCH`）一律不换——CLAUDE.md 选图第 2 道闸门；团体赛放宽过的，图注**最先点名**的名单上的人必须是主角（`relaxed_subject_problem`）；图注里 `Team <X>` 当主语（「Team Europe celebrate after …」）的，不分放宽没放宽一律不换（`team_subject_problem`） |
    | 拍摄日期 | 照片有 EXIF `DateTimeOriginal` 就必须落在这场的当地日子（`exif_date_problem`；前一天的图晚传上来，上传那道闸拦不住） |
    | 分辨率 | 按选定的 `zoom` 铺 1080×1440 **不放大**（`build_match_reel.cover_photo_problem` 那道闸，不写 `_low_res_why`——机器不替人认领放大） |
    | 认人 | `face_checks`：最大那张脸**认得出是封面主角**（match ≥ 0.34）；认成对手、`unknown`、模型不可用一律不换 |
@@ -69,7 +69,8 @@
 试完退回），在**第一次 render 之前**问一句：抽帧封面的这一条，官方图是不是其实已经在了？有一张
 全过——**手写、还没推过**的 spec 退出码 `PREFLIGHT_FOUND`（3），报告里是换图的原话
 （`image`／`focus`／`focus_y`／`zoom`，`--write` 一条命令写进去，而且一定写得进去）；自动 spec 只报；
-**已经推过的只报、不试写、不改 spec**（`already_pushed`：发布账本／`pushed.json`；推出去之后归 O4）。
+**已经推过的只报、不试写、不改 spec**（`already_pushed`：发布账本／`pushed.json`／账本之前推的那 22 条
+`data/legacy_prepush_reels.json`；推出去之后归 O4）。
 一张都没全过、渠道一档都没查成、判不了当地日期、`_keep_frame_why` 认领过的——都不拦（2026-09-26 的授权）。
 来路：返工审计 2026-09-28，66 条里 11 条第一次推的是抽帧封面、4 条换实拍又重推了 5 次。
 
@@ -1021,6 +1022,59 @@ def relaxed_subject_problem(c: Candidate, ctx: MatchContext) -> str | None:
             "放宽（名单认姓／不写对手）只认拍他本人的图，主语是别人的不换")
 
 
+#: 「Team <X>」前一个词是这些时，它是定语／宾语，不是主语：「Alexander Zverev **of** Team Europe」
+#: 「celebrates **with** Team Europe」「Learner Tien **of** Team World」。`his／her／their` 那种是
+#: 「他的团队」（教练组），也不是这一类。
+_TEAM_NOT_SUBJECT_BEFORE = frozenset(
+    "of for with against from to by over beat beats beating defeat defeats defeated def vs versus"
+    " between at in on into join joins joined his her their its".split())
+#: 「Team Europe **player** Alexander Zverev …」：团队名只是他的头衔（同位语）。只收**单数**——
+#: 「Team Europe players and captains get around Zverev」主语是一群人。
+_TEAM_ROLE_NOUNS = frozenset(("player", "captain", "member", "star"))
+_TEAM_PHRASE = re.compile(r"\b(?:Team|TEAM)\s+([A-Z][\w-]*)")
+
+
+def team_subject_problem(c: Candidate, ctx: MatchContext) -> str | None:
+    """图注里「Team <X>」当**主语**（后面跟的不是封面主角的名字）——拍的是一队人，不是他本人。
+
+    2026-09-28 复审：lavercup.com 9/27 那张 `TD2_6943_UhmuiH5g` 的 Getty 图注是
+    「LONDON, ENGLAND – SEPTEMBER 27: **Team Europe celebrate** after Alexander Zverev of Team Europe
+    defeats Learner Tien of Team World …」——全名 ＋ 对手 ＋ 日期全点了，**没走任何放宽**，
+    原来点名闸放行；而它和替补席那张 `TD2_6943_vfR8lRDz…-scaled`（「The Team Europe bench rise …」，
+    认人 mismatch 0.13）是**同一个帧号**。所以不分放宽没放宽，一律不认成「拍他的图」。
+
+    判法（安全方向：拿不准就算没过）：
+    - 只认大写的 `Team <X>`（专名，不是「his team」）；前一个词是介词／`his`（`_TEAM_NOT_SUBJECT_BEFORE`）
+      的是定语／宾语，跳过
+    - 后面紧跟（隔着 `'s` 或单数头衔 player／captain／member／star）封面主角的名或姓——同位语，
+      团队名只是他的头衔，认；否则（动词、`players and captains`、`bench`、别人的名字）不认
+    - **不只看图注开头**：官网那一档的 `caption` 是 title ＋ alt ＋ caption 拼的（`cover_channels`），
+      title 可能就是「Zverev」或「Team Europe」，找不到「开头」在哪；只要有一处团队当主语就不换
+    - 两个词的队名（「Team Great Britain's Jack Draper」）会被误拦——安全方向，不换"""
+    caption = str(c.caption or "")
+    names = set(_fold(ctx.subject_en).split())
+    for m in _TEAM_PHRASE.finditer(caption):
+        before = _fold(caption[:m.start()]).split()
+        if before and before[-1] in _TEAM_NOT_SUBJECT_BEFORE:
+            continue
+        rest = _fold(caption[m.end():]).split()
+        titled = rest[:1] == ["s"]
+        if titled:
+            rest = rest[1:]
+        while rest and rest[0] in _TEAM_ROLE_NOUNS:
+            titled = True
+            rest = rest[1:]
+        if rest and rest[0] in names:
+            continue
+        said = " ".join(caption[m.start():].split()[:5])
+        who = ctx.subject_zh or "封面主角"
+        if titled:
+            return (f"图注里「{said}…」的主语是 Team {m.group(1)} 的别人，不是{who}——不换")
+        return (f"图注里「{said}…」是团队（Team {m.group(1)}）当主语——拍的是一队人（庆祝／替补席），"
+                f"不是{who}本人的图，不换")
+    return None
+
+
 def metadata_problems(c: Candidate, ctx: MatchContext,
                       relaxed: list[str] | None = None) -> list[str]:
     """说明／元数据有没有**点名**这场球：人（全名）、对手、赛事、日期，而且拍的是
@@ -1052,6 +1106,9 @@ def metadata_problems(c: Candidate, ctx: MatchContext,
                                if ctx.date_window else ""))
     if len(relaxed) > before and (who := relaxed_subject_problem(c, ctx)):
         problems.append(who)
+    # 不分放宽没放宽：团队当主语的一律不是拍他本人（复审：TD2_6943_UhmuiH5g 全名＋对手都点了）
+    if (team := team_subject_problem(c, ctx)):
+        problems.append(team)
     if (hit := NOT_IN_MATCH.search(text)):
         problems.append(f"说明里有「{hit.group(0)}」——不是这场单打在打的时刻"
                         "（训练／热身／发布会／采访／签名／抵达／定妆／替补席／看台／双打一律不换）")
@@ -1330,7 +1387,13 @@ def exif_date_problem(taken: datetime | None, shown: str, ctx: MatchContext) -> 
     2026-09-28 复审 D3(c)：说明没写日期时只能拿上传时刻判，而「前一天的图第二天才批量传上来」
     是真事（拉沃尔杯官网第二天的 Getty 图是次日 14:14Z 才上传的，比第三天那场开赛还晚——
     `_upload_problems` 拦不住）。照片自己记着按快门的那一刻，有就拿它再核一遍。
-    带时差的换算到赛事时区；没写时差的当成当地钟点（相机钟没调对的会被误拦——安全方向，不换）。"""
+    带时差的换算到赛事时区；没写时差的当成当地钟点（相机钟没调对的会被误拦——安全方向，不换）。
+
+    ⚠️ 只知道开赛时刻、不知道结束时刻（`_match.start_utc`／`_start_time_source` 只记开赛，
+    flashscore 没给 `DD`）时，`ctx.match_dates` **只有开赛那一天**——夜场打过当地午夜、
+    过了午夜才拍的图 EXIF 落在第二天，这里会拦下，`evaluate` 还会把它记进 `tried`
+    （「照片 EXIF 拍摄时刻」算图本身的毛病，下一班不再下）。这是**安全方向**：漏换一张，
+    不会换成别的比赛日；知道结束时刻（flashscore 的 `DD`）时两天都算这一场，不会误拦。"""
     if taken is None:
         return None
     if taken.tzinfo is not None:
@@ -1347,7 +1410,10 @@ def exif_date_problem(taken: datetime | None, shown: str, ctx: MatchContext) -> 
 
 def image_verdict(blob: bytes, spec: dict, ctx: MatchContext, *, checker=None) -> dict:
     """下下来的这张图过不过拍摄日期（EXIF 有才判）、分辨率、认人、睁眼、钩子带五道闸。**都算完**再报，
-    一张图被拦的理由全写出来（别只报第一道，那样下一个人会以为只差这一样）。"""
+    一张图被拦的理由全写出来（别只报第一道，那样下一个人会以为只差这一样）。
+
+    拍摄日期那道按 `ctx.match_dates` 判：只有开赛时刻（没有结束时刻）时它只是开赛那一天，
+    夜场过了当地午夜拍的图会被拦下、记进 `tried`——安全方向（`exif_date_problem`）。"""
     from PIL import Image, ImageOps  # noqa: PLC0415
 
     import face_checks  # noqa: PLC0415
@@ -1872,13 +1938,41 @@ PREFLIGHT_FOUND = 3
 #: 渲前预检这一步给多少秒（`--preflight-budget` 印出来，match-reel 那一步拿去喂 `timeout`）。
 #: 复审 nit 3：match-reel 各步骤声明的最坏预算之和原来是 62（job 63），这一步从 5 分钟收到
 #: 2 分钟、留出 ≥ 3 分钟余量——**会拦的**（手写 spec 的第一次渲染）给 100 秒，**只报不拦的**
-#: （自动 spec、已经推过的）给 60 秒。2026-09-28 全库 83 条抽帧封面实测单条最慢 17.1 秒。
+#: （自动 spec、已经推过的）给 60 秒。单条耗时是个**范围**（2026-09-28 沙箱实测 81 条抽帧封面
+#: 「赛场之上」）：机器闸判不了的（缺主角英文名、认不出赛事、没开赛时刻）和只剩 AP 一档的（挑战页
+#: 第一页就停）不到 1 秒，22 条；其余 59 条 1.2~21.4 秒、平均 11.8；
+#: 同一条 bencic-townsend 量了 15.4／16.6／22.7 秒，复审时 24 秒（网络抖动，同一条能差 7 秒）。
+#: 只报的 60 秒是最慢那次的 2.5 倍。
 PREFLIGHT_BUDGET_BLOCKING = 100
 PREFLIGHT_BUDGET_REPORT = 60
 
 
 def _is_auto(spec: dict) -> bool:
     return (spec.get("_production") or {}).get("status") == "ready_for_render"
+
+
+#: 发布账本和 `pushed.json` 都还没有的时候就推出去的抽帧封面「赛场之上」（复审：81 条漏 22 条）。
+#: 只许减不许加，自检在 `tests/test_o4_channels.py`。
+PREPUSH_LEGACY = Path("data/legacy_prepush_reels.json")
+
+
+def prepush_legacy(repo: Path) -> frozenset[str] | None:
+    """`PREPUSH_LEGACY` 里登记的 slug；文件不在是空集（`tmp_path` 那种没登记表的仓库），
+    **在但读不了返回 None**——调用方按「状态不明」处理。"""
+    path = repo / PREPUSH_LEGACY
+    try:
+        text = path.read_text(encoding="utf-8")
+    except FileNotFoundError:
+        return frozenset()
+    except OSError:
+        return None
+    try:
+        reels = json.loads(text)["reels"]
+    except (ValueError, KeyError, TypeError):
+        return None
+    if not isinstance(reels, list):
+        return None
+    return frozenset(str(s) for s in reels)
 
 
 def already_pushed(repo: Path, slug: str) -> str:
@@ -1889,9 +1983,20 @@ def already_pushed(repo: Path, slug: str) -> str:
       （sending／sent／uncertain）——`auto_push_gate` 挡重发认的就是它。**账本读不了算推过**
       （状态不明时宁可只报不拦，`publication_ledger.interview_published` 同一个口径）
     - git 跟踪着 `output/<日期>/reel/<slug>/pushed.json`（自动推送那条路留下的标记；
-      按 `git ls-files` 查，稀疏检出下 `output/` 不在工作区也查得到）"""
+      按 `git ls-files` 查，稀疏检出下 `output/` 不在工作区也查得到）
+
+    外加一张冻结的登记表 `PREPUSH_LEGACY`：2026-08-02~08-08 合进 main 的 22 条抽帧封面
+    「赛场之上」，推的时候账本（首笔 2026-08-24）还没有、`pushed.json` 只有 `push.auto`
+    那条路写（手动 `mode=push` 只改 `copy.html`）——上面两处都认不出它们。登记表读不了
+    同样按推过算。"""
     import publication_ledger  # noqa: PLC0415
 
+    legacy = prepush_legacy(repo)
+    if legacy is None:
+        return f"{PREPUSH_LEGACY.as_posix()} 读不了，状态不明按推过算"
+    if slug in legacy:
+        return (f"{PREPUSH_LEGACY.as_posix()} 登记过（发布账本和 pushed.json 之前推的，"
+                "2026-08-02~08-08）")
     try:
         attempts = publication_ledger.load(repo, "reel", slug)["attempts"]
     except (ValueError, UnicodeDecodeError, AttributeError, TypeError) as exc:
