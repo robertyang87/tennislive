@@ -7869,7 +7869,11 @@ def test_查旁白那条路不许碰源片也不许写产物():
        （和 `--cover-only` 那次同一个坑：开关够不着等于这条能力不存在）
     """
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
-    body = src[src.index("if args.check_narration:"):src.index("if args.dry_run:")]
+    # 切到 check_narration **之后**那个 `if args.dry_run:`：wp/tts-polyphones 在措辞闸之后、
+    # check_narration 之前另开了一个只印多音字预检的 `if args.dry_run:`，按第一次出现切的话
+    # 切出来是空串，这条判据就读不到它要看的那一段了。
+    start = src.index("if args.check_narration:")
+    body = src[start:src.index("if args.dry_run:", start)]
     assert "download(" not in body, "查旁白那条路碰了源片——它不需要"
     assert "TemporaryDirectory" in body, (
         "语音没落临时目录——查一次旁白就往 output/ 里写一遍 voice_*.mp3")
@@ -13870,7 +13874,10 @@ def test_签名源那道闸排在下载之前():
     assert "spec_sources(spec)" in inspect.getsource(reel.validate_spec).split('"""')[-1], (
         "validate_spec 不再调 spec_sources，dry-run 就够不着这道闸了")
     main_body = src[src.index("def main("):]
-    dry = main_body[main_body.index("if args.dry_run:"):]
+    # 模式分发那个 `if args.dry_run:` 在 check_narration 之后；前面那个只印多音字预检
+    # （wp/tts-polyphones），不是 dry-run 那条路本身。
+    dry = main_body[main_body.index("if args.dry_run:",
+                                    main_body.index("if args.check_narration:")):]
     assert "validate_spec(spec)" in dry[:400], "--dry-run 那条路没调 validate_spec"
 
     # ④ 真跑一遍 dry-run 的第一步：不联网、不碰源片，当场红

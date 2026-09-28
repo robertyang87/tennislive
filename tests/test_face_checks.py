@@ -300,7 +300,9 @@ def test_dry_run就查cover_src里已经抓好的那一帧(model, tmp_path):
     src = (ROOT / "tools" / "build_match_reel.py").read_text(encoding="utf-8")
     import re  # noqa: PLC0415
 
-    dry = src[src.index("    if args.dry_run:"):]
+    # 模式分发那个 `if args.dry_run:` 在 check_narration 之后；前面那个只印多音字预检
+    # （wp/tts-polyphones），按第一次出现切会切到它、而它里面当然没有封面认人。
+    dry = src[src.index("    if args.dry_run:", src.index("    if args.check_narration:")):]
     # 切到这一支结束：下一行缩进回到 4 格（main 里的下一条语句）
     end = re.search(r"\n    \S", dry[20:])
     dry = dry[:20 + end.start()] if end else dry
