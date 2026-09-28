@@ -334,6 +334,25 @@ def test_人核过也要补空档的VAD证据_空档销过才跳过(monkeypatch,
     assert got["verify"] == 0 and got.get("rc") == clip.VERIFY_FINDINGS_EXIT, got
 
 
+def test_自动销过账的空档subs和verify日志不再喊没销账(monkeypatch, tmp_path, capsys):
+    """复审第四轮：`main()` 每一档都喊一遍没销账的空档，原来只减人销的账（`_unresolved_gaps`）——
+    VAD 证据已经自动销掉、闸也放行了的空档，subs／verify 日志照样印「⚠️ 空档没销账」。"""
+    spec = dict(_SPEC)
+    out = tmp_path / "out" / "demo"
+    out.mkdir(parents=True)
+    clip.record_second_asr(spec, _LINES, out, 0.02, 300, 300)
+    _attest(spec, out, "no_speech")
+    got = _drive_verify(monkeypatch, tmp_path, spec, [(1.0, 6.0)])
+    printed = capsys.readouterr().out
+    assert got.get("rc") == 0, got
+    assert "空档没销账" not in printed, "闸放行了的空档，日志还说没销账"
+    assert f"`{GAP}`：VAD 自动销账" in printed, printed
+    # VAD 听到了人声：照旧喊
+    _attest(spec, out, "speech_detected", 2.1)
+    _drive_verify(monkeypatch, tmp_path, spec, [(1.0, 6.0)])
+    assert "⚠️ 空档没销账" in capsys.readouterr().out
+
+
 def _fake_faster_whisper(monkeypatch, words: list[tuple[float, float, str]]) -> None:
     """一个假的 faster_whisper：转写给定的词，VAD 一段人声都没有。"""
     word_objs = [types.SimpleNamespace(start=a, end=b, word=w) for a, b, w in words]
@@ -560,6 +579,19 @@ def test_缺subs判定的先投subs_中文封面的红不挡_碰转写的红才�
                 or set(subs) & set(dict(waiting))), "一条 slug 一趟只许投一样"
     # 老接口不变：todo_slugs 不把「先投 subs」的混进 render 名单
     assert pick.todo_slugs(now=_NOW)[0] == ["clean"]
+
+
+def test_片尾板那道红挡subs_改end区间就变():
+    """复审第四轮：「已知带片尾板的源上 `end` 离最后一个词太远」那道红（`subtitle_findings` 报
+    `片尾板：…`，pick 前面再加「预检：」）要改的是 `end`——第二份 ASR 量的区间跟着变，先投的那趟
+    subs 白跑（5~8 分钟一趟 runner）。和 `en_fixed` 挂错行同一类：挡 subs。中文超宽照旧不挡。"""
+    import pick_interview_renders as p  # noqa: PLC0415
+
+    need = f"{pf.NEEDS_SUBS}当前转写指纹没有第二份 ASR 的分歧量数"
+    tail = "预检：片尾板：`end` 在最后一个词之后 9.4 秒，源片带片尾板——收到词尾后 1.5 秒以内，或写 `_end_why`"
+    assert not p.wants_subs([need, tail]), "片尾板的红不挡 subs：改完 end 那一趟就白量了"
+    assert p.subs_blockers([need, tail]) == [tail]
+    assert p.wants_subs([need, "预检：字幕（出片那一趟 write_ass 会红在这儿）：中文超宽"])
 
 
 def test_subs投过在窗口里不重投_超窗重投_满三趟停_只有转写输入改了才清零(pick):
@@ -852,6 +884,14 @@ def test_换了源片判定不作数_没记源的老量数也不作数(monkeypat
                                                   "url": spec["url"]}))
     assert clip.subs_verdict(dict(swapped, transcript_verified=True), _LINES, out).state \
         == "needs_subs"
+    # ⚠️ 上一句红的其实是空档证据（它记的是旧源，换源后那处空档成了缺判定），不是人核那一支——
+    # 拿掉「pass 记的源要对得上」那个条件它照样绿（复审第四轮）。空档由人销账（或者没有空档）时，
+    # 挡着的**只剩**这一个条件
+    closed = dict(human, caption_gaps_ok={GAP: "人听过：掌声"})
+    assert clip.subs_verdict(closed, _LINES, out).state == "ok"
+    got = clip.subs_verdict(dict(closed, url=swapped["url"]), _LINES, out)
+    assert got.state == "needs_subs" and any("源" in p for p in got.pending), (
+        "人核的是换源之前那条片子，换了源照样凭「人核过」放行", got)
     # render 的 verify：换源之后不跳过、真重量
     rundir = tmp_path / "out" / "demo"
     rundir.mkdir(parents=True)
@@ -861,6 +901,15 @@ def test_换了源片判定不作数_没记源的老量数也不作数(monkeypat
     assert json.loads((rundir / clip.VERIFY_FP).read_text(encoding="utf-8"))["url"] == spec["url"]
     got = _drive_verify(monkeypatch, tmp_path, swapped, [])
     assert got["verify"] == 1, "换了源片还跳过重量——拿旧片子量的数出片"
+    # 人核过的那一支同理：pass 记的是旧源，render 不许凭「人核过」跳过第二份 ASR
+    # （`transcript_verified and recorded == fp and not verdict.pending` 那一跳）
+    (rundir / clip.VERIFY_FP).write_text(json.dumps({
+        "sha256": clip.transcript_fingerprint(spec, _LINES, rundir), "status": "pass",
+        "url": spec["url"]}))
+    got = _drive_verify(monkeypatch, tmp_path, dict(spec, transcript_verified=True), [])
+    assert got["verify"] == 0, "对照：同一条源、人核过，照旧跳过"
+    got = _drive_verify(monkeypatch, tmp_path, dict(swapped, transcript_verified=True), [])
+    assert got["verify"] == 1, "人核的是换源之前那条片子，render 还凭「人核过」跳过重量"
 
 
 def test_subs那一趟落的判定都记着源_下一趟不再缺判定(monkeypatch, tmp_path):
@@ -1210,7 +1259,7 @@ def test_同一份转写输入投满次数停下_账上标parked_pipeline_health
     assert json.loads(pick.STATE.read_text())["subs"]["needs"].get("parked") is True
     alerts = ph.parked_interview_subs(pick.STATE)
     assert len(alerts) == 1 and "needs" in alerts[0] and f"{pick.SUBS_MAX_TRIES} 趟" in alerts[0]
-    report, got = ph.render_report([], [], (0, 0, 0.0), [], None, alerts)
+    report, got = ph.render_report([], [], (0, 0, 0.0), [], None, parked_subs=alerts)
     assert "采访 subs 停着" in report and alerts[0] in got
     assert ph.alert_keys(alerts) == ["interview-subs:needs"]
     body = (ROOT / "tools" / "pipeline_health.py").read_text(encoding="utf-8")
@@ -1226,6 +1275,38 @@ def test_同一份转写输入投满次数停下_账上标parked_pipeline_health
     pick.sync_subs_state(now=now)
     assert "parked" not in json.loads(pick.STATE.read_text())["subs"]["needs"]
     assert ph.parked_interview_subs(pick.STATE) == []
+
+
+def test_停着的那条探针判不了就叫醒全量_全量判过缓存命中就不再叫醒(pick, monkeypatch):
+    """复审第四轮：停着（parked）的一条还缺中文，人修好原因、手动投了 mode=subs、判定落了——判定文件
+    在预检缓存的键里（`caption_fingerprint`），探针缓存不命中、退回「判不了转写那一半」。原来
+    `_subs_block` 照旧按次数判 parked、探针不算活：全量那一趟不醒，`--sync-subs` 跑不到，parked 标记
+    一直挂着、pipeline-health 一直喊。现在探针判不了的停着那条算活（只叫醒全量）；全量判过、缓存
+    命中之后，真还停着的探针不再叫醒它（不会每 10 分钟逼一趟全量）。"""
+    import interview_preflight  # noqa: PLC0415
+
+    _fresh(pick)
+    monkeypatch.setattr(pick, "_code_fingerprint", lambda: "code")
+    monkeypatch.setattr(interview_preflight, "caption_fingerprint", lambda slug: [])
+    at = lambda m: (_NOW + timedelta(minutes=m)).strftime("%FT%TZ")  # noqa: E731
+    for i in range(pick.SUBS_MAX_TRIES):
+        pick.mark_subs("fresh", now=at(i * 80))
+    now = _NOW + timedelta(minutes=pick.SUBS_MAX_TRIES * 80 + 1)
+
+    def unavailable(s, **kw):
+        raise interview_preflight.PreflightUnavailable("缺 PIL")
+    monkeypatch.setattr(interview_preflight, "spec_problems", unavailable)
+    monkeypatch.setattr(interview_preflight, "probe_problems",
+                        lambda s: (["check_copy_page：缺 xhs"], ["量宽度"]))
+    monkeypatch.setattr(pick, "PROBE", True)
+    _, waiting, subs = pick.todo_plan(now=now)
+    assert "fresh" in subs, ("停着的那条探针判不了还不算活：全量不醒，parked 永远摘不掉", waiting)
+    # 全量判过（还缺判定＝真还停着）、缓存命中：探针不再叫醒
+    need = f"{interview_preflight.NEEDS_SUBS}当前转写指纹没有第二份 ASR 的分歧量数"
+    pick._verdicts()["fresh"] = {"key": pick.verdict_key("fresh"),
+                                 "missing": ["check_copy_page：缺 xhs", need]}
+    _, waiting, subs = pick.todo_plan(now=now)
+    assert "fresh" not in subs and "预检还是认不出" in dict(waiting)["fresh"][0], (subs, waiting)
 
 
 def test_auto_render全量那一趟带sync_subs_探针不带():

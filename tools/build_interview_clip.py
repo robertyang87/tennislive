@@ -45,8 +45,14 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
   把话筒交给她谢菲律宾球迷，她开口了，而 YouTube 的自动字幕在那一段**一个事件
   都没有**——于是成片上那 3.2 秒是空白，还通过了全部校验。见 `caption_gaps`。
   英语 ASR 的空白不能判断它是什么：没人说话、掌声、还是球员换了母语，
-  `small.en` 都可能给空白。verify 另跑语言无关的 Silero VAD；只有核心区无人声且
-  第二 ASR 也没有词才自动销账。VAD 检出人声的一律继续红灯，不猜语言和内容。
+  `small.en` 都可能给空白。verify 另跑语言无关的 Silero VAD，逐处落进
+  `gap_vad_attestation.json`，三种情形自动销账、各标各的依据（`GAP_AUTO_LABELS`，
+  理由见 `gap_row_reason`）：核心区 VAD 没测到人声、第二份 ASR 也没听出词——
+  「VAD 自动销账」，**只有这一种**是证过没人说话；VAD 测到了人声，但第二份 ASR 听到的
+  词已按原顺序出现在前后的成品字幕里——「双 ASR 自动销账」（两套时间码的边界漂移）；
+  成品字幕相邻两行的时间轴本来就盖住了核心区——「字幕时间轴自动销账」。后两种都是
+  VAD 听到了人声、按字幕里有这几秒的话销账。其余 VAD 检出人声的一律红灯、要人听，
+  不猜语言和内容。
 
 用法：
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage subs
@@ -6352,7 +6358,17 @@ def main() -> int:
     # `caption_gaps_ok` 的键是**源片**秒（`294.8-297.4`）——照着提示写键，
     # 写出来的那个键永远对不上，而对不上的样子就是「销了账它还在喊」。
     # render 那一步（下面）一直是印键的，只有这一行漏了。
-    for a, b in _unresolved_gaps(spec, caption_gaps(spec, outdir)):
+    # ⚠️ 按当前指纹的证据**自动销过账**的不喊（复审第四轮）：原来只减人销的账
+    # （`_unresolved_gaps`），subs／verify 的日志把闸已经放行的空档也印成「没销账」。
+    # render 那一步在下面单独列自动销账的依据，这里只在别的几档列
+    open_gaps = _unresolved_gaps(spec, caption_gaps(spec, outdir))
+    auto_closed = auto_gap_closures(spec, lines, outdir) if open_gaps else {}
+    for a, b in open_gaps:
+        if gap_key(a, b) in auto_closed:
+            if args.stage != "render":
+                print(f"[空档] 片内 {a - spec['start']:.1f}–{b - spec['start']:.1f} 秒 "
+                      f"`{gap_key(a, b)}`：{auto_closed[gap_key(a, b)]}")
+            continue
         print(f"⚠️ 空档没销账：片内 {a - spec['start']:.1f}–{b - spec['start']:.1f} 秒"
               f"（{b - a:.1f} 秒自动字幕是空的）　{_yt_at(spec['url'], a)}\n"
               f"   销账写进 `caption_gaps_ok`，键是 `{gap_key(a, b)}`")

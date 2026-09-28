@@ -353,6 +353,10 @@ def _remember(slug: str, missing: list[str]) -> None:
         _VERDICTS_DIRTY = True
 
 
+#: 探针顶上的那条「缺判定」不是判出来的，是**判不了**（`_cached_verdict`）——`todo_plan` 认它
+PROBE_SUBS_UNKNOWN = "探针判不了转写那一半"
+
+
 def _cached_verdict(slug: str, missing: list[str] | None = None) -> list[str]:
     """探针判不全的一条：同一份输入全量判过就用那一份，没有就当「要全量那一趟来判」——
     别的都齐了的算待投 render（原来的口径）；还缺中文、封面这类的（`missing`，不挡 subs），
@@ -366,7 +370,7 @@ def _cached_verdict(slug: str, missing: list[str] | None = None) -> list[str]:
     if not missing:
         return []
     from interview_preflight import NEEDS_SUBS  # noqa: PLC0415
-    return [*missing, f"{NEEDS_SUBS}探针判不了转写那一半（缺 PIL），当前转写指纹有没有 subs 的判定"
+    return [*missing, f"{NEEDS_SUBS}{PROBE_SUBS_UNKNOWN}（缺 PIL），当前转写指纹有没有 subs 的判定"
                       "交给全量那一趟"]
 
 
@@ -632,6 +636,14 @@ def todo_plan(*, now: datetime | None = None
             continue
         others = [m for m in missing if NEEDS_SUBS not in m]
         if block := _subs_block(p.stem, now=now, state=state):
+            if PROBE and block[0] == "parked" and any(PROBE_SUBS_UNKNOWN in m for m in missing):
+                # 停着的那条，探针**判不了**它还缺不缺判定（缓存没命中：判定文件在键里，人修好
+                # 原因、手动投的 subs 一落判定，键就变了）。原来照旧按次数判 parked、不算活——
+                # 全量那一趟不醒，`--sync-subs` 跑不到，parked 标记一直挂着、pipeline-health
+                # 一直喊（复审第四轮）。算活、叫醒全量去判（探针只数数，不 dispatch）；全量判完
+                # 缓存命中，真还停着的下一趟探针就不再叫醒它
+                subs.append(p.stem)
+                continue
             waiting.append((p.stem, [block[1], *others]))
             if block[0] == "parked":
                 _SUBS_SYNC["parked"].add(p.stem)

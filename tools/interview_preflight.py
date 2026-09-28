@@ -218,7 +218,13 @@ SUBS_RED = "转写（subs 在当前转写指纹上量出来的）："
 EN_FIXED_RED = "`en_fixed` 行号像是挂错了行"
 HUMAN_QUOTE_RED = "人工引语对不上："
 RESEGMENT_RED = "字幕重切："
-TRANSCRIPT_REDS = ("check_source_contract：", EN_FIXED_RED, HUMAN_QUOTE_RED, RESEGMENT_RED)
+#: 「已知带片尾板的源上 `end` 离最后一个词太远」那道红的开头——它由另一条同期改动加进
+#: `subtitle_findings`（`interview_tail.quiet_tail_problem`，报 `片尾板：…`），那边没合进来之前
+#: 这一项不命中任何东西。改的是 `end`，第二份 ASR 量的区间跟着变，先投的那趟 subs 白跑一趟
+#: （复审第四轮：两边哪个先合，这一项都认得出）
+TAIL_BOARD_RED = "片尾板："
+TRANSCRIPT_REDS = ("check_source_contract：", EN_FIXED_RED, HUMAN_QUOTE_RED, RESEGMENT_RED,
+                   TAIL_BOARD_RED)
 
 
 def subtitle_findings(spec: dict, *, require_subs: bool = False

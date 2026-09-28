@@ -274,7 +274,7 @@ def stale_publications(now: datetime | None = None, hours: float = 1.5) -> list[
 def render_report(health: list[WorkflowHealth], steps: list[dict],
                   sla: tuple[int, int, float], stale: list[str],
                   orchestrator: tuple[str | None, float | None] | None = None,
-                  parked_subs: list[str] | None = None,
+                  *, parked_subs: list[str] | None = None,
                   ) -> tuple[str, list[str]]:
     alerts: list[str] = []
     lines = ["## 自动视频流水线健康度", "", "| 工作流 | 样本 | 成功 | 失败率 | 中位耗时 | 连续失败 |",
@@ -528,8 +528,10 @@ def main(argv: list[str] | None = None) -> int:
         health.append(row)
         steps.extend(these_steps)
     sla = sla_health()
+    # 新加的段一律按关键字传（`*` 之后）：几条分支各往这儿加一段，合的时候不会串位
     report, alerts = render_report(health, steps, sla, stale_publications(),
-                                   orchestrator_productivity(), parked_interview_subs())
+                                   orchestrator_productivity(),
+                                   parked_subs=parked_interview_subs())
     # 和看板同一份数据（每条受监控工作流 24 小时内的 run）、同一个定义。
     # ⚠️ 原来取的是全仓最近 100 条——忙时只够回溯一个半小时，而这一班实际两三个小时
     # 才来一趟，一处没人重试的失败滚出列表就永远不推（`monitored_runs` 顶注）。

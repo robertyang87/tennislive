@@ -5015,3 +5015,16 @@ render 那一趟判定 ok 时照旧装 faster-whisper、恢复模型缓存，只
 - **nit 4 ｜ subs 的账会删**：render 那一份（`slugs`／`at`）从来不删；subs 这一份判定交上来、spec 没了、已出片就删
   （只删过了重投窗口的），ok 且这趟要投 render 的留给 SLA 起点、`mark_one` 投出去那一刻删；撞车合并带着删除和标记
 
+### 复审第四轮（2026-09-28）
+
+- **人核那一支的「pass 记的源对不上就不认」原来没有判据**：拿掉它，老测试照样绿——那句断言红在空档证据
+  （它也记着旧源），不是这一支。补的断言让空档由人销账，只剩这一个条件挡着；render 那一跳
+  （`transcript_verified and recorded == fp and not verdict.pending`）同样钉了，两处各自反向验证变红
+- **停着（parked）的那条，探针判不了就算活**：判定文件在预检缓存的键里，人修好、手动投的 subs 一落判定，
+  探针缓存不命中、退回「判不了转写那一半」（`PROBE_SUBS_UNKNOWN`）；原来照旧判 parked、不叫醒全量，
+  `--sync-subs` 跑不到、标记一直挂着。全量判过之后缓存命中，真还停着的不再叫醒
+- **`片尾板：` 进 `TRANSCRIPT_REDS`**：那道红（另一条同期改动加的）要改 `end`，区间一变先投的 subs 白跑
+- **每一档喊「空档没销账」减掉自动销账的**：subs／verify 日志原来把闸已放行的空档印成没销账；
+  `pipeline_health.render_report` 新加的段按关键字传（`parked_subs=`），几条分支各加一段时合并不串位
+- 不改的：人核那一支的老 pass **没记源**照认（人的标记）。量过：人核、写 `asr_model` 的 spec 里 5 条的
+  `verify_fingerprint.json` 没记源（4 条老格式连 `status` 都没有），5 条都已发——以后修订其中一条时换源，照旧跳过重量
