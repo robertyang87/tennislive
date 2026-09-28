@@ -4978,8 +4978,8 @@ reel-auto-ready 只补封面和视觉证据、**不重跑备料**。回放（df_
 08a3fd1da SystemExit 穿出 → probe 红 → 失败自愈摘 state → 重 probe；dc80fd22d 草稿留在 waiting、再没人碰。
 重 probe 要重下源片，所以**只重跑便宜的那一半**（选了 D1，没退回「probe 非零退出」那条 b 路）：
 
-- `assemble_spec` 读失败**且可重试**（`match_feed._get` 的 SystemExit、`StatsError`/`FeedUnavailable`、网络异常；
-  解析错、同姓认不出不算）→ 草稿记 `_feed_retry: {blocks, errors, tries, last_at}`，`blocks` 连带这一趟没跑的下游
+- `assemble_spec` 读失败**且可重试**（`match_feed._get` 的 SystemExit、`FeedUnavailable`、网络异常；
+  解析错、同姓认不出、**带 4xx 状态码的**不算——4xx 里只有 408/425/429 算，见第三轮）→ 草稿记 `_feed_retry: {blocks, errors, tries, last_at}`，`blocks` 连带这一趟没跑的下游
   （`match_id` → 全部；`matchup` → stats／hit_data／points；`points` 顺带 tiebreaks）。反查 id 也算一块：
   `find_match` 有页读失败时没找到报 `FeedUnavailable`（那一页里可能就有它），原来吞成「没反查到 id」
 - reel-auto-ready 每一班（过期检查之后、认领 probe 和转正之前）跑 `tools/retry_feed_blocks.py`：**只重跑账上那几块**，
@@ -4994,3 +4994,33 @@ reel-auto-ready 只补封面和视觉证据、**不重跑备料**。回放（df_
 等比缩只在更高一档世界量得到，各对一半）；只剩一种装得进才用它。全库 391 对「框 × probe 过的源片尺寸」新老两版
 结果逐一相同。判据 `tests/test_feed_retry.py`、`test_只宽出界的框_平移和等比缩都装得进_不猜退回猜框`、
 `test_同一组宽高两种读法各自量对一半_所以光凭宽高分不出`、`test_手写spec带着_production也跳过_认自动链的是kind`。
+
+### ⭐⭐ 第三轮复审（同日）：**补上的赛果会让 probe 那一趟的视觉结论过时**
+
+probe 在 assemble 之后**同一趟**跑 `analyze_reel_visuals`；df_mh_1／df_hh_1／反查 id 读失败时，MiniMax 看到的 `_match`
+只有 flashscore_id、没有 `_cover_brief`——`clean_report` 不核封面人物、情绪退回 winner_celebration。重跑补上赛果之后，
+reel-auto-ready 要不要重审只看封面路径／状态／retryable／`evidence_hash`（**只含图片字节，不含 `_match`**）→ 不重审 →
+promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角，自动渲、自动推**（回放 `rv5_stale_visual_repro.py`：
+封面诺斯科娃、赢家萨巴伦卡，改前重审条件 False、waiting 里没有视觉闸）。爆冷反过来：loser_fighting 当时被判不合格
+（retryable false），补上 brief 之后永不重审、卡到过期不告警。main 上不会：probe 红 → 重 probe 时 `_match` 已经在了。
+
+- `retry_feed_blocks` 这一趟改了 `_match`／`_cover_brief`、**且赛果定下来了**（`result_verified`；没定的 promote 本来不收，
+  这时作废只会拿半截赛果再问一次模型）→ `analyze_reel_visuals.recheck_after_facts_change`（**不调模型**）：存着的回答按新赛果重跑 `clean_report` 的核对，不过 → waiting（哈希留着，同一张照片不再问）；
+  过 → 作废：摘 `input_sha256`（`main` 按它复用 pass）、`retryable: true`、waiting，走原来那条重审路。`error` 的不动
+- `apply_story` 认得上一趟自己写的结尾兑现段（`_why` 以 `ENDING_WHY` 开头），重审第二次走到它时结尾不再放两遍
+
+几处小补（同一轮 nit）：
+
+| 原来 | 现在 |
+|---|---|
+| 撤了文案报 `healed`、`_feed_retry` 摘掉，没有告警（没有东西会再起草它）；`dropped` 只打 `::warning::` | `copy_dropped`／`dropped`／重跑崩了都记 `_feed_retry.needs_human`（跨班留着）：`::warning::` ＋ run 摘要**只打第一次**，`pipeline_health.feed_retry_stuck` 按它点名 |
+| flashscore 挂住不回，一趟重跑 2~6 分钟，3 份草稿就能把 15 分钟的 job 拖超时，`tries` 永远不涨 | 工作流 `timeout 120`，被掐（124）另起 `--timed-out 120` 补记一趟（`tries`＋1，试满停手）；写草稿先写临时文件再换名 |
+| 连着三班（≈ 半小时）花光三次 | 退避：第一次下一班就来，之后隔 20、40 分钟（`FEED_RETRY_BACKOFF × 2**tries`，命令行那层判，返回 `later`） |
+| 试满后每一班照旧进这一步、刷 warning | `exhausted_at` 在就不进；`exhausted` 不再打 warning |
+| 崩了只 `echo`，不涨次数、不点名 | 从盘上那份草稿记 `exhausted_at` ＋ `needs_human`（不写改了一半的），返回 `broken` |
+| `StatsError`／任何 SystemExit 都算可重试 | 带 4xx 状态码的不算（`match_feed._get` 自己说「4xx 是明确拒绝」），408/425/429 除外；`StatsError` 本身不算，`FeedUnavailable` 算 |
+
+**人处置完怎么让它重来**：`python tools/retry_feed_blocks.py --draft specs/reels/pending/<slug>.draft.json --rearm --write`，
+推 main（`tries` 清零、摘 `exhausted_at`／`needs_human`；账上已没有要重读的块就整个摘掉——撤了文案那种重读补不回来，
+要么手写 `editorial`，要么照编排器那条 `match-reel.yml mode=probe` 重新备料）。pipeline_health 的报表里印着这一句。
+⚠️ 转正要 `hit_data`：`_durations` 只有这一块写，缺了 waiting 报「比赛时长没有结构化来源」。判据 `tests/test_feed_retry.py`（25 条）。

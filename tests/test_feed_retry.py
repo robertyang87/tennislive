@@ -236,6 +236,14 @@ def test_flashscore喂料_5xx重试完是没读到_4xx是明确拒绝(monkeypatc
     assert a.is_transient_feed_error(SystemExit("HTTP 503"))
     assert not a.is_transient_feed_error(ValueError("解析错"))
     assert not a.is_transient_feed_error(a.MatchupOrderUnverified("同姓", transient=False))
+    # 第三轮复审 nit：原来 SystemExit／StatsError 整类算可重试，4xx（明确拒绝）也重试三次
+    assert not a.is_transient_feed_error(SystemExit(
+        "https://…/df_mh_1_x\n  HTTP 404 —— 被挡还是不存在，看状态码和 Content-Type")), "4xx 是明确拒绝"
+    assert not a.is_transient_feed_error(fs.StatsError("Flashscore HTTP 403（x）"))
+    assert not a.is_transient_feed_error(fs.StatsError("统计喂料是空的"))
+    assert a.is_transient_feed_error(SystemExit("https://…\n  HTTP 429 —— 被挡还是不存在")), "限流是晚点再来"
+    assert a.is_transient_feed_error(SystemExit("https://…\n  连了 3 次都失败（URLError）"))
+    assert a.is_transient_feed_error(fs.FeedUnavailable("Flashscore HTTP 503（x，试了 3 次）"))
 
 
 def test_补齐比分之后拿同几道闸核一遍已经起草的文案_对不上就撤(flash):
@@ -246,9 +254,10 @@ def test_补齐比分之后拿同几道闸核一遍已经起草的文案_对不�
     draft["editorial"] = {"thesis": "萨巴伦卡 6-2 6-1 横扫", "narration": ["开局"]}
     draft["push"] = {"summary": "萨巴伦卡横扫", "lead": "两盘", "auto": True}
     flash.down.clear()
-    assert a.retry_feed_blocks(draft) == "healed"
+    assert a.retry_feed_blocks(draft) == "copy_dropped", "撤了文案不是「读通了」——没有东西会再起草它"
     assert "editorial" not in draft and "push" not in draft
     assert "备料补齐之后文案对不上" in "\n".join(draft["_notes"])
+    assert "文案对不上" in draft["_feed_retry"]["needs_human"][0], "要人看——记账，pipeline_health 按它点名"
 
     flash.down = {"df_mh_1"}
     ok = _assemble()
@@ -260,6 +269,7 @@ def test_补齐比分之后拿同几道闸核一遍已经起草的文案_对不�
 # ── reel-auto-ready 的那一步 ───────────────────────────────────────────────
 
 def test_命令行_写回草稿_试满打warning写run摘要(flash, tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(rfb, "_now", lambda: datetime.now(timezone.utc) + timedelta(days=1))
     flash.down = {"df_mh_1"}
     path = tmp_path / "sabalenka-noskova.draft.json"
     path.write_text(json.dumps(_assemble(), ensure_ascii=False), encoding="utf-8")
@@ -276,7 +286,8 @@ def test_命令行_写回草稿_试满打warning写run摘要(flash, tmp_path, mo
     before = path.read_bytes()
     assert rfb.main(["--draft", str(path), "--write"]) == 0
     out = capsys.readouterr().out
-    assert out.strip().splitlines()[-1] == "exhausted" and "::warning::" in out
+    assert out.strip().splitlines()[-1] == "exhausted"
+    assert "::warning::" not in out, "试满那一班已经告警过、pipeline_health 在点名——不许每一班再刷一遍"
     assert path.read_bytes() == before, "试满之后不再改草稿"
 
 
@@ -296,6 +307,14 @@ def test_reel_auto_ready每一班先重跑欠着的备料_再补封面和转正(
     assert at < run.index("PROBE=$(git ls-tree"), "重跑不要 probe 证据，排在认领 probe 之前"
     assert at < run.index("tools/promote_reel_draft.py"), "补上的赛果这一班就能转正"
     assert "git add specs/reels" in run, "改过的草稿要落库"
+    # 第三轮复审 nit：flashscore 挂住不回时一趟能拖 2~6 分钟（job 才 15 分钟）；被掐掉要补记这一趟
+    line = run[run.rindex("\n", 0, at) + 1:run.index("\n", at)]
+    assert line.lstrip().startswith("timeout "), f"重跑要有墙钟上限：{line}"
+    assert "|| FEED_RC=$?" in line, "被掐掉不许让 bash -e 带崩整个循环"
+    fallback = run[at:at + 600]
+    assert '"$FEED_RC" = "124"' in fallback and "--timed-out" in fallback, "被掐掉（124）要补记一趟"
+    guard = run[run.rindex("if [", 0, at):at]
+    assert "._feed_retry.exhausted_at" in guard, "停手了的不再进这一步（不然每一班刷一遍 warning）"
 
 
 # ── pipeline_health 点名 ───────────────────────────────────────────────────
@@ -314,14 +333,21 @@ def test_健康检查点名试满仍没读通的新鲜草稿_过期的和还在�
          "_feed_retry": {**ledger, "tries": 1, "exhausted_at": None}},
         {"slug": "expired-one", "_production": {"received_at": stale}, "_feed_retry": ledger},
         {"slug": "healthy", "_production": {"received_at": fresh}},
+        # 第三轮复审 nit：撤了文案／重读也一样的错／重跑崩了——账上没有要重读的块，也要点名
+        {"slug": "copy-gone", "_production": {"received_at": fresh},
+         "_feed_retry": {"blocks": [], "tries": 1, "needs_human": ["备料补齐之后文案对不上（…）"],
+                         "needs_human_at": "2026-09-28T11:00:00Z"}},
     ]
     seen = []
     monkeypatch.setattr(ph, "_tracked_jsons", lambda pattern: seen.append(pattern) or drafts)
     stuck = ph.feed_retry_stuck(now)
     assert seen == ["specs/reels/pending/*.draft.json"]
-    assert len(stuck) == 1 and "stuck-one" in stuck[0] and "points" in stuck[0]
+    assert len(stuck) == 2 and "stuck-one" in stuck[1] and "points" in stuck[1]
+    assert "copy-gone" in stuck[0] and "文案对不上" in stuck[0]
+    stuck = stuck[1:]
     _report, alerts = ph.render_report([], [], (0, 0, 0.0), [], None, stuck)
     assert stuck[0] in alerts and "stuck-one" in _report
+    assert "--rearm --write" in _report, "告警要带上怎么让它重来，不让人去翻 skill"
     # 去重按 slug：同一份草稿换了一句错误文字，不算新告警
     assert ph.alert_keys(stuck) == ["feed_retry:stuck-one"]
     assert ph.alert_keys([stuck[0].replace("points", "points、tiebreaks")]) == ["feed_retry:stuck-one"]
@@ -349,3 +375,274 @@ def test_账本字段_转正剥掉_不是真字段所以不会被下划线闸误
     assert set(a.FEED_BLOCKS) == {"match_id", "matchup", "stats", "hit_data", "points", "tiebreaks"}
     for upstream, downstream in a._FEED_DOWNSTREAM.items():
         assert upstream in a.FEED_BLOCKS and set(downstream) <= set(a.FEED_BLOCKS)
+
+
+# ── 第三轮复审：赛果补齐之后，probe 那一趟的视觉结论就过时了 ─────────────────
+#
+# match-reel.yml 的 probe 在 assemble 之后同一趟紧接着跑 analyze_reel_visuals；df_mh_1 读失败时
+# 模型看到的 `_match` 只有 flashscore_id，`clean_report` 不核封面人物、情绪退回 winner_celebration。
+# 重跑补上赛果之后，reel-auto-ready 要不要重审只看封面路径／状态／retryable／图片字节哈希——
+# 不看 `_match`。回放 rv5_stale_visual_repro.py：输家当封面主角的 pass 原样留着，promote 照抄。
+
+import analyze_reel_visuals as visual  # noqa: E402
+
+
+def _probe_verdict(draft: dict, *, subject: str, moment: str) -> dict:
+    """probe 那一趟：模型按看得见的给答案，`clean_report` 按**当时**的草稿核，钉上图片哈希。"""
+    draft["cover"]["portrait"] = {"image": "assets/reel/sabalenka-noskova-cover.jpg"}
+    window = {"start": 100, "end": 110, "kind": "match_point", "winner_visible": True,
+              "reason": "赛点 105s 落地", "confidence": 0.9}
+    raw = {"cold_open": dict(window), "ending": dict(window),
+           "cover": {"same_match": True, "subject": subject, "moment": moment,
+                     "reason": "同场、握拳", "confidence": 0.9}}
+    report, _ = visual.clean_report(raw, draft, 200.0)
+    report.update(input_sha256="bytes-the-model-saw",
+                  cover_image=draft["cover"]["portrait"]["image"])
+    draft["_visual_evidence"] = report
+    return report
+
+
+def _workflow_rereviews(draft: dict, current_hash: str = "bytes-the-model-saw") -> bool:
+    """reel-auto-ready.yml 那道重审条件（原样照抄；图片字节没变）。"""
+    ev = draft.get("_visual_evidence") or {}
+    return (ev.get("cover_image", "__missing__") == "__missing__"
+            or draft["cover"]["portrait"]["image"] != ev.get("cover_image")
+            or ev.get("visual_status") == "error" or ev.get("retryable") is True
+            or current_hash != ev.get("input_sha256"))
+
+
+def _analyze_reuses(draft: dict, current_hash: str = "bytes-the-model-saw") -> bool:
+    """analyze_reel_visuals.main 的复用条件：同一批字节的 pass 不再问模型。"""
+    ev = draft.get("_visual_evidence") or {}
+    return ev.get("visual_status") == "pass" and ev.get("input_sha256") == current_hash
+
+
+def test_赛果补齐之后_probe时给的封面人物是输家_不许带着旧pass转正(flash):
+    flash.down = {"df_mh_1"}
+    draft = _assemble()
+    assert "winner" not in draft["_match"]
+    # 封面照片是萨巴伦卡——这个世界里她是输家（feed home 诺斯科娃 6-4 6-3）；probe 那一趟不知道
+    assert _probe_verdict(draft, subject="萨巴伦卡", moment="winner_celebration")["visual_status"] == "pass"
+
+    flash.down.clear()
+    assert a.retry_feed_blocks(draft) == "healed" and draft["_match"]["winner"] == "诺斯科娃"
+    ev = draft["_visual_evidence"]
+    assert ev["visual_status"] == "waiting" and ev["status"] == "waiting", (
+        "赛果补齐之后旧 pass 原样留着——promote 会把输家抄进 cover.subject、自动渲、自动推")
+    assert any("封面人物应为 诺斯科娃" in x for x in ev["problems"]), ev["problems"]
+    assert "MiniMax 冷开场/结尾/封面视觉证据未通过" in promote.waiting_reasons(draft)
+    assert not _workflow_rereviews(draft), "同一张照片、同一份回答：不再花一次模型（换图时工作流照旧重审）"
+    assert "按新赛果不过闸" in "\n".join(draft["_notes"])
+
+
+def test_赛果补齐之后_旧结论对得上也作废_走原来那条重审路(flash):
+    """模型当时不知道赢家（`winner_visible` 是蒙的），对得上也只是碰巧——作废，按新赛果重审。
+    `input_sha256` 必须摘掉：`analyze_reel_visuals.main` 见同一批字节的 pass 就原样复用。"""
+    flash.down = {"df_mh_1"}
+    draft = _assemble()
+    _probe_verdict(draft, subject="诺斯科娃", moment="winner_celebration")
+    flash.down.clear()
+    assert a.retry_feed_blocks(draft) == "healed"
+    ev = draft["_visual_evidence"]
+    assert ev["visual_status"] == "waiting" and visual.STALE_VERDICT in ev["problems"]
+    assert "input_sha256" not in ev, "不摘哈希，重审那一趟也会复用旧 pass"
+    assert _workflow_rereviews(draft) and not _analyze_reuses(draft)
+    assert "MiniMax 冷开场/结尾/封面视觉证据未通过" in promote.waiting_reasons(draft), (
+        "没配 MINIMAX key、重审没发生时，也不许拿旧 pass 转正")
+
+
+def test_爆冷_probe时按赢家庆祝判不合格的输家在拼_补齐之后要重审_不许卡到过期(flash):
+    flash.down = {"df_mh_1"}
+    draft = _assemble(away_rank=40)  # 世界第 40 的诺斯科娃赢了世界第 1
+    ev = _probe_verdict(draft, subject="萨巴伦卡", moment="loser_fighting")
+    assert ev["visual_status"] == "waiting" and ev["retryable"] is False
+    assert not _workflow_rereviews(draft), "改之前的样子：waiting ＋ 不可重试，永远不会再审"
+
+    flash.down.clear()
+    assert a.retry_feed_blocks(draft) == "healed"
+    assert draft["_cover_brief"]["preferred_moment_key"] == "loser_fighting"
+    assert _workflow_rereviews(draft), "补上爆冷 brief 之后，存着的回答对得上——要按新赛果重审"
+    assert "input_sha256" not in draft["_visual_evidence"]
+
+
+def test_赛果没变的重跑不碰视觉结论_接口失败的也不碰(flash):
+    """只补 stats（`_match` 早就 verified）不花一次模型；`error`（接口失败）本来就会重审。"""
+    flash.down = {"df_st_1"}
+    draft = _assemble()
+    assert draft["_feed_retry"]["blocks"] == ["stats"] and draft["_match"]["winner"] == "诺斯科娃"
+    kept = dict(_probe_verdict(draft, subject="诺斯科娃", moment="winner_celebration"))
+    flash.down.clear()
+    assert a.retry_feed_blocks(draft) == "healed"
+    assert draft["_visual_evidence"] == kept
+
+    flash.down = {"df_mh_1"}
+    broken = _assemble()
+    broken["_visual_evidence"] = error = {"visual_status": "error", "status": "waiting",
+                                         "retryable": True, "problems": ["MiniMax API：timeout"]}
+    flash.down.clear()
+    assert a.retry_feed_blocks(broken) == "healed" and broken["_visual_evidence"] == error
+
+
+def test_赛果还没定下来的那一趟不碰视觉结论_定下来那一趟才处置(flash, monkeypatch):
+    """反查 id 和逐局表都读失败：第一班只补上 id（`_match` 变了，逐局表还挂着）——赛果没定，
+    promote 本来就不收；这时作废，工作流会拿半截赛果再问一次模型，下一班补齐又作废一次。"""
+    state = {"id_down": True}
+
+    def resolve(home, away):
+        if state["id_down"]:
+            raise fs.FeedUnavailable("近期赛果喂料全部读取失败：-1: Flashscore HTTP 503")
+        return MID
+
+    monkeypatch.setattr(a, "resolve_match_id", resolve)
+    flash.down = {"df_mh_1"}
+    draft = _assemble(flashscore_id=None)
+    kept = dict(_probe_verdict(draft, subject="萨巴伦卡", moment="winner_celebration"))
+    state["id_down"] = False
+    assert a.retry_feed_blocks(draft) == "retry"
+    assert draft["_match"] == {"flashscore_id": MID}, "id 这一班补上了，`_match` 变了"
+    assert draft["_visual_evidence"] == kept, "赛果没定，不花一次模型"
+    flash.down.clear()
+    assert a.retry_feed_blocks(draft) == "healed"
+    assert draft["_visual_evidence"]["visual_status"] == "waiting", "赛果定下来那一班照样处置"
+
+
+def test_重审之后再走一遍apply_story_结尾不许放两遍():
+    """作废之后重审会第二次走 apply_story；上一趟写的结尾兑现段带旁白（editorial.question），
+    原来会被当成正文留下，再接一段新结尾——同一个结局放两遍。"""
+    draft = {"editorial": {"question": "她还能走多远？"},
+             "segments": [{"start": 10, "end": 20, "narration": "开局"},
+                          {"start": 30, "end": 40, "narration": "第二盘"}]}
+    report = {"cold_open": {"start": 100, "end": 110, "reason": "赛点"},
+              "ending": {"start": 98, "end": 112, "reason": "赛点和握手"}}
+    rows, zh = [(104, "Match point.")], [("Match point.", "赛点。")]
+    once = visual.apply_story(draft, report, rows, zh)
+    shape = [(seg["start"], seg["end"]) for seg in once["segments"]]
+    source = once["_segments_source"]
+    twice = visual.apply_story(once, report, rows, zh)
+    assert [(seg["start"], seg["end"]) for seg in twice["segments"]] == shape, twice["segments"]
+    assert twice["_segments_source"] == source
+
+
+# ── 第三轮复审的几处小补：退避、墙钟上限、崩了、撤了文案都要记账点名、重新布置 ──────
+
+def _cli(path: Path, *extra: str) -> str:
+    import contextlib  # noqa: PLC0415
+    import io  # noqa: PLC0415
+
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        assert rfb.main(["--draft", str(path), "--write", *extra]) == 0
+    return buf.getvalue()
+
+
+def test_重跑之间要退避_不许三班连着把次数花光(flash, tmp_path, monkeypatch):
+    flash.down = {"df_mh_1"}
+    draft = _assemble()
+    last = datetime(2026, 9, 28, 8, tzinfo=timezone.utc)
+    draft["_feed_retry"].update(tries=1, last_at="2026-09-28T08:00:00Z")
+    path = tmp_path / "d.draft.json"
+    path.write_text(json.dumps(draft, ensure_ascii=False), encoding="utf-8")
+    before = path.read_bytes()
+    monkeypatch.setattr(rfb, "_now", lambda: last + timedelta(minutes=15))
+    flash.calls.clear()
+    assert _cli(path).strip().splitlines()[-1] == "later"
+    assert flash.calls == [] and path.read_bytes() == before, "退避期内一个请求都不发、不改草稿"
+    assert a.feed_retry_due_at({"tries": 2, "last_at": "2026-09-28T08:00:00Z"}) == last + timedelta(minutes=40)
+    assert a.feed_retry_due_at({"tries": 0, "last_at": "2026-09-28T08:00:00Z"}) is None, "第一次不等"
+    monkeypatch.setattr(rfb, "_now", lambda: last + timedelta(minutes=21))
+    assert _cli(path).strip().splitlines()[-1] == "retry" and flash.calls
+
+
+def test_被工作流掐掉的那一趟也算一次_试满照样停手(flash, tmp_path):
+    flash.down = {"df_mh_1"}
+    path = tmp_path / "d.draft.json"
+    path.write_text(json.dumps(_assemble(), ensure_ascii=False), encoding="utf-8")
+    flash.calls.clear()
+    got = [_cli(path, "--timed-out", "120").strip().splitlines()[-1] for _ in range(a.FEED_RETRY_MAX)]
+    assert got == ["retry"] * (a.FEED_RETRY_MAX - 1) + ["gave_up"]
+    assert flash.calls == [], "补记那一趟不读 feed"
+    ledger = json.loads(path.read_text(encoding="utf-8"))["_feed_retry"]
+    assert ledger["tries"] == a.FEED_RETRY_MAX and ledger["exhausted_at"]
+    assert "120s 内没读完" in ledger["errors"]["points"]
+
+
+def test_重跑崩了_记账停手点名_不写半截改动(flash, tmp_path, monkeypatch):
+    flash.down = {"df_mh_1"}
+    path = tmp_path / "d.draft.json"
+    draft = _assemble()
+    order = [p["name_en"] for p in draft["cover"]["matchup"]]
+    path.write_text(json.dumps(draft, ensure_ascii=False), encoding="utf-8")
+    summary = tmp_path / "summary.md"
+    monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary))
+
+    def crash(draft):
+        draft["cover"]["matchup"].reverse()  # 改了一半再崩
+        raise ValueError("草稿 cover.matchup 不是两位带英文名的球员")
+
+    monkeypatch.setattr(rfb, "retry_feed_blocks", crash)
+    out = _cli(path)
+    assert out.strip().splitlines()[-1] == "broken" and "::warning::" in out
+    saved = json.loads(path.read_text(encoding="utf-8"))
+    assert [p["name_en"] for p in saved["cover"]["matchup"]] == order, "从盘上那份记账，不写改了一半的"
+    assert saved["_feed_retry"]["exhausted_at"] and "崩了" in saved["_feed_retry"]["needs_human"][0]
+    assert "崩了" in summary.read_text(encoding="utf-8")
+    flash.calls.clear()
+    assert a.retry_feed_blocks(saved) == "exhausted", "崩过、停手了的，下一次调用不再读 feed"
+    assert flash.calls == []
+
+
+def test_撤了文案和重读也一样的错_打warning写摘要_只打一次(flash, tmp_path, monkeypatch):
+    flash.down = {"df_mh_1"}
+    draft = _assemble()
+    draft["editorial"] = {"thesis": "萨巴伦卡 6-2 6-1 横扫", "narration": ["开局"]}
+    path = tmp_path / "d.draft.json"
+    path.write_text(json.dumps(draft, ensure_ascii=False), encoding="utf-8")
+    summary = tmp_path / "summary.md"
+    monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary))
+    flash.down.clear()
+    out = _cli(path)
+    assert out.strip().splitlines()[-1] == "copy_dropped" and "::warning::" in out
+    assert "文案对不上" in summary.read_text(encoding="utf-8")
+    assert _cli(path).strip().splitlines()[-1] == "none", "账上没有要重读的块了"
+
+    flash.down = {"df_mh_1"}
+    path.write_text(json.dumps(_assemble(), ensure_ascii=False), encoding="utf-8")
+
+    def garbled(mid):
+        raise ValueError("df_mh_1 的 HL 字段对不上")
+
+    monkeypatch.setattr(a, "points", garbled)
+    out = _cli(path)
+    assert out.strip().splitlines()[-1] == "dropped" and "::warning::" in out
+    saved = json.loads(path.read_text(encoding="utf-8"))
+    assert "重读也一样的错" in saved["_feed_retry"]["needs_human"][0]
+    assert "重读也一样的错" in summary.read_text(encoding="utf-8")
+
+
+def test_人看过之后重新布置_次数清零_没得重读的整个摘掉(flash, tmp_path):
+    flash.down = {"df_mh_1"}
+    draft = _assemble()
+    draft["_feed_retry"].update(tries=3, exhausted_at="2026-09-28T08:00:00Z")
+    path = tmp_path / "d.draft.json"
+    path.write_text(json.dumps(draft, ensure_ascii=False), encoding="utf-8")
+    assert _cli(path, "--rearm").strip().splitlines()[-1] == "rearmed"
+    ledger = json.loads(path.read_text(encoding="utf-8"))["_feed_retry"]
+    assert ledger["tries"] == 0 and "exhausted_at" not in ledger and ledger["blocks"] == ["points"]
+
+    done = {"slug": "x", "_feed_retry": {"blocks": [], "needs_human": ["撤了文案"]}}
+    assert a.rearm_feed_retry(done) and "_feed_retry" not in done
+
+
+def test_要人看的账跨班留着_后一班读通了也不摘(flash):
+    """这一班补上逐局表、撤了文案，stats 还没读到（retry）；下一班 stats 也读通了——
+    账要是跟着「全读通了」一起摘掉，撤文案那一句告警就没了，草稿照样躺到过期。"""
+    flash.down = {"df_mh_1", "df_st_1"}
+    draft = _assemble()
+    assert draft["_feed_retry"]["blocks"] == ["stats", "points"]
+    draft["editorial"] = {"thesis": "萨巴伦卡 6-2 6-1 横扫", "narration": ["开局"]}
+    flash.down = {"df_st_1"}
+    assert a.retry_feed_blocks(draft) == "retry" and "editorial" not in draft
+    flash.down.clear()
+    assert a.retry_feed_blocks(draft) == "healed"
+    ledger = draft["_feed_retry"]
+    assert ledger["blocks"] == [] and "文案对不上" in ledger["needs_human"][0]

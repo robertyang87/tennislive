@@ -56,7 +56,7 @@ import re
 import sys
 import urllib.error
 from dataclasses import dataclass, field
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
@@ -142,21 +142,45 @@ _FEED_DOWNSTREAM = {
     "match_id": ("matchup", "stats", "hit_data", "points"),
     "matchup": ("stats", "hit_data", "points"),
 }
-#: reel-auto-ready 最多替一份草稿重跑几次（probe 那一趟不算）。reel-auto-ready 10 分钟
-#: 一班（GitHub 会丢 schedule，实际更稀），三次 ≈ 半小时以上——够等过一次 flashscore
-#: 抖动；还不通就是源站真出事了，该叫人，不该再悄悄试到过期。
+#: reel-auto-ready 最多替一份草稿重跑几次（probe 那一趟不算）。三次之间按
+#: `FEED_RETRY_BACKOFF` 退避（第一次下一班就来，之后隔 20、40 分钟），从 probe 算起
+#: ≈ 一小时以上——够等过一次 flashscore 抖动；还不通就是源站真出事了，该叫人，
+#: 不该再悄悄试到过期。
 FEED_RETRY_MAX = 3
-#: 「没读到」的异常：`match_feed._get` 重试完抛的 SystemExit（5xx／网络／4xx 被挡）、
-#: `fetch_match_stats_fs` 的 StatsError（含 `FeedUnavailable`）、裸网络异常。
-#: ValueError／KeyError 这类**解析**错不在里面——同一份 feed 重读一遍还是同一个错。
-_TRANSIENT_FEED = (SystemExit, StatsError, urllib.error.URLError, TimeoutError,
+#: 退避的底数：第 n 次重跑（n≥1 次已经试过）离上一次至少隔 `FEED_RETRY_BACKOFF × 2**n`。
+#: 原来一班一次、连着三班（≈ 半小时）就把次数花光——flashscore 挂半小时以上就只剩告警
+#: （2026-09-28 第三轮复审）。退避只在命令行那一层（`tools/retry_feed_blocks.py`）判，
+#: 这个函数本身照旧一叫就跑。
+FEED_RETRY_BACKOFF = timedelta(minutes=10)
+#: 「没读到」的异常：`match_feed._get` 重试完抛的 SystemExit（5xx／网络）、
+#: `fetch_match_stats_fs.FeedUnavailable`、裸网络异常。**不在里面的**：ValueError／KeyError
+#: 这类解析错（同一份 feed 重读一遍还是同一个错）、`StatsError` 本身（4xx、「扫完了确实没有」），
+#: 以及任何带 4xx 状态码的——`match_feed._get` 的 docstring 写着「4xx 是明确拒绝（404 不存在 /
+#: 403 被挡）」，原来 SystemExit／StatsError 整类算可重试，把拒绝也重试了三次
+#: （第三轮复审 nit）。4xx 里只有 `_RETRYABLE_4XX`（超时、太早、限流）是「晚点再来」。
+_TRANSIENT_FEED = (SystemExit, FeedUnavailable, urllib.error.URLError, TimeoutError,
                    ConnectionError, http.client.HTTPException)
+_RETRYABLE_4XX = frozenset({408, 425, 429})
+_HTTP_STATUS = re.compile(r"\bHTTP (\d{3})\b")
+
+
+def _http_status(exc: BaseException) -> int | None:
+    """异常里带的 HTTP 状态码：HTTPError 取 `.code`；`match_feed._get` 的 SystemExit 和
+    `fetch_match_stats_fs.feed` 的 StatsError 都把它写进消息（「HTTP 404 —— …」）。
+    ⚠️ SystemExit 也有 `.code`——那是退出码（这里是整条消息），不是 HTTP 状态码。"""
+    if isinstance(exc, urllib.error.HTTPError):
+        return int(exc.code)
+    found = _HTTP_STATUS.search(str(exc))
+    return int(found.group(1)) if found else None
 
 
 def is_transient_feed_error(exc: BaseException) -> bool:
     """这一块下一班值不值得再读一遍。"""
     if isinstance(exc, MatchupOrderUnverified):
         return exc.transient
+    status = _http_status(exc)
+    if status is not None and 400 <= status < 500:
+        return status in _RETRYABLE_4XX
     return isinstance(exc, _TRANSIENT_FEED)
 
 
@@ -818,8 +842,14 @@ def record_feed_retry(draft: dict, feed: FeedState, *, tries: int) -> None:
                         "last_at": "2026-09-28T07:00:00Z"}
 
     `_` 开头：是给下一班看的账，不进成片；promote 转正时剥掉
-    （`render_inputs.GATE_ANNOTATIONS["_feed_retry"]`）。"""
-    if not feed.failed:
+    （`render_inputs.GATE_ANNOTATIONS["_feed_retry"]`）。
+
+    停手、要人看的那几种另记两个键（`flag_feed_retry` 写）：`needs_human`（一句句为什么）和
+    `needs_human_at`；试满的还有 `exhausted_at`。**它们跨班留着**——这一班读通了也不摘，
+    不然上一班撤了文案、这一班补齐了，告警就跟着账一起没了。"""
+    prior = draft.get("_feed_retry") if isinstance(draft.get("_feed_retry"), dict) else {}
+    keep = {k: prior[k] for k in ("needs_human", "needs_human_at") if prior.get(k)}
+    if not feed.failed and not keep:
         draft.pop("_feed_retry", None)
         return
     draft["_feed_retry"] = {
@@ -827,16 +857,103 @@ def record_feed_retry(draft: dict, feed: FeedState, *, tries: int) -> None:
         "errors": {b: feed.failed[b] for b in FEED_BLOCKS if b in feed.failed},
         "tries": tries,
         "last_at": _stamp(),
+        **keep,
     }
 
 
-def _recheck_copy(draft: dict, feed: FeedState, notes: list[str]) -> None:
+def flag_feed_retry(draft: dict, why: str, *, stop: bool = False, tries: int = 0) -> None:
+    """记一句「要人看」：`needs_human` 追加（同一句不重复记）、`needs_human_at` 记第一次的时刻；
+    `stop=True` 同时记 `exhausted_at`——reel-auto-ready 见到它就不再进这一步（崩了、试满了）。
+
+    来路（第三轮复审 nit）：原来只有「试满」一种会被 pipeline_health 点名；撤了文案（healed 之后
+    `_feed_retry` 摘掉）、重读也一样的错（`dropped`）、重跑本身崩了，都只打一句 `::warning::`
+    甚至什么都不打，然后草稿静静躺到 PENDING_MAX_AGE。"""
+    ledger = draft.get("_feed_retry")
+    if not isinstance(ledger, dict):
+        ledger = draft["_feed_retry"] = {"blocks": [], "errors": {}, "tries": tries,
+                                         "last_at": _stamp()}
+    reasons = list(ledger.get("needs_human") or [])
+    if why not in reasons:
+        reasons.append(why)
+    ledger["needs_human"] = reasons
+    ledger.setdefault("needs_human_at", _stamp())
+    if stop:
+        ledger.setdefault("exhausted_at", _stamp())
+
+
+def feed_retry_due_at(ledger: dict) -> datetime | None:
+    """下一次重跑最早什么时候（按 `FEED_RETRY_BACKOFF` 退避）；`None`＝现在就可以。
+    第一次（tries == 0）不等：probe 刚落库，抖动多半已经过去。"""
+    tries = int(ledger.get("tries") or 0)
+    if tries <= 0:
+        return None
+    try:
+        last = datetime.fromisoformat(str(ledger.get("last_at") or "").replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if last.tzinfo is None:
+        return None
+    return last + FEED_RETRY_BACKOFF * 2 ** tries
+
+
+def record_feed_timeout(draft: dict, seconds: int) -> str:
+    """reel-auto-ready 给重跑套了墙钟上限（`timeout`）；被掐掉的那一趟**算一次**：`tries`＋1，
+    试满照样停手、点名。被掐的进程没写草稿，所以这一笔由工作流另起一次命令行补记。
+
+    来路（第三轮复审 nit）：flashscore 挂住不回（不是快速失败）时，一次重跑按 45s/40s 超时
+    ×3 次重试能拖 2~6 分钟；reel-auto-ready 整个 job 15 分钟，还要补封面、问模型——三份草稿
+    就能把 job 拖到超时，落库那一步不跑，`tries` 永远不涨，每一班重演一遍，连别的草稿的转正和
+    render 派发一起挡住。返回值和 `retry_feed_blocks` 同一套（`retry`／`gave_up`／`none`）。"""
+    ledger = draft.get("_feed_retry")
+    if not isinstance(ledger, dict) or not ledger.get("blocks") or ledger.get("exhausted_at"):
+        return "none"
+    tries = int(ledger.get("tries") or 0) + 1
+    why = f"{seconds}s 内没读完（flashscore 挂住不回，工作流掐掉了这一趟）"
+    ledger.update(tries=tries, last_at=_stamp(),
+                  errors={b: why for b in ledger["blocks"]})
+    notes = [f"── 备料重跑 第 {tries}/{FEED_RETRY_MAX} 次：{why}"]
+    status = "gave_up" if tries >= FEED_RETRY_MAX else "retry"
+    if status == "gave_up":
+        ledger["exhausted_at"] = ledger["last_at"]
+        notes.append(f"⚠️ flashscore 备料重跑 {FEED_RETRY_MAX} 次仍没读到："
+                     + "、".join(ledger["blocks"]) + "——不再自动重跑，pipeline_health 会点名")
+    draft["_notes"] = [*(draft.get("_notes") or []), *notes]
+    return status
+
+
+def rearm_feed_retry(draft: dict) -> bool:
+    """人看过之后重新布置自动重跑：`tries` 清零，摘掉 `exhausted_at`／`needs_human`。
+    账上已经没有要重读的块（撤了文案、重读也一样的错）就整个摘掉——那几种重跑补不回来，
+    人处置完了告警也该停。返回有没有改动。"""
+    ledger = draft.get("_feed_retry")
+    if not isinstance(ledger, dict):
+        return False
+    if not ledger.get("blocks"):
+        draft.pop("_feed_retry")
+        return True
+    for key in ("exhausted_at", "needs_human", "needs_human_at"):
+        ledger.pop(key, None)
+    ledger["tries"] = 0
+    return True
+
+
+def _visual_facts(draft: dict) -> str:
+    """视觉审核依赖的赛果口径：`ask_minimax` 把 `_match`、`_cover_brief` 原样喂给模型，
+    `clean_report` 按它们核封面人物和情绪。matchup 顺序不单独比：只在赛果定下来那一趟处置，
+    而 verified 的 `_match` 就是按归好位的 matchup 算的，顺序变了它必然跟着变。"""
+    return json.dumps([draft.get("_match"), draft.get("_cover_brief")],
+                      ensure_ascii=False, sort_keys=True, default=str)
+
+
+def _recheck_copy(draft: dict, feed: FeedState, notes: list[str]) -> str | None:
     """重跑补上了比分／统计之后，拿**同几道机械闸**把已经起草的文案再核一遍。
 
     probe 那一趟文案是在没有这几块的情况下起草的（`score_fact` / `total_points_fact`
     没喂进去），`editorial_score_problem` 当时拿空比分放行了它。补齐之后不核，就是
     一份没对过比分的文案被自动转正。**只核不重写**：起草那一步走模型，账号所有者
-    2026-09-27 定了不再加强模型链——对不上就撤下，草稿留在 waiting，不猜。"""
+    2026-09-27 定了不再加强模型链——对不上就撤下，草稿留在 waiting，不猜。
+
+    返回撤下的原因（没撤返回 None）——撤了就**没有任何东西再起草它**，调用方要记「要人看」。"""
     matchup = draft.get("cover", {}).get("matchup", [])
     stats = draft.get("stats", {})
     editorial = draft.get("editorial")
@@ -849,7 +966,7 @@ def _recheck_copy(draft: dict, feed: FeedState, notes: list[str]) -> None:
             draft.pop("push", None)
             notes.append(f"⚠️ 备料补齐之后文案对不上：{problem}——撤下 editorial 和 push"
                          "（不重写，草稿留在 waiting）")
-            return
+            return f"备料补齐之后文案对不上（{problem}），撤下了 editorial 和 push"
     push = draft.get("push")
     if isinstance(push, dict):
         problem = (editorial_total_points_problem(push, stats, matchup, feed.scores)
@@ -857,6 +974,8 @@ def _recheck_copy(draft: dict, feed: FeedState, notes: list[str]) -> None:
         if problem:
             draft.pop("push", None)
             notes.append(f"⚠️ 备料补齐之后推送文案{problem}；已撤下 push，禁止发送")
+            return f"备料补齐之后推送文案{problem}，撤下了 push"
+    return None
 
 
 def retry_feed_blocks(draft: dict) -> str:
@@ -866,22 +985,27 @@ def retry_feed_blocks(draft: dict) -> str:
     | 返回 | 意思 |
     |---|---|
     | `none` | 没有账（或账是空的），什么都没做 |
-    | `exhausted` | 已经试满 `FEED_RETRY_MAX` 次，这一班不再读——该叫人了 |
+    | `exhausted` | 已经试满 `FEED_RETRY_MAX` 次（或崩过、记了 `exhausted_at`），这一班不再读——该叫人了 |
     | `healed` | 这一趟全读通了，`_feed_retry` 摘掉 |
-    | `dropped` | 读到了，但剩下的是**重读也一样**的错（解析错、按姓认不出、扫完了确实没有这场）——照旧只写 note、从账上划掉，草稿留在 waiting 等人 |
+    | `dropped` | 读到了，但剩下的是**重读也一样**的错（解析错、按姓认不出、扫完了确实没有这场）——从账上划掉、记「要人看」，草稿留在 waiting |
+    | `copy_dropped` | 全读通了，可已经起草的文案对不上补齐的比分，撤了——**没有东西会再起草它**，记「要人看」 |
     | `retry` | 还有没读通的，`tries`＋1，下一班再来 |
-    | `gave_up` | 这一趟刚好试满、仍没读通（`exhausted_at` 记上时刻）|"""
+    | `gave_up` | 这一趟刚好试满、仍没读通（`exhausted_at` 记上时刻）|
+
+    赛果（`_match`／`_cover_brief`）这一趟定下来了，就把 probe 那一趟的视觉结论交给
+    `analyze_reel_visuals.recheck_after_facts_change` 机械处置——那份结论是在不知道赢家时给的。"""
     ledger = draft.get("_feed_retry")
     if not isinstance(ledger, dict) or not ledger.get("blocks"):
         return "none"
     tries = int(ledger.get("tries") or 0)
-    if tries >= FEED_RETRY_MAX:
+    if tries >= FEED_RETRY_MAX or ledger.get("exhausted_at"):  # 试满了，或者崩过、停手了
         return "exhausted"
     blocks = {b for b in ledger.get("blocks") or () if b in FEED_BLOCKS}
     pair = (draft.get("cover") or {}).get("matchup") or []
     if len(pair) != 2 or not all(p.get("name_en") for p in pair):
         raise ValueError("草稿 cover.matchup 不是两位带英文名的球员，没法重跑备料")
     home, away = (str(p["name_en"]) for p in pair)
+    facts_before = _visual_facts(draft)
     feed = FeedState(mid=(draft.get("_match") or {}).get("flashscore_id") or None,
                      order_verified="matchup" not in blocks and "match_id" not in blocks,
                      home_zh=str(pair[0].get("name") or ""),
@@ -907,27 +1031,46 @@ def retry_feed_blocks(draft: dict) -> str:
         notes.append("⚠️ 账上没记 match_id，草稿里却没有 _match.flashscore_id——没法重跑")
     if feed.mid and "matchup" in blocks:
         _matchup_block(draft, home, away, feed, notes)
+    copy_dropped = None
     if feed.mid and feed.order_verified:
         _feed_data_blocks(draft, feed, notes, blocks - {"match_id", "matchup"})
         if feed.scores_read:
             _match_fact_block(draft, feed, notes)
         if feed.scores_read or "stats" in blocks:
-            _recheck_copy(draft, feed, notes)
+            copy_dropped = _recheck_copy(draft, feed, notes)
+    # 只在赛果**这一趟定下来**时处置：还没 verified 的草稿 promote 本来就不收，这时作废只会
+    # 让工作流拿半截赛果再问一次模型，下一趟补齐又作废一次——白花钱。定下来那一趟赛果必然
+    # 变（status 变成 result_verified），所以不会漏掉。
+    if _visual_facts(draft) != facts_before \
+            and (draft.get("_match") or {}).get("status") == "result_verified":
+        from analyze_reel_visuals import recheck_after_facts_change  # noqa: PLC0415
+        visual_note = recheck_after_facts_change(draft)
+        if visual_note:
+            notes.append(visual_note)
     record_feed_retry(draft, feed, tries=tries + 1)
     if feed.failed:
         status = "gave_up" if tries + 1 >= FEED_RETRY_MAX else "retry"
+    elif feed.dropped:
+        status = "dropped"
     else:
-        status = "dropped" if feed.dropped else "healed"
+        status = "copy_dropped" if copy_dropped else "healed"
+    if copy_dropped:
+        flag_feed_retry(draft, copy_dropped + "（不重写：没有东西会再起草它）", tries=tries + 1)
     if status == "gave_up":
         draft["_feed_retry"]["exhausted_at"] = draft["_feed_retry"]["last_at"]
         notes.append(f"⚠️ flashscore 备料重跑 {FEED_RETRY_MAX} 次仍没读到："
                      + "、".join(draft["_feed_retry"]["blocks"])
                      + "——不再自动重跑，pipeline_health 会点名")
     elif status == "healed":
-        notes.append("备料重跑读通了，_feed_retry 摘掉")
+        notes.append("备料重跑读通了，_feed_retry 摘掉" if "_feed_retry" not in draft
+                     else "备料重跑读通了（前几班记下的「要人看」留着）")
+    elif status == "copy_dropped":
+        notes.append("⚠️ 备料重跑读通了，但文案撤了——pipeline_health 会点名，等人补")
     elif status == "dropped":
-        notes.append("⚠️ 备料重跑读到了，但 " + "、".join(dict.fromkeys(feed.dropped))
-                     + " 是重读也一样的错——从账上划掉，草稿留在 waiting 等人")
+        dropped = "、".join(dict.fromkeys(feed.dropped))
+        flag_feed_retry(draft, f"{dropped} 是重读也一样的错（见 _notes）", tries=tries + 1)
+        notes.append(f"⚠️ 备料重跑读到了，但 {dropped} 是重读也一样的错——从账上划掉，"
+                     "草稿留在 waiting，pipeline_health 会点名")
     draft["_notes"] = [*(draft.get("_notes") or []), *notes]
     return status
 

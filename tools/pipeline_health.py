@@ -262,16 +262,21 @@ def stale_publications(now: datetime | None = None, hours: float = 1.5) -> list[
 
 PENDING_DRAFTS = "specs/reels/pending/*.draft.json"
 #: `feed_retry_stuck` 那一类告警的开头——`alert_keys` 按它认，按 slug 去重
-FEED_RETRY_ALERT = "flashscore 备料重跑试满仍没读到"
+FEED_RETRY_ALERT = "自动草稿的 flashscore 备料要人看"
+#: 人处置完之后怎么让它重来（告警和报表里都印这一句，不让人去翻 skill）
+FEED_RETRY_REARM = ("python tools/retry_feed_blocks.py --draft "
+                    "specs/reels/pending/<slug>.draft.json --rearm --write，推 main")
 
 
 def feed_retry_stuck(now: datetime | None = None) -> list[str]:
-    """自动草稿里 flashscore 备料**重跑试满仍没读通**、而这场球还新鲜的那几份。
+    """自动草稿里 flashscore 备料**停手、要人看**、而这场球还新鲜的那几份。
 
     来路（2026-09-28 复审 D1）：probe 那一趟 flashscore 抖一下，草稿照写、留在 waiting；
     编排器认得草稿、永不重 probe。reel-auto-ready 现在按 `_feed_retry` 只重跑读失败的块，
     最多 `FEED_RETRY_MAX` 次——试满了它就不再碰，这儿接着点名：**不能静静地躺到
     PENDING_MAX_AGE 过期**（那时这场球已经不做了，告警也跟着消失）。
+    第三轮复审补上另外几种同样没人再碰的：补齐后撤了文案、重读也一样的错、重跑本身崩了
+    ——都记在 `_feed_retry.needs_human`（`assemble_spec.flag_feed_retry`）。
 
     过期了的不报：`promote_reel_draft.PENDING_MAX_AGE` 是新鲜窗唯一的出处（reel-auto-ready
     也 import 它）。判据 `tests/test_feed_retry.py`。"""
@@ -281,8 +286,13 @@ def feed_retry_stuck(now: datetime | None = None) -> list[str]:
     out: list[str] = []
     for draft in _tracked_jsons(PENDING_DRAFTS):
         ledger = draft.get("_feed_retry") if isinstance(draft, dict) else None
-        if not isinstance(ledger, dict) or not ledger.get("exhausted_at") \
-                or not ledger.get("blocks"):
+        if not isinstance(ledger, dict):
+            continue
+        why = [str(x) for x in ledger.get("needs_human") or ()]
+        if ledger.get("exhausted_at") and ledger.get("blocks"):
+            why.insert(0, f"{'、'.join(ledger['blocks'])} 没读到，"
+                          f"{ledger['exhausted_at']} 停了自动重跑（试了 {ledger.get('tries')} 次）")
+        if not why:
             continue
         try:
             received = instant(str((draft.get("_production") or {}).get("received_at") or ""))
@@ -290,8 +300,7 @@ def feed_retry_stuck(now: datetime | None = None) -> list[str]:
             received = None
         if received is None or now - received > PENDING_MAX_AGE:
             continue
-        out.append(f"{FEED_RETRY_ALERT}：{draft.get('slug') or '?'}"
-                   f"（{'、'.join(ledger['blocks'])}，{ledger['exhausted_at']} 放弃自动重跑）")
+        out.append(f"{FEED_RETRY_ALERT}：{draft.get('slug') or '?'}（{'；'.join(why)}）")
     return sorted(out)
 
 
@@ -333,8 +342,9 @@ def render_report(health: list[WorkflowHealth], steps: list[dict],
         lines += ["", "### 发布账本待核实", *[f"- {item}" for item in stale]]
     if feed_stuck:
         alerts.extend(feed_stuck)
-        lines += ["", "### 自动草稿的 flashscore 备料没读通（reel-auto-ready 已不再重跑）",
-                  *[f"- {item}" for item in feed_stuck]]
+        lines += ["", "### 自动草稿的 flashscore 备料停手了（reel-auto-ready 不会再碰）",
+                  *[f"- {item}" for item in feed_stuck],
+                  "", f"人处置完之后重新布置：`{FEED_RETRY_REARM}`"]
     slow = sorted(steps, key=lambda row: row["seconds"], reverse=True)[:10]
     lines += ["", "### 最近最慢步骤", "", "| 工作流 / job / step | 耗时 | 结果 |",
               "|---|---:|---|"]

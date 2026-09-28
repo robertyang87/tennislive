@@ -361,6 +361,50 @@ def clean_report(raw: dict | None, draft: dict, duration: float) -> tuple[dict, 
     return report, problems
 
 
+#: 作废之后 `problems` 里那一句（promote 的 waiting 原因照旧是「视觉证据未通过」）
+STALE_VERDICT = "赛果在这份视觉结论之后才补齐（当时不知道赢家）——按新赛果重审"
+
+
+def recheck_after_facts_change(draft: dict) -> str | None:
+    """备料重跑补上赛果之后，probe 那一趟的视觉结论就过时了——**机械地**处置它，不调模型。
+
+    来路（2026-09-28 第三轮复审）：match-reel.yml 的 probe 在 assemble 之后**同一趟**紧接着跑本工具；
+    df_mh_1／df_hh_1／反查 id 读失败时，模型看到的 `_match` 只有 flashscore_id、没有 `_cover_brief`，
+    `clean_report` 的 wanted 为空（封面人物不核），wanted_moment 退回 winner_celebration。
+    `retry_feed_blocks` 补上赛果之后，reel-auto-ready 要不要重审只看封面路径／状态／retryable／
+    `evidence_hash`（只含图片字节，不含 `_match`）→ 不重审 → promote 把模型的 `cover.subject`
+    抄进正式 spec：**输家当封面主角，自动渲、自动推**（回放 rv5_stale_visual_repro.py）。
+    爆冷那一半反过来：probe 那一趟按 winner_celebration 把 loser_fighting 判不合格
+    （retryable false），补上 brief 之后再没人重审，卡到过期、不告警。
+
+    处置（只动 `_visual_evidence`）：
+    - 拿**存着的那份模型回答**按新赛果重跑 `clean_report` 的核对：现在不过 → waiting，
+      `input_sha256` 留着（同一张照片、同一份回答，照片里是谁不随赛果变；换图后工作流照旧重审）
+    - 现在过 → 这份结论是在不知道赛果时给的，**作废**：摘掉 `input_sha256`（`main` 按它复用 pass
+      ——不摘就算重审也原样复用）、`retryable` 置 true、状态 waiting，reel-auto-ready 走原来那条重审路
+    - `visual_status == "error"`（接口失败）不动：它本来就会重审
+
+    时长传无穷：窗口越没越出源片，probe 那一趟已经按真时长核过，和赛果无关。
+    返回一句 note；没有视觉结论可处置时返回 None。判据 `tests/test_feed_retry.py`。"""
+    previous = draft.get("_visual_evidence")
+    if not isinstance(previous, dict) or not previous \
+            or previous.get("visual_status") == "error":
+        return None
+    _, problems = clean_report(previous, draft, float("inf"))
+    report = {**previous, "status": "waiting", "visual_status": "waiting"}
+    if problems:
+        report.update(retryable=False, problems=problems)
+        note = ("⚠️ 赛果补齐之后，probe 那一趟的视觉结论按新赛果不过闸："
+                + "；".join(problems) + "——留在 waiting")
+    else:
+        report.pop("input_sha256", None)
+        report.update(retryable=True, problems=[STALE_VERDICT])
+        note = ("赛果补齐之后作废 probe 那一趟的视觉结论（当时不知道赢家）——"
+                "reel-auto-ready 下一步按新赛果重审")
+    draft["_visual_evidence"] = report
+    return note
+
+
 TRANSLATION_SCHEMA = {
     "type": "object",
     "properties": {
@@ -464,6 +508,11 @@ def translate_quotes(chat: Chat, lines: list[str],
     return out
 
 
+#: apply_story 写的结尾兑现段的 `_why` 开头——再走一遍 apply_story 时靠它认出上一趟的结尾
+ENDING_WHY = "正文重新兑现冷开场的完整结局"
+_STORY_SOURCE = " + MiniMax 冷开场/结尾视觉闸"
+
+
 def apply_story(draft: dict, report: dict, caption_rows: list[tuple[float, str]],
                 translated: list[tuple[str, str]]) -> dict:
     """把已过闸的视觉证据写成冷开场+正文+结尾兑现，不替模型猜缺失项。"""
@@ -483,14 +532,18 @@ def apply_story(draft: dict, report: dict, caption_rows: list[tuple[float, str]]
         "quote": quote, "fit": "crop",
         "_why": f"MiniMax 视觉证据：{cold.get('reason', '')}；英文原声来自 captions.txt。",
     }
+    # ⚠️ 上一趟 apply_story 写的结尾兑现段也带旁白（`editorial.question`）——不认出来就会被当成
+    # 正文留下，再接一段新结尾：同一个结局放两遍。重审（`recheck_after_facts_change` 作废旧结论
+    # 之后）会第二次走到这儿。冷开场那段旁白是空的，本来就不进 body。
     body = [dict(seg) for seg in (draft.get("segments") or [])
-            if str(seg.get("narration") or "").strip()]
+            if str(seg.get("narration") or "").strip()
+            and not str(seg.get("_why") or "").startswith(ENDING_WHY)]
     # 结尾必须是同一条完整收官窗口，不能用更晚握手靠时间码蒙混。
     last_line = str((draft.get("editorial") or {}).get("question") or "").strip()
     last = {
         "start": ending["start"], "end": ending["end"],
         "narration": last_line, "fit": "crop",
-        "_why": f"正文重新兑现冷开场的完整结局：{ending.get('reason', '')}",
+        "_why": f"{ENDING_WHY}：{ending.get('reason', '')}",
     }
     # A reviewed silent winning point must survive editorial assembly. Only
     # extend across an explicitly preserved, overlapping source interval; do
@@ -506,8 +559,9 @@ def apply_story(draft: dict, report: dict, caption_rows: list[tuple[float, str]]
             last["_why"] += "；保留人工逐帧核实的完整制胜分及赛后反应。"
     draft["segments"] = [first, *body, last]
     draft["_visual_evidence"] = report
-    draft["_segments_source"] = (
-        str(draft.get("_segments_source") or "") + " + MiniMax 冷开场/结尾视觉闸")
+    source = str(draft.get("_segments_source") or "")
+    if not source.endswith(_STORY_SOURCE):
+        draft["_segments_source"] = source + _STORY_SOURCE
     return draft
 
 
