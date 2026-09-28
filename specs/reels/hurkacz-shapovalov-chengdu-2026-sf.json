@@ -96,10 +96,10 @@
   "_quote_why_global": "五段原声，全部出自源片英字幕（逐句核对过时间）：冷开场「it's the first ATP tour level final of the year」「battle his way back from a set behind」（276.72–292.72）；首盘末「And this time, Denis Shapovalov does get the job done」（132.64）；第二盘破发「the pressure tells, and then breaks in the next」（171.52–177.76）；第二盘末「Second set belongs to Hubert Hurkacz」（196.88）；决胜盘破发「And he misfires with the forehand」（269.12，指沙波瓦洛夫）。",
   "_result_why": "见 `_match._source`。",
   "_scorebox_why": "probe 记分条候选 `[98, 920, 519, 1029]`；score_00–07 抽帧逐格核验：左缘 98（名条左缘）、上沿 920、下沿 1029 落在框内，右缘 519 覆盖第三盘三列盘分＋分数最宽一档。",
-  "_source": "ATP Tour 官方 YouTube `U8m_db1AwPE`《Shapovalov vs Hurkacz & Davidovich Fokina Battles Basilashvili | Chengdu 2026 Highlights Semi-Finals》（两场半决赛合集）。probe（run 36443861550，完成／成功，落库提交 8cc87cfd）1920×1080、25fps、源片总长 632.95s；本场 0:00–4:54，probe 参数 clip_from=0、clip_to=294。四要素自证：记分条 `HURKACZ / SHAPOVALOV` 逐格读过（1-1 15-30、3-3 15-0、5-6 30-15→30-30、抢七 7-6→8-10、第二盘 2-1、5-3 40-15、第三盘 3-2 15-0、5-3 40-15、终局 `6⁸ 6 6 / 7 3 3`），和账号所有者提供的 flashscore 逐分一致；场地挡板 `CHENGDU 成都`；解说（源片英字幕）132.64「And this time, Denis Shapovalov does get the job done」、196.88「Second set belongs to Hubert Hurkacz」、276.72「it's the first ATP tour level final of the year for Hubert Hurkacz」；294 起是第二场集锦，本场段落全部收在 293.5 之前。没有场上采访。",
-  "_stats_why": "本条 spec 暂不带 `stats` 块：终场技术统计三源口径不一致（tennis.com ACE 13／sportradar 14；破发点 tennis.com 3/5–0/3 vs Flashscore 逐分 8/3–4/0；一发进球率 63/69 vs 66.7/71.4），且 first_total／second_total／pts_won／headshot 缺可靠终值；按账号所有者规则，拿不准的不上数据图。render 侧 `match_stat_hooks.py --stats-block` 可在封面定稿后补。",
+  "_source": "ATP Tour 官方 YouTube `U8m_db1AwPE`《Shapovalov vs Hurkacz & Davidovich Fokina Battles Basilashvili | Chengdu 2026 Highlights Semi-Finals》（两场半决赛合集）。probe（run 36443861550，完成／成功，落库提交 8cc87cfd）1920×1080、25fps、源片总长 632.95s；本场 0:00–4:54，probe 参数 clip_from=0、clip_to=294。四要素自证：记分条 `HURKACZ / SHAPOVALOV` 逐格读过（1-1 15-30、3-3 15-0、5-6 30-15→30-30、抢七 7-6→8-10、第二盘 2-1、5-3 40-15、第三盘 3-2 15-0、5-3 40-15、终局 `6⁸ 6 6 / 7 3 3`），和账号所有者提供的 flashscore 逐分一致；场地挡板 `CHENGDU 成都`；解说（源片英字幕）132.64「And this time, Denis Shapovalov does get the job done」、196.88「Second set belongs to Hubert Hurkacz」、276.72「it's the first ATP tour level final of the year for Hubert Hurkacz」；294 起是第二场集锦；除最后一段为装下旁白延至 295.0 外，本场段落全部收在 293.5 之前。没有场上采访。",
+  "_stats_why": "stats 块取自 2026-09-28 Flashscore 逐分推导：胡尔卡奇破发 3/8、沙波瓦洛夫 0/4（tennis.com 终表 3/5–0/3 口径不同，不混写，以逐分为准）。一发/二发/ACE/双误无可靠终值，不编造；winners/UE 三个规定来源（flashscore df_st_1、TNNS、ATP赛后稿）均无，不编造。",
   "_tactics_why_note": "球路写在第 6 段（第二盘持续施压＋第一个破发点兑现，解说“the pressure tells”）、第 9 段（沙波瓦洛夫正手失误送破发，解说“misfires with the forehand”；救球转圈摔倒为事件动作）。",
-  "_tennistv_trim": "**片尾**：294s（04:54）起是第二场（达维多维奇·福基纳 vs 巴西拉什维利）的集锦；用到的最后一段收在 293.5。**片头**：0–4.5s 是标题卡 `HURKACZ v SHAPOVALOV`，第一段正片从 4.5 起。**台标**：YouTube 官方源无常驻台标；左下转播记分条（[98,920,519,1029]）在 3:4 取景窗（cx=0.5 取 555~1365）之外，由 `score_inset` 补。",
+  "_tennistv_trim": "**片尾**：294s（04:54）起是第二场（达维多维奇·福基纳 vs 巴西拉什维利）的集锦；用到的最后一段为装下旁白延至 295.0（画面 22.5s ≥ 旁白真 TTS 21.82s）。**片头**：0–4.5s 是标题卡 `HURKACZ v SHAPOVALOV`，第一段正片从 4.5 起。**台标**：YouTube 官方源无常驻台标；左下转播记分条（[98,920,519,1029]）在 3:4 取景窗（cx=0.5 取 555~1365）之外，由 `score_inset` 补。",
   "_topbar_why": "按账号所有者 2026-09-24／09-26 定的格式「<年份> <巡回赛><级别> <城市> <轮次>」：成都公开赛是 ATP250。line2 由 cover.winner / result / matchup 机械拼出（赢家视角）。",
   "_turning_points": [
     "首盘第十二局沙波瓦洛夫 5-6 发球 30-40，胡尔卡奇破发点兼盘点被救，6-6（源片 78.5~94.5）。",
@@ -215,7 +215,7 @@
   ],
   "segments": [
     {
-      "_payoff_why": "最后一段（272.5→293.5）按时间顺序完整重放赛点那一分、落地、终局图、团队庆祝、走向球网和握手，覆盖本段 276.5~293.5 整段。",
+      "_payoff_why": "最后一段（272.5→295.0）按时间顺序完整重放赛点那一分、落地、终局图、团队庆祝、走向球网和握手，覆盖本段 276.5~295.0 整段。",
       "_quote_kind": "broadcast",
       "_why": "冷开场：赛点在 ~277 落地（272.5s 记分条 `5-3 40-15`，278.5s 翻成终局 `HURKACZ 6⁸ 6 6 / SHAPOVALOV 7 3 3`）；276.5–278.5 赛点落地，278.5 终局图＋看台鼓掌，280.5 他的团队庆祝，282.5–286.5 他笑着走向球网，288.5–292.5 网前握手；294 起是第二场集锦，段尾 293.5 收在它之前。不配旁白，只留解说原声＋中英字幕（源片英字幕 276.72–292.72），段内 at = 原时刻 − 276.5。",
       "crosses_cut": "276.5 赛点落地、278.5 终局图、280.5 团队庆祝、282.5–286.5 走向球网、288.5–292.5 握手：都是赛点之后同一段庆祝。",
@@ -338,10 +338,10 @@
       "_digital_silence_why": "262.8–263.8s 是第六局破发分（约 269s，字幕 misfires with the forehand）之前的局间停顿；破发制胜分在窗口内且现场声正常，旁白已覆盖第五局摔倒和第六局破发四比二"
     },
     {
-      "_why": "272.5–276.5 决胜盘第 9 局胡尔卡奇发球 5-3：记分条 `40-15`（赛点），~277 落地，278.5s 翻成终局 `HURKACZ 6⁸ 6 6 / SHAPOVALOV 7 3 3`。flashscore 第 9 局：`15:0胡、30:0胡、30:15沙、40:15胡（MP 1/1）`。278.5 看台＋教练鼓掌，280.5 他的团队庆祝，282.5–286.5 他笑着走向球网（contact_04 缩略图＋解说「Big smile on his face… very relaxed」），288.5–292.5 网前握手；294 起第二场，段尾 293.5。赛点之后只写情绪（B14），不写数据；结尾落在决赛＋一问。",
+      "_why": "272.5–276.5 决胜盘第 9 局胡尔卡奇发球 5-3：记分条 `40-15`（赛点），~277 落地，278.5s 翻成终局 `HURKACZ 6⁸ 6 6 / SHAPOVALOV 7 3 3`。flashscore 第 9 局：`15:0胡、30:0胡、30:15沙、40:15胡（MP 1/1）`。278.5 看台＋教练鼓掌，280.5 他的团队庆祝，282.5–286.5 他笑着走向球网（contact_04 缩略图＋解说「Big smile on his face… very relaxed」），288.5–292.5 网前握手；294 起第二场，段尾 295.0（旁白真 TTS 21.82s，画面 22.5s 留 0.68s 余量）。赛点之后只写情绪（B14），不写数据；结尾落在决赛＋一问。",
       "crosses_cut": "278.5 终局图、280.5 团队庆祝、282.5–286.5 走向球网、288.5–292.5 握手：都是赛点之后同一段庆祝。",
       "cx": 0.5,
-      "end": 293.5,
+      "end": 295.0,
       "narration": "五比三，胡尔卡奇发球胜赛。四十比十五，第一个赛点就拿下。他笑着走向球网，和沙波瓦洛夫握手。温网因伤退赛、美网第二轮出局之后，这是他今年第一次打进巡回赛决赛。决赛，他将对阵达维多维奇·福基纳——这一次，他能把冠军留在成都吗？",
       "point_end_ok": "比赛已经结束：赛点在 ~277 落地，278.5 记分条翻成终局；之后没有新的一分。",
       "score_inset": true,
