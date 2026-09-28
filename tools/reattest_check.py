@@ -36,6 +36,11 @@
 
 ⚠️ **发布账本一个字都不松**：账本按成片 hash 记，重核对之后还是同一份成片——
 已经 `sent` 的照样拦住，「没有真改动就不该有新消息」（CLAUDE.md 9/22 那节）。
+发出去之后只改推送文案（`push.summary` / `push.lead`）也一样：账号所有者 2026-09-27
+答复原话「**只改推送文案不重推**」——重核对照样出凭证，但不会再发一条
+（`tests/test_reattest.py::test_已发的片子只改推送文案_重核对之后也不重推`）。
+⚠️ **换封面是真改动**（O4 `cover_upgrade.py` 自动换图）：投影或素材字节变了，永远判 render
+（`test_O4换封面永远走render不走重核对`）。
 """
 
 from __future__ import annotations
@@ -75,6 +80,23 @@ def latest_outdir(repo: Path, slug: str) -> Path | None:
     """按 slug 反查最新那一份产物目录（和 `mode=push` 同一个口径：日期排序取最新）。"""
     hits = sorted((repo / "output").glob(f"*/reel/{slug}/render.json"))
     return hits[-1].parent if hits else None
+
+
+def outdir_in_git(repo: Path, slug: str) -> str | None:
+    """盘上没有、仓库里有：稀疏检出把 `output/` 挡在外面（和工作流「算出目录」同一个口径，
+    `git ls-tree` 按日期排序取最新）。返回那个目录的相对路径；不是 git 仓库或没有就 None。"""
+    import re  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(repo), "ls-tree", "-r", "--name-only", "HEAD", "--", "output"],
+            capture_output=True, text=True, check=True).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    pattern = re.compile(rf"^output/[^/]+/reel/{re.escape(slug)}/render\.json$")
+    hits = sorted(line.rsplit("/", 1)[0] for line in out.splitlines() if pattern.match(line))
+    return hits[-1] if hits else None
 
 
 def _load(path: Path) -> tuple[bytes, dict] | None:
@@ -119,8 +141,9 @@ def assess(repo: Path, slug: str, outdir: Path, spec_path: Path) -> Assessment:
     loaded = _load(outdir / ri.MANIFEST_NAME)
     if not loaded:
         unknown.reasons.append(
-            f"没有 {ri.MANIFEST_NAME}——这一版是 2026-09-27 之前渲的（那时渲染还不记"
-            "渲染输入），判不了哪些字段进了成片")
+            f"没有 {ri.MANIFEST_NAME}——这一版渲染时还没有这个功能（渲染输入清单是 "
+            "mode=reattest 合进来之后才开始记的；比那更早渲的、或清单没写成的都这样），"
+            "判不了哪些字段进了成片")
         return _with(unknown, qc, qc_bytes, render)
     manifest_bytes, manifest = loaded
     digest = ri.sha256_bytes(manifest_bytes)
@@ -267,8 +290,8 @@ def _report(a: Assessment, slug: str, outdir: Path, *, applied: bool) -> int:
                   "  gh workflow run match-reel.yml --ref <分支> "
                   f"-f mode=reattest -f slug={slug}\n"
                   "  （runner 上照旧先跑 production_preflight 和 --dry-run，红了就不会重核对）\n"
-                  "  ⚠️ 它和 render 共用并发组 match-reel-<slug>-render（cancel-in-progress）："
-                  "同一条片子有 render 在跑时派它，会把那趟 render 顶掉——先等 render 跑完")
+                  "  它和 render 共用并发组 match-reel-<slug>-render：有 render 在跑时它排队等，"
+                  "不顶掉那趟；⚠️ 有 render **排着队**时派它，排着的那趟会被 GitHub 顶掉")
         return 0
     if a.status == "render":
         print("[要重渲] 这次改动动到了渲染输入，成片会变——走 mode=render：")
@@ -295,7 +318,14 @@ def main(argv: list[str] | None = None) -> int:
     repo = Path(args.repo)
     outdir = Path(args.outdir) if args.outdir else latest_outdir(repo, args.slug)
     if outdir is None:
-        print(f"[判不了] output/*/reel/{args.slug}/render.json 一份都没有——先 mode=render")
+        tracked = outdir_in_git(repo, args.slug)
+        if tracked:
+            # 复审 2026-09-28：稀疏检出里原来报「一份都没有——先 mode=render」，
+            # 会把人送去白渲 7~10 分钟，而那一版其实就在仓库里。
+            print(f"[判不了] {tracked} 在仓库里、但这个检出没把它拉下来（稀疏检出挡着 output/）"
+                  f"——先 `git sparse-checkout add {tracked}` 再问一遍")
+        else:
+            print(f"[判不了] output/*/reel/{args.slug}/render.json 一份都没有——先 mode=render")
         return 2
     spec_path = Path(args.spec) if args.spec else repo / "specs" / "reels" / f"{args.slug}.json"
     if args.apply:

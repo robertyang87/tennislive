@@ -162,9 +162,11 @@ render；而 `segments[i]._why`、`cover.portrait._why`、`stats._why` 这类同
   存、按原顺序比，任何一张表的键换了顺序都报「键的顺序变了」、走 render
 - `sources` 表里的键**全是数据**：`spec_sources` 不按下划线跳过，`{"_why": …, "r1": …}`
   里那句 `_why` 就是第一条、就是主源片——所以投影**不剥**这张表里的 `_` 键（评审第二轮）
-- 发布门禁**每次都**拿当前 spec 重算投影和认领（不只在凭证带 `reattest` 时），`render.json`
-  钉的清单 sha 必须就是凭证钉的那一份；清单记的 spec 和凭证记的不一样，凭证又不是重核对
-  出的——拦
+- 发布门禁**每次都**拿当前 spec 重算投影（不只在凭证带 `reattest` 时）；认领只在 spec 字节
+  和清单记的**不一样**时按今天的口径重判（一样的话那一刻闸认了才渲得出来，见本节最后一条）。
+  `render.json` 钉的清单 sha 必须就是凭证钉的那一份；清单记的 spec 和凭证记的不一样，凭证
+  又不是重核对出的——拦。L2 质检也只钉**描述这份成片**的清单（`film_sha256` 对得上、
+  `render.json` 也钉着它），盘上躺着上一趟剩的就警告、不钉（复审 2026-09-28）
 - 清单是**旧口径**写的（`version` 比 `render_inputs.VERSION` 小）：门禁不拿新口径重算
   （v1→v2 那次按原顺序比，会把每份 v1 清单都判成「键的顺序变了」），普通渲染退回 spec
   字节那一道、重核对凭证不认——**升 `VERSION` 不用回头迁移老清单**
@@ -188,10 +190,17 @@ render；而 `segments[i]._why`、`cover.portrait._why`、`stats._why` 这类同
   （reattest 只跑 dry-run）。**`where=()` 只给两种**：只在备料时读（`promote_reel_draft`，
   render 和 dry-run 都不调），或者它出现就是拒绝（`_import`）。拿不准就去看读它的函数
   被谁调：`--dry-run` 走不到的，一律写 `where`。赶着让自己分支变绿时最容易错在这儿
-- ⚠️ 这条测试按**模块**走 import 图，不按函数：哪个分支把一个模块拉进了渲染 import 图
-  （比如 `build_interview_clip`），那个模块里**采访线才调**的函数读的键也会被扫出来。
-  确认读它的函数渲染/dry-run 路径上不调，再按 `where=()` 登记（写清「采访线读，赛场之上
-  不调」）；`push` 在那种函数里读，加进 `PUBLISH_FIELDS["push"]`
+- ⚠️ 这条测试按**模块**走 import 图，不按函数：共用模块里**采访线才调**的函数（`interview_`
+  开头的，比如 `taste_gates_extra.interview_taste_extra`）读的键也会被扫出来——确认渲染/dry-run
+  路径上不调，再按 `where=()` 登记（写清「采访线读，赛场之上不调」）；`push` 在那种函数里读，
+  加进 `PUBLISH_FIELDS["push"]`
+- ⭐ **采访模块本身不进这张图**（2026-09-28 合 main 时定的）：`check_polyphones.interview_texts`
+  和 `taste_gates_extra.interview_ledger_dir` 里那两处延迟 import 会把 `build_interview_clip`
+  连同 7 个采访模块拉进来，25 处读法（采访台头印 `push`、片尾板认领……）就全得在竖版短片的
+  表里登记，其中「台头印 `push`」还得登成「只进推送」——那是假话。所以测试里的
+  `_OTHER_LINE_GATEWAYS` 只剪**这两处 import**（不剪模块：别处哪天真 import 了采访模块，照样
+  进图、照样要归类），`test_采访线的入口只从采访线的函数调` 按（模块, 函数）往上追「谁调了它」，
+  追到的必须是 `interview_` 开头的函数或命令行入口——`validate_spec` 哪天调了它，这里红
 - 扫描认的读法（复审 fix 轮补全，每种都拿合成模块复现过）：字面量、顶层常量（字符串或
   `("_a", "_b")` / `frozenset({...})` 这类序列）、`from m import KEY` / `m.KEY`、循环变量、
   按键名比（`k == "_x"`、`k in KEYS`、`spec.keys() & {...}`）；按前后缀批量认
@@ -204,11 +213,27 @@ render；而 `segments[i]._why`、`cover.portrait._why`、`stats._why` 这类同
 ⚠️ 所以上面那句「注解要在发 `mode=render` 之前改完」仍然是**最便宜**的做法（一秒都不花）；
 重核对是**改晚了**时的出路：一趟只装主依赖、跑 dry-run、拉一份成片算 sha256 的 runner，
 而不是 7~10 分钟的重渲（2026-09-27 落地时**还没在 runner 上量过实际耗时**，第一趟跑完补在这儿）。
-⚠️ 2026-09-27 之前渲的片子没有清单，重核对判不了，照旧重渲。
-⚠️ **和 render 共用并发组 `match-reel-<slug>-render`，cancel-in-progress——后派的顶掉先派的，
-不分 mode**：同一条片子 render 还在跑时派 reattest，**那趟 render 会被取消**（7~10 分钟白跑、
-成片没出）。先等 render 跑完再派；反过来（reattest 在跑时派 render）无害。不拆组是故意的：
-拆开之后两者能并行，render 的 `--clobber` 会在 reattest 核完之后换掉 Release 上的成片。
+⚠️ 渲染时还没有这个功能的片子（清单是 `mode=reattest` 合进来之后才开始记的）没有清单，
+重核对判不了，照旧重渲。稀疏检出里本地问，`output/` 那一格没拉下来时它会说「在仓库里、
+先 `git sparse-checkout add <目录>`」，不再误报「一份都没有——先 mode=render」。
+⚠️ **和 render 共用并发组 `match-reel-<slug>-render`**（不拆组是故意的：拆开之后两者能并行，
+render 的 `--clobber` 会在 reattest 核完之后换掉 Release 上的成片）。**reattest 不取消在跑的
+render**（2026-09-28 起 `cancel-in-progress` 对 reattest 是 false）：O4 自动换图之后派的
+render（`cover_upgrade.py`，无人值守）正在跑时有人派了 reattest，原来会把那趟 render 顶掉，
+现在 reattest 排队等它跑完——跑完的新清单描述的就是换了图的那份 spec，reattest 判「同一份」
+或按新清单核。反过来 render 照旧顶掉在跑的 reattest（无害，render 出新凭证）。剩一个 GitHub
+自己的口径：同组里**排队中**的那一趟会被后派的顶掉，不管 cancel-in-progress——render 排着队
+时派 reattest，排着的 render 没了（O4 那条下一班对账 `redispatch_plan` 一小时后会重派）。
+
+⚠️ **换封面是真改动，永远走 render**：O4 把 `cover.portrait` 从 `frame_at` 换成 `image`（新文件
+`assets/reel/<slug>-official.*`），投影变了；同一个路径换图，素材字节变了——两种都判 render，
+判据 `test_O4换封面永远走render不走重核对`。
+
+⚠️⚠️ **只改推送文案，不重推**（账号所有者 2026-09-27 答复原话：「只改推送文案不重推」）：
+已经 `sent` 的片子渲完之后只改 `push.summary` / `push.lead`，重核对照样出凭证（成片没变），
+但发布账本按成片 hash 记、`pushed.json` 也还在——**不会再发一条**。这正是现在账本的行为，
+判据 `test_已发的片子只改推送文案_重核对之后也不重推`。要让新文案发出去，唯一的路是产物真的变
+（CLAUDE.md 9/22「重渲一趟去逼出一条新消息这条路不存在」那节）。
 
 #### ⭐⭐ 判据的扫描面，往往比规矩的适用面窄——#726 那条当天就撞上了
 

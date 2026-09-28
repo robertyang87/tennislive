@@ -84,15 +84,31 @@ def write_attestation(film: Path, spec_path: Path, spec: dict) -> Path:
     # 凭证把它一起钉住，之后 spec 只改注解/推送字段时 `mode=reattest` 才认得出
     # 「这份清单就是这一次渲染写的」。老片子没有清单就不写这一项——重核对对它们
     # 判「不了」，照旧重渲。
+    # ⚠️ **只钉描述这份成片的那一份**（复审 2026-09-28）：盘上躺着一份上一趟留下的清单
+    # （记的是别的成片）、`render.json` 又没钉它（导入流程拷进来的那种），照钉的话
+    # 发布门禁会报「render.json 钉的清单和凭证钉的不是同一份」、自动链只印一行 `[跳过]`，
+    # 片子不吭声地不推。对不上就警告、不钉——门禁退回 spec 字节那一道照发，这一版之后
+    # 只能 mode=render（`reattest_check` 报判不了）。
+    meta_path = outdir / "render.json"
+    data = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.is_file() else {}
     inputs = outdir / RENDER_INPUTS_NAME
     if inputs.is_file():
-        payload["render_inputs_sha256"] = _sha256(inputs)
+        digest = _sha256(inputs)
+        try:
+            described = json.loads(inputs.read_text(encoding="utf-8")).get("film_sha256")
+        except (ValueError, UnicodeDecodeError, AttributeError):
+            described = None
+        if described == payload["film_sha256"] and data.get("render_inputs_sha256") == digest:
+            payload["render_inputs_sha256"] = digest
+        else:
+            print(f"[QC] ⚠️ {inputs} 不是这一份成片的渲染输入清单（它记的成片 "
+                  f"{str(described)[:12]}…，render.json 钉的 "
+                  f"{str(data.get('render_inputs_sha256'))[:12]}…）——凭证不钉它；"
+                  "这一版之后改 spec 只能 mode=render")
     path = outdir / "qc_attestation.json"
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")
 
-    meta_path = outdir / "render.json"
-    data = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.is_file() else {}
     data.update({
         "film_sha256": payload["film_sha256"],
         "film_bytes": payload["film_bytes"],

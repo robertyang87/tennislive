@@ -187,15 +187,17 @@ concurrency:
   # ⚠️ **reattest 和 render 共用一组**（`match-reel-<slug>-render`）：它核的是
   # 「上一趟 render 落下的那条链」，两者同时跑的话，render 的 `--clobber` 会在它
   # 核完之后换掉 Release 上的成片，而它的提交会把旧凭证重放回来。
-  # 同组 + cancel-in-progress ＝ **后派的顶掉先派的，不分 mode**：
-  #   - render 还在跑时派 reattest → **那趟 render 被取消**（成片没出、7~10 分钟白跑）。
-  #     所以派 reattest 之前先确认同 slug 没有 render 在跑；`reattest_check.py`
-  #     本地那句派单提示里也印着这一条
+  # **reattest 不取消在跑的那一趟**（cancel-in-progress 按新派的那趟算，对它是 false）：
+  #   - render 还在跑时派 reattest → reattest 排队等它跑完。原来是把 render 顶掉——
+  #     O4 自动换图（reel-cover-upgrade.yml → cover_upgrade.py）无人值守地派 render，
+  #     有人这时派一趟 reattest，换了图的那趟重渲就白死，要等一小时后对账重派
+  #     （2026-09-28 合 main 时改的）
   #   - reattest 还在跑时派 render → reattest 被取消，无害（render 会出新凭证）
-  #   - 两个 reattest 前后脚 → 只留后一个，同样无害
-  # 不拆成两组的理由就是上面那个撞车：拆开之后两者能并行，比被顶掉一趟更坏。
+  #   - 两个 reattest 前后脚 → 后一个排队，同样无害
+  #   - ⚠️ GitHub 自己的口径：同组**排队中**的那一趟总会被后派的顶掉，不看 cancel-in-progress
+  # 不拆成两组的理由就是上面那个撞车：拆开之后两者能并行，比排一次队更坏。
   group: ${{ github.event.inputs.mode == 'push' && 'match-reel-publish' || format('match-reel-{0}-{1}', github.event.inputs.slug, github.event.inputs.mode == 'reattest' && 'render' || github.event.inputs.mode) }}
-  cancel-in-progress: ${{ github.event.inputs.mode != 'push' }}
+  cancel-in-progress: ${{ github.event.inputs.mode != 'push' && github.event.inputs.mode != 'reattest' }}
 
 jobs:
   reel:

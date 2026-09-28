@@ -432,7 +432,7 @@ def test_同一个路径换了一张图_spec没动也要报重渲(tmp_path, caps
     (lambda o: (o / "poster.jpg").write_bytes(b"\xff\xd8 swapped poster"), "poster.jpg"),
     (lambda o: (o / "subtitles.ass").write_text("Dialogue: 换过\n", encoding="utf-8"),
      "subtitles.ass"),
-    (lambda o: (o / ri.MANIFEST_NAME).unlink(), "之前渲的"),
+    (lambda o: (o / ri.MANIFEST_NAME).unlink(), "渲染时还没有这个功能"),
     (lambda o: (o / "render.json").write_text(json.dumps({
         **json.loads((o / "render.json").read_text(encoding="utf-8")),
         "film_sha256": "0" * 64}), encoding="utf-8"), "同一份成片"),
@@ -540,6 +540,137 @@ def test_重核对之后账本已经sent的照样拦住(reattested):
         gate.wants_auto_push(repo, SLUG, outdir)
     with pytest.raises(SystemExit, match="禁止盲目重发"):
         gate.ledger_status(repo, outdir, "sending", "https://run/1", "now")
+
+
+@pytest.mark.parametrize("field", ["summary", "lead"])
+@pytest.mark.parametrize("marker", [True, False], ids=["同日_pushed.json在", "跨天_只剩账本"])
+def test_已发的片子只改推送文案_重核对之后也不重推(tmp_path, field, marker):
+    """账号所有者 2026-09-27 对复审那一问的答复原话：「只改推送文案不重推」。
+
+    发出去之后只改 `push.summary` / `push.lead`：成片一个像素没变，重核对照样出凭证
+    （文案是推送那一刻现读的，下次真要发时用的是新的）；但这一份成片**已经发过**——
+    `pushed.json` 在（同日）或只剩发布账本那一笔 `sent`（跨天、目录里没有 marker），
+    门禁都拦住，连表单勾「强制推送」也拦住。要新文案发出去，产物得真的变（CLAUDE.md 9/22）。
+    """
+    _git(tmp_path, "init", "-q")
+    base = _spec()
+    base["push"] = {"auto": True, "summary": "她赢了", "lead": "决胜盘一度落后。"}
+    outdir = _rendered(tmp_path, base)
+    from publication_ledger import write  # noqa: PLC0415
+    write(tmp_path, gate.LEDGER_COLUMN, SLUG, _sha(FILM), status="sent",
+          run_url="https://run/0", now="2026-09-27T11:00:00Z")
+    if marker:
+        (outdir / gate.MARKER).write_text('{"at": "2026-09-27T11:00:00Z"}\n', encoding="utf-8")
+    _commit(tmp_path)
+
+    spec_path = _edit(tmp_path, lambda s: s["push"].update({field: "改过的推送文案"}), base)
+    assert _assess(tmp_path, outdir).status == "reattest"
+    assert rc.apply(tmp_path, SLUG, outdir, spec_path, fetch=_release_ok).status == "reattest"
+    _commit(tmp_path)
+    assert gate.validate_qc(tmp_path, SLUG, outdir) == _sha(FILM)     # 凭证是成立的
+    for forced in (False, True):
+        with pytest.raises(gate.Skip, match="持久发布账本已有 sent"):
+            gate.wants_auto_push(tmp_path, SLUG, outdir, forced=forced)
+    with pytest.raises(SystemExit, match="禁止盲目重发"):
+        gate.ledger_status(tmp_path, outdir, "sending", "https://run/1", "now")
+    if marker:
+        # 账本那一笔哪天丢了（老片子 2026-08-24 之前没有账本），pushed.json 照样拦住
+        ledger = sorted(p.relative_to(tmp_path).as_posix()
+                        for p in (tmp_path / "data").rglob(f"{SLUG}.json"))
+        assert ledger, "账本那一笔没落在 data/ 下，这半条测不到东西"
+        _git(tmp_path, "rm", "-q", *ledger)
+        _commit(tmp_path)
+        with pytest.raises(gate.Skip, match="已经推过了"):
+            gate.wants_auto_push(tmp_path, SLUG, outdir, forced=True)
+
+
+def test_质检只钉描述这份成片的清单(tmp_path, capsys):
+    """复审 2026-09-28：盘上躺着上一趟剩的清单（记的是别的成片）、`render.json` 又没钉它
+    （导入流程拷进来的那种）——原来照钉，发布门禁报「render.json 钉的清单和凭证钉的不是
+    同一份」、自动链只印一行 `[跳过]`。现在不钉，门禁退回 spec 字节那一道照发。"""
+    _git(tmp_path, "init", "-q")
+    outdir = _rendered(tmp_path)
+    film = outdir / f"{SLUG}.mp4"
+    film.write_bytes(b"another-film")                      # 同一个目录里的另一份成片
+    (outdir / "render.json").write_text(json.dumps({
+        "film_seconds": 1, "video_url": "https://example.test/x.mp4",
+        "video_bytes": len(b"another-film")}), encoding="utf-8")
+    spec_path = tmp_path / "specs/reels" / f"{SLUG}.json"
+    landed.write_attestation(film, spec_path, json.loads(spec_path.read_text(encoding="utf-8")))
+    qc = json.loads((outdir / "qc_attestation.json").read_text(encoding="utf-8"))
+    assert "render_inputs_sha256" not in qc
+    assert "不是这一份成片的渲染输入清单" in capsys.readouterr().out
+    film.unlink()
+    _commit(tmp_path)
+    assert gate.validate_qc(tmp_path, SLUG, outdir) == _sha(b"another-film")
+    # 对得上的那一份照钉（`_rendered` 走的就是这条路，见上面那几条）
+    assert json.loads((_rendered(tmp_path / "ok") / "qc_attestation.json")
+                      .read_text(encoding="utf-8"))["render_inputs_sha256"]
+
+
+def test_稀疏检出里本地问_不把人送去白渲(tmp_path, capsys):
+    """复审 2026-09-28：`output/` 那一格在仓库里、只是没检出——原来报「一份都没有——先
+    mode=render」。现在按 `git ls-tree` 认出来，告诉人先拉下来。"""
+    _git(tmp_path, "init", "-q")
+    outdir = _rendered(tmp_path)
+    _commit(tmp_path)
+    _git(tmp_path, "rm", "-rq", "--cached", "--", "output")   # 只从工作区消失：
+    _git(tmp_path, "reset", "-q")                              # 索引/HEAD 里照旧有
+    for p in sorted(outdir.rglob("*"), reverse=True):
+        p.unlink() if p.is_file() else p.rmdir()
+    assert rc.main(["--slug", SLUG, "--repo", str(tmp_path)]) == 2
+    out = capsys.readouterr().out
+    assert "git sparse-checkout add output/2026-09-27/reel/demo" in out
+    assert "先 mode=render" not in out
+
+
+def test_O4换封面永远走render不走重核对(tmp_path):
+    """O4 自动换图（`cover_upgrade.apply_upgrade`）换的是封面——真改动，走 render。
+
+    用 `cover_upgrade.upgraded_portrait` 自己拼出来的 portrait，照 `apply_upgrade` 的写法
+    落盘：`frame_at` 没了、`image` 指向新存的 `assets/reel/<slug>-official.jpg`，外加一段
+    `_why` / `_gates` 注解。注解那一半重核对认，封面那一半不认——判 render，凭证不动。
+    """
+    import cover_upgrade as cu  # noqa: PLC0415
+
+    base = _spec()
+    base["cover"]["portrait"] = {"frame_at": 162.4, "zoom": 1.2,
+                                 "_why": "推送窗口内没有官方实拍，抽帧"}
+    outdir = _rendered(tmp_path, base)
+    before = (outdir / "qc_attestation.json").read_bytes()
+
+    chosen = {
+        "candidate": cu.Candidate(channel="wta", url="https://img.test/official.jpg",
+                                  caption="Coco Gauff in action"),
+        "evidence": {"size": (4000, 2667),
+                     "layout": {"zoom": 1.0, "focus": 0.5, "focus_y": 0.3, "fill": 2.47,
+                                "face_out": [400, 300, 700, 650]},
+                     "face": {"similarity": {"高芙": 0.61}, "ear": 0.3}},
+        "blob": b"\xff\xd8 new official photo",
+    }
+    ctx = cu.MatchContext(slug=SLUG, subject_zh="高芙", subject_en="Coco Gauff",
+                          event_en="Beijing", tz="Asia/Shanghai")
+    image_rel = f"assets/reel/{SLUG}-official.jpg"
+    (tmp_path / image_rel).write_bytes(chosen["blob"])
+    portrait = cu.upgraded_portrait(base["cover"]["portrait"], chosen, ctx, image_rel)
+    assert "frame_at" not in portrait and portrait["image"] == image_rel
+    spec_path = _edit(tmp_path, lambda s: s["cover"].update(portrait=portrait), base)
+
+    a = _assess(tmp_path, outdir)
+    assert a.status == "render", a.reasons
+    assert any("封面" in r for r in a.reasons), a.reasons
+    assert rc.apply(tmp_path, SLUG, outdir, spec_path, fetch=_release_ok).status == "render"
+    assert (outdir / "qc_attestation.json").read_bytes() == before, "拒绝的那一趟不许动凭证"
+
+
+def test_reattest不顶掉在跑的render():
+    """O4 无人值守派的 render 在跑时有人派 reattest：reattest 排队，不把 render 顶掉。"""
+    import yaml  # noqa: PLC0415
+
+    doc = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    cancel = doc["concurrency"]["cancel-in-progress"]
+    assert "github.event.inputs.mode != 'reattest'" in cancel, cancel
+    assert "github.event.inputs.mode != 'push'" in cancel, cancel
 
 
 def test_发布门禁不信重核对凭证的一面之词(reattested):

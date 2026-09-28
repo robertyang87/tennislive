@@ -248,7 +248,9 @@ def test_match_reel只串行不可撤回发布不串行多场渲染():
     assert "github.event.inputs.push == 'true'" not in concurrency, (
         "push=true 的生产 render 被全局发布锁串行了；多场应该按 slug 并行，"
         "质检落库后再派 push-only 串行发送")
-    assert "cancel-in-progress: ${{ github.event.inputs.mode != 'push' }}" in concurrency
+    # reattest 不顶掉在跑的 render（O4 自动换图派的那趟），见 tests/test_reattest.py
+    assert ("cancel-in-progress: ${{ github.event.inputs.mode != 'push' && "
+            "github.event.inputs.mode != 'reattest' }}") in concurrency
 
 
 def test_render质检落库后自动派push_only且本趟不直接发送():

@@ -193,7 +193,9 @@ def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
         raise Skip(f"{slug}：重核对凭证没有钉住渲染输入清单，不认")
     if not digest:
         return
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    tools = str(Path(__file__).resolve().parent)
+    if tools not in sys.path:            # 多个 --changed 每个都调一次，别往 sys.path 里堆重复项
+        sys.path.insert(0, tools)
     import render_inputs  # noqa: PLC0415
 
     name = render_inputs.MANIFEST_NAME
