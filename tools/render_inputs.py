@@ -143,8 +143,11 @@ def utc_time(value: Any) -> bool:
 
 def any_text_value(value: Any) -> bool:
     """`{源键: 为什么}` 这种认领表（`probe_sources.coverage_findings` 读 `_no_probe_why`）：
-    至少一条 `str(v or "").strip()` 非空才算——一张全是空白的表闸一条都不认。"""
-    return isinstance(value, dict) and any(str(v or "").strip() for v in value.values())
+    至少一条理由非空才算——一张全是空白的表闸一条都不认。理由按 `probe_sources.claim_why`
+    的口径取：老写法是一句话，多源的新写法是对象的 `why`（带宽高帧率，2026-09-28）。"""
+    def _why(v: Any) -> str:
+        return str((v.get("why") if isinstance(v, dict) else v) or "").strip()
+    return isinstance(value, dict) and any(_why(v) for v in value.values())
 
 
 #: `taste_gates_extra.QUOTE_KINDS` 的一份抄本（这个模块只许用标准库，import 不了它）。
@@ -279,8 +282,8 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
         "（dry-run 只报不拦）", "stale_cover_problem", "cover.portrait._old_photo_why"),
     "_no_probe_why": _gate(
         "probe_sources.coverage_findings：`{源键: 为什么}`，某条源认领不到 probe.json 的认领"
-        "（probe_dry_run；新的手写 spec 硬）", "coverage_findings", "_no_probe_why",
-        any_text_value),
+        "（probe_dry_run；新的手写 spec 硬；多源的认领是对象、带宽高帧率，几何预演拿它照跑）",
+        "_claims", "_no_probe_why", any_text_value),
     "_numeral_display_why": _gate(
         "reel_asset_gates.numeral_display_problems：字幕数字换算半中半洋的认领",
         "numeral_display_problems", "_numeral_display_why"),

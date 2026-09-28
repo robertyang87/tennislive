@@ -654,7 +654,7 @@ def test_渲不出图要红_而且剪进片子的不再渲第二遍(tmp_path):
     guard = body.rindex("not stat_card_in_film(spec)", 0, late)
     assert late - guard < 200, "渲完成片之后那一趟要跳过已经剪进片子的图"
     early = body.index("_materialize_stat_card(spec, segments, outdir)")
-    assert early < body.index("_check_segments_fit(segments, sources)"), "图要在切段和越界检查之前渲出来"
+    assert early < body.index("_check_segments_fit(segments, sources"), "图要在切段和越界检查之前渲出来"
 
 
 def test_stat_card段在load_spec那一刻就归一成image段(tmp_path):

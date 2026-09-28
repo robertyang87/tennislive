@@ -1301,6 +1301,8 @@ pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/
 `output/` 一个字节不动，清理/上传/提交三步全跳过。它**一次列全所有超长的段**，
 外加每段的余量（还标「很紧」）——比离线估准得多，见下。
 
+⭐ **2026-09-28 起 `--check-narration`／`mode=narration` 量完会落账**（`data/narration_checks/<slug>.json`，按每段旁白的指纹）：`--dry-run` 对「落在估算误差里」的段认这份账，手写 spec 没账就红（zverev-deminaur 第 9 段：画面 11.9s、runner 上 edge-tts 实测 12.10s——那一趟没有 Azure 钥匙——dry-run 当时只印了一句「悬」）。账头记着量它的 TTS 后端，只认和**出片那台机器**同一个后端量的（`render_tts_setup`；runner 的 dry-run 和 render 挂同一对钥匙）。runner 那一趟把账自己提交回分支，这是 `mode=narration` 唯一写进仓库的东西。量法、豁免见 `tennis-pipeline-ops`「返工审计的八道小闸」。
+
 #### ⚠️⚠️ 本地 `--check-narration` 和 runner 上的 render **不是同一个 TTS**，而 runner 那个更快
 
 2026-08-15 在 `wangxiyu-timofeeva` 上踩的，**代价是一趟白跑的 render**：

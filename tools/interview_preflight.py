@@ -30,7 +30,9 @@ runner 上必红的那些「只看 spec 就判得出」的错在 dispatch 之前
 
 **红（runner 上一定会红的）**：全称断言要认领两个源（runner「发布文案前置检查」那一步
 的 `check_interview_claims`）、L0 来源身份、Tennis TV 台标挪没挪出窗口、顶栏赛事行格式、
-顶栏比分方向、开场认领、冷开场／片尾那两段、小红书正文在不在、文案不提字幕规格、封面 `hook_accent`、
+顶栏比分方向、开场认领、冷开场／片尾那两段、**已知带片尾板的源（拉沃尔杯、Tennis TV）上手写
+spec 的 `end` 离最后一个词太远**（`interview_tail.quiet_tail_problem`，认领 `_end_why`）、
+小红书正文在不在、文案不提字幕规格、封面 `hook_accent`、
 账号所有者的口味闸（`check_taste`：标题和推送标题同一个数只能有一个说法；
 `check_taste_extra`：总分差、赛点同义反复、小红书正文 markdown）、解读卡（含「一行放得下」）、
 文案的 tag／标题（`push_reel --stage check`，和 runner 的「发布文案前置检查」同一条命令）、以及
@@ -184,7 +186,7 @@ def caption_fingerprint(slug: str) -> list[str] | None:
 def subtitle_findings(spec: dict) -> tuple[list[str], list[str]]:
     """按仓库里的字幕缓存重切一遍行，再走出片那一趟的 `write_ass` 全套 → (红, 提示)。"""
     import build_interview_clip as clip  # noqa: PLC0415
-    from interview_tail import cache_word_spans, quiet_tail_note  # noqa: PLC0415
+    from interview_tail import cache_word_spans, quiet_tail_problem  # noqa: PLC0415
 
     slug = str(spec.get("slug") or "")
     problems: list[str] = []
@@ -199,8 +201,11 @@ def subtitle_findings(spec: dict) -> tuple[list[str], list[str]]:
         if words is None:
             notes.append("字幕缓存和这条 URL 对不上（换过候选视频？），行数对齐没法离线判")
             return problems, notes
-        if note := quiet_tail_note(spec, cache_word_spans(work, spec)):
-            notes.append(note)
+        tail_red, tail_note = quiet_tail_problem(spec, cache_word_spans(work, spec))
+        if tail_red:
+            problems.append(f"片尾板：{tail_red}")
+        if tail_note:
+            notes.append(tail_note)
         with contextlib.redirect_stdout(io.StringIO()):
             lines = clip.segment(words, spec["start"], spec["end"],
                                  budget=spec.get("segment_budget_px"),
