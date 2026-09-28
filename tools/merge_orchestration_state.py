@@ -98,6 +98,58 @@ def merge_interview_states(base: dict, ours: dict, theirs: dict) -> dict:
             else:
                 target[slug] = value
     merged["slugs"] = sorted(slugs)
+    # 「先投 subs」的账（`pick_interview_renders.mark_subs`）同一个规矩：本趟改过的条目
+    # 重放上去，远端同一条更新（时刻不早于本趟）就让远端的。不重放的话，一撞车这趟投的
+    # subs 就没记上，下一趟又投一次——同 slug 的 concurrency 是 cancel-in-progress，
+    # 重投会把还在跑的那趟掐掉。
+    # ⚠️ **本趟删掉的、改了标记的也要带过去**（`sync_subs_state` 删判定已交上来的、标 `parked`；
+    # `mark_one` 删用完的，复审 nit 3/4）——和 `blocked` 那一栏同一个道理：不带，一撞车账就只进
+    # 不出、停下的标记也丢了。远端自己也动过这一条（≠ base）而且不比本趟旧，就听远端的。
+    base_subs = base.get("subs") or {}
+    ours_subs = ours.get("subs") or {}
+    theirs_subs = theirs.get("subs") or {}
+    for slug in sorted(set(base_subs) | set(ours_subs)):
+        mine, was, remote = ours_subs.get(slug), base_subs.get(slug), theirs_subs.get(slug)
+        if mine == was:
+            continue
+        if (remote is not None and remote != was
+                and (mine is None
+                     or str(remote.get("at") or "") >= str(mine.get("at") or ""))):
+            continue
+        if mine is None:
+            (merged.get("subs") or {}).pop(slug, None)
+        else:
+            merged.setdefault("subs", {})[slug] = mine
+    # 停车账（`pick_interview_renders.note_autopick_failure`，interview-clip 的 render 红在封面
+    # 自动换帧时记）：本趟改过的条目加回去——不加的话 interview-clip 记账撞上 auto-render 的
+    # dispatch 提交，重放以远端为底，这一笔就丢了，停车永远攒不满（D2）。两边都改过同一条
+    # 取 `at` 晚的那一份（同一个 slug 的 render 按 concurrency 串行，晚的就是后记的）。
+    base_f = base.get("autopick_failed") or {}
+    theirs_f = theirs.get("autopick_failed") or {}
+    for slug, entry in (ours.get("autopick_failed") or {}).items():
+        if base_f.get(slug) == entry:
+            continue
+        remote = theirs_f.get(slug)
+        if (isinstance(remote, dict) and remote != base_f.get(slug) and isinstance(entry, dict)
+                and str(remote.get("at") or "") > str(entry.get("at") or "")):
+            continue
+        merged.setdefault("autopick_failed", {})[slug] = entry
+    # 「转写判定红着等人」那本账（`pick_interview_renders.sync_waiting_marks`，pipeline-health 读）：
+    # 只有 auto-render 全量那一趟写它。本趟改过的（新记、删掉、改了原因）带过去；远端自己也动过
+    # 这一条（≠ base）就听远端的——`since` 只会是更早那一次见红的时刻，别让撞车把它往后挪。
+    base_r = base.get("subs_red") or {}
+    ours_r = ours.get("subs_red") or {}
+    theirs_r = theirs.get("subs_red") or {}
+    for slug in sorted(set(base_r) | set(ours_r)):
+        mine, was = ours_r.get(slug), base_r.get(slug)
+        if mine == was or theirs_r.get(slug) != was:
+            continue
+        if mine is None:
+            (merged.get("subs_red") or {}).pop(slug, None)
+        else:
+            merged.setdefault("subs_red", {})[slug] = mine
+    if "subs_red" in merged and not merged["subs_red"]:
+        merged.pop("subs_red")
     return merged
 
 
@@ -121,7 +173,10 @@ def main() -> int:
             if (not isinstance(state, dict)
                     or not isinstance(state.get("slugs", []), list)
                     or not isinstance(state.get("at", {}), dict)
-                    or not isinstance(state.get("spec_sha256", {}), dict)):
+                    or not isinstance(state.get("spec_sha256", {}), dict)
+                    or not isinstance(state.get("subs", {}), dict)
+                    or not isinstance(state.get("autopick_failed", {}), dict)
+                    or not isinstance(state.get("subs_red", {}), dict)):
                 raise ValueError("Invalid interview dispatch state")
         merged = merge_interview_states(*snapshots)
     else:

@@ -202,8 +202,9 @@ concurrency:
 jobs:
   reel:
     runs-on: ubuntu-latest
-    # 各步骤声明的最坏预算之和是 57 分钟（dry-run 闸 3 + 装 ffmpeg／中文字体各 15 +
-    # 装 Chromium 10 + 判据回喂修复步 8 + 源片认领的认领／摘认领／标完成三步各 2），
+    # 各步骤声明的最坏预算之和是 59 分钟（dry-run 闸 3 + 抽帧封面渲前查官方图 2 +
+    # 装 ffmpeg／中文字体各 15 + 装 Chromium 10 + 判据回喂修复步 8 + 源片认领的认领／摘认领／
+    # 标完成三步各 2），
     # 63 在它上面留了几分钟余量——步骤自己还在正常重试时不许被 job 级的壳先砍掉，
     # 判据 test_job级超时要兜得住各步骤自己声明的最坏预算之和。再加带 timeout 的步骤，
     # 先把这个和重算一遍。
@@ -305,6 +306,27 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
+
+      # **表单填错的，第一步就红**（2026-09-28 返工审计）。排在认领源片和装依赖
+      # **之前**（只用标准库；排在 setup-python 之后，是因为失败时那两步 `failure()`
+      # 清理——摘认领、摘 state——要用 `python`）：
+      #   - run 36304133786：`url` 空着、`slug` 还是表单默认 `eala-zheng`——装完依赖、
+      #     起完 PO token，第 1.4 分钟才红在 `curl: (3) URL rejected`，看不出是「没填」
+      #   - run 35478525370：cookies 模式填了 `ytsearch8:…` 搜索词，搜出 0 条，报的是
+      #     「没下到媒体流」，看着像 cookie 坏了
+      #   - `scorebox` 写错格式要在下源片之前红；「框是按别的分辨率量的」那一半要源片
+      #     高度，下完在 build_match_reel 里按高度缩放，不再红（fit_scorebox_to_frame）
+      # 判据 tests/test_source_probe_robustness.py
+      - name: probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）
+        if: github.event.inputs.mode == 'probe' || github.event.inputs.mode == 'cookies'
+        env:
+          MODE: ${{ github.event.inputs.mode }}
+          URL: ${{ github.event.inputs.url }}
+          SLUG: ${{ github.event.inputs.slug }}
+          SCOREBOX: ${{ github.event.inputs.scorebox }}
+        run: |
+          python3 tools/source_url_check.py --mode "$MODE" --url "$URL" \
+            --slug "$SLUG" --scorebox "$SCOREBOX"
 
       # **同一条源片别 probe 两遍**（2026-09-27 返工取证 P6）。一开跑就按视频 id
       # 查 main 上的认领（data/probe_claims/<id>.json）和近三天的 probe 目录：别的
@@ -489,6 +511,14 @@ jobs:
           || github.event.inputs.mode == 'narration'
           || github.event.inputs.mode == 'reattest'
         timeout-minutes: 3
+        # **和 render 步挂同一对 Azure 钥匙**（2026-09-28 修正轮 2）：「误差带里的旁白认真 TTS
+        # 的账」要比账头的后端和**出片那一趟**对不对得上（`render_tts_setup` →
+        # `azure_tts.available()`）。这一步不挂的话它恒答「没有 Azure」，钥匙修好那天 render
+        # 走 Azure、dry-run 还在认 edge-tts 的账；SDK 在上面「装依赖」里已经装好（render／cover／
+        # narration 三档）。判据 `test_runner的dry_run和render挂同一对Azure钥匙`。
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: |
           # tee 进 /tmp/render-findings.log：render 红了之后「判据回喂模型修一轮」
           # 那一步要拿这份**确定性的原话**当输入（tools/repair_reel_spec.py）。
@@ -540,8 +570,49 @@ jobs:
           # 覆盖那道闸只在 mode=render 硬：cover／narration 这两趟用不到 probe，
           # 时效第一、封面排最前，别让一条还没 probe 的源挡住出封面。
           export REEL_DRY_RUN_FOR="${{ github.event.inputs.mode }}"
+          # --voice／--rate 和 narration、render 两步传同一对表单值：误差带那道闸拿它们比账头
+          # （`narration_record_mismatch`），不传就恒比 CLI 默认值——表单上换了音色，
+          # narration 量的账和 dry-run 的期望各说各的。判据 `test_runner三步传同一对音色语速`。
           python tools/build_match_reel.py render --dry-run \
-            --spec "$SPEC" --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log
+            --spec "$SPEC" \
+            --voice "${{ github.event.inputs.voice }}" \
+            --rate "${{ github.event.inputs.rate }}" \
+            --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log
+
+      # 抽帧封面：渲之前先查一遍官方图（O4 那一份渠道清单 ＋ 同一套机器闸，
+      # tools/cover_upgrade.py 的 preflight）。有一张全过就不许发抽帧——手写 spec 在这儿红
+      # （报错里是换图的原话），自动 spec 只报。来路：返工审计 2026-09-28，窗口里 11 条第一次
+      # 推的是抽帧封面，其中 4 条换实拍又重推了 5 次。
+      # **只拦手写 spec 的第一次渲染**（发布账本／pushed.json 都没有）；**已经推过的只报**——
+      # 推出去之后换图归 O4（它认 `_keep_frame_why`），这里不改已发的 spec（复审 D2）。
+      # **不拦的**：不是抽帧、`_keep_frame_why` 认领过、判不了当地日期、一张都没全过（机器闸
+      # ＋正式封面闸，和 `--write` 同一道）、渠道一档都没查成、超时、工具自己炸了——2026-09-26
+      # 账号所有者：没有高清大图时抽帧可以直接用。
+      # 退出码 3 才是「找到了」（Python 没接住的异常是 1，分得开）。人脸模型在上面已经备好。
+      # 秒数按这一条拦不拦定（`cover_upgrade.preflight_budget`）：会拦的 100 秒，只报的（自动
+      # spec、已经推过的）60 秒；这一步 2 分钟兜底（复审 nit 3：job 预算原来 62/63，留 ≥3 分钟）。
+      # 单条实测 0.1~24 秒（机器闸判不了、只剩 AP 一档的不到 1 秒；其余 1~24 秒，
+      # 同一条能差 7 秒——bencic-townsend 15.4～24）。印不出秒数就按 60。
+      - name: 抽帧封面先查官方图（有能过机器闸的就不许发抽帧）
+        if: github.event.inputs.mode == 'render'
+        timeout-minutes: 2
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          set +e
+          LIMIT=$(python tools/cover_upgrade.py --preflight-budget --slug "$SLUG" 2>/dev/null)
+          case "$LIMIT" in ''|*[!0-9]*) LIMIT=60 ;; esac
+          # 不 tee 进 /tmp/render-findings.log：自动 spec 在这儿只报不拦，那份原话是给
+          # 「判据回喂」修 spec 用的，换图不归模型管（账号所有者 2026-09-27：模型线不再加强）
+          timeout "$LIMIT" python tools/cover_upgrade.py --preflight --slug "$SLUG" \
+            --summary "$GITHUB_STEP_SUMMARY"
+          rc=$?
+          set -e
+          case "$rc" in
+            0) ;;
+            3) exit 1 ;;
+            124) echo "::warning::渲前查官方图超时（${LIMIT} 秒），没查完——不拦，抽帧照发" ;;
+            *) echo "::warning::渲前查官方图的工具自己出错（退出码 $rc）——不拦，抽帧照发；看上面的日志" ;;
+          esac
 
       # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
       # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
@@ -1026,51 +1097,17 @@ jobs:
             echo "::notice::未配置 YT_COOKIES_TXT，只能靠 player client 梯子碰运气"
           fi
 
-      # **cookie 会过期，而过期时的表现和「没配」一模一样。** 所以要有一条随时能跑、
-      # 不产生任何产物的验证：真下三秒媒体流。
-      # 注意 `--skip-download` 那种探活是**假的**——不带 cookie 也拿得到标题和格式表，
-      # 只有真去取媒体流才会撞上 "Sign in to confirm you're not a bot"。
+      # **cookie 会过期，而过期时的表现和「没配」一模一样。** 真下三秒媒体流的那段
+      # 逻辑在 tools/yt_cookie_check.sh（按日志分因：机器人验证／n challenge／视频下架）——
+      # source-health.yml 每 6 小时定时派发这一档（无人值守 → 红了走 pipeline_health
+      # 的阻塞推送，按 `match-reel:cookies` 去重），**同一段检查只许有一份**。
+      # 2026-09-19 17:15Z cookie 失效，到 22:52Z 都只是会话手动拨的 probe 在红。
       - name: cookies — 只验 YouTube 还能不能下
         if: github.event.inputs.mode == 'cookies'
         env:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
-        run: |
-          URL="${{ github.event.inputs.url }}"
-          [ -n "$URL" ] || URL="https://www.youtube.com/watch?v=HyKTXynnI9c"
-          ARGS=""
-          if [ -n "$YT_COOKIES" ]; then
-            ARGS="--cookies $YT_COOKIES"
-            echo "带 cookie 试（$(wc -l < "$YT_COOKIES") 行）"
-          else
-            echo "::warning::没有 YT_COOKIES_TXT，这次只验 client 梯子（cookies 模式不起 PO token provider）"
-          fi
-          rm -rf "$RUNNER_TEMP/ytcheck" && mkdir -p "$RUNNER_TEMP/ytcheck"
-          yt-dlp $ARGS --js-runtimes node --download-sections "*0-3" \
-            --force-keyframes-at-cuts \
-            -f "bv*[height<=720]+ba/b[height<=720]/b" \
-            -o "$RUNNER_TEMP/ytcheck/probe.%(ext)s" "$URL" 2>&1 | tee "$RUNNER_TEMP/yt.log" || true
-          FILE=$(ls -S "$RUNNER_TEMP/ytcheck" 2>/dev/null | head -1)
-          if [ -z "$FILE" ]; then
-            # **别把「没下到」一律说成「cookie 过期」**——第一次跑就栽在这上面：
-            # 真实原因是没装 yt-dlp-ejs，n challenge 解不了，只剩图片格式，
-            # 而我的报错写着「cookie 可能过期了」，方向反了。所以按日志分因。
-            if grep -q "not a bot\|Sign in to confirm" "$RUNNER_TEMP/yt.log"; then
-              echo "::error::撞上了机器人验证——cookie 无效或已过期，重新导一份"
-            elif grep -q "n challenge solving failed\|Only images are available" "$RUNNER_TEMP/yt.log"; then
-              echo "::error::n challenge 解不了：yt-dlp 缺 yt-dlp-ejs 或没有 JS 运行时，和 cookie 无关"
-            else
-              echo "::error::没下到媒体流，原因见下面的格式表"
-            fi
-            yt-dlp $ARGS --js-runtimes node --list-formats "$URL" 2>&1 | tail -25 || true
-            exit 1
-          fi
-          SIZE=$(stat -c%s "$RUNNER_TEMP/ytcheck/$FILE")
-          echo "拿到 $FILE，$SIZE 字节"
-          # 几百字节的「文件」多半是错误页，不是媒体
-          [ "$SIZE" -gt 51200 ] || { echo "::error::文件只有 $SIZE 字节，不是媒体流"; exit 1; }
-          ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 \
-            "$RUNNER_TEMP/ytcheck/$FILE"
-          echo "YouTube 下载可用。"
+          URL: ${{ github.event.inputs.url }}
+        run: bash tools/yt_cookie_check.sh "$URL"
 
       - name: probe — 下载 + 缩略图墙
         if: github.event.inputs.mode == 'probe'
@@ -1216,11 +1253,41 @@ jobs:
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          # 按真语音重放数字静音要读 probe.json：dry-run 那一步落好的，可能已经被「算出目录」
+          # 那一步的 `git sparse-checkout add` 清掉（落盘要排在每一个 add 之后）——再落一遍，
+          # 已经在的不动。取不到只是这一层哑（会出声），不拦查旁白。
+          python tools/probe_sources.py materialize "$SPEC" \
+            || echo "::warning::按 URL 认领 probe.json 失败——按真语音重放数字静音这一趟可能没查"
+          set +e
           python tools/build_match_reel.py render --check-narration \
             --spec "$SPEC" \
             --voice "${{ github.event.inputs.voice }}" \
             --rate "${{ github.event.inputs.rate }}" \
             --outdir "${{ steps.paths.outputs.outdir }}"
+          rc=$?
+          set -e
+          # **量到的真时长落账，提交回这条分支**（2026-09-28）：`--dry-run` 对「落在估算
+          # 误差里」的段按旁白指纹认 data/narration_checks/<slug>.json（`narration_check_findings`；
+          # 没账只报、不拦——09-28 会话决定，这一趟**不是**正常路径上必走的一步，想先知道才拨）。
+          # 沙箱连不上 edge-tts（WSS 被代理挡），这一趟是会话里补账的路——不提交的话量完就丢。
+          # 只 add 这一个小 JSON，装不下（rc=1）也照样落账：真时长本身没错，改画面长度不用重量。
+          REC="data/narration_checks/${{ github.event.inputs.slug }}.json"
+          # **main 上不提交**（2026-09-28 修正轮 2）：直接推到 main 的提交不过 CI。在分支上跑，
+          # 账和 spec 进同一个 PR；main 上这一趟只报数（日志里那张表照旧印）。
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "::warning::mode=narration 在 main 上跑：真 TTS 的账不提交（main 的提交不过 CI）——要落账就在分支上重跑，或者把日志里那张表抄进 $REC 走 PR"
+          elif [ -f "$REC" ]; then
+            git config user.name "Claude"
+            git config user.email "noreply@anthropic.com"
+            git add "$REC"
+            if ! git diff --cached --quiet; then
+              git commit -q -m "reel: narration ${{ github.event.inputs.slug }} 真 TTS 时长落账"
+              source tools/git_push_retry.sh
+              push_with_rebase_retry "${{ github.ref_name }}" \
+                || echo "::warning::真 TTS 时长的账没推上去——日志里那张表照抄进 $REC 再提交"
+            fi
+          fi
+          exit $rc
 
       - name: cover — 只出封面海报
         if: github.event.inputs.mode == 'cover'
@@ -1251,6 +1318,10 @@ jobs:
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           SLUG="${{ github.event.inputs.slug }}"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          # render 在 TTS 之后按真语音重放数字静音（`_render_silence_gate`），要读 probe.json——
+          # 和 narration 那一步同一个理由再落一遍（已经在的不动，一趟批量 fetch 两秒）。
+          python tools/probe_sources.py materialize "$SPEC" \
+            || echo "::warning::按 URL 认领 probe.json 失败——render 按真语音重放数字静音这一趟可能没查"
           # 600 秒是性能目标，不是内容闸。超线照样做完、照样过 L2 和发布；
           # `finish` 会在产物与 job summary 留 FAIL + warning，供后续定点修复。
           # tee + pipefail：失败原话（TTS 装不下 / 哑场 / ReelError）要留给
@@ -1700,19 +1771,17 @@ jobs:
         if: github.event.inputs.mode == 'probe' && github.ref_name == 'main'
         env:
           GH_TOKEN: ${{ github.token }}
+        # ⚠️ 手写 spec（没有 `_production`）不是这一步的活：会话在 main 上重 probe 一条
+        # 已经写好的手写 spec（cobolli-mensik-doubles-laver-cup-2026，run 36331363124），
+        # 原来这里裸 `assert _production.status` 把整趟 probe 打红——判据挪进
+        # tools/probe_dispatch_gate.py：没 spec → [waiting]，手写 → [skip]，自动 spec 的
+        # ready ＋ push.auto 合同照旧是硬的（对不上就红）。
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
-          if [ ! -f "$SPEC" ]; then
-            echo "[waiting] 严格生产证据未齐；本次不 dispatch render"
+          ACTION=$(python tools/probe_dispatch_gate.py --spec "$SPEC") || exit 1
+          if [ "$ACTION" != "dispatch" ]; then
             exit 0
           fi
-          python - "$SPEC" <<'PY'
-          import json, sys
-          spec = json.load(open(sys.argv[1], encoding="utf-8"))
-          assert (spec.get("_production") or {}).get("status") == "ready_for_render"
-          assert (spec.get("push") or {}).get("auto") is True
-          print("正式 spec + 自动推送合同已确认")
-          PY
           gh workflow run match-reel.yml --ref main \
             -f mode=render \
             -f slug="${{ github.event.inputs.slug }}" \

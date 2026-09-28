@@ -309,20 +309,34 @@ def test_全库顶栏比分都是赢家视角():
     assert not bad, "\n".join(bad)
 
 
-def test_顶栏比分那道闸坐在渲染入口_下载之前就红(tmp_path, monkeypatch):
-    """不查源码文本，真跑 `main()`：L0 放行之后，比分方向错的 spec 在第一步就退出，
-    一个网络调用都不发。"""
+def test_顶栏比分那道闸坐在渲染入口_下载之前就红(tmp_path, monkeypatch, capsys):
+    """不查源码文本，真跑 `main()`：L0 放行之后，比分方向错的 spec 在出片那几档第一步就退出，
+    一个网络调用都不发。⚠️ 只交转写判定的那两档（subs／verify）只报不拦（2026-09-28 D2：
+    比分方向不碰转写指纹，subs 要能和改文案、挑封面并行跑）——报还是要报。"""
     spec = _score_spec("6-3 1-6 4-6")
     spec.update({"url": "https://example.invalid/x", "start": 0, "end": 10,
                  "event": "2026 美网 1/4决赛"})
     path = tmp_path / "s.json"
     path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
     monkeypatch.setattr(bic, "check_source_contract", lambda s: "ok")
-    monkeypatch.setattr(bic, "storyboard_sheet",
-                        lambda *a, **k: pytest.fail("比分那道闸没拦住，已经走到下载"))
+    monkeypatch.setattr(bic, "OUTDIR", tmp_path / "out")
+    for name in ("storyboard_sheet", "fetch_words", "yt_download"):
+        monkeypatch.setattr(bic, name, lambda *a, **k: pytest.fail("比分那道闸没拦住，已经走到下载"))
+    for stage in ("render", "cover"):
+        monkeypatch.setattr(sys, "argv", ["x", "--spec", str(path), "--stage", stage])
+        with pytest.raises(SystemExit, match="输家视角"):
+            bic.main()
+
+    class Reached(Exception):
+        pass
+
+    def reached(*a, **k):
+        raise Reached
+    monkeypatch.setattr(bic, "storyboard_sheet", reached)
     monkeypatch.setattr(sys, "argv", ["x", "--spec", str(path), "--stage", "subs"])
-    with pytest.raises(SystemExit, match="输家视角"):
+    with pytest.raises(Reached):
         bic.main()
+    assert "输家视角" in capsys.readouterr().out, "subs 那一档不拦，可红还要印出来"
 
 
 # ── 三、离线预检：出片那一趟必红的，dispatch 之前在本地报 ─────────────────
@@ -375,6 +389,40 @@ def test_预检全绿的合成采访(monkeypatch, tmp_path):
     assert problems == [], problems
 
 
+def test_全量预检也按已提交的封面扫描记录拦frame_at(monkeypatch, tmp_path):
+    """rework_audit_0928：封面帧那一类在 dispatch 之前一道都没有，9 趟全是装完依赖、下完
+    源片才红。记录（`mode=cover` 提交的、render 自动换帧提交的）已经说了哪一格不行，
+    就在 dispatch 之前红，并把能直接换的那一格报出来。全量和探针两条路都要有。"""
+    import interview_cover_scan as scan
+
+    spec = _full_spec(monkeypatch, tmp_path)
+    # 机器能换的那一格还得是文案点了名的人（`interview_cover_scan.named_in_copy`）
+    spec["cover"]["tag"] = "2026 美网 · 莱巴金娜"
+    block = {"status": "ok", "identity": {"verdict": "match", "name": "莱巴金娜",
+                                          "similarity": {"莱巴金娜": 0.6}, "missing": [],
+                                          "face_px": 300.0},
+             "eyes": {"verdict": "open", "ear": 0.3, "face_px": 300.0}}
+    entries = [{"frame_at": 1.0, "status": "fail", "issues": ["只检出 1 只眼"],
+                "face": None, "margin": 2.0, "face_model": block},
+               {"frame_at": 1.2, "status": "pass", "issues": [], "face": None,
+                "margin": 3.0, "face_model": block}]
+    # 记录的窗口（0.5–2.5）不是 render 现在会扫的那一段（frame_at 前后各 2 秒＝0–3）：
+    # 判不准 render 扫不扫得到 1.2，拦下来、报出那一格
+    record = scan.build_record(spec, (0.5, 2.5), 0.2, entries)
+    path = pf.OUTPUT / spec["slug"] / scan.RECORD_NAME
+    path.write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
+    problems, _ = pf.spec_problems(spec, copy=False)
+    hit = [p for p in problems if p.startswith("_check_cover_scan")]
+    assert len(hit) == 1 and "没过闸" in hit[0] and "1.2 秒" in hit[0], problems
+    # 同一段、同一个间隔（D3）：render 红了会自动换上 1.2——不拦，提示里说一声
+    path.write_text(json.dumps(scan.build_record(spec, (0.0, 3.0), 0.2, entries),
+                               ensure_ascii=False), encoding="utf-8")
+    problems, notes = pf.spec_problems(spec, copy=False)
+    assert problems == [] and any("1.2 秒" in n and "render" in n for n in notes), (problems, notes)
+    spec["cover"]["frame_at"] = 1.2
+    assert pf.spec_problems(spec, copy=False)[0] == []
+
+
 @pytest.mark.parametrize(("mutate", "expect"), [
     (lambda s: s["zh"].pop(), "对不上"),                                      # 117:114 那种
     (lambda s: s["zh"].__setitem__(0, "非" * 20), "中文超宽"),
@@ -399,13 +447,19 @@ def test_预检把runner上必红的spec错在本地报出来(monkeypatch, tmp_p
 
 
 def _leading_checks(fn_name: str) -> list[str]:
-    """`build_interview_clip.<fn_name>` 函数体里**第一排连着的** `check_*(spec)` 调用。"""
+    """`build_interview_clip.<fn_name>` 函数体里**第一排连着的** `check_*(spec)` 调用。
+
+    `main()` 里 L0 之后那一排包在一个 `try` 里（转写那几档只报不拦，2026-09-28 D2）——
+    `try` 的正文照样算这一排，跳过它就只抠得到 L0 一道。"""
     import ast
 
     tree = ast.parse((ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8"))
     fn = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == fn_name)
     out: list[str] = []
+    flat: list[ast.stmt] = []
     for stmt in fn.body:
+        flat += stmt.body if isinstance(stmt, ast.Try) else [stmt]
+    for stmt in flat:
         call = stmt.value if isinstance(stmt, ast.Expr) else None
         name = (call.func.id if isinstance(call, ast.Call) and isinstance(call.func, ast.Name)
                 else "")

@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import ast
 import json
+import os
 import re
 import shlex
 import subprocess
@@ -467,10 +468,14 @@ def test_dry_run真的印出多音字预检(tmp_path):
         path = tmp_path / name / f"{slug}.json"
         path.parent.mkdir()
         path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+        # ⚠️ 两趟都按 runner 的 mode=narration 跑（`REEL_DRY_RUN_FOR`）：塞一处多音字就是改了
+        # 旁白，别的按 mode 分软硬的闸（量过真 TTS 装不下那一类）在 narration 那趟只报——
+        # 那是另一道闸的事，不该让这条红。（「误差带里没账」2026-09-28 起任何一趟都只报。）
+        env = {**os.environ, "REEL_DRY_RUN_FOR": "narration"}
         return subprocess.run(
             [sys.executable, "tools/build_match_reel.py", "render", "--spec", str(path),
              "--outdir", str(tmp_path / name / "out"), "--dry-run"],
-            cwd=ROOT, capture_output=True, text=True, timeout=120)
+            cwd=ROOT, capture_output=True, text=True, timeout=120, env=env)
 
     base = dry_run("base")
     last = [s for s in spec["segments"] if s.get("narration")][-1]

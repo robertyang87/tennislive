@@ -27,10 +27,20 @@ jobs:
         with:
           sparse-checkout: |
             data/orchestration_state.json
+            # 采访「先投 subs」投满次数停下的（`parked`），pipeline_health 列出来（复审 2026-09-28 nit 3）。
+            # 判据 test_同一份转写输入投满次数停下_账上标parked_pipeline_health列出来
+            # 同一份文件里还有封面停车的标记（`autopick_failed[*].parked`）和转写判定红着的那本账
+            # （`subs_red`），pipeline_health 一样只读标记（2026-09-28 F3）；封面那一栏拿
+            # 下面的 output/**/render.json 认「标记之后出过片」
+            data/interview_render_dispatched.json
             data/interview_publish_ledger/*.json
             data/reel_publish_ledger/*.json
             data/explainer_publish_ledger/*.json
             output/**/render.json
+            # 自动草稿的 flashscore 备料重跑试满仍没读通的，这儿点名（feed_retry_stuck）；
+            # 新鲜窗的唯一出处是 promote_reel_draft.PENDING_MAX_AGE，它只 import 标准库
+            specs/reels/pending/*.draft.json
+            tools/promote_reel_draft.py
             tools/pipeline_health.py
             # 「阻塞」的唯一定义在看板那边，pipeline_health import 它（Q9 阻塞推微信）。
             # 判据 test_健康检查的阻塞定义就是看板那一份_工作流检出了它

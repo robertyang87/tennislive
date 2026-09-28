@@ -1,0 +1,175 @@
+{
+  "scoreboard_qc_sha256": "40bf32100b97b17702d1f032b1eed5cf0c9a861c9f28b8068cffefc90d26f9be",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 227.48,
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 1/4决赛",
+    "line2": "普罗佐罗娃 3-6 7-5 6-4 王欣瑜",
+    "start": 1.2,
+    "end": 228.68
+  },
+  "film_seconds": 232.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 18.888,
+    "2": 15.576,
+    "3": 10.176,
+    "4": 10.248,
+    "5": 20.736,
+    "7": 22.392,
+    "8": 10.512,
+    "9": 11.424,
+    "10": 8.64,
+    "11": 8.136,
+    "13": 7.32
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "王欣瑜",
+        "similarity": {
+          "王欣瑜": 0.4395,
+          "普罗佐罗娃": 0.1159
+        },
+        "missing": [],
+        "expected": [
+          "普罗佐罗娃",
+          "王欣瑜"
+        ],
+        "face": [
+          178,
+          186,
+          489,
+          564
+        ],
+        "face_px": 378.2,
+        "reason": "像 王欣瑜（0.44 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        },
+        "target": [
+          "王欣瑜"
+        ]
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2668,
+        "ear_each": [
+          0.2645,
+          0.2691
+        ],
+        "face": [
+          178,
+          186,
+          489,
+          564
+        ],
+        "face_px": 378.2,
+        "reason": "眼睛纵横比 0.27 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": [],
+      "region": [
+        555,
+        0,
+        1365,
+        1080
+      ],
+      "frame": "output/2026-09-28/reel/wang-prozorova-singapore-2026-qf/cover_src/portrait.jpg",
+      "frame_at": 23.0,
+      "target": [
+        "王欣瑜"
+      ]
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 4,
+          "named": "普罗佐罗娃",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 8,
+          "named": "普罗佐罗娃",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 14,
+          "named": "普罗佐罗娃",
+          "frames": 2,
+          "faces": 2,
+          "named_seen": 1,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 6,
+      "faces": 2
+    }
+  },
+  "render_inputs_sha256": "6a0e3d7127c34fe3916cc523a43d7a6c52f5ab4186d1875750afcbf9708ff9d9",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "wang-prozorova-singapore-2026-qf",
+    "received_at": "2026-09-28T12:47:37Z",
+    "artifact_ready_at": "2026-09-28T12:54:25Z",
+    "elapsed_seconds": 408.4,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "50ca18289f9d328e3c432b009f166867d253996a0522466a1076246798762dd4",
+    "spec_sha256": "affcbad31d1468e37968d49465d6d425a8437b315b1d81c033c49d68aec8cfc1",
+    "run_id": "36424112503",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-28T12:49:09Z",
+        "run_id": "36424112503"
+      }
+    ],
+    "render_seconds": 316.4,
+    "pre_render_seconds": 92.0
+  },
+  "film_sha256": "50ca18289f9d328e3c432b009f166867d253996a0522466a1076246798762dd4",
+  "film_bytes": 111826692,
+  "qc_attestation_sha256": "fb45cd9f5dbb0a0083d66c997d3ec8f17813fb0e6e0851b77e554b3ccbde124f",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-28T12:49:09Z",
+      "run_id": "36424112503"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-28T12:54:26Z",
+      "run_id": "36424112503"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wang-prozorova-singapore-2026-qf/wang-prozorova-singapore-2026-qf.mp4",
+  "video_bytes": 111826692,
+  "_release_tag_note": "2026-09-28T12:54:30Z run 36424112503 把这一份（video_bytes 111826692）传上 tag `reel-wang-prozorova-singapore-2026-qf`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-09-25/reel/wang-prozorova-singapore-2026-qf 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+}
