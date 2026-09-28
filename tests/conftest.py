@@ -69,6 +69,15 @@ def _no_face_model_network(monkeypatch):
 
 
 @pytest.fixture(autouse=True)
+def _no_official_photo_api_network(monkeypatch):
+    """ATP Media／WTA 照片接口那两档（`tools/official_photo_apis.py`，2026-09-28 排进
+    `cover_channels.CHANNELS` 最前面）：任何跑全部渠道的测试（`find_cover_photo.main`、`cover_upgrade.search`
+    不给 sweeps）都会真去翻接口、Range 原图的头。单元测试一律关掉——要测这两档的传 `fetch=`／`head=`
+    打桩（录下来的数据在 `tests/fixtures/official_photo_apis/`）。和上下几条同一个形状。"""
+    monkeypatch.setenv("TENNISLIVE_PHOTO_API_FETCH", "0")
+
+
+@pytest.fixture(autouse=True)
 def _no_headshot_fetch_network(monkeypatch):
     """`headshot_index.resolve_headshots` 索引没命中会去 WTA 官方现抓头像（并把
     文件写进 assets/players/headshots/）。单元测试一律关掉——要测那条路的测试

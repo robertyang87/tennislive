@@ -484,8 +484,9 @@ def promote(draft: dict, probe: dict | None = None) -> dict:
 
     # `_feed_retry` 是草稿专用的账（flashscore 哪几块还欠着，reel-auto-ready 重跑用），
     # 转正时和 `_draft` 一起剥掉：正式 spec 不再被任何一班重跑，留着只会让读的人以为
-    # 还欠着什么。欠着的块在 `_notes` 里照旧写着。
-    spec = {k: v for k, v in draft.items() if k not in ("_draft", "_feed_retry")}
+    # 还欠着什么。欠着的块在 `_notes` 里照旧写着。`_cover_api` 同理（照片接口那一档的账：
+    # 问过的开赛时刻、下过没过的候选、被视觉审核判掉的图——`refresh_reel_cover`）。
+    spec = {k: v for k, v in draft.items() if k not in ("_draft", "_feed_retry", "_cover_api")}
     spec.update({
         "cover": cover,
         "editorial": editorial,

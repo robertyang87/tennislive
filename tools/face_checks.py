@@ -821,7 +821,7 @@ def restrict_identity(ident: Mapping, names: Sequence[str],
 
 def check_frame(image, expected_players, *, model: FaceModel | None = None,
                 target: Sequence[str] | None = None,
-                rivals: Sequence[str] = ()) -> dict:
+                rivals: Sequence[str] = (), all_faces: bool = False) -> dict:
     """封面帧一次查两件事（同一张脸）。给 `audit_interview_cover` 和
     `reel_face_gate` 共用——**两条线一个出口，别写两份**。
 
@@ -835,6 +835,9 @@ def check_frame(image, expected_players, *, model: FaceModel | None = None,
     `problems`、`warnings` **和不给 rivals 时逐字段一样**（`restrict_identity`）：终审
     那一份不因为多比了几个人而变，要更严一档的调用方（赛后开麦封面的机器换帧）自己读
     `rivals` 那一块。只支持按名字给的候选（str／名单），显式头像路径的 Mapping 不混用。
+
+    `all_faces`：多给两块——`faces`（检出的每一张脸的框，大的在前，O4 拿它认两人同框）和 `pose`
+    （最大那张脸正不正、清不清楚，`face_pose`，O4 排序用）。
     """
     try:
         model = model or load()
@@ -843,7 +846,8 @@ def check_frame(image, expected_players, *, model: FaceModel | None = None,
         problems, warnings = problems_of(block)
         return {**block, "problems": problems, "warnings": warnings}
     img = read_bgr(image)
-    face = largest_face(model, img)
+    detected = model.detect(img)
+    face = max(detected, key=lambda f: f.area) if detected else None
     refs = resolve_expected(expected_players)
     others = [str(r) for r in rivals if str(r).strip() and str(r) not in refs]
     if others:
@@ -855,10 +859,50 @@ def check_frame(image, expected_players, *, model: FaceModel | None = None,
                                      target=target)
     block = {"status": "ok", "model": MODEL_VERSION, "identity": ident,
              "eyes": eyes_open(img, face, model=model)}
+    if all_faces:
+        # 检出的每一张脸（大的在前）：O4 按它认「两人同框」（`cover_upgrade.second_face`）。
+        # 只在要的时候给——别的调用方把这一块整个落进凭证，平白多一串坐标
+        block["faces"] = [f.box() for f in sorted(detected, key=lambda f: -f.area)]
+        block["pose"] = face_pose(img, face)
     if full is not None:
         block["rivals"] = full
     problems, warnings = problems_of(block)
     return {**block, "problems": problems, "warnings": warnings}
+
+
+#: 「偏正面」：两眼间距 ÷ 脸框宽 ≥ 这个数。2026-09-28 杭州／新加坡／瓜达拉哈拉 20 张官方原图量的：
+#: 正脸 0.38~0.46（Medvedev-022 0.41、Safiullin-022 0.42、捧杯 vc-5 0.38），四分之三侧 0.25~0.33
+#: （Medvedev-014 0.25），侧脸 < 0.23（Medvedev-019 0.17、-024 0.22、握手照 0.18）
+FRONTAL_EYE_SPAN = 0.30
+#: 「脸是清楚的」：脸框缩到 112×112 灰度后的拉普拉斯方差 ≥ 这个数。同一批量的：清楚的 460~3141，
+#: 动感模糊的 Medvedev-019 193、背景里的小脸 230~255、横幅上的误检 63。**只拿来排序**（`cover_upgrade.taste_key`），
+#: 不是闸——不同镜头的方差不可比（`rank_frame_sharpness` 那条），所以门槛放得很低，只分「糊透了」
+SHARP_FACE_LAPLACIAN = 300.0
+
+
+def face_pose(img, face: Face | None) -> dict | None:
+    """最大那张脸的「正不正」「清不清楚」：`eye_span`（两眼间距 ÷ 脸框宽，5 点里的两只眼）和
+    `sharp`（脸框缩到 112×112 灰度的拉普拉斯方差）。账号所有者的口味：正脸或偏正面 ＞ 侧脸（2026-09-26）、
+    封面要清楚（2026-08-16）——O4 挑图时排序用（`cover_upgrade.taste_key`）。"""
+    if face is None:
+        return None
+    import cv2  # noqa: PLC0415
+    import numpy as np  # noqa: PLC0415
+
+    kps = np.asarray(face.kps, dtype=np.float64)
+    x1, y1, x2, y2 = (int(round(v)) for v in face.bbox)
+    width = max(x2 - x1, 1)
+    eye_span = float(abs(kps[1][0] - kps[0][0]) / width)
+    h, w = img.shape[:2]
+    crop = img[max(y1, 0):min(y2, h), max(x1, 0):min(x2, w)]
+    sharp = None
+    if crop.size:
+        gray = cv2.resize(cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY), (112, 112),
+                          interpolation=cv2.INTER_AREA)
+        sharp = round(float(cv2.Laplacian(gray, cv2.CV_64F).var()), 1)
+    return {"eye_span": round(eye_span, 3), "sharp": sharp,
+            "frontal": eye_span >= FRONTAL_EYE_SPAN,
+            "clear": sharp is not None and sharp >= SHARP_FACE_LAPLACIAN}
 
 
 def rank_frames(frames: Iterable[tuple[str, object]], expected_players, *,

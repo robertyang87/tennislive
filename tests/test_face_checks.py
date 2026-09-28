@@ -418,7 +418,9 @@ def test_人脸模型缓存键跟着模型版本走():
              "match-reel.yml": "dry-run — 先把 spec 的形状错拦在编码之前",
              "ci.yml": "pytest",
              # O4 自动换图：候选官方图过认人＋睁眼闸（tools/cover_upgrade.py）
-             "reel-cover-upgrade.yml": "tools/cover_upgrade.py"}
+             "reel-cover-upgrade.yml": "tools/cover_upgrade.py",
+             # 自动链封面那一步的照片接口档（2026-09-28，refresh_reel_cover → pick_for_draft）
+             "reel-auto-ready.yml": "refresh_reel_cover.py --draft"}
     for name, first_use in users.items():
         wf = yaml.safe_load((ROOT / ".github" / "workflows" / name).read_text(encoding="utf-8"))
         steps = [s for job in wf["jobs"].values() for s in job.get("steps") or []]
