@@ -3618,6 +3618,35 @@ def _takeaway_speech(card: dict) -> str:
     return text if text.endswith(("。", "？", "！")) else text + "。"
 
 
+def report_takeaway_polyphones(spec: dict, spec_path: str | None = None) -> None:
+    """解读卡口播里换字表管不到的多音字，每一趟开头报一声。**只报不拦。**
+
+    账号所有者 2026-09-27「配音 tts 里的多音字最好在生成语音时候替换成同音的字」。
+    换字本身在 `speakable()` 里（`_takeaway_voice` → `synthesize_narration` 走它）；
+    这儿报的是表里**还没有**、读音又不是常用那个的字——和 `render --dry-run` 同一个
+    函数（`tools/check_polyphones.py`），不另写一份。没有解读卡就不出声。
+
+    ⚠️ 走 `preflight_lines`：**先**问 pypinyin 在不在，再取语料——取语料要 import
+    `tennislive.video.explainer`（约 2.4 秒，这个模块别处故意不 import 它），而
+    runner 上 pypinyin 恒缺，每个 stage 为印一句「这趟没查」白付那几秒不值。
+    整段包在 try 里：这是只报不拦的预检，它自己出错不许把这一趟 stage 拖垮
+    （真合成那条路 `_takeaway_voice` 出错也只是退回静音卡）。
+    """
+    if not spec.get("takeaway"):
+        return
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        sys.path.insert(0, str(ROOT / "src"))
+        import check_polyphones  # noqa: PLC0415
+
+        lines = check_polyphones.preflight_lines(
+            lambda: check_polyphones.interview_texts(spec, speech=_takeaway_speech),
+            slug=spec.get("slug"), spec_path=spec_path)
+    except Exception as exc:  # noqa: BLE001
+        lines = [f"[多音字] ⚠️ 这趟没查完：{type(exc).__name__}: {exc}"[:300]]
+    print("\n".join(lines))
+
+
 # yt-dlp 认的合流容器（`--merge-output-format` 的取值）。别往里加 `m4a`——
 # 它是音轨容器，不在这张表里，传进去 yt-dlp 直接报参数非法。
 _MERGE_CONTAINERS = frozenset("mp4 mkv webm mov avi flv".split())
@@ -5749,6 +5778,7 @@ def main() -> int:
     check_cover_hook(spec)
     check_taste(spec)
     check_taste_extra(spec)
+    report_takeaway_polyphones(spec, spec_path=args.spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"

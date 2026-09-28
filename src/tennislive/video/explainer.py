@@ -45,6 +45,7 @@ from ..cdn import jsdelivr_base
 from ..design_tokens import MOTION as _MOTION
 from ..render.hashtags import with_campaign_tags
 from .numeral_halves import other_half_is_arabic
+from .pronounce import apply as _apply_homophones
 from .subtitle_text import drop_punctuation
 
 # The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
@@ -12236,7 +12237,11 @@ def speakable(text: str) -> str:
 
     The guard list is what stops 挑战 (challenge, and the Gentlemen's
     trophy) from turning into 选战; those really are tiǎo and are already
-    read correctly.
+    read correctly. Since 2026-09-27 the guard also keeps 挑 wherever 选
+    would be a different word: 挑起 / 挑回 / 挑高球 (tiǎo, lifting the
+    ball), 挑选, 挑刺, 挑大梁, 挑毛病, and 没什么可挑的. The swap is only
+    made where the sentence still means the same thing (see
+    `pronounce.HOMOPHONES`, key `tiao-pick`).
 
     ### 硬地：地 是 dì，不是轻声的 de
 
@@ -12295,10 +12300,16 @@ def speakable(text: str) -> str:
     照 挑→选 / 硬地→硬帝 那套：喂给合成器的是「**伯林**」（伯只读 bó），
     屏幕上仍然是「柏林」；**两边字数一样**，字幕时间轴照旧成立。
     ⚠️ 只换「柏林」两个字，不碰单独的「柏」——松柏、柏树那儿它就该读 bǎi。
+
+    ### 2026-09-27 起：换字全部收进一张表（`video/pronounce.py`）
+
+    账号所有者：「**配音 tts 里的多音字最好在生成语音时候替换成同音的字**」。
+    上面四条原样搬进 `pronounce.HOMOPHONES`（顺序不变），又加了全库普查、逐条
+    声学比对量出来「原句读错、换字读对」的十一条（鲁塞 布塞 往回数 空出 空着
+    空在 四中三 拆开重做 数十九 长回合 次长时间）。每条带证据、带不许动的上下文，
+    字数 1:1 由 `pronounce.apply` 每次替换时查。**这儿仍是唯一入口**。
     """
-    text = re.sub(r"挑(?![战衅拨逗剔眉])", "选", readable(text))
-    return (text.replace("硬地", "硬帝").replace("〇", "零")
-            .replace("柏林", "伯林"))
+    return _apply_homophones(readable(text))
 
 
 def token_spans(text: str, tokens: Sequence[str]) -> list[tuple[int, int, str]]:
@@ -12429,9 +12440,10 @@ def word_split_report(
 def readable(text: str) -> str:
     """旁白照着念出来的样子——给字幕用，不给 TTS 用。
 
-    字幕要和耳朵里听到的对上，所以比分同样写成「6比4」。但 `speakable` 里那处
-    挑→选是**给合成器纠音**的，屏幕上必须还是「挑球」。两者只差这一个字，
-    字数一样，所以按字位算出来的时间轴对两边都成立。
+    字幕要和耳朵里听到的对上，所以比分同样写成「6比4」。但 `speakable` 里那些
+    换字（挑→选、柏林→伯林……整张表在 `video/pronounce.py`）是**给合成器纠音**的，
+    屏幕上必须还是「挑球」「柏林」。每一条换字都 1:1，两份字数一样，所以按字位
+    算出来的时间轴对两边都成立（`_boundary_marks` 先在合成那份里找 token）。
 
     ⚠️ 「比」两边**不加空格**。原来写成「6 比 4」，烧上屏就是
     `7{\\fs68} 比 {\\fs78}5` 这种松松垮垮的一串——没有人把比分写成「7 比 5」，
@@ -13108,17 +13120,26 @@ def _boundary_marks(boundaries: Sequence[dict], text: str) -> list[tuple[int, fl
     某一段旁白 122 个非空白字，边界流只有 109 个，差的 13 个全是逗号句号。
     按累加长度算，「他自己说」在原文排第 108 位、在边界空间只排第 97 位，
     查出来的时刻晚了 1.7 秒——而且越往后漂得越多，最后一句被压成不到一秒。
+
+    ⚠️ **token 是合成器念的那份（`speakable()` 之后）切出来的**，带着换过的字
+    （「伯林」「控出」）。在显示的这份里找不到它们，原来只能沿用上一处——实测
+    「两年前，柏林揭幕战」里「伯林」被钉在逗号上，早了一个字。换字表保证两份
+    字数 1:1，所以**先在合成那份里找**，找到的字位原样对回显示这份。
     """
     marks: list[tuple[int, float]] = []
     pos = 0
+    twin = speakable(text)
+    hay = twin if len(twin) == len(text) else text
     for b in boundaries:
         spoken = str(b.get("text") or "").strip()
         seconds = float(b.get("offset", 0)) / 1e7
         if not spoken:
             continue
-        found = text.find(spoken, pos)
+        found = hay.find(spoken, pos)
+        if found < 0 and hay is not text:
+            found = text.find(spoken, pos)
         if found < 0:
-            # 合成器拿到的那份和显示的这份差一个字（挑→选的纠音）时会落到这里。
+            # 两份都找不到（旧的 words.json、合成那份被调用方另改过）时会落到这里。
             # 保持单调，宁可沿用上一处，也别让时间轴倒退。
             found = pos
         marks.append((found, seconds))

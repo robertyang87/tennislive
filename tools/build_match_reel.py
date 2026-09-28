@@ -5346,7 +5346,14 @@ def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list, str
 
     ⚠️ **喂进去的必须是 `speakable()` 之后那份**——合成器念的是它，不是 spec 里
     写的那份。拿原文去 find token，「硬地」那种替换过的字一个都对不上。
+
+    ⚠️ **要保护的名字也得换成念出来的样子**（2026-09-27 换字表扩到十几条之后）：
+    名字里有字被换（「鲁塞」→「鲁赛」），拿原名去换过字的那份里找，一处都找不到，
+    `word_split_report` 就当这段没有这个名字——**保护静默失效**。按字位从合成那份
+    里切（`pronounce.spoken_forms`），两份字数 1:1。
     """
+    from tennislive.video.pronounce import spoken_forms  # noqa: PLC0415
+
     out = []
     names = _protected_names(spec)
     for index, seg in enumerate(segments):
@@ -5357,7 +5364,8 @@ def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list, str
         if not marks:
             continue
         spoken = speakable(text)
-        line, crossing, inside = word_split_report(spoken, marks, names)
+        line, crossing, inside = word_split_report(
+            spoken, marks, spoken_forms(readable(text), names))
         tokens = [t for t in (str(m.get("text", "")).strip() for m in marks) if t]
         out.append((index, line, crossing, inside, spoken, tokens))
     return out
@@ -10567,6 +10575,24 @@ def main() -> int:
     # 三条路一个 seat 全过，0.2 秒就红。豁免表按 slug 查，老 spec 照旧绿。
     enforce_spec_wording(spec, Path(args.spec))
     apply_tts_backend(spec)
+    if args.dry_run:
+        # **多音字：换字表管不到的，出片前列出来。** 账号所有者 2026-09-27「配音 tts
+        # 里的多音字最好在生成语音时候替换成同音的字」——换字表（video/pronounce.py）
+        # 只收量过读错的；新写的旁白里冒出来的新词，在这儿（0.x 秒、不联网）先报一声，
+        # 要真合成比对就照它印的那行跑 `check_polyphones.py --measure`。**只报不拦**：
+        # 静态这一半是 pypinyin 的代理，不是合成器本身，做成硬闸就是一条常年红。
+        # 排在措辞闸之后、validate_spec 和之后所有会红的闸（查选段、估旁白……）前面：
+        # 哪一道先红，这几行都照样印；判据 `test_dry_run真的印出多音字预检` 也因此不跟
+        # 那条 spec 以后会不会被别的闸拦住绑在一起。不排到措辞闸前面：从成片导入那道
+        # 守卫到 `enforce_spec_wording` 之间不许插任何东西（`test_finished_master_guard`
+        # 拿最小的命名空间跑真 `main()`），而措辞闸对存量按 slug 豁免，本来就不会红。
+        # ⚠️ runner 上不装 pypinyin，Actions 上这儿恒印「这趟没查」——在会话里跑才查得到。
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import check_polyphones  # noqa: PLC0415
+
+        print("\n".join(check_polyphones.preflight_lines(
+            lambda: check_polyphones.reel_texts(spec), slug=Path(args.spec).stem,
+            spec_path=args.spec)) + "\n")
     if args.check_narration:
         # **一个源片字节都不碰。** 这道闸比的是「TTS 时长 vs spec 里的段长」，
         # 两样都不需要源片；而跑一趟 render 去问同一个问题，在通过的情况下会
