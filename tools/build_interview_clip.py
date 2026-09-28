@@ -191,6 +191,15 @@ _FONT_FILES = {
     # 方向——断行会比实际更早换行，不会撑出去。
     "num": (str(ROOT / "assets/fonts/TLScore-Regular.ttf"), None),
 }
+#: 只给**切行的老尺子**量宽用的字体（`SEGMENT_RULERS`）。libass 不画它，所以不进
+#: `_FONT_FILES`／`_ASS_NAME`——那两张表是「渲染用的字体」一一对应。
+#: 2026-09-27 之前英文字幕是 Noto Sans，那之前渲的已发 spec 是按它量宽断的行。
+#: ⚠️ 它是 apt 的 `fonts-noto-core`，ci.yml / interview-clip.yml /
+#: interview-auto-render.yml 都得装着——判据 `test_老尺子的字体三个工作流都装着`。
+_RULER_FONT_FILES = {
+    "en_noto": ("/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf",
+                "fonts-noto-core"),
+}
 # ASS 的 `Fontname` 要写字体**自己声明的名字**，而且**只有某些名字算数**。
 # 两支都实测过（渲一小段，和一个不存在的字体名比 md5，一样就是没认出来）：
 #
@@ -314,7 +323,7 @@ def _measure_at(kind: str, size: int, text: str) -> float:
     if (key := (kind, size)) not in _FONT_CACHE:
         from PIL import ImageFont  # noqa: PLC0415
 
-        path, pkg = _FONT_FILES[kind]
+        path, pkg = _FONT_FILES[kind] if kind in _FONT_FILES else _RULER_FONT_FILES[kind]
         if not Path(path).exists():
             raise SystemExit(
                 f"量宽度要 {path}，没有。\n"
@@ -962,6 +971,19 @@ def _bare(word: str) -> str:
     return word.lower().strip(".,?!;:'\"“”‘’‖")
 
 
+def _bare_0805(word: str) -> str:
+    """**冻住的历史版本，只给老尺子 `noto-46-bare-0805` 用，别拿它干别的。**
+
+    2026-08-05（79b809b7b，加解读卡）到 2026-09-03（d07205f50 修掉）之间，模块里
+    第二个同名 `_bare`（比对引文用，今天叫 `_bare_text`）把上面那份静默盖掉了：
+    切行排断点拿到的是**不转小写、剥掉一切非字母数字**的这一份，于是 `And`/`The`
+    起头的词认不出来、`don't` 变成 `dont`。那一个月渲的采访片就是按它断的行——
+    已发的重渲要逐行对上，就得按它原样再断一遍（见 `SEGMENT_RULERS`）。
+    ⚠️ 不许引用 `_bare_text`：那一份哪天为比对引文改了，老尺子就跟着静静变了。
+    """
+    return re.sub(r"[\s\W_]+", "", word, flags=re.UNICODE)
+
+
 def _rank(word: str) -> int:
     """断点好坏，越小越好。"""
     b = _bare(word)
@@ -971,6 +993,81 @@ def _rank(word: str) -> int:
 def _phrase_ok(clause: list[tuple[float, str]], i: int) -> bool:
     """第 i 个词能不能起一行：它自己是短语开头，**且**上一个词收得住。"""
     return _bare(clause[i][1]) in _BREAK_BEFORE and _bare(clause[i - 1][1]) not in _NO_TAIL
+
+
+# ── 切行的尺子：按 spec 钉死，已发的不跟着换（2026-09-28）──────────────────
+#
+# `segment()` 每次出片都现切一遍，不读 `lines.json`；而 `zh` 是逐行手写的、
+# `en_fixed` 是按行号挂的。**所以量宽的字体、字号、词类归一，任何一样一变，
+# 已发 spec 的行就变**——行数变了 `write_ass` 当场红（「中文 N 行、英文 M 行」），
+# 行数碰巧没变而边界挪了，中文就静静地配到隔壁那句英文上。
+#
+# 2026-09-27 34cb737f 把英文字幕换成 Inter，`_FONT_FILES["en"]` 跟着换，切行
+# 的尺子也就换了：108 条已渲 spec 里按现在的尺子只有 43 条行数对得上、25 条逐行
+# 边界对得上。再往前还有两次同样的静默换尺子（08-01 字号 40→46，08-05～09-03
+# `_bare` 被同名定义盖掉）。每条已发 spec 按它当年那把尺子重切，108 条
+# **107 条逐行边界和 lines.json 一字不差**，剩下那条（ruud-cerundolo 发布会）
+# 是推完之后中文已经按新尺子重挂过的，按新尺子对得上。
+#
+# 名字 → (量宽的字体, 字号, 查词类表之前怎么归一)。**定下来就是历史事实：只许加
+# 新尺子，不许改旧的。** 下一次再换英文字体或字号，先把今天这把以旧名留下、把它
+# 之前渲的 slug 挂进 `LEGACY_SEGMENT_RULER_FILE`，再换默认——
+# `test_已渲的采访spec按钉死的尺子重切_行一行不差` 会按条数报出来谁对不上。
+SEGMENT_RULERS = {
+    # 2026-09-27 34cb737f 起的默认：现在烧英文字幕的那支，和 `_en_width` 同一把
+    "inter-46": ("en", _FONT_SIZE["en"], _bare),
+    # 08-01 b5282bcf1 ~ 08-05 79b809b7b，以及 09-03 d07205f50 ~ 09-27 34cb737f
+    "noto-46": ("en_noto", 46, _bare),
+    # 08-05 79b809b7b ~ 09-03 d07205f50：`_bare` 被同名定义盖掉的那一个月
+    "noto-46-bare-0805": ("en_noto", 46, _bare_0805),
+    # 08-01 c68938aa3 ~ b5282bcf1（同一天）：英文还是 40 号
+    "noto-40": ("en_noto", 40, _bare),
+}
+SEGMENT_RULER = "inter-46"
+LEGACY_SEGMENT_RULER_FILE = ROOT / "data" / "legacy_interview_segment_metric.json"
+_RULER_WIDTH: dict[str, object] = {}
+_LEGACY_RULER_CACHE: dict[str, str] = {}
+
+
+def ruler_width(name: str):
+    """尺子 → 量一行英文多宽（px）的函数。"""
+    if name not in _RULER_WIDTH:
+        kind, size, _ = SEGMENT_RULERS[name]
+        _RULER_WIDTH[name] = lambda text, _k=kind, _s=size: _measure_at(_k, _s, text)
+    return _RULER_WIDTH[name]
+
+
+def legacy_segment_rulers() -> dict[str, str]:
+    """`data/legacy_interview_segment_metric.json` → {slug: 尺子名}。
+
+    ⚠️ **读不到就报错，不回退到默认尺子**——回退就是 2026-09-27 那次事故本身：
+    已发的片子按新尺子切，行数不吭声地变了。"""
+    if not _LEGACY_RULER_CACHE:
+        try:
+            data = json.loads(LEGACY_SEGMENT_RULER_FILE.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            raise SystemExit(
+                f"读不到 {LEGACY_SEGMENT_RULER_FILE}（{exc}）——已发采访按哪把尺子重切"
+                "就记在这儿，没有它就会按新尺子切，行对不上已经手写好的中文。") from exc
+        for name, slugs in data.items():
+            if name.startswith("_"):
+                continue
+            if name not in SEGMENT_RULERS or name == SEGMENT_RULER:
+                raise SystemExit(f"{LEGACY_SEGMENT_RULER_FILE.name} 里的 {name!r} 不是一把老尺子"
+                                 f"（老尺子只有 {sorted(set(SEGMENT_RULERS) - {SEGMENT_RULER})}）。")
+            for slug in slugs:
+                if slug in _LEGACY_RULER_CACHE:
+                    raise SystemExit(f"{slug} 在 {LEGACY_SEGMENT_RULER_FILE.name} 里挂了两把尺子。")
+                _LEGACY_RULER_CACHE[slug] = name
+    return dict(_LEGACY_RULER_CACHE)
+
+
+def segment_ruler(spec: dict) -> str:
+    """这条 spec 切行用哪把尺子：挂在老尺子表里的用老尺子，其余用默认。
+
+    **只看 slug，不看 spec 里的任何字段**——已发 spec 的内容一改，
+    interview-auto-render 就按 spec 指纹重渲、重推（「已发的不重渲」）。"""
+    return legacy_segment_rulers().get(str(spec.get("slug") or ""), SEGMENT_RULER)
 
 
 def cookie_args(spec: dict) -> list[str]:
@@ -1034,13 +1131,16 @@ _FORCE_PENALTY = 4.0
 _MIN_LINE_SECS = 0.8
 
 
-def _break_rank(sent: list[tuple[float, str]], i: int) -> int | None:
-    """在第 i 个词前面断有多好。`None`＝这儿不该断（只有实在没别的路才用）。"""
-    if _bare(sent[i - 1][1]) in _NO_TAIL:
+def _break_rank(sent: list[tuple[float, str]], i: int,
+                bare=_bare) -> int | None:
+    """在第 i 个词前面断有多好。`None`＝这儿不该断（只有实在没别的路才用）。
+
+    `bare` 是查词类表之前怎么归一，跟着切行的尺子走（`SEGMENT_RULERS`）。"""
+    if bare(sent[i - 1][1]) in _NO_TAIL:
         return None                                   # 上一行会吊在虚词上
     if sent[i - 1][1].endswith((",", ";", ":", "—")):
         return 0                                      # 逗号之后，最自然
-    b = _bare(sent[i][1])
+    b = bare(sent[i][1])
     if b in _DETERMINER:
         return 1 + len(_RANK) + 1                     # 最差的合法档，见 _DETERMINER
     if b not in _BREAK_BEFORE:
@@ -1049,7 +1149,7 @@ def _break_rank(sent: list[tuple[float, str]], i: int) -> int | None:
 
 
 def _split_wide(sent: list[tuple[float, str]], budget: float,
-                width) -> tuple[list[list[tuple[float, str]]], bool]:
+                width, bare=_bare) -> tuple[list[list[tuple[float, str]]], bool]:
     """把一句话切成尽量**匀**的几行。返回 (分段, 有没有被迫硬断)。
 
     贪心（填满头一行、剩下的往后推）会在句尾留碎行，所以这里做一遍
@@ -1058,6 +1158,15 @@ def _split_wide(sent: list[tuple[float, str]], budget: float,
 
     找不到任何合法断点时才按词边界硬断，并把 `forced` 报上去：
     **兜底出事的时候要吭声**，否则「断得难看」和「本来就断不开」长得一样。
+
+    ⚠️ **太宽的候选行不量**（2026-09-28）：原来对每个终点 j 把 `sent[0:j]` 起的
+    每一段都量一遍再扔掉，一句 n 个词要量 n²/2 次——`laver-cup-2026-trophy-ceremony`
+    那句 304 词（ASR 一个标点没打）一句就四万六千次，这一条重切 12 秒；全库 112 条有字幕
+    缓存的 spec 按一把尺子重切一遍 73 秒。
+    多一个词只会更宽，所以从 j 往回数、量到第一段放不下就停，前面那些本来就是
+    `continue` 掉的。**结果逐行不变**：112 条 × 四把尺子＝448 趟，换之前换之后逐行比，
+    一字不差（逐个量 247 秒 → 77 秒；CI 里抽长句比的是
+    `test_太宽的候选不量_切出来的行和逐个量一字不差`）。
     """
     n = len(sent)
     if width(_text(sent)) <= budget:
@@ -1066,18 +1175,23 @@ def _split_wide(sent: list[tuple[float, str]], budget: float,
     best, prev, hard = [inf] * (n + 1), [0] * (n + 1), [False] * (n + 1)
     best[0] = 0.0
     for j in range(1, n + 1):
-        for i in range(j):
+        # 单个词（i = j-1）超宽也只能认，所以它永远是候选；再往前一个词一个词加，
+        # 加到放不下为止——那之前的起点，原来的循环也一律 `continue`。
+        fits = {j - 1: width(_text(sent[j - 1:j]))}
+        for i in range(j - 2, -1, -1):
+            if (w := width(_text(sent[i:j]))) > budget:
+                break
+            fits[i] = w
+        for i in sorted(fits):
             if best[i] == inf:
                 continue
-            w = width(_text(sent[i:j]))
-            if w > budget and j - i > 1:
-                continue                               # 太宽；单个词超宽只能认
-            rank = 0 if i == 0 else _break_rank(sent, i)
+            w = fits[i]
+            rank = 0 if i == 0 else _break_rank(sent, i, bare)
             pen = (_FORCE_PENALTY if rank is None else rank * _RANK_PENALTY) * budget
             slack = 0.0 if j == n else (budget - w) ** 2 / budget
             if (c := best[i] + slack + pen) < best[j]:
                 best[j], prev[j] = c, i
-                hard[j] = hard[i] or (i > 0 and _break_rank(sent, i) is None)
+                hard[j] = hard[i] or (i > 0 and _break_rank(sent, i, bare) is None)
     cuts, j = [n], n
     while j:
         j = prev[j]
@@ -1092,8 +1206,14 @@ def _text(clause: list[tuple[float, str]]) -> str:
 
 def segment(words: list[tuple[float, str]], start: float, end: float,
             budget: float | None = None, width=None,
-            word_fix: dict[str, str] | None = None) -> list[dict]:
+            word_fix: dict[str, str] | None = None,
+            ruler: str | None = None) -> list[dict]:
     """逐词 → 字幕行。**一行一句，不劈词组，不超宽。**
+
+    `ruler` 是切行的尺子（`SEGMENT_RULERS`），**出片那条路一律传
+    `segment_ruler(spec)`**——已发的 spec 要按它当年渲的那把尺子重切，行才对得上
+    手写的 `zh` 和按行号挂的 `en_fixed`。不给就是现在的默认尺子（新 spec）。
+    `width` 显式给了就用它量宽（测试用），词类归一仍跟着 `ruler`。
 
     三条规矩，顺序就是优先级：
 
@@ -1115,7 +1235,11 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
     - **整行读起来不对** → 走 `en_fixed`。它替换的是成品行，不动分词
     """
     budget = _LINE_PX if budget is None else budget
-    width = _en_width if width is None else width
+    ruler = SEGMENT_RULER if ruler is None else ruler
+    if ruler not in SEGMENT_RULERS:
+        raise SystemExit(f"切行尺子 {ruler!r} 不存在，只有 {sorted(SEGMENT_RULERS)}。")
+    width = ruler_width(ruler) if width is None else width
+    bare = SEGMENT_RULERS[ruler][2]
     fix = {**_NAME_FIX, **(word_fix or {})}
 
     def _fix(w: str) -> str:
@@ -1163,7 +1287,7 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
     packed: list[list[tuple[float, str]]] = []
     forced_at = []
     for sent in merged:
-        chunks, forced = _split_wide(sent, budget, width)
+        chunks, forced = _split_wide(sent, budget, width, bare)
         if forced:
             forced_at.append(_text(sent)[:52])
         packed += chunks
@@ -1902,8 +2026,14 @@ def assert_topbar_font_log(stderr: str, spec: dict) -> None:
 
 
 
-def en_problems(lines: list[dict]) -> list[str]:
+def en_problems(lines: list[dict], ruler: str | None = None) -> list[str]:
     """英文那一行的硬要求：不超宽。
+
+    ⚠️ **量宽用切这些行的那把尺子**（`ruler`，调用方传 `segment_ruler(spec)`；不给就是
+    默认尺子）。952 是那把尺子的单位：老尺子（Noto 40）切出来、在它自己的尺子上放得下
+    的行，拿 Inter 46 量会超（`eala-svitolina-dc2026-qf` 15 行，最宽 995px），而这条片子
+    按现在的字幕（Inter 44 号，libass 的 em 是 44÷1.430）真烧出来最宽的一行 749px——
+    拿别的尺子量，闸就在一条画得下的片子上红。
 
     ⚠️ **抽成函数是为了让 `check_lead_in` 能在下载源片之前跑同一份判据。**
     原来这段内联在 `write_ass` 里，也就是**要等主体编码完才报**——
@@ -1915,8 +2045,10 @@ def en_problems(lines: list[dict]) -> list[str]:
     ⚠️ **两个调用方共用这一份，别各写一遍**——写两处必分叉，而分叉的样子是
     「本地全绿、远端红」。
     """
-    return [f"#{i} 英文超宽 {_en_width(seg['en']):.0f}px（可用 {_LINE_PX}）：{seg['en']}"
-            for i, seg in enumerate(lines, 1) if _en_width(seg["en"]) > _LINE_PX]
+    width = ruler_width(SEGMENT_RULER if ruler is None else ruler)
+    note = "" if ruler in (None, SEGMENT_RULER) else f"，按尺子 {ruler} 量"
+    return [f"#{i} 英文超宽 {width(seg['en']):.0f}px（可用 {_LINE_PX}{note}）：{seg['en']}"
+            for i, seg in enumerate(lines, 1) if width(seg["en"]) > _LINE_PX]
 
 
 def zh_problems(lines: list[dict], zh: list[str]) -> list[str]:
@@ -2085,7 +2217,7 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
     # **英文也要量。** 原来这道闸只查中文——于是 `en_fixed` 里一行订正写长了
     # （实测 1150px，超出可用宽两成）**一路畅通**，libass 到渲染时默默折行，
     # 压到中文那一行上。切行时量过的是 ASR 原文，订正之后没人再量一次。
-    if wide := en_problems(lines):
+    if wide := en_problems(lines, segment_ruler(spec or {})):
         raise SystemExit(
             "英文字幕过不了：\n  " + "\n  ".join(wide)
             + "\n⚠️ 多半是 `en_fixed` 把一行改长了。**词被 ASR 并在一起的那种错要走"
@@ -4610,7 +4742,8 @@ def _check_side_block(spec: dict, key: str, method: str) -> None:
         # 的那几条片头，而 `trail_in` 是 2026-09-14 才有的字段——一条新字段不该
         # 天生带着旧债的赦免（否则表里任何一个 slug 都会顺手把它的片尾也放过去）。
         bad = ([] if key == "lead_in" and slug in _LEGACY_LEAD_IN_SUBS
-               else en_problems(cue_lines) + zh_problems(cue_lines, cue_zh))
+               else en_problems(cue_lines, segment_ruler(spec))
+               + zh_problems(cue_lines, cue_zh))
         if bad:
             raise SystemExit(
                 f"{slug} 的 `{key}.subs` 过不了正片那套字幕规矩：\n  "
@@ -5832,9 +5965,15 @@ def main() -> int:
         # 只出缩略图墙，不切行。原来 `sheet` 在 choices 里却没有分支，
         # 落到下面等于「subs 少一面墙」，和名字说的正好相反。
         return 0
+    # **尺子按 slug 钉死**：已发的 spec 按它当年渲的那把重切（见 `SEGMENT_RULERS`），
+    # 换尺子要出声——「按哪把切的」和「切出来几行」在日志上不许只剩后一个。
+    if (ruler := segment_ruler(spec)) != SEGMENT_RULER:
+        print(f"切行尺子：{ruler}（已发，按当年那把重切，"
+              f"见 {LEGACY_SEGMENT_RULER_FILE.relative_to(ROOT)}）")
     lines = segment(
         fetch_words(spec["url"], outdir, spec), spec["start"], spec["end"],
         budget=spec.get("segment_budget_px"), word_fix=spec.get("word_fix"),
+        ruler=ruler,
     )
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
     # ASR 会把整句说得语法不成立（`The crazy Yes. round of applause.`），

@@ -182,7 +182,7 @@ def test_人工请求在翻译前与渲染使用同一套语气词清理(tmp_pat
     monkeypatch.setattr(
         build_interview_clip,
         "segment",
-        lambda words, start, end, budget=None: [
+        lambda words, start, end, budget=None, ruler=None: [
             {"a": 0.0, "b": 1.0, "en": "Um hello"}
         ],
     )

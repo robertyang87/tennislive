@@ -72,7 +72,9 @@ def _require_env() -> None:
         import PIL  # noqa: F401, PLC0415
     except ImportError as exc:
         raise PreflightUnavailable("缺 PIL（`pip install -e .`）") from exc
-    missing = [p for p, _ in clip._FONT_FILES.values() if not Path(p).exists()]
+    # 切行的老尺子（已发 spec 按当年那支字体重切）也是量宽度要的字体，一样查
+    missing = [p for p, _ in (*clip._FONT_FILES.values(), *clip._RULER_FONT_FILES.values())
+               if not Path(p).exists()]
     if not POINT_FONT.exists():
         missing.append(str(POINT_FONT))
     if missing:
@@ -202,7 +204,8 @@ def subtitle_findings(spec: dict) -> tuple[list[str], list[str]]:
         with contextlib.redirect_stdout(io.StringIO()):
             lines = clip.segment(words, spec["start"], spec["end"],
                                  budget=spec.get("segment_budget_px"),
-                                 word_fix=spec.get("word_fix"))
+                                 word_fix=spec.get("word_fix"),
+                                 ruler=clip.segment_ruler(spec))
         # `main()` 在套 `en_fixed` 之前先查行号挂没挂错（0 起写成 1 起就整体错一行），
         # 挂错了当场 SystemExit——这里同一个位置、同一个函数；后面的量宽建在错位的行上，
         # 报出来也是噪声，所以和 runner 一样到此为止。

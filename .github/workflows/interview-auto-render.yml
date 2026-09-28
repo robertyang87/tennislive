@@ -43,6 +43,8 @@ on:
       # 另一半口味闸（`check_taste_extra`；请求预检 `check_request` 也调它）和它的存量表
       - "tools/taste_gates_extra.py"
       - "data/legacy_interview_gates.json"
+      # 已发采访切行的老尺子表（`build_interview_clip.segment_ruler`，预检重切字幕按它）
+      - "data/legacy_interview_segment_metric.json"
       - ".github/workflows/interview-auto-render.yml"
   schedule:
     # 每 10 分钟接住新草稿、人工请求、片头重试和 dispatch；避开整点/半点。

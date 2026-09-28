@@ -2758,6 +2758,28 @@ explainer 一 import 就 2.4 秒，抄的就钉住）。
 改前／改后的顶栏和字幕帧并排图在评审会话的临时目录，没进仓库；要重看就用 `tools/design_compare_sheet.py`
 对同一批 spec 重出。
 
+### ⭐⭐ 2026-09-28 切行的尺子按 slug 钉死——已发的采访重渲，行必须和发出去那一版一字不差
+
+上面那句「字幕那一半的尺子故意没换」**当天就被推翻了**：34cb737f 把 `_FONT_FILES["en"]` 换成 Inter，
+`segment()` 量宽用的就是它。108 条已渲 spec 按新尺子重切：**65 条行数对不上**（`write_ass`「中文 N 行、
+英文 M 行」或先红在 `en_fixed` 错行）、**17 条行数碰巧对上、边界挪了**（不红，中文静静配到隔壁那句英文）。
+取证还挖出更早两次同样的静默换尺子：08-01 英文 40→46，08-05～09-03 `_bare` 被同名定义盖掉（不转小写）。
+
+- **尺子＝量宽字体＋字号＋词类归一**（`SEGMENT_RULERS`：`inter-46` 默认、`noto-46`、`noto-46-bare-0805`、
+  `noto-40`）。已渲 spec 按 slug 挂在 `data/legacy_interview_segment_metric.json`（82 条，**只许减**），
+  **不改 spec**——改了 spec 指纹，interview-auto-render 就重渲重推。`main()` 和 dispatch 前预检都传
+  `ruler=segment_ruler(spec)`，`en_problems` 也按同一把量（Noto 40 切的行拿 Inter 46 量会到 995px，
+  而 libass 真渲只有 749px）
+- 结果：**108 条里 107 条逐行边界和 `lines.json` 一字不差**，剩下 ruud-cerundolo 发布会是推完后中文已按
+  新尺子重挂过的（按新尺子对得上）。老尺子切的 8887 行按现在的 Inter 44 号估算最宽 745px，最宽三行
+  拿 libass 真烧量 734~749px、都是单行（可用 952）
+- **下次再换英文字体／字号／`_bare`**：先把今天这把以旧名加进 `SEGMENT_RULERS`、把换之前渲的 slug 挂上去，
+  再换默认。`test_已渲的采访spec按钉死的尺子重切_行一行不差` 拿仓库里的字幕缓存把全库重切一遍，按条数报
+- 老尺子要 `fonts-noto-core`（渲染已经不用它了，最像死依赖）：ci / interview-clip / interview-auto-render 都得装
+- 顺带：`_split_wide` 量到放不下就停（多一个词只会更宽），和逐个量逐行一字不差（448 趟全库比过），247 秒→77 秒
+
+判据 `tests/test_interview_segment_ruler.py`。
+
 ### ⭐⭐ 赛后采访片**从比赛结束那一刻开头**，不从第一个问题开头
 
 账号所有者 2026-08-16，看完 `tirante-djokovic-cincinnati-2026-r2`：
