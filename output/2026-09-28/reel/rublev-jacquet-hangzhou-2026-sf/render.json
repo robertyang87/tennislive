@@ -1,0 +1,159 @@
+{
+  "scoreboard_qc_sha256": "1b7f32cc97cbcfee22487adf13364a2714e8a196de16d1239c1d9b9cfa450774",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 156.1,
+  "topbar": {
+    "line1": "2026 ATP250 杭州 半决赛",
+    "line2": "卢布列夫 7-6(0) 6-1 雅凯",
+    "start": 1.2,
+    "end": 157.3
+  },
+  "film_seconds": 161.16,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 13.8,
+    "2": 9.672,
+    "3": 11.304,
+    "4": 11.472,
+    "5": 10.32,
+    "6": 9.792,
+    "7": 15.384,
+    "8": 15.48,
+    "9": 4.344,
+    "10": 9.552,
+    "11": 5.712,
+    "12": 9.672
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "卢布列夫",
+        "similarity": {
+          "卢布列夫": 0.5438,
+          "雅凯": -0.0027
+        },
+        "missing": [],
+        "expected": [
+          "卢布列夫",
+          "雅凯"
+        ],
+        "face": [
+          296,
+          255,
+          557,
+          607
+        ],
+        "face_px": 352.1,
+        "reason": "像 卢布列夫（0.54 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        },
+        "target": [
+          "卢布列夫"
+        ]
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2818,
+        "ear_each": [
+          0.2891,
+          0.2744
+        ],
+        "face": [
+          296,
+          255,
+          557,
+          607
+        ],
+        "face_px": 352.1,
+        "reason": "眼睛纵横比 0.28 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": [],
+      "region": [
+        499,
+        0,
+        1310,
+        1080
+      ],
+      "frame": "output/2026-09-28/reel/rublev-jacquet-hangzhou-2026-sf/cover_src/portrait.jpg",
+      "frame_at": 33.5,
+      "target": [
+        "卢布列夫"
+      ]
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 10,
+          "named": "雅凯",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 2,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "d2646cbb3c593d28f656b7d988c4663b5fe2ab3bad010173eb0edccf44762cba",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "rublev-jacquet-hangzhou-2026-sf",
+    "received_at": "2026-09-28T14:42:42Z",
+    "artifact_ready_at": "2026-09-28T14:47:56Z",
+    "elapsed_seconds": 314.92,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "3bd2804c1a979fb261ad9182a0ff08afbd9ad7271381a94eaee8aaea944e7191",
+    "spec_sha256": "68f5241a39c1c20c9c9022824295cdf7bf151797cde186f68810e6b459483685",
+    "run_id": "36438009455",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-28T14:44:33Z",
+        "run_id": "36438009455"
+      }
+    ],
+    "render_seconds": 203.92,
+    "pre_render_seconds": 111.0
+  },
+  "film_sha256": "3bd2804c1a979fb261ad9182a0ff08afbd9ad7271381a94eaee8aaea944e7191",
+  "film_bytes": 65966476,
+  "qc_attestation_sha256": "e46630b705e53ab18638c9979375c63e1be81bfa0e6f0ee3406a9f3f16ecbb7f",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-28T14:44:33Z",
+      "run_id": "36438009455"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-28T14:47:57Z",
+      "run_id": "36438009455"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-rublev-jacquet-hangzhou-2026-sf/rublev-jacquet-hangzhou-2026-sf.mp4",
+  "video_bytes": 65966476
+}
