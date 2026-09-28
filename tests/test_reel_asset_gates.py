@@ -568,9 +568,16 @@ def _reconcile_pre_ledger() -> None:
     # 账本记不到的，冻结表必须一字不差地有；冻结表里的，重推之后 pushed.json 取早的那个
     # 照样是它（新日期目录那份更晚）——两头都按冻结表的时刻对。
     missing = {s: at for s, at in from_output.items()
-               if (s in frozen or s not in ledger) and frozen.get(s) != at}
+               if s not in ledger and frozen.get(s) != at}
     assert not missing, ("pushed.json 里有账本记不到的发布，冻结表却没有（或时刻对不上）"
                          f"——runner 上看不见它们：{missing}")
+    # 冻结表里、账本也记着的（账本之前发过、后来重推落了账）：pushed.json 只许**不早于**
+    # 冻结表。晚于它是正常的——显式重发要先删掉原来那份 pushed.json 再 mode=push
+    # （复审 nit：原来 `missing` 把「s in frozen」也算进去，这种合法重发会误红）。
+    stray = {s: (at, frozen[s]) for s, at in from_output.items()
+             if s in frozen and s in ledger and at < frozen[s]}
+    assert not stray, ("pushed.json 比冻结表记的第一次发出去还早——时刻对不上，"
+                       f"runner 上第一次发出去的时刻会错：{stray}")
     # 账本时代的片子：pushed.json 不许比账本记得早。冻结表里的那批不在此列——它们第一次
     # 发出去本来就在账本之前，重推才落账，上面 `missing` 已按冻结表的时刻对过。
     earlier = {s: (at, ledger[s]) for s, at in from_output.items()
@@ -622,6 +629,10 @@ def test_账本之前那批重推一次_对账不红_第一次发出去的时刻
     for out in (output, tmp_path / "no-output"):                      # 本地 / runner
         assert gates.first_sent(slug, ledger=ledger, output=out,
                                 pre_ledger=gates.PRE_LEDGER) == first
+    # 显式重发（先删原来那份 pushed.json 再 mode=push）：只剩比冻结表晚的那份，照样不红
+    # （复审 nit 的复现：原来 `missing` 把它当成「时刻对不上」）
+    shutil.rmtree(output / first[:10] / "reel" / slug)
+    _reconcile_pre_ledger()
     # 进了账本之后，冻结表那一格照样对账：pushed.json 冒出一个比表更早的时刻就红
     stray = output / "2000-01-01" / "reel" / slug
     stray.mkdir(parents=True)

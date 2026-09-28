@@ -4114,8 +4114,8 @@ def check_score_orientation(spec: dict) -> None:
 
 def check_taste(spec: dict) -> None:
     """账号所有者的口味闸（采访线那一半）：标题和推送标题同一个数只能有一个说法
-    （硬）；封面大标题里要解释的术语（**只报**，等账号所有者确认要不要做硬——
-    规则书那条管的是 reel 的钩子和字卡问句，见 `taste_gates.interview_taste_findings`）。
+    （硬）；封面大标题里要解释的术语（账号所有者 2026-09-27 答复做硬：手写的硬、
+    自动链没人核过的只报——发没发不算，和钩子同一个分法，见 `taste_gates.interview_taste_findings`）。
 
     账号所有者 2026-09-27「形成一个通用的规则在做视频前就拦掉，而不是说做了
     一半又返工」。判据单一出处在 `tools/taste_gates.py`（reel 和采访共用），

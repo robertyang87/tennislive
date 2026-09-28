@@ -10894,10 +10894,23 @@ def main() -> int:
     started = time.perf_counter()
     outcome, error = "success", None
     try:
-        render(spec, outdir,
-               voice=args.voice, rate=args.rate,
-               source_override=Path(args.source) if args.source else None,
-               cover_only=args.cover_only)
+        film = render(spec, outdir,
+                      voice=args.voice, rate=args.rate,
+                      source_override=Path(args.source) if args.source else None,
+                      cover_only=args.cover_only)
+        if not args.cover_only:
+            # **渲染输入清单**（账号所有者 2026-09-27 选的「重核对，不重渲」，O1）：
+            # 这一版成片吃了 spec 里的哪些东西、引用素材的字节、落下的产物，
+            # 全记进 render_inputs.json。之后 spec 只改注解/推送字段时，
+            # `mode=reattest` 拿它逐字节比，一处没动就重出一张凭证、不重渲
+            # （来路 85b94e74 / d338e77d / e15e73e5 / 80bbdd1a：成片一个像素都没变
+            # 的重渲；d5bbc48c 改在真字段 `editorial` 里，重核对省不掉，照旧重渲）。
+            # ⚠️ 读的是 spec **文件的字节**，不是 load_spec 归一化之后的 dict——
+            # 质检凭证钉的也是文件字节，两边必须是同一个东西。
+            # ⚠️ 写不成只警告、不打红这一趟（`record_best_effort` 的 docstring）。
+            import render_inputs  # noqa: PLC0415
+            render_inputs.record_best_effort(Path(args.spec), outdir, film,
+                                             Path(__file__).resolve().parents[1])
     except BaseException as exc:
         outcome, error = type(exc).__name__, str(exc)[:500]
         raise

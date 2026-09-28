@@ -27,8 +27,8 @@
 | `data/legacy_taste_gates.json` 里已发的老片子 | 放行（已发的不重渲）；**钩子冻的是原文**，改一个字就重新受管 |
 | 自动产的 spec（`_production.status == ready_for_render`） | **只报**——那一头没有人写认领，做硬会把自动链卡成「今天没有候选」；判据文本照样印进日志（行首 `[口味·<块>]`） |
 
-采访线的封面大标题术语**只报**（规则书写的是 reel 和字卡，等账号所有者确认要不要做硬），
-见 `interview_taste_findings`。
+采访线的封面大标题术语：账号所有者 2026-09-27 ~23:00Z 答复**做硬**——手写的硬、
+自动链没核没发的只报（和钩子同一个分法），见 `interview_taste_findings`。
 
 ⚠️ **这些闸不接模型。** 账号所有者 2026-09-27：「minimax 和 deepseek 都不要用，后续会
 拿掉」——所以这里只读 spec（谁写的都一样判），**不回喂任何模型重写钩子，也不为
@@ -153,14 +153,27 @@ _ROUND_NAME = r"1/8决赛|1/4决赛|半决赛|(?<!总)决赛|第[一二三四1-4
 #: 时「了?」会回溯成空，前瞻看到的是「了抢七」，照样放行。
 #: ⚠️ 「争夺冠军」是赛前的说法（两人争的是冠军，谁拿到还没发生），「夺」前面是
 #: 「争」就不算——复审第二轮 nit：``has_match_result('两人争夺冠军')`` 原来是 True。
+#: 复审 nit（2026-09-27 晚，补词表、不冻结——规矩之后写的钩子按新规矩认）：
+#: 封后／封王／称王／称后、摘（得）…冠、晋身、直落 也是结果；「夺」到「冠」之间放宽到
+#: 「了」＋8 个字（「她夺得首个巡回赛冠军」中间 5 个字、「夺得了2026年首个冠军」
+#: 「了」后 7 个字——数字一位算一个字，原来 4 个字两句都认不出）。反方向：
+#: 「夺冠热门／夺冠希望／夺冠大热」是赛前的说法（`冠(?!热门|希望|大热)`），「杀入了
+#: 最后一盘」和「杀入决胜盘」一样是过程。
+#: 复审第三轮 nit：「直落」后面要跟两盘／三盘（「决胜盘直落三局」是一串局，过程）；
+#: 「晋身前十／世界前N／榜」是排名不是这一场；「夺冠呼声／夺冠路上」是赛前或过程；
+#: 「夺回」不是夺冠、「冠军点」是一分——「他夺回主动权 冠军点」原来凭 8 个字的缝认成结果。
+_TITLE_WON = r"冠(?!热门|希望|大热|呼声|路|之路|军点)"
 _STRONG_RESULT = re.compile(
     r"淘汰|逆转|击败|掀翻|送走|横扫|翻盘|翻了?回来|赢了?回来|扳回来|晋级"
     r"|进了?(?:决赛|半决赛|\d+强|八强|四强|1/4决赛)|首进|捧杯|捧起[^，,]{0,4}杯"
     r"|(?:拿下|赢下|拿到|第一个|第一)[^，,]{0,6}冠军?|出局|止步|告负|收官|战胜"
     r"|过关|锁定|收进口袋|胜利|首冠|卫冕|会师|笑到最后|" + _ROUND_NAME
     + r"|胜(?![盘局分利])|负于|输给|赢(?:双打|单打)"
-    r"|(?<!争)夺(?:下|得|取)?[^，,]{0,4}冠|登顶|加冕|问鼎"
-    r"|(?:(?:闯|杀|挺)入|挺进)(?!了?(?:决胜|抢[七十]|第[一二三四五1-5]盘|盘末|局末))"
+    r"|(?<!争)夺(?!回)(?:下|得|取)?了?[^，,]{0,8}" + _TITLE_WON
+    # 「夺回…冠军」是拿回头衔，是结果；「夺回主动权」不带冠字，照旧不认（复审 nit）
+    + r"|夺回[^，,]{0,6}" + _TITLE_WON + r"|登顶|加冕|问鼎"
+    r"|封后|封王|称王|称后|摘得?[^，,]{0,4}" + _TITLE_WON + r"|晋身(?!前|世界|榜)|直落[两三2-3]盘"
+    r"|(?:(?:闯|杀|挺)入|挺进)(?!了?(?:决胜|抢[七十]|第[一二三四五1-5]盘|盘末|局末|最后一盘))"
     r"|跻身|不敌|惜败|憾负")
 #: 让「赢/输/拿下」变成**过程**而不是结果的那些宾语：分、局、盘、点、球、拍。
 #: 「比分」「分钟」里的「分」不算（`(?<!比)分(?!钟)`）；「这场球」「赢球」「输球」
@@ -840,20 +853,44 @@ def reel_taste_findings(spec: dict) -> tuple[list[str], list[str]]:
     return [p for _, h, p in scoped if h], [p for _, h, p in scoped if not h]
 
 
-def interview_taste_findings(spec: dict) -> tuple[list[str], list[str]]:
+def interview_is_auto(spec: dict) -> bool:
+    """自动链写的、还没人核过的采访 spec：章 `auto_pending`，且没有
+    `transcript_verified` / `_verified_clean`。**发没发出去不算。**
+
+    ⚠️ 不能复用 `build_interview_request.unverified_auto_spec`（它还认 `_protected`：
+    发布账本或 `pushed.json` 一出现就销章）。那个判据只许用在「渲染闸拦得住同一个
+    缺陷」的全库测试上，而大标题术语对自动 spec 渲染闸**只报**——于是一条手改过、
+    带术语的自动 spec 会先被放行渲染、推出去，推完账本里有了 `sent`，它在全库测试
+    `test_全库当前零误报` 里就成了「手写的」、硬红在下一个无关 PR 上，而豁免表只许减、
+    没有出口（批次复审 blocking (a)，合成 spec 复现过：发布前 ([], [术语])、
+    账本写进 `sent` 之后 ([术语], [])）。「赛场之上」的 `is_auto` 看
+    `_production.status`，发布不改它；这里同理，只看章和人核标记。
+    判据 `tests/test_taste_gates.py::test_自动采访spec推出去之后术语仍然只报`。"""
+    if not isinstance(spec, dict) or spec.get("transcript_verification") != "auto_pending":
+        return False
+    return not (spec.get("transcript_verified") or spec.get("_verified_clean"))
+
+
+def interview_taste_findings(spec: dict, *, auto: bool | None = None
+                             ) -> tuple[list[str], list[str]]:
     """采访线：(硬的, 只报的)。
 
     硬：标题和推送标题同一个数只能有一个说法（规则书 `copy-fields-one-source-of-truth`
-    写明管 reel／采访／字卡三条线）。
+    写明管 reel／采访／字卡三条线）——谁写的都硬（自动转正的模板标题结构上碰不到它）。
 
-    只报：封面大标题里的术语。规则书 `hook-no-jargon-or-allusion` 管的是 reel 和字卡，
-    O6 说的也是「钩子」——把采访大标题一起做硬是实现这一包时自己延伸出去的
-    （106 条已发标题里 11 条会中，「五比一 却被雨拖到抢七」这类），**账号所有者确认
-    之前只报不拦**；确认了就把它挪进硬的那一组，豁免表已经冻好了。
+    封面大标题里的术语：账号所有者 2026-09-27 ~23:00Z 答复**做硬**（原来只报，
+    因为规则书那条写的是 reel 和字卡、O6 说的是「钩子」，实现时自己延伸的要等他确认）。
+    分法和「赛场之上」的钩子一样：**手写的硬，自动链没人核过的只报**（发没发不算，
+    `interview_is_auto`；`auto` 显式传进来就按它）。已发的 11 条按原文冻在
+    `legacy_taste_gates.json` 的 `interview_title_jargon`，只许减不许加。
     """
     shape = shape_problem(spec)
     if shape:
         return [shape], []
     hard = [p for p in (copy_count_problem(spec, title_key="title"),) if p]
-    soft = [p for p in (interview_title_jargon_problem(spec),) if p]
-    return hard, soft
+    jargon = interview_title_jargon_problem(spec)
+    if not jargon:
+        return hard, []
+    if interview_is_auto(spec) if auto is None else auto:
+        return hard, [jargon]
+    return hard + [jargon], []

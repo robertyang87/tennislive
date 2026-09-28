@@ -475,8 +475,11 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
         # 留草稿、不提升——原来只报：转出去的 spec 渲染入口的 `check_taste` 照拦、永远渲不成，
         # 全库测试 `test_全库当前零误报` 对采访又是硬的（批次 4 复审 nit），和上面
         # `interview_taste_extra` 那一半同一个处置。只报的那一组照旧只报。
+        # ⚠️ `auto=False`：草稿带着 `auto_pending` 章，按默认分法大标题术语只报；可草稿的
+        # 标题只要不是上面那句模板，就只可能是**人写的**——放过去，转正后渲染闸也只报，
+        # 推出去就是一条带术语的封面（批次复审 blocking (a)）。模板标题碰不到术语。
         from taste_gates import interview_taste_findings  # noqa: PLC0415
-        taste_hard, taste_soft = interview_taste_findings(spec)
+        taste_hard, taste_soft = interview_taste_findings(spec, auto=False)
         if taste_hard:
             skipped.append(
                 f"{f.name}: 口味闸不过（{'；'.join(taste_hard)}），不提升")

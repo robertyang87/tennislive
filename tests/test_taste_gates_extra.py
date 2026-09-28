@@ -103,6 +103,26 @@ def test_赛点盘点只兑现一个是同义反复_破发点不算():
         assert T.one_of_n_problem(_court(hook=hook)) is None, hook
 
 
+def test_盘点跨盘的效率可以认领_one_of_n_why():
+    """复审 nit（2026-09-27）：「首盘两个盘点都没拿下、丢了这一盘；两盘下来三个盘点只兑现了
+    一个」跨了两个终止单元，是真会变的效率——手写 spec 要有一个和别的 `_why` 同形状的口，
+    豁免表只许减、不是出口。三个入口（reel spec／小红书正文／采访）认的是同一个键。"""
+    line = "首盘两个盘点都没拿下；两盘下来三个盘点只兑现了一个"
+    bad = _court(hook="x")
+    bad["segments"] = [{"narration": line}, *bad["segments"]]
+    assert T.one_of_n_problem(bad), "不认领照样红"
+    assert any("只兑现了一个" in h for h in T.spec_taste_extra(bad)[0])
+    claimed = {**bad, "_one_of_n_why": "盘点跨了两盘：首盘两个没拿下丢盘，第二盘兑现一个"}
+    assert T.one_of_n_problem(claimed) is None
+    assert not any("只兑现了一个" in h for h in T.spec_taste_extra(claimed)[0])
+    assert T.xhs_taste_extra(bad, line)[0]
+    assert not T.xhs_taste_extra(claimed, line)[0], "小红书正文那一面也要认同一个键"
+    iv = {"slug": "new-iv", "cover": {"title": ["首秀赢了", line]}, "push": {"summary": "x"}}
+    assert T.interview_taste_extra(iv)[0]
+    assert not T.interview_taste_extra({**iv, "_one_of_n_why": "跨盘"})[0]
+    assert T.one_of_n_problem({**bad, "_one_of_n_why": "  "}), "空白不算认领"
+
+
 def test_采访的赛点同义反复只管我们的文案_当事人的原话照实翻():
     """账号所有者 08-19「杜绝类似的弱智文案」说的是我们写的字。`zh` 是球员自己的话的译文——
     球员说「三个盘点只拿下一个」就照实翻，不许因此把片子拦在渲染入口、把自动草稿挡在

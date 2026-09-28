@@ -12229,19 +12229,15 @@ def speakable(text: str) -> str:
     longer run of digits. A genuine "1-2 天" range would be mis-read, but no
     deck has one; scores are what this text is full of.
 
-    The other fix is a heteronym. 挑 in 挑球 is tiāo, first tone, "to pick
-    one out"; the voice reads it tiǎo, third tone, which is the 挑战 sense —
-    to provoke. There is no way to hand edge-tts a pronunciation, so the
-    audio gets a synonym instead: 选 means the same thing here and has only
-    one reading. The slides keep 挑球, which is the word people write.
+    The other fixes are heteronyms, swapped for a same-sound character that
+    has only the wanted reading (the table is `pronounce.HOMOPHONES`).
 
-    The guard list is what stops 挑战 (challenge, and the Gentlemen's
-    trophy) from turning into 选战; those really are tiǎo and are already
-    read correctly. Since 2026-09-27 the guard also keeps 挑 wherever 选
-    would be a different word: 挑起 / 挑回 / 挑高球 (tiǎo, lifting the
-    ball), 挑选, 挑刺, 挑大梁, 挑毛病, and 没什么可挑的. The swap is only
-    made where the sentence still means the same thing (see
-    `pronounce.HOMOPHONES`, key `tiao-pick`).
+    There used to be one synonym swap as well: 挑 in 挑球 went to 选, because
+    the voice was heard reading the 挑战 tone. It was dropped on 2026-09-27.
+    Measured that day, 挑球 already reads tiāo without it (calib 挑球a/b/c
+    correct), so it gave no pronunciation gain. Where 挑 means a lob
+    (一记挑球过顶, 把球挑过对手头顶, 挑到底线), 选 is a different word and
+    the listener hears the wrong thing. 挑 now goes to the voice as written.
 
     ### 硬地：地 是 dì，不是轻声的 de
 
@@ -12252,7 +12248,7 @@ def speakable(text: str) -> str:
     这个词在这条线上到处都是（每条前瞻都要说「换到硬地」「第一个硬地决赛」），
     所以不能靠每条片子改一次文案。
 
-    没法给 edge-tts 递音标，所以照 挑→选 那套办：**给合成器换一个同音字**，
+    没法给 edge-tts 递音标，所以**给合成器换一个同音字**，
     屏幕上仍然是「硬地」。选「帝」而不是「第」，是因为「第」强烈期待后面跟
     数字（第一、第二），「硬第决赛」这种串会让它顿一下；「帝」是个独立名词。
     **两边字数一样**，所以按字位算出来的字幕时间轴对两份都成立——这是
@@ -12297,7 +12293,7 @@ def speakable(text: str) -> str:
     「柏」是多音字（bǎi 柏树 / bó 柏林 / bò 黄柏），合成器在「两年前柏林揭幕战」里
     读成了 bǎi。地名「柏林」只有 bó lín 一个读法，而这条线讲拉沃尔杯、戴维斯杯、
     WTA500 柏林站都会提它，所以和「硬地」一样**全局**换，不靠每条片子改文案。
-    照 挑→选 / 硬地→硬帝 那套：喂给合成器的是「**伯林**」（伯只读 bó），
+    照 硬地→硬帝 那套：喂给合成器的是「**伯林**」（伯只读 bó），
     屏幕上仍然是「柏林」；**两边字数一样**，字幕时间轴照旧成立。
     ⚠️ 只换「柏林」两个字，不碰单独的「柏」——松柏、柏树那儿它就该读 bǎi。
 
@@ -12441,8 +12437,8 @@ def readable(text: str) -> str:
     """旁白照着念出来的样子——给字幕用，不给 TTS 用。
 
     字幕要和耳朵里听到的对上，所以比分同样写成「6比4」。但 `speakable` 里那些
-    换字（挑→选、柏林→伯林……整张表在 `video/pronounce.py`）是**给合成器纠音**的，
-    屏幕上必须还是「挑球」「柏林」。每一条换字都 1:1，两份字数一样，所以按字位
+    换字（硬地→硬帝、柏林→伯林……整张表在 `video/pronounce.py`）是**给合成器纠音**的，
+    屏幕上必须还是「硬地」「柏林」。每一条换字都 1:1，两份字数一样，所以按字位
     算出来的时间轴对两边都成立（`_boundary_marks` 先在合成那份里找 token）。
 
     ⚠️ 「比」两边**不加空格**。原来写成「6 比 4」，烧上屏就是

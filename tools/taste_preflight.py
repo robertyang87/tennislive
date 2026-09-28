@@ -588,7 +588,7 @@ def run_interview_checks(spec: dict, xhs: str) -> list[GateResult]:
         try:
             with redirect_stdout(buf), redirect_stderr(buf):
                 call()
-            # 只报的口味发现（采访封面大标题的术语）印在 stdout，通过也要摆出来
+            # 只报的口味发现（自动 spec 的采访封面大标题术语）印在 stdout，通过也要摆出来
             out.append(GateResult(name, "pass", _fmt(buf.getvalue(), 400)
                                   if name == "check_taste" else ""))
         except BaseException as exc:  # noqa: BLE001 —— 闸用 SystemExit 报红

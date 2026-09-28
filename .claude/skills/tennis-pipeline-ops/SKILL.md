@@ -97,6 +97,144 @@ tools/auto_push_gate.py`。
 只有 0.7~1.1 / 255、PSNR 41.7~44.6 dB，是 x264 重编码的量化噪声，不是内容变了）。
 所以**别拿「帧哈希不一样」去判「片子变了」**，要量差的量级。
 
+#### ⭐⭐ 2026-09-27 账号所有者选了「重核对，不重渲」：`match-reel mode=reattest`
+
+上面「所以重渲」那句**对竖版短片那条线作废了一半**。O1（质检指纹管到哪儿）三个方向
+摆出来，账号所有者选的是 **c「重核对，不重渲」**——不是 b「凭证的哈希里摘掉注解」
+（那条要证明渲染器从不读被排除的键，没人证得了），也不是 a「照旧重渲、只加个闸」。
+
+来路是量出来的账：**五趟 7~10 分钟的重渲，成片一个像素都没变**——
+`eala-jovic` 85b94e74（`_why`/`_no_repeat` 段号交叉引用）、`mensik-tien` d338e77d
+（`stats._winners_ue_why`）、`wong-paul` d5bbc48c（一个加错的分钟数）、
+`medvedev-damm` e15e73e5（`push._no_auto_why` → `push.auto`）；`gauff-jovic` 80bbdd1a
+推送之后改了两段 `_score_inset_why`，链从此断着。（`zheng-liutova` 93df2572 是采访线，
+同一个形状，**采访线这次没做**，那边照旧重渲。）
+
+⚠️ **五趟里重核对省得掉四趟，`wong-paul` 那趟省不掉**（评审拿真提交重放量出来的）：
+那个分钟数改在 `editorial.human_context.facts`——`editorial` 是**真字段**，只进闸
+（`_validate_editorial_contract` / `ending_payoff_problem`）却在投影里，`reattest_check`
+报「渲染参数：editorial.human_context.facts[3]」、判 render。要放它得另开一类「只进闸的
+真字段」、让归类扫描管住谁读它；没做，宁可多渲一趟（判据
+`test_editorial是真字段_改里面的数照旧重渲`）。
+
+**机制**（`tools/render_inputs.py` / `tools/reattest_check.py`）：
+
+| 什么时候 | 做什么 |
+|---|---|
+| 渲染刚结束（`build_match_reel.main`） | 写 `render_inputs.json`：spec 的**渲染投影**（去掉注解和 `push` 块）、引用素材的字节 sha、落下的产物（`subtitles.ass` / `topbar.ass` / `poster.jpg` / `stat_card.jpg` / `scoreboard_qc.json`）、成片 sha。`render.json` 和 L2 凭证都钉它的 sha |
+| spec 改完、派之前（本地） | `python tools/reattest_check.py --slug <slug>`：0 ＝ 派 `mode=reattest` 就够；1 ＝ 动了渲染输入，走 `mode=render`；2 ＝ 判不了（没有清单的老片子 / 链本身对不上），也走 render |
+| runner 上 `mode=reattest` | 照旧先跑 `production_preflight` 和 `--dry-run`；再核旧凭证链、逐字节比投影/认领/素材/产物、**现下载 Release 成片算 sha256**；全对才写一张绑定新 spec 字节、指着同一份成片的新凭证，提交。不下源片、不装 ffmpeg/Chromium，和 render 同一个并发组 |
+
+⚠️ **它什么都不重建**：不重跑字幕、不重排渲染计划，比的是渲染那一刻**记下来的**东西——
+spec 投影（按原顺序，`sources` 原样）、认领、引用素材的字节、盘上的产物
+（`subtitles.ass` / `topbar.ass` / `poster.jpg` / `stat_card.jpg` / `scoreboard_qc.json`）
+——和 `render_inputs.json` 逐字节对。所以对 spec 的改动它比「重建 ASS 再比」更严：投影里
+任何一处非注解的改动都判 render，连只动像素、不进字幕的字段也算。**代码变没变它不管**
+——成片复用的就是那一份，代码漂移不改变已经渲出来的东西。
+
+「投影里去掉哪些」**不是靠记的**：`tests/test_reattest.py::test_渲染路径读到的注解键都要归类`
+从渲染和质检入口顺着 import 走一遍，每一处 `_` 键的读取都要在
+`render_inputs.RENDER_ANNOTATIONS`（进成片：`_column` 管字幕下锚、`_production.event`
+挑比分板那一套）或 `GATE_ANNOTATIONS`（只进闸）里认领，`push` 只许在措辞闸/推送元数据
+那几个函数里读。**以后在渲染路径上新读一个 `_` 键，那条测试当场红**，逼着回答
+「它进不进成片」。只进闸的注解**值**不进指纹（dry-run 重跑那些闸），但**闸读它的那个
+位置上、按那道闸自己的口径算数的认领，之后必须仍然算数**——`build_cover` 的 `_layout_why`
+这类认领只在编码里查，删掉就等于绕过。位置和口径都照闸的读法登记在 `Gate.where` /
+`Gate.rule`：`_approved_by_user: false`、`_layout_why: "   "` 闸不认，改成这样照样判
+render；而 `segments[i]._why`、`cover.portrait._why`、`stats._why` 这类同名的纯说明
+**没有闸读**（只有 `segments[i].voice._why` 有），删了照样可以重核对。读它的函数
+（`Gate.read_by`）由测试按 import 图对账，谁新读一处，逼着回头看一眼位置还对不对。
+
+**一个字都没松的**（「发出去的必须和质检过的是同一份」）：
+
+- `auto_push_gate.validate_qc` 原来那几道全在（spec 字节、字幕、成片 hash、Release 字节），
+  **还多了一道**：凭证带 `reattest` 的，门禁自己拿当前 spec 重算投影和认领再比一次，不信
+  runner 那一步的一面之词
+- **发布账本按成片 hash 记**，重核对之后还是同一份成片——已经 `sent` 的照样拦住。
+  「没有真改动就不该有新消息」（CLAUDE.md 9/22 那节），重核对**不是**重推的门路
+- 同一个路径换了一张图（O4 自动换图的形状）、动了旁白/窗口/钩子/`_column`、产物被换过、
+  Release 被别的一趟 `--clobber` 过——**一律判 render**。换图那一条**spec 一个字节不动也判**
+  （本地 `--slug` 不会再报「什么都不用做」）
+- ⭐⭐ **键的顺序也是渲染输入**（清单 v2，评审 2026-09-27 拦下的阻断项）：渲染器按插入
+  顺序取第一个——`sources` 的第一条就是主源片（`next(iter(sources))`，没写 `source` 的段
+  都从它取画面），`sources` 里不止一个键的 spec 有 54 条（2026-09-27 rebase 到 main 之后数的）。原来的投影 `sort_keys` 之后比，**只调换两个源
+  的 spec 和原来那份一模一样**，重核对会把旧成片推给一份已经换了主源片的 spec。现在按原顺序
+  存、按原顺序比，任何一张表的键换了顺序都报「键的顺序变了」、走 render
+- `sources` 表里的键**全是数据**：`spec_sources` 不按下划线跳过，`{"_why": …, "r1": …}`
+  里那句 `_why` 就是第一条、就是主源片——所以投影**不剥**这张表里的 `_` 键（评审第二轮）
+- 发布门禁**每次都**拿当前 spec 重算投影（不只在凭证带 `reattest` 时）；认领只在 spec 字节
+  和清单记的**不一样**时按今天的口径重判（一样的话那一刻闸认了才渲得出来，见本节最后一条）。
+  `render.json` 钉的清单 sha 必须就是凭证钉的那一份；清单记的 spec 和凭证记的不一样，凭证
+  又不是重核对出的——拦。L2 质检也只钉**描述这份成片**的清单（`film_sha256` 对得上、
+  `render.json` 也钉着它），盘上躺着上一趟剩的就警告、不钉（复审 2026-09-28）
+- 清单是**旧口径**写的（`version` 比 `render_inputs.VERSION` 小）：门禁不拿新口径重算
+  （v1→v2 那次按原顺序比，会把每份 v1 清单都判成「键的顺序变了」），普通渲染退回 spec
+  字节那一道、重核对凭证不认——**升 `VERSION` 不用回头迁移老清单**
+- ⭐ **「旧口径」不靠人记得升版本号**（评审第三轮复现的）：往 `RENDER_ANNOTATIONS` 里加一个键、
+  没升 `VERSION`，改之前渲、改之后才合并的片子 spec 一个字节没动，门禁却拿新口径比出
+  「渲染参数：_facts 变了」——自动链上只印一行 `[跳过]`，**不吭声地永远不推**。现在清单另记
+  `rules`（`render_inputs.rules_digest()`：进投影的注解键、整块剥掉的推送字段、素材后缀，
+  和 `project` / `canonical` / `diff_paths` 在一份样本 spec 上的行为），口径是版本号 ＋ 指纹
+  两样一起认（`same_rules`），表一改自动算旧口径。**`GATE_ANNOTATIONS` 不进指纹**——加一道闸
+  不改投影，兄弟分支每归类一个键，已渲片子的清单照旧能重核对
+- ⚠️ **和别的分支合并时，后合进 main 的那一个负责归类**：两边各自往渲染路径上加了读 `_`
+  键的闸，文本上不冲突、合起来那条扫描测试就红（2026-09-27 rebase 时撞上的：main 刚加的
+  `_short_match_why` / `_cover_reuse_why` / `_numeral_display_why` / `_board_on_screen_why`，
+  以及 #1105 封面认人的 `cover.portrait._face_check_why`）。只在编码里跑的闸（认人就是：
+  源片到手才查），`Gate.where` 必须写到它真读的位置——空着就等于允许重核对删掉它。
+  读的不是 spec、是渲染自己攒的字典（`_FACE_REPORT` 里的 `_key`）：按（键, 函数）登记进
+  测试里的 `_NOT_SPEC_READS`，不整批放
+- ⚠️⚠️ **扫描测试分不出「dry-run 里跑的闸」和「只在编码里跑的闸」，`where` 填对全靠归类的人**。
+  它只逼你**登记**，不替你判断：给一道只在 render（编码、源片到手之后）才查的认领登记
+  `where=()`，测试照样绿——而重核对从此允许删掉那句认领、那道闸一次都不再跑
+  （reattest 只跑 dry-run）。**`where=()` 只给两种**：只在备料时读（`promote_reel_draft`，
+  render 和 dry-run 都不调），或者它出现就是拒绝（`_import`）。拿不准就去看读它的函数
+  被谁调：`--dry-run` 走不到的，一律写 `where`。赶着让自己分支变绿时最容易错在这儿
+- ⚠️ 这条测试按**模块**走 import 图，不按函数：共用模块里**采访线才调**的函数（`interview_`
+  开头的，比如 `taste_gates_extra.interview_taste_extra`）读的键也会被扫出来——确认渲染/dry-run
+  路径上不调，再按 `where=()` 登记（写清「采访线读，赛场之上不调」）；`push` 在那种函数里读，
+  加进 `PUBLISH_FIELDS["push"]`
+- ⭐ **采访模块本身不进这张图**（2026-09-28 合 main 时定的）：`check_polyphones.interview_texts`
+  和 `taste_gates_extra.interview_ledger_dir` 里那两处延迟 import 会把 `build_interview_clip`
+  连同 7 个采访模块拉进来，25 处读法（采访台头印 `push`、片尾板认领……）就全得在竖版短片的
+  表里登记，其中「台头印 `push`」还得登成「只进推送」——那是假话。所以测试里的
+  `_OTHER_LINE_GATEWAYS` 只剪**这两处 import**（不剪模块：别处哪天真 import 了采访模块，照样
+  进图、照样要归类），`test_采访线的入口只从采访线的函数调` 按（模块, 函数）往上追「谁调了它」，
+  追到的必须是 `interview_` 开头的函数或命令行入口——`validate_spec` 哪天调了它，这里红
+- 扫描认的读法（复审 fix 轮补全，每种都拿合成模块复现过）：字面量、顶层常量（字符串或
+  `("_a", "_b")` / `frozenset({...})` 这类序列）、`from m import KEY` / `m.KEY`、循环变量、
+  按键名比（`k == "_x"`、`k in KEYS`、`spec.keys() & {...}`）；按前后缀批量认
+  （`k.startswith("_")`、`k.endswith("_why")`）进「整批」那张表，逐个函数登记
+- 闸口径收严（`Gate.rule` 从 `text_str` 改成 `text`）**不进指纹**：发布门禁对 spec 字节
+  就是清单那一份的片子**不重判认领**（那一刻闸认了才渲得出来），投影照算；spec 改过才按
+  今天的口径判。清单写不成（`record_best_effort`）只警告、不留半截、不打红那一趟渲染——
+  之后这一版 `reattest_check` 报判不了；Release 成片取不到（404 / 断网）同样报判不了
+
+⚠️ 所以上面那句「注解要在发 `mode=render` 之前改完」仍然是**最便宜**的做法（一秒都不花）；
+重核对是**改晚了**时的出路：一趟只装主依赖、跑 dry-run、拉一份成片算 sha256 的 runner，
+而不是 7~10 分钟的重渲（2026-09-27 落地时**还没在 runner 上量过实际耗时**，第一趟跑完补在这儿）。
+⚠️ 渲染时还没有这个功能的片子（清单是 `mode=reattest` 合进来之后才开始记的）没有清单，
+重核对判不了，照旧重渲。稀疏检出里本地问，`output/` 那一格没拉下来时它会说「在仓库里、
+先 `git sparse-checkout add <目录>`」，不再误报「一份都没有——先 mode=render」。
+⚠️ **和 render 共用并发组 `match-reel-<slug>-render`**（不拆组是故意的：拆开之后两者能并行，
+render 的 `--clobber` 会在 reattest 核完之后换掉 Release 上的成片）。**reattest 不取消在跑的
+render**（2026-09-28 起 `cancel-in-progress` 对 reattest 是 false）：O4 自动换图之后派的
+render（`cover_upgrade.py`，无人值守）正在跑时有人派了 reattest，原来会把那趟 render 顶掉，
+现在 reattest 排队等它跑完——跑完的新清单描述的就是换了图的那份 spec，reattest 判「同一份」
+或按新清单核。反过来 render 照旧顶掉在跑的 reattest（无害，render 出新凭证）。剩一个 GitHub
+自己的口径：同组里**排队中**的那一趟会被后派的顶掉，不管 cancel-in-progress——render 排着队
+时派 reattest，排着的 render 没了（O4 那条下一班对账 `redispatch_plan` 一小时后会重派）。
+
+⚠️ **换封面是真改动，永远走 render**：O4 把 `cover.portrait` 从 `frame_at` 换成 `image`（新文件
+`assets/reel/<slug>-official.*`），投影变了；同一个路径换图，素材字节变了——两种都判 render，
+判据 `test_O4换封面永远走render不走重核对`。
+
+⚠️⚠️ **只改推送文案，不重推**（账号所有者 2026-09-27 答复原话：「只改推送文案不重推」）：
+已经 `sent` 的片子渲完之后只改 `push.summary` / `push.lead`，重核对照样出凭证（成片没变），
+但发布账本按成片 hash 记、`pushed.json` 也还在——**不会再发一条**。这正是现在账本的行为，
+判据 `test_已发的片子只改推送文案_重核对之后也不重推`。要让新文案发出去，唯一的路是产物真的变
+（CLAUDE.md 9/22「重渲一趟去逼出一条新消息这条路不存在」那节）。
+
 #### ⭐⭐ 判据的扫描面，往往比规矩的适用面窄——#726 那条当天就撞上了
 
 同一天 #726 给「赛场之上」立了一条：**小红书正文首行必须出现球员名字**。理由是
@@ -4591,6 +4729,11 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
     git rm output/<日期>/reel/<slug>/pushed.json && 合并
     # 或 match-reel.yml mode=push push=true（同样要先删掉 pushed.json）
 
+⭐ **已发片子只改推送文字（`push.summary`／`push.lead`）不重推**——账号所有者 2026-09-27 ~23:00Z
+答复 reattest 评审那一问，确认了。成片没变（指纹没变），发布账本和 `pushed.json` 照拦，
+和 09-22「没有真改动就不该有新消息」同一句话；改掉的文字只落进仓库（复制页、下一次重渲）。
+真要让改过的文字发出去，就得有进成片的改动、重渲出新指纹，走上面那条「重渲默认重推」。
+
 ## ⭐⭐ 2026-09-27：Q9 阻塞推微信的四条口径（账号所有者 ~23:00Z 答复）
 
 定义只有一份：`tools/build_dashboard_snapshot.py` 的 `blocked_runs`（顶注有全文和实测证据），
@@ -4661,8 +4804,15 @@ spec 也不改），销章看 `_protected`：人核过（`transcript_verified` /
 ⚠️ 其中「N 强」那条**草稿转正那条路堵上了一半**（评审 2026-09-27：main 上真草稿
 `bonzi-winston-salem-2026-r` 的 DeepSeek 译文「大概是八强左右」，转正 `check_interview_copy_wording`
 返回空、全库测试红）：`promote_all` 按全库测试同一份面（`spec_wording.non_annotation_strings`，**含 `zh`**）
-跑 `strength_round_hits`，命中就留草稿。**人工请求那条路（`build_interview_request` 直接写正式 spec）
-仍然不查**——译文命中时是让 build 红、还是标 `manual_review_required`，没替账号所有者定。
+跑 `strength_round_hits`，命中就留草稿。**人工请求那条路 2026-09-27 晚也堵上了**（确定性的一刀，
+和 promote 同一个处置，不碰模型提示词）：`build_interview_request._round_name_review` 在写正式 spec 之前
+按同一份面判，**只在机器译文里**的「N 强」→ 正式 spec 不写，落成 `<slug>.draft.json`＋`manual_review_required`
+（promote 见到这个键不提升；`is_pending` 认得它在等人、同一份请求不重建；人改好 `zh`、删掉键、改名成
+`<slug>.json`、把 `_xhs` 存成 `.xhs.txt`；正式 spec 一写出来这份草稿自动删掉）；**请求自己写的**「N 强」
+→ `RequestNotReady`，改请求。`attach_interview_lead_in` 配出来的 `lead_in.subs[].zh` 命中就不写、下一轮重配。
+判据 `test_机器译文把轮次写成N强_正式spec不写_落草稿等人工复核`、`test_冷开场译文把轮次写成N强_不写_下一轮重配`。
+⚠️ 这份草稿也算进 `interview-auto-render` 早退探针的 `DRAFTS`，人没处理之前每 10 分钟跑一趟全量——
+和 promote 留下的草稿同一个老毛病，没在这一刀里改。
 ⚠️ **这些「照判」拦不住出片，只守 main 的绿**：GITHUB_TOKEN 推的提交不触发 ci.yml，自动链提交完
 渲染已经派出去了，全库测试是之后才跑的。所以「照判」的意思是「这条缺陷只有它在查，红给下一个人工
 PR 看」，不是「它挡在出片前面」。
@@ -4757,8 +4907,9 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 `TAKEAWAY_POINT_PX/TRACKING`）。2026-09-27 main 的评审 I2／I3 把卡改成 `keep-all`＋`balance`、
 左边距跟台头收到 70（正文区 860px），合并时 CSS 改成读这组常量——不然闸按 838 量、卡按 860 排，
 正是「写两处必分叉」。`interview_spec_gates.card_lines` 照这套 CSS 排行，全库 104 张卡＋4 条样例
-真渲对过，折点逐字一样，报错里印的就是卡上的折点。⚠️ **「在空格处折成匀称的两行」算不算合格
-是账号所有者还没定的口径**，定之前照旧要求一行。
+真渲对过，折点逐字一样，报错里印的就是卡上的折点。⭐ **「在空格处折成匀称的两行」不算合格**——
+账号所有者 2026-09-27 ~23:00Z 答复：收尾卡那一句**一行放得下，写不下就写短**。闸本来就这么判，
+不放宽；真要两行照旧在那张卡里写 `_wrap_ok` 认领。
 
 ⚠️ `FROZEN_SLACK`＝0.2 只校准过 1.1~1.7 秒；已发的 0.2~1 秒短冻帧（从 Release 拉回 102 条
 已发正片量出来 2 条）挂在 `data/legacy_interview_gates.json` 的 `frozen_tail_short`，

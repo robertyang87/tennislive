@@ -62,7 +62,7 @@ class Homophone:
     evidence: str        # 为什么换：量出来的数 / 账号所有者原话＋日期
     examples: tuple[tuple[str, str], ...]   # (原文, 喂给合成器的)
     guards: tuple[str, ...] = ()            # 必须原样不动的上下文
-    kind: str = "homophone"                 # 挑→选 是同义字，不是同音字
+    kind: str = "homophone"                 # 同音字；同义字换字（原 挑→选）已拿掉
     # 变宽的「前面不许是」：命中处前面的文字**以它结尾**就不换。Python 的
     # lookbehind 只收定宽，而「前十中三」「前五十中两个」前面那串数字是变宽的。
     skip_before: str = ""
@@ -84,32 +84,15 @@ _CN_DIGIT = "一二三四五六七八九十两"
 
 HOMOPHONES: tuple[Homophone, ...] = (
     # ------------------------------------------------------------------
-    # 2026-09-27 之前就在 speakable() 里的四条，原样搬过来（顺序也不变；挑→选 同日
-    # 复查收窄到「换完还是同一个词」的上下文，见那一条）。
+    # 2026-09-27 之前就在 speakable() 里的四条，原样搬过来（顺序也不变）——
+    # 其中 挑→选（`tiao-pick`）同日拿掉了：
+    #   量出来原文「挑球」已经读 tiāo（calib 挑球a/b/c correct，measure_polyphone
+    #   +6%/+22%），按本表自己的收录规矩（「原句量出来读错」才进）它没有读音收益；
+    #   而「挑」当挑高球讲（tiǎo）时——「一记挑球过顶」「网前被他轻轻一挑」「把球挑过
+    #   对手头顶」「挑到底线」——换成「选」就是**另一个词**，听的人听到的是「选球」。
+    #   收窄了两轮还挡不全，所以整条拿掉（复审 nit，2026-09-27）。挑高／挑起／挑回 的
+    #   tiǎo 读偏由预检 `check_polyphones.REWRITE_ONLY` 提醒改写那一句，不归这张表。
     # ------------------------------------------------------------------
-    Homophone(
-        key="tiao-pick",
-        # 「选」是同义字，不是同音字：只在「挑」＝挑选（换完还是同一个词）的地方换。
-        # 挑高球／挑起／挑回 是 tiǎo（把球挑起来那个动作），换成「选」就成了另一个词——
-        # laver-cup-history-2026「对手挑起高球」→「选起高球」、rybakina-sabalenka
-        # 决赛「把球挑回底线」→「选回底线」、medvedev-tiafoe 草稿「挑高球」→「选高球」
-        # （2026-09-27 复查）。挑选→「选选」、挑刺、挑大梁、挑毛病、挑明、
-        # 「没什么可挑的」（挑剔那个意思）同理。这些原样留着：最坏是读音偏，
-        # 不是换了一个词。挑高／挑起／挑回 量过原样读 tiāo（不对），而 tiǎo 找不到
-        # 读音稳定的单音字——预检 `check_polyphones.REWRITE_ONLY` 提醒改写那一句。
-        pattern=r"(?<!可)挑(?![战衅拨逗剔眉高起回选刺明灯担水]|大梁|毛病)", replace="选",
-        word="挑球", reading="tiāo", kind="synonym",
-        evidence=(
-            "挑球的「挑」是 tiāo（一声，挑出一颗来）；合成器读成 tiǎo（挑战那个）。"
-            "edge-tts 不收音标，换一个意思相同、只有一个读音的「选」。"
-            "2026-09-27 声学复测（measure_polyphone，+6%/+22%）：原文「挑球」三句"
-            "现在都已读 tiāo（calib 挑球a/b/c correct），规则保留；同日复查把它收窄到"
-            "「换完还是同一个词」的上下文（挑高／挑起／挑回 这类换成「选」是另一个词）。"),
-        examples=(("球员发球前挑球，挑那颗最不毛的", "球员发球前选球，选那颗最不毛的"),),
-        guards=("鹰眼挑战制", "男单挑战杯", "挑衅", "挑拨", "挑逗", "挑剔", "挑眉",
-                "对手挑起高球", "反手把球挑回底线", "高难度挑高球", "挑选", "挑刺",
-                "年轻人挑大梁", "挑毛病", "把话挑明", "这一盘他打得没什么可挑的"),
-    ),
     Homophone(
         key="yingdi", pattern="硬地", replace="硬帝",
         word="硬地", reading="dì",
@@ -319,8 +302,9 @@ HOMOPHONES: tuple[Homophone, ...] = (
 _COMPILED: tuple[tuple[Homophone, re.Pattern[str]], ...] = tuple(
     (h, re.compile(h.pattern)) for h in HOMOPHONES)
 
-#: 2026-09-27 之前就在 `speakable()` 里的四条（回归判据拿它们比旧实现）。
-LEGACY_KEYS = ("tiao-pick", "yingdi", "ling", "bolin")
+#: 2026-09-27 之前就在 `speakable()` 里、现在还在表里的三条（回归判据拿它们比旧实现；
+#: 第四条 挑→选 同日拿掉了，见表头注释）。
+LEGACY_KEYS = ("yingdi", "ling", "bolin")
 
 
 class PronounceError(ValueError):
