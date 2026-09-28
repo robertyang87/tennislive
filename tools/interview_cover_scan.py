@@ -57,9 +57,15 @@ cobolli-mensik 30 秒那一帧红了、就地扫出来的排名第一是 29.4—
   （佩古拉的亚军致辞，tag「… · 佩古拉」）落到伊埃拉、`nakashima-shelton-mtl2026-final`
   落到谢尔顿、`williams-sisters-cincinnati-2026-r1-presser` 落到对手。人挑的那一帧
   （本人）终审判 mismatch 红，机器接着就把冠军那一格换上去、终审 match、推送闸也 match，
-  没有一道拦得住。108 条认得出主角的采访 spec 里 104 条的文案点了主角的名，没点的 4 条
-  正是这三条加上主角没官方头像、本来就换不了的颁奖礼。双打同理：`alcaraz-mensik`
-  文案只点了阿尔卡拉斯，门西克那一格不许换
+  没有一道拦得住。双打同理：`alcaraz-mensik` 文案只点了阿尔卡拉斯，门西克那一格不许换
+- ⚠️ **主角是 winner 兜底猜的，只认 tag 那一格点的名**（`naming_copy`，2026-09-28 第二轮
+  复审）：只查「整份文案里有没有这个名字」挡不住亚军致辞——副标题常写着「不敌{冠军}」。
+  `rybakina-swiatek-tor2026-final`（莱巴金娜的亚军致辞，tag「… · 莱巴金娜」、sub「6-2 6-3
+  不敌斯瓦泰克」）和它的发布会兜底都落到斯瓦泰克，而斯瓦泰克就在 sub 里：复审拿官方头像拼的
+  海报跑 `run_scan(autopick)`，302.5 换到了斯瓦泰克那一格、rc=0。主角有出处的（spec 写了
+  是谁、亚军内容写了 `match.loser`、文案只点了一个参赛者）仍认整份文案。全库 108 条认得出
+  主角的采访 spec 里 100 条过得了这一道（63 条主角是兜底猜的）；不过的 8 条：上面三条、这两条、
+  tag 只写「2026 美网 · 赛后开麦」而主角又是兜底猜的两条，加上主角没官方头像的颁奖礼
 - 换上之后，人给原来那一帧写的认领（`_face_check_why`／`_frame_scan_why`）挪进
   `cover._frame_autopick.dropped`，`cover._why` 前面标一句「说的是原来那一帧」——
   那几句是给人看过的那一帧写的，挂在一帧没人看过的上面，下次尺子一变就会替它开脱
@@ -510,21 +516,54 @@ def cover_copy(spec: dict) -> str:
                                      *titles) if v)
 
 
+def subject_guessed(spec: dict) -> bool:
+    """认人的主角是不是 `expected_subject` 最后那一步 **winner 兜底**猜出来的。
+
+    判法不另抄一份推断：拿掉 `winner`／`match.winner` 再推一次，认不出人就是兜底
+    （前面几步——`subject` 那几个字段、亚军内容的 `match.loser`、文案只点了一个参赛者——
+    一步都不读 winner）。推断本身抛了就当是猜的，只认 tag。"""
+    bare = copy.deepcopy(spec)
+    bare.pop("winner", None)
+    if isinstance(bare.get("match"), dict):
+        bare["match"].pop("winner", None)
+    try:
+        return bool(_auditor.expected_subject(spec)) and not _auditor.expected_subject(bare)
+    except Exception:  # noqa: BLE001
+        return True
+
+
+def naming_copy(spec: dict) -> tuple[str, str]:
+    """认出来的人得在哪段文案里被点名 → (文案, 叫法)。
+
+    主角是 winner 兜底猜的：**只认 tag**（「赛事 · 人名」那一格，promote 拼的就是它）。
+    整份文案不够——亚军致辞的副标题常写着「不敌{冠军}」：`rybakina-swiatek-tor2026-final`
+    （莱巴金娜的亚军致辞，tag「… · 莱巴金娜」、sub「6-2 6-3不敌斯瓦泰克」）兜底落到斯瓦泰克，
+    而斯瓦泰克就在 sub 里。别的来路（spec 写了是谁、亚军内容写了 `match.loser`、文案只点了
+    一个参赛者）主角是有出处的，整份封面文案点了名就行。"""
+    if subject_guessed(spec):
+        return str((spec.get("cover") or {}).get("tag") or ""), "tag"
+    return cover_copy(spec), "封面文案（tag／sub／topic／title）"
+
+
 def named_in_copy(spec: dict, name: str | None) -> str:
     """认出来的 `name` 是不是封面文案点了名的那个人：空串＝是，否则说为什么不换。
 
     认人的「本人」是 `expected_subject` 推出来的，手写 spec 里它会退回 `winner`——
-    亚军致辞、对手的发布会就落到了**对面那个人**身上（模块开头那三条）。文案是人写的、
-    写的就是这段采访是谁，所以机器换上的脸必须是文案里点了名的人。
+    亚军致辞、对手的发布会就落到了**对面那个人**身上（模块开头那几条）。文案是人写的、
+    写的就是这段采访是谁，所以机器换上的脸必须是文案里点了名的人；主角是兜底猜的，
+    只认 tag 那一格（`naming_copy`）。
     """
     if not name:
         return "认出来的那个人没有名字"
-    copy_text = cover_copy(spec)
-    if name in copy_text:
+    text, where = naming_copy(spec)
+    if name in text:
         return ""
-    return (f"认出来是{name}，可封面文案（tag／sub／title）里没有这个名字"
-            f"——「{copy_text[:40]}」说的是别人，换上去就是给别人的采访配了{name}的脸"
-            "（多半是 expected_subject 退回 winner 落到了对手身上：spec 顶层写 subject）")
+    if where == "tag":
+        return (f"认出来是{name}，可封面文案的 tag「{text[:40]}」没点这个名字——主角是按 winner "
+                "兜底猜的（spec 没写 subject／match.loser），只认 tag 那一格：亚军致辞的副标题常写着"
+                "「不敌冠军」，整份文案里有这个名字不算数（spec 顶层写 subject）")
+    return (f"认出来是{name}，可{where}里没有这个名字"
+            f"——「{text[:40]}」说的是别人，换上去就是给别人的采访配了{name}的脸")
 
 
 def autopick_problem(entry: dict, spec: dict) -> str:
@@ -580,7 +619,8 @@ def pick(record: dict | None, spec: dict) -> dict | None:
 
 
 def subject_unnamed(spec: dict) -> str:
-    """认人要找的主角（`expected_subject`，双打「A/B」任一）一个都不在封面文案里 → 为什么；
+    """认人要找的主角（`expected_subject`，双打「A/B」任一）一个都不在该认的文案里
+    （`naming_copy`：兜底猜的只认 tag）→ 为什么；
     否则空串。**近处一格都挑不出来时拿它决定要不要整段粗扫**：主角都不是文案里那个人，
     粗扫四十格也只会挑出一张张「不许换」的脸，白烧一分半钟。逐格那一道（`named_in_copy`）
     照样在，这里只是省时间。"""
@@ -589,10 +629,11 @@ def subject_unnamed(spec: dict) -> str:
     except Exception:  # noqa: BLE001 —— 认不出主角就交给逐格那一道（它会 unknown）
         return ""
     names = [n for n in str(want or "").replace("／", "/").split("/") if n.strip()]
-    if not names or any(n in cover_copy(spec) for n in names):
+    text, where = naming_copy(spec)
+    if not names or any(n in text for n in names):
         return ""
-    return (f"认人要找的封面主角是「{want}」（expected_subject），可封面文案里一个都没点名"
-            f"（「{cover_copy(spec)[:40]}」）——机器不知道该换谁的脸，不换")
+    return (f"认人要找的封面主角是「{want}」（expected_subject），可{where}里一个都没点名"
+            f"（「{text[:40]}」）——机器不知道该换谁的脸，不换")
 
 
 def sweep_plan(spec: dict, near: tuple[float, float],
@@ -615,6 +656,31 @@ def sweep_plan(spec: dict, near: tuple[float, float],
     return times, (_round(a), _round(b)), step
 
 
+def _same_t(a: object, b: object) -> bool:
+    try:
+        return abs(float(a) - float(b)) <= MATCH_TOLERANCE
+    except (TypeError, ValueError):
+        return False
+
+
+def human_pick(cover: dict) -> object:
+    """人挑的那一帧。上一次换帧记录还管着当前 `frame_at`（它的 `to` 就是这一帧）→ 记录里
+    人挑的那一帧（连换几次都往回追到人那一格：`human_pick`，第一次换的记录里就是 `from`）；
+    没换过，或者换过之后人又手改了 `frame_at`（记录的 `to` 对不上了）→ 当前 `frame_at`。"""
+    prev = cover.get(AUTOPICK_KEY)
+    t = cover.get("frame_at")
+    if isinstance(prev, dict) and _same_t(prev.get("to"), t):
+        return prev.get("human_pick", prev.get("from", t))
+    return t
+
+
+def human_why(why: str) -> str:
+    """`cover._why` 去掉机器换帧标的那一句（`WHY_MARK`…〕）→ 人写的原话。"""
+    if why.startswith(WHY_MARK) and "〕" in why:
+        return why.split("〕", 1)[1]
+    return why
+
+
 def rewrite_frame_at(text: str, new_t: float, note: dict) -> str:
     """spec 原文 → 改 `cover.frame_at`、加 `cover._frame_autopick` 的新原文。
 
@@ -626,24 +692,26 @@ def rewrite_frame_at(text: str, new_t: float, note: dict) -> str:
 
     人给原来那一帧写的认领（`STALE_CLAIMS`）挪进 `_frame_autopick.dropped`（上一次换帧
     挪过的接着留着），`cover._why` 前面标一句它说的是哪一帧（`WHY_MARK`，再换一次只换这一句）。
+    「哪一帧」是 `human_pick`：已经换过一次的 spec（render 换完就跟成片一起提交到 main）再换，
+    标的仍是人挑的那一帧，不是上一次机器换的；换过之后人又手改了 `frame_at`，标的是人新挑的。
     """
     data = json.loads(text)
     expected = copy.deepcopy(data)
     cover = expected.setdefault("cover", {})
     old_t = cover.get("frame_at")
+    seen = human_pick(cover)
     cover["frame_at"] = new_t
     prev = cover.get(AUTOPICK_KEY) if isinstance(cover.get(AUTOPICK_KEY), dict) else {}
     dropped = {**(prev.get("dropped") or {}),
                **{k: cover.pop(k) for k in STALE_CLAIMS if k in cover}}
     if dropped:
         note = {**note, "dropped": dropped}
+    if not _same_t(seen, old_t):
+        note = {**note, "human_pick": seen}
     why = cover.get("_why")
     if isinstance(why, str) and why.strip():
-        if why.startswith(WHY_MARK) and "〕" in why:
-            why = why.split("〕", 1)[1]
-        seen = prev.get("from", old_t) if prev else old_t
         cover["_why"] = (f"{WHY_MARK}下面说的是人挑的 {seen} 秒那一帧；{new_t} 秒是机器换的、"
-                         f"没人看过，读数见 {AUTOPICK_KEY}〕{why}")
+                         f"没人看过，读数见 {AUTOPICK_KEY}〕{human_why(why)}")
     cover[AUTOPICK_KEY] = note
     styles = [(indent, ascii_, tail) for indent in (2, 1, 4) for ascii_ in (False, True)
               for tail in ("\n", "")]
