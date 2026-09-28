@@ -1194,19 +1194,25 @@ def test_subs那一趟只提交自己那一格():
             continue
         body = str(step.get("run", ""))
         dirs = re.findall(r'^\s*(?:D|OUTDIR)="([^"]+)"', body, re.M)
+        # 只在 render 档才赋值的变量（封面自动换帧改过的 spec，`$AUTOPICK_SPEC`）：subs 那一档
+        # 它恒为空串，`git add` 碰不到 spec。只认紧跟在 `if [ "$MODE" = "render" ] && …; then`
+        # 下面那一行的赋值——守卫一拆，它就回到「不许 add」那一堆里
+        render_only = re.findall(
+            r'^\s*if \[ "\$MODE" = "render" \] && [^\n]*; then\n\s*(\w+)="specs/', body, re.M)
         for ln in body.splitlines():
             code = ln.split(" #", 1)[0].strip()
             if code.startswith("#") or "git add" not in code:
                 continue
-            adds.append((step.get("name"), code[code.index("git add"):], dirs))
+            adds.append((step.get("name"), code[code.index("git add"):], dirs, render_only))
     assert adds, "扫描面坏了：subs 那一档一个 git add 都没抠到"
-    assert {name for name, _, _ in adds} >= {"提交成片", "第二份 ASR 交叉校验并提交报告（subs）"}, adds
+    assert {name for name, _, _, _ in adds} >= {"提交成片", "第二份 ASR 交叉校验并提交报告（subs）"}, adds
     ran.clear()
     assert not may_run("github.event.inputs.push == 'true' && steps.x.outputs.found == 'true'")
-    for name, ln, dirs in adds:
+    for name, ln, dirs, render_only in adds:
         assert dirs and all(d.startswith("output/interviews/") for d in dirs), (name, dirs)
         targets = [t for t in ln.split()[2:] if not t.startswith("-")]
-        assert targets and all(t.strip('"') in ('$D', '$REC', '$OUTDIR') for t in targets), (name, ln)
+        allowed = {"$D", "$REC", "$OUTDIR", *(f"${v}" for v in render_only)}
+        assert targets and all(t.strip('"') in allowed for t in targets), (name, ln)
 
 
 def test_subs账判定交上来就删_投render那一下删_撞车合并带着删(pick):

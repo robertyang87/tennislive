@@ -373,7 +373,7 @@ def recheck_after_facts_change(draft: dict) -> str | None:
     `clean_report` 的 wanted 为空（封面人物不核），wanted_moment 退回 winner_celebration。
     `retry_feed_blocks` 补上赛果之后，reel-auto-ready 要不要重审只看封面路径／状态／retryable／
     `evidence_hash`（只含图片字节，不含 `_match`）→ 不重审 → promote 把模型的 `cover.subject`
-    抄进正式 spec：**输家当封面主角，自动渲、自动推**（回放 rv5_stale_visual_repro.py）。
+    抄进正式 spec：**输家当封面主角，自动渲、自动推**（判据 `test_赛果补齐之后_probe时给的封面人物是输家_不许带着旧pass转正`）。
     爆冷那一半反过来：probe 那一趟按 winner_celebration 把 loser_fighting 判不合格
     （retryable false），补上 brief 之后再没人重审，卡到过期、不告警。
 
@@ -385,10 +385,12 @@ def recheck_after_facts_change(draft: dict) -> str | None:
       `ask_minimax` 让它「认不出留空」。它的 `subject` 空着／写了表外译名、`winner_visible` 蒙错，
       都不说明照片里是输家。那一版留着哈希、`retryable` false：工作流不重审、`refresh_reel_cover`
       见「已有封面」不换图、`_feed_retry` 在 healed 时摘掉——**不告警、躺到 PENDING_MAX_AGE**
-      （回放 rv5r_stuck_after_heal.py：空 subject／莎巴伦卡／winner_visible=false 三种全卡）。
+      （空 subject／表外译名／winner_visible 蒙错三种，改前全卡：判据 `test_赛果补齐之后_probe时瞎答的赢家照片_不许凭那份回答判死`
+      的三个参数各是一种）。
       `main` 上同一个 503 让 probe 红、自愈放掉 slug、重 probe 时带着完整 `_match` 审——不丢这场
     - 代价至多**每份补齐的草稿多一次**走原路的重审：重审那一趟 `clean_report` 把 `retryable` 写回
       false、哈希钉上新的，真是输家的照片就停在 waiting（和 `main` 一样），不会反复问
+      （判据 `test_赛果补齐之后_重审只多一次_真是输家的照片停在waiting不反复问`）
     - `visual_status == "error"`（接口失败）不动：它本来就会重审
 
     时长传无穷：窗口越没越出源片，probe 那一趟已经按真时长核过，和赛果无关。

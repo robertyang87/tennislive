@@ -406,7 +406,7 @@ def test_账本字段_转正剥掉_不是真字段所以不会被下划线闸误
 # match-reel.yml 的 probe 在 assemble 之后同一趟紧接着跑 analyze_reel_visuals；df_mh_1 读失败时
 # 模型看到的 `_match` 只有 flashscore_id，`clean_report` 不核封面人物、情绪退回 winner_celebration。
 # 重跑补上赛果之后，reel-auto-ready 要不要重审只看封面路径／状态／retryable／图片字节哈希——
-# 不看 `_match`。回放 rv5_stale_visual_repro.py：输家当封面主角的 pass 原样留着，promote 照抄。
+# 不看 `_match`。改前：输家当封面主角的 pass 原样留着，promote 照抄（下面第一条判据钉的就是它）。
 
 import analyze_reel_visuals as visual  # noqa: E402
 
@@ -517,7 +517,7 @@ def test_赛果补齐之后_probe时瞎答的赢家照片_不许凭那份回答�
     """第四轮复审：probe 那一趟 `_match` 只有 flashscore_id、没有 `_cover_brief`，prompt 里一个名字都没有。
     照片**就是赢家**（诺斯科娃），模型只是没认出来——按新赛果核那份回答必然不过；这时留着哈希、
     `retryable` false，工作流不重审、`refresh_reel_cover` 见「已有封面」不换、`_feed_retry` 在 healed
-    时摘掉，**不告警地躺到 PENDING_MAX_AGE**（回放 rv5r_stuck_after_heal.py，三种全卡）。"""
+    时摘掉，**不告警地躺到 PENDING_MAX_AGE**（上面三个参数就是那三种，改前全卡）。"""
     flash.down = {"df_mh_1"}
     draft = _assemble()
     ev = _probe_verdict(draft, subject=subject, moment="winner_celebration",

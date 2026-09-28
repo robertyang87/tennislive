@@ -3944,7 +3944,7 @@ BtbN 上 δ≈0，「拆 δ」那条自检跳过并 warning 出 ffmpeg 版本—
 
 | 改了什么 | 为什么 / 证据 |
 |---|---|
-| 旁白尾巴按**上包络**（`probe_audio.speech_ceiling` ＝ 离线估×1.10 ＋ 2.20）也说不到的那一秒：**手写 spec 硬**、自动 spec 只报 | 「旁白长度是估的」只说明点估判不了。上包络按 main 上 3921 段真 mp3 定：runner 现在走 **edge-tts**（09-15 之后 80 份 render.json 全是），比按 Azure 拟合的离线估慢、而且和句长成正比——1595 段里 16 段超出 `est+2.2`，最坏 +4.85 s（43 秒的长段），平移盖不住，斜率 0.10 时 edge-tts 要 1.33、azure 要 0.85（azure 尾巴按 0 秒静音算也还剩 0.52）。冻结最贴的 11 段：`test_上包络盖得住每一段真语音`。老的 `silence_risk`「最长估」跟着换成同一个上包络 |
+| 旁白尾巴按**上包络**（`probe_audio.speech_ceiling` ＝ 离线估×1.10 ＋ 2.20）也说不到的那一秒：**手写 spec 硬**、自动 spec 只报 | 「旁白长度是估的」只说明点估判不了。上包络按 main 上 3921 段真 mp3 定：runner 现在走 **edge-tts**（09-15 之后 80 份 render.json 全是），比按 Azure 拟合的离线估慢、而且和句长成正比——1595 段里 16 段超出 `est+2.2`，最坏 +4.85 s（43 秒的长段），平移盖不住，斜率 0.10 时 edge-tts 要 1.33、~~azure 要 0.85（azure 尾巴按 0 秒静音算也还剩 0.52）~~——azure 这个数过时了，按「说到哪儿」比的改正数是 **0.66**，见下面收尾轮「尾巴不是 0.83」那一行。冻结最贴的 11 段：`test_上包络盖得住每一段真语音`。老的 `silence_risk`「最长估」跟着换成同一个上包络 |
 | 点估和上包络之间：只报，**印出 `render --check-narration` 的原命令** | 离线估在这一截判不了 |
 | `--check-narration`（runner 的 mode=narration 跑的就是它）合完真语音，按**真语音说到哪儿**（`voice_speech_end`，QC 同口径 −80 dB 以下算说完，再让 0.1 s）＋真封面长重放同一套：手写 spec 硬 | 时效第一那条「悬的段跑一分钟 `--check-narration`」现在顺手把静音也判了 |
 | 整屏证据段（image／stat_card／title_card）不再整段遮住，按 QC 的 `in_ev`（窗口两头各 0.3 s）豁免 | 跨出窗口那一秒（证据段口播说完 ＋ 下一段安静的开头）QC 照样数 |
@@ -3967,8 +3967,8 @@ BtbN 上 δ≈0，「拆 δ」那条自检跳过并 warning 出 ffmpeg 版本—
 
 | 定了什么 | 怎么做 / 证据 |
 |---|---|
-| **D1 硬的几档只在 mode=render 硬**（无旁白段那一档和旁白尾巴上包络那一档都算） | `probe_audio.mode_demoted` 和源片覆盖那道**同一个口径**（`probe_sources.dry_run_mode`：工作流传的 `REEL_DRY_RUN_FOR`，本地不传按 render 算）。cover／narration／reattest 同一句照印、挂上「这一趟是 mode=…」、不红——时效第一、封面排最前；reattest 核的那份成片 QC 真量过。只有 dry-run 读这个环境变量，`--check-narration` 和 render 那一遍照硬。判据 `test_数字静音硬的几档只在mode_render硬_cover和narration照印不红` |
-| **D2 render 自己在 TTS 之后、分段编码之前按真语音重放**（`_render_silence_gate`） | 就是 `--check-narration` 那一档（真语音说到哪儿 `measured_speech_ends` ＋ 封面配音真长度），语音和封面长度是这一趟本来就合好的，**不多合一句、不多下一个字节**；手写 spec 硬伤当场 ReelError（原句和 dry-run 同一套），自动 spec 只报（连无旁白段那一档也只报——dry-run 那一步对它已经硬过）。match-reel 的 narration／render 两步调 build_match_reel 之前各自再 `probe_sources.py materialize` 一遍：dry-run 落的 probe.json 排在「算出目录」那一步的 `git sparse-checkout add` 前面，可能被清掉（已经在的不动，取不到只出声不拦）。判据 `test_render在TTS之后_分段编码之前按真语音重放数字静音`（真调 `render()`，假语音，走到比分板蒙版就停）、`test_narration和render那两步先按URL把probe落盘` |
+| **D1 硬的几档只在 mode=render 硬**（无旁白段那一档和旁白尾巴上包络那一档都算） | `probe_audio.mode_demoted` 和源片覆盖那道**同一个口径**（`probe_sources.dry_run_mode`：工作流传的 `REEL_DRY_RUN_FOR`，本地不传按 render 算）。cover／narration／reattest 同一句照印、挂上「这一趟是 mode=…」、不红——时效第一、封面排最前；reattest 核的那份成片 QC 真量过。只有 dry-run 读这个环境变量，`--check-narration` 和 render 那一遍照硬。判据 `test_数字静音硬的几档只在mode_render硬_cover和narration照印不红`。⚠️ 集成第三轮补上：`silence_findings` 那道老的「必红」（`silent_audio` 静音区）原来漏在这个口径外面，cover 那一趟照样被它挡住——现在同一个 `probe_audio.demote`，判据 `test_老的静音区必红那道也只在mode_render硬_cover和narration照印不红` |
+| **D2 render 自己在 TTS 之后、分段编码之前按真语音重放**（`_render_silence_gate`） | 就是 `--check-narration` 那一档（真语音说到哪儿 `measured_speech_ends` ＋ 封面配音真长度），语音和封面长度是这一趟本来就合好的，**不多合一句、不多下一个字节**；手写 spec 硬伤当场 ReelError（原句和 dry-run 同一套），自动 spec 只报（连无旁白段那一档也只报——dry-run 那一步对它已经硬过）。match-reel 的 narration／render 两步调 build_match_reel 之前各自再 `probe_sources.py materialize` 一遍：dry-run 落的 probe.json 排在「算出目录」那一步的 `git sparse-checkout add` 前面，可能被清掉（已经在的不动，取不到只出声不拦）。判据 `test_render在TTS之后_分段编码之前按真语音重放数字静音`（真调 `render()`，假语音，走到比分板蒙版就停）、`test_narration和render那两步先按URL把probe落盘`。先认领 probe.json 再解语音：一份都认领不上时这一层本来不查，`measured_speech_ends` 不白解（`test_render那一遍先认领probe再解语音_认领不上不解码`） |
 | **尾巴不是 0.83**：点估扣 `TTS_TAIL`＝0.76（中位）、上包络扣 `TTS_TAIL_MIN`＝0.69（最短，`speech_end_ceiling`） | 0.83 是 `words.json` 末事件到 mp3 末尾的距离；按 QC 口径（−80 dB）量 16 趟失败 run 里 279 条真 edge-tts mp3 的**声学**尾巴：最短 0.698、中位 0.756、最长 0.794。硬的那一档比的是「说到哪儿」，余量要按它算：edge-tts **0.88**、azure **0.66**、没记后端 **0.81**（azure／没记后端的尾巴没量过，按 0 算）；扣 0.83 时是 0.74／0.52／0.67（评审重量的 0.74 就是这个） |
 | 重 probe 命令的框：老 probe 没记（bfc462b9a 之前的一份都没有）就退到 spec 顶层 `scorebox`（只给开了 `score_inset` 的段取画面的那几条源；一段都没开归主源），都没有就在命令后面明说「没记是哪个框」 | 仓库里 640 份 probe.json：`point_ends` 有数（给过 `--scorebox`）的 92 份，记了框的 0 份；按 URL 找得到 spec 顶层框的 67 份，其余 25 份照印那句明说。判据 `test_重probe的命令_老probe没记框就退到spec顶层_都没有要明说`、`test_probe那一趟真把逐块响度和给过的框写进probe_json`（真跑 `main()` probe，不是查源码文本） |
 
@@ -5111,8 +5111,8 @@ reel-auto-ready 只补封面和视觉证据、**不重跑备料**。回放（df_
 probe 在 assemble 之后**同一趟**跑 `analyze_reel_visuals`；df_mh_1／df_hh_1／反查 id 读失败时，MiniMax 看到的 `_match`
 只有 flashscore_id、没有 `_cover_brief`——`clean_report` 不核封面人物、情绪退回 winner_celebration。重跑补上赛果之后，
 reel-auto-ready 要不要重审只看封面路径／状态／retryable／`evidence_hash`（**只含图片字节，不含 `_match`**）→ 不重审 →
-promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角，自动渲、自动推**（回放 `rv5_stale_visual_repro.py`：
-封面诺斯科娃、赢家萨巴伦卡，改前重审条件 False、waiting 里没有视觉闸）。爆冷反过来：loser_fighting 当时被判不合格
+promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角，自动渲、自动推**（判据 `test_赛果补齐之后_probe时给的封面人物是输家_不许带着旧pass转正`：
+封面上是输家，改前重审条件 False、waiting 里没有视觉闸）。爆冷反过来：loser_fighting 当时被判不合格
 （retryable false），补上 brief 之后永不重审、卡到过期不告警。main 上不会：probe 红 → 重 probe 时 `_match` 已经在了。
 
 - `retry_feed_blocks` 这一趟改了 `_match`／`_cover_brief`、**且赛果定下来了**（`result_verified`；没定的 promote 本来不收，
@@ -5122,7 +5122,8 @@ promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角
 - ⚠️ 第四轮复审改掉了「不过 → 哈希留着，同一张照片不再问」：那份回答是**瞎答的**（prompt 里没名字、没赢家，
   `ask_minimax` 让它「认不出留空」），`subject` 空着／表外译名／`winner_visible` 蒙错都不说明照片里是输家——
   留着哈希就不重审、`refresh_reel_cover` 见「已有封面」不换图、`_feed_retry` 在 healed 时摘掉，**不告警地躺到过期**
-  （`rv5r_stuck_after_heal.py` 三种全卡；带着赢家审过的 125 份 pending 草稿里 `cover.subject` 空着的有 66 份（2026-09-28 实测））。
+  （空 subject／表外译名／`winner_visible` 蒙错三种改前全卡，`test_赛果补齐之后_probe时瞎答的赢家照片_不许凭那份回答判死` 的三个参数各是一种；带着赢家审过的 125 份
+  pending 草稿里 `cover.subject` 空着的有 66 份（2026-09-28 实测））。
   代价至多每份补齐的草稿多一次重审：重审那一趟 `clean_report` 把 `retryable` 写回 false、钉上新哈希，真是输家就停在
   waiting（和 main 一样），不反复问。判据 `test_赛果补齐之后_probe时瞎答的赢家照片_不许凭那份回答判死`、
   `test_赛果补齐之后_重审只多一次_真是输家的照片停在waiting不反复问`

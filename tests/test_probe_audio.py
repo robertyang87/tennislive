@@ -390,6 +390,69 @@ def test_数字静音硬的几档只在mode_render硬_cover和narration照印不
         assert reel._check_narration_silence(tail, segs, {0: 2.0}, None) is True
 
 
+def test_老的静音区必红那道也只在mode_render硬_cover和narration照印不红(monkeypatch):
+    """集成第三轮 D1：`silence_findings` 那道老的「必红」（`silent_audio` 量出来的源片静音区、
+    旁白按最长估也盖不住 ≥2 秒）原来不走 `mode_demoted`——数字静音这一族新加的两档在
+    cover／narration／reattest 只报了，它照样把出封面那一趟挡住。两道现在同一个口径。
+    逐块响度造成一路响（新的那一档什么都判不出），只让 `silent_audio` 说话：挡住的只能是老的那道。"""
+    spec = {"slug": "t", "source_url": "U",
+            "segments": [{"start": 4.0, "end": 18.0, "narration": "一句三秒多的旁白。"}]}
+    probe = {**_probe([(30, -25.0)]), "silent_audio": [[10.0, 18.0]], "duration": 30.0,
+             "scene_cuts": [], "point_ends": [], "width": 1920, "height": 1080,
+             "fps": "25/1", "fps_value": 25.0}
+    monkeypatch.setattr(reel, "probes_for_spec", lambda _s: ({"U": probe}, []))
+    segs = reel.parse_segments(spec, {"": Path("x")}, "")
+    hard, _soft = reel.silence_findings(spec, segs, {"U": probe}, {"": "U"})
+    assert hard and "必红" in hard[0], hard                     # 这一截确实是老的那道「必红」
+    assert reel.digital_silence_check(spec, segs, {"U": probe}, {"": "U"}) == ([], []), \
+        "造的逐块响度该一路响——新的那一档要是也报了，就分不出是谁挡住的"
+    for mode, want in ((None, True), ("render", True), ("cover", False),
+                       ("narration", False), ("reattest", False)):
+        if mode is None:
+            monkeypatch.delenv(ps.MODE_ENV, raising=False)
+        else:
+            monkeypatch.setenv(ps.MODE_ENV, mode)
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            got = reel.probe_dry_run(spec, segs)
+        out = buf.getvalue()
+        assert got is want, (mode, out)
+        assert "旁白按最长估也盖不住" in out and "必红" in out, (mode, out)   # 同一句照印
+        if not want:
+            assert f"这一趟是 mode={mode}，不编码" in out, (mode, out)
+            assert "数字静音有几秒到 mode=render 那一趟会红" in out, out    # 不许说「没有硬伤」了事
+
+
+def test_render那一遍先认领probe再解语音_认领不上不解码(monkeypatch):
+    """集成第三轮 nit：`_render_silence_gate` 原来先 `measured_speech_ends`（逐段解 mp3）再认领
+    probe.json——一份都认领不上时这一层本来不查，解码白付。现在先认领；认领上了只认领一遍。"""
+    spec, probe = _tail_spec()
+    segs = reel.parse_segments(spec, {"": Path("x")}, "")
+    decoded: list[int] = []
+    claimed: list[int] = []
+
+    def _decode(_voices, _spoken):
+        decoded.append(1)
+        return {0: 13.95}
+
+    def _claim(_s, _p=None):
+        claimed.append(1)
+        return ({"U": _p}, []) if _p is not None else ({}, [])
+
+    monkeypatch.setattr(reel, "measured_speech_ends", _decode)
+    monkeypatch.setattr(reel, "probes_for_spec", _claim)
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        reel._render_silence_gate(spec, segs, [], {0: 3.0}, 1.2)
+    assert not decoded, "一份 probe.json 都没认领上，还去解了语音"
+    assert "一份 probe.json 都没认领上" in buf.getvalue(), buf.getvalue()   # 没查要出声
+    claimed.clear()
+    monkeypatch.setattr(reel, "probes_for_spec", lambda s: _claim(s, probe))
+    with redirect_stdout(io.StringIO()):
+        reel._render_silence_gate(spec, segs, [], {0: 3.0}, 1.2)
+    assert decoded == [1] and claimed == [1], (decoded, claimed)
+
+
 def test_重probe的命令_老probe没记框就退到spec顶层_都没有要明说(monkeypatch, tmp_path):
     """评审 2026-09-28：probe.json 从 bfc462b9a 起才记给过的 `--scorebox`，之前的一份都没有——
     照印的重 probe 命令把给过框的那批全丢了框，重跑一趟死球时刻那一层就没了。退到 spec
@@ -490,6 +553,10 @@ def test_check_narration从main真跑一遍_段序号对得上_硬伤退出1(tmp
                         lambda outdir, *_a: (_speech(Path(outdir) / "outro.mp3", 1.0), []))
     monkeypatch.setattr(reel, "outro_length", lambda _p: 1.75)
     monkeypatch.setattr(reel, "probes_for_spec", lambda _s: ({"U": probe}, []))
+    # `--check-narration` 当场落真 TTS 的账（`write_narration_record`，同期那一包加的）：
+    # 不改道的话，这条测试每跑一趟都往仓库的 data/narration_checks/ 里写一份 t.json
+    checks = tmp_path / "checks"
+    monkeypatch.setattr(reel, "NARRATION_CHECKS_DIR", checks)
     monkeypatch.setattr(sys, "argv", ["build_match_reel.py", "render", "--check-narration",
                                       "--spec", str(path), "--outdir", str(tmp_path / "o")])
     for speak, code, said in ((SHORT_THEN_LONG, 1, "2:2.0"), (LONG_THEN_SHORT, 0, "2:13.")):
@@ -505,6 +572,7 @@ def test_check_narration从main真跑一遍_段序号对得上_硬伤退出1(tmp
         else:
             assert "封面之后没有必红的数字静音" in out, out
     assert not (tmp_path / "o").exists(), "--check-narration 不许写产物"
+    assert (checks / "t.json").is_file(), "装不下也要落账——账落进改过道的目录，不落仓库"
 
 
 class _Encoded(Exception):

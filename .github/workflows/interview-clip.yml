@@ -1141,8 +1141,11 @@ jobs:
           # 在质检后发生过变化」不推，`pick_interview_renders` 判「当前 spec 没出过片」
           # 过 70 分钟又投一趟，那一趟再红、再换，**永远落不了地**。标记只由封面那一步写。
           # O4（reel-cover-upgrade）换赛场之上的封面也是连 spec 一起提交的，同一个做法。
+          # ⚠️ 只在 render 档：标记本来只由 render 的封面那一步写，这里再按 MODE 拦一道，
+          # subs 那一档（和人改 spec 并行跑）就**结构上**碰不到 spec——判据
+          # `test_subs那一趟只提交自己那一格` 认的就是这个 MODE 守卫。
           AUTOPICK_SPEC=""
-          if [ -f "$RUNNER_TEMP/cover-autopicked" ]; then
+          if [ "$MODE" = "render" ] && [ -f "$RUNNER_TEMP/cover-autopicked" ]; then
             AUTOPICK_SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
             git add "$AUTOPICK_SPEC"
           fi

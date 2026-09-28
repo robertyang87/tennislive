@@ -6214,6 +6214,9 @@ def silence_findings(spec: dict, segments, probes: dict,
     守住「哑场离线估只提醒、不拍板」的老规矩（f7b2501 那次软化）。
     「必红」（旁白按最长估也盖不住 ≥2 秒——足够压满一个 QC 计数的整秒）
     对谁都是硬的：那是确定性的渲后失败，让它跑完渲染只是多付 8 分钟学费。
+    ⚠️ 「硬」只在 mode=render 那一趟算数：`probe_dry_run` 拿返回的硬伤过一遍
+    `probe_audio.demote(…, mode_demoted())`，cover／narration／reattest 几趟照印不红
+    （和 `digital_silence_check` 同一个口径）。这个函数本身不读环境变量。
     """
     import probe_audio  # noqa: PLC0415
 
@@ -6382,7 +6385,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     | 段尾切在一分打完之前 | `point_ends`／`point_ends_guess` | **新的手写 spec 硬**（2026-09-19，账号所有者第四次重申），老片子与自动 spec 只报——见 `mid_point_findings` |
     | 这条源片的死球时刻整个没量过 | `point_ends`／`scorebox_guess` | 只报，**见下** |
     | 源片分辨率不到 1080p | `height` | **硬**，2026-08-23 补的，见下 |
-    | 段窗口撞源片静音区、旁白盖不住 | `silent_audio` | 必红的对谁都硬；大概率红的**自动 spec 硬、手写只报**（`silence_findings`） |
+    | 段窗口撞源片静音区、旁白盖不住 | `silent_audio` | 必红的对谁都硬；大概率红的**自动 spec 硬、手写只报**（`silence_findings`）。⚠️ 和下一行同一个口径：硬的**只在 mode=render 那一趟硬**（`probe_audio.demote(…, mode_demoted())`），cover／narration／reattest 照印不红 |
     | 回贴开关和板对不上（开着却一帧板都没有／关着而板连着在） | `board` | 见 `probe_board.board_findings`（2026-09-27） |
     | 按成片口径重放 QC 的数字静音闸 | `audio_levels` | **无旁白段硬**；旁白尾巴按上包络也盖不住的**手写 spec 硬**、自动 spec 只报（2026-09-28），点估那一截只报并指到 `--check-narration`（那边按真语音，手写同样硬）；老 probe 没这一格只报并印重 probe 的原命令（`probe_audio`）。⚠️ 硬的几档**只在 mode=render 那一趟硬**（`probe_audio.mode_demoted`，和源片覆盖那道同一个口径），cover／narration／reattest 照印不红；render 自己在 TTS 之后按真语音再判一遍（`_render_silence_gate`） |
     | 源片没 probe | 按 URL 认领不到 | **新的手写 spec 硬**，存量／自动 spec 只报（`probe_sources`，2026-09-27） |
@@ -6553,19 +6556,23 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
                    "不是拿这一版将就的退路。换一条更高清的源，或者等官方"
                    "发布更清晰的版本再回来。"))
 
+    # 数字静音这一族（⑥ 和 ⑥b）硬的几档**只在 mode=render 那一趟硬**（cover／narration／
+    # reattest 照印不红，时效第一、封面排最前）——和源片覆盖那道同一个口径
+    # （`probe_sources.dry_run_mode`）。⑥ 那道老的「必红」原来漏在这个口径外面：
+    # cover 那一趟照样被它挡住（集成第三轮 D1），现在两道走同一个 `probe_audio.demote`。
+    import probe_audio  # noqa: PLC0415
+
+    demoted = probe_audio.mode_demoted()
     # ⑥ 段窗口撞源片静音区——省掉「渲 8 分半才被 QC 静音闸判死」那一类返工。
     s_hard, s_soft = silence_findings(spec, segments, probes, urls)
+    s_hard, s_soft = probe_audio.demote(s_hard, s_soft, demoted)
     hard.extend(s_hard)
     soft.extend(s_soft)
     # ⑥b 按成片口径重放数字静音闸：源片逐块响度 × 这一段的现场声增益，交给 QC
     #    自己的 `dead_seconds`（`probe_audio`）。无旁白段实测够得着就硬；旁白尾巴按
     #    上包络也盖不住的，手写 spec 硬（2026-09-28），点估那一截指到 --check-narration。
-    #    硬的几档只在 mode=render 那一趟硬（cover／narration／reattest 照印不红，时效第一、
-    #    封面排最前）——和源片覆盖那道同一个口径（`probe_sources.dry_run_mode`）。
-    import probe_audio  # noqa: PLC0415
-
     d_hard, d_soft = digital_silence_check(spec, segments, probes, urls,
-                                           demoted=probe_audio.mode_demoted())
+                                           demoted=demoted)
     hard.extend(d_hard)
     soft.extend(d_soft)
 
@@ -6614,7 +6621,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     # 「没查」和「查过没事」不许长一样（上面 soft 里那句会说清怎么补）。
     # 这一趟不是 mode=render、数字静音按实测会红的那几秒只报了：也别说成「没有硬伤」。
     unmeasured = any("逐 0.05 秒响度还没量过" in line for line in d_soft)
-    deferred = any("数字静音只在 mode=render 硬" in line for line in d_soft)
+    deferred = any("数字静音只在 mode=render 硬" in line for line in (*s_soft, *d_soft))
     print("  选段这一层没有硬伤（片长、分辨率、几何"
           + ("；数字静音有几秒到 mode=render 那一趟会红，见上" if deferred else
              "；数字静音那一层没查，见上" if unmeasured else "、数字静音")
@@ -6640,17 +6647,28 @@ def measured_speech_ends(voices, spoken) -> dict[int, float]:
     return out
 
 
-def _replay_silence_with_voices(spec: dict, segments, measured: dict[int, float],
-                                cover_secs: float | None,
-                                ) -> tuple[list[str], list[str]] | None:
-    """按**真语音**长度重放数字静音闸，印出表头和只报的那几条，返回 `(硬, 软)`。
-
-    probe.json 一份都认领不上（本地精简 worktree 没落盘、或者还没 probe）返回 None，
+def _silence_probes(spec: dict) -> dict[str, dict] | None:
+    """按真语音重放数字静音要的 probe.json（`probes_for_spec`）；一份都认领不上返回 None，
     并且要出声——「没查」和「查过没事」不许长一样。"""
     probes, _missing = probes_for_spec(spec)
     if not probes:
         print("\n[查静音] 一份 probe.json 都没认领上——按真语音重放数字静音这一层没查。"
               "精简 worktree 先 `python3 tools/probe_sources.py materialize <spec>`")
+        return None
+    return probes
+
+
+def _replay_silence_with_voices(spec: dict, segments, measured: dict[int, float],
+                                cover_secs: float | None, *,
+                                probes: dict[str, dict] | None = None,
+                                ) -> tuple[list[str], list[str]] | None:
+    """按**真语音**长度重放数字静音闸，印出表头和只报的那几条，返回 `(硬, 软)`。
+
+    probe.json 一份都认领不上（本地精简 worktree 没落盘、或者还没 probe）返回 None
+    （`_silence_probes` 出声）。调用方已经认领过的，`probes` 直接递进来，别认领两遍。"""
+    if probes is None:
+        probes = _silence_probes(spec)
+    if probes is None:
         return None
     urls = dict(spec.get("sources") or {}) or {"": str(spec.get("source_url", ""))}
     hard, soft = digital_silence_check(spec, segments, probes, urls, measured=measured,
@@ -6692,11 +6710,17 @@ def _render_silence_gate(spec: dict, segments, voices, spoken, cover_secs: float
 
     手写 spec 的硬伤当场 `ReelError`，报的就是 dry-run／`--check-narration` 那几行原句；
     自动产的 spec 只报（渲后 QC 照样量）。runner 上没拨 mode=narration 也接得住：09-20~27
-    渲后静音红的 16 趟都是先付了一整趟编码才知道。"""
+    渲后静音红的 16 趟都是先付了一整趟编码才知道。
+
+    ⚠️ **先认领 probe.json，再解语音**（`measured_speech_ends` 要逐段解一遍 mp3）：一份都
+    认领不上时这一层本来就不查，解码白付（集成第三轮 nit）。"""
     import probe_sources  # noqa: PLC0415
 
+    probes = _silence_probes(spec)
+    if probes is None:
+        return
     got = _replay_silence_with_voices(spec, segments, measured_speech_ends(voices, spoken),
-                                      cover_secs)
+                                      cover_secs, probes=probes)
     if got is None:
         return
     hard, soft = got
