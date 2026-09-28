@@ -375,7 +375,10 @@ def test_健康检查的稀疏检出带着草稿和新鲜窗的出处():
     assert "specs/reels/pending/*.draft.json" in checkout
     assert "tools/promote_reel_draft.py" in checkout, "feed_retry_stuck import 它的 PENDING_MAX_AGE"
     body = (ROOT / "tools/pipeline_health.py").read_text(encoding="utf-8")
-    assert "orchestrator_productivity(), feed_stuck=feed_retry_stuck())" in body, "main 要真的把它交给报表"
+    # 只钉「main() 那一处调用里把它按关键字交出去了」，不钉整行原文：别的分支在同一处调用后面
+    # 再加关键字参数（采访 subs 停车那一项）时，括号不在这一行收尾
+    call = body[body.index("report, alerts = render_report("):]
+    assert "feed_stuck=feed_retry_stuck()" in call[:300], "main 要真的把它交给报表"
     # 第四轮复审 nit：只收关键字——别的分支在同一个位置加了列表参数，按位置传会串栏
     import inspect  # noqa: PLC0415
     import tools.pipeline_health as ph  # noqa: PLC0415

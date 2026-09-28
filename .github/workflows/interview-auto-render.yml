@@ -136,7 +136,10 @@ jobs:
           )
           # This is only a cheap work probe. Full eligibility runs again after
           # dependencies and fonts are installed, before any dispatch.
-          if ! python3 tools/pick_interview_renders.py --probe > /tmp/todo.txt 2> /tmp/waiting.txt; then
+          # `--subs-list`：当前转写指纹还缺 subs 判定、要先投 mode=subs 的（2026-09-28）——
+          # 它们不在 stdout 那份 render 名单里，但一样是活，要叫醒全量那一趟去投。
+          if ! python3 tools/pick_interview_renders.py --probe --subs-list /tmp/subs-probe.txt \
+              > /tmp/todo.txt 2> /tmp/waiting.txt; then
             cat /tmp/waiting.txt >&2
             echo 'Work probe needs rendering dependencies; continue to full validation.'
             echo 'work=true' >> "$GITHUB_OUTPUT"
@@ -145,6 +148,7 @@ jobs:
           cat /tmp/todo.txt
           cat /tmp/waiting.txt >&2
           READY=$(tail -n +2 /tmp/todo.txt | grep -c . || true)
+          SUBS=$(cat /tmp/subs-probe.txt 2>/dev/null | grep -c . || true)
           python3 tools/pick_interview_renders.py --stale | tee /tmp/stale.txt
           if grep -q "（投于" /tmp/stale.txt; then
             {
@@ -161,11 +165,11 @@ jobs:
             } >> "$GITHUB_STEP_SUMMARY"
           fi
           if [ "$DRAFTS" -eq 0 ] && [ "$REQUESTS" -eq 0 ] \
-             && [ "$READY" -eq 0 ] && [ "$NEEDS_LEAD" -eq 0 ]; then
+             && [ "$READY" -eq 0 ] && [ "$SUBS" -eq 0 ] && [ "$NEEDS_LEAD" -eq 0 ]; then
             echo "[早退] 没有能提升的草稿、人工请求、待补片头或待 dispatch 的正式 spec。"
             echo "work=false" >> "$GITHUB_OUTPUT"
           else
-            echo "能提升的草稿=$DRAFTS，人工请求=$REQUESTS，待 dispatch=$READY，待同场冷开场=$NEEDS_LEAD"
+            echo "能提升的草稿=$DRAFTS，人工请求=$REQUESTS，待 dispatch=$READY，待先跑 subs=$SUBS，待同场冷开场=$NEEDS_LEAD"
             echo "work=true" >> "$GITHUB_OUTPUT"
           fi
 
@@ -347,14 +351,23 @@ jobs:
             exit 1
           fi
 
+      # ⚠️ **render 之前先要 subs 那一趟的判定**（2026-09-28）：当前转写指纹还没有第二份
+      # ASR 的量数、空档还没有 VAD 证据的，先投 `mode=subs`（`/tmp/subs.txt`），判定落库了
+      # 下一趟再判——干净就投 render，量出分歧／空档就进等待名单等人改或认领。
+      # 来路：9/20~9/28 六趟 render 红在「空档没销账／转写分歧超阈」，四趟是这一步投的，
+      # 0/6 在 dispatch 之前拦得住（审计 rework_audit_0928）。判据 `tests/test_interview_subs_first.py`。
       - name: dispatch 未 render 的正式 spec（每 slug 一个 run，并行）
         if: steps.gate.outputs.work == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -o pipefail
-          python tools/pick_interview_renders.py | tee /tmp/todo.txt
+          rm -f /tmp/subs.txt /tmp/subs-dispatched.md
+          # `--sync-subs`：顺手收拾「先投 subs」那本账——判定已交上来的删掉、投满次数停下的标 `parked`
+          # （pipeline-health 读它列出来），和下面的派发记录一起提交
+          python tools/pick_interview_renders.py --subs-list /tmp/subs.txt --sync-subs | tee /tmp/todo.txt
           mapfile -t SLUGS < <(tail -n +2 /tmp/todo.txt | grep -v '^$' || true)
+          mapfile -t SUBS_SLUGS < <(grep -v '^$' /tmp/subs.txt 2>/dev/null || true)
           # 这一趟人工请求没过闸的 slug 不投：改过的请求没落盘，此刻的正式 spec 还是上一版。
           # 上一版的 render 要是一直没落地（过了 STALE_MINUTES），pick 会把它当待渲再投一次，
           # push.auto 的话旧版就抢在改过的请求前面发出去了。不记 dispatch 状态，
@@ -369,15 +382,44 @@ jobs:
               echo "[跳过] $slug 这一趟人工请求没过闸，不投上一版 spec"
               continue
             fi
-            RECEIVED_AT=$(date -u +%FT%TZ)
-            echo "[dispatch] interview-clip render $slug"
+            DISPATCHED_AT=$(date -u +%FT%TZ)
+            # 10 分钟成片时钟的起点：这趟 render 是先投 subs 换来的，就从那趟 subs 派发算起
+            # （`render_received_at`）——不然 subs 那一跳整段不进 SLA。取不到就用现在，
+            # 不许因为它把整趟打红。记账（--mark-one）照旧记真正的派发时刻：70 分钟的重投窗口按它算。
+            RECEIVED_AT=$(python tools/pick_interview_renders.py --received-at "$slug" \
+              --at "$DISPATCHED_AT") || RECEIVED_AT="$DISPATCHED_AT"
+            [ -n "$RECEIVED_AT" ] || RECEIVED_AT="$DISPATCHED_AT"
+            echo "[dispatch] interview-clip render $slug（SLA 起点 $RECEIVED_AT）"
             if gh workflow run interview-clip.yml --ref main \
               -f "slug=$slug" -f mode=render -f "received_at=$RECEIVED_AT"; then
-              python tools/pick_interview_renders.py --mark-one "$slug" --at "$RECEIVED_AT"
+              python tools/pick_interview_renders.py --mark-one "$slug" --at "$DISPATCHED_AT"
             else
               FAILED+=("$slug")
             fi
           done
+          # 先跑 subs 的：同一份「没过闸不投」，投成了才记（`--mark-subs`，先投后记）
+          for slug in "${SUBS_SLUGS[@]}"; do
+            if [ -n "$BLOCKED" ] && printf '%s\n' "$BLOCKED" | grep -qxF -- "$slug"; then
+              echo "[跳过] $slug 这一趟人工请求没过闸，不为上一版 spec 跑 subs"
+              continue
+            fi
+            SUBS_AT=$(date -u +%FT%TZ)
+            echo "[dispatch] interview-clip subs $slug（当前转写指纹还缺第二份 ASR 的判定，render 等它）"
+            if gh workflow run interview-clip.yml --ref main \
+              -f "slug=$slug" -f mode=subs; then
+              python tools/pick_interview_renders.py --mark-subs "$slug" --at "$SUBS_AT"
+              echo "- $slug" >> /tmp/subs-dispatched.md
+            else
+              FAILED+=("subs:$slug")
+            fi
+          done
+          if [ -s /tmp/subs-dispatched.md ]; then
+            {
+              echo "## 🔎 先投了 subs（当前转写指纹还没有第二份 ASR 的判定；判定落库后下一趟再决定投不投 render）"
+              echo ""
+              cat /tmp/subs-dispatched.md
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
           if [ "${#FAILED[@]}" -gt 0 ]; then
             {
               echo "## ⚠️ 有采访 dispatch 失败（没记状态，下一趟会重投）"

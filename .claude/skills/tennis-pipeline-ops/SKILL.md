@@ -5123,3 +5123,110 @@ promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角
 ⚠️ 转正要 `hit_data`：`_durations` 只有这一块写，缺了 waiting 报「比赛时长没有结构化来源」。判据 `tests/test_feed_retry.py`。
 ⚠️ `pipeline_health.render_report` 的 `feed_stuck` **只收关键字**：`wp/interview-subs-before-render` 在同一个位置加了
 `parked_subs`，两边都按位置传，合并时留下两个形参就会串栏（点名点错一栏、不报错）。
+
+## ⭐⭐ 2026-09-28：赛后开麦 render 之前先要 subs 在**当前转写指纹**上交的判定
+
+来路（返工审计 rework_audit_0928）：9/20~9/28 有 6 趟 render 红在「字幕空档没销账／转写分歧超阈」
+（alcaraz-fritz ×3、tien-cobolli ×2、chwalinska-mertens ×1，25.4 runner-分钟），**0/6 在 dispatch
+之前拦得住**，其中 4 趟是 interview-auto-render 自己投的。第二份 ASR 的结论只活在 runner 上；
+预检在仓库里没有字幕缓存时只报一句 ⚠️（这条线第一趟就成的只有 2/13）。
+
+现在的顺序，三处接线同一个判据（`build_interview_clip.subs_verdict`，ok／needs_subs／red）：
+
+| | 缺判定（needs_subs） | 判定红（red） | 判定 ok |
+|---|---|---|---|
+| **interview-auto-render** | 先投 `mode=subs`（`pick_interview_renders --subs-list`，`--mark-subs` 记账：70 分钟内不重投（大于 job 超时 65，第三轮）、同一份转写输入满 3 趟停下喊人、**转写输入**一改清零——改 zh／封面／文案不清零） | 进等待名单（和 verify 报的同一句） | 投 render |
+| **interview-clip render 那一趟** | 「采访 spec 离线预检」带 `--require-subs`，**第 1 秒就停**：先 dispatch `mode=subs` | 同左，停 | verify **不重量**，直接用判定 |
+| **本地** `interview_preflight.py --slug X` | 默认只提示；`--require-subs` 是 dispatch 口径 | 两种口径都红 | — |
+
+- 判定＝三份进仓库的文件，都绑 `transcript_fingerprint`：`second_asr_verdict.json`（新，第二份 ASR
+  **每跑一次都落**的分歧量数）、`gap_vad_attestation.json`（每行带自动销账的 `reason`）、
+  `verify_fingerprint.json`。认领（`transcript_disagree_ok`、`caption_gaps_ok`）不进指纹，
+  量完再写照样作数。**指纹变**＝切出来的 `en` 行变、`en_fixed` 变、字幕缓存变、换模型、
+  关掉第二份的 VAD（`whisper_vad_filter: false`；开着时指纹和加它之前一字不差）——这时判定作废、
+  自动链再投一趟 subs。`SUBS_INPUT_KEYS` 里每一样都要绑得上判定（进指纹、进 `window`、或经切行），
+  表自带自检：复审量到 VAD 开关漏绑——只改它，subs 的账清零、判定却照旧 ok，render 跳过重量、
+  拿旧开关量的数出片（`eala-parks-toronto-2026`、`gauff-kostyuk-cincinnati-2026-qf` 写着 false）
+- ⚠️ **`start`／`end` 不进指纹**（复审 2026-09-28 实测：挪进两句话之间的静默，行一字不差、指纹
+  一字不差）。所以按区间量的东西各自绑区间：分歧量数和 `verify_fingerprint.json` 的 pass 记
+  `window`，对不上＝缺判定；空档证据按**空档键**逐行认——区间一挪、空档边界跟着挪、键就变了，
+  证据里**没有那一行＝缺判定**（再投一趟 subs，VAD 重新作证），**不是红**。红只留给两种「量出来了」的：
+  分歧超闸没认领够，和证据里那一行记着 `speech_detected`（VAD 真听到了人声）。原来「证据文件是当前
+  指纹的」就把没有行的新键判红：一段 VAD 证过的静默，`start` 挪进去两秒就要人去听、去认领，
+  手动 render 停在 `--require-subs` 上——而 render 的 verify 走重量那一支本来会自动销掉它
+- subs 判定干净就**叫醒 interview-auto-render**（GITHUB_TOKEN 的提交触发不了它的 on:push）
+- 预检结论缓存的键带上这三份（`caption_fingerprint`）：subs 一落判定，探针就不再拿「缺判定」
+  那份旧结论顶；探针里「缺判定」的那条 subs 刚投过就不算活，不叫醒全量
+- 手动流程：**同一个 slug 先 subs、判定落库了再 render**；两档别叠着发（concurrency 会互相掐）
+
+回放（`scratchpad/isubs/replay6.py <worktree> <outdir>`——判定文件带 `window`、按 `SUBS_RED` 认红；
+六趟失败各自 head_sha 上的 spec＋当时仓库里的产物，现在的代码；复审 2026-09-28 发现盘上那份还是
+没带 `window`、按旧前缀认红的旧版，跑出来 B 一条都不是红，已改好并在修正后的代码上重跑）：
+**6/6 不再投 render**（旧预检 0 处字幕红 → 新口径 6 条全是 needs_subs → 投 subs）；把那一趟
+render 日志里量到的分歧率／红着的空档写成判定之后 **6/6 红**（仍不投）；换到随后那次人手修正的
+提交：只加了认领的 3 条变 ok，改了 `en_fixed` 的 3 条指纹变了、回到 needs_subs（照实）。
+存量：110 条正式 spec 按仓库里的判定重判，**红 0**。已推送的 54 条：9 条 ok（都是
+`transcript_verified: true`、人核过的分歧不看区间，老规矩没动），45 条 needs_subs——其中 43 条是
+`verify_fingerprint.json` 没记 `window` 的老 pass（绑区间之前落的，**不猜它当年量的是哪一段**，
+重渲时先投一趟 subs 重量），`ruud-cerundolo-laver-cup-2026-presser` 是推送后 `en_fixed` 重挂过行号
+（83ff6b6a5），`gauff-kostyuk-cincinnati-2026-qf` 写着 `whisper_vad_filter: false`、它的人核指纹是
+VAD 开关进指纹之前落的（复审第二轮只有它一条从 ok 变 needs_subs，按 `isubs/corpus_scan.py` 前后对照）。
+没推送记录的 56 条全是 needs_subs（49 条是 `verify_fingerprint.json` 那一代之前渲的
+老片、没有量数；5 条是没记 `window` 的老 pass；`sabalenka-zhang-tor2026-r3` 的字幕缓存是换 URL
+之前那条的；`swiatek-shnaider-tor2026-qf` 是 08-21 那条只有骨架的 spec）——重渲时自动链会先投
+subs，**不挂豁免表**：这不是内容红，是没量过。真 picker 在当前 HEAD 上实跑：投 render 0 条、投 subs
+0 条，等待名单只有 `swiatek-shnaider-tor2026-qf`（L0 缺字段）——合并不会重渲重推任何一条。
+⚠️ **dispatch 口径要一路传到 pick**：`_preflight_problems` 退回 `spec_problems(spec)`（复审 M9）的话，
+只缺判定的 spec 在 pick 眼里是干净的、投 render，runner 上 `--require-subs` 却红——
+每 70 分钟重投一趟 render，`mode=subs` 永远不投。原来测试的桩无视 `require_subs`、这么改照样绿；
+现在桩按口径分红和提示，另加一条不打桩的真预检判据。
+⚠️ 「先投 subs 多一跳」的端到端代价**还没有一条 run 量过**；从这一版起 auto-render 投 render 时
+`received_at`（10 分钟成片时钟起点）取那趟 subs 的派发时刻（`render_received_at`：同一份转写输入、
+晚于上一次 render 派发、40 分钟以内，否则取现在），所以 `video_sla` 的 elapsed／pre_render 会把这一跳
+算进去；`--mark-one` 照旧记真正的派发时刻（70 分钟重投窗口按它算）。
+render 那一趟判定 ok 时照旧装 faster-whisper、恢复模型缓存，只是不再跑第二份 ASR。
+判据 `tests/test_interview_subs_first.py`。
+
+### 复审第三轮（2026-09-28）：定下来的两条口径 ＋ 四处收口
+
+按 CLAUDE.md「时效第一」和账号所有者「完全自动化」定的（口径选择已由会话拍板，记在这儿）：
+
+- **D1 ｜ `caption_timeline_covered` 照旧自动销账，报告说实话**：销不销账不变（老行为，不是这次返工的根子）；
+  变的是标签按依据分（`GAP_AUTO_LABELS`）——只有 `no_speech` 叫「VAD 自动销账」，另两种是「双 ASR 自动销账」
+  「字幕时间轴自动销账」，理由里照印 VAD 测到的人声秒数和第二份 ASR 听到的词、写明「不是 VAD 证明没人说话」。
+  量的：仓库里 32 行 `caption_timeline_covered`，14 行 VAD 测到 >0.12s 人声、9 行第二份 ASR 听到了词。
+  caption_gaps.md、核对表、verify／render 日志、`subs_verdict` 的明细读的是同一个函数（`gap_row_reason`）
+- **D2 ｜ 转写输入（`SUBS_REQUIRED_KEYS`：url／start／end）齐了就先投 subs，不等中文、解读卡、封面、小红书正文**：
+  `missing_for_render` 在这些缺着时也跑转写那一半的预检；挡 subs 的只有碰转写本身的红（`subs_blockers`：
+  L0、`en_fixed` 挂错行、人工引语对不上、切行崩了——`interview_preflight.TRANSCRIPT_REDS`）。为此
+  `main()` 开头那排出片闸和中文排版在 `TRANSCRIPT_STAGES`（subs／verify）**只报不拦**——不然缺一份小红书
+  正文（`check_copy_page`）subs 就死在第 0.2 秒；render／cover／sheet 照旧拦，render 之前的预检照旧逐道列全。
+  不变的：render 照旧要当前指纹上 ok 的判定；三份名单两两不相交；在跑的 subs 窗口里不重投、改中文封面不掐它；
+  render 在跑不投 subs；发布过的不投；subs 那一趟只提交 `output/interviews/<slug>/`（按 YAML 求值钉死）。
+  探针（没 PIL）见还缺中文的 spec、又没有同一份输入的全量结论，算「可能要先投 subs」叫醒全量——一天一趟为上限（键带日期）
+- **nit 1 ｜ 判定绑源**：写 `asr_model` 的 spec（110 条里 39 条）第一份读仓库里的 `cap_asr.json3`、不看 URL，
+  同区间换源片指纹不变、判定照旧 ok、render 跳过重量。现在量数、pass、空档证据都记 `url`，`verdict_bound`
+  （指纹＋区间＋源）一处认；**没记源的老量数不算**（退回重量）。默认指纹字节没动（`test_VAD开关默认开着时指纹和加它之前一字不差`）。
+  人核过那一支：老 pass 没记源照认，记了源对不上才不认。存量重判：110 条里只有 `sabalenka-noskova-usopen-2026-qf-oncourt`
+  （已发、人核、空档靠老 VAD 证据）从 ok 变缺判定；真 picker 实跑照旧投 render 0、投 subs 0——不会一趟趟重投
+  （发布过的不投；新跑的 subs 落的判定都带 `url`，判据 `test_subs那一趟落的判定都记着源_下一趟不再缺判定`）
+- **nit 2 ｜ `SUBS_STALE_MINUTES` 40 → 70**：和 `STALE_MINUTES` 同一条规矩，必须大于 interview-clip 的 job 超时（65）；
+  判据从 YAML 读。`SUBS_SLA_MINUTES` 不跟着放宽，单独 40
+- **nit 3 ｜ 投满次数停下的看得见**：`--sync-subs`（只在 dispatch 那一步带）给账上标 `parked`，
+  `pipeline_health.parked_interview_subs` 读它进报表和告警（pipeline-health 稀疏检出带上状态文件）
+- **nit 4 ｜ subs 的账会删**：render 那一份（`slugs`／`at`）从来不删；subs 这一份判定交上来、spec 没了、已出片就删
+  （只删过了重投窗口的），ok 且这趟要投 render 的留给 SLA 起点、`mark_one` 投出去那一刻删；撞车合并带着删除和标记
+
+### 复审第四轮（2026-09-28）
+
+- **人核那一支的「pass 记的源对不上就不认」原来没有判据**：拿掉它，老测试照样绿——那句断言红在空档证据
+  （它也记着旧源），不是这一支。补的断言让空档由人销账，只剩这一个条件挡着；render 那一跳
+  （`transcript_verified and recorded == fp and not verdict.pending`）同样钉了，两处各自反向验证变红
+- **停着（parked）的那条，探针判不了就算活**：判定文件在预检缓存的键里，人修好、手动投的 subs 一落判定，
+  探针缓存不命中、退回「判不了转写那一半」（`PROBE_SUBS_UNKNOWN`）；原来照旧判 parked、不叫醒全量，
+  `--sync-subs` 跑不到、标记一直挂着。全量判过之后缓存命中，真还停着的不再叫醒
+- **`片尾板：` 进 `TRANSCRIPT_REDS`**：那道红（另一条同期改动加的）要改 `end`，区间一变先投的 subs 白跑
+- **每一档喊「空档没销账」减掉自动销账的**：subs／verify 日志原来把闸已放行的空档印成没销账；
+  `pipeline_health.render_report` 新加的段按关键字传（`parked_subs=`），几条分支各加一段时合并不串位
+- 不改的：人核那一支的老 pass **没记源**照认（人的标记）。量过：人核、写 `asr_model` 的 spec 里 5 条的
+  `verify_fingerprint.json` 没记源（4 条老格式连 `status` 都没有），5 条都已发——以后修订其中一条时换源，照旧跳过重量
