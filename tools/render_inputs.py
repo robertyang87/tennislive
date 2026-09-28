@@ -347,6 +347,9 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_winners_ue_why": _gate("taste_gates_extra.winners_ue_missing：数据图缺制胜分/UE 的认领"
                              "（dry-run）", "winners_ue_missing", "stats._winners_ue_why",
                              truthy),
+    "_x_cdn_why": _gate("build_match_reel.x_cdn_source_problem：主地址只剩 X 的 CDN 直链"
+                        "（帖子已删）的认领（validate_spec，dry-run 就查）",
+                        "x_cdn_source_problem", "_x_cdn_why"),
     "_why": _gate("_seg_voice：改了语速/音高要写为什么。**只有 `voice._why` 有闸读**——"
                   "`segments[i]._why`、`cover.portrait._why`、`stats._why` 都是纯说明",
                   "_seg_voice", "segments[].voice._why"),

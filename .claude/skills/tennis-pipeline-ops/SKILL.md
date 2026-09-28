@@ -4676,6 +4676,11 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
 **红一次 → 重试**（多半就过）；**红两次、而且是两台不同的 runner → 别再重试了**，
 去跑 `mode=cookies`，然后按它说的办。
 
+⭐ **2026-09-28 起有定时自检**：`source-health.yml` 的 `youtube-cookies` job 每 6 小时派发一趟
+`match-reel mode=cookies`（派发者 `github-actions[bot]` → 无人值守），红了由 pipeline-health 按
+`match-reel:cookies` 推一次阻塞（Q9，不重复推）。这一轮 5 趟全是会话手动拨的，按 Q9 本来就不推——
+所以当时没有任何东西叫醒人。见文末「源片与 probe 的七处不稳」。
+
 **修法只有一个，而且我做不了**：从一个登录过 YouTube 的浏览器重新导一份 cookies.txt，
 更新仓库 Secret `YT_COOKIES_TXT`（工作流第 23 步会把它落成文件并通过 `YT_COOKIES` 传进去；
 日志里那句 `带 cookie 试（25 行）` 说明**文件是在的**——**「cookie 存在」和「cookie 有效」
@@ -4921,3 +4926,27 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 拉沃尔杯板，都已推送），发布会（机位锁死、相邻帧差 < 0.5 能连着 9 秒）0 条误认；
 另有 5 条正片最后 1.1~1.7 秒是冻帧（`end` 越过了源片画面）。这 7 条不挂豁免：闸只在重渲
 那一刻才跑，重渲时就该一起收掉。量法和名单在 `tools/interview_tail.py` 的 docstring。
+
+## ⭐⭐ 2026-09-28：源片与 probe 的七处不稳（返工审计「22 趟不回放」那一类）
+
+审计（09-20~09-28，82 趟失败 run）里 22 趟是 probe／外部源／基础设施，当时判为「不回放」。按形状拆开，
+每一类都有一个便宜的判据；判据全在 `tests/test_source_probe_robustness.py`，每条拿当时那一趟的真实输入回放。
+
+| 类（趟数） | 当时 | 现在 |
+|---|---|---|
+| YouTube cookie 失效（5） | 09-19 17:15–22:52Z 只有会话手动拨的 run 在红，Q9 不推，没人被叫醒 | `source-health.yml` 的 `youtube-cookies` job 每 6 小时派发 `match-reel mode=cookies`，红了按 `match-reel:cookies` 推一次；检查本体只有一份 `tools/yt_cookie_check.sh`（match-reel 的 cookies 步骤也调它） |
+| cookies 自检填了搜索词（1，run 35478525370） | `ytsearch8:…` 搜出 0 条，报「没下到媒体流」 | 第一步红：「是搜索词不是视频」（`tools/source_url_check.py`） |
+| probe 空 URL＋默认 slug（1，run 36304133786） | 第 1.4 分钟红在 `curl: (3)` | match-reel 表单自检（setup-python 之后、认领源片和装依赖之前），两处都点名；`build_match_reel probe` 下载之前也拦空地址和坏框 |
+| X CDN 直链 403（2） | 一句 curl 403 | 帖子地址下载时现解、直链只当 `source_fallbacks`（tennis-media-sources「X 和 Instagram 是第一手源」） |
+| 1080p 的框配 720p 源（2，medvedev-wong） | 源片下完才红（cv2 `!_src.empty()` / ReelError），probe 产物一个字节没提交 | `fit_scorebox_to_frame`：按源片高度找一档装得下的参考高度等比缩（`98,920,519,1029`@1280×720 → `65,613,346,686`；同一 slug 后来下到 1080p 那趟这个框量出 97 个死球），缩不进退回猜框；`probe.json` 记 `scorebox_fitted`。全库 94 条 spec 的框对 probe 过的源片：108 次原样、1 次要缩（`zheng-rybakina` 的 720p 那趟）、0 次丢 |
+| 派发 render 的 assert 撞手写 spec（1，run 36331363124） | 裸 `AssertionError` | `tools/probe_dispatch_gate.py`：没 spec → waiting，手写（无 `_production`）→ skip，自动 spec 的 ready ＋ `push.auto` 合同照旧硬 |
+| frame-grab 推送 5 次失败（1，run 36317540680） | 手搓循环睡在 fetch 和 push 之间（13~28 秒），远端每一轮都往前走一格 | 改用共享 `push_with_rebase_retry`；**共享脚本本身也改成「先退避、再 rebase、立刻推」**（原来同样睡在 rebase 和 push 之间），同 slug 的 frame-grab 排队 |
+| 上游 HTTP 5xx（1，run 35708122768） | 审计标成 flashscore，**日志里其实是 MiniMax 读比分板 500**——base 的 47f9f2b6d 已降级只报（`test_scoreboard_http_failure_does_not_write_partial_alignment`），账号所有者 09-27 定了不给模型加重试，没加 | flashscore 这一侧补上同形的洞：`fetch_match_stats_fs.feed` 5xx／网络抖动重试 3 次、最后一律 `StatsError`；`assemble_spec` 读 feed 的五块接住 `match_feed._get` 抛的 `SystemExit`（原来穿过每一处 `except Exception`，一次 500 就让 probe 整趟不提交） |
+
+`assemble_spec --year ''`（3 趟）在 base 的 09e091851 已修，`test_match_reel_optional_int_inputs` 钉着。
+
+⚠️ 判据宁可窄：`source_url_check` 扫过 main 上 640 份 probe.json 的 `url`、94 条 spec 的 `scorebox`、
+281 个 `scorebox_guess`，零误伤。X 直链那道闸全库 0 条手写硬红（4 条存量挂表）。
+⚠️ 回放的上限：X 那两条 403 当时的帖子地址仓库里没有，**现在的办法能不能把它们救回来没验证过**——
+能证明的只是「写帖子地址的 spec 下载时现解，不会再因为钉死的直链失效而红」。
+

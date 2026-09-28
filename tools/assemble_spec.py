@@ -80,6 +80,17 @@ DRAFT_SUFFIX = ".draft.json"
 DRAFT_DIR = Path(__file__).resolve().parent.parent / "specs" / "reels" / "pending"
 
 
+#: flashscore 那几块（matchup 归位、stats、狠数据、转折局、抢七小分）读 feed 走
+#: `match_feed._get`：HTTP 5xx 和网络抖动**先重试三次**，还不行就抛 **SystemExit**
+#: ——那是给命令行用的口径（「被挡还是不存在，别当成没有这场」），而 SystemExit
+#: 不是 Exception，原来那几处 `except Exception` **一个都接不住**：上游一次 500
+#: 就把整条「自动备料写 spec 草稿」带崩，probe 那一趟切点、缩略图墙全都不提交
+#: （2026-09-28 返工审计「上游 HTTP 500」那一类）。备料是给草稿加料，缺一块只该
+#: 记一句 note、留在 waiting，不该让 probe 红。判据
+#: `test_flashscore_5xx重试之后仍失败_备料降级成只报不拖垮probe`。
+_FEED_ERRORS = (Exception, SystemExit)
+
+
 def _surname(full: str) -> str:
     """英文名取姓（出处只有一份 `tennislive.names.surname_en`：缩写名 `Bu Y.`
     姓在第一个词）。反查 flashscore 用它（find_match 按片段匹配）。"""
@@ -130,7 +141,7 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
                      if row.get("FH") and row.get("FK")}
             f = dict(zip(("FH", "FK"), next(iter(pairs)))) if len(pairs) == 1 else {}
         fs_home, fs_away = f.get("FH", ""), f.get("FK", "")
-    except Exception as exc:  # noqa: BLE001 —— 网络失败就退回命令行顺序
+    except _FEED_ERRORS as exc:  # noqa: BLE001 —— 网络失败就退回命令行顺序
         print(f"[matchup] flashscore df_hh_1 读不到（{exc}），退回命令行顺序")
         fs_home = fs_away = ""
     if not fs_home or not fs_away:
@@ -618,7 +629,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         # ② stats 块（数据图）。
         try:
             blk = stats_block(mid)
-        except Exception as exc:  # noqa: BLE001 —— 网络/格式都别拖垮整份草稿
+        except _FEED_ERRORS as exc:  # noqa: BLE001 —— 网络/格式都别拖垮整份草稿
             notes.append(f"⚠️ stats 块没成（{type(exc).__name__}: {exc}）")
             blk = None
         if blk is not None:
@@ -645,7 +656,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             draft["_durations"] = hit["durations"]
             notes.append(f"狠数据候选 {len(hit['candidates'])} 条"
                          + ("" if hit["candidates"] else "（分盘统计字段可能没铺全）"))
-        except Exception as exc:  # noqa: BLE001
+        except _FEED_ERRORS as exc:  # noqa: BLE001
             notes.append(f"⚠️ 狠数据没成（{type(exc).__name__}: {exc}）")
 
         # ④ 转折局候选。
@@ -659,7 +670,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
                 for g in ranked[:TURNING_POINT_TOP]
             ]
             notes.append(f"转折局候选 {len(ranked)} 局，取前 {TURNING_POINT_TOP}")
-        except Exception as exc:  # noqa: BLE001
+        except _FEED_ERRORS as exc:  # noqa: BLE001
             notes.append(f"⚠️ 转折局没成（{type(exc).__name__}: {exc}）")
 
     # 抢七小分＋补上抢七盘的洞：df_mh_1 不列抢七那一局，final_set_scores 对
@@ -674,7 +685,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             else:
                 notes.append("⚠️ df_sui_1 的每盘数字和逐局表对不上，"
                              "抢七小分没拿到（对不上就不猜）")
-        except Exception as exc:  # noqa: BLE001
+        except _FEED_ERRORS as exc:  # noqa: BLE001
             notes.append(f"⚠️ 抢七小分没拿到（{type(exc).__name__}: {exc}）——"
                          "带抢七的比赛会过不了 result_verified/小分闸，属于该红")
 

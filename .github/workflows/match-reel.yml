@@ -306,6 +306,27 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      # **表单填错的，第一步就红**（2026-09-28 返工审计）。排在认领源片和装依赖
+      # **之前**（只用标准库；排在 setup-python 之后，是因为失败时那两步 `failure()`
+      # 清理——摘认领、摘 state——要用 `python`）：
+      #   - run 36304133786：`url` 空着、`slug` 还是表单默认 `eala-zheng`——装完依赖、
+      #     起完 PO token，第 1.4 分钟才红在 `curl: (3) URL rejected`，看不出是「没填」
+      #   - run 35478525370：cookies 模式填了 `ytsearch8:…` 搜索词，搜出 0 条，报的是
+      #     「没下到媒体流」，看着像 cookie 坏了
+      #   - `scorebox` 写错格式要在下源片之前红；「框是按别的分辨率量的」那一半要源片
+      #     高度，下完在 build_match_reel 里按高度缩放，不再红（fit_scorebox_to_frame）
+      # 判据 tests/test_source_probe_robustness.py
+      - name: probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）
+        if: github.event.inputs.mode == 'probe' || github.event.inputs.mode == 'cookies'
+        env:
+          MODE: ${{ github.event.inputs.mode }}
+          URL: ${{ github.event.inputs.url }}
+          SLUG: ${{ github.event.inputs.slug }}
+          SCOREBOX: ${{ github.event.inputs.scorebox }}
+        run: |
+          python3 tools/source_url_check.py --mode "$MODE" --url "$URL" \
+            --slug "$SLUG" --scorebox "$SCOREBOX"
+
       # **同一条源片别 probe 两遍**（2026-09-27 返工取证 P6）。一开跑就按视频 id
       # 查 main 上的认领（data/probe_claims/<id>.json）和近三天的 probe 目录：别的
       # slug 做过就 `::warning::` 带出可复用的目录，然后把这一趟的认领**推到 main**
@@ -1026,51 +1047,17 @@ jobs:
             echo "::notice::未配置 YT_COOKIES_TXT，只能靠 player client 梯子碰运气"
           fi
 
-      # **cookie 会过期，而过期时的表现和「没配」一模一样。** 所以要有一条随时能跑、
-      # 不产生任何产物的验证：真下三秒媒体流。
-      # 注意 `--skip-download` 那种探活是**假的**——不带 cookie 也拿得到标题和格式表，
-      # 只有真去取媒体流才会撞上 "Sign in to confirm you're not a bot"。
+      # **cookie 会过期，而过期时的表现和「没配」一模一样。** 真下三秒媒体流的那段
+      # 逻辑在 tools/yt_cookie_check.sh（按日志分因：机器人验证／n challenge／视频下架）——
+      # source-health.yml 每 6 小时定时派发这一档（无人值守 → 红了走 pipeline_health
+      # 的阻塞推送，按 `match-reel:cookies` 去重），**同一段检查只许有一份**。
+      # 2026-09-19 17:15Z cookie 失效，到 22:52Z 都只是会话手动拨的 probe 在红。
       - name: cookies — 只验 YouTube 还能不能下
         if: github.event.inputs.mode == 'cookies'
         env:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
-        run: |
-          URL="${{ github.event.inputs.url }}"
-          [ -n "$URL" ] || URL="https://www.youtube.com/watch?v=HyKTXynnI9c"
-          ARGS=""
-          if [ -n "$YT_COOKIES" ]; then
-            ARGS="--cookies $YT_COOKIES"
-            echo "带 cookie 试（$(wc -l < "$YT_COOKIES") 行）"
-          else
-            echo "::warning::没有 YT_COOKIES_TXT，这次只验 client 梯子（cookies 模式不起 PO token provider）"
-          fi
-          rm -rf "$RUNNER_TEMP/ytcheck" && mkdir -p "$RUNNER_TEMP/ytcheck"
-          yt-dlp $ARGS --js-runtimes node --download-sections "*0-3" \
-            --force-keyframes-at-cuts \
-            -f "bv*[height<=720]+ba/b[height<=720]/b" \
-            -o "$RUNNER_TEMP/ytcheck/probe.%(ext)s" "$URL" 2>&1 | tee "$RUNNER_TEMP/yt.log" || true
-          FILE=$(ls -S "$RUNNER_TEMP/ytcheck" 2>/dev/null | head -1)
-          if [ -z "$FILE" ]; then
-            # **别把「没下到」一律说成「cookie 过期」**——第一次跑就栽在这上面：
-            # 真实原因是没装 yt-dlp-ejs，n challenge 解不了，只剩图片格式，
-            # 而我的报错写着「cookie 可能过期了」，方向反了。所以按日志分因。
-            if grep -q "not a bot\|Sign in to confirm" "$RUNNER_TEMP/yt.log"; then
-              echo "::error::撞上了机器人验证——cookie 无效或已过期，重新导一份"
-            elif grep -q "n challenge solving failed\|Only images are available" "$RUNNER_TEMP/yt.log"; then
-              echo "::error::n challenge 解不了：yt-dlp 缺 yt-dlp-ejs 或没有 JS 运行时，和 cookie 无关"
-            else
-              echo "::error::没下到媒体流，原因见下面的格式表"
-            fi
-            yt-dlp $ARGS --js-runtimes node --list-formats "$URL" 2>&1 | tail -25 || true
-            exit 1
-          fi
-          SIZE=$(stat -c%s "$RUNNER_TEMP/ytcheck/$FILE")
-          echo "拿到 $FILE，$SIZE 字节"
-          # 几百字节的「文件」多半是错误页，不是媒体
-          [ "$SIZE" -gt 51200 ] || { echo "::error::文件只有 $SIZE 字节，不是媒体流"; exit 1; }
-          ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 \
-            "$RUNNER_TEMP/ytcheck/$FILE"
-          echo "YouTube 下载可用。"
+          URL: ${{ github.event.inputs.url }}
+        run: bash tools/yt_cookie_check.sh "$URL"
 
       - name: probe — 下载 + 缩略图墙
         if: github.event.inputs.mode == 'probe'
@@ -1700,19 +1687,17 @@ jobs:
         if: github.event.inputs.mode == 'probe' && github.ref_name == 'main'
         env:
           GH_TOKEN: ${{ github.token }}
+        # ⚠️ 手写 spec（没有 `_production`）不是这一步的活：会话在 main 上重 probe 一条
+        # 已经写好的手写 spec（cobolli-mensik-doubles-laver-cup-2026，run 36331363124），
+        # 原来这里裸 `assert _production.status` 把整趟 probe 打红——判据挪进
+        # tools/probe_dispatch_gate.py：没 spec → [waiting]，手写 → [skip]，自动 spec 的
+        # ready ＋ push.auto 合同照旧是硬的（对不上就红）。
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
-          if [ ! -f "$SPEC" ]; then
-            echo "[waiting] 严格生产证据未齐；本次不 dispatch render"
+          ACTION=$(python tools/probe_dispatch_gate.py --spec "$SPEC") || exit 1
+          if [ "$ACTION" != "dispatch" ]; then
             exit 0
           fi
-          python - "$SPEC" <<'PY'
-          import json, sys
-          spec = json.load(open(sys.argv[1], encoding="utf-8"))
-          assert (spec.get("_production") or {}).get("status") == "ready_for_render"
-          assert (spec.get("push") or {}).get("auto") is True
-          print("正式 spec + 自动推送合同已确认")
-          PY
           gh workflow run match-reel.yml --ref main \
             -f mode=render \
             -f slug="${{ github.event.inputs.slug }}" \

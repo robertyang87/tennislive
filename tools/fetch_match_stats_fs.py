@@ -41,8 +41,10 @@ Games），`SG` 是指标名，**`SH` 是主队、`SI` 是客队**。谁是主�
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
 import re
+import time
 import urllib.error
 import urllib.request
 from collections.abc import Iterable
@@ -92,13 +94,36 @@ DEFAULT_MATCH_OFFSETS = (-1, 0, 1, -2, -3, -4, -5, -6, -7)
 FAST_MATCH_OFFSETS = frozenset({-1, 0, 1})
 
 
-def feed(name: str) -> str:
+#: 一页喂料最多试几次。**只重试「没送到」**：HTTP 5xx 和网络抖动（超时、连接被重置）；
+#: 4xx 是明确拒绝，当场报（和 `match_feed._get` 同一个口径）。
+FEED_ATTEMPTS = 3
+FEED_RETRY_SLEEP = 1.0
+
+
+def feed(name: str, *, attempts: int = FEED_ATTEMPTS, sleep=time.sleep) -> str:
+    """一页 flashscore 喂料。失败一律变成 `StatsError`（调用方按它降级）。
+
+    原来只接 `HTTPError`、一次都不重试：上游一次 500 就是一页读取失败，而**超时／
+    连接被重置**（`URLError`、`TimeoutError`）根本不是 `StatsError`，穿过
+    `find_match` 的线程池、穿过 `assemble_spec.resolve_match_id` 的 `except StatsError`，
+    把「自动备料写 spec 草稿」整步带崩（2026-09-28 返工审计「上游 HTTP 500」那一类）。
+    判据 `test_flashscore喂料5xx先重试_还不行才报StatsError`。"""
     req = urllib.request.Request(NINJA + name, headers=HEADERS)
-    try:
-        with urllib.request.urlopen(req, timeout=45) as resp:
-            return resp.read().decode("utf-8", "replace")
-    except urllib.error.HTTPError as exc:
-        raise StatsError(f"Flashscore HTTP {exc.code}（{name}）") from exc
+    last = ""
+    for attempt in range(1, attempts + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=45) as resp:
+                return resp.read().decode("utf-8", "replace")
+        except urllib.error.HTTPError as exc:
+            if not 500 <= exc.code < 600:
+                raise StatsError(f"Flashscore HTTP {exc.code}（{name}）") from exc
+            last = f"HTTP {exc.code}"
+        except (urllib.error.URLError, TimeoutError, ConnectionError,
+                http.client.HTTPException) as exc:
+            last = f"{type(exc).__name__}: {exc}"
+        if attempt < attempts:
+            sleep(FEED_RETRY_SLEEP * attempt)
+    raise StatsError(f"Flashscore {last}（{name}，试了 {attempts} 次）")
 
 
 def _fields(record: str) -> dict[str, str]:

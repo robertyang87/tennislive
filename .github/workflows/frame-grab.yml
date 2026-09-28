@@ -34,6 +34,13 @@ on:
 permissions:
   contents: write
 
+# 同一个 slug 排队、不并行：两趟同时往 output/<日期>/frames/<slug>/ 写同名 JPEG，
+# 后推的那趟 rebase 会撞二进制冲突（共享重试 abort 之后每一轮撞同一个）。
+# 不同 slug 各写各的目录，照样并行。
+concurrency:
+  group: frame-grab-${{ github.event.inputs.slug }}
+  cancel-in-progress: false
+
 jobs:
   grab:
     runs-on: ubuntu-latest
@@ -162,6 +169,13 @@ jobs:
             "${RANGE[@]}"
           ls -la "${{ steps.paths.outputs.outdir }}" | head -20
 
+      # push 重试走共享脚本 tools/git_push_retry.sh（和另外十条工作流同一份）。
+      # 原来这里手搓的循环是「fetch → reset → 重放 → **睡 5~35 秒** → push」：睡在
+      # 拿到远端和推之间，main 在那几十秒里又被别的 run 推过，于是每一轮都撞车——
+      # run 36317540680（2026-09-27 12:01Z）五次全红，fetch 到 push 隔 13~28 秒，
+      # 远端每一轮都往前走了一格（b356cc9→93b7013→c2f5998→9fb4d2e→900522d）。
+      # 共享脚本先退避、再 rebase、rebase 完立刻推，撞车窗口只剩 rebase 那一两秒；
+      # 帧目录是本趟独有的（output/<日期>/frames/<slug>/），rebase 不会有内容冲突。
       - name: 提交候选帧
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
@@ -172,15 +186,5 @@ jobs:
           python tools/check_staged_file_sizes.py
           git diff --cached --quiet && { echo "没有新内容"; exit 0; }
           git commit -m "frames: ${{ github.event.inputs.slug }} 候选帧"
-          for attempt in $(seq 1 5); do
-            git push origin "HEAD:${{ github.ref_name }}" && exit 0
-            git fetch origin "${{ github.ref_name }}"
-            git branch -f grabbed HEAD
-            git reset --hard "origin/${{ github.ref_name }}"
-            rm -rf "$OUTDIR"
-            git checkout grabbed -- "$OUTDIR"
-            git add --sparse "$OUTDIR"
-            git diff --cached --quiet || git commit -m "frames: ${{ github.event.inputs.slug }} 候选帧"
-            sleep $((attempt * 5 + RANDOM % 10))
-          done
-          echo "::error::连续 5 次推送失败"; exit 1
+          source tools/git_push_retry.sh
+          push_with_rebase_retry "${{ github.ref_name }}" 8

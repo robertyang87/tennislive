@@ -846,6 +846,14 @@ def report_timings() -> None:
 # 下面 `reel_timing` 那处是同一个形状）。
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pipeline_timing import PARALLEL_MARK, stage_table  # noqa: E402
+# X 地址的两个判断和 `--scorebox` 的格式判据只许有一份：工作流第一步（装依赖之前）
+# 用同一个标准库模块自检表单（tools/source_url_check.py）。
+from source_url_check import (  # noqa: E402
+    is_x_cdn_url,
+    is_x_status_url,
+    scorebox_problem,
+    url_problem,
+)
 
 SEGMENT_STAGE = "分段编码" + PARALLEL_MARK
 
@@ -964,6 +972,58 @@ def silent_audio_spans(path: Path, floor_db: float = -60.0,
                                floor_db=floor_db, min_silence=min_silence)[0]
 
 
+#: 转播常见的几档画幅高度。`--scorebox` 是在其中某一档上量的，而这一趟下到的源片
+#: 可能是另一档（YouTube 刚上传的片子先只有 720p，过一阵才补出 1080p）。
+SCOREBOX_REF_HEIGHTS = (720, 1080, 1440, 2160)
+
+
+def fit_scorebox_to_frame(scorebox: str, frame: tuple[int, int] | None,
+                          ) -> tuple[str, str | None]:
+    """`--scorebox` 对上**这一趟下到的**源片：返回 `(能用的框 or "", 说明 or None)`。
+
+    来路（2026-09-27，`medvedev-wong-hangzhou-2026-qf`，run 36331431180 / 36333879418）：
+    会话照着 1080p 那一版量了 `98,920,519,1029`，而同一条 YouTube 地址那一趟
+    `mweb(+POT)` 只下到 1280×720（刚上传的片子先只有 720p）——框整个落在画面外，
+    第一趟 cv2 `!_src.empty()` 崩在量死球那一步，第二趟换成 ReelError 照样红，
+    **两趟都是源片下完、切点和缩略图墙都做完之后才红，probe 产物一个字节没提交**。
+    同一个 slug 后来下到 1920×1080 的那一趟，这个框量出 97 个死球时刻——框本身是对的，
+    错的只是分辨率。
+
+    所以不再红：
+    - 框在画面里 → 原样用（量的就是这一档，或者分辨率碰巧一样）
+    - 框出界 → 找一档**比源片高、装得下这个框、宽高比和源片一样**的参考高度
+      （`SCOREBOX_REF_HEIGHTS`），按 源片高/参考高 等比缩——1080→720 就是 ×2/3，
+      `98,920,519,1029` → `65,613,346,686`
+    - 哪一档都装不下 → 返回空串，调用方退回 `suggest_scorebox` 猜框那条路
+      （`point_ends_guess`），**probe 照样出完、照样提交**
+
+    格式错（不是四个整数、x0≥x1）不在这儿：那是表单问题，工作流第一步
+    （`source_url_check.py`）和 `main` 下载之前都会红。"""
+    text = str(scorebox or "").strip()
+    if not text:
+        return "", None
+    if scorebox_problem(text) or frame is None:
+        return text, None                # 格式错交给 point_end_candidates 报；量不出尺寸就不动
+    x0, y0, x1, y1 = (int(v) for v in text.split(","))
+    w, h = frame
+    if x1 <= w and y1 <= h:
+        return text, None
+    for ref_h in SCOREBOX_REF_HEIGHTS:
+        if ref_h <= h:
+            continue
+        ref_w = round(w * ref_h / h)
+        if x1 <= ref_w and y1 <= ref_h:
+            k = h / ref_h
+            fitted = [round(x0 * k), round(y0 * k), round(x1 * k), round(y1 * k)]
+            fitted[2] = min(fitted[2], w)
+            fitted[3] = min(fitted[3], h)
+            box = ",".join(str(v) for v in fitted)
+            return box, (f"--scorebox {text} 超出源片画面 {w}×{h}——按 {ref_w}×{ref_h} 量的框，"
+                         f"等比缩到这一档：{box}（spec 里的 `scorebox` 仍按渲染那一趟的源片像素写）")
+    return "", (f"--scorebox {text} 超出源片画面 {w}×{h}，按哪一档参考高度都装不下——"
+                "这个框不用，退回猜框（point_ends_guess）；照源片像素重新给一次再 probe")
+
+
 def measure_point_ends(source: Path, scorebox: str,
                        ) -> tuple[list[float], str | None, list[float] | None]:
     """probe 那一趟量死球时刻的**全部**：返回 `(point_ends, scorebox_guess, point_ends_guess)`。
@@ -1056,7 +1116,12 @@ def point_end_candidates(source: Path, scorebox: str, *,
             f"--scorebox {scorebox} 超出源片画面 {frame_size[0]}×{frame_size[1]}"
             "——框是按别的分辨率量的，照源片像素重新给")
     with stage("量死球（猜的框）" if guessed else "量死球"):
-        rows = fpe.scan(source, box, 0.1)
+        try:
+            rows = fpe.scan(source, box, 0.1)
+        except ValueError as exc:
+            # 量死球是 probe 的附带产物，框不对不许把整趟 probe（切点、缩略图墙）带崩
+            print(f"{tag} {exc}——这一项跳过")
+            return []
         ends = fpe.point_ends(rows, fpe.CHANGE, fpe.DARK_SHARE, fpe.MERGE)
     print(f"{tag} 采样 {len(rows)} 点，记分条跳变 {len(ends)} 次"
           + ("（框是 suggest_scorebox 猜的，存进 point_ends_guess）" if guessed else ""))
@@ -2021,6 +2086,17 @@ _PLAIN = [
 # 「含 h264」自动失败。**判据不该依赖它在文件里的位置。**
 FMT_SELECTOR = "bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b"
 FMT_SORT = "res:1080,fps,vcodec:h264,acodec:m4a"
+# **X 的帖子地址单走一个选择器。** 上面那个按 `height<=1080` 卡，而竖版 1080×1920
+# 的高是 1920——卡掉之后只剩 480×852（run 36133328467，2026-09-25 实测），于是
+# tennis-media-sources 教人「spec 里别写帖子地址、写解出来的 CDN 直链」；而 CDN 直链
+# **会失效**（jl-lc-eurosport / jl-tabilo-bag，run 36231247557 / 36231253272，
+# `curl: (22) 403`，2026-09-28 沙箱复测仍 403）。
+# X 给的 `http-*` 是音画合一的 mp4，`-S res:1080` 的 res 按**短边**算：竖版
+# 1080×1920 短边正好 1080。2026-09-28 沙箱实测（yt-dlp 2026.08.19）：
+#   janniksin/status/2103431955874226576  老选择器 hls-315 480×852 → 这个 http-10368 1080×1920
+#   WTA/status/2101474528798867839        老选择器 hls-2334 1280×720 → http-2176 1280×720（不降）
+#   pavyg/status/2100236978620928375      老选择器 hls-778 720×960  → http-2176 720×960（不降）
+X_FMT_SELECTOR = "b[protocol^=http]/bv*+ba/b"
 
 # **每一次 yt-dlp 调用都要带上这几个**，所以抽出来共用。
 # `--js-runtimes node` 是解 n challenge 的那一环：没有它，YouTube 的格式表
@@ -2101,7 +2177,63 @@ def _resolve_media_url(url: str) -> str:
         raise ReelError(str(exc)) from exc
 
 
-def download(url: str, dest: Path, *, archival: bool = False) -> Path:
+def download(url: str, dest: Path, *, archival: bool = False,
+             fallback: str | None = None) -> Path:
+    """下一条源片；主地址下不下来、而 spec 在 `source_fallbacks` 里给了备用地址时，改下备用那条。
+
+    备用地址是给 **X 的 CDN 直链**留的：主地址写 `x.com/<账号>/status/<id>`（下载那一刻
+    由 yt-dlp 现解，链接不会过期），当时解出来的 `video.twimg.com/...mp4` 只放进
+    `source_fallbacks` 兜底——帖子被删、X 那头临时解不出时还有一条路。
+    两条都不通才红，报错里两边的原因都在。
+    """
+    try:
+        return _download_one(url, dest, archival=archival)
+    except ReelError as exc:
+        if not fallback:
+            raise
+        first = str(exc).strip().splitlines()[0][:200] if str(exc).strip() else "（无报错正文）"
+        print(f"[备用源] 主地址下不下来（{first}），改下 source_fallbacks 里那条：{fallback[:100]}")
+        try:
+            return _download_one(fallback, dest, archival=archival)
+        except ReelError as exc2:
+            raise ReelError(
+                f"主地址和备用地址都下不下来。\n  主（{url[:90]}）：{exc}\n"
+                f"  备用（{fallback[:90]}）：{exc2}") from exc2
+
+
+def _download_x_status(url: str, fetch: str, dest: Path, binary: str) -> Path:
+    """X 帖子地址 → yt-dlp 现解 CDN 直链、按短边取最高那档（`X_FMT_SELECTOR`）。
+
+    不走 YouTube 那张 player client 梯子（那八档是 YouTube 的 extractor 参数），
+    只重试一次——X 的 guest token 偶尔抖一下。"""
+    notes: list[str] = []
+    for attempt in (1, 2):
+        proc = subprocess.run(
+            [binary, *YTDLP_BASE, "--no-warnings", "-f", X_FMT_SELECTOR,
+             "-S", FMT_SORT, "--merge-output-format", "mp4",
+             "-o", str(dest), fetch],
+            capture_output=True, text=True)
+        if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 0:
+            width, height = probe_size(dest)
+            print(f"[ok] X 帖子现解 下到了 {width}×{height}，"
+                  f"{dest.stat().st_size / 1e6:.1f} MB")
+            _keep_source(url, dest)
+            return dest
+        dest.unlink(missing_ok=True)
+        why = " | ".join(line.strip() for line in (proc.stderr or "").splitlines()
+                         if line.startswith("ERROR"))[:300] \
+            or (proc.stderr or "")[-300:]
+        notes.append(f"第 {attempt} 次：{why}")
+        print(f"[fail] X 帖子现解 第 {attempt} 次：{why}")
+        if attempt == 1:
+            time.sleep(3)
+    raise ReelError(
+        f"X 帖子地址解不出视频（{url}）：\n  " + "\n  ".join(notes)
+        + "\n\n帖子被删／设了可见范围时解不出来；spec 里有当时解出来的 CDN 直链就写进 "
+          "`source_fallbacks`（键和 `sources` 一样），下载会自动改下那条。")
+
+
+def _download_one(url: str, dest: Path, *, archival: bool = False) -> Path:
     """取**最高清晰度**：先试 1080p 的 avc1（码率最高的那档），退到 bestvideo。
 
     `YT_COOKIES` 指向一个 cookies.txt 就带上——机房 IP 被挡的时候，
@@ -2156,6 +2288,14 @@ def download(url: str, dest: Path, *, archival: bool = False) -> Path:
     # 两到三次」），还会把缓存目录撑满。页面地址是稳定的，它才是键。
     fetch = _resolve_media_url(url)
 
+    # **X 的帖子地址：下载那一刻由 yt-dlp 现解**，不先 curl 一个 HTML 壳（原来就是
+    # 这么绕的：curl 下到 0.2 MB 网页 → 退回 yt-dlp → 被 `height<=1080` 卡成 480×852）。
+    if is_x_status_url(fetch):
+        binary = shutil.which("yt-dlp") or shutil.which("yt_dlp")
+        if not binary:
+            raise ReelError(f"X 帖子地址要 yt-dlp 现解，而这台机器找不到 yt-dlp（{url}）")
+        return _download_x_status(url, fetch, dest, binary)
+
     # 不是 YouTube 就是一个普通直链（网盘、赛事站…），curl 一下就完了。
     # 这条路是被逼出来的：YouTube 对这台机器和 runner 都封着，人只能自己下好
     # 传到网盘，再把直链给我们。
@@ -2171,7 +2311,15 @@ def download(url: str, dest: Path, *, archival: bool = False) -> Path:
             capture_output=True, text=True)
         if proc.returncode != 0 or not dest.is_file() or dest.stat().st_size == 0:
             dest.unlink(missing_ok=True)
-            raise ReelError(f"直链下载失败（{url[:90]}）：{(proc.stderr or '')[-300:]}")
+            hint = ""
+            if is_x_cdn_url(fetch):
+                # jl-lc-eurosport / jl-tabilo-bag（run 36231247557 / 36231253272）：
+                # 两条 X CDN 直链 403，报出来只有一句 curl——看不出下一步该做什么。
+                hint = ("\n这是 X 的 CDN 直链（video.twimg.com），**它会失效**。"
+                        "改写帖子地址 x.com/<账号>/status/<id>，下载那一刻由 yt-dlp 现解"
+                        "（竖版也拿得到原画）；直链只放进 spec 的 `source_fallbacks` 兜底。")
+            raise ReelError(
+                f"直链下载失败（{url[:90]}）：{(proc.stderr or '')[-300:]}{hint}")
         # **「下到了」不等于「下到的是视频」**，而这条路原来只看**前 64 字节**
         # 里有没有 `<!doctype html` / `<html`。Brightcove 的播放页
         # （`players.brightcove.net/<账号>/<player>/index.html?videoId=…`）
@@ -6783,6 +6931,81 @@ def spec_sources(spec: dict) -> dict[str, str]:
     return single
 
 
+def spec_source_fallbacks(spec: dict) -> dict[str, str]:
+    """spec 的 `source_fallbacks`：`{源键: 备用地址}`——主地址下不下来时 `download` 改下这条。
+
+    给 X 的 CDN 直链留的（见 `x_cdn_source_problem`）：主地址写帖子地址，下载那一刻
+    现解；当时解出来的 `video.twimg.com/...mp4` 放这儿兜底。单源 spec 的键写
+    `source_url`（`spec_sources` 里它的键是空串，JSON 里写空串键太难认）。
+
+    和 `spec_sources` 一样**过签名源那道闸**——备用地址也是要交出去下载的，不许从
+    这个口子绕开禁令。键必须对得上 `sources`，值必须是 http(s) 地址。"""
+    raw = spec.get("source_fallbacks")
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        raise ReelError(f'`source_fallbacks` 要写成 {{"源键": "备用地址"}}，现在是 {raw!r}')
+    keys = spec_sources(spec)
+    out: dict[str, str] = {}
+    for key, value in raw.items():
+        name = "" if (str(key) == "source_url" and "" in keys) else str(key)
+        if name not in keys:
+            raise ReelError(
+                f"`source_fallbacks` 的键「{key}」不在 `sources` 里（有的是 "
+                f"{sorted(k or 'source_url' for k in keys)}）——备用地址要挂在它替补的那条源上")
+        problem = url_problem(str(value))
+        if problem:
+            raise ReelError(f"`source_fallbacks.{key}`：{problem.replace('`url`', '备用地址')}")
+        out[name] = str(value)
+    _reject_signed_source_urls(out)
+    return out
+
+
+#: 「主地址写成 X 的 CDN 直链」这道闸（2026-09-28）之前已经发出去的 spec，**只许减不许加**。
+#: 它们渲过、推过，已发的不重渲（改 `sources` 会改渲染输入）；以后再渲时直链真失效了，
+#: 按报错里说的换成帖子地址。判据 `test_X直链当主地址的存量只许减不许加`（表自带自检：
+#: 每一条都真的还挂着 CDN 直链当主地址）。
+LEGACY_X_CDN_PRIMARY = frozenset({
+    "hsieh-chan-handshake-feud-2026",
+    "prozorova-concussion-withdrawal-2026",
+    "sinner-beijing-withdrawal-2026",
+    "zheng-from-low-to-us-open-comeback",
+})
+
+
+def x_cdn_source_problem(spec: dict) -> str | None:
+    """`sources`／`source_url` 的**主地址**写成了 X 的 CDN 直链（`video.twimg.com`）。
+
+    来路（2026-09-28 返工审计）：jl-lc-eurosport / jl-tabilo-bag 两趟 probe 红在
+    `curl: (22) … 403`（run 36231247557 / 36231253272）——X 的 CDN 直链**会失效**，
+    2026-09-28 沙箱复测那两条仍是 403，而同一批别的直链是 206。而 tennis-media-sources
+    原来教的正是「spec 里写直链」：因为按 `height<=1080` 卡的选择器对竖版只挑得到
+    480×852。现在 X 帖子地址单走 `X_FMT_SELECTOR`（按短边取最高档，竖版拿得到
+    1080×1920），直链就只该当备用：
+
+    - 主地址写 `x.com/<账号>/status/<id>`，下载那一刻由 yt-dlp 现解
+    - 当时解出来的直链放进 `source_fallbacks`（键和 `sources` 一样），帖子没了还有一条路
+    - 帖子本身已经删了、只剩直链：spec 顶层写 `_x_cdn_why` 认领
+
+    返回 None ＝ 没问题。**自动产的 spec 只报**（调用处），手写的是硬闸。"""
+    slug = str(spec.get("slug") or "")
+    if slug in LEGACY_X_CDN_PRIMARY or str(spec.get("_x_cdn_why") or "").strip():
+        return None
+    try:
+        urls = spec_sources(spec)
+    except ReelError:
+        return None                     # 形状错由 spec_sources 自己报
+    bad = [k for k, u in urls.items() if is_x_cdn_url(u)]
+    if not bad:
+        return None
+    where = "、".join(f"`{k}`" if k else "`source_url`" for k in bad)
+    return (f"源片 {where} 的主地址是 X 的 CDN 直链（video.twimg.com）——**它会失效**"
+            "（jl-lc-eurosport / jl-tabilo-bag 两趟 probe 红在 403）。\n"
+            "主地址改写帖子地址 x.com/<账号>/status/<id>（下载那一刻由 yt-dlp 现解，竖版也拿得到"
+            "原画）；这条直链挪进 `source_fallbacks`（键和 `sources` 一样）当备用。"
+            "帖子已经删了、只剩直链的，在 spec 顶层写 `_x_cdn_why` 认领。")
+
+
 # conform 认领的源 → 基准尺寸。**只登记，不落盘**：放大裁边那一截前置到每一条读
 # 这条源的 ffmpeg 链最前面（`conform_prefilter`），几何一律按 `effective_size` 算。
 _CONFORM_TARGETS: dict[Path, tuple[int, int]] = {}
@@ -8332,6 +8555,14 @@ def validate_spec(
             print(f"[当事人声明] 自动 spec，只报不拦：{social.splitlines()[0]}")
         else:
             raise ReelError(social)
+    # 源片主地址写成 X 的 CDN 直链：会失效（jl-lc-eurosport / jl-tabilo-bag 403）
+    spec_source_fallbacks(spec)          # 备用地址的形状错、签名源，0.2 秒就报
+    x_cdn = x_cdn_source_problem(spec)
+    if x_cdn:
+        if (spec.get("_production") or {}).get("status") == "ready_for_render":
+            print(f"[X 直链] 自动 spec，只报不拦：{x_cdn.splitlines()[0]}")
+        else:
+            raise ReelError(x_cdn)
     duplicate = duplicate_match_problem(spec)
     if duplicate:
         raise ReelError(duplicate)
@@ -8657,6 +8888,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 认领过 `archival` 的源，下载那层要知道：缓存复查按 400 的地板、
     # 低清兜底那份才许进缓存。别在 download 里重读 spec——它没有 spec。
     claimed_archival = archival_claims(spec)
+    fallbacks = spec_source_fallbacks(spec)
     sources: dict[str, Path] = {}
     for key, url in urls.items():
         path = outdir / (f"source_{key}.mp4" if key else "source.mp4")
@@ -8664,7 +8896,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             path = source_override
         if not path.is_file():
             with stage(f"下载源片 {key or '(主源)'}"):
-                path = download(url, path, archival=key in claimed_archival)
+                path = download(url, path, archival=key in claimed_archival,
+                                fallback=fallbacks.get(key))
         sources[key] = path
     check_native_quality_exceptions(spec, sources)
     conform_sources(sources, spec)
@@ -10438,9 +10671,21 @@ def main() -> int:
     outdir = Path(args.outdir)
 
     if args.mode == "probe":
+        # **表单错在下源片之前红**：空地址、框格式错（run 36304133786 空地址第 1.4 分钟
+        # 才红在 curl: (3)）。地址的完整形状（搜索词、非 http）由工作流第一步
+        # `source_url_check.py` 查——这里只拦空的，本地拿 `file://` 探一条也照样走得通。
+        for problem in ("" if str(args.url or "").strip() else url_problem(args.url),
+                        scorebox_problem(args.scorebox)):
+            if problem:
+                raise ReelError(problem)
         outdir.mkdir(parents=True, exist_ok=True)
         source = download(args.url, outdir / "source.mp4")
         w, h = probe_size(source)
+        # 框是按别的分辨率量的：按高度等比缩，缩不进就退回猜框——**不许在源片下完之后红**
+        # （medvedev-wong 两趟，见 fit_scorebox_to_frame）。
+        scorebox, scorebox_note = fit_scorebox_to_frame(args.scorebox, (w, h))
+        if scorebox_note:
+            print(f"::warning::{scorebox_note}")
         duration = probe_duration(source)
         # **帧率要记进 probe.json。** 多源那条线上，`check_sources_match` 拿
         # 尺寸和帧率一起判，对不上就红——而 probe 之前只报尺寸，于是「这条源
@@ -10501,7 +10746,7 @@ def main() -> int:
         # ⚠️ 2026-09-19 起**猜到的框也顺手量一遍**（`point_ends_guess`）——
         # 「猜对了下一轮 probe 抄一下」那一轮从来没有人跑过（478 份 probe 里
         # 只有 53 份有数），见 `measure_point_ends`。
-        ends, scorebox_guess, ends_guess = measure_point_ends(source, args.scorebox)
+        ends, scorebox_guess, ends_guess = measure_point_ends(source, scorebox)
         # **音频静音区间也趁源片还在的时候量**（见 silent_audio_spans 的来路）。
         # 三种结果都要出声：「没音轨」「量过为空」「有区间」在 probe.json 里
         # 分别是 None / [] / [[a,b]...]，读的人不用猜。
@@ -10521,7 +10766,7 @@ def main() -> int:
                     "（--dry-run 会按旁白离线估预判这一层）")
         else:
             print("[静音] 量过：源片音频没有 ≥0.8s 的静音区间")
-        board = board_scan.finish(args.scorebox or scorebox_guess or "")
+        board = board_scan.finish(scorebox or scorebox_guess or "")
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
             "fps": fps_expr, "fps_value": round(fps, 3),
@@ -10531,6 +10776,10 @@ def main() -> int:
             # 的那一趟，这里都是 None——和 `point_ends` 一样别把「没猜」和
             # 「猜了没有」混成一回事。
             "scorebox_guess": scorebox_guess,
+            # 给了 --scorebox 但和这一趟源片的分辨率对不上时，实际用的框和为什么
+            # （None＝原样用了／没给）。按高度缩过的框只对这一趟下到的这一档成立。
+            "scorebox_fitted": ({"given": args.scorebox, "used": scorebox or None,
+                                 "why": scorebox_note} if scorebox_note else None),
             # 按猜的框量出来的死球时刻（None=这趟没猜／给了 --scorebox；
             # []=按猜的框量过、没有跳变）。dry-run 在 `point_ends` 空着时拿它
             # 查「段尾切在一分打完之前」，报出来时会标明是猜的框。

@@ -31,6 +31,9 @@ CONVERTED = [
     "oncourt-interviews.yml",
     "reel-auto-ready.yml",
     "reel-cover-upgrade.yml",
+    # 2026-09-28：原来手搓「fetch → reset → 重放 → 睡 5~35 秒 → push」，睡在拿到远端
+    # 和推之间，run 36317540680 五次全撞车（帧目录是本趟独有的，rebase 没有内容冲突）
+    "frame-grab.yml",
 ]
 
 
@@ -54,6 +57,11 @@ def test_共享的push重试脚本形状要对():
     assert "::error::" in code, "重试耗尽要出声，静默返回和「推上了」长得一样"
     assert code.index("git push origin") < code.index("git pull --rebase"), (
         "push 在前 rebase 在后：第一次 push 大多直接成功，别每次先白拉一趟")
+    fn = code.split("push_with_rebase_retry()", 1)[1].split("\n}", 1)[0]
+    assert fn.index("sleep") < fn.index("git pull --rebase"), (
+        "退避要睡在 rebase **之前**：睡在 rebase 和 push 之间，main 在那几秒里又被推过，"
+        "下一次 push 照样被拒（frame-grab run 36317540680 五次全红；"
+        "行为判据 test_共享push重试_退避期间别人推了也推得上）")
     assert "return 1" in code and "exit 1" not in code, (
         "脚本自己不许 exit——它是被 source 的，exit 会把调用方整个带走；"
         "失败与否由调用方按自己步骤的语义决定")

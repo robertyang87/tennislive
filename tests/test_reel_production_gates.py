@@ -661,10 +661,14 @@ def test_workflow只有正式ready才从probe派发render():
     body = (ROOT / ".github/workflows/match-reel.yml").read_text(encoding="utf-8")
     step = body.split("probe 正式 spec 就绪后自动派发 render", 1)[1].split(
         "render 质检落库后读取 spec", 1)[0]
-    assert 'status") == "ready_for_render"' in step
+    # 判据 2026-09-28 挪进 tools/probe_dispatch_gate.py（手写 spec 不再裸 assert，
+    # run 36331363124）；ready ＋ push.auto 的合同在那边，这里钉接线
+    assert "tools/probe_dispatch_gate.py" in step
+    gate = (ROOT / "tools/probe_dispatch_gate.py").read_text(encoding="utf-8")
+    assert 'status != "ready_for_render"' in gate and '.get("auto") is not True' in gate
+    assert "[waiting]" in gate
     assert "gh workflow run match-reel.yml --ref main" in step
     assert "-f mode=render" in step
-    assert "[waiting]" in step
 
 
 def test_match_reel_dispatch表单绝不超过github的25项硬限制():
