@@ -1,0 +1,332 @@
+{
+  "_claims": [],
+  "_column": "赛场之上",
+  "_hit_data": "文案 helper 跑过 `match_stat_hooks.py QmOLdkIG` 和 `match_feed.py show QmOLdkIG`（flashscore home=Medvedev、away=Safiullin，逐分按 home:away 记）。进旁白的：**首盘 5-5 梅德韦杰夫发球 40-0 保发**（记分条 313.5~321.5 `MEDVEDEV 5 40 / SAFIULLIN 5 0`）；**5-6 萨菲乌林发球 15-40 两个盘点被破**（记分条 357.5~359.5 `6 40 / 5 15`，361.5 翻成 `7 / 5`）；**第二盘第1局萨菲乌林破发**（梅德韦杰夫发球，记分条 365.5~371.5 `•MEDVEDEV 7 0 0 / SAFIULLIN 5 0 40` 显示 0-40 三个破发点；373.5 记分条 `7 1 / 5 2` 确认萨菲乌林已破发领先，随后 2-1）；**第二盘 4-5 萨菲乌林发球 15-40 两个赛点（兼破发点）被破**（记分条 467.5~499.5 `MEDVEDEV 7 5 40 / •SAFIULLIN 5 4 15`，501.5 翻成 `7 6 / 5 4`，point_end 499.6）；**梅德韦杰夫全场 11 个发球局 10 保 1 破**（df_st_1 Service games won 10/11，破发点挽救 4/5）；**萨菲乌林 8 个破发点兑现 3 个**（df_st_1 梅德韦杰夫 Break Points Converted 3/8）。一发：梅 67%（43/64）、一发得分率 81%（35/43）；萨 63%（44/70）、一发得分率 70%（31/44)（2026-09-28 23:39 逐分修正，df_st_1 的 69%/82%/64%/71% 作废）。交手记录：职业巡回赛第一次碰面（ATP 赛前稿梅德韦杰夫原话 `we played so much in juniors… first meeting in professional tennis`）；青少年时期多次交手、一起打过 ATP 杯。",
+  "_match": {
+    "_order_why": "flashscore 这一场 home=Medvedev D.、away=Safiullin R.（文案 helper `match_stat_hooks.py QmOLdkIG`）；这里 participants 按 cover.matchup 的顺序（a=梅德韦杰夫、b=萨菲乌林）。",
+    "flashscore_id": "QmOLdkIG",
+    "loser": "萨菲乌林",
+    "loser_result": "5-7 4-6",
+    "participants": [
+      "梅德韦杰夫",
+      "萨菲乌林"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        5
+      ],
+      [
+        6,
+        4
+      ]
+    ],
+    "source": "flashscore_points",
+    "source_id": "QmOLdkIG",
+    "status": "result_verified",
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "梅德韦杰夫",
+    "winner_result": "7-5 6-4"
+  },
+  "_no_quote_why": "ATP 赛前稿梅德韦杰夫原话只转述（「职业生涯第一次在巡回赛碰面」），不直接引用英文——按 2026-09-25 口径，采访原声只进「赛后开麦」。本场集锦无赛后采访。",
+  "_no_repeat": "同栏目 `rublev-jacquet-hangzhou-2026-sf`（同一晚另一场半决赛）只在结尾提一句当决赛预告（决赛对卢布列夫）；卢布列夫那条不提这一场。萨菲乌林同栏目没有单独讲过。梅德韦杰夫前两轮（罗耶、黄泽林）同栏目没做过。",
+  "_push_summary_why": "主语梅德韦杰夫；「首盘5比5才分胜负」是这一场的关键局面（5-5 之后连下两局），「晋级」是结果（进决赛写在 lead 第一句）；不写排名、不写术语「破发」。",
+  "_result_why": "源片记分条终局 501.5s `MEDVEDEV 7 6 / SAFIULLIN 5 4`；文案 helper 按 flashscore `QmOLdkIG` 核过 7-5、6-4。三处一致（flashscore 比分、源片终局、helper 事实清单）。",
+  "_scorebox_why": "同一台杭州转播（和 `rublev-jacquet-hangzhou-2026-sf` 同一套板、同一个源片），probe 按这个框给了 `--scorebox`，point_ends 量出来了；probe 的 board 扫描按 atp 标定认到 1275/1404 帧有板。第二盘板最宽（两盘分＋AD）；各段右缘渲染时现量，519 只当兜底。",
+  "_source": "Tennis TV 官方 YouTube 频道《Rublev vs Jacquet & Medvedev vs Safiullin For A Place In The Final | Hangzhou 2026 Highlights》（`nSaTYP-T8sM`，用户 2026-09-28 直接指定），526s，yt-dlp 报 1080p、频道 `Tennis TV`；官方章节 `00:00 Rublev vs Jacquet` / `04:05 Medvedev vs Safiullin`，probe（run 36443597444）按 `clip_from=245 clip_to=526` 只看后一章，落的是 1920×1080 / 25fps。**渠道**：YouTube 单场集锦和 Tennis TV 免费 short-highlights。",
+  "_topbar_why": "line1 按「<年份> <巡回赛><级别> <城市> <轮次>」：杭州公开赛 ATP250；TNNS 写 `Semifinal`、flashscore 写 `Semi-finals`。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_turning_points": [
+    "首盘 5-5 梅德韦杰夫发球，40-0 保发，6-5（源片 313.5~323.5，记分条 `MEDVEDEV 5 40 / SAFIULLIN 5 0`）。",
+    "首盘 5-6 萨菲乌林发球，15-40 两个盘点，梅德韦杰夫破发，7-5（源片 354~366，357.5 记分条 `6 40 / 5 15`，361.5 翻成 `7 / 5`；point_ends 356.0、356.9 是 15-30、15-40 那两分）。",
+    "第二盘 0-0 梅德韦杰夫发球 0-40，连救三个破发点保发（源片 365.5~373.5，记分条 `•MEDVEDEV 7 0 0 / SAFIULLIN 5 0 40`）；但萨菲乌林随后破发，2-1 领先（373.5 记分条 `7 1 15 / 5 2 0`）。",
+    "第二盘 4-5 萨菲乌林发球，15-40 两个赛点（兼破发点），梅德韦杰夫破发，6-4（源片 467~500.5，记分条 `MEDVEDEV 7 5 40 / •SAFIULLIN 5 4 15`，point_end 499.6，501.5 翻成 `7 6 / 5 4`）。",
+    "赛点 499.6 拿下：501.5~503.5 他近景（握拳、长出一口气），505.5~509.5 和萨菲乌林网前握手，511.5~513.5 向看台挥手，515.5 看台。517.5 起 Tennis TV 片尾（`THE BEST SEAT IN TENNIS`＋扫码），已剪掉。"
+  ],
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+  "cover": {
+    "_heat_why": "账号所有者点名要做这一场（杭州半决赛、和卢布列夫那场同一批）。梅德韦杰夫是前世界第一、本站头号种子，刷到的人认得他；赢了就进决赛，和卢布列夫打全俄决赛，话题够。",
+    "_hook_why": "按 2026-09-27 口径：第一行＝关键局面——首盘 5-5 之前双方一路僵持，梅德韦杰夫 5-5 保发、5-6 破发，连下两局 7-5（记分条 313.5 `MEDVEDEV 5 40 / SAFIULLIN 5 0`、323.5 `6 15 / 5 15`、361.5 `7 / 5`）；不写术语「破发」。第二行＝结果：打进决赛。9 字和 9 字。备选 A「发小第一次职业赛相遇」更偏背景而非比赛关键局面，按文案 helper 建议用 B。",
+    "_matchup_rank_why": "文案 helper 按仓库 `sources/rankings.fetch_rankings()` 口径核过：梅德韦杰夫 6、萨菲乌林 84（比赛日 9/28 当期）。梅德韦杰夫是本站头号种子（TNNS 比分页、签表）。",
+    "_name_why": "`player_zh(\"Daniil Medvedev\")` → 梅德韦杰夫，`player_zh(\"Roman Safiullin\")` → 萨菲乌林。",
+    "_subject_why": "封面放**梅德韦杰夫**——这一场的赢家、钩子两行的主语。",
+    "eyebrow": "赛场之上",
+    "hook": "首盘5比5才分胜负\n梅德韦杰夫挺进决赛",
+    "hook_accent": "挺进决赛",
+    "layout": "solo",
+    "matchup": [
+      {
+        "country": "RUS",
+        "name": "梅德韦杰夫",
+        "name_en": "Daniil Medvedev",
+        "rank": 6
+      },
+      {
+        "country": "RUS",
+        "name": "萨菲乌林",
+        "name_en": "Roman Safiullin",
+        "rank": 84
+      }
+    ],
+    "portrait": {
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 2026-09-28 21:40 ~ 23:30）：① 官方图库——`tools/find_cover_photo.py` Getty/AFP 这一场 0 张可用（封面 helper 实测）；② 赛后稿：ATP 赛后稿当时未配可用大图；③ 中文媒体：ATP Tour 官方微博当晚半决赛帖未找到可用原图；④ Tennis TV 官方 Instagram 图片帖 `https://www.instagram.com/p/Dd1StgJszdN/`（431 万粉，梅德韦杰夫晋级照）已定位，但 instagram-cli 取不到原图直链、embed 403、browser 抓取 403——已交回 root 派 browser task 提取，拿到 ≥1000px 宽干净无压字原图后走 `reel-cover-upgrade` 换图重推。\n抽帧选 502.0s：赛点拿下后的近景（杭体集团背景板），梅德韦杰夫正脸、握拳后长出一口气，和钩子「挺进决赛」同一个人同一刻，清晰偏正面。",
+      "focus": 0.5,
+      "focus_y": 0.45,
+      "frame_at": 502.0,
+      "zoom": 1.0
+    },
+    "result": "7-5 6-4",
+    "scoreboard": {
+      "away": "萨菲乌林",
+      "home": "梅德韦杰夫",
+      "sets": [
+        [
+          7,
+          5
+        ],
+        [
+          6,
+          4
+        ]
+      ],
+      "court": "Center Court",
+      "duration_source": {
+        "field": "duration",
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A43%3A00%22%2C%20%22source%22%3A%20%22flashscore%20point-by-point%20%E5%88%86%E7%9B%98%200%3A56%20%2B%200%3A47%20%3D%201%3A43%22%7D"
+      },
+      "_duration_why": "flashscore 逐分：第一盘 0:56、第二盘 0:47，总用时 1:43；印 1:43。"
+    },
+    "subject": "梅德韦杰夫",
+    "topic": "ATP250 杭州 半决赛 · 梅德韦杰夫 VS 萨菲乌林",
+    "winner": "梅德韦杰夫",
+    "_court_why": "同赛事同日另一场半决赛（rublev-jacquet）记 Center Court；杭州公开赛主球场。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "首盘5比5才分胜负",
+      "梅德韦杰夫挺进决赛"
+    ],
+    "question": "赢了发小，决赛打卢布列夫——今年的第三个冠军，梅德韦杰夫拿得下来吗？",
+    "thesis": "首盘一路僵持到5-5，5-5梅德韦杰夫保发、5-6破发，连下两局7-5；第二盘萨菲乌林先破发2-1领先，梅德韦杰夫3-3追回，4-5再破一次6-4收下。全场11个发球局只丢1个，决赛对卢布列夫。",
+    "beats": [
+      "冷开场：赛点，梅德韦杰夫拿下，握拳、仰头长出一口气。",
+      "落点＋坐标：北京时间9月28日晚上，杭州公开赛男单半决赛，头号种子梅德韦杰夫对世界第84的萨菲乌林。",
+      "来路：发小对决，青少年时期交手多次，职业生涯第一次在巡回赛碰面。",
+      "首盘：5-5之前一路僵持；5-5梅德韦杰夫保发，5-6破发，连下两局7-5。",
+      "第二盘：萨菲乌林先破发2-1；梅德韦杰夫3-3追回；4-5再破，6-4收下。",
+      "赛点兑现，转身庆祝，和萨菲乌林握手、拥抱，挥手致意。",
+      "结尾：决赛对卢布列夫，全俄决赛。"
+    ],
+    "human_context": {
+      "angle": "这场球的主语是**发小对决**：梅德韦杰夫和萨菲乌林从小一起练球，青少年时期交手过很多次，还一起打过ATP杯，但这却是他们职业生涯第一次在巡回赛里碰面。首盘5-5才分胜负，第二盘萨菲乌林先破发，梅德韦杰夫追回来再破收下。",
+      "facts": [
+        "flashscore QmOLdkIG：Medvedev D. 7-5 6-4 Safiullin R.；杭州公开赛男单半决赛。",
+        "【已作废，被 2026-09-28 23:39 逐分修正】flashscore df_st_1 全场（梅德韦杰夫／萨菲乌林）：ACE 7/6、双误 3/2、一发进球率 69%（44/64）对 64%（45/70）、一发得分率 82% 对 71%、二发得分率 47% 对 43%、破发点挽救 80%（4/5）对 63%（5/8）、破发兑现 38%（3/8）对 20%（1/5）、发球局 91%（10/11）对 73%（8/11）。 → 修正后：一发 35/43（67%，得分率81%）对 31/44（63%，得分率70%）；二发 9/21（42%）对 11/26（42%）；破发兑现 3/8 对 1/5 不变。",
+        "排名：梅德韦杰夫世界第6（头号种子），萨菲乌林世界第84。",
+        "梅德韦杰夫2026年布里斯班、迪拜两冠，印第安维尔斯亚军；杭州晋级路：轮空 → 7-6(6)、6-3 罗耶 → 6-3、6-7(2)、6-3 黄泽林。",
+        "萨菲乌林生涯最高第36（2024）；2026本周前巡回赛仅6胜，本周已3胜；温网赢卢布列夫并从德约科维奇手中拿下一盘；杭州晋级路：6-2、6-0 孙发京 → 5-7、6-3、6-4 哈利斯 → 6-3、6-3 布云朝克特。",
+        "决赛：梅德韦杰夫 vs 卢布列夫，全俄决赛；卢布列夫半决赛 7-6(0)、6-1 胜雅凯。",
+        "梅德韦杰夫赛前：'we played so much in juniors… first meeting in professional tennis'（ATP赛前稿）。"
+      ],
+      "sources": [
+        "https://www.flashscore.com/match/tennis/QmOLdkIG/",
+        "https://www.youtube.com/watch?v=nSaTYP-T8sM"
+      ]
+    }
+  },
+  "mixed_fps": {
+    "ttv": "YouTube 1080p，probe 在 runner 上报 25fps。单一源片，没有混帧率。"
+  },
+  "primary": "ttv",
+  "push": {
+    "auto": true,
+    "lead": "杭州公开赛半决赛，头号种子梅德韦杰夫 7-5、6-4 击败萨菲乌林，打进决赛。首盘 5-5 后他连下两局，第二盘 4-5 破发收下。全场 11 个发球局只丢 1 个。决赛对阵卢布列夫，上演全俄决赛。",
+    "matchup": "梅德韦杰夫 vs 萨菲乌林",
+    "score": "7-5 6-4",
+    "summary": "5比5后连下两局 晋级决赛",
+    "_summary_why": "字位 12.5≤13（SUMMARY_MAX）：首盘 5-5 后梅德韦杰夫连下两局 7-5；不写术语「破发」。原 15.5 字位超了，2026-09-28 cover 前置检查拦过。"
+  },
+  "scorebox": [
+    98,
+    920,
+    519,
+    1029
+  ],
+  "segments": [
+    {
+      "_why": "冷开场：赛点之后。499.6 point_end（赛点拿下），501.5~503.5 他近景：握拳、长出一口气（杭体集团背景板）。只留现场声，不配旁白。｜_ending_payoff_required=true：含赛点拿下后的第一波庆祝（501.5~503.5 握拳近景），正文第 12 段按时间顺序完整重放 467~504.5。",
+      "cx": 0.5,
+      "end": 504.5,
+      "narration": "",
+      "source": "ttv",
+      "start": 500.0,
+      "_ending_payoff_required": true,
+      "_quote_skip_why": "500~504.5 只有现场声（观众欢呼＋赛点拿下后的场内声），解说没开口——_why 已记「只留现场声，不配旁白」。",
+      "score_inset": true
+    },
+    {
+      "_why": "① 赛点。画面：505.5~509.5 和萨菲乌林网前握手，510~512 走向场边。记分条 501.5 已翻成 `7 6 / 5 4`。",
+      "cx": 0.5,
+      "end": 512.0,
+      "narration": "赛点拿下，梅德韦杰夫握拳、仰头长出一口气。职业生涯第一次，巡回赛里碰上从小一起长大的发小。",
+      "source": "ttv",
+      "start": 504.5,
+      "score_inset": true
+    },
+    {
+      "_why": "② 落点＋坐标。画面：集锦正片第一分（251.5 起），记分条 `MEDVEDEV 1 / •SAFIULLIN 0 AD`——萨菲乌林发球、梅德韦杰夫开场就破发 1-0。247.5~249.5 的 `MEDVEDEV VS SAFIULLIN` 标题卡是 Tennis TV 包装，不用。",
+      "cx": 0.5,
+      "end": 263.0,
+      "narration": "北京时间 9 月 28 日晚上，杭州公开赛男单半决赛，头号种子梅德韦杰夫 7 比 5、6 比 4 拿下萨菲乌林，晋级决赛。",
+      "source": "ttv",
+      "start": 251.5,
+      "score_inset": true
+    },
+    {
+      "_why": "③ 发小。画面：1-1 平分相持（记分条 261.5~276 `•MEDVEDEV 1 40 / SAFIULLIN 1 40`，梅德韦杰夫发球），259.5 萨菲乌林网前近景。",
+      "cx": 0.5,
+      "end": 276.0,
+      "narration": "两个人是从小一起练球的发小。青少年时期交手过很多次，还一起打过 ATP 杯，但这却是他们职业生涯，第一次在巡回赛里碰面。",
+      "source": "ttv",
+      "start": 263.0,
+      "score_inset": true
+    },
+    {
+      "_why": "④ 梅德韦杰夫 2026 上半。画面：2-1（记分条 289.5~295.5 `MEDVEDEV 2 15 / •SAFIULLIN 1 30`），287.5 看台。",
+      "cx": 0.5,
+      "end": 295.0,
+      "narration": "今年他已经拿了布里斯班，和迪拜两个冠军，还进了印第安维尔斯的决赛。",
+      "source": "ttv",
+      "start": 287.0,
+      "score_inset": true
+    },
+    {
+      "_why": "④ 梅德韦杰夫 2026 下半。画面：3-3（记分条 299.5~305.5 `•MEDVEDEV 3 0 / SAFIULLIN 3 15`，梅德韦杰夫发球）。",
+      "cx": 0.5,
+      "end": 305.0,
+      "narration": "要不是大满贯，一直没能走出第一周的后半程，这个赛季的上限本可以更高；杭州前两轮，他赢得也都不算轻松。",
+      "source": "ttv",
+      "start": 295.0,
+      "score_inset": true
+    },
+    {
+      "_why": "⑤ 萨菲乌林。画面：3-3 继续，309.5 梅德韦杰夫近景（说对手时给对手的对手近景，转场用），311.5 看台。",
+      "cx": 0.5,
+      "end": 314.0,
+      "narration": "对面的萨菲乌林排名掉到80开外，但温网他赢过卢布列夫，真打疯了谁都不怵。",
+      "source": "ttv",
+      "start": 305.0,
+      "score_inset": true
+    },
+    {
+      "_why": "⑥ 首盘上半。画面：5-5 梅德韦杰夫发球 40-0 保发（记分条 313.5~321.5 `•MEDVEDEV 5 40 / SAFIULLIN 5 0`），323.5 翻成 `6 15 / 5 15`。",
+      "cx": 0.5,
+      "end": 324.0,
+      "narration": "首盘僵持到 5 比 5，梅德韦杰夫保发，6 比 5。",
+      "source": "ttv",
+      "start": 313.5,
+      "score_inset": true
+    },
+    {
+      "_why": "⑥ 首盘下半。画面：5-6 萨菲乌林发球 15-40 两个盘点（记分条 357.5~359.5 `MEDVEDEV 6 40 / •SAFIULLIN 5 15`），361.5 翻成 `7 / 5`，第二盘 0-0。point_ends 356.0、356.9 是 15-30、15-40 那两分。｜球路核：356~361 逐帧看过，15-40 这一分双方都在底线相持、无上网，落点判断以画面为准、不编具体线路。",
+      "cx": 0.5,
+      "end": 366.0,
+      "narration": "5比6，萨菲乌林发球，15比40，两个盘点。底线相持，梅德韦杰夫破发，7比5先下一城。",
+      "source": "ttv",
+      "start": 354.0,
+      "score_inset": true
+    },
+    {
+      "_why": "⑦ 数据。画面：第二盘第1局梅德韦杰夫发球 0-40 被萨菲乌林破发（记分条 365.5~371.5 `•MEDVEDEV 7 0 0 / SAFIULLIN 5 0 40`）（记分条 365.5~371.5 `•MEDVEDEV 7 0 0 / SAFIULLIN 5 0 40`）——「5 个破发点只丢 1 个」的画面注脚。",
+      "cx": 0.5,
+      "end": 376.0,
+      "narration": "一发进球率百分之六十七，拿下百分之八十一；8 个破发点兑现 3 个，5 个破发点只丢了 1 个。",
+      "source": "ttv",
+      "start": 366.0,
+      "score_inset": true
+    },
+    {
+      "_why": "⑧ 第二盘上半。画面：1-2 萨菲乌林发球（记分条 373.5~379.5 `MEDVEDEV 7 1 15 / •SAFIULLIN 5 2 0`、381.5~389.5 `7 1 40 / 5 2 30`），391.5 翻成 `7 3 / 5 3`。破发的那一分集锦没收录，只给结果，不编球路。",
+      "cx": 0.5,
+      "end": 392.0,
+      "narration": "第二盘，萨菲乌林先破发，2 比 1 领先；梅德韦杰夫追平，3 比 3。",
+      "source": "ttv",
+      "start": 376.0,
+      "score_inset": true
+    },
+    {
+      "_why": "⑧ 第二盘下半。画面：4-5 萨菲乌林发球 15-40 两个赛点（兼破发点）（记分条 467.5~499.5 `MEDVEDEV 7 5 40 / •SAFIULLIN 5 4 15`），point_end 499.6，501.5 翻成 `7 6 / 5 4`。是破发收下、不是保发收下——记分条圆点在萨菲乌林一行，已核对。｜段尾延到 504.5：把 501.5~503.5 的第一波庆祝（冷开场同一段）按时间顺序重放在正文里，满足 _ending_payoff_required=true 的连续覆盖。｜球路核：494.5~500.5 逐帧看过，赛点这一分双方都在底线相持、无上网；决胜拍是制胜分还是失误画面无法确证，不写。",
+      "cx": 0.5,
+      "end": 504.5,
+      "narration": "4比5，萨菲乌林发球，15比40，梅德韦杰夫手握两个赛点。底线相持，梅德韦杰夫拿下这一分，破发收下比赛，6比4。全场11个发球局，他只丢了1个。",
+      "source": "ttv",
+      "start": 467.0,
+      "score_inset": true
+    },
+    {
+      "_why": "⑩ 决赛预告。画面：5-4 局间（记分条 439.5~445.5 `MEDVEDEV 7 5 / SAFIULLIN 5 4`），用局间的走动当决赛预告的底。决赛：flashscore YRzVjjGE 卢布列夫 7-6(0) 6-1 雅凯（同栏目已发）。",
+      "cx": 0.5,
+      "end": 450.0,
+      "narration": "决赛，他要打卢布列夫。有意思的是，萨菲乌林在温网赢的正是卢布列夫。",
+      "source": "ttv",
+      "start": 440.0,
+      "score_inset": true
+    },
+    {
+      "_why": "末屏一问。画面：5-4 梅德韦杰夫发球局（记分条 467.5 起 `•MEDVEDEV 7 5 40 / SAFIULLIN 5 4 15`，放在结局重放之后当尾声提问，画面只是 5-4 的发球局底）。问题只问不答，按 2026-09-25 口径。",
+      "cx": 0.5,
+      "end": 467.0,
+      "narration": "这是他职业生涯第38个硬地决赛，今年已经拿了布里斯班，和迪拜两个冠军。",
+      "source": "ttv",
+      "start": 450.0,
+      "score_inset": true
+    },
+    {
+      "start": 504.5,
+      "end": 515.5,
+      "narration": "赢了发小，全场11个发球局只丢1个。决赛打卢布列夫，今年的第三个冠军，拿得下来吗？",
+      "score_inset": true,
+      "_why": "正文结局重兑现：赛点后第一波庆祝（504.5-512）+挥手致意（512-515.5）；冷开场是预告，这里按时间顺序让观众看见比赛真的结束。旁白先给数字（11个发球局只丢1个）再抛下一问，落向期待兑现。",
+      "source": "ttv"
+    }
+  ],
+  "slug": "medvedev-safiullin-hangzhou-2026-sf",
+  "sources": {
+    "ttv": "https://www.youtube.com/watch?v=nSaTYP-T8sM"
+  },
+  "stats": {
+    "_source": "2026-09-28 23:39 Flashscore Point by Point 逐分核对修正：此前机器抄的 df_st_1 全场统计（一发 44/64 对 45/70、二发 47% 对 43%）与逐分重算不符，以逐分为准。一发 35/43 对 31/44；二发 9/21（42%）对 11/26（42%）；破发兑现 3/8 对 1/5（逐分与 df_st_1 一致）；ACE 7/6、双误 3/2 沿用 df_st_1（逐分未覆盖）。a=梅德韦杰夫、b=萨菲乌林。制胜分/非受迫失误：三个规定来源都没有，不编造。",
+    "_winners_ue_why": "flashscore df_st_1 这一场没有 winners/UE（工具原话）；TNNS app 账号所有者只截了卢布列夫那场，没有截这一场；ATP 赛后稿未配技术统计。三个规定来源都没有，按仓库要求不编造，stats 里不放 winners/ue，数据图只渲染已有字段。",
+    "a": {
+      "aces": 7,
+      "bp_chances": 8,
+      "bp_conv": 3,
+      "df": 3,
+      "first_in": 43,
+      "first_won": 35,
+      "second_total": 21,
+      "second_won": 9,
+      "headshot": "assets/players/headshots/atp-MM58.png"
+    },
+    "b": {
+      "aces": 6,
+      "bp_chances": 5,
+      "bp_conv": 1,
+      "df": 2,
+      "first_in": 44,
+      "first_won": 31,
+      "second_total": 26,
+      "second_won": 11,
+      "headshot": "assets/players/headshots/atp-SX50.png"
+    },
+    "tour": "atp"
+  },
+  "topbar": {
+    "line1": "2026 ATP250 杭州 半决赛",
+    "line2": "梅德韦杰夫 7-5 6-4 萨菲乌林"
+  },
+  "_tennistv_trim": "源片 526.025s，Tennis TV 片尾板在 520s 之后；本片最后用的 footage 是 seg12 的 467.0→504.5，离片尾板 15s 以上，片尾板未入片。竖裁 1080x1920 取横片中部，右上角 Tennis TV 台标在裁切区之外，取景窗内无台标（2026-09-29 抽帧核验）。"
+}

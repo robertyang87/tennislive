@@ -1,0 +1,345 @@
+{
+  "slug": "rublev-jacquet-hangzhou-2026-sf",
+  "_column": "赛场之上",
+  "sources": {
+    "ttv": "https://www.youtube.com/watch?v=nSaTYP-T8sM"
+  },
+  "primary": "ttv",
+  "_source": "Tennis TV 官方 YouTube 频道《Rublev vs Jacquet & Medvedev vs Safiullin For A Place In The Final 🔥 | Hangzhoul 2026 Highlights》（`nSaTYP-T8sM`，yt-dlp 列频道 `/videos` 第一条，北京 2026-09-28 21:57 上线），526s，yt-dlp 报 1080p、频道 `Tennis TV`；官方章节 `00:00 RUBLEV VS JACQUET` / `04:05 MEDVEDEV VS SAFIULLIN`，probe（run 36432431745）按 `clip_to=245` 只看前一章，落的是 1920×1080 / 25fps。**渠道**：YouTube 单场集锦和 Tennis TV 免费 short-highlights 都还没发（`tennistv_catalog.py match 4713_2026_MS003` 只有付费的 extended 1206s、付费全长和一条 242s 的赛后采访），这条当日半决赛合集是唯一的 1080p 官方源。四要素自证：记分条逐格读过（`JACQUET / RUBLEV` 两行）——首盘 `•0 15 / 0 15`、`•1 30 / 1 0`、`3 0 / •2 30`、`•4 15 / 4 15`、`5 0 / •4 30`、`5 30 / •4 30`、抢七 `•6 / 6`、`6 0 / •6 6`，第二盘 `•6⁰ 0 AD / 7 1`、`•6⁰ 0 / 7 1 AD`、`6⁰ 0 15 / •7 2 0`、`6⁰ 0 15 / •7 2 15`、`•6⁰ 0 30 / 7 3 40`、`6⁰ 1 15 / •7 5 40`（228.5 画面挂 `2 MATCH POINTS`）、终局 `6⁰ 1 / 7 6`，和 flashscore M7514hNb 逐局记录一一对得上；场地印 `HANGZHOU 杭州`、挡板 `杭体集团` `问界`；片头卡 `JACQUET vs RUBLEV`。",
+  "_tennistv_trim": "**片尾**：这是两场的合集，没有 Tennis TV 品牌卡——第一章 245.0 结束、245.81 起静音，之后是梅德韦杰夫那一场；最后一段收在 244.9，在章节边界之前。片头 0~4.0 是 `JACQUET vs RUBLEV` 片头卡（静音），不进任何一段。**台标**：Tennis TV 台标烧在右上角（源片 x≈1580~1860），3:4 取景窗 cx=0.5 只取 555~1365，在窗外。",
+  "mixed_fps": {
+    "ttv": "YouTube 1080p，probe 在 runner 上报 25fps。单一源片，没有混帧率。"
+  },
+  "scorebox": [
+    98,
+    920,
+    519,
+    1029
+  ],
+  "_scorebox_why": "同一台杭州转播（和 `rublev-gaston-hangzhou-2026-qf` 同一套板），probe 按这个框给了 `--scorebox`，point_ends 量出来了；probe 的 board 扫描按 atp 标定认到 1178/1225 帧有板。第二盘板最宽（两盘分＋AD）；各段右缘渲染时现量，519 只当兜底。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "卢布列夫",
+    "hook": "首盘6平后7分全拿\n卢布列夫挺进决赛",
+    "hook_accent": "挺进决赛",
+    "_hook_why": "按 2026-09-25 口径：第一行＝关键局面——首盘双方发球局全保打到 6 平，之后决定这一盘的 7 分全是卢布列夫的（抢七 7-0，flashscore M7514hNb 首盘 7-6、抢七小分 0；记分条 76.5 `6 0 / •6 6`、82.5 `6⁰ / 7`）；不写「抢七」这个词（O6）。第二行＝结果：打进决赛。9 字和 8 字。",
+    "topic": "ATP250 杭州 半决赛 · 卢布列夫 VS 雅凯",
+    "winner": "卢布列夫",
+    "result": "7-6(0) 6-1",
+    "matchup": [
+      {
+        "name": "卢布列夫",
+        "name_en": "Andrey Rublev",
+        "country": "RUS",
+        "rank": 24
+      },
+      {
+        "name": "雅凯",
+        "name_en": "Kyrian Jacquet",
+        "country": "FRA",
+        "rank": 86
+      }
+    ],
+    "_matchup_rank_why": "仓库 `sources/rankings.fetch_rankings()`（tennisexplorer ATP 榜，`atp_at=28.09.2026`，本周一那一期）Rublev Andrey 24、Jacquet Kyrian 86。ESPN `site.api.espn.com/.../atp/rankings` 这一刻还挂着上一期（25 / 107，和 `rublev-gaston-hangzhou-2026-qf` 印的 25、雅凯 107 同一期），没更新，所以当期只有 tennisexplorer 一个源；比赛日 9/28 用的是 9/28 那一期。卢布列夫是本站 2 号种子（TNNS 比分页名字旁 `2`）。",
+    "_name_why": "`player_zh(\"Andrey Rublev\")` → 卢布列夫，`player_zh(\"Kyrian Jacquet\")` → 雅凯，`player_zh(\"Daniil Medvedev\")` → 梅德韦杰夫。",
+    "_subject_why": "封面放**卢布列夫**——这一场的赢家、钩子两行的主语。",
+    "_heat_why": "账号所有者点名要做这一场（截图 TNNS 比分页，「做这个赛场之上」）。卢布列夫是前世界第 5、本站 2 号种子，刷到的人认得他；这一场是半决赛（轮次本身够格），赢了就进决赛，决赛对头号种子梅德韦杰夫。",
+    "portrait": {
+      "frame_at": 33.5,
+      "focus": 0.45,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 20:20 ~ 22:10）：① 官方图库——`tools/find_cover_photo.py --player Rublev --event Hangzhou --date 2026-09-28` WTA photo-resources、WTA 赛后稿头图都是 0 张，AP 页面两趟都没取到；杭州公开赛没有可探的 WordPress 媒体库。② 赛后稿：没有。③ 中文媒体：搜狗微信第一趟列出这一场的两篇（09-28 19:08、21:38），两篇都没有列出可用大图，列出的图全出自 11:03 那篇、是 1/4 决赛对加斯东；第二、三趟撞反爬。④ Getty / Imago 沙箱搜不了。官方图一上线 `reel-cover-upgrade` 会自动换图重推。\n**这一帧**：源片 33.5s，首盘 3-2 他发球拿下 40-0 之后的近景（frame-grab 0.5 秒一帧逐格看过 32.0~36.0，33.0~34.5 连着 1.5 秒都是正脸）：**正脸直视镜头、双眼睁着、合焦**，神情专注，粉紫色 K-Swiss 球衣、紫色头带，和本场所有镜头一致。先试过赛点后的 237.0s：runner 抓到的那一帧他眼睛斜向一侧、半眯，而且脸在画面偏下，下巴落进钩子带，调不开就换了这一帧。",
+      "_low_res_why": "源片 1920×1080，铺 1080×1440 按高算放大 1.33 倍（抽帧的理由见 `_frame_why`）。",
+      "_focus_why": "focus 0.45：这一帧脸的中心在源片横向约 0.45（frame-grab 33.5 那张量），3:4 窗口取约 459~1269，左下角记分条（右缘约 370）和右上角 Tennis TV 台标都在窗外。纵向：头带约 0.17、眼睛约 0.27、下巴约 0.47，铺满后约 y 245 / 390 / 680——台头带（0~170）之下、钩子带（790 起）之上。"
+    },
+    "scoreboard": {
+      "court": "Center Court",
+      "_court_why": "TNNS app 比分页（账号所有者截图）写 `Center Court`。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A22%3A00%22%2C%20%22source%22%3A%20%22TNNS%20app%20%E6%AF%94%E5%88%86%E9%A1%B5%EF%BC%88%E8%B4%A6%E5%8F%B7%E6%89%80%E6%9C%89%E8%80%85%E6%88%AA%E5%9B%BE%EF%BC%8C%E5%8C%97%E4%BA%AC%2020%3A13%EF%BC%89%E8%AE%A1%E6%97%B6%201%3A22%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_sui_1%EF%BC%88M7514hNb%EF%BC%89%E5%88%86%E7%9B%98%200%3A46%20%2B%200%3A31%20%3D%201%3A17%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "TNNS app 比分页（账号所有者截图）1:22；flashscore df_sui_1 分盘合计 1:17。两源差 5 分钟，CLAUDE.md 记过 flashscore 用时偏差，取 TNNS 那一个。"
+    }
+  },
+  "_result_why": "flashscore 当日表 M7514hNb：home=Jacquet K.、away=Rublev A.，AG/AH=0/2，分盘 6:7、1:6，首盘抢七 Jacquet 0；TNNS app 比分页（账号所有者截图）`Andrey Rublev 7 6 / Kyrian Jacquet 6⁰ 1`；源片 236.5s 记分条终局 `JACQUET 6⁰ 1 / RUBLEV 7 6`。三处一致。",
+  "topbar": {
+    "line1": "2026 ATP250 杭州 半决赛",
+    "line2": "卢布列夫 7-6(0) 6-1 雅凯"
+  },
+  "_topbar_why": "line1 按「<年份> <巡回赛><级别> <城市> <轮次>」：杭州公开赛 ATP250；TNNS 写 `Semifinal`、flashscore 写 `Semi-finals`。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "M7514hNb",
+    "flashscore_id": "M7514hNb",
+    "participants": [
+      "卢布列夫",
+      "雅凯"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        6
+      ],
+      [
+        6,
+        1
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        7,
+        0
+      ],
+      null
+    ],
+    "winner": "卢布列夫",
+    "loser": "雅凯",
+    "winner_result": "7-6(0) 6-1",
+    "loser_result": "6-7(0) 1-6",
+    "_order_why": "flashscore 这一场 home=Jacquet K.、away=Rublev A.；这里 participants 按 cover.matchup 的版式顺序（卢布列夫在前），盘分和抢七小分已经按这个顺序对调过。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py M7514hNb` 和 `match_feed.py show M7514hNb`（flashscore home=Jacquet、away=Rublev，逐分按 home:away 记）。进旁白的：**首盘 12 个发球局全保**（df_st_1 Set 1 Service games won 6/6 对 6/6）；**卢布列夫首盘发球 35 分，雅凯只拿到 6 分**（Set 1 Service Points Won 客队 29/35）；**4-4 雅凯发球，15:40 两个破发点被救**（`15:40 |B1|, 30:40 |B1|, 40:40, A:40`，5-4）；**4-5 卢布列夫发球保盘，30 平**（`0:15, 0:30, 15:30, 30:30, 30:40`，5-5）；**首盘抢七 7-0**（set_scores 7:6、雅凯抢七小分 0；记分条 76.5 `6 0 / •6 6`，82.5 `6⁰ / 7`）；**第二盘第 2 局雅凯发球四次平分、两次占先、第三个破发点被破**（`30:40 |B1|, 40:40, A:40, 40:40, A:40, 40:40, 40:A |B1|, 40:40, 40:A |B1|`）；**第 4 局 `15:40 |B1|, 30:40 |B1|` 第二个破发点再破，4-0**；**卢布列夫全场 10 个发球局全保、雅凯一个破发点都没拿到**（df_st_1 Service games won 客队 10/10，Break Points Saved 客队 0/0）；**第二盘 6-1，赛点 `15:40 |B3|` 第一个就兑现**（画面 228.5 挂 `2 MATCH POINTS`）。制胜分 35 对 17、非受迫失误 19 对 22（TNNS app，账号所有者截图）只进数据图。交手记录（df_hh_1）：含本场 Rublev 1:0，第一次交手。",
+  "_turning_points": [
+    "首盘 4-4 雅凯发球，卢布列夫 15-40 两个破发点被救（源片 36.8~49.5 是这一局 15 平那一分，破发点那几分集锦没放）。",
+    "首盘 4-5 卢布列夫发球保盘，30 平（57.9~69.9，逐 0.5 秒看过 58~67：远端卢布列夫在底线把近端雅凯左右调动，64 雅凯向左滑出去救球，67 追到右侧没救回；68 切到卢布列夫走回、69 近景）。",
+    "首盘抢七 7-0（70.2~82.4：70.5 板 `•6 / 6` 雅凯发球第一分；76.8 板 `6 0 / •6 6` 他发球的盘点；80.5 他走回，82.5 板 `6⁰ / 7`）。",
+    "第二盘第 2 局：四次平分（120.5~133.9 雅凯占先那一分没守住，130.5 雅凯近景；134.1~151.4 卢布列夫第三个破发点，逐 0.5 秒看过：近端雅凯在底线左右来回，149.5 丢分，150.0 雅凯近景，板翻成 `6⁰ 0 / 7 2 AD`）。",
+    "第二盘 2-0 卢布列夫发球 15 平，164.6~184.4 长时间的底线相持（逐 0.5 秒看过：近端雅凯被调到两边、180.5 低身救球），184.5 雅凯张开双手。",
+    "第二盘第 4 局 204.8~208.5 破发点兑现 4-0；赛点 228.7~233.3（228.5 画面 `2 MATCH POINTS`），233.5 看台、235~237.5 他近景、238~240.4 和雅凯在网前拥抱。"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "首盘6平后7分全拿",
+      "卢布列夫挺进决赛"
+    ],
+    "question": "昨天打了快三个小时才赢，今天卢布列夫是怎么一个多小时就打进决赛的？",
+    "thesis": "首盘双方发球局全保，4-4 他两个破发点没拿下、4-5 自己保发；进了抢七，雅凯一分都没拿到，7-0；第二盘雅凯第 2 局四次平分后被破、第 4 局再被破，4-0；全场他 10 个发球局雅凯一个破发点都没拿到，6-1，第一个赛点收下，决赛对梅德韦杰夫。",
+    "beats": [
+      "冷开场：赛点，看台，他仰头，和雅凯拥抱。",
+      "落点＋坐标：一小时二十二分钟；北京时间 9 月 28 日下午，杭州半决赛，二号种子对世界第 86 的雅凯。",
+      "来路：昨天九个盘点才拿下一盘；今天首盘发球局全保。",
+      "4-4 两个破发点被救；4-5 他底线调动保发。",
+      "抢七 7-0。",
+      "第二盘：四次平分后破发 2-0；长相持雅凯摊手；再破 4-0；全场一个破发点没给。",
+      "赛点第一个兑现。结尾：决赛对梅德韦杰夫。"
+    ],
+    "human_context": {
+      "angle": "这场球的主语是**卢布列夫的效率**：昨天 1/4 决赛他打了 2 小时 52 分钟、第九个盘点才赢下一盘；今天首盘打到 6 平，抢七 7-0，第二盘一路 5-0，全场一个破发点都没给雅凯，一小时二十二分钟进决赛。",
+      "facts": [
+        "flashscore M7514hNb：Jacquet K. 6-7(0) 1-6 Rublev A.；分盘用时 0:46 + 0:31 = 1:17，TNNS app 1:22；当日表 AD=1790588400（09:40Z＝北京 17:40）。",
+        "flashscore df_st_1 全场（卢布列夫／雅凯）：ACE 5/6、双误 1/1、一发得分率 86%（32/37）对 70%（23/33）、破发点兑现 2/7 对 0/0、发球局 10/10 对 7/9、总得分 67/115 对 48/115。",
+        "TNNS app（账号所有者截图）：Winners 35/17、Unforced Errors 19/22、1st Serve In 66%/56%、1st Serve Win 86%/70%、Break Points Saved 雅凯 71%（5/7）——和 flashscore 一发、破发点两项一致。",
+        "排名：tennisexplorer `atp_at=28.09.2026` 24 / 86；ESPN 仍挂上一期 25 / 107。",
+        "昨天 1/4 决赛：`rublev-gaston-hangzhou-2026-qf`（已发）卢布列夫 6-7(6) 7-6(4) 6-1 加斯东，2 小时 52 分钟，第九个盘点才赢下一盘。",
+        "决赛：flashscore YRzVjjGE `Medvedev D. – Rublev A.`，AD=1790681400（9/29 11:30Z＝北京 19:30）；梅德韦杰夫半决赛 7-5 6-4 胜萨菲乌林（QmOLdkIG），头号种子（TNNS 截图名字旁 `1`）。"
+      ],
+      "sources": [
+        "https://www.flashscore.com/match/tennis/M7514hNb/",
+        "https://www.youtube.com/watch?v=nSaTYP-T8sM",
+        "https://www.tennisexplorer.com/ranking/atp-men/"
+      ]
+    }
+  },
+  "_no_repeat": "同栏目 `rublev-gaston-hangzhou-2026-qf`（昨天 1/4 决赛）只借一句当来路（九个盘点、快三个小时）；`rublev-merida-us-open-2026-r2` 这一条不提。雅凯同栏目没有单独讲过。",
+  "_claims": [],
+  "_no_quote_why": "这条源片**这一轮判不了**：YouTube 还没给它生成自动字幕（probe 的 captions_debug：mweb `There are no subtitles for the requested languages`，web/tv 报格式不可用），沙箱下不动媒体流、whisper 这一轮没跑，没法做双模型核对。听不了就不留——全片走中文旁白加现场声，冷开场只留现场声。不是「这条集锦没有值得留的解说」。",
+  "push": {
+    "summary": "首盘7分全拿 卢布列夫晋级",
+    "lead": "杭州公开赛半决赛，二号种子卢布列夫 7-6(0) 6-1 击败法国人雅凯，打进决赛。首盘双方发球局全保打到 6 平，抢七他 7 分全拿；第二盘一路领先到 5-0。全场 10 个发球局，雅凯一个破发点都没拿到，比赛只打了 1 小时 22 分钟。决赛对头号种子梅德韦杰夫。",
+    "matchup": "卢布列夫 vs 雅凯",
+    "score": "7-6(0) 6-1",
+    "auto": true
+  },
+  "_push_summary_why": "主语卢布列夫；「首盘7分全拿」是这一场的关键局面（6 平之后的抢七 7-0），「晋级」是结果（进决赛写在 lead 第一句；带「进决赛」整条 20.5 字位超限）；不写排名、不写术语「抢七」「破发」。",
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "aces": 5,
+      "df": 1,
+      "winners": 35,
+      "ue": 19,
+      "first_in": 37,
+      "first_won": 32,
+      "second_total": 19,
+      "second_won": 13,
+      "bp_conv": 2,
+      "bp_chances": 7,
+      "pts_won": 67,
+      "pts_total": 115,
+      "first_total": 56,
+      "headshot": "assets/players/headshots/atp-RE44.png"
+    },
+    "b": {
+      "aces": 6,
+      "df": 1,
+      "winners": 17,
+      "ue": 22,
+      "first_in": 33,
+      "first_won": 23,
+      "second_total": 26,
+      "second_won": 14,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 48,
+      "pts_total": 115,
+      "first_total": 59,
+      "headshot": "assets/players/headshots/atp-J0AZ.png"
+    },
+    "_source": "`python3 tools/match_stat_hooks.py M7514hNb --stats-block` 机器抄的 flashscore df_st_1 全场统计（北京 20:30 那一趟；自洽：32+13+(59−23−14)=67 ＝ pts_won）。flashscore 这一场 home=Jacquet、away=Rublev，这里 a/b 跟 cover.matchup 的顺序（a=卢布列夫、b=雅凯），已对调。**制胜分／非受迫失误**：flashscore 这场没有（工具原话），取 TNNS app 比分页（账号所有者截图，北京 20:13）Winners Jacquet 17 / Rublev 35、Unforced Errors 22 / 19；同一张截图的 1st Serve In 56%/66%、1st Serve Win 70%/86%、Break Points Saved 71%（5/7）和 flashscore 逐项一致，说明截图就是这一场的全场统计。头像：atp-RE44 卢布列夫（沿用），atp-J0AZ 雅凯（这一趟 `fetch_official_headshot.py atp \"Kyrian Jacquet\" --id J0AZ --via https://www.mubadaladcopen.com` 新抓；ATP id 取自 Tennis TV 目录 `players: [J0AZ, RE44]`）。"
+  },
+  "segments": [
+    {
+      "source": "ttv",
+      "start": 228.7,
+      "end": 240.4,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "冷开场：赛点。228.5 画面挂 `2 MATCH POINTS`（板 `6⁰ 1 15 / •7 5 40`），228.66 切到这一分的宽景，逐 0.5 秒看过 229~233：近端雅凯 230 向右扑救；233.28 切到看台（233.5~234.5 观众鼓掌、举手机），板翻成 `6⁰ 1 / 7 6`；234.88 切到他近景：235 仰头、236 手捂额头、237 正脸；238~240 和雅凯在网前拥抱。只留现场声。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "倒数第二段按时间顺序重放 228.7–234.8（赛点到看台），这次配旁白；倒数第一段接 234.9 之后的近景和拥抱。",
+      "point_end_ok": "赛点那一分 233.2 前结束，233.28 切到看台；之后是他本人近景和网前拥抱，比赛已经结束。",
+      "crosses_cut": "233.28 切到看台、234.88 切到他本人近景：赛点之后同一刻的反应。",
+      "_quote_skip_why": "这几秒的解说听不了：YouTube 没给这条片子生成字幕（captions_debug），沙箱下不动音轨、whisper 没跑，核不了原话就不写字幕；冷开场只留现场声（顶层 `_no_quote_why`）。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 12.2,
+      "end": 26.2,
+      "cx": 0.5,
+      "narration": "一小时二十二分钟，卢布列夫打完了这场半决赛。北京时间九月二十八号下午五点多，杭州公开赛半决赛，二号种子卢布列夫，对阵世界第八十六的法国人雅凯。",
+      "_why": "② 落点＋③ 坐标。画面：首盘第 1 局那一分之后，12.2 起是雅凯近景，14.1 起第 2 局 `•1 30 / 1 0` 那一分，24.46 切到雅凯近景（24.5~26）。「一小时二十二分钟」：TNNS app（账号所有者截图）。",
+      "_start_time_why": "开球时刻：flashscore 当日表 M7514hNb 的 AD=1790588400（2026-09-28 09:40Z＝北京 17:40）。只说「下午五点多」，不报到分。",
+      "point_end_ok": "第 2 局那一分 24.4 前结束，24.46 切到雅凯近景；25.7 的翻牌在段内，段尾 26.2 在 26.26 那一刀之前。",
+      "crosses_cut": "14.1 从雅凯近景接下一分、24.46 切到雅凯走回：旁白讲的是整场和坐标，不指认某一分。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 26.3,
+      "end": 36.4,
+      "cx": 0.5,
+      "narration": "昨天他打了快三个小时，第九个盘点才拿下一盘。今天第一盘，卢布列夫发球的三十五分，雅凯只拿到六分。",
+      "_why": "来路＋首盘。画面：首盘 `JACQUET 3 0 / •RUBLEV 2 30`，他发球，26.3~31.8 这一分；31.84 切到他近景（32.5~34.5 正脸，板 `2 40`）。昨天那场：`rublev-gaston-hangzhou-2026-qf`（6-7(6) 7-6(4) 6-1，TNNS 2:52，第九个盘点才赢下一盘）。「三十五分只拿到六分」：Set 1 Service Points Won 客队（卢布列夫）29/35。",
+      "point_end_ok": "这一分 31.8 前结束，之后是他的近景；段内 32.7~36.2 的翻牌是近景里板的抖动，段尾 36.4 在 36.5 那一刀之前，下一次翻牌 49.4。",
+      "crosses_cut": "31.84（loose）切到卢布列夫近景：同一分打完之后。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 36.8,
+      "end": 49.5,
+      "cx": 0.5,
+      "narration": "四平，雅凯发球，卢布列夫打到十五比四十，手握两个破发点。雅凯连着顶了回来，保住了这一局。卢布列夫没有着急。",
+      "_why": "首盘 `•JACQUET 4 15 / RUBLEV 4 15`：雅凯发球（36.5 发球近景之后，36.8 起宽景这一分，38~47 相持），47.58 切到卢布列夫走回（48.5）。flashscore Set 1 第 9 局 `15:0, 15:15, 15:30, 15:40 |B1|, 30:40 |B1|, 40:40, A:40`——两个破发点，雅凯保发 5-4。集锦没放破发点那两分，放的是这一局 15 平那一分。",
+      "point_end_ok": "这一分 47.5 前结束，47.58 切到卢布列夫走回；point_ends 49.4，段尾 49.5 在 49.54 那一刀之前。",
+      "crosses_cut": "47.58（loose）切到卢布列夫走回：同一分之后。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 57.9,
+      "end": 69.9,
+      "cx": 0.5,
+      "narration": "四比五，卢布列夫发球保盘，三十平。他在底线把雅凯左右调动，雅凯滑出去救了一拍，没追上。他保住了，五平。",
+      "_why": "首盘 `JACQUET 5 30 / •RUBLEV 4 30`：57.0~57.7 他发球近景，57.78 切到宽景。逐 0.5 秒看过 58~67：远端卢布列夫、近端雅凯，58~61 雅凯在右侧，62~64 被调到左侧、64.0 向左滑步救球，65~67 又被拉到右侧，67 这一拍没追上。68.0 切到卢布列夫走回、69.0 近景。flashscore Set 1 第 10 局 `0:15, 0:30, 15:30, 30:30, 30:40` 后他保发，5-5。",
+      "point_end_ok": "这一分 67.7 前结束，之后是他的近景；point_ends 69.2 在段内，70.1 离段尾 0.2 秒、是 70.08 那一刀之后的首帧。",
+      "crosses_cut": "67.8（loose）/ 69.12（loose）切到卢布列夫走回和近景：同一分打完之后，旁白说的正是他。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 70.2,
+      "end": 82.4,
+      "cx": 0.5,
+      "narration": "六平，进了抢七，这一段雅凯一分都没拿到。卢布列夫一路打到六比零，第一个盘点就兑现，七比零，先拿下第一盘。",
+      "_why": "首盘抢七：70.2~75.1 `•JACQUET 6 / RUBLEV 6` 雅凯发球的第一分；75.16 / 76.5 切到他发球近景，76.78 起 `JACQUET 6 0 / •RUBLEV 6 6` 他的盘点，79.44 切，80.5 他走回，82.5 板翻成 `6⁰ / 7`。抢七 7-0：flashscore 首盘 7-6、雅凯抢七小分 0。",
+      "point_end_ok": "盘点那一分 79.4 前结束，80.5 他走回；82.5 的翻牌离段尾 0.1 秒，是这一盘结束后板更新的那一刻。",
+      "crosses_cut": "75.16 / 76.5 / 76.78 / 79.44：抢七里接连两分和拿下这一盘后的走回，旁白讲的是整个抢七。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 120.5,
+      "end": 133.9,
+      "cx": 0.5,
+      "narration": "第二盘第二局，雅凯的发球局打出了四次平分。他两次占先，两次都没守住，卢布列夫的破发点一个接一个地来。",
+      "_why": "第二盘 `•JACQUET 6⁰ 0 AD / RUBLEV 7 1`：雅凯占先、他发球，120.5~129.2 这一分，129.32 切到雅凯近景（130.5 走回），132.5 板翻回 `40 / 40`。flashscore Set 2 第 2 局 `15:0, 15:15, 30:15, 30:30, 30:40 |B1|, 40:40, A:40, 40:40, A:40, 40:40, 40:A |B1|, 40:40, 40:A |B1|`——四次 40:40、两次 A:40。",
+      "point_end_ok": "这一分 129.2 前结束，129.32 切到雅凯走回；132.5 板翻平分在段内，段尾 133.9 在 134.0 那一刀之前。",
+      "crosses_cut": "129.32 切到雅凯走回：丢掉这一分之后，旁白说的正是他。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 134.1,
+      "end": 151.4,
+      "cx": 0.5,
+      "narration": "卢布列夫的第三个破发点。两人在底线来回相持。他不急着下重手，把球一左一右地调动，雅凯从一侧跑到另一侧，来回跑了好几趟。最后一拍，雅凯没顶住。二比零。",
+      "_why": "第二盘 `•JACQUET 6⁰ 0 / RUBLEV 7 1 AD`：近端雅凯发球，逐 0.5 秒看过 134~149.5：136 雅凯在左侧，139 回到中路偏右，141~142 又被拉到左侧，144 左侧，147~149 左侧底线，149.5 丢分；149.86 切到雅凯近景（150~151），板翻成 `6⁰ 0 / 7 2 AD`，151.44 切回。",
+      "point_end_ok": "这一分 149.8 前结束，149.86 切到雅凯近景；段内 141.4/142.4 的翻牌是转播板闪烁，段尾 151.4 在 151.44 那一刀之前、151.5 翻牌离段尾 0.1 秒。",
+      "crosses_cut": "149.86 切到雅凯近景：丢掉破发点之后的反应。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 164.6,
+      "end": 185.8,
+      "cx": 0.5,
+      "narration": "卢布列夫发球，十五平。又是一分漫长的底线相持，雅凯被调到场地两边，低下身子连着救球，最后还是丢了。他摊开双手，一脸无奈。到这里，他已经很难找到办法了。",
+      "_why": "第二盘 `JACQUET 6⁰ 0 15 / •RUBLEV 7 2 15`：164.52 起宽景，逐 0.5 秒看过 164.5~184：远端卢布列夫、近端雅凯，雅凯左右来回，180.5 低身救球；184.5 切到雅凯近景张开双手（184.5~185.5）。flashscore Set 2 第 3 局 `15:0, 15:15, 15:30, 15:40` 他保发 3-0。",
+      "point_end_ok": "这一分 184.4 前结束，184.5 切到雅凯的反应；point_ends 185.2 在段内，段尾 185.8 在 185.84 那一刀之前，下一次翻牌 208.7。",
+      "crosses_cut": "184.5 切到雅凯张开双手：丢掉这一分之后的反应，旁白说的正是他。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 204.8,
+      "end": 209.7,
+      "cx": 0.5,
+      "narration": "雅凯的下一个发球局，他再破一次，四比零。",
+      "_why": "204.76~208.4 `•JACQUET 6⁰ 0 30 / RUBLEV 7 3 40`：雅凯发球、卢布列夫的第二个破发点，208.46 切到他近景（208.5 握拳走回）。flashscore Set 2 第 4 局 `0:15, 15:15, 15:30, 15:40 |B1|, 30:40 |B1|` 第二个破发点破发，4-0。",
+      "point_end_ok": "破发点那一分 208.4 前结束，208.46 切到他近景；208.7 的翻牌在段内，209.9 离段尾 0.2 秒、是 209.82 那一刀之后的首帧。",
+      "crosses_cut": "208.46 切到卢布列夫近景：破发之后的反应。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 209.9,
+      "end": 220.4,
+      "cx": 0.5,
+      "narration": "雅凯保住一局，一比五。轮到卢布列夫发球胜赛。全场他的十个发球局，雅凯一个破发点都没拿到。",
+      "_why": "209.82 起 `JACQUET 6⁰ 1 15 / •RUBLEV 7 5 0`：他发球那一局 0-15 的一分，逐 0.5 秒看过 210~220：近端雅凯在左侧底线来回，219.5 这一分结束、两人走回。「雅凯保住一局」：flashscore Set 2 第 6 局 `15:0, 30:0, 40:0` 雅凯保发 1-5（集锦没放）；「十个发球局一个破发点都没拿到」：df_st_1 Service games won 客队 10/10，Break Points Saved 客队 0/0。",
+      "point_end_ok": "这一分 219.5 前结束，之后是两人走回；段尾 220.4 之后的下一次翻牌是 225.8（5.4 秒后，在他近景里）。",
+      "crosses_cut": "段内没有切点。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 228.7,
+      "end": 234.8,
+      "cx": 0.5,
+      "narration": "五比一，他发球胜赛，两个赛点。第一个，他就拿下了。",
+      "_why": "和冷开场同一分，按时间顺序重放、配旁白：228.5 画面 `2 MATCH POINTS`、板 `6⁰ 1 15 / •7 5 40`，229~233 这一分，233.28 切到看台，板翻成 `6⁰ 1 / 7 6`。flashscore Set 2 第 7 局 `15:0, 15:15, 15:30, 15:40 |B3|` 第一个赛点兑现。",
+      "point_end_ok": "赛点那一分 233.2 前结束，233.28 切到看台；比赛已经结束。",
+      "crosses_cut": "233.28 切到看台：赛点之后同一刻。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 234.9,
+      "end": 244.9,
+      "cx": 0.5,
+      "narration": "决赛是两个俄罗斯人的对决，对面是头号种子梅德韦杰夫。省下的力气留给明天，他能在杭州捧杯吗？",
+      "_why": "234.88 起他近景：235 仰头、236 手捂额头、237 正脸；238~240 和雅凯在网前拥抱；240.58 切到网前宽景，两人走回，244 雅凯向看台挥手。段尾 244.9 在章节边界 245.0 之前（245.81 起静音，之后是梅德韦杰夫那一场）。决赛：flashscore YRzVjjGE，梅德韦杰夫 7-5 6-4 胜萨菲乌林，头号种子（TNNS）。",
+      "point_end_ok": "比赛已经结束。",
+      "crosses_cut": "240.58 从近景切到网前宽景：同一刻赛后的握手拥抱，旁白是片尾一问。",
+      "score_inset": true
+    }
+  ]
+}

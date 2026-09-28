@@ -8021,6 +8021,10 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   打完）。按下面那条常设授权走：终场后约一小时，WTA photo-resources、WTA 赛后稿、
 #:   四川在线体育频道都没有本场图，搜狗微信撞反爬、AP 这一档没跑通。用 47.1s 第二盘破发到
 #:   2-0 之后走回底线、正脸睁眼的近景，源片 1920×1080，放大 1.33 倍。
+#: - `rublev-jacquet-hangzhou-2026-sf`：2026-09-28 杭州 ATP250 半决赛（北京 19:10 前后
+#:   打完）。按下面那条常设授权走：终场后约三小时 find_cover_photo 查 WTA photo-resources、
+#:   赛后稿头图 0，AP 页面没取到，搜狗微信列出的图都是前一天 1/4 决赛的。用 Tennis TV
+#:   半决赛合集 33.5s 首盘发球后正脸睁眼的近景，源片 1920×1080，放大 1.33 倍。
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
@@ -8039,6 +8043,8 @@ OWNER_APPROVED_FRAME_COVERS = frozenset({
     "zverev-tien-laver-cup-2026",
     "two-handled-racket-maric-2026",
     "davidovich-fokina-basilashvili-chengdu-2026-sf",
+    "rublev-jacquet-hangzhou-2026-sf",
+    "medvedev-safiullin-hangzhou-2026-sf",  # 2026-09-26 常设授权；官方图四类源查过无可用高清，见 spec _frame_why。
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来

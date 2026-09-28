@@ -1,0 +1,87 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 2.578,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 185.7,
+  "topbar": null,
+  "film_seconds": 192.125,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 7.08,
+    "1": 9.408,
+    "2": 3.48,
+    "3": 13.896,
+    "4": 2.16,
+    "5": 14.112,
+    "6": 13.944,
+    "7": 11.352,
+    "8": 3.144,
+    "9": 21.624,
+    "10": 11.208,
+    "11": 7.584,
+    "12": 9.912,
+    "13": 8.568,
+    "14": 13.68,
+    "15": 11.352
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "292b23895b7a1eea6d7c2dce6b4e6584822345dd9449a2d256d8d45344f8b7bc",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "seeds-zheng-china-open-2026",
+    "received_at": "2026-09-28T16:04:50Z",
+    "artifact_ready_at": "2026-09-28T16:12:04Z",
+    "elapsed_seconds": 434.195,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "46c1bc6717781731cbdb30c95bf2294d94da14b3a43f64e780683e8060a215c6",
+    "spec_sha256": "f339b827617da17b8e7f1144866d9adb43ea10bdad36191a621f393740de526d",
+    "run_id": "36448392515",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-28T16:06:37Z",
+        "run_id": "36448392515"
+      }
+    ],
+    "render_seconds": 327.195,
+    "pre_render_seconds": 107.0
+  },
+  "film_sha256": "46c1bc6717781731cbdb30c95bf2294d94da14b3a43f64e780683e8060a215c6",
+  "film_bytes": 76568785,
+  "qc_attestation_sha256": "d9df83ecd64a89b0c52844c0eac8b4d6441973492b4877f63b78ec2833a77de7",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-28T16:06:37Z",
+      "run_id": "36448392515"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-28T16:12:05Z",
+      "run_id": "36448392515"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-seeds-zheng-china-open-2026/seeds-zheng-china-open-2026.mp4",
+  "video_bytes": 76568785,
+  "_release_tag_note": "2026-09-28T16:12:11Z run 36448392515 把这一份（video_bytes 76568785）传上 tag `reel-seeds-zheng-china-open-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-09-28/reel/seeds-zheng-china-open-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+}

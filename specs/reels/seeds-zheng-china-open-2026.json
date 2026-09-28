@@ -5,8 +5,8 @@
   "_facts": "全部出自 docs/research/seeds-zheng-china-open-2026.md，逐条带出处和可信度。要点：中网签表 WTA 官方 MDS.pdf（RELEASED 28 Sep 2026）＋ WTA 抽签稿 ＋ 新浪；郑钦文 9/28 世界第 54（WTA 接口，单源，旁白只说「五十名开外」，9/14、9/21 两期都是 52，同样成立）；美网三场赛果取仓库 result_verified 的三条 spec。",
   "_claims": {
     "美网历史上第一个非种子女单冠军（克里斯特尔斯 2009）": "https://www.espn.com/sports/tennis/usopen09/news/story?id=4471433（Unseeded Clijsters wins U.S. Open）＋ https://www.tennismajors.com/us-open-news/september-12-2009-the-day-kim-clijsters-became-the-first-wildcard-to-win-the-us-open-491468.html ＋ 维基 2009 US Open Women's singles",
-    "温网历史上第一个非种子女单冠军（万卓索娃 2023）": "https://www.cbssports.com/tennis/news/wimbledon-2023-marketa-vondrousova-becomes-first-unseeded-woman-to-win-singles-title-at-the-all-england-club ＋ https://www.nbcsports.com/olympics/news/marketa-vondrousova-ons-jabeur-wimbledon-final",
-    "1号和2号种子只可能在决赛相遇": "https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf（第 1 / 128 签）＋ https://ausopen.com/articles/news/how-seeds-are-different-rankings"
+    "1号和2号种子只可能在决赛相遇": "https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf（第 1 / 128 签）＋ https://ausopen.com/articles/news/how-seeds-are-different-rankings",
+    "公开赛年代首位非种子温网女单冠军（万卓索娃 2023）": "https://www.usopen.org/en_US/news/articles/2023-07-15/marketa_vondrousova_makes_history_as_first_unseeded_woman_to_win_wimbledon_in_the_open_era.html"
   },
   "sources": {
     "open": "https://www.youtube.com/watch?v=dg7Whi_m_Tc",
@@ -168,14 +168,24 @@
     },
     {
       "source": "von23",
-      "start": 272.0,
+      "start": 270.5,
       "end": 283.3,
       "fit": "crop",
-      "narration": "二〇二三年温网，世界第四十二的万卓索娃，没有种子。决赛赢了六号种子贾巴尔，温网第一个非种子女单冠军。",
-      "_why": "温网官方决赛集锦：270.5 万卓索娃近景走向底线，274.28 起底线回合宽景。_claims 第二条。render run 36420959113 质检报成片 140s 数字静音：温网回合之间现场声只有 -65~-71 dB（probe audio_levels 273~280s），原来 274.4 起、旁白只说 5 秒，后半段就是静音。改成 272.0 起、旁白 10 秒说到 282 前后，281s 起现场声回到 -48 dB 以上；原来的技术统计图形段一并拿掉，结果并进这句旁白。",
+      "narration": "二〇二三年，世界第四十二的万卓索娃，决赛击败六号种子贾巴尔，成为公开赛年代首位非种子温网女单冠军。",
+      "_why": "温网官方决赛集锦：270.5 万卓索娃近景走向底线，274.28 起底线回合宽景。_claims 的万卓索娃纪录条目。render run 36420959113 质检报成片 140s 数字静音：温网回合之间现场声只有 -65~-71 dB（probe audio_levels 273~280s），原来 274.4 起、旁白只说 5 秒，后半段就是静音。改成 272.0 起、旁白 10 秒说到 282 前后，281s 起现场声回到 -48 dB 以上；原来的技术统计图形段一并拿掉，结果并进这句旁白。 2026-09-28按用户要求把纪录口径明确为「公开赛年代首位非种子温网女单冠军」；配音、自动生成的字幕及画面信息条同步修改，保留原272.0–283.3秒全部素材，前接270.5–272.0秒同一个近景，信息条在回合开始前退出，段长12.8秒。",
       "point_end_ok": "探讨片的背景画面，不解说这一分的归属。",
       "_quote_skip_why": "probe 未取得字幕，解说无法逐字核对。",
-      "crosses_cut": "274.28 一刀：万卓索娃走向底线的近景（270.5 / 272.5 格）→ 同一局的宽景回合，同一个人、同一段时间。"
+      "crosses_cut": "274.28 一刀：万卓索娃走向底线的近景（270.5 / 272.5 格）→ 同一局的宽景回合，同一个人、同一段时间。",
+      "inset": {
+        "image": "assets/beatcards/seeds-zheng-china-open-2026/vondrousova-wimbledon-2023.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.52,
+        "pad": 0.085,
+        "show_for": 2.8,
+        "motion": "editorial"
+      },
+      "_inset_why": "用户2026-09-28要求修正文案和画面：信息条明确「公开赛年代首位」「非种子温网女单冠军」，年份与姓名写在证据行。原生story_text透明信息条仅在270.5–273.3秒人物近景期间出现（2.45秒开始淡出，2.8秒完全消失），在274.28秒切到完整回合之前已退出，不遮挡远端球员。"
     },
     {
       "source": "main",
