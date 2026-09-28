@@ -1,6 +1,5 @@
 {
-  "_release_tag_note": "⚠️ 这份记录已经不作数：tag `reel-rublev-gaston-hangzhou-2026-qf` 被 2026-09-28 那一趟重渲（run 36428550065，封面换 ATP 官方图、结尾按已定的半决赛改）`--clobber` 换掉了。2026-09-28 13:4x 用 Range GET 量的，tag 上现在是 91617677 字节，也就是 output/2026-09-28/reel/rublev-gaston-hangzhou-2026-qf 那一份；本目录记的 85915423 字节是更早那一版。",
-  "scoreboard_qc_sha256": "107201bb7df559b972db662843f706aa71e07f12fa51b9739d2d7f4e9e4c3423",
+  "scoreboard_qc_sha256": "4b1a3a9ae60c4b3278c48fdfc9f7cd3b9cf839485b3a4f70f8309de663634d5d",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
@@ -30,7 +29,7 @@
     "11": 9.768,
     "12": 16.896,
     "13": 7.92,
-    "14": 6.0
+    "14": 7.32
   },
   "face_checks": {
     "cover": {
@@ -104,43 +103,45 @@
       "faces": 0
     }
   },
+  "render_inputs_sha256": "86f02acc5fe7358105df315d4540e4c282c3e24cd2843734aa286f88ec775d2e",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "rublev-gaston-hangzhou-2026-qf",
-    "received_at": "2026-09-27T14:48:04Z",
-    "artifact_ready_at": "2026-09-27T14:54:34Z",
-    "elapsed_seconds": 390.607,
+    "received_at": "2026-09-28T13:25:55Z",
+    "artifact_ready_at": "2026-09-28T13:33:07Z",
+    "elapsed_seconds": 432.227,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "c62a8a5fc4d288c72fbbab625b4c13647c3650aeaaf0ee0c8a95392e65db4623",
-    "spec_sha256": "fc59fba1ce854a02d1231ee1f1ada9ac08318d10fe36acb83a7ee9376565813c",
-    "run_id": "36327221784",
+    "film_sha256": "e4377e0be225ecf0d30c60943a370ac647fbdca4d4a162393dcc12fc19f40514",
+    "spec_sha256": "ba317917371a9c6ebcc596cd98a4f387de897d22914736d867cfbf01458dfd8e",
+    "run_id": "36428550065",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-27T14:49:54Z",
-        "run_id": "36327221784"
+        "at": "2026-09-28T13:27:41Z",
+        "run_id": "36428550065"
       }
     ],
-    "render_seconds": 280.607,
-    "pre_render_seconds": 110.0
+    "render_seconds": 326.227,
+    "pre_render_seconds": 106.0
   },
-  "film_sha256": "c62a8a5fc4d288c72fbbab625b4c13647c3650aeaaf0ee0c8a95392e65db4623",
-  "film_bytes": 85915423,
-  "qc_attestation_sha256": "81e84625b5ec052d244b8492f09399a5af3988d97b71678e54f83426ccd0ace3",
+  "film_sha256": "e4377e0be225ecf0d30c60943a370ac647fbdca4d4a162393dcc12fc19f40514",
+  "film_bytes": 91617677,
+  "qc_attestation_sha256": "297a40054dc786cd07d20155b5b0e090b2f22b2eefd2e16e9577955010a3e755",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-27T14:49:54Z",
-      "run_id": "36327221784"
+      "at": "2026-09-28T13:27:41Z",
+      "run_id": "36428550065"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-27T14:54:35Z",
-      "run_id": "36327221784"
+      "at": "2026-09-28T13:33:08Z",
+      "run_id": "36428550065"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-rublev-gaston-hangzhou-2026-qf/rublev-gaston-hangzhou-2026-qf.mp4",
-  "video_bytes": 85915423
+  "video_bytes": 91617677,
+  "_release_tag_note": "2026-09-28T13:33:14Z run 36428550065 把这一份（video_bytes 91617677）传上 tag `reel-rublev-gaston-hangzhou-2026-qf`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-09-27/reel/rublev-gaston-hangzhou-2026-qf 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
 }
