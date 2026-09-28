@@ -1,4 +1,9 @@
 name: interview-clip
+# run 标题带上 slug：看板首屏和阻塞微信（账号所有者 Q9）从标题里认「哪条卡住」——
+# 手动拨的 run 原来标题只有工作流名。判据 test_手动拨的出片工作流run标题带slug
+# ⚠️ 每一段是什么登记在 tools/build_dashboard_snapshot.py 的 RUN_NAME_FIELDS（按段位读，
+# 两段的 slug 才认得出来），改这一行要一起改——判据 test_run标题的段位表和工作流里写的run_name对得上
+run-name: "interview-clip · ${{ inputs.mode }} · ${{ inputs.slug }}"
 
 # 把 @wta 逐场集锦尾巴上的**场上采访**剪出来，烧中英双语字幕。
 #

@@ -396,6 +396,7 @@ def test_绕过检测器自己认得出绕过():
 #: 登记之后再想拿掉，就得同时改这张表，在 diff 里看得见。WP1–WP8 接完 token
 #: 各自往这儿加一行。
 _ENFORCED_FLOOR = (
+    "dashboard/styles.css",                  # WP1 看板：样式只写 var(--tl-…)
     "src/tennislive/render/knowledge.py",    # WP2 推送：字卡那条推送正文
     "src/tennislive/render/push_style.py",   # WP2 推送 + 复制页的唯一样式出处
     "src/tennislive/video/diagram_palette.py",
@@ -528,7 +529,14 @@ def test_CSS变量带tl前缀_和看板自己的变量不撞名():
         if p.name == "tokens.css":
             continue
         theirs[p.name] = _declared(p.read_text(encoding="utf-8"))
-    assert "--muted" in theirs.get("styles.css", set()), "判据失效：看板的 --muted 没扫到"
+    # WP1 之后看板 styles.css 一个自己的变量都不定义了（只用 var(--tl-…)），
+    # 所以「扫到了 --muted」这条自证换成：styles.css 确实被扫了，而且撞名检测
+    # 拿老看板那两个名字喂进去必须报出来——不然这条是恒真的绿灯。
+    assert "styles.css" in theirs, "判据失效：看板的 styles.css 没扫到"
+    old_dashboard = _declared(":root{--muted:#91a99b;--radius:20px}")
+    assert old_dashboard - ours == old_dashboard, "判据失效：老看板的 --muted/--radius 本该不撞"
+    assert {"--tl-muted"} & ours and _declared(":root{--tl-muted:#000}") & ours, (
+        "判据失效：同名变量喂进去没被认成撞名")
     clash = {name: sorted(names & ours) for name, names in theirs.items() if names & ours}
     assert not clash, f"和看板自己的变量撞名：{clash}"
 
@@ -540,8 +548,11 @@ def test_主题跟随系统_钉死的data_theme优先_裸root不写color_scheme(
       原来那句 `:root{color-scheme:dark}` 会把任何链接了 tokens.css、又没写
       `data-theme="light"` 的页面的浏览器画布翻成深色；
     - `data-theme="dark|light"` 钉死的两块，永远在；
-    - 跟随系统：`prefers-color-scheme` 浅／深两块，选择器是「没钉死」的 `:root`，
-      钉死了就让位；
+    - 跟随系统：浅色那块写在 `@media` 外面兜底、深色那块包在
+      `prefers-color-scheme: dark` 里、**排在浅色后面**（同特异度，后写的赢），
+      选择器都是「没钉死」的 `:root`，钉死了就让位。⚠️ 原来浅色也包在
+      `prefers-color-scheme: light` 里——认不出这条媒体查询的 WebView（老 Android／X5、
+      iOS < 12.1）两块都不生效，页面一个颜色都没有（WP1 复核的 nit）；
     - 浅色块声明的变量 = 深色块 − 画布专用的（`DARK_ONLY` 和图表），画布角色在
       任何一块浅色里都不出现（不会悄悄继承一个深色值）。
     """
@@ -552,22 +563,24 @@ def test_主题跟随系统_钉死的data_theme优先_裸root不写color_scheme(
     assert "color-scheme" not in by_sel[(":root",)]
     assert set(by_sel) >= {
         (":root",), (':root[data-theme="dark"]',), (':root[data-theme="light"]',),
-        ("@media (prefers-color-scheme: dark)", unpinned),
-        ("@media (prefers-color-scheme: light)", unpinned),
+        (unpinned,), ("@media (prefers-color-scheme: dark)", unpinned),
     }
     schemes = {sel: re.findall(r"color-scheme:\s*(\w+)", body) for sel, body in blocks}
     assert {sel: s for sel, s in schemes.items() if s} == {
         (':root[data-theme="dark"]',): ["dark"],
         (':root[data-theme="light"]',): ["light"],
+        (unpinned,): ["light"],
         ("@media (prefers-color-scheme: dark)", unpinned): ["dark"],
-        ("@media (prefers-color-scheme: light)", unpinned): ["light"],
-    }
+    }, "没钉死的颜色只许一块在 @media 外面（浅色兜底），否则认不出媒体查询的浏览器没颜色"
+    order = [sel for sel, _ in blocks]
+    assert order.index((unpinned,)) < order.index(("@media (prefers-color-scheme: dark)", unpinned)), \
+        "深色要排在浅色兜底后面，否则系统要深色时被浅色盖回去"
     dark_vars = _declared(by_sel[(':root[data-theme="dark"]',)])
     light_vars = _declared(by_sel[(':root[data-theme="light"]',)])
     assert light_vars == dark_vars - T.dark_only_vars()
     assert T.dark_only_vars() <= dark_vars
     assert _declared(by_sel[("@media (prefers-color-scheme: dark)", unpinned)]) == dark_vars
-    assert _declared(by_sel[("@media (prefers-color-scheme: light)", unpinned)]) == light_vars
+    assert _declared(by_sel[(unpinned,)]) == light_vars
 
     # 默认深色的消费方：深色块兼认「没钉死」，不跟随系统，裸 :root 照样不写
     dark_default = _css_blocks(T.tokens_css(default="dark"))
@@ -657,6 +670,14 @@ _POINTER_FILES = (
     "tools/design_compare_sheet.py",
     "tests/test_design_tokens.py",
     "tests/test_push_visual.py",
+    # WP1 看板：注释里点名的判据同样要指得到
+    ".github/workflows/pages.yml",
+    ".github/workflows/pipeline-health.yml",
+    "dashboard/app.js",
+    "dashboard/index.html",
+    "dashboard/styles.css",
+    "tools/build_dashboard_snapshot.py",
+    "tools/pipeline_health.py",
 )
 
 

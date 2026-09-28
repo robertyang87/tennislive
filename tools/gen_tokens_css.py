@@ -6,7 +6,7 @@
 
 内容：与主题无关的 `:root`（圆角、字阶、字体、动效、彩条，**不带 `color-scheme`**）、
 钉死主题的 `:root[data-theme="dark|light"]` 两块、按消费方默认主题生成的「没钉死」
-那一份（跟随系统就是 `prefers-color-scheme` 浅／深两块），最后是
+那一份（跟随系统：浅色在 `@media` 外面兜底、深色在 `prefers-color-scheme: dark` 里覆盖），最后是
 `prefers-reduced-motion` 块。浅色块声明的变量 = 深色块 − 画布专用的
 （`DARK_ONLY` 和图表）。
 
