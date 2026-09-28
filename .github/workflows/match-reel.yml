@@ -489,6 +489,14 @@ jobs:
           || github.event.inputs.mode == 'narration'
           || github.event.inputs.mode == 'reattest'
         timeout-minutes: 3
+        # **和 render 步挂同一对 Azure 钥匙**（2026-09-28 修正轮 2）：「误差带里的旁白认真 TTS
+        # 的账」要比账头的后端和**出片那一趟**对不对得上（`render_tts_setup` →
+        # `azure_tts.available()`）。这一步不挂的话它恒答「没有 Azure」，钥匙修好那天 render
+        # 走 Azure、dry-run 还在认 edge-tts 的账；SDK 在上面「装依赖」里已经装好（render／cover／
+        # narration 三档）。判据 `test_runner的dry_run和render挂同一对Azure钥匙`。
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: |
           # tee 进 /tmp/render-findings.log：render 红了之后「判据回喂模型修一轮」
           # 那一步要拿这份**确定性的原话**当输入（tools/repair_reel_spec.py）。
@@ -1230,7 +1238,12 @@ jobs:
           # 是会话里补账的路——不提交的话量完就丢。只 add 这一个小 JSON，装不下（rc=1）
           # 也照样落账：真时长本身没错，改画面长度不用重量。
           REC="data/narration_checks/${{ github.event.inputs.slug }}.json"
-          if [ -f "$REC" ]; then
+          # **main 上不提交**（2026-09-28 修正轮 2）：直接推到 main 的提交不过 CI，冻着的 slug
+          # 量完账，`test_旁白没量过真TTS的豁免表只许减` 就红在下一个无关 PR 上。在分支上跑，
+          # 账和豁免表的删行进同一个 PR；main 上这一趟只报数（日志里那张表照旧印）。
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "::warning::mode=narration 在 main 上跑：真 TTS 的账不提交（main 的提交不过 CI）——要落账就在分支上重跑，或者把日志里那张表抄进 $REC 走 PR"
+          elif [ -f "$REC" ]; then
             git config user.name "Claude"
             git config user.email "noreply@anthropic.com"
             git add "$REC"

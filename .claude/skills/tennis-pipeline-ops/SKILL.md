@@ -4854,6 +4854,42 @@ PR 看」，不是「它挡在出片前面」。
 （别的请求照常提交、dispatch，这一条的旧 spec 按清单跳过；红是为了不让它只剩一句被略过的 warning），
 H 那种「warning ＋ 绿」只剩不带清单的手动调法。
 
+## ⭐⭐ 2026-09-28：返工审计的八道小闸——每一道都各烧过一整趟 render 或一次重推
+
+`rework_audit_0928`（09-20~09-28，82 趟失败 run ＋ 25 次推送后重推）里这八样**只看 spec
+和仓库里的 probe／字幕缓存就判得出**，却都等到 runner 下完源片（或推出去之后）才发现。
+全部挪到 `--dry-run`／`interview_preflight`：**手写 spec 硬、自动 spec 只报、已发的冻进豁免表
+（只许减、测试自检）**。判据 `tests/test_small_gates.py`，每道都反向验证过（拆掉红在自己那条断言上）。
+
+| 闸 | 在哪儿 | 来路（回放） | 豁免 |
+|---|---|---|---|
+| 章节卡 > 18 字 | `_normalize_title_card_segments`（load_spec），和 render 现渲卡同一个 `render_title_card.length_problem`；**谁写的都硬**——超了 render 必红，只报等于晚三分钟红 | china-open-withdrawals ca2d4829a（19 字，run 36296202661）、asiad-2026-men-draw 775d5d8d1（25 字，run 36296693320） | 全库 0 条 |
+| 写过源片末尾：容差 **0**（原来 +0.05s） | `segments_over_source_end`，`need ≤ 源片时长`；谁写的都硬（超了 render 必红） | hu-kopriva 466450041：143.4＋0.18＝143.58 对 probe 143.56，超 0.02s（run 35949569743）→ 红 | 无。⚠️ 第一版是「减一帧」，比证据严：已推送 5 段落在最后一帧里（差 0.014~0.038s）照样渲得出来（chengdu-ng-kouame cf73af107、eala-ruse 5f589d63f 的 spec 和 render.json 同一个提交），修正轮收回成 0、豁免表删掉 |
+| 误差带里的旁白要拿**真 TTS** 认账 | `narration_check_findings`（dry-run），账在 `data/narration_checks/<slug>.json`，按每段旁白的指纹认，**文件头的后端／栏目基调／音色／语速要和出片那一趟对得上**（`narration_record_mismatch`，修正轮补的：第一版记了不比）。**「出片那一趟」按出片那台机器算**（`render_tts_setup`＝`apply_tts_backend`＋`column_base_style` 的同一个判法），runner 的 dry-run 步挂和 render 步同一对 Azure 钥匙——修正轮 2：上一版按 spec 推（没写 `tts_backend` 就当 azure），而 runner 上两把钥匙是空的（run 36257658569 render 步 env 两项空、日志「[配音] 没有 Azure」；origin/main 上 09-25~09-28 的 44 份 render.json `narration_backend` 全是 edge-tts），`mode=narration` 量出来的 edge-tts 账一律不认，没写 `tts_backend` 的手写 spec（rebase 到 c127cdcd0 之后 317 条里 294 条）量完还是红、报错叫你再去量。全库扫描不比后端（CI 上没有 Azure）；换字表（`speakable`）故意不进指纹——同音字换音节数不变，进了就每改一次表全库的账作废；`--check-narration` 落账，runner 的 `mode=narration` 量完**自己提交回分支**（沙箱连不上 edge-tts） | zverev-deminaur 4a2eb32c4 第 9 段：画面 11.9s、runner 上 **edge-tts** 实测 12.10s（run 36257658569，那一趟没有 Azure）——dry-run 当时只印一句「悬」→ 红 | `data/legacy_narration_unchecked.json`：上线时 specs/reels 下 299 条手写 spec 按**整条旁白指纹**冻，改一个字就不认；修正轮 2 补冻 1 条（上限 300）：two-handled-racket-maric-2026，闸在分支上时 main 上手写推送的 |
+| 蒙版和裁框差 1px | `masked_board_patch`：`alphamerge` 之前把蒙版 `scale` 成裁框宽高（neighbor），两处回贴共用 | safiullin-bu 424×108 对 424×109（run 36323549463）；测试真跑 ffmpeg，两头都钉 | 不是闸，是修 |
+| 采访：已知带片尾板的源，话音后空 > 1.5s，**手写** spec | `interview_tail.quiet_tail_problem`（`interview_preflight` 里升红）；拉沃尔杯、Tennis TV（`source_verification.source`／请求的 `source`／`tennistv.com`）；认领 `_end_why` 或 `_end_board_ok` | alcaraz-fritz-interview 1b0b65ee5^（话音后 3.1s）、tien-cobolli 9ae8918fb^（5.4s）推出去又重推——⚠️ **回放拦不住**：两条都是自动 spec（`auto_pending`），这道闸只报；它们归出片那一趟的 `end_card_problem`＋自动终点撞板直接收（73aba4c1c／16bcfd336，09-27，事故之后才上线）。这道闸管的是以后手写的，把 runner 上同一个红提到 dispatch 前 | `legacy_interview_gates.json` 的 `end_board_quiet_tail`：2 条辛辛那提 Tennis TV 已推送 |
+| 钩子「送××进决赛」不算赛果 | `taste_gates.has_match_result` | bucsa-noskova 872c6dab6^（账号所有者原话「封面钩子文案没交代赛果啊」） | `legacy_taste_gates.json` 的 `hook_shape` ＋1：zverev-prizmic「77分钟送德国晋级」（09-20，规矩之前） |
+| 多源 `_no_probe_why` 要带宽高帧率 | `probe_sources.coverage_findings`／`claimed_geometry`：认领写成 `{"why","width","height","fps"}`，几何预演拿它照跑（每条源都没 probe、全靠认领时也跑——修正轮把它挪到「一份都没认领上」的早退之前）；一句话的认领手写红 | sinner-beijing-withdrawal 97ebe27a2 的 xvid 480×852（run 36133328467） | 全库 0 条用过 |
+| 开着 `score_inset`、probe 早于逐帧量板 | `probe_board.board_findings`：报错里给现成的 `gh workflow run match-reel.yml … mode=probe … scorebox=…` | prozorova-eala e04fb91b6（run 36020126044）、alcaraz-mensik-doubles e73bd17d4（run 36197683115） | `data/legacy_board_unprobed.json`：78 条已推送、84 条源 |
+
+**回放**（失败那一趟的 spec 版本、换新 slug、**按真实路径**调判据）：蒙版那条是修不是闸
+（测试真跑 ffmpeg 钉住），bu-majchrzak 的「N号种子」**按设计不做闸**（见 `tennis-owner-taste`）；
+其余该拦的 10 条拦住 **8 条**——没拦住的是采访片尾板那两条（自动 spec，只报，见上表）。
+⚠️ 第一版这里写的是「11 条里 10 条」：回放脚本给 `quiet_tail_problem` 硬塞了 `auto=False`，
+测的不是出片时真走的那条路。**回放要走真实路径，别替判据填参数。**
+全库扫描（specs/reels 315 条能解析的手写 spec、采访 110 条）：豁免表之外 **0 条硬红**。
+
+⚠️ **误差带那道闸会让几乎每条新手写 spec 先量一次真 TTS**：`SPEECH_EST_ERR`＝2.2s，
+上线时全库 315 条里 299 条有落在带里的段。这正是 CLAUDE.md「那一分钟必须花」——它原来只写在
+文档里。沙箱量不了（edge-tts 走 WSS，代理挡），走 runner：
+`gh workflow run match-reel.yml --ref <分支> -f mode=narration -f slug=<slug>`，约 1.5 分钟，
+账自己提交回分支（**在 main 上跑只报数、不提交**——修正轮 2 加的判断，main 的提交不过 CI）；runner 上 cover／narration 那两趟这道闸只报，不挡出封面、不挡补账本身。本地量的账头写着这台机器的后端，和 runner 出片那个不一样就不认——runner 现在走哪个，看最近一份 render.json 的 `narration_backend`。
+
+⚠️ **豁免表的自检会在没人动 spec 的时候变红**：对冻着的 slug 跑了 `mode=narration`（账直接提交到
+`github.ref_name`；修正轮 2 起 main 上那一趟不提交）、或者重跑了冻着那条源的 probe（提交落在 `output/**`，ci.yml 跳过），
+`test_旁白没量过真TTS的豁免表只许减`／`test_没量板的豁免表只许减` 就红在下一个无关 PR 上。
+补完账／重跑完 probe，**同一个提交里**把那个 slug 从豁免表删掉。
+
 ## ⭐⭐ 2026-09-27：赛后开麦 dispatch 之前的离线预检、片尾板、拼接清单、推送后修订
 
 **写完或改完一条采访 spec，dispatch 之前先跑一条命令**（秒级、不联网、不下源片）：
@@ -4921,39 +4957,3 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 拉沃尔杯板，都已推送），发布会（机位锁死、相邻帧差 < 0.5 能连着 9 秒）0 条误认；
 另有 5 条正片最后 1.1~1.7 秒是冻帧（`end` 越过了源片画面）。这 7 条不挂豁免：闸只在重渲
 那一刻才跑，重渲时就该一起收掉。量法和名单在 `tools/interview_tail.py` 的 docstring。
-
-## ⭐⭐ 2026-09-28：返工审计的八道小闸——每一道都各烧过一整趟 render 或一次重推
-
-`rework_audit_0928`（09-20~09-28，82 趟失败 run ＋ 25 次推送后重推）里这八样**只看 spec
-和仓库里的 probe／字幕缓存就判得出**，却都等到 runner 下完源片（或推出去之后）才发现。
-全部挪到 `--dry-run`／`interview_preflight`：**手写 spec 硬、自动 spec 只报、已发的冻进豁免表
-（只许减、测试自检）**。判据 `tests/test_small_gates.py`，每道都反向验证过（拆掉红在自己那条断言上）。
-
-| 闸 | 在哪儿 | 来路（回放） | 豁免 |
-|---|---|---|---|
-| 章节卡 > 18 字 | `_normalize_title_card_segments`（load_spec），和 render 现渲卡同一个 `render_title_card.length_problem`；**谁写的都硬**——超了 render 必红，只报等于晚三分钟红 | china-open-withdrawals ca2d4829a（19 字，run 36296202661）、asiad-2026-men-draw 775d5d8d1（25 字，run 36296693320） | 全库 0 条 |
-| 写过源片末尾：容差 **0**（原来 +0.05s） | `segments_over_source_end`，`need ≤ 源片时长`；谁写的都硬（超了 render 必红） | hu-kopriva 466450041：143.4＋0.18＝143.58 对 probe 143.56，超 0.02s（run 35949569743）→ 红 | 无。⚠️ 第一版是「减一帧」，比证据严：已推送 5 段落在最后一帧里（差 0.014~0.038s）照样渲得出来（chengdu-ng-kouame cf73af107、eala-ruse 5f589d63f 的 spec 和 render.json 同一个提交），修正轮收回成 0、豁免表删掉 |
-| 误差带里的旁白要拿**真 TTS** 认账 | `narration_check_findings`（dry-run），账在 `data/narration_checks/<slug>.json`，按每段旁白的指纹认，**文件头的后端／栏目基调／音色／语速要和出片那一趟对得上**（`narration_record_mismatch`，修正轮补的：第一版记了不比，edge-tts 的账会被 Azure 出片认下）；换字表（`speakable`）故意不进指纹——同音字换音节数不变，进了就每改一次表全库的账作废；`--check-narration` 落账，runner 的 `mode=narration` 量完**自己提交回分支**（沙箱连不上 edge-tts） | zverev-deminaur 4a2eb32c4 第 9 段：画面 11.9s、Azure 12.10s（run 36257658569）——dry-run 当时只印一句「悬」→ 红 | `data/legacy_narration_unchecked.json`：上线时 specs/reels 下 299 条手写 spec 按**整条旁白指纹**冻，改一个字就不认 |
-| 蒙版和裁框差 1px | `masked_board_patch`：`alphamerge` 之前把蒙版 `scale` 成裁框宽高（neighbor），两处回贴共用 | safiullin-bu 424×108 对 424×109（run 36323549463）；测试真跑 ffmpeg，两头都钉 | 不是闸，是修 |
-| 采访：已知带片尾板的源，话音后空 > 1.5s，**手写** spec | `interview_tail.quiet_tail_problem`（`interview_preflight` 里升红）；拉沃尔杯、Tennis TV（`source_verification.source`／请求的 `source`／`tennistv.com`）；认领 `_end_why` 或 `_end_board_ok` | alcaraz-fritz-interview 1b0b65ee5^（话音后 3.1s）、tien-cobolli 9ae8918fb^（5.4s）推出去又重推——⚠️ **回放拦不住**：两条都是自动 spec（`auto_pending`），这道闸只报；它们归出片那一趟的 `end_card_problem`＋自动终点撞板直接收（73aba4c1c／16bcfd336，09-27，事故之后才上线）。这道闸管的是以后手写的，把 runner 上同一个红提到 dispatch 前 | `legacy_interview_gates.json` 的 `end_board_quiet_tail`：2 条辛辛那提 Tennis TV 已推送 |
-| 钩子「送××进决赛」不算赛果 | `taste_gates.has_match_result` | bucsa-noskova 872c6dab6^（账号所有者原话「封面钩子文案没交代赛果啊」） | `legacy_taste_gates.json` 的 `hook_shape` ＋1：zverev-prizmic「77分钟送德国晋级」（09-20，规矩之前） |
-| 多源 `_no_probe_why` 要带宽高帧率 | `probe_sources.coverage_findings`／`claimed_geometry`：认领写成 `{"why","width","height","fps"}`，几何预演拿它照跑（每条源都没 probe、全靠认领时也跑——修正轮把它挪到「一份都没认领上」的早退之前）；一句话的认领手写红 | sinner-beijing-withdrawal 97ebe27a2 的 xvid 480×852（run 36133328467） | 全库 0 条用过 |
-| 开着 `score_inset`、probe 早于逐帧量板 | `probe_board.board_findings`：报错里给现成的 `gh workflow run match-reel.yml … mode=probe … scorebox=…` | prozorova-eala e04fb91b6（run 36020126044）、alcaraz-mensik-doubles e73bd17d4（run 36197683115） | `data/legacy_board_unprobed.json`：78 条已推送、84 条源 |
-
-**回放**（失败那一趟的 spec 版本、换新 slug、**按真实路径**调判据）：蒙版那条是修不是闸
-（测试真跑 ffmpeg 钉住），bu-majchrzak 的「N号种子」**按设计不做闸**（见 `tennis-owner-taste`）；
-其余该拦的 10 条拦住 **8 条**——没拦住的是采访片尾板那两条（自动 spec，只报，见上表）。
-⚠️ 第一版这里写的是「11 条里 10 条」：回放脚本给 `quiet_tail_problem` 硬塞了 `auto=False`，
-测的不是出片时真走的那条路。**回放要走真实路径，别替判据填参数。**
-全库扫描（specs/reels 315 条能解析的手写 spec、采访 110 条）：豁免表之外 **0 条硬红**。
-
-⚠️ **误差带那道闸会让几乎每条新手写 spec 先量一次真 TTS**：`SPEECH_EST_ERR`＝2.2s，
-上线时全库 315 条里 299 条有落在带里的段。这正是 CLAUDE.md「那一分钟必须花」——它原来只写在
-文档里。沙箱量不了（edge-tts 走 WSS，代理挡），走 runner：
-`gh workflow run match-reel.yml --ref <分支> -f mode=narration -f slug=<slug>`，约 1.5 分钟，
-账自己提交回分支；runner 上 cover／narration 那两趟这道闸只报，不挡出封面、不挡补账本身。
-
-⚠️ **豁免表的自检会在没人动 spec 的时候变红**：对冻着的 slug 跑了 `mode=narration`（账直接提交到
-`github.ref_name`，是 main 就不过 CI）、或者重跑了冻着那条源的 probe（提交落在 `output/**`，ci.yml 跳过），
-`test_旁白没量过真TTS的豁免表只许减`／`test_没量板的豁免表只许减` 就红在下一个无关 PR 上。
-补完账／重跑完 probe，**同一个提交里**把那个 slug 从豁免表删掉。

@@ -30,7 +30,9 @@ runner 上必红的那些「只看 spec 就判得出」的错在 dispatch 之前
 
 **红（runner 上一定会红的）**：全称断言要认领两个源（runner「发布文案前置检查」那一步
 的 `check_interview_claims`）、L0 来源身份、Tennis TV 台标挪没挪出窗口、顶栏赛事行格式、
-顶栏比分方向、开场认领、冷开场／片尾那两段、小红书正文在不在、文案不提字幕规格、封面 `hook_accent`、
+顶栏比分方向、开场认领、冷开场／片尾那两段、**已知带片尾板的源（拉沃尔杯、Tennis TV）上手写
+spec 的 `end` 离最后一个词太远**（`interview_tail.quiet_tail_problem`，认领 `_end_why`）、
+小红书正文在不在、文案不提字幕规格、封面 `hook_accent`、
 账号所有者的口味闸（`check_taste`：标题和推送标题同一个数只能有一个说法；
 `check_taste_extra`：总分差、赛点同义反复、小红书正文 markdown）、解读卡（含「一行放得下」）、
 文案的 tag／标题（`push_reel --stage check`，和 runner 的「发布文案前置检查」同一条命令）、以及
@@ -38,9 +40,7 @@ runner 上必红的那些「只看 spec 就判得出」的错在 dispatch 之前
 行数对齐、中英超宽、吊尾虚词、顶栏宽度、`highlight_en`）。
 
 **⚠️（只报不拦）**：没有字幕缓存所以行数没对上号；`end` 离最后一个词还有好几秒
-（片尾板要在出片那一趟按帧量，见 `interview_tail`——**已知带片尾板的源（拉沃尔杯、
-Tennis TV）上的手写 spec 这一条是红**，`interview_tail.quiet_tail_problem`，认领 `_end_why`）；
-转正那道措辞闸的口径。
+（片尾板要在出片那一趟按帧量，见 `interview_tail`）；转正那道措辞闸的口径。
 """
 from __future__ import annotations
 

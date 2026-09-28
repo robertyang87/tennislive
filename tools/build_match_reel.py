@@ -6572,8 +6572,9 @@ def narration_estimates(segments) -> list[tuple[int, float, float]]:
 # ── 「落在估算误差里」要拿真 TTS 认账（2026-09-28 返工审计） ─────────────────
 #
 # zverev-deminaur-laver-cup-2026 第 9 段：画面 11.9s，dry-run 离线估只报「悬，跑一次
-# mode=narration」，没人跑；runner 上 Azure 实测 12.10s，render 当场红（run 36257658569，
-# 白烧 2.9 分钟）。CLAUDE.md 早写着「只要它报了『第 [N] 段落在估算的误差里』，就跑一次
+# mode=narration」，没人跑；runner 上真 TTS 实测 12.10s，render 当场红（run 36257658569，
+# 白烧 2.9 分钟）。⚠️ 那一趟**没有 Azure**：render 步 env 里 `AZURE_SPEECH_KEY`／`REGION`
+# 两项都空、日志印「[配音] 没有 Azure」——12.10s 是 **edge-tts** 量的（修正轮 2 更正）。CLAUDE.md 早写着「只要它报了『第 [N] 段落在估算的误差里』，就跑一次
 # `--check-narration` 再发 render，别赌」——**只写在文档里，没有闸**。
 #
 # 现在 `--check-narration`（本地，或 runner 的 mode=narration）把每段量到的真时长按
@@ -6627,31 +6628,47 @@ def load_narration_record(slug: str) -> dict[str, dict]:
     return segs if isinstance(segs, dict) else {}
 
 
-def expected_narration_setup(spec: dict) -> tuple[str, list[str]]:
-    """出片那一趟会用的 `(TTS 后端, [栏目基调, styledegree])`——按 spec 推，不看这台机器有没有钥匙。
+def render_tts_setup(spec: dict) -> tuple[str, list[str]]:
+    """**这台机器上**出片那一趟会用的 `(TTS 后端, [栏目基调, styledegree])`。
 
-    runner 上 render 有 Azure 钥匙，所以没写 `tts_backend` 的就是 `azure`，基调按栏目
-    （`column_base_style` 在有 Azure 时取的同一个 `base_style_for`）；写了 `tts_backend: edge`
-    的是 `edge-tts`、没有基调（`column_base_style` 在没 Azure 时返回空）。"""
-    if spec.get("tts_backend") == "edge":
+    和 `apply_tts_backend`＋`column_base_style` 同一个判法（不打日志）：spec 认领了
+    `tts_backend: edge`、或者这台机器 `azure_tts.available()` 答否 → `edge-tts`、没有基调；
+    否则 `azure`、基调按栏目。判据 `test_出片那台机器的TTS和apply_tts_backend是同一个判法`。
+
+    ⚠️ **修正轮 2（2026-09-28）：上一版按 spec 推**（没写 `tts_backend` 就当 `azure`），而 runner
+    上根本没有 Azure：run 36257658569（job 108447396699）render 步的 env 里 `AZURE_SPEECH_KEY`／
+    `AZURE_SPEECH_REGION` 两项都空、日志印「[配音] 没有 Azure」；origin/main 上 09-25~09-28 落的
+    44 份 render.json，`narration_backend` 全是 `edge-tts`。`mode=narration` 挂的是同一对 secrets，
+    量出来的账头必然是 `edge-tts`，按 spec 推的 `azure` 一律不认——没写 `tts_backend` 的手写 spec
+    （rebase 到 c127cdcd0 之后 317 条里 294 条）在 dry-run 上无路可走：报错叫你去量，量完还是不认。
+    所以期望值取**出片那台机器真会用的**：runner 的 dry-run 步挂和 render 步同一对钥匙、
+    同一套依赖（SDK 在「装依赖」里、dry-run 之前就装了，`test_runner的dry_run和render挂同一对Azure钥匙`），
+    两步的 `available()` 答的是同一件事；钥匙修好那天，edge-tts 量的老账自动不认，
+    再跑一趟 `mode=narration` 就换成 Azure 的账。"""
+    if spec.get("tts_backend") == "edge" or not azure_tts.available():
         return "edge-tts", ["", ""]
     column = str(spec.get("column") or (spec.get("cover") or {}).get("eyebrow") or "").strip()
     return "azure", list(azure_tts.base_style_for(column))
 
 
-def narration_record_mismatch(data: dict, spec: dict, *, voice: str | None = None,
-                              rate: str | None = None) -> str | None:
+def narration_record_mismatch(data: dict, *, tts: tuple[str, list[str]] | None = None,
+                              voice: str | None = None, rate: str | None = None) -> str | None:
     """账本的文件头（后端、栏目基调、音色、语速）和出片那一趟对不上 → 一句为什么不认；对得上 None。
 
-    修正轮（2026-09-28）：第一版把这几样记进了账却从来不比——edge-tts 量的账会被当成
-    Azure 出片的真时长认下来，而这条闸要防的正是「量的不是出片那个 TTS」。
-    `voice`／`rate` 给了才比（`--dry-run` 传它自己的参数，默认值和工作流的默认值是
-    一对，`test_match_reel` 钉着）。"""
+    修正轮（2026-09-28）：第一版把这几样记进了账却从来不比，而这条闸要防的正是
+    「量的不是出片那个 TTS」——哪个 TTS 量的，时长就是哪个 TTS 的（本地 `--check-narration`
+    和 runner 的 render 不是同一个 TTS 时差得出 6%，见 `tennis-video-craft`）。
+    每一样**给了才比**：`tts` 是 `render_tts_setup(spec)`（`--dry-run` 在出片那台机器上算），
+    `voice`／`rate` 是 `--dry-run` 自己的参数（默认值和工作流的默认值是一对，`test_match_reel`
+    钉着）。全库扫描一样都不给——后端是**哪台机器**的事，CI 上没有 Azure，拿它去比 runner
+    量的账，钥匙修好那天全库一起红（修正轮 2）。"""
     if not data:
         return None
-    backend, base = expected_narration_setup(spec)
-    got = [("TTS 后端", str(data.get("backend") or ""), backend),
-           ("栏目基调", list(data.get("base_style") or ["", ""]), base)]
+    got = []
+    if tts is not None:
+        backend, base = tts
+        got += [("TTS 后端", str(data.get("backend") or ""), backend),
+                ("栏目基调", list(data.get("base_style") or ["", ""]), list(base))]
     if voice is not None:
         got.append(("音色", str(data.get("voice") or ""), voice))
     if rate is not None:
@@ -6691,21 +6708,30 @@ def legacy_narration_unchecked() -> dict[str, str]:
 
 
 def check_narration_commands(spec: dict, spec_path: str | Path | None = None) -> str:
-    """补账的两行现成命令（本地一行、runner 一行）。"""
+    """补账的两行现成命令（runner 一行、本地一行）。
+
+    runner 排前面：账头记着量它的 TTS 后端，`--dry-run` 只认和**出片那台机器**同一个后端量的账
+    （`render_tts_setup`）。runner 的 mode=narration 和 render 挂同一对钥匙，量的一定是出片那个；
+    本地量的只有后端碰巧一样才认（修正轮 2：原来写「本地（能连 edge-tts／有 Azure 钥匙）」，
+    而上一版对没写 `tts_backend` 的 spec 只认 azure，本地 edge-tts 量的账恒不认）。"""
     slug = str(spec.get("slug") or (Path(spec_path).stem if spec_path else "<slug>"))
     path = str(spec_path or f"specs/reels/{slug}.json")
-    return ("    本地（能连 edge-tts／有 Azure 钥匙，约 1 分钟）：\n"
+    return ("    runner（约 1.5 分钟，和 render 同一对钥匙、同一个 TTS；量完自己把账提交回分支，"
+            "**别在 main 上跑**）：\n"
+            f"      gh workflow run match-reel.yml --ref <分支> -f mode=narration -f slug={slug}\n"
+            "    本地（约 1 分钟，要连得上 TTS；账头的后端要和出片那台一样才认——"
+            "runner 现在走哪个，看最近一份 render.json 的 narration_backend）：\n"
             f"      PYTHONPATH=src python3 tools/build_match_reel.py render --check-narration "
             f"--spec {path} --outdir /tmp/check-narration-{slug}\n"
-            "    runner（沙箱连不上 TTS 时；约 1.5 分钟，量完自己把账提交回分支）：\n"
-            f"      gh workflow run match-reel.yml --ref <分支> -f mode=narration -f slug={slug}\n"
             f"    量完把 data/narration_checks/{slug}.json 和 spec 一起提交")
 
 
 def narration_check_findings(spec: dict, segments, tight: list[int], *,
                              spec_path: str | Path | None = None,
                              record: dict | None = None, legacy: dict | None = None,
-                             env: dict | None = None, voice: str | None = None,
+                             env: dict | None = None,
+                             tts: tuple[str, list[str]] | None = None,
+                             voice: str | None = None,
                              rate: str | None = None) -> tuple[list[str], list[str], list[str]]:
     """「落在估算误差里」的段认真 TTS 的账 → `(红, 只报, 认过账的)`。
 
@@ -6716,12 +6742,14 @@ def narration_check_findings(spec: dict, segments, tight: list[int], *,
 
     账本的文件头和出片那一趟对不上（`narration_record_mismatch`：后端、栏目基调、音色、
     语速）→ 整份账不认，误差带里的段按「没量过」算。`record` 显式给了就不查文件头（测试用）。
+    `tts` 给 `render_tts_setup(spec)`——`--dry-run` 在出片那台机器上给；全库扫描不给（见
+    `narration_record_mismatch`）。
     """
     slug = str(spec.get("slug") or (Path(spec_path).stem if spec_path else ""))
     mismatch = None
     if record is None:
         data = _narration_record_file(slug)
-        mismatch = narration_record_mismatch(data, spec, voice=voice, rate=rate)
+        mismatch = narration_record_mismatch(data, tts=tts, voice=voice, rate=rate)
         segs = data.get("segments")
         record = {} if mismatch or not isinstance(segs, dict) else segs
     env = os.environ if env is None else env
@@ -6758,7 +6786,7 @@ def narration_check_findings(spec: dict, segments, tight: list[int], *,
         line = (f"  第 {[i + 1 for i in unchecked]} 段落在估算的误差里，而 "
                 f"data/narration_checks/{slug or '<slug>'}.json 里没有这几段**现在这版旁白**的"
                 "真 TTS 时长（没量过，或者量完又改过字）。离线估判不了——zverev-deminaur 第 9 段"
-                "就是这么在 runner 上红的（估的余量看着宽，Azure 实测超了 0.2s）。"
+                "就是这么在 runner 上红的（估的余量看着宽，runner 上 edge-tts 实测超了 0.2s）。"
                 + (f"（账本在，但量的不是出片那一套：{mismatch}——整份不认）" if mismatch else "")
                 + "先量：\n" + check_narration_commands(spec, spec_path))
         if soft_reason:
@@ -10849,6 +10877,15 @@ def main() -> int:
         with tempfile.TemporaryDirectory() as tmp:
             voices = synthesize(segments, Path(tmp), args.voice, args.rate, *base_style)
             spoken, over = narration_overruns(segments, voices)
+            # **量到的真时长当场落账**：`--dry-run` 对「落在估算误差里」的段按旁白指纹认它
+            # （`narration_check_findings`）。账落在 data/，不碰 output/。⚠️ 必须排在这个分支
+            # **任何一个 `return 1` 之前**（装不下也要落账：真时长没错，改画面长度不用重量），
+            # 判据 `test_check_narration落账排在任何return之前`。
+            record_path = write_narration_record(
+                str(spec.get("slug") or Path(args.spec).stem), segments, spoken,
+                voice=args.voice, rate=args.rate,
+                backend=tts_backend if isinstance(tts_backend, str) else str(tts_backend),
+                base_style=base_style)
             splits = _word_splits(spec, segments, voices)
             # ⚠️ **必须在这个 `with` 里量。** 语音只在临时目录里活着，出了这个
             # 块就被删——第一版印在外面，十一段全报「文件不在」（run 30901516117）。
@@ -10862,16 +10899,11 @@ def main() -> int:
             # 再出现，本该在这 1 分半的本地路里就看见，不该再等一趟 7 分钟的 render。
             outro_voice, _outro_marks = synth_outro(Path(tmp), args.voice, args.rate)
             outro_secs = outro_length(outro_voice)
-        # **量到的真时长落账**：`--dry-run` 对「落在估算误差里」的段按旁白指纹认它
-        # （`narration_check_findings`）。账落在 data/，不碰 output/。
-        record_path = write_narration_record(
-            str(spec.get("slug") or Path(args.spec).stem), segments, spoken,
-            voice=args.voice, rate=args.rate,
-            backend=tts_backend if isinstance(tts_backend, str) else str(tts_backend),
-            base_style=base_style)
         total = sum(s.length for s in segments)
         print(f"[查旁白] {len(spoken)} 段有旁白，画面共 {total:.1f}s"
               f"（音色 {args.voice} {args.rate}），片尾 {outro_secs:.2f}s")
+        print(f"[查旁白] 真 TTS 时长（{tts_backend}）记进 {record_path}——和 spec 一起提交，"
+              "`--dry-run` 认这份账（改了哪段旁白，哪段就要重量）")
         for index, secs in sorted(spoken.items()):
             room = segments[index].length - secs
             flag = ("超出" if room < -0.12 else "很紧" if room < 0.3
@@ -10902,8 +10934,6 @@ def main() -> int:
         # **风格做出来没有、有没有做过头**，报在这儿——语音还在临时目录里，
         # 这一刻是唯一能干净量到它的时候（成片混了现场声，量出来不可信）。
         print("\n".join(prosody))
-        print(f"\n[查旁白] 真 TTS 时长记进 {record_path}——和 spec 一起提交，"
-              "`--dry-run` 认这份账（改了哪段旁白，哪段就要重量）")
         if over:
             return 1
         print("\n[查旁白] 每段旁白都装得下；超 4 秒留白仅提示，不阻断渲染。")
@@ -11035,8 +11065,11 @@ def main() -> int:
                 return 1
             # **误差带里的段要拿真 TTS 认账**（`narration_check_findings`）：原来这儿只印
             # 一句「开跑之前用真语音量一次」，zverev-deminaur 第 9 段就是读了这句没去量。
+            # 比账头用**出片那台机器**的 TTS（`render_tts_setup`）：runner 的 dry-run 步挂着和
+            # render 步同一对 Azure 钥匙，两步答的是同一件事（修正轮 2）。
             n_hard, n_soft, n_ok = narration_check_findings(
-                spec, segments, tight, spec_path=args.spec, voice=args.voice, rate=args.rate)
+                spec, segments, tight, spec_path=args.spec, tts=render_tts_setup(spec),
+                voice=args.voice, rate=args.rate)
             if n_ok:
                 print("\n[估旁白] 误差带里这几段已经拿真 TTS 量过（"
                       f"data/narration_checks/{spec.get('slug') or Path(args.spec).stem}.json）：\n"

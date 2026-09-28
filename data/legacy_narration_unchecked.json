@@ -1,5 +1,6 @@
 {
- "_why": "「落在估算误差里的段要拿真 TTS 认账」（build_match_reel.narration_check_findings，2026-09-28；来路 zverev-deminaur-laver-cup-2026 run 36257658569：第 9 段画面 11.9s、dry-run 只报「悬」，Azure 实测 12.10s，render 红）上线时 specs/reels/ 下已有的手写 spec。按**整条旁白的指纹**（spec_narration_fingerprint）冻住：任何一段旁白改一个字、换一个语速风格就不认，要先跑 --check-narration 落账。只许减不许加（量过账、或 spec 删了就从这里删掉）；自检 tests/test_small_gates.py::test_旁白没量过真TTS的豁免表只许减。",
+ "_why": "「落在估算误差里的段要拿真 TTS 认账」（build_match_reel.narration_check_findings，2026-09-28；来路 zverev-deminaur-laver-cup-2026 run 36257658569：第 9 段画面 11.9s、dry-run 只报「悬」，runner 上真 TTS 实测 12.10s（那一趟没有 Azure 钥匙，是 edge-tts），render 红）上线时 specs/reels/ 下已有的手写 spec。按**整条旁白的指纹**（spec_narration_fingerprint）冻住：任何一段旁白改一个字、换一个语速风格就不认，要先跑 --check-narration 落账。只许减不许加（量过账、或 spec 删了就从这里删掉）；自检 tests/test_small_gates.py::test_旁白没量过真TTS的豁免表只许减。",
+ "_late": "2026-09-28 修正轮 2 补冻 1 条（上限 299→300）：two-handled-racket-maric-2026——这道闸还在分支上时在 main 上手写、渲完、推送的（984185f8b 起，c127cdcd0 已推送），误差带里第 [2, 4, 5, 6, 7, 8, 9] 段没有账。和那 299 条同一类（定规矩之前已发的），已发的不重渲。只此一条，之后照旧只许减。",
  "reels": {
   "alcaraz-faria-us-open-2026-r2": "fba04b3a48c62ca3",
   "alcaraz-fritz-laver-cup-2026": "9132b583ed6eb673",
@@ -241,6 +242,7 @@
   "tsitsipas-auger-aliassime": "121196895b372b82",
   "tsitsipas-fils-us-open-2026-r1": "a1f4369908c97589",
   "tsitsipas-royer": "6b396c8b442c079b",
+  "two-handled-racket-maric-2026": "fb5c1171da12a77b",
   "usopen-qualies-2026": "07d1753247ea8ab8",
   "vacherot-harris-chengdu-2026-r2": "503f00cda4cdccea",
   "wang-arango-us-open-2026-r1": "6203778765066a0b",

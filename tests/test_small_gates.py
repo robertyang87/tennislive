@@ -133,7 +133,8 @@ def test_写过源片末尾只有两个参数_不要帧率也不要豁免表():
 # ═══════════════════════════ ③ 误差带里的旁白认真 TTS 的账 ═══════════════════════════
 
 #: zverev-deminaur-laver-cup-2026 在 4a2eb32c4 上的第 9 段（146.0–157.9，画面 11.9s）；
-#: runner 上 Azure 实测 12.10s，render 红（run 36257658569）。
+#: runner 上真 TTS 实测 12.10s，render 红（run 36257658569）。⚠️ 那一趟没有 Azure 钥匙
+#: （render 步 env 两项都空、日志「[配音] 没有 Azure」），12.10s 是 edge-tts 量的。
 ZVEREV_SEG9 = ("十比九，轮到德米纳尔的赛点。一个很长的回合，他被兹维列夫左右调动，"
                "一次次滑到角上把球救回来。最后一拍，兹维列夫没打进。")
 
@@ -157,6 +158,10 @@ def test_误差带里的段没量过真TTS_手写的红_命令现成():
     assert len(hard) == 1 and not soft and not ok, (hard, soft)
     assert "render --check-narration --spec specs/reels/zz-new-laver-cup-2026.json" in hard[0]
     assert "-f mode=narration -f slug=zz-new-laver-cup-2026" in hard[0]
+    # 修正轮 2：runner 那一行排前面、叮嘱别在 main 上跑；不再说「本地能连 edge-tts 就行」
+    assert hard[0].index("gh workflow run") < hard[0].index("render --check-narration")
+    assert "别在 main 上跑" in hard[0] and "能连 edge-tts" not in hard[0]
+    assert "Azure 实测" not in hard[0], "那一趟没有 Azure，12.10s 是 edge-tts 量的"
 
 
 def test_量过真TTS的账按旁白指纹认():
@@ -166,7 +171,7 @@ def test_量过真TTS的账按旁白指纹认():
     hard, soft, ok = reel.narration_check_findings(
         spec, segs, [0], record={fp: {"segment": 1, "spoken": 11.5}}, legacy={}, env={})
     assert not hard and ok, (hard, ok)
-    # Azure 那一趟的真数 12.10 > 11.9 + 0.12：量过也红
+    # runner 那一趟（edge-tts）的真数 12.10 > 11.9 + 0.12：量过也红
     hard, soft, ok = reel.narration_check_findings(
         spec, segs, [0], record={fp: {"segment": 1, "spoken": 12.10}}, legacy={}, env={})
     assert len(hard) == 1 and "超出" in hard[0], hard
@@ -213,44 +218,99 @@ def test_check_narration落账_dry_run读回来(tmp_path, monkeypatch):
 
 
 def test_账本量的不是出片那一套_整份不认(tmp_path, monkeypatch):
-    """修正轮（2026-09-28）：第一版账上记了后端／音色／语速却从来不比——edge-tts 量的账会被
-    当成 Azure 出片的真时长认下来。现在文件头要和出片那一趟对得上。"""
+    """修正轮（2026-09-28）：第一版账上记了后端／音色／语速却从来不比。现在文件头要和出片那一趟
+    对得上——**出片那一趟**按出片那台机器算（`render_tts_setup`，修正轮 2），由 `--dry-run` 传进来。"""
     monkeypatch.setattr(reel, "NARRATION_CHECKS_DIR", tmp_path)
     spec, segs = _zverev_spec()
     voice, rate = "zh-CN-YunjianNeural", "+6%"
+    edge, azure = ("edge-tts", ["", ""]), ("azure", ["", ""])
 
     def verdict(**kw):
         return reel.narration_check_findings(spec, segs, [0], legacy={}, env={}, **kw)
 
     reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate=rate,
                                 backend="edge-tts")
-    hard, _soft, ok = verdict(voice=voice, rate=rate)
+    # 没有 Azure 的 runner（run 36257658569 那一种）：出片走 edge-tts，edge-tts 的账就认
+    hard, _soft, ok = verdict(tts=edge, voice=voice, rate=rate)
+    assert not hard and ok, hard
+    # 出片那台有 Azure：edge-tts 的账不认
+    hard, _soft, ok = verdict(tts=azure, voice=voice, rate=rate)
     assert hard and not ok and "TTS 后端" in hard[0] and "'edge-tts'" in hard[0], hard
-    # spec 自己认领了 edge-tts，同一份账就认
-    edge = dict(spec, tts_backend="edge", _tts_backend_why="x")
-    assert not reel.narration_check_findings(edge, segs, [0], legacy={}, env={},
-                                             voice=voice, rate=rate)[0]
+    assert not verdict()[0], "没给 tts 就不比后端（全库扫描走这条：CI 上没有 Azure，不替 runner 判）"
     reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice="zh-CN-YunxiNeural",
                                 rate=rate, backend="azure")
-    hard, _soft, _ok = verdict(voice=voice, rate=rate)
+    hard, _soft, _ok = verdict(tts=azure, voice=voice, rate=rate)
     assert hard and "音色" in hard[0], hard
     assert not verdict()[0], "没给音色语速就不比这两样（全库扫描走这条）"
     reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate="+0%",
                                 backend="azure")
-    assert "语速" in verdict(voice=voice, rate=rate)[0][0]
+    assert "语速" in verdict(tts=azure, voice=voice, rate=rate)[0][0]
     # 栏目基调变了（表改了，或者 spec 换了栏目）：老账不认
     reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate=rate,
                                 backend="azure")
-    assert not verdict(voice=voice, rate=rate)[0]
-    monkeypatch.setitem(reel.azure_tts.COLUMN_BASE_STYLE, "赛场之上", ("excited", "1.2"))
-    styled = dict(spec, cover={"eyebrow": "赛场之上"})
-    hard = reel.narration_check_findings(styled, segs, [0], legacy={}, env={},
-                                         voice=voice, rate=rate)[0]
+    assert not verdict(tts=azure, voice=voice, rate=rate)[0]
+    hard = verdict(tts=("azure", ["excited", "1.2"]), voice=voice, rate=rate)[0]
     assert hard and "栏目基调" in hard[0], hard
     reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate=rate,
                                 backend="azure", base_style=("excited", "1.2"))
-    assert not reel.narration_check_findings(styled, segs, [0], legacy={}, env={},
-                                             voice=voice, rate=rate)[0], "按新基调重量过就认"
+    assert not verdict(tts=("azure", ["excited", "1.2"]), voice=voice, rate=rate)[0], \
+        "按新基调重量过就认"
+
+
+def _fake_azure(monkeypatch, *, on: bool) -> None:
+    """让 `azure_tts.available()` 答 on：钥匙＋SDK 都在（假模块），或者两把钥匙都没有。"""
+    import types  # noqa: PLC0415
+    az = reel.azure_tts
+    monkeypatch.setenv(az._ENV_BACKEND, "")    # 登记原值：apply_tts_backend 会写它，测完还原
+    if on:
+        monkeypatch.setenv(az._ENV_KEY, "k")
+        monkeypatch.setenv(az._ENV_REGION, "eastus")
+        for name in ("azure", "azure.cognitiveservices", "azure.cognitiveservices.speech"):
+            monkeypatch.setitem(sys.modules, name, sys.modules.get(name) or types.ModuleType(name))
+    else:
+        monkeypatch.delenv(az._ENV_KEY, raising=False)
+        monkeypatch.delenv(az._ENV_REGION, raising=False)
+    assert az.available() is on, "前提没立住"
+
+
+@pytest.mark.parametrize("azure_on", [False, True])
+def test_出片那台机器的TTS和apply_tts_backend是同一个判法(monkeypatch, capsys, azure_on):
+    """修正轮 2：dry-run 的期望值必须和出片那一趟**同一个判法**——render 用
+    `apply_tts_backend`＋`column_base_style` 定后端和基调，`--check-narration` 把这两个记进账头，
+    `--dry-run` 拿 `render_tts_setup` 去比。两边分叉，就是上一版那个死循环。"""
+    monkeypatch.setitem(reel.azure_tts.COLUMN_BASE_STYLE, "赛场之上", ("excited", "1.2"))
+    for spec in ({"slug": "a", "cover": {"eyebrow": "赛场之上"}},
+                 {"slug": "b", "cover": {"eyebrow": "网球有故事"}},
+                 {"slug": "c", "cover": {"eyebrow": "赛场之上"}, "tts_backend": "edge",
+                  "_tts_backend_why": "x"}):
+        _fake_azure(monkeypatch, on=azure_on)
+        want = reel.render_tts_setup(spec)
+        got = (reel.apply_tts_backend(spec), list(reel.column_base_style(spec)))
+        assert want == got, (spec, want, got)
+    capsys.readouterr()
+
+
+def test_runner的dry_run和render挂同一对Azure钥匙():
+    """修正轮 2：dry-run 步不挂钥匙，`available()` 在那一步恒答否，和 render 步答的不是一件事。
+    SDK 也要在 dry-run 之前装好（「装依赖」那一步，render／cover／narration 三档）。"""
+    yml = WORKFLOW.read_text(encoding="utf-8")
+
+    def step(name: str) -> str:
+        body = yml[yml.index(f"- name: {name}"):]
+        return body[:body.index("\n      - name:")]
+
+    def azure_env(body: str) -> list[str]:
+        return sorted(ln.strip() for ln in body.splitlines() if "AZURE_SPEECH_" in ln
+                      and "${{" in ln)
+
+    dry, render = step("dry-run — 先把 spec 的形状错拦在编码之前"), step("render — 出成片")
+    assert azure_env(render) and azure_env(dry) == azure_env(render), azure_env(dry)
+    assert azure_env(step("narration — 只查旁白装不装得下")) == azure_env(render)
+    assert yml.index("- name: 装依赖") < yml.index("- name: dry-run — 先把 spec 的形状错拦在编码之前")
+    deps = step("装依赖")
+    narration_deps = deps[deps.index('= "narration" ]'):deps.index('= "reattest" ]')]
+    assert "azure-cognitiveservices-speech" in narration_deps
+    assert "pip install -q azure-cognitiveservices-speech" in deps.split('= "probe" ]')[1]
 
 
 def test_check_narration落账带上合成用的基调():
@@ -261,6 +321,19 @@ def test_check_narration落账带上合成用的基调():
     assert "*base_style)" in check and "base_style=base_style" in check
     dry = src[src.index("n_hard, n_soft, n_ok = narration_check_findings("):]
     assert "voice=args.voice, rate=args.rate" in dry[:300]
+    assert "tts=render_tts_setup(spec)" in dry[:300], "账头要和出片那台机器比（修正轮 2）"
+
+
+def test_check_narration落账排在任何return之前():
+    """装不下（`over`）也要落账——真时长没错，改画面长度不用重量。wp/silence-hard 在这个分支里
+    加了自己的 `return 1` 条件，合并时这条钉住落账的位置。"""
+    src = inspect.getsource(reel.main)
+    check = src[src.index("if args.check_narration:"):]
+    check = check[:check.index("if args.dry_run:")]
+    # 认的是**代码行**里的 return（注释里也写着「任何一个 `return 1` 之前」，别被它误伤）
+    returns = [m.start() for m in re.finditer(r"^\s*return 1\s*$", check, re.M)]
+    assert "write_narration_record(" in check and returns
+    assert check.index("write_narration_record(") < min(returns)
 
 
 def test_误差带那道闸接在dry_run里_check_narration落账():
@@ -279,6 +352,78 @@ def test_误差带那道闸接在dry_run里_check_narration落账():
     step = step[:step.index("\n      - name:")]
     assert "data/narration_checks/" in step and "push_with_rebase_retry" in step
     assert "exit $rc" in step, "装不下（rc=1）的那一趟也要落账，然后照样红"
+    # 修正轮 2：main 上跑的那一趟不提交（main 的提交不过 CI，豁免表自检会红在下一个无关 PR 上）
+    guard = step[step.index('REC="data/narration_checks/'):]
+    assert '[ "${{ github.ref_name }}" = "main" ]' in guard
+    assert guard.index('= "main" ]') < guard.index("git commit"), "判 main 要排在提交之前"
+    assert guard.index('= "main" ]') < guard.index("elif [ -f \"$REC\" ]")
+
+
+#: 复审（修正轮 2）拿来复现死循环的那条：分支上 dry-run 绿、没写 `tts_backend`、冻在豁免表里。
+E2E_SLUG = "alcaraz-fritz-laver-cup-2026"
+
+
+def test_没有Azure的runner_量账之后dry_run认账_一条路走通(tmp_path, monkeypatch, capsys):
+    """修正轮 2：把 run 36257658569 那台 runner 的状态（两把钥匙都空）整条回放一遍——
+    改一个旁白字 → 冻结失效 → `--check-narration`（真 `main()`，只把合成和量时长打桩）落账 →
+    `--dry-run`（真 `main()`，REEL_DRY_RUN_FOR=render）认这份账、exit 0。
+    上一版按 spec 推「azure」，这一步 exit 1、报「整份不认」、叫你再去量，量完还是不认。"""
+    src = ROOT / "specs" / "reels" / f"{E2E_SLUG}.json"
+    spec = _load(src)
+    assert "tts_backend" not in spec and E2E_SLUG in reel.legacy_narration_unchecked()
+    tight = _tight(_segments(spec))
+    assert tight, "前提：这条有落在误差带里的段"
+    seg = spec["segments"][tight[0]]
+    assert seg["narration"].endswith("。")
+    seg["narration"] = seg["narration"][:-1] + "！"          # 改一个字：冻结不认了
+    work = tmp_path / "specs"
+    work.mkdir()
+    spec_path = work / src.name
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False, indent=1), encoding="utf-8")
+    copy = src.with_suffix(".xhs.txt")
+    if copy.is_file():
+        shutil.copy(copy, spec_path.with_suffix(".xhs.txt"))
+    monkeypatch.setattr(reel, "NARRATION_CHECKS_DIR", tmp_path / "checks")
+    _fake_azure(monkeypatch, on=False)
+    monkeypatch.setenv("REEL_DRY_RUN_FOR", "render")
+
+    # 合成和量时长打桩（沙箱连不上 TTS），其余全走 main() 自己那几行：
+    # apply_tts_backend → validate_spec → column_base_style → synthesize → write_narration_record
+    based: list[tuple] = []
+
+    def synthesize(segments, outdir, voice, rate, *base):
+        based.append(base)
+        return [(Path(outdir) / f"voice_{i:02d}.mp3", []) for i in range(len(segments))]
+
+    lengths = {i: s.length for i, s in enumerate(reel.validate_spec(json.loads(
+        spec_path.read_text(encoding="utf-8"))))}
+    monkeypatch.setattr(reel, "synthesize", synthesize)
+    monkeypatch.setattr(reel, "probe_duration",
+                        lambda path: lengths[int(Path(path).stem.split("_")[1])] - 0.4)
+    monkeypatch.setattr(reel, "_word_splits", lambda *a: [])
+    monkeypatch.setattr(reel, "prosody_report", lambda *a: [])
+    monkeypatch.setattr(reel, "synth_outro", lambda outdir, v, r: (Path(outdir) / "o.mp3", []))
+    monkeypatch.setattr(reel, "outro_length", lambda path: 3.0)
+
+    def run(*flags: str) -> tuple[int, str]:
+        capsys.readouterr()
+        monkeypatch.setattr(sys, "argv", ["build_match_reel.py", "render", *flags,
+                                          "--spec", str(spec_path),
+                                          "--outdir", str(tmp_path / "out")])
+        rc = reel.main()
+        return rc, capsys.readouterr().out
+
+    rc, out = run("--dry-run")
+    assert rc == 1 and "没有这几段**现在这版旁白**" in out, "前提：改了字、还没量，手写的红"
+    rc, out = run("--check-narration")
+    assert rc == 0, out[-2000:]
+    assert based == [("", "")], "没有 Azure：不套栏目基调"
+    head = json.loads((tmp_path / "checks" / f"{E2E_SLUG}.json").read_text(encoding="utf-8"))
+    assert head["backend"] == "edge-tts" and head["base_style"] == ["", ""]
+    rc, out = run("--dry-run")
+    assert "整份不认" not in out, out[-3000:]
+    assert "误差带里这几段已经拿真 TTS 量过" in out
+    assert rc == 0, out[-3000:]
 
 
 def test_旁白没量过真TTS的豁免表只许减():
@@ -300,7 +445,9 @@ def test_旁白没量过真TTS的豁免表只许减():
         if not hard:
             stale.append(f"{slug}（已经量过账／不在误差带里了）")
     assert not stale, "从 data/legacy_narration_unchecked.json 删掉：" + "、".join(stale)
-    assert len(legacy) <= 299
+    # 299 条是上线时的存量；修正轮 2 补冻 two-handled-racket-maric-2026（闸在分支上时 main 上
+    # 手写推送的，见那份表的 `_late`），之后只许减
+    assert len(legacy) <= 300
 
 
 def test_豁免表外的手写spec误差带里的段都量过():
