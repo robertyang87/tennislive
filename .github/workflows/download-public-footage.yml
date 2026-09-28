@@ -1,4 +1,4 @@
-# Review-only draft: not installed, committed, dispatched, or published.
+# Isolated source-download workflow for the Beijing men's draw production.
 # Uses the same YT_COOKIES_TXT -> RUNNER_TEMP file pattern as match-reel.yml.
 name: Download official public tennis footage
 
@@ -22,25 +22,22 @@ jobs:
       max-parallel: 2
       matrix:
         include:
-          - id: V0o1CQ2KMvQ
+          - id: 'EnOF7arIHds'
             channel_id: UCbcxFkd6B9xUU54InHv4Tig
-            label: miami-2025-mensik-djokovic
-            section: '*00:03:00-00:13:00'
-            trim_origin: 180
-            trim_duration: 600
-            url: https://www.youtube.com/watch?v=V0o1CQ2KMvQ
-          - id: UtdkZ-J21Lw
-            channel_id: UCNa8NxMgSm7m4Ii9d4QGk1Q
-            label: wimbledon-2026-deminaur-cobolli
-            url: https://www.youtube.com/watch?v=UtdkZ-J21Lw
-          - id: hQhffT5ptLE
+            label: hangzhou-2025-medvedev-wu
+            url: https://www.youtube.com/watch?v=EnOF7arIHds
+          - id: 'KhBd3aS7i5s'
             channel_id: UCbcxFkd6B9xUU54InHv4Tig
-            label: halle-2026-faa-tien
-            url: https://www.youtube.com/watch?v=hQhffT5ptLE
-          - id: hY1epQDmhGQ
-            channel_id: UCXbboag48Qlr78zzz6SkzkQ
-            label: usopen-2026-zverev-shelton
-            url: https://www.youtube.com/watch?v=hY1epQDmhGQ
+            label: chengdu-2025-shang-bergs
+            url: https://www.youtube.com/watch?v=KhBd3aS7i5s
+          - id: '-i-__KqEvXE'
+            channel_id: UCY_5h5zaSwN7Or4kIJDYNXA
+            label: hangzhou-2026-bu-safiullin
+            url: https://www.youtube.com/watch?v=-i-__KqEvXE
+          - id: 'AFRkGlrk0dg'
+            channel_id: UCbcxFkd6B9xUU54InHv4Tig
+            label: hangzhou-2024-zhang-cilic
+            url: https://www.youtube.com/watch?v=AFRkGlrk0dg
     steps:
       # No checkout and no repository mutations are needed for these fixed URLs.
       - uses: actions/setup-python@v5
@@ -146,7 +143,8 @@ jobs:
           meta['trim_origin'] = float(os.environ.get('TRIM_ORIGIN') or 0)
           meta['trim_requested_duration'] = float(os.environ.get('TRIM_DURATION') or source_duration)
           meta['source_duration'] = source_duration
-          meta['trim_note'] = 'Requested source interval; stream-copy cuts may differ slightly at keyframes.'
+          meta['trim_note'] = ('Requested source interval; stream-copy cuts may differ slightly at keyframes.'
+                               if os.environ.get('TRIM_DURATION') else 'Full source downloaded; no trim.')
           with video.open('rb') as handle:
               meta['sha256'] = hashlib.file_digest(handle, 'sha256').hexdigest()
           shutil.move(str(video), out / video.name)
