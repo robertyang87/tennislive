@@ -4938,10 +4938,10 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 | cookies 自检填了搜索词（1，run 35478525370） | `ytsearch8:…` 搜出 0 条，报「没下到媒体流」 | 第一步红：「是搜索词不是视频」（`tools/source_url_check.py`） |
 | probe 空 URL＋默认 slug（1，run 36304133786） | 第 1.4 分钟红在 `curl: (3)` | match-reel 表单自检（setup-python 之后、认领源片和装依赖之前），两处都点名；`build_match_reel probe` 下载之前也拦空地址和坏框 |
 | X CDN 直链 403（2） | 一句 curl 403 | 帖子地址下载时现解、直链只当 `source_fallbacks`（tennis-media-sources「X 和 Instagram 是第一手源」） |
-| 1080p 的框配 720p 源（2，medvedev-wong） | 源片下完才红（cv2 `!_src.empty()` / ReelError），probe 产物一个字节没提交 | `fit_scorebox_to_frame`：按源片高度找一档装得下的参考高度等比缩（`98,920,519,1029`@1280×720 → `65,613,346,686`；同一 slug 后来下到 1080p 那趟这个框量出 97 个死球），缩不进退回猜框；`probe.json` 记 `scorebox_fitted`。全库 94 条 spec 的框对 probe 过的源片：108 次原样、1 次要缩（`zheng-rybakina` 的 720p 那趟）、0 次丢 |
+| 1080p 的框配 720p 源（2，medvedev-wong） | 源片下完才红（cv2 `!_src.empty()` / ReelError），probe 产物一个字节没提交 | `fit_scorebox_to_frame`：按源片高度找一档装得下的参考高度等比缩（`98,920,519,1029`@1280×720 → `65,613,346,686`；同一 slug 后来下到 1080p 那趟这个框量出 97 个死球），缩不进退回猜框；`probe.json` 记 `scorebox_fitted`。⚠️ **只认得出「出界」**：720p 的框配 1080p 源、1080p 左上角的框碰巧装得进 720p，都原样用、量错地方、不报——框照这一趟源片的像素给；`--scorebox` 给了却量不了时 `point_ends` 记 `null`（不是 `[]`，`[]` 是量过零次）。全库 94 条 spec 的框对 probe 过的源片：108 次原样、1 次要缩（`zheng-rybakina` 的 720p 那趟）、0 次丢 |
 | 派发 render 的 assert 撞手写 spec（1，run 36331363124） | 裸 `AssertionError` | `tools/probe_dispatch_gate.py`：没 spec → waiting，手写（无 `_production`）→ skip，自动 spec 的 ready ＋ `push.auto` 合同照旧硬 |
 | frame-grab 推送 5 次失败（1，run 36317540680） | 手搓循环睡在 fetch 和 push 之间（13~28 秒），远端每一轮都往前走一格 | 改用共享 `push_with_rebase_retry`；**共享脚本本身也改成「先退避、再 rebase、立刻推」**（原来同样睡在 rebase 和 push 之间），同 slug 的 frame-grab 排队 |
-| 上游 HTTP 5xx（1，run 35708122768） | 审计标成 flashscore，**日志里其实是 MiniMax 读比分板 500**——base 的 47f9f2b6d 已降级只报（`test_scoreboard_http_failure_does_not_write_partial_alignment`），账号所有者 09-27 定了不给模型加重试，没加 | flashscore 这一侧补上同形的洞：`fetch_match_stats_fs.feed` 5xx／网络抖动重试 3 次、最后一律 `StatsError`；`assemble_spec` 读 feed 的五块接住 `match_feed._get` 抛的 `SystemExit`（原来穿过每一处 `except Exception`，一次 500 就让 probe 整趟不提交） |
+| 上游 HTTP 5xx（1，run 35708122768） | 审计标成 flashscore，**日志里其实是 MiniMax 读比分板 500**——base 的 47f9f2b6d 已降级只报（`test_scoreboard_http_failure_does_not_write_partial_alignment`），账号所有者 09-27 定了不给模型加重试，没加 | flashscore 这一侧补上同形的洞：`fetch_match_stats_fs.feed` 5xx／网络抖动重试 3 次、最后一律 `StatsError`；`assemble_spec` 读 feed 的四块（stats／狠数据／转折局／抢七小分）接住 `match_feed._get` 抛的 `SystemExit`（原来穿过每一处 `except Exception`，一次 500 就让 probe 整趟不提交）；**matchup 归位那一块不降级**，见下 |
 
 `assemble_spec --year ''`（3 趟）在 base 的 09e091851 已修，`test_match_reel_optional_int_inputs` 钉着。
 
@@ -4950,3 +4950,23 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 ⚠️ 回放的上限：X 那两条 403 当时的帖子地址仓库里没有，**现在的办法能不能把它们救回来没验证过**——
 能证明的只是「写帖子地址的 spec 下载时现解，不会再因为钉死的直链失效而红」。
 
+### ⭐⭐ 复审补丁（同日）：**matchup 顺序核不出，就一块按 home/away 排的都不写**
+
+`matchup_order` 读不到 df_hh_1 时原来退回命令行顺序、只 print 一句。base 上 SystemExit 穿出去让
+probe 红（没草稿）；接住之后，逐局表和统计照样按 flashscore 的 home/away 来，`verified_match_fact`
+拿 feed home 的比分配命令行的 `matchup[0]`——回放「只有 df_hh_1 503、home 是诺斯科娃 6-4 6-3」：
+草稿写成 `_match.status=result_verified winner=萨巴伦卡 6-4 6-3 loser=诺斯科娃`，stats.a 挂在萨巴伦卡
+名下，`verified_result_problem` 拿 `_match` 自己的字段反推，一道都不响。
+
+现在核不出（feed 读不到、没给本场 FH/FK、同姓按姓认不出）就抛 `MatchupOrderUnverified`：matchup
+照命令行写两个名字，**stats／狠数据／转折局／赛果事实整块不写**，`_notes` 写明原因，草稿留在
+waiting（「结构化赛果尚未 verified」）。`check_draft_matchup_order` 碰上它记「没法判」，不再拿
+命令行顺序去比。顺手修了同一个形状：`collect` / `_label` 原来传命令行顺序的名字，而它们拿 home
+那个名字标 feed 的 SH／server=home——matchup 重排过的场次，赢家的总分、破发点兑现标在输家名下，
+还喂进文案 facts。判据 `test_df_hh_1读不到时不许出result_verified`（带对照组）、
+`test_matchup_order核不出顺序就抛_不退回命令行顺序`、`test_狠数据和转折局的名字按feed的home_away给`。
+
+同一轮三个小补：`source_fallbacks` 进 `_REAL_FIELDS["spec"]`（写成 `_source_fallbacks` 要红，别等语料里
+出现第一条才被推导出来）；表单默认 slug `eala-zheng` 的认领口是 `url` 填它 spec 里那条源片（原来这条
+已发片子一趟都重 probe 不了）；`pipeline_health.workflow_health` 按 run-name 的 mode 把 `cookies` 自检
+滤出出片趋势（`SELF_CHECK_MODES`，一趟定时的 cookies 绿会把 render 的连续失败清零）。

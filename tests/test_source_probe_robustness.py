@@ -12,7 +12,7 @@
 | 1080p 的框配 720p 源 | 2 | 源片下完才红，probe 产物全丢 | 按高度等比缩（`98,920,519,1029` → `65,613,346,686`），probe 照样出完 |
 | 派发 render 的 assert 撞手写 spec | 1 | 裸 AssertionError | `[skip]`，自动 spec 的合同照旧硬 |
 | frame-grab 推送 5 次失败 | 1 | 睡在 fetch 和 push 之间，每一轮都撞车 | 共享重试：先睡、再 rebase、立刻推 |
-| 上游 HTTP 5xx（备料） | 1 | 那一趟其实是 MiniMax 500（base 47f9f2b6d 已降级）；flashscore 这一侧 SystemExit 穿过 `except Exception` | feed 先重试，assemble 接住 SystemExit 只报 |
+| 上游 HTTP 5xx（备料） | 1 | 那一趟其实是 MiniMax 500（base 47f9f2b6d 已降级）；flashscore 这一侧 SystemExit 穿过 `except Exception` | feed 先重试，assemble 接住 SystemExit 只报；**matchup 归位核不出不退回命令行顺序**，按 home/away 排的几块整块不写 |
 
 `assemble_spec --year ''`（3 趟）在 base 的 09e091851 已修，`test_match_reel_optional_int_inputs` 钉着。
 """
@@ -72,6 +72,22 @@ def test_回放_空URL加默认slug的probe在第一步红_两处都点名():
     assert len(problems) == 2, problems
     assert "url` 是空的" in problems[0] and "eala-zheng" in problems[1]
     assert suc.main(["--mode", "probe", "--url", "", "--slug", "eala-zheng"]) == 1
+
+
+def test_默认slug的老片子自己的源片_重probe放行_换地址照旧红(tmp_path):
+    """默认 slug 那一条原来没有出口：`eala-zheng` 这条已发片子一趟都重 probe 不了。
+    认领口是 `url` 就是它 spec 里那条源片；换一条地址顶着默认 slug 照旧红。"""
+    default = suc.form_default("slug")
+    own = suc.published_source_urls(default)
+    assert own, f"specs/reels/{default}.json 里读不出源片地址——认领口是哑的"
+    assert suc.probe_problems(next(iter(own)), default, "", default_slug=default) == []
+    other = "https://www.youtube.com/watch?v=aINLTXtRWbE"
+    assert other not in own
+    (problem,) = suc.probe_problems(other, default, "", default_slug=default)
+    assert default in problem and "url` 填它 spec 里那条源片" in problem
+    # 读不到那份 spec（被删、目录不对）就一律按「没改」红，不许因为读不到而放行
+    assert suc.probe_problems(next(iter(own)), default, "", default_slug=default,
+                              specs=tmp_path) != []
 
 
 def test_回放_cookies自检传了搜索词_第一步就说它是搜索词():
@@ -338,6 +354,18 @@ def test_source_fallbacks的形状_键对得上sources_备用也过签名源那�
     assert reel.spec_source_fallbacks(base) == {}
 
 
+def test_写成下划线的source_fallbacks要被拦_不许静静地不生效():
+    """`_REAL_FIELDS` 由 `test_真字段表要盖住每条spec里出现过的字段` 从语料推——而
+    语料里还没有一条 spec 写过 `source_fallbacks`，那条判据要等第一条照 X 直链闸
+    的建议挪了直链的手写 spec 才会红。在那之前 `_source_fallbacks` 这种手滑整块
+    被当注解跳过，主地址 403 时备用那条根本不会被试。"""
+    fallback = {"xvid": "https://video.twimg.com/amplify_video/1/v.mp4"}
+    with pytest.raises(reel.ReelError, match="source_fallbacks"):
+        reel._reject_underscored_fields({"_source_fallbacks": fallback})
+    reel._reject_underscored_fields({"source_fallbacks": fallback,
+                                     "_source_fallbacks_why": "帖子被删时的兜底"})
+
+
 def test_新写的spec主地址不许是X直链_认领或存量放行():
     cdn = "https://video.twimg.com/amplify_video/1/vid/avc1/1080x1920/a.mp4?tag=29"
     spec = {"slug": "new-x-story-2026", "sources": {"main": "https://youtu.be/aaaaaaaaaaa", "xvid": cdn}}
@@ -421,6 +449,27 @@ def test_框落在画面外_量死球只报不崩_不是cv2的empty断言(tmp_pa
     _flip_video(video)
     with pytest.raises(ValueError, match="画面外"):
         fpe.scan(video, (400, 300, 500, 400), 0.1)
+
+
+def test_量不了的框记None_不和量过零次的空表混(monkeypatch, capsys):
+    """`scan` 报 ValueError（框落在画面外）时原来返回 `[]`——而 `[]` 在
+    `point_ends_guess` 里就是「量过、零次」，dry-run 会说「框多半猜错了」。"""
+    import find_point_ends as fpe  # noqa: PLC0415
+
+    def outside(*_a, **_kw):
+        raise ValueError("框 (1, 2, 30, 40) 落在 0×0 的画面外——框是按别的分辨率量的")
+
+    monkeypatch.setattr(fpe, "scan", outside)
+    monkeypatch.setattr(reel, "_video_frame_size", lambda _src: None)
+    assert reel.point_end_candidates(Path("x.mp4"), "1,2,30,40") is None
+    assert "没量成" in capsys.readouterr().out
+    assert reel.point_end_candidates(Path("x.mp4"), "") == [], "没给框仍是 []（跳过）"
+    # 猜的框量不了记 []：None 在 point_ends_guess 里是「这趟没猜」（dry-run 会说「老 probe」）
+    monkeypatch.setattr(reel, "suggest_scorebox", lambda _src: "1,2,30,40")
+    assert reel.measure_point_ends(Path("x.mp4"), "") == ([], "1,2,30,40", [])
+    assert reel.measure_point_ends(Path("x.mp4"), "1,2,30,40") == (None, None, None)
+    monkeypatch.setattr(fpe, "scan", lambda *_a, **_kw: [])
+    assert reel.point_end_candidates(Path("x.mp4"), "1,2,30,40") == [], "量过零次仍是 []"
 
 
 def test_probe一趟_框出界也照样出完probe_json_并记下缩放(monkeypatch, tmp_path):
@@ -602,7 +651,11 @@ def test_flashscore_5xx重试之后仍失败_备料降级成只报不拖垮probe
     def http500(*_a, **_kw):
         raise SystemExit("https://www.flashscore.com/x/feed\n  HTTP 500 —— 被挡还是不存在")
 
-    for name in ("fs_feed", "stats_block", "collect", "points", "set_pairs"):
+    # df_hh_1 读得到（home/away 核上了），其余四块都 5xx——只报、不拖垮。
+    # df_hh_1 本身读不到是另一回事：见下一条，那时连这四块都不许写。
+    monkeypatch.setattr(a, "fs_feed",
+                        lambda *_a: "KP÷4CYI9Ick¬FH÷Eala A.¬FK÷Ruse E.¬~")
+    for name in ("stats_block", "collect", "points", "set_pairs"):
         monkeypatch.setattr(a, name, http500)
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
 
@@ -616,3 +669,82 @@ def test_flashscore_5xx重试之后仍失败_备料降级成只报不拖垮probe
     joined = "\n".join(draft["_notes"])
     assert "stats 块没成（SystemExit" in joined and "转折局没成（SystemExit" in joined
     assert "stats" not in draft and "_turning_points" not in draft
+
+
+def _df_hh_1_assemble(monkeypatch, df_hh_1):
+    """回放 2026-09-28 复审那一趟：flashscore 的 home 是诺斯科娃（6-4 6-3 赢了），
+    编排器给的 --home 是萨巴伦卡；逐局表、统计都取得到，只有 df_hh_1 看 `df_hh_1` 桩。"""
+    import assemble_spec as a  # noqa: PLC0415
+    import promote_reel_draft as promote  # noqa: PLC0415
+
+    games = [{"set": str(n), "home_games": h, "away_games": w, "points": [],
+              "server": "home", "winner": "home"}
+             for n, (h, w) in enumerate([(6, 4), (6, 3)], 1)]
+    called: list[str] = []
+
+    def rec(name, value):
+        def _f(*_a, **_kw):
+            called.append(name)
+            return value
+        return _f
+
+    monkeypatch.setattr(a, "fs_feed", df_hh_1)
+    monkeypatch.setattr(a, "points", rec("points", games))
+    monkeypatch.setattr(a, "rank_games", lambda g: [])
+    monkeypatch.setattr(a, "set_pairs", rec("set_pairs", [(6, 4), (6, 3)]))
+    monkeypatch.setattr(a, "stats_block", rec("stats_block", {
+        "a": {"aces": 9}, "b": {"aces": 1},
+        "_missing_required": [], "_has_winners_ue": False}))
+    monkeypatch.setattr(a, "collect", rec("collect", {"candidates": [], "durations": []}))
+    monkeypatch.setattr(a, "fetch_rankings",
+                        lambda: type("R", (), {"atp": [], "wta": []})())
+
+    class NotReady:
+        ready = False
+
+    monkeypatch.setattr(a, "Chat", lambda: NotReady())
+    draft = a.assemble(slug="sabalenka-noskova", home="Aryna Sabalenka",
+                       away="Linda Noskova", event="Cincinnati", year=2026,
+                       fixture="北京时间", flashscore_id="8QYQMw6l",
+                       tactical_packet={"status": "skipped"})
+    return draft, called, promote.waiting_reasons(draft)
+
+
+def test_df_hh_1读不到时不许出result_verified(monkeypatch):
+    """matchup 顺序核不出（df_hh_1 5xx 重试完仍 SystemExit），**赛果事实和按 feed
+    home/away 排的几块一块都不写**，草稿留在 waiting。
+
+    复审回放（2026-09-28）：把 SystemExit 接住、退回命令行顺序之后，这一趟产出
+    `_match.status=result_verified winner=萨巴伦卡 6-4 6-3 loser=诺斯科娃`，stats.a
+    挂在萨巴伦卡名下——赢的是 flashscore 的 home 诺斯科娃，而 `verified_result_problem`
+    拿 `_match` 自己的字段反推，一道都不响。"""
+    def down(name, mid):
+        raise SystemExit(f"https://…/{name}_{mid}\n  HTTP 503 —— 被挡还是不存在")
+
+    draft, called, waiting = _df_hh_1_assemble(monkeypatch, down)
+    match = draft.get("_match") or {}
+    assert match.get("status") != "result_verified", (
+        f"顺序没核上还出了赛果事实：{match.get('winner')} {match.get('winner_result')}")
+    assert "winner" not in draft["cover"] and "result" not in draft["cover"]
+    assert "stats" not in draft and "_hit_data" not in draft
+    assert "_turning_points" not in draft
+    assert called == [], f"顺序不认时不该再去读按 home/away 排的 feed：{called}"
+    assert "结构化赛果尚未 verified" in waiting
+    joined = "\n".join(draft["_notes"])
+    assert "matchup 顺序没核上" in joined and "HTTP 503" in joined, (
+        "退路要写进 _notes，不许只 print 到 stdout")
+    assert match.get("flashscore_id") == "8QYQMw6l"
+
+
+def test_df_hh_1读得到时同一趟出诺斯科娃赢(monkeypatch):
+    """上一条的对照组：同样的逐局表，df_hh_1 给出本场 home=诺斯科娃，赢家就是她。"""
+    body = "SA÷2¬~KP÷8QYQMw6l¬FH÷Noskova L.¬FK÷Sabalenka A.¬~"
+    draft, called, _waiting = _df_hh_1_assemble(monkeypatch, lambda *_a: body)
+    match = draft["_match"]
+    assert match["status"] == "result_verified"
+    assert (match["winner"], match["winner_result"], match["loser"]) == (
+        "诺斯科娃", "6-4 6-3", "萨巴伦卡")
+    assert [p["name_en"] for p in draft["cover"]["matchup"]] == [
+        "Linda Noskova", "Aryna Sabalenka"]
+    assert draft["stats"]["a"]["aces"] == 9, "stats.a 跟 feed 的 home（诺斯科娃）"
+    assert {"stats_block", "points", "set_pairs", "collect"} <= set(called)

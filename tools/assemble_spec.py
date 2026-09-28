@@ -88,7 +88,23 @@ DRAFT_DIR = Path(__file__).resolve().parent.parent / "specs" / "reels" / "pendin
 #: （2026-09-28 返工审计「上游 HTTP 500」那一类）。备料是给草稿加料，缺一块只该
 #: 记一句 note、留在 waiting，不该让 probe 红。判据
 #: `test_flashscore_5xx重试之后仍失败_备料降级成只报不拖垮probe`。
+#: ⚠️ **matchup 归位那一块不是「缺一块」**：其余几块都按它归好的 home/away 排，它接住
+#: 之后不许退回命令行顺序，而是抛 `MatchupOrderUnverified`，让依赖顺序的几块整块不写。
 _FEED_ERRORS = (Exception, SystemExit)
+
+
+class MatchupOrderUnverified(Exception):
+    """`matchup_order` 核不出 flashscore 的 home/away——**顺序不认，不是退回命令行**。
+
+    stats 块、狠数据、转折局、逐盘比分这几块全是按 flashscore 的 home/away 排的；
+    只要 matchup 没按同一个 home/away 归位，`verified_match_fact` 就会拿 feed 的
+    home 比分去配命令行的 matchup[0]，**把赢家印成输家，还标着 result_verified**
+    （`verified_result_problem` 拿 `_match` 自己的字段反推，输入错了照样自洽）。
+    原来读不到 df_hh_1 就退回命令行顺序、只 print 一句：base 上 SystemExit 穿出去
+    让 probe 红（没草稿、没错数据），把它接住之后这条退路就成了「萨巴伦卡 6-4 6-3
+    诺斯科娃」——赢的是 flashscore 的 home 诺斯科娃（2026-09-28 复审回放）。
+    所以核不出就抛它，由 `assemble` 把依赖顺序的几块整块跳过、草稿留在 waiting。
+    判据 `test_df_hh_1读不到时不许出result_verified`。"""
 
 
 def _surname(full: str) -> str:
@@ -118,7 +134,9 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
     都不响。
 
     实现：读 `df_hh_1` 的 FH/FK（home/away 英文全名），拿它把两个输入归位。
-    读不到就退回命令行顺序（出声，别静默）。
+    **核不出就抛 `MatchupOrderUnverified`**（feed 读不到、没给 FH/FK、按姓认不出
+    ——同姓的两个 Wang 就是后一种），不退回命令行顺序：命令行顺序和 feed 的
+    home/away 是两回事，拿它顶上会让赛果事实把赢家算反。
     """
     try:
         body = fs_feed("df_hh_1", flashscore_id)
@@ -141,12 +159,12 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
                      if row.get("FH") and row.get("FK")}
             f = dict(zip(("FH", "FK"), next(iter(pairs)))) if len(pairs) == 1 else {}
         fs_home, fs_away = f.get("FH", ""), f.get("FK", "")
-    except _FEED_ERRORS as exc:  # noqa: BLE001 —— 网络失败就退回命令行顺序
-        print(f"[matchup] flashscore df_hh_1 读不到（{exc}），退回命令行顺序")
-        fs_home = fs_away = ""
+    except _FEED_ERRORS as exc:  # noqa: BLE001 —— 读不到就是核不出，不是命令行顺序
+        detail = " ".join(x.strip() for x in str(exc).splitlines() if x.strip())
+        raise MatchupOrderUnverified(
+            f"flashscore df_hh_1 没读出本场 home/away（{type(exc).__name__}: {detail}）") from exc
     if not fs_home or not fs_away:
-        print("[matchup] flashscore 没给 FH/FK，退回命令行顺序")
-        return [(home, player_zh(home)), (away, player_zh(away))]
+        raise MatchupOrderUnverified("flashscore df_hh_1 没给本场的 FH/FK")
     # 按「谁的姓出现在 flashscore 的 home 里」归位，而不是按整名相等——feed 是
     # 「Baez S.」缩写，命令行是「Sebastian Baez」，整名对不上。
     def side_is(fs_name: str, full: str) -> bool:
@@ -163,8 +181,8 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
             ordered.append((away, player_zh(away)))
     if len(ordered) == 2 and ordered[0][0] != ordered[1][0]:
         return ordered
-    print(f"[matchup] 按姓认不出 home/away（FH={fs_home!r} FK={fs_away!r}），退回命令行顺序")
-    return [(home, player_zh(home)), (away, player_zh(away))]
+    raise MatchupOrderUnverified(
+        f"按姓认不出 home/away（FH={fs_home!r} FK={fs_away!r}）")
 
 
 def facts_text(hit_data: list[dict]) -> str:
@@ -559,6 +577,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
     background_param = background
     notes: list[str] = []
     feed_home_zh, feed_away_zh = player_zh(home), player_zh(away)
+    order_verified = False
     authoritative_scores: list[tuple[int, int]] = []
     draft: dict = {
         "_draft": True,
@@ -596,9 +615,23 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         # ⚠️ 拿到 id 就立刻重排 matchup——stats.a 跟的是 flashscore 的 home，
         # 而 render_stat_card 的 a 跟 cover.matchup[0]，顺序不一致数据图会
         # 把赢家印成输家（CLAUDE.md 记过的坑）。
-        ordered = matchup_order(home, away, mid)
+        try:
+            ordered = matchup_order(home, away, mid)
+            order_verified = True
+        except MatchupOrderUnverified as exc:
+            # 顺序核不出：matchup 照命令行写（只是两个名字，不带任何归属），而
+            # 按 feed home/away 排的几块（stats、狠数据、转折局、逐盘比分 →
+            # 赛果事实）一块都不写——写了就是把 feed home 的数挂在命令行
+            # matchup[0] 名下。草稿留在 waiting（「结构化赛果尚未 verified」）。
+            ordered = [(home, player_zh(home)), (away, player_zh(away))]
+            order_verified = False
+            notes.append(
+                f"⚠️ matchup 顺序没核上 flashscore 的 home/away（{exc}）——stats 块"
+                "／狠数据／转折局／赛果事实都按 feed 的 home/away 排，顺序不认就"
+                "一块都不写（写了会把赢家印成输家），草稿留在 waiting；df_hh_1 "
+                "恢复后重跑备料")
         feed_home_zh, feed_away_zh = ordered[0][1], ordered[1][1]
-        if [x[1] for x in ordered] != [player_zh(home), player_zh(away)]:
+        if order_verified and [x[1] for x in ordered] != [player_zh(home), player_zh(away)]:
             notes.append("matchup 按 flashscore home/away 重排："
                          + " vs ".join(x[1] for x in ordered))
         supplied = {
@@ -625,7 +658,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
     except Exception as exc:  # noqa: BLE001 —— 排名失败不能拖垮整份草稿
         notes.append(f"⚠️ 封面排名没成（{type(exc).__name__}: {exc}）")
 
-    if mid:
+    if mid and order_verified:
         # ② stats 块（数据图）。
         try:
             blk = stats_block(mid)
@@ -651,7 +684,10 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
 
         # ③ 狠数据候选。
         try:
-            hit = collect(mid, player_zh(home), player_zh(away))
+            # ⚠️ 名字按 **feed 的 home/away** 给（collect 拿 home 的名字去标 SH
+            # 那一列的数），不是命令行顺序——matchup 重排过的场次，传命令行顺序
+            # 就是把赢家的总分、破发点兑现标在输家名下，还喂进文案 facts。
+            hit = collect(mid, feed_home_zh, feed_away_zh)
             draft["_hit_data"] = hit["candidates"]
             draft["_durations"] = hit["durations"]
             notes.append(f"狠数据候选 {len(hit['candidates'])} 条"
@@ -665,7 +701,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             authoritative_scores = final_set_scores(match_games)
             ranked = rank_games(match_games)
             draft["_turning_points"] = [
-                {"label": _label(g, player_zh(home), player_zh(away)),
+                {"label": _label(g, feed_home_zh, feed_away_zh),
                  "density": g["density"], "tags": g["tags"]}
                 for g in ranked[:TURNING_POINT_TOP]
             ]
@@ -701,7 +737,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         notes.append(
             f"赛果事实闸：{match_fact['winner']} "
             f"{match_fact['winner_result']} {match_fact['loser']}（赢家视角）")
-    elif mid:
+    elif mid and order_verified:
         notes.append("⚠️ 逐局数据不足以确定赢家和逐盘比分；不生成正式 spec")
 
     cover_brief = upset_cover_brief(

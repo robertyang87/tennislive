@@ -990,7 +990,11 @@ def fit_scorebox_to_frame(scorebox: str, frame: tuple[int, int] | None,
     错的只是分辨率。
 
     所以不再红：
-    - 框在画面里 → 原样用（量的就是这一档，或者分辨率碰巧一样）
+    - 框在画面里 → 原样用。⚠️ **这里只认得出「出界」这一种错配**：参数里没有量框
+      那一档的分辨率，所以 720p 量的框配 1080p 源、1080p 量的框配 4K 源、或者
+      1080p 左上角的框（`60,40,520,140`）碰巧装得进 720p，都会原样用、量错地方、
+      **不报**——量出来零跳变时 `point_end_candidates` 会把 moved 分布打出来，
+      那是唯一的线索。框要按这一趟源片的像素给
     - 框出界 → 找一档**比源片高、装得下这个框、宽高比和源片一样**的参考高度
       （`SCOREBOX_REF_HEIGHTS`），按 源片高/参考高 等比缩——1080→720 就是 ×2/3，
       `98,920,519,1029` → `65,613,346,686`
@@ -1025,7 +1029,7 @@ def fit_scorebox_to_frame(scorebox: str, frame: tuple[int, int] | None,
 
 
 def measure_point_ends(source: Path, scorebox: str,
-                       ) -> tuple[list[float], str | None, list[float] | None]:
+                       ) -> tuple[list[float] | None, str | None, list[float] | None]:
     """probe 那一趟量死球时刻的**全部**：返回 `(point_ends, scorebox_guess, point_ends_guess)`。
 
     ⚠️⚠️ **2026-09-19 账号所有者第四次重申「视频剪辑要完整一分结束再切画面」。**
@@ -1043,6 +1047,10 @@ def measure_point_ends(source: Path, scorebox: str,
     - 给了 `--scorebox`：照旧只量 `point_ends`，不猜（`scorebox_guess=None`）
     - 没给、猜到了：`point_ends=[]`，`point_ends_guess` 是按猜的框量的
     - 没给、猜不到：三个都是空的，probe 会说清是「猜不出记分条」
+    - 给了 `--scorebox` 却量不了（框落在画面外）：`point_ends=None`，不是 `[]`
+    - 猜的框量不了：`point_ends_guess=[]`——`None` 在这一项里已经是「这趟没猜」，dry-run
+      见了会说「老 probe、还没人重跑」；而猜的框量不了就是框猜错了，`[]` 引出的那句
+      「框多半猜错了」正对
     """
     scorebox_guess = None
     ends_guess = None
@@ -1050,7 +1058,7 @@ def measure_point_ends(source: Path, scorebox: str,
         scorebox_guess = suggest_scorebox(source)
     ends = point_end_candidates(source, scorebox)
     if scorebox_guess:
-        ends_guess = point_end_candidates(source, scorebox_guess, guessed=True)
+        ends_guess = point_end_candidates(source, scorebox_guess, guessed=True) or []
     return ends, scorebox_guess, ends_guess
 
 
@@ -1070,8 +1078,13 @@ def _video_frame_size(source: Path) -> tuple[int, int] | None:
 
 
 def point_end_candidates(source: Path, scorebox: str, *,
-                         guessed: bool = False) -> list[float]:
+                         guessed: bool = False) -> list[float] | None:
     """量一遍死球时刻，写进 `probe.json`——**趁源片还在**。
+
+    返回值三种，别混：`[]` 没给框（跳过）或量过、一次跳变都没有；非空＝量到的时刻；
+    **`None`＝给了框、却量不了**（`find_point_ends.scan` 报 ValueError：框落在画面外）。
+    `None` 原来也写成 `[]`，而 `[]` 在 `point_ends_guess` 里就是「量过、零次」——
+    dry-run 会据此说「框多半猜错了」，其实是根本没量成（2026-09-28 复审 nit）。
 
     `guessed=True` 表示这个框是 `suggest_scorebox()` 猜的（见
     `measure_point_ends`）：量法一样，只是打印出来要标明是猜的框。
@@ -1119,9 +1132,10 @@ def point_end_candidates(source: Path, scorebox: str, *,
         try:
             rows = fpe.scan(source, box, 0.1)
         except ValueError as exc:
-            # 量死球是 probe 的附带产物，框不对不许把整趟 probe（切点、缩略图墙）带崩
-            print(f"{tag} {exc}——这一项跳过")
-            return []
+            # 量死球是 probe 的附带产物，框不对不许把整趟 probe（切点、缩略图墙）带崩；
+            # 返回 None 不是 []——「量不了」和「量过零次」在 probe.json 里要分得开
+            print(f"{tag} {exc}——这一项没量成（probe.json 记 null，不是 []）")
+            return None
         ends = fpe.point_ends(rows, fpe.CHANGE, fpe.DARK_SHARE, fpe.MERGE)
     print(f"{tag} 采样 {len(rows)} 点，记分条跳变 {len(ends)} 次"
           + ("（框是 suggest_scorebox 猜的，存进 point_ends_guess）" if guessed else ""))
@@ -3552,7 +3566,8 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
              "music", "outro", "push", "rate", "scorebox", "segments",
              "silent_source",
-             "slug", "source_audio", "source_url", "source_quality_exceptions", "sources", "stats",
+             "slug", "source_audio", "source_fallbacks", "source_url",
+             "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
              "editorial"),
     "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_align", "layout", "matchup", "meta",
@@ -10770,6 +10785,8 @@ def main() -> int:
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
             "fps": fps_expr, "fps_value": round(fps, 3),
+            # point_ends：[]＝没给 --scorebox 或量过零次；None＝给了框却量不了
+            # （框落在画面外，见 point_end_candidates / measure_point_ends）
             "scene_cuts": cuts, "scene_cuts_loose": loose, "point_ends": ends,
             # 没给 --scorebox 时猜出来的候选，供 `--dry-run` 提醒「有一个猜测
             # 在，还没有人拿它重跑」。给了 --scorebox 的这一趟，或者猜不出来

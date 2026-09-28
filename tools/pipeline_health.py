@@ -90,12 +90,26 @@ class WorkflowHealth:
         return self.failures / self.runs if self.runs else 0.0
 
 
+#: 出片工作流里**不出片、只做自检**的 mode（按 run-name 的 mode 段认）。它们的红绿
+#: 由阻塞那一路按 `<工作流>:<mode>` 单独报；混进出片的趋势里，一趟定时的 cookies
+#: 绿会把 render 的连续失败清零、一趟 cookies 红会撑高失败率，中位耗时和步骤抽样
+#: 也被三十秒的自检拉偏（2026-09-28 复审：source-health 每 6 小时派一趟
+#: `match-reel mode=cookies`）。判据 `test_自检mode不进出片工作流的趋势`。
+SELF_CHECK_MODES = frozenset({"cookies"})
+
+
+def _is_self_check(run: dict) -> bool:
+    return dashboard.run_name_fields(run).get("mode") in SELF_CHECK_MODES
+
+
 def workflow_health(api: GitHubAPI, workflow: str, limit: int,
                     step_runs: int) -> tuple[WorkflowHealth, list[dict]]:
     encoded = urllib.parse.quote(workflow, safe="")
+    # 多取一倍：自检 run 滤掉之后，出片 run 仍凑得够 `limit` 条
     payload = api.get(
-        f"actions/workflows/{encoded}/runs?status=completed&per_page={limit}")
-    runs = (payload.get("workflow_runs") or [])[:limit]
+        f"actions/workflows/{encoded}/runs?status=completed&per_page={min(100, 2 * limit)}")
+    runs = [row for row in (payload.get("workflow_runs") or [])
+            if not _is_self_check(row)][:limit]
     durations = [v for row in runs
                  if (v := elapsed(row.get("created_at"), row.get("updated_at"))) is not None]
     conclusions = [str(row.get("conclusion") or "") for row in runs]

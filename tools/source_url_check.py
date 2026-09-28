@@ -26,6 +26,7 @@ python3），越早红越便宜。`build_match_reel.py` 也从这儿 import X �
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -33,6 +34,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github/workflows/match-reel.yml"
+SPECS = ROOT / "specs/reels"
 
 #: `x.com/<账号>/status/<数字>`（也认 twitter.com / mobile.twitter.com / 带 `/video/1` 尾巴的）
 _X_STATUS = re.compile(r"^/[A-Za-z0-9_]{1,50}/status/\d{5,25}(?:/(?:video|photo)/\d+)?/?$")
@@ -108,18 +110,40 @@ def form_default(field: str, workflow_text: str | None = None) -> str | None:
     return m.group(1) if m else None
 
 
+def published_source_urls(slug: str, specs: Path | None = None) -> set[str]:
+    """已发 spec `specs/reels/<slug>.json` 里的源片地址（`source_url` ＋ `sources` 的值）。
+    读不到就是空集——那时默认 slug 一律按「没改」红。"""
+    try:
+        spec = json.loads(((specs or SPECS) / f"{slug}.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return set()
+    if not isinstance(spec, dict):
+        return set()
+    urls = {spec.get("source_url")}
+    if isinstance(spec.get("sources"), dict):
+        urls |= set(spec["sources"].values())
+    return {u.strip() for u in urls if isinstance(u, str) and u.strip()}
+
+
 def probe_problems(url: str, slug: str, scorebox: str = "", *,
-                   default_slug: str | None = None) -> list[str]:
-    """mode=probe 的表单：地址要填、要是地址；slug 不许还是表单默认值；框格式要对。"""
+                   default_slug: str | None = None,
+                   specs: Path | None = None) -> list[str]:
+    """mode=probe 的表单：地址要填、要是地址；slug 不许还是表单默认值；框格式要对。
+
+    默认 slug 那一条的**认领口**：`url` 就是那条已发 spec 自己的源片——那是真要重 probe
+    这条老片子，不是忘了改（原来没有出口，这条已发片子一趟都重 probe 不了，2026-09-28
+    复审 nit）。换一条地址还顶着默认 slug，照旧红：probe 产物会落到老片子名下。"""
     out = []
     problem = url_problem(url)
     if problem:
         out.append(problem)
-    if default_slug and str(slug).strip() == default_slug:
+    if (default_slug and str(slug).strip() == default_slug
+            and str(url).strip() not in published_source_urls(default_slug, specs)):
         out.append(
             f"`slug` 还是表单默认值「{default_slug}」——那是 2026-07 已经发过的老片子"
             f"（specs/reels/{default_slug}.json），probe 产物会落到它名下。"
-            "按 <姓>-<姓>-<赛事>-<年>-<轮次> 起一个这场球自己的 slug")
+            "按 <姓>-<姓>-<赛事>-<年>-<轮次> 起一个这场球自己的 slug"
+            "（真要重 probe 这条老片子，`url` 填它 spec 里那条源片地址就放行）")
     box = scorebox_problem(scorebox)
     if box:
         out.append(box)
