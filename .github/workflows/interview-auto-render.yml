@@ -363,7 +363,9 @@ jobs:
         run: |
           set -o pipefail
           rm -f /tmp/subs.txt /tmp/subs-dispatched.md
-          python tools/pick_interview_renders.py --subs-list /tmp/subs.txt | tee /tmp/todo.txt
+          # `--sync-subs`：顺手收拾「先投 subs」那本账——判定已交上来的删掉、投满次数停下的标 `parked`
+          # （pipeline-health 读它列出来），和下面的派发记录一起提交
+          python tools/pick_interview_renders.py --subs-list /tmp/subs.txt --sync-subs | tee /tmp/todo.txt
           mapfile -t SLUGS < <(tail -n +2 /tmp/todo.txt | grep -v '^$' || true)
           mapfile -t SUBS_SLUGS < <(grep -v '^$' /tmp/subs.txt 2>/dev/null || true)
           # 这一趟人工请求没过闸的 slug 不投：改过的请求没落盘，此刻的正式 spec 还是上一版。

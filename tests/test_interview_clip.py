@@ -633,12 +633,13 @@ def test_成品字幕时间轴覆盖空档核心区就不算漏字幕():
 def test_VAD自动销账必须绑定当前指纹且不能和第二ASR词冲突(tmp_path):
     lines = [{"en": "hello"}]
     spec = {"asr_model": "small.en", "whisper_model": "medium.en",
-            "en_fixed": {}}
+            "en_fixed": {}, "url": "https://example.test/v"}
     fp = transcript_fingerprint(spec, lines, tmp_path)
     proof = {
         "status": "pass",
         "method": "silero_vad_plus_dual_asr_coverage",
         "sha256": fp,
+        "url": spec["url"],
         "results": [{
             "key": "3.0-6.0", "status": "no_speech", "speech_seconds": 0.0,
             "second_asr_words": [],
@@ -664,6 +665,12 @@ def test_VAD自动销账必须绑定当前指纹且不能和第二ASR词冲突(t
 
     # 字幕、订正或模型一变，旧证据立即失效。
     assert auto_silent_gap_keys(spec, [{"en": "hello again"}], tmp_path) == set()
+    # 换了源片（写 asr_model 的 spec 指纹不变）、或者证据没记源：VAD 听的是别的音轨，不认
+    assert auto_silent_gap_keys(dict(spec, url="https://example.test/other"), lines,
+                                tmp_path) == set()
+    (tmp_path / GAP_VAD_ATTESTATION).write_text(
+        json.dumps({k: v for k, v in proof.items() if k != "url"}), encoding="utf-8")
+    assert auto_silent_gap_keys(spec, lines, tmp_path) == set()
     proof["sha256"] = transcript_fingerprint(spec, lines, tmp_path)
     proof["results"][0]["speech_seconds"] = GAP_VAD_MAX_SPEECH_SECS + 0.001
     (tmp_path / GAP_VAD_ATTESTATION).write_text(
@@ -3723,7 +3730,9 @@ def test_字幕规格和TennisTV台标原来只在全库测试里_现在渲染�
     assert clip.tennistv_logo_problem(dict(tv, logo_box=[1, 2, 3, 4])) is None
     assert clip.tennistv_logo_problem(dict(tv, url="https://youtu.be/x")) is None
 
-    # ② 真跑 `main() --stage subs`，联网那几步换成桩：走到桩＝闸没拦住或排在了后面
+    # ② 真跑 `main() --stage render`，联网那几步换成桩：走到桩＝闸没拦住或排在了后面。
+    # ⚠️ 原来跑的是 `--stage subs`——2026-09-28 D2 起 subs／verify 两档只交转写判定，这一排
+    # 只报不拦（文案、台标不碰转写指纹，subs 要能和写文案并行跑）；拦在出片那几档
     class _Reached(Exception):
         pass
 
@@ -3736,11 +3745,11 @@ def test_字幕规格和TennisTV台标原来只在全库测试里_现在渲染�
         monkeypatch.setattr(clip, name, _stub(name))
     monkeypatch.setattr(clip, "OUTDIR", tmp_path / "out")
 
-    def run(spec: dict) -> str:
+    def run(spec: dict, stage: str = "render") -> str:
         p = tmp_path / f"{spec['slug']}.json"
         p.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
         monkeypatch.setattr(sys, "argv", ["build_interview_clip.py", "--spec", str(p),
-                                          "--stage", "subs"])
+                                          "--stage", stage])
         try:
             clip.main()
         except _Reached as e:
@@ -3752,10 +3761,11 @@ def test_字幕规格和TennisTV台标原来只在全库测试里_现在渲染�
     # 已发的合规 spec 当底（slug 不换：`check_copy_page` 要它的 `.xhs.txt` 在仓库里）
     base = json.loads((SPECS / "ruud-zverev-laver-cup-2026-doubles-interview.json")
                       .read_text(encoding="utf-8"))
-    assert run(base) == "走到了 storyboard_sheet", "对照组：合规的 spec 前面那排闸全放行"
+    assert run(base) == "走到了 fetch_words", "对照组：合规的 spec 前面那排闸全放行"
     bad = json.loads(json.dumps(base))
     bad["push"]["lead"] += "中英双语字幕。"
     assert run(bad).startswith("拦下：文案里提了字幕"), run(bad)
+    assert run(bad, "subs") == "走到了 storyboard_sheet", "subs 那一档只报不拦（D2）"
     # TennisTV：身份那道闸（L0）换成空操作，好让台标这道排到最前面被看见
     monkeypatch.setattr(clip, "check_source_contract", lambda spec: "")
     tv_spec = dict(base, url="https://www.tennistv.com/videos/x")

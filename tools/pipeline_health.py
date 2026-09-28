@@ -228,6 +228,31 @@ def orchestrator_productivity(
     return state["last_dispatch_at"], (now - at).total_seconds() / 3600
 
 
+INTERVIEW_DISPATCH_STATE = Path("data/interview_render_dispatched.json")
+PARKED_SUBS = "采访 subs 停着："
+
+
+def parked_interview_subs(path: Path | None = None) -> list[str]:
+    """采访自动链「先投 subs」**停下来**的（同一份转写输入投满次数还没交判定）→ 告警句。
+
+    `pick_interview_renders.sync_subs_state` 在全量那一趟把它们标成 `parked`，这里只读标记——
+    次数上限只在 pick 那边定义一次。原来停下之后只在 auto-render 的 stderr（等待名单）里印一行，
+    不翻日志就看不见（复审 2026-09-28 nit 3）；而停下的原因（下不动源片、判定绑的指纹对不上）
+    自动链自己修不好，要人。读不到状态文件＝没有（这一栏不许把监控整个带红）。"""
+    try:
+        state = json.loads((path or INTERVIEW_DISPATCH_STATE).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    book = state.get("subs") if isinstance(state, dict) else None
+    out: list[str] = []
+    for slug, rec in sorted((book or {}).items() if isinstance(book, dict) else []):
+        if isinstance(rec, dict) and rec.get("parked"):
+            out.append(f"{PARKED_SUBS}{slug}（同一份转写输入投了 {rec.get('tries')} 趟 mode=subs 还没交"
+                       f"判定，最后一趟 {rec.get('at')}）——看「interview-clip · subs · {slug}」的日志，"
+                       "修好后手动 dispatch 一次 mode=subs")
+    return out
+
+
 def stale_publications(now: datetime | None = None, hours: float = 1.5) -> list[str]:
     now = now or datetime.now(timezone.utc)
     stale: list[str] = []
@@ -249,6 +274,7 @@ def stale_publications(now: datetime | None = None, hours: float = 1.5) -> list[
 def render_report(health: list[WorkflowHealth], steps: list[dict],
                   sla: tuple[int, int, float], stale: list[str],
                   orchestrator: tuple[str | None, float | None] | None = None,
+                  parked_subs: list[str] | None = None,
                   ) -> tuple[str, list[str]]:
     alerts: list[str] = []
     lines = ["## 自动视频流水线健康度", "", "| 工作流 | 样本 | 成功 | 失败率 | 中位耗时 | 连续失败 |",
@@ -281,6 +307,10 @@ def render_report(health: list[WorkflowHealth], steps: list[dict],
     if stale:
         alerts.extend(stale)
         lines += ["", "### 发布账本待核实", *[f"- {item}" for item in stale]]
+    if parked_subs:
+        alerts.extend(parked_subs)
+        lines += ["", "### 采访 subs 停着（自动链不再重投，要人看）",
+                  *[f"- {item}" for item in parked_subs]]
     slow = sorted(steps, key=lambda row: row["seconds"], reverse=True)[:10]
     lines += ["", "### 最近最慢步骤", "", "| 工作流 / job / step | 耗时 | 结果 |",
               "|---|---:|---|"]
@@ -309,6 +339,8 @@ def alert_keys(alerts: list[str]) -> list[str]:
             keys.add("publication:" + item.split(": sending 已持续", 1)[0])
         elif "：近 " in item and "失败率" in item:
             keys.add("workflow:" + item)
+        elif item.startswith(PARKED_SUBS):
+            keys.add("interview-subs:" + item[len(PARKED_SUBS):].split("（", 1)[0])
         else:
             digest = hashlib.sha256(item.encode("utf-8")).hexdigest()[:16]
             keys.add("other:" + digest)
@@ -497,7 +529,7 @@ def main(argv: list[str] | None = None) -> int:
         steps.extend(these_steps)
     sla = sla_health()
     report, alerts = render_report(health, steps, sla, stale_publications(),
-                                   orchestrator_productivity())
+                                   orchestrator_productivity(), parked_interview_subs())
     # 和看板同一份数据（每条受监控工作流 24 小时内的 run）、同一个定义。
     # ⚠️ 原来取的是全仓最近 100 条——忙时只够回溯一个半小时，而这一班实际两三个小时
     # 才来一趟，一处没人重试的失败滚出列表就永远不推（`monitored_runs` 顶注）。

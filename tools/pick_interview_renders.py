@@ -32,9 +32,12 @@ QC 的仍按已 render 兼容，避免上线时把几十条存量一起重跑。
 
 ⚠️ **render 之前先要 subs 那一趟的判定**（2026-09-28）。`interview_preflight` 在
 dispatch 口径（`require_subs`）下，缺字幕缓存、缺**当前转写指纹**的第二份 ASR
-判定都记成红、带 `NEEDS_SUBS`——一条 spec 只卡在这一类上，就进「先投 subs」名单
-（`--subs-list`），workflow 投 `mode=subs`、`--mark-subs` 记一笔；判定落库之后
-下一趟再判：干净就投 render，量出分歧／空档就进等待名单等人改或认领。
+判定都记成红、带 `NEEDS_SUBS`——一条 spec 缺这个判定、又没有挡 subs 的红（L0、`en_fixed`
+挂错行、人工引语对不上：`subs_blockers`），就进「先投 subs」名单（`--subs-list`）——**中文、
+封面、小红书正文还缺着也投**（D2：第二份 ASR 和翻译并行，subs 那两档对它们只报不拦）；
+workflow 投 `mode=subs`、`--mark-subs` 记一笔；判定落库之后下一趟再判：干净就投 render，
+量出分歧／空档就进等待名单等人改或认领。`--sync-subs` 顺手收拾那本账（判定交上来的删、
+投满次数停下的标 `parked`，pipeline-health 读它）。
 来路：9/20~9/28 六趟 render 红在「空档没销账／转写分歧超阈」（alcaraz-fritz ×3、
 tien-cobolli ×2、chwalinska ×1，25.4 runner-分钟），**0/6 在 dispatch 之前拦得住**，
 其中四趟是这里投的——第二份 ASR 的结论只活在 runner 上。
@@ -42,6 +45,7 @@ tien-cobolli ×2、chwalinska ×1，25.4 runner-分钟），**0/6 在 dispatch �
 用法：
     python tools/pick_interview_renders.py               # 打印待 dispatch 的
     python tools/pick_interview_renders.py --subs-list F # 另把「先投 subs」的写进 F
+    python tools/pick_interview_renders.py --subs-list F --sync-subs  # dispatch 那一步：顺手收拾 subs 的账
     python tools/pick_interview_renders.py --mark-one X  # X dispatch 成功后记一笔
     python tools/pick_interview_renders.py --mark-subs X # X 的 subs dispatch 成功后记一笔
     python tools/pick_interview_renders.py --received-at X --at T  # X 投 render 时的 SLA 起点
@@ -73,6 +77,7 @@ from build_interview_clip import (  # noqa: E402
     _LEGACY_NO_OPENING,
     _NO_TAKEAWAY_LEGACY,
     check_lead_in,
+    has_transcript_inputs,
 )
 from interview_revision import post_push_edit  # noqa: E402
 from interview_source_gate import SourceContractError, validate_source_contract  # noqa: E402
@@ -92,19 +97,27 @@ LEGACY_INPUT_BASELINE = ROOT / "data" / "interview_render_legacy_baseline.json"
 STALE_MINUTES = 70
 
 # 「先投 subs」的重投窗口和次数上限。subs 一趟（取字幕＋第二份 ASR）实测 5~8 分钟；
-# 40 分钟还没交判定＝那趟死了或被同 slug 的 dispatch 掐了（concurrency 是
-# cancel-in-progress），再投一次。同一份转写输入投满 `SUBS_MAX_TRIES` 趟还没判定就停下、
-# 进等待名单喊人——下不动源片这类毛病，每 40 分钟重投一趟也修不好，只会刷红
-# pipeline-health。**转写输入**（`build_interview_clip.SUBS_INPUT_KEYS`：url／start／end／
+# 窗口过了还没交判定＝那趟死了或被同 slug 的 dispatch 掐了（concurrency 是
+# cancel-in-progress），再投一次。⚠️ 窗口和 `STALE_MINUTES` 同一条规矩：必须**大于**
+# interview-clip.yml 的 `timeout-minutes`（65）——subs 跑在同一个 job 里，窗口比 job 超时短，
+# 一趟慢的 subs（下源片、medium.en 冷启动）还在跑就被重投的那趟掐掉、从头再来。原来写的是 40
+# （复审 nit 2），判据 `test_subs重投窗口长于interview_clip的job超时` 从 YAML 里读那个数。
+# 同一份转写输入投满 `SUBS_MAX_TRIES` 趟还没判定就停下、进等待名单，并在账上标 `parked`
+# （pipeline-health 读它列出来，复审 nit 3）——下不动源片这类毛病，每一小时重投一趟也修不好，
+# 只会刷红 pipeline-health。**转写输入**（`build_interview_clip.SUBS_INPUT_KEYS`：url／start／end／
 # en_fixed／word_fix／切行宽度／两份 ASR 的模型）一改，次数清零；改 zh／封面／文案不算——
 # 那些不动转写，而每次提交 spec 都会经 on:push 叫醒这里，按整份 spec 认的话，
 # 一趟还在跑的 subs 会被同 slug 的重投掐掉（cancel-in-progress）、从头再来。
-SUBS_STALE_MINUTES = 40
+SUBS_STALE_MINUTES = 70
 SUBS_MAX_TRIES = 3
 # render 那一趟 10 分钟成片时钟（interview-clip 的 `received_at`）往前拨到「先投的那趟 subs」，
 # 只认这么近的一趟：subs 实测 5~8 分钟，判定干净就叫醒 auto-render 当场投 render。再早的
 # 那趟中间多半隔着人（判定红了、人改完认领才投的 render）——人等的那几个小时不是流水线的时间。
-SUBS_SLA_MINUTES = SUBS_STALE_MINUTES
+# ⚠️ 原来写成 `= SUBS_STALE_MINUTES`：重投窗口按 job 超时拉到 70 之后，它不该跟着放宽——
+# 两个数回答的不是同一个问题（一个是「那趟死没死」，一个是「中间隔没隔着人」）。
+SUBS_SLA_MINUTES = 40
+#: `validate_source_contract` 那一条红的开头——它挡 subs（下错了源，量出来的是别的片子）。
+L0_MISSING = "L0 本场场上采访身份"
 
 
 def _sha256(path: Path) -> str:
@@ -188,7 +201,7 @@ def missing_for_render(slug: str, spec: dict) -> list[str]:
     try:
         validate_source_contract(spec)
     except SourceContractError as exc:
-        missing.append(f"L0 本场场上采访身份（{exc}）")
+        missing.append(f"{L0_MISSING}（{exc}）")
     if not spec.get("opening") and slug not in _LEGACY_NO_OPENING:
         missing.append("opening（开场认领，check_opening 那道闸）")
     if not spec.get("zh"):
@@ -218,16 +231,21 @@ def missing_for_render(slug: str, spec: dict) -> list[str]:
         if not PROBE:
             raise
         unknown = True
-    if not missing:
+    # **转写输入齐了就判转写那一半，不等中文、封面、文案**（2026-09-28 D2）：原来这几样缺
+    # 一样就不跑预检，于是「缺 subs 判定」根本判不出来，subs 要等所有文字工作做完才投——
+    # 第二份 ASR 就只能排在翻译后面，不能并行。挡 subs 的红（L0）已经在的就不必跑。
+    if not missing or (has_transcript_inputs(spec) and not subs_blockers(missing)):
         pre, pre_unknown = _preflight_problems(slug, spec)
         missing += pre
         unknown = unknown or pre_unknown
     if not PROBE:
         _remember(slug, missing)
         return missing
-    if missing or not unknown:
-        return missing          # 不要 PIL 的闸已经判红，或者这一趟本来就判得全
-    return _cached_verdict(slug)
+    if not unknown or subs_blockers(missing) or (missing and not has_transcript_inputs(spec)):
+        # 这一趟本来就判得全；或者便宜的那几道已经红了，而转写那一半要么判出了挡 subs 的红、
+        # 要么根本没有输入（不会投 subs）——都不必看缓存
+        return missing
+    return _cached_verdict(slug, missing)
 
 
 #: `--probe`：interview-auto-render「没活就早退」那一步（runner 的系统 python3，没有 PIL）。
@@ -335,15 +353,21 @@ def _remember(slug: str, missing: list[str]) -> None:
         _VERDICTS_DIRTY = True
 
 
-def _cached_verdict(slug: str) -> list[str]:
-    """探针判不全的一条：同一份输入全量判过就用那一份，没有就当「要全量那一趟来判」。"""
+def _cached_verdict(slug: str, missing: list[str] | None = None) -> list[str]:
+    """探针判不全的一条：同一份输入全量判过就用那一份，没有就当「要全量那一趟来判」——
+    别的都齐了的算待投 render（原来的口径）；还缺中文、封面这类的（`missing`，不挡 subs），
+    算「可能要先投 subs」（带 `NEEDS_SUBS`，D2）：不然探针数不到它、不叫醒全量，subs 就一直没人投。"""
     key = verdict_key(slug)
     row = _verdicts().get(slug) or {}
     if key is not None and isinstance(row, dict) and row.get("key") == key \
             and isinstance(row.get("missing"), list):
         return [f"{m}（上一趟全量预检判的，输入没变）" for m in row["missing"]]
     _UNKNOWN.append(slug)
-    return []
+    if not missing:
+        return []
+    from interview_preflight import NEEDS_SUBS  # noqa: PLC0415
+    return [*missing, f"{NEEDS_SUBS}探针判不了转写那一半（缺 PIL），当前转写指纹有没有 subs 的判定"
+                      "交给全量那一趟"]
 
 
 def _preflight_problems(slug: str, spec: dict) -> tuple[list[str], bool]:
@@ -404,13 +428,22 @@ def _utc(raw: object) -> datetime | None:
         return None
 
 
-def needs_subs_only(missing: list[str]) -> bool:
-    """这条 spec 是不是**只**卡在「当前指纹还缺 subs 的判定」上（别的红一条都没有）。
+def subs_blockers(missing: list[str]) -> list[str]:
+    """`missing` 里**挡 subs** 的那几条：L0，和碰转写本身的红（`interview_preflight.TRANSCRIPT_REDS`：
+    `en_fixed` 挂错行、人工引语对不上、切行崩了）。subs 那一趟自己也死在这几处，或者改完这一处
+    转写指纹多半跟着变、这一趟量的就是旧的那一版。"""
+    from interview_preflight import TRANSCRIPT_REDS  # noqa: PLC0415 —— 顶层只 import 标准库
+    return [m for m in missing if L0_MISSING in m or any(t in m for t in TRANSCRIPT_REDS)]
 
-    混着别的红（字幕超宽、en_fixed 挂错行……）就不投 subs：人改完那一处，转写指纹
-    多半跟着变，这一趟 subs 量的就是旧的那一版。"""
+
+def wants_subs(missing: list[str]) -> bool:
+    """当前转写指纹还缺 subs 的判定（`NEEDS_SUBS`），而且没有挡 subs 的红（`subs_blockers`）。
+
+    2026-09-28 D2：原来要**只**卡在缺判定上——中文还没写、封面没挑、小红书正文没有、字幕超宽，
+    subs 一律不投，第二份 ASR 只能排在所有文字工作之后。那些红不碰转写指纹、subs 那两档只报不拦
+    （`build_interview_clip.TRANSCRIPT_STAGES`），现在不挡；render 照旧要当前指纹上 ok 的判定。"""
     from interview_preflight import NEEDS_SUBS  # noqa: PLC0415 —— 顶层只 import 标准库
-    return bool(missing) and all(NEEDS_SUBS in m for m in missing)
+    return any(NEEDS_SUBS in m for m in missing) and not subs_blockers(missing)
 
 
 def _subs_inputs(slug: str) -> str:
@@ -426,7 +459,14 @@ def _subs_inputs(slug: str) -> str:
 
 def subs_dispatch_block(slug: str, *, now: datetime,
                         state: dict | None = None) -> str | None:
-    """这条该投 subs 时，有什么理由**先不投** → 理由（None＝投）。
+    """这条该投 subs 时，有什么理由**先不投** → 理由（None＝投）。见 `_subs_block`。"""
+    got = _subs_block(slug, now=now, state=state)
+    return got[1] if got else None
+
+
+def _subs_block(slug: str, *, now: datetime,
+                state: dict | None = None) -> tuple[str, str] | None:
+    """→ (`in_flight`｜`parked`, 理由)；None＝投。
 
     认领按**转写输入**的指纹（`_subs_inputs`），不按整份 spec：转写输入一改（新的转写要
     重新量），上一趟 subs 的认领就不算数；只改了 zh／封面／文案，认领照旧——不然每次
@@ -437,10 +477,10 @@ def subs_dispatch_block(slug: str, *, now: datetime,
         return None
     at = _utc(rec.get("at"))
     if at is not None and now - at < timedelta(minutes=SUBS_STALE_MINUTES):
-        return f"已投 subs（{rec.get('at')}），等它交判定"
+        return "in_flight", f"已投 subs（{rec.get('at')}），等它交判定"
     tries = int(rec.get("tries") or 0)
     if tries >= SUBS_MAX_TRIES:
-        return (f"同一份转写输入已投 {tries} 趟 subs，预检还是认不出当前指纹的判定。两种可能："
+        return "parked", (f"同一份转写输入已投 {tries} 趟 subs，预检还是认不出当前指纹的判定。两种可能："
                 f"① 那几趟没交判定——去看「interview-clip · subs · {slug}」的日志"
                 "（下不动源片／字幕多半是这个）；② 交了，但判定绑的指纹和预检按仓库里的字幕缓存"
                 f"重切出来的对不上——比一下 output/interviews/{slug}/second_asr_verdict.json 的 "
@@ -526,11 +566,15 @@ def todo_plan(*, now: datetime | None = None
 
     三份都不含「已 render」和「最近刚 dispatch」的。dispatch 超过 STALE_MINUTES 仍无
     render.json 的自动释放回 ready；再次 mark 会刷新时刻，实现环境抖动自愈。
-    **只**卡在「当前指纹缺 subs 判定」上的进第三份（`needs_subs_only`），刚投过 subs、
-    还在窗口里的进等待名单说一声（`subs_dispatch_block`）。
+    当前指纹缺 subs 判定、又没有挡 subs 的红的进第三份（`wants_subs`——中文、封面、文案还缺着
+    也进，D2），刚投过 subs、还在窗口里的、投满次数停下的进等待名单说一声（`subs_dispatch_block`）。
+    **三份两两不相交**：一条 slug 这一趟只会投一样（同 slug 的 concurrency 是 cancel-in-progress，
+    投两样就是后一个掐前一个）。
+    顺带把「先投 subs」那本账该留哪几条、哪几条停下了记进 `_SUBS_SYNC`，`sync_subs_state` 用。
     """
     now = now or datetime.now(timezone.utc)
     state = _load_state()
+    _SUBS_SYNC["keep"], _SUBS_SYNC["parked"], _SUBS_SYNC["others"] = set(), set(), {}
     rendered = _rendered_slugs()
     current_rendered = _current_rendered_slugs(rendered)
     changed_inputs = rendered - current_rendered
@@ -576,16 +620,70 @@ def todo_plan(*, now: datetime | None = None
                         waiting.append((p.stem, [why]))
                     continue
         missing = missing_for_render(p.stem, spec)
-        if missing and needs_subs_only(missing):
-            if why := subs_dispatch_block(p.stem, now=now, state=state):
-                waiting.append((p.stem, [why]))
-            else:
-                subs.append(p.stem)
-        elif missing:
-            waiting.append((p.stem, missing))
-        else:
+        if not missing:
             ready.append(p.stem)
+            _SUBS_SYNC["keep"].add(p.stem)    # render_received_at 要那趟 subs 的时刻，mark_one 再删
+            continue
+        from interview_preflight import NEEDS_SUBS  # noqa: PLC0415 —— 顶层只 import 标准库
+        if any(NEEDS_SUBS in m for m in missing):
+            _SUBS_SYNC["keep"].add(p.stem)    # 判定还缺着：账（次数、在跑的那趟）还有用
+        if not wants_subs(missing):
+            waiting.append((p.stem, missing))
+            continue
+        others = [m for m in missing if NEEDS_SUBS not in m]
+        if block := _subs_block(p.stem, now=now, state=state):
+            waiting.append((p.stem, [block[1], *others]))
+            if block[0] == "parked":
+                _SUBS_SYNC["parked"].add(p.stem)
+        else:
+            subs.append(p.stem)
+            _SUBS_SYNC["others"][p.stem] = others
     return ready, waiting, subs
+
+
+#: `todo_plan` 最近一趟留下的：「先投 subs」那本账该留哪几条（`keep`）、哪几条停下了（`parked`）、
+#: 先投 subs 的那几条 render 另外还缺什么（`others`，只印给人看）。
+_SUBS_SYNC: dict = {"keep": set(), "parked": set(), "others": {}}
+
+
+def sync_subs_state(*, now: datetime | None = None) -> list[str]:
+    """按 `todo_plan` 刚判完的结论收拾「先投 subs」那本账（全量那一趟、dispatch 之前）→ 删掉的 slug。
+
+    - **删**（复审 nit 4）：判定已经交上来的（不再缺判定——红了等人、ok 了投 render；ok 且这一趟
+      就要投 render 的留着，`render_received_at` 要它，`mark_one` 投出去那一刻删）、spec 没了、
+      已经出片、发布过不再投的……**只删过了重投窗口的**：还在窗口里的那趟可能还在跑，删了它，
+      挡它的红一消失就会再投一趟、把在跑的掐掉。render 那一份（`slugs`／`at`）从来不删，这一份
+      不学它：它的 `tries` 只在「同一份转写输入还缺判定」时有用，留着只会让账越滚越大。
+    - **标 `parked`**（复审 nit 3）：同一份转写输入投满 `SUBS_MAX_TRIES` 趟还没判定的——
+      pipeline-health 读这个标记列出来，不用去翻 auto-render 的 stderr；不再停着的摘掉标记。
+    """
+    now = now or datetime.now(timezone.utc)
+    state = _load_state()
+    book = state.get("subs") or {}
+    dropped: list[str] = []
+    changed = False
+    for slug in sorted(book):
+        rec = book[slug]
+        at = _utc(rec.get("at")) if isinstance(rec, dict) else None
+        in_flight = at is not None and now - at < timedelta(minutes=SUBS_STALE_MINUTES)
+        gone = not isinstance(rec, dict) or not (SPECS / f"{slug}.json").is_file()
+        if gone or (slug not in _SUBS_SYNC["keep"] and not in_flight):
+            del book[slug]
+            dropped.append(slug)
+            changed = True
+            continue
+        parked = slug in _SUBS_SYNC["parked"]
+        if bool(rec.get("parked")) != parked:
+            if parked:
+                rec["parked"] = True
+            else:
+                rec.pop("parked", None)
+            changed = True
+    if changed:
+        state["subs"] = book
+        STATE.parent.mkdir(parents=True, exist_ok=True)
+        STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+    return dropped
 
 
 def mark_one(slug: str, *, now: str = "") -> None:
@@ -598,6 +696,9 @@ def mark_one(slug: str, *, now: str = "") -> None:
     spec_path = SPECS / f"{slug}.json"
     if spec_path.is_file():
         state["spec_sha256"][slug] = _sha256(spec_path)
+    # 这趟 render 就是「先投 subs」等的那一下：那本账这一条用完了（SLA 起点已经在投之前
+    # 由 `render_received_at` 取走），删掉——不删的话账只进不出（复审 nit 4）
+    (state.get("subs") or {}).pop(slug, None)
     STATE.parent.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2),
                      encoding="utf-8")
@@ -651,6 +752,9 @@ def main() -> int:
                          "（每行一个；没有也写一个空文件）")
     ap.add_argument("--mark-subs", default="",
                     help="这条 slug 的 mode=subs dispatch 成功了，记进状态")
+    ap.add_argument("--sync-subs", action="store_true",
+                    help="判完顺手收拾「先投 subs」那本账：删判定已交上来的、标投满次数停下的"
+                         "（`sync_subs_state`；只在 dispatch 那一步用——本地预览别带，免得改状态文件）")
     args = ap.parse_args()
     global PROBE
     PROBE = bool(args.probe)
@@ -679,6 +783,10 @@ def main() -> int:
     ready, waiting, subs = todo_plan()
     if not PROBE:
         save_verdicts()
+        if args.sync_subs:
+            if dropped := sync_subs_state():
+                print(f"[subs 账] 删了 {len(dropped)} 条判定已交上来／用不上的：{'、'.join(dropped)}",
+                      file=sys.stderr)
     if args.subs_list:
         Path(args.subs_list).write_text("".join(f"{s}\n" for s in subs), encoding="utf-8")
     unknown = [s for s in ready if s in _UNKNOWN]
@@ -695,6 +803,11 @@ def main() -> int:
         print(f"[等自动补齐 / 例外复核] {len(waiting)} 条（不 dispatch）：", file=sys.stderr)
         for slug, missing in waiting:
             print(f"  {slug}：缺 {'、'.join(missing)}", file=sys.stderr)
+    # 先投 subs 的那几条 render 另外还缺什么：subs 不等它们（D2），可人要知道还剩哪几样
+    if later := {s: o for s, o in _SUBS_SYNC["others"].items() if o and s in subs}:
+        print(f"[先投 subs，render 另外还缺] {len(later)} 条：", file=sys.stderr)
+        for slug, others in later.items():
+            print(f"  {slug}：缺 {'、'.join(others)}", file=sys.stderr)
     return 0
 
 

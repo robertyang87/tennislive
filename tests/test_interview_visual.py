@@ -412,9 +412,10 @@ def test_封面重点词写错了在spec闸就红_不等出封面(tmp_path, monk
             auto[f"{spec['slug']}.json"] = str(exc)
     _report_auto("check_cover_hook", auto)
 
-    # 真跑一遍 `main() --stage subs`（评审 WP3 修正轮 nit：源码里有这一行调用证明不了它
+    # 真跑一遍 `main() --stage render`（评审 WP3 修正轮 nit：源码里有这一行调用证明不了它
     # 真的跑、真的排在联网之前）。联网 / 下源片那几步换成桩：走到桩就说明闸没拦住，
-    # 或者排在了它们后面。
+    # 或者排在了它们后面。⚠️ 原来跑 `--stage subs`——2026-09-28 D2 起那一档只交转写判定、
+    # 封面这排闸只报不拦（不碰转写指纹）；拦在出片那几档。
     class _Reached(Exception):
         pass
 
@@ -433,7 +434,7 @@ def test_封面重点词写错了在spec闸就红_不等出封面(tmp_path, monk
         p = tmp_path / f"{spec['slug']}.json"
         p.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
         monkeypatch.setattr(sys, "argv", ["build_interview_clip.py", "--spec", str(p),
-                                          "--stage", "subs"])
+                                          "--stage", "render"])
         try:
             clip.main()
         except _Reached as e:
@@ -443,7 +444,7 @@ def test_封面重点词写错了在spec闸就红_不等出封面(tmp_path, monk
         return "跑完了"
 
     # 对照组：合规的重点词，前面那排闸全放行，一路走到第一个联网的步骤——桩是接上的
-    assert run("紧张") == "走到了 storyboard_sheet"
+    assert run("紧张") == "走到了 fetch_words"
     out = run("不存在")
     assert out.startswith("拦下") and "hook_accent" in out, (
         f"重点词写错了，`main()` 却{out}——它只读 spec，该在联网之前第一秒就报")

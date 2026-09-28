@@ -210,6 +210,15 @@ NEEDS_SUBS = "［要先跑 subs］"
 #: ⚠️ 不写「render 会红在这儿」：render 的 verify 在判定不是 ok 时会**重量**一遍
 #: （第二份 ASR 不是确定性的），它红不红要看那一趟——这里只说量出来了什么。
 SUBS_RED = "转写（subs 在当前转写指纹上量出来的）："
+#: **碰转写本身**的红（2026-09-28 D2）：有它在，自动链不先投 subs——subs 那一趟自己也死在
+#: 同一处（L0、`en_fixed` 挂错行、人工引语对不上、切行崩了，`main()` 在切行前后拦，不分档），
+#: 或者改完这一处转写指纹多半跟着变，这一趟量的就是旧的那一版。**不在这张表里的红**
+#: （中文、封面、文案、解读卡、冷开场、顶栏……）不碰转写指纹，subs 那两档只报不拦
+#: （`build_interview_clip.TRANSCRIPT_STAGES`），**不挡 subs**——第二份 ASR 和写中文、挑封面并行跑。
+EN_FIXED_RED = "`en_fixed` 行号像是挂错了行"
+HUMAN_QUOTE_RED = "人工引语对不上："
+RESEGMENT_RED = "字幕重切："
+TRANSCRIPT_REDS = ("check_source_contract：", EN_FIXED_RED, HUMAN_QUOTE_RED, RESEGMENT_RED)
 
 
 def subtitle_findings(spec: dict, *, require_subs: bool = False
@@ -256,7 +265,7 @@ def subtitle_findings(spec: dict, *, require_subs: bool = False
         # 挂错了当场 SystemExit——这里同一个位置、同一个函数；后面的量宽建在错位的行上，
         # 报出来也是噪声，所以和 runner 一样到此为止。
         if bad := clip.en_fixed_misaligned(lines, spec.get("en_fixed") or {}):
-            problems.append("`en_fixed` 行号像是挂错了行（键是 **1 起** 的行号）："
+            problems.append(f"{EN_FIXED_RED}（键是 **1 起** 的行号）："
                             + "；".join(bad))
             return problems, notes
         for k, v in (spec.get("en_fixed") or {}).items():
@@ -273,7 +282,7 @@ def subtitle_findings(spec: dict, *, require_subs: bool = False
             not_yet("；".join(verdict.pending))
         err, _ = _run_gate(clip.check_human_quote, spec, lines, work)
         if err:
-            problems.append(f"人工引语对不上：{err}")
+            problems.append(f"{HUMAN_QUOTE_RED}{err}")
         zh = spec.get("zh") or []
         if not zh:
             notes.append(f"切出 {len(lines)} 行英文，spec 里还没有中文")
@@ -386,9 +395,9 @@ def spec_problems(spec: dict, *, copy: bool = True, date: str = "",
     try:
         sub_bad, sub_notes = subtitle_findings(spec, require_subs=require_subs)
     except ImportError as exc:
-        raise PreflightUnavailable(f"字幕重切：{exc}") from exc
+        raise PreflightUnavailable(f"{RESEGMENT_RED}{exc}") from exc
     except Exception as exc:  # noqa: BLE001 —— 同 `_run_gate`：坏 spec 记红，不带崩调用方
-        sub_bad, sub_notes = [f"字幕重切：{type(exc).__name__}: {exc}"], []
+        sub_bad, sub_notes = [f"{RESEGMENT_RED}{type(exc).__name__}: {exc}"], []
     problems += sub_bad
     notes += sub_notes
     from spec_wording import check_interview_copy_wording  # noqa: PLC0415

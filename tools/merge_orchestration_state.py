@@ -102,15 +102,24 @@ def merge_interview_states(base: dict, ours: dict, theirs: dict) -> dict:
     # 重放上去，远端同一条更新（时刻不早于本趟）就让远端的。不重放的话，一撞车这趟投的
     # subs 就没记上，下一趟又投一次——同 slug 的 concurrency 是 cancel-in-progress，
     # 重投会把还在跑的那趟掐掉。
+    # ⚠️ **本趟删掉的、改了标记的也要带过去**（`sync_subs_state` 删判定已交上来的、标 `parked`；
+    # `mark_one` 删用完的，复审 nit 3/4）——和 `blocked` 那一栏同一个道理：不带，一撞车账就只进
+    # 不出、停下的标记也丢了。远端自己也动过这一条（≠ base）而且不比本趟旧，就听远端的。
     base_subs = base.get("subs") or {}
+    ours_subs = ours.get("subs") or {}
     theirs_subs = theirs.get("subs") or {}
-    for slug, rec in (ours.get("subs") or {}).items():
-        if rec == base_subs.get(slug):
+    for slug in sorted(set(base_subs) | set(ours_subs)):
+        mine, was, remote = ours_subs.get(slug), base_subs.get(slug), theirs_subs.get(slug)
+        if mine == was:
             continue
-        remote = theirs_subs.get(slug) or {}
-        if remote and str(remote.get("at") or "") >= str(rec.get("at") or ""):
+        if (remote is not None and remote != was
+                and (mine is None
+                     or str(remote.get("at") or "") >= str(mine.get("at") or ""))):
             continue
-        merged.setdefault("subs", {})[slug] = rec
+        if mine is None:
+            (merged.get("subs") or {}).pop(slug, None)
+        else:
+            merged.setdefault("subs", {})[slug] = mine
     return merged
 
 
