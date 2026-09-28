@@ -114,14 +114,18 @@ _N = r"[\d一二两三四五六七八九十百零]+"
 #: 31 条这么写，已发的 zverev-sonego-us-open-2026-r1、tiafoe-michelsen 旁白都是）。合并两份正则时
 #: 一度丢了 `\s*`，带空格的写法整批漏过（批次 4 复审抓到）——判据
 #: `test_钩子里比全场总分差要拦` 的空格那几条。
-#: ⚠️ 合并时放弃了 copy-strip 那份的一个分支：「全场只?(?:多|少)赢?」不要求带「N 分」，
-#: 所以认得「全场多赢一个球」（单位是球）；这一份要求「全场」后面带「N 分」，那个边角放掉了
-#: ——换来的是不误伤「全场多次破发」「全场一直领先」。
+#: ⚠️ 合并时放弃过 copy-strip 那份的一个分支：「全场只?(?:多|少)赢?」不要求带「N 分」，
+#: 所以认得「全场多赢一个球」（单位是球）和「全场多出 26 分」（动词是「出」）——合并版
+#: 两个都漏了（批次复审 nit：自动草稿 snigur-shnaider 的 thesis 正写着「全场多出26分」，
+#: thesis 会喂钩子）。2026-09-27 收回来，但不照抄那个不带数的分支：动词表补「出」，
+#: 「全场…多/少…N 个球」单列一支（单位是球只在「全场」后面认，「多一个球」单说太宽）
+#: ——照旧不误伤「全场多次破发」「全场一直领先」。
 #: ⚠️ 故意不收裸的「差 N 分」：「只差一分被拖进决胜盘」是他接受过的钩子，那一分是关键分。
 TOTAL_MARGIN = re.compile(
     rf"总分|总得分|总小分"
     rf"|全场[^\n，。]{{0,8}}?(?:领先|落后|只差|差)\s*{_N}\s*个?小?分(?!钟|之)"
-    rf"|(?<![至最不])(?:多|少)(?:赢|拿|得)?了?\s*{_N}\s*个?小?分(?!钟|之)"
+    rf"|(?<![至最不])(?:多|少)(?:赢|拿|得|出)?了?\s*{_N}\s*个?小?分(?!钟|之)"
+    rf"|全场只?(?:多|少)(?:赢|拿|得|出)?了?\s*{_N}\s*个球"
     rf"|{_N}\s*个小分")
 
 #: 2026-09-19 那条规矩之前已经发出去的。全库量过：钩子／推送标题里写总分差的 12 条，
@@ -180,11 +184,21 @@ ONE_OF_N = re.compile(r"(赛点|盘点)[^。！？\n]{0,8}只(兑现|转化|拿�
 ONE_OF_N_LEGACY = frozenset({"bouzkova-jovic"})
 
 
+def _one_of_n_claimed(spec: dict) -> bool:
+    """spec 顶层 `_one_of_n_why` 认领（2026-09-27 复审 nit）：**盘点跨盘不一定是同义反复**——
+    一盘里盘点没拿下、丢了这一盘，后一盘再兑现一个（「两盘下来三个盘点只兑现了一个」）
+    是真会变的效率。判据是「这几个点是不是同一个终止单元里的同一串」（tennis-editorial），
+    正则分不出来，所以给手写 spec 一个和别的 `_why` 同形状的口；豁免表只许减，不是出口。
+    赛点对赢家恒是同义反复，认领口照样开着——写不出为什么就别写。"""
+    return bool(str(spec.get("_one_of_n_why") or "").strip())
+
+
 def one_of_n_problem(spec: dict, xhs_text: str | None = None) -> str | None:
     """只扫我们写的字（`_our_copy` ＋ 小红书正文），不扫原声段：解说喊一句「三个盘点只
     拿下一个」照实配双语字幕，不许因此把手写 spec 拦在渲染入口——和采访那边不扫 `zh`
-    同一个形状（`test_赛点同义反复只管我们的文案_解说原声照实翻`）。"""
-    if _slug(spec) in ONE_OF_N_LEGACY:
+    同一个形状（`test_赛点同义反复只管我们的文案_解说原声照实翻`）。
+    认领口 spec 顶层 `_one_of_n_why`（见 `_one_of_n_claimed`）。"""
+    if _slug(spec) in ONE_OF_N_LEGACY or _one_of_n_claimed(spec):
         return None
     hits = _hits(ONE_OF_N, _our_copy(spec) + ([xhs_text] if xhs_text else []))
     if not hits:
@@ -731,7 +745,9 @@ def xhs_taste_extra(spec: dict, xhs_text: str | None) -> tuple[list[str], list[s
     if not xhs_text:
         return [], []
     hard = [p for p in (xhs_markdown_problem(xhs_text),
-                        one_of_n_problem({"slug": _slug(spec)}, xhs_text)) if p]
+                        one_of_n_problem({"slug": _slug(spec),
+                                          "_one_of_n_why": spec.get("_one_of_n_why")},
+                                         xhs_text)) if p]
     soft = [n for n in (peng_shuai_note([xhs_text]),) if n]
     return ([], hard + soft) if _auto(spec) else (hard, soft)
 
@@ -752,7 +768,8 @@ def interview_taste_extra(spec: dict, xhs_text: str | None = None
     ours += [str((spec.get("takeaway") or {}).get(k) or "") for k in ("point", "narration")]
     texts = ours + [str(z) for z in spec.get("zh") or []]
     one_of_n = None
-    if _slug(spec) not in ONE_OF_N_LEGACY and (hits := _hits(ONE_OF_N, ours)):
+    if (_slug(spec) not in ONE_OF_N_LEGACY and not _one_of_n_claimed(spec)
+            and (hits := _hits(ONE_OF_N, ours))):
         one_of_n = (f"写了「N 个赛点／盘点只兑现了一个」：{hits}——赢家永远只兑现最后一个，"
                     "要写就写对手救下了几个（账号所有者 2026-08-19）。")
     hard = [p for p in (total_margin_problem(shadow), one_of_n,

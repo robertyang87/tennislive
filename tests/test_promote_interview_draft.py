@@ -411,3 +411,15 @@ def test_手改草稿的标题和推送标题数字打架_转正时留草稿(too
                        encoding="utf-8")
     promoted, skipped = tool.promote_all(write=True)
     assert promoted and not skipped, (promoted, skipped)
+
+    # 批次复审 blocking (a)：草稿带着 `auto_pending` 章，默认分法下大标题术语只报——
+    # 可非模板的标题只可能是人改的；放过去转正后渲染闸也只报、推出去就是带术语的封面。
+    # promote 按手写判（`auto=False`），留草稿。
+    (specs / "zverev-cincinnati-2026-r3.json").unlink()
+    (specs / "zverev-cincinnati-2026-r3.xhs.txt").unlink(missing_ok=True)
+    jargon = {**base, "transcript_verification": "auto_pending",
+              "cover": {**(base.get("cover") or {}), "title": ["抢七扳平之后", "兹维列夫赢了"]}}
+    draft_p.write_text(json.dumps(jargon, ensure_ascii=False), encoding="utf-8")
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted == [] and any("口味闸不过" in s and "抢七" in s for s in skipped), skipped
+    assert draft_p.exists()

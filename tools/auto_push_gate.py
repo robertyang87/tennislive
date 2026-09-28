@@ -296,7 +296,9 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path,
     film_hash = validate_qc(repo, slug, outdir)
 
     # 复用 push_reel 那份读法，别在这儿另解一遍 JSON——「一个数写两处必分叉」。
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    # 只插一次：多个 --changed 逐条走这里，原来每条插一次（复审 nit，同 production_preflight）
+    if (tools := str(Path(__file__).resolve().parent)) not in sys.path:
+        sys.path.insert(0, tools)
     from push_reel import POSTER_NAME, push_is_auto  # noqa: PLC0415
 
     if not push_is_auto(copy_path):

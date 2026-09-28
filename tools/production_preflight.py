@@ -43,16 +43,20 @@ class RequestNotReady(ValueError):
     写进 run 摘要并标红——没过前置检查的请求不会只剩一句被人略过的 warning。"""
 
 
-def check_taste(spec: dict) -> None:
+def check_taste(spec: dict, *, auto: bool | None = None) -> None:
     """账号所有者的口味闸（采访线）：标题和推送标题的数字一致（硬）；封面大标题的
-    术语只报（等账号所有者确认，见 `taste_gates.interview_taste_findings`）。
+    术语（账号所有者 2026-09-27 答复做硬：手写的硬、自动链没核没发的只报，见
+    `taste_gates.interview_taste_findings`）。
+
+    `auto=False`：人工请求那条路（`check_request`）——标题是人写在请求里的，一律按手写判，
+    哪怕「只改元数据」那条路上铺进来的现有 spec 带着自动链的章。
 
     2026-09-27「形成一个通用的规则在做视频前就拦掉，而不是说做了一半又返工」——
     所以它排在任何下载、ASR、渲染之前。判据单一出处 tools/taste_gates.py。
     """
     _tools_on_path()
     from taste_gates import interview_taste_findings  # noqa: PLC0415
-    hard, soft = interview_taste_findings(spec)
+    hard, soft = interview_taste_findings(spec, auto=auto)
     for note in soft:
         print(f"[口味] {spec.get('slug', '?')} 只报：{note}")
     if hard:
@@ -70,7 +74,7 @@ def check_request(req: dict) -> None:
     抄请求的 cover/push）。所以这里不另去读 specs/ 下的旧稿。
     """
     # No download, fonts, browser or ASR import required here.
-    check_taste(req)
+    check_taste(req, auto=False)
     # 出片那一趟 `build_interview_clip.main()` 开头还有两道**只读 spec 文本**的闸：
     # 比分赢家视角（`check_score_orientation`）和另一半口味闸（`check_taste_extra`）。
     # 原来请求这一步不查它们——`interview-auto-render` 用 GITHUB_TOKEN 把 spec 直推 main
@@ -116,7 +120,20 @@ def check_request(req: dict) -> None:
         base.with_suffix('.json').write_text(json.dumps(req, ensure_ascii=False))
         copy = base.with_suffix('.xhs.txt')
         copy.write_text(str(req.get('xhs') or ''), encoding='utf-8')
-        check_copy(copy, '赛后开麦')
+        try:
+            check_copy(copy, '赛后开麦', quiet=True)
+        except subprocess.CalledProcessError as exc:
+            # 文案超限（tag > 5、标题 > 20 字位）是**确定性的**请求问题——不改请求每一趟都一样红，
+            # 和解读卡、全称断言同一类：`RequestNotReady`，只红这一条、不连坐别的 spec 的
+            # 提交和 dispatch（复审 nit：原来抛 CalledProcessError，算 failed、整趟退 1）。
+            # 判「判据红」还是「工具崩了」用和 `interview_preflight.copy_problem`／`CRASHED`
+            # 同一个办法：输出里有 Traceback 就是崩了，原样往上抛（照旧让 step 红）。
+            out = f"{exc.stdout or ''}{exc.stderr or ''}"
+            if 'Traceback (most recent call last)' in out:
+                sys.stderr.write(out)
+                raise
+            tail = ' / '.join(out.strip().splitlines()[-3:]) or f'退出码 {exc.returncode}'
+            raise RequestNotReady(f'发布文案过不了 push_reel --stage check：{tail}') from exc
 
 
 def _takeaway_wrap(req: dict) -> list[str]:

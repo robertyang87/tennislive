@@ -406,17 +406,17 @@ def closer_problems(deck: Deck) -> list[str]:
 
 
 def reading_problems(deck: Deck) -> list[str]:
-    """配音读法：比分的「-」会被念成「杠」；「挑」只许留在挑战／挑衅这类词里。"""
+    """配音读法：比分的「-」会被念成「杠」。
+
+    ⚠️ 原来还有一半：「挑」只许留在挑战／挑衅这类词里（别的都该被 挑→选 换掉）。
+    2026-09-27 挑→选 整条拿掉了——量出来原文「挑球」已经读 tiāo，而挑高球那个「挑」
+    换成「选」是另一个词（`video/pronounce.py` 表头注释）——所以这一半的前提不在了。
+    挑高／挑起／挑回 的 tiǎo 读偏归 `check_polyphones.REWRITE_ONLY` 提醒。"""
     problems = []
     for seg in deck.segments:
         spoken = E.speakable(seg.narration)
         if re.search(r"(?<!\d)\d{1,3}\s*[-–—−]\s*\d{1,3}(?!\d)", spoken):
             problems.append(f"{deck.slug}/{seg.kind} 旁白里还有会被读成「杠」的比分：{spoken[:60]}")
-        for hit in re.finditer(r"挑(.?)", spoken):
-            if hit.group(1) not in "战衅拨逗剔眉":
-                problems.append(
-                    f"{deck.slug}/{seg.kind} 旁白里还有会被读成三声的「挑」：{spoken[:60]}")
-                break
     return problems
 
 

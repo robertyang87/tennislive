@@ -4729,6 +4729,11 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
     git rm output/<日期>/reel/<slug>/pushed.json && 合并
     # 或 match-reel.yml mode=push push=true（同样要先删掉 pushed.json）
 
+⭐ **已发片子只改推送文字（`push.summary`／`push.lead`）不重推**——账号所有者 2026-09-27 ~23:00Z
+答复 reattest 评审那一问，确认了。成片没变（指纹没变），发布账本和 `pushed.json` 照拦，
+和 09-22「没有真改动就不该有新消息」同一句话；改掉的文字只落进仓库（复制页、下一次重渲）。
+真要让改过的文字发出去，就得有进成片的改动、重渲出新指纹，走上面那条「重渲默认重推」。
+
 ## ⭐⭐ 2026-09-27：Q9 阻塞推微信的四条口径（账号所有者 ~23:00Z 答复）
 
 定义只有一份：`tools/build_dashboard_snapshot.py` 的 `blocked_runs`（顶注有全文和实测证据），
@@ -4799,8 +4804,15 @@ spec 也不改），销章看 `_protected`：人核过（`transcript_verified` /
 ⚠️ 其中「N 强」那条**草稿转正那条路堵上了一半**（评审 2026-09-27：main 上真草稿
 `bonzi-winston-salem-2026-r` 的 DeepSeek 译文「大概是八强左右」，转正 `check_interview_copy_wording`
 返回空、全库测试红）：`promote_all` 按全库测试同一份面（`spec_wording.non_annotation_strings`，**含 `zh`**）
-跑 `strength_round_hits`，命中就留草稿。**人工请求那条路（`build_interview_request` 直接写正式 spec）
-仍然不查**——译文命中时是让 build 红、还是标 `manual_review_required`，没替账号所有者定。
+跑 `strength_round_hits`，命中就留草稿。**人工请求那条路 2026-09-27 晚也堵上了**（确定性的一刀，
+和 promote 同一个处置，不碰模型提示词）：`build_interview_request._round_name_review` 在写正式 spec 之前
+按同一份面判，**只在机器译文里**的「N 强」→ 正式 spec 不写，落成 `<slug>.draft.json`＋`manual_review_required`
+（promote 见到这个键不提升；`is_pending` 认得它在等人、同一份请求不重建；人改好 `zh`、删掉键、改名成
+`<slug>.json`、把 `_xhs` 存成 `.xhs.txt`；正式 spec 一写出来这份草稿自动删掉）；**请求自己写的**「N 强」
+→ `RequestNotReady`，改请求。`attach_interview_lead_in` 配出来的 `lead_in.subs[].zh` 命中就不写、下一轮重配。
+判据 `test_机器译文把轮次写成N强_正式spec不写_落草稿等人工复核`、`test_冷开场译文把轮次写成N强_不写_下一轮重配`。
+⚠️ 这份草稿也算进 `interview-auto-render` 早退探针的 `DRAFTS`，人没处理之前每 10 分钟跑一趟全量——
+和 promote 留下的草稿同一个老毛病，没在这一刀里改。
 ⚠️ **这些「照判」拦不住出片，只守 main 的绿**：GITHUB_TOKEN 推的提交不触发 ci.yml，自动链提交完
 渲染已经派出去了，全库测试是之后才跑的。所以「照判」的意思是「这条缺陷只有它在查，红给下一个人工
 PR 看」，不是「它挡在出片前面」。
@@ -4895,8 +4907,9 @@ workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟�
 `TAKEAWAY_POINT_PX/TRACKING`）。2026-09-27 main 的评审 I2／I3 把卡改成 `keep-all`＋`balance`、
 左边距跟台头收到 70（正文区 860px），合并时 CSS 改成读这组常量——不然闸按 838 量、卡按 860 排，
 正是「写两处必分叉」。`interview_spec_gates.card_lines` 照这套 CSS 排行，全库 104 张卡＋4 条样例
-真渲对过，折点逐字一样，报错里印的就是卡上的折点。⚠️ **「在空格处折成匀称的两行」算不算合格
-是账号所有者还没定的口径**，定之前照旧要求一行。
+真渲对过，折点逐字一样，报错里印的就是卡上的折点。⭐ **「在空格处折成匀称的两行」不算合格**——
+账号所有者 2026-09-27 ~23:00Z 答复：收尾卡那一句**一行放得下，写不下就写短**。闸本来就这么判，
+不放宽；真要两行照旧在那张卡里写 `_wrap_ok` 认领。
 
 ⚠️ `FROZEN_SLACK`＝0.2 只校准过 1.1~1.7 秒；已发的 0.2~1 秒短冻帧（从 Release 拉回 102 条
 已发正片量出来 2 条）挂在 `data/legacy_interview_gates.json` 的 `frozen_tail_short`，
