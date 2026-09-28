@@ -2309,8 +2309,8 @@ WordPress 的 `search` 两样都不搜），判据 `test_半截失败的一档�
 ⚠️ **按这套闸，拉沃尔杯官网那批图过不了**：`lavercup.com` 媒体库的上限是 1200 宽
 （`BS2_8696` 1200×927、`CB_34032` 1200×832、`BS2_9519` 1200×800），铺 1080×1440 要放大
 1.55~1.80 倍——6b49049b 是人写了 `_low_res_why` 认领的。2026-09-27 对 `bublik-jodar`
-实跑：23 张候选，本场那两张日期、说明全对，卡在分辨率。要让机器接这一档，得账号所有者
-先定「放大到几倍以内可以自动换」，**这是口径，不是 bug**。
+实跑：23 张候选，本场那两张日期、说明全对，卡在分辨率。**定了（2026-09-28）：机器不接**——
+O4 的规矩本来就写着「铺满不放大」，机器不替人写 `_low_res_why`；这一档要换只能人挑、人认领。
 
 **实测过的端点（2026-09-27，沙箱）**：flashscore `dc_1_hheFZ9KN` 200（`DC÷1790360700`
 ＝09-25 18:25Z）；`lavercup.com/wp-json/wp/v2/media?search=…&_fields=…caption,alt_text`
@@ -2332,6 +2332,61 @@ WordPress 的 `search` 两样都不搜），判据 `test_半截失败的一档�
     python3 tools/cover_upgrade.py --slug <slug>      # 只查一条
     python3 tools/cover_upgrade.py --plan             # 只看有没有活（目标、要重派的 render），不查图
     # 工作流：定时班次带 --apply；推完会话用 tools/push_link.py --slug <slug> 取新推送网页
+
+##### ⭐⭐ 2026-09-28：O4 第一班一张都没换成——渠道合成一份、AP 是挑战页、没开赛时刻也能推日期、团体赛按名单、渲前预检
+
+第一班（run 36378419750，apply=false）的账：杭州三条**只查了 AP**（403），别的渠道在报告里根本不出现；
+`safiullin-bu` 因为 spec 没有 `_match.start_utc`／`flashscore_id` 被挡；`zverev-tien` 官网 8 张全卡在
+「只写姓」「没写对手」。改了四处：
+
+| | 现在 | 判据 |
+|---|---|---|
+| 渠道 | `tools/cover_channels.py` 的 `CHANNELS` **一份**，`find_cover_photo`（人查）和 `cover_upgrade`（O4）共用；官网域名也只在 `EVENT_SITES` 登记（人查给 `--event "Laver Cup"` 就自动带上 lavercup.com）。每档一行：**查了 N 张／查空／没查成／没跑／O4 不查**，末行分清「一档都没查成＝结果未知」和「查成了、没有全过」 | `test_渠道只登记一份_人查和O4用同一张单子` |
+| AP | 沙箱实测是 **Cloudflare 人机挑战**（403 ＋ `cf-mitigated: challenge`，`/hub/tennis`、`/search`、`.rss`、`news-sitemap` 全一样；它的 robots.txt 对 ClaudeBot／Claude-User 也写着 `Disallow: /`），runner 那一班同一地址也是 403——**不绕**，第一页认出来就停、记「没查成」 | `test_AP的Cloudflare挑战页记没查成_第一页就停` |
+| 当地日期 | `_match.start_utc` → `_start_time_source`（safiullin-bu 记着 sofascore 的 `reported_utc`）→ flashscore → **首推时刻推的两天窗口**（片子只做今天／昨天的比赛日；窗口下说明必须点对手、写日期，只能靠上传时刻判的不换），报告里写「日期来源」 | `test_没有开赛时刻_按spec记下的或首推时刻推当地日期_并说是哪一个` |
+| 团体赛 | `data/team_event_rosters.json`（拉沃尔杯 2026：官网 9/21 那篇的名单 ＋ 10 场「Match Highlights – A v B (Match N)」，和仓库 10 条拉沃尔杯 spec 逐条对得上）。**只写姓**：名单上这个姓只有他一人就认（认人闸还要认出是他）；**官网图注不写对手**：只认官网自己的图、日期是开赛时刻算的、他那天只打这一场且对手对得上、图注没点名单上的别人 | `test_拉沃尔杯官网真图注_…`（9/27 真图注录在 `tests/fixtures/cover_upgrade/`） |
+
+⚠️ **为什么团体赛放宽对手**：官网自己写的图注，拍他本人时**从来不写对手**（「Alexander Zverev adds another
+Laver Cup title to his resume.」「Team Europe players and captains get around Zverev.」）；写了对手的两张拍的
+恰恰是对手那边（「Team World's Learner Tien returns another Zverev smash.」）。兹维列夫 9/26 单打双打都打
+（第 6、第 8 场），那一天照旧要点对手。
+
+**渲前预检**（返工审计：66 条里 11 条首推是抽帧、4 条换实拍重推了 5 次）：match-reel render 那一步
+`python tools/cover_upgrade.py --preflight --slug <slug>`，同一套渠道和机器闸——有一张全过，**手写 spec 的第一次
+渲染红**（退出码 3，报告里是 `image`／`focus`／`focus_y`／`zoom`，`--write` 一条命令写进去），自动 spec、已经推过的
+只报；没有、判不了、渠道没查成、超时（会拦的 100 秒、只报的 60 秒）、工具自己炸了都不拦。会话发 render 之前自己也跑一遍。
+
+**回放的数（别读成「修好了」）**：11 条首推按首推那一刻重跑（上传晚于首推的剔掉）**0 条会被拦**——杭州 6 条
+机器能用的渠道一档都没有（AP 挑战页；中文媒体是这一站唯一出过实拍的一档，而 O4 不查它）；拉沃尔杯 4 条
+名单放宽之后点名闸过了 20 张（其中 10 张靠名单），**20 张全卡在官网 1200 宽**、1 张卡认人（替补席）；
+比利·简·金杯 1 条 WTA 查空。全库 83 条抽帧封面今天跑一遍：硬红 0。单条耗时是个范围：机器闸判不了的
+（缺英文名、认不出赛事、没开赛时刻）和只剩 AP 一档的不到 1 秒；其余 1~24 秒（81 条
+「赛场之上」逐条量 1.2~21.4 秒、平均 11.8；bencic-townsend 同一条
+15.4／16.6／22.7 秒，复审时 24 秒——网络抖动，同一条能差 7 秒）。
+
+**两件定了（按仓库已有的规矩定，不是悬着的口径）**：
+- **中文媒体 O4 不用**：公众号／当地网站的配图没有图注，时间地点人物自证不了——CLAUDE.md「出处以来源自己的
+  描述为准，不靠看图推断」。人查照旧跑这一档（`--zh`），换上去要人挑（`cover_channels` 里的 `o4_off`）
+- **拉沃尔杯官网 1200 宽的图机器不换**：O4 的规矩是「铺满不放大」，机器不写 `_low_res_why`
+
+##### 同日复审：只拦第一次、放宽要再收三道、两道闸是同一道
+
+| | 现在 | 判据 |
+|---|---|---|
+| 渲前预检拦谁 | **只拦手写 spec 的第一次渲染**（`already_pushed`：发布账本里没有 sending／sent／uncertain、git 里没有 `output/*/reel/<slug>/pushed.json`）。推过的只报、不试写、`--write` 也不写——推出去之后换图归 O4（它认 `_keep_frame_why`，认领口只有这一个）；原来那张空的 `PREFLIGHT_LEGACY` 删了（它管的就是「推过的」） | `test_渲前预检只拦第一次渲染_推过的只报_不试写不改spec` |
+| 预检和 `--write` | 预检挑图时拿 `--write` 的同一个函数（`_formal_gate_on`：`cover_photo_problem` ＋ `validate_spec`）试一遍、试完退回——退出码 3 只在 `--write` 会成功时出现；正式闸不放的换下一张 | `test_渲前预检拦下的那张_write一定写得进去_同一道正式封面闸` |
+| 团体赛放宽 | 放宽之后认错人原来只剩认人闸：① 点名闸收裸的替补席／看台名词（`bench`、`support…`、`crowd`、`fan(s)`、`spectator(s)`）② 放宽过的，图注**最先点名**的名单上的人必须是主角（「Learner Tien returns another Zverev smash」主语是对手）③ 照片有 EXIF `DateTimeOriginal` 就必须落在这场的当地日子（前一天的图第二天才传上来，上传那道闸拦不住） | zverev-tien 那 8 张：点名闸过的从 **7 张→4 张**（4 张全是主角先点名、全卡 1200 宽），**要下图的从 1 张→0 张**；`test_拉沃尔杯官网8张_…`、`test_照片EXIF拍摄日期不是这场的当地日子就不换` |
+| 开赛时刻下界 | `_start_time_source.reported_utc`（列出来的开赛时间）≤ 真开赛：「上传晚于开赛」拿它比是**更松**（原注释写反了），团体赛「不写对手」的放宽不给 | `test_列出来的开赛时间只当下界_团体赛不写对手的放宽不给` |
+| 时间 | match-reel 那一步 5→2 分钟：会拦的 100 秒、只报的 60 秒（`--preflight-budget`）；各步骤预算之和 62→59，job 63 | `test_渲前预检那一步的秒数装得进步骤超时_job留足三分钟余量` |
+
+##### 复审第二轮：账本之前推的 22 条、团队当主语、看台词钉住、夜场 EXIF
+
+| | 现在 | 判据 |
+|---|---|---|
+| 账本之前推的 | 81 条抽帧封面「赛场之上」里 22 条 `already_pushed` 认不出——8/2~8/8 合进 main，发布账本首笔 8/24、`pushed.json` 只有 `push.auto` 那条路写（手动 `mode=push` 只改 `copy.html`）。冻进 `data/legacy_prepush_reels.json`，只许减不许加；读不了按推过算。量法：`is_frame_cover` ＋ eyebrow＝赛场之上，逐条跑 `already_pushed`，空串的就是 | `test_发布账本之前推过的抽帧封面_登记表只许减_每条都查得到` |
+| 团队当主语 | 图注里 `Team <X>` 后面跟的不是封面主角的名字（「Team Europe celebrate after Alexander Zverev …」「Team Europe players and captains get around Zverev」）——**不分放宽没放宽**都不换（`team_subject_problem`）；`of／with／for Team X`、`Team X's <他>`、`Team X player <他>` 照旧认。两个词的队名会误拦（安全方向） | `TD2_6943_UhmuiH5g`（全名＋对手＋日期都点了，和替补席那张同一个帧号）；zverev-tien 8 张点名闸过的 4→2；`test_团队当主语的图注_不分放宽没放宽都不认成拍他本人` |
+| 看台词 | `crowd(s)`／`fan(s)`／`spectator(s)` 没有真图注钉着，逐个参数化（删一个红一格；`fantastic`／`crowded` 不拦） | `test_看台那几个词_crowd_fan_spectator_单复数都拦` |
+| 夜场 EXIF | 只记了开赛时刻时 `match_dates` 只有开赛那天：过了当地午夜拍的图被拦、记进 `tried`——安全方向（漏换一张，不换成别的比赛日）；flashscore 给了结束时刻就两天都认 | `test_只有开赛时刻时_夜场过了午夜拍的图被EXIF拦下还记进tried_知道结束时刻就不拦` |
 
 
 ### ⭐⭐ 2026-09-18：**比利·简·金杯官网的图在 Contentful 上，原图 5000~7000px**——页面是 JS 壳，图不是

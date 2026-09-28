@@ -202,8 +202,9 @@ concurrency:
 jobs:
   reel:
     runs-on: ubuntu-latest
-    # 各步骤声明的最坏预算之和是 57 分钟（dry-run 闸 3 + 装 ffmpeg／中文字体各 15 +
-    # 装 Chromium 10 + 判据回喂修复步 8 + 源片认领的认领／摘认领／标完成三步各 2），
+    # 各步骤声明的最坏预算之和是 59 分钟（dry-run 闸 3 + 抽帧封面渲前查官方图 2 +
+    # 装 ffmpeg／中文字体各 15 + 装 Chromium 10 + 判据回喂修复步 8 + 源片认领的认领／摘认领／
+    # 标完成三步各 2），
     # 63 在它上面留了几分钟余量——步骤自己还在正常重试时不许被 job 级的壳先砍掉，
     # 判据 test_job级超时要兜得住各步骤自己声明的最坏预算之和。再加带 timeout 的步骤，
     # 先把这个和重算一遍。
@@ -577,6 +578,41 @@ jobs:
             --voice "${{ github.event.inputs.voice }}" \
             --rate "${{ github.event.inputs.rate }}" \
             --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log
+
+      # 抽帧封面：渲之前先查一遍官方图（O4 那一份渠道清单 ＋ 同一套机器闸，
+      # tools/cover_upgrade.py 的 preflight）。有一张全过就不许发抽帧——手写 spec 在这儿红
+      # （报错里是换图的原话），自动 spec 只报。来路：返工审计 2026-09-28，窗口里 11 条第一次
+      # 推的是抽帧封面，其中 4 条换实拍又重推了 5 次。
+      # **只拦手写 spec 的第一次渲染**（发布账本／pushed.json 都没有）；**已经推过的只报**——
+      # 推出去之后换图归 O4（它认 `_keep_frame_why`），这里不改已发的 spec（复审 D2）。
+      # **不拦的**：不是抽帧、`_keep_frame_why` 认领过、判不了当地日期、一张都没全过（机器闸
+      # ＋正式封面闸，和 `--write` 同一道）、渠道一档都没查成、超时、工具自己炸了——2026-09-26
+      # 账号所有者：没有高清大图时抽帧可以直接用。
+      # 退出码 3 才是「找到了」（Python 没接住的异常是 1，分得开）。人脸模型在上面已经备好。
+      # 秒数按这一条拦不拦定（`cover_upgrade.preflight_budget`）：会拦的 100 秒，只报的（自动
+      # spec、已经推过的）60 秒；这一步 2 分钟兜底（复审 nit 3：job 预算原来 62/63，留 ≥3 分钟）。
+      # 单条实测 0.1~24 秒（机器闸判不了、只剩 AP 一档的不到 1 秒；其余 1~24 秒，
+      # 同一条能差 7 秒——bencic-townsend 15.4～24）。印不出秒数就按 60。
+      - name: 抽帧封面先查官方图（有能过机器闸的就不许发抽帧）
+        if: github.event.inputs.mode == 'render'
+        timeout-minutes: 2
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          set +e
+          LIMIT=$(python tools/cover_upgrade.py --preflight-budget --slug "$SLUG" 2>/dev/null)
+          case "$LIMIT" in ''|*[!0-9]*) LIMIT=60 ;; esac
+          # 不 tee 进 /tmp/render-findings.log：自动 spec 在这儿只报不拦，那份原话是给
+          # 「判据回喂」修 spec 用的，换图不归模型管（账号所有者 2026-09-27：模型线不再加强）
+          timeout "$LIMIT" python tools/cover_upgrade.py --preflight --slug "$SLUG" \
+            --summary "$GITHUB_STEP_SUMMARY"
+          rc=$?
+          set -e
+          case "$rc" in
+            0) ;;
+            3) exit 1 ;;
+            124) echo "::warning::渲前查官方图超时（${LIMIT} 秒），没查完——不拦，抽帧照发" ;;
+            *) echo "::warning::渲前查官方图的工具自己出错（退出码 $rc）——不拦，抽帧照发；看上面的日志" ;;
+          esac
 
       # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
       # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
