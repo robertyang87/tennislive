@@ -17426,3 +17426,20 @@ def test_tiles证据卡一行放完不换行_超字数当场报错():
     d = card.build_html({"kind": "draw", "rows": [{"seed": "1号", "where": "签表最上面", "hi": True},
                                                    {"seed": "2号", "where": "签表最下面"}]})
     assert d.count('class="d-cell') == 2 and 'd-cell hi' in d
+
+
+def test_bracket签表图左右各8个签位_高亮只给点名的那一个():
+    """账号所有者 2026-09-28「用类似的签表图」（TennisTV 北京签表）。判据：左右各 8 个签位
+    少一个就报错（半张签表会把对阵画错）；绿底只给 `hi` 的那一个签位。"""
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import render_evidence_card as card  # noqa: PLC0415
+
+    side = [{"name": f"球员{i}"} for i in range(8)]
+    hi = [dict(e) for e in side]
+    hi[4]["hi"] = True
+    html = card.build_html({"kind": "bracket", "title": "北京 2026", "left": side, "right": hi,
+                            "center": "1/8决赛"})
+    assert html.count(f'fill="{card.GREEN}" stroke="{card.GREEN}"') == 1
+    assert html.count("<rect") >= 16
+    with pytest.raises(SystemExit, match="各要 8 个"):
+        card.build_html({"kind": "bracket", "left": side[:7], "right": side})
