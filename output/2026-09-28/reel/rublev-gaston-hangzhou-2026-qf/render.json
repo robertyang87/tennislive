@@ -1,0 +1,147 @@
+{
+  "scoreboard_qc_sha256": "4b1a3a9ae60c4b3278c48fdfc9f7cd3b9cf839485b3a4f70f8309de663634d5d",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 203.45,
+  "topbar": {
+    "line1": "2026 ATP250 杭州 1/4决赛",
+    "line2": "卢布列夫 6-7(6) 7-6(4) 6-1 加斯东",
+    "start": 1.2,
+    "end": 204.65
+  },
+  "film_seconds": 208.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 12.84,
+    "2": 14.184,
+    "3": 9.264,
+    "4": 18.816,
+    "5": 9.0,
+    "6": 14.808,
+    "7": 12.96,
+    "8": 8.16,
+    "9": 9.576,
+    "10": 17.64,
+    "11": 9.768,
+    "12": 16.896,
+    "13": 7.92,
+    "14": 7.32
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 3,
+          "named": "卢布列夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 4,
+          "named": "加斯东",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 9,
+          "named": "加斯东",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 10,
+          "named": "加斯东",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 11,
+          "named": "加斯东",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 12,
+          "named": "加斯东",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 14,
+          "named": "加斯东",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 14,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "86f02acc5fe7358105df315d4540e4c282c3e24cd2843734aa286f88ec775d2e",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "rublev-gaston-hangzhou-2026-qf",
+    "received_at": "2026-09-28T13:25:55Z",
+    "artifact_ready_at": "2026-09-28T13:33:07Z",
+    "elapsed_seconds": 432.227,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "e4377e0be225ecf0d30c60943a370ac647fbdca4d4a162393dcc12fc19f40514",
+    "spec_sha256": "ba317917371a9c6ebcc596cd98a4f387de897d22914736d867cfbf01458dfd8e",
+    "run_id": "36428550065",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-28T13:27:41Z",
+        "run_id": "36428550065"
+      }
+    ],
+    "render_seconds": 326.227,
+    "pre_render_seconds": 106.0
+  },
+  "film_sha256": "e4377e0be225ecf0d30c60943a370ac647fbdca4d4a162393dcc12fc19f40514",
+  "film_bytes": 91617677,
+  "qc_attestation_sha256": "297a40054dc786cd07d20155b5b0e090b2f22b2eefd2e16e9577955010a3e755",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-28T13:27:41Z",
+      "run_id": "36428550065"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-28T13:33:08Z",
+      "run_id": "36428550065"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-rublev-gaston-hangzhou-2026-qf/rublev-gaston-hangzhou-2026-qf.mp4",
+  "video_bytes": 91617677,
+  "_release_tag_note": "2026-09-28T13:33:14Z run 36428550065 把这一份（video_bytes 91617677）传上 tag `reel-rublev-gaston-hangzhou-2026-qf`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-09-27/reel/rublev-gaston-hangzhou-2026-qf 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+}
