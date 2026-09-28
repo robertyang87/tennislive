@@ -44,6 +44,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -192,10 +193,16 @@ _NUM = r"(?:\d+|[零一二两三四五六七八九十百]+)"
 #: 「以后尽量避免比较全场得分只差几分……其实网球差距就在一两分的关键分，
 #: 而不要把这个放在封面的钩子上」）。「只差一分被拖进决胜盘」是关键分，放行——
 #: 所以不收「差 N 分」。「至少/最多」不是差值，前面挡掉。
-TOTAL_POINTS = re.compile(
-    r"总分|总得分|总小分|全场只?(?:多|少)赢?"
-    r"|(?:只|却|反而)?(?<![至最很太])(?:多|少)(?:赢|拿|得)?了?" + _NUM
-    + r"\s*个?小?分(?!钟)|" + _NUM + r"个小分")
+#:
+#: ⚠️ **这条规矩的正则只有一份，在 `taste_gates_extra.TOTAL_MARGIN`**——两个包
+#: （wp/taste-gates-copy-strip 在这儿、wp/taste-gates-verify-rest 在那儿）各写过一份，
+#: 合并时收成一份：那一份按 126 份自动草稿量过（「总分落后18分」这里原来认不得），
+#: 也挡掉了这里原来会误伤的「全场多次破发」「全场一直领先」。钩子的形状闸
+#: （`hook_result_problem`）和推送标题的总分闸（`total_margin_problem`）用的是同一个对象。
+_TOOLS = str(Path(__file__).resolve().parent)
+if _TOOLS not in sys.path:
+    sys.path.insert(0, _TOOLS)
+from taste_gates_extra import TOTAL_MARGIN as TOTAL_POINTS  # noqa: E402
 
 #: 第一行的比分没说是哪一盘（「最后关头4比6落后」——4 比 6 是什么？）。**只报**：
 #: 它也扫到了规矩之前被接受的 tsitsipas 第一行，做硬会误伤。

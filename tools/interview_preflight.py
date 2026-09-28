@@ -31,7 +31,8 @@ runner 上必红的那些「只看 spec 就判得出」的错在 dispatch 之前
 **红（runner 上一定会红的）**：全称断言要认领两个源（runner「发布文案前置检查」那一步
 的 `check_interview_claims`）、L0 来源身份、Tennis TV 台标挪没挪出窗口、顶栏赛事行格式、
 顶栏比分方向、开场认领、冷开场／片尾那两段、小红书正文在不在、文案不提字幕规格、封面 `hook_accent`、
-账号所有者的口味闸（`check_taste`：标题和推送标题同一个数只能有一个说法）、解读卡（含「一行放得下」）、
+账号所有者的口味闸（`check_taste`：标题和推送标题同一个数只能有一个说法；
+`check_taste_extra`：总分差、赛点同义反复、小红书正文 markdown）、解读卡（含「一行放得下」）、
 文案的 tag／标题（`push_reel --stage check`，和 runner 的「发布文案前置检查」同一条命令）、以及
 **按仓库里的字幕缓存重切一遍行**之后走 `write_ass` 那一整套（`en_fixed` 行号错位、
 行数对齐、中英超宽、吊尾虚词、顶栏宽度、`highlight_en`）。
@@ -268,6 +269,7 @@ def _spec_gates(clip) -> tuple:
             clip.check_score_orientation, clip.check_opening,
             clip.check_lead_in, clip.check_trail_in, clip.check_copy_page,
             clip.check_copy_bilingual, clip.check_cover_hook, clip.check_taste,
+            clip.check_taste_extra,
             clip.check_takeaway)
 
 

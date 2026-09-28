@@ -441,7 +441,10 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
         copy_text = xhs_copy(spec)
         from spec_wording import (check_interview_copy_wording,  # noqa: PLC0415
                                   non_annotation_strings, strength_round_hits)
-        if problems := check_interview_copy_wording(spec, copy_text):
+        from taste_gates_extra import interview_taste_extra  # noqa: PLC0415
+        problems = check_interview_copy_wording(spec, copy_text)
+        problems += interview_taste_extra(spec, copy_text)[0]
+        if problems:
             skipped.append(
                 f"{f.name}: 措辞不合规矩（{'；'.join(problems)}），不提升")
             continue

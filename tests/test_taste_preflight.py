@@ -224,6 +224,23 @@ def test_主入口的退出码(tp, tmp_path, monkeypatch, capsys):
     assert tp.main(["--line", "赛场之上"]) == 0, "spec 还没写：只列清单，不跑闸"
 
 
+def test_采访的预检也跑口味闸(tp):
+    """`build_interview_clip.main()` 第一道是 `check_taste_extra`（总分差、赛点同义反复、
+    小红书 markdown）。预检按名字列采访线的闸——漏了它，预检会对一条 `main()`
+    当场拦下的采访报全绿。"""
+    bad = {"slug": "x-interview", "cover": {"title": ["全场只多赢三分", "「我一直相信自己」"]},
+           "push": {"summary": "兹维列夫只多赢三分"}}
+    gates = {g.name: g for g in tp.run_interview_checks(bad, "")}
+    assert "check_taste_extra" in gates, sorted(gates)
+    assert gates["check_taste_extra"].status == "fail"
+    assert "总分差" in gates["check_taste_extra"].detail
+    good = {**bad, "cover": {"title": ["决胜盘一度落后", "他赢了"]}, "push": {"summary": "他赢了"}}
+    gates = {g.name: g for g in tp.run_interview_checks(good, "")}
+    assert gates["check_taste_extra"].status == "pass"
+    gates = {g.name: g for g in tp.run_interview_checks(good, "**加粗**的正文")}
+    assert gates["check_taste_extra"].status == "fail", "小红书正文那一面也要跑到"
+
+
 # ————————————————— 推断出来的规则：只自查，永不做成闸 —————————————————
 # 账号所有者 2026-09-27 选定：SKILL 里「转述」来的规则（没有他的原话——从他挑了哪一个、
 # 怎么改的里推出来，或者只有会话转述；例：C4「被否后给 3～4 个候选并排」）只当提醒。

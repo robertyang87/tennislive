@@ -50,13 +50,15 @@ def check_taste(spec: dict) -> None:
     2026-09-27「形成一个通用的规则在做视频前就拦掉，而不是说做了一半又返工」——
     所以它排在任何下载、ASR、渲染之前。判据单一出处 tools/taste_gates.py。
     """
-    sys.path.insert(0, str(ROOT / 'tools'))
+    _tools_on_path()
     from taste_gates import interview_taste_findings  # noqa: PLC0415
     hard, soft = interview_taste_findings(spec)
     for note in soft:
         print(f"[口味] {spec.get('slug', '?')} 只报：{note}")
     if hard:
-        raise ValueError('不合账号所有者的口味：' + '；'.join(hard))
+        # 请求自己的文案问题，确定性的——和解读卡、全称断言同一类（`RequestNotReady`，
+        # 它是 ValueError 的子类，原来按 ValueError 接的地方照旧接得住）
+        raise RequestNotReady('不合账号所有者的口味：' + '；'.join(hard))
 
 
 def check_request(req: dict) -> None:

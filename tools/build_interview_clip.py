@@ -4102,6 +4102,28 @@ def check_taste(spec: dict) -> None:
                          + "\n  - ".join(hard))
 
 
+def check_taste_extra(spec: dict, spec_path: Path | None = None) -> None:
+    """账号所有者口味规则里对采访线也成立的那几道（标题／推送标题拿总分差、赛点同义反复、
+    小红书正文 markdown），判据和账在 tools/taste_gates_extra.py。只读 spec 和
+    `.xhs.txt`，第 0.2 秒就报。只报的（汉字数字、昵称音译、转述来的那条）印出来不拦。
+
+    `spec_path` 不给就按 slug 认 `specs/interviews/<slug>.json`——和 `check_copy_page`、
+    `check_copy_bilingual` 读正文的是同一个位置（runner 上 `--spec` 也恒是它）。`main()`
+    开头那一排只传 `spec`：`interview_preflight._spec_gates` 按 ast 钉死那一排、逐道只吃
+    spec 地重跑，多一个参数预检就跑不了它（`test_预检的闸和出片那一趟main开头那一排是同一份`）。"""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from taste_gates_extra import interview_taste_extra  # noqa: PLC0415
+    if spec_path is None:
+        spec_path = ROOT / "specs" / "interviews" / f"{spec.get('slug', '')}.json"
+    xhs = spec_path.with_suffix(".xhs.txt")
+    hard, soft = interview_taste_extra(
+        spec, xhs.read_text(encoding="utf-8") if xhs.is_file() else None)
+    for note in soft:
+        print(f"[口味] 只报：{note}")
+    if hard:
+        raise SystemExit(f"{spec.get('slug', '?')}：\n  - " + "\n  - ".join(hard))
+
+
 def check_source_contract(spec: dict) -> str:
     """L0：在任何下载、转写或渲染之前确认这是一条被验证过身份的赛后内容。
 
@@ -5726,6 +5748,7 @@ def main() -> int:
     check_copy_bilingual(spec)
     check_cover_hook(spec)
     check_taste(spec)
+    check_taste_extra(spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
