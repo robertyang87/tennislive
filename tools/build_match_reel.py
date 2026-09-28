@@ -5971,8 +5971,10 @@ def silence_risk(seg_start: float, seg_end: float, speech_est: float | None,
 
     - `speech_est`＝这一段旁白的离线估（含 lead_pause）；None＝没有旁白
       （quote 段和纯画面段的音频就是现场声本身，静音区整个漏出来）
-    - **必红**＝静音区里连「旁白按最长估（+SPEECH_EST_ERR）」都盖不住的部分
-      ——SPEECH_EST_ERR 是那批实测的最坏偏差，超出它就没有任何合成结果救得回
+    - **必红**＝静音区里连「旁白按最长估」都盖不住的部分——最长估是 mp3 时长的上包络
+      （`probe_audio.speech_ceiling` ＝ 离线估×1.10 ＋ SPEECH_EST_ERR，2026-09-28 按 main 上
+      3921 段真 mp3 定的），超出它就没有任何合成结果救得回。⚠️ 这里拿**整个 mp3**（连尾巴
+      那截静音）当「盖得住」，只会少报、不会多报
     - **大概率红**＝按点估盖不住的部分。点估的中位误差贴近 0
       （`test_离线估旁白长度要对得上真产物` 钉着），所以这一档是掷硬币偏输
     - 完全盖得住的不出现在返回值里——别拿它刷屏（哑场那道闸的老教训）
@@ -6179,7 +6181,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     | 源片分辨率不到 1080p | `height` | **硬**，2026-08-23 补的，见下 |
     | 段窗口撞源片静音区、旁白盖不住 | `silent_audio` | 必红的对谁都硬；大概率红的**自动 spec 硬、手写只报**（`silence_findings`） |
     | 回贴开关和板对不上（开着却一帧板都没有／关着而板连着在） | `board` | 见 `probe_board.board_findings`（2026-09-27） |
-    | 按成片口径重放 QC 的数字静音闸 | `audio_levels` | **无旁白段硬**；旁白尾巴按上包络也盖不住的**手写 spec 硬**、自动 spec 只报（2026-09-28），点估那一截只报并指到 `--check-narration`（那边按真语音，手写同样硬）；老 probe 没这一格只报并印重 probe 的原命令（`probe_audio`） |
+    | 按成片口径重放 QC 的数字静音闸 | `audio_levels` | **无旁白段硬**；旁白尾巴按上包络也盖不住的**手写 spec 硬**、自动 spec 只报（2026-09-28），点估那一截只报并指到 `--check-narration`（那边按真语音，手写同样硬）；老 probe 没这一格只报并印重 probe 的原命令（`probe_audio`）。⚠️ 硬的几档**只在 mode=render 那一趟硬**（`probe_audio.mode_demoted`，和源片覆盖那道同一个口径），cover／narration／reattest 照印不红；render 自己在 TTS 之后按真语音再判一遍（`_render_silence_gate`） |
     | 源片没 probe | 按 URL 认领不到 | **新的手写 spec 硬**，存量／自动 spec 只报（`probe_sources`，2026-09-27） |
     | 多源尺寸／帧率对不上 | `width`／`height`／`fps` | **硬**——render 里 `check_sources_match` 的预演（`probe_sources`） |
 
@@ -6352,7 +6354,12 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     # ⑥b 按成片口径重放数字静音闸：源片逐块响度 × 这一段的现场声增益，交给 QC
     #    自己的 `dead_seconds`（`probe_audio`）。无旁白段实测够得着就硬；旁白尾巴按
     #    上包络也盖不住的，手写 spec 硬（2026-09-28），点估那一截指到 --check-narration。
-    d_hard, d_soft = digital_silence_check(spec, segments, probes, urls)
+    #    硬的几档只在 mode=render 那一趟硬（cover／narration／reattest 照印不红，时效第一、
+    #    封面排最前）——和源片覆盖那道同一个口径（`probe_sources.dry_run_mode`）。
+    import probe_audio  # noqa: PLC0415
+
+    d_hard, d_soft = digital_silence_check(spec, segments, probes, urls,
+                                           demoted=probe_audio.mode_demoted())
     hard.extend(d_hard)
     soft.extend(d_soft)
 
@@ -6399,25 +6406,46 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
         return True
     # 数字静音那一层没量（老 probe 没有 `audio_levels`）就别说它「没有硬伤」——
     # 「没查」和「查过没事」不许长一样（上面 soft 里那句会说清怎么补）。
+    # 这一趟不是 mode=render、数字静音按实测会红的那几秒只报了：也别说成「没有硬伤」。
     unmeasured = any("逐 0.05 秒响度还没量过" in line for line in d_soft)
+    deferred = any("数字静音只在 mode=render 硬" in line for line in d_soft)
     print("  选段这一层没有硬伤（片长、分辨率、几何"
-          + ("；数字静音那一层没查，见上" if unmeasured else "、数字静音")
+          + ("；数字静音有几秒到 mode=render 那一趟会红，见上" if deferred else
+             "；数字静音那一层没查，见上" if unmeasured else "、数字静音")
           + "）。**挑段仍然要看缩略图墙**——「近端是谁」「情绪对不对题」机器判不了。")
     return False
 
 
 
-def _check_narration_silence(spec: dict, segments, measured: dict[int, float],
-                             cover_secs: float | None) -> bool:
-    """`--check-narration` 那一头：按**真语音**长度重放数字静音闸，印出来，返回有没有硬伤。
+def measured_speech_ends(voices, spoken) -> dict[int, float]:
+    """`{段序号: 真语音说到段内第几秒}`（`probe_audio.voice_speech_end`，QC 同一个量法）。
 
-    probe.json 认领不上（本地精简 worktree 没落盘、或者还没 probe）要出声——「没查」和
-    「查过没事」不许长一样。"""
+    `voices` 按**段序号**排——`synthesize` 给每一段都占一格，没旁白的段也占（所以
+    `voices[i]` 就是第 i 段，不是第 i 条有旁白的段）；`spoken` 是 `narration_overruns`
+    给的有旁白的段序号。解不出来的段不放进去：重放对它退回上包络，**不许**当成没说话。
+    `--check-narration` 和 render 共用这一处——两边的段序号口径写一次。"""
+    import probe_audio  # noqa: PLC0415
+
+    out: dict[int, float] = {}
+    for index in sorted(spoken):
+        end = probe_audio.voice_speech_end(voices[index][0])
+        if end is not None:
+            out[index] = end
+    return out
+
+
+def _replay_silence_with_voices(spec: dict, segments, measured: dict[int, float],
+                                cover_secs: float | None,
+                                ) -> tuple[list[str], list[str]] | None:
+    """按**真语音**长度重放数字静音闸，印出表头和只报的那几条，返回 `(硬, 软)`。
+
+    probe.json 一份都认领不上（本地精简 worktree 没落盘、或者还没 probe）返回 None，
+    并且要出声——「没查」和「查过没事」不许长一样。"""
     probes, _missing = probes_for_spec(spec)
     if not probes:
         print("\n[查静音] 一份 probe.json 都没认领上——按真语音重放数字静音这一层没查。"
               "精简 worktree 先 `python3 tools/probe_sources.py materialize <spec>`")
-        return False
+        return None
     urls = dict(spec.get("sources") or {}) or {"": str(spec.get("source_url", ""))}
     hard, soft = digital_silence_check(spec, segments, probes, urls, measured=measured,
                                        cover_exact=cover_secs)
@@ -6426,22 +6454,76 @@ def _check_narration_silence(spec: dict, segments, measured: dict[int, float],
           + (f"；封面 {cover_secs:.2f}s" if cover_secs is not None else "") + "）")
     if soft:
         print("  只报不拦：\n" + "\n".join(soft))
-    if hard:
-        print("  **过不去**（渲后数字静音闸必红）：\n" + "\n".join(hard))
-        return True
+    return hard, soft
+
+
+def _say_silence_clean(soft: list[str]) -> None:
     if any("逐 0.05 秒响度还没量过" in line for line in soft):
         print("  有源片没量过逐块响度，这一层对它没查（见上）——「没查」不是「没事」")
     else:
         print("  按真语音重放，封面之后没有必红的数字静音")
+
+
+def _check_narration_silence(spec: dict, segments, measured: dict[int, float],
+                             cover_secs: float | None) -> bool:
+    """`--check-narration` 那一头：按真语音重放数字静音闸，印出来，返回有没有硬伤。"""
+    got = _replay_silence_with_voices(spec, segments, measured, cover_secs)
+    if got is None:
+        return False
+    hard, soft = got
+    if hard:
+        print("  **过不去**（渲后数字静音闸必红）：\n" + "\n".join(hard))
+        return True
+    _say_silence_clean(soft)
     return False
+
+
+def _render_silence_gate(spec: dict, segments, voices, spoken, cover_secs: float) -> None:
+    """render 自己那一遍（2026-09-28）：TTS 合完、「旁白比画面长」那道闸之后、分段编码
+    之前，按真语音说完的时刻＋封面配音真长度重放 QC 的数字静音闸——和 `--check-narration`
+    同一套（`measured` 那一档），**不多合一句语音、不多下一个字节**（语音和封面长度都是
+    这一趟本来就合好的，probe.json 是仓库里的）。
+
+    手写 spec 的硬伤当场 `ReelError`，报的就是 dry-run／`--check-narration` 那几行原句；
+    自动产的 spec 只报（渲后 QC 照样量）。runner 上没拨 mode=narration 也接得住：09-20~27
+    渲后静音红的 16 趟都是先付了一整趟编码才知道。"""
+    import probe_sources  # noqa: PLC0415
+
+    got = _replay_silence_with_voices(spec, segments, measured_speech_ends(voices, spoken),
+                                      cover_secs)
+    if got is None:
+        return
+    hard, soft = got
+    if hard and probe_sources.is_auto(spec):
+        print("  自动产的 spec 只报不拦（渲后 QC 照样量）：\n" + "\n".join(hard))
+        return
+    if hard:
+        raise ReelError(
+            "按真语音重放 QC 的数字静音闸，渲后必红——在分段编码之前拦下（没付编码）：\n"
+            + "\n".join(hard)
+            + "\n\n改完先在本地 `render --check-narration` 过一遍（约 1 分钟），再拨 render。")
+    _say_silence_clean(soft)
+
+
+def _spec_box_urls(spec: dict, urls: dict) -> set[str]:
+    """spec 顶层 `scorebox` 归哪几条源：开了 `score_inset` 的段取画面的那几条（回贴拿它
+    切的就是那几条源的板）；一段都没开（带式）就归主源。没写 `scorebox` 是空集。"""
+    if not spec.get("scorebox") or not urls:
+        return set()
+    primary = next(iter(urls))
+    keys = {str(seg.get("source") or primary) for seg in spec.get("segments") or []
+            if isinstance(seg, dict) and seg.get("score_inset")}
+    return {urls[key] for key in (keys or {primary}) if key in urls}
 
 
 def _reprobe_commands(spec: dict, probes: dict, urls: dict) -> dict[str, str]:
     """`{源片 URL: 重 probe 的原命令}`——给「probe 早于 audio_levels」那句话用。
 
     slug 取那份老 probe 所在的目录名（多源片子的源常 probe 在别的 slug 下，同一个
-    slug 同一天只能落一份 probe.json）；区间、记分条框照抄老 probe；分支取当前
-    检出的那一条（runner 上是 `GITHUB_REF_NAME`），拿不到就写 `<分支>`。"""
+    slug 同一天只能落一份 probe.json）；区间、记分条框照抄老 probe——老 probe 没记框
+    （bfc462b9a 之前的全没记）就退到 spec 顶层的 `scorebox`（只给它归属的那几条源，
+    `_spec_box_urls`），都没有就在命令后面明说；分支取当前检出的那一条（runner 上是
+    `GITHUB_REF_NAME`），拿不到就写 `<分支>`。"""
     import probe_audio  # noqa: PLC0415
 
     found, _missing = claim_probes(spec)
@@ -6451,31 +6533,36 @@ def _reprobe_commands(spec: dict, probes: dict, urls: dict) -> dict[str, str]:
                              capture_output=True, text=True)
         ref = got.stdout.strip() if got.returncode == 0 else ""
     ref = ref if ref and ref != "HEAD" else "<分支（要含 d8fb15b74）>"
+    boxed = _spec_box_urls(spec, urls)
     out = {}
     for url in set(urls.values()):
         folder, _data = found.get(url, (None, None))
         slug = folder.name if folder is not None else str(spec.get("slug") or "<slug>")
-        out[url] = probe_audio.reprobe_command(url, slug, probes.get(url), ref)
+        out[url] = probe_audio.reprobe_command(
+            url, slug, probes.get(url), ref,
+            spec_box=spec.get("scorebox") if url in boxed else None)
     return out
 
 
 def digital_silence_check(spec: dict, segments, probes: dict, urls: dict, *,
                           measured: dict[int, float] | None = None,
                           cover_exact: float | None = None,
+                          demoted: str = "",
                           ) -> tuple[list[str], list[str]]:
     """按成片口径重放 QC 的数字静音闸（`probe_audio.digital_silence_findings`），`(硬, 软)`。
 
-    `--dry-run` 和 `--check-narration` 共用这一处：前者只有离线估（点估／上包络两档），
-    后者合过真语音，`measured`＝`{段序号: 真语音说到段内第几秒}`、`cover_exact`＝封面
-    配音的真长度（`cover_length` 同一个算法）。旁白尾巴那两档**手写 spec 硬、自动 spec
-    只报**（`_production.status == ready_for_render` 的是自动产的）。"""
+    `--dry-run`、`--check-narration` 和 render（`_render_silence_gate`）共用这一处：前者只有
+    离线估（点估／上包络两档），后两者合过真语音，`measured`＝`{段序号: 真语音说到段内第几秒}`、
+    `cover_exact`＝封面配音的真长度（`cover_length` 同一个算法）。旁白尾巴那两档**手写 spec
+    硬、自动 spec 只报**（`_production.status == ready_for_render` 的是自动产的）。
+    `demoted`：非空时硬伤照印、降成只报（dry-run 在 mode≠render 那几趟传 `mode_demoted()`）。"""
     import probe_audio  # noqa: PLC0415
 
     cover_text = str((spec.get("cover") or {}).get("narration") or "").strip()
     if cover_exact is None and not cover_text:
         cover_exact = COVER_SECONDS
     strict = (spec.get("_production") or {}).get("status") != "ready_for_render"
-    return probe_audio.digital_silence_findings(
+    hard, soft = probe_audio.digital_silence_findings(
         spec, segments, probes, urls, fade=SEG_FADE,
         gain=lambda seg, _ducked=_mix_ducks(spec, segments): _seg_bed_gain(
             seg, ducked=_ducked),
@@ -6487,6 +6574,7 @@ def digital_silence_check(spec: dict, segments, probes: dict, urls: dict, *,
         reprobe=(_reprobe_commands(spec, probes, urls)
                  if any(p.get("audio_levels") is None and p.get("silent_audio") is not None
                         for p in probes.values()) else None))
+    return probe_audio.demote(hard, soft, demoted)
 
 
 def board_paste_on_at(seg, when: float) -> bool:
@@ -8925,6 +9013,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             + "\n\n两条出路，选一条：把这几段的旁白删短，或者把画面拉长"
               "（`end` 往后挪，但别越过下一段的 `start`）。")
 
+    # **数字静音也在编码之前判一遍**（2026-09-28）：语音和封面长度这时都是真的，
+    # 和 `--check-narration` 同一套重放（真语音说到哪儿 × probe 量的源片响度），
+    # 不多合一句、不多下一个字节。09-20~27 渲后静音红了 16 趟、117 runner 分钟，
+    # 每一趟都先付了整趟编码——手写 spec 的硬伤在这儿就红，自动 spec 只报。
+    _render_silence_gate(spec, segments, voices, spoken_of, cover_secs)
+
     # **同一个数的另一头：哪几段大半时间没人在说话。** 排在这儿是因为它和上面
     # 那道闸用的是同一批 TTS 时长，一个源片都不用碰——而下面就要开始编码了，
     # 在这之前红掉省的是整趟渲染。
@@ -10728,11 +10822,9 @@ def main() -> int:
             # 尾巴落在点估和上包络之间的那一截判不了（渲后静音红 16 趟里 43 个死秒在旁白
             # 尾巴上）——这儿语音在手，每段说到哪儿、封面停多久都是确定的，同一套重放
             # 按真长度再跑一遍，手写 spec 在这儿是硬的。runner 的 mode=narration 跑的
-            # 就是这条命令，前一步 dry-run 已经把 probe.json 落好了。
-            import probe_audio  # noqa: PLC0415
-
-            spoken_end = {i: probe_audio.voice_speech_end(voices[i][0]) for i in spoken}
-            measured = {i: v for i, v in spoken_end.items() if v is not None}
+            # 就是这条命令（那一步先按 URL 把 probe.json 落盘）。render 在 TTS 之后
+            # 跑的是同一套（`_render_silence_gate`），段序号口径写在一处。
+            measured = measured_speech_ends(voices, spoken)
             cover_path, _cover_marks = synth_cover(spec, Path(tmp), args.voice, args.rate)
             cover_secs = cover_length(cover_path) if cover_path is not None else None
         total = sum(s.length for s in segments)

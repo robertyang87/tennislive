@@ -23,6 +23,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 import build_match_reel as reel  # noqa: E402
 import check_reel_landed as qc  # noqa: E402
 import probe_audio as pa  # noqa: E402
+import probe_sources as ps  # noqa: E402
 
 G = 20 * math.log10(reel.BED_LOUD)       # −2.85 dB
 BLOCKS_PER_S = round(1 / pa.BLOCK_SECONDS)
@@ -82,7 +83,7 @@ def test_旁白尾巴_上包络之外手写硬_自动只报_点估那一截指�
     seg = reel.Segment(4.0, 18.0, None, "一句三秒多的旁白。")  # 14 秒的段、旁白估 3.5 秒
     probe = _probe([(10, -25.0), (8, -59.5), (12, -25.0)])     # 源 10–18 安静
     spec = {"slug": "t", "segments": [{}]}
-    # 上包络 3.5×1.1＋2.2−0.83 ≈ 5.2 秒，安静从段内 6 秒起 → 必红
+    # 上包络说到 3.5×1.1＋2.2−0.69（最短的 mp3 尾巴）≈ 5.4 秒，安静从段内 6 秒起 → 必红
     hard, soft = _findings(spec, [seg], probe, estimates={0: 3.5}, strict=True)
     assert hard and "上包络也说不到这儿" in hard[0] and "必红" in hard[0], (hard, soft)
     assert "成片第 8 秒" in hard[0], hard
@@ -94,7 +95,8 @@ def test_旁白尾巴_上包络之外手写硬_自动只报_点估那一截指�
     hard, soft = _findings(claimed, [seg], probe, estimates={0: 3.5}, strict=True)
     assert not hard and any("已认领" in s for s in soft), soft
     # 点估盖不住、上包络盖得住：只报，并给出 --check-narration 的原命令
-    # （估 7.5 秒：点估说到成片 7.9、上包络说到 10.8；安静在成片 8.2–11.7）
+    # （估 7.5 秒：点估说到成片 1.2＋7.5−0.76≈7.9、上包络说到 1.2＋8.25＋2.2−0.69≈11.0；
+    # 安静在成片 8.2–11.7）
     hard, soft = _findings(spec, [seg], _probe(TIGHT_PLAN), estimates={0: 7.5}, strict=True)
     assert not hard, hard
     assert any("大概率红" in s and "render --check-narration --spec specs/reels/t.json" in s
@@ -124,17 +126,31 @@ def test_合过真语音就按真长度判_点估那一档不再报():
 
 
 def test_上包络盖得住每一段真语音():
-    """`speech_ceiling` 是硬的那一档的全部前提：它要是比真 mp3 短，一秒还在说话的
+    """`speech_end_ceiling` 是硬的那一档的全部前提：它要是比真说到的早，一秒还在说话的
     就会被判成死秒。冻结的是 2026-09-28 从 main 上 3921 段真 mp3（render.json 的
     `narration_seconds`）里挑出来**最贴上包络**的几段——edge-tts 是 runner 现在走的
-    后端，慢得和句长成正比，平移的 `est + SPEECH_EST_ERR` 盖不住 43 秒那一段。"""
+    后端，慢得和句长成正比，平移的 `est + SPEECH_EST_ERR` 盖不住 43 秒那一段。
+
+    ⚠️ 硬的那一档比的是**说到哪儿**，不是 mp3 时长（评审 2026-09-28）：mp3 上包络减去的
+    尾巴要是比真尾巴长，「说到哪儿」就估早了。原来扣 0.83（`words.json` 末事件的距离），
+    而 QC 口径量 279 条真 edge-tts mp3 的尾巴是 0.698~0.794——edge-tts 最紧的一段余量从
+    0.87 被吃到 0.74。现在扣最短的那截（`TTS_TAIL_MIN`），余量按说到哪儿算。"""
+    lo, median, _hi = EDGE_TAIL_MEASURED
+    assert pa.TTS_TAIL_MIN <= lo, "硬的那一档扣的尾巴比量到的最短尾巴还长——说到哪儿会估早"
+    assert abs(pa.TTS_TAIL - median) < 0.01, "点估那一档扣的是中位"
+    margins: dict[str, float] = {}
     for backend, slug, index, chars, latin, punct, lead, real in _CEILING_FIXTURE:
         est = reel.speech_seconds("一" * chars + "a" * latin + "，" * punct) + lead
         ceiling = pa.speech_ceiling(est, reel.SPEECH_EST_ERR)
         assert real <= ceiling, (backend, slug, index, real, ceiling)
-        # azure 的 mp3 尾巴没量过有多长：按一点静音都没有算，也得盖得住
-        if backend != "edge-tts":
-            assert real <= ceiling - pa.TTS_TAIL, (backend, slug, index, real, ceiling)
+        # 真说到 ≤ mp3 − 尾巴：edge-tts 按量到的最短尾巴；azure／没记后端的尾巴没量过，
+        # 按一点静音都没有算，也得盖得住
+        spoke = real - (lo if backend == "edge-tts" else 0.0)
+        room = pa.speech_end_ceiling(est, reel.SPEECH_EST_ERR) - spoke
+        assert room >= 0, (backend, slug, index, spoke, room)
+        margins[backend] = min(room, margins.get(backend, math.inf))
+    # 注释和 SKILL 里写的余量（按说到哪儿算）：edge-tts ≈0.88、azure ≈0.66、没记后端 ≈0.81
+    assert margins["edge-tts"] >= 0.85 and margins["azure"] >= 0.6 and margins["?"] >= 0.8, margins
     ests = [(reel.speech_seconds("一" * c + "a" * la + "，" * pu) + le, r)
             for _b, _s, _i, c, la, pu, le, r in _CEILING_FIXTURE]
     # 平移不够：有一段超出 est + SPEECH_EST_ERR（斜率不是凑的）
@@ -146,6 +162,12 @@ def test_上包络盖得住每一段真语音():
     # 说话的 2 秒多算成「必红」（对手写 spec 也是硬的）
     (_lo, _hi, certain, _p), = reel.silence_risk(0.0, 50.0, 38.5, [[41.0, 45.0]])
     assert certain < 2.0, certain
+
+
+#: 2026-09-28 按 QC 口径（`voice_speech_end`：8 kHz 逐块 RMS、−80 dB 以下算说完）量的
+#: edge-tts mp3 尾巴：16 趟渲后静音红的 artifact 里 279 条真 `voice_NN.mp3`，
+#: （最短, 中位, 最长）。原来那个 0.83 是 `words.json` 末事件到 mp3 末尾的距离。
+EDGE_TAIL_MEASURED = (0.698, 0.756, 0.794)
 
 
 #: (后端, slug, 段序号(0 起), 字, 按词念的拉丁字母, 句读, lead_pause, 真 mp3 秒)——
@@ -242,9 +264,7 @@ def test_dry_run接上了逐块重放_无旁白段撞上就红(monkeypatch):
     s_hard, s_soft = reel.silence_findings(spec, segs, {"U": {**probe, "silent_audio": [
         [9.0, 15.0]]}}, {"": "U"})
     assert not s_hard and not s_soft, (s_hard, s_soft)
-    # 接线：probe 那一趟真把它写进 probe.json
-    body = (ROOT / "tools" / "build_match_reel.py").read_text("utf-8")
-    assert '"audio_levels": audio_levels,' in body
+    # 接线（probe 那一趟真把它写进 probe.json）由 `test_probe那一趟真把逐块响度和给过的框写进probe_json` 真跑一遍
 
 
 def _tail_spec(**extra) -> tuple[dict, dict]:
@@ -289,12 +309,8 @@ def test_check_narration按真语音重放_没认领到probe要出声(monkeypatc
     with redirect_stdout(buf):
         assert reel._check_narration_silence(spec, segs, {0: 2.0}, None) is False
     assert "这一层没查" in buf.getvalue(), buf.getvalue()
-    # 接线：`--check-narration` 真的调它，封面配音也合了（封面长度要真长度，不扫相位）
-    body = (ROOT / "tools" / "build_match_reel.py").read_text("utf-8")
-    start = body.index("    if args.check_narration:")
-    cn = body[start:body.index("    if args.dry_run:", start)]
-    assert "_check_narration_silence(" in cn and "synth_cover(" in cn and \
-        "voice_speech_end(" in cn, "check-narration 没把真语音喂给数字静音重放"
+    # 接线（`main()` 真的把真语音按段序号喂进来、硬伤退出码 1）由
+    # `test_check_narration从main真跑一遍_段序号对得上_硬伤退出1` 用假语音真跑一遍
 
 
 def test_真语音说完的时刻_按QC同一个量法(tmp_path):
@@ -330,9 +346,285 @@ def test_老probe没有逐块响度_照印重probe的原命令(monkeypatch, tmp_
     got = reel._reprobe_commands({"slug": "t", "source_url": "U"}, {"U": old}, {"": "U"})
     assert got["U"].startswith("gh workflow run match-reel.yml --ref claude/y -f mode=probe "
                                "-f slug=src-slug -f url=U"), got
-    # 接线：probe 那一趟把给了的 --scorebox 记进 probe.json，下次重跑照抄得到
-    body = (ROOT / "tools" / "build_match_reel.py").read_text("utf-8")
-    assert '"scorebox": args.scorebox or None,' in body
+    # 接线（probe 那一趟把给了的 --scorebox 记进 probe.json）由
+    # `test_probe那一趟真把逐块响度和给过的框写进probe_json` 真跑一遍
+
+
+def test_数字静音硬的几档只在mode_render硬_cover和narration照印不红(monkeypatch):
+    """2026-09-28 会话定的（时效第一、封面排最前）：dry-run 那一步 cover／narration／reattest
+    三趟共用，却不编码——一截静音不许挡住出封面、查旁白。无旁白段那一档（09-27）和旁白
+    尾巴上包络那一档（09-28）都只在 mode=render 那一趟硬，其余几趟**同一句照印**、不红。
+    口径和源片覆盖那道一字不差（`probe_sources.dry_run_mode`：本地不传按 render 算）。"""
+    bare = {"slug": "t", "source_url": "U",
+            "segments": [{"start": 8.0, "end": 18.0, "quote": "Wow\n哇"}]}
+    bare_probe = {**_probe(QUIET_PLAN), "duration": 30.0, "scene_cuts": [], "point_ends": [],
+                  "width": 1920, "height": 1080, "fps": "25/1", "fps_value": 25.0}
+    tail, tail_probe = _tail_spec()
+    for spec, probe, marker in ((bare, bare_probe, "按实测源片响度重放 QC"),
+                                (tail, tail_probe, "上包络也说不到这儿")):
+        monkeypatch.setattr(reel, "probes_for_spec", lambda _s, _p=probe: ({"U": _p}, []))
+        segs = reel.parse_segments(spec, {"": Path("x")}, "")
+        for mode, want in ((None, True), ("render", True), (" ", True),
+                           ("cover", False), ("narration", False), ("reattest", False)):
+            if mode is None:
+                monkeypatch.delenv(ps.MODE_ENV, raising=False)
+            else:
+                monkeypatch.setenv(ps.MODE_ENV, mode)
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                got = reel.probe_dry_run(spec, segs)
+            out = buf.getvalue()
+            assert got is want, (marker, mode, out)
+            assert marker in out, (marker, mode, out)            # 同一句照印
+            if not want:
+                assert f"这一趟是 mode={mode}，不编码" in out, (marker, mode, out)
+                assert "数字静音有几秒到 mode=render 那一趟会红" in out, out   # 不许说「没有硬伤」了事
+    for env in ({}, {ps.MODE_ENV: "render"}, {ps.MODE_ENV: " "}, {ps.MODE_ENV: "cover"},
+                {ps.MODE_ENV: "narration"}, {ps.MODE_ENV: "reattest"}):
+        assert (pa.mode_demoted(env) == "") is ("mode=" not in ps.coverage_demoted(env)), env
+    # 只有 dry-run 读这个环境变量：--check-narration（和 render 自己那一遍）按真语音照硬
+    monkeypatch.setenv(ps.MODE_ENV, "narration")
+    monkeypatch.setattr(reel, "probes_for_spec", lambda _s: ({"U": tail_probe}, []))
+    segs = reel.parse_segments(tail, {"": Path("x")}, "")
+    with redirect_stdout(io.StringIO()):
+        assert reel._check_narration_silence(tail, segs, {0: 2.0}, None) is True
+
+
+def test_重probe的命令_老probe没记框就退到spec顶层_都没有要明说(monkeypatch, tmp_path):
+    """评审 2026-09-28：probe.json 从 bfc462b9a 起才记给过的 `--scorebox`，之前的一份都没有——
+    照印的重 probe 命令把给过框的那批全丢了框，重跑一趟死球时刻那一层就没了。退到 spec
+    顶层的 `scorebox`（只给它归属的那几条源）；两样都没有就在命令后面明说没记下来。"""
+    given = {"url": "U", "silent_audio": [], "point_ends": [12.4, 30.1]}   # 给过框、没记
+    cmd = pa.reprobe_command("U", "s", given, "b", spec_box=[104, 888, 736, 978])
+    assert "-f scorebox=104,888,736,978" in cmd and "框取自 spec 顶层" in cmd, cmd
+    cmd, _, note = pa.reprobe_command("U", "s", given, "b").partition("  # ")
+    assert "-f scorebox=" not in cmd and "没记是哪个框" in note, (cmd, note)
+    unknown = {"url": "U", "silent_audio": [], "point_ends": []}
+    assert "没记上一趟给没给" in pa.reprobe_command("U", "s", unknown, "b"), unknown
+    guessed = {"url": "U", "silent_audio": [], "point_ends": [], "scorebox_guess": "1,2,3,4"}
+    assert "#" not in pa.reprobe_command("U", "s", guessed, "b")        # 上一趟本来就没给
+    recorded = {**given, "scorebox": "40,905,600,1012"}
+    cmd = pa.reprobe_command("U", "s", recorded, "b", spec_box=[1, 2, 3, 4])
+    assert cmd.endswith("-f scorebox=40,905,600,1012"), cmd             # 记过的优先，不加注
+    # build_match_reel 那一头：spec 的框只归开了 score_inset 的段取画面的那几条源
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("GITHUB_REF_NAME", "claude/y")
+    spec = {"slug": "t", "sources": {"main": "U1", "walk": "U2"}, "scorebox": [104, 888, 736, 978],
+            "segments": [{"source": "main", "score_inset": True}, {"source": "walk"}]}
+    probes = {"U1": dict(given, url="U1"), "U2": dict(given, url="U2")}
+    got = reel._reprobe_commands(spec, probes, spec["sources"])
+    assert "-f scorebox=104,888,736,978" in got["U1"], got
+    cmd, _, note = got["U2"].partition("  # ")
+    assert "-f scorebox=" not in cmd and "没记是哪个框" in note, got
+    single = {"slug": "t", "source_url": "U", "scorebox": [98, 920, 476, 1029],
+              "segments": [{"start": 0.0, "end": 5.0}]}                   # 带式：一段都没开也归主源
+    got = reel._reprobe_commands(single, {"U": given}, {"": "U"})
+    assert "-f scorebox=98,920,476,1029" in got["U"], got
+    # 真接进 dry-run 印出来的那句话
+    old = {**given, "duration": 30.0, "scene_cuts": [], "width": 1920, "height": 1080,
+           "fps": "25/1", "fps_value": 25.0}
+    spec = {"slug": "t", "source_url": "U", "scorebox": [104, 888, 736, 978],
+            "topbar": {"line1": "2026 ATP250 成都 首轮"},
+            "segments": [{"start": 8.0, "end": 18.0, "quote": "Wow\n哇", "score_inset": True}]}
+    monkeypatch.setattr(reel, "probes_for_spec", lambda _s: ({"U": old}, []))
+    segs = reel.parse_segments(spec, {"": Path("x")}, "")
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        reel.probe_dry_run(spec, segs)
+    assert "-f scorebox=104,888,736,978  # 框取自 spec 顶层" in buf.getvalue(), buf.getvalue()
+
+
+def _speech(path: Path, speak: float, tail: float = 0.75) -> Path:
+    """假语音：前 `speak` 秒是 300 Hz 正弦（在说话），后面 `tail` 秒数字静音——edge-tts
+    那截尾巴的形状。不联网、不合成。"""
+    _ffmpeg("-f", "lavfi", "-i", f"sine=frequency=300:duration={speak}", "-af",
+            f"volume=0.3,apad=pad_dur={tail}", "-t", f"{speak + tail}", "-ar", "24000",
+            "-c:a", "libmp3lame", str(path))
+    return path
+
+
+def _fake_synth(speak: dict[int, float]):
+    """顶替 `synthesize`：**按段序号**给每一段占一格（没旁白的段也占），有旁白的段落一条假语音。"""
+    def synth(segments, outdir, voice, rate, *_style):
+        out = []
+        for index, seg in enumerate(segments):
+            path = Path(outdir) / f"voice_{index:02d}.mp3"
+            if seg.narration.strip():
+                _speech(path, speak[index])
+            out.append((path, []))
+        return out
+    return synth
+
+
+#: 三段：0 无旁白（源 0–4 响）、1 有旁白（源 4–18，其中 10–18 安静）、2 有旁白（源 18–28 响）。
+#: 有旁白的是第 1、2 段——`voices[i]` 是第 i 段，不是第 i 条有旁白的段：段序号要是错位成
+#: 「第 0、1 条」，第 1 段就会拿到第 2 段的语音长度。封面定长 1.2 → 第 1 段在成片 5.2–19.2，
+#: 安静的那一截在成片 11.2–19.2。
+THREE_PLAN = [(10, -25.0), (8, -59.5), (12, -25.0)]
+SHORT_THEN_LONG = {1: 2.0, 2: 9.0}      # 第 1 段说两秒就停 → 成片 12~18 秒必红
+LONG_THEN_SHORT = {1: 13.2, 2: 2.0}     # 第 1 段说满；错位的话它拿到 2.0 → 误红
+
+
+def _three_spec(**extra) -> tuple[dict, dict]:
+    spec = {"slug": "t", "source_url": "U", "cover": {}, "segments": [
+        {"start": 0.0, "end": 4.0, "quote": "Wow\n哇"},
+        {"start": 4.0, "end": 18.0, "narration": "一句旁白，前半截说完就停。"},
+        {"start": 18.0, "end": 28.0, "narration": "另一句旁白。"}], **extra}
+    probe = {**_probe(THREE_PLAN), "duration": 30.0, "scene_cuts": [], "point_ends": [],
+             "width": 1920, "height": 1080, "fps": "25/1", "fps_value": 25.0}
+    return spec, probe
+
+
+def test_check_narration从main真跑一遍_段序号对得上_硬伤退出1(tmp_path, monkeypatch):
+    """`main()` 的 `--check-narration` 那条路真跑一遍（合成打桩成本地假语音）：真语音按
+    **段序号**喂进重放（`measured_speech_ends`），手写 spec 的死秒退出码 1，说满了退出码 0。
+    段序号错位（按「第几条有旁白」编号）时第二组会误红——两组一起才钉得住。"""
+    spec, probe = _three_spec()
+    path = tmp_path / "t.json"
+    path.write_text(__import__("json").dumps(spec, ensure_ascii=False), "utf-8")
+    monkeypatch.setattr(reel, "enforce_spec_wording", lambda *_a: None)
+    monkeypatch.setattr(reel, "validate_spec",
+                        lambda sp: reel.parse_segments(sp, {"": Path("x")}, ""))
+    monkeypatch.setattr(reel, "prosody_report", lambda *_a: [])
+    monkeypatch.setattr(reel, "synth_outro",
+                        lambda outdir, *_a: (_speech(Path(outdir) / "outro.mp3", 1.0), []))
+    monkeypatch.setattr(reel, "outro_length", lambda _p: 1.75)
+    monkeypatch.setattr(reel, "probes_for_spec", lambda _s: ({"U": probe}, []))
+    monkeypatch.setattr(sys, "argv", ["build_match_reel.py", "render", "--check-narration",
+                                      "--spec", str(path), "--outdir", str(tmp_path / "o")])
+    for speak, code, said in ((SHORT_THEN_LONG, 1, "2:2.0"), (LONG_THEN_SHORT, 0, "2:13.")):
+        monkeypatch.setattr(reel, "synthesize", _fake_synth(speak))
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            got = reel.main()
+        out = buf.getvalue()
+        assert got == code, (speak, out)
+        assert f"旁白说到段内：{said}" in out, out            # 第 2 段（序号 1）的真语音
+        if code:
+            assert "按真语音，旁白说到段内 2.0" in out and "成片第 12 秒" in out, out
+        else:
+            assert "封面之后没有必红的数字静音" in out, out
+    assert not (tmp_path / "o").exists(), "--check-narration 不许写产物"
+
+
+class _Encoded(Exception):
+    """render() 走到了闸后面那一步（比分板蒙版／分段编码）——闸放行了。"""
+
+
+def _render_until_encode(tmp_path, monkeypatch, spec: dict, probe: dict, speak: dict):
+    """真调 `render()`，把下载之前那几道和源片无关的闸、TTS 打桩，走到「比分板蒙版」
+    就停（抛 `_Encoded`）。源片是本地合成的 30 秒小片（已在 outdir 里，不下载）。"""
+    out = tmp_path / "out"
+    out.mkdir(exist_ok=True)
+    src = out / "source.mp4"
+    if not src.exists():
+        _ffmpeg("-f", "lavfi", "-i", "testsrc2=size=320x240:rate=5:duration=30",
+                "-f", "lavfi", "-i", "anoisesrc=d=30:a=0.05", "-c:v", "libx264",
+                "-preset", "ultrafast", "-c:a", "aac", "-shortest", str(src))
+    for name in ("validate_spec", "_preflight_cutout", "check_native_quality_exceptions",
+                 "conform_sources", "check_sources_match", "precheck_cover_face",
+                 "require_live_sound", "resolve_crop"):
+        monkeypatch.setattr(reel, name, lambda *_a, **_k: None)
+    for name in ("FPS", "FPS_EXPR", "_INSET_TOP_CLEAR_Y"):
+        monkeypatch.setattr(reel, name, getattr(reel, name))     # render 改全局，测完还原
+    monkeypatch.setattr(reel, "_TIMINGS", [])
+    monkeypatch.setattr(reel, "resolve_fps", lambda _s: (reel.FPS_EXPR, reel.FPS))
+    monkeypatch.setattr(reel, "synth_outro",
+                        lambda outdir, *_a: (_speech(Path(outdir) / "outro.mp3", 1.0), []))
+    monkeypatch.setattr(reel, "outro_length", lambda _p: 1.75)
+    monkeypatch.setattr(reel, "synthesize", _fake_synth(speak))
+    monkeypatch.setattr(reel, "probes_for_spec", lambda _s: ({"U": probe}, []))
+
+    def encoded(*_a, **_k):
+        raise _Encoded
+    monkeypatch.setattr(reel, "scoreboard_profile", encoded)
+    monkeypatch.setattr(reel, "cut_segment", encoded)
+    return reel.render(spec, out, voice="v", rate="+0%")
+
+
+def test_render在TTS之后_分段编码之前按真语音重放数字静音(tmp_path, monkeypatch):
+    """2026-09-28 会话定的：render 自己在「TTS 合成」和「旁白比画面长」那道闸之后、分段编码
+    之前，按真语音跑一遍 `--check-narration` 那一档——不多合一句、不多下一个字节。手写 spec
+    的死秒当场 ReelError（报的就是 dry-run／check-narration 那几行原句），自动 spec 只报。"""
+    spec, probe = _three_spec()
+    buf = io.StringIO()
+    with redirect_stdout(buf), pytest.raises(reel.ReelError) as err:
+        _render_until_encode(tmp_path, monkeypatch, spec, probe, SHORT_THEN_LONG)
+    text = str(err.value)
+    assert "在分段编码之前拦下" in text and "按真语音，旁白说到段内 2.0" in text, text
+    assert "成片第 12 秒" in text and "手写 spec 硬闸" in text, text
+    assert "[耗时] TTS 合成" in buf.getvalue(), "闸要排在 TTS 之后（语音是这一趟合的那几条）"
+    # 说满了：闸放行，走到比分板蒙版那一步
+    with redirect_stdout(io.StringIO()) as clean, pytest.raises(_Encoded):
+        _render_until_encode(tmp_path, monkeypatch, spec, probe, LONG_THEN_SHORT)
+    assert "封面之后没有必红的数字静音" in clean.getvalue(), clean.getvalue()
+    # 自动产的 spec：同一截只报，照样往下走——连无旁白段那一档（dry-run 里对自动 spec 也硬）
+    # 在 render 这一遍也只报：源 1–4 安静 → 冷开场那段成片第 3、4 秒是死秒
+    auto, _ = _three_spec(_production={"status": "ready_for_render"})
+    quiet_open = {**probe, "audio_levels": pa.encode_levels(_levels(
+        [(1, -25.0), (3, -59.5), (6, -25.0), (8, -59.5), (12, -25.0)]),
+        reel.QUIETEST_BED_GAIN)}
+    with redirect_stdout(io.StringIO()) as buf, pytest.raises(_Encoded):
+        _render_until_encode(tmp_path, monkeypatch, auto, quiet_open, SHORT_THEN_LONG)
+    out = buf.getvalue()
+    assert "自动产的 spec 只报不拦" in out and "（无旁白）" in out and "成片第 3 秒" in out, out
+    assert "按真语音，旁白说到段内 2.0" in out, out
+    # 一份 probe 都认领不上：出声说没查，不拦
+    monkeypatch.setattr(reel, "probes_for_spec", lambda _s: ({}, [""]))
+    with redirect_stdout(io.StringIO()) as buf, pytest.raises(_Encoded):
+        reel.render(spec, tmp_path / "out", voice="v", rate="+0%")
+    assert "这一层没查" in buf.getvalue(), buf.getvalue()
+
+
+def test_probe那一趟真把逐块响度和给过的框写进probe_json(tmp_path, monkeypatch):
+    """`main()` 的 probe 那条路真跑一遍（合成源片，下载／切点／缩略图墙／字幕打桩）：
+    给了 `--scorebox` 就原样记进 probe.json（下次重 probe 照抄得到），没给记 None；
+    `audio_levels` 是真量出来的逐块响度。"""
+    src = tmp_path / "src.mp4"
+    _ffmpeg("-f", "lavfi", "-i", "testsrc2=size=320x240:rate=5:duration=6",
+            "-f", "lavfi", "-i", "anoisesrc=d=6:a=0.05", "-c:v", "libx264",
+            "-preset", "ultrafast", "-c:a", "aac", "-shortest", str(src))
+    monkeypatch.setattr(reel, "download", lambda url, dest, **kw: src)
+    monkeypatch.setattr(reel, "scene_changes", lambda *a, **kw: [])
+    monkeypatch.setattr(reel, "contact_sheet", lambda *a, **kw: [])
+    monkeypatch.setattr(reel, "fetch_captions", lambda *a, **kw: None)
+    monkeypatch.setattr(reel, "measure_point_ends",
+                        lambda _src, box: ([2.5], None, None) if box else ([], None, None))
+    for extra, want in ((["--scorebox", "10,200,300,236"], "10,200,300,236"), ([], None)):
+        out = tmp_path / f"probe{len(extra)}"
+        monkeypatch.setattr(sys, "argv", ["build_match_reel.py", "probe", "--url", "u",
+                                          "--outdir", str(out), *extra])
+        with redirect_stdout(io.StringIO()):
+            assert reel.main() == 0
+        data = __import__("json").loads((out / "probe.json").read_text("utf-8"))
+        assert data["scorebox"] == want, data.get("scorebox")
+        levels = pa.decode_levels(data["audio_levels"])
+        assert levels is not None and abs(len(levels) - 6 / pa.BLOCK_SECONDS) <= 2, \
+            data["audio_levels"]
+    # 下一趟重 probe 照抄得到这个框
+    cmd = pa.reprobe_command("u", "s", data | {"scorebox": "10,200,300,236"}, "b")
+    assert cmd.endswith("-f scorebox=10,200,300,236"), cmd
+
+
+def test_narration和render那两步先按URL把probe落盘(tmp_path):
+    """按真语音重放数字静音要读 probe.json——dry-run 那一步落好的，可能被「算出目录」那一步
+    的 `git sparse-checkout add` 清掉（落盘要排在每一个 add 之后）。narration 和 render 两步
+    调 build_match_reel 之前各自再落一遍（已经在的不动），取不到不拦（`||`）。"""
+    import yaml  # noqa: PLC0415
+
+    flow = yaml.safe_load((ROOT / ".github" / "workflows" / "match-reel.yml")
+                          .read_text(encoding="utf-8"))
+    steps = flow["jobs"]["reel"]["steps"]
+    names = [str(s.get("name", "")) for s in steps]
+    paths = next(i for i, n in enumerate(names) if n == "算出目录")
+    for prefix in ("narration — ", "render — 出成片"):
+        at = next(i for i, n in enumerate(names) if n.startswith(prefix))
+        assert at > paths, prefix
+        code = [line.split("#")[0] for line in steps[at]["run"].splitlines()]
+        mat = next(i for i, line in enumerate(code) if "probe_sources.py materialize" in line)
+        run = next(i for i, line in enumerate(code) if "build_match_reel.py render" in line)
+        assert mat < run, (prefix, mat, run)
+        assert "||" in code[mat] + code[mat + 1], "取不到只是这一层哑，不许拦住这一步"
 
 
 def test_不闪避那条分支现场声不乘BED_LOUD(monkeypatch):

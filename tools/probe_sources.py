@@ -139,10 +139,18 @@ def source_dims(spec: dict, probes: dict[str, dict],
     return dims, lacking
 
 
+def dry_run_mode(env: dict | None = None) -> str:
+    """工作流 dry-run 那一步是替哪个 mode 跑的；不传（本地）按 render 算。
+    `probe_audio.mode_demoted`（数字静音那几档）读的是同一个口径——两道闸只在
+    mode=render 硬，判法写一处。"""
+    env = os.environ if env is None else env
+    return str(env.get(MODE_ENV) or "render").strip() or "render"
+
+
 def coverage_demoted(env: dict | None = None) -> str:
     """这一趟覆盖那道闸为什么降成只报；空串＝照常（硬）。"""
     env = os.environ if env is None else env
-    mode = str(env.get(MODE_ENV) or "render").strip() or "render"
+    mode = dry_run_mode(env)
     if mode != "render":
         return (f"这一趟是 mode={mode}，用不到 probe——覆盖只在 mode=render 硬，"
                 "别让它挡住出封面／查旁白")

@@ -1216,6 +1216,11 @@ jobs:
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          # 按真语音重放数字静音要读 probe.json：dry-run 那一步落好的，可能已经被「算出目录」
+          # 那一步的 `git sparse-checkout add` 清掉（落盘要排在每一个 add 之后）——再落一遍，
+          # 已经在的不动。取不到只是这一层哑（会出声），不拦查旁白。
+          python tools/probe_sources.py materialize "$SPEC" \
+            || echo "::warning::按 URL 认领 probe.json 失败——按真语音重放数字静音这一趟可能没查"
           python tools/build_match_reel.py render --check-narration \
             --spec "$SPEC" \
             --voice "${{ github.event.inputs.voice }}" \
@@ -1251,6 +1256,10 @@ jobs:
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           SLUG="${{ github.event.inputs.slug }}"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          # render 在 TTS 之后按真语音重放数字静音（`_render_silence_gate`），要读 probe.json——
+          # 和 narration 那一步同一个理由再落一遍（已经在的不动，一趟批量 fetch 两秒）。
+          python tools/probe_sources.py materialize "$SPEC" \
+            || echo "::warning::按 URL 认领 probe.json 失败——render 按真语音重放数字静音这一趟可能没查"
           # 600 秒是性能目标，不是内容闸。超线照样做完、照样过 L2 和发布；
           # `finish` 会在产物与 job summary 留 FAIL + warning，供后续定点修复。
           # tee + pipefail：失败原话（TTS 装不下 / 哑场 / ReelError）要留给

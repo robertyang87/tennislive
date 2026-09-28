@@ -3852,6 +3852,9 @@ zheng-burel 的三连打回里两次是渲后数字静音闸（run 33000830101�
     说到      = 段起点 + mp3 时长 − 0.83
     没人说话  = 段长 − mp3 时长 + 0.83      ← **恒 ≥ 0.83s，闸要求 mp3 ≤ 段长**
 
+（⚠️ 2026-09-28：0.83 是 `words.json` 末事件的距离；按 QC 口径（−80 dB）量的**声学**尾巴是 0.70~0.79 秒——
+数字静音那套预判用后者，`probe_audio.TTS_TAIL`／`TTS_TAIL_MIN`，见本节末尾「同日收尾轮」。）
+
 拿它反推整条片子，逐秒表和时间轴**逐段对得上**（第 12 段 mp3 6.72s / 画面 10.0s
 → 4.11s 没人说话 → 113~116s 量到 −54.2/−50.9/−52.3/−39.7，正是那一段）——
 **这个式子就是「哪一秒该由谁负责」的判据**，别再从逐秒表往回猜。
@@ -3956,9 +3959,29 @@ BtbN 上 δ≈0，「拆 δ」那条自检跳过并 warning 出 ffmpeg 版本—
 `audio_levels` 只给 0.36 那一档留数，判不了）、只有一秒多的窄静音夹在响里（上界要放宽一块）、
 旁白刚停就静（闪避还在回弹，成片比模型按 `BED_LOUD` 算的更轻，模型接不住；回放保守口径把这 0.75 秒记成判不了，乐观口径多接 3 趟）。
 全库 316 条 spec 扫过：硬／软和改之前逐条一样（没有一份 probe 带 `audio_levels`，304 条多了
-「没量过」那一句）。⚠️ 已发的片子源片被重 probe 之后再走 reattest：那份成片是**钉之前**渲的
-（δ 最多几十毫秒），按 δ≡0 预判理论上能在贴边的一秒上误红——出现了就看成片的 QC 读数，
-写 `_digital_silence_why` 认领。
+「没量过」那一句）。~~⚠️ 已发的片子源片被重 probe 之后再走 reattest：那份成片是**钉之前**渲的
+（δ 最多几十毫秒），按 δ≡0 预判理论上能在贴边的一秒上误红~~——同日收尾轮定了「只在 mode=render
+硬」，reattest 那一趟这几档只报，这条顾虑不再成立（见下）。
+
+⭐ **同日收尾轮（复审 nit ＋ 会话定的两条）**：
+
+| 定了什么 | 怎么做 / 证据 |
+|---|---|
+| **D1 硬的几档只在 mode=render 硬**（无旁白段那一档和旁白尾巴上包络那一档都算） | `probe_audio.mode_demoted` 和源片覆盖那道**同一个口径**（`probe_sources.dry_run_mode`：工作流传的 `REEL_DRY_RUN_FOR`，本地不传按 render 算）。cover／narration／reattest 同一句照印、挂上「这一趟是 mode=…」、不红——时效第一、封面排最前；reattest 核的那份成片 QC 真量过。只有 dry-run 读这个环境变量，`--check-narration` 和 render 那一遍照硬。判据 `test_数字静音硬的几档只在mode_render硬_cover和narration照印不红` |
+| **D2 render 自己在 TTS 之后、分段编码之前按真语音重放**（`_render_silence_gate`） | 就是 `--check-narration` 那一档（真语音说到哪儿 `measured_speech_ends` ＋ 封面配音真长度），语音和封面长度是这一趟本来就合好的，**不多合一句、不多下一个字节**；手写 spec 硬伤当场 ReelError（原句和 dry-run 同一套），自动 spec 只报（连无旁白段那一档也只报——dry-run 那一步对它已经硬过）。match-reel 的 narration／render 两步调 build_match_reel 之前各自再 `probe_sources.py materialize` 一遍：dry-run 落的 probe.json 排在「算出目录」那一步的 `git sparse-checkout add` 前面，可能被清掉（已经在的不动，取不到只出声不拦）。判据 `test_render在TTS之后_分段编码之前按真语音重放数字静音`（真调 `render()`，假语音，走到比分板蒙版就停）、`test_narration和render那两步先按URL把probe落盘` |
+| **尾巴不是 0.83**：点估扣 `TTS_TAIL`＝0.76（中位）、上包络扣 `TTS_TAIL_MIN`＝0.69（最短，`speech_end_ceiling`） | 0.83 是 `words.json` 末事件到 mp3 末尾的距离；按 QC 口径（−80 dB）量 16 趟失败 run 里 279 条真 edge-tts mp3 的**声学**尾巴：最短 0.698、中位 0.756、最长 0.794。硬的那一档比的是「说到哪儿」，余量要按它算：edge-tts **0.88**、azure **0.66**、没记后端 **0.81**（azure／没记后端的尾巴没量过，按 0 算）；扣 0.83 时是 0.74／0.52／0.67（评审重量的 0.74 就是这个） |
+| 重 probe 命令的框：老 probe 没记（bfc462b9a 之前的一份都没有）就退到 spec 顶层 `scorebox`（只给开了 `score_inset` 的段取画面的那几条源；一段都没开归主源），都没有就在命令后面明说「没记是哪个框」 | 仓库里 640 份 probe.json：`point_ends` 有数（给过 `--scorebox`）的 92 份，记了框的 0 份；按 URL 找得到 spec 顶层框的 67 份，其余 25 份照印那句明说。判据 `test_重probe的命令_老probe没记框就退到spec顶层_都没有要明说`、`test_probe那一趟真把逐块响度和给过的框写进probe_json`（真跑 `main()` probe，不是查源码文本） |
+
+**尾巴改完重跑回放**：dry-run **5/16 趟、10 个死秒、38.3 分钟**（比扣 0.83 少了 zhiyenbayeva-bouzas 第 92 秒：
+上包络让回去的那 0.14 秒正好盖住它）；`--check-narration`／render 那一遍 **10/16 趟、20 个死秒**（那 10 趟原来一共
+烧了 81.3 runner 分钟，render 那一遍省下的是编码往后那一截，下载和 TTS 照付），闪避回弹乐观口径 13/16、33 个。
+⚠️ **回放里「预测成死秒而 QC 没红 0 秒」是构造出来的，不是证据**：回放的 `audio_levels` 就是从失败那趟成片自己
+反推的，拿它预测同一份成片不可能多红。真正挡误红的是三样：main 上 3921 段真 mp3 定的上包络（冻结最贴的 11 段）、
+真跑 AAC 分段 → 溶解 → 闪避混音链的几条测试、以及**一条真源片**——`two-handled-racket-maric-2026`（09-28 渲完 QC
+过了、已推送，两条源的 probe 真带 `audio_levels`）：dry-run 0 硬 0 软，按 render.json 的真 mp3 长度扣 0~0.85 秒尾巴
+重放 0 硬。样本就这一条，别把它读成「不会误红」。
+⚠️ 留着没改的一个边角：`masked()` 只认每段自己窗口里的人声——旁白按 `narration_overruns` 的容差最多拖进下一段
+0.12 秒，那一截不算「压到人声」，理论上能在段界后、下一段恰好整秒安静的那一秒误红；两件事要同时发生，概率低。
 
 ⭐ 同一轮顺手补的另一类：**多源片子的几何红 7 趟（38.9 分钟）**，runner 的 dry-run 全是
 「一份 probe.json 都没认领上」——4 趟的 probe 早就落了库，只是在别的 slug 目录下

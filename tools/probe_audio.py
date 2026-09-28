@@ -75,7 +75,7 @@ QC 的 `per_second_db` 量：**这两份夹具里**没有一秒被预测成静�
 |---|---|
 | 无旁白的视频段（冷开场、原声段、quote 段），实测够得着 | **硬**——实测值，不是估算；封面定长时相位也是确定的 |
 | 同上，但封面跟着配音走（相位要等 TTS 才定） | 扫一整个周期，每个相位都红才**硬**，否则只报 |
-| 有旁白的段、旁白按**上包络**（`speech_ceiling`）也说不到这儿 | **手写 spec 硬**（2026-09-28），自动 spec 只报 |
+| 有旁白的段、旁白按**上包络**（`speech_end_ceiling`）也说不到这儿 | **手写 spec 硬**（2026-09-28），自动 spec 只报 |
 | 有旁白的段、按离线**点估**说完之后、上包络之前 | 只报，并给出 `--check-narration` 那条命令——离线估判不了 |
 | `--check-narration` 合了真语音（`measured`），按真语音说完之后 | **手写 spec 硬**，自动 spec 只报 |
 | 看过、确认要这么剪 | 那一段写 `"_digital_silence_why": "<为什么>"` 认领，降成只报 |
@@ -83,6 +83,16 @@ QC 的 `per_second_db` 量：**这两份夹具里**没有一秒被预测成静�
 
 ⚠️ 无旁白段对自动产的 spec 同样是硬的——和 `silence_findings` 对无旁白段的口径一致（那一头是
 模型，render 红了之后 `repair_reel_spec` 拿 dry-run 当复检闸，改窗口比烧一趟渲染便宜）。
+
+⚠️ **上面「硬」的几档，dry-run 只在 mode=render 那一趟硬**（`mode_demoted`，2026-09-28）：
+和 `probe_sources.coverage_demoted` 同一个口径（工作流传的 `REEL_DRY_RUN_FOR`，本地不传按
+render 算）——cover／narration／reattest 几趟不编码，同一句照印、降成只报、不红：时效第一、
+封面排最前，一截旁白尾巴的静音不许挡住出封面和查旁白；reattest 核的那份成片 QC 已经真量过。
+
+⚠️ **render 自己也重放一遍**（`build_match_reel._render_silence_gate`，2026-09-28）：TTS 合完、
+「旁白比画面长」那道闸之后、分段编码之前，按真语音说完的时刻＋封面配音真长度跑 `measured`
+那一档——和 `--check-narration` 同一套，不多合一句语音、不多下一个字节；手写 spec 的硬伤当场
+红（报错原话和 dry-run 一样），自动 spec 只报。runner 上漏跑了 mode=narration 也接得住。
 
 ### 旁白尾巴为什么从「只报」改成手写 spec 硬（2026-09-28 返工审计）
 
@@ -100,8 +110,9 @@ edge-tts（main 上 09-15 之后 80 份 render.json 全是 `edge-tts`），它�
 1595 段里 16 段超出 `est + 2.20`，最坏 +4.85 秒（43 秒的长段）。平移盖不住，要带斜率，
 见 `HARD_EST_SLOPE`。
 
-⚠️ 这套只在 probe（量）和 dry-run（读）两处出现，render 路径一个字节都不多解
-（`test_音频那套不许接进出片流程` 那条老规矩：解音轨拖慢出片）。
+⚠️ **源片音轨**只在 probe 那一趟解（量），dry-run／`--check-narration`／render 只读 probe.json
+——render 路径上源片音轨一个字节都不多解（`test_音频那套不许接进出片流程` 那条老规矩：解音轨
+拖慢出片）；render 多解的只是这一趟本来就合好的几条语音 mp3（`voice_speech_end`，几十毫秒一条）。
 """
 
 from __future__ import annotations
@@ -128,9 +139,16 @@ MASK_WINDOW = 0.5
 FLOOR_ENERGY = 10 ** (SILENCE_FLOOR_DB / 10)
 #: 采样全零时的读数，和 `per_second_db` 一致（它对 rms=0 写 −99）。
 DIGITAL_SILENCE_DB = -99.0
-#: edge-tts 的 mp3 末尾那一截固定静音（`tennis-pipeline-ops`「说到 ＝ 段起点 ＋
-#: mp3 时长 − 0.83」，逐段对过）。离线估的是 mp3 时长，真说完要再往前挪这么多。
-TTS_TAIL = 0.83
+#: edge-tts 的 mp3 末尾那一截静音多长——**按 QC 同一个量法**（`voice_speech_end`：8 kHz 逐块
+#: RMS，−80 dB 以下算没人说话）。2026-09-28 量 16 趟渲后静音红的 artifact 里 279 条真
+#: `voice_NN.mp3`（全是 edge-tts）：**最短 0.698、中位 0.756、最长 0.794 秒**。
+#: ⚠️ 原来这里写的是 0.83——那是 `words.json` 末事件到 mp3 末尾的距离（`tennis-pipeline-ops`
+#: 「说到 ＝ 段起点 ＋ mp3 时长 − 0.83」），末一个字的余音在声学上还要再响几十毫秒，拿它当
+#: 声学尾巴就把「说到哪儿」估早了——硬的那一档每段白白少掉 0.13 秒余量（评审 2026-09-28）。
+#: 离线估的是 mp3 时长，真说完要往前挪一截尾巴：**点估**那一档用中位（`TTS_TAIL`）；
+#: **上包络**那一档（硬）用最短的那一截（`TTS_TAIL_MIN`，见 `speech_end_ceiling`）。
+TTS_TAIL = 0.76
+TTS_TAIL_MIN = 0.69
 #: 编码器／重采样把响块能量抹开的余量：窗口两头各放宽一整块。时间轴的账（溶解钉回
 #: 名义长度、first_pts）另算，这一格只管「抹」——成片比量源片时多过三代 AAC，响→静
 #: 边沿后面十几毫秒里成片沾到的能量比量出来的多（14 段夹具实测，归零就把上界打穿
@@ -149,8 +167,17 @@ CLAIM_KEY = "_digital_silence_why"
 #: | 没记后端 | 37 | +0.78 | +1.43 | 0 | 0.70 |
 #:
 #: edge-tts 的偏差跟句长成正比（43 秒的长段 +4.85、2 秒的短段 +0.9），光平移盖不住；
-#: 斜率 0.10 ＋ `est_err`（2.20）对三档各留 0.87／1.35／1.50 秒余量。azure 的 mp3 尾巴就算
-#: 没有那 0.83 秒静音（按 0 算），`1.10·est + 2.20 − TTS_TAIL` 也还比它要的 0.85 宽 0.52 秒。
+#: 斜率 0.10 ＋ `est_err`（2.20）对三档的 **mp3 时长**各留 0.87／1.35／1.50 秒余量。
+#: ⚠️ 硬的那一档比的不是 mp3 时长，是**说到哪儿**（`speech_end_ceiling` ＝ 上包络 −
+#: `TTS_TAIL_MIN`）——余量要按这个数算（评审 2026-09-28 重量过：尾巴按 0.83 扣时 edge-tts
+#: 最紧的一段只剩 0.74 秒）：
+#:
+#: | 后端 | 真说到 ≤ | 余量 |
+#: |---|---|---|
+#: | edge-tts | mp3 − 0.698（279 条量过的最短尾巴） | 0.87 ＋ 0.698 − 0.69 ≈ **0.88** |
+#: | azure | mp3（尾巴没量过，按一点静音都没有算） | 1.35 − 0.69 ≈ **0.66** |
+#: | 没记后端 | mp3（同上） | 1.50 − 0.69 ≈ **0.81** |
+#:
 #: 判据 `tests/test_probe_audio.py::test_上包络盖得住每一段真语音`（冻结最坏的几段）。
 HARD_EST_SLOPE = 0.10
 #: 真语音「说完了」按多轻算：逐块 RMS 低于它的尾巴算没人说话。成片里旁白是
@@ -165,6 +192,12 @@ MEASURED_GUARD = 0.1
 def speech_ceiling(est: float, est_err: float) -> float:
     """离线估 `est` 秒（含 lead_pause）的旁白，真 mp3 最长可能多长——见 `HARD_EST_SLOPE`。"""
     return est * (1 + HARD_EST_SLOPE) + est_err
+
+
+def speech_end_ceiling(est: float, est_err: float) -> float:
+    """同一段旁白**最晚说到**段内第几秒：mp3 时长的上包络减去最短的那截尾巴。
+    硬的那一档拿它判——它要是比真说到的早，一秒还在说话的就会被判成死秒。"""
+    return max(0.0, speech_ceiling(est, est_err) - TTS_TAIL_MIN)
 
 
 def voice_speech_end(path: Path) -> float | None:
@@ -182,16 +215,68 @@ def voice_speech_end(path: Path) -> float | None:
     return (last + 1) * BLOCK_SECONDS
 
 
-def reprobe_command(url: str, slug: str, probe: dict | None, ref: str) -> str:
+def _box_text(box: object) -> str:
+    """记分条框写成 `-f scorebox=` 要的 `x0,y0,x1,y1`：probe 记的是字符串，spec 顶层是四个数。"""
+    if isinstance(box, (list, tuple)) and len(box) == 4:
+        return ",".join(str(int(v)) for v in box)
+    return str(box or "").strip()
+
+
+def reprobe_command(url: str, slug: str, probe: dict | None, ref: str,
+                    spec_box: object = None) -> str:
     """把一条老 probe 按原样重跑一遍的命令（区间、记分条框照抄上一趟）。
-    `ref` 要含 d8fb15b74（#1134）——从那一版起 probe 才写 `audio_levels`。"""
+    `ref` 要含 d8fb15b74（#1134）——从那一版起 probe 才写 `audio_levels`。
+
+    记分条框：probe.json 从 bfc462b9a 起才记下给过的 `--scorebox`，**在那之前的一份都
+    没有**（评审 2026-09-28：给过框的 92 份 probe 照印的命令全把框丢了，重跑一趟死球
+    时刻那一层就没了）。所以没记的退到 `spec_box`（这条源在 spec 顶层 `scorebox` 里的框，
+    调用方判它归不归这条源）；两样都没有就在命令后面**明说**框没记下来，别让人以为
+    上一趟本来就没给。"""
     probe = probe or {}
     parts = [f"gh workflow run match-reel.yml --ref {ref} -f mode=probe",
              f"-f slug={slug}", f"-f url={url}"]
-    for key in ("clip_from", "clip_to", "scorebox"):
+    for key in ("clip_from", "clip_to"):
         if probe.get(key) not in (None, ""):
             parts.append(f"-f {key}={probe[key]}")
-    return " ".join(parts)
+    note = ""
+    recorded, fallback = _box_text(probe.get("scorebox")), _box_text(spec_box)
+    if recorded:
+        parts.append(f"-f scorebox={recorded}")
+    elif fallback:
+        parts.append(f"-f scorebox={fallback}")
+        note = "  # 框取自 spec 顶层的 scorebox——老 probe 没记当时给的 --scorebox"
+    elif probe.get("point_ends"):
+        note = ("  # 上一趟给过 --scorebox（point_ends 有数），但老 probe 没记是哪个框、spec 顶层"
+                "也没有——重跑前自己补 -f scorebox=x0,y0,x1,y1，否则死球时刻这一层就丢了")
+    elif not probe.get("scorebox_guess"):
+        note = ("  # 老 probe 没记上一趟给没给 --scorebox、spec 顶层也没有——给过的话重跑要"
+                "自己补 -f scorebox=x0,y0,x1,y1")
+    return " ".join(parts) + note
+
+
+def mode_demoted(env: dict | None = None) -> str:
+    """dry-run 这一趟数字静音那几档为什么降成只报；空串＝照常（硬）。
+
+    和 `probe_sources.coverage_demoted` 的 mode 那一半**同一个口径**（`dry_run_mode`：工作流
+    传的 `REEL_DRY_RUN_FOR`，本地不传按 render 算）：cover／narration／reattest 几趟不编码，
+    一截静音挡不住它们要的产物——时效第一、封面排最前。同一句照印，只是不红。
+    ⚠️ 只给 `--dry-run` 用：`--check-narration` 和 render 自己那一遍不读这个环境变量。"""
+    import probe_sources  # noqa: PLC0415
+
+    mode = probe_sources.dry_run_mode(env)
+    if mode == "render":
+        return ""
+    return (f"这一趟是 mode={mode}，不编码——数字静音只在 mode=render 硬，"
+            "别让它挡住出封面／查旁白")
+
+
+def demote(hard: list[str], soft: list[str], why: str) -> tuple[list[str], list[str]]:
+    """`why` 非空（`mode_demoted` 给的原因）时，硬伤原句照印进软的、后面挂上原因。"""
+    if not why or not hard:
+        return hard, soft
+    return [], [f"{line}\n    （{why}）" for line in hard] + soft
+
+
 _ENC_HOW = ("逐 0.05 秒 RMS（8 kHz 单声道，同 check_reel_landed.per_second_db），"
             "dB 向上取整到 0.1；任何含它的 window 秒窗口按 quietest_gain 都红不了"
             "成片的块只记「响」，按游程写成 L<块数>")
@@ -509,7 +594,7 @@ def digital_silence_findings(
       合过封面配音时是真长度）；跟着配音走又没合过时传 None，`cover_estimate` 是离线估，
       从它起扫一整个周期的相位
     - `estimates`：`{段序号: 离线估旁白秒数}`（`narration_estimates` 的口径，含 lead_pause）
-    - `est_err`：离线估的误差带（`SPEECH_EST_ERR`）；上包络见 `speech_ceiling`
+    - `est_err`：离线估的误差带（`SPEECH_EST_ERR`）；上包络见 `speech_end_ceiling`
     - `strict`：旁白尾巴那两档（上包络／真语音）硬不硬——手写的 spec 硬，自动 spec 只报
     - `measured`：`{段序号: 真语音说到段内第几秒}`（`--check-narration` 合过真语音时给，
       `voice_speech_end` 的口径）；给了就不再报「点估」那一档
@@ -570,7 +655,7 @@ def digital_silence_findings(
             return measured[k] + MEASURED_GUARD
         if kind == "maybe":
             return max(0.0, est - TTS_TAIL)
-        return max(0.0, speech_ceiling(est, est_err) - TTS_TAIL)    # sure／没量到的 measured
+        return speech_end_ceiling(est, est_err)            # sure／没量到的 measured
 
     # 尺子：旁白段整段算有人声（只剩无旁白段）／旁白按上包络说完之后／按点估说完之后；
     # 合过真语音（`--check-narration`）时后两把换成「按真语音说完之后」一把——真长度在手，
@@ -668,7 +753,8 @@ def digital_silence_findings(
             continue
         if kind == "sure":
             where = ("（旁白按上包络也说不到这儿：离线估 "
-                     f"{estimates.get(k, 0.0):.1f}s ×{1 + HARD_EST_SLOPE:.2f} ＋ {est_err}s）")
+                     f"{estimates.get(k, 0.0):.1f}s ×{1 + HARD_EST_SLOPE:.2f} ＋ {est_err}s"
+                     f" − 尾巴 {TTS_TAIL_MIN}s）")
         else:
             where = (f"（按真语音，旁白说到段内 {measured.get(k, 0.0):.2f}s）"
                      if measured and k in measured else "（按上包络，这一段没合出真语音）")
