@@ -692,6 +692,33 @@ def test_机器译文把轮次写成N强_正式spec不写_落草稿等人工复�
     assert json.loads((specs / f"{slug}.json").read_text("utf-8"))["zh"] == zh
     assert not (specs / f"{slug}.draft.json").exists(), "正式 spec 写出来，待复核草稿就作废"
 
+    # 复审第三轮 nit：已有正式 spec 的请求改了、重建又撞上机器译文「N 强」——落草稿、
+    # 正式 spec 不动；下一趟认得它在等人，不再每 10 分钟重建一遍盖掉人改的
+    formal_before = (specs / f"{slug}.json").read_bytes()
+    # 改的是转写那一组键（`max_zh_chars`）：不是只改元数据，要重新切行、重新翻译
+    path.write_text(json.dumps({**req, "max_zh_chars": 18}, ensure_ascii=False),
+                    encoding="utf-8")
+    zh[0] = "我们打出了一个美网八强的比赛"
+    monkeypatch.setenv("TENNISLIVE_PRODUCTION_CACHE", str(tmp_path / "cache3"))
+    assert B.pending_paths() == [path]
+    B._build_one(path, object(), write=True)
+    assert (specs / f"{slug}.json").read_bytes() == formal_before
+    assert json.loads((specs / f"{slug}.draft.json").read_text("utf-8"))["_round_name_hits"]
+    assert B.pending_paths() == [], "已有正式 spec 也一样：在等人改译文，不重建"
+
+    # 同一个路径上是 `draft_interview_spec` 的自动草稿（不带 `_round_name_hits`）：不许盖掉
+    (specs / f"{slug}.draft.json").write_text('{"_draft": true, "slug": "%s"}' % slug,
+                                              encoding="utf-8")
+    auto_draft = (specs / f"{slug}.draft.json").read_bytes()
+    path.write_text(json.dumps({**req, "max_zh_chars": 17}, ensure_ascii=False),
+                    encoding="utf-8")
+    monkeypatch.setenv("TENNISLIVE_PRODUCTION_CACHE", str(tmp_path / "cache4"))
+    import production_preflight as PP0  # noqa: PLC0415
+    with pytest.raises(PP0.RequestNotReady, match="另一份草稿"):
+        B._build_one(path, object(), write=True)
+    assert (specs / f"{slug}.draft.json").read_bytes() == auto_draft
+    assert (specs / f"{slug}.json").read_bytes() == formal_before
+
     # 请求自己写的「N 强」：RequestNotReady，一个字节都不写
     import production_preflight as PP  # noqa: PLC0415
     other = {**_interview_request("round-name-req-interview"), "_tactical_research": {"skip": True}}

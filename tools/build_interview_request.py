@@ -274,9 +274,14 @@ def _awaiting_round_review(req: dict, slug: str) -> bool:
 def is_pending(path: Path) -> bool:
     req = _read(path)
     slug = _slug(req, path)
+    # 在等人改译文（上一趟落了 `<slug>.draft.json`）：有没有正式 spec 都一样不重建——
+    # 复审第三轮 nit：原来只在没有正式 spec 时认它，已有正式 spec 的请求改了之后撞上
+    # 机器译文「N 强」，每 10 分钟重建一次、把人改到一半的草稿盖掉。
+    if _awaiting_round_review(req, slug):
+        return False
     spec_path = SPECS / f"{slug}.json"
     if not _exists_or_tracked(spec_path):
-        return not _awaiting_round_review(req, slug)
+        return True
     # A sparse or unreadable formal spec is not permission to overwrite it.
     if not spec_path.is_file():
         return False
@@ -781,6 +786,20 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
         if write:
             if any(file_digest(p) != sha for p, sha in observed.items()):
                 raise RuntimeError(f"{slug}: 输入或正式稿已被另一任务修改，拒绝覆盖")
+            # 复审第三轮 nit：`<slug>.draft.json` 也是 `draft_interview_spec` 自动草稿的路径。
+            # 那边落盘前会避撞，这边原来直接盖——而作废清理只删带 `_round_name_hits` 的，
+            # 被盖掉的自动草稿就没了。不是自己落的那种，一个字节都不写。
+            draft_path = SPECS / f"{slug}.draft.json"
+            if draft_path.is_file():
+                try:
+                    mine = "_round_name_hits" in _read(draft_path)
+                except (OSError, ValueError):
+                    mine = False
+                if not mine:
+                    from production_preflight import RequestNotReady  # noqa: PLC0415
+                    raise RequestNotReady(
+                        f"{slug}.draft.json 已经是另一份草稿（不是请求生成器落的待复核稿），"
+                        "不覆盖——先处理掉那份草稿，或者给请求换一个 slug")
             if research_job is not None:
                 spec["_tactical_research"] = research_job.result()
             spec["manual_review_required"] = (

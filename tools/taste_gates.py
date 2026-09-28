@@ -159,15 +159,18 @@ _ROUND_NAME = r"1/8决赛|1/4决赛|半决赛|(?<!总)决赛|第[一二三四1-4
 #: 「了」后 7 个字——数字一位算一个字，原来 4 个字两句都认不出）。反方向：
 #: 「夺冠热门／夺冠希望／夺冠大热」是赛前的说法（`冠(?!热门|希望|大热)`），「杀入了
 #: 最后一盘」和「杀入决胜盘」一样是过程。
-_TITLE_WON = r"冠(?!热门|希望|大热)"
+#: 复审第三轮 nit：「直落」后面要跟两盘／三盘（「决胜盘直落三局」是一串局，过程）；
+#: 「晋身前十／世界前N／榜」是排名不是这一场；「夺冠呼声／夺冠路上」是赛前或过程；
+#: 「夺回」不是夺冠、「冠军点」是一分——「他夺回主动权 冠军点」原来凭 8 个字的缝认成结果。
+_TITLE_WON = r"冠(?!热门|希望|大热|呼声|路|之路|军点)"
 _STRONG_RESULT = re.compile(
     r"淘汰|逆转|击败|掀翻|送走|横扫|翻盘|翻了?回来|赢了?回来|扳回来|晋级"
     r"|进了?(?:决赛|半决赛|\d+强|八强|四强|1/4决赛)|首进|捧杯|捧起[^，,]{0,4}杯"
     r"|(?:拿下|赢下|拿到|第一个|第一)[^，,]{0,6}冠军?|出局|止步|告负|收官|战胜"
     r"|过关|锁定|收进口袋|胜利|首冠|卫冕|会师|笑到最后|" + _ROUND_NAME
     + r"|胜(?![盘局分利])|负于|输给|赢(?:双打|单打)"
-    r"|(?<!争)夺(?:下|得|取)?了?[^，,]{0,8}" + _TITLE_WON + r"|登顶|加冕|问鼎"
-    r"|封后|封王|称王|称后|摘得?[^，,]{0,4}" + _TITLE_WON + r"|晋身|直落"
+    r"|(?<!争)夺(?!回)(?:下|得|取)?了?[^，,]{0,8}" + _TITLE_WON + r"|登顶|加冕|问鼎"
+    r"|封后|封王|称王|称后|摘得?[^，,]{0,4}" + _TITLE_WON + r"|晋身(?!前|世界|榜)|直落[两三2-3]盘"
     r"|(?:(?:闯|杀|挺)入|挺进)(?!了?(?:决胜|抢[七十]|第[一二三四五1-5]盘|盘末|局末|最后一盘))"
     r"|跻身|不敌|惜败|憾负")
 #: 让「赢/输/拿下」变成**过程**而不是结果的那些宾语：分、局、盘、点、球、拍。
@@ -849,16 +852,21 @@ def reel_taste_findings(spec: dict) -> tuple[list[str], list[str]]:
 
 
 def interview_is_auto(spec: dict) -> bool:
-    """自动链写的、还没人核也还没发的采访 spec——和 `build_interview_request.
-    unverified_auto_spec` 是**同一个判据**（章 `auto_pending` ＋ 没被 `_protected`
-    销章），不另写一份。读不到那个模块就当手写的（fail closed：硬）。"""
+    """自动链写的、还没人核过的采访 spec：章 `auto_pending`，且没有
+    `transcript_verified` / `_verified_clean`。**发没发出去不算。**
+
+    ⚠️ 不能复用 `build_interview_request.unverified_auto_spec`（它还认 `_protected`：
+    发布账本或 `pushed.json` 一出现就销章）。那个判据只许用在「渲染闸拦得住同一个
+    缺陷」的全库测试上，而大标题术语对自动 spec 渲染闸**只报**——于是一条手改过、
+    带术语的自动 spec 会先被放行渲染、推出去，推完账本里有了 `sent`，它在全库测试
+    `test_全库当前零误报` 里就成了「手写的」、硬红在下一个无关 PR 上，而豁免表只许减、
+    没有出口（批次复审 blocking (a)，合成 spec 复现过：发布前 ([], [术语])、
+    账本写进 `sent` 之后 ([术语], [])）。「赛场之上」的 `is_auto` 看
+    `_production.status`，发布不改它；这里同理，只看章和人核标记。
+    判据 `tests/test_taste_gates.py::test_自动采访spec推出去之后术语仍然只报`。"""
     if not isinstance(spec, dict) or spec.get("transcript_verification") != "auto_pending":
         return False
-    try:
-        from build_interview_request import unverified_auto_spec  # noqa: PLC0415
-    except ImportError:
-        return False
-    return unverified_auto_spec(spec)
+    return not (spec.get("transcript_verified") or spec.get("_verified_clean"))
 
 
 def interview_taste_findings(spec: dict, *, auto: bool | None = None
@@ -870,8 +878,8 @@ def interview_taste_findings(spec: dict, *, auto: bool | None = None
 
     封面大标题里的术语：账号所有者 2026-09-27 ~23:00Z 答复**做硬**（原来只报，
     因为规则书那条写的是 reel 和字卡、O6 说的是「钩子」，实现时自己延伸的要等他确认）。
-    分法和「赛场之上」的钩子一样：**手写的硬，自动链没核没发的只报**
-    （`interview_is_auto`；`auto` 显式传进来就按它）。已发的 11 条按原文冻在
+    分法和「赛场之上」的钩子一样：**手写的硬，自动链没人核过的只报**（发没发不算，
+    `interview_is_auto`；`auto` 显式传进来就按它）。已发的 11 条按原文冻在
     `legacy_taste_gates.json` 的 `interview_title_jargon`，只许减不许加。
     """
     shape = shape_problem(spec)

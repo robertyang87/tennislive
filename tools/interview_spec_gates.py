@@ -222,12 +222,14 @@ def takeaway_point_problems(spec: dict) -> list[str]:
 #: 方括号要看它**站在哪儿**（`_bracket_notes`）：单独一格、分数到 10 的 `[10-8]` 是
 #: 抢十代替的决胜盘，算一盘；紧贴在一盘后面的 `6-7[5-7]`、或者到不了 10 分的 `[5-7]`
 #: 是那一盘的抢七注脚，不算（review 那条：原来一律算一盘，`6-7[5-7] 6-4 6-4` 数成 2:2 误红）。
-_SET = re.compile(r"(\d+)\s*[-–]\s*(\d+)(\s*[(（]\s*\d+(?:\s*[-–:]\s*\d+)?\s*[)）])?")
+_SET = re.compile(r"(\d+)\s*[-–:]\s*(\d+)(\s*[(（]\s*\d+(?:\s*[-–:]\s*\d+)?\s*[)）])?")
 _BRACKET = re.compile(r"(\s*)[\[［]\s*(\d+)\s*([-–:])\s*(\d+)\s*[\]］]")
 _RETIRED = re.compile(r"ret\.?|退赛|w\.?/?o\.?|walkover|不战而胜", re.I)
 
 
-_PREV_SET = re.compile(r"(\d+)\s*[-–]\s*(\d+)\s*$")
+#: 复审第三轮 nit：盘分和方括号一样认冒号（`7:6[10:8] 6:4`）——原来 `_BRACKET` 认冒号、
+#: 这两个不认，`6:7[8:10]` 的注脚被当成单独一盘（抢七打到 10-8 是合法的），盘数就错了。
+_PREV_SET = re.compile(r"(\d+)\s*[-–:]\s*(\d+)\s*$")
 
 
 def _bracket_notes(score: str) -> str:

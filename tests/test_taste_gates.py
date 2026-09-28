@@ -107,7 +107,7 @@ RESULT_WORDING = [
     "她夺冠了", "澳网夺冠", "他挺进了8强", "他杀入了决赛",
     # 复审 nit（2026-09-27 晚）：补词表——夺…冠放宽、封后／封王／称王、摘冠、晋身、直落
     "她夺得首个巡回赛冠军", "夺得了2026年首个冠军", "萨巴伦卡美网封后", "阿尔卡拉斯封王",
-    "辛纳称王北京", "摘得冠军", "晋身8强", "直落两盘",
+    "辛纳称王北京", "摘得冠军", "晋身8强", "直落两盘", "直落三盘横扫", "直落2盘",
 ]
 
 
@@ -121,7 +121,11 @@ def test_轮次名和整场结果的说法都算结果():
                  "闯入盘末", "一路挺进决胜盘",
                  # 复审 nit：「夺冠热门／希望／大热」是赛前的说法；「最后一盘」和决胜盘一样是过程
                  "她是夺冠热门", "夺冠希望最大", "夺冠大热门", "他杀入了最后一盘",
-                 "闯入最后一盘"):
+                 "闯入最后一盘",
+                 # 复审第三轮 nit：直落要跟盘数；晋身前十是排名；夺冠呼声／路上是赛前或过程；
+                 # 「夺回」不是夺冠、「冠军点」是一分
+                 "决胜盘直落三局", "她晋身前十", "晋身世界前五", "夺冠呼声最高",
+                 "夺冠路上最难的一场", "他夺回主动权 冠军点"):
         assert not T.has_match_result(line), f"把过程当成了结果：{line!r}"
 
 
@@ -192,8 +196,8 @@ def test_术语认领口只给网球有故事():
 
 def test_采访封面标题的术语_手写的硬_自动的只报():
     """账号所有者 2026-09-27 ~23:00Z 答复：采访大标题的术语**做硬**（原来只报，因为规则书
-    那条写的是 reel 和字卡）。分法和「赛场之上」的钩子一样：手写的硬，自动链没核没发的
-    （`auto_pending` 章、没被 `_protected` 销章）只报——那一头没人写认领。
+    那条写的是 reel 和字卡）。分法和「赛场之上」的钩子一样：手写的硬，自动链没人核过的
+    （`auto_pending` 章、没有人核标记；发没发不算，见下一条）只报——那一头没人写认领。
     `copy-fields-one-source-of-truth` 写明管三条线，照旧对谁都硬。"""
     spec = {"slug": "new-iv", "cover": {"title": ["20岁首秀 两盘拿下", "他先谢看台上的费德勒"]},
             "push": {"summary": "他说谢谢费德勒"}}
@@ -215,6 +219,35 @@ def test_采访封面标题的术语_手写的硬_自动的只报():
              "push": {"summary": "两个赛点没兑现，他说还会回来"}}
     hard, soft = T.interview_taste_findings(clash)
     assert hard and not soft, "标题和推送标题一个数两个说法是硬的"
+
+
+def test_自动采访spec推出去之后术语仍然只报(tmp_path, monkeypatch):
+    """批次复审 blocking (a)：`interview_is_auto` 原来复用 `unverified_auto_spec`，那个判据
+    认 `_protected`——发布账本一出现 `sent` 就销章。而自动 spec 的大标题术语渲染闸只报，
+    于是一条手改过、带术语的自动 spec 先被放行渲染、推出去，推完它在全库测试里成了
+    「手写的」、硬红在下一个无关 PR 上（豁免表只许减，没有出口）。现在只看章和人核标记，
+    发没发不算——和「赛场之上」`is_auto` 看 `_production.status` 同一个道理。"""
+    from publication_ledger import INTERVIEW_LEDGER_ENV
+
+    ledger = tmp_path / "ledger"
+    ledger.mkdir()
+    monkeypatch.setenv(INTERVIEW_LEDGER_ENV, str(ledger))
+    spec = {"slug": "zz-new-iv", "transcript_verification": "auto_pending",
+            "cover": {"title": ["20岁首秀 两盘拿下", "他先谢看台上的费德勒"]},
+            "push": {"summary": "他说谢谢费德勒"}}
+    before = T.interview_taste_findings(spec)
+    assert not before[0] and before[1], before
+    (ledger / "zz-new-iv.json").write_text(json.dumps(
+        {"slug": "zz-new-iv", "attempts": [{"key": "k", "status": "sent"}]}), encoding="utf-8")
+    import build_interview_request as req
+    assert not req.unverified_auto_spec(spec), "前提：账本 sent 之后另一个判据确实销章了"
+    after = T.interview_taste_findings(spec)
+    assert after == before, f"推出去之后同一条自动 spec 的分法不许变：{after}"
+    path = tmp_path / "zz-new-iv.json"
+    path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    assert _corpus_hard_findings([], [path]) == ([], []), "全库测试不许因为它推过就判红"
+    # 人核过才按手写判
+    assert T.interview_taste_findings({**spec, "_verified_clean": True})[0]
 
 
 def test_字卡封面问句同一条规矩():
@@ -394,7 +427,7 @@ def _corpus_hard_findings(reel_paths, interview_paths) -> tuple[list[str], list[
     采访线：数字一致那一条对谁都硬——自动转正的标题是固定模板「{赢家}赢球之后／第一时间
     说了什么？」，推送标题「{赢家}赢球后的场上采访」，两边都没有被计数的名词，结构上碰不到它。
     大标题术语（2026-09-27 做硬）由 `interview_taste_findings` 自己按 `interview_is_auto`
-    分：自动链没核没发的落进只报那一组，这里不用再分。
+    分：自动链没人核过的落进只报那一组（发没发不算），这里不用再分。
     """
     bad, auto = [], []
     for path in reel_paths:
