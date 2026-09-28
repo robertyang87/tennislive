@@ -419,6 +419,24 @@ def test_海报在就照发(repo: Path):
     assert picked[0] == "demo"
 
 
+def test_渲完之后手改小红书正文提了字幕规格_推送闸拦住(repo: Path, capsys):
+    """`.xhs.txt` 不在 QC 哈希链里，渲染入口那道 `check_copy_bilingual` 渲完就不再跑，
+    而全库测试对还没核也没发的自动 spec 只报（2026-09-27）。渲完到推之间手改正文，
+    这一刻能拦住的只剩推送闸。反向那一半就是上面 `test_海报在就照发`：同一个仓库、
+    正文是「文案」，照发。
+    """
+    _spec(repo, {"auto": True})
+    (repo / "specs/interviews/demo.xhs.txt").write_text(
+        "本片配中英双语字幕，原声保留", encoding="utf-8")
+    _commit_all(repo)
+    assert gate.pick(CHANGED, repo) is None, "正文提了字幕规格，推送闸却放行了"
+    out = capsys.readouterr().out
+    assert "字幕这类制作规格" in out and "demo.xhs.txt" in out, f"跳过了却没说为什么：{out}"
+    # 这是「闸拦住了」，不是「本来就不该发」：要打成 ::error::，绿 run 的日志里一眼看得见
+    assert any(line.startswith("::error::") and "demo.xhs.txt" in line
+               for line in out.splitlines()), f"闸拦住了却只打了一行 [跳过]：{out}"
+
+
 def _commit_cover_scan(repo: Path, frames: dict[float, str], slug: str = "demo") -> None:
     """按 fixture 里那条 spec 的取景写一份 `cover_candidates.json` 并提交。"""
     import interview_cover_scan as scan  # noqa: PLC0415

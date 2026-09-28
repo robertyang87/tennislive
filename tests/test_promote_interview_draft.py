@@ -145,6 +145,29 @@ def test_promote补winner和push(tool):
     assert spec["source_verification"]["attestation_sha256"]
 
 
+def test_promote给TennisTV草稿补台标那一挪_渲染闸放行(tool):
+    """`check_tennistv_logo`（`main()` 开头）不写 `crop_shift_x` 就拦出片，而转正原来
+    不补——main 上 winston-salem 三份 Tennis TV 草稿转正后会一条条停在那道闸上
+    （2026-09-27 评审）。这个数是台标左沿推出来的，不是编辑口味，转正就补上。
+    """
+    import build_interview_clip as clip  # noqa: PLC0415
+
+    tv = "https://www.tennistv.com/videos/x-on-court-interview"
+    who = ("兹维列夫", "阿特马内", "兹维列夫 vs 阿特马内")
+    draft = _draft(url=tv)
+    draft["source_verification"] = dict(draft["source_verification"], source_url=tv)
+    spec = tool.promote(draft, who)
+    assert spec.get("crop_shift_x") == clip.TENNISTV_CROP_SHIFT, "转正没给 Tennis TV 草稿补台标那一挪"
+    assert clip.tennistv_logo_problem(spec) is None, "补了还过不了渲染那道闸"
+    assert "crop_shift_x" in (clip.tennistv_logo_problem(draft) or ""), "对照组：草稿本身过不了"
+
+    kept = dict(draft, crop_shift_x=-0.1)
+    assert tool.promote(kept, who).get("crop_shift_x") == -0.1, "人写过的不许覆盖"
+    boxed = dict(draft, logo_box=[1, 2, 3, 4])
+    assert "crop_shift_x" not in tool.promote(boxed, who), "走 logo_box 的不再挪窗口"
+    assert "crop_shift_x" not in tool.promote(_draft(), who), "不是 Tennis TV 的不挪"
+
+
 def test_promote保留给终审的注解键(tool):
     """`_zh_draft` / `_notes` 是写给终审的（机器译文参考、cap_asr 没有说话人
     标记的提醒）。旧版一刀剥掉全部 `_` 键，提示就这么丢过——只许剥
@@ -240,6 +263,52 @@ def test_promote_all写盘时保留注解并删草稿(tool, monkeypatch, tmp_pat
     assert spec["_zh_draft"] == ["机器译文"], "注解键要跟着进正式 spec"
 
 
+# ── 自动收尾卡那一句要一行放得下（interview_spec_gates 那道闸的同一把尺）──────
+
+
+def _top500_names() -> list[str]:
+    table = json.loads((_TOOLS.parent / "src" / "tennislive" / "zh"
+                        / "player_names_top500.json").read_text(encoding="utf-8"))
+    return sorted({row["name_zh"] for rows in table["tours"].values()
+                   for row in rows if row.get("name_zh")})
+
+
+@pytest.mark.parametrize("win", [
+    # review 量出来会折行的 top-100：WTA #5 / #19 / #25、ATP #25
+    "米拉·安德烈耶娃", "亚历山德罗娃", "克雷吉茨科娃", "达维多维奇·福基纳",
+])
+def test_promote的自动收尾卡长名字也放得下一行(tool, win):
+    """原模板 `{win}赢球后的第一反应` 在这几个名字上量出来 858~1002px，卡上一行当时只有
+    838px（main 收左边距之后 860px，安德烈耶娃 940、福基纳 1002 照样放不下）——提升出来的
+    spec 在 picker 预检和 render 的 check_takeaway 都红，而自动链没有任何一步会替它改短，
+    只能永久躺在等待名单里。"""
+    pytest.importorskip("PIL")
+    import interview_spec_gates as gates  # noqa: PLC0415
+
+    spec = tool.promote(_draft(), (win, "对手", f"{win} vs 对手"))
+    point = spec["takeaway"]["close"]["point"]
+    assert gates.takeaway_point_problems(spec) == [], point
+    assert gates.point_width(point) <= gates.point_box_px()
+
+
+def test_promote的自动收尾卡短名字照旧用全句(tool):
+    """退路只在放不下时才用——放得下的名字不许被顺手砍短。"""
+    pytest.importorskip("PIL")
+    spec = tool.promote(_draft(), ("兹维列夫", "阿特马内", "兹维列夫 vs 阿特马内"))
+    assert spec["takeaway"]["close"]["point"] == "兹维列夫赢球后的第一反应"
+
+
+def test_promote的自动收尾卡_译名表里每个名字都放得下一行(tool):
+    """全表扫：top-500 译名表里的每一个中文名，自动模板都要落在一行里。"""
+    pytest.importorskip("PIL")
+    import interview_spec_gates as gates  # noqa: PLC0415
+
+    box = gates.point_box_px()
+    too_wide = [(win, tool.auto_takeaway_point(win)) for win in _top500_names()
+                if gates.point_width(tool.auto_takeaway_point(win)) > box]
+    assert not too_wide, too_wide
+
+
 def test_手改过的草稿带着没认领的全称断言_转正时留草稿(tool, monkeypatch, tmp_path):
     """转正之后 interview-clip 会被自动 dispatch，而前置检查里那道全称断言闸是
     硬的（`production_preflight.check_interview_claims`）。有人往 `.draft.json`
@@ -275,5 +344,70 @@ def test_手改过的草稿带着没认领的全称断言_转正时留草稿(too
     draft_p.write_text(json.dumps({**base, "_claims": {
         claim: "逐场表核过 https://a.example/x ；https://b.example/y"}}),
         encoding="utf-8")
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted and not skipped, (promoted, skipped)
+
+
+def test_字幕译文把轮次写成N强_转正时留草稿(tool, monkeypatch, tmp_path):
+    """`check_interview_copy_wording` 故意不扫 `zh`（译文），而全库测试
+    `test_轮次写分数式不写N强` 扫整份 spec、含 `zh`，对自动 spec 也是硬的——转正直推
+    main 就是 main 红。主语是 main 上真草稿 `bonzi-winston-salem-2026-r` 的那一行
+    （评审 2026-09-27）。改成 1/4决赛 照常转正（闸不是一刀切掉译文）。"""
+    specs = tmp_path / "specs" / "interviews"
+    specs.mkdir(parents=True)
+    draft_p = specs / "zverev-cincinnati-2026-r3.draft.json"
+    base = {**_draft(), "source_title": "Cincinnati 2026 R3 Alexander Zverev Interview"}
+    monkeypatch.setattr(tool, "SPECS", specs)
+
+    class _Digest:
+        results = [_match("Zverev A.", "Atmane T.", winner_idx=0)]
+
+    monkeypatch.setattr(tool, "_collect_digests", lambda: [_Digest()])
+    monkeypatch.setattr(tool, "player_zh", lambda en: {
+        "Zverev A.": "兹维列夫", "Atmane T.": "阿特马内"}.get(en, en))
+
+    draft_p.write_text(json.dumps({**base, "zh": ["大概是八强左右，所以是的，我很开心"]}),
+                       encoding="utf-8")
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted == [], promoted
+    assert any("N 强" in s and "八强" in s for s in skipped), skipped
+    assert draft_p.exists(), "拦下来的草稿要留在原地等终审"
+    assert not (specs / "zverev-cincinnati-2026-r3.json").exists()
+
+    draft_p.write_text(json.dumps({**base, "zh": ["大概是 1/4 决赛左右，所以是的，我很开心"]}),
+                       encoding="utf-8")
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted and not skipped, (promoted, skipped)
+
+
+def test_手改草稿的标题和推送标题数字打架_转正时留草稿(tool, monkeypatch, tmp_path):
+    """批次 4 复审 nit：`taste_gates.interview_taste_findings` 的硬的那一组（标题和推送标题
+    同一个数两个说法）原来在 promote 只报——转出去的 spec 渲染入口 `check_taste` 照拦、
+    永远渲不成，`test_全库当前零误报` 对采访又是硬的。和 `interview_taste_extra` 同一个处置：
+    留草稿。两边说法一致就照常转正。"""
+    specs = tmp_path / "specs" / "interviews"
+    specs.mkdir(parents=True)
+    draft_p = specs / "zverev-cincinnati-2026-r3.draft.json"
+    base = {**_draft(), "source_title": "Cincinnati 2026 R3 Alexander Zverev Interview"}
+    monkeypatch.setattr(tool, "SPECS", specs)
+
+    class _Digest:
+        results = [_match("Zverev A.", "Atmane T.", winner_idx=0)]
+
+    monkeypatch.setattr(tool, "_collect_digests", lambda: [_Digest()])
+    monkeypatch.setattr(tool, "player_zh", lambda en: {
+        "Zverev A.": "兹维列夫", "Atmane T.": "阿特马内"}.get(en, en))
+
+    clash = {**base, "cover": {**(base.get("cover") or {}), "title": ["救下3个赛点", "兹维列夫赢了"]},
+             "push": {"summary": "兹维列夫救下2个赛点"}}
+    draft_p.write_text(json.dumps(clash), encoding="utf-8")
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted == [], promoted
+    assert any("口味闸不过" in s for s in skipped), skipped
+    assert draft_p.exists(), "拦下来的草稿要留在原地等终审"
+    assert not (specs / "zverev-cincinnati-2026-r3.json").exists()
+
+    draft_p.write_text(json.dumps({**clash, "push": {"summary": "兹维列夫救下3个赛点"}}),
+                       encoding="utf-8")
     promoted, skipped = tool.promote_all(write=True)
     assert promoted and not skipped, (promoted, skipped)

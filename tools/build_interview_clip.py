@@ -86,7 +86,12 @@ from tennislive.design_tokens import (  # noqa: E402
     BRAND_BAR_CSS, DARK, MOTION, SCORE, TEXT_SHADOW_CHROME, TEXT_SHADOW_HOOK,
     ass, ass_inline, rgb,
 )
-from tennislive.video.subtitle_text import drop_punctuation  # noqa: E402
+# ⚠️ `tennislive.video.subtitle_text` **不许在模块级 import**：它本身只用标准库，可
+# `tennislive/video/__init__.py` 会把 pipeline → research → digest → sources → requests
+# 整串拉进来。interview-auto-render 的「没活就早退」探针跑在 runner 的系统 python3 上、
+# 靠 `pick_interview_renders` → 本文件顶层只 import 标准库（那边顶部的注释），模块级
+# 这一行会让探针 import 就崩、每 10 分钟退回全量 job。用到它的 `zh_display` 里再 import。
+# 判据 `test_探针的import链只用标准库`。
 
 # 这条线自己的几支色：`design_tokens` 里**没有同值的角色**。评审把它们登记成「合并」
 # 对象（#06140f → background #04120d、#cfe3d9 / #dcefe4 → muted-foreground #cfe6d8、
@@ -688,20 +693,8 @@ def fetch_words(url: str, workdir: Path,
     在「要不要重试」而不是「要不要带 cookie」。
     """
     workdir.mkdir(parents=True, exist_ok=True)
-    # 人工请求已把第一份 Whisper 逐词稿持久化为 `cap_asr.json3`；渲染必须继续
-    # 使用同一份第一源。若这里又优先下载 YouTube 自动字幕，翻译与渲染会因
-    # 两套断句产生 674/673 这类错位。medium.en 仍独立担任第二份 ASR 校验。
-    asr_cache = workdir / "cap_asr.json3"
-    if spec and spec.get("asr_model") and asr_cache.is_file():
-        data = json.loads(asr_cache.read_text())
-        out = []
-        for ev in data.get("events", []):
-            base = ev.get("tStartMs", 0)
-            for seg in ev.get("segs") or []:
-                word = (seg.get("utf8") or "").strip()
-                if word:
-                    out.append(((base + seg.get("tOffsetMs", 0)) / 1000, word))
-        return out
+    if (cached := cached_words(url, workdir, spec)) is not None:
+        return cached
     # **抓过就别再抓，但只认这条 URL 抓的那份。** YouTube 会限流，而限流时的
     # 报错和「这条片子没字幕」长得不一样但同样让人停手；字幕又是不会变的，
     # 缓存下来重跑不花代价——**这句话的前提是 outdir 里只对应一条视频**。
@@ -769,7 +762,11 @@ def fetch_words(url: str, workdir: Path,
                 f"{len(tried)} 档 client 都拿不到自动字幕：\n" + "\n".join(tried)
                 + "\n先用 `yt-dlp --list-subs` 确认这条片子有没有，"
                 "再判断是「没有」还是「被挡了」。")
-    data = json.loads(pick_caption(files).read_text())
+    return _json3_words(pick_caption(files))
+
+
+def _json3_words(path: Path) -> list[tuple[float, str]]:
+    data = json.loads(path.read_text())
     out = []
     for ev in data.get("events", []):
         base = ev.get("tStartMs", 0)
@@ -778,6 +775,26 @@ def fetch_words(url: str, workdir: Path,
             if word:
                 out.append(((base + seg.get("tOffsetMs", 0)) / 1000, word))
     return out
+
+
+def cached_words(url: str, workdir: Path,
+                 spec: dict | None = None) -> list[tuple[float, str]] | None:
+    """`fetch_words` 的**不联网那一半**：目录里已经有这条 URL 的字幕缓存就读它，
+    没有就返回 None（不下载）。
+
+    抽出来是为了 `tools/interview_preflight.py`：dispatch 之前在本地按仓库里
+    落着的缓存重切一遍行，行数对不上、字幕超宽这类 runner 上必红的错，第 1 秒
+    就报——而**选哪份缓存**必须和出片那一趟同一个口径，所以只能有这一处。
+    """
+    # 人工请求已把第一份 Whisper 逐词稿持久化为 `cap_asr.json3`；渲染必须继续
+    # 使用同一份第一源。若这里又优先下载 YouTube 自动字幕，翻译与渲染会因
+    # 两套断句产生 674/673 这类错位。medium.en 仍独立担任第二份 ASR 校验。
+    asr_cache = workdir / "cap_asr.json3"
+    if spec and spec.get("asr_model") and asr_cache.is_file():
+        return _json3_words(asr_cache)
+    vid = _video_id(url) if is_youtube(url) else ""
+    files = sorted(workdir.glob(f"cap_{vid}*.json3" if vid else "cap_*.json3"))
+    return _json3_words(pick_caption(files)) if files else None
 
 
 # **空档判据**：自动字幕连一个事件都没有的那几秒。阈值 2.0 秒是从真实分布量的，
@@ -1967,6 +1984,8 @@ def zh_display(cn: str) -> str:
     ⚠️ 一整行只有标点（「……」）时退回原文，不画一条空字幕——L2 闸要求中英
     逐 cue 成对，空文本会被当成「这一句没有中文」。
     """
+    from tennislive.video.subtitle_text import drop_punctuation  # noqa: PLC0415 —— 见模块顶部
+
     shown = drop_punctuation(cn) or cn.strip()
     return _ZH_RUN.sub(
         lambda m: rf"{{\fs{_ZH_NUM_PX}}}{m.group(0)}{{\fs{_ZH_RENDER_PX}}}", shown)
@@ -2161,6 +2180,17 @@ TAKEAWAY_MAX_CHARS = 34
 # 每个字给多少秒。中文默读约 6~8 字/秒，这儿按 5.5 字/秒留一档余量——
 # 卡上的字是**要在手机上一眼扫完**的，读不完等于没写。
 TAKEAWAY_SECONDS_PER_CHAR = 1 / 5.5
+# 解读卡正文区的左右留白和 `.point` 那一行的字号/字距（px）。**渲卡片的 CSS
+# （`takeaway_html`）和「一行放不放得下」那道闸（`interview_spec_gates.takeaway_point_problems`）
+# 读的是这同一组数**——写两处必分叉，而分叉的样子是闸说放得下、卡上折成两行。
+#
+# 左边距 70：和台头 `.head{left:70px}` 同一条竖线（2026-09-27 评审 I3 台头换成封面那一套
+# 之后，原来的 92 会让正文比品牌块右错 22px）。右边距 150 不动——那是给小红书
+# 右侧点赞/收藏/评论那一列让的（CLAUDE.md「解读卡的版式」）。正文区 1080−70−150＝860px。
+TAKEAWAY_PAD_LEFT = 70
+TAKEAWAY_PAD_RIGHT = 150
+TAKEAWAY_POINT_PX = 76
+TAKEAWAY_POINT_TRACKING = 0.5
 
 
 def takeaway_seconds(card: dict) -> float:
@@ -3408,10 +3438,7 @@ def _shoot(html: str, dest: Path, page=None) -> Path:
 #:
 #: 判据 `test_收尾卡断行只在空格处_不劈词`（真渲，拿 DOM 逐字取行）。
 _CARD_WRAP = "word-break:keep-all;text-wrap:balance;overflow-wrap:anywhere"
-#: 收尾卡正文左边距：和台头 `.head{left:70px}` 同一条竖线（I3 台头换成封面那一套
-#: 之后，原来的 92 会让正文比品牌块右错 22px）。右边距 150 不动——那是给小红书
-#: 右侧点赞/收藏/评论那一列让的（CLAUDE.md「解读卡的版式」）。
-_CARD_PAD_L = 70
+#: 正文区左右留白和 `.point` 字号/字距见 `TAKEAWAY_PAD_LEFT` 那一组常量——闸和 CSS 读同一份。
 
 
 def takeaway_html(spec: dict, which: str) -> str:
@@ -3432,12 +3459,12 @@ def takeaway_html(spec: dict, which: str) -> str:
 body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
  background:radial-gradient(120% 90% at 50% 12%,{_CARD_GLOW} 0%,{_INK_BG} 62%);
  font-family:'TL Sans SC',sans-serif;color:{DARK['foreground']};
- padding:206px 150px 150px {_CARD_PAD_L}px;display:flex;flex-direction:column;
+ padding:206px {TAKEAWAY_PAD_RIGHT}px 150px {TAKEAWAY_PAD_LEFT}px;display:flex;flex-direction:column;
  justify-content:center}}
 {_LOCKUP_CSS}.lead{{font-size:42px;line-height:1.5;color:{DARK['subtle-foreground']};margin-bottom:34px;
  {_CARD_WRAP}}}
 .point{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
- font-size:76px;line-height:1.36;letter-spacing:.5px;{_CARD_WRAP}}}
+ font-size:{TAKEAWAY_POINT_PX}px;line-height:1.36;letter-spacing:{TAKEAWAY_POINT_TRACKING}px;{_CARD_WRAP}}}
 .facts{{list-style:none;margin-top:56px;display:flex;flex-direction:column;gap:22px}}
 .facts li{{font-size:40px;line-height:1.42;color:{_SOFT_FG};padding-left:30px;
  position:relative;{_CARD_WRAP}}}
@@ -3589,6 +3616,35 @@ def _takeaway_speech(card: dict) -> str:
     text = "。".join(p.strip().rstrip("。") for p in parts if p and p.strip())
     text = text.replace("「", "").replace("」", "")
     return text if text.endswith(("。", "？", "！")) else text + "。"
+
+
+def report_takeaway_polyphones(spec: dict, spec_path: str | None = None) -> None:
+    """解读卡口播里换字表管不到的多音字，每一趟开头报一声。**只报不拦。**
+
+    账号所有者 2026-09-27「配音 tts 里的多音字最好在生成语音时候替换成同音的字」。
+    换字本身在 `speakable()` 里（`_takeaway_voice` → `synthesize_narration` 走它）；
+    这儿报的是表里**还没有**、读音又不是常用那个的字——和 `render --dry-run` 同一个
+    函数（`tools/check_polyphones.py`），不另写一份。没有解读卡就不出声。
+
+    ⚠️ 走 `preflight_lines`：**先**问 pypinyin 在不在，再取语料——取语料要 import
+    `tennislive.video.explainer`（约 2.4 秒，这个模块别处故意不 import 它），而
+    runner 上 pypinyin 恒缺，每个 stage 为印一句「这趟没查」白付那几秒不值。
+    整段包在 try 里：这是只报不拦的预检，它自己出错不许把这一趟 stage 拖垮
+    （真合成那条路 `_takeaway_voice` 出错也只是退回静音卡）。
+    """
+    if not spec.get("takeaway"):
+        return
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        sys.path.insert(0, str(ROOT / "src"))
+        import check_polyphones  # noqa: PLC0415
+
+        lines = check_polyphones.preflight_lines(
+            lambda: check_polyphones.interview_texts(spec, speech=_takeaway_speech),
+            slug=spec.get("slug"), spec_path=spec_path)
+    except Exception as exc:  # noqa: BLE001
+        lines = [f"[多音字] ⚠️ 这趟没查完：{type(exc).__name__}: {exc}"[:300]]
+    print("\n".join(lines))
 
 
 # yt-dlp 认的合流容器（`--merge-output-format` 的取值）。别往里加 `m4a`——
@@ -3979,6 +4035,122 @@ def check_topline_format(spec: dict) -> None:
     ev = str(spec.get("event") or "").strip()
     if ev and (problem := tour_topline_problem(ev, spec.get("_topbar_format_why", ""))):
         raise SystemExit(f"{slug} 的 `event`：{problem}")
+
+
+# 台标左沿在源片里的横向位置（归一）。**两条片子各量过一次**：
+# 德约那条赛前专访 0.823、霍达尔那条 0.827（四帧取最小，1058/1280）。
+# 同一个转播模板，取小的那个当判据。
+_TENNISTV_LOGO_LEFT = 0.823
+# 4:3 窗口在 16:9 源片上居中时保留 x 0.125–0.875，所以要躲开台标，
+# 窗口至少要往左挪这么多。**这个数是推出来的，不是拍的**——改上面那个量到的
+# 位置，它自己跟着走。
+_TENNISTV_MIN_SHIFT = _TENNISTV_LOGO_LEFT - 0.875
+# 实际写进 spec 的那个数：德约那条（同一个转播模板）用的就是它，比 `_TENNISTV_MIN_SHIFT`
+# 多留 0.008 余量。`promote_interview_draft` 转正 Tennis TV 草稿时照它补——这是几何推出来
+# 的数，不是编辑口味；不补的话自动链就停在 `check_tennistv_logo` 这道闸上。
+TENNISTV_CROP_SHIFT = -0.06
+
+# 这条规矩立起来之前发的两条。**只许减不许加**，自检在
+# `test_那张TennisTV豁免表自己也要是真的`。
+_LEGACY_TENNISTV_NO_SHIFT = {
+    "faria-shelton-cincinnati-2026-r2",
+    "shang-rublev-mtl2026-r2",
+}
+
+
+def tennistv_logo_problem(spec: dict) -> str | None:
+    """Tennis TV 源片右上角的台标躲没躲开窗口：躲开了（或不归这条管）回 None。
+
+    判据是**窗口的几何真的躲开了**——`crop_shift_x` 挪到台标左沿之外，或者显式走
+    `logo_box`（`removelogo`）——不是「spec 里写没写一句话」（霍达尔那条的
+    `_tennistv_trim` 写着「框不进来」，是推的，第一版成片右上角印着半个台标）。
+    """
+    if "tennistv.com" not in str(spec.get("url", "")):
+        return None
+    slug = str(spec.get("slug", "?"))
+    if slug in _LEGACY_TENNISTV_NO_SHIFT or spec.get("logo_box"):
+        return None
+    shift = spec.get("crop_shift_x")
+    if not isinstance(shift, int | float) or isinstance(shift, bool):
+        return (
+            f"{slug} 的源片是 Tennis TV，右上角有台标，而 spec 没写 `crop_shift_x`。\n"
+            f"居中的 4:3 窗口保留 x 0.125–0.875，台标左沿在 {_TENNISTV_LOGO_LEFT}——"
+            f"**它在窗口里面**。写 `\"crop_shift_x\": {TENNISTV_CROP_SHIFT}`（德约那条同一个"
+            "转播模板用的就是这个），或者走 `logo_box`。")
+    if shift > _TENNISTV_MIN_SHIFT + 1e-9:
+        return (
+            f"{slug} 的 `crop_shift_x` = {shift}，还不够把台标挪出窗口："
+            f"至少要 {_TENNISTV_MIN_SHIFT:.3f}（台标左沿 {_TENNISTV_LOGO_LEFT}、"
+            "居中窗口右沿 0.875）。")
+    return None
+
+
+def check_tennistv_logo(spec: dict) -> None:
+    """渲染入口：别人的台标不许烧进我们的片子（账号所有者 2026-08-16「把它的片尾和它的
+    logo 剪掉」）。
+
+    ⚠️ 原来这条只活在 `test_TennisTV的源片必须真的把台标挪出窗口` 里，渲染不查——
+    草稿转正（`promote_interview_draft` 收 `tennistv_structured_feed` 的草稿、原来不设
+    `crop_shift_x`）直推 main 的那一刻，要么把 main 打红，要么（测试对自动 spec 只报之后）
+    带着台标出片。所以挪到这儿：只读 spec，排在下载之前。转正现在按
+    `TENNISTV_CROP_SHIFT` 补上这一挪，这道闸兜的是手写和别的路进来的。
+    """
+    if problem := tennistv_logo_problem(spec):
+        raise SystemExit(problem)
+
+
+def check_score_orientation(spec: dict) -> None:
+    """顶栏比分（`push.score`）必须是赢家视角——顶栏印的是「赢家 比分 输家」。
+
+    zheng-rybakina 857f1fbc 之前照着郑钦文视角写了 `6-3 1-6 4-6`、赢家却是
+    莱巴金娜。判据在 `interview_spec_gates.score_orientation_problem`，
+    dispatch 前的预检跑的是同一份。
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from interview_spec_gates import score_orientation_problem  # noqa: PLC0415
+    if problem := score_orientation_problem(spec):
+        raise SystemExit(f"{spec.get('slug', '?')}：{problem}")
+
+
+def check_taste(spec: dict) -> None:
+    """账号所有者的口味闸（采访线那一半）：标题和推送标题同一个数只能有一个说法
+    （硬）；封面大标题里要解释的术语（**只报**，等账号所有者确认要不要做硬——
+    规则书那条管的是 reel 的钩子和字卡问句，见 `taste_gates.interview_taste_findings`）。
+
+    账号所有者 2026-09-27「形成一个通用的规则在做视频前就拦掉，而不是说做了
+    一半又返工」。判据单一出处在 `tools/taste_gates.py`（reel 和采访共用），
+    和 `check_topline_format` 同一个座位：只读 spec，渲染入口第 0.2 秒就报。
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from taste_gates import interview_taste_findings  # noqa: PLC0415
+    hard, soft = interview_taste_findings(spec)
+    for note in soft:
+        print(f"[口味] {spec.get('slug', '?')} 只报：{note}")
+    if hard:
+        raise SystemExit(f"{spec.get('slug', '?')} 不合账号所有者的口味：\n  - "
+                         + "\n  - ".join(hard))
+
+
+def check_taste_extra(spec: dict, spec_path: Path | None = None) -> None:
+    """账号所有者口味规则里对采访线也成立的那几道（标题／推送标题拿总分差、赛点同义反复、
+    小红书正文 markdown），判据和账在 tools/taste_gates_extra.py。只读 spec 和
+    `.xhs.txt`，第 0.2 秒就报。只报的（汉字数字、昵称音译、转述来的那条）印出来不拦。
+
+    `spec_path` 不给就按 slug 认 `specs/interviews/<slug>.json`——和 `check_copy_page`、
+    `check_copy_bilingual` 读正文的是同一个位置（runner 上 `--spec` 也恒是它）。`main()`
+    开头那一排只传 `spec`：`interview_preflight._spec_gates` 按 ast 钉死那一排、逐道只吃
+    spec 地重跑，多一个参数预检就跑不了它（`test_预检的闸和出片那一趟main开头那一排是同一份`）。"""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from taste_gates_extra import interview_taste_extra  # noqa: PLC0415
+    if spec_path is None:
+        spec_path = ROOT / "specs" / "interviews" / f"{spec.get('slug', '')}.json"
+    xhs = spec_path.with_suffix(".xhs.txt")
+    hard, soft = interview_taste_extra(
+        spec, xhs.read_text(encoding="utf-8") if xhs.is_file() else None)
+    for note in soft:
+        print(f"[口味] 只报：{note}")
+    if hard:
+        raise SystemExit(f"{spec.get('slug', '?')}：\n  - " + "\n  - ".join(hard))
 
 
 def check_source_contract(spec: dict) -> str:
@@ -4597,11 +4769,28 @@ def check_takeaway(spec: dict) -> None:
                     "引一句他没说过的话，渲出来一点异常都没有。\n"
                     "对一下 spec 的 `zh`（比对时两边的标点都会被剥掉，不用逐字一样）。")
 
+    # ②b `point` 那一句要一行放得下——折行只看宽度不看词，jodar-bublik／deminaur
+    # 两次都折在人名和词中间、渲完抽帧才看见。排在「引的是不是他说的」之后：
+    # 那一条是这张卡唯一致命的错法，先报它。判据、量法和豁免表都在
+    # `interview_spec_gates`，dispatch 前的预检跑的是同一份。
+    sys.path.insert(0, str(ROOT / "tools"))
+    from interview_spec_gates import takeaway_point_problems  # noqa: PLC0415
+    if wrap := takeaway_point_problems(spec):
+        raise SystemExit("解读卡的字放不下一行：\n  " + "\n  ".join(wrap))
+
     # ③ 我们自己的画面占比——**只报数，不拒渲**（2026-08-08 账号所有者撤销
     # 了拿它拒渲那道闸，见 `MIN_OURS_RATIO` 上面那段）。低于旧门槛时多印一句
     # 提示，供写卡片的人参考，但不阻止出片——完整发布会、完整问答，
     # 内容本身要多长就多长。
-    ours, total = ours_ratio(spec)
+    try:
+        ours, total = ours_ratio(spec)
+    except (ImportError, OSError) as exc:
+        # ⚠️ 这一项只报数不拒渲，**不许因为算不了把前面那几道真闸一起带崩**：
+        # `ours_ratio` 要 import `outro_page`→`explainer`，后者在模块加载时就读
+        # `assets/explainer/…`，而 dispatch 之前跑预检的 interview-auto-render
+        # 稀疏检出里没有那个目录（`tools/interview_preflight.py`）。出片那一趟全检出，照常算。
+        print(f"[解读卡] 自有画面占比这次算不了（{type(exc).__name__}: {exc}）——只报数的一项，跳过")
+        return
     pct = ours / total
     note = "" if pct >= MIN_OURS_RATIO else f"（低于旧门槛 {MIN_OURS_RATIO:.0%}，仅供参考，不拒渲）"
     print(f"[解读卡] 自有画面 {ours:.1f}s / 全片 {total:.1f}s ＝ {pct:.1%}{note}")
@@ -4610,6 +4799,148 @@ def check_takeaway(spec: dict) -> None:
 _COPY_PAGE_LEGACY: frozenset[str] = frozenset()
 """规矩生效之前已经渲完的 slug——只许减不许加，表自带自检。当前是空集，
 这条闸是补上去的（见下），发现时没有一条已发的 spec 撞上它。"""
+
+
+#: 文案里不许提字幕这类制作规格——账号所有者 2026-08-19：「以后不要再在文案里说
+#: 中英文字幕相关的文案」。**式子和豁免表只有这一份**：`test_文案不许再提中英双语字幕`
+#: 扫全库，`check_copy_bilingual` 在渲染入口扫这一条，两边读的是同一个东西。
+#:
+#: ⚠️ 原来它只活在那条测试里，渲染一个字都不查：2026-09-27 自动链把请求里一句
+#: `lead_in.why`「Brightcove 源没有字幕轨」原样写进正式 spec（610388394），能拦它的
+#: 只有全库测试——而自动链的提交不触发 CI，那条测试只能红在下一个无关的人工合并上
+#: （run 36285183697）。挪到渲染入口之后，自动 spec 在全库测试里就可以只报了。
+_BILINGUAL_COPY = re.compile(r"(中英)?双语字幕|字幕轨|中英字幕")
+
+# 规矩定下来**之前**已经发出去的一批。已发的片子不为了措辞重渲——
+# `sabalenka-wang-cincinnati-2026-r3` 的 `_copy_note` 里账号所有者原话
+# 就是「这条只管以后」。**只许减不许加**：修好一个就从下面删掉一个，
+# 别让它变成一张许可证。
+_LEGACY_BILINGUAL_MENTION = {
+    'alexandrova-sabalenka-tor2026-r16.json',
+    'alexandrova-sabalenka-tor2026-r16.xhs.txt',
+    'arango-venus-cincinnati-2026-r1.json',
+    'arango-venus-cincinnati-2026-r1.xhs.txt',
+    'chwalinska-cincinnati-2026-studio.json',
+    'chwalinska-cincinnati-2026-studio.xhs.txt',
+    'deminaur-fery-cincinnati-2026-r3.json',
+    'deminaur-fery-cincinnati-2026-r3.xhs.txt',
+    'djokovic-cincinnati-2026-presser.json',
+    'djokovic-cincinnati-2026-presser.xhs.txt',
+    'djokovic-cincinnati-2026-return.json',
+    'djokovic-cincinnati-2026-return.xhs.txt',
+    'eala-mcnally-toronto-2026-r3-presser-full.json',
+    'eala-mcnally-toronto-2026-r3-presser-full.xhs.txt',
+    'eala-mcnally-toronto-2026-r3-presser.json',
+    'eala-mcnally-toronto-2026-r3-presser.xhs.txt',
+    'eala-mcnally-toronto-2026-r3.json',
+    'eala-mcnally-toronto-2026-r3.xhs.txt',
+    'eala-osaka-dc2026-sf-studio.json',
+    'eala-osaka-dc2026-sf-studio.xhs.txt',
+    'eala-osaka-dc2026-sf.json',
+    'eala-osaka-dc2026-sf.xhs.txt',
+    'eala-parks-toronto-2026.json',
+    'eala-parks-toronto-2026.xhs.txt',
+    'eala-pegula-dc2026-final-presser.json',
+    'eala-pegula-dc2026-final-presser.xhs.txt',
+    'eala-pegula-dc2026-final.json',
+    'eala-pegula-dc2026-final.xhs.txt',
+    'eala-svitolina-dc2026-qf.json',
+    'eala-svitolina-dc2026-qf.xhs.txt',
+    'faria-shelton-cincinnati-2026-r2.json',
+    'faria-shelton-cincinnati-2026-r2.xhs.txt',
+    'fils-lehecka-cincinnati-2026-r3.json',
+    'fils-lehecka-cincinnati-2026-r3.xhs.txt',
+    'gauff-samsonova-cincinnati-2026-r2.json',
+    'gauff-samsonova-cincinnati-2026-r2.xhs.txt',
+    'jodar-tabilo-cincinnati-2026-r3.json',
+    'jodar-tabilo-cincinnati-2026-r3.xhs.txt',
+    'mensik-hijikata-cincinnati-2026-r3.json',
+    'mensik-hijikata-cincinnati-2026-r3.xhs.txt',
+    'nakashima-shelton-mtl2026-final.json',
+    'nakashima-shelton-mtl2026-final.xhs.txt',
+    'noskova-boulter-cincinnati-2026-r2.json',
+    'noskova-boulter-cincinnati-2026-r2.xhs.txt',
+    'pegula-eala-dc2026-final.json',
+    'pegula-eala-dc2026-final.xhs.txt',
+    'rybakina-frech-cincinnati-2026-r3.json',
+    'rybakina-frech-cincinnati-2026-r3.xhs.txt',
+    'rybakina-gauff-tor2026-sf.json',
+    'rybakina-gauff-tor2026-sf.xhs.txt',
+    'rybakina-osaka-tor2026-qf.xhs.txt',
+    'rybakina-swiatek-tor2026-final-presser.json',
+    'rybakina-swiatek-tor2026-final-presser.xhs.txt',
+    'rybakina-swiatek-tor2026-final.json',
+    'rybakina-swiatek-tor2026-final.xhs.txt',
+    'rybakina-townsend-cincinnati-2026-r2.json',
+    'rybakina-townsend-cincinnati-2026-r2.xhs.txt',
+    'sabalenka-uchijima-tor2026-r64.json',
+    'sabalenka-uchijima-tor2026-r64.xhs.txt',
+    'sabalenka-zhang-tor2026-r3.json',
+    'sabalenka-zhang-tor2026-r3.xhs.txt',
+    'shang-rublev-mtl2026-r2.json',
+    'shang-rublev-mtl2026-r2.xhs.txt',
+    'shelton-mensik-mtl2026-qf.xhs.txt',
+    'shelton-nakashima-mtl2026-final.json',
+    'shelton-nakashima-mtl2026-final.xhs.txt',
+    'swiatek-arango-cincinnati-2026-r2.json',
+    'swiatek-arango-cincinnati-2026-r2.xhs.txt',
+    'swiatek-rybakina-tor2026-final-presser.json',
+    'swiatek-rybakina-tor2026-final-presser.xhs.txt',
+    'swiatek-rybakina-tor2026-final.json',
+    'swiatek-rybakina-tor2026-final.xhs.txt',
+    'swiatek-sakkari-cincinnati-2026-r3.json',
+    'swiatek-sakkari-cincinnati-2026-r3.xhs.txt',
+    'tirante-djokovic-cincinnati-2026-r2.json',
+    'tirante-djokovic-cincinnati-2026-r2.xhs.txt',
+    'zverev-atmane-cincinnati-2026-r3.json',
+    'zverev-atmane-cincinnati-2026-r3.xhs.txt',
+}
+
+
+def _outward_strings(obj):
+    """会发出去的字符串：`_` 开头的键是注解，整棵跳过。
+
+    `_copy_note` 里正引着账号所有者那句原话——连它一起扫，会把「把规矩记下来」
+    判成「又违反了规矩」。
+    """
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if isinstance(k, str) and k.startswith("_"):
+                continue
+            yield from _outward_strings(v)
+    elif isinstance(obj, list):
+        for v in obj:
+            yield from _outward_strings(v)
+    elif isinstance(obj, str):
+        yield obj
+
+
+def bilingual_copy_hits(obj) -> list[str]:
+    """`obj`（spec dict，或 `.xhs.txt` 的全文）里提到字幕规格的那几个词，去重排序。"""
+    return sorted({m.group(0) for text in _outward_strings(obj)
+                   for m in _BILINGUAL_COPY.finditer(text)})
+
+
+def check_copy_bilingual(spec: dict, root: Path = ROOT) -> None:
+    """渲染入口：这条 spec 和它的小红书正文都不许提字幕规格（豁免表按文件名认）。
+
+    **排在下载之前**，和 `check_copy_page` 同一个座位：只读 spec 和正文，0.2 秒就报。
+    推送闸（`auto_push_interview_gate.wants_auto_push`）用 `root=<仓库>` 再调一次：
+    `.xhs.txt` 不在 QC 哈希链里，渲完到推之间手改它，渲染这道闸已经跑过了。
+    """
+    slug = str(spec.get("slug", ""))
+    found = {}
+    if hits := bilingual_copy_hits(spec):
+        found[f"{slug}.json"] = hits
+    copy_path = root / "specs" / "interviews" / f"{slug}.xhs.txt"
+    if copy_path.is_file() and (hits := bilingual_copy_hits(
+            copy_path.read_text(encoding="utf-8"))):
+        found[copy_path.name] = hits
+    fresh = {k: v for k, v in found.items() if k not in _LEGACY_BILINGUAL_MENTION}
+    if fresh:
+        raise SystemExit(
+            f"文案里提了字幕这类制作规格：{fresh}——那是制作规格，不是这场球的内容，"
+            "删掉（账号所有者 2026-08-19）。`_` 开头的注解键不扫，要留出处写进注解。")
 
 
 def check_copy_page(spec: dict) -> None:
@@ -4783,6 +5114,59 @@ def _side_segment(spec: dict, outdir: Path, key: str = "lead_in") -> Path | None
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2", str(dest)],
         check=True, timeout=600)
     return dest
+
+
+def check_tail(spec: dict, src: Path, workdir: Path | None = None) -> dict | None:
+    """源片到手、**编码之前**：`end` 压进了源片的片尾板，或者越过了源片画面（冻帧）。
+
+    拉沃尔杯七条采访有四条第一版把片尾板剪了进来、两条推上微信又重推，每次都是
+    渲完把成片拉回来逐帧量才看见——而量法是机械的，源片在手就能量。判据和校准数据
+    在 `interview_tail`（认领口 `_end_board_ok` / `_frozen_tail_ok`）。
+
+    ⚠️ **`end` 是生成器算的默认值时不红，直接收到闸算出来的终点**（改的是内存里的
+    `spec["end"]`，返回一份记录给 `render.json["end_trim"]`）：自动产出的 spec 没有人会
+    来改 `end`，红了就是每 70 分钟重投一次、永远红下去。**人给的 `end` 照旧红**——
+    判据见 `interview_tail` 第四节。字幕行是按原窗切的，收短之后落在新终点之后的
+    那几行只是不再出现在画面上，行数和 `zh` 仍然一一对应。
+
+    `workdir`（字幕缓存所在的产物目录）：自动收短时拿 `cap_asr.json3` 量出来的最后一个
+    词尾给终点托底——板紧贴着话尾时「板前 0.2 秒」会吃掉字尾（`tail_verdict` 的 docstring）。
+    """
+    import os  # noqa: PLC0415
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    from interview_tail import (  # noqa: PLC0415
+        cache_word_spans,
+        end_is_auto,
+        measured_speech_end,
+        tail_verdict,
+    )
+    auto = end_is_auto(spec)
+    original = float(spec["end"])
+    speech_end = None
+    if auto and workdir is not None:
+        speech_end = measured_speech_end(cache_word_spans(workdir, spec),
+                                         float(spec.get("start") or 0.0), original)
+    reasons = []
+    for _ in range(2):            # 先收冻帧、再看收完之后是不是还压在板里
+        problem, target = tail_verdict(spec, src, speech_end=speech_end)
+        if not problem:
+            break
+        start = float(spec.get("start") or 0.0)
+        if not auto or target is None or target <= start + 1.0:
+            raise SystemExit(f"{spec.get('slug', '?')}：{problem}")
+        reasons.append(problem.split("。")[0])
+        spec["end"] = target
+    if not reasons:
+        return None
+    trim = {"from": round(original, 2), "to": float(spec["end"]),
+            "why": reasons, "end_was": "auto_default"}
+    note = (f"`end` 是自动默认值（没人给过），{reasons[-1]}——自动收到 "
+            f"{spec['end']:.2f}（原 {original:.2f}），记进 render.json 的 end_trim")
+    print(f"[片尾] {note}")
+    if os.environ.get("GITHUB_ACTIONS"):
+        print(f"::notice title=片尾自动收短::{spec.get('slug', '?')}：{note}")
+    return trim
 
 
 # ── 接缝溶解（Q4，2026-09-27）──────────────────────────────────────────────
@@ -5004,6 +5388,7 @@ def dissolve_concat(parts: list[Path], out: Path) -> Path:
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     check_takeaway(spec)
     src = yt_download(spec["url"], outdir / "source.mp4", SOURCE_FMT, spec)
+    end_trim = check_tail(spec, src, outdir)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)
@@ -5134,6 +5519,11 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     parts += _takeaway_segments(spec, outdir, "close")
     if (outro := _build_outro(outdir)) is not None:
         parts.append(outro)
+    # 拼了哪几段、解读卡有没有声音，量出来记进 render.json——上面两条退路都是
+    # 绿着退的，L2（check_interview_landed）照 spec 核这份记录。见 interview_assembly。
+    sys.path.insert(0, str(ROOT / "tools"))
+    from interview_assembly import record as record_assembly  # noqa: PLC0415
+    record_assembly(parts, outdir, end_trim=end_trim)
 
     # ⚠️ **两个 return，两个都要记片长。** 这个文件里同一个形状栽过一次
     # （`build_cover` 委托链上只改了一个 return，成片当场塌成 12 秒），
@@ -5340,7 +5730,10 @@ def _build_outro(outdir: Path) -> Path | None:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--spec", required=True)
+    ap.add_argument("--spec", required=True,
+                    help="spec 路径。⚠️ 小红书正文那几道闸（check_taste_extra、check_copy_page）按 slug "
+                         "读 specs/interviews/<slug>.xhs.txt，不读 --spec 旁边那份——runner 上 --spec "
+                         "恒是那个位置；本地拿 /tmp 下的副本跑，正文用的是仓库里那份")
     ap.add_argument("--stage",
                     choices=["subs", "sheet", "verify", "cover", "cover-scan", "render"],
                     default="subs")
@@ -5374,7 +5767,9 @@ def main() -> int:
     # L0 必须排在全部准备工作之前。技术成片再漂亮，也不能把演播室采访冒充成
     # 用户要的“本场场上采访”。
     check_source_contract(spec)
+    check_tennistv_logo(spec)
     check_topline_format(spec)
+    check_score_orientation(spec)
     # **排在最前面，每一趟都过。** 它只读 spec、不联网、不下源片——
     # 「这条片子怎么开头」是写 spec 那一刻就该定下来的事，让它在第 0.2 秒报，
     # 而不是等九分钟的 render 出片之后再由人看出来「怎么一上来就有人在说话」。
@@ -5382,7 +5777,11 @@ def main() -> int:
     check_lead_in(spec)
     check_trail_in(spec)
     check_copy_page(spec)
+    check_copy_bilingual(spec)
     check_cover_hook(spec)
+    check_taste(spec)
+    check_taste_extra(spec)
+    report_takeaway_polyphones(spec, spec_path=args.spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"

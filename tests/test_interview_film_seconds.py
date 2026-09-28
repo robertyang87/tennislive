@@ -84,6 +84,10 @@ def test_采访片两个出口都要写film_seconds(tmp_path, monkeypatch, case,
     # 同理，fake_run 不会真的启动 libass，也就不会产生 fontselect 日志；字体
     # 证据本身由 test_interview_clip 的正反例覆盖，这里只验证两个片长出口。
     monkeypatch.setattr(mod, "assert_topbar_font_log", lambda *a, **k: None)
+    # 假源片只有 1 秒而 spec 的 end 是 30——编码之前那道「end 越过源片画面／压进
+    # 片尾板」的闸（`check_tail`）会正确地先红。它的判据在 test_interview_preflight，
+    # 这里只验两个片长出口。
+    monkeypatch.setattr(mod, "check_tail", lambda *a, **k: None)
     if with_outro:
         monkeypatch.setattr(
             mod, "_build_outro",
@@ -117,6 +121,10 @@ def test_采访片两个出口都要写film_seconds(tmp_path, monkeypatch, case,
         "别只改一个（`build_cover` 那次就是这么塌的）")
     assert data["video_url"] == "https://example.invalid/v.mp4", (
         f"{case}：把 render.json 覆盖了，原有的键丢了——要合并写")
+    # 拼了哪几段也要落进同一份 render.json（L2 照 spec 核它，见 interview_assembly）
+    roles = [row["role"] for row in (data.get("assembly") or {}).get("parts", [])]
+    assert roles == (["body", "outro"] if with_outro else ["body"]), (
+        f"{case}：render.json 没记拼接清单（{roles}）")
 
     # 真量：拼接那条多一段 3 秒片尾，直通那条只有 8 秒正片。
     expect = 11.0 if with_outro else 8.0

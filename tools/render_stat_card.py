@@ -223,6 +223,7 @@ import versus_poster as vp  # noqa: E402
 from tennislive.design_tokens import BRAND_BAR_CSS, DARK, SCORE, rgb  # noqa: E402
 from tennislive.render.webcards import _font_css  # noqa: E402
 from tennislive.video.explainer import _data_uri  # noqa: E402
+from tennislive.video import watermark  # noqa: E402
 
 W, H = 1080, 1920
 
@@ -254,8 +255,30 @@ _HEADSHOT_BG = "#e9efe9"  # token-exempt: 头像透明处的垫底，不是界�
 _BG_BASE = f"linear-gradient(170deg,{DARK['card']} 0%,{DARK['background']} 55%)"
 
 # 台头（Q15）：栏目只有三个，这张图属于「赛场之上」——原来写的「数据复盘」
-# 是三个栏目之外的第四个名字。推送页那张的 footer 左边本来就是这一句。
-BRAND_LINE = "网球时差 · 赛场之上"
+# 是三个栏目之外的第四个名字。
+# ⚠️ 栏目名读 `cover.eyebrow`（缺省「赛场之上」），和封面台头、正片常驻角标读的是
+# **同一处**（`build_match_reel` 常驻角标那段注释：各读各的，一部片子里就写着两个栏目）。
+# 2026-09-27 挂着 `stats` 的 210 条 spec 全是「赛场之上」，所以今天看不出差别；哪天一条
+# 「网球有故事」的剪辑片挂了 `stat_card: true`，写死的台头就会在「网球有故事」的角标
+# 底下印出「赛场之上」。
+# ⚠️ **缺省栏目和那一句的格式都不在这儿另写一份**（评审 2026-09-27：原来这儿自己有一个
+# `DEFAULT_COLUMN = "赛场之上"`，和 `build_match_reel.DEFAULT_COLUMN` 各写一遍——哪天
+# 改了一处，另一处不报错）：缺省跟这条线的主模块走，格式跟常驻角标那一行走
+# （`watermark.brand_label`）。判据 `test_数据图台头的缺省栏目和格式只有一处出处`。
+# ⚠️ import 放在缺省那个分支里，不放顶上：`build_match_reel` 自己是懒 import 这个模块的，
+# 而 `python tools/build_match_reel.py` 跑起来时主模块叫 `__main__`——顶上 import 的话，
+# 每次渲数据图都会按 `build_match_reel` 这个名字把它再加载一遍。放在这儿只有 eyebrow
+# 空着才走到（2026-09-27 带 stats 的 210 条 spec 全写了 eyebrow）。
+
+
+def brand_line(cover: dict) -> str:
+    column = str(cover.get("eyebrow", "")).strip()
+    if not column:
+        from build_match_reel import DEFAULT_COLUMN  # noqa: PLC0415
+        column = DEFAULT_COLUMN
+    return watermark.brand_label(column)
+
+
 # 赢家头像那一圈描边：它唯一的意思就是「这一方赢了」，所以和赢盘同一支薄荷
 # （Q1「凡是薄荷的地方都在说这一方赢了，其余品牌处一律黄绿」）。黄绿描边 ＋ 薄荷
 # 赢盘并排渲过：两支绿挨在一起，读不出哪支是「赢」——比较图在 WP8 的 scratchpad。
@@ -485,6 +508,25 @@ def _headshot_style(raw: dict, where: str) -> str:
     )
 
 
+def footer_text(stats: dict, court: str) -> str:
+    """poster 底部那一格印什么：「场地 · 日期」；**只剩一个和比分底下同一行的场地名时给空**。
+
+    评审 2026-09-27（第二轮，试合并树上量）：带 stats 的 219 条 spec 里 138 条（63%）既没写
+    `footer_venue` 也没写 `footer_date`，footer 退回 `court`——而 `court` 已经印在比分底下
+    （`.h2h-meta`），于是一张图的底部居中孤零零一个「Center Court」，和上面那行重复。
+    日期不替它补：`_match` 里没有统一的比赛日期字段（本分支没写 footer 的 129 条里只有
+    3 条带 `date`，当地日期还是北京日期也没写），拿不准的日期不上图——所以只剩重复时
+    整格不渲。
+
+    `footer_venue` 写成别的（「辛辛那提 · 男单第二轮」）、或者有 `footer_date`，照旧印。
+    """
+    venue = str(stats.get("footer_venue") or court).strip()
+    date = str(stats.get("footer_date") or "").strip()
+    if not date and venue == court.strip():
+        return ""
+    return f"{venue} · {date}" if date else venue
+
+
 def build(spec: dict, *, variant: str = "poster") -> str:
     if variant not in VARIANTS:
         raise SystemExit(f"数据统计图只有 {sorted(VARIANTS)} 两种变体，拿到的是 {variant!r}")
@@ -551,7 +593,7 @@ h1{{font-size:34px;text-align:center;color:{BRAND};margin-bottom:14px}}
 .sval.lead .smain{{color:{BRAND}}}.band .slabel{{font-size:31px;font-weight:700;text-align:center;position:relative;top:-9px}}
 .band .slabel-en{{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:16px;font-weight:400;color:{DARK['subtle-foreground']}}}
 .band .slabel--solo{{top:0}}
-</style></head><body class="band"><h1>全场数据复盘</h1><div class="names"><span>{names[0]}</span><span>{names[1]}</span></div>
+</style></head><body class="band"><h1>全场数据对比</h1><div class="names"><span>{names[0]}</span><span>{names[1]}</span></div>
 <div class="score">{score_line}</div>{rows_html}</body></html>"""
 
     def side(meta: dict, raw: dict, where: str) -> str:
@@ -590,8 +632,7 @@ h1{{font-size:34px;text-align:center;color:{BRAND};margin-bottom:14px}}
     h2h_b = side(right_meta, b, "stats.b")
 
     topic = f'{html.escape(str(cover.get("topic", "")))}'
-    footer_venue = html.escape(str(stats.get("footer_venue") or court))
-    footer_date = html.escape(str(stats.get("footer_date") or ""))
+    footer_line = footer_text(stats, court)
     if variant == "film":
         # 片里那一版：段标题和 footer 整个不渲（不是 display:none——不渲就没有
         # 那两个盒子的高度账），行距收紧。行距那两个数是拿两条九行全有的真 spec
@@ -606,9 +647,12 @@ h1{{font-size:34px;text-align:center;color:{BRAND};margin-bottom:14px}}
                     ".srow{margin-bottom:20px;padding-bottom:13px}")
     else:
         section_title = '<div class="section-title">全场数据对比</div>'
-        footer = ('<div class="footer">\n    <span>网球时差 · 赛场之上</span>\n'
-                  f'    <span>{footer_venue}{" · " + footer_date if footer_date else ""}</span>'
-                  "\n  </div>")
+        # footer 只留「场地 · 日期」。左边原来那句「网球时差 · 赛场之上」拿掉了：Q15 把台头
+        # 换成同一句之后，一张图上印了两遍（评审 2026-09-27）。只剩一个场地名、和比分底下
+        # 那行一字不差时整个不渲（`footer_text`）。
+        footer = ('<div class="footer">\n'
+                  f'    <span>{html.escape(footer_line)}</span>'
+                  "\n  </div>") if footer_line else ""
         film_css = ""
 
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>
@@ -712,6 +756,10 @@ body{{color:{FG};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
  gap:14px;margin-bottom:33px;padding-bottom:23px;
  border-bottom:1px solid {_rgba(FG, .10)}}}
 .srow:last-child{{border-bottom:none;margin-bottom:0;padding-bottom:0}}
+/* poster 有 footer 时最后一行统计不是 `.wrap` 的最后一个孩子，`:last-child` 匹配不到，
+   它底下的分隔线和 footer 的上边线挨着成了两根（评审 2026-09-27）。只拿掉线、不动
+   间距：footer 那根线的位置和原来一样，底下那一格不挪。 */
+.srow:has(+ .footer){{border-bottom:none}}
 .sval{{display:inline-flex;align-items:baseline;gap:10px;white-space:nowrap;
  font-family:'TL Score','TL Sans SC',sans-serif}}
 .sval-l{{justify-content:flex-start}}
@@ -751,15 +799,17 @@ body{{color:{FG};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
    位移单独量过（纯中文在 top:0 时比数字中心低 10.6px，所以取 −5px）。 */
 .slabel--solo{{top:-5px}}
 
+/* 只剩「场地 · 日期」一格，居中——和上面居中的中英标签、段标题一条中轴（左右两格
+   那版的左边是台头那句的重复，2026-09-27 拿掉；并排渲过左 / 右 / 居中三种，居中最稳）。 */
 .footer{{margin-top:38px;padding-top:20px;border-top:1px solid {_rgba(FG, .18)};
- display:flex;justify-content:space-between;align-items:center;
+ display:flex;justify-content:center;align-items:center;
  font-family:'TL Sans SC',sans-serif;font-size:23px;color:{vp.DIM};letter-spacing:.5px}}
 {film_css}
 </style></head>
 <body>
 <div class="bar"></div>
 <div class="head">{icon_html}
-  <div class="brandlines"><span class="brand">{BRAND_LINE}</span>
+  <div class="brandlines"><span class="brand">{html.escape(brand_line(cover))}</span>
   <span class="topic">{topic}</span></div>
 </div>
 

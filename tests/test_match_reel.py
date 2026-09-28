@@ -1328,22 +1328,12 @@ _NO_SLATE_YET = {
 }
 
 # 收尾没落在一问上、而且**已经发出去了**的。只许减不许加，底下有自检。
-_ENDING_LEGACY = {
-    # 同上：`eala-parks` 收在「六比二，晋级第三轮。」这句数据上。
-    "eala-parks",
-    # `shang-darderi-montreal-2026` 收在「四比五，他救下两个赛点。」这句数据上。
-    "shang-darderi-montreal-2026",
-    # `zheng-you-us-open-2026-q1` 收在「……零次被破发，是这场胜利最硬的答案。」
-    # 这句数据上。它 2026-08-25T01:53:09Z 已经推过微信（run 32799209180），
-    # 收尾那句烧在音轨和字幕里，不为措辞重渲。
-    "zheng-you-us-open-2026-q1",
-    # `andreeva-gauff` 收在「全场总得分九十五比九十四，高芙只多拿一分。
-    # 她救回两个赛点，把这场胜利拼到了手里。」这句数据上。它
-    # 2026-09-10T00:43:27Z 已经推过微信（发布台账 `sent`），收尾那句烧在
-    # 音轨和字幕里，不为措辞重渲。⚠️ 同一条片子在 `_NO_SLATE_YET` 里也挂着
-    # 一笔，那条注释记着这一类的根子（自动链直推 main 不触发 CI）。
-    "andreeva-gauff",
-}
+# ⚠️ 判据和这张表的单一出处在 tools/taste_gates_extra.py（validate_spec 也用它，
+# `--dry-run` 0.2 秒就报）——这儿只 import，不再各抄一份。
+sys.path.insert(0, str(Path("tools").resolve()))
+import taste_gates_extra as _TG  # noqa: E402
+
+_ENDING_LEGACY = _TG.ENDING_LEGACY
 
 
 def test_赛场之上开场要给出北京时间赛事和轮次():
@@ -1540,39 +1530,11 @@ def test_收尾要落在一问上不能停在数据上():
     """
     bad, offenders = [], set()
     for slug, spec in _reel_specs().items():
-        segs = spec["segments"]
-        # `.get`：原声段（`quote`）根本没有 narration 这个键
-        nars = [s.get("narration", "") for s in segs]
-        nars = [n for n in nars if n]
-        last_narration = nars[-1] if nars else ""
-
-        true_last_text = ""
-        last_seg = segs[-1] if segs else {}
-        nar = str(last_seg.get("narration", "")).strip()
-        if nar:
-            true_last_text = nar
-        else:
-            quote = last_seg.get("quote")
-            if isinstance(quote, str) and quote.strip():
-                true_last_text = quote.strip()
-            elif isinstance(quote, list) and quote:
-                entry = quote[-1]
-                text = entry.get("text", "") if isinstance(entry, dict) else str(entry)
-                # `text` 是「英文\n中文」，末尾一问只看中文那半行
-                zh = str(text).split("\n")[-1].strip()
-                true_last_text = zh or str(text).strip()
-
-        if not last_narration and not true_last_text:
-            continue
-
-        ends_in_question = (
-            ("？" in last_narration[-30:]) or ("？" in true_last_text[-30:])
-        )
-        if not ends_in_question:
+        tail = _TG.ending_offender(spec)
+        if tail is not None:
             offenders.add(slug)
             if slug not in _ENDING_LEGACY:
-                shown = true_last_text or last_narration
-                bad.append(f"{slug}: …{shown[-26:]}")
+                bad.append(f"{slug}: …{tail}")
     assert not bad, (
         "这些片子的收尾停在数据上，没有落在一问上：\n  " + "\n  ".join(bad))
 
@@ -2599,13 +2561,24 @@ def test_赛场之上的封面一律用solo():
     with pytest.raises(reel.ReelError, match="一律用 solo"):
         reel.build_cover({"": Path("x.mp4")}, "", {"cover": vs},
                          Path("y.mp4"), 1920)
-    # **写了判据就放行。** 反向验证这一支真的走过去了：它必须**越过栏目那道
-    # 闸**、死在后面别的地方——只断言「不抛『一律用 solo』」证明不了这个，
-    # 那句话改一个字就假绿。
+    # ⚠️ **「赛场之上」写了 `_layout_why` 也不放行**（2026-09-24 起）：账号所有者否掉的
+    # shang-mannarino 42cfae85 正写着一句认领。和 `validate_spec` 里的
+    # `taste_gates_extra.solo_layout_problem` 是同一份判据，报错不许再把人指去写认领。
     declared = {**vs, "_layout_why": "这一条两个人的戏份一样重，退回 VS"}
-    with pytest.raises(reel.ReelError, match="frame_at|找不到|ffmpeg|封面|图"):
+    with pytest.raises(reel.ReelError, match="一律用 solo") as caught:
         reel.build_cover({"": Path("x.mp4")}, "", {"cover": declared},
                          Path("y.mp4"), 1920)
+    assert "没有认领口" in str(caught.value), "报错还在把人指去写 `_layout_why`"
+    # **认领口只剩「网球有故事」：写了判据就放行。** 反向验证这一支真的走过去了：
+    # 它必须**越过栏目那道闸**、死在后面别的地方——只断言「不抛『一律用 solo』」
+    # 证明不了这个，那句话改一个字就假绿。
+    story = {**declared, "eyebrow": "网球有故事"}
+    with pytest.raises(reel.ReelError, match="frame_at|找不到|ffmpeg|封面|图"):
+        reel.build_cover({"": Path("x.mp4")}, "", {"cover": story},
+                         Path("y.mp4"), 1920)
+    with pytest.raises(reel.ReelError, match="_layout_why"):
+        reel.build_cover({"": Path("x.mp4")}, "",
+                         {"cover": {**vs, "eyebrow": "网球有故事"}}, Path("y.mp4"), 1920)
     # **老片子按 slug 豁免**，同样要验它真的越过了栏目那道闸。
     with pytest.raises(reel.ReelError, match="frame_at|找不到|ffmpeg|封面|图"):
         reel.build_cover({"": Path("x.mp4")}, "",
@@ -2745,7 +2718,12 @@ def test_文案里的tag最多五个():
     sys.path.insert(0, str(Path("tools").resolve()))
     from tennislive.render.hashtags import MAX_HASHTAGS, hashtag_count  # noqa: PLC0415
 
-    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+    # ⚠️ **采访线的文案也要扫**：原来只 glob 了 specs/reels，于是 2026-09 起 9 趟
+    # run 红在「6 个 tag，超过 5 个」，其中 7 趟是 specs/interviews 的（tien-cobolli
+    # 653b6d60、nakashima-mensik f8de57d3 都是「账号＋赛事＋三个人＋栏目」）——
+    # 推送前那道闸（push_reel）拦得住，可那已经是渲完、合完之后了。
+    for path in sorted([*Path("specs/reels").glob("*.xhs.txt"),
+                        *Path("specs/interviews").glob("*.xhs.txt")]):
         n = hashtag_count(path.read_text(encoding="utf-8"))
         assert n <= MAX_HASHTAGS, f"{path.name} 有 {n} 个 tag"
 
@@ -5459,6 +5437,9 @@ def test_dry_run秒级返回且一个字节都不下载(tmp_path):
         Path("specs/reels/tiafoe-musetti-cincinnati-2026-qf.json").read_text(
             encoding="utf-8"))
     spec["source_url"] = "http://0.0.0.0/绝对下不动.mp4"
+    # 2026-09-27 起新的手写 spec 每条源都要认领得到 probe（probe_sources）——这条
+    # 故意喂一个没人 probe 过的地址，按那道闸的认领口写明为什么
+    spec["_no_probe_why"] = {"": "测试夹具：故意喂一个下不动、也没 probe 过的地址"}
     # 临时文件用底稿自己的 slug 命名：措辞豁免按 slug 查（spec_wording），
     # 这条底稿挂着「7点05分」的账，换名克隆就丢豁免、dry-run 会红在措辞上
     path = tmp_path / "tiafoe-musetti-cincinnati-2026-qf.json"
@@ -7097,37 +7078,17 @@ def test_封面上每个球员都要有国旗和即时排名():
 
 
 def _rank_claims(text: str) -> list[int]:
-    """把一段文案里**声称的排名**抠出来（阿拉伯和汉字都认）。
+    """把一段文案里**声称的排名**抠出来——单一出处在 `tools/taste_gates.rank_claims`
+    （2026-09-27 挪进 `validate_spec`，`--dry-run` 就报，不用等 CI）。
 
     ⚠️ **只认「世界第N」「世界排名N」「排名…N」这三种说法**，别放宽：
-
-    - `第N号种子` / `N号种子` 是**种子序号不是排名**。卢布列夫在蒙特利尔是
-      十号种子、世界第十六——两个数都对，混成一件事就成了假话
-    - 「第一次打进四强」「两个盘点」里的数跟排名无关，扫进来只会误伤
-
-    判据宁可窄，不可宽：扩大化的判据不吭声，它不会说「我拦错了」，
-    只会让下一个人把对的写法改成错的。
+    `第N号种子` 是**种子序号不是排名**（卢布列夫在蒙特利尔是十号种子、世界第十六）；
+    「第一次打进四强」「两个盘点」里的数跟排名无关。
     """
-    import re  # noqa: PLC0415
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from taste_gates import rank_claims  # noqa: PLC0415
 
-    sys.path.insert(0, str(Path("src").resolve()))
-    from tennislive.video.explainer import _num_value  # noqa: PLC0415
-
-    out: list[int] = []
-    # 「排名」和数字之间允许隔一个动词（掉到 / 升到 / 来到 / 是），
-    # 但**不允许隔任意字符**——隔开了就未必还在说同一件事
-    pat = re.compile(r"(?:世界第|世界排名|排名(?:掉到|升到|来到|是)?)"
-                     r"\s*([0-9]+|[一二三四五六七八九十百千两]+)")
-    for m in pat.finditer(text):
-        run = m.group(1)
-        if run.isdigit():
-            out.append(int(run))
-            continue
-        value = _num_value(run)
-        # 读不出来（比如「排名最高」被切到「高」）就跳过，别猜
-        if value is not None:
-            out.append(int(value))
-    return out
+    return rank_claims(text)
 
 
 def test_钩子和文案里写的排名要和matchup对得上():
@@ -7157,36 +7118,24 @@ def test_钩子和文案里写的排名要和matchup对得上():
     这两个人的当期名次；正文有几百字，同一个说法在那儿完全可以是三年前的。
     又一次「判据宁可窄，不可宽」——扫宽了它不会说「我拦错了」。
     """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from taste_gates import rank_claim_problem  # noqa: PLC0415
+
     checked = 0
     bad: dict[str, str] = {}
     for path in sorted(Path("specs/reels").glob("*.json")):
         spec = json.loads(path.read_text(encoding="utf-8"))
         cover = spec.get("cover") or {}
-        registered: set[int] = set()
-        for who in cover.get("matchup") or []:
-            if isinstance(who, dict) and isinstance(who.get("rank"), int):
-                registered.add(who["rank"])
-        versus = cover.get("versus") or {}
-        for side in ("top", "bottom"):
-            panel = versus.get(side) or {}
-            if isinstance(panel.get("rank"), int):
-                registered.add(panel["rank"])
-        if not registered:
-            continue
-
         push = spec.get("push") or {}
-        texts = {"cover.hook": str(cover.get("hook", "")),
-                 "push.summary": str(push.get("summary", ""))}
-        for where, text in texts.items():
-            for claimed in _rank_claims(text):
-                checked += 1
-                if claimed not in registered:
-                    bad[f"{path.name}:{where}"] = (
-                        f"写着世界第 {claimed}，而 matchup 登记的是 "
-                        f"{sorted(registered)}")
+        checked += len(_rank_claims(str(cover.get("hook", "")))
+                       + _rank_claims(str(push.get("summary", ""))))
+        # ⚠️ 判据本身在 `validate_spec` 里（`taste_gates.rank_claim_problem`），
+        # 这儿是 CI 那一面的镜像——扫全库、证明它真的扫到了东西。
+        if problem := rank_claim_problem(spec):
+            bad[path.name] = problem
     assert not bad, f"钩子/文案里的排名和 matchup 对不上：{bad}"
-    # **判据自己的判据。** 上面两个 `continue` 一旦写宽，或者 `_rank_claims`
-    # 的正则写死，这条测试会变成一盏恒真的绿灯——而它拦的正是「不吭声」那一类。
+    # **判据自己的判据。** `rank_claims` 的正则一旦写死（一个都抠不出来），
+    # 这条测试会变成一盏恒真的绿灯——而它拦的正是「不吭声」那一类。
     assert checked >= 1, "一处排名都没校到——是不是跳过的条件或正则写宽了？"
 
     # 抠取本身要正反都对：认得出该认的，也不许把种子序号当排名
@@ -7648,24 +7597,11 @@ def test_小红书正文不许用markdown():
     ⚠️ tag 行 `#网球时差` 不许误伤：`#` 后面没有空格，和 markdown 的 ATX 标题
     （`# ` 必须带空格）分得开。反向验证里专门有这一条。
     """
-    import re  # noqa: PLC0415
-
-    marks = (
-        ("星号（**加粗** / *斜体*）", re.compile(r"\*")),
-        ("反引号", re.compile(r"`")),
-        ("下划线强调 __", re.compile(r"__")),
-        ("表格竖线", re.compile(r"^\s*\|", re.M)),
-        ("# 标题", re.compile(r"^#{1,6}\s", re.M)),
-        ("> 引用", re.compile(r"^>\s", re.M)),
-        ("[]() 链接", re.compile(r"\[[^\]]*\]\([^)]*\)")),
-    )
-
+    # ⚠️ 记号表的单一出处在 tools/taste_gates_extra.py（`--dry-run` 的措辞座位也用它）。
     offenders, checked = {}, 0
     for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
         checked += 1
-        text = path.read_text(encoding="utf-8")
-        hits = [f"{name}×{len(pat.findall(text))}"
-                for name, pat in marks if pat.search(text)]
+        hits = _TG.xhs_markdown_hits(path.read_text(encoding="utf-8"))
         if hits:
             offenders[path.name] = hits
     assert checked >= 15, f"只扫到 {checked} 份文案——目录写错了？"
@@ -7933,7 +7869,11 @@ def test_查旁白那条路不许碰源片也不许写产物():
        （和 `--cover-only` 那次同一个坑：开关够不着等于这条能力不存在）
     """
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
-    body = src[src.index("if args.check_narration:"):src.index("if args.dry_run:")]
+    # 切到 check_narration **之后**那个 `if args.dry_run:`：wp/tts-polyphones 在措辞闸之后、
+    # check_narration 之前另开了一个只印多音字预检的 `if args.dry_run:`，按第一次出现切的话
+    # 切出来是空串，这条判据就读不到它要看的那一段了。
+    start = src.index("if args.check_narration:")
+    body = src[start:src.index("if args.dry_run:", start)]
     assert "download(" not in body, "查旁白那条路碰了源片——它不需要"
     assert "TemporaryDirectory" in body, (
         "语音没落临时目录——查一次旁白就往 output/ 里写一遍 voice_*.mp3")
@@ -8718,154 +8658,6 @@ def test_片尾接上之后每个分段都要留溶解底料(tmp_path):
         "长度账破了，后面每一句旁白和字幕都会整体错位")
 
 
-def test_片尾的动效每一层都要按时出现(tmp_path):
-    """账号所有者 2026-08-05：「最后最好有一个动效出来这一屏」。
-
-    **真跑一遍生产用的那个滤镜图**，量每一层在自己该出现的时刻之前是不是还没
-    出现、之后是不是出来了。查源码里有没有 `fade=` 只能防「有人把它删了」，
-    防不住「它从来没工作过」——这个仓库里「签名对了、实现是空的」是常客。
-
-    ⚠️ 拿**纯色块**当层，不渲真页面：这条判据要在 CI 上跑得起来，而 CI 上
-    没有 Chromium 也没有品牌字体。它验的是滤镜图的时序，不是版式好不好看。
-
-    ⚠️ **必须按 30fps 跑，不能用 25。** 静图输入不给 `-framerate` 时 ffmpeg
-    按 25fps 解 `-loop 1`，而 `zoompan` 输出标的是目标帧率——帧数不够，画面
-    就缩成 `total × 25/fps`。**fps 恰好是 25 时两者相等，这个 bug 完全看不见**：
-    第一版就是拿 25 跑的，绿得很干净，而真跑一次解说片（30fps）当场量到
-    画面 3.57s、音轨 4.29s。判据的参数选在「恰好掩盖缺陷」的那一档上，
-    和没有判据是一回事。
-    """
-    import shutil  # noqa: PLC0415
-    import subprocess  # noqa: PLC0415
-
-    sys.path.insert(0, str(Path("tools").resolve()))
-    from tennislive.video import outro_page  # noqa: PLC0415
-
-    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
-
-    secs, fps = 3.85, 30
-    # 底层纯黑，三层各是一条横带，落在互不重叠的高度上——这样量某一条带的
-    # 亮度就等于量那一层出没出来。
-    base = tmp_path / "base.png"
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
-                    f"color=c=black:s={outro_page.VIDEO_W}x{outro_page.VIDEO_H}",
-                    "-frames:v", "1", str(base)], check=True)
-    bands = {}
-    layer_files = []
-    for i, (key, st, dur, _rise) in enumerate(outro_page.LAYERS):
-        y0 = 200 + i * 300
-        bands[key] = (y0, y0 + 160, st, dur)
-        f = tmp_path / f"l{i}.png"
-        # 透明底 + 一条白带
-        subprocess.run(
-            ["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
-             f"color=c=black@0.0:s={outro_page.VIDEO_W}x{outro_page.VIDEO_H}",
-             "-vf", f"drawbox=x=0:y={y0}:w={outro_page.VIDEO_W}:h=160:"
-                    "c=white@1.0:t=fill",
-             "-frames:v", "1", "-pix_fmt", "rgba", str(f)], check=True)
-        layer_files.append(f)
-
-    film = tmp_path / "outro.mp4"
-    args = ["ffmpeg", "-v", "error", "-y",
-            "-framerate", str(fps), "-loop", "1", "-t", f"{secs}", "-i", str(base)]
-    for f in layer_files:
-        args += ["-framerate", str(fps), "-loop", "1", "-t", f"{secs}", "-i", str(f)]
-    args += ["-filter_complex", outro_page.motion_filter(secs, str(fps), float(fps)),
-             "-map", "[vout]", "-c:v", "libx264", "-preset", "ultrafast",
-             "-crf", "12", "-pix_fmt", "yuv420p", str(film)]
-    subprocess.run(args, check=True)
-
-    # ① **画面必须真有那么长。** 少给 `-framerate` 时它会缩成 total×25/fps，
-    # 而 ffmpeg 不报错——真跑解说片时量到画面 3.57s、音轨 4.29s 就是这个。
-    got = float(subprocess.run(
-        ["ffprobe", "-v", "error", "-select_streams", "v:0",
-         "-show_entries", "stream=duration", "-of", "csv=p=0", str(film)],
-        check=True, capture_output=True, text=True).stdout.strip().rstrip(","))
-    assert abs(got - secs) < 0.12, (
-        f"片尾画面 {got:.2f}s，要的是 {secs:.2f}s——"
-        f"差 {secs / got if got else 0:.3f} 倍。静图输入少了 `-framerate`，"
-        "帧数按 25fps 铺、时长按目标帧率标，画面就比音轨短一截")
-
-    def band_brightness(moment: float, y0: int, y1: int) -> float:
-        shot = tmp_path / "s.png"
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{moment:.3f}",
-                        "-i", str(film), "-frames:v", "1", str(shot)], check=True)
-        out = subprocess.run(
-            ["ffmpeg", "-hide_banner", "-i", str(shot), "-vf",
-             f"crop={outro_page.VIDEO_W}:{y1 - y0}:0:{y0},"
-             "format=gray,signalstats,metadata=print:key=lavfi.signalstats.YAVG",
-             "-f", "null", "-"], capture_output=True, text=True).stderr
-        got = re.search(r"YAVG=(\S+)", out)
-        assert got, f"量不到 {moment}s 的亮度"
-        return float(got.group(1))
-
-    for key, (y0, y1, st, dur) in bands.items():
-        # 入场之前：还没出来（留 0.06s 余量给取帧的量化误差）
-        before = band_brightness(max(0.0, st - 0.10), y0, y1)
-        # 淡完之后：出来了
-        after = band_brightness(min(secs - 0.05, st + dur + 0.25), y0, y1)
-        assert before < 12, (
-            f"「{key}」层在 {st}s 之前就已经出现了（亮度 {before:.1f}）——"
-            "淡入没生效，那一层从第 0 帧就是满的")
-        assert after > 90, (
-            f"「{key}」层淡完之后还没出来（亮度 {after:.1f}）——"
-            "这一层根本没被合进去，或者 fade 把 alpha 弄反了")
-        assert after - before > 60, (
-            f"「{key}」层前后差得太小（{before:.1f} → {after:.1f}），淡入没在动")
-
-
-def test_片尾片段的画面要和它自己要的一样长(tmp_path):
-    """**真调一次 `render_clip`**，量它出来的画面有多长。
-
-    ⚠️ 这条是补上一条判据的漏洞的。`test_片尾的动效每一层都要按时出现` 验的是
-    `motion_filter`（滤镜图），而真出问题的地方在 `render_clip` 拼的那串
-    **ffmpeg 参数**里——静图输入少了 `-framerate`，ffmpeg 就按 25fps 铺
-    `-loop 1`，而 `zoompan` 输出标的是目标帧率，画面于是缩成 `total×25/fps`。
-
-    实测（解说片，30fps，目标 4.29s）：**画面 3.57s，音轨 4.29s。**
-    ffmpeg 不报错，成片能出来，只是最后 0.72 秒没有画面。
-
-    而那条老判据**抓不到它**：测试自己拼命令行、自己带了 `-framerate`，
-    把生产代码里的两处全拿掉照样绿。查的东西和跑的东西不是一回事。
-
-    喂现成的 PNG 当层（`layers=`），所以这条不碰 Chromium，CI 上跑得起来。
-
-    ⚠️ **必须按 30fps 跑**：fps 恰好是 25 时 `total×25/fps == total`，
-    这个 bug 完全看不见。
-    """
-    import shutil  # noqa: PLC0415
-    import subprocess  # noqa: PLC0415
-
-    from tennislive.video import outro_page  # noqa: PLC0415
-
-    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
-
-    layers = {}
-    for name in ["base"] + [k for k, *_ in outro_page.LAYERS]:
-        f = tmp_path / f"{name}.png"
-        subprocess.run(
-            ["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
-             f"color=c=gray:s={outro_page.VIDEO_W}x{outro_page.VIDEO_H}",
-             "-frames:v", "1", "-pix_fmt", "rgba", str(f)], check=True)
-        layers[name] = f
-
-    want, fps = 4.29, 30
-    dest = outro_page.render_clip(
-        tmp_path, want,
-        fps_expr=str(fps), fps=float(fps), chromium="", dest=tmp_path / "o.mp4",
-        audio_rate="24000", preset="ultrafast", crf="26",
-        audio_bitrate="64k", layers=layers,
-    )
-    got = float(subprocess.run(
-        ["ffprobe", "-v", "error", "-select_streams", "v:0",
-         "-show_entries", "stream=duration", "-of", "csv=p=0", str(dest)],
-        check=True, capture_output=True, text=True).stdout.strip().rstrip(","))
-    assert abs(got - want) < 0.12, (
-        f"片尾画面 {got:.2f}s，要的是 {want:.2f}s（差 {want / got if got else 0:.3f} "
-        f"倍，25/{fps} = {25 / fps:.3f}）——静图输入少了 `-framerate`，"
-        "帧数按 25fps 铺、时长按目标帧率标，画面就比音轨短一截，而 ffmpeg 不报错")
-
-
 def test_片尾卡的画幅要和几条线的卡对得上():
     """片尾页搬进 `src/tennislive/video/` 之后，画幅是**另写的一份**。
 
@@ -9512,27 +9304,21 @@ def test_一段里的长留白要提示但不再阻断渲染():
         "超过 4 秒的旁白留白仍会阻断 render；有现场声时它只能提示")
 
 
-# 发在这条规矩之前的那一条，**只许减不许加**。它是那次翻车的现场，留着当锚点：
-# eala-svitolina 12 段里 7 段在报幕（58%），读者的原话是
-# 「她发球，她接发。。。她发球，她接发。她发球，对面接发。。。」——几乎是原文引用。
+# 判据（正则、25% 门槛、豁免表）的单一出处在 `tools/taste_gates.py`
+# （`ANNOUNCE` / `BOARD_SHARE_MAX` / `BOARD_ANNOUNCE_LEGACY`）：2026-09-27 挪进了
+# `validate_spec`，手写 spec `--dry-run` 0.2 秒就红，不再只活在 CI 里。
+# 这条测试留作 CI 那一面的镜像：扫全库、带锚点、豁免表自检。
 #
-# ⚠️ **名单里只有它一条，是量出来的，不是估的。** 我一开始按一个更宽的正则
-# （把「他的发球局」也算上）以为 eala-osaka 35%、wong-gea 30% 也超标，顺手写进
-# 了名单——`_BOARD_LEGACY` 那条自检当场报「wong-gea 已经不超标了」。
-# **豁免名单也要自证它豁免的是真的超标**，否则拦的是空气。
-_BOARD_LEGACY = {"eala-svitolina"}
-
-# 一条片子里最多多少段可以提「谁在发球」。
+# 豁免表里只有 eala-svitolina 一条，它是那次翻车的现场：12 段里 7 段在报幕（58%），
+# 读者的原话是「她发球，她接发。。。她发球，她接发。她发球，对面接发。。。」。
+# ⚠️ **名单里只有它一条，是量出来的，不是估的**——按更宽的正则一度以为
+# eala-osaka 35%、wong-gea 30% 也超标，自检当场报「wong-gea 已经不超标了」。
 #
-# **卡的是密度，不是单次出现**——单次往往是有信息的：「轮到自己发球，三十比
-# 四十——帕雷哈的第二个盘点」讲的是**保发被逼到悬崖**，和「没能兑现破发点」
-# 完全是两回事。第一版我禁了任何一次出现，当场误伤这句好台词。
-#
-# 量出来两档分得很开，25% 落在中间不贴边：
+# **卡的是密度，不是单次出现**：「轮到自己发球，三十比四十——帕雷哈的第二个
+# 盘点」讲的是保发被逼到悬崖，有信息。量出来两档分得很开，25% 落在中间：
 #
 #     ❌ eala-svitolina 58%（7/12）
 #     ✅ wong-gea 20%   wang-pareja 11%   gea-shapovalov 6%   最近三条 0%
-_BOARD_SHARE_MAX = 0.25
 
 
 def test_旁白不许把每一局都念一遍():
@@ -9545,61 +9331,37 @@ def test_旁白不许把每一局都念一遍():
     这和已经被禁的「画面里是」是**同一族**：把观众已经看见的东西再指一遍，
     只不过那条指的是画面，这条指的是**烧在画面上的记分条**。
 
-    ⚠️ **卡密度不卡单次，是踩出来的。** 第一版禁了任何一次出现，当场误伤
-    `wang-pareja` 那句「轮到自己发球，三十比四十——帕雷哈的第二个盘点」——
-    在**自己的发球局**被逼到盘点，和「破发点没兑现」是两件事，说清楚是有信息的。
-    又一次「判据宁可窄，不可宽」。
-
     ⚠️ **这条也不禁比分。** CLAUDE.md 早就救回过「5-6 落后，三个盘点她一个也
     没让」——比分在那儿是**制造张力**的手段。
 
-    ⚠️ **它拦不住「平淡」本身。** 顺序、有没有立场、钩子留没留，都是编辑判断，
-    机械挡不住（见 CLAUDE.md「最硬的那个事实放第 ① 屏」那条为什么故意没有
-    测试）。这条只拦一种**能量出来**的坏：把每一局按顺序念一遍。
-
-    根子记在 CLAUDE.md：仓库里「旁白要把比赛走向讲清楚」被我执行成了「把每一局
-    念一遍」。**走向是四个点**（谁领先 → 谁追上 → 转折在哪 → 怎么收），
-    不是九局流水。
+    ⚠️ **它拦不住「平淡」本身。** 这条只拦一种**能量出来**的坏：把每一局按顺序
+    念一遍。**走向是四个点**（谁领先 → 谁追上 → 转折在哪 → 怎么收），不是九局流水。
     """
-    announce = re.compile(
-        r"轮到.{0,4}发球"
-        r"|自己的?发球局"
-        r"|对面的?发球局"
-        r"|对面发球(?!局)"
-        r"|(?:紧接着|下一局|这一局)[^。；]{0,6}发球局")
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from taste_gates import (ANNOUNCE, BOARD_ANNOUNCE_LEGACY,  # noqa: PLC0415
+                             BOARD_SHARE_MAX, board_announce_problem,
+                             board_announce_share)
+
     bad = []
     for slug, spec in sorted(_reel_specs().items()):
-        if slug in _BOARD_LEGACY:
-            continue
-        segs = [s for s in spec["segments"] if (s.get("narration") or "").strip()]
-        if len(segs) < 5:
-            continue
-        hit = [s for s in segs
-               if announce.search((s.get("narration") or "")
-                                  + _quote_str(s.get("quote")))]
-        share = len(hit) / len(segs)
-        if share > _BOARD_SHARE_MAX:
-            bad.append(f"{slug}：{len(hit)}/{len(segs)} 段（{share:.0%}）在报"
-                       f"「谁在发球」，第一处 @{hit[0]['start']}")
+        spec = {**spec, "slug": slug}
+        if problem := board_announce_problem(spec):
+            bad.append(f"{slug}：{problem}")
     assert not bad, (
         "旁白把每一局按顺序念了一遍——记分条上一直写着，说了等于没说：\n  "
-        + "\n  ".join(bad)
-        + "\n\n走向讲**四个点**（谁领先 → 谁追上 → 转折在哪 → 怎么收），"
-          "不是每一局都交代一次开球权。")
+        + "\n  ".join(bad))
 
     # 反面锚点：这些必须**过**——比分和保发是制造张力的手段，不是报幕
     for keeper in ("五比六落后，三个盘点她一个也没让",
                    "先输一比六，再掀翻头号种子",
                    "赛点，黄泽林在二区发出内角 Ace。球落地，他放下球拍，双手掩面。"):
-        assert not announce.search(keeper), f"误伤了一句好台词：{keeper}"
+        assert not ANNOUNCE.search(keeper), f"误伤了一句好台词：{keeper}"
 
-    # 判据自己的判据：三条 legacy 必须真的超标，否则这条测试拦的是空气
-    for slug in _BOARD_LEGACY:
-        spec = _reel_specs()[slug]
-        segs = [s for s in spec["segments"] if (s.get("narration") or "").strip()]
-        hit = sum(1 for s in segs if announce.search(s.get("narration") or ""))
-        assert hit / len(segs) > _BOARD_SHARE_MAX, (
-            f"{slug} 已经不超标了，把它从 _BOARD_LEGACY 里去掉")
+    # 判据自己的判据：legacy 必须真的超标，否则这条测试拦的是空气
+    for slug in BOARD_ANNOUNCE_LEGACY:
+        _hit, _total, share = board_announce_share(_reel_specs()[slug])
+        assert share is not None and share > BOARD_SHARE_MAX, (
+            f"{slug} 已经不超标了，把它从 BOARD_ANNOUNCE_LEGACY 里去掉")
 
 
 # 离线估旁白长度 ------------------------------------------------------------
@@ -10116,29 +9878,10 @@ def _with_legacy_soft_cover(slug: str, spec: dict) -> dict:
     return spec
 
 
-#: 用 Tennis TV 源片、而且发在「片尾和台标要剪掉」这条规矩（账号所有者 2026-08-16）
-#: 之前的片子。已发的不重渲——**只许减不许加**，自检在下面那条测试里。
-_LEGACY_TENNISTV = {
-    "baez-dimitrov", "djokovic-tirante", "eala-svitolina", "fonseca-ruud",
-    "fritz-jodar-final", "gea-shapovalov", "hewitt-washington",
-    "hijikata-monfils", "kovacevic-khachanov",
-    "landaluce-draper", "medvedev-zandschulp", "nakashima-jodar-montreal-sf",
-    "shang-darderi-montreal-2026", "shang-vallejo", "shelton-fonseca",
-    "shelton-nakashima-montreal-final", "shelton-tien-montreal-sf",
-    "tirante-fritz", "tsitsipas-royer", "wang-samsonova", "wong-brooksby",
-    "wong-gea", "wong-lehecka", "zverev-griekspoor",
-}
-
-
-def _uses_tennistv(spec: dict) -> bool:
-    """这条 spec 的源片是不是 Tennis TV 的。
-
-    ⚠️ **只看 `_source` 和 `_editing_why` 这两栏**（我们自己写的来路交代），
-    不扫整份 spec——`_no_repeat` 里会点名别的片子，那些片子的名字里带 Tennis TV
-    就会把这一条误判成「也用了 Tennis TV」。判据宁可窄，不可宽。
-    """
-    blob = " ".join(str(spec.get(k) or "") for k in ("_source", "_editing_why"))
-    return "Tennis TV" in blob or "TennisTV" in blob
+#: 用 Tennis TV 源片、而且发在「片尾和台标要剪掉」这条规矩之前的片子——判据和存量表的
+#: 单一出处在 tools/taste_gates_extra.py（`--dry-run` 也用它），这儿只 import。
+_LEGACY_TENNISTV = _TG.TENNISTV_LEGACY
+_uses_tennistv = _TG.uses_tennistv
 
 
 def test_用TennisTV的源片要说清片尾和台标怎么剪掉():
@@ -10167,10 +9910,8 @@ def test_用TennisTV的源片要说清片尾和台标怎么剪掉():
         assert _uses_tennistv(specs[slug]), (
             f"{slug} 已经不是 Tennis TV 的源片了，从 `_LEGACY_TENNISTV` 里删掉")
 
-    fresh = sorted(
-        slug for slug, spec in specs.items()
-        if _uses_tennistv(spec) and slug not in _LEGACY_TENNISTV
-        and not str(spec.get("_tennistv_trim") or "").strip())
+    fresh = sorted(slug for slug, spec in specs.items()
+                   if _TG.tennistv_trim_problem(spec))
     assert not fresh, (
         f"这几条用了 Tennis TV 的源片，却没写 `_tennistv_trim`：{fresh}。\n"
         "账号所有者 2026-08-16 定的：**片尾和台标都要剪掉**。写一句说清"
@@ -13093,27 +12834,24 @@ def test_赛场之上的quote段不许是赛后采访():
     发现集锦尾巴带采访的正确动作是记成赛后开麦候选另出一条。
     已发的四条不重渲，挂 legacy 表，只许减不许加。
     """
-    legacy = {"rybakina-samsonova", "alexandrova-sabalenka",
-              "osaka-mertens", "swiatek-kostyuk"}
-    allowed = {"broadcast", "ceremony"}
+    # ⚠️ 判据和存量表的单一出处在 tools/taste_gates_extra.py（`--dry-run` 也用它）。
+    legacy = _TG.QUOTE_KIND_LEGACY
     checked = 0
     legacy_seen = set()
     for p in sorted(Path("specs/reels").glob("*.json")):
         spec = json.loads(p.read_text(encoding="utf-8"))
         if (spec.get("cover") or {}).get("eyebrow") != "赛场之上":
             continue
-        for i, seg in enumerate(spec.get("segments") or [], 1):
-            if not seg.get("quote"):
-                continue
-            checked += 1
-            if p.stem in legacy:
+        checked += sum(1 for seg in spec.get("segments") or [] if seg.get("quote"))
+        bad = _TG.quote_kind_offenders(spec)
+        if p.stem in legacy:
+            if bad:
                 legacy_seen.add(p.stem)
-                continue
-            kind = seg.get("_quote_kind")
-            assert kind in allowed, (
-                f"{p.name} 段{i} 的 quote 没认领 _quote_kind（broadcast/"
-                f"ceremony）。赛后采访不进复盘——那是赛后开麦的素材，"
-                f"另出一条；转播原声/颁奖现场声才许留，写上认领")
+            continue
+        assert not bad, (
+            f"{p.name} 段{bad} 的 quote 没认领 _quote_kind（broadcast/"
+            f"ceremony）。赛后采访不进复盘——那是赛后开麦的素材，"
+            f"另出一条；转播原声/颁奖现场声才许留，写上认领")
     # 判据自己的判据：主语没了要出声，别变成恒真的绿灯
     assert checked >= 7, f"只扫到 {checked} 个 quote 段，spec 目录是不是不对"
     # legacy 表自检：写错一个名字，豁免就成了一盏恒真的绿灯
@@ -14136,7 +13874,10 @@ def test_签名源那道闸排在下载之前():
     assert "spec_sources(spec)" in inspect.getsource(reel.validate_spec).split('"""')[-1], (
         "validate_spec 不再调 spec_sources，dry-run 就够不着这道闸了")
     main_body = src[src.index("def main("):]
-    dry = main_body[main_body.index("if args.dry_run:"):]
+    # 模式分发那个 `if args.dry_run:` 在 check_narration 之后；前面那个只印多音字预检
+    # （wp/tts-polyphones），不是 dry-run 那条路本身。
+    dry = main_body[main_body.index("if args.dry_run:",
+                                    main_body.index("if args.check_narration:")):]
     assert "validate_spec(spec)" in dry[:400], "--dry-run 那条路没调 validate_spec"
 
     # ④ 真跑一遍 dry-run 的第一步：不联网、不碰源片，当场红

@@ -300,7 +300,9 @@ def test_dry_run就查cover_src里已经抓好的那一帧(model, tmp_path):
     src = (ROOT / "tools" / "build_match_reel.py").read_text(encoding="utf-8")
     import re  # noqa: PLC0415
 
-    dry = src[src.index("    if args.dry_run:"):]
+    # 模式分发那个 `if args.dry_run:` 在 check_narration 之后；前面那个只印多音字预检
+    # （wp/tts-polyphones），按第一次出现切会切到它、而它里面当然没有封面认人。
+    dry = src[src.index("    if args.dry_run:", src.index("    if args.check_narration:")):]
     # 切到这一支结束：下一行缩进回到 4 格（main 里的下一条语句）
     end = re.search(r"\n    \S", dry[20:])
     dry = dry[:20 + end.start()] if end else dry
@@ -414,7 +416,9 @@ def test_人脸模型缓存键跟着模型版本走():
     assert face_checks.CACHE_KEY.endswith(digest[:12])
     users = {"interview-clip.yml": "audit_interview_cover.py",
              "match-reel.yml": "dry-run — 先把 spec 的形状错拦在编码之前",
-             "ci.yml": "pytest"}
+             "ci.yml": "pytest",
+             # O4 自动换图：候选官方图过认人＋睁眼闸（tools/cover_upgrade.py）
+             "reel-cover-upgrade.yml": "tools/cover_upgrade.py"}
     for name, first_use in users.items():
         wf = yaml.safe_load((ROOT / ".github" / "workflows" / name).read_text(encoding="utf-8"))
         steps = [s for job in wf["jobs"].values() for s in job.get("steps") or []]

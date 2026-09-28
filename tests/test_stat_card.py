@@ -737,7 +737,13 @@ def test_film变体是成片画幅_不渲footer和段标题_poster一个像素�
     assert sc.VARIANTS["film"] == (1080, 1440) and sc.VARIANTS["poster"] == (1080, 1920)
     assert "height:1440px" in film and "height:1920px" in poster
     assert 'class="footer"' not in film and "全场数据对比" not in film
-    assert 'class="footer"' in poster and "全场数据对比" in poster
+    assert "全场数据对比" in poster
+    # 这条 spec 没写 footer_venue / footer_date，poster 的 footer 只会重复场地名——
+    # 整格不渲（`test_poster的footer只重复场地名就整格不渲`）；补一个日期它就回来，film 照旧没有
+    dated = json.loads(json.dumps(spec))
+    dated["stats"]["footer_date"] = "2026年8月25日"
+    assert 'class="footer"' in sc.build(dated)
+    assert 'class="footer"' not in sc.build(dated, variant="film")
     assert film.count('class="srow"') == poster.count('class="srow"') == 9
     with pytest.raises(SystemExit, match="变体"):
         sc.build(spec, variant="wide")
@@ -775,6 +781,56 @@ def test_film变体真渲出来装得下五盘九行_松行距会溢出(monkeypa
     assert heights["loose"][1] > 1440 and heights["tight"][1] == 1440, \
         "scrollHeight 溢出时报得出、装得下时只报画布高——两把尺子在溢出方向上要一致"
     assert "CONTENT_BOTTOM_JS" in inspect.getsource(sc.render)
+
+
+def test_poster的footer只重复场地名就整格不渲(monkeypatch):
+    """评审 2026-09-27（第二轮）：带 stats 的 spec 里六成多没写 `footer_venue` / `footer_date`，
+    footer 退回 `court`，而场地名已经印在比分底下——图的最底下居中孤零零一个
+    「Arthur Ashe Stadium」，和上面那行一字不差。日期不替它补（没有统一可信的比赛日期
+    字段），只剩重复时整格不渲；写了别的场地说明或日期的照旧印。"""
+    import versus_poster as vp  # noqa: PLC0415
+    monkeypatch.setattr(vp, "_fetch_match_duration", lambda src, where: "3:12:00")
+    court = "Arthur Ashe Stadium"
+    assert sc.footer_text({}, court) == ""
+    assert sc.footer_text({"footer_venue": court}, court) == "", "写了和场地一样的 venue 也是重复"
+    assert sc.footer_text({"footer_date": "2026年8月25日"}, court) == f"{court} · 2026年8月25日"
+    assert sc.footer_text({"footer_venue": "辛辛那提 · 男单第二轮"}, court) == "辛辛那提 · 男单第二轮"
+    assert sc.footer_text({"footer_venue": "辛辛那提", "footer_date": "2026.08.17"}, court) \
+        == "辛辛那提 · 2026.08.17"
+
+    poster = sc.build(_film_spec())
+    assert sc.footer_text(_film_spec()["stats"], court) == "", "这条样本本该是只重复场地名的那种"
+    assert 'class="footer"' not in poster, "footer 只剩一个重复的场地名，还是渲出来了"
+    visible = re.sub(r"<style>.*?</style>", "", poster, flags=re.S)
+    assert visible.count(court) == 1, (
+        f"场地名在图上印了 {visible.count(court)} 遍——比分底下一遍、footer 又一遍")
+
+
+def test_poster最后一行统计底下和footer之间只有一根线(monkeypatch, tmp_path):
+    """`.srow:last-child` 在 `.wrap` 里匹配不到（最后一个孩子是 footer），最后一行统计的
+    分隔线和 footer 的上边线挨着成了两根（评审 2026-09-27，老样子）。真在 Chromium 里
+    量 footer 前面那一行的计算样式，不查 CSS 文本。"""
+    import versus_poster as vp  # noqa: PLC0415
+    monkeypatch.setattr(vp, "_fetch_match_duration", lambda src, where: "3:12:00")
+    from playwright.sync_api import sync_playwright  # noqa: PLC0415
+    spec = _film_spec()
+    spec["stats"]["footer_date"] = "2026年8月25日"
+    page = tmp_path / "poster.html"
+    page.write_text(sc.build(spec), encoding="utf-8")
+    with sync_playwright() as pw:
+        browser = sc._launch_browser(pw)
+        tab = browser.new_page(viewport={"width": 1080, "height": 1920})
+        tab.goto(page.resolve().as_uri())
+        got = tab.evaluate(
+            "() => { const f = document.querySelector('.footer');"
+            " const prev = f.previousElementSibling; const cs = getComputedStyle(prev);"
+            " return [prev.className, cs.borderBottomStyle, cs.borderBottomWidth,"
+            "         getComputedStyle(f).borderTopStyle]; }")
+        browser.close()
+    assert got[0] == "srow", f"footer 前面不是最后一行统计：{got}"
+    assert got[3] == "solid", "footer 自己的上边线没了——那根线本来该留着"
+    assert got[1] == "none" or got[2] == "0px", (
+        f"最后一行统计底下还有一根线（{got[1]} {got[2]}），和 footer 的上边线挨着成了两根")
 
 
 def test_render按变体开视口_命令行也认变体():

@@ -44,6 +44,24 @@ def test_published_marker_protects_even_unreviewed_spec(tmp_path, monkeypatch):
     assert not builder.is_pending(path)
 
 
+def test_publish_ledger_protects_unreviewed_spec_without_pushed_marker(tmp_path, monkeypatch):
+    # 2026-08-29 nishikori-sakamoto-us-open-2026-q3-farewell: ledger `sent`, never a
+    # pushed.json, so 519816362 rebuilt the published, owner-edited spec six hours later.
+    path, spec, _ = setup_request(tmp_path, monkeypatch,
+        {'transcript_verification': 'auto_pending'}, {'_rebuild_once': True})
+    monkeypatch.setattr(builder, 'ROOT', tmp_path)
+    ledger = tmp_path / 'data/interview_publish_ledger/demo.json'
+    ledger.parent.mkdir(parents=True)
+    ledger.write_text('{"slug":"demo","attempts":[]}')
+    assert builder.is_pending(path), 'an empty ledger is not a publication'
+    ledger.write_text('{"slug":"demo","attempts":[{"key":"k","status":"sent"}]}')
+    assert not builder.is_pending(path), 'the publish ledger is the authoritative state'
+    req = json.loads(path.read_text())
+    req.update(revision='v2', expected_spec_sha256=cache.file_digest(spec))
+    path.write_text(json.dumps(req))
+    assert builder.is_pending(path), 'an explicit revision may still rebuild it'
+
+
 def test_consumed_request_does_not_revert_editorial_changes(tmp_path, monkeypatch):
     req = {'slug': 'demo', 'url': 'https://youtu.be/x', 'cover': {'zoom': 1.5}}
     spec = {'url': req['url'], 'cover': {'zoom': 1.9},

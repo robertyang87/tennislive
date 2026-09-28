@@ -33,6 +33,7 @@ from __future__ import annotations
 import functools
 import hashlib
 import json
+import os
 import re
 import sys
 import urllib.request
@@ -41,8 +42,18 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SPECS = ROOT / "specs" / "reels"
+#: 「发没发过」的三个出处。⚠️ 函数的默认参数一律写 None、**调用那一刻**才读这几个名字
+#: （`publication_record`）——原来绑在 `def` 的默认值上，测试 monkeypatch 模块属性、
+#: 设环境变量都够不着，`_empty_reel_ledger` 钉空了 `reel_facts` 那一半，这一半照读真账本。
 LEDGER = ROOT / "data" / "reel_publish_ledger"
 OUTPUT = ROOT / "output"
+#: 账本（2026-08-24 起）之前发的 125 条，从 `output/*/reel/*/pushed.json` 冻成的一张表。
+#: runner 的稀疏检出不带 `output/`（cone 模式 add 那 278 个 pushed.json 会连同目录产物
+#: 342 MB 一起拉回来），没有这张表，runner 上的封面复用闸就看不见这批：同栏目借它们的
+#: 封面照样放行（复审 2026-09-27：借 noskova-tauson 封面的新 spec，本地硬红、runner 放行）。
+#: 08-24 起每次推送都同时写账本，所以这张表不会再长。对账见
+#: `test_账本之前发的那批冻成表_和pushed_json逐条对得上`。
+PRE_LEDGER = ROOT / "data" / "reel_pushed_before_ledger.json"
 LEGACY_PATH = ROOT / "data" / "legacy_reel_asset_gates.json"
 
 sys.path.insert(0, str(ROOT / "tools"))
@@ -279,17 +290,54 @@ def _cover_photos(spec: dict) -> list[str]:
     return out
 
 
-def _published(ledger: Path, output: Path) -> dict[str, str]:
+def publication_record() -> tuple[Path, Path | None, Path | None]:
+    """「发没发过」这一刻读哪儿：`(发布账本目录, 产物根目录或 None, 账本之前那批的冻结表或 None)`。
+
+    设了 `TENNISLIVE_REEL_LEDGER_DIR`（`tests/conftest.py::_empty_reel_ledger`，
+    和 `reel_facts.REEL_LEDGER_DIR` 认的是同一个变量）＝**整份发布记录钉成那个目录**：
+    账本读它，产物目录里的 `pushed.json` 和冻结表都不再认——那是同一份记录的老出处，
+    只钉账本不钉它们，推送落一个 `pushed.json` 照样能把测试打红。生产上没人设它。
+    每次调用现读环境变量（不在 import 时读）：`build_match_reel.py render --dry-run`
+    子进程继承得到，进程内 `monkeypatch.setenv` 也立刻生效。
+    """
+    pinned = os.environ.get("TENNISLIVE_REEL_LEDGER_DIR")
+    if pinned:
+        return Path(pinned), None, None
+    return LEDGER, OUTPUT, PRE_LEDGER
+
+
+def _record(ledger: Path | None, output: Path | None,
+            pre_ledger: Path | None = None) -> tuple[Path, Path | None, Path | None]:
+    """显式传进来的出处优先；没传的那几个按 `publication_record()` 现取。"""
+    default_ledger, default_output, default_pre = publication_record()
+    return (default_ledger if ledger is None else Path(ledger),
+            default_output if output is None else Path(output),
+            default_pre if pre_ledger is None else Path(pre_ledger))
+
+
+def pre_ledger_pushes(path: Path | None = None) -> dict[str, str]:
+    """冻结表里的 `{slug: 第一次发出去的时刻}`；表不在（finalize-reel 那种不带 `data/`
+    的稀疏检出）就当空表——和存量豁免表一个口径，不许抛。"""
+    path = PRE_LEDGER if path is None else Path(path)
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    pushes = doc.get("pushes") if isinstance(doc, dict) else None
+    return {str(k): str(v) for k, v in pushes.items()} if isinstance(pushes, dict) else {}
+
+
+def _published(ledger: Path, output: Path | None,
+               pre_ledger: Path | None = None) -> dict[str, str]:
     """每条已经发出去的片子 → **第一次**发出去的时刻（ISO 字符串，UTC）。
 
-    两个出处取早的那个：发布账本（`data/reel_publish_ledger/`，2026-08-24 起才有）
-    和产物目录里的 `pushed.json`（更早的那批只有它）。只认账本不认 `pushed.json`
-    的话，08-24 之前发的片子全是「没发过」——量出来的第一个误报就是这个形状：
-    wangxiyu-keys（08-20 发）被判成「借了 asiad-2026-women-draw（09-27 发）的图」，
-    方向整个反了。⚠️ runner 上不检出 `output/`，那边只剩账本——少认几条老片子；
-    唯一会因此多报的形状（原主查不到发没发过、借图的一方已认领）在
-    `cover_reuse_problem` 里跳过，判据 `test_runner视角下封面复用那道闸和本地一样零误报`。
-    不缓存：全库一遍 30 毫秒，缓存了反而会在账本变了之后读旧的。
+    三个出处取早的那个：发布账本（`data/reel_publish_ledger/`，2026-08-24 起才有）、
+    产物目录里的 `pushed.json`（更早的那批只有它），以及那批冻成的表（`PRE_LEDGER`，
+    runner 上没有 `output/` 时靠它）。只认账本不认老出处的话，08-24 之前发的片子全是
+    「没发过」——量出来的第一个误报就是这个形状：wangxiyu-keys（08-20 发）被判成
+    「借了 asiad-2026-women-draw（09-27 发）的图」，方向整个反了。
+    不缓存：全库一遍 30 毫秒，缓存了反而会在账本变了之后读旧的；要连着判很多条的
+    （全库扫描），自己算一次、经 `cover_reuse_finding(published=…)` 传进去。
     """
     first: dict[str, str] = {}
 
@@ -305,17 +353,22 @@ def _published(ledger: Path, output: Path) -> dict[str, str]:
         for attempt in doc.get("attempts") or []:
             if isinstance(attempt, dict) and attempt.get("status") == "sent":
                 note(path.stem, attempt.get("at"))
-    for path in Path(output).glob("*/reel/*/pushed.json") if Path(output).is_dir() else ():
+    pushed = Path(output) if output is not None else None
+    for path in pushed.glob("*/reel/*/pushed.json") if pushed and pushed.is_dir() else ():
         try:
             note(path.parent.name, json.loads(path.read_text(encoding="utf-8")).get("at"))
         except (ValueError, AttributeError):
             continue
+    if pre_ledger is not None:
+        for slug, at in pre_ledger_pushes(pre_ledger).items():
+            note(slug, at)
     return first
 
 
-def first_sent(slug: str, *, ledger: Path = LEDGER, output: Path = OUTPUT) -> str | None:
+def first_sent(slug: str, *, ledger: Path | None = None, output: Path | None = None,
+               pre_ledger: Path | None = None) -> str | None:
     """这条片子**第一次**发出去的时刻（没发过就是 None）。"""
-    return _published(Path(ledger), Path(output)).get(slug)
+    return _published(*_record(ledger, output, pre_ledger)).get(slug)
 
 
 def _sha(path: Path) -> str:
@@ -329,18 +382,21 @@ def _sha_cached(path: Path, size: int, mtime_ns: int) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def cover_reuse_problem(spec: dict, *, specs: Path = SPECS, ledger: Path = LEDGER,
-                        root: Path = ROOT, output: Path = OUTPUT,
+def cover_reuse_problem(spec: dict, *, specs: Path | None = None,
+                        ledger: Path | None = None, root: Path = ROOT,
+                        output: Path | None = None, pre_ledger: Path | None = None,
                         legacy_set: frozenset[str] | None = None) -> str | None:
     """见 `cover_reuse_finding`；只要文案，不分栏目。"""
     found = cover_reuse_finding(spec, specs=specs, ledger=ledger, root=root,
-                                output=output, legacy_set=legacy_set)
+                                output=output, pre_ledger=pre_ledger, legacy_set=legacy_set)
     return found[0] if found else None
 
 
-def cover_reuse_finding(spec: dict, *, specs: Path = SPECS, ledger: Path = LEDGER,
-                        root: Path = ROOT, output: Path = OUTPUT,
+def cover_reuse_finding(spec: dict, *, specs: Path | None = None,
+                        ledger: Path | None = None, root: Path = ROOT,
+                        output: Path | None = None, pre_ledger: Path | None = None,
                         legacy_set: frozenset[str] | None = None,
+                        published: dict[str, str] | None = None,
                         ) -> tuple[str, bool] | None:
     """封面照片和另一条**已经发出去**的片子是同一张（按路径，或者按内容哈希）。
 
@@ -348,6 +404,8 @@ def cover_reuse_finding(spec: dict, *, specs: Path = SPECS, ledger: Path = LEDGE
     `wang-garland-singapore-2026-r2` 已经推过的（9f1169aa → 81ec82b4，重渲重推）。
     判据只认**比我先发出去**的那一条——我先发、别人后借我的图，不是我的错；
     显式的重做（`revision_of` 互指）也不算。比内容先比文件大小，大小一样才算哈希。
+    `published` 给了就不再读发布记录（全库扫描算一次传进来；`ledger`／`output`／
+    `pre_ledger` 这时不起作用）。
     """
     slug = str(spec.get("slug") or "")
     claimed = legacy("cover_reuse") if legacy_set is None else legacy_set
@@ -359,9 +417,14 @@ def cover_reuse_finding(spec: dict, *, specs: Path = SPECS, ledger: Path = LEDGE
     by_size: dict[int, list[Path]] = {}
     for path in mine.values():
         by_size.setdefault(path.stat().st_size, []).append(path)
-    published = _published(Path(ledger), Path(output))
+    if published is None:
+        published = _published(*_record(ledger, output, pre_ledger))
     my_sent = published.get(slug)
-    for other_path in sorted(Path(specs).glob("*.json")):
+    mine_col = str((spec.get("cover") or {}).get("eyebrow") or "")
+    # 跨栏目的命中先记着、接着往下找：按文件名排在前面的恰好是一条跨栏目的，不许把
+    # 后面那条同栏目的盖掉（a-story 先发、b-reel 后发、我是赛场之上——该硬红的被降成只报）
+    cross: tuple[str, bool] | None = None
+    for other_path in sorted(Path(SPECS if specs is None else specs).glob("*.json")):
         other_slug = other_path.stem
         their_sent = published.get(other_slug)
         if other_slug == slug or not their_sent or (my_sent and my_sent <= their_sent):
@@ -374,10 +437,9 @@ def cover_reuse_finding(spec: dict, *, specs: Path = SPECS, ledger: Path = LEDGE
             continue
         if not my_sent and (other_slug in claimed
                             or str(other.get("_cover_reuse_why") or "").strip()):
-            # 我查不到自己发没发过（runner 不检出 output/，08-24 之前发的片子只在
-            # pushed.json 里），而它自己认领了「借图」——借的多半就是我这张。
-            # 不跳过的话，runner 上重渲 wangxiyu-keys（08-20 发）会被
-            # asiad-2026-women-draw（09-27 发、已认领）反咬一口，本地却是绿的。
+            # 我查不到自己发没发过（哪条流水线既没 output/ 也没冻结表），而它自己认领了
+            # 「借图」——借的多半就是我这张。不跳过的话，重渲 wangxiyu-keys（08-20 发）
+            # 会被 asiad-2026-women-draw（09-27 发、已认领）反咬一口。
             continue
         for rel in _cover_photos(other):
             path = root / rel
@@ -390,14 +452,17 @@ def cover_reuse_finding(spec: dict, *, specs: Path = SPECS, ledger: Path = LEDGE
                 # 第二个值＝同一栏目。CLAUDE.md「同一件事，不同栏目各讲一次不算重复」：
                 # 存量 7 次命中里 6 次是网球有故事借同一个人的赛场之上封面，唯一的证据
                 # （wang-prozorova「换一张封面吧」）是同栏目同站——跨栏目只报不拦。
-                mine_col = str((spec.get("cover") or {}).get("eyebrow") or "")
                 their_col = str((other.get("cover") or {}).get("eyebrow") or "")
-                return (f"封面照片 {rel} 已经在 `{other_slug}` 上发出去过（{their_sent}）——"
-                        "读者刷到的是同一张图。换一张这一场自己的图（官方图库／抽帧，见 "
-                        "tennis-cover-photos）；真要沿用（同一个人的系列、按要求重做）就在 "
-                        "spec 顶层写 `_cover_reuse_why` 说清为什么。",
-                        mine_col == their_col)
-    return None
+                found = (f"封面照片 {rel} 已经在 `{other_slug}` 上发出去过（{their_sent}）——"
+                         "读者刷到的是同一张图。换一张这一场自己的图（官方图库／抽帧，见 "
+                         "tennis-cover-photos）；真要沿用（同一个人的系列、按要求重做）就在 "
+                         "spec 顶层写 `_cover_reuse_why` 说清为什么。",
+                         mine_col == their_col)
+                if found[1]:
+                    return found
+                cross = cross or found
+                break
+    return cross
 
 
 # ─────────────────────────────────────────────────────── ⑥ 字幕里的数字 ──
@@ -512,8 +577,16 @@ def push_copy_check(copy_path: Path, *, date: str | None = None) -> tuple[str, s
 
 # ──────────────────────────────────────────────────────────────── 汇总 ──
 
-def spec_asset_problems(spec: dict) -> tuple[list[str], list[str]]:
-    """`validate_spec` 只接这一刀：返回 `(硬的, 只报的)`。"""
+def spec_asset_problems(spec: dict, *, at_render: bool = True,
+                        ) -> tuple[list[str], list[str]]:
+    """`validate_spec` 只接这一刀：返回 `(硬的, 只报的)`。
+
+    `at_render=False` 是 `validate_spec(allow_published_legacy=True)` 那个全仓离线盘点口径：
+    **不问「发没发过」**——封面复用④整道跳过。它读发布账本和 `pushed.json`，而一次推送
+    落账就能改它的判词（一条还没发的 spec 撞上刚发出去的同一张图）：全库扫描读它，
+    auto-push 那个账本提交在 main 上跑 CI 就红——和 `reel_facts.time_sensitive_gate`
+    的 `at_render` 是同一个理由。④ 在全库那一层由 `tests/test_reel_asset_gates.py` 自己兜。
+    """
     hard: list[str] = []
     soft: list[str] = []
     duration = duration_problem(spec)
@@ -523,7 +596,7 @@ def spec_asset_problems(spec: dict) -> tuple[list[str], list[str]]:
     if stats:
         hard.append(stats)
     hard += image_problems(spec)
-    reuse = cover_reuse_finding(spec)
+    reuse = cover_reuse_finding(spec) if at_render else None
     judged = numeral_display_problems(spec)
     if reuse and reuse[1]:
         judged = [reuse[0]] + judged

@@ -32,6 +32,7 @@ HOSTS = {
     "pipeline-health.yml": ["orchestrate.yml", "reel-auto-ready.yml"],
     "oncourt-interviews.yml": ["orchestrate.yml", "reel-auto-ready.yml"],
     "interview-auto-render.yml": ["orchestrate.yml", "reel-auto-ready.yml", "pipeline-health.yml"],
+    "reel-cover-upgrade.yml": ["orchestrate.yml", "reel-auto-ready.yml"],
 }
 
 _STUB = """#!/usr/bin/env bash

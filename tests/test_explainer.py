@@ -956,11 +956,18 @@ def test_片头片尾各留一段静音(tmp_path, monkeypatch):
     graph = cmd[cmd.index("-filter_complex") + 1]
     assert "adelay=600:all=1" in graph  # 只有第一段被往后推
     assert graph.count("adelay") == 1
-    assert "apad=pad_dur=1.500" in graph  # 只有最后一段挂了静音
-    assert graph.count("apad") == 1
-    # 中间那段没有静音，但仍然要有自己的标签，否则 concat 接不上。
-    assert "[3:a]anull[a1]" in graph
-    assert "[v0][a0][v1][a1][v2][a2]concat=n=3" in graph
+    # 每一段声音都锁成它那一屏画面的原长（2026-09-27 起画面溶解着接，声音单独
+    # concat，差多少就累积多少）：第一段 = 10 + 片头 0.6，最后一段 = 10 + 片尾 1.5
+    # ——片尾那段安静就是 whole_dur 补出来的。
+    assert "[1:a]adelay=600:all=1,apad=whole_dur=10.600,atrim=end=10.600[a0]" in graph
+    assert "[5:a]apad=whole_dur=11.500,atrim=end=11.500[a2]" in graph
+    # 中间那段没有静音（锁的就是它自己的 10 秒），但仍然要有自己的标签，否则 concat 接不上。
+    assert "[3:a]apad=whole_dur=10.000,atrim=end=10.000[a1]" in graph
+    # 2026-09-27 起画面溶解着接（Q4），声音仍然按段 concat——每一屏的起点不变：
+    # 第 1 个接缝落在 10.6s、第 2 个落在 20.6s，正是硬切时的那两个时刻。
+    assert "[a0][a1][a2]concat=n=3:v=0:a=1[outa]" in graph
+    assert "[v0][v1]xfade=transition=fade:duration=0.18:offset=10.600[vx1]" in graph
+    assert "[vx1][v2]xfade=transition=fade:duration=0.18:offset=20.600[outv]" in graph
 
 
 def test_只有一屏时片头片尾都加在同一段上(tmp_path, monkeypatch):
@@ -987,7 +994,7 @@ def test_只有一屏时片头片尾都加在同一段上(tmp_path, monkeypatch)
     cmd = calls[-1]
     assert cmd[cmd.index("-t") + 1] == "6.100"  # 4 + 0.6 + 1.5
     graph = cmd[cmd.index("-filter_complex") + 1]
-    assert "adelay=600:all=1,apad=pad_dur=1.500" in graph
+    assert "adelay=600:all=1,apad=whole_dur=6.100,atrim=end=6.100" in graph
 
 
 def test_解说片的片尾要接进concat(tmp_path, monkeypatch):
@@ -1027,9 +1034,12 @@ def test_解说片的片尾要接进concat(tmp_path, monkeypatch):
     # 幻灯片占 0..3（两屏各一图一音），片尾是第 4 个输入
     assert "[4:v]scale=" in graph, f"片尾没接进滤镜图：{graph}"
     assert "[4:a]aresample" in graph, "片尾的音轨没接上——成片最后会没声音"
-    # 片尾占 concat 的最后一格
-    assert "[v0][a0][v1][a1][v2][a2]concat=n=3" in graph, (
+    # 片尾占 concat 的最后一格（声音），画面上是最后一个溶解——进片尾那一刀
+    # 也溶解（账号所有者 2026-09-27 Q4「含进片尾」）
+    assert "[a0][a1][a2]concat=n=3:v=0:a=1[outa]" in graph, (
         f"片尾没排在 concat 的最后一格：{graph}")
+    assert "[vx1][v2]xfade=transition=fade:duration=0.18:offset=10.100[outv]" in graph, (
+        f"末屏进片尾那一刀不是溶解：{graph}")
     # **不给片尾排字幕**：那一页上印着口播说的每个字
     outro_chain = [c for c in graph.split(";") if c.startswith("[4:v]")][0]
     assert "subtitles" not in outro_chain, (
@@ -1042,6 +1052,7 @@ def test_解说片的片尾要接进concat(tmp_path, monkeypatch):
                                captions=["第一屏", "第二屏"], runner=runner)
     graph2 = calls[-1][calls[-1].index("-filter_complex") + 1]
     assert "concat=n=2" in graph2 and "[4:v]" not in graph2
+    assert "[v0][v1]xfade=" in graph2 and "[v1]null" not in graph2
 
 
 def test_解说片接上片尾之后成片真的变长(tmp_path):

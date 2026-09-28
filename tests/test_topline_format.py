@@ -49,8 +49,18 @@ def test_自动草稿按赛事名拼出这个格式():
     assert rf.tour_topline(2026, "US Open", "第一轮") is None
 
 
-def _specs(kind: str):
-    folder = ROOT / "specs" / ("reels" if kind == "reels" else "interviews")
+def _specs(kind: str, folder: Path | None = None):
+    """(slug, 顶栏赛事行, 认领, 是不是自动链刚提交还没核没发的采访 spec)。
+
+    ⚠️ 采访那一格**连草稿一起扫**（`*.json` 也配得上 `*.draft.json`）：
+    `oncourt-interviews` 把草稿直推 main，`event` 是「<年> <赛事中文名>」、没有级别
+    和轮次，29 站 2026 赛程里 18 站过不了这道格式——草稿和自动转正的正式 spec
+    都盖着 `auto_pending`，这里只报；拦它出片的是 `build_interview_clip.main()`
+    开头的 `check_topline_format`（同一个 `tour_topline_problem`）。
+    """
+    folder = folder or ROOT / "specs" / ("reels" if kind == "reels" else "interviews")
+    if kind != "reels":
+        import build_interview_request as req  # noqa: PLC0415
     for path in sorted(folder.glob("*.json")):
         spec = json.loads(path.read_text(encoding="utf-8"))
         slug = spec.get("slug") or path.stem
@@ -58,25 +68,62 @@ def _specs(kind: str):
             if str((spec.get("cover") or {}).get("eyebrow", "")).strip() != "赛场之上":
                 continue
             line = (spec.get("topbar") or {}).get("line1")
+            auto = False   # 赛场之上的自动 spec 在渲染时也只报（`_topbar_lines`），没有闸替它拦，照判
         else:
             line = spec.get("event")
+            auto = req.unverified_auto_spec(spec, slug)
         if line:
-            yield slug, line, spec.get("_topbar_format_why", "")
+            yield slug, line, spec.get("_topbar_format_why", ""), auto
+
+
+def _topline_findings(kind: str, folder: Path | None = None) -> list[str]:
+    legacy = rf.legacy_topline(kind)
+    bad, auto = [], {}
+    for slug, line, claim, pending in _specs(kind, folder):
+        if slug in legacy or not rf.tour_topline_problem(line, claim):
+            continue
+        if pending:
+            auto[slug] = line
+        else:
+            bad.append(f"{slug}: {line}")
+    if auto:
+        import build_interview_request as req  # noqa: PLC0415
+        req.report_unverified_auto("新片子的顶栏赛事行都合格式", auto)
+    return bad
 
 
 @pytest.mark.parametrize("kind", ["reels", "interviews"])
 def test_新片子的顶栏赛事行都合格式(kind):
-    legacy = rf.legacy_topline(kind)
-    bad = [f"{slug}: {line}" for slug, line, claim in _specs(kind)
-           if slug not in legacy and rf.tour_topline_problem(line, claim)]
+    bad = _topline_findings(kind)
     assert not bad, "这些顶栏赛事行不合「2026 ATP250 成都 首轮」的格式：\n  " + "\n  ".join(bad)
+
+
+def test_采访草稿直推main的赛事行只报_销章就红_渲染入口照拦(tmp_path):
+    """`draft_interview_spec` 写的 `event` 是「2026 中国网球公开赛」这种：没有级别和轮次。
+    草稿由 `oncourt-interviews` 直推 main（不触发 CI）——这条要是照判，它就红在
+    下一个无关的人工合并上。所以：盖着章、没核没发的只报；销了章的照红；
+    渲染入口对同一行照拦。"""
+    import build_interview_clip as bic
+    import build_interview_request as req
+
+    draft = {"slug": "zz-auto-oncourt-sim", "_draft": True, "event": "2026 中国网球公开赛",
+             "transcript_verified": False, "transcript_verification": "auto_pending"}
+    (tmp_path / "zz-auto-oncourt-sim.draft.json").write_text(
+        json.dumps(draft, ensure_ascii=False), encoding="utf-8")
+    with pytest.warns(req.UnverifiedAutoSpecFinding, match="zz-auto-oncourt-sim"):
+        assert _topline_findings("interviews", tmp_path) == []
+    (tmp_path / "zz-auto-oncourt-sim.draft.json").write_text(json.dumps(
+        dict(draft, transcript_verified=True), ensure_ascii=False), encoding="utf-8")
+    assert _topline_findings("interviews", tmp_path) == ["zz-auto-oncourt-sim: 2026 中国网球公开赛"]
+    with pytest.raises(SystemExit, match="ATP250 成都 首轮"):
+        bic.check_topline_format(draft)
 
 
 @pytest.mark.parametrize("kind", ["reels", "interviews"])
 def test_豁免表只许减不许加_名字要真的存在且真的还不合格式(kind):
     legacy = rf.legacy_topline(kind)
     assert legacy, "豁免表读不到——路径或键名写错了，整条判据会静静失效"
-    seen = {slug: (line, claim) for slug, line, claim in _specs(kind)}
+    seen = {slug: (line, claim) for slug, line, claim, _auto in _specs(kind)}
     missing = sorted(s for s in legacy if s not in seen)
     fixed = sorted(s for s in legacy
                    if s in seen and not rf.tour_topline_problem(*seen[s]))

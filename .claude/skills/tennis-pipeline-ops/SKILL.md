@@ -3733,6 +3733,79 @@ dry-run 的判据、判据的反向验证，还要把四条源片重 probe 一�
 **probe 那一头按 `−60 − 20log10(BED_LOUD)` ≈ −57 dB 再量一份「偏轻区间」**，
 让 dry-run 拿它和上面那个「没人说话」的区间求交集。**记在这儿，别忘了。**
 
+⭐⭐ **2026-09-27 补上了，形状比「再量一份 −57 dB 区间」更直接**（`tools/probe_audio.py`）：
+2026-09-06 ~ 09-25 这一类渲后红了 **20 趟、162.8 runner 分钟**（失败 run 头号）。
+probe 那一趟和 `silencedetect` **同一趟 ffmpeg** 顺手解出 QC 同口径（8 kHz 单声道）的
+**逐 0.05 秒 RMS**，存进 `probe.json` 的 `audio_levels`（只给可能落进死秒的块留数，
+其余记「响」按游程压）；`--dry-run` 按封面长度、每段成片起点、溶解底料、这一段的现场声
+增益（`BED_LOUD`×音床，`_seg_bed_gain`）把成片每一秒映射回源片、**按上界**算能量，
+交给 QC 自己的 `dead_seconds`。两道边界：
+
+| | 处置 |
+|---|---|
+| 无旁白段（冷开场、quote 段）实测够得着 | **硬**；看过要这么剪就在那一段写 `_digital_silence_why` |
+| 旁白尾巴（按离线估说完之后） | **只报**（R7／f7b2501），分「按最长估也盖不住＝必红」和「大概率」两档 |
+| 老 probe 没有 `audio_levels`、慢放段、mute 段、`spec.music` | 只报一句「这一层没查」 |
+
+⚠️ **量出来它只接得住 20 趟里的 4 趟**（noskova-boulter、zhang-cocciaretto、
+zheng-paolini 首趟、mensik-tien——死秒落在无旁白段；最后那条 −60.6 dB 夹在 −54 的两秒
+中间，上界多半漏给 QC）。**其余 15 趟的死秒全在旁白说完之后**，按 R7 只报——但原来
+一个字都不报，现在报得出「第 N 段旁白一停，成片第 X 秒 ≈ 源 a–b，最响一块 −YY dB」。
+老 probe 没有 `audio_levels`，**要重跑一趟 `mode=probe` 这一层才有数**。
+判据 `tests/test_probe_audio.py`（真跑一遍 AAC 分段 → 溶解 → 闪避混音的链）。⚠️ 这句
+「上界、不误报」**只对测过的两份夹具成立**（3 段、14 段），不是对任意成片的保证——它是
+在下面这几条前提都成立时才是上界，render 改了其中任何一条，这层就要跟着改：
+
+⚠️⚠️ **同一天评审抓到的 BLOCKING：成片的现场声会漂，第一版按名义段长算，会误报。**
+`acrossfade` 把每一路现场声接在前一路**解出来的末尾**——只要一个 part 解出来不正好是
+`-t {L+尾巴}` 那么长，第 k 段的现场声就和画面、旁白、字幕错开 δ_k。第一版不算它：评审在
+沙箱的 ffmpeg 6.1 上拿真链复现出「成片第 61 秒上界 −66.7 必红、成片实际 −45.9」。
+
+⚠️⚠️ **δ 往哪边错跟 ffmpeg 版本走，而出片用的不是沙箱那一版**（评审第二轮 BLOCKING：
+按 6.1 的数摆的 14 段夹具在 CI 上自己塌了）。真调 `cut_segment`，源片 25／29.97／50／60 fps
+各 8 刀、两版都量：
+
+| | 解出来比 `-t` | 往哪边累积 |
+|---|---|---|
+| 沙箱 ffmpeg 6.1 | 补满最后一帧 AAC（`-t 5.18` → 5.184s），+2~+19 ms／刀 | **正**，14 段 +0.16~0.2 s |
+| **CI 和 runner 的 BtbN master**（`ensure_ffmpeg`，出片就是它） | **不补**，不截的刀正好是 `-t` | **负**：只剩 `-shortest` 截短（评审的 25 fps 真链三刀各 −20.7／−20.7／−28.7 ms，第 12 段 −70 ms） |
+
+截短两版一样：`-ss` 落在两帧之间画面少一帧，音轨跟着少 1~2 帧 AAC——32 刀里 4 刀
+（25 和 50→25 各 −23.3 ms，60→30 −19.3／−6.0 ms）。所以原来那句「14 段累积 +0.16~0.2 秒、
+现场声晚」**只是 6.1 的事**；生产上现场声是**早**几十毫秒。补法三条，都是量出来的：
+
+| | 量到什么 | 怎么算 |
+|---|---|---|
+| δ_k | 6.1：「补满」公式和真链逐段对到 0.1 ms（画面不截时）；BtbN：0 | `audio_drift` |
+| `-shortest` 截短 | 见上表，两版同一刀同一个数；哪一刀补、哪一刀截 dry-run 看不见 | δ 按**区间** [−(1/fps＋1 帧 AAC), 补满]（`part_padding`），窗口取所有对齐的并集——每个 part 负那头放宽 1/fps＋21 ms、正那头最多 21 ms，十三段之后宽出约 1 秒，后段短静音判不死、漏给 QC（评审在 runner ffmpeg 上复现过一整段全静的后段最后一个死秒漏掉）。**正那头只在 6.1 上兑现**，留着是因为本地 dry-run 跑在 6.1 上 |
+| 音轨晚开始的源片 | 容器里 audio start_time 56ms 的源片，量出来的 PCM 整条错开 56ms（`-ss` 按文件时间轴） | `measure` 加 `aresample=first_pts=0` |
+
+`ALIGN_SLACK`（窗口两头各放宽 0.05s）现在只管「编码器抹开的能量」：成片多过三代 AAC，
+−2 dB 的响→静边沿后面十几毫秒，量源片时格子后面那块是干净的、成片里却沾进来——归零就把
+上界打穿 0.6~13 dB（6.1 上 14 段夹具的 −2 dB 边沿；BtbN 上 δ 区间正那头从不兑现的余量先把
+边沿盖住了，那一刀在夹具里不红）。⚠️ 14 段夹具的 δ **按量**——平源逐 part 解码，不借公式；
+BtbN 上 δ≈0，「拆 δ」那条自检跳过并 warning 出 ffmpeg 版本——所以 δ 在 CI 上另有两条护着
+（评审第三轮：把 `audio_drift` 换成全零，BtbN 上原来整份测试照样绿）：
+`test_δ区间两头都算进去_不跑ffmpeg` 直接调 `predict_levels`，区间最少／最多两头各压一秒；
+`test_真cut_segment刀刀截短_负漂移真跑一遍混音链` 用真 `cut_segment` 造出生产上那种负漂移——
+25 fps、帧上起切、`-t` 落在「帧格 ＋0.01s」的刀两版都按画面尾巴截到整帧 AAC（4.69 → 4.672、
+4.73 → 4.7147，同刀同数；落在 ＋0／＋0.02／＋0.03 的不截），九刀累积约 −0.24 s，拆掉 δ 或只拆
+负那头都在 BtbN 上误报。另外两条同一轮的 nit：**片尾关掉、一句旁白都
+没有**时 render 走不闪避的分支，现场声不乘 `BED_LOUD`（`_mix_ducks`，按 0.72 算会估轻 2.85 dB
+误报）；`measure` 按块流式读 PCM（仓库里最长那条 8678 秒的源片整条读进内存要顶到约 1.1 GB）。
+
+⭐ 同一轮顺手补的另一类：**多源片子的几何红 7 趟（38.9 分钟）**，runner 的 dry-run 全是
+「一份 probe.json 都没认领上」——4 趟的 probe 早就落了库，只是在别的 slug 目录下
+（`hsieh-chan-uso3`、`proz-mia25`、`quiet-src-*`）。`tools/probe_sources.py`：工作流按
+URL 把 probe.json 落盘（部分克隆一趟批量 fetch，实测 2 秒）；dry-run 拿 probe 的宽高帧率跑
+render 里**同一个** `check_sources_match`（硬，同一句报错）；**新的手写 spec 每条源都要能
+认领到 probe**（硬，`_no_probe_why` 认领，存量挂 `data/legacy_no_probe_sources.json`）。
+⚠️ 覆盖这道**只在 `mode=render` 那一趟硬**（工作流传 `REEL_DRY_RUN_FOR`）：cover／narration
+两趟共用 dry-run 那一步却用不到 probe，时效第一、封面排最前，一条还没 probe 的源不许挡住
+出封面。工作流按 URL 取 probe.json 失败了（`materialize` 现在取不完整就退出码 1）也降成只报
+（`REEL_PROBES_MATERIALIZE_FAILED`）——那一趟「认领不到」可能只是没拉回来。落盘那一步要排在
+**所有** `git sparse-checkout add` 之后：add 会把稀疏范围外、没被跟踪修改的落盘文件清掉。
+
 #### ⭐⭐ 上面那句「下一步」2026-08-27 做掉了：render 红了判据自动回喂，修一轮再自渲
 
 耗时审计定案之后账号所有者一句「那帮我处理吧」。链路本身每一跳早就是自触发的
@@ -4533,3 +4606,166 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
 ⚠️ 判「是不是手动」**先看 event**：schedule run 的 actor 是最后改 cron 的人（实测 `reel-auto-ready`
 36352155523 是 `robertyang87`）。run 标题里没有派发者标记，读不出来。
 ⚠️ 老标题 run 的取代按 `updated_at` 排：晚 2 秒开、先跑完的绿证明不了「红了之后好了」。
+
+## ⭐⭐ 2026-09-27：自动链直接提交到 main 的草稿 spec 不许把 main 打红——全库测试对它只报，拦它的是渲染闸
+
+**来路**：17:33Z `interview-auto-render` 把 `laver-cup-2026-trophy-ceremony` 的自动正式 spec
+（01684ef0，`zh` 是 DeepSeek 初译，11 行超 952px）直推 main。**GITHUB_TOKEN 推的提交不触发
+ci.yml**，于是它不红在自己身上：`test_字号涨了不许撑破已有的行` 红在 2 分钟后一个无关的人工合并
+（#1127，run 36337538392）上，再把所有开着的 PR（#1112 …）一起打红，38 分钟后 #1130 手修才绿。
+**而那条片子早被渲染闸拦下了**（run 36337385713 停在 `write_ass` →「中文字幕过不了」）——全库测试
+只是把同一个缺陷在 main 上重复报了一遍。9/20~9/27 的六次「自动生成赛后开麦正式 spec」提交**六次全红**
+（main 四次、PR 两次），**六次渲染闸都先拦下了**。
+
+**判据只有一份**：`build_interview_request.unverified_auto_spec(spec, slug)`——
+章是 `transcript_verification == "auto_pending"`（三个自动写手都盖、**没有代码会改掉它**，人工修
+spec 也不改），销章看 `_protected`：人核过（`transcript_verified` / `_verified_clean`）或已推送
+——**发布账本**（`data/interview_publish_ledger/<slug>.json` 里任何一次
+`sending/accepted/delivered/sent/uncertain`，集合是 `publication_ledger.INTERVIEW_PUBLISHED`，
+和 `wants_auto_push` 挡重发共用一份）或老的 `pushed.json` 标记，稀疏检出看不到就查 git index。
+**草稿（`*.draft.json`）也算**。只报的出口是
+`report_unverified_auto`：印出来 ＋ 挂 `UnverifiedAutoSpecFinding` warning（CI 的 warnings 汇总里看得见）。
+
+⚠️ **「已推送」只认 `pushed.json` 是第一版的错**（评审 2026-09-27 抓到）：
+`nishikori-sakamoto-us-open-2026-q3-farewell` 账本 `sent`（2026-08-29 06:53Z，run 33239487051）、
+账号所有者手改过（7c6110dd2），**`pushed.json` 从来没有过**——于是它被当成「自动链还没核没发」，
+这张表里每一条全库测试对它都只报；同一个盲区早在 8/29 就让 `is_pending` 放行了一次重建
+（519816362 给这条 `opening.why` 写着「按账号所有者明确要求不补冷开场」的片子挂上了 `lead_in`）。
+`_protected` 现在读账本，两处一起堵上。
+⚠️ **读账本的代价：只把 `SPECS` / `OUTDIR` 指到 tmp_path 的测试会静静读到真账本**（账本跟着 `ROOT` 走）。
+合 main 时撞上过：`test_人工请求的_claims跟进正式spec_没认领在build那一刻就红` 拿真的已发 slug 走 `_build_one`，
+读到 `accepted`，红在「已确认版本受保护」上。拿真 slug 走 `build_interview_request` 的测试用
+`@pytest.mark.usefixtures("_empty_interview_ledger")`（`publication_ledger.INTERVIEW_LEDGER_ENV`）；
+**不做成 autouse**——全库扫描要读真账本才认得出锦织圭那条推过。
+
+| 全库测试（只对未销章的自动 spec 只报） | 拦同一个缺陷的渲染闸 |
+|---|---|
+| `test_interview_clip::test_字号涨了不许撑破已有的行`、`test_interview_visual::test_字幕渲染字号换了一个行都不许多`（③） | `write_ass` → `zh_problems`；片头片尾字幕 `check_lead_in` / `check_trail_in` |
+| `test_interview_clip::test_新的采访片必须有解读卡而且引的是他真说过的话` | `render()` 第一行 `check_takeaway` |
+| `test_interview_clip::test_不需要跨视频片头时check_lead_in是空操作` | `main()` 开头 `check_lead_in` |
+| `test_interview_visual::test_封面重点词写错了在spec闸就红_不等出封面`（全库那一圈） | `main()` 开头 `check_cover_hook` |
+| `test_topline_format::test_新片子的顶栏赛事行都合格式[interviews]`（连草稿：`oncourt` 草稿的 `event` 是「2026 中国网球公开赛」） | `main()` 开头 `check_topline_format` |
+| `test_interview_clip::test_新的采访片必须认领怎么开头` | `main()` 开头 `check_opening`（`promote_interview_draft` 只给三种核验方式补 `opening`） |
+| `test_interview_clip::test_文案不许再提中英双语字幕` | **这次新装**：`main()` 的 `check_copy_bilingual`（式子和 78 个文件的豁免表搬进 `build_interview_clip`，测试和闸读同一份）；`.xhs.txt` 不在 QC 哈希链里，所以**推送闸 `wants_auto_push` 再查一次**（渲完到推之间手改正文；拦下时打 `::error::`，不混进一串 `[跳过]`） |
+| `test_interview_clip::test_TennisTV的源片必须真的把台标挪出窗口` | **这次新装**：`main()` 的 `check_tennistv_logo`；`promote_interview_draft` 转正 Tennis TV 草稿时按 `TENNISTV_CROP_SHIFT`（−0.06，台标左沿推出来的）补上，自动链不再停在这道闸上 |
+
+⚠️ **没有渲染闸的照判，不许拿这个判据当通用豁免**：`test_explainer::test_人名要以译名表为准`
+（「勒纳·田」「帕特里克」那两次）渲染一个字都不查，对自动 spec 照旧判红——要让它也只报，得先把
+近似串那套（`_ON_PURPOSE` / `_KNOWN_TYPOS` / `_near_misses`…）从测试里搬进工具、接进 `main()`。
+同一个形状、**评审量出来还没堵的另外三条**（一条盖章的合成 spec 当场红三条）：
+`test_interview_clip::test_轮次写分数式不写N强`、`test_spec_wording::test_文案里不许挂来源注脚`、
+`test_match_reel::test_接发球局不许说丢`——`build_interview_request` / `push_reel --stage check` /
+`build_interview_clip.main()` / `wants_auto_push` 一个都不查（`check_interview_copy_wording` 只在
+`promote_interview_draft` 和 `taste_preflight` 里跑，而且不扫 `zh`）。**自动链还能经由这四条把 main 打红**；
+堵法是同一个：先在 `main()` 装同一个判据，再让测试对自动 spec 只报。
+⚠️ 其中「N 强」那条**草稿转正那条路堵上了一半**（评审 2026-09-27：main 上真草稿
+`bonzi-winston-salem-2026-r` 的 DeepSeek 译文「大概是八强左右」，转正 `check_interview_copy_wording`
+返回空、全库测试红）：`promote_all` 按全库测试同一份面（`spec_wording.non_annotation_strings`，**含 `zh`**）
+跑 `strength_round_hits`，命中就留草稿。**人工请求那条路（`build_interview_request` 直接写正式 spec）
+仍然不查**——译文命中时是让 build 红、还是标 `manual_review_required`，没替账号所有者定。
+⚠️ **这些「照判」拦不住出片，只守 main 的绿**：GITHUB_TOKEN 推的提交不触发 ci.yml，自动链提交完
+渲染已经派出去了，全库测试是之后才跑的。所以「照判」的意思是「这条缺陷只有它在查，红给下一个人工
+PR 看」，不是「它挡在出片前面」。
+⚠️ **「赛场之上」不在这张表里**：它的自动 spec（`_production.status == ready_for_render`）在
+`validate_spec` 里好几道闸本来就**只报不拦**，渲染替它拦不住，全库测试是唯一查它的判据，照判
+（同上：它不挡出片；而钩子那道 `promote_reel_draft` 写盘前就跑 `validate_spec`，红的钩子进不了 main）。
+⚠️ **还有一段缝判据认不出**：自动 spec 被人手修过、但还没推（#1130 手修拉沃尔杯那条，ba28735dc 到推送
+约 19 分钟）。手修不改章，这段时间里对手修的回归全库测试也只报——渲染闸照拦，只是 PR 上那一盏绿
+不代表这几条判据查过它。
+⚠️ 豁免表照旧**只许减不许加**；新加一条全库判据时先问：**渲染入口有没有同一个判据在拦？**
+有，才轮得到对自动 spec 只报；没有，先把闸装上。
+
+判据 `test_自动链刚提交的采访spec只报_销章就红_渲染闸照拦`（01684ef0 那一行原文：盖章只报、
+销章就红、`write_ass` 照拦）、`test_自动spec的判据_章在而且没核没发才算`（含主语：main 上盖章的
+17 条正式 spec **17 条全推过**——账本里发过的每一条都必须认成销章，锦织圭那条点名；门槛 ≥10）、
+`test_production_speed::test_publish_ledger_protects_unreviewed_spec_without_pushed_marker`（`is_pending`
+不再重建账本里发过的 spec）、`test_auto_push_interview::test_渲完之后手改小红书正文提了字幕规格_推送闸拦住`、
+`test_promote_interview_draft::test_promote给TennisTV草稿补台标那一挪_渲染闸放行`、`test_字幕规格和TennisTV台标原来只在全库测试里_现在渲染入口就拦`、
+`test_topline_format::test_采访草稿直推main的赛事行只报_销章就红_渲染入口照拦`。
+
+⚠️ **批次 4 合并时这张表又长了三行，也堵上了请求那条路**（复审 BLOCKING：在合并树上种两条盖章的
+01684ef0 变体——标题改成「总分只多8分」、`push.score` 反成输家视角——`2 failed`）：
+`test_interview_preflight::test_全库顶栏比分都是赢家视角`（渲染闸 `check_score_orientation`）、
+`test_interview_preflight::test_新的收尾卡都放得下一行`（`check_takeaway`）、
+`test_taste_gates_extra::test_全库已发的spec一条都不红` 的采访那一圈（`check_taste_extra`）——
+三条都是新包加的全库测试，**没走 `unverified_auto_spec` 分流**，现在走了。请求那条路：
+`production_preflight.check_request` 原来只跑 `check_taste`，比分方向和另一半口味闸（总分差、
+赛点同义反复、正文 markdown）要等出片那一趟才拦，而 auto-render 在那之前已经直推 main——现在
+`check_request` 同一份判据当场 `RequestNotReady`（判据 `test_请求预检拦比分输家视角和总分差`；
+扫过全部请求：新拦下的只有**不在待生成名单里**的 `zheng-rybakina-us-open-2026-qf-presser`，
+它请求里还是输家视角「6-3 1-6 4-6」，spec 早改对了——改请求就会让它重新待生成，没动）。
+`promote_interview_draft` 同理：`taste_gates.interview_taste_findings` 硬的那一组（标题和推送标题
+数字两个说法）原来只报、转出去的 spec 永远渲不成，现在留草稿。
+
+⚠️ **J×H 合并改了 H 的承诺**：H 的提交说「请求没过前置检查＝`::warning::`、run 照旧绿」；合进 J 的
+`--failed-list` 之后，**interview-auto-render 每一趟都带这个参数**，`RequestNotReady` 也进失败清单，
+最后一步把整趟标红——一条写错的请求会让**每 10 分钟那一趟都红**，直到有人改请求。这是有意的
+（别的请求照常提交、dispatch，这一条的旧 spec 按清单跳过；红是为了不让它只剩一句被略过的 warning），
+H 那种「warning ＋ 绿」只剩不带清单的手动调法。
+
+## ⭐⭐ 2026-09-27：赛后开麦 dispatch 之前的离线预检、片尾板、拼接清单、推送后修订
+
+**写完或改完一条采访 spec，dispatch 之前先跑一条命令**（秒级、不联网、不下源片）：
+
+    PYTHONPATH=src python tools/interview_preflight.py --slug <slug>
+
+它按出片那一趟**同一份函数**把「只看 spec 就判得出」的闸全过一遍：L0、顶栏赛事行、
+顶栏比分方向、开场、冷开场／片尾那两段、小红书正文在不在、解读卡（含**收尾卡那一句
+一行放得下**）、文案 tag／标题（`push_reel --stage check`），再按仓库里的字幕缓存
+重切一遍行、走 `write_ass` 全套（中英行数、超宽、吊在「的」上、顶栏宽度）。
+`interview-clip.yml` 在装完字体之后、取字幕之前跑同一条；`pick_interview_renders`
+在自动 dispatch 之前跑同一份，红的进「等自动补齐 / 例外复核」、不投。
+退出码 2 是**判不了**（缺 PIL／字体），不是「判过了」。
+
+来路：2026-09-06 起 interview-clip 12 趟红在中文字幕、9 趟红在 tag／标题，全是 spec
+本身的错，却要等 runner 装完依赖、取完字幕（中位 146 秒）才报；收尾卡折行
+（jodar-bublik 48a60760「费 ／ 德勒」、deminaur 617db353「一 ／ 直顶住」）渲完抽帧才看见。
+
+另外三件同一包里落的（判据 `tests/test_interview_preflight.py`）：
+
+| | 在哪儿 | 一句话 |
+|---|---|---|
+| 片尾板／冻帧 | `interview_tail.tail_verdict`，`render()` 下完源片、**编码之前** | 源片最后一张「硬切或黑场淡入之后一直不动」的板，`end` 压进去就红并给出该收到的终点；`end` 越过源片视频流也红（成片会冻住）。认领 `_end_board_ok` / `_frozen_tail_ok`。⚠️ **`end` 是生成器算的默认值（`_end_default` 还等于 `end`）时不红，直接收到算出来的终点**，日志和 `render.json["end_trim"]` 记一笔——自动产的 spec 没人会来改 `end`，红了就是每 70 分钟重投一次；**人给的 `end` 照旧红** |
+| 默认终点 | `interview_tail.default_end` | 自动链没给 `end` 时＝最后一个词的词尾 ＋ 0.8 秒（人手收尾的中位，偏向多留；撞上板由出片那一趟收），不再是源片全长；生成器同时记 `_end_default` |
+| 拼接清单 | `interview_assembly`，`render()` 写进 `render.json["assembly"]`，`check_interview_landed --film` 照 spec 核 | 收尾卡口播没合上（退回静音卡）、品牌片尾渲不出来，原来都是绿着退的 |
+| 推送后修订 | `interview_revision.post_push_edit`，`pick_interview_renders.todo_slugs` | 推送后 24 小时内改了**会进成片的字段**（`interview_revision.FILM_KEYS` 白名单，按 `qc_attestation.spec_content_sha256` 比）＝一次修订，自动重渲重推；过了窗口进等待名单，要重渲写 `_publication_revision`。⚠️ **是白名单不是「去掉 `_` 注解」**：`transcript_verified`／`caption_gaps_ok`／`whisper_model`／`match`／`source_verification`／`push.lead` 这些不进画面，改了不重渲——edge-tts 和 Chromium 不是逐字节确定的，重渲出来指纹一变就是微信上多一条一样的消息。加了会进成片的新字段要同时进白名单（`test_内容指纹白名单盖住出片读的每一个键` 替你记得） |
+
+⚠️ **auto-render 的「没活就早退」探针跑在 runner 的系统 python3 上，没有 PIL**
+（`pick_interview_renders.py --probe`）：不要 PIL 的闸照跑，量宽度那几项（解读卡一行、
+文案、字幕重切、冷开场双语字幕宽度）记成「判不了」，拿**上一趟全量预检同一份输入**记下的
+结论顶上（`VERDICT_CACHE`，actions/cache 带过去；键是判据代码＋spec＋文案＋字幕缓存＋日期
+的指纹）。没有就算待投、交给全量那一趟。原来一律抛，一条卡在量宽度上的红 spec 每 10 分钟
+逼一次全量 job。全库回放：全量 29 秒 → 探针 0.5 秒，待投／等待两份名单逐条一样。
+复审补的四处：**缓存键里的字幕和预检实际读的是同一组**（`interview_preflight.caption_fingerprint`
+和 `_materialize_captions` 同一个分支——工作区有产物格就只认工作区，按 git blob 算法取指纹，
+和 HEAD 一样时键也一样）；`push_reel` 子进程崩出 Traceback 的那种红打 `CRASHED` 标记、**不记进
+缓存**（不然偶发一次崩溃被探针重放到北京日期翻过去）；探针里量宽度撞上缺字体的 **OSError 也算
+判不了**（探针排在 apt 装字体之前）；结论文件按 `sort_keys` 写，**内容有变才另存一份缓存**
+（键仍带 run_id——缓存键一经写入不可覆盖，按内容定键的话 A→B→A 存不进去）。
+⚠️ **探针那条 import 链只许标准库**：`pick_interview_renders` → `build_interview_clip` 顶层
+一行 `from tennislive.video.subtitle_text import …` 就会经 `tennislive/video/__init__.py`
+把 pipeline → research → digest → sources → requests 整串拉进来，探针 import 就崩、
+workflow 退回「Work probe needs rendering dependencies」每 10 分钟一趟全量（合并 main 时
+撞上过，改成函数里 import）。判据 `test_探针的import链只用标准库`（子进程里只放行标准库
+和仓库自己的代码，真跑一遍 `--probe`）。
+
+⚠️ 自动收短的终点「板前 0.2 秒」在板紧贴话尾时会吃字尾（alcaraz-fritz 的板在词尾 ＋0.11 秒）：
+`check_tail` 从 `cap_asr.json3` 量出最后一个真词的词尾给终点托底，但不越过板前最后一帧确定
+不是板的采样；YouTube 自动字幕只有词头（估的）不托底。
+
+⚠️ **收尾卡「一行放得下」量的是 `takeaway_html` 同一组常量**（`TAKEAWAY_PAD_LEFT/RIGHT`、
+`TAKEAWAY_POINT_PX/TRACKING`）。2026-09-27 main 的评审 I2／I3 把卡改成 `keep-all`＋`balance`、
+左边距跟台头收到 70（正文区 860px），合并时 CSS 改成读这组常量——不然闸按 838 量、卡按 860 排，
+正是「写两处必分叉」。`interview_spec_gates.card_lines` 照这套 CSS 排行，全库 104 张卡＋4 条样例
+真渲对过，折点逐字一样，报错里印的就是卡上的折点。⚠️ **「在空格处折成匀称的两行」算不算合格
+是账号所有者还没定的口径**，定之前照旧要求一行。
+
+⚠️ `FROZEN_SLACK`＝0.2 只校准过 1.1~1.7 秒；已发的 0.2~1 秒短冻帧（从 Release 拉回 102 条
+已发正片量出来 2 条）挂在 `data/legacy_interview_gates.json` 的 `frozen_tail_short`，
+**只认量的那一刻的 `end`**，只许减不许加。
+
+⚠️ 片尾板那道闸是拿真产物校过的：已发 101 条采访的正片尾巴里认出 2 条真板
+（`sabalenka-pegula-us-open-2026-sf-interview` 美网板、`ruud-cerundolo-laver-cup-2026-presser`
+拉沃尔杯板，都已推送），发布会（机位锁死、相邻帧差 < 0.5 能连着 9 秒）0 条误认；
+另有 5 条正片最后 1.1~1.7 秒是冻帧（`end` 越过了源片画面）。这 7 条不挂豁免：闸只在重渲
+那一刻才跑，重渲时就该一起收掉。量法和名单在 `tools/interview_tail.py` 的 docstring。

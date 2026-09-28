@@ -524,57 +524,18 @@ def test_钩子复读赛果的豁免表只许减不许加():
 # （少拦一条），不是误伤，方向是安全的那一头。现成的好写法就在同一份 spec 的
 # `push.lead` 里（「此前和佩古拉交手四次全负，最近一次就是一周前华盛顿站
 # 半决赛」——那才是标题）。
-_RESULT_VERB = re.compile(
-    r"(晋级|淘汰|横扫|逆转|击败|险胜|过关|出局|收官|锁定|苦战|拿下|战胜|获胜|胜)"
-)
+# ⚠️ 判据（剥名字和赛果动词）和豁免表的单一出处在 tools/taste_gates_extra.py
+# ——`validate_spec` 也用它，`--dry-run` 0.2 秒就报；这儿只 import，不再各抄一份。
+sys.path.insert(0, str(Path("tools").resolve()))
+import taste_gates_extra as _TG  # noqa: E402
+
+_SUMMARY_LEGACY = _TG.SUMMARY_LEGACY
 
 
 def _summary_offenders():
     """{slug: 推送标题}，只收「剥完名字和赛果动词之后什么都不剩」的。"""
-    out = {}
-    for slug, spec in _specs():
-        cover = spec.get("cover") or {}
-        if cover.get("eyebrow") != "赛场之上":
-            continue
-        summary = str((spec.get("push") or {}).get("summary") or "").strip()
-        if not summary:
-            continue
-        rest = summary
-        names = [str(m.get("name") or "") for m in (cover.get("matchup") or [])]
-        names += [str(cover.get("winner") or ""), str(cover.get("subject") or "")]
-        for name in names:
-            if name.strip():
-                rest = rest.replace(name.strip(), "")
-        rest = _RESULT_VERB.sub("", rest)
-        if not re.sub(r"[，,。、·\s]", "", rest):
-            out[slug] = summary
-    return out
-
-
-_SUMMARY_LEGACY_已推送 = frozenset({
-    # ⚠️ 这条是这道判据落地（#332）的同一天做的，两边并行，改完 spec 才撞上。
-    #    它 08-14 03:2x 已经自动推送过了——`push.summary` 参与拼微信标题，
-    #    改它会让今天算出来的标题和当时真发出去的那条对不上（eala-osaka 那条
-    #    「故意不补 summary」记的就是这个），所以按已推送挂账，不改字。
-    "landaluce-draper",            # 兰达卢塞逆转
-    "osaka-fernandez",             # 大坂直美淘汰费尔南德斯
-    "osaka-mertens",               # 奥萨卡横扫梅尔滕斯晋级
-    "rybakina-gauff-toronto-sf",   # 莱巴金娜逆转晋级
-    "shelton-fonseca",             # 谢尔顿险胜丰塞卡
-    "shelton-mensik",              # 谢尔顿横扫门西克
-    "svitolina-alexandrova",       # 斯维托丽娜逆转晋级
-    "swiatek-golubic",             # 斯瓦泰克横扫戈卢比奇晋级
-    "swiatek-kostyuk",             # 斯瓦泰克逆转科斯秋克晋级
-})
-
-# ⏰ **还没推——`push.summary` 只是一行字，改它连重渲都不用。**
-_SUMMARY_LEGACY_还没推送 = frozenset({
-    "rybakina-li",                    # 莱巴金娜逆转晋级
-    "rybakina-osaka",                 # 莱巴金娜逆转大坂直美
-    "swiatek-svitolina-toronto-sf",   # 斯瓦泰克逆转晋级
-})
-
-_SUMMARY_LEGACY = _SUMMARY_LEGACY_已推送 | _SUMMARY_LEGACY_还没推送
+    return {slug: summary for slug, spec in _specs()
+            if (summary := _TG.summary_strip_offender(spec))}
 
 
 def test_推送标题不许只有名字加赛果():
@@ -1003,9 +964,11 @@ def test_前20那条线是名次不是种子号():
 #   `stats.a/b` 两边都有 `winners` + `ue`  → 过
 #   缺 → 必须写 `stats._winners_ue_why`，说清 TNNS 那趟跑出来是什么
 #
-# ⚠️ **为什么不做成 `validate_spec` 的 runtime 闸**：和 `_no_stats_why`
-# 一个道理——「忘了查」和「查过确实没有」在产物上分不出来，runtime 闸拦前者
-# 必然误伤后者（TNNS 的 `hasExtendedStats` 真会是 false）。
+# ⚠️ **原来这里写着「不做成 `validate_spec` 的 runtime 闸」**，理由是「忘了查」和
+# 「查过确实没有」在产物上分不出来。**那个理由只对「必须有这两行」成立**——而这条闸
+# 认领的是「问过 TNNS 了」（`_winners_ue_why`），查过确实没有的写一句就放行，runtime
+# 一样不误伤。2026-09-27 挪进了 `validate_spec`（tools/taste_gates_extra.py）：原来
+# 只在 CI 上跑，而自动出片链直推 main 不触发 CI，`--dry-run` 也看不见它。
 #
 # ⚠️ **也不接进出片流程**：TNNS 要真浏览器过 Cloudflare 挑战，一次 25~30 秒
 # 且不可缓存。写 spec 的时候手动跑一趟 `tnns-stats.yml`，和 `mcp_stats.py`
@@ -1016,33 +979,13 @@ def test_前20那条线是名次不是种子号():
 # 例子就是它自己的来路：那两行数字一直拿得到，而它发出去的时候没有。
 # 已发的片子不重渲（微信那条消息收不回来），所以只挂账，只管以后。
 
-_WINNERS_UE_LEGACY = frozenset({
-    "baez-dimitrov", "bejlek-pliskova", "boisson-krueger", "boulter-volynets",
-    "bucsa-chwalinska", "cirstea-bartunkova", "eala-ruse", "hijikata-monfils",
-    "jodar-shapovalov", "kenin-lys", "maria-yastremska", "navarro-kalinina",
-    "noskova-boulter", "ostapenko-frech", "parry-mertens", "pegula-waltert",
-    "sonmez-anisimova", "sonmez-kasatkina", "stearns-tauson", "townsend-osorio",
-    "tsitsipas-royer", "wang-vandewinkel", "wangxiyu-timofeeva",     })
+# ⚠️ 判据和豁免表的单一出处在 tools/taste_gates_extra.py（`--dry-run` 也用它）。
+_WINNERS_UE_LEGACY = _TG.WINNERS_UE_LEGACY
 
 
 def _missing_winners_ue():
-    """有 `stats` 块、却缺制胜分/非受迫失误、又没说查过 TNNS 的那些。
-
-    ⚠️ 两边都要查。`render_stat_card.usable_rows` 对「只有一边有」是报错的
-    （那是数据对不齐，不是拿不到），这里按同一个口径认「有」。
-    """
-    out = set()
-    for slug, spec in _court_specs():
-        stats = spec.get("stats")
-        if not stats:
-            continue                      # 整块没有 → 归 `_no_stats_why` 那条闸管
-        a, b = stats.get("a") or {}, stats.get("b") or {}
-        if all(key in a and key in b for key in ("winners", "ue")):
-            continue
-        if stats.get("_winners_ue_why"):
-            continue
-        out.add(slug)
-    return out
+    """有 `stats` 块、却缺制胜分/非受迫失误、又没说查过 TNNS 的那些。"""
+    return {slug for slug, spec in _specs() if _TG.winners_ue_missing(spec)}
 
 
 def test_数据图缺制胜分和UE的要说清TNNS那趟跑出来是什么():
