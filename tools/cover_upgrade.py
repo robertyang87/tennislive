@@ -1866,6 +1866,7 @@ def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
     rows: list[dict] = []
     passed: list[dict] = []
     downloads = 0
+    model_down = ""
     for c in candidates:
         relaxed: list[str] = []
         row = {"channel": c.channel, "url": c.url, "caption": c.caption[:240],
@@ -1883,6 +1884,12 @@ def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
             row["problems"].append("前几班下过、闸没过（账的 attempts.tried），不再下")
             row["skipped"] = True
             continue
+        if model_down:
+            # 复审 nit（2026-09-28）：模型这一班加载不上（「装认人依赖」continue-on-error 没装成），
+            # 原来照样把过了元数据的原图挨张下满 MAX_DOWNLOADS——一张都判不了、一张都不记 tried，
+            # 下一班再下一遍。第一张报了模型不可用，这一班剩下的就不下了（不记 tried，下一班再试）
+            row["problems"].append(f"{model_down}（这一班不再下，下一班再试）")
+            continue
         if downloads >= MAX_DOWNLOADS:
             row["problems"].append(f"这一趟已经下了 {MAX_DOWNLOADS} 张，留给下一班"
                                    "（下过的记进账，下一班从这里接着下）")
@@ -1896,6 +1903,7 @@ def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
         got = image_verdict(blob, target.spec, ctx, checker=checker)
         row["problems"] += got["problems"]
         row["evidence"] = got["evidence"]
+        model_down = next((p for p in got["problems"] if p.startswith("人脸模型不可用")), "")
         if not row["problems"]:
             passed.append({"candidate": c, "blob": blob, "evidence": got["evidence"],
                            "relaxed": relaxed, "row": row})

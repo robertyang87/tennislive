@@ -639,6 +639,30 @@ def test_人脸模型不可用就不换(tmp_path):
     assert any("人脸模型不可用" in line for line in got["report"])
 
 
+def test_人脸模型不可用_这一班只下第一张_剩下的不下也不记tried(tmp_path):
+    """复审 nit（2026-09-28）：「装认人依赖」装不上的那一班，原来照样把过了元数据的原图挨张
+    下满 `MAX_DOWNLOADS`——一张都判不了、一张都不记 tried，下一班又下一遍。"""
+    urls = [f"https://assets.apnews.com/x/{i:08x}.jpg" for i in range(4)]
+    fetched: list[str] = []
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
+
+    def sweeps_for(_ctx):
+        return [("测试渠道", lambda: [_ap(u) for u in urls])]
+
+    def fetch(url):
+        fetched.append(url)
+        return _photo("ok")
+
+    got = cu.run(repo, NOW, apply=True, sweeps_for=sweeps_for,
+                 times=lambda _id: (START, None), fetch=fetch,
+                 checker=lambda img, exp, **_kw: {"status": "unavailable", "error": "没装 onnxruntime"},
+                 final_gate=lambda spec: None)
+    assert got["upgraded"] == []
+    assert fetched == urls[:1], f"模型不可用之后还在下：{fetched}"
+    assert sum("这一班不再下" in line for line in got["report"]) >= 1, "\n".join(got["report"])
+    assert not (cu.load_ledger(repo)["attempts"].get(SLUG) or {}).get("tried"), "模型不可用不许记 tried"
+
+
 def test_换完过不了正式的封面闸就全部退回(tmp_path, model):
     repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
     before = (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes()
