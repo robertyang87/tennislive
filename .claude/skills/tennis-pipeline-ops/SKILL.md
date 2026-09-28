@@ -4921,7 +4921,7 @@ H 那种「warning ＋ 绿」只剩不带清单的手动调法。
 |---|---|---|---|
 | 章节卡 > 18 字 | `_normalize_title_card_segments`（load_spec），和 render 现渲卡同一个 `render_title_card.length_problem`；**谁写的都硬**——超了 render 必红，只报等于晚三分钟红 | china-open-withdrawals ca2d4829a（19 字，run 36296202661）、asiad-2026-men-draw 775d5d8d1（25 字，run 36296693320） | 全库 0 条 |
 | 写过源片末尾：容差 **0**（原来 +0.05s） | `segments_over_source_end`，`need ≤ 源片时长`；谁写的都硬（超了 render 必红） | hu-kopriva 466450041：143.4＋0.18＝143.58 对 probe 143.56，超 0.02s（run 35949569743）→ 红 | 无。⚠️ 第一版是「减一帧」，比证据严：已推送 5 段落在最后一帧里（差 0.014~0.038s）照样渲得出来（chengdu-ng-kouame cf73af107、eala-ruse 5f589d63f 的 spec 和 render.json 同一个提交），修正轮收回成 0、豁免表删掉 |
-| 误差带里的旁白要拿**真 TTS** 认账 | `narration_check_findings`（dry-run），账在 `data/narration_checks/<slug>.json`，按每段旁白的指纹认，**文件头的后端／栏目基调／音色／语速要和出片那一趟对得上**（`narration_record_mismatch`，修正轮补的：第一版记了不比）。**「出片那一趟」按出片那台机器算**（`render_tts_setup`＝`apply_tts_backend`＋`column_base_style` 的同一个判法），runner 的 dry-run 步挂和 render 步同一对 Azure 钥匙——修正轮 2：上一版按 spec 推（没写 `tts_backend` 就当 azure），而 runner 上两把钥匙是空的（run 36257658569 render 步 env 两项空、日志「[配音] 没有 Azure」；origin/main 上 09-25~09-28 的 44 份 render.json `narration_backend` 全是 edge-tts），`mode=narration` 量出来的 edge-tts 账一律不认，没写 `tts_backend` 的手写 spec（rebase 到 c127cdcd0 之后 317 条里 294 条）量完还是红、报错叫你再去量。全库扫描不比后端（CI 上没有 Azure）；换字表（`speakable`）故意不进指纹——同音字换音节数不变，进了就每改一次表全库的账作废；`--check-narration` 落账，runner 的 `mode=narration` 量完**自己提交回分支**（沙箱连不上 edge-tts） | zverev-deminaur 4a2eb32c4 第 9 段：画面 11.9s、runner 上 **edge-tts** 实测 12.10s（run 36257658569，那一趟没有 Azure）——dry-run 当时只印一句「悬」→ 红 | `data/legacy_narration_unchecked.json`：上线时 specs/reels 下 299 条手写 spec 按**整条旁白指纹**冻，改一个字就不认；修正轮 2 补冻 1 条（上限 300）：two-handled-racket-maric-2026，闸在分支上时 main 上手写推送的 |
+| 误差带里的旁白要拿**真 TTS** 认账 | `narration_check_findings`（dry-run），账在 `data/narration_checks/<slug>.json`，按每段旁白的指纹认，**文件头的后端／栏目基调／音色／语速要和出片那一趟对得上**（`narration_record_mismatch`，修正轮补的：第一版记了不比）。**「出片那一趟」按出片那台机器算**（`render_tts_setup`＝`apply_tts_backend`＋`column_base_style` 的同一个判法），runner 的 dry-run 步挂和 render 步同一对 Azure 钥匙——修正轮 2：上一版按 spec 推（没写 `tts_backend` 就当 azure），而 runner 上两把钥匙是空的（run 36257658569 render 步 env 两项空、日志「[配音] 没有 Azure」；origin/main 上 09-25~09-28 的 44 份 render.json `narration_backend` 全是 edge-tts），`mode=narration` 量出来的 edge-tts 账一律不认，没写 `tts_backend` 的手写 spec（rebase 到 c127cdcd0 之后 317 条里 294 条）量完还是红、报错叫你再去量。全库扫描不比后端（CI 上没有 Azure）；换字表（`speakable`）故意不进指纹——同音字换音节数不变，进了就每改一次表全库的账作废；`--check-narration` 落账，runner 的 `mode=narration` 量完**自己提交回分支**（沙箱连不上 edge-tts） | zverev-deminaur 4a2eb32c4 第 9 段：画面 11.9s、runner 上 **edge-tts** 实测 12.10s（run 36257658569，那一趟没有 Azure）——dry-run 当时只印一句「悬」→ 红。⭐ **09-28 会话改成：没账只报（带补账命令），只有量过、装不下才红**，见表下那段 | 无。原来的 `data/legacy_narration_unchecked.json`（300 条按整条旁白指纹冻）随「没账就红」一起删了 |
 | 蒙版和裁框差 1px | `masked_board_patch`：`alphamerge` 之前把蒙版 `scale` 成裁框宽高（neighbor），两处回贴共用 | safiullin-bu 424×108 对 424×109（run 36323549463）；测试真跑 ffmpeg，两头都钉 | 不是闸，是修 |
 | 采访：已知带片尾板的源，话音后空 > 1.5s，**手写** spec | `interview_tail.quiet_tail_problem`（`interview_preflight` 里升红）；拉沃尔杯、Tennis TV（`source_verification.source`／请求的 `source`／`tennistv.com`）；认领 `_end_why` 或 `_end_board_ok` | alcaraz-fritz-interview 1b0b65ee5^（话音后 3.1s）、tien-cobolli 9ae8918fb^（5.4s）推出去又重推——⚠️ **回放拦不住**：两条都是自动 spec（`auto_pending`），这道闸只报；它们归出片那一趟的 `end_card_problem`＋自动终点撞板直接收（73aba4c1c／16bcfd336，09-27，事故之后才上线）。这道闸管的是以后手写的，把 runner 上同一个红提到 dispatch 前 | `legacy_interview_gates.json` 的 `end_board_quiet_tail`：2 条辛辛那提 Tennis TV 已推送 |
 | 钩子「送××进决赛」不算赛果 | `taste_gates.has_match_result` | bucsa-noskova 872c6dab6^（账号所有者原话「封面钩子文案没交代赛果啊」） | `legacy_taste_gates.json` 的 `hook_shape` ＋1：zverev-prizmic「77分钟送德国晋级」（09-20，规矩之前） |
@@ -4935,18 +4935,37 @@ H 那种「warning ＋ 绿」只剩不带清单的手动调法。
 测的不是出片时真走的那条路。**回放要走真实路径，别替判据填参数。**
 全库扫描（specs/reels 315 条能解析的手写 spec、采访 110 条）：豁免表之外 **0 条硬红**。
 
-⚠️ **误差带那道闸会让几乎每条新手写 spec 先量一次真 TTS**：`SPEECH_EST_ERR`＝2.2s，
-上线时全库 315 条里 299 条有落在带里的段。这正是 CLAUDE.md「那一分钟必须花」——它原来只写在
-文档里。沙箱量不了（edge-tts 走 WSS，代理挡），走 runner：
-`gh workflow run match-reel.yml --ref <分支> -f mode=narration -f slug=<slug>`，约 1.5 分钟，
-账自己提交回分支（**在 main 上跑只报数、不提交**——修正轮 2 加的判断，main 的提交不过 CI）；runner 上 cover／narration 那两趟这道闸只报，不挡出封面、不挡补账本身。本地量的账头写着这台机器的后端，和 runner 出片那个不一样就不认——runner 现在走哪个，看最近一份 render.json 的 `narration_backend`。
+### ⭐⭐ 2026-09-28 会话决定：误差带那道闸**没账只报**——别往正常路径上加一趟 runner
 
-⚠️ **豁免表的自检会在没人动 spec 的时候变红**：对冻着的 slug 跑了 `mode=narration`（账直接提交到
-`github.ref_name`；修正轮 2 起 main 上那一趟不提交）、或者重跑了冻着那条源的 probe（提交落在 `output/**`，ci.yml 跳过），
-`test_旁白没量过真TTS的豁免表只许减`／`test_没量板的豁免表只许减` 就红在下一个无关 PR 上。
-补完账／重跑完 probe，**同一个提交里**把那个 slug 从豁免表删掉。
+第一版让手写 spec「误差带里的段没账就红」，量出来这一刀落在几乎每一条新片子上：
+`SPEECH_EST_ERR`＝2.2s，specs/reels 下 **316 条能解析的 spec 里 305 条**至少有一段落在带里，
+`data/narration_checks/` 一份账都没有，全靠 300 条的冻结表撑着——**每条新的手写 spec 都要先
+多拨一趟 `mode=narration`**（约 1.5 分钟 runner ＋ 一次提交回分支）才过得了 dry-run。
+而 render 在**编码之前**本来就有一道真 TTS 的硬闸：`tools/build_match_reel.py:9565`
+（`render()` 里 `spoken_of, over = narration_overruns(segments, voices)`，超 `NARRATION_OVER_TOL`
+就 `ReelError`；本文件「TTS 和旁白超长那道闸，挪到编码之前」）——同一个错在那儿红，一个像素都
+没编（zverev-deminaur 那一趟白烧 2.9 分钟）。**只在真超了的那几条上付，而不是每条都先付一趟**，
+这就是「时效第一」在这儿的算法。
 
-⚠️ **Azure 钥匙修好那天，先在分支上把已发、没冻的手写片子重量一遍**（`mode=narration`，账头换成 azure）：否则 edge-tts 量的账整份不认，O4（`reel-cover-upgrade` 派的 `mode=render push=true --ref main`）会在 dry-run 上红死——main 上那一趟 narration 不提交，补不上账；CI 不比后端，这一步不会提前红。
+| 情形 | 现在 |
+|---|---|
+| 误差带里的段没账（没量过／改过字／账头对不上） | **任何一趟都只报**，印两行现成的补账命令（runner 一行、本地一行） |
+| 账上量过、真时长比画面长 | 手写 spec 在 `mode=render` 的 dry-run 上**红**（真数，render 必红）；自动 spec 和 cover／narration 趟只报 |
+
+- 冻结表 `data/legacy_narration_unchecked.json` 和它的自检一起删了（它冻的那道闸不存在了）；
+  「每条误差带里的手写 spec 都有账」这条 CI 全库扫描也删了——别再加回来，它就是那一趟 runner
+- 账本的写（`--check-narration`／`mode=narration`，量完自己提交回分支，**main 上只报数不提交**）
+  和读（`narration_check_findings`、`load_narration_record`）都留着：想在发 render 之前就知道，照旧
+  `gh workflow run match-reel.yml --ref <分支> -f mode=narration -f slug=<slug>`
+- 判据 `tests/test_small_gates.py::test_新的手写spec误差带里没账_dry_run照样过_只报带命令`
+  （render／cover／narration 三趟都 exit 0 且印出命令；把「没账」退回「手写红」，render 那一格红）
+
+⚠️ **没量板那张豁免表的自检照旧会在没人动 spec 的时候变红**：重跑了冻着那条源的 probe（提交落在
+`output/**`，ci.yml 跳过），`test_没量板的豁免表只许减` 就红在下一个无关 PR 上。重跑完 probe，
+**同一个提交里**把那个 slug 从豁免表删掉。
+
+⚠️ **Azure 钥匙修好那天**，edge-tts 量的老账会整份不认——09-28 起那只是一句提示，不再红
+（O4 派的 `mode=render push=true --ref main` 不会卡在 dry-run 上）；真超了照旧红在 render 编码之前。
 
 ## ⭐⭐ 2026-09-27：赛后开麦 dispatch 之前的离线预检、片尾板、拼接清单、推送后修订
 
@@ -5051,7 +5070,7 @@ render 的封面前置那一步红了会就地扫、自动换一格（tennis-cov
 | X CDN 直链 403（2） | 一句 curl 403 | 帖子地址下载时现解、直链只当 `source_fallbacks`（tennis-media-sources「X 和 Instagram 是第一手源」） |
 | 1080p 的框配 720p 源（2，medvedev-wong） | 源片下完才红（cv2 `!_src.empty()` / ReelError），probe 产物一个字节没提交 | `fit_scorebox_to_frame`：按源片高度找一档装得下的参考高度等比缩（`98,920,519,1029`@1280×720 → `65,613,346,686`；同一 slug 后来下到 1080p 那趟这个框量出 97 个死球），缩不进退回猜框；`probe.json` 记 `scorebox_fitted`。⚠️ **只认得出「出界」**：720p 的框配 1080p 源、1080p 左上角的框碰巧装得进 720p，都原样用、量错地方、不报——框照这一趟源片的像素给；**只宽出界、源片比 16:9 窄**（4:3 老转播）时平移（黑边世界）和等比缩（更高一档）两种读法都装得进就不猜、退回猜框，见下面第二轮复审；`--scorebox` 给了却量不了时 `point_ends` 记 `null`（不是 `[]`，`[]` 是量过零次）。全库 94 条 spec 的框对 probe 过的源片：108 次原样、1 次要缩（`zheng-rybakina` 的 720p 那趟）、0 次丢 |
 | 派发 render 的 assert 撞手写 spec（1，run 36331363124） | 裸 `AssertionError` | `tools/probe_dispatch_gate.py`：没 spec → waiting，手写（`_production.kind` 不是 `orchestrated_reel`，含没有 `_production` 的）→ skip，自动 spec 的 ready ＋ `push.auto` 合同照旧硬 |
-| frame-grab 推送 5 次失败（1，run 36317540680） | 手搓循环睡在 fetch 和 push 之间（13~28 秒），远端每一轮都往前走一格 | 改用共享 `push_with_rebase_retry`；**共享脚本本身也改成「先退避、再 rebase、立刻推」**（原来同样睡在 rebase 和 push 之间），同 slug 的 frame-grab 排队 |
+| frame-grab 推送 5 次失败（1，run 36317540680） | 手搓循环睡在 fetch 和 push 之间（13~28 秒），远端每一轮都往前走一格 | 改用共享 `push_with_rebase_retry`；**共享脚本本身也改成「先退避、再 rebase、立刻推」**（原来同样睡在 rebase 和 push 之间），同 slug 的 frame-grab 排队——⚠️ 排队只排得下**一个**：GitHub 每组最多一个在跑、一个 pending，同 slug 连拨三趟，第三趟会把还在 pending 的第二趟取消（`cancel-in-progress: false` 只保在跑的那趟）；要抽不同区间就换 slug |
 | 上游 HTTP 5xx（1，run 35708122768） | 审计标成 flashscore，**日志里其实是 MiniMax 读比分板 500**——base 的 47f9f2b6d 已降级只报（`test_scoreboard_http_failure_does_not_write_partial_alignment`），账号所有者 09-27 定了不给模型加重试，没加 | flashscore 这一侧补上同形的洞：`fetch_match_stats_fs.feed` 5xx／网络抖动重试 3 次、最后一律 `StatsError`；`assemble_spec` 读 feed 的四块（stats／狠数据／转折局／抢七小分）接住 `match_feed._get` 抛的 `SystemExit`（原来穿过每一处 `except Exception`，一次 500 就让 probe 整趟不提交）；**matchup 归位那一块不降级**，见下 |
 
 `assemble_spec --year ''`（3 趟）在 base 的 09e091851 已修，`test_match_reel_optional_int_inputs` 钉着。
@@ -5159,7 +5178,8 @@ promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角
 | | 缺判定（needs_subs） | 判定红（red） | 判定 ok |
 |---|---|---|---|
 | **interview-auto-render** | 先投 `mode=subs`（`pick_interview_renders --subs-list`，`--mark-subs` 记账：70 分钟内不重投（大于 job 超时 65，第三轮）、同一份转写输入满 3 趟停下喊人、**转写输入**一改清零——改 zh／封面／文案不清零） | 进等待名单（和 verify 报的同一句） | 投 render |
-| **interview-clip render 那一趟** | 「采访 spec 离线预检」带 `--require-subs`，**第 1 秒就停**：先 dispatch `mode=subs` | 同左，停 | verify **不重量**，直接用判定 |
+| **interview-clip render 那一趟，自动链派发的**（`github.triggering_actor` 以 `[bot]` 结尾） | 「采访 spec 离线预检」`--dispatched-by` 开 dispatch 口径，**第 1 秒就停**：先 dispatch `mode=subs` | 同左，停 | verify **不重量**，直接用判定 |
+| **interview-clip render 那一趟，手动拨的**（个人登录名／认不出，09-28 会话决定） | **只提示**，「转写交叉校验」在同一个 job 里现量第二份 ASR（老路） | 停 | verify **不重量** |
 | **本地** `interview_preflight.py --slug X` | 默认只提示；`--require-subs` 是 dispatch 口径 | 两种口径都红 | — |
 
 - 判定＝三份进仓库的文件，都绑 `transcript_fingerprint`：`second_asr_verdict.json`（新，第二份 ASR
@@ -5180,7 +5200,7 @@ promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角
 - subs 判定干净就**叫醒 interview-auto-render**（GITHUB_TOKEN 的提交触发不了它的 on:push）
 - 预检结论缓存的键带上这三份（`caption_fingerprint`）：subs 一落判定，探针就不再拿「缺判定」
   那份旧结论顶；探针里「缺判定」的那条 subs 刚投过就不算活，不叫醒全量
-- 手动流程：**同一个 slug 先 subs、判定落库了再 render**；两档别叠着发（concurrency 会互相掐）
+- 手动流程：重渲**直接拨 render** 就行（缺判定时转写在同一个 job 里现量，见下一节）；两档别叠着发（concurrency 会互相掐）
 
 回放（`scratchpad/isubs/replay6.py <worktree> <outdir>`——判定文件带 `window`、按 `SUBS_RED` 认红；
 六趟失败各自 head_sha 上的 spec＋当时仓库里的产物，现在的代码；复审 2026-09-28 发现盘上那份还是
@@ -5209,6 +5229,48 @@ subs，**不挂豁免表**：这不是内容红，是没量过。真 picker 在�
 算进去；`--mark-one` 照旧记真正的派发时刻（70 分钟重投窗口按它算）。
 render 那一趟判定 ok 时照旧装 faster-whisper、恢复模型缓存，只是不再跑第二份 ASR。
 判据 `tests/test_interview_subs_first.py`。
+
+### ⭐ 2026-09-28 会话决定：`--require-subs` 只对自动链派发的 render 开——手动重渲不先投 subs
+
+时效第一：别往正常路径上加一趟 runner。原来 interview-clip 的 render 预检**无条件** `--require-subs`，
+而 wp/round3-int HEAD 上已推送的 54 条采访里 **46 条**在 dispatch 口径下是 `NEEDS_SUBS`（判定是没记
+区间和源的老产物；按 `interview_preflight.subtitle_findings(require_subs=True)` 实测，8 条干净）——
+手动重渲任何一条都要先多拨一趟 `mode=subs`（取字幕约 1 分钟＋第二份 ASR 3~5 分钟）、等它落库再拨 render。
+
+- **信号**：`github.triggering_actor`（工作流里传 `--dispatched-by "$DISPATCHED_BY"`）。pick 用
+  `GH_TOKEN: secrets.GITHUB_TOKEN` 派发 → `github-actions[bot]`；会话／人拨的是个人登录名。和看板
+  `build_dashboard_snapshot.is_unattended` 同一个判法（那边实测过 interview-clip 36337385713 由编排链派发、
+  `triggering_actor` 是 `github-actions[bot]`）。**认不出按手动算**：手动那一支照样验转写，只是慢几分钟
+- 为什么不认 `received_at`：自动链必传它，但一次性派发工作流（`noskova-final-render.yml` 那种「手写的
+  重渲」）也传；而手动的人照样可能填它量 SLA。`triggering_actor` 还顺带让 GitHub 页面上人点的「重跑」算手动
+- **自动链不变**：pick 投 render 之前按同一个口径判过（缺判定先投 subs），runner 上那一步照旧 dispatch 口径
+- **手动那一支不跳过转写**：「转写交叉校验」那一步只看 `mode == 'render'`，`--stage verify` 在判定不是 ok
+  时现量第二份 ASR（上线 subs 之前的老路），faster-whisper 和模型缓存照装；**已经量出来的红两边都红**
+- 判据 `tests/test_interview_subs_first.py`：`test_render预检只对自动链派发的开dispatch口径_手动拨的缺判定只提示`
+  （真 `main()`、不打桩）、`test_认自动链派发者和看板的无人值守同一个判法`、
+  `test_手动拨的render照样在同一个job里验转写_自动链仍用GITHUB_TOKEN派发`；三个方向各反向验证过
+  （判法恒真、工作流退回 `--require-subs`、给「转写交叉校验」加条件）
+
+### ⭐ 2026-09-28 会话决定：采访线「停着、要人」的另外两种也进 pipeline-health（F3）
+
+`parked_interview_subs`（subs 投满次数停下）之外，还有两种一样是自动链自己修不好、会一直停着的，
+原来只在 auto-render 的 run 摘要／stderr 或看板 24 小时窗口里露一下：
+
+| | 谁判、谁记 | pipeline-health |
+|---|---|---|
+| **封面停车**（同一个封面连着 `PARK_AFTER` 趟红在封面那一步） | 停车那一刻 `note_autopick_failure` 给 `autopick_failed[slug]` 标 `parked`（停着的那条探针不当活，全量那一趟未必再来）；全量那一趟 `sync_waiting_marks` 按 `parked_slugs` 摘／补 | `parked_interview_covers`：只读标记，**每一班都列、不按时间窗**；唯一本地兜底：`render.json` 的成片时刻晚于最后一趟红（人手动重渲成了，不会叫醒全量来摘）不列 |
+| **转写判定红着等人**（第二份 ASR 分歧超闸没认领够、VAD 在空档里听到人声） | 只有 pick 全量那一趟判得出（要 PIL＋字体）：`sync_waiting_marks` 记 `subs_red[slug] = {since, inputs_sha256, why}`，同一份转写输入接着红 `since` 不动、转写输入改了重算、不红了删 | `interview_subs_red_waiting`：`since` 超过 `SUBS_RED_WAIT_HOURS`（6）才列 |
+
+- 两样都跟 `parked_interview_subs` 同一个形状：判法只在 pick 定义一次，pipeline-health 的稀疏检出只有
+  `data/interview_render_dispatched.json`（和 `output/**/render.json`），只读标记
+- `render_report` 新加的 `parked_covers`／`subs_red` **只收关键字**（`test_采访停着的几栏只收关键字`），
+  三栏同一个排法；`alert_keys` 按 slug 认（`interview-cover:`／`interview-subs-red:`）——「红着已 N 小时」
+  每班都长，按整句认就是每小时推一条「新故障」
+- 状态合并：`merge_interview_states` 带上 `subs_red`（本趟改过的带过去，远端动过听远端的）；
+  标记挂在 `autopick_failed` 那一行上，走那一栏原有的重放
+- 判据 `test_转写判定红着的记下从哪一刻起_超过6小时pipeline_health列出来`、
+  `test_封面停车标记给pipeline_health_不按时间窗_不停了就摘`、`test_红着的转写那本账撞车合并不丢_远端动过听远端的`；
+  反向验证过（`since` 每趟重置、停车那一刻不标、键按整句／不按 6 小时滤、main 不传）
 
 ### 复审第三轮（2026-09-28）：定下来的两条口径 ＋ 四处收口
 

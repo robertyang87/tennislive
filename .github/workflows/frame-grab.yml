@@ -37,6 +37,10 @@ permissions:
 # 同一个 slug 排队、不并行：两趟同时往 output/<日期>/frames/<slug>/ 写同名 JPEG，
 # 后推的那趟 rebase 会撞二进制冲突（共享重试 abort 之后每一轮撞同一个）。
 # 不同 slug 各写各的目录，照样并行。
+# ⚠️ **「排队」只排得下一个**：GitHub 每个 concurrency 组最多一个在跑、一个 pending——
+# `cancel-in-progress: false` 保住的是在跑的那趟，**不保 pending 的**。同一个 slug 连拨三趟，
+# 第三趟一进组，还在排队的第二趟就被取消（run 列表里是 cancelled，不是排在后面）。
+# 要抽不同的区间就换个 slug，或者等前一趟跑完再拨。
 concurrency:
   group: frame-grab-${{ github.event.inputs.slug }}
   cancel-in-progress: false

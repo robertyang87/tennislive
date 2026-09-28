@@ -134,6 +134,22 @@ def merge_interview_states(base: dict, ours: dict, theirs: dict) -> dict:
                 and str(remote.get("at") or "") > str(entry.get("at") or "")):
             continue
         merged.setdefault("autopick_failed", {})[slug] = entry
+    # 「转写判定红着等人」那本账（`pick_interview_renders.sync_waiting_marks`，pipeline-health 读）：
+    # 只有 auto-render 全量那一趟写它。本趟改过的（新记、删掉、改了原因）带过去；远端自己也动过
+    # 这一条（≠ base）就听远端的——`since` 只会是更早那一次见红的时刻，别让撞车把它往后挪。
+    base_r = base.get("subs_red") or {}
+    ours_r = ours.get("subs_red") or {}
+    theirs_r = theirs.get("subs_red") or {}
+    for slug in sorted(set(base_r) | set(ours_r)):
+        mine, was = ours_r.get(slug), base_r.get(slug)
+        if mine == was or theirs_r.get(slug) != was:
+            continue
+        if mine is None:
+            (merged.get("subs_red") or {}).pop(slug, None)
+        else:
+            merged.setdefault("subs_red", {})[slug] = mine
+    if "subs_red" in merged and not merged["subs_red"]:
+        merged.pop("subs_red")
     return merged
 
 
@@ -159,7 +175,8 @@ def main() -> int:
                     or not isinstance(state.get("at", {}), dict)
                     or not isinstance(state.get("spec_sha256", {}), dict)
                     or not isinstance(state.get("subs", {}), dict)
-                    or not isinstance(state.get("autopick_failed", {}), dict)):
+                    or not isinstance(state.get("autopick_failed", {}), dict)
+                    or not isinstance(state.get("subs_red", {}), dict)):
                 raise ValueError("Invalid interview dispatch state")
         merged = merge_interview_states(*snapshots)
     else:

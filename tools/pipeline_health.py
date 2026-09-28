@@ -267,6 +267,95 @@ def parked_interview_subs(path: Path | None = None) -> list[str]:
     return out
 
 
+#: 采访封面停车（`pick_interview_renders.parked_slugs`，同一个封面连着 PARK_AFTER 趟红在封面那一步）
+PARKED_COVER = "采访封面停车："
+#: 采访转写判定红着等人（第二份 ASR 分歧超闸没认领够／VAD 在空档里听到人声）
+SUBS_RED_WAITING = "采访转写红着等人："
+#: 红着多久才喊（2026-09-28 会话决定）：subs 交了红的判定之后，人改 `en_fixed`／认领／销账
+#: 通常当天就动手；过了 6 小时还红着，多半是没人看见——auto-render 只在 stderr 的等待名单里印一行
+SUBS_RED_WAIT_HOURS = 6.0
+
+
+def _interview_state(path: Path | None) -> dict:
+    try:
+        state = json.loads((path or INTERVIEW_DISPATCH_STATE).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return state if isinstance(state, dict) else {}
+
+
+def _rendered_after(slug: str, at: datetime | None, output: Path) -> bool:
+    """`output/interviews/<slug>/render.json` 的成片时刻晚于 `at`＝那之后出过片了。"""
+    try:
+        sla = json.loads((output / slug / "render.json").read_text(encoding="utf-8")) \
+            .get("production_sla") or {}
+        ready = instant(str(sla.get("artifact_ready_at") or "")) if sla.get("artifact_ready_at") \
+            else None
+    except (OSError, ValueError, AttributeError):
+        return False
+    return ready is not None and at is not None and ready > at
+
+
+def parked_interview_covers(path: Path | None = None,
+                            output: Path | None = None) -> list[str]:
+    """采访封面**停车**的（同一个封面连着 PARK_AFTER 趟红在封面那一步，自动链不再投）→ 告警句。
+
+    2026-09-28 会话决定（F3）：原来只列在 auto-render run 摘要的 🅿️ 那一栏、只在看板 24 小时
+    窗口里露一下红，过了那一天就没人再提——而停着的那条自动链修不好（要人改封面、补头像或重扫）。
+    和 `parked_interview_subs` 同一个形状：**只读 pick 记的 `parked` 标记**（进停车那一刻
+    `note_autopick_failure` 标上，全量那一趟 `sync_waiting_marks` 摘掉），计数和条件只在 pick 定义一次；
+    只要标着就每一班都列（不按时间窗）。唯一的本地兜底：标记之后**出过片**（render.json 的成片时刻
+    晚于最后一趟红）的不列——人手动重渲成了，不会叫醒全量那一趟来摘标记。读不到状态文件＝没有。"""
+    rows = _interview_state(path).get("autopick_failed")
+    output = output or Path("output/interviews")
+    out: list[str] = []
+    for slug, row in sorted(rows.items() if isinstance(rows, dict) else []):
+        if not (isinstance(row, dict) and row.get("parked")):
+            continue
+        try:
+            at = instant(str(row.get("at") or "")) if row.get("at") else None
+        except ValueError:
+            at = None
+        if _rendered_after(slug, at, output):
+            continue
+        out.append(f"{PARKED_COVER}{slug}（同一个封面连着 {row.get('count')} 趟红在封面那一步"
+                   f"〔{row.get('kind') or 'autopick'}〕，最近一趟 {row.get('at')}）："
+                   f"{str(row.get('why') or '原因没记')[:160]}——改封面（frame_at／scan_window／"
+                   "文案点名／subject）、补主角头像或 mode=cover 重扫，停车账的键一变自动重投；"
+                   f"`python tools/pick_interview_renders.py --parked` 看全文")
+    return out
+
+
+def interview_subs_red_waiting(now: datetime | None = None, path: Path | None = None,
+                               hours: float = SUBS_RED_WAIT_HOURS) -> list[str]:
+    """采访**转写判定红着等人**超过 `hours` 小时的 → 告警句。
+
+    2026-09-28 会话决定（F3）：subs 交了红的判定（第二份 ASR 分歧超闸没认领够、VAD 在空档里
+    听到了人声），auto-render 只把它放进 stderr 的等待名单——那一趟 subs 退出码 3 是「绿」的，
+    也不叫醒任何东西，不翻日志就看不见。判红只在 pick 的全量那一趟（要 PIL 和字体量宽度），
+    它把红着的记进状态文件的 `subs_red`（`sync_waiting_marks`，`since`＝第一次见它红）；
+    这里只按 `since` 算红了多久。读不到状态文件＝没有。"""
+    now = now or datetime.now(timezone.utc)
+    book = _interview_state(path).get("subs_red")
+    out: list[str] = []
+    for slug, rec in sorted(book.items() if isinstance(book, dict) else []):
+        if not isinstance(rec, dict):
+            continue
+        try:
+            since = instant(str(rec.get("since") or "")) if rec.get("since") else None
+        except ValueError:
+            since = None
+        if since is None:
+            continue
+        age = (now - since).total_seconds() / 3600
+        if age <= hours:
+            continue
+        out.append(f"{SUBS_RED_WAITING}{slug}（转写判定红着已 {age:.0f} 小时，从 {rec['since']} 起）："
+                   f"{str(rec.get('why') or '')[:200]}——修 en_fixed／认领 transcript_disagree_ok／"
+                   "销账 caption_gaps_ok（报告在 output/interviews/" + slug + "/）")
+    return out
+
+
 def stale_publications(now: datetime | None = None, hours: float = 1.5) -> list[str]:
     now = now or datetime.now(timezone.utc)
     stale: list[str] = []
@@ -334,6 +423,8 @@ def render_report(health: list[WorkflowHealth], steps: list[dict],
                   orchestrator: tuple[str | None, float | None] | None = None,
                   *, feed_stuck: list[str] | None = None,
                   parked_subs: list[str] | None = None,
+                  parked_covers: list[str] | None = None,
+                  subs_red: list[str] | None = None,
                   ) -> tuple[str, list[str]]:
     # `feed_stuck` 只收关键字：别的分支也在这个位置后面加列表参数（采访字幕停车那一项），两边都留下
     # 合并时，按位置传的那一份会落进对方的形参——报表点名点错一栏，不报错。
@@ -373,10 +464,14 @@ def render_report(health: list[WorkflowHealth], steps: list[dict],
         lines += ["", "### 自动草稿的 flashscore 备料停手了（reel-auto-ready 不会再碰）",
                   *[f"- {item}" for item in feed_stuck],
                   "", f"人处置完之后重新布置：`{FEED_RETRY_REARM}`"]
-    if parked_subs:
-        alerts.extend(parked_subs)
-        lines += ["", "### 采访 subs 停着（自动链不再重投，要人看）",
-                  *[f"- {item}" for item in parked_subs]]
+    # 采访线「停着、要人」的三种：同一个排法（标题＋逐条），都进告警；只要状态文件还记着就每一班都列
+    for title, items in (("采访 subs 停着（自动链不再重投，要人看）", parked_subs),
+                         ("采访封面停车（自动链不再投，要人改封面／补头像／重扫）", parked_covers),
+                         (f"采访转写判定红着超过 {SUBS_RED_WAIT_HOURS:.0f} 小时（等人改或认领）",
+                          subs_red)):
+        if items:
+            alerts.extend(items)
+            lines += ["", f"### {title}", *[f"- {item}" for item in items]]
     slow = sorted(steps, key=lambda row: row["seconds"], reverse=True)[:10]
     lines += ["", "### 最近最慢步骤", "", "| 工作流 / job / step | 耗时 | 结果 |",
               "|---|---:|---|"]
@@ -409,6 +504,11 @@ def alert_keys(alerts: list[str]) -> list[str]:
             keys.add("workflow:" + item)
         elif item.startswith(PARKED_SUBS):
             keys.add("interview-subs:" + item[len(PARKED_SUBS):].split("（", 1)[0])
+        elif item.startswith(PARKED_COVER):
+            keys.add("interview-cover:" + item[len(PARKED_COVER):].split("（", 1)[0])
+        elif item.startswith(SUBS_RED_WAITING):
+            # 句子里的「红着已 N 小时」每班都长，键只认 slug——不然每小时推一条「新故障」
+            keys.add("interview-subs-red:" + item[len(SUBS_RED_WAITING):].split("（", 1)[0])
         else:
             digest = hashlib.sha256(item.encode("utf-8")).hexdigest()[:16]
             keys.add("other:" + digest)
@@ -599,7 +699,9 @@ def main(argv: list[str] | None = None) -> int:
     # 新加的段一律按关键字传（`*` 之后）：几条分支各往这儿加一段，合的时候不会串位
     report, alerts = render_report(health, steps, sla, stale_publications(),
                                    orchestrator_productivity(), feed_stuck=feed_retry_stuck(),
-                                   parked_subs=parked_interview_subs())
+                                   parked_subs=parked_interview_subs(),
+                                   parked_covers=parked_interview_covers(),
+                                   subs_red=interview_subs_red_waiting())
     # 和看板同一份数据（每条受监控工作流 24 小时内的 run）、同一个定义。
     # ⚠️ 原来取的是全仓最近 100 条——忙时只够回溯一个半小时，而这一班实际两三个小时
     # 才来一趟，一处没人重试的失败滚出列表就永远不推（`monitored_runs` 顶注）。

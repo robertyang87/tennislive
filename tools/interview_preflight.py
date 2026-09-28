@@ -52,6 +52,14 @@ spec 的 `end` 离最后一个词太远**（`interview_tail.quiet_tail_problem`�
 interview-clip 的 render 那一趟、`pick_interview_renders` 自动 dispatch 之前）下是带
 `NEEDS_SUBS` 的红——自动链见到只卡在这一类上的，先投 `mode=subs`。来路：9/20~9/28 六趟
 render 红在「空档没销账／转写分歧超阈」，0/6 在 dispatch 之前拦得住。
+
+⭐ **interview-clip 的 render 那一趟只对自动链拨的 run 用 dispatch 口径**（`--dispatched-by`，
+2026-09-28 会话决定，时效第一）：`--require-subs` 原来对每一趟 render 都开，而已推送的 54 条
+采访里 46 条在 dispatch 口径下是 `NEEDS_SUBS`（判定是老产物、没记区间和源——wp/round3-int
+HEAD 上按 `subtitle_findings(require_subs=True)` 实测），手动重渲一条就得先多拨一趟
+`mode=subs`（取字幕约 1 分钟＋第二份 ASR 3~5 分钟，工作流顶上那张表）。
+手动拨的（派发者是个人）缺判定只提示，同一个 job 里「转写交叉校验」那一步现量第二份 ASR
+（上线 subs 之前的老路，`--stage verify` 在判定不是 ok 时本来就重量）；**已经量出来的红照旧红**。
 """
 from __future__ import annotations
 
@@ -212,6 +220,11 @@ def caption_fingerprint(slug: str) -> list[str] | None:
 #: `pick_interview_renders` 见到一条 spec 只卡在这一类上，就先投 `mode=subs`
 #: 而不是 render（也不是干等人）；别的红混在里面就照旧进等待名单。
 NEEDS_SUBS = "［要先跑 subs］"
+#: 派发者登录名以它结尾 ＝ 工作流用 `GH_TOKEN: github.token` 派发的（interview-auto-render 的
+#: pick 那一步）。和 `build_dashboard_snapshot.is_unattended` 同一个判法——那边 2026-09-27 实测：
+#: 编排链派发的 `interview-clip` 36337385713 的 `triggering_actor` 是 `github-actions[bot]`，
+#: 会话拨的 run 是个人登录名。
+BOT_SUFFIX = "[bot]"
 #: subs 已在当前转写指纹上量出来的红（分歧超闸没认领够、VAD 在空档里听到了人声）的前缀。
 #: ⚠️ 不写「render 会红在这儿」：render 的 verify 在判定不是 ok 时会**重量**一遍
 #: （第二份 ASR 不是确定性的），它红不红要看那一趟——这里只说量出来了什么。
@@ -231,6 +244,19 @@ RESEGMENT_RED = "字幕重切："
 TAIL_BOARD_RED = "片尾板："
 TRANSCRIPT_REDS = ("check_source_contract：", EN_FIXED_RED, HUMAN_QUOTE_RED, RESEGMENT_RED,
                    TAIL_BOARD_RED)
+
+
+def picker_dispatched(actor: str | None) -> bool:
+    """interview-clip 这一趟 render 是不是**自动链的 pick** 派发的（`github.triggering_actor`）。
+
+    是 → dispatch 口径（`require_subs`）：pick 投 render 之前已经按同一个口径判过「判定干净」
+    （`pick_interview_renders`，缺判定就先投 subs），runner 上再判一次防的是 pick 和 run 之间
+    spec 被改了——自动链行为不变。
+    不是（会话／人手动拨的、GitHub 页面上点的重跑）→ 本地口径：缺判定只提示，「转写交叉校验」
+    那一步在同一个 job 里现量第二份 ASR（2026-09-28 会话决定：已推送的 54 条里 46 条的判定
+    是没记区间和源的老产物，手动重渲不该先多拨一趟 `mode=subs`（取字幕约 1 分钟＋第二份 ASR 3~5 分钟））。
+    **认不出（空串）按手动算**：那一支照样验转写，只是慢几分钟；按自动算会把人挡在门外。"""
+    return str(actor or "").strip().endswith(BOT_SUFFIX)
 
 
 def subtitle_findings(spec: dict, *, require_subs: bool = False
@@ -538,13 +564,24 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--date", default="", help="标题里的日期，默认今天（北京时间）")
     ap.add_argument("--require-subs", action="store_true",
                     help="dispatch render 的口径：缺字幕缓存、缺当前转写指纹的 subs 判定也算红"
-                         "（interview-clip 的 render 那一趟和自动链都这么判）")
+                         "（自动链 pick 投 render 之前就是这么判的）")
+    ap.add_argument("--dispatched-by", metavar="ACTOR", default=None,
+                    help="interview-clip 的 render 那一趟传 `github.triggering_actor`：以 [bot] 结尾"
+                         "（自动链 pick 派发的）才开 --require-subs；个人拨的缺判定只提示，"
+                         "同一个 job 里现量第二份 ASR（picker_dispatched）")
     args = ap.parse_args(argv)
     path = Path(args.spec) if args.spec else SPECS / f"{args.slug}.json"
     spec = json.loads(path.read_text(encoding="utf-8"))
+    require_subs = args.require_subs
+    if args.dispatched_by is not None:
+        auto = picker_dispatched(args.dispatched_by)
+        require_subs = require_subs or auto
+        print(f"[预检] 派发者 {args.dispatched_by or '（认不出）'}："
+              + ("自动链派发——缺 subs 判定算红（pick 投之前就是这么判的）" if auto else
+                 "手动拨的——缺 subs 判定只提示，「转写交叉校验」那一步在这一趟里现量第二份 ASR"))
     try:
         problems, notes = spec_problems(spec, copy=not args.skip_copy, date=args.date,
-                                        require_subs=args.require_subs)
+                                        require_subs=require_subs)
     except PreflightUnavailable as exc:
         print(f"[预检] 判不了：{exc}")
         return 2

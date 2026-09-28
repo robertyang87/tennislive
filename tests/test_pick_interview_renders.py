@@ -439,6 +439,53 @@ def test_封面自动换帧连着三趟挑不出来就停车_换了封面从头�
     assert "b-todo" not in tool.parked_slugs()
 
 
+def test_封面停车标记给pipeline_health_不按时间窗_不停了就摘(tool, monkeypatch, tmp_path):
+    """2026-09-28 会话决定（F3）：封面停车原来只在 auto-render run 摘要的 🅿️ 栏、看板 24 小时窗口里
+    露一下。现在停车那一刻 `note_autopick_failure` 就给那一行标 `parked`（停着的那条探针不当活，
+    全量那一趟未必再来），全量那一趟 `sync_waiting_marks` 按 `parked_slugs` 摘／补；
+    pipeline-health 只读标记、每一班都列，键按 slug（不随时间变）。"""
+    sys.path.insert(0, str(_TOOLS.parent))
+    from tools import pipeline_health as ph  # noqa: PLC0415
+
+    now = datetime(2026, 9, 28, 12, 0, tzinfo=timezone.utc)
+    long_ago = (now - timedelta(minutes=tool.STALE_MINUTES + 1)).strftime("%FT%TZ")
+    tool.mark_one("b-todo", now=long_ago)
+    _closed_record(tool, "b-todo")
+    for _ in range(tool.PARK_AFTER - 1):
+        assert "parked" not in tool.note_autopick_failure("b-todo", now=long_ago)
+    assert ph.parked_interview_covers(tool.STATE, output=tool.OUTPUT) == [], "没满就不算停车"
+    assert tool.note_autopick_failure("b-todo", now=long_ago).get("parked") is True
+    alerts = ph.parked_interview_covers(tool.STATE, output=tool.OUTPUT)
+    assert len(alerts) == 1 and alerts[0].startswith(ph.PARKED_COVER + "b-todo（"), alerts
+    assert f"连着 {tool.PARK_AFTER} 趟" in alerts[0] and "闭眼" in alerts[0], alerts
+    assert ph.alert_keys(alerts) == ["interview-cover:b-todo"]
+    report, got = ph.render_report([], [], (0, 0, 0.0), [], None, parked_covers=alerts)
+    assert "采访封面停车" in report and alerts[0] in got
+    # 全量那一趟判完照旧停着：标记留着（不按时间窗——一周以后还列）
+    tool.todo_plan(now=now)
+    tool.sync_waiting_marks(now=now)
+    assert ph.parked_interview_covers(tool.STATE, output=tool.OUTPUT) == alerts
+    # 人换了封面：全量那一趟摘掉标记
+    spec_path = tool.SPECS / "b-todo.json"
+    body = json.loads(spec_path.read_text(encoding="utf-8"))
+    body["cover"]["frame_at"] = 2.5
+    spec_path.write_text(json.dumps(body, ensure_ascii=False), encoding="utf-8")
+    tool.todo_plan(now=now)
+    assert tool.sync_waiting_marks(now=now) is True
+    row = json.loads(tool.STATE.read_text(encoding="utf-8"))["autopick_failed"]["b-todo"]
+    assert "parked" not in row and ph.parked_interview_covers(tool.STATE, output=tool.OUTPUT) == []
+    # 又攒满、标上；之后人手动重渲成了（成片时刻晚于最后一趟红）——不叫醒全量，这里自己不列
+    for _ in range(tool.PARK_AFTER):
+        tool.note_autopick_failure("b-todo", now=long_ago)
+    assert ph.parked_interview_covers(tool.STATE, output=tool.OUTPUT)
+    (tool.OUTPUT / "b-todo" / "render.json").write_text(json.dumps({"production_sla": {
+        "artifact_ready_at": now.strftime("%FT%TZ")}}), encoding="utf-8")
+    assert ph.parked_interview_covers(tool.STATE, output=tool.OUTPUT) == []
+    body = (_TOOLS / "pipeline_health.py").read_text(encoding="utf-8")
+    call = body[body.index("report, alerts = render_report("):]
+    assert "parked_covers=parked_interview_covers()" in call[:500], "main() 没把封面停车传给报表"
+
+
 def test_停车账和指纹只用标准库(tmp_path):
     """interview-auto-render 的探针（系统 python3）和 `--parked` 都要算封面指纹——
     `interview_cover_scan.cover_fingerprint` 那一串 import 只许标准库，而且两头（interview-clip

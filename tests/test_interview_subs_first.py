@@ -18,7 +18,9 @@
 3. `interview_preflight` 的 dispatch 口径（`require_subs`）把缺缓存、缺判定记成带
    `NEEDS_SUBS` 的红；`pick_interview_renders` 只卡在这一类上的先投 subs；
 4. 两条工作流的接线：auto-render 投 subs、记账、探针数它当活、投 render 时 SLA 从那趟 subs
-   算起；interview-clip 的 render 预检带 `--require-subs`，subs 判定干净就叫醒 auto-render。
+   算起；interview-clip 的 render 预检**只对自动链派发的 run** 开 `--require-subs`
+   （`--dispatched-by`，2026-09-28 会话决定：手动重渲缺判定只提示、同一个 job 里现量），
+   subs 判定干净就叫醒 auto-render。
 """
 
 from __future__ import annotations
@@ -835,7 +837,10 @@ def test_auto_render探针把先投subs的当成活(tmp_path):
 def test_interview_clip的render预检要subs判定_subs干净就叫醒auto_render():
     steps = _wf("interview-clip.yml")
     pre = next(s for s in steps if "tools/interview_preflight.py" in str(s.get("run")))
-    assert "--require-subs" in pre["run"] and "mode == 'render'" in pre["if"]
+    assert "mode == 'render'" in pre["if"]
+    # 派发者决定口径（2026-09-28）：不再对每一趟 render 无条件 `--require-subs`
+    assert '--dispatched-by "$DISPATCHED_BY"' in pre["run"] and "--require-subs" not in pre["run"]
+    assert pre["env"]["DISPATCHED_BY"] == "${{ github.triggering_actor }}"
     names = [s.get("name") for s in steps]
     verify = names.index("第二份 ASR 交叉校验并提交报告（subs）")
     assert steps[verify].get("id") == "subs_verify"
@@ -847,6 +852,78 @@ def test_interview_clip的render预检要subs判定_subs干净就叫醒auto_rend
     assert "mode == 'subs'" in wake["if"] and "github.ref_name == 'main'" in wake["if"]
     assert "gh workflow run interview-auto-render.yml --ref main" in wake["run"]
     assert names.index("叫醒自动出片（subs 交了干净的判定）") > verify
+
+
+# ---------------------------------------------------------------- 手动重渲（2026-09-28 会话决定）
+#
+# 时效第一：已发的采访判定大多没记区间和源（老产物），`--require-subs` 对每一趟 render 都开的话，
+# 手动重渲一条要先多拨一趟 `mode=subs`（取字幕约 1 分钟＋第二份 ASR 3~5 分钟，工作流顶上那张表）。现在只对**自动链 pick 派发的** run 开；
+# 手动拨的缺判定只提示，「转写交叉校验」那一步在同一个 job 里现量第二份 ASR。
+
+@pytest.mark.parametrize("actor, auto", [("github-actions[bot]", True), ("robertyang87", False),
+                                         ("", False)])
+def test_render预检只对自动链派发的开dispatch口径_手动拨的缺判定只提示(
+        monkeypatch, tmp_path, capsys, actor, auto):
+    """不打桩 `spec_problems`：同一条有字幕缓存、没有 subs 判定的 spec，按 interview-clip 那一步
+    的真命令行（`--dispatched-by <github.triggering_actor>`）跑 `main()`——自动链派发的报
+    `NEEDS_SUBS` 的红，个人拨的（和认不出的）只提示；**已经量出来的红两边都红**。"""
+    spec = _spec_with_cache(monkeypatch, tmp_path)
+    path = tmp_path / f"{spec['slug']}.json"
+    path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+
+    def run() -> list[str]:
+        capsys.readouterr()
+        pf.main(["--spec", str(path), "--skip-copy", "--dispatched-by", actor])
+        return capsys.readouterr().out.splitlines()
+
+    out = run()
+    needs = [ln for ln in out if ln.startswith("❌ " + pf.NEEDS_SUBS)]
+    assert bool(needs) == auto, out
+    if not auto:
+        assert any(ln.startswith("⚠️") and clip.SECOND_ASR_VERDICT in ln for ln in out), out
+        assert any("现量第二份 ASR" in ln for ln in out), "手动那一支要说清转写在哪儿验"
+    # 量出来的红（分歧 30%、没认领）：谁拨的都红——手动放行的只是「还没量」
+    work = pf.OUTPUT / spec["slug"]
+    clip.record_second_asr(spec, _lines_as_main(spec, work), work, 0.3, 9, 6)
+    assert any(ln.startswith("❌ " + pf.SUBS_RED) for ln in run())
+
+
+def test_认自动链派发者和看板的无人值守同一个判法():
+    """`picker_dispatched` 和 `build_dashboard_snapshot.is_unattended`（workflow_dispatch 那一支）
+    必须同一个结论——那边 2026-09-27 实测过编排链派发的 interview-clip 36337385713 的
+    `triggering_actor` 是 `github-actions[bot]`、会话拨的是个人登录名。"""
+    import importlib.util  # noqa: PLC0415
+
+    spec = importlib.util.spec_from_file_location(
+        "dash_for_subs_first", ROOT / "tools" / "build_dashboard_snapshot.py")
+    dash = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(dash)
+    for login, kind in (("github-actions[bot]", "Bot"), ("robertyang87", "User")):
+        run = {"event": "workflow_dispatch", "triggering_actor": {"login": login, "type": kind}}
+        assert pf.picker_dispatched(login) is dash.is_unattended(run), login
+    assert pf.picker_dispatched(None) is False and pf.picker_dispatched("  ") is False, \
+        "认不出按手动算：那一支照样验转写，按自动算会把人挡在门外"
+
+
+def test_手动拨的render照样在同一个job里验转写_自动链仍用GITHUB_TOKEN派发():
+    """手动那一支靠的是「转写交叉校验」那一步：它只看 mode、不看有没有判定（判定不是 ok 时
+    `--stage verify` 现量第二份 ASR，`test_判定ok时verify不重量_补落pass指纹让render认` 钉着
+    代码那一半），排在预检之后、剪片之前，faster-whisper 和模型缓存在 render 这一档照装。
+    自动链那一支靠 pick 用仓库自带的 token 派发——换成个人 PAT，派发者就不是 [bot] 了。"""
+    steps = _wf("interview-clip.yml")
+    names = [s.get("name") for s in steps]
+    pre = next(i for i, s in enumerate(steps) if "tools/interview_preflight.py" in str(s.get("run")))
+    at = names.index("转写交叉校验")
+    verify = steps[at]
+    assert verify["if"].strip() == "github.event.inputs.mode == 'render'", verify["if"]
+    assert "--stage verify" in verify["run"]
+    assert pre < at < names.index("剪 + 烧字幕")
+    deps = steps[names.index("装依赖")]["run"]
+    assert 'if [ "$MODE" = "render" ]; then EXTRA_ASR="faster-whisper"' in deps
+    assert "mode == 'render'" in steps[names.index("缓存第二份 ASR 模型")]["if"]
+    auto = next(s for s in _wf("interview-auto-render.yml")
+                if "gh workflow run interview-clip.yml" in str(s.get("run")))
+    assert auto["env"]["GH_TOKEN"] in ("${{ secrets.GITHUB_TOKEN }}", "${{ github.token }}")
 
 
 # ---------------------------------------------------------------- 复审第三轮（2026-09-28）
@@ -1281,6 +1358,80 @@ def test_同一份转写输入投满次数停下_账上标parked_pipeline_health
     pick.sync_subs_state(now=now)
     assert "parked" not in json.loads(pick.STATE.read_text())["subs"]["needs"]
     assert ph.parked_interview_subs(pick.STATE) == []
+
+
+def test_转写判定红着的记下从哪一刻起_超过6小时pipeline_health列出来(pick):
+    """2026-09-28 会话决定（F3）：subs 交了红的判定，auto-render 只把它放进 stderr 的等待名单
+    （那一趟 subs 退出码 3 是绿的、也不叫醒谁），不翻日志看不见。全量那一趟判红时记 `subs_red`
+    （`since`＝第一次见它红，同一份转写输入接着红不动；转写输入改了重新算；不红了删掉），
+    pipeline-health 按 `since` 超过 6 小时才列，键只认 slug（「红着已 N 小时」每班都长）。"""
+    import interview_preflight  # noqa: PLC0415
+
+    sys.path.insert(0, str(ROOT))
+    from tools import pipeline_health as ph  # noqa: PLC0415
+
+    at = lambda h: (_NOW + timedelta(hours=h)).strftime("%FT%TZ")  # noqa: E731
+    spec = json.loads((pick.SPECS / "needs.json").read_text(encoding="utf-8"))
+    (pick.SPECS / "red.json").write_text(json.dumps(dict(spec, slug="red")), encoding="utf-8")
+    (pick.SPECS / "red.xhs.txt").write_text("文案", encoding="utf-8")
+    pick._VERDICTS_FIXTURE["red"] = [f"{interview_preflight.SUBS_RED}第二份 ASR 在当前转写指纹上"
+                                     "量到：分歧 30.0%（闸门 12%），没有认领"]
+    _, waiting, subs = pick.todo_plan(now=_NOW)
+    assert "red" in dict(waiting) and "red" not in subs
+    assert pick.sync_waiting_marks(now=_NOW) is True
+    book = json.loads(pick.STATE.read_text(encoding="utf-8"))["subs_red"]
+    assert set(book) == {"red"} and book["red"]["since"] == at(0) and "30.0%" in book["red"]["why"]
+    # 一小时后还红着、转写输入没变：`since` 不动
+    pick.todo_plan(now=_NOW + timedelta(hours=1))
+    pick.sync_waiting_marks(now=_NOW + timedelta(hours=1))
+    assert json.loads(pick.STATE.read_text(encoding="utf-8"))["subs_red"]["red"]["since"] == at(0)
+    assert ph.interview_subs_red_waiting(now=_NOW + timedelta(hours=5), path=pick.STATE) == []
+    alerts = ph.interview_subs_red_waiting(now=_NOW + timedelta(hours=7), path=pick.STATE)
+    assert len(alerts) == 1 and alerts[0].startswith(ph.SUBS_RED_WAITING + "red（"), alerts
+    assert "7 小时" in alerts[0] and "30.0%" in alerts[0]
+    later = ph.interview_subs_red_waiting(now=_NOW + timedelta(hours=30), path=pick.STATE)
+    assert ph.alert_keys(alerts) == ph.alert_keys(later) == ["interview-subs-red:red"]
+    report, got = ph.render_report([], [], (0, 0, 0.0), [], None, subs_red=alerts)
+    assert "采访转写判定红着超过 6 小时" in report and alerts[0] in got
+    # 人改了转写输入（区间），还是红（要重量）：从这一刻重新算
+    (pick.SPECS / "red.json").write_text(json.dumps(dict(spec, slug="red", end=42.0)),
+                                         encoding="utf-8")
+    pick.todo_plan(now=_NOW + timedelta(hours=8))
+    pick.sync_waiting_marks(now=_NOW + timedelta(hours=8))
+    assert json.loads(pick.STATE.read_text(encoding="utf-8"))["subs_red"]["red"]["since"] == at(8)
+    # 认领够了、不红了：账上删掉，pipeline-health 不再列
+    pick._VERDICTS_FIXTURE["red"] = []
+    pick.todo_plan(now=_NOW + timedelta(hours=9))
+    pick.sync_waiting_marks(now=_NOW + timedelta(hours=9))
+    assert "subs_red" not in json.loads(pick.STATE.read_text(encoding="utf-8"))
+    assert ph.interview_subs_red_waiting(now=_NOW + timedelta(days=3), path=pick.STATE) == []
+    body = (ROOT / "tools" / "pipeline_health.py").read_text(encoding="utf-8")
+    call = body[body.index("report, alerts = render_report("):]
+    assert "subs_red=interview_subs_red_waiting()" in call[:500], "main() 没把红着的转写传给报表"
+    wf = (ROOT / ".github" / "workflows" / "interview-auto-render.yml").read_text(encoding="utf-8")
+    assert "--sync-subs" in wf, "记账只在全量那一趟（--sync-subs）跑"
+    src = (ROOT / "tools" / "pick_interview_renders.py").read_text(encoding="utf-8")
+    sync = src[src.index("        if args.sync_subs:"):]
+    assert "sync_waiting_marks()" in sync[:400], "--sync-subs 没调 sync_waiting_marks——等于没装"
+
+
+def test_红着的转写那本账撞车合并不丢_远端动过听远端的():
+    from merge_orchestration_state import merge_interview_states  # noqa: PLC0415
+
+    base = {"slugs": [], "at": {}, "spec_sha256": {}}
+    row = {"since": "2026-09-28T04:00:00Z", "inputs_sha256": "i", "why": "分歧 30%"}
+    merged = merge_interview_states(base, {**base, "subs_red": {"red": row}},
+                                    {**base, "slugs": ["x"], "at": {"x": "t"}})
+    assert merged["subs_red"] == {"red": row} and merged["slugs"] == ["x"]
+    # 本趟删掉（不红了）：带过去
+    merged = merge_interview_states({**base, "subs_red": {"red": row}}, base,
+                                    {**base, "subs_red": {"red": row}})
+    assert "subs_red" not in merged
+    # 远端自己改过这一条（更早的 since）：听远端的
+    older = dict(row, since="2026-09-28T03:00:00Z")
+    merged = merge_interview_states(base, {**base, "subs_red": {"red": row}},
+                                    {**base, "subs_red": {"red": older}})
+    assert merged["subs_red"] == {"red": older}
 
 
 def test_停着的那条探针判不了就叫醒全量_全量判过缓存命中就不再叫醒(pick, monkeypatch):

@@ -309,11 +309,20 @@ jobs:
       # 分歧超阈」，都是装完依赖、下完源片、跑完三五分钟 whisper 才知道；判定在仓库里
       # 的话，这一步第 1 秒就判得出。缺判定就先 dispatch `mode=subs`（它交判定，
       # render 那一趟的 verify 在判定 ok 时直接用它、不再重量）。
+      #
+      # ⭐ **只对自动链派发的 run 开**（`--dispatched-by`，2026-09-28 会话决定，时效第一）：
+      # 已推送的 54 条里 46 条的判定是没记区间和源的老产物，手动重渲一条原来要先多拨一趟
+      # `mode=subs`（取字幕约 1 分钟＋第二份 ASR 3~5 分钟，工作流顶上那张表）。派发者按 `github.triggering_actor` 认——pick 用
+      # `GH_TOKEN: secrets.GITHUB_TOKEN` 派发，是 `github-actions[bot]`（interview-clip
+      # 36337385713 实测，见 build_dashboard_snapshot.is_unattended）；个人拨的缺判定只提示，
+      # 下面「转写交叉校验」那一步在同一个 job 里现量第二份 ASR（判定不是 ok 就重量，
+      # 上线 subs 之前的老路）。已经量出来的红，两种派发者都红。
       - name: 采访 spec 离线预检（秒级）
         if: github.event.inputs.mode == 'render'
         env:
           SLUG: ${{ github.event.inputs.slug }}
-        run: PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy --require-subs
+          DISPATCHED_BY: ${{ github.triggering_actor }}
+        run: PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy --dispatched-by "$DISPATCHED_BY"
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都

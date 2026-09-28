@@ -1267,14 +1267,13 @@ jobs:
           rc=$?
           set -e
           # **量到的真时长落账，提交回这条分支**（2026-09-28）：`--dry-run` 对「落在估算
-          # 误差里」的段按旁白指纹认 data/narration_checks/<slug>.json，手写 spec 没这份账
-          # 就红（`narration_check_findings`）。沙箱连不上 edge-tts（WSS 被代理挡），这一趟
-          # 是会话里补账的路——不提交的话量完就丢。只 add 这一个小 JSON，装不下（rc=1）
-          # 也照样落账：真时长本身没错，改画面长度不用重量。
+          # 误差里」的段按旁白指纹认 data/narration_checks/<slug>.json（`narration_check_findings`；
+          # 没账只报、不拦——09-28 会话决定，这一趟**不是**正常路径上必走的一步，想先知道才拨）。
+          # 沙箱连不上 edge-tts（WSS 被代理挡），这一趟是会话里补账的路——不提交的话量完就丢。
+          # 只 add 这一个小 JSON，装不下（rc=1）也照样落账：真时长本身没错，改画面长度不用重量。
           REC="data/narration_checks/${{ github.event.inputs.slug }}.json"
-          # **main 上不提交**（2026-09-28 修正轮 2）：直接推到 main 的提交不过 CI，冻着的 slug
-          # 量完账，`test_旁白没量过真TTS的豁免表只许减` 就红在下一个无关 PR 上。在分支上跑，
-          # 账和豁免表的删行进同一个 PR；main 上这一趟只报数（日志里那张表照旧印）。
+          # **main 上不提交**（2026-09-28 修正轮 2）：直接推到 main 的提交不过 CI。在分支上跑，
+          # 账和 spec 进同一个 PR；main 上这一趟只报数（日志里那张表照旧印）。
           if [ "${{ github.ref_name }}" = "main" ]; then
             echo "::warning::mode=narration 在 main 上跑：真 TTS 的账不提交（main 的提交不过 CI）——要落账就在分支上重跑，或者把日志里那张表抄进 $REC 走 PR"
           elif [ -f "$REC" ]; then

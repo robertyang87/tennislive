@@ -37,7 +37,9 @@ dispatch 口径（`require_subs`）下，缺字幕缓存、缺**当前转写指�
 封面、小红书正文还缺着也投**（D2：第二份 ASR 和翻译并行，subs 那两档对它们只报不拦）；
 workflow 投 `mode=subs`、`--mark-subs` 记一笔；判定落库之后下一趟再判：干净就投 render，
 量出分歧／空档就进等待名单等人改或认领。`--sync-subs` 顺手收拾那本账（判定交上来的删、
-投满次数停下的标 `parked`，pipeline-health 读它）。
+投满次数停下的标 `parked`，pipeline-health 读它）；同一趟还记下 pipeline-health 要列的另外两种
+「停着」：转写判定红着等人的（`subs_red`，记从哪一刻起红着）、封面停车的（`autopick_failed` 那一行
+标 `parked`）——`sync_waiting_marks`。
 来路：9/20~9/28 六趟 render 红在「空档没销账／转写分歧超阈」（alcaraz-fritz ×3、
 tien-cobolli ×2、chwalinska ×1，25.4 runner-分钟），**0/6 在 dispatch 之前拦得住**，
 其中四趟是这里投的——第二份 ASR 的结论只活在 runner 上。
@@ -45,7 +47,7 @@ tien-cobolli ×2、chwalinska ×1，25.4 runner-分钟），**0/6 在 dispatch �
 用法：
     python tools/pick_interview_renders.py               # 打印待 dispatch 的
     python tools/pick_interview_renders.py --subs-list F # 另把「先投 subs」的写进 F
-    python tools/pick_interview_renders.py --subs-list F --sync-subs  # dispatch 那一步：顺手收拾 subs 的账
+    python tools/pick_interview_renders.py --subs-list F --sync-subs  # dispatch 那一步：顺手收拾 subs 的账＋停着的标记
     python tools/pick_interview_renders.py --mark-one X  # X dispatch 成功后记一笔
     python tools/pick_interview_renders.py --mark-subs X # X 的 subs dispatch 成功后记一笔
     python tools/pick_interview_renders.py --received-at X --at T  # X 投 render 时的 SLA 起点
@@ -144,6 +146,10 @@ L0_MISSING = "L0 本场场上采访身份"
 # 只在 main 上投、只读 main 上的账，分支上的一笔合并进来会替 main 停一条它没红过的封面。
 PARK_AFTER = 3
 PARK_KINDS = ("autopick", "audit", "check")
+#: 状态文件里「转写判定红着等人」那本账（`sync_waiting_marks` 写、`pipeline_health` 读）：
+#: slug → {since, inputs_sha256, why}。`since` 是全量那一趟**第一次**见它红的时刻——同一份转写输入
+#: 一直红着就不动；转写输入一改（重量）或者不红了就从账上删。
+SUBS_RED_BOOK = "subs_red"
 
 
 def _sha256(path: Path) -> str:
@@ -455,6 +461,8 @@ def _load_state() -> dict:
         data["subs"] = {}
     if "autopick_failed" in data and not isinstance(data["autopick_failed"], dict):
         data["autopick_failed"] = {}
+    if SUBS_RED_BOOK in data and not isinstance(data[SUBS_RED_BOOK], dict):
+        data[SUBS_RED_BOOK] = {}
     return data
 
 
@@ -622,6 +630,10 @@ def note_autopick_failure(slug: str, *, now: str = "", kind: str = "autopick",
     rows[slug] = {"cover": fp, "record": blob, "count": count, "kind": kind,
                   "at": now or datetime.now(timezone.utc).strftime("%FT%TZ"),
                   "why": why[:400]}
+    if count >= PARK_AFTER:
+        # 停车那一刻就标上（pipeline-health 只读标记）：停着的那条探针不当活，全量那一趟
+        # （`sync_waiting_marks`）未必再跑——等它来标，闲着的日子就永远没人知道
+        rows[slug]["parked"] = True
     _write_state(state)
     return rows[slug]
 
@@ -718,6 +730,7 @@ def todo_plan(*, now: datetime | None = None
     now = now or datetime.now(timezone.utc)
     state = _load_state()
     _SUBS_SYNC["keep"], _SUBS_SYNC["parked"], _SUBS_SYNC["others"] = set(), set(), {}
+    _SUBS_SYNC["red"], _SUBS_SYNC["cover_parked"] = {}, set()
     rendered = _rendered_slugs()
     current_rendered = _current_rendered_slugs(rendered)
     changed_inputs = rendered - current_rendered
@@ -728,6 +741,7 @@ def todo_plan(*, now: datetime | None = None
     waiting: list[tuple[str, list[str]]] = []
     subs: list[str] = []
     parked = parked_slugs(rendered=current_rendered)
+    _SUBS_SYNC["cover_parked"] = set(parked)
     _PARKED.clear()
     for p in sorted(SPECS.glob("*.json")):
         if p.name.endswith(".draft.json") or p.stem in blocked:
@@ -770,6 +784,9 @@ def todo_plan(*, now: datetime | None = None
             _PARKED.append(p.stem)
             continue
         missing = missing_for_render(p.stem, spec)
+        from interview_preflight import SUBS_RED  # noqa: PLC0415 —— 顶层只 import 标准库
+        if reds := [m for m in missing if SUBS_RED in m]:
+            _SUBS_SYNC["red"][p.stem] = reds[0]   # 转写判定红着等人（`sync_waiting_marks` 记账）
         if not missing:
             ready.append(p.stem)
             _SUBS_SYNC["keep"].add(p.stem)    # render_received_at 要那趟 subs 的时刻，mark_one 再删
@@ -800,8 +817,9 @@ def todo_plan(*, now: datetime | None = None
 
 
 #: `todo_plan` 最近一趟留下的：「先投 subs」那本账该留哪几条（`keep`）、哪几条停下了（`parked`）、
-#: 先投 subs 的那几条 render 另外还缺什么（`others`，只印给人看）。
-_SUBS_SYNC: dict = {"keep": set(), "parked": set(), "others": {}}
+#: 先投 subs 的那几条 render 另外还缺什么（`others`，只印给人看）；转写判定红着的（`red`：
+#: slug → 第一条红）、封面停车的（`cover_parked`）——后两样 `sync_waiting_marks` 用。
+_SUBS_SYNC: dict = {"keep": set(), "parked": set(), "others": {}, "red": {}, "cover_parked": set()}
 
 
 def sync_subs_state(*, now: datetime | None = None) -> list[str]:
@@ -842,6 +860,56 @@ def sync_subs_state(*, now: datetime | None = None) -> list[str]:
         STATE.parent.mkdir(parents=True, exist_ok=True)
         STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
     return dropped
+
+
+def sync_waiting_marks(*, now: datetime | None = None) -> bool:
+    """按 `todo_plan` 刚判完的结论，给 pipeline-health 记下另外两种「停着、要人」→ 状态改没改。
+
+    2026-09-28 会话决定（F3）：这两种原来只印在 auto-render 的 run 摘要／stderr 里，要么不翻日志
+    看不见，要么只在看板的 24 小时窗口里露一下——而它们都是自动链自己修不好、会一直停着的。
+    和 `parked_interview_subs` 同一个形状：**pick 在这儿判、记标记，pipeline-health 只读标记**
+    （判法只在这边定义一次；pipeline-health 的稀疏检出只有这份状态文件）。
+
+    - **转写判定红着等人**（`subs_red`）：预检报 `SUBS_RED`（第二份 ASR 分歧超闸没认领够、VAD 在
+      空档里听到了人声）的 slug → `{since, inputs_sha256, why}`。同一份转写输入接着红，`since` 不动
+      （pipeline-health 按它算红了多久，超过 6 小时才喊）；转写输入改了（人改了 en_fixed／区间，
+      下一趟要重量）从现在重新算；不再红的删掉。
+    - **封面停车**：`parked_slugs` 判出来的，`autopick_failed[slug]` 那一行标 `parked: true`；不再停着
+      （换了封面、重扫了记录、当前 spec 出过片）摘掉。计数和停车条件只在 `parked_slugs` 里。
+      进停车那一刻 `note_autopick_failure` 已经标上了（停着的那条不算活，全量那一趟未必再来）；
+      摘标记靠这里——换封面／重扫记录都会让它回到待投、叫醒全量那一趟。
+    只在全量那一趟（`--sync-subs`）跑，探针不写状态。"""
+    now = now or datetime.now(timezone.utc)
+    stamp = now.strftime("%FT%TZ")
+    state = _load_state()
+    changed = False
+    book = state.get(SUBS_RED_BOOK) if isinstance(state.get(SUBS_RED_BOOK), dict) else {}
+    fresh: dict = {}
+    for slug, why in sorted(_SUBS_SYNC["red"].items()):
+        inputs = _subs_inputs(slug)
+        prev = book.get(slug) if isinstance(book.get(slug), dict) else {}
+        same = bool(prev) and prev.get("inputs_sha256") == inputs and _utc(prev.get("since"))
+        fresh[slug] = {"since": prev["since"] if same else stamp, "inputs_sha256": inputs,
+                       "why": str(why)[:300]}
+    if fresh != book:
+        if fresh:
+            state[SUBS_RED_BOOK] = fresh
+        else:
+            state.pop(SUBS_RED_BOOK, None)
+        changed = True
+    for slug, row in (state.get("autopick_failed") or {}).items():
+        if not isinstance(row, dict):
+            continue
+        parked = slug in _SUBS_SYNC["cover_parked"]
+        if bool(row.get("parked")) != parked:
+            if parked:
+                row["parked"] = True
+            else:
+                row.pop("parked", None)
+            changed = True
+    if changed:
+        _write_state(state)
+    return changed
 
 
 def mark_one(slug: str, *, now: str = "") -> None:
@@ -920,7 +988,9 @@ def main() -> int:
                     help="这条 slug 的 mode=subs dispatch 成功了，记进状态")
     ap.add_argument("--sync-subs", action="store_true",
                     help="判完顺手收拾「先投 subs」那本账：删判定已交上来的、标投满次数停下的"
-                         "（`sync_subs_state`；只在 dispatch 那一步用——本地预览别带，免得改状态文件）")
+                         "（`sync_subs_state`），再记下转写判定红着等人的、封面停车的"
+                         "（`sync_waiting_marks`，pipeline-health 读）；只在 dispatch 那一步用——"
+                         "本地预览别带，免得改状态文件")
     args = ap.parse_args()
     global PROBE
     PROBE = bool(args.probe)
@@ -969,6 +1039,7 @@ def main() -> int:
             if dropped := sync_subs_state():
                 print(f"[subs 账] 删了 {len(dropped)} 条判定已交上来／用不上的：{'、'.join(dropped)}",
                       file=sys.stderr)
+            sync_waiting_marks()
     if args.subs_list:
         Path(args.subs_list).write_text("".join(f"{s}\n" for s in subs), encoding="utf-8")
     unknown = [s for s in ready if s in _UNKNOWN]

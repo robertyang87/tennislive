@@ -469,8 +469,8 @@ def test_dry_run真的印出多音字预检(tmp_path):
         path.parent.mkdir()
         path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
         # ⚠️ 两趟都按 runner 的 mode=narration 跑（`REEL_DRY_RUN_FOR`）：塞一处多音字就是改了
-        # 旁白，「误差带里的段要拿真 TTS 认账」那道闸（`narration_check_findings`，2026-09-28）
-        # 按设计会把冻着的老片判回新规矩、红——那是另一道闸的事，它在 narration 那趟只报。
+        # 旁白，别的按 mode 分软硬的闸（量过真 TTS 装不下那一类）在 narration 那趟只报——
+        # 那是另一道闸的事，不该让这条红。（「误差带里没账」2026-09-28 起任何一趟都只报。）
         env = {**os.environ, "REEL_DRY_RUN_FOR": "narration"}
         return subprocess.run(
             [sys.executable, "tools/build_match_reel.py", "render", "--spec", str(path),

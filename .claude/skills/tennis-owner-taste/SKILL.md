@@ -105,7 +105,7 @@ BGM 走曲库那条不在里面：它是他 08-29 在两个方案里亲口选的
 
 ### C 发 render 之前
 
-- [ ] **C1** 〔全部〕本地闸都跑完了吗：`--dry-run`、目标测试（读统计行，不看退出码）、dry-run 报「误差带」就跑 `--check-narration`（09-28 起没账手写 spec 直接红，账在 `data/narration_checks/`）、`preview_segments_local`、`render_cover_local`、`tools/taste_preflight.py`？同一个 commit 的确定性闸红了，不重渲去确认　❌ wu-duckworth：回贴开关在镜头中间翻转，四道闸全绿，拉回成片才看见　✅ dry-run 0.2 秒 → 预览 3 秒 → 封面 7 秒 → check-narration 约 1 分钟 → 全绿才发
+- [ ] **C1** 〔全部〕本地闸都跑完了吗：`--dry-run`、目标测试（读统计行，不看退出码）、dry-run 报「误差带」就跑 `--check-narration`（没账只报不拦、render 编码之前那道真 TTS 闸兜底；想先知道就量，账在 `data/narration_checks/`）、`preview_segments_local`、`render_cover_local`、`tools/taste_preflight.py`？同一个 commit 的确定性闸红了，不重渲去确认　❌ wu-duckworth：回贴开关在镜头中间翻转，四道闸全绿，拉回成片才看见　✅ dry-run 0.2 秒 → 预览 3 秒 → 封面 7 秒 → check-narration 约 1 分钟 → 全绿才发
 - [ ] **C2** 〔全部〕这次改动碰到的 slug 都在他限定的范围里吗？新写进 spec 或测试的规矩引得到他的原话和日期吗？　❌ crowd-noise 在同一个 PR 里连片子内容也改了；会话自造「不展示排名」写进 7 条 spec　✅ 豁免表里另外三条一个字没碰
 - [ ] **C3** 〔全部〕这是口径选择（两个答案都对）吗？不是就按证据直接做，证据写进 `_why` 和回复　❌ 证据摆出来之后停下来等他表态　✅ 证据进 `_why` 和 PR 正文，直接渲
 - [ ] **C4** 〔全部〕他已经否过一版封面、钩子或版式了？这一轮是不是一次真渲 3–4 个并排候选给他挑（首版不适用，首版按本规则自己选、不等批准）？　❌ mensik-nakashima 每轮只换一个，36 分钟里钩子改了五轮　✅ bu-zheng 四版并排，一次定下

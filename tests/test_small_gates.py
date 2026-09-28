@@ -5,7 +5,7 @@
 |---|---|---|
 | 1 | 章节卡超 18 字在 `--dry-run` 就红 | china-open-withdrawals（run 36296202661）、asiad-2026-men-draw（run 36296693320） |
 | 2 | 「写过源片末尾」容差从 +0.05s 收成 0 | hu-kopriva-chengdu-2026-r1（run 35949569743） |
-| 3 | 误差带里的旁白要拿真 TTS 认账 | zverev-deminaur-laver-cup-2026 第 9 段（run 36257658569） |
+| 3 | 误差带里的旁白要拿真 TTS 认账（09-28 会话：没账只报，量过装不下才红） | zverev-deminaur-laver-cup-2026 第 9 段（run 36257658569） |
 | 4 | 蒙版先缩成裁框尺寸再 alphamerge | safiullin-bu-hangzhou-2026-qf（run 36323549463，424×108 对 424×109） |
 | 5 | 已知带片尾板的源，话音后空太久，手写采访红 | alcaraz-fritz-interview（1b0b65ee5）、tien-cobolli（9ae8918fb）——⚠️ 这两条是自动 spec，这道闸只报、拦不住（归出片那一趟的 `end_card_problem`） |
 | 6 | 钩子「送××进决赛」不算赛果；「N号种子」只报 | bucsa-noskova（872c6dab6）；bu-majchrzak（61e62b8a5） |
@@ -13,6 +13,9 @@
 | 8 | 开着回贴、probe 没量板，手写红 | prozorova-eala（run 36020126044）、alcaraz-mensik-doubles（run 36197683115） |
 
 每一道：手写 spec 硬、自动 spec 只报、已发的冻进豁免表（只许减、自带自检）。
+⚠️ 第 3 道例外（2026-09-28 会话决定，时效第一）：**没账只报**，只有量过、装不下才红——
+specs/reels 下 316 条能解析的 spec 里 305 条落在误差带里，没账就红等于每条新片子多一趟 runner；
+render 编码之前那道真 TTS 旁白闸兜底。冻结表 `legacy_narration_unchecked.json` 随之删掉。
 """
 from __future__ import annotations
 
@@ -150,18 +153,21 @@ def _tight(segments) -> list[int]:
             if -reel.SPEECH_EST_ERR <= room < reel.SPEECH_EST_ERR]
 
 
-def test_误差带里的段没量过真TTS_手写的红_命令现成():
+def test_误差带里的段没量过真TTS_只报不拦_命令现成():
+    """2026-09-28 会话决定：没账**只报**（带两行现成命令），不再红——几乎每条新片子都落在
+    误差带里，红就是正常路径上多一趟 runner；render 编码之前那道真 TTS 旁白闸兜底。"""
     spec, segs = _zverev_spec()
     tight = _tight(segs)
     assert tight == [0], "zverev-deminaur 第 9 段离线估落在误差带里——这正是那一趟没去量的原因"
-    hard, soft, ok = reel.narration_check_findings(spec, segs, tight, record={}, legacy={}, env={})
-    assert len(hard) == 1 and not soft and not ok, (hard, soft)
-    assert "render --check-narration --spec specs/reels/zz-new-laver-cup-2026.json" in hard[0]
-    assert "-f mode=narration -f slug=zz-new-laver-cup-2026" in hard[0]
+    hard, soft, ok = reel.narration_check_findings(spec, segs, tight, record={}, env={})
+    assert not hard and len(soft) == 1 and not ok, (hard, soft)
+    assert "render --check-narration --spec specs/reels/zz-new-laver-cup-2026.json" in soft[0]
+    assert "-f mode=narration -f slug=zz-new-laver-cup-2026" in soft[0]
+    assert "不拦" in soft[0] and "render 编码之前" in soft[0]
     # 修正轮 2：runner 那一行排前面、叮嘱别在 main 上跑；不再说「本地能连 edge-tts 就行」
-    assert hard[0].index("gh workflow run") < hard[0].index("render --check-narration")
-    assert "别在 main 上跑" in hard[0] and "能连 edge-tts" not in hard[0]
-    assert "Azure 实测" not in hard[0], "那一趟没有 Azure，12.10s 是 edge-tts 量的"
+    assert soft[0].index("gh workflow run") < soft[0].index("render --check-narration")
+    assert "别在 main 上跑" in soft[0] and "能连 edge-tts" not in soft[0]
+    assert "Azure 实测" not in soft[0], "那一趟没有 Azure，12.10s 是 edge-tts 量的"
 
 
 def test_量过真TTS的账按旁白指纹认():
@@ -169,40 +175,37 @@ def test_量过真TTS的账按旁白指纹认():
     fp = reel.narration_fingerprint(segs[0])
     # 装得下：放行，还要报出来认过账
     hard, soft, ok = reel.narration_check_findings(
-        spec, segs, [0], record={fp: {"segment": 1, "spoken": 11.5}}, legacy={}, env={})
+        spec, segs, [0], record={fp: {"segment": 1, "spoken": 11.5}}, env={})
     assert not hard and ok, (hard, ok)
-    # runner 那一趟（edge-tts）的真数 12.10 > 11.9 + 0.12：量过也红
+    # runner 那一趟（edge-tts）的真数 12.10 > 11.9 + 0.12：量过、装不下，手写的照样红
     hard, soft, ok = reel.narration_check_findings(
-        spec, segs, [0], record={fp: {"segment": 1, "spoken": 12.10}}, legacy={}, env={})
+        spec, segs, [0], record={fp: {"segment": 1, "spoken": 12.10}}, env={})
     assert len(hard) == 1 and "超出" in hard[0], hard
-    # 改一个字，指纹变了，老账不认
+    # 改一个字，指纹变了，老账不认——按「没量过」只报
     spec2, segs2 = _zverev_spec()
     segs2[0].narration += "！"
-    hard, _soft, _ok = reel.narration_check_findings(
-        spec2, segs2, [0], record={fp: {"segment": 1, "spoken": 11.5}}, legacy={}, env={})
-    assert hard and "没有这几段" in hard[0]
+    hard, soft, _ok = reel.narration_check_findings(
+        spec2, segs2, [0], record={fp: {"segment": 1, "spoken": 11.5}}, env={})
+    assert not hard and soft and "没有这几段" in soft[0]
 
 
-def test_误差带那道闸_自动spec和runner的cover与narration趟只报_冻着的老片只认原文():
-    spec, segs = _zverev_spec(_production=AUTO)
-    hard, soft, _ok = reel.narration_check_findings(spec, segs, [0], record={}, legacy={}, env={})
-    assert not hard and soft and "自动产的 spec 只报" in soft[0]
+def test_误差带那道闸_没账任何一趟都只报_量过装不下只在手写的render趟红():
     spec, segs = _zverev_spec()
-    for mode in ("narration", "cover"):
+    fp = reel.narration_fingerprint(segs[0])
+    over = {fp: {"segment": 1, "spoken": 12.10}}
+    for mode in ("render", "narration", "cover"):
         hard, soft, _ok = reel.narration_check_findings(
-            spec, segs, [0], record={}, legacy={}, env={"REEL_DRY_RUN_FOR": mode})
+            spec, segs, [0], record={}, env={"REEL_DRY_RUN_FOR": mode})
         assert not hard and soft, mode
-    hard, _soft, _ok = reel.narration_check_findings(
-        spec, segs, [0], record={}, legacy={}, env={"REEL_DRY_RUN_FOR": "render"})
-    assert hard
-    frozen = {spec["slug"]: reel.spec_narration_fingerprint(segs)}
-    hard, soft, _ok = reel.narration_check_findings(spec, segs, [0], record={}, legacy=frozen,
-                                                    env={})
-    assert not hard and "legacy_narration_unchecked" in soft[0]
-    segs[0].narration = segs[0].narration.replace("十比九", "10比9")
-    hard, _soft, _ok = reel.narration_check_findings(spec, segs, [0], record={}, legacy=frozen,
-                                                     env={})
-    assert hard, "冻着的老片改了一个字就要重量"
+        hard, soft, _ok = reel.narration_check_findings(
+            spec, segs, [0], record=over, env={"REEL_DRY_RUN_FOR": mode})
+        assert bool(hard) == (mode == "render") and bool(soft) == (mode != "render"), mode
+    spec, segs = _zverev_spec(_production=AUTO)
+    hard, soft, _ok = reel.narration_check_findings(spec, segs, [0], record=over, env={})
+    assert not hard and soft and "自动产的 spec 只报" in soft[0]
+    hard, soft, _ok = reel.narration_check_findings(spec, segs, [0], record={}, env={})
+    assert not hard and soft and "自动产的 spec 只报" in soft[0]
+    assert "legacy" not in inspect.signature(reel.narration_check_findings).parameters
 
 
 def test_check_narration落账_dry_run读回来(tmp_path, monkeypatch):
@@ -213,7 +216,7 @@ def test_check_narration落账_dry_run读回来(tmp_path, monkeypatch):
     assert path.parent == tmp_path and path.name == "zz-new-laver-cup-2026.json"
     record = reel.load_narration_record(spec["slug"])
     assert record[reel.narration_fingerprint(segs[0])]["spoken"] == 11.4
-    hard, _soft, ok = reel.narration_check_findings(spec, segs, [0], legacy={}, env={})
+    hard, _soft, ok = reel.narration_check_findings(spec, segs, [0], env={})
     assert not hard and ok
 
 
@@ -226,34 +229,37 @@ def test_账本量的不是出片那一套_整份不认(tmp_path, monkeypatch):
     edge, azure = ("edge-tts", ["", ""]), ("azure", ["", ""])
 
     def verdict(**kw):
-        return reel.narration_check_findings(spec, segs, [0], legacy={}, env={}, **kw)
+        return reel.narration_check_findings(spec, segs, [0], env={}, **kw)
+
+    def refused(**kw) -> str:
+        """账被整份不认 → 按「没量过」只报（09-28 起不红），返回那一句；认了返回空串。"""
+        hard, soft, ok = verdict(**kw)
+        assert not hard, hard
+        return "" if ok else soft[0]
 
     reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate=rate,
                                 backend="edge-tts")
     # 没有 Azure 的 runner（run 36257658569 那一种）：出片走 edge-tts，edge-tts 的账就认
-    hard, _soft, ok = verdict(tts=edge, voice=voice, rate=rate)
-    assert not hard and ok, hard
+    assert not refused(tts=edge, voice=voice, rate=rate)
     # 出片那台有 Azure：edge-tts 的账不认
-    hard, _soft, ok = verdict(tts=azure, voice=voice, rate=rate)
-    assert hard and not ok and "TTS 后端" in hard[0] and "'edge-tts'" in hard[0], hard
-    assert not verdict()[0], "没给 tts 就不比后端（全库扫描走这条：CI 上没有 Azure，不替 runner 判）"
+    why = refused(tts=azure, voice=voice, rate=rate)
+    assert "TTS 后端" in why and "'edge-tts'" in why and "整份不认" in why, why
+    assert not refused(), "没给 tts 就不比后端（全库扫描走这条：CI 上没有 Azure，不替 runner 判）"
     reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice="zh-CN-YunxiNeural",
                                 rate=rate, backend="azure")
-    hard, _soft, _ok = verdict(tts=azure, voice=voice, rate=rate)
-    assert hard and "音色" in hard[0], hard
-    assert not verdict()[0], "没给音色语速就不比这两样（全库扫描走这条）"
+    assert "音色" in refused(tts=azure, voice=voice, rate=rate)
+    assert not refused(), "没给音色语速就不比这两样（全库扫描走这条）"
     reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate="+0%",
                                 backend="azure")
-    assert "语速" in verdict(tts=azure, voice=voice, rate=rate)[0][0]
+    assert "语速" in refused(tts=azure, voice=voice, rate=rate)
     # 栏目基调变了（表改了，或者 spec 换了栏目）：老账不认
     reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate=rate,
                                 backend="azure")
-    assert not verdict(tts=azure, voice=voice, rate=rate)[0]
-    hard = verdict(tts=("azure", ["excited", "1.2"]), voice=voice, rate=rate)[0]
-    assert hard and "栏目基调" in hard[0], hard
+    assert not refused(tts=azure, voice=voice, rate=rate)
+    assert "栏目基调" in refused(tts=("azure", ["excited", "1.2"]), voice=voice, rate=rate)
     reel.write_narration_record(spec["slug"], segs, {0: 11.4}, voice=voice, rate=rate,
                                 backend="azure", base_style=("excited", "1.2"))
-    assert not verdict(tts=("azure", ["excited", "1.2"]), voice=voice, rate=rate)[0], \
+    assert not refused(tts=("azure", ["excited", "1.2"]), voice=voice, rate=rate), \
         "按新基调重量过就认"
 
 
@@ -384,30 +390,29 @@ def test_误差带那道闸接在dry_run里_check_narration落账():
     step = step[:step.index("\n      - name:")]
     assert "data/narration_checks/" in step and "push_with_rebase_retry" in step
     assert "exit $rc" in step, "装不下（rc=1）的那一趟也要落账，然后照样红"
-    # 修正轮 2：main 上跑的那一趟不提交（main 的提交不过 CI，豁免表自检会红在下一个无关 PR 上）
+    # 修正轮 2：main 上跑的那一趟不提交（main 的提交不过 CI；账和 spec 走同一个 PR）
     guard = step[step.index('REC="data/narration_checks/'):]
     assert '[ "${{ github.ref_name }}" = "main" ]' in guard
     assert guard.index('= "main" ]') < guard.index("git commit"), "判 main 要排在提交之前"
     assert guard.index('= "main" ]') < guard.index("elif [ -f \"$REC\" ]")
 
 
-#: 复审（修正轮 2）拿来复现死循环的那条：分支上 dry-run 绿、没写 `tts_backend`、冻在豁免表里。
+#: 复审（修正轮 2）拿来复现死循环的那条：分支上 dry-run 绿、没写 `tts_backend`。
 E2E_SLUG = "alcaraz-fritz-laver-cup-2026"
 
 
-def test_没有Azure的runner_量账之后dry_run认账_一条路走通(tmp_path, monkeypatch, capsys):
-    """修正轮 2：把 run 36257658569 那台 runner 的状态（两把钥匙都空）整条回放一遍——
-    改一个旁白字 → 冻结失效 → `--check-narration`（真 `main()`，只把合成和量时长打桩）落账 →
-    `--dry-run`（真 `main()`，REEL_DRY_RUN_FOR=render）认这份账、exit 0。
-    上一版按 spec 推「azure」，这一步 exit 1、报「整份不认」、叫你再去量，量完还是不认。"""
+def _e2e_setup(tmp_path, monkeypatch, capsys):
+    """把 E2E_SLUG 抄一份、误差带里第一段改一个字（这版旁白没有账），账本目录指到空的 tmp，
+    两把 Azure 钥匙都空（run 36257658569 那台 runner）。返回 `run(*flags) -> (rc, stdout)`，
+    跑的是真 `main()`；只把合成和量时长打桩（沙箱连不上 TTS）。"""
     src = ROOT / "specs" / "reels" / f"{E2E_SLUG}.json"
     spec = _load(src)
-    assert "tts_backend" not in spec and E2E_SLUG in reel.legacy_narration_unchecked()
+    assert "tts_backend" not in spec
     tight = _tight(_segments(spec))
     assert tight, "前提：这条有落在误差带里的段"
     seg = spec["segments"][tight[0]]
     assert seg["narration"].endswith("。")
-    seg["narration"] = seg["narration"][:-1] + "！"          # 改一个字：冻结不认了
+    seg["narration"] = seg["narration"][:-1] + "！"          # 改一个字：这版旁白没量过
     work = tmp_path / "specs"
     work.mkdir()
     spec_path = work / src.name
@@ -445,54 +450,50 @@ def test_没有Azure的runner_量账之后dry_run认账_一条路走通(tmp_path
         rc = reel.main()
         return rc, capsys.readouterr().out
 
+    return run, based
+
+
+def test_没有Azure的runner_量账之后dry_run认账_一条路走通(tmp_path, monkeypatch, capsys):
+    """修正轮 2：把 run 36257658569 那台 runner 的状态（两把钥匙都空）整条回放一遍——
+    改一个旁白字 → `--check-narration`（真 `main()`，只把合成和量时长打桩）落账 →
+    `--dry-run`（真 `main()`，REEL_DRY_RUN_FOR=render）认这份账、exit 0。
+    上一版按 spec 推「azure」，量完报「整份不认」、叫你再去量，量完还是不认。"""
+    run, based = _e2e_setup(tmp_path, monkeypatch, capsys)
     rc, out = run("--dry-run")
-    assert rc == 1 and "没有这几段**现在这版旁白**" in out, "前提：改了字、还没量，手写的红"
+    assert "没有这几段**现在这版旁白**" in out, "前提：改了字、还没量"
     rc, out = run("--check-narration")
     assert rc == 0, out[-2000:]
     assert based == [("", "")], "没有 Azure：不套栏目基调"
     head = json.loads((tmp_path / "checks" / f"{E2E_SLUG}.json").read_text(encoding="utf-8"))
     assert head["backend"] == "edge-tts" and head["base_style"] == ["", ""]
     rc, out = run("--dry-run")
-    assert "整份不认" not in out, out[-3000:]
+    assert "整份不认" not in out and "没有这几段**现在这版旁白**" not in out, out[-3000:]
     assert "误差带里这几段已经拿真 TTS 量过" in out
     assert rc == 0, out[-3000:]
 
 
-def test_旁白没量过真TTS的豁免表只许减():
-    legacy = reel.legacy_narration_unchecked()
-    assert legacy, "豁免表读不到——路径或键名写错了"
-    specs = {str(_load(p).get("slug") or p.stem): _load(p) for p in REELS}
-    stale = []
-    for slug, fingerprint in legacy.items():
-        spec = specs.get(slug)
-        if spec is None or (spec.get("_production") or {}).get("status") == "ready_for_render":
-            stale.append(f"{slug}（spec 没了／是自动 spec）")
-            continue
-        segs = _segments(spec)
-        if reel.spec_narration_fingerprint(segs) != fingerprint:
-            stale.append(f"{slug}（旁白改过了，豁免已经不认）")
-            continue
-        hard, _soft, _ok = reel.narration_check_findings(spec, segs, _tight(segs),
-                                                         legacy={}, env={})
-        if not hard:
-            stale.append(f"{slug}（已经量过账／不在误差带里了）")
-    assert not stale, "从 data/legacy_narration_unchecked.json 删掉：" + "、".join(stale)
-    # 299 条是上线时的存量；修正轮 2 补冻 two-handled-racket-maric-2026（闸在分支上时 main 上
-    # 手写推送的，见那份表的 `_late`），之后只许减
-    assert len(legacy) <= 300
+@pytest.mark.parametrize("mode", ["render", "cover", "narration"])
+def test_新的手写spec误差带里没账_dry_run照样过_只报带命令(tmp_path, monkeypatch, capsys, mode):
+    """2026-09-28 会话决定（时效第一：别往正常路径上加一趟 runner）：手写 spec 误差带里的段
+    没有真 TTS 的账，**哪一趟的 dry-run 都 exit 0**，印一句带两行补账命令的提示。
+    第一版在 mode=render 上 exit 1——每条新片子都得先多拨一趟 mode=narration。"""
+    run, _based = _e2e_setup(tmp_path, monkeypatch, capsys)
+    monkeypatch.setenv("REEL_DRY_RUN_FOR", mode)
+    assert not (tmp_path / "checks").exists(), "前提：一份账都没有"
+    rc, out = run("--dry-run")
+    assert "没有这几段**现在这版旁白**" in out, out[-3000:]
+    notice = out[out.index("[估旁白] 只报（不拦）"):]
+    assert f"-f mode=narration -f slug={E2E_SLUG}" in notice
+    assert "render --check-narration --spec" in notice
+    assert "[估旁白] **过不去**" not in out
+    assert rc == 0, out[-3000:]
 
 
-def test_豁免表外的手写spec误差带里的段都量过():
-    bad = []
-    for path in REELS:
-        spec = _load(path)
-        try:
-            segs = _segments(spec)
-        except reel.ReelError:
-            continue
-        hard, _soft, _ok = reel.narration_check_findings(spec, segs, _tight(segs), env={})
-        bad += [f"{path.stem}: {h.strip()[:80]}" for h in hard]
-    assert not bad, "\n".join(bad)
+def test_旁白没账的冻结表跟着那道闸一起删了():
+    """没账不红了，冻结表冻的那道闸就不存在了：文件、读它的函数都不许再回来。"""
+    assert not (ROOT / "data" / "legacy_narration_unchecked.json").exists()
+    assert not hasattr(reel, "legacy_narration_unchecked")
+    assert not hasattr(reel, "LEGACY_NARRATION_UNCHECKED_PATH")
 
 
 # ═══════════════════════════ ④ alphamerge：蒙版缩成裁框尺寸 ═══════════════════════════

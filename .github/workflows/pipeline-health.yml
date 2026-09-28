@@ -29,6 +29,9 @@ jobs:
             data/orchestration_state.json
             # 采访「先投 subs」投满次数停下的（`parked`），pipeline_health 列出来（复审 2026-09-28 nit 3）。
             # 判据 test_同一份转写输入投满次数停下_账上标parked_pipeline_health列出来
+            # 同一份文件里还有封面停车的标记（`autopick_failed[*].parked`）和转写判定红着的那本账
+            # （`subs_red`），pipeline_health 一样只读标记（2026-09-28 F3）；封面那一栏拿
+            # 下面的 output/**/render.json 认「标记之后出过片」
             data/interview_render_dispatched.json
             data/interview_publish_ledger/*.json
             data/reel_publish_ledger/*.json

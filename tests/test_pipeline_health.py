@@ -773,3 +773,14 @@ def test_已按阻塞报过的工作流不再推它的趋势告警(tmp_path, mon
               "explainer.yml：近 5 次失败率 60%，连续失败 3", "编排器已 30 小时没点过 run（阈值 24h）"]
     assert ph.trend_alerts_to_push(alerts, [{"workflow": "match-reel"}]) == alerts[1:]
     assert ph.trend_alerts_to_push(alerts, []) == alerts
+
+
+def test_采访停着的几栏只收关键字():
+    """`render_report` 后面加的几栏一律只收关键字（main() 也按关键字传）：几条分支各往这儿加一栏，
+    按位置传的那一份合并时会落进别人的形参——报表点名点错一栏，不报错（feed_stuck／parked_subs
+    那次的老账）。2026-09-28 F3 加的封面停车、转写红着两栏同一个规矩。"""
+    import inspect  # noqa: PLC0415
+
+    params = inspect.signature(render_report).parameters
+    for name in ("feed_stuck", "parked_subs", "parked_covers", "subs_red"):
+        assert params[name].kind is inspect.Parameter.KEYWORD_ONLY, name

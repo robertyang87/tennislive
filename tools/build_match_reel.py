@@ -6987,13 +6987,20 @@ def narration_estimates(segments) -> list[tuple[int, float, float]]:
 #
 # 现在 `--check-narration`（本地，或 runner 的 mode=narration）把每段量到的真时长按
 # **这一段旁白的指纹**记进 `data/narration_checks/<slug>.json`；`--dry-run` 对落在误差带里
-# 的段去认这份账：指纹对得上、真时长装得下就放行；对不上（没量过、或者改过字）**手写的红**，
-# 报错里给出那两行现成命令。自动 spec 只报；runner 上 cover／narration 那两趟只报
-# （narration 那趟正是来补这份账的）；定规矩之前已发的按整条旁白的指纹冻在
-# `data/legacy_narration_unchecked.json`，改一个字就不认。判据 `tests/test_small_gates.py`。
+# 的段去认这份账：指纹对得上、真时长装得下就放行；量过、真时长装不下，手写的红。
+#
+# ⭐ **没账（没量过、改过字、账头对不上）只报、带补账命令，任何一趟都不红**（2026-09-28
+# 会话决定，时效第一：**别往正常路径上加一趟 runner**）。第一版让手写 spec 没账就红，量出来
+# 这一刀落在几乎每一条新片子上：specs/reels 下 316 条能解析的 spec 里 **305 条**至少有一段
+# 落在 ±2.2s 的误差带里（data/narration_checks/ 那时 0 份账，靠 300 条的冻结表撑着）——
+# 每条新的手写 spec 都要先多拨一趟 `mode=narration`（约 1.5 分钟 runner ＋ 一次提交回分支）
+# 才过得了 dry-run。而 render 在**编码之前**本来就有一道真 TTS 的硬闸（`render()` 里
+# `narration_overruns` 那一处，「TTS 和旁白超长那道闸，挪到编码之前」）：同一个错在那儿红，
+# 一个像素都没编（zverev-deminaur 那一趟白烧 2.9 分钟）——**只在真超了的那几条上付**，而不是
+# 每条都先付一趟。所以这一层只负责「让人早点看见、给现成命令」，不拍板。
+# 冻结表 `data/legacy_narration_unchecked.json` 跟着删了（它冻的那道闸不存在了）。
+# 判据 `tests/test_small_gates.py`。
 NARRATION_CHECKS_DIR = Path(__file__).resolve().parents[1] / "data" / "narration_checks"
-LEGACY_NARRATION_UNCHECKED_PATH = (Path(__file__).resolve().parents[1] / "data"
-                                   / "legacy_narration_unchecked.json")
 
 
 def narration_fingerprint(seg) -> str:
@@ -7004,11 +7011,10 @@ def narration_fingerprint(seg) -> str:
     工作流的音色／语速、TTS 后端、栏目基调——它们一变，这条片子的每一段都要重量。
     ⚠️ `speakable()`（换字表、比分里的「-」）**故意不进指纹**：它换的是同音字和「-」→「比」，
     念出来的音节数不变；而换字表改得勤（09-27 一天扩到十几条），进了指纹，改一次表就把
-    全库已发片子的账一起作废、下一个无关 PR 红在 `test_豁免表外的手写spec误差带里的段都量过`
-    上（2026-09-28 修正轮）。
+    全库已发片子的账一起作废（2026-09-28 修正轮）。
     ⚠️ 指纹吃的是 `parse_segments`／`_seg_voice` **解析之后**的值——改它们的默认值（没写 `voice`
-    时的四个空串、`lead_pause` 的 0.0）会一次作废全部冻结指纹和已落的账（`legacy_narration_unchecked.json`、
-    `data/narration_checks/`）：实测把没写 `voice` 时的 rate 默认改成 `+0%`，豁免表 300 条认得上的变成 0 条。"""
+    时的四个空串、`lead_pause` 的 0.0）会一次作废 `data/narration_checks/` 里已落的全部账
+    （实测把没写 `voice` 时的 rate 默认改成 `+0%`，当时冻结表 300 条认得上的变成 0 条）。"""
     raw = json.dumps([seg.narration.strip(), seg.voice_rate, seg.voice_pitch, seg.voice_style,
                       seg.voice_styledegree, round(float(seg.voice_lead_pause or 0.0), 3)],
                      ensure_ascii=False)
@@ -7016,7 +7022,7 @@ def narration_fingerprint(seg) -> str:
 
 
 def spec_narration_fingerprint(segments) -> str:
-    """整条片子的旁白指纹（豁免表按它冻：任何一段改了字就不认）。"""
+    """整条片子的旁白指纹（任何一段改了字就变）。"""
     parts = [narration_fingerprint(s) for s in segments if s.narration.strip()]
     return hashlib.sha1("|".join(parts).encode("utf-8")).hexdigest()[:16]
 
@@ -7110,14 +7116,6 @@ def write_narration_record(slug: str, segments, spoken: dict[int, float], *,
     return path
 
 
-def legacy_narration_unchecked() -> dict[str, str]:
-    try:
-        data = json.loads(LEGACY_NARRATION_UNCHECKED_PATH.read_text(encoding="utf-8"))
-    except FileNotFoundError:
-        return {}
-    return {str(k): str(v) for k, v in (data.get("reels") or {}).items()}
-
-
 def check_narration_commands(spec: dict, spec_path: str | Path | None = None) -> str:
     """补账的两行现成命令（runner 一行、本地一行）。
 
@@ -7139,17 +7137,21 @@ def check_narration_commands(spec: dict, spec_path: str | Path | None = None) ->
 
 def narration_check_findings(spec: dict, segments, tight: list[int], *,
                              spec_path: str | Path | None = None,
-                             record: dict | None = None, legacy: dict | None = None,
+                             record: dict | None = None,
                              env: dict | None = None,
                              tts: tuple[str, list[str]] | None = None,
                              voice: str | None = None,
                              rate: str | None = None) -> tuple[list[str], list[str], list[str]]:
     """「落在估算误差里」的段认真 TTS 的账 → `(红, 只报, 认过账的)`。
 
-    | 情形 | 手写 spec | 自动 spec／runner 的 cover·narration 趟／冻着的老片 |
+    | 情形 | 手写 spec（mode=render） | 自动 spec／runner 的 cover·narration 趟 |
     |---|---|---|
-    | 误差带里的段，账上没有这段旁白（没量过、改过字） | **红** | 只报 |
+    | 误差带里的段，账上没有这段旁白（没量过、改过字、账头对不上） | **只报**，带补账命令 | 只报 |
     | 账上量过、真时长比画面长 `NARRATION_OVER_TOL` 以上（误差带里外都算） | **红** | 只报 |
+
+    没账那一行 2026-09-28 从「红」改成「只报」（见上面那段注释：几乎每条新片子都落在误差带里，
+    红就是正常路径上多一趟 runner；render 编码之前那道真 TTS 硬闸照样兜底）。
+    量过、装不下的那一行留着红：那是一个真数，render 的旁白闸必红，dry-run 先拦下不花一分钱。
 
     账本的文件头和出片那一趟对不上（`narration_record_mismatch`：后端、栏目基调、音色、
     语速）→ 整份账不认，误差带里的段按「没量过」算。`record` 显式给了就不查文件头（测试用）。
@@ -7166,13 +7168,9 @@ def narration_check_findings(spec: dict, segments, tight: list[int], *,
     env = os.environ if env is None else env
     mode = str(env.get("REEL_DRY_RUN_FOR") or "render").strip() or "render"
     auto = (spec.get("_production") or {}).get("status") == "ready_for_render"
-    frozen = (legacy_narration_unchecked() if legacy is None else legacy).get(slug)
-    thawed = frozen is not None and frozen != spec_narration_fingerprint(segments)
     soft_reason = ("自动产的 spec 只报" if auto
                    else f"这一趟是 mode={mode}，只报（narration 那趟正是来补账的）"
-                   if mode != "render"
-                   else "定规矩之前已发的，旁白一字没动，挂在 legacy_narration_unchecked"
-                   if frozen is not None and not thawed else "")
+                   if mode != "render" else "")
     hard: list[str] = []
     soft: list[str] = []
     ok: list[str] = []
@@ -7194,16 +7192,16 @@ def narration_check_findings(spec: dict, segments, tight: list[int], *,
         elif index in tight:
             ok.append(f"  第 {index + 1} 段：真 TTS 量过 {spoken:.2f}s，余量 {room:+.2f}s")
     if unchecked:
-        line = (f"  第 {[i + 1 for i in unchecked]} 段落在估算的误差里，而 "
-                f"data/narration_checks/{slug or '<slug>'}.json 里没有这几段**现在这版旁白**的"
-                "真 TTS 时长（没量过，或者量完又改过字）。离线估判不了——zverev-deminaur 第 9 段"
-                "就是这么在 runner 上红的（估的余量看着宽，runner 上 edge-tts 实测超了 0.2s）。"
-                + (f"（账本在，但量的不是出片那一套：{mismatch}——整份不认）" if mismatch else "")
-                + "先量：\n" + check_narration_commands(spec, spec_path))
-        if soft_reason:
-            soft.append(line + f"\n    （{soft_reason}）")
-        else:
-            hard.append(line)
+        # 没账**只报，任何一趟都不红**（2026-09-28 会话决定，见上面那段注释）
+        soft.append(
+            f"  第 {[i + 1 for i in unchecked]} 段落在估算的误差里，而 "
+            f"data/narration_checks/{slug or '<slug>'}.json 里没有这几段**现在这版旁白**的"
+            "真 TTS 时长（没量过，或者量完又改过字）。离线估判不了——zverev-deminaur 第 9 段"
+            "就是这么在 runner 上红的（估的余量看着宽，runner 上 edge-tts 实测超了 0.2s）。"
+            + (f"（账本在，但量的不是出片那一套：{mismatch}——整份不认）" if mismatch else "")
+            + "不拦：render 编码之前那道真 TTS 的旁白闸照样兜底（红在编码之前，一个像素都没编）。"
+            "想在发 render 之前就知道，先量：\n" + check_narration_commands(spec, spec_path)
+            + (f"\n    （{soft_reason}）" if soft_reason else ""))
     return hard, soft, ok
 
 
@@ -11597,8 +11595,10 @@ def main() -> int:
                 print(f"\n第 {[i + 1 for i in sure]} 段一定装不下：这几段删短，"
                       "或者把画面拉长（`end` 往后挪，别越过下一段的 `start`）。")
                 return 1
-            # **误差带里的段要拿真 TTS 认账**（`narration_check_findings`）：原来这儿只印
+            # **误差带里的段认真 TTS 的账**（`narration_check_findings`）：原来这儿只印
             # 一句「开跑之前用真语音量一次」，zverev-deminaur 第 9 段就是读了这句没去量。
+            # 没账只报（带现成命令，2026-09-28 会话决定：别往正常路径上加一趟 runner，render
+            # 编码之前那道真 TTS 闸兜底）；量过、装不下才红。
             # 比账头用**出片那台机器**的 TTS（`render_tts_setup`）：runner 的 dry-run 步挂着和
             # render 步同一对 Azure 钥匙，两步答的是同一件事（修正轮 2）。
             n_hard, n_soft, n_ok = narration_check_findings(
@@ -11609,7 +11609,7 @@ def main() -> int:
                       f"data/narration_checks/{spec.get('slug') or Path(args.spec).stem}.json）：\n"
                       + "\n".join(n_ok))
             if n_soft:
-                print("\n[估旁白] 只报：\n" + "\n".join(n_soft))
+                print("\n[估旁白] 只报（不拦）：\n" + "\n".join(n_soft))
             if n_hard:
                 print("\n[估旁白] **过不去**：\n" + "\n".join(n_hard))
                 return 1
