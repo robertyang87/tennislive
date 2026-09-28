@@ -1,0 +1,31 @@
+{
+  "schema": 2,
+  "at": "2026-09-28T18:36:41Z",
+  "pipeline": "match-reel",
+  "slug": "medvedev-safiullin-hangzhou-2026-sf",
+  "mode": "cover",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 3.173,
+  "last_stage": "封面编码",
+  "stage_seconds": {
+    "下载源片 ttv": 0.077,
+    "封面认人（开跑先查）": 0.278,
+    "VS 抓帧 portrait（源 ttv）": 0.28,
+    "封面海报": 1.748,
+    "封面编码": 0.227
+  },
+  "stage_counts": {
+    "下载源片 ttv": 1,
+    "封面认人（开跑先查）": 1,
+    "VS 抓帧 portrait（源 ttv）": 1,
+    "封面海报": 1,
+    "封面编码": 1
+  },
+  "parallel_stages": [],
+  "untimed_seconds": 0.563,
+  "cpu_count": 4,
+  "run_id": "36466209012",
+  "run_attempt": "1",
+  "on_runner": true
+}
