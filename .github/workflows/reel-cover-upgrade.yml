@@ -89,11 +89,36 @@ jobs:
         run: |
           ARGS=(--plan --summary "$GITHUB_STEP_SUMMARY"
                 --out-targets "$RUNNER_TEMP/targets.txt"
-                --out-redispatch "$RUNNER_TEMP/redispatch.txt")
+                --out-redispatch "$RUNNER_TEMP/redispatch.txt"
+                --out-assets "$RUNNER_TEMP/assets.txt")
           [ "$APPLY" = "true" ] && ARGS+=(--apply)
           [ -n "$SLUG" ] && ARGS+=(--slug "$SLUG")
           PYTHONPATH=tools python3 -m cover_upgrade "${ARGS[@]}"
           echo "targets=$(grep -c . "$RUNNER_TEMP/targets.txt" || true)" >> "$GITHUB_OUTPUT"
+
+      # assets/reel（518 MB）不在稀疏检出里，而「赛场之上」的整屏证据段、插图段指着的
+      # 正是那里的图：`validate_spec` 查它们在不在，少了最终那道闸和换图之前的基线一起红，
+      # 那一条就永远退避、永远换不成（批次 4 复审：gea-shapovalov 的三张图）。
+      # 所以**只检出目标 spec 点名的那几张**（`cover_upgrade.spec_assets`，`--plan` 写的
+      # assets.txt）。cone 模式的 `git sparse-checkout add` 只收目录，单个文件要走
+      # `checkout --ignore-skip-worktree-bits`；只取索引里真有的（spec 写错的路径留给
+      # `validate_spec` 去报，别让 checkout 在这儿炸）。
+      # 判据 `test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样`（按这张单子补文件）
+      # ＋ `test_点名素材那一步在真的稀疏检出里只取出那几张`（真跑这段脚本）。
+      - name: 检出目标 spec 点名的素材（不整个拉 assets/reel）
+        if: steps.plan.outputs.targets != '0'
+        env:
+          GIT_LITERAL_PATHSPECS: "1"
+        run: |
+          if [ ! -s "$RUNNER_TEMP/assets.txt" ]; then
+            echo "目标 spec 没点名稀疏检出之外的素材"
+            exit 0
+          fi
+          xargs -r -d '\n' git ls-files -- < "$RUNNER_TEMP/assets.txt" > "$RUNNER_TEMP/assets-known.txt"
+          if [ -s "$RUNNER_TEMP/assets-known.txt" ]; then
+            xargs -r -d '\n' git checkout HEAD --ignore-skip-worktree-bits -- < "$RUNNER_TEMP/assets-known.txt"
+          fi
+          echo "检出 $(grep -c . "$RUNNER_TEMP/assets-known.txt" || true) / $(grep -c . "$RUNNER_TEMP/assets.txt") 个点名素材"
 
       - uses: actions/setup-python@v5
         if: steps.plan.outputs.targets != '0'

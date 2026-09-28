@@ -4667,6 +4667,26 @@ PR 看」，不是「它挡在出片前面」。
 `test_promote_interview_draft::test_promote给TennisTV草稿补台标那一挪_渲染闸放行`、`test_字幕规格和TennisTV台标原来只在全库测试里_现在渲染入口就拦`、
 `test_topline_format::test_采访草稿直推main的赛事行只报_销章就红_渲染入口照拦`。
 
+⚠️ **批次 4 合并时这张表又长了三行，也堵上了请求那条路**（复审 BLOCKING：在合并树上种两条盖章的
+01684ef0 变体——标题改成「总分只多8分」、`push.score` 反成输家视角——`2 failed`）：
+`test_interview_preflight::test_全库顶栏比分都是赢家视角`（渲染闸 `check_score_orientation`）、
+`test_interview_preflight::test_新的收尾卡都放得下一行`（`check_takeaway`）、
+`test_taste_gates_extra::test_全库已发的spec一条都不红` 的采访那一圈（`check_taste_extra`）——
+三条都是新包加的全库测试，**没走 `unverified_auto_spec` 分流**，现在走了。请求那条路：
+`production_preflight.check_request` 原来只跑 `check_taste`，比分方向和另一半口味闸（总分差、
+赛点同义反复、正文 markdown）要等出片那一趟才拦，而 auto-render 在那之前已经直推 main——现在
+`check_request` 同一份判据当场 `RequestNotReady`（判据 `test_请求预检拦比分输家视角和总分差`；
+扫过全部请求：新拦下的只有**不在待生成名单里**的 `zheng-rybakina-us-open-2026-qf-presser`，
+它请求里还是输家视角「6-3 1-6 4-6」，spec 早改对了——改请求就会让它重新待生成，没动）。
+`promote_interview_draft` 同理：`taste_gates.interview_taste_findings` 硬的那一组（标题和推送标题
+数字两个说法）原来只报、转出去的 spec 永远渲不成，现在留草稿。
+
+⚠️ **J×H 合并改了 H 的承诺**：H 的提交说「请求没过前置检查＝`::warning::`、run 照旧绿」；合进 J 的
+`--failed-list` 之后，**interview-auto-render 每一趟都带这个参数**，`RequestNotReady` 也进失败清单，
+最后一步把整趟标红——一条写错的请求会让**每 10 分钟那一趟都红**，直到有人改请求。这是有意的
+（别的请求照常提交、dispatch，这一条的旧 spec 按清单跳过；红是为了不让它只剩一句被略过的 warning），
+H 那种「warning ＋ 绿」只剩不带清单的手动调法。
+
 ## ⭐⭐ 2026-09-27：赛后开麦 dispatch 之前的离线预检、片尾板、拼接清单、推送后修订
 
 **写完或改完一条采访 spec，dispatch 之前先跑一条命令**（秒级、不联网、不下源片）：

@@ -378,3 +378,36 @@ def test_字幕译文把轮次写成N强_转正时留草稿(tool, monkeypatch, t
                        encoding="utf-8")
     promoted, skipped = tool.promote_all(write=True)
     assert promoted and not skipped, (promoted, skipped)
+
+
+def test_手改草稿的标题和推送标题数字打架_转正时留草稿(tool, monkeypatch, tmp_path):
+    """批次 4 复审 nit：`taste_gates.interview_taste_findings` 的硬的那一组（标题和推送标题
+    同一个数两个说法）原来在 promote 只报——转出去的 spec 渲染入口 `check_taste` 照拦、
+    永远渲不成，`test_全库当前零误报` 对采访又是硬的。和 `interview_taste_extra` 同一个处置：
+    留草稿。两边说法一致就照常转正。"""
+    specs = tmp_path / "specs" / "interviews"
+    specs.mkdir(parents=True)
+    draft_p = specs / "zverev-cincinnati-2026-r3.draft.json"
+    base = {**_draft(), "source_title": "Cincinnati 2026 R3 Alexander Zverev Interview"}
+    monkeypatch.setattr(tool, "SPECS", specs)
+
+    class _Digest:
+        results = [_match("Zverev A.", "Atmane T.", winner_idx=0)]
+
+    monkeypatch.setattr(tool, "_collect_digests", lambda: [_Digest()])
+    monkeypatch.setattr(tool, "player_zh", lambda en: {
+        "Zverev A.": "兹维列夫", "Atmane T.": "阿特马内"}.get(en, en))
+
+    clash = {**base, "cover": {**(base.get("cover") or {}), "title": ["救下3个赛点", "兹维列夫赢了"]},
+             "push": {"summary": "兹维列夫救下2个赛点"}}
+    draft_p.write_text(json.dumps(clash), encoding="utf-8")
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted == [], promoted
+    assert any("口味闸不过" in s for s in skipped), skipped
+    assert draft_p.exists(), "拦下来的草稿要留在原地等终审"
+    assert not (specs / "zverev-cincinnati-2026-r3.json").exists()
+
+    draft_p.write_text(json.dumps({**clash, "push": {"summary": "兹维列夫救下3个赛点"}}),
+                       encoding="utf-8")
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted and not skipped, (promoted, skipped)

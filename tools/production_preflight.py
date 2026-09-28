@@ -71,6 +71,21 @@ def check_request(req: dict) -> None:
     """
     # No download, fonts, browser or ASR import required here.
     check_taste(req)
+    # 出片那一趟 `build_interview_clip.main()` 开头还有两道**只读 spec 文本**的闸：
+    # 比分赢家视角（`check_score_orientation`）和另一半口味闸（`check_taste_extra`）。
+    # 原来请求这一步不查它们——`interview-auto-render` 用 GITHUB_TOKEN 把 spec 直推 main
+    # （CI 不跑），render 那道闸挡住了片子，而全库测试（`test_全库顶栏比分都是赢家视角`、
+    # `test_全库已发的spec一条都不红`）要到下一个 PR 才把 main 打红（批次 4 复审 BLOCKING；
+    # 先例：`zheng-rybakina-us-open-2026-qf-presser` 请求里的输家视角「6-3 1-6 4-6」）。
+    # 同一份判据、不另写：判据 `test_请求预检拦比分输家视角和总分差`。
+    _tools_on_path()
+    from interview_spec_gates import score_orientation_problem  # noqa: PLC0415
+    if (problem := score_orientation_problem(req)):
+        raise RequestNotReady(problem)
+    from taste_gates_extra import interview_taste_extra  # noqa: PLC0415
+    hard, _soft = interview_taste_extra(req, str(req.get('xhs') or '') or None)
+    if hard:
+        raise RequestNotReady('；'.join(hard))
     cov = req.get('cover') or {}
     zoom, focus = float(cov.get('zoom', 1)), float(cov.get('focus_y', .5))
     if not 1 <= zoom <= 2.4 or not 0 <= focus <= 1:

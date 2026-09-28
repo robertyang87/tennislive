@@ -544,6 +544,21 @@ def test_预检把推断规则列成提醒_从不进退出码(tp, tmp_path, monk
     assert tp.parse_inferred(f"标着〔{tp.INFERRED_TAG}〕的是推断\n- **x**：y｜〔{tp.INFERRED_TAG}〕**") == []
 
 
+def test_采访线预检的闸和出片那一趟是同一份名单(tp):
+    """批次 4 复审 nit：`run_interview_checks` 原来手抄一份名字元组，删掉
+    `check_score_orientation` 这个文件照样全绿。准绳是 `interview_preflight._spec_gates`
+    （它和 `main()`／`render()` 开头那排按 ast 比过）：预检**跑出来**的每一道都要和它对上。"""
+    sys.path.insert(0, str(TOOLS))
+    import build_interview_clip as bic  # noqa: PLC0415
+    import interview_preflight as pf  # noqa: PLC0415
+
+    spec = json.loads(_PROBE_INTERVIEW.read_text(encoding="utf-8"))
+    assert spec.get("takeaway"), "对照 spec 要带解读卡，check_takeaway 才会跑"
+    ran = [r.name for r in tp.run_interview_checks(spec, "")]
+    want = [g.__name__ for g in pf._spec_gates(bic)]
+    assert ran[:-1] == want and ran[-1] == "check_interview_copy_wording", (ran, want)
+
+
 def test_采访线预检跑全了main开头那排spec闸_含封面钩子(tp):
     """`run_interview_checks` 是 `build_interview_clip.main()` 开头那排只读 spec 的闸的
     预演；少一道，预检报绿、render 第 0.2 秒红——`check_cover_hook` 原来就漏了

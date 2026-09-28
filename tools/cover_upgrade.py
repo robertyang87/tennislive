@@ -1551,6 +1551,8 @@ def main(argv: list[str] | None = None) -> int:
                          "带 --apply 时把重派记进账")
     ap.add_argument("--out-targets", default="", help="--plan：要查图的 slug 一行一个")
     ap.add_argument("--out-redispatch", default="", help="--plan：要重派 render 的 slug 一行一个")
+    ap.add_argument("--out-assets", default="",
+                    help="--plan：目标 spec 点名的素材文件一行一个（工作流只检出这几张，见 spec_assets）")
     args = ap.parse_args(argv)
     now = _parse_utc(args.now) if args.now else datetime.now(timezone.utc)
     if now is None:
@@ -1570,7 +1572,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.summary:
         with open(args.summary, "a", encoding="utf-8") as fh:
             fh.write(f"## {title}\n\n```\n" + text + "\n```\n")
-    for flag, key in ((args.out_targets, "targets"), (args.out_redispatch, "redispatch")):
+    for flag, key in ((args.out_targets, "targets"), (args.out_redispatch, "redispatch"),
+                      (args.out_assets, "assets")):
         if flag:
             Path(flag).write_text("".join(f"{s}\n" for s in got.get(key) or []),
                                   encoding="utf-8")
@@ -1596,6 +1599,36 @@ def static_problems(spec: dict) -> list[str]:
     只用标准库（`reel_facts` 是纯 Python），`--plan` 照样不装依赖。"""
     ctx = match_context(spec, times=_offline)
     return [p for p in ctx.problems if not p.startswith("flashscore 开赛时刻取不到")]
+
+
+def spec_assets(spec: dict) -> list[str]:
+    """spec 里**点名**的素材文件（`assets/…` 开头的字符串，不管挂在哪个字段下）。
+
+    工作流的稀疏检出不带 `assets/reel`（518 MB）：而「赛场之上」的整屏证据段、插图段
+    （`segments[].image`／`inset.image`）指着的正是那里的图，`validate_spec` 查它们在不在——
+    少了就「这些段的图片找不到文件」，最终那道闸和换图之前的基线一起红，那一条就永远
+    退避、永远换不成（批次 4 复审：gea-shapovalov 的三张图）。`--plan` 把目标 spec 点名的
+    这几张写进 `--out-assets`，工作流**只把这几张**检出来（不是整个 assets/reel）。
+
+    按「字符串以 `assets/` 开头」认，不按字段名列清单：`validate_spec` 以后多读一个字段，
+    这里自己跟上。判据 `test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样`。"""
+    found: set[str] = set()
+
+    def walk(node) -> None:
+        if isinstance(node, dict):
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value)
+        elif isinstance(node, str):
+            rel = node.strip()
+            if (rel.startswith("assets/") and "\n" not in rel
+                    and ".." not in Path(rel).parts):
+                found.add(rel)
+
+    walk(spec)
+    return sorted(found)
 
 
 def plan(repo: Path, now: datetime, *, apply: bool = False, only: str = "") -> dict:
@@ -1631,8 +1664,9 @@ def plan(repo: Path, now: datetime, *, apply: bool = False, only: str = "") -> d
                       + ("" if apply else "（干跑，没写）"))
     if apply:
         mark_redispatched(repo, due, now)
+    assets = sorted({a for t in found for a in spec_assets(t.spec)})
     return {"targets": [t.slug for t in found], "redispatch": due, "reconciled": orphans,
-            "report": report}
+            "assets": assets, "report": report}
 
 
 if __name__ == "__main__":

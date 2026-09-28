@@ -556,18 +556,32 @@ def parse_junit(slug: str, xml_text: str, tests=TASTE_CI_TESTS) -> list[GateResu
 
 
 def run_interview_checks(spec: dict, xhs: str) -> list[GateResult]:
+    """采访线：出片那一趟开头只读 spec 的那一排闸，**同一份名单**——
+    `interview_preflight._spec_gates`（它和 `build_interview_clip.main()`／`render()` 开头那排
+    按 ast 比过，`test_预检的闸和出片那一趟main开头那一排是同一份`）。
+
+    原来这里手抄了一份名字元组：删掉 `check_score_orientation`，`test_taste_preflight.py`
+    照样全绿（批次 4 复审 nit）。现在不抄，判据 `test_采访线预检的闸和出片那一趟是同一份名单`。"""
     sys.path[:0] = [str(ROOT / "src"), str(ROOT / "tools")]
     import build_interview_clip as bic  # noqa: PLC0415
+    import interview_preflight  # noqa: PLC0415
     from spec_wording import check_interview_copy_wording  # noqa: PLC0415
+    from taste_gates_extra import interview_taste_extra  # noqa: PLC0415
 
-    checks: list[tuple[str, Callable[[], object]]] = [
-        (name, (lambda f=getattr(bic, name): f(spec)))
-        for name in ("check_source_contract", "check_tennistv_logo", "check_topline_format",
-                     "check_score_orientation", "check_opening", "check_lead_in", "check_trail_in",
-                     "check_copy_page", "check_copy_bilingual", "check_cover_hook", "check_taste")
-    ]
-    if spec.get("takeaway"):
-        checks.append(("check_takeaway", lambda: bic.check_takeaway(spec)))
+    def taste_extra() -> None:
+        # `check_taste_extra` 读的是 spec 旁边的 `.xhs.txt`；这里正文已经在手上（可能是
+        # 还没落盘的草稿），直接调它背后那一刀
+        hard, _ = interview_taste_extra(spec, xhs or None)
+        if hard:
+            raise SystemExit("；".join(hard))
+
+    checks: list[tuple[str, Callable[[], object]]] = []
+    for gate in interview_preflight._spec_gates(bic):
+        name = gate.__name__
+        if name == "check_takeaway" and not spec.get("takeaway"):
+            continue
+        checks.append((name, taste_extra if name == "check_taste_extra"
+                       else (lambda f=gate: f(spec))))
     out = []
     for name, call in checks:
         buf = io.StringIO()
@@ -584,13 +598,6 @@ def run_interview_checks(spec: dict, xhs: str) -> list[GateResult]:
     problems = check_interview_copy_wording(spec, xhs or None)
     out.append(GateResult("check_interview_copy_wording",
                           "fail" if problems else "pass", "；".join(problems)))
-    # `build_interview_clip.check_taste_extra`（渲染入口第一道）读的是 spec 旁边的
-    # `.xhs.txt`；这里正文已经在手上，直接调它背后那一刀。不列进来，预检会对一条
-    # `main()` 当场拦下的采访报全绿。
-    from taste_gates_extra import interview_taste_extra  # noqa: PLC0415
-    hard, _ = interview_taste_extra(spec, xhs or None)
-    out.append(GateResult("check_taste_extra", "fail" if hard else "pass",
-                          _fmt("；".join(hard), 400) if hard else ""))
     return out
 
 

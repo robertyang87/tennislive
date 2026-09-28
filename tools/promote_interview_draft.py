@@ -470,11 +470,18 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
             skipped.append(
                 f"{f.name}: 全称断言没认领两个独立源（`_claims`），不提升")
             continue
-        # 口味闸（tools/taste_gates.py）：自动转正这一头**只报不拦**——模板标题
-        # 本来碰不到它，真碰到了也不能把自动链卡成「今天没有候选」；渲染入口
-        # （build_interview_clip.check_taste / production_preflight）照旧硬拦。
+        # 口味闸（tools/taste_gates.py）：模板标题本来碰不到它；碰到了的只可能是**手改过的
+        # 草稿**（「救下3个赛点／兹维列夫赢了」配推送「兹维列夫救下2个赛点」）。硬的那一组
+        # 留草稿、不提升——原来只报：转出去的 spec 渲染入口的 `check_taste` 照拦、永远渲不成，
+        # 全库测试 `test_全库当前零误报` 对采访又是硬的（批次 4 复审 nit），和上面
+        # `interview_taste_extra` 那一半同一个处置。只报的那一组照旧只报。
         from taste_gates import interview_taste_findings  # noqa: PLC0415
-        for note in sum(interview_taste_findings(spec), []):
+        taste_hard, taste_soft = interview_taste_findings(spec)
+        if taste_hard:
+            skipped.append(
+                f"{f.name}: 口味闸不过（{'；'.join(taste_hard)}），不提升")
+            continue
+        for note in taste_soft:
             print(f"[口味] {f.name} 只报不拦：{note}")
         if write:
             out = SPECS / f"{spec['slug']}.json"

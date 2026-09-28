@@ -37,6 +37,27 @@ def _corpus():
             yield json.loads(p.read_text(encoding="utf-8"))
 
 
+def _judged(check: str, found: list[tuple[dict, str]]) -> list[str]:
+    """全库测试的发现里，**自动链刚提交、还没核也没发**的那几条只报（K 的
+    `unverified_auto_spec`），回其余的（照判）。
+
+    这几条判据在出片那一趟 `build_interview_clip.main()` 开头都有同一道闸（`check_takeaway`、
+    `check_score_orientation`），片子出不去；而 `interview-auto-render` 用 GITHUB_TOKEN 直推
+    main、CI 不跑，这里判红只会红在下一个无关的 PR 上（批次 4 复审 BLOCKING，和 01684ef0
+    拉沃尔杯那次同一个形状）。请求那条路在 `production_preflight.check_request` 就拦。"""
+    import build_interview_request as req  # noqa: PLC0415
+
+    auto, hard = {}, []
+    for spec, what in found:
+        slug = str(spec.get("slug") or "")
+        if req.unverified_auto_spec(spec, slug):
+            auto.setdefault(slug, []).append(what)
+        else:
+            hard.append(f"{slug}: {what}")
+    req.report_unverified_auto(check, auto)
+    return hard
+
+
 # ── 一、收尾卡那一句要一行放得下 ─────────────────────────────────────────
 
 
@@ -125,6 +146,22 @@ def test_请求预检就拦收尾卡折行_不等自动链建完spec(monkeypatch
     assert len(copies) == 3
 
 
+def test_请求预检拦比分输家视角和总分差():
+    """批次 4 复审 BLOCKING：`check_request` 原来只跑 `check_taste`，比分赢家视角和另一半
+    口味闸（总分差、赛点同义反复、正文 markdown）要等出片那一趟 `main()` 才拦——而
+    `interview-auto-render` 在那之前已经用 GITHUB_TOKEN 把 spec 直推 main（CI 不跑），
+    全库测试到下一个 PR 才红。拿真请求改一处复现，**真跑**文案检查（不打桩）。"""
+    import production_preflight as pp
+
+    req = json.loads((ROOT / "requests" / "interviews"
+                      / "pegula-navarro-us-open-2026-qf-interview.json").read_text("utf-8"))
+    pp.check_request(req)                                   # 原样过得了
+    with pytest.raises(pp.RequestNotReady, match="输家视角"):
+        pp.check_request({**req, "push": {**req["push"], "score": "6-3 4-6 3-6"}})
+    with pytest.raises(pp.RequestNotReady, match="总分"):
+        pp.check_request({**req, "cover": {**req["cover"], "title": ["总分只多2分", "佩古拉赢了"]}})
+
+
 def test_一条请求没过前置检查_不让整个请求生成步骤红(monkeypatch, tmp_path, capsys):
     """review 那条：`check_request` 抛了，`build_interview_request --write` 原来退 1——
     interview-auto-render 里它后面的「配结尾／提交／dispatch」只挂着
@@ -173,8 +210,8 @@ def test_量卡片宽度和渲卡片用的是同一组常量(monkeypatch, tmp_pa
 
 def test_新的收尾卡都放得下一行():
     """存量也扫：豁免只认钉住的那一句（`points`），不再按 slug 整条跳过。"""
-    bad = [f"{s['slug']}: {p}" for s in _corpus()
-           for p in gates.takeaway_point_problems(s)]
+    bad = _judged("新的收尾卡都放得下一行",
+                  [(s, p) for s in _corpus() for p in gates.takeaway_point_problems(s)])
     assert not bad, "\n".join(bad)
 
 
@@ -259,8 +296,8 @@ def test_抢七注脚整个剥掉_不许被当成另一盘(score, red):
 
 
 def test_全库顶栏比分都是赢家视角():
-    bad = [f"{s['slug']}: {p}" for s in _corpus()
-           if (p := gates.score_orientation_problem(s))]
+    bad = _judged("全库顶栏比分都是赢家视角",
+                  [(s, p) for s in _corpus() if (p := gates.score_orientation_problem(s))])
     assert not bad, "\n".join(bad)
 
 
@@ -770,6 +807,8 @@ def test_auto_render被预检和picker的判据改动叫醒():
     missing = sorted(f"tools/{m}.py" for m in need if f"tools/{m}.py" not in paths)
     assert not missing, f"改了这些判据不会叫醒 picker：{missing}"
     assert "data/legacy_interview_gates.json" in paths
+    # 口味闸的存量表（`taste_gates.LEGACY_PATH`）：改豁免同样改变谁能投
+    assert "data/legacy_taste_gates.json" in paths
     assert len(wf[True]["push"]["paths"]) == len(paths), "paths 里有重复的条目"
 
 

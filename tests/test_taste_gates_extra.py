@@ -407,15 +407,21 @@ def test_全库已发的spec一条都不红():
         if hard:
             red[slug] = [h.split("\n")[0][:80] for h in hard]
     assert not red, f"已发的 spec 被判红了（误伤，或者存量表漏挂）：{red}"
-    iv_red = {}
+    # 采访线：自动链刚提交、还没核也没发的 spec **只报**（K 的 `unverified_auto_spec`）——
+    # `interview-auto-render` 用 GITHUB_TOKEN 直推 main、CI 不跑，这里判红就红在下一个
+    # 无关的 PR 上；同一道闸（`check_taste_extra`）在出片那一趟 `main()` 开头照样拦它，
+    # 请求那条路在 `production_preflight.check_request` 就拦（批次 4 复审 BLOCKING）。
+    import build_interview_request as req  # noqa: PLC0415
+    iv_red, iv_auto = {}, {}
     for path in sorted(INTERVIEWS.glob("*.json")):
         if path.name.endswith(".draft.json"):
             continue
         xhs = path.with_suffix(".xhs.txt")
-        hard, _ = T.interview_taste_extra(json.loads(path.read_text("utf-8")),
-                                          xhs.read_text("utf-8") if xhs.is_file() else None)
+        spec = json.loads(path.read_text("utf-8"))
+        hard, _ = T.interview_taste_extra(spec, xhs.read_text("utf-8") if xhs.is_file() else None)
         if hard:
-            iv_red[path.stem] = hard
+            (iv_auto if req.unverified_auto_spec(spec, path.stem) else iv_red)[path.stem] = hard
+    req.report_unverified_auto("采访 spec 的口味闸（另一半）", iv_auto)
     assert not iv_red, f"已发的采访 spec 被判红了：{iv_red}"
 
 

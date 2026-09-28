@@ -125,6 +125,15 @@ def test_钩子里比全场总分差要拦():
     # 「只差一分」是关键分，放行；「至少」不是差值
     assert T.hook_result_problem(_hook_spec("只差一分被拖进决胜盘\n他还是挺进了8强"), legacy={}) is None
     assert not T.TOTAL_POINTS.search("至少3分")
+    # 批次 4 复审：数字两边带空格是这个仓库最常见的写法（80 条带数字的钩子／标题里 31 条），
+    # 合并两份正则时一度把 `\s*` 丢了，这三条整批漏过
+    for hook in ("全场只多赢 1 分\n她逆转淘汰头号种子", "全场只多拿 6 分\n兹维列夫五盘晋级",
+                 "全场落后 9 分\n她还是挺进了8强", "比对手少拿 3 个小分\n他照样逆转"):
+        assert T.hook_result_problem(_hook_spec(hook), legacy={}), hook
+    # 反方向：空格放宽之后，这些照旧不是总分差
+    for text in ("全场多次破发", "全场一直领先", "至少 3 分", "多花 10 分钟",
+                 "4 小时 53 分", "四分之一", "他只丢了 1 个发球局"):
+        assert not T.TOTAL_POINTS.search(text), text
 
 
 def test_新闻点就是事件本身可以认领():

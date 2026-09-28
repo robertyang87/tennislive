@@ -1005,9 +1005,10 @@ def _workflow_sparse() -> list[str]:
     return [ln.strip().strip("/") for ln in str(opts["sparse-checkout"]).splitlines() if ln.strip()]
 
 
-def _checkout_view(dest: Path, cone: list[str] | None) -> Path:
+def _checkout_view(dest: Path, cone: list[str] | None, extra: tuple[str, ...] = ()) -> Path:
     """`ROOT` 的一份只读「检出」：`cone=None` 是全量，否则按 actions/checkout 的 cone
-    模式展开——列出的目录整棵、它们每一层上级目录里的**文件**、仓库根上的文件。"""
+    模式展开——列出的目录整棵、它们每一层上级目录里的**文件**、仓库根上的文件。
+    `extra`：工作流在 cone 之外单独检出的文件（「检出目标 spec 点名的素材」那一步）。"""
     import shutil  # noqa: PLC0415
 
     def covered(rel: str) -> bool:
@@ -1036,7 +1037,26 @@ def _checkout_view(dest: Path, cone: list[str] | None) -> Path:
 
     walk(ROOT, dest, "")
     (dest / _WRITES).mkdir(parents=True, exist_ok=True)
+    for rel in extra:
+        if (ROOT / rel).is_file() and not (dest / rel).exists():
+            (dest / rel).parent.mkdir(parents=True, exist_ok=True)
+            (dest / rel).symlink_to(ROOT / rel)
     return dest
+
+
+def _workflow_extra_assets() -> tuple[str, ...]:
+    """工作流在 cone 之外补检出的文件：`--plan` 按 `spec_assets` 写的那张单子。这里拿
+    `_GATE_PROBE` 会换图的每一条 spec 算一遍（和 probe 同一个筛法）。"""
+    out: set[str] = set()
+    for path in sorted((ROOT / "specs" / "reels").glob("*.json")):
+        try:
+            spec = json.loads(path.read_text(encoding="utf-8"))
+        except ValueError:
+            continue
+        cover = spec.get("cover") or {}
+        if cu.is_frame_cover(spec) and str(cover.get("eyebrow") or "").strip() == "赛场之上":
+            out.update(cu.spec_assets(spec))
+    return tuple(sorted(out))
 
 
 #: 在视图里跑：每一条「赛场之上」抽帧封面按机器换图的形状换成一张 2560×1440 的图，
@@ -1082,7 +1102,8 @@ def test_最终那道闸在工作流的稀疏检出里和全量检出里判得�
     `_final_gate`，和全量检出逐条比：稀疏检出**不许多出任何一个问题**。
     不按字段名列素材清单——`validate_spec` 以后再多读一样东西，这里自己会红。"""
     views = {"full": _checkout_view(tmp_path / "full", None),
-             "sparse": _checkout_view(tmp_path / "sparse", _workflow_sparse())}
+             "sparse": _checkout_view(tmp_path / "sparse", _workflow_sparse(),
+                                      _workflow_extra_assets())}
     procs = {}
     for name, view in views.items():
         env = {**os.environ, "PYTHONPATH": f"{view / 'src'}{os.pathsep}{view / 'tools'}",
@@ -1105,6 +1126,58 @@ def test_最终那道闸在工作流的稀疏检出里和全量检出里判得�
     assert not diff, ("工作流的稀疏检出比全量多拦了这些（缺的素材要加进 "
                       "reel-cover-upgrade.yml 的 sparse-checkout）：\n"
                       + "\n".join(f"  {s}: {p}" for s, p in sorted(diff.items())[:8]))
+
+
+def test_点名素材那一步在真的稀疏检出里只取出那几张(tmp_path):
+    """批次 4 复审 BLOCKING：`assets/reel` 不在稀疏检出里，gea-shapovalov 的三张插图段图
+    让最终那道闸和基线一起红、永远退避。工作流的补法是 `--plan` 写 `--out-assets`、
+    下一步只检出那几张——cone 模式的 `sparse-checkout add` 只收目录，所以这段脚本
+    **真的**拿一个 cone 稀疏检出跑一遍：点名的取出来、没点名的不取、索引里没有的不炸。"""
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows" / "reel-cover-upgrade.yml")
+                        .read_text("utf-8"))
+    steps = [s for job in wf["jobs"].values() for s in job["steps"]]
+    plan = next(s for s in steps if "--plan" in str(s.get("run") or ""))
+    assert '--out-assets "$RUNNER_TEMP/assets.txt"' in plan["run"]
+    step = next(s for s in steps if "assets.txt" in str(s.get("run") or "") and s is not plan)
+    assert step.get("if") == "steps.plan.outputs.targets != '0'"
+    i = steps.index
+    gate = next(s for s in steps if "tools/cover_upgrade.py" in str(s.get("run") or ""))
+    assert i(plan) < i(step) < i(gate), "要排在 --plan 之后、查图过闸之前"
+
+    src = tmp_path / "src"
+    for rel, body in {"assets/reel/a.jpg": "A", "assets/reel/b.jpg": "B",
+                      "specs/reels/x.json": "{}"}.items():
+        (src / rel).parent.mkdir(parents=True, exist_ok=True)
+        (src / rel).write_text(body, "utf-8")
+    _git(tmp_path, "init", "-q", str(src))
+    _git(src, "add", "-A")
+    _commit(src, "init")
+    work = tmp_path / "work"
+    _git(tmp_path, "clone", "-q", "--sparse", f"file://{src}", str(work))
+    _git(work, "sparse-checkout", "set", "specs")
+    assert not (work / "assets").exists()
+    runner = tmp_path / "runner"
+    runner.mkdir()
+    (runner / "assets.txt").write_text("assets/reel/a.jpg\nassets/reel/missing.jpg\n", "utf-8")
+    env = {**os.environ, **{k: str(v) for k, v in (step.get("env") or {}).items()},
+           "RUNNER_TEMP": str(runner)}
+    out = subprocess.run(["bash", "-eo", "pipefail", "-c", step["run"]], cwd=work, env=env,
+                         capture_output=True, text=True, check=False)
+    assert out.returncode == 0, out.stdout + out.stderr
+    assert (work / "assets/reel/a.jpg").read_text("utf-8") == "A"
+    assert not (work / "assets/reel/b.jpg").exists(), "只取点名的，不整个拉 assets/reel"
+    assert _git(work, "status", "--porcelain") == "", "取出来的文件不许变成改动"
+
+
+def test_spec_assets按字符串认素材_不按字段名():
+    spec = {"cover": {"portrait": {"frame_at": 3.2}},
+            "segments": [{"image": "assets/reel/x.jpg"},
+                         {"inset": {"image": "assets/reel/y.png"}},
+                         {"narration": "assets/ 开头的旁白\n不算"},
+                         {"image": "assets/../etc/passwd"}]}
+    assert cu.spec_assets(spec) == ["assets/reel/x.jpg", "assets/reel/y.png"]
 
 
 # ---------------------------------------------------------------- 评审第三轮

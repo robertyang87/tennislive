@@ -5730,7 +5730,10 @@ def _build_outro(outdir: Path) -> Path | None:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--spec", required=True)
+    ap.add_argument("--spec", required=True,
+                    help="spec 路径。⚠️ 小红书正文那几道闸（check_taste_extra、check_copy_page）按 slug "
+                         "读 specs/interviews/<slug>.xhs.txt，不读 --spec 旁边那份——runner 上 --spec "
+                         "恒是那个位置；本地拿 /tmp 下的副本跑，正文用的是仓库里那份")
     ap.add_argument("--stage",
                     choices=["subs", "sheet", "verify", "cover", "cover-scan", "render"],
                     default="subs")
