@@ -40,6 +40,7 @@ import sys
 import tempfile
 import threading
 from collections import defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -51,6 +52,7 @@ from interview_skill import model_instructions  # noqa: E402
 from interview_zh_tail import has_dangling_tail  # noqa: E402
 # 自动章只定义一处：读它的 `unverified_auto_spec` 和盖它的三个写手用同一个常量。
 from build_interview_request import AUTO_PENDING  # noqa: E402
+from interview_draft_hold import DRAFTED_AT_KEY  # noqa: E402
 
 CANDIDATES = ROOT / "data" / "interview_clip_candidates.json"
 SPECS = ROOT / "specs" / "interviews"
@@ -538,6 +540,10 @@ def _build_one(c: dict, chat, cal: list[dict], *, write: bool) -> tuple[str, boo
             if slug is None:
                 return spec["slug"], False, "slug 到 -9 都被占了——先清掉旧草稿再来"
             spec["slug"] = slug
+            # 建草稿的时刻：promote 只翻近几天的赛果，建得太早的草稿它永远查不到——
+            # `interview_draft_hold` 按这个章把它记成「停着」，auto-render 探针就不再
+            # 为它每 10 分钟跑一趟全量（2026-09-28 量的：60 趟里 39 趟空转）
+            spec[DRAFTED_AT_KEY] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
             SPECS.mkdir(parents=True, exist_ok=True)
             out = SPECS / f"{slug}.draft.json"
             out.write_text(json.dumps(spec, ensure_ascii=False, indent=2),

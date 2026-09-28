@@ -661,7 +661,7 @@ def test_机器译文把轮次写成N强_正式spec不写_落草稿等人工复�
     monkeypatch.setenv("TENNISLIVE_PRODUCTION_CACHE", str(tmp_path / "cache"))
     rows = [{"t": 0.5, "text": "we made the quarterfinals"}, {"t": 2.0, "text": "thank you"}]
     monkeypatch.setattr(B, "_transcribe_request", lambda *a, **k: (rows, 60.0))
-    monkeypatch.setattr(build_interview_clip, "segment", lambda words, start, end, budget=None: [
+    monkeypatch.setattr(build_interview_clip, "segment", lambda words, start, end, budget=None, ruler=None: [
         {"a": 0.5, "b": 1.8, "en": "we made the quarterfinals"},
         {"a": 2.0, "b": 3.0, "en": "thank you"}])
     zh = ["我们打出了一个美网八强的比赛", "谢谢大家"]

@@ -175,3 +175,8 @@ jobs:
           nudge_if_stale orchestrate.yml 20 -f apply=true
           # 监控班次自己也挨饿（实测 145~402 分钟一趟）：它是阻塞推微信的那一班
           nudge_if_stale pipeline-health.yml 90
+          # O4 自动换图（2026-09-28）：登记 3 小时 0 趟——没有任何班次叫醒它，而 GitHub 会丢
+          # schedule 事件。apply=true 和它自己的定时班次同一个语义（定时＝真换）
+          nudge_if_stale reel-cover-upgrade.yml 40 -f apply=true
+          # 采访派发（10 分钟一班）：停着的草稿不再叫醒全量之后，空转一趟只要十几秒
+          nudge_if_stale interview-auto-render.yml 30

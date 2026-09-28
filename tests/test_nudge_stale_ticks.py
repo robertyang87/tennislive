@@ -26,8 +26,10 @@ SCRIPT = Path("tools/nudge_stale_ticks.sh").resolve()
 #: schedule，9/27 是 01:52 → 08:34 → 14:19）——监控挨饿，没人重试的失败就拖到下一班
 #: 才推（复核 FIX ROUND 1）。三条最勤的 cron 宿主顺手叫它，阈值 90 分钟。
 HOSTS = {
-    "orchestrate.yml": ["reel-auto-ready.yml", "pipeline-health.yml"],
-    "reel-auto-ready.yml": ["orchestrate.yml", "pipeline-health.yml"],
+    "orchestrate.yml": ["reel-auto-ready.yml", "pipeline-health.yml", "reel-cover-upgrade.yml",
+                        "interview-auto-render.yml"],
+    "reel-auto-ready.yml": ["orchestrate.yml", "pipeline-health.yml", "reel-cover-upgrade.yml",
+                            "interview-auto-render.yml"],
     "official-social-images.yml": ["orchestrate.yml", "reel-auto-ready.yml"],
     "pipeline-health.yml": ["orchestrate.yml", "reel-auto-ready.yml"],
     "oncourt-interviews.yml": ["orchestrate.yml", "reel-auto-ready.yml"],
@@ -121,7 +123,40 @@ def test_挨饿的定时班次要互相叫醒():
                 f"{host}: 叫醒 orchestrate 不带 apply=true 等于白叫")
         if "pipeline-health.yml" in targets:
             assert "nudge_if_stale pipeline-health.yml 90" in body, host
+    if "reel-cover-upgrade.yml" in targets:
+            assert "nudge_if_stale reel-cover-upgrade.yml 40 -f apply=true" in body, (
+                f"{host}: 叫醒 O4 换图不带 apply=true 就只查不换——它定时那一班是真换")
     # pipeline-health 原来只有 actions: read——gh workflow run 要 write，
     # 少了它 nudge 每次都「没成」，而那和「没挨饿」在结果上长得一样
     health = Path(".github/workflows/pipeline-health.yml").read_text("utf-8")
     assert "actions: write" in health
+
+
+#: 有 schedule、但**不在**任何宿主的叫醒名单里的——各写一句为什么挨饿也无所谓。
+#: 2026-09-28 的来路：reel-cover-upgrade（O4 自动换图）登记 3 小时 0 趟，没有任何班次
+#: 叫醒它、GitHub 又在丢 schedule 事件——而当时没有一条判据会问「谁来叫醒它」。
+NOT_NUDGED = {
+    "official-social-images.yml": "发现类采集，漏一班下一班照样捞到，不卡出片",
+    "oncourt-interviews.yml": "场上采访采集，漏一班下一班补；出片那一段由 interview-auto-render 接",
+    "source-health.yml": "6 小时一班的源健康检查，晚一班只是晚报",
+}
+
+
+def test_每条定时工作流要么有人叫醒_要么写明为什么不用():
+    """防住「又加一条定时工作流，没人叫醒、静静挨饿」这一类，不只是 reel-cover-upgrade 这一条。"""
+    import yaml  # noqa: PLC0415
+
+    scheduled = set()
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        on = yaml.safe_load(path.read_text(encoding="utf-8")).get(True) or {}
+        if isinstance(on, dict) and on.get("schedule"):
+            scheduled.add(path.name)
+    nudged = {t for targets in HOSTS.values() for t in targets}
+    orphan = sorted(scheduled - nudged - set(NOT_NUDGED))
+    assert not orphan, (
+        f"这些定时工作流没有任何宿主叫醒、也没写为什么不用：{orphan}——GitHub 会丢 schedule "
+        "事件，加进某个宿主的 nudge 步骤（HOSTS），或在 NOT_NUDGED 里写明理由")
+    stale = sorted(set(NOT_NUDGED) - scheduled)
+    assert not stale, f"NOT_NUDGED 里这些已经不是定时工作流了，删掉：{stale}"
+    both = sorted(set(NOT_NUDGED) & nudged)
+    assert not both, f"这些既在叫醒名单里、又挂着「不用叫醒」：{both}"
