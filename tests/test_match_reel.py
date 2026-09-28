@@ -17401,3 +17401,28 @@ def test_quote的at超出段长在dry_run就红():
     seg["quote"][-1]["at"] = reel.seg_seconds(seg) + 0.05
     with pytest.raises(reel.ReelError, match="超出这一段"):
         reel.validate_spec(spec)
+
+
+def test_tiles证据卡一行放完不换行_超字数当场报错():
+    """账号所有者 2026-09-28 看 timeline 版证据卡：「最好不要换行」「减少点文案」
+    「字体能精美一些同时配上 logo 或图片」。tiles / draw 两种卡每行一句、带图标；
+    判据钉两件事：超过 TILE_MAX_CHARS 当场报错（不是渲出来才发现折行），
+    图标文件不在也当场报错（不是在透明底上渲一块空白）。"""
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import render_evidence_card as card  # noqa: PLC0415
+
+    html = card.build_html({
+        "kind": "tiles", "title": "种子引发的【风波】",
+        "rows": [{"when": "2001 温网", "what": "种子从16个扩到32个",
+                  "logo": "assets/slam2026/logos/logo-wimbledon.png"}]})
+    assert 'class="t-img logo"' in html and "<b>风波</b>" in html
+    assert "white-space: nowrap" in html
+
+    with pytest.raises(SystemExit, match="不换行"):
+        card.build_html({"kind": "tiles", "rows": [{"what": "一" * (card.TILE_MAX_CHARS + 1)}]})
+    with pytest.raises(SystemExit, match="图片文件不在"):
+        card.build_html({"kind": "tiles", "rows": [{"what": "短句", "photo": "assets/nope.jpg"}]})
+
+    d = card.build_html({"kind": "draw", "rows": [{"seed": "1号", "where": "签表最上面", "hi": True},
+                                                   {"seed": "2号", "where": "签表最下面"}]})
+    assert d.count('class="d-cell') == 2 and 'd-cell hi' in d
