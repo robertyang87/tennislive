@@ -75,7 +75,7 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-hangzhou-import-v1-${{ github.run_id }}
+          key: apt-pkgs-${{ runner.os }}-24.04-hangzhou-import-v1-${{ github.run_id }}-${{ strategy.job-index }}
           restore-keys: |
             apt-pkgs-${{ runner.os }}-24.04-hangzhou-import-v1-
       - name: Install native QC dependencies
