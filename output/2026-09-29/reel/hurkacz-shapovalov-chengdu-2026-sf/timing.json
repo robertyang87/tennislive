@@ -1,27 +1,49 @@
 {
   "schema": 2,
-  "at": "2026-09-28T17:26:36Z",
+  "at": "2026-09-29T01:32:18Z",
   "pipeline": "match-reel",
   "slug": "hurkacz-shapovalov-chengdu-2026-sf",
-  "mode": "cover",
+  "mode": "render",
   "outcome": "success",
   "error": null,
-  "elapsed_seconds": 2.771,
-  "last_stage": "封面编码",
+  "elapsed_seconds": 424.601,
+  "last_stage": "数据统计对照图",
   "stage_seconds": {
-    "下载源片 youtube": 0.108,
-    "封面海报": 2.076,
-    "封面编码": 0.293
+    "下载源片 youtube": 0.097,
+    "片尾配音": 0.417,
+    "TTS 合成": 7.669,
+    "比分板蒙版": 43.509,
+    "封面海报": 2.566,
+    "封面编码": 0.386,
+    "分段编码·并行": 340.892,
+    "分段编码": 90.855,
+    "片尾母版转码": 0.54,
+    "拼接": 57.888,
+    "混音": 7.68,
+    "烧字幕+成片": 209.562,
+    "数据统计对照图": 1.381
   },
   "stage_counts": {
     "下载源片 youtube": 1,
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "比分板蒙版": 1,
     "封面海报": 1,
-    "封面编码": 1
+    "封面编码": 1,
+    "分段编码·并行": 14,
+    "分段编码": 1,
+    "片尾母版转码": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1,
+    "数据统计对照图": 1
   },
-  "parallel_stages": [],
-  "untimed_seconds": 0.294,
+  "parallel_stages": [
+    "分段编码·并行"
+  ],
+  "untimed_seconds": 2.051,
   "cpu_count": 4,
-  "run_id": "36457951473",
+  "run_id": "36507669755",
   "run_attempt": "1",
   "on_runner": true
 }

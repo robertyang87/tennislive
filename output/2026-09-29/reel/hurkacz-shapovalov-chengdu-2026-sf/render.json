@@ -1,0 +1,137 @@
+{
+  "scoreboard_qc_sha256": "888149d45e787f74d22464df2bad15177dda2be6533f02f6634521f8f77de8a4",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 283.7,
+  "topbar": {
+    "line1": "2026 ATP250 成都 半决赛",
+    "line2": "胡尔卡奇 6-7(8) 6-3 6-3 沙波瓦洛夫",
+    "start": 1.2,
+    "end": 284.9
+  },
+  "film_seconds": 288.76,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 19.56,
+    "2": 7.968,
+    "3": 10.536,
+    "4": 11.664,
+    "5": 3.216,
+    "6": 4.488,
+    "7": 12.672,
+    "8": 12.744,
+    "9": 6.432,
+    "10": 5.592,
+    "11": 5.64,
+    "12": 5.688,
+    "13": 20.592
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 3,
+          "named": "胡尔卡奇",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 6,
+          "named": "胡尔卡奇",
+          "frames": 2,
+          "faces": 1,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 7,
+          "named": "沙波瓦洛夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 10,
+          "named": "胡尔卡奇",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 11,
+          "named": "沙波瓦洛夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 12,
+          "named": "沙波瓦洛夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 12,
+      "faces": 1
+    }
+  },
+  "render_inputs_sha256": "8d99bdbe5b753b72ee9e67228dbecd1f7cf2361b3a572fc49a351d75ba27cfeb",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "hurkacz-shapovalov-chengdu-2026-sf",
+    "received_at": "2026-09-29T01:23:36Z",
+    "artifact_ready_at": "2026-09-29T01:32:18Z",
+    "elapsed_seconds": 522.42,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "6f101c32490f7366087539930c5c853d5f5d2ff97f2ec81afc358b464bd0edae",
+    "spec_sha256": "610f71968564502e312f3fae56ee938119c6961e0a5331a56e54188509a59ffe",
+    "run_id": "36507669755",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-29T01:25:13Z",
+        "run_id": "36507669755"
+      }
+    ],
+    "render_seconds": 426.42,
+    "pre_render_seconds": 96.0
+  },
+  "film_sha256": "6f101c32490f7366087539930c5c853d5f5d2ff97f2ec81afc358b464bd0edae",
+  "film_bytes": 149141848,
+  "qc_attestation_sha256": "dd86665df49239e3e53e3a9bfda83ed7889c5b6856145343f535b531bacb8c2d",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-29T01:25:13Z",
+      "run_id": "36507669755"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-29T01:32:19Z",
+      "run_id": "36507669755"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-hurkacz-shapovalov-chengdu-2026-sf/hurkacz-shapovalov-chengdu-2026-sf.mp4",
+  "video_bytes": 149141848
+}
