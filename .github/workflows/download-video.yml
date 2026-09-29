@@ -1,0 +1,151 @@
+name: download-video
+run-name: "download-video · ${{ inputs.url }}"
+
+# 把单条公开 YouTube 视频下载到 runner，再作为 GitHub Release
+# 附件持久保存。不把大视频提交进 git 历史。
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "YouTube 视频链接（请确保你有权下载和存档）"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: download-video-${{ inputs.url }}
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      VIDEO_URL: ${{ inputs.url }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: 安装 YouTube 下载器
+        run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+
+      # YouTube 对机房 IP 经常要求 PO token。provider 起不来时不在
+      # 这里伪造一个根因，让 yt-dlp 在下一步输出真实诊断。
+      - name: 启动 PO token provider
+        continue-on-error: true
+        run: |
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for attempt in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "PO token provider 已就绪"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::warning::PO token provider 50 秒内未就绪，继续尝试 cookies/client 通道"
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+
+      - name: 写入 YouTube cookies（如已配置）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::未配置 YT_COOKIES_TXT，仅使用 PO token/client 通道"
+          fi
+
+      - name: 解析并下载原片
+        id: video
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -euo pipefail
+          ARGS=(--js-runtimes node)
+          if [ -n "$YT_COOKIES" ]; then
+            ARGS+=(--cookies "$YT_COOKIES")
+          fi
+
+          VIDEO_ID=$(yt-dlp "${ARGS[@]}" --skip-download --print id "$VIDEO_URL" | tail -1)
+          TITLE=$(yt-dlp "${ARGS[@]}" --skip-download --print title "$VIDEO_URL" | tail -1)
+          test -n "$VIDEO_ID" || { echo "::error::无法解析 YouTube 视频 ID"; exit 1; }
+
+          mkdir -p "$RUNNER_TEMP/download"
+          yt-dlp "${ARGS[@]}" \
+            -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b" \
+            --merge-output-format mp4 --remux-video mp4 \
+            -o "$RUNNER_TEMP/download/$VIDEO_ID.%(ext)s" \
+            "$VIDEO_URL"
+
+          FILE="$RUNNER_TEMP/download/$VIDEO_ID.mp4"
+          test -s "$FILE" || { echo "::error::下载结束但没有生成 MP4"; exit 1; }
+          SIZE=$(stat -c%s "$FILE")
+          test "$SIZE" -gt 51200 || { echo "::error::文件只有 $SIZE 字节，不是有效视频"; exit 1; }
+
+          echo "id=$VIDEO_ID" >> "$GITHUB_OUTPUT"
+          echo "title<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$TITLE" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "file=$FILE" >> "$GITHUB_OUTPUT"
+          echo "size=$SIZE" >> "$GITHUB_OUTPUT"
+
+      - name: 上传到 GitHub Release
+        env:
+          VIDEO_ID: ${{ steps.video.outputs.id }}
+          VIDEO_TITLE: ${{ steps.video.outputs.title }}
+          VIDEO_FILE: ${{ steps.video.outputs.file }}
+          VIDEO_SIZE: ${{ steps.video.outputs.size }}
+        run: |
+          set -euo pipefail
+          TAG="source-$VIDEO_ID"
+          ASSET="$VIDEO_ID.mp4"
+          cp "$VIDEO_FILE" "$RUNNER_TEMP/$ASSET"
+
+          gh release view "$TAG" >/dev/null 2>&1 || \
+            gh release create "$TAG" --title "$VIDEO_TITLE" \
+              --notes "由 download-video GitHub Action 保存的源视频。来源：$VIDEO_URL"
+
+          UPLOADED=0
+          for attempt in 1 2 3 4; do
+            if gh release upload "$TAG" "$RUNNER_TEMP/$ASSET" --clobber; then
+              UPLOADED=1
+              break
+            fi
+            sleep $((attempt * attempt * 5))
+          done
+          test "$UPLOADED" = 1 || { echo "::error::Release 附件连续 4 次上传失败"; exit 1; }
+
+          URL="https://github.com/${{ github.repository }}/releases/download/$TAG/$ASSET"
+          CODE=000
+          for attempt in 1 2 3 4 5 6 7 8; do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
+            if [ "$CODE" = 200 ] || [ "$CODE" = 206 ]; then
+              break
+            fi
+            sleep 5
+          done
+          if [ "$CODE" != 200 ] && [ "$CODE" != 206 ]; then
+            echo "::error::Release 已上传，但直链探活返回 HTTP $CODE"
+            exit 1
+          fi
+
+          {
+            echo "## 视频已保存"
+            echo
+            echo "- 标题：$VIDEO_TITLE"
+            echo "- 大小：$VIDEO_SIZE 字节"
+            echo "- [直接下载]($URL)"
+            echo "- [Release 页](https://github.com/${{ github.repository }}/releases/tag/$TAG)"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "download_url=$URL"
