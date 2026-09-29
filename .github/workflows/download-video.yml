@@ -25,6 +25,9 @@ jobs:
     env:
       VIDEO_URL: ${{ inputs.url }}
       GH_TOKEN: ${{ github.token }}
+      # 这条线不 checkout（下载与 Release 都不读仓库文件）。
+      # gh release 因此不能从 .git 推断仓库，必须显式绑定。
+      GH_REPO: ${{ github.repository }}
     steps:
       - uses: actions/setup-python@v5
         with:
