@@ -37,6 +37,9 @@ def test_分轨视频下载前必须安装ffmpeg才能合并成mp4():
 
 def test_原片上传release并在摘要输出直链():
     body = _body()
+    assert "GH_REPO: ${{ github.repository }}" in body, (
+        "工作流没有 checkout，gh release 必须用 GH_REPO 明确仓库"
+    )
     assert "gh release upload" in body
     assert "--clobber" in body
     assert re.search(r"for attempt in 1 2 3 4", body)
