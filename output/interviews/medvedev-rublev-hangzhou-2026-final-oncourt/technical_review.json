@@ -1,0 +1,36 @@
+{
+  "status": "technical_review_only_not_publish_attestation",
+  "film_sha256": "c26d6b03ca6c88e53f1795f9c16fa245cfa7d8831786a36de801756770acd20d",
+  "film_seconds": 88.48,
+  "native_assembly_roles": [
+    "cover",
+    "lead_in",
+    "body",
+    "trail_in",
+    "takeaway_close",
+    "outro"
+  ],
+  "decode": "Full ffmpeg decode exit0 after final native22 render",
+  "visual_review": "Codex inspected cover, body, takeaway and contact sheet; not claimed frame-by-frame or human full listening",
+  "subtitles": "Native segment ruler22; main verify base.en vs small.en 3.2%, zero caption gaps; no manual reviewed boolean",
+  "source_resolution": {
+    "body": [
+      1920,
+      1080
+    ],
+    "lead_trail": [
+      1920,
+      1080
+    ]
+  },
+  "crop": "fixed centre crop_shift_x=0, body keep_top=.80; lead/trail default4:3, no tracking",
+  "pending": [
+    "PublishGate",
+    "Release upload and final artifact binding"
+  ],
+  "native_l2": {
+    "status": "passed",
+    "evidence": "qc_attestation.json",
+    "film_sha256": "c26d6b03ca6c88e53f1795f9c16fa245cfa7d8831786a36de801756770acd20d"
+  }
+}

@@ -25,6 +25,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
+from urllib.parse import urlparse
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -136,7 +138,37 @@ def framing_contract(spec: dict) -> tuple[dict, list[str]]:
         "focus_y": focus_y,
     }
     issues: list[str] = []
-    if frame_at < 0:
+    if cover.get("photo_path"):
+        contract.pop("frame_at")
+        photo_path = str(cover.get("photo_path") or "")
+        source = str(cover.get("photo_source") or "")
+        photo_sha = str(cover.get("photo_sha256") or "")
+        contract.update(photo_path=photo_path, photo_source=source, photo_sha256=photo_sha)
+        generation = cover.get("generation", "photograph")
+        contract["generation"] = generation
+        if generation == "video_frame":
+            frame = cover.get("source_frame") or {}
+            contract["source_frame"] = frame
+            frame_url = urlparse(str(frame.get("url") or ""))
+            if frame_url.scheme not in {"http", "https"} or not frame_url.netloc:
+                issues.append("独立抽帧缺真实 source_frame.url")
+            if _number(frame.get("seconds")) < 0:
+                issues.append("独立抽帧缺非负 source_frame.seconds")
+            if not re.fullmatch(r"[a-f0-9]{64}", str(frame.get("source_sha256") or "")):
+                issues.append("独立抽帧缺真实 source_frame.source_sha256")
+        elif generation != "photograph":
+            issues.append("封面 generation 必须是 photograph 或 video_frame")
+        if "frame_at" in cover:
+            issues.append("摄影封面不能同时填写 cover.frame_at")
+        path = Path(photo_path)
+        if path.is_absolute() or ".." in path.parts:
+            issues.append("cover.photo_path 必须是仓库内相对路径")
+        parsed = urlparse(source)
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+            issues.append("cover.photo_source 必须是可追溯的公开来源 URL")
+        if not re.fullmatch(r"[a-f0-9]{64}", photo_sha):
+            issues.append("cover.photo_sha256 必须是原图真实 SHA-256")
+    elif frame_at < 0:
         issues.append("cover.frame_at 必须是非负秒数")
     if not 1.0 <= zoom <= 2.4:
         issues.append(f"cover.zoom={zoom:g}，必须在 1.0–2.4")
@@ -208,6 +240,25 @@ def poster_face_model(poster: Path, expected: str, rivals: tuple[str, ...] = ())
         return {"status": "error", "error": f"{type(exc).__name__}: {exc}",
                 "problems": [], "warnings": [f"认人／睁眼读不了海报：{exc}"]}
     return face_model_evidence(photo, expected, rivals)
+
+
+def validate_photo_file(spec: dict, root: Path | None = None) -> None:
+    """Only production audit reads the source photo; offline gates compare bound hashes."""
+    cover = spec.get("cover") or {}
+    if not cover.get("photo_path"):
+        return
+    _, issues = framing_contract(spec)
+    if issues:
+        raise ValueError("；".join(issues))
+    root = (root or Path(__file__).resolve().parents[1]).resolve()
+    photo = (root / cover["photo_path"]).resolve()
+    if not photo.is_relative_to(root):
+        raise ValueError("摄影原图不在仓库内")
+    if not photo.is_file() or sha256(photo) != cover["photo_sha256"]:
+        raise ValueError("摄影原图缺失或 SHA-256 与 spec 不符")
+    from PIL import Image
+    with Image.open(photo) as im:
+        im.verify()
 
 
 def analyze_poster(poster: Path) -> dict:
@@ -413,6 +464,7 @@ def audit_poster(poster: Path, spec: dict, *, face: bool = False,
     阈值或构图合同迟早分叉，而分叉的样子是「扫描说能过、终审红了」——
     正是扫描要省掉的那一趟 render。
     """
+    validate_photo_file(spec)
     result = analyze_poster(poster)
     contract, _ = framing_contract(spec)
     result["contract"] = contract
@@ -438,7 +490,10 @@ def write_report(
     warnings: list[str] | None = None,
 ) -> Path:
     face_model = result.get("face_model") if isinstance(result, dict) else None
-    identity = "L0-bound spec subject + same-source frame_at"
+    contract = result.get("contract") if isinstance(result, dict) else None
+    identity = ("L0-bound spec subject + verified independent image source and SHA-256"
+                if isinstance(contract, dict) and contract.get("photo_path")
+                else "L0-bound spec subject + same-source frame_at")
     if isinstance(face_model, dict) and face_model.get("status") == "ok":
         identity += f" + face model {face_model.get('model')} vs official headshot"
     payload = {
