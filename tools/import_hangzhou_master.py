@@ -52,7 +52,7 @@ def assemble(path):
     # in their native paths by the reviewed metadata commit. No proof synthesis.
     for p in (spec,spec.with_suffix('.xhs.txt'),out/'poster.jpg',out/'render.json'):
         if not p.is_file(): raise FileNotFoundError(p)
-    run('python','tools/push_reel.py','--stage','check','--outdir',out,'--copy',spec.with_suffix('.xhs.txt'))
+    run('python','tools/push_reel.py','--stage','check','--outdir',out,'--copy',spec.with_suffix('.xhs.txt'),'--date',m['date'])
     if m['column']=='reel':
         run('python','tools/check_reel_landed.py','--slug',m['slug'],'--date',m['date'],'--film',film,'--spec',spec)
     else:
@@ -82,7 +82,7 @@ def release(path):
     r=read(out/'render.json')
     r.update(video_url=url,video_bytes=m['bytes'],film_sha256=m['sha256'],release_asset_digest=asset['digest'],qc_attestation_sha256=digest(out/'qc_attestation.json'))
     write(out/'render.json',r)
-    run('python','tools/push_reel.py','--stage','page','--outdir',out,'--copy',spec.with_suffix('.xhs.txt'))
+    run('python','tools/push_reel.py','--stage','page','--outdir',out,'--copy',spec.with_suffix('.xhs.txt'),'--date',m['date'])
     film.unlink() # verified Release contains exact bytes; keeps movie out of git
 
 if __name__=='__main__':

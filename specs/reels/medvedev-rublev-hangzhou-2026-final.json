@@ -73,7 +73,7 @@
     {
       "start": 184.8,
       "end": 216.5,
-      "narration": "杭州决赛，两盘拿下老朋友卢布列夫，梅德韦杰夫夺冠。但首盘并不轻松，两人一路打到五比五。看这个回合，卢布列夫持续调动，梅德韦杰夫在底线接住攻势，再往网前压。这一分拿下，压力回到了卢布列夫的发球局。全场面对两个破发点，他全部守住，自己的发球局一个没丢。这一晚，他还轰出了二十三记ACE。",
+      "narration": "北京时间九月二十九号晚上快八点，杭州决赛。梅德韦杰夫两盘拿下卢布列夫。但首盘并不轻松，两人一路打到五比五。这个回合，卢布列夫持续调动，梅德韦杰夫接住攻势，再往网前压。拿下这一分，压力回到卢布列夫的发球局。全场面对两个破发点，他全部守住，发球局一个没丢，还轰出了二十三记ACE。",
       "source": "ttv",
       "fit": "crop",
       "cx": 0.5,
@@ -255,5 +255,25 @@
   "mixed_fps": {
     "ttv": "GitHub release原片ffprobe 1920x1080 50fps；取代用户转码512p。"
   },
-  "_tennistv_trim": "最后使用源片479.6秒，480秒后Tennis TV扫码片尾不入片。原片右上台标在固定居中3:4取景窗之外；成片仍做逐段抽帧确认。"
+  "_tennistv_trim": "最后使用源片479.6秒，480秒后Tennis TV扫码片尾不入片。原片右上台标在固定居中3:4取景窗之外；成片仍做逐段抽帧确认。",
+  "_opening_time_source": {
+    "url": "https://www.flashscore.com/tennis/atp-singles/hangzhou/results/",
+    "match_id": "YRzVjjGE",
+    "feed_timestamp": 1790682000,
+    "beijing": "2026-09-29T19:40:00+08:00",
+    "official_schedule_url": "https://www.hangzhouopen.com/en/media/news/hangzhou-atp-250-2026-history-draw-schedule",
+    "note": "官方不早于19:30仅为下界；Flashscore本场feed列19:40，旁白按owner口径只说晚上快八点，不声称精确第一球。"
+  },
+  "_hit_data": [
+    {
+      "label": "卢布列夫 破发点兑现",
+      "detail": "0/2（0%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "梅德韦杰夫 连续保发",
+      "detail": "11 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    }
+  ]
 }
