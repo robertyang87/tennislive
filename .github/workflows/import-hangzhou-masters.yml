@@ -75,9 +75,9 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-ci-v2-${{ github.run_id }}
+          key: apt-pkgs-${{ runner.os }}-24.04-hangzhou-import-v1-${{ github.run_id }}
           restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
+            apt-pkgs-${{ runner.os }}-24.04-hangzhou-import-v1-
       - name: Install native QC dependencies
         timeout-minutes: 15
         run: |
