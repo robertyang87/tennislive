@@ -101,3 +101,14 @@ def test_半透明小分格压在蓝场上也算板():
     # 球场本身不许被这一档扫进来
     assert not a.board_mask(np.full((4, 4, 3), (100, 165, 220), np.uint8)).any()
     assert not a.board_mask(np.full((4, 4, 3), (123, 167, 128), np.uint8)).any()
+
+
+def test_两行小分同列白字笔画不应被当成板的右缘():
+    """成都决赛两行15的1：上下白字合计超过半高，不能截成两行1。"""
+    band = _band(446)
+    band[12:44, 411:416] = (245, 250, 248)
+    band[65:98, 411:416] = (245, 250, 248)
+    assert a.board_edge(band, cap=549) == 446
+    # 外面的球场仍透明，不能因为认了白字把整幅白色广告抠回来。
+    band[:, 500:600] = (250, 250, 250)
+    assert a.board_edge(band, cap=549) == 446

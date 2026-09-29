@@ -645,6 +645,16 @@ h1{{font-size:34px;text-align:center;color:{BRAND};margin-bottom:14px}}
         footer = ""
         film_css = (".wrap{padding:34px 74px 0}"
                     ".srow{margin-bottom:20px;padding-bottom:13px}")
+        # Mixed-source cards may explicitly retain their source attribution in
+        # the film. Keep the existing footer styling and leave default cards
+        # unchanged; tighter row gaps reserve room inside the 1440px canvas.
+        if stats.get("show_source_footer") is True and footer_line:
+            footer = ('<div class="footer">\n'
+                      f'    <span>{html.escape(footer_line)}</span>'
+                      "\n  </div>")
+            film_css = (".wrap{padding:34px 74px 0}"
+                        ".srow{margin-bottom:11px;padding-bottom:13px}"
+                        ".footer{margin-top:20px;padding-top:14px}")
     else:
         section_title = '<div class="section-title">全场数据对比</div>'
         # footer 只留「场地 · 日期」。左边原来那句「网球时差 · 赛场之上」拿掉了：Q15 把台头

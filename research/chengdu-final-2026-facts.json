@@ -1,0 +1,923 @@
+{
+  "match": {
+    "date": "2026-09-29",
+    "event": "Chengdu Open",
+    "round": "Final",
+    "tour": "ATP",
+    "surface": "Hard",
+    "court": "Center Court",
+    "winner": "Alejandro Davidovich Fokina",
+    "loser": "Hubert Hurkacz",
+    "score": "6-4 7-6(7)",
+    "tiebreak_winner_score": "9-7",
+    "seed_winner": 2,
+    "seed_loser": 5
+  },
+  "source_policy": "User screenshot trusted as supplied evidence, not independently certified. Flashscore fetched directly and raw archived. No shot types inferred from point feed. Conflicts explicit; use one provider per stats panel.",
+  "ids": {
+    "flashscore": "OvOGsnw1",
+    "flashscore_home": "Hubert Hurkacz",
+    "flashscore_away": "Alejandro Davidovich Fokina"
+  },
+  "sources": [
+    {
+      "id": "user_tnns",
+      "type": "user screenshot",
+      "file": "IMG_5147.png",
+      "library_id": "libfile_df5e818d10e88191ae5671d95e16b696",
+      "status": "read from visible conversation image"
+    },
+    {
+      "id": "fs_results",
+      "url": "https://www.flashscore.com/tennis/atp-singles/chengdu/results/",
+      "status": "fetched; match id/player mapping verified"
+    },
+    {
+      "id": "df_mh_1",
+      "url": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_OvOGsnw1",
+      "raw_file": "research/chengdu-final-2026/df_mh_1.txt",
+      "status": "fetched directly"
+    },
+    {
+      "id": "df_st_1",
+      "url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_OvOGsnw1",
+      "raw_file": "research/chengdu-final-2026/df_st_1.txt",
+      "status": "fetched directly"
+    },
+    {
+      "id": "df_sui_1",
+      "url": "https://local-global.flashscore.ninja/2/x/feed/df_sui_1_OvOGsnw1",
+      "raw_file": "research/chengdu-final-2026/df_sui_1.txt",
+      "status": "fetched directly"
+    },
+    {
+      "id": "atp_article",
+      "url": "https://www.atptour.com/en/news/davidovich-fokina-hurkacz-chengdu-2026-final",
+      "status": "search indexed headline verified; direct open blocked",
+      "verified_claim": "Second title of 2026"
+    },
+    {
+      "id": "tennisnow",
+      "url": "https://tennisnow.com/davidovich-fokina-tops-hurkacz-for-maiden-hard-court-crown-in-chengdu/",
+      "status": "search result",
+      "verified_claim": "Saved four set points; first hard-court title"
+    },
+    {
+      "id": "tennistemple",
+      "url": "https://en.tennistemple.com/actu/davidovich-fokina-claims-second-title-of-the/E1V2",
+      "status": "search retrieved article",
+      "claims": "3-6 tiebreak deficit, 9-7 win, second career title after Mallorca June; first set break at 3-3"
+    }
+  ],
+  "verified_sequence": [
+    {
+      "set": 1,
+      "event": "Opening Hurkacz service game",
+      "detail": "Hurkacz saved three break points and held; 20 points in game, counting final winning point omitted by feed."
+    },
+    {
+      "set": 1,
+      "event": "Davidovich serving at 2-3",
+      "detail": "Saved his only break point faced all match and held for 3-3."
+    },
+    {
+      "set": 1,
+      "event": "Hurkacz serving at 3-3",
+      "detail": "Davidovich converted break point at 15-40, led 4-3; only service break in match."
+    },
+    {
+      "set": 1,
+      "event": "Set conclusion",
+      "detail": "Davidovich held for 6-4."
+    },
+    {
+      "set": 2,
+      "event": "Hurkacz serving at 5-5",
+      "detail": "Hurkacz saved two break points from 15-40 and held for 6-5."
+    },
+    {
+      "set": 2,
+      "event": "Tiebreak",
+      "detail": "Davidovich trailed 3-6; saved three consecutive set points to reach 6-6, then a fourth at 6-7; won last three points from 6-7 to 9-7. Converted first match point at 8-7."
+    }
+  ],
+  "stats_flashscore": [
+    {
+      "scope": "Match",
+      "group": "Service",
+      "label": "Aces",
+      "hurkacz": "17",
+      "davidovich_fokina": "8"
+    },
+    {
+      "scope": "Match",
+      "group": "Service",
+      "label": "Double Faults",
+      "hurkacz": "2",
+      "davidovich_fokina": "2"
+    },
+    {
+      "scope": "Match",
+      "group": "Service",
+      "label": "1st serve percentage",
+      "hurkacz": "72%",
+      "davidovich_fokina": "77%"
+    },
+    {
+      "scope": "Match",
+      "group": "Service",
+      "label": "1st serve points won",
+      "hurkacz": "70% (46/66)",
+      "davidovich_fokina": "87% (46/53)"
+    },
+    {
+      "scope": "Match",
+      "group": "Service",
+      "label": "2nd serve points won",
+      "hurkacz": "46% (12/26)",
+      "davidovich_fokina": "50% (8/16)"
+    },
+    {
+      "scope": "Match",
+      "group": "Service",
+      "label": "Break Points Saved",
+      "hurkacz": "5/6",
+      "davidovich_fokina": "1/1"
+    },
+    {
+      "scope": "Match",
+      "group": "Return",
+      "label": "1st return points won",
+      "hurkacz": "13% (7/53)",
+      "davidovich_fokina": "30% (20/66)"
+    },
+    {
+      "scope": "Match",
+      "group": "Return",
+      "label": "2nd return points won",
+      "hurkacz": "50% (8/16)",
+      "davidovich_fokina": "54% (14/26)"
+    },
+    {
+      "scope": "Match",
+      "group": "Return",
+      "label": "Break Points Converted",
+      "hurkacz": "0/1",
+      "davidovich_fokina": "1/6"
+    },
+    {
+      "scope": "Match",
+      "group": "Points",
+      "label": "Service Points Won",
+      "hurkacz": "63% (58/92)",
+      "davidovich_fokina": "78% (54/69)"
+    },
+    {
+      "scope": "Match",
+      "group": "Points",
+      "label": "Return Points Won",
+      "hurkacz": "22% (15/69)",
+      "davidovich_fokina": "37% (34/92)"
+    },
+    {
+      "scope": "Match",
+      "group": "Points",
+      "label": "Total Points Won",
+      "hurkacz": "45% (73/161)",
+      "davidovich_fokina": "55% (88/161)"
+    },
+    {
+      "scope": "Match",
+      "group": "Points",
+      "label": "Last 10 balls",
+      "hurkacz": "3",
+      "davidovich_fokina": "7"
+    },
+    {
+      "scope": "Match",
+      "group": "Points",
+      "label": "Match points saved",
+      "hurkacz": "0",
+      "davidovich_fokina": "0"
+    },
+    {
+      "scope": "Match",
+      "group": "Games",
+      "label": "Service games won",
+      "hurkacz": "91% (10/11)",
+      "davidovich_fokina": "100% (11/11)"
+    },
+    {
+      "scope": "Match",
+      "group": "Games",
+      "label": "Return games won",
+      "hurkacz": "0% (0/11)",
+      "davidovich_fokina": "9% (1/11)"
+    },
+    {
+      "scope": "Match",
+      "group": "Games",
+      "label": "Total games won",
+      "hurkacz": "45% (10/22)",
+      "davidovich_fokina": "55% (12/22)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "label": "Aces",
+      "hurkacz": "8",
+      "davidovich_fokina": "2"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "label": "Double Faults",
+      "hurkacz": "0",
+      "davidovich_fokina": "2"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "label": "1st serve percentage",
+      "hurkacz": "70%",
+      "davidovich_fokina": "68%"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "label": "1st serve points won",
+      "hurkacz": "63% (19/30)",
+      "davidovich_fokina": "95% (18/19)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "label": "2nd serve points won",
+      "hurkacz": "38% (5/13)",
+      "davidovich_fokina": "44% (4/9)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "label": "Break Points Saved",
+      "hurkacz": "3/4",
+      "davidovich_fokina": "1/1"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Return",
+      "label": "1st return points won",
+      "hurkacz": "5% (1/19)",
+      "davidovich_fokina": "37% (11/30)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Return",
+      "label": "2nd return points won",
+      "hurkacz": "56% (5/9)",
+      "davidovich_fokina": "62% (8/13)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Return",
+      "label": "Break Points Converted",
+      "hurkacz": "0/1",
+      "davidovich_fokina": "1/4"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Points",
+      "label": "Service Points Won",
+      "hurkacz": "56% (24/43)",
+      "davidovich_fokina": "79% (22/28)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Points",
+      "label": "Return Points Won",
+      "hurkacz": "21% (6/28)",
+      "davidovich_fokina": "44% (19/43)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Points",
+      "label": "Total Points Won",
+      "hurkacz": "42% (30/71)",
+      "davidovich_fokina": "58% (41/71)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Points",
+      "label": "Match points saved",
+      "hurkacz": "0",
+      "davidovich_fokina": "0"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Games",
+      "label": "Service games won",
+      "hurkacz": "80% (4/5)",
+      "davidovich_fokina": "100% (5/5)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Games",
+      "label": "Return games won",
+      "hurkacz": "0% (0/5)",
+      "davidovich_fokina": "20% (1/5)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Games",
+      "label": "Total games won",
+      "hurkacz": "40% (4/10)",
+      "davidovich_fokina": "60% (6/10)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "label": "Aces",
+      "hurkacz": "9",
+      "davidovich_fokina": "6"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "label": "Double Faults",
+      "hurkacz": "2",
+      "davidovich_fokina": "0"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "label": "1st serve percentage",
+      "hurkacz": "73%",
+      "davidovich_fokina": "83%"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "label": "1st serve points won",
+      "hurkacz": "75% (27/36)",
+      "davidovich_fokina": "82% (28/34)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "label": "2nd serve points won",
+      "hurkacz": "54% (7/13)",
+      "davidovich_fokina": "57% (4/7)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "label": "Break Points Saved",
+      "hurkacz": "2/2",
+      "davidovich_fokina": "0/0"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Return",
+      "label": "1st return points won",
+      "hurkacz": "18% (6/34)",
+      "davidovich_fokina": "25% (9/36)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Return",
+      "label": "2nd return points won",
+      "hurkacz": "43% (3/7)",
+      "davidovich_fokina": "46% (6/13)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Return",
+      "label": "Break Points Converted",
+      "hurkacz": "0/0",
+      "davidovich_fokina": "0/2"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Points",
+      "label": "Service Points Won",
+      "hurkacz": "69% (34/49)",
+      "davidovich_fokina": "78% (32/41)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Points",
+      "label": "Return Points Won",
+      "hurkacz": "22% (9/41)",
+      "davidovich_fokina": "31% (15/49)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Points",
+      "label": "Total Points Won",
+      "hurkacz": "48% (43/90)",
+      "davidovich_fokina": "52% (47/90)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Points",
+      "label": "Match points saved",
+      "hurkacz": "0",
+      "davidovich_fokina": "0"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Games",
+      "label": "Service games won",
+      "hurkacz": "100% (6/6)",
+      "davidovich_fokina": "100% (6/6)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Games",
+      "label": "Return games won",
+      "hurkacz": "0% (0/6)",
+      "davidovich_fokina": "0% (0/6)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Games",
+      "label": "Total games won",
+      "hurkacz": "50% (6/12)",
+      "davidovich_fokina": "50% (6/12)"
+    }
+  ],
+  "stats_user_tnns": {
+    "column_order": [
+      "Hurkacz",
+      "Davidovich Fokina"
+    ],
+    "winners": [
+      31,
+      31
+    ],
+    "unforced_errors": [
+      29,
+      9
+    ],
+    "first_serve_in_pct": [
+      72,
+      77
+    ],
+    "first_serve_points_won_pct": [
+      70,
+      85
+    ],
+    "break_points_saved": [
+      "5/6",
+      "1/1"
+    ],
+    "dominance_ratio": [
+      0.62,
+      1.62
+    ],
+    "duration": "1:46"
+  },
+  "conflicts": [
+    {
+      "field": "duration",
+      "user_tnns": "1:46",
+      "flashscore": "1:47",
+      "decision": "Use 1:47 only when explicitly sourced to Flashscore; otherwise await official/video scoreboard. Do not mix silently."
+    },
+    {
+      "field": "Davidovich first serve points won",
+      "user_tnns": "85%",
+      "flashscore": "87% (46/53)",
+      "decision": "Prefer ratio-backed FS for FS panel, or preserve whole TNNS panel with source label; no silent combination."
+    },
+    {
+      "field": "tiebreak notation",
+      "elpais": "7-6(9)",
+      "user_tnns_and_flashscore": "7-6(7), tiebreak9-7",
+      "decision": "Use 7-6(7); raw point feed explicitly ends7-9 home-away."
+    },
+    {
+      "field": "rankings",
+      "sources": "Some articles use tournament-week29/46; other current-week tables28/41",
+      "decision": "unresolved; no rank in final copy until chosen ranking date verified"
+    }
+  ],
+  "unverified": [
+    "Shot selection/technique on crucial points requires viewing source video.",
+    "Winners31/31 and UE9/29 currently only TNNS supplied screenshot; FS has neither.",
+    "Full trophy speech words, speech boundaries and trophy lift require video audit."
+  ],
+  "editorial_options": {
+    "main_arc": "第二盘四次面临丢盘，最终直落两盘夺冠；统计作为复盘补充。",
+    "stats_takeaway": "按用户TNNS统计，同为31个制胜分，福基纳少20次非受迫性失误；这不能单独证明某一具体战术。",
+    "safe_shorthand": "四次化险为夷，成都捧杯。",
+    "avoid": [
+      "首冠（这是第二个ATP单打冠军）",
+      "全场没给对手机会（对手有1个破发点及4个盘点）",
+      "把7-6(7)写成7-6(9)",
+      "具体击球技术无画面支撑"
+    ]
+  },
+  "point_by_point_games": [
+    {
+      "set": "Set 1",
+      "home_games": "1",
+      "away_games": "0",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "15:0, 15:15, 30:15, 30:30, 30:40 |B1|, 40:40, 40:A |B1|, 40:40, A:40, 40:40, A:40, 40:40, 40:A |B1|, 40:40, A:40, 40:40, A:40, 40:40, A:40",
+      "break_points": 3,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 1",
+      "home_games": "1",
+      "away_games": "1",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 0:30, 0:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 1",
+      "home_games": "2",
+      "away_games": "1",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 15:15, 30:15, 30:30, 40:30",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 1",
+      "home_games": "2",
+      "away_games": "2",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 0:30, 0:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 1",
+      "home_games": "3",
+      "away_games": "2",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "15:0, 15:15, 15:30, 30:30, 40:30",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 1",
+      "home_games": "3",
+      "away_games": "3",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "15:0, 15:15, 15:30, 15:40, 30:40, 40:40, A:40 |B1|, 40:40, 40:A",
+      "break_points": 1,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 1",
+      "home_games": "3",
+      "away_games": "4",
+      "server": "home",
+      "winner": "away",
+      "broken": true,
+      "points": "15:0, 15:15, 15:30, 15:40 |B1|",
+      "break_points": 1,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 1",
+      "home_games": "3",
+      "away_games": "5",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "15:0, 15:15, 15:30, 15:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 1",
+      "home_games": "4",
+      "away_games": "5",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 0:30, 15:30, 30:30, 40:30",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 1",
+      "home_games": "4",
+      "away_games": "6",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 0:30, 15:30, 15:40 |B2|",
+      "break_points": 0,
+      "set_points": 1,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "1",
+      "away_games": "0",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 15:15, 30:15, 30:30, 40:30",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "1",
+      "away_games": "1",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "15:0, 15:15, 30:15, 30:30, 30:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "2",
+      "away_games": "1",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 15:15, 30:15, 40:15",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "2",
+      "away_games": "2",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "15:0, 15:15, 15:30, 15:40, 30:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "3",
+      "away_games": "2",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 15:15, 15:30, 30:30, 40:30, 40:40, A:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "3",
+      "away_games": "3",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 0:30, 0:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "4",
+      "away_games": "3",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "15:0, 30:0, 40:0",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "4",
+      "away_games": "4",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "15:0, 15:15, 15:30, 15:40, 30:40, 40:40, 40:A",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "5",
+      "away_games": "4",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 0:30, 15:30, 30:30, 40:30, 40:40, A:40, 40:40, A:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "5",
+      "away_games": "5",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 0:30, 0:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "6",
+      "away_games": "5",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 0:30, 15:30, 15:40 |B1|, 30:40 |B1|, 40:40, A:40",
+      "break_points": 2,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    },
+    {
+      "set": "Set 2",
+      "home_games": "6",
+      "away_games": "6",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 15:15, 15:30, 15:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "note": "home=Hurkacz; away=Davidovich Fokina; game score is score AFTER game; final point omitted in ordinary game points string"
+    }
+  ],
+  "tiebreak_point_by_point": [
+    {
+      "hurkacz": 1,
+      "davidovich_fokina": 0,
+      "server": "Hurkacz",
+      "winner": "Hurkacz",
+      "point_marker_after_point": null
+    },
+    {
+      "hurkacz": 1,
+      "davidovich_fokina": 1,
+      "server": "Davidovich Fokina",
+      "winner": "Davidovich Fokina",
+      "point_marker_after_point": null
+    },
+    {
+      "hurkacz": 1,
+      "davidovich_fokina": 2,
+      "server": "Davidovich Fokina",
+      "winner": "Davidovich Fokina",
+      "point_marker_after_point": null
+    },
+    {
+      "hurkacz": 2,
+      "davidovich_fokina": 2,
+      "server": "Hurkacz",
+      "winner": "Hurkacz",
+      "point_marker_after_point": null
+    },
+    {
+      "hurkacz": 3,
+      "davidovich_fokina": 2,
+      "server": "Hurkacz",
+      "winner": "Hurkacz",
+      "point_marker_after_point": null
+    },
+    {
+      "hurkacz": 4,
+      "davidovich_fokina": 2,
+      "server": "Davidovich Fokina",
+      "winner": "Hurkacz",
+      "point_marker_after_point": null
+    },
+    {
+      "hurkacz": 4,
+      "davidovich_fokina": 3,
+      "server": "Davidovich Fokina",
+      "winner": "Davidovich Fokina",
+      "point_marker_after_point": null
+    },
+    {
+      "hurkacz": 5,
+      "davidovich_fokina": 3,
+      "server": "Hurkacz",
+      "winner": "Hurkacz",
+      "point_marker_after_point": null
+    },
+    {
+      "hurkacz": 6,
+      "davidovich_fokina": 3,
+      "server": "Hurkacz",
+      "winner": "Hurkacz",
+      "point_marker_after_point": "2,1"
+    },
+    {
+      "hurkacz": 6,
+      "davidovich_fokina": 4,
+      "server": "Davidovich Fokina",
+      "winner": "Davidovich Fokina",
+      "point_marker_after_point": "2,1"
+    },
+    {
+      "hurkacz": 6,
+      "davidovich_fokina": 5,
+      "server": "Davidovich Fokina",
+      "winner": "Davidovich Fokina",
+      "point_marker_after_point": "2,1"
+    },
+    {
+      "hurkacz": 6,
+      "davidovich_fokina": 6,
+      "server": "Hurkacz",
+      "winner": "Davidovich Fokina",
+      "point_marker_after_point": null
+    },
+    {
+      "hurkacz": 7,
+      "davidovich_fokina": 6,
+      "server": "Hurkacz",
+      "winner": "Hurkacz",
+      "point_marker_after_point": "2,1"
+    },
+    {
+      "hurkacz": 7,
+      "davidovich_fokina": 7,
+      "server": "Davidovich Fokina",
+      "winner": "Davidovich Fokina",
+      "point_marker_after_point": null
+    },
+    {
+      "hurkacz": 7,
+      "davidovich_fokina": 8,
+      "server": "Davidovich Fokina",
+      "winner": "Davidovich Fokina",
+      "point_marker_after_point": "3,2"
+    },
+    {
+      "hurkacz": 7,
+      "davidovich_fokina": 9,
+      "server": "Hurkacz",
+      "winner": "Davidovich Fokina",
+      "point_marker_after_point": null
+    }
+  ]
+}

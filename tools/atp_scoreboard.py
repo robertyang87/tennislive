@@ -40,7 +40,7 @@ from pathlib import Path
 
 import numpy as np
 
-PROFILE = "atp-tour-v1"
+PROFILE = "atp-tour-v2"
 EDGE_PAD = 2          # 板右缘外多留的源片像素（抗锯齿的那一列）
 SCAN_W = 760          # 从板左缘往右扫多宽：板 ≤ ~420、黄条 ≤ ~260
 MIN_BOARD_W = 150     # 板最窄也有名字那一栏宽；比这窄就不是板
@@ -70,7 +70,8 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
     """这一帧板的右缘（相对带左缘的列号，不含），板不在就 None。
 
     按列算「板色像素占这一列多少」。板里有白字，所以一列的板色占比到不了 1，
-    但从来不会低于一半；球场那一侧是 0。从左往右走到**连着 4 列**都低于一半
+    两行同列的数字笔画能占过一半，所以右缘计数须包含白字；球场那一侧是 0。
+    从左往右走到**连着 4 列**都低于一半
     为止——4 列是为了跨过盘分格之间那道细缝。
     """
     frac = board_mask(band).mean(axis=0)
@@ -82,7 +83,11 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
     blue_cols = ((b > 180) & (r < 70) & (g < 70)).mean(axis=0) > 0.4
     if blue_cols.sum() < 6:
         return None
-    low = frac < 0.5
+    # 成都决赛 2026-09-29 90.5s：上下两行都是15，白色1的竖笔画
+    # 让连续4列板底色少于一半，旧逻辑把完整446px板截在411px。
+    # 白字只参与右缘连续性，不放宽前面的深色名字区/盘分蓝存在判据。
+    white = np.minimum(np.minimum(r, g), b) > 225
+    low = (board_mask(band) | white).mean(axis=0) < 0.5
     edge = None
     for x in range(MIN_BOARD_W, len(frac) - 4):
         if low[x:x + 4].all():
