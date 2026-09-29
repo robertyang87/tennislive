@@ -37,6 +37,13 @@ jobs:
       - name: 安装 YouTube 下载器
         run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
 
+      - name: 安装音视频合并工具
+        timeout-minutes: 8
+        run: |
+          sudo apt-get update -o Acquire::Retries=3 \
+            -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30
+          sudo apt-get install -y ffmpeg
+
       # YouTube 对机房 IP 经常要求 PO token。provider 起不来时不在
       # 这里伪造一个根因，让 yt-dlp 在下一步输出真实诊断。
       - name: 启动 PO token provider

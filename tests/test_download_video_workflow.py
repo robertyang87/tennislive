@@ -26,6 +26,15 @@ def test_下载复用现有youtube解锁链路():
     assert "--js-runtimes node" in body
 
 
+def test_分轨视频下载前必须安装ffmpeg才能合并成mp4():
+    body = _body()
+    install = body.find("sudo apt-get install -y ffmpeg")
+    download = body.find('yt-dlp "${ARGS[@]}"')
+    assert install != -1, "runner 没安装 ffmpeg，分开的视频/音频轨不会合并"
+    assert download != -1, "找不到实际下载命令"
+    assert install < download, "ffmpeg 必须在 yt-dlp 下载分轨格式之前安装"
+
+
 def test_原片上传release并在摘要输出直链():
     body = _body()
     assert "gh release upload" in body
