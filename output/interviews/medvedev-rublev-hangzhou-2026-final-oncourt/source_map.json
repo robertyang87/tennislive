@@ -1,0 +1,63 @@
+{
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "overlap_seconds": 0.2,
+  "dissolve_seconds": 0.18,
+  "parts": [
+    {
+      "role": "cover",
+      "output_start": 0,
+      "output_end": 2.0,
+      "photo_path": "assets/reel/medvedev-hangzhou-final-trophy-frame-46810.jpg",
+      "photo_source": "https://www.youtube.com/watch?v=_9MGjWJe2iw&t=468.1s",
+      "generation": "video_frame",
+      "source_frame": {
+        "url": "https://www.youtube.com/watch?v=_9MGjWJe2iw",
+        "seconds": 468.1,
+        "source_sha256": "6f9415a4ecbb80041050d643706ebbc0990f672fcee6cc4a2c9b8eea4e79a21e",
+        "source_dimensions": [
+          1920,
+          1080
+        ]
+      }
+    },
+    {
+      "role": "lead_in",
+      "output_start": 1.8,
+      "output_end": 11.32,
+      "source_url": "https://www.youtube.com/watch?v=_9MGjWJe2iw",
+      "source_start": 443.5,
+      "source_end": 453.0
+    },
+    {
+      "role": "body",
+      "output_start": 11.12,
+      "output_end": 60.12,
+      "source_url": "https://www.tennistv.com/videos/4583597/hangzhou-2026-final-medvedev-interview",
+      "source_start": 13.54,
+      "source_end": 62.5
+    },
+    {
+      "role": "trail_in",
+      "output_start": 59.92,
+      "output_end": 74.24,
+      "source_url": "https://www.youtube.com/watch?v=_9MGjWJe2iw",
+      "source_start": 465.6,
+      "source_end": 479.9
+    },
+    {
+      "role": "takeaway_close",
+      "output_start": 74.04,
+      "output_end": 81.2
+    },
+    {
+      "role": "outro",
+      "output_start": 81.0,
+      "output_end": 85.2
+    }
+  ],
+  "note": "正文/前后原声SRT；独立中文收尾与品牌口播使用各自原生画面文字，不冒充球员翻译"
+}

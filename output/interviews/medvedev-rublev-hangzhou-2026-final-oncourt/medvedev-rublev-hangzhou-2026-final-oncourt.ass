@@ -1,0 +1,72 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:00:48.96,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 ATP250 杭州 决赛
+Dialogue: 1,0:00:00.00,0:00:48.96,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}梅德韦杰夫 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}7{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}5 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}4{\r\fnNoto Sans CJK SC\fs38} 卢布列夫 · 赛后场上采访
+Dialogue: 0,0:00:00.00,0:00:01.74,EN,,0,0,0,,Yeah, it was a great tournament.
+Dialogue: 0,0:00:00.00,0:00:01.74,ZH,,0,0,0,,是的 这是一届很棒的比赛
+Dialogue: 0,0:00:01.74,0:00:02.96,EN,,0,0,0,,Fun, fun one.
+Dialogue: 0,0:00:01.74,0:00:02.96,ZH,,0,0,0,,很开心 很有意思
+Dialogue: 0,0:00:02.96,0:00:03.84,EN,,0,0,0,,Some good matches.
+Dialogue: 0,0:00:02.96,0:00:03.84,ZH,,0,0,0,,也打了几场好球
+Dialogue: 0,0:00:04.63,0:00:05.98,EN,,0,0,0,,Felt some good tennis.
+Dialogue: 0,0:00:04.63,0:00:05.98,ZH,,0,0,0,,感觉自己打得不错
+Dialogue: 0,0:00:05.98,0:00:07.52,EN,,0,0,0,,And today I served pretty well.
+Dialogue: 0,0:00:05.98,0:00:07.52,ZH,,0,0,0,,今天发球也很好
+Dialogue: 0,0:00:07.52,0:00:09.12,EN,,0,0,0,,So really happy about it.
+Dialogue: 0,0:00:07.52,0:00:09.12,ZH,,0,0,0,,对此我很满意
+Dialogue: 0,0:00:09.12,0:00:11.78,EN,,0,0,0,,And, yeah, happy, happy to get the title.
+Dialogue: 0,0:00:09.12,0:00:11.78,ZH,,0,0,0,,能拿到冠军 真的很开心
+Dialogue: 0,0:00:11.96,0:00:14.86,EN,,0,0,0,,And it's really something meaningful for you
+Dialogue: 0,0:00:11.96,0:00:14.86,ZH,,0,0,0,,这对你来说也很有意义
+Dialogue: 0,0:00:14.86,0:00:17.24,EN,,0,0,0,,to play against your compatriot.
+Dialogue: 0,0:00:14.86,0:00:17.24,ZH,,0,0,0,,和自己的同胞交手
+Dialogue: 0,0:00:17.80,0:00:19.38,EN,,0,0,0,,You had a previous experience
+Dialogue: 0,0:00:17.80,0:00:19.38,ZH,,0,0,0,,你此前也曾
+Dialogue: 0,0:00:19.38,0:00:21.52,EN,,0,0,0,,of taking on him in a final.
+Dialogue: 0,0:00:19.38,0:00:21.52,ZH,,0,0,0,,在决赛里和他交过手
+Dialogue: 0,0:00:22.08,0:00:22.86,EN,,0,0,0,,And you won that one.
+Dialogue: 0,0:00:22.08,0:00:22.86,ZH,,0,0,0,,而且赢下了那场比赛
+Dialogue: 0,0:00:22.86,0:00:25.90,EN,,0,0,0,,And also you are the... you're the one
+Dialogue: 0,0:00:22.86,0:00:25.90,ZH,,0,0,0,,这次你也再次
+Dialogue: 0,0:00:25.90,0:00:28.30,EN,,0,0,0,,who stands in this final.
+Dialogue: 0,0:00:25.90,0:00:28.30,ZH,,0,0,0,,成为决赛的获胜者
+Dialogue: 0,0:00:28.30,0:00:30.92,EN,,0,0,0,,So how does this final mean to you?
+Dialogue: 0,0:00:28.30,0:00:30.92,ZH,,0,0,0,,这场决赛对你意味着什么？
+Dialogue: 0,0:00:30.92,0:00:31.70,EN,,0,0,0,,Yeah, I mean,
+Dialogue: 0,0:00:30.92,0:00:31.70,ZH,,0,0,0,,是的 我想说
+Dialogue: 0,0:00:31.70,0:00:32.62,EN,,0,0,0,,it's never easy to play
+Dialogue: 0,0:00:31.70,0:00:32.62,ZH,,0,0,0,,这从来都不容易
+Dialogue: 0,0:00:32.62,0:00:33.54,EN,,0,0,0,,someone from your country.
+Dialogue: 0,0:00:32.62,0:00:33.54,ZH,,0,0,0,,和自己的同胞比赛
+Dialogue: 0,0:00:33.54,0:00:35.92,EN,,0,0,0,,There is always a tiny bit more on the line.
+Dialogue: 0,0:00:33.54,0:00:35.92,ZH,,0,0,0,,总会比平时更在意一点
+Dialogue: 0,0:00:35.92,0:00:37.80,EN,,0,0,0,,Even if, in the end, we don't care —
+Dialogue: 0,0:00:35.92,0:00:37.80,ZH,,0,0,0,,虽然说到底 对手是谁并不重要
+Dialogue: 0,0:00:37.80,0:00:38.84,EN,,0,0,0,,whoever you play in the final,
+Dialogue: 0,0:00:37.80,0:00:38.84,ZH,,0,0,0,,决赛无论对谁
+Dialogue: 0,0:00:38.84,0:00:39.46,EN,,0,0,0,,you want to win.
+Dialogue: 0,0:00:38.84,0:00:39.46,ZH,,0,0,0,,你都想赢
+Dialogue: 0,0:00:39.46,0:00:41.18,EN,,0,0,0,,But there's a tiny bit more on the line.
+Dialogue: 0,0:00:39.46,0:00:41.18,ZH,,0,0,0,,但和同胞交手 还是更在意一些
+Dialogue: 0,0:00:41.18,0:00:42.82,EN,,0,0,0,,So, for sure, a lot more nerves.
+Dialogue: 0,0:00:41.18,0:00:42.82,ZH,,0,0,0,,所以肯定会更紧张
+Dialogue: 0,0:00:43.46,0:00:45.72,EN,,0,0,0,,And I think I handled it well.
+Dialogue: 0,0:00:43.46,0:00:45.72,ZH,,0,0,0,,我觉得自己处理得不错
+Dialogue: 0,0:00:45.82,0:00:47.38,EN,,0,0,0,,I played good in important moments.
+Dialogue: 0,0:00:45.82,0:00:47.38,ZH,,0,0,0,,关键时刻 我打得很好
+Dialogue: 0,0:00:47.38,0:00:48.96,EN,,0,0,0,,And I'm really happy about my level.
+Dialogue: 0,0:00:47.38,0:00:48.96,ZH,,0,0,0,,我对自己的表现很满意

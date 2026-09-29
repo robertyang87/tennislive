@@ -1,0 +1,36 @@
+{
+  "status": "technical_review_only_not_publish_attestation",
+  "film_sha256": "348aff7e08d29f0c13b0317723915d89b34937aea836ca043afa836b900472bd",
+  "film_seconds": 85.2,
+  "native_assembly_roles": [
+    "cover",
+    "lead_in",
+    "body",
+    "trail_in",
+    "takeaway_close",
+    "outro"
+  ],
+  "decode": "full ffmpeg decode completed exit0",
+  "visual_review": "Codex inspected cover, body, takeaway and contact sheet; not claimed frame-by-frame or human full listening",
+  "subtitles": "native verify_transcript base.en vs small.en, measured5.0% below12%; no>=2s caption gaps; transcript_verified stays false",
+  "source_resolution": {
+    "body": [
+      1920,
+      1080
+    ],
+    "lead_trail": [
+      1920,
+      1080
+    ]
+  },
+  "crop": "fixed centre crop_shift_x=0, body keep_top=.80; lead/trail default4:3, no tracking",
+  "pending": [
+    "PublishGate",
+    "Release upload and final artifact binding"
+  ],
+  "native_l2": {
+    "status": "passed",
+    "evidence": "qc_attestation.json",
+    "film_sha256": "348aff7e08d29f0c13b0317723915d89b34937aea836ca043afa836b900472bd"
+  }
+}

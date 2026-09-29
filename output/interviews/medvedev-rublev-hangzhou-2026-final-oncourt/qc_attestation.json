@@ -1,0 +1,59 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-29T16:38:19Z",
+  "slug": "medvedev-rublev-hangzhou-2026-final-oncourt",
+  "content_id": "2026:hangzhou:final:medvedev-rublev",
+  "requested_content_type": "on_court",
+  "source_attestation_sha256": "01ac3524c43dab7ebdf93423f8489b451cb93711bbd3ea19133beaf7f0f4a000",
+  "spec_sha256": "4bf3259239ef89e561042757ff1cd4ebefaecc6a064d17c33d450a2d615d5f23",
+  "poster_sha256": "1f31ebe1c7510b201ac7784cd39bf7b9a987e89be774dc097767a4f6bd4b5592",
+  "cover_visual_attestation_sha256": "483a46fdd9b2f1ec4d13d25c8fe04ae7e52aa7b2701a149703a8679d53d447c5",
+  "ass_sha256": "ec3359de7f94409acde0b9a277c11d295690549ae53bfb9b8ea2c6e1a2c66bad",
+  "lead_ass_sha256": "2ecb1ca1d02c7192f922129a5d5cd94f1c848b51c9c0cda463007df73593c7a2",
+  "trail_ass_sha256": "14754effe5ae8918a1e302cf72f35955a44ca6c05af4d727a64d84f3d8228b9a",
+  "film_sha256": "348aff7e08d29f0c13b0317723915d89b34937aea836ca043afa836b900472bd",
+  "film_bytes": 34146536,
+  "spec_content_sha256": "f44d96935a9758e916e79e043479a0cb736e77386f16b489705f301cc2d3bf28",
+  "checks": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "max_av_delta_s": 0.3,
+    "silence_floor_db": -60.0,
+    "bilingual_body_cues": 27,
+    "bilingual_lead_cues": 1,
+    "bilingual_trail_cues": 4,
+    "cover_subject": "梅德韦杰夫",
+    "cover_subject_prominent": true,
+    "assembly": [
+      {
+        "role": "cover",
+        "seconds": 2.0
+      },
+      {
+        "role": "lead_in",
+        "seconds": 9.52
+      },
+      {
+        "role": "body",
+        "seconds": 49.0
+      },
+      {
+        "role": "trail_in",
+        "seconds": 14.32
+      },
+      {
+        "role": "takeaway_close",
+        "seconds": 7.16,
+        "peak_db": -8.7
+      },
+      {
+        "role": "outro",
+        "seconds": 4.2,
+        "peak_db": -8.5
+      }
+    ]
+  },
+  "match_id": "2026:hangzhou:final:medvedev-rublev"
+}

@@ -1,0 +1,80 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-29T16:38:19Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "梅德韦杰夫",
+  "identity_evidence": "L0-bound spec subject + verified independent image source and SHA-256",
+  "spec_sha256": "4bf3259239ef89e561042757ff1cd4ebefaecc6a064d17c33d450a2d615d5f23",
+  "poster_sha256": "1f31ebe1c7510b201ac7784cd39bf7b9a987e89be774dc097767a4f6bd4b5592",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        437,
+        274,
+        411,
+        411
+      ],
+      "detected_faces": 2,
+      "eyes": 2,
+      "face_height_ratio": 0.50741,
+      "face_area_ratio": 0.1931,
+      "center_x_ratio": 0.59491,
+      "center_y_ratio": 0.40679,
+      "sharpness": 388.663,
+      "contrast": 153.0
+    },
+    "contract": {
+      "shot_type": "",
+      "zoom": 1.0,
+      "focus_y": 0.5,
+      "photo_path": "assets/reel/medvedev-hangzhou-final-trophy-frame-46810.jpg",
+      "photo_source": "https://www.youtube.com/watch?v=_9MGjWJe2iw&t=468.1s",
+      "photo_sha256": "17b41cd66edbd1b1b0bcd5db9973efa02328d6b7a29f5e3f59bfae76bd2b162c",
+      "generation": "video_frame",
+      "source_frame": {
+        "url": "https://www.youtube.com/watch?v=_9MGjWJe2iw",
+        "seconds": 468.1,
+        "source_sha256": "6f9415a4ecbb80041050d643706ebbc0990f672fcee6cc4a2c9b8eea4e79a21e",
+        "source_dimensions": [
+          1920,
+          1080
+        ]
+      }
+    },
+    "face_model": {
+      "status": "unavailable",
+      "model": "buffalo_s-v0.7",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/root/.cache/tennislive/face-models/buffalo_s-v0.7）",
+      "problems": [],
+      "warnings": [
+        "人脸模型不可用，认人和睁眼都没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/root/.cache/tennislive/face-models/buffalo_s-v0.7）"
+      ]
+    }
+  },
+  "issues": [],
+  "warnings": [
+    "人脸模型不可用，认人和睁眼都没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/root/.cache/tennislive/face-models/buffalo_s-v0.7）"
+  ]
+}
