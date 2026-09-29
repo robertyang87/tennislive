@@ -1,7 +1,7 @@
 {
   "status": "technical_review_only_not_publish_attestation",
-  "film_sha256": "348aff7e08d29f0c13b0317723915d89b34937aea836ca043afa836b900472bd",
-  "film_seconds": 85.2,
+  "film_sha256": "c26d6b03ca6c88e53f1795f9c16fa245cfa7d8831786a36de801756770acd20d",
+  "film_seconds": 88.48,
   "native_assembly_roles": [
     "cover",
     "lead_in",
@@ -10,9 +10,9 @@
     "takeaway_close",
     "outro"
   ],
-  "decode": "full ffmpeg decode completed exit0",
+  "decode": "Full ffmpeg decode exit0 after final native22 render",
   "visual_review": "Codex inspected cover, body, takeaway and contact sheet; not claimed frame-by-frame or human full listening",
-  "subtitles": "native verify_transcript base.en vs small.en, measured5.0% below12%; no>=2s caption gaps; transcript_verified stays false",
+  "subtitles": "Native segment ruler22; main verify base.en vs small.en 3.2%, zero caption gaps; no manual reviewed boolean",
   "source_resolution": {
     "body": [
       1920,
@@ -31,6 +31,6 @@
   "native_l2": {
     "status": "passed",
     "evidence": "qc_attestation.json",
-    "film_sha256": "348aff7e08d29f0c13b0317723915d89b34937aea836ca043afa836b900472bd"
+    "film_sha256": "c26d6b03ca6c88e53f1795f9c16fa245cfa7d8831786a36de801756770acd20d"
   }
 }

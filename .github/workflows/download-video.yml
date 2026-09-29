@@ -25,10 +25,13 @@ jobs:
     env:
       VIDEO_URL: ${{ inputs.url }}
       GH_TOKEN: ${{ github.token }}
-      # 这条线不 checkout（下载与 Release 都不读仓库文件）。
-      # gh release 因此不能从 .git 推断仓库，必须显式绑定。
+      # 下载和 Release 显式绑定仓库；仅检出共享依赖安装脚本。
       GH_REPO: ${{ github.repository }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/ci_apt_install.sh
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

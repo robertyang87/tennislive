@@ -55,37 +55,32 @@
     "court": "Center Court"
   },
   "zh": [
-    "是的 这是一届很棒的比赛",
-    "很开心 很有意思",
-    "也打了几场好球",
-    "感觉自己打得不错",
-    "今天发球也很好",
+    "是很棒的一届比赛 很开心",
+    "打了几场好球 感觉不错",
+    "今天我的发球也很好",
     "对此我很满意",
     "能拿到冠军 真的很开心",
     "这对你来说也很有意义",
     "和自己的同胞交手",
     "你此前也曾",
-    "在决赛里和他交过手",
+    "在决赛中和他交过手",
     "而且赢下了那场比赛",
-    "这次你也再次",
-    "成为决赛的获胜者",
-    "这场决赛对你意味着什么？",
-    "是的 我想说",
-    "这从来都不容易",
-    "和自己的同胞比赛",
+    "这次你也成为决赛的赢家",
+    "那么这场决赛",
+    "有何意义？ 这从来都不容易",
+    "和自己国家的球员比赛",
     "总会比平时更在意一点",
-    "虽然说到底 对手是谁并不重要",
-    "决赛无论对谁",
-    "你都想赢",
-    "但和同胞交手 还是更在意一些",
-    "所以肯定会更紧张",
+    "虽然说到底 无论对手是谁",
+    "打进决赛 你就想赢",
+    "但和同胞交手 还是更在意",
+    "所以肯定会更加紧张",
     "我觉得自己处理得不错",
     "关键时刻 我打得很好",
     "我对自己的表现很满意"
   ],
   "lead_in": {
     "url": "https://www.youtube.com/watch?v=_9MGjWJe2iw",
-    "start": 443.5,
+    "start": 440.24,
     "end": 453.0,
     "crop_ratio": 1.3333333333333333,
     "crop_shift_x": 0,
@@ -101,12 +96,50 @@
     },
     "subs": [
       {
+        "a": 440.24,
+        "b": 444.14,
+        "en": "Oh, how did he hang in?",
+        "zh": "他是怎么撑住这一回合的？"
+      },
+      {
         "a": 448.46,
-        "b": 452.52,
+        "b": 452.7,
         "en": "Medvedev claims a third title of the season.",
         "zh": "梅德韦杰夫收获本赛季第三冠"
       }
-    ]
+    ],
+    "why": "440.24秒起是本场决赛赛点最后回合与夺冠庆祝，保留解说整句Oh, how did he hang in?及赛季第三冠确认。接自Tennis TV同场官方1080p集锦，用以交代采访前的夺冠背景；采访源本身没有赛点画面。",
+    "source_captions": [
+      [
+        440.24,
+        "Oh, how did he hang in?"
+      ],
+      [
+        448.46,
+        "Daniel Mebadev claims a third title of the season."
+      ],
+      [
+        454.14,
+        "He boosts his chances of qualifying for Turin in the process."
+      ],
+      [
+        459.74,
+        "Once again, he gets the better of his good friend Andrei Rublev in straight sets."
+      ],
+      [
+        467.38,
+        "Mebadev, a champion in a 23rd different city."
+      ],
+      [
+        471.62,
+        "What a portfolio this man possesses."
+      ],
+      [
+        477.18,
+        "He's the last man standing in Hangzhou."
+      ]
+    ],
+    "source_captions_method": "faster-whisper small.en, actual source audio 440–482s; evidence side_source_asr.json"
   },
   "trail_in": {
     "url": "https://www.youtube.com/watch?v=_9MGjWJe2iw",
@@ -120,9 +153,10 @@
       "loser_en": "Andrey Rublev",
       "event_search": "Hangzhou",
       "year": 2026,
-      "method": "official_exact_match_highlight",
+      "method": "official_trophy_ceremony",
       "height": 1080,
-      "channel": "Tennis TV"
+      "channel": "Tennis TV",
+      "evidence": "The exact official highlight source contains the trophy-ceremony footage at 465.6–479.9 seconds; this is not a complete ceremony speech."
     },
     "subs": [
       {
@@ -138,18 +172,19 @@
         "zh": "这是他夺冠的第23座不同城市"
       },
       {
-        "a": 472.3,
-        "b": 475.04,
+        "a": 471.62,
+        "b": 475.3,
         "en": "What a portfolio this man possesses.",
         "zh": "他的冠军履历多么丰富"
       },
       {
-        "a": 477.16,
-        "b": 479.4,
-        "en": "The last man standing in Hangzhou.",
+        "a": 477.18,
+        "b": 479.44,
+        "en": "He's the last man standing in Hangzhou.",
         "zh": "他是杭州最后的赢家"
       }
-    ]
+    ],
+    "why": "465.6–479.9秒是同场决赛颁奖仪式，梅德韦杰夫正面举起冠军奖杯，现场解说回顾其夺冠城市；接自 Tennis TV 同场官方1080p集锦，以真实捧杯画面收束场上采访。此段是仪式画面与解说，不冒充冠军本人致辞。"
   },
   "cover": {
     "title": [
@@ -190,5 +225,12 @@
     ],
     "match_id": "2026:hangzhou:final:medvedev-rublev",
     "attestation_sha256": "01ac3524c43dab7ebdf93423f8489b451cb93711bbd3ea19133beaf7f0f4a000"
+  },
+  "en_fixed": {
+    "2": "Some good matches. Felt some good tennis.",
+    "12": "So how does this final",
+    "13": "mean to you? Yeah, I mean, it's never easy",
+    "20": "and I think I handled it well. I",
+    "22": "and I'm really happy about my level."
   }
 }
