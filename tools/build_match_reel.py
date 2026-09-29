@@ -2694,10 +2694,10 @@ def _frange(start: float, stop: float, step: float):
 class Segment:
     start: float
     end: float
-    cx: float | None          # None = 没人量过，按整段运动质心的中位数自己定
+    cx: float | None          # None = 固定源片几何中心；新渲染不跟随运动质心
     narration: str
     fit: str = "crop"
-    track: bool = True
+    track: bool = False
     # 这一段取自哪条源片（`spec["sources"]` 的键）。空＝主源。
     # 一条片子跨两场比赛时用得上：休伊特那条要「首胜吉隆」和「负于德米纳尔」
     # 两条官方集锦，故事才完整。
@@ -4356,6 +4356,12 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     `-ss` 放在 `-i` **前面**是关键帧级的快速定位，落点可能偏几百毫秒；放在
     后面才是精确定位。高光片段一秒都不能偏，所以用精确定位（慢一点无所谓）。
     """
+    from tennislive.video.crop_policy import require_fixed_center
+    require_fixed_center({"cx": seg.cx, "track": seg.track or bool(path),
+                          "square_pan": seg.square_pan}, where="cut_segment")
+    if seg.cx is None:
+        seg.cx = 0.5
+
     # 两种取景。**默认 crop，铺满全屏——回合镜头也一样。**
     #
     #   crop    真·3:4 裁切，铺满画布。窗口 42% 宽（810/1920），球飞到
@@ -9405,6 +9411,11 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            source_override: Path | None = None,
            cover_only: bool = False) -> Path:
+    # Actual new video renders enforce the current owner policy. Historical
+    # read-only schema validation and cover-photo framing remain unchanged.
+    from tennislive.video.crop_policy import require_reel_center
+    if not cover_only:
+        require_reel_center(spec)
     outdir.mkdir(parents=True, exist_ok=True)
     _FACE_REPORT.clear()          # 这一趟的认人结果只许是这一趟的
     # **先只看 spec，再看这台机器。** 两样都在下载之前，形状错和缺依赖都

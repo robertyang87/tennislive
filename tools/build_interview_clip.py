@@ -5491,6 +5491,9 @@ def _side_segment(spec: dict, outdir: Path, key: str = "lead_in") -> Path | None
 
     这一块没写时返回 `None`——`render()` 据此决定要不要把它塞进 `parts`。
     """
+    from tennislive.video.crop_policy import require_interview_center
+    require_interview_center(spec)
+
     prefix = _SIDE_KEYS[key]
     lead = spec.get(key)
     if lead is None:
@@ -5830,6 +5833,9 @@ def dissolve_concat(parts: list[Path], out: Path) -> Path:
 
 
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
+    from tennislive.video.crop_policy import require_interview_center
+    require_interview_center(spec)
+
     check_takeaway(spec)
     src = yt_download(spec["url"], outdir / "source.mp4", SOURCE_FMT, spec)
     end_trim = check_tail(spec, src, outdir)
