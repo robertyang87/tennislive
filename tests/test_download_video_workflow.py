@@ -28,7 +28,15 @@ def test_下载复用现有youtube解锁链路():
 
 def test_分轨视频下载前必须安装ffmpeg才能合并成mp4():
     body = _body()
-    install = body.find("sudo apt-get install -y ffmpeg")
+    # 与共享安装链一致；只认实际命令行，不让注释里的名字冒充安装。
+    checkout = body.find("uses: actions/checkout@v4")
+    script = body.find("sparse-checkout: tools/ci_apt_install.sh")
+    source = re.search(r"^\s+source tools/ci_apt_install\.sh\s*$", body, re.M)
+    ensure = re.search(r"^\s+ensure_ffmpeg\s*$", body, re.M)
+    assert checkout != -1 and script > checkout, "共享脚本必须先从仓库检出"
+    assert source and ensure, "ffmpeg 必须调用共享安装脚本"
+    install = ensure.start()
+    assert script < source.start() < install, "必须先检出并 source 共享脚本，再安装 ffmpeg"
     download = body.find('yt-dlp "${ARGS[@]}"')
     assert install != -1, "runner 没安装 ffmpeg，分开的视频/音频轨不会合并"
     assert download != -1, "找不到实际下载命令"
@@ -38,7 +46,7 @@ def test_分轨视频下载前必须安装ffmpeg才能合并成mp4():
 def test_原片上传release并在摘要输出直链():
     body = _body()
     assert "GH_REPO: ${{ github.repository }}" in body, (
-        "工作流没有 checkout，gh release 必须用 GH_REPO 明确仓库"
+        "gh release 必须用 GH_REPO 明确仓库"
     )
     assert "gh release upload" in body
     assert "--clobber" in body
