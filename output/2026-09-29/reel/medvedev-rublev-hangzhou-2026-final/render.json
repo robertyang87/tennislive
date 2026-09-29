@@ -1,0 +1,43 @@
+{
+  "scoreboard_qc_sha256": "25232a9ca4ebf2ebadc9bbe268f665673cb2349b14fbaf297ede4b4ca6ca051c",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 106.4,
+  "topbar": {
+    "line1": "2026 ATP250 杭州 决赛",
+    "line2": "梅德韦杰夫 7-5 6-4 卢布列夫",
+    "start": 1.2,
+    "end": 107.6
+  },
+  "film_seconds": 111.44,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 27.6,
+    "2": 12.072,
+    "3": 6.36,
+    "4": 10.56,
+    "6": 12.312
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "unavailable",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/root/.cache/tennislive/face-models/buffalo_s-v0.7）",
+      "report_only": true,
+      "warnings": [
+        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/root/.cache/tennislive/face-models/buffalo_s-v0.7）"
+      ]
+    }
+  },
+  "render_inputs_sha256": "54a95b1fe5fabf899cfefdeb3761132eb008503542603f38aa351decb81d4303",
+  "film_sha256": "4f7a4bdf997403ef074f0eee9a3182cc2ff485eb044609989e36028cd8ee0517",
+  "film_bytes": 62241504,
+  "qc_attestation_sha256": "2d7433af884b12bddac94db1964531c69edfc6d61b70a065ab28f7dc6816f278"
+}

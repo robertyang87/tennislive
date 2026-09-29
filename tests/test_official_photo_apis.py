@@ -407,9 +407,9 @@ def test_是不是决赛_看顶栏和轮次():
 
 # ---------------------------------------------------------------- ⑦ 预裁的抽帧也是抽帧
 
-#: 仓库里 `cover.portrait.image` 指着的是**视频帧**的那几条（2026-09-28 全库扫的）：fernandez 那张
-#: `_frame_why` 开头就是「⚠️ 抽帧」；成都四条 `_low_res_why` 开头是「源片 1920×1080」
-PRECROPPED_FRAMES = {"fernandez-gibson-singapore-2026-final", "cerundolo-zhou-chengdu-2026-r1",
+#: 当前库存仍使用预裁视频帧的四条。Fernandez 已在 09-28 20:53Z 升级为 WTA 官方照片，
+#: 历史抽帧状态由 cover_upgrades 账本中的 previous_portrait 单独回放。
+PRECROPPED_FRAMES = {"cerundolo-zhou-chengdu-2026-r1",
                      "shang-mannarino-chengdu-2026-r1", "tabilo-mannarino-chengdu-2026-r2",
                      "vacherot-harris-chengdu-2026-r2"}
 
@@ -427,14 +427,22 @@ def test_预裁进仓库的抽帧_O4认得出_官方实拍的一张都不误认(
     assert found == PRECROPPED_FRAMES, found ^ PRECROPPED_FRAMES
     # 反例就在仓库里：`_frame_why` 写着「不是抽帧」「换掉了抽帧」「没有用 frame_at 抽帧」的官方实拍
     for slug in ("eala-jovic-us-open-2026-r3", "fery-deminaur", "wang-kalinskaya-us-open-2026-r2",
-                 "paul-cobolli", "jovic-stearns-guadalajara-2026-final"):
+                 "paul-cobolli", "jovic-stearns-guadalajara-2026-final",
+                 "fernandez-gibson-singapore-2026-final"):
         assert not cu.is_frame_cover(replay.spec_of(slug)), slug
     assert cu.is_frame_cover({"cover": {"portrait": {"frame_at": 161.4}}})
 
 
-def test_fernandez那条_O4现在是目标(tmp_path):
-    """首推 09-27 14:57Z，48 小时窗口里；原来 `is_frame_cover` 只认 `frame_at`，它不在目标里。"""
+def test_fernandez旧抽帧是目标_已升级官方照不再是目标(tmp_path):
+    """按真实升级账本回放旧状态；当前官方照不能再次入选，旧预裁帧仍须被认出。"""
     spec = replay.spec_of("fernandez-gibson-singapore-2026-final")
+    upgrade = json.loads((ROOT / "data" / "cover_upgrades.json").read_text(encoding="utf-8"))["upgrades"][spec["slug"]]
+    assert upgrade["status"] == "upgraded"
+    assert spec["cover"]["portrait"]["image"] == upgrade["image"]
+    assert not cu.is_frame_cover(spec)
+    official_portrait = spec["cover"]["portrait"]
+    spec["cover"]["portrait"] = upgrade["previous_portrait"]
+    assert cu.is_frame_cover(spec)
     (tmp_path / "specs" / "reels").mkdir(parents=True)
     (tmp_path / "specs" / "reels" / f"{spec['slug']}.json").write_text(json.dumps(spec), encoding="utf-8")
     (tmp_path / "data" / "reel_publish_ledger").mkdir(parents=True)
@@ -454,6 +462,11 @@ def test_fernandez那条_O4现在是目标(tmp_path):
     por = cu.upgraded_portrait(spec["cover"]["portrait"], chosen, ctx, "assets/reel/x-official.jpg")
     assert "预裁的抽帧 assets/reel/fernandez-gibson-final-trophy.jpg" in por["_why"], por["_why"]
     assert "条目 #4582447" in por["_why"] and "EXIF 拍摄 2026:09:27 19:18:58+08:00" in por["_why"]
+    # 同样的时间窗和推送账本，仅换回已生效的官方照片，应不再被 O4 选中。
+    spec["cover"]["portrait"] = official_portrait
+    (tmp_path / "specs" / "reels" / f"{spec['slug']}.json").write_text(json.dumps(spec), encoding="utf-8")
+    found, _notes = cu.targets(tmp_path, _u("2026-09-28T13:00:00Z"))
+    assert found == []
 
 
 # ---------------------------------------------------------------- ⑧ 渠道顺序、人查挂着等

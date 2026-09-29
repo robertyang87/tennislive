@@ -1,0 +1,47 @@
+{
+  "schema": 2,
+  "at": "2026-09-29T16:43:59Z",
+  "pipeline": "match-reel",
+  "slug": "medvedev-rublev-hangzhou-2026-final",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 131.641,
+  "last_stage": "数据统计对照图",
+  "stage_seconds": {
+    "片尾配音": 0.001,
+    "TTS 合成": 0.011,
+    "比分板蒙版": 24.871,
+    "封面海报": 2.526,
+    "封面编码": 0.619,
+    "分段编码·并行": 121.095,
+    "分段编码": 25.735,
+    "片尾母版转码": 0.697,
+    "拼接": 26.335,
+    "混音": 4.399,
+    "烧字幕+成片": 40.7,
+    "数据统计对照图": 1.532
+  },
+  "stage_counts": {
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "比分板蒙版": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码·并行": 7,
+    "分段编码": 1,
+    "片尾母版转码": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1,
+    "数据统计对照图": 1
+  },
+  "parallel_stages": [
+    "分段编码·并行"
+  ],
+  "untimed_seconds": 4.215,
+  "cpu_count": 9,
+  "run_id": null,
+  "run_attempt": null,
+  "on_runner": false
+}

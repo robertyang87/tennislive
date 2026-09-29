@@ -1,0 +1,140 @@
+# Import only concrete, hash-bound Hangzhou masters that pass native QC.
+name: Import Hangzhou approved masters
+on:
+  push:
+    branches: [main]
+    paths: [data/approved_reel_imports/hangzhou-final-2026/requests/*.json]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+jobs:
+  discover:
+    timeout-minutes: 5
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.requests.outputs.matrix }}
+      count: ${{ steps.requests.outputs.count }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Discover concrete requests only
+        id: requests
+        run: |
+          python - <<'PYDISCOVER'
+          import json, os
+          from pathlib import Path
+          rows=[]
+          base=Path('data/approved_reel_imports/hangzhou-final-2026/requests')
+          for column in ('reel', 'interview'):
+              request=base/(column+'.json')
+              if not request.is_file():
+                  continue
+              data=json.loads(request.read_text())
+              if data.get('column')!=column:
+                  raise SystemExit(f'Wrong column in {request}')
+              # A recorded attempt requires receipt review, never another automatic import.
+              ledger=Path(f"data/{column}_publish_ledger/{data['slug']}.json")
+              if ledger.exists():
+                  print(f'Skip {column}: existing publication ledger; inspect receipt/status')
+                  continue
+              rows.append({'column':column})
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('matrix='+json.dumps({'include':rows})+'\n')
+              f.write('count='+str(len(rows))+'\n')
+          PYDISCOVER
+  import:
+    needs: discover
+    if: needs.discover.outputs.count != '0' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.matrix) }}
+    concurrency:
+      group: hangzhou-master-import-${{ matrix.column }}
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+      PYTHONPATH: src
+      REQUEST: data/approved_reel_imports/hangzhou-final-2026/requests/${{ matrix.column }}.json
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore apt package cache
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-hangzhou-import-v1-${{ github.run_id }}-${{ strategy.job-index }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-hangzhou-import-v1-
+      - name: Install native QC dependencies
+        timeout-minutes: 15
+        run: |
+          pip install -e '.[visualqa]'
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: Save apt package cache after actual download
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+      - name: Assemble and run native QC
+        id: master
+        run: python tools/import_hangzhou_master.py assemble --request "$REQUEST"
+      - name: Upload exact master and generate copy page
+        run: python tools/import_hangzhou_master.py release --request "$REQUEST"
+      - name: Commit native output evidence
+        env:
+          OUTDIR: ${{ steps.master.outputs.outdir }}
+          SPEC: ${{ steps.master.outputs.spec }}
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add -- "$SPEC" "${SPEC%.json}.xhs.txt" "$OUTDIR"
+          python - <<'PY'
+          import subprocess, re
+          paths=subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines()
+          if any(p.lower().endswith(('.mp4','.mov','.mkv')) and not re.fullmatch(r'output/[^/]+/reel/[^/]+/score_masks/segment-\d+\.mkv', p) for p in paths):
+              raise SystemExit('Movie bytes must not enter Git tree')
+          PY
+          python tools/check_staged_file_sizes.py
+          if ! git diff --cached --quiet; then
+            git commit -m "Hangzhou: import ${{ matrix.column }} master with native QC"
+          fi
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main
+      - name: Complete publication gate
+        id: gate
+        env:
+          OUTDIR: ${{ steps.master.outputs.outdir }}
+        run: |
+          if [ '${{ matrix.column }}' = reel ]; then
+            python tools/auto_push_gate.py --changed "$OUTDIR/render.json"
+          else
+            python tools/auto_push_interview_gate.py --changed "$OUTDIR/render.json"
+          fi
+      - name: Dispatch existing publisher
+        if: steps.gate.outputs.found == 'true'
+        env:
+          SLUG: ${{ steps.master.outputs.slug }}
+        run: |
+          if [ '${{ matrix.column }}' = reel ]; then
+            gh workflow run match-reel.yml --ref main -f mode=push -f slug="$SLUG" -f push=true
+          else
+            gh workflow run auto-push-interview.yml --ref main -f slug="$SLUG"
+          fi
+          echo 'Publisher dispatched; completion requires actual PushPlus receipt and committed ledger.' >> "$GITHUB_STEP_SUMMARY"
