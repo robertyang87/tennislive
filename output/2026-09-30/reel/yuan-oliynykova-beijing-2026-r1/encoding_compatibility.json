@@ -1,0 +1,52 @@
+{
+  "bytes": 67727735,
+  "renderer_sha256": "86cebb104a489702c9aae91965e5c7c9857d2ccf16af0e493101497be76dcd25",
+  "sps": {
+    "profile_idc": 100,
+    "level_idc": 41,
+    "num_units_in_tick": 1,
+    "time_scale": 50,
+    "max_num_ref_frames": 4,
+    "max_dec_frame_buffering": 4,
+    "max_num_reorder_frames": 2,
+    "log2_max_mv_length_vertical": 11
+  },
+  "decoded_frames": 2865,
+  "stream_nb_frames": 2865,
+  "exact_frame_pts_25fps": true,
+  "discard_video_packets": 0,
+  "motion_vectors_checked": 25243284,
+  "max_vertical_motion_px": 508.5,
+  "max_horizontal_motion_px": 509.25,
+  "macroblocks_per_frame": 6120,
+  "macroblocks_per_second": 153000,
+  "dpb_macroblocks": 24480,
+  "leaky_bucket_peak_bits_at_12mbps": 2265711.9999999995,
+  "full_decode_exit": 0,
+  "faststart": true,
+  "atoms": [
+    {
+      "type": "ftyp",
+      "offset": 0,
+      "size": 32
+    },
+    {
+      "type": "moov",
+      "offset": 32,
+      "size": 85760
+    },
+    {
+      "type": "free",
+      "offset": 85792,
+      "size": 8
+    },
+    {
+      "type": "mdat",
+      "offset": 85800,
+      "size": 67641935
+    }
+  ],
+  "device_iphone_photos_tested": false,
+  "passed": true,
+  "film_sha256": "1cf74b5faa05de8d02c6211e53075e2a8ba797882c4dfc224f4905e5d78375a3"
+}
