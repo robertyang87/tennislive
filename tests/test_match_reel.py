@@ -15050,8 +15050,9 @@ def test_记分条按实际大小裁原比例贴回左下角(tmp_path, capsys):
                     "「要按板的实际大小裁」没做到时的样子，不是要修的 bug")
 
         # 窗口左缘没越过板左缘时**跳过回贴并出声**（贴了反而叠重影）
-        seg = reel.Segment(start=0.0, end=0.4, cx=0.36, narration="",
-                           track=False, score_inset=(104, 888, 616, 978))
+        # 固定中心窗口从 x=353 开始；板本身放在窗口内，仍验证跳过回贴。
+        seg = reel.Segment(start=0.0, end=0.4, cx=0.5, narration="",
+                           track=False, score_inset=(400, 888, 912, 978))
         reel.cut_segment(src, seg, tmp_path / "skip.mp4", 1920)
         assert "跳过回贴" in capsys.readouterr().out, (
             "窗口本来就含住整条板时要跳过回贴并说一声——"

@@ -152,14 +152,14 @@ def test_contain段也回贴整条比分板而且和铺满段同一个落点(tmp
         check=True, capture_output=True, text=True)
     oy = round(862 * reel.VIDEO_W / reel.CROP_W)
     probe = (40, oy + 60)          # 贴板左侧：contain 画面里这里本来是左边外面的灰
-    seg = Segment(0.0, 2.0, 0.515, "", track=False, fit="contain",
+    seg = Segment(0.0, 2.0, 0.5, "", track=False, fit="contain",
                   score_inset=(80, 862, 520, 1036))
     out = tmp_path / "contain_board.mp4"
     cut_segment(src, seg, out, 1920)
     r, g, b = _pixel(out, 1.0, probe)
     assert r > 150 and g < 90, f"contain 段该贴上整条板，({probe}) 实际 {(r, g, b)}"
 
-    seg_off = Segment(0.0, 2.0, 0.515, "", track=False, fit="contain")
+    seg_off = Segment(0.0, 2.0, 0.5, "", track=False, fit="contain")
     out2 = tmp_path / "contain_plain.mp4"
     cut_segment(src, seg_off, out2, 1920)
     r2, g2, _ = _pixel(out2, 1.0, probe)
@@ -185,7 +185,7 @@ def test_contain段回贴时原板残条不许从蒙版缝里露出来(tmp_path)
          "-i", "color=c=black:size=440x174:rate=25:duration=2",
          "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", str(mask)],
         check=True, capture_output=True, text=True)
-    seg = Segment(0.0, 1.5, 0.515, "", track=False, fit="contain",
+    seg = Segment(0.0, 1.5, 0.5, "", track=False, fit="contain",
                   score_inset=(80, 862, 520, 1036))
     seg.score_inset_mask = str(mask)
     out = tmp_path / "residual.mp4"

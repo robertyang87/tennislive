@@ -407,9 +407,8 @@ def test_是不是决赛_看顶栏和轮次():
 
 # ---------------------------------------------------------------- ⑦ 预裁的抽帧也是抽帧
 
-#: 仓库里 `cover.portrait.image` 指着的是**视频帧**的那几条（2026-09-28 全库扫的）：fernandez 那张
-#: `_frame_why` 开头就是「⚠️ 抽帧」；成都四条 `_low_res_why` 开头是「源片 1920×1080」
-PRECROPPED_FRAMES = {"fernandez-gibson-singapore-2026-final", "cerundolo-zhou-chengdu-2026-r1",
+#: 当前仍指向预裁视频帧的四条；fernandez 已升级官方照片，不再计入。
+PRECROPPED_FRAMES = {"cerundolo-zhou-chengdu-2026-r1",
                      "shang-mannarino-chengdu-2026-r1", "tabilo-mannarino-chengdu-2026-r2",
                      "vacherot-harris-chengdu-2026-r2"}
 
@@ -427,7 +426,8 @@ def test_预裁进仓库的抽帧_O4认得出_官方实拍的一张都不误认(
     assert found == PRECROPPED_FRAMES, found ^ PRECROPPED_FRAMES
     # 反例就在仓库里：`_frame_why` 写着「不是抽帧」「换掉了抽帧」「没有用 frame_at 抽帧」的官方实拍
     for slug in ("eala-jovic-us-open-2026-r3", "fery-deminaur", "wang-kalinskaya-us-open-2026-r2",
-                 "paul-cobolli", "jovic-stearns-guadalajara-2026-final"):
+                 "paul-cobolli", "jovic-stearns-guadalajara-2026-final",
+                 "fernandez-gibson-singapore-2026-final"):
         assert not cu.is_frame_cover(replay.spec_of(slug)), slug
     assert cu.is_frame_cover({"cover": {"portrait": {"frame_at": 161.4}}})
 
@@ -435,6 +435,12 @@ def test_预裁进仓库的抽帧_O4认得出_官方实拍的一张都不误认(
 def test_fernandez那条_O4现在是目标(tmp_path):
     """首推 09-27 14:57Z，48 小时窗口里；原来 `is_frame_cover` 只认 `frame_at`，它不在目标里。"""
     spec = replay.spec_of("fernandez-gibson-singapore-2026-final")
+    # 回放首推时的预裁输入，不依赖线上 spec 永远不升级封面。
+    assert not cu.is_frame_cover(spec), "现在的官方照片不应再进入换图目标"
+    spec["cover"]["portrait"] = {
+        "image": "assets/reel/fernandez-gibson-final-trophy.jpg",
+        "_frame_why": "⚠️ 抽帧：首推时的 WTA 视频预裁封面",
+    }
     (tmp_path / "specs" / "reels").mkdir(parents=True)
     (tmp_path / "specs" / "reels" / f"{spec['slug']}.json").write_text(json.dumps(spec), encoding="utf-8")
     (tmp_path / "data" / "reel_publish_ledger").mkdir(parents=True)
