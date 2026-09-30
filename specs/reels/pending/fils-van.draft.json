@@ -18,7 +18,16 @@
       }
     ],
     "winner": "菲斯",
-    "result": "6-3 6-2"
+    "result": "6-3 6-2",
+    "portrait": {
+      "image": "assets/reel/fils-van-cover.jpg",
+      "focus": 0.468,
+      "focus_y": 0.817,
+      "zoom": 1.1,
+      "_gates": "① 点名：说明／文件名有「arthur fils」「Tokyo」，日期对上当地 2026-09-30（Asia/Tokyo；日期来源 flashscore dc_1_0YMQqIUj）；EXIF 拍摄 2026:09:30 17:16:34+09:00。② 分辨率：3636×2424，zoom 1.1 铺 1080×1440 是 1.53×（不放大）。③ 认人：最大那张脸像 菲斯 0.48（≥ 0.34）。④ 睁眼：EAR 0.2978（≥ 0.16）。⑤ 钩子带：脸落在 y205~755，钩子顶边 790。排序：[True, False, False, True, True, 550, 0.4799]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/30/03e997ce-e9b6-4a07-8b0a-172526dfb090/GettyImages-2297295510.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/30/03e997ce-e9b6-4a07-8b0a-172526dfb090/GettyImages-2297295510.jpg（条目 #4584346，接口发布 2026-09-30T11:33:40Z，EXIF 拍摄 2026:09:30 17:16:34+09:00（UTC 2026-09-30T08:16:34Z），原图 3636×2424），说明原文「2026 Tokyo Fils · France's Arthur Fils reacts during his men's singles tennis match against France's Luca van Assche at the ATP Tour Japan Open Tennis Championships at the Ariake Tennis Forest Park in Tokyo on September 30, 2026. (Photo by Rie KIKUCHI / AFP)」，署名 RIE KIKUCHI；AFP or licensors；AFP via Getty Images。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -311,34 +320,31 @@
       "end": 267.36,
       "kind": "match_point",
       "winner_visible": true,
-      "reason": "250.92s 起 FILS 5-3*，258.5s 范阿舍局点被破；260.5s 菲斯低头走向网前，262.5s-266.5s 两位选手隔网握手，264.5s 菲斯在网前与范阿舍握手完成比赛（Fils 6-3 6-2 的制胜分与赛后握手余波连续展开）。",
-      "confidence": 0.9
+      "reason": "256.5s 范阿舍(黑衣)全力挥拍制胜分后,258.5s 表情平静抬头,260.5s 低头走向球网;262.5s 走到网前,264.5s-266.5s 双方在网前握手完成比赛,裁判椅可见,场内观众起立。winner 菲斯(白衣)出现握手画面。窗口起始于冷开场前最近的切点 250.92s,结束于握手完成后的切点 267.36s。",
+      "confidence": 0.88
     },
     "ending": {
       "start": 250.92,
       "end": 267.36,
-      "kind": "match_point",
+      "kind": "aftermath",
       "winner_visible": true,
-      "reason": "250.92s 开始 FILS 5-3* 的赛点局面；256.5s 菲斯发球、258.5s 范阿舍局分被破，赛点兑现；260.5s 菲斯走向网前，262.5s-266.5s 两位球员在网前握手，268.5s 起切入频道结尾的 SUBSCRIBE/WATCH MORE 板。冷开场的赛点与赛后握手完全在 250.92–267.36 窗口内再次兑现。",
-      "confidence": 0.9
+      "reason": "250.92s 起为最后一分后余波:254.5s 球已落地,256.5s 范阿舍正手制胜挥拍,258.5s 面部特写,260.5s 低头走向网前;262.5s 两人至网前,264.5s-266.5s 网前握手完成,场内观众鼓掌。ending 与 cold_open 同一窗口,完整覆盖结局余波。",
+      "confidence": 0.88
     },
     "cover": {
-      "same_match": false,
-      "subject": "",
-      "moment": "other",
-      "wrong_or_old": true,
-      "reason": "任务说明明确没有候选封面照片，无法核验人物、比分、赛事标识或服装是否属于本场（Fils 6-3 6-2 胜 Van Assche）。在缺少同场封面证据的情况下按规则判定 same_match=false。",
-      "confidence": 0.95
+      "same_match": true,
+      "subject": "范阿舍",
+      "moment": "winner_celebration",
+      "wrong_or_old": false,
+      "reason": "封面人物为黑人男性卷发、留须,穿 Lacoste 黑色带拉链上衣,与视频中范阿舍(黑衣)形象一致;菲斯为白人且穿浅色球衣,可排除。封面中他紧握右拳、指节贴白胶带,视线坚定地望向上方,为赢球瞬间握拳庆祝姿态;背景深色近黑色,属于夜场灯光,可在 ATP 室内硬地赛中看到。但该比赛为白天进行(画面内观众清晰可辨、室内白天环境),封面深黑背景与本场照明不完全一致,可能为同站赛事夜场或同球员旧图,降低置信度;人物特征与场次一致,未发现其他平台水印或裁剪痕迹。confidence: 0.70。",
+      "confidence": 0.7
     },
     "problems": [
-      "ending 理由引用窗口外时间：[268.5]",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面人物应为 菲斯，模型识别为 空",
-      "封面情绪应为 winner_celebration，现在是 other"
+      "封面置信度 0.70 低于 0.80",
+      "封面人物应为 菲斯，模型识别为 范阿舍"
     ],
     "model_attempts": 1,
-    "input_sha256": "11ed60535234e5b5d0558ea647b514ea206d3719db87e0391d4c4ca063609919",
+    "input_sha256": "9ac24ac462fcfacae28930ec0cedae84247529ae378ddd18cfc849f3343a9dea",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
@@ -346,6 +352,18 @@
       "contact_03.jpg",
       "contact_04.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/fils-van-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "0YMQqIUj",
+      "start_utc": "2026-09-30T07:10:00Z",
+      "end_utc": "2026-09-30T08:43:23Z",
+      "source": "flashscore dc_1_0YMQqIUj（DC／DD）"
+    },
+    "tried": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/30/da9d1f5b-8bb7-43be-9422-5694c83882f2/GettyImages-2297293450.jpg"
+    ],
+    "replaced_under": "11ed60535234e5b5d0558ea647b514ea206d3719db87e0391d4c4ca063609919"
   }
 }
