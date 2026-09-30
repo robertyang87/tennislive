@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        include: [{"key": "title12trophy", "url": "https://www.youtube.com/watch?v=4Jf-MMDHR00"}]
+        include: [{"key": "bgm_odesza_a_moment_apart", "url": "https://www.youtube.com/watch?v=xarC5jAiO7w"}]
     steps:
       - uses: actions/setup-python@v5
         with:
