@@ -1,0 +1,49 @@
+{
+  "scoreboard_qc_sha256": "b45c9d079f817f4a5f445c63beed646a4d28ed0e1d8853974c2a18940b94e0ed",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 112.96,
+  "topbar": {
+    "line1": "2026 ATP500 北京 首轮",
+    "line2": "热亚 6-4 6-3 张之臻",
+    "start": 1.2,
+    "end": 114.16
+  },
+  "film_seconds": 118.0,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 2.712,
+    "2": 18.12,
+    "3": 12.36,
+    "4": 6.48,
+    "5": 9.072,
+    "6": 11.664,
+    "7": 12.96,
+    "8": 11.664,
+    "9": 7.944
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "unavailable",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（[local face-model cache]）",
+      "report_only": true,
+      "warnings": [
+        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（[local face-model cache]）"
+      ]
+    }
+  },
+  "render_inputs_sha256": "98e6affec5c1dc1e8c9ca23501eb15bdf0cf0a3fefaaa6e619c2e0fb3fdc2b66",
+  "film_sha256": "cedbdbb9da10829da3228cd88cbc1b56a0316932e784bfd701e066e3e746aee4",
+  "film_bytes": 52068974,
+  "qc_attestation_sha256": "c3a362a445b60e776d2685f143fdf9f9a59ea774371a25ff503347ba0897456a",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zhang-gea-beijing-2026-r1/zhang-gea-beijing-2026-r1.mp4",
+  "video_bytes": 52068974
+}

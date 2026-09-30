@@ -1,0 +1,89 @@
+{
+  "status": "pass",
+  "film_sha256": "cedbdbb9da10829da3228cd88cbc1b56a0316932e784bfd701e066e3e746aee4",
+  "spec_sha256": "e4132c4b722b53f7d066b89ca22fcda5d0b747bb22a04cc2ba06d9eadc1e7f78",
+  "checked_at": "2026-09-30T13:01:00Z",
+  "reviewer": "Manual visual inspection with deterministic native QC",
+  "canvas": "1080x1440 full-bleed 3:4",
+  "framing": {
+    "cx": 0.5,
+    "track": false,
+    "all_video_segments_confirmed": true
+  },
+  "manual_visual_review": {
+    "sample_times": [
+      0.5,
+      2,
+      4.8,
+      6.8,
+      10,
+      20,
+      31.6,
+      42,
+      47,
+      60,
+      72,
+      80,
+      95,
+      100,
+      103.8,
+      108,
+      113,
+      116
+    ],
+    "result": "Approved same-match frame cover; subject and result identity unambiguous; readable subtitles and dynamically masked scorebug; full point endings and handshake retained; no unrelated match or TennisTV advertisement. Final statistics card and branded outro match native templates.",
+    "source_full_review": "All77 native source contact frames, enlarged score sheets, exact transitions, repaired-stream pixel mapping and cropped native matchpoint sample"
+  },
+  "ending": {
+    "complete_match_point_source": [
+      116.5,
+      130.2
+    ],
+    "cold_open_source": [
+      125.9,
+      130.2
+    ],
+    "brand_ad_starts": 143.88,
+    "cold_open_payoff_covered": true
+  },
+  "audio": {
+    "native_full_duration_RMS_and_tail": "pass",
+    "tts_word_boundaries": "Actual generated words and segment fit checked",
+    "full_manual_listening": false,
+    "broadcast_quotation": "No unverified transcript included; brief cold-open retains real ambient sound",
+    "expected_still_card_silence_seconds": [
+      112,
+      113
+    ]
+  },
+  "black_freeze_scan": {
+    "black_events": [],
+    "freeze_events_within_match_action": [],
+    "intentional_still_card_events": [
+      [
+        104.96,
+        107.8
+      ],
+      [
+        107.8,
+        110.56
+      ],
+      [
+        110.56,
+        112.72
+      ]
+    ],
+    "interpretation": "All detected stillness lies within planned narrated statistics card; not video freeze corruption"
+  },
+  "cover": {
+    "is_video_frame": true,
+    "user_approved_exception": true,
+    "source_timestamp_s": 68.9,
+    "upscale_factor": 1.333333,
+    "identity": "Zhang Zhizhen, manually compared with same-match video and official headshot"
+  },
+  "known_limitations": [
+    "No physical iPhone Photos import test",
+    "Automatic face models unavailable; face identity/eyes/occlusion checked manually. Native file-based image path reports not_applicable; that does not turn the approved frame into a photographic original."
+  ]
+}
