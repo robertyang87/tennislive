@@ -891,6 +891,30 @@ def main() -> int:
               "  这一步必须排在 git commit 之前，否则它进不了仓库。")
         return 0
 
+    # Message-only corrections keep the original QC/spec/video immutable.
+    # Their own exact delivery identity must be durably reserved before any POST.
+    revision = None
+    revision_repo = Path.cwd()
+    from publication_revision import claim_post, has_revision, resolve as resolve_revision
+    if has_revision(revision_repo, outdir):
+        from auto_push_gate import validate_qc
+        run_url = (f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/"
+                   f"{os.environ.get('GITHUB_REPOSITORY', '')}/actions/runs/"
+                   f"{os.environ.get('GITHUB_RUN_ID', '')}")
+        if (not os.environ.get("GITHUB_RUN_ID") or not os.environ.get("GITHUB_REPOSITORY")
+                or not os.environ.get("RUNNER_TEMP")):
+            raise SystemExit("消息修订只能由已预占的原生发布工作流发送")
+        film_hash = validate_qc(revision_repo, outdir.name, outdir)
+        revision = resolve_revision(revision_repo, outdir.name, outdir, film_hash,
+                                    phase="send", run_url=run_url)
+        canonical = prepare_copy(revision_repo / "specs/reels" / f"{outdir.name}.xhs.txt", outdir)
+        if ((column, title, copy_text) != (canonical[0], canonical[1],
+                                          f"{canonical[1]}\n\n{canonical[2]}")
+                or args.lead or args.title_prefix
+                or Path(args.copy).resolve() != (revision_repo / "specs/reels" / f"{outdir.name}.xhs.txt").resolve()):
+            raise SystemExit("消息修订不允许临时覆盖已经绑定的标题、正文或导语")
+    stat_name = revision.stat_card_name if revision else STAT_CARD_NAME
+
     # 走了 Release 的片子**不在仓库里**，所以先问 render.json 再找文件。
     released = released_video_url(outdir)
     name = args.video
@@ -920,20 +944,25 @@ def main() -> int:
     # 账号所有者 2026-08-25 定：赛场之上的微信推送必须带全场技术统计图。
     # 这道闸放在真正发送之前，查产物而不是查 spec：即使上游误删了 `stats`
     # 字段，也不能让一条缺数据图的消息静默发出去。其他栏目仍按原规则可选。
-    if column == "赛场之上" and not (outdir / STAT_CARD_NAME).is_file():
+    if column == "赛场之上" and not (outdir / stat_name).is_file():
         raise SystemExit(
             f"赛场之上推微信必须带全场技术统计图：缺少 "
-            f"{outdir / STAT_CARD_NAME}。补齐 spec.stats 和双方头像、重新 render 后再推。"
+            f"{outdir / stat_name}。补齐 spec.stats 和双方头像、重新 render 后再推。"
         )
     # 非赛场之上栏目仍是可选的一屏；有文件就带上。
     stat_card = ""
-    if (outdir / STAT_CARD_NAME).is_file():
-        stat_card = stat_card_url(outdir)
+    if (outdir / stat_name).is_file():
+        stat_card = stat_card_url(outdir, stat_name)
         print(f"[数据图] 带上这一屏：{stat_card}")
     body = build_html(url, copy_url, args.lead, copy_text, poster,
                       column=column, stat_card=stat_card)
     # ⚠️ 前缀**只作用在这一处**。上面 `wait_for_copy_page(copy_url, title)` 和
     # 复制页里印的都是裸 `title`——前缀混进去就是「等一句永远不出现的话」。
+    if revision:
+        # Recheck after Pages/CDN waits: no changed bytes may borrow the reservation.
+        resolve_revision(revision_repo, outdir.name, outdir, film_hash,
+                         phase="send", run_url=run_url)
+        claim_post(revision, run_url, Path(os.environ["RUNNER_TEMP"]))
     receipt = push(f"{args.title_prefix}{title}", body, asset_dir=outdir)
     if args.receipt_out:
         # 流水号和消息网页一起落：「记下已推送」那一步把它写进 pushed.json，

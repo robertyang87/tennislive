@@ -1275,7 +1275,7 @@ CI 绿是**发布的闸**，不是**质检的替代**——成片该拉回来量
 公共实现 `render/push_style.py`；三栏目剪辑共用 `push_reel.build_html`，字卡共用
 `knowledge_push_html_from_parts`，复制页共用 `to_copy_page`。新模板必须接同一契约。
 发布前跑 `tests/test_push_system_theme.py` + `tests/test_push_visual.py`（含浅→深→浅、
-旧 WebView 浅色兜底、红按钮金样、25 页正文长度闸）。只改以后模板，不重推已发视频。
+旧 WebView 浅色兜底、红按钮金样、25 页正文长度闸）。只改以后模板，不自动批量重推历史内容；用户明确要求的单次消息修订走独立凭证与防重闸。
 **本地通过不等于微信实机通过**：PushPlus 外壳不归我们控制；首次真实推送后另核
 托管页保留主题样式，再核微信是否传递系统偏好，未验不能说已在微信生效。
 

@@ -308,7 +308,13 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path,
                        f"（要开：在 {spec.name} 的 push 块里加一行 \"auto\": true）")
         print(f"[强制] {slug}：spec 没写 push.auto，但表单勾了强制推送——"
               "只放宽这一道，成片身份/账本/pushed.json 照旧要过")
-    previous = blocking_attempt(repo, LEDGER_COLUMN, slug, film_hash)
+    from publication_revision import RevisionError, resolve as resolve_revision  # noqa: PLC0415
+    try:
+        revision = resolve_revision(repo, slug, outdir, film_hash)
+    except RevisionError as exc:
+        raise Skip(f"{slug}：消息修订不成立——{exc}") from exc
+    fingerprint = revision.fingerprint if revision else film_hash
+    previous = blocking_attempt(repo, LEDGER_COLUMN, slug, fingerprint)
     if previous:
         raise Skip(f"{slug}：持久发布账本已有 {previous.get('status')}（"
                    f"{previous.get('at', '时间未记')}，{previous.get('run', '地址未记')}），"
@@ -425,11 +431,23 @@ def ledger_status(repo: Path, outdir: Path, status: str, run_url: str, now: str,
                   receipt: str = "") -> Path:
     slug = outdir.name
     film_hash = validate_qc(repo, slug, outdir)
-    if status == "sending":
-        previous = blocking_attempt(repo, LEDGER_COLUMN, slug, film_hash)
-        if previous:
-            raise SystemExit(f"{slug} 已有 {previous.get('status')} 发布记录，禁止盲目重发")
-    return write_ledger(repo, LEDGER_COLUMN, slug, film_hash, status=status,
+    from publication_revision import RevisionError, resolve as resolve_revision  # noqa: PLC0415
+    try:
+        revision = resolve_revision(repo, slug, outdir, film_hash,
+                                    phase="reserve" if status == "sending" else "finish",
+                                    run_url=run_url)
+    except RevisionError as exc:
+        raise SystemExit(f"{slug}：消息修订不成立——{exc}") from exc
+    fingerprint = revision.fingerprint if revision else film_hash
+    previous = blocking_attempt(repo, LEDGER_COLUMN, slug, fingerprint)
+    if status == "sending" and previous:
+        raise SystemExit(f"{slug} 已有 {previous.get('status')} 发布记录，禁止盲目重发")
+    if revision and previous and previous.get("status") == "sent":
+        if status == "uncertain" or receipt == previous.get("pushplus_receipt"):
+            # Known success must survive a later bookkeeping failure.
+            return repo / "data" / "reel_publish_ledger" / f"{slug}.json"
+        raise SystemExit("消息修订已发送，新的回执与原记录不一致")
+    return write_ledger(repo, LEDGER_COLUMN, slug, fingerprint, status=status,
                         run_url=run_url, now=now, receipt=receipt)
 
 
