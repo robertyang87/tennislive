@@ -6,7 +6,7 @@ import argparse,hashlib,json,os,subprocess,sys
 import requests
 from auto_push_gate import wants_auto_push,validate_qc
 from publication_ledger import blocking_attempt
-from push_reel import headline,split_copy,build_html,wait_for_copy_page,wait_for_video
+from push_reel import headline,split_copy,build_html,wait_for_copy_page,wait_for_video,poster_url
 from tennislive.render.pushmsg import to_copy_page
 from tennislive.publish.pushplus import push,write_receipt,_jsdelivr_delivery,image_sources,check_content_length,wait_for_images
 SLUG='medvedev-24-titles-23-cities';DATE='2026-09-30'
@@ -14,7 +14,8 @@ EXPECTED='5af14197ef8a2dd2c93ae53ec3870ad8992e9b6b2b2ccfde7af254c8c0512c31';SIZE
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'output'/DATE/'reel'/SLUG
 SPEC=ROOT/'specs/reels'/f'{SLUG}.json';COPY=ROOT/'specs/reels'/f'{SLUG}.xhs.txt'
 BASE=f'https://github.com/robertyang87/tennislive/releases/download/reel-{SLUG}'
-VIDEO=f'{BASE}/{SLUG}.mp4';POSTER=f'https://robertyang87.github.io/tennislive/output/{DATE}/reel/{SLUG}/poster.jpg'
+os.environ.setdefault('TENNISLIVE_ASSET_REV','793b91eaf2386742ce6d30d39648351bff2544af')
+VIDEO=f'{BASE}/{SLUG}.mp4';POSTER=poster_url(Path('output')/DATE/'reel'/SLUG)
 PAGE=f'https://robertyang87.github.io/tennislive/output/{DATE}/reel/{SLUG}/copy.html'
 def sha(p):
  h=hashlib.sha256()

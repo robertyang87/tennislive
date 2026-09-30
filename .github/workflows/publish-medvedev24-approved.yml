@@ -59,7 +59,7 @@ jobs:
       - name: Send once using normal PushPlus implementation
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-          TENNISLIVE_ASSET_REV: ${{ github.sha }}
+          TENNISLIVE_ASSET_REV: '793b91eaf2386742ce6d30d39648351bff2544af'
         run: python tools/publish_medvedev24_approved.py send --run "$RUN_URL" --receipt-out "$RUNNER_TEMP/medvedev24-receipt.json"
       - name: Record actual receipt
         run: |
