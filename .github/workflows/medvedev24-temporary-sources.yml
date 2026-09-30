@@ -1,0 +1,80 @@
+name: Medvedev 24 titles temporary sources
+run-name: Medvedev 24 titles private source acquisition
+on:
+  push:
+    branches: [codex/medvedev24-private-source-20260930]
+    paths: [.github/workflows/medvedev24-temporary-sources.yml]
+permissions:
+  contents: read
+concurrency:
+  group: medvedev24-temporary-sources
+  cancel-in-progress: false
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include: [{"key": "title01", "url": "https://www.youtube.com/watch?v=hGPHeC0WcpI"}, {"key": "title02", "url": "https://www.youtube.com/watch?v=DbotaYXf5p0"}, {"key": "title04", "url": "https://www.youtube.com/watch?v=xGh-Vs58gx8"}, {"key": "title05", "url": "https://www.youtube.com/watch?v=lzIsYprtBkM"}, {"key": "title06", "url": "https://www.youtube.com/watch?v=bHGWPiCpgqw"}, {"key": "title07", "url": "https://www.youtube.com/watch?v=h45VzqeEdyA"}, {"key": "title08", "url": "https://www.youtube.com/watch?v=XboV-Jf0uhk"}, {"key": "title11", "url": "https://www.youtube.com/watch?v=tXAxuiktuZw"}, {"key": "title12", "url": "https://www.youtube.com/watch?v=kmlWqFNpovQ"}, {"key": "title13", "url": "https://www.youtube.com/watch?v=MEFpXBwnyQA"}, {"key": "title14", "url": "https://www.youtube.com/watch?v=Oogz5oFsYvM"}, {"key": "title15", "url": "https://www.youtube.com/watch?v=2fRc4mUq5aw"}, {"key": "title16", "url": "https://www.youtube.com/watch?v=KdHqCKOrm7M"}, {"key": "title17", "url": "https://www.youtube.com/watch?v=SmFGhhcDCX8"}, {"key": "title18", "url": "https://www.youtube.com/watch?v=WtJU8HN_iJ4"}, {"key": "title19", "url": "https://www.youtube.com/watch?v=U7sBC5S5874"}, {"key": "title20", "url": "https://www.youtube.com/watch?v=cu-AoDpkJJU"}, {"key": "title21", "url": "https://www.youtube.com/watch?v=cGsV1Ftkzcs"}, {"key": "title22", "url": "https://www.youtube.com/watch?v=XLyIURu_Yq0"}, {"key": "title23", "url": "https://www.youtube.com/watch?v=cU68ZY0dnxg"}]
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install official downloader and verify FFmpeg
+        run: |
+          python -m pip install --quiet 'yt-dlp[default]'
+          command -v ffmpeg
+      - name: Acquire requested official source without publication
+        env:
+          SOURCE_URL: ${{ matrix.url }}
+          SOURCE_KEY: ${{ matrix.key }}
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/source" "$RUNNER_TEMP/metadata"
+          COOKIE_ARGS=()
+          COOKIE_PATH="$RUNNER_TEMP/medvedev24-cookies.txt"
+          trap 'rm -f "$COOKIE_PATH"' EXIT
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            umask 077
+            printf '%s' "$YT_COOKIES_TXT" > "$COOKIE_PATH"
+            COOKIE_ARGS=(--cookies "$COOKIE_PATH")
+          fi
+          python -m yt_dlp --js-runtimes node "${COOKIE_ARGS[@]}" \
+            --no-playlist --socket-timeout 30 --retries 2 --fragment-retries 2 \
+            -f 'bv*[height=1080]+ba/b[height=1080]' \
+            -S 'vcodec:h264,acodec:m4a' --merge-output-format mp4 \
+            --write-info-json -o "$RUNNER_TEMP/source/source.%(ext)s" "$SOURCE_URL"
+          ffprobe -v error -show_entries stream=codec_name,codec_type,width,height,r_frame_rate:format=duration,size \
+            -of json "$RUNNER_TEMP/source/source.mp4" > "$RUNNER_TEMP/source/probe.json"
+          python - <<'PYMETA'
+          import json,os,pathlib,hashlib
+          d=pathlib.Path(os.environ['RUNNER_TEMP'])/'source'
+          info=json.loads((d/'source.info.json').read_text())
+          meta={k:info.get(k) for k in ['id','title','uploader','channel_id','webpage_url','upload_date','duration','width','height','fps']}
+          meta['key']=os.environ['SOURCE_KEY']
+          meta['sha256']=hashlib.sha256((d/'source.mp4').read_bytes()).hexdigest()
+          meta['rights_status']='unknown; production research source, not a licence'
+          meta['retention_days']=1
+          (d/'source.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2))
+          (d/'source.info.json').unlink()
+          probe=json.loads((d/'probe.json').read_text())
+          assert any(s.get('height',0)>=1080 for s in probe['streams']), 'Native1080p required'
+          assert any(s.get('codec_type')=='audio' for s in probe['streams']), 'Missing audio'
+          PYMETA
+      - name: Save authenticated temporary artifact only
+        uses: actions/upload-artifact@v4
+        with:
+          name: medvedev24-${{ matrix.key }}
+          path: |
+            ${{ runner.temp }}/source/source.mp4
+            ${{ runner.temp }}/source/source.json
+            ${{ runner.temp }}/source/probe.json
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
