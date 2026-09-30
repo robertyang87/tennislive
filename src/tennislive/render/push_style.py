@@ -1,13 +1,16 @@
-"""微信推送正文和复制页的视觉——**一套浅色 token**，三条线共用。
+"""微信推送正文和复制页的视觉——**同一套系统浅／深色 token**，三条线共用。
 
 来路（2026-09-27 UI / VI 评审 3.2，WP2）：
 
 - **推送正文和复制页之间用了 22 个 hex，一个都没共享**：推送的药丸是 #e7f5ea 底
   #087747 字、提示灰 #7a8580（白底只有 3.82:1）、视频按钮 #102d23；复制页的按钮是
   #0a7d43，深色模式换成不是品牌色的 #b8e986，toast 的底和深色页面底是同一个色
-  （1.00:1，完全看不见）。现在两边的颜色都从 `design_tokens.LIGHT`（推送只有浅色：
-  PushPlus 那一页会不会留 `<style>` 没人保证，所以推送是内联的浅色）和
-  `tokens_css()`（复制页是真网页，跟随系统浅／深）来。
+  （1.00:1，完全看不见）。现在两边的颜色都从 `design_tokens.LIGHT` / `DARK` 来。
+  2026-09-30 起推送正文也跟随系统：浅色内联兜底，深色用作用域媒体查询覆盖；
+  复制页继续用 `tokens_css(default="system")`。这是所有栏目后续网页的全局要求。
+  不按时钟判断夜间，不用脚本记住固定主题，也不对图片／视频做反色。
+  PushPlus 若过滤 `<style>` 或 WebView 不传系统偏好，仍可读但只能浅色；
+  本地浏览器测试不能冒充已验证 PushPlus 托管页或微信实机。
 - **账号所有者 2026-09-27 Q8**：浅底上药丸和按钮用**黄绿实底 + 墨色字**
   （#c6f65a / #04120d，15.2:1），链接用**中性灰**。黄绿在白底上只有 1.26:1，
   **永远不当字色**。
@@ -34,7 +37,7 @@ from __future__ import annotations
 import html
 import re
 
-from ..design_tokens import FONT_WEB, LIGHT, RADIUS_WEB, TEXT_WEB, css_vars, tokens_css
+from ..design_tokens import DARK, FONT_WEB, LIGHT, RADIUS_WEB, TEXT_WEB, css_vars, tokens_css
 
 #: 推送卡顶上那条红边——和卡底那颗红按钮同一支红（账号所有者 2026-08-31 定了不动）。
 PUSH_RED = "#ff2442"  # token-exempt: 推送红边／红按钮的红，账号所有者「不要改了」
@@ -43,9 +46,32 @@ _L = LIGHT
 #: 进 `style="…"` 属性的字体栈：token 里是双引号，放进双引号属性会把属性截断。
 FONT_INLINE = FONT_WEB.replace('"', "'")
 
-# ── 推送正文（内联浅色）──────────────────────────────────────────────────
+# ── 推送正文（浅色内联兜底 + 系统深色覆盖）──────────────────────────────────────────────────
 PAGE = (f"background-color:{_L['background']};color:{_L['foreground']};"
-        f"padding:12px 10px;font-family:{FONT_INLINE}")
+        f"padding:12px 10px;font-family:{FONT_INLINE};color-scheme:light dark")
+
+
+def system_theme_style() -> str:
+    """PushPlus 正文的系统主题，限定在我们自己的 `.tl-push` 内。
+
+    用 token 生成行内颜色选择器：不用给每张图的链接重复加 class，25 页字卡仍能
+    放进 PushPlus 的 2 万字预算。选择器和值同源，换 token 时不会漏改另一处。
+    `!important` 只覆盖颜色；浅色原样、红按钮逐字节不动、宿主与图片不受影响。
+    不依赖 JS、远程 CSS 或新 WebView 才支持的 `light-dark()`。
+    """
+    rules = [
+        f".tl-push{{color-scheme:dark;background-color:{DARK['background']}!important;"
+        f"color:{DARK['foreground']}!important}}",
+    ]
+    for prop, role in (("background-color", "card"), ("color", "foreground"),
+                       ("color", "muted-foreground"), ("color", "link")):
+        rule = (f'.tl-push [style*="{prop}:{LIGHT[role]};"]'
+                f"{{{prop}:{DARK[role]}!important}}")
+        if rule not in rules:
+            rules.append(rule)
+    rules.append(f'.tl-push [style*="border-top:1px solid {LIGHT["border"]};"]'
+                 f'{{border-top-color:{DARK["border"]}!important}}')
+    return '<style>@media (prefers-color-scheme: dark){' + ''.join(rules) + '}</style>'
 
 
 def card(padding: str) -> str:

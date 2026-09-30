@@ -9,7 +9,7 @@
 - 账号所有者 Q8：浅底上药丸和按钮**黄绿实底 + 墨色字**，链接**中性灰**
 - ⚠️⚠️ **红按钮 #ff2442 逐字节不动**（账号所有者 2026-08-31「微信推送的红色按钮不要改了」）
 
-这份文件钉：① 红按钮两处产出和金样逐字节相等；② 推送只用浅色 token、Q8 的角色分工；
+这份文件钉：① 红按钮两处产出和金样逐字节相等；② 推送只用浅／深色 token、Q8 的角色分工；
 ③ 两条「网球有故事」推送同一套样子；④ 整块可选、`lang`、图片预留比例、回退链接；
 ⑤ 字卡推送的 2 万字预算没被样式挤掉；⑥ 复制页样式只写 token 变量；
 ⑦ 复制页在 Chromium 里真的：失败说失败、连点重新计时、深色 toast 看得见、按钮 44px、有焦点环。
@@ -96,19 +96,19 @@ def test_推送红按钮逐字节不动_两处产出都钉金样(tmp_path):
         assert "border-top:5px solid #ff2442" in body
 
 
-# ── ② 一套浅色 token，Q8 的角色分工 ────────────────────────────────────────
+# ── ② 一套系统主题 token，Q8 的角色分工 ────────────────────────────────────────
 _HEX = re.compile(r"#[0-9a-fA-F]{6}\b")
 
 
-def test_推送正文只用浅色token一套色():
-    """推送是 PushPlus 那一页里的内联样式——只有浅色，所以每个颜色都得是 `LIGHT`
+def test_推送正文只用系统浅深色token一套色():
+    """推送浅色内联兜底、深色媒体查询覆盖，每个颜色都得是 `LIGHT` / `DARK`
     里的某个角色（红按钮／红边那一支除外）。原来这里有 #e7f5ea / #087747 / #7a8580 /
     #102d23 / #25342e 五支各配各的，**提示灰 #7a8580 白底只有 3.82:1**。"""
-    allowed = {v.lower() for v in T.LIGHT.values()} | {"#ff2442", "#ffffff"}
+    allowed = {v.lower() for theme in (T.LIGHT, T.DARK) for v in theme.values()} | {"#ff2442", "#ffffff"}
     for body in (_reel(), _knowledge()):
         used = {h.lower() for h in _HEX.findall(body)}
         stray = used - allowed
-        assert not stray, f"推送里有不属于浅色 token 的颜色：{sorted(stray)}"
+        assert not stray, f"推送里有不属于系统主题 token 的颜色：{sorted(stray)}"
         assert not re.search(r"(?i)\b(rgba?|hsla?)\(", body), "推送里有字面的颜色函数"
         assert "#7a8580" not in body, "提示灰还是 3.82:1 的那支"
 
