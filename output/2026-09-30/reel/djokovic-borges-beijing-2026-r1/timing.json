@@ -1,0 +1,43 @@
+{
+  "schema": 2,
+  "at": "2026-09-30T15:30:40Z",
+  "pipeline": "match-reel",
+  "slug": "djokovic-borges-beijing-2026-r1",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 241.054,
+  "last_stage": "数据统计对照图",
+  "stage_seconds": {
+    "片尾配音": 0.001,
+    "TTS 合成": 0.003,
+    "比分板蒙版": 16.418,
+    "封面海报": 8.108,
+    "封面编码": 0.474,
+    "分段编码": 0.544,
+    "片尾母版转码": 0.583,
+    "拼接": 31.21,
+    "混音": 4.077,
+    "烧字幕+成片": 169.52,
+    "数据统计对照图": 6.656
+  },
+  "stage_counts": {
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "比分板蒙版": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码": 1,
+    "片尾母版转码": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1,
+    "数据统计对照图": 1
+  },
+  "parallel_stages": [],
+  "untimed_seconds": 3.46,
+  "cpu_count": 2,
+  "run_id": null,
+  "run_attempt": null,
+  "on_runner": false
+}

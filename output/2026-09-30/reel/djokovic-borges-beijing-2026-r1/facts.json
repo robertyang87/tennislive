@@ -1,0 +1,93 @@
+{
+  "match_id": "YBGg3Lr2",
+  "home": "Nuno Borges",
+  "away": "Novak Djokovic",
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 2,
+      "first_in": 36,
+      "first_total": 65,
+      "first_won": 27,
+      "second_total": 29,
+      "second_won": 15,
+      "bp_conv": 0,
+      "bp_chances": 2,
+      "pts_won": 59,
+      "pts_total": 133
+    },
+    "b": {
+      "aces": 8,
+      "df": 2,
+      "first_in": 48,
+      "first_total": 68,
+      "first_won": 42,
+      "second_total": 20,
+      "second_won": 9,
+      "bp_conv": 1,
+      "bp_chances": 2,
+      "pts_won": 74,
+      "pts_total": 133
+    }
+  },
+  "match_duration": "1:52",
+  "set_durations": [
+    "0:43",
+    "1:09"
+  ],
+  "ranking_matchday": {
+    "Borges": 49,
+    "Djokovic": 11
+  },
+  "source_stats": "https://global.flashscore.ninja/2/x/feed/df_st_1_YBGg3Lr2",
+  "source_duration": "https://global.flashscore.ninja/2/x/feed/df_sui_1_YBGg3Lr2",
+  "source_matchpage": "https://www.flashscore.com/match/tennis/borges-nuno-hzbEPIOa/djokovic-novak-AZg49Et9/?mid=YBGg3Lr2",
+  "notes": [
+    "a is Borges; b Djokovic. Reverse for Djokovic-first layout.",
+    "Duration Flashscore 1:52 agrees EFE, while on-court Rolex displays 1:50 during final point (TTV 213s); preserve discrepancy.",
+    "Winners/unforced errors absent from this feed: omit, do not populate from Reddit.",
+    "first_total derived exactly as first_in+second_total and matches service-points denominators.",
+    "Rankings matchday Flashscore English/Italian and Tennis.com 11/49; pre-event China Open article lists Djokovic12, potentially older snapshot but cause unconfirmed."
+  ],
+  "result": {
+    "winner": "Novak Djokovic",
+    "loser": "Nuno Borges",
+    "score": "6-3 7-6(2)"
+  },
+  "context": {
+    "event_record": "30 wins0 losses at China Open only",
+    "last_appearance": "2015",
+    "titles_before": "6",
+    "next_opponent": "Yunchaokete Bu"
+  },
+  "turns": [
+    {
+      "score": "S1 3-0",
+      "fact": "Early break and hold"
+    },
+    {
+      "score": "S1 4-2",
+      "fact": "Saved two break points to hold5-2",
+      "footage_missing_from_short_source": true
+    },
+    {
+      "score": "S2 2-3",
+      "fact": "Received courtside physiotherapy; no confirmed diagnosis",
+      "footage_missing_from_short_source": true
+    },
+    {
+      "score": "S2 4-4",
+      "fact": "Won long rally but missed later break chance; Borges held"
+    },
+    {
+      "score": "S2 5-6",
+      "fact": "Held after40-15 became deuce"
+    },
+    {
+      "score": "Tiebreak5-1→7-2",
+      "fact": "Closed straight-set win"
+    }
+  ],
+  "visual_recap_policy": "Two same-match official-photo recap inserts distinguish events absent from available official highlight footage; no substituted live point or invented treatment scene.",
+  "visual_model_policy": "No DeepSeek or MiniMax used. Full source manually visually reviewed and deterministic video/audio evidence retained."
+}

@@ -1,0 +1,25 @@
+{
+  "film_sha256": "3052d7764c522bb5eb618173093c92f3ecf2771b3a9228429b3a9b70b6658777",
+  "spec_sha256": "463093d17e06183f9b35a4fbe3931667b442668459b4c93cd46dcfa263af490e",
+  "render_inputs_sha256": "bfa8ca81669b8e84515b87de6bfff5f90416bddbfa3a5c6a416a5648287d456d",
+  "renderer": {
+    "path": "tools/build_match_reel.py",
+    "sha256": "86cebb104a489702c9aae91965e5c7c9857d2ccf16af0e493101497be76dcd25",
+    "unchanged_from_verified_native_base": true
+  },
+  "encoding_test": "15 native encoding regression tests passed independently",
+  "local_runtime_adapters": {
+    "wrapper_sha256": "a715bbadaa47c5f7745477619409a005944b73d7f34408fdfe411e8e8385d801",
+    "rasterizer_sha256": "1f12cd83e9899c6915c168c9afdc7082ad5ec86d2c37fa356a1c2b8fb0daaeef",
+    "template": "Native HTML through existing WeasyPrint/PyMuPDF adapter; only selected cover hook color set to#FFD600",
+    "resource_limits": "2 native segment workers; each FFmpeg input decoder1 thread; filter_threads1; filter_complex_threads1; outputencoder2threads",
+    "concat": "Exact native xfade video graph and exact native acrossfade audio graph processed independently to avoid cross-stream queue pressure; video encoded once with native PART_CRF12, audio interim pcm_f32le, then video stream-copy and one native160kbpsAAC encode. Native narration mix/subtitle burn/final export unchanged. No subgroup re-encoding.",
+    "part_reuse": "Source SHA and segment/source/scorebox/layout/crop inputs matched; every native cached part size andSHA checked before reuse",
+    "no_qc_threshold_changes": true,
+    "byte_identical_to_default_parallel_execution_claimed": false
+  },
+  "native_L2": "0 findings; current immutable film/spec attestation",
+  "final_encoding": "H264High4.1,CFR25,yuv420p,AAC,faststart,full5143-frame decode; actualSPS/MV/DPB/packet timing audited",
+  "runtime_recovery": "Earlier whole-graph processes terminated without diagnostic stderr; suspected memory pressure, not established kernelOOM. Split-stream rendering succeeded; no claim failed attempts produced a valid film.",
+  "physical_iphone_tested": false
+}

@@ -1,0 +1,128 @@
+{
+  "status": "pass",
+  "film_sha256": "3052d7764c522bb5eb618173093c92f3ecf2771b3a9228429b3a9b70b6658777",
+  "spec_sha256": "463093d17e06183f9b35a4fbe3931667b442668459b4c93cd46dcfa263af490e",
+  "checked_at_utc": "2026-09-30T15:32:00Z",
+  "reviewer": "Manual visual inspection plus deterministic native QC; no DeepSeek/MiniMax",
+  "canvas": "1080x1440 full-bleed3:4",
+  "framing": {
+    "cx": 0.5,
+    "track": false,
+    "all_video_segments_confirmed": true
+  },
+  "manual_visual_review": {
+    "sample_times": [
+      0.5,
+      2.5,
+      5.7,
+      9,
+      17,
+      25,
+      36,
+      44.3,
+      47,
+      53.5,
+      58,
+      61.7,
+      66,
+      72.8,
+      85,
+      99,
+      111,
+      114,
+      125,
+      132,
+      145,
+      160,
+      172.6,
+      177,
+      181,
+      185,
+      192,
+      198,
+      203.5
+    ],
+    "contact_sheet_sha256": "ad59a8cbf33479b165a0fb0b71082719b7beac4cd9a68c2770ec96db7bf5bee6",
+    "result": "Selected pure-yellow hook in film opening matches final poster; all29 actual final-frame samples reviewed; faces/scoreboard/subtitles readable; no score/name overlap; complete live match point and post-win applause/handshake retained; fixed-center framing maintained. Two official-photo recap inserts explicitly narrate absent key-game/treatment history without passing other rallies off as those events.",
+    "source_full_review": "Four-second full-duration contact sheets, one-second focused sheets, enlarged scoreboard and exact boundaries manually checked. Official complete248.576s source; alternative154.475s official edit compared and rejected for missing payoff."
+  },
+  "ending": {
+    "complete_match_point_source": [
+      209,
+      219
+    ],
+    "post_win_source": [
+      219,
+      239
+    ],
+    "cold_open_source": [
+      221,
+      225.4
+    ],
+    "brand_ad_starts": 239.68,
+    "cold_open_payoff_covered": true
+  },
+  "audio": {
+    "native_full_duration_RMS_and_tail": "pass",
+    "tts_word_boundaries": "Actual generated words and segment fit checked; initial TTS independently ASR-reviewed",
+    "full_manual_listening": false,
+    "broadcast_quotation": "No unverified verbatim transcript used; live sound preserved",
+    "no_bgm": true,
+    "expected_still_card_silence_seconds": [
+      51,
+      70
+    ],
+    "long_rally_original_sound": "Chinese narration stops before the three long-rally climaxes and final match-point impact; native sidechain releases original sound when speech ends"
+  },
+  "black_freeze_scan": {
+    "black_events": [],
+    "freeze_events_within_match_action": [],
+    "intentional_cover_and_photo_events": [
+      [
+        0.0,
+        1.2
+      ],
+      [
+        45.28,
+        46.84
+      ],
+      [
+        46.84,
+        49.44
+      ],
+      [
+        49.44,
+        51.52
+      ],
+      [
+        64.0,
+        65.32
+      ],
+      [
+        65.32,
+        67.28
+      ],
+      [
+        67.28,
+        70.8
+      ]
+    ]
+  },
+  "cover": {
+    "photo_is_video_frame": false,
+    "source_dimensions": [
+      5000,
+      3333
+    ],
+    "source_url": "https://www.chinaopen.com/cn/contents/281/1602.html",
+    "selected_accent": "#FFD600",
+    "accent_text": "30战全胜",
+    "additional_outline_or_background": false,
+    "poster_sha256": "83a2facc90ac54b478cd8d0f169661ad4efcaec88dd309badc28648660c252b8"
+  },
+  "known_limitations": [
+    "No physical iPhone Photos import test",
+    "Full manual audio listening unavailable; audio timing/levels/word boundaries and ASR checked",
+    "Automatic face model unavailable; player identities, eyes and occlusion checked manually"
+  ]
+}
