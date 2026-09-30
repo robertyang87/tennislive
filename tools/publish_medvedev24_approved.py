@@ -8,13 +8,13 @@ from auto_push_gate import wants_auto_push,validate_qc
 from publication_ledger import blocking_attempt
 from push_reel import headline,split_copy,build_html,wait_for_copy_page,wait_for_video
 from tennislive.render.pushmsg import to_copy_page
-from tennislive.publish.pushplus import push,write_receipt
+from tennislive.publish.pushplus import push,write_receipt,_jsdelivr_delivery,image_sources,check_content_length,wait_for_images
 SLUG='medvedev-24-titles-23-cities';DATE='2026-09-30'
 EXPECTED='5af14197ef8a2dd2c93ae53ec3870ad8992e9b6b2b2ccfde7af254c8c0512c31';SIZE=242652311
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'output'/DATE/'reel'/SLUG
 SPEC=ROOT/'specs/reels'/f'{SLUG}.json';COPY=ROOT/'specs/reels'/f'{SLUG}.xhs.txt'
 BASE=f'https://github.com/robertyang87/tennislive/releases/download/reel-{SLUG}'
-VIDEO=f'{BASE}/{SLUG}.mp4';POSTER=f'{BASE}/poster.jpg'
+VIDEO=f'{BASE}/{SLUG}.mp4';POSTER=f'https://robertyang87.github.io/tennislive/output/{DATE}/reel/{SLUG}/poster.jpg'
 PAGE=f'https://robertyang87.github.io/tennislive/output/{DATE}/reel/{SLUG}/copy.html'
 def sha(p):
  h=hashlib.sha256()
@@ -69,7 +69,11 @@ def verify_public():
  response=requests.get(POSTER,timeout=30);response.raise_for_status();assert hashlib.sha256(response.content).hexdigest()==sha(OUT/'poster.jpg'),'Public poster differs'
  proof={'status':'pass','film_sha256':sha(film),'film_bytes':film.stat().st_size,'public_video_url':VIDEO,'public_poster_sha256':sha(OUT/'poster.jpg'),'public_copy_fields_match':True}
  (OUT/'public_asset_verification.json').write_text(json.dumps(proof,ensure_ascii=False,indent=2)+'\n')
- print('Public movie, cover and exact copy verified; no message sent')
+ _,_,html=content()
+ os.environ.setdefault('TENNISLIVE_ASSET_REV',os.environ.get('GITHUB_SHA','793b91eaf2386742ce6d30d39648351bff2544af'))
+ prepared=_jsdelivr_delivery(html,image_sources(html),OUT)
+ wait_for_images(prepared);check_content_length(prepared)
+ print('Public movie, cover, exact copy and native image delivery verified; no message sent')
 
 def send(receipt,run):
  # Do not repeat wants_auto_push after reservation: same-run sending state is expected.
