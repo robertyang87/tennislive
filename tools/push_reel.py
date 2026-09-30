@@ -691,7 +691,7 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
           图片长按保存
 
     ⚠️ **样子不在这儿配**（2026-09-27 UI 评审 WP2）：药丸、标题、提示行、「原图 ↗」、
-    视频按钮都从 `render/push_style.py` 的同一组函数出，颜色是 `design_tokens.LIGHT`
+    视频按钮都从 `render/push_style.py` 的同一组函数出，颜色跟随系统 `design_tokens.LIGHT` / `DARK`
     ——和字卡那条推送（`knowledge_push_html_from_parts`）、复制页同一套。
     **只有卡底那颗红按钮是字面写在这儿的**，逐字节不动（账号所有者 2026-08-31
     「微信推送的红色按钮不要改了」），判据 `tests/test_push_visual.py` 拿真产出和
@@ -756,7 +756,7 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
 
     red = btn(copy_url, "分别复制标题 / 正文", "#ff2442")  # token-exempt: 红按钮逐字节不动（2026-08-31）
 
-    return f"""<div lang="zh-CN" style="{ps.PAGE}">
+    return f"""<div lang="zh-CN" class="tl-push" style="{ps.PAGE}">{ps.system_theme_style()}
 <div style="{ps.card("18px 0 22px")}">
 <div style="{pad}">{ps.pill(column)}
 {ps.title_block(html.escape(title))}

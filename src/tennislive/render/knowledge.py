@@ -135,7 +135,7 @@ def knowledge_push_html_from_parts(
     action = ps.video_button(video_url) if video_url else ""
     red = (f'<a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">'  # token-exempt: 红按钮逐字节不动（2026-08-31）
            "分别复制标题 / 正文 / 置顶评论</a>")
-    return f"""<div lang="zh-CN" style="{ps.PAGE}">
+    return f"""<div lang="zh-CN" class="tl-push" style="{ps.PAGE}">{ps.system_theme_style()}
 <div style="{ps.card("18px 16px 22px")}">
   {ps.pill(column)}
   {ps.title_block(title)}
