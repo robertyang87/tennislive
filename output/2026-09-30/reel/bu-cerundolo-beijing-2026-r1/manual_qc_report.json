@@ -1,0 +1,66 @@
+{
+  "status": "pass",
+  "film_sha256": "60bbd51060c29c46f323538faa3acb572ceb1e10d1863ad7fba8efb0462202aa",
+  "spec_sha256": "8b86416e875b09a71ff9ef968595e297f222d2785abbc9d57188b1b4fd768f6b",
+  "checked_at": "2026-09-30T12:56:35.121912+00:00",
+  "reviewer": "assistant visual inspection with deterministic native QC",
+  "canvas": "1080x1440 full-bleed 3:4",
+  "framing": {
+    "cx": 0.5,
+    "track": false,
+    "all_video_segments_confirmed": true
+  },
+  "manual_visual_review": {
+    "sample_times": [
+      0.5,
+      2,
+      3,
+      7,
+      22,
+      34,
+      52,
+      65,
+      73,
+      78,
+      90,
+      99,
+      112,
+      125,
+      136,
+      143,
+      145,
+      147,
+      150
+    ],
+    "result": "Cover face clear and unobscured; native three-set score geometry aligned; subtitles and retained scorebug readable; no foreign-game inserts; no trophy/interview or Tennis TV advertisement; full point finishes and handshake retained",
+    "source_full_review": "Complete-duration native contact sheets, enlarged scoreboard sheets, exact transition checks"
+  },
+  "ending": {
+    "complete_match_point_source": [
+      110.72,
+      139.7
+    ],
+    "celebration_and_handshake_source": [
+      139.78,
+      147.02
+    ],
+    "cold_open_source": [
+      140.7,
+      143.4
+    ],
+    "brand_ad_starts": 147.16,
+    "cold_open_payoff_covered": true
+  },
+  "audio": {
+    "native_full_duration_RMS_and_tail": "pass",
+    "tts_word_boundaries": "Checked actual generated word timestamps and segment fit",
+    "source_commentary_caption": "Getting things done in Beijing again. / 又一次在北京赢了下来",
+    "full_manual_listening": false,
+    "black_freeze_scan": "No >=0.2s black or >=1.5s freeze detection events"
+  },
+  "name_identity": "Full canonical opponent name matches official headshot and native cross-spec identity check",
+  "known_limitations": [
+    "Automated face-recognition model unavailable; visual identity checked against same-match source and official photo",
+    "No physical iPhone Photos import test"
+  ]
+}

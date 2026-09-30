@@ -767,6 +767,38 @@ PART_CRF = "12"
 FINAL_PRESET = "medium"
 FINAL_CRF = "18"
 
+
+def final_video_compat_args(width: int, height: int, fps_expr: str) -> list[str]:
+    """Constrain the encoder itself; changing only SPS level cannot repair a stream.
+
+    The topbar concat filter emits a microsecond time base. Without explicit CFR
+    and encoder time base x264 can advertise 1,000,000 fps / Level 6.2 even when
+    displayed frames are 25 fps (Beijing/Tokyo, 2026-09-30). Keep source-derived
+    rational fps, and select a level from actual macroblock/DPB requirements.
+    Bounds: FFmpeg libavcodec/h264_levels.c (H.264 Annex A). These two levels
+    cover this renderer's 1080x1440 canvas, including 60 fps without a false 4.1.
+    """
+    fps = Fraction(fps_expr)
+    if width <= 0 or height <= 0 or width % 2 or height % 2 or fps <= 0:
+        raise ReelError("H.264 export requires positive even dimensions and fps")
+    mb_w, mb_h = (width + 15) // 16, (height + 15) // 16
+    mbs = mb_w * mb_h
+    # ref=3 plus the B-pyramid reference requires four decoded frame buffers.
+    for level, max_fs, max_mbps, max_dpb in (
+        ("4.1", 8192, 245760, 32768),
+        ("4.2", 8704, 522240, 34816),
+    ):
+        if (mbs <= max_fs and mbs * fps <= max_mbps and mbs * 4 <= max_dpb
+                and max(mb_w, mb_h) ** 2 <= 8 * max_fs):
+            return [
+                "-profile:v", "high", "-level:v", level,
+                "-r", str(fps), "-fps_mode", "cfr",
+                "-enc_time_base", f"{fps.denominator}:{fps.numerator}",
+                "-x264-params", "ref=3:mvrange=511:vbv-maxrate=12000:vbv-bufsize=24000",
+                "-video_track_timescale", str(math.lcm(90000, fps.numerator)),
+            ]
+    raise ReelError(f"No validated H.264 export level for {width}x{height}@{fps_expr}")
+
 # **成片一律走 GitHub Release 附件，不进 git。**
 #
 # 账号所有者定过两层。2026-08-02：「我的基础要求是保证内容和画面质量，文件多大都
@@ -9981,6 +10013,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             *wm_inputs, *scrim_inputs, *video_args,
             "-map", "1:a:0",
             "-c:v", "libx264", "-preset", FINAL_PRESET, "-crf", FINAL_CRF,
+            *final_video_compat_args(VIDEO_W, VIDEO_H, FPS_EXPR),
             "-pix_fmt", "yuv420p",
             "-c:a", "copy", "-movflags", "+faststart", str(final))
 
