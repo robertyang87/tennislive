@@ -4401,6 +4401,23 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "", *,
     同一份实现渲**别的时刻**、写到别处、复用同一个浏览器页面。
     扫描不另抄一份抽帧＋渲海报，理由同上——扫的那张必须就是终审审的那张。
     """
+    # An explicitly supplied event photograph is a different source from a
+    # video frame.  Feed it through the same native cover renderer so render()
+    # still records the cover in its ordinary assembly; never present it as a
+    # frame at `frame_at`.  The source URL is mandatory provenance, not a QC
+    # approval flag (the final poster must still pass the normal visual gates).
+    photo_value = (spec.get("cover") or {}).get("photo_path")
+    if photo_value:
+        if at is not None:
+            raise SystemExit("摄影封面没有视频抽帧时刻，不能传 at 做抽帧候选。")
+        if not str(spec["cover"].get("photo_source") or "").strip():
+            raise SystemExit("摄影封面缺 cover.photo_source，无法记录图片来源。")
+        photo = Path(photo_value)
+        if not photo.is_absolute():
+            photo = ROOT / photo
+        if not photo.is_file():
+            raise SystemExit(f"摄影封面文件不存在：{photo}")
+        return build_cover(spec, photo, dest or outdir / "poster.jpg", page=page)
     frame = outdir / "_cover_frame.jpg"
     if dest is not None:           # 扫候选：每一格各用各的临时帧，别互相盖
         frame = dest.with_suffix(".frame.jpg")
@@ -4520,11 +4537,24 @@ def tennistv_logo_problem(spec: dict) -> str | None:
             f"居中的 4:3 窗口保留 x 0.125–0.875，台标左沿在 {_TENNISTV_LOGO_LEFT}——"
             f"**它在窗口里面**。写 `\"crop_shift_x\": {TENNISTV_CROP_SHIFT}`（德约那条同一个"
             "转播模板用的就是这个），或者走 `logo_box`。")
-    if shift > _TENNISTV_MIN_SHIFT + 1e-9:
+    # `_crop_expr` shrinks both height AND width when keep < 1.  On this
+    # 16:9 source the centred 4:3 window ends at .5 + .375 * keep, not
+    # always .875.  Judge the actual window, including the configured ratio.
+    keep = spec.get("crop_keep_top", 1.0)
+    ratio = spec.get("crop_ratio", CROP_RATIO)
+    if (isinstance(keep, bool) or not isinstance(keep, int | float)
+            or not math.isfinite(keep) or not 0 < keep <= 1
+            or isinstance(ratio, bool) or not isinstance(ratio, int | float)
+            or not math.isfinite(ratio) or ratio <= 0
+            or not math.isfinite(shift) or abs(shift) > CROP_SHIFT_MAX):
+        return f"{slug} 的裁切参数不合法，无法确认 Tennis TV 台标已出框。"
+    right = 0.5 + ratio * keep / (2 * (16 / 9)) + shift
+    minimum_shift = _TENNISTV_LOGO_LEFT - 0.5 - ratio * keep / (2 * (16 / 9))
+    if right > _TENNISTV_LOGO_LEFT + 1e-9:
         return (
             f"{slug} 的 `crop_shift_x` = {shift}，还不够把台标挪出窗口："
-            f"至少要 {_TENNISTV_MIN_SHIFT:.3f}（台标左沿 {_TENNISTV_LOGO_LEFT}、"
-            "居中窗口右沿 0.875）。")
+            f"当前窗口右沿 {right:.4f}（台标左沿 {_TENNISTV_LOGO_LEFT}），"
+            f"按当前比例和保留高度，横移至少要 {minimum_shift:.3f}。")
     return None
 
 

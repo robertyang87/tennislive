@@ -25,14 +25,13 @@ jobs:
     env:
       VIDEO_URL: ${{ inputs.url }}
       GH_TOKEN: ${{ github.token }}
-      # Release 显式绑定仓库；稀疏 checkout 只为复用共享安装脚本。
+      # 下载和 Release 显式绑定仓库；仅检出共享依赖安装脚本。
       GH_REPO: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: tools/ci_apt_install.sh
           sparse-checkout-cone-mode: false
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -44,11 +43,29 @@ jobs:
       - name: 安装 YouTube 下载器
         run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
 
+      - name: 恢复音视频工具 apt 缓存
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-download-video-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-download-video-v1-
       - name: 安装音视频合并工具
-        timeout-minutes: 8
+        timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
-          apt_install_cached ffmpeg
+          ensure_ffmpeg
+      - name: 回写实际下载的 apt 缓存
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
 
       # YouTube 对机房 IP 经常要求 PO token。provider 起不来时不在
       # 这里伪造一个根因，让 yt-dlp 在下一步输出真实诊断。

@@ -407,7 +407,8 @@ def test_是不是决赛_看顶栏和轮次():
 
 # ---------------------------------------------------------------- ⑦ 预裁的抽帧也是抽帧
 
-#: 当前仍指向预裁视频帧的四条；fernandez 已升级官方照片，不再计入。
+#: 当前库存仍使用预裁视频帧的四条。Fernandez 已在 09-28 20:53Z 升级为 WTA 官方照片，
+#: 历史抽帧状态由 cover_upgrades 账本中的 previous_portrait 单独回放。
 PRECROPPED_FRAMES = {"cerundolo-zhou-chengdu-2026-r1",
                      "shang-mannarino-chengdu-2026-r1", "tabilo-mannarino-chengdu-2026-r2",
                      "vacherot-harris-chengdu-2026-r2"}
@@ -432,15 +433,16 @@ def test_预裁进仓库的抽帧_O4认得出_官方实拍的一张都不误认(
     assert cu.is_frame_cover({"cover": {"portrait": {"frame_at": 161.4}}})
 
 
-def test_fernandez那条_O4现在是目标(tmp_path):
-    """首推 09-27 14:57Z，48 小时窗口里；原来 `is_frame_cover` 只认 `frame_at`，它不在目标里。"""
+def test_fernandez旧抽帧是目标_已升级官方照不再是目标(tmp_path):
+    """按真实升级账本回放旧状态；当前官方照不能再次入选，旧预裁帧仍须被认出。"""
     spec = replay.spec_of("fernandez-gibson-singapore-2026-final")
-    # 回放首推时的预裁输入，不依赖线上 spec 永远不升级封面。
-    assert not cu.is_frame_cover(spec), "现在的官方照片不应再进入换图目标"
-    spec["cover"]["portrait"] = {
-        "image": "assets/reel/fernandez-gibson-final-trophy.jpg",
-        "_frame_why": "⚠️ 抽帧：首推时的 WTA 视频预裁封面",
-    }
+    upgrade = json.loads((ROOT / "data" / "cover_upgrades.json").read_text(encoding="utf-8"))["upgrades"][spec["slug"]]
+    assert upgrade["status"] == "upgraded"
+    assert spec["cover"]["portrait"]["image"] == upgrade["image"]
+    assert not cu.is_frame_cover(spec)
+    official_portrait = spec["cover"]["portrait"]
+    spec["cover"]["portrait"] = upgrade["previous_portrait"]
+    assert cu.is_frame_cover(spec)
     (tmp_path / "specs" / "reels").mkdir(parents=True)
     (tmp_path / "specs" / "reels" / f"{spec['slug']}.json").write_text(json.dumps(spec), encoding="utf-8")
     (tmp_path / "data" / "reel_publish_ledger").mkdir(parents=True)
@@ -460,6 +462,11 @@ def test_fernandez那条_O4现在是目标(tmp_path):
     por = cu.upgraded_portrait(spec["cover"]["portrait"], chosen, ctx, "assets/reel/x-official.jpg")
     assert "预裁的抽帧 assets/reel/fernandez-gibson-final-trophy.jpg" in por["_why"], por["_why"]
     assert "条目 #4582447" in por["_why"] and "EXIF 拍摄 2026:09:27 19:18:58+08:00" in por["_why"]
+    # 同样的时间窗和推送账本，仅换回已生效的官方照片，应不再被 O4 选中。
+    spec["cover"]["portrait"] = official_portrait
+    (tmp_path / "specs" / "reels" / f"{spec['slug']}.json").write_text(json.dumps(spec), encoding="utf-8")
+    found, _notes = cu.targets(tmp_path, _u("2026-09-28T13:00:00Z"))
+    assert found == []
 
 
 # ---------------------------------------------------------------- ⑧ 渠道顺序、人查挂着等

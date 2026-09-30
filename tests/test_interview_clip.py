@@ -2062,7 +2062,8 @@ _KEEP_SUFFIX = {".mp4", ".jpg", ".ass", ".md", ".json", ".json3"}
 # 这一页上）；`cover.html` 是渲封面时的中间物，12.5 MB 全是 base64 内嵌的字体。
 # 第一版按后缀判，写的时候目录里只有 `cover.html`，等推送接上、`copy.html`
 # 落进来就误报了——**判据宁可窄不可宽，但「窄」要窄在对的那一维上**。
-_KEEP_NAMES = {"copy.html"}
+# L2 的逐 cue 核验及凭证哈希直接依赖片头/片尾 ASS；它们是证据而非编码中间物。
+_KEEP_NAMES = {"copy.html", "_lead.ass", "_trail.ass", "final_bilingual.srt"}
 _DROP_NAMES = {"cover.html", "whisper.json"}
 # ⚠️ **目录要另走一张表，按后缀判对它没有意义。**
 # 上面那两行判的是文件；`p.suffix` 拿到目录上，一个叫 `evidence` 的目录必红、
@@ -2099,8 +2100,9 @@ def test_中间物不许进仓库(path):
             if p.name not in _KEEP_DIRS:
                 bad.append(p.name + "/")
             continue
-        if (p.name in _DROP_NAMES or p.name.startswith(("source.", "_"))
-                or (p.suffix not in _KEEP_SUFFIX and p.name not in _KEEP_NAMES)):
+        if (p.name not in _KEEP_NAMES and
+                (p.name in _DROP_NAMES or p.name.startswith(("source.", "_"))
+                 or p.suffix not in _KEEP_SUFFIX)):
             bad.append(p.name)
     assert not bad, f"{outdir} 里有中间物：{bad}——工作流的清理步骤要跟着加"
 
