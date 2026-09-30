@@ -122,7 +122,7 @@ jobs:
           # No 720p fallback. The real streams are checked independently below.
           yt-dlp "${ARGS[@]}" \
             -S "+res" \
-            -f "bv[height=1080][ext=mp4]+ba[ext=m4a]/b[height=1080][ext=mp4]/bv[height=1080]+ba/b[height=1080]/bv[height>=1080]+ba/b[height>=1080]" \
+            -f "137+140" \
             --merge-output-format mp4 --remux-video mp4 --write-info-json \
             -o "$RUNNER_TEMP/yuan-review/source.%(ext)s" "$VIDEO_URL" \
             >"$RUNNER_TEMP/yuan-download.log" 2>&1 || {
@@ -158,6 +158,8 @@ jobs:
           videos = [s for s in streams if s.get("codec_type") == "video"]
           if not videos or not any(min(s.get("width", 0), s.get("height", 0)) >= 1080 for s in videos):
               raise SystemExit("Source must have a real video stream with short edge >= 1080")
+          if not any(s.get("codec_name") == "h264" for s in videos):
+              raise SystemExit("Source must be H264 for native frame inspection")
           if not any(s.get("codec_type") == "audio" for s in streams):
               raise SystemExit("Source has no audio stream")
           duration = float(probe.get("format", {}).get("duration", 0))
