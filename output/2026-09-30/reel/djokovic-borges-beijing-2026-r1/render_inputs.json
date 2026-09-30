@@ -2,13 +2,23 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "djokovic-borges-beijing-2026-r1",
-  "written_at": "2026-09-30T15:30:40Z",
+  "written_at": "2026-09-30T17:07:31Z",
   "code_sha": "",
-  "spec_sha256": "463093d17e06183f9b35a4fbe3931667b442668459b4c93cd46dcfa263af490e",
-  "film_sha256": "3052d7764c522bb5eb618173093c92f3ecf2771b3a9228429b3a9b70b6658777",
-  "film_bytes": 94108087,
-  "projection_sha256": "f6362f28b87660884e9940042e3b76b0c6e1f08819b2c3d79fc6199e1ad55cf1",
+  "spec_sha256": "441ec04eee9ede070b9008fe78b4ee9ee34f7cfafcf49dcb76d81d27f792ad7d",
+  "film_sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+  "film_bytes": 101054067,
+  "projection_sha256": "712729f45dc492140bd597a7018bf4eecfe74ca806c35c462c74cfffbc0c614f",
   "claims": [
+    [
+      "segments",
+      2,
+      "_board_on_screen_why"
+    ],
+    [
+      "segments",
+      5,
+      "_board_on_screen_why"
+    ],
     [
       "segments",
       0,
@@ -16,26 +26,6 @@
     ],
     [
       "_match"
-    ],
-    [
-      "segments",
-      2,
-      "_photo_caption_safety"
-    ],
-    [
-      "segments",
-      5,
-      "_photo_caption_safety"
-    ],
-    [
-      "segments",
-      2,
-      "_photo_source"
-    ],
-    [
-      "segments",
-      5,
-      "_photo_source"
     ],
     [
       "segments",
@@ -52,7 +42,17 @@
     ],
     [
       "segments",
+      2,
+      "_score_inset_why"
+    ],
+    [
+      "segments",
       4,
+      "_score_inset_why"
+    ],
+    [
+      "segments",
+      5,
       "_score_inset_why"
     ],
     [
@@ -69,15 +69,14 @@
   "assets": {
     "assets/players/headshots/borges-beijing-2026-r1.png": "e66781c93c6de8dd4dcf4542a0aecbd388a7e814d3a6a4deb7a2b23bb1837a19",
     "assets/players/headshots/djokovic-beijing-2026-r1.png": "fdc6204606c5395b7168b22ffbf4818ad800d4a40a6b1dbb7ab2716105edc296",
-    "assets/reel/djokovic-borges-beijing-2026-r1-recap.jpg": "1ea8d202f0eb1aa4bf569ced2ca4e2eec59622eb17a8fba2e6247ca5b9e66f8b",
     "assets/reel/djokovic-borges-beijing-2026-r1.jpg": "65c344f4324a1a9d7b3e3fe1b9b274f360f8690e1c2f6ef931e3ba264c1890d2"
   },
   "artifacts": {
-    "subtitles.ass": "c66453ddb94dd85a2dbb435b30ad13db2e5cde1108836d9c336594557ef0ca38",
-    "topbar.ass": "d7c13c23b57152848cdc0ac0f202168f17562c46eb163a63437f0287f2028220",
+    "subtitles.ass": "c2d9f4d0b6f15afbeb8573d1aaa1a500fe980bb6cdd289b9b8543770a7e8c84a",
+    "topbar.ass": "dbf5e037e72c7d4d0d6d16b589bcee45d44e8e188319df40279af4644282b728",
     "poster.jpg": "83a2facc90ac54b478cd8d0f169661ad4efcaec88dd309badc28648660c252b8",
     "stat_card.jpg": "b6ca4da7cd424f9e1dcdbb7b0f6718fe46288cc0398e7fb76e6e4cc3d88d7b1f",
-    "scoreboard_qc.json": "226ac4f729bf449b8d1df09c0dd12de9bd4be3012ddc8b8c117d2d160aa5b4aa"
+    "scoreboard_qc.json": "efad0c5bc18bdb800e3a5240b4c524281b537c16767db9614dc60fed69c527c8"
   },
   "projection": {
     "slug": "djokovic-borges-beijing-2026-r1",
@@ -187,10 +186,16 @@
         "crosses_cut": "从发球准备开始完整保留首盘1-0、40-30破发长回合；51秒左右结束，随后德约走向场边；旁白在前半程完成，尾部真实击球和喝彩承载压力。"
       },
       {
-        "image": "assets/reel/djokovic-borges-beijing-2026-r1-recap.jpg",
-        "image_kind": "photo",
-        "seconds": 7.0,
-        "narration": "三比零开局。四比二时，两个破发点都救回来，德约守到五比二。"
+        "start": 64.16,
+        "end": 67.66,
+        "speed": 0.5,
+        "cx": 0.5,
+        "track": false,
+        "score_inset": false,
+        "narration": "三比零开局。四比二时，两个破发点都救回来，德约守到五比二。",
+        "bed": "low",
+        "point_end_ok": "本场已结束一分后的走动/看台镜头；非正在进行回合，结束在下一发球切镜前。",
+        "crosses_cut": "同场死球期实景：走动及近景/看台，画面另标赛况回顾，不冒充所述关键局或医疗现场。"
       },
       {
         "start": 67.8,
@@ -213,10 +218,16 @@
         "crosses_cut": "完整5-3占先盘点，75秒死球，77看台欢呼，79德约本人反应。"
       },
       {
-        "image": "assets/reel/djokovic-borges-beijing-2026-r1-recap.jpg",
-        "image_kind": "photo",
-        "seconds": 7.6,
-        "narration": "第二盘二比三后，他接受了场边治疗。身体不适，发球局却一个也没丢。"
+        "start": 144.94,
+        "end": 148.74,
+        "speed": 0.5,
+        "cx": 0.5,
+        "track": false,
+        "score_inset": false,
+        "narration": "第二盘二比三后，他接受了场边治疗。身体不适，发球局却一个也没丢。",
+        "bed": "low",
+        "point_end_ok": "本场已结束一分后的走动/看台镜头；非正在进行回合，结束在下一发球切镜前。",
+        "crosses_cut": "同场死球期实景：走动及近景/看台，画面另标赛况回顾，不冒充所述关键局或医疗现场。"
       },
       {
         "start": 107.0,
@@ -260,13 +271,13 @@
       },
       {
         "start": 219.0,
-        "end": 239.0,
+        "end": 239.6,
         "cx": 0.5,
         "track": false,
         "narration": "六比三，七比六。十一年过去，重返中网，他把纪录续到三十战全胜。掌声还在，德约的北京故事也还在继续。下一轮迎战布云朝克特，他能在这里继续赢下去吗？",
         "score_inset": true,
-        "point_end_ok": "赛点后德约近景、鼓掌、网前握手、向看台致意，完整回收221–225.4冷开场。239止，未带240后TennisTV其他人物宣传。",
-        "crosses_cut": "赛点后德约近景、鼓掌、网前握手、向看台致意，完整回收221–225.4冷开场。239止，未带240后TennisTV其他人物宣传。"
+        "point_end_ok": "原结束后的完整纪录点评保留到source239.60，最后here在239.56结束。源239.68开始宣传，渲染本段尾部只克隆最后干净帧供0.18秒溶解，不带入宣传。",
+        "crosses_cut": "同场赛后向看台致意，末尾延长0.6秒保留完整英文，不改变现有中文VO时码。"
       }
     ],
     "stats": {

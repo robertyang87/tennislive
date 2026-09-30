@@ -1,25 +1,85 @@
 {
-  "film_sha256": "3052d7764c522bb5eb618173093c92f3ecf2771b3a9228429b3a9b70b6658777",
-  "spec_sha256": "463093d17e06183f9b35a4fbe3931667b442668459b4c93cd46dcfa263af490e",
-  "render_inputs_sha256": "bfa8ca81669b8e84515b87de6bfff5f90416bddbfa3a5c6a416a5648287d456d",
-  "renderer": {
-    "path": "tools/build_match_reel.py",
-    "sha256": "86cebb104a489702c9aae91965e5c7c9857d2ccf16af0e493101497be76dcd25",
-    "unchanged_from_verified_native_base": true
+  "video_stream_sha256": "039db02563fab33dbb260110d8fbe53f481fbdbc6bdf401945fb8119e3e95132",
+  "pixel_review_binding": "62samples reviewed before audio-only fix; all5158encoded video packets verified identical after repair",
+  "status": "pass",
+  "checked_at_utc": "2026-09-30T17:08:49.562651+00:00",
+  "film_sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+  "spec_sha256": "441ec04eee9ede070b9008fe78b4ee9ee34f7cfafcf49dcb76d81d27f792ad7d",
+  "ass_sha256": "c2d9f4d0b6f15afbeb8573d1aaa1a500fe980bb6cdd289b9b8543770a7e8c84a",
+  "film_bytes": 101054067,
+  "renderer_sha256": "86cebb104a489702c9aae91965e5c7c9857d2ccf16af0e493101497be76dcd25",
+  "renderer_unchanged": true,
+  "adapter_sha256": "091b1da3b62096b781edffa9c003258c6c5123b55f2407c4b2821a518ae9961b",
+  "recap_audio_adapter_sha256": "f75b5a615d8e70ddc78066353757f06c96c3cdab9fb7be6674d4e36a342d95cd",
+  "recap_audio_repair": {
+    "method": "Replace both complete recap backgrounds before original native duck mix; original Chinese MP3 and exact native delay offsets retained; no TTS regeneration; video copied",
+    "windows": [
+      [
+        45.12,
+        52.12
+      ],
+      [
+        63.82,
+        71.42
+      ]
+    ],
+    "donor_source": [
+      145.1,
+      146.4
+    ],
+    "donor_description": "Same-match dead-ball arena/applause between commentator phrases",
+    "donor_gain_before_native_duck": 0.18,
+    "loop_crossfade_seconds": 0.1,
+    "bed_boundary_crossfade_seconds": 0.04,
+    "native_audio_bitrate": "192k",
+    "native_voice_filters": [
+      "[2:a]adelay=5600|5600[v1]",
+      "[3:a]adelay=45120|45120[v2]",
+      "[4:a]adelay=52120|52120[v3]",
+      "[5:a]adelay=61040|61040[v4]",
+      "[6:a]adelay=63820|63820[v5]",
+      "[7:a]adelay=71420|71420[v6]",
+      "[8:a]adelay=113170|113170[v7]",
+      "[9:a]adelay=131270|131270[v8]",
+      "[10:a]adelay=171870|171870[v9]",
+      "[11:a]adelay=181870|181870[v10]",
+      "[12:a]adelay=202470[voutro]"
+    ]
   },
-  "encoding_test": "15 native encoding regression tests passed independently",
-  "local_runtime_adapters": {
-    "wrapper_sha256": "a715bbadaa47c5f7745477619409a005944b73d7f34408fdfe411e8e8385d801",
-    "rasterizer_sha256": "1f12cd83e9899c6915c168c9afdc7082ad5ec86d2c37fa356a1c2b8fb0daaeef",
-    "template": "Native HTML through existing WeasyPrint/PyMuPDF adapter; only selected cover hook color set to#FFD600",
-    "resource_limits": "2 native segment workers; each FFmpeg input decoder1 thread; filter_threads1; filter_complex_threads1; outputencoder2threads",
-    "concat": "Exact native xfade video graph and exact native acrossfade audio graph processed independently to avoid cross-stream queue pressure; video encoded once with native PART_CRF12, audio interim pcm_f32le, then video stream-copy and one native160kbpsAAC encode. Native narration mix/subtitle burn/final export unchanged. No subgroup re-encoding.",
-    "part_reuse": "Source SHA and segment/source/scorebox/layout/crop inputs matched; every native cached part size andSHA checked before reuse",
-    "no_qc_threshold_changes": true,
-    "byte_identical_to_default_parallel_execution_claimed": false
+  "recap_audio_graph": "[0:a]volume='1-((min(max((t-45.12)/0.04,0),1)*min(max((52.12-t)/0.04,0),1))+(min(max((t-63.82)/0.04,0),1)*min(max((71.42-t)/0.04,0),1)))':eval=frame[oldbed];[1:a]asplit=2[ambsrc0][ambsrc1];[ambsrc0]atrim=duration=7.000,asetpts=PTS-STARTPTS,volume=0.18,afade=t=in:d=0.04,afade=t=out:st=6.960:d=0.04,adelay=45120|45120[amb0];[ambsrc1]atrim=duration=7.600,asetpts=PTS-STARTPTS,volume=0.18,afade=t=in:d=0.04,afade=t=out:st=7.560:d=0.04,adelay=63820|63820[amb1];[oldbed][amb0][amb1]amix=inputs=3:duration=first:normalize=0[rawbed];[rawbed]volume=0.72[bed];[2:a]adelay=5600|5600[v1];[3:a]adelay=45120|45120[v2];[4:a]adelay=52120|52120[v3];[5:a]adelay=61040|61040[v4];[6:a]adelay=63820|63820[v5];[7:a]adelay=71420|71420[v6];[8:a]adelay=113170|113170[v7];[9:a]adelay=131270|131270[v8];[10:a]adelay=171870|171870[v9];[11:a]adelay=181870|181870[v10];[12:a]adelay=202470[voutro];[v1][v2][v3][v4][v5][v6][v7][v8][v9][v10][voutro]amix=inputs=11:normalize=0[voice];[voice]asplit=2[vk0][vm];[vk0]apad[vk];[bed][vk]sidechaincompress=threshold=0.02:ratio=12:attack=15:release=450:makeup=1[duck];[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]",
+  "final_audio_repair": {
+    "verified_donor_duration": 8.5,
+    "donor_source": [
+      145.1,
+      146.4
+    ],
+    "overlap_add_crossfade_seconds": 0.1,
+    "base_audio": "Original v2 Chinese VO and source mix; recaps originally have no background",
+    "base_audio_sha256": "37561d4bf6c4b7ea7b5e5c3b9aee78ddbda8e7e5dc740fadf9806f4f4a7eb0d2",
+    "windows": [
+      [
+        45.12,
+        52.12
+      ],
+      [
+        63.82,
+        71.42
+      ]
+    ],
+    "added_bed_gain": 0.1296,
+    "video_stream_copy": true,
+    "audio_encode": "AAC192k; audio-only repair, extra AAC generation disclosed",
+    "filtergraph": "[1:a]asplit=2[base][key];[2:a]asplit=2[amb0src][amb1src];[amb0src]atrim=duration=7.0,asetpts=PTS-STARTPTS,volume=0.1296,afade=t=in:d=0.04,afade=t=out:st=6.96:d=0.04,adelay=45120|45120[amb0];[amb1src]atrim=duration=7.6,asetpts=PTS-STARTPTS,volume=0.1296,afade=t=in:d=0.04,afade=t=out:st=7.56:d=0.04,adelay=63820|63820[amb1];[amb0][amb1]amix=inputs=2:normalize=0,apad[amb];[amb][key]sidechaincompress=threshold=0.02:ratio=12:attack=15:release=450:makeup=1[duck];[base][duck]amix=inputs=2:normalize=0:dropout_transition=0[out]"
   },
-  "native_L2": "0 findings; current immutable film/spec attestation",
-  "final_encoding": "H264High4.1,CFR25,yuv420p,AAC,faststart,full5143-frame decode; actualSPS/MV/DPB/packet timing audited",
-  "runtime_recovery": "Earlier whole-graph processes terminated without diagnostic stderr; suspected memory pressure, not established kernelOOM. Split-stream rendering succeeded; no claim failed attempts produced a valid film.",
-  "physical_iphone_tested": false
+  "final_audio_repair_adapter_sha256": "278f3ac3d1dd49975030ee351f9a7589c5f6fb1843d3c9fa3e09927c8c55ec6e",
+  "adapter_scope": [
+    "Exact native video/audio graphs processed in separate bounded-memory passes",
+    "Verified8unchangedsegments reused; two real-motion recap segments and extended final segment regenerated",
+    "Native write_subtitles uses audio-role-mapped cues:42Chinese-only TTS cues plus expanded original English bilingual cues",
+    "Cleanframepadding excludes promo following239.68",
+    "Approved pure#FFD600 coveraccent adapter reused"
+  ],
+  "no_quality_threshold_changes": true,
+  "native_L2": "See qc_attestation.json",
+  "encoding": "See encoding_compatibility.json"
 }

@@ -1,17 +1,17 @@
 {
-  "scoreboard_qc_sha256": "226ac4f729bf449b8d1df09c0dd12de9bd4be3012ddc8b8c117d2d160aa5b4aa",
+  "scoreboard_qc_sha256": "efad0c5bc18bdb800e3a5240b4c524281b537c16767db9614dc60fed69c527c8",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
   "layout": "full",
-  "segments_seconds": 200.67,
+  "segments_seconds": 201.27,
   "topbar": {
     "line1": "2026 ATP500 北京 首轮",
     "line2": "德约科维奇 6-3 7-6(2) 博尔热斯",
     "start": 1.2,
-    "end": 201.87
+    "end": 202.47
   },
-  "film_seconds": 205.72,
+  "film_seconds": 206.32,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -33,18 +33,18 @@
       "why": "封面不是抽帧"
     },
     "segments": {
-      "status": "unavailable",
-      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（buffalo_s-v0.7）",
+      "status": "error",
       "report_only": true,
+      "error": "ModuleNotFoundError: No module named 'cv2'",
       "warnings": [
-        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（buffalo_s-v0.7）"
+        "分段画面认人没跑完：ModuleNotFoundError: No module named 'cv2'"
       ]
     }
   },
-  "render_inputs_sha256": "bfa8ca81669b8e84515b87de6bfff5f90416bddbfa3a5c6a416a5648287d456d",
-  "film_sha256": "3052d7764c522bb5eb618173093c92f3ecf2771b3a9228429b3a9b70b6658777",
-  "film_bytes": 94108087,
-  "qc_attestation_sha256": "5e8eb3e9d0120aa3d287020b64c627ddca3c431f678b22fea4b84ac3acb7afb3",
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-djokovic-borges-beijing-2026-r1/djokovic-borges-beijing-2026-r1.mp4",
-  "video_bytes": 94108087
+  "render_inputs_sha256": "4ddbfce24264a04e4fc391340d23e8cb4b967e43954474157e5cc299cba0bc68",
+  "film_sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+  "film_bytes": 101054067,
+  "qc_attestation_sha256": "b1b192829a1b200809531e8ab5afea7703ebf45dcdc1447bf825a7e33a8ab54b",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-djokovic-borges-beijing-2026-r1/djokovic-borges-beijing-2026-r1-subtitle-corrected.mp4",
+  "video_bytes": 101054067
 }

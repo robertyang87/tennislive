@@ -1,128 +1,82 @@
 {
+  "video_stream_sha256": "039db02563fab33dbb260110d8fbe53f481fbdbc6bdf401945fb8119e3e95132",
+  "pixel_review_binding": "62samples reviewed before audio-only fix; all5158encoded video packets verified identical after repair",
   "status": "pass",
-  "film_sha256": "3052d7764c522bb5eb618173093c92f3ecf2771b3a9228429b3a9b70b6658777",
-  "spec_sha256": "463093d17e06183f9b35a4fbe3931667b442668459b4c93cd46dcfa263af490e",
-  "checked_at_utc": "2026-09-30T15:32:00Z",
-  "reviewer": "Manual visual inspection plus deterministic native QC; no DeepSeek/MiniMax",
-  "canvas": "1080x1440 full-bleed3:4",
+  "checked_at_utc": "2026-09-30T17:08:49.562651+00:00",
+  "film_sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+  "spec_sha256": "441ec04eee9ede070b9008fe78b4ee9ee34f7cfafcf49dcb76d81d27f792ad7d",
+  "ass_sha256": "c2d9f4d0b6f15afbeb8573d1aaa1a500fe980bb6cdd289b9b8543770a7e8c84a",
+  "film_bytes": 101054067,
+  "reviewer": "Actual final-frame manual inspection plus native deterministic QC; no DeepSeek/MiniMax",
+  "manual_visual_review": {
+    "count": 62,
+    "sampling": "Every subtitle cue midpoint, plus cover, last word, transition, brand outro and both Chinese/original-English handoff edges",
+    "contact_sheets": [
+      {
+        "file": "actual_bilingual_contact_1.jpg",
+        "sha256": "3348c191a489b817c9499c0ecf6c37e781bd844db87de9d30e78902f13c33f9b"
+      },
+      {
+        "file": "actual_bilingual_contact_2.jpg",
+        "sha256": "e93cde0b863a96195c4cb9b3ee157879494eb07c77e37dae1c0e959c57824677"
+      },
+      {
+        "file": "actual_bilingual_contact_3.jpg",
+        "sha256": "c57348196767fddba2077f28802892d237242bb56cc63f44917d04ccef8832dc"
+      },
+      {
+        "file": "actual_bilingual_contact_4.jpg",
+        "sha256": "2fd07b23a21f6515a4402299d72773e4f53872c211b3fe771bd147192df59259"
+      },
+      {
+        "file": "actual_bilingual_contact_5.jpg",
+        "sha256": "989aa08ff813519a2e408f7b73cff70eb4a2ed42465fd207b1168abe5b5eee9d"
+      },
+      {
+        "file": "actual_bilingual_contact_6.jpg",
+        "sha256": "34d55198bd9ecab1ce271075bb0baddd6ea7d0af84c7858250994dc17026418d"
+      }
+    ],
+    "review": "Inspected actual encoded video frames: Chinese TTS has Chinese only; original English commentary has English above Chinese. All actual final cue samples reviewed; readable and separate from scoreboard, no overlapping subtitle roles."
+  },
+  "cover": {
+    "poster_sha256": "83a2facc90ac54b478cd8d0f169661ad4efcaec88dd309badc28648660c252b8",
+    "selected_accent": "#FFD600",
+    "accent_text": "30战全胜",
+    "additional_outline_or_background": false
+  },
   "framing": {
     "cx": 0.5,
     "track": false,
-    "all_video_segments_confirmed": true
-  },
-  "manual_visual_review": {
-    "sample_times": [
-      0.5,
-      2.5,
-      5.7,
-      9,
-      17,
-      25,
-      36,
-      44.3,
-      47,
-      53.5,
-      58,
-      61.7,
-      66,
-      72.8,
-      85,
-      99,
-      111,
-      114,
-      125,
-      132,
-      145,
-      160,
-      172.6,
-      177,
-      181,
-      185,
-      192,
-      198,
-      203.5
+    "unchanged_segments": 8,
+    "middle_motion_recaps": [
+      {
+        "film": [
+          45.12,
+          52.12
+        ],
+        "source": [
+          64.16,
+          67.66
+        ],
+        "speed": 0.5
+      },
+      {
+        "film": [
+          63.82,
+          71.42
+        ],
+        "source": [
+          144.94,
+          148.74
+        ],
+        "speed": 0.5
+      }
     ],
-    "contact_sheet_sha256": "ad59a8cbf33479b165a0fb0b71082719b7beac4cd9a68c2770ec96db7bf5bee6",
-    "result": "Selected pure-yellow hook in film opening matches final poster; all29 actual final-frame samples reviewed; faces/scoreboard/subtitles readable; no score/name overlap; complete live match point and post-win applause/handshake retained; fixed-center framing maintained. Two official-photo recap inserts explicitly narrate absent key-game/treatment history without passing other rallies off as those events.",
-    "source_full_review": "Four-second full-duration contact sheets, one-second focused sheets, enlarged scoreboard and exact boundaries manually checked. Official complete248.576s source; alternative154.475s official edit compared and rejected for missing payoff."
-  },
-  "ending": {
-    "complete_match_point_source": [
-      209,
-      219
-    ],
-    "post_win_source": [
-      219,
-      239
-    ],
-    "cold_open_source": [
-      221,
-      225.4
-    ],
-    "brand_ad_starts": 239.68,
-    "cold_open_payoff_covered": true
-  },
-  "audio": {
-    "native_full_duration_RMS_and_tail": "pass",
-    "tts_word_boundaries": "Actual generated words and segment fit checked; initial TTS independently ASR-reviewed",
-    "full_manual_listening": false,
-    "broadcast_quotation": "No unverified verbatim transcript used; live sound preserved",
-    "no_bgm": true,
-    "expected_still_card_silence_seconds": [
-      51,
-      70
-    ],
-    "long_rally_original_sound": "Chinese narration stops before the three long-rally climaxes and final match-point impact; native sidechain releases original sound when speech ends"
-  },
-  "black_freeze_scan": {
-    "black_events": [],
-    "freeze_events_within_match_action": [],
-    "intentional_cover_and_photo_events": [
-      [
-        0.0,
-        1.2
-      ],
-      [
-        45.28,
-        46.84
-      ],
-      [
-        46.84,
-        49.44
-      ],
-      [
-        49.44,
-        51.52
-      ],
-      [
-        64.0,
-        65.32
-      ],
-      [
-        65.32,
-        67.28
-      ],
-      [
-        67.28,
-        70.8
-      ]
-    ]
-  },
-  "cover": {
-    "photo_is_video_frame": false,
-    "source_dimensions": [
-      5000,
-      3333
-    ],
-    "source_url": "https://www.chinaopen.com/cn/contents/281/1602.html",
-    "selected_accent": "#FFD600",
-    "accent_text": "30战全胜",
-    "additional_outline_or_background": false,
-    "poster_sha256": "83a2facc90ac54b478cd8d0f169661ad4efcaec88dd309badc28648660c252b8"
+    "extended_last_segment_seconds": 0.6
   },
   "known_limitations": [
-    "No physical iPhone Photos import test",
-    "Full manual audio listening unavailable; audio timing/levels/word boundaries and ASR checked",
-    "Automatic face model unavailable; player identities, eyes and occlusion checked manually"
+    "Broadcast transcripts checked against prior localASR evidence, not claimed full manual audio listening",
+    "No physical iPhone Photos import test"
   ]
 }

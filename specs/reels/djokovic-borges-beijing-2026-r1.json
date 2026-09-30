@@ -136,7 +136,7 @@
     1029
   ],
   "_scorebox_why": "本场1920x1080源逐像素检查；首盘宽约300，次盘和抢七宽约342，原生逐帧蒙版动态决定右缘和有无。",
-  "_no_quote_why": "保留真实现场声，不把未经逐字人工听证的英文转播ASR当正式引语；中文旁白只来自核实事实。",
+  "_no_quote_why": "已核实的原声解说通过精确成片时间窗写入统一双语cue清单，避免和中文VO字幕同时叠加；不在segment.quote重复定义。原声证据、覆盖检查及双语实际帧另存bilingual_qc.json。",
   "_tennistv_trim": "源约240秒以后为TennisTV宣传蒙太奇，本片最晚239秒止；仅用同场比赛与赛后掌声。",
   "segments": [
     {
@@ -164,13 +164,20 @@
       "_intentional_original_audio": "回合后半段保留真实击球，不用持续空泛旁白覆盖。"
     },
     {
-      "image": "assets/reel/djokovic-borges-beijing-2026-r1-recap.jpg",
-      "image_kind": "photo",
-      "seconds": 7.0,
+      "start": 64.16,
+      "end": 67.66,
+      "speed": 0.5,
+      "cx": 0.5,
+      "track": false,
+      "score_inset": false,
       "narration": "三比零开局。四比二时，两个破发点都救回来，德约守到五比二。",
-      "_photo_source": "https://www.chinaopen.com/cn/contents/281/1602.html",
-      "_photo_caption_safety": "同场官方摄影说明此为进程回顾，非所述破发点或治疗现场；主体脸在画面中上部，字幕在下部近比分板位置不遮脸。",
-      "_why": "核实RTS/B92逐局进程；该局不在官方短剪中，明确用同场照片回顾，不挪用别分冒充。"
+      "bed": "low",
+      "point_end_ok": "本场已结束一分后的走动/看台镜头；非正在进行回合，结束在下一发球切镜前。",
+      "crosses_cut": "同场死球期实景：走动及近景/看台，画面另标赛况回顾，不冒充所述关键局或医疗现场。",
+      "_why": "用户要求去掉中途照片，替换为同场真实运动画面，0.5倍速保持原7.0/7.6秒时长。中文VO不变，原生atempo保音高，bed low现场气氛声。",
+      "_score_inset_why": "回顾画面不是旁白所述时点的即时比分，不回贴比分；赛况回顾标签明确其叙述角色。",
+      "_broll_source_evidence": "broll/candidates.jpg; actual dead-ball frames inspected; source first64.16–67.66, second144.94–148.74.",
+      "_board_on_screen_why": "已看实际竖版预览：这是标明赛况回顾的同场死球期画面，不是旁白所述时点的比分证明；不把这个其他时点的比分回贴强化为当前比分，原场馆大屏仅作为环境，右上回顾标签持续显示。"
     },
     {
       "start": 67.8,
@@ -194,13 +201,20 @@
       "_score_inset_why": "首盘结束后看台及德约近景，逐帧probe该窗口无ATP板；不贴空板。"
     },
     {
-      "image": "assets/reel/djokovic-borges-beijing-2026-r1-recap.jpg",
-      "image_kind": "photo",
-      "seconds": 7.6,
+      "start": 144.94,
+      "end": 148.74,
+      "speed": 0.5,
+      "cx": 0.5,
+      "track": false,
+      "score_inset": false,
       "narration": "第二盘二比三后，他接受了场边治疗。身体不适，发球局却一个也没丢。",
-      "_photo_source": "https://www.chinaopen.com/cn/contents/281/1602.html",
-      "_photo_caption_safety": "同场官方摄影说明此为进程回顾，非所述破发点或治疗现场；主体脸在画面中上部，字幕在下部近比分板位置不遮脸。",
-      "_why": "AFE/EFE及B92核实场边治疗，无病因诊断；官方短剪无治疗镜头，以同场写真作回顾不伪造。"
+      "bed": "low",
+      "point_end_ok": "本场已结束一分后的走动/看台镜头；非正在进行回合，结束在下一发球切镜前。",
+      "crosses_cut": "同场死球期实景：走动及近景/看台，画面另标赛况回顾，不冒充所述关键局或医疗现场。",
+      "_why": "用户要求去掉中途照片，替换为同场真实运动画面，0.5倍速保持原7.0/7.6秒时长。中文VO不变，原生atempo保音高，bed low现场气氛声。",
+      "_score_inset_why": "回顾画面不是旁白所述时点的即时比分，不回贴比分；赛况回顾标签明确其叙述角色。",
+      "_broll_source_evidence": "broll/candidates.jpg; actual dead-ball frames inspected; source first64.16–67.66, second144.94–148.74.",
+      "_board_on_screen_why": "已看实际竖版预览：这是标明赛况回顾的同场死球期画面，不是旁白所述时点的比分证明；不把这个其他时点的比分回贴强化为当前比分，原场馆大屏仅作为环境，右上回顾标签持续显示。"
     },
     {
       "start": 107.0,
@@ -246,14 +260,15 @@
     },
     {
       "start": 219.0,
-      "end": 239.0,
+      "end": 239.6,
       "cx": 0.5,
       "track": false,
       "narration": "六比三，七比六。十一年过去，重返中网，他把纪录续到三十战全胜。掌声还在，德约的北京故事也还在继续。下一轮迎战布云朝克特，他能在这里继续赢下去吗？",
       "score_inset": true,
-      "point_end_ok": "赛点后德约近景、鼓掌、网前握手、向看台致意，完整回收221–225.4冷开场。239止，未带240后TennisTV其他人物宣传。",
-      "crosses_cut": "赛点后德约近景、鼓掌、网前握手、向看台致意，完整回收221–225.4冷开场。239止，未带240后TennisTV其他人物宣传。",
-      "_why": "段首德约赛后近景仍有6-3/7-6结果板，原生逐帧蒙版自动贴回，随后握手原板撤掉时不贴。"
+      "point_end_ok": "原结束后的完整纪录点评保留到source239.60，最后here在239.56结束。源239.68开始宣传，渲染本段尾部只克隆最后干净帧供0.18秒溶解，不带入宣传。",
+      "crosses_cut": "同场赛后向看台致意，末尾延长0.6秒保留完整英文，不改变现有中文VO时码。",
+      "_why": "段首德约赛后近景仍有6-3/7-6结果板，原生逐帧蒙版自动贴回，随后握手原板撤掉时不贴。",
+      "_bilingual_tail_why": "用户要求原声解说中英字幕；parent授权将片尾延0.6秒以自然收完整句，outro相应后移0.6秒，其他所有镜头与中文配音不变。"
     }
   ],
   "stats": {
@@ -288,5 +303,30 @@
     },
     "_source": "Flashscore本场YBGg3Lr2 df_st_1，全场整数一致；原feed主博尔热斯/客德约，此处按cover德约在前交换。48+20=68，36+29=65，68+65=133，74+59=133。",
     "_winners_ue_why": "正式Flashscore全场feed没有制胜分与非受迫失误项，官方同场完整集锦也未展示全场技术表；未把缺失写成0，未采用冲突的社媒统计。"
+  },
+  "_bilingual_subtitle_why": "用户明确：中文TTS只加中文字幕，原视频前景英文原声加英文及中文。全混音重新扫描后共42条中文TTS字幕、11条原声区间双语字幕（含一条明示Score/比分的核实赛果说明，非逐字引文）。按实测语音收尾缩短第13、42条中文字幕，避免覆盖重新升到前景的英文原声。尾段至source239.60及206.32秒音画时间线不变。",
+  "_original_commentary_coverage": "最终音频与原声字幕覆盖证据见输出original_commentary_coverage.json，其精确哈希由bilingual_qc.json绑定；cue packet SHA256 b3db1c18a2e78537b2067d9c6933d5363fd7c400e64cb1e4177e160585350420。保留局部措辞不确定性，不宣称完整人工听审。",
+  "_middle_motion_recap_why": "两个中段静态照片已替换为本场真实死球期视频，分别0.5倍速7.0s与7.6s，右上标赛况回顾；非关键局或医疗过程现场影像。使用真实低音量气氛声并重新审计前景英文。",
+  "_recap_ambient_replacement": {
+    "reason": "替换两段完整回顾底轨，避免原镜头英文解说在中文VO结束后露出；不是静音",
+    "donor_source": [
+      145.1,
+      146.4
+    ],
+    "film_windows": [
+      [
+        45.12,
+        52.12
+      ],
+      [
+        63.82,
+        71.42
+      ]
+    ],
+    "gain_before_native_duck": 0.18,
+    "loop_crossfade_s": 0.1,
+    "voice_files_and_delays_unchanged": true,
+    "verified_loop_seconds": 8.5,
+    "final_method": "保留v2原始配音/原声混音，两个回顾的空底轨叠加已验证无讲话现场声，保持全部视频码流不变，仅重新编码音频。"
   }
 }
