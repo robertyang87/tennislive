@@ -129,6 +129,8 @@ def cut_footage_beat(
     0.2/4.0/7.8 秒三个采样点角标都在），不需要像 `_render_intro_badge` 当年
     那样猜一个够长的 `-t`。
     """
+    from tennislive.video.crop_policy import require_fixed_center
+    require_fixed_center({"cx": cx}, where="preview.footage_beat")
     length = end - start
     chain = footage_crop_chain(canvas_w, canvas_h, cx)
     cmd = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",

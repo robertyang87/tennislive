@@ -13683,6 +13683,10 @@ def assemble_explainer_video(
     `printed`：每一屏**画面上印着的那句大字**（封面的大问题）。字幕里念的正好是
     那一句的，丢掉不排（`drop_printed_cues`）——大字已经印着了。
     """
+    from tennislive.video.crop_policy import require_fixed_center
+    if intro is not None:
+        require_fixed_center({"intro_cx": intro_cx}, where="explainer.intro")
+
     if not slides or len(slides) != len(audios):
         raise ExplainerVideoError("幻灯片与音频数量不匹配")
     if shutil.which(ffmpeg_bin) is None:

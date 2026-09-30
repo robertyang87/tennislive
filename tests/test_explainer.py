@@ -1638,15 +1638,7 @@ def test_canvas_h传CARD_H画布真的变成三比四不留黑边(tmp_path):
 
 
 def test_intro_cx显式给定的比例决定哪一段源片落在画面中心(tmp_path):
-    """账号所有者 2026-08-07：「居中啊，和后面视频一样啊」——`crop` 不给
-    `x` 就是缺省居中源片的几何中心，不是画面里那个人。`intro_cx` 是显式
-    给的水平中心（源片宽度的比例，0.5＝几何居中，行为跟改之前一样）。
-
-    造一段源片：蓝色背景配一条窄的洋红竖条，竖条中心精确落在源片 1280 宽
-    的 30%（x=384）处。给 `intro_cx=0.3`，这条竖条应该被钉到输出画面正
-    中心；不给（缺省 0.5，纯几何居中）时，它应该落在输出左侧、明显偏离
-    中心——两者一起验证：给了会真的移动裁切窗口，不给还是老样子。
-    """
+    """2026-09-29 全局固定几何中心：偏移应拒绝，默认画面不追到偏左主体。"""
     import shutil  # noqa: PLC0415
     import subprocess  # noqa: PLC0415
 
@@ -1696,18 +1688,15 @@ def test_intro_cx显式给定的比例决定哪一段源片落在画面中心(tm
     default_out = E.assemble_explainer_video(
         [s], [a], tmp_path / "default.mp4", intro=intro, canvas_h=E.CARD_H,
     )
-    centered_out = E.assemble_explainer_video(
-        [s], [a], tmp_path / "centered.mp4", intro=intro, canvas_h=E.CARD_H,
-        intro_cx=0.3,
-    )
+    from tennislive.video.crop_policy import VideoCropPolicyError
+    with pytest.raises(VideoCropPolicyError, match="固定中间"):
+        E.assemble_explainer_video(
+            [s], [a], tmp_path / "centered.mp4", intro=intro, canvas_h=E.CARD_H,
+            intro_cx=0.3,
+        )
 
     default_x = _bar_x(default_out)
-    centered_x = _bar_x(centered_out)
     ow = E.VIDEO_W
-
-    assert abs(centered_x - ow / 2) < 20, (
-        f"intro_cx=0.3 应该把 30% 处的竖条钉到输出中心 {ow / 2}，实测在 {centered_x:.1f}"
-    )
     assert abs(default_x - ow / 2) > 200, (
         "默认 cx=0.5 应该是纯几何居中，30% 处的竖条不该落在输出中心附近，"
         f"实测在 {default_x:.1f}——是不是默认值被意外改动了？"
