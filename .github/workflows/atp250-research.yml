@@ -1,0 +1,65 @@
+name: ATP250 rulebook source research
+on:
+  push:
+    branches: [codex/atp250-medvedev-research-20261001]
+    paths: [.github/workflows/atp250-research.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Install PDF reader
+        run: python -m pip install -q pypdf
+      - name: Retrieve and validate official rulebooks
+        run: |
+          python - <<'PY'
+          import urllib.request, json, hashlib, re
+          from pathlib import Path
+          from concurrent.futures import ThreadPoolExecutor
+          from pypdf import PdfReader
+          out=Path('atp250-research'); out.mkdir()
+          sources={
+            'atp-full-dec': 'https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf',
+            'atp-full-jan': 'https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook_14jan26.pdf',
+            'atp-chapter1': 'https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook-chapter-1_atp-circuit-regulations25jan26.pdf',
+            'itf-atp-full': 'https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf',
+            'atp-faq': 'https://www.atptour.com/en/rankings/rankings-faq',
+            'atp-rulebook-index': 'https://www.atptour.com/en/corporate/rulebook',
+          }
+          def fetch(item):
+            name,url=item; record={'name':name,'url':url}
+            try:
+              req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'})
+              with urllib.request.urlopen(req,timeout=35) as r:
+                b=r.read();record.update(status=r.status,content_type=r.headers.get('Content-Type'),final_url=r.url)
+              record.update(bytes=len(b),sha256=hashlib.sha256(b).hexdigest(),pdf=b.startswith(b'%PDF'))
+              if record['pdf']:
+                p=out/(name+'.pdf');p.write_bytes(b)
+                pages=[page.extract_text() or '' for page in PdfReader(p).pages]
+                record['pages']=len(pages)
+                (out/(name+'.txt')).write_text('\n'.join(f'\n<<<PDF PAGE {i}>>>\n{t}' for i,t in enumerate(pages,1)))
+                selected=[]
+                for i,t in enumerate(pages,1):
+                  if re.search(r'1\.08|1\.16|9\.03|Bonus Pool|ATP Tour 250 Tournament|Top 10|zero \(0\).*penalt',t,re.I):
+                    selected.append(f'\n<<<PDF PAGE {i}>>>\n{t}')
+                (out/(name+'-selected.txt')).write_text('\n'.join(selected))
+              else:
+                (out/(name+'.html')).write_bytes(b)
+            except Exception as e:
+              record['error']=str(e)
+            return record
+          with ThreadPoolExecutor(max_workers=4) as pool:
+            records=list(pool.map(fetch,sources.items()))
+          (out/'manifest.json').write_text(json.dumps(records,indent=2))
+          print(json.dumps(records,indent=2))
+          assert any(r.get('pdf') and r.get('pages',0)>10 for r in records), 'No readable official rulebook obtained'
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atp250-public-sources
+          path: atp250-research
+          retention-days: 14
