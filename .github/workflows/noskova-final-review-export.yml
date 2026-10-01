@@ -23,10 +23,6 @@ jobs:
       MKL_NUM_THREADS: "1"
       OPENBLAS_NUM_THREADS: "1"
       PYTHONDONTWRITEBYTECODE: "1"
-      PIP_CACHE_DIR: ${{ runner.temp }}/sun-public-asr-cache/pip
-      HF_HOME: ${{ runner.temp }}/sun-public-asr-cache/hf
-      XDG_CACHE_HOME: ${{ runner.temp }}/sun-public-asr-cache/xdg
-      TMPDIR: ${{ runner.temp }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,6 +47,12 @@ jobs:
           command -v ffmpeg >/dev/null
           command -v ffprobe >/dev/null
           python tools/review_sun_public_source.py --validate
+      - name: Set temporary cache paths for subsequent steps
+        run: |
+          echo "PIP_CACHE_DIR=$RUNNER_TEMP/sun-public-asr-cache/pip" >> "$GITHUB_ENV"
+          echo "HF_HOME=$RUNNER_TEMP/sun-public-asr-cache/hf" >> "$GITHUB_ENV"
+          echo "XDG_CACHE_HOME=$RUNNER_TEMP/sun-public-asr-cache/xdg" >> "$GITHUB_ENV"
+          echo "TMPDIR=$RUNNER_TEMP" >> "$GITHUB_ENV"
       - name: Install the reviewed local inference dependencies
         run: |
           python -m pip install --disable-pip-version-check --no-cache-dir --retries 0 --timeout 30 faster-whisper==1.2.1 ctranslate2==4.8.2 onnxruntime==1.30.0 numpy==2.5.3 huggingface-hub==1.33.0 tokenizers==0.23.2 av==19.0.0
