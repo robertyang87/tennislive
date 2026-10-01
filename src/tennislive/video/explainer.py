@@ -32,6 +32,7 @@ import base64
 import html
 import json
 import mimetypes
+import math
 import os
 import re
 import shutil
@@ -13416,7 +13417,8 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
                     *, height: int = VIDEO_H,
                     margin_v: int = _ASS_MARGIN_V,
                     outline: float = 3, shadow: float = 0,
-                    bottom_margin: int | None = None) -> Path:
+                    bottom_margin: int | None = None,
+                    bottom_margin_windows: Sequence[tuple[float, float, int]] = ()) -> Path:
     """`bottom_margin` 给了，就**每一条**都下锚（`\\an2`）、底边离画布底这么多——
     全出血回贴了比分板的「赛场之上」用它把字幕钉在板的正上方
     （`build_match_reel.subtitle_bottom_for_boards`）。没给照旧：单行上锚、双语下锚。"""
@@ -13445,11 +13447,27 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
 
     # 双语那一档下锚（`\\an2` ＋ 底边距），别的照旧走样式里的上锚（MarginV=0
     # 就是「用样式那个数」）。理由和那个边距怎么来的，见 `bilingual_bottom_margin`。
+    # Explicit windows affect only contained cues; a crossing cue must be fixed,
+    # never silently split or moved into a neighbouring segment.
+    previous_end = 0.0
+    for lo, hi, margin in bottom_margin_windows:
+        if (not all(isinstance(v, (int, float)) and not isinstance(v, bool)
+                    and math.isfinite(v) for v in (lo, hi))
+                or not previous_end <= lo < hi
+                or type(margin) is not int or not 96 <= margin <= height - 96):
+            raise ValueError("invalid segment subtitle-bottom window")
+        previous_end = hi
     lines = []
     for start, end, shown in cues:
+        cue_bottom = bottom_margin
+        for lo, hi, margin in bottom_margin_windows:
+            if start < hi - 1e-6 and end > lo + 1e-6:
+                if start < lo - 1e-6 or end > hi + 1e-6:
+                    raise ValueError("subtitle cue crosses its segment-position window")
+                cue_bottom = margin
         bilingual = is_bilingual_cue(shown)
-        if bottom_margin is not None:
-            margin, anchor = bottom_margin, r"{\an2}"
+        if cue_bottom is not None:
+            margin, anchor = cue_bottom, r"{\an2}"
         else:
             margin = bilingual_bottom_margin(height, margin_v) if bilingual else 0
             anchor = r"{\an2}" if bilingual else ""
