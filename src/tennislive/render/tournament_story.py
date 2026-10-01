@@ -77,6 +77,23 @@ class TournamentStory:
 
 STORIES = (
     TournamentStory(
+        slug="atp250-medvedev-hangzhou-2026",
+        aliases=("medvedev hangzhou 250",),
+        title="大牌为什么也打250？",
+        location="杭州 · 中国", level="ATP 250", surface="室外硬地", founded="2026 案例",
+        hero_fact="世界第 6 的梅德韦杰夫在杭州夺冠；参赛资格、500 任务和排名积分分别计算。",
+        facts=("2026 杭州官方签表：梅德排名第 6、夺冠，冠军积分 250 分。",),
+        moments=(), venue="头部球员的 250 赛先例", kind="rule",
+        image=ASSETS.parent / "explainer/atp250-medvedev-hangzhou-2026/medvedev-hangzhou-r2.jpg",
+        image_credit="Tennis TV 官方图库 / 杭州 2026 第二轮",
+        source_url="https://www.protennislive.com/posting/2026/4713/mds.pdf",
+        image_source_url="https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/26/64d86649-71a9-4af3-9a81-66f494196531/Daniil-Medvedev-012.jpg",
+        source_label="官方签表与 2026 ATP 规则书",
+        evidence_urls=("https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf", "https://novakdjokovic.com/en/album/geneva-2025/"),
+        hero_marker="2026",
+    ),
+
+    TournamentStory(
         slug="umag",
         aliases=("umag", "croatia open", "plava laguna"),
         title="克罗地亚公开赛",

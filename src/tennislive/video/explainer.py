@@ -3594,6 +3594,170 @@ _FILS_PRECEDENT_DIAGRAM = """\
 """
 
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    'atp250-medvedev-hangzhou-2026': (('cause',
+      '杭州 · 2026',
+      '梅德这冠，拿到250分',
+      '九月二十九日，梅德韦杰夫击败卢布列夫，在杭州夺冠。二百五十，首先是赛事级别，也代表冠军的该站积分。',
+      'assets/explainer/atp250-medvedev-hangzhou-2026/hangzhou-trophy.jpg',
+      'Hangzhou Open official / 2026-09-29',
+      ('2026 杭州 · ATP 250', '签表排名第 6 · 冠军 250 分')),
+     ('cause',
+      '巨星先例',
+      '费德勒、纳达尔也打过',
+      '费德勒，二〇一五年，世界第二，在伊斯坦布尔夺冠。纳达尔，二〇一七年，世界第九，参加布里斯班赛。两站都是二百五十级别。',
+      '',
+      '官方历史签表',
+      ('年份、排名都按当年签表', '两人均直接入围正赛'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="68" text-anchor="middle" font-size="33" '
+      'fill="#b8cfc0">两代巨星 · 当年签表排名</text><rect x="35" y="115" width="830" height="100" rx="20" '
+      'fill="#183d2a"/><text x="67" y="158" font-size="32" fill="#c6f65a" font-weight="800">世界第 '
+      '2</text><text x="300" y="158" font-size="34" font-weight="800">费德勒</text><text x="67" y="195" '
+      'font-size="29" fill="#b8cfc0">2015 伊斯坦布尔 · ATP 250</text><text x="803" y="180" '
+      'text-anchor="end" font-size="29">冠军</text><rect x="35" y="245" width="830" height="100" rx="20" '
+      'fill="#183d2a"/><text x="67" y="288" font-size="32" fill="#c6f65a" font-weight="800">世界第 '
+      '9</text><text x="300" y="288" font-size="34" font-weight="800">纳达尔</text><text x="67" y="325" '
+      'font-size="29" fill="#b8cfc0">2017 布里斯班 · ATP 250</text><text x="803" y="310" text-anchor="end" '
+      'font-size="29">1/4决赛</text><text x="450" y="445" text-anchor="middle" font-size="34" '
+      'fill="#c6f65a" font-weight="800">两人均直接入围正赛</text></g></svg>'),
+     ('cause',
+      '阿尔卡拉斯 · 2023',
+      '世界第2，也在250捧杯',
+      '阿尔卡拉斯，二〇二三年，世界第二，在布宜诺斯艾利斯夺冠。顶级球员来打二百五十，有明确的先例。',
+      'assets/explainer/atp250-medvedev-hangzhou-2026/alcaraz-buenosaires-2023.jpg',
+      'Tennis TV official / 2023-02-19',
+      ('2023 阿根廷公开赛 · ATP 250', '阿尔卡拉斯 · 签表排名第 2')),
+     ('cause',
+      '德约科维奇 · 2025',
+      '第100冠，拿在250',
+      '德约更直观。二〇二五年，世界第六，在日内瓦拿到生涯第一百冠。这座冠军，也来自二百五十赛。',
+      'assets/explainer/atp250-medvedev-hangzhou-2026/djokovic-geneva-2025.jpg',
+      'Novak Djokovic official / Profimedia / AP',
+      ('2025 日内瓦 · ATP 250', '世界第 6 · 生涯第 100 冠')),
+     ('cause',
+      '德约科维奇 · 2024',
+      '世界第1，也来过',
+      '前一年，世界第一的德约也来过日内瓦，但那次拿的是外卡，打到半决赛。这里要分清年份，也要分清入围方式。',
+      '',
+      '2024 Geneva official draw',
+      ('2024 日内瓦 · 世界第 1', '持外卡 WC · 止步半决赛'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="88" text-anchor="middle" font-size="36" '
+      'fill="#b8cfc0">2024 日内瓦 · ATP 250</text><text x="450" y="235" text-anchor="middle" '
+      'font-size="120" font-weight="800" fill="#c6f65a">世界第 1</text><text x="450" y="320" '
+      'text-anchor="middle" font-size="48" font-weight="800">德约科维奇</text><rect x="255" y="365" '
+      'width="390" height="78" rx="20" fill="#183d2a"/><text x="450" y="417" text-anchor="middle" '
+      'font-size="38" font-weight="800">WC 外卡 · 半决赛</text></g></svg>'),
+     ('cause',
+      '更多近年先例',
+      '这些前十，也拿过250冠军',
+      '近年还有世界第五的西西帕斯，在洛斯卡沃斯；世界第五的卢布列夫，在香港；世界第七的鲁德，在日内瓦。他们都拿过二百五十冠军。',
+      '',
+      '2023/2024 official draws',
+      ('西西帕斯、卢布列夫、鲁德', '分别在 2023、2024 年夺冠'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><rect x="35" y="30" width="830" height="100" rx="20" '
+      'fill="#183d2a"/><text x="67" y="73" font-size="32" fill="#c6f65a" font-weight="800">世界第 '
+      '5</text><text x="300" y="73" font-size="34" font-weight="800">西西帕斯</text><text x="67" y="110" '
+      'font-size="29" fill="#b8cfc0">2023 洛斯卡沃斯 · ATP 250</text><text x="803" y="95" text-anchor="end" '
+      'font-size="29">冠军</text><rect x="35" y="155" width="830" height="100" rx="20" '
+      'fill="#183d2a"/><text x="67" y="198" font-size="32" fill="#c6f65a" font-weight="800">世界第 '
+      '5</text><text x="300" y="198" font-size="34" font-weight="800">卢布列夫</text><text x="67" y="235" '
+      'font-size="29" fill="#b8cfc0">2024 香港 · ATP 250</text><text x="803" y="220" text-anchor="end" '
+      'font-size="29">冠军</text><rect x="35" y="280" width="830" height="100" rx="20" '
+      'fill="#183d2a"/><text x="67" y="323" font-size="32" fill="#c6f65a" font-weight="800">世界第 '
+      '7</text><text x="300" y="323" font-size="34" font-weight="800">鲁德</text><text x="67" y="360" '
+      'font-size="29" fill="#b8cfc0">2024 日内瓦 · ATP 250</text><text x="803" y="345" text-anchor="end" '
+      'font-size="29">冠军</text><text x="450" y="458" text-anchor="middle" font-size="30" '
+      'fill="#b8cfc0">当年签表排名 · 均直接入围</text></g></svg>'),
+     ('mechanism',
+      '同场阵容 · 2017',
+      '1站250，来了5位前十',
+      '而且，一站可以看到多位前十。二〇一七年布里斯班，签表里有拉奥尼奇、瓦林卡、锦织圭、蒂姆和纳达尔，共五位。这张历史签表，显然不止两位前十。',
+      '',
+      '2017 Brisbane official draw',
+      ('布里斯班 ATP 250 · 5 位前十', '5 人均直接入围正赛'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 535"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="52" text-anchor="middle" font-size="32" '
+      'fill="#b8cfc0">2017 布里斯班 · 官方签表排名</text><rect x="75" y="90" width="750" height="67" rx="15" '
+      'fill="#183d2a"/><text x="113" y="136" font-size="34">拉奥尼奇</text><text x="777" y="136" '
+      'text-anchor="end" font-size="36" fill="#c6f65a" font-weight="800">第 3</text><rect x="75" '
+      'y="172" width="750" height="67" rx="15" fill="#183d2a"/><text x="113" y="218" '
+      'font-size="34">瓦林卡</text><text x="777" y="218" text-anchor="end" font-size="36" fill="#c6f65a" '
+      'font-weight="800">第 4</text><rect x="75" y="254" width="750" height="67" rx="15" '
+      'fill="#183d2a"/><text x="113" y="300" font-size="34">锦织圭</text><text x="777" y="300" '
+      'text-anchor="end" font-size="36" fill="#c6f65a" font-weight="800">第 5</text><rect x="75" '
+      'y="336" width="750" height="67" rx="15" fill="#183d2a"/><text x="113" y="382" '
+      'font-size="34">蒂姆</text><text x="777" y="382" text-anchor="end" font-size="36" fill="#c6f65a" '
+      'font-weight="800">第 8</text><rect x="75" y="418" width="750" height="67" rx="15" '
+      'fill="#183d2a"/><text x="113" y="464" font-size="34">纳达尔</text><text x="777" y="464" '
+      'text-anchor="end" font-size="36" fill="#c6f65a" font-weight="800">第 9</text></g></svg>'),
+     ('mechanism',
+      '2026 ATP 规则',
+      '能参赛，还有参赛任务',
+      '能打二百五十，和该完成什么任务，是两件事。二〇二六年的承诺球员，按上一年十一月十日的前三十认定。基本任务是四站五百赛，至少一站在美网之后。',
+      '',
+      '2026 ATP Rulebook 1.08 C–D, pp12–13',
+      ('承诺球员：指定日期排名前 30', '4 站 ATP 500 · 至少 1 站美网后'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 535"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="60" text-anchor="middle" font-size="32" '
+      'fill="#b8cfc0">2026 承诺球员 · 基本参赛任务</text><rect x="55" y="160" width="180" height="185" rx="24" '
+      'fill="#183d2a"/><text x="145" y="237" text-anchor="middle" font-size="29" fill="#b8cfc0">第 1 '
+      '站</text><text x="145" y="303" text-anchor="middle" font-size="58" font-weight="800" '
+      'fill="#f4fbf7">500</text><rect x="270" y="160" width="180" height="185" rx="24" '
+      'fill="#183d2a"/><text x="360" y="237" text-anchor="middle" font-size="29" fill="#b8cfc0">第 2 '
+      '站</text><text x="360" y="303" text-anchor="middle" font-size="58" font-weight="800" '
+      'fill="#f4fbf7">500</text><rect x="485" y="160" width="180" height="185" rx="24" '
+      'fill="#183d2a"/><text x="575" y="237" text-anchor="middle" font-size="29" fill="#b8cfc0">第 3 '
+      '站</text><text x="575" y="303" text-anchor="middle" font-size="58" font-weight="800" '
+      'fill="#f4fbf7">500</text><rect x="700" y="160" width="180" height="185" rx="24" '
+      'fill="#c6f65a"/><text x="790" y="237" text-anchor="middle" font-size="29" fill="#092317">第 4 '
+      '站</text><text x="790" y="303" text-anchor="middle" font-size="58" font-weight="800" '
+      'fill="#092317">500</text><text x="450" y="427" text-anchor="middle" font-size="36" '
+      'font-weight="800" fill="#c6f65a">至少 1 站安排在美网后</text><text x="450" y="490" text-anchor="middle" '
+      'font-size="29" fill="#b8cfc0">按 2025-11-10 前 30 认定承诺球员</text></g></svg>'),
+     ('mechanism',
+      '折抵规则',
+      '蒙特卡洛能抵，杭州不能',
+      '蒙特卡洛虽然是一千赛，也能计入这项最低参赛任务。但杭州二百五十，不能拿来折抵。这里讲的是基本参赛任务，奖金池还有另一套条件。',
+      '',
+      '2026 ATP Rulebook 1.08 D/G',
+      ('蒙特卡洛：可计入最低任务', '杭州 250：不能折抵 500'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="62" text-anchor="middle" font-size="32" '
+      'fill="#b8cfc0">能否计入「4 站 500」最低任务？</text><rect x="60" y="120" width="780" height="145" rx="24" '
+      'fill="#183d2a"/><text x="100" y="178" font-size="38" font-weight="800">蒙特卡洛 1000</text><text '
+      'x="100" y="233" font-size="30" fill="#b8cfc0">规则明确允许折抵</text><text x="790" y="210" '
+      'text-anchor="end" font-size="48" font-weight="800" fill="#c6f65a">可以</text><rect x="60" y="300" '
+      'width="780" height="145" rx="24" fill="#183d2a"/><text x="100" y="358" font-size="38" '
+      'font-weight="800">杭州 250</text><text x="100" y="413" font-size="30" '
+      'fill="#b8cfc0">冠军积分另算</text><text x="790" y="390" text-anchor="end" font-size="48" '
+      'font-weight="800">不折抵</text></g></svg>'),
+     ('mechanism',
+      '排名积分',
+      '拿250分，不等于净加250',
+      '积分也要另算。假设这项冠军成绩符合替换条件，替掉原来九十分的成绩，排名总分净增的是一百六十分，而不是二百五十分。这是假设例子，不是梅德的实际积分明细。',
+      '',
+      '2026 ATP Rulebook ranking chapter; explicit hypothetical',
+      ('假设符合替换条件 · 90 → 250', '排名总分净增 160 分'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 535"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="65" text-anchor="middle" font-size="32" '
+      'fill="#b8cfc0">假设示例 · 此成绩符合替换条件</text><text x="130" y="154" font-size="31">旧成绩</text><rect '
+      'x="130" y="180" width="205" height="65" rx="14" fill="#45644f"/><text x="375" y="227" '
+      'font-size="45" font-weight="800">90 分</text><text x="130" y="300" font-size="31">250 '
+      '冠军成绩</text><rect x="130" y="326" width="570" height="65" rx="14" fill="#c6f65a"/><text x="735" '
+      'y="373" font-size="45" font-weight="800">250</text><text x="450" y="490" text-anchor="middle" '
+      'font-size="44" fill="#c6f65a" font-weight="800">净增 250 − 90 = 160 分</text></g></svg>'),
+     ('today',
+      '回到杭州',
+      '一座冠军，两件事分开算',
+      '所以，梅德在杭州拿到了冠军和二百五十分。成绩能否计入排名、净增多少，要看他的有效成绩；五百赛的参赛任务则另算。二百五十是赛事级别，不是球星身份的标签。',
+      'assets/explainer/atp250-medvedev-hangzhou-2026/hangzhou-handshake.jpg',
+      'Tennis TV official / Hangzhou 2026 final',
+      ('该站冠军积分：250 分', '排名有效成绩、500 任务分别算'),
+      '',
+      '你希望哪位球星来家门口的250赛？')),
+
     "a-plus-wildcard": (
     # 「中网那张 ATP 外卡为什么给了勒纳·钱」——2026-09-21 中网公布外卡当天做的。
     #
@@ -9759,6 +9923,9 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    'atp250-medvedev-hangzhou-2026': {'hook': '梅德杭州夺冠：赛事级别、参赛任务和排名积分，是三件事。用费德勒、纳达尔、阿尔卡拉斯、德约等真实先例讲清楚。',
+     'tags': ('网球', '网球时差', '梅德韦杰夫', '杭州公开赛', '网球冷知识')},
+
     "fils-tokyo-qualifying": {
         # ⚠️ 小红书正文卡 1000 字，要点那部分自动拼进来就占五百多字（第一版
         # 1031 字当场红），所以这里只写结论和那几个数，规则细节交给要点。
@@ -10359,6 +10526,15 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    'atp250-medvedev-hangzhou-2026': {'topic': '世界前十，也打 ATP 250',
+     'question': '梅德来杭州夺冠\n大牌也能打小比赛？',
+     'narration': '世界第六的梅德，在杭州夺冠了。大牌球员，为什么能来打二百五十级别的比赛？',
+     'image': 'assets/explainer/atp250-medvedev-hangzhou-2026/medvedev-hangzhou-r2.jpg',
+     'credit': 'Tennis TV official / 2026-09-26 Hangzhou second round',
+     'gloss': '250 冠军积分 · 500 参赛任务',
+     'cards_why': '用户明确要求「最好用图片配合字卡的形式讲」「规则也可以用一些图表做展示」「多找几个案例啊」。案例用对应年份赛事实拍或原始签表信息，抽象的参赛任务与积分替换用原创图表。',
+     'canvas': '3:4'},
+
     "fils-tokyo-qualifying": {
         "topic": "世界第 11，要从资格赛打起",
         "question": "世界第 11\n为什么要打资格赛？",
