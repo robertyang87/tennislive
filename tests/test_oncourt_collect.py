@@ -1184,6 +1184,24 @@ def test_tail_interview_items_are_marked_so_downstream_knows_to_skip_ahead():
         assert "Match Highlights" in v["title"], v["title"]
 
 
+def _is_local_test_module(root: Path, name: str) -> bool:
+    # production_history is a non-collected CI helper, not a third-party package.
+    return (name.startswith("test_") or name == "production_history") and \
+        (root / "tests" / f"{name}.py").is_file()
+
+
+def test_dependency_scan_recognizes_only_existing_local_test_helpers(tmp_path):
+    (tmp_path / "tests").mkdir()
+    for name in ("production_history", "test_example", "unregistered_package"):
+        (tmp_path / "tests" / f"{name}.py").touch()
+    assert _is_local_test_module(tmp_path, "production_history")
+    assert _is_local_test_module(tmp_path, "test_example")
+    assert not _is_local_test_module(tmp_path, "test_missing")
+    assert not _is_local_test_module(tmp_path, "unregistered_package")
+    (tmp_path / "tests" / "production_history.py").unlink()
+    assert not _is_local_test_module(tmp_path, "production_history")
+
+
 def test_测试用到的第三方包都在dev依赖里():
     """测试 `import` 的第三方包，必须登记在 `dev` extra 里。
 
@@ -1229,8 +1247,8 @@ def test_测试用到的第三方包都在dev依赖里():
                 continue
             # 同理，兄弟测试模块也是本地的（`from test_design_tokens import …`
             # 复用另一份测试里的扫描函数）。只认 `test_` 开头且 tests/ 下真有这个
-            # 文件的名字，别的一概照旧当第三方查。
-            if name.startswith("test_") and (root / "tests" / f"{name}.py").exists():
+            # 文件的名字，以及明确命名且真实存在的 CI 库存诊断 helper。
+            if _is_local_test_module(root, name):
                 continue
             if DIST.get(name, name).lower().replace("-", "").replace("_", "") not in declared:
                 missing.append(f"{path.name} import {name}")
