@@ -46,7 +46,7 @@ jobs:
           [[ "$GITHUB_REF_NAME" == "preview/native-asr-sun-20261001" ]] || exit 1
           command -v ffmpeg >/dev/null
           command -v ffprobe >/dev/null
-          python tools/review_sun_public_source.py --validate
+          python tools/review_sun_public_source.py --targeted-second-pass --validate
       - name: Set temporary cache paths for subsequent steps
         run: |
           echo "PIP_CACHE_DIR=$RUNNER_TEMP/sun-public-asr-cache/pip" >> "$GITHUB_ENV"
@@ -57,7 +57,7 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check --no-cache-dir --retries 0 --timeout 30 faster-whisper==1.2.1 ctranslate2==4.8.2 onnxruntime==1.30.0 numpy==2.5.3 huggingface-hub==1.33.0 tokenizers==0.23.2 av==19.0.0
       - name: Acquire and verify the public source, then infer sequentially
-        run: python tools/review_sun_public_source.py
+        run: python tools/review_sun_public_source.py --targeted-second-pass
       - uses: actions/upload-artifact@v4
         if: always()
         with:
