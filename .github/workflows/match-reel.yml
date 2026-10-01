@@ -1306,6 +1306,45 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      - name: Sun — acquire the exact reviewed public source
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'sun-lys-beijing-2026-r1' && github.ref == 'refs/heads/preview/native-cover-sun-20261001'
+        env:
+          ORT_DISABLE_TELEMETRY: "1"
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          HF_HUB_OFFLINE: "1"
+          TRANSFORMERS_OFFLINE: "1"
+          SUN_SOURCE_OUTDIR: ${{ steps.paths.outputs.outdir }}
+        run: |
+          set -euo pipefail
+          PYTHONPATH=src:tools python - <<'PY'
+          import json
+          import os
+          import time
+          from pathlib import Path
+          import review_sun_public_source as source
+          root = Path.cwd().resolve()
+          out = (root / os.environ["SUN_SOURCE_OUTDIR"]).resolve()
+          if not out.is_relative_to(root / "output") or out.name != "sun-lys-beijing-2026-r1" or out.parent.name != "reel":
+              raise SystemExit("Invalid Sun source destination")
+          out.mkdir(parents=True, exist_ok=True)
+          dest = out / "source.mp4"
+          try:
+              if not dest.exists():
+                  deadline = time.monotonic() + 120
+                  resolver = source.native_resolver(root / "src/tennislive/video/official.py")
+                  url = source.resolve_source(resolver, deadline)
+                  source.download_exact(url, dest, source.SOURCE_BYTES, source.SOURCE_SHA, deadline)
+              source.verify_source(dest)
+          except Exception as exc:
+              print(json.dumps({"sun_source_verified": False, "reason": type(exc).__name__}))
+              raise SystemExit(1) from None
+          print(json.dumps({"sun_source_verified": True, "bytes": source.SOURCE_BYTES, "sha256": source.SOURCE_SHA}))
+          PY
+          PYTHONPATH=src:tools python tools/build_match_reel.py render --dry-run \
+            --spec specs/reels/sun-lys-beijing-2026-r1.json \
+            --outdir "$SUN_SOURCE_OUTDIR" --source "$SUN_SOURCE_OUTDIR/source.mp4" \
+            --voice zh-CN-YunJianNeural --rate +0%
+
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
