@@ -1,0 +1,256 @@
+{
+  "slug": "sun-lys-beijing-2026-r1",
+  "_column": "赛场之上",
+  "_production_commit": "1e9e4417f0db056d1b4580acec1a501d52e682f2",
+  "_preparation_status": "recovered_cover_and_facts_pending_retirement_patch_and_full_audio_review",
+  "source_url": "https://www.wtatennis.com/videos/4585115/junior-no-1-sun-xinran-advances-on-wta-debut-in-beijing-as-lys-retires",
+  "tts_backend": "edge",
+  "_match": {
+    "status": "result_verified",
+    "date": "2026-10-01",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS082",
+    "participants": [
+      "利斯",
+      "孙心然"
+    ],
+    "winner": "孙心然",
+    "loser": "利斯",
+    "winner_result": "6-1 3-0 Ret.",
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "duration": "00:43:48",
+    "daypart": "晚上",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?from=2026-10-01&to=2026-10-01",
+    "_result_why": "Official explicit winner/result and Xinhua full report independently identify Lys retirement and Sun victory; Tennis.com confirms terminal retired status and same set scores only.",
+    "observed_at": "2026-10-01T19:04:30.751488+00:00",
+    "source_response_sha256": "9f8a5944c255bbf174888f029368d84d41909131246ba2fc8e3f309f21bdfc12",
+    "retirement_evidence": {
+      "retired_player": "利斯",
+      "best_of": 3,
+      "sources": [
+        {
+          "match_key": "1020_2026_LS082",
+          "match_date": "2026-10-01",
+          "participants": [
+            "利斯",
+            "孙心然"
+          ],
+          "set_scores_home_away": [
+            [
+              1,
+              6
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "winner": "孙心然",
+          "retired_player": "利斯",
+          "status": "retired",
+          "terminal": true,
+          "provider": "WTA",
+          "source_class": "official_result",
+          "source_id": "1020_2026_LS082",
+          "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?from=2026-10-01&to=2026-10-01",
+          "source_sha256": "9f8a5944c255bbf174888f029368d84d41909131246ba2fc8e3f309f21bdfc12",
+          "checked_at": "2026-10-01T19:04:30.751488+00:00"
+        },
+        {
+          "match_key": "1020_2026_LS082",
+          "match_date": "2026-10-01",
+          "participants": [
+            "利斯",
+            "孙心然"
+          ],
+          "set_scores_home_away": [
+            [
+              1,
+              6
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "winner": "孙心然",
+          "retired_player": "利斯",
+          "status": "retired",
+          "terminal": true,
+          "provider": "Xinhua",
+          "source_class": "independent_report",
+          "source_id": "372efd6eb1d1475ea7b7ac8aea1f582e",
+          "source_url": "https://www.news.cn/sports/20261001/372efd6eb1d1475ea7b7ac8aea1f582e/c.html",
+          "source_sha256": "89301255a924f7c3b2211868d732642f2ef39c32e63a3555879938bee67402fb",
+          "checked_at": "2026-10-01T19:33:12.145443+00:00"
+        }
+      ]
+    }
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "孙心然",
+    "hook": "连赢九局\n16岁孙心然过关",
+    "hook_accent": "九局",
+    "hook_accent_color": "#FFD600",
+    "topic": "WTA1000 北京 首轮 · 孙心然 VS 利斯",
+    "winner": "孙心然",
+    "result": "6-1 3-0 Ret.",
+    "matchup": [
+      {
+        "name": "孙心然",
+        "name_en": "Xinran Sun",
+        "country": "CHN",
+        "rank": 582
+      },
+      {
+        "name": "利斯",
+        "name_en": "Eva Lys",
+        "country": "GER",
+        "rank": 102
+      }
+    ],
+    "portrait": {
+      "image": "assets/reel/sun-lys-beijing-2026-r1.jpg",
+      "focus": 0.52,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_portrait_why": "WTA official Sun-R1-Jimmie photograph, Jimmie48/WTA, CMS4585120, published2026-10-01. Sun with eyes visible and raised fist in the match outfit; same-match action reaction, not claimed as retirement celebration. Original3056x1991 and exact verified image SHA retained.",
+      "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/10/01/3ff1e4a5-5b2f-426f-a7c1-164dcb3e2cc6/Sun-R1-Jimmie.jpg?width=3056"
+    },
+    "scoreboard": {
+      "court": "Capital Group Diamond",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?from=2026-10-01&to=2026-10-01",
+        "match_id": "LS082",
+        "field": "MatchTimeTotal"
+      }
+    }
+  },
+  "segments": [],
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 1,
+      "df": 0,
+      "first_in": 16,
+      "first_total": 30,
+      "first_won": 13,
+      "second_won": 8,
+      "second_total": 14,
+      "bp_conv": 5,
+      "bp_chances": 7,
+      "pts_won": 42,
+      "pts_total": 60,
+      "headshot": "assets/players/headshots/wta-335958-match-LS082.jpg",
+      "_headshot_source": {
+        "kind": "same_match_official_photo_crop",
+        "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/10/01/3ff1e4a5-5b2f-426f-a7c1-164dcb3e2cc6/Sun-R1-Jimmie.jpg?width=3056",
+        "source_sha256": "6d91fde762e6a2bff5fcb5da97e2c16feb5f3733578a235736852e1d5989bb7e",
+        "crop_xywh": [
+          1120,
+          80,
+          900,
+          900
+        ],
+        "size": [
+          600,
+          600
+        ]
+      }
+    },
+    "b": {
+      "aces": 0,
+      "df": 7,
+      "first_in": 17,
+      "first_total": 30,
+      "first_won": 6,
+      "second_won": 3,
+      "second_total": 13,
+      "bp_conv": 1,
+      "bp_chances": 4,
+      "pts_won": 18,
+      "pts_total": 60,
+      "headshot": "assets/players/headshots/wta-325826.jpg"
+    },
+    "footer_date": "2026-10-01",
+    "footer_venue": "北京 · 钻石球场",
+    "_source": "WTA LS082 setnum=0, actual points played until retirement; A=Eva Lys/B=Xinran Sun mapped into cover order Sun/Lys. The unfinished3-0 set is not counted as a completed set. Final total60 points. Seven verified rows only; Winners/UE omitted by this episode’s approved decision, never zero-filled.",
+    "_official_source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS082/stats",
+    "_winners_ue_why": "Both full-match Winners/UE remain unavailable. This episode has an explicit omission decision; other data and QC requirements remain.",
+    "_official_response_sha256": "240d5888bcf23dba586e734178f83b1cfcf6cc324bc4e168dcb985657476c4fa",
+    "_source_conflict_note": "Tennis.com overall first-serve-points-won values differ from WTA. This card uses the internally coherent WTA setnum=0 full match record only, with30 serve points each and60 total points; do not label serve rates cross-verified or mix provider fields.",
+    "_winners_ue_omission": {
+      "slug": "sun-lys-beijing-2026-r1",
+      "source_id": "1020_2026_LS082",
+      "match_date": "2026-10-01",
+      "winner_result": "6-1 3-0 Ret.",
+      "fields": [
+        "winners",
+        "ue"
+      ],
+      "decision": "omit_both_rows_for_this_film_only",
+      "authorization": "owner-approved-remaining-four-film-omissions-2026-10-01"
+    }
+  },
+  "push": {
+    "auto": false,
+    "summary": "连赢九局，16岁孙心然过关",
+    "lead": "中网女单首轮，16岁的孙心然开局0比1后连赢九局。利斯在1比6、0比3落后时退赛，孙心然拿到巡回赛首胜，下一轮对阵布克沙。"
+  },
+  "topbar": {
+    "line1": "2026 WTA1000 北京 首轮",
+    "line2": "孙心然 6-1 3-0 对手退赛 利斯"
+  },
+  "outro": false,
+  "_cover_duration_why": "Native1.2-second cover, no narration.",
+  "_ending_why": "Retirement ending: actual courtside confirmation/staff exchange. No invented final match point, completed second set, handshake or winner celebration. End before clipped source speech after201s.",
+  "_source_provenance": {
+    "publisher": "WTA",
+    "canonical_url": "https://www.wtatennis.com/videos/4585115/junior-no-1-sun-xinran-advances-on-wta-debut-in-beijing-as-lys-retires",
+    "video_id": "6406022752112",
+    "sha256": "bc607f1100401b0623ebbd90761d5263d024294c2d0daaefd8ead03f1e7ff390",
+    "bytes": 54561507,
+    "width": 1280,
+    "height": 720,
+    "fps": "25/1",
+    "duration": 204.843333
+  },
+  "scorebox": [
+    58,
+    581,
+    345,
+    657
+  ],
+  "_heat_why": "16岁的中国球员在中网主场拿到巡回赛首胜；开局丢发球局后连赢九局有已核逐分转折。",
+  "_match_retirement_note": "Use Ret. display marker; do not silently strip it. Exact public terminal sources and fresh hashes are attached after recovery.",
+  "_facts": [
+    {
+      "url": "https://www.wtatennis.com/news/4585170/sun-advances-qu-impresses-chinas-next-gen-make-their-mark-in-beijing",
+      "type": "official_match_report",
+      "why": "Explicit retired6-1,3-0; firstgamebroken then nine straight games; rankings582/102; next27seedBucsa."
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4583293/who-is-sun-xinran-wta-tour-debut-beijing-get-to-know-junior-number-one",
+      "type": "official_player_context",
+      "why": "16years old juniorNo1, firsttour-levelmatch, USOpenjuniorwinner. Not firstprofessionalmatch."
+    }
+  ],
+  "source_quality_exceptions": {
+    "https://www.wtatennis.com/videos/4585115/junior-no-1-sun-xinran-advances-on-wta-debut-in-beijing-as-lys-retires": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "Official WTA main highlights maximum progressive rendition1280x720, verified source SHA bc607f1100401b0623ebbd90761d5263d024294c2d0daaefd8ead03f1e7ff390. Official WTA YouTube channel feed checked2026-10-01T19:01Z has no same-match higher-quality upload. Conditional720p editorial decision applies to this exact source; output scaling does not add source detail."
+    }
+  }
+}

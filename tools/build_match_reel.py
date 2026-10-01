@@ -6313,6 +6313,8 @@ def silence_findings(spec: dict, segments, probes: dict,
 # 戴维斯杯的官方影像档案（ITF 频道）highlights 一律只有 720p、没有全场重播，
 # 1930 年代的英国百代新闻片只有 640×480，**这两档「等」也等不出 1080p**。
 APPROVED_LOW_RES_SOURCES: dict[str, int] = {
+    # Sun–Lys Beijing2026: official highest rendition720p; conditional owner approval.
+    "https://www.wtatennis.com/videos/4585115/junior-no-1-sun-xinran-advances-on-wta-debut-in-beijing-as-lys-retires": 720,
     "https://www.youtube.com/watch?v=-6Gv0033I2I": 720,   # 郑钦文重剪源
     "https://www.youtube.com/watch?v=qBtBKmKmQZc": 720,   # ITF：鲁德 v 埃切维里，挪威 v 阿根廷 2025
     "https://www.youtube.com/watch?v=E-MWVXF9ET0": 720,   # ITF：布德科夫·克耶尔 v 费恩利，挪威 v 英国 2026
