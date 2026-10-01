@@ -67,3 +67,11 @@ watching/listening to the final mix. Missing evidence is a blocker, never a pass
 are rejected; native statistical and chapter cards remain supported. Cover photos
 are unaffected. A requested exceptional photo treatment requires a separate
 reviewed change, not a hidden exemption flag.
+
+## Approved one-film decision: Zheng–Shi, 2026-10-01
+
+For `zheng-shi-beijing-2026-r1` (WTA 1020/2026/LS070), the approved
+single-film editorial decision omits both Winners/UE rows. The gate binds the
+exact episode identity, date, result and decision record. Unknown values are
+removed, never zero-filled. Other episodes and all other production gates
+remain unchanged.

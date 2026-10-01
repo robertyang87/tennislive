@@ -1,7 +1,7 @@
 {
   "slug": "zheng-shi-beijing-2026-r1",
   "_column": "赛场之上",
-  "_preparation_status": "assembled_plan_actual_tts_waiting_stats_audio_binding_cover",
+  "_preparation_status": "user_approved_zheng_only_wue_omission_ready_for_native_render",
   "_production_commit": "1e9e4417f0db056d1b4580acec1a501d52e682f2",
   "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-RAEwp4zJBx8/RAEwp4zJBx8.mp4",
   "tts_backend": "edge",
@@ -228,7 +228,7 @@
       "seconds": 8.32,
       "narration": "四个发球局只丢三分。下一关卡林斯卡娅，这份稳定，能带郑钦文再进一步吗？",
       "_edit_id": "full_match_statistics",
-      "_read_time_why": "真实旁白容器8.28秒、尾部发声结束7.397秒，卡片留8.32秒以保留完整配音又避免超过1秒数字静音；完整九行，等待Winners/UE真实四值方可渲染。"
+      "_read_time_why": "真实旁白容器8.28秒、尾部发声结束7.397秒，卡片留8.32秒以保留完整配音又避免超过1秒数字静音；展示七行已核统计，Winners/UE按本期决定省略。"
     },
     {
       "start": 253.8,
@@ -255,8 +255,6 @@
   ],
   "stats": {
     "a": {
-      "winners": null,
-      "ue": null,
       "aces": 2,
       "df": 5,
       "first_in": 45,
@@ -271,8 +269,6 @@
       "headshot": "assets/players/headshots/wta-328120.jpg"
     },
     "b": {
-      "winners": null,
-      "ue": null,
       "aces": 5,
       "df": 7,
       "first_in": 63,
@@ -299,35 +295,25 @@
         "note": "官方球员头像服务jpg/png均404；本场WTA主片中施晗正面近景，仅用于统计卡小肖像，主封面仍官方高清实拍"
       }
     },
-    "_winners_ue_evidence": {
-      "provider": null,
-      "method": null,
-      "source_url": null,
-      "source_path": null,
-      "source_sha256": null,
-      "period": "Match",
-      "checked_at": null,
-      "match_date": "2026-10-01",
-      "winner_result": null,
-      "matchup": [
-        "Qinwen Zheng",
-        "Han Shi"
-      ],
-      "winners": [
-        null,
-        null
-      ],
-      "ue": [
-        null,
-        null
-      ]
-    },
     "tour": "wta",
     "footer_date": "2026-10-01",
     "footer_venue": "北京 · 钻石球场",
-    "_source": "WTA LS070官方终场全场setnum=0，核验2026-10-01T05:58:08+00:00，A郑钦文/B施晗。二发分母=总发球分-一发分、分子=发球总得分-一发得分。Winners/UE尚无可信完整值，必须保持null并阻止正式渲染。",
+    "_source": "WTA LS070官方终场全场setnum=0，核验2026-10-01T05:58:08+00:00，A郑钦文/B施晗。二发分母=总发球分-一发分、分子=发球总得分-一发得分。Winners/UE尚无可信完整值；本期经批准省略两行，未将缺失值充零。其余七项仍为已核实全场数据。",
     "_official_source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS070/stats",
-    "_official_response_sha256": "2560d5d196ebb2f8ac1dfd230159238182eb4f906f281ea60af4683013264274"
+    "_official_response_sha256": "2560d5d196ebb2f8ac1dfd230159238182eb4f906f281ea60af4683013264274",
+    "_winners_ue_omission": {
+      "slug": "zheng-shi-beijing-2026-r1",
+      "source_id": "1020_2026_LS070",
+      "match_date": "2026-10-01",
+      "winner_result": "7-6(6) 4-6 6-2",
+      "fields": [
+        "winners",
+        "ue"
+      ],
+      "decision": "omit_both_rows_for_this_film_only",
+      "authorization": "owner-approved-single-film-omission-2026-10-01"
+    },
+    "_winners_ue_why": "双方全场Winners/UE仍未核实。本期按明确的一次性编辑决定省略两行，其余七项为已核实全场数据；缺失值未填零，原声、画面与最终QC保持原标准。"
   },
   "push": {
     "auto": false,
@@ -355,7 +341,7 @@
   "_source_provenance": {
     "publisher": "WTA",
     "canonical_url": "https://www.youtube.com/watch?v=RAEwp4zJBx8",
-    "retrieval": "Existing parent-authorized download-video.yml run36826078226",
+    "retrieval": "download-video.yml run36826078226 verified Release asset",
     "sha256": "02e6d5274b2b6f0071fa0e06e88a6f75eeba08359f678d8a026ed7f4a425102b",
     "bytes": 41495791,
     "width": 1920,
@@ -384,7 +370,7 @@
     "line1": "2026 WTA1000 北京 首轮",
     "line2": "郑钦文 7-6(6) 4-6 6-2 施晗"
   },
-  "_heat_why": "用户明确要求制作郑钦文这期；中网国庆日中国球员之间的主场首轮，首盘四个盘点被救后仍胜、被追平后决胜盘发球局只丢三分，有具体转折。",
+  "_heat_why": "中网国庆日中国球员之间的主场首轮，首盘四个盘点被救后仍胜、被追平后决胜盘发球局只丢三分，有具体转折。",
   "editorial": {
     "mode": "match_review",
     "question": "首盘四个盘点被救、第二盘又被追平，郑钦文怎样守住主场这一胜？",
