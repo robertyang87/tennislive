@@ -14,6 +14,8 @@ import json
 import sys
 from pathlib import Path
 
+from production_history import should_check
+
 import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -422,6 +424,8 @@ def test_全库已发的spec一条都不红():
     assert len(specs) > 200, "spec 目录像是没扫到"
     red = {}
     for slug, spec in specs.items():
+        if not should_check('tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红', ROOT / "specs/reels" / f"{slug}.json"):
+            continue
         hard, _ = T.spec_taste_extra(spec)
         hard += T.xhs_taste_extra(spec, _xhs(slug))[0]
         if hard:

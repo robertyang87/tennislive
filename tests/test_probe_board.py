@@ -284,6 +284,37 @@ def test_量板失败不许把probe带崩_但要出声并落进probe_json(tmp_pa
     assert "skipped" in skipped
 
 
+def _custom_box_has_probe(spec: dict, profile: str, probes=None) -> bool:
+    """A custom box is valid only with a real same-source, same-profile scan."""
+    if probes is None:
+        probes, missing = b.probes_for_spec(spec)
+        if missing:
+            return False
+    urls = list((spec.get("sources") or {}).values()) or [spec.get("source_url")]
+    for url in urls:
+        probe = probes.get(url) or {}
+        board = probe.get("board") or {}
+        if probe.get("url") != url or not board.get("frames"):
+            return False
+        scan, _ = pb._pick_scan(board, spec["scorebox"], profile)
+        if not scan or not scan.get("frames") or not (scan["profiles"][profile].get("runs")):
+            return False
+    return bool(urls)
+
+
+def test_custom_scorebox_needs_matching_source_and_scan():
+    box = [90, 870, 516, 984]
+    spec = {"source_url": "https://example.test/source", "scorebox": box}
+    probe = {"url": spec["source_url"], "board": _board("wta", [(5, 386, 386)], box=box)}
+    assert _custom_box_has_probe(spec, "wta", {spec["source_url"]: probe})
+    assert not _custom_box_has_probe(spec, "wta", {})
+    assert not _custom_box_has_probe(spec, "atp", {spec["source_url"]: probe})
+    wrong = json.loads(json.dumps(probe)); wrong["url"] = "https://example.test/different-cut"
+    assert not _custom_box_has_probe(spec, "wta", {spec["source_url"]: wrong})
+    wrong = json.loads(json.dumps(probe)); wrong["board"]["scans"][0]["box"][3] = 980
+    assert not _custom_box_has_probe(spec, "wta", {spec["source_url"]: wrong})
+
+
 def test_标定框和全库spec用的框对得上():
     """`CALIBRATED` 是全库 spec 量出来的，不是拍的——哪天某家转播换了框，这条先红，
     probe 就不会拿一条旧带去量新 spec（那样 dry-run 只会说「框对不上」，这一层白装）。"""
@@ -306,10 +337,11 @@ def test_标定框和全库spec用的框对得上():
         if prof not in pb.CALIBRATED:
             continue
         seen.setdefault(prof, []).append(
-            any(pb.same_box(box, cal) for cal in pb.CALIBRATED[prof]))
+            any(pb.same_box(box, cal) for cal in pb.CALIBRATED[prof])
+            or _custom_box_has_probe(spec, prof))
     for prof in ("atp", "wta", "itf-bjk", "lavercup"):
         assert len(seen.get(prof, [])) >= 5, f"{prof} 一条 spec 都没扫到，判据的主语像是没了"
-        assert all(seen[prof]), f"{prof} 有 spec 的 scorebox 不在 CALIBRATED 里：补一条标定带"
+        assert all(seen[prof]), f"{prof} 有 spec 的 scorebox 既不在 CALIBRATED，也缺少同源自定义扫描"
     uso = seen.get("us-open", [])
     assert len(uso) >= 40 and sum(uso) >= 0.9 * len(uso), (sum(uso), len(uso))
 

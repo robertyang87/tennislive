@@ -194,6 +194,18 @@ def main() -> None:
     ap.add_argument('--column', required=True)
     args = ap.parse_args()
     path = Path(args.spec)
+    if args.column == '赛场之上' and path.is_file():
+        _tools_on_path()
+        from winners_ue_gate import require
+        require(json.loads(path.read_text(encoding='utf-8')))
+    if args.column in {'赛场之上', '网球有故事'} and path.is_file():
+        _tools_on_path()
+        from production_style import match_footage_problem
+        from foreground_audio_gate import require as require_audio_review
+        spec = json.loads(path.read_text(encoding='utf-8'))
+        if issue := match_footage_problem(spec):
+            raise SystemExit(issue)
+        require_audio_review(spec)
     if args.column == '赛后开麦' and path.is_file():
         check_interview_claims(path)
         check_taste(json.loads(path.read_text(encoding='utf-8')))

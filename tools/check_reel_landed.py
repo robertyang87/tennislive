@@ -510,8 +510,25 @@ def main() -> int:
         print(f"[QC] 本轮重验开始，先撤销旧凭证 {stale}")
     spec = json.loads(spec_path.read_text(encoding="utf-8"))
     print(f"成片 {film}（{film.stat().st_size / 1e6:.1f} MB）")
-    cover = cover_seconds(film)
+    from winners_ue_gate import problem as winners_ue_problem  # noqa: PLC0415
+    stats_problem = winners_ue_problem(spec)
+    if stats_problem:
+        print(f"[不合格] {stats_problem}")
+        return 1
 
+    cover = cover_seconds(film)
+    from production_style import match_footage_problem  # noqa: PLC0415
+    from foreground_audio_gate import verify_final  # noqa: PLC0415
+    if issue := match_footage_problem(spec):
+        print(f"[不合格] {issue}")
+        return 1
+    try:
+        if cover is None:
+            raise ValueError("新片原声音轨质检需要本次 render.json 的真实封面时长")
+        verify_final(spec, film.parent / "subtitles.ass", cover, film=film)
+    except (OSError, KeyError, TypeError, ValueError) as exc:
+        print(f"[不合格] waiting_audio_review：{exc}")
+        return 1
     bad = voiced_by(film, spec)
 
     headshot = stat_card_headshot_problem(

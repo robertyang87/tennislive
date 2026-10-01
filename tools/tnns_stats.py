@@ -177,6 +177,17 @@ _DAY_MARK = "/v1/matches"
 _DAY_API = "https://api.tnnslive.com/v1/matches?date={date}&web=true"
 
 
+def _is_challenge(body: str) -> bool:
+    return any(marker in body.casefold() for marker in (
+        "just a moment", "verify you are human", "checking your browser", "正在进行安全验证"))
+
+
+def _reject_challenge(body: str) -> None:
+    if _is_challenge(body):
+        raise SystemExit("[TNNS] 安全/人机验证阻断；停止此站访问，不继续 fetch 或备用导航。"
+                         "这是取数受阻，不是本场没有统计。")
+
+
 def _page_fetch(page, url: str) -> str | None:
     """在**页面里**发请求——挑战过了之后这条路是通的，`context.request` 不通。
 
@@ -218,6 +229,13 @@ def _browser_capture(urls: list[str], marks: list[str], wait: int = 22,
     from playwright.sync_api import sync_playwright
 
     got: dict[str, str] = {}
+    challenged: list[str] = []
+
+    def stop_if_challenged():
+        if challenged:
+            raise SystemExit("[TNNS] 统计/赛程响应出现安全验证；停止此站访问，不继续 fetch 或导航。"
+                             "这是取数受阻，不是本场没有统计。")
+
     with sync_playwright() as pw:
         browser = pw.chromium.launch(args=["--no-sandbox"])
         ctx = browser.new_context(
@@ -228,28 +246,33 @@ def _browser_capture(urls: list[str], marks: list[str], wait: int = 22,
 
         def on_response(resp):
             for mark in marks:
-                if mark in resp.url and mark not in got:
+                if mark in resp.url:
                     # ⚠️ 不按 content-type 过滤——TNNS 回的是 text/html。
                     try:
                         body = resp.text()
                     except Exception:  # noqa: BLE001
                         return
-                    if body:
+                    if _is_challenge(body):
+                        # Record only: raising inside a Playwright event callback
+                        # does not reliably abort the caller's next request.
+                        challenged.append(resp.url)
+                        return
+                    if body and mark not in got:
                         got[mark] = body
 
         ctx.on("response", on_response)
         page = ctx.new_page()
         for url in urls:
+            stop_if_challenged()
             print(f"[TNNS] 打开 {url}")
             try:
                 page.goto(url, timeout=60000, wait_until="domcontentloaded")
             except Exception as exc:  # noqa: BLE001
                 print(f"[TNNS] goto 失败：{type(exc).__name__}: {exc}")
             page.wait_for_timeout(wait * 1000)
+            stop_if_challenged()
             html = page.content()
-            if "Just a moment" in html:
-                print("[TNNS] ⚠️ Cloudflare 挑战**没过**——这一趟拿不到数据，"
-                      "不是这场没有统计")
+            _reject_challenge(html)
         # ⚠️ **页面内取回来的东西不许和被动抓包混用同一个键。**
         # 2026-08-16 run 31956961716 就栽在这儿：按 `date=2026-08-15` 那一发
         # `Failed to fetch` 了，而首页的被动抓包**早就把同一个键填上了今天的
@@ -257,8 +280,12 @@ def _browser_capture(urls: list[str], marks: list[str], wait: int = 22,
         # **参数没生效，而它宣称生效了**。这正是这个函数上一版要修的那个形状，
         # 只是换到了下一层。所以另起 `in_page:` 前缀，谁是谁一目了然。
         for key, url in (in_page or {}).items():
+            stop_if_challenged()
             print(f"[TNNS] 页面内取 {url}")
             body = _page_fetch(page, url)
+            stop_if_challenged()
+            if body:
+                _reject_challenge(body)
             if not body:
                 # ⚠️ **页面内 fetch 对 `api.tnnslive.com` 是跨域的，会 `Failed to
                 # fetch`**（2026-08-16 run 31958875002 实测）。而**顶层导航不受
@@ -277,7 +304,9 @@ def _browser_capture(urls: list[str], marks: list[str], wait: int = 22,
                 except Exception as exc:  # noqa: BLE001
                     print(f"[TNNS] 导航也失败：{type(exc).__name__}: {exc}")
                     body = None
-            if body and "Just a moment" not in body:
+            stop_if_challenged()
+            if body:
+                _reject_challenge(body)
                 got[f"in_page:{key}"] = body
         browser.close()
     return got
@@ -379,6 +408,50 @@ def players_of(decoded: dict, period: str = "Match") -> list | None:
     return block[0].get("players")
 
 
+def validate_totals(decoded: dict) -> None:
+    """Reject malformed rows, unknown player order and inconsistent set totals."""
+    if has_extended_stats(decoded) is False:
+        raise ValueError("TNNS hasExtendedStats=false 却提供 Winners/UE，响应自相矛盾")
+    whole = winners_ue(decoded)
+    who = players_of(decoded)
+    if not whole or not isinstance(who, list) or len(who) != 2 or not all(
+            isinstance(p, str) and p.strip() for p in who) or who[0] == who[1]:
+        raise ValueError("TNNS 全场数据或两个球员的统计列身份不完整")
+    periods = (decoded.get("data") or {}).get("data") or {}
+    sets = [name for name in periods if name.startswith("Set ") and name[4:].isdigit()]
+    sets.sort(key=lambda p: int(p[4:]))
+    if not 1 <= len(sets) <= 5 or sets != [f"Set {i}" for i in range(1, len(sets) + 1)]:
+        raise ValueError("TNNS 分盘统计缺失或不连续，不能自证全场总计")
+    blocks = {"Match": whole}
+    for period in sets:
+        if players_of(decoded, period) != who:
+            raise ValueError(f"TNNS {period} 球员列序与全场不同")
+        blocks[period] = winners_ue(decoded, period)
+    for period, values in blocks.items():
+        # The identities must belong to the actual count rows, not a neighboring
+        # service-stat group. Duplicate rows are ambiguous even if one is valid.
+        titles = []
+        for group in periods[period]:
+            counts = [row for row in _rows([group])
+                      if row.get("title") in {"Winners", "Unforced Errors"}]
+            if counts and group.get("players") != who:
+                raise ValueError(f"TNNS {period} Winners/UE 所在分组球员列序不一致")
+            titles.extend(row["title"] for row in counts)
+        if sorted(titles) != ["Unforced Errors", "Winners"]:
+            raise ValueError(f"TNNS {period} Winners/UE 缺失或重复")
+        if values is None:
+            raise ValueError(f"TNNS {period} 缺 Winners/UE")
+        for field in ("winners", "ue"):
+            pair = values.get(field)
+            if not isinstance(pair, list) or len(pair) != 2 or any(
+                    type(v) is not int or v < 0 for v in pair):
+                raise ValueError(f"TNNS {period} {field} 不是两人的非负整数")
+    for field in ("winners", "ue"):
+        totals = [sum(blocks[p][field][i] for p in sets) for i in (0, 1)]
+        if totals != whole[field]:
+            raise ValueError(f"TNNS {field} 分盘合计 {totals} 与全场 {whole[field]} 对不上")
+
+
 def _report(match_id: str, decoded: dict) -> None:
     data = decoded.get("data") or {}
     print(f"\n=== TNNS 单场统计 id={match_id} ===")
@@ -405,6 +478,8 @@ def _report(match_id: str, decoded: dict) -> None:
                 f"（多半是默认标签页，Stats 那一屏还没加载）。\n"
                 f"别把它写成 `_winners_ue_why`——那会把一句假话钉成判据。\n"
                 f"先用 `probe-blocked` 的 `--print-body` 把整份响应打出来看。")
+        if ext is not False:
+            raise SystemExit("[TNNS] hasExtendedStats 未明确返回 false；这是读取未完成，不是没有统计")
         # 走到这儿才是真的没有：接口自己说没有扩展统计。
         # ⚠️ 查空也要留下判据——「忘了查」和「查过确实没有」在产物上分不出来
         # （那张图两种情况都少两行），所以这条路要给出能粘的东西，不然下一个人
@@ -413,13 +488,17 @@ def _report(match_id: str, decoded: dict) -> None:
         print("\n粘进 spec 的 `stats` 块（这一趟查空了，要挂账）：")
         print(f'  "_winners_ue_why": "跑过 tnns-stats（id={match_id}），'
               f'hasExtendedStats={ext}，'
-              f'TNNS 这场也没有这两行；flashscore 同样没有。"')
+              f'TNNS 这场没有扩展统计；其他来源需另行核查。"')
         return
+    try:
+        validate_totals(decoded)
+    except ValueError as exc:
+        raise SystemExit(f"[TNNS] {exc}；不要复制这些数字") from exc
     print(f"制胜分       {whole['winners']}")
     print(f"非受迫失误   {whole['ue']}")
     who = players_of(decoded) or ["?", "?"]
     print(f"（选手顺序 {who}）")
-    sets = [(p, winners_ue(decoded, p)) for p in ("Set 1", "Set 2", "Set 3")]
+    sets = [(p, winners_ue(decoded, p)) for p in (f"Set {i}" for i in range(1, 6))]
     sets = [(p, v) for p, v in sets if v]
     for p, v in sets:
         print(f"  [{p}] 制胜分 {v['winners']}　非受迫失误 {v['ue']}")
@@ -458,17 +537,21 @@ def main() -> int:
     src = sys.argv[2]
     body = sys.stdin.read() if src == "-" else open(src, encoding="utf-8").read()
     decoded = decode(body)
+    if winners_ue(decoded):
+        validate_totals(decoded)
+    elif has_extended_stats(decoded) is not False:
+        raise SystemExit("TNNS 未取得可核验的全场 Winners/UE；未知状态不能写成没有")
     data = decoded.get("data") or {}
     print(f"hasExtendedStats: {has_extended_stats(decoded)}")
     print(f"分块：{[k for k in data if isinstance(data[k], list)]}")
-    for period in ("Match", "Set 1", "Set 2", "Set 3"):
+    for period in ("Match", *(f"Set {i}" for i in range(1, 6))):
         got = winners_ue(decoded, period)
         if got:
             print(f"  [{period:6s}] 制胜分 {got['winners']}　非受迫失误 {got['ue']}")
         elif period in data:
             print(f"  [{period:6s}] 这一块没有这两行")
     # 自证：分盘加起来要等于全场。对不上就是解错了，宁可红也别把假数发出去。
-    sets = [winners_ue(decoded, p) for p in ("Set 1", "Set 2", "Set 3")]
+    sets = [winners_ue(decoded, f"Set {i}") for i in range(1, 6)]
     sets = [s for s in sets if s]
     whole = winners_ue(decoded, "Match")
     if whole and sets:

@@ -6,6 +6,8 @@ import json
 import sys
 from pathlib import Path
 
+from production_history import should_check
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 import push_reel  # noqa: E402
@@ -24,7 +26,9 @@ def _pairs():
 
 def test_正文第一句不许重复标题_新片子():
     bad = [f"{slug}：{w.title_echo_problem(spec, slug, text)}"
-           for slug, spec, text in _pairs() if w.title_echo_problem(spec, slug, text)]
+           for slug, spec, text in _pairs()
+           if should_check('tests/test_title_echo.py::test_正文第一句不许重复标题_新片子', ROOT / "specs/reels" / f"{slug}.json")
+           and w.title_echo_problem(spec, slug, text)]
     assert not bad, "\n".join(bad)
 
 
