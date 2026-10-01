@@ -245,6 +245,21 @@ def absolute_time(value, start, duration):
     return round(start + min(max(value, 0), duration), 6)
 
 
+def timing_evidence(local_start, local_end, source_offset, duration):
+    if any(type(v) not in (int, float) or not math.isfinite(v) for v in (local_start, local_end)):
+        raise Blocked("inference_timestamp_non_finite")
+    within = 0 <= local_start < local_end <= duration
+    return {
+        "raw_relative_start": local_start, "raw_relative_end": local_end,
+        "raw_source_start": round(source_offset + local_start, 6),
+        "raw_source_end": round(source_offset + local_end, 6),
+        "source_start": absolute_time(local_start, source_offset, duration) if within else None,
+        "source_end": absolute_time(local_end, source_offset, duration) if within else None,
+        "timestamp_within_window": within,
+        "timing_status": "inferred_pending_review" if within else "out_of_window_pending_review",
+    }
+
+
 def infer(source, model_dir, workdir):
     verify_source(source)  # Exact source bytes checked again before any extraction.
     check_model(model_dir)
@@ -260,8 +275,11 @@ def infer(source, model_dir, workdir):
         segments, _ = model.transcribe(audio, language="en", beam_size=5, temperature=0, condition_on_previous_text=False, initial_prompt=None, prefix=None, word_timestamps=True, vad_filter=False)
         items = []
         for segment in segments:
-            words = [{"word": w.word, "source_start": absolute_time(w.start, start, frames / 16000), "source_end": absolute_time(w.end, start, frames / 16000), "probability": w.probability, "uncertain": w.probability < 0.8} for w in (segment.words or [])]
-            items.append({"text": segment.text, "source_start": absolute_time(segment.start, start, frames / 16000), "source_end": absolute_time(segment.end, start, frames / 16000), "avg_logprob": segment.avg_logprob, "no_speech_prob": segment.no_speech_prob, "compression_ratio": segment.compression_ratio, "uncertain": True, "words": words})
+            words = []
+            for w in (segment.words or []):
+                timing = timing_evidence(w.start, w.end, start, frames / 16000)
+                words.append({"word": w.word, **timing, "probability": w.probability, "uncertain": w.probability < 0.8 or not timing["timestamp_within_window"]})
+            items.append({"text": segment.text, **timing_evidence(segment.start, segment.end, start, frames / 16000), "avg_logprob": segment.avg_logprob, "no_speech_prob": segment.no_speech_prob, "compression_ratio": segment.compression_ratio, "uncertain": True, "words": words})
         rows.append({"window": index, "source_from": start, "source_to": end, "decoded_seconds": frames / 16000, "segments": items, "empty_output_is_not_silence_proof": not items})
         clip.unlink()
         print(json.dumps({"completed_window": index, "segments": len(items), **FLAGS}), flush=True)
