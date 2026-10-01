@@ -116,7 +116,7 @@ def infer(data,input_dir,model_dir,outdir):
         report={'schema':'tennislive.asr-evidence-only.retained-v2','created_at':stamp(),'input':item,'model':{'id':MODEL_ID,'revision':REVISION,'model_sha256':MODEL_FILES['model.bin'][1]},'versions':versions,'language':'en','segments':rows,'status':'inference_only_not_verified','empty_output_is_not_silence_proof':not rows,'uncertainty_note':'Model output may omit or hallucinate quiet foreground speech. Cross-check entire window and source timing.','audio_review_pass':False,'publication_eligible':False}
         (outdir/f'{item["id"]}.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');completed.append(item['id'])
         print(json.dumps({'completed':item['id'],'segments':len(rows),'review_pass':False}),flush=True)
-    (outdir/'batch.json').write_text(json.dumps({'created_at':stamp(),'completed':completed,'source_seconds':309.95,'audio_review_pass':False,'publication_eligible':False},indent=2)+'\n')
+    (outdir/'batch.json').write_text(json.dumps({'created_at':stamp(),'completed':completed,'source_seconds':data['source_seconds'],'planned_source_seconds':309.95,'available_slugs':data['available_slugs'],'blocked_slugs':data['blocked_slugs'],'scope_status':data['scope_status'],'audio_review_pass':False,'publication_eligible':False},indent=2)+'\n')
 
 import hashlib
 
@@ -171,9 +171,10 @@ METADATA_MAX_BYTES = 2 * 1024 * 1024
 class SourceFetchError(RuntimeError):
     """A fixed, non-sensitive error code; never embed external exception text."""
 
-    def __init__(self, code, returncode=None):
+    def __init__(self, code, returncode=None, safe_summary=""):
         self.code = code
         self.returncode = returncode if type(returncode) is int else None
+        self.safe_summary = safe_summary if isinstance(safe_summary, str) and len(safe_summary) <= 600 else ""
         super().__init__(code)
 
 def public_source_error(exc):
@@ -279,16 +280,67 @@ def _classify_download_stderr(payload):
         return "library_loader"
     if "no module named" in text:
         return "missing_module"
+    if "importerror:" in text or "cannot import name" in text:
+        return "import_error"
     if "no such option" in text or "unrecognized arguments:" in text:
         return "unknown_option"
+    if any(marker in text for marker in ("certificate_verify_failed", "certificate verify failed", "sslerror", "ssl: ", "tlsv1 alert", "ssl handshake")):
+        return "ssl_error"
+    if any(marker in text for marker in ("connectionerror", "proxyerror", "connection refused", "connection reset", "connection aborted", "timed out", "network is unreachable", "name or service not known", "temporary failure in name resolution", "remote end closed connection", "urlopen error")):
+        return "connection_error"
+    if "unsupported url" in text:
+        return "unsupported_url"
     if "requested format is not available" in text:
         return "format_unavailable"
+    if any(marker in text for marker in ("no video formats found", "no formats found", "no formats available", "does not have any formats")):
+        return "no_formats"
     if any(marker in text for marker in ("signature has expired", "signature expired", "expiredtoken", "request has expired", "requestexpired")):
         return "signature_expired"
     status = re.search(r"\bhttp(?: error)?\s*:?\s+([45][0-9]{2})\b", text)
     if status:
         return "http_" + status.group(1)
     return "unknown"
+
+def _sanitize_download_diagnostic(payload):
+    """Keep one actionable cause, after redacting the entire bounded buffer."""
+    text = payload.decode("utf-8", errors="replace") if isinstance(payload, (bytes, bytearray)) else str(payload)
+    was_truncated = len(payload) >= 65536
+    text = text[-65536:]
+    if was_truncated:
+        text = text.partition("\n")[2] or "Diagnostic line exceeded capture limit"
+    text = re.sub(r"\x1b\][^\x07]*(?:\x07|\x1b\\)", "", text)
+    text = re.sub(r"\x1b\[[0-?]*[ -/]*[@-~]", "", text)
+    text = "".join(char for char in text if char in "\n\r\t" or char.isprintable())
+    # Remove complete URLs before matching credential fields or clipping text.
+    text = re.sub(r"(?i)\b[a-z][a-z0-9+.-]*:(?:\\?/){2}[^\s<>\"'`]+", "[url]", text)
+    text = re.sub(r"(?i)\bhttps?%3a(?:%2f){2}[^\s<>\"'`]+", "[url]", text)
+    text = re.sub(r"[?&][A-Za-z0-9_.%-]+=[^\s<>\"'`]*", "[query redacted]", text)
+    text = re.sub(r"(?i)[\"']?\b(?:authorization|proxy-authorization|cookie|set-cookie)[\"']?\s*[:=][^\r\n]*", "[credentials redacted]", text)
+    text = re.sub(r"(?i)\b(?:bearer|basic)\s+[^\s,;\"'<>]+", "[credentials redacted]", text)
+    keys = r"(?:access[_-]?token|refresh[_-]?token|id[_-]?token|token|jwt|api[_-]?key|x-api-key|password|passwd|client[_-]?secret|secret|signature|credential|session[_-]?id|sig|policy|key-pair-id|awsaccesskeyid|x-amz-[a-z0-9-]+|x-goog-[a-z0-9-]+)"
+    value = r"(?:\"[^\"\r\n]*\"|'[^'\r\n]*'|[^\s,;\]\}\)]+)"
+    text = re.sub(r"(?i)[\"']?\b" + keys + r"[\"']?(?:\s*(?::|=|\bis\b)\s*|\s+)" + value, "[credential redacted]", text)
+    text = re.sub(r"\beyJ[A-Za-z0-9_-]{3,}\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b", "[jwt]", text)
+    text = re.sub(r"(?<![A-Za-z0-9_+/=-])[A-Za-z0-9_+/-]{32,}={0,2}(?![A-Za-z0-9_+/=-])", "[long value]", text)
+    text = re.sub(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}", "[email]", text)
+    text = re.sub(r"(?i)\b(?:for\s+)?(?:user(?:name)?|login|account)\s*(?::|=|\bis\b|\s)\s*" + value, "[user]", text)
+    # Quoted paths can contain spaces. Then remove unquoted absolute, Windows,
+    # home-relative and ordinary relative paths; preserve dotted module names.
+    text = re.sub(r"\"[^\"\r\n]*[/\\][^\"\r\n]*\"|'[^'\r\n]*[/\\][^'\r\n]*'", "[path]", text)
+    text = re.sub(r"(?<![A-Za-z0-9_])(?:[A-Za-z]:[/\\]|~?[/\\]|\.{1,2}[/\\])[^\s\"'<>\[\]\(\),;]*", "[path]", text)
+    text = re.sub(r"(?<![A-Za-z0-9_])[^\s\"'<>\[\]\(\),;:/\\]+[/\\][^\s\"'<>\[\]\(\),;]*", "[path]", text)
+    text = re.sub(r"(?<![\w.])@[A-Za-z0-9_-]+", "[user]", text)
+    for key in ("USER", "LOGNAME", "USERNAME", "GITHUB_ACTOR", "SUDO_USER"):
+        username = os.environ.get(key, "")
+        if username:
+            text = re.sub(r"(?<!\w)" + re.escape(username) + r"(?!\w)", "[user]", text, flags=re.I)
+    text = "".join(char for char in text if char in "\n\r\t" or char.isprintable())
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    if not lines:
+        return "No diagnostic text captured"
+    cause = re.compile(r"(?i)(?:\berror\s*:|\b[\w.]*(?:error|exception)\s*[:(]|\bsystemexit\s*:|\bcaused by\b)")
+    line = next((line for line in reversed(lines) if cause.search(line)), lines[-1])
+    return re.sub(r"\s+", " ", line)[:600]
 
 def _drain_private_stderr(process, tail):
     # Nonblocking and bounded in both work per poll and retained memory. The
@@ -362,7 +414,8 @@ def _bounded_hls_download(playback_url, dest, expected_bytes, deadline):
                 if returncode is not None:
                     _drain_private_stderr(process, private_stderr)
                     if returncode:
-                        raise SourceFetchError(_classify_download_stderr(private_stderr), returncode)
+                        raise SourceFetchError(_classify_download_stderr(private_stderr), returncode,
+                                               _sanitize_download_diagnostic(private_stderr))
                     break
                 time.sleep(min(0.2, _remaining(deadline)))
         finally:
@@ -464,13 +517,22 @@ def acquire_sources(outdir, report_path):
             row['status']='exact_source_verified';paths[slug]=target
         except Exception as exc:
             row['status']='blocked';row['reason']=public_source_error(exc)
+            if isinstance(exc,urllib.error.HTTPError):
+                row['reason']=f'http_{exc.code}'
+            elif isinstance(exc,urllib.error.URLError):
+                row['reason']='archive_connection_error'
             if type(getattr(exc,'returncode',None)) is int:
                 row['returncode']=exc.returncode
+            detail=getattr(exc,'safe_summary','')
+            if isinstance(detail,str) and detail:
+                row['safe_summary']=detail[:600]
             rows.append(row)
             Path(report_path).write_text(json.dumps({'sources':rows,'audio_inference_started':False,'raw_audio_uploaded':False,'audio_review_pass':False,'publication_eligible':False},indent=2)+'\n')
-            raise SourceFetchError('source_acquisition_incomplete') from None
+            continue
         rows.append(row)
     Path(report_path).write_text(json.dumps({'sources':rows,'audio_inference_started':False,'raw_audio_uploaded':False,'audio_review_pass':False,'publication_eligible':False},indent=2)+'\n')
+    if not paths:
+        raise SourceFetchError('no_exact_source_available')
     return paths
 
 
@@ -508,9 +570,10 @@ def read_plan(path, expected_sha):
 
 def extract_windows(plan, paths, input_dir):
     expected={slug:digest for slug,(_,digest,_,_) in SOURCES.items()}
-    if set(paths)!=set(expected):
-        raise ValueError('Exactly the three approved source files are required')
-    for slug,digest in expected.items():
+    if not paths or not set(paths).issubset(expected):
+        raise ValueError('A nonempty subset of the three approved sources is required')
+    for slug in paths:
+        digest=expected[slug]
         path=Path(paths[slug])
         if path.is_symlink() or not path.is_file() or sha(path)!=digest:
             raise ValueError('Original source SHA256 mismatch before clipping')
@@ -519,6 +582,8 @@ def extract_windows(plan, paths, input_dir):
         raise ValueError('Symlink input directory rejected')
     items=[]
     for original in plan['items']:
+        if original['slug'] not in paths:
+            continue
         item=dict(original);rel=f'clips/{item["id"]}.wav';dest=input_dir/rel
         if dest.is_symlink() or not dest.resolve().is_relative_to(input_dir.resolve()):
             raise ValueError('Clip output escapes its isolated input directory')
@@ -529,17 +594,28 @@ def extract_windows(plan, paths, input_dir):
             raise ValueError('Bounded local PCM extraction failed')
         item.update(path=rel,bytes=dest.stat().st_size,sha256=sha(dest))
         check_wav(dest,item);items.append(item)
-    return {'schema':'tennislive.runtime-retained-excerpts.v2','items':items,'source_seconds':309.95,'raw_audio_uploaded':False,'audio_review_pass':False,'publication_eligible':False}
+    return {'schema':'tennislive.runtime-retained-excerpts.v2','items':items,'source_seconds':round(sum(x['source_to']-x['source_from']for x in items),3),'planned_source_seconds':309.95,'available_slugs':sorted(paths),'blocked_slugs':sorted(set(expected)-set(paths)),'scope_status':'complete_inference_input' if len(paths)==len(expected) else 'partial_inference_input','raw_audio_uploaded':False,'audio_review_pass':False,'publication_eligible':False}
 
 
 def read_runtime(path, plan, input_dir):
     data=json.loads(Path(path).read_text())
-    if data.get('schema')!='tennislive.runtime-retained-excerpts.v2' or data.get('source_seconds')!=309.95:
+    if data.get('schema')!='tennislive.runtime-retained-excerpts.v2' or data.get('planned_source_seconds')!=309.95:
         raise ValueError('Unexpected local runtime evidence')
+    available=data.get('available_slugs',[])
+    if not isinstance(available,list)or not available or len(set(available))!=len(available)or not set(available).issubset(SOURCES):
+        raise ValueError('Invalid available-source subset')
+    if data.get('blocked_slugs')!=sorted(set(SOURCES)-set(available)):
+        raise ValueError('Missing-source status does not match the available sources')
+    expected_items=[x for x in plan['items']if x['slug']in available]
+    expected_seconds=round(sum(x['source_to']-x['source_from']for x in expected_items),3)
+    if data.get('source_seconds')!=expected_seconds:
+        raise ValueError('Partial source seconds are not the exact retained subset')
     items=data.get('items',[])
-    if len(items)!=15:
+    if len(items)!=len(expected_items):
         raise ValueError('Runtime excerpt count differs')
-    for expected,item in zip(plan['items'],items):
+    if data.get('scope_status')!=('complete_inference_input'if len(available)==len(SOURCES)else'partial_inference_input'):
+        raise ValueError('Runtime scope status is inconsistent')
+    for expected,item in zip(expected_items,items):
         if set(item)!=set(expected)|{'path','bytes','sha256'} or any(item[k]!=v for k,v in expected.items()):
             raise ValueError('Runtime source window differs from fixed plan')
         if item['path']!=f'clips/{item["id"]}.wav' or not valid_digest(item['sha256']):
