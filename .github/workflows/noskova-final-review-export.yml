@@ -1,67 +1,67 @@
-# Branch-only review override. Do not merge this temporary file into main.
-name: native-cover-preview
-run-name: "native-cover-preview · ${{ inputs.slug }} · preview-only"
+name: native-asr-short-window-review
+run-name: "native-asr-short-window-review · ATP 2026-10-01 · evidence-only"
 on:
   workflow_dispatch:
-    inputs:
-      slug:
-        description: "Existing 赛场之上 spec slug; image preview only"
-        required: true
-        type: string
 permissions:
   contents: read
 concurrency:
-  group: native-cover-preview-${{ github.ref }}-${{ inputs.slug }}
+  group: native-asr-short-window-review
   cancel-in-progress: false
 jobs:
-  cover-preview:
+  asr-evidence:
+    if: github.ref == 'refs/heads/preview/native-asr-20261001'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     permissions:
       contents: read
     env:
-      SLUG: ${{ github.event.inputs.slug }}
+      ORT_DISABLE_TELEMETRY: "1"
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
       PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONPATH: src
+      INPUT_PLAN_SHA: "5acda0db28c3387269204f2a8e6c3995514d89db1e34a673dc73dacd97a8b75c"
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
           sparse-checkout: |
-            assets
-            data
-            specs
             src
-            tools
+            tools/review_atp_public_windows.py
+            assets/asr-review-20261001/public-source-windows.json
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - name: Preview input and existing browser preflight (read only)
+          python-version: "3.12"
+      - name: Validate the fixed fourteen-window plan
         run: |
           set -euo pipefail
-          [[ "$GITHUB_REF_NAME" == preview/native-cover-* ]] || { echo "::error::This temporary preview workflow requires an isolated preview/native-cover-* branch"; exit 1; }
-          python tools/check_cover_preview.py --slug "$SLUG" --inputs-only
-          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
-          [ -n "$CHROME" ] && [ -x "$CHROME" ] || { echo "::error::No preinstalled browser; preview will not install one"; exit 1; }
-          "$CHROME" --version
-          echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
-      - name: Install declared Python rendering dependencies
-        run: python -m pip install -q -e ".[webrender]"
-      - name: Check native cover contract
-        run: PYTHONPATH=src python tools/check_cover_preview.py --slug "$SLUG"
-      - name: Render native preview only
+          [[ "$GITHUB_REF_NAME" == "preview/native-asr-20261001" ]] || exit 1
+          command -v ffmpeg >/dev/null
+          python tools/review_atp_public_windows.py --mode inputs --plan-sha256 "$INPUT_PLAN_SHA"
+      - name: Install public-source reader dependencies
+        run: python -m pip install --disable-pip-version-check --retries 0 --timeout 30 requests==2.32.5 yt-dlp==2026.7.4
+      - name: Verify public sources and extract only the fixed windows
         run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/cover-preview"
-          PYTHONPATH=src python tools/render_cover_local.py --slug "$SLUG" \
-            --outdir "$RUNNER_TEMP/cover-preview" --out "$RUNNER_TEMP/cover-preview/preview.jpg"
-          PYTHONPATH=src python tools/check_cover_preview.py --slug "$SLUG" \
-            --report-to "$RUNNER_TEMP/cover-preview/preview-report.json"
-          echo "Preview only. Final-video QC NOT RUN. No publication or WeChat send." >> "$GITHUB_STEP_SUMMARY"
+          python tools/review_atp_public_windows.py --mode acquire --plan-sha256 "$INPUT_PLAN_SHA" --workdir "$RUNNER_TEMP/atp-public-review" --outdir "$RUNNER_TEMP/atp-asr-evidence"
+      - name: Install fixed inference dependencies
+        run: |
+          python -m pip install --disable-pip-version-check --retries 0 --timeout 30 faster-whisper==1.2.1 ctranslate2==4.8.2 onnxruntime==1.30.0 numpy==2.5.3 huggingface-hub==1.33.0 tokenizers==0.23.2 av==19.0.0
+      - name: Fetch and hash-verify one official model
+        run: |
+          python tools/review_atp_public_windows.py --mode download-model --plan-sha256 "$INPUT_PLAN_SHA" --workdir "$RUNNER_TEMP/atp-public-review" --outdir "$RUNNER_TEMP/atp-asr-evidence"
+      - name: Infer fourteen windows sequentially
+        run: |
+          python tools/review_atp_public_windows.py --mode infer --plan-sha256 "$INPUT_PLAN_SHA" --workdir "$RUNNER_TEMP/atp-public-review" --outdir "$RUNNER_TEMP/atp-asr-evidence"
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: cover-preview-${{ github.event.inputs.slug }}-${{ github.run_id }}
+          name: atp-short-window-asr-${{ github.run_id }}
           path: |
-            ${{ runner.temp }}/cover-preview/preview.jpg
-            ${{ runner.temp }}/cover-preview/preview-report.json
-          if-no-files-found: error
+            ${{ runner.temp }}/atp-asr-evidence/sources.json
+            ${{ runner.temp }}/atp-asr-evidence/runtime-inputs.json
+            ${{ runner.temp }}/atp-asr-evidence/clip-*.json
+            ${{ runner.temp }}/atp-asr-evidence/batch.json
+          if-no-files-found: warn
           retention-days: 7
