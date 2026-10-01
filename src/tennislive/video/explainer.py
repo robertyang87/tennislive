@@ -2017,6 +2017,8 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # 2026-10-01：run 36808709110 的 133.67s 成片已逐屏、字幕与音量质检；见 docs/research/atp250-medvedev-hangzhou-2026-qc.json。
+    "atp250-medvedev-hangzhou-2026",
     # 2026-09-26 验过才加进来的。**第二趟**的数（第一趟 run 36249638228 抽帧看见
     # 字幕「弗里茨第十 蒂亚福第12」半中半洋，旁白改写后作废，并补了判据
     # `test_同一句里的排名不许一个中文一个阿拉伯数字`）：

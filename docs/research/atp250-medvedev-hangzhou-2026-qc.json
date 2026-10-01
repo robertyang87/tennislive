@@ -1,0 +1,51 @@
+{
+  "slug": "atp250-medvedev-hangzhou-2026",
+  "reviewed_at_utc": "2026-10-01T03:14:23.317743+00:00",
+  "source_commit": "2a544718ec44dc1baf72c9d40c31d76d440a39bc",
+  "render_commit": "bfd6e54133b3869d531a56c85ffaf5e03014a6e6",
+  "workflow_run": 36808709110,
+  "release_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-atp250-medvedev-hangzhou-2026/explainer.mp4",
+  "movie": {
+    "duration_seconds": 133.666667,
+    "resolution": [
+      1080,
+      1440
+    ],
+    "fps": 30,
+    "bytes": 4424658,
+    "sha256": "5aaddcc3c7485967292e6081cbbd08e74414d9a898259146c0355d5c5d268183",
+    "video_audio_duration_difference_seconds": 0.052667
+  },
+  "audio": {
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+22%",
+    "pitch": "+0Hz",
+    "mean_volume_db": -24.1,
+    "peak_volume_db": -4.0,
+    "clip_detected": false,
+    "word_boundaries_reviewed": 12,
+    "all_remote_word_boundaries_identical_to_local_review": true,
+    "longest_silence_seconds": 2.368917,
+    "longest_silence_location": "结尾卡至品牌片尾过渡，含标准末屏留白"
+  },
+  "visual": {
+    "all_cards_reviewed": 12,
+    "outro_reviewed": true,
+    "actual_mp4_frames_reviewed": 13,
+    "black_frames_detected": false,
+    "rules_and_hypothetical_labels_visible": true,
+    "historical_years_visible": true,
+    "no_picture_subtitle_overlap_observed": true
+  },
+  "checks": {
+    "explainer_preflight": "17/17 passed",
+    "new_deck_budget_tests": "3 passed",
+    "landed_copy_checks": "4 phrases present",
+    "subtitle_lines": "all 12 ASS files read back; dates, ranking, 250/500 and 90→250 hypothetical verified"
+  },
+  "content_scope": {
+    "individual_cases": 9,
+    "same_event_group_used": "2017 Brisbane: Raonic 3, Wawrinka 4, Nishikori 5, Thiem 8, Nadal 9",
+    "additional_group_in_dossier": "2022 Marseille: Tsitsipas 4, Rublev 7, Auger-Aliassime 9"
+  }
+}
