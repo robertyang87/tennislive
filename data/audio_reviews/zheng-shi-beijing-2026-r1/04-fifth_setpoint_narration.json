@@ -1,0 +1,13 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-RAEwp4zJBx8/RAEwp4zJBx8.mp4",
+  "source_sha256": "02e6d5274b2b6f0071fa0e06e88a6f75eeba08359f678d8a026ed7f4a425102b",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI",
+  "reviewed_at": "2026-10-01T07:25:58+00:00",
+  "reviewed_from": 118,
+  "reviewed_to": 144.38,
+  "status": "complete",
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "Both full-source VAD passes and the full multilingual no-VAD pass have no words in this interval. The English no-VAD Point-of-the-match tail stretched to119.02 is resolved as a timing artifact using focused100–113 and112–122 two-model runs: that phrase is earlier and This is some fight ends117.74/117.76. The next possible speech begins no earlier than144.54 in any existing run, after this window. The natural0.18-second tail through144.38 is also before the earliest possible next commentary onset144.54 in existing evidence."
+}

@@ -16,6 +16,48 @@ FIELDS = ("winners", "ue")
 SOURCE_CLASSES = frozenset({"official_stats", "editorial", "broadcast", "tnns", "mcp"})
 SOURCE_METHODS = frozenset({"api", "page", "broadcast", "user_screenshot"})
 
+# One-film owner decision, 2026-10-01. This is deliberately not a general
+# allow_missing flag: Sun/ATP and every other production retain the full gate.
+ZHENG_SHI_OMISSION = {
+    "slug": "zheng-shi-beijing-2026-r1",
+    "source_id": "1020_2026_LS070",
+    "match_date": "2026-10-01",
+    "winner_result": "7-6(6) 4-6 6-2",
+    "fields": ["winners", "ue"],
+    "decision": "omit_both_rows_for_this_film_only",
+    "authorization": "owner-approved-single-film-omission-2026-10-01",
+}
+
+
+def _omission_problem(spec: dict) -> str | None:
+    """Validate the exact approved episode; do not certify unknown values."""
+    stats = spec["stats"]
+    if stats.get("_winners_ue_omission") != ZHENG_SHI_OMISSION:
+        return "Winners/UE 省略仅限郑钦文–施晗本期的明确用户决定，批准记录不匹配"
+    match = spec.get("_match") or {}
+    cover = spec.get("cover") or {}
+    if (spec.get("slug") != ZHENG_SHI_OMISSION["slug"]
+            or match.get("status") != "result_verified"
+            or match.get("source") != "official_wta"
+            or match.get("source_id") != ZHENG_SHI_OMISSION["source_id"]
+            or match.get("date") != ZHENG_SHI_OMISSION["match_date"]
+            or match.get("winner_result") != ZHENG_SHI_OMISSION["winner_result"]
+            or match.get("winner") != "郑钦文"
+            or match.get("loser") != "施晗"
+            or match.get("participants") != ["郑钦文", "施晗"]
+            or match.get("set_scores_home_away") != [[7, 6], [4, 6], [6, 2]]
+            or cover.get("eyebrow") != "赛场之上"
+            or cover.get("winner") != "郑钦文"
+            or cover.get("result") != ZHENG_SHI_OMISSION["winner_result"]
+            or [(p.get("name"), p.get("name_en")) for p in cover.get("matchup", [])
+                if isinstance(p, dict)] != [("郑钦文", "Qinwen Zheng"), ("施晗", "Han Shi")]):
+        return "Winners/UE 单片省略批准与本场身份、日期、赢家、比分或球员列不一致"
+    if any(key in stats[side] for side in ("a", "b") for key in FIELDS):
+        return "批准省略须移除双方 Winners/UE 字段，不得显示 null、零或推测数值"
+    if "_winners_ue_evidence" in stats:
+        return "省略不等于统计已核实，请保留查证记录而非 Winners/UE 完整证据声明"
+    return None
+
 
 def _text(value: object) -> bool:
     return isinstance(value, str) and bool(value.strip())
@@ -107,6 +149,8 @@ def problem(spec: dict) -> str | None:
     cover = spec.get("cover")
     if not isinstance(cover, dict) or not _text(cover.get("result")):
         return "Winners/UE 核验需要本场完整的赢家视角比分 cover.result"
+    if "_winners_ue_omission" in stats:
+        return _omission_problem(spec)
     present = [key in side for side in sides for key in FIELDS]
     if any(present) and not all(present):
         return "Winners/UE 必须双方两项完整，不能只补一边或拿缺失充零"
