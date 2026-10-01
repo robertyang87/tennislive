@@ -18,7 +18,16 @@
       }
     ],
     "winner": "郑钦文",
-    "result": "7-6(6) 4-6 6-2"
+    "result": "7-6(6) 4-6 6-2",
+    "portrait": {
+      "image": "assets/reel/zheng-shi-cover.jpg",
+      "focus": 0.588,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「qinwen zheng」「BEIJING」，日期对上当地 2026-10-01（Asia/Shanghai；日期来源 flashscore dc_1_QkqqzdWq）；EXIF 拍摄 2026:10:01 12:25:09+09:00。② 分辨率：5460×3640，zoom 1 铺 1080×1440 是 2.53×（不放大）。③ 认人：最大那张脸像 郑钦文 0.51（≥ 0.34）。④ 睁眼：EAR 0.1872（≥ 0.16）。⑤ 钩子带：脸落在 y325~415，钩子顶边 790。排序：[True, False, False, True, True, 90, 0.5138]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/01/488c5b9e-ec26-4b4e-ac68-8bb82aa96cff/Zheng-R1-Yanshan-Zhang.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/01/488c5b9e-ec26-4b4e-ac68-8bb82aa96cff/Zheng-R1-Yanshan-Zhang.jpg（条目 #4584804，接口发布 2026-10-01T06:38:48Z，EXIF 拍摄 2026:10:01 12:25:09+09:00（UTC ），原图 5460×3640），说明原文「Zheng Qinwen, Beijing 2026 · BEIJING, CHINA - OCTOBER 01: Qinwen Zheng of China plays a backhand against Han Shi of China during the Women&apos;s Singles first round match on Day 2 of the China Open at National Tennis Center on October 01, 2026 in Beijing, China. (Photo by Yanshan Zhang/Getty Images」，署名 Yanshan Zhang/Getty Images；2026 Getty Images；Getty Images；Yanshan Zhang。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -381,10 +390,54 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "error",
-    "retryable": true,
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 251.8,
+      "end": 274.56,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "252.5s shows 郑钦文 (red dress) fist-pumping in celebration right after the final point; 254.5s shows the last serve/shot with on-screen scoreboard showing MATCH POINT scenario (3rd set 1-0 after losing tiebreak); 266.5s-274.5s show 郑钦文 composed/celebrating close-ups. Cut boundaries at 251.8 and 274.56 bracket this decisive stretch.",
+      "confidence": 0.92
+    },
+    "ending": {
+      "start": 274.56,
+      "end": 298.16,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "274.56s cut enters celebration phase. 276.5s-278.5s: handshake at net with 施晗 (yellow). 280.5s-282.5s: hugging opponents/team. 284.5s-294.5s: 郑钦文 waving to crowd, 北京/为胜利时刻 banner visible. 286.5s-290.5s: trophy/wave celebration. 296.5s final scoreboard graphic: 'ROUND 1, Q ZHENG 6, S SHI 2' confirming 7-6(6) 4-6 6-2 result. 298.5s WTA outro begins (cut at 298.16). Fully covers cold_open.",
+      "confidence": 0.95
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "郑钦文",
+      "moment": "other",
+      "wrong_or_old": false,
+      "reason": "Cover shows player in red dress on blue hard court matching 郑钦文's outfit in the match footage (red Alipay+ vivo branded dress). Blue court and lighting consistent with Beijing China Open setting. Action shot of full-effort backhand swing mid-air. Face visible frontal/near-frontal, both eyes visible. No other platform watermark, no opposing player visible to compare for identity, but court color and clothing strongly match same match.",
+      "confidence": 0.82
+    },
     "problems": [
-      "MiniMax API：JSONDecodeError: Expecting ',' delimiter: line 7 column 100 (char 212)"
-    ]
+      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
+      "封面情绪应为 winner_celebration，现在是 other"
+    ],
+    "model_attempts": 1,
+    "input_sha256": "51f3df8fb66eb7390f5e85126f13a9544cdc7300eb033e78fc81836f1b0bd5d3",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_02.jpg",
+      "contact_03.jpg",
+      "contact_04.jpg",
+      "contact_05.jpg"
+    ],
+    "cover_image": "assets/reel/zheng-shi-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "QkqqzdWq",
+      "start_utc": "2026-10-01T03:10:00Z",
+      "end_utc": "2026-10-01T05:55:42Z",
+      "source": "flashscore dc_1_QkqqzdWq（DC／DD）"
+    },
+    "replaced_under": ""
   }
 }

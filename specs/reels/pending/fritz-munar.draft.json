@@ -21,12 +21,12 @@
     "result": "6-7(7) 6-4 6-3",
     "portrait": {
       "image": "assets/reel/fritz-munar-cover.jpg",
-      "focus": 0.332,
+      "focus": 0.117,
       "focus_y": 0.5,
       "zoom": 1.0,
-      "_gates": "① 点名：说明／文件名有「taylor fritz」「Tokyo」，日期对上当地 2026-10-01（Asia/Tokyo；日期来源 flashscore dc_1_rZXni0xH）；EXIF 拍摄 2026:10:01 12:24:35+08:00。② 分辨率：4447×2965，zoom 1 铺 1080×1440 是 2.06×（不放大）。③ 认人：最大那张脸像 弗里茨 0.48（≥ 0.34）。④ 睁眼：EAR 0.2524（≥ 0.16）。⑤ 钩子带：脸落在 y263~703，钩子顶边 790。排序：[True, False, False, True, True, 440, 0.4773]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
-      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/01/8f87be07-8c39-483a-aaf6-64595eab9ce6/GettyImages-2297441213.jpg",
-      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/01/8f87be07-8c39-483a-aaf6-64595eab9ce6/GettyImages-2297441213.jpg（条目 #4584709，接口发布 2026-10-01T04:32:13Z，EXIF 拍摄 2026:10:01 12:24:35+08:00（UTC ），原图 4447×2965），说明原文「2026 Tokyo Fritz · USA's Taylor Fritz plays a shot to Spain's Jaume Munar during their men's singles tennis match at the ATP Tour Japan Open Tennis Championships at the Ariake Tennis Forest Park in Tokyo on October 1, 2026. (Photo by Rie KIKUCHI / AFP)」，署名 RIE KIKUCHI；AFP or licensors；AFP via Getty Images。"
+      "_gates": "① 点名：说明／文件名有「taylor fritz」「Tokyo」，日期对上当地 2026-10-01（Asia/Tokyo；日期来源 flashscore dc_1_rZXni0xH）；EXIF 拍摄 2026:10:01 03:33:21+01:00。② 分辨率：2800×1867，zoom 1 铺 1080×1440 是 1.30×（不放大）。③ 认人：最大那张脸像 弗里茨 0.43（≥ 0.34）。④ 睁眼：EAR 0.2992（≥ 0.16）。⑤ 钩子带：脸落在 y299~645，钩子顶边 790。排序：[True, False, False, True, True, 346, 0.4312]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/01/3781a5a7-b45e-4876-a01e-a621d43392ac/GettyImages-2297437864.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/01/3781a5a7-b45e-4876-a01e-a621d43392ac/GettyImages-2297437864.jpg（条目 #4584707，接口发布 2026-10-01T04:32:07Z，EXIF 拍摄 2026:10:01 03:33:21+01:00（UTC ），原图 2800×1867），说明原文「2026 Tokyo Fritz · USA's Taylor Fritz plays a shot to Spain's Jaume Munar during their men's singles tennis match at the ATP Tour Japan Open Tennis Championships at the Ariake Tennis Forest Park in Tokyo on October 1, 2026. (Photo by Rie KIKUCHI / AFP)」，署名 RIE KIKUCHI；AFP or licensors；AFP via Getty Images。"
     }
   },
   "_production": {
@@ -368,35 +368,36 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 137.14,
-      "end": 141.24,
+      "start": 109.06,
+      "end": 137.14,
       "kind": "match_point",
       "winner_visible": true,
-      "reason": "Frames at 137.14s and 138.5s show Fritz (maroon shirt) at the net with MUNAR approaching for the handshake; score overlay shows FRITZ 7 6 3, MUNAR 6 4 6 — final set just completed at 3-6. The deciding point/handshake is visible, making this the match-ending payoff.",
-      "confidence": 0.85
+      "reason": "镜头切点 109.06s 进入近景画面：穆纳尔（戴白头带、白色衣领）在 110.5s 时低头咬牙，114.5s 回头；112.5s/114.5s 弗里茨弯身低头的画面夹在中间——这是最后一局收尾与赛点的连贯反应片段。窗口内 108.5s 比分牌显示 FRITZ 7 6 15 / MUNAR 6 5 15（第二盘6-4、第三盘3-6前的决胜局收尾），110.5s 穆纳尔咬牙不甘、112.5s/114.5s 弗里茨握拍低头，是最后被破发/输球的连续画面，符合冷开场必须是赛点/赛后余波的硬规则。",
+      "confidence": 0.86
     },
     "ending": {
       "start": 137.14,
       "end": 146.28,
       "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "137.14s–140.5s: handshake at the net between Fritz and Munar with crowd applauding, scoreboard reading FRITZ 7 6 3 / MUNAR 6 4 6. 142.5s: post-match sideline interaction with emotion visible. 144.5s: Munar (red shirt) shown roaring with clenched fists in celebration/relief. The window captures both the handshake and the winner's celebration, fully covering the cold-open window.",
-      "confidence": 0.85
+      "reason": "137.14s 切点后 138.5s 显示弗里茨、穆纳尔在网前握手（比分牌 FRITZ 7 6 3 / MUNAR 6 4 6），140.5s 两人握手仍可见，144.5s 切换到穆纳尔握拳怒吼的红色衣服特写（眼睛睁大、张嘴吼），146.5s 出现 TennisTV 标板。窗口完整覆盖网前握手+穆纳尔赛后庆祝吼，并完整覆盖了 cold_open 的 109.06–137.14 时间窗口。",
+      "confidence": 0.92
     },
     "cover": {
-      "same_match": false,
+      "same_match": true,
       "subject": "弗里茨",
       "moment": "loser_fighting",
-      "wrong_or_old": true,
-      "reason": "The cover shows a tall player wearing a BOSS white cap with dark piping and a white shirt with a star logo (Hugo Boss kit, an older sponsor era). In this match Fritz wears a maroon Adidas shirt with no BOSS branding (see frames 84.5s, 86.5s, 130.5s, 132.5s, 134.5s, 136.5s). The cap/shirt combination does not match Fritz's current kit at this tournament, and no scoreboard/event mark ties the photo to this match. Cannot be confirmed as same-match — treated as old/wrong image.",
-      "confidence": 0.4
+      "wrong_or_old": false,
+      "reason": "封面男子面额头清晰可见、双眼睁开，面朝镜头方向微侧，约 1/4 侧脸但双眼和眉眼完整可读；身穿白色 Hugo Boss POLO 衫、戴 BOSS 白色头带、右手持红框 Wilson 拍，正在用力回球、神情咬牙较劲发力——属于输家仍在拼的近景动作。背景蓝色挡板与片源 ATP Finals（室内蓝场、JAPAN 赞助标识）的视觉系统一致；服装与片源中白色服装持拍者一致，无法证明来自其他赛事，且符合封面规则'爆冷 → 弗里茨 · 输家仍在拼'。confidence 因面额约为 1/4 侧而非完全正面，保守下调。",
+      "confidence": 0.78
     },
     "problems": [
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.40 低于 0.80"
+      "cold_open 理由引用窗口外时间：[108.5]",
+      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
+      "封面置信度 0.78 低于 0.80"
     ],
     "model_attempts": 1,
-    "input_sha256": "1c54b8c4fd95f230d3de0f45c0734a395ff2119d3f6f7e885f9e2b55f0f18650",
+    "input_sha256": "b851e40b995de7965b2a5844c024579fa8346964b7f24b97e7786beb18e305f8",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
@@ -411,6 +412,9 @@
       "end_utc": "2026-10-01T05:08:32Z",
       "source": "flashscore dc_1_rZXni0xH（DC／DD）"
     },
-    "replaced_under": "b4d81906585a75866d7ad2269d2ee65fb49a4066bb754114fcc271183af1de61"
+    "replaced_under": "1c54b8c4fd95f230d3de0f45c0734a395ff2119d3f6f7e885f9e2b55f0f18650",
+    "rejected": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/01/8f87be07-8c39-483a-aaf6-64595eab9ce6/GettyImages-2297441213.jpg"
+    ]
   }
 }

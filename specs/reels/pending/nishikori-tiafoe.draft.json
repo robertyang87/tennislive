@@ -18,7 +18,16 @@
       }
     ],
     "winner": "蒂亚福",
-    "result": "6-4 6-4"
+    "result": "6-4 6-4",
+    "portrait": {
+      "image": "assets/reel/nishikori-tiafoe-cover.jpg",
+      "focus": 0.497,
+      "focus_y": 0.0,
+      "zoom": 1.1,
+      "_gates": "① 点名：说明／文件名有「frances tiafoe」「Tokyo」，日期对上当地 2026-10-01（Asia/Tokyo；日期来源 flashscore dc_1_j3oaqNc6）；EXIF 拍摄 2026:10:01 06:41:11+01:00。② 分辨率：5865×3910，zoom 1.1 铺 1080×1440 是 2.47×（不放大）。③ 认人：最大那张脸像 蒂亚福 0.42（≥ 0.34）。④ 睁眼：EAR 0.2949（≥ 0.16）。⑤ 钩子带：脸落在 y172~297，钩子顶边 790。排序：[True, False, False, True, True, 125, 0.4204]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/01/26ad9fd7-f26f-4860-914e-8feef41ff73c/GettyImages-2297442531.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/01/26ad9fd7-f26f-4860-914e-8feef41ff73c/GettyImages-2297442531.jpg（条目 #4584792，接口发布 2026-10-01T06:16:32Z，EXIF 拍摄 2026:10:01 06:41:11+01:00（UTC ），原图 5865×3910），说明原文「2026 Tokyo Tiafoe · USA's Frances Tiafoe plays a shot to Japan's Kei Nishikori during their men's singles tennis match at the ATP Tour Japan Open Tennis Championships at the Ariake Tennis Forest Park in Tokyo on October 1, 2026. (Photo by Rie KIKUCHI / AFP)」，署名 RIE KIKUCHI；AFP or licensors；AFP via Getty Images。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -325,46 +334,23 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "waiting",
-    "retryable": false,
-    "cold_open": {
-      "start": 118.5,
-      "end": 126.5,
-      "kind": "match_point",
-      "winner_visible": true,
-      "reason": "Scoreboard shows NISHIKORI 4 5 / TIAFOE 4 40 at 120.5s, the deciding point of the second set; 122.5s–126.5s capture the final rally and Tiafoe closing it out at 5–6 to seal 6–4 6–4.",
-      "confidence": 0.85
-    },
-    "ending": {
-      "start": 118.5,
-      "end": 138.5,
-      "kind": "winner_celebration",
-      "winner_visible": true,
-      "reason": "Replay of the match point runs through 126.5s; 128.5s–134.5s show close-ups of Tiafoe (UKG jersey, white headband) in his celebration; 136.5s shows the embrace with Nishikori, fully covering the cold-open window and delivering the final payoff.",
-      "confidence": 0.88
-    },
-    "cover": {
-      "same_match": false,
-      "subject": "",
-      "moment": "other",
-      "wrong_or_old": true,
-      "reason": "No candidate cover photo was provided; same_match cannot be verified, so default to false with low confidence.",
-      "confidence": 0.4
-    },
+    "visual_status": "error",
+    "retryable": true,
     "problems": [
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.40 低于 0.80",
-      "封面人物应为 蒂亚福，模型识别为 空",
-      "封面情绪应为 winner_celebration，现在是 other"
+      "MiniMax API：HTTPError: HTTP Error 400: Bad Request"
+    ]
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "j3oaqNc6",
+      "start_utc": "2026-10-01T05:30:00Z",
+      "end_utc": "2026-10-01T06:44:08Z",
+      "source": "flashscore dc_1_j3oaqNc6（DC／DD）"
+    },
+    "tried": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/01/2d115f71-d773-4e46-a094-7a7207c4f3cb/GettyImages-2297447642.jpg",
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/01/30e23372-ef24-487e-a739-13de454ba9bd/GettyImages-2297442276.jpg"
     ],
-    "model_attempts": 1,
-    "input_sha256": "d498ced52ddf1765066e9735b0b0d7015cf53226a3c555690ae5ae833330fc09",
-    "inputs": [
-      "contact_00.jpg",
-      "contact_01.jpg",
-      "contact_02.jpg"
-    ],
-    "cover_image": ""
+    "replaced_under": "d498ced52ddf1765066e9735b0b0d7015cf53226a3c555690ae5ae833330fc09"
   }
 }
