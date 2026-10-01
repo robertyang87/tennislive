@@ -1,11 +1,11 @@
-name: native-asr-short-window-review
-run-name: "native-asr-short-window-review · ATP 2026-10-01 · evidence-only"
+name: native-asr-retained-window-review-v2
+run-name: "native-asr-retained-window-review-v2 · ATP 2026-10-01 · evidence-only"
 on:
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: native-asr-short-window-review
+  group: native-asr-retained-window-review-v2
   cancel-in-progress: false
 jobs:
   asr-evidence:
@@ -21,15 +21,15 @@ jobs:
       TRANSFORMERS_OFFLINE: "1"
       PYTHONDONTWRITEBYTECODE: "1"
       PYTHONPATH: src
-      INPUT_PLAN_SHA: "5acda0db28c3387269204f2a8e6c3995514d89db1e34a673dc73dacd97a8b75c"
+      INPUT_PLAN_SHA: "0a15b7026b90d0ef2c2e816ff18b629144a8b71365db23cbaf8f360218d4db41"
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
           sparse-checkout: |
             src
-            tools/review_atp_public_windows.py
-            assets/asr-review-20261001/public-source-windows.json
+            tools/review_atp_retained_windows_v2.py
+            assets/asr-review-20261001/retained-source-windows-v2.json
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
@@ -43,34 +43,34 @@ jobs:
           fi
           command -v ffmpeg
           ffmpeg -version
-      - name: Validate the fixed fourteen-window plan
+      - name: Validate the fixed fifteen-window plan
         run: |
           set -euo pipefail
           [[ "$GITHUB_REF_NAME" == "preview/native-asr-20261001" ]] || exit 1
           command -v ffmpeg >/dev/null
-          python tools/review_atp_public_windows.py --mode inputs --plan-sha256 "$INPUT_PLAN_SHA"
+          python tools/review_atp_retained_windows_v2.py --mode inputs --plan-sha256 "$INPUT_PLAN_SHA"
       - name: Install public-source reader dependencies
         run: python -m pip install --disable-pip-version-check --retries 0 --timeout 30 requests==2.32.5 yt-dlp==2026.7.4
       - name: Verify public sources and extract only the fixed windows
         run: |
-          python tools/review_atp_public_windows.py --mode acquire --plan-sha256 "$INPUT_PLAN_SHA" --workdir "$RUNNER_TEMP/atp-public-review" --outdir "$RUNNER_TEMP/atp-asr-evidence"
+          python tools/review_atp_retained_windows_v2.py --mode acquire --plan-sha256 "$INPUT_PLAN_SHA" --workdir "$RUNNER_TEMP/atp-retained-review-v2" --outdir "$RUNNER_TEMP/atp-retained-asr-v2"
       - name: Install fixed inference dependencies
         run: |
           python -m pip install --disable-pip-version-check --retries 0 --timeout 30 faster-whisper==1.2.1 ctranslate2==4.8.2 onnxruntime==1.30.0 numpy==2.5.3 huggingface-hub==1.33.0 tokenizers==0.23.2 av==19.0.0
       - name: Fetch and hash-verify one official model
         run: |
-          python tools/review_atp_public_windows.py --mode download-model --plan-sha256 "$INPUT_PLAN_SHA" --workdir "$RUNNER_TEMP/atp-public-review" --outdir "$RUNNER_TEMP/atp-asr-evidence"
-      - name: Infer fourteen windows sequentially
+          python tools/review_atp_retained_windows_v2.py --mode download-model --plan-sha256 "$INPUT_PLAN_SHA" --workdir "$RUNNER_TEMP/atp-retained-review-v2" --outdir "$RUNNER_TEMP/atp-retained-asr-v2"
+      - name: Infer fifteen windows sequentially
         run: |
-          python tools/review_atp_public_windows.py --mode infer --plan-sha256 "$INPUT_PLAN_SHA" --workdir "$RUNNER_TEMP/atp-public-review" --outdir "$RUNNER_TEMP/atp-asr-evidence"
+          python tools/review_atp_retained_windows_v2.py --mode infer --plan-sha256 "$INPUT_PLAN_SHA" --workdir "$RUNNER_TEMP/atp-retained-review-v2" --outdir "$RUNNER_TEMP/atp-retained-asr-v2"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: atp-short-window-asr-${{ github.run_id }}
+          name: atp-retained-window-asr-v2-${{ github.run_id }}
           path: |
-            ${{ runner.temp }}/atp-asr-evidence/sources.json
-            ${{ runner.temp }}/atp-asr-evidence/runtime-inputs.json
-            ${{ runner.temp }}/atp-asr-evidence/clip-*.json
-            ${{ runner.temp }}/atp-asr-evidence/batch.json
+            ${{ runner.temp }}/atp-retained-asr-v2/sources.json
+            ${{ runner.temp }}/atp-retained-asr-v2/runtime-inputs.json
+            ${{ runner.temp }}/atp-retained-asr-v2/clip-*.json
+            ${{ runner.temp }}/atp-retained-asr-v2/batch.json
           if-no-files-found: warn
           retention-days: 7
