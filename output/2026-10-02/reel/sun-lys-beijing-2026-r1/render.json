@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "4c7f1c59db46b0fc856b358852b6fb815b00512ebc2b7bf192818527176557f4",
+  "scoreboard_qc_sha256": "50d9027538d60391de93dfb161b4b2d89689404e1bb6f53b09aebdd53aee9982",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 0.0,
@@ -53,44 +53,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "50224669dc7bee3b6f17185c9bfa8dafff89caa42f6b418da1793e59f6d74fe1",
+  "render_inputs_sha256": "bb2ec1705c79c0a67ee6bee1ead613b5ce2dfba3142bf6fce40f3e0fd0761750",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "sun-lys-beijing-2026-r1",
-    "received_at": "2026-10-01T22:56:10Z",
-    "artifact_ready_at": "2026-10-01T23:00:33Z",
-    "elapsed_seconds": 263.37,
+    "received_at": "2026-10-01T23:30:02Z",
+    "artifact_ready_at": "2026-10-01T23:34:08Z",
+    "elapsed_seconds": 246.968,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "beb4f8c99a8d68b1dd01e11d5900de054d4f76914450d4b0d05579dba147bc17",
-    "spec_sha256": "72658da42614809798241d07821c2f19627c2657d19859893bcc7a22003b4e6d",
-    "run_id": "36937970468",
+    "film_sha256": "91d8f691837a81c5f315e0884bc9096464cf65a228a4e15a33bb5cb449056869",
+    "spec_sha256": "64e30b180907d32e8f893613ef96d87fff47f4976846533e2d91ad304d16fde5",
+    "run_id": "36941126337",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-01T22:58:14Z",
-        "run_id": "36937970468"
+        "at": "2026-10-01T23:31:53Z",
+        "run_id": "36941126337"
       }
     ],
-    "render_seconds": 139.37,
-    "pre_render_seconds": 124.0
+    "render_seconds": 135.968,
+    "pre_render_seconds": 111.0
   },
-  "film_sha256": "beb4f8c99a8d68b1dd01e11d5900de054d4f76914450d4b0d05579dba147bc17",
-  "film_bytes": 44714256,
-  "qc_attestation_sha256": "3ae8b71e4c3c3bce7157370fbbbd17bc7332ae04b42d65c97016a43312c0823b",
+  "film_sha256": "91d8f691837a81c5f315e0884bc9096464cf65a228a4e15a33bb5cb449056869",
+  "film_bytes": 44710677,
+  "qc_attestation_sha256": "1c458baf19214a884e994636146251905e5cea0adbcd834395370c9aa5774a01",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-01T22:58:14Z",
-      "run_id": "36937970468"
+      "at": "2026-10-01T23:31:53Z",
+      "run_id": "36941126337"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-01T23:00:34Z",
-      "run_id": "36937970468"
+      "at": "2026-10-01T23:34:10Z",
+      "run_id": "36941126337"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sun-lys-beijing-2026-r1/sun-lys-beijing-2026-r1.mp4",
-  "video_bytes": 44714256
+  "video_bytes": 44710677
 }
