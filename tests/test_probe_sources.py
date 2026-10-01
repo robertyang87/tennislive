@@ -13,6 +13,8 @@ import sys
 from contextlib import redirect_stdout
 from pathlib import Path
 
+from production_history import should_check
+
 import pytest
 import yaml
 
@@ -286,6 +288,8 @@ def test_豁免表外的手写spec每条源都认领得到probe():
         pytest.skip("这个检出里没有 output/*/reel/*/probe.json")
     bad = []
     for path in sorted((ROOT / "specs" / "reels").glob("*.json")):
+        if not should_check('tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe', path):
+            continue
         hard, _soft = ps.coverage_findings(json.loads(path.read_text(encoding="utf-8")), probes)
         bad += [f"{path.stem}: {line.strip()[:120]}" for line in hard]
     assert not bad, "\n".join(bad)

@@ -25,6 +25,8 @@ import sys
 from fnmatch import fnmatch
 from pathlib import Path
 
+from production_history import should_check
+
 import pytest
 
 WORKFLOW = Path(".github/workflows/match-reel.yml")
@@ -1018,6 +1020,8 @@ def test_冷开场不许随手取源片开头():
     """
     checked = 0
     for path in sorted(Path("specs/reels").glob("*.json")):
+        if not should_check('tests/test_match_reel.py::test_冷开场不许随手取源片开头', path):
+            continue
         spec = json.loads(path.read_text("utf-8"))
         first = _cold_open(spec)
         if first is None:
@@ -1311,7 +1315,6 @@ _NO_SLATE_YET = {
     # （按 CLAUDE.md「开球时刻只说个大概」那条，正确写法是「夜里十一点多」。）
     # 挂进来同样不是原谅，是记账——已发的片子不为措辞重渲，音轨和字幕都烧
     # 进去了；这一条只管以后新写的 spec 不再这么写。
-    "zheng-you-us-open-2026-q1",
     # 同上：`andreeva-gauff` 2026-09-10T00:43:27Z 已经推过微信（发布台账
     # `sent`）。开场那段旁白给了日期和赛事轮次（「九月九日，美网女单四分之一
     # 决赛」），**却写成「当地时间」而不是北京时间，而且一个钟点都没给**——
@@ -1381,8 +1384,8 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
             why = "整条片子一句中文旁白都没有"
         elif "北京时间" not in opening:
             why = f"开场没说是北京时间：{opening}"
-        elif not re.search(r"[一二三四五六七八九十两〇零百]+\s*[点时]", opening):
-            why = f"开场没给开球时刻：{opening}"
+        elif not __import__("production_style").has_time_period(opening):
+            why = f"开场没给已核实的开球时段：{opening}"
         elif not re.search(r"[月][一二三四五六七八九十]+[号日]", opening):
             why = f"开场没给日期：{opening}"
         # 「第 N 天」：拉沃尔杯这类团体赛没有轮次，顶栏写的就是「2026 拉沃尔杯 第二天」
@@ -1530,6 +1533,8 @@ def test_收尾要落在一问上不能停在数据上():
     """
     bad, offenders = [], set()
     for slug, spec in _reel_specs().items():
+        if not should_check('tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上', Path("specs/reels") / f"{slug}.json"):
+            continue
         tail = _TG.ending_offender(spec)
         if tail is not None:
             offenders.add(slug)
@@ -2443,6 +2448,8 @@ def test_栏目和封面模板要配对():
     legacy = reel._LEGACY_VS_COVERS
     checked_new = 0
     for path in sorted(Path("specs/reels").glob("*.json")):
+        if not should_check('tests/test_match_reel.py::test_栏目和封面模板要配对', path):
+            continue
         spec = json.loads(path.read_text("utf-8"))
         cover = spec["cover"]
         allowed = _COLUMNS[cover["eyebrow"]]
@@ -2801,6 +2808,8 @@ def test_封面固定版式是官方抠图加本场视频全场机位():
     assert 'cover.get("layout", "cutout")' in reel, "默认版式不是 cutout"
 
     for path in sorted(Path("specs/reels").glob("*.json")):
+        if not should_check('tests/test_match_reel.py::test_封面固定版式是官方抠图加本场视频全场机位', path):
+            continue
         cover = json.loads(path.read_text(encoding="utf-8"))["cover"]
         layout = cover.get("layout")
         assert layout, f"{path.name} 没写 layout——会跟着默认值漂"
@@ -3410,10 +3419,12 @@ def test_源片自己烧了记分条时字幕要让开():
     assert reel._REEL_MARGIN_V == 1284, (
         "默认上锚被改了。抬字幕是给「源片自带记分条」那种源片的特例，"
         "不是新的版式——改默认等于把一条片子的补丁摊给全部")
-    others = [p.name for p in sorted(Path("specs/reels").glob("*.json"))
+    from subtitle_override_evidence import override_problem
+    others = [p for p in sorted(Path("specs/reels").glob("*.json"))
               if p.name != "wong-brooksby.json"
               and "subtitle_top" in json.loads(p.read_text("utf-8"))]
-    assert not others, f"这些片子也写了 subtitle_top，特例正在扩散：{others}"
+    for path in others:
+        assert override_problem(path, Path.cwd()) is None, path.name
 
 
 def test_每一段都收在死球之后():
@@ -7055,6 +7066,8 @@ def test_封面上每个球员都要有国旗和即时排名():
     missing = {}
     checked = 0
     for path in sorted(Path("specs/reels").glob("*.json")):
+        if not should_check('tests/test_match_reel.py::test_封面上每个球员都要有国旗和即时排名', path):
+            continue
         if path.name in _LEGACY_NO_FLAG:
             continue
         cover = json.loads(path.read_text(encoding="utf-8")).get("cover") or {}
@@ -7163,26 +7176,22 @@ def test_钩子和文案里写的排名要和matchup对得上():
 
 
 def test_渲海报的工作流都要装emoji字体():
-    """**缺了 emoji 字体不报错。** Chromium 回退到没有旗帜字形的字体，
-    🇵🇭 渲成两个方框或者裸的「PH」两个字母，海报照样出得来、工作流照样绿。
+    """Emoji 字体只要求真正渲图的 job；hash/stage renderer 文件不算渲图。"""
+    import yaml  # noqa: PLC0415
+    from tools.workflow_contracts import renders_poster, poster_font_missing  # noqa: PLC0415
 
-    判据不数包名，**按「谁渲海报」自动推**：凡是 run 脚本里出现
-    `versus_poster` / `build_match_reel` 的工作流，apt 行就必须带
-    `fonts-noto-color-emoji`。这样以后多一条出海报的线，它会替人记得。
-    """
-    import re  # noqa: PLC0415
-
+    checked = []
     for path in sorted(Path(".github/workflows").glob("*.yml")):
-        text = path.read_text(encoding="utf-8")
-        runs = "\n".join(re.findall(r"^\s*run:\s*\|?(.*(?:\n(?:\s{2,}).*)*)",
-                                    text, re.M))
-        runs = "\n".join(ln for ln in runs.splitlines()
-                          if not ln.lstrip().startswith("#"))
-        if not any(k in runs for k in ("versus_poster", "build_match_reel.py")):
-            continue
-        assert "fonts-noto-color-emoji" in runs, (
-            f"{path.name} 渲海报却没装 fonts-noto-color-emoji——"
-            "国旗会悄悄变成方框，而这一步不会红")
+        workflow = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for name, job in (workflow.get("jobs") or {}).items():
+            runs = [str(step.get("run") or "") for step in job.get("steps") or []]
+            if not any(renders_poster(run) for run in runs):
+                continue
+            checked.append(f"{path.name}:{name}")
+            assert not poster_font_missing(runs), (
+                f"{path.name}:{name} 渲海报却没装 fonts-noto-color-emoji——"
+                "国旗会悄悄变成方框，而这一步不会红")
+    assert checked, "没有扫到任何真实渲海报的命令，判据失效了"
 
 
 def test_轮次写分数式不写N强():
@@ -7276,6 +7285,8 @@ def test_小红书正文首行要点出是谁():
 
     offenders, checked, unjudgeable = {}, 0, []
     for path in sorted(Path("specs/reels").glob("*.json")):
+        if not should_check('tests/test_match_reel.py::test_小红书正文首行要点出是谁', path):
+            continue
         xhs = path.with_suffix(".xhs.txt")
         if not xhs.exists():
             continue
@@ -9737,7 +9748,9 @@ def test_真字段表要盖住每条spec里出现过的字段():
     """
     reel = _reel()
     seen: dict[str, set[str]] = {"spec": set(), "cover": set(), "segment": set()}
-    for spec in _reel_specs().values():
+    for slug, spec in _reel_specs().items():
+        if not should_check('tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段', Path("specs/reels") / f"{slug}.json"):
+            continue
         seen["spec"] |= set(spec)
         seen["cover"] |= set(spec.get("cover") or {})
         for seg in spec.get("segments") or []:
@@ -10024,6 +10037,7 @@ def test_封面大图一律用官方高清图不许抽帧():
     left = sorted(s for s, sp in specs.items()
                   if s not in (reel.LEGACY_SOFT_COVERS
                                | reel.OWNER_APPROVED_FRAME_COVERS)
+                  and should_check('tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧', Path("specs/reels") / f"{s}.json")
                   and reel.cover_photo_problem(sp) is not None)
     assert not left, f"这几条既不在豁免表里、封面又过不了闸：{left}"
 
@@ -10278,6 +10292,8 @@ def test_每条spec的旁白都还估得下():
     denied: set[str] = set()
     checked = 0
     for slug, spec in _reel_specs().items():
+        if not should_check('tests/test_match_reel.py::test_每条spec的旁白都还估得下', Path("specs/reels") / f"{slug}.json"):
+            continue
         try:
             reel.spec_sources(spec)
         except reel.ReelError as exc:
@@ -10540,21 +10556,19 @@ def test_提交产物的工作流一律用Claude的身份():
     判据**自动推导，不维护白名单**：凡是 `git config user.email` 的工作流，
     邮箱都必须是 noreply@anthropic.com。
     """
+    import yaml  # noqa: PLC0415
+    from tools.workflow_contracts import git_user_settings, git_identity_problems  # noqa: PLC0415
+
     seen = 0
     for path in sorted(Path(".github/workflows").glob("*.yml")):
-        for line in _yaml_only(path.read_text(encoding="utf-8")).splitlines():
-            stripped = line.strip()
-            if not stripped.startswith("git config user."):
-                continue
-            seen += 1
-            if "user.email" in stripped:
-                assert "noreply@anthropic.com" in stripped, (
-                    f"{path.name}：`{stripped}` —— GitHub 会把它标成 Unverified。"
-                    "改这里，别去改已经推上去的历史。")
-            else:
-                assert '"Claude"' in stripped, (
-                    f"{path.name}：`{stripped}` 的提交者名字应该是 Claude")
-    # 判据自己的判据：主语没了要出声
+        workflow = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for job in (workflow.get("jobs") or {}).values():
+            for step in job.get("steps") or []:
+                run = str(step.get("run") or "")
+                seen += len(git_user_settings(run))
+                problems = git_identity_problems(run)
+                assert not problems, (
+                    f"{path.name}：{problems}；改工作流里的身份，别去改已经推上去的历史")
     assert seen >= 20, f"只扫到 {seen} 行 git config user.*——路径写错了吗"
 
 

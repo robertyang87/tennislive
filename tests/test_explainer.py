@@ -3763,61 +3763,40 @@ def test_触发要排在探活之前不是之后():
             f"{where} 把触发排在了探活循环**之后**——那时按钮早就摘掉了")
 
 
-#: 探复制页的那两个函数。谁（间接）调用它们，谁就要能点动 Pages。
-_COPY_PAGE_PROBES = {"drop_dead_copy_button", "wait_for_copy_page"}
+def _assert_pages_access(workflow: dict, job: dict, step: dict, where: str):
+    from tools.workflow_contracts import effective_env
+
+    perms = job.get("permissions", workflow.get("permissions")) or {}
+    env = effective_env(workflow, job, step)
+    assert perms.get("actions") == "write", (
+        f"{where} 会探复制页却没有 `actions: write`——点不动 pages.yml")
+    assert env.get("GITHUB_TOKEN") or env.get("GH_TOKEN"), (
+        f"{where} 拿不到 token，`trigger_pages_build` 会直接跳过")
 
 
-def _funcs_calling(tree, names: set[str]) -> set[str]:
-    """模块里哪些顶层函数调用了 `names` 里的任何一个。
-
-    **用 AST 不用正则**：`push_reel.py` 的 docstring 里提了三次
-    `wait_for_copy_page`，真正的调用只有一处；正则分不出这个差别，而这个
-    仓库的注释正是记教训的地方，必然会提到被测的那个名字。
-    """
-    import ast
-
-    hit = set()
-    for node in tree.body:
-        if not isinstance(node, ast.FunctionDef):
-            continue
-        for sub in ast.walk(node):
-            if isinstance(sub, ast.Call):
-                name = getattr(sub.func, "id", None) or getattr(
-                    sub.func, "attr", None)
-                if name in names:
-                    hit.add(node.name)
-    return hit
-
-
-def _probing_entry_points() -> list[str]:
-    """从代码推出「哪些命令行入口会走到探复制页」，不手写清单。"""
-    import ast
-
-    tools = sorted(
-        p.name for p in Path("tools").glob("*.py")
-        if _funcs_calling(ast.parse(p.read_text(encoding="utf-8")),
-                          _COPY_PAGE_PROBES))
-
-    cli_src = Path("src/tennislive/cli.py").read_text(encoding="utf-8")
-    probing = _funcs_calling(ast.parse(cli_src), _COPY_PAGE_PROBES)
-    # `if args.channel == "pushplus": return cmd_publish_pushplus(args)`
-    channels = sorted({
-        chan for chan, fn in re.findall(
-            r'args\.channel\s*==\s*"([^"]+)"[^\n]*\n\s*return\s+(\w+)\(', cli_src)
-        if fn in probing})
-
-    # **判据自己也要有判据**：主语没了它要出声，而不是变成一条恒真的绿灯。
-    assert tools, "一个 tools 脚本都没查到会探复制页——判据失效了"
-    assert channels, "一个 publish channel 都没查到会探复制页——判据失效了"
-    return ([re.escape(t) for t in tools]
-            + [rf"publish\s+{re.escape(c)}" for c in channels])
+def test_Pages权限检查继承环境但仍拦缺token和降权():
+    workflow = {"permissions": {"actions": "write"}, "env": {"GH_TOKEN": "workflow-token"}}
+    _assert_pages_access(workflow, {}, {}, "workflow env")
+    job = {"env": {"GITHUB_TOKEN": "job-token"}}
+    _assert_pages_access({"permissions": {"actions": "write"}}, job, {}, "job env")
+    _assert_pages_access({"permissions": {"actions": "write"}}, {},
+                         {"env": {"GITHUB_TOKEN": "step-token"}}, "step env")
+    with pytest.raises(AssertionError, match="token"):
+        _assert_pages_access({"permissions": {"actions": "write"}}, {}, {}, "missing token")
+    with pytest.raises(AssertionError, match="token"):
+        _assert_pages_access(workflow, {}, {"env": {"GH_TOKEN": ""}}, "cleared token")
+    with pytest.raises(AssertionError, match="actions: write"):
+        _assert_pages_access({"permissions": {"contents": "read"}}, job, {}, "missing permission")
+    with pytest.raises(AssertionError, match="actions: write"):
+        _assert_pages_access(workflow, {"permissions": {"contents": "read"}}, {}, "job override")
 
 
 def test_会发微信的工作流都要能触发Pages():
     """判据自己推导，不维护白名单。
 
-    凡是跑 `push_reel.py` 或 `tennislive publish pushplus` 的工作流都会走到
-    探复制页那条路，所以都要：`permissions: actions: write`（才点得动
+    只有真正走到探复制页的命令才要权限；`push_reel --stage check/page`
+    提前返回，本地校验/写页不算推送。推送步骤继承 workflow/job env，所以要查
+    合并后的环境，而不是强迫每一步重复 token。真的会探页就都要：`permissions: actions: write`（才点得动
     workflow_dispatch）+ 那一步拿得到 token。少一样就退回「探满 40 分钟再摘
     按钮」，**而它不报错**。
 
@@ -3835,26 +3814,23 @@ def test_会发微信的工作流都要能触发Pages():
     """
     import yaml
 
-    need = re.compile("|".join(_probing_entry_points()))
+    from tools.workflow_contracts import pages_calls, pages_entries
+
+    entries = pages_entries(Path.cwd())
+    assert entries[0] and entries[1], "Pages 调用入口没有扫到，判据失效了"
     checked = []
     for path in sorted(Path(".github/workflows").glob("*.yml")):
         spec = yaml.safe_load(path.read_text(encoding="utf-8"))
-        perms = spec.get("permissions") or {}
         for job in (spec.get("jobs") or {}).values():
             for step in job.get("steps") or []:
                 run = "\n".join(
                     line for line in str(step.get("run") or "").splitlines()
                     if not line.lstrip().startswith("#"))
-                if not need.search(run):
+                if not pages_calls(run, entries):
                     continue
-                env = step.get("env") or {}
-                checked.append(f"{path.name}「{step.get('name')}」")
-                assert perms.get("actions") == "write", (
-                    f"{path.name} 会发微信却没有 `actions: write`——"
-                    "点不动 pages.yml，复制页只能等别的 push 才发布")
-                assert "GITHUB_TOKEN" in env or "GH_TOKEN" in env, (
-                    f"{path.name}「{step.get('name')}」拿不到 token，"
-                    "`trigger_pages_build` 会直接跳过")
+                where = f"{path.name}「{step.get('name')}」"
+                checked.append(where)
+                _assert_pages_access(spec, job, step, where)
     assert len(checked) >= 9, f"只校到 {len(checked)} 处，判据可能失效了"
 
 

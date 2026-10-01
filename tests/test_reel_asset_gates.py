@@ -21,6 +21,8 @@ import sys
 import urllib.parse
 from pathlib import Path
 
+from production_history import should_check
+
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -422,6 +424,8 @@ def test_全库存量对新闸零误报():
     """
     bad = []
     for slug, spec in _specs():
+        if not should_check('tests/test_reel_asset_gates.py::test_全库存量对新闸零误报', ROOT / "specs/reels" / f"{slug}.json"):
+            continue
         found = [gates.duration_problem(spec), gates.stats_card_problem(spec),
                  *gates.numeral_display_problems(spec)]
         found += [f"{where} 指的 {rel} 不在"

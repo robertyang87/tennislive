@@ -208,6 +208,8 @@ def test_主入口的退出码(tp, tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(tp, "INTERVIEWS", tmp_path / "none")
     monkeypatch.setattr(tp, "ROOT", ROOT)
 
+    # This fixture isolates reporting/exit-code behavior; evidence failures have dedicated tests.
+    monkeypatch.setattr(importlib.import_module("winners_ue_gate"), "problem", lambda spec: None)
     monkeypatch.setattr(tp, "run_reel_dry_run", lambda p: tp.GateResult("dry", "pass"))
     monkeypatch.setattr(tp, "run_ci_tests", lambda slug: [
         tp.GateResult("别人的", "other"), tp.GateResult("环境", "env")])
@@ -532,6 +534,8 @@ def test_预检把推断规则列成提醒_从不进退出码(tp, tmp_path, monk
          "segments": []}, ensure_ascii=False), encoding="utf-8")
     monkeypatch.setattr(tp, "REELS", reels)
     monkeypatch.setattr(tp, "INTERVIEWS", tmp_path / "none")
+    # This fixture isolates reporting/exit-code behavior; evidence failures have dedicated tests.
+    monkeypatch.setattr(importlib.import_module("winners_ue_gate"), "problem", lambda spec: None)
     monkeypatch.setattr(tp, "run_reel_dry_run", lambda p: tp.GateResult("dry", "pass"))
     monkeypatch.setattr(tp, "run_ci_tests", lambda slug: [tp.GateResult("ci", "pass")])
     assert tp.main(["--slug", "demo"]) == 0
