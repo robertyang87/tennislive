@@ -3598,7 +3598,7 @@ _FILS_PRECEDENT_DIAGRAM = """\
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     'atp250-medvedev-hangzhou-2026': (('cause',
       '杭州 · 2026',
-      '梅德这冠，拿到250分',
+      '梅总这冠，拿到250分',
       '九月二十九日，梅德韦杰夫击败卢布列夫，在杭州夺冠。二百五十，首先是赛事级别，也代表冠军的该站积分。',
       'assets/explainer/atp250-medvedev-hangzhou-2026/hangzhou-trophy.jpg',
       'Hangzhou Open official / 2026-09-29',
@@ -3738,7 +3738,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
      ('mechanism',
       '排名积分',
       '拿250分，不等于净加250',
-      '积分也要另算。假设这项冠军成绩符合替换条件，替掉原来九十分的成绩，排名总分净增的是一百六十分，而不是二百五十分。这是假设例子，不是梅德的实际积分明细。',
+      '积分也要另算。假设这项冠军成绩符合替换条件，替掉原来九十分的成绩，排名总分净增的是一百六十分，而不是二百五十分。这是假设例子，不是梅总的实际积分明细。',
       '',
       '2026 ATP Rulebook ranking chapter; explicit hypothetical',
       ('假设符合替换条件 · 90 → 250', '排名总分净增 160 分'),
@@ -3753,7 +3753,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
      ('today',
       '回到杭州',
       '一座冠军，两件事分开算',
-      '所以梅德在杭州拿到了冠军和二百五十分。成绩能否计入排名、净增多少，要看他的有效成绩；五百赛的参赛任务则另算。二百五十是赛事级别，不是球星身份的标签。',
+      '所以梅总在杭州拿到了冠军和二百五十分。成绩能否计入排名、净增多少，要看他的有效成绩；五百赛的参赛任务则另算。二百五十是赛事级别，不是球星身份的标签。',
       'assets/explainer/atp250-medvedev-hangzhou-2026/hangzhou-handshake.jpg',
       'Tennis TV official / Hangzhou 2026 final',
       ('该站冠军积分：250 分', '排名有效成绩、500 任务分别算'),
@@ -9925,7 +9925,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
-    'atp250-medvedev-hangzhou-2026': {'hook': '梅德杭州夺冠：赛事级别、参赛任务和排名积分，是三件事。用费德勒、纳达尔、阿尔卡拉斯、德约等真实先例讲清楚。',
+    'atp250-medvedev-hangzhou-2026': {'hook': '梅总杭州夺冠：赛事级别、参赛任务和排名积分，是三件事。用费德勒、纳达尔、阿尔卡拉斯、德约等真实先例讲清楚。',
      'tags': ('网球', '网球时差', '梅德韦杰夫', '杭州公开赛', '网球冷知识')},
 
     "fils-tokyo-qualifying": {
@@ -10529,8 +10529,8 @@ def column_of(slug: str) -> Column:
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
     'atp250-medvedev-hangzhou-2026': {'topic': '世界前十，也打 ATP 250',
-     'question': '梅德来杭州夺冠\n大牌也能打小比赛？',
-     'narration': '世界第六的梅德，在杭州夺冠了。大牌球员，为什么能来打二百五十级别的比赛？',
+     'question': '梅总来杭州夺冠\n大牌也能打小比赛？',
+     'narration': '世界第六的梅总，在杭州夺冠了。大牌球员，为什么能来打二百五十级别的比赛？',
      'image': 'assets/explainer/atp250-medvedev-hangzhou-2026/medvedev-hangzhou-r2.jpg',
      'credit': 'Tennis TV official / 2026-09-26 Hangzhou second round',
      'gloss': '250 冠军积分 · 500 参赛任务',

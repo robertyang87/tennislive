@@ -82,7 +82,7 @@ STORIES = (
         title="大牌为什么也打250？",
         location="杭州 · 中国", level="ATP 250", surface="室外硬地", founded="2026 案例",
         hero_fact="世界第 6 的梅德韦杰夫在杭州夺冠；参赛资格、500 任务和排名积分分别计算。",
-        facts=("2026 杭州官方签表：梅德排名第 6、夺冠，冠军积分 250 分。",),
+        facts=("2026 杭州官方签表：梅总排名第 6、夺冠，冠军积分 250 分。",),
         moments=(), venue="头部球员的 250 赛先例", kind="rule",
         image=ASSETS.parent / "explainer/atp250-medvedev-hangzhou-2026/medvedev-hangzhou-r2.jpg",
         image_credit="Tennis TV 官方图库 / 杭州 2026 第二轮",
