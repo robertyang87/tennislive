@@ -1,0 +1,467 @@
+{
+  "topic": "ATP250/500参赛规则：梅德韦杰夫2026杭州案例",
+  "column": "网球有故事",
+  "checked_at_utc": "2026-10-01T02:09:37Z",
+  "repository_main_pulled": "fdb99423f9a104fb3a8f1042fa0d19ae0366a87f",
+  "status": "事实与素材研究交付；尚未生成成片",
+  "sources": {
+    "rulebook": {
+      "url": "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf",
+      "title": "2026 ATP Official Rulebook，ITF 托管副本",
+      "local_file": "official-rulebooks/itf-atp-full.pdf",
+      "physical_pages": 210,
+      "pdf_modified_at": "2025-12-22T14:12:20Z",
+      "sha256": "1536d079ca0963645d399151ea499697253a93f0d13ac56f626816690f7b3232",
+      "scope": "已核查下载文件、版面和条文；未证明此副本包含截至 2026-10-01 的所有修订。ATP 当前网页及若干 PDF 地址返回 403，不把旧副本称为当前官网最新版。"
+    },
+    "hangzhou_draw": {
+      "url": "https://www.protennislive.com/posting/2026/4713/mds.pdf",
+      "title": "2026 杭州官方男子单打签表",
+      "local_file": "sources/hangzhou-draw.pdf",
+      "sha256": "bf6809dd122538d67ed69ef04eb9925d4015b813052568c70bf2ead3202a0a5e"
+    },
+    "as_final": {
+      "url": "https://as.com/tenis/mas_tenis/medvedev-supera-a-su-compatriota-rublev-para-hacerse-con-el-titulo-f202609-n/",
+      "title": "AS：梅德韦杰夫击败卢布列夫夺冠",
+      "retrieval": "正文已读取，与签表交叉核对；不在仓库保存全文"
+    },
+    "marseille_draw": {
+      "url": "https://www.protennislive.com/posting/2022/496/mds.pdf",
+      "title": "2022 马赛官方单打签表",
+      "local_file": "sources/marseille-2022-draw.pdf",
+      "sha256": "b62331a81d23f574e33a68355318da0fb8f0f2c441bec50be9aac1871bae5711",
+      "scope": "历史反例，不能独自证明 2026 年规则；与 2026 规则书检索合用。"
+    },
+    "brisbane_draw": {
+      "url": "https://www.protennislive.com/posting/2017/339/mds.pdf",
+      "title": "2017 布里斯班官方单打签表",
+      "local_file": "sources/brisbane-2017-draw.pdf",
+      "scope": "历史 ATP250 签表，拉奥尼奇第3、锦织圭第5、蒂姆第8、纳达尔第9；不用于证明 2026 年新增或未新增规定。"
+    },
+    "nov2025_ranking": {
+      "url": "https://www.tennisexplorer.com/ranking/atp-men/?date=2025-11-10",
+      "title": "2025-11-10 排名历史记录",
+      "scope": "二级排名数据库，梅德韦杰夫第13；承诺球员定义来自规则书，身份判断来自该日期排名。"
+    },
+    "ttv_final": {
+      "url": "https://www.tennistv.com/videos/4583637/hangzhou-2026-final-highlights",
+      "metadata_url": "https://api.tennistv.com/content/atpmedia/video/EN/?references=ATP_MATCH%3A4713_2026_MS001&pageSize=30",
+      "title": "Hangzhou 2026 Final Highlights",
+      "duration_seconds": 480,
+      "match_id": "4713_2026_MS001",
+      "scope": "本轮已读取官方元数据；尚未重新下载并逐帧审阅源片。"
+    },
+    "ttv_interview": {
+      "url": "https://www.tennistv.com/videos/4583597/hangzhou-2026-final-medvedev-interview",
+      "metadata_url": "https://api.tennistv.com/content/atpmedia/video/EN/4583597",
+      "title": "Hangzhou 2026 Final Medvedev Interview",
+      "duration_seconds": 69,
+      "scope": "元数据证明为本站决赛采访；不凭题目推断其解释选赛动机。free 标签与 premium 系统字段冲突，不承诺可免费下载。"
+    }
+  },
+  "claims": [
+    {
+      "id": "case",
+      "original": "梅德韦杰夫打杭州250",
+      "verdict": "confirmed",
+      "conclusion": "本次以 2026 年杭州为例：9月23–29日，梅德韦杰夫是头号种子、签表排名第6，未标 WC，决赛7-5、6-4击败卢布列夫；冠军250分、158,065美元。比赛身份与赛果经签表和独立赛事报道交叉核对，冠军积分与奖金以官方签表为准。",
+      "evidence": [
+        {
+          "source": "hangzhou_draw",
+          "page": 1
+        },
+        {
+          "source": "as_final"
+        }
+      ],
+      "usable_in_proposed_video": true
+    },
+    {
+      "id": "top10_single_event",
+      "original": "ATP250通常最多2名前十，东道主/卫冕等除外",
+      "verdict": "unsupported_remove",
+      "conclusion": "检索2026规则书全本及参赛条款未找到这种通用两人上限。2022马赛签表列西西帕斯第4、卢布列夫第7、阿利亚西姆第9，三人均未标WC，均非法国籍；该历史反例说明不能把两人上限当长期通行规则。视频删除这个数字；不据此宣称所有赛事绝无其他协议限制。",
+      "evidence": [
+        {
+          "source": "rulebook",
+          "section": "1.08, VII Player entries；全本Top10/限制检索"
+        },
+        {
+          "source": "marseille_draw",
+          "page": 1
+        }
+      ],
+      "usable_in_proposed_video": false
+    },
+    {
+      "id": "top10_annual",
+      "original": "ATP前十没有全年250场次封顶",
+      "verdict": "no_generic_cap_found",
+      "conclusion": "本次取得的2026规则书没有查到类似“前十全年250只能2–3站”的通用配额。可以确认世界第6的梅德韦杰夫本次正常入围杭州；视频只讲他可以参赛，不把未检出条款扩成“所有时候绝无限制”。",
+      "evidence": [
+        {
+          "source": "rulebook",
+          "section": "全本与VII Player entries"
+        },
+        {
+          "source": "hangzhou_draw",
+          "page": 1
+        }
+      ],
+      "usable_in_proposed_video": true
+    },
+    {
+      "id": "commitment_players",
+      "original": "上一年年终前30",
+      "verdict": "precision_needed",
+      "conclusion": "2026条文的准确判定日是2025年11月10日，单打前30。梅德韦杰夫该日第13，因此属于这个范围；不能用今年某周跌出/进入前30就改变全年身份。",
+      "evidence": [
+        {
+          "source": "rulebook",
+          "section": "1.08 C",
+          "printed_page": 13,
+          "physical_page": 7
+        },
+        {
+          "source": "nov2025_ranking"
+        }
+      ],
+      "usable_in_proposed_video": true,
+      "short_original_quote": "A 2026 ATP commitment player is any player positioned in the Top 30 ... as of November 10, 2025."
+    },
+    {
+      "id": "four500",
+      "original": "必须打4站500，蒙卡可抵1站，至少1站美网后",
+      "verdict": "confirmed_in_examined_edition",
+      "conclusion": "基础承诺是四站ATP500，至少一站在美网之后；蒙特卡洛计入500类别最低要求。杭州250不计入该四站。未核查梅德韦杰夫本人的全年承诺履行台账，不声称他还缺几站或已违规。",
+      "evidence": [
+        {
+          "source": "rulebook",
+          "section": "1.08 D",
+          "printed_page": 13,
+          "physical_page": 7
+        }
+      ],
+      "usable_in_proposed_video": true,
+      "short_original_quote": "four (4) ATP Tour 500 tournaments, one (1) of which must be held following the US Open."
+    },
+    {
+      "id": "swings",
+      "original": "四站500必须在不同窗口均匀分布",
+      "verdict": "conflates_two_conditions",
+      "conclusion": "至少美网后一站属于基础承诺；四站且三个赛段各一站，是完整500固定奖金的参赛条件。不能把奖金分段条件说成所有承诺球员基础参赛义务的一部分。",
+      "evidence": [
+        {
+          "source": "rulebook",
+          "section": "1.08 D/G",
+          "printed_pages": [
+            13,
+            14
+          ],
+          "physical_pages": [
+            7,
+            8
+          ]
+        }
+      ],
+      "usable_in_proposed_video": true
+    },
+    {
+      "id": "montecarlo_bonus",
+      "original": "蒙卡可抵500，所以也可算500奖金资格",
+      "verdict": "false_if_inferred",
+      "conclusion": "蒙卡可以满足500类别最低承诺，但不计入500固定奖金的计算或资格。",
+      "evidence": [
+        {
+          "source": "rulebook",
+          "section": "1.08 G note",
+          "printed_page": 15,
+          "physical_page": 8
+        }
+      ],
+      "usable_in_proposed_video": true,
+      "short_original_quote": "Monte Carlo Masters 1000 points do not count towards the ATP Tour 500 Fixed Bonus Pool calculations or eligibility."
+    },
+    {
+      "id": "zero_pointers",
+      "original": "零分一律冻结52周，无法替换",
+      "verdict": "overstated",
+      "conclusion": "500退赛通常产生排名零分；条文同时规定经批准的连续伤病、现场医疗和宣传活动等豁免，并允许承诺球员在同一自然年以其后额外500赛替换一次退赛零分。无法笼统说“一律无法替换”；250不能按这个条款替换500退赛罚零。补赛总量在同一副本两处写4与5，具体数字暂不用于视频。",
+      "evidence": [
+        {
+          "source": "rulebook",
+          "section": "9.03 C",
+          "printed_page": 269,
+          "physical_page": 135
+        },
+        {
+          "source": "rulebook",
+          "section": "8.04 I.2",
+          "printed_pages": [
+            242,
+            243
+          ],
+          "physical_page": 122
+        }
+      ],
+      "usable_in_proposed_video": true
+    },
+    {
+      "id": "ranking_value",
+      "original": "顶尖球员打250往往赚不到有效分，只有固定六个低级别成绩槽",
+      "verdict": "needs_rewrite",
+      "conclusion": "250成绩可能进入其他有效成绩，2026文本还允许符合条件的更高500/250成绩替换最多三个强制大师赛成绩；须满足先后次序、参赛及无罚分等条件。不能从级别低推出没有积分价值。冠军250是赛事授予积分，不等于其滚动总分净增250；具体净增须核其排名明细和到期成绩。",
+      "evidence": [
+        {
+          "source": "rulebook",
+          "section": "9.03 A/B",
+          "printed_page": 268,
+          "physical_page": 135
+        },
+        {
+          "source": "hangzhou_draw",
+          "page": 1
+        }
+      ],
+      "usable_in_proposed_video": true,
+      "short_original_quote": "replace up to 3 mandatory results ... with a better score from an ATP Tour 500 or ATP Tour 250 event"
+    },
+    {
+      "id": "bonus_money",
+      "original": "可能失去价值数百万美元的500奖金池分红",
+      "verdict": "individual_pool_must_be_separated",
+      "conclusion": "所取版本列2026 ATP500固定奖金池总额3,075,000美元，这是整个池，不是梅德韦杰夫个人可得数额。未满四站少一站减15%、少两站减30%、少三站或以上减100%；每缺一赛段另减25%，可叠加，并有规定的资格和伤病例外。不能说少一站就必然丢掉整个奖金。",
+      "evidence": [
+        {
+          "source": "rulebook",
+          "section": "1.08 G",
+          "printed_pages": [
+            14,
+            15
+          ],
+          "physical_page": 8
+        }
+      ],
+      "usable_in_proposed_video": false
+    },
+    {
+      "id": "appearance_fees",
+      "original": "他打杭州是为了出场费/捞钱/虐菜",
+      "verdict": "not_established",
+      "conclusion": "1.16允许ATP500和250提供宣传服务费用，但未找到他的杭州合同、金额或解释选择杭州的本人原话。赛后访谈标题也不能证明选赛动机。视频不采用这些归因。",
+      "evidence": [
+        {
+          "source": "rulebook",
+          "section": "1.16 B",
+          "printed_page": 21
+        },
+        {
+          "source": "ttv_interview"
+        }
+      ],
+      "usable_in_proposed_video": false
+    }
+  ],
+  "materials": [
+    {
+      "kind": "official_photo",
+      "id": 4583651,
+      "title": "2026 Hangzhou Rublev Medvedev",
+      "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/29/29b422fd-b45e-4e1b-9081-70663cdd28d7/Andrey-Rublev-035.jpg",
+      "metadata_url": "https://api.prod.atpmedia.pulselive.com/content/atpmedia/photo/EN/",
+      "local_file": "sources/photo-4583651.jpg",
+      "preview": "sources/photo-4583651-preview.jpg",
+      "width": 5106,
+      "height": 3404,
+      "sha256": "b1cffdb96c9b4e9a883d1cfe4d0c170302132979a7abe1e3ceb006cfb3d800fe",
+      "date_time_original": "2026:09:29 21:15:06",
+      "visual_checked": true,
+      "visual_evidence": "梅德与卢布赛后握手；二人球衣与本场照片一致，拍摄时间在当晚决赛后。",
+      "rights": "官方来源已确认；未发现明确的第三方再发布许可。公开可读和无版权字段不等于可自由复用。"
+    },
+    {
+      "kind": "official_photo",
+      "id": 4583610,
+      "title": "2026 Hangzhou Medvedev",
+      "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/29/1589759e-4c68-464a-8147-f7953da3951a/Daniil-Medvedev-018.jpg",
+      "metadata_url": "https://api.prod.atpmedia.pulselive.com/content/atpmedia/photo/EN/",
+      "local_file": "sources/photo-4583610.jpg",
+      "preview": "sources/photo-4583610-preview.jpg",
+      "width": 7040,
+      "height": 4688,
+      "sha256": "dd27376c6f39c8a7b14289600aa7c6d7738ed2d963b8100b57f54a049ecda3f9",
+      "date_time_original": "2026:09:29 20:27:47",
+      "visual_checked": true,
+      "visual_evidence": "梅德蓝色球衣击球近景；背景杭州赛事广告，眼睛睁开，但球经过脸部，封面候选需实际裁切后评估。",
+      "rights": "官方来源已确认；未发现明确的第三方再发布许可。公开可读和无版权字段不等于可自由复用。"
+    },
+    {
+      "kind": "official_photo",
+      "id": 4583607,
+      "title": "2026 Hangzhou Medvedev",
+      "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/09/29/7c016858-5b63-4d55-8d95-e81b96e08511/Daniil-Medvedev-020.jpg",
+      "metadata_url": "https://api.prod.atpmedia.pulselive.com/content/atpmedia/photo/EN/",
+      "local_file": "sources/photo-4583607.jpg",
+      "preview": "sources/photo-4583607-preview.jpg",
+      "width": 5568,
+      "height": 3712,
+      "sha256": "5476fb449bebf54acb6dc79f8ae84ccb1470100aaaf9a0eee07be7c39708f8af",
+      "date_time_original": "2026:09:29 20:35:05",
+      "visual_checked": true,
+      "visual_evidence": "梅德中景；球场明确写HANGZHOU杭州，适合比赛地和人物落地。",
+      "rights": "官方来源已确认；未发现明确的第三方再发布许可。公开可读和无版权字段不等于可自由复用。"
+    },
+    {
+      "kind": "official_photo",
+      "title": "杭州2026决赛颁奖照",
+      "url": "https://www.hangzhouopen.com/-/media/images/news/2026/09/29/14/27/medvedev-rublev-hangzhou-2026-trophy.jpg",
+      "local_file": "sources/hangzhou-photo.jpg",
+      "width": 1920,
+      "height": 1080,
+      "visual_checked": true,
+      "visual_evidence": "梅德右侧持冠军奖杯，卢布左侧持亚军奖杯；由赛事文件路径和独立赛事报道交叉确认同场。",
+      "rights": "未确认第三方再发布许可"
+    },
+    {
+      "kind": "official_video",
+      "source": "ttv_final",
+      "youtube_url_from_repository": "https://www.youtube.com/watch?v=_9MGjWJe2iw",
+      "duration_seconds": 480,
+      "candidate_windows": [
+        {
+          "start": 448.4,
+          "end": 452.7,
+          "use": "冠军点后的胜利反应"
+        },
+        {
+          "start": 443.5,
+          "end": 465.6,
+          "use": "赛点、庆祝与握手"
+        },
+        {
+          "start": 465.6,
+          "end": 479.6,
+          "use": "捧杯颁奖"
+        }
+      ],
+      "window_evidence": "来自现有spec及既有审片记录；本轮核实元数据，没有再次逐帧确认时间点。制作前必须重新审片。",
+      "rights": "Tennis TV/ATP Media；使用范围待按现有账号授权核对"
+    },
+    {
+      "kind": "official_video",
+      "source": "ttv_interview",
+      "duration_seconds": 69,
+      "use": "本人赛后声音；仅在逐句核验后作情绪或事实素材，不作为参赛动机证明",
+      "rights": "Tennis TV；API entitlement字段冲突，尚未验证访问与复用许可"
+    },
+    {
+      "kind": "official_document",
+      "source": "hangzhou_draw",
+      "preview": "evidence/hangzhou-draw-1.png",
+      "use": "签表排名、入围状态、夺冠积分证据"
+    },
+    {
+      "kind": "official_document",
+      "source": "rulebook",
+      "preview": "evidence/rules-007.png",
+      "use": "印刷第13页：承诺球员、四站500、蒙卡"
+    },
+    {
+      "kind": "official_document",
+      "source": "rulebook",
+      "preview": "evidence/rules-008.png",
+      "use": "印刷第14–15页：奖金池分段条件及蒙卡排除"
+    },
+    {
+      "kind": "official_document",
+      "source": "rulebook",
+      "preview": "evidence/rules-135.png",
+      "use": "印刷第268–269页：250积分替换大师赛、500罚零例外"
+    }
+  ],
+  "open_questions": [
+    {
+      "question": "同一2026副本对零分补赛的总站数写法冲突",
+      "evidence": "8.04 I.2.f，印刷243页：total of five (5) played；9.03 C，印刷269页：total of four (4) played。两处均明确同年、退赛之后、每年最多替换一次。",
+      "action": "不选一个数字假装已解决；视频只说有条件补赛替换。若要讲完整操作细则，需新版修订或ATP解释。"
+    },
+    {
+      "question": "承诺球员总计分站数与联合杯条文",
+      "evidence": "9.03 A 将United Cup单列，同时又放进best six；B没有单列。不能据此给所有球员一律套18/19公式。",
+      "action": "本片只讲250可能产生有效积分，不展开总计分站数。若要量化梅德净增，应查他的实际计分明细。"
+    },
+    {
+      "question": "是否存在尚未收录的2026年中修订",
+      "evidence": "所取官方规则书副本PDF元数据为2025-12-22；ATP当前页面请求403。",
+      "action": "版本局限明确保留；不声称本次已证明截至10月1日所有修订都一致。"
+    }
+  ],
+  "editorial_proposal": {
+    "hook": "世界第六，为什么能打250？",
+    "thesis": "用杭州冠军说明：参赛资格、排名积分、500参赛承诺是不同事项。250可以打，也可能有积分价值，但不能抵四站500任务。",
+    "duration_target_seconds": [
+      70,
+      90
+    ],
+    "beats": [
+      {
+        "seconds": [
+          0,
+          7
+        ],
+        "picture": "本场冠军点反应/捧杯，保留短原声",
+        "message": "梅德杭州夺冠，提出世界第六为什么能打250的问题"
+      },
+      {
+        "seconds": [
+          7,
+          20
+        ],
+        "picture": "本站实拍＋短暂官方签表证据",
+        "message": "明确2026年、正常入围和冠军250分；一句解释250是男子巡回赛较低的赛事级别"
+      },
+      {
+        "seconds": [
+          20,
+          37
+        ],
+        "picture": "本场比赛画面为主，最多一张简单示意图",
+        "message": "不采用未经支持的前十两人上限；把能不能参赛和必须参加什么区分开"
+      },
+      {
+        "seconds": [
+          37,
+          56
+        ],
+        "picture": "500任务四个标记，蒙卡旁注；切回梅德现场",
+        "message": "基础四站500、至少一站美网后；杭州这站不抵500任务"
+      },
+      {
+        "seconds": [
+          56,
+          75
+        ],
+        "picture": "实拍与简单积分替换动画",
+        "message": "250可能有积分价值，赛事积分与总分净增不同；不用未经核实的梅德净增数字"
+      },
+      {
+        "seconds": [
+          75,
+          85
+        ],
+        "picture": "握手/捧杯收束",
+        "message": "回到杭州：250冠军与500任务各算各的，避免把低级别参赛直接等同违规或捞钱"
+      }
+    ],
+    "why_cards": "只有抽象任务和积分关系需要简单示意，主体为本站实拍和视频；不制作整屏条文课件。",
+    "avoid": [
+      "WTA比较",
+      "未经证明的选赛动机",
+      "零分绝对不可替换",
+      "冠军250分等于净增250分",
+      "把奖金池总额当个人损失",
+      "宣称保证爆款"
+    ],
+    "production_gate": "用户要求先核事实与素材再决定做法，本次交付研究和可评估的叙事方案；成片仍需源片重审、素材许可核对与仓库制作质量检查。"
+  }
+}
