@@ -1,0 +1,321 @@
+{
+  "version": 1,
+  "frozen_revision": "c850697251969c419168fd1f5ef7d667b21bbcd7",
+  "frozen_at": "2026-09-30T23:20:00Z",
+  "scope": "CI inventory diagnostics only. Existing published findings are recorded, not certified as QA pass. No production/render/publish exemption.",
+  "rows": [
+    {
+      "slug": "medvedev-24-titles-23-cities",
+      "spec_path": "specs/reels/medvedev-24-titles-23-cities.json",
+      "copy_path": "specs/reels/medvedev-24-titles-23-cities.xhs.txt",
+      "ledger_path": "data/reel_publish_ledger/medvedev-24-titles-23-cities.json",
+      "pushed_path": "output/2026-09-30/reel/medvedev-24-titles-23-cities/pushed.json",
+      "receipt": "2e0b9e3a6af54462a3a790f2b911065a",
+      "published_at": "2026-09-30T09:43:31Z",
+      "files": {
+        "specs/reels/medvedev-24-titles-23-cities.json": "a18eb754f746852fbda511a0d6040da1d01899626ff672b7fd06736552f983c5",
+        "specs/reels/medvedev-24-titles-23-cities.xhs.txt": "3c9fa7489167bb4e3983a9793af5c56bf3d06dc6ef6dad6727286a54b5394b3a",
+        "data/reel_publish_ledger/medvedev-24-titles-23-cities.json": "a041ef23becfaaf179ecb324f6049c242e5a9827a4591352f51f5e777f41d269",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/public_asset_verification.json": "46a9a9b39a6c1177cb3382c242b0e0607ee35da6b4384f1822724024faf6099c",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/pushed.json": "d4fdd1bc0a9b9fce621f54d2598a66096c92887aa811508055d108698455006d",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/qc_attestation.json": "f579b54165da8146503caef023f049a2e24665bed9002d27679baad98465a9de",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/render.json": "8f9cd2e0c5c4c29b35fbe181cb4a6baaf98328e7f35e5889256342a04a1576c6",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/subtitles.ass": "ebe50a6df6f39b7dd0b715b98077e69c44db6bdb3a16cb0022d92a652b670c67",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/wechat_title.txt": "766b6ab531b17ee8d9b9409dfd88404a980635f8a72355d4cc03093307bde095",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/xiaohongshu.txt": "3c9fa7489167bb4e3983a9793af5c56bf3d06dc6ef6dad6727286a54b5394b3a"
+      },
+      "output_evidence": [
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/public_asset_verification.json",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/pushed.json",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/qc_attestation.json",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/render.json",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/subtitles.ass",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/wechat_title.txt",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/xiaohongshu.txt"
+      ],
+      "known_findings": {
+        "tests/test_match_reel.py::test_冷开场不许随手取源片开头": "Imported master recipe starts at 0.6s without _head_open_why",
+        "tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上": "Closing narration ends with title statistics rather than a question",
+        "tests/test_match_reel.py::test_栏目和封面模板要配对": "Imported master cover has no editable reel layout",
+        "tests/test_match_reel.py::test_封面固定版式是官方抠图加本场视频全场机位": "Imported master cover has no editable reel layout",
+        "tests/test_match_reel.py::test_封面上每个球员都要有国旗和即时排名": "Imported master cover does not contain reel versus panels",
+        "tests/test_match_reel.py::test_小红书正文首行要点出是谁": "Imported master metadata has no cover.matchup names for this inventory check",
+        "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段": "Imported master recipe declares canvas/column/date/fps/title outside editable reel schema",
+        "tests/test_match_reel.py::test_每条spec的旁白都还估得下": "Imported finished-master recipe does not reconstruct the original subtitle/audio production",
+        "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报": "cover.poster points at a relative finished-master output, not a root asset",
+        "tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红": "Closing narration ends with title statistics rather than a question",
+        "tests/test_unvoiced_quote.py::test_新片子没配音的段都有双语原声字幕": "Recipe omits quote fields; separate prior read-only final-media audit found foreground-English caption-gap candidates at Rome 286.061–288.200s and 291.121–292.301s, and Brisbane 333.866–337.086s. Exact sampled final frames lacked commentary captions; subjective listening and full semantic coverage remain unproven. Old media has not been repaired or revalidated here",
+        "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe": "Compiled master is represented by file/hash metadata rather than a probeable source URL",
+        "tests/test_title_echo.py::test_正文第一句不许重复标题_新片子": "Legacy raw-copy inventory false positive: the dedicated sender separates the leading title from the published body; this assertion is not evidence of repeated published body text"
+      },
+      "repository_inputs": {
+        "medvedev-24-titles-23-cities.mp4": null,
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/copy.html": {
+          "mode": "100644",
+          "oid": "a7ff7d2d0337c7f371765cd532b11d4860e0e5c1"
+        },
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/poster.jpg": {
+          "mode": "100644",
+          "oid": "5fecda6fe1bffac7cd04794b05b99cc8247db7d6"
+        },
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/probe.json": null,
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/push.html": {
+          "mode": "100644",
+          "oid": "05e4b3925f65e5501fe0c25e83d22741cd1e146c"
+        },
+        "poster.jpg": null
+      },
+      "output_repository_paths": [
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/copy.html",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/poster.jpg",
+        "output/2026-09-30/reel/medvedev-24-titles-23-cities/push.html"
+      ]
+    },
+    {
+      "slug": "khachanov-auger-aliassime-beijing-2026-r1",
+      "spec_path": "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.json",
+      "copy_path": "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.xhs.txt",
+      "ledger_path": "data/reel_publish_ledger/khachanov-auger-aliassime-beijing-2026-r1.json",
+      "pushed_path": "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/pushed.json",
+      "receipt": "1576f022cd95410f8e1a7d14d845b6dc",
+      "published_at": "2026-09-30T10:09:03Z",
+      "files": {
+        "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.json": "717f271fa2215b0551b9fdebc1596445f3951359365b2d0613c511dad2f610e3",
+        "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.xhs.txt": "ba7259777a28665bd564fd4be7ba45b46a329fc14bbab10fcde9498c579d07e0",
+        "data/reel_publish_ledger/khachanov-auger-aliassime-beijing-2026-r1.json": "f11f7d0a04768a85acf8306bf72d519c2ed52630317a375409252e8adaf1823a",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/pushed.json": "4f2bc9e5b35ef98af00684b970731bfa3f3b13ad208d1ca524eb04b030a56dbf",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/qc_attestation.json": "77d505529a87bdf4c462452ad7e6f062e82a391c5d45e55c2a702e7889479295",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/render.json": "60a778812a77daf78ad0db338cea42b15cd6773a17dbdcd522c8b8979226ad08",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/render_inputs.json": "ee53161ff010942a098cef3c089436f87e42f7ad6680b261c9e496610a3b1254",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/scoreboard_qc.json": "9806a61d282dd6a43c67b6d5eddbf485f18d05fbe9e7cc01647d90a2b25c2fc1",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/subtitles.ass": "5959640715ca633097bc893f7bcb9cb6e13ac9edae36c3509ef29bbcaa240086",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/topbar.ass": "aab91f4038f950614e4e791bc81f337e1ae7956bab8165f3c4744d1e1a1f25aa",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/wechat_title.txt": "f3e459d37d51911a6223da616161d115fb393c0daea82d667afe3187fdee3c90",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/xiaohongshu.txt": "32f3df40db060699f2d2d9184f386ba63df21e781b5986afcdc1c3faffc70453"
+      },
+      "output_evidence": [
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/pushed.json",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/qc_attestation.json",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/render.json",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/render_inputs.json",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/scoreboard_qc.json",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/subtitles.ass",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/topbar.ass",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/wechat_title.txt",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/xiaohongshu.txt"
+      ],
+      "known_findings": {
+        "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段": "Historical root-level track is outside editable reel schema",
+        "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧": "Referenced asset is absent in the frozen Git tree; no binary backfill authorized",
+        "tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有": "Historical spec lacks _hit_data and _no_hit_data_why",
+        "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报": "Referenced cover asset is absent in the frozen Git tree",
+        "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe": "Declared Tennis TV source URL has no matching tracked probe record",
+        "tests/test_title_echo.py::test_正文第一句不许重复标题_新片子": "Published copy repeats the push title in its first sentence",
+        "tests/test_match_reel.py::test_每条spec的旁白都还估得下": "Narration inventory calls validate_spec first and is blocked by the frozen missing cover asset; this is an input-dependency finding, not evidence of bad narration timing"
+      },
+      "repository_inputs": {
+        "assets/players/headshots/atp-AG37.png": {
+          "mode": "100644",
+          "oid": "e38b93fdc589767f84a9a2cb5cf1f9588d277e13"
+        },
+        "assets/players/headshots/atp-KE29.png": {
+          "mode": "100644",
+          "oid": "e4c1fd38f1fbe70cb5c840ad88c0d39382970552"
+        },
+        "assets/reel/khachanov-auger-aliassime-beijing-2026-r1.jpg": null,
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/copy.html": {
+          "mode": "100644",
+          "oid": "2a89f78c9055292572d6a37198c1859993dead5a"
+        },
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/poster.jpg": {
+          "mode": "100644",
+          "oid": "6157087c60651390bbf45fd30505b13d2ff12fe1"
+        },
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/probe.json": null,
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/push.html": {
+          "mode": "100644",
+          "oid": "1dfa36d33778d1ab95338dc29e28f50223c306ca"
+        },
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/stat_card.jpg": {
+          "mode": "100644",
+          "oid": "618b6ee6563fd7f7a0c068699a277c0fd6816339"
+        }
+      },
+      "output_repository_paths": [
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/copy.html",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/poster.jpg",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/push.html",
+        "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/stat_card.jpg"
+      ]
+    },
+    {
+      "slug": "tabilo-paul-tokyo-2026-r1",
+      "spec_path": "specs/reels/tabilo-paul-tokyo-2026-r1.json",
+      "copy_path": "specs/reels/tabilo-paul-tokyo-2026-r1.xhs.txt",
+      "ledger_path": "data/reel_publish_ledger/tabilo-paul-tokyo-2026-r1.json",
+      "pushed_path": "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/pushed.json",
+      "receipt": "25835a66b4324737ba1511c5c3d13f62",
+      "published_at": "2026-09-30T10:42:42Z",
+      "files": {
+        "specs/reels/tabilo-paul-tokyo-2026-r1.json": "a8c1e3a242e43935c37c7131b173b3f6605f56af000964de121350b916da6505",
+        "specs/reels/tabilo-paul-tokyo-2026-r1.xhs.txt": "b19bce15b7ed40dfb508afdb1e45d0755eef46f250cf17272072cc9b25122c81",
+        "data/reel_publish_ledger/tabilo-paul-tokyo-2026-r1.json": "3e8cb03ec3af432ec7c9fc1c7d4a843c8d73291970f4a477ef1dd8f4700673f1",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/pushed.json": "88ae132e0d551562b1abfbbaf6635256edbead47d7f54def254d21d1d0f38d08",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/qc_attestation.json": "5b75de25021b833ec47391ce12402bb657d45641036895d2e803ff9f386f0ce1",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/render.json": "e640a437c1a380e2e6b442d5bd1d89b4a23c491cf6735862dee5c77d86599f9f",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/render_inputs.json": "439ec2d87ede76da2e04473ba20a2987a8d924e9fc0c333271f97780221e3664",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/scoreboard_qc.json": "9e6858bdd0121d6d9062c5ac5ad1bc30200a040051d52936c2c16f4f8fcb6e05",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/subtitles.ass": "25251f8e17b593b12309fef7138f5bd223c1e0002c3f1dee0a1d0c7fd436ff46",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/topbar.ass": "c18320002441f42e734f04b1d7369a4402f2a93df271e02007856d7c2510a8ec",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/wechat_title.txt": "8105f19c9816549598923b7d99a466bf1f4bfee726ed228b24d19269db256e8e",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/xiaohongshu.txt": "9326a8e106e138825f5dd79ad21ab0ea3abaef8958e74e3f8a92ad65815ad4bd"
+      },
+      "output_evidence": [
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/pushed.json",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/qc_attestation.json",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/render.json",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/render_inputs.json",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/scoreboard_qc.json",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/subtitles.ass",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/topbar.ass",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/wechat_title.txt",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/xiaohongshu.txt"
+      ],
+      "known_findings": {
+        "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段": "Historical root-level track is outside editable reel schema",
+        "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧": "Referenced asset is absent in the frozen Git tree; no binary backfill authorized",
+        "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报": "Referenced cover asset is absent in the frozen Git tree",
+        "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe": "Declared Tennis TV source URL has no matching tracked probe record",
+        "tests/test_match_reel.py::test_每条spec的旁白都还估得下": "Narration inventory calls validate_spec first and is blocked by the frozen missing cover asset; this is an input-dependency finding, not evidence of bad narration timing"
+      },
+      "repository_inputs": {
+        "assets/players/headshots/atp-PL56.png": {
+          "mode": "100644",
+          "oid": "050cdde07e4eac8d57dc043691d316f11ea65614"
+        },
+        "assets/players/headshots/atp-TE30.png": {
+          "mode": "100644",
+          "oid": "8dcf66d5fdf1e7843665879a5cd71050e99995d1"
+        },
+        "assets/reel/tabilo-paul-tokyo-2026-r1.jpg": null,
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/copy.html": {
+          "mode": "100644",
+          "oid": "49232b14293101490a3b535010cef51028cf68fc"
+        },
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/poster.jpg": {
+          "mode": "100644",
+          "oid": "fe1985a50df31e6e2235c95e5be7d020fdb1c6a9"
+        },
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/probe.json": null,
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/push.html": {
+          "mode": "100644",
+          "oid": "3e0005edaa95d39b9e1afdc5dc30988605b53da4"
+        },
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/stat_card.jpg": {
+          "mode": "100644",
+          "oid": "149aa4c941787657a9e9928f5d4fef48d72d0879"
+        }
+      },
+      "output_repository_paths": [
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/copy.html",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/poster.jpg",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/push.html",
+        "output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/stat_card.jpg"
+      ]
+    },
+    {
+      "slug": "bu-cerundolo-beijing-2026-r1",
+      "spec_path": "specs/reels/bu-cerundolo-beijing-2026-r1.json",
+      "copy_path": "specs/reels/bu-cerundolo-beijing-2026-r1.xhs.txt",
+      "ledger_path": "data/reel_publish_ledger/bu-cerundolo-beijing-2026-r1.json",
+      "pushed_path": "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/pushed.json",
+      "receipt": "d3c19109718d478e8923e42b8aec2476",
+      "published_at": "2026-09-30T13:20:01Z",
+      "files": {
+        "specs/reels/bu-cerundolo-beijing-2026-r1.json": "8b86416e875b09a71ff9ef968595e297f222d2785abbc9d57188b1b4fd768f6b",
+        "specs/reels/bu-cerundolo-beijing-2026-r1.xhs.txt": "6e6b0aa8bed5518e8500501d96cf7970f1412952f1a8f84af63cf40274b1502e",
+        "data/reel_publish_ledger/bu-cerundolo-beijing-2026-r1.json": "3c4abe00ceb00c11dce41f9fdf434f44aacee4134f82896a214eb926b0d45087",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/encoding_compatibility.json": "3b9a0ff174e77fd3ea28448bfab1bef587ab0b59fde57f384afedac6e41258ed",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/encoding_ffprobe.json": "3cdfcf12647e610507e2b5ff4a95b3cb413912840e2dc672838c8ca2c75e3b48",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/facts.json": "54d16bf6f8fa180fda2085bbc15b06bd5c3ba170ab87cc927e2c86af1cddc7f0",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/manual_qc_report.json": "bb3c16a4d1deaf83b5fdcab6db98281216189cbc729ced64098fd9736fd065a0",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/probe.json": "249d67563517d19a90578a513fc0c046bbdae2e36263b48fdf985f15c9c59df2",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/pushed.json": "40e86275b1a1ef8b36f5c8e745f8c1be0a13dba8ced13042c82b657bff64dcea",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/qc_attestation.json": "3277ca2580a4d9a78379cfcce0a6dcb94147a3e3d78d0f2b6490c8b8f88714cb",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/render.json": "4e04d699c9a6115d12fed17be77cc5ae8264f7c08c75482cabb433b8e3058a24",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/render_inputs.json": "b078c28c5767462d140573fca7543b5163f80ee9683af7902d6d722887186db1",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/runtime_render_evidence.json": "5c2bb4cd71e249a8d73d4c84b847143812ca60d3198cfdc92807ccc8c07ec91c",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/scoreboard_qc.json": "48982e9f057616a0b1d039af398af7b4f730c7c9e3dea2fecf0838cc4e08482c",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/source_identity.json": "acdac6b810d43106cb28b73f3a4cad740b73196345572c2aba50293cc4367294",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/source_photo.json": "29405a7b7006b6bf6d1ec6956ea978ac6f2a4aa0cb06dc12691ca9b8c93f2064",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/subtitles.ass": "f03c22a08d4af004272e7ea3032283538f06ee00794e9d9f471f72a5dda9c805",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/topbar.ass": "fca4bf14e274119ce695c4bc358fb56c7ba7c33f4b0fbc90360c83511ad24f0c",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/wechat_title.txt": "66168efda524b01eca1d3c93e4ad8118e8acf1bda0377b004e6a5a7c3071206b",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/xiaohongshu.txt": "a96536a995f957a23666c080d099156a0b5d398244567cdc6ed8bd9af8470d64"
+      },
+      "output_evidence": [
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/encoding_compatibility.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/encoding_ffprobe.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/facts.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/manual_qc_report.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/probe.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/pushed.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/qc_attestation.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/render.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/render_inputs.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/runtime_render_evidence.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/scoreboard_qc.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/source_identity.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/source_photo.json",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/subtitles.ass",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/topbar.ass",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/wechat_title.txt",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/xiaohongshu.txt"
+      ],
+      "known_findings": {
+        "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段": "Historical root-level track is outside editable reel schema"
+      },
+      "repository_inputs": {
+        "assets/players/headshots/atp-C0C8.png": {
+          "mode": "100644",
+          "oid": "2ebdcb45c184c1d980ebe42de03662159c24fa84"
+        },
+        "assets/players/headshots/atp-Y09V.png": {
+          "mode": "100644",
+          "oid": "260d6ace4664768e2233c108ee47e255a441310e"
+        },
+        "assets/reel/bu-cerundolo-beijing-2026-r1.jpg": {
+          "mode": "100644",
+          "oid": "890ffcdd292303cbd35c0fe56a0ca595300198b2"
+        },
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/copy.html": {
+          "mode": "100644",
+          "oid": "9efb77534ba3f04d035fe133266189a78d745626"
+        },
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/poster.jpg": {
+          "mode": "100644",
+          "oid": "9fbadec05f657f2c72541dd700728f124bf46e4c"
+        },
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/probe.json": {
+          "mode": "100644",
+          "oid": "d7a8bdccec41aac40e10ef23517d6a4c8e963340"
+        },
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/push.html": {
+          "mode": "100644",
+          "oid": "66e1844f593ceb637d5fb400384e176cf5cbe07f"
+        },
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/stat_card.jpg": {
+          "mode": "100644",
+          "oid": "8504282b677da99e56954a28bd069a9e77c7d7dd"
+        }
+      },
+      "output_repository_paths": [
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/copy.html",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/poster.jpg",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/push.html",
+        "output/2026-09-30/reel/bu-cerundolo-beijing-2026-r1/stat_card.jpg"
+      ]
+    }
+  ],
+  "repository_identity_scope": "Local Git index/blob and materialized worktree identities only; no claim about remote URL bytes. Sparse-omitted binaries are never fetched."
+}
