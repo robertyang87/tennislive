@@ -44,7 +44,7 @@ WINDOWS = tuple((start, min(start + 30.0, SOURCE_SECONDS)) for start in range(0,
 METADATA_BYTES = 2 * 1024 * 1024
 FLAGS = {"raw_audio_uploaded": False, "external_asr_api": False, "audio_review_pass": False, "publication_eligible": False}
 MEDIA_HOST = "fastly-signed-us-east-1-prod.brightcovecdn.com"
-MODEL_HOSTS = frozenset({"huggingface.co", "cdn-lfs.huggingface.co", "cdn-lfs-us-1.huggingface.co", "cdn-lfs-eu-1.huggingface.co", "cas-bridge.xethub.hf.co"})
+MODEL_HOSTS = frozenset({"huggingface.co", "cdn-lfs.huggingface.co", "cdn-lfs-us-1.huggingface.co", "cdn-lfs-eu-1.huggingface.co", "cas-bridge.xethub.hf.co", "us.aws.cdn.hf.co"})
 
 
 class Blocked(RuntimeError):
