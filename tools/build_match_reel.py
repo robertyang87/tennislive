@@ -3661,7 +3661,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
              "editorial"),
-    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_align", "layout", "matchup", "meta",
+    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_accent_color", "hook_align", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
