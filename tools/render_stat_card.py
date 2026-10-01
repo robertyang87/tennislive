@@ -840,6 +840,8 @@ def _launch_browser(pw):
 
 
 def render(spec: dict, out: Path, *, variant: str = "poster") -> Path:
+    from winners_ue_gate import require  # noqa: PLC0415
+    require(spec)
     html_str = build(spec, variant=variant)
     canvas_w, canvas_h = VARIANTS[variant]
     page = out.with_suffix(".html")

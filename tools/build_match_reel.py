@@ -7446,7 +7446,9 @@ def spec_sources(spec: dict) -> dict[str, str]:
             raise ReelError(
                 f'`sources` 要写成非空的 {{"键": "url"}}，段里用 "source": "键" 引用；'
                 f"现在是 {multi!r}")
-        resolved = {str(k): str(v) for k, v in multi.items()}
+        if any(not isinstance(v, str) for v in multi.values()):
+            raise ReelError("sources 的值必须是 URL 字符串；成片清单不能当成源片 URL 重渲")
+        resolved = {str(k): v for k, v in multi.items()}
         _reject_signed_source_urls(resolved)
         return resolved
     if "source_url" not in spec:
@@ -9447,6 +9449,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # read-only schema validation and cover-photo framing remain unchanged.
     from tennislive.video.crop_policy import require_reel_center
     if not cover_only:
+        from winners_ue_gate import require as require_winners_ue  # noqa: PLC0415
+        require_winners_ue(spec)
+        from production_style import match_footage_problem  # noqa: PLC0415
+        from foreground_audio_gate import require as require_audio_review  # noqa: PLC0415
+        if issue := match_footage_problem(spec):
+            raise ReelError(issue)
+        require_audio_review(spec)
         require_reel_center(spec)
     outdir.mkdir(parents=True, exist_ok=True)
     _FACE_REPORT.clear()          # 这一趟的认人结果只许是这一趟的
@@ -9469,6 +9478,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 path = download(url, path, archival=key in claimed_archival,
                                 fallback=fallbacks.get(key))
         sources[key] = path
+    if not cover_only:
+        from foreground_audio_gate import bind_sources  # noqa: PLC0415
+        bind_sources(spec, sources, outdir)
     check_native_quality_exceptions(spec, sources)
     conform_sources(sources, spec)
     check_sources_match(sources, spec)
@@ -9797,7 +9809,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                                       probe_duration(cover_voice),
                                       boundaries=cover_marks, offset=0.0))
     offset = cover_secs
+    audio_cue_offsets = []
     for index, (seg, (path, marks)) in enumerate(zip(segments, voices)):
+        audio_cue_offsets.append(offset)
         if seg.quote:
             # 原声段：没有语音可对齐，按字数等比铺满整段。**行数不能太多**，
             # 否则每行只剩一瞬——一段 12 秒的采访塞 60 字就是这样。
@@ -9826,6 +9840,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                     boundaries=marks, offset=offset)
                 if a < limit)
         offset += seg.length
+
+    from foreground_audio_gate import record_timeline  # noqa: PLC0415
+    record_timeline(spec, outdir, cover_secs, audio_cue_offsets, [seg.length for seg in segments])
 
     # **片尾那句口播接在所有分段之后。** `offset` 走到这儿正好是
     # cover_secs + Σ seg.length，也就是片尾页的起点——和 `lengths` 用的是同一份

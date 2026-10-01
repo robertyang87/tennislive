@@ -493,14 +493,24 @@ def main() -> int:
             # 而账号所有者甩来一张 TNNS Live 的截图，那两行就在上面——
             # **flashscore 没有 ≠ 没有**（CLAUDE.md「查空一类不等于查空全部」）。
             # 所以这行只说 flashscore 的范围，并把下一条路指出来。
-            print("制胜分 / 非受迫失误：**flashscore 这场没有**——"
-                  "⚠️ 这不等于拿不到。先去 TNNS 问一次：\n"
-                  "    gh workflow run tnns-stats.yml -f who=<姓>,<姓>"
-                  "    # 或 -f match_id=<TNNS 数字 id>\n"
-                  "  （要真浏览器过 Cloudflare，只能在 runner 上跑；解法和判据见 "
-                  "tools/tnns_stats.py）\n"
-                  "  两边都没有，才照 render_stat_card 的 OPTIONAL_FIELDS 留空，"
-                  "并在 spec 的 `stats._source` 里写清楚**两个源都查过**")
+            print("制胜分 / 非受迫失误：**flashscore 这场没有提供完整两项**——"
+                  "保留已取得的字段，不等于这场没有数据。\n"
+                  "  按同一场比赛并行补查，不把任何一家当成必经站：\n"
+                  "  1. 官方比赛统计及赛后稿：ATP / WTA / 赛事官网的 Match Reaction、"
+                  "by-the-numbers，按两人姓名、日期、赛事和比分确认场次。\n"
+                  "  2. 官方同场转播 / 集锦：自行抽取 MATCH SUMMARY / MATCH STATS "
+                  "全场技术表，保存视频 URL、时间码和帧；不默认让用户提供截图。\n"
+                  "  3. Match Charting Project：tools/mcp_stats.py find --who <姓> "
+                  "--year <年>，再用 show <唯一slug>；记下索引日期和标注者，"
+                  "明确是志愿者标注，正反手分项不能替代总数。\n"
+                  "  4. TNNS：仅在可正常访问时用 tools/tnns_stats.py；"
+                  "遇安全验证停止，不换出口或接口绕过。\n"
+                  "  每个来源分别记录：已取得 / 本源缺字段 / 暂未收录 / "
+                  "访问受阻 / 解析失败，并写明时间及证据位置。"
+                  "访问失败不能写成数据不存在；冲突未解决不能混填。\n"
+                  "  已核实全场范围、球员列序和统计口径后才填写；"
+                  "仍缺项要列清已查来源与各自结果，再按发布闸处理。"
+                  "结构化记录保存到 stats._winners_ue_evidence / _winners_ue_check。")
         print(json.dumps({k: blk[k] for k in ("a", "b")}, ensure_ascii=False, indent=2))
         return 0
 
