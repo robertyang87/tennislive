@@ -15,6 +15,7 @@ import html
 import importlib.metadata
 import json
 import math
+from numbers import Real
 from pathlib import Path
 import re
 import signal
@@ -240,14 +241,15 @@ def extract_window(source, dest, start, end):
 
 
 def absolute_time(value, start, duration):
-    if type(value) not in (int, float) or not math.isfinite(value) or value < -0.05 or value > duration + 0.05:
+    if isinstance(value, bool) or not isinstance(value, Real) or not math.isfinite(float(value)) or value < -0.05 or value > duration + 0.05:
         raise Blocked("inference_timestamp_out_of_window")
     return round(start + min(max(value, 0), duration), 6)
 
 
 def timing_evidence(local_start, local_end, source_offset, duration):
-    if any(type(v) not in (int, float) or not math.isfinite(v) for v in (local_start, local_end)):
+    if any(isinstance(v, bool) or not isinstance(v, Real) or not math.isfinite(float(v)) for v in (local_start, local_end)):
         raise Blocked("inference_timestamp_non_finite")
+    local_start, local_end = float(local_start), float(local_end)
     within = 0 <= local_start < local_end <= duration
     return {
         "raw_relative_start": local_start, "raw_relative_end": local_end,
@@ -278,8 +280,8 @@ def infer(source, model_dir, workdir):
             words = []
             for w in (segment.words or []):
                 timing = timing_evidence(w.start, w.end, start, frames / 16000)
-                words.append({"word": w.word, **timing, "probability": w.probability, "uncertain": w.probability < 0.8 or not timing["timestamp_within_window"]})
-            items.append({"text": segment.text, **timing_evidence(segment.start, segment.end, start, frames / 16000), "avg_logprob": segment.avg_logprob, "no_speech_prob": segment.no_speech_prob, "compression_ratio": segment.compression_ratio, "uncertain": True, "words": words})
+                words.append({"word": w.word, **timing, "probability": float(w.probability), "uncertain": w.probability < 0.8 or not timing["timestamp_within_window"]})
+            items.append({"text": segment.text, **timing_evidence(segment.start, segment.end, start, frames / 16000), "avg_logprob": float(segment.avg_logprob), "no_speech_prob": float(segment.no_speech_prob), "compression_ratio": float(segment.compression_ratio), "uncertain": True, "words": words})
         rows.append({"window": index, "source_from": start, "source_to": end, "decoded_seconds": frames / 16000, "segments": items, "empty_output_is_not_silence_proof": not items})
         clip.unlink()
         print(json.dumps({"completed_window": index, "segments": len(items), **FLAGS}), flush=True)
