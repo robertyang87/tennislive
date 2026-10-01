@@ -42,6 +42,7 @@ MODEL_FILES = {
     "vocabulary.txt": (422309, "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf"),
 }
 WINDOWS = tuple((start, min(start + 30.0, SOURCE_SECONDS)) for start in range(0, 190, 27))
+TARGETED_WINDOWS = ((36,41),(68,75),(106,111),(123,130),(178,186),(186,193),(193,200))
 METADATA_BYTES = 2 * 1024 * 1024
 FLAGS = {"raw_audio_uploaded": False, "external_asr_api": False, "audio_review_pass": False, "publication_eligible": False}
 MEDIA_HOST = "fastly-signed-us-east-1-prod.brightcovecdn.com"
@@ -215,7 +216,7 @@ def check_model(model_dir):
 
 
 def check_windows(windows):
-    if windows != WINDOWS or windows[0][0] != 0 or windows[-1][1] != SOURCE_SECONDS:
+    if windows not in (WINDOWS, TARGETED_WINDOWS):
         raise Blocked("window_scope_mismatch")
     for start, end in windows:
         if any(type(x) not in (int, float) or not math.isfinite(x) for x in (start, end)) or not 0 <= start < end <= SOURCE_SECONDS or end - start > 30:
@@ -262,19 +263,21 @@ def timing_evidence(local_start, local_end, source_offset, duration):
     }
 
 
-def infer(source, model_dir, workdir):
+def infer(source, model_dir, workdir, *, windows=WINDOWS, beam_size=5):
     verify_source(source)  # Exact source bytes checked again before any extraction.
     check_model(model_dir)
-    check_windows(WINDOWS)
+    check_windows(windows)
+    if (windows == TARGETED_WINDOWS and beam_size != 1) or (windows == WINDOWS and beam_size != 5):
+        raise Blocked("decoder_scope_mismatch")
     import numpy as np
     from faster_whisper import WhisperModel
     model = WhisperModel(str(model_dir), device="cpu", compute_type="int8", cpu_threads=1, num_workers=1, local_files_only=True)
     rows = []
-    for index, (start, end) in enumerate(WINDOWS, 1):
+    for index, (start, end) in enumerate(windows, 1):
         clip = workdir / f"window-{index:02d}.wav"
         pcm, frames = extract_window(source, clip, start, end)
         audio = np.frombuffer(pcm, dtype=np.int16).astype(np.float32) / 32768.0
-        segments, _ = model.transcribe(audio, language="en", beam_size=5, temperature=0, condition_on_previous_text=False, initial_prompt=None, prefix=None, word_timestamps=True, vad_filter=False)
+        segments, _ = model.transcribe(audio, language="en", beam_size=beam_size, temperature=0, condition_on_previous_text=False, initial_prompt=None, prefix=None, word_timestamps=True, vad_filter=False)
         items = []
         for segment in segments:
             words = []
@@ -300,15 +303,18 @@ def write_json(path, data):
     path.write_text(raw)
 
 
-def validate():
-    check_windows(WINDOWS)
+def validate(targeted=False):
+    windows = TARGETED_WINDOWS if targeted else WINDOWS
+    check_windows(windows)
     native_resolver("src/tennislive/video/official.py")
-    return {"windows": len(WINDOWS), "source_seconds": SOURCE_SECONDS, "overlap_seconds": 3, **FLAGS}
+    return {"windows": len(windows), "source_seconds": SOURCE_SECONDS, "processed_seconds": sum(b-a for a,b in windows), "targeted_second_pass": targeted, **FLAGS}
 
 
-def run():
+def run(targeted=False):
     if os.environ.get("GITHUB_REF_NAME") != BRANCH:
         raise Blocked("isolated_branch_required")
+    windows = TARGETED_WINDOWS if targeted else WINDOWS
+    beam_size = 1 if targeted else 5
     root = Path(os.environ["RUNNER_TEMP"])
     if not root.is_absolute() or root.is_symlink() or not root.is_dir():
         raise Blocked("runner_temp_required")
@@ -338,10 +344,10 @@ def run():
             download_exact(target, model_dir / name, size, digest, deadline, model=True)
         check_model(model_dir)
         evidence["stage"] = "infer"
-        rows = infer(source, model_dir, work)
-        transcript = {"schema": "tennislive.sun-asr-transcript-evidence.v1", "public_source_url": PAGE, "source_sha256": SOURCE_SHA, "status": "inference_only_not_human_verified", "language": "en", "windows": rows, "uncertainty_note": "Model output can omit or hallucinate speech. Overlaps remain separate for boundary comparison. Listen to the entire source; empty output does not prove silence.", **FLAGS}
+        rows = infer(source, model_dir, work, windows=windows, beam_size=beam_size)
+        transcript = {"schema": "tennislive.sun-asr-transcript-evidence.v1", "public_source_url": PAGE, "source_sha256": SOURCE_SHA, "status": "inference_only_not_human_verified", "language": "en", "targeted_second_pass": targeted, "beam_size": beam_size, "processed_seconds": sum(b-a for a,b in windows), "windows": rows, "uncertainty_note": "Model output can omit or hallucinate speech. Overlaps remain separate for boundary comparison. Listen to the entire source; empty output does not prove silence.", **FLAGS}
         write_json(out / "transcript.json", transcript)
-        evidence.update(status="inference_only_not_human_verified", completed_windows=len(rows), cpu_threads=1, vad_filter=False, transcript_seeding=False, versions={name: importlib.metadata.version(name) for name in ("faster-whisper", "ctranslate2", "onnxruntime", "numpy", "huggingface-hub", "tokenizers", "av")})
+        evidence.update(status="inference_only_not_human_verified", completed_windows=len(rows), targeted_second_pass=targeted, beam_size=beam_size, processed_seconds=sum(b-a for a,b in windows), cpu_threads=1, vad_filter=False, transcript_seeding=False, versions={name: importlib.metadata.version(name) for name in ("faster-whisper", "ctranslate2", "onnxruntime", "numpy", "huggingface-hub", "tokenizers", "av")})
     except Exception as exc:
         evidence.update(status="blocked", reason=str(exc) if isinstance(exc, Blocked) else "runner_failed")
         if isinstance(exc, Blocked) and getattr(exc, "safe_host", None):
@@ -354,12 +360,13 @@ def run():
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--validate", action="store_true")
+    parser.add_argument("--targeted-second-pass", action="store_true")
     args = parser.parse_args()
     if args.validate:
-        print(json.dumps(validate()))
+        print(json.dumps(validate(args.targeted_second_pass)))
         return
     with total_limit(2400):
-        run()
+        run(args.targeted_second_pass)
 
 
 if __name__ == "__main__":
