@@ -34,6 +34,9 @@ on:
       - "tools/interview_tail.py"
       - "tools/interview_revision.py"
       - "tools/production_preflight.py"
+      - "tools/foreground_audio_gate.py"
+      - "tools/production_style.py"
+      - "tools/winners_ue_gate.py"
       # 全称断言那道闸（预检排在最前面的一道）和它的扫描面
       - "tools/absolute_claims.py"
       - "tools/spec_wording.py"
