@@ -81,7 +81,9 @@ def total_limit(seconds):
 def safe_url(url, hosts):
     parsed = urlsplit(url)
     if parsed.scheme != "https" or parsed.hostname not in hosts or parsed.username or parsed.password or parsed.port not in (None, 443):
-        raise Blocked("url_not_approved")
+        error = Blocked("url_not_approved")
+        error.safe_host = parsed.hostname if parsed.hostname and re.fullmatch(r"[A-Za-z0-9.-]+", parsed.hostname) else "redacted"
+        raise error
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -297,10 +299,12 @@ def run():
     work.mkdir(); out.mkdir()
     evidence = {"schema": "tennislive.sun-public-source-asr-evidence.v1", "created_at": datetime.now(timezone.utc).isoformat(), "public_source_url": PAGE, "video_id": VIDEO_ID, "source_bytes": SOURCE_BYTES, "source_sha256": SOURCE_SHA, "source_seconds": SOURCE_SECONDS, "resolver_sha256": RESOLVER_SHA, "model": {"id": MODEL_ID, "revision": REVISION, "files": {name: {"bytes": size, "sha256": digest} for name, (size, digest) in MODEL_FILES.items()}}, "telemetry_and_offline_flags": {key: os.environ[key] for key in ("ORT_DISABLE_TELEMETRY", "HF_HUB_DISABLE_TELEMETRY", "HF_HUB_OFFLINE", "TRANSFORMERS_OFFLINE")}, "status": "not_started", **FLAGS}
     try:
+        evidence["stage"] = "resolve_source"
         resolver = native_resolver("src/tennislive/video/official.py")
         deadline = time.monotonic() + 120
         url = resolve_source(resolver, deadline)
         source = work / "source.mp4"
+        evidence["stage"] = "download_source"
         download_exact(url, source, SOURCE_BYTES, SOURCE_SHA, deadline)
         verify_source(source)
         evidence["status"] = "exact_source_verified"
@@ -308,16 +312,20 @@ def run():
         model_dir = work / "model"; model_dir.mkdir()
         deadline = time.monotonic() + 1200
         for name, (size, digest) in MODEL_FILES.items():
+            evidence["stage"] = "model_" + name
             target = f"https://huggingface.co/{MODEL_ID}/resolve/{REVISION}/{name}?download=true"
             safe_url(target, {"huggingface.co"})
             download_exact(target, model_dir / name, size, digest, deadline, model=True)
         check_model(model_dir)
+        evidence["stage"] = "infer"
         rows = infer(source, model_dir, work)
         transcript = {"schema": "tennislive.sun-asr-transcript-evidence.v1", "public_source_url": PAGE, "source_sha256": SOURCE_SHA, "status": "inference_only_not_human_verified", "language": "en", "windows": rows, "uncertainty_note": "Model output can omit or hallucinate speech. Overlaps remain separate for boundary comparison. Listen to the entire source; empty output does not prove silence.", **FLAGS}
         write_json(out / "transcript.json", transcript)
         evidence.update(status="inference_only_not_human_verified", completed_windows=len(rows), cpu_threads=1, vad_filter=False, transcript_seeding=False, versions={name: importlib.metadata.version(name) for name in ("faster-whisper", "ctranslate2", "onnxruntime", "numpy", "huggingface-hub", "tokenizers", "av")})
     except Exception as exc:
         evidence.update(status="blocked", reason=str(exc) if isinstance(exc, Blocked) else "runner_failed")
+        if isinstance(exc, Blocked) and getattr(exc, "safe_host", None):
+            evidence["rejected_host"] = exc.safe_host
         write_json(out / "evidence.json", evidence)
         raise Blocked("runner_blocked") from None
     write_json(out / "evidence.json", evidence)
