@@ -1,67 +1,67 @@
-# Branch-only review override. Do not merge this temporary file into main.
-name: native-cover-preview
-run-name: "native-cover-preview · ${{ inputs.slug }} · preview-only"
+name: sun-public-source-asr-evidence
+run-name: "Sun–Lys WTA public source · inference evidence only"
 on:
   workflow_dispatch:
-    inputs:
-      slug:
-        description: "Existing 赛场之上 spec slug; image preview only"
-        required: true
-        type: string
 permissions:
   contents: read
 concurrency:
-  group: native-cover-preview-${{ github.ref }}-${{ inputs.slug }}
+  group: sun-public-source-asr-evidence
   cancel-in-progress: false
 jobs:
-  cover-preview:
+  asr-evidence:
+    if: github.ref == 'refs/heads/preview/native-asr-sun-20261001'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 45
     permissions:
       contents: read
     env:
-      SLUG: ${{ github.event.inputs.slug }}
+      ORT_DISABLE_TELEMETRY: "1"
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
       PYTHONDONTWRITEBYTECODE: "1"
+      PIP_CACHE_DIR: ${{ runner.temp }}/sun-public-asr-cache/pip
+      HF_HOME: ${{ runner.temp }}/sun-public-asr-cache/hf
+      XDG_CACHE_HOME: ${{ runner.temp }}/sun-public-asr-cache/xdg
+      TMPDIR: ${{ runner.temp }}
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
           sparse-checkout: |
-            assets
-            data
-            specs
-            src
-            tools
+            src/tennislive/video/official.py
+            tools/review_sun_public_source.py
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - name: Preview input and existing browser preflight (read only)
+          python-version: "3.12"
+      - name: Install official Ubuntu ffmpeg and ffprobe
+        timeout-minutes: 5
         run: |
           set -euo pipefail
-          [[ "$GITHUB_REF_NAME" == preview/native-cover-* ]] || { echo "::error::This temporary preview workflow requires an isolated preview/native-cover-* branch"; exit 1; }
-          python tools/check_cover_preview.py --slug "$SLUG" --inputs-only
-          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
-          [ -n "$CHROME" ] && [ -x "$CHROME" ] || { echo "::error::No preinstalled browser; preview will not install one"; exit 1; }
-          "$CHROME" --version
-          echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
-      - name: Install declared Python rendering dependencies
-        run: python -m pip install -q -e ".[webrender]"
-      - name: Check native cover contract
-        run: PYTHONPATH=src python tools/check_cover_preview.py --slug "$SLUG"
-      - name: Render native preview only
+          sudo apt-get update -o Acquire::Retries=0 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30
+          sudo apt-get install -y --no-install-recommends ffmpeg
+      - name: Validate exact resolver and fixed full-source windows
         run: |
           set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/cover-preview"
-          PYTHONPATH=src python tools/render_cover_local.py --slug "$SLUG" \
-            --outdir "$RUNNER_TEMP/cover-preview" --out "$RUNNER_TEMP/cover-preview/preview.jpg"
-          PYTHONPATH=src python tools/check_cover_preview.py --slug "$SLUG" \
-            --report-to "$RUNNER_TEMP/cover-preview/preview-report.json"
-          echo "Preview only. Final-video QC NOT RUN. No publication or WeChat send." >> "$GITHUB_STEP_SUMMARY"
+          [[ "$GITHUB_REF_NAME" == "preview/native-asr-sun-20261001" ]] || exit 1
+          command -v ffmpeg >/dev/null
+          command -v ffprobe >/dev/null
+          python tools/review_sun_public_source.py --validate
+      - name: Install the reviewed local inference dependencies
+        run: |
+          python -m pip install --disable-pip-version-check --no-cache-dir --retries 0 --timeout 30 faster-whisper==1.2.1 ctranslate2==4.8.2 onnxruntime==1.30.0 numpy==2.5.3 huggingface-hub==1.33.0 tokenizers==0.23.2 av==19.0.0
+      - name: Acquire and verify the public source, then infer sequentially
+        run: python tools/review_sun_public_source.py
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: cover-preview-${{ github.event.inputs.slug }}-${{ github.run_id }}
+          name: sun-public-source-asr-evidence-${{ github.run_id }}
           path: |
-            ${{ runner.temp }}/cover-preview/preview.jpg
-            ${{ runner.temp }}/cover-preview/preview-report.json
-          if-no-files-found: error
+            ${{ runner.temp }}/sun-public-asr-evidence/transcript.json
+            ${{ runner.temp }}/sun-public-asr-evidence/evidence.json
+          if-no-files-found: warn
           retention-days: 7
