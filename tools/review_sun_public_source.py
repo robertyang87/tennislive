@@ -280,7 +280,7 @@ def infer(source, model_dir, workdir):
             words = []
             for w in (segment.words or []):
                 timing = timing_evidence(w.start, w.end, start, frames / 16000)
-                words.append({"word": w.word, **timing, "probability": float(w.probability), "uncertain": w.probability < 0.8 or not timing["timestamp_within_window"]})
+                words.append({"word": w.word, **timing, "probability": float(w.probability), "uncertain": float(w.probability) < 0.8 or not timing["timestamp_within_window"]})
             items.append({"text": segment.text, **timing_evidence(segment.start, segment.end, start, frames / 16000), "avg_logprob": float(segment.avg_logprob), "no_speech_prob": float(segment.no_speech_prob), "compression_ratio": float(segment.compression_ratio), "uncertain": True, "words": words})
         rows.append({"window": index, "source_from": start, "source_to": end, "decoded_seconds": frames / 16000, "segments": items, "empty_output_is_not_silence_proof": not items})
         clip.unlink()
