@@ -72,7 +72,7 @@
   },
   "film_sha256": "77320c30dd854948cac6d343aee5dba75dfda178d300e0908a635db6d6f1afa8",
   "film_bytes": 32132059,
-  "qc_attestation_sha256": "8e5fe89cfc72fa0d6370785adf4555f4953a839578eab0d1934f1a6ab5fd53e8",
+  "qc_attestation_sha256": "47fc46c32aa5f5da0d4dde042855c97d02db1335827c9e39f57bfc699f1ad0b6",
   "production_stage_events": [
     {
       "stage": "render",
@@ -86,5 +86,12 @@
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zheng-shi-beijing-2026-r1/zheng-shi-beijing-2026-r1.mp4",
-  "video_bytes": 32132059
+  "video_bytes": 32132059,
+  "reattests": [
+    {
+      "at": "2026-10-01T21:40:41Z",
+      "spec_sha256": "8dbac71958fbc5c027aa19d635730259444a6b089a08460756482b53825ca23f",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/36930120075"
+    }
+  ]
 }
