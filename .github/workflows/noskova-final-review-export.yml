@@ -1,24 +1,67 @@
-name: noskova-final-review-export
+# Branch-only review override. Do not merge this temporary file into main.
+name: native-cover-preview
+run-name: "native-cover-preview · ${{ inputs.slug }} · preview-only"
 on:
   workflow_dispatch:
+    inputs:
+      slug:
+        description: "Existing 赛场之上 spec slug; image preview only"
+        required: true
+        type: string
 permissions:
   contents: read
-  actions: read
+concurrency:
+  group: native-cover-preview-${{ github.ref }}-${{ inputs.slug }}
+  cancel-in-progress: false
 jobs:
-  export:
+  cover-preview:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      SLUG: ${{ github.event.inputs.slug }}
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
-      - name: Retrieve actual rendered film
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            assets
+            data
+            specs
+            src
+            tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Preview input and existing browser preflight (read only)
         run: |
-          mkdir -p review
-          gh release download reel-noskova-svitolina-bjk-cup-2026-final --pattern '*.mp4' --dir review
-          sha256sum review/*.mp4 > review/SHA256SUMS
+          set -euo pipefail
+          [[ "$GITHUB_REF_NAME" == preview/native-cover-* ]] || { echo "::error::This temporary preview workflow requires an isolated preview/native-cover-* branch"; exit 1; }
+          python tools/check_cover_preview.py --slug "$SLUG" --inputs-only
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          [ -n "$CHROME" ] && [ -x "$CHROME" ] || { echo "::error::No preinstalled browser; preview will not install one"; exit 1; }
+          "$CHROME" --version
+          echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
+      - name: Install declared Python rendering dependencies
+        run: python -m pip install -q -e ".[webrender]"
+      - name: Check native cover contract
+        run: PYTHONPATH=src python tools/check_cover_preview.py --slug "$SLUG"
+      - name: Render native preview only
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/cover-preview"
+          PYTHONPATH=src python tools/render_cover_local.py --slug "$SLUG" \
+            --outdir "$RUNNER_TEMP/cover-preview" --out "$RUNNER_TEMP/cover-preview/preview.jpg"
+          PYTHONPATH=src python tools/check_cover_preview.py --slug "$SLUG" \
+            --report-to "$RUNNER_TEMP/cover-preview/preview-report.json"
+          echo "Preview only. Final-video QC NOT RUN. No publication or WeChat send." >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         with:
-          name: noskova-final-reviewed-film
-          path: review/
+          name: cover-preview-${{ github.event.inputs.slug }}-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/cover-preview/preview.jpg
+            ${{ runner.temp }}/cover-preview/preview-report.json
+          if-no-files-found: error
           retention-days: 7
