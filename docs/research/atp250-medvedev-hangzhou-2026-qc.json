@@ -1,0 +1,75 @@
+{
+  "slug": "atp250-medvedev-hangzhou-2026",
+  "reviewed_at_utc": "2026-10-01T03:47:46.246589+00:00",
+  "release_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-atp250-medvedev-hangzhou-2026/explainer.mp4",
+  "movie": {
+    "duration_seconds": 133.5,
+    "resolution": [
+      1080,
+      1440
+    ],
+    "fps": 30,
+    "bytes": 4428289,
+    "sha256": "a318385a0d5b41f24c90ccf37afa0511a35679d07471afeab441cea2a6d33e76",
+    "video_audio_duration_difference_seconds": 0.054
+  },
+  "audio": {
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+22%",
+    "pitch": "+0Hz",
+    "mean_volume_db": -24.1,
+    "peak_volume_db": -3.8,
+    "clip_detected": false,
+    "word_boundaries_reviewed": 12,
+    "longest_silence_seconds": 2.373917,
+    "longest_silence_location": "结尾卡至品牌片尾过渡，含标准末屏留白",
+    "first_11_boundary_arrays_identical_to_previous_review": true,
+    "all_spoken_words_match_current_script": true
+  },
+  "visual": {
+    "all_cards_reviewed": 12,
+    "outro_reviewed": true,
+    "actual_mp4_frames_reviewed": 4,
+    "black_frames_detected": false,
+    "rules_and_hypothetical_labels_visible": true,
+    "historical_years_visible": true,
+    "no_picture_subtitle_overlap_observed": true,
+    "source_cards_identical_to_previously_reviewed_12_cards": true,
+    "review_method": "All 12 source JPEGs byte-identical to full reviewed edition; final cover, math, repaired subtitle and outro frames reviewed; full stream decoded with no black frames"
+  },
+  "checks": {
+    "explainer_preflight": "17/17 passed",
+    "new_deck_budget_tests": "3 passed",
+    "landed_copy_checks": "4 phrases present",
+    "subtitle_lines": "all 12 ASS files read back; dates, ranking, 250/500 and 90→250 hypothetical verified",
+    "subtitle_cue_min_length": "all actual ASS cues have >=3 visible characters; existing full script subtitle test passed",
+    "photo_registry": "existing provenance assertion passed for every photo; credits.json keyed by exact filenames"
+  },
+  "content_scope": {
+    "individual_cases": 9,
+    "same_event_group_used": "2017 Brisbane: Raonic 3, Wawrinka 4, Nishikori 5, Thiem 8, Nadal 9",
+    "additional_group_in_dossier": "2022 Marseille: Tsitsipas 4, Rublev 7, Auger-Aliassime 9"
+  },
+  "supersedes": {
+    "movie_sha256": "5aaddcc3c7485967292e6081cbbd08e74414d9a898259146c0355d5c5d268183",
+    "workflow_run": 36808709110,
+    "source_commit": "2a544718ec44dc1baf72c9d40c31d76d440a39bc",
+    "render_commit": "bfd6e54133b3869d531a56c85ffaf5e03014a6e6"
+  },
+  "source_sha256": "c49bdf9c8ae09e196303433d3131a47fc3f8009dbec33229a685f3cf2220f5e1",
+  "render_backend": "Native explainer.yml cloud render",
+  "source_assets_workflow_run": 36808709110,
+  "repair_scope": "The comma after 所以 was removed to group its subtitle with the following sentence; no spoken tokens or facts changed. Source registry format fixed for all five photos.",
+  "source_commit": "29d1d811392db9fd2e59c2c195c3ce739170dc02",
+  "render_commit": "f279ed1614ea34df0045ebf24bb2a78606116a7d",
+  "workflow_run": 36811524280,
+  "release_asset": {
+    "id": 602365900,
+    "digest": "sha256:a318385a0d5b41f24c90ccf37afa0511a35679d07471afeab441cea2a6d33e76",
+    "matches_downloaded_final_movie": true
+  },
+  "artifact": {
+    "id": 11140005707,
+    "zip_sha256": "24b6c356b07360f65fec10205320c84d3ca9d3a070cbc82681abd555e690b5f3"
+  }
+}
