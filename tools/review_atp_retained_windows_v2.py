@@ -96,28 +96,6 @@ def model_download(model_dir):
         download_verified(url,Path(model_dir)/name,size,digest)
     check_model(model_dir)
 
-def infer(data,input_dir,model_dir,outdir):
-    check_model(model_dir)
-    for item in data['items']:check_wav(Path(input_dir)/item['path'],item)
-    import numpy as np
-    from faster_whisper import WhisperModel
-    model=WhisperModel(str(model_dir),device='cpu',compute_type='int8',cpu_threads=2,num_workers=1,local_files_only=True)
-    outdir=Path(outdir);outdir.mkdir(parents=True,exist_ok=True)
-    versions={name:importlib.metadata.version(name) for name in ('faster-whisper','ctranslate2','onnxruntime','numpy','huggingface-hub','tokenizers','av')}
-    completed=[]
-    for item in data['items']:
-        decoded=subprocess.run(['ffmpeg','-nostdin','-v','error','-i',str(Path(input_dir)/item['path']),'-vn','-ac','1','-ar','16000','-f','f32le','-'],check=True,capture_output=True,timeout=30)
-        audio=np.frombuffer(decoded.stdout,dtype=np.float32)
-        segments,info=model.transcribe(audio,language='en',beam_size=5,temperature=0,condition_on_previous_text=False,initial_prompt=None,word_timestamps=True,vad_filter=False)
-        rows=[]
-        for segment in segments:
-            words=[{'word':w.word,'start':w.start,'end':w.end,'source_start':round(item['source_from']+w.start,3),'source_end':round(item['source_from']+w.end,3),'probability':w.probability,'uncertain':w.probability<.8} for w in (segment.words or [])]
-            rows.append({'start':segment.start,'end':segment.end,'text':segment.text,'avg_logprob':segment.avg_logprob,'no_speech_prob':segment.no_speech_prob,'compression_ratio':segment.compression_ratio,'words':words})
-        report={'schema':'tennislive.asr-evidence-only.retained-v2','created_at':stamp(),'input':item,'model':{'id':MODEL_ID,'revision':REVISION,'model_sha256':MODEL_FILES['model.bin'][1]},'versions':versions,'language':'en','segments':rows,'status':'inference_only_not_verified','empty_output_is_not_silence_proof':not rows,'uncertainty_note':'Model output may omit or hallucinate quiet foreground speech. Cross-check entire window and source timing.','audio_review_pass':False,'publication_eligible':False}
-        (outdir/f'{item["id"]}.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');completed.append(item['id'])
-        print(json.dumps({'completed':item['id'],'segments':len(rows),'review_pass':False}),flush=True)
-    (outdir/'batch.json').write_text(json.dumps({'created_at':stamp(),'completed':completed,'source_seconds':data['source_seconds'],'planned_source_seconds':309.95,'available_slugs':data['available_slugs'],'blocked_slugs':data['blocked_slugs'],'scope_status':data['scope_status'],'audio_review_pass':False,'publication_eligible':False},indent=2)+'\n')
-
 import hashlib
 
 import html
@@ -276,6 +254,8 @@ def _kill_download_group(process):
 def _classify_download_stderr(payload):
     """Map a private bounded buffer to fixed codes; never return error text."""
     text = payload.decode("utf-8", errors="replace").lower()
+    if "errno 27" in text or "file too large" in text:
+        return "intermediate_size_limit"
     if "error while loading shared libraries" in text or "cannot open shared object file" in text:
         return "library_loader"
     if "no module named" in text:
@@ -367,7 +347,7 @@ def _bounded_hls_download(playback_url, dest, expected_bytes, deadline):
         output = staging / "source.mp4"
         # Each file is kernel-limited. Aggregate allowance accommodates separate
         # A/V files, merged output, and ordinary temporary HLS overhead.
-        per_file_limit = expected_bytes + 1024 * 1024
+        per_file_limit = 2 * expected_bytes + 8 * 1024 * 1024
         aggregate_limit = 3 * expected_bytes + 8 * 1024 * 1024
 
         def set_file_limit():
@@ -476,6 +456,53 @@ def get_ttv(url, dest):
         raise
     except Exception:
         raise SourceFetchError("public_fetch_failed") from None
+
+"""Finite native-number reports, including NumPy scalar model outputs."""
+def native_real(value):
+    from numbers import Real
+    if isinstance(value,bool) or not isinstance(value,Real):
+        raise ValueError('ASR numeric output must be a real scalar')
+    result=float(value)
+    if not math.isfinite(result):
+        raise ValueError('ASR numeric output must be finite')
+    return result
+
+
+def segment_report(segment,item):
+    start=native_real(segment.start);end=native_real(segment.end)
+    if end<start:
+        raise ValueError('ASR segment end precedes start')
+    duration=item['source_to']-item['source_from'];words=[]
+    for word in segment.words or []:
+        a=native_real(word.start);b=native_real(word.end);prob=native_real(word.probability)
+        if b<a or not 0<=prob<=1:
+            raise ValueError('Invalid ASR word interval or probability')
+        outside=a<0 or b>duration
+        words.append({'word':str(word.word),'start':a,'end':b,'source_start':round(item['source_from']+a,3),'source_end':round(item['source_from']+b,3),'probability':prob,'uncertain':bool(prob<.8 or outside),'outside_input_window':bool(outside)})
+    return {'start':start,'end':end,'text':str(segment.text),'avg_logprob':native_real(segment.avg_logprob),'no_speech_prob':native_real(segment.no_speech_prob),'compression_ratio':native_real(segment.compression_ratio),'outside_input_window':bool(start<0 or end>duration),'words':words}
+
+
+def infer(data,input_dir,model_dir,outdir):
+    check_model(model_dir)
+    for item in data['items']:check_wav(Path(input_dir)/item['path'],item)
+    import numpy as np
+    from faster_whisper import WhisperModel
+    model=WhisperModel(str(model_dir),device='cpu',compute_type='int8',cpu_threads=2,num_workers=1,local_files_only=True)
+    outdir=Path(outdir);outdir.mkdir(parents=True,exist_ok=True)
+    versions={name:importlib.metadata.version(name) for name in ('faster-whisper','ctranslate2','onnxruntime','numpy','huggingface-hub','tokenizers','av')}
+    completed=[]
+    for item in data['items']:
+        print(json.dumps({'stage':'infer_window','clip':item['id'],'review_pass':False}),flush=True)
+        decoded=subprocess.run(['ffmpeg','-nostdin','-v','error','-i',str(Path(input_dir)/item['path']),'-vn','-ac','1','-ar','16000','-f','f32le','-'],check=True,capture_output=True,timeout=30)
+        audio=np.frombuffer(decoded.stdout,dtype=np.float32)
+        segments,info=model.transcribe(audio,language='en',beam_size=5,temperature=0.0,condition_on_previous_text=False,initial_prompt=None,word_timestamps=True,vad_filter=False)
+        rows=[segment_report(segment,item)for segment in segments]
+        report={'schema':'tennislive.asr-evidence-only.retained-v2','created_at':stamp(),'input':item,'model':{'id':MODEL_ID,'revision':REVISION,'model_sha256':MODEL_FILES['model.bin'][1]},'versions':versions,'language':'en','segments':rows,'status':'inference_only_not_verified','empty_output_is_not_silence_proof':not rows,'uncertainty_note':'Model output may omit or hallucinate quiet foreground speech. Cross-check entire window and source timing.','audio_review_pass':False,'publication_eligible':False}
+        (outdir/f'{item["id"]}.json').write_text(json.dumps(report,ensure_ascii=False,indent=2,allow_nan=False)+'\n');completed.append(item['id'])
+        print(json.dumps({'completed':item['id'],'segments':len(rows),'review_pass':False}),flush=True)
+    batch={'created_at':stamp(),'completed':completed,'source_seconds':data['source_seconds'],'planned_source_seconds':309.95,'available_slugs':data['available_slugs'],'blocked_slugs':data['blocked_slugs'],'scope_status':data['scope_status'],'audio_review_pass':False,'publication_eligible':False}
+    (outdir/'batch.json').write_text(json.dumps(batch,indent=2,allow_nan=False)+'\n')
+
 
 """Fixed public plan and local excerpts; included in the frozen runner helper."""
 OFFICIAL_RESOLVER_SHA256 = '1b345431dccf751614f88ebfce93f38fce3126e52fa7d7ba42a9f4eb84ae1e04'
@@ -664,5 +691,12 @@ if __name__=='__main__':
         main()
     except Exception as exc:
         # Transient public-player tokens and local paths never enter artifacts/logs.
-        print(json.dumps({'status':'blocked','error_type':type(exc).__name__,'audio_review_pass':False,'publication_eligible':False}),flush=True)
+        import traceback
+        frames=traceback.extract_tb(exc.__traceback__)[-4:]
+        failure={'status':'blocked','error_type':type(exc).__name__,'safe_summary':_sanitize_download_diagnostic(type(exc).__name__+': '+str(exc)),'trace':[{'module':Path(x.filename).name,'function':x.name,'line':x.lineno}for x in frames],'audio_review_pass':False,'publication_eligible':False}
+        print(json.dumps(failure),flush=True)
+        if '--outdir' in sys.argv:
+            failure_dir=Path(sys.argv[sys.argv.index('--outdir')+1])
+            if failure_dir.is_dir() and not failure_dir.is_symlink():
+                (failure_dir/'batch.json').write_text(json.dumps(failure,indent=2)+'\n')
         raise SystemExit(1) from None
