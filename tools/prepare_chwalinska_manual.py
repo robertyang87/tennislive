@@ -23,7 +23,7 @@ for i,(t,f) in enumerate(frames):
  im=Image.open(f);im.thumbnail((w,h-20));x=(i%5)*w;y=(i//5)*h;sheet.paste(im,(x,y));dr.text((x+5,y+h-18),f'{t:.2f}s',fill='white')
 sheet.save(a.outdir/'portrait_contact.jpg',quality=92)
 subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-ss','259.0','-i',str(source),'-t','28','-vn','-c:a','libmp3lame','-b:a','128k','-y',str(a.outdir/'deciding_audio.mp3')],check=True)
-print('Original speech and same-match portraits collected; no DeepSeek calls.')
+print('Original speech and same-match portraits collected; no DeepSeek or MiniMax calls.')
 
 source_sha=hashlib.file_digest(source.open('rb'),'sha256').hexdigest()
 (a.outdir/'source_sha256.txt').write_text(source_sha+'\n')
@@ -31,7 +31,7 @@ model2=WhisperModel('small.en',device='cpu',compute_type='int8')
 segs2,info2=model2.transcribe(str(source),language='en',word_timestamps=True,vad_filter=True,beam_size=5)
 rows2=[{'start':s.start,'end':s.end,'text':s.text.strip(),'words':[{'start':w.start,'end':w.end,'word':w.word,'probability':w.probability} for w in s.words or []]} for s in segs2]
 (a.outdir/'broadcast_asr_independent.json').write_text(json.dumps({'model':'small.en','source_sha256':source_sha,'segments':rows2},ensure_ascii=False,indent=2)+'\n')
-from analyze_reel_visuals import verified_minimax_report, evidence_hash
+
 base=json.loads(Path('specs/reels/pending/yastremska-chwalinska.draft.json').read_text())
 base['cover']['portrait']={'image':str(a.outdir/'portrait_036.80.jpg')}
 base['_cover_brief']={'preferred_subject':'赫瓦林斯卡','preferred_moment_key':'loser_fighting','preferred_moment':'本场仍在拼；正面手持拍准备下一分，不要低头失落照。'}
@@ -52,10 +52,7 @@ subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-ss','59','-i',str(
 third,_=model.transcribe(str(clip),language='en',word_timestamps=True,vad_filter=False,beam_size=5)
 (a.outdir/'volley_asr_crosscheck.json').write_text(json.dumps({'model':'medium.en','source_offset':59,'decoding':'unseeded local 10-second context','segments':[{'start':59+s.start,'end':59+s.end,'text':s.text} for s in third]},ensure_ascii=False,indent=2)+'\\n')
 
-report,problems=verified_minimax_report(base,frames,a.outdir/'portrait_036.80.jpg',probe,os.environ['MINIMAX_API_KEY'])
-report['evidence_sha256']=evidence_hash(frames,a.outdir/'portrait_036.80.jpg')
-(a.outdir/'manual_visual_evidence.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-print('VISUAL PROBLEMS',problems)
+print('Original frames only. DeepSeek and MiniMax are disabled by owner instruction.')
 
 
 # Re-run with tolerant JSON string decoding; content gates remain unchanged.
