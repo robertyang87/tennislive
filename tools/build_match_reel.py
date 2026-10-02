@@ -3618,7 +3618,17 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                  or spec.get("_column", "")).strip()
     if (layout != "band" and column == "赛场之上" and not spec.get("archival")
             and str(spec.get("slug", "")) not in legacy_fullbleed_no_scoreboard()):
-        missing_box = scorebox is None
+        # No broadcast board exists in some same-match camera footage. Only a
+        # complete, explicit absence declaration makes source coordinates moot.
+        # Keep requiring a real box for inset requests or incomplete claims.
+        video_segments = [raw for raw in spec["segments"]
+                          if not (raw.get("image") or raw.get("title_card") or raw.get("stat_card"))]
+        declared_no_board = bool(video_segments) and all(
+            raw.get("score_inset") is False
+            and isinstance(raw.get("_score_inset_why"), str)
+            and bool(raw["_score_inset_why"].strip())
+            for raw in video_segments)
+        missing_box = scorebox is None and not declared_no_board
         undeclared, unclaimed = [], []
         for i, raw in enumerate(spec["segments"]):
             if raw.get("image") or raw.get("title_card") or raw.get("stat_card"):

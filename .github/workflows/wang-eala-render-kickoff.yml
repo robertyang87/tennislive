@@ -1,0 +1,23 @@
+name: wang-eala-render-kickoff
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths: [.github/workflows/wang-eala-render-kickoff.yml]
+permissions:
+  contents: read
+  actions: write
+jobs:
+  dispatch:
+    if: github.head_ref == 'codex/wang-xiyu-eala-asiad-20261002'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch native render without publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PRODUCTION_BRANCH: ${{ github.head_ref }}
+        run: |
+          gh workflow run match-reel.yml --ref "$PRODUCTION_BRANCH" \
+            -f mode=render -f slug=wang-xiyu-eala-asian-games-2026-sf \
+            -f push=false -f rate=+0% -f voice=zh-CN-YunjianNeural
