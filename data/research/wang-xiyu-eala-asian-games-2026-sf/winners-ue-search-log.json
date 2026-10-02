@@ -1,0 +1,124 @@
+{
+  "checked_utc": "2026-10-02T05:51:01.367635+00:00",
+  "target": "2026-10-01 Asian Games WS semifinal Wang Xiyu vs Alexandra Eala",
+  "outcome": "Winners and unforced errors remain unverified after the specific checks below. This does not assert that no source anywhere publishes them.",
+  "categories": [
+    {
+      "category": "TNNS Live / Match Charting Project",
+      "checks": [
+        {
+          "url": "https://api.tnnslive.com/v1/matches?date=2026-10-01&web=true&referring_domain=tnnslive.com",
+          "status": "HTTP403 Cloudflare; blocked not no-coverage",
+          "evidence": "tnns-api.txt"
+        },
+        {
+          "url": "https://tnnslive.com/?date=2026-10-01",
+          "status": "Chromium native probe after28s: Just a moment, Cloudflare not passed",
+          "evidence": "tnns-browser.log"
+        },
+        {
+          "url": "https://r.jina.ai/https://tnnslive.com/?date=2026-10-01",
+          "status": "HTTP200 rendered page, shows current main tour matches and Eala headline; no target match stats",
+          "evidence": "tnns-jina.txt"
+        },
+        {
+          "url": "https://www.tennisabstract.com/charting/meta.html",
+          "status": "HTTP200 metadata index, no exact-date target match",
+          "evidence": "mcp-index.txt"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/JeffSackmann/tennis_MatchChartingProject/master/charting-w-matches.csv",
+          "status": "HTTP200 parsed full womens index, 30 Eala rows, none target date20261001",
+          "latest_eala_matches": [
+            "20260905-W-US_Open-R32-Alexandra_Eala-Iva_Jovic",
+            "20260809-W-Toronto-R16-Alexandra_Eala-Belinda_Bencic",
+            "20260807-W-Toronto-R32-Alexandra_Eala-Caty_Mcnally",
+            "20260801-W-Washington-SF-Naomi_Osaka-Alexandra_Eala",
+            "20260731-W-Washington-QF-Elina_Svitolina-Alexandra_Eala"
+          ],
+          "evidence": "mcp-matches.txt"
+        }
+      ]
+    },
+    {
+      "category": "Official reports / postmatch API / editorial reports",
+      "checks": [
+        {
+          "url": "https://results.asiangames2026.org/ag2026/reports/ENG.TENWSINGLES-----------SFNL000100--.C73A_1_0.pdf",
+          "status": "HTTP200 full match statistics; winners/UE rows absent",
+          "evidence": "official-wang-eala-C73A.pdf"
+        },
+        {
+          "url": "https://back.results.asiangames2026.org/s/AG2026/en/TEN/results/W.SINGLES-----------.SFNL.000100--",
+          "status": "HTTP200 decoded full match and each-set Stats, no winners/UE keys",
+          "evidence": "api-results.json"
+        },
+        {
+          "url": "https://www.olympics.com/en/news/asian-games-2026-tennis-women-alexandra-eala-semi-final",
+          "status": "Public jina full article: qualitative unforced errors reference, no counts",
+          "evidence": "olympics-jina.html"
+        },
+        {
+          "url": "https://rallyher.com/chinese-players-china-open-2026-asian-games-gold/",
+          "status": "HTTP200 full report: same second serve62/29 and totals/breaks, no winners/UE; page-header Winners List phrase is unrelated navigation",
+          "evidence": "rallyher-china.html"
+        },
+        {
+          "url": "https://rallyher.com/asian-games-2026-womens-singles-results-draw-schedule/",
+          "status": "HTTP200 detailed draws/results, no target match winners/UE counts",
+          "evidence": "rallyher-asiad.html"
+        },
+        {
+          "url": "https://www.dzrh.com.ph/post/asiad-alex-eala-bags-bronze-after-semifinal-defeat-at-asian-games-2026",
+          "status": "HTTP200 stats report: service/break/points only, no winners/UE",
+          "evidence": "dzrh.html"
+        }
+      ]
+    },
+    {
+      "category": "Video statistics boards",
+      "checks": [
+        {
+          "url": "https://www.bilibili.com/video/BV1VqaB65EAt/",
+          "status": "Public720p129.733s fan camera compilation obtained by china_video; contact sheet viewed, no fullmatch broadcast statistics board, only courtside game/point scoreboard",
+          "evidence": "../china/BV1VqaB65EAt.mp4 / ../china/BV1VqaB65EAt-contact.jpg"
+        },
+        {
+          "url": "https://tv.cctv.com/2026/10/01/VIDExOT9ma5YKyTD6ZquxUVd261001.shtml",
+          "status": "News combined two womens semis, no verified target-match W/UE fullmatch board identified; footage search agent continues",
+          "evidence": "See china_video and root evidence"
+        }
+      ]
+    },
+    {
+      "category": "Public data interfaces / Flashscore / SofaScore",
+      "checks": [
+        {
+          "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+          "status": "HTTP200 fullfeed, no exact Eala player target match; eala substring is New Zealand not Eala",
+          "evidence": "fs-day0.txt"
+        },
+        {
+          "url": "https://global.flashscore.ninja/2/x/feed/f_2_-1_0_en_1",
+          "status": "HTTP200 fullfeed, no target match",
+          "evidence": "fs-day1.txt"
+        },
+        {
+          "url": "https://www.flashscore.com/tennis/wta-singles/asian-games/",
+          "status": "HTTP200 actual initial result data2023 Hangzhou tournament, NOT2026; Eala semifinal vsZhengQinwen, excluded",
+          "evidence": "flashscore-resultfeed.txt"
+        },
+        {
+          "url": "https://www.flashscore.com/tennis/wta-singles/asian-games-2026/results/",
+          "status": "HTTP404 no supported2026 endpoint",
+          "evidence": "flash2026.html"
+        },
+        {
+          "url": "https://www.sofascore.com/tennis/match/eala-alexandra-wang-xiyu/bBbsNvcb",
+          "status": "HTTP200 captcha redirect; cannot infer coverage",
+          "evidence": "sofascore.html"
+        }
+      ]
+    }
+  ]
+}

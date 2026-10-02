@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/sina-matchpoint-original.mp4",
+  "source_path": "/workspace/eala-research/china/sina-597011609-1080.mp4",
+  "source_sha256": "a2562acbad782361b790428d800de04a27df13c8dd07361c9666e0c5d351e50e",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "auto",
+  "detected_language": "ko",
+  "language_probability": 0.2685125172138214,
+  "range_from": 0,
+  "range_to": 7.3,
+  "created_at": "2026-10-02T06:15:41.071926+00:00",
+  "elapsed_seconds": 11.14,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 1.64,
+      "end": 3.04,
+      "text": " 멈췄다.",
+      "avg_logprob": -2.166070032119751,
+      "no_speech_prob": 0.4382460117340088,
+      "compression_ratio": 0.5555555555555556,
+      "words": [
+        {
+          "start": 1.64,
+          "end": 3.04,
+          "word": " 멈췄다.",
+          "probability": 0.3744181790583146
+        }
+      ]
+    }
+  ]
+}

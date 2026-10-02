@@ -1,0 +1,44 @@
+{
+  "url": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/sina-matchpoint-original.mp4",
+  "width": 1080,
+  "height": 1440,
+  "duration": 60.162993,
+  "fps": "30/1",
+  "fps_value": 30.0,
+  "scene_cuts": [],
+  "scene_cuts_loose": [
+    24.77,
+    25.23,
+    25.63,
+    28.1,
+    42.53
+  ],
+  "point_ends": [],
+  "scorebox_guess": null,
+  "scorebox": null,
+  "scorebox_fitted": null,
+  "point_ends_guess": null,
+  "silent_audio": [],
+  "audio_levels": {
+    "block": 0.05,
+    "rate": 8000,
+    "window": 0.5,
+    "quietest_gain": 0.36,
+    "blocks": 1203,
+    "db": "L1203",
+    "_how": "逐 0.05 秒 RMS（8 kHz 单声道，同 check_reel_landed.per_second_db），dB 向上取整到 0.1；任何含它的 window 秒窗口按 quietest_gain 都红不了成片的块只记「响」，按游程写成 L<块数>"
+  },
+  "clip_from": null,
+  "clip_to": null,
+  "sheets": [
+    "contact_00.jpg",
+    "score_00.jpg",
+    "score_01.jpg"
+  ],
+  "every": 2.0,
+  "captions": null,
+  "board": {
+    "version": 1,
+    "skipped": "源片不是 1920×1080、这一趟也没给 --scorebox、也没猜到框"
+  }
+}

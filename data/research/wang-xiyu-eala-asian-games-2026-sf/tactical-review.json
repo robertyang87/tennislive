@@ -1,0 +1,248 @@
+{
+  "match": {
+    "date": "2026-10-01",
+    "event": "2026 Aichi-Nagoya Asian Games women singles semifinal",
+    "players": [
+      "王曦雨",
+      "Alexandra Eala 伊埃拉"
+    ],
+    "final_score_from_official_record": "3-6 6-3 6-2"
+  },
+  "method": "Direct visual inspection of decoded full-resolution frames, 1-second grids and 0.13–0.2-second boundary frames. Audio has not been independently heard by this agent. This is a visual review, not an audio signoff.",
+  "sources": [
+    {
+      "path": "/workspace/eala-research/china/BV1VqaB65EAt.mp4",
+      "sha256": "b73701bcfd3791c5570571b9ee435fcb3daa1bf92fef58c62843541ba60bd112",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "native_watermark": "zgzoyj + bilibili, upper left approximately x24–207,y30–70. Red event signage and right-side physical scoreboard are scene content.",
+      "crop_review": "Central 3:4 crop (x370–910 of 1280x720) excludes important left/right player movements and scoreboard. Use full-width contain for technical evidence; keep source attribution."
+    },
+    {
+      "path": "/workspace/eala-research/china/sina-597011609-1080.mp4",
+      "sha256": "a2562acbad782361b790428d800de04a27df13c8dd07361c9666e0c5d351e50e",
+      "dimensions": [
+        1080,
+        1440
+      ],
+      "native_watermark": "Embedded yellow editorial headline at top. Approximately y50–166 during opening; changes to three lines at 25s. No separate channel logo observed in inspected opening and interaction frames. Do not label as clean source.",
+      "crop_review": "Native aspect ratio is already 3:4; preserve full native frame. Opening headline stays above body/ball. Verify any overlaid top bar does not leave headline fragments."
+    }
+  ],
+  "complete_windows": [
+    {
+      "id": "first_set_serve_point",
+      "path": "/workspace/eala-research/china/BV1VqaB65EAt.mp4",
+      "start": 38.733313,
+      "recommended_start": 39.0,
+      "end": 50.65,
+      "set": 1,
+      "physical_scoreboard": "Eala 5, Wang 2. Before terminal shot the right board shows 40/40.",
+      "near_player": "王曦雨, red CHINA top, white skirt, black cap",
+      "far_player": "伊埃拉, blue/turquoise top, white skirt",
+      "point_start_ok": true,
+      "point_end_ok": true,
+      "point_end_evidence": "Wang completes final near-left forehand around49.7; by50.07–50.60 both stop readiness and Eala walks with racket down. Scene cut50.7 happens after this visible relaxation.",
+      "winner_confirmed": false,
+      "terminal_ball": "Ball travels deep toward far court after Wang forehand; do not classify winner, forced error, or exact in/out from these frames.",
+      "actions": [
+        {
+          "time": 42.2,
+          "fact": "Wang toss/left-handed serve preparation visible."
+        },
+        {
+          "time": 42.55,
+          "fact": "Wang serve swing/contact/follow-through visible; Eala positioned and moves on far screen-left to return."
+        },
+        {
+          "time": 44.35,
+          "fact": "Wang at near screen-left hits left-handed forehand; ball and racket visible."
+        },
+        {
+          "time": 45.9,
+          "fact": "Wang recovers preparation nearer center while Eala is playing at far baseline."
+        },
+        {
+          "time": 46.3,
+          "fact": "Wang again hits from near screen-left forehand side."
+        },
+        {
+          "time": 49.7,
+          "fact": "Wang last left-handed forehand near screen-left edge; whole native frame required."
+        }
+      ],
+      "safe_commentary": "发球先把伊埃拉带开，下一拍，王曦雨向正手位移动，把球再送回去。",
+      "forbidden_claims": [
+        "此分王曦雨制胜",
+        "此分因此拿下",
+        "这一拍造成对手非受迫失误",
+        "这是0比5时的现场",
+        "用此局部点证明整场战术调整"
+      ]
+    },
+    {
+      "id": "match_point_one_side_complete_process",
+      "path": "/workspace/eala-research/china/sina-597011609-1080.mp4",
+      "start": 0,
+      "end": 9.0,
+      "set": 3,
+      "physical_scoreboard": "Not visible in this source. Contextual match identity/final result established by sources, not source scorebug.",
+      "visible_player": "Only Wang Xiyu throughout serve/rally segment; opponent and final landing off camera.",
+      "point_start_ok": true,
+      "point_end_ok": true,
+      "point_end_basis": "Continuous filmed service preparation, toss/serve, Wang backhand, readiness, attempted movement toward incoming final ball, stopping, fist-pump and smiling. This verifies the point has ended through player reaction; it does not show the decisive landing.",
+      "actions": [
+        {
+          "time": 1.0,
+          "fact": "Wang toss begins."
+        },
+        {
+          "time": 2.0,
+          "fact": "Wang left-handed serve/contact/follow-through."
+        },
+        {
+          "time": 4.1,
+          "fact": "Wang two-handed backhand swing/follow-through, filmed from side/front."
+        },
+        {
+          "time": 6.6,
+          "fact": "Wang moves to her backhand side toward incoming ball; no additional racket contact observed."
+        },
+        {
+          "time": 7.4,
+          "fact": "Wang stops pursuit and makes visible fist-pump."
+        },
+        {
+          "time": 8.5,
+          "fact": "Wang smiles and fist-pumps; same uninterrupted camera."
+        }
+      ],
+      "safe_commentary": "最后这一分，发球、反手回击，随后她收住脚步，握紧拳头。",
+      "forbidden_claims": [
+        "精准说对面回球落点",
+        "说这是王正手制胜分",
+        "说最后一拍打出了制胜球",
+        "以标题制胜分当技术统计证据"
+      ]
+    }
+  ],
+  "partial_technical_window": {
+    "id": "second_set_return_exchange",
+    "path": "/workspace/eala-research/china/BV1VqaB65EAt.mp4",
+    "start": 75.466688,
+    "end": 87.366,
+    "set": 2,
+    "physical_scoreboard": "Eala previous set6/current1; Wang previous set3/current2. Clear frame81.0 and76.25.",
+    "near_player": "伊埃拉, blue/turquoise",
+    "far_player": "王曦雨, red",
+    "point_start_visible": "Eala serve swing visible immediately after cut; preparation/toss earlier phase is omitted.",
+    "point_end_ok": false,
+    "end_evidence": "At87.36 Wang far side is still returning a ball and Eala near side stays ready;87.4 hard-cuts to another camera/time while the point is still live.",
+    "actions": [
+      {
+        "time": 76.25,
+        "fact": "Wang far screen-left, two-handed backhand return after Eala serve."
+      },
+      {
+        "time": 78.25,
+        "fact": "Wang runs toward far screen-right, her left-handed forehand side."
+      },
+      {
+        "time": 78.6,
+        "fact": "Wang forehand swing/follow-through at far screen-right."
+      },
+      {
+        "time": 79.15,
+        "fact": "Wang recovering toward center of far baseline in readiness."
+      },
+      {
+        "time": 80.65,
+        "fact": "Wang again moves to far screen-right forehand side and returns."
+      }
+    ],
+    "safe_commentary": "反手接发之后，王曦雨跑到另一侧用正手还击。球刚出手，人就回到中间，准备应对下一拍。",
+    "use_limit": "Only a visible local sequence; needs explicit source-cut exception if program requires complete points. Do not assert point outcome or whole-match adjustment."
+  },
+  "other_bili_segments": [
+    {
+      "start": 26.5,
+      "end": 38.733313,
+      "set": 2,
+      "physical_scoreboard": "Eala6/1, Wang3/2",
+      "status": "Duplicate of75.466–87.4 same second-set service/rally, reordered montage. Eala near-side serve visible at26.50–26.8, but at38.65 Wang far side still plays and the ball remains live at the net before38.733 hard cut. Not a complete point.",
+      "visual_duplicate_evidence": [
+        "tactical-review-frame-26.50.jpg vs tactical-review-frame-75.50.jpg",
+        "tactical-review-frame-26.80.jpg vs tactical-review-frame-75.90.jpg",
+        "tactical-review-frame-38.65.jpg vs tactical-review-frame-87.36.jpg"
+      ]
+    },
+    {
+      "start": 50.7,
+      "end": 62.9,
+      "set": 1,
+      "physical_scoreboard": "Eala5/Wang3, not second set.",
+      "status": "Entry already mid-rally; visible dead-ball relaxation by62.4–62.7, but serve missing."
+    },
+    {
+      "start": 62.9,
+      "end": 75.466688,
+      "set": 1,
+      "physical_scoreboard": "Eala5/Wang3, not second set.",
+      "status": "Eala far-side serve visible; at75.4 far Eala remains ready after near Wang plays from screen-left off frame. Do not certify terminal landing/dead ball."
+    },
+    {
+      "start": 87.4,
+      "end": 100.0,
+      "set": 3,
+      "physical_scoreboard": "Eala6,3,2 / Wang3,6,5.",
+      "status": "Match-point tail begins mid-rally; Wang near red, Eala far blue. Backhand87.7–88.1, pursues incoming last ball90.4–91.1 then stops;92+ relax,95+ heads to net,100 handshake approach. Serve absent, not standalone complete point."
+    }
+  ],
+  "visual_match_point_alignment": {
+    "bili_backhand": [
+      87.7,
+      88.1
+    ],
+    "sina_backhand": [
+      3.8,
+      4.4
+    ],
+    "bili_stop_pursuit": [
+      90.4,
+      91.1
+    ],
+    "sina_stop_pursuit": [
+      6.4,
+      7.1
+    ],
+    "approximate_offset_seconds": 83.8,
+    "status": "Visually consistent clothing, same two-handed backhand, then same final-ball pursuit without another shot, followed by win reaction and net handshake; no audio synchronization verified. Candidate cross-camera edit may use Sina opening into Bili tail, but parent must review cut before claiming validated full point."
+  },
+  "emotion_window": {
+    "path": "/workspace/eala-research/china/sina-597011609-1080.mp4",
+    "start": 27,
+    "end": 35,
+    "fact": "Zhang Shuai approaches, embraces Wang Xiyu around29–31, then separates and clasps hands33–35; later face-to-face smiling conversation.",
+    "native_title": "Three-line yellow headline at top from25s about Zhang reaching final and tomorrow face-off; preserve origin or replace editorially with verified attribution, no blur removal."
+  },
+  "missing_visual_context": [
+    "First-set Wang0–5 physical scoreboard not found in the inspected Bili clip",
+    "Second-set Wang5–1 physical scoreboard not found",
+    "Third-set Wang4–1 or4–2 physical scoreboard not found",
+    "No Winners/Unforced Errors statistics board found"
+  ],
+  "editorial_guardrails": [
+    "Only attach first-set5–2 footage to5–2 context;0–5 story must be official fact/stat card.",
+    "Do not use5–3 first-set segments as second-set pictures with live score claims.",
+    "Keep names 王曦雨 and 伊埃拉.",
+    "Source audio preserved but this reviewer cannot provide actual-listening signoff.",
+    "The source montage is not in set order:26.5 second-set rally,38.7–75.4 first-set points,75.466 repeat second-set rally,87.4 third-set tail. Never infer set from clip chronology."
+  ],
+  "opening_bili": {
+    "start": 0,
+    "end": 26.5,
+    "status": "Players with bags moving next to umpire chair and net, plus spectators; no live point. Prematch/postmatch chronological assignment not certified. Use only neutral venue/players-with-bags atmosphere."
+  }
+}

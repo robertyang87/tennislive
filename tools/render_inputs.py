@@ -281,7 +281,7 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                     "（封面用时闸）、promote_reel_draft 的撞车键（合集源片按场次 id 分开，`_compilation_only`）、list_official_uploads "
                     "认人和开球日（dry-run 只报不拦的官方上传／封面日期报告）",
                     "verified_result_problem decider_tiebreak_problem waiting_reasons "
-                    "promote _source_urls _match_keys _flashscore_id _match_date _retired event_dates spec_surnames _omission_problem",
+                    "promote _source_urls _match_keys _flashscore_id _match_date _retired event_dates spec_surnames _omission_problem _verified_retirement_problem",
                     "_match", truthy),
     "_narration_why": _gate("cover_voice_matches_hook_problem：封面口播和钩子不同的认领",
                             "cover_voice_matches_hook_problem", "cover._narration_why"),
@@ -355,7 +355,7 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                               "tts_backend）", "apply_tts_backend", "_tts_backend_why",
                               nonblank_str),
     "_visual_evidence": _gate("promote_reel_draft（备料提升时读）", "waiting_reasons promote"),
-    "_winners_ue_omission": _gate("winners_ue_gate：仅限郑钦文–施晗本期的两行省略决定，身份/日期/比分和双方字段由原闸逐项核验",
+    "_winners_ue_omission": _gate("winners_ue_gate：仅限已批准五期精确比赛的两行省略决定，身份/日期/比分和双方字段由原闸逐项核验",
                                 "problem _omission_problem", "stats._winners_ue_omission", truthy),
     "_winners_ue_evidence": _gate("新统计卡/预检/成片QC核验完整制胜分与UE的来源、日期和列序", "problem _omission_problem", "stats._winners_ue_evidence", any_text_value),
     "_winners_ue_check": _gate("缺统计时记录真实查找状态；不构成缺项发布许可", "problem", "stats._winners_ue_check", any_text_value),
