@@ -1,0 +1,32 @@
+name: preserve-wang-eala-sources
+on:
+  push:
+    branches: [codex/wang-xiyu-eala-asiad-20261002]
+    paths: [.github/workflows/preserve-wang-eala-sources.yml]
+permissions:
+  contents: write
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Preserve exact original public source bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PYCODE'
+          import json,pathlib,hashlib,urllib.request,subprocess,os
+          items=json.loads('[{"name": "bili-three-sets-original.mp4", "url": "https://upos-sz-mirrorcosov.bilivideo.com/upgcxcode/91/03/42366930391/42366930391-1-192.mp4?e=ig8euxZM2rNcNbNanwdVhwdlhbu3hwdVhoNvNC8BqJIzNbfqXBvEqxTEto8BTrNvN0GvT90W5JZMkX_YN0MvXg8gNEV4NC8xNEV4N03eN0B5tZlqNxTEto8BTrNvNeZVuJ10Kj_g2UB02J0mN0B5tZlqNCNEto8BTrNvNC7MTX502C8f2jmMQJ6mqF2fka1mqx6gqj0eN0B599M=&deadline=1790927027&platform=pc&mid=0&gen=playurlv3&os=cosovbv&og=ali&nbs=1&trid=3973bb806d59448290745918776484fu&uipk=5&oi=1516289083&upsig=a643e622d45746d095095ad40ffe3e61&uparams=e,deadline,platform,mid,gen,os,og,nbs,trid,uipk,oi&bvc=vod&nettype=0&bw=2241092&lrs=0&qn_dyeid=6a6480a31a9aa66c004a3a576abf4493&agrr=0&buvid=&build=0&dl=0&f=u_0_0&orderid=0,2", "sha256": "b73701bcfd3791c5570571b9ee435fcb3daa1bf92fef58c62843541ba60bd112", "canonical": "https://www.bilibili.com/video/BV1VqaB65EAt/"}, {"name": "sina-matchpoint-original.mp4", "url": "https://f.video.weibocdn.com/o0/9AYmSXAxlx08Beon7GyI01041200OREh0E010.mp4?label=mp4_1080p&template=1080x1440.24.0&media_id=5349257582936127&tp=8x8A3El:YTkl0eM8&us=0&ori=1&bf=4&ot=v&ps=2uqnxX&uid=1N1NmM&ab=,15568-g4,8013-g0,3601-g38&Expires=1790922870&ssig=gjJUJfNqhj&KID=unistore,video", "sha256": "a2562acbad782361b790428d800de04a27df13c8dd07361c9666e0c5d351e50e", "canonical": "https://k.sina.cn/article_1797246290_m6b1fcd5203302uyb8.html?subch=osport"}]')
+          for i in items:
+           p=pathlib.Path(os.environ['RUNNER_TEMP'])/i['name']
+           req=urllib.request.Request(i['url'],headers={'User-Agent':'Mozilla/5.0','Referer':i['canonical']})
+           with urllib.request.urlopen(req,timeout=150) as r,p.open('wb') as f:
+            while b:=r.read(1048576):f.write(b)
+           actual=hashlib.sha256(p.read_bytes()).hexdigest()
+           if actual!=i['sha256']:raise SystemExit('Original source SHA mismatch: '+i['name']+' '+actual)
+           print('Verified',i['name'],actual,flush=True)
+          tag='source-wang-eala-asiad-20261001'
+          if subprocess.run(['gh','release','view',tag,'--repo','robertyang87/tennislive'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode:
+           subprocess.run(['gh','release','create',tag,'--repo','robertyang87/tennislive','--target',os.environ['GITHUB_SHA'],'--title','Public original sources: Wang Xiyu–Eala Asian Games SF','--notes','Original publicly accessible match clips preserved unchanged; provenance and original byte hashes recorded in production spec. No access restrictions bypassed.','--prerelease'],check=True)
+          for i in items:
+           subprocess.run(['gh','release','upload',tag,str(pathlib.Path(os.environ['RUNNER_TEMP'])/i['name']),'--repo','robertyang87/tennislive'],check=True)
+          PYCODE
