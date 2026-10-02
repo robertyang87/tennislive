@@ -13,7 +13,9 @@ def test_every_knowledge_story_has_platform_safe_titles():
     digest = Digest(today=date(2026, 7, 23))
 
     for story in STORIES:
-        assert xhs_title_len(knowledge_title(story, digest)) <= 20
+        title = knowledge_title(story, digest)
+        assert len(title) <= 20
+        assert not any(c.isspace() for c in title)
         assert len(knowledge_wechat_title(story, digest)) <= 64
 
 

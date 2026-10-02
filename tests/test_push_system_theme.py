@@ -67,7 +67,7 @@ def _palette(page):
       const byText = text => divs.find(el => el.textContent === text);
       const card = root.querySelector('div');
       const body = divs.find(el => style(el).whiteSpace === 'pre-wrap');
-      const title = divs.find(el => el.textContent.startsWith('9.30 ') && style(el).userSelect === 'all');
+      const title = divs.find(el => el.textContent.startsWith('9.30赛场之上|') && style(el).userSelect === 'all');
       const hint = byText('☝️ 标题，长按这一行即可复制');
       const original = [...root.querySelectorAll('a')].find(el => el.textContent === '原图 ↗');
       const divider = divs.find(el => style(el).borderTopWidth === '1px');

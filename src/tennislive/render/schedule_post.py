@@ -25,6 +25,7 @@ from .schedule_time import (
     match_key,
 )
 from .story import is_chinese_player
+from .copy_title import COPY_TITLE_MAX, compact_copy_title, copy_hook_budget, make_copy_title
 
 
 def _names(players: Sequence) -> str:
@@ -90,14 +91,12 @@ def _clock_zh(m: Match) -> str:
     return period + clock
 
 
-# 小红书标题超过 20 字左右就会被截断，读者看到的是半句话。这个预算算的是
-# 整条标题（含「7.28 今日赛程 | 」那截前缀），西文按半个汉字宽计。
-TITLE_MAX = 20
+# Copyable-title budget counts each digit/punctuation as one character.
+TITLE_MAX = COPY_TITLE_MAX
 
 
-def _width(text: str) -> float:
-    """汉字算 1，西文/数字/空格算 0.5——和标题被截断的实际观感对得上。"""
-    return sum(1.0 if ord(ch) > 0x2E80 else 0.5 for ch in text)
+def _width(text: str) -> int:
+    return len(compact_copy_title(text))
 
 
 def headline_hook(m: Match, time_text: str = "", budget: float | None = None) -> str:
@@ -143,7 +142,26 @@ def headline_hook(m: Match, time_text: str = "", budget: float | None = None) ->
     for text in cleaned:
         if _width(text) <= limit:
             return text
-    return cleaned[-1]
+    # Abbreviate given names without dropping either player from the title.
+    def short_side(players):
+        names = []
+        for player in players:
+            name = player_zh(player.name)
+            words = name.split()
+            if name.isascii() and len(words) > 1:
+                name = ".".join(w[0] for w in words[:-1]) + "." + words[-1]
+            names.append(name)
+        return "/".join(names)
+    paired = f"{short_side(m.home)}vs{short_side(m.away)}"
+    if _width(paired) <= limit:
+        return paired
+    # Untranslated multiword names can use their initials in the short title;
+    # the schedule body still contains each complete name. Never slice a name.
+    def initials(players):
+        return "/".join("".join(w[0] for w in p.name.split())
+                        if p.name.isascii() and len(p.name.split()) > 1
+                        else player_zh(p.name) for p in players)
+    return f"{initials(m.home)}对{initials(m.away)}"
 
 
 def pick_lead(matches: Sequence[Match]) -> Match | None:
@@ -176,13 +194,10 @@ def _start_key(m: Match) -> float:
 
 
 def post_title(day, lead: Match | None, time_text: str = "") -> str:
-    """`7.28 今日赛程 | <看点>`，整条控制在 TITLE_MAX 宽度内。"""
-    stem = f"{day.month}.{day.day} 今日赛程"
-    if lead is None:
-        return stem
-    prefix = f"{stem} | "
-    hook = headline_hook(lead, time_text, budget=TITLE_MAX - _width(prefix))
-    return prefix + hook
+    """Keep date+column+|; only the editorial hook can consume the remainder."""
+    label = f"{day.month}.{day.day}"
+    hook = headline_hook(lead, time_text, budget=copy_hook_budget(label, "今日赛程")) if lead else "赛程速览"
+    return make_copy_title(label, "今日赛程", hook)
 
 
 def _event_heading(group) -> str:

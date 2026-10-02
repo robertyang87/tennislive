@@ -1922,10 +1922,14 @@ def test_推送正文里印文案且只印一遍():
     同一个结构。但**同一段不能印两遍**：以前正文印一遍、灰底复制块又印一遍，
     字符串断言全过，人一看整页才发现。"""
     sys.path.insert(0, str(Path("tools").resolve()))
-    from push_reel import build_html, split_copy  # noqa: PLC0415
+    from push_reel import build_html, prepare_copy  # noqa: PLC0415
 
-    copy = Path("specs/reels/nishikori-shang.xhs.txt").read_text("utf-8").strip()
-    title, body_text = split_copy(copy)
+    # The raw .xhs file begins with body copy; the native publishing boundary
+    # supplies the validated date+column+| title before rendering the message.
+    _, title, body_text = prepare_copy(
+        Path("specs/reels/nishikori-shang.xhs.txt"),
+        Path("output/2026-07-28/reel/nishikori-shang"))
+    copy = f"{title}\n\n{body_text}"
     page = build_html("https://v/x.mp4", "https://p/copy.html", "一句导语", copy,
                       "", "赛场之上")
     assert page.count(title) == 1
@@ -8439,7 +8443,9 @@ def test_复制页打不开时消息本身留得住文案():
     html = push_reel.build_html("https://v/x.mp4", "https://p/copy.html", "",
                                 f"{title}\n\n{body}", "", "开球之前")
 
-    # 标题在，而且**只印一遍**——多印一遍就是那个老毛病
+    # 标题规范为无空白的完整日期+栏目+|，而且只印一遍。
+    from tennislive.render.copy_title import copy_title  # noqa: PLC0415
+    title = copy_title(title)
     assert html.count(title) == 1, "标题印了不止一遍"
     assert "长按" in html.split(title, 1)[1][:200], (
         "大标题底下没有「长按可复制」那一行——复制页打不开时标题就没有出口了")
