@@ -1113,6 +1113,7 @@ jobs:
       - name: 月亮姐完全重做 — 原始转播转写和本场封面采样
         if: github.event.inputs.mode == 'probe' && github.event.inputs.slug == 'yastremska-chwalinska'
         env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
