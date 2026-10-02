@@ -686,7 +686,7 @@ def test_dry_run的推送标题和runner同一个函数(tmp_path, monkeypatch, c
     (tmp_path / f"{slug}.json").write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
     shutil.copy(src / f"{slug}.xhs.txt", tmp_path / f"{slug}.xhs.txt")
     _t, _b, problem = gates.push_copy_check(tmp_path / f"{slug}.xhs.txt", date="2026-09-27")
-    assert problem and "超过 13" in problem, problem
+    assert problem and "超过 20" in problem, problem
     monkeypatch.setattr(sys, "argv", ["build_match_reel.py", "render", "--dry-run",
                                       "--spec", str(tmp_path / f"{slug}.json"),
                                       "--outdir", str(tmp_path / "dry")])

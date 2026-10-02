@@ -53,6 +53,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from tennislive.cdn import jsdelivr_base  # noqa: E402
 from tennislive.publish.pushplus import push, write_receipt  # noqa: E402
 from tennislive.render import push_style as ps  # noqa: E402
+from tennislive.render.copy_title import copy_title  # noqa: E402
 from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
@@ -232,6 +233,27 @@ def wait_for_video(url: str, *, attempts: int = 8, delay: float = 15.0,
 
 def headline(outdir: Path, column: str, matchup: str, score: str = "",
              event: str = "", summary: str = "", date: str = "") -> str:
+    """Reel copy titles follow the 20-character, no-whitespace publishing rule.
+
+    Other columns keep their established generator until their independently
+    reviewed title-policy migration lands. Rendering and film inputs are unchanged.
+    """
+    if column != "赛场之上":
+        return _legacy_headline(outdir, column, matchup, score, event, summary, date)
+    if date and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+        raise SystemExit(f"--date 要写成 YYYY-MM-DD，收到 {date!r}")
+    if summary.strip():
+        pair = summary
+    else:
+        pair = matchup.replace(" vs ", f" {score} ") if score and " vs " in matchup \
+            else (f"{matchup} {score}".strip() if score else matchup)
+        # Preserve set-score boundaries before removing whitespace.
+        pair = re.sub(r"(?<=\d)\s+(?=\d+[-:])", "，", pair)
+    return copy_title(pair)
+
+
+def _legacy_headline(outdir: Path, column: str, matchup: str, score: str = "",
+                     event: str = "", summary: str = "", date: str = "") -> str:
     """`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`。
 
     末尾那一格有两种写法，按这条片子哪种更说得清选：
