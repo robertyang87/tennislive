@@ -2,7 +2,6 @@
   "slug": "nishikori-tiafoe-tokyo-2026-r1",
   "_column": "赛场之上",
   "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4584955/4584955.mp4",
-  "track": false,
   "segments": [
     {
       "_role": "cold_open",
@@ -19,7 +18,7 @@
       "_role": "landing_and_context",
       "start": 0,
       "end": 10.8,
-      "narration": "这一抱之后，锦织告别东京。首轮对阵蒂亚福，开局零比二，他先保住发球局。",
+      "narration": "北京时间十月一日下午，锦织告别东京。首轮对阵蒂亚福，零比二落后，他先保住发球局。",
       "score_inset": true,
       "cx": 0.5,
       "_source_audio_disposition": "True-zero replacement under original_audio_mode=muted_narrated; no source speech/crowd/ambience retained."
@@ -239,7 +238,8 @@
         }
       }
     },
-    "_winners_ue_why": "Winners/UE 数值仍未核实，不能据此断言数据不存在。各来源的实际状态保留在 stats._winners_ue_check；用户于 2026-10-01 仅授权 stats._winners_ue_omission 所指的本片同时省略这两行，未把缺失值写成零，未声称已取得完整 W/UE 证据。"
+    "_winners_ue_why": "Winners/UE 数值仍未核实，不能据此断言数据不存在。各来源的实际状态保留在 stats._winners_ue_check；用户于 2026-10-01 仅授权 stats._winners_ue_omission 所指的本片同时省略这两行，未把缺失值写成零，未声称已取得完整 W/UE 证据。",
+    "_source": "Flashscore full-match statistics j3oaqNc6, https://local-global.flashscore.ninja/2/x/feed/df_st_1_j3oaqNc6; native source home=Nishikori, away=Tiafoe; display a=Tiafoe and b=Nishikori reverses the source columns. Unverified Winners/UE remain omitted."
   },
   "push": {
     "auto": true,
@@ -371,7 +371,7 @@
     "source_avg_frame_rate": "5667000/113329",
     "duration": 188.928,
     "measurement_source": "output/2026-10-01/reel/nishikori-tiafoe-tokyo-2026-r1/probe.json",
-    "measurement_source_sha256": "7d300555534ec21763332697d32297f35442bf638fa1b8546d0bc6a2886760db"
+    "measurement_source_sha256": "d935a3b90ac16e437a18ccf67f7c6dc239ade319727920bd7a6daebf7c5943d0"
   },
   "original_audio_mode": "muted_narrated",
   "owner_approval": "atp-20261002-narrated-three",
@@ -409,5 +409,6 @@
     "photo_filler_added": false,
     "render_status": "not_run",
     "final_QC_status": "not_run"
-  }
+  },
+  "_no_quote_why": "The source commentary could not be verified. This Chinese-narrated edition completely removes the original soundtrack and its proposed English quotes, retaining the exact continuous final point and net embrace. No absence-of-speech claim is made."
 }

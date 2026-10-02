@@ -1,59 +1,59 @@
 {
-  "slug": "nishikori-tiafoe-tokyo-2026-r1",
-  "checked_at": "2026-10-02T05:28:58Z",
-  "voice": "zh-CN-YunjianNeural",
-  "rate": "+6%",
-  "backend": "edge-tts",
-  "base_style": [
-    "",
-    ""
-  ],
-  "_why": "Actual ffprobe remeasurement of the 9 Chinese narration MP3s: one newly synthesized opening plus eight hash-verified unchanged clips; all genuine WordBoundary evidence preserved in tts-current.json. No ASR or original-source listening pass claimed.",
-  "segments": {
-    "baf42578af50d81a": {
-      "segment": 1,
-      "spoken": 5.952,
-      "picture": 9.0
-    },
-    "2114dc168554b25a": {
-      "segment": 2,
-      "spoken": 7.848,
-      "picture": 10.8
-    },
-    "3bad7938d0dc1984": {
-      "segment": 3,
-      "spoken": 7.824,
-      "picture": 9.6
-    },
-    "bebabd5f9dc930ae": {
-      "segment": 5,
-      "spoken": 12.12,
-      "picture": 19.0
-    },
-    "9f60871d98b0a54f": {
-      "segment": 7,
-      "spoken": 6.864,
-      "picture": 9.5
-    },
-    "5116b9c1b2fd4a81": {
-      "segment": 8,
-      "spoken": 4.008,
-      "picture": 5.84
-    },
-    "df20a63673b628ac": {
-      "segment": 10,
-      "spoken": 13.68,
-      "picture": 24.5
-    },
-    "efcc0aa9b004edf3": {
-      "segment": 11,
-      "spoken": 4.272,
-      "picture": 5.1
-    },
-    "3de65088f33a9af5": {
-      "segment": 14,
-      "spoken": 7.032,
-      "picture": 8.0
-    }
+ "slug": "nishikori-tiafoe-tokyo-2026-r1",
+ "checked_at": "2026-10-02T05:59:39Z",
+ "voice": "zh-CN-YunjianNeural",
+ "rate": "+6%",
+ "backend": "edge-tts",
+ "base_style": [
+  "",
+  ""
+ ],
+ "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+ "segments": {
+  "baf42578af50d81a": {
+   "segment": 1,
+   "spoken": 5.952,
+   "picture": 9.0
+  },
+  "e972519dc35f4007": {
+   "segment": 2,
+   "spoken": 8.616,
+   "picture": 10.8
+  },
+  "3bad7938d0dc1984": {
+   "segment": 3,
+   "spoken": 7.824,
+   "picture": 9.6
+  },
+  "bebabd5f9dc930ae": {
+   "segment": 5,
+   "spoken": 12.12,
+   "picture": 19.0
+  },
+  "9f60871d98b0a54f": {
+   "segment": 7,
+   "spoken": 6.864,
+   "picture": 9.5
+  },
+  "5116b9c1b2fd4a81": {
+   "segment": 8,
+   "spoken": 4.008,
+   "picture": 5.84
+  },
+  "df20a63673b628ac": {
+   "segment": 10,
+   "spoken": 13.68,
+   "picture": 24.5
+  },
+  "efcc0aa9b004edf3": {
+   "segment": 11,
+   "spoken": 4.272,
+   "picture": 5.1
+  },
+  "3de65088f33a9af5": {
+   "segment": 14,
+   "spoken": 7.032,
+   "picture": 8.0
   }
+ }
 }

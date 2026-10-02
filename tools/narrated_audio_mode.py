@@ -62,7 +62,9 @@ def enabled(spec: dict, *, sources: dict | None = None) -> bool:
   raise ValueError('中文旁白模式必须有本人TTS冷开场')
  if any(s.get('quote') for s in segments):
   raise ValueError('已移除的原声不能再显示未核准的英文引语')
- if any(s.get('track') or s.get('cx',.5) not in (None,.5) for s in segments):
+ if 'track' in spec and spec['track'] is not False:
+  raise ValueError('本模式顶层track只接受布尔false')
+ if any(s.get('track') or s.get('square_pan') or s.get('cx',.5) not in (None,.5) for s in segments):
   raise ValueError('本次影片必须固定居中')
  if spec.get('layout','full')!='full':
   raise ValueError('本次影片必须3:4全画布')
@@ -151,11 +153,14 @@ def declared_pause_seconds(spec: dict, film: Path, levels: list, after: int) -> 
  if not enabled(spec):
   return []
  binding=json.loads((film.parent/'audio_review_binding.json').read_text())
- # verify_mix is called first by foreground_audio_gate.verify_final. Keep precise
- # clip windows here: wholly missing TTS never becomes an approved silence.
- rows=binding['narrated_mix']['voices']
- return [i for i,db in enumerate(levels) if i>=after and db<=-60 and not any(
-  float(r['offset'])+.15<i+1 and i<float(r['offset'])+float(r['duration'])-.15 for r in rows)]
+ # MP3 containers include trailing padding and ordinary spoken pauses. A
+ # duration rectangle is not a speech-activity mask (Zverev native run2429).
+ # Require the full real-film proof before accepting *any* measured silence:
+ # exact sealed TTS packet hash, every expected voice audible, and zero bed.
+ # Wholly missing narration therefore remains a hard failure, even when this
+ # helper is called independently of foreground_audio_gate.verify_final.
+ verify_mix(spec,film,binding)
+ return [i for i,db in enumerate(levels) if i>=after and db<=-60]
 
 
 def preload_tts(spec: dict, *, voice: str, rate: str, root: Path | None = None) -> None:
@@ -165,7 +170,7 @@ def preload_tts(spec: dict, *, voice: str, rate: str, root: Path | None = None) 
  root = root or Path(__file__).resolve().parents[1]
  seed_path = root/'data/narrated_tts'/f"{spec['slug']}.json"
  expected_seed = {
-  "nishikori-tiafoe-tokyo-2026-r1":"50477f4df357c035fb7c6678f6fd96798419e94d95cea0a4d0f06470c370d3e5",
+  "nishikori-tiafoe-tokyo-2026-r1":"e5ff9c9d33d7a9ae80d5b133578aad76cd36c290624e2b24157c1b41ca709deb",
   "shang-baez-beijing-2026-r1":"d7f3d92eb17af19875f3df1569f0a71ca4f8f938b84b7cbdf16a7349305a63c5",
   "zverev-norrie-beijing-2026-r1":"e699ee222ecd6e2f89362d5401133e15449b60f4709294143271baa7eacba318",
  }[spec["slug"]]
@@ -200,3 +205,25 @@ def preload_tts(spec: dict, *, voice: str, rate: str, root: Path | None = None) 
  for name,raw in decoded.items():
   (cache/name).write_bytes(raw)
  print(f'[TTS] 恢复{len(decoded)}份已核验原始配音缓存；不重合成')
+
+
+def validate_root_tracking(spec: dict) -> None:
+ """Consume root track=false as a real fixed-camera/no-pan constraint."""
+ if 'track' not in spec:
+  return
+ if spec['track'] is not False:
+  raise ValueError('顶层track只接受布尔false；追踪必须按受支持的分段合同声明')
+ if any(segment.get('track') or segment.get('square_pan') for segment in spec.get('segments') or []):
+  raise ValueError('顶层track=false与分段追踪或平移冲突')
+ # Camera control is independent of audio mode. Existing ordinary reels may
+ # use a static off-centre crop; the bounded narrated mode separately requires
+ # exact centre, source identity and complete original-audio exclusion.
+ enabled(spec)
+
+
+def no_quote_reason(spec: dict) -> str:
+ """A verified mode declaration is a structured editorial reason, not ASR."""
+ if not enabled(spec):
+  return ''
+ return ('Exact source-bound Chinese-narrated mode excludes original audio and quotes; '
+         'native final QA still requires every TTS voice, sealed audio identity and zero source PCM.')

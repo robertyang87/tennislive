@@ -3686,7 +3686,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "music", "outro", "push", "rate", "scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_fallbacks", "source_url",
-             "original_audio_mode", "owner_approval",
+             "original_audio_mode", "owner_approval", "track",
              "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
              "editorial"),
@@ -9098,6 +9098,7 @@ def validate_spec(
     if not urls:
         raise ReelError("spec 里一个源都没有")
     source_quality_exceptions(spec)
+    narrated_audio_mode.validate_root_tracking(spec)
     # 顶栏是画布版式的一部分，先在 dry-run / check-narration 阶段校形状，
     # 不要等到六分钟渲染完才发现两行文字没读到。
     topbar = _topbar_lines(spec)
@@ -11874,3 +11875,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

@@ -77,3 +77,72 @@ def test_schema_fields_and_projection_are_render_inputs():
  import render_inputs
  spec=candidate()
  assert 'original_audio_mode' in json.dumps(render_inputs.project(spec))
+
+
+def test_pcm_verified_tts_padding_is_not_missing_original_audio(tmp_path,monkeypatch):
+ film=tmp_path/'film.mp4';film.write_bytes(b'placeholder')
+ (tmp_path/'audio_review_binding.json').write_text('{}')
+ verified=[]
+ monkeypatch.setattr(mode,'verify_mix',lambda spec,film,binding:verified.append(True))
+ assert mode.declared_pause_seconds(candidate(),film,[-99,-25,-91,-99],after=2)==[2,3]
+ assert verified==[True]
+
+def test_missing_tts_is_never_accepted_as_planned_silence(tmp_path,monkeypatch):
+ film=tmp_path/'film.mp4';film.write_bytes(b'placeholder')
+ (tmp_path/'audio_review_binding.json').write_text('{}')
+ def fail(*args):raise ValueError('missing real narration')
+ monkeypatch.setattr(mode,'verify_mix',fail)
+ with pytest.raises(ValueError,match='missing real narration'):
+  mode.declared_pause_seconds(candidate(),film,[-99]*100,after=2)
+
+
+@pytest.mark.parametrize('value',[True,0,1,None,'false',[],{}])
+def test_root_tracking_rejects_non_false_values(value):
+ spec=candidate();spec['track']=value
+ with pytest.raises(ValueError):mode.validate_root_tracking(spec)
+
+@pytest.mark.parametrize('change',[{'track':True},{'cx':0.6},{'square_pan':True}])
+def test_root_fixed_camera_rejects_conflicting_segments(change):
+ spec=candidate();spec['track']=False;spec['segments'][0].update(change)
+ with pytest.raises(ValueError):mode.validate_root_tracking(spec)
+
+def test_root_false_is_consumed_and_default_legacy_is_unchanged():
+ spec=candidate();spec['track']=False
+ mode.validate_root_tracking(spec)
+ assert 'track' in build._REAL_FIELDS['spec']
+ ordinary=copy.deepcopy(spec);ordinary.pop('original_audio_mode');ordinary.pop('owner_approval')
+ mode.validate_root_tracking(ordinary)
+ assert not mode.no_quote_reason(ordinary)
+ ordinary['segments'][0]['cx']=0.6
+ mode.validate_root_tracking(ordinary)
+ ordinary['segments'][0]['track']=True
+ with pytest.raises(ValueError):mode.validate_root_tracking(ordinary)
+ ordinary['segments'][0]['track']=False
+ ordinary.pop('track');mode.validate_root_tracking(ordinary)
+ assert not mode.no_quote_reason(ordinary)
+
+def test_structured_no_quote_reason_requires_complete_bounded_mode():
+ spec=candidate();assert mode.no_quote_reason(spec)
+ for change in [lambda s:s.update(owner_approval='unverified'),
+                lambda s:s.update(slug='unapproved'),
+                lambda s:s.update(source_url='https://example.com/wrong.mp4'),
+                lambda s:s.update(source_audio='extra.wav'),
+                lambda s:s.update(music='music.wav'),
+                lambda s:s['segments'][0].update(quote='unverified'),
+                lambda s:s['segments'][0].update(end=0.1)]:
+  altered=copy.deepcopy(spec);change(altered)
+  with pytest.raises(ValueError):mode.no_quote_reason(altered)
+
+@pytest.mark.parametrize('fault',['missing_seal','wrong_packet','missing_voice','wrong_source'])
+def test_final_audio_proof_stays_mandatory(tmp_path,monkeypatch,fault):
+ spec=candidate();record=mode.APPROVED[spec['slug']]
+ binding={'original_audio_mode':mode.MODE,'owner_approval':mode.APPROVAL,
+          'sources':{'':record['sha256']},
+          'narrated_mix':{'method':'anullsrc_before_tts_mix','original_audio_gain':0,
+                          'audio_packet_sha256':'correct','voices':[{'kind':'segment','index':0}]}}
+ monkeypatch.setattr(mode,'audio_packet_hash',lambda film:'correct')
+ if fault=='missing_seal':binding.pop('narrated_mix')
+ if fault=='wrong_packet':binding['narrated_mix']['audio_packet_sha256']='changed'
+ if fault=='missing_voice':binding['narrated_mix']['voices']=[]
+ if fault=='wrong_source':binding['sources']['']='changed'
+ with pytest.raises(ValueError):mode.verify_mix(spec,tmp_path/'film.mp4',binding)
