@@ -1,0 +1,110 @@
+{
+  "plan_sha256": "0f8996954fa2e603f46568d5b08afd68c4d60f38297031f375b8a37e69e86388",
+  "original_audio_mode": "muted_narrated",
+  "owner_approval": "atp-20261002-narrated-three",
+  "sources": {
+    "": "dd355e5dd6f25b66414c15427f5fc53d7d37785c36801939e42ca2bba15efeee"
+  },
+  "timeline": {
+    "cover_seconds": 1.2,
+    "offsets": [
+      1.2,
+      12.299999999999999,
+      25.2,
+      31.4,
+      47.76,
+      53.54,
+      70.06,
+      85.82000000000001,
+      92.72000000000001,
+      94.72000000000001,
+      98.92000000000002,
+      102.74000000000001,
+      108.92000000000002,
+      117.02000000000001,
+      118.60000000000001,
+      130.60000000000002
+    ],
+    "lengths": [
+      11.1,
+      12.9,
+      6.2,
+      16.36,
+      5.78,
+      16.52,
+      15.76,
+      6.9,
+      2.0,
+      4.2,
+      3.82,
+      6.18,
+      8.1,
+      1.58,
+      12.0,
+      17.82
+    ]
+  },
+  "narrated_mix": {
+    "method": "anullsrc_before_tts_mix",
+    "original_audio_gain": 0,
+    "audio_packet_sha256": "042b7a92d24080a7af9d8f1072b3bace4d053d6928d401cb547ce8db3b92d350",
+    "voices": [
+      {
+        "kind": "segment",
+        "index": 0,
+        "offset": 1.2,
+        "duration": 3.888,
+        "sha256": "5e8d5b46a36f1fb10796bce1d1bf11b335451f0fcb701a2c293f47c512251624"
+      },
+      {
+        "kind": "segment",
+        "index": 1,
+        "offset": 12.299,
+        "duration": 10.488,
+        "sha256": "f573e036dc6f196ec1c16a088bf561512ec49e417ff7bbd3f64b3370b3cab148"
+      },
+      {
+        "kind": "segment",
+        "index": 3,
+        "offset": 31.4,
+        "duration": 11.736,
+        "sha256": "98de299531ae992eedf29c632cc7e9a32140b72c435e5d65ae963aa734bec7d6"
+      },
+      {
+        "kind": "segment",
+        "index": 5,
+        "offset": 53.54,
+        "duration": 12.384,
+        "sha256": "27e5c24deed96631ca440f038c6bd5729a9b1cd01a83b35883a78418dc7e654b"
+      },
+      {
+        "kind": "segment",
+        "index": 7,
+        "offset": 85.82,
+        "duration": 6.048,
+        "sha256": "f0ce09a8651ff71f33d2ffdd5eb268fb560bca789f5960f12a8268195a97b685"
+      },
+      {
+        "kind": "segment",
+        "index": 10,
+        "offset": 98.92,
+        "duration": 2.496,
+        "sha256": "112d09d139b9b0381195d73cb7f995a74e99a820da1ef89e45315831c6c95105"
+      },
+      {
+        "kind": "segment",
+        "index": 12,
+        "offset": 108.92,
+        "duration": 5.544,
+        "sha256": "14db138be2defe5dba5073694191ab7cb890911c3c700e860ae249d4300c33b4"
+      },
+      {
+        "kind": "segment",
+        "index": 14,
+        "offset": 118.6,
+        "duration": 11.016,
+        "sha256": "812ecb40b62e68d6c7128db8dab8889a8c3493094435065fa8c6074a318b11da"
+      }
+    ]
+  }
+}
