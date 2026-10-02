@@ -1,5 +1,5 @@
 """Collect original footage and speech evidence; no text-generation provider."""
-import argparse, json, subprocess, sys
+import argparse, json, subprocess, sys, hashlib, os
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from build_match_reel import download
@@ -24,3 +24,21 @@ for i,(t,f) in enumerate(frames):
 sheet.save(a.outdir/'portrait_contact.jpg',quality=92)
 subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-ss','259.0','-i',str(source),'-t','28','-vn','-c:a','libmp3lame','-b:a','128k','-y',str(a.outdir/'deciding_audio.mp3')],check=True)
 print('Original speech and same-match portraits collected; no DeepSeek calls.')
+
+source_sha=hashlib.file_digest(source.open('rb'),'sha256').hexdigest()
+(a.outdir/'source_sha256.txt').write_text(source_sha+'\n')
+model2=WhisperModel('small.en',device='cpu',compute_type='int8')
+segs2,info2=model2.transcribe(str(source),language='en',word_timestamps=True,vad_filter=True,beam_size=5)
+rows2=[{'start':s.start,'end':s.end,'text':s.text.strip(),'words':[{'start':w.start,'end':w.end,'word':w.word,'probability':w.probability} for w in s.words or []]} for s in segs2]
+(a.outdir/'broadcast_asr_independent.json').write_text(json.dumps({'model':'small.en','source_sha256':source_sha,'segments':rows2},ensure_ascii=False,indent=2)+'\n')
+from analyze_reel_visuals import verified_minimax_report, evidence_hash
+base=json.loads(Path('specs/reels/pending/yastremska-chwalinska.draft.json').read_text())
+base['cover']['portrait']={'image':str(a.outdir/'portrait_036.80.jpg')}
+base['_cover_brief']={'preferred_subject':'赫瓦林斯卡','preferred_moment_key':'loser_fighting','preferred_moment':'本场仍在拼；正面手持拍准备下一分，不要低头失落照。'}
+probe=json.loads((a.outdir/'probe.json').read_text())
+frames=sorted(a.outdir.glob('contact_*.jpg'))+[a.outdir/'portrait_contact.jpg']
+report,problems=verified_minimax_report(base,frames,a.outdir/'portrait_036.80.jpg',probe,os.environ['MINIMAX_API_KEY'])
+report['evidence_sha256']=evidence_hash(frames,a.outdir/'portrait_036.80.jpg')
+(a.outdir/'manual_visual_evidence.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+print('VISUAL PROBLEMS',problems)
+
