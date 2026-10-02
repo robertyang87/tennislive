@@ -1,0 +1,15 @@
+name: chwalinska-manual-dispatch
+on:
+  push:
+    branches: [codex/chwalinska-manual-rebuild]
+    paths: [.github/workflows/chwalinska-manual-dispatch.yml, tools/prepare_chwalinska_manual.py]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run match-reel.yml --repo robertyang87/tennislive --ref codex/chwalinska-manual-rebuild -f mode=probe -f slug=yastremska-chwalinska -f url=https://www.youtube.com/watch?v=12BOGT88OnQ
