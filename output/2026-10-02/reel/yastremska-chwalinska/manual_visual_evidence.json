@@ -1,0 +1,36 @@
+{
+  "model": "MiniMax-M3",
+  "status": "waiting",
+  "visual_status": "waiting",
+  "retryable": false,
+  "cold_open": {
+    "start": 275.8,
+    "end": 299.92,
+    "kind": "match_point",
+    "winner_visible": true,
+    "reason": "From 275.8s the scoreboard reads ROUND 2, D.YASTREMSKA 6 6 / M.LI CHWALINSKA [17] 1 1, so the next point ends the match. At 284.5s Yastremska (yellow) raises her arms after the final point and walks toward the net; by 286.5s both players approach for the handshake and the post-match exchanges complete before the WTA outro graphic begins at 299.92s. Winner celebration clearly visible.",
+    "confidence": 0.92
+  },
+  "ending": {
+    "start": 275.8,
+    "end": 299.92,
+    "kind": "winner_celebration",
+    "winner_visible": true,
+    "reason": "Ending fully covers the cold-open window (275.8–299.92s). 284.5s–298.5s show Yastremska raising her arms in celebration, the on-court scoreboard confirming the 6-1 6-1 result, and the two players walking to the net for the handshake (portrait sheet 281.2s–283.2s). Winner Yastremska and loser Chwalińska both visible; the deterministic outro follows immediately at 299.92s.",
+    "confidence": 0.92
+  },
+  "cover": {
+    "same_match": false,
+    "subject": "赫瓦林斯卡",
+    "moment": "loser_fighting",
+    "wrong_or_old": true,
+    "reason": "The cover scoreboard shows D.YASTREMSKA 2 15 vs M.CHWALINSKA [17] 1 0 — an early-game point with set score only 2-1, contradicting the verified final 6-3 6-1 result. The on-court PICC board, blue Beijing Open court and Chwalińska in a black outfit match this match, but the score state is from a different point of play. The subject is still fighting (two-handed grip, eyes forward on ball), so moment=loser_fighting. Because the scoreboard state cannot belong to this match result, the frame is not usable as a cover for the verified outcome.",
+    "confidence": 0.55
+  },
+  "problems": [
+    "封面无法证明是同一场，或疑似旧图/错图",
+    "封面置信度 0.55 低于 0.80"
+  ],
+  "model_attempts": 1,
+  "evidence_sha256": "ad531d3bbc2b3c9911bca4cb258ac22e2b23d6bb638e1bdd1704f9ccea09638a"
+}
