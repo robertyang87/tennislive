@@ -1110,8 +1110,14 @@ jobs:
           URL: ${{ github.event.inputs.url }}
         run: bash tools/yt_cookie_check.sh "$URL"
 
+      - name: 月亮姐完全重做 — 原始转播转写和本场封面采样
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.slug == 'yastremska-chwalinska'
+        run: |
+          pip install -q faster-whisper
+          python tools/prepare_chwalinska_manual.py --outdir "${{ steps.paths.outputs.outdir }}"
+
       - name: probe — 下载 + 缩略图墙
-        if: github.event.inputs.mode == 'probe'
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.slug != 'yastremska-chwalinska'
         env:
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
@@ -1159,7 +1165,7 @@ jobs:
       # ——对齐是「给 segments 加料」不是硬闸，没料就退回下面 assemble 里 DeepSeek
       # 读字幕那条老路。ATP 场没有 WTA 逐分通路，自然降级（prepare_alignment 出声）。
       - name: probe — 逐分+比分板对齐备料
-        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != '' && github.event.inputs.slug != 'yastremska-chwalinska'
         env:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
@@ -1175,7 +1181,7 @@ jobs:
       # 若上面机械对齐备出了 pbp.json + scoreboard.json，就传进去——assemble 会用
       # 逐分+比分板对齐出 segments（比读字幕准）；没备出就退回读字幕。
       - name: probe — 自动备料写 spec 草稿
-        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != '' && github.event.inputs.slug != 'yastremska-chwalinska'
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
@@ -1221,7 +1227,7 @@ jobs:
       # 可复核证据；DeepSeek 只翻译这一窗口里真实存在的英文转播字幕。任何一项
       # 不确定都会把草稿留在 pending，不进入 render。
       - name: probe — 视觉事实闸 + 双语原声冷开场
-        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != '' && github.event.inputs.slug != 'yastremska-chwalinska'
         env:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
@@ -1234,7 +1240,7 @@ jobs:
       # 只有全部生产证据齐全且 build_match_reel.validate_spec 真通过，才把 pending
       # 提升成正式 spec。脚本对 waiting 返回 0：这不是故障，而是明确“不生产”。
       - name: probe — 提升通过硬闸的正式 spec
-        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != '' && github.event.inputs.slug != 'yastremska-chwalinska'
         run: |
           python tools/promote_reel_draft.py \
             --draft "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json" \
