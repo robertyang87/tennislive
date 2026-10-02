@@ -409,7 +409,7 @@ def _e2e_setup(tmp_path, monkeypatch, capsys):
     spec = _load(src)
     # This fixture targets TTS accounting. Its publishing hook must independently
     # fit the mandatory date+column prefix, including the widest 12.28 date.
-    spec.setdefault("push", {})["summary"] = "阿尔卡拉斯险胜弗里茨"
+    spec.setdefault("push", {})["summary"] = "阿尔卡拉斯抢十险胜"
     assert "tts_backend" not in spec
     tight = _tight(_segments(spec))
     assert tight, "前提：这条有落在误差带里的段"
