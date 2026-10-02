@@ -166,10 +166,12 @@ def hotspot_candidates(
 
 
 def _trim_title(text: str, limit: int = 20) -> str:
-    text = text.strip().replace(" ", "")
-    if len(text) <= limit:
-        return text
-    return text[: limit - 1] + "…"
+    from .copy_title import compact_copy_title  # noqa: PLC0415
+
+    text = compact_copy_title(text)
+    # Candidate selection already supplies complete alternatives; never cut a
+    # person's name or the result midway just to fit the publishing field.
+    return text if len(text) <= limit else ""
 
 
 def _winner_and_loser(match: Match) -> tuple[str, str]:

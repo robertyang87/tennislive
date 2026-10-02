@@ -211,10 +211,13 @@ def check_xhs_post(digest: Digest, post: str) -> tuple[list[str], list[str]]:
     from .render.hashtags import MAX_HASHTAGS, hashtag_count
     from .render.xiaohongshu import xhs_title_len
 
-    xhs_title = lines[0].strip()
-    title_len = xhs_title_len(xhs_title)
-    if title_len > XHS_TITLE_LIMIT:
-        fatal.append(f"小红书标题超长: {title_len:g} > {XHS_TITLE_LIMIT}")
+    from .render.copy_title import validate_copy_title
+
+    xhs_title = lines[0]
+    try:
+        validate_copy_title(xhs_title, require_prefix=True)
+    except SystemExit as exc:
+        fatal.append(f"小红书标题{'超长' if len(xhs_title) > XHS_TITLE_LIMIT else '不合规'}: {exc}")
 
     body = _xhs_body(lines)
     tag_count = hashtag_count(post)
