@@ -190,7 +190,7 @@
       "cx": 0.5,
       "score_inset": true,
       "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
-      "_why": "末赛点后第一波庆祝近景，真实转播逆转总结；没有握手，正文最后完整复现。",
+      "_why": "赛点完成时到第一波庆祝近景，真实转播逆转总结；为完整保留176.02开始英语，窗口提前至175.90，末分尾部也在完整正文连续结尾中重现。冷开场没有握手。",
       "narration": "",
       "_quote_kind": "broadcast",
       "quote": [
@@ -386,7 +386,7 @@
         {
           "at": 0.0,
           "end": 3.8,
-          "text": "Oh, he does enjoy the drive volley after the serve.\n噢，他很喜欢发球之后抽击截击。"
+          "text": "Oh, he does enjoy the drive volley after the serve.\n噢，他很喜欢发球后的凌空抽击。"
         },
         {
           "at": 3.8,
@@ -415,17 +415,18 @@
       "start": 148.85,
       "end": 162.24,
       "cx": 0.5,
-      "score_inset": true,
+      "score_inset": false,
       "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
-      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
-      "narration": "破发后，瓦舍罗来到五比四。发球胜赛局却是十五比四十。两个破发点，丢一个就回到五比五。从底线相持到冲向网前，他还得把球顶回去。"
+      "_why": "源宽镜头中瓦舍罗从底线相持到冲向网前，动作已逐帧核实；本段没有原生比分板，末局5比4/15比40来自Flashscore逐分，不把缺板回合声称为已用画面证实的首个破发点。",
+      "narration": "破发后，瓦舍罗来到五比四。发球胜赛局却是十五比四十。两个破发点，丢一个就回到五比五。从底线相持到冲向网前，他还得把球顶回去。",
+      "_score_inset_why": "真源148.85为前一近景末不足0.04秒，记分条为决胜盘3比2；148.88切宽镜头后至162.24球场左下没有任何记分条，151秒原分辨率截图与probe逐帧判据一致。5比4与15比40仅来自逐分证据，不能声称本段源板显示。"
     },
     {
       "source": "ttv",
       "start": 162.24,
       "end": 166.9,
       "cx": 0.5,
-      "score_inset": true,
+      "score_inset": false,
       "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
       "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
       "narration": "",
@@ -434,14 +435,15 @@
         {
           "at": 0.0,
           "end": 3.36,
-          "text": "Now it's Vacherot launching himself around the court.\n现在轮到瓦舍罗在场上飞身救球了。"
+          "text": "That's Vacherot launching himself around the court.\n瓦舍罗在场上飞身救球。"
         },
         {
           "at": 3.36,
-          "end": 4.66,
+          "end": 4.659,
           "text": "That's so impressive.\n这一球真让人赞叹。"
         }
-      ]
+      ],
+      "_score_inset_why": "162.24至166.90源片宽镜头与近景均无记分条；163秒1920×1080截图和probe5fps全窗口检测一致。"
     },
     {
       "source": "ttv",
