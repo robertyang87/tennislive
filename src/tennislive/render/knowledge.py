@@ -24,7 +24,7 @@ import html
 from ..digest import Digest
 from . import push_style as ps
 from .tournament_story import TournamentStory
-from .xiaohongshu import xhs_title_len
+from .copy_title import compact_copy_title, copy_hook_budget, make_copy_title, publication_hook
 
 # 栏目名印在标题上——读者只看标题，承诺印不出来这个栏目对外就不存在。
 # 见 docs/columns.md 与 docs/column-operations.md 的 R4。
@@ -41,6 +41,8 @@ def knowledge_column(story: TournamentStory) -> str:
 
 def knowledge_title(story: TournamentStory, digest: Digest) -> str:
     day = f"{digest.today.month}.{digest.today.day}"
+    column = knowledge_column(story)
+    budget = copy_hook_budget(day, column)
     trivia_hooks = {
         "scoring-history": "网球为什么是15、30、40？",
         "yellow-ball": "网球为什么从白色变黄？",
@@ -60,17 +62,15 @@ def knowledge_title(story: TournamentStory, digest: Digest) -> str:
         hook = trivia_hooks.get(story.slug, f"{story.title}，你真懂吗？")
     else:
         hook = f"为什么要记住{story.title}？"
-    column = knowledge_column(story)
-    prefix = f"{_COLUMN_EMOJI}{day}{column}｜"
-    if xhs_title_len(prefix + hook) > 20:
+    if len(compact_copy_title(hook)) > budget:
         if story.kind == "player":
             short_name = story.title.rsplit("·", 1)[-1]
             hook = f"{short_name}的来路"
         else:
             hook = f"{story.title}的故事"
-    if xhs_title_len(prefix + hook) > 20:
+    if len(compact_copy_title(hook)) > budget:
         hook = story.title
-    return prefix + hook
+    return make_copy_title(day, column, publication_hook(story.slug, hook))
 
 
 def knowledge_wechat_title(story: TournamentStory, digest: Digest) -> str:

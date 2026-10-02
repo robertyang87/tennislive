@@ -18,7 +18,16 @@
       }
     ],
     "winner": "米拉·安德烈耶娃",
-    "result": "3-6 6-0 6-0"
+    "result": "3-6 6-0 6-0",
+    "portrait": {
+      "image": "assets/reel/yuan-andreeva-beijing-2026-r2-cover.jpg",
+      "focus": 0.319,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「Mirra Andreeva」「Beijing」，日期对上当地 2026-10-02（Asia/Shanghai；日期来源 flashscore dc_1_t0OdtxKa）；EXIF 拍摄 2026:10:02 11:37:06+08:00。② 分辨率：6776×4517，zoom 1 铺 1080×1440 是 3.14×（不放大）。③ 认人：最大那张脸像 米拉·安德烈耶娃 0.35（≥ 0.34）。④ 睁眼：EAR 0.272（≥ 0.16）。⑤ 钩子带：脸落在 y272~494，钩子顶边 790。排序：[True, False, False, True, True, 222, 0.3525]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/02/6e5116be-04f8-4c63-b64e-67e146d13558/Mirra-Andreeva-Beijing-2026.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/02/6e5116be-04f8-4c63-b64e-67e146d13558/Mirra-Andreeva-Beijing-2026.jpg（条目 #4585417，接口发布 2026-10-02T05:23:03Z，EXIF 拍摄 2026:10:02 11:37:06+08:00（UTC 2026-10-02T03:37:06Z），原图 6776×4517），说明原文「Mirra Andreeva, Beijing 2026 · Russia's Mirra Andreeva hits a return to China's Yuan Yue during their women's singles second round tennis match at the China Open tennis tournament in Beijing on October 2, 2026. (Photo by WANG Zhao / AFP)」，署名 Getty Images；WANG ZHAO；AFP or licensors；AFP via Getty Images。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -335,44 +344,19 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "waiting",
-    "retryable": false,
-    "cold_open": {
-      "start": 416.32,
-      "end": 433.52,
-      "kind": "aftermath",
-      "winner_visible": true,
-      "reason": "416.5s 和 418.5s 显示米拉·安德烈耶娃（绿帽，辫子）在赛后采访中拿着 WTA 麦克风，她抬头望向看台露出喜悦/释然的笑容，是赛后采访的情绪兑现；422.5s 有人递麦/握手，432.5s 接受采访面部特写均落在窗口内，作为紧接赛后的余波满足冷开场要求。",
-      "confidence": 0.82
-    },
-    "ending": {
-      "start": 416.32,
-      "end": 433.52,
-      "kind": "aftermath",
-      "winner_visible": true,
-      "reason": "416.5–418.5s 米拉·安德烈耶娃接受 WTA 采访、抬头笑容；422.5s 教练/工作人员握手；426.5/428.5/430.5s 继续对麦克风发言；432.5s 面部近景特写——完整覆盖冷开场 416.32–433.52 区间，赛后采访的余波即正文末尾的结局兑现。",
-      "confidence": 0.82
-    },
-    "cover": {
-      "same_match": true,
-      "subject": "米拉·安德烈耶娃",
-      "moment": "winner_celebration",
-      "wrong_or_old": false,
-      "reason": "画面 416.5–432.5s 为 WTA 麦克风前的现场赛后采访：选手戴绿色 visor、辫子、深色 Nike 球衣，与本场赢家米拉·安德烈耶娃一致；背景可见北京国家网球中心钻石球场看台与 WTA 标识，服装/场地与本场 (北京 China Open) 完全吻合；面带笑容抬头望看台，属于赢家赛后庆祝/释然情绪。",
-      "confidence": 0.8
-    },
+    "visual_status": "error",
+    "retryable": true,
     "problems": [
-      "没有官方高清封面候选"
-    ],
-    "model_attempts": 1,
-    "input_sha256": "bc6f9f301d0bd260b00371f7beca5c7dbd20a5508a2d68a86aa700ae62ee7644",
-    "inputs": [
-      "contact_00.jpg",
-      "contact_02.jpg",
-      "contact_05.jpg",
-      "contact_06.jpg",
-      "contact_07.jpg"
-    ],
-    "cover_image": ""
+      "MiniMax API：HTTPError: HTTP Error 400: Bad Request"
+    ]
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "t0OdtxKa",
+      "start_utc": "2026-10-02T03:10:00Z",
+      "end_utc": "2026-10-02T05:03:11Z",
+      "source": "flashscore dc_1_t0OdtxKa（DC／DD）"
+    },
+    "replaced_under": "bc6f9f301d0bd260b00371f7beca5c7dbd20a5508a2d68a86aa700ae62ee7644"
   }
 }
