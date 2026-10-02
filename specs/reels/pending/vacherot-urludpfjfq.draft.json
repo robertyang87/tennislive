@@ -21,12 +21,13 @@
     "result": "4-6 7-6(5) 6-4"
   },
   "_production": {
-    "kind": "orchestrated_reel",
+    "kind": "manual_reel_blocked",
     "received_at": "2026-10-02T06:43:00Z",
     "event": "Tokyo",
     "year": 2026,
     "round": "第二轮",
-    "court": "Colosseum"
+    "court": "Colosseum",
+    "status": "blocked_editorial_facts"
   },
   "source_url": "https://www.youtube.com/watch?v=uRLUdPfjF_Q",
   "_match": {
@@ -245,34 +246,11 @@
     "collected_at": "2026-10-02T06:58:25.890899+00:00",
     "elapsed_seconds": 1.018
   },
-  "editorial": {
-    "hook": [
-      "他先丢一盘",
-      "七比五逆转西西帕斯"
-    ],
-    "question": "世界排名第十八的瓦舍罗，是怎么顶住西西帕斯八个破发点拿下的？",
-    "thesis": "靠第二盘抢七的进攻，瓦舍罗找回压制力，第三盘又在关键局兑现机会。",
-    "beats": [
-      "第一盘瓦舍罗两次机会都打丢，西西帕斯只送出一波五比零。盘末五个局点全丢，四比六先丢一盘。",
-      "第二盘瓦舍罗破发点零比二，首盘的一发得分率百分之八十三掉到六十九。第十二局三十九拍的球逼出两个盘点，他反手直线救回一个，又一个截击弹网。抢七他八比五拼下来，七比六。",
-      "决胜盘瓦舍罗的发球局全都保住，百分之四十的破发点兑现，六比四拿下比赛。"
-    ],
-    "chapters": [
-      "首盘机会打丢",
-      "抢七他拼下来了",
-      "决胜盘他保得干净"
-    ],
-    "human_context": "赛后技术统计：西西帕斯全场八个破发点，只转化了二个。",
-    "narration": [
-      "他开局两次破发点没兑现，首盘西西帕斯五比零拿下。",
-      "瓦舍罗在抢七里八比五追平大比分，把比赛拖进决胜盘。",
-      "决胜盘他百分百保发，七比五逆转了西西帕斯。"
-    ]
-  },
+  "editorial": {},
   "push": {
     "summary": "抢七救回盘点后逆转西西帕斯",
     "lead": "瓦舍罗4比6先丢一盘，第二盘抢七8比5拼下，决胜盘6比4逆转西西帕斯。全场总得分94比96不占优，但他在关键分上更硬，9个发球局全部保住，破了两个关键局拿下比赛。",
-    "auto": true
+    "auto": false
   },
   "segments": [
     {
@@ -308,7 +286,7 @@
     },
     {
       "start": 82.88,
-      "end": 95.0,
+      "end": 95,
       "narration": "西西帕斯稳住局面，把比分拉开到五比零。",
       "_beat": 1,
       "_why": "解说提到keeps it just about out of reach，对应首盘西西帕斯拉开比分，为第一beat首盘局面。"
@@ -378,7 +356,7 @@
       "moment": "other",
       "wrong_or_old": true,
       "reason": "No candidate cover photo was provided for this audit. Returning same_match=false because there is no cover image to verify against the match (Vacherot vs Tsitsipas, ATP Tokyo, blue court). Cannot confirm identity, scoreboard, or event marks without a cover frame.",
-      "confidence": 0.0
+      "confidence": 0
     },
     "problems": [
       "没有官方高清封面候选",
@@ -396,5 +374,46 @@
       "contact_03.jpg"
     ],
     "cover_image": ""
+  },
+  "_editorial_qc": {
+    "status": "blocked",
+    "run_id": 36975720389,
+    "source_commit": "2c9b633d",
+    "verified_result": "4-6 7-6(5) 6-4",
+    "problems": [
+      "hook/narration 把整场结果写成七比五；正确结果为4-6 7-6(5) 6-4",
+      "beats/narration 把第二盘抢七写成八比五；正确为7-5",
+      "beats/narration 出现首盘五比零和两次破发机会未兑现；首盘瓦舍罗没有破发机会，最终4-6",
+      "beats 把首盘83%一发得分率归给瓦舍罗；83%属于西西帕斯，瓦舍罗为67%"
+    ],
+    "evidence_urls": [
+      "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard?dates=20261002",
+      "https://www.flashscore.com/match/tennis/Off5k6rC/#/match-summary"
+    ],
+    "why": "Deterministic editorial fact failure: quarantine draft; do not promote, render, or publish."
+  },
+  "_rejected_editorial": {
+    "hook": [
+      "他先丢一盘",
+      "七比五逆转西西帕斯"
+    ],
+    "question": "世界排名第十八的瓦舍罗，是怎么顶住西西帕斯八个破发点拿下的？",
+    "thesis": "靠第二盘抢七的进攻，瓦舍罗找回压制力，第三盘又在关键局兑现机会。",
+    "beats": [
+      "第一盘瓦舍罗两次机会都打丢，西西帕斯只送出一波五比零。盘末五个局点全丢，四比六先丢一盘。",
+      "第二盘瓦舍罗破发点零比二，首盘的一发得分率百分之八十三掉到六十九。第十二局三十九拍的球逼出两个盘点，他反手直线救回一个，又一个截击弹网。抢七他八比五拼下来，七比六。",
+      "决胜盘瓦舍罗的发球局全都保住，百分之四十的破发点兑现，六比四拿下比赛。"
+    ],
+    "chapters": [
+      "首盘机会打丢",
+      "抢七他拼下来了",
+      "决胜盘他保得干净"
+    ],
+    "human_context": "赛后技术统计：西西帕斯全场八个破发点，只转化了二个。",
+    "narration": [
+      "他开局两次破发点没兑现，首盘西西帕斯五比零拿下。",
+      "瓦舍罗在抢七里八比五追平大比分，把比赛拖进决胜盘。",
+      "决胜盘他百分百保发，七比五逆转了西西帕斯。"
+    ]
   }
 }
