@@ -240,10 +240,10 @@ winner_celebration＝赢家庆祝；loser_fighting＝输家落后或失利时仍
     if text.startswith("```"):
         text = text.split("\n", 1)[1].rsplit("```", 1)[0]
     try:
-        parsed = json.loads(text)
+        parsed = json.loads(text, strict=False)
     except json.JSONDecodeError:
         found = re.search(r"\{.*\}", text, re.S)
-        parsed = json.loads(found.group(0)) if found else None
+        parsed = json.loads(found.group(0), strict=False) if found else None
     return parsed if isinstance(parsed, dict) else None
 
 
