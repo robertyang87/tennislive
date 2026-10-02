@@ -26,7 +26,9 @@
     "https://www.wtatennis.com/tournaments/china-open/scores/LS055",
     "https://www.wtatennis.com/tournament/1020/beijing/2026/order-of-play",
     "https://www.wtatennis.com/players/324325/yue-yuan",
-    "https://www.wtatennis.com/players/331809/mirra-andreeva"
+    "https://www.wtatennis.com/players/331809/mirra-andreeva",
+    "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS055/score",
+    "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS055/stats"
   ],
   "court": "Capital Group Diamond",
   "court_zh": "钻石球场",
@@ -35,5 +37,11 @@
   "country_andreeva": "RUS",
   "current_rank_yuan": 135,
   "current_rank_andreeva": 5,
-  "rank_observation_date": "2026-10-02"
+  "rank_observation_date": "2026-10-02",
+  "duration_exact": "01:52:38",
+  "level": "WTA 1000",
+  "match_id": "LS055",
+  "winners": null,
+  "unforced_errors": null,
+  "winners_ue_status": "WTA官方全场stats接口未提供Winners/UE；TNNS日期runner未匹配，本机人机验证受阻。缺失不等于零，不能从总分推算。"
 }

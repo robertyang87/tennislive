@@ -1,21 +1,40 @@
 {
-  "source_page": "https://www.chinaopen.com/cn/contents/281/1624.html",
-  "source_title": "袁悦先赢一盘遭逆转 不敌安德列娃止步次轮",
-  "publication_date": "2026-10-02",
-  "publication_date_source": "https://www.chinaopen.com/cn/channels/279.html",
-  "image_url": "https://www.chinaopen.com/cn/upload/images/2026/10/827ac52c284cb630.jpg",
-  "download_path": "/workspace/scratch/yuan-match-facts/yuan-chinaopen-r2-official.jpg",
+  "status": "accepted_source_frame_fallback",
+  "subject": "Yue Yuan / 袁悦",
+  "image": "assets/reel/yuan-andreeva-beijing-2026-r2-yuan-frame-132.80.jpg",
+  "sha256": "3bf3d7c35790c0777c9e50d032693b02bb3c08cb4449a1996193592c11f3cef1",
   "dimensions": [
-    5000,
-    3335
+    1920,
+    1080
   ],
-  "bytes": 5528290,
-  "exif_datetime_original": "2026:10:02 11:52:04",
-  "exif_offset": "+08:00",
-  "exif_datetime_original_utc": "2026-10-02T03:52:04Z",
-  "http_last_modified": "2026-10-02T05:18:42Z",
-  "copyright": "unknown",
-  "rights": "unverified",
-  "match_binding": "赛事官方本场赛报唯一正文照片，EXIF本场比赛日10/2，比分与对手同页确认",
-  "visual_notes": "袁悦黑色裙装绿色帽反手击球，单人、眼睛睁开，蓝色硬地BEIJING标识；主角在照片左侧"
+  "source_video": "https://youtu.be/V6ekW4Qy1jA",
+  "source_channel": "WTA",
+  "source_frame": {
+    "at": 132.8,
+    "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-V6ekW4Qy1jA/V6ekW4Qy1jA.mp4",
+    "source_sha256": "ec9fed9650ac8b0f6f9c62377d9be4b7ef528ca8ef87b6cbb2527819331b866f"
+  },
+  "identity_evidence": "本场132.80s偏正面近景：袁悦薄荷绿裙、绿色遮阳帽；画面记分条Y.YUAN 5 Ad / M.ANDREEVA [4] 3、SET POINT #2；与源片18–27s袁悦外观及官方头像一致。绿帽单独不构成人物证据。",
+  "fallback_authorization": "CLAUDE.md 2026-09-26 established owner口径，已有授权：没有高清实拍时可直接用清晰偏正面抽帧。",
+  "rejected_photo": {
+    "image_url": "https://www.chinaopen.com/cn/upload/images/2026/10/827ac52c284cb630.jpg",
+    "source_page": "https://www.chinaopen.com/cn/contents/281/1624.html",
+    "dimensions": [
+      5000,
+      3335
+    ],
+    "actual_subject": "Mirra Andreeva / 米拉·安德烈耶娃",
+    "reason": "本场关联正确但人物错误；黑裙球员是Andreeva，而Yuan本场是薄荷绿裙。赛报标题点名袁悦不能证明图片人物。",
+    "production_asset_deleted": true
+  },
+  "channel_search_results": {
+    "WTA_photo_api": "袁悦id324325全部48条最新为2026-09-30首轮，已排除；10/2无本场袁悦匹配。",
+    "WTA_photo_resources": "无本场袁悦匹配。",
+    "WTA_article_lead_photo": "无本场袁悦匹配。",
+    "AP": "扫描返回无匹配。",
+    "China_Open_official_article": "本场正文唯一图是安德烈耶娃，排除；WP接口404，不视为查空。",
+    "Chinese_media": "搜狗微信27条去重后1条10/2相关推文，文章proxy403，结果未知。",
+    "local_paper": "北京来源未配置，未跑，结果未知。"
+  },
+  "limitations": "当前已成功检查渠道无可用本场袁悦高清实拍；受阻渠道仍未知，不能宣称互联网所有来源不存在。1920×1080抽帧竖版需要放大，正式spec已记录_low_res_why。"
 }
