@@ -1220,6 +1220,15 @@ jobs:
       # MiniMax 不是“看过就算”：它要把冷开场、结尾兑现和封面人物/情绪写成
       # 可复核证据；DeepSeek 只翻译这一窗口里真实存在的英文转播字幕。任何一项
       # 不确定都会把草稿留在 pending，不进入 render。
+      - name: 月亮姐用户点名视角重写与本场封面重查
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.slug == 'yastremska-chwalinska'
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: |
+          python tools/chwalinska_owner_reel.py --outdir "${{ steps.paths.outputs.outdir }}"
+          python tools/refresh_reel_cover.py --draft specs/reels/pending/yastremska-chwalinska.draft.json --write --api-budget 60
+
       - name: probe — 视觉事实闸 + 双语原声冷开场
         if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
         env:
