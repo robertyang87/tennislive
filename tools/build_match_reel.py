@@ -84,6 +84,8 @@ render 每一步都记时间，末尾按耗时排一张表（`report_timings()`�
 
 from __future__ import annotations
 
+import narrated_audio_mode
+
 import argparse
 import json
 import math
@@ -591,7 +593,7 @@ def dissolve_filtergraph(lengths: list[float], fade: float,
 
 
 def duck_filtergraph(filters: list[str], voice_labels: list[str],
-                     music: str = "") -> str:
+                     music: str = "", *, mute_original: bool = False) -> str:
     """闪避的滤镜图：没人说话时现场声开到 `BED_LOUD`，解说一进来就压下去。
 
     **`[vk0]apad[vk]` 那一段不能省，而且不能只当它是个细节。**
@@ -626,7 +628,8 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str],
     # 最后那次 amix，和闪避完的现场声、解说三路相加。
     beds = "[duck][vm]" + ("[music]" if music else "")
     return (
-        f"[0:a]volume={BED_LOUD}[bed];{';'.join(filters)};"
+        ("anullsrc=r=48000:cl=stereo[bed];" if mute_original else f"[0:a]volume={BED_LOUD}[bed];")
+        + f"{';'.join(filters)};"
         f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
         f"[voice]asplit=2[vk0][vm];"
         f"[vk0]apad[vk];"
@@ -3683,6 +3686,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "music", "outro", "push", "rate", "scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_fallbacks", "source_url",
+             "original_audio_mode", "owner_approval",
              "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
              "editorial"),
@@ -6283,6 +6287,8 @@ def silence_findings(spec: dict, segments, probes: dict,
     """
     import probe_audio  # noqa: PLC0415
 
+    if narrated_audio_mode.enabled(spec):
+        return [], ["  获准中文旁白模式：源原声将被真实移除；最终TTS与零底轨由成片PCM核验"]
     hard: list[str] = []
     soft: list[str] = []
     strict = (spec.get("_production") or {}).get("status") == "ready_for_render"
@@ -6853,6 +6859,8 @@ def digital_silence_check(spec: dict, segments, probes: dict, urls: dict, *,
     `demoted`：非空时硬伤照印、降成只报（dry-run 在 mode≠render 那几趟传 `mode_demoted()`）。"""
     import probe_audio  # noqa: PLC0415
 
+    if narrated_audio_mode.enabled(spec):
+        return [], ["  获准中文旁白模式：仅计划内的静音留白；本人TTS由渲后实测硬闸校验"]
     cover_text = str((spec.get("cover") or {}).get("narration") or "").strip()
     if cover_exact is None and not cover_text:
         cover_exact = COVER_SECONDS
@@ -8651,6 +8659,8 @@ def unvoiced_quote_problem(spec: dict, *, legacy: frozenset | None = None) -> st
     slug = str(spec.get("slug") or "")
     if slug in (legacy_unvoiced_quote() if legacy is None else legacy):
         return None
+    if narrated_audio_mode.enabled(spec):
+        return None
     bad = []
     for i, seg in enumerate(spec.get("segments") or [], 1):
         if seg.get("image") or str(seg.get("narration") or "").strip():
@@ -8723,7 +8733,7 @@ def cold_open_problem(spec: dict, *, primary: str | None = None) -> str | None:
             "真没有赢球后画面的源片，在 spec 顶层写 `_no_cold_open_why`。")
     if first.get("image"):
         return "「赛场之上」第 1 段是静图，不是赢球后的冷开场。\n" + hint
-    if str(first.get("narration") or "").strip():
+    if str(first.get("narration") or "").strip() and not narrated_audio_mode.enabled(spec):
         return ("「赛场之上」第 1 段配了中文旁白——那不是冷开场。"
                 "账号所有者 2026-09-25：「视频从赢球后的冷开场……是全局的要求」。\n"
                 + hint)
@@ -9587,6 +9597,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     if _INSET_TOP_CLEAR_Y and any(s.inset for s in segments):
         print(f"[贴图] 这个栏目画常驻角标，顶角的 inset 一律让到 y ≥ {_INSET_TOP_CLEAR_Y}")
     # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
+    narrated_audio_mode.preload_tts(spec, voice=voice, rate=rate)
     cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
     cover_secs = cover_length(cover_voice)
     # 默认保留品牌片尾；但当比赛本身已经以双方握手形成完整收束时，spec 可用
@@ -9941,7 +9952,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(silent), *mix_inputs,
                 "-filter_complex",
-                duck_filtergraph(filters, voice_labels, music_graph),
+                duck_filtergraph(filters, voice_labels, music_graph,
+                                 mute_original=narrated_audio_mode.enabled(spec)),
                 # 这一步只是把解说混进现场声，产物是个 m4a——画面在这儿是
                 # 拿来给 `-shortest` 定长度的，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
@@ -9954,6 +9966,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "-i", str(silent), "-vn", "-c:a", "aac", "-b:a", "192k",
                 "-ar", AUDIO_RATE, str(mixed))
 
+    narrated_audio_mode.seal_mix(spec, outdir, mixed, voices, audio_cue_offsets,
+                                spoken_of, cover_voice, cover_secs, outro_voice, offset,
+                                probe_duration)
     final = outdir / f"{spec.get('slug', 'reel')}.mp4"
     topbar = _topbar_lines(spec)
     topbar_ass = None
