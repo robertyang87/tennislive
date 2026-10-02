@@ -2,17 +2,22 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "wang-xiyu-eala-asian-games-2026-sf",
-  "written_at": "2026-10-02T06:50:23Z",
-  "code_sha": "4d041ede12eef4854a7c2db80de0d09bbdd96266",
-  "spec_sha256": "904ec76df2ec3d4f3533ccb0419e10a4ebe1cdb163b07fae935c9757dcc93f72",
-  "film_sha256": "4e192df16ba7c2fa8cf55de51ecc1986b11e895a4404a515352b7a94a1bdffa1",
-  "film_bytes": 26337363,
-  "projection_sha256": "0e59e8f261be55f67b2cab015afcce48d036dd174e86f247bf253fa36c627338",
+  "written_at": "2026-10-02T07:41:15Z",
+  "code_sha": "2e57d1cdf652328e0aa2c6dfe005b39b6c779d0f",
+  "spec_sha256": "b364b86658ada57baf4dd2d37cf60ed796335d7c3e0f820779f2f7c74c484797",
+  "film_sha256": "d70c1a6c522405cbefeaeb07c5cc7d239f70e7dab28fff459bad314a8d374f2e",
+  "film_bytes": 12541747,
+  "projection_sha256": "ef2dbded97d022f59abe6ffe174bb558d3d21cba1856d67028c3e865e17ba542",
   "claims": [
     [
       "segments",
       0,
       "_ending_payoff_required"
+    ],
+    [
+      "segments",
+      0,
+      "_head_open_why"
     ],
     [
       "cover",
@@ -29,8 +34,11 @@
     ],
     [
       "segments",
-      11,
+      10,
       "_quote_skip_why"
+    ],
+    [
+      "_set_coverage_why"
     ],
     [
       "segments",
@@ -39,22 +47,12 @@
     ],
     [
       "segments",
-      2,
-      "_score_inset_why"
-    ],
-    [
-      "segments",
-      4,
+      9,
       "_score_inset_why"
     ],
     [
       "segments",
       10,
-      "_score_inset_why"
-    ],
-    [
-      "segments",
-      11,
       "_score_inset_why"
     ],
     [
@@ -82,9 +80,9 @@
     "assets/reel/wang-xiyu-eala-asian-games-2026-sf.jpg": "c0d171948066e37006cca4f2b3790aa23f14e9946d95e78c91e0351516f435a5"
   },
   "artifacts": {
-    "audio_review_binding.json": "dcec5cd581077301fe3ec47f58e27d391d0658068dd679eb884aa03300580577",
-    "subtitles.ass": "7bc2172bd0ca1bb510322885aefa9bd49bf8f6451f9cc751ba1351dd883da950",
-    "topbar.ass": "ff8095c9ce3860f3c939189fd9860e804e203d568df2dd66cdf3cddc40f3cf75",
+    "audio_review_binding.json": "a20223ee6f59159e97c4566c3c49e6835e6804a93c8c6a1ebc17782f30fd0e11",
+    "subtitles.ass": "531027d07d3f4b7e083e9b8e53540987ade2f2e0df83866936e8c38ed46746be",
+    "topbar.ass": "d2caf4e4b51000d23d3b9b3d36ffaaeea49c7efc8bd9636d08c433ca095f4a6f",
     "poster.jpg": "57b5d733c9d1bb0eb1af559a9c61bdf9d7287a993cb6fa9c101eaf4ed81ef564",
     "stat_card.jpg": "c2721decc975770f8c69c96c73c2ce2258e14634638691188e8b4192773300fe"
   },
@@ -169,20 +167,9 @@
       "footer_venue": "名古屋 · 东山公园网球中心"
     },
     "sources": {
-      "sina": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/sina-matchpoint-original.mp4",
-      "bili": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/bili-three-sets-original.mp4"
+      "sina": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/sina-matchpoint-original.mp4"
     },
     "primary": "sina",
-    "archival": {
-      "bili": "用户2026-10-02明确选用这份原生1280×720本场现场集锦，非历史异场；保留整幅中央固定取景，避免裁掉两侧选手/球和真实比分牌。展示放大不增加源细节。"
-    },
-    "source_quality_exceptions": {
-      "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/bili-three-sets-original.mp4": {
-        "min_height": 720,
-        "approved_by": "user",
-        "reason": "用户回答“用现有720p片源，只展示已核实的官方统计”，2026-10-02。此Release与已核公开B站源SHA一致，未重新编码。"
-      }
-    },
     "segments": [
       {
         "source": "sina",
@@ -191,11 +178,10 @@
         "narration": "",
         "cx": 0.5,
         "track": false,
-        "fit": "crop",
         "score_inset": false,
         "point_end_ok": "连续同源叙事分界或非相持场边片段，按实际逐帧证据；具体窗口另见tactical-review.json。",
-        "crop_zoom": 1.34,
-        "fill_y": 0.5
+        "crop_zoom": 1.132,
+        "fill_y": 1.0
       },
       {
         "title_card": "154分钟\n拼下一张决赛门票",
@@ -203,35 +189,15 @@
         "seconds": 5.74
       },
       {
-        "source": "bili",
-        "start": 5,
-        "end": 11,
+        "seconds": 7.0,
         "narration": "北京时间十月一日下午，爱知名古屋亚运会女单半决赛，王曦雨对伊埃拉。",
-        "cx": 0.5,
-        "track": false,
-        "fit": "contain",
-        "score_inset": false,
-        "point_end_ok": "连续同源叙事分界或非相持场边片段，按实际逐帧证据；具体窗口另见tactical-review.json。",
-        "contain_keep": 1.0,
-        "speed": 0.8
+        "title_card": "10月1日下午\n亚运女单半决赛"
       },
       {
         "title_card": "首盘\n0比5落后",
         "narration": "开局，王曦雨连丢五局，零比五。离丢掉第一盘，只差一局。",
         "seconds": 6.82,
         "kicker": "01"
-      },
-      {
-        "source": "bili",
-        "start": 39,
-        "end": 50.65,
-        "narration": "发球先把伊埃拉带开。下一拍，王曦雨向正手位移动，把球再送回去。",
-        "cx": 0.5,
-        "track": false,
-        "fit": "contain",
-        "score_inset": false,
-        "point_end_ok": "发球约42.55，最后正手约49.7，50.07–50.60双方放下准备姿势、伊埃拉走动，死球明确，50.7源切之前结束。不得认末拍落点/得分归属。",
-        "contain_keep": 1.0
       },
       {
         "title_card": "追回三局\n首盘仍是3比6",
@@ -264,13 +230,13 @@
         "source": "sina",
         "start": 0,
         "end": 7.3,
-        "narration": "发球后站稳，双手反手接上下一拍。",
+        "narration": "发球落地后，重新站稳；再用双手反手，接上下一拍。",
         "cx": 0.5,
         "track": false,
-        "fit": "full_source",
         "score_inset": false,
         "point_end_ok": "0–7.3为本方视角连续发球、反手与追球，下一段7.3–9无缝接赢球握拳，组成完整赛点过程；对面与最后落点在画外，不编球路结果。",
-        "full_source_scale": 0.78
+        "crop_zoom": 1.132,
+        "fill_y": 1.0
       },
       {
         "source": "sina",
@@ -279,11 +245,10 @@
         "narration": "",
         "cx": 0.5,
         "track": false,
-        "fit": "crop",
         "score_inset": false,
         "point_end_ok": "源7.3死球后握拳/笑，连续接上一段，直到9秒仍是王曦雨本方反应。",
-        "crop_zoom": 1.34,
-        "fill_y": 0.5
+        "crop_zoom": 1.132,
+        "fill_y": 1.0
       },
       {
         "title_card": "会师决赛\n中国锁定金银",

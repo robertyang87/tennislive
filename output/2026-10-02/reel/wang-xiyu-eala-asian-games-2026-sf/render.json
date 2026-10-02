@@ -4,14 +4,14 @@
   "cover_narrated": false,
   "outro_seconds": 4.032,
   "layout": "full",
-  "segments_seconds": 99.99,
+  "segments_seconds": 87.84,
   "topbar": {
     "line1": "2026 亚运会 名古屋 女单半决赛",
     "line2": "王曦雨 3-6 6-3 6-2 伊埃拉",
     "start": 1.2,
-    "end": 101.19
+    "end": 89.04
   },
-  "film_seconds": 105.233,
+  "film_seconds": 93.1,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+0%",
   "narration_backend": "edge-tts",
@@ -19,15 +19,14 @@
     "1": 5.64,
     "2": 6.864,
     "3": 6.72,
-    "4": 7.104,
-    "5": 7.416,
-    "6": 10.896,
-    "7": 8.76,
-    "8": 8.256,
-    "9": 10.056,
-    "10": 3.936,
-    "12": 6.96,
-    "13": 4.536
+    "4": 7.416,
+    "5": 10.896,
+    "6": 8.76,
+    "7": 8.256,
+    "8": 10.056,
+    "9": 5.832,
+    "11": 6.96,
+    "12": 4.536
   },
   "face_checks": {
     "cover": {
@@ -44,51 +43,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "dd2e2c1649f9b0c10f7e813512da785e3bd9f4b3908ff6b401ffbf93f72522f6",
+  "render_inputs_sha256": "9e7a45da38848e4a479a722408b0c166af118c5a80604e274a96e7fafa3d6d2c",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "wang-xiyu-eala-asian-games-2026-sf",
-    "received_at": "2026-10-02T06:45:51Z",
-    "artifact_ready_at": "2026-10-02T06:50:23Z",
-    "elapsed_seconds": 272.541,
+    "received_at": "2026-10-02T07:37:47Z",
+    "artifact_ready_at": "2026-10-02T07:41:15Z",
+    "elapsed_seconds": 208.956,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "4e192df16ba7c2fa8cf55de51ecc1986b11e895a4404a515352b7a94a1bdffa1",
-    "spec_sha256": "904ec76df2ec3d4f3533ccb0419e10a4ebe1cdb163b07fae935c9757dcc93f72",
-    "run_id": "36975069014",
+    "film_sha256": "d70c1a6c522405cbefeaeb07c5cc7d239f70e7dab28fff459bad314a8d374f2e",
+    "spec_sha256": "b364b86658ada57baf4dd2d37cf60ed796335d7c3e0f820779f2f7c74c484797",
+    "run_id": "36979559413",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-02T06:48:17Z",
-        "run_id": "36975069014"
+        "at": "2026-10-02T07:39:47Z",
+        "run_id": "36979559413"
       }
     ],
-    "render_seconds": 126.541,
-    "pre_render_seconds": 146.0
+    "render_seconds": 88.956,
+    "pre_render_seconds": 120.0
   },
-  "film_sha256": "4e192df16ba7c2fa8cf55de51ecc1986b11e895a4404a515352b7a94a1bdffa1",
-  "film_bytes": 26337363,
-  "qc_attestation_sha256": "3a9d2a71dc5a2aae0434839679145ac534e06bc8fdefc2c70dcd7e19f32f383f",
+  "film_sha256": "d70c1a6c522405cbefeaeb07c5cc7d239f70e7dab28fff459bad314a8d374f2e",
+  "film_bytes": 12541747,
+  "qc_attestation_sha256": "7cb9adc87d87aeab16e6aab2227721f7b384fd9a9257f5ea2a980427ecbfb05c",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-02T06:48:17Z",
-      "run_id": "36975069014"
+      "at": "2026-10-02T07:39:47Z",
+      "run_id": "36979559413"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-02T06:50:24Z",
-      "run_id": "36975069014"
+      "at": "2026-10-02T07:41:17Z",
+      "run_id": "36979559413"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wang-xiyu-eala-asian-games-2026-sf/wang-xiyu-eala-asian-games-2026-sf.mp4",
-  "video_bytes": 26337363,
-  "reattests": [
-    {
-      "at": "2026-10-02T06:56:42Z",
-      "spec_sha256": "baaf1cb1ef902bf70bd5dcf55efece7b55351e7df17d9a872b6a9166a1436bf2",
-      "run": ""
-    }
-  ]
+  "video_bytes": 12541747
 }
