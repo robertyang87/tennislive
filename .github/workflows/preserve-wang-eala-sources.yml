@@ -1,12 +1,14 @@
 name: preserve-wang-eala-sources
 on:
-  push:
-    branches: [codex/wang-xiyu-eala-asiad-20261002]
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
     paths: [.github/workflows/preserve-wang-eala-sources.yml]
 permissions:
   contents: write
 jobs:
   preserve:
+    if: github.head_ref == 'codex/wang-xiyu-eala-asiad-20261002'
     runs-on: ubuntu-latest
     steps:
       - name: Preserve exact original public source bytes
