@@ -14,4 +14,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh run cancel 36979053348 --repo robertyang87/tennislive || true
-          gh workflow run match-reel.yml --repo robertyang87/tennislive --ref codex/chwalinska-manual-rebuild -f mode=probe -f slug=yastremska-chwalinska -f url=https://www.youtube.com/watch?v=12BOGT88OnQ
+          gh workflow run match-reel.yml --repo robertyang87/tennislive --ref codex/chwalinska-manual-rebuild -f mode=narration -f slug=yastremska-chwalinska -f url=https://www.youtube.com/watch?v=12BOGT88OnQ
