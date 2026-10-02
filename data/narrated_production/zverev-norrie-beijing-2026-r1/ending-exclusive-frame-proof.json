@@ -1,0 +1,76 @@
+{
+  "schema": "tennislive.source-ending-exclusive-frame-proof.v1",
+  "source_sha256": "dd355e5dd6f25b66414c15427f5fc53d7d37785c36801939e42ca2bba15efeee",
+  "source_bytes": 40607227,
+  "source_frame_rate": "50/1",
+  "source_time_base": "1/12800",
+  "native_output_fps": 25,
+  "last_court_frame_source_seconds": 233.66,
+  "first_promo_frame_source_seconds": 233.68,
+  "segment": {
+    "index": 15,
+    "start": 215.86,
+    "end_exclusive": 233.68,
+    "duration": 17.82,
+    "outro": false,
+    "native_tail_seconds": 0
+  },
+  "test_command": [
+    "ffmpeg",
+    "-nostdin",
+    "-v",
+    "error",
+    "-threads",
+    "1",
+    "-ss",
+    "215.860",
+    "-i",
+    "<exact source mp4>",
+    "-t",
+    "17.820",
+    "-vf",
+    "fps=25,scale=160:90,format=yuv420p",
+    "-an",
+    "-f",
+    "framemd5",
+    "final-window-native-timing.framemd5"
+  ],
+  "test_scope": "Real full selected ending decoded with native input-ss/output-t and25fps timing; scaled only for hashing. Not a final1080x1440 render or crop/score-mask QC.",
+  "output_frames": 446,
+  "last_output_pts": 17.8,
+  "last_output_frame_md5": "1614cb68a5b68f4769b9a4f6c3b29b3d",
+  "source23366_md5": "1614cb68a5b68f4769b9a4f6c3b29b3d",
+  "promo23368_md5": "4a418d070cd8fb8951953dd3da28a072",
+  "last_frame_is_full_final_court_frame": true,
+  "promo_not_included": true,
+  "checks": [
+    {
+      "file": "final-window-native-timing.framemd5",
+      "sha256": "f5cad4e7466bfe4f421ca039cea765b386dadb83b4cc22e5223bba89149eace7"
+    },
+    {
+      "file": "source-233.66.framemd5",
+      "sha256": "3c0fe3e92c93bb23d6117b2c3bc9cb7b59a9e94aed82c5812f2bd97743bb6e9b"
+    },
+    {
+      "file": "source-233.68.framemd5",
+      "sha256": "19b3b8726491479a75a215b34e5fff3ffc2dd5c615ec7121f396af721c282977"
+    },
+    {
+      "file": "source-233.64.framemd5",
+      "sha256": "f7456e031eaf4a001aa641a2f54b375b85e1a4d002a07b1c5400d1cfd9cf974d"
+    },
+    {
+      "file": "end-exclusive-test.framemd5",
+      "sha256": "08ca4e5edc784e416b91e9cd2090f84853bda2229cb7ad5e2427c459e4fe713b"
+    }
+  ],
+  "visual_source_contact": "evidence/ending-source-contact.jpg",
+  "cold_open": {
+    "start": 222.38,
+    "core_end": 233.48,
+    "fade_tail": 0.18,
+    "exclusive_source_budget_end": 233.66,
+    "purpose": "Opening reaction teaser only; full final handshake is guaranteed by final payoff"
+  }
+}
