@@ -19,7 +19,7 @@ from .common import (
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
 from .hashtags import limit_hashtags
-from .copy_title import COPY_TITLE_MAX, compact_copy_title, copy_title
+from .copy_title import compact_copy_title, copy_hook_budget, make_copy_title
 from .narrative import data_angle as _data_angle
 from .narrative import editor_takeaway, preview_angle
 from .rating import (
@@ -92,8 +92,10 @@ def _title_emoji(hook: str) -> str:
 
 
 def decorate_title(digest: Digest, hook: str, *, category: str = "") -> str:
-    """Publish the concise hook without automatic date/category decoration."""
-    return copy_title(_compact_title_hook(hook, COPY_TITLE_MAX))
+    """Keep date/column/| and fit the editorial hook into the remaining budget."""
+    column = category or "今日球局"
+    day = f"{digest.today.month}.{digest.today.day}"
+    return make_copy_title(day, column, _compact_title_hook(hook, copy_hook_budget(day, column)))
 
 
 def _latin_short_name(value: str) -> str:
@@ -210,9 +212,11 @@ def _compact_title_hook(hook: str, budget: float) -> str:
 
     # Prefer a content-specific "球员+动作+轮次" hook over the raw clauses so the
     # title varies by the day's actual story instead of a generic fallback.
-    candidates.extend(_subject_action_hooks(cleaned))
-
     clauses = [part.strip() for part in re.split(r"[，,；;：:]", cleaned) if part.strip()]
+    # A time/context clause is not the player's name. Compress complete clauses
+    # independently so the budget cannot drop the result verb from the title.
+    for clause in reversed(clauses):
+        candidates.extend(_subject_action_hooks(clause))
     if len(clauses) >= 2:
         subject = re.split(
             r"先丢|苦战|鏖战|历经|经过|耗时|直落|连赢|三盘|两盘",
@@ -230,9 +234,9 @@ def _compact_title_hook(hook: str, budget: float) -> str:
             ),
             "",
         )
+        candidates.extend(reversed(clauses))
         if subject and action:
             candidates.append(subject + action)
-        candidates.extend(reversed(clauses))
         candidates.extend(clauses)
 
     for candidate in candidates:

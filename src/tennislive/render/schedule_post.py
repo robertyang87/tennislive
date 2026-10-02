@@ -25,7 +25,7 @@ from .schedule_time import (
     match_key,
 )
 from .story import is_chinese_player
-from .copy_title import COPY_TITLE_MAX, compact_copy_title, copy_title
+from .copy_title import COPY_TITLE_MAX, compact_copy_title, copy_hook_budget, make_copy_title
 
 
 def _names(players: Sequence) -> str:
@@ -152,7 +152,16 @@ def headline_hook(m: Match, time_text: str = "", budget: float | None = None) ->
                 name = ".".join(w[0] for w in words[:-1]) + "." + words[-1]
             names.append(name)
         return "/".join(names)
-    return f"{short_side(m.home)}vs{short_side(m.away)}"
+    paired = f"{short_side(m.home)}vs{short_side(m.away)}"
+    if _width(paired) <= limit:
+        return paired
+    # Untranslated multiword names can use their initials in the short title;
+    # the schedule body still contains each complete name. Never slice a name.
+    def initials(players):
+        return "/".join("".join(w[0] for w in p.name.split())
+                        if p.name.isascii() and len(p.name.split()) > 1
+                        else player_zh(p.name) for p in players)
+    return f"{initials(m.home)}对{initials(m.away)}"
 
 
 def pick_lead(matches: Sequence[Match]) -> Match | None:
@@ -185,10 +194,10 @@ def _start_key(m: Match) -> float:
 
 
 def post_title(day, lead: Match | None, time_text: str = "") -> str:
-    """A concise copyable schedule title; no notification-only prefix."""
-    if lead is None:
-        return copy_title(f"{day.month}.{day.day}今日赛程")
-    return copy_title(headline_hook(lead, time_text, budget=TITLE_MAX))
+    """Keep date+column+|; only the editorial hook can consume the remainder."""
+    label = f"{day.month}.{day.day}"
+    hook = headline_hook(lead, time_text, budget=copy_hook_budget(label, "今日赛程")) if lead else "赛程速览"
+    return make_copy_title(label, "今日赛程", hook)
 
 
 def _event_heading(group) -> str:

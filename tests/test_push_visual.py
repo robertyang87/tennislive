@@ -38,7 +38,7 @@ COPY = "https://p.invalid/output/2026-09-26/copy.html"
 VIDEO = "https://v.invalid/explainer.mp4"
 POSTER = "https://gcore.jsdelivr.net/gh/o/r@main/output/2026-09-26/reel/x/poster.jpg"
 STAT = "https://gcore.jsdelivr.net/gh/o/r@main/output/2026-09-26/reel/x/stat_card.jpg"
-XHS = "标题一行\n\n正文第一段。\n\n正文第二段，带一个数 7-6(4)。\n\n#网球时差"
+XHS = "9.26网球有故事|标题一行\n\n正文第一段。\n\n正文第二段，带一个数 7-6(4)。\n\n#网球时差"
 
 
 def _reel(column: str = "赛场之上", *, stat: bool = True) -> str:
@@ -156,7 +156,7 @@ def test_两条网球有故事推送长得一样_药丸是栏目名_有标题提
         assert gone not in deck, f"字卡推送里还有老样子：{gone}"
     # 标题提示行紧跟在大标题下面（复制页打不开时标题的出口），两条都是
     for body in (clip, deck):
-        after_title = body.split("标题一行", 1)[1]
+        after_title = body.split("9.26网球有故事|标题一行", 1)[1]
         assert after_title.index(ps.TITLE_HINT_TEXT) < 200
 
 
@@ -189,7 +189,7 @@ def test_推送标题正文整块可选_片段声明中文():
     片段没有 `lang` 时全角逗号按西文字形排（评审 `zoom_punct_push_vs_copy.jpg`）。"""
     for body in (_reel(), _knowledge()):
         assert body.startswith('<div lang="zh-CN" '), body[:60]
-        title = _style_of(body, "标题一行")
+        title = _style_of(body, "9.26网球有故事|标题一行")
         text = re.search(r'<div style="([^"]*)">正文第一段', body).group(1)
         for style in (title, text):
             assert "user-select:all" in style and "-webkit-user-select:all" in style, style
@@ -340,7 +340,7 @@ def test_复制页的textarea_id没改_指纹读得到(tmp_path):
     这两个 id 一个都不能动。"""
     page = tmp_path / "copy.html"
     page.write_text(to_copy_page(XHS), encoding="utf-8")
-    assert copy_page_fingerprint(page) == "标题一行"
+    assert copy_page_fingerprint(page) == "9.26网球有故事|标题一行"
     assert '<textarea id="body" readonly>' in page.read_text(encoding="utf-8")
 
 

@@ -201,7 +201,7 @@ def test_栏目认不出时报成一行而不是炸成traceback(monkeypatch, cap
         out = capsys.readouterr().out
         assert "✗ 栏目" in out and "✗ 相对时间词" in out, out
         # 其余各项照样报完：合格的那些一个不少
-        assert out.count("✓") == len(P.CHECKS) - 2, out
+        assert out.count("✓") == len(P.CHECKS) - (3 if column == "没登记过的栏目" else 2), out
 
 
 def test_最宽的日期真的是最宽的():

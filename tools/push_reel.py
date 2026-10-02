@@ -53,7 +53,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from tennislive.cdn import jsdelivr_base  # noqa: E402
 from tennislive.publish.pushplus import push, write_receipt  # noqa: E402
 from tennislive.render import push_style as ps  # noqa: E402
-from tennislive.render.copy_title import copy_title  # noqa: E402
+from tennislive.render.copy_title import copy_title, make_copy_title  # noqa: E402
 from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
@@ -252,18 +252,24 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     return copy_title(pair)
 
 
-def publication_title(matchup: str = "", score: str = "", summary: str = "") -> str:
-    """Build the final copy/push title for every column.
+def publication_title(outdir: Path, column: str, matchup: str = "", score: str = "",
+                      summary: str = "", date: str = "", slug: str = "") -> str:
+    """Final date+column+|+hook contract, separate from intermediate headlines."""
+    from datetime import date as Date  # noqa: PLC0415
 
-    Legacy dated headline helpers remain available to intermediate callers;
-    their visual-width and short-summary budgets never authorize final copy.
-    This boundary is shared by check, page and push via prepare_copy.
-    """
-    if summary.strip():
-        return copy_title(summary)
-    pair = matchup.replace(" vs ", f" {score} ") if score and " vs " in matchup \
-        else (f"{matchup} {score}".strip() if score else matchup)
-    return copy_title(pair)
+    if not date:
+        found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
+        if not found:
+            raise SystemExit("最终发布标题缺少日期；请传 --date YYYY-MM-DD")
+        date = "-".join(found.groups())
+    try:
+        when = Date.fromisoformat(date)
+    except ValueError as exc:
+        raise SystemExit(f"--date 要写成有效 YYYY-MM-DD，收到 {date!r}") from exc
+    pair = summary if summary.strip() else (
+        matchup.replace(" vs ", f" {score} ") if score and " vs " in matchup
+        else (f"{matchup} {score}".strip() if score else matchup))
+    return make_copy_title(f"{when.month}.{when.day}", column, pair, slug=slug)
 
 
 def _legacy_headline(outdir: Path, column: str, matchup: str, score: str = "",
@@ -858,7 +864,8 @@ def prepare_copy(copy_path: Path, outdir: Path, *, column: str = "", date: str =
     meta = resolve_meta(Path(copy_path), args if args is not None else argparse.Namespace())
     if date and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
         raise SystemExit(f"--date 要写成 YYYY-MM-DD，收到 {date!r}")
-    title = publication_title(meta["matchup"], meta["score"], meta["summary"])
+    title = publication_title(outdir, column, meta["matchup"], meta["score"],
+                              meta["summary"], date, Path(copy_path).name.split(".")[0])
     copy_text = copy_body_only(copy_text, title)
     if not copy_text:
         raise SystemExit("正文去掉标题后为空")

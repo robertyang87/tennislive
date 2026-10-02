@@ -255,13 +255,14 @@ def copy_body_problems(deck: Deck) -> list[str]:
 
 def copy_title_problems(deck: Deck) -> list[str]:
     """The final copy title has no whitespace and at most 20 characters."""
-    from tennislive.render.copy_title import copy_title, validate_copy_title  # noqa: PLC0415
+    from tennislive.render.copy_title import make_copy_title, validate_copy_title  # noqa: PLC0415
 
     head = deck.xhs.splitlines()[0] if deck.xhs.splitlines() else ""
     problems = []
     try:
-        validate_copy_title(head)
-        if copy_title(deck.story.title) != head:
+        validate_copy_title(head, require_prefix=True)
+        if make_copy_title(deck.date_label, E.explainer_column(deck.slug),
+                           deck.story.title, slug=deck.slug) != head:
             problems.append(f"{deck.slug} 标题与选题不符：{head}")
     except SystemExit as exc:
         problems.append(f"{deck.slug}：{exc}")

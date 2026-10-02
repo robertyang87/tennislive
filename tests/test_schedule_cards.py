@@ -357,6 +357,7 @@ def test_title_fits_the_xiaohongshu_budget():
     assert _width(title) <= TITLE_MAX, title
     assert len(title) <= TITLE_MAX
     assert not any(c.isspace() for c in title)
+    assert title.startswith("7.28今日赛程|")
 
 
 def test_title_never_drops_the_two_names():

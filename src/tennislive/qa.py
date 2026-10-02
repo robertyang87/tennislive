@@ -215,7 +215,7 @@ def check_xhs_post(digest: Digest, post: str) -> tuple[list[str], list[str]]:
 
     xhs_title = lines[0]
     try:
-        validate_copy_title(xhs_title)
+        validate_copy_title(xhs_title, require_prefix=True)
     except SystemExit as exc:
         fatal.append(f"小红书标题{'超长' if len(xhs_title) > XHS_TITLE_LIMIT else '不合规'}: {exc}")
 
@@ -226,7 +226,8 @@ def check_xhs_post(digest: Digest, post: str) -> tuple[list[str], list[str]]:
             f"小红书话题标签超过{MAX_HASHTAGS}个: {tag_count}"
         )
     daily = _is_daily_post(digest, post, xhs_title)
-    # Publishing titles need no date decoration; dates belong to source metadata.
+    if not any(label in xhs_title for label in _date_labels(digest)):
+        fatal.append("小红书标题缺少当日日期")
     if not body:
         fatal.append("小红书正文为空")
         return fatal, warn

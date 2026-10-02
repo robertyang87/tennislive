@@ -25,7 +25,7 @@ from .common import (
     match_round_display,
     side_display,
 )
-from .copy_title import copy_title
+from .copy_title import copy_title, validate_copy_title
 from .rating import (
     is_tour_focus_match,
     stay_up_stars,
@@ -152,6 +152,7 @@ def to_copy_page(
     只对知识帖成立（评审 3.2；判据 `test_复制页台头不写贴图_四条线都说得通`）。
     """
     title, body = split_xhs(xhs_text)
+    validate_copy_title(title, require_prefix=True)
     safe_title = html.escape(title)
     safe_body = html.escape(body)
     safe_comment = html.escape((pinned_comment or "").strip())
@@ -162,7 +163,9 @@ def to_copy_page(
       <textarea id="comment" readonly>{safe_comment}</textarea>
     </section>""" if safe_comment else ""
     alt_sections = ""
-    alternatives = dict.fromkeys(copy_title(t) for t in (alt_titles or []) if t)
+    alternatives = dict.fromkeys(
+        validate_copy_title(copy_title(t), require_prefix=True)
+        for t in (alt_titles or []) if t)
     for i, alt in enumerate(t for t in alternatives if t != title):
         safe_alt = html.escape(alt)
         alt_sections += f"""
