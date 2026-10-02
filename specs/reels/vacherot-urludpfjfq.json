@@ -38,12 +38,11 @@
     "result": "4-6 7-6(5) 6-4",
     "topic": "ATP500 东京 第二轮 · 瓦舍罗 VS 西西帕斯",
     "portrait": {
-      "image": "output/2026-10-02/frames/vacherot-tsitsipas-tokyo-2026-cover/frame_00183.7s.jpg",
-      "frame_at": 183.7,
-      "focus": 0.4,
+      "image": "assets/covers/vacherot-tokyo-2026.jpg",
+      "focus": 0.52,
       "focus_y": 0,
-      "zoom": 1.0,
-      "_frame_why": "2026-09-26常设授权：ATP图库现有瓦舍罗东京照片发布于9月30日，非本场；AP与中文图片搜索未找到可核对10月2日第二轮的高清照片；东京赛事图库接口不可用，未能核实照片场次。使用本场183.7秒赛后正面睁眼近景。"
+      "zoom": 1,
+      "_why": "用户本次明确批准使用9月30日东京同站官方高清照片；非10月2日本场照片。ATP官方原图5616×3744，正面睁眼，不把拍摄日期标为本场。"
     },
     "scoreboard": {
       "home": "瓦舍罗",
@@ -69,7 +68,7 @@
       }
     },
     "_heat_why": "账号所有者直接给出本场链接要求制作；瓦舍罗当前世界第18，西西帕斯为前世界第三。",
-    "_portrait_why": "同场比赛结束后的瓦舍罗正面近景；双眼睁开，无遮挡。"
+    "_portrait_why": "用户批准9月30日同站ATP官方高清实拍，替代不清晰的本场抽帧。"
   },
   "scorebox": [
     98,
@@ -168,103 +167,345 @@
     },
     "tour": "atp",
     "_source": "Flashscore Off5k6rC逐盘与全场统计，ESPN与源终局比分互证；不编造制胜分或非受迫失误。",
-    "_winners_ue_why": "Flashscore全场及逐盘统计未列制胜分与非受迫失误；TNNS与官方来源核验仍在进行，未知值不得冒充零。"
+    "_winners_ue_why": "Flashscore本场统计未列这两项；TNNS触发人机验证后停止，其他官方源未获得已核实同场字段。用户2026-10-02明确批准仅本片省略两行，未知值不写零。见data/stat_lookups/vacherot-urludpfjfq.json。",
+    "_winners_ue_omission": {
+      "slug": "vacherot-urludpfjfq",
+      "source_id": "Off5k6rC",
+      "match_date": "2026-10-02",
+      "winner_result": "4-6 7-6(5) 6-4",
+      "fields": [
+        "winners",
+        "ue"
+      ],
+      "decision": "omit_both_rows_for_this_film_only",
+      "authorization": "owner-approved-single-film-omission-2026-10-02"
+    }
   },
   "stat_card_full_canvas": true,
   "segments": [
     {
       "source": "ttv",
-      "start": 176.4,
-      "end": 182.64,
-      "narration": "",
+      "start": 175.9,
+      "end": 181.6,
       "cx": 0.5,
       "score_inset": true,
-      "_ending_payoff_required": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "末赛点后第一波庆祝近景，真实转播逆转总结；没有握手，正文最后完整复现。",
+      "narration": "",
       "_quote_kind": "broadcast",
       "quote": [
         {
-          "at": 0,
-          "end": 2.4,
-          "text": "That's a big turnaround for Valentin Vacherot.\n瓦舍罗完成了一场大逆转"
+          "at": 0.12,
+          "end": 3.45,
+          "text": "It's a big turnaround for Valentin Vacherot.\n瓦舍罗完成了一场大逆转。"
         },
         {
-          "at": 2.4,
-          "end": 6.24,
-          "text": "Down a set and a break.\n先丢一盘又落后一次破发"
+          "at": 3.45,
+          "end": 5.45,
+          "text": "Down a set and a break.\n先丢一盘，又落后一次破发。"
         }
       ],
-      "_why": "源字幕176.40与178.16开始的真实转播解说；球员赛后近景，不包含握手，正文结尾完整重现。",
-      "point_end_ok": "该段是赛点结束后的球员庆祝近景，不是进行中的回合。赛点在176.42前已结束，183.50候选是猜框误检，不是这一分真实翻牌。"
+      "_ending_payoff_required": true
     },
     {
       "source": "ttv",
-      "start": 0,
-      "end": 25,
-      "narration": "先丢一盘又落后，瓦舍罗还是翻了回来。北京时间十月二号上午，东京公开赛男单第二轮，他对阵西西帕斯。西西帕斯的正手打出威胁。首盘第五局，瓦舍罗的发球局被拿走。",
+      "start": 13.26,
+      "end": 21.64,
       "cx": 0.5,
       "score_inset": true,
-      "_why": "落点、坐标，首盘2比2时15比40失守；18.3至25秒破发结果。10.80原声明确西西帕斯正手打出威胁，未声称全场打法调整。"
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "首个未选整分0至13.06舍弃；13.26原声前句已结束，新回合发球尚未触球，完整保留本分发球击球与后续回合。",
+      "narration": "北京时间十月二号上午，东京第二轮。瓦舍罗三盘逆转西西帕斯，晋级八强。"
     },
     {
       "source": "ttv",
-      "start": 25,
+      "start": 21.64,
+      "end": 25.0,
+      "cx": 0.5,
+      "score_inset": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 3.01,
+          "text": "And the block return works wonders.\n这记挡回的接发效果真好。"
+        }
+      ]
+    },
+    {
+      "source": "ttv",
+      "start": 47.04,
       "end": 65.28,
-      "narration": "西西帕斯靠一发撑住自己的发球局。瓦舍罗这边，先要把自己的发球局守下来，再找机会追回丢掉的一局。两人继续争，比分却没有回到同一起点。走到盘末，西西帕斯还握着领先。",
       "cx": 0.5,
       "score_inset": true,
-      "_why": "首盘各关键回合与盘末完整保留；一发15/18、5/5保发及无破发点均为逐盘统计。"
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "25至47.04整段首盘中段回合和随后的不确定英语舍弃；前述第五局破发已由18.3至25源窗口完整保留，本段是3比4至首盘盘末。明确回顾前文正手与挡接发，来源10.18和21.64真实解说，不推为全场调整。",
+      "narration": "前面，西西帕斯用正手制造威胁，挡接发也给瓦舍罗带来压力。首盘第五局，瓦舍罗丢掉发球局。要追回来，既得守住自己，也得从对手的发球局找机会。走到盘末，领先还在西西帕斯手里。"
     },
     {
       "source": "ttv",
       "start": 65.28,
-      "end": 100.8,
-      "narration": "首盘四比六。西西帕斯五个发球局全部保住，一发得分率百分之八十三。第二盘更难：瓦舍罗再次丢掉发球局，一比三落后，后来仍是二比四。一次保发只能延续比赛；他需要从对手手里拿回一局。先守住自己，等下一次机会。",
+      "end": 73.1,
       "cx": 0.5,
       "score_inset": true,
-      "_why": "第二盘先失守第三局，1比3、2比4由逐局记录核实；不虚构心理或本场调整。"
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "首盘四比六。第二盘刚开始，瓦舍罗自己的发球局又遇到麻烦。"
     },
     {
       "source": "ttv",
-      "start": 100.8,
-      "end": 124.88,
-      "narration": "机会终于来了。三比四，瓦舍罗拿到破发点。这一分拿下来，才算追回那一局。四比四，他做到了。双方随后走到抢七，胜负要靠这一分一分地争。瓦舍罗还没有赢下这一盘，但比赛已经重新有了悬念。",
+      "start": 73.1,
+      "end": 73.75,
       "cx": 0.5,
       "score_inset": true,
-      "_why": "100.8至108.86回破；111.04开始抢七，第二盘胜负不提前揭晓。"
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 0.65,
+          "text": "What a game!\n这一局太精彩了！"
+        }
+      ]
+    },
+    {
+      "source": "ttv",
+      "start": 73.75,
+      "end": 82.77,
+      "cx": 0.5,
+      "score_inset": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "第二盘一比三落后，瓦舍罗先要守住自己。保发只能续命，要追平，还得拿回那一局。"
+    },
+    {
+      "source": "ttv",
+      "start": 82.77,
+      "end": 84.55,
+      "cx": 0.5,
+      "score_inset": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 1.78,
+          "text": "That keeps it just about out of reach.\n这样一来，对手还是差一点追不上。"
+        }
+      ]
+    },
+    {
+      "source": "ttv",
+      "start": 84.55,
+      "end": 92.24,
+      "cx": 0.5,
+      "score_inset": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "二比四，差的还是一次破发。西西帕斯守着领先，瓦舍罗还在等追回来的机会。"
+    },
+    {
+      "source": "ttv",
+      "start": 92.24,
+      "end": 99.65,
+      "cx": 0.5,
+      "score_inset": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 2.26,
+          "text": "Oh, that is brilliant.\n噢，这球真漂亮。"
+        },
+        {
+          "at": 4.44,
+          "end": 7.41,
+          "text": "Magical stuff from Tsitsipas.\n西西帕斯这一分太神奇了。"
+        }
+      ]
+    },
+    {
+      "source": "ttv",
+      "start": 99.65,
+      "end": 107.96,
+      "cx": 0.5,
+      "score_inset": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "三比四，这次瓦舍罗拿到破发点。机会摆在眼前，能不能把那一局追回来？"
+    },
+    {
+      "source": "ttv",
+      "start": 107.96,
+      "end": 111.04,
+      "cx": 0.5,
+      "score_inset": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "本分结束后真实解说确认回破4比4；随后111.04至124.88整段抢七1比2回合与残缺解说省略，不截断保留的回合。",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 2.24,
+          "text": "And he gets the break back.\n他把破发追回来了。"
+        }
+      ]
     },
     {
       "source": "ttv",
       "start": 124.88,
-      "end": 148.88,
-      "narration": "抢七六比五，瓦舍罗握着盘点。拿下这一分，双方盘数才追平。抢七七比五，双方各赢一盘。决胜盘二比二，又是一个接发球局的机会。眼前这个破发点，他能不能拿下来？",
+      "end": 138.7,
       "cx": 0.5,
       "score_inset": true,
-      "_why": "124.88至130.98第二盘末分；132.18至140.02决胜盘第五局破发；事件顺序与源一致。"
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "抢七六比五，瓦舍罗拿到盘点。这一分得拿下来，才能把盘数追平。七比五，他追平了。决胜盘二比二，他又拿到破发点。这回能拿下吗？"
     },
     {
       "source": "ttv",
-      "start": 148.88,
-      "end": 168.04,
-      "narration": "瓦舍罗破发后，一路保到五比四。发球胜赛局，他却打到十五比四十。西西帕斯还有两个破发点。只要拿下一个，比分就回到五比五。这一分，瓦舍罗从底线相持到跑向网前，还得把球顶回去。",
+      "start": 138.7,
+      "end": 148.85,
       "cx": 0.5,
       "score_inset": true,
-      "_why": "逐分15比40、30比40、40比40；源完整呈现第一个挽救回合，第二个结果来自逐分，未声称画面收录。root逐contact帧核150.5–158.5底线、160.5向前、162.5到网前；162.24原声Vacherot launching himself around the court，逐分首BP被救。"
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 3.8,
+          "text": "Oh, he does enjoy the drive volley after the serve.\n噢，他很喜欢发球之后抽击截击。"
+        },
+        {
+          "at": 3.8,
+          "end": 5.35,
+          "text": "And he's made plenty of them.\n而且他已经打成了不少次。"
+        },
+        {
+          "at": 5.38,
+          "end": 6.95,
+          "text": "That one a little more tricky.\n这一球稍微难了一点。"
+        },
+        {
+          "at": 6.95,
+          "end": 9.18,
+          "text": "But it's not a great game for Tsitsipas.\n但西西帕斯这一局打得不好。"
+        },
+        {
+          "at": 9.18,
+          "end": 10.15,
+          "text": "He pays the price.\n他为此付出了代价。"
+        }
+      ]
     },
     {
       "source": "ttv",
-      "start": 168.04,
-      "end": 189.04,
-      "narration": "两个破发点都救回来，接下来是瓦舍罗的第一个赛点。最后这一分，得由他自己拿下。",
+      "start": 148.85,
+      "end": 162.24,
       "cx": 0.5,
       "score_inset": true,
-      "_why": "168.04至176.42完整赛点，随后庆祝与186.3至189.04握手；旁白留出后段真实原声。",
-      "point_end_ok": "本段完整赛点在176.42前结束，随后只呈现庆祝与握手，189.04是握手后的镜头切点；189.70猜框误检不是场上回合翻牌。"
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "破发后，瓦舍罗来到五比四。发球胜赛局却是十五比四十。两个破发点，丢一个就回到五比五。从底线相持到冲向网前，他还得把球顶回去。"
+    },
+    {
+      "source": "ttv",
+      "start": 162.24,
+      "end": 166.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 3.36,
+          "text": "Now it's Vacherot launching himself around the court.\n现在轮到瓦舍罗在场上飞身救球了。"
+        },
+        {
+          "at": 3.36,
+          "end": 4.66,
+          "text": "That's so impressive.\n这一球真让人赞叹。"
+        }
+      ]
+    },
+    {
+      "source": "ttv",
+      "start": 166.9,
+      "end": 175.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "按已交叉核验的源原声时间窗独立字幕或本人配音；完整英语不与TTS重叠。",
+      "narration": "两个破发点都救回来，接下来是瓦舍罗的第一个赛点。最后这一分，还得由他自己拿下。"
+    },
+    {
+      "source": "ttv",
+      "start": 175.9,
+      "end": 195.02,
+      "cx": 0.5,
+      "score_inset": true,
+      "point_end_ok": "原声/本人TTS在同源连续窗口之间切换；相邻时间边界一致，不跳帧、不丢回合。只在已完整结束的场景后跳过未选整分。",
+      "_why": "完整末赛点在前一同源连续窗口结束，接庆祝、186至189.04握手及之后挥手；末英文完整收尾194.95，195.02原转播片尾前干净切出。",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.12,
+          "end": 3.45,
+          "text": "It's a big turnaround for Valentin Vacherot.\n瓦舍罗完成了一场大逆转。"
+        },
+        {
+          "at": 3.45,
+          "end": 5.45,
+          "text": "Down a set and a break.\n先丢一盘，又落后一次破发。"
+        },
+        {
+          "at": 6.12,
+          "end": 9.7,
+          "text": "And not having much impact on the match at all.\n而且此前始终没能扭转场上的局面。"
+        },
+        {
+          "at": 10.2,
+          "end": 11.75,
+          "text": "But in the nick of time,\n但就在关键时刻，"
+        },
+        {
+          "at": 12.28,
+          "end": 13.7,
+          "text": "he got himself going,\n他找回了状态，"
+        },
+        {
+          "at": 13.83,
+          "end": 15.05,
+          "text": "got himself involved,\n重新咬住了比赛，"
+        },
+        {
+          "at": 15.89,
+          "end": 19.05,
+          "text": "and he snatches it away from Tsitsipas.\n最终从西西帕斯手中抢走了胜利。"
+        }
+      ]
     },
     {
       "stat_card": true,
       "seconds": 10,
-      "narration": "先丢一盘，再追回来。瓦舍罗晋级东京八强。下一轮对手未定，他还能延续这股劲吗？",
-      "_why": "完整赛点、庆祝和握手后，全画布统计卡10秒，再品牌片尾。"
+      "narration": "瓦舍罗晋级东京八强。下一轮对手未定，他还能延续这股劲吗？",
+      "_why": "完整末获胜一分、庆祝握手后，全画布10秒统计卡，再品牌片尾。"
     }
   ],
   "push": {
@@ -305,7 +546,9 @@
   "_hit_data": "Flashscore Off5k6rC：首盘西西帕斯一发15/18、五个发球局全部保住；瓦舍罗第二盘回破4比4、抢七7比5；决胜盘最后发球局15比40救两个破发点。",
   "_local_checks": {
     "narration": "edge-tts本地网络传输失败（aiohttp ClientConnectorError），未取得真实语音时长，必须由runner在编码前执行真实TTS门禁",
-    "winners_ue": "TNNS访问遇人机验证停止；独立官方来源查找中，不把未知写为0",
-    "cover": "用户要求找高清大图；183.7秒抽帧仅暂存，不能作为最终封面"
-  }
+    "winners_ue": "用户明确批准本期省略制胜分与非受迫失误；root负责精确单片授权代码记录。",
+    "cover": "用户明确批准同站9月30日高清ATP图，待root上传assets/covers/vacherot-tokyo-2026.jpg",
+    "audio": "选窗重构完成，待audio agent就实际所有选用窗口生成真实asr_cross_checked证据。"
+  },
+  "_audio_editing": "用户禁止DeepSeek与MiniMax；英文按本地Whisper独立模型加源字幕交叉核验，英语与TTS分窗。完整舍弃不确定原声所在整分，不通过截断回合消除问题。"
 }

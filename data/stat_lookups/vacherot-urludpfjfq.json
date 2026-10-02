@@ -1,0 +1,166 @@
+{
+  "checked_at": "2026-10-02T07:20:58.583055+00:00",
+  "match_date": "2026-10-02",
+  "matchup": [
+    "Valentin Vacherot",
+    "Stefanos Tsitsipas"
+  ],
+  "winner_result": "4-6 7-6(5) 6-4",
+  "period": "Match",
+  "status": "owner_approved_omission",
+  "winners": null,
+  "ue": null,
+  "sources": {
+    "official_stats": {
+      "status": "blocked",
+      "note": "ATP results HTTP403; stopped this domain, no bypass. Tokyo official draw PDFs accessible but draw has no W/UE; official news listing currently latest 2026-10-01 and no same-match Oct2 recap."
+    },
+    "editorial": {
+      "status": "not_verified",
+      "note": "ESPN correct competition sports.core.api.espn.com/v2/sports/tennis/leagues/atp/events/5-2026/competitions/183506 HTTP200; statsSource={id:0,description:none,state:none}; both participants lack statistics refs. ESPN daily scoreboard participant statistics empty.",
+      "extracted_match": {
+        "event_id": "5-2026",
+        "competition_id": "183506",
+        "date": "2026-10-02T03:30Z",
+        "statsSource": {
+          "id": "0",
+          "description": "none",
+          "state": "none"
+        },
+        "competitors": [
+          {
+            "name": "Valentin Vacherot",
+            "id": "9376",
+            "winner": true,
+            "statistics_ref_present": false
+          },
+          {
+            "name": "Stefanos Tsitsipas",
+            "id": "2869",
+            "winner": false,
+            "statistics_ref_present": false
+          }
+        ]
+      }
+    },
+    "mcp": {
+      "status": "not_verified",
+      "note": "Match Charting Project index HTTP200; five Vacherot matches in 2026, latest20260722, no20261002 entry."
+    },
+    "tnns": {
+      "status": "blocked",
+      "note": "Parent reported human verification challenge; no requests made by this agent."
+    },
+    "broadcast": {
+      "status": "not_verified",
+      "note": "Reviewed final source contact sheet180.5–204.5: closeup/handshake/celebration/endcard, no W/UE card. Highlight subset cannot reconstruct full-match W/UE."
+    }
+  },
+  "artifacts": [
+    {
+      "source_sha256": "bb0824db0c313f4cbe5057db0db0d788b5b5f6622d76a4ac2865a687c3e494f5",
+      "bytes": 151630,
+      "capture_filename": "stats-atp-draw.raw",
+      "source_url": "https://www.protennislive.com/posting/2026/329/mds.pdf",
+      "http_status": 200,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "827f4e194660e1149975f417de19ae58d74071bf9fb522438a86a0896ebfaeb9",
+      "bytes": 5483,
+      "capture_filename": "stats-atp-results.raw",
+      "source_url": "https://www.atptour.com/en/scores/current/tokyo/329/results",
+      "http_status": 403,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "62947d2fb779fc8441f1e860dbc9a0d2fc1927675ad10ac0af0bd96f98654831",
+      "bytes": 919,
+      "capture_filename": "stats-espn-box.raw",
+      "source_url": "https://www.espn.com/tennis/matchstats?matchId=183506",
+      "http_status": 403,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+      "bytes": 216,
+      "capture_filename": "stats-espn-competition.raw",
+      "source_url": "https://sports.api.espn.com/apis/v2/sports/tennis/atp/events/183506/competitions/183506/statistics",
+      "http_status": 503,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "0c51d620b93277feab4495782b7d0514b6974dd41ed6b41e034d04fb2ab92116",
+      "bytes": 71,
+      "capture_filename": "stats-espn-core.raw",
+      "source_url": "https://sports.core.api.espn.com/v2/sports/tennis/leagues/atp/events/329-2026/competitions/183506",
+      "http_status": 404,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "17cd7b64f0f66b99c4dc237bef6c25239da7871d5c857c961dbf78ef00bc11b8",
+      "bytes": 3466,
+      "capture_filename": "stats-espn-correct-core.raw",
+      "source_url": "https://sports.core.api.espn.com/v2/sports/tennis/leagues/atp/events/5-2026/competitions/183506",
+      "http_status": 200,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "930604f44888e1e7f4c8cba6be385b44321efbea02ad4d33b59d4d9bcc5d9d67",
+      "bytes": 178,
+      "capture_filename": "stats-espn-summary.raw",
+      "source_url": "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/summary?event=183506",
+      "http_status": 400,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "14fbfc5907f54c5e22cd8dff687e9dc06ae6f303f46b50ce462deffff28810f5",
+      "bytes": 2717000,
+      "capture_filename": "stats-mcp-index.raw",
+      "source_url": "https://www.tennisabstract.com/charting/",
+      "http_status": 200,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "149e09afbca16828b33296138664e0e417bfcbe11b8a4af81f3fa22665bc2a27",
+      "bytes": 35660,
+      "capture_filename": "stats-tokyo-atp.raw",
+      "source_url": "https://www.japanopentennis.com/atp/",
+      "http_status": 200,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "9c958752955de9a6b37d337750be5d0570c7954ba596e6c14ba0bc1f1df2d2a8",
+      "bytes": 35529,
+      "capture_filename": "stats-tokyo-draw.raw",
+      "source_url": "https://www.japanopentennis.com/atp/score-draws/draw/?DrawType=Singles",
+      "http_status": 200,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "ee50070a83daa3653ba927fb62b3b1c152f7c1a4900ff87247c5f397f053a9f2",
+      "bytes": 47252,
+      "capture_filename": "stats-tokyo-news.raw",
+      "source_url": "https://www.japanopentennis.com/atp/news-and-media/news",
+      "http_status": 200,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    },
+    {
+      "source_sha256": "0e55817801f7d287ca64654b8698e4780adae6974e02843ca1aab94544109b13",
+      "bytes": 4090,
+      "capture_filename": "stats-tokyo-site.raw",
+      "source_url": "https://www.japanopentennis.com/",
+      "http_status": 200,
+      "retention": "Raw capture exists in session scratch only; repository retains URL, outcome, extracted observations and SHA256, not an uploaded raw-file claim."
+    }
+  ],
+  "gate_conclusion": "Owner authorized omission of both W/UE rows for this exact film. Values remain unknown and fields must be absent; all other unapproved matches retain strict evidence gate.",
+  "slug": "vacherot-urludpfjfq",
+  "authorization": {
+    "scope": "this_exact_film_only",
+    "date": "2026-10-02",
+    "decision": "omit_both_rows_for_this_film_only",
+    "owner_response": "可以",
+    "context": "Parent reports owner explicitly approved this film omission after two clearly stated questions; no global waiver."
+  }
+}
