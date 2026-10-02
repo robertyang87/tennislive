@@ -1052,7 +1052,7 @@ def test_钩子重点词可选品牌绿_一屏只留一处(tmp_path):
     # VS 那一套也认（赛场之上的封面）
     src = Path("tools/versus_poster.py").read_text("utf-8")
     # 2026-09-27 起品牌绿从 token 取（`BRAND = DARK["primary"]`），源码里写的是名字
-    assert ".hook .accent{{color:{BRAND}}}" in src, "VS 模板的 CSS 没给 accent 上色"
+    assert ".hook .accent{{color:{hook_accent_color}}}" in src, "VS 模板的 CSS 没给 accent 上色"
     assert vp.BRAND == "#c6f65a"
     assert src.count("hook_html(") >= 3, "solo 和 VS 两处钩子都要走 hook_html"
 
