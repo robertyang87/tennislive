@@ -1,0 +1,63 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=12BOGT88OnQ",
+  "source_sha256": "a6488b8ef28119597dff4565df48a6204404f9e2305ac3cb59c06485e6f71d98",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI producer plus independent editorial/visual agents; no human listening claimed",
+  "reviewed_at": "2026-10-02T07:42:41.417842+00:00",
+  "reviewed_from": 209.5,
+  "reviewed_to": 220.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 209.92,
+      "end": 211.36,
+      "en": "Statement hold of serve",
+      "zh": "这一局保发很强势"
+    },
+    {
+      "start": 211.36,
+      "end": 212.74,
+      "en": "to see out the opening set there",
+      "zh": "也由此拿下首盘"
+    },
+    {
+      "start": 212.74,
+      "end": 213.76,
+      "en": "from Dayana Yastremska.",
+      "zh": "亚斯特雷姆斯卡"
+    },
+    {
+      "start": 214.88,
+      "end": 216.76,
+      "en": "Really impressive first set performance.",
+      "zh": "首盘表现令人印象深刻"
+    },
+    {
+      "start": 217.62,
+      "end": 220.08,
+      "en": "A little blip after initially going ahead.",
+      "zh": "开局领先后曾有一点波折"
+    }
+  ],
+  "evidence_runs": [
+    36977376249,
+    36978033285,
+    36979303385
+  ],
+  "asr_evidence": [
+    {
+      "path": "docs/production/chwalinska-owner-20261002/broadcast_asr.json",
+      "sha256": "4fa4b9ad6b142dd39b1d4ad0e24308a5c5f1a3bf20af5ee822723778facebf92"
+    },
+    {
+      "path": "docs/production/chwalinska-owner-20261002/broadcast_asr_independent.json",
+      "sha256": "bce672dd908dfbbd80bfdb59d38f646f9a3f472331f8e9b5862ae24934472524"
+    },
+    {
+      "path": "docs/production/chwalinska-owner-20261002/volley_asr_crosscheck.json",
+      "sha256": "4d47de24b89c808d02c192b89374addedef262184b3120e7d6915fc9bb7ea88a"
+    }
+  ],
+  "_review_notes": "完整选用窗口已与medium.en全片、small.en独立无提示全片逐项交叉；63秒争议开头以small.en与medium.en无提示局部窗共同确认That's a good volley，仅把姓名近音替换为本场官方名字。原声译文由OpenAI亲写，未调用DeepSeek或MiniMax。"
+}
