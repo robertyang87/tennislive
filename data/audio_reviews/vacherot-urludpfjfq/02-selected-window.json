@@ -1,0 +1,116 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=uRLUdPfjF_Q",
+  "source_sha256": "caee5ca1805ad8f56a86ab55258cbde18a20d539ce2e3edf8e7a9c33306b4f6d",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex OpenAI; source-caption transcript cross-checked against independently decoded faster-whisper small.en, medium.en, large-v3 and local word alignments",
+  "reviewed_at": "2026-10-02T07:41:40.906698+00:00",
+  "reviewed_from": 21.64,
+  "reviewed_to": 25.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 21.64,
+      "end": 24.65,
+      "en": "And the block return works wonders.",
+      "zh": "这记挡回的接发效果真好。"
+    }
+  ],
+  "source_path_at_review": "/workspace/scratch/uRLUdPfjF_Q.mp4",
+  "review_scope": "Full selected-window ASR cross-check with retained source captions and full-source independent model outputs. Audio attachment cannot be listened to in this runtime; no listened_with_transcript claim. Complete denotes selected-window evidence resolved under asr_cross_checked, not perfect human verbatim listening.",
+  "provenance": [
+    {
+      "path": "data/audio_reviews/vacherot-urludpfjfq/provenance/source-captions.txt",
+      "sha256": "2031cc85e8fff1ca82ce2561f24fa2ece69a1b2ba0416af1a7f10fb356a7888f"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-urludpfjfq/provenance/whisper-large-v3-refine.json",
+      "sha256": "0c28e6853f48c41b74dc0863875a99046d68c71df639dbf784abcd4854df9b4f"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-urludpfjfq/provenance/whisper-large-v3-spots.json",
+      "sha256": "970955c80e7768057f003784b55f0bc822b6628b6c7cc2b0a8c1b4736ce6451b"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-urludpfjfq/provenance/whisper-medium-en.json",
+      "sha256": "ed5fec8c124ea98c1ca216a18d0f89836734f997482e43fe5cbdca4c55f806ba"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-urludpfjfq/provenance/whisper-medium-local.json",
+      "sha256": "13ac5febe2efb3c4753a56aaa9d7f364491c8232857c22187c05c332dd7b6829"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-urludpfjfq/provenance/whisper-medium-spots.json",
+      "sha256": "7c20769e1fbdd3e85e08e35aedb0e5e1dee839797aaab9bda382fafc0ae59bc3"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-urludpfjfq/provenance/whisper-small-en.json",
+      "sha256": "3b6ffce891b530e6b66c93fe0bc8b385d36a7d09686a72c542e1fc2dcba56b50"
+    }
+  ],
+  "resolution_log": [
+    {
+      "span": [
+        0,
+        0.75
+      ],
+      "decision": "Unfinished opening Bad omitted together with complete first source point0–13.26."
+    },
+    {
+      "span": [
+        40.5,
+        45.7
+      ],
+      "decision": "Oh/Good interjection disputed; complete25–47.04 source block omitted, no chosen cue pretends resolved."
+    },
+    {
+      "span": [
+        120,
+        124.88
+      ],
+      "decision": "Interrupted highlight commentary omitted with complete111.04–124.88 prior source block."
+    },
+    {
+      "span": [
+        124.26,
+        124.72
+      ],
+      "decision": "small.en and large-v3 agree last cannot ends124.70/124.72; medium wrongly aligns into125.14/125.32 with zero-duration He/just. Use independent agreeing word endpoints; next source point begins124.88."
+    },
+    {
+      "span": [
+        162.24,
+        165.6
+      ],
+      "decision": "medium local and large-v3 local independently identify That's Vacherot launching himself around the court; choose these agreeing local decodes over coarse caption Now it's and other model It's. Correct player spelling using official match identity. Variance remains in retained raw ASR, no claim of perfect verbatim human listening."
+    },
+    {
+      "span": [
+        62,
+        62.7
+      ],
+      "decision": "Isolated small.en I not repeated by source captions or full medium; reject as noncorroborated crowd/play ASR artefact."
+    },
+    {
+      "span": [
+        156.8,
+        157.6
+      ],
+      "decision": "Isolated small.en Oh not repeated by source captions/full medium nor commentary context; reject as noncorroborated nonforeground ASR artefact."
+    },
+    {
+      "span": [
+        176.02,
+        179.35
+      ],
+      "decision": "Multiple independent model passes say It's a big turnaround, choosing this over coarse source-caption That's."
+    },
+    {
+      "span": [
+        197.44,
+        205.05
+      ],
+      "decision": "Models hallucinate thank-you words over TennisTV logo audio; outside every chosen source window."
+    }
+  ]
+}

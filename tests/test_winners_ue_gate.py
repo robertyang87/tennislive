@@ -328,3 +328,71 @@ def test_match_reel_cannot_evade_required_stats_by_omitting_entire_card():
 @pytest.mark.parametrize('value', [[], {'cover': []}, {'cover': None}])
 def test_malformed_spec_fails_with_a_useful_gate_message(value):
     assert '必须是对象' in G.problem(value)
+
+
+def approved_omission(slug):
+    approved = deepcopy(G.APPROVED_WUE_OMISSIONS[slug])
+    identity = G._APPROVED_MATCH_IDENTITIES[slug]
+    return {
+        'slug': slug,
+        'cover': {'eyebrow': '赛场之上', 'winner': identity['winner'],
+                  'result': identity['result'], 'matchup': [
+                      {'name': name, 'name_en': english}
+                      for name, english in identity['matchup']]},
+        '_match': {'status': 'result_verified', 'date': approved['match_date'],
+                   'source': identity['source'], 'source_id': identity['source_id'],
+                   'winner': identity['winner'], 'loser': identity['loser'],
+                   'participants': deepcopy(identity['participants']),
+                   'set_scores_home_away': deepcopy(identity['sets']),
+                   'winner_result': identity['result']},
+        'stats': {'a': {}, 'b': {}, '_winners_ue_omission': approved},
+    }
+
+
+def test_vacherot_owner_approved_omission_requires_exact_match():
+    s = approved_omission('vacherot-urludpfjfq')
+    assert G.problem(s) is None
+    for section, field, value in [
+        (None, 'slug', 'unapproved-vacherot'),
+        ('_match', 'date', '2026-10-03'),
+        ('_match', 'source', 'official_atp'),
+        ('_match', 'source_id', 'other-match'),
+        ('_match', 'winner_result', '6-4 6-4'),
+        ('cover', 'result', '6-4 6-4'),
+    ]:
+        bad = deepcopy(s)
+        (bad if section is None else bad[section])[field] = value
+        assert G.problem(bad)
+    bad = deepcopy(s)
+    bad['cover']['matchup'].reverse()
+    assert G.problem(bad)
+
+
+@pytest.mark.parametrize('side', ['a', 'b'])
+@pytest.mark.parametrize('field', ['winners', 'ue'])
+def test_approved_omission_cannot_display_unknown_as_zero(side, field):
+    s = approved_omission('vacherot-urludpfjfq')
+    s['stats'][side][field] = 0
+    assert G.problem(s)
+
+
+def test_original_five_exact_omission_authorizations_remain_unchanged():
+    originals = {
+        'zheng-shi-beijing-2026-r1': ('1020_2026_LS070', '7-6(6) 4-6 6-2',
+                                    'owner-approved-single-film-omission-2026-10-01'),
+        'nishikori-tiafoe-tokyo-2026-r1': ('j3oaqNc6', '6-4 6-4',
+                                         'owner-approved-remaining-four-film-omissions-2026-10-01'),
+        'shang-baez-beijing-2026-r1': ('0bIo5sEk', '5-7 6-3 7-5',
+                                      'owner-approved-remaining-four-film-omissions-2026-10-01'),
+        'zverev-norrie-beijing-2026-r1': ('0I8uROz9', '7-6(1) 6-4',
+                                        'owner-approved-remaining-four-film-omissions-2026-10-01'),
+        'sun-lys-beijing-2026-r1': ('1020_2026_LS082', '6-1 3-0 Ret.',
+                                   'owner-approved-remaining-four-film-omissions-2026-10-01'),
+    }
+    for slug, (source_id, result, authorization) in originals.items():
+        entry = G.APPROVED_WUE_OMISSIONS[slug]
+        assert entry == {'slug': slug, 'source_id': source_id, 'match_date': '2026-10-01',
+                         'winner_result': result, 'fields': ['winners', 'ue'],
+                         'decision': 'omit_both_rows_for_this_film_only',
+                         'authorization': authorization}
+        assert G.problem(approved_omission(slug)) is None

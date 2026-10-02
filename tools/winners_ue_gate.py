@@ -16,8 +16,8 @@ FIELDS = ("winners", "ue")
 SOURCE_CLASSES = frozenset({"official_stats", "editorial", "broadcast", "tnns", "mcp"})
 SOURCE_METHODS = frozenset({"api", "page", "broadcast", "user_screenshot"})
 
-# The original Zheng decision is preserved. Four additional named films were
-# approved on 2026-10-01; every other production retains the complete W/UE gate.
+# Each omission is authorized for one exact film and match identity.
+# Every other production retains the complete W/UE gate.
 ZHENG_SHI_OMISSION = {
     "slug": "zheng-shi-beijing-2026-r1",
     "source_id": "1020_2026_LS070",
@@ -34,14 +34,37 @@ APPROVED_WUE_OMISSIONS = {'zheng-shi-beijing-2026-r1': {'slug': 'zheng-shi-beiji
 _APPROVED_MATCH_IDENTITIES = {'zheng-shi-beijing-2026-r1': {'source': 'official_wta', 'source_id': '1020_2026_LS070', 'winner': '郑钦文', 'loser': '施晗', 'participants': ['郑钦文', '施晗'], 'sets': [[7, 6], [4, 6], [6, 2]], 'result': '7-6(6) 4-6 6-2', 'matchup': [['郑钦文', 'Qinwen Zheng'], ['施晗', 'Han Shi']]}, 'nishikori-tiafoe-tokyo-2026-r1': {'source': 'flashscore_points', 'source_id': 'j3oaqNc6', 'winner': '蒂亚福', 'loser': '锦织圭', 'participants': ['锦织圭', '蒂亚福'], 'sets': [[4, 6], [4, 6]], 'result': '6-4 6-4', 'matchup': [['蒂亚福', 'Frances Tiafoe'], ['锦织圭', 'Kei Nishikori']]}, 'shang-baez-beijing-2026-r1': {'source': 'flashscore_points', 'source_id': '0bIo5sEk', 'winner': '商竣程', 'loser': '巴埃斯', 'participants': ['商竣程', '巴埃斯'], 'sets': [[5, 7], [6, 3], [7, 5]], 'result': '5-7 6-3 7-5', 'matchup': [['商竣程', 'Juncheng Shang'], ['巴埃斯', 'Sebastian Baez']]}, 'zverev-norrie-beijing-2026-r1': {'source': 'flashscore_points', 'source_id': '0I8uROz9', 'winner': '兹维列夫', 'loser': '诺里', 'participants': ['兹维列夫', '诺里'], 'sets': [[7, 6], [6, 4]], 'result': '7-6(1) 6-4', 'matchup': [['兹维列夫', 'Alexander Zverev'], ['诺里', 'Cameron Norrie']]}, 'sun-lys-beijing-2026-r1': {'source': 'official_wta', 'source_id': '1020_2026_LS082', 'winner': '孙心然', 'loser': '利斯', 'participants': ['利斯', '孙心然'], 'sets': [[1, 6], [0, 3]], 'result': '6-1 3-0 Ret.', 'matchup': [['孙心然', 'Xinran Sun'], ['利斯', 'Eva Lys']]}}
 
 
+# Owner explicitly approved this film's omission on 2026-10-02 after reviewing
+# the missing-data lookup. This does not authorize any other match or slug.
+APPROVED_WUE_OMISSIONS["vacherot-urludpfjfq"] = {
+    "slug": "vacherot-urludpfjfq",
+    "source_id": "Off5k6rC",
+    "match_date": "2026-10-02",
+    "winner_result": "4-6 7-6(5) 6-4",
+    "fields": ["winners", "ue"],
+    "decision": "omit_both_rows_for_this_film_only",
+    "authorization": "owner-approved-single-film-omission-2026-10-02",
+}
+_APPROVED_MATCH_IDENTITIES["vacherot-urludpfjfq"] = {
+    "source": "flashscore_points",
+    "source_id": "Off5k6rC",
+    "winner": "瓦舍罗",
+    "loser": "西西帕斯",
+    "participants": ["瓦舍罗", "西西帕斯"],
+    "sets": [[4, 6], [7, 6], [6, 4]],
+    "result": "4-6 7-6(5) 6-4",
+    "matchup": [["瓦舍罗", "Valentin Vacherot"], ["西西帕斯", "Stefanos Tsitsipas"]],
+}
+
+
 def _omission_problem(spec: dict) -> str | None:
-    """Only these five specific films may omit rows; unknown values stay unknown."""
+    """Only explicitly approved exact matches may omit rows; unknown stays unknown."""
     slug = spec.get("slug")
     approved = APPROVED_WUE_OMISSIONS.get(slug)
     identity = _APPROVED_MATCH_IDENTITIES.get(slug)
     stats = spec["stats"]
     if approved is None or identity is None or stats.get("_winners_ue_omission") != approved:
-        return "Winners/UE 省略仅限已批准的五期精确比赛，批准记录不匹配"
+        return "Winners/UE 省略仅限明确批准的精确比赛，批准记录不匹配"
     match = spec.get("_match") or {}
     cover = spec.get("cover") or {}
     if not isinstance(match, dict) or not isinstance(cover, dict):
