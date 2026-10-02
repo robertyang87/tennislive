@@ -123,7 +123,6 @@
     516,
     984
   ],
-  "scoreboard_profile": "wta_left",
   "subtitle_top": 860,
   "stat_card_full_canvas": true,
   "_production": {
@@ -139,7 +138,7 @@
     "eyebrow": "赛场之上",
     "layout": "solo",
     "subject": "赫瓦林斯卡",
-    "hook": "首盘救下2个盘点\n月亮姐第二轮告负",
+    "hook": "首盘救下2个盘点\n月亮姐仍两盘告负",
     "hook_accent": "2个盘点",
     "topic": "WTA1000 北京 第二轮 · 亚斯特雷姆斯卡 VS 赫瓦林斯卡",
     "winner": "亚斯特雷姆斯卡",
@@ -180,7 +179,7 @@
     "mode": "match_review",
     "hook": [
       "首盘救下2个盘点",
-      "月亮姐第二轮告负"
+      "月亮姐仍两盘告负"
     ],
     "question": "月亮姐救回两个盘点，为什么还是没能扭转比赛？",
     "thesis": "她先追平再救盘点，但发球局持续承压，主动得分明显少于对手，最终两盘告负。",
@@ -516,5 +515,23 @@
       "end": 275.55,
       "reason": "原生259秒发球，264/270秒底线相持，到275.50秒停止击球、球童入场完整结束。"
     }
-  }
+  },
+  "_subtitle_top_why": "本片保留 subtitle_top=860 的既有上锚，不修改全局默认。原生渲染 36982776082 的 subtitles.ass 中 TL MarginV=860，并由 2026-10-02T08:19:16Z 的通过凭证绑定。归档 docs/production/chwalinska-owner-20261002/final-independent-review.json 记录在成片 2.2、59、95、110、145、174、179 秒抽帧复核，双语字幕完整可读、未与比分条重叠；最终 160、162、174 秒复核确认最后一分和握手字幕可读。这里补记既有复核依据，不声称重新测量像素；修改 spec 字节后须走原生重核对或重渲重新绑定凭证，不能沿用旧 spec 哈希。",
+  "_hit_data": [
+    {
+      "label": "全场制胜分与非受迫失误对照",
+      "detail": "亚斯特雷姆斯卡制胜分47、非受迫失误24；赫瓦林斯卡制胜分6、非受迫失误11。",
+      "source": "TNNS Match 75051478，2026-10-02T06:55:25Z 已归档真实查询；两盘分别相加与全场一致。",
+      "source_url": "https://tnnslive.com/match/75051478",
+      "source_path": "docs/production/chwalinska-owner-20261002/tnns-stats.txt",
+      "source_fields": [
+        "stats.a.winners",
+        "stats.a.ue",
+        "stats.b.winners",
+        "stats.b.ue"
+      ],
+      "source_spec_sha256": "dceb3dce656c0daf1d5f5bdee041d002f3e64b78f6719d5f8222b84c245fc36b",
+      "use": "body_only"
+    }
+  ]
 }
