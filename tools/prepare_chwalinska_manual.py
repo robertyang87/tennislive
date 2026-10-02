@@ -42,3 +42,5 @@ report['evidence_sha256']=evidence_hash(frames,a.outdir/'portrait_036.80.jpg')
 (a.outdir/'manual_visual_evidence.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print('VISUAL PROBLEMS',problems)
 
+
+# Re-run with tolerant JSON string decoding; content gates remain unchanged.
