@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "reviewer": "china_video independent visual reviewer",
+  "reviewed_at": "2026-10-02T06:55:41.249289+00:00",
+  "artifact_role": "final_cloud_release",
+  "cloud_run_id": 36975069014,
+  "status": "PASS",
+  "passed": true,
+  "film": {
+    "path": "/workspace/eala-research/cloud-verified/wang-xiyu-eala-asian-games-2026-sf.mp4",
+    "sha256": "4e192df16ba7c2fa8cf55de51ecc1986b11e895a4404a515352b7a94a1bdffa1",
+    "bytes": 26337363,
+    "duration_seconds": 105.233333,
+    "dimensions": [
+      1080,
+      1440
+    ]
+  },
+  "method": "Fresh ffmpeg extraction from the exact downloaded cloud movie. Each listed JPEG was directly opened and inspected with view_image. Neither earlier native-release frames nor simulated frames substitute for this cloud artifact.",
+  "scope": "Focused selected-frame visual QC for source marks, action framing, face/racket visibility, caption clearance and chapter-card/cover readability. This report does not certify continuous playback, all intermediate frames, or audio.",
+  "frames": [
+    {
+      "film_time_seconds": 0.6,
+      "file": "/workspace/eala-research/china/tactical-review-final-cloud-0.6.jpg",
+      "sha256": "39be02e4d8810af38c840472ca4cc5425ee5aad9352e7e6208fb1b947d15855e",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 31.0,
+      "file": "/workspace/eala-research/china/tactical-review-final-cloud-31.0.jpg",
+      "sha256": "71742f2250220d242d1659e25fd0db2543e4109b0dacbacaa114acba86579d62",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 73.3,
+      "file": "/workspace/eala-research/china/tactical-review-final-cloud-73.3.jpg",
+      "sha256": "588f1a8155f73e2b5ec16b65716d82697a7a3e16889fa1ccff36200d137434c5",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 82.2,
+      "file": "/workspace/eala-research/china/tactical-review-final-cloud-82.2.jpg",
+      "sha256": "2d6d6e0ba71dfaa24a9c024675c54f6c02930693fec84f78e21e509b1ea8e360",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 85.0,
+      "file": "/workspace/eala-research/china/tactical-review-final-cloud-85.0.jpg",
+      "sha256": "3940d711503f6e24cb2c6fceea052d818e7e77da5196f88cb2c30b3b134e8d09",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 85.6,
+      "file": "/workspace/eala-research/china/tactical-review-final-cloud-85.6.jpg",
+      "sha256": "b279b6cd138f5c1b49a5e53a3c53de9d7bcec15545ab56c84e9adb02f5c4fe78",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 88.6,
+      "file": "/workspace/eala-research/china/tactical-review-final-cloud-88.6.jpg",
+      "sha256": "96e533e5af42a62a855f0ec3e6689e11e21baddfecadcdeae45e548e1c8deedb",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 90.3,
+      "file": "/workspace/eala-research/china/tactical-review-final-cloud-90.3.jpg",
+      "sha256": "1394f6d6ee1893bf7d1078ddcf099af681795936f30327d9dd9f71bf2cb26ea4",
+      "directly_viewed": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "Sina complete-source action framing",
+      "status": "PASS",
+      "film_times": [
+        82.2,
+        85.0,
+        85.6
+      ],
+      "finding": "The complete native portrait frame is scaled to approximately 842 by 1122 and centered. Toss hand, face, body and racket action remain visible. The source yellow headline is preserved below and separate from the production header. Subtitles stay below the sharp source frame."
+    },
+    {
+      "name": "Original camera boundary",
+      "status": "PASS_WITH_LIMITATION",
+      "film_times": [
+        85.0
+      ],
+      "finding": "A small left racket edge intersects the native source boundary during backhand follow-through (source approximately 4.5 seconds). This is intrinsic source-camera framing, not an added output crop. Do not claim that every millimeter of the racket remains in the original camera frame."
+    },
+    {
+      "name": "Sina celebration face and fist",
+      "status": "PASS",
+      "film_times": [
+        88.6
+      ],
+      "finding": "The celebration closeup preserves face, cap and raised fist. Header and subtitles do not obscure the face or fist. The original headline is outside this natural closeup crop; source attribution remains recorded."
+    },
+    {
+      "name": "Bili court frame and watermark",
+      "status": "PASS",
+      "film_times": [
+        31.0
+      ],
+      "finding": "The horizontal court image remains in a sharp full-width center band. The original zgzoyj/bilibili upper-left watermark is visible. Court action has no overlay subtitle. Near player at left and far player near the upper boundary reflect the original camera frame, not output-added clipping."
+    },
+    {
+      "name": "Chapter card at 73.3 seconds",
+      "status": "PASS",
+      "film_times": [
+        73.3
+      ],
+      "finding": "最后一局 四分锁定胜利 appears as a clean centered single line. Bottom subtitle 决胜盘 4个破发点 她兑现了3个 and the brand footer remain separated and readable."
+    },
+    {
+      "name": "Chapter card at 90.3 seconds",
+      "status": "PASS",
+      "film_times": [
+        90.3
+      ],
+      "finding": "会师决赛 中国锁定金银 is centered and wholly within frame on one line. Bottom subtitle 这场胜利 and brand footer are clear, without clipping or overlap."
+    },
+    {
+      "name": "Cover poster",
+      "status": "PASS",
+      "film_times": [
+        0.6
+      ],
+      "finding": "Face, cap and raised fist are intact. The event header, 首盘0比5落后 / 王曦雨逆转进决赛 hook, names, and 3-6/6-3/6-2 scoreboard are readable. The cover graphic deliberately overlaps the torso rather than obscuring face or fist."
+    }
+  ],
+  "blocking_issues": [],
+  "release_authority": "This cloud artifact and its exact SHA are the release evidence. final-visual-qc.json for the local native movie remains process evidence only.",
+  "conclusion": "PASS: the cloud movie retains whole-source technical framing with original yellow headline separated from the production header; sampled source marks, faces, action and final chapter cards are readable."
+}

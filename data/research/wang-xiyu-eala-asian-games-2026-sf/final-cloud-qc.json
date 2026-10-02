@@ -1,0 +1,143 @@
+{
+  "schema": "tennislive.final-cloud-qc.v1",
+  "status": "pass",
+  "checked_at": "2026-10-02T06:54:49.544673+00:00",
+  "slug": "wang-xiyu-eala-asian-games-2026-sf",
+  "run_id": "36975069014",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wang-xiyu-eala-asian-games-2026-sf/wang-xiyu-eala-asian-games-2026-sf.mp4",
+  "film_sha256": "4e192df16ba7c2fa8cf55de51ecc1986b11e895a4404a515352b7a94a1bdffa1",
+  "film_bytes": 26337363,
+  "spec_sha256": "904ec76df2ec3d4f3533ccb0419e10a4ebe1cdb163b07fae935c9757dcc93f72",
+  "cloud_qc_attestation_sha256": "d9b4cec6aee71018f5a8f17e3786f0f78d1269aac919edc5169dcf71f407f7a0",
+  "cloud_render_inputs_sha256": "dd2e2c1649f9b0c10f7e813512da785e3bd9f4b3908ff6b401ffbf93f72522f6",
+  "cloud_metadata_modified": false,
+  "binding_checks": {
+    "film_expected_release": true,
+    "bytes_expected_release": true,
+    "film_render": true,
+    "film_inputs": true,
+    "film_cloud_qc": true,
+    "spec_cloud_qc": true,
+    "spec_inputs": true,
+    "ass_cloud_qc": true,
+    "inputs_render": true,
+    "inputs_cloud_qc": true,
+    "original_cloud_attestation_preserved": true,
+    "audio_plan": true,
+    "audio_review": true,
+    "sina_verified_original_sha_matches_cloud_audio": true,
+    "bili_verified_original_sha_matches_cloud_audio": true,
+    "artifact_audio_review_binding.json": true,
+    "artifact_subtitles.ass": true,
+    "artifact_topbar.ass": true,
+    "artifact_poster.jpg": true,
+    "artifact_stat_card.jpg": true,
+    "asset_assets/players/headshots/wta-eala-asiad.jpg": true,
+    "asset_assets/players/headshots/wta-wang-xiyu-asiad.jpg": true,
+    "asset_assets/reel/wang-xiyu-eala-asian-games-2026-sf.jpg": true,
+    "native_l2": true,
+    "full_decode_frames": true,
+    "no_black_frames": true,
+    "no_decoder_errors": true,
+    "av_duration_delta": true
+  },
+  "native_l2": {
+    "status": "pass",
+    "failure_count": 0,
+    "method": "Original CLI executed against same MP4 inode in isolated cloud-recheck, with copied metadata; original downloaded cloud attestation and render.json remain unchanged.",
+    "log_sha256": "8c207026857c287a73bb204e8cdaaeb67afa52ce5227e0188917b66d3680f257"
+  },
+  "decode": {
+    "status": "pass",
+    "decoded_frames": 3157,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": "30/1",
+    "video_seconds": 105.233333,
+    "audio_seconds": 105.216,
+    "av_delta_seconds": 0.017333,
+    "mean_volume_db": -25.8,
+    "peak_volume_db": -3.3,
+    "black_frames_detected": false,
+    "log_sha256": "b2eca0ce1aaae76f00fcdc740a84d2ab060ee2de3946faf66210e7776be02864"
+  },
+  "visual": {
+    "status": "pass",
+    "method": "Actual frames extracted from the downloaded cloud Release MP4 and visually inspected.",
+    "frame_seconds": [
+      0.6,
+      1.7,
+      23.4,
+      56.0,
+      73.3,
+      82.2,
+      85.6,
+      88.6,
+      90.3,
+      103.5
+    ],
+    "findings": [
+      "Sina source yellow headline is fully retained and clearly below native topbar; no overlap at serve and backhand frames.",
+      "Full source scale 0.78 retains tossing hand, racket, body and feet.",
+      "Bilibili source watermark remains visible; no attribution erased.",
+      "Wang Xiyu and Alexandra Eala identity, final score and seven official statistic rows match source-backed spec.",
+      "Winners/UE rows remain absent under exact owner-approved omission; no unknown values rendered as zero.",
+      "Changed chapter cards have no orphan characters or broken words.",
+      "Readable subtitles, correct cover and native brand outro."
+    ],
+    "frame_sha256": {
+      "0.6.jpg": "39be02e4d8810af38c840472ca4cc5425ee5aad9352e7e6208fb1b947d15855e",
+      "1.7.jpg": "1bd92a442496706360619fe1c1077c8ccb27afddec58843759cd63815059f8b8",
+      "103.5.jpg": "486937862c5ac2c341f35ab97dba3e4928d80df4ee323dcea01b9ea37e39db17",
+      "23.4.jpg": "eceed7cd9fe5c0ad16d5c1bf3bf2f02713d41fe30574990cf95a5c1452e53f7c",
+      "56.0.jpg": "38396e2fb06d621278f5a015304bc8e6ef91117abffeb11efaa91ecb93f8b1d0",
+      "73.3.jpg": "588f1a8155f73e2b5ec16b65716d82697a7a3e16889fa1ccff36200d137434c5",
+      "82.2.jpg": "2d6d6e0ba71dfaa24a9c024675c54f6c02930693fec84f78e21e509b1ea8e360",
+      "85.6.jpg": "b279b6cd138f5c1b49a5e53a3c53de9d7bcec15545ab56c84e9adb02f5c4fe78",
+      "88.6.jpg": "96e533e5af42a62a855f0ec3e6689e11e21baddfecadcdeae45e548e1c8deedb",
+      "90.3.jpg": "1394f6d6ee1893bf7d1078ddcf099af681795936f30327d9dd9f71bf2cb26ea4"
+    }
+  },
+  "audio_review_method": "asr_cross_checked plus signal scanning; no direct-listening claim",
+  "limitations": [
+    "No direct audio input available for this agent; does not claim listened or guarantee absence of original source music.",
+    "Final-point source is one-sided: opponent and final landing are off camera; no unsupported statement about shot landing."
+  ],
+  "scope": "Initial review certifies the actual cloud film and original cloud spec. Appended local reattest_review certifies binding to the annotation-only current spec; original cloud run 36975069014 did not execute this later spec.",
+  "original_cloud_review_scope": "Original fields above describe the original cloud artifact and spec at initial review time; its original metadata bytes are preserved in the attached ZIP. They do not assert the cloud run executed the later annotation-only spec.",
+  "current_binding_status": "pass",
+  "reattest_review": {
+    "status": "pass",
+    "reviewed_at": "2026-10-02T06:59:56.232176+00:00",
+    "method": "Local native tools/reattest_check.py --apply performed by root; this agent independently checks actual local reattestation, unchanged downloaded Release movie and original archived cloud metadata. No re-render and no new cloud run claimed.",
+    "change": "Added segments[0]._head_open_why explanatory annotation: source 7.3 seconds is final-point winning reaction, not match opening. Render projection remains unchanged.",
+    "current_spec_sha256": "baaf1cb1ef902bf70bd5dcf55efece7b55351e7df17d9a872b6a9166a1436bf2",
+    "current_qc_attestation_sha256": "3a9d2a71dc5a2aae0434839679145ac534e06bc8fdefc2c70dcd7e19f32f383f",
+    "current_render_json_sha256": "d8f3d37a19a98611cc994514f7dd90b5756937a531392da495181eddbb7abbf4",
+    "render_inputs_sha256": "dd2e2c1649f9b0c10f7e813512da785e3bd9f4b3908ff6b401ffbf93f72522f6",
+    "film_sha256": "4e192df16ba7c2fa8cf55de51ecc1986b11e895a4404a515352b7a94a1bdffa1",
+    "native_reattest_at": "2026-10-02T06:56:42Z",
+    "reattest_run": "",
+    "checks": {
+      "film_sha_unchanged": true,
+      "bytes_unchanged": true,
+      "current_spec_sha": true,
+      "current_qc_render_binding": true,
+      "render_inputs_byte_identical_to_original_zip": true,
+      "render_inputs_qc_binding": true,
+      "original_cloud_qc_archived": true,
+      "original_cloud_spec_archived": true,
+      "unchanged_render_projection": true,
+      "local_reattest_no_claimed_cloud_run": true
+    },
+    "original_cloud_archive": {
+      "path": "/workspace/attachments/f0610c38-1f0c-4545-9fef-1ecafac7905d/wang-eala-cloud-metadata.zip",
+      "sha256": "296fa2cd6c04d8861148054c803f1a2d57bdf870aa60fbaecaddf3e89a525a25",
+      "original_qc_attestation_sha256": "d9b4cec6aee71018f5a8f17e3786f0f78d1269aac919edc5169dcf71f407f7a0",
+      "original_render_json_sha256": "cd2ac1a5738b04574a5ce6355f9f4bf521f29cc3748583bd1cc522a287276257",
+      "original_render_inputs_sha256": "dd2e2c1649f9b0c10f7e813512da785e3bd9f4b3908ff6b401ffbf93f72522f6"
+    }
+  }
+}
