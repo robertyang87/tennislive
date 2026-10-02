@@ -14,7 +14,7 @@
 
 错误生产asset `assets/reel/yuan-andreeva-beijing-2026-r2-chinaopen-official.jpg`经全部spec引用检查后删除。旧draft移至`discarded/yuan-andreeva-beijing-2026-r2.draft.json`，标明discarded并移除旧portrait生产引用；不再位于`specs/reels/pending/`。历史错误URL仅保留在rejected evidence，严禁复用。
 
-## 当前采用的封面
+## 曾采用的抽帧（已按用户高清要求替换）
 
 `assets/reel/yuan-andreeva-beijing-2026-r2-yuan-frame-132.80.jpg`，WTA本场官方视频原生1920×1080的132.80秒帧，薄荷绿裙袁悦偏正面、双眼睁开。此帧记分条为Y.YUAN 5 Ad、M.ANDREEVA [4] 3、SET POINT #2，提供本场阶段证据；人物需结合脸、源片18–27秒与官方头像核对，不能仅凭绿帽认人。封面裁切需避开记分条，人物脸避开标题带，最终渲染由主agent检查。
 
@@ -23,3 +23,7 @@
 WTA照片接口按袁悦id全48条最新仅9/30首轮；WTA photo-resources、赛后稿头图、AP成功检查后无本场袁悦匹配。中网文章唯一图是对手；WP接口404、中文微信正文403、北京当地报纸未配置属于受阻/未跑，结果未知，不能宣称全网不存在。此次采用抽帧是已检查源没有可用本场实拍的生产fallback。
 
 本文件不声明最终视频已验证、已渲染或已发布；这些状态由主agent最终检查决定。
+
+## 最终高清封面候选
+
+用户10月2日追加要求“封面换高清大图”，故不用抽帧。采用WTA官方2026克卢日站袁悦动作资料照，3280×2183，photo id4443690，Petean Calin Florin/WTA；2月3日为API发布日期，实际拍摄时刻未知。并非本场摄影，正式文案如实说明为本赛季资料照。2026北京第二轮Getty确有袁悦6000×4000照片，但公开预览带水印，没有获取原图。高清检索范围和候选来源分别见hd-cover-search.json及hd-cover-candidates.json。
