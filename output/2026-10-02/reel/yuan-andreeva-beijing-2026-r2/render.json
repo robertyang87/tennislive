@@ -1,0 +1,132 @@
+{
+  "scoreboard_qc_sha256": "c465a99a325db6c7cb87bc8a2010386b60dae99e3fefdad4fcb8b87291c66eed",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 205.11,
+  "topbar": {
+    "line1": "2026 WTA1000 北京 第二轮",
+    "line2": "米拉·安德烈耶娃 3-6 6-0 6-0 袁悦",
+    "start": 1.2,
+    "end": 206.31
+  },
+  "film_seconds": 210.16,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 4.272,
+    "2": 10.512,
+    "4": 4.176,
+    "6": 8.904,
+    "8": 10.512,
+    "10": 10.056,
+    "12": 8.808,
+    "13": 12.264
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 3,
+          "named": "袁悦",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 5,
+          "named": "袁悦",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 7,
+          "named": "袁悦",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 9,
+          "named": "袁悦",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 11,
+          "named": "袁悦",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 14,
+          "named": "袁悦",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 12,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "1c3d995e521599eadc2a97b8c1699659e931eaf6fa892032e75c8e93024db382",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "yuan-andreeva-beijing-2026-r2",
+    "received_at": "2026-10-02T08:06:13Z",
+    "artifact_ready_at": "2026-10-02T08:12:14Z",
+    "elapsed_seconds": 361.294,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "b1f323aae3861ab84a21c33ab123350cd120b754a40a02d9f00cb6a7b9df9f89",
+    "spec_sha256": "4d6c7d33140131eedea3e510e40d7e064c6507ff74e47a225bbbfef9dac073d0",
+    "run_id": "36982137065",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-02T08:08:20Z",
+        "run_id": "36982137065"
+      }
+    ],
+    "render_seconds": 234.294,
+    "pre_render_seconds": 127.0
+  },
+  "film_sha256": "b1f323aae3861ab84a21c33ab123350cd120b754a40a02d9f00cb6a7b9df9f89",
+  "film_bytes": 68716082,
+  "qc_attestation_sha256": "c2aee5d13012036484194191474b6ceaa863e3874608d3e84bd360d8953730bd",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-02T08:08:20Z",
+      "run_id": "36982137065"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-02T08:12:15Z",
+      "run_id": "36982137065"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-yuan-andreeva-beijing-2026-r2/yuan-andreeva-beijing-2026-r2.mp4",
+  "video_bytes": 68716082
+}
