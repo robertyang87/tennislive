@@ -151,11 +151,14 @@ def declared_pause_seconds(spec: dict, film: Path, levels: list, after: int) -> 
  if not enabled(spec):
   return []
  binding=json.loads((film.parent/'audio_review_binding.json').read_text())
- # verify_mix is called first by foreground_audio_gate.verify_final. Keep precise
- # clip windows here: wholly missing TTS never becomes an approved silence.
- rows=binding['narrated_mix']['voices']
- return [i for i,db in enumerate(levels) if i>=after and db<=-60 and not any(
-  float(r['offset'])+.15<i+1 and i<float(r['offset'])+float(r['duration'])-.15 for r in rows)]
+ # MP3 containers include trailing padding and ordinary spoken pauses. A
+ # duration rectangle is not a speech-activity mask (Zverev native run2429).
+ # Require the full real-film proof before accepting *any* measured silence:
+ # exact sealed TTS packet hash, every expected voice audible, and zero bed.
+ # Wholly missing narration therefore remains a hard failure, even when this
+ # helper is called independently of foreground_audio_gate.verify_final.
+ verify_mix(spec,film,binding)
+ return [i for i,db in enumerate(levels) if i>=after and db<=-60]
 
 
 def preload_tts(spec: dict, *, voice: str, rate: str, root: Path | None = None) -> None:
@@ -165,7 +168,7 @@ def preload_tts(spec: dict, *, voice: str, rate: str, root: Path | None = None) 
  root = root or Path(__file__).resolve().parents[1]
  seed_path = root/'data/narrated_tts'/f"{spec['slug']}.json"
  expected_seed = {
-  "nishikori-tiafoe-tokyo-2026-r1":"50477f4df357c035fb7c6678f6fd96798419e94d95cea0a4d0f06470c370d3e5",
+  "nishikori-tiafoe-tokyo-2026-r1":"e5ff9c9d33d7a9ae80d5b133578aad76cd36c290624e2b24157c1b41ca709deb",
   "shang-baez-beijing-2026-r1":"d7f3d92eb17af19875f3df1569f0a71ca4f8f938b84b7cbdf16a7349305a63c5",
   "zverev-norrie-beijing-2026-r1":"e699ee222ecd6e2f89362d5401133e15449b60f4709294143271baa7eacba318",
  }[spec["slug"]]
