@@ -25,6 +25,7 @@ from .common import (
     match_round_display,
     side_display,
 )
+from .copy_title import copy_title
 from .rating import (
     is_tour_focus_match,
     stay_up_stars,
@@ -114,7 +115,7 @@ def split_xhs(xhs_text: str) -> tuple[str, str]:
     之前的老片子，所以**零豁免表**。
     """
     lines = xhs_text.splitlines()
-    title = lines[0].strip() if lines else ""
+    title = copy_title(lines[0]) if lines else copy_title("")
     body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
     body = "\n".join(lines[body_start:]).strip()
     if len(body) > XHS_BODY_MAX:
@@ -161,7 +162,8 @@ def to_copy_page(
       <textarea id="comment" readonly>{safe_comment}</textarea>
     </section>""" if safe_comment else ""
     alt_sections = ""
-    for i, alt in enumerate(t for t in (alt_titles or []) if t and t != title):
+    alternatives = dict.fromkeys(copy_title(t) for t in (alt_titles or []) if t)
+    for i, alt in enumerate(t for t in alternatives if t != title):
         safe_alt = html.escape(alt)
         alt_sections += f"""
     <section>
@@ -215,9 +217,12 @@ def to_push_html(
     d = digest.today
     raw = (xhs_text or "").strip()
     lines = raw.splitlines()
-    title = lines[0].strip() if lines else pick_headline_auto(digest)
-    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
-    body = "\n".join(lines[body_start:]).strip()
+    if lines:
+        title, body = split_xhs(raw)
+    else:
+        from .xiaohongshu import decorate_title  # noqa: PLC0415
+
+        title, body = decorate_title(digest, pick_headline_auto(digest)), ""
     safe_title = html.escape(title)
 
     parts = [
@@ -871,7 +876,7 @@ def to_schedule_push_html(
     """
     raw = (xhs_text or "").strip()
     lines = raw.splitlines()
-    title = lines[0].strip() if lines else ""
+    title = copy_title(lines[0]) if lines else copy_title(f"{day.month}.{day.day}今日赛程")
     body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
     body = "\n".join(lines[body_start:]).strip()
 

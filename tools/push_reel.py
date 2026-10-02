@@ -252,6 +252,20 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     return copy_title(pair)
 
 
+def publication_title(matchup: str = "", score: str = "", summary: str = "") -> str:
+    """Build the final copy/push title for every column.
+
+    Legacy dated headline helpers remain available to intermediate callers;
+    their visual-width and short-summary budgets never authorize final copy.
+    This boundary is shared by check, page and push via prepare_copy.
+    """
+    if summary.strip():
+        return copy_title(summary)
+    pair = matchup.replace(" vs ", f" {score} ") if score and " vs " in matchup \
+        else (f"{matchup} {score}".strip() if score else matchup)
+    return copy_title(pair)
+
+
 def _legacy_headline(outdir: Path, column: str, matchup: str, score: str = "",
                      event: str = "", summary: str = "", date: str = "") -> str:
     """`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`。
@@ -842,8 +856,9 @@ def prepare_copy(copy_path: Path, outdir: Path, *, column: str = "", date: str =
     # 工作流那几个输入曾经挂着上一条片子的默认值，漏传一项就拿另一场球的
     # 标题发出去。
     meta = resolve_meta(Path(copy_path), args if args is not None else argparse.Namespace())
-    title = headline(outdir, column, meta["matchup"], meta["score"],
-                     meta["event"], meta["summary"], date)
+    if date and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+        raise SystemExit(f"--date 要写成 YYYY-MM-DD，收到 {date!r}")
+    title = publication_title(meta["matchup"], meta["score"], meta["summary"])
     copy_text = copy_body_only(copy_text, title)
     if not copy_text:
         raise SystemExit("正文去掉标题后为空")

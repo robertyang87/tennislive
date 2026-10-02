@@ -94,12 +94,9 @@ def test_xhs_post(sample_digest):
 
     post = to_post(sample_digest)
     title = post_title(sample_digest)
-    # V1 §3.1：发布标题与封面主钩子同源（头条候选 ①）+ 日期与 emoji
-    d = sample_digest.today
-    assert f"{d.month}.{d.day}今日球局｜" in title
-    hook = title.split("｜", 1)[1]
-    assert hook and "…" not in hook
-    assert xhs_title_len(title) <= 20  # 平台口径：半角记 0.5
+    assert title and "…" not in title
+    assert not any(c.isspace() for c in title)
+    assert len(title) <= 20  # 数字和标点也各算一个字符
     assert "#网球" in post
     body = post.split("\n", 2)[2]
     assert len(body) <= 520
@@ -387,7 +384,7 @@ def test_push_copy_page_and_button(sample_digest):
     )
 
     assert "复制标题" in page and "复制正文" in page
-    assert "测试标题 &lt;1&gt;" in page
+    assert "测试标题&lt;1&gt;" in page
     assert "正文第一行" in page
     # V1 §3.1：备选标题可复制；与主标题重复或为空的候选不重复展示
     assert "备选标题 2" in page and "备选钩子一" in page
@@ -396,7 +393,7 @@ def test_push_copy_page_and_button(sample_digest):
     assert "copy.html" in push_html
     assert "robertyang87.github.io/tennislive" in push_html
     assert "分别复制标题 / 正文 / 置顶评论" in push_html
-    assert "测试标题 &lt;1&gt;" in push_html
+    assert "测试标题&lt;1&gt;" in push_html
     assert "正文第一行" in push_html
     assert push_html.index("card_00_cover.png") < push_html.index("正文第一行")
 
@@ -1341,17 +1338,17 @@ def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):
 
 
 def test_decorated_title_date_emoji_and_budget():
-    """发布标题带日期与内容匹配的 emoji，且不超过小红书 20 字预算."""
+    """发布标题只保留钩子，每个数字标点按一个字符计数。"""
     from tennislive.render.xiaohongshu import decorate_title, xhs_title_len
 
     digest = Digest(today=date(2026, 7, 20))
     champion = decorate_title(digest, "时隔16个月，西西帕斯再夺冠")
-    assert champion == "🏆7.20｜时隔16个月，西西帕斯再夺冠"
+    assert champion == "时隔16个月西西帕斯再夺冠"
     assert xhs_title_len(champion) <= 20
 
-    assert decorate_title(digest, "爆冷：黑马掀翻头号种子").startswith("💥")
-    assert decorate_title(digest, "袁悦今日出战").startswith("🔥")
-    assert decorate_title(digest, "每日赛程赛果速览").startswith("🎾")
+    assert decorate_title(digest, "爆冷：黑马掀翻头号种子") == "爆冷：黑马掀翻头号种子"
+    assert decorate_title(digest, "袁悦今日出战") == "袁悦今日出战"
+    assert decorate_title(digest, "每日赛程赛果速览") == "每日赛程赛果速览"
 
     # 超预算的钩子改写成完整短句，不发布半句话或省略号。
     long_hook = "这是一个非常非常长的钩子标题肯定放不下二十个字"
@@ -1611,8 +1608,9 @@ def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
 
     assert all(xhs_title_len(title) <= 20 for title in titles.values())
     assert "很多人会答错" not in "\n".join(titles.values())
-    assert "网球有故事｜误判催生网球鹰眼" in titles["hawkeye"]
-    assert "的来路" in titles["alcaraz"]
+    assert titles["hawkeye"] == "误判催生网球鹰眼"
+    assert "阿尔卡拉斯" in titles["alcaraz"]
+    assert all(len(t) <= 20 and not any(c.isspace() for c in t) for t in titles.values())
 
 
 

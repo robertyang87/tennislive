@@ -102,7 +102,7 @@ def test_publish_qa_warns_but_does_not_block_an_untranslated_top_500_player(monk
     assert any("前500球员中文名待异步补充" in item for item in warn)
 
 
-def test_xhs_daily_title_requires_current_date_and_platform_length():
+def test_xhs_daily_title_requires_character_limit_but_not_date():
     digest = _digest()
 
     missing_date, _ = check_xhs_post(
@@ -113,11 +113,11 @@ def test_xhs_daily_title_requires_current_date_and_platform_length():
         _post(_spacious_body(), title="🎾7.20｜这是一个明显超过平台预算的超长标题需要阻断"),
     )
 
-    assert any("缺少当日日期" in item for item in missing_date)
+    assert not any("标题" in item for item in missing_date)
     assert any("标题超长" in item for item in too_long)
 
 
-def test_xhs_flash_requires_date_but_is_exempt_from_daily_body_target():
+def test_xhs_flash_title_needs_no_date_and_is_exempt_from_daily_body_target():
     match = make_match(
         status=MatchStatus.SCHEDULED,
         winner=None,
@@ -137,7 +137,7 @@ def test_xhs_flash_requires_date_but_is_exempt_from_daily_body_target():
 
     assert not any("正文过短" in item for item in fatal)
     assert not any("正文低于" in item for item in warn)
-    assert any("缺少当日日期" in item for item in no_date)
+    assert not any("标题" in item for item in no_date)
 
 
 def test_xhs_one_match_daily_post_still_uses_daily_body_gate():

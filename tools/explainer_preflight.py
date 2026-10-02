@@ -254,22 +254,17 @@ def copy_body_problems(deck: Deck) -> list[str]:
 
 
 def copy_title_problems(deck: Deck) -> list[str]:
-    """标题是「日期 栏目｜选题」，小红书超 20 字位就截断（全角 1、半角 0.5）。"""
-    from tennislive.render.xiaohongshu import xhs_title_len  # noqa: PLC0415
+    """The final copy title has no whitespace and at most 20 characters."""
+    from tennislive.render.copy_title import copy_title, validate_copy_title  # noqa: PLC0415
 
-    head = deck.xhs.splitlines()[0]
-    column = E.explainer_column(deck.slug)
+    head = deck.xhs.splitlines()[0] if deck.xhs.splitlines() else ""
     problems = []
-    if not head.startswith(f"🎾{deck.date_label} {column}｜"):
-        problems.append(f"{deck.slug} 标题格式不对：{head}")
-    if deck.story.title not in head:
-        problems.append(f"{deck.slug} 标题里没有选题「{deck.story.title}」：{head}")
-    width, limit = xhs_title_len(head), TITLE_TOO_WIDE.get(deck.slug, 20)
-    if width > limit:
-        problems.append(
-            f"{deck.slug} 标题 {width:g} 字位，超小红书上限 "
-            + (f"20（存量豁免只许降不许升，登记的是 {limit:g}）" if limit != 20 else "20")
-            + f"：{head}")
+    try:
+        validate_copy_title(head)
+        if copy_title(deck.story.title) != head:
+            problems.append(f"{deck.slug} 标题与选题不符：{head}")
+    except SystemExit as exc:
+        problems.append(f"{deck.slug}：{exc}")
     return problems
 
 

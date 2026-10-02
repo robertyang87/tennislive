@@ -107,7 +107,7 @@ _BREAKERS = {
     "小红书正文 1000 字": lambda d, m: dataclasses.replace(
         d, xhs=d.xhs.split("\n", 1)[0] + "\n\n" + "字" * 1001),
     "标题字位": lambda d, m: dataclasses.replace(
-        d, xhs=d.xhs.replace(f"｜{d.story.title}", f"｜{d.story.title}再加上一长串标题", 1)),
+        d, xhs="1" * 21 + "\n" + d.xhs.split("\n", 1)[1]),
     "标签": lambda d, m: dataclasses.replace(
         d, xhs=d.xhs.rsplit("\n\n", 1)[0] + "\n\n#网球时差 #网球"),
     "封面首句窗口": lambda d, m: _beat(

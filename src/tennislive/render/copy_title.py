@@ -10,6 +10,19 @@ import re
 import unicodedata
 
 COPY_TITLE_MAX = 20
+# Old source captions may still include these notification-only wrappers. Keep
+# archives intact, but do not copy the wrapper into a new publishing field.
+_LEGACY_PREFIX = re.compile(
+    r"^(?:[🎾🏆💥🔥📅]\s*)?\d{1,2}[./]\d{1,2}\s*"
+    r"(?:赛场之上|赛后开麦|网球有故事|昨日好球|历史上的今天|今日球局|今日赛程|开球之前)?"
+    r"\s*[|｜丨]\s*")
+
+
+def strip_title_decoration(title: str) -> str:
+    if _LEGACY_PREFIX.match(title):
+        # Remove only the recognized wrapper; retain every content clause.
+        return _LEGACY_PREFIX.sub("", title, count=1)
+    return title
 
 
 def _space(char: str) -> bool:
@@ -23,6 +36,9 @@ def compact_copy_title(title: str) -> str:
     not become different numbers. Question marks, quotes and name punctuation
     remain; editorial wording may reduce them further without losing meaning.
     """
+    title = "".join(" " if _space(char) else char for char in title).strip()
+    title = strip_title_decoration(title)
+    title = re.sub(r"(?<=\d)\s+(?=\d+[-:])", "，", title)
     title = "".join(char for char in title if not _space(char))
     title = re.sub(r"(?<!\d)[，,；;、]|[，,；;、](?!\d)", "", title)
     title = re.sub(r"[|｜丨]+", "", title)

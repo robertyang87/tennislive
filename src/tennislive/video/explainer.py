@@ -14397,6 +14397,8 @@ def explainer_xiaohongshu(
     account reads the same voice whichever format they land on. Every line
     comes from the beats themselves; nothing is invented for the caption.
     """
+    from ..render.copy_title import copy_title  # noqa: PLC0415
+
     closer = segments[-1]
     column = explainer_column(story.slug)
     question = closer.question or "你怎么看？"
@@ -14417,7 +14419,7 @@ def explainer_xiaohongshu(
     hook = caption.get("hook") or ""
     tags = " ".join(f"#{tag}" for tag in caption.get("tags") or _DEFAULT_TAGS)
     return with_campaign_tags(
-        f"🎾{date_label} {column}｜{story.title}\n\n"
+        f"{copy_title(story.title)}\n\n"
         + (f"{hook}\n\n" if hook else "")
         + "\n\n".join(sections)
         + "\n\n💬 留个答案\n"

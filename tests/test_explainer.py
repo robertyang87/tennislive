@@ -2718,7 +2718,7 @@ def test_复制页可达但内容是旧版时也要摘掉按钮():
     old_page = to_copy_page("7.29 今日赛程 | 郑钦文凌晨1点战伊埃拉\n\n正文甲")
     new_page = to_copy_page("7.29 今日赛程 | 王欣瑜战萨姆索诺娃\n\n正文乙")
     live_old, live_new = _Resp(old_page), _Resp(new_page)
-    fresh = "7.29 今日赛程 | 王欣瑜战萨姆索诺娃"
+    fresh = "王欣瑜战萨姆索诺娃"
 
     with mock.patch.object(requests, "get", return_value=live_old):
         assert not _probe_page("http://x/copy.html", attempts=1, expect=fresh), (
@@ -4764,4 +4764,3 @@ def test_塞伦多洛全名不误报而同句错姓氏仍报错():
     hits = scan(full + "，" + wrong + "。")
     assert ("塞伦多罗", "塞伦多洛") in hits
     assert (wrong, full) in hits
-

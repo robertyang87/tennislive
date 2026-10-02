@@ -19,6 +19,7 @@ from .common import (
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
 from .hashtags import limit_hashtags
+from .copy_title import COPY_TITLE_MAX, compact_copy_title, copy_title
 from .narrative import data_angle as _data_angle
 from .narrative import editor_takeaway, preview_angle
 from .rating import (
@@ -75,7 +76,7 @@ def record_quiz() -> None:
 
 
 def xhs_title_len(text: str) -> float:
-    """小红书标题字数：全角/汉字/emoji 记 1，半角字符记 0.5."""
+    """Legacy visual-width helper; publishing uses copy_title and len, never this."""
     return sum(0.5 if ord(c) < 128 else 1 for c in text)
 
 
@@ -91,16 +92,8 @@ def _title_emoji(hook: str) -> str:
 
 
 def decorate_title(digest: Digest, hook: str, *, category: str = "") -> str:
-    """发布标题 = emoji + 日期 + 钩子，如 '🏆7.20｜跌至世界第85，西西帕斯终于捧杯'.
-
-    按小红书 20 字预算（半角记 0.5）裁剪钩子，日期与 emoji 不挤占核心信息。
-    """
-    prefix = (
-        f"{_title_emoji(hook)}{digest.today.month}.{digest.today.day}"
-        f"{category}｜"
-    )
-    budget = 20 - xhs_title_len(prefix)
-    return prefix + _compact_title_hook(hook, budget)
+    """Publish the concise hook without automatic date/category decoration."""
+    return copy_title(_compact_title_hook(hook, COPY_TITLE_MAX))
 
 
 def _latin_short_name(value: str) -> str:
@@ -204,7 +197,7 @@ def _compact_title_hook(hook: str, budget: float) -> str:
         ("美国公开赛", "美网"),
     ):
         cleaned = cleaned.replace(long_name, short_name)
-    if xhs_title_len(cleaned) <= budget:
+    if len(compact_copy_title(cleaned)) <= budget:
         return cleaned
 
     candidates: list[str] = []
@@ -244,13 +237,13 @@ def _compact_title_hook(hook: str, budget: float) -> str:
 
     for candidate in candidates:
         candidate = candidate.strip("，。、：|｜")
-        if candidate and xhs_title_len(candidate) <= budget:
+        if candidate and len(compact_copy_title(candidate)) <= budget:
             return candidate
 
     # A generic but complete fallback is preferable to publishing half a name
     # or half a sentence. The deck carries the detailed headline in full.
     for fallback in ("今日焦点已锁定", "昨夜最值回看", "今晚值得一看"):
-        if xhs_title_len(fallback) <= budget:
+        if len(compact_copy_title(fallback)) <= budget:
             return fallback
     return "焦点"
 
