@@ -1111,7 +1111,7 @@ jobs:
         run: bash tools/yt_cookie_check.sh "$URL"
 
       - name: probe — 下载 + 缩略图墙
-        if: github.event.inputs.mode == 'probe'
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.slug != 'yastremska-chwalinska'
         env:
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
@@ -1159,7 +1159,7 @@ jobs:
       # ——对齐是「给 segments 加料」不是硬闸，没料就退回下面 assemble 里 DeepSeek
       # 读字幕那条老路。ATP 场没有 WTA 逐分通路，自然降级（prepare_alignment 出声）。
       - name: probe — 逐分+比分板对齐备料
-        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != '' && github.event.inputs.slug != 'yastremska-chwalinska'
         env:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
@@ -1175,7 +1175,7 @@ jobs:
       # 若上面机械对齐备出了 pbp.json + scoreboard.json，就传进去——assemble 会用
       # 逐分+比分板对齐出 segments（比读字幕准）；没备出就退回读字幕。
       - name: probe — 自动备料写 spec 草稿
-        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != '' && github.event.inputs.slug != 'yastremska-chwalinska'
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}

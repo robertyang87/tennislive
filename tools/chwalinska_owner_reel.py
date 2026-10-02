@@ -5,7 +5,7 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'src'))
 from tennislive.research.brief import Chat
-from draft_spec import draft_editorial, draft_push, arithmetic_claim_problem
+from draft_spec import draft_editorial, draft_push, arithmetic_claim_problem, system_prompt, SCHEMA, normalize_editorial_for_speech
 from assemble_spec import editorial_score_problem
 
 p = argparse.ArgumentParser()
@@ -32,7 +32,19 @@ background = ('主角只写赫瓦林斯卡，昵称月亮姐由用户核准，�
 chat = Chat(provider='deepseek')
 if not chat.ready:
     raise RuntimeError('DeepSeek credential unavailable')
-e = draft_editorial(chat, home='Dayana Yastremska', away='Maja Chwalinska', event='Beijing', year=2026, fixture='本场已结束；只允许结果包内的事实', facts=facts, background=background)
+errors = [
+ '补齐的硬事实：TNNS id75051478、run36975746845经逐盘合计核准：亚斯特雷姆斯卡47制胜分24非受迫失误，赫瓦林斯卡6制胜分11非受迫失误。可用这个反差回答为什么接不住对手进攻。',
+ '首稿错误：交手1比0已经包含本场，不能称第二次碰面；删除这句背景。',
+ '首稿错误：赫瓦林斯卡破发点1/1等于百分之百，不是两成一。',
+ '首稿错误：全场一发得分18/40等于百分之四十五，不是四十六。',
+ '首稿错误：没有第二盘第一局破发、一比零领先、随后连输六局的可核实证据，全部删除。只写本次已证实的第二盘一比六、一发得分率百分之三十九。',
+ '首稿错误：赫瓦林斯卡首盘落后为二比五，不是从她的视角写五比二；首盘二比五时救下两个盘点保住一局到三比五，首盘最终三比六。',
+ '钩子第一行写首盘救下两个盘点这个关键局面，第二行以月亮姐为主语明确告负，每行十字内。',
+ '结尾先用已核实的一个破发点一兑现、首盘两盘点挽救、第二盘一比六等事实回答开头，只能抛关于改善已证实的发球弱点的积极期待。不要说一局就是全部努力。',
+ '不要写未核准的排名、年龄、伤病、动机、下一站或下一轮；女性代词她。每句旁白三十五字以内。',
+]
+e = chat.ask(system_prompt(), json.dumps({'previous_json': d['editorial'], 'validator_errors': errors}, ensure_ascii=False), schema=SCHEMA, max_tokens=2200)
+e = normalize_editorial_for_speech(e) if isinstance(e, dict) else None
 if not e:
     raise RuntimeError('DeepSeek returned no editorial')
 error = editorial_score_problem(e, [(6,3),(6,1)]) or arithmetic_claim_problem(e)
@@ -50,6 +62,12 @@ for s, line in zip(d['segments'], e['narration']):
 d.pop('_visual_evidence', None)
 d['cover'].pop('portrait', None)
 d['_notes'].append('用户2026-10-02核准月亮姐＝赫瓦林斯卡；本次DeepSeek重写聚焦她，旧赢家封面证据作废。')
+d['stats']['a'].update(winners=47, ue=24)
+d['stats']['b'].update(winners=6, ue=11)
+d['stats']['_source'] = 'Flashscore zR532YMs；制胜分/非受迫失误：TNNS 75051478（run36975746845，分盘合计等于全场）'
+d['_editorial_correction'] = {'attempts': 1, 'errors': errors}
+d['_production']['received_at'] = '2026-10-02T06:19:07Z'
 path.write_text(json.dumps(d, ensure_ascii=False, indent=2) + '\n')
+a.outdir.mkdir(parents=True, exist_ok=True)
 (a.outdir / 'owner_editorial.json').write_text(json.dumps({'editorial':e,'push':push,'model':chat.channel}, ensure_ascii=False, indent=2)+'\n')
 print(json.dumps({'hook':e['hook'],'summary':push['summary']}, ensure_ascii=False))
