@@ -1,0 +1,153 @@
+{
+  "scoreboard_qc_sha256": "6ca9a44ecbd45ff2dc990e134b3448330af56944b829a01a0677b7f511b85f9b",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 175.45,
+  "topbar": {
+    "line1": "2026 WTA1000 北京 第二轮",
+    "line2": "亚斯特雷姆斯卡 6-3 6-1 赫瓦林斯卡",
+    "start": 1.2,
+    "end": 176.65
+  },
+  "film_seconds": 180.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 8.064,
+    "2": 9.12,
+    "3": 2.352,
+    "4": 7.296,
+    "6": 6.744,
+    "7": 6.168,
+    "9": 6.744,
+    "10": 7.944,
+    "12": 2.232,
+    "13": 8.232,
+    "14": 9.72,
+    "15": 7.368,
+    "16": 18.288
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "unknown",
+        "name": "赫瓦林斯卡",
+        "similarity": {
+          "亚斯特雷姆斯卡": 0.059,
+          "赫瓦林斯卡": 0.3375
+        },
+        "missing": [],
+        "expected": [
+          "亚斯特雷姆斯卡",
+          "赫瓦林斯卡"
+        ],
+        "face": [
+          379,
+          333,
+          496,
+          495
+        ],
+        "face_px": 161.7,
+        "reason": "和封面主角赫瓦林斯卡只有 0.34，介于 0.15~0.34",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        },
+        "target": [
+          "赫瓦林斯卡"
+        ]
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2401,
+        "ear_each": [
+          0.2609,
+          0.2192
+        ],
+        "face": [
+          379,
+          333,
+          496,
+          495
+        ],
+        "face_px": 161.7,
+        "reason": "眼睛纵横比 0.24 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": [
+        "认人拿不准：和封面主角赫瓦林斯卡只有 0.34，介于 0.15~0.34"
+      ],
+      "region": [
+        610,
+        0,
+        1420,
+        1080
+      ],
+      "frame": "output/2026-10-02/reel/yastremska-chwalinska/cover_src/portrait.jpg",
+      "frame_at": 36.8,
+      "target": [
+        "赫瓦林斯卡"
+      ]
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "e81f901c7def89f24d025dfaaf9a16ce1d1f0bf6405897ea4ae3c188d7303d56",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "yastremska-chwalinska",
+    "received_at": "2026-10-02T08:13:00Z",
+    "artifact_ready_at": "2026-10-02T08:19:14Z",
+    "elapsed_seconds": 374.766,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "557784652b0aea2adae9daeead955444ec93ef00cbb325e8a700da6a58f05ce3",
+    "spec_sha256": "dceb3dce656c0daf1d5f5bdee041d002f3e64b78f6719d5f8222b84c245fc36b",
+    "run_id": "36982776082",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-02T08:15:16Z",
+        "run_id": "36982776082"
+      }
+    ],
+    "render_seconds": 238.766,
+    "pre_render_seconds": 136.0
+  },
+  "film_sha256": "557784652b0aea2adae9daeead955444ec93ef00cbb325e8a700da6a58f05ce3",
+  "film_bytes": 89750864,
+  "qc_attestation_sha256": "f57b540de533df91210fbfbbb09a5ec8edda63b9c7d3409449232dcd22f26fad",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-02T08:15:16Z",
+      "run_id": "36982776082"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-02T08:19:16Z",
+      "run_id": "36982776082"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-yastremska-chwalinska/yastremska-chwalinska.mp4",
+  "video_bytes": 89750864
+}

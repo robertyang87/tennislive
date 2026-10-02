@@ -1,0 +1,178 @@
+{
+  "schema": "tennislive.narrated-match-facts.v1",
+  "created_at": "2026-10-02T05:26:26.746282+00:00",
+  "match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "0I8uROz9",
+    "flashscore_id": "0I8uROz9",
+    "participants": [
+      "兹维列夫",
+      "诺里"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        6
+      ],
+      [
+        6,
+        4
+      ]
+    ],
+    "winner": "兹维列夫",
+    "loser": "诺里",
+    "winner_result": "7-6(1) 6-4",
+    "loser_result": "6-7(1) 4-6",
+    "tiebreaks_home_away": [
+      [
+        7,
+        1
+      ],
+      null
+    ],
+    "date": "2026-10-01",
+    "start_utc": "2026-10-01T08:11:48Z",
+    "start_beijing_daypart": "下午",
+    "tour": "ATP",
+    "event": "China Open",
+    "round": "R1",
+    "court": "Capital Group Diamond"
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "aces": 15,
+      "df": 0,
+      "first_in": 52,
+      "first_total": 68,
+      "first_won": 40,
+      "second_won": 12,
+      "second_total": 16,
+      "bp_conv": 1,
+      "bp_chances": 2,
+      "pts_won": 76,
+      "pts_total": 135,
+      "headshot": "assets/players/headshots/atp-Z355.png"
+    },
+    "b": {
+      "aces": 3,
+      "df": 0,
+      "first_in": 51,
+      "first_total": 67,
+      "first_won": 35,
+      "second_won": 8,
+      "second_total": 16,
+      "bp_conv": 0,
+      "bp_chances": 3,
+      "pts_won": 59,
+      "pts_total": 135,
+      "headshot": "assets/players/headshots/atp-N771.png"
+    },
+    "_source": "Full Match serve/break/point statistics agreed between Sofascore17206253 and Flashscore0I8uROz9, total135 verified by PBP. Column a Zverev, b Norrie. Winners/UE were not recovered from checked sources; both rows omitted under the exact user-approved single-film omission record. Missing data are not zeros or certified W/UE.",
+    "_winners_ue_check": {
+      "status": "checked_missing_user_approved_single_film_row_omission",
+      "sources": {
+        "official_stats": {
+          "status": "available_fields_incomplete",
+          "evidence": "Sofascore and Flashscore final records contain no Winners/UE"
+        },
+        "editorial": {
+          "status": "search_completed_no_match_values_found",
+          "evidence": "Public searches at10:43 and11:05 found no genuine current match-level W/UE"
+        },
+        "broadcast": {
+          "status": "full_source_inspected_no_summary_card",
+          "evidence": "All5 contact pages from official243.693424s source inspected; no W/UE card, ending handshake then promo"
+        },
+        "tnns": {
+          "status": "blocked_challenge",
+          "evidence": "Stopped; do not bypass"
+        },
+        "mcp": {
+          "status": "not_connected",
+          "evidence": "No tennis statistics MCP available at original preparation"
+        }
+      }
+    },
+    "_winners_ue_omission": {
+      "slug": "zverev-norrie-beijing-2026-r1",
+      "source_id": "0I8uROz9",
+      "match_date": "2026-10-01",
+      "winner_result": "7-6(1) 6-4",
+      "fields": [
+        "winners",
+        "ue"
+      ],
+      "decision": "omit_both_rows_for_this_film_only",
+      "authorization": "owner-approved-remaining-four-film-omissions-2026-10-01"
+    },
+    "_winners_ue_why": "Sofascore and Flashscore final match records did not contain Winners/UE, and the complete official highlight contact sheets showed no W/UE summary card. Public editorial search found no matching values. TNNS was blocked by a challenge and was not bypassed; no tennis-statistics MCP was connected. The user explicitly approved omitting these two rows for this film on 2026-10-01; stats._winners_ue_omission records that bounded authorization. Missing values are not zeros and the blocked source was not verified empty."
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "首盘差一分就落后，兹维列夫如何把这场球留在两盘？",
+    "thesis": "先守住自己的三次破发危机，再在最后一个接发局完成全场唯一的破发。以两段网前与底线对抗解释他在僵持中的得分路径。",
+    "beats": [
+      "首盘5-5长回合中主动上网，随后5-6挽救盘点",
+      "抢七0-1后连拿七分，拿下首盘",
+      "次盘互救破发点，最后一局兑现赛点完成唯一破发"
+    ],
+    "human_context": {
+      "angle": "头号种子的北京首战被诺里咬到首盘盘点和次盘最后一局",
+      "facts": [
+        "2026-10-01北京首轮，世界第2兹维列夫击败第39诺里7-6(1)6-4",
+        "实际开赛08:11:48UTC，北京下午",
+        "15aces、0双误、3个破发点全救；最后一局为唯一破发"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=eciSHiQTzN8",
+        "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_0I8uROz9",
+        "https://local-global.flashscore.ninja/2/x/feed/df_st_1_0I8uROz9"
+      ]
+    }
+  },
+  "source_archive_binding": {
+    "original_publisher_url": "https://www.youtube.com/watch?v=eciSHiQTzN8",
+    "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-eciSHiQTzN8/eciSHiQTzN8.mp4",
+    "archive_release": "source-eciSHiQTzN8",
+    "asset_name": "eciSHiQTzN8.mp4",
+    "bytes": 40607227,
+    "sha256": "dd355e5dd6f25b66414c15427f5fc53d7d37785c36801939e42ca2bba15efeee",
+    "basis": "Existing public Release asset recovered through normal browser download; full byte identity and full A/V decode verified.",
+    "source_media_changed": false,
+    "new_download_for_this_binding": false
+  },
+  "original_spec_sha256": "871d8fd2e4cd46993eb85fbceefc8d8a5126171dad72ef4a5b9105a621b6e440",
+  "source_assets": [
+    {
+      "role": "cover_photo",
+      "path": "assets/reel/zverev-norrie-beijing-2026-r1.jpg",
+      "bytes": 8681241,
+      "sha256": "12995eaeb3532bf7f9bdb045513df174271096a6aad7344f1ca4ebc0e98be671"
+    },
+    {
+      "role": "headshot_a",
+      "path": "assets/players/headshots/atp-Z355.png",
+      "bytes": 35637,
+      "sha256": "7c0d9a53189c0f670d06159881572b673886fa6929107f5210f84e33bac4679f"
+    },
+    {
+      "role": "headshot_b",
+      "path": "assets/players/headshots/atp-N771.png",
+      "bytes": 37313,
+      "sha256": "faf94b63a53bfb0abd9814b5a65b9daba39030a737dbf929f9dfa8e4a9f538a1"
+    }
+  ],
+  "source_facts_not_refetched": true,
+  "opening": {
+    "text": "首盘救盘点，兹维列夫两盘晋级。",
+    "support": [
+      "First-set5-6 set point saved, then hold: recovered Flashscore point-by-point source0I8uROz9",
+      "Final winner result7-6(1)6-4: recovered verified match facts and source broadcast"
+    ],
+    "is_original_commentary_quote": false
+  },
+  "no_new_deepseek_minimax_asr_or_bgm": true,
+  "winners_ue": "Keep both omitted under exact existing single-film approval; missing is not zero"
+}

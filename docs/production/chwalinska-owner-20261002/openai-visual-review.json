@@ -1,0 +1,52 @@
+{
+  "model": "OpenAI",
+  "review_method": "independent_multi_agent_native_frame_review",
+  "status": "pass",
+  "visual_status": "pass",
+  "deepseek_used": false,
+  "minimax_used": false,
+  "reviewed_at": "2026-10-02T07:42:41.417842+00:00",
+  "cold_open": {
+    "start": 275.55,
+    "end": 278.8,
+    "kind": "aftermath",
+    "winner_visible": true,
+    "confidence": 0.95,
+    "reason": "275.50s原帧两人已经停拍走动、球童入场，最终回合已死球；276.00s黄裙赢家握拳走动，278.00s向网前移动。原声首句完整，比分条仍在并动态退场，spec开启真实比分恢复。"
+  },
+  "ending": {
+    "start": 275.55,
+    "end": 284.48,
+    "kind": "winning_shot",
+    "winner_visible": true,
+    "confidence": 0.95,
+    "reason": "275.50秒最终回合已结束，随后赢家近景与走网；281.40s握手、282.20s分离、284.40s结果卡6-3/6-1与两人致意裁判。保留原声完整到284.47s，握手后无中文旁白，完整覆盖冷开场。"
+  },
+  "cover": {
+    "same_match": true,
+    "subject": "赫瓦林斯卡",
+    "moment": "loser_fighting",
+    "wrong_or_old": false,
+    "confidence": 0.95,
+    "reason": "36.80s原帧黑裙赫瓦林斯卡正面持拍准备发球，抬头双眼眼裂可见；原比分D.YASTREMSKA2/15，M.CHWALINSKA[17]1/0与首盘逐局2-1对应，PICC及北京本场蓝色球场一致。全片始终同服装、同场景；早局比分不是旧图。父agent查看正式poster_local.jpg确认主角、hook和比分可读。"
+  },
+  "evidence_runs": [
+    36977376249,
+    36979303385
+  ],
+  "inputs": [
+    "portrait_036.80.jpg",
+    "visual_native_275.50.jpg",
+    "visual_native_276.00.jpg",
+    "visual_native_278.00.jpg",
+    "visual_native_281.40.jpg",
+    "visual_native_282.20.jpg",
+    "visual_native_284.40.jpg"
+  ],
+  "problems": [],
+  "complete_last_point": {
+    "start": 253.92,
+    "end": 275.55,
+    "reason": "原生259秒发球，264/270秒底线相持，到275.50秒停止击球、球童入场完整结束。"
+  }
+}

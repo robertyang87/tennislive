@@ -20,13 +20,8 @@
     "winner": "米拉·安德烈耶娃",
     "result": "3-6 6-0 6-0",
     "portrait": {
-      "image": "assets/reel/yuan-andreeva-beijing-2026-r2-cover.jpg",
-      "focus": 0.319,
-      "focus_y": 0.5,
-      "zoom": 1.0,
-      "_gates": "① 点名：说明／文件名有「Mirra Andreeva」「Beijing」，日期对上当地 2026-10-02（Asia/Shanghai；日期来源 flashscore dc_1_t0OdtxKa）；EXIF 拍摄 2026:10:02 11:37:06+08:00。② 分辨率：6776×4517，zoom 1 铺 1080×1440 是 3.14×（不放大）。③ 认人：最大那张脸像 米拉·安德烈耶娃 0.35（≥ 0.34）。④ 睁眼：EAR 0.272（≥ 0.16）。⑤ 钩子带：脸落在 y272~494，钩子顶边 790。排序：[True, False, False, True, True, 222, 0.3525]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
-      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/02/6e5116be-04f8-4c63-b64e-67e146d13558/Mirra-Andreeva-Beijing-2026.jpg",
-      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/02/6e5116be-04f8-4c63-b64e-67e146d13558/Mirra-Andreeva-Beijing-2026.jpg（条目 #4585417，接口发布 2026-10-02T05:23:03Z，EXIF 拍摄 2026:10:02 11:37:06+08:00（UTC 2026-10-02T03:37:06Z），原图 6776×4517），说明原文「Mirra Andreeva, Beijing 2026 · Russia's Mirra Andreeva hits a return to China's Yuan Yue during their women's singles second round tennis match at the China Open tennis tournament in Beijing on October 2, 2026. (Photo by WANG Zhao / AFP)」，署名 Getty Images；WANG ZHAO；AFP or licensors；AFP via Getty Images。"
+      "_discarded": true,
+      "_reason": "旧照片已确认为Mirra Andreeva，不是Yue Yuan；旧production引用已移除。"
     }
   },
   "_production": {
@@ -35,7 +30,8 @@
     "event": "Beijing",
     "year": 2026,
     "round": "Round of 64",
-    "court": "Capital Group Diamond"
+    "court": "Capital Group Diamond",
+    "status": "waiting_stats"
   },
   "source_url": "https://youtu.be/V6ekW4Qy1jA",
   "_match": {
@@ -69,7 +65,10 @@
       null,
       null,
       null
-    ]
+    ],
+    "date": "2026-10-02",
+    "start_utc": "2026-10-02T02:48:29.873Z",
+    "official_result_source": "https://www.wtatennis.com/tournaments/china-open/scores/LS055"
   },
   "stats": {
     "a": {
@@ -99,6 +98,25 @@
       "pts_total": 143,
       "first_total": 61,
       "headshot": "assets/players/headshots/wta-331809.jpg"
+    },
+    "_winners_ue_check": {
+      "sources": {
+        "official_stats": {
+          "status": "unavailable",
+          "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS055/stats",
+          "reason": "本场全场setnum=0返回没有winners和unforced errors，不能推算"
+        },
+        "editorial": {
+          "status": "unavailable",
+          "source_url": "https://www.chinaopen.com/cn/contents/281/1624.html",
+          "reason": "官方赛报未给制胜分/非受迫失误"
+        },
+        "tnns": {
+          "status": "not_verified",
+          "source_url": "https://github.com/robertyang87/tennislive/actions/runs/36974817505",
+          "reason": "246场日期列表未匹配球员；本机遇人机验证停止，不足以断言本场无统计"
+        }
+      }
     }
   },
   "_hit_data": [
@@ -339,24 +357,54 @@
     "推送文案已通过事实校验；默认开启 QC 后自动推送",
     "窗口起草 7 段",
     "封面官方实拍：比赛页上还没有这一场的赛后稿（页面共 8 篇文章，没有一篇 slug 含这两个姓）。Match Reaction 一般赛后一小时内上线——等会儿再试，别当成「没有实拍」。",
-    "⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why"
+    "⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why",
+    "会话查证已补中网官方本场袁悦照片；本条仍waiting_stats，制胜分/非受迫失误不能缺省。视觉旧报告的采访窗口不采纳，后续需要新证据审核。"
   ],
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "error",
-    "retryable": true,
-    "problems": [
-      "MiniMax API：HTTPError: HTTP Error 400: Bad Request"
-    ]
-  },
-  "_cover_api": {
-    "times": {
-      "flashscore_id": "t0OdtxKa",
-      "start_utc": "2026-10-02T03:10:00Z",
-      "end_utc": "2026-10-02T05:03:11Z",
-      "source": "flashscore dc_1_t0OdtxKa（DC／DD）"
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 416.32,
+      "end": 433.52,
+      "kind": "aftermath",
+      "winner_visible": true,
+      "reason": "416.5s 和 418.5s 显示米拉·安德烈耶娃（绿帽，辫子）在赛后采访中拿着 WTA 麦克风，她抬头望向看台露出喜悦/释然的笑容，是赛后采访的情绪兑现；422.5s 有人递麦/握手，432.5s 接受采访面部特写均落在窗口内，作为紧接赛后的余波满足冷开场要求。",
+      "confidence": 0.82
     },
-    "replaced_under": "bc6f9f301d0bd260b00371f7beca5c7dbd20a5508a2d68a86aa700ae62ee7644"
-  }
+    "ending": {
+      "start": 416.32,
+      "end": 433.52,
+      "kind": "aftermath",
+      "winner_visible": true,
+      "reason": "416.5–418.5s 米拉·安德烈耶娃接受 WTA 采访、抬头笑容；422.5s 教练/工作人员握手；426.5/428.5/430.5s 继续对麦克风发言；432.5s 面部近景特写——完整覆盖冷开场 416.32–433.52 区间，赛后采访的余波即正文末尾的结局兑现。",
+      "confidence": 0.82
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "米拉·安德烈耶娃",
+      "moment": "winner_celebration",
+      "wrong_or_old": false,
+      "reason": "画面 416.5–432.5s 为 WTA 麦克风前的现场赛后采访：选手戴绿色 visor、辫子、深色 Nike 球衣，与本场赢家米拉·安德烈耶娃一致；背景可见北京国家网球中心钻石球场看台与 WTA 标识，服装/场地与本场 (北京 China Open) 完全吻合；面带笑容抬头望看台，属于赢家赛后庆祝/释然情绪。",
+      "confidence": 0.8
+    },
+    "problems": [
+      "本场封面候选已补，需按新图重新审核；已有冷开场及结尾416.32–433.52属于赛后采访，不能用作赛场之上比赛结局",
+      "waiting_stats：未核实双方全场制胜分和非受迫失误，不提升、不render"
+    ],
+    "model_attempts": 1,
+    "input_sha256": "bc6f9f301d0bd260b00371f7beca5c7dbd20a5508a2d68a86aa700ae62ee7644",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_02.jpg",
+      "contact_05.jpg",
+      "contact_06.jpg",
+      "contact_07.jpg"
+    ],
+    "cover_image": ""
+  },
+  "_discarded": true,
+  "_discarded_reason": "用户要求全部重做并禁用DeepSeek；旧草稿误把中网本场安德烈耶娃黑裙照片认作袁悦，禁止作为自动制作候选。正式稿由Codex重新写。",
+  "_superseded_by": "specs/reels/yuan-andreeva-beijing-2026-r2.json"
 }
