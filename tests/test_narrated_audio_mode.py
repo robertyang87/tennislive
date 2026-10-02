@@ -111,7 +111,13 @@ def test_root_false_is_consumed_and_default_legacy_is_unchanged():
  mode.validate_root_tracking(spec)
  assert 'track' in build._REAL_FIELDS['spec']
  ordinary=copy.deepcopy(spec);ordinary.pop('original_audio_mode');ordinary.pop('owner_approval')
+ mode.validate_root_tracking(ordinary)
+ assert not mode.no_quote_reason(ordinary)
+ ordinary['segments'][0]['cx']=0.6
+ mode.validate_root_tracking(ordinary)
+ ordinary['segments'][0]['track']=True
  with pytest.raises(ValueError):mode.validate_root_tracking(ordinary)
+ ordinary['segments'][0]['track']=False
  ordinary.pop('track');mode.validate_root_tracking(ordinary)
  assert not mode.no_quote_reason(ordinary)
 

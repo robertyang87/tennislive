@@ -208,13 +208,17 @@ def preload_tts(spec: dict, *, voice: str, rate: str, root: Path | None = None) 
 
 
 def validate_root_tracking(spec: dict) -> None:
- """Consume root track=false as the bounded mode's fixed-camera constraint."""
+ """Consume root track=false as a real fixed-camera/no-pan constraint."""
  if 'track' not in spec:
   return
  if spec['track'] is not False:
   raise ValueError('顶层track只接受布尔false；追踪必须按受支持的分段合同声明')
- if not enabled(spec):
-  raise ValueError('顶层track=false只属于精确绑定的中文旁白固定镜头合同')
+ if any(segment.get('track') or segment.get('square_pan') for segment in spec.get('segments') or []):
+  raise ValueError('顶层track=false与分段追踪或平移冲突')
+ # Camera control is independent of audio mode. Existing ordinary reels may
+ # use a static off-centre crop; the bounded narrated mode separately requires
+ # exact centre, source identity and complete original-audio exclusion.
+ enabled(spec)
 
 
 def no_quote_reason(spec: dict) -> str:
