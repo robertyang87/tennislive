@@ -77,3 +77,20 @@ def test_schema_fields_and_projection_are_render_inputs():
  import render_inputs
  spec=candidate()
  assert 'original_audio_mode' in json.dumps(render_inputs.project(spec))
+
+
+def test_pcm_verified_tts_padding_is_not_missing_original_audio(tmp_path,monkeypatch):
+ film=tmp_path/'film.mp4';film.write_bytes(b'placeholder')
+ (tmp_path/'audio_review_binding.json').write_text('{}')
+ verified=[]
+ monkeypatch.setattr(mode,'verify_mix',lambda spec,film,binding:verified.append(True))
+ assert mode.declared_pause_seconds(candidate(),film,[-99,-25,-91,-99],after=2)==[2,3]
+ assert verified==[True]
+
+def test_missing_tts_is_never_accepted_as_planned_silence(tmp_path,monkeypatch):
+ film=tmp_path/'film.mp4';film.write_bytes(b'placeholder')
+ (tmp_path/'audio_review_binding.json').write_text('{}')
+ def fail(*args):raise ValueError('missing real narration')
+ monkeypatch.setattr(mode,'verify_mix',fail)
+ with pytest.raises(ValueError,match='missing real narration'):
+  mode.declared_pause_seconds(candidate(),film,[-99]*100,after=2)
