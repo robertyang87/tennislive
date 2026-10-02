@@ -118,10 +118,10 @@ def knowledge_push_html_from_parts(
     ⚠️⚠️ 卡底那颗红按钮是**字面写在这儿的**，逐字节不动（账号所有者 2026-08-31
     「微信推送的红色按钮不要改了」；它比 `push_reel` 那颗多一个分号，那也不动）。
     """
-    lines = xhs_text.strip().splitlines()
-    title = html.escape(lines[0] if lines else "")
-    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
-    body = "\n".join(lines[body_start:]).strip()
+    from .pushmsg import split_xhs  # noqa: PLC0415
+
+    raw_title, body = split_xhs(xhs_text)
+    title = html.escape(raw_title)
     # One block, not paragraph divs: the body has to be readable *and* liftable
     # in a single long-press. Splitting it into elements made copying a drag-
     # across-the-whole-screen job, and pairing pretty paragraphs with a second
