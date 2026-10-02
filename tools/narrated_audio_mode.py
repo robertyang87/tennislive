@@ -62,7 +62,9 @@ def enabled(spec: dict, *, sources: dict | None = None) -> bool:
   raise ValueError('中文旁白模式必须有本人TTS冷开场')
  if any(s.get('quote') for s in segments):
   raise ValueError('已移除的原声不能再显示未核准的英文引语')
- if any(s.get('track') or s.get('cx',.5) not in (None,.5) for s in segments):
+ if 'track' in spec and spec['track'] is not False:
+  raise ValueError('本模式顶层track只接受布尔false')
+ if any(s.get('track') or s.get('square_pan') or s.get('cx',.5) not in (None,.5) for s in segments):
   raise ValueError('本次影片必须固定居中')
  if spec.get('layout','full')!='full':
   raise ValueError('本次影片必须3:4全画布')
@@ -203,3 +205,21 @@ def preload_tts(spec: dict, *, voice: str, rate: str, root: Path | None = None) 
  for name,raw in decoded.items():
   (cache/name).write_bytes(raw)
  print(f'[TTS] 恢复{len(decoded)}份已核验原始配音缓存；不重合成')
+
+
+def validate_root_tracking(spec: dict) -> None:
+ """Consume root track=false as the bounded mode's fixed-camera constraint."""
+ if 'track' not in spec:
+  return
+ if spec['track'] is not False:
+  raise ValueError('顶层track只接受布尔false；追踪必须按受支持的分段合同声明')
+ if not enabled(spec):
+  raise ValueError('顶层track=false只属于精确绑定的中文旁白固定镜头合同')
+
+
+def no_quote_reason(spec: dict) -> str:
+ """A verified mode declaration is a structured editorial reason, not ASR."""
+ if not enabled(spec):
+  return ''
+ return ('Exact source-bound Chinese-narrated mode excludes original audio and quotes; '
+         'native final QA still requires every TTS voice, sealed audio identity and zero source PCM.')

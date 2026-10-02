@@ -17217,7 +17217,9 @@ def test_赛场之上要留一段精彩的原声解说_不留要写明为什么(
         if p.stem in _NO_BROADCAST_QUOTE_LEGACY:
             legacy_seen.add(p.stem)
             continue
-        assert (spec.get("_no_quote_why") or "").strip(), (
+        from tools.narrated_audio_mode import no_quote_reason
+        structured_reason = no_quote_reason(spec)
+        assert (spec.get("_no_quote_why") or structured_reason).strip(), (
             f"{p.name} 没留原声解说，也没写 `_no_quote_why`。\n"
             f"账号所有者 2026-09-19：「精彩的原声解说，配上中英文字幕保留下来，"
             f"这样感觉更有氛围感」——这是全局要求。\n"
