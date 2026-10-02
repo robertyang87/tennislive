@@ -36,7 +36,22 @@ base=json.loads(Path('specs/reels/pending/yastremska-chwalinska.draft.json').rea
 base['cover']['portrait']={'image':str(a.outdir/'portrait_036.80.jpg')}
 base['_cover_brief']={'preferred_subject':'赫瓦林斯卡','preferred_moment_key':'loser_fighting','preferred_moment':'本场仍在拼；正面手持拍准备下一分，不要低头失落照。'}
 probe=json.loads((a.outdir/'probe.json').read_text())
-frames=sorted(a.outdir.glob('contact_*.jpg'))+[a.outdir/'portrait_contact.jpg']
+frames=[]
+for t in [36.8,53.8,63.2,135.0,140.5,144.6,192.5,209.0,259.0,264.0,270.0,275.5,276.0,278.0,280.0,281.4,282.2,284.4]:
+ f=a.outdir/f'visual_native_{t:06.2f}.jpg'
+ subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-ss',str(t),'-i',str(source),'-frames:v','1','-q:v','2','-y',str(f)],check=True)
+ im=Image.open(f);im.thumbnail((1280,720));dr=ImageDraw.Draw(im);dr.rectangle((0,0,180,40),fill='black');dr.text((10,10),f'SOURCE {t:.2f}s',fill='white');im.save(f,quality=92);frames.append(f)
+# Full-duration sheets plus native source-timestamped images; early score is a valid match state.
+base['_cover_brief']['evidence_notes']='封面来自此源片36.8秒首盘2-1，不能拿过程比分与最终6-3/6-1不相同当旧图。最终赛点在259到275.8，黄裙赢家近景随后，281.4到282.2握手，299.92片尾。按原帧所见判断，不猜未展示的动作。'
+base['_cover_brief']['requested_cold_open_scope']=[275.5,278.0]
+base['_cover_brief']['requested_ending_scope']=[275.5,284.4]
+frames=sorted(a.outdir.glob('contact_*.jpg'))+frames
+# Independently decode the one disputed commentary clause from its local acoustic context.
+clip=a.outdir/'volley_speech.wav'
+subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-ss','59','-i',str(source),'-t','10','-vn','-ar','16000','-y',str(clip)],check=True)
+third,_=model.transcribe(str(clip),language='en',word_timestamps=True,vad_filter=False,beam_size=5)
+(a.outdir/'volley_asr_crosscheck.json').write_text(json.dumps({'model':'medium.en','source_offset':59,'decoding':'unseeded local 10-second context','segments':[{'start':59+s.start,'end':59+s.end,'text':s.text} for s in third]},ensure_ascii=False,indent=2)+'\\n')
+
 report,problems=verified_minimax_report(base,frames,a.outdir/'portrait_036.80.jpg',probe,os.environ['MINIMAX_API_KEY'])
 report['evidence_sha256']=evidence_hash(frames,a.outdir/'portrait_036.80.jpg')
 (a.outdir/'manual_visual_evidence.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
