@@ -96,7 +96,7 @@ import sys
 import time
 from contextlib import contextmanager, nullcontext
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from fractions import Fraction
 from pathlib import Path
 
@@ -2864,11 +2864,35 @@ class Segment:
     # 水印条裁出画外——这个键原来在允许字段表里、**渲染一处都没读**，
     # 写了不报错也不生效（run 36214015142 渲出来水印原样还在）。
     crop_zoom: float = 1.0
+    # Optional per-segment subtitle anchor; absent keeps the existing layout.
+    subtitle_bottom: int | None = None
 
     @property
     def length(self) -> float:
         return seg_seconds({"start": self.start, "end": self.end,
                             "speed": self.speed})
+
+
+def _seg_subtitle_bottom(s: dict, i: int) -> int | None:
+    if "subtitle_bottom" not in s:
+        return None
+    value = s["subtitle_bottom"]
+    if type(value) is not int or not 96 <= value <= VIDEO_H - 96:
+        raise ReelError(f"第 {i + 1} 段 subtitle_bottom 必须为 96~{VIDEO_H - 96} 的整数像素")
+    if not (str(s.get("narration") or "").strip() or s.get("quote")):
+        raise ReelError(f"第 {i + 1} 段 subtitle_bottom 需要实际字幕")
+    return value
+
+
+def segment_subtitle_bottom_windows(segments: list[Segment], cover_secs: float):
+    windows = []
+    cursor = cover_secs
+    for seg in segments:
+        end = cursor + seg.length
+        if seg.subtitle_bottom is not None:
+            windows.append((cursor, end, seg.subtitle_bottom))
+        cursor = end
+    return windows
 
 
 def _seg_fill_y(s: dict, i: int) -> float | None:
@@ -3408,7 +3432,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        contain_keep=_seg_contain_keep(s, i),
                        crop_zoom=_seg_crop_zoom(s, i))
 
-    segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
+    segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i))
+                for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
                if s.image and s.image != STAT_CARD_PLACEHOLDER
                and not s.image.startswith(TITLE_CARD_PREFIX)
@@ -3669,7 +3694,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
-                "kicker", "track", "voice"),
+                "kicker", "track", "voice", "subtitle_bottom"),
 }
 
 
@@ -6313,6 +6338,8 @@ def silence_findings(spec: dict, segments, probes: dict,
 # 戴维斯杯的官方影像档案（ITF 频道）highlights 一律只有 720p、没有全场重播，
 # 1930 年代的英国百代新闻片只有 640×480，**这两档「等」也等不出 1080p**。
 APPROVED_LOW_RES_SOURCES: dict[str, int] = {
+    # Sun–Lys Beijing2026: official highest rendition720p; conditional owner approval.
+    "https://www.wtatennis.com/videos/4585115/junior-no-1-sun-xinran-advances-on-wta-debut-in-beijing-as-lys-retires": 720,
     "https://www.youtube.com/watch?v=-6Gv0033I2I": 720,   # 郑钦文重剪源
     "https://www.youtube.com/watch?v=qBtBKmKmQZc": 720,   # ITF：鲁德 v 埃切维里，挪威 v 阿根廷 2025
     "https://www.youtube.com/watch?v=E-MWVXF9ET0": 720,   # ITF：布德科夫·克耶尔 v 费恩利，挪威 v 英国 2026
@@ -9878,7 +9905,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     ass = write_subtitles(cues, outdir / "subtitles.ass",
                           height=VIDEO_H, margin_v=margin_v,
                           outline=SUB_OUTLINE_PX, shadow=SUB_SHADOW_PX,
-                          bottom_margin=bottom)
+                          bottom_margin=bottom,
+                          bottom_margin_windows=segment_subtitle_bottom_windows(segments, cover_secs))
     moved = "" if margin_v == default_margin else (
         f"，比默认抬高 {default_margin - margin_v}px "
         + ("让开回贴在左下的记分条" if margin_v == board_margin != default_margin

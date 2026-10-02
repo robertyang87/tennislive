@@ -1,0 +1,137 @@
+{
+  "_match": {
+    "status": "result_verified",
+    "date": "2026-10-01",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS082",
+    "participants": [
+      "利斯",
+      "孙心然"
+    ],
+    "winner": "孙心然",
+    "loser": "利斯",
+    "winner_result": "6-1 3-0 Ret.",
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "duration": "00:43:48",
+    "daypart": "晚上",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?from=2026-10-01&to=2026-10-01",
+    "_result_why": "Official explicit winner/result and Xinhua full report independently identify Lys retirement and Sun victory; Tennis.com confirms terminal retired status and same set scores only.",
+    "observed_at": "2026-10-01T19:04:30.751488+00:00",
+    "source_response_sha256": "9f8a5944c255bbf174888f029368d84d41909131246ba2fc8e3f309f21bdfc12",
+    "retirement_evidence": {
+      "retired_player": "利斯",
+      "best_of": 3,
+      "sources": [
+        {
+          "match_key": "1020_2026_LS082",
+          "match_date": "2026-10-01",
+          "participants": [
+            "利斯",
+            "孙心然"
+          ],
+          "set_scores_home_away": [
+            [
+              1,
+              6
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "winner": "孙心然",
+          "retired_player": "利斯",
+          "status": "retired",
+          "terminal": true,
+          "provider": "WTA",
+          "source_class": "official_result",
+          "source_id": "1020_2026_LS082",
+          "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?from=2026-10-01&to=2026-10-01",
+          "source_sha256": "9f8a5944c255bbf174888f029368d84d41909131246ba2fc8e3f309f21bdfc12",
+          "checked_at": "2026-10-01T19:04:30.751488+00:00"
+        },
+        {
+          "match_key": "1020_2026_LS082",
+          "match_date": "2026-10-01",
+          "participants": [
+            "利斯",
+            "孙心然"
+          ],
+          "set_scores_home_away": [
+            [
+              1,
+              6
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "winner": "孙心然",
+          "retired_player": "利斯",
+          "status": "retired",
+          "terminal": true,
+          "provider": "Xinhua",
+          "source_class": "independent_report",
+          "source_id": "372efd6eb1d1475ea7b7ac8aea1f582e",
+          "source_url": "https://www.news.cn/sports/20261001/372efd6eb1d1475ea7b7ac8aea1f582e/c.html",
+          "source_sha256": "89301255a924f7c3b2211868d732642f2ef39c32e63a3555879938bee67402fb",
+          "checked_at": "2026-10-01T19:33:12.145443+00:00"
+        }
+      ]
+    }
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "孙心然",
+    "hook": "连赢九局\n16岁孙心然过关",
+    "hook_accent": "九局",
+    "hook_accent_color": "#FFD600",
+    "topic": "WTA1000 北京 首轮 · 孙心然 VS 利斯",
+    "winner": "孙心然",
+    "result": "6-1 3-0 Ret.",
+    "matchup": [
+      {
+        "name": "孙心然",
+        "name_en": "Xinran Sun",
+        "country": "CHN",
+        "rank": 582
+      },
+      {
+        "name": "利斯",
+        "name_en": "Eva Lys",
+        "country": "GER",
+        "rank": 102
+      }
+    ],
+    "portrait": {
+      "image": "assets/reel/sun-lys-beijing-2026-r1.jpg",
+      "focus": 0.52,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_portrait_why": "WTA official Sun-R1-Jimmie photograph, Jimmie48/WTA, CMS4585120, published2026-10-01. Sun with eyes visible and raised fist in the match outfit; same-match action reaction, not claimed as retirement celebration. Original3056x1991 and exact verified image SHA retained.",
+      "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/10/01/3ff1e4a5-5b2f-426f-a7c1-164dcb3e2cc6/Sun-R1-Jimmie.jpg?width=3056"
+    },
+    "scoreboard": {
+      "court": "Capital Group Diamond",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?from=2026-10-01&to=2026-10-01",
+        "match_id": "LS082",
+        "field": "MatchTimeTotal"
+      }
+    }
+  },
+  "stats": {
+    "tour": "wta"
+  }
+}

@@ -16,8 +16,8 @@ FIELDS = ("winners", "ue")
 SOURCE_CLASSES = frozenset({"official_stats", "editorial", "broadcast", "tnns", "mcp"})
 SOURCE_METHODS = frozenset({"api", "page", "broadcast", "user_screenshot"})
 
-# One-film owner decision, 2026-10-01. This is deliberately not a general
-# allow_missing flag: Sun/ATP and every other production retain the full gate.
+# The original Zheng decision is preserved. Four additional named films were
+# approved on 2026-10-01; every other production retains the complete W/UE gate.
 ZHENG_SHI_OMISSION = {
     "slug": "zheng-shi-beijing-2026-r1",
     "source_id": "1020_2026_LS070",
@@ -29,29 +29,42 @@ ZHENG_SHI_OMISSION = {
 }
 
 
+APPROVED_WUE_OMISSIONS = {'zheng-shi-beijing-2026-r1': {'slug': 'zheng-shi-beijing-2026-r1', 'source_id': '1020_2026_LS070', 'match_date': '2026-10-01', 'winner_result': '7-6(6) 4-6 6-2', 'fields': ['winners', 'ue'], 'decision': 'omit_both_rows_for_this_film_only', 'authorization': 'owner-approved-single-film-omission-2026-10-01'}, 'nishikori-tiafoe-tokyo-2026-r1': {'slug': 'nishikori-tiafoe-tokyo-2026-r1', 'source_id': 'j3oaqNc6', 'match_date': '2026-10-01', 'winner_result': '6-4 6-4', 'fields': ['winners', 'ue'], 'decision': 'omit_both_rows_for_this_film_only', 'authorization': 'owner-approved-remaining-four-film-omissions-2026-10-01'}, 'shang-baez-beijing-2026-r1': {'slug': 'shang-baez-beijing-2026-r1', 'source_id': '0bIo5sEk', 'match_date': '2026-10-01', 'winner_result': '5-7 6-3 7-5', 'fields': ['winners', 'ue'], 'decision': 'omit_both_rows_for_this_film_only', 'authorization': 'owner-approved-remaining-four-film-omissions-2026-10-01'}, 'zverev-norrie-beijing-2026-r1': {'slug': 'zverev-norrie-beijing-2026-r1', 'source_id': '0I8uROz9', 'match_date': '2026-10-01', 'winner_result': '7-6(1) 6-4', 'fields': ['winners', 'ue'], 'decision': 'omit_both_rows_for_this_film_only', 'authorization': 'owner-approved-remaining-four-film-omissions-2026-10-01'}, 'sun-lys-beijing-2026-r1': {'slug': 'sun-lys-beijing-2026-r1', 'source_id': '1020_2026_LS082', 'match_date': '2026-10-01', 'winner_result': '6-1 3-0 Ret.', 'fields': ['winners', 'ue'], 'decision': 'omit_both_rows_for_this_film_only', 'authorization': 'owner-approved-remaining-four-film-omissions-2026-10-01'}}
+
+_APPROVED_MATCH_IDENTITIES = {'zheng-shi-beijing-2026-r1': {'source': 'official_wta', 'source_id': '1020_2026_LS070', 'winner': '郑钦文', 'loser': '施晗', 'participants': ['郑钦文', '施晗'], 'sets': [[7, 6], [4, 6], [6, 2]], 'result': '7-6(6) 4-6 6-2', 'matchup': [['郑钦文', 'Qinwen Zheng'], ['施晗', 'Han Shi']]}, 'nishikori-tiafoe-tokyo-2026-r1': {'source': 'flashscore_points', 'source_id': 'j3oaqNc6', 'winner': '蒂亚福', 'loser': '锦织圭', 'participants': ['锦织圭', '蒂亚福'], 'sets': [[4, 6], [4, 6]], 'result': '6-4 6-4', 'matchup': [['蒂亚福', 'Frances Tiafoe'], ['锦织圭', 'Kei Nishikori']]}, 'shang-baez-beijing-2026-r1': {'source': 'flashscore_points', 'source_id': '0bIo5sEk', 'winner': '商竣程', 'loser': '巴埃斯', 'participants': ['商竣程', '巴埃斯'], 'sets': [[5, 7], [6, 3], [7, 5]], 'result': '5-7 6-3 7-5', 'matchup': [['商竣程', 'Juncheng Shang'], ['巴埃斯', 'Sebastian Baez']]}, 'zverev-norrie-beijing-2026-r1': {'source': 'flashscore_points', 'source_id': '0I8uROz9', 'winner': '兹维列夫', 'loser': '诺里', 'participants': ['兹维列夫', '诺里'], 'sets': [[7, 6], [6, 4]], 'result': '7-6(1) 6-4', 'matchup': [['兹维列夫', 'Alexander Zverev'], ['诺里', 'Cameron Norrie']]}, 'sun-lys-beijing-2026-r1': {'source': 'official_wta', 'source_id': '1020_2026_LS082', 'winner': '孙心然', 'loser': '利斯', 'participants': ['利斯', '孙心然'], 'sets': [[1, 6], [0, 3]], 'result': '6-1 3-0 Ret.', 'matchup': [['孙心然', 'Xinran Sun'], ['利斯', 'Eva Lys']]}}
+
+
 def _omission_problem(spec: dict) -> str | None:
-    """Validate the exact approved episode; do not certify unknown values."""
+    """Only these five specific films may omit rows; unknown values stay unknown."""
+    slug = spec.get("slug")
+    approved = APPROVED_WUE_OMISSIONS.get(slug)
+    identity = _APPROVED_MATCH_IDENTITIES.get(slug)
     stats = spec["stats"]
-    if stats.get("_winners_ue_omission") != ZHENG_SHI_OMISSION:
-        return "Winners/UE 省略仅限郑钦文–施晗本期的明确用户决定，批准记录不匹配"
+    if approved is None or identity is None or stats.get("_winners_ue_omission") != approved:
+        return "Winners/UE 省略仅限已批准的五期精确比赛，批准记录不匹配"
     match = spec.get("_match") or {}
     cover = spec.get("cover") or {}
-    if (spec.get("slug") != ZHENG_SHI_OMISSION["slug"]
-            or match.get("status") != "result_verified"
-            or match.get("source") != "official_wta"
-            or match.get("source_id") != ZHENG_SHI_OMISSION["source_id"]
-            or match.get("date") != ZHENG_SHI_OMISSION["match_date"]
-            or match.get("winner_result") != ZHENG_SHI_OMISSION["winner_result"]
-            or match.get("winner") != "郑钦文"
-            or match.get("loser") != "施晗"
-            or match.get("participants") != ["郑钦文", "施晗"]
-            or match.get("set_scores_home_away") != [[7, 6], [4, 6], [6, 2]]
+    if not isinstance(match, dict) or not isinstance(cover, dict):
+        return "Winners/UE 省略需要本场身份和封面对象"
+    people = cover.get("matchup")
+    if not isinstance(people, list) or not all(isinstance(p, dict) for p in people):
+        return "Winners/UE 省略需要两个明确的统计列球员"
+    if (match.get("status") != "result_verified"
+            or match.get("source") != identity["source"]
+            or match.get("source_id") != identity["source_id"]
+            or match.get("date") != approved["match_date"]
+            or match.get("winner_result") != identity["result"]
+            or match.get("winner") != identity["winner"]
+            or match.get("loser") != identity["loser"]
+            or match.get("participants") != identity["participants"]
+            or match.get("set_scores_home_away") != identity["sets"]
             or cover.get("eyebrow") != "赛场之上"
-            or cover.get("winner") != "郑钦文"
-            or cover.get("result") != ZHENG_SHI_OMISSION["winner_result"]
-            or [(p.get("name"), p.get("name_en")) for p in cover.get("matchup", [])
-                if isinstance(p, dict)] != [("郑钦文", "Qinwen Zheng"), ("施晗", "Han Shi")]):
+            or cover.get("winner") != identity["winner"]
+            or cover.get("result") != identity["result"]
+            or [[p.get("name"), p.get("name_en")] for p in people] != identity["matchup"]):
         return "Winners/UE 单片省略批准与本场身份、日期、赢家、比分或球员列不一致"
+    if any(not isinstance(stats.get(side), dict) for side in ("a", "b")):
+        return "Winners/UE 省略必须保留双方统计对象"
     if any(key in stats[side] for side in ("a", "b") for key in FIELDS):
         return "批准省略须移除双方 Winners/UE 字段，不得显示 null、零或推测数值"
     if "_winners_ue_evidence" in stats:
