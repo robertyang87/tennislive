@@ -18,7 +18,16 @@
       }
     ],
     "winner": "穆霍娃",
-    "result": "7-6(3) 6-1"
+    "result": "7-6(3) 6-1",
+    "portrait": {
+      "image": "assets/reel/muchova-boulter-cover.jpg",
+      "focus": 0.832,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「karolina muchova」「Beijing」，日期对上当地 2026-10-02（Asia/Shanghai；日期来源 flashscore dc_1_tO2ydyRi）；EXIF 拍摄 2026:10:02 16:03:35+08:00。② 分辨率：6170×4113，zoom 1 铺 1080×1440 是 2.86×（不放大）。③ 认人：最大那张脸像 穆霍娃 0.44（≥ 0.34）。④ 睁眼：EAR 0.2989（≥ 0.16）。⑤ 钩子带：脸落在 y369~466，钩子顶边 790。排序：[True, False, False, True, True, 97, 0.4443]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/02/2e61ed9b-5912-4a98-8f64-435385e2d66e/Muchova-Pedro-Pardo-AFP.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/02/2e61ed9b-5912-4a98-8f64-435385e2d66e/Muchova-Pedro-Pardo-AFP.jpg（条目 #4585546，接口发布 2026-10-02T09:46:32Z，EXIF 拍摄 2026:10:02 16:03:35+08:00（UTC 2026-10-02T08:03:35Z），原图 6170×4113），说明原文「Karolina Muchova, Beijing 2026 · Czech Republicâs Karolina Muchova hits a return to Britain's Katie Boulter during their women's singles match at the China Open tennis tournament in Beijing on October 2, 2026. (Photo by Pedro PARDO / AFP)」，署名 Pedro Pardo/AFP via Getty Images；PEDRO PARDO；AFP or licensors；AFP via Getty Images。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -324,51 +333,19 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "waiting",
-    "retryable": false,
-    "cold_open": {
-      "start": 436.32,
-      "end": 446.403628,
-      "kind": "winner_celebration",
-      "winner_visible": true,
-      "reason": "436.5s WTA赛后字幕、438.5s/440.5s/442.5s/444.5s WTA品牌结尾模板，均落在436.32–446.40秒窗口；视频末尾无比赛回合，仅含赛后的WTA标识/品牌卡，无可见的winner庆祝或握手画面可作冷开场制胜分或赛后余波证据，因此标记confidence较低。",
-      "confidence": 0.35
-    },
-    "ending": {
-      "start": 436.32,
-      "end": 446.403628,
-      "kind": "aftermath",
-      "winner_visible": false,
-      "reason": "436.5s WTA赛后绿底标识、438.5s/440.5s/442.5s/444.5s WTA紫色SUBSCRIBE品牌卡片均落在436.32–446.40秒窗口；窗口内无可见选手、握手或庆祝，仅为WTA品牌结尾，属于赛后余波；未见winner画面，winner_visible=false。",
-      "confidence": 0.4
-    },
-    "cover": {
-      "same_match": false,
-      "subject": "",
-      "moment": "other",
-      "wrong_or_old": true,
-      "reason": "题目未提供候选封面照片，无可审核的cover证据；无法证明本场，因此same_match=false。",
-      "confidence": 0.1
-    },
+    "visual_status": "error",
+    "retryable": true,
     "problems": [
-      "cold_open 置信度 0.35 低于 0.80",
-      "ending 无法确认赢家出现在画面中",
-      "ending 置信度 0.40 低于 0.80",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.10 低于 0.80",
-      "封面人物应为 穆霍娃，模型识别为 空",
-      "封面情绪应为 winner_celebration，现在是 other"
-    ],
-    "model_attempts": 1,
-    "input_sha256": "4ccd7ec60682a0976643b05aa8f4bbf64295da8cd8be017713d36837bb481a49",
-    "inputs": [
-      "contact_00.jpg",
-      "contact_02.jpg",
-      "contact_05.jpg",
-      "contact_06.jpg",
-      "contact_07.jpg"
-    ],
-    "cover_image": ""
+      "MiniMax API：HTTPError: HTTP Error 400: Bad Request"
+    ]
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "tO2ydyRi",
+      "start_utc": "2026-10-02T07:10:00Z",
+      "end_utc": "2026-10-02T08:39:48Z",
+      "source": "flashscore dc_1_tO2ydyRi（DC／DD）"
+    },
+    "replaced_under": "4ccd7ec60682a0976643b05aa8f4bbf64295da8cd8be017713d36837bb481a49"
   }
 }
