@@ -595,6 +595,11 @@ def main() -> int:
     after = math.ceil(cover) + 1
     evidence = evidence_windows(spec, cover)
     dead, exempt = dead_seconds(levels, after, evidence)
+    import narrated_audio_mode
+    pauses = narrated_audio_mode.declared_pause_seconds(spec, film, levels, after)
+    dead = [i for i in dead if i not in pauses]
+    if pauses:
+        print(f"[ok] 本次三片授权的零原声留白 {pauses}；已核验每句本人TTS和最终音轨哈希")
     if dead:
         bad += 1
         print(f"\n[不合格] 封面之后还有 {len(dead)} 秒是数字静音：{dead}")
@@ -623,7 +628,7 @@ def main() -> int:
               f" 口播最响 {worst:.1f} dB"
               + ("" if ok else "——卡上没有声音"))
 
-    windows = quiet_windows(spec, cover)
+    windows = ([] if narrated_audio_mode.enabled(spec) else quiet_windows(spec, cover))
     if not windows:
         print("[注意] 这条 spec 每段都有旁白，没有纯现场声的窗口可单独验")
     for start, length, src in windows:

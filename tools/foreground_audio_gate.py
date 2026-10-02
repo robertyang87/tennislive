@@ -6,6 +6,7 @@ window, retain its transcript evidence, and bind the actual downloaded bytes.
 Historical CI snapshots are deliberately not imported here.
 """
 from __future__ import annotations
+import narrated_audio_mode
 import hashlib
 import json
 import math
@@ -32,6 +33,8 @@ def plan_hash(spec: dict) -> str:
         segments.append(row)
     value={'slug':spec.get('slug'),'source_url':spec.get('source_url'),
            'sources':spec.get('sources'),'source_audio':spec.get('source_audio'),'segments':segments}
+    if spec.get('original_audio_mode') is not None:
+        value.update(original_audio_mode=spec['original_audio_mode'],owner_approval=spec.get('owner_approval'))
     return hashlib.sha256(json.dumps(value,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
 
 
@@ -73,6 +76,8 @@ def _quote_windows(seg: dict):
 
 def inspect(spec: dict, *, root: Path=ROOT, sources: dict[str,Path]|None=None) -> list[dict]:
     """Return every required cue; missing/changed evidence is a hard failure."""
+    if narrated_audio_mode.enabled(spec,sources=sources):
+        return []
     if spec.get('source_audio'):
         raise ValueError('source_audio 额外音轨未绑定审听：先合并为确定的源文件并重新审听，不能复用旧证据')
     selected=[]
@@ -160,6 +165,12 @@ def require(spec: dict, **kwargs) -> list[dict]:
 def bind_sources(spec: dict, sources: dict[str,Path], outdir: Path, *, root: Path=ROOT) -> None:
     require(spec,root=root,sources=sources)
     review=root/'data/audio_reviews'/f"{spec.get('slug')}.json"
+    if narrated_audio_mode.enabled(spec,sources=sources):
+        payload={'plan_sha256':plan_hash(spec),'original_audio_mode':narrated_audio_mode.MODE,
+                 'owner_approval':narrated_audio_mode.APPROVAL,
+                 'sources':{key:_sha(path) for key,path in sources.items()}}
+        (outdir/'audio_review_binding.json').write_text(json.dumps(payload,indent=2)+'\n')
+        return
     if not review.is_file():
         return  # TTS-only production has no retained original-audio windows.
     payload={'plan_sha256':plan_hash(spec),'review_sha256':_sha(review),
@@ -185,7 +196,7 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
             or render.get('render_inputs_sha256')!=_sha(manifest_path)):
         raise ValueError('烧片时的 film/ASS 绑定不匹配；只改字幕旁文件不能证明视频字幕已修复')
     review=root/'data/audio_reviews'/f"{spec.get('slug')}.json"
-    if review.is_file():
+    if review.is_file() and not narrated_audio_mode.enabled(spec):
         binding_path=ass.parent/'audio_review_binding.json'
         if manifest.get('artifacts',{}).get('audio_review_binding.json')!=_sha(binding_path):
             raise ValueError('烧片时的音频审听绑定已变')
@@ -216,7 +227,11 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
     binding_path=ass.parent/'audio_review_binding.json'
     if manifest.get('artifacts',{}).get(binding_path.name)!=_sha(binding_path):
         raise ValueError('烧片时的音频/时间轴绑定已变')
-    timeline=json.loads(binding_path.read_text())['timeline']
+    bound=json.loads(binding_path.read_text())
+    if bound.get('plan_sha256')!=plan_hash(spec):
+        raise ValueError('音频绑定不是当前剪辑配方')
+    narrated_audio_mode.verify_mix(spec,film,bound)
+    timeline=bound['timeline']
     offsets,lengths=timeline['offsets'],timeline['lengths']
     if timeline['cover_seconds']!=cover_seconds or len(offsets)!=len(spec.get('segments') or []) or len(lengths)!=len(offsets):
         raise ValueError('当前封面/分段时间不是渲染时使用的时间轴')
