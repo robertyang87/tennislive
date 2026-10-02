@@ -834,15 +834,15 @@ def _headline(**kwargs) -> str:
 
 def test_有赛果时标题把vs换成比分():
     got = _headline(column="赛场之上", matchup="锦织圭 vs 商竣程", score="2:1")
-    assert got == "7.28 赛场之上 | 锦织圭 2:1 商竣程"
+    assert got == "锦织圭2:1商竣程"
     # 没赛果（比如赛前前瞻）就保留「vs」
     assert _headline(column="赛场之上", matchup="锦织圭 vs 商竣程").endswith(
-        "锦织圭 vs 商竣程"
+        "锦织圭vs商竣程"
     )
     # 比分说不清的片子（退赛、以转折为主）改用一句话概括，顶掉末尾那一格
     assert _headline(column="赛场之上", matchup="锦织圭 vs 商竣程", score="2:1",
                      summary="复出首战打满三盘") == (
-        "7.28 赛场之上 | 复出首战打满三盘")
+        "复出首战打满三盘")
 
 
 def test_page阶段不发推送也不需要成片(tmp_path):
@@ -866,7 +866,7 @@ def test_page阶段不发推送也不需要成片(tmp_path):
     page = (outdir / "copy.html").read_text(encoding="utf-8")
     # 格式化标题就是这条帖子的标题，复制页那一格里放的是它；文案自己那句钩子
     # 退成正文第一行。（口径选择，问过之后定的。）
-    assert "7.28 赛场之上 | 锦织圭 2:1 商竣程" in page   # 这一跑没传 --event
+    assert "锦织圭2:1商竣程" in page   # 这一跑没传 --event
     assert "小红书那句标题" in page and "正文第二行" in page
     assert "navigator.clipboard" in page or "execCommand" in page
     # 这份 spec 没有旁白段、抽不出末屏一问，那一格就不该留个空框加一个
@@ -1961,38 +1961,27 @@ def test_回合镜头也铺满不走contain():
     assert "回合镜头必须用这个" not in source
 
 
-def test_标题整句不超过20个字位():
-    """账号所有者的原话：「标题控制在 20 个汉字内，言简意赅直达重点，精炼内容。
-    讲不完的放到副标题，可以放到正文第一行，详细总结概括。」
-
-    卡的是**整句**，不是末尾那一格——以前只卡 `summary`，前面还挂着日期、栏目、
-    赛事轮次，加起来 25 个字位，通知栏里根本读不完。
-
-    量的是小红书字位（全角 1、半角 0.5），不是 `len()`：「7.28 」五个半角只占
-    2.5 个，按 `len()` 算会白白吃掉两格。两处用同一把尺，标题才不会在这儿过、
-    到小红书又超。
-    """
+def test_标题整句不超过20个字符():
+    """2026-10-02：数字、标点各算一个字符；标题不能带任何空白。"""
     import pytest  # noqa: PLC0415
 
     sys.path.insert(0, str(Path("tools").resolve()))
-    sys.path.insert(0, str(Path("src").resolve()))
     from push_reel import TITLE_MAX, headline  # noqa: PLC0415
-    from tennislive.render.xiaohongshu import xhs_title_len  # noqa: PLC0415
 
     out = Path("output/2026-07-28/reel/x")
     got = headline(out, "赛场之上", "锦织圭 vs 商竣程", "2:1", "", "商竣程复出输球")
-    assert xhs_title_len(got) <= TITLE_MAX, got
-    # **赛事名就是这么被挤出去的**，所以工作流里 event 默认留空
+    assert len(got) <= TITLE_MAX and not any(c.isspace() for c in got), got
+    # 日期、栏目、赛事依然是元数据，不强塞到可复制标题里。
+    assert headline(out, "赛场之上", "锦织圭 vs 商竣程", "2:1", "华盛顿 ATP500 首轮",
+                    "商竣程复出输球") == got
+    assert headline(out, "赛场之上", "", summary="1" * 19 + "?") == "1" * 19 + "?"
+    with pytest.raises(SystemExit, match="21 个字符"):
+        headline(out, "赛场之上", "", summary="1" * 20 + "?")
+    assert headline(out, "赛场之上", "", summary="连赢9局，16岁孙心然过关") == "连赢9局16岁孙心然过关"
+    # 工作流的默认值自己也要过得了这道闸。
     text = WORKFLOW.read_text(encoding="utf-8")
-    block = text[text.index("      event:"):text.index("      summary:")]
-    assert 'default: ""' in block, "event 默认要留空"
-    with pytest.raises(SystemExit, match="字位"):
-        headline(out, "赛场之上", "锦织圭 vs 商竣程", "2:1", "华盛顿 ATP500 首轮",
-                 "商竣程复出输球")
-    # 工作流的默认值自己也要过得了这道闸
-    summary = re.search(r"      summary:.*?default: \"(.*?)\"", text, re.S).group(1)
-    assert xhs_title_len(headline(out, "赛场之上", "伊埃拉 vs 郑钦文", "2:1", "",
-                                  summary)) <= TITLE_MAX
+    summary = re.search(r'      summary:.*?default: "(.*?)"', text, re.S).group(1)
+    assert len(headline(out, "赛场之上", "伊埃拉 vs 郑钦文", "2:1", "", summary)) <= TITLE_MAX
 
 
 def test_复制页探活要认内容不能只认200(monkeypatch):
@@ -2038,16 +2027,16 @@ def test_标题末尾那句不超过二十字():
     """标题是给人扫的，不是给人读的。超了直接报错，别让它悄悄溜出去——
     和「卡片上每条不超过 16 字」同一个道理。"""
     sys.path.insert(0, str(Path("tools").resolve()))
-    from push_reel import SUMMARY_MAX, headline  # noqa: PLC0415
+    from push_reel import TITLE_MAX, headline  # noqa: PLC0415
 
     text = WORKFLOW.read_text(encoding="utf-8")
     default = text.split("      summary:")[1].split("default:")[1]
     default = default.split("\n")[0].strip().strip('"')
-    assert len(default) <= SUMMARY_MAX, f"工作流默认那句 {len(default)} 字：{default}"
+    assert len(default) <= TITLE_MAX, f"工作流默认那句 {len(default)} 字：{default}"
 
     try:
         headline(Path("output/2026-07-28/reel/x"), "赛场之上", "甲 vs 乙",
-                 summary="一" * (SUMMARY_MAX + 1))
+                 summary="一" * (TITLE_MAX + 1))
     except SystemExit as exc:
         assert "超过" in str(exc)
     else:
@@ -3565,10 +3554,10 @@ def test_推送元数据从spec读工作流不许挂上一条片子的默认值(
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
 
-    # 两条已发的片子，一条 VS 版式一条 solo，标题要原样重现
+    # 一条 VS 版式一条 solo：保留标题内容，按当前规则省去日期和栏目装饰
     for slug, outdir, want in (
         ("wong-brooksby", "output/2026-07-31/reel/wong-brooksby",
-         "7.31 赛场之上 | 黄泽林首进ATP四强"),
+         "黄泽林首进ATP四强"),
         ("hewitt-washington", "output/2026-07-31/reel/hewitt-washington",
          "7.31 网球有故事 | 休伊特之子做了那个动作"),
     ):
@@ -4238,7 +4227,7 @@ def test_每条spec都算得出一句过得了闸的标题():
             meta["event"], meta["summary"])
     assert len(titles) >= 9, f"只校到 {len(titles)} 条 spec，判据失效了"
 
-    # ② 产物在的时候（本地沙箱）再验一层：和已经发出去的那句逐字相同
+    # ② 历史已发页面不回写；只把旧标题的内容部分规范化后比较
     latest: dict[str, Path] = {}
     for outdir in _published_reels():
         if (outdir / "copy.html").is_file():
@@ -4254,8 +4243,15 @@ def test_每条spec都算得出一句过得了闸的标题():
         got = push_reel.headline(outdir, push_reel.column_of(copy_path),
                                  meta["matchup"], meta["score"], meta["event"],
                                  meta["summary"])
-        assert got == want, (
-            f"{slug}：从 spec 算出来的是「{got}」，已经发出去的是「{want}」")
+        from html import unescape  # noqa: PLC0415
+        from tennislive.render.copy_title import copy_title  # noqa: PLC0415
+        historical = unescape(want)
+        if push_reel.column_of(copy_path) == "赛场之上":
+            historical = re.split(r"[|｜丨]", historical)[-1]
+            historical = re.sub(r"(?<=\d)\s+(?=\d+[-:])", "，", historical)
+            historical = copy_title(historical)
+        assert got == historical, (
+            f"{slug}：从 spec 算出来的是「{got}」，历史标题内容是「{historical}」")
 
 
 def test_写错的push字段要报错不许悄悄不生效():
@@ -17221,7 +17217,9 @@ def test_赛场之上要留一段精彩的原声解说_不留要写明为什么(
         if p.stem in _NO_BROADCAST_QUOTE_LEGACY:
             legacy_seen.add(p.stem)
             continue
-        assert (spec.get("_no_quote_why") or "").strip(), (
+        from tools.narrated_audio_mode import no_quote_reason
+        structured_reason = no_quote_reason(spec)
+        assert (spec.get("_no_quote_why") or structured_reason).strip(), (
             f"{p.name} 没留原声解说，也没写 `_no_quote_why`。\n"
             f"账号所有者 2026-09-19：「精彩的原声解说，配上中英文字幕保留下来，"
             f"这样感觉更有氛围感」——这是全局要求。\n"
