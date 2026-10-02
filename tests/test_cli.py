@@ -292,7 +292,8 @@ def test_content_command_generates_complete_preview_package(tmp_path, monkeypatc
     item = payload["items"][0]
     assert item["kind"] == "preview"
     assert item["match_id"] == "preview-cn"
-    assert "7.19｜" in item["title"]
+    assert item["title"].startswith("7.19今日球局|")
+    assert len(item["title"]) <= 20 and not any(c.isspace() for c in item["title"])
     assert len(item["cards"]) == 4
     assert all(Path(card).exists() for card in item["cards"])
     package = Path(item["package_dir"])

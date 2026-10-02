@@ -9,7 +9,7 @@ from tennislive.models import MatchStats, MatchStatus, StatPair
 from tennislive.qa import check_xhs_post
 
 
-TITLE = "🎾7.20｜今晚焦点值得守"
+TITLE = "7.20今日球局|今晚焦点值得守"
 
 
 def _digest(*, schedule_count: int = 3) -> Digest:
@@ -102,7 +102,7 @@ def test_publish_qa_warns_but_does_not_block_an_untranslated_top_500_player(monk
     assert any("前500球员中文名待异步补充" in item for item in warn)
 
 
-def test_xhs_daily_title_requires_current_date_and_platform_length():
+def test_xhs_daily_title_requires_prefix_and_complete_character_limit():
     digest = _digest()
 
     missing_date, _ = check_xhs_post(
@@ -117,7 +117,7 @@ def test_xhs_daily_title_requires_current_date_and_platform_length():
     assert any("标题超长" in item for item in too_long)
 
 
-def test_xhs_flash_requires_date_but_is_exempt_from_daily_body_target():
+def test_xhs_flash_title_requires_date_and_is_exempt_from_daily_body_target():
     match = make_match(
         status=MatchStatus.SCHEDULED,
         winner=None,

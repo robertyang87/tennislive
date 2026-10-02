@@ -18,7 +18,16 @@
       }
     ],
     "winner": "诺斯科娃",
-    "result": "6-4 6-1"
+    "result": "6-4 6-1",
+    "portrait": {
+      "image": "assets/reel/noskova-ruse-cover.jpg",
+      "focus": 0.0,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「linda noskova」「Beijing」，日期对上当地 2026-10-02（Asia/Shanghai；日期来源 flashscore dc_1_EHSopi7D）；EXIF 拍摄 2026:10:02 13:32:03+08:00。② 分辨率：6000×4000，zoom 1 铺 1080×1440 是 2.78×（不放大）。③ 认人：最大那张脸像 诺斯科娃 0.54（≥ 0.34）。④ 睁眼：EAR 0.3365（≥ 0.16）。⑤ 钩子带：脸落在 y321~722，钩子顶边 790。排序：[True, False, False, True, True, 401, 0.5359]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/02/0a10f257-25c3-4a4e-aa1e-773f2426f7d1/Linda-Noskova-Beijing-2026.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/02/0a10f257-25c3-4a4e-aa1e-773f2426f7d1/Linda-Noskova-Beijing-2026.jpg（条目 #4585456，接口发布 2026-10-02T07:04:49Z，EXIF 拍摄 2026:10:02 13:32:03+08:00（UTC 2026-10-02T05:32:03Z），原图 6000×4000），说明原文「Linda Noskova, Beijing 2026 · BEIJING, CHINA - OCTOBER 2: Linda Noskova of Czech Republic in action against Elena-Gabriela Ruse of Romania during their Women&apos;s Singles second round match on day three of China Open at the National Tennis Center on October 2, 2026 in Beijing, China. (Photo by Fre」，署名 Getty Images；Getty Images；Fred Lee；2026 Fred Lee。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -310,49 +319,19 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "waiting",
-    "retryable": false,
-    "cold_open": {
-      "start": 258.92,
-      "end": 274.8,
-      "kind": "match_point",
-      "winner_visible": true,
-      "reason": "窗口包含最后赛点回合与赛后反应：260.5s 比分 6-4 6-1 完赛；268.5s–274.5s 赢家诺斯科娃（白裙白帽）赛后慢走到网前准备握手，低头收拍，笑容可见；270.5s 抬头正面近景。这是 6-1 收盘后的紧接余波。",
-      "confidence": 0.9
-    },
-    "ending": {
-      "start": 258.92,
-      "end": 289.08,
-      "kind": "winner_celebration",
-      "winner_visible": true,
-      "reason": "完整覆盖冷开场：260.5s 收盘比分 6-4 6-1；268.5s–274.5s 赢家诺斯科娃走网前低头收拍、近景；276.5s–278.5s 网前握手；280.5s–282.5s 双方近网道贺；284.5s–288.5s 诺斯科娃走回己方半区看台，握手并致意。覆盖赛点+赢家+握手。",
-      "confidence": 0.92
-    },
-    "cover": {
-      "same_match": false,
-      "subject": "",
-      "moment": "other",
-      "wrong_or_old": true,
-      "reason": "任务说明未提供候选封面照片，仅有源时间码图，因此无法证明为同场封面；同_match 判 false。",
-      "confidence": 0.3
-    },
+    "visual_status": "error",
+    "retryable": true,
     "problems": [
-      "ending 必须是 3-30 秒的完整收官窗口",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.30 低于 0.80",
-      "封面人物应为 诺斯科娃，模型识别为 空",
-      "封面情绪应为 winner_celebration，现在是 other"
-    ],
-    "model_attempts": 1,
-    "input_sha256": "daac63d9332a0d0a941f35e454e80b0e88fef07bee2ac7c48ccfdcbf43d075d1",
-    "inputs": [
-      "contact_00.jpg",
-      "contact_02.jpg",
-      "contact_03.jpg",
-      "contact_04.jpg",
-      "contact_05.jpg"
-    ],
-    "cover_image": ""
+      "MiniMax API：HTTPError: HTTP Error 400: Bad Request"
+    ]
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "EHSopi7D",
+      "start_utc": "2026-10-02T05:25:00Z",
+      "end_utc": "2026-10-02T06:49:37Z",
+      "source": "flashscore dc_1_EHSopi7D（DC／DD）"
+    },
+    "replaced_under": "daac63d9332a0d0a941f35e454e80b0e88fef07bee2ac7c48ccfdcbf43d075d1"
   }
 }

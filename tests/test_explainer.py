@@ -2718,7 +2718,7 @@ def test_复制页可达但内容是旧版时也要摘掉按钮():
     old_page = to_copy_page("7.29 今日赛程 | 郑钦文凌晨1点战伊埃拉\n\n正文甲")
     new_page = to_copy_page("7.29 今日赛程 | 王欣瑜战萨姆索诺娃\n\n正文乙")
     live_old, live_new = _Resp(old_page), _Resp(new_page)
-    fresh = "7.29 今日赛程 | 王欣瑜战萨姆索诺娃"
+    fresh = "7.29今日赛程|王欣瑜战萨姆索诺娃"
 
     with mock.patch.object(requests, "get", return_value=live_old):
         assert not _probe_page("http://x/copy.html", attempts=1, expect=fresh), (
@@ -4559,7 +4559,7 @@ def test_那一千字的闸是四条线共用的一处出处():
     from tennislive.render.pushmsg import XHS_BODY_MAX, to_copy_page
 
     # ① 行为：顶格放行、多一个字就拦
-    at_cap = "标题\n\n" + "字" * XHS_BODY_MAX
+    at_cap = "10.2网球有故事|标题\n\n" + "字" * XHS_BODY_MAX
     assert "字" * 20 in to_copy_page(at_cap), "顶格那一份应该照常渲出来"
     with pytest.raises(SystemExit) as e:
         to_copy_page("标题\n\n" + "字" * (XHS_BODY_MAX + 1))
@@ -4764,4 +4764,3 @@ def test_塞伦多洛全名不误报而同句错姓氏仍报错():
     hits = scan(full + "，" + wrong + "。")
     assert ("塞伦多罗", "塞伦多洛") in hits
     assert (wrong, full) in hits
-
