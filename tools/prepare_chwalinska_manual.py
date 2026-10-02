@@ -13,7 +13,7 @@ rows=[{'start':s.start,'end':s.end,'text':s.text.strip(),'avg_logprob':s.avg_log
 (a.outdir/'broadcast_asr.json').write_text(json.dumps({'model':'medium.en','language':info.language,'segments':rows},ensure_ascii=False,indent=2)+'\n')
 (a.outdir/'captions.txt').write_text(''.join(f"{r['start']:.2f}\t{r['text']}\n" for r in rows))
 frames=[]
-for low,high in [(35.0,38.2),(255.8,257.8)]:
+for low,high in [(35.0,38.2),(255.8,257.8),(279.8,283.2)]:
  for i in range(round((high-low)/0.2)+1):
   t=round(low+0.2*i,2);f=a.outdir/f'portrait_{t:06.2f}.jpg'
   subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-ss',str(t),'-i',str(source),'-frames:v','1','-q:v','2','-y',str(f)],check=True)

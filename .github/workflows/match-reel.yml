@@ -1112,6 +1112,10 @@ jobs:
 
       - name: 月亮姐完全重做 — 原始转播转写和本场封面采样
         if: github.event.inputs.mode == 'probe' && github.event.inputs.slug == 'yastremska-chwalinska'
+        env:
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
           pip install -q faster-whisper
           python tools/prepare_chwalinska_manual.py --outdir "${{ steps.paths.outputs.outdir }}"
