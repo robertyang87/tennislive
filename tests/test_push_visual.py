@@ -284,7 +284,7 @@ def test_字卡推送图多也装得下_每张图不比改之前更贵(tmp_path,
             for i in range(26)]
     for u in urls:
         (tmp_path / rel / u.rsplit("/", 1)[1]).write_bytes(b"x")
-    xhs = "🎾9.14 网球有故事｜谢尔顿为什么在大学多读了一年\n\n" + "字" * 1000
+    xhs = "9.14网球有故事|谢尔顿为何多读1年\n\n" + "字" * 1000
 
     def sent(n: int) -> str:
         body = knowledge_push_html_from_parts(
