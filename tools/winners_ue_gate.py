@@ -49,10 +49,18 @@ WANG_EALA_OMISSION = {
 def _wang_eala_omission_problem(spec: dict) -> str | None:
     """Validate only the Asian Games film explicitly approved by the owner."""
     stats = spec["stats"]
+    if any(not isinstance(stats.get(side), dict) for side in ("a", "b")):
+        return "Winners/UE 省略必须保留双方统计对象"
     if stats.get("_winners_ue_omission") != WANG_EALA_OMISSION:
         return "Winners/UE 省略仅限王曦雨–伊埃拉亚运半决赛本期的明确用户决定，批准记录不匹配"
     match = spec.get("_match") or {}
     cover = spec.get("cover") or {}
+    if not isinstance(match, dict) or not isinstance(cover, dict):
+        return "Winners/UE 省略需要本场身份和封面对象"
+    people = cover.get("matchup")
+    if (not isinstance(people, list) or len(people) != 2
+            or not all(isinstance(p, dict) for p in people)):
+        return "Winners/UE 省略需要两个明确的统计列球员"
     if (spec.get("slug") != WANG_EALA_OMISSION["slug"]
             or match.get("status") != "result_verified"
             or match.get("source") != "official_asian_games"
@@ -66,8 +74,8 @@ def _wang_eala_omission_problem(spec: dict) -> str | None:
             or cover.get("eyebrow") != "赛场之上"
             or cover.get("winner") != "王曦雨"
             or cover.get("result") != WANG_EALA_OMISSION["winner_result"]
-            or [(p.get("name"), p.get("name_en")) for p in cover.get("matchup", [])
-                if isinstance(p, dict)] != [("王曦雨", "Xiyu Wang"), ("伊埃拉", "Alexandra Eala")]):
+            or [(p.get("name"), p.get("name_en")) for p in people]
+            != [("王曦雨", "Xiyu Wang"), ("伊埃拉", "Alexandra Eala")]):
         return "Winners/UE 单片省略批准与本场身份、日期、赢家、比分或球员列不一致"
     if any(key in stats[side] for side in ("a", "b") for key in FIELDS):
         return "批准省略须移除双方 Winners/UE 字段，不得显示 null、零或推测数值"
@@ -272,4 +280,3 @@ def problem(spec: dict) -> str | None:
 def require(spec: dict) -> None:
     if issue := problem(spec):
         raise ValueError(issue)
-

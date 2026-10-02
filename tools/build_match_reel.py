@@ -2864,6 +2864,8 @@ class Segment:
     # 水印条裁出画外——这个键原来在允许字段表里、**渲染一处都没读**，
     # 写了不报错也不生效（run 36214015142 渲出来水印原样还在）。
     crop_zoom: float = 1.0
+    # Explicit whole-frame foreground sizing; other framing keeps its geometry.
+    full_source_scale: float = 1.0
     # Optional per-segment subtitle anchor; absent keeps the existing layout.
     subtitle_bottom: int | None = None
 
@@ -3350,6 +3352,16 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             raise ReelError(f"第 {i + 1} 段 contain_keep 要是 0.5~1.0 的比例（拿到 {raw!r}）")
         return float(raw)
 
+    def _seg_full_source_scale(s: dict, i: int) -> float:
+        if "full_source_scale" not in s:
+            return 1.0
+        raw = s["full_source_scale"]
+        if s.get("fit") != "full_source":
+            raise ReelError(f"第 {i + 1} 段 full_source_scale 只支持 fit=full_source")
+        if type(raw) is not float or not math.isfinite(raw) or not 0.5 <= raw <= 1.0:
+            raise ReelError(f"第 {i + 1} 段 full_source_scale 要是 0.5~1.0 的有限浮点比例")
+        return raw
+
     def _seg_score_windows(s: dict, i: int) -> tuple[tuple[float, float], ...]:
         if "score_inset_windows" not in s:
             return ()
@@ -3397,7 +3409,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
             stray = sorted(set(s) & {"start", "end", "source", "track",
                                      "quote", "inset", "speed", "mute", "cx",
-                                     "crop_zoom", "fit", "crosses_cut", "point_end_ok",
+                                     "crop_zoom", "full_source_scale", "fit", "crosses_cut", "point_end_ok",
                                      "score_inset", "score_inset_windows"})
             if stray:
                 raise ReelError(f"第 {i + 1} 段是整屏证据段（image），"
@@ -3430,6 +3442,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])),
                        fill_y=_seg_fill_y(s, i),
                        contain_keep=_seg_contain_keep(s, i),
+                       full_source_scale=_seg_full_source_scale(s, i),
                        crop_zoom=_seg_crop_zoom(s, i))
 
     segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i))
@@ -3690,7 +3703,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
-    "segment": ("bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
+    "segment": ("bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "full_source_scale", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
@@ -4477,13 +4490,15 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         keep = (native_w if seg.fit == "full_source"
                 else contain_keep_width(native_w, seg.contain_keep))
         x = (native_w - keep) // 2
+        foreground_w = (round(VIDEO_W * seg.full_source_scale) // 2 * 2
+                        if seg.fit == "full_source" else VIDEO_W)
         chain = (
             f"split=2[bg][fg];"
             f"[bg]crop={keep}:{native_h}:{x}:0,"
             f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
             f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
             f"[fg]crop={keep}:{native_h}:{x}:0,"
-            f"scale={VIDEO_W}:-2:flags=lanczos[fgs];"
+            f"scale={foreground_w}:-2:flags=lanczos[fgs];"
             f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
         )
         labeled = True
@@ -4500,7 +4515,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             # 板淡出的那几秒照旧不贴（spans / 逐帧蒙版，和铺满段同一套）。
             x0, y0, x1, y1 = box
             ratio = VIDEO_W / CROP_W
-            fratio = VIDEO_W / keep
+            fratio = foreground_w / keep
 
             def _even(v: float) -> int:
                 return max(2, -(-int(round(v)) // 2) * 2)
@@ -4537,12 +4552,12 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 # 把板那一块 delogo 掉（按四周的地板插值），再贴整条板。
                 f"[fg]delogo=x={x0}:y={y0}:w={x1 - x0}:h={min(y1, native_h - 2) - y0},"
                 f"crop={keep}:{native_h}:{x}:0,"
-                f"scale={VIDEO_W}:{fh}:flags=lanczos[fgs];"
-                f"[bgb][fgs]overlay=0:{top}[m];"
+                f"scale={foreground_w}:{fh}:flags=lanczos[fgs];"
+                f"[bgb][fgs]overlay=(W-w)/2:{top}[m];"
                 + patch +
                 f"[m][b]overlay=0:{oy}{gate},{sp}fps={FPS_EXPR},setsar=1"
             )
-        if native_w < native_h:
+        if native_w < native_h and not (seg.fit == "full_source" and seg.full_source_scale < 1.0):
             # **竖屏源一律铺满整个画布，不留两侧模糊垫底**——账号所有者
             # 2026-09-25 看完 sinner-beijing-withdrawal-2026（辛纳本人 X 上
             # 1080×1920 的退赛视频按 contain 缩成 810 宽、两边各垫一条模糊）：
@@ -11862,4 +11877,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
