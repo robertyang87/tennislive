@@ -18,7 +18,12 @@
       }
     ],
     "winner": "米拉·安德烈耶娃",
-    "result": "3-6 6-0 6-0"
+    "result": "3-6 6-0 6-0",
+    "portrait": {
+      "image": "assets/reel/yuan-andreeva-beijing-2026-r2-chinaopen-official.jpg",
+      "_portrait_why": "中网本场官方赛报实拍；EXIF 2026-10-02 11:52:04+08:00落在比赛窗口；袁悦击球中，正面可辨、双眼睁开。来源 https://www.chinaopen.com/cn/contents/281/1624.html",
+      "source_url": "https://www.chinaopen.com/cn/upload/images/2026/10/827ac52c284cb630.jpg"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -26,7 +31,8 @@
     "event": "Beijing",
     "year": 2026,
     "round": "Round of 64",
-    "court": "Capital Group Diamond"
+    "court": "Capital Group Diamond",
+    "status": "waiting_stats"
   },
   "source_url": "https://youtu.be/V6ekW4Qy1jA",
   "_match": {
@@ -60,7 +66,10 @@
       null,
       null,
       null
-    ]
+    ],
+    "date": "2026-10-02",
+    "start_utc": "2026-10-02T02:48:29.873Z",
+    "official_result_source": "https://www.wtatennis.com/tournaments/china-open/scores/LS055"
   },
   "stats": {
     "a": {
@@ -90,6 +99,25 @@
       "pts_total": 143,
       "first_total": 61,
       "headshot": "assets/players/headshots/wta-331809.jpg"
+    },
+    "_winners_ue_check": {
+      "sources": {
+        "official_stats": {
+          "status": "unavailable",
+          "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS055/stats",
+          "reason": "本场全场setnum=0返回没有winners和unforced errors，不能推算"
+        },
+        "editorial": {
+          "status": "unavailable",
+          "source_url": "https://www.chinaopen.com/cn/contents/281/1624.html",
+          "reason": "官方赛报未给制胜分/非受迫失误"
+        },
+        "tnns": {
+          "status": "not_verified",
+          "source_url": "https://github.com/robertyang87/tennislive/actions/runs/36974817505",
+          "reason": "246场日期列表未匹配球员；本机遇人机验证停止，不足以断言本场无统计"
+        }
+      }
     }
   },
   "_hit_data": [
@@ -330,7 +358,8 @@
     "推送文案已通过事实校验；默认开启 QC 后自动推送",
     "窗口起草 7 段",
     "封面官方实拍：比赛页上还没有这一场的赛后稿（页面共 8 篇文章，没有一篇 slug 含这两个姓）。Match Reaction 一般赛后一小时内上线——等会儿再试，别当成「没有实拍」。",
-    "⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why"
+    "⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why",
+    "会话查证已补中网官方本场袁悦照片；本条仍waiting_stats，制胜分/非受迫失误不能缺省。视觉旧报告的采访窗口不采纳，后续需要新证据审核。"
   ],
   "_visual_evidence": {
     "model": "MiniMax-M3",
@@ -362,7 +391,8 @@
       "confidence": 0.8
     },
     "problems": [
-      "没有官方高清封面候选"
+      "本场封面候选已补，需按新图重新审核；已有冷开场及结尾416.32–433.52属于赛后采访，不能用作赛场之上比赛结局",
+      "waiting_stats：未核实双方全场制胜分和非受迫失误，不提升、不render"
     ],
     "model_attempts": 1,
     "input_sha256": "bc6f9f301d0bd260b00371f7beca5c7dbd20a5508a2d68a86aa700ae62ee7644",
