@@ -85,6 +85,7 @@ render 每一步都记时间，末尾按耗时排一张表（`report_timings()`�
 from __future__ import annotations
 
 import narrated_audio_mode
+import reviewed_effects_mode
 
 import argparse
 import json
@@ -593,7 +594,7 @@ def dissolve_filtergraph(lengths: list[float], fade: float,
 
 
 def duck_filtergraph(filters: list[str], voice_labels: list[str],
-                     music: str = "", *, mute_original: bool = False) -> str:
+                     music: str = "", *, mute_original: bool = False, reviewed_bed: str = "") -> str:
     """闪避的滤镜图：没人说话时现场声开到 `BED_LOUD`，解说一进来就压下去。
 
     **`[vk0]apad[vk]` 那一段不能省，而且不能只当它是个细节。**
@@ -623,12 +624,20 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str],
     抽成函数是为了让判据能**真跑一次混音**：查源码文本的断言只能防「有人把它
     删了」，防不住「它从来没工作过」。
     """
+    if reviewed_bed:
+        # Speech-separated ball transients must stay audible under Chinese TTS.
+        # Fixed native bed gain; no voice-driven compressor on reviewed effects.
+        if music or mute_original:
+            raise ValueError("审核击球床不允许额外音乐或静音原声模式")
+        return (reviewed_bed + f"{';'.join(filters)};"
+                f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
+                "[bed][voice]amix=inputs=2:normalize=0:dropout_transition=0,asetpts=N/SR/TB[out]")
     # 音乐**不进闪避**：它已经在现场声的 4% 上，再让 sidechaincompress 压一道
     # 等于没有；而且喂进 sidechain 会把「有没有人说话」这个判据搅浑。它直接进
     # 最后那次 amix，和闪避完的现场声、解说三路相加。
     beds = "[duck][vm]" + ("[music]" if music else "")
     return (
-        ("anullsrc=r=48000:cl=stereo[bed];" if mute_original else f"[0:a]volume={BED_LOUD}[bed];")
+        (reviewed_bed or ("anullsrc=r=48000:cl=stereo[bed];" if mute_original else f"[0:a]volume={BED_LOUD}[bed];"))
         + f"{';'.join(filters)};"
         f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
         f"[voice]asplit=2[vk0][vm];"
@@ -2869,6 +2878,8 @@ class Segment:
     crop_zoom: float = 1.0
     # Optional per-segment subtitle anchor; absent keeps the existing layout.
     subtitle_bottom: int | None = None
+    # Measured original board retained in an uncropped source frame; never an inset.
+    source_scorebox: tuple[int, int, int, int] | None = None
 
     @property
     def length(self) -> float:
@@ -3437,6 +3448,22 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 
     segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i))
                 for i, s in enumerate(spec["segments"])]
+    source_scorebox = spec.get("source_scorebox")
+    if source_scorebox is not None:
+        original_box = _scorebox4(source_scorebox)
+        if original_box is None:
+            raise ReelError("source_scorebox 要写实测源画面框 [x0,y0,x1,y1]")
+        for i, (raw, seg) in enumerate(zip(spec["segments"], segments)):
+            if seg.image or raw.get("title_card") or raw.get("stat_card"):
+                continue
+            preserves = (seg.fit == "full_source" or
+                         (seg.fit == "contain" and seg.contain_keep == 1.0))
+            if (not preserves or raw.get("score_inset") is not False
+                    or seg.score_inset or seg.cx not in (None, .5) or seg.track
+                    or seg.square_pan):
+                raise ReelError(f"第 {i + 1} 段 source_scorebox 保留原板要求完整源画面："
+                                "fit=full_source 或 contain_keep=1.0、居中、不回贴；普通fill不能免回贴")
+            seg.source_scorebox = original_box
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
                if s.image and s.image != STAT_CARD_PLACEHOLDER
                and not s.image.startswith(TITLE_CARD_PREFIX)
@@ -3608,7 +3635,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                  or spec.get("_column", "")).strip()
     if (layout != "band" and column == "赛场之上" and not spec.get("archival")
             and str(spec.get("slug", "")) not in legacy_fullbleed_no_scoreboard()):
-        missing_box = scorebox is None
+        missing_box = scorebox is None and source_scorebox is None
         undeclared, unclaimed = [], []
         for i, raw in enumerate(spec["segments"]):
             if raw.get("image") or raw.get("title_card") or raw.get("stat_card"):
@@ -3683,10 +3710,10 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
              "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
-             "music", "outro", "push", "rate", "scorebox", "segments",
+             "music", "outro", "push", "rate", "scorebox", "source_scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_fallbacks", "source_url",
-             "original_audio_mode", "owner_approval", "track",
+             "original_audio_mode", "owner_approval", "audio_effects_review", "track",
              "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
              "editorial"),
@@ -4481,6 +4508,10 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         keep = (native_w if seg.fit == "full_source"
                 else contain_keep_width(native_w, seg.contain_keep))
         x = (native_w - keep) // 2
+        if seg.source_scorebox:
+            bx0, by0, bx1, by1 = seg.source_scorebox
+            if not (x <= bx0 < bx1 <= x + keep and 0 <= by0 < by1 <= native_h):
+                raise ReelError("source_scorebox 原板超出真实源画面取景，不能免回贴")
         chain = (
             f"split=2[bg][fg];"
             f"[bg]crop={keep}:{native_h}:{x}:0,"
@@ -6287,6 +6318,8 @@ def silence_findings(spec: dict, segments, probes: dict,
     """
     import probe_audio  # noqa: PLC0415
 
+    if reviewed_effects_mode.enabled(spec):
+        return [], ["  本条获准保留击球效果声：效果轨审核、精确raw窗口与最终PCM由渲后硬闸核验"]
     if narrated_audio_mode.enabled(spec):
         return [], ["  获准中文旁白模式：源原声将被真实移除；最终TTS与零底轨由成片PCM核验"]
     hard: list[str] = []
@@ -6859,6 +6892,8 @@ def digital_silence_check(spec: dict, segments, probes: dict, urls: dict, *,
     `demoted`：非空时硬伤照印、降成只报（dry-run 在 mode≠render 那几趟传 `mode_demoted()`）。"""
     import probe_audio  # noqa: PLC0415
 
+    if reviewed_effects_mode.enabled(spec):
+        return [], ["  本条击球效果声模式：效果床与本人TTS由渲后身份绑定及PCM核验"]
     if narrated_audio_mode.enabled(spec):
         return [], ["  获准中文旁白模式：仅计划内的静音留白；本人TTS由渲后实测硬闸校验"]
     cover_text = str((spec.get("cover") or {}).get("narration") or "").strip()
@@ -8734,7 +8769,7 @@ def cold_open_problem(spec: dict, *, primary: str | None = None) -> str | None:
             "真没有赢球后画面的源片，在 spec 顶层写 `_no_cold_open_why`。")
     if first.get("image"):
         return "「赛场之上」第 1 段是静图，不是赢球后的冷开场。\n" + hint
-    if str(first.get("narration") or "").strip() and not narrated_audio_mode.enabled(spec):
+    if str(first.get("narration") or "").strip() and not (narrated_audio_mode.enabled(spec) or reviewed_effects_mode.enabled(spec)):
         return ("「赛场之上」第 1 段配了中文旁白——那不是冷开场。"
                 "账号所有者 2026-09-25：「视频从赢球后的冷开场……是全局的要求」。\n"
                 + hint)
@@ -9710,6 +9745,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             resolve_masks(sources, segments, outdir,
                           Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
                           FPS_EXPR, SEG_FADE)
+        elif profile == "rna-slam":
+            from rna_scoreboard import resolve_masks as resolve_rna_masks
+            resolve_rna_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
         elif profile == "atp":
             # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
             # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
@@ -9946,6 +9984,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         print(f"[音乐] {music_spec['file']}：循环播放铺满 {film_seconds:.1f}s，"
               f"{pct}% 现场声（增益 {BED_LOUD * pct / 100:.4f}），"
               f"{max(0.0, film_seconds - MUSIC_FADE):.1f}s 起淡出")
+    reviewed_bed = ""
+    effects_windows = []
+    if reviewed_effects_mode.enabled(spec):
+        effects_inputs, reviewed_bed, effects_windows = reviewed_effects_mode.bed_graph(
+            spec, sources, audio_cue_offsets, 1 + mix_inputs.count("-i"))
+        mix_inputs.extend(effects_inputs)
     with stage("混音"):
         if filters:
             # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
@@ -9955,7 +9999,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "-i", str(silent), *mix_inputs,
                 "-filter_complex",
                 duck_filtergraph(filters, voice_labels, music_graph,
-                                 mute_original=narrated_audio_mode.enabled(spec)),
+                                 mute_original=narrated_audio_mode.enabled(spec), reviewed_bed=reviewed_bed),
                 # 这一步只是把解说混进现场声，产物是个 m4a——画面在这儿是
                 # 拿来给 `-shortest` 定长度的，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
@@ -9971,6 +10015,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     narrated_audio_mode.seal_mix(spec, outdir, mixed, voices, audio_cue_offsets,
                                 spoken_of, cover_voice, cover_secs, outro_voice, offset,
                                 probe_duration)
+    reviewed_effects_mode.seal_mix(spec, outdir, mixed, voices, audio_cue_offsets,
+                                  spoken_of, cover_voice, cover_secs, outro_voice, offset,
+                                  probe_duration, effects_windows)
     final = outdir / f"{spec.get('slug', 'reel')}.mp4"
     topbar = _topbar_lines(spec)
     topbar_ass = None

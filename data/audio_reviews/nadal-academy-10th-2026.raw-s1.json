@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=mXIoUmxozgw",
+  "source_sha256": "c58680e11e07e6e08bcc72756cfe26bf974d9cd6ac03a8f7cea2007411da7f0c",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: real faster-whisper small + medium CPU int8 Silero VAD cross-check; no human listening claim",
+  "reviewed_at": "2026-10-03T20:52:45.791501+00:00",
+  "status": "complete",
+  "reviewed_from": 132.4,
+  "reviewed_to": 145.7,
+  "foreground_english": [],
+  "no_foreground_english_reason": "Two independent model-size VAD runs return no utterances across the entire exact 132.4–145.7 source window. Longer surrounding-window VAD outputs also contain no utterances here. Language guesses without speech are not treated as spoken-language identification.",
+  "uncertain_spans": [],
+  "asr_results": [
+    {
+      "model": "small",
+      "language": "en",
+      "probability": 0.3531171679496765,
+      "segments": []
+    },
+    {
+      "model": "medium",
+      "language": "en",
+      "probability": 0.5062422156333923,
+      "segments": []
+    }
+  ]
+}

@@ -42,6 +42,7 @@ PROBE_FPS = 5
 #: `--scorebox` 另扫一份。x1 是「这场最宽那一档」，各条不同，这里只当扫描宽度的提示。
 #: 判据 `test_标定框和全库spec用的框对得上`：哪天某家转播换了框，那条测试先红。
 CALIBRATED = {
+    "rna-slam": ((183, 890, 645, 1000),),
     "atp": ((98, 920, 519, 1029),),
     "wta": ((90, 870, 550, 980),),
     "itf-bjk": ((145, 915, 600, 1012),),
@@ -78,12 +79,13 @@ EDGE_TOL = 8
 
 def _modules():
     """render 用的那五套判据。**懒加载**：dry-run 那条路不需要 numpy。"""
+    import rna_scoreboard  # noqa: PLC0415
     import atp_scoreboard  # noqa: PLC0415
     import itf_scoreboard  # noqa: PLC0415
     import lavercup_scoreboard  # noqa: PLC0415
     import scoreboard_geometry  # noqa: PLC0415
     import wta_scoreboard  # noqa: PLC0415
-    return {"atp": atp_scoreboard, "wta": wta_scoreboard, "itf-bjk": itf_scoreboard,
+    return {"rna-slam": rna_scoreboard, "atp": atp_scoreboard, "wta": wta_scoreboard, "itf-bjk": itf_scoreboard,
             "lavercup": lavercup_scoreboard, "us-open": scoreboard_geometry}
 
 
@@ -100,8 +102,8 @@ def band_width(profile: str, box: tuple[int, int, int, int], source_w: int) -> i
         return min(room, mods["wta"].SCAN_W)
     if profile in ("atp", "us-open"):
         return min(room, mods["atp"].SCAN_W)
-    if profile == "itf-bjk":
-        return min(room, max(int((x1 - x0) * mods["itf-bjk"].HINT_SLACK), source_w // 2 - x0))
+    if profile in ("itf-bjk", "rna-slam"):
+        return min(room, max(int((x1 - x0) * mods[profile].HINT_SLACK), source_w // 2 - x0))
     if profile == "lavercup":
         return min(room, max(int((x1 - x0) * 1.3), mods["lavercup"].WIDE_SCAN_PX,
                              source_w // 2 - x0))
