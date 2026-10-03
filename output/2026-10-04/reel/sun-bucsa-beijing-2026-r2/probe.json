@@ -35,8 +35,7 @@
     2406.44,
     2479.48,
     2521.64,
-    2524.92,
-    2544.2
+    2524.92
   ],
   "point_ends": [
     4.0,
@@ -678,12 +677,11 @@
     "_how": "逐 0.05 秒 RMS（8 kHz 单声道，同 check_reel_landed.per_second_db），dB 向上取整到 0.1；任何含它的 window 秒窗口按 quietest_gain 都红不了成片的块只记「响」，按游程写成 L<块数>"
   },
   "clip_from": 2365.0,
-  "clip_to": 2548.0,
+  "clip_to": 2544.2,
   "sheets": [
     "contact_00.jpg",
     "contact_01.jpg",
     "contact_02.jpg",
-    "contact_03.jpg",
     "score_00.jpg",
     "score_01.jpg",
     "score_02.jpg",
@@ -696,7 +694,7 @@
     "version": 1,
     "fps": 5,
     "t0": 2365.0,
-    "frames": 915,
+    "frames": 896,
     "scans": [
       {
         "box": [
@@ -705,7 +703,7 @@
           519,
           1029
         ],
-        "frames": 915,
+        "frames": 896,
         "profiles": {
           "atp": {
             "present": 0,
@@ -720,7 +718,7 @@
           550,
           980
         ],
-        "frames": 915,
+        "frames": 896,
         "profiles": {
           "wta": {
             "present": 672,
@@ -842,7 +840,7 @@
                 null
               ],
               [
-                38,
+                19,
                 null,
                 null
               ]
@@ -857,7 +855,7 @@
           600,
           1012
         ],
-        "frames": 915,
+        "frames": 896,
         "profiles": {
           "itf-bjk": {
             "present": 0,
@@ -872,7 +870,7 @@
           520,
           1036
         ],
-        "frames": 915,
+        "frames": 896,
         "profiles": {
           "lavercup": {
             "present": 0,
@@ -887,7 +885,7 @@
           920,
           1040
         ],
-        "frames": 915,
+        "frames": 896,
         "profiles": {
           "lavercup": {
             "present": 0,
@@ -902,7 +900,7 @@
           660,
           978
         ],
-        "frames": 915,
+        "frames": 896,
         "profiles": {
           "us-open": {
             "present": 0,
@@ -917,7 +915,7 @@
           554,
           988
         ],
-        "frames": 915,
+        "frames": 896,
         "profiles": {
           "atp": {
             "present": 0,
@@ -1083,7 +1081,7 @@
                 492
               ],
               [
-                39,
+                20,
                 null,
                 null
               ]
