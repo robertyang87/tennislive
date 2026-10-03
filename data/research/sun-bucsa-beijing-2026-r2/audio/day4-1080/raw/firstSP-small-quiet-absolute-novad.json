@@ -1,0 +1,83 @@
+{
+  "schema": "tennislive.derived-pcm-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=EuPUtfm-pA0",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 2506.32,
+  "range_to": 2521.15,
+  "created_at": "2026-10-03T18:30:58.600840+00:00",
+  "elapsed_seconds": 17.4,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 2518.32,
+      "end": 2521.12,
+      "text": " Thank you for watching!",
+      "avg_logprob": -1.257464423775673,
+      "no_speech_prob": 0.49053093791007996,
+      "compression_ratio": 0.7419354838709677,
+      "words": [
+        {
+          "start": 2518.32,
+          "end": 2519.72,
+          "word": " Thank",
+          "probability": 0.002673664828762412,
+          "chapter_start": 153.32,
+          "chapter_end": 154.72
+        },
+        {
+          "start": 2519.72,
+          "end": 2521.12,
+          "word": " you",
+          "probability": 0.9272195100784302,
+          "chapter_start": 154.72,
+          "chapter_end": 156.12
+        },
+        {
+          "start": 2521.12,
+          "end": 2521.12,
+          "word": " for",
+          "probability": 0.3571193516254425,
+          "chapter_start": 156.12,
+          "chapter_end": 156.12
+        },
+        {
+          "start": 2521.12,
+          "end": 2521.12,
+          "word": " watching!",
+          "probability": 0.763319730758667,
+          "chapter_start": 156.12,
+          "chapter_end": 156.12
+        }
+      ],
+      "chapter_start": 153.32,
+      "chapter_end": 156.12
+    }
+  ],
+  "transcribed_input_sha256": "43d76393680e4224460c8d5ba3cee1daf7adb74e2027b17ffef92dc3b402a47d",
+  "transcribed_input": "chapter-review-derived-mono-48k.wav",
+  "transcribed_input_is_original_video_bytes": false,
+  "original_source_sha256": "3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a",
+  "original_source_sha_provenance": {
+    "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/source-chapter-manifest.json",
+    "sha256": "752791a2d848ae5bdcfb4e74aee38c8c6f5e1e728c0bd61342244a04742cc6a4",
+    "source_hash_method": "actual complete original cache file read remotely during this export",
+    "export_run_id": "37143082855",
+    "export_head": "a31cfb583b22334cf41fbd81db53bdb57c60b22a"
+  },
+  "absolute_source_offset_seconds": 2365.0,
+  "reviewed_scope": "Only this183s derived PCM chapter or its recorded subwindow; full49minute original video was not transcribed locally.",
+  "actual_listening_performed": false,
+  "original_raw_local_document_sha256": "9f0f49d850bf213e3a5763527acbf827398aa7fb1552764b53e8f1a4bcb7177c",
+  "time_mapping": "Originalabsolute = localchapter+2365.0",
+  "chapter_range_from": 141.32,
+  "chapter_range_to": 156.15
+}

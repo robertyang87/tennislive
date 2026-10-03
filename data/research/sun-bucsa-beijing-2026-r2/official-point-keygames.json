@@ -1,0 +1,673 @@
+[
+  {
+    "set": 1,
+    "game": 1,
+    "server": "A",
+    "winner": "A",
+    "pointNumbers": [
+      1,
+      6
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 1,
+        "team": "A",
+        "score": 6,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 1,
+        "team": "B",
+        "score": 4,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 1,
+    "game": 2,
+    "server": "B",
+    "winner": "A",
+    "pointNumbers": [
+      7,
+      12
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 1,
+        "team": "A",
+        "score": 6,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 1,
+        "team": "B",
+        "score": 4,
+        "tieBreakScore": null
+      }
+    ],
+    "break": true,
+    "breakpointEvents": [
+      {
+        "pointNumber": 12,
+        "winner": "A",
+        "receiver": "A",
+        "before": {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        }
+      }
+    ]
+  },
+  {
+    "set": 1,
+    "game": 3,
+    "server": "A",
+    "winner": "B",
+    "pointNumbers": [
+      13,
+      20
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 1,
+        "team": "A",
+        "score": 6,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 1,
+        "team": "B",
+        "score": 4,
+        "tieBreakScore": null
+      }
+    ],
+    "break": true,
+    "breakpointEvents": [
+      {
+        "pointNumber": 20,
+        "winner": "B",
+        "receiver": "B",
+        "before": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      }
+    ]
+  },
+  {
+    "set": 1,
+    "game": 4,
+    "server": "B",
+    "winner": "B",
+    "pointNumbers": [
+      21,
+      24
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 1,
+        "team": "A",
+        "score": 6,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 1,
+        "team": "B",
+        "score": 4,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 1,
+    "game": 5,
+    "server": "A",
+    "winner": "A",
+    "pointNumbers": [
+      25,
+      30
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 1,
+        "team": "A",
+        "score": 6,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 1,
+        "team": "B",
+        "score": 4,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 1,
+    "game": 6,
+    "server": "B",
+    "winner": "B",
+    "pointNumbers": [
+      31,
+      36
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 1,
+        "team": "A",
+        "score": 6,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 1,
+        "team": "B",
+        "score": 4,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 1,
+    "game": 7,
+    "server": "A",
+    "winner": "A",
+    "pointNumbers": [
+      37,
+      46
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 1,
+        "team": "A",
+        "score": 6,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 1,
+        "team": "B",
+        "score": 4,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": [
+      {
+        "pointNumber": 42,
+        "winner": "A",
+        "receiver": "B",
+        "before": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      }
+    ]
+  },
+  {
+    "set": 1,
+    "game": 8,
+    "server": "B",
+    "winner": "B",
+    "pointNumbers": [
+      47,
+      50
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 1,
+        "team": "A",
+        "score": 6,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 1,
+        "team": "B",
+        "score": 4,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 1,
+    "game": 9,
+    "server": "A",
+    "winner": "A",
+    "pointNumbers": [
+      51,
+      55
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 1,
+        "team": "A",
+        "score": 6,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 1,
+        "team": "B",
+        "score": 4,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 1,
+    "game": 10,
+    "server": "B",
+    "winner": "A",
+    "pointNumbers": [
+      56,
+      60
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 1,
+        "team": "A",
+        "score": 6,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 1,
+        "team": "B",
+        "score": 4,
+        "tieBreakScore": null
+      }
+    ],
+    "break": true,
+    "breakpointEvents": [
+      {
+        "pointNumber": 60,
+        "winner": "A",
+        "receiver": "A",
+        "before": {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        }
+      }
+    ]
+  },
+  {
+    "set": 2,
+    "game": 1,
+    "server": "A",
+    "winner": "B",
+    "pointNumbers": [
+      61,
+      64
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": true,
+    "breakpointEvents": [
+      {
+        "pointNumber": 64,
+        "winner": "B",
+        "receiver": "B",
+        "before": {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        }
+      }
+    ]
+  },
+  {
+    "set": 2,
+    "game": 2,
+    "server": "B",
+    "winner": "B",
+    "pointNumbers": [
+      65,
+      68
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 2,
+    "game": 3,
+    "server": "A",
+    "winner": "A",
+    "pointNumbers": [
+      69,
+      73
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 2,
+    "game": 4,
+    "server": "B",
+    "winner": "A",
+    "pointNumbers": [
+      74,
+      78
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": true,
+    "breakpointEvents": [
+      {
+        "pointNumber": 78,
+        "winner": "A",
+        "receiver": "A",
+        "before": {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        }
+      }
+    ]
+  },
+  {
+    "set": 2,
+    "game": 5,
+    "server": "A",
+    "winner": "A",
+    "pointNumbers": [
+      79,
+      88
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": [
+      {
+        "pointNumber": 86,
+        "winner": "A",
+        "receiver": "B",
+        "before": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      }
+    ]
+  },
+  {
+    "set": 2,
+    "game": 6,
+    "server": "B",
+    "winner": "B",
+    "pointNumbers": [
+      89,
+      93
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 2,
+    "game": 7,
+    "server": "A",
+    "winner": "A",
+    "pointNumbers": [
+      94,
+      98
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 2,
+    "game": 8,
+    "server": "B",
+    "winner": "B",
+    "pointNumbers": [
+      99,
+      104
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 2,
+    "game": 9,
+    "server": "A",
+    "winner": "A",
+    "pointNumbers": [
+      105,
+      110
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 2,
+    "game": 10,
+    "server": "B",
+    "winner": "B",
+    "pointNumbers": [
+      111,
+      115
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": []
+  },
+  {
+    "set": 2,
+    "game": 11,
+    "server": "A",
+    "winner": "A",
+    "pointNumbers": [
+      116,
+      123
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": false,
+    "breakpointEvents": [
+      {
+        "pointNumber": 121,
+        "winner": "A",
+        "receiver": "B",
+        "before": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      }
+    ]
+  },
+  {
+    "set": 2,
+    "game": 12,
+    "server": "B",
+    "winner": "A",
+    "pointNumbers": [
+      124,
+      128
+    ],
+    "scoreAfter": [
+      {
+        "setNumber": 2,
+        "team": "A",
+        "score": 7,
+        "tieBreakScore": null
+      },
+      {
+        "setNumber": 2,
+        "team": "B",
+        "score": 5,
+        "tieBreakScore": null
+      }
+    ],
+    "break": true,
+    "breakpointEvents": [
+      {
+        "pointNumber": 127,
+        "winner": "B",
+        "receiver": "A",
+        "before": {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        }
+      },
+      {
+        "pointNumber": 128,
+        "winner": "A",
+        "receiver": "A",
+        "before": {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        }
+      }
+    ]
+  }
+]
