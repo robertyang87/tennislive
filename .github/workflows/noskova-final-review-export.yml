@@ -3,22 +3,241 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-  actions: read
 jobs:
   export:
+    if: github.ref == 'refs/heads/codex/zheng-kalinskaya-20261003'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Retrieve actual rendered film
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-        run: |
-          mkdir -p review
-          gh release download reel-noskova-svitolina-bjk-cup-2026-final --pattern '*.mp4' --dir review
-          sha256sum review/*.mp4 > review/SHA256SUMS
-      - uses: actions/upload-artifact@v4
+      - uses: actions/checkout@v4
         with:
-          name: noskova-final-reviewed-film
-          path: review/
-          retention-days: 7
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/ci_apt_install.sh
+            /shared/ci/apt.sh
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ensure real ffmpeg and ffprobe
+        timeout-minutes: 5
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Restore exact native Day4 original-source cache
+        id: sourcecache
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-zheng-kalinskaya-beijing-2026-r2-d1d2f8d1bf88a7e0
+          fail-on-cache-miss: true
+      - name: Measure original bytes and create explicitly derived chapter review files
+        timeout-minutes: 8
+        env:
+          CACHE_HIT: ${{ steps.sourcecache.outputs.cache-hit }}
+          EXPORT_RUN_ID: ${{ github.run_id }}
+          EXPORT_HEAD: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+
+          source_url = 'https://www.youtube.com/watch?v=EuPUtfm-pA0'
+          key = 'reel-src-zheng-kalinskaya-beijing-2026-r2-d1d2f8d1bf88a7e0'
+          filename = hashlib.sha1(source_url.encode()).hexdigest()[:16] + '.mp4'
+          assert filename == '4e15e4fb97523b9c.mp4'
+          assert hashlib.sha256(source_url.encode()).hexdigest()[:16] == 'd1d2f8d1bf88a7e0'
+          if os.environ.get('CACHE_HIT') != 'true':
+              raise SystemExit('Exact branch-native cache hit required; no replacement download')
+          source = Path.home() / '.cache/tennislive-sources' / filename
+          if not source.is_file() or source.stat().st_size != 829782258:
+              raise SystemExit('Original cache size differs from native probe: expected 829782258 bytes')
+          out = Path('review/metadata')
+          parts_dir = Path('review/proxy-parts')
+          out.mkdir(parents=True)
+          parts_dir.mkdir(parents=True)
+
+          def sha(path):
+              digest = hashlib.sha256()
+              with path.open('rb') as handle:
+                  for chunk in iter(lambda: handle.read(1024 * 1024), b''):
+                      digest.update(chunk)
+              return digest.hexdigest()
+
+          def probe(path):
+              return json.loads(subprocess.check_output([
+                  'ffprobe', '-v', 'error', '-show_streams', '-show_format', '-of', 'json', str(path)
+              ], text=True))
+
+          full_probe = probe(source)
+          video = next(s for s in full_probe['streams'] if s.get('codec_type') == 'video')
+          if (video.get('width'), video.get('height'), video.get('avg_frame_rate')) != (1920, 1080, '25/1'):
+              raise SystemExit('Original source dimensions/frame rate mismatch')
+          if abs(float(full_probe['format']['duration']) - 2920.605896) > 0.1:
+              raise SystemExit('Original source duration mismatch')
+          full_sha = sha(source)
+          (out / 'full-source-ffprobe.json').write_text(json.dumps(full_probe, indent=2) + '\n', encoding='utf-8')
+          proxy = Path('review/chapter-review-derived.mp4')
+          wav = out / 'chapter-review-derived-mono-48k.wav'
+          proxy_command = [
+              'ffmpeg', '-hide_banner', '-loglevel', 'error', '-nostdin', '-y',
+              '-ss', '1275', '-i', str(source), '-t', '184',
+              '-map', '0:v:0', '-map', '0:a:0', '-c:v', 'libx264',
+              '-preset', 'veryfast', '-crf', '18', '-pix_fmt', 'yuv420p',
+              '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', str(proxy),
+          ]
+          wav_command = [
+              'ffmpeg', '-hide_banner', '-loglevel', 'error', '-nostdin', '-y',
+              '-ss', '1275', '-i', str(source), '-t', '184', '-map', '0:a:0',
+              '-vn', '-ac', '1', '-ar', '48000', '-c:a', 'pcm_s16le', str(wav),
+          ]
+          subprocess.run(proxy_command, check=True, timeout=330)
+          subprocess.run(wav_command, check=True, timeout=60)
+          proxy_probe = probe(proxy)
+          proxy_video = next(s for s in proxy_probe['streams'] if s.get('codec_type') == 'video')
+          if (proxy_video.get('width'), proxy_video.get('height'), proxy_video.get('avg_frame_rate')) != (1920, 1080, '25/1'):
+              raise SystemExit('Derived review proxy dimensions/frame rate mismatch')
+          if abs(float(proxy_probe['format']['duration']) - 184.0) > 0.1:
+              raise SystemExit('Derived review proxy duration mismatch')
+          wav_probe = probe(wav)
+          audio = next(s for s in wav_probe['streams'] if s.get('codec_type') == 'audio')
+          if audio.get('codec_name') != 'pcm_s16le' or audio.get('channels') != 1 or str(audio.get('sample_rate')) != '48000':
+              raise SystemExit('Derived PCM properties mismatch')
+          if abs(float(wav_probe['format']['duration']) - 184.0) > 0.1:
+              raise SystemExit('Derived PCM duration mismatch')
+          proxy_sha = sha(proxy)
+          pcm_sha = sha(wav)
+          parts = []
+          chunk_size = 24 * 1024 * 1024
+          if proxy.stat().st_size > 8 * chunk_size:
+              raise SystemExit('Derived proxy exceeds eight 24MiB export chunks; export workflow must be expanded')
+          with proxy.open('rb') as handle:
+              for index in range(8):
+                  chunk = handle.read(chunk_size)
+                  if not chunk:
+                      break
+                  part_name = f'chapter-review-derived.mp4.part{index:03d}'
+                  (parts_dir / part_name).write_bytes(chunk)
+                  parts.append({'filename': part_name, 'bytes': len(chunk), 'sha256': hashlib.sha256(chunk).hexdigest()})
+          manifest = {
+              'schema': 'original-bound-derived-chapter-review-v1',
+              'source_url': source_url, 'source_cache_key': key, 'source_cache_filename': filename,
+              'cache_scope_ref': 'refs/heads/codex/zheng-kalinskaya-20261003',
+              'export_run_id': os.environ['EXPORT_RUN_ID'], 'export_head': os.environ['EXPORT_HEAD'],
+              'full_original': {
+                  'bytes': source.stat().st_size, 'sha256': full_sha,
+                  'width': video['width'], 'height': video['height'],
+                  'avg_frame_rate': video['avg_frame_rate'],
+                  'duration_seconds': float(full_probe['format']['duration']),
+                  'hash_method': 'actual complete original cache file read remotely during this export',
+              },
+              'absolute_source_offset_seconds': 1275.0,
+              'requested_source_end_seconds': 1459.0,
+              'requested_duration_seconds': 184.0,
+              'time_mapping': 'derived local time + 1275.0 seconds = original source absolute time',
+              'proxy': {
+                  'filename': proxy.name, 'bytes': proxy.stat().st_size, 'sha256': proxy_sha,
+                  'duration_seconds': float(proxy_probe['format']['duration']),
+                  'width': proxy_video['width'], 'height': proxy_video['height'],
+                  'avg_frame_rate': proxy_video['avg_frame_rate'],
+                  'encoding': 'libx264 veryfast CRF18 yuv420p; AAC128k; reencoded review proxy',
+                  'is_original_source_bytes': False, 'parts': parts,
+              },
+              'pcm': {
+                  'filename': wav.name, 'bytes': wav.stat().st_size, 'sha256': pcm_sha,
+                  'duration_seconds': float(wav_probe['format']['duration']),
+                  'codec': audio['codec_name'], 'channels': audio['channels'], 'sample_rate': audio['sample_rate'],
+                  'is_original_source_bytes': False,
+              },
+              'derivation_commands': {'proxy': proxy_command, 'pcm': wav_command},
+              'usage': 'Derived files are only for visual/audio source review. Formal native render must still use the cached full original source. Never substitute proxy SHA for full-original source SHA.',
+          }
+          (out / 'source-chapter-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          (out / 'proxy-ffprobe.json').write_text(json.dumps(proxy_probe, indent=2) + '\n', encoding='utf-8')
+          (out / 'pcm-ffprobe.json').write_text(json.dumps(wav_probe, indent=2) + '\n', encoding='utf-8')
+          (out / 'SHA256SUMS').write_text(
+              f'{full_sha}  FULL_ORIGINAL_CACHE/{filename}\n{proxy_sha}  {proxy.name}\n{pcm_sha}  {wav.name}\n'
+              + ''.join(f"{p['sha256']}  {p['filename']}\n" for p in parts), encoding='utf-8'
+          )
+          print(json.dumps({'original_bytes': source.stat().st_size, 'original_sha256': full_sha,
+                            'proxy_bytes': proxy.stat().st_size, 'proxy_sha256': proxy_sha,
+                            'pcm_bytes': wav.stat().st_size, 'pcm_sha256': pcm_sha,
+                            'absolute_offset': 1275, 'parts': len(parts)}))
+          PY
+      - name: Export original-binding metadata and derived PCM
+        uses: actions/upload-artifact@v4
+        with:
+          name: zheng-kalinskaya-day4-chapter-metadata-pcm
+          path: review/metadata/
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: error
+      - name: Export derived proxy chunk 000
+        uses: actions/upload-artifact@v4
+        with:
+          name: zheng-kalinskaya-day4-review-proxy-part-000
+          path: review/proxy-parts/chapter-review-derived.mp4.part000
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: ignore
+      - name: Export derived proxy chunk 001
+        uses: actions/upload-artifact@v4
+        with:
+          name: zheng-kalinskaya-day4-review-proxy-part-001
+          path: review/proxy-parts/chapter-review-derived.mp4.part001
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: ignore
+      - name: Export derived proxy chunk 002
+        uses: actions/upload-artifact@v4
+        with:
+          name: zheng-kalinskaya-day4-review-proxy-part-002
+          path: review/proxy-parts/chapter-review-derived.mp4.part002
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: ignore
+      - name: Export derived proxy chunk 003
+        uses: actions/upload-artifact@v4
+        with:
+          name: zheng-kalinskaya-day4-review-proxy-part-003
+          path: review/proxy-parts/chapter-review-derived.mp4.part003
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: ignore
+      - name: Export derived proxy chunk 004
+        uses: actions/upload-artifact@v4
+        with:
+          name: zheng-kalinskaya-day4-review-proxy-part-004
+          path: review/proxy-parts/chapter-review-derived.mp4.part004
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: ignore
+      - name: Export derived proxy chunk 005
+        uses: actions/upload-artifact@v4
+        with:
+          name: zheng-kalinskaya-day4-review-proxy-part-005
+          path: review/proxy-parts/chapter-review-derived.mp4.part005
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: ignore
+      - name: Export derived proxy chunk 006
+        uses: actions/upload-artifact@v4
+        with:
+          name: zheng-kalinskaya-day4-review-proxy-part-006
+          path: review/proxy-parts/chapter-review-derived.mp4.part006
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: ignore
+      - name: Export derived proxy chunk 007
+        uses: actions/upload-artifact@v4
+        with:
+          name: zheng-kalinskaya-day4-review-proxy-part-007
+          path: review/proxy-parts/chapter-review-derived.mp4.part007
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: ignore
