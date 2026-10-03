@@ -1,10 +1,10 @@
-# 莱巴金娜—查拉耶娃 中网R64独立核验
+# 莱巴金娜—恰拉耶娃 中网R64独立核验
 
 核验UTC：2026-10-03T17:46:13.329327+00:00。独立研究；未修改孙心然作品、repo或refs，未渲染/发布。
 
 ## 身份与背景
 
-2026年10月3日晚北京WTA1000女单第二轮/R64，24岁、世界118位查拉耶娃（AlinaCharaeva，ARM亚美尼亚）3–6、6–4、6–3逆转27岁、新世界第一莱巴金娜（ElenaRybakina，KAZ哈萨克斯坦）。WTA官方LS032、TNNS75051532、Flash0Epw9iu2，官方2:11:50，封面展示2:11。球场CapitalGroupDiamond（首创集团钻石球场），下一轮首次对阵SonayKartal（卡塔尔）。排名1/118、国籍、出生日期1999-06-17/2002-05-27由官方球员profile直接核验；莱巴careerNo1达成日期14Sep2026。
+2026年10月3日晚北京WTA1000女单第二轮/R64，24岁、世界118位恰拉耶娃（AlinaCharaeva，ARM亚美尼亚）3–6、6–4、6–3逆转27岁、新世界第一莱巴金娜（ElenaRybakina，KAZ哈萨克斯坦）。WTA官方LS032、TNNS75051532、Flash0Epw9iu2，官方2:11:50，封面展示2:11。球场CapitalGroupDiamond（首创集团钻石球场），下一轮首次对阵SonayKartal（卡塔尔）。排名1/118、国籍、出生日期1999-06-17/2002-05-27由官方球员profile直接核验；莱巴careerNo1达成日期14Sep2026。
 
 元数据MatchTimeStamp12:24:16.1UTC=北京时间20:24，官方首点12:40:06UTC=20:40，末点14:51:25UTC=22:51。开头写北京时间10月3日晚；元数据与首点差16分钟，不报精确实际开球时间。
 
@@ -12,7 +12,7 @@
 
 ## 全场完整整数（官方原始列序莱巴／查拉）
 
-| 指标 | 莱巴金娜 | 查拉耶娃 |
+| 指标 | 莱巴金娜 | 恰拉耶娃 |
 |---|---:|---:|
 | ACE |3|6|
 | 双误 |7|4|
@@ -57,3 +57,5 @@ TennisNow同场报道给W30/16、UE48/17。UE可双源支持，但W存在差异�
 `match-packet.json`包括country/rank/age/round/court/time/next、历史具体来源与冲突。正式消费`stats-spec.json`为赢家a=查拉,b=莱巴；`stats-spec-winner-first.json`同为赢家优先；`stats-spec-official-order.json`保留官方原序a=莱巴,b=查拉研究备份，两者WUE证据保留原始Ryb/Chara列序供闸门映射。尚无头像；不修改已有作品、不渲染/发布。
 
 官方/API、编辑稿、TNNS已实取200；MCP全量女子CSV/meta200未列本场（不能宣称全网不存在）；FlashMatchstats200无WUE。国际视频代理正在核同场YouTube源，本代理未冒称已目视转播全场统计板。
+
+中文译名说明：展示与自写文案按既有 repo canonical 统一“恰拉耶娃”；中网原始中文的“查拉耶娃”是另一译法。英文、原始统计、实际源、raw ASR、取段窗口未改。

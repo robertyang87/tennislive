@@ -1,7 +1,31 @@
 {
-  "schema": "tennislive.foreground-audio-review.v1",
+  "source_sha256": "ed88d5e4cce59bdd16b7caa8cf709f8afda9f1b0bf1871798d97d788ca6f198f",
+  "previous_plan_sha256": "7485bfc4d83bff4efe83e9251a07b0fd72c0557b5f9e30eed4f049863b33b888",
   "plan_sha256": "72656de5ce33ea19798ed5464ee1ebba85cabe3bdfe2bcd55cf3456adda0ca80",
-  "segments": [
+  "review_sha256": "4dd6b22ce44a78610d6749d32bc6488e9c16ca8fc79b49a5f130a1a056f2d7da",
+  "spec_sha256": "397cb7ab64b7201859ace7bce921dfa0bc281efe938545c6f722ee7c3093b8b8",
+  "xhs_sha256": "60a3a888d7a2e4be95b629b26d1cd773696795b8225bbb78e25c98840cd93fde",
+  "match_packet_sha256": "1830dc022d0dfec79ce7a77d223174a6b243e4b13ad52cad0fd2dd0bcfba2364",
+  "stats_display_packet_sha256": "ec09bd9b6901a397e122854099d38c4d4c189351e9b8148dae30aa7a964263c2",
+  "required_english_cues": 23,
+  "changed_files": [
+    "specs/reels/rybakina-charaeva-beijing-2026-r2.json",
+    "specs/reels/rybakina-charaeva-beijing-2026-r2.xhs.txt",
+    "data/research/rybakina-charaeva-beijing-2026-r2/editorial-independent.md",
+    "data/research/rybakina-charaeva-beijing-2026-r2/stats.md",
+    "data/research/rybakina-charaeva-beijing-2026-r2/stats-spec.json",
+    "data/research/rybakina-charaeva-beijing-2026-r2/match-packet.json",
+    "data/research/rybakina-charaeva-beijing-2026-r2/audio/locked-cue-proposal.json",
+    "data/research/rybakina-charaeva-beijing-2026-r2/audio/selected-05.json",
+    "data/research/rybakina-charaeva-beijing-2026-r2/audio/selected-12.json",
+    "data/research/rybakina-charaeva-beijing-2026-r2/audio/selected-11.json",
+    "data/research/rybakina-charaeva-beijing-2026-r2/audio/selected-04.json",
+    "data/research/rybakina-charaeva-beijing-2026-r2/audio/selected-09.json",
+    "data/research/rybakina-charaeva-beijing-2026-r2/audio/selected-06.json"
+  ],
+  "raw_asr_and_official_match_unchanged": true,
+  "note": "中文译名按既有repo标准统一为恰拉耶娃，English/raw actual ASR/source/window未改。官方中文报道使用查拉耶娃属另一译名，仅对外及自写派生文案按号内标准统一，不改变人物身份、排名、国籍、日期或比赛事实。",
+  "selected_packets": [
     {
       "index": 0,
       "transcript_path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/selected-00.json",
@@ -58,6 +82,12 @@
       "transcript_sha256": "5b903451eb5ca0b65a0d730ea719d1a89847bdf1ec834176bb787334545e37d1"
     }
   ],
-  "_editorial_rebind_note": "Root corrected final static card paraphrase to faithfully reflect I tried to keep believing I could turn around the game. No source video window, source quote/cue or audio review packet changed. Recomputed native plan hash and reverified actual downloaded original bytes.",
-  "_name_normalization_note": "中文译名按既有repo标准统一为恰拉耶娃，English/raw actual ASR/source/window未改。官方中文报道使用查拉耶娃属另一译名，仅对外及自写派生文案按号内标准统一，不改变人物身份、排名、国籍、日期或比赛事实。"
+  "cover_preview_sha256": "c89b9b8013b82c70eacdb05dbb69feff34c03000fa49cfdac12e9670f4de31e2",
+  "checks": {
+    "foreground_audio_actual_source_require": "pass",
+    "production_preflight": "pass",
+    "dry_run": "pass",
+    "names_ci": "3 passed, 106 deselected",
+    "cover_preview": "rendered and viewed"
+  }
 }
