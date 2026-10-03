@@ -2823,7 +2823,7 @@ class Segment:
     # None＝这一段不贴。带式的窗口居中（「不要偏离中心的」），美网那条浮在
     # 左下的板会被窗口左缘裁掉——开了这个的段从同一帧把整条板抠出来、按画面
     # 带的缩放比贴回左下，正好盖住残条，比分逐帧天然同步。spec 里写
-    # `"score_inset": true`（用 spec 顶层 `scorebox` 的坐标）或 `{"x2": N}`
+    # `"score_inset": true`（段级 `scorebox` 覆盖顶层默认坐标）或 `{"x2": N}`
     # （单独放宽这一段的板右缘）。
     # ⚠️ **顶层 scorebox 按板的最宽状态写**（「尽量把五盘大战的比分能包括
     # 进来」）：美网每完成一盘板右缘 +38px，BO5 一律写 ~736。它现在只给
@@ -2973,7 +2973,7 @@ def seg_seconds(s: dict) -> float:
 
 
 def _scorebox4(box) -> tuple[int, int, int, int] | None:
-    """spec 顶层 `scorebox` 的形状校验：[x0, y0, x1, y1]（源片像素坐标），
+    """顶层或段级 `scorebox` 的形状校验：[x0, y0, x1, y1]（源片像素坐标），
     全为非负数且 x0<x1、y0<y1。合格返回整数四元组，不合格返回 None——
     报错的措辞由调用方按上下文写（spec 级和段级各说各的话）。"""
     if (isinstance(box, (list, tuple)) and len(box) == 4
@@ -3308,6 +3308,13 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     """
     def _seg_score_inset(s: dict, i: int) -> tuple[int, int, int, int] | None:
         raw = s.get("score_inset")
+        if "scorebox" in s:
+            if _scorebox4(s["scorebox"]) is None:
+                raise ReelError(f"第 {i + 1} 段 scorebox 要写合格的 [x0, y0, x1, y1]"
+                                f"（源片像素坐标），拿到 {s['scorebox']!r}。")
+            if not raw:
+                raise ReelError(f"第 {i + 1} 段写了 scorebox 却没开 score_inset——"
+                                "这是不生效的死键；段级框只覆盖这一段回贴的位置。")
         if raw is None or raw is False:
             return None
         # ⭐ 2026-09-16 起全出血也能回贴（原来只认带式，全出血走「cx 排除」）。
@@ -3315,11 +3322,13 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         # 只剩「7|4 / 5|4」四个数字＋半截名字，全片 94.6s（37%）都这样；而全库
         # 177 条赛场之上里 160 条是全出血，这不是美网期间才有的形状。全出血的
         # 板贴在字幕带**上方**（几何见 cut_segment），带式照旧贴画面带左下。
-        box = _scorebox4(spec.get("scorebox"))
+        # 多源片子的转播板位置可能不同：段级框覆盖全局默认，仍取同一源帧。
+        box_value = s.get("scorebox", spec.get("scorebox"))
+        box = _scorebox4(box_value)
         if box is None:
             raise ReelError(
-                f"第 {i + 1} 段开了 score_inset，spec 顶层却没有合格的 "
-                f"`scorebox`（拿到 {spec.get('scorebox')!r}）。写 "
+                f"第 {i + 1} 段开了 score_inset，却没有合格的 "
+                f"`scorebox`（段级覆盖或 spec 顶层默认，拿到 {box_value!r}）。写 "
                 "[x0, y0, x1, y1]（源片像素坐标）——probe 的 scorebox_guess "
                 "直接抄，别按感觉量。")
         if raw is True:
@@ -3336,7 +3345,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                     "一截球场），深盘的段则单独放宽。")
             return (box[0], box[1], int(x2), box[3])
         raise ReelError(
-            f"第 {i + 1} 段的 score_inset 只认 true（用 spec 的 scorebox）"
+            f"第 {i + 1} 段的 score_inset 只认 true（用段级或 spec 默认 scorebox）"
             '或 {"x2": N}（这一段打到更深的盘、板更宽时单独放宽右缘），'
             f"拿到的是 {raw!r}。")
 
@@ -3401,7 +3410,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             stray = sorted(set(s) & {"start", "end", "source", "track",
                                      "quote", "inset", "speed", "mute", "cx",
                                      "crop_zoom", "fit", "crosses_cut", "point_end_ok",
-                                     "score_inset", "score_inset_windows"})
+                                     "score_inset", "score_inset_windows", "scorebox"})
             if stray:
                 raise ReelError(f"第 {i + 1} 段是整屏证据段（image），"
                                 f"不认这些窗口类字段：{stray}")
@@ -3696,7 +3705,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "tier", "topic", "versus", "winner"),
     "segment": ("bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
-                "score_inset_windows",
+                "score_inset_windows", "scorebox",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
                 "kicker", "track", "voice", "subtitle_bottom"),
 }
@@ -6807,14 +6816,10 @@ def _render_silence_gate(spec: dict, segments, voices, spoken, cover_secs: float
 
 
 def _spec_box_urls(spec: dict, urls: dict) -> set[str]:
-    """spec 顶层 `scorebox` 归哪几条源：开了 `score_inset` 的段取画面的那几条（回贴拿它
-    切的就是那几条源的板）；一段都没开（带式）就归主源。没写 `scorebox` 是空集。"""
-    if not spec.get("scorebox") or not urls:
-        return set()
-    primary = next(iter(urls))
-    keys = {str(seg.get("source") or primary) for seg in spec.get("segments") or []
-            if isinstance(seg, dict) and seg.get("score_inset")}
-    return {urls[key] for key in (keys or {primary}) if key in urls}
+    """顶层默认或段级 `scorebox` 实际归属的源；一段都没开（带式）就归主源。"""
+    from probe_board import scoreboxes_by_url  # noqa: PLC0415
+
+    return set(scoreboxes_by_url(spec, urls))
 
 
 def _reprobe_commands(spec: dict, probes: dict, urls: dict) -> dict[str, str]:
@@ -6822,7 +6827,7 @@ def _reprobe_commands(spec: dict, probes: dict, urls: dict) -> dict[str, str]:
 
     slug 取那份老 probe 所在的目录名（多源片子的源常 probe 在别的 slug 下，同一个
     slug 同一天只能落一份 probe.json）；区间、记分条框照抄老 probe——老 probe 没记框
-    （bfc462b9a 之前的全没记）就退到 spec 顶层的 `scorebox`（只给它归属的那几条源，
+    （bfc462b9a 之前的全没记）就退到这条源的段级或顶层默认 `scorebox`（只给它归属的源，
     `_spec_box_urls`），都没有就在命令后面明说；分支取当前检出的那一条（runner 上是
     `GITHUB_REF_NAME`），拿不到就写 `<分支>`。"""
     import probe_audio  # noqa: PLC0415
@@ -6834,14 +6839,19 @@ def _reprobe_commands(spec: dict, probes: dict, urls: dict) -> dict[str, str]:
                              capture_output=True, text=True)
         ref = got.stdout.strip() if got.returncode == 0 else ""
     ref = ref if ref and ref != "HEAD" else "<分支（要含 d8fb15b74）>"
-    boxed = _spec_box_urls(spec, urls)
+    from probe_board import scoreboxes_by_url  # noqa: PLC0415
+
+    boxes = scoreboxes_by_url(spec, urls)
     out = {}
     for url in set(urls.values()):
         folder, _data = found.get(url, (None, None))
         slug = folder.name if folder is not None else str(spec.get("slug") or "<slug>")
+        owned = boxes.get(url) or []
         out[url] = probe_audio.reprobe_command(
             url, slug, probes.get(url), ref,
-            spec_box=spec.get("scorebox") if url in boxed else None)
+            spec_box=owned[0] if len(owned) == 1 else None)
+        if len(owned) == 1 and owned[0] != spec.get("scorebox"):
+            out[url] = out[url].replace("框取自 spec 顶层的 scorebox", "框取自该源的段级 scorebox")
     return out
 
 

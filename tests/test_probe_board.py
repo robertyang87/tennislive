@@ -284,22 +284,24 @@ def test_量板失败不许把probe带崩_但要出声并落进probe_json(tmp_pa
     assert "skipped" in skipped
 
 
-def _custom_box_has_probe(spec: dict, profile: str, probes=None) -> bool:
+def _custom_box_has_probe(spec: dict, profile: str, probes=None, *, box=None, url=None) -> bool:
     """A custom box is valid only with a real same-source, same-profile scan."""
     if probes is None:
         probes, missing = b.probes_for_spec(spec)
         if missing:
             return False
-    urls = list((spec.get("sources") or {}).values()) or [spec.get("source_url")]
-    for url in urls:
-        probe = probes.get(url) or {}
+    urls = spec.get("sources") or {"": spec.get("source_url")}
+    owned = {url: [box]} if url is not None else pb.scoreboxes_by_url(spec, urls)
+    for source_url, boxes in owned.items():
+        probe = probes.get(source_url) or {}
         board = probe.get("board") or {}
-        if probe.get("url") != url or not board.get("frames"):
+        if probe.get("url") != source_url or not board.get("frames"):
             return False
-        scan, _ = pb._pick_scan(board, spec["scorebox"], profile)
-        if not scan or not scan.get("frames") or not (scan["profiles"][profile].get("runs")):
-            return False
-    return bool(urls)
+        for source_box in boxes:
+            scan, _ = pb._pick_scan(board, source_box, profile)
+            if not scan or not scan.get("frames") or not (scan["profiles"][profile].get("runs")):
+                return False
+    return bool(owned)
 
 
 def test_custom_scorebox_needs_matching_source_and_scan():
@@ -313,6 +315,25 @@ def test_custom_scorebox_needs_matching_source_and_scan():
     assert not _custom_box_has_probe(spec, "wta", {spec["source_url"]: wrong})
     wrong = json.loads(json.dumps(probe)); wrong["board"]["scans"][0]["box"][3] = 980
     assert not _custom_box_has_probe(spec, "wta", {spec["source_url"]: wrong})
+
+
+def test_custom_segment_boxes_need_their_own_source_scan():
+    official = [86, 827, 554, 988]
+    supplement = [14, 964, 392, 1072]
+    urls = {"official": "https://example.test/official", "supplement": "https://example.test/supplement"}
+    spec = {"sources": urls, "scorebox": official, "segments": [
+        {"source": "official", "score_inset": True},
+        {"source": "supplement", "score_inset": True, "scorebox": supplement}]}
+    probes = {urls["official"]: {"url": urls["official"], "board": _board("wta", [(5, 554, 554)], box=official)},
+              urls["supplement"]: {"url": urls["supplement"], "board": _board("wta", [(5, 392, 392)], box=supplement)}}
+    assert _custom_box_has_probe(spec, "wta", probes)
+    assert not _custom_box_has_probe(spec, "wta", {urls["official"]: probes[urls["official"]]})
+    wrong = json.loads(json.dumps(probes))
+    wrong[urls["supplement"]]["board"] = wrong[urls["official"]]["board"]
+    assert not _custom_box_has_probe(spec, "wta", wrong)  # Correct URL with the other source's box.
+    wrong = json.loads(json.dumps(probes))
+    wrong[urls["supplement"]]["url"] = urls["official"]
+    assert not _custom_box_has_probe(spec, "wta", wrong)  # Correct box with the other source's URL.
 
 
 def test_标定框和全库spec用的框对得上():
@@ -336,9 +357,12 @@ def test_标定框和全库spec用的框对得上():
                                      spec_tour(spec))
         if prof not in pb.CALIBRATED:
             continue
-        seen.setdefault(prof, []).append(
-            any(pb.same_box(box, cal) for cal in pb.CALIBRATED[prof])
-            or _custom_box_has_probe(spec, prof))
+        urls = spec.get("sources") or {"": spec.get("source_url")}
+        for url, boxes in pb.scoreboxes_by_url(spec, urls).items():
+            for source_box in boxes:
+                seen.setdefault(prof, []).append(
+                    any(pb.same_box(source_box, cal) for cal in pb.CALIBRATED[prof])
+                    or _custom_box_has_probe(spec, prof, box=source_box, url=url))
     for prof in ("atp", "wta", "itf-bjk", "lavercup"):
         assert len(seen.get(prof, [])) >= 5, f"{prof} 一条 spec 都没扫到，判据的主语像是没了"
         assert all(seen[prof]), f"{prof} 有 spec 的 scorebox 既不在 CALIBRATED，也缺少同源自定义扫描"

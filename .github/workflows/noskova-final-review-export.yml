@@ -3,38 +3,22 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
 jobs:
   export:
-    if: github.ref == 'refs/heads/codex/zheng-kalinskaya-20261003'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
-      - uses: actions/cache/restore@v4
-        with:
-          path: ~/.cache/tennislive-sources
-          key: reel-src-zheng-kalinskaya-beijing-2026-r2-d1d2f8d1bf88a7e0
-          fail-on-cache-miss: true
-      - uses: actions/cache/restore@v4
-        with:
-          path: ~/.cache/tennislive-sources
-          key: reel-src-zheng-kalinskaya-source-1-e86153a33638afb5
-          fail-on-cache-miss: true
-      - name: Verify both complete originals
+      - name: Retrieve actual rendered film
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
-          python - <<'PYCODE'
-          import hashlib
-          from pathlib import Path
-          originals={'4e15e4fb97523b9c.mp4':(829782258,'3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a'),'623d99844d676d9d.mp4':(217141591,'04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5')}
-          for name,(size,expected) in originals.items():
-              p=Path.home()/'.cache/tennislive-sources'/name
-              assert p.stat().st_size==size,(name,p.stat().st_size)
-              h=hashlib.sha256()
-              with p.open('rb') as f:
-                  for chunk in iter(lambda:f.read(1024*1024),b''):h.update(chunk)
-              assert h.hexdigest()==expected,(name,h.hexdigest())
-              print(name,size,h.hexdigest())
-          PYCODE
-      - uses: actions/cache/save@v4
+          mkdir -p review
+          gh release download reel-noskova-svitolina-bjk-cup-2026-final --pattern '*.mp4' --dir review
+          sha256sum review/*.mp4 > review/SHA256SUMS
+      - uses: actions/upload-artifact@v4
         with:
-          path: ~/.cache/tennislive-sources
-          key: reel-src-zheng-kalinskaya-beijing-2026-r2-48aba6eb2575fd8c
+          name: noskova-final-reviewed-film
+          path: review/
+          retention-days: 7
