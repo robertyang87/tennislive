@@ -18,4 +18,4 @@ jobs:
           GH_REPO: ${{ github.repository }}
           PRODUCTION_BRANCH: ${{ github.head_ref }}
         run: |
-          gh workflow run match-reel.yml --ref "$PRODUCTION_BRANCH" -f mode=probe -f slug=djokovic-bu-beijing-2026-r2 -f url=https://www.youtube.com/watch?v=vbZsqAVIcuk -f clip_from=0 -f clip_to=191 -f scorebox=96,920,530,1030 -f push=false
+          gh workflow run match-reel.yml --ref "$PRODUCTION_BRANCH" -f mode=probe -f slug=djokovic-bu-beijing-2026-r2 -f url=https://www.youtube.com/watch?v=U_XusSb_NV4 -f scorebox=96,920,530,1030 -f push=false
