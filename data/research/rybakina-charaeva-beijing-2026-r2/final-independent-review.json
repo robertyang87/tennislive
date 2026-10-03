@@ -1,0 +1,72 @@
+{
+  "schema": "independent-actual-native-film-review-v1",
+  "status": "pass",
+  "checked_at": "2026-10-03T19:11:48Z",
+  "native_run_id": 37146466389,
+  "native_code_sha": "a05ca27878413d1c64490a047c619b5b07f7e131",
+  "actual_film": {
+    "path": "/workspace/upset-Qd4MQBnmF5A-research/final-native-review/rybakina-charaeva-beijing-2026-r2.mp4",
+    "bytes": 60913678,
+    "sha256": "ac3d6923d9cde29dc7a03e362bee4ce276dea71e03c7575df815e4fcb56d6134"
+  },
+  "actual_local_original_source": {
+    "path": "/workspace/upset-Qd4MQBnmF5A-research/rybakina-charaeva-youtube-original-1080p.mp4",
+    "bytes": 85056713,
+    "sha256": "ed88d5e4cce59bdd16b7caa8cf709f8afda9f1b0bf1871798d97d788ca6f198f",
+    "method": "actual complete local original file read and SHA256 remeasured"
+  },
+  "spec_sha256": "397cb7ab64b7201859ace7bce921dfa0bc281efe938545c6f722ee7c3093b8b8",
+  "ass_sha256": "1b8d97a6a693c824d3d8c21f3bbbb7910af5a2e319997eb4ca6e29b9726af675",
+  "render_inputs_sha256": "15274b0b0dd78660393a99aaf10323e5836d05a0f4ab91644043c6bf23ba2d34",
+  "qc_attestation_sha256": "bf8d50bf66eb7192da57a65932698a1e23632dc790110d7f2d7eb23bce6f79d3",
+  "projection_sha256": "1a26a9ee418b49b436eece1e62e6d3807819a50046253c89e5a119cd99b58f4a",
+  "audio_binding_sha256": "d8af2da5c8c6ef29bc60690a2961a928b1e52dc0958488da5620b42747c1cf23",
+  "audio_plan_sha256": "72656de5ce33ea19798ed5464ee1ebba85cabe3bdfe2bcd55cf3456adda0ca80",
+  "audio_review_sha256": "4dd6b22ce44a78610d6749d32bc6488e9c16ca8fc79b49a5f130a1a056f2d7da",
+  "required_english_cues": 23,
+  "checks": {
+    "actual_film_hash_bytes": "pass",
+    "actual_original_source_hash_bytes": "pass",
+    "spec_render_attestation_binding": "pass",
+    "all_manifest_assets_and_artifacts_byte_sha": "pass",
+    "current_spec_native_projection": "pass",
+    "audio_plan_review_source_binding": "pass",
+    "native_require_with_actual_original_source": "pass",
+    "native_verify_final_actual_film": "pass",
+    "full_video_and_audio_decode": {
+      "status": "pass",
+      "command": "ffmpeg -v error -i ACTUAL_FILM -map 0:v:0 -map 0:a:0 -f null -",
+      "exit_code": 0,
+      "stderr": ""
+    }
+  },
+  "media": {
+    "width": 1080,
+    "height": 1440,
+    "fps": "25/1",
+    "video_frames": 3448,
+    "film_seconds": 137.92,
+    "video_seconds": 137.92,
+    "audio_seconds": 137.89,
+    "video_start_seconds": 0.0,
+    "audio_start_seconds": 0.0,
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "av_duration_difference_seconds": 0.030000000000001137
+  },
+  "limitations": [
+    "No claim of direct human-style audio listening: underlying evidence uses genuine ASR cross-check.",
+    "All-three-set key points, handshake and statistics-card visual inspection are independently performed by root.",
+    "Repository CI is not green: root reports latest full CI37145964096 has five known historical Yastremska failures and5376passes; this independent final-film report does not substitute for full-suite CI."
+  ],
+  "root_visual_review": {
+    "status": "pass",
+    "actual_film_sha256": "ac3d6923d9cde29dc7a03e362bee4ce276dea71e03c7575df815e4fcb56d6134",
+    "method": "viewed actual movie sampled wall, full statistical image, actual handshake frame105.50; no direct listening claimed",
+    "cover": "real same-match winning fist photo; canonical Chinese name, ARM118/KAZ1 and winner-oriented3-6 6-4 6-3 correct",
+    "story": "firstsetloss, immediatebreakback, farChara passing approaching nearRyb, missed BP222.84 and actual fullfinal serve/point correctly described",
+    "stats": "winnerChara left;17vs33 winners,17vs48 UE,5/8vs4/6 BP and88vs83 total verified raw sources; fullcanvas and no subtitle obstruction",
+    "ending": "actual final point, collapse, celebration, net handshake105.50 and umpire handshake, complete emphatic last commentary; uncertain later name tail omitted",
+    "source_overlay": "fixed center fullcanvas cuts source corners; no Bilibili or unrelated source text"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=Qd4MQBnmF5A",
+  "source_sha256": "ed88d5e4cce59bdd16b7caa8cf709f8afda9f1b0bf1871798d97d788ca6f198f",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 63.8,
+  "range_to": 67.0,
+  "created_at": "2026-10-03T17:58:23.521696+00:00",
+  "elapsed_seconds": 3.5,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 64.56,
+      "end": 66.8,
+      "text": " This time she doesn't relinquish the lead.",
+      "avg_logprob": -0.28471588171445406,
+      "no_speech_prob": 0.19104470312595367,
+      "compression_ratio": 0.8571428571428571,
+      "words": [
+        {
+          "start": 64.56,
+          "end": 65.08,
+          "word": " This",
+          "probability": 0.47828465700149536
+        },
+        {
+          "start": 65.08,
+          "end": 65.34,
+          "word": " time",
+          "probability": 0.9944148063659668
+        },
+        {
+          "start": 65.34,
+          "end": 65.54,
+          "word": " she",
+          "probability": 0.7602093815803528
+        },
+        {
+          "start": 65.54,
+          "end": 65.88,
+          "word": " doesn't",
+          "probability": 0.991752028465271
+        },
+        {
+          "start": 65.88,
+          "end": 66.38,
+          "word": " relinquish",
+          "probability": 0.9940347969532013
+        },
+        {
+          "start": 66.38,
+          "end": 66.54,
+          "word": " the",
+          "probability": 0.989949107170105
+        },
+        {
+          "start": 66.54,
+          "end": 66.8,
+          "word": " lead.",
+          "probability": 0.9901767373085022
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "ba39051156c314d07a59f5b8498b47d7b76881adb74b87ddcc771d0cdb6a1cc0",
+  "metadata_sanitization": "Only local source_path omitted for repository portability; words, probabilities, source absolute times and model settings unchanged."
+}

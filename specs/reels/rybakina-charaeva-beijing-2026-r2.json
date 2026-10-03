@@ -1,0 +1,570 @@
+{
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 6,
+      "df": 4,
+      "first_in": 50,
+      "first_total": 78,
+      "first_won": 38,
+      "second_won": 9,
+      "second_total": 28,
+      "bp_conv": 5,
+      "bp_chances": 8,
+      "pts_won": 88,
+      "pts_total": 171,
+      "winners": 17,
+      "ue": 17,
+      "headshot": "assets/players/headshots/wta-329198-match-LS032.jpg",
+      "_headshot_source": {
+        "source_url": "https://www.chinaopen.com/en/upload/images/2026/10/微信图片_20261003233220_470_1468.jpg",
+        "source_sha256": "40fa936822789e0db308a63c4506de09af9836151d6cf5a39060d022cd783d98",
+        "crop_xywh": [
+          2570,
+          1240,
+          890,
+          890
+        ],
+        "size": [
+          600,
+          600
+        ]
+      }
+    },
+    "b": {
+      "aces": 3,
+      "df": 7,
+      "first_in": 53,
+      "first_total": 93,
+      "first_won": 32,
+      "second_won": 20,
+      "second_total": 40,
+      "bp_conv": 4,
+      "bp_chances": 6,
+      "pts_won": 83,
+      "pts_total": 171,
+      "winners": 33,
+      "ue": 48,
+      "headshot": "assets/players/headshots/wta-324166.jpg"
+    },
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051532&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/rybakina-charaeva-beijing-2026-r2/stats-2.txt",
+      "source_sha256": "0e247086912417eff2b1131cfd893fff22f49ff955c3a1ab9e019098545bc5fb",
+      "period": "Match",
+      "match_date": "2026-10-03",
+      "checked_at": "2026-10-03T17:46:13.329327+00:00",
+      "winner_result": "3-6 6-4 6-3",
+      "matchup": [
+        "Rybakina",
+        "Charaeva"
+      ],
+      "winners": [
+        33,
+        17
+      ],
+      "ue": [
+        48,
+        17
+      ],
+      "notes": "API data.period=Match, KeyStats.players=[Rybakina,Charaeva]. Metadata/dayfeed use winner-first order; do not copy that order into the stats values. TennisNow reports a different winners count30/16 but the same UE48/17. Retain this one complete TNNS Match source for both rows."
+    },
+    "_source": "Core integers official WTA setnum0 https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS032/stats ; W/UE native TNNS Match API https://api.tnnslive.com/v1/web?id=75051532&mode=match_info&submode=stats&web=true . WTA, TNNS Match and Flashscore0Epw9iu2 agree on all core card integers. a=Elena Rybakina,b=Alina Charaeva. Tennis.com first-in55/54 vs official53/50 is conflicting; use official. TNNS Match time2:10 vs official2:11:50 use official2:11. Winner-first display override:stats.a=Charaeva,b=Rybakina; source evidence retains its originalRybakina/Charaeva columns.",
+    "footer_date": "2026-10-03",
+    "footer_venue": "北京 · Capital Group Diamond"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "subject": "恰拉耶娃",
+    "winner": "恰拉耶娃",
+    "result": "3-6 6-4 6-3",
+    "matchup": [
+      {
+        "name": "恰拉耶娃",
+        "name_en": "Alina Charaeva",
+        "country": "ARM",
+        "rank": 118
+      },
+      {
+        "name": "莱巴金娜",
+        "name_en": "Elena Rybakina",
+        "country": "KAZ",
+        "rank": 1
+      }
+    ],
+    "scoreboard": {
+      "court": "Capital Group Diamond",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS032",
+        "match_id_field": "MatchID"
+      }
+    },
+    "layout": "solo",
+    "hook": "首盘3比6落后\n恰拉耶娃逆转世界第一",
+    "hook_accent": "世界第一",
+    "topic": "WTA1000 北京 第二轮 · 恰拉耶娃 VS 莱巴金娜",
+    "portrait": {
+      "image": "assets/reel/rybakina-charaeva-beijing-2026-r2-celebration.jpg",
+      "focus": 0.63,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "source_url": "https://www.chinaopen.com/en/upload/images/2026/10/微信图片_20261003233220_470_1468.jpg",
+      "_portrait_why": "中网官方同场Day4赛报举拳庆祝照。真实查看后与原集锦紫红Adidas帽、白背心、绿色Wilson拍的获胜者核对，正面睁眼张嘴，人物身份恰拉耶娃；不声称此照片精确拍在最后一分结束的一秒。"
+    },
+    "_court_sources": [
+      "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+      "https://api.tnnslive.com/v1/web?id=75051532&mode=match&web=true"
+    ]
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS032",
+    "date": "2026-10-03",
+    "winner": "恰拉耶娃",
+    "loser": "莱巴金娜",
+    "participants": [
+      "莱巴金娜",
+      "恰拉耶娃"
+    ],
+    "winner_result": "3-6 6-4 6-3",
+    "set_scores_home_away": [
+      [
+        6,
+        3
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        3,
+        6
+      ]
+    ],
+    "source_url": "https://www.wtatennis.com/tournaments/china-open/scores/LS032",
+    "daypart": "晚上",
+    "duration": "02:11:50",
+    "date_time_copy": "北京时间2026年10月3日晚"
+  },
+  "slug": "rybakina-charaeva-beijing-2026-r2",
+  "_column": "赛场之上",
+  "source_url": "https://www.youtube.com/watch?v=Qd4MQBnmF5A",
+  "tts_backend": "edge",
+  "track": false,
+  "scorebox": [
+    86,
+    827,
+    554,
+    988
+  ],
+  "outro": false,
+  "stat_card_full_canvas": true,
+  "topbar": {
+    "line1": "2026 WTA1000 北京 第二轮",
+    "line2": "恰拉耶娃 3-6 6-4 6-3 莱巴金娜"
+  },
+  "push": {
+    "auto": true,
+    "summary": "恰拉耶娃逆转世界第一",
+    "lead": "中网女单第二轮，世界排名118的恰拉耶娃首盘落后，最终3比6、6比4、6比3逆转新世界第一莱巴金娜，晋级第三轮，下一轮对卡塔尔。"
+  },
+  "_tts_backend_why": "采用已确定的Edge云见中文体育旁白；无Azure专用情绪或停顿需求。用户禁止DeepSeek和MiniMax，文案与画面核验使用OpenAI及真实本地ASR。",
+  "_facts": [
+    {
+      "url": "https://www.wtatennis.com/news/4586105/charaeva-upsets-new-world-no-1-rybakina-in-beijing-second-round",
+      "type": "official_match_report",
+      "why": "年龄排名、新世界第一身份首战、最终三盘比分、赛后本人相信及下一轮对手。"
+    },
+    {
+      "url": "https://www.chinaopen.com/cn/contents/281/1640.html",
+      "type": "official_chinese_match_report",
+      "why": "中文姓名和晚场日期；资格赛身份与WTA官方MDS/QS矛盾，明确不使用该身份。"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "首盘落后，她怎样把比赛追回来？",
+    "thesis": "用即时回破、次盘穿越球和决胜盘胜赛局，解释排名118的恰拉耶娃如何逆转新世界第一。",
+    "beats": [
+      "本场真实胜利反应冷开",
+      "北京时间日期与排名坐标",
+      "首盘3-6落后",
+      "即时回破追2-2",
+      "穿越球6-4扳平",
+      "全场失误差距",
+      "决胜盘未兑现的破发压力及随后建立领先、胜赛局",
+      "完整最后一分、庆祝与握手兑现冷开",
+      "下一轮卡塔尔的积极期待"
+    ],
+    "human_context": {
+      "angle": "首次击败世界第一、赛后本人说未停止相信。",
+      "facts": [
+        "24岁排名118",
+        "本场为巡回赛第17场正赛",
+        "首次击败世界第一"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4586105/charaeva-upsets-new-world-no-1-rybakina-in-beijing-second-round"
+      ]
+    }
+  },
+  "_source_provenance": {
+    "schema": "actual-source-export-v1",
+    "source_url": "https://www.youtube.com/watch?v=Qd4MQBnmF5A",
+    "source_cache_key": "reel-src-rybakina-charaeva-beijing-2026-r2-78dbea337d45cf5e",
+    "source_cache_filename": "73bb3cbaa24f3f0d.mp4",
+    "cache_scope_ref": "refs/heads/codex/rybakina-charaeva-20261003",
+    "native_probe_run_id": 37140902926,
+    "export_run_id": "37141596649",
+    "export_head": "79af75e0a9fa9b1aeef5763472ba30826ab42ebe",
+    "bytes": 85056713,
+    "sha256": "ed88d5e4cce59bdd16b7caa8cf709f8afda9f1b0bf1871798d97d788ca6f198f",
+    "width": 1920,
+    "height": 1080,
+    "avg_frame_rate": "25/1",
+    "duration_seconds": 283.980045,
+    "chunk_size_bytes": 25165824,
+    "parts": [
+      {
+        "filename": "source.mp4.part000",
+        "bytes": 25165824,
+        "sha256": "9d6c42b23423e875fb38dd764b4966a6ca0d39ab02133490d9e1f5624d52702b"
+      },
+      {
+        "filename": "source.mp4.part001",
+        "bytes": 25165824,
+        "sha256": "305b998d69255abc2adaa9f09dab539b70bdf0e374c7f8b6a8817727e41e381b"
+      },
+      {
+        "filename": "source.mp4.part002",
+        "bytes": 25165824,
+        "sha256": "e25dfd0864d2e4f5b5d50b10f9c578d952d3e310b89694f743b9c237d9169eb8"
+      },
+      {
+        "filename": "source.mp4.part003",
+        "bytes": 9559241,
+        "sha256": "022725bb269273bfc0ca869e3c4745821dfc6936dd742f6588e115d56b0b51c4"
+      }
+    ],
+    "method": "exact branch cache restored; original bytes split without transcode; actual SHA measured during export"
+  },
+  "_preparation_status": "source_audio_and_visual_bound_pending_native_render",
+  "_editing_why": "原生1080x1440满画布固定cx=.5不追人。真实YT1080原字节与nativeprobe绑定，无混用WTA官网364秒备用时间轴。全部关键分完整保留；英文原声独立展示双语字幕。",
+  "_set_coverage_why": "覆盖首盘盘点、次盘即时回破和盘点穿越球、决胜盘一记未兑现的破发点与完整赛点庆祝握手。未出现的3-2到5-2过程由官方结果补述，不用Ryb成功救BP那一分冒充Chara破发成功。",
+  "_heat_why": "新世界第一身份首战被世界排名118的对手逆转，赢家来自首盘落后，戏剧性由真实三盘与情绪呈现。",
+  "_hit_data": [
+    {
+      "label": "非受迫失误17/48",
+      "detail": "恰拉耶娃17，莱巴金娜48，完整TNNS Match来源，与TennisNow一致；不能将失误都说成被迫失误。",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051532&mode=match_info&submode=stats&web=true"
+    }
+  ],
+  "segments": [
+    {
+      "start": 241.8,
+      "end": 246.8,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": false,
+      "_edit_id": "cold_open",
+      "point_end_ok": "实际获胜后的面部反应；Achieves完整句242.02–245.96，提前241.80避免截词。正文235.95–269.15覆盖冷开。无赛后采访。",
+      "crosses_cut": "实际获胜后的面部反应；Achieves完整句242.02–245.96，提前241.80避免截词。正文235.95–269.15覆盖冷开。无赛后采访。",
+      "_why": "实际获胜后的面部反应；Achieves完整句242.02–245.96，提前241.80避免截词。正文235.95–269.15覆盖冷开。无赛后采访。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "正文229.20–269.15连续覆盖完整赛点、胜利反应与握手，包含冷开241.80–246.80。",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.19,
+          "end": 1.47,
+          "text": "Achieves a majestic,\n这是一场了不起的胜利，"
+        },
+        {
+          "at": 1.47,
+          "end": 4.21,
+          "text": "career-defining victory in Beijing.\n在北京，改写她的职业生涯。"
+        }
+      ],
+      "_score_inset_why": "本场实际获胜近景，241.80–246.80对应原生custom WTA scan26帧全无板；实际源图亦无比分板。顶栏呈现终局比分。"
+    },
+    {
+      "title_card": "世界第118的她\n逆转了世界第一",
+      "kicker": "恰拉耶娃在北京的一夜",
+      "seconds": 12,
+      "narration": "北京时间十月三号晚上，中网女单第二轮。二十四岁的恰拉耶娃，排名第一百一十八，面对新世界第一莱巴金娜。"
+    },
+    {
+      "start": 56.2,
+      "end": 64.25,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "首盘三比六，先赢下的是莱巴金娜。恰拉耶娃要从落后一盘开始追。",
+      "score_inset": true,
+      "_edit_id": "first_set",
+      "point_end_ok": "实际首盘莱巴金娜5–3、40–0盘点，56.20为发前准备，58.24切wide，完整发球与底线回合。64.25仅切声音，下一段连续保留结果；前一句英文最晚55.44结束。",
+      "crosses_cut": "实际首盘莱巴金娜5–3、40–0盘点，56.20为发前准备，58.24切wide，完整发球与底线回合。64.25仅切声音，下一段连续保留结果；前一句英文最晚55.44结束。",
+      "_why": "实际首盘莱巴金娜5–3、40–0盘点，56.20为发前准备，58.24切wide，完整发球与底线回合。64.25仅切声音，下一段连续保留结果；前一句英文最晚55.44结束。"
+    },
+    {
+      "start": 64.25,
+      "end": 67.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "first_set_reaction",
+      "point_end_ok": "连续保留首盘盘点结局与莱巴金娜近景；This time完整句最晚66.90结束。tight small.en实际63.8–67.0只识别该句。后续67.24新句不采用；不保留后续盘间比分贴片。",
+      "crosses_cut": "连续保留首盘盘点结局与莱巴金娜近景；This time完整句最晚66.90结束。tight small.en实际63.8–67.0只识别该句。后续67.24新句不采用；不保留后续盘间比分贴片。",
+      "_why": "连续保留首盘盘点结局与莱巴金娜近景；This time完整句最晚66.90结束。tight small.en实际63.8–67.0只识别该句。后续67.24新句不采用；不保留后续盘间比分贴片。",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.22,
+          "end": 2.7,
+          "text": "This time she doesn't relinquish the lead.\n这一次，她没有让领先溜走。"
+        }
+      ]
+    },
+    {
+      "start": 98.75,
+      "end": 109.3,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "第二盘再次被破发，她马上回敬。这一分之后，追到二比二，重新咬住比赛。",
+      "score_inset": true,
+      "_edit_id": "break_back",
+      "point_end_ok": "次盘莱巴金娜2–1发球、15–40，恰拉耶娃回破追2–2。98.75仍是莱巴金娜近景发前，避开前句Diamond Court最晚98.58。完整发球和底线对攻；近端紫帽恰拉耶娃持续在底线击球，远端白帽莱巴金娜。不能从人物缩略图误判莱巴金娜上网。109.30仅切声音，英文最早109.50。",
+      "crosses_cut": "次盘莱巴金娜2–1发球、15–40，恰拉耶娃回破追2–2。98.75仍是莱巴金娜近景发前，避开前句Diamond Court最晚98.58。完整发球和底线对攻；近端紫帽恰拉耶娃持续在底线击球，远端白帽莱巴金娜。不能从人物缩略图误判莱巴金娜上网。109.30仅切声音，英文最早109.50。",
+      "_why": "次盘莱巴金娜2–1发球、15–40，恰拉耶娃回破追2–2。98.75仍是莱巴金娜近景发前，避开前句Diamond Court最晚98.58。完整发球和底线对攻；近端紫帽恰拉耶娃持续在底线击球，远端白帽莱巴金娜。不能从人物缩略图误判莱巴金娜上网。109.30仅切声音，英文最早109.50。"
+    },
+    {
+      "start": 109.3,
+      "end": 119.28,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "break_back_reaction",
+      "point_end_ok": "连续回破末球、恰拉耶娃面部反应；完整第四次break-followed-by-break及2–2评论最晚119.14结束。119.28才下一分wide发前。",
+      "crosses_cut": "连续回破末球、恰拉耶娃面部反应；完整第四次break-followed-by-break及2–2评论最晚119.14结束。119.28才下一分wide发前。",
+      "_why": "连续回破末球、恰拉耶娃面部反应；完整第四次break-followed-by-break及2–2评论最晚119.14结束。119.28才下一分wide发前。",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.17,
+          "end": 2.33,
+          "text": "And for the fourth time today,\n今天第四次，"
+        },
+        {
+          "at": 3.69,
+          "end": 6.89,
+          "text": "a break is followed by another break.\n刚被破发，马上又回破。"
+        },
+        {
+          "at": 7.09,
+          "end": 9.89,
+          "text": "The break back for Charaeva to get to two-all.\n恰拉耶娃回破，追到二比二。"
+        }
+      ]
+    },
+    {
+      "start": 160.85,
+      "end": 174.7,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "五比四，恰拉耶娃拿到盘点。这记穿越球，把比赛追回来了。六比四，两人回到同一起点。",
+      "score_inset": true,
+      "_edit_id": "second_set",
+      "point_end_ok": "次盘恰拉耶娃5–4接发盘点；莱巴金娜发球。完整底线对攻；近端白帽莱巴金娜推进网前，远端紫帽恰拉耶娃向画面右侧移动后打穿越，球落到莱巴金娜身后扳平盘数。不能写恰拉耶娃主动上网；具体反手待第二视觉复核，当前只写穿越球。上一句Houdini最晚160.40结束；174.70声音分界留出Oh先于175.40的裕量。",
+      "crosses_cut": "次盘恰拉耶娃5–4接发盘点；莱巴金娜发球。完整底线对攻；近端白帽莱巴金娜推进网前，远端紫帽恰拉耶娃向画面右侧移动后打穿越，球落到莱巴金娜身后扳平盘数。不能写恰拉耶娃主动上网；具体反手待第二视觉复核，当前只写穿越球。上一句Houdini最晚160.40结束；174.70声音分界留出Oh先于175.40的裕量。",
+      "_why": "次盘恰拉耶娃5–4接发盘点；莱巴金娜发球。完整底线对攻；近端白帽莱巴金娜推进网前，远端紫帽恰拉耶娃向画面右侧移动后打穿越，球落到莱巴金娜身后扳平盘数。不能写恰拉耶娃主动上网；具体反手待第二视觉复核，当前只写穿越球。上一句Houdini最晚160.40结束；174.70声音分界留出Oh先于175.40的裕量。"
+    },
+    {
+      "start": 174.7,
+      "end": 179.9,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "second_set_reaction",
+      "point_end_ok": "连续盘点穿越得分、握拳庆祝；Oh quality finish实际短句保留。178.48切真实赢家近景，179.90止于下一句And Elena最早180.29前；避免186.92截断延续到190.26的长句。",
+      "crosses_cut": "连续盘点穿越得分、握拳庆祝；Oh quality finish实际短句保留。178.48切真实赢家近景，179.90止于下一句And Elena最早180.29前；避免186.92截断延续到190.26的长句。",
+      "_why": "连续盘点穿越得分、握拳庆祝；Oh quality finish实际短句保留。178.48切真实赢家近景，179.90止于下一句And Elena最早180.29前；避免186.92截断延续到190.26的长句。",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.67,
+          "end": 3.69,
+          "text": "Oh, quality finish.\n噢，漂亮的收尾。"
+        }
+      ]
+    },
+    {
+      "stat_card": true,
+      "seconds": 12,
+      "narration": "全场，恰拉耶娃只有十七次非受迫失误，莱巴金娜有四十八次。她把自己能控制的球，稳稳留在场内。",
+      "_edit_id": "statistics",
+      "_why": "全场完整九行integer来自WTA与TNNS Match，UE17/48得到TennisNow二核；不跨来源混用制胜球。"
+    },
+    {
+      "start": 222.84,
+      "end": 226.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "这个破发点，她没拿下。",
+      "score_inset": true,
+      "_edit_id": "third_set_break",
+      "point_end_ok": "决胜盘恰拉耶娃3–2领先，莱巴金娜发球15–40。实际这一个破发点未兑现；229.16比分实帧莱巴金娜已到30–40。保完整发前及此点；不能说恰拉耶娃这点完成破发。",
+      "crosses_cut": "决胜盘恰拉耶娃3–2领先，莱巴金娜发球15–40。实际这一个破发点未兑现；229.16比分实帧莱巴金娜已到30–40。保完整发前及此点；不能说恰拉耶娃这点完成破发。",
+      "_why": "决胜盘恰拉耶娃3–2领先，莱巴金娜发球15–40。实际这一个破发点未兑现；229.16比分实帧莱巴金娜已到30–40。保完整发前及此点；不能说恰拉耶娃这点完成破发。"
+    },
+    {
+      "start": 226.0,
+      "end": 229.2,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "third_set_break_reaction",
+      "point_end_ok": "She is going to want that one back对应恰拉耶娃错失机会的评论。完整句至227.96；229.16仍为该点死球，229.20源hardjump才是MATCH POINT #2。",
+      "crosses_cut": "She is going to want that one back对应恰拉耶娃错失机会的评论。完整句至227.96；229.16仍为该点死球，229.20源hardjump才是MATCH POINT #2。",
+      "_why": "She is going to want that one back对应恰拉耶娃错失机会的评论。完整句至227.96；229.16仍为该点死球，229.20源hardjump才是MATCH POINT #2。",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.23,
+          "end": 2.01,
+          "text": "She's going to want that one back.\n这一球，她会很想重来一次。"
+        }
+      ]
+    },
+    {
+      "start": 229.2,
+      "end": 235.95,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "五比三，胜赛局。恰拉耶娃要自己把最后一分拿下。",
+      "score_inset": true,
+      "_edit_id": "match_point",
+      "point_end_ok": "原片25fps逐帧：229.16旧点，229.20新点，明确莱巴金娜3–5、恰拉耶娃40–30 own serve、MATCH POINT #2。保发前站位、约230.8抛球及完整最后一分；235.95只声音分界，And最早236.18，之后连续庆祝。",
+      "crosses_cut": "原片25fps逐帧：229.16旧点，229.20新点，明确莱巴金娜3–5、恰拉耶娃40–30 own serve、MATCH POINT #2。保发前站位、约230.8抛球及完整最后一分；235.95只声音分界，And最早236.18，之后连续庆祝。",
+      "_why": "原片25fps逐帧：229.16旧点，229.20新点，明确莱巴金娜3–5、恰拉耶娃40–30 own serve、MATCH POINT #2。保发前站位、约230.8抛球及完整最后一分；235.95只声音分界，And最早236.18，之后连续庆祝。"
+    },
+    {
+      "start": 235.95,
+      "end": 269.15,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "victory_and_handshake",
+      "point_end_ok": "完整最后一分结束、看台/教练反应、赢家面孔、约247.0–248.2双方面向网前握手、约251.0–254.6主裁握手、挥手及哭笑面孔。全部英文逐词交叉核对；Yes and yes最晚269.08，269.15结束。271.16后最后人名句/尾完整性未解决，全部排除，未假标已审听。",
+      "crosses_cut": "完整最后一分结束、看台/教练反应、赢家面孔、约247.0–248.2双方面向网前握手、约251.0–254.6主裁握手、挥手及哭笑面孔。全部英文逐词交叉核对；Yes and yes最晚269.08，269.15结束。271.16后最后人名句/尾完整性未解决，全部排除，未假标已审听。",
+      "_why": "完整最后一分结束、看台/教练反应、赢家面孔、约247.0–248.2双方面向网前握手、约251.0–254.6主裁握手、挥手及哭笑面孔。全部英文逐词交叉核对；Yes and yes最晚269.08，269.15结束。271.16后最后人名句/尾完整性未解决，全部排除，未假标已审听。",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 1.98,
+          "text": "And Alina Charaeva\n恰拉耶娃，"
+        },
+        {
+          "at": 1.98,
+          "end": 4.18,
+          "text": "manufactures a lifelong dream\n把她此生的梦想变成现实，"
+        },
+        {
+          "at": 4.18,
+          "end": 5.58,
+          "text": "in real time.\n就在眼前。"
+        },
+        {
+          "at": 6.04,
+          "end": 7.32,
+          "text": "Achieves a majestic,\n这是一场了不起的胜利，"
+        },
+        {
+          "at": 7.32,
+          "end": 10.06,
+          "text": "career-defining victory in Beijing.\n在北京，改写她的职业生涯。"
+        },
+        {
+          "at": 13.1,
+          "end": 14.14,
+          "text": "Alina Charaeva,\n恰拉耶娃，"
+        },
+        {
+          "at": 14.14,
+          "end": 16.0,
+          "text": "cool as the other side of the pillow,\n依然冷静从容，"
+        },
+        {
+          "at": 16.2,
+          "end": 17.98,
+          "text": "as she upsets world number one,\n她击败了世界第一，"
+        },
+        {
+          "at": 18.22,
+          "end": 20.42,
+          "text": "Elena Rybakina at the China Open.\n中网上的莱巴金娜。"
+        },
+        {
+          "at": 21.36,
+          "end": 23.1,
+          "text": "Facing the world number one.\n面对世界第一。"
+        },
+        {
+          "at": 23.2,
+          "end": 24.62,
+          "text": "Nervous? Perhaps.\n紧张吗？或许。"
+        },
+        {
+          "at": 25.1,
+          "end": 26.36,
+          "text": "Daunted? Nope.\n怯场吗？没有。"
+        },
+        {
+          "at": 27.1,
+          "end": 29.28,
+          "text": "Intimidated? Not in the least.\n被吓倒了吗？一点也没有。"
+        },
+        {
+          "at": 29.7,
+          "end": 31.18,
+          "text": "Valiant and triumphant?\n勇敢并且赢得胜利？"
+        },
+        {
+          "at": 31.86,
+          "end": 33.18,
+          "text": "Yes and yes.\n是的，都做到了。"
+        }
+      ]
+    },
+    {
+      "title_card": "下一轮，对卡塔尔\n继续把相信打成现实",
+      "kicker": "第一次击败世界第一之后",
+      "seconds": 11,
+      "narration": "她赛后说，相信自己有机会扭转比赛。下一轮对卡塔尔，她能继续带来惊喜吗？",
+      "_edit_id": "ending",
+      "_why": "实际完整胜利反应后忠实释义本人官方报道，下一轮已核，积极邀请期待同一主角。"
+    }
+  ],
+  "_name_normalization_note": "中文译名按既有repo标准统一为恰拉耶娃，English/raw actual ASR/source/window未改。官方中文报道使用查拉耶娃属另一译名，仅对外及自写派生文案按号内标准统一，不改变人物身份、排名、国籍、日期或比赛事实。"
+}

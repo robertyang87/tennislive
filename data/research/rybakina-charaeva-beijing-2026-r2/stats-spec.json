@@ -1,0 +1,119 @@
+{
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 6,
+      "df": 4,
+      "first_in": 50,
+      "first_total": 78,
+      "first_won": 38,
+      "second_won": 9,
+      "second_total": 28,
+      "bp_conv": 5,
+      "bp_chances": 8,
+      "pts_won": 88,
+      "pts_total": 171,
+      "winners": 17,
+      "ue": 17
+    },
+    "b": {
+      "aces": 3,
+      "df": 7,
+      "first_in": 53,
+      "first_total": 93,
+      "first_won": 32,
+      "second_won": 20,
+      "second_total": 40,
+      "bp_conv": 4,
+      "bp_chances": 6,
+      "pts_won": 83,
+      "pts_total": 171,
+      "winners": 33,
+      "ue": 48
+    },
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051532&mode=match_info&submode=stats&web=true",
+      "source_path": "/workspace/upset-Qd4MQBnmF5A-research/stats-2.txt",
+      "source_sha256": "0e247086912417eff2b1131cfd893fff22f49ff955c3a1ab9e019098545bc5fb",
+      "period": "Match",
+      "match_date": "2026-10-03",
+      "checked_at": "2026-10-03T17:46:13.329327+00:00",
+      "winner_result": "3-6 6-4 6-3",
+      "matchup": [
+        "Rybakina",
+        "Charaeva"
+      ],
+      "winners": [
+        33,
+        17
+      ],
+      "ue": [
+        48,
+        17
+      ],
+      "notes": "API data.period=Match, KeyStats.players=[Rybakina,Charaeva]. Metadata/dayfeed use winner-first order; do not copy that order into the stats values. TennisNow reports a different winners count30/16 but the same UE48/17. Retain this one complete TNNS Match source for both rows."
+    },
+    "_source": "Core integers official WTA setnum0 https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS032/stats ; W/UE native TNNS Match API https://api.tnnslive.com/v1/web?id=75051532&mode=match_info&submode=stats&web=true . WTA, TNNS Match and Flashscore0Epw9iu2 agree on all core card integers. a=Elena Rybakina,b=Alina Charaeva. Tennis.com first-in55/54 vs official53/50 is conflicting; use official. TNNS Match time2:10 vs official2:11:50 use official2:11. Winner-first display override:stats.a=Charaeva,b=Rybakina; source evidence retains its originalRybakina/Charaeva columns.",
+    "footer_date": "2026-10-03",
+    "footer_venue": "北京 · 国家网球中心"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "subject": "恰拉耶娃",
+    "winner": "恰拉耶娃",
+    "result": "3-6 6-4 6-3",
+    "matchup": [
+      {
+        "name": "恰拉耶娃",
+        "name_en": "Alina Charaeva",
+        "country": "ARM",
+        "rank": 118
+      },
+      {
+        "name": "莱巴金娜",
+        "name_en": "Elena Rybakina",
+        "country": "KAZ",
+        "rank": 1
+      }
+    ],
+    "scoreboard": {
+      "court": "Capital Group Diamond",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS032"
+      }
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS032",
+    "date": "2026-10-03",
+    "winner": "恰拉耶娃",
+    "loser": "莱巴金娜",
+    "participants": [
+      "莱巴金娜",
+      "恰拉耶娃"
+    ],
+    "winner_result": "3-6 6-4 6-3",
+    "set_scores_home_away": [
+      [
+        6,
+        3
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        3,
+        6
+      ]
+    ],
+    "source_url": "https://www.wtatennis.com/tournaments/china-open/scores/LS032"
+  },
+  "_name_normalization_note": "中文译名按既有repo标准统一为恰拉耶娃，English/raw actual ASR/source/window未改。官方中文报道使用查拉耶娃属另一译名，仅对外及自写派生文案按号内标准统一，不改变人物身份、排名、国籍、日期或比赛事实。"
+}

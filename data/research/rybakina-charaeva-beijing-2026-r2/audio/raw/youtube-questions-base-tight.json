@@ -1,0 +1,237 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=Qd4MQBnmF5A",
+  "source_sha256": "ed88d5e4cce59bdd16b7caa8cf709f8afda9f1b0bf1871798d97d788ca6f198f",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 257.0,
+  "range_to": 269.4,
+  "created_at": "2026-10-03T17:53:56.500910+00:00",
+  "elapsed_seconds": 3.31,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 257.0,
+      "end": 258.9,
+      "text": " facing the world number one.",
+      "avg_logprob": -0.2814046878899847,
+      "no_speech_prob": 0.22177112102508545,
+      "compression_ratio": 1.1517857142857142,
+      "words": [
+        {
+          "start": 257.0,
+          "end": 257.96,
+          "word": " facing",
+          "probability": 0.3466506600379944
+        },
+        {
+          "start": 257.96,
+          "end": 258.12,
+          "word": " the",
+          "probability": 0.9825140833854675
+        },
+        {
+          "start": 258.12,
+          "end": 258.3,
+          "word": " world",
+          "probability": 0.8291522264480591
+        },
+        {
+          "start": 258.3,
+          "end": 258.6,
+          "word": " number",
+          "probability": 0.7900465726852417
+        },
+        {
+          "start": 258.6,
+          "end": 258.9,
+          "word": " one.",
+          "probability": 0.9290534257888794
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 259.22,
+      "end": 260.34,
+      "text": " Nervous perhaps?",
+      "avg_logprob": -0.2814046878899847,
+      "no_speech_prob": 0.22177112102508545,
+      "compression_ratio": 1.1517857142857142,
+      "words": [
+        {
+          "start": 259.22,
+          "end": 259.62,
+          "word": " Nervous",
+          "probability": 0.8171876470247904
+        },
+        {
+          "start": 259.62,
+          "end": 260.34,
+          "word": " perhaps?",
+          "probability": 0.282773494720459
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 260.96,
+      "end": 261.48,
+      "text": " Don't it?",
+      "avg_logprob": -0.2814046878899847,
+      "no_speech_prob": 0.22177112102508545,
+      "compression_ratio": 1.1517857142857142,
+      "words": [
+        {
+          "start": 260.96,
+          "end": 261.34,
+          "word": " Don't",
+          "probability": 0.6424975693225861
+        },
+        {
+          "start": 261.34,
+          "end": 261.48,
+          "word": " it?",
+          "probability": 0.5737237930297852
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 261.9,
+      "end": 262.16,
+      "text": " Nope.",
+      "avg_logprob": -0.2814046878899847,
+      "no_speech_prob": 0.22177112102508545,
+      "compression_ratio": 1.1517857142857142,
+      "words": [
+        {
+          "start": 261.9,
+          "end": 262.16,
+          "word": " Nope.",
+          "probability": 0.782282292842865
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 263.08,
+      "end": 263.72,
+      "text": " Intimidated?",
+      "avg_logprob": -0.2814046878899847,
+      "no_speech_prob": 0.22177112102508545,
+      "compression_ratio": 1.1517857142857142,
+      "words": [
+        {
+          "start": 263.08,
+          "end": 263.72,
+          "word": " Intimidated?",
+          "probability": 0.9433213472366333
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 263.94,
+      "end": 265.1,
+      "text": " Not in the least.",
+      "avg_logprob": -0.2814046878899847,
+      "no_speech_prob": 0.22177112102508545,
+      "compression_ratio": 1.1517857142857142,
+      "words": [
+        {
+          "start": 263.94,
+          "end": 264.32,
+          "word": " Not",
+          "probability": 0.9874438643455505
+        },
+        {
+          "start": 264.32,
+          "end": 264.56,
+          "word": " in",
+          "probability": 0.9906901121139526
+        },
+        {
+          "start": 264.56,
+          "end": 264.7,
+          "word": " the",
+          "probability": 0.9986862540245056
+        },
+        {
+          "start": 264.7,
+          "end": 265.1,
+          "word": " least.",
+          "probability": 0.9529176950454712
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 265.68,
+      "end": 267.06,
+      "text": " Valiant and triumphant?",
+      "avg_logprob": -0.2814046878899847,
+      "no_speech_prob": 0.22177112102508545,
+      "compression_ratio": 1.1517857142857142,
+      "words": [
+        {
+          "start": 265.68,
+          "end": 266.32,
+          "word": " Valiant",
+          "probability": 0.7363376220067342
+        },
+        {
+          "start": 266.32,
+          "end": 266.5,
+          "word": " and",
+          "probability": 0.7627997994422913
+        },
+        {
+          "start": 266.5,
+          "end": 267.06,
+          "word": " triumphant?",
+          "probability": 0.9414721727371216
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 268.0,
+      "end": 268.62,
+      "text": " Yes and yes.",
+      "avg_logprob": -0.2814046878899847,
+      "no_speech_prob": 0.22177112102508545,
+      "compression_ratio": 1.1517857142857142,
+      "words": [
+        {
+          "start": 267.76,
+          "end": 268.08,
+          "word": " Yes",
+          "probability": 0.9766718149185181
+        },
+        {
+          "start": 268.08,
+          "end": 268.36,
+          "word": " and",
+          "probability": 0.9015407562255859
+        },
+        {
+          "start": 268.36,
+          "end": 268.62,
+          "word": " yes.",
+          "probability": 0.9686095118522644
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "02ae87f388a2e506f4cc5a9b748a0c675fc616ba7ee97c5447b41e105233b240",
+  "metadata_sanitization": "Only local source_path omitted for repository portability; words, probabilities, source absolute times and model settings unchanged."
+}
