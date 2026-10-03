@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "reviewer": "china_video independent visual reviewer",
+  "reviewed_at": "2026-10-02T06:48:50.425125+00:00",
+  "status": "SUPERSEDED",
+  "passed": false,
+  "film": {
+    "path": "/workspace/eala-research/native-release/wang-xiyu-eala-asian-games-2026-sf.mp4",
+    "sha256": "7564e8c562c9d5ca2b8c2fc2f5b3b8e242f0de7a42d1af2a77356615cea1e0a6",
+    "bytes": 26463012,
+    "duration_seconds": 105.233333,
+    "dimensions": [
+      1080,
+      1440
+    ]
+  },
+  "method": "Fresh ffmpeg extraction from the actual native-release movie only; each listed JPEG was inspected directly with view_image. No prior preview or simulation substituted for these output frames.",
+  "scope": "Focused final repair verification: full_source_scale0.78 technical framing, source captions/watermarks, own header separation, facial/action preservation and subtitle clearance. Visual signoff only, no audio signoff.",
+  "frames": [
+    {
+      "film_time_seconds": 31,
+      "file": "/workspace/eala-research/china/tactical-review-final-release-31.0.jpg",
+      "sha256": "1734318fe36091bbc79256f4ddc01a49fb7b0b80e6acb00d4830155f089f24ef",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 82.2,
+      "file": "/workspace/eala-research/china/tactical-review-final-release-82.2.jpg",
+      "sha256": "b4bbc841629dd19d67c17e80ffe3780a6ed9215f37a7cee3612915c973025e8c",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 84.9,
+      "file": "/workspace/eala-research/china/tactical-review-final-release-84.9.jpg",
+      "sha256": "ec1deb3cc2163a70567b70e6a7b7a8fafb1e8ee8760650abf6a39fa3ec388f71",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 85,
+      "file": "/workspace/eala-research/china/tactical-review-final-release-85.0.jpg",
+      "sha256": "7291d3a542503d8a35f43c703efced367717abf6fe8d4416e3b420da3f2ef77e",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 85.6,
+      "file": "/workspace/eala-research/china/tactical-review-final-release-85.6.jpg",
+      "sha256": "f7421f45b474876fc094d67d123caae0d8bcaa2f6f25680e5de336bccce47458",
+      "directly_viewed": true
+    },
+    {
+      "film_time_seconds": 88.6,
+      "file": "/workspace/eala-research/china/tactical-review-final-release-88.6.jpg",
+      "sha256": "d65dbbdfee869de336b236a23e775f91930761dafe0c6f6e201997f563ecbda9",
+      "directly_viewed": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "sina_native_frame_preserved",
+      "status": "PASS",
+      "evidence_times": [
+        82.2,
+        84.9,
+        85,
+        85.6
+      ],
+      "finding": "Actual release uses complete native source reduced and centered in approximately842x1122 rectangle starting119,159.82.2 retains serve raised hand, face, racket and body.84.9 retains incoming ball at left and racket preparation;85.0 retains backhand shot follow-through with most racket head;85.6 retains readiness and racket."
+    },
+    {
+      "name": "source_yellow_caption_header_separation",
+      "status": "PASS",
+      "evidence_times": [
+        82.2,
+        84.9,
+        85,
+        85.6
+      ],
+      "finding": "Own white/green header occupies the upper canvas; source yellow two-line caption sits separately inside the source frame aroundy194–288. No letter overlap or orphaned yellow fragments observed. Caption retained as published source content, not characterized as technical-statistical truth."
+    },
+    {
+      "name": "subtitle_action_clearance",
+      "status": "PASS",
+      "evidence_times": [
+        82.2,
+        84.9,
+        85,
+        85.6
+      ],
+      "finding": "82.2 lower subtitle remains below source-frame bottom, does not cover face, raised hand, racket or body action.84.9/85.0/85.6 no subtitle intrudes on backhand action."
+    },
+    {
+      "name": "celebration_face_fist",
+      "status": "PASS",
+      "evidence_times": [
+        88.6
+      ],
+      "finding": "Actual release celebration framing retains face/cap and raised fist fully; own header does not cover them."
+    },
+    {
+      "name": "bili_source_provenance_and_full_width",
+      "status": "PASS",
+      "evidence_times": [
+        31
+      ],
+      "finding": "zgzoyj/bilibili original upper-left mark remains in sharp central source band. Near player camera-edge truncation matches original source framing previously documented; no additional crop introduced by final contain."
+    }
+  ],
+  "blocking_issues": [],
+  "material_limits": [
+    "Sina original source itself slightly cuts the left edge of the racket during approximately4.5s follow-through; final output85.0 reproduces this limitation and adds no crop. Do not claim every racket pixel is recorded by the original camera.",
+    "The decisive landing of the final point is outside the one-side source; this visual review does not invent its exact location or shot outcome.",
+    "This is a targeted extraction review of listed frames, not a claim of continuous real-time viewing of every frame or audio."
+  ],
+  "conclusion": "PASS: final actual movie resolves added technical crop and source-header overlap; source yellow caption is retained separately, action and facial/fist framing are preserved in inspected windows.",
+  "superseded_why": "用户随后要求铺满竖屏并裁掉原媒体文字；此前整源横屏/留黄字版本不作为最终发布凭证。使用新的final-cloud-visual-qc报告。"
+}

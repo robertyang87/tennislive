@@ -1,0 +1,92 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/bili-three-sets-original.mp4",
+  "source_sha256": "b73701bcfd3791c5570571b9ee435fcb3daa1bf92fef58c62843541ba60bd112",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: independent small/base models, VAD and no-VAD outputs compared; no claim of manual listening",
+  "reviewed_at": "2026-10-02T06:23:25.123093+00:00",
+  "reviewed_from": 5,
+  "reviewed_to": 11,
+  "status": "complete",
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "双模型/VAD组合无句子；唯一base无VAD候选始于11.58秒，实际所选窗口在11秒结束，未纳入这段不稳定人声。",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-bili-5-17-base-no-vad.json",
+      "sha256": "9407f172348ee1e43be0d9992532281dabd8a0b21daaf182f411842f41c76518",
+      "model": "base",
+      "vad": false,
+      "utterances": [
+        {
+          "id": 1,
+          "start": 11.58,
+          "end": 16.84,
+          "text": " Let's go, let's go, let's go!",
+          "avg_logprob": -1.06427001953125,
+          "no_speech_prob": 0.596017062664032,
+          "compression_ratio": 1.3181818181818181,
+          "words": [
+            {
+              "start": 11.58,
+              "end": 12.58,
+              "word": " Let's",
+              "probability": 0.3749699634499848
+            },
+            {
+              "start": 12.58,
+              "end": 12.58,
+              "word": " go,",
+              "probability": 0.4429265856742859
+            },
+            {
+              "start": 12.66,
+              "end": 14.02,
+              "word": " let's",
+              "probability": 0.6071817502379417
+            },
+            {
+              "start": 14.02,
+              "end": 14.46,
+              "word": " go,",
+              "probability": 0.9023610353469849
+            },
+            {
+              "start": 14.96,
+              "end": 16.6,
+              "word": " let's",
+              "probability": 0.8071916997432709
+            },
+            {
+              "start": 16.6,
+              "end": 16.84,
+              "word": " go!",
+              "probability": 0.9585715532302856
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-bili-5-17-base-vad.json",
+      "sha256": "3abc4d411422908eb918be751d6100012fd81b567a41907be5ef256b273488e1",
+      "model": "base",
+      "vad": true,
+      "utterances": []
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-bili-5-17-small-no-vad.json",
+      "sha256": "e2f31762b146e23168a18a8e24b01cfd4d7f90c16b7f00c84bf2b375b6d3d41a",
+      "model": "small",
+      "vad": false,
+      "utterances": []
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-bili-5-17-small-vad.json",
+      "sha256": "0757ea59d7a7142ebde849fd230e59a977b38c8c2ea0a5c1f68a3df364dbdf67",
+      "model": "small",
+      "vad": true,
+      "utterances": []
+    }
+  ],
+  "_review_scope": "Complete selected-window foreground-English review via permitted asr_cross_checked method. Original audio preserved. Does not certify exact non-English speech or absence of music."
+}

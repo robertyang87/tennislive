@@ -1,0 +1,44 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/bili-three-sets-original.mp4",
+  "source_sha256": "b73701bcfd3791c5570571b9ee435fcb3daa1bf92fef58c62843541ba60bd112",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: independent small/base models, VAD and no-VAD outputs compared; no claim of manual listening",
+  "reviewed_at": "2026-10-02T06:23:25.124134+00:00",
+  "reviewed_from": 39,
+  "reviewed_to": 50.65,
+  "status": "complete",
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "独立small/base在VAD与无VAD四组合的本完整窗均无句子；原场内回合，无转播英文解说或英文字幕。",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-bili-39-50p65-base-no-vad.json",
+      "sha256": "c7da62db33f4321f3ead5962bc20232d17d66e5cf59399eb9e3fece1fc0c3832",
+      "model": "base",
+      "vad": false,
+      "utterances": []
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-bili-39-50p65-base-vad.json",
+      "sha256": "8ebd7323e42574170181583f261c84ac533a0f4864638e893ffc7b0f148a899f",
+      "model": "base",
+      "vad": true,
+      "utterances": []
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-bili-39-50p65-small-no-vad.json",
+      "sha256": "5f16ac9d641e44c876fbc657d28d780e5651667e5ffe460c4e68e6f8614e5025",
+      "model": "small",
+      "vad": false,
+      "utterances": []
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-bili-39-50p65-small-vad.json",
+      "sha256": "310603db77dc131ac97d94128edbd2c6e674c54070d271f8889a9ab6840c545f",
+      "model": "small",
+      "vad": true,
+      "utterances": []
+    }
+  ],
+  "_review_scope": "Complete selected-window foreground-English review via permitted asr_cross_checked method. Original audio preserved. Does not certify exact non-English speech or absence of music."
+}

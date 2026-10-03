@@ -1,0 +1,92 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/sina-matchpoint-original.mp4",
+  "source_sha256": "a2562acbad782361b790428d800de04a27df13c8dd07361c9666e0c5d351e50e",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: independent small/base models, VAD and no-VAD outputs compared; no claim of manual listening",
+  "reviewed_at": "2026-10-02T06:23:25.124937+00:00",
+  "reviewed_from": 0,
+  "reviewed_to": 7.3,
+  "status": "complete",
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "双模型VAD无句子；无VAD分别误识为韩语订阅点赞、停了，内容和时刻不吻合。此前指定英语的无VAD仅I/Oh，词概率0.0031/0.0044，不能当可靠英语句。跨模型与长窗结果未建立可复核的前景英语。",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-sina-0-7p3-base-no-vad.json",
+      "sha256": "c6f4320d3d66016d6fef587b1e7d05f1226d8f96c7cc4c61afd09a06c4111572",
+      "model": "base",
+      "vad": false,
+      "utterances": [
+        {
+          "id": 1,
+          "start": 1.64,
+          "end": 3.04,
+          "text": " 멈췄다.",
+          "avg_logprob": -2.166070032119751,
+          "no_speech_prob": 0.4382460117340088,
+          "compression_ratio": 0.5555555555555556,
+          "words": [
+            {
+              "start": 1.64,
+              "end": 3.04,
+              "word": " 멈췄다.",
+              "probability": 0.3744181790583146
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-sina-0-7p3-base-vad.json",
+      "sha256": "f66e45d591337e724a21f7f30d97c773a72274d42d95f21e5637b89ce85f6063",
+      "model": "base",
+      "vad": true,
+      "utterances": []
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-sina-0-7p3-small-no-vad.json",
+      "sha256": "a1528ab08915801b7571599c1d135492dc8c9c3c3850f935213508fafb8d8ac5",
+      "model": "small",
+      "vad": false,
+      "utterances": [
+        {
+          "id": 1,
+          "start": 2.48,
+          "end": 3.88,
+          "text": " 구독과 좋아요 부탁드려요!",
+          "avg_logprob": -1.01911700963974,
+          "no_speech_prob": 0.45411768555641174,
+          "compression_ratio": 0.8,
+          "words": [
+            {
+              "start": 2.48,
+              "end": 3.88,
+              "word": " 구독과",
+              "probability": 0.2597118681296706
+            },
+            {
+              "start": 3.88,
+              "end": 3.88,
+              "word": " 좋아요",
+              "probability": 0.9704604744911194
+            },
+            {
+              "start": 3.88,
+              "end": 3.88,
+              "word": " 부탁드려요!",
+              "probability": 0.5792869428793589
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-sina-0-7p3-small-vad.json",
+      "sha256": "94bc1637cc42c78882186d2d78ca39ee076f78e864e552a975b42e2ccf99c9ac",
+      "model": "small",
+      "vad": true,
+      "utterances": []
+    }
+  ],
+  "_review_scope": "Complete selected-window foreground-English review via permitted asr_cross_checked method. Original audio preserved. Does not certify exact non-English speech or absence of music."
+}
