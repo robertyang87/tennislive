@@ -1,0 +1,465 @@
+{
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 2,
+      "df": 4,
+      "first_in": 36,
+      "first_total": 73,
+      "first_won": 26,
+      "second_won": 18,
+      "second_total": 37,
+      "bp_conv": 4,
+      "bp_chances": 5,
+      "pts_won": 66,
+      "pts_total": 128,
+      "winners": 13,
+      "ue": 22,
+      "headshot": "assets/players/headshots/wta-335958-match-LS041.jpg",
+      "_headshot_source": {
+        "kind": "same_match_official_photo_crop",
+        "source_url": "https://p1.img.cctvpic.com/photoAlbum/source/2026/10/03/PHOTEwtxo8ISUhf8KuCYB0HG261003.jpg",
+        "source_sha256": "734a79c643a39aefcee8ed766a80d42550257e61feb17d208775ca3e24f57c45",
+        "crop_xywh": [
+          280,
+          150,
+          900,
+          900
+        ],
+        "size": [
+          600,
+          600
+        ]
+      }
+    },
+    "b": {
+      "aces": 1,
+      "df": 1,
+      "first_in": 38,
+      "first_total": 55,
+      "first_won": 25,
+      "second_won": 8,
+      "second_total": 17,
+      "bp_conv": 2,
+      "bp_chances": 5,
+      "pts_won": 62,
+      "pts_total": 128,
+      "winners": 17,
+      "ue": 28,
+      "headshot": "assets/players/headshots/wta-321158.jpg"
+    },
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051548&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/sun-bucsa-beijing-2026-r2/wue-1.txt",
+      "source_sha256": "441469f0c6f1e951c032443b5c177deee3a6e5dff35e0f48b0e738750a22e18c",
+      "period": "Match",
+      "match_date": "2026-10-03",
+      "checked_at": "2026-10-03T16:43:11.863539+00:00",
+      "winner_result": "6-4 7-5",
+      "matchup": [
+        "Sun",
+        "Bucsa"
+      ],
+      "winners": [
+        13,
+        17
+      ],
+      "ue": [
+        22,
+        28
+      ],
+      "notes": "Decoded K/P/_ using public frontend format. data.period=Match; Key Stats players=[Sun,Bucsa]. Full-match core raw values crosschecked against WTA official stats. Do not copy TNNS erroneous per-set core stats or match-point counts into copy."
+    },
+    "_source": "Core full-match integers from official WTA setnum0 https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS041/stats ; W/UE from TNNS Match API. Core matches Flashscore KS24sykK. a=Xinran Sun,b=Cristina Bucsa. Include double faults in second-serve denominators37/17 (49%/47%), not Tennis.com excluded33/16(55%/50%).",
+    "footer_date": "2026-10-03",
+    "footer_venue": "北京 · HSBC Moon"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "winner": "孙心然",
+    "result": "6-4 7-5",
+    "matchup": [
+      {
+        "name": "孙心然",
+        "name_en": "Xinran Sun",
+        "country": "CHN",
+        "rank": 582
+      },
+      {
+        "name": "布克沙",
+        "name_en": "Cristina Bucsa",
+        "country": "ESP",
+        "rank": 35
+      }
+    ],
+    "scoreboard": {
+      "court": "HSBC Moon",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS041",
+        "match_id_field": "MatchID"
+      },
+      "_court_sources": [
+        "https://www.tennis.com/tournaments/china-open-wta/matches/x-sun-vs-c-bucsa-2026-10-03",
+        "https://api.tnnslive.com/v1/web?id=75051548&mode=match&web=true"
+      ]
+    },
+    "_rank_sources": [
+      {
+        "name": "孙心然",
+        "rank": 582,
+        "url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+        "field": "article Currently ranked No.582"
+      },
+      {
+        "name": "布克沙",
+        "rank": 35,
+        "url": "https://www.wtatennis.com/players/321158/cristina-bucsa",
+        "field": "data-player-stats.ytd.singles.rank"
+      }
+    ],
+    "layout": "solo",
+    "subject": "孙心然",
+    "hook": "次盘0比2落后\n孙心然挺进第3轮",
+    "hook_accent": "第3轮",
+    "topic": "WTA1000 北京 第二轮 · 孙心然 VS 布克沙",
+    "portrait": {
+      "image": "assets/reel/sun-bucsa-beijing-2026-r2-serve.jpg",
+      "focus": 0.68,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "source_url": "https://p4.img.cctvpic.com/photoAlbum/source/2026/10/03/PHOTAaumhPMQtLMPQWWOzhzK261003.jpg",
+      "_portrait_why": "账号所有者明确选择本场央视七图中第5张抛球照（本轮展示的第二张），同场拍摄2026-10-03 18:38:11，官方图集确认孙心然vs布克沙。正面睁眼抬头看球，保留自然神态，不称获胜后照片。",
+      "_low_res_why": "账号所有者明确选择本场真实抛球照片。2048x1366原图铺满原生1080x1440，约5.4%放大，保留真实细节，无生成重绘。"
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS041",
+    "date": "2026-10-03",
+    "winner": "孙心然",
+    "loser": "布克沙",
+    "participants": [
+      "孙心然",
+      "布克沙"
+    ],
+    "winner_result": "6-4 7-5",
+    "set_scores_home_away": [
+      [
+        6,
+        4
+      ],
+      [
+        7,
+        5
+      ]
+    ],
+    "source_url": "https://www.wtatennis.com/tournaments/china-open/scores/LS041",
+    "start_api_utc": "2026-10-03T10:06:35.773+00:00",
+    "first_point_utc": "2026-10-03T10:19:20Z",
+    "date_time_copy": "北京时间2026年10月3日晚",
+    "_time_note": "Use natural evening slot only; match metadata timestamp and first actual point differ13m. Neither substitutes proof of exact actual start.",
+    "daypart": "晚上",
+    "duration": "01:31:18"
+  },
+  "slug": "sun-bucsa-beijing-2026-r2",
+  "_column": "赛场之上",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "segments": [
+    {
+      "start": 197.55,
+      "end": 199.75,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "cold_open",
+      "point_end_ok": "本场最后一分已结束后的胜利反应及完整第一句解说；正文末尾完整回放赛点与庆祝握手。",
+      "_why": "本场最后一分已结束后的胜利反应及完整第一句解说；正文末尾完整回放赛点与庆祝握手。",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0,
+          "end": 2.195,
+          "text": "Oh, she wins it in style.\n噢，她赢得真漂亮。"
+        }
+      ],
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "正文187.4–206.32完整保留最后一分、举臂庆祝、团队鼓掌和网前握手，覆盖冷开197.55–199.75。",
+      "_score_inset_why": "原生WTA逐帧检测197.55–202秒仍有比赛比分，按真实出现与撤除随帧回贴；后面的近景无板不会留下背景补丁。",
+      "crosses_cut": "本场最后一分已结束后的胜利反应及完整第一句解说；正文末尾完整回放赛点与庆祝握手。"
+    },
+    {
+      "title_card": "16岁的她\n第一次击败前50",
+      "kicker": "孙心然的成年赛场突破",
+      "seconds": 8.0,
+      "narration": "十六岁的孙心然，第一次击败世界前五十。关键时刻，她还敢主动出手。",
+      "_why": "先交代本场突破，后接北京时间日期和比赛坐标，真实本人年龄与首Top50胜由官方确认。"
+    },
+    {
+      "start": 26.9,
+      "end": 39.48,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "北京时间十月三号晚上，中网女单第二轮，孙心然迎战布克沙。十六岁的她，世界排名五百八十二。",
+      "score_inset": true,
+      "_edit_id": "context",
+      "point_end_ok": "首盘孙1–0时布克沙发球，源发球前开始，孙赢下该分后背面反应结束，下一分发球前收住。",
+      "_why": "首盘孙1–0时布克沙发球，源发球前开始，孙赢下该分后背面反应结束，下一分发球前收住。",
+      "crosses_cut": "首盘孙1–0时布克沙发球，源发球前开始，孙赢下该分后背面反应结束，下一分发球前收住。"
+    },
+    {
+      "start": 102.25,
+      "end": 117.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "首盘两人打到四比四。孙心然仍在主动找空当。这个正手拿下这一分，她随后六比四先拿一盘。",
+      "score_inset": true,
+      "_edit_id": "first_set",
+      "point_end_ok": "真实首盘4–4、孙30–15自己的发球局，完整回合开始，117.0只切换声音，后一原声窗连续；此分不是首盘盘点，六比四为随后已核整盘赛果。",
+      "_why": "真实首盘4–4、孙30–15自己的发球局，完整回合开始，117.0只切换声音，后一原声窗连续；此分不是首盘盘点，六比四为随后已核整盘赛果。",
+      "crosses_cut": "真实首盘4–4、孙30–15自己的发球局，完整回合开始，117.0只切换声音，后一原声窗连续；此分不是首盘盘点，六比四为随后已核整盘赛果。"
+    },
+    {
+      "start": 117.0,
+      "end": 119.1,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "first_set_reaction",
+      "point_end_ok": "同一首盘4–4局的回合反应与完整英文；118.84以后源内跳次盘1–2准备，119.1以前未发球，保英文尾并收在下一分开球前。",
+      "_why": "同一首盘4–4局的回合反应与完整英文；118.84以后源内跳次盘1–2准备，119.1以前未发球，保英文尾并收在下一分开球前。",
+      "quote": [
+        {
+          "at": 0.05,
+          "end": 1.86,
+          "text": "Oh, such a good finish.\n这一球收得漂亮。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "同一首盘4–4局的回合反应与完整英文；118.84以后源内跳次盘1–2准备，119.1以前未发球，保英文尾并收在下一分开球前。"
+    },
+    {
+      "start": 132.65,
+      "end": 144.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "次盘零比二落后，她追回来了。三比三，这记反手直线帮她守住发球局。",
+      "score_inset": true,
+      "_edit_id": "second_set",
+      "point_end_ok": "真实次盘3–3、孙40–15发球局；143.05近端双反直线得分后保发4–3。144.6只切声音，原片连续接到完整解说，不能说2–2或3–2。",
+      "_why": "真实次盘3–3、孙40–15发球局；143.05近端双反直线得分后保发4–3。144.6只切声音，原片连续接到完整解说，不能说2–2或3–2。",
+      "crosses_cut": "真实次盘3–3、孙40–15发球局；143.05近端双反直线得分后保发4–3。144.6只切声音，原片连续接到完整解说，不能说2–2或3–2。"
+    },
+    {
+      "start": 144.6,
+      "end": 147.65,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "backhand_reaction",
+      "point_end_ok": "同一次盘3–3局的反手直线保发与观众反应，保留完整英文尾；147.0后源内跳下分5–4准备，147.65前未发球，不截活球。",
+      "_why": "同一次盘3–3局的反手直线保发与观众反应，保留完整英文尾；147.0后源内跳下分5–4准备，147.65前未发球，不截活球。",
+      "quote": [
+        {
+          "at": 0.23,
+          "end": 3.045,
+          "text": "She finds the backhand down the line.\n她打出反手直线。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "同一次盘3–3局的反手直线保发与观众反应，保留完整英文尾；147.0后源内跳下分5–4准备，147.65前未发球，不截活球。"
+    },
+    {
+      "stat_card": true,
+      "seconds": 13.5,
+      "narration": "全场五次破发机会，孙心然拿下四次。制胜分少于对手，她赢在重要的机会没有白白放过。",
+      "_edit_id": "statistics",
+      "_why": "九行全场原始整数：核心官方WTA，Winners与UE取完整TNNSMatch；不把分盘错误或排除双误的二发口径混入。"
+    },
+    {
+      "start": 168.75,
+      "end": 184.2,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "五比五，孙心然面临被破发的危险。她没有只求把球挡回去。正手打向直线，救下这一分，随后守住发球局。",
+      "score_inset": true,
+      "_edit_id": "break_point",
+      "point_end_ok": "完整5–5孙发球30–40：170.68发球触球，181.6左右近端右侧正手直线，183秒后死球；184.2仅切原声，接近景和完整英语。固定居中裁切下极右击球手部部分出画，以源全景核球路，不宣称竖屏完整展示挥拍手部。",
+      "_why": "完整5–5孙发球30–40：170.68发球触球，181.6左右近端右侧正手直线，183秒后死球；184.2仅切原声，接近景和完整英语。固定居中裁切下极右击球手部部分出画，以源全景核球路，不宣称竖屏完整展示挥拍手部。",
+      "crosses_cut": "完整5–5孙发球30–40：170.68发球触球，181.6左右近端右侧正手直线，183秒后死球；184.2仅切原声，接近景和完整英语。固定居中裁切下极右击球手部部分出画，以源全景核球路，不宣称竖屏完整展示挥拍手部。"
+    },
+    {
+      "start": 184.2,
+      "end": 187.65,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "forehand_reaction",
+      "point_end_ok": "同一救破发点结束后孙握拳近景，保留完整前景英语句，不用中文旁白压住原声。",
+      "_why": "同一救破发点结束后孙握拳近景，保留完整前景英语句，不用中文旁白压住原声。",
+      "quote": [
+        {
+          "at": 0.01,
+          "end": 3.36,
+          "text": "There's nothing tentative about that forehand.\n这记正手毫不犹豫。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "同一救破发点结束后孙握拳近景，保留完整前景英语句，不用中文旁白压住原声。"
+    },
+    {
+      "start": 187.65,
+      "end": 197.55,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "来到赛点，布克沙上网。孙心然用正手穿越，打出了属于自己的答案。",
+      "score_inset": true,
+      "_edit_id": "match_point",
+      "point_end_ok": "最后赛点从布克沙189.92发球前开始到196.6孙远端正手穿越、197死球；197.55仅声音分界，下一段连续保留举臂、走网及握手，不写第几个赛点。",
+      "_why": "最后赛点从布克沙189.92发球前开始到196.6孙远端正手穿越、197死球；197.55仅声音分界，下一段连续保留举臂、走网及握手，不写第几个赛点。",
+      "crosses_cut": "最后赛点从布克沙189.92发球前开始到196.6孙远端正手穿越、197死球；197.55仅声音分界，下一段连续保留举臂、走网及握手，不写第几个赛点。"
+    },
+    {
+      "start": 197.55,
+      "end": 206.15,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "victory_and_handshake",
+      "point_end_ok": "与赛点连续，198.84–201.12举臂庆祝，203.8–204.7网前握手，保留完整胜利两句评论直到源末，兑现冷开。",
+      "_why": "与赛点连续，198.84–201.12举臂庆祝，203.8–204.7网前握手，保留完整胜利两句评论直到源末，兑现冷开。",
+      "quote": [
+        {
+          "at": 0,
+          "end": 2.2,
+          "text": "Oh, she wins it in style.\n噢，她赢得真漂亮。"
+        },
+        {
+          "at": 3.22,
+          "end": 8.41,
+          "text": "And it's the biggest victory of this young sixteen-year-old's career.\n16岁小将生涯最重要的一胜。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_score_inset_why": "原生WTA逐帧检测197.55–202秒仍有比赛比分，按真实出现与撤除随帧回贴；后面的近景无板不会留下背景补丁。",
+      "crosses_cut": "与赛点连续，198.84–201.12举臂庆祝，203.8–204.7网前握手，保留完整胜利两句评论直到源末，兑现冷开。"
+    },
+    {
+      "title_card": "下一关，高芙\n仍然每球去拼",
+      "kicker": "把青少年冠军的勇气带进成年赛场",
+      "seconds": 13.0,
+      "narration": "孙心然说，开场有些紧张，后来越来越好。下一轮是高芙。年轻的勇气，就从这一分一分开始。你最想为哪一分鼓掌？",
+      "_edit_id": "ending",
+      "_why": "最后一分、真实庆祝和握手完整保留后，忠实释义WTA赛后本人文字，下一轮高芙已核，问题邀请为真实回合鼓掌。"
+    }
+  ],
+  "tts_backend": "edge",
+  "track": false,
+  "scorebox": [
+    58,
+    552,
+    366,
+    658
+  ],
+  "topbar": {
+    "line1": "2026 WTA1000 北京 第二轮",
+    "line2": "孙心然 6-4 7-5 布克沙"
+  },
+  "outro": false,
+  "push": {
+    "auto": true,
+    "summary": "孙心然闯关",
+    "lead": "中网女单第二轮，16岁孙心然第二盘0比2落后追回，5比5用正手直线救下破发点，最终6比4、7比5击败布克沙，首次战胜世界前50，晋级第三轮，下一轮迎战高芙。"
+  },
+  "_source_provenance": {
+    "publisher": "WTA",
+    "canonical_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+    "video_id": "6406166508112",
+    "sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+    "bytes": 54935229,
+    "width": 1280,
+    "height": 720,
+    "fps": "25/1",
+    "duration": 206.358333
+  },
+  "_set_coverage_why": "官方集锦没有首盘盘点或次盘0–2镜头。首盘用真实4–4完整回合和官方6–4终盘结果交代，次盘从实际3–3回合开始，0–2→3–2由官方赛报准确补充；5–5救破发点与末分庆祝握手完整。不能用首盘2–0画面冒充次盘0–2。",
+  "_editing_why": "原生1080x1440满画布，固定中心cx0.5，不追人、不含外部新闻字。选实际完整重点分，原声与中文旁白独立分段，配源证据、统计卡与赛后本人感言。",
+  "_heat_why": "中国16岁美网青少年女单冠军在中网主场，首次击败Top50后下一轮挑战高芙。",
+  "_hit_data": [
+    {
+      "label": "破发机会4/5",
+      "detail": "官方全场孙心然5次破发机会兑现4次，布克沙5次兑现2次。",
+      "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS041/stats"
+    }
+  ],
+  "_facts": [
+    {
+      "url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+      "type": "official_match_report",
+      "why": "年龄、rank582、0–2追回、5–5正手直线救BP、最终比分、本人紧张后更好、下一轮高芙；赛点序号文字与逐分冲突，所以不使用第几个。"
+    },
+    {
+      "url": "https://www.chinaopen.com/cn/contents/281/1641.html",
+      "type": "official_chinese_match_report",
+      "why": "中文姓名孙心然、10月3日第二轮6–4/7–5胜布克沙晋级32强。"
+    },
+    {
+      "url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+      "type": "official_video",
+      "why": "首Top50胜以及实际全部重点回合、庆祝和握手。"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "5比5那一分，她为什么仍敢主动出手？",
+    "thesis": "把16岁首次Top50胜落到次盘追回、5–5正手直线救BP和末球正手穿越，尊重对手并展示真实机会把握。",
+    "beats": [
+      "真实胜利冷开",
+      "首Top50胜落点",
+      "北京时间日期和对阵",
+      "首盘4–4关键分及6–4赛果",
+      "次盘0–2追回与3–3反手直线保发",
+      "全场破发机会4/5",
+      "5–5救BP",
+      "完整赛点、庆祝、握手，冷开兑现",
+      "本人克服紧张及下一轮高芙期待"
+    ],
+    "human_context": {
+      "angle": "孙心然把青少年夺冠后的勇气带入成年巡回赛，关键分仍主动进攻；赛后本人承认紧张后状态更好。",
+      "facts": [
+        "16岁2026美网青少年冠军",
+        "首次Top50胜",
+        "下一轮对高芙"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+        "https://www.chinaopen.com/cn/contents/281/1641.html",
+        "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next"
+      ]
+    }
+  },
+  "_tts_backend_why": "采用已确定的Microsoft Edge云见中文体育旁白；本稿没有Azure专用情绪风格或自定义停顿需求。禁止DeepSeek和MiniMax，选段文案由OpenAI据实处理。",
+  "stat_card_full_canvas": true,
+  "_ending_why": "正文真实赛点、举臂庆祝、握手及完整两句原声保留到206.15；最后一句实际词尾205.86已结束，额外0.18秒溶解底料到206.33小于源206.358；最后情绪卡以本人承认紧张后的成长与下一轮高芙期待提问。",
+  "_preparation_status": "prepared_pending_source_quality_decision",
+  "_quality_blocker": "Highest verified public WTA rendition is1280x720. Exact URL has no owner-approved low-resolution entry. Async question pending; no approval inferred, no formal render/QC/push claimed."
+}

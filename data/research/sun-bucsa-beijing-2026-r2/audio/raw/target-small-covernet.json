@@ -1,0 +1,106 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 120,
+  "range_to": 139,
+  "created_at": "2026-10-03T16:45:38.789925+00:00",
+  "elapsed_seconds": 10.25,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 129.66,
+      "end": 132.18,
+      "text": " Really good covering there on the net by Bookset.",
+      "avg_logprob": -0.896146297454834,
+      "no_speech_prob": 0.2557888925075531,
+      "words": [
+        {
+          "start": 129.66,
+          "end": 130.3,
+          "word": " Really",
+          "probability": 0.3704395592212677
+        },
+        {
+          "start": 130.3,
+          "end": 130.5,
+          "word": " good",
+          "probability": 0.9767341613769531
+        },
+        {
+          "start": 130.5,
+          "end": 130.82,
+          "word": " covering",
+          "probability": 0.9628911018371582
+        },
+        {
+          "start": 130.82,
+          "end": 131.14,
+          "word": " there",
+          "probability": 0.8981361985206604
+        },
+        {
+          "start": 131.14,
+          "end": 131.3,
+          "word": " on",
+          "probability": 0.9786044359207153
+        },
+        {
+          "start": 131.3,
+          "end": 131.38,
+          "word": " the",
+          "probability": 0.9956750273704529
+        },
+        {
+          "start": 131.38,
+          "end": 131.56,
+          "word": " net",
+          "probability": 0.9815935492515564
+        },
+        {
+          "start": 131.56,
+          "end": 131.76,
+          "word": " by",
+          "probability": 0.97441565990448
+        },
+        {
+          "start": 131.76,
+          "end": 132.18,
+          "word": " Bookset.",
+          "probability": 0.3599235266447067
+        }
+      ]
+    },
+    {
+      "start": 132.18,
+      "end": 132.4,
+      "text": " That's it.",
+      "avg_logprob": -1.1306886332375663,
+      "no_speech_prob": 0.43236833810806274,
+      "words": [
+        {
+          "start": 132.18,
+          "end": 132.4,
+          "word": " That's",
+          "probability": 0.3358559934422374
+        },
+        {
+          "start": 132.4,
+          "end": 132.4,
+          "word": " it.",
+          "probability": 0.25788137316703796
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "c035842471326a1208e18f17b53796dac4543c89f280cdc1f83dcbe8995aa2ff",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

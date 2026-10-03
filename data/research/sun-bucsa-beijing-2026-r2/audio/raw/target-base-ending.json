@@ -1,0 +1,139 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 188,
+  "range_to": 206.358333,
+  "created_at": "2026-10-03T16:45:38.277631+00:00",
+  "elapsed_seconds": 1.01,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 197.58,
+      "end": 205.8,
+      "text": " Oh, she wins it in style, and it's the biggest victory of this young 16-year-old's career.",
+      "avg_logprob": -0.5903661400079727,
+      "no_speech_prob": 0.2880689203739166,
+      "words": [
+        {
+          "start": 197.58,
+          "end": 198.22,
+          "word": " Oh,",
+          "probability": 0.21070028841495514
+        },
+        {
+          "start": 198.28,
+          "end": 198.46,
+          "word": " she",
+          "probability": 0.9818634986877441
+        },
+        {
+          "start": 198.46,
+          "end": 198.72,
+          "word": " wins",
+          "probability": 0.9879816174507141
+        },
+        {
+          "start": 198.72,
+          "end": 198.9,
+          "word": " it",
+          "probability": 0.7633275389671326
+        },
+        {
+          "start": 198.9,
+          "end": 199.02,
+          "word": " in",
+          "probability": 0.968367338180542
+        },
+        {
+          "start": 199.02,
+          "end": 199.44,
+          "word": " style,",
+          "probability": 0.979019045829773
+        },
+        {
+          "start": 200.0,
+          "end": 201.52,
+          "word": " and",
+          "probability": 0.28922778367996216
+        },
+        {
+          "start": 201.52,
+          "end": 201.8,
+          "word": " it's",
+          "probability": 0.8009392619132996
+        },
+        {
+          "start": 201.8,
+          "end": 201.94,
+          "word": " the",
+          "probability": 0.9969762563705444
+        },
+        {
+          "start": 201.94,
+          "end": 202.54,
+          "word": " biggest",
+          "probability": 0.9893954396247864
+        },
+        {
+          "start": 202.54,
+          "end": 203.24,
+          "word": " victory",
+          "probability": 0.9927132725715637
+        },
+        {
+          "start": 203.24,
+          "end": 203.74,
+          "word": " of",
+          "probability": 0.9758194088935852
+        },
+        {
+          "start": 203.74,
+          "end": 204.06,
+          "word": " this",
+          "probability": 0.9967994689941406
+        },
+        {
+          "start": 204.06,
+          "end": 204.34,
+          "word": " young",
+          "probability": 0.9763106107711792
+        },
+        {
+          "start": 204.34,
+          "end": 204.86,
+          "word": " 16",
+          "probability": 0.9484233260154724
+        },
+        {
+          "start": 204.86,
+          "end": 205.16,
+          "word": "-year",
+          "probability": 0.7689135372638702
+        },
+        {
+          "start": 205.16,
+          "end": 205.52,
+          "word": "-old's",
+          "probability": 0.7325042088826498
+        },
+        {
+          "start": 205.52,
+          "end": 205.8,
+          "word": " career.",
+          "probability": 0.9691087007522583
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "432fbf3993b93c68b021a1f538524a154682405ebc54ad8ae4b37a345bfae99b",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

@@ -1,0 +1,103 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 138,
+  "range_to": 153,
+  "created_at": "2026-10-03T16:45:35.496916+00:00",
+  "elapsed_seconds": 9.82,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 143.86,
+      "end": 146.68,
+      "text": " You can't do it.",
+      "avg_logprob": -1.6547314922014873,
+      "no_speech_prob": 0.13628613948822021,
+      "words": [
+        {
+          "start": 143.86,
+          "end": 145.26,
+          "word": " You",
+          "probability": 0.035467710345983505
+        },
+        {
+          "start": 145.26,
+          "end": 145.82,
+          "word": " can't",
+          "probability": 0.22844919748604298
+        },
+        {
+          "start": 145.82,
+          "end": 146.68,
+          "word": " do",
+          "probability": 0.13991186022758484
+        },
+        {
+          "start": 146.68,
+          "end": 146.68,
+          "word": " it.",
+          "probability": 0.22729021310806274
+        }
+      ]
+    },
+    {
+      "start": 149.94,
+      "end": 152.74,
+      "text": " You can't do it.",
+      "avg_logprob": -1.6547314922014873,
+      "no_speech_prob": 0.13628613948822021,
+      "words": [
+        {
+          "start": 149.94,
+          "end": 151.34,
+          "word": " You",
+          "probability": 0.16351671516895294
+        },
+        {
+          "start": 151.34,
+          "end": 152.74,
+          "word": " can't",
+          "probability": 0.6571089327335358
+        },
+        {
+          "start": 152.74,
+          "end": 152.74,
+          "word": " do",
+          "probability": 0.6866004467010498
+        },
+        {
+          "start": 152.74,
+          "end": 152.74,
+          "word": " it.",
+          "probability": 0.9117437601089478
+        }
+      ]
+    },
+    {
+      "start": 152.74,
+      "end": 152.98,
+      "text": " You",
+      "avg_logprob": -1.196775108575821,
+      "no_speech_prob": 0.5378620028495789,
+      "words": [
+        {
+          "start": 152.74,
+          "end": 152.98,
+          "word": " You",
+          "probability": 0.01819157600402832
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "624cc273615bea9f9a8824828da224cae408dc5b9f2d42509e2cbc8b285d5b9c",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

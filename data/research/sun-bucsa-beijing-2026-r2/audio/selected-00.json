@@ -1,0 +1,408 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI international_video: actual full-source and targeted raw-ASR comparison across small, base, small.en and medium.en; no external editorial/vision models used",
+  "reviewed_at": "2026-10-03T17:00:57.284169+00:00",
+  "status": "complete",
+  "reviewed_from": 197.55,
+  "reviewed_to": 199.75,
+  "actual_listening_performed": false,
+  "review_scope": "Entire retained source window cross-checked using actual full-source raw ASR, targeted raw ASR and speech-event timing. Complete denotes that evidence review, not invented human listening.",
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/ending-tight-base.json",
+      "sha256": "420352b85902bedae6d8fb825d865b60dc25143ecd30666c348b3415e70b9b6a",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 199.6,
+      "range_to": 206.358333
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/ending-tight-small.json",
+      "sha256": "01def10e0797446adbfd70fb216e93cc6878fb478accfaaaf858917a1c37a337",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 199.6,
+      "range_to": 206.358333
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/finish-tight-medium.en.json",
+      "sha256": "25e3ca7a4e06500b78162f41abef3b8e5ff4b0b8029a39bb239189c9f45d3ca9",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 115.5,
+      "range_to": 119.5
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/finish-tight-small.json",
+      "sha256": "703e9af3cf32ba5593fecd5f08ef12300ec0eea882b854ad5094b4a3f5e1732d",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 115.5,
+      "range_to": 119.5
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/full-base-no-vad.json",
+      "sha256": "8eb21c6cc6847cf1949b08d27cffc93439c6bf777a5946cf0d77316cedd0b42e",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/full-base-vad.json",
+      "sha256": "a6ad23ea1116d1e1e6a6cdad20e451b1e7e5f5131b7455e0232dbd7a181f4826",
+      "model": "base",
+      "vad_filter": true,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/full-medium.en-vad.json",
+      "sha256": "c15020635e1be71e361f6aaaec3c451bcc377562a028cf1d8f6b15771dd95b7c",
+      "model": "medium.en",
+      "vad_filter": true,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/full-small-no-vad.json",
+      "sha256": "1b152030f13a0d480a824647c8e07ab98fc9a3cb6ff531972b68b24f3d4195ae",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/full-small-vad.json",
+      "sha256": "041dbfb633900f359b1968db9b7c2da1c7a891cbd140e3af07dbeca50a81a250",
+      "model": "small",
+      "vad_filter": true,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-base-backhand.json",
+      "sha256": "0dc81387a253337c38365cdcf96beae6648ede0781ca3aab474da3e267df9588",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 138,
+      "range_to": 153
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-base-composed.json",
+      "sha256": "6bed621d1d4d8b0ca98ba57976aee6fbb7c98dafdeaecb571b7731e09266dbf5",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 155,
+      "range_to": 172
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-base-covernet.json",
+      "sha256": "9a89ea1bbb36815e7d86a97fe9e1ee365f6033cd762f08ccaebd8e079dc4f660",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 120,
+      "range_to": 139
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-base-ending.json",
+      "sha256": "ce29605a8ac4a55fc6c6898370f525d1608d0a6d16b1617712a2765a7f79e6db",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 188,
+      "range_to": 206.358333
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-base-forehand.json",
+      "sha256": "44238863f56f51058f3859fca5c3f59248482109508c080156bfd0a5cd25350a",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 176,
+      "range_to": 191
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-base-mixup.json",
+      "sha256": "22e461a4e6e0115ca71643029e8ba5fcc1b4a25de78cd90520803b6f74c61356",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 66,
+      "range_to": 79
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-base-opening.json",
+      "sha256": "dcc211a406fbbbb71d5a34d43faf02173ae00f8c163f36dc91a6878d63fd668b",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 0,
+      "range_to": 29
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-base-turnaround.json",
+      "sha256": "7bf50772dcff75b87feef0f66b8b10d2bf2e817426ade20aa5aeaee88e3a6361",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 91,
+      "range_to": 108
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-medium.en-backhand.json",
+      "sha256": "581065f9b368250c996f562f0dde323970e34e3307a4295413e43d058fe6abb2",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 138,
+      "range_to": 153
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-medium.en-composed.json",
+      "sha256": "8e483df880c37731347157134c9d774b4990e5e3d54e2a99e3976435fe618aae",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 155,
+      "range_to": 172
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-medium.en-covernet.json",
+      "sha256": "cf5693f2f8f8234a594cebc5c8489b223d4115b41529fa1e3c52f5e82a77865e",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 120,
+      "range_to": 139
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-medium.en-ending.json",
+      "sha256": "00753102b070128e5343489a6da7fca761a8f5bf93ff3b9e015fdfe4025254a5",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 188,
+      "range_to": 206.358333
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-medium.en-forehand.json",
+      "sha256": "0a3ed3e58b5281ac2bc40898a44263409d9be36a1c7340371e91d58e12446325",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 176,
+      "range_to": 191
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-medium.en-mixup.json",
+      "sha256": "884ddc930410b776b7738e0121193e9b416e3b819b0b81dea020356302fe1bc0",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 66,
+      "range_to": 79
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-medium.en-opening.json",
+      "sha256": "4896a8eb738f83f39a4ebe53d63899dd3193c194576e09651799027171c50634",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 0,
+      "range_to": 29
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-medium.en-turnaround.json",
+      "sha256": "cf8fa4870550b739048ec9e3edd831a7fb91dc20a5084ed20a64231a77c8d739",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 91,
+      "range_to": 108
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small-backhand.json",
+      "sha256": "534683ea47aba91bc99cf179c8c39c4ed70b2db1b3f109a54bac79a05e7462a1",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 138,
+      "range_to": 153
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small-composed.json",
+      "sha256": "ff6ae654cabe4a4c9d8dd68c7facc7b4c0348ef03d80d74e9471cd5fc6eaa1b8",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 155,
+      "range_to": 172
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small-covernet.json",
+      "sha256": "ca9f5b3921a5bd8b3dc15fc15cd1047465e4985ac0aebb67fb3c61b1db846a49",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 120,
+      "range_to": 139
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small-ending.json",
+      "sha256": "483d6f4ac4d35e11bfb9f318b40e730db9006a652b2cac98b6816704195dd147",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 188,
+      "range_to": 206.358333
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small-forehand.json",
+      "sha256": "9accca809a74cb83d16b7e81382f1255018c09fc59ff081a0c2e9bf081e043cd",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 176,
+      "range_to": 191
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small-mixup.json",
+      "sha256": "0d50747196dac9b11486696fe31899e2399acfdd1da1c264f25c2d9cac8bc187",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 66,
+      "range_to": 79
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small-opening.json",
+      "sha256": "a1e3a4aa383b52ea36d92d59f8f895cb4fc33ed440557e897a7da80bbe1fe742",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 0,
+      "range_to": 29
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small-turnaround.json",
+      "sha256": "d2c349cd7f8ebe692cda98683649f90013b59c8fb1639d0114bc41d3bae8cc11",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 91,
+      "range_to": 108
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small.en-backhand.json",
+      "sha256": "5eb04abe477c7607784e87a94ab2bd7d061626036ebc1162d5abfcfbe2b079ac",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 138,
+      "range_to": 153
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small.en-composed.json",
+      "sha256": "38fb6204f8afccb7b71a5acbb5bcd7d70fadbc19a01071b1974103609173efa6",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 155,
+      "range_to": 172
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small.en-covernet.json",
+      "sha256": "5bb773aebb885d8e8c609cab93c239f6dd4ce438c41bdf504df66ca0a5a38659",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 120,
+      "range_to": 139
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small.en-ending.json",
+      "sha256": "8129a6ce734873e1668b9bee1beeede7669c304f6d3e7d7ed0df5e07f0e1e80b",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 188,
+      "range_to": 206.358333
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small.en-forehand.json",
+      "sha256": "bb6fb7755e6512a2f0489a179ff420e870dfdf7dcb26d6f729490e5cb1260442",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 176,
+      "range_to": 191
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small.en-mixup.json",
+      "sha256": "10c0e668ba05ccfa795bce857b461f15aa2d025d710153b24d9fc73e328e0065",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 66,
+      "range_to": 79
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small.en-opening.json",
+      "sha256": "a6fbf79999496364535ec253c53e5015aab8fbb1ec42dbb7dca91ea572160edf",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 0,
+      "range_to": 29
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/target-small.en-turnaround.json",
+      "sha256": "21e2395132a8cd84824ec57e6489dbfa57839eb74b59f25afdc5a7c47ce934b9",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 91,
+      "range_to": 108
+    }
+  ],
+  "speech_activity_evidence": {
+    "path": "data/research/sun-bucsa-beijing-2026-r2/audio/raw/source-silero-vad-events.json",
+    "sha256": "b7335d5312162f9238077e4b53db1b4e79aef7eceeebd570ff6a00a41f2d9212",
+    "classification": "Standalone speech-activity events only; no claim of language or listening. Court sounds may trigger false positive."
+  },
+  "source_caption_evidence": {
+    "available": false,
+    "why": "Brightcove metadata text_tracks contains only thumbnail metadata VTT, no caption track."
+  },
+  "source_language_detection": {
+    "small_no_vad": {
+      "language": "en",
+      "probability": 0.9178666472434998
+    },
+    "base_no_vad": {
+      "language": "en",
+      "probability": 0.9605065584182739
+    },
+    "small_vad": {
+      "language": "en",
+      "probability": 0.9878963232040405
+    },
+    "base_vad": {
+      "language": "en",
+      "probability": 0.98247230052948
+    }
+  },
+  "foreground_english": [
+    {
+      "start": 197.56,
+      "end": 199.65,
+      "en": "Oh, she wins it in style.",
+      "zh": "噢，她赢得真漂亮。"
+    }
+  ],
+  "crosscheck_notes": [
+    {
+      "span": [
+        144.6,
+        147.65
+      ],
+      "result": "She finds the backhand down the line.",
+      "basis": "Full small VAD and medium.en target agree including finds and backhand down the line. Base VAD vised is low-confidence; narrow multilingual/English-small no-VAD repeating sorry or You cannot do it is demonstrably contradictory window hallucination, not injected into captions. Medium fullsource loses final the line under VAD concatenation; targeted medium preserves it."
+    },
+    {
+      "span": [
+        184.2,
+        187.65
+      ],
+      "result": "There's nothing tentative about that forehand.",
+      "basis": "Full small VAD and medium.en target/full VAD agree tentative, with lexical word probabilities0.739/0.887/0.933. Base tense-to/small.en sensitive are retained in raw evidence and resolved by agreeing small+medium utterance. Word interval envelope retained through187.46; next TTS begins187.65."
+    },
+    {
+      "span": [
+        197.55,
+        206.32
+      ],
+      "result": "Oh, she wins it in style. And it's the biggest victory of this young sixteen-year-old's career.",
+      "basis": "Oh shared by target small/base/small.en and full medium VAD. And shared by tight small target, broad small/base/medium target and full medium VAD. Main clause agrees across all models. Numbers normalized16->sixteen without changing spoken content. Medium full-VAD and stretches199.89–201.53 over a crowd gap; tight pass200.80–205.80 and standalone VAD second speech201.258 onward locate second clause. Sentence cues cover all lexical speech, not whole pause."
+    },
+    {
+      "basis": "First finish interjection Oh independently agrees in tight small+medium.en actual runs117.08/117.12; first boundary moved117.00. Entire quote-window tail includes only court/crowd/nonlexical audio after the complete utterance. Words/number orthography normalized without factual additions."
+    }
+  ]
+}
