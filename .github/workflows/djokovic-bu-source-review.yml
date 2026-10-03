@@ -1,15 +1,26 @@
 name: Djokovic Bu source review export
 on:
+  workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [main]
     paths: [.github/workflows/djokovic-bu-source-review.yml]
 permissions:
   contents: read
-  actions: read
+  actions: write
 jobs:
+  launch:
+    if: github.event_name == 'pull_request' && github.head_ref == 'codex/djokovic-bu-20261003'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Export under production branch cache scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow run djokovic-bu-source-review.yml --ref codex/djokovic-bu-20261003
   export:
-    if: github.head_ref == 'codex/djokovic-bu-20261003'
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
