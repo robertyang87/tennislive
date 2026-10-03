@@ -75,3 +75,7 @@ The owner requires every future video to explain the process clearly, retain com
 ## Key commentary and bilingual subtitles (2026-10-03)
 
 All columns should actively retain as much compelling original commentary during key moments as the story supports, with accurately checked Chinese and English subtitles. Keep complete sentences and reactions, and place our explanatory narration between source-commentary windows. Subtitle English speech with the original English and faithful Chinese translation. Do not replace exciting source commentary merely to simplify TTS or captions; preserve the full action and inspect the actual final mix and caption timing. The owner’s exact instruction is retained in the canonical owner-taste skill. Existing source-audio evidence and honest review-method requirements remain in force.
+
+字卡按完整语义分行，不拆词、不留孤字末行。通过简化文案与明确分行保持视觉平衡；逐张检查实际原生预览和最终视频，不以 JSON 的换行符作为已正确显示的证据。
+
+字卡品牌“网球时差 · TENNIS JETLAG”放在画布底部安全边距内；检查实际字幕帧，确保品牌在字幕下方且不遮挡，不把品牌抬到页面中段。

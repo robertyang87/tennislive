@@ -1,0 +1,49 @@
+{
+  "schema": 2,
+  "at": "2026-10-03T21:55:28Z",
+  "pipeline": "match-reel",
+  "slug": "zheng-kalinskaya-beijing-2026-r2",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 239.09,
+  "last_stage": "烧字幕+成片",
+  "stage_seconds": {
+    "下载源片 official": 0.289,
+    "下载源片 supplement": 0.111,
+    "数据统计对照图（剪进片子）": 1.622,
+    "章节卡（剪进片子）": 9.387,
+    "TTS 合成": 2.775,
+    "比分板蒙版": 17.66,
+    "封面海报": 2.756,
+    "封面编码": 0.251,
+    "分段编码·并行": 169.674,
+    "分段编码": 47.045,
+    "拼接": 37.667,
+    "混音": 5.342,
+    "烧字幕+成片": 107.439
+  },
+  "stage_counts": {
+    "下载源片 official": 1,
+    "下载源片 supplement": 1,
+    "数据统计对照图（剪进片子）": 1,
+    "章节卡（剪进片子）": 1,
+    "TTS 合成": 1,
+    "比分板蒙版": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码·并行": 22,
+    "分段编码": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1
+  },
+  "parallel_stages": [
+    "分段编码·并行"
+  ],
+  "untimed_seconds": 6.746,
+  "cpu_count": 4,
+  "run_id": "37156362096",
+  "run_attempt": "1",
+  "on_runner": true
+}

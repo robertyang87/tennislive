@@ -387,6 +387,29 @@ def legacy_board_unprobed() -> dict[str, list[str]]:
     return {str(k): [str(x) for x in v] for k, v in (data.get("reels") or {}).items()}
 
 
+def scoreboxes_by_url(spec: dict, urls: dict) -> dict[str, list]:
+    """回贴实际取到的源 → 该源使用的框；段级框覆盖顶层默认，不借别的源的扫描。"""
+    if not urls:
+        return {}
+    primary = str(spec.get("primary") or next(iter(urls)))
+    owned: dict[str, list] = {}
+    for raw in spec.get("segments") or []:
+        if not isinstance(raw, dict) or not raw.get("score_inset") or raw.get("image"):
+            continue
+        url = urls.get(str(raw.get("source") or primary))
+        box = raw.get("scorebox", spec.get("scorebox"))
+        if url and isinstance(box, (list, tuple)) and len(box) == 4:
+            boxes = owned.setdefault(url, [])
+            if list(box) not in boxes:
+                boxes.append(list(box))
+    # 原来的带式记录：没有段开回贴时，顶层框仍归主源。
+    if not owned and isinstance(spec.get("scorebox"), (list, tuple)):
+        url = urls.get(primary)
+        if url:
+            owned[url] = [list(spec["scorebox"])]
+    return owned
+
+
 def reprobe_command(spec: dict, source_key: str, url: str, probe: dict | None) -> str:
     """重跑一趟 probe 的那一行命令（带上老 probe 的区间和 spec 的 scorebox）。"""
     slug = str(spec.get("slug") or "<slug>")
@@ -396,7 +419,9 @@ def reprobe_command(spec: dict, source_key: str, url: str, probe: dict | None) -
         value = (probe or {}).get(key)
         if value not in (None, ""):
             parts.append(f"-f {flag}={value}")
-    box = spec.get("scorebox")
+    urls = spec.get("sources") or {source_key: url}
+    owned = scoreboxes_by_url(spec, urls).get(url) or []
+    box = owned[0] if len(owned) == 1 else None
     if isinstance(box, (list, tuple)) and len(box) == 4:
         parts.append("-f scorebox=" + ",".join(str(int(v)) for v in box))
     return " ".join(parts)
@@ -447,9 +472,6 @@ def board_findings(spec: dict, segments, probes: dict, urls: dict, *,
     soft: list[str] = []
     if profile in (None, "band-legacy"):
         return hard, soft
-    box = spec.get("scorebox")
-    if not (isinstance(box, (list, tuple)) and len(box) == 4):
-        return hard, soft
     slug = str(spec.get("slug") or "")
     auto = (spec.get("_production") or {}).get("status") == "ready_for_render"
     strict_off = not auto and slug not in legacy_board_on_screen()
@@ -462,6 +484,9 @@ def board_findings(spec: dict, segments, probes: dict, urls: dict, *,
         if seg.image:
             continue
         raw = raw_segments[index] if index < len(raw_segments) else {}
+        box = raw.get("scorebox", spec.get("scorebox"))
+        if not (isinstance(box, (list, tuple)) and len(box) == 4):
+            continue
         on = bool(seg.score_inset)
         label = seg.source or "(主源)"
         probe = probes.get(urls.get(seg.source, ""))

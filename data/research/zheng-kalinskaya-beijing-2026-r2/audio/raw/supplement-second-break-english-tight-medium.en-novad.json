@@ -1,0 +1,101 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 1354.5,
+  "range_to": 1365.0,
+  "selected_from": 1354.5,
+  "selected_to": 1365.0,
+  "decoded_pcm_sha256": "a691a366c4b885e2575d77baa4d756c1f18895e671c4975b8c1cf5aa348d79e0",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:16:16.336924+00:00",
+  "elapsed_seconds": 4.28,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 1357.04,
+      "end": 1364.02,
+      "text": " Oh and Kalinskaya from 40-15 up to our crew.",
+      "avg_logprob": -0.41268371133243337,
+      "no_speech_prob": 0.23575550317764282,
+      "compression_ratio": 0.8461538461538461,
+      "words": [
+        {
+          "start": 1357.04,
+          "end": 1357.96,
+          "word": " Oh",
+          "probability": 0.46609359979629517
+        },
+        {
+          "start": 1357.96,
+          "end": 1358.18,
+          "word": " and",
+          "probability": 0.4290212094783783
+        },
+        {
+          "start": 1358.18,
+          "end": 1358.86,
+          "word": " Kalinskaya",
+          "probability": 0.7017619411150614
+        },
+        {
+          "start": 1358.86,
+          "end": 1359.52,
+          "word": " from",
+          "probability": 0.8528931736946106
+        },
+        {
+          "start": 1359.52,
+          "end": 1359.88,
+          "word": " 40",
+          "probability": 0.9202674627304077
+        },
+        {
+          "start": 1359.88,
+          "end": 1360.34,
+          "word": "-15",
+          "probability": 0.8074705004692078
+        },
+        {
+          "start": 1360.34,
+          "end": 1360.78,
+          "word": " up",
+          "probability": 0.9664515256881714
+        },
+        {
+          "start": 1360.78,
+          "end": 1363.44,
+          "word": " to",
+          "probability": 0.3962683081626892
+        },
+        {
+          "start": 1363.44,
+          "end": 1363.62,
+          "word": " our",
+          "probability": 0.9959750771522522
+        },
+        {
+          "start": 1363.62,
+          "end": 1364.02,
+          "word": " crew.",
+          "probability": 0.9923966526985168
+        }
+      ]
+    }
+  ]
+}
