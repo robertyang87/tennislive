@@ -19,9 +19,9 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           for i in $(seq 1 80); do
-            state=$(gh api repos/robertyang87/tennislive/actions/runs/37101476173 --jq '.status')
+            state=$(gh api repos/robertyang87/tennislive/actions/runs/37101585454 --jq '.status')
             if [ "$state" = completed ]; then
-              result=$(gh api repos/robertyang87/tennislive/actions/runs/37101476173 --jq '.conclusion')
+              result=$(gh api repos/robertyang87/tennislive/actions/runs/37101585454 --jq '.conclusion')
               [ "$result" = success ] || { echo "Native probe ended: $result"; exit 1; }
               exit 0
             fi
