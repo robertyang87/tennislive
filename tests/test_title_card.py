@@ -70,9 +70,9 @@ def test_render在切段之前按版式尺寸渲章节卡(tmp_path, monkeypatch)
         out.write_bytes(b"jpg")
 
     got = reel._materialize_title_cards({}, segs, tmp_path, renderer=fake)
-    # 全出血：卡铺满整幅，字幕从 default_margin_v() 起压在卡上，@handle 要让开它
+    # 全出血：品牌使用卡片默认的底部 64px 安全区，不受字幕上锚影响。
     assert calls == [("排名是怎么掉的", "01", (1080, 1440), "title_card_02.jpg",
-                      reel.VIDEO_H - reel.default_margin_v() + reel.TITLE_CARD_HANDLE_GAP_PX)]
+                      0)]
     assert got[1].image == str(tmp_path / "title_card_02.jpg")
     assert got[0] is segs[0] and got[2] is segs[2], "别的段一个字不动"
     # 带式：按画面带的尺寸渲，不然 3:4 的卡缩进 9:8 的带里两边留出大片底色
@@ -174,21 +174,39 @@ def test_按画面区尺寸渲的章节卡铺满整幅_彩条落在顶边不缩�
     assert y0 > 0 and x0 > 0 and x1 - x0 <= int(reel.VIDEO_W * 0.94)
 
 
-def test_章节卡底部的handle要让开字幕那一行(tmp_path):
-    """铺满整幅之后，照片尾页那 64px 贴底的 @handle 落在 y 1336~1376，而字幕从
-    1284 起（`_REEL_MARGIN_V`）——正压在字幕那一行上。调用方按字幕上锚算好
-    `clear_bottom` 传进来；渲出来的卡在字幕带里不许有亮像素。"""
+def test_章节卡品牌在真实字幕下方的底部安全区(tmp_path, monkeypatch):
+    """郑钦文本期字幕下锚 y=1079；品牌应在 y=1336~1376。
+
+    验证原生卡片与真实 ASS 字幕同时存在，不许靠隐藏字幕或品牌过关。
+    全片字幕上锚变化也不能把卡片品牌重新抬到正文中间。"""
+    import subprocess  # noqa: PLC0415
+
     from PIL import Image  # noqa: PLC0415
-    clear = reel.VIDEO_H - reel.default_margin_v() + reel.TITLE_CARD_HANDLE_GAP_PX
-    assert f"bottom:{clear}px" in tc.build("x", clear_bottom=clear)
-    assert "bottom:64px" in tc.build("x"), "不传就是片尾页那一档，别的调用方不受影响"
-    out = tc.render("排名是怎么掉的", tmp_path / "c.jpg", kicker="01", clear_bottom=clear)
-    im = Image.open(out).convert("L")          # 2x：2160×2880
-    sub_band = im.crop((0, reel.default_margin_v() * 2, im.width, im.height))
-    bright = sum(1 for v in sub_band.getdata() if v > 120)
-    assert bright == 0, f"字幕带（y≥{reel.default_margin_v()}）里还有 {bright} 个亮像素——handle 没让开"
-    handle_zone = im.crop((0, (reel.VIDEO_H - clear - 60) * 2, im.width, (reel.VIDEO_H - clear) * 2))
-    assert sum(1 for v in handle_zone.getdata() if v > 120) > 200, "handle 得还在，只是抬到字幕上方"
+
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    monkeypatch.setattr(reel, "default_margin_v", lambda: 943)
+    segs = reel.parse_segments(_spec(), {"": 1}, "")
+    card = reel._materialize_title_cards({}, segs, tmp_path)[1]
+    assert "bottom:64px" in tc.build("排名是怎么掉的", kicker="01")
+    im = Image.open(card.image).convert("L")  # Native browser output is 2x.
+    brand = im.crop((0, 1330 * 2, im.width, 1380 * 2))
+    assert sum(v > 120 for v in brand.getdata()) > 200, "底部品牌必须真的画出来"
+    assert sum(v > 120 for v in im.crop((0, 990 * 2, im.width, 1100 * 2)).getdata()) == 0, \
+        "未叠字幕时，此区域应没有被错误抬高的品牌"
+
+    ass = reel.write_subtitles([(0, 2.4, "北京时间十月三号下午")], tmp_path / "caption.ass",
+                               height=1440, margin_v=1002, outline=4, shadow=1,
+                               bottom_margin=361)
+    frame = tmp_path / "with-caption.png"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", card.image,
+                    "-vf", f"scale=1080:1440,ass={ass}:fontsdir={ROOT / 'assets' / 'fonts'}",
+                    "-frames:v", "1", str(frame)], check=True)
+    landed = Image.open(frame).convert("L")
+    assert landed.size == (1080, 1440)
+    assert sum(v > 120 for v in landed.crop((0, 990, 1080, 1100)).getdata()) > 200, \
+        "真实字幕必须仍在原定锚位可见"
+    assert sum(v > 120 for v in landed.crop((0, 1330, 1080, 1380)).getdata()) > 200, \
+        "叠字幕后底部品牌必须仍然可见，与字幕分离"
 
 
 def test_真渲的章节卡走完切段那条路_成片第一行就是彩条(tmp_path):

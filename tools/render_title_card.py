@@ -59,10 +59,10 @@ def length_problem(text: str) -> str | None:
 
 def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
           clear_bottom: int = 0) -> str:
-    """`clear_bottom`：卡底要留空多少像素（字幕会压在这一段上）。全出血下卡铺满
-    整幅、字幕从 y=1284 起，@handle 若照片尾页那 64px 贴底就正压在字幕那一行上；
-    调用方（`build_match_reel._materialize_title_cards`）按字幕上锚算好传进来，
-    带式传 0（字幕在卡外的底带里）。"""
+    """品牌默认距卡底 64px，保持独立于字幕锚的底部安全区。
+
+    `clear_bottom` 保留为显式增加底边留白的接口；原生章节卡使用默认值，
+    不根据全片字幕上锚自动抬高品牌。"""
     text = str(text or "").strip()
     if not text:
         raise SystemExit("章节卡要有一句话（text 是空的）")

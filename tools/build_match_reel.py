@@ -515,9 +515,6 @@ INSET_WATERMARK_GAP_PX = 24
 #: 栏目，照合同的 pad 贴。模块全局和 `LAYOUT` 同一个形状——cut_segment 那一层
 #: 拿不到 spec。
 _INSET_TOP_CLEAR_Y = 0
-#: 章节卡底部那行 @handle 离字幕上锚的距离：全出血下字幕从 y=1284 起，
-#: handle 若照 outro 那 64px 贴底就落在 1336~1376，正压在字幕那一行上。
-TITLE_CARD_HANDLE_GAP_PX = 24
 # **每一段的音轨都要压到同一个采样率**。`concat` + `-c copy` 只认第一个文件的
 # 流参数：封面那段的 anullsrc 是 48k，而各分段跟着源片走 44.1k，于是 44.1k 的
 # AAC 帧被当成 48k 播——整条现场声快 8.8%，音轨在画面还剩 5.7 秒时就播完了
@@ -9433,10 +9430,8 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
             import render_title_card  # noqa: PLC0415
             renderer = render_title_card.render
         size = (VIDEO_W, BAND_PIC_H) if LAYOUT == "band" else (VIDEO_W, VIDEO_H)
-        # 全出血下卡铺满整幅（`still_canvas_for_layout`），字幕从 `default_margin_v()`
-        # 起压在卡上——卡底那行 @handle 要让开它；带式的字幕在底带里、卡外，不用让。
-        clear_bottom = (0 if LAYOUT == "band"
-                        else VIDEO_H - default_margin_v() + TITLE_CARD_HANDLE_GAP_PX)
+        # 品牌固定在卡底 64px 安全区（render_title_card 的默认值）。
+        # 字幕保留自己的真实锚，不再拿默认字幕上锚把品牌抬到标题/正文中间。
         out_segments = []
         for i, s in enumerate(segments):
             if not (s.image and s.image.startswith(TITLE_CARD_PREFIX)):
@@ -9444,8 +9439,7 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
                 continue
             card = json.loads(s.image[len(TITLE_CARD_PREFIX):])
             out = outdir / f"title_card_{i + 1:02d}.jpg"
-            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size,
-                     clear_bottom=clear_bottom)
+            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size)
             if not out.is_file():
                 raise ReelError(f"第 {i + 1} 段的章节卡没渲出来：{out}")
             print(f"[章节卡] 第 {i + 1} 段「{card['text']}」→ {out.name}（{size[0]}×{size[1]}）")
