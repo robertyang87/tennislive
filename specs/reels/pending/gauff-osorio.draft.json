@@ -21,7 +21,12 @@
     "result": "7-6(4) 4-6 6-2",
     "portrait": {
       "image": "assets/reel/gauff-osorio-cover.jpg",
-      "_portrait_why": "WTA 官方赛后稿头图，自动抓取"
+      "focus": 0.769,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「coco gauff」「Beijing」，日期对上当地 2026-10-03（Asia/Shanghai；日期来源 flashscore dc_1_6aNa6xum）；EXIF 拍摄 2026:10:03 12:34:14+08:00。② 分辨率：6480×4320，zoom 1 铺 1080×1440 是 3.00×（不放大）。③ 认人：最大那张脸像 高芙 0.38（≥ 0.34）。④ 睁眼：EAR 0.2112（≥ 0.16）。⑤ 钩子带：脸落在 y405~524，钩子顶边 790。排序：[True, False, False, True, False, 119, 0.3837]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/03/7acdd6b1-2171-4b30-8fe5-ceca9ca0e8c9/Gauff-R2-FL.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/03/7acdd6b1-2171-4b30-8fe5-ceca9ca0e8c9/Gauff-R2-FL.jpg（条目 #4585924，接口发布 2026-10-03T06:18:45Z，EXIF 拍摄 2026:10:03 12:34:14+08:00（UTC 2026-10-03T04:34:14Z），原图 6480×4320），说明原文「Coco Gauff, Beijing 2026 · BEIJING, CHINA - OCTOBER 3: Coco Gauff of the United States in action against Camila Osorio of Colombia during their Women&apos;s Singles Round of 64 match on day four of China Open at the National Tennis Center on October 3, 2026 in Beijing, China. (Photo by Fred Lee/Gett」，署名 Fred Lee/Getty Images；Getty Images；Fred Lee；2026 Fred Lee。"
     }
   },
   "_production": {
@@ -325,46 +330,19 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "waiting",
-    "retryable": false,
-    "cold_open": {
-      "start": 265.28,
-      "end": 267.84,
-      "kind": "match_point",
-      "winner_visible": true,
-      "reason": "265.28s 高芙扣杀致胜后紧握拳臂庆祝并走向网前；266.5s 比分 7-6 4-6 6-0 显示已破发；267.84s 高芙低头攥拳，制胜分已结束",
-      "confidence": 0.88
-    },
-    "ending": {
-      "start": 265.28,
-      "end": 295.84,
-      "kind": "winner_celebration",
-      "winner_visible": true,
-      "reason": "265.28–267.84s 高芙庆祝握拳；268.5–270.5s 教练团鼓掌；272.5–278.5s 双方网前握手；288.5–294.5s 'WINNER' 字样、观众、最终记分牌 COCO GAUFF 7-6 4-6 6-2 / C[AMILA] OSORIO 6-7 6-4 2-6 显示冠军",
-      "confidence": 0.92
-    },
-    "cover": {
-      "same_match": true,
-      "subject": "高芙",
-      "moment": "other",
-      "wrong_or_old": false,
-      "reason": "封面穿深酒红色 New Balance 球衣与白色 NB 头带，与本场高芙装备一致；镜头为底线回球动作瞬间，未呈现庆祝或沮丧情绪；同场同服装同赛事（China Open），但非赢家庆祝瞬间",
-      "confidence": 0.82
-    },
+    "visual_status": "error",
+    "retryable": true,
     "problems": [
-      "cold_open 必须是 3-30 秒的完整收官窗口",
-      "ending 必须是 3-30 秒的完整收官窗口",
-      "封面情绪应为 winner_celebration，现在是 other"
-    ],
-    "model_attempts": 1,
-    "input_sha256": "8acc4eff5e9a30d6f0a129541123e6d04ee675b194eb6ce57f17ffea4d654b82",
-    "inputs": [
-      "contact_00.jpg",
-      "contact_02.jpg",
-      "contact_03.jpg",
-      "contact_04.jpg",
-      "contact_05.jpg"
-    ],
-    "cover_image": "assets/reel/gauff-osorio-cover.jpg"
+      "MiniMax API：HTTPError: HTTP Error 400: Bad Request"
+    ]
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "6aNa6xum",
+      "start_utc": "2026-10-03T03:05:00Z",
+      "end_utc": "2026-10-03T05:27:41Z",
+      "source": "flashscore dc_1_6aNa6xum（DC／DD）"
+    },
+    "replaced_under": "8acc4eff5e9a30d6f0a129541123e6d04ee675b194eb6ce57f17ffea4d654b82"
   }
 }
