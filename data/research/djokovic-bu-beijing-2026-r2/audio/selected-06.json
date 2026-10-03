@@ -1,0 +1,194 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI international_video: independent small/base full-source VAD/no-VAD and targeted ASR/caption comparison",
+  "reviewed_at": "2026-10-03T06:26:19.893243+00:00",
+  "status": "complete",
+  "reviewed_from": 68.65,
+  "reviewed_to": 94.4,
+  "actual_listening_performed": false,
+  "review_scope": "Entire retained source window. Complete is ASR cross-check evidence scope, not an invented listening attestation.",
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/full-base-auto.json",
+      "sha256": "508f45fcd4a48ef7bc80085fc8372e07e4938c12262e11a90c93737911f1960d",
+      "model": "base",
+      "vad_filter": true,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/full-base-no-vad.json",
+      "sha256": "9a755c6ae43d1c7bb3ebd2540669bbd29afbcb91d35fd794f51aba7c99066140",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/full-small-auto.json",
+      "sha256": "36fa211f4b830b6a9e1ff4aaa376f9aafb46f039f2833e1f2fa56ace70d02de0",
+      "model": "small",
+      "vad_filter": true,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/full-small-no-vad.json",
+      "sha256": "03ff413022f0890df7e8a1c098e3948e78f5559f1e71a7b28ba89e2df3041e66",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-closing-streak-base.json",
+      "sha256": "ac8499d257607741425249b480f49ad5a25e0fe881b119b5891b5e02ceb8e6d8",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 218,
+      "range_to": 234.46
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-closing-streak-small.json",
+      "sha256": "7f11ce2668e8be5e7c87437eebd5fb7ef8878d6c942dc83086cf68950dbb6ac5",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 218,
+      "range_to": 234.46
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-decibel-point-base.json",
+      "sha256": "f7b1c68c9a5cfc3050ecddca26dc65e3303347290a80bc8075f62e542d60cee5",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 93,
+      "range_to": 102
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-decibel-point-small.json",
+      "sha256": "09513af7bc5559d3a2d43b58f29e22891a0075f3a12c8b0961045d91aa45e693",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 93,
+      "range_to": 102
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-how-won-point-base.json",
+      "sha256": "4e3e570690d4ee448c5f11d55bb6837f960bdf9d18c14c12741d72ff2ae6424a",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 207.5,
+      "range_to": 212
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-how-won-point-small.json",
+      "sha256": "8a1eb9e8aaeffcc6cb3f1ff9044b46fd68194c17533ae77758b1ce14fd7dea50",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 207.5,
+      "range_to": 212
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-moved-ball-base.json",
+      "sha256": "a98f4cf9db8e4f638bca5bfdc7853b9fdf4fa8b857e1970387101c37d330eaa7",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 34.5,
+      "range_to": 38.5
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-moved-ball-small.json",
+      "sha256": "ebb824727adb576a3a57033cf3cdb5b1ed1c258c3326bce64eab9ff831023852",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 34.5,
+      "range_to": 38.5
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-opening-break-base.json",
+      "sha256": "686f33ea176209979a82e900ce2645f97f10de10e562413762519005ed6b7258",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 46,
+      "range_to": 53
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-opening-break-small.json",
+      "sha256": "9efd9624647b75c550b86bcdfed5ee20f2d6f3a5cb4ac6aed565b0a850448038",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 46,
+      "range_to": 53
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-opening-comment-base.json",
+      "sha256": "5780cf156e5ff8f99b5a2d97b65b44fe632be5b62d4ff2efde14eba518897bf6",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 9,
+      "range_to": 15
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-opening-comment-small.json",
+      "sha256": "20122972997f0fe2a3c5487714823ec6e49057ce19539bee501f8642889eb101",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 9,
+      "range_to": 15
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-quick-start-base.json",
+      "sha256": "ba4bccf301a549e0a41b640234602434581031ea2e7995a2858cc2483106ff5f",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 168,
+      "range_to": 175
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-quick-start-small.json",
+      "sha256": "284ddc894c1137b95f1151ca596d88cd922c16a13acb93e2b7d7382ef817accc",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 168,
+      "range_to": 175
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-second-set-base.json",
+      "sha256": "2a09fc1be1401d9d7396463ff46c3342eaa9277ecdfd32e806c6c90e38f4868e",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 118,
+      "range_to": 129.2
+    },
+    {
+      "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/target-second-set-small.json",
+      "sha256": "72f82b48cbc8f27463d0d05dbc31b5edafdfd6581a6484413871db06a074784b",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 118,
+      "range_to": 129.2
+    }
+  ],
+  "source_caption_evidence": {
+    "path": "data/research/djokovic-bu-beijing-2026-r2/audio/raw/source-auto-captions.txt",
+    "sha256": "b3a4bed89e3c8bde272fb03c45ea3a46915c0a2866ab1bf6de0cd6179aba16ed",
+    "classification": "YouTube machine-generated source captions, corroboration only, independently checked against ASR; not falsely certified human-verbatim."
+  },
+  "source_language_detection": {
+    "small": "en:0.9798399806022644",
+    "base": "en:0.982454240322113"
+  },
+  "foreground_english": [],
+  "no_foreground_english_reason": "Both multilingual small/base whole-source no-VAD/VAD recognition and source auto-captions were cross-checked across the full selected gap: surrounding lexical commentary ends before the window or starts after it; no lexical English lies inside. VAD long segments that straddle the gap were rejected as alignment artifacts using actual word times and independent no-VAD/caption timing. Original court/crowd/grunt sound retained; player grunts are not commentator English.",
+  "crosscheck_notes": [
+    "All selected source seconds reviewed through the independent ASR/caption records, not an empty automated pass."
+  ],
+  "boundary_evidence": {
+    "previous_english_end": 68.4,
+    "next_english_start": 94.74
+  }
+}

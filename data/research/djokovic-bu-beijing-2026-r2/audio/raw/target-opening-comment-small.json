@@ -1,0 +1,106 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 9,
+  "range_to": 15,
+  "created_at": "2026-10-03T06:12:55.314818+00:00",
+  "elapsed_seconds": 2.5,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 9.0,
+      "end": 13.16,
+      "text": " Oh, great speed from Booth!",
+      "avg_logprob": -0.6571181535720825,
+      "no_speech_prob": 0.26686570048332214,
+      "words": [
+        {
+          "start": 9.0,
+          "end": 9.82,
+          "word": " Oh,",
+          "probability": 0.04715438187122345
+        },
+        {
+          "start": 9.82,
+          "end": 10.94,
+          "word": " great",
+          "probability": 0.8878433704376221
+        },
+        {
+          "start": 10.94,
+          "end": 11.38,
+          "word": " speed",
+          "probability": 0.985191822052002
+        },
+        {
+          "start": 11.38,
+          "end": 11.74,
+          "word": " from",
+          "probability": 0.605262041091919
+        },
+        {
+          "start": 11.74,
+          "end": 13.16,
+          "word": " Booth!",
+          "probability": 0.36513905972242355
+        }
+      ]
+    },
+    {
+      "start": 13.16,
+      "end": 14.24,
+      "text": " Looking in from the left there.",
+      "avg_logprob": -0.6571181535720825,
+      "no_speech_prob": 0.26686570048332214,
+      "words": [
+        {
+          "start": 13.16,
+          "end": 13.44,
+          "word": " Looking",
+          "probability": 0.35910019278526306
+        },
+        {
+          "start": 13.44,
+          "end": 13.56,
+          "word": " in",
+          "probability": 0.9430346488952637
+        },
+        {
+          "start": 13.56,
+          "end": 13.68,
+          "word": " from",
+          "probability": 0.984305739402771
+        },
+        {
+          "start": 13.68,
+          "end": 13.82,
+          "word": " the",
+          "probability": 0.9988144636154175
+        },
+        {
+          "start": 13.82,
+          "end": 14.06,
+          "word": " left",
+          "probability": 0.9990311861038208
+        },
+        {
+          "start": 14.06,
+          "end": 14.24,
+          "word": " there.",
+          "probability": 0.9236770868301392
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "615532e01827d036b038881aec68c4794178e70fe0347c281162608fe0e21545",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}
