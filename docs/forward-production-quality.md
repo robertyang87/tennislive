@@ -67,3 +67,7 @@ watching/listening to the final mix. Missing evidence is a blocker, never a pass
 are rejected; native statistical and chapter cards remain supported. Cover photos
 are unaffected. A requested exceptional photo treatment requires a separate
 reviewed change, not a hidden exemption flag.
+
+## Complete process and turning-point coverage (2026-10-03)
+
+The owner requires every future video to explain the process clearly, retain complete footage of turning points and key moments, and convey emotion through editing, original sound, evidence-backed narration and genuine reactions. Duration follows the story; do not shorten necessary beats to meet an arbitrary short runtime or pad it with repeated shots. See the owner’s exact instruction in `.claude/skills/tennis-owner-taste/SKILL.md`. Record each key turning point, the preceding situation, complete action, outcome and immediate reaction. Missing key footage is a sourcing gap; a text card alone does not establish complete visual coverage. Reassign agents to current production gaps and finish actual film review before publishing. Reach/virality remains a creative goal, not a guaranteed quality result.
