@@ -1,0 +1,125 @@
+{
+  "schema": "original-bound-derived-chapter-review-v1",
+  "source_url": "https://www.youtube.com/watch?v=EuPUtfm-pA0",
+  "source_cache_key": "reel-src-zheng-kalinskaya-beijing-2026-r2-d1d2f8d1bf88a7e0",
+  "source_cache_filename": "4e15e4fb97523b9c.mp4",
+  "cache_scope_ref": "refs/heads/codex/zheng-kalinskaya-20261003",
+  "export_run_id": "37148736914",
+  "export_head": "ccabd28d80ddaadf020f278a6f56526b214047f9",
+  "full_original": {
+    "bytes": 829782258,
+    "sha256": "3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a",
+    "width": 1920,
+    "height": 1080,
+    "avg_frame_rate": "25/1",
+    "duration_seconds": 2920.605896,
+    "hash_method": "actual complete original cache file read remotely during this export"
+  },
+  "absolute_source_offset_seconds": 1275.0,
+  "requested_source_end_seconds": 1459.0,
+  "requested_duration_seconds": 184.0,
+  "time_mapping": "derived local time + 1275.0 seconds = original source absolute time",
+  "proxy": {
+    "filename": "chapter-review-derived.mp4",
+    "bytes": 85002125,
+    "sha256": "cad24cb21b3c2a95a437911bb70a0d354849a4efd2dc388303f91dfdee5a647e",
+    "duration_seconds": 184.0,
+    "width": 1920,
+    "height": 1080,
+    "avg_frame_rate": "25/1",
+    "encoding": "libx264 veryfast CRF18 yuv420p; AAC128k; reencoded review proxy",
+    "is_original_source_bytes": false,
+    "parts": [
+      {
+        "filename": "chapter-review-derived.mp4.part000",
+        "bytes": 25165824,
+        "sha256": "540aeab4a5a9946b8771fe45532a83d56b8df9dec2d1de2c892f172184730b53"
+      },
+      {
+        "filename": "chapter-review-derived.mp4.part001",
+        "bytes": 25165824,
+        "sha256": "5570f88c8e9108c110a42c666d84f906c6974fe965ee0a94b2874a40276c56de"
+      },
+      {
+        "filename": "chapter-review-derived.mp4.part002",
+        "bytes": 25165824,
+        "sha256": "b803b87c8c60cfa2115d87439dd819da54f168902a7bc850edfe9d36475a4da8"
+      },
+      {
+        "filename": "chapter-review-derived.mp4.part003",
+        "bytes": 9504653,
+        "sha256": "be6d4a386848ebd10af0addb9c1c62d8428dcf3099cf75c61ec56578d7de6064"
+      }
+    ]
+  },
+  "pcm": {
+    "filename": "chapter-review-derived-mono-48k.wav",
+    "bytes": 17664078,
+    "sha256": "20fa03801427446c392a6c4bf1bb0f03cfea3b77dd5064336b8fa373cd0abe2e",
+    "duration_seconds": 184.0,
+    "codec": "pcm_s16le",
+    "channels": 1,
+    "sample_rate": "48000",
+    "is_original_source_bytes": false
+  },
+  "derivation_commands": {
+    "proxy": [
+      "ffmpeg",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-nostdin",
+      "-y",
+      "-ss",
+      "1275",
+      "-i",
+      "/home/runner/.cache/tennislive-sources/4e15e4fb97523b9c.mp4",
+      "-t",
+      "184",
+      "-map",
+      "0:v:0",
+      "-map",
+      "0:a:0",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "veryfast",
+      "-crf",
+      "18",
+      "-pix_fmt",
+      "yuv420p",
+      "-c:a",
+      "aac",
+      "-b:a",
+      "128k",
+      "-movflags",
+      "+faststart",
+      "review/chapter-review-derived.mp4"
+    ],
+    "pcm": [
+      "ffmpeg",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-nostdin",
+      "-y",
+      "-ss",
+      "1275",
+      "-i",
+      "/home/runner/.cache/tennislive-sources/4e15e4fb97523b9c.mp4",
+      "-t",
+      "184",
+      "-map",
+      "0:a:0",
+      "-vn",
+      "-ac",
+      "1",
+      "-ar",
+      "48000",
+      "-c:a",
+      "pcm_s16le",
+      "review/metadata/chapter-review-derived-mono-48k.wav"
+    ]
+  },
+  "usage": "Derived files are only for visual/audio source review. Formal native render must still use the cached full original source. Never substitute proxy SHA for full-original source SHA."
+}

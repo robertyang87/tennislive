@@ -1,0 +1,72 @@
+{
+  "schema": "tennislive.foreground-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "method": "asr_cross_checked",
+  "reviewer": "zheng_av_edit: actual decoded PCM small/base/medium.en crosscheck with original identity and word timestamps",
+  "reviewed_at": "2026-10-03T20:40:34.614157+00:00",
+  "status": "complete",
+  "reviewed_from": 1612.4,
+  "reviewed_to": 1617.9,
+  "actual_listening_performed": false,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 1616.12,
+      "end": 1617.66,
+      "en": "Oh, did it find the line?",
+      "zh": "噢，这球压线了吗？"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-third-last-break-small-novad.json",
+      "sha256": "d94f1c313e5591b04c7f54b2ef8731a557909a5d7ca7962624511f976c34bfc6",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 1607.0,
+      "range_to": 1627.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-third-last-break-base-vad.json",
+      "sha256": "4dbaeb12b9c74a940dfca05099db78a726ce5d45f6865b2eb70bfcbfb226d2f6",
+      "model": "base",
+      "vad_filter": true,
+      "range_from": 1607.0,
+      "range_to": 1627.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-third-last-break-medium.en-novad.json",
+      "sha256": "981da498e9be6120c2c2425f32df6160ad9221ec568177f38e08fdb588e65d0a",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 1607.0,
+      "range_to": 1627.0,
+      "actual_listening_performed": false
+    }
+  ],
+  "source_identity_provenance": [
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-source-chapter-manifest.json",
+      "sha256": "07eefc426b3041b014b07ce230c9df76bb3b9e68dadc8e5abd2746f0b8fbca61"
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-proxy-ffprobe.json",
+      "sha256": "2c3dc20c46f0d153ed986e6ff75e47bae2bd1aeb9a87189cfb1b3628b9367391"
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-full-source-ffprobe.json",
+      "sha256": "75569109738365c0aff79a8e50486daafabbbecab7fab2b12f1f016804ca2c33"
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-pcm-ffprobe.json",
+      "sha256": "ebc44fc96e44a5b59285ca299d2ef730cfcfd24d602b2e9a136ad59ec85a48cf"
+    }
+  ],
+  "visual_notes": "卡远端、郑近端；发前近景到完整回合和结果，下一句Rightin从1618.14开始，不纳入。此球是破发点，非赛点；接官方场边退赛握手。",
+  "source_native_fragment_notes": [],
+  "completion_scope": "Coverage of recognized retained foreground speech and exact source-native fragments, not a claim that original commentary clauses are grammatically complete. Source-native truncation is shown with ellipses; missing later words are not guessed. ASR crosschecked; no human listening performed."
+}

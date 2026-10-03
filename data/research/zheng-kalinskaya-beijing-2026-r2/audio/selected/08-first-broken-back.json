@@ -1,0 +1,108 @@
+{
+  "schema": "tennislive.foreground-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "method": "asr_cross_checked",
+  "reviewer": "zheng_av_edit: actual decoded PCM small/base/medium.en crosscheck with original identity and word timestamps",
+  "reviewed_at": "2026-10-03T20:40:34.614157+00:00",
+  "status": "complete",
+  "reviewed_from": 647.4,
+  "reviewed_to": 664.5,
+  "actual_listening_performed": false,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 647.44,
+      "end": 649.64,
+      "en": "Right on the line.",
+      "zh": "正好压线。"
+    },
+    {
+      "start": 660.48,
+      "end": 664.14,
+      "en": "And Zheng coughs up her serve, so the break lead…",
+      "zh": "郑钦文丢掉发球局，破发优势……",
+      "source_native_incomplete_clause": true
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-broken-back-small-novad.json",
+      "sha256": "0824786e7b809c90eb776c4ae78de4c9bc3047a18cf727ea955ded2cbb40bbfb",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 645.0,
+      "range_to": 671.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-broken-back-base-vad.json",
+      "sha256": "c7ba28b6b5c6d50c90ed47110f96ac23a7a9194fb88bb9d99aef6412643bf2ad",
+      "model": "base",
+      "vad_filter": true,
+      "range_from": 645.0,
+      "range_to": 671.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-broken-english-tight-small-novad.json",
+      "sha256": "3655f4d077b5dedf0b1adbf5f5075070e2f66474949c9c5bef66a4d65d3b589e",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 658.5,
+      "range_to": 666.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-broken-english-tight-base-novad.json",
+      "sha256": "486986b60ea1f68dac3d1e7ee321e1f1fbd04aafaa57079fba64f57ab09bd792",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 658.5,
+      "range_to": 666.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-broken-english-tight-medium.en-novad.json",
+      "sha256": "be12d1ae35e230c24c38487882d3f4c76e5267eb669c454bf1c413cffcca6c2e",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 658.5,
+      "range_to": 666.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-broken-back-medium.en-novad.json",
+      "sha256": "f0f2f3e423d1ea55567a131506c449611d7080475c56ca72f5556b38fe8aff3b",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 645.0,
+      "range_to": 671.0,
+      "actual_listening_performed": false
+    }
+  ],
+  "source_identity_provenance": [
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-source-chapter-manifest.json",
+      "sha256": "07eefc426b3041b014b07ce230c9df76bb3b9e68dadc8e5abd2746f0b8fbca61"
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-proxy-ffprobe.json",
+      "sha256": "2c3dc20c46f0d153ed986e6ff75e47bae2bd1aeb9a87189cfb1b3628b9367391"
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-full-source-ffprobe.json",
+      "sha256": "75569109738365c0aff79a8e50486daafabbbecab7fab2b12f1f016804ca2c33"
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-pcm-ffprobe.json",
+      "sha256": "ebc44fc96e44a5b59285ca299d2ef730cfcfd24d602b2e9a136ad59ec85a48cf"
+    }
+  ],
+  "visual_notes": "最前的压线评论来自上一点，不能说上一点画面完整；接下来本次两次发球至被回破完整，尾部卡近景。",
+  "source_native_fragment_notes": [
+    "原片在“so the break lead”后切断评论，省略号表明源内截断，不补后文。Zheng来自实际球员身份及Shank/Shenk识别的专名校正；coughs up her serve的up/her分词由原始多模型phonetic overlap交叉核对。"
+  ],
+  "completion_scope": "Coverage of recognized retained foreground speech and exact source-native fragments, not a claim that original commentary clauses are grammatically complete. Source-native truncation is shown with ellipses; missing later words are not guessed. ASR crosschecked; no human listening performed."
+}

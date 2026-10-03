@@ -1,0 +1,76 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "zheng-kalinskaya-beijing-2026-r2",
+  "plan_sha256": "0391b033cc29dd1e2e02c468a757227d67063679b19ba1dae35b99078831f39e",
+  "reviewed_at": "2026-10-03T20:40:34.614157+00:00",
+  "method": "asr_cross_checked",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/00-cold_open.json",
+      "transcript_sha256": "95342d8588619e884c281b497614badbfadc2cf2caf137ee7f310cc11ec76f3d"
+    },
+    {
+      "index": 2,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/02-backhand-return.json",
+      "transcript_sha256": "334b73445501e14a002065fafa8ce432dffac921cfa8488fec11e7b6b5b72989"
+    },
+    {
+      "index": 3,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/03-fifth-game-deuce-rally.json",
+      "transcript_sha256": "77c91a2a9ff3fc259e9e258dc82cd8f89cccb72a45cb1ebe10e2bc8c4b5bf179"
+    },
+    {
+      "index": 4,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/04-first-set-0-40-reply.json",
+      "transcript_sha256": "665b350afffe03833eca1c6efdea340e30d62ccd26359613bcc55bfe68e9f6ef"
+    },
+    {
+      "index": 5,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/05-first-set-hold-3-all.json",
+      "transcript_sha256": "121461d82ee217b1547b584245cd97d1be7435e4dbdf58d1088d3bfb46b0cf5f"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/06-first-break-5-3.json",
+      "transcript_sha256": "6d08b87a5dbdb5ef808f2d4e37bb539023fa594381b9a27ee580466bfd87bc09"
+    },
+    {
+      "index": 8,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/08-first-broken-back.json",
+      "transcript_sha256": "904de8a73c926b76dc22d9900cb18d4785e590912aac6e91cd8f0d9d8f8dbf4a"
+    },
+    {
+      "index": 10,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/10-first-set-tiebreak-setpoint.json",
+      "transcript_sha256": "e349c758127478760e8af96ae1dec6909ee565948f46e1affd9f4403f3cd0c5a"
+    },
+    {
+      "index": 12,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/12-second-save-two-bp.json",
+      "transcript_sha256": "97e7a6e1a08c9fa890f99c956b49ee2c2cba41e9351b9108a92fc22e3f8bf379"
+    },
+    {
+      "index": 14,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/14-second-break-4-3.json",
+      "transcript_sha256": "94ef868b3418830b3d05bcb79846b1851c2e0b460fd63717e537b8799c1837d4"
+    },
+    {
+      "index": 16,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/16-second-set-setpoint.json",
+      "transcript_sha256": "e9797907fcc8644c3cb4c378479dd039a56bdb8a223509b414b5e786c7c7001b"
+    },
+    {
+      "index": 17,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/17-third-last-break.json",
+      "transcript_sha256": "c3f6173c48dd0aad264c1765982f18b5d3a61d781a1ad1d42e0e13f7fbd75826"
+    },
+    {
+      "index": 19,
+      "transcript_path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/selected/19-retirement-handshake.json",
+      "transcript_sha256": "efb60ba9c960f1a600692760b87fc69f5cdcf9dc2240ae9661756f91b00972e1"
+    }
+  ],
+  "note": "Each retained source window is covered by actual PCM/raw ASR bound to actual original MP4 SHA. Literal source-native fragments are ellipsized, not completed by invented commentary. This is ASR crosscheck and actual-frame review, not a human-listening certificate."
+}

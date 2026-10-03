@@ -77,7 +77,7 @@ def _video_key(url: str) -> str:
 
 
 def _match_keys(spec: dict) -> set[str]:
-    """这一条讲的是哪一场球——两把钥匙：flashscore 场次 id ＋ 源片。
+    """这一条讲的是哪一场球——场次身份（Flashscore / verified WTA）＋源片。
 
     ⚠️ 两把都要，缺一把就漏一类：场次 id 最硬（同一场球常有两版官方集锦，
     换一版视频它照样认得出），而 2026-08 之前那批 spec 的 `_match` 是一段散文、
@@ -89,6 +89,9 @@ def _match_keys(spec: dict) -> set[str]:
         mid = str(match.get("flashscore_id") or "").strip()
         if mid:
             keys.add(f"fs:{mid}")
+    wta_id = _official_wta_id(spec)
+    if wta_id:
+        keys.add(f"wta:{wta_id}")
     for url in (spec.get("source_url"), *(spec.get("sources") or {}).values()):
         key = _video_key(url)
         if key.startswith(("yt:", "http://", "https://")):
@@ -101,6 +104,17 @@ def _flashscore_id(spec: dict) -> str:
     return str(match.get("flashscore_id") or "").strip() if isinstance(match, dict) else ""
 
 
+def _official_wta_id(spec: dict) -> str:
+    """只认 verified 官方完整场次键：赛事_年度_签表场号，裸 LS035 不够唯一。"""
+    match = spec.get("_match")
+    if (not isinstance(match, dict) or match.get("source") != "official_wta"
+            or match.get("status") != "result_verified"):
+        return ""
+    source_id = str(match.get("source_id") or "").strip()
+    return source_id if re.fullmatch(
+        r"[1-9]\d*_(?:19|20)\d{2}_(?:LS|LD|QS|QD)\d{3}", source_id) else ""
+
+
 def _compilation_only(spec: dict, key: str, other: str, root: Path | None = None) -> bool:
     """撞上的只是一条**合集源片**、其实是两场球吗？
 
@@ -111,15 +125,21 @@ def _compilation_only(spec: dict, key: str, other: str, root: Path | None = None
 
     只在**两条都记了场次 id、而且 id 不一样**时放行；缺一个 id 就照旧按源片判（老 spec
     的 `_match` 是散文、没有 id，那时只剩源片认得出——`_match_keys` 那条）。
-    场次 id 那把钥匙自己对上的（`fs:`），永远是同一场球。"""
-    if key.startswith("fs:"):
+    两条都拥有 verified 官方 WTA 完整场次键时，也能证实同一赛事年度的不同场；
+    不接受裸签表场号或未经核实的键。场次钥匙自己对上的（`fs:` / `wta:`），
+    永远是同一场球。"""
+    if key.startswith(("fs:", "wta:")):
         return False
     try:
         prior = json.loads(((root or FORMAL) / f"{other}.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return False
     mine, theirs = _flashscore_id(spec), _flashscore_id(prior if isinstance(prior, dict) else {})
-    return bool(mine and theirs and mine != theirs)
+    if mine and theirs:
+        return mine != theirs
+    mine, theirs = _official_wta_id(spec), _official_wta_id(prior if isinstance(prior, dict) else {})
+    return bool(mine and theirs and mine != theirs
+                and mine.rsplit("_", 1)[0] == theirs.rsplit("_", 1)[0])
 
 
 def _published_reel_matches(root: Path | None = None) -> dict[str, str]:

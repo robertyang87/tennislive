@@ -1,0 +1,102 @@
+{
+  "schema": "tennislive.foreground-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "method": "asr_cross_checked",
+  "reviewer": "zheng_av_edit: actual decoded PCM small/base/medium.en crosscheck with original identity and word timestamps",
+  "reviewed_at": "2026-10-03T20:40:34.614157+00:00",
+  "status": "complete",
+  "reviewed_from": 614.1,
+  "reviewed_to": 623.97,
+  "actual_listening_performed": false,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 620.56,
+      "end": 623.84,
+      "en": "And too much to bear, as Kalinskaya…",
+      "zh": "难以承受，卡林斯卡娅……",
+      "source_native_incomplete_clause": true
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-break-english-tight-small-novad.json",
+      "sha256": "a7a4949858a5ea135444d89e0062bed376697388fe753b8583e182c26abca4b7",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 618.5,
+      "range_to": 625.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-break-english-tight-base-novad.json",
+      "sha256": "55fdb07f6d3c1f007ef3746a200fd17cafddae95634fafd21f0dbcec3b949ab6",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 618.5,
+      "range_to": 625.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-break-english-tight-medium.en-novad.json",
+      "sha256": "7f2d51f3ec2f8e076ae806683d49dd1bef7a254ae4e5089f85ca551d06ebf8b8",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 618.5,
+      "range_to": 625.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-break-5-3-small-novad.json",
+      "sha256": "7e634d275867f6c2d323de2cee1c68674c74c2770f4beef54c15bbc98e10af8e",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 609.0,
+      "range_to": 633.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-break-5-3-base-vad.json",
+      "sha256": "aa2c260a5a8307dadab3013a6fb8708ba8cea60a68ede56377137e0d8c752838",
+      "model": "base",
+      "vad_filter": true,
+      "range_from": 609.0,
+      "range_to": 633.0,
+      "actual_listening_performed": false
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/supplement-first-break-5-3-medium.en-novad.json",
+      "sha256": "234e7273ba80084e6fd6c6ec1fbb1c43e0fdb27e638d770107fdb9a641335415",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 609.0,
+      "range_to": 633.0,
+      "actual_listening_performed": false
+    }
+  ],
+  "source_identity_provenance": [
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-source-chapter-manifest.json",
+      "sha256": "07eefc426b3041b014b07ce230c9df76bb3b9e68dadc8e5abd2746f0b8fbca61"
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-proxy-ffprobe.json",
+      "sha256": "2c3dc20c46f0d153ed986e6ff75e47bae2bd1aeb9a87189cfb1b3628b9367391"
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-full-source-ffprobe.json",
+      "sha256": "75569109738365c0aff79a8e50486daafabbbecab7fab2b12f1f016804ca2c33"
+    },
+    {
+      "path": "data/research/zheng-kalinskaya-beijing-2026-r2/audio/raw/official-provenance-pcm-ffprobe.json",
+      "sha256": "ebc44fc96e44a5b59285ca299d2ef730cfcfd24d602b2e9a136ad59ec85a48cf"
+    }
+  ],
+  "visual_notes": "Kal远端发球，郑近端；本次准备与发球到完整得分和郑握拳。原片随即切向下一局；英文as Kalinskaya后缺后文，保持词面并加省略号，不虚构结尾。",
+  "source_native_fragment_notes": [
+    "三tight ASR全部识别And too much to bear as Kalinskaya，原源在姓名后跳到下局。无谓词续句被补写。"
+  ],
+  "completion_scope": "Coverage of recognized retained foreground speech and exact source-native fragments, not a claim that original commentary clauses are grammatically complete. Source-native truncation is shown with ellipses; missing later words are not guessed. ASR crosschecked; no human listening performed."
+}

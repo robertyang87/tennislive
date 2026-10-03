@@ -1,0 +1,125 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 645.0,
+  "range_to": 671.0,
+  "selected_from": 647.0,
+  "selected_to": 667.0,
+  "decoded_pcm_sha256": "e9d0a6d847f9916d354c76b0a9defd366c18cdf929c338350225621c78599c70",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:10:33.530208+00:00",
+  "elapsed_seconds": 1.49,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 647.51,
+      "end": 663.94,
+      "text": " right on the line and Shank coughs up or serve so the break lead",
+      "avg_logprob": -0.7558690874200118,
+      "no_speech_prob": 0.2151615470647812,
+      "compression_ratio": 1.0158730158730158,
+      "words": [
+        {
+          "start": 647.51,
+          "end": 648.31,
+          "word": " right",
+          "probability": 0.23951755464076996
+        },
+        {
+          "start": 648.31,
+          "end": 648.47,
+          "word": " on",
+          "probability": 0.952289342880249
+        },
+        {
+          "start": 648.47,
+          "end": 648.59,
+          "word": " the",
+          "probability": 0.9968900084495544
+        },
+        {
+          "start": 648.59,
+          "end": 649.03,
+          "word": " line",
+          "probability": 0.9963722229003906
+        },
+        {
+          "start": 649.03,
+          "end": 650.35,
+          "word": " and",
+          "probability": 0.4488595724105835
+        },
+        {
+          "start": 661.1,
+          "end": 661.78,
+          "word": " Shank",
+          "probability": 0.24375393241643906
+        },
+        {
+          "start": 661.78,
+          "end": 662.16,
+          "word": " coughs",
+          "probability": 0.5547244772315025
+        },
+        {
+          "start": 662.16,
+          "end": 662.24,
+          "word": " up",
+          "probability": 0.7987207174301147
+        },
+        {
+          "start": 662.24,
+          "end": 662.38,
+          "word": " or",
+          "probability": 0.5475404262542725
+        },
+        {
+          "start": 662.38,
+          "end": 662.72,
+          "word": " serve",
+          "probability": 0.9144605398178101
+        },
+        {
+          "start": 662.72,
+          "end": 663.24,
+          "word": " so",
+          "probability": 0.6811403036117554
+        },
+        {
+          "start": 663.24,
+          "end": 663.36,
+          "word": " the",
+          "probability": 0.9836873412132263
+        },
+        {
+          "start": 663.36,
+          "end": 663.58,
+          "word": " break",
+          "probability": 0.6563583016395569
+        },
+        {
+          "start": 663.58,
+          "end": 663.94,
+          "word": " lead",
+          "probability": 0.9698147773742676
+        }
+      ]
+    }
+  ]
+}
