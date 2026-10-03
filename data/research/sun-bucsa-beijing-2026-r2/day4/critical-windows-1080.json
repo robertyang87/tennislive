@@ -1,0 +1,114 @@
+{
+  "review_media": "derived1920x1080CRF18proxy",
+  "review_proxy_sha256": "62bcbb5a62b1bc8697d49c7f262a5653cd45d11a9e0139a57ecc774b290514d6",
+  "original_manifest": "/workspace/sun-bucsa-research/day4-chapter-original-review/source-chapter-manifest.json",
+  "time_mapping": "absolute=chapter_relative+2365",
+  "precision": "whole windows on25fps grid; stroke/service estimates from5fps ±0.12s unless exact full frame proof",
+  "points": [
+    {
+      "id": "context_first_set_1_0",
+      "absolute": [
+        2406.48,
+        2419.96
+      ],
+      "relative": [
+        41.48,
+        54.96
+      ],
+      "score": "First set Sun1–0, Sun0–15; Bucsa serves",
+      "server": "Bucsa",
+      "last_stroke": "Sun far end forehand down the line toward near left singles line; Bucsa does not touch last ball",
+      "winner": "Sun",
+      "service_toss_relative": 42.7,
+      "service_contact_relative": 43.3,
+      "dead_ball_relative": 52.08,
+      "confidence": "stroke/winner visual; landing near line avoids precision language"
+    },
+    {
+      "id": "first_set_4_4_long",
+      "absolute": [
+        2479.56,
+        2506.24
+      ],
+      "relative": [
+        114.56,
+        141.24
+      ],
+      "score": "First set4–4, Sun30–0; Sun serves",
+      "server": "Sun",
+      "last_stroke": "Bucsa far end two-handed backhand crosscourt; ball lands near left half of singles court; Sun does not hit again",
+      "winner": "Bucsa",
+      "service_toss_relative": 116.2,
+      "service_contact_relative": 117.4,
+      "dead_ball_relative": 137.8,
+      "confidence": "last ball lands inside; visual source evidence full137.40; no claiming Sun wins"
+    },
+    {
+      "id": "first_set_set_point",
+      "absolute": [
+        2506.32,
+        2524.56
+      ],
+      "relative": [
+        141.32,
+        159.56
+      ],
+      "score": "First set Sun5–4, Sun40–15; Bucsa serves, Sun receives",
+      "server": "Bucsa",
+      "last_stroke": "Bucsa near end two-handed backhand crosscourt goes past far baseline; Sun leaves it",
+      "winner": "Sun; first set6–4",
+      "service_toss_relative": 143.15,
+      "service_contact_relative": 143.9,
+      "dead_ball_relative": 155.9,
+      "confidence": "actual baseline bounce behind line shown at155.72; no invented Sun winner shot"
+    },
+    {
+      "id": "match_point_and_handshake",
+      "absolute": [
+        2525.0,
+        2544.16
+      ],
+      "relative": [
+        160.0,
+        179.16
+      ],
+      "score": "Second set Sun6–5, Sun40–15; Bucsa serves, Sun receives",
+      "server": "Bucsa",
+      "last_stroke": "Sun far end forehand passes advancing Bucsa on near right side; Bucsa does not hit last ball",
+      "winner": "Sun; match6–4,7–5",
+      "service_toss_relative": 162.25,
+      "service_contact_relative": 162.65,
+      "last_stroke_relative": 169.35,
+      "dead_ball_relative": 170.3,
+      "raised_arms_relative": [
+        170.5,
+        172.7
+      ],
+      "handshake_relative": [
+        176.6,
+        177.3
+      ],
+      "actual_next_match_cut_relative": 179.2,
+      "confidence": "forehand clear in full169.40; whole serve/rally/celebration/handshake retained; no matchpoint ordinal"
+    }
+  ],
+  "cold_open_absolute": [
+    2535.52,
+    2538.28
+  ],
+  "cold_open_relative": [
+    170.52,
+    173.28
+  ],
+  "crop": {
+    "x0": 555,
+    "y0": 0,
+    "x1": 1365,
+    "y1": 1080,
+    "output": [
+      1080,
+      1440
+    ],
+    "follow": false
+  }
+}

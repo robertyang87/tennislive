@@ -1,0 +1,404 @@
+{
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 2,
+      "df": 4,
+      "first_in": 36,
+      "first_total": 73,
+      "first_won": 26,
+      "second_won": 18,
+      "second_total": 37,
+      "bp_conv": 4,
+      "bp_chances": 5,
+      "pts_won": 66,
+      "pts_total": 128,
+      "winners": 13,
+      "ue": 22,
+      "headshot": "assets/players/headshots/wta-335958-match-LS041.jpg",
+      "_headshot_source": {
+        "kind": "same_match_official_photo_crop",
+        "source_url": "https://p1.img.cctvpic.com/photoAlbum/source/2026/10/03/PHOTEwtxo8ISUhf8KuCYB0HG261003.jpg",
+        "source_sha256": "734a79c643a39aefcee8ed766a80d42550257e61feb17d208775ca3e24f57c45",
+        "crop_xywh": [
+          280,
+          150,
+          900,
+          900
+        ],
+        "size": [
+          600,
+          600
+        ]
+      }
+    },
+    "b": {
+      "aces": 1,
+      "df": 1,
+      "first_in": 38,
+      "first_total": 55,
+      "first_won": 25,
+      "second_won": 8,
+      "second_total": 17,
+      "bp_conv": 2,
+      "bp_chances": 5,
+      "pts_won": 62,
+      "pts_total": 128,
+      "winners": 17,
+      "ue": 28,
+      "headshot": "assets/players/headshots/wta-321158.jpg"
+    },
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051548&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/sun-bucsa-beijing-2026-r2/wue-1.txt",
+      "source_sha256": "441469f0c6f1e951c032443b5c177deee3a6e5dff35e0f48b0e738750a22e18c",
+      "period": "Match",
+      "match_date": "2026-10-03",
+      "checked_at": "2026-10-03T16:43:11.863539+00:00",
+      "winner_result": "6-4 7-5",
+      "matchup": [
+        "Sun",
+        "Bucsa"
+      ],
+      "winners": [
+        13,
+        17
+      ],
+      "ue": [
+        22,
+        28
+      ],
+      "notes": "Decoded K/P/_ using public frontend format. data.period=Match; Key Stats players=[Sun,Bucsa]. Full-match core raw values crosschecked against WTA official stats. Do not copy TNNS erroneous per-set core stats or match-point counts into copy."
+    },
+    "_source": "Core full-match integers from official WTA setnum0 https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS041/stats ; W/UE from TNNS Match API. Core matches Flashscore KS24sykK. a=Xinran Sun,b=Cristina Bucsa. Include double faults in second-serve denominators37/17 (49%/47%), not Tennis.com excluded33/16(55%/50%).",
+    "footer_date": "2026-10-03",
+    "footer_venue": "北京 · HSBC Moon"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "winner": "孙心然",
+    "result": "6-4 7-5",
+    "matchup": [
+      {
+        "name": "孙心然",
+        "name_en": "Xinran Sun",
+        "country": "CHN",
+        "rank": 582
+      },
+      {
+        "name": "布克沙",
+        "name_en": "Cristina Bucsa",
+        "country": "ESP",
+        "rank": 35
+      }
+    ],
+    "scoreboard": {
+      "court": "HSBC Moon",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS041",
+        "match_id_field": "MatchID"
+      },
+      "_court_sources": [
+        "https://www.tennis.com/tournaments/china-open-wta/matches/x-sun-vs-c-bucsa-2026-10-03",
+        "https://api.tnnslive.com/v1/web?id=75051548&mode=match&web=true"
+      ]
+    },
+    "_rank_sources": [
+      {
+        "name": "孙心然",
+        "rank": 582,
+        "url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+        "field": "article Currently ranked No.582"
+      },
+      {
+        "name": "布克沙",
+        "rank": 35,
+        "url": "https://www.wtatennis.com/players/321158/cristina-bucsa",
+        "field": "data-player-stats.ytd.singles.rank"
+      }
+    ],
+    "layout": "solo",
+    "subject": "孙心然",
+    "hook": "次盘0比2落后\n孙心然挺进第3轮",
+    "hook_accent": "第3轮",
+    "topic": "WTA1000 北京 第二轮 · 孙心然 VS 布克沙",
+    "portrait": {
+      "image": "assets/reel/sun-bucsa-beijing-2026-r2-action.jpg",
+      "focus": 0.55,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "source_url": "https://p4.img.cctvpic.com/photoAlbum/source/2026/10/03/PHOT2jXyHE88fexfHZXDCykd261003.jpg",
+      "_portrait_why": "账号所有者2026-10-03发图明确选择此正手追球照，替换抛球封面。画面对照央视本场原图第3张一致；孙心然对布克沙，同场2026-10-03 18:20:41拍摄。使用2048x1367高清原图，不使用聊天压缩版。",
+      "_low_res_why": "用户明确选择本场真实全身动作照；2048x1367原图铺满1080x1440画布，约5.3%放大，不生成重绘。"
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS041",
+    "date": "2026-10-03",
+    "winner": "孙心然",
+    "loser": "布克沙",
+    "participants": [
+      "孙心然",
+      "布克沙"
+    ],
+    "winner_result": "6-4 7-5",
+    "set_scores_home_away": [
+      [
+        6,
+        4
+      ],
+      [
+        7,
+        5
+      ]
+    ],
+    "source_url": "https://www.wtatennis.com/tournaments/china-open/scores/LS041",
+    "start_api_utc": "2026-10-03T10:06:35.773+00:00",
+    "first_point_utc": "2026-10-03T10:19:20Z",
+    "date_time_copy": "北京时间2026年10月3日晚",
+    "_time_note": "Use natural evening slot only; match metadata timestamp and first actual point differ13m. Neither substitutes proof of exact actual start.",
+    "daypart": "晚上",
+    "duration": "01:31:18"
+  },
+  "slug": "sun-bucsa-beijing-2026-r2",
+  "_column": "赛场之上",
+  "source_url": "https://www.youtube.com/watch?v=EuPUtfm-pA0",
+  "segments": [
+    {
+      "start": 2535.25,
+      "end": 2537.65,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "cold_open",
+      "point_end_ok": "本场真实最后一分后举臂庆祝。完整Oh she wins it in style最早2535.52、最晚2537.40；保2535.25–2537.65，正文末段完整覆盖此冷开。",
+      "crosses_cut": "本场真实最后一分后举臂庆祝。完整Oh she wins it in style最早2535.52、最晚2537.40；保2535.25–2537.65，正文末段完整覆盖此冷开。",
+      "_why": "本场真实最后一分后举臂庆祝。完整Oh she wins it in style最早2535.52、最晚2537.40；保2535.25–2537.65，正文末段完整覆盖此冷开。",
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "末段完整2525.0–2543.88覆盖末分、冷开区间2535.25–2537.65、庆祝和握手。",
+      "quote": [
+        {
+          "at": 0.24,
+          "end": 2.25,
+          "text": "Oh, she wins it in style.\n噢，她赢得真漂亮。"
+        }
+      ]
+    },
+    {
+      "title_card": "16岁的她\n第一次击败前50",
+      "kicker": "孙心然的成年赛场突破",
+      "seconds": 9.5,
+      "narration": "十六岁，排名五百八十二。孙心然在北京，第一次击败世界前五十。"
+    },
+    {
+      "start": 2406.48,
+      "end": 2419.96,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "北京时间十月三号晚上，中网第二轮，孙心然迎战布克沙。接发这一分，正手直线找到空当。",
+      "score_inset": true,
+      "_edit_id": "context",
+      "point_end_ok": "实际首盘1–0、0–15接发回合，中文独立旁白。此前opening hold of serve整句最晚2406.40结束，start2406.48之后至2419.96全窗对照完整small/base VAD、完整small.en noVAD及中段medium.en，无可靠前景英语；空识别不是单独判据。",
+      "crosses_cut": "实际首盘1–0、0–15接发回合，中文独立旁白。此前opening hold of serve整句最晚2406.40结束，start2406.48之后至2419.96全窗对照完整small/base VAD、完整small.en noVAD及中段medium.en，无可靠前景英语；空识别不是单独判据。",
+      "_why": "实际首盘1–0、0–15接发回合，中文独立旁白。此前opening hold of serve整句最晚2406.40结束，start2406.48之后至2419.96全窗对照完整small/base VAD、完整small.en noVAD及中段medium.en，无可靠前景英语；空识别不是单独判据。"
+    },
+    {
+      "start": 2506.32,
+      "end": 2521.15,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "首盘五比四，她拿到盘点。连续对攻后，布克沙最后一记双反出界。六比四，孙心然先拿一盘。",
+      "score_inset": true,
+      "_edit_id": "first_set_point",
+      "point_end_ok": "真实首盘5–4接发盘点，连续回合，中文至2521.15，下一段声音连续。上一句夸布克沙转分的英文最晚2506.16结束，start2506.32避开尾音；下一句big upset最早2521.32，end2521.15有裕量。medium.en144.52–144.60孤立Thankyouverymuch及tight small153.32–156.12 Thankyouforwatching均为未获其他完整模型/目标窗支持的噪声误识，详见raw概率/零时长与交叉结论。",
+      "crosses_cut": "真实首盘5–4接发盘点，连续回合，中文至2521.15，下一段声音连续。上一句夸布克沙转分的英文最晚2506.16结束，start2506.32避开尾音；下一句big upset最早2521.32，end2521.15有裕量。medium.en144.52–144.60孤立Thankyouverymuch及tight small153.32–156.12 Thankyouforwatching均为未获其他完整模型/目标窗支持的噪声误识，详见raw概率/零时长与交叉结论。",
+      "_why": "真实首盘5–4接发盘点，连续回合，中文至2521.15，下一段声音连续。上一句夸布克沙转分的英文最晚2506.16结束，start2506.32避开尾音；下一句big upset最早2521.32，end2521.15有裕量。medium.en144.52–144.60孤立Thankyouverymuch及tight small153.32–156.12 Thankyouforwatching均为未获其他完整模型/目标窗支持的噪声误识，详见raw概率/零时长与交叉结论。"
+    },
+    {
+      "start": 2521.15,
+      "end": 2524.56,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "first_set_reaction",
+      "point_end_ok": "保完整And do we have a big upset on the cards原声，medium词尾到2524.52，原2524.50早0.02，微调end2524.56（25fps对齐）保全词。2524.60下一源镜仍为同场赛点发前，非他场。",
+      "crosses_cut": "保完整And do we have a big upset on the cards原声，medium词尾到2524.52，原2524.50早0.02，微调end2524.56（25fps对齐）保全词。2524.60下一源镜仍为同场赛点发前，非他场。",
+      "_why": "保完整And do we have a big upset on the cards原声，medium词尾到2524.52，原2524.50早0.02，微调end2524.56（25fps对齐）保全词。2524.60下一源镜仍为同场赛点发前，非他场。",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.14,
+          "end": 3.405,
+          "text": "And do we have a big upset on the cards?\n会出现一场大冷门吗？"
+        }
+      ]
+    },
+    {
+      "stat_card": true,
+      "seconds": 12,
+      "narration": "全场五次破发机会，孙心然拿下四次。制胜分少于对手，她赢在重要的机会没有白白放过。",
+      "_edit_id": "statistics",
+      "_why": "完整官方全场九行integer，W/UE为真实TNNS完整Match源，不混错误分盘。"
+    },
+    {
+      "title_card": "次盘0比2落后\n她把比赛追回来了",
+      "kicker": "关键分仍然主动出手",
+      "seconds": 12,
+      "narration": "次盘零比二落后，她追回来了。五比五，一记正手直线救下破发点。随后保发，六比五。",
+      "_edit_id": "second_set_turn",
+      "_why": "本场官方WTA赛报的明确比分与球路。高清合集没保留该段回合，采用独立文字卡，不伪造球路画面。"
+    },
+    {
+      "start": 2525.0,
+      "end": 2535.25,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "来到赛点，布克沙上网。孙心然用正手穿越，打出了属于自己的答案。",
+      "score_inset": true,
+      "_edit_id": "match_point",
+      "point_end_ok": "真实次盘6–5接发赛点完整发前和回合，中文至2535.25。bigupset此前最晚2524.52结束，start2525.00避开尾音；下一Oh最早2535.52。目标small/base noVAD整窗均无文本，且全部完整章节模型/末段medium支持同一英语间隙；不将单个空结果当证明。",
+      "crosses_cut": "真实次盘6–5接发赛点完整发前和回合，中文至2535.25。bigupset此前最晚2524.52结束，start2525.00避开尾音；下一Oh最早2535.52。目标small/base noVAD整窗均无文本，且全部完整章节模型/末段medium支持同一英语间隙；不将单个空结果当证明。",
+      "_why": "真实次盘6–5接发赛点完整发前和回合，中文至2535.25。bigupset此前最晚2524.52结束，start2525.00避开尾音；下一Oh最早2535.52。目标small/base noVAD整窗均无文本，且全部完整章节模型/末段medium支持同一英语间隙；不将单个空结果当证明。"
+    },
+    {
+      "start": 2535.25,
+      "end": 2543.88,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "victory_and_handshake",
+      "point_end_ok": "保完整Oh she wins it in style与And its the biggest victory of this young sixteen-year-olds career两句，末词最晚2543.72，窗end2543.88。真实同场走向网前与握手，25fps下一场标题2544.20才开始。fullbase VAD孤立I dontknow及nativeautocap尾And未获fullsmall/small.en/medium和两独立tight支持，raw保留并记噪声异常，不编造第三句。",
+      "crosses_cut": "保完整Oh she wins it in style与And its the biggest victory of this young sixteen-year-olds career两句，末词最晚2543.72，窗end2543.88。真实同场走向网前与握手，25fps下一场标题2544.20才开始。fullbase VAD孤立I dontknow及nativeautocap尾And未获fullsmall/small.en/medium和两独立tight支持，raw保留并记噪声异常，不编造第三句。",
+      "_why": "保完整Oh she wins it in style与And its the biggest victory of this young sixteen-year-olds career两句，末词最晚2543.72，窗end2543.88。真实同场走向网前与握手，25fps下一场标题2544.20才开始。fullbase VAD孤立I dontknow及nativeautocap尾And未获fullsmall/small.en/medium和两独立tight支持，raw保留并记噪声异常，不编造第三句。",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.24,
+          "end": 2.25,
+          "text": "Oh, she wins it in style.\n噢，她赢得真漂亮。"
+        },
+        {
+          "at": 3.54,
+          "end": 8.57,
+          "text": "And it's the biggest victory of this young sixteen-year-old's career.\n16岁小将生涯最重要的一胜。"
+        }
+      ]
+    },
+    {
+      "title_card": "下一关，高芙\n仍然每球去拼",
+      "kicker": "把青少年冠军的勇气带进成年赛场",
+      "seconds": 12,
+      "narration": "孙心然说，开场有些紧张，后来越来越好。下一轮对高芙，你最想为她哪一分鼓掌？",
+      "_edit_id": "ending",
+      "_why": "实际赛点庆祝握手完整后，忠实释义本人官方文字，邀请为同一主角真实球路鼓掌。"
+    }
+  ],
+  "tts_backend": "edge",
+  "track": false,
+  "scorebox": [
+    86,
+    827,
+    554,
+    988
+  ],
+  "topbar": {
+    "line1": "2026 WTA1000 北京 第二轮",
+    "line2": "孙心然 6-4 7-5 布克沙"
+  },
+  "outro": false,
+  "push": {
+    "auto": true,
+    "summary": "孙心然挺进第3轮",
+    "lead": "中网女单第二轮，16岁孙心然第二盘0比2落后追回，5比5用正手直线救下破发点，最终6比4、7比5击败布克沙，首次战胜世界前50，晋级第三轮，下一轮迎战高芙。"
+  },
+  "_source_provenance": {
+    "publisher": "WTA",
+    "canonical_url": "https://www.youtube.com/watch?v=EuPUtfm-pA0",
+    "bytes": 829782258,
+    "sha256": "3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a",
+    "width": 1920,
+    "height": 1080,
+    "avg_frame_rate": "25/1",
+    "duration_seconds": 2920.605896,
+    "hash_method": "actual complete original cache file read remotely during this export",
+    "chapter_start": 2365,
+    "chapter_end": 2544.2,
+    "chapter_identity": "X.Sun Vs C.Bucsa",
+    "original_source_hash_provenance": "Remote actual full-original cache SHA from export37143082855; formalrender reads fulloriginal829782258bytes, not derivedproxy."
+  },
+  "_set_coverage_why": "官方Day4合集本场实际章2365–2544.20，全原源1920x1080@25。实画保留首盘1–0接发正手直线、首盘真实盘点、第二盘真实赛点与完整庆祝握手。合集省去次盘0–2追回及5–5救破发点画面，以官方赛报准确事实做独立字卡补述，不用首盘镜头冒充次盘。",
+  "_editing_why": "原生1080x1440铺满画布，固定cx.5不追人。本场高清视频与真实原PCM派生审查章节按source-chapter-manifest绑定；formalnative渲染必须恢复829MB原全源3d750e...，不以71MBproxy作为原源。避开2544.20下一场Bouzkova/Birrell标题硬切。",
+  "_heat_why": "中国16岁美网青少年女单冠军在中网主场，首次击败Top50后下一轮挑战高芙。",
+  "_hit_data": [
+    {
+      "label": "破发机会4/5",
+      "detail": "官方全场孙心然5次破发机会兑现4次，布克沙5次兑现2次。",
+      "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS041/stats"
+    }
+  ],
+  "_facts": [
+    {
+      "url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+      "type": "official_match_report",
+      "why": "年龄、rank582、0–2追回、5–5正手直线救BP、最终比分、本人紧张后更好、下一轮高芙；赛点序号文字与逐分冲突，所以不使用第几个。"
+    },
+    {
+      "url": "https://www.chinaopen.com/cn/contents/281/1641.html",
+      "type": "official_chinese_match_report",
+      "why": "中文姓名孙心然、10月3日第二轮6–4/7–5胜布克沙晋级32强。"
+    },
+    {
+      "url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+      "type": "official_video",
+      "why": "首Top50胜以及实际全部重点回合、庆祝和握手。"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "十六岁的她，怎样把勇气打成一场胜利？",
+    "thesis": "十六岁排名582的孙心然首次击败Top50：首盘正手直线与盘点连续对攻，次盘追回由官方文字交代，最终正手穿越、真实庆祝与握手落地。",
+    "beats": [
+      "真实胜利冷开",
+      "16岁排名582首次Top50胜",
+      "北京时间坐标及首盘正手直线",
+      "真实首盘盘点6-4",
+      "全场破发机会4/5",
+      "次盘0-2追回及5-5救BP文字事实",
+      "完整最终赛点、庆祝与握手",
+      "本人缓解紧张以及下一轮高芙期待"
+    ],
+    "human_context": {
+      "angle": "孙心然把青少年夺冠后的勇气带入成年巡回赛，关键分仍主动进攻；赛后本人承认紧张后状态更好。",
+      "facts": [
+        "16岁2026美网青少年冠军",
+        "首次Top50胜",
+        "下一轮对高芙"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+        "https://www.chinaopen.com/cn/contents/281/1641.html",
+        "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next"
+      ]
+    }
+  },
+  "_tts_backend_why": "采用已确定的Microsoft Edge云见中文体育旁白；本稿没有Azure专用情绪风格或自定义停顿需求。禁止DeepSeek和MiniMax，选段文案由OpenAI据实处理。",
+  "stat_card_full_canvas": true,
+  "_ending_why": "末分2525.0–2535.25与2535.25–2543.88原声连续，实际careertail至2543.72已完整，握手章176.6–177.2已显示。0.18s溶解底料最远2544.06在2544.20他场硬切前；末card正向高芙期待问题。",
+  "_preparation_status": "actual_1080p_source_visual_and_asr_bound_native_preflight_passed_pending_render"
+}

@@ -1,0 +1,680 @@
+{
+  "schema": "tennislive.derived-pcm-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=EuPUtfm-pA0",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": true,
+  "condition_on_previous_text": false,
+  "requested_language": "auto",
+  "detected_language": "en",
+  "language_probability": 0.9818651080131531,
+  "range_from": 2365.0,
+  "range_to": 2548.0,
+  "created_at": "2026-10-03T18:13:48.151264+00:00",
+  "elapsed_seconds": 11.38,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 2389.72,
+      "end": 2391.34,
+      "text": " a really good finish there.",
+      "avg_logprob": -0.3220653096023871,
+      "no_speech_prob": 0.5347376465797424,
+      "compression_ratio": 1.5979899497487438,
+      "words": [
+        {
+          "start": 2389.72,
+          "end": 2390.2,
+          "word": " a",
+          "probability": 0.08973558992147446,
+          "chapter_start": 24.72,
+          "chapter_end": 25.2
+        },
+        {
+          "start": 2390.2,
+          "end": 2390.48,
+          "word": " really",
+          "probability": 0.9653283953666687,
+          "chapter_start": 25.2,
+          "chapter_end": 25.48
+        },
+        {
+          "start": 2390.48,
+          "end": 2390.7,
+          "word": " good",
+          "probability": 0.9870961904525757,
+          "chapter_start": 25.48,
+          "chapter_end": 25.7
+        },
+        {
+          "start": 2390.7,
+          "end": 2391.0,
+          "word": " finish",
+          "probability": 0.9367935657501221,
+          "chapter_start": 25.7,
+          "chapter_end": 26.0
+        },
+        {
+          "start": 2391.0,
+          "end": 2391.34,
+          "word": " there.",
+          "probability": 0.8752663731575012,
+          "chapter_start": 26.0,
+          "chapter_end": 26.34
+        }
+      ],
+      "chapter_start": 24.72,
+      "chapter_end": 26.34
+    },
+    {
+      "id": 2,
+      "start": 2403.6,
+      "end": 2406.12,
+      "text": " A good opening hold of serve here.",
+      "avg_logprob": -0.3220653096023871,
+      "no_speech_prob": 0.5347376465797424,
+      "compression_ratio": 1.5979899497487438,
+      "words": [
+        {
+          "start": 2403.6,
+          "end": 2404.2,
+          "word": " A",
+          "probability": 0.45651721954345703,
+          "chapter_start": 38.6,
+          "chapter_end": 39.2
+        },
+        {
+          "start": 2404.2,
+          "end": 2404.46,
+          "word": " good",
+          "probability": 0.989304780960083,
+          "chapter_start": 39.2,
+          "chapter_end": 39.46
+        },
+        {
+          "start": 2404.46,
+          "end": 2405.04,
+          "word": " opening",
+          "probability": 0.994231104850769,
+          "chapter_start": 39.46,
+          "chapter_end": 40.04
+        },
+        {
+          "start": 2405.04,
+          "end": 2405.36,
+          "word": " hold",
+          "probability": 0.9502754807472229,
+          "chapter_start": 40.04,
+          "chapter_end": 40.36
+        },
+        {
+          "start": 2405.36,
+          "end": 2405.52,
+          "word": " of",
+          "probability": 0.9734416604042053,
+          "chapter_start": 40.36,
+          "chapter_end": 40.52
+        },
+        {
+          "start": 2405.52,
+          "end": 2405.76,
+          "word": " serve",
+          "probability": 0.8324693441390991,
+          "chapter_start": 40.52,
+          "chapter_end": 40.76
+        },
+        {
+          "start": 2405.76,
+          "end": 2406.12,
+          "word": " here.",
+          "probability": 0.9486704468727112,
+          "chapter_start": 40.76,
+          "chapter_end": 41.12
+        }
+      ],
+      "chapter_start": 38.6,
+      "chapter_end": 41.12
+    },
+    {
+      "id": 3,
+      "start": 2447.94,
+      "end": 2449.08,
+      "text": " Nice finish there.",
+      "avg_logprob": -0.3220653096023871,
+      "no_speech_prob": 0.5347376465797424,
+      "compression_ratio": 1.5979899497487438,
+      "words": [
+        {
+          "start": 2447.94,
+          "end": 2448.54,
+          "word": " Nice",
+          "probability": 0.6723121404647827,
+          "chapter_start": 82.94,
+          "chapter_end": 83.54
+        },
+        {
+          "start": 2448.54,
+          "end": 2448.78,
+          "word": " finish",
+          "probability": 0.9113605618476868,
+          "chapter_start": 83.54,
+          "chapter_end": 83.78
+        },
+        {
+          "start": 2448.78,
+          "end": 2449.08,
+          "word": " there.",
+          "probability": 0.9298252463340759,
+          "chapter_start": 83.78,
+          "chapter_end": 84.08
+        }
+      ],
+      "chapter_start": 82.94,
+      "chapter_end": 84.08
+    },
+    {
+      "id": 4,
+      "start": 2463.98,
+      "end": 2466.0,
+      "text": " Really nice winner on the forehand there.",
+      "avg_logprob": -0.3220653096023871,
+      "no_speech_prob": 0.5347376465797424,
+      "compression_ratio": 1.5979899497487438,
+      "words": [
+        {
+          "start": 2463.98,
+          "end": 2464.58,
+          "word": " Really",
+          "probability": 0.7079968452453613,
+          "chapter_start": 98.98,
+          "chapter_end": 99.58
+        },
+        {
+          "start": 2464.58,
+          "end": 2464.86,
+          "word": " nice",
+          "probability": 0.9844824075698853,
+          "chapter_start": 99.58,
+          "chapter_end": 99.86
+        },
+        {
+          "start": 2464.86,
+          "end": 2465.06,
+          "word": " winner",
+          "probability": 0.9329220056533813,
+          "chapter_start": 99.86,
+          "chapter_end": 100.06
+        },
+        {
+          "start": 2465.06,
+          "end": 2465.22,
+          "word": " on",
+          "probability": 0.9849934577941895,
+          "chapter_start": 100.06,
+          "chapter_end": 100.22
+        },
+        {
+          "start": 2465.22,
+          "end": 2465.3,
+          "word": " the",
+          "probability": 0.9983586668968201,
+          "chapter_start": 100.22,
+          "chapter_end": 100.3
+        },
+        {
+          "start": 2465.3,
+          "end": 2465.74,
+          "word": " forehand",
+          "probability": 0.9527437090873718,
+          "chapter_start": 100.3,
+          "chapter_end": 100.74
+        },
+        {
+          "start": 2465.74,
+          "end": 2466.0,
+          "word": " there.",
+          "probability": 0.8792316913604736,
+          "chapter_start": 100.74,
+          "chapter_end": 101.0
+        }
+      ],
+      "chapter_start": 98.98,
+      "chapter_end": 101.0
+    },
+    {
+      "id": 5,
+      "start": 2476.98,
+      "end": 2478.46,
+      "text": " Really nice mix up there.",
+      "avg_logprob": -0.3220653096023871,
+      "no_speech_prob": 0.5347376465797424,
+      "compression_ratio": 1.5979899497487438,
+      "words": [
+        {
+          "start": 2476.98,
+          "end": 2477.5,
+          "word": " Really",
+          "probability": 0.6237335801124573,
+          "chapter_start": 111.98,
+          "chapter_end": 112.5
+        },
+        {
+          "start": 2477.5,
+          "end": 2477.76,
+          "word": " nice",
+          "probability": 0.9924720525741577,
+          "chapter_start": 112.5,
+          "chapter_end": 112.76
+        },
+        {
+          "start": 2477.76,
+          "end": 2477.98,
+          "word": " mix",
+          "probability": 0.98401939868927,
+          "chapter_start": 112.76,
+          "chapter_end": 112.98
+        },
+        {
+          "start": 2477.98,
+          "end": 2478.22,
+          "word": " up",
+          "probability": 0.7187281250953674,
+          "chapter_start": 112.98,
+          "chapter_end": 113.22
+        },
+        {
+          "start": 2478.22,
+          "end": 2478.46,
+          "word": " there.",
+          "probability": 0.9602014422416687,
+          "chapter_start": 113.22,
+          "chapter_end": 113.46
+        }
+      ],
+      "chapter_start": 111.98,
+      "chapter_end": 113.46
+    },
+    {
+      "id": 6,
+      "start": 2503.52,
+      "end": 2506.02,
+      "text": " Boxer did so well to turn that point around.",
+      "avg_logprob": -0.3220653096023871,
+      "no_speech_prob": 0.5347376465797424,
+      "compression_ratio": 1.5979899497487438,
+      "words": [
+        {
+          "start": 2503.52,
+          "end": 2504.12,
+          "word": " Boxer",
+          "probability": 0.41044243425130844,
+          "chapter_start": 138.52,
+          "chapter_end": 139.12
+        },
+        {
+          "start": 2504.12,
+          "end": 2504.22,
+          "word": " did",
+          "probability": 0.9597656726837158,
+          "chapter_start": 139.12,
+          "chapter_end": 139.22
+        },
+        {
+          "start": 2504.22,
+          "end": 2504.62,
+          "word": " so",
+          "probability": 0.9931148886680603,
+          "chapter_start": 139.22,
+          "chapter_end": 139.62
+        },
+        {
+          "start": 2504.62,
+          "end": 2504.88,
+          "word": " well",
+          "probability": 0.9972313046455383,
+          "chapter_start": 139.62,
+          "chapter_end": 139.88
+        },
+        {
+          "start": 2504.88,
+          "end": 2505.04,
+          "word": " to",
+          "probability": 0.9908429384231567,
+          "chapter_start": 139.88,
+          "chapter_end": 140.04
+        },
+        {
+          "start": 2505.04,
+          "end": 2505.26,
+          "word": " turn",
+          "probability": 0.9980450868606567,
+          "chapter_start": 140.04,
+          "chapter_end": 140.26
+        },
+        {
+          "start": 2505.26,
+          "end": 2505.44,
+          "word": " that",
+          "probability": 0.9963692426681519,
+          "chapter_start": 140.26,
+          "chapter_end": 140.44
+        },
+        {
+          "start": 2505.44,
+          "end": 2505.66,
+          "word": " point",
+          "probability": 0.9974880218505859,
+          "chapter_start": 140.44,
+          "chapter_end": 140.66
+        },
+        {
+          "start": 2505.66,
+          "end": 2506.02,
+          "word": " around.",
+          "probability": 0.9981279969215393,
+          "chapter_start": 140.66,
+          "chapter_end": 141.02
+        }
+      ],
+      "chapter_start": 138.52,
+      "chapter_end": 141.02
+    },
+    {
+      "id": 7,
+      "start": 2521.45,
+      "end": 2524.21,
+      "text": " And do we have a big upset on the cards?",
+      "avg_logprob": -0.3220653096023871,
+      "no_speech_prob": 0.5347376465797424,
+      "compression_ratio": 1.5979899497487438,
+      "words": [
+        {
+          "start": 2521.45,
+          "end": 2521.97,
+          "word": " And",
+          "probability": 0.7315222024917603,
+          "chapter_start": 156.45,
+          "chapter_end": 156.97
+        },
+        {
+          "start": 2521.97,
+          "end": 2522.09,
+          "word": " do",
+          "probability": 0.9651942253112793,
+          "chapter_start": 156.97,
+          "chapter_end": 157.09
+        },
+        {
+          "start": 2522.09,
+          "end": 2522.23,
+          "word": " we",
+          "probability": 0.9894750118255615,
+          "chapter_start": 157.09,
+          "chapter_end": 157.23
+        },
+        {
+          "start": 2522.23,
+          "end": 2522.39,
+          "word": " have",
+          "probability": 0.9987133741378784,
+          "chapter_start": 157.23,
+          "chapter_end": 157.39
+        },
+        {
+          "start": 2522.39,
+          "end": 2522.51,
+          "word": " a",
+          "probability": 0.9931187629699707,
+          "chapter_start": 157.39,
+          "chapter_end": 157.51
+        },
+        {
+          "start": 2522.51,
+          "end": 2522.77,
+          "word": " big",
+          "probability": 0.9951156377792358,
+          "chapter_start": 157.51,
+          "chapter_end": 157.77
+        },
+        {
+          "start": 2522.77,
+          "end": 2523.31,
+          "word": " upset",
+          "probability": 0.9635894298553467,
+          "chapter_start": 157.77,
+          "chapter_end": 158.31
+        },
+        {
+          "start": 2523.31,
+          "end": 2523.65,
+          "word": " on",
+          "probability": 0.9898836016654968,
+          "chapter_start": 158.31,
+          "chapter_end": 158.65
+        },
+        {
+          "start": 2523.65,
+          "end": 2523.83,
+          "word": " the",
+          "probability": 0.9972447156906128,
+          "chapter_start": 158.65,
+          "chapter_end": 158.83
+        },
+        {
+          "start": 2523.83,
+          "end": 2524.21,
+          "word": " cards?",
+          "probability": 0.9575073719024658,
+          "chapter_start": 158.83,
+          "chapter_end": 159.21
+        }
+      ],
+      "chapter_start": 156.45,
+      "chapter_end": 159.21
+    },
+    {
+      "id": 8,
+      "start": 2535.56,
+      "end": 2537.24,
+      "text": " Oh, she wins it in style.",
+      "avg_logprob": -0.3220653096023871,
+      "no_speech_prob": 0.5347376465797424,
+      "compression_ratio": 1.5979899497487438,
+      "words": [
+        {
+          "start": 2535.56,
+          "end": 2536.16,
+          "word": " Oh,",
+          "probability": 0.46742114424705505,
+          "chapter_start": 170.56,
+          "chapter_end": 171.16
+        },
+        {
+          "start": 2536.18,
+          "end": 2536.34,
+          "word": " she",
+          "probability": 0.9929825067520142,
+          "chapter_start": 171.18,
+          "chapter_end": 171.34
+        },
+        {
+          "start": 2536.34,
+          "end": 2536.6,
+          "word": " wins",
+          "probability": 0.9973165392875671,
+          "chapter_start": 171.34,
+          "chapter_end": 171.6
+        },
+        {
+          "start": 2536.6,
+          "end": 2536.8,
+          "word": " it",
+          "probability": 0.1660035401582718,
+          "chapter_start": 171.6,
+          "chapter_end": 171.8
+        },
+        {
+          "start": 2536.8,
+          "end": 2536.9,
+          "word": " in",
+          "probability": 0.9853739738464355,
+          "chapter_start": 171.8,
+          "chapter_end": 171.9
+        },
+        {
+          "start": 2536.9,
+          "end": 2537.24,
+          "word": " style.",
+          "probability": 0.984095573425293,
+          "chapter_start": 171.9,
+          "chapter_end": 172.24
+        }
+      ],
+      "chapter_start": 170.56,
+      "chapter_end": 172.24
+    },
+    {
+      "id": 9,
+      "start": 2538.82,
+      "end": 2543.34,
+      "text": " And it's the biggest victory of this young 16-year-old's",
+      "avg_logprob": -0.3220653096023871,
+      "no_speech_prob": 0.5347376465797424,
+      "compression_ratio": 1.5979899497487438,
+      "words": [
+        {
+          "start": 2538.82,
+          "end": 2539.42,
+          "word": " And",
+          "probability": 0.19152112305164337,
+          "chapter_start": 173.82,
+          "chapter_end": 174.42
+        },
+        {
+          "start": 2539.42,
+          "end": 2539.68,
+          "word": " it's",
+          "probability": 0.7880832850933075,
+          "chapter_start": 174.42,
+          "chapter_end": 174.68
+        },
+        {
+          "start": 2539.68,
+          "end": 2539.86,
+          "word": " the",
+          "probability": 0.9982714653015137,
+          "chapter_start": 174.68,
+          "chapter_end": 174.86
+        },
+        {
+          "start": 2539.86,
+          "end": 2540.42,
+          "word": " biggest",
+          "probability": 0.9968873858451843,
+          "chapter_start": 174.86,
+          "chapter_end": 175.42
+        },
+        {
+          "start": 2540.42,
+          "end": 2540.96,
+          "word": " victory",
+          "probability": 0.9873537421226501,
+          "chapter_start": 175.42,
+          "chapter_end": 175.96
+        },
+        {
+          "start": 2540.96,
+          "end": 2541.66,
+          "word": " of",
+          "probability": 0.9593670964241028,
+          "chapter_start": 175.96,
+          "chapter_end": 176.66
+        },
+        {
+          "start": 2541.66,
+          "end": 2541.96,
+          "word": " this",
+          "probability": 0.9978255033493042,
+          "chapter_start": 176.66,
+          "chapter_end": 176.96
+        },
+        {
+          "start": 2541.96,
+          "end": 2542.28,
+          "word": " young",
+          "probability": 0.9947381615638733,
+          "chapter_start": 176.96,
+          "chapter_end": 177.28
+        },
+        {
+          "start": 2542.28,
+          "end": 2542.72,
+          "word": " 16",
+          "probability": 0.9426332116127014,
+          "chapter_start": 177.28,
+          "chapter_end": 177.72
+        },
+        {
+          "start": 2542.72,
+          "end": 2543.04,
+          "word": "-year",
+          "probability": 0.5255416873842478,
+          "chapter_start": 177.72,
+          "chapter_end": 178.04
+        },
+        {
+          "start": 2543.04,
+          "end": 2543.34,
+          "word": "-old's",
+          "probability": 0.8787399927775065,
+          "chapter_start": 178.04,
+          "chapter_end": 178.34
+        }
+      ],
+      "chapter_start": 173.82,
+      "chapter_end": 178.34
+    },
+    {
+      "id": 10,
+      "start": 2543.34,
+      "end": 2543.7,
+      "text": " Korea.",
+      "avg_logprob": -0.7026166915893555,
+      "no_speech_prob": 0.1632564216852188,
+      "compression_ratio": 0.42857142857142855,
+      "words": [
+        {
+          "start": 2543.34,
+          "end": 2543.7,
+          "word": " Korea.",
+          "probability": 0.773061990737915,
+          "chapter_start": 178.34,
+          "chapter_end": 178.7
+        }
+      ],
+      "chapter_start": 178.34,
+      "chapter_end": 178.7
+    }
+  ],
+  "transcribed_input_sha256": "43d76393680e4224460c8d5ba3cee1daf7adb74e2027b17ffef92dc3b402a47d",
+  "transcribed_input": "chapter-review-derived-mono-48k.wav",
+  "transcribed_input_is_original_video_bytes": false,
+  "original_source_sha256": "3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a",
+  "original_source_sha_provenance": {
+    "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/source-chapter-manifest.json",
+    "sha256": "752791a2d848ae5bdcfb4e74aee38c8c6f5e1e728c0bd61342244a04742cc6a4",
+    "source_hash_method": "actual complete original cache file read remotely during this export",
+    "export_run_id": "37143082855",
+    "export_head": "a31cfb583b22334cf41fbd81db53bdb57c60b22a"
+  },
+  "absolute_source_offset_seconds": 2365.0,
+  "reviewed_scope": "Only this183s derived PCM chapter or its recorded subwindow; full49minute original video was not transcribed locally.",
+  "actual_listening_performed": false,
+  "original_raw_local_document_sha256": "0577b6b406b8026c7079f67a965b82e676ef06a2440e8e8a2e757aa1be47dc5a",
+  "time_mapping": "Originalabsolute = localchapter+2365.0",
+  "chapter_range_from": 0,
+  "chapter_range_to": 183.0
+}
