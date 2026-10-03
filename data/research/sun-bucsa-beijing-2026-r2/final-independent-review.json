@@ -1,0 +1,72 @@
+{
+  "schema": "independent-actual-native-film-review-v1",
+  "status": "pass",
+  "checked_at": "2026-10-03T18:58:39Z",
+  "native_run_id": 37145739670,
+  "native_code_sha": "5e141ed4f5742523ec982dcfef5eedab04092f27",
+  "actual_film": {
+    "path": "/workspace/sun-bucsa-research/final-native-review/sun-bucsa-beijing-2026-r2.mp4",
+    "bytes": 29994245,
+    "sha256": "4c8d59161900e3977993ce03da4ef5fbb71f68ba9063d258a2c889a2afb363d3"
+  },
+  "spec_sha256": "50be3f68381f1c42eed52d569353c8b3eb1225de2b4e0fdc8323f0e2dbc6fb62",
+  "ass_sha256": "d34583c20eb21715d26dccea165e4e6ff07ff31d0dc59a9f36b5b37fb9233f0f",
+  "render_inputs_sha256": "0ce959aec0cba65bcab30b539fc36095315c6a8939a80e838ae28a89cb669d8b",
+  "qc_attestation_sha256": "6a2fd8fe53c3db9c1b9f023456931df82f50a5985735f77fb60b74646ae45e1c",
+  "audio_binding_sha256": "d413a8f7a8f0f14fda6007eb4ee9455b44311f87d85f3e54dbc422e1dd87d186",
+  "audio_plan_sha256": "154a937a0eab5f870ba664897ba7161cf9e9814abb68e32350cb5b28f2c51b5a",
+  "source_sha256": "3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a",
+  "source_verification_scope": "Full 829782258-byte original SHA was measured by native remote export/render. This local review verified the actual film and bound packets/metadata; the full original was not present locally and was not falsely claimed rehashed locally.",
+  "checks": {
+    "actual_film_hash_bytes": "pass",
+    "spec_render_attestation_binding": "pass",
+    "all_manifest_assets_and_artifacts_byte_sha": "pass",
+    "audio_plan_review_source_binding": "pass",
+    "native_verify_final_actual_film": "pass",
+    "current_spec_native_projection": "pass",
+    "full_video_and_audio_decode": {
+      "status": "pass",
+      "command": "ffmpeg -v error -i ACTUAL_FILM -map 0:v:0 -map 0:a:0 -f null -",
+      "exit_code": 0,
+      "stderr": ""
+    }
+  },
+  "limitations": [
+    "This report does not claim audio was directly listened to. Existing evidence uses honest ASR cross-check.",
+    "Visual statistics card and handshake frame inspection are being conducted independently by root.",
+    "Exact-head repository CI remains an independent check; this is not a declaration that whole-repository CI is green."
+  ],
+  "projection_sha256": "f7969543ebf2eecc418e57cec13a87fb9e2a4ae53378c39e1462c4fbdc36d3e9",
+  "media": {
+    "width": 1080,
+    "height": 1440,
+    "fps": "25/1",
+    "video_frames": 2493,
+    "film_seconds": 99.72,
+    "video_seconds": 99.72,
+    "audio_seconds": 99.7,
+    "video_start_seconds": 0.0,
+    "audio_start_seconds": 0.0,
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "av_duration_difference_seconds": 0.02
+  },
+  "subtitle_boundary": {
+    "first_set_reaction_quote_end_on_source": 2524.52,
+    "source_segment_end": 2524.56,
+    "source_boundary_margin_seconds": 0.04,
+    "actual_ass_quote_end_seconds": 44.78,
+    "actual_statistics_segment_start_seconds": 44.81999999999999,
+    "actual_ass_margin_seconds": 0.03999999999999204,
+    "native_verify_final_tts_no_extra_english": "pass"
+  },
+  "root_visual_review": {
+    "status": "pass",
+    "actual_film_sha256": "4c8d59161900e3977993ce03da4ef5fbb71f68ba9063d258a2c889a2afb363d3",
+    "method": "viewed actual film sampled wall and full stat card and actual handshake frame85.55; actual listening not performed",
+    "cover": "selected same-match user action photo; nativefullcanvas",
+    "stats": "all nine rows/fullcanvas; winnerSun left, 13/17 winners and22/28 UE, 4/5 vs2/5 BP; no additional CN caption covering card",
+    "handshake": "actual frame85.55 shows both hands at contact, netcelebration continuous",
+    "source_overlay": "source corners outside fixed center crop; real WTA scoreboard individually masked/reposted and disappears when withdrawn"
+  }
+}
