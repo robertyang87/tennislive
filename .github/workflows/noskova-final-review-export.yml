@@ -96,8 +96,39 @@ jobs:
           timeout 90 yt-dlp --flat-playlist --playlist-end 20 --dump-single-json 'https://www.youtube.com/@WTA/videos' > review/wta-latest-uploads.json
       - uses: actions/upload-artifact@v4
         with:
-          name: rybakina-charaeva-native-source
-          path: review/
+          name: rybakina-charaeva-native-source-part000
+          path: review/source.mp4.part000
           retention-days: 3
           compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rybakina-charaeva-native-source-part001
+          path: review/source.mp4.part001
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rybakina-charaeva-native-source-part002
+          path: review/source.mp4.part002
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rybakina-charaeva-native-source-part003
+          path: review/source.mp4.part003
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rybakina-charaeva-native-source-metadata
+          path: |
+            review/source-manifest.json
+            review/ffprobe.json
+            review/SHA256SUMS
+            review/wta-latest-uploads.json
+          retention-days: 3
           if-no-files-found: error
