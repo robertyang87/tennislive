@@ -1,0 +1,52 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=Qd4MQBnmF5A",
+  "source_sha256": "ed88d5e4cce59bdd16b7caa8cf709f8afda9f1b0bf1871798d97d788ca6f198f",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 174.9,
+  "range_to": 179.9,
+  "created_at": "2026-10-03T17:53:55.921112+00:00",
+  "elapsed_seconds": 2.83,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 174.9,
+      "end": 178.1,
+      "text": " Oh, quality finish.",
+      "avg_logprob": -0.8673307970166206,
+      "no_speech_prob": 0.20043730735778809,
+      "compression_ratio": 0.7037037037037037,
+      "words": [
+        {
+          "start": 174.9,
+          "end": 176.2,
+          "word": " Oh,",
+          "probability": 0.3210691809654236
+        },
+        {
+          "start": 176.88,
+          "end": 177.7,
+          "word": " quality",
+          "probability": 0.8520411252975464
+        },
+        {
+          "start": 177.7,
+          "end": 178.1,
+          "word": " finish.",
+          "probability": 0.8365592360496521
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "1b353e1cf9ea1526df2997f0db10f7cbad183ca41a1f2cdee02ac317028de112",
+  "metadata_sanitization": "Only local source_path omitted for repository portability; words, probabilities, source absolute times and model settings unchanged."
+}

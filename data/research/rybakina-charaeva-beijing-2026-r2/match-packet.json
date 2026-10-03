@@ -1,0 +1,167 @@
+{
+  "checked_at": "2026-10-03T17:46:13.329327+00:00",
+  "match": {
+    "tour": "WTA1000",
+    "event": "China Open2026",
+    "date": "2026-10-03",
+    "round": "R64/second round",
+    "official_match_id": "1020_2026_LS032",
+    "tnns_id": "75051532",
+    "flashscore_id": "0Epw9iu2",
+    "youtube_id": "Qd4MQBnmF5A",
+    "winner": "Alina Charaeva",
+    "winner_zh": "查拉耶娃",
+    "winner_score": "3-6 6-4 6-3",
+    "court": "Capital Group Diamond",
+    "court_id": 1,
+    "duration": "02:11:50",
+    "duration_card": "2:11",
+    "api_match_timestamp_utc": "2026-10-03T12:24:16.1+00:00",
+    "api_first_point_utc": "2026-10-03T12:40:06Z",
+    "api_last_point_utc": "2026-10-03T14:51:25Z",
+    "chinese_time_copy": "北京时间2026年10月3日晚",
+    "time_note": "API metadata20:24Beijing; firstpoint20:40Beijing. Do not claim exact actualstart solely from metadata."
+  },
+  "players": [
+    {
+      "name": "Elena Rybakina",
+      "name_zh": "莱巴金娜",
+      "wta_id": "324166",
+      "country": "KAZ",
+      "country_name": "Kazakhstan",
+      "rank": 1,
+      "age": 27,
+      "dob": "1999-06-17",
+      "no1_since_official_career_high": "2026-09-14",
+      "sources": [
+        "https://www.wtatennis.com/players/324166/elena-rybakina"
+      ]
+    },
+    {
+      "name": "Alina Charaeva",
+      "name_zh": "查拉耶娃",
+      "wta_id": "329198",
+      "country": "ARM",
+      "country_name": "Armenia",
+      "rank": 118,
+      "age": 24,
+      "dob": "2002-05-27",
+      "entry": "main_draw_direct_unmarked",
+      "sources": [
+        "https://www.wtatennis.com/players/329198/alina-charaeva",
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/1020/MDS.pdf"
+      ]
+    }
+  ],
+  "next_round": {
+    "opponent": "Sonay Kartal",
+    "name_zh": "卡塔尔",
+    "round": "R32/third round",
+    "first_meeting": true,
+    "sources": [
+      "https://www.wtatennis.com/news/4586105/charaeva-upsets-new-world-no-1-rybakina-in-beijing-second-round",
+      "https://wtafiles.wtatennis.com/pdf/draws/2026/1020/MDS.pdf"
+    ]
+  },
+  "history": [
+    {
+      "claim": "WTA历史第2位在世界第一身份首场单打失利的球员",
+      "status": "verified_official_claim_with_secondary_confirmation",
+      "subject": "Elena Rybakina",
+      "sources": [
+        "https://www.wtatennis.com/news/4586105/charaeva-upsets-new-world-no-1-rybakina-in-beijing-second-round",
+        "https://www.tennismajors.com/wta-tour-news/no-118-charaeva-stuns-rybakina-in-her-first-match-as-world-no-1-862445.html"
+      ],
+      "exact_official": "Entering the week, only one player in WTA Tour Driven by Mercedes-Benz history had lost her first match as World No.1. Make it two",
+      "previous": "Naomi Osaka lost to Kristina Mladenovic in Dubai2019",
+      "scope": "First singles match played while rankedNo1; not first match since a prior injury and not her first-ever tour match."
+    },
+    {
+      "claim": "1975年WTA排名建立以来，第9位排名Top100之外击败当时世界第一的球员",
+      "status": "verified_official_claim",
+      "subject": "Alina Charaeva",
+      "sources": [
+        "https://www.wtatennis.com/news/4586105/charaeva-upsets-new-world-no-1-rybakina-in-beijing-second-round"
+      ],
+      "exact_official": "Since the rankings were first published in1975, Charaeva is just the ninth player outside the Top100 to defeat the WorldNo1",
+      "scope": "Number of players, not number of upset matches."
+    },
+    {
+      "claim": "1975年WTA排名建立以来，排名最低的先丢一盘后逆转世界第一的球员",
+      "status": "verified_official_and_reuters_optace",
+      "subject": "Alina Charaeva",
+      "sources": [
+        "https://www.wtatennis.com/news/4586105/charaeva-upsets-new-world-no-1-rybakina-in-beijing-second-round",
+        "https://www.straitstimes.com/sport/tennis/rybakinas-first-match-as-world-number-one-ends-in-china-open-defeat-by-charaeva?ref=latest",
+        "https://tennisnow.com/armenias-charaeva-ranked-118-stuns-no-rybakina-in-beijing/"
+      ],
+      "scope": "From a set down/comeback essential. Do not shorten to lowest-ranked player ever to beatNo1."
+    }
+  ],
+  "conflicts": [
+    {
+      "field": "qualifier",
+      "conflicting_source": "https://www.chinaopen.com/cn/contents/281/1640.html",
+      "claim": "资格赛球员",
+      "chosen": "Do not callqualifier:officialMDSrow4 has noQ; QSdoesnotlistCharaeva; WTAeventplayersentryTypeempty."
+    },
+    {
+      "field": "country",
+      "conflicting_source": "TennisMajorsAPphotocaption says Russia",
+      "chosen": "OfficialWTAprofileandmatchAPIARM; ReutersRussian-bornArmenian and FlashArmenia agree. UseARM not oldRUS."
+    },
+    {
+      "field": "MatchWinners",
+      "TNNS": [
+        33,
+        17
+      ],
+      "TennisNow": [
+        30,
+        16
+      ],
+      "chosen": "TNNSMatchcompletepair, no blending. BothUE48/17 match."
+    },
+    {
+      "field": "first_in",
+      "official_WTA": [
+        53,
+        50
+      ],
+      "Tennis_com": [
+        55,
+        54
+      ],
+      "chosen": "OfficialWTA/TNNS/Flashcorrectfullcounts."
+    },
+    {
+      "field": "duration",
+      "official": "02:11:50",
+      "TNNSmetadata": "2:10",
+      "chosen": "Official2:11card."
+    },
+    {
+      "field": "PBPtotalcounts",
+      "official_stats": [
+        83,
+        88
+      ],
+      "official_PBP": [
+        84,
+        87
+      ],
+      "chosen": "Useofficialstatsforfullpoints; PBPfirstsetdiffers1point. Gamefinish/majortransitionsalsoWTAprosesupported."
+    }
+  ],
+  "raw_sources": {
+    "official_match": "official-target-match.json",
+    "official_stats": "stats-0.txt",
+    "official_points": "stats-1.txt",
+    "tnns_stats": "stats-2.txt",
+    "tnns_stats_decoded": "tnns-decoded-2.json",
+    "tnns_metadata": "tnns-decoded-3.json",
+    "flashscore_stats": "stats-4.txt",
+    "official_MDS": "official-draw-MDS.pdf",
+    "official_QS": "official-draw-QS.pdf"
+  }
+}

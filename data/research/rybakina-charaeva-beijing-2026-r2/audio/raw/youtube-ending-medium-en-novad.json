@@ -1,0 +1,516 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=Qd4MQBnmF5A",
+  "source_sha256": "ed88d5e4cce59bdd16b7caa8cf709f8afda9f1b0bf1871798d97d788ca6f198f",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 235.0,
+  "range_to": 273.94,
+  "created_at": "2026-10-03T17:50:28.570471+00:00",
+  "elapsed_seconds": 19.31,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 236.18,
+      "end": 241.44,
+      "text": " And she manufactures a lifelong dream in real time.",
+      "avg_logprob": -0.365626311596529,
+      "no_speech_prob": 0.9037787914276123,
+      "compression_ratio": 1.4269662921348314,
+      "words": [
+        {
+          "start": 236.18,
+          "end": 237.02,
+          "word": " And",
+          "probability": 0.28528717160224915
+        },
+        {
+          "start": 237.02,
+          "end": 237.46,
+          "word": " she",
+          "probability": 0.000817085849121213
+        },
+        {
+          "start": 237.46,
+          "end": 238.58,
+          "word": " manufactures",
+          "probability": 0.25541800260543823
+        },
+        {
+          "start": 238.58,
+          "end": 239.16,
+          "word": " a",
+          "probability": 0.9413654208183289
+        },
+        {
+          "start": 239.16,
+          "end": 239.62,
+          "word": " lifelong",
+          "probability": 0.5982898473739624
+        },
+        {
+          "start": 239.62,
+          "end": 240.16,
+          "word": " dream",
+          "probability": 0.994118332862854
+        },
+        {
+          "start": 240.16,
+          "end": 240.68,
+          "word": " in",
+          "probability": 0.9189109206199646
+        },
+        {
+          "start": 240.68,
+          "end": 240.92,
+          "word": " real",
+          "probability": 0.9877604246139526
+        },
+        {
+          "start": 240.92,
+          "end": 241.44,
+          "word": " time.",
+          "probability": 0.6100016832351685
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 242.4,
+      "end": 245.96,
+      "text": " Achieves a majestic career-defining victory in Beijing.",
+      "avg_logprob": -0.365626311596529,
+      "no_speech_prob": 0.9037787914276123,
+      "compression_ratio": 1.4269662921348314,
+      "words": [
+        {
+          "start": 242.4,
+          "end": 242.72,
+          "word": " Achieves",
+          "probability": 0.8583303491274515
+        },
+        {
+          "start": 242.72,
+          "end": 242.9,
+          "word": " a",
+          "probability": 0.9745532274246216
+        },
+        {
+          "start": 242.9,
+          "end": 243.4,
+          "word": " majestic",
+          "probability": 0.9768105745315552
+        },
+        {
+          "start": 243.4,
+          "end": 244.12,
+          "word": " career",
+          "probability": 0.7058224081993103
+        },
+        {
+          "start": 244.12,
+          "end": 244.58,
+          "word": "-defining",
+          "probability": 0.8741076389948527
+        },
+        {
+          "start": 244.58,
+          "end": 245.08,
+          "word": " victory",
+          "probability": 0.965968906879425
+        },
+        {
+          "start": 245.08,
+          "end": 245.48,
+          "word": " in",
+          "probability": 0.9684602618217468
+        },
+        {
+          "start": 245.48,
+          "end": 245.96,
+          "word": " Beijing.",
+          "probability": 0.9861736297607422
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 249.52,
+      "end": 251.9,
+      "text": " Cool as the other side of the pillow.",
+      "avg_logprob": -0.365626311596529,
+      "no_speech_prob": 0.9037787914276123,
+      "compression_ratio": 1.4269662921348314,
+      "words": [
+        {
+          "start": 249.52,
+          "end": 250.04,
+          "word": " Cool",
+          "probability": 0.23025581240653992
+        },
+        {
+          "start": 250.04,
+          "end": 250.82,
+          "word": " as",
+          "probability": 0.8463377952575684
+        },
+        {
+          "start": 250.82,
+          "end": 251.0,
+          "word": " the",
+          "probability": 0.989075779914856
+        },
+        {
+          "start": 251.0,
+          "end": 251.14,
+          "word": " other",
+          "probability": 0.9900208711624146
+        },
+        {
+          "start": 251.14,
+          "end": 251.36,
+          "word": " side",
+          "probability": 0.995170533657074
+        },
+        {
+          "start": 251.36,
+          "end": 251.48,
+          "word": " of",
+          "probability": 0.9903116226196289
+        },
+        {
+          "start": 251.48,
+          "end": 251.62,
+          "word": " the",
+          "probability": 0.9839348196983337
+        },
+        {
+          "start": 251.62,
+          "end": 251.9,
+          "word": " pillow.",
+          "probability": 0.9655936360359192
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 252.32,
+      "end": 256.32,
+      "text": " She upsets world number one at the China open.",
+      "avg_logprob": -0.365626311596529,
+      "no_speech_prob": 0.9037787914276123,
+      "compression_ratio": 1.4269662921348314,
+      "words": [
+        {
+          "start": 252.32,
+          "end": 252.44,
+          "word": " She",
+          "probability": 0.17328426241874695
+        },
+        {
+          "start": 252.44,
+          "end": 253.1,
+          "word": " upsets",
+          "probability": 0.9699544608592987
+        },
+        {
+          "start": 253.1,
+          "end": 253.34,
+          "word": " world",
+          "probability": 0.8819257616996765
+        },
+        {
+          "start": 253.34,
+          "end": 253.64,
+          "word": " number",
+          "probability": 0.7855838537216187
+        },
+        {
+          "start": 253.64,
+          "end": 253.96,
+          "word": " one",
+          "probability": 0.8625760078430176
+        },
+        {
+          "start": 253.96,
+          "end": 254.66,
+          "word": " at",
+          "probability": 0.11321865767240524
+        },
+        {
+          "start": 254.66,
+          "end": 255.58,
+          "word": " the",
+          "probability": 0.9280903935432434
+        },
+        {
+          "start": 255.58,
+          "end": 255.9,
+          "word": " China",
+          "probability": 0.7127825617790222
+        },
+        {
+          "start": 255.9,
+          "end": 256.32,
+          "word": " open.",
+          "probability": 0.7834437489509583
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 257.76,
+      "end": 258.96,
+      "text": " Facing the world number one.",
+      "avg_logprob": -0.365626311596529,
+      "no_speech_prob": 0.9037787914276123,
+      "compression_ratio": 1.4269662921348314,
+      "words": [
+        {
+          "start": 257.76,
+          "end": 258.02,
+          "word": " Facing",
+          "probability": 0.9437656700611115
+        },
+        {
+          "start": 258.02,
+          "end": 258.18,
+          "word": " the",
+          "probability": 0.8111027479171753
+        },
+        {
+          "start": 258.18,
+          "end": 258.36,
+          "word": " world",
+          "probability": 0.9781720638275146
+        },
+        {
+          "start": 258.36,
+          "end": 258.64,
+          "word": " number",
+          "probability": 0.97209632396698
+        },
+        {
+          "start": 258.64,
+          "end": 258.96,
+          "word": " one.",
+          "probability": 0.9744834899902344
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 259.26,
+      "end": 259.68,
+      "text": " Nervous?",
+      "avg_logprob": -0.365626311596529,
+      "no_speech_prob": 0.9037787914276123,
+      "compression_ratio": 1.4269662921348314,
+      "words": [
+        {
+          "start": 259.26,
+          "end": 259.68,
+          "word": " Nervous?",
+          "probability": 0.9052426020304362
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 260.16,
+      "end": 260.52,
+      "text": " Perhaps.",
+      "avg_logprob": -0.365626311596529,
+      "no_speech_prob": 0.9037787914276123,
+      "compression_ratio": 1.4269662921348314,
+      "words": [
+        {
+          "start": 260.16,
+          "end": 260.52,
+          "word": " Perhaps.",
+          "probability": 0.811968982219696
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 261.12,
+      "end": 261.44,
+      "text": " Daunted?",
+      "avg_logprob": -0.365626311596529,
+      "no_speech_prob": 0.9037787914276123,
+      "compression_ratio": 1.4269662921348314,
+      "words": [
+        {
+          "start": 261.12,
+          "end": 261.44,
+          "word": " Daunted?",
+          "probability": 0.8301101624965668
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 262.02,
+      "end": 262.26,
+      "text": " Nope.",
+      "avg_logprob": -0.365626311596529,
+      "no_speech_prob": 0.9037787914276123,
+      "compression_ratio": 1.4269662921348314,
+      "words": [
+        {
+          "start": 262.02,
+          "end": 262.26,
+          "word": " Nope.",
+          "probability": 0.5361658334732056
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 262.26,
+      "end": 272.18,
+      "text": " intimidated not in the least valiant and triumphant yes and yes almost a look",
+      "avg_logprob": -0.5048774755918063,
+      "no_speech_prob": 0.2501662075519562,
+      "compression_ratio": 1.2298850574712643,
+      "words": [
+        {
+          "start": 262.26,
+          "end": 263.54,
+          "word": " intimidated",
+          "probability": 0.23346875607967377
+        },
+        {
+          "start": 263.54,
+          "end": 264.38,
+          "word": " not",
+          "probability": 0.6313797831535339
+        },
+        {
+          "start": 264.38,
+          "end": 264.6,
+          "word": " in",
+          "probability": 0.9951223731040955
+        },
+        {
+          "start": 264.6,
+          "end": 264.78,
+          "word": " the",
+          "probability": 0.9987916350364685
+        },
+        {
+          "start": 264.78,
+          "end": 265.18,
+          "word": " least",
+          "probability": 0.9972130656242371
+        },
+        {
+          "start": 265.18,
+          "end": 266.24,
+          "word": " valiant",
+          "probability": 0.9390864968299866
+        },
+        {
+          "start": 266.24,
+          "end": 266.56,
+          "word": " and",
+          "probability": 0.9927825927734375
+        },
+        {
+          "start": 266.56,
+          "end": 267.08,
+          "word": " triumphant",
+          "probability": 0.9964131712913513
+        },
+        {
+          "start": 267.08,
+          "end": 268.14,
+          "word": " yes",
+          "probability": 0.8260363936424255
+        },
+        {
+          "start": 268.14,
+          "end": 268.4,
+          "word": " and",
+          "probability": 0.9916389584541321
+        },
+        {
+          "start": 268.4,
+          "end": 269.08,
+          "word": " yes",
+          "probability": 0.9962769150733948
+        },
+        {
+          "start": 269.08,
+          "end": 271.8,
+          "word": " almost",
+          "probability": 0.7803031206130981
+        },
+        {
+          "start": 271.8,
+          "end": 272.04,
+          "word": " a",
+          "probability": 0.9833167195320129
+        },
+        {
+          "start": 272.04,
+          "end": 272.18,
+          "word": " look",
+          "probability": 0.9986347556114197
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 272.18,
+      "end": 273.92,
+      "text": " of disbelief from Shahraib as",
+      "avg_logprob": -0.5048774755918063,
+      "no_speech_prob": 0.2501662075519562,
+      "compression_ratio": 1.2298850574712643,
+      "words": [
+        {
+          "start": 272.18,
+          "end": 272.36,
+          "word": " of",
+          "probability": 0.9835366606712341
+        },
+        {
+          "start": 272.36,
+          "end": 272.94,
+          "word": " disbelief",
+          "probability": 0.9978258013725281
+        },
+        {
+          "start": 272.94,
+          "end": 273.26,
+          "word": " from",
+          "probability": 0.9945481419563293
+        },
+        {
+          "start": 273.26,
+          "end": 273.8,
+          "word": " Shahraib",
+          "probability": 0.18209518492221832
+        },
+        {
+          "start": 273.8,
+          "end": 273.92,
+          "word": " as",
+          "probability": 0.23981808125972748
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "78c08a22e2211575bfd6c0a473aaf80212e4a7e57c0fc5d5fafdc6cd36d2d5c8",
+  "metadata_sanitization": "Only local source_path omitted for repository portability; words, probabilities, source absolute times and model settings unchanged."
+}
