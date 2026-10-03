@@ -302,6 +302,10 @@ def _english_display(name: str, meta: dict, where: str) -> str:
     # `P. -. SMITH`。两种都不报错，只是印在海报上很怪。
     # 现在只按空白切：**名**里的每一段各取首字母、用 `-` 接回去
     # （`Elena-Gabriela` → `E.-G.`），**姓**原样大写。
+    # A team label is not a person's given name + surname.
+    if (name.endswith("队") and "country" in meta and meta["country"] is None
+            and "rank" in meta and meta["rank"] is None):
+        return value.upper()
     parts = value.split()
     if len(parts) > 1 and "." not in parts[0]:
         given = ["-".join(f"{bit[0]}." for bit in part.split("-") if bit)
@@ -908,6 +912,31 @@ def _score_row(meta: dict, cells: str, where: str, *, winner: bool) -> str:
         '</div>')
 
 
+def _team_exhibition_duration_error(cover: dict) -> str | None:
+    """Explicit team exhibition results may omit an unrecorded event duration.
+
+    This does not apply to a singles/doubles match, whose result is a set score.
+    """
+    board = cover.get("scoreboard") or {}
+    if board.get("result_format") != "team_exhibition":
+        return None
+    pair = cover.get("matchup") or []
+    if len(pair) != 2 or any(
+        not isinstance(side, dict)
+        or not str(side.get("name") or "").endswith("队")
+        or "country" not in side or side["country"] is not None
+        or "rank" not in side or side["rank"] is not None
+        for side in pair
+    ):
+        return "team_exhibition 必须是两支无国家代表身份、无世界排名的球队（country/rank: null）。"
+    result = re.fullmatch(r"(\d{1,2})-(\d{1,2})", str(cover.get("result") or ""))
+    if not result or int(result[1]) <= int(result[2]):
+        return "team_exhibition 的 result 必须是赢家在前的单一团体比分。"
+    if not str(board.get("duration_unavailable_why") or "").strip():
+        return "team_exhibition 必须写 duration_unavailable_why，说明未记录整场活动用时。"
+    return None
+
+
 def solo_scoreboard_shape_error(cover: dict) -> str | None:
     """「赛场之上」solo 封面的比分板**形状**够不够——只读 spec，不联网。
 
@@ -937,6 +966,12 @@ def solo_scoreboard_shape_error(cover: dict) -> str | None:
                 "cover.scoreboard 不能省略（需包含 court 和 duration_source）。")
     if not str(scoreboard.get("court") or "").strip():
         return "赛场之上比分板缺 `scoreboard.court`，不能猜场地名称。"
+    if scoreboard.get("result_format") == "team_exhibition":
+        team_problem = _team_exhibition_duration_error(cover)
+        if team_problem:
+            return team_problem
+        if "duration_source" not in scoreboard:
+            return None
     source = scoreboard.get("duration_source")
     if not isinstance(source, dict) or not str(source.get("url") or "").strip():
         return "cover.scoreboard 缺 `duration_source.url`：比赛时长不能手填。"
@@ -1007,7 +1042,12 @@ def _scoreboard_html(cover: dict) -> str:
     scoreboard = cover.get("scoreboard") or {}
     court = str(scoreboard.get("court") or "").strip()
     source = scoreboard.get("duration_source") or {}
-    duration = _fetch_match_duration(source, "cover.scoreboard")
+    duration = (_fetch_match_duration(source, "cover.scoreboard")
+                if source else "")
+    duration_html = (f'<span class="scoreboard-duration">{_CLOCK_ICON}'
+                     f'<span>{html.escape(duration)}</span></span>' if duration else "")
+    if scoreboard.get("result_format") == "team_exhibition":
+        duration_html += '<span class="scoreboard-note">团体比分</span>'
     scores, note = _scoreboard_sets(result, "cover")
     # ⚠️ 只看**位数**，不看是第几盘：同一块板上两种大小的上标比统一小一号难看。
     wide_tb = any(len(str(tb)) > 1 for _, _, tb in scores if tb)
@@ -1045,8 +1085,7 @@ def _scoreboard_html(cover: dict) -> str:
         f'<span class="scoreboard-court">{_COURT_ICON}'
         f'<span>{html.escape(court)}</span></span>'
         '<span class="scoreboard-meta">'
-        f'<span class="scoreboard-duration">{_CLOCK_ICON}'
-        f'<span>{html.escape(duration)}</span></span>'
+        f'{duration_html}'
         f'{note_html}'
         '</span>'
         '</div>'
