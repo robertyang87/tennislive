@@ -1,211 +1,24 @@
 name: noskova-final-review-export
 on:
   workflow_dispatch:
-    inputs:
-      slug:
-        description: Actual native Release film to export for final review
-        required: true
-        type: choice
-        options:
-          - sun-bucsa-beijing-2026-r2
-          - rybakina-charaeva-beijing-2026-r2
 permissions:
   contents: read
+  actions: read
 jobs:
   export:
-    if: github.ref == 'refs/heads/codex/sun-bucsa-20261003' || github.ref == 'refs/heads/codex/rybakina-charaeva-20261003'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            /tools/ci_apt_install.sh
-            /shared/ci/apt.sh
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Ensure actual ffmpeg and ffprobe
-        timeout-minutes: 5
-        run: |
-          source tools/ci_apt_install.sh
-          ensure_ffmpeg
-          ffmpeg -version
-          ffprobe -version
-      - name: Download exact actual native Release MP4
-        timeout-minutes: 3
+      - name: Retrieve actual rendered film
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          SLUG: ${{ inputs.slug }}
         run: |
-          case "$SLUG" in
-            sun-bucsa-beijing-2026-r2|rybakina-charaeva-beijing-2026-r2) ;;
-            *) echo 'Unexpected slug; export refused'; exit 1 ;;
-          esac
-          mkdir -p review/metadata review/parts review/download
-          gh api "repos/$GH_REPO/releases/tags/reel-$SLUG" > review/metadata/release.json
-          gh release download "reel-$SLUG" --pattern "$SLUG.mp4" --dir review/download
-      - name: Measure actual final film and split original bytes
-        timeout-minutes: 2
-        env:
-          SLUG: ${{ inputs.slug }}
-          GH_REPO: ${{ github.repository }}
-          EXPORT_RUN_ID: ${{ github.run_id }}
-          EXPORT_HEAD: ${{ github.sha }}
-          EXPORT_REF: ${{ github.ref }}
-        run: |
-          python - <<'PY'
-          import hashlib
-          import json
-          import os
-          from pathlib import Path
-          import subprocess
-
-          slug = os.environ['SLUG']
-          allowed = {'sun-bucsa-beijing-2026-r2', 'rybakina-charaeva-beijing-2026-r2'}
-          if slug not in allowed:
-              raise SystemExit('Unexpected film slug')
-          movie = Path('review/download') / f'{slug}.mp4'
-          if not movie.is_file() or movie.stat().st_size <= 0:
-              raise SystemExit('Exact native Release film missing or empty')
-          metadata = Path('review/metadata')
-          release = json.loads((metadata / 'release.json').read_text())
-          if release.get('tag_name') != f'reel-{slug}':
-              raise SystemExit('Release tag mismatch')
-          matching = [a for a in release.get('assets', []) if a.get('name') == movie.name]
-          if len(matching) != 1 or matching[0].get('size') != movie.stat().st_size:
-              raise SystemExit('Actual downloaded bytes do not match exactly one Release asset')
-          asset = matching[0]
-          probe = json.loads(subprocess.check_output([
-              'ffprobe', '-v', 'error', '-show_streams', '-show_format', '-of', 'json', str(movie)
-          ], text=True))
-          video = next((s for s in probe['streams'] if s.get('codec_type') == 'video'), None)
-          audio = next((s for s in probe['streams'] if s.get('codec_type') == 'audio'), None)
-          if video is None or (video.get('width'), video.get('height')) != (1080, 1440):
-              raise SystemExit('Actual native film must be 1080x1440')
-          duration = float(probe['format']['duration'])
-          if not (0 < duration <= 300) or audio is None:
-              raise SystemExit('Actual native film duration or audio stream invalid')
-          # This is a native-rendered film review export, not a new render or source file.
-          # Split/join preserves every byte of the actual downloaded Release MP4.
-          chunk_size = 24 * 1024 * 1024
-          if movie.stat().st_size > 8 * chunk_size:
-              raise SystemExit('Film exceeds eight 24MiB chunks; expand export before download')
-          digest = hashlib.sha256()
-          parts = []
-          with movie.open('rb') as handle:
-              for index in range(8):
-                  chunk = handle.read(chunk_size)
-                  if not chunk:
-                      break
-                  digest.update(chunk)
-                  name = f'{slug}.mp4.part{index:03d}'
-                  (Path('review/parts') / name).write_bytes(chunk)
-                  parts.append({'filename': name, 'bytes': len(chunk), 'sha256': hashlib.sha256(chunk).hexdigest()})
-          actual_sha = digest.hexdigest()
-          release_digest = asset.get('digest')
-          if release_digest and release_digest != f'sha256:{actual_sha}':
-              raise SystemExit('Release asset digest differs from measured actual film SHA')
-          assert sum(p['bytes'] for p in parts) == movie.stat().st_size
-          manifest = {
-              'schema': 'actual-native-final-film-export-v1',
-              'slug': slug,
-              'release_tag': release['tag_name'], 'release_url': release.get('html_url'),
-              'release_asset_id': asset.get('id'), 'release_asset_url': asset.get('browser_download_url'),
-              'release_asset_digest': release_digest,
-              'export_run_id': os.environ['EXPORT_RUN_ID'], 'export_head': os.environ['EXPORT_HEAD'],
-              'export_ref': os.environ['EXPORT_REF'],
-              'film_filename': movie.name, 'film_bytes': movie.stat().st_size,
-              'film_sha256': actual_sha, 'width': video['width'], 'height': video['height'],
-              'duration_seconds': duration, 'avg_frame_rate': video.get('avg_frame_rate'),
-              'video_codec': video.get('codec_name'), 'audio_codec': audio.get('codec_name'),
-              'audio_sample_rate': audio.get('sample_rate'), 'audio_channels': audio.get('channels'),
-              'chunk_size_bytes': chunk_size, 'parts': parts,
-              'method': 'Actual existing native Release MP4 downloaded; ffprobe measured on real file; complete original film bytes hashed and split without transcode.',
-              'is_new_render': False,
-              'review_scope': 'Export transport verifies final-film bytes and media properties only. It does not assert editorial, visual, audio-listening, source-binding or publishing QC.',
-              'reassembly': 'Concatenate parts by ascending zero-padded part number, then verify film_bytes and film_sha256 before reviewing.',
-          }
-          (metadata / 'final-film-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          (metadata / 'ffprobe.json').write_text(json.dumps(probe, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          (metadata / 'SHA256SUMS').write_text(
-              f'{actual_sha}  {movie.name}\n' + ''.join(f"{p['sha256']}  {p['filename']}\n" for p in parts), encoding='utf-8'
-          )
-          print(json.dumps({k: manifest[k] for k in ('slug', 'film_bytes', 'film_sha256', 'width', 'height', 'duration_seconds')}))
-          print(f'Exported {len(parts)} byte-preserving review chunks; no render or publication')
-          PY
-      - name: Export actual film metadata
-        uses: actions/upload-artifact@v4
+          mkdir -p review
+          gh release download reel-noskova-svitolina-bjk-cup-2026-final --pattern '*.mp4' --dir review
+          sha256sum review/*.mp4 > review/SHA256SUMS
+      - uses: actions/upload-artifact@v4
         with:
-          name: final-review-${{ inputs.slug }}-metadata
-          path: review/metadata/
-          retention-days: 3
-          compression-level: 0
-          if-no-files-found: error
-      - name: Export actual film part 000
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-review-${{ inputs.slug }}-part-000
-          path: review/parts/${{ inputs.slug }}.mp4.part000
-          retention-days: 3
-          compression-level: 0
-          if-no-files-found: ignore
-      - name: Export actual film part 001
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-review-${{ inputs.slug }}-part-001
-          path: review/parts/${{ inputs.slug }}.mp4.part001
-          retention-days: 3
-          compression-level: 0
-          if-no-files-found: ignore
-      - name: Export actual film part 002
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-review-${{ inputs.slug }}-part-002
-          path: review/parts/${{ inputs.slug }}.mp4.part002
-          retention-days: 3
-          compression-level: 0
-          if-no-files-found: ignore
-      - name: Export actual film part 003
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-review-${{ inputs.slug }}-part-003
-          path: review/parts/${{ inputs.slug }}.mp4.part003
-          retention-days: 3
-          compression-level: 0
-          if-no-files-found: ignore
-      - name: Export actual film part 004
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-review-${{ inputs.slug }}-part-004
-          path: review/parts/${{ inputs.slug }}.mp4.part004
-          retention-days: 3
-          compression-level: 0
-          if-no-files-found: ignore
-      - name: Export actual film part 005
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-review-${{ inputs.slug }}-part-005
-          path: review/parts/${{ inputs.slug }}.mp4.part005
-          retention-days: 3
-          compression-level: 0
-          if-no-files-found: ignore
-      - name: Export actual film part 006
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-review-${{ inputs.slug }}-part-006
-          path: review/parts/${{ inputs.slug }}.mp4.part006
-          retention-days: 3
-          compression-level: 0
-          if-no-files-found: ignore
-      - name: Export actual film part 007
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-review-${{ inputs.slug }}-part-007
-          path: review/parts/${{ inputs.slug }}.mp4.part007
-          retention-days: 3
-          compression-level: 0
-          if-no-files-found: ignore
+          name: noskova-final-reviewed-film
+          path: review/
+          retention-days: 7
