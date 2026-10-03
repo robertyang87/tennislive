@@ -3,22 +3,101 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-  actions: read
 jobs:
   export:
+    if: github.ref == 'refs/heads/codex/rybakina-charaeva-20261003'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 8
     steps:
-      - name: Retrieve actual rendered film
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore exact native source cache
+        id: sourcecache
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-rybakina-charaeva-beijing-2026-r2-78dbea337d45cf5e
+          fail-on-cache-miss: true
+      - name: Verify and split actual cached source
         env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
+          CACHE_HIT: ${{ steps.sourcecache.outputs.cache-hit }}
+          WORKFLOW_RUN_ID: ${{ github.run_id }}
+          WORKFLOW_HEAD: ${{ github.sha }}
         run: |
-          mkdir -p review
-          gh release download reel-noskova-svitolina-bjk-cup-2026-final --pattern '*.mp4' --dir review
-          sha256sum review/*.mp4 > review/SHA256SUMS
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+
+          if os.environ['CACHE_HIT'] != 'true':
+              raise SystemExit('Exact source-cache hit required; no replacement download allowed')
+          url = 'https://www.youtube.com/watch?v=Qd4MQBnmF5A'
+          cache_key = 'reel-src-rybakina-charaeva-beijing-2026-r2-78dbea337d45cf5e'
+          name = hashlib.sha1(url.encode()).hexdigest()[:16] + '.mp4'
+          assert name == '73bb3cbaa24f3f0d.mp4'
+          assert hashlib.sha256(url.encode()).hexdigest()[:16] == '78dbea337d45cf5e'
+          source = Path.home() / '.cache/tennislive-sources' / name
+          if not source.is_file() or source.stat().st_size != 85056713:
+              raise SystemExit('Cached source missing or actual size differs from native probe (85056713 bytes)')
+          probe = json.loads(subprocess.check_output([
+              'ffprobe', '-v', 'error', '-show_streams', '-show_format', '-of', 'json', str(source)
+          ], text=True))
+          video = next(s for s in probe['streams'] if s.get('codec_type') == 'video')
+          if (video.get('width'), video.get('height'), video.get('avg_frame_rate')) != (1920, 1080, '25/1'):
+              raise SystemExit('Cached source dimensions/frame rate differ from actual native probe')
+          if abs(float(probe['format']['duration']) - 284.0) > 0.1:
+              raise SystemExit('Cached source duration differs from actual native probe')
+          out = Path('review')
+          out.mkdir()
+          total = hashlib.sha256()
+          parts = []
+          chunk_size = 24 * 1024 * 1024
+          with source.open('rb') as handle:
+              for index in range(100):
+                  chunk = handle.read(chunk_size)
+                  if not chunk:
+                      break
+                  total.update(chunk)
+                  filename = f'source.mp4.part{index:03d}'
+                  (out / filename).write_bytes(chunk)
+                  parts.append({'filename': filename, 'bytes': len(chunk), 'sha256': hashlib.sha256(chunk).hexdigest()})
+          manifest = {
+              'schema': 'actual-source-export-v1',
+              'source_url': url,
+              'source_cache_key': cache_key,
+              'source_cache_filename': name,
+              'cache_scope_ref': 'refs/heads/codex/rybakina-charaeva-20261003',
+              'native_probe_run_id': 37140902926,
+              'export_run_id': os.environ['WORKFLOW_RUN_ID'],
+              'export_head': os.environ['WORKFLOW_HEAD'],
+              'bytes': source.stat().st_size,
+              'sha256': total.hexdigest(),
+              'width': video['width'], 'height': video['height'],
+              'avg_frame_rate': video['avg_frame_rate'],
+              'duration_seconds': float(probe['format']['duration']),
+              'chunk_size_bytes': chunk_size,
+              'parts': parts,
+              'method': 'exact branch cache restored; original bytes split without transcode; actual SHA measured during export',
+          }
+          (out / 'source-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          (out / 'ffprobe.json').write_text(json.dumps(probe, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          (out / 'SHA256SUMS').write_text(''.join(f"{p['sha256']}  {p['filename']}\n" for p in parts), encoding='utf-8')
+          print(json.dumps({k: manifest[k] for k in ('bytes', 'sha256', 'width', 'height', 'duration_seconds')}, ensure_ascii=False))
+          print(f'Exported {len(parts)} original-byte chunks; no replacement source downloaded')
+          PY
+      - name: Read newest official WTA upload metadata
+        continue-on-error: true
+        timeout-minutes: 2
+        run: |
+          python -m pip install --quiet yt-dlp
+          timeout 90 yt-dlp --flat-playlist --playlist-end 20 --dump-single-json 'https://www.youtube.com/@WTA/videos' > review/wta-latest-uploads.json
       - uses: actions/upload-artifact@v4
         with:
-          name: noskova-final-reviewed-film
+          name: rybakina-charaeva-native-source
           path: review/
-          retention-days: 7
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: error
