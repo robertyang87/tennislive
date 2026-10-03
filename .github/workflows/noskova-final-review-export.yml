@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
+      - uses: actions/checkout@v4
+      - name: Install native source probe tools
+        timeout-minutes: 4
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
