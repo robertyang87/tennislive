@@ -3128,8 +3128,10 @@ def _quote_display(text: str) -> str:
     和同一条片子里旁白字幕（从来不带）摆在一起是两种样子。英文行不动：
     那是他真说的话，标点是语法的一部分，撇号逗号都得在——这条线发的是
     英语学习素材（见「烧进画面的英文里不许有语气词」那节，英文按行单独管）。
+    比分的 readable 转换也只用于原本含汉字的行，不能先把英文里的 40–15
+    变成 40比15，再误把英文当中文去标点。
     """
-    shown = [drop_punctuation(line) if _QUOTE_CJK.search(line) else line.strip()
+    shown = [drop_punctuation(readable(line)) if _QUOTE_CJK.search(line) else line.strip()
              for line in text.split("\n")]
     return "\n".join(line for line in shown if line) or text
 
@@ -3185,14 +3187,14 @@ def explicit_quote_cues(lines: tuple, span: float,
                 raise ReelError(
                     f"quote 字幕会和下一条重叠：end={end-offset:.2f}s, "
                     f"next={next_start-offset:.2f}s")
-            out.append((start, end, _quote_display(readable(str(item["text"])))))
+            out.append((start, end, _quote_display(str(item["text"]))))
         return out
     weights = [max(1, len(str(t).replace("\n", ""))) for t in lines]
     total = sum(weights)
     at = offset
     for text, weight in zip(lines, weights):
         dur = span * weight / total
-        out.append((at, at + dur, _quote_display(readable(str(text)))))
+        out.append((at, at + dur, _quote_display(str(text))))
         at += dur
     return out
 
@@ -7923,11 +7925,11 @@ def quote_overflow_rows(spec: dict) -> list[tuple[int, str, float, int, bool]]:
         for item in raw:
             text = item["text"] if isinstance(item, dict) else str(item)
             # ⚠️ 量的是**渲出来那一份**，不是 spec 里的原文。
-            # `_quote_display(readable(...))` 就是 `explicit_quote_cues` 真正
-            # 送进字幕的那串：中文行去了标点（`·` 变成空格）、比分写成「6比4」。
+            # `_quote_display(...)` 就是 `explicit_quote_cues` 真正送进字幕的那串：
+            # 原英文行保留，中文行去了标点（`·` 变成空格）、比分写成「6比4」。
             # 拿原文去量，量的不是同一串字——账号所有者报的那条正是栽在这儿：
             # 原文里那个 `·` 到了屏幕上是个空格，于是整行多了一个断点。
-            shown = _quote_display(readable(str(text)))
+            shown = _quote_display(str(text))
             for index, row in enumerate(shown.split("\n")):
                 row = row.strip()
                 if not row:
@@ -11886,4 +11888,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

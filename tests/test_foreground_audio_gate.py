@@ -89,6 +89,29 @@ def test_final_ass_must_actually_contain_the_reviewed_cue(tmp_path):
     with pytest.raises(ValueError):A.verify_final(spec,ass,1.,root=tmp_path)
 
 
+def test_renderer_keeps_english_score_verifiable_in_final_ass(tmp_path):
+    from tools.build_match_reel import explicit_quote_cues
+    from tennislive.video.explainer import write_subtitles
+
+    spec,source,transcript,review_path=fixture(tmp_path)
+    en='Oh, and Kalinskaya, from 40–15 up…'
+    zh='噢，卡林斯卡娅刚才还40–15领先……'
+    spec['segments'][0]['quote'][0]['text']=en+'\n'+zh
+    packet=json.loads(transcript.read_text())
+    packet['foreground_english'][0].update(en=en,zh=zh)
+    transcript.write_text(json.dumps(packet))
+    review=json.loads(review_path.read_text())
+    review['plan_sha256']=A.plan_hash(spec)
+    review['segments'][0]['transcript_sha256']=A._sha(transcript)
+    review_path.write_text(json.dumps(review))
+    A.bind_sources(spec,{'':source},tmp_path,root=tmp_path)
+    cues=explicit_quote_cues(tuple(spec['segments'][0]['quote']),span=5.,offset=1.)
+    ass=write_subtitles(cues,tmp_path/'subtitles.ass',height=1440,margin_v=1284)
+    seal(spec,ass)
+    # The unchanged final gate checks the renderer's actual ASS and source binding.
+    A.verify_final(spec,ass,1.,root=tmp_path)
+
+
 def test_final_bilingual_overlap_is_rejected(tmp_path):
     spec,source,_,_=fixture(tmp_path);A.bind_sources(spec,{'':source},tmp_path,root=tmp_path)
     ass=tmp_path/'subtitles.ass';ass.write_text('Dialogue: 0,0:00:02.00,0:00:04.00,TL,,0,0,0,,What a finish!\\N漂亮的收尾！\nDialogue: 0,0:00:03.00,0:00:04.50,TL,,0,0,0,,Another title\\N又一座冠军\n')
