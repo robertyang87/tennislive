@@ -1,22 +1,10 @@
 {
-  "_note": "中国大陆球员名单，用于从场上采访标题里认出「有中国球员的场次」，也是 render/common.py 的 CHINESE_PLAYER_NAMES 的同源表。名字取自 src/tennislive/zh/players.py（译名唯一出处，别在这里另写译名）。标题里的写法两种都有——『Qinwen Zheng』和『Zheng Qinwen』——所以匹配时两种顺序都要试。",
-
+  "_note": "中国大陆球员名单，用于从场上采访标题里认出「有中国球员的场次」，也是 render/common.py 的 CHINESE_PLAYER_NAMES 的同源表。名字以 player_zh() 的规范输出为准（top500 快照优先、players.py 兜底，别在这里另造译名）。标题里的写法两种都有——『Qinwen Zheng』和『Zheng Qinwen』——所以匹配时两种顺序都要试。",
   "_roster_note": "**收谁，判据在这儿（2026-08-14 定）。** 在这之前这张表没有标准：它和 render/common.py 的 CHINESE_PLAYER_NAMES 各 24 人，看着一样，实际只重合 22 个——两人前后各手抄了一遍，四个名字各只进了一边。而漏一个人的样子是「他的比赛没进中国军团」「他的采访没被推」，和「今天他没打」一模一样。判据是：①**ATP／WTA 单打 top500 里国籍 CHN 的，只要译名已定就收**；②不在 top500 的（双打名将、掉出榜的老将）**手工收，每条写 `_why`**；③译名还没定的**不收**，挂在 `_pending_translation` 里。每条用 `admit` 标明走的是 ① 还是 ②。",
-
   "_country_note": "⚠️ **国籍要查，不许按拼音写法猜。** 「大陆用不带连字符的拼音、港台用带连字符的」这个启发式**自己有反例**：`Jia-Jing Lu`（逯佳境）带连字符却是大陆球员，`Sheng-Mei Bai` 同理；反过来 `Lulu Sun`（新西兰）、`Ann Li`（美国）不带连字符却不是。查得到的地方两个：WTA 官方球员接口 `api.wtatennis.com/tennis/players/?pageSize=50&name=<全名>` 的 `countryCode`（⚠️ `name` 是**整串子串匹配**并按姓氏字母排序，拿姓去查会翻到别人身上——上面那个例子里查 `Shi` 返回的第一条是格鲁吉亚的 Abashidze。要拿**全名**查），以及排名 PDF 里的 IOC 码（ATP 行内 `Cui, Jie (CHN)`；WTA 在名字的下一行）。本表每一位 2026-08-14 都按这两条之一核过。",
-
   "_rank_note": "⚠️ 表里**故意不存排名**。排名每周都动，存进来就是一个会过期而且过期时不吭声的数。`admit` 只回答「这条是按哪条规则收的」，不回答「他现在第几」。要现在的排名去查 `src/tennislive/zh/player_names_top500.json` 或者排名 PDF。收进来时的快照：ATP 榜 2026-08-14 抓、WTA 榜 For 10 August 2026。",
-
-  "_pending_translation_note": "CHN 单打 top500 里的，但 `player_zh()` 目前只给得出一个**机器音译的裸姓**（「王」「杨」「任」），不是名字。**不收**，理由不是懒：这张表的 `zh` 会直接印进微信推送（印一个「王」出去就是一条坏消息），而 CHINESE_PLAYER_NAMES 里塞一个裸姓会**把同姓的人一起认成他**——机器兜底给的正是姓，所以以后每多一个查不到译名的同姓球员就多一次误认。译名定下来（写进 data/player_name_overrides.json 或 zh/players.py）之后再按规则 ① 收进来。",
-  "_pending_translation": [
-    {"en": "Yufei Ren", "tour": "WTA", "machine_zh": "任"},
-    {"en": "Yidi Yang", "tour": "WTA", "machine_zh": "杨"},
-    {"en": "Jiaqi Wang", "tour": "WTA", "machine_zh": "王"},
-    {"en": "Yujia Huang", "tour": "WTA", "machine_zh": "黄"},
-    {"en": "Lan Mi", "tour": "WTA", "machine_zh": "米"},
-    {"en": "Chengyiyi Yuan", "tour": "WTA", "machine_zh": "元"}
-  ],
-
+  "_pending_translation_note": "译名未定的 CHN 单打 top500 球员暂缓收录，不把裸姓当姓名。2026-10-04 原六项已核实中文全名并用 WTA 官方接口精确核对 CHN，已移入 players；新增未核实条目仍挂本队列。",
+  "_pending_translation": [],
   "_excluded_note": "以下几位会被姓氏/拼音特征误判为中国大陆球员，明确排除：谢淑薇（Su-Wei Hsieh，中华台北）、Ann Li（美国）、Lulu Sun（新西兰）。排除项写在这里而不是靠代码猜，是为了下次有人加名单时能看见理由。",
   "excluded": [
     "Su-Wei Hsieh",
@@ -237,6 +225,54 @@
       "tour": "WTA",
       "admit": "manual",
       "_why": "老将（1990 年生），生涯最高单打第 46。⚠️ 现在**两张排名表里都查不到**，国籍是拿 WTA 球员接口 id=312636 核的（CHN）。哪天确认退役了就从这张表里去掉。"
+    },
+    {
+      "en": "Yufei Ren",
+      "zh": "任钰菲",
+      "tour": "WTA",
+      "admit": "singles-top500",
+      "name_source_url": "https://sports.cctv.com/2019/08/04/ARTIEmxbXsGiuj5CrkkdTuoy190804.shtml",
+      "country_source_url": "https://api.wtatennis.com/tennis/players/?pageSize=50&name=Yufei%20Ren"
+    },
+    {
+      "en": "Yidi Yang",
+      "zh": "杨一迪",
+      "tour": "WTA",
+      "admit": "singles-top500",
+      "name_source_url": "https://sports.cctv.com/2016/08/27/ARTIYI9ruqhDX1PsKW0EBt1I160827.shtml",
+      "country_source_url": "https://api.wtatennis.com/tennis/players/?pageSize=50&name=Yidi%20Yang"
+    },
+    {
+      "en": "Jiaqi Wang",
+      "zh": "王佳祺",
+      "tour": "WTA",
+      "admit": "singles-top500",
+      "name_source_url": "https://sports.cctv.com/2019/01/18/ARTI2vGZljUfuUkEPP8irpFQ190118.shtml",
+      "country_source_url": "https://api.wtatennis.com/tennis/players/?pageSize=50&name=Jiaqi%20Wang"
+    },
+    {
+      "en": "Yujia Huang",
+      "zh": "黄裕迦",
+      "tour": "WTA",
+      "admit": "singles-top500",
+      "name_source_url": "https://sports.sina.com.cn/o/2026-06-24/doc-inienttu1557723.shtml",
+      "country_source_url": "https://api.wtatennis.com/tennis/players/?pageSize=50&name=Yujia%20Huang"
+    },
+    {
+      "en": "Chengyiyi Yuan",
+      "zh": "袁程依依",
+      "tour": "WTA",
+      "admit": "singles-top500",
+      "name_source_url": "https://sports.cctv.com/2020/08/28/ARTIv2gnuMt1F5dziPFeP2ZM200828.shtml",
+      "country_source_url": "https://api.wtatennis.com/tennis/players/?pageSize=50&name=Chengyiyi%20Yuan"
+    },
+    {
+      "en": "Lan Mi",
+      "zh": "米兰",
+      "tour": "WTA",
+      "admit": "singles-top500",
+      "name_source_url": "https://www.163.com/dy/article/KHFFDAF105298CTE.html",
+      "country_source_url": "https://api.wtatennis.com/tennis/players/?pageSize=50&name=Lan%20Mi"
     }
   ],
   "_surname_note": "**只认全名会漏掉一大半。** 实测漏的都是关键条目：『Zheng Quarter-final post-match interview | Roland-Garros 2025』（郑钦文法网八强，只写姓）、『Zhu/Zhang On-Court Interview | United Cup 2026』（双打配对，两个姓）。所以允许**只按姓**匹配，但姓氏歧义大，必须配 excluded_full 消歧——Michael Zheng 是美国人、Lulu Sun 是新西兰人、Ann Li 是美国人，他们的姓都在名单里。只按姓命中时**不断言是哪一位**，标成待确认。",

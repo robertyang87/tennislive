@@ -47,7 +47,8 @@ jobs:
       - name: 校验 1000/1000 覆盖率与译名入口
         run: |
           python tools/update_player_names.py --check
-          pytest -q tests/test_player_names.py
+          python tools/audit_player_name_alignment.py
+          pytest -q tests/test_player_names.py tests/test_player_name_alignment.py
       - name: 提交更新
         shell: bash
         run: |

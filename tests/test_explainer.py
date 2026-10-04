@@ -2896,6 +2896,8 @@ _ON_PURPOSE = {
     # 「帕特里克」和「施特里克」只差一个字，两个都对。2026-09-27
     # `cobolli-mensik-laver-cup-2026-doubles-interview` 主持人提到他时第一次扫出来。
     "帕特里克·麦肯罗",
+    # Billie Jean King 婚前姓名 Moffitt；遮完整姓名避免窗口「比利·简·莫」误报。
+    "比利·简·莫菲特",
     # Francisco Cerundolo 的完整姓名；表里用姓氏「塞伦多洛」。只遮完整真名，
     # 避免遮掉姓氏后「西斯科·」被误判成「西斯科娃」，不豁免错写的姓氏。
     "弗朗西斯科·塞伦多洛",
@@ -2950,11 +2952,9 @@ _ON_PURPOSE = {
 #: 就说明有人偷懒了。
 #:
 #: 只许减不许加，底下有自检。
-_SHIPPED_TYPOS = {
-    # 商竣程—达尔德里蒙特利尔 R3（e22a6e1）：两张译名表都是**达尔代里**。
-    # 2026-08-07 01:36:54Z 已经推过微信（run 31138555626 第 30 步 success）。
-    ("shang-darderi-montreal-2026.json", "达尔德里"),
-}
+_SHIPPED_TYPOS = set()
+# 2026-10-04：原商竣程蒙特利尔 R3 的「达尔德里」已成为当前规范名，
+# 因此删除过时错名记录；未改动历史视频或 spec。
 
 #: **近似串那条查不到两三个字的名字**——三个字的窗口会撞上普通词，所以下面那条
 #: 测试只查四个字以上。可表里有 210 个两三字的名字，「凯斯」就在里面：我把
@@ -3095,6 +3095,69 @@ def _near_misses(masked, run_re, index):
     return hits
 
 
+# 2026-10-04 全量译名对齐：仅兼容 HEAD 存量文本的旧规范名。
+# 这些不是新内容的合法显示名，未列出的文件仍须采用 player_zh()。
+# 哈恰诺夫旧央视用例：https://sports.cctv.com/2017/07/06/ARTI3sjUMZTbo2WB6EKs7ATW170706.shtml
+_LEGACY_CANONICAL_NAMES = {
+    ('cobolli-paul-cincinnati-2026-qf.json', "达尔代里"),
+    ('cobolli-paul-cincinnati-2026-qf.xhs.txt', "达尔代里"),
+    ('shang-darderi-montreal-2026.xhs.txt', "达尔代里"),
+    ('thiem-football', "达尔代里"),
+    ('anisimova-bartunkova.json', '安尼西莫娃'),
+    ('anisimova-bartunkova.xhs.txt', '安尼西莫娃'),
+    ('bu-lucky-loser', '哈恰诺夫'),
+    ('bu-lucky-loser-story.json', '哈恰诺夫'),
+    ('bu-lucky-loser-story.xhs.txt', '哈恰诺夫'),
+    ('chengdu-ng-kouame.json', '哈恰诺夫'),
+    ('gea-shapovalov.json', '哈恰诺夫'),
+    ('gea-shapovalov.xhs.txt', '哈恰诺夫'),
+    ('khachanov-auger-aliassime-beijing-2026-r1.json', '哈恰诺夫'),
+    ('khachanov-auger-aliassime-beijing-2026-r1.xhs.txt', '哈恰诺夫'),
+    ('khachanov-blockx-us-open-2026-qf-interview.json', '哈恰诺夫'),
+    ('khachanov-blockx-us-open-2026-qf-interview.xhs.txt', '哈恰诺夫'),
+    ('khachanov-blockx-us-open-2026-qf.json', '哈恰诺夫'),
+    ('khachanov-blockx-us-open-2026-qf.xhs.txt', '哈恰诺夫'),
+    ('kovacevic-khachanov.json', '哈恰诺夫'),
+    ('kovacevic-khachanov.xhs.txt', '哈恰诺夫'),
+    ('lucky-loser', '哈恰诺夫'),
+    ('lucky-loser', '贝尔腾斯'),
+    ('second-serve-clock', '哈恰诺夫'),
+    ('shelton-zverev-h2h.json', '哈恰诺夫'),
+    ('zheng-kalinskaya-beijing-2026-r2.json', '鲍兹科娃'),
+    ('zheng-kalinskaya-beijing-2026-r2.xhs.txt', '鲍兹科娃'),
+    ('zverev-khachanov-us-open-2026-sf-interview.json', '哈恰诺夫'),
+    ('zverev-khachanov-us-open-2026-sf-interview.xhs.txt', '哈恰诺夫'),
+    ('zverev-khachanov-us-open-2026-sf-presser.json', '哈恰诺夫'),
+    ('zverev-khachanov-us-open-2026-sf-presser.xhs.txt', '哈恰诺夫'),
+    ('zverev-khachanov-us-open-2026-sf.json', '哈恰诺夫'),
+    ('zverev-khachanov-us-open-2026-sf.xhs.txt', '哈恰诺夫'),
+    ('zverev-vandezandschulp-us-open-2026-qf.json', '哈恰诺夫'),
+    ('zverev-vandezandschulp-us-open-2026-qf.xhs.txt', '哈恰诺夫'),
+}
+
+
+def _mask_legacy_canonical_names(where, text):
+    for filename, name in _LEGACY_CANONICAL_NAMES:
+        if where == filename:
+            text = text.replace(name, "　" * len(name))
+    return text
+
+
+def test_旧译名兼容只作用于明确登记的历史文本():
+    old = "哈恰诺夫"
+    where = "bu-lucky-loser-story.json"
+    assert (where, old) in _LEGACY_CANONICAL_NAMES
+    assert old not in _mask_legacy_canonical_names(where, old)
+    assert _mask_legacy_canonical_names("new-story.json", old) == old
+    assert _mask_legacy_canonical_names(where, "卡恰诺夫") == "卡恰诺夫"
+    # 兼容旧规范名不能吞掉真正手打错名，索引仍须报告它们。
+    for wrong, canonical in (("奥斯塔片科", "奥斯塔彭科"), ("里巴金娜", "莱巴金娜")):
+        masked = _mask_legacy_canonical_names(where, wrong)
+        assert masked == wrong
+        assert (wrong, canonical) in _near_misses(
+            masked, _CJK_DOT_RUN, _typo_index([(canonical, canonical)]))
+
+
 def test_人名要以译名表为准():
     """人名不手打，以 `zh/players.py` 为准——这条写在 CLAUDE.md 里，仍然被违反了两次。
 
@@ -3154,7 +3217,7 @@ def test_人名要以译名表为准():
     typo_safe_names = _typo_safe_names(known)
 
     def scan(where: str, text: str) -> None:
-        safe = text
+        safe = _mask_legacy_canonical_names(where, text)
         for word in _TYPO_SAFE + typo_safe_names:
             safe = safe.replace(word, "　" * len(word))
         for wrong, right in _KNOWN_TYPOS.items():
