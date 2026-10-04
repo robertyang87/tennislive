@@ -1087,3 +1087,17 @@ def test_推送闸_封面凭证里认人睁眼的数是好的就照发(repo: Pat
     _with_face_model(repo, similarity=0.62, ear=0.28)
     picked = gate.pick(CHANGED, repo)
     assert picked is not None and picked[0] == "demo"
+
+
+def test_明确手动推送仅放宽自动意图(repo: Path):
+    _spec(repo, {"auto": False})
+    gate.wants_auto_push(repo, "demo", repo / "output/interviews/demo", forced=True)
+
+
+def test_明确手动推送仍核原生QC(repo: Path):
+    _spec(repo, {"auto": False})
+    qc = repo / "output/interviews/demo/qc_attestation.json"
+    data = json.loads(qc.read_text()); data["status"] = "fail"
+    qc.write_text(json.dumps(data)); _git(repo, "add", str(qc.relative_to(repo)))
+    with pytest.raises(gate.Skip, match="QC 凭证状态"):
+        gate.wants_auto_push(repo, "demo", repo / "output/interviews/demo", forced=True)

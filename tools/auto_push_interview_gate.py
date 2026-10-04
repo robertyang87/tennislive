@@ -427,7 +427,7 @@ def cover_scan_gate(repo: Path, slug: str, outdir: Path) -> None:
         raise Skip(f"{slug}：{problem}")
 
 
-def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
+def wants_auto_push(repo: Path, slug: str, outdir: Path, *, forced: bool = False) -> None:
     """发布门禁，过不了就 ``Skip``（带理由）。"""
     # **render.json 必须还在仓库里。** 工作流那头已经用 --diff-filter=AM 滤掉了
     # 删除项，这儿再兜一层：被删的旧产物不是新渲完的片子，它的 spec 往往还写着
@@ -448,8 +448,10 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     from push_reel import POSTER_NAME, push_is_auto  # noqa: PLC0415
 
     if not push_is_auto(copy_path):
-        raise Skip(f"{slug}：spec 里没写 push.auto=true，不自动发"
-                   f"（要开：在 {spec.name} 的 push 块里加一行 \"auto\": true）")
+        if not forced:
+            raise Skip(f"{slug}：spec 里没写 push.auto=true，不自动发"
+                       f"（要开：在 {spec.name} 的 push 块里加一行 \"auto\": true）")
+        print(f"[强制] {slug}：明确手动推送，仅放宽 push.auto 意图闸；L0/L2/发布账本照旧")
     film_hash = validate_qc(repo, slug, outdir)
 
     # 新的权威状态在 data/ 下，渲染回放只会替换 output/interviews/<slug>，
@@ -595,6 +597,7 @@ def main(argv: list[str] | None = None) -> int:
                     help="这次合并改动的文件（仓库相对路径）")
     ap.add_argument("--slug", default="",
                     help="只查这一条（workflow_dispatch 那条路），发布门禁照过")
+    ap.add_argument("--forced", action="store_true", help="明确手动发布，仅放宽 push.auto 意图闸，需 --slug")
     ap.add_argument("--record", default="",
                     help="发完之后更新独立发布账本（值为 outdir）")
     ap.add_argument("--reserve", default="",
@@ -608,6 +611,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--repo", default=".", help="仓库根目录")
     args = ap.parse_args(argv)
 
+    if args.forced and not args.slug:
+        ap.error("--forced 仅用于 --slug 点名手动发布")
     repo = Path(args.repo)
     state_actions = [bool(args.reserve), bool(args.record), bool(args.uncertain)]
     if sum(state_actions) > 1:
@@ -650,7 +655,7 @@ def main(argv: list[str] | None = None) -> int:
         path = f"output/interviews/{args.slug}/render.json"
         try:
             slug, outdir = candidate(path, repo)
-            wants_auto_push(repo, slug, outdir)
+            wants_auto_push(repo, slug, outdir, forced=args.forced)
         except AlreadyAccepted as why:
             print(f"[安全跳过] {why}")
             _emit_already_accepted(args.slug)

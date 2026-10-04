@@ -75,6 +75,7 @@ import math
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import NamedTuple
 from urllib.parse import urlparse
@@ -890,7 +891,9 @@ def caption_gaps(spec: dict, workdir: Path) -> list[tuple[float, float]]:
     **这一步只负责把空档找出来，不负责判断它是什么。** 找出来是机器的事
     （判据摆得出来：源在这几秒里一个事件都没有），判断得人听——没人说话、
     掌声、或者球员换了母语，机器分不出来。返回的空档要在 spec 的
-    `caption_gaps_ok` 里逐个销账才许出片。
+    `caption_gaps_ok` 里逐个销账才许出片。显式 `caption_gap_annotations`
+    是另一条保守保留路径：有源SHA与双ASR/声音事件交叉证据时，把短空档
+    显示为掌声夹杂未辨识人声，原声不删；它不认证静音、逐字台词或人工听审。
     """
     spans = _caption_spans(workdir)
     lo, hi = spec["start"], spec["end"]
@@ -901,6 +904,69 @@ def caption_gaps(spec: dict, workdir: Path) -> list[tuple[float, float]]:
         if b - a >= CAPTION_GAP_SECS:
             gaps.append((round(a, 2), round(b, 2)))
     return gaps
+
+
+def conservative_gap_annotations(spec: dict, outdir: Path | None = None) -> list[dict]:
+    """Keep unresolved brief voices visible, separately from spoken-word ASR.
+
+    This is not a silence or verbatim-speech attestation. Only the fixed cautious
+    event label is allowed; source-bound cross-evidence and an actual word gap
+    are required, and no known speech may be replaced.
+    """
+    raw = spec.get("caption_gap_annotations")
+    if raw is None:
+        return []
+    if not isinstance(raw, list) or not raw:
+        raise SystemExit("caption_gap_annotations 必须是非空事件数组。")
+    source_hashes = {r.get("sha256") for r in (spec.get("source_verification") or {}).get("evidence", [])
+                     if r.get("kind") == "actual_source_file"}
+    rows = []
+    for row in raw:
+        if not isinstance(row, dict) or set(row) != {"start", "end", "kind", "source_sha256", "evidence", "why"}:
+            raise SystemExit("保守声音事件字段必须完整且明确。")
+        a, b = row["start"], row["end"]
+        if (isinstance(a, bool) or isinstance(b, bool)
+                or not isinstance(a, (int, float)) or not isinstance(b, (int, float))
+                or not math.isfinite(a) or not math.isfinite(b)
+                or not spec["start"] <= a < b <= spec["end"] or b - a > 5):
+            raise SystemExit("保守声音事件须在源区间内，且不超过5秒。")
+        if row["kind"] != "applause_with_indistinct_voices" or len(str(row["why"]).strip()) < 30:
+            raise SystemExit("仅支持有交叉证据的掌声夹杂未辨识人声，不认证台词或静音。")
+        if row["source_sha256"] not in source_hashes:
+            raise SystemExit("保守声音事件与实际源 SHA 不符。")
+        evidence = row["evidence"]
+        if not isinstance(evidence, dict) or set(evidence) != {"path", "sha256"}:
+            raise SystemExit("保守声音事件必须提供证据文件和SHA。")
+        proof_path = (ROOT / str(evidence["path"])).resolve()
+        if not proof_path.is_relative_to(ROOT) or not proof_path.is_file():
+            raise SystemExit("保守声音证据必须是仓库内的真实文件。")
+        data = proof_path.read_bytes()
+        if hashlib.sha256(data).hexdigest() != evidence["sha256"]:
+            raise SystemExit("保守声音证据 SHA 不符。")
+        proof = json.loads(data)
+        if (proof.get("source_sha256") != row["source_sha256"]
+                or proof.get("status") != "uncertain speech identity, applause supported"
+                or "no human listening claim" not in str(proof.get("method"))
+                or not proof.get("window") or len(proof["window"]) != 2
+                or a < proof["window"][0] or b > proof["window"][1]):
+            raise SystemExit("声音证据未保留语音不确定性或没有覆盖事件区间。")
+        models = {r.get("model") for e in (proof.get("evidence") or {}).values()
+                  for r in (e["result"].get("results", []) if isinstance(e.get("result"), dict) else [])}
+        if len(models - {None}) < 2 or not any("audioset" in k for k in proof.get("evidence", {})):
+            raise SystemExit("声音事件须有两种独立ASR和声音事件模型交叉证据。")
+        if outdir is not None:
+            spans = _caption_spans(outdir)
+            if any(min(b, z) - max(a, x) > 0.025 for x, z in spans):
+                raise SystemExit("保守声音事件不得覆盖ASR已识别的讲话。")
+            matching = [g for g in caption_gaps(spec, outdir)
+                        if abs(g[0] - a) <= 0.05 and abs(g[1] - b) <= 0.05]
+            if len(matching) != 1:
+                raise SystemExit("保守声音事件必须逐一精确对应实际字幕词空档。")
+        rows.append(dict(row, en="[Applause and indistinct voices]", zh="掌声 夹杂未辨识人声"))
+    rows.sort(key=lambda r: r["start"])
+    if any(x["end"] > y["start"] for x, y in zip(rows, rows[1:])):
+        raise SystemExit("保守声音事件不得重叠。")
+    return rows
 
 
 def gap_key(a: float, b: float) -> str:
@@ -2232,6 +2298,7 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
             "「这一行读起来不对」而长度不变的订正。")
     if bad := zh_problems(lines, zh):
         raise SystemExit("中文字幕过不了：\n  " + "\n  ".join(bad))
+    annotations = conservative_gap_annotations(spec, path.parent) if spec else []
     ev = []
     if spec is not None and wants_topbar(spec):
         # 顶栏一直挂着：整条片子从头到尾都要能回答「这是哪一场」。
@@ -2264,7 +2331,11 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
         unmatched = set(phrases)
         for seg, cn in zip(lines, zh):
             en = seg["en"].replace("&gt;&gt;", "").replace(">>", "").strip()
-            a, b = _ts(seg["a"] - clip_start), _ts(seg["b"] - clip_start)
+            end = seg["b"]
+            for annotation in annotations:
+                if seg["a"] < annotation["start"] < end:
+                    end = annotation["start"]  # cut subtitle hold padding, not source speech
+            a, b = _ts(seg["a"] - clip_start), _ts(end - clip_start)
             if phrases:
                 en, hit = highlight_en(en, phrases)
                 unmatched -= hit
@@ -2279,6 +2350,11 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
                 + "\n  ".join(sorted(unmatched))
                 + "\n多半是打错字，或者 `en_fixed`／`word_fix` 后来改了原文。"
                 "按词边界找的，短语必须逐字（含大小写）出现在某一行英文字幕里。")
+    for annotation in annotations:
+        a, b = _ts(annotation["start"] - clip_start), _ts(annotation["end"] - clip_start)
+        ev.append(f"Dialogue: 0,{a},{b},EN,,0,0,0,,{annotation['en']}")
+        shown = zh_display(annotation["zh"])
+        ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,{_zh_margin_v(shown)},,{shown}")
     path.write_text(_ASS_HEAD + "\n".join(ev) + "\n", encoding="utf-8")
 
 
@@ -2605,6 +2681,13 @@ def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
     # 2026-09-28）。**只在关掉时进**——默认开着的指纹和加这一条之前一字不差，存量判定不作废。
     if not spec.get("whisper_vad_filter", True):
         h.update(b"|second_vad=off")
+    if spec.get("transcript_languages") is not None:
+        h.update(json.dumps(transcript_language_windows(spec), sort_keys=True,
+                            ensure_ascii=False).encode("utf-8"))
+    if spec.get("caption_gap_annotations") is not None:
+        conservative_gap_annotations(spec)
+        h.update(json.dumps(spec["caption_gap_annotations"], sort_keys=True,
+                            ensure_ascii=False).encode("utf-8"))
     return h.hexdigest()
 
 
@@ -2642,7 +2725,7 @@ def verdict_bound(rec: dict, spec: dict, fp: str) -> bool:
 #: 人工订正、切行宽度、两份 ASR 的模型和 VAD 开关。自动链「先投 subs」的账按它们认
 #: （`pick_interview_renders.subs_dispatch_block`）——改 zh／封面／文案不动转写，不该清零重投。
 SUBS_INPUT_KEYS = ("url", "start", "end", "en_fixed", "word_fix", "segment_budget_px",
-                   "asr_model", "whisper_model", "whisper_vad_filter")
+                   "asr_model", "whisper_model", "whisper_vad_filter", "transcript_languages", "caption_gap_annotations")
 #: 其中**非有不可**的三样：有了它们 subs 就能跑（取字幕、切行、第二份 ASR），其余几样缺省
 #: 就是缺省值。自动链见一条正式 spec 有了这三样、转写又还缺判定，就先投 subs——**不等**
 #: 中文、解读卡、封面、小红书正文（2026-09-28 D2：第二份 ASR 和翻译并行，不排在它后面）。
@@ -2811,8 +2894,12 @@ def attest_gap_silence(spec: dict, lines: list[dict], outdir: Path,
     print(f"[空档 VAD] {resolved}/{len(results)} 处由静音或相邻字幕覆盖证明销账；"
           "其余仍需补字幕或听音。"
           f"证据 → {path}")
+    conservative = {gap_key(r["start"], r["end"]) for r in conservative_gap_annotations(spec, outdir)}
     for row in results:
-        if row["status"] == "speech_detected":
+        if row["status"] == "speech_detected" and row["key"] in conservative and not row["second_asr_words"]:
+            print(f"[空档] 保守声音事件 {row['key']}：原始人声红旗{row['speech_seconds']:.3f}s仍保留，"
+                  "产品明确标注掌声夹杂未辨识人声，不认证静音或逐字台词。")
+        elif row["status"] == "speech_detected":
             words = " ".join(row["second_asr_words"]) or "—"
             print(f"[空档 VAD] 保持红灯 {row['key']}：人声 {row['speech_seconds']:.3f}s，"
                   f"第二 ASR 词={words}")
@@ -2891,6 +2978,8 @@ def auto_gap_closures(spec: dict, lines: list[dict], outdir: Path,
     if payload is None:
         return {}
     resolved: dict[str, str] = {}
+    annotations = {gap_key(r["start"], r["end"]): r
+                   for r in conservative_gap_annotations(spec, outdir)}
     for row in payload.get("results", []):
         if not isinstance(row, dict):
             continue
@@ -2908,6 +2997,14 @@ def auto_gap_closures(spec: dict, lines: list[dict], outdir: Path,
             status = str(row.get("status"))
             resolved[str(row.get("key"))] = (f"{GAP_AUTO_LABELS[status]}："
                                              + gap_row_reason(row, _second_model(spec)))
+        elif (row.get("status") == "speech_detected" and not lexical
+              and str(row.get("key")) in annotations):
+            annotation = annotations[str(row["key"])]
+            resolved[str(row["key"])] = (
+                "保守声音事件标注：原声完整保留，字幕明确掌声夹杂未辨识人声；"
+                "未认证静音、说话人或台词，也没有人工听审认领。"
+                f"VAD实测人声{float(row['speech_seconds']):.3f}s；"
+                f"证据{annotation['evidence']['path']}。")
     return resolved
 
 
@@ -3090,6 +3187,75 @@ def subs_verdict(spec: dict, lines: list[dict], outdir: Path) -> SubsVerdict:
     return SubsVerdict(state, reds, pending, notes)
 
 
+def transcript_language_windows(spec: dict) -> list[dict]:
+    """Validate explicit source-language windows without translating speech.
+
+    Absent configuration retains the existing English-only transcription path.
+    """
+    raw = spec.get("transcript_languages")
+    if raw is None:
+        return []
+    if not isinstance(raw, list) or not raw:
+        raise SystemExit("transcript_languages 必须是非空语言窗口列表")
+    start, end = float(spec["start"]), float(spec["end"])
+    if not math.isfinite(start) or not math.isfinite(end) or end <= start:
+        raise SystemExit("transcript_languages 需要有效正文 start/end")
+    cursor = start
+    result = []
+    for item in raw:
+        if not isinstance(item, dict) or set(item) != {"start", "end", "language"}:
+            raise SystemExit("transcript_languages 每项必须只有 start/end/language")
+        a, b = item["start"], item["end"]
+        if (isinstance(a, bool) or isinstance(b, bool)
+                or not isinstance(a, (int, float)) or not isinstance(b, (int, float))
+                or not math.isfinite(a) or not math.isfinite(b) or b <= a):
+            raise SystemExit("transcript_languages 窗口必须是有限数字且 end>start")
+        if abs(a - cursor) > 1e-6 or b > end + 1e-6:
+            raise SystemExit("transcript_languages 必须按顺序无缝覆盖 start/end，不得重叠或越界")
+        language = item["language"]
+        if not isinstance(language, str) or not re.fullmatch(r"[a-z]{2,3}", language):
+            raise SystemExit("transcript_languages.language 必须是明确的小写语言代码，如 en/ca")
+        result.append({"start": float(a), "end": float(b), "language": language})
+        cursor = float(b)
+    if abs(cursor - end) > 1e-6:
+        raise SystemExit("transcript_languages 未覆盖正文 end")
+    if any(item["language"] != "en" for item in result):
+        for key, model in (("asr_model", spec.get("asr_model")),
+                           ("whisper_model", _second_model(spec))):
+            if model and str(model).endswith(".en"):
+                raise SystemExit(f"{key}={model} 仅支持英语，非英语窗口必须用多语模型")
+    return result
+
+
+def transcribe_source_words(model, audio: Path, spec: dict) -> list[tuple[float, float, str]]:
+    """Run native transcription per source language and restore source timestamps."""
+    windows = transcript_language_windows(spec)
+    kwargs = {"task": "transcribe", "word_timestamps": True,
+              "vad_filter": spec.get("whisper_vad_filter", True)}
+    if not windows:
+        segs, _ = model.transcribe(str(audio), language="en", **kwargs)
+        return [(float(w.start), float(w.end), w.word.strip())
+                for seg in segs for w in (seg.words or [])
+                if spec["start"] <= w.start <= spec["end"]]
+    words = []
+    with tempfile.TemporaryDirectory(prefix="interview-languages-") as directory:
+        for index, window in enumerate(windows):
+            clip = Path(directory) / f"{index}.wav"
+            subprocess.run([
+                "ffmpeg", "-y", "-v", "error", "-ss", str(window["start"]),
+                "-i", str(audio), "-t", str(window["end"] - window["start"]),
+                "-vn", "-ac", "1", "-ar", "16000", str(clip),
+            ], check=True, capture_output=True)
+            segs, _ = model.transcribe(str(clip), language=window["language"], **kwargs)
+            for seg in segs:
+                for word in seg.words or []:
+                    a = float(word.start) + window["start"]
+                    b = float(word.end) + window["start"]
+                    if window["start"] <= a < window["end"]:
+                        words.append((a, min(b, window["end"]), word.word.strip()))
+    return words
+
+
 def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     """拿**独立的第二份 ASR** 校 YouTube 那份，把分歧摊出来。
 
@@ -3115,6 +3281,7 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 分歧率 0%，报告一片绿，而它什么都没验证。
     # 仓库里 `en` / `en-orig` 那次记的就是这个形状：**同一份 ASR 换个名字，
     # 拿它当交叉验证是自欺。**
+    transcript_language_windows(spec)
     second = _second_model(spec)
     if spec.get("asr_model") and second == spec["asr_model"]:
         raise SystemExit(
@@ -3134,17 +3301,14 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     audio = yt_download(spec["url"], outdir / "_audio.m4a", "ba", spec)
 
     model = WhisperModel(_second_model(spec), compute_type="int8")
-    segs, _ = model.transcribe(str(audio), language="en", word_timestamps=True,
-                               vad_filter=spec.get("whisper_vad_filter", True))
-    words = [w for s in segs for w in (s.words or [])
-             if spec["start"] <= w.start <= spec["end"]]
-    mine = [(w.start, w.word.strip()) for w in words]
+    words = transcribe_source_words(model, audio, spec)
+    mine = [(start, text) for start, _end, text in words]
     (outdir / "whisper.json").write_text(
         json.dumps(mine, ensure_ascii=False, indent=1), encoding="utf-8")
     # 英文模型没听见词不代表没人说话；另用语言无关 VAD 给每处空档作证。
     attest_gap_silence(
         spec, lines, outdir, audio,
-        [(w.start, w.end, w.word.strip()) for w in words],
+        words,
     )
 
     rate, theirs, ours, sm = disagree_rate(
@@ -3167,6 +3331,9 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
               "这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把"
               "「说话人有多磕巴」量成「两份转写对不上」。", "",
               f"## 分歧逐处（左＝{first}，右＝第二份）", ""]
+    if spec.get("transcript_languages") is not None:
+        report[2:2] = ["- 原声语言窗口（仅转写，不翻译）： " + json.dumps(
+            transcript_language_windows(spec), ensure_ascii=False)]
     for tag, i1, i2, j1, j2 in sm.get_opcodes():
         if tag == "equal":
             continue
@@ -3335,9 +3502,10 @@ def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
     report = [f"# 自动字幕的空档：{spec['slug']}", "",
               f"阈值 {CAPTION_GAP_SECS:.0f} 秒；空档 **{len(gaps)}** 处。", "",
               f"第一份是 {_first_source_label(spec)}，第二份 ASR 是 "
-              f"`{_second_model(spec)}`（英语专用）。**它什么都没听出来，"
-              "不等于这几秒没人说话**——非英语在它这儿同样是空白，两种情况"
-              "分不出来，得人去听。", ""]
+              f"`{_second_model(spec)}`（"
+              + ("英语专用" if _second_model(spec).endswith(".en") else "多语模型")
+              + "）。**它什么都没听出来，不等于这几秒没人说话**——"
+              "ASR 空词不能证明静音：可能没人说话、不是英语或该语言识别失败，需结合语言窗、VAD 和原声核对。", ""]
     for a, b in gaps:
         en_here = [w for t, w in en_words if a <= t <= b]
         report += [
@@ -3346,8 +3514,8 @@ def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
             f"- 键：`{gap_key(a, b)}`",
             f"- 第二份 ASR（{_second_model(spec)}）："
             + (f"`{' '.join(en_here)}`　→ **第一份（{_first_source_label(spec)}）"
-               "漏了英语，补进 `en_fixed`**"
-               if en_here else "**什么都没有** → 人去听：没人说话，还是不是英语？"),
+               "可能漏了原文或发生时间边界漂移，核对 `en_fixed`**"
+               if en_here else "**什么都没有** → 核对原声：环境声、未识别语音，还是时间边界漂移？"),
             f"- 已销账：{_gap_closure_text(spec, gap_key(a, b), auto)}",
             ""]
     path = outdir / "caption_gaps.md"
@@ -4652,6 +4820,7 @@ def check_source_contract(spec: dict) -> str:
     模块是按 `tools.build_interview_clip` 这个包名导入的，`tools/` 本身不在
     `sys.path` 上，除非另一个测试文件恰好先插过它——那是巧合，不是必然。
     """
+    transcript_language_windows(spec)
     import sys  # noqa: PLC0415
 
     sys.path.insert(0, str(ROOT / "tools"))
