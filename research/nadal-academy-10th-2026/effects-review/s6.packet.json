@@ -1,0 +1,108 @@
+{
+  "source": "s6",
+  "effects_sha256": "6344baed0d38b7257d9dca36e627608376498c4bf6007502952cdbc955431ebb",
+  "source_sha256": "bf9f13ec42facfeb6b64afc554bdff16d937d55d320ac2e058d937c7cda990c1",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+  "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+  "reviewed_from": 186,
+  "reviewed_to": 222,
+  "selected_windows": [
+    {
+      "start": 186,
+      "end": 222
+    }
+  ],
+  "foreground_speech": [],
+  "no_foreground_speech_reason": "All selected windows independently transcribed with small and medium VAD. No reproducible foreground phrase identified. Original outputs and low-confidence candidates retained; this is automatic ASR cross-check, not human listening. Corrected complete-point186–222 context is empty in small and medium; old188-start medium Oh .084/noSpeech .734 is not stable.",
+  "uncertain_spans": [],
+  "asr_results": [
+    {
+      "source": "s6",
+      "start": 188,
+      "end": 222,
+      "model": "medium",
+      "effects_sha256": "6344baed0d38b7257d9dca36e627608376498c4bf6007502952cdbc955431ebb",
+      "language": "en",
+      "language_probability": 0.6378797888755798,
+      "segments": [
+        {
+          "start": 191.42,
+          "end": 192.36,
+          "text": " Oh",
+          "avg_logprob": -0.819105327129364,
+          "no_speech_prob": 0.7343395948410034,
+          "words": [
+            {
+              "start": 191.42,
+              "end": 192.36,
+              "word": " Oh",
+              "probability": 0.08403031527996063
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "s6",
+      "start": 186,
+      "end": 222,
+      "model": "small",
+      "effects_sha256": "6344baed0d38b7257d9dca36e627608376498c4bf6007502952cdbc955431ebb",
+      "language": "en",
+      "language_probability": 0.3531171679496765,
+      "segments": []
+    },
+    {
+      "source": "s6",
+      "start": 188,
+      "end": 222,
+      "model": "small",
+      "effects_sha256": "6344baed0d38b7257d9dca36e627608376498c4bf6007502952cdbc955431ebb",
+      "language": "en",
+      "language_probability": 0.3883099853992462,
+      "segments": []
+    },
+    {
+      "source": "s6",
+      "start": 186,
+      "end": 222,
+      "model": "medium",
+      "effects_sha256": "6344baed0d38b7257d9dca36e627608376498c4bf6007502952cdbc955431ebb",
+      "language": "en",
+      "language_probability": 0.5062422156333923,
+      "segments": []
+    }
+  ],
+  "candidate_outputs": [
+    {
+      "model": "medium",
+      "window": [
+        188,
+        222
+      ],
+      "segment": {
+        "start": 191.42,
+        "end": 192.36,
+        "text": " Oh",
+        "avg_logprob": -0.819105327129364,
+        "no_speech_prob": 0.7343395948410034,
+        "words": [
+          {
+            "start": 191.42,
+            "end": 192.36,
+            "word": " Oh",
+            "probability": 0.08403031527996063
+          }
+        ]
+      }
+    }
+  ],
+  "transient_evidence": "rna10-effects-transients.json",
+  "limitations": [
+    "No independent human listening",
+    "Energy peaks alone do not semantically prove ball hits",
+    "Empty ASR is model evidence, not mathematical absence of all speech"
+  ]
+}

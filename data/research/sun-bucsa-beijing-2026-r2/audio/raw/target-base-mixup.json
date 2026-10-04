@@ -1,0 +1,61 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 66,
+  "range_to": 79,
+  "created_at": "2026-10-03T16:45:23.932662+00:00",
+  "elapsed_seconds": 0.96,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 73.46,
+      "end": 74.92,
+      "text": " Really nice mix up that.",
+      "avg_logprob": -0.9613867865668403,
+      "no_speech_prob": 0.14499278366565704,
+      "words": [
+        {
+          "start": 73.46,
+          "end": 73.98,
+          "word": " Really",
+          "probability": 0.3144088089466095
+        },
+        {
+          "start": 73.98,
+          "end": 74.22,
+          "word": " nice",
+          "probability": 0.9922400712966919
+        },
+        {
+          "start": 74.22,
+          "end": 74.48,
+          "word": " mix",
+          "probability": 0.991860568523407
+        },
+        {
+          "start": 74.48,
+          "end": 74.74,
+          "word": " up",
+          "probability": 0.83946293592453
+        },
+        {
+          "start": 74.74,
+          "end": 74.92,
+          "word": " that.",
+          "probability": 0.823989748954773
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "74b978fffe04f4f996162d0ec8dac25674f4b0c1734da14c7f47f318c854f2e7",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

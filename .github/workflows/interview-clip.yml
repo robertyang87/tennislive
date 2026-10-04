@@ -1395,7 +1395,9 @@ jobs:
         run: |
           [ "${{ github.ref_name }}" = "main" ] || {
             echo "::error::微信推送只允许 main：Pages、QC 和发布账本必须基于主干不可变产物"; exit 1; }
-          python tools/auto_push_interview_gate.py \
+          FORCED=""
+          if [ "${{ github.event.inputs.mode }}" = "push" ]; then FORCED="--forced"; fi
+          python tools/auto_push_interview_gate.py $FORCED \
             --slug "${{ github.event.inputs.slug }}"
 
       - name: 预占发布账本（发送前）

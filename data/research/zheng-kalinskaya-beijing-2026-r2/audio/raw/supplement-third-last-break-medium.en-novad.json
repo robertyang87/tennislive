@@ -1,0 +1,200 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 1607.0,
+  "range_to": 1627.0,
+  "selected_from": 1609.0,
+  "selected_to": 1623.0,
+  "decoded_pcm_sha256": "9113902a342fd869aad7c8b17045eb0b5289ff17b974b2fd29b013d379c616d7",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:13:20.320053+00:00",
+  "elapsed_seconds": 6.38,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 1607.0,
+      "end": 1610.08,
+      "text": " Winner in four, she only has 19 here.",
+      "avg_logprob": -0.5001921171233767,
+      "no_speech_prob": 0.3638262450695038,
+      "compression_ratio": 1.1132075471698113,
+      "words": [
+        {
+          "start": 1607.0,
+          "end": 1607.64,
+          "word": " Winner",
+          "probability": 0.49723777174949646
+        },
+        {
+          "start": 1607.64,
+          "end": 1607.92,
+          "word": " in",
+          "probability": 0.43134286999702454
+        },
+        {
+          "start": 1607.92,
+          "end": 1608.06,
+          "word": " four,",
+          "probability": 0.803588330745697
+        },
+        {
+          "start": 1608.2,
+          "end": 1608.26,
+          "word": " she",
+          "probability": 0.979796826839447
+        },
+        {
+          "start": 1608.26,
+          "end": 1608.42,
+          "word": " only",
+          "probability": 0.9958311915397644
+        },
+        {
+          "start": 1608.42,
+          "end": 1608.66,
+          "word": " has",
+          "probability": 0.9981390237808228
+        },
+        {
+          "start": 1608.66,
+          "end": 1609.12,
+          "word": " 19",
+          "probability": 0.8949434161186218
+        },
+        {
+          "start": 1609.12,
+          "end": 1610.08,
+          "word": " here.",
+          "probability": 0.9842997789382935
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 1616.12,
+      "end": 1617.66,
+      "text": " Oh, did it find the line?",
+      "avg_logprob": -0.5001921171233767,
+      "no_speech_prob": 0.3638262450695038,
+      "compression_ratio": 1.1132075471698113,
+      "words": [
+        {
+          "start": 1616.12,
+          "end": 1616.68,
+          "word": " Oh,",
+          "probability": 0.7231825590133667
+        },
+        {
+          "start": 1616.78,
+          "end": 1616.9,
+          "word": " did",
+          "probability": 0.9264400601387024
+        },
+        {
+          "start": 1616.9,
+          "end": 1617.02,
+          "word": " it",
+          "probability": 0.9143781065940857
+        },
+        {
+          "start": 1617.02,
+          "end": 1617.22,
+          "word": " find",
+          "probability": 0.989332914352417
+        },
+        {
+          "start": 1617.22,
+          "end": 1617.38,
+          "word": " the",
+          "probability": 0.9947070479393005
+        },
+        {
+          "start": 1617.38,
+          "end": 1617.66,
+          "word": " line?",
+          "probability": 0.9983680844306946
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 1618.14,
+      "end": 1618.62,
+      "text": " Right in.",
+      "avg_logprob": -0.5001921171233767,
+      "no_speech_prob": 0.3638262450695038,
+      "compression_ratio": 1.1132075471698113,
+      "words": [
+        {
+          "start": 1618.14,
+          "end": 1618.32,
+          "word": " Right",
+          "probability": 0.8448284864425659
+        },
+        {
+          "start": 1618.32,
+          "end": 1618.62,
+          "word": " in.",
+          "probability": 0.47333022952079773
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 1624.06,
+      "end": 1626.7,
+      "text": " And disappointment for Anna Kalinskaya.",
+      "avg_logprob": -0.5001921171233767,
+      "no_speech_prob": 0.3638262450695038,
+      "compression_ratio": 1.1132075471698113,
+      "words": [
+        {
+          "start": 1624.06,
+          "end": 1624.62,
+          "word": " And",
+          "probability": 0.8516940474510193
+        },
+        {
+          "start": 1624.62,
+          "end": 1625.18,
+          "word": " disappointment",
+          "probability": 0.9923916459083557
+        },
+        {
+          "start": 1625.18,
+          "end": 1625.78,
+          "word": " for",
+          "probability": 0.9584562182426453
+        },
+        {
+          "start": 1625.78,
+          "end": 1626.06,
+          "word": " Anna",
+          "probability": 0.9106705188751221
+        },
+        {
+          "start": 1626.06,
+          "end": 1626.7,
+          "word": " Kalinskaya.",
+          "probability": 0.8984803954760233
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 93,
+  "range_to": 102,
+  "created_at": "2026-10-03T06:12:57.579025+00:00",
+  "elapsed_seconds": 1.01,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 94.76,
+      "end": 100.72,
+      "text": " Oh, I want to point. The death of our level was just rising from both, right it.",
+      "avg_logprob": -0.7486625586946806,
+      "no_speech_prob": 0.27504241466522217,
+      "words": [
+        {
+          "start": 94.76,
+          "end": 95.4,
+          "word": " Oh,",
+          "probability": 0.17552590370178223
+        },
+        {
+          "start": 95.5,
+          "end": 95.66,
+          "word": " I",
+          "probability": 0.24386997520923615
+        },
+        {
+          "start": 95.66,
+          "end": 95.66,
+          "word": " want",
+          "probability": 0.6757901906967163
+        },
+        {
+          "start": 95.66,
+          "end": 95.76,
+          "word": " to",
+          "probability": 0.7826777696609497
+        },
+        {
+          "start": 95.76,
+          "end": 96.08,
+          "word": " point.",
+          "probability": 0.8391503095626831
+        },
+        {
+          "start": 96.78,
+          "end": 97.42,
+          "word": " The",
+          "probability": 0.9695656299591064
+        },
+        {
+          "start": 97.42,
+          "end": 97.76,
+          "word": " death",
+          "probability": 0.4762144386768341
+        },
+        {
+          "start": 97.76,
+          "end": 97.92,
+          "word": " of",
+          "probability": 0.4047912359237671
+        },
+        {
+          "start": 97.92,
+          "end": 98.04,
+          "word": " our",
+          "probability": 0.21829307079315186
+        },
+        {
+          "start": 98.04,
+          "end": 98.4,
+          "word": " level",
+          "probability": 0.980542778968811
+        },
+        {
+          "start": 98.4,
+          "end": 98.72,
+          "word": " was",
+          "probability": 0.977445125579834
+        },
+        {
+          "start": 98.72,
+          "end": 98.92,
+          "word": " just",
+          "probability": 0.9947969317436218
+        },
+        {
+          "start": 98.92,
+          "end": 99.36,
+          "word": " rising",
+          "probability": 0.9855583906173706
+        },
+        {
+          "start": 99.36,
+          "end": 99.68,
+          "word": " from",
+          "probability": 0.993762195110321
+        },
+        {
+          "start": 99.68,
+          "end": 100.1,
+          "word": " both,",
+          "probability": 0.9807882308959961
+        },
+        {
+          "start": 100.16,
+          "end": 100.36,
+          "word": " right",
+          "probability": 0.5931245684623718
+        },
+        {
+          "start": 100.36,
+          "end": 100.72,
+          "word": " it.",
+          "probability": 0.25468456745147705
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "39b7943c9d9b1ffa8a0c1521bf15331a51f232b0dc4923b8123443b43044353f",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

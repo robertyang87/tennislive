@@ -1,0 +1,245 @@
+{
+  "source": "https://github.com/robertyang87/tennislive/releases/download/source-V6ekW4Qy1jA/V6ekW4Qy1jA.mp4",
+  "reviewer": "Codex independent visual agents, verified by root",
+  "source_properties": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 25
+  },
+  "identity": {
+    "yuan": "mint-green sleeveless dress, mint visor, short brown ponytail, white earrings",
+    "andreeva": "black sleeveless dress with white piping, mint visor, long braided ponytail",
+    "confidence": 0.99,
+    "reason": "Yuan close-ups at 0.56, 54.2, 132.8 and scoreboard plus court movement; same distinct mint dress at net handshake 278.5–283.4"
+  },
+  "cover": {
+    "original_official_image_subject": "Mirra Andreeva, black dress; rejected by parent",
+    "selected_candidate": "/workspace/scratch/yuan-visual/cover-candidate-132.80.jpg",
+    "alternative": "/workspace/scratch/yuan-visual/cover-candidate-133.20.jpg",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "confidence": 0.99,
+    "reason": "Source close-up of Yuan at set point, both eyes visibly open, face three-quarter toward camera, mint visor/dress/white earrings consistent across match. 26 s face too small; 54/98 s cap shadow hides eyes; 167–170 s face side-on. No resizing or modification to candidate files.",
+    "status": "source-frame approved earlier; owner now requested HD photograph replacement, pending final photo review",
+    "final_candidate": {
+      "asset": "assets/reel/yuan-andreeva-beijing-2026-r2-yuan-wta-hd.jpg",
+      "resolution": [
+        3280,
+        2183
+      ],
+      "source": "WTA official photo4443690;2026Cluj",
+      "same_match": false,
+      "focus": 0.35,
+      "zoom": 1.15,
+      "reviewed_preview": "visual-evidence/cover-hd-preview.jpg",
+      "face": "whole face visible;both eyes open;face near center;caption below jaw",
+      "reviewer": "Codex root and independent visual agent",
+      "status": "pass"
+    }
+  },
+  "windows": [
+    {
+      "name": "cold",
+      "original": [
+        270,
+        278.4
+      ],
+      "final": [
+        273.35,
+        278.36
+      ],
+      "approved": true,
+      "confidence": 0.99,
+      "reason": "Final window exclusively winning Andreeva post-match close-up; visible black dress and braided ponytail. Parent expressly authorized winner result teaser and audio agent established complete English sentence boundaries; no serve/rally completeness claim applies to reaction-only teaser. Original 270 began in terminal phase of match point."
+    },
+    {
+      "name": "intro",
+      "original": [
+        25.8,
+        48.6
+      ],
+      "recommended": [
+        25.8,
+        51.6
+      ],
+      "confidence": 0.92,
+      "reason": "25.8 includes Yuan serve preparation and first rally; second break-point rally starts roughly38 s. At48.2 ball visible in far service-box air,48.6 still traveling,49.0 above far baseline while Yuan watches. Avoid48.6 because outcome landing unresolved; at49.6 both players relaxed/walking,51.6 before source switches to Andreeva close-up51.64–51.8. Recommended endpoint includes aftermath."
+    },
+    {
+      "name": "first",
+      "original": [
+        2,
+        13.1
+      ],
+      "recommended": [
+        1.84,
+        16.96
+      ],
+      "confidence": 0.99,
+      "reason": "13.0–13.8 near-court Andreeva still runs right and strikes while far-court Yuan outside right singles sideline. At14.0–14.8 near player finishes tracking;15–16.8 both players relaxed;17.0 source cuts to Yuan close-up.13.1 plainly cuts live rally.1.84 starts with wide view and service phase."
+    },
+    {
+      "name": "break",
+      "original": [
+        68.4,
+        98.2
+      ],
+      "approved": true,
+      "confidence": 0.98,
+      "reason": "68.4 Yuan previous-point reaction,69–70.6 Andreeva serve preparation,71–87.6 prolonged rally,88.0 both players start relaxing and walking. Source close-up of Yuan begins90.32;98.2 remains preparatory close-up before next serve. Full point and aftermath included.68.4–88.2 technically includes result only minimally;90.32 provides unambiguous reaction coverage."
+    },
+    {
+      "name": "firstset",
+      "original": [
+        132.8,
+        171.2
+      ],
+      "approved": true,
+      "confidence": 0.98,
+      "reason": "132.8 Yuan close-up before serve at set point;135–162 rally;163 players relax;164 spectators applause;167–170 Yuan walks to bench;171.2 still walking. Endpoint does not cut active point."
+    },
+    {
+      "name": "second",
+      "original": [
+        215.2,
+        248.6
+      ],
+      "approved": true,
+      "confidence": 0.98,
+      "reason": "215.2 Yuan reaction/preparation,216–238 rally;239 onward Andreeva close-up followed by changeover.244–248 score summary shows Yuan6 0 / Andreeva3 6.248.6 next match-point receiver close-up, no live-ball cutoff."
+    },
+    {
+      "name": "lastpoint",
+      "original": [
+        248.6,
+        285.9
+      ],
+      "final": [
+        248.6,
+        287.04
+      ],
+      "approved": true,
+      "confidence": 0.99,
+      "reason": "248.6 receiver close-up precedes final serve;250.5 near-court Andreeva serve phase;251–270 full rally;271 player approaches net;272.2–278.36 winner reaction;278.5–279.2 players handshake;282.4–283.2 Yuan shakes umpire hand;283.4 Yuan turns away;283.8–284.4 Andreeva umpire handshake;285.5–287.04 winner waves to crowd. Parent expressly allows brief actual winner celebration and keeps complete commentary to287.04. No interview after298.64 is used."
+    }
+  ],
+  "technical_claims": [
+    {
+      "text": "袁悦跑到边线把球回到空当",
+      "source": [
+        2,
+        13.1
+      ],
+      "assessment": "Partial visual support; do not claim a clean winner or successful point finish at13.1",
+      "confidence": 0.78,
+      "reason": "Yuan far-court mint dress reaches extreme right beyond singles sideline at11.8–13.4; near-court opponent subsequently runs opposite/right at13.2–13.8. Ball lands into open court space at stages but opponent continues responding, and13.1 ends before point is decided. Safer exact description: 袁悦追到边线，仍把这一拍回了过去。",
+      "safe_rewrite": "袁悦追到边线，仍把这一拍回了过去。"
+    },
+    {
+      "text": "袁悦先调一侧再反向打",
+      "source": [
+        68.4,
+        88.2
+      ],
+      "assessment": "Supported as a general two-sided rally description, not a uniquely isolated two-shot tactical pattern",
+      "confidence": 0.87,
+      "reason": "Mint-dress Yuan far court repeatedly changes side; black-dress opponent near court moves left at76–82 then far right84.5–86.0, consistent with side-to-side redirection. Extended rally includes multiple patterns; exact intentional first-side-then-reverse tactic overstates causality.",
+      "safe_rewrite": "底线对拉中，袁悦多次变线，调动对手两侧移动。"
+    }
+  ],
+  "crop": {
+    "fixed_cx_0_5_risk": true,
+    "confidence": 0.99,
+    "reason": "1920×1080 full-height9:16 crop width607.5 covers x656.25–1263.75. At12.5 Yuan far right x~1360 lies completely outside center crop; 13.0–13.8 far player aroundx~1380 similarly outside. Tennis wide shots must retain both sidelines/players; use wide-shot contain/panel, or avoid untracked center full-height crop. Cover132.8 face lies nearx~980 and remains inside crop. Initial official photo subject x~330 would disappear entirely atcx.5."
+  },
+  "evidence_contact_sheets": [
+    "/workspace/scratch/yuan-visual/first-contact-0.jpg",
+    "/workspace/scratch/yuan-visual/ends_fine-fine.jpg",
+    "/workspace/scratch/yuan-visual/intro_end-fine.jpg",
+    "/workspace/scratch/yuan-visual/break-contact-0.jpg",
+    "/workspace/scratch/yuan-visual/break-contact-1.jpg",
+    "/workspace/scratch/yuan-visual/break_end-fine.jpg",
+    "/workspace/scratch/yuan-visual/firstset-contact-0.jpg",
+    "/workspace/scratch/yuan-visual/firstset-contact-1.jpg",
+    "/workspace/scratch/yuan-visual/second-contact-0.jpg",
+    "/workspace/scratch/yuan-visual/ending-contact-0.jpg",
+    "/workspace/scratch/yuan-visual/ending-contact-1.jpg",
+    "/workspace/scratch/yuan-visual/ending-contact-2.jpg",
+    "/workspace/scratch/yuan-visual/last_end-fine.jpg",
+    "/workspace/scratch/yuan-visual/handshake-fine.jpg",
+    "/workspace/scratch/yuan-visual/cover-candidates-contact.jpg"
+  ],
+  "constraints": "No shared spec modifications. No generated/editorially inferred interview material. No DeepSeek. Parent explicit latest scope governs winner reaction and audio-complete ending.",
+  "final_followup_review": {
+    "spec": "/workspace/tennislive/specs/reels/yuan-andreeva-beijing-2026-r2.json",
+    "continuity": "Current spec joins adjacent narration/original-sound windows without source skips:25.8–31.8–48.6–54;1.84–13.1–25.8;68.4–87.8–98.2;132.8–161.2–170.1;215.2–236.1–248.6;248.6–269.7–287.04. Original cut-live concerns are resolved by adjacency.",
+    "cover": "132.80 source frame confirmed: Yuan, mint dress/visor/earrings; three-quarter near-front face with both eyes visibly open; candidate1920×1080; spec asset matches selection.",
+    "verified_defense_technique": {
+      "window": [
+        1.84,
+        13.1
+      ],
+      "confidence": 0.92,
+      "observed": "At11.98–12.16 Yuan far court moves beyond right doubles sideline;12.22–12.38 knee bends and low-body posture, racket reaches across left/backhand side to retrieve low ball. Backhand low rescue can be described; do not infer spin, exact landing zone, straight/crosscourt course or clean winner.",
+      "candidates": [
+        "追到边线外，袁悦用反手把低球救了回来。",
+        "被拉开后，袁悦压低重心，反手伸拍续上了这一分。"
+      ],
+      "evidence": [
+        "/workspace/scratch/yuan-visual/defense-stroke-12.16-full.jpg",
+        "/workspace/scratch/yuan-visual/stroke_12-contact.jpg"
+      ]
+    },
+    "shared_spec_changed": false,
+    "remaining_render_check": "All source shot descriptions verified; final renderer must preserve wide-shot playable court, or fixedcx.5full-height9:16still excludes sideline Yuan at12s."
+  },
+  "source_sha256": "ec9fed9650ac8b0f6f9c62377d9be4b7ef528ca8ef87b6cbb2527819331b866f",
+  "providers_excluded": [
+    "DeepSeek",
+    "MiniMax"
+  ],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-V6ekW4Qy1jA/V6ekW4Qy1jA.mp4",
+  "current_spec_review": {
+    "completed": true,
+    "contiguous_full_points": [
+      [
+        1.84,
+        25.8
+      ],
+      [
+        25.8,
+        54
+      ],
+      [
+        68.4,
+        98.2
+      ],
+      [
+        132.8,
+        170.1
+      ],
+      [
+        215.2,
+        248.6
+      ],
+      [
+        248.6,
+        287.04
+      ]
+    ],
+    "technical_claim": "追到边线外，袁悦用反手把低球救了回来。",
+    "technical_source_window": [
+      11.98,
+      12.38
+    ],
+    "confidence": 0.92,
+    "ending": "Full match point, both handshakes and complete English broadcast utterance retained; no interview."
+  },
+  "evidence_files": {
+    "research/yuan-andreeva-beijing-2026-r2/visual-evidence/defense-stroke-12.16-full.jpg": "dc2ac916869e629c81a9040fd4fa48e6e965b30bfbe901e4d253a872247c97d9",
+    "research/yuan-andreeva-beijing-2026-r2/visual-evidence/ends_fine-fine.jpg": "411f3da9dc39dd97c8d9ed07c840a944f9290b21a2c318744b73adc22438b58d",
+    "research/yuan-andreeva-beijing-2026-r2/visual-evidence/stroke_12-contact.jpg": "a777561d4221e303145e8c6d14fd586e13b54771676c9560160e3563a3edfdc1"
+  }
+}

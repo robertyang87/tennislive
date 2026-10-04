@@ -2789,7 +2789,7 @@ def test_封面这道闸真的查到了东西():
     assert checked >= 2, f"封面注里一共只抠出 {checked} 句英文引语，这道闸等于没装"
 
 
-def test_字幕带背景色和封面解读卡是同一支品牌绿():
+def test_字幕带背景色和封面解读卡是同一套共享深蓝():
     """垫底那层现在是纯色，要和 `build_cover` / `build_takeaway_card`
     用**同一支**品牌深绿（`#06140f`），不是另起一支。
 
@@ -2801,9 +2801,10 @@ def test_字幕带背景色和封面解读卡是同一支品牌绿():
     看着像三个不同的产品。
     """
     from tools.build_interview_clip import _BG_COLOUR
+    from tennislive.design_tokens import DARK
 
     hexval = _BG_COLOUR.removeprefix("0x").lower()
-    assert hexval == "06140f", (
+    assert hexval == DARK["background"].removeprefix("#"), (
         f"`_BG_COLOUR` 现在是 {_BG_COLOUR!r}，和封面/解读卡用的品牌深绿 "
         "#06140f 不一样了——三处理应是同一支颜色，改了一处要么是笔误，"
         "要么另外两处（`build_cover` / `build_takeaway_card`）也要跟着改。")
@@ -2838,7 +2839,7 @@ def test_字幕带的背景不再从模糊视频派生():
     # 所以判据改成**推导**，不再写死一个会过期的数字：十六进制字面量本身
     # 只许出现一次（定义那一行），凡是 `color=c=` 垫底源都要走 `_BG_COLOUR`
     # 这个名字——多少处引用都行，只要没人抄一遍字面量。
-    assert body.count('"#06140f"') == 1, (
+    assert body.count('_INK_BG = DARK["background"]') == 1, (
         "背景色的十六进制字面量出现了不止一次——该走 `_BG_COLOUR` 这个名字，"
         "不是各处各写一遍")
     colour_lines = [ln for ln in body.splitlines() if "color=c=" in ln]

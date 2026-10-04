@@ -1,0 +1,95 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 658.5,
+  "range_to": 666.0,
+  "selected_from": 658.5,
+  "selected_to": 666.0,
+  "decoded_pcm_sha256": "b853d555fbdcf47386c14c37c4df45e8ca6b1860cf9a801cb9f7d89136a93f0f",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:16:12.054577+00:00",
+  "elapsed_seconds": 4.33,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 660.72,
+      "end": 664.14,
+      "text": " And shank off upper serve so the break lead.",
+      "avg_logprob": -0.4952041932514736,
+      "no_speech_prob": 0.1574559211730957,
+      "compression_ratio": 0.8461538461538461,
+      "words": [
+        {
+          "start": 660.72,
+          "end": 661.38,
+          "word": " And",
+          "probability": 0.8542793393135071
+        },
+        {
+          "start": 661.38,
+          "end": 661.86,
+          "word": " shank",
+          "probability": 0.717552438378334
+        },
+        {
+          "start": 661.86,
+          "end": 662.12,
+          "word": " off",
+          "probability": 0.773573637008667
+        },
+        {
+          "start": 662.12,
+          "end": 662.38,
+          "word": " upper",
+          "probability": 0.4845791161060333
+        },
+        {
+          "start": 662.38,
+          "end": 662.78,
+          "word": " serve",
+          "probability": 0.8613168597221375
+        },
+        {
+          "start": 662.78,
+          "end": 663.26,
+          "word": " so",
+          "probability": 0.773684024810791
+        },
+        {
+          "start": 663.26,
+          "end": 663.42,
+          "word": " the",
+          "probability": 0.9972910284996033
+        },
+        {
+          "start": 663.42,
+          "end": 663.64,
+          "word": " break",
+          "probability": 0.6946845054626465
+        },
+        {
+          "start": 663.64,
+          "end": 664.14,
+          "word": " lead.",
+          "probability": 0.9916847944259644
+        }
+      ]
+    }
+  ]
+}

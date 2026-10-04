@@ -1,0 +1,208 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 218,
+  "range_to": 234.46,
+  "created_at": "2026-10-03T06:13:11.645406+00:00",
+  "elapsed_seconds": 2.87,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 218.0,
+      "end": 228.36,
+      "text": " No, but Djokovic keeps his streak alive here in Beijing. 31 and 0 now for Djokovic.",
+      "avg_logprob": -0.33528227494521573,
+      "no_speech_prob": 0.5156797766685486,
+      "words": [
+        {
+          "start": 218.0,
+          "end": 219.32,
+          "word": " No,",
+          "probability": 0.263150691986084
+        },
+        {
+          "start": 219.44,
+          "end": 219.5,
+          "word": " but",
+          "probability": 0.47233957052230835
+        },
+        {
+          "start": 219.5,
+          "end": 220.2,
+          "word": " Djokovic",
+          "probability": 0.9005575925111771
+        },
+        {
+          "start": 220.2,
+          "end": 220.82,
+          "word": " keeps",
+          "probability": 0.9401074647903442
+        },
+        {
+          "start": 220.82,
+          "end": 221.24,
+          "word": " his",
+          "probability": 0.9646196365356445
+        },
+        {
+          "start": 221.24,
+          "end": 221.78,
+          "word": " streak",
+          "probability": 0.9805002212524414
+        },
+        {
+          "start": 221.78,
+          "end": 222.32,
+          "word": " alive",
+          "probability": 0.9877952337265015
+        },
+        {
+          "start": 222.32,
+          "end": 222.72,
+          "word": " here",
+          "probability": 0.7201070785522461
+        },
+        {
+          "start": 222.72,
+          "end": 222.92,
+          "word": " in",
+          "probability": 0.9928998947143555
+        },
+        {
+          "start": 222.92,
+          "end": 223.3,
+          "word": " Beijing.",
+          "probability": 0.9921632409095764
+        },
+        {
+          "start": 224.92,
+          "end": 225.66,
+          "word": " 31",
+          "probability": 0.8505576848983765
+        },
+        {
+          "start": 225.66,
+          "end": 226.42,
+          "word": " and",
+          "probability": 0.6164601445198059
+        },
+        {
+          "start": 226.42,
+          "end": 226.76,
+          "word": " 0",
+          "probability": 0.6832383871078491
+        },
+        {
+          "start": 226.76,
+          "end": 227.08,
+          "word": " now",
+          "probability": 0.9155769944190979
+        },
+        {
+          "start": 227.08,
+          "end": 227.44,
+          "word": " for",
+          "probability": 0.9340515732765198
+        },
+        {
+          "start": 227.44,
+          "end": 228.36,
+          "word": " Djokovic.",
+          "probability": 0.9964331388473511
+        }
+      ]
+    },
+    {
+      "start": 230.6,
+      "end": 234.06,
+      "text": " At times it didn't look like it was going to happen today.",
+      "avg_logprob": -0.33528227494521573,
+      "no_speech_prob": 0.5156797766685486,
+      "words": [
+        {
+          "start": 230.6,
+          "end": 231.34,
+          "word": " At",
+          "probability": 0.9507253170013428
+        },
+        {
+          "start": 231.34,
+          "end": 231.76,
+          "word": " times",
+          "probability": 0.9984363913536072
+        },
+        {
+          "start": 231.76,
+          "end": 232.02,
+          "word": " it",
+          "probability": 0.7565746307373047
+        },
+        {
+          "start": 232.02,
+          "end": 232.3,
+          "word": " didn't",
+          "probability": 0.9926714599132538
+        },
+        {
+          "start": 232.3,
+          "end": 232.48,
+          "word": " look",
+          "probability": 0.9836595058441162
+        },
+        {
+          "start": 232.48,
+          "end": 232.7,
+          "word": " like",
+          "probability": 0.9957675933837891
+        },
+        {
+          "start": 232.7,
+          "end": 232.86,
+          "word": " it",
+          "probability": 0.9972424507141113
+        },
+        {
+          "start": 232.86,
+          "end": 233.0,
+          "word": " was",
+          "probability": 0.9975960850715637
+        },
+        {
+          "start": 233.0,
+          "end": 233.2,
+          "word": " going",
+          "probability": 0.9945976734161377
+        },
+        {
+          "start": 233.2,
+          "end": 233.42,
+          "word": " to",
+          "probability": 0.9992751479148865
+        },
+        {
+          "start": 233.42,
+          "end": 233.7,
+          "word": " happen",
+          "probability": 0.9988259673118591
+        },
+        {
+          "start": 233.7,
+          "end": 234.06,
+          "word": " today.",
+          "probability": 0.9926701784133911
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "415c8256dbed9bd725cb11fc50a0a50e011005ecad52ee416df00d247147830f",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

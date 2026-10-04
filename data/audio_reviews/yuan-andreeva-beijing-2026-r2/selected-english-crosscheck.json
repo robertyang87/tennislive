@@ -1,0 +1,419 @@
+{
+  "source_url": "https://youtu.be/V6ekW4Qy1jA",
+  "source_sha256": "ec9fed9650ac8b0f6f9c62377d9be4b7ef528ca8ef87b6cbb2527819331b866f",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-audio review sub-agent",
+  "reviewed_at": "2026-10-02T07:10:25.643070+00:00",
+  "scope": "Selected foreground English windows only; entire 0–298.5 independently ASR scanned. This is not a claim of human listening.",
+  "raw_evidence": {
+    "provider-captions.txt": "69dec73bbf71cd9a9a6a0ddfeacfd00c33f12671b0191ec5d5d4e6525ab96ba7",
+    "small-en-match.json": "7905cc751a10032baa093ddcf66c3ed285ff39aec8942cb864618071c0fb1b4b",
+    "medium-en-match.json": "c12f31ee9301c53be7cd812e788fefdf31aa4d34c71a6c69de0831bb3d6c6a56",
+    "small-en-targeted-no-vad.json": "0fcb0a5a2d2923d3e34cab70430146f94a3e4ad5032e8468f14c0d4317d08fb7",
+    "medium-en-targeted-no-vad.json": "155b5aa7617d97f958a935b4064eb76fff2a939eafc6000fca61a52ce7c1f541",
+    "vad.json": "e1fe9a77911c4e147ac8a74b106e4c057fc07e3e7d6e0304be22f67dc8e1ffb6",
+    "medium-en-opening-no-vad.json": "5aee10af9e136ff181a932d1a41a182add0eed8af1e2c2448c01256fcdfc0f98",
+    "cold-split-vad.json": "4bc8bd1c0d2e388797f326578759e050367e81564d94431ebc3e5c9860f27115"
+  },
+  "utterances": [
+    {
+      "start": 88.24,
+      "end": 90.02,
+      "en": "Oh, went the other way. Smart play.",
+      "zh": "哦，打向了另一边，聪明的选择。",
+      "basis": "Provider start + small.en/medium.en word endings; Oh retained from provider; no-VAD medium confirms rest."
+    },
+    {
+      "start": 90.02,
+      "end": 91.46,
+      "en": "But she gets rewarded.",
+      "zh": "不过，她得到了回报。",
+      "basis": "Provider but agrees with medium.en targeted no-VAD; full-window ASRs emit and, a segmentation error."
+    },
+    {
+      "start": 91.46,
+      "end": 97.58,
+      "en": "So, on her fifth opportunity, Yuan gets the first break of the opening set.",
+      "zh": "所以，在第五次机会中，袁悦拿下了首盘的第一次破发。",
+      "basis": "Provider + both independent ASRs agree all content; Juan is phonetic misrecognition of Yuan (surname only here)."
+    },
+    {
+      "start": 161.38,
+      "end": 165.84,
+      "en": "And what a way to finish that opening set for Yuan Yue.",
+      "zh": "袁悦以这样一球结束首盘，真是精彩。",
+      "basis": "Provider and targeted medium.en recover initial And omitted by VAD; all ASRs recognize Yuan Yue phonetically (Juan Yu/Wanyu), preserved surname-first order."
+    },
+    {
+      "start": 165.84,
+      "end": 168.64,
+      "en": "And Mirra Andreeva, as you can tell, disgusted.",
+      "zh": "可以看出，米拉·安德烈耶娃非常懊恼。",
+      "basis": "Targeted medium.en recognizes full Mirra Andreeva; provider Miranda is phonetic proper-name collapse; small.en/full medium.en drops first name."
+    },
+    {
+      "start": 168.64,
+      "end": 170.02,
+      "en": "Throws the racket.",
+      "zh": "她摔了球拍。",
+      "basis": "Provider and both independent ASRs agree; no-VAD word end170.02."
+    },
+    {
+      "start": 170.43,
+      "end": 171.8,
+      "en": "Not too pleased.",
+      "zh": "她很不满意。",
+      "basis": "All sources agree; targeted start overly stretched170.02, full small.en shows170.43; next And may begin171.80 so clean stop before this phrase is preferred."
+    },
+    {
+      "start": 171.8,
+      "end": 176.24,
+      "en": "And Yuan Yue turned 28 just six days ago.",
+      "zh": "袁悦六天前刚满二十八岁。",
+      "basis": "Provider + both independent ASRs confirm name/28/six days. Next sentence And starts at171.80 in targeted ASR; birthday clause should not be cut."
+    },
+    {
+      "start": 176.24,
+      "end": 177.56,
+      "en": "A belated birthday present.",
+      "zh": "这是一份迟来的生日礼物。",
+      "basis": "Provider and both independent ASRs agree."
+    },
+    {
+      "start": 236.56,
+      "end": 241.86,
+      "en": "No player has won more six-love sets on tour this year than Mirra Andreeva.",
+      "zh": "本赛季巡回赛中，没有人赢下六比零的盘数比米拉·安德烈耶娃更多。",
+      "basis": "Provider + small.en agree No player; medium.en emits Claire (acoustic segmentation error). All agree remainder and proper name."
+    },
+    {
+      "start": 241.86,
+      "end": 245.68,
+      "en": "That's her 12th six-love set of 2026.",
+      "zh": "这是她在二〇二六年赢下的第十二盘六比零。",
+      "basis": "Provider + both independent ASRs agree 12th and 2026. This is faithful broadcaster quotation; independent statistic verification outside this audio task."
+    },
+    {
+      "start": 246.19,
+      "end": 247.85,
+      "en": "More importantly though, she's forced a third.",
+      "zh": "更重要的是，她把比赛拖入了决胜盘。",
+      "basis": "Provider + small.en agree a third; medium.en writes to third but rest identical; context is third set, not finishing third."
+    },
+    {
+      "start": 270.16,
+      "end": 271.22,
+      "en": "Oh, and it goes long.",
+      "zh": "哦，这一球出界了。",
+      "basis": "Provider start + small.en and both medium.en runs agree text/end; no-VAD start269.7 inherited crop boundary, so provider270.16 used."
+    },
+    {
+      "start": 271.87,
+      "end": 275.32,
+      "en": "And Mirra Andreeva drops the opening set,",
+      "zh": "米拉·安德烈耶娃虽然输掉了首盘，",
+      "basis": "Provider and all independent ASR runs agree; Mirra (not Mira) official proper-name spelling only correction."
+    },
+    {
+      "start": 275.45,
+      "end": 278.33,
+      "en": "but then steamrolls through the final two sets.",
+      "zh": "但随后在最后两盘一路横扫。",
+      "basis": "Provider and all independent ASR runs agree; conservative start275.45 from small.en, end278.33 from full medium.en."
+    },
+    {
+      "start": 278.55,
+      "end": 280.76,
+      "en": "Although that was a fun last point.",
+      "zh": "不过，最后这一分还是很精彩。",
+      "basis": "Provider and all independent ASR runs agree."
+    },
+    {
+      "start": 281.39,
+      "end": 286.95,
+      "en": "Not many points won by Yuan Yue in that last couple sets.",
+      "zh": "最后两盘，袁悦赢下的分数并不多。",
+      "basis": "Provider and all independent ASR runs agree content; Juan Yu/one you phonetic spelling normalized to Yuan Yue without reordering. End286.95, next Mirra begins287.24."
+    },
+    {
+      "start": 13.3,
+      "end": 15.5,
+      "en": "Oh, great shot from Yuan there.",
+      "zh": "哦，袁悦打出了一记好球。",
+      "basis": "Provider + full medium.en recover Oh. small.en/full medium.en and targeted medium.en agree all words; Yuan proper spelling normalized from Juan/one."
+    },
+    {
+      "start": 15.68,
+      "end": 16.5,
+      "en": "Excellent stuff.",
+      "zh": "真精彩。",
+      "basis": "Provider + all ASRs agree; largest measured word end16.50."
+    },
+    {
+      "start": 17.8,
+      "end": 20.28,
+      "en": "Had to go out wide to get that ball and placed it nicely.",
+      "zh": "她必须跑到很宽的位置去救球，而且落点处理得很好。",
+      "basis": "Provider + all independent ASR runs agree, targeted medium.en word end20.28."
+    },
+    {
+      "start": 20.56,
+      "end": 24.78,
+      "en": "So, on serve to get this second round matchup underway.",
+      "zh": "所以，这场第二轮较量开局双方都保住了发球局。",
+      "basis": "Provider + all ASR runs agree. On serve means no service break so far; no score or winner added. Largest ASR ending24.78, VAD residual until25.476; keep raw through25.8."
+    },
+    {
+      "start": 49.04,
+      "end": 49.58,
+      "en": "Nicely done.",
+      "zh": "处理得漂亮。",
+      "basis": "Provider + full medium.en agree Nicely done; small.en and targeted medium.en emit Actually done (acoustic ambiguity resolved by provider/full medium.en agreement)."
+    },
+    {
+      "start": 50.86,
+      "end": 53.4,
+      "en": "Put away there from Andreeva.",
+      "zh": "安德烈耶娃在这里终结了这一分。",
+      "basis": "Provider + small.en and targeted medium.en agree Put away there from Andreeva; full medium.en emits Good away (acoustic error)."
+    },
+    {
+      "start": 273.488,
+      "end": 275.32,
+      "en": "drops the opening set,",
+      "zh": "输掉了首盘，",
+      "basis": "Provider speaker change >> at274.08 establishes new commentator. Both ASRs finish predecessor Andreeva by273.04. Local Silero .3/.5/.7 all show silence273.2–273.488; cut273.35 retains complete new voice, avoiding full-ASR smear of drops start into preceding name."
+    }
+  ],
+  "unselected_uncertain_spans": [
+    {
+      "start": 193.36,
+      "end": 195.4,
+      "reason": "Provider partial That's great for not recovered by either default VAD ASR; do not retain in a complete packet."
+    },
+    {
+      "start": 65.12,
+      "end": 65.99,
+      "reason": "Provider Excellent not recovered by either default VAD ASR. Current selected windows avoid it."
+    }
+  ],
+  "boundary_recommendations": {
+    "first_set_tts": [
+      132.8,
+      161.2
+    ],
+    "first_set_raw_clean": [
+      161.2,
+      170.1
+    ],
+    "first_set_raw_with_birthday": [
+      161.2,
+      178.3
+    ],
+    "cold_raw": [
+      270.0,
+      278.4
+    ],
+    "final_raw": [
+      269.7,
+      287.1
+    ]
+  },
+  "notes": [
+    "ASR crop-initial word boundaries can smear into leading silence. Conservative selection retains provider onset and both ASR word-end range; they are not original provider end timestamps.",
+    "Official player name normalization corrects acoustic spelling only: Yuan (surname), Yuan Yue (both name syllables surname-first), Mirra Andreeva. No quote rephrasing or surname/given-name reorder.",
+    "No DeepSeek used.",
+    "Need ensure subtitle records cover entire retained English, including conjunction And/But, and do not overlap adjacent rows."
+  ],
+  "subtitle_cues": [
+    {
+      "start": 88.24,
+      "end": 90.02,
+      "en": "Oh, went the other way. Smart play.",
+      "zh": "哦，打向了另一边，聪明的选择。"
+    },
+    {
+      "start": 90.02,
+      "end": 91.46,
+      "en": "But she gets rewarded.",
+      "zh": "不过，她得到了回报。"
+    },
+    {
+      "start": 91.46,
+      "end": 93.84,
+      "en": "So, on her fifth opportunity,",
+      "zh": "所以，在第五次机会中，"
+    },
+    {
+      "start": 93.84,
+      "end": 95.96,
+      "en": "Yuan gets the first break",
+      "zh": "袁悦拿下了第一次破发，"
+    },
+    {
+      "start": 95.96,
+      "end": 97.58,
+      "en": "of the opening set.",
+      "zh": "是在这一场的首盘。"
+    },
+    {
+      "start": 161.38,
+      "end": 164.42,
+      "en": "And what a way to finish that opening set",
+      "zh": "这一球为首盘收尾，真是精彩，"
+    },
+    {
+      "start": 164.42,
+      "end": 165.84,
+      "en": "for Yuan Yue.",
+      "zh": "袁悦赢下首盘。"
+    },
+    {
+      "start": 165.84,
+      "end": 167.8,
+      "en": "And Mirra Andreeva, as you can tell,",
+      "zh": "可以看出，米拉·安德烈耶娃，"
+    },
+    {
+      "start": 167.8,
+      "end": 168.64,
+      "en": "disgusted.",
+      "zh": "非常懊恼。"
+    },
+    {
+      "start": 168.64,
+      "end": 170.02,
+      "en": "Throws the racket.",
+      "zh": "她摔了球拍。"
+    },
+    {
+      "start": 236.56,
+      "end": 239.2,
+      "en": "No player has won more six-love sets",
+      "zh": "没有人赢下六比零的盘数更多，"
+    },
+    {
+      "start": 239.2,
+      "end": 241.86,
+      "en": "on tour this year than Mirra Andreeva.",
+      "zh": "在本赛季巡回赛中超过米拉·安德烈耶娃。"
+    },
+    {
+      "start": 241.86,
+      "end": 245.68,
+      "en": "That's her 12th six-love set of 2026.",
+      "zh": "这是她在二〇二六年赢下的第十二盘六比零。"
+    },
+    {
+      "start": 246.19,
+      "end": 247.85,
+      "en": "More importantly though, she's forced a third.",
+      "zh": "更重要的是，她把比赛拖入了决胜盘。"
+    },
+    {
+      "start": 270.16,
+      "end": 271.22,
+      "en": "Oh, and it goes long.",
+      "zh": "哦，这一球出界了。"
+    },
+    {
+      "start": 271.87,
+      "end": 275.32,
+      "en": "And Mirra Andreeva drops the opening set,",
+      "zh": "米拉·安德烈耶娃虽然输掉了首盘，"
+    },
+    {
+      "start": 275.45,
+      "end": 278.33,
+      "en": "but then steamrolls through the final two sets.",
+      "zh": "但随后在最后两盘一路横扫。"
+    },
+    {
+      "start": 278.55,
+      "end": 280.76,
+      "en": "Although that was a fun last point.",
+      "zh": "不过，最后这一分还是很精彩。"
+    },
+    {
+      "start": 281.39,
+      "end": 285.14,
+      "en": "Not many points won by Yuan Yue",
+      "zh": "袁悦赢下的分数并不多，"
+    },
+    {
+      "start": 285.14,
+      "end": 286.95,
+      "en": "in that last couple sets.",
+      "zh": "在最后这两盘中。"
+    },
+    {
+      "start": 13.3,
+      "end": 15.5,
+      "en": "Oh, great shot from Yuan there.",
+      "zh": "哦，袁悦打出了一记好球。"
+    },
+    {
+      "start": 15.68,
+      "end": 16.5,
+      "en": "Excellent stuff.",
+      "zh": "真精彩。"
+    },
+    {
+      "start": 17.8,
+      "end": 19.38,
+      "en": "Had to go out wide to get that ball",
+      "zh": "她必须跑到很宽的位置去救球，"
+    },
+    {
+      "start": 19.38,
+      "end": 20.28,
+      "en": "and placed it nicely.",
+      "zh": "而且落点处理得很好。"
+    },
+    {
+      "start": 20.56,
+      "end": 22.84,
+      "en": "So, on serve to get",
+      "zh": "所以，开局双方都保住发球局，"
+    },
+    {
+      "start": 22.84,
+      "end": 24.78,
+      "en": "this second round matchup underway.",
+      "zh": "展开这场第二轮的较量。"
+    },
+    {
+      "start": 49.04,
+      "end": 49.58,
+      "en": "Nicely done.",
+      "zh": "处理得漂亮。"
+    },
+    {
+      "start": 50.86,
+      "end": 53.4,
+      "en": "Put away there from Andreeva.",
+      "zh": "安德烈耶娃在这里终结了这一分。"
+    },
+    {
+      "start": 273.488,
+      "end": 275.32,
+      "en": "drops the opening set,",
+      "zh": "输掉了首盘，"
+    }
+  ],
+  "subtitle_cue_note": "Display chunks preserve all source words; parent may refine Chinese subtitle phrasing as root-produced translation. All English cue times are absolute source seconds.",
+  "extra_window_recommendations": {
+    "first_point_raw": [
+      13.1,
+      25.8
+    ],
+    "intro_point_raw": [
+      48.6,
+      54.0
+    ],
+    "cold_second_commentator": [
+      273.35,
+      278.36
+    ]
+  }
+}

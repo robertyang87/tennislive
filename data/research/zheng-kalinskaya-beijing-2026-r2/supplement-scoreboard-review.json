@@ -1,0 +1,106 @@
+{
+  "source": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "sample_frame_times": [
+    1000,
+    1356,
+    1408
+  ],
+  "recommended_scorebox": [
+    14,
+    964,
+    392,
+    1072
+  ],
+  "frame_dimensions": [
+    1920,
+    1080
+  ],
+  "measurement_method": "actual ffmpeg frame extraction plus existing wta_scoreboard.present and board_edge; root visual review of full frame and magnified board",
+  "findings": [
+    {
+      "time": 1000,
+      "box": [
+        14,
+        964,
+        392,
+        1072
+      ],
+      "present": true,
+      "edge_relative": 373,
+      "mint_cols": 23
+    },
+    {
+      "time": 1356,
+      "box": [
+        14,
+        964,
+        392,
+        1072
+      ],
+      "present": true,
+      "edge_relative": 374,
+      "mint_cols": 20
+    },
+    {
+      "time": 1408,
+      "box": [
+        14,
+        964,
+        392,
+        1072
+      ],
+      "present": true,
+      "edge_relative": 374,
+      "mint_cols": 24
+    }
+  ],
+  "no_colour_threshold_changes_needed": true,
+  "existing_config_insufficient": "parse_segments chooses only spec.scorebox; score_inset={x2} changes right edge alone. Two sources need distinct left/top/bottom anchors.",
+  "proposed_scope": [
+    "tools/build_match_reel.py: segment.scorebox override, validation, field table, source-owned reprobe fallback",
+    "tools/probe_board.py: per-segment matching scan selection",
+    "tests/test_segment_scorebox.py: multi-source defaults/override/rejection/source-matching audit",
+    "tests/test_probe_board.py: full-library custom scan evidence matched to actual source-owned boxes"
+  ],
+  "blocked_until_root_scope_confirmation": false,
+  "known_visual_limitation": "Supplement original has WTA TOUR translucent watermark at centre net; ordinary vertical centre crop does not remove it. Top-left third-party text not seen in sampled frames.",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "probe_path": "output/2026-10-04/reel/zheng-kalinskaya-source-1/probe.json",
+  "scan_summary": {
+    "frames": 8262,
+    "present": 7578,
+    "unresolved": 0
+  },
+  "implementation_files": [
+    "tools/build_match_reel.py",
+    "tools/probe_board.py",
+    "tests/test_segment_scorebox.py",
+    "tests/test_probe_board.py"
+  ],
+  "validation": {
+    "focused_related": "15 passed, 413 deselected",
+    "probe_and_segment_suite": "55 passed, 1 deselected (the pre-existing whole-library calibrated test)",
+    "ruff_F821": "pass",
+    "py_compile": "pass",
+    "diff_check": "pass",
+    "whole_library_baseline": "Unedited HEAD version of test_标定框和全库spec用的框对得上 also fails the WTA same-source scan assertion; no legacy exemptions or thresholds changed.",
+    "actual_native_smoke": {
+      "source_window": [
+        1355,
+        1356
+      ],
+      "frames": 25,
+      "present_frames": 25,
+      "mask_sha256": "016f99af2150973b7ff0d2651a2fde075cb8c46ac5f2aa9ae493695d1c19143e",
+      "resolution": [
+        1080,
+        1440
+      ],
+      "output_fps": 25,
+      "visual_review": "Correct supplemental scoreboard appears at x=0,y=1285, full player names/serve strip/current games/points visible; original translucent central WTA TOUR watermark remains.",
+      "review_file": "/workspace/zheng-kalinskaya-research/scoreboard-layout/native-segment-smoke/supplement-native-fullcanvas.jpg"
+    }
+  }
+}

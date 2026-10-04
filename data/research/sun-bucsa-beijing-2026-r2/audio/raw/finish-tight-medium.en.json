@@ -1,0 +1,64 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 115.5,
+  "range_to": 119.5,
+  "created_at": "2026-10-03T16:56:23.808948+00:00",
+  "elapsed_seconds": 8.26,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 117.12,
+      "end": 118.5,
+      "text": " Oh, such a good finish.",
+      "avg_logprob": -0.656453812122345,
+      "no_speech_prob": 0.08084499090909958,
+      "compression_ratio": 0.7419354838709677,
+      "words": [
+        {
+          "start": 117.12,
+          "end": 117.52,
+          "word": " Oh,",
+          "probability": 0.35564541816711426
+        },
+        {
+          "start": 117.7,
+          "end": 117.9,
+          "word": " such",
+          "probability": 0.9941127896308899
+        },
+        {
+          "start": 117.9,
+          "end": 118.04,
+          "word": " a",
+          "probability": 0.7987484335899353
+        },
+        {
+          "start": 118.04,
+          "end": 118.16,
+          "word": " good",
+          "probability": 0.9986388087272644
+        },
+        {
+          "start": 118.16,
+          "end": 118.5,
+          "word": " finish.",
+          "probability": 0.9995658993721008
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "08914a830799ac895fe5cc8359970d1b3570219d993c272b3a9e026662ffe929",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

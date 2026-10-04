@@ -328,3 +328,78 @@ def test_match_reel_cannot_evade_required_stats_by_omitting_entire_card():
 @pytest.mark.parametrize('value', [[], {'cover': []}, {'cover': None}])
 def test_malformed_spec_fails_with_a_useful_gate_message(value):
     assert '必须是对象' in G.problem(value)
+
+
+def yuan_approved():
+    return {
+        'slug': 'yuan-andreeva-beijing-2026-r2',
+        '_match': {
+            'status': 'result_verified', 'source': 'flashscore_points',
+            'source_id': 't0OdtxKa', 'date': '2026-10-02',
+            'winner_result': '3-6 6-0 6-0', 'winner': '米拉·安德烈耶娃',
+            'loser': '袁悦', 'participants': ['袁悦', '米拉·安德烈耶娃'],
+            'set_scores_home_away': [[6, 3], [0, 6], [0, 6]],
+        },
+        'cover': {
+            'eyebrow': '赛场之上', 'winner': '米拉·安德烈耶娃',
+            'result': '3-6 6-0 6-0', 'matchup': [
+                {'name': '袁悦', 'name_en': 'Yue Yuan'},
+                {'name': '米拉·安德烈耶娃', 'name_en': 'Mirra Andreeva'},
+            ],
+        },
+        'stats': {'a': {}, 'b': {}, '_winners_ue_omission': {
+            'slug': 'yuan-andreeva-beijing-2026-r2', 'source_id': 't0OdtxKa',
+            'match_date': '2026-10-02', 'winner_result': '3-6 6-0 6-0',
+            'fields': ['winners', 'ue'], 'decision': 'omit_both_rows_for_this_film_only',
+            'authorization': 'owner-requested-complete-video-after-missing-wue-disclosure-2026-10-02',
+        }},
+    }
+
+
+def test_yuan_complete_video_request_allows_only_exact_two_row_omission():
+    assert G.problem(yuan_approved()) is None
+    s = yuan_approved(); del s['stats']['_winners_ue_omission']
+    assert 'waiting_stats' in G.problem(s)
+    s = yuan_approved(); s['slug'] = 'yuan-another-match'
+    assert G.problem(s)
+
+
+@pytest.mark.parametrize('key,value', [
+    ('status', 'scheduled'), ('source', 'official_wta'), ('source_id', 'other'),
+    ('date', '2026-10-01'), ('winner', '袁悦'), ('loser', '米拉·安德烈耶娃'),
+    ('winner_result', '6-3 0-6 0-6'),
+    ('participants', ['米拉·安德烈耶娃', '袁悦']),
+    ('set_scores_home_away', [[3, 6], [6, 0], [6, 0]]),
+])
+def test_yuan_omission_rejects_changed_match_identity(key, value):
+    s = yuan_approved(); s['_match'][key] = value
+    assert G.problem(s)
+
+
+@pytest.mark.parametrize('key', list(G.YUAN_ANDREEVA_OMISSION))
+def test_yuan_omission_requires_exact_authorization_record(key):
+    s = yuan_approved(); del s['stats']['_winners_ue_omission'][key]
+    assert G.problem(s)
+
+
+@pytest.mark.parametrize('key,value', [
+    ('winner', '袁悦'), ('result', '6-3 0-6 0-6'), ('eyebrow', '赛后开麦'),
+    ('matchup', [{'name': '米拉·安德烈耶娃', 'name_en': 'Mirra Andreeva'},
+                 {'name': '袁悦', 'name_en': 'Yue Yuan'}]),
+])
+def test_yuan_omission_rejects_changed_cover_or_player_columns(key, value):
+    s = yuan_approved(); s['cover'][key] = value
+    assert G.problem(s)
+
+
+@pytest.mark.parametrize('side', ['a', 'b'])
+@pytest.mark.parametrize('field', ['winners', 'ue'])
+@pytest.mark.parametrize('value', [None, 0, 99])
+def test_yuan_omission_never_authorizes_unknown_zero_or_guessed_values(side, field, value):
+    s = yuan_approved(); s['stats'][side][field] = value
+    assert G.problem(s)
+
+
+def test_yuan_omission_does_not_claim_complete_statistics_evidence():
+    s = yuan_approved(); s['stats']['_winners_ue_evidence'] = {}
+    assert G.problem(s)

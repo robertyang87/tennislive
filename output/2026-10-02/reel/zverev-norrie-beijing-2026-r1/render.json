@@ -1,0 +1,116 @@
+{
+  "scoreboard_qc_sha256": "1887afca2f1bb7c6fc721c8b85c6311bbdf6271c689dbc50792d6823f943c383",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 0.0,
+  "layout": "full",
+  "segments_seconds": 147.22,
+  "topbar": {
+    "line1": "2026 ATP500 北京 首轮",
+    "line2": "兹维列夫 7-6(1) 6-4 诺里",
+    "start": 1.2,
+    "end": 148.42
+  },
+  "film_seconds": 148.4,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 3.888,
+    "1": 10.488,
+    "3": 11.736,
+    "5": 12.384,
+    "7": 6.048,
+    "10": 2.496,
+    "12": 5.544,
+    "14": 11.016
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 1,
+          "named": "兹维列夫",
+          "frames": 2,
+          "faces": 1,
+          "named_seen": 1,
+          "other_seen": 0
+        },
+        {
+          "segment": 6,
+          "named": "兹维列夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 11,
+          "named": "诺里",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 13,
+          "named": "兹维列夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 8,
+      "faces": 1
+    }
+  },
+  "render_inputs_sha256": "6ebbe3fce72ec31a40ac754757702c0f4593b8928d272e69603b2917e5b72602",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zverev-norrie-beijing-2026-r1",
+    "received_at": "2026-10-02T06:22:39Z",
+    "artifact_ready_at": "2026-10-02T06:28:03Z",
+    "elapsed_seconds": 324.044,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "cc1f80b8a6d56be7aa13a6b89c2d9af6f92f9a462267ac45f6696d840fbaa069",
+    "spec_sha256": "086a17318e74a804154615266f3f78619cdf46118692ce51cfdfcd4089a74122",
+    "run_id": "36973241134",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-02T06:24:41Z",
+        "run_id": "36973241134"
+      }
+    ],
+    "render_seconds": 202.044,
+    "pre_render_seconds": 122.0
+  },
+  "film_sha256": "cc1f80b8a6d56be7aa13a6b89c2d9af6f92f9a462267ac45f6696d840fbaa069",
+  "film_bytes": 55547178,
+  "qc_attestation_sha256": "39ff4ca3e4e4faee0cf95bcc3c769b5b52c517fe8e810b7acd66f4cda65445c3",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-02T06:24:41Z",
+      "run_id": "36973241134"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-02T06:28:05Z",
+      "run_id": "36973241134"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zverev-norrie-beijing-2026-r1/zverev-norrie-beijing-2026-r1.mp4",
+  "video_bytes": 55547178
+}

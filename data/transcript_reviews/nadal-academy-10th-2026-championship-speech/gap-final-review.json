@@ -1,0 +1,688 @@
+{
+  "source_sha256": "8227792fd511b0af162aa91efcc4cc1f0106d05dffb65aeec92b228d01f6a408",
+  "reviewed_at": "2026-10-03T21:54:57.618493+00:00",
+  "window": [
+    64,
+    67.8
+  ],
+  "method": "automatic ASR and AudioSet cross-evidence; no human listening claim",
+  "status": "uncertain speech identity, applause supported",
+  "findings": [
+    "Medium/tiny short auto language runs produce unstable Thank you or Mm-hmm; Thank token probabilities .010–.047 make complete new words unverified.",
+    "Wider medium auto63–69 retains out today tail until64.92/65.18, and misreads upcoming Catalan Com sabeu beginning67.56/67.66; gap overlaps acoustic/reverb boundaries.",
+    "AST64–67.8 Speech=.491 and Applause=.466; inner64.34–67.4 Speech=.5025 and Applause=.4777. Supports applause presence but not absence of speech.",
+    "65s visual frame shows audience clapping, supporting scene context only; not proof of audio or speaker identity."
+  ],
+  "recommended_description": "Applause / scene ambience with brief indistinct vocal sound; no verified new utterance.",
+  "forbidden_conclusions": [
+    "The window is silent.",
+    "Thank you is a certified original phrase.",
+    "The classifier proves no speech and may automatically clear the subtitle VAD gate."
+  ],
+  "evidence": {
+    "gap-medium-review.json": {
+      "sha256": "7f7ab6d26828105bd203744b4c8acf55cd48024d6fad8cf14cd43fbb25b66bfc",
+      "result": {
+        "method": "real automatic-language ASR short window, no listening claim",
+        "reviewed_at": "2026-10-03T21:52:30.502247+00:00",
+        "results": [
+          {
+            "model": "medium",
+            "from": 64,
+            "to": 67.8,
+            "vad": false,
+            "detected_language": "en",
+            "language_probability": 0.8994506597518921,
+            "segments": [
+              {
+                "start": 64.0,
+                "end": 64.12,
+                "text": " Thank you.",
+                "avg_logprob": -0.8041180805726484,
+                "no_speech_prob": 0.3675019145011902,
+                "words": [
+                  {
+                    "start": 64.0,
+                    "end": 64.0,
+                    "word": " Thank",
+                    "probability": 0.0242826659232378
+                  },
+                  {
+                    "start": 64.0,
+                    "end": 64.12,
+                    "word": " you.",
+                    "probability": 0.9956887364387512
+                  }
+                ]
+              },
+              {
+                "start": 65.34,
+                "end": 67.14,
+                "text": " Thank you.",
+                "avg_logprob": -0.8041180805726484,
+                "no_speech_prob": 0.3675019145011902,
+                "words": [
+                  {
+                    "start": 65.34,
+                    "end": 66.3,
+                    "word": " Thank",
+                    "probability": 0.010067119263112545
+                  },
+                  {
+                    "start": 66.3,
+                    "end": 67.14,
+                    "word": " you.",
+                    "probability": 0.9962816834449768
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "medium",
+            "from": 64,
+            "to": 67.8,
+            "vad": true,
+            "detected_language": "en",
+            "language_probability": 0.8027636408805847,
+            "segments": [
+              {
+                "start": 65.49,
+                "end": 66.49,
+                "text": " Mm-hmm.",
+                "avg_logprob": -0.8280185120446342,
+                "no_speech_prob": 0.6564635038375854,
+                "words": [
+                  {
+                    "start": 65.49,
+                    "end": 66.15,
+                    "word": " Mm",
+                    "probability": 0.1690930724143982
+                  },
+                  {
+                    "start": 66.15,
+                    "end": 66.49,
+                    "word": "-hmm.",
+                    "probability": 0.5763375908136368
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "medium",
+            "from": 63,
+            "to": 69,
+            "vad": false,
+            "detected_language": "en",
+            "language_probability": 0.8962319493293762,
+            "segments": [
+              {
+                "start": 63.0,
+                "end": 64.92,
+                "text": " out today.",
+                "avg_logprob": -0.993239837033408,
+                "no_speech_prob": 0.43493545055389404,
+                "words": [
+                  {
+                    "start": 63.0,
+                    "end": 63.78,
+                    "word": " out",
+                    "probability": 0.4464038610458374
+                  },
+                  {
+                    "start": 63.78,
+                    "end": 64.92,
+                    "word": " today.",
+                    "probability": 0.9782974123954773
+                  }
+                ]
+              },
+              {
+                "start": 68.0,
+                "end": 68.98,
+                "text": " Kwan Sabo was a",
+                "avg_logprob": -0.993239837033408,
+                "no_speech_prob": 0.43493545055389404,
+                "words": [
+                  {
+                    "start": 67.66,
+                    "end": 68.36,
+                    "word": " Kwan",
+                    "probability": 0.20042660273611546
+                  },
+                  {
+                    "start": 68.36,
+                    "end": 68.58,
+                    "word": " Sabo",
+                    "probability": 0.3063870221376419
+                  },
+                  {
+                    "start": 68.58,
+                    "end": 68.78,
+                    "word": " was",
+                    "probability": 0.8726803660392761
+                  },
+                  {
+                    "start": 68.78,
+                    "end": 68.98,
+                    "word": " a",
+                    "probability": 0.6066593527793884
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "medium",
+            "from": 63,
+            "to": 69,
+            "vad": true,
+            "detected_language": "en",
+            "language_probability": 0.893900990486145,
+            "segments": [
+              {
+                "start": 63.18,
+                "end": 65.18,
+                "text": " Out today",
+                "avg_logprob": -0.6089287454431708,
+                "no_speech_prob": 0.17930512130260468,
+                "words": [
+                  {
+                    "start": 63.18,
+                    "end": 63.82,
+                    "word": " Out",
+                    "probability": 0.42838314175605774
+                  },
+                  {
+                    "start": 63.82,
+                    "end": 65.18,
+                    "word": " today",
+                    "probability": 0.9575424194335938
+                  }
+                ]
+              },
+              {
+                "start": 67.56,
+                "end": 68.98,
+                "text": " Once above was a",
+                "avg_logprob": -0.6089287454431708,
+                "no_speech_prob": 0.17930512130260468,
+                "words": [
+                  {
+                    "start": 67.56,
+                    "end": 68.4,
+                    "word": " Once",
+                    "probability": 0.036418087780475616
+                  },
+                  {
+                    "start": 68.4,
+                    "end": 68.6,
+                    "word": " above",
+                    "probability": 0.5409321784973145
+                  },
+                  {
+                    "start": 68.6,
+                    "end": 68.8,
+                    "word": " was",
+                    "probability": 0.8726488947868347
+                  },
+                  {
+                    "start": 68.8,
+                    "end": 68.98,
+                    "word": " a",
+                    "probability": 0.9129335880279541
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "gap-tiny-review.json": {
+      "sha256": "cf926da0e68415a022dda75455b27abfc72826b3f4cee19b9e57ac0edddc867d",
+      "result": {
+        "method": "real automatic-language ASR short window, no listening claim",
+        "reviewed_at": "2026-10-03T21:51:52.059812+00:00",
+        "results": [
+          {
+            "model": "tiny",
+            "from": 64,
+            "to": 67.8,
+            "vad": false,
+            "detected_language": "en",
+            "language_probability": 0.6661429405212402,
+            "segments": [
+              {
+                "start": 64.0,
+                "end": 65.88,
+                "text": " Thank you.",
+                "avg_logprob": -0.7908888657887777,
+                "no_speech_prob": 0.4736742079257965,
+                "words": [
+                  {
+                    "start": 64.0,
+                    "end": 64.28,
+                    "word": " Thank",
+                    "probability": 0.047068558633327484
+                  },
+                  {
+                    "start": 64.28,
+                    "end": 65.88,
+                    "word": " you.",
+                    "probability": 0.9835504293441772
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "tiny",
+            "from": 64,
+            "to": 67.8,
+            "vad": true,
+            "detected_language": "en",
+            "language_probability": 0.5973789691925049,
+            "segments": [
+              {
+                "start": 65.49,
+                "end": 66.63,
+                "text": " Thank you.",
+                "avg_logprob": -0.9330037236213684,
+                "no_speech_prob": 0.5283260345458984,
+                "words": [
+                  {
+                    "start": 65.49,
+                    "end": 66.63,
+                    "word": " Thank",
+                    "probability": 0.02119605243206024
+                  },
+                  {
+                    "start": 66.63,
+                    "end": 66.63,
+                    "word": " you.",
+                    "probability": 0.9764528870582581
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "tiny",
+            "from": 63,
+            "to": 69,
+            "vad": false,
+            "detected_language": "en",
+            "language_probability": 0.8858882784843445,
+            "segments": [
+              {
+                "start": 63.38,
+                "end": 67.88,
+                "text": " How do you think?",
+                "avg_logprob": -1.0258955508470535,
+                "no_speech_prob": 0.13637331128120422,
+                "words": [
+                  {
+                    "start": 63.38,
+                    "end": 63.76,
+                    "word": " How",
+                    "probability": 0.11064062267541885
+                  },
+                  {
+                    "start": 63.76,
+                    "end": 63.96,
+                    "word": " do",
+                    "probability": 0.28562304377555847
+                  },
+                  {
+                    "start": 63.96,
+                    "end": 67.86,
+                    "word": " you",
+                    "probability": 0.634491503238678
+                  },
+                  {
+                    "start": 67.86,
+                    "end": 67.88,
+                    "word": " think?",
+                    "probability": 0.6824085712432861
+                  }
+                ]
+              },
+              {
+                "start": 68.16,
+                "end": 68.98,
+                "text": " Once a boat was a...",
+                "avg_logprob": -1.0258955508470535,
+                "no_speech_prob": 0.13637331128120422,
+                "words": [
+                  {
+                    "start": 68.16,
+                    "end": 68.34,
+                    "word": " Once",
+                    "probability": 0.07516425102949142
+                  },
+                  {
+                    "start": 68.34,
+                    "end": 68.48,
+                    "word": " a",
+                    "probability": 0.23843398690223694
+                  },
+                  {
+                    "start": 68.48,
+                    "end": 68.6,
+                    "word": " boat",
+                    "probability": 0.3033554255962372
+                  },
+                  {
+                    "start": 68.6,
+                    "end": 68.84,
+                    "word": " was",
+                    "probability": 0.9602097868919373
+                  },
+                  {
+                    "start": 68.84,
+                    "end": 68.98,
+                    "word": " a...",
+                    "probability": 0.46454624831676483
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "tiny",
+            "from": 63,
+            "to": 69,
+            "vad": true,
+            "detected_language": "en",
+            "language_probability": 0.7330060005187988,
+            "segments": [
+              {
+                "start": 63.18,
+                "end": 65.9,
+                "text": " How do you think?",
+                "avg_logprob": -0.9552299465451922,
+                "no_speech_prob": 0.1585790067911148,
+                "words": [
+                  {
+                    "start": 63.18,
+                    "end": 63.86,
+                    "word": " How",
+                    "probability": 0.19576521217823029
+                  },
+                  {
+                    "start": 63.86,
+                    "end": 63.98,
+                    "word": " do",
+                    "probability": 0.24487707018852234
+                  },
+                  {
+                    "start": 63.98,
+                    "end": 65.9,
+                    "word": " you",
+                    "probability": 0.6311889886856079
+                  },
+                  {
+                    "start": 65.9,
+                    "end": 65.9,
+                    "word": " think?",
+                    "probability": 0.8836607336997986
+                  }
+                ]
+              },
+              {
+                "start": 68.18,
+                "end": 68.98,
+                "text": " Once above was a",
+                "avg_logprob": -0.9552299465451922,
+                "no_speech_prob": 0.1585790067911148,
+                "words": [
+                  {
+                    "start": 68.18,
+                    "end": 68.34,
+                    "word": " Once",
+                    "probability": 0.054365064948797226
+                  },
+                  {
+                    "start": 68.34,
+                    "end": 68.6,
+                    "word": " above",
+                    "probability": 0.14570122957229614
+                  },
+                  {
+                    "start": 68.6,
+                    "end": 68.82,
+                    "word": " was",
+                    "probability": 0.38720858097076416
+                  },
+                  {
+                    "start": 68.82,
+                    "end": 68.98,
+                    "word": " a",
+                    "probability": 0.51109379529953
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "gap-audioset-review.json": {
+      "sha256": "adbf94ffc075c84a7a0fea40b59097fcdd9b2e757f93c8b307ce6e7b0cc98ab2",
+      "result": [
+        {
+          "file": "gap-medium-64-67.8.wav",
+          "model": "MIT/ast-finetuned-audioset-10-10-0.4593",
+          "events": [
+            {
+              "label": "Speech",
+              "score": 0.49096623063087463
+            },
+            {
+              "label": "Applause",
+              "score": 0.46621984243392944
+            },
+            {
+              "label": "Male speech, man speaking",
+              "score": 0.2621752619743347
+            },
+            {
+              "label": "Narration, monologue",
+              "score": 0.09513770788908005
+            },
+            {
+              "label": "Sound effect",
+              "score": 0.04905690625309944
+            },
+            {
+              "label": "Animal",
+              "score": 0.02726464532315731
+            },
+            {
+              "label": "Throat clearing",
+              "score": 0.0185810849070549
+            },
+            {
+              "label": "Clapping",
+              "score": 0.015615830197930336
+            },
+            {
+              "label": "Crowd",
+              "score": 0.014858769252896309
+            },
+            {
+              "label": "Inside, small room",
+              "score": 0.012617426924407482
+            },
+            {
+              "label": "Sigh",
+              "score": 0.012491364032030106
+            },
+            {
+              "label": "Music",
+              "score": 0.0110069764778018
+            },
+            {
+              "label": "Chuckle, chortle",
+              "score": 0.006268749944865704
+            },
+            {
+              "label": "Cheering",
+              "score": 0.006089568138122559
+            },
+            {
+              "label": "Inside, large room or hall",
+              "score": 0.005707820411771536
+            }
+          ],
+          "method": "automatic AudioSet event classification, no human listening"
+        },
+        {
+          "file": "gap-medium-63-69.wav",
+          "model": "MIT/ast-finetuned-audioset-10-10-0.4593",
+          "events": [
+            {
+              "label": "Speech",
+              "score": 0.6089412569999695
+            },
+            {
+              "label": "Applause",
+              "score": 0.4392068684101105
+            },
+            {
+              "label": "Male speech, man speaking",
+              "score": 0.35775506496429443
+            },
+            {
+              "label": "Narration, monologue",
+              "score": 0.28067952394485474
+            },
+            {
+              "label": "Animal",
+              "score": 0.029705695807933807
+            },
+            {
+              "label": "Music",
+              "score": 0.01716911979019642
+            },
+            {
+              "label": "Sound effect",
+              "score": 0.01594163104891777
+            },
+            {
+              "label": "Clapping",
+              "score": 0.013026239350438118
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "score": 0.009141746908426285
+            },
+            {
+              "label": "Speech synthesizer",
+              "score": 0.009060648269951344
+            },
+            {
+              "label": "Outside, urban or manmade",
+              "score": 0.008824707940220833
+            },
+            {
+              "label": "Crowd",
+              "score": 0.008007586933672428
+            },
+            {
+              "label": "Domestic animals, pets",
+              "score": 0.007634066976606846
+            },
+            {
+              "label": "Inside, small room",
+              "score": 0.006771646440029144
+            },
+            {
+              "label": "Vehicle",
+              "score": 0.006402280181646347
+            }
+          ],
+          "method": "automatic AudioSet event classification, no human listening"
+        }
+      ]
+    },
+    "gap-audioset-inner-review.json": {
+      "sha256": "b0d1d6151858380e2b2cbeeb2438f3f03a5f49d5a5ca3bd882998bdfdb59d9b2",
+      "result": [
+        {
+          "file": "gap-medium-64-67.8.wav",
+          "range": [
+            64.34,
+            67.4
+          ],
+          "model": "MIT/ast-finetuned-audioset-10-10-0.4593",
+          "events": [
+            {
+              "label": "Speech",
+              "score": 0.5024644136428833
+            },
+            {
+              "label": "Applause",
+              "score": 0.47771796584129333
+            },
+            {
+              "label": "Male speech, man speaking",
+              "score": 0.10377267748117447
+            },
+            {
+              "label": "Narration, monologue",
+              "score": 0.07655638456344604
+            },
+            {
+              "label": "Sound effect",
+              "score": 0.024197323247790337
+            },
+            {
+              "label": "Animal",
+              "score": 0.022325722500681877
+            },
+            {
+              "label": "Clapping",
+              "score": 0.02047867141664028
+            },
+            {
+              "label": "Inside, small room",
+              "score": 0.013416523113846779
+            },
+            {
+              "label": "Music",
+              "score": 0.0131301898509264
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "score": 0.012522228993475437
+            },
+            {
+              "label": "Domestic animals, pets",
+              "score": 0.009187397547066212
+            },
+            {
+              "label": "Throat clearing",
+              "score": 0.008706387132406235
+            },
+            {
+              "label": "Crowd",
+              "score": 0.008458606898784637
+            },
+            {
+              "label": "Meow",
+              "score": 0.00565573712810874
+            },
+            {
+              "label": "Cat",
+              "score": 0.005335594993084669
+            }
+          ],
+          "method": "automatic AudioSet event classification, no human listening"
+        }
+      ]
+    }
+  }
+}

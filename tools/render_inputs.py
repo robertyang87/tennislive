@@ -191,6 +191,9 @@ def _gate(why: str, read_by: str, where: str | tuple[str, ...] = (),
 #: 渲染/质检路径上被读、但**只进闸不进成片**的 `_` 键（raise 或 print）。
 #: 值不进指纹；闸读它的那个位置上算数的，重核对时必须仍然算数（见模块 docstring）。
 GATE_ANNOTATIONS: dict[str, Gate] = {
+    "_stats_availability_why": _gate(
+        "video_without_tour_stats：限定表演赛缺巡回赛统计的认领，只控制技术统计闸",
+        "video_without_tour_stats", "_stats_availability_why"),
     "_approved_by_user": _gate("build_cover：approved_image 要有用户认领，缺了拒渲（编码里才查）",
                                "build_cover", "cover._approved_by_user", truthy),
     "_beat": _gate("promote_reel_draft.insert_chapter_cards（备料提升时读，render 不调）",
@@ -281,7 +284,7 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                     "（封面用时闸）、promote_reel_draft 的撞车键（合集源片按场次 id 分开，`_compilation_only`）、list_official_uploads "
                     "认人和开球日（dry-run 只报不拦的官方上传／封面日期报告）",
                     "verified_result_problem decider_tiebreak_problem waiting_reasons "
-                    "promote _source_urls _match_keys _flashscore_id _match_date _retired event_dates spec_surnames _omission_problem _verified_retirement_problem",
+                    "promote _source_urls _match_keys _flashscore_id _official_wta_id _match_date _retired event_dates spec_surnames _omission_problem _verified_retirement_problem",
                     "_match", truthy),
     "_narration_why": _gate("cover_voice_matches_hook_problem：封面口播和钩子不同的认领",
                             "cover_voice_matches_hook_problem", "cover._narration_why"),
@@ -374,6 +377,7 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
 #: 这几个函数里读它（都是措辞闸、推送元数据或备料），判据同上那条测试。
 PUBLISH_FIELDS: dict[str, frozenset[str]] = {
     "push": frozenset({
+        "video_without_tour_stats",                 # 固定表演赛统计闸要求禁用自动推送
         "spec_outward_text",                       # build_match_reel：全称断言闸扫的外发文字
         "push_is_auto", "push_meta",               # push_reel：推送开关与标题
         "voiced_texts", "outward_deep", "outward_flat",

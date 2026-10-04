@@ -227,10 +227,25 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
         raise Skip(f"{slug}：QC 的内容身份与当前 spec 不一致")
     checks = qc.get("checks") or {}
     expected_body = len(spec.get("zh") or [])
+    # L2 counts verified conservative sound-event cues separately from speech.
+    # Reuse its actual ASS/evidence checks; never inflate a declared number.
+    if spec.get("caption_gap_annotations") is not None:
+        from check_interview_landed import bilingual_body_ok, _ass_body_events
+        ass_path = outdir / f"{slug}.ass"
+        if not tracked(repo, ass_path) or qc.get("ass_sha256") != _sha256_bytes(_tracked_bytes(repo, ass_path)):
+            raise Skip(f"{slug}：声音事件双语字幕与 QC 字节不一致")
+        body_ok, detail = bilingual_body_ok(ass_path, spec)
+        if not body_ok:
+            raise Skip(f"{slug}：L2 正文与保守声音事件验证失败（{detail}）")
+        expected_body = len(_ass_body_events(ass_path)["EN"])
     expected_lead = len(((spec.get("lead_in") or {}).get("subs") or []))
     if not expected_body or checks.get("bilingual_body_cues") != expected_body:
         raise Skip(f"{slug}：QC 没有逐 cue 证明采访正文中英字幕完整")
     official_no_lead = verified_no_lead_exception(spec)
+    if not expected_lead and spec.get("requested_content_type") == "ceremony":
+        from check_interview_landed import bilingual_lead_ok
+        # Same verified trophy-speech opening contract as native L2.
+        official_no_lead, _ = bilingual_lead_ok(outdir / "_lead.ass", spec)
     if expected_lead:
         if (checks.get("bilingual_lead_cues") != expected_lead
                 or not qc.get("lead_ass_sha256")):
@@ -427,7 +442,7 @@ def cover_scan_gate(repo: Path, slug: str, outdir: Path) -> None:
         raise Skip(f"{slug}：{problem}")
 
 
-def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
+def wants_auto_push(repo: Path, slug: str, outdir: Path, *, forced: bool = False) -> None:
     """发布门禁，过不了就 ``Skip``（带理由）。"""
     # **render.json 必须还在仓库里。** 工作流那头已经用 --diff-filter=AM 滤掉了
     # 删除项，这儿再兜一层：被删的旧产物不是新渲完的片子，它的 spec 往往还写着
@@ -448,8 +463,10 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     from push_reel import POSTER_NAME, push_is_auto  # noqa: PLC0415
 
     if not push_is_auto(copy_path):
-        raise Skip(f"{slug}：spec 里没写 push.auto=true，不自动发"
-                   f"（要开：在 {spec.name} 的 push 块里加一行 \"auto\": true）")
+        if not forced:
+            raise Skip(f"{slug}：spec 里没写 push.auto=true，不自动发"
+                       f"（要开：在 {spec.name} 的 push 块里加一行 \"auto\": true）")
+        print(f"[强制] {slug}：明确手动推送，仅放宽 push.auto 意图闸；L0/L2/发布账本照旧")
     film_hash = validate_qc(repo, slug, outdir)
 
     # 新的权威状态在 data/ 下，渲染回放只会替换 output/interviews/<slug>，
@@ -595,6 +612,7 @@ def main(argv: list[str] | None = None) -> int:
                     help="这次合并改动的文件（仓库相对路径）")
     ap.add_argument("--slug", default="",
                     help="只查这一条（workflow_dispatch 那条路），发布门禁照过")
+    ap.add_argument("--forced", action="store_true", help="明确手动发布，仅放宽 push.auto 意图闸，需 --slug")
     ap.add_argument("--record", default="",
                     help="发完之后更新独立发布账本（值为 outdir）")
     ap.add_argument("--reserve", default="",
@@ -608,6 +626,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--repo", default=".", help="仓库根目录")
     args = ap.parse_args(argv)
 
+    if args.forced and not args.slug:
+        ap.error("--forced 仅用于 --slug 点名手动发布")
     repo = Path(args.repo)
     state_actions = [bool(args.reserve), bool(args.record), bool(args.uncertain)]
     if sum(state_actions) > 1:
@@ -650,7 +670,7 @@ def main(argv: list[str] | None = None) -> int:
         path = f"output/interviews/{args.slug}/render.json"
         try:
             slug, outdir = candidate(path, repo)
-            wants_auto_push(repo, slug, outdir)
+            wants_auto_push(repo, slug, outdir, forced=args.forced)
         except AlreadyAccepted as why:
             print(f"[安全跳过] {why}")
             _emit_already_accepted(args.slug)

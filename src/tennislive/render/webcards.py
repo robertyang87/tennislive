@@ -27,6 +27,7 @@ from ..research.media import brief_for_match
 from ..timeutil import fmt_schedule_time, fmt_time_beijing
 from ..zh import player_zh, surface_zh
 from ..zh.tournaments import tournament_surface
+from ..design_tokens import DARK, rgb
 from ..zh.countries import country_iso2
 from .common import (
     _abbrev_en,
@@ -343,15 +344,15 @@ _COURT_SVG = """<svg class="court" viewBox="0 0 1080 1060" preserveAspectRatio="
 _CSS = """
 * { margin:0; padding:0; box-sizing:border-box; }
 :root {
-  --ground0:#061D17; --ground1:#0B3B2C;
+  --ground0:@CARD@; --ground1:@BACKGROUND@;
   --ivory:#F7F3E8; --fade:#9AA89F;
   --gold:#D5B44D; --gold-soft:rgba(213,180,77,.38);
   --flash:#F15A3A;
   --neon:#D6FF00; --sky:#76D7EA; --coral:#FF7657;
-  --panel:rgba(3,24,19,.82); --panel-strong:rgba(4,30,23,.92);
-  --panel-border:rgba(214,255,0,.18); --panel-text:#F6F7F2;
-  --panel-muted:#A8B9B1; --panel-soft:rgba(214,255,0,.11);
-  --divider:rgba(214,255,0,.17); --score-win:#D6FF00;
+  --panel:rgba(@CARD_RGB@,.82); --panel-strong:rgba(@MUTED_RGB@,.92);
+  --panel-border:rgba(255,255,255,.13); --panel-text:#F6F7F2;
+  --panel-muted:#A8B9B1; --panel-soft:rgba(255,255,255,.045);
+  --divider:rgba(255,255,255,.12); --score-win:#D6FF00;
   --reason:#CDDBD4;
   --courtline:rgba(255,255,255,.055);
   --cardshadow:0 14px 34px rgba(0,0,0,.42);
@@ -379,8 +380,8 @@ html.light {
    面板跟着底色一起提亮并降低不透明度：底色变亮而面板不动的话，深色面板
    压在亮底上反而更像"一块一块"的，比原来还重。 */
 html.daily {
-  --ground0:#1E4234; --ground1:#2A6450;
-  --panel:rgba(22,58,46,.70); --panel-strong:rgba(26,68,54,.84);
+  --ground0:@MUTED@; --ground1:@CARD@;
+  --panel:rgba(@CARD_RGB@,.70); --panel-strong:rgba(@MUTED_RGB@,.84);
 }
 body {
   width:@W@px; height:@H@px; overflow:hidden; position:relative;
@@ -404,8 +405,8 @@ body::before { content:""; position:absolute; left:0; top:0; width:100%; height:
 .poster:not(.cover) { isolation:isolate; }
 .poster:not(.cover)::before { content:""; position:absolute; inset:0;
   background:
-    linear-gradient(180deg,rgba(1,13,11,.78) 0%,rgba(1,13,11,.5) 34%,rgba(1,13,11,.82) 100%),
-    linear-gradient(90deg,rgba(1,13,11,.48) 0%,rgba(1,13,11,.08) 75%),
+    linear-gradient(180deg,rgba(@BACKGROUND_RGB@,.78) 0%,rgba(@BACKGROUND_RGB@,.5) 34%,rgba(@BACKGROUND_RGB@,.82) 100%),
+    linear-gradient(90deg,rgba(@BACKGROUND_RGB@,.48) 0%,rgba(@BACKGROUND_RGB@,.08) 75%),
     var(--inner-bg) center 48%/cover no-repeat;
   opacity:.72; pointer-events:none; }
 html.light .poster:not(.cover)::before { opacity:.16; }
@@ -413,7 +414,7 @@ html.light .poster:not(.cover)::before { opacity:.16; }
 
 .poster.tonight-page::before {
   background:
-    linear-gradient(180deg,rgba(2,16,20,.16) 0%,rgba(2,16,20,.22) 30%,rgba(2,20,18,.42) 58%,rgba(2,20,18,.76) 100%),
+    linear-gradient(180deg,rgba(@BACKGROUND_RGB@,.16) 0%,rgba(@BACKGROUND_RGB@,.22) 30%,rgba(@BACKGROUND_RGB@,.42) 58%,rgba(@BACKGROUND_RGB@,.76) 100%),
     var(--page-bg,var(--inner-bg)) var(--page-bg-pos,center 42%)/cover no-repeat;
   opacity:1;
 }
@@ -426,7 +427,7 @@ html.light .poster.tonight-page::before { opacity:.52; }
    与照片本身的明暗无关，换成任何一张场馆图都成立。 */
 .poster.tonight-page::after { content:""; position:absolute; left:0; right:0; top:0;
   height:300px; z-index:0; pointer-events:none;
-  background:linear-gradient(180deg,rgba(2,16,20,.82) 0%,rgba(2,16,20,.58) 48%,rgba(2,16,20,0) 100%); }
+  background:linear-gradient(180deg,rgba(@BACKGROUND_RGB@,.82) 0%,rgba(@BACKGROUND_RGB@,.58) 48%,rgba(@BACKGROUND_RGB@,0) 100%); }
 html.light .poster.tonight-page::after { opacity:.35; }
 
 .masthead { display:flex; flex:none; align-items:center; gap:16px; }
@@ -552,23 +553,23 @@ html.light .chip-green { color:#fff; }
 /* ---------- 封面 ---------- */
 .cover { overflow:hidden; color:#F7F3EA; }
 .cover::before { content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
-  background:linear-gradient(180deg,rgba(1,13,11,.08) 0%,rgba(1,13,11,0) 50%,rgba(1,13,11,.04) 76%,rgba(1,13,11,.2) 100%),
-    linear-gradient(90deg,rgba(1,13,11,.18) 0%,rgba(1,13,11,.06) 52%,rgba(1,13,11,0) 100%); }
+  background:linear-gradient(180deg,rgba(@BACKGROUND_RGB@,.08) 0%,rgba(@BACKGROUND_RGB@,0) 50%,rgba(@BACKGROUND_RGB@,.04) 76%,rgba(@BACKGROUND_RGB@,.2) 100%),
+    linear-gradient(90deg,rgba(@BACKGROUND_RGB@,.18) 0%,rgba(@BACKGROUND_RGB@,.06) 52%,rgba(@BACKGROUND_RGB@,0) 100%); }
 .cover::after { content:""; position:absolute; left:0; right:0; top:0; height:12px; z-index:5;
   background:linear-gradient(90deg,var(--neon) 0 42%,var(--coral) 42% 72%,var(--sky) 72%); }
 .cover-bg { position:absolute; inset:0; z-index:0;
   background-size:var(--cover-size,cover); background-position:var(--cover-focus,center);
-  background-repeat:no-repeat; background-color:#061D17;
+  background-repeat:no-repeat; background-color:@BACKGROUND@;
   filter:saturate(1.08) contrast(1.02) brightness(1.08); }
 .cover .masthead,.cover .footer { position:relative; z-index:3; }
 .cover .brand { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:42px; font-weight:400; letter-spacing:0; }
 .cover .date { color:#D6E3DD; }
 .cover-copy { position:relative; z-index:2; width:590px; margin-top:22px;
   padding:12px 18px 18px; border-radius:6px;
-  background:linear-gradient(90deg,rgba(2,20,16,.15),rgba(2,20,16,.04) 72%,rgba(2,20,16,0)); }
+  background:linear-gradient(90deg,rgba(@BACKGROUND_RGB@,.15),rgba(@BACKGROUND_RGB@,.04) 72%,rgba(@BACKGROUND_RGB@,0)); }
 .cover.cover-text-left .cover-copy { align-self:flex-start; }
 .cover.cover-text-right .cover-copy { align-self:flex-end;
-  background:linear-gradient(270deg,rgba(2,20,16,.15),rgba(2,20,16,.04) 72%,rgba(2,20,16,0)); }
+  background:linear-gradient(270deg,rgba(@BACKGROUND_RGB@,.15),rgba(@BACKGROUND_RGB@,.04) 72%,rgba(@BACKGROUND_RGB@,0)); }
 .edition { display:inline-block; color:var(--neon); font-family:'Barlow Condensed';
   font-size:23px; font-weight:600; letter-spacing:4px; line-height:1.2;
   text-shadow:0 3px 14px rgba(0,0,0,.75); }
@@ -581,7 +582,7 @@ html.light .chip-green { color:#fff; }
 .cover.compact-headline .focus { font-size:58px; line-height:1.08; max-width:550px; }
 .cover.extra-compact-headline .focus { font-size:51px; line-height:1.1; }
 .cover-lower { position:relative; z-index:3; width:900px; margin-top:auto; margin-bottom:20px;
-  padding:18px 20px; border-radius:8px; background:rgba(2,20,16,.22);
+  padding:18px 20px; border-radius:8px; background:rgba(@BACKGROUND_RGB@,.22);
   backdrop-filter:blur(3px); }
 .cover-secondary { margin-bottom:16px; padding-left:14px; border-left:5px solid var(--coral);
   color:#F0F4F1; font-size:25px; font-weight:700; line-height:1.35; max-width:850px;
@@ -661,7 +662,7 @@ html.daily .tonight-page .event-meta b {
 
 .pick { border-left:5px solid var(--sky); padding:7px 26px 8px; margin-bottom:8px; }
 .tonight-page .pick {
-  background:linear-gradient(90deg,rgba(2,29,23,.72),rgba(2,29,23,.52));
+  background:linear-gradient(90deg,rgba(@CARD_RGB@,.72),rgba(@CARD_RGB@,.52));
   border-top-color:rgba(118,215,234,.28);
   border-right-color:rgba(118,215,234,.28);
   border-bottom-color:rgba(118,215,234,.28);
@@ -750,7 +751,7 @@ html.daily .tonight-page .event-meta b {
 .venue-photo { position:relative; height:365px; margin-top:0; background-size:cover;
   background-position:center; border:1px solid var(--panel-border); border-radius:8px;
   overflow:hidden; box-shadow:var(--cardshadow); }
-.venue-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 45%,rgba(4,22,16,.92)); }
+.venue-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 45%,rgba(@BACKGROUND_RGB@,.92)); }
 /* 竖版人像：完整显示不裁脸，同图模糊铺满做底 */
 .venue-photo .ph-back { position:absolute; inset:0; background-size:cover; background-position:center;
   filter:blur(24px) brightness(.68); transform:scale(1.15); }
@@ -790,7 +791,7 @@ html.daily .tonight-page .event-meta b {
 .knowledge-photo.portrait img { object-fit:contain; }
 .knowledge-photo.wide-cover img { object-fit:cover; }
 .knowledge-photo::after { content:""; position:absolute; inset:0;
-  background:linear-gradient(180deg,transparent 38%,rgba(2,21,16,.94)); }
+  background:linear-gradient(180deg,transparent 38%,rgba(@BACKGROUND_RGB@,.94)); }
 .knowledge-photo-copy { position:absolute; z-index:2; left:28px; right:28px; bottom:24px; }
 .knowledge-photo-copy small { display:block; color:#D4E0D9; font-size:19px; }
 .knowledge-photo-copy strong { display:block; margin-top:7px; color:#fff;
@@ -801,8 +802,8 @@ html.daily .tonight-page .event-meta b {
 .knowledge-cover .knowledge-photo { height:560px; }
 .knowledge-cover { isolation:isolate; --cover-focus:50% 28%; }
 .knowledge-cover::before {
-  background:linear-gradient(180deg,rgba(1,13,11,.08) 0%,rgba(1,13,11,0) 50%,rgba(1,13,11,.04) 76%,rgba(1,13,11,.2) 100%),
-    linear-gradient(90deg,rgba(1,13,11,.18) 0%,rgba(1,13,11,.06) 64%,rgba(1,13,11,0) 100%);
+  background:linear-gradient(180deg,rgba(@BACKGROUND_RGB@,.08) 0%,rgba(@BACKGROUND_RGB@,0) 50%,rgba(@BACKGROUND_RGB@,.04) 76%,rgba(@BACKGROUND_RGB@,.2) 100%),
+    linear-gradient(90deg,rgba(@BACKGROUND_RGB@,.18) 0%,rgba(@BACKGROUND_RGB@,.06) 64%,rgba(@BACKGROUND_RGB@,0) 100%);
 }
 .knowledge-cover>.knowledge-cover-bg { position:absolute; inset:0; z-index:0;
   background-size:cover; background-position:var(--knowledge-cover-focus,50% 28%);
@@ -812,16 +813,16 @@ html.daily .tonight-page .event-meta b {
   position:relative; z-index:3;
 }
 .knowledge-cover .knowledge-cover-copy { width:950px; margin-top:54px; padding:4px 18px 18px 0;
-  background:linear-gradient(90deg,rgba(2,20,16,.2),rgba(2,20,16,0) 74%); }
+  background:linear-gradient(90deg,rgba(@BACKGROUND_RGB@,.2),rgba(@BACKGROUND_RGB@,0) 74%); }
 .knowledge-cover .knowledge-kicker { margin-top:0; color:var(--neon); text-shadow:0 3px 14px rgba(0,0,0,.7); }
 .knowledge-cover h1 { margin-top:16px; max-width:950px; color:#fff; font-size:86px;
   line-height:1.03; text-shadow:0 8px 30px rgba(0,0,0,.78); }
 .knowledge-cover .knowledge-hook { margin-top:36px; padding:30px 30px;
   border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
-  border-radius:8px; background:rgba(10,55,44,.88);
+  border-radius:8px; background:rgba(@MUTED_RGB@,.88);
   display:grid; grid-template-columns:145px 1fr; gap:32px; align-items:center; }
 .knowledge-cover .knowledge-hook { margin-top:auto; margin-bottom:14px;
-  background:rgba(3,28,22,.32); backdrop-filter:blur(5px); }
+  background:rgba(@CARD_RGB@,.32); backdrop-filter:blur(5px); }
 .knowledge-hook b { font-family:'Barlow Condensed'; font-size:65px; color:var(--neon); line-height:1; }
 .knowledge-hook p { color:var(--pagetext); font-family:'TL Serif SC','TL Sans SC';
   font-size:31px; font-weight:900; line-height:1.62; }
@@ -852,7 +853,7 @@ html.daily .tonight-page .event-meta b {
 .knowledge-moment p { margin-top:12px; color:var(--reason); font-size:28px; line-height:1.44; }
 .knowledge-verdict { margin-top:31px; padding:25px 27px;
   border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
-  border-radius:8px; background:rgba(10,55,44,.88);
+  border-radius:8px; background:rgba(@MUTED_RGB@,.88);
   font-family:'TL Serif SC','TL Sans SC'; color:var(--ivory);
   font-size:36px; font-weight:900; line-height:1.44; }
 .has-page-photo .knowledge-timeline { margin-top:16px; }
@@ -892,12 +893,12 @@ html.daily .tonight-page .event-meta b {
 .official-facts span { display:block; margin-top:7px; color:var(--reason); font-size:17px; }
 .official-summary { margin-top:17px; padding:17px 20px;
   border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
-  border-radius:8px; background:rgba(10,55,44,.88); color:var(--ivory);
+  border-radius:8px; background:rgba(@MUTED_RGB@,.88); color:var(--ivory);
   font-size:20px; line-height:1.42; }
 .official-summary b { color:#E85545; }
 .marathon-story-visual { margin-top:16px; padding:19px 28px 20px;
   border-top:2px solid var(--coral); border-bottom:1px solid var(--divider);
-  background:rgba(5,42,33,.56); }
+  background:rgba(@CARD_RGB@,.56); }
 .marathon-story-head { display:grid; grid-template-columns:1fr auto; align-items:end;
   gap:24px; }
 .marathon-story-head span { display:block; color:var(--sky); font-size:21px;
@@ -933,14 +934,14 @@ html.daily .tonight-page .event-meta b {
 .marathon-rule-arrow { color:var(--neon); font-size:55px; text-align:center; }
 .marathon-scoreline { margin-top:25px; padding:24px 26px 27px;
   border-top:2px solid var(--coral); border-bottom:1px solid var(--divider);
-  background:rgba(5,42,33,.52); }
+  background:rgba(@CARD_RGB@,.52); }
 .marathon-scoreline header { display:flex; align-items:baseline; justify-content:space-between; }
 .marathon-scoreline header span { color:var(--sky); font-size:20px; font-weight:700; }
 .marathon-scoreline header b { color:var(--reason); font-size:20px; }
 .marathon-sets { display:grid; grid-template-columns:repeat(5,1fr); margin-top:17px; }
 .marathon-set { min-height:104px; padding:15px 10px; text-align:center;
   border-right:1px solid var(--divider); }
-.marathon-set:last-child { border-right:0; background:rgba(211,255,18,.06); }
+.marathon-set:last-child { border-right:0; background:rgba(255,255,255,.04); }
 .marathon-set small { display:block; color:var(--reason); font-size:16px; }
 .marathon-set strong { display:block; margin-top:9px; color:var(--ivory);
   font-family:'Barlow Condensed'; font-size:43px; line-height:1; }
@@ -958,14 +959,14 @@ html.daily .tonight-page .event-meta b {
   font-size:18px; line-height:1.3; }
 .marathon-summary { margin-top:26px; padding:23px 25px;
   border-left:7px solid var(--coral); border-radius:8px;
-  background:rgba(10,55,44,.88); color:var(--ivory);
+  background:rgba(@MUTED_RGB@,.88); color:var(--ivory);
   font-family:'TL Serif SC','TL Sans SC'; font-size:30px; font-weight:900;
   line-height:1.42; }
 .marathon-event-photo { position:relative; height:480px; margin-top:14px;
   overflow:hidden; border:1px solid var(--panel-border); border-radius:8px;
   background-size:cover; background-position:var(--marathon-focus,50% 42%); }
 .marathon-event-photo::after { content:""; position:absolute; inset:0;
-  background:linear-gradient(180deg,transparent 34%,rgba(2,21,16,.9)); }
+  background:linear-gradient(180deg,transparent 34%,rgba(@BACKGROUND_RGB@,.9)); }
 .marathon-event-photo div { position:absolute; z-index:1; left:28px; right:28px;
   bottom:22px; }
 .marathon-event-photo small { display:block; color:var(--sky); font-size:19px;
@@ -979,7 +980,7 @@ html.daily .tonight-page .event-meta b {
 .marathon-event-photo ~ .marathon-summary { margin-top:18px; padding-top:18px; padding-bottom:18px; }
 .marathon-today-visual { margin-top:38px; padding:34px 32px;
   border-top:2px solid var(--coral); border-bottom:1px solid var(--divider);
-  background:rgba(5,42,33,.5); }
+  background:rgba(@CARD_RGB@,.5); }
 .marathon-era { display:grid; grid-template-columns:150px 1fr; gap:26px;
   align-items:center; min-height:172px; }
 .marathon-era + .marathon-era { margin-top:16px; padding-top:20px;
@@ -1066,7 +1067,7 @@ html.daily .tonight-page .event-meta b {
 .today-visual text { fill:var(--ivory); font:700 31px 'Barlow Condensed'; }
 .knowledge-question { margin-top:30px; padding:28px 29px; border:1px solid rgba(120,211,220,.26);
   border-left:7px solid var(--coral); border-radius:8px;
-  background:rgba(10,55,44,.88); color:var(--pagetext); }
+  background:rgba(@MUTED_RGB@,.88); color:var(--pagetext); }
 .knowledge-question small { color:#E85545; font-size:16px; font-weight:700; letter-spacing:.18em; }
 .knowledge-question strong { display:block; margin-top:14px; color:var(--ivory);
   font-family:'TL Serif SC','TL Sans SC'; font-size:38px; line-height:1.42; }
@@ -1087,7 +1088,7 @@ html.daily .tonight-page .event-meta b {
 .media-visual img { width:100%; height:100%; object-fit:cover; object-position:50% 24%;
   filter:saturate(.84) contrast(1.06); }
 .media-visual::after { content:""; position:absolute; inset:0;
-  background:linear-gradient(90deg,rgba(0,25,20,.96) 0%,rgba(0,25,20,.78) 47%,rgba(0,25,20,.12) 100%); }
+  background:linear-gradient(90deg,rgba(@BACKGROUND_RGB@,.96) 0%,rgba(@BACKGROUND_RGB@,.78) 47%,rgba(@BACKGROUND_RGB@,.12) 100%); }
 .media-visual-copy { position:absolute; z-index:2; left:30px; top:34px; width:64%; }
 .media-visual small { font-family:'TL Sans SC'; color:var(--sky); font-size:20px;
   font-weight:700; }
@@ -1194,11 +1195,11 @@ html.daily .poster.tonight-page::before {
   opacity:1;
   background:
     linear-gradient(180deg,
-      rgba(2,16,20,.20) 0%,
-      rgba(2,16,20,.14) 26%,
-      rgba(2,20,18,.30) 46%,
-      rgba(2,20,18,.72) 66%,
-      rgba(2,20,18,.90) 100%),
+      rgba(@BACKGROUND_RGB@,.20) 0%,
+      rgba(@BACKGROUND_RGB@,.14) 26%,
+      rgba(@BACKGROUND_RGB@,.30) 46%,
+      rgba(@BACKGROUND_RGB@,.72) 66%,
+      rgba(@BACKGROUND_RGB@,.90) 100%),
     var(--page-bg,var(--inner-bg)) var(--page-bg-pos,center 42%)/cover no-repeat;
 }
 html.daily .poster.tonight-page::after { height:340px; }
@@ -1304,6 +1305,13 @@ html.daily .results-page .hero .set, html.daily .focus-page .hero .set { font-si
 html.daily .focus-page .compare-row span { font-size:34px; font-weight:500; }
 
 """
+
+
+# 全栏目卡片（包括网球有故事）接同一套蓝色背景与中性分隔线。
+for _role in ("background", "card", "muted"):
+    _CSS = _CSS.replace("@" + _role.upper() + "@", DARK[_role])
+    _CSS = _CSS.replace("@" + _role.upper() + "_RGB@",
+                        ",".join(str(channel) for channel in rgb(DARK[_role])))
 
 
 def daily_card_theme() -> str:

@@ -1,0 +1,121 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=Qd4MQBnmF5A",
+  "source_sha256": "ed88d5e4cce59bdd16b7caa8cf709f8afda9f1b0bf1871798d97d788ca6f198f",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex actual source multi-model ASR and visual evidence review",
+  "reviewed_at": "2026-10-03T18:05:09.740363+00:00",
+  "status": "complete",
+  "reviewed_from": 56.2,
+  "reviewed_to": 64.25,
+  "actual_listening_performed": false,
+  "review_scope": "Entire retained source window reviewed using actual source full and targeted independent ASR. Complete means crosschecked evidence review, not a claim of human listening.",
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-breakback-base-tight.json",
+      "sha256": "9c5b2d9f78575e55c207f246261e59d962cec8822bff5f2e4d0dfacb997e1f22",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 108.7,
+      "range_to": 119.3
+    },
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-ending-medium-en-novad.json",
+      "sha256": "9b7c583bcd1ae782ae9b1211ec2defe9e18246f90de698f168f90020d4fbfbed",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 235.0,
+      "range_to": 273.94
+    },
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-first-short-small-en.json",
+      "sha256": "2b35e64a4b889c01641287a995dec71e5841a4eccb94d49f669f2129426ddfb0",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 63.8,
+      "range_to": 67.0
+    },
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-firstset-base-tight.json",
+      "sha256": "73a57bf4478e772e4997c2c9fec2b54e60b19cbca1b4c1cfc26e338373dc2d75",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 63.5,
+      "range_to": 77.8
+    },
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-full-base-vad.json",
+      "sha256": "115742bab0a160b9c16a955eb93361efa3237b928748cab7242ac3bec8ee34ee",
+      "model": "base",
+      "vad_filter": true,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-full-small-en-novad.json",
+      "sha256": "5500fc60733b8574d50fac25dabdae94054bdd6355212be1255e31dfea6e9172",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-full-small-vad.json",
+      "sha256": "4bbff40d64f553533cc5a15069da812284210cd63bf9815017e7ee59999c2e7d",
+      "model": "small",
+      "vad_filter": true,
+      "range_from": 0,
+      "range_to": null
+    },
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-middle-medium-en-novad.json",
+      "sha256": "68dd458df8efe79e5542fbee7d600d79ead261363d5e9de141faea53472ed7bf",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 50.0,
+      "range_to": 191.0
+    },
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-quality-base-tight.json",
+      "sha256": "ee77b361435c5b0980bf75619ebbc3320c764bb79f27be92bcd76e77f29a8af6",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 174.9,
+      "range_to": 179.9
+    },
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-questions-base-tight.json",
+      "sha256": "57b690c05de3edcbf6acc33dbf523c74d5b2743ac9f9906c5a17152ce1aa9c78",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 257.0,
+      "range_to": 269.4
+    },
+    {
+      "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/raw/youtube-win-base-tight.json",
+      "sha256": "0e8487d2d94104f9cf70fa216246a6181e097a26dbe589776615abf6096c4ee7",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 235.8,
+      "range_to": 257.3
+    }
+  ],
+  "source_caption_evidence": {
+    "path": "data/research/rybakina-charaeva-beijing-2026-r2/audio/youtube-auto-captions.txt",
+    "sha256": "9b9f09dbc040deaae01daefcf0986c0186e37cc22a3d32690768a42276f0aab4",
+    "classification": "YouTube automatic caption corroboration only, not human listening or verbatim authority."
+  },
+  "crosscheck_notes": [
+    "English language detected on actual full small/base ASR with probabilities .992900/.995419. No original-vs-dubbed inference made.",
+    "Multilingual small/base full VAD, independent full small.en noVAD, medium.en middle/ending noVAD and five tight base windows compared. VAD can concatenate long pauses, and tight first word timestamps can collapse to requested window edge; actual full noVAD lexical word positions resolve those timing artifacts.",
+    "Proper names ASR spellings Rybakina/Rabakina/Robachanis and Charaeva/Shada-Leva/Shadadeva corrected only to officially verified participants, not invented literal phonetic names. Full small/base, tight base and actual native source captions corroborate the complete retained naming clauses; medium.en ending pronoun substitutions not silently used as the literal source.",
+    "Opening This time ends at most66.90; full medium.en assigns the next Its start to the silence before67.24, while actual tight63.8–67.0 small.en recognizes only the complete first sentence. Automatic caption timestamps are approximate and cannot override the actual source targeted ASR boundary. Retain only first sentence, not the source continuation.",
+    "Cold and ending career-defining sentence is split into readable bilingual subtitle chunks without changing source audio or dropping words. Quotes are all broadcast commentary; there are no interviews.",
+    "Last271.16–273.92 sentence is excluded due unresolved ASR name/tail completeness. It is not marked listened or complete. NonVAD brand-tail You hallucination278.16 is outside all retained windows.",
+    "Boundary pads exclude previous DiamondCourt98.58, Houdini160.40, and following AndElena180.29. Every TTS window and its restored-audio tail were checked against all full-source word events; an empty ASR result alone was not used as proof of silence."
+  ],
+  "foreground_english": [],
+  "no_foreground_english_reason": "Compared actual source full small/base VAD, full small.en noVAD, targeted medium.en and raw lexical timestamps. This entire selected window lies between reliable broadcast speech events, with preceding and following word tails outside boundaries. Long-gap ASR segments are not treated as continuous speech and no empty result alone proves silence.",
+  "boundary_evidence": "实际首盘莱巴金娜5–3、40–0盘点，56.20为发前准备，58.24切wide，完整发球与底线回合。64.25仅切声音，下一段连续保留结果；前一句英文最晚55.44结束。"
+}

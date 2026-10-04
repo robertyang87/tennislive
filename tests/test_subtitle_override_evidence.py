@@ -54,3 +54,47 @@ def test_tampered_ass_cannot_prove_anchor(tmp_path):
     path, out = _fixture(tmp_path)
     (out / "subtitles.ass").write_text("Format: Name, MarginV\nStyle: TL,900\n")
     assert override_problem(path, tmp_path)
+
+
+def _retained_manifest(path, out):
+    from render_inputs import canonical, project
+    projection = project(json.loads(path.read_text()))
+    qc = json.loads((out / "qc_attestation.json").read_text())
+    manifest = {"spec_sha256": qc["spec_sha256"], "film_sha256": qc["film_sha256"],
+                "projection": projection,
+                "projection_sha256": hashlib.sha256(canonical(projection).encode()).hexdigest(),
+                "artifacts": {"subtitles.ass": qc["ass_sha256"]}}
+    raw = json.dumps(manifest).encode()
+    (out / "render_inputs.json").write_bytes(raw)
+    qc["render_inputs_sha256"] = hashlib.sha256(raw).hexdigest()
+    qraw = json.dumps(qc).encode()
+    (out / "qc_attestation.json").write_bytes(qraw)
+    render = {"film_sha256": qc["film_sha256"], "render_inputs_sha256": qc["render_inputs_sha256"],
+              "qc_attestation_sha256": hashlib.sha256(qraw).hexdigest()}
+    (out / "render.json").write_text(json.dumps(render))
+
+
+def test_cover_copy_change_keeps_only_retained_subtitle_geometry_proof(tmp_path):
+    path, out = _fixture(tmp_path)
+    _retained_manifest(path, out)
+    spec = json.loads(path.read_text())
+    spec["cover"] = {"hook": "Revised cover copy"}
+    path.write_text(json.dumps(spec))
+    assert override_problem(path, tmp_path) is None
+    # 这不是新 spec 的成片质检凭证；发布闸仍会拦住旧 spec 哈希。
+    qc = json.loads((out / "qc_attestation.json").read_text())
+    assert qc["spec_sha256"] != hashlib.sha256(path.read_bytes()).hexdigest()
+    spec["source_url"] = "https://example.test/other-source"
+    path.write_text(json.dumps(spec))
+    assert override_problem(path, tmp_path)
+
+
+def test_retained_geometry_cannot_borrow_tampered_manifest(tmp_path):
+    path, out = _fixture(tmp_path)
+    _retained_manifest(path, out)
+    spec = json.loads(path.read_text()); spec["cover"] = {"hook": "Changed"}
+    path.write_text(json.dumps(spec))
+    manifest = json.loads((out / "render_inputs.json").read_text())
+    manifest["projection"]["subtitle_top"] = 900
+    (out / "render_inputs.json").write_text(json.dumps(manifest))
+    assert override_problem(path, tmp_path)

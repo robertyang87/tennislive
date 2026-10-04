@@ -84,8 +84,6 @@ render 每一步都记时间，末尾按耗时排一张表（`report_timings()`�
 
 from __future__ import annotations
 
-import narrated_audio_mode
-
 import argparse
 import json
 import math
@@ -102,7 +100,11 @@ from dataclasses import dataclass, replace
 from fractions import Fraction
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+import narrated_audio_mode  # noqa: E402
+import reviewed_effects_mode  # noqa: E402
 
 from tennislive import localca  # noqa: E402
 from tennislive.video import outro_page  # noqa: E402
@@ -515,9 +517,6 @@ INSET_WATERMARK_GAP_PX = 24
 #: 栏目，照合同的 pad 贴。模块全局和 `LAYOUT` 同一个形状——cut_segment 那一层
 #: 拿不到 spec。
 _INSET_TOP_CLEAR_Y = 0
-#: 章节卡底部那行 @handle 离字幕上锚的距离：全出血下字幕从 y=1284 起，
-#: handle 若照 outro 那 64px 贴底就落在 1336~1376，正压在字幕那一行上。
-TITLE_CARD_HANDLE_GAP_PX = 24
 # **每一段的音轨都要压到同一个采样率**。`concat` + `-c copy` 只认第一个文件的
 # 流参数：封面那段的 anullsrc 是 48k，而各分段跟着源片走 44.1k，于是 44.1k 的
 # AAC 帧被当成 48k 播——整条现场声快 8.8%，音轨在画面还剩 5.7 秒时就播完了
@@ -593,7 +592,7 @@ def dissolve_filtergraph(lengths: list[float], fade: float,
 
 
 def duck_filtergraph(filters: list[str], voice_labels: list[str],
-                     music: str = "", *, mute_original: bool = False) -> str:
+                     music: str = "", *, mute_original: bool = False, reviewed_bed: str = "") -> str:
     """闪避的滤镜图：没人说话时现场声开到 `BED_LOUD`，解说一进来就压下去。
 
     **`[vk0]apad[vk]` 那一段不能省，而且不能只当它是个细节。**
@@ -623,12 +622,20 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str],
     抽成函数是为了让判据能**真跑一次混音**：查源码文本的断言只能防「有人把它
     删了」，防不住「它从来没工作过」。
     """
+    if reviewed_bed:
+        # Speech-separated ball transients must stay audible under Chinese TTS.
+        # Fixed native bed gain; no voice-driven compressor on reviewed effects.
+        if music or mute_original:
+            raise ValueError("审核击球床不允许额外音乐或静音原声模式")
+        return (reviewed_bed + f"{';'.join(filters)};"
+                f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
+                "[bed][voice]amix=inputs=2:normalize=0:dropout_transition=0,asetpts=N/SR/TB[out]")
     # 音乐**不进闪避**：它已经在现场声的 4% 上，再让 sidechaincompress 压一道
     # 等于没有；而且喂进 sidechain 会把「有没有人说话」这个判据搅浑。它直接进
     # 最后那次 amix，和闪避完的现场声、解说三路相加。
     beds = "[duck][vm]" + ("[music]" if music else "")
     return (
-        ("anullsrc=r=48000:cl=stereo[bed];" if mute_original else f"[0:a]volume={BED_LOUD}[bed];")
+        (reviewed_bed or ("anullsrc=r=48000:cl=stereo[bed];" if mute_original else f"[0:a]volume={BED_LOUD}[bed];"))
         + f"{';'.join(filters)};"
         f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
         f"[voice]asplit=2[vk0][vm];"
@@ -2819,15 +2826,17 @@ class Segment:
     # ⚠️ 排在 image 之后：`_one` 到 image 为止都是按位置传的，插在前面会把
     # mute 顶进这个槽（第一版就是这么在 `bed=` 上撞出 multiple values 的）。
     bed: str = ""
-    # **记分条回贴（只在带式版式）**：解析好的抠图坐标 (x0, y0, x1, y1)，
+    # **记分条回贴**：解析好的抠图坐标 (x0, y0, x1, y1)，
     # None＝这一段不贴。带式的窗口居中（「不要偏离中心的」），美网那条浮在
     # 左下的板会被窗口左缘裁掉——开了这个的段从同一帧把整条板抠出来、按画面
     # 带的缩放比贴回左下，正好盖住残条，比分逐帧天然同步。spec 里写
-    # `"score_inset": true`（用 spec 顶层 `scorebox` 的坐标）或 `{"x2": N}`
+    # `"score_inset": true`（段级 `scorebox` 覆盖顶层默认坐标）或 `{"x2": N}`
     # （单独放宽这一段的板右缘）。
     # ⚠️ **顶层 scorebox 按板的最宽状态写**（「尽量把五盘大战的比分能包括
-    # 进来」）：美网每完成一盘板右缘 +38px，BO5 一律写 ~736。它现在只给
-    # **左缘和上下沿**（这两样不随盘数变）＋ 量不出来时的兜底右缘。
+    # 进来」）：美网每完成一盘板右缘 +38px，BO5 一律写 ~736。
+    # scorebox 是源片搜索提示，不是固定尺寸的实心贴片；WTA 渲染逐帧测主板
+    # 与原生提示条的真实边界，收紧四边，提示条旁的球场必须透明。
+    # 两部分取同源同帧、同比缩放，保留相对位置，不为提示条重新缩小主板。
     # ⭐ **右缘是渲染时逐段现量的**（`resolve_board_insets`，账号所有者
     # 2026-08-29：「不能固定宽度去切，要自适应」）——多抠的那截是球场，
     # 会被贴到画面上另一个位置，绿盖绿看不出来但它是错的。
@@ -2869,6 +2878,8 @@ class Segment:
     crop_zoom: float = 1.0
     # Optional per-segment subtitle anchor; absent keeps the existing layout.
     subtitle_bottom: int | None = None
+    # Measured original board retained in an uncropped source frame; never an inset.
+    source_scorebox: tuple[int, int, int, int] | None = None
 
     @property
     def length(self) -> float:
@@ -2973,7 +2984,7 @@ def seg_seconds(s: dict) -> float:
 
 
 def _scorebox4(box) -> tuple[int, int, int, int] | None:
-    """spec 顶层 `scorebox` 的形状校验：[x0, y0, x1, y1]（源片像素坐标），
+    """顶层或段级 `scorebox` 的形状校验：[x0, y0, x1, y1]（源片像素坐标），
     全为非负数且 x0<x1、y0<y1。合格返回整数四元组，不合格返回 None——
     报错的措辞由调用方按上下文写（spec 级和段级各说各的话）。"""
     if (isinstance(box, (list, tuple)) and len(box) == 4
@@ -3128,8 +3139,10 @@ def _quote_display(text: str) -> str:
     和同一条片子里旁白字幕（从来不带）摆在一起是两种样子。英文行不动：
     那是他真说的话，标点是语法的一部分，撇号逗号都得在——这条线发的是
     英语学习素材（见「烧进画面的英文里不许有语气词」那节，英文按行单独管）。
+    比分的 readable 转换也只用于原本含汉字的行，不能先把英文里的 40–15
+    变成 40比15，再误把英文当中文去标点。
     """
-    shown = [drop_punctuation(line) if _QUOTE_CJK.search(line) else line.strip()
+    shown = [drop_punctuation(readable(line)) if _QUOTE_CJK.search(line) else line.strip()
              for line in text.split("\n")]
     return "\n".join(line for line in shown if line) or text
 
@@ -3185,14 +3198,14 @@ def explicit_quote_cues(lines: tuple, span: float,
                 raise ReelError(
                     f"quote 字幕会和下一条重叠：end={end-offset:.2f}s, "
                     f"next={next_start-offset:.2f}s")
-            out.append((start, end, _quote_display(readable(str(item["text"])))))
+            out.append((start, end, _quote_display(str(item["text"]))))
         return out
     weights = [max(1, len(str(t).replace("\n", ""))) for t in lines]
     total = sum(weights)
     at = offset
     for text, weight in zip(lines, weights):
         dur = span * weight / total
-        out.append((at, at + dur, _quote_display(readable(str(text)))))
+        out.append((at, at + dur, _quote_display(str(text))))
         at += dur
     return out
 
@@ -3308,6 +3321,13 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     """
     def _seg_score_inset(s: dict, i: int) -> tuple[int, int, int, int] | None:
         raw = s.get("score_inset")
+        if "scorebox" in s:
+            if _scorebox4(s["scorebox"]) is None:
+                raise ReelError(f"第 {i + 1} 段 scorebox 要写合格的 [x0, y0, x1, y1]"
+                                f"（源片像素坐标），拿到 {s['scorebox']!r}。")
+            if not raw:
+                raise ReelError(f"第 {i + 1} 段写了 scorebox 却没开 score_inset——"
+                                "这是不生效的死键；段级框只覆盖这一段回贴的位置。")
         if raw is None or raw is False:
             return None
         # ⭐ 2026-09-16 起全出血也能回贴（原来只认带式，全出血走「cx 排除」）。
@@ -3315,11 +3335,13 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         # 只剩「7|4 / 5|4」四个数字＋半截名字，全片 94.6s（37%）都这样；而全库
         # 177 条赛场之上里 160 条是全出血，这不是美网期间才有的形状。全出血的
         # 板贴在字幕带**上方**（几何见 cut_segment），带式照旧贴画面带左下。
-        box = _scorebox4(spec.get("scorebox"))
+        # 多源片子的转播板位置可能不同：段级框覆盖全局默认，仍取同一源帧。
+        box_value = s.get("scorebox", spec.get("scorebox"))
+        box = _scorebox4(box_value)
         if box is None:
             raise ReelError(
-                f"第 {i + 1} 段开了 score_inset，spec 顶层却没有合格的 "
-                f"`scorebox`（拿到 {spec.get('scorebox')!r}）。写 "
+                f"第 {i + 1} 段开了 score_inset，却没有合格的 "
+                f"`scorebox`（段级覆盖或 spec 顶层默认，拿到 {box_value!r}）。写 "
                 "[x0, y0, x1, y1]（源片像素坐标）——probe 的 scorebox_guess "
                 "直接抄，别按感觉量。")
         if raw is True:
@@ -3336,7 +3358,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                     "一截球场），深盘的段则单独放宽。")
             return (box[0], box[1], int(x2), box[3])
         raise ReelError(
-            f"第 {i + 1} 段的 score_inset 只认 true（用 spec 的 scorebox）"
+            f"第 {i + 1} 段的 score_inset 只认 true（用段级或 spec 默认 scorebox）"
             '或 {"x2": N}（这一段打到更深的盘、板更宽时单独放宽右缘），'
             f"拿到的是 {raw!r}。")
 
@@ -3401,7 +3423,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             stray = sorted(set(s) & {"start", "end", "source", "track",
                                      "quote", "inset", "speed", "mute", "cx",
                                      "crop_zoom", "fit", "crosses_cut", "point_end_ok",
-                                     "score_inset", "score_inset_windows"})
+                                     "score_inset", "score_inset_windows", "scorebox"})
             if stray:
                 raise ReelError(f"第 {i + 1} 段是整屏证据段（image），"
                                 f"不认这些窗口类字段：{stray}")
@@ -3437,6 +3459,22 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 
     segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i))
                 for i, s in enumerate(spec["segments"])]
+    source_scorebox = spec.get("source_scorebox")
+    if source_scorebox is not None:
+        original_box = _scorebox4(source_scorebox)
+        if original_box is None:
+            raise ReelError("source_scorebox 要写实测源画面框 [x0,y0,x1,y1]")
+        for i, (raw, seg) in enumerate(zip(spec["segments"], segments)):
+            if seg.image or raw.get("title_card") or raw.get("stat_card"):
+                continue
+            preserves = (seg.fit == "full_source" or
+                         (seg.fit == "contain" and seg.contain_keep == 1.0))
+            if (not preserves or raw.get("score_inset") is not False
+                    or seg.score_inset or seg.cx not in (None, .5) or seg.track
+                    or seg.square_pan):
+                raise ReelError(f"第 {i + 1} 段 source_scorebox 保留原板要求完整源画面："
+                                "fit=full_source 或 contain_keep=1.0、居中、不回贴；普通fill不能免回贴")
+            seg.source_scorebox = original_box
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
                if s.image and s.image != STAT_CARD_PLACEHOLDER
                and not s.image.startswith(TITLE_CARD_PREFIX)
@@ -3502,9 +3540,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         pinned = [i + 1 for i, g in enumerate(spec["segments"])
                   if isinstance(g.get("score_inset"), dict)]
         print(f"    [score] scorebox 宽 {bx[2] - bx[0]}px（右缘 {bx[2]}）——"
-              "板的**左缘和上下沿**取这四个数（不随盘数变），"
-              "**右缘渲染时逐段现量**（板每打完一盘 +38px，"
-              "`resolve_board_insets` 每段采 6 点，量不出来才退回这个右缘）；"
+              "这是源图形的搜索提示；渲染按对应转播标定量实际边界，"
+              "WTA 主板与提示条逐帧分别测四边、透明合成，不搬搜索框里的球场；"
               + (f"开了回贴的是第 {inset_on} 段" if inset_on else "没有段开回贴")
               + (f"，其中第 {pinned} 段用 `{{\"x2\": N}}` 把右缘钉死了"
                  "（现量就不生效了，只在量不准的时候才该这么钉）" if pinned else ""))
@@ -3608,7 +3645,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                  or spec.get("_column", "")).strip()
     if (layout != "band" and column == "赛场之上" and not spec.get("archival")
             and str(spec.get("slug", "")) not in legacy_fullbleed_no_scoreboard()):
-        missing_box = scorebox is None
+        missing_box = scorebox is None and source_scorebox is None
         undeclared, unclaimed = [], []
         for i, raw in enumerate(spec["segments"]):
             if raw.get("image") or raw.get("title_card") or raw.get("stat_card"):
@@ -3683,10 +3720,10 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
              "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
-             "music", "outro", "push", "rate", "scorebox", "segments",
+             "music", "outro", "push", "rate", "scorebox", "scoreboard_profile", "source_scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_fallbacks", "source_url",
-             "original_audio_mode", "owner_approval", "track",
+             "original_audio_mode", "owner_approval", "audio_effects_review", "track",
              "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
              "editorial"),
@@ -3696,7 +3733,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "tier", "topic", "versus", "winner"),
     "segment": ("bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
-                "score_inset_windows",
+                "score_inset_windows", "scorebox",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
                 "kicker", "track", "voice", "subtitle_bottom"),
 }
@@ -4481,6 +4518,10 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         keep = (native_w if seg.fit == "full_source"
                 else contain_keep_width(native_w, seg.contain_keep))
         x = (native_w - keep) // 2
+        if seg.source_scorebox:
+            bx0, by0, bx1, by1 = seg.source_scorebox
+            if not (x <= bx0 < bx1 <= x + keep and 0 <= by0 < by1 <= native_h):
+                raise ReelError("source_scorebox 原板超出真实源画面取景，不能免回贴")
         chain = (
             f"split=2[bg][fg];"
             f"[bg]crop={keep}:{native_h}:{x}:0,"
@@ -6287,6 +6328,8 @@ def silence_findings(spec: dict, segments, probes: dict,
     """
     import probe_audio  # noqa: PLC0415
 
+    if reviewed_effects_mode.enabled(spec):
+        return [], ["  本条获准保留击球效果声：效果轨审核、精确raw窗口与最终PCM由渲后硬闸核验"]
     if narrated_audio_mode.enabled(spec):
         return [], ["  获准中文旁白模式：源原声将被真实移除；最终TTS与零底轨由成片PCM核验"]
     hard: list[str] = []
@@ -6807,14 +6850,10 @@ def _render_silence_gate(spec: dict, segments, voices, spoken, cover_secs: float
 
 
 def _spec_box_urls(spec: dict, urls: dict) -> set[str]:
-    """spec 顶层 `scorebox` 归哪几条源：开了 `score_inset` 的段取画面的那几条（回贴拿它
-    切的就是那几条源的板）；一段都没开（带式）就归主源。没写 `scorebox` 是空集。"""
-    if not spec.get("scorebox") or not urls:
-        return set()
-    primary = next(iter(urls))
-    keys = {str(seg.get("source") or primary) for seg in spec.get("segments") or []
-            if isinstance(seg, dict) and seg.get("score_inset")}
-    return {urls[key] for key in (keys or {primary}) if key in urls}
+    """顶层默认或段级 `scorebox` 实际归属的源；一段都没开（带式）就归主源。"""
+    from probe_board import scoreboxes_by_url  # noqa: PLC0415
+
+    return set(scoreboxes_by_url(spec, urls))
 
 
 def _reprobe_commands(spec: dict, probes: dict, urls: dict) -> dict[str, str]:
@@ -6822,7 +6861,7 @@ def _reprobe_commands(spec: dict, probes: dict, urls: dict) -> dict[str, str]:
 
     slug 取那份老 probe 所在的目录名（多源片子的源常 probe 在别的 slug 下，同一个
     slug 同一天只能落一份 probe.json）；区间、记分条框照抄老 probe——老 probe 没记框
-    （bfc462b9a 之前的全没记）就退到 spec 顶层的 `scorebox`（只给它归属的那几条源，
+    （bfc462b9a 之前的全没记）就退到这条源的段级或顶层默认 `scorebox`（只给它归属的源，
     `_spec_box_urls`），都没有就在命令后面明说；分支取当前检出的那一条（runner 上是
     `GITHUB_REF_NAME`），拿不到就写 `<分支>`。"""
     import probe_audio  # noqa: PLC0415
@@ -6834,14 +6873,19 @@ def _reprobe_commands(spec: dict, probes: dict, urls: dict) -> dict[str, str]:
                              capture_output=True, text=True)
         ref = got.stdout.strip() if got.returncode == 0 else ""
     ref = ref if ref and ref != "HEAD" else "<分支（要含 d8fb15b74）>"
-    boxed = _spec_box_urls(spec, urls)
+    from probe_board import scoreboxes_by_url  # noqa: PLC0415
+
+    boxes = scoreboxes_by_url(spec, urls)
     out = {}
     for url in set(urls.values()):
         folder, _data = found.get(url, (None, None))
         slug = folder.name if folder is not None else str(spec.get("slug") or "<slug>")
+        owned = boxes.get(url) or []
         out[url] = probe_audio.reprobe_command(
             url, slug, probes.get(url), ref,
-            spec_box=spec.get("scorebox") if url in boxed else None)
+            spec_box=owned[0] if len(owned) == 1 else None)
+        if len(owned) == 1 and owned[0] != spec.get("scorebox"):
+            out[url] = out[url].replace("框取自 spec 顶层的 scorebox", "框取自该源的段级 scorebox")
     return out
 
 
@@ -6859,6 +6903,8 @@ def digital_silence_check(spec: dict, segments, probes: dict, urls: dict, *,
     `demoted`：非空时硬伤照印、降成只报（dry-run 在 mode≠render 那几趟传 `mode_demoted()`）。"""
     import probe_audio  # noqa: PLC0415
 
+    if reviewed_effects_mode.enabled(spec):
+        return [], ["  本条击球效果声模式：效果床与本人TTS由渲后身份绑定及PCM核验"]
     if narrated_audio_mode.enabled(spec):
         return [], ["  获准中文旁白模式：仅计划内的静音留白；本人TTS由渲后实测硬闸校验"]
     cover_text = str((spec.get("cover") or {}).get("narration") or "").strip()
@@ -7913,11 +7959,11 @@ def quote_overflow_rows(spec: dict) -> list[tuple[int, str, float, int, bool]]:
         for item in raw:
             text = item["text"] if isinstance(item, dict) else str(item)
             # ⚠️ 量的是**渲出来那一份**，不是 spec 里的原文。
-            # `_quote_display(readable(...))` 就是 `explicit_quote_cues` 真正
-            # 送进字幕的那串：中文行去了标点（`·` 变成空格）、比分写成「6比4」。
+            # `_quote_display(...)` 就是 `explicit_quote_cues` 真正送进字幕的那串：
+            # 原英文行保留，中文行去了标点（`·` 变成空格）、比分写成「6比4」。
             # 拿原文去量，量的不是同一串字——账号所有者报的那条正是栽在这儿：
             # 原文里那个 `·` 到了屏幕上是个空格，于是整行多了一个断点。
-            shown = _quote_display(readable(str(text)))
+            shown = _quote_display(str(text))
             for index, row in enumerate(shown.split("\n")):
                 row = row.strip()
                 if not row:
@@ -8734,7 +8780,7 @@ def cold_open_problem(spec: dict, *, primary: str | None = None) -> str | None:
             "真没有赢球后画面的源片，在 spec 顶层写 `_no_cold_open_why`。")
     if first.get("image"):
         return "「赛场之上」第 1 段是静图，不是赢球后的冷开场。\n" + hint
-    if str(first.get("narration") or "").strip() and not narrated_audio_mode.enabled(spec):
+    if str(first.get("narration") or "").strip() and not (narrated_audio_mode.enabled(spec) or reviewed_effects_mode.enabled(spec)):
         return ("「赛场之上」第 1 段配了中文旁白——那不是冷开场。"
                 "账号所有者 2026-09-25：「视频从赢球后的冷开场……是全局的要求」。\n"
                 + hint)
@@ -9054,6 +9100,10 @@ def scoreboard_profile(spec: dict, segments: list | None = None) -> str | None:
         return "us-open" if us_open_match_line(line1) else "band-legacy"
     event = str((spec.get("_production") or {}).get("event") or "")
     if (profile := broadcast_profile(line1, event, spec_tour(spec))):
+        declared = spec.get("scoreboard_profile")
+        if declared is not None and (not isinstance(declared, str)
+                or {"wta_left": "wta"}.get(declared, declared) != profile):
+            raise ReelError(f"scoreboard_profile {declared!r} 与已标定转播 {profile!r} 不符")
         return profile
     raise ReelError(
         f"全出血的片子开了 score_inset，可顶栏「{line1}」认不出是哪一家转播——"
@@ -9421,10 +9471,8 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
             import render_title_card  # noqa: PLC0415
             renderer = render_title_card.render
         size = (VIDEO_W, BAND_PIC_H) if LAYOUT == "band" else (VIDEO_W, VIDEO_H)
-        # 全出血下卡铺满整幅（`still_canvas_for_layout`），字幕从 `default_margin_v()`
-        # 起压在卡上——卡底那行 @handle 要让开它；带式的字幕在底带里、卡外，不用让。
-        clear_bottom = (0 if LAYOUT == "band"
-                        else VIDEO_H - default_margin_v() + TITLE_CARD_HANDLE_GAP_PX)
+        # 品牌固定在卡底 64px 安全区（render_title_card 的默认值）。
+        # 字幕保留自己的真实锚，不再拿默认字幕上锚把品牌抬到标题/正文中间。
         out_segments = []
         for i, s in enumerate(segments):
             if not (s.image and s.image.startswith(TITLE_CARD_PREFIX)):
@@ -9432,8 +9480,7 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
                 continue
             card = json.loads(s.image[len(TITLE_CARD_PREFIX):])
             out = outdir / f"title_card_{i + 1:02d}.jpg"
-            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size,
-                     clear_bottom=clear_bottom)
+            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size)
             if not out.is_file():
                 raise ReelError(f"第 {i + 1} 段的章节卡没渲出来：{out}")
             print(f"[章节卡] 第 {i + 1} 段「{card['text']}」→ {out.name}（{size[0]}×{size[1]}）")
@@ -9710,6 +9757,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             resolve_masks(sources, segments, outdir,
                           Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
                           FPS_EXPR, SEG_FADE)
+        elif profile == "rna-slam":
+            from rna_scoreboard import resolve_masks as resolve_rna_masks
+            resolve_rna_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
         elif profile == "atp":
             # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
             # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
@@ -9946,6 +9996,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         print(f"[音乐] {music_spec['file']}：循环播放铺满 {film_seconds:.1f}s，"
               f"{pct}% 现场声（增益 {BED_LOUD * pct / 100:.4f}），"
               f"{max(0.0, film_seconds - MUSIC_FADE):.1f}s 起淡出")
+    reviewed_bed = ""
+    effects_windows = []
+    if reviewed_effects_mode.enabled(spec):
+        effects_inputs, reviewed_bed, effects_windows = reviewed_effects_mode.bed_graph(
+            spec, sources, audio_cue_offsets, 1 + mix_inputs.count("-i"))
+        mix_inputs.extend(effects_inputs)
     with stage("混音"):
         if filters:
             # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
@@ -9955,7 +10011,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "-i", str(silent), *mix_inputs,
                 "-filter_complex",
                 duck_filtergraph(filters, voice_labels, music_graph,
-                                 mute_original=narrated_audio_mode.enabled(spec)),
+                                 mute_original=narrated_audio_mode.enabled(spec), reviewed_bed=reviewed_bed),
                 # 这一步只是把解说混进现场声，产物是个 m4a——画面在这儿是
                 # 拿来给 `-shortest` 定长度的，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
@@ -9971,6 +10027,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     narrated_audio_mode.seal_mix(spec, outdir, mixed, voices, audio_cue_offsets,
                                 spoken_of, cover_voice, cover_secs, outro_voice, offset,
                                 probe_duration)
+    reviewed_effects_mode.seal_mix(spec, outdir, mixed, voices, audio_cue_offsets,
+                                  spoken_of, cover_voice, cover_secs, outro_voice, offset,
+                                  probe_duration, effects_windows)
     final = outdir / f"{spec.get('slug', 'reel')}.mp4"
     topbar = _topbar_lines(spec)
     topbar_ass = None
@@ -10158,7 +10217,10 @@ def masked_board_patch(x0: int, y0: int, x1: int, y1: int, mask: str,
     判据 `tests/test_small_gates.py::test_蒙版和裁框差一行也能alphamerge`（真跑 ffmpeg）。
     """
     w, h = x1 - x0, y1 - y0
-    return (f"[wb]crop={w}:{h}:{x0}:{y0},format=rgb24[bc];"
+    # Tight measured bounds can be odd. Cropping a YUV420 frame first silently
+    # rounds its origin/size to the chroma grid, losing a graphic edge and making
+    # the alpha plane a different size. RGB first preserves the native pixels.
+    return (f"[wb]format=rgb24,crop={w}:{h}:{x0}:{y0}:exact=1[bc];"
             f"movie='{_escape(Path(mask))}':dec_threads=1,format=gray,"
             f"scale={w}:{h}:flags=neighbor[mask];"
             f"[bc][mask]alphamerge,scale={bw}:{sh}:flags=lanczos[b];")
@@ -11876,4 +11938,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

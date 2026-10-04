@@ -32,7 +32,9 @@ from tennislive.render import cards
 from tennislive.render.webcards import _CSS, _shell, daily_card_theme
 
 # 提淡后的底色（:root 是 #061D17 → #0B3B2C）
-GROUND0, GROUND1 = (0x1E, 0x42, 0x34), (0x2A, 0x64, 0x50)
+from tennislive.design_tokens import DARK, rgb
+
+GROUND0, GROUND1 = rgb(DARK["muted"]), rgb(DARK["card"])
 
 # CSS 里那段布局重做的起点，测试靠它把"新增规则"和原有规则分开
 _DAILY_MARKER = "daily 的布局重做"
@@ -115,9 +117,9 @@ def test_daily_overrides_only_the_four_background_surfaces():
     assert overridden == {"--ground0", "--ground1", "--panel", "--panel-strong"}, (
         f"html.daily 覆盖了额外的 token：{sorted(overridden)}"
     )
-    assert "--ground0:#1E4234" in block and "--ground1:#2A6450" in block
+    assert f"--ground0:{DARK['muted']}" in block and f"--ground1:{DARK['card']}" in block
 
-    root_ground0, root_ground1 = (0x06, 0x1D, 0x17), (0x0B, 0x3B, 0x2C)
+    root_ground0, root_ground1 = rgb(DARK["card"]), rgb(DARK["background"])
     assert _luma(GROUND0) > _luma(root_ground0)
     assert _luma(GROUND1) > _luma(root_ground1)
 
@@ -290,9 +292,8 @@ def test_pillow_fallback_matches_the_html_palette():
     daily, dark = cards._THEMES["daily"], cards._THEMES["dark"]
     changed = {k for k in daily if daily[k] != dark.get(k)}
     assert changed == {
-        "BG_TOP", "BG_BOTTOM", "PANEL", "PANEL_HI", "SOFT_ACCENT",
-        "CARD_BG", "CARD_TEXT", "CARD_GREY", "CARD_LINE",
-        "WIN_BAND", "WIN_GREEN", "CHIP_GREEN",
+        "BG_TOP", "BG_BOTTOM", "SOFT_ACCENT",
+        "CHIP_GREEN",
     }, f"Pillow 兜底改了额外的色值：{sorted(changed)}"
     # 收敛成的那支金必须就是主题里的 --gold，不能另起一支
     assert daily["SOFT_ACCENT"] == (0xD5, 0xB4, 0x4D)

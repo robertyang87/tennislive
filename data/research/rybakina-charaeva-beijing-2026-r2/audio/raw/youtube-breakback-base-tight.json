@@ -1,0 +1,201 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=Qd4MQBnmF5A",
+  "source_sha256": "ed88d5e4cce59bdd16b7caa8cf709f8afda9f1b0bf1871798d97d788ca6f198f",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 108.7,
+  "range_to": 119.3,
+  "created_at": "2026-10-03T17:53:57.215812+00:00",
+  "elapsed_seconds": 4.08,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 109.58,
+      "end": 117.26,
+      "text": " And for the fourth time today, a break is followed by another break, the break-back for",
+      "avg_logprob": -0.5116551592946053,
+      "no_speech_prob": 0.18766279518604279,
+      "compression_ratio": 1.1153846153846154,
+      "words": [
+        {
+          "start": 109.58,
+          "end": 110.1,
+          "word": " And",
+          "probability": 0.40954241156578064
+        },
+        {
+          "start": 110.1,
+          "end": 110.26,
+          "word": " for",
+          "probability": 0.8524831533432007
+        },
+        {
+          "start": 110.26,
+          "end": 110.4,
+          "word": " the",
+          "probability": 0.9937392473220825
+        },
+        {
+          "start": 110.4,
+          "end": 110.64,
+          "word": " fourth",
+          "probability": 0.7958464026451111
+        },
+        {
+          "start": 110.64,
+          "end": 110.9,
+          "word": " time",
+          "probability": 0.9965696334838867
+        },
+        {
+          "start": 110.9,
+          "end": 111.28,
+          "word": " today,",
+          "probability": 0.9694413542747498
+        },
+        {
+          "start": 111.86,
+          "end": 113.22,
+          "word": " a",
+          "probability": 0.9732266068458557
+        },
+        {
+          "start": 113.22,
+          "end": 113.56,
+          "word": " break",
+          "probability": 0.9869001507759094
+        },
+        {
+          "start": 113.56,
+          "end": 115.0,
+          "word": " is",
+          "probability": 0.9614291787147522
+        },
+        {
+          "start": 115.0,
+          "end": 115.3,
+          "word": " followed",
+          "probability": 0.9965651631355286
+        },
+        {
+          "start": 115.3,
+          "end": 115.5,
+          "word": " by",
+          "probability": 0.9996788501739502
+        },
+        {
+          "start": 115.5,
+          "end": 115.68,
+          "word": " another",
+          "probability": 0.996098518371582
+        },
+        {
+          "start": 115.68,
+          "end": 116.14,
+          "word": " break,",
+          "probability": 0.99549400806427
+        },
+        {
+          "start": 116.32,
+          "end": 116.42,
+          "word": " the",
+          "probability": 0.571844220161438
+        },
+        {
+          "start": 116.42,
+          "end": 116.68,
+          "word": " break",
+          "probability": 0.9660884737968445
+        },
+        {
+          "start": 116.68,
+          "end": 117.02,
+          "word": "-back",
+          "probability": 0.5477027259767056
+        },
+        {
+          "start": 117.02,
+          "end": 117.26,
+          "word": " for",
+          "probability": 0.9356564283370972
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 117.26,
+      "end": 118.96,
+      "text": " a shot of Labour to get it to all.",
+      "avg_logprob": -0.8102418642777663,
+      "no_speech_prob": 0.19552412629127502,
+      "compression_ratio": 0.8717948717948718,
+      "words": [
+        {
+          "start": 117.26,
+          "end": 117.5,
+          "word": " a",
+          "probability": 0.09923480451107025
+        },
+        {
+          "start": 117.5,
+          "end": 117.5,
+          "word": " shot",
+          "probability": 0.44713324308395386
+        },
+        {
+          "start": 117.5,
+          "end": 117.66,
+          "word": " of",
+          "probability": 0.8397972583770752
+        },
+        {
+          "start": 117.66,
+          "end": 117.88,
+          "word": " Labour",
+          "probability": 0.1520434021949768
+        },
+        {
+          "start": 117.88,
+          "end": 118.34,
+          "word": " to",
+          "probability": 0.9340257048606873
+        },
+        {
+          "start": 118.34,
+          "end": 118.48,
+          "word": " get",
+          "probability": 0.9974915981292725
+        },
+        {
+          "start": 118.48,
+          "end": 118.6,
+          "word": " it",
+          "probability": 0.20054152607917786
+        },
+        {
+          "start": 118.6,
+          "end": 118.74,
+          "word": " to",
+          "probability": 0.8731033802032471
+        },
+        {
+          "start": 118.74,
+          "end": 118.96,
+          "word": " all.",
+          "probability": 0.5540252923965454
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "8f131478da09a56f5a870e701ab7d50999002483c94a8825e60a2978ea62951d",
+  "metadata_sanitization": "Only local source_path omitted for repository portability; words, probabilities, source absolute times and model settings unchanged."
+}

@@ -1,0 +1,25 @@
+{
+  "algorithm": "4th-order Butterworth highpass 2200Hz local effects only;20ms linear crossfade to original effects at each edge; no full-frequency mute",
+  "input_sha256": "c7065056b6d958a16bebe42421d9bc3c260fcc35798383c5775a5304acee35df",
+  "output_sha256": "73034a53b8cc1489ad8fd867d3fc205c6ca9a661439d6539baecc95685fe59f6",
+  "regions": [
+    {
+      "start": 79.7,
+      "end": 81.1,
+      "rms_before": 0.02294565518643914,
+      "rms_after": 0.004668943871415088,
+      "peak_before": 0.1880478858947754,
+      "peak_after": 0.09967866218742406,
+      "nonzero_samples": 67199
+    },
+    {
+      "start": 98.7,
+      "end": 99.9,
+      "rms_before": 0.06858141703683163,
+      "rms_after": 0.014282008871007333,
+      "peak_before": 0.29922211170196533,
+      "peak_after": 0.164066779732304,
+      "nonzero_samples": 57600
+    }
+  ]
+}
