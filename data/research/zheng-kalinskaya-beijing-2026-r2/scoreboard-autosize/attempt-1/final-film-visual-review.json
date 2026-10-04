@@ -1,0 +1,177 @@
+{
+  "status": "changes_required",
+  "whole_film_visual_qc_pass": false,
+  "run_id": "37169969418",
+  "film_path": "/workspace/scoreboard-autosize-research/native-final/zheng-kalinskaya-beijing-2026-r2.mp4",
+  "film_sha256": "df0c075f20c4515be1144bf9ce48fc081f63b1aa28818599eb291bde0dee1447",
+  "film_bytes": 67455874,
+  "film_seconds": 222.76,
+  "actual_listening_performed": false,
+  "review_method": "Viewed 33 real final MP4 frame crops across every one of the 11 scoreboard windows plus 8 full final MP4 frames for subtitle/turn/RET/brand/handshake/stats/ending. Compared two failing frames with original WTA source proxy (+1275s identity). No preview substituted for final movie.",
+  "findings": [
+    {
+      "severity": "blocking_visual",
+      "segment": 3,
+      "film_second": 39.35,
+      "source": "official",
+      "source_second": 1348.57,
+      "finding": "Two grey rectangular court/background patches remain attached beyond true rounded body right edge. Native source main body right edge approximately x478; final patch contains adjacent non-board source pixels to approximately x522. Names, server marker and scores remain readable but user tight-boundary request not satisfied.",
+      "actual_final_frame": "final-visual-frames/seg03-2.png",
+      "actual_source_frame": "native-source-1348.57.png"
+    },
+    {
+      "severity": "blocking_visual",
+      "segment": 4,
+      "film_second": 54.67,
+      "source": "official",
+      "source_second": 1382.05,
+      "finding": "Native BACKHAND WINNERS header is preserved, but blue racket/background rectangular patch remains to right of native statistics body. Actual body right edge approximately x446; copied adjacent background extends toward x490.",
+      "actual_final_frame": "final-visual-frames/seg04-2.png",
+      "actual_source_frame": "native-source-1382.05.png"
+    }
+  ],
+  "windows": [
+    {
+      "segment": 2,
+      "sample_count": 3,
+      "visual_status": "pass_at_reviewed_samples",
+      "source": "official",
+      "film_samples": [
+        14.48,
+        18.6,
+        22.67
+      ]
+    },
+    {
+      "segment": 3,
+      "sample_count": 3,
+      "visual_status": "changes_required",
+      "source": "official",
+      "film_samples": [
+        23.32,
+        31.36,
+        39.35
+      ]
+    },
+    {
+      "segment": 4,
+      "sample_count": 3,
+      "visual_status": "changes_required",
+      "source": "official",
+      "film_samples": [
+        40.0,
+        47.36,
+        54.67
+      ]
+    },
+    {
+      "segment": 5,
+      "sample_count": 3,
+      "visual_status": "pass_at_reviewed_samples",
+      "source": "official",
+      "film_samples": [
+        55.32,
+        65.3,
+        75.23
+      ]
+    },
+    {
+      "segment": 6,
+      "sample_count": 3,
+      "visual_status": "pass_at_reviewed_samples",
+      "source": "supplement",
+      "film_samples": [
+        75.88,
+        80.515,
+        85.1
+      ]
+    },
+    {
+      "segment": 8,
+      "sample_count": 3,
+      "visual_status": "pass_at_reviewed_samples",
+      "source": "supplement",
+      "film_samples": [
+        90.25,
+        98.5,
+        106.7
+      ]
+    },
+    {
+      "segment": 10,
+      "sample_count": 3,
+      "visual_status": "pass_at_reviewed_samples",
+      "source": "official",
+      "film_samples": [
+        112.15,
+        116.09,
+        119.98
+      ]
+    },
+    {
+      "segment": 12,
+      "sample_count": 3,
+      "visual_status": "pass_at_reviewed_samples",
+      "source": "supplement",
+      "film_samples": [
+        129.13,
+        137.205,
+        145.23
+      ]
+    },
+    {
+      "segment": 14,
+      "sample_count": 3,
+      "visual_status": "pass_at_reviewed_samples",
+      "source": "supplement",
+      "film_samples": [
+        152.58,
+        157.43,
+        162.23
+      ]
+    },
+    {
+      "segment": 16,
+      "sample_count": 3,
+      "visual_status": "pass_at_reviewed_samples",
+      "source": "official",
+      "film_samples": [
+        167.68,
+        172.72,
+        177.71
+      ]
+    },
+    {
+      "segment": 17,
+      "sample_count": 3,
+      "visual_status": "pass_at_reviewed_samples",
+      "source": "supplement",
+      "film_samples": [
+        178.36,
+        180.81,
+        183.21
+      ]
+    }
+  ],
+  "confirmed_improvements": [
+    "Original 45px upper court strip removed from normal official body; no broad upper rectangular court patch in reviewed ordinary windows.",
+    "Original short SET POINT header retained; area to its right reveals actual main crop background rather than copied source ballcourt.",
+    "Names, seed [15], server tennis-ball mark and normal set/game/point columns retained at reviewed frames.",
+    "Different first/second/third-set widths retained; no stretching target box.",
+    "Board absent end frames at segments5,6,8,14 correctly show clean underlying video at sampled times.",
+    "Native supplement incomplete header green strips preserved without invented BREAK POINT text.",
+    "English literal 40–15 subtitle is readable at actual film160.5s; Chinese line retained and clear of board.",
+    "Third break wide view at180.0s preserves near-side Zheng and swing area.",
+    "RET card186.0/188.5 has semantic line break, correctRet score, bottombrand separated from subtitle.",
+    "Chair-side handshake198.02 visible; no fabricated matchpoint finish.",
+    "Stats206.0 retains9 rows and Ret.; ending217.0 shows next Bouzkova and bottombrand."
+  ],
+  "contact_sheets": [
+    "final-scoreboard-contact-01.jpg",
+    "final-scoreboard-contact-02.jpg",
+    "final-scoreboard-contact-03.jpg",
+    "final-scoreboard-contact-04.jpg",
+    "final-content-contact.jpg"
+  ],
+  "scope_limit": "Visual sampled-frame review; native technical gates and root full FFmpeg/alpha verification are separate. Final actual movie still requires a new native rerender for two remaining body-edge defects; do not publish this SHA as visually approved."
+}
