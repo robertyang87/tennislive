@@ -1,0 +1,135 @@
+{
+  "schema": "independent-finished-master-visual-review-v1",
+  "created_at": "2026-09-30T01:45:04.012634+00:00",
+  "master_file": "/workspace/scratch/b4b8091bcdb5/chengdu-media/trophy-v2/赛后开麦-成都捧杯时刻-v2.mp4",
+  "master_sha256": "0e64879ae47c9e41806a07bb1be7c08cdc0cd0604a05180a310f6c1527f63182",
+  "bytes": 17790499,
+  "duration_sec": 52.4,
+  "reviewer": "independent_qc",
+  "status": "visual_pass_with_audio_scope_limit",
+  "is_restored_original": false,
+  "method": "Decoded full-video 3-second contact sheet and inspected 14 full-resolution frames including every subtitle cue, cover, endcard and real brand outro. Read actual rendered text; not solely script/spec validation.",
+  "source_identity": {
+    "type": "trophy_moment",
+    "visual_evidence": "Same pink-clothed winner holds actual trophy on CHENGDU awards court with panda mascots. No microphone/player speaking sequence present.",
+    "player_speech": false,
+    "audio_role": "broadcast_commentator per source transcript; not independently listened in this pass"
+  },
+  "subtitles": [
+    {
+      "source_start": 441.41,
+      "source_end": 443.21,
+      "en": "But the smile says it all.",
+      "zh": "但他的笑容已经说明了一切",
+      "actual_visible_frame_sec": 3,
+      "evidence": "independent-qc/frame-3.jpg",
+      "visual_readability": "pass"
+    },
+    {
+      "source_start": 444.35,
+      "source_end": 447.81,
+      "en": "After losing his first five Tour-level finals,",
+      "zh": "此前五次巡回赛决赛都失利",
+      "actual_visible_frame_sec": 6,
+      "evidence": "independent-qc/frame-6.jpg",
+      "visual_readability": "pass"
+    },
+    {
+      "source_start": 448.27,
+      "source_end": 450.35,
+      "en": "he’s now won two in a row.",
+      "zh": "如今他已连续两次决赛夺冠",
+      "actual_visible_frame_sec": 10,
+      "evidence": "independent-qc/frame-10.jpg",
+      "visual_readability": "pass"
+    },
+    {
+      "source_start": 451.27,
+      "source_end": 453.97,
+      "en": "And this one came having not played a match",
+      "zh": "而这次夺冠之前 他已有",
+      "actual_visible_frame_sec": 14.5,
+      "evidence": "independent-qc/frame-14.5.jpg",
+      "visual_readability": "pass"
+    },
+    {
+      "source_start": 453.97,
+      "source_end": 455.57,
+      "en": "for two and a half months.",
+      "zh": "两个半月没有参加比赛",
+      "actual_visible_frame_sec": 15.8,
+      "evidence": "independent-qc/frame-15.8.jpg",
+      "visual_readability": "pass"
+    },
+    {
+      "source_start": 455.83,
+      "source_end": 458.45,
+      "en": "What a week it has been for the Spaniard.",
+      "zh": "对他来说 这是难忘的一周",
+      "actual_visible_frame_sec": 17.5,
+      "evidence": "independent-qc/frame-17.5.jpg",
+      "visual_readability": "pass"
+    },
+    {
+      "source_start": 458.59,
+      "source_end": 460.77,
+      "en": "He is the champion in Chengdu.",
+      "zh": "他就是成都站的冠军",
+      "actual_visible_frame_sec": 20,
+      "evidence": "independent-qc/frame-20.jpg",
+      "visual_readability": "pass"
+    },
+    {
+      "source_start": 467.59,
+      "source_end": 470.73,
+      "en": "Just an absolute incredible effort",
+      "zh": "这样的表现实在不可思议",
+      "actual_visible_frame_sec": 30,
+      "evidence": "independent-qc/frame-30.jpg",
+      "visual_readability": "pass"
+    },
+    {
+      "source_start": 470.73,
+      "source_end": 472.67,
+      "en": "and he absolutely deserved that.",
+      "zh": "这个冠军他当之无愧",
+      "actual_visible_frame_sec": 33,
+      "evidence": "independent-qc/frame-33.jpg",
+      "visual_readability": "pass"
+    },
+    {
+      "source_start": 472.89,
+      "source_end": 474.61,
+      "en": "He played so well from the start.",
+      "zh": "从一开始 他就打得非常出色",
+      "actual_visible_frame_sec": 35,
+      "evidence": "independent-qc/frame-35.jpg",
+      "visual_readability": "pass"
+    }
+  ],
+  "findings": [
+    "All Chinese and English cues visually legible; correct full player name in topbar; no tofu/line clipping.",
+    "Chinese above English in rebuilt version; differs from prior main quote style, but both visible.",
+    "Full-bleed footage under header, fixed center accepted; no crop adjustment requested.",
+    "Delogo removes previous wide result-strip characters; smear remains perceptible in lower body area 14.5–20 seconds, not text residue.",
+    "Cover has real same-event trophy photo; trophy and face readable.",
+    "40s endcard contains four saved set points / Chengdu champion and 5 losses to 2 wins; 49.5s real 网球时差 brand animation."
+  ],
+  "audio": {
+    "method": "ffmpeg volume/silence numeric measurement only; no direct listening",
+    "mean_db": -24.1,
+    "max_db": -3.8,
+    "silence_ranges_sec": [
+      [
+        46.9704,
+        48.3724
+      ],
+      [
+        51.1681,
+        52.352
+      ]
+    ],
+    "subjective_listening_pass": false
+  },
+  "blocking_visual_defects": []
+}
