@@ -1,0 +1,116 @@
+{
+  "schema": "tennislive.independent-actual-film-review.v1",
+  "status": "render_4_final_pass",
+  "whole_film_qc_pass": true,
+  "checked_at": "2026-10-03T22:00:07.292243+00:00",
+  "film": {
+    "path": "/workspace/zheng-kalinskaya-research/render-4-final/zheng-kalinskaya-beijing-2026-r2.mp4",
+    "sha256": "775b10396cb8622f1d6a7f950702f7f48d1a97d563122ce9f2b7fa2030900236",
+    "bytes": 67113729,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "frame_rate": "25/1",
+    "video_seconds": 222.76,
+    "audio_seconds": 222.741333,
+    "full_audio_video_decode": "actual independent ffmpeg -v error -i FILM -f null - returned exit 0"
+  },
+  "native_run_id": 37156362096,
+  "code_sha": "a865af2c8b04b9b077c4a5a66d46d48903570b88",
+  "input_binding": {
+    "spec_sha256": "697a17323f6b834b25672653cba89d787af8b2aecc1aa84c94caf4182948d803",
+    "plan_sha256": "56b6406be353bfaa45f7de74f4226ec9a03f4d9f961c92ab07462a5aeffaf5e6",
+    "render_inputs_sha256": "40b65d3035196af909b5c01bac47990d46166d99a8ab484e11ee775109e66cd8",
+    "audio_review_binding_sha256": "b9dcc1ecffca99ed9683f8c5c876fe94c3b16c1ba9357658c7c8222821d03279",
+    "ass_sha256": "a7e631f3a74a6600a6d24bde6600fd533cf8ba108d466f5b060a06eed51b02f5",
+    "qc_attestation_sha256": "dd1b881d9b18b5a183364770953da95786f6b6e02e1fdb4ac6edf13106edfbdc",
+    "native_attestation_status": "pass",
+    "film_sha_and_bytes_match_render_inputs_and_attestation": true,
+    "sources": {
+      "official": "3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a",
+      "supplement": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5"
+    },
+    "timeline": {
+      "cover_seconds": 1.2,
+      "offsets": [
+        1.2,
+        3.2800000000000002,
+        14.18,
+        23.02,
+        39.7,
+        55.02,
+        75.58,
+        85.45,
+        89.95,
+        107.05000000000001,
+        111.85000000000001,
+        120.33000000000001,
+        128.83,
+        145.58,
+        152.28,
+        162.58,
+        167.38000000000002,
+        178.06000000000003,
+        183.56000000000003,
+        192.06000000000003,
+        201.98000000000002,
+        213.48000000000002
+      ],
+      "lengths": [
+        2.08,
+        10.9,
+        8.84,
+        16.68,
+        15.32,
+        20.56,
+        9.87,
+        4.5,
+        17.1,
+        4.8,
+        8.48,
+        8.5,
+        16.75,
+        6.7,
+        10.3,
+        4.8,
+        10.68,
+        5.5,
+        8.5,
+        9.92,
+        11.5,
+        9.3
+      ]
+    }
+  },
+  "method": {
+    "actual_image_view_performed": true,
+    "actual_listening_performed": false,
+    "inspection": "Actually viewed 5 selected frame walls (54 exact frames), 4 complete-film five-second walls (45 frames), 3 final-break dense walls (28 frames at 5 fps), and six full-resolution actual film frames for cover, literal English, last return, handshake, 9-stat card and final card. Native foreground_audio_gate.verify_final(spec, ASS, cover1.2, film=actualfilm) returned successfully for all 19 cues. No claim of human listening; raw ASR/source bindings and native metering provide audio evidence."
+  },
+  "checks": {
+    "cover": "pass: actual same-match Zheng waving portrait, intact face/hand, readable full 6-7(4) 6-4 3-0 retirement score",
+    "eight_burned_semantic_cards": "pass: all actual film card text split into intended complete semantic lines; no orphan RET character; branding sits near bottom64, apart from TTS subtitles",
+    "chronological_main_turns": "pass: first-set 5-3 opportunity and breakback, true tiebreak loss, second-set two break-point saves, 3-3 break and 6-4 setpoint, then third-set last break and genuine retirement are shown with correct roles; no normal match-point claim",
+    "last_decisive_return": "pass: 178.06–183.56 actual contained centred .82 sequence, 28 dense frames show the previously cropped Zheng return, ball flight, opponent response and immediate aftermath; no tracking/offset, real source-frame blur fills canvas",
+    "english_40_15": "pass: actual burned 160.00 frame says Oh, and Kalinskaya, from 40–15 up…; no Chinese 比 inside the English phrase",
+    "bilingual_readability": "pass: native 19-cue verifier and actual reviewed burned frames agree; source-edited truncated commentary retains explicit English ellipses without invented continuation",
+    "retirement_and_handshake": "pass: true 3-0 RET, medical/illness explanation, actual chair-side handshake contact visible at198.02; no ordinary match-winning point or invented celebration",
+    "nine_stats": "pass: actual 204.2 full frame has 13/3 ACE,6/3DF,51/15W,19/9UE,61/71 first-in,79/67 first-won,45/44 second-won,4/6vs1/6 BP and90/80 points; Ret. visible and no topbar/subtitle overlay; narration scopes data to already-played portion",
+    "watermarks_and_other_text": "pass: no third-party corner/video-platform watermark or extraneous creator caption spotted in actual checked film frames; physical WTA TOUR net lettering and court ads remain as real venue markings",
+    "next_round": "pass: final card and narration identify Bouzkova / 鲍兹科娃 consistently, first meeting, readable call to comment",
+    "native_read_only_verification": "pass: current matching spec, actual final-film hash and actual ASS passed foreground_audio_gate.verify_final; no spec/seal/gate modifications"
+  },
+  "findings_resolved_from_render_3": [
+    "literal-English numeric corruption fixed in actual film",
+    "eight-card semantic line breaks fixed in actual film",
+    "final decisive return now retained in actual centred .82 contained shot"
+  ],
+  "blocking_findings": [],
+  "limits": [
+    "Inspection is actual frame review plus full decode and raw-ASR/native verification, not claimed real-time human audio listening.",
+    "Editorially selected key turns are reviewed; this does not assert every break point or every full-match point is present.",
+    "Fixed-centre other segments can briefly clip non-decisive body extremities at image edges; the prior major missing decisive-return defect is fixed."
+  ],
+  "release_scope": "Independent final-film QC only; merge, auto-WeChat push and delivery receipt belong to root workflow. Existing native attestation was only read, not edited."
+}

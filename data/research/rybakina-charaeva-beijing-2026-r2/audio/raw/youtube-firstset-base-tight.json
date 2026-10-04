@@ -1,0 +1,296 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=Qd4MQBnmF5A",
+  "source_sha256": "ed88d5e4cce59bdd16b7caa8cf709f8afda9f1b0bf1871798d97d788ca6f198f",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 63.5,
+  "range_to": 77.8,
+  "created_at": "2026-10-03T17:53:56.552946+00:00",
+  "elapsed_seconds": 3.41,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 64.5,
+      "end": 68.4,
+      "text": " This time she doesn't relinquish the lead, it's an overwhelming service",
+      "avg_logprob": -0.31181302453790394,
+      "no_speech_prob": 0.21860472857952118,
+      "compression_ratio": 1.396103896103896,
+      "words": [
+        {
+          "start": 64.5,
+          "end": 65.04,
+          "word": " This",
+          "probability": 0.14711393415927887
+        },
+        {
+          "start": 65.04,
+          "end": 65.32,
+          "word": " time",
+          "probability": 0.9788206815719604
+        },
+        {
+          "start": 65.32,
+          "end": 65.52,
+          "word": " she",
+          "probability": 0.8384603261947632
+        },
+        {
+          "start": 65.52,
+          "end": 65.82,
+          "word": " doesn't",
+          "probability": 0.984617680311203
+        },
+        {
+          "start": 65.82,
+          "end": 66.38,
+          "word": " relinquish",
+          "probability": 0.9548924565315247
+        },
+        {
+          "start": 66.38,
+          "end": 66.52,
+          "word": " the",
+          "probability": 0.9897223114967346
+        },
+        {
+          "start": 66.52,
+          "end": 66.78,
+          "word": " lead,",
+          "probability": 0.9888302683830261
+        },
+        {
+          "start": 67.08,
+          "end": 67.3,
+          "word": " it's",
+          "probability": 0.9554020166397095
+        },
+        {
+          "start": 67.3,
+          "end": 67.38,
+          "word": " an",
+          "probability": 0.9951279163360596
+        },
+        {
+          "start": 67.38,
+          "end": 67.84,
+          "word": " overwhelming",
+          "probability": 0.986842930316925
+        },
+        {
+          "start": 67.84,
+          "end": 68.4,
+          "word": " service",
+          "probability": 0.9772543907165527
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 68.4,
+      "end": 72.42,
+      "text": " effort to get her a one set advantage as her first hold at love and Elena",
+      "avg_logprob": -0.31181302453790394,
+      "no_speech_prob": 0.21860472857952118,
+      "compression_ratio": 1.396103896103896,
+      "words": [
+        {
+          "start": 68.4,
+          "end": 68.72,
+          "word": " effort",
+          "probability": 0.35326656699180603
+        },
+        {
+          "start": 68.72,
+          "end": 68.94,
+          "word": " to",
+          "probability": 0.9912630319595337
+        },
+        {
+          "start": 68.94,
+          "end": 69.12,
+          "word": " get",
+          "probability": 0.9983015060424805
+        },
+        {
+          "start": 69.12,
+          "end": 69.3,
+          "word": " her",
+          "probability": 0.9864087104797363
+        },
+        {
+          "start": 69.3,
+          "end": 69.46,
+          "word": " a",
+          "probability": 0.8301985263824463
+        },
+        {
+          "start": 69.46,
+          "end": 69.58,
+          "word": " one",
+          "probability": 0.8011370301246643
+        },
+        {
+          "start": 69.58,
+          "end": 69.82,
+          "word": " set",
+          "probability": 0.7035144567489624
+        },
+        {
+          "start": 69.82,
+          "end": 70.24,
+          "word": " advantage",
+          "probability": 0.98366379737854
+        },
+        {
+          "start": 70.24,
+          "end": 71.04,
+          "word": " as",
+          "probability": 0.7369431853294373
+        },
+        {
+          "start": 71.04,
+          "end": 71.16,
+          "word": " her",
+          "probability": 0.9876306653022766
+        },
+        {
+          "start": 71.16,
+          "end": 71.44,
+          "word": " first",
+          "probability": 0.9955409169197083
+        },
+        {
+          "start": 71.44,
+          "end": 71.66,
+          "word": " hold",
+          "probability": 0.9184445738792419
+        },
+        {
+          "start": 71.66,
+          "end": 71.82,
+          "word": " at",
+          "probability": 0.9462796449661255
+        },
+        {
+          "start": 71.82,
+          "end": 72.0,
+          "word": " love",
+          "probability": 0.8925209641456604
+        },
+        {
+          "start": 72.0,
+          "end": 72.22,
+          "word": " and",
+          "probability": 0.6422094702720642
+        },
+        {
+          "start": 72.22,
+          "end": 72.42,
+          "word": " Elena",
+          "probability": 0.7112609148025513
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 72.42,
+      "end": 76.96,
+      "text": " Abakina wins the first set she's ever played as the world number one.",
+      "avg_logprob": -0.31181302453790394,
+      "no_speech_prob": 0.21860472857952118,
+      "compression_ratio": 1.396103896103896,
+      "words": [
+        {
+          "start": 72.42,
+          "end": 73.0,
+          "word": " Abakina",
+          "probability": 0.42941539982954663
+        },
+        {
+          "start": 73.0,
+          "end": 73.66,
+          "word": " wins",
+          "probability": 0.8852612376213074
+        },
+        {
+          "start": 73.66,
+          "end": 73.86,
+          "word": " the",
+          "probability": 0.9928783774375916
+        },
+        {
+          "start": 73.86,
+          "end": 74.18,
+          "word": " first",
+          "probability": 0.9969906806945801
+        },
+        {
+          "start": 74.18,
+          "end": 74.5,
+          "word": " set",
+          "probability": 0.9979410767555237
+        },
+        {
+          "start": 74.5,
+          "end": 75.02,
+          "word": " she's",
+          "probability": 0.9476117789745331
+        },
+        {
+          "start": 75.02,
+          "end": 75.2,
+          "word": " ever",
+          "probability": 0.9967283010482788
+        },
+        {
+          "start": 75.2,
+          "end": 75.54,
+          "word": " played",
+          "probability": 0.9979755282402039
+        },
+        {
+          "start": 75.54,
+          "end": 76.1,
+          "word": " as",
+          "probability": 0.9822331666946411
+        },
+        {
+          "start": 76.1,
+          "end": 76.22,
+          "word": " the",
+          "probability": 0.9937198162078857
+        },
+        {
+          "start": 76.22,
+          "end": 76.4,
+          "word": " world",
+          "probability": 0.8516505360603333
+        },
+        {
+          "start": 76.4,
+          "end": 76.68,
+          "word": " number",
+          "probability": 0.9455190300941467
+        },
+        {
+          "start": 76.68,
+          "end": 76.96,
+          "word": " one.",
+          "probability": 0.9190380573272705
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "6ffd7b02e88eb1d00c7c0624a60b46c4c24cf0617533cc20a582d7ac14d0b9ce",
+  "metadata_sanitization": "Only local source_path omitted for repository portability; words, probabilities, source absolute times and model settings unchanged."
+}

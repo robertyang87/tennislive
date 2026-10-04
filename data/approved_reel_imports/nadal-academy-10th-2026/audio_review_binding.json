@@ -1,0 +1,330 @@
+{
+  "plan_sha256": "4b471e9e6e04c75722b5ccc624eb1abca294923a38c3c1ecd94db647d46b42ac",
+  "review_sha256": "9e07c8e689d6ce493445a83052ad9507a13b187c7dffbd23c92afc17a8083faf",
+  "sources": {
+    "s1": "c58680e11e07e6e08bcc72756cfe26bf974d9cd6ac03a8f7cea2007411da7f0c",
+    "s2": "eef0f948d9a168240d670f13fca74b3741d865c1a9f59df74a7bb4bd28145f47",
+    "s3": "5d21b2f5a28c81631e0f3d35ebf79e1c5cb33c8857f0d17f6cb10ac5ea790a05",
+    "s4": "906624336a33597f300443cefcbb311ffd0d9728937fdd54b03971f59e92167d",
+    "s5": "a1f4265fba2d5c04b24b361839ee806e247fa7a53acf755000f0638f105e748a",
+    "s6": "bf9f13ec42facfeb6b64afc554bdff16d937d55d320ac2e058d937c7cda990c1",
+    "s7": "0c5f104a0731abe33fa7336f22ae4d479234f78cf54b104d3da73cf8ed044586"
+  },
+  "timeline": {
+    "cover_seconds": 1.2,
+    "offsets": [
+      1.2,
+      6.0,
+      18.3,
+      40.3,
+      76.3,
+      103.8,
+      125.8,
+      132.8,
+      141.8,
+      160.8,
+      186.8,
+      197.8,
+      207.20000000000002,
+      212.70000000000002,
+      226.00000000000003
+    ],
+    "lengths": [
+      4.8,
+      12.3,
+      22.0,
+      36.0,
+      27.5,
+      22.0,
+      7.0,
+      9.0,
+      19.0,
+      26.0,
+      11.0,
+      9.4,
+      5.5,
+      13.3,
+      12.3
+    ]
+  },
+  "original_audio_mode": "reviewed_effects",
+  "owner_approval": "rna10-20261003-ball-sound-kept",
+  "effects_mix": {
+    "method": "independent_reviewed_effects_trims_and_raw_window",
+    "manifest_sha256": "6e85fd5c5fe657af4603fcfac88550eb75dbd918057f248ed4f5af70f0198c41",
+    "windows": [
+      {
+        "index": 0,
+        "source": "s1",
+        "kind": "processed_effects",
+        "start": 140.9,
+        "end": 145.7,
+        "speed": 1.0,
+        "offset": 1.2,
+        "duration": 4.799999999999983,
+        "audio_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281"
+      },
+      {
+        "index": 1,
+        "source": "s1",
+        "kind": "processed_effects",
+        "start": 145.7,
+        "end": 158,
+        "speed": 1.0,
+        "offset": 6.0,
+        "duration": 12.300000000000011,
+        "audio_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281"
+      },
+      {
+        "index": 2,
+        "source": "s7",
+        "kind": "processed_effects",
+        "start": 186,
+        "end": 208,
+        "speed": 1.0,
+        "offset": 18.3,
+        "duration": 22.0,
+        "audio_sha256": "4f7462f0da280a1a454d0d14f61410edac63811dab9f67ef7e786b578d18c973"
+      },
+      {
+        "index": 3,
+        "source": "s6",
+        "kind": "processed_effects",
+        "start": 186,
+        "end": 222,
+        "speed": 1.0,
+        "offset": 40.3,
+        "duration": 36.0,
+        "audio_sha256": "6344baed0d38b7257d9dca36e627608376498c4bf6007502952cdbc955431ebb"
+      },
+      {
+        "index": 4,
+        "source": "s5",
+        "kind": "processed_effects",
+        "start": 229.5,
+        "end": 257,
+        "speed": 1.0,
+        "offset": 76.3,
+        "duration": 27.5,
+        "audio_sha256": "392b267c9d2954894170f2b922cea07f9c2972164660963da59acd9a648f0e1e"
+      },
+      {
+        "index": 5,
+        "source": "s4",
+        "kind": "processed_effects",
+        "start": 74,
+        "end": 96,
+        "speed": 1.0,
+        "offset": 103.8,
+        "duration": 22.0,
+        "audio_sha256": "73034a53b8cc1489ad8fd867d3fc205c6ca9a661439d6539baecc95685fe59f6"
+      },
+      {
+        "index": 6,
+        "source": "s4",
+        "kind": "processed_effects",
+        "start": 96,
+        "end": 103,
+        "speed": 1.0,
+        "offset": 125.8,
+        "duration": 7.0,
+        "audio_sha256": "73034a53b8cc1489ad8fd867d3fc205c6ca9a661439d6539baecc95685fe59f6"
+      },
+      {
+        "index": 7,
+        "source": "s3",
+        "kind": "processed_effects",
+        "start": 160,
+        "end": 169,
+        "speed": 1.0,
+        "offset": 132.8,
+        "duration": 9.0,
+        "audio_sha256": "aab663afc2c3b7572466b27f48fd8d6391e49bf037cc822317ef310d810a45a4"
+      },
+      {
+        "index": 8,
+        "source": "s3",
+        "kind": "processed_effects",
+        "start": 177,
+        "end": 196,
+        "speed": 1.0,
+        "offset": 141.8,
+        "duration": 19.0,
+        "audio_sha256": "aab663afc2c3b7572466b27f48fd8d6391e49bf037cc822317ef310d810a45a4"
+      },
+      {
+        "index": 9,
+        "source": "s2",
+        "kind": "processed_effects",
+        "start": 155,
+        "end": 181,
+        "speed": 1.0,
+        "offset": 160.8,
+        "duration": 26.0,
+        "audio_sha256": "9451b751cc6ecba2266d4253f762c954b6bf97d08826a29aa51b6a50f7d6e17c"
+      },
+      {
+        "index": 10,
+        "source": "s1",
+        "kind": "processed_effects",
+        "start": 95,
+        "end": 106,
+        "speed": 1.0,
+        "offset": 186.8,
+        "duration": 11.0,
+        "audio_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281"
+      },
+      {
+        "index": 11,
+        "source": "s1",
+        "kind": "processed_effects",
+        "start": 117.5,
+        "end": 126.9,
+        "speed": 1.0,
+        "offset": 197.8,
+        "duration": 9.400000000000006,
+        "audio_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281"
+      },
+      {
+        "index": 12,
+        "source": "s1",
+        "kind": "processed_effects",
+        "start": 126.9,
+        "end": 132.4,
+        "speed": 1.0,
+        "offset": 207.2,
+        "duration": 5.5,
+        "audio_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281"
+      },
+      {
+        "index": 13,
+        "source": "s1",
+        "kind": "raw",
+        "start": 132.4,
+        "end": 145.7,
+        "speed": 1.0,
+        "offset": 212.7,
+        "duration": 13.299999999999983,
+        "audio_sha256": "c58680e11e07e6e08bcc72756cfe26bf974d9cd6ac03a8f7cea2007411da7f0c"
+      },
+      {
+        "index": 14,
+        "source": "s1",
+        "kind": "processed_effects",
+        "start": 145.7,
+        "end": 158,
+        "speed": 1.0,
+        "offset": 226.0,
+        "duration": 12.300000000000011,
+        "audio_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281"
+      }
+    ],
+    "voices": [
+      {
+        "kind": "segment",
+        "index": 0,
+        "offset": 1.2,
+        "duration": 2.784,
+        "sha256": "02ac68ceac03f0d43d008b4dfe03b029492b38fd0096819504bb2ffb9fbb26d2"
+      },
+      {
+        "kind": "segment",
+        "index": 1,
+        "offset": 6.0,
+        "duration": 8.016,
+        "sha256": "9b78356ba5aa57bc7f4d383431a198cc47d3c63deceed15bbcb753e7f78ee134"
+      },
+      {
+        "kind": "segment",
+        "index": 2,
+        "offset": 18.3,
+        "duration": 12.216,
+        "sha256": "12e8710f726ad4df3039abf1ad4bbe8528fa8075c6968dd2130251d51934021b"
+      },
+      {
+        "kind": "segment",
+        "index": 3,
+        "offset": 40.3,
+        "duration": 13.536,
+        "sha256": "05de17a4d925d2d4c551e1f4047420c5d13578fe5a081ef050ddb20518561c69"
+      },
+      {
+        "kind": "segment",
+        "index": 4,
+        "offset": 76.3,
+        "duration": 9.624,
+        "sha256": "618f52403cb133c488ece210df26b24c182bd53bb3af0fabfb87f7d6ebc77799"
+      },
+      {
+        "kind": "segment",
+        "index": 5,
+        "offset": 103.8,
+        "duration": 13.056,
+        "sha256": "077e64a3177a9ec8aba47b419273e9f0061457ef8168dd6c6d79ae169c4803d2"
+      },
+      {
+        "kind": "segment",
+        "index": 6,
+        "offset": 125.8,
+        "duration": 4.128,
+        "sha256": "94a62bc464cbbbbf4d1ca6c4b4406c06f38b1f828489657eef39c3482b3a8abb"
+      },
+      {
+        "kind": "segment",
+        "index": 7,
+        "offset": 132.8,
+        "duration": 4.632,
+        "sha256": "6173119581b1605dc0d712064ce301238b604b04b5185fc32de5e8f7e668a596"
+      },
+      {
+        "kind": "segment",
+        "index": 8,
+        "offset": 141.8,
+        "duration": 8.64,
+        "sha256": "229e75f9e88d88b4cc7e5894165255377c029f4df070aa1dec3ee976e1b2e033"
+      },
+      {
+        "kind": "segment",
+        "index": 9,
+        "offset": 160.8,
+        "duration": 15.264,
+        "sha256": "a63aa531f3c5b324682bf46de46f44fec86e13267fcb6c7f0fd943d81a06d4d8"
+      },
+      {
+        "kind": "segment",
+        "index": 10,
+        "offset": 186.8,
+        "duration": 7.872,
+        "sha256": "02fa479f038398ad67929a5657a785153fd503293f812d4def83e8dcde7b6724"
+      },
+      {
+        "kind": "segment",
+        "index": 11,
+        "offset": 197.8,
+        "duration": 6.72,
+        "sha256": "eb750c8e237083f53aa1aa2995fc10cc06d40a7dd4681e08f24193b50dffcde7"
+      },
+      {
+        "kind": "segment",
+        "index": 12,
+        "offset": 207.2,
+        "duration": 3.48,
+        "sha256": "efc93b4cae8320e7069894ecb1506e1bf4d79bdac1660ddd6f3a77eac2fffcf7"
+      },
+      {
+        "kind": "segment",
+        "index": 14,
+        "offset": 226.0,
+        "duration": 10.344,
+        "sha256": "4b1510485323efdc97eda07d0c45a212d255aea9053c28aa634d25bb7ec60c37"
+      },
+      {
+        "kind": "outro",
+        "offset": 238.3,
+        "duration": 4.2,
+        "sha256": "c4779a44cdc7d89141cbf503c49915cbf57236d99a8edf0745819627208e9ff8"
+      }
+    ],
+    "audio_packet_sha256": "7b28a80d28911c355f5b3e1bf4e9d02c6f0ccae665e360714ec03daae9ea7728"
+  }
+}

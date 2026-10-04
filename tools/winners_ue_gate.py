@@ -171,6 +171,9 @@ def problem(spec: dict) -> str | None:
     """Return a hard production/QC failure; never fetch or guess numbers here."""
     if not isinstance(spec, dict) or not isinstance(spec.get("cover", {}), dict):
         return "Winners/UE 的 spec 和 cover 必须是对象"
+    from team_exhibition_scope import video_without_tour_stats
+    if video_without_tour_stats(spec):
+        return None
     stats = spec.get("stats")
     if stats is None:
         if (spec.get("cover") or {}).get("eyebrow") == "赛场之上":

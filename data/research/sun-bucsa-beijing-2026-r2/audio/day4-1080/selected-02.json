@@ -1,0 +1,144 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=EuPUtfm-pA0",
+  "source_sha256": "3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex actual Day4 chapter multi-model ASR evidence review",
+  "reviewed_at": "2026-10-03T18:35:26.270762+00:00",
+  "status": "complete",
+  "reviewed_from": 2406.48,
+  "reviewed_to": 2419.96,
+  "actual_listening_performed": false,
+  "review_scope": "Entire selected window reviewed via actual PCM directly derived from the remote original source under retained export manifest. This does not claim local829MB fullsource listening or ASR.",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/ending-base-tight-absolute-novad.json",
+      "sha256": "e543fd3a1672b08de2c4ec47b2ba03119c9bcda7f947cb485a6d9bc9ffa84b9f",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 2534.8,
+      "range_to": 2544.5
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/ending-medium-en-absolute-novad.json",
+      "sha256": "1b68c741ae41d50deef86fb4636b8e50f68f562818ae00c437fbc3ac78ab255a",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 2515.0,
+      "range_to": 2548.0
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/ending-small-tight-absolute-novad.json",
+      "sha256": "2196757d0a9cfadf0bbc9d27fbfa03c22ad09a23f45e18a4a1032a1a48f23003",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 2534.8,
+      "range_to": 2544.5
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/finalMP-base-quiet-absolute-novad.json",
+      "sha256": "da5d9a2182be6688320a884f6c765a684f9223ebe4996a119d2977fe217de70e",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 2525.0,
+      "range_to": 2535.25
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/finalMP-small-quiet-absolute-novad.json",
+      "sha256": "5b94cd2f4cb9e7a3a9bf519de255b5d661f6bc2a073ba5ebaa7599349e6f9302",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 2525.0,
+      "range_to": 2535.25
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/firstSP-base-quiet-absolute-novad.json",
+      "sha256": "638bd661162c164d50ae8bbb7eb7a61874e4a5178085cc889ce182118697228b",
+      "model": "base",
+      "vad_filter": false,
+      "range_from": 2506.32,
+      "range_to": 2521.15
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/firstSP-small-en-quiet-absolute-vad.json",
+      "sha256": "0a26ee1f18ab63dc770957812cff5cbd0117b0726903235e63386e9b3156cf62",
+      "model": "small.en",
+      "vad_filter": true,
+      "range_from": 2506.32,
+      "range_to": 2521.15
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/firstSP-small-quiet-absolute-novad.json",
+      "sha256": "41fe9a9580a5f9a52b35fed71211e1ed1898183439dbc506badf96bc7224c1b8",
+      "model": "small",
+      "vad_filter": false,
+      "range_from": 2506.32,
+      "range_to": 2521.15
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/fullchapter-base-absolute-vad.json",
+      "sha256": "62f897c8da72f92953428084c8bacc47e0118512a559bf736f43f1acdc0430a4",
+      "model": "base",
+      "vad_filter": true,
+      "range_from": 2365.0,
+      "range_to": 2548.0
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/fullchapter-small-absolute-vad.json",
+      "sha256": "d15cf8506124e4ab114fe7108b8baed107d73c2efd7cc3cb79bfdb5129bd3659",
+      "model": "small",
+      "vad_filter": true,
+      "range_from": 2365.0,
+      "range_to": 2548.0
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/fullchapter-small-en-absolute-novad.json",
+      "sha256": "5b19639a1e7f39e84d16d142c31b76695217e390aaae176487eef71d581906d3",
+      "model": "small.en",
+      "vad_filter": false,
+      "range_from": 2365.0,
+      "range_to": 2548.0
+    },
+    {
+      "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/raw/middle-medium-en-absolute-novad.json",
+      "sha256": "b190aa72d98ae0d94e3e41b4ed5f685d3d6e37de472e759b6739bca32d9fff39",
+      "model": "medium.en",
+      "vad_filter": false,
+      "range_from": 2385.0,
+      "range_to": 2510.0
+    }
+  ],
+  "source_caption_evidence": {
+    "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/youtube-auto-captions.txt",
+    "sha256": "4027e7af1439e7ae36840363d3e832d651ccc64103cfca80cf1b246ef830fbce",
+    "classification": "Native YouTube automatic captions only, no human-listening claim."
+  },
+  "original_source_derivation_evidence": {
+    "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/source-chapter-manifest.json",
+    "sha256": "752791a2d848ae5bdcfb4e74aee38c8c6f5e1e728c0bd61342244a04742cc6a4",
+    "classification": "Actual remote original cache hash and exact documented derivative extraction."
+  },
+  "review_input": {
+    "kind": "documented_original_source_derived_PCM",
+    "transcribed_input_sha256": "43d76393680e4224460c8d5ba3cee1daf7adb74e2027b17ffef92dc3b402a47d",
+    "is_original_video_bytes": false,
+    "absolute_source_offset_seconds": 2365,
+    "original_source_sha256": "3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a",
+    "original_source_hash_method": "actual complete original cache file read remotely during export",
+    "local_original_source_byte_hash_verified": false
+  },
+  "crosscheck_notes": [
+    "Actual full183s derived chapter PCM: small/base automaticEnglish .981865/.984422; fullsmall.en noVAD, middle/ending medium.en noVAD and selected tight windows crosschecked. The full49minute original was not locally transcribed.",
+    "Original fullvideo SHA was actually read remotely by export37143082855. Local actualPCM SHA43d763... and actualreviewproxySHA62bcbb... verified separately. Formalnative must restore the full original cache4e15e4fb97523b9c.mp4 and verify its3d750... SHA; localPCM/proxy never passed as original source bytes.",
+    "Sourceabsolute = derivedchapter +2365 seconds. ASR raw documents retain both chapter and absolute word times, actual derivative input SHA, original remote source SHA provenance and original extraction commands.",
+    "SelectedfirstSP: medium.en four-word Thankyouverymuch in0.08s, noSpeechProb.636; actualfullsmall/base VAD and fullsmall.en noVAD do not support it. Tightbase141.32–156.15 empty; tight small Thankyouforwatching has Thank probability.002674, finalfor/watching wordszero-duration atclip156.12 and logprob-1.257. These disagreeing boilerplate phrases are actual preserved noisehallucination records, not silent deletion or real broadcast speech. Independent selectedsmall.en VAD provides another actual check.",
+    "SelectedfinalMP: bothactualtargetsmall/base noVAD show no lexical words; fullchapter models and mediumending locate both neighboring sentences outside selected bounds. No individual blankASR is used as sufficient proof of silence.",
+    "Selectedending: fullsmall/base and noVAD small.en/medium agree on complete victories, career corrected from multilingualsmall Korea by three agreeing English lexical records. Fullbasealone I dontknow after178.7 not corroborated by fullsmall/small.en/medium; independent tightbase andtightsmall169.8–179.5 both end178.68/178.72 withcareer andnothingfollowing. Nativeauto trailingAnd likewise uncorroborated in actual4model/tightruns, treated as unreliablesinglecaption. Rawcontradictions preserved.",
+    "Oh/And unstressed interjections at170.52 and173.82 supported actualsmall/base plus nativeautocaption; Englishmodels sometimesomit these weak words. Both retained in literal quotes. All retainedEnglish splitfromChineseTTS, with complete sentence ends and boundary pads.",
+    "No original-vs-autodubbed voice classification inferred from language detection. actual_listening_performed:false throughout."
+  ],
+  "boundary_evidence": "实际首盘1–0、0–15接发回合，中文独立旁白。此前opening hold of serve整句最晚2406.40结束，start2406.48之后至2419.96全窗对照完整small/base VAD、完整small.en noVAD及中段medium.en，无可靠前景英语；空识别不是单独判据。",
+  "no_foreground_english_reason": "Entire selected source window crosschecked across actual fullchapter independent model lexical words, original YouTube captions, targeted ASR and adjoining English word boundaries. Candidate weak/zero-duration boilerplate noise errors were inspected against other complete and targeted runs and preserved in raw records; no blank ASR alone was used as proof."
+}

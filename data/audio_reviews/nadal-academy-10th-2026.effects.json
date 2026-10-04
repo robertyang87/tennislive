@@ -1,0 +1,258 @@
+{
+  "schema": "tennislive.reviewed-effects.v1",
+  "slug": "nadal-academy-10th-2026",
+  "owner_approval": "rna10-20261003-ball-sound-kept",
+  "sources": {
+    "s1": {
+      "effects_path": "data/audio_effects/rna10/s1.wav",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "source_sha256": "c58680e11e07e6e08bcc72756cfe26bf974d9cd6ac03a8f7cea2007411da7f0c",
+      "status": "reviewed",
+      "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+      "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+      "algorithm": "DeepFilterNet3 mono48k effect residual original minus estimated speech; 30s chunks with1s context",
+      "model_sha256": "23b92884f63ccf54bb026014604625ab231657b6480df65db4095c4c171e6003",
+      "ball_impacts_preserved": true,
+      "ball_impacts_preservation_basis": "Visual service action and numeric transient energies; see actual report and transientJSON. Impacts remain nonzero. s4 local regions attenuate low/mid impact energy; peak retains53–55%; not perfect separation. No human listening claimed.",
+      "speech_review": {
+        "method": "asr_cross_checked",
+        "transcript_path": "research/nadal-academy-10th-2026/effects-review/s1.packet.json",
+        "sha256": "91822ac16a2f9e18e7b1176818fa6adaa6516333885006f398a246aa7e86cb08",
+        "uncertain_spans": []
+      },
+      "reviewed_scope": [
+        {
+          "start": 140.9,
+          "end": 145.7
+        },
+        {
+          "start": 145.7,
+          "end": 158
+        },
+        {
+          "start": 95,
+          "end": 106
+        },
+        {
+          "start": 117.5,
+          "end": 126.9
+        },
+        {
+          "start": 126.9,
+          "end": 132.4
+        },
+        {
+          "start": 145.7,
+          "end": 158
+        }
+      ],
+      "transient_report": "research/nadal-academy-10th-2026/effects-review/rna10-effects-transients.json",
+      "limitations": [
+        "No independent human listening",
+        "Energy peaks alone do not semantically prove ball hits",
+        "Empty ASR is model evidence, not mathematical absence of all speech"
+      ],
+      "effects_url": "https://github.com/robertyang87/tennislive/releases/download/rna10-effects-20261003/s1.wav"
+    },
+    "s2": {
+      "effects_path": "data/audio_effects/rna10/s2.wav",
+      "effects_sha256": "9451b751cc6ecba2266d4253f762c954b6bf97d08826a29aa51b6a50f7d6e17c",
+      "source_sha256": "eef0f948d9a168240d670f13fca74b3741d865c1a9f59df74a7bb4bd28145f47",
+      "status": "reviewed",
+      "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+      "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+      "algorithm": "DeepFilterNet3 mono48k effect residual original minus estimated speech; 30s chunks with1s context",
+      "model_sha256": "23b92884f63ccf54bb026014604625ab231657b6480df65db4095c4c171e6003",
+      "ball_impacts_preserved": true,
+      "ball_impacts_preservation_basis": "Visual service action and numeric transient energies; see actual report and transientJSON. Impacts remain nonzero. s4 local regions attenuate low/mid impact energy; peak retains53–55%; not perfect separation. No human listening claimed.",
+      "speech_review": {
+        "method": "asr_cross_checked",
+        "transcript_path": "research/nadal-academy-10th-2026/effects-review/s2.packet.json",
+        "sha256": "df24bd5a783070934b72400d6921c8e12e7c328b0f1215fd71d2f71016b9a71a",
+        "uncertain_spans": []
+      },
+      "reviewed_scope": [
+        {
+          "start": 155,
+          "end": 181
+        }
+      ],
+      "transient_report": "research/nadal-academy-10th-2026/effects-review/rna10-effects-transients.json",
+      "limitations": [
+        "No independent human listening",
+        "Energy peaks alone do not semantically prove ball hits",
+        "Empty ASR is model evidence, not mathematical absence of all speech"
+      ],
+      "effects_url": "https://github.com/robertyang87/tennislive/releases/download/rna10-effects-20261003/s2.wav"
+    },
+    "s3": {
+      "effects_path": "data/audio_effects/rna10/s3.wav",
+      "effects_sha256": "aab663afc2c3b7572466b27f48fd8d6391e49bf037cc822317ef310d810a45a4",
+      "source_sha256": "5d21b2f5a28c81631e0f3d35ebf79e1c5cb33c8857f0d17f6cb10ac5ea790a05",
+      "status": "reviewed",
+      "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+      "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+      "algorithm": "DeepFilterNet3 mono48k effect residual original minus estimated speech; 30s chunks with1s context",
+      "model_sha256": "23b92884f63ccf54bb026014604625ab231657b6480df65db4095c4c171e6003",
+      "ball_impacts_preserved": true,
+      "ball_impacts_preservation_basis": "Visual service action and numeric transient energies; see actual report and transientJSON. Impacts remain nonzero. s4 local regions attenuate low/mid impact energy; peak retains53–55%; not perfect separation. No human listening claimed.",
+      "speech_review": {
+        "method": "asr_cross_checked",
+        "transcript_path": "research/nadal-academy-10th-2026/effects-review/s3.packet.json",
+        "sha256": "c111c4543d6d15e9859864b3ca5eea1b61e72f37a166ef9862498e262b99bf79",
+        "uncertain_spans": []
+      },
+      "reviewed_scope": [
+        {
+          "start": 160,
+          "end": 169
+        },
+        {
+          "start": 177,
+          "end": 196
+        }
+      ],
+      "transient_report": "research/nadal-academy-10th-2026/effects-review/rna10-effects-transients.json",
+      "limitations": [
+        "No independent human listening",
+        "Energy peaks alone do not semantically prove ball hits",
+        "Empty ASR is model evidence, not mathematical absence of all speech"
+      ],
+      "effects_url": "https://github.com/robertyang87/tennislive/releases/download/rna10-effects-20261003/s3.wav"
+    },
+    "s4": {
+      "effects_path": "data/audio_effects/rna10/s4.wav",
+      "effects_sha256": "73034a53b8cc1489ad8fd867d3fc205c6ca9a661439d6539baecc95685fe59f6",
+      "source_sha256": "906624336a33597f300443cefcbb311ffd0d9728937fdd54b03971f59e92167d",
+      "status": "reviewed",
+      "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+      "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+      "algorithm": "DeepFilterNet3 mono48k effect residual original minus estimated speech; 30s chunks with1s context; local4th-order2200Hz highpass79.7–81.1/98.7–99.9 with20ms crossfade",
+      "model_sha256": "23b92884f63ccf54bb026014604625ab231657b6480df65db4095c4c171e6003",
+      "ball_impacts_preserved": true,
+      "ball_impacts_preservation_basis": "Visual service action and numeric transient energies; see actual report and transientJSON. Impacts remain nonzero. s4 local regions attenuate low/mid impact energy; peak retains53–55%; not perfect separation. No human listening claimed.",
+      "speech_review": {
+        "method": "asr_cross_checked",
+        "transcript_path": "research/nadal-academy-10th-2026/effects-review/s4.packet.json",
+        "sha256": "da1dc55404af64c67373883fefd2f3d3a1c30a226af0055ff094aa39da8acce7",
+        "uncertain_spans": []
+      },
+      "reviewed_scope": [
+        {
+          "start": 74,
+          "end": 96
+        },
+        {
+          "start": 96,
+          "end": 103
+        }
+      ],
+      "transient_report": "research/nadal-academy-10th-2026/effects-review/rna10-effects-transients.json",
+      "limitations": [
+        "No independent human listening",
+        "Energy peaks alone do not semantically prove ball hits",
+        "Empty ASR is model evidence, not mathematical absence of all speech",
+        "Localized highpass attenuates low/mid-frequency impact and audience energy; region RMS falls about14dB",
+        "Peak amplitudes remain53%/55% of v1 and all regions have nonzero audible energy; not full-frequency mute",
+        "Most unaffected match audio is byte-for-byte same decoded data before PCM re-export",
+        "Not perfect semantic speech separation; automatic model cross-check only"
+      ],
+      "effects_url": "https://github.com/robertyang87/tennislive/releases/download/rna10-effects-20261003/s4.wav"
+    },
+    "s5": {
+      "effects_path": "data/audio_effects/rna10/s5.wav",
+      "effects_sha256": "392b267c9d2954894170f2b922cea07f9c2972164660963da59acd9a648f0e1e",
+      "source_sha256": "a1f4265fba2d5c04b24b361839ee806e247fa7a53acf755000f0638f105e748a",
+      "status": "reviewed",
+      "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+      "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+      "algorithm": "DeepFilterNet3 mono48k effect residual original minus estimated speech; 30s chunks with1s context",
+      "model_sha256": "23b92884f63ccf54bb026014604625ab231657b6480df65db4095c4c171e6003",
+      "ball_impacts_preserved": true,
+      "ball_impacts_preservation_basis": "Visual service action and numeric transient energies; see actual report and transientJSON. Impacts remain nonzero. s4 local regions attenuate low/mid impact energy; peak retains53–55%; not perfect separation. No human listening claimed.",
+      "speech_review": {
+        "method": "asr_cross_checked",
+        "transcript_path": "research/nadal-academy-10th-2026/effects-review/s5.packet.json",
+        "sha256": "de73275658ab325a573cd3de9dd5dc3992f466df0a6c49a1a778aa639066f507",
+        "uncertain_spans": []
+      },
+      "reviewed_scope": [
+        {
+          "start": 229.5,
+          "end": 257
+        }
+      ],
+      "transient_report": "research/nadal-academy-10th-2026/effects-review/rna10-effects-transients.json",
+      "limitations": [
+        "No independent human listening",
+        "Energy peaks alone do not semantically prove ball hits",
+        "Empty ASR is model evidence, not mathematical absence of all speech"
+      ],
+      "effects_url": "https://github.com/robertyang87/tennislive/releases/download/rna10-effects-20261003/s5.wav"
+    },
+    "s6": {
+      "effects_path": "data/audio_effects/rna10/s6.wav",
+      "effects_sha256": "6344baed0d38b7257d9dca36e627608376498c4bf6007502952cdbc955431ebb",
+      "source_sha256": "bf9f13ec42facfeb6b64afc554bdff16d937d55d320ac2e058d937c7cda990c1",
+      "status": "reviewed",
+      "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+      "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+      "algorithm": "DeepFilterNet3 mono48k effect residual original minus estimated speech; 30s chunks with1s context",
+      "model_sha256": "23b92884f63ccf54bb026014604625ab231657b6480df65db4095c4c171e6003",
+      "ball_impacts_preserved": true,
+      "ball_impacts_preservation_basis": "Visual service action and numeric transient energies; see actual report and transientJSON. Impacts remain nonzero. s4 local regions attenuate low/mid impact energy; peak retains53–55%; not perfect separation. No human listening claimed.",
+      "speech_review": {
+        "method": "asr_cross_checked",
+        "transcript_path": "research/nadal-academy-10th-2026/effects-review/s6.packet.json",
+        "sha256": "63b2f01b551f721e8ca4a90e33c1dd5d96b1acb16b7feab99c316de4c1d1babf",
+        "uncertain_spans": []
+      },
+      "reviewed_scope": [
+        {
+          "start": 186,
+          "end": 222
+        }
+      ],
+      "transient_report": "research/nadal-academy-10th-2026/effects-review/rna10-effects-transients.json",
+      "limitations": [
+        "No independent human listening",
+        "Energy peaks alone do not semantically prove ball hits",
+        "Empty ASR is model evidence, not mathematical absence of all speech"
+      ],
+      "effects_url": "https://github.com/robertyang87/tennislive/releases/download/rna10-effects-20261003/s6.wav"
+    },
+    "s7": {
+      "effects_path": "data/audio_effects/rna10/s7.wav",
+      "effects_sha256": "4f7462f0da280a1a454d0d14f61410edac63811dab9f67ef7e786b578d18c973",
+      "source_sha256": "0c5f104a0731abe33fa7336f22ae4d479234f78cf54b104d3da73cf8ed044586",
+      "status": "reviewed",
+      "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+      "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+      "algorithm": "DeepFilterNet3 mono48k effect residual original minus estimated speech; 30s chunks with1s context",
+      "model_sha256": "23b92884f63ccf54bb026014604625ab231657b6480df65db4095c4c171e6003",
+      "ball_impacts_preserved": true,
+      "ball_impacts_preservation_basis": "Visual service action and numeric transient energies; see actual report and transientJSON. Impacts remain nonzero. s4 local regions attenuate low/mid impact energy; peak retains53–55%; not perfect separation. No human listening claimed.",
+      "speech_review": {
+        "method": "asr_cross_checked",
+        "transcript_path": "research/nadal-academy-10th-2026/effects-review/s7.packet.json",
+        "sha256": "fcbf9569ba174ebb8846d788fe6de80b520dadeefe18baf0931b4cfdf47a696f",
+        "uncertain_spans": []
+      },
+      "reviewed_scope": [
+        {
+          "start": 186,
+          "end": 208
+        }
+      ],
+      "transient_report": "research/nadal-academy-10th-2026/effects-review/rna10-effects-transients.json",
+      "limitations": [
+        "No independent human listening",
+        "Energy peaks alone do not semantically prove ball hits",
+        "Empty ASR is model evidence, not mathematical absence of all speech"
+      ],
+      "effects_url": "https://github.com/robertyang87/tennislive/releases/download/rna10-effects-20261003/s7.wav"
+    }
+  },
+  "evidence_report": "research/nadal-academy-10th-2026/effects-review/rna10-effects-review.md",
+  "review_method_limit": "Automatic independent ASR cross-check and numeric transient measurements, no human listening, no perfect separation claim."
+}

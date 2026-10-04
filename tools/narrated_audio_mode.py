@@ -41,6 +41,9 @@ def sha(path: Path) -> str:
 
 
 def enabled(spec: dict, *, sources: dict | None = None) -> bool:
+ import reviewed_effects_mode
+ if reviewed_effects_mode.enabled(spec,sources=sources):
+  return False
  mode=spec.get('original_audio_mode')
  if mode is None:
   if 'owner_approval' in spec:
@@ -116,6 +119,10 @@ def seal_mix(spec: dict, outdir: Path, mixed: Path, voices: list,
 
 
 def verify_mix(spec: dict, film: Path, binding: dict) -> None:
+ import reviewed_effects_mode
+ if reviewed_effects_mode.enabled(spec):
+  reviewed_effects_mode.verify_mix(spec,film,binding)
+  return
  if not enabled(spec):
   return
  record=APPROVED[spec['slug']]
@@ -150,6 +157,11 @@ def verify_mix(spec: dict, film: Path, binding: dict) -> None:
 
 
 def declared_pause_seconds(spec: dict, film: Path, levels: list, after: int) -> list[int]:
+ import reviewed_effects_mode
+ if reviewed_effects_mode.enabled(spec):
+  binding=json.loads((film.parent/'audio_review_binding.json').read_text())
+  reviewed_effects_mode.verify_mix(spec,film,binding)
+  return [i for i,db in enumerate(levels) if i>=after and db<=-60]
  if not enabled(spec):
   return []
  binding=json.loads((film.parent/'audio_review_binding.json').read_text())
@@ -223,6 +235,11 @@ def validate_root_tracking(spec: dict) -> None:
 
 def no_quote_reason(spec: dict) -> str:
  """A verified mode declaration is a structured editorial reason, not ASR."""
+ import reviewed_effects_mode
+ if reviewed_effects_mode.enabled(spec):
+  return ('Exact owner-approved RNA10 effects mode retains reviewed ball sounds and '
+          'one complete raw window; it forbids broadcast quotes. Native audio identity '
+          'and foreground-speech review remain required.')
  if not enabled(spec):
   return ''
  return ('Exact source-bound Chinese-narrated mode excludes original audio and quotes; '

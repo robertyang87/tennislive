@@ -1,0 +1,217 @@
+{
+  "method": "real automatic-language ASR short window, no listening claim",
+  "reviewed_at": "2026-10-03T21:52:30.502247+00:00",
+  "results": [
+    {
+      "model": "medium",
+      "from": 64,
+      "to": 67.8,
+      "vad": false,
+      "detected_language": "en",
+      "language_probability": 0.8994506597518921,
+      "segments": [
+        {
+          "start": 64.0,
+          "end": 64.12,
+          "text": " Thank you.",
+          "avg_logprob": -0.8041180805726484,
+          "no_speech_prob": 0.3675019145011902,
+          "words": [
+            {
+              "start": 64.0,
+              "end": 64.0,
+              "word": " Thank",
+              "probability": 0.0242826659232378
+            },
+            {
+              "start": 64.0,
+              "end": 64.12,
+              "word": " you.",
+              "probability": 0.9956887364387512
+            }
+          ]
+        },
+        {
+          "start": 65.34,
+          "end": 67.14,
+          "text": " Thank you.",
+          "avg_logprob": -0.8041180805726484,
+          "no_speech_prob": 0.3675019145011902,
+          "words": [
+            {
+              "start": 65.34,
+              "end": 66.3,
+              "word": " Thank",
+              "probability": 0.010067119263112545
+            },
+            {
+              "start": 66.3,
+              "end": 67.14,
+              "word": " you.",
+              "probability": 0.9962816834449768
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "medium",
+      "from": 64,
+      "to": 67.8,
+      "vad": true,
+      "detected_language": "en",
+      "language_probability": 0.8027636408805847,
+      "segments": [
+        {
+          "start": 65.49,
+          "end": 66.49,
+          "text": " Mm-hmm.",
+          "avg_logprob": -0.8280185120446342,
+          "no_speech_prob": 0.6564635038375854,
+          "words": [
+            {
+              "start": 65.49,
+              "end": 66.15,
+              "word": " Mm",
+              "probability": 0.1690930724143982
+            },
+            {
+              "start": 66.15,
+              "end": 66.49,
+              "word": "-hmm.",
+              "probability": 0.5763375908136368
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "medium",
+      "from": 63,
+      "to": 69,
+      "vad": false,
+      "detected_language": "en",
+      "language_probability": 0.8962319493293762,
+      "segments": [
+        {
+          "start": 63.0,
+          "end": 64.92,
+          "text": " out today.",
+          "avg_logprob": -0.993239837033408,
+          "no_speech_prob": 0.43493545055389404,
+          "words": [
+            {
+              "start": 63.0,
+              "end": 63.78,
+              "word": " out",
+              "probability": 0.4464038610458374
+            },
+            {
+              "start": 63.78,
+              "end": 64.92,
+              "word": " today.",
+              "probability": 0.9782974123954773
+            }
+          ]
+        },
+        {
+          "start": 68.0,
+          "end": 68.98,
+          "text": " Kwan Sabo was a",
+          "avg_logprob": -0.993239837033408,
+          "no_speech_prob": 0.43493545055389404,
+          "words": [
+            {
+              "start": 67.66,
+              "end": 68.36,
+              "word": " Kwan",
+              "probability": 0.20042660273611546
+            },
+            {
+              "start": 68.36,
+              "end": 68.58,
+              "word": " Sabo",
+              "probability": 0.3063870221376419
+            },
+            {
+              "start": 68.58,
+              "end": 68.78,
+              "word": " was",
+              "probability": 0.8726803660392761
+            },
+            {
+              "start": 68.78,
+              "end": 68.98,
+              "word": " a",
+              "probability": 0.6066593527793884
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "medium",
+      "from": 63,
+      "to": 69,
+      "vad": true,
+      "detected_language": "en",
+      "language_probability": 0.893900990486145,
+      "segments": [
+        {
+          "start": 63.18,
+          "end": 65.18,
+          "text": " Out today",
+          "avg_logprob": -0.6089287454431708,
+          "no_speech_prob": 0.17930512130260468,
+          "words": [
+            {
+              "start": 63.18,
+              "end": 63.82,
+              "word": " Out",
+              "probability": 0.42838314175605774
+            },
+            {
+              "start": 63.82,
+              "end": 65.18,
+              "word": " today",
+              "probability": 0.9575424194335938
+            }
+          ]
+        },
+        {
+          "start": 67.56,
+          "end": 68.98,
+          "text": " Once above was a",
+          "avg_logprob": -0.6089287454431708,
+          "no_speech_prob": 0.17930512130260468,
+          "words": [
+            {
+              "start": 67.56,
+              "end": 68.4,
+              "word": " Once",
+              "probability": 0.036418087780475616
+            },
+            {
+              "start": 68.4,
+              "end": 68.6,
+              "word": " above",
+              "probability": 0.5409321784973145
+            },
+            {
+              "start": 68.6,
+              "end": 68.8,
+              "word": " was",
+              "probability": 0.8726488947868347
+            },
+            {
+              "start": 68.8,
+              "end": 68.98,
+              "word": " a",
+              "probability": 0.9129335880279541
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

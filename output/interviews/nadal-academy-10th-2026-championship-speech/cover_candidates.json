@@ -1,0 +1,504 @@
+{
+ "slug": "nadal-academy-10th-2026-championship-speech",
+ "method": "cover_scan_v1",
+ "auditor": "opencv-haar-v1",
+ "thresholds": {
+  "CANVAS": [
+   1080,
+   1440
+  ],
+  "FACE_CENTER_X_RANGE": [
+   0.08,
+   0.92
+  ],
+  "FACE_CENTER_Y_RANGE": [
+   0.06,
+   0.72
+  ],
+  "MIN_CLOSE_UP_FACE_HEIGHT_RATIO": 0.14,
+  "MIN_EYES": 2,
+  "MIN_FACE_AREA_RATIO": 0.01,
+  "MIN_FACE_CONTRAST": 32.0,
+  "MIN_FACE_HEIGHT_RATIO": 0.08,
+  "MIN_FACE_SHARPNESS": 45.0,
+  "MIN_ZOOM_CLOSE_UP": 1.5,
+  "PHOTO_HEIGHT": 810,
+  "PHOTO_TOP": 150
+ },
+ "layout": "35f276785b2544bd",
+ "face_model": {
+  "cache_key": "face-models-buffalo_s-v0.7-17d6bb6dfcd3",
+  "thresholds": {
+   "CROP_MARGIN": 0.15,
+   "DET_SIZE": 640,
+   "DET_THRESH": 0.5,
+   "EYE_CLOSED_EAR": 0.12,
+   "EYE_OPEN_EAR": 0.16,
+   "MATCH_SIM": 0.34,
+   "MIN_EYE_FACE_PX": 72,
+   "MIN_ID_FACE_PX": 56,
+   "MISMATCH_SIM": 0.15,
+   "NMS_THRESH": 0.4
+  }
+ },
+ "face_in_scan": true,
+ "rivals_in_scan": 1,
+ "scanned_at": "2026-10-03T21:47:05Z",
+ "framing": {
+  "url": "https://www.youtube.com/watch?v=N5OzUjDXdOs",
+  "mirrored": false,
+  "logo_box": null,
+  "video_eq": null,
+  "crop_ratio": 1.3333333333333333,
+  "crop_keep_top": 1.0,
+  "crop_shift_x": 0.0,
+  "zoom": 1.24,
+  "focus_y": 0.5,
+  "shot_type": ""
+ },
+ "window": [
+  16.0,
+  18.0
+ ],
+ "window_declared": true,
+ "step": 0.2,
+ "spec_frame_at": 17.4,
+ "candidates": [
+  {
+   "frame_at": 16.0,
+   "status": "fail",
+   "issues": [
+    "归一化脸部清晰度 5.54，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     152,
+     251,
+     276,
+     276
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.34074,
+    "face_area_ratio": 0.08708,
+    "sharpness": 5.54,
+    "contrast": 197.85,
+    "center_x_ratio": 0.26852,
+    "center_y_ratio": 0.29506
+   },
+   "margin": 0.123,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 411.1
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.5747,
+     "face_px": 411.1
+    }
+   }
+  },
+  {
+   "frame_at": 16.2,
+   "status": "fail",
+   "issues": [
+    "归一化脸部清晰度 23.969，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     498,
+     301,
+     344,
+     344
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.42469,
+    "face_area_ratio": 0.13527,
+    "sharpness": 23.969,
+    "contrast": 84.0,
+    "center_x_ratio": 0.62037,
+    "center_y_ratio": 0.39877
+   },
+   "margin": 0.533,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 422.7
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2631,
+     "face_px": 422.7
+    }
+   }
+  },
+  {
+   "frame_at": 16.4,
+   "status": "fail",
+   "issues": [
+    "归一化脸部清晰度 32.819，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     418,
+     305,
+     387,
+     387
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.47778,
+    "face_area_ratio": 0.1712,
+    "sharpness": 32.819,
+    "contrast": 92.0,
+    "center_x_ratio": 0.5662,
+    "center_y_ratio": 0.43025
+   },
+   "margin": 0.729,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 427.8
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.1721,
+     "face_px": 427.8
+    }
+   }
+  },
+  {
+   "frame_at": 16.6,
+   "status": "fail",
+   "issues": [
+    "归一化脸部清晰度 40.672，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     303,
+     304,
+     396,
+     396
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.48889,
+    "face_area_ratio": 0.17926,
+    "sharpness": 40.672,
+    "contrast": 90.0,
+    "center_x_ratio": 0.46389,
+    "center_y_ratio": 0.43457
+   },
+   "margin": 0.904,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 421.7
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2757,
+     "face_px": 421.7
+    }
+   }
+  },
+  {
+   "frame_at": 16.8,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     316,
+     319,
+     386,
+     386
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.47654,
+    "face_area_ratio": 0.17032,
+    "sharpness": 58.676,
+    "contrast": 92.0,
+    "center_x_ratio": 0.4713,
+    "center_y_ratio": 0.44691
+   },
+   "margin": 1.304,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 422.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2523,
+     "face_px": 422.4
+    }
+   }
+  },
+  {
+   "frame_at": 17.0,
+   "status": "fail",
+   "issues": [
+    "归一化脸部清晰度 42.166，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     390,
+     308,
+     383,
+     383
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.47284,
+    "face_area_ratio": 0.16768,
+    "sharpness": 42.166,
+    "contrast": 92.0,
+    "center_x_ratio": 0.53843,
+    "center_y_ratio": 0.43148
+   },
+   "margin": 0.937,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 417.8
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2397,
+     "face_px": 417.8
+    }
+   }
+  },
+  {
+   "frame_at": 17.2,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     537,
+     293,
+     371,
+     371
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.45802,
+    "face_area_ratio": 0.15734,
+    "sharpness": 61.982,
+    "contrast": 187.0,
+    "center_x_ratio": 0.66898,
+    "center_y_ratio": 0.40556
+   },
+   "margin": 1.377,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 429.2
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2294,
+     "face_px": 429.2
+    }
+   }
+  },
+  {
+   "frame_at": 17.4,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     636,
+     299,
+     380,
+     380
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.46914,
+    "face_area_ratio": 0.16507,
+    "sharpness": 137.663,
+    "contrast": 164.0,
+    "center_x_ratio": 0.76481,
+    "center_y_ratio": 0.41852
+   },
+   "margin": 3.059,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 420.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2336,
+     "face_px": 420.3
+    }
+   }
+  },
+  {
+   "frame_at": 17.6,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     727,
+     351,
+     336,
+     336
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.41481,
+    "face_area_ratio": 0.12905,
+    "sharpness": 130.319,
+    "contrast": 102.0,
+    "center_x_ratio": 0.8287,
+    "center_y_ratio": 0.45556
+   },
+   "margin": 2.896,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 409.9
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2243,
+     "face_px": 409.9
+    }
+   }
+  },
+  {
+   "frame_at": 17.8,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     720,
+     324,
+     338,
+     338
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.41728,
+    "face_area_ratio": 0.13059,
+    "sharpness": 128.185,
+    "contrast": 114.0,
+    "center_x_ratio": 0.82315,
+    "center_y_ratio": 0.42346
+   },
+   "margin": 2.849,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 409.8
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.251,
+     "face_px": 409.8
+    }
+   }
+  },
+  {
+   "frame_at": 18.0,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     630,
+     266,
+     374,
+     374
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.46173,
+    "face_area_ratio": 0.15989,
+    "sharpness": 88.591,
+    "contrast": 171.0,
+    "center_x_ratio": 0.75648,
+    "center_y_ratio": 0.37407
+   },
+   "margin": 1.969,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "纳达尔"
+     ],
+     "face_px": 437.2
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.1747,
+     "face_px": 437.2
+    }
+   }
+  }
+ ],
+ "passing": [
+  17.4,
+  17.6,
+  17.8,
+  18.0,
+  17.2,
+  16.8
+ ]
+}

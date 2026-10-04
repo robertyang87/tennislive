@@ -14,6 +14,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 import build_match_reel as b  # noqa: E402
+from reel_facts import SCOREBOARD_PROFILES  # noqa: E402
 
 ON = [{"score_inset": True}]
 
@@ -23,6 +24,7 @@ ON = [{"score_inset": True}]
     ("2026 ATP250 成都站 首轮", "atp"),
     ("2026 比利·简·金杯 1/4决赛", "itf-bjk"),
     ("2026 拉沃尔杯 第一日", "lavercup"),
+    ("纳达尔学院 · 十周年 · 团体总比分 4:3", "rna-slam"),
 ])
 def test_认得出的转播走各自的逐帧判据(line1, want):
     assert b.scoreboard_profile({"topbar": {"line1": line1}, "segments": ON}) == want
@@ -39,6 +41,15 @@ def test_没开回贴的片子不管():
                                  "segments": [{"score_inset": False}]}) is None
 
 
+def test_explicit_profile_must_match_verified_broadcast():
+    spec = {"topbar": {"line1": "2026 WTA1000 北京 第二轮"},
+            "segments": ON, "scoreboard_profile": "wta_left"}
+    assert b.scoreboard_profile(spec) == "wta"
+    for wrong in ("atp", "unknown", {}):
+        with pytest.raises(b.ReelError, match="scoreboard_profile"):
+            b.scoreboard_profile(dict(spec, scoreboard_profile=wrong))
+
+
 def test_全库开了回贴的全出血片子都落在标定过的转播上():
     """新写的 spec 撞上没标定的转播，这条和 `--dry-run` 一起红。"""
     seen = 0
@@ -53,7 +64,7 @@ def test_全库开了回贴的全出血片子都落在标定过的转播上():
                    for s in spec.get("segments") or []):
             continue
         seen += 1
-        assert b.scoreboard_profile(spec) in {"atp", "wta", "itf-bjk", "lavercup"}, path.name
+        assert b.scoreboard_profile(spec) in {profile for _, profile in SCOREBOARD_PROFILES}, path.name
     assert seen >= 5, "一条开了回贴的全出血 spec 都没扫到，判据的主语像是没了"
 
 

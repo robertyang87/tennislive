@@ -1,0 +1,85 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 120,
+  "range_to": 139,
+  "created_at": "2026-10-03T16:48:05.695628+00:00",
+  "elapsed_seconds": 2.39,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 129.78,
+      "end": 132.44,
+      "text": " Really good covering there on the net by bookser.",
+      "avg_logprob": -0.6962771969182151,
+      "no_speech_prob": 0.33083534240722656,
+      "words": [
+        {
+          "start": 129.78,
+          "end": 130.28,
+          "word": " Really",
+          "probability": 0.6185736060142517
+        },
+        {
+          "start": 130.28,
+          "end": 130.5,
+          "word": " good",
+          "probability": 0.9969099164009094
+        },
+        {
+          "start": 130.5,
+          "end": 130.86,
+          "word": " covering",
+          "probability": 0.9660476446151733
+        },
+        {
+          "start": 130.86,
+          "end": 131.14,
+          "word": " there",
+          "probability": 0.9655633568763733
+        },
+        {
+          "start": 131.14,
+          "end": 131.28,
+          "word": " on",
+          "probability": 0.9849570989608765
+        },
+        {
+          "start": 131.28,
+          "end": 131.38,
+          "word": " the",
+          "probability": 0.9967926144599915
+        },
+        {
+          "start": 131.38,
+          "end": 131.56,
+          "word": " net",
+          "probability": 0.9675394892692566
+        },
+        {
+          "start": 131.56,
+          "end": 131.78,
+          "word": " by",
+          "probability": 0.973121702671051
+        },
+        {
+          "start": 131.78,
+          "end": 132.44,
+          "word": " bookser.",
+          "probability": 0.37551064416766167
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "428b33793d2766aa00fa3bc167bdf57b2a566ea657fa76a7c9d70d89b676a362",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

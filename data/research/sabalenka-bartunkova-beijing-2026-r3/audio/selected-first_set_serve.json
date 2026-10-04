@@ -1,0 +1,36 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-s3mqDeV5E_w/s3mqDeV5E_w.mp4",
+  "source_sha256": "ce7320181adea751842fe58f500e6fa5f788e1c547fe064d11a775d0292a5efd",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review agent — inspected provider caption text and actual-source small.en ASR word evidence; no listening claimed",
+  "reviewed_at": "2026-10-04T06:40:26.741667+00:00",
+  "status": "complete",
+  "reviewed_from": 193.3,
+  "reviewed_to": 202.15,
+  "foreground_english": [
+    {
+      "start": 197.6,
+      "end": 201.54,
+      "en": "A great serve from Bartunkova. Served well throughout the opening set.",
+      "zh": "巴尔通科娃好发球，首盘发得出色。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM"
+    }
+  ],
+  "uncertain_spans": [],
+  "actual_listening_performed": false,
+  "evidence": [
+    {
+      "path": "/workspace/scratch/audio-review/whisper-small-en.json",
+      "sha256": "6e3d0d3d41b4555b44393958d712cd9ca74cb6699be6850ced3aeccfad72eefe"
+    },
+    {
+      "path": "/workspace/scratch/sabalenka-probe/captions.txt",
+      "sha256": "13653388da2db597c4e5765e023f74687c428b270127c493ab2bbf1b394e36b8"
+    },
+    {
+      "path": "/workspace/scratch/audio-review/targeted-small-en.json"
+    }
+  ],
+  "review_scope": "Only this selected window; full source review remains partial.",
+  "source_url_binding_note": "Published Release URL supplied by producer; reviewed bytes identified by source_sha256."
+}

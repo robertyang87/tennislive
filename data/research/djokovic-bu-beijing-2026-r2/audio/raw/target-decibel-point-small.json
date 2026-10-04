@@ -1,0 +1,130 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 93,
+  "range_to": 102,
+  "created_at": "2026-10-03T06:13:02.180978+00:00",
+  "elapsed_seconds": 2.39,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 94.74,
+      "end": 96.12,
+      "text": " Oh, what a point!",
+      "avg_logprob": -0.5594238042831421,
+      "no_speech_prob": 0.3820788264274597,
+      "words": [
+        {
+          "start": 94.74,
+          "end": 95.36,
+          "word": " Oh,",
+          "probability": 0.264600932598114
+        },
+        {
+          "start": 95.48,
+          "end": 95.68,
+          "word": " what",
+          "probability": 0.9803720116615295
+        },
+        {
+          "start": 95.68,
+          "end": 95.8,
+          "word": " a",
+          "probability": 0.9980754852294922
+        },
+        {
+          "start": 95.8,
+          "end": 96.12,
+          "word": " point!",
+          "probability": 0.9817704558372498
+        }
+      ]
+    },
+    {
+      "start": 96.94,
+      "end": 100.4,
+      "text": " The death to bell level was just rising from both routes.",
+      "avg_logprob": -0.5594238042831421,
+      "no_speech_prob": 0.3820788264274597,
+      "words": [
+        {
+          "start": 96.94,
+          "end": 97.42,
+          "word": " The",
+          "probability": 0.9773375988006592
+        },
+        {
+          "start": 97.42,
+          "end": 97.72,
+          "word": " death",
+          "probability": 0.5619372725486755
+        },
+        {
+          "start": 97.72,
+          "end": 97.88,
+          "word": " to",
+          "probability": 0.540891706943512
+        },
+        {
+          "start": 97.88,
+          "end": 98.04,
+          "word": " bell",
+          "probability": 0.34056320786476135
+        },
+        {
+          "start": 98.04,
+          "end": 98.44,
+          "word": " level",
+          "probability": 0.9844720959663391
+        },
+        {
+          "start": 98.44,
+          "end": 98.72,
+          "word": " was",
+          "probability": 0.8630945086479187
+        },
+        {
+          "start": 98.72,
+          "end": 98.92,
+          "word": " just",
+          "probability": 0.989424467086792
+        },
+        {
+          "start": 98.92,
+          "end": 99.4,
+          "word": " rising",
+          "probability": 0.9951362013816833
+        },
+        {
+          "start": 99.4,
+          "end": 99.7,
+          "word": " from",
+          "probability": 0.9830334782600403
+        },
+        {
+          "start": 99.7,
+          "end": 100.04,
+          "word": " both",
+          "probability": 0.9572814702987671
+        },
+        {
+          "start": 100.04,
+          "end": 100.4,
+          "word": " routes.",
+          "probability": 0.549549400806427
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "281a49fcbbc74d77a1a9ff28aaeb1bd242dfd089fc4014328b6a12a0e8bf5c0e",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

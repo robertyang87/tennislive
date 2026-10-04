@@ -1,0 +1,109 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 168,
+  "range_to": 175,
+  "created_at": "2026-10-03T06:13:06.777176+00:00",
+  "elapsed_seconds": 2.27,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 168.0,
+      "end": 173.8,
+      "text": " It's a lightning quick start from Novak Djokovic, team up on their feet.",
+      "avg_logprob": -0.3044203416160915,
+      "no_speech_prob": 0.5235998034477234,
+      "words": [
+        {
+          "start": 168.0,
+          "end": 169.2,
+          "word": " It's",
+          "probability": 0.6783449798822403
+        },
+        {
+          "start": 169.2,
+          "end": 169.24,
+          "word": " a",
+          "probability": 0.9915276169776917
+        },
+        {
+          "start": 169.24,
+          "end": 169.66,
+          "word": " lightning",
+          "probability": 0.9048685431480408
+        },
+        {
+          "start": 169.66,
+          "end": 170.0,
+          "word": " quick",
+          "probability": 0.8922792673110962
+        },
+        {
+          "start": 170.0,
+          "end": 170.38,
+          "word": " start",
+          "probability": 0.9833202958106995
+        },
+        {
+          "start": 170.38,
+          "end": 171.36,
+          "word": " from",
+          "probability": 0.8796223998069763
+        },
+        {
+          "start": 171.36,
+          "end": 171.84,
+          "word": " Novak",
+          "probability": 0.9757088422775269
+        },
+        {
+          "start": 171.84,
+          "end": 172.52,
+          "word": " Djokovic,",
+          "probability": 0.9812821596860886
+        },
+        {
+          "start": 172.58,
+          "end": 172.86,
+          "word": " team",
+          "probability": 0.9623445272445679
+        },
+        {
+          "start": 172.86,
+          "end": 173.08,
+          "word": " up",
+          "probability": 0.826867401599884
+        },
+        {
+          "start": 173.08,
+          "end": 173.28,
+          "word": " on",
+          "probability": 0.9828526377677917
+        },
+        {
+          "start": 173.28,
+          "end": 173.46,
+          "word": " their",
+          "probability": 0.9676203727722168
+        },
+        {
+          "start": 173.46,
+          "end": 173.8,
+          "word": " feet.",
+          "probability": 0.9988441467285156
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "28695241aabeb24f90f427ae6fc40b6f90bf6c91db0e0b1d086c8172f55d96b8",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

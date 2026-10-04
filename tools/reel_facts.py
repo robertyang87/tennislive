@@ -719,6 +719,7 @@ def legacy_cover_topic() -> frozenset:
 #: 顶栏里认得出的词 → 判据名。**单一出处**：渲染（`build_match_reel.scoreboard_profile`）
 #: 和自动转正（`promote_reel_draft`）都读这一张。
 SCOREBOARD_PROFILES = (
+    ("纳达尔学院", "rna-slam"),
     ("比利·简·金杯", "itf-bjk"),
     ("拉沃尔杯", "lavercup"),
     ("ATP", "atp"),

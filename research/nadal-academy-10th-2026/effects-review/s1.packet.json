@@ -1,0 +1,218 @@
+{
+  "source": "s1",
+  "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+  "source_sha256": "c58680e11e07e6e08bcc72756cfe26bf974d9cd6ac03a8f7cea2007411da7f0c",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+  "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+  "reviewed_from": 95,
+  "reviewed_to": 158,
+  "selected_windows": [
+    {
+      "start": 140.9,
+      "end": 145.7
+    },
+    {
+      "start": 145.7,
+      "end": 158
+    },
+    {
+      "start": 95,
+      "end": 106
+    },
+    {
+      "start": 117.5,
+      "end": 126.9
+    },
+    {
+      "start": 126.9,
+      "end": 132.4
+    },
+    {
+      "start": 145.7,
+      "end": 158
+    }
+  ],
+  "foreground_speech": [],
+  "no_foreground_speech_reason": "All selected windows independently transcribed with small and medium VAD. No reproducible foreground phrase identified. Original outputs and low-confidence candidates retained; this is automatic ASR cross-check, not human listening. Isolated small Oh probability .0164 vanishes in medium and in full117.5–132.4 context for small/medium/tiny; processed140.9–158 empty in small and medium.",
+  "uncertain_spans": [],
+  "asr_results": [
+    {
+      "source": "s1",
+      "start": 95,
+      "end": 106,
+      "model": "medium",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.5062422156333923,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 117.5,
+      "end": 126.9,
+      "model": "medium",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.5062422156333923,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 126.9,
+      "end": 132.4,
+      "model": "medium",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.5908817648887634,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 145.7,
+      "end": 158,
+      "model": "medium",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.5062422156333923,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 117.5,
+      "end": 132.4,
+      "model": "small",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.3531171679496765,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 140.9,
+      "end": 158,
+      "model": "small",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.3531171679496765,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 117.5,
+      "end": 132.4,
+      "model": "tiny",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.26587411761283875,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 95,
+      "end": 106,
+      "model": "small",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.3531171679496765,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 117.5,
+      "end": 126.9,
+      "model": "small",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.3531171679496765,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 126.9,
+      "end": 132.4,
+      "model": "small",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.6116203665733337,
+      "segments": [
+        {
+          "start": 127.81,
+          "end": 128.11,
+          "text": " Oh",
+          "avg_logprob": -1.0259974300861359,
+          "no_speech_prob": 0.5960116386413574,
+          "words": [
+            {
+              "start": 127.81,
+              "end": 128.11,
+              "word": " Oh",
+              "probability": 0.016424303874373436
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "s1",
+      "start": 145.7,
+      "end": 158,
+      "model": "small",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.3531171679496765,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 117.5,
+      "end": 132.4,
+      "model": "medium",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.5062422156333923,
+      "segments": []
+    },
+    {
+      "source": "s1",
+      "start": 140.9,
+      "end": 158,
+      "model": "medium",
+      "effects_sha256": "3c6a4969c888dfb991a9e06df001c87731e887eeec3588dd239d4a7d72022281",
+      "language": "en",
+      "language_probability": 0.5062422156333923,
+      "segments": []
+    }
+  ],
+  "candidate_outputs": [
+    {
+      "model": "small",
+      "window": [
+        126.9,
+        132.4
+      ],
+      "segment": {
+        "start": 127.81,
+        "end": 128.11,
+        "text": " Oh",
+        "avg_logprob": -1.0259974300861359,
+        "no_speech_prob": 0.5960116386413574,
+        "words": [
+          {
+            "start": 127.81,
+            "end": 128.11,
+            "word": " Oh",
+            "probability": 0.016424303874373436
+          }
+        ]
+      }
+    }
+  ],
+  "transient_evidence": "rna10-effects-transients.json",
+  "limitations": [
+    "No independent human listening",
+    "Energy peaks alone do not semantically prove ball hits",
+    "Empty ASR is model evidence, not mathematical absence of all speech"
+  ]
+}

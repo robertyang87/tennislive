@@ -58,7 +58,7 @@ FILM_KEYS = frozenset({
     # 源片和时间窗
     "url", "start", "end",
     # 字幕：取哪份逐词稿、怎么切行、烧进去的中英文
-    "asr_model", "segment_budget_px", "word_fix", "en_fixed", "zh",
+    "asr_model", "segment_budget_px", "word_fix", "en_fixed", "zh", "caption_gap_annotations",
     # 顶栏／栏目名（`header_runs`、`topbar_layout`、卡片和封面的 eyebrow）
     "event", "winner", "interview_kind", "subject", "topbar", "topbar_layout",
     "ceremony_subtype", "column",
@@ -87,6 +87,10 @@ def film_content(spec: dict) -> dict:
     for side in ("lead_in", "trail_in"):
         if isinstance(out.get(side), dict):
             out[side] = {k: v for k, v in out[side].items() if k not in SIDE_NOTE_KEYS}
+    if isinstance(out.get("caption_gap_annotations"), list):
+        out["caption_gap_annotations"] = [
+            {k: row[k] for k in ("start", "end", "kind") if k in row}
+            for row in out["caption_gap_annotations"]]
     push = spec.get("push")
     if isinstance(push, dict):
         out["push"] = {k: _strip_notes(v) for k, v in push.items() if k in PUSH_FILM_KEYS}

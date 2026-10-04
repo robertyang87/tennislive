@@ -1,0 +1,85 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 9,
+  "range_to": 15,
+  "created_at": "2026-10-03T06:12:54.806080+00:00",
+  "elapsed_seconds": 0.92,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 10.42,
+      "end": 14.26,
+      "text": " Great speed from boot, getting from the left there.",
+      "avg_logprob": -0.7909638626234872,
+      "no_speech_prob": 0.17786528170108795,
+      "words": [
+        {
+          "start": 10.42,
+          "end": 10.94,
+          "word": " Great",
+          "probability": 0.3328624367713928
+        },
+        {
+          "start": 10.94,
+          "end": 11.32,
+          "word": " speed",
+          "probability": 0.9375495314598083
+        },
+        {
+          "start": 11.32,
+          "end": 11.76,
+          "word": " from",
+          "probability": 0.8826460242271423
+        },
+        {
+          "start": 11.76,
+          "end": 12.16,
+          "word": " boot,",
+          "probability": 0.3849271237850189
+        },
+        {
+          "start": 12.42,
+          "end": 13.46,
+          "word": " getting",
+          "probability": 0.5540932416915894
+        },
+        {
+          "start": 13.46,
+          "end": 13.68,
+          "word": " from",
+          "probability": 0.6619129776954651
+        },
+        {
+          "start": 13.68,
+          "end": 13.82,
+          "word": " the",
+          "probability": 0.9985036849975586
+        },
+        {
+          "start": 13.82,
+          "end": 14.0,
+          "word": " left",
+          "probability": 0.9888620972633362
+        },
+        {
+          "start": 14.0,
+          "end": 14.26,
+          "word": " there.",
+          "probability": 0.6402420997619629
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "6a22bcc6fece0043c4a4c73202574618cd4387842ca8c1e0de044612070f0a83",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

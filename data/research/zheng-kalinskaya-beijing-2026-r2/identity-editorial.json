@@ -1,0 +1,96 @@
+{
+  "schema": "tennislive.identity-editorial-facts.v1",
+  "winner": "郑钦文",
+  "thesis": "5-3错失首盘后调整，次盘0-1救2BP、4-3破发后扳平，再以尊重因病退赛的真实结局收尾。",
+  "potential_hook": [
+    "首盘5比3没守住",
+    "郑钦文扳平后晋级"
+  ],
+  "retirement_visible_result_required": "6-7(4) 6-4 3-0 Ret.",
+  "flow": [
+    {
+      "phase": "set1",
+      "fact": "首盘郑钦文5-3领先，未能在发球胜盘局结束，最终抢七4-7丢首盘，盘分6-7(4)。",
+      "source_url": "https://www.chinaopen.com/en/contents/353/720.html"
+    },
+    {
+      "phase": "set2_early",
+      "fact": "次盘0-1时，郑钦文发球15-40和30-40救两个破发点，保至1-1。",
+      "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS035/point-by-point",
+      "point_ids": [
+        103,
+        104
+      ],
+      "raw_path": "data/research/zheng-kalinskaya-beijing-2026-r2/identity-official-pbp-original.json"
+    },
+    {
+      "phase": "set2_middle",
+      "fact": "次盘2-2时卡林斯卡娅救下郑钦文两个破发点，保到郑2-3；郑随后保至3-3。",
+      "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS035/point-by-point",
+      "point_ids": [
+        122,
+        124
+      ]
+    },
+    {
+      "phase": "set2_turn",
+      "fact": "郑钦文次盘第7局破发，4-3领先。这是第二盘唯一一次破发。她随后6-4扳平盘数。",
+      "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS035/point-by-point",
+      "point_id": 139
+    },
+    {
+      "phase": "set3_end",
+      "fact": "决胜盘首局后卡林斯卡娅接受医疗暂停，再打两局后因病退赛，终场郑3-0领先。",
+      "source_url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires"
+    },
+    {
+      "phase": "next",
+      "fact": "第三轮对18号种子鲍兹科娃，两人首次交手。",
+      "source_url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires"
+    }
+  ],
+  "technical_descriptions_available": [
+    {
+      "fact": "WTA prose描述郑钦文以连续接发直接得分施压卡林斯卡娅，第二盘4-3破发；须视觉找真实对应击球再用。",
+      "source_url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires"
+    },
+    {
+      "fact": "全场13记ACE；第二盘一发成功率70%(21/30)、一发得分率85.7%(18/21)。可描述发球质量提升，但不能由总数推断每一分具体战术。",
+      "source_url": "https://www.wtatennis.com/tournaments/china-open/scores/LS035"
+    }
+  ],
+  "faithful_player_quote": {
+    "source_url": "https://www.chinaopen.com/en/contents/353/720.html",
+    "en": "It was not easy, especially when I was5-3up,then I couldn’t get the firstset ... it takes a while to change a bit of the mentality in the secondset.I was just happy that I’m able to get the match,even if she retired.",
+    "zh_paraphrase": "5比3领先却没拿下首盘很不容易，第二盘需要时间调整心态；她很高兴能晋级，同时明确承认对手退赛。",
+    "usage": "可旁白归纳并归属她赛后所说；不伪装原声，不插赛后采访进赛场之上。"
+  },
+  "positive_ending_question": "把落后的情绪放下，把下一分重新打好。第三轮面对鲍兹科娃，你最期待郑钦文把哪一项提升延续下去？",
+  "prohibited_claims": [
+    "打败健康对手的完整逆转",
+    "2-1盘获胜",
+    "第三盘6-0",
+    "specificillnessdiagnosis",
+    "冠军/夺冠",
+    "用身体不适推定装病/诈伤",
+    "把下一轮写成待定",
+    "把15号种子当世界15",
+    "把郑写成24岁（生日10月8日尚未到）",
+    "次盘1-2救两个BP"
+  ],
+  "conflicts": [
+    {
+      "field": "second_set_early_break_points",
+      "source_url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+      "source_claim": "Kalinskaya held two break points to lead2-0 in secondset",
+      "verified_resolution": "WTA prose is correct:Kalinskaya served first in set2 to0-1; Zheng saved2BP in game2 at15-40 and30-40(points103/104), holding1-1. Subsequent game4 atZheng1-2 was routinehold2-2 with noBP. Earlier teammessage1-2/saved2BP was a subject/game-index misreading and withdrawn.",
+      "status": "resolved_early_message_corrected",
+      "decision": "仅用郑次盘0比1时救两个破发点追成1比1；不写1比2时救两个BP。",
+      "pbp_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS035/point-by-point",
+      "pbp_reference": "data/research/zheng-kalinskaya-beijing-2026-r2/identity-official-pbp-original.json",
+      "pbp_sha256": "56b14c0459687400f2de8f17f099e35c87eda4091228c170e3751e08a506af02",
+      "pbp_game_summary": "data/research/zheng-kalinskaya-beijing-2026-r2/identity-pbp-game-summary.json",
+      "pbp_game_summary_sha256": "7b09de06db37181b2cd957b18244d70a775606b3bf924dc43463fa0eb3f668c3"
+    }
+  ]
+}

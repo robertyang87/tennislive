@@ -1,0 +1,226 @@
+{
+  "method": "real automatic-language ASR short window, no listening claim",
+  "reviewed_at": "2026-10-03T21:51:52.059812+00:00",
+  "results": [
+    {
+      "model": "tiny",
+      "from": 64,
+      "to": 67.8,
+      "vad": false,
+      "detected_language": "en",
+      "language_probability": 0.6661429405212402,
+      "segments": [
+        {
+          "start": 64.0,
+          "end": 65.88,
+          "text": " Thank you.",
+          "avg_logprob": -0.7908888657887777,
+          "no_speech_prob": 0.4736742079257965,
+          "words": [
+            {
+              "start": 64.0,
+              "end": 64.28,
+              "word": " Thank",
+              "probability": 0.047068558633327484
+            },
+            {
+              "start": 64.28,
+              "end": 65.88,
+              "word": " you.",
+              "probability": 0.9835504293441772
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "tiny",
+      "from": 64,
+      "to": 67.8,
+      "vad": true,
+      "detected_language": "en",
+      "language_probability": 0.5973789691925049,
+      "segments": [
+        {
+          "start": 65.49,
+          "end": 66.63,
+          "text": " Thank you.",
+          "avg_logprob": -0.9330037236213684,
+          "no_speech_prob": 0.5283260345458984,
+          "words": [
+            {
+              "start": 65.49,
+              "end": 66.63,
+              "word": " Thank",
+              "probability": 0.02119605243206024
+            },
+            {
+              "start": 66.63,
+              "end": 66.63,
+              "word": " you.",
+              "probability": 0.9764528870582581
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "tiny",
+      "from": 63,
+      "to": 69,
+      "vad": false,
+      "detected_language": "en",
+      "language_probability": 0.8858882784843445,
+      "segments": [
+        {
+          "start": 63.38,
+          "end": 67.88,
+          "text": " How do you think?",
+          "avg_logprob": -1.0258955508470535,
+          "no_speech_prob": 0.13637331128120422,
+          "words": [
+            {
+              "start": 63.38,
+              "end": 63.76,
+              "word": " How",
+              "probability": 0.11064062267541885
+            },
+            {
+              "start": 63.76,
+              "end": 63.96,
+              "word": " do",
+              "probability": 0.28562304377555847
+            },
+            {
+              "start": 63.96,
+              "end": 67.86,
+              "word": " you",
+              "probability": 0.634491503238678
+            },
+            {
+              "start": 67.86,
+              "end": 67.88,
+              "word": " think?",
+              "probability": 0.6824085712432861
+            }
+          ]
+        },
+        {
+          "start": 68.16,
+          "end": 68.98,
+          "text": " Once a boat was a...",
+          "avg_logprob": -1.0258955508470535,
+          "no_speech_prob": 0.13637331128120422,
+          "words": [
+            {
+              "start": 68.16,
+              "end": 68.34,
+              "word": " Once",
+              "probability": 0.07516425102949142
+            },
+            {
+              "start": 68.34,
+              "end": 68.48,
+              "word": " a",
+              "probability": 0.23843398690223694
+            },
+            {
+              "start": 68.48,
+              "end": 68.6,
+              "word": " boat",
+              "probability": 0.3033554255962372
+            },
+            {
+              "start": 68.6,
+              "end": 68.84,
+              "word": " was",
+              "probability": 0.9602097868919373
+            },
+            {
+              "start": 68.84,
+              "end": 68.98,
+              "word": " a...",
+              "probability": 0.46454624831676483
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "tiny",
+      "from": 63,
+      "to": 69,
+      "vad": true,
+      "detected_language": "en",
+      "language_probability": 0.7330060005187988,
+      "segments": [
+        {
+          "start": 63.18,
+          "end": 65.9,
+          "text": " How do you think?",
+          "avg_logprob": -0.9552299465451922,
+          "no_speech_prob": 0.1585790067911148,
+          "words": [
+            {
+              "start": 63.18,
+              "end": 63.86,
+              "word": " How",
+              "probability": 0.19576521217823029
+            },
+            {
+              "start": 63.86,
+              "end": 63.98,
+              "word": " do",
+              "probability": 0.24487707018852234
+            },
+            {
+              "start": 63.98,
+              "end": 65.9,
+              "word": " you",
+              "probability": 0.6311889886856079
+            },
+            {
+              "start": 65.9,
+              "end": 65.9,
+              "word": " think?",
+              "probability": 0.8836607336997986
+            }
+          ]
+        },
+        {
+          "start": 68.18,
+          "end": 68.98,
+          "text": " Once above was a",
+          "avg_logprob": -0.9552299465451922,
+          "no_speech_prob": 0.1585790067911148,
+          "words": [
+            {
+              "start": 68.18,
+              "end": 68.34,
+              "word": " Once",
+              "probability": 0.054365064948797226
+            },
+            {
+              "start": 68.34,
+              "end": 68.6,
+              "word": " above",
+              "probability": 0.14570122957229614
+            },
+            {
+              "start": 68.6,
+              "end": 68.82,
+              "word": " was",
+              "probability": 0.38720858097076416
+            },
+            {
+              "start": 68.82,
+              "end": 68.98,
+              "word": " a",
+              "probability": 0.51109379529953
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

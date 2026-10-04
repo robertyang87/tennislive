@@ -1,0 +1,539 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 0,
+  "range_to": null,
+  "created_at": "2026-10-03T16:52:11.717077+00:00",
+  "elapsed_seconds": 19.68,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 11.41,
+      "end": 26.44,
+      "text": " and a really good finish there a good opening hold of serve",
+      "avg_logprob": -0.23377420733103882,
+      "no_speech_prob": 0.04480673745274544,
+      "compression_ratio": 1.7894736842105263,
+      "words": [
+        {
+          "start": 11.41,
+          "end": 11.91,
+          "word": " and",
+          "probability": 0.11483792960643768
+        },
+        {
+          "start": 11.91,
+          "end": 12.05,
+          "word": " a",
+          "probability": 0.9576399326324463
+        },
+        {
+          "start": 12.05,
+          "end": 12.29,
+          "word": " really",
+          "probability": 0.975814163684845
+        },
+        {
+          "start": 12.29,
+          "end": 12.51,
+          "word": " good",
+          "probability": 0.9976226687431335
+        },
+        {
+          "start": 12.51,
+          "end": 12.83,
+          "word": " finish",
+          "probability": 0.9959596991539001
+        },
+        {
+          "start": 12.83,
+          "end": 13.21,
+          "word": " there",
+          "probability": 0.9474493861198425
+        },
+        {
+          "start": 23.8,
+          "end": 24.74,
+          "word": " a",
+          "probability": 0.1822366565465927
+        },
+        {
+          "start": 24.74,
+          "end": 25.06,
+          "word": " good",
+          "probability": 0.9330906271934509
+        },
+        {
+          "start": 25.06,
+          "end": 25.6,
+          "word": " opening",
+          "probability": 0.9989159107208252
+        },
+        {
+          "start": 25.6,
+          "end": 25.9,
+          "word": " hold",
+          "probability": 0.9078972935676575
+        },
+        {
+          "start": 25.9,
+          "end": 26.14,
+          "word": " of",
+          "probability": 0.9375022649765015
+        },
+        {
+          "start": 26.14,
+          "end": 26.44,
+          "word": " serve",
+          "probability": 0.4819592535495758
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 73.7,
+      "end": 101.94,
+      "text": " really nice mix up there did so well to turn that point around",
+      "avg_logprob": -0.23377420733103882,
+      "no_speech_prob": 0.04480673745274544,
+      "compression_ratio": 1.7894736842105263,
+      "words": [
+        {
+          "start": 73.7,
+          "end": 74.0,
+          "word": " really",
+          "probability": 0.39064013957977295
+        },
+        {
+          "start": 74.0,
+          "end": 74.26,
+          "word": " nice",
+          "probability": 0.9951618313789368
+        },
+        {
+          "start": 74.26,
+          "end": 74.54,
+          "word": " mix",
+          "probability": 0.9950262904167175
+        },
+        {
+          "start": 74.54,
+          "end": 74.76,
+          "word": " up",
+          "probability": 0.7700694799423218
+        },
+        {
+          "start": 74.76,
+          "end": 75.38,
+          "word": " there",
+          "probability": 0.9953125715255737
+        },
+        {
+          "start": 99.06,
+          "end": 99.84,
+          "word": " did",
+          "probability": 0.3972260653972626
+        },
+        {
+          "start": 99.84,
+          "end": 100.36,
+          "word": " so",
+          "probability": 0.9945632815361023
+        },
+        {
+          "start": 100.36,
+          "end": 100.62,
+          "word": " well",
+          "probability": 0.9987980127334595
+        },
+        {
+          "start": 100.62,
+          "end": 100.84,
+          "word": " to",
+          "probability": 0.9982905983924866
+        },
+        {
+          "start": 100.84,
+          "end": 101.02,
+          "word": " turn",
+          "probability": 0.9995310306549072
+        },
+        {
+          "start": 101.02,
+          "end": 101.22,
+          "word": " that",
+          "probability": 0.9987819790840149
+        },
+        {
+          "start": 101.22,
+          "end": 101.46,
+          "word": " point",
+          "probability": 0.9990748167037964
+        },
+        {
+          "start": 101.46,
+          "end": 101.94,
+          "word": " around",
+          "probability": 0.99920254945755
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 117.52,
+      "end": 132.64,
+      "text": " such a good finish really good covering there on the net by Buxa",
+      "avg_logprob": -0.23377420733103882,
+      "no_speech_prob": 0.04480673745274544,
+      "compression_ratio": 1.7894736842105263,
+      "words": [
+        {
+          "start": 117.52,
+          "end": 117.84,
+          "word": " such",
+          "probability": 0.7180977463722229
+        },
+        {
+          "start": 117.84,
+          "end": 118.04,
+          "word": " a",
+          "probability": 0.7704847455024719
+        },
+        {
+          "start": 118.04,
+          "end": 118.16,
+          "word": " good",
+          "probability": 0.9984719157218933
+        },
+        {
+          "start": 118.16,
+          "end": 118.76,
+          "word": " finish",
+          "probability": 0.9997641444206238
+        },
+        {
+          "start": 129.38,
+          "end": 130.34,
+          "word": " really",
+          "probability": 0.8281901478767395
+        },
+        {
+          "start": 130.34,
+          "end": 130.52,
+          "word": " good",
+          "probability": 0.9995311498641968
+        },
+        {
+          "start": 130.52,
+          "end": 130.9,
+          "word": " covering",
+          "probability": 0.9976116418838501
+        },
+        {
+          "start": 130.9,
+          "end": 131.18,
+          "word": " there",
+          "probability": 0.9973582625389099
+        },
+        {
+          "start": 131.18,
+          "end": 131.3,
+          "word": " on",
+          "probability": 0.9976504445075989
+        },
+        {
+          "start": 131.3,
+          "end": 131.4,
+          "word": " the",
+          "probability": 0.9995843768119812
+        },
+        {
+          "start": 131.4,
+          "end": 131.58,
+          "word": " net",
+          "probability": 0.9996510744094849
+        },
+        {
+          "start": 131.58,
+          "end": 131.82,
+          "word": " by",
+          "probability": 0.9905767440795898
+        },
+        {
+          "start": 131.82,
+          "end": 132.64,
+          "word": " Buxa",
+          "probability": 0.6449230313301086
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 145.28,
+      "end": 166.41,
+      "text": " she finds the backhand down and a really good finish there",
+      "avg_logprob": -0.23377420733103882,
+      "no_speech_prob": 0.04480673745274544,
+      "compression_ratio": 1.7894736842105263,
+      "words": [
+        {
+          "start": 145.28,
+          "end": 145.58,
+          "word": " she",
+          "probability": 0.7425543665885925
+        },
+        {
+          "start": 145.58,
+          "end": 145.92,
+          "word": " finds",
+          "probability": 0.9688845276832581
+        },
+        {
+          "start": 145.92,
+          "end": 146.14,
+          "word": " the",
+          "probability": 0.9729289412498474
+        },
+        {
+          "start": 146.14,
+          "end": 146.58,
+          "word": " backhand",
+          "probability": 0.9163159132003784
+        },
+        {
+          "start": 146.58,
+          "end": 146.82,
+          "word": " down",
+          "probability": 0.9528018832206726
+        },
+        {
+          "start": 146.82,
+          "end": 147.6,
+          "word": " and",
+          "probability": 0.3006538152694702
+        },
+        {
+          "start": 164.69,
+          "end": 164.97,
+          "word": " a",
+          "probability": 0.9812461733818054
+        },
+        {
+          "start": 164.97,
+          "end": 165.29,
+          "word": " really",
+          "probability": 0.9990850687026978
+        },
+        {
+          "start": 165.29,
+          "end": 165.53,
+          "word": " good",
+          "probability": 0.999631404876709
+        },
+        {
+          "start": 165.53,
+          "end": 165.89,
+          "word": " finish",
+          "probability": 0.9996217489242554
+        },
+        {
+          "start": 165.89,
+          "end": 166.41,
+          "word": " there",
+          "probability": 0.9411367774009705
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 167.15,
+      "end": 187.46,
+      "text": " very composed there's nothing tentative about that forehand",
+      "avg_logprob": -0.23377420733103882,
+      "no_speech_prob": 0.04480673745274544,
+      "compression_ratio": 1.7894736842105263,
+      "words": [
+        {
+          "start": 167.15,
+          "end": 167.55,
+          "word": " very",
+          "probability": 0.9403311610221863
+        },
+        {
+          "start": 167.55,
+          "end": 168.33,
+          "word": " composed",
+          "probability": 0.9997336268424988
+        },
+        {
+          "start": 184.24,
+          "end": 185.22,
+          "word": " there's",
+          "probability": 0.7501272559165955
+        },
+        {
+          "start": 185.22,
+          "end": 185.46,
+          "word": " nothing",
+          "probability": 0.9993533492088318
+        },
+        {
+          "start": 185.46,
+          "end": 185.94,
+          "word": " tentative",
+          "probability": 0.9332913160324097
+        },
+        {
+          "start": 185.94,
+          "end": 186.24,
+          "word": " about",
+          "probability": 0.9996026158332825
+        },
+        {
+          "start": 186.24,
+          "end": 186.5,
+          "word": " that",
+          "probability": 0.9995452761650085
+        },
+        {
+          "start": 186.5,
+          "end": 187.46,
+          "word": " forehand",
+          "probability": 0.9951569736003876
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 197.63,
+      "end": 205.85,
+      "text": " Oh, she wins it in style, and it's the biggest victory of this young 16-year-old's career.",
+      "avg_logprob": -0.379109188914299,
+      "no_speech_prob": 0.018191324546933174,
+      "compression_ratio": 1.0344827586206897,
+      "words": [
+        {
+          "start": 197.63,
+          "end": 198.25,
+          "word": " Oh,",
+          "probability": 0.16678574681282043
+        },
+        {
+          "start": 198.35,
+          "end": 198.53,
+          "word": " she",
+          "probability": 0.9772593975067139
+        },
+        {
+          "start": 198.53,
+          "end": 198.77,
+          "word": " wins",
+          "probability": 0.9957478642463684
+        },
+        {
+          "start": 198.77,
+          "end": 198.93,
+          "word": " it",
+          "probability": 0.9127445220947266
+        },
+        {
+          "start": 198.93,
+          "end": 199.07,
+          "word": " in",
+          "probability": 0.9951825737953186
+        },
+        {
+          "start": 199.07,
+          "end": 199.65,
+          "word": " style,",
+          "probability": 0.9950360655784607
+        },
+        {
+          "start": 199.89,
+          "end": 201.53,
+          "word": " and",
+          "probability": 0.7716448307037354
+        },
+        {
+          "start": 201.53,
+          "end": 201.83,
+          "word": " it's",
+          "probability": 0.8914875686168671
+        },
+        {
+          "start": 201.83,
+          "end": 202.05,
+          "word": " the",
+          "probability": 0.9983443021774292
+        },
+        {
+          "start": 202.05,
+          "end": 202.63,
+          "word": " biggest",
+          "probability": 0.998282790184021
+        },
+        {
+          "start": 202.63,
+          "end": 203.29,
+          "word": " victory",
+          "probability": 0.9955462217330933
+        },
+        {
+          "start": 203.29,
+          "end": 203.87,
+          "word": " of",
+          "probability": 0.9921099543571472
+        },
+        {
+          "start": 203.87,
+          "end": 204.11,
+          "word": " this",
+          "probability": 0.9963577389717102
+        },
+        {
+          "start": 204.11,
+          "end": 204.45,
+          "word": " young",
+          "probability": 0.996957540512085
+        },
+        {
+          "start": 204.45,
+          "end": 204.99,
+          "word": " 16",
+          "probability": 0.9316021800041199
+        },
+        {
+          "start": 204.99,
+          "end": 205.17,
+          "word": "-year",
+          "probability": 0.8147161900997162
+        },
+        {
+          "start": 205.17,
+          "end": 205.57,
+          "word": "-old's",
+          "probability": 0.9572791457176208
+        },
+        {
+          "start": 205.57,
+          "end": 205.85,
+          "word": " career.",
+          "probability": 0.9972919821739197
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "eba09f0043d03fc831f6c6be431764e0dad05ceb4e74b8ae729349f39fd720d9",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

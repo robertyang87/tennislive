@@ -1,0 +1,79 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 91,
+  "range_to": 108,
+  "created_at": "2026-10-03T16:48:03.308086+00:00",
+  "elapsed_seconds": 2.57,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 99.28,
+      "end": 101.82,
+      "text": " Did so well to turn that point around.",
+      "avg_logprob": -0.5663953423500061,
+      "no_speech_prob": 0.21008910238742828,
+      "words": [
+        {
+          "start": 99.28,
+          "end": 99.84,
+          "word": " Did",
+          "probability": 0.058919500559568405
+        },
+        {
+          "start": 99.84,
+          "end": 100.34,
+          "word": " so",
+          "probability": 0.9894856214523315
+        },
+        {
+          "start": 100.34,
+          "end": 100.62,
+          "word": " well",
+          "probability": 0.9984563589096069
+        },
+        {
+          "start": 100.62,
+          "end": 100.78,
+          "word": " to",
+          "probability": 0.9888944625854492
+        },
+        {
+          "start": 100.78,
+          "end": 101.0,
+          "word": " turn",
+          "probability": 0.9980912804603577
+        },
+        {
+          "start": 101.0,
+          "end": 101.2,
+          "word": " that",
+          "probability": 0.99699866771698
+        },
+        {
+          "start": 101.2,
+          "end": 101.44,
+          "word": " point",
+          "probability": 0.9961419701576233
+        },
+        {
+          "start": 101.44,
+          "end": 101.82,
+          "word": " around.",
+          "probability": 0.9962751865386963
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "8c3a2fee0943ad351c8afb91081264138681dea538323c82fe29a00d032cb864",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

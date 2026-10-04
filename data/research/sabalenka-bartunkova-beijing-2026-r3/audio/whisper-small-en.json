@@ -1,0 +1,1678 @@
+{
+  "model": "small.en",
+  "info": "TranscriptionInfo(language='en', language_probability=1, duration=308.8021875, duration_after_vad=104.992, all_language_probs=None, transcription_options=TranscriptionOptions(beam_size=5, best_of=5, patience=1, length_penalty=1, repetition_penalty=1, no_repeat_ngram_size=0, log_prob_threshold=-1.0, no_speech_threshold=0.6, compression_ratio_threshold=2.4, condition_on_previous_text=True, prompt_reset_on_temperature=0.5, temperatures=[0.0, 0.2, 0.4, 0.6, 0.8, 1.0], initial_prompt=None, prefix=None, suppress_blank=True, suppress_tokens=(1, 2, 7, 8, 9, 10, 14, 25, 26, 27, 28, 29, 31, 58, 59, 60, 61, 62, 63, 90, 91, 92, 93, 357, 366, 438, 532, 685, 705, 796, 930, 1058, 1220, 1267, 1279, 1303, 1343, 1377, 1391, 1635, 1782, 1875, 2162, 2361, 2488, 3467, 4008, 4211, 4600, 4808, 5299, 5855, 6329, 7203, 9609, 9959, 10563, 10786, 11420, 11709, 11907, 13163, 13697, 13700, 14808, 15306, 16410, 16791, 17992, 19203, 19510, 20724, 22305, 22935, 27007, 30109, 30420, 33409, 34949, 40283, 40493, 40549, 47282, 49146, 50257, 50357, 50358, 50359, 50360, 50361), without_timestamps=False, max_initial_timestamp=1.0, word_timestamps=True, prepend_punctuations='\"\\'\u201c\u00bf([{-', append_punctuations='\"\\'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001', multilingual=False, max_new_tokens=None, clip_timestamps=[0.0], hallucination_silence_threshold=None, hotwords=None), vad_options=VadOptions(threshold=0.5, neg_threshold=None, min_speech_duration_ms=0, max_speech_duration_s=inf, min_silence_duration_ms=2000, speech_pad_ms=400))",
+  "segments": [
+    {
+      "start": 13.26,
+      "end": 27.55,
+      "text": " That's not coming back. That catches the inside of the line, so",
+      "words": [
+        {
+          "start": 13.26,
+          "end": 13.66,
+          "word": " That's",
+          "probability": 0.5320877134799957
+        },
+        {
+          "start": 13.66,
+          "end": 13.78,
+          "word": " not",
+          "probability": 0.9735498428344727
+        },
+        {
+          "start": 13.78,
+          "end": 14.02,
+          "word": " coming",
+          "probability": 0.9933551549911499
+        },
+        {
+          "start": 14.02,
+          "end": 14.54,
+          "word": " back.",
+          "probability": 0.9978960752487183
+        },
+        {
+          "start": 25.77,
+          "end": 25.77,
+          "word": " That",
+          "probability": 0.6245759129524231
+        },
+        {
+          "start": 25.77,
+          "end": 26.05,
+          "word": " catches",
+          "probability": 0.9707291126251221
+        },
+        {
+          "start": 26.05,
+          "end": 26.25,
+          "word": " the",
+          "probability": 0.9930942058563232
+        },
+        {
+          "start": 26.25,
+          "end": 26.53,
+          "word": " inside",
+          "probability": 0.9638597369194031
+        },
+        {
+          "start": 26.53,
+          "end": 26.69,
+          "word": " of",
+          "probability": 0.8748489618301392
+        },
+        {
+          "start": 26.69,
+          "end": 26.71,
+          "word": " the",
+          "probability": 0.9613069891929626
+        },
+        {
+          "start": 26.71,
+          "end": 26.93,
+          "word": " line,",
+          "probability": 0.988895058631897
+        },
+        {
+          "start": 27.11,
+          "end": 27.55,
+          "word": " so",
+          "probability": 0.9831849932670593
+        }
+      ]
+    },
+    {
+      "start": 27.55,
+      "end": 70.75,
+      "text": " four straight points for Bartz and Kova. Big put away from Sabalinka there, puts that overhead away,",
+      "words": [
+        {
+          "start": 27.55,
+          "end": 28.11,
+          "word": " four",
+          "probability": 0.27239736914634705
+        },
+        {
+          "start": 28.11,
+          "end": 28.35,
+          "word": " straight",
+          "probability": 0.9423154592514038
+        },
+        {
+          "start": 28.35,
+          "end": 28.69,
+          "word": " points",
+          "probability": 0.9958248138427734
+        },
+        {
+          "start": 28.69,
+          "end": 28.93,
+          "word": " for",
+          "probability": 0.982062041759491
+        },
+        {
+          "start": 28.93,
+          "end": 29.27,
+          "word": " Bartz",
+          "probability": 0.2540166303515434
+        },
+        {
+          "start": 29.27,
+          "end": 29.33,
+          "word": " and",
+          "probability": 0.5551909804344177
+        },
+        {
+          "start": 29.33,
+          "end": 29.63,
+          "word": " Kova.",
+          "probability": 0.9021167159080505
+        },
+        {
+          "start": 51.41,
+          "end": 51.75,
+          "word": " Big",
+          "probability": 0.34396061301231384
+        },
+        {
+          "start": 51.75,
+          "end": 51.97,
+          "word": " put",
+          "probability": 0.9871231317520142
+        },
+        {
+          "start": 51.97,
+          "end": 52.17,
+          "word": " away",
+          "probability": 0.8873129487037659
+        },
+        {
+          "start": 52.17,
+          "end": 52.41,
+          "word": " from",
+          "probability": 0.9952613711357117
+        },
+        {
+          "start": 52.41,
+          "end": 52.91,
+          "word": " Sabalinka",
+          "probability": 0.5332293808460236
+        },
+        {
+          "start": 52.91,
+          "end": 53.19,
+          "word": " there,",
+          "probability": 0.9355885982513428
+        },
+        {
+          "start": 69.49,
+          "end": 69.75,
+          "word": " puts",
+          "probability": 0.930288553237915
+        },
+        {
+          "start": 69.75,
+          "end": 69.97,
+          "word": " that",
+          "probability": 0.9783210754394531
+        },
+        {
+          "start": 69.97,
+          "end": 70.39,
+          "word": " overhead",
+          "probability": 0.9850389957427979
+        },
+        {
+          "start": 70.39,
+          "end": 70.75,
+          "word": " away,",
+          "probability": 0.9957785606384277
+        }
+      ]
+    },
+    {
+      "start": 89.1,
+      "end": 103.54,
+      "text": " much better from Sabalinka. Three of the first four points that she won were winners, so as you said",
+      "words": [
+        {
+          "start": 89.1,
+          "end": 89.42,
+          "word": " much",
+          "probability": 0.9788205027580261
+        },
+        {
+          "start": 89.42,
+          "end": 89.64,
+          "word": " better",
+          "probability": 0.9992437362670898
+        },
+        {
+          "start": 89.64,
+          "end": 89.92,
+          "word": " from",
+          "probability": 0.9642884135246277
+        },
+        {
+          "start": 89.92,
+          "end": 90.46,
+          "word": " Sabalinka.",
+          "probability": 0.9851418932278951
+        },
+        {
+          "start": 99.38,
+          "end": 99.84,
+          "word": " Three",
+          "probability": 0.9362980723381042
+        },
+        {
+          "start": 99.84,
+          "end": 99.94,
+          "word": " of",
+          "probability": 0.9973911046981812
+        },
+        {
+          "start": 99.94,
+          "end": 100.06,
+          "word": " the",
+          "probability": 0.9990449547767639
+        },
+        {
+          "start": 100.06,
+          "end": 100.3,
+          "word": " first",
+          "probability": 0.9956960678100586
+        },
+        {
+          "start": 100.3,
+          "end": 101.1,
+          "word": " four",
+          "probability": 0.9693940877914429
+        },
+        {
+          "start": 101.1,
+          "end": 101.38,
+          "word": " points",
+          "probability": 0.9974139928817749
+        },
+        {
+          "start": 101.38,
+          "end": 101.58,
+          "word": " that",
+          "probability": 0.9898077845573425
+        },
+        {
+          "start": 101.58,
+          "end": 101.74,
+          "word": " she",
+          "probability": 0.996190071105957
+        },
+        {
+          "start": 101.74,
+          "end": 101.96,
+          "word": " won",
+          "probability": 0.9966018199920654
+        },
+        {
+          "start": 101.96,
+          "end": 102.16,
+          "word": " were",
+          "probability": 0.9848397374153137
+        },
+        {
+          "start": 102.16,
+          "end": 102.44,
+          "word": " winners,",
+          "probability": 0.9421929717063904
+        },
+        {
+          "start": 102.74,
+          "end": 102.78,
+          "word": " so",
+          "probability": 0.9859225749969482
+        },
+        {
+          "start": 102.78,
+          "end": 103.22,
+          "word": " as",
+          "probability": 0.745922863483429
+        },
+        {
+          "start": 103.22,
+          "end": 103.32,
+          "word": " you",
+          "probability": 0.8494863510131836
+        },
+        {
+          "start": 103.32,
+          "end": 103.54,
+          "word": " said",
+          "probability": 0.9941592216491699
+        }
+      ]
+    },
+    {
+      "start": 104.02,
+      "end": 117.8,
+      "text": " went after it early on. A couple break opportunities for a double break for Bartz and Kova. Saves one,",
+      "words": [
+        {
+          "start": 104.02,
+          "end": 104.3,
+          "word": " went",
+          "probability": 0.11126074194908142
+        },
+        {
+          "start": 104.3,
+          "end": 104.62,
+          "word": " after",
+          "probability": 0.9967936873435974
+        },
+        {
+          "start": 104.62,
+          "end": 104.74,
+          "word": " it",
+          "probability": 0.990019679069519
+        },
+        {
+          "start": 104.74,
+          "end": 104.9,
+          "word": " early",
+          "probability": 0.9899851083755493
+        },
+        {
+          "start": 104.9,
+          "end": 105.18,
+          "word": " on.",
+          "probability": 0.9948461055755615
+        },
+        {
+          "start": 105.86,
+          "end": 106.16,
+          "word": " A",
+          "probability": 0.3370462954044342
+        },
+        {
+          "start": 106.16,
+          "end": 106.4,
+          "word": " couple",
+          "probability": 0.997222900390625
+        },
+        {
+          "start": 106.4,
+          "end": 106.72,
+          "word": " break",
+          "probability": 0.5409281253814697
+        },
+        {
+          "start": 106.72,
+          "end": 107.2,
+          "word": " opportunities",
+          "probability": 0.9859018325805664
+        },
+        {
+          "start": 107.2,
+          "end": 107.66,
+          "word": " for",
+          "probability": 0.9942288398742676
+        },
+        {
+          "start": 107.66,
+          "end": 107.78,
+          "word": " a",
+          "probability": 0.9791625738143921
+        },
+        {
+          "start": 107.78,
+          "end": 108.06,
+          "word": " double",
+          "probability": 0.9946656227111816
+        },
+        {
+          "start": 108.06,
+          "end": 108.34,
+          "word": " break",
+          "probability": 0.9630599021911621
+        },
+        {
+          "start": 108.34,
+          "end": 108.96,
+          "word": " for",
+          "probability": 0.8305147290229797
+        },
+        {
+          "start": 108.96,
+          "end": 109.22,
+          "word": " Bartz",
+          "probability": 0.9878702759742737
+        },
+        {
+          "start": 109.22,
+          "end": 109.32,
+          "word": " and",
+          "probability": 0.9960582256317139
+        },
+        {
+          "start": 109.32,
+          "end": 109.68,
+          "word": " Kova.",
+          "probability": 0.9976935684680939
+        },
+        {
+          "start": 117.08,
+          "end": 117.46,
+          "word": " Saves",
+          "probability": 0.9554879069328308
+        },
+        {
+          "start": 117.46,
+          "end": 117.8,
+          "word": " one,",
+          "probability": 0.9878601431846619
+        }
+      ]
+    },
+    {
+      "start": 137.13,
+      "end": 149.8,
+      "text": " saves the second break points. Great hustle from Sabalinka to get that ball to an easy",
+      "words": [
+        {
+          "start": 137.13,
+          "end": 137.45,
+          "word": " saves",
+          "probability": 0.9947485327720642
+        },
+        {
+          "start": 137.45,
+          "end": 137.69,
+          "word": " the",
+          "probability": 0.9963793158531189
+        },
+        {
+          "start": 137.69,
+          "end": 137.93,
+          "word": " second",
+          "probability": 0.9980655312538147
+        },
+        {
+          "start": 137.93,
+          "end": 138.19,
+          "word": " break",
+          "probability": 0.9571874737739563
+        },
+        {
+          "start": 138.19,
+          "end": 138.57,
+          "word": " points.",
+          "probability": 0.942279040813446
+        },
+        {
+          "start": 147.4,
+          "end": 147.68,
+          "word": " Great",
+          "probability": 0.868794322013855
+        },
+        {
+          "start": 147.68,
+          "end": 148.06,
+          "word": " hustle",
+          "probability": 0.9980679154396057
+        },
+        {
+          "start": 148.06,
+          "end": 148.26,
+          "word": " from",
+          "probability": 0.9668650031089783
+        },
+        {
+          "start": 148.26,
+          "end": 148.68,
+          "word": " Sabalinka",
+          "probability": 0.9816741545995077
+        },
+        {
+          "start": 148.68,
+          "end": 148.86,
+          "word": " to",
+          "probability": 0.9430935978889465
+        },
+        {
+          "start": 148.86,
+          "end": 148.96,
+          "word": " get",
+          "probability": 0.9991888403892517
+        },
+        {
+          "start": 148.96,
+          "end": 149.18,
+          "word": " that",
+          "probability": 0.9968650937080383
+        },
+        {
+          "start": 149.18,
+          "end": 149.34,
+          "word": " ball",
+          "probability": 0.9967868328094482
+        },
+        {
+          "start": 149.34,
+          "end": 149.52,
+          "word": " to",
+          "probability": 0.36433878540992737
+        },
+        {
+          "start": 149.52,
+          "end": 149.62,
+          "word": " an",
+          "probability": 0.6708595156669617
+        },
+        {
+          "start": 149.62,
+          "end": 149.8,
+          "word": " easy",
+          "probability": 0.9983695149421692
+        }
+      ]
+    },
+    {
+      "start": 149.8,
+      "end": 176.64,
+      "text": " put away. Open court for Bartz and Kova. That's a rocket backhand from Sabalinka that time. What a",
+      "words": [
+        {
+          "start": 149.8,
+          "end": 150.04,
+          "word": " put",
+          "probability": 0.11586828529834747
+        },
+        {
+          "start": 150.04,
+          "end": 150.24,
+          "word": " away.",
+          "probability": 0.9266681671142578
+        },
+        {
+          "start": 150.38,
+          "end": 150.52,
+          "word": " Open",
+          "probability": 0.9102620482444763
+        },
+        {
+          "start": 150.52,
+          "end": 150.76,
+          "word": " court",
+          "probability": 0.9309762716293335
+        },
+        {
+          "start": 150.76,
+          "end": 151.72,
+          "word": " for",
+          "probability": 0.9854043126106262
+        },
+        {
+          "start": 151.72,
+          "end": 152.12,
+          "word": " Bartz",
+          "probability": 0.31027424335479736
+        },
+        {
+          "start": 152.12,
+          "end": 152.2,
+          "word": " and",
+          "probability": 0.5879636406898499
+        },
+        {
+          "start": 152.2,
+          "end": 152.52,
+          "word": " Kova.",
+          "probability": 0.866823673248291
+        },
+        {
+          "start": 168.52,
+          "end": 168.6,
+          "word": " That's",
+          "probability": 0.5672147125005722
+        },
+        {
+          "start": 168.6,
+          "end": 168.7,
+          "word": " a",
+          "probability": 0.6550241112709045
+        },
+        {
+          "start": 168.7,
+          "end": 168.96,
+          "word": " rocket",
+          "probability": 0.9032658338546753
+        },
+        {
+          "start": 168.96,
+          "end": 169.48,
+          "word": " backhand",
+          "probability": 0.9789339900016785
+        },
+        {
+          "start": 169.48,
+          "end": 169.96,
+          "word": " from",
+          "probability": 0.9947029948234558
+        },
+        {
+          "start": 169.96,
+          "end": 170.58,
+          "word": " Sabalinka",
+          "probability": 0.41789690653483075
+        },
+        {
+          "start": 170.58,
+          "end": 170.78,
+          "word": " that",
+          "probability": 0.8900850415229797
+        },
+        {
+          "start": 170.78,
+          "end": 171.36,
+          "word": " time.",
+          "probability": 0.9983479976654053
+        },
+        {
+          "start": 176.54,
+          "end": 176.56,
+          "word": " What",
+          "probability": 0.44688981771469116
+        },
+        {
+          "start": 176.56,
+          "end": 176.64,
+          "word": " a",
+          "probability": 0.9932437539100647
+        }
+      ]
+    },
+    {
+      "start": 176.64,
+      "end": 198.9,
+      "text": " return. It's so early, Sabalinka didn't even react. Shot there from Sabalinka. Great serve from Bartz",
+      "words": [
+        {
+          "start": 176.64,
+          "end": 176.92,
+          "word": " return.",
+          "probability": 0.9618586897850037
+        },
+        {
+          "start": 177.82,
+          "end": 178.04,
+          "word": " It's",
+          "probability": 0.4700382128357887
+        },
+        {
+          "start": 178.04,
+          "end": 178.18,
+          "word": " so",
+          "probability": 0.9753589630126953
+        },
+        {
+          "start": 178.18,
+          "end": 178.42,
+          "word": " early,",
+          "probability": 0.9990792274475098
+        },
+        {
+          "start": 178.66,
+          "end": 178.84,
+          "word": " Sabalinka",
+          "probability": 0.9318641622861227
+        },
+        {
+          "start": 178.84,
+          "end": 179.02,
+          "word": " didn't",
+          "probability": 0.9277898967266083
+        },
+        {
+          "start": 179.02,
+          "end": 179.2,
+          "word": " even",
+          "probability": 0.9015367031097412
+        },
+        {
+          "start": 179.2,
+          "end": 179.6,
+          "word": " react.",
+          "probability": 0.9988608360290527
+        },
+        {
+          "start": 192.02,
+          "end": 192.1,
+          "word": " Shot",
+          "probability": 0.9306118488311768
+        },
+        {
+          "start": 192.1,
+          "end": 192.36,
+          "word": " there",
+          "probability": 0.9913842678070068
+        },
+        {
+          "start": 192.36,
+          "end": 192.6,
+          "word": " from",
+          "probability": 0.9908735752105713
+        },
+        {
+          "start": 192.6,
+          "end": 193.18,
+          "word": " Sabalinka.",
+          "probability": 0.9886517524719238
+        },
+        {
+          "start": 197.6,
+          "end": 198.12,
+          "word": " Great",
+          "probability": 0.9354917407035828
+        },
+        {
+          "start": 198.12,
+          "end": 198.4,
+          "word": " serve",
+          "probability": 0.9977465271949768
+        },
+        {
+          "start": 198.4,
+          "end": 198.64,
+          "word": " from",
+          "probability": 0.9841408729553223
+        },
+        {
+          "start": 198.64,
+          "end": 198.9,
+          "word": " Bartz",
+          "probability": 0.9938195645809174
+        }
+      ]
+    },
+    {
+      "start": 198.9,
+      "end": 205.66,
+      "text": " and Kova. Served well throughout the opening sets. Perhaps an upset in the making on Diamond Court",
+      "words": [
+        {
+          "start": 198.9,
+          "end": 199.02,
+          "word": " and",
+          "probability": 0.9958449006080627
+        },
+        {
+          "start": 199.02,
+          "end": 199.3,
+          "word": " Kova.",
+          "probability": 0.9966033101081848
+        },
+        {
+          "start": 199.92,
+          "end": 200.18,
+          "word": " Served",
+          "probability": 0.9879262745380402
+        },
+        {
+          "start": 200.18,
+          "end": 200.36,
+          "word": " well",
+          "probability": 0.9989638328552246
+        },
+        {
+          "start": 200.36,
+          "end": 200.64,
+          "word": " throughout",
+          "probability": 0.9829384684562683
+        },
+        {
+          "start": 200.64,
+          "end": 200.88,
+          "word": " the",
+          "probability": 0.9990115165710449
+        },
+        {
+          "start": 200.88,
+          "end": 201.16,
+          "word": " opening",
+          "probability": 0.9961344003677368
+        },
+        {
+          "start": 201.16,
+          "end": 201.54,
+          "word": " sets.",
+          "probability": 0.9548134207725525
+        },
+        {
+          "start": 202.28,
+          "end": 202.8,
+          "word": " Perhaps",
+          "probability": 0.9449717998504639
+        },
+        {
+          "start": 202.8,
+          "end": 203.1,
+          "word": " an",
+          "probability": 0.9620323181152344
+        },
+        {
+          "start": 203.1,
+          "end": 203.46,
+          "word": " upset",
+          "probability": 0.9770628213882446
+        },
+        {
+          "start": 203.46,
+          "end": 203.7,
+          "word": " in",
+          "probability": 0.9970812201499939
+        },
+        {
+          "start": 203.7,
+          "end": 203.82,
+          "word": " the",
+          "probability": 0.9985575079917908
+        },
+        {
+          "start": 203.82,
+          "end": 204.14,
+          "word": " making",
+          "probability": 0.998073935508728
+        },
+        {
+          "start": 204.14,
+          "end": 204.56,
+          "word": " on",
+          "probability": 0.9912413358688354
+        },
+        {
+          "start": 204.56,
+          "end": 205.32,
+          "word": " Diamond",
+          "probability": 0.8503289222717285
+        },
+        {
+          "start": 205.32,
+          "end": 205.66,
+          "word": " Court",
+          "probability": 0.8931993842124939
+        }
+      ]
+    },
+    {
+      "start": 205.66,
+      "end": 211.96,
+      "text": " on this day five of the China Open. Nikola Bartz and Kova, the 26 seed, takes the opener",
+      "words": [
+        {
+          "start": 205.66,
+          "end": 205.96,
+          "word": " on",
+          "probability": 0.9765890836715698
+        },
+        {
+          "start": 205.96,
+          "end": 206.18,
+          "word": " this",
+          "probability": 0.9923451542854309
+        },
+        {
+          "start": 206.18,
+          "end": 206.38,
+          "word": " day",
+          "probability": 0.8213693499565125
+        },
+        {
+          "start": 206.38,
+          "end": 206.82,
+          "word": " five",
+          "probability": 0.833253026008606
+        },
+        {
+          "start": 206.82,
+          "end": 207.58,
+          "word": " of",
+          "probability": 0.9010221362113953
+        },
+        {
+          "start": 207.58,
+          "end": 207.72,
+          "word": " the",
+          "probability": 0.9944881796836853
+        },
+        {
+          "start": 207.72,
+          "end": 208.02,
+          "word": " China",
+          "probability": 0.9778633117675781
+        },
+        {
+          "start": 208.02,
+          "end": 208.44,
+          "word": " Open.",
+          "probability": 0.960648238658905
+        },
+        {
+          "start": 208.76,
+          "end": 208.96,
+          "word": " Nikola",
+          "probability": 0.2742026746273041
+        },
+        {
+          "start": 208.96,
+          "end": 209.36,
+          "word": " Bartz",
+          "probability": 0.9647281765937805
+        },
+        {
+          "start": 209.36,
+          "end": 209.48,
+          "word": " and",
+          "probability": 0.9924696087837219
+        },
+        {
+          "start": 209.48,
+          "end": 209.74,
+          "word": " Kova,",
+          "probability": 0.9976487159729004
+        },
+        {
+          "start": 209.86,
+          "end": 209.92,
+          "word": " the",
+          "probability": 0.996986448764801
+        },
+        {
+          "start": 209.92,
+          "end": 210.32,
+          "word": " 26",
+          "probability": 0.9466636180877686
+        },
+        {
+          "start": 210.32,
+          "end": 210.8,
+          "word": " seed,",
+          "probability": 0.38262471556663513
+        },
+        {
+          "start": 210.84,
+          "end": 211.5,
+          "word": " takes",
+          "probability": 0.9911969900131226
+        },
+        {
+          "start": 211.5,
+          "end": 211.72,
+          "word": " the",
+          "probability": 0.9991280436515808
+        },
+        {
+          "start": 211.72,
+          "end": 211.96,
+          "word": " opener",
+          "probability": 0.9985917210578918
+        }
+      ]
+    },
+    {
+      "start": 211.96,
+      "end": 218.38,
+      "text": " against Serena Sabalinka. Six games to four. U.S. Open third round two, losing to Norendreva.",
+      "words": [
+        {
+          "start": 211.96,
+          "end": 212.24,
+          "word": " against",
+          "probability": 0.3326539695262909
+        },
+        {
+          "start": 212.24,
+          "end": 212.62,
+          "word": " Serena",
+          "probability": 0.5731992647051811
+        },
+        {
+          "start": 212.62,
+          "end": 213.16,
+          "word": " Sabalinka.",
+          "probability": 0.4472340016315381
+        },
+        {
+          "start": 213.48,
+          "end": 213.52,
+          "word": " Six",
+          "probability": 0.82431560754776
+        },
+        {
+          "start": 213.52,
+          "end": 213.82,
+          "word": " games",
+          "probability": 0.9810314774513245
+        },
+        {
+          "start": 213.82,
+          "end": 214.02,
+          "word": " to",
+          "probability": 0.9431569576263428
+        },
+        {
+          "start": 214.02,
+          "end": 214.3,
+          "word": " four.",
+          "probability": 0.9626497626304626
+        },
+        {
+          "start": 215.32,
+          "end": 215.48,
+          "word": " U",
+          "probability": 0.3609263002872467
+        },
+        {
+          "start": 215.48,
+          "end": 215.62,
+          "word": ".S.",
+          "probability": 0.9824366569519043
+        },
+        {
+          "start": 215.62,
+          "end": 215.88,
+          "word": " Open",
+          "probability": 0.9286592602729797
+        },
+        {
+          "start": 215.88,
+          "end": 216.12,
+          "word": " third",
+          "probability": 0.8703088164329529
+        },
+        {
+          "start": 216.12,
+          "end": 216.38,
+          "word": " round",
+          "probability": 0.9597905874252319
+        },
+        {
+          "start": 216.38,
+          "end": 216.62,
+          "word": " two,",
+          "probability": 0.6406463980674744
+        },
+        {
+          "start": 216.72,
+          "end": 216.86,
+          "word": " losing",
+          "probability": 0.9872827529907227
+        },
+        {
+          "start": 216.86,
+          "end": 217.54,
+          "word": " to",
+          "probability": 0.9911770820617676
+        },
+        {
+          "start": 217.54,
+          "end": 218.38,
+          "word": " Norendreva.",
+          "probability": 0.45511181056499483
+        }
+      ]
+    },
+    {
+      "start": 224.86,
+      "end": 265.21,
+      "text": " Oh, such a good pickup. Good hands and drops in. Nice pickup from Sabalinka there. And Nikola Bartz",
+      "words": [
+        {
+          "start": 224.86,
+          "end": 224.94,
+          "word": " Oh,",
+          "probability": 0.3521675765514374
+        },
+        {
+          "start": 225.2,
+          "end": 225.52,
+          "word": " such",
+          "probability": 0.7668632864952087
+        },
+        {
+          "start": 225.52,
+          "end": 225.72,
+          "word": " a",
+          "probability": 0.9975855350494385
+        },
+        {
+          "start": 225.72,
+          "end": 225.82,
+          "word": " good",
+          "probability": 0.9950258135795593
+        },
+        {
+          "start": 225.82,
+          "end": 226.2,
+          "word": " pickup.",
+          "probability": 0.6920319199562073
+        },
+        {
+          "start": 229.46,
+          "end": 229.76,
+          "word": " Good",
+          "probability": 0.9515180587768555
+        },
+        {
+          "start": 239.91,
+          "end": 240.25,
+          "word": " hands",
+          "probability": 0.9698155522346497
+        },
+        {
+          "start": 240.25,
+          "end": 240.49,
+          "word": " and",
+          "probability": 0.2937498390674591
+        },
+        {
+          "start": 240.49,
+          "end": 240.75,
+          "word": " drops",
+          "probability": 0.8879205584526062
+        },
+        {
+          "start": 240.75,
+          "end": 241.09,
+          "word": " in.",
+          "probability": 0.996416449546814
+        },
+        {
+          "start": 254.83,
+          "end": 254.97,
+          "word": " Nice",
+          "probability": 0.9012130498886108
+        },
+        {
+          "start": 254.97,
+          "end": 255.31,
+          "word": " pickup",
+          "probability": 0.9480506181716919
+        },
+        {
+          "start": 255.31,
+          "end": 255.61,
+          "word": " from",
+          "probability": 0.9976571798324585
+        },
+        {
+          "start": 255.61,
+          "end": 256.19,
+          "word": " Sabalinka",
+          "probability": 0.9578499992688497
+        },
+        {
+          "start": 256.19,
+          "end": 256.51,
+          "word": " there.",
+          "probability": 0.9590321183204651
+        },
+        {
+          "start": 264.35,
+          "end": 264.41,
+          "word": " And",
+          "probability": 0.9655634760856628
+        },
+        {
+          "start": 264.41,
+          "end": 264.73,
+          "word": " Nikola",
+          "probability": 0.34754547476768494
+        },
+        {
+          "start": 264.73,
+          "end": 265.21,
+          "word": " Bartz",
+          "probability": 0.39174433052539825
+        }
+      ]
+    },
+    {
+      "start": 265.21,
+      "end": 271.53,
+      "text": " and Kova gets it done. The number two seed, the number two player in the world is out.",
+      "words": [
+        {
+          "start": 265.21,
+          "end": 265.33,
+          "word": " and",
+          "probability": 0.3901715576648712
+        },
+        {
+          "start": 265.33,
+          "end": 265.61,
+          "word": " Kova",
+          "probability": 0.8754088282585144
+        },
+        {
+          "start": 265.61,
+          "end": 266.23,
+          "word": " gets",
+          "probability": 0.8437514305114746
+        },
+        {
+          "start": 266.23,
+          "end": 266.47,
+          "word": " it",
+          "probability": 0.9966555833816528
+        },
+        {
+          "start": 266.47,
+          "end": 266.71,
+          "word": " done.",
+          "probability": 0.9990317821502686
+        },
+        {
+          "start": 268.23,
+          "end": 268.39,
+          "word": " The",
+          "probability": 0.9862595796585083
+        },
+        {
+          "start": 268.39,
+          "end": 268.61,
+          "word": " number",
+          "probability": 0.9450444579124451
+        },
+        {
+          "start": 268.61,
+          "end": 269.07,
+          "word": " two",
+          "probability": 0.8806265592575073
+        },
+        {
+          "start": 269.07,
+          "end": 269.35,
+          "word": " seed,",
+          "probability": 0.9820584654808044
+        },
+        {
+          "start": 269.53,
+          "end": 269.59,
+          "word": " the",
+          "probability": 0.9935450553894043
+        },
+        {
+          "start": 269.59,
+          "end": 269.75,
+          "word": " number",
+          "probability": 0.9973142743110657
+        },
+        {
+          "start": 269.75,
+          "end": 270.07,
+          "word": " two",
+          "probability": 0.9889477491378784
+        },
+        {
+          "start": 270.07,
+          "end": 270.35,
+          "word": " player",
+          "probability": 0.9961277842521667
+        },
+        {
+          "start": 270.35,
+          "end": 270.47,
+          "word": " in",
+          "probability": 0.9944977164268494
+        },
+        {
+          "start": 270.47,
+          "end": 270.57,
+          "word": " the",
+          "probability": 0.9994180202484131
+        },
+        {
+          "start": 270.57,
+          "end": 270.85,
+          "word": " world",
+          "probability": 0.9979769587516785
+        },
+        {
+          "start": 270.85,
+          "end": 271.17,
+          "word": " is",
+          "probability": 0.7988134622573853
+        },
+        {
+          "start": 271.17,
+          "end": 271.53,
+          "word": " out.",
+          "probability": 0.9980661273002625
+        }
+      ]
+    },
+    {
+      "start": 272.31,
+      "end": 279.94,
+      "text": " Nikola Bartz and Kova, the biggest win of her career. What an impressive showing from this",
+      "words": [
+        {
+          "start": 272.31,
+          "end": 272.61,
+          "word": " Nikola",
+          "probability": 0.9367690086364746
+        },
+        {
+          "start": 272.61,
+          "end": 273.01,
+          "word": " Bartz",
+          "probability": 0.9832897484302521
+        },
+        {
+          "start": 273.01,
+          "end": 273.15,
+          "word": " and",
+          "probability": 0.9947022795677185
+        },
+        {
+          "start": 273.15,
+          "end": 273.43,
+          "word": " Kova,",
+          "probability": 0.9971206188201904
+        },
+        {
+          "start": 273.55,
+          "end": 273.63,
+          "word": " the",
+          "probability": 0.9980106949806213
+        },
+        {
+          "start": 273.63,
+          "end": 274.05,
+          "word": " biggest",
+          "probability": 0.9995013475418091
+        },
+        {
+          "start": 274.05,
+          "end": 274.45,
+          "word": " win",
+          "probability": 0.9963984489440918
+        },
+        {
+          "start": 274.45,
+          "end": 275.21,
+          "word": " of",
+          "probability": 0.99671471118927
+        },
+        {
+          "start": 275.21,
+          "end": 275.43,
+          "word": " her",
+          "probability": 0.9994114637374878
+        },
+        {
+          "start": 275.43,
+          "end": 275.83,
+          "word": " career.",
+          "probability": 0.9983983635902405
+        },
+        {
+          "start": 278.24,
+          "end": 278.44,
+          "word": " What",
+          "probability": 0.9857208728790283
+        },
+        {
+          "start": 278.44,
+          "end": 278.58,
+          "word": " an",
+          "probability": 0.9957981705665588
+        },
+        {
+          "start": 278.58,
+          "end": 278.98,
+          "word": " impressive",
+          "probability": 0.9996432065963745
+        },
+        {
+          "start": 278.98,
+          "end": 279.46,
+          "word": " showing",
+          "probability": 0.9981339573860168
+        },
+        {
+          "start": 279.46,
+          "end": 279.74,
+          "word": " from",
+          "probability": 0.9903036952018738
+        },
+        {
+          "start": 279.74,
+          "end": 279.94,
+          "word": " this",
+          "probability": 0.9981337189674377
+        }
+      ]
+    },
+    {
+      "start": 279.94,
+      "end": 286.52,
+      "text": " young 20-year-old. She's vaulted up the rankings this year, started the year in the 130s,",
+      "words": [
+        {
+          "start": 279.94,
+          "end": 280.12,
+          "word": " young",
+          "probability": 0.346905916929245
+        },
+        {
+          "start": 280.12,
+          "end": 280.52,
+          "word": " 20",
+          "probability": 0.8502374291419983
+        },
+        {
+          "start": 280.52,
+          "end": 280.66,
+          "word": "-year",
+          "probability": 0.5533718056976795
+        },
+        {
+          "start": 280.66,
+          "end": 280.96,
+          "word": "-old.",
+          "probability": 0.9487732350826263
+        },
+        {
+          "start": 281.3,
+          "end": 281.62,
+          "word": " She's",
+          "probability": 0.9422936141490936
+        },
+        {
+          "start": 281.62,
+          "end": 282.06,
+          "word": " vaulted",
+          "probability": 0.9880127906799316
+        },
+        {
+          "start": 282.06,
+          "end": 282.16,
+          "word": " up",
+          "probability": 0.9974718689918518
+        },
+        {
+          "start": 282.16,
+          "end": 282.34,
+          "word": " the",
+          "probability": 0.9946337938308716
+        },
+        {
+          "start": 282.34,
+          "end": 282.68,
+          "word": " rankings",
+          "probability": 0.9979150891304016
+        },
+        {
+          "start": 282.68,
+          "end": 283.0,
+          "word": " this",
+          "probability": 0.9928432703018188
+        },
+        {
+          "start": 283.0,
+          "end": 283.34,
+          "word": " year,",
+          "probability": 0.9991762042045593
+        },
+        {
+          "start": 283.54,
+          "end": 284.32,
+          "word": " started",
+          "probability": 0.986185610294342
+        },
+        {
+          "start": 284.32,
+          "end": 284.6,
+          "word": " the",
+          "probability": 0.9979497790336609
+        },
+        {
+          "start": 284.6,
+          "end": 284.82,
+          "word": " year",
+          "probability": 0.9982701539993286
+        },
+        {
+          "start": 284.82,
+          "end": 285.0,
+          "word": " in",
+          "probability": 0.991915225982666
+        },
+        {
+          "start": 285.0,
+          "end": 285.14,
+          "word": " the",
+          "probability": 0.9987670183181763
+        },
+        {
+          "start": 285.14,
+          "end": 286.52,
+          "word": " 130s,",
+          "probability": 0.6894921064376831
+        }
+      ]
+    },
+    {
+      "start": 287.0,
+      "end": 293.76,
+      "text": " and now 34 and moving on up as Nikola Bartz and Kova takes out",
+      "words": [
+        {
+          "start": 287.0,
+          "end": 287.26,
+          "word": " and",
+          "probability": 0.9882119297981262
+        },
+        {
+          "start": 287.26,
+          "end": 287.6,
+          "word": " now",
+          "probability": 0.9989460110664368
+        },
+        {
+          "start": 287.6,
+          "end": 288.78,
+          "word": " 34",
+          "probability": 0.9456176161766052
+        },
+        {
+          "start": 288.78,
+          "end": 289.32,
+          "word": " and",
+          "probability": 0.8383520841598511
+        },
+        {
+          "start": 289.32,
+          "end": 289.58,
+          "word": " moving",
+          "probability": 0.9845037460327148
+        },
+        {
+          "start": 289.58,
+          "end": 289.86,
+          "word": " on",
+          "probability": 0.9991238713264465
+        },
+        {
+          "start": 289.86,
+          "end": 290.16,
+          "word": " up",
+          "probability": 0.9974742531776428
+        },
+        {
+          "start": 290.16,
+          "end": 290.82,
+          "word": " as",
+          "probability": 0.9372815489768982
+        },
+        {
+          "start": 290.82,
+          "end": 291.82,
+          "word": " Nikola",
+          "probability": 0.07860950380563736
+        },
+        {
+          "start": 291.82,
+          "end": 292.22,
+          "word": " Bartz",
+          "probability": 0.38653804268687963
+        },
+        {
+          "start": 292.22,
+          "end": 292.28,
+          "word": " and",
+          "probability": 0.26604384183883667
+        },
+        {
+          "start": 292.28,
+          "end": 292.64,
+          "word": " Kova",
+          "probability": 0.8864270150661469
+        },
+        {
+          "start": 292.64,
+          "end": 293.52,
+          "word": " takes",
+          "probability": 0.8870761394500732
+        },
+        {
+          "start": 293.52,
+          "end": 293.76,
+          "word": " out",
+          "probability": 0.9959885478019714
+        }
+      ]
+    },
+    {
+      "start": 293.76,
+      "end": 298.22,
+      "text": " Arena Sabalinka in straight sets. Six-four, six-three.",
+      "words": [
+        {
+          "start": 293.76,
+          "end": 294.12,
+          "word": " Arena",
+          "probability": 0.3520263731479645
+        },
+        {
+          "start": 294.12,
+          "end": 294.86,
+          "word": " Sabalinka",
+          "probability": 0.39400042593479156
+        },
+        {
+          "start": 294.86,
+          "end": 295.14,
+          "word": " in",
+          "probability": 0.9382738471031189
+        },
+        {
+          "start": 295.14,
+          "end": 295.58,
+          "word": " straight",
+          "probability": 0.9440287947654724
+        },
+        {
+          "start": 295.58,
+          "end": 296.1,
+          "word": " sets.",
+          "probability": 0.9848158359527588
+        },
+        {
+          "start": 296.94,
+          "end": 297.0,
+          "word": " Six",
+          "probability": 0.27004483342170715
+        },
+        {
+          "start": 297.0,
+          "end": 297.38,
+          "word": "-four,",
+          "probability": 0.7326699793338776
+        },
+        {
+          "start": 297.6,
+          "end": 297.88,
+          "word": " six",
+          "probability": 0.9820552468299866
+        },
+        {
+          "start": 297.88,
+          "end": 298.22,
+          "word": "-three.",
+          "probability": 0.991687685251236
+        }
+      ]
+    }
+  ]
+}

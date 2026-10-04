@@ -220,7 +220,7 @@ sys.path.insert(0, str(REPO_ROOT / "tools"))
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import versus_poster as vp  # noqa: E402
-from tennislive.design_tokens import BRAND_BAR_CSS, DARK, SCORE, rgb  # noqa: E402
+from tennislive.design_tokens import BRAND_BAR_CSS, CARD_BACKGROUND_CSS, DARK, SCORE, rgb  # noqa: E402
 from tennislive.render.webcards import _font_css  # noqa: E402
 from tennislive.video.explainer import _data_uri  # noqa: E402
 from tennislive.video import watermark  # noqa: E402
@@ -248,11 +248,12 @@ _TOPIC_FG = "#dcefe4"  # token-exempt: versus_poster 台头副标题同值，零
 # 头像底下垫的那块浅灰（透明头像才看得见）。
 _HEADSHOT_BG = "#e9efe9"  # token-exempt: 头像透明处的垫底，不是界面色
 
+# 2026-10-04 全栏目深蓝设计已获授权；下列 09-27 绿底说明为历史。
 # 账号所有者 2026-09-27（UI/VI 评审 Q3）：底色从藏青 ＋ 四色径向光改成**品牌墨绿**，
 # 和片里其余几张卡（标题卡、片尾、字卡）同一支墨；光只留黄绿和薄荷两支——
 # 蓝、红两团光拿掉。这张图上的颜色从此只有两种意思：黄绿＝品牌／这一项谁占优，
 # 薄荷＝这一方赢了（赢盘、赢家描边，Q1）。判据 `tests/test_stat_card_palette.py`。
-_BG_BASE = f"linear-gradient(170deg,{DARK['card']} 0%,{DARK['background']} 55%)"
+_BG_BASE = CARD_BACKGROUND_CSS
 
 # 台头（Q15）：栏目只有三个，这张图属于「赛场之上」——原来写的「数据复盘」
 # 是三个栏目之外的第四个名字。
@@ -660,10 +661,7 @@ h1{{font-size:34px;text-align:center;color:{BRAND};margin-bottom:14px}}
 *{{margin:0;padding:0;box-sizing:border-box}}
 html,body{{width:{canvas_w}px;height:{canvas_h}px;overflow:hidden}}
 body{{color:{FG};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
- background:
-  radial-gradient(1150px 800px at 8% -8%, {_rgba(BRAND, .20)}, transparent 52%),
-  radial-gradient(950px 700px at 20% 108%, {_rgba(WIN, .13)}, transparent 52%),
-  {_BG_BASE}}}
+ background:{_BG_BASE}}}
 .bar{{height:11px;background:{BRAND_BAR_CSS}}}
 .head{{display:flex;align-items:center;gap:18px;padding:32px 74px 6px}}
 .brand-icon{{width:58px;height:58px;object-fit:contain}}

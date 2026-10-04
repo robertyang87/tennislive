@@ -7,6 +7,7 @@ Historical CI snapshots are deliberately not imported here.
 """
 from __future__ import annotations
 import narrated_audio_mode
+import reviewed_effects_mode
 import hashlib
 import json
 import math
@@ -33,6 +34,8 @@ def plan_hash(spec: dict) -> str:
         segments.append(row)
     value={'slug':spec.get('slug'),'source_url':spec.get('source_url'),
            'sources':spec.get('sources'),'source_audio':spec.get('source_audio'),'segments':segments}
+    if spec.get('audio_effects_review') is not None:
+        value['audio_effects_review']=spec['audio_effects_review']
     if spec.get('original_audio_mode') is not None:
         value.update(original_audio_mode=spec['original_audio_mode'],owner_approval=spec.get('owner_approval'))
     return hashlib.sha256(json.dumps(value,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
@@ -80,11 +83,12 @@ def inspect(spec: dict, *, root: Path=ROOT, sources: dict[str,Path]|None=None) -
         return []
     if spec.get('source_audio'):
         raise ValueError('source_audio 额外音轨未绑定审听：先合并为确定的源文件并重新审听，不能复用旧证据')
+    effects=reviewed_effects_mode.enabled(spec)
     selected=[]
     for i,seg in enumerate(spec.get('segments') or []):
         if str(seg.get('narration') or '').strip() and seg.get('quote'):
             raise ValueError(f'第{i+1}段为自配中文TTS，不叠加英文译文；原声与TTS请分段')
-        if 'start' in seg and 'end' in seg and not seg.get('image'):
+        if 'start' in seg and 'end' in seg and not seg.get('image') and (not effects or reviewed_effects_mode.raw_segment(seg)):
             selected.append((i,seg))
     if not selected:
         return []
@@ -164,6 +168,8 @@ def require(spec: dict, **kwargs) -> list[dict]:
 
 def bind_sources(spec: dict, sources: dict[str,Path], outdir: Path, *, root: Path=ROOT) -> None:
     require(spec,root=root,sources=sources)
+    if reviewed_effects_mode.enabled(spec):
+        reviewed_effects_mode.manifest(spec,root=root,sources=sources)
     review=root/'data/audio_reviews'/f"{spec.get('slug')}.json"
     if narrated_audio_mode.enabled(spec,sources=sources):
         payload={'plan_sha256':plan_hash(spec),'original_audio_mode':narrated_audio_mode.MODE,

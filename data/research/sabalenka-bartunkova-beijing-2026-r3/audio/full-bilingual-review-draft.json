@@ -1,0 +1,280 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=s3mqDeV5E_w",
+  "source_sha256": "ce7320181adea751842fe58f500e6fa5f788e1c547fe064d11a775d0292a5efd",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review agent: inspected both textual ASR evidence sets; no actual listening performed",
+  "reviewed_at": "2026-10-04T06:38:41.765888+00:00",
+  "status": "partial",
+  "reviewed_from": 0,
+  "reviewed_to": 308.802,
+  "actual_listening_performed": false,
+  "evidence": [
+    {
+      "path": "/workspace/scratch/audio-review/whisper-small-en.json",
+      "sha256": "6e3d0d3d41b4555b44393958d712cd9ca74cb6699be6850ced3aeccfad72eefe"
+    },
+    {
+      "path": "/workspace/scratch/sabalenka-probe/captions.txt",
+      "sha256": "13653388da2db597c4e5765e023f74687c428b270127c493ab2bbf1b394e36b8"
+    },
+    {
+      "path": "/workspace/scratch/audio-review/targeted-small-en.json"
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 13.26,
+      "end": 14.54,
+      "en": "That's not coming back.",
+      "zh": "这球回不来了。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 25.6,
+      "end": 29.63,
+      "en": "That catches the inside of the line. So, four straight points for Bartunkova.",
+      "zh": "这球压在边线内侧。巴尔通科娃连拿四分。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 51.41,
+      "end": 53.19,
+      "en": "Big put-away from Sabalenka there.",
+      "zh": "萨巴伦卡这一拍大力终结。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 69.49,
+      "end": 70.75,
+      "en": "Put that overhead away.",
+      "zh": "把这记高压扣杀打死了。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "uncertain",
+      "uncertainty": "Put/Puts that overhead away: captions vs second ASR disagreement."
+    },
+    {
+      "start": 89.1,
+      "end": 90.46,
+      "en": "Much better from Sabalenka.",
+      "zh": "萨巴伦卡这一分打得好多了。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 99.38,
+      "end": 105.18,
+      "en": "Three of the first four points that she won were winners. So, as you said, went after it early on.",
+      "zh": "她赢下的前四分里，有三分是制胜分。所以，正如你说的，她一上来就主动进攻。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 105.86,
+      "end": 109.68,
+      "en": "Couple break opportunities for a double break for Bartunkova.",
+      "zh": "巴尔通科娃拿到两个破发机会，有望建立两次破发的优势。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 117.08,
+      "end": 117.8,
+      "en": "Saves one.",
+      "zh": "挽救了一个。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 137.13,
+      "end": 138.57,
+      "en": "Saves the second break points.",
+      "zh": "第二个破发点也救下来了。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "uncertain",
+      "uncertainty": "Second break point(s): both ASRs say plural; supplied caption plural; normal grammar was used only in draft."
+    },
+    {
+      "start": 147.4,
+      "end": 152.52,
+      "en": "Great hustle from Sabalenka to get that ball, but an easy put-away, open court for Bartunkova.",
+      "zh": "萨巴伦卡奋力跑动救到这球，但巴尔通科娃面对空场，轻松打死。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "uncertain",
+      "uncertainty": "but an easy vs to an easy: unresolved connective."
+    },
+    {
+      "start": 168.48,
+      "end": 171.36,
+      "en": "That's a rocket backhand from Sabalenka that time.",
+      "zh": "这次萨巴伦卡的反手回球像火箭一样。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "uncertain",
+      "uncertainty": "back in vs backhand: two small.en passes support backhand but provider captions disagree."
+    },
+    {
+      "start": 176.4,
+      "end": 176.92,
+      "en": "What a return!",
+      "zh": "这记接发太精彩了！",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 177.76,
+      "end": 179.6,
+      "en": "Well, it's so early. Sab didn't even react.",
+      "zh": "她抢得太早了，萨巴伦卡甚至没来得及反应。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "uncertain",
+      "uncertainty": "Subject unresolved: provider Sab, full ASR Sabalinka, cropped ASR so I cannot; do not infer the opponent from video."
+    },
+    {
+      "start": 190.8,
+      "end": 193.24,
+      "en": "Big shot there from Sabalenka.",
+      "zh": "萨巴伦卡这一拍打得很重。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 197.6,
+      "end": 201.54,
+      "en": "A great serve from Bartunkova. Served well throughout the opening set.",
+      "zh": "巴尔通科娃发出一记好球。她整个首盘的发球都很出色。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 202.28,
+      "end": 214.3,
+      "en": "Perhaps an upset in the making on Diamond Court on this day five of the China Open. Nikola Bartunkova, the 26 seed, takes the opener against Aryna Sabalenka, six games to four.",
+      "zh": "中网第五比赛日的钻石球场，冷门或许正在酝酿。26号种子尼古拉·巴尔通科娃以六比四拿下与阿丽娜·萨巴伦卡交锋的首盘。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 215.32,
+      "end": 218.38,
+      "en": "US Open third round, too, losing to Andreeva.",
+      "zh": "美网也打到第三轮，输给了安德烈耶娃。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "uncertain",
+      "uncertainty": "Final opponent surname: provider Andrea / ASR Norendreva or Andriva; Andreeva is a normalization candidate not independently verified."
+    },
+    {
+      "start": 224.8,
+      "end": 226.2,
+      "en": "Oh, such a good pickup.",
+      "zh": "哦，这记低球救得真好。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 239.22,
+      "end": 241.08,
+      "en": "Good hands. That drops in.",
+      "zh": "手感真好，这球落在界内。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 254.56,
+      "end": 256.51,
+      "en": "Oh, nice pickup from Sabalenka there.",
+      "zh": "哦，萨巴伦卡这记低球救得漂亮。",
+      "cross_check": "provider auto captions plus faster-whisper small.en on full source PCM",
+      "status": "cross_checked"
+    },
+    {
+      "start": 264.16,
+      "end": 266.71,
+      "en": "And Nikola Bartunkova gets it done.",
+      "zh": "尼古拉·巴尔通科娃赢下了比赛。",
+      "status": "cross_checked"
+    },
+    {
+      "start": 268.23,
+      "end": 271.53,
+      "en": "The number two seed, the number two player in the world, is out.",
+      "zh": "二号种子、世界排名第二的球员出局了。",
+      "status": "cross_checked"
+    },
+    {
+      "start": 272.31,
+      "end": 275.83,
+      "en": "Nikola Bartunkova, the biggest win of her career.",
+      "zh": "尼古拉·巴尔通科娃拿到了职业生涯最重要的一场胜利。",
+      "status": "cross_checked"
+    },
+    {
+      "start": 278.24,
+      "end": 280.96,
+      "en": "What an impressive showing from this young 20-year-old.",
+      "zh": "这位20岁小将的表现令人印象深刻。",
+      "status": "cross_checked"
+    },
+    {
+      "start": 281.3,
+      "end": 283.34,
+      "en": "She's vaulted up the rankings this year.",
+      "zh": "她今年的排名飞速上升。",
+      "status": "cross_checked"
+    },
+    {
+      "start": 283.54,
+      "end": 290.16,
+      "en": "Started the year in the 130s and now 34 and moving on up,",
+      "zh": "年初还在130多位，如今已到第34位，还将继续攀升，",
+      "status": "cross_checked",
+      "note": "Continues into following sentence; preserve together in edit."
+    },
+    {
+      "start": 290.16,
+      "end": 298.22,
+      "en": "as Nikola Bartunkova takes out Aryna Sabalenka in straight sets, 6-4, 6-3.",
+      "zh": "尼古拉·巴尔通科娃以六比四、六比三直落两盘，淘汰阿丽娜·萨巴伦卡。",
+      "status": "cross_checked"
+    }
+  ],
+  "uncertain_spans": [
+    {
+      "start": 69.49,
+      "end": 70.75,
+      "reason": "Put/Puts that overhead away: captions vs second ASR disagreement."
+    },
+    {
+      "start": 137.13,
+      "end": 138.57,
+      "reason": "Second break point(s): both ASRs say plural; supplied caption plural; normal grammar was used only in draft."
+    },
+    {
+      "start": 147.4,
+      "end": 152.52,
+      "reason": "but an easy vs to an easy: unresolved connective."
+    },
+    {
+      "start": 168.48,
+      "end": 171.36,
+      "reason": "back in vs backhand: two small.en passes support backhand but provider captions disagree."
+    },
+    {
+      "start": 177.76,
+      "end": 179.6,
+      "reason": "Subject unresolved: provider Sab, full ASR Sabalinka, cropped ASR so I cannot; do not infer the opponent from video."
+    },
+    {
+      "start": 215.32,
+      "end": 218.38,
+      "reason": "Final opponent surname: provider Andrea / ASR Norendreva or Andriva; Andreeva is a normalization candidate not independently verified."
+    }
+  ],
+  "notes": [
+    "This is NOT a gate-ready complete review. Do not change status to complete without resolving uncertain spans.",
+    "Proper names normalized to project owner player names; raw ASR retained with misspellings.",
+    "Provider text lacks end times; ASR word timestamps supply candidate ends. Local cropped ASR corrected Good hands to 239.22 rather than full-ASR 229.46.",
+    "No audible umpire-score omission can be ruled out by ASR alone. Final listening remains necessary."
+  ]
+}

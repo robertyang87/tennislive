@@ -1,0 +1,85 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 120,
+  "range_to": 139,
+  "created_at": "2026-10-03T16:50:03.685822+00:00",
+  "elapsed_seconds": 5.59,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 129.78,
+      "end": 132.38,
+      "text": " Really good covering there on the net by Buxa.",
+      "avg_logprob": -0.6972883780797322,
+      "no_speech_prob": 0.2500515282154083,
+      "words": [
+        {
+          "start": 129.78,
+          "end": 130.32,
+          "word": " Really",
+          "probability": 0.49707701802253723
+        },
+        {
+          "start": 130.32,
+          "end": 130.54,
+          "word": " good",
+          "probability": 0.9968121647834778
+        },
+        {
+          "start": 130.54,
+          "end": 130.9,
+          "word": " covering",
+          "probability": 0.982159435749054
+        },
+        {
+          "start": 130.9,
+          "end": 131.18,
+          "word": " there",
+          "probability": 0.9780268669128418
+        },
+        {
+          "start": 131.18,
+          "end": 131.32,
+          "word": " on",
+          "probability": 0.9850850701332092
+        },
+        {
+          "start": 131.32,
+          "end": 131.4,
+          "word": " the",
+          "probability": 0.9974496960639954
+        },
+        {
+          "start": 131.4,
+          "end": 131.58,
+          "word": " net",
+          "probability": 0.9990503191947937
+        },
+        {
+          "start": 131.58,
+          "end": 131.84,
+          "word": " by",
+          "probability": 0.931789755821228
+        },
+        {
+          "start": 131.84,
+          "end": 132.38,
+          "word": " Buxa.",
+          "probability": 0.5878315071264902
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "d47e100082faedb436507af51ba4fb7160369ffe3b533c6e319eb7189142a133",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

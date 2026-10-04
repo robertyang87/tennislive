@@ -1,0 +1,124 @@
+{
+  "schema": "tennislive.actual-narration-check-attempt.v1",
+  "checked_at": "2026-10-03T06:35:16.594198+00:00",
+  "spec_path": "specs/reels/djokovic-bu-beijing-2026-r2.json",
+  "spec_sha256": "aed685900391f27f338585077dfd7a4b5762f0a7dab9459660bdc0d82579a6bc",
+  "worktree": "/workspace/tennislive-djokovic-bu",
+  "command": [
+    "/workspace/tennislive-venv/bin/python",
+    "tools/build_match_reel.py",
+    "render",
+    "--check-narration",
+    "--spec",
+    "specs/reels/djokovic-bu-beijing-2026-r2.json",
+    "--outdir",
+    "/workspace/djokovic-bu-research/narration-check",
+    "--voice",
+    "zh-CN-YunjianNeural",
+    "--rate",
+    "+6%"
+  ],
+  "tts_backend": "edge",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "exit_code": 1,
+  "result": "blocked_by_local_edge_network",
+  "timings_measured": false,
+  "narration_overrun_result": "unknown_not_measured",
+  "first_failure": {
+    "file": "voice_01.mp3",
+    "segment_index": 1,
+    "exception": "aiohttp.client_exceptions.ClientConnectorError",
+    "host": "speech.platform.bing.com:443",
+    "transport": "Connect call failed150.171.27.10:443 errno111; Network is unreachable errno101",
+    "native_retries": 2,
+    "native_retry_wait_seconds": [
+      2,
+      6
+    ],
+    "native_error": "edge-tts 合成失败：voice_01.mp3；重试2次仍然没送到"
+  },
+  "followup": "Do not alter spec/audio bindings or dispatch extra narration workflow. Root proceeds native production render, where real TTS synthesis and narration_overruns gate run before encoding.",
+  "segments": [
+    {
+      "segment_index": 1,
+      "narration": "先丢一盘，再连扳两盘。德约拼了将近三小时，才赢下这一场。",
+      "available_seconds": 7.8,
+      "measured_seconds": null,
+      "overflow_seconds": null,
+      "measurement_status": "failed_network_before_first_tts"
+    },
+    {
+      "segment_index": 2,
+      "narration": "北京时间十月二号晚上，中网男单第二轮，德约对小布。",
+      "available_seconds": 6.9,
+      "measured_seconds": null,
+      "overflow_seconds": null,
+      "measurement_status": "not_reached_after_first_tts_network_failure"
+    },
+    {
+      "segment_index": 4,
+      "narration": "首盘唯一一次破发属于小布。来到他的胜盘点，德约只能继续追。",
+      "available_seconds": 8.05,
+      "measured_seconds": null,
+      "overflow_seconds": null,
+      "measurement_status": "not_reached_after_first_tts_network_failure"
+    },
+    {
+      "segment_index": 6,
+      "narration": "首盘六比四，小布先拔头筹。第二盘德约三比一领先，又被立刻回破。这个平分，双方把底线拉开，一拍接着一拍，谁都不肯先退。",
+      "available_seconds": 25.75,
+      "measured_seconds": null,
+      "overflow_seconds": null,
+      "measurement_status": "not_reached_after_first_tts_network_failure"
+    },
+    {
+      "segment_index": 8,
+      "narration": "这一盘的胜负，来到抢七。德约拿到了盘点。",
+      "available_seconds": 6.0,
+      "measured_seconds": null,
+      "overflow_seconds": null,
+      "measurement_status": "not_reached_after_first_tts_network_failure"
+    },
+    {
+      "segment_index": 10,
+      "narration": "抢七二比二之后，德约连拿五分。七比六，比赛扳平。决胜盘第一局，又是一段二十多秒的拉锯。谁想先拿优势，都得从这一拍一拍里争。",
+      "available_seconds": 25.2,
+      "measured_seconds": null,
+      "overflow_seconds": null,
+      "measurement_status": "not_reached_after_first_tts_network_failure"
+    },
+    {
+      "segment_index": 12,
+      "narration": "德约已经三比零领先，小布仍在争。把对手拉到边线之外，逼出跑动中的回球失误。赛后小布说，他珍惜这次交手，想要每球必争。",
+      "available_seconds": 15.2,
+      "measured_seconds": null,
+      "overflow_seconds": null,
+      "measurement_status": "not_reached_after_first_tts_network_failure"
+    },
+    {
+      "segment_index": 14,
+      "narration": "全场二发得分，小布百分之四十三，德约百分之七十三。没有一发护航时，德约多守住的那些分，成了逆转的底气。",
+      "available_seconds": 12.0,
+      "measured_seconds": null,
+      "overflow_seconds": null,
+      "measurement_status": "not_reached_after_first_tts_network_failure"
+    },
+    {
+      "segment_index": 15,
+      "narration": "反手打向空当。德约连扳两盘，逆转晋级。",
+      "available_seconds": 5.34,
+      "measured_seconds": null,
+      "overflow_seconds": null,
+      "measurement_status": "not_reached_after_first_tts_network_failure"
+    },
+    {
+      "segment_index": 17,
+      "narration": "德约为自己的付出骄傲，小布仍想每球必争。下一轮，德约对兹维列夫与商竣程之间的胜者。你最想为哪一分鼓掌？",
+      "available_seconds": 13.5,
+      "measured_seconds": null,
+      "overflow_seconds": null,
+      "measurement_status": "not_reached_after_first_tts_network_failure"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-03T22:22:54Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "纳达尔",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at + face model buffalo_s-v0.7 vs official headshot",
+  "spec_sha256": "1f5efccf094cda6b812a1ab9ef9f41eb70eae3059a6dc83d7a85d2cca94f8f16",
+  "poster_sha256": "30f9e761c7159019d01e5d92cc15922da46f6aa67ad058bebd86d412b9bad745",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        636,
+        299,
+        380,
+        380
+      ],
+      "detected_faces": 3,
+      "eyes": 2,
+      "face_height_ratio": 0.46914,
+      "face_area_ratio": 0.16507,
+      "center_x_ratio": 0.76481,
+      "center_y_ratio": 0.41852,
+      "sharpness": 137.663,
+      "contrast": 164.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 17.4,
+      "zoom": 1.24,
+      "focus_y": 0.5
+    },
+    "face_model": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "unknown",
+        "name": null,
+        "similarity": {},
+        "missing": [
+          "纳达尔"
+        ],
+        "expected": [
+          "纳达尔"
+        ],
+        "face": [
+          684,
+          130,
+          986,
+          551
+        ],
+        "face_px": 420.3,
+        "reason": "没有可比的官方头像：纳达尔",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2336,
+        "ear_each": [
+          0.2328,
+          0.2343
+        ],
+        "face": [
+          684,
+          130,
+          986,
+          551
+        ],
+        "face_px": 420.3,
+        "reason": "眼睛纵横比 0.23 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": [
+        "认人拿不准：没有可比的官方头像：纳达尔"
+      ]
+    }
+  },
+  "issues": [],
+  "warnings": [
+    "认人拿不准：没有可比的官方头像：纳达尔"
+  ]
+}

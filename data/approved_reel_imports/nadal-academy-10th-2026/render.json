@@ -1,0 +1,52 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 237.1,
+  "topbar": {
+    "line1": "2026 纳达尔学院 马纳科尔 十周年表演赛",
+    "line2": "纳达尔队 4-3 穆雷队",
+    "start": 1.2,
+    "end": 238.3
+  },
+  "film_seconds": 242.133,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 2.784,
+    "1": 8.016,
+    "2": 12.216,
+    "3": 13.536,
+    "4": 9.624,
+    "5": 13.056,
+    "6": 4.128,
+    "7": 4.632,
+    "8": 8.64,
+    "9": 15.264,
+    "10": 7.872,
+    "11": 6.72,
+    "12": 3.48,
+    "14": 10.344
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "unavailable",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）",
+      "report_only": true,
+      "warnings": [
+        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）"
+      ]
+    }
+  },
+  "render_inputs_sha256": "a556195cec1c6e678873c2f6885144d2e0bf204345af1cc3c35bec0f30f20ea8",
+  "film_sha256": "3ee4e3323c804da75bce49e11616742a53ac1b490273220575e387f7f9d3e2a3",
+  "film_bytes": 168316502,
+  "qc_attestation_sha256": "8525009538fd8713754bbd8f6ac7816ae8e063a640c48552871f35a452a2e203"
+}

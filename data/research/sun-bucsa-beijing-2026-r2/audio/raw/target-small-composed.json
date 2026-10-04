@@ -1,0 +1,82 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 155,
+  "range_to": 172,
+  "created_at": "2026-10-03T16:45:48.399131+00:00",
+  "elapsed_seconds": 6.83,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 164.24,
+      "end": 166.16,
+      "text": " I'm really good finish there.",
+      "avg_logprob": -1.3419621640985662,
+      "no_speech_prob": 0.35119548439979553,
+      "words": [
+        {
+          "start": 164.24,
+          "end": 164.9,
+          "word": " I'm",
+          "probability": 0.29633778147399426
+        },
+        {
+          "start": 164.9,
+          "end": 165.2,
+          "word": " really",
+          "probability": 0.6193890571594238
+        },
+        {
+          "start": 165.2,
+          "end": 165.5,
+          "word": " good",
+          "probability": 0.9786680340766907
+        },
+        {
+          "start": 165.5,
+          "end": 165.82,
+          "word": " finish",
+          "probability": 0.5295882821083069
+        },
+        {
+          "start": 165.82,
+          "end": 166.16,
+          "word": " there.",
+          "probability": 0.4877258837223053
+        }
+      ]
+    },
+    {
+      "start": 166.16,
+      "end": 168.04,
+      "text": " very composed.",
+      "avg_logprob": -0.9850660959879557,
+      "no_speech_prob": 0.21436595916748047,
+      "words": [
+        {
+          "start": 166.16,
+          "end": 167.44,
+          "word": " very",
+          "probability": 0.0907418355345726
+        },
+        {
+          "start": 167.44,
+          "end": 168.04,
+          "word": " composed.",
+          "probability": 0.811205267906189
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "bf05a1df505f65b1fdd60203788b8b6c8aa93fd410ca16a057595de05cf56991",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

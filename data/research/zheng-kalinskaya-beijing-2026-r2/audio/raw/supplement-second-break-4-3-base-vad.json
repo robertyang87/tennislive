@@ -1,0 +1,164 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 1346.0,
+  "range_to": 1374.0,
+  "selected_from": 1348.0,
+  "selected_to": 1370.0,
+  "decoded_pcm_sha256": "59e463167c1715a5e1d9f85cdd76ebd63ecf82b3c20378e4bb15f3e4ca7951f9",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:10:42.593359+00:00",
+  "elapsed_seconds": 3.68,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 1357.28,
+      "end": 1360.6,
+      "text": " Oh, and Kalanskaya, from 40-15 up.",
+      "avg_logprob": -0.7366910865229945,
+      "no_speech_prob": 0.07326921820640564,
+      "compression_ratio": 0.9125,
+      "words": [
+        {
+          "start": 1357.28,
+          "end": 1357.9,
+          "word": " Oh,",
+          "probability": 0.3901481330394745
+        },
+        {
+          "start": 1358.1,
+          "end": 1358.12,
+          "word": " and",
+          "probability": 0.7249833941459656
+        },
+        {
+          "start": 1358.12,
+          "end": 1359.04,
+          "word": " Kalanskaya,",
+          "probability": 0.4891793020069599
+        },
+        {
+          "start": 1359.14,
+          "end": 1359.48,
+          "word": " from",
+          "probability": 0.976231038570404
+        },
+        {
+          "start": 1359.48,
+          "end": 1359.8,
+          "word": " 40",
+          "probability": 0.713420569896698
+        },
+        {
+          "start": 1359.8,
+          "end": 1360.26,
+          "word": "-15",
+          "probability": 0.7806392908096313
+        },
+        {
+          "start": 1360.26,
+          "end": 1360.6,
+          "word": " up.",
+          "probability": 0.9608492851257324
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 1363.31,
+      "end": 1363.97,
+      "text": " Bar crew.",
+      "avg_logprob": -0.7366910865229945,
+      "no_speech_prob": 0.07326921820640564,
+      "compression_ratio": 0.9125,
+      "words": [
+        {
+          "start": 1363.31,
+          "end": 1363.57,
+          "word": " Bar",
+          "probability": 0.4298124313354492
+        },
+        {
+          "start": 1363.57,
+          "end": 1363.97,
+          "word": " crew.",
+          "probability": 0.8984441757202148
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 1368.89,
+      "end": 1370.97,
+      "text": " And susceptible to the wind.",
+      "avg_logprob": -0.7366910865229945,
+      "no_speech_prob": 0.07326921820640564,
+      "compression_ratio": 0.9125,
+      "words": [
+        {
+          "start": 1368.89,
+          "end": 1369.57,
+          "word": " And",
+          "probability": 0.41818782687187195
+        },
+        {
+          "start": 1369.57,
+          "end": 1370.25,
+          "word": " susceptible",
+          "probability": 0.5603195428848267
+        },
+        {
+          "start": 1370.25,
+          "end": 1370.61,
+          "word": " to",
+          "probability": 0.9975587129592896
+        },
+        {
+          "start": 1370.61,
+          "end": 1370.73,
+          "word": " the",
+          "probability": 0.9987490177154541
+        },
+        {
+          "start": 1370.73,
+          "end": 1370.97,
+          "word": " wind.",
+          "probability": 0.8119766712188721
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 1370.97,
+      "end": 1371.59,
+      "text": " you",
+      "avg_logprob": -1.6174843311309814,
+      "no_speech_prob": 0.4738989770412445,
+      "compression_ratio": 0.2727272727272727,
+      "words": [
+        {
+          "start": 1370.97,
+          "end": 1371.59,
+          "word": " you",
+          "probability": 0.017076415941119194
+        }
+      ]
+    }
+  ]
+}

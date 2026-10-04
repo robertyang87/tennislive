@@ -1,0 +1,187 @@
+{
+  "schema": "tennislive.derived-pcm-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=EuPUtfm-pA0",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 2534.8,
+  "range_to": 2544.5,
+  "created_at": "2026-10-03T18:16:48.543939+00:00",
+  "elapsed_seconds": 1.71,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 2535.64,
+      "end": 2543.68,
+      "text": " She wins it in style, and it's the biggest victory of this young 16-year-olds career.",
+      "avg_logprob": -0.4799551677703857,
+      "no_speech_prob": 0.30073994398117065,
+      "compression_ratio": 1.0240963855421688,
+      "words": [
+        {
+          "start": 2535.64,
+          "end": 2536.32,
+          "word": " She",
+          "probability": 0.2808302342891693,
+          "chapter_start": 170.64,
+          "chapter_end": 171.32
+        },
+        {
+          "start": 2536.32,
+          "end": 2536.58,
+          "word": " wins",
+          "probability": 0.9882531762123108,
+          "chapter_start": 171.32,
+          "chapter_end": 171.58
+        },
+        {
+          "start": 2536.58,
+          "end": 2536.78,
+          "word": " it",
+          "probability": 0.7339941263198853,
+          "chapter_start": 171.58,
+          "chapter_end": 171.78
+        },
+        {
+          "start": 2536.78,
+          "end": 2536.9,
+          "word": " in",
+          "probability": 0.9460453987121582,
+          "chapter_start": 171.78,
+          "chapter_end": 171.9
+        },
+        {
+          "start": 2536.9,
+          "end": 2537.32,
+          "word": " style,",
+          "probability": 0.9721193909645081,
+          "chapter_start": 171.9,
+          "chapter_end": 172.32
+        },
+        {
+          "start": 2537.58,
+          "end": 2539.4,
+          "word": " and",
+          "probability": 0.4855658710002899,
+          "chapter_start": 172.58,
+          "chapter_end": 174.4
+        },
+        {
+          "start": 2539.4,
+          "end": 2539.68,
+          "word": " it's",
+          "probability": 0.6584592759609222,
+          "chapter_start": 174.4,
+          "chapter_end": 174.68
+        },
+        {
+          "start": 2539.68,
+          "end": 2539.82,
+          "word": " the",
+          "probability": 0.9898020625114441,
+          "chapter_start": 174.68,
+          "chapter_end": 174.82
+        },
+        {
+          "start": 2539.82,
+          "end": 2540.4,
+          "word": " biggest",
+          "probability": 0.981089174747467,
+          "chapter_start": 174.82,
+          "chapter_end": 175.4
+        },
+        {
+          "start": 2540.4,
+          "end": 2541.1,
+          "word": " victory",
+          "probability": 0.9802393317222595,
+          "chapter_start": 175.4,
+          "chapter_end": 176.1
+        },
+        {
+          "start": 2541.1,
+          "end": 2541.62,
+          "word": " of",
+          "probability": 0.9602164030075073,
+          "chapter_start": 176.1,
+          "chapter_end": 176.62
+        },
+        {
+          "start": 2541.62,
+          "end": 2541.96,
+          "word": " this",
+          "probability": 0.9858534336090088,
+          "chapter_start": 176.62,
+          "chapter_end": 176.96
+        },
+        {
+          "start": 2541.96,
+          "end": 2542.22,
+          "word": " young",
+          "probability": 0.9596142172813416,
+          "chapter_start": 176.96,
+          "chapter_end": 177.22
+        },
+        {
+          "start": 2542.22,
+          "end": 2542.74,
+          "word": " 16",
+          "probability": 0.935822606086731,
+          "chapter_start": 177.22,
+          "chapter_end": 177.74
+        },
+        {
+          "start": 2542.74,
+          "end": 2543.02,
+          "word": "-year",
+          "probability": 0.7021004557609558,
+          "chapter_start": 177.74,
+          "chapter_end": 178.02
+        },
+        {
+          "start": 2543.02,
+          "end": 2543.26,
+          "word": "-olds",
+          "probability": 0.8771392107009888,
+          "chapter_start": 178.02,
+          "chapter_end": 178.26
+        },
+        {
+          "start": 2543.26,
+          "end": 2543.68,
+          "word": " career.",
+          "probability": 0.9208444952964783,
+          "chapter_start": 178.26,
+          "chapter_end": 178.68
+        }
+      ],
+      "chapter_start": 170.64,
+      "chapter_end": 178.68
+    }
+  ],
+  "transcribed_input_sha256": "43d76393680e4224460c8d5ba3cee1daf7adb74e2027b17ffef92dc3b402a47d",
+  "transcribed_input": "chapter-review-derived-mono-48k.wav",
+  "transcribed_input_is_original_video_bytes": false,
+  "original_source_sha256": "3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a",
+  "original_source_sha_provenance": {
+    "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/source-chapter-manifest.json",
+    "sha256": "752791a2d848ae5bdcfb4e74aee38c8c6f5e1e728c0bd61342244a04742cc6a4",
+    "source_hash_method": "actual complete original cache file read remotely during this export",
+    "export_run_id": "37143082855",
+    "export_head": "a31cfb583b22334cf41fbd81db53bdb57c60b22a"
+  },
+  "absolute_source_offset_seconds": 2365.0,
+  "reviewed_scope": "Only this183s derived PCM chapter or its recorded subwindow; full49minute original video was not transcribed locally.",
+  "actual_listening_performed": false,
+  "original_raw_local_document_sha256": "37904228c1b45fbf5ad3a7521208e8bdb7b3b95370b3439081ef7a3e8b8b9706",
+  "time_mapping": "Originalabsolute = localchapter+2365.0",
+  "chapter_range_from": 169.8,
+  "chapter_range_to": 179.5
+}

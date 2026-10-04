@@ -1,0 +1,106 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 0,
+  "range_to": 29,
+  "created_at": "2026-10-03T16:49:47.667799+00:00",
+  "elapsed_seconds": 6.2,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 11.38,
+      "end": 13.04,
+      "text": " A really good finish there.",
+      "avg_logprob": -0.7306061618857913,
+      "no_speech_prob": 0.04384578391909599,
+      "words": [
+        {
+          "start": 11.38,
+          "end": 12.02,
+          "word": " A",
+          "probability": 0.2762376368045807
+        },
+        {
+          "start": 12.02,
+          "end": 12.28,
+          "word": " really",
+          "probability": 0.9872766137123108
+        },
+        {
+          "start": 12.28,
+          "end": 12.5,
+          "word": " good",
+          "probability": 0.9988915324211121
+        },
+        {
+          "start": 12.5,
+          "end": 12.84,
+          "word": " finish",
+          "probability": 0.9991255402565002
+        },
+        {
+          "start": 12.84,
+          "end": 13.16,
+          "word": " there.",
+          "probability": 0.9742251038551331
+        }
+      ]
+    },
+    {
+      "start": 24.1,
+      "end": 26.38,
+      "text": " A good opening hold of Sir.",
+      "avg_logprob": -0.7306061618857913,
+      "no_speech_prob": 0.04384578391909599,
+      "words": [
+        {
+          "start": 24.1,
+          "end": 24.74,
+          "word": " A",
+          "probability": 0.8059022426605225
+        },
+        {
+          "start": 24.74,
+          "end": 25.06,
+          "word": " good",
+          "probability": 0.9807730913162231
+        },
+        {
+          "start": 25.06,
+          "end": 25.6,
+          "word": " opening",
+          "probability": 0.9969035983085632
+        },
+        {
+          "start": 25.6,
+          "end": 25.9,
+          "word": " hold",
+          "probability": 0.7958905100822449
+        },
+        {
+          "start": 25.9,
+          "end": 26.16,
+          "word": " of",
+          "probability": 0.899310827255249
+        },
+        {
+          "start": 26.16,
+          "end": 26.38,
+          "word": " Sir.",
+          "probability": 0.1486358791589737
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "b23dd579a1bf48a93b4f06360e066db4e621b4c9a6b77724b020d0c59f8d628d",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

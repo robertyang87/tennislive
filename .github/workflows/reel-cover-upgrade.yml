@@ -62,8 +62,10 @@ jobs:
           # （`reel_asset_gates.image_problems`，#1104）——少了它**每一条**换好的图都被
           # 「assets/flags/xx.png 不在仓库里」退回。这张单子由
           # `test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样` 按真实 spec 逐条对账。
+          # 字卡制作预检按真实字体测语义行宽，同样必须带上 fonts。
           sparse-checkout: |
             assets/flags
+            assets/fonts
             assets/players
             assets/venues
             assets/explainer/nadal-academy

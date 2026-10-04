@@ -1,0 +1,101 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 1019.0,
+  "range_to": 1038.0,
+  "selected_from": 1021.0,
+  "selected_to": 1034.0,
+  "decoded_pcm_sha256": "222767fd980894a26f1321585e978d9d88b0aaa0916e84fe6c05d2fe387efa22",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:10:54.380406+00:00",
+  "elapsed_seconds": 2.11,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 1020.66,
+      "end": 1023.0,
+      "text": " Oh, that's nice from Cal and Skye as she applied...",
+      "avg_logprob": -0.7476475659538718,
+      "no_speech_prob": 0.544293224811554,
+      "compression_ratio": 0.8947368421052632,
+      "words": [
+        {
+          "start": 1020.66,
+          "end": 1021.06,
+          "word": " Oh,",
+          "probability": 0.24838781356811523
+        },
+        {
+          "start": 1021.08,
+          "end": 1021.28,
+          "word": " that's",
+          "probability": 0.9865414202213287
+        },
+        {
+          "start": 1021.28,
+          "end": 1021.48,
+          "word": " nice",
+          "probability": 0.989791750907898
+        },
+        {
+          "start": 1021.48,
+          "end": 1021.68,
+          "word": " from",
+          "probability": 0.9119928479194641
+        },
+        {
+          "start": 1021.68,
+          "end": 1021.92,
+          "word": " Cal",
+          "probability": 0.16927774250507355
+        },
+        {
+          "start": 1021.92,
+          "end": 1022.02,
+          "word": " and",
+          "probability": 0.39384400844573975
+        },
+        {
+          "start": 1022.02,
+          "end": 1022.32,
+          "word": " Skye",
+          "probability": 0.6359214186668396
+        },
+        {
+          "start": 1022.32,
+          "end": 1022.5,
+          "word": " as",
+          "probability": 0.7212756872177124
+        },
+        {
+          "start": 1022.5,
+          "end": 1022.6,
+          "word": " she",
+          "probability": 0.9849510192871094
+        },
+        {
+          "start": 1022.6,
+          "end": 1023.0,
+          "word": " applied...",
+          "probability": 0.3432907983660698
+        }
+      ]
+    }
+  ]
+}
