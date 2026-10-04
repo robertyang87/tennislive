@@ -217,8 +217,8 @@
     "kind": "none",
     "why": "正文是独立场上采访产品；比赛结束画面必须从同场官方集锦以 lead_in 接入。"
   },
-  "crop_shift_x": -0.06,
-  "_crop_shift_why": "Tennis TV 右上角台标（左沿 0.823）在居中 4:3 窗口里；转正时按 check_tennistv_logo 的几何补的默认值。",
+  "crop_shift_x": 0,
+  "_crop_shift_why": "按最新全局裁切规则固定居中，不左右偏移；使用logo_box笔画掩膜。已用实际官方源片运行logo_mask，9079个笔画像素，非空。",
   "_facts": [
     "官方采访说明：德约三盘击败兹维列夫；https://www.tennistv.com/videos/4586490/beijing-2026-qf-djokovic-interview",
     "采访原话：今年艰难但仍在努力，让年轻人必须拼尽全力；发球加第一拍精准，第二、三盘5比4时稳住情绪。"
@@ -262,5 +262,13 @@
       "channel": "Tennis TV",
       "height": 1080
     }
-  }
+  },
+  "cx": 0.5,
+  "track": false,
+  "logo_box": [
+    0.82,
+    0.02,
+    0.17,
+    0.12
+  ]
 }
