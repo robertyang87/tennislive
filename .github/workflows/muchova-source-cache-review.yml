@@ -1,0 +1,127 @@
+name: muchova-source-cache-review
+run-name: "Muchova–Boulter cache-only source review"
+on:
+  push:
+    branches: [codex/muchova-source-review-20261004]
+    paths: [.github/workflows/muchova-source-cache-review.yml]
+permissions:
+  contents: read
+concurrency:
+  group: muchova-source-cache-review-ml7I2o2xkco
+  cancel-in-progress: false
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: b701bff296a7076aa73770ec10ead495296a0590
+          persist-credentials: false
+          sparse-checkout: tools/ci_apt_install.sh
+          sparse-checkout-cone-mode: false
+      - name: Prepare ffprobe through the repository installer
+        timeout-minutes: 5
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - uses: actions/cache/restore@v4
+        id: source_cache
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-muchova-boulter-bc81742e1a8088b4
+          fail-on-cache-miss: true
+      - name: Validate and export only the exact acquired source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test '${{ steps.source_cache.outputs.cache-hit }}' = true || { echo 'Exact source cache key did not match'; exit 1; }
+          mkdir -p "$RUNNER_TEMP/muchova-review"
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib,subprocess
+          url='https://www.youtube.com/watch?v=ml7I2o2xkco'
+          source=pathlib.Path.home()/'.cache/tennislive-sources'/(hashlib.sha1(url.encode()).hexdigest()[:16]+'.mp4')
+          assert source.is_file() and not source.is_symlink(), 'Exact cached MP4 missing or symlinked; do not download'
+          assert source.stat().st_size>1000000
+          metadata=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-show_format','-of','json',str(source)]))
+          video=next(s for s in metadata['streams'] if s['codec_type']=='video')
+          assert video['width']==1920 and video['height']==1080, 'Unexpected dimensions'
+          assert video['avg_frame_rate']=='25/1', 'Unexpected frame rate'
+          assert abs(float(metadata['format']['duration'])-446.403628)<0.2, 'Unexpected duration'
+          assert any(s['codec_type']=='audio' for s in metadata['streams']), 'Missing audio'
+          out=pathlib.Path(os.environ['RUNNER_TEMP'])/'muchova-review'
+          h=hashlib.sha256();parts=[]
+          with source.open('rb') as f:
+              for index in range(8):
+                  chunk=f.read(24*1024*1024)
+                  if not chunk: break
+                  h.update(chunk); name=f'source.mp4.part{index:02d}'
+                  (out/name).write_bytes(chunk)
+                  parts.append({'file':name,'bytes':len(chunk),'sha256':hashlib.sha256(chunk).hexdigest()})
+              assert not f.read(1), 'Source exceeds bounded eight-part export'
+          manifest={'source_url':url,'cache_key':'reel-src-muchova-boulter-bc81742e1a8088b4','source_file':source.name,'source_bytes':source.stat().st_size,'source_sha256':h.hexdigest(),'ffprobe':metadata,'parts':parts,'run_id':os.environ['GITHUB_RUN_ID'],'purpose':'cache-only same-match source review; no download, render, release or publication'}
+          (out/'source-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          print(json.dumps({k:manifest[k] for k in ['source_url','source_bytes','source_sha256','run_id']}))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muchova-source-manifest-${{ github.run_id }}
+          path: ${{ runner.temp }}/muchova-review/source-manifest.json
+          if-no-files-found: error
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muchova-source-part00-${{ github.run_id }}
+          path: ${{ runner.temp }}/muchova-review/source.mp4.part00
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muchova-source-part01-${{ github.run_id }}
+          path: ${{ runner.temp }}/muchova-review/source.mp4.part01
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muchova-source-part02-${{ github.run_id }}
+          path: ${{ runner.temp }}/muchova-review/source.mp4.part02
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muchova-source-part03-${{ github.run_id }}
+          path: ${{ runner.temp }}/muchova-review/source.mp4.part03
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muchova-source-part04-${{ github.run_id }}
+          path: ${{ runner.temp }}/muchova-review/source.mp4.part04
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muchova-source-part05-${{ github.run_id }}
+          path: ${{ runner.temp }}/muchova-review/source.mp4.part05
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muchova-source-part06-${{ github.run_id }}
+          path: ${{ runner.temp }}/muchova-review/source.mp4.part06
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muchova-source-part07-${{ github.run_id }}
+          path: ${{ runner.temp }}/muchova-review/source.mp4.part07
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
