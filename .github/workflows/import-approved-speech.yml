@@ -1,0 +1,133 @@
+name: Import approved speech master
+on:
+  push:
+    branches: [main]
+    paths:
+      - data/approved_interview_imports/nadal-academy-10th-2026-championship-speech/request.json
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: import-approved-speech-cup
+  cancel-in-progress: false
+jobs:
+  import:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+      REQUEST: data/approved_interview_imports/nadal-academy-10th-2026-championship-speech/request.json
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            data/approved_interview_imports/nadal-academy-10th-2026-championship-speech
+            data/interview_publish_ledger
+            data/transcript_reviews/nadal-academy-10th-2026-championship-speech
+            specs/interviews
+            tools
+            assets/reel
+            research/nadal-academy-10th-2026-championship-speech
+            src
+            output/interviews/nadal-academy-10th-2026-championship-speech
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Cache apt packages for native validation
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-approved-speech-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-approved-speech-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
+      - name: Install native validation dependencies
+        timeout-minutes: 15
+        run: |
+          pip install -q -e . numpy
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+
+      # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
+      # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：
+      # 命中的趟白传一份、只装 ffmpeg 的趟把空目录存成最新那一格——见那份脚本
+      # 顶部 2026-09-27 那段。判据 `tests/test_runner_setup_cache.py`。
+      - name: 回写 apt 缓存（这趟真下了新包才存）
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+      - name: Restore verified transfer chunks
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/approved-speech-chunks
+          key: approved-speech-${{ hashFiles('data/approved_interview_imports/nadal-academy-10th-2026-championship-speech/request.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            approved-speech-${{ hashFiles('data/approved_interview_imports/nadal-academy-10th-2026-championship-speech/request.json') }}-
+      - name: Reconstruct exact master and verify original native QC identity
+        id: master
+        run: python tools/import_approved_speech.py assemble --request "$REQUEST"
+      - name: Save verified chunks even after a failed import
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/approved-speech-chunks
+          key: approved-speech-${{ hashFiles('data/approved_interview_imports/nadal-academy-10th-2026-championship-speech/request.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Upload movie to Release and generate native pages
+        run: python tools/import_approved_speech.py release --request "$REQUEST"
+      - name: Commit metadata, cover, copy and QC evidence
+        env:
+          OUTDIR: ${{ steps.master.outputs.outdir }}
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          # Explicit file list: movie bytes must never become Git tree entries.
+          git add --sparse specs/interviews/nadal-academy-10th-2026-championship-speech.json specs/interviews/nadal-academy-10th-2026-championship-speech.xhs.txt
+          git add --sparse "$OUTDIR"/*.json "$OUTDIR"/*.ass "$OUTDIR"/*.jpg "$OUTDIR"/*.html "$OUTDIR"/cap_*.json3
+          if git diff --cached --name-only | grep -E '\.(mp4|mov|mkv)$'; then
+            echo '::error::Movie accidentally staged'; exit 1
+          fi
+          python tools/check_staged_file_sizes.py
+          if git diff --cached --name-only | grep -E '\.(mp4|mov|mkv)$'; then
+            echo '::error::Movie accidentally staged; refusing publication'
+            exit 1
+          fi
+          python tools/check_staged_file_sizes.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'reel: import approved speech master and native QC evidence'
+          fi
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main
+      - name: Run complete native publication gate
+        id: publish_gate
+        env:
+          OUTDIR: ${{ steps.master.outputs.outdir }}
+        run: python tools/auto_push_interview_gate.py --forced --slug nadal-academy-10th-2026-championship-speech
+      - name: Require actual publication gate selection
+        if: steps.publish_gate.outputs.found != 'true'
+        run: |
+          echo '::error::Native forced publication gate did not select the verified speech master'
+          exit 1
+      - name: Report gate result without sending
+        run: |
+          echo 'Exact speech master imported. Main-thread operator must dispatch interview-clip mode=push push=true after verifying Release GET and native publication gate.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Retain failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: approved-speech-import-diagnostics
+          path: |
+            output/*/reel/nadal-academy-10th-2026-championship-speech/*.json
+            output/*/reel/nadal-academy-10th-2026-championship-speech/*.ass
+          if-no-files-found: ignore

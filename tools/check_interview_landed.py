@@ -108,14 +108,28 @@ def _ass_body_events(ass: Path) -> dict[str, list[tuple[str, str, str]]]:
 
 
 def bilingual_body_ok(ass: Path, spec: dict) -> tuple[bool, str]:
-    """正文英文和中文必须逐 cue 同时出现，数量与 spec.zh 一致。"""
+    """正文与保守声音事件必须中英逐 cue 同时出现，事件另计且检查实际内容。"""
     events = _ass_body_events(ass)
     en, zh = events["EN"], events["ZH"]
     en_times = [(a, b) for a, b, text in en if text]
     zh_times = [(a, b) for a, b, text in zh if text]
-    expected = len(spec.get("zh") or [])
+    annotations = []
+    if spec.get("caption_gap_annotations") is not None:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import build_interview_clip as clip  # noqa: PLC0415
+        try:
+            annotations = clip.conservative_gap_annotations(spec, ass.parent)
+        except (SystemExit, ValueError, OSError) as exc:
+            return False, f"声音事件证据/区间无效：{exc}"
+        for annotation in annotations:
+            a, b = clip._ts(annotation["start"] - spec["start"]), clip._ts(annotation["end"] - spec["start"])
+            if ((a, b, annotation["en"]) not in en
+                    or (a, b, clip.zh_display(annotation["zh"])) not in zh):
+                return False, "保守声音事件缺失或没有按真实区间中英成对落入成品字幕。"
+    spoken = len(spec.get("zh") or [])
+    expected = spoken + len(annotations)
     ok = bool(en_times) and en_times == zh_times and len(en_times) == expected
-    return ok, (f"EN {len(en_times)} / ZH {len(zh_times)} / spec.zh {expected}，"
+    return ok, (f"EN {len(en_times)} / ZH {len(zh_times)} / spec.zh {spoken} + 声音事件 {len(annotations)}，"
                 f"逐 cue 时间 {'一致' if en_times == zh_times else '不一致'}")
 
 
@@ -123,7 +137,18 @@ def bilingual_lead_ok(ass: Path, spec: dict) -> tuple[bool, str]:
     """冷开场的原解说也必须逐 cue 中英成对，不能只验采访正文。"""
     expected = len(((spec.get("lead_in") or {}).get("subs") or []))
     if expected == 0:
-        from interview_source_gate import verified_no_lead_exception  # noqa: PLC0415
+        from interview_source_gate import validate_source_contract, verified_no_lead_exception  # noqa: PLC0415
+        # The native source/opening contract permits a verified trophy speech
+        # to start with the ceremony itself. Do not invent a match-end lead-in.
+        if (spec.get("requested_content_type") == "ceremony"
+                and spec.get("interview_kind") == "赛后捧杯致辞"
+                and (spec.get("opening") or {}).get("kind") == "none"
+                and spec.get("lead_in") is None):
+            try:
+                validate_source_contract(spec)
+            except (ValueError, SystemExit):
+                return False, "典礼无需冷开场的身份契约未核实或已失效"
+            return True, "已核捧杯致辞按原生opening契约无需独立比赛冷开场"
         if verified_no_lead_exception(spec):
             return True, "已核验的告别/入选典礼按编辑决定不配置独立冷开场（显式例外）"
         return False, "spec.lead_in.subs 为空"
