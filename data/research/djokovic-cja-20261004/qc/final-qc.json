@@ -1,0 +1,234 @@
+{
+  "status": "pass",
+  "blocking_findings": [],
+  "scope": "Actual native Release MP4 independently decoded, sealed and visually sampled; not a claim of uninterrupted human audiovisual playback",
+  "run_id": 37213753618,
+  "artifact_id": 11307817416,
+  "release_tag": "reel-zverev-djokovic",
+  "film_bytes": 138442435,
+  "film_sha256": "4634bbe1ce3e235e5d176180c6ac3870cb9cca65edf1fdfb7594337b9006e3e0",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "spec_sha256": "4a5e8fc4c942bebdb6be82c331afae319e12e69e9c1639377ae26a34b808b2e8",
+  "code_sha": "b3221dd6b574c70d4097cd404d279be3cc78934b",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "video_duration_seconds": 337.28,
+  "audio_duration_seconds": 337.28,
+  "full_decode_exit_code": 0,
+  "independent_pinned_l2_exit_code": 0,
+  "mask_seals_checked": 23,
+  "visual_sample_frames": 116,
+  "all_quote_midpoints_viewed": 24,
+  "native_cards_viewed": 5,
+  "stat_card_subtitle_bottom": 96,
+  "board_checks": [
+    {
+      "source_seconds": 0.5,
+      "film_seconds": 13.95,
+      "state": "wide-ad",
+      "result": "pass"
+    },
+    {
+      "source_seconds": 10.5,
+      "film_seconds": 23.95,
+      "state": "dark-blue-closeup",
+      "result": "pass"
+    },
+    {
+      "source_seconds": 108.5,
+      "film_seconds": 133.05,
+      "state": "no-blue-set-finish-board",
+      "result": "pass"
+    },
+    {
+      "source_seconds": 280.5,
+      "film_seconds": 296.13,
+      "state": "dark-ad-full-column",
+      "result": "pass"
+    },
+    {
+      "source_seconds": 282.5,
+      "film_seconds": 298.13,
+      "state": "no-points-column",
+      "result": "pass"
+    },
+    {
+      "source_seconds": 284.8,
+      "film_seconds": 300.43,
+      "state": "no-board-player-closeup",
+      "result": "pass"
+    }
+  ],
+  "match_points": [
+    {
+      "source_start": 229.2,
+      "source_end": 266.44,
+      "film_start": 240.74,
+      "film_end": 277.98,
+      "result": "complete serve-through-dead-ball; two contiguous source windows; 20 actual dense storyboard frames viewed"
+    },
+    {
+      "source_start": 272.6,
+      "source_end": 280.2,
+      "film_start": 288.23,
+      "film_end": 295.83,
+      "result": "complete serve-through-dead-ball; next contiguous raw-audio window retains confirmation; 5 dense frames and outcome/reaction samples viewed"
+    }
+  ],
+  "quote_audio": {
+    "quotes_checked": 24,
+    "min_waveform_correlation": 0.996539,
+    "max_abs_lag_ms": 0.0,
+    "method": "Decoded final audio compared numerically with exact reviewed source for every original-commentary quote, allowing +-250ms alignment; no claim of human listening",
+    "translation_review_method": "Reviewed sealed source utterance packets and actual rendered paired captions; no claim of human listening"
+  },
+  "quotes_actual_visual_review": [
+    {
+      "film_seconds": 5.84,
+      "text": "Breathe it in.\n尽情感受这一刻。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 21.1,
+      "text": "Out it goes.\n球出界了。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 25.11,
+      "text": "That is Alexander Zverev, who wastes very little time.\n兹维列夫很快抓住了机会。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 44.22,
+      "text": "Oh, yes! Exquisite!\n好球！太精妙了！",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 53.35,
+      "text": "Gets him!\n他得手了！",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 55.3,
+      "text": "Oh, Djokovic!\n哦，德约科维奇！",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 86.01,
+      "text": "Oh! Alexander Zverev!\n哦！亚历山大·兹维列夫！",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 124.69,
+      "text": "Well, Djokovic didn't take advantage there.\n德约科维奇没能抓住这个机会。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 128.54,
+      "text": "Great hustle from Zverev.\n兹维列夫奋力救球。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 135.06,
+      "text": "The set does go the way of our top seed, Alexander Zverev.\n头号种子兹维列夫拿下首盘。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 153.34,
+      "text": "Oh, no way!\n哦，难以置信！",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 156.05,
+      "text": "He's got it!\n他打成了！",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 159.0,
+      "text": "That is remarkable!\n这太不可思议了！",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 187.97,
+      "text": "Brilliant!\n太精彩了！",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 192.78,
+      "text": "It's a place he loves.\n他爱这片场地。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 213.33,
+      "text": "Oh, he was stretching there, Zverev.\n哦，兹维列夫奋力伸展开来救球。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 226.91,
+      "text": "Injecting the extra pace up the line.\n沿直线打出了更快的球速。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 286.06,
+      "text": "I don't think anybody breathing.\n我觉得大家都屏住了呼吸。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 297.23,
+      "text": "He's done it again!\n他又做到了！",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 300.41,
+      "text": "Novak Djokovic.\n诺瓦克·德约科维奇。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 304.87,
+      "text": "There's something about this place.\n这片场地有些特别之处。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 310.11,
+      "text": "And there is something about this man.\n而这个人也有些特别之处。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 313.74,
+      "text": "The unbeaten record here in Beijing continues.\n他在北京的不败纪录仍在延续。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    },
+    {
+      "film_seconds": 320.27,
+      "text": "Breathe it in.\n尽情感受这一刻。",
+      "result": "both languages readable; safe from bottom scoreboard; complete line wraps"
+    }
+  ],
+  "ending": {
+    "last_source_window_end": 308.92,
+    "padding_source_end": 309.1,
+    "source_tennistv_brand_start": 309.14,
+    "actual_final_outro": "native deep-blue Tennis Jetlag brand, canvas full to 337.20s sample; no TennisTV outro"
+  },
+  "stats": {
+    "observed": "ACE19/4; DF0/3; 1st in80%/72%; 1st won71%/82%; 2nd won56%/52%; BP1/4 vs2/5; points85/95",
+    "winners_ue": "omitted under exact owner-authorized film exception; pinned gate passed"
+  },
+  "evidence": {
+    "full_decode_log": "native-run/full-decode.log",
+    "l2_log": "native-run/independent-l2.log",
+    "render_seals": "native-run/sealed-final-check.json",
+    "original_run_attestation": "native-run/original-run-qc_attestation.json",
+    "quote_source_waveforms": "native-run/final-source-audio.json",
+    "full_canvas_frame_index": "native-run/final-frames/frame-index.json",
+    "dense_matchpoint_index": "native-run/final-frames/points/point-index.json",
+    "small_montages": [
+      "final-evidence/native-cards-and-stat.jpg",
+      "final-evidence/actual-board-states.jpg",
+      "final-evidence/actual-two-matchpoints.jpg"
+    ]
+  }
+}
