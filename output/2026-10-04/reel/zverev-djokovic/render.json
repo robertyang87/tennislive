@@ -1,0 +1,133 @@
+{
+  "scoreboard_qc_sha256": "76a4fbd297ef8ba0b667ae1b91e62d7c7f2e2b3ac6aaf5a2f8c2ff89708d4905",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 332.21,
+  "topbar": {
+    "line1": "2026 ATP500 北京 1/4决赛",
+    "line2": "德约科维奇 4-6 6-4 6-4 兹维列夫",
+    "start": 1.2,
+    "end": 333.41
+  },
+  "film_seconds": 337.28,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 5.448,
+    "2": 4.512,
+    "4": 7.992,
+    "6": 3.072,
+    "8": 10.08,
+    "10": 10.32,
+    "11": 10.488,
+    "13": 8.424,
+    "15": 9.552,
+    "16": 9.216,
+    "18": 10.008,
+    "20": 7.776,
+    "22": 10.584,
+    "23": 8.856,
+    "25": 5.448,
+    "27": 5.808,
+    "29": 7.656
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 5,
+          "named": "兹维列夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 14,
+          "named": "兹维列夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 19,
+          "named": "兹维列夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 24,
+          "named": "兹维列夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 28,
+          "named": "兹维列夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 10,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "ecfcaa79f81f1cc5639122d522b925274ea1f21c6e6f4133feba0f7cc4d144bc",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zverev-djokovic",
+    "received_at": "2026-10-04T15:38:29Z",
+    "artifact_ready_at": "2026-10-04T15:47:08Z",
+    "elapsed_seconds": 519.112,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "4634bbe1ce3e235e5d176180c6ac3870cb9cca65edf1fdfb7594337b9006e3e0",
+    "spec_sha256": "4a5e8fc4c942bebdb6be82c331afae319e12e69e9c1639377ae26a34b808b2e8",
+    "run_id": "37213753618",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-04T15:40:50Z",
+        "run_id": "37213753618"
+      }
+    ],
+    "render_seconds": 378.112,
+    "pre_render_seconds": 141.0
+  },
+  "film_sha256": "4634bbe1ce3e235e5d176180c6ac3870cb9cca65edf1fdfb7594337b9006e3e0",
+  "film_bytes": 138442435,
+  "qc_attestation_sha256": "73fce9a5f4b18c65b28b4f73e5f323bff9328f94ac758933bccc07712c8a0816",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-04T15:40:50Z",
+      "run_id": "37213753618"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-04T15:47:09Z",
+      "run_id": "37213753618"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zverev-djokovic/zverev-djokovic.mp4",
+  "video_bytes": 138442435
+}
