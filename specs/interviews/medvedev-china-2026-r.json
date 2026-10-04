@@ -1,5 +1,4 @@
 {
-  "_draft": true,
   "slug": "medvedev-china-2026-r",
   "url": "https://www.tennistv.com/videos/4586439/beijing-2026-qf-daniil-medvedev-interview",
   "source_title": "Medvedev through to Beijing semis in style",
@@ -12,7 +11,7 @@
   "requested_content_type": "on_court",
   "interview_kind": "赛后场上采访",
   "event": "2026 中国网球公开赛",
-  "winner": "",
+  "winner": "梅德韦杰夫",
   "_interviewee_en": "Daniil Medvedev",
   "zh": [
     "丹尼尔，恭喜你",
@@ -165,7 +164,9 @@
         "round": "QF",
         "duration_s": 120
       }
-    ]
+    ],
+    "match_id": "2026:中国网球公开赛:qf:daniil-medvedev",
+    "attestation_sha256": "5cc580c90cb346ccd65686cae544c29695500b61562b9820f691eb356790f94b"
   },
   "match": {
     "id": "2026:中国网球公开赛:qf:daniil-medvedev",
@@ -174,10 +175,46 @@
     "year": 2026,
     "round": "四分之一决赛",
     "interviewee_en": "Daniil Medvedev",
-    "status": "candidate"
+    "status": "result_verified",
+    "winner": "梅德韦杰夫",
+    "loser": "塞伦多洛",
+    "participants": [
+      "梅德韦杰夫",
+      "塞伦多洛"
+    ],
+    "winner_en": "Daniil Medvedev",
+    "loser_en": "Francisco Cerundolo"
   },
   "_notes": [
     "自动草稿：正式切行 + 机器译文已备；cap_asr.json3 没有 `>> ` 说话人标记（whisper 不分说话人），终审切行前自己按内容补；双模型核对（verify_transcript）由 render 时跑第二份完成；出现模型分歧或实体红旗才转人工复核"
   ],
-  "_drafted_at": "2026-10-04T18:29:32Z"
+  "_drafted_at": "2026-10-04T18:29:32Z",
+  "push": {
+    "matchup": "梅德韦杰夫 vs 塞伦多洛",
+    "summary": "梅德韦杰夫赢球后的场上采访",
+    "lead": "2026 中国网球公开赛，梅德韦杰夫击败塞伦多洛后的完整场上采访。",
+    "auto": true
+  },
+  "cover": {
+    "frame_at": 63.9,
+    "title": [
+      "梅德韦杰夫赢球之后",
+      "第一时间说了什么？"
+    ],
+    "sub": "中国网球公开赛 1/4决赛 赛后场上采访",
+    "tag": "中国网球公开赛 · 梅德韦杰夫",
+    "_why": "自动初选采访中段近景；L2 封面抽帧仍需检查清晰度和睁眼。"
+  },
+  "takeaway": {
+    "close": {
+      "point": "梅德韦杰夫赢球后的第一反应",
+      "ask": "你怎么看梅德韦杰夫这场比赛的表现？"
+    }
+  },
+  "opening": {
+    "kind": "none",
+    "why": "正文是独立场上采访产品；比赛结束画面必须从同场官方集锦以 lead_in 接入。"
+  },
+  "crop_shift_x": -0.06,
+  "_crop_shift_why": "Tennis TV 右上角台标（左沿 0.823）在居中 4:3 窗口里；转正时按 check_tennistv_logo 的几何补的默认值。"
 }
