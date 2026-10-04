@@ -1,5 +1,4 @@
 {
-  "_draft": true,
   "slug": "hurkacz-china-2026-r",
   "url": "https://www.tennistv.com/videos/4586379/beijing-2026-qf-hubert-hurkacz-interview",
   "source_title": "Hurkacz powers into Beijing semis",
@@ -12,7 +11,7 @@
   "requested_content_type": "on_court",
   "interview_kind": "赛后场上采访",
   "event": "2026 中国网球公开赛",
-  "winner": "",
+  "winner": "胡尔卡奇",
   "_interviewee_en": "Hubert Hurkacz",
   "zh": [
     "休伊，大大的恭喜。",
@@ -147,7 +146,9 @@
         "round": "QF",
         "duration_s": 116
       }
-    ]
+    ],
+    "match_id": "2026:中国网球公开赛:qf:hubert-hurkacz",
+    "attestation_sha256": "ff01dc14ce1781cdc8cda74871715abc849461bada92cec3ce4517c8bbc776bc"
   },
   "match": {
     "id": "2026:中国网球公开赛:qf:hubert-hurkacz",
@@ -156,10 +157,46 @@
     "year": 2026,
     "round": "四分之一决赛",
     "interviewee_en": "Hubert Hurkacz",
-    "status": "candidate"
+    "status": "result_verified",
+    "winner": "胡尔卡奇",
+    "loser": "哈恰诺夫",
+    "participants": [
+      "胡尔卡奇",
+      "哈恰诺夫"
+    ],
+    "winner_en": "Hubert Hurkacz",
+    "loser_en": "Karen Khachanov"
   },
   "_notes": [
     "自动草稿：正式切行 + 机器译文已备；cap_asr.json3 没有 `>> ` 说话人标记（whisper 不分说话人），终审切行前自己按内容补；双模型核对（verify_transcript）由 render 时跑第二份完成；出现模型分歧或实体红旗才转人工复核"
   ],
-  "_drafted_at": "2026-10-04T14:38:59Z"
+  "_drafted_at": "2026-10-04T14:38:59Z",
+  "push": {
+    "matchup": "胡尔卡奇 vs 哈恰诺夫",
+    "summary": "胡尔卡奇赢球后的场上采访",
+    "lead": "2026 中国网球公开赛，胡尔卡奇击败哈恰诺夫后的完整场上采访。",
+    "auto": true
+  },
+  "cover": {
+    "frame_at": 61.6,
+    "title": [
+      "胡尔卡奇赢球之后",
+      "第一时间说了什么？"
+    ],
+    "sub": "中国网球公开赛 1/4决赛 赛后场上采访",
+    "tag": "中国网球公开赛 · 胡尔卡奇",
+    "_why": "自动初选采访中段近景；L2 封面抽帧仍需检查清晰度和睁眼。"
+  },
+  "takeaway": {
+    "close": {
+      "point": "胡尔卡奇赢球后的第一反应",
+      "ask": "你怎么看胡尔卡奇这场比赛的表现？"
+    }
+  },
+  "opening": {
+    "kind": "none",
+    "why": "正文是独立场上采访产品；比赛结束画面必须从同场官方集锦以 lead_in 接入。"
+  },
+  "crop_shift_x": -0.06,
+  "_crop_shift_why": "Tennis TV 右上角台标（左沿 0.823）在居中 4:3 窗口里；转正时按 check_tennistv_logo 的几何补的默认值。"
 }
