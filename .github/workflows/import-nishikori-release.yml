@@ -1,0 +1,79 @@
+name: Import exact Nishikori farewell master to Release
+on:
+  push:
+    branches: [main]
+    paths: [data/approved_reel_imports/nishikori-career-farewell/request.json]
+permissions:
+  contents: write
+concurrency:
+  group: import-nishikori-career-farewell-original-release
+  cancel-in-progress: false
+jobs:
+  import-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            data/approved_reel_imports/nishikori-career-farewell
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore native media checker apt cache
+        id: apt_cache
+        timeout-minutes: 2
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-nishikori-release-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-nishikori-release-v1-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
+      - name: Install standard transfer and media checker
+        timeout-minutes: 15
+        run: |
+          pip install -q requests
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: Save native media checker apt cache after a download
+        timeout-minutes: 2
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+      - name: Reconstruct original master and verify actual Release bytes
+        run: >-
+          python tools/import_nishikori_release.py
+          --request data/approved_reel_imports/nishikori-career-farewell/request.json
+          --proof data/approved_reel_imports/nishikori-career-farewell/release-proof.json
+      - name: Commit only Release proof metadata, never movie or render signal
+        run: |
+          git config user.name 'Claude'
+          git config user.email 'noreply@anthropic.com'
+          git add --sparse data/approved_reel_imports/nishikori-career-farewell/release-proof.json
+          if git diff --cached --name-only | grep -E '\.(mp4|mov|mkv)$'; then
+            echo '::error::Movie bytes must never enter the Git tree'; exit 1
+          fi
+          python tools/check_staged_file_sizes.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'reel: verify original Nishikori master on Release without publishing'
+            source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+          fi
+      - name: Preserve actual Release verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nishikori-original-release-proof
+          path: data/approved_reel_imports/nishikori-career-farewell/release-proof.json
+          if-no-files-found: warn

@@ -1538,7 +1538,11 @@ def test_收尾要落在一问上不能停在数据上():
     for slug, spec in _reel_specs().items():
         if not should_check('tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上', Path("specs/reels") / f"{slug}.json"):
             continue
-        tail = _TG.ending_offender(spec)
+        # Runtime already applies ENDING_LEGACY; audit its entries against the
+        # underlying predicate separately, rather than treating acceptance as a fix.
+        if slug in _ENDING_LEGACY and _TG.ending_offender(spec) is not None:
+            offenders.add(slug)
+        tail = _TG.ending_problem(spec)
         if tail is not None:
             offenders.add(slug)
             if slug not in _ENDING_LEGACY:
@@ -17180,7 +17184,7 @@ _QUOTE_NOT_BILINGUAL_LEGACY = {("hewitt-washington", 5)}
 
 
 def _iter_quote_cues():
-    """(slug, 段序号, 这一条字幕的文本) —— `quote` 可以是字符串，也可以是列表，
+    """(slug, 段序号, 字幕文本, 原声语言) —— `quote` 可以是字符串，也可以是列表，
     列表元素可以是字符串或 {"at": .., "text": ..}。三种写法都要扫到。"""
     for p in sorted(Path("specs/reels").glob("*.json")):
         spec = json.loads(p.read_text(encoding="utf-8"))
@@ -17191,7 +17195,33 @@ def _iter_quote_cues():
             items = [raw] if isinstance(raw, str) else list(raw)
             for it in items:
                 text = it if isinstance(it, str) else str(it.get("text") or "")
-                yield p.stem, i, text
+                yield p.stem, i, text, seg.get("_source_language")
+
+
+def _quote_is_bilingual(text, source_language):
+    lines = [x for x in text.split("\n") if x.strip()]
+    if len(lines) < 2:
+        return False
+    cjk = re.compile(r"[\u4e00-\u9fff]")
+    if source_language == "ja":
+        kana = re.compile(r"[\u3041-\u3096\u30a1-\u30fa\uff66-\uff9d]")
+        return any(kana.search(x) for x in lines) and any(
+            cjk.search(x) and not kana.search(x) for x in lines)
+    return any(cjk.search(x) for x in lines) and any(
+        not cjk.search(x) for x in lines)
+
+
+@pytest.mark.parametrize("text,language,expected", [
+    ("本当にありがとうございました\n真的非常感谢大家", "ja", True),
+    ("本当にありがとうございました\nThank you", "ja", False),
+    ("真的非常感谢大家\n谢谢大家", "ja", False),
+    ("\n真的非常感谢大家", "ja", False),
+    ("Thank you\n谢谢大家", "en", True),
+    ("7-6, 6-4\n七比六，六比四", None, True),
+    ("本当にありがとうございました\n真的非常感谢大家", "en", False),
+])
+def test_原声双语按真实语言验证不把日语冒充英语(text, language, expected):
+    assert _quote_is_bilingual(text, language) is expected
 
 
 def test_赛场之上要留一段精彩的原声解说_不留要写明为什么():
@@ -17245,25 +17275,25 @@ def test_赛场之上要留一段精彩的原声解说_不留要写明为什么(
 def test_原声解说的字幕一律中英双语():
     """同一句话的下半条：留下来的原声**必须配双语字幕**，不是只给中文。
 
-    判据是**这一条字幕里既有带汉字的一行、也有不带汉字的一行**（原文那一行
+    英语原声的判据是**这一条字幕里既有带汉字的一行、也有不带汉字的一行**（原文那一行
     可能是纯数字，`fritz-jodar-final` 的 `"7-6, 6-4\n七比六，六比四"` 就是
     合格的——所以不能按「有没有英文字母」判，那条会误伤它）。
+
+    真正标为 `_source_language: "ja"` 的日语原声则须有含假名的日语原文行，
+    以及另一行不含假名的中文译文；不能用英文或空行代替原话。
 
     ⚠️ 这一条**不限赛场之上**：赛后开麦、网球有故事的剪辑片，凡是留了原声的
     都走同一条。量下来 246 条字幕里只有 1 条不合格（`hewitt-washington`
     第 5 段是整段中文转述），已发不重渲，挂表。
     """
-    cjk = re.compile(r"[\u4e00-\u9fff]")
     checked = 0
     legacy_seen = set()
-    for slug, seg_no, text in _iter_quote_cues():
+    for slug, seg_no, text, source_language in _iter_quote_cues():
         checked += 1
         if (slug, seg_no) in _QUOTE_NOT_BILINGUAL_LEGACY:
             legacy_seen.add((slug, seg_no))
             continue
-        lines = [x for x in text.split("\n") if x.strip()]
-        assert len(lines) >= 2 and any(cjk.search(x) for x in lines) \
-            and any(not cjk.search(x) for x in lines), (
+        assert _quote_is_bilingual(text, source_language), (
             f"{slug} 段{seg_no} 的原声字幕不是双语：{text[:60]!r}\n"
             f"写成「原文\\n中文」两行——原声段的氛围感靠的就是听得见原话、"
             f"同时读得懂意思")

@@ -1,0 +1,26 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://x.com/japanopentennis/status/2105556880110330208",
+  "source_path": "/workspace/scratch/tokyo-official-x-thanks.mp4",
+  "source_sha256": "f250056fe3bb8660989f36760108c36c162337ab519a3690331342e34e1f3726",
+  "method": "asr_cross_checked",
+  "reviewer": "rio_source local cached small.en/base.en cross-check; metadata/visual identity used only for spelling normalization; no claimed human listening",
+  "reviewed_at": "2026-10-04T07:21:16.220531+00:00",
+  "status": "complete",
+  "reviewed_from": 7,
+  "reviewed_to": 17,
+  "foreground_english": [],
+  "no_foreground_english_reason": "Entire7–17s exit/thanks window independently processed by cached small.en and base.en; both return zero speech segments. No foreground English detected; this is exit imagery/applause, not a quoted player speech. Only this tested window is covered.",
+  "uncertain_spans": [],
+  "evidence": [
+    "data/audio_reviews/nishikori-career-farewell/evidence/tokyo2026-exit-compact-small.en-cc35e138934e.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/tokyo2026-exit-compact-base.en-de487ebb159a.json"
+  ],
+  "human_listening_done": false,
+  "timing_method": "Actual ASR word onsets/ends at source offsets; no uniform cue spacing",
+  "portable_review_provenance": {
+    "original_packet_sha256": "2c0414db7e37885a32815d068dfe5685deff7b23725b994d3139aed70a4161ce",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

@@ -226,6 +226,17 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
     bilingual=[e for e in events if '\n' in e[2] and re.search('[A-Za-z]',e[2].split('\n')[0])
                and not re.search('[\u3400-\u9fff]',e[2].split('\n')[0])
                and re.search('[\u3400-\u9fff]',e[2].split('\n')[-1])]
+    # Producers may burn the tightly stacked language lanes as two actual
+    # ASS events. Accept only exactly co-timed original/translation rows;
+    # do not fabricate a combined sidecar or pair unrelated caption windows.
+    for a, b, en in events:
+        if '\n' in en or not re.search('[A-Za-z]', en) or re.search('[\u3400-\u9fff]', en):
+            continue
+        matches = [(x, y, zh) for x, y, zh in events
+                   if abs(x-a) < .001 and abs(y-b) < .001 and '\n' not in zh
+                   and re.search('[\u3400-\u9fff]', zh) and not re.search('[A-Za-z]', zh)]
+        if len(matches) == 1:
+            bilingual.append((a, b, en+'\n'+matches[0][2]))
     bilingual.sort()
     if any(a[1]>b[0]+.01 for a,b in zip(bilingual,bilingual[1:])):
         raise ValueError('成片双语字幕重叠，会堆成四行')
@@ -256,5 +267,5 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
         a,b=offsets[cue['segment']]+cue['start'],offsets[cue['segment']]+cue['end']
         if not any(x<=a+.08 and y>=b-.08 and '\n' in text
                    and _text(cue['en']) in _text(text.split('\n')[0])
-                   and _text(readable(cue['zh'])) in _text(text.split('\n',1)[1]) for x,y,text in events):
+                   and _text(readable(cue['zh'])) in _text(text.split('\n',1)[1]) for x,y,text in bilingual):
             raise ValueError(f'成片 ASS 缺原声双语句：{a:.2f}–{b:.2f}s')

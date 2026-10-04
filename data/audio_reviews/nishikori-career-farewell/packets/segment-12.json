@@ -1,0 +1,56 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_file": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "closing_source cached multilingual small/base plus root medium.en independent crosschecking; official player identity only for name spelling",
+  "reviewed_at": "2026-10-04T07:39:32.191785+00:00",
+  "status": "complete",
+  "reviewed_from": 278.85,
+  "reviewed_to": 287.49,
+  "foreground_english": [
+    {
+      "start": 281.59,
+      "end": 284.49,
+      "en": "One hour and 47 minutes,",
+      "zh": "1小时47分，"
+    },
+    {
+      "start": 284.49,
+      "end": 286.41,
+      "en": "and we have a new champion,",
+      "zh": "新冠军"
+    },
+    {
+      "start": 286.41,
+      "end": 287.49,
+      "en": "Kei Nishikori.",
+      "zh": "锦织圭。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "uncertain_spans": [],
+  "asr_results": [
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/kuala2014-medium.en-c9f3b3a5b5d5.json",
+      "sha256": "c9f3b3a5b5d5884680cb049c1a92e116d18f220675a5d713b4465542b8ff3911"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/kuala2014-third-small-c9bd5296ffee.json",
+      "sha256": "e6a572091b862ea3545a38d33170a67c7bc12b813b6471e97927e12136dadf64"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/kuala2014-third-base-b8aa31b8749e.json",
+      "sha256": "a7e7b622f9d5bf6e8d71991d52b5bea37147133fb1bc74953034a970eb646195"
+    }
+  ],
+  "human_listening_done": false,
+  "correction_evidence": "Memphis medium Ishikori + multilingual small Nishikori + official winner spelling; KL full lexical utterance medium agrees with small.en and multilingual small including47, base digit errors preserved in evidence. No invented completion.",
+  "portable_review_provenance": {
+    "original_packet_sha256": "620734f13ea2abd91757d64f3d61f78eacbdf2fccfa20ba1cc125e1cda49d956",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  },
+  "actual_subcue_revision": "Whole source utterances split only at existing actual producer ASR word boundaries; no missing parent words, no changed source window. Murray Chinese now corresponds to each exact English subclause."
+}

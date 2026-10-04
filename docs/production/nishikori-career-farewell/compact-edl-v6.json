@@ -1,0 +1,1881 @@
+{
+  "schema": "nishikori-compact-edl-v6",
+  "title": "12冠，亚洲男子网球开路者，坚持到底",
+  "chapter": 1,
+  "publication_candidate": true,
+  "internal_preview": false,
+  "reuse_verified_scenes": true,
+  "output": {
+    "width": 1080,
+    "height": 1440,
+    "fps": 25,
+    "cx": 0.5,
+    "track": false
+  },
+  "duration": 292.48,
+  "scenes": [
+    {
+      "id": "cover-author-intro",
+      "kind": "missing_video",
+      "duration": 6.8,
+      "node_ids": [
+        "20080211-02"
+      ],
+      "headline": "12冠，一生不放弃",
+      "rows": [],
+      "publication_candidate": true,
+      "archive_photo": {
+        "image_path": "data/reel_materials/nishikori-career-farewell/poster.jpg",
+        "scene_label_zh": "2013马德里档案照",
+        "source": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2023/07/11/eba39170-3142-45e7-bbcb-54b4d4fd4680/GettyImages-168408762.jpg",
+        "credit": "GettyImages-168408762; official photo title2013 Madrid Nishikori",
+        "not_match_video": true,
+        "source_article": "https://www.tennistv.com/videos/3578110",
+        "photo_native_dimensions": [
+          3844,
+          2542
+        ]
+      },
+      "match_video_complete": false,
+      "timeline_in": 0,
+      "timeline_out": 6.8,
+      "source_in": null,
+      "source_out": null,
+      "source_identity": "documentary_photo_not_match_video"
+    },
+    {
+      "id": "2008-delray-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 0,
+      "out": 8.52,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20080211-02"
+      ],
+      "info": [
+        "2008｜德尔雷海滩｜决赛",
+        "第1冠",
+        "胜 布雷克"
+      ],
+      "metric": "3-6 6-1 6-4",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 4.91,
+          "source_out": 6.73,
+          "english": "It is a remarkable story.",
+          "zh": "这是一段非凡的故事。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 6.8,
+      "duration": 8.52,
+      "timeline_out": 15.32,
+      "source_in": 0,
+      "source_out": 8.52,
+      "source_identity": "raw_source",
+      "championship": 1,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "源0秒已在抛球；全回合可见，准备动作缺失",
+      "native_foreground_status": "asr_cross_checked",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/01-2008-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/01-2008-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": []
+    },
+    {
+      "id": "2012-tokyo-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 48.95,
+      "out": 57.35,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20121001-03"
+      ],
+      "info": [
+        "2012｜东京｜决赛",
+        "第2冠",
+        "胜 拉奥尼奇"
+      ],
+      "metric": "7-6(5) 3-6 6-0",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [],
+      "timeline_in": 15.32,
+      "duration": 8.4,
+      "timeline_out": 23.72,
+      "source_in": 48.95,
+      "source_out": 57.35,
+      "source_identity": "raw_source",
+      "championship": 2,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "源48.95秒抛球中段开始；发球击球及回合完整",
+      "native_foreground_status": "uncertain",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/02-2012-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/02-2012-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": [
+        {
+          "source_in": 57.45,
+          "source_out": 62,
+          "status": "uncertain",
+          "reason": "save it/savour同音歧义，且for the young...句尾截断。两模型起点差2.46秒。",
+          "preserve_win_edit_recommendation": "冠军点48.95–56与本人庆祝56–57.35保留；57.45后含歧义解说暂不纳入完整字幕保留窗。"
+        }
+      ],
+      "reaction_seconds": 1.35,
+      "boundary_note": "完整point；避免59秒把下一英语句截断，保干净反应1.35秒。"
+    },
+    {
+      "id": "2013-memphis-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 79.45,
+      "out": 89.01,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20130218-04"
+      ],
+      "info": [
+        "2013｜孟菲斯｜决赛",
+        "第3冠",
+        "胜 菲·洛佩斯"
+      ],
+      "metric": "6-2 6-3",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 85.43,
+          "source_out": 86.86,
+          "english": "He's done it!",
+          "zh": "他做到了！",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 23.72,
+      "duration": 9.56,
+      "timeline_out": 33.28,
+      "source_in": 79.45,
+      "source_out": 89.01,
+      "source_identity": "raw_source",
+      "championship": 3,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "79.45秒远端已抛球/即将击球；需补发球准备",
+      "native_foreground_status": "asr_cross_checked",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/03-2013-memphis-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/03-2013-memphis-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": []
+    },
+    {
+      "id": "2013-memphis-trophy",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 113.82,
+      "out": 117.78,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20130218-04"
+      ],
+      "info": [
+        "2013｜孟菲斯｜决赛",
+        "第3冠",
+        "胜 菲·洛佩斯"
+      ],
+      "metric": "6-2 6-3",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": false,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 113.82,
+          "source_out": 117.76,
+          "english": "And he wins over Feliciano Lopez in dominant form.",
+          "zh": "他强势击败费利西亚诺·洛佩斯。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 33.28,
+      "duration": 3.96,
+      "timeline_out": 37.24,
+      "source_in": 113.82,
+      "source_out": 117.78,
+      "source_identity": "raw_source",
+      "championship": 3,
+      "segment_role": "trophy",
+      "integrity_evidence": "79.45秒远端已抛球/即将击球；需补发球准备",
+      "native_foreground_status": "asr_cross_checked",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/publication-assets/trophy-asr/2013-memphis-trophy-small.en.json",
+        "/workspace/tennislive-work/work/publication-assets/trophy-asr/2013-memphis-trophy-base.en.json"
+      ],
+      "native_audio_issues": []
+    },
+    {
+      "id": "2013-author-champion-map",
+      "kind": "missing_video",
+      "duration": 6.92,
+      "node_ids": [
+        "20130505-23"
+      ],
+      "headline": "冠军足迹",
+      "rows": [
+        "2013｜马德里｜档案照片"
+      ],
+      "publication_candidate": true,
+      "archive_photo": {
+        "image_path": "/workspace/tennislive-work/work/nishikori-career-farewell/archive-photos/3578110.jpg",
+        "scene_label_zh": "档案照片",
+        "source": "https://www.tennistv.com/videos/3578110",
+        "credit": "TennisTV official catalog photo",
+        "not_match_video": true
+      },
+      "match_video_complete": false,
+      "timeline_in": 37.24,
+      "timeline_out": 44.16,
+      "source_in": null,
+      "source_out": null,
+      "source_identity": "documentary_photo_not_match_video"
+    },
+    {
+      "id": "2013-madrid-federer",
+      "kind": "video",
+      "source": "/workspace/scratch/madrid-nico-sm20856608.mp4",
+      "in": 350.5,
+      "out": 374.26,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20130505-23"
+      ],
+      "info": [
+        "2013｜马德里大师赛｜1/8决赛",
+        "击败费德勒",
+        "对手：费德勒"
+      ],
+      "metric": "6-4 1-6 6-2",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 358.84,
+          "source_out": 364.02,
+          "english": "The defending champion is out here in Madrid.",
+          "zh": "卫冕冠军在马德里被淘汰。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 364.3,
+          "source_out": 369.44,
+          "english": "Kei Nishikori scores his first ever win over Roger Federer.",
+          "zh": "锦织圭首次击败费德勒。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 369.44,
+          "source_out": 374.24,
+          "english": "Certainly his finest win on a clay court, of the Japanese player.",
+          "zh": "这是他红土赛场最出色的胜利。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 44.16,
+      "duration": 23.76,
+      "timeline_out": 67.92,
+      "source_in": 350.5,
+      "source_out": 374.26,
+      "source_identity": "raw_source",
+      "native_audio_packet": "/workspace/tennislive-work/work/nishikori-career-farewell/native-foreground-extra/windows_packets/madrid2013-nico-finalpoint.json",
+      "native_audio_status": "complete",
+      "source_dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "id": "2014-memphis-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 151.15,
+      "out": 158.63,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20140210-05"
+      ],
+      "info": [
+        "2014｜孟菲斯｜决赛",
+        "第4冠",
+        "胜 卡洛维奇"
+      ],
+      "metric": "6-4 7-6(0)",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 153.95,
+          "source_out": 156.11,
+          "english": "Game, set, match, Nishikori.",
+          "zh": "局、盘、比赛，锦织圭获胜。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 67.92,
+      "duration": 7.48,
+      "timeline_out": 75.4,
+      "source_in": 151.15,
+      "source_out": 158.63,
+      "source_identity": "raw_source",
+      "championship": 4,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "151.15秒已抛球；记分板TIEBREAK 6比0，击球至终局完整",
+      "native_foreground_status": "uncertain",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/04-2014-memphis-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/04-2014-memphis-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": [],
+      "native_audio_packet": "/workspace/tennislive-work/work/publication-assets/compact-audio-packets/memphis2014-resolved-packet.json",
+      "native_audio_status": "complete_packet_with_actual_cross_model_quotes"
+    },
+    {
+      "id": "2014-memphis-trophy",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 168.4,
+      "out": 170.28,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20140210-05"
+      ],
+      "info": [
+        "2014｜孟菲斯｜决赛",
+        "第4冠",
+        "胜 卡洛维奇"
+      ],
+      "metric": "6-4 7-6(0)",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": false,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [],
+      "timeline_in": 75.4,
+      "duration": 1.88,
+      "timeline_out": 77.28,
+      "source_in": 168.4,
+      "source_out": 170.28,
+      "source_identity": "raw_source",
+      "championship": 4,
+      "segment_role": "trophy",
+      "integrity_evidence": "151.15秒已抛球；记分板TIEBREAK 6比0，击球至终局完整",
+      "native_foreground_status": "dual_asr_no_lexical_detection",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/publication-assets/trophy-asr/2014-memphis-trophy-small.en.json",
+        "/workspace/tennislive-work/work/publication-assets/trophy-asr/2014-memphis-trophy-base.en.json"
+      ],
+      "native_audio_issues": []
+    },
+    {
+      "id": "2014-barcelona-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 183.15,
+      "out": 194.55,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20140421-06"
+      ],
+      "info": [
+        "2014｜巴塞罗那｜决赛",
+        "第5冠",
+        "胜 吉拉尔多"
+      ],
+      "metric": "6-2 6-2",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 191.1,
+          "source_out": 194.52,
+          "english": "Nishikori makes history in Barcelona.",
+          "zh": "锦织圭在巴塞罗那创造历史。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 77.28,
+      "duration": 11.4,
+      "timeline_out": 88.68,
+      "source_in": 183.15,
+      "source_out": 194.55,
+      "source_identity": "raw_source",
+      "championship": 5,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "183.15秒抛球已完成；击球至终局完整",
+      "native_foreground_status": "asr_cross_checked",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/05-2014-barcelona-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/05-2014-barcelona-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": [],
+      "native_boundary_reason": "Independent medium word timing Barcelona ends194.52 and nextHe starts194.82(base194.78); rawend194.55 keeps whole utterance and excludes next. Earlier small194.34 shared boundary rejected.",
+      "out_of_selected_window_cues": [
+        {
+          "source_in": 191.1,
+          "source_out": 194.34,
+          "english": "Nishikori makes history in Barcelona.",
+          "zh": "锦织圭在巴塞罗那创造历史。",
+          "status": "metadata_assisted_name_normalization",
+          "verification": "small Ishikori /base Michigori，官方winner Nishikori与本场scoreboard，后文同词。",
+          "human_heard": false
+        },
+        {
+          "source_in": 194.32,
+          "source_out": 196.65,
+          "english": "He's the first Japanese player",
+          "zh": "他是第一位日本球员，",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        }
+      ],
+      "native_audio_status": "medium_and_base_real_word_timing_resolved_packet_pending_bind"
+    },
+    {
+      "id": "2014-usopen-djokovic-complete",
+      "kind": "video",
+      "source": "/workspace/scratch/usopen2014-expanded-qa/nico-sm24415341.mp4",
+      "in": 731.5,
+      "out": 758.5,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20140825-25"
+      ],
+      "info": [
+        "2014｜美网｜半决赛",
+        "击败德约科维奇",
+        "对手：德约科维奇"
+      ],
+      "metric": "6-4 1-6 7-6(4) 6-3",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [],
+      "timeline_in": 88.68,
+      "duration": 27,
+      "timeline_out": 115.68,
+      "source_in": 731.5,
+      "source_out": 758.5,
+      "source_identity": "raw_source",
+      "source_url": "https://www.nicovideo.jp/watch/sm24415341",
+      "source_authority": "public_archival_uploader_not_official_event_account",
+      "native_audio_status": "two_multilingual_models_no_speech_complete_exact_window",
+      "integrity_evidence": "root/QA verified full serve to point and celebration; source854x480 archival",
+      "native_audio_packet": "work/nishikori-career-farewell/usopen2014-fullpoint-audio/usopen2014-nico-selected27-no-speech.json",
+      "native_audio_issues": []
+    },
+    {
+      "id": "2014-usopen-final-history",
+      "kind": "video",
+      "source": "/workspace/scratch/usopen-2014-final-official.mp4",
+      "in": 139,
+      "out": 151.52,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20140908-53"
+      ],
+      "info": [
+        "2014｜美网｜决赛",
+        "大满贯亚军",
+        "对手：西里奇"
+      ],
+      "metric": "3-6 3-6 3-6",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": false,
+      "source_pending": false,
+      "author_vo_allowed": true,
+      "english_cues": [],
+      "timeline_in": 115.68,
+      "duration": 12.52,
+      "timeline_out": 128.2,
+      "source_in": 139,
+      "source_out": 151.52,
+      "source_identity": "raw_source",
+      "author_vo_window_seconds": 12.288,
+      "native_audio_packet": "/workspace/tennislive-work/work/nishikori-career-farewell/native-foreground-extra/windows_packets/usopen2014-final-no-english.json",
+      "native_audio_status": "complete"
+    },
+    {
+      "id": "2014-kuala-lumpur-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 278.85,
+      "out": 287.49,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20140922-07"
+      ],
+      "info": [
+        "2014｜吉隆坡｜决赛",
+        "第6冠",
+        "胜 贝内特乌"
+      ],
+      "metric": "7-6(4) 6-4",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 281.59,
+          "source_out": 284.49,
+          "english": "One hour and 47 minutes,",
+          "zh": "1小时47分，",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 284.49,
+          "source_out": 286.41,
+          "english": "and we have a new champion,",
+          "zh": "新冠军",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 286.41,
+          "source_out": 287.49,
+          "english": "Kei Nishikori.",
+          "zh": "锦织圭。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 128.2,
+      "duration": 8.64,
+      "timeline_out": 136.84,
+      "source_in": 278.85,
+      "source_out": 287.49,
+      "source_identity": "raw_source",
+      "championship": 6,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "278.85秒远端发球动作已开始；回合短且结果完整",
+      "native_foreground_status": "uncertain",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/06-2014-kuala-lumpur-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/06-2014-kuala-lumpur-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": [],
+      "native_audio_packet": "/workspace/tennislive-work/work/publication-assets/compact-audio-packets/kuala2014-resolved-packet.json",
+      "native_audio_status": "complete_packet_with_actual_cross_model_quotes"
+    },
+    {
+      "id": "2014-tokyo-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 323.65,
+      "out": 337.01,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20140929-08"
+      ],
+      "info": [
+        "2014｜东京｜决赛",
+        "第7冠",
+        "胜 拉奥尼奇"
+      ],
+      "metric": "7-6(5) 4-6 6-4",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [],
+      "timeline_in": 136.84,
+      "duration": 13.36,
+      "timeline_out": 150.2,
+      "source_in": 323.65,
+      "source_out": 337.01,
+      "source_identity": "raw_source",
+      "championship": 7,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "323.65秒抛球中开始，回合全部可见",
+      "native_foreground_status": "uncertain",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/07-2014-tokyo-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/07-2014-tokyo-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": [
+        {
+          "source_in": 331.86,
+          "source_out": 332.7,
+          "status": "uncertain",
+          "reason": "smallYEAH/baseUgh，非明确词义的选手/观众吼声。",
+          "preserve_win_edit_recommendation": "属于非词语情绪音不编英文；保原声+回合胜利，标签nonlexical_reaction而不是无声。"
+        }
+      ]
+    },
+    {
+      "id": "2015-memphis-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 377.45,
+      "out": 386.13,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20150209-09"
+      ],
+      "info": [
+        "2015｜孟菲斯｜决赛",
+        "第8冠",
+        "胜 安德森"
+      ],
+      "metric": "6-4 6-4",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [],
+      "timeline_in": 150.2,
+      "duration": 8.68,
+      "timeline_out": 158.88,
+      "source_in": 377.45,
+      "source_out": 386.13,
+      "source_identity": "raw_source",
+      "championship": 8,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "377.45秒已抛球；回合与拥抱/庆祝清楚",
+      "native_foreground_status": "uncertain",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/08-2015-memphis-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/08-2015-memphis-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": [
+        {
+          "source_in": 382.33,
+          "source_out": 382.87,
+          "status": "uncertain",
+          "reason": "smallYeah/baseOkay，极短反应音，非可确定解说句。",
+          "preserve_win_edit_recommendation": "真回合必须保；标nonlexical_or_uncertain_reaction，不伪造词字幕。"
+        }
+      ]
+    },
+    {
+      "id": "2015-memphis-trophy",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 401,
+      "out": 402.88,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20150209-09"
+      ],
+      "info": [
+        "2015｜孟菲斯｜决赛",
+        "第8冠",
+        "胜 安德森"
+      ],
+      "metric": "6-4 6-4",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": false,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [],
+      "timeline_in": 158.88,
+      "duration": 1.88,
+      "timeline_out": 160.76,
+      "source_in": 401,
+      "source_out": 402.88,
+      "source_identity": "raw_source",
+      "championship": 8,
+      "segment_role": "trophy",
+      "integrity_evidence": "377.45秒已抛球；回合与拥抱/庆祝清楚",
+      "native_foreground_status": "dual_asr_no_lexical_detection",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/publication-assets/trophy-asr/2015-memphis-trophy-small.en.json",
+        "/workspace/tennislive-work/work/publication-assets/trophy-asr/2015-memphis-trophy-base.en.json"
+      ],
+      "native_audio_issues": [],
+      "native_audio_status": "both_context_models_no_speech_before_402_99_cross_cut_word"
+    },
+    {
+      "id": "2015-barcelona-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 403.4,
+      "out": 410.72,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20150420-10"
+      ],
+      "info": [
+        "2015｜巴塞罗那｜决赛",
+        "第9冠",
+        "胜 安杜哈尔"
+      ],
+      "metric": "6-4 6-4",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 405.08,
+          "source_out": 407.62,
+          "english": "Victory for Nishikori!",
+          "zh": "锦织圭获胜！",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 407.63,
+          "source_out": 409.72,
+          "english": "And what a way to do it!",
+          "zh": "这样的夺冠方式，太精彩了！",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 160.76,
+      "duration": 7.32,
+      "timeline_out": 168.08,
+      "source_in": 403.4,
+      "source_out": 410.72,
+      "source_identity": "raw_source",
+      "championship": 9,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "403.4秒已抛球，击球到得分完整",
+      "native_foreground_status": "asr_cross_checked",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/09-2015-barcelona-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/09-2015-barcelona-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": []
+    },
+    {
+      "id": "2015-washington-point_reaction",
+      "kind": "video",
+      "source": "/workspace/scratch/compact-washington-third-set.mp4",
+      "in": 548.5,
+      "out": 566.86,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20150803-11"
+      ],
+      "info": [
+        "2015｜华盛顿｜决赛",
+        "第10冠",
+        "胜 伊斯内尔"
+      ],
+      "metric": "4-6 6-4 6-4",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 563.68,
+          "source_out": 566.66,
+          "english": "Nishikori wins Washington.",
+          "zh": "锦织圭赢下华盛顿冠军。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 168.08,
+      "duration": 18.36,
+      "timeline_out": 186.44,
+      "source_in": 548.5,
+      "source_out": 566.86,
+      "source_identity": "raw_source",
+      "championship": 10,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "实帧548.5远端Isner站姿尚未抛球；550.5发球击球；Kei近端白蓝接发，完整rally至562.x终局；563.5近景溶解，564–566双臂庆祝。scoreISNER6 4 4 0/NISHIKORI4 6 5 40，终局Kei4-6 6-4 6-4。",
+      "native_foreground_status": "dual_asr_no_lexical_detection",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/publication-assets/washington-source-proof/asr/washington-third-final-complete-small.en.json",
+        "/workspace/tennislive-work/work/publication-assets/washington-source-proof/asr/washington-third-final-complete-base.en.json",
+        "/workspace/tennislive-work/work/publication-assets/washington-source-proof/asr/washington-third-final-handle-small.en.json",
+        "/workspace/tennislive-work/work/publication-assets/washington-source-proof/asr/washington-third-final-handle-base.en.json"
+      ],
+      "native_audio_issues": [],
+      "source_url": "https://www.nicovideo.jp/watch/sm26897731",
+      "source_authority": "public_archival_uploader_not_official_event_account",
+      "serve_hit_visible": true,
+      "native_audio_status": "complete_full_utterances_cross_checked_packet",
+      "championship_terminal_point_verified": true,
+      "manual_reframing": true,
+      "automatic_tracking": false,
+      "native_audio_packet": "/workspace/tennislive-work/work/publication-assets/compact-audio-packets/washington2015-resolved-packet.json"
+    },
+    {
+      "id": "2016-memphis-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 613.45,
+      "out": 626.61,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20160208-12"
+      ],
+      "info": [
+        "2016｜孟菲斯｜决赛",
+        "第11冠",
+        "胜 弗里茨"
+      ],
+      "metric": "6-4 6-4",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [],
+      "timeline_in": 186.44,
+      "duration": 13.16,
+      "timeline_out": 199.6,
+      "source_in": 613.45,
+      "source_out": 626.61,
+      "source_identity": "raw_source",
+      "championship": 11,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "613.45秒远端已发球，抛球准备缺失；回合完整",
+      "native_foreground_status": "dual_asr_no_lexical_detection",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/11-2016-memphis-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/11-2016-memphis-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": []
+    },
+    {
+      "id": "2016-rio-nadal-complete-point",
+      "kind": "video",
+      "source": "/workspace/scratch/rio-niconico-sm29448713.mp4",
+      "source_url": "https://www.nicovideo.jp/watch/sm29448713",
+      "source_authority": "public_archival_uploader_with_original_broadcast_no_commentary_metadata",
+      "in": 509,
+      "out": 531,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20160808-27"
+      ],
+      "info": [
+        "2016｜里约奥运｜铜牌赛",
+        "击败纳达尔",
+        "胜 纳达尔"
+      ],
+      "metric": "6-2 6-7(1) 6-3",
+      "info_for": 3,
+      "info_y": 20,
+      "point_complete": true,
+      "serve_hit_visible": true,
+      "source_pending": false,
+      "native_audio_status": "complete_two_multilingual_models_no_intelligible_English_original_ambient_not_silent",
+      "native_audio_issues": [],
+      "already_framed": false,
+      "source_identity": "raw_source",
+      "english_cues": [],
+      "source_in": 509,
+      "source_out": 531,
+      "duration": 22,
+      "timeline_in": 199.6,
+      "timeline_out": 221.6,
+      "source_quality": "archival_640x360_not_nativeHD",
+      "integrity_evidence": "Rio组实看509准备/510发球/513.7制胜/522握手/528举臂；2016Nadal铜牌赛身份与比分已核。",
+      "native_audio_packet": "/workspace/tennislive-work/work/nishikori-career-farewell/native-foreground-extra/windows_packets/rio2016-nico-finalpoint.json"
+    },
+    {
+      "id": "2016-rio-author-photo-context",
+      "kind": "missing_video",
+      "duration": 7.88,
+      "node_ids": [
+        "20160808-27"
+      ],
+      "headline": "里约铜牌",
+      "rows": [
+        "2016｜铜牌赛",
+        "胜 纳达尔｜6-2 6-7(1) 6-3",
+        "档案照片，非比赛视频"
+      ],
+      "publication_candidate": true,
+      "archive_photo": {
+        "image_path": "/workspace/scratch/rio-guardian-bronze-celebration.jpg",
+        "scene_label_zh": "档案照片",
+        "source": "https://www.theguardian.com/sport/2016/aug/14/kei-nishikori-rafael-nadal-bronze-tennis-olympics",
+        "credit": "Julian Finney/Getty Images",
+        "not_match_video": true
+      },
+      "match_video_complete": false,
+      "timeline_in": 221.6,
+      "timeline_out": 229.48,
+      "source_in": null,
+      "source_out": null,
+      "source_identity": "documentary_photo_not_match_video",
+      "native_audio_status": "real_photo_silent_background_for_author",
+      "note": "保真实纪实照片供05作者VO，不代替前面的已获完整point，避免叠未核歌声。"
+    },
+    {
+      "id": "2016-usopen-murray-full-commentary",
+      "kind": "video",
+      "source": "/workspace/scratch/usopen-3e2cf1c-00abaaeb534.mp4",
+      "in": 64.84,
+      "out": 83.52,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20160829-33"
+      ],
+      "info": [
+        "2016｜美网｜1/4决赛",
+        "第二次美网四强",
+        "对手：穆雷"
+      ],
+      "metric": "1-6 6-4 4-6 6-1 7-5",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 64.84,
+          "source_out": 66.24,
+          "english": "And with that volley,",
+          "zh": "凭借这记截击，",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 66.24,
+          "source_out": 68.89,
+          "english": "Nishikori broke at five-all in the fifth.",
+          "zh": "决胜盘5比5，锦织圭破发。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 69.58,
+          "source_out": 70.75,
+          "english": "This was match point.",
+          "zh": "这是赛点。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 72.32,
+          "source_out": 75.89,
+          "english": "And Kei Nishikori, with that going in the net,",
+          "zh": "随着这一球下网，锦织圭",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 75.89,
+          "source_out": 77.8,
+          "english": "finds himself in the semifinals",
+          "zh": "他晋级半决赛，",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 77.8,
+          "source_out": 80.2,
+          "english": "for the second time in three years,",
+          "zh": "这是三年内第二次。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 80.2,
+          "source_out": 83.44,
+          "english": "upsetting Andy Murray, seven-five in the fifth.",
+          "zh": "击败安迪·穆雷，决胜盘七比五。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 229.48,
+      "duration": 18.68,
+      "timeline_out": 248.16,
+      "source_in": 64.84,
+      "source_out": 83.52,
+      "source_identity": "raw_source",
+      "native_audio_packet": "/workspace/tennislive-work/work/nishikori-career-farewell/native-foreground-extra/windows_packets/usopen2016-murray-full.json",
+      "native_audio_status": "complete"
+    },
+    {
+      "id": "2018-finals-author-comeback",
+      "kind": "missing_video",
+      "duration": 6.56,
+      "node_ids": [
+        "20181112-28"
+      ],
+      "headline": "重返年终舞台",
+      "rows": [
+        "2018｜年终总决赛｜档案照片"
+      ],
+      "publication_candidate": true,
+      "archive_photo": {
+        "image_path": "/workspace/tennislive-work/work/nishikori-career-farewell/archive-photos/2390500.jpg",
+        "scene_label_zh": "档案照片",
+        "source": "https://www.tennistv.com/videos/2390500",
+        "credit": "TennisTV official catalog photo",
+        "not_match_video": true
+      },
+      "match_video_complete": false,
+      "timeline_in": 248.16,
+      "timeline_out": 254.72,
+      "source_in": null,
+      "source_out": null,
+      "source_identity": "documentary_photo_not_match_video"
+    },
+    {
+      "id": "2018-finals-federer-point",
+      "kind": "video",
+      "source": "/workspace/scratch/road2019.mp4",
+      "in": 44.625,
+      "out": 51.585,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20181112-28"
+      ],
+      "info": [
+        "2018｜ATP年终总决赛｜小组赛",
+        "击败费德勒",
+        "对手：费德勒"
+      ],
+      "metric": "7-6(4) 6-3",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [],
+      "timeline_in": 254.72,
+      "duration": 6.96,
+      "timeline_out": 261.68,
+      "source_in": 44.625,
+      "source_out": 51.585,
+      "source_identity": "raw_source",
+      "native_audio_note": "源为纪录片；此已核窗无英文，采访/音乐需保真实审核，不假称纯赛场声。",
+      "native_audio_packet": "/workspace/tennislive-work/work/nishikori-career-farewell/native-foreground-extra/windows_packets/finals2018-federer-point-no-english.json",
+      "native_audio_status": "complete"
+    },
+    {
+      "id": "2019-brisbane-point_reaction",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 822.85,
+      "out": 836.57,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20190106-13"
+      ],
+      "info": [
+        "2019｜布里斯班｜决赛",
+        "第12冠",
+        "胜 梅德韦杰夫"
+      ],
+      "metric": "6-4 3-6 6-2",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": true,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [
+        {
+          "source_in": 827.4,
+          "source_out": 832.52,
+          "english": "The drought is over.",
+          "zh": "冠军荒结束了。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        },
+        {
+          "source_in": 832.52,
+          "source_out": 836.54,
+          "english": "Two sets to one: 6-4, 3-6, 6-2.",
+          "zh": "两盘比一：6比4、3比6、6比2。",
+          "status": "actual_source_word_boundary_split",
+          "human_heard": false
+        }
+      ],
+      "timeline_in": 261.68,
+      "duration": 13.72,
+      "timeline_out": 275.4,
+      "source_in": 822.85,
+      "source_out": 836.57,
+      "source_identity": "raw_source",
+      "championship": 12,
+      "segment_role": "point_reaction",
+      "integrity_evidence": "822.85秒锦织圭已抛球，击球至庆祝完整",
+      "native_foreground_status": "uncertain",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/12-2019-brisbane-point-reaction-small.en.json",
+        "/workspace/tennislive-work/work/nishikori-career-farewell/audio/commentary-titles/12-2019-brisbane-point-reaction-base.en.json"
+      ],
+      "native_audio_issues": [],
+      "native_audio_status": "complete_full_utterances_cross_checked_packet",
+      "native_audio_packet": "/workspace/tennislive-work/work/publication-assets/compact-audio-packets/brisbane2019-resolved-packet.json"
+    },
+    {
+      "id": "2019-brisbane-trophy",
+      "kind": "video",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "in": 850.15,
+      "out": 854.23,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20190106-13"
+      ],
+      "info": [
+        "2019｜布里斯班｜决赛",
+        "第12冠",
+        "胜 梅德韦杰夫"
+      ],
+      "metric": "6-4 3-6 6-2",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": false,
+      "source_pending": false,
+      "author_vo_allowed": false,
+      "english_cues": [],
+      "timeline_in": 275.4,
+      "duration": 4.08,
+      "timeline_out": 279.48,
+      "source_in": 850.15,
+      "source_out": 854.23,
+      "source_identity": "raw_source",
+      "championship": 12,
+      "segment_role": "trophy",
+      "integrity_evidence": "822.85秒锦织圭已抛球，击球至庆祝完整",
+      "native_foreground_status": "dual_asr_no_lexical_detection",
+      "native_audio_asr_files": [
+        "/workspace/tennislive-work/work/publication-assets/trophy-asr/2019-brisbane-trophy-small.en.json",
+        "/workspace/tennislive-work/work/publication-assets/trophy-asr/2019-brisbane-trophy-base.en.json"
+      ],
+      "native_audio_issues": []
+    },
+    {
+      "id": "2019-brisbane-author-last-title",
+      "kind": "missing_video",
+      "duration": 6.72,
+      "node_ids": [
+        "20190106-13"
+      ],
+      "headline": "第12冠，坚持到底",
+      "rows": [
+        "2019｜布里斯班｜档案照片"
+      ],
+      "publication_candidate": true,
+      "archive_photo": {
+        "image_path": "/workspace/tennislive-work/work/nishikori-career-farewell/archive-photos/2378316.jpg",
+        "scene_label_zh": "档案照片",
+        "source": "https://www.tennistv.com/videos/2378316",
+        "credit": "TennisTV official catalog photo",
+        "not_match_video": true
+      },
+      "match_video_complete": false,
+      "timeline_in": 279.48,
+      "timeline_out": 286.2,
+      "source_in": null,
+      "source_out": null,
+      "source_identity": "documentary_photo_not_match_video"
+    },
+    {
+      "id": "2026-tokyo-before-original-farewell",
+      "kind": "video",
+      "source": "/workspace/scratch/tokyo-official-x-thanks.mp4",
+      "in": 7,
+      "out": 13.28,
+      "cx": 0.5,
+      "cy": 0.5,
+      "node_ids": [
+        "20260930-65"
+      ],
+      "info": [
+        "2026｜东京｜第一轮",
+        "职业生涯最后一场",
+        "对手：蒂亚福"
+      ],
+      "metric": "4-6 4-6",
+      "info_y": 20,
+      "info_for": 3,
+      "already_framed": false,
+      "point_complete": false,
+      "source_pending": false,
+      "author_vo_allowed": true,
+      "english_cues": [],
+      "timeline_in": 286.2,
+      "duration": 6.28,
+      "timeline_out": 292.48,
+      "source_in": 7,
+      "source_out": 13.28,
+      "source_identity": "raw_source",
+      "native_audio_packet": "/workspace/tennislive-work/work/nishikori-career-farewell/native-foreground-extra/windows_packets/tokyo2026-exit-no-english.json",
+      "native_audio_status": "complete"
+    }
+  ],
+  "narration": [
+    {
+      "unit_id": "compact-01",
+      "audio": "data/reel_materials/nishikori-career-farewell/audio/compact-01.mp3",
+      "marks": "data/reel_materials/nishikori-career-farewell/audio/compact-01-marks.json",
+      "spoken_text": "十八岁拿下第一座巡回赛冠军。锦织圭，把亚洲男子网球带向了更远的地方。",
+      "audio_in": 0,
+      "audio_out": 6.768,
+      "start": 0,
+      "gain": 1.5,
+      "node_ids": [
+        "20080211-02"
+      ],
+      "author_tts": true,
+      "speaker": "documentary_author",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    {
+      "unit_id": "compact-02",
+      "audio": "data/reel_materials/nishikori-career-farewell/audio/compact-02.mp3",
+      "marks": "data/reel_materials/nishikori-career-farewell/audio/compact-02-marks.json",
+      "spoken_text": "东京、孟菲斯、巴塞罗那。从第一座到第十二座，每一次捧杯，都有自己的重量。",
+      "audio_in": 0,
+      "audio_out": 6.888,
+      "start": 37.24,
+      "gain": 1.5,
+      "node_ids": [
+        "20130505-23"
+      ],
+      "author_tts": true,
+      "speaker": "documentary_author",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    {
+      "unit_id": "compact-03",
+      "audio": "data/reel_materials/nishikori-career-farewell/audio/compact-03.mp3",
+      "marks": "data/reel_materials/nishikori-career-farewell/audio/compact-03-marks.json",
+      "spoken_text": "费德勒、纳达尔、德约科维奇，他都赢过。美网击败德约，让他走进大满贯决赛。",
+      "audio_in": 0,
+      "audio_out": 6.84,
+      "start": 115.68,
+      "gain": 1.5,
+      "node_ids": [
+        "20140908-53"
+      ],
+      "author_tts": true,
+      "speaker": "documentary_author",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    {
+      "unit_id": "compact-04",
+      "audio": "data/reel_materials/nishikori-career-farewell/audio/compact-04.mp3",
+      "marks": "data/reel_materials/nishikori-career-farewell/audio/compact-04-marks.json",
+      "spoken_text": "决赛没能夺冠，但他成为了首位晋级大满贯男单决赛的亚洲球员。",
+      "audio_in": 0,
+      "audio_out": 5.448,
+      "start": 122.52,
+      "gain": 1.5,
+      "node_ids": [
+        "20140908-53"
+      ],
+      "author_tts": true,
+      "speaker": "documentary_author",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    {
+      "unit_id": "compact-05",
+      "audio": "data/reel_materials/nishikori-career-farewell/audio/compact-05.mp3",
+      "marks": "data/reel_materials/nishikori-career-farewell/audio/compact-05-marks.json",
+      "spoken_text": "里约拿下铜牌。同年回到纽约，他再进四强。那些漫长的第五盘，他从不轻易交出去。",
+      "audio_in": 0,
+      "audio_out": 7.872,
+      "start": 221.6,
+      "gain": 1.5,
+      "node_ids": [
+        "20160808-27"
+      ],
+      "author_tts": true,
+      "speaker": "documentary_author",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    {
+      "unit_id": "compact-06",
+      "audio": "data/reel_materials/nishikori-career-farewell/audio/compact-06.mp3",
+      "marks": "data/reel_materials/nishikori-career-farewell/audio/compact-06-marks.json",
+      "spoken_text": "伤病让他停下，也让归来变得更难。可他还是回到年终舞台，再次击败费德勒。",
+      "audio_in": 0,
+      "audio_out": 6.528,
+      "start": 248.16,
+      "gain": 1.5,
+      "node_ids": [
+        "20181112-28"
+      ],
+      "author_tts": true,
+      "speaker": "documentary_author",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    {
+      "unit_id": "compact-07",
+      "audio": "data/reel_materials/nishikori-career-farewell/audio/compact-07.mp3",
+      "marks": "data/reel_materials/nishikori-career-farewell/audio/compact-07-marks.json",
+      "spoken_text": "十二冠的最后一座在布里斯班。伤病让他走了很多弯路，却没让他放弃回到球场。",
+      "audio_in": 0,
+      "audio_out": 6.696,
+      "start": 279.48,
+      "gain": 1.5,
+      "node_ids": [
+        "20190106-13"
+      ],
+      "author_tts": true,
+      "speaker": "documentary_author",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    {
+      "unit_id": "compact-08",
+      "audio": "data/reel_materials/nishikori-career-farewell/audio/compact-08.mp3",
+      "marks": "data/reel_materials/nishikori-career-farewell/audio/compact-08-marks.json",
+      "spoken_text": "2026年10月1日，东京。最后一场巡回赛结束，把最后的话留给他自己。",
+      "audio_in": 0,
+      "audio_out": 6.264,
+      "start": 286.2,
+      "gain": 1.5,
+      "node_ids": [
+        "20260930-65"
+      ],
+      "author_tts": true,
+      "speaker": "documentary_author",
+      "voice": "zh-CN-YunjianNeural"
+    }
+  ],
+  "original_slots": [
+    {
+      "start": 11.71,
+      "end": 13.53,
+      "en": "It is a remarkable story.",
+      "zh": "这是一段非凡的故事。",
+      "node_ids": [
+        "20080211-02"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 29.7,
+      "end": 31.13,
+      "en": "He's done it!",
+      "zh": "他做到了！",
+      "node_ids": [
+        "20130218-04"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 33.28,
+      "end": 37.22,
+      "en": "And he wins over Feliciano Lopez in dominant form.",
+      "zh": "他强势击败费利西亚诺·洛佩斯。",
+      "node_ids": [
+        "20130218-04"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 52.5,
+      "end": 57.68,
+      "en": "The defending champion is out here in Madrid.",
+      "zh": "卫冕冠军在马德里被淘汰。",
+      "node_ids": [
+        "20130505-23"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 57.96,
+      "end": 63.1,
+      "en": "Kei Nishikori scores his first ever win over Roger Federer.",
+      "zh": "锦织圭首次击败费德勒。",
+      "node_ids": [
+        "20130505-23"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 63.1,
+      "end": 67.9,
+      "en": "Certainly his finest win on a clay court, of the Japanese player.",
+      "zh": "这是他红土赛场最出色的胜利。",
+      "node_ids": [
+        "20130505-23"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 70.72,
+      "end": 72.88,
+      "en": "Game, set, match, Nishikori.",
+      "zh": "局、盘、比赛，锦织圭获胜。",
+      "node_ids": [
+        "20140210-05"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 85.23,
+      "end": 88.65,
+      "en": "Nishikori makes history in Barcelona.",
+      "zh": "锦织圭在巴塞罗那创造历史。",
+      "node_ids": [
+        "20140421-06"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 130.94,
+      "end": 133.84,
+      "en": "One hour and 47 minutes,",
+      "zh": "1小时47分，",
+      "node_ids": [
+        "20140922-07"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 133.84,
+      "end": 135.76,
+      "en": "and we have a new champion,",
+      "zh": "新冠军",
+      "node_ids": [
+        "20140922-07"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 135.76,
+      "end": 136.84,
+      "en": "Kei Nishikori.",
+      "zh": "锦织圭。",
+      "node_ids": [
+        "20140922-07"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 162.44,
+      "end": 164.98,
+      "en": "Victory for Nishikori!",
+      "zh": "锦织圭获胜！",
+      "node_ids": [
+        "20150420-10"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 164.99,
+      "end": 167.08,
+      "en": "And what a way to do it!",
+      "zh": "这样的夺冠方式，太精彩了！",
+      "node_ids": [
+        "20150420-10"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 183.26,
+      "end": 186.24,
+      "en": "Nishikori wins Washington.",
+      "zh": "锦织圭赢下华盛顿冠军。",
+      "node_ids": [
+        "20150803-11"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 229.48,
+      "end": 230.88,
+      "en": "And with that volley,",
+      "zh": "凭借这记截击，",
+      "node_ids": [
+        "20160829-33"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 230.88,
+      "end": 233.53,
+      "en": "Nishikori broke at five-all in the fifth.",
+      "zh": "决胜盘5比5，锦织圭破发。",
+      "node_ids": [
+        "20160829-33"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 234.22,
+      "end": 235.39,
+      "en": "This was match point.",
+      "zh": "这是赛点。",
+      "node_ids": [
+        "20160829-33"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 236.96,
+      "end": 240.53,
+      "en": "And Kei Nishikori, with that going in the net,",
+      "zh": "随着这一球下网，锦织圭",
+      "node_ids": [
+        "20160829-33"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 240.53,
+      "end": 242.44,
+      "en": "finds himself in the semifinals",
+      "zh": "他晋级半决赛，",
+      "node_ids": [
+        "20160829-33"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 242.44,
+      "end": 244.84,
+      "en": "for the second time in three years,",
+      "zh": "这是三年内第二次。",
+      "node_ids": [
+        "20160829-33"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 244.84,
+      "end": 248.08,
+      "en": "upsetting Andy Murray, seven-five in the fifth.",
+      "zh": "击败安迪·穆雷，决胜盘七比五。",
+      "node_ids": [
+        "20160829-33"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 266.23,
+      "end": 271.35,
+      "en": "The drought is over.",
+      "zh": "冠军荒结束了。",
+      "node_ids": [
+        "20190106-13"
+      ],
+      "human_heard": false
+    },
+    {
+      "start": 271.35,
+      "end": 275.37,
+      "en": "Two sets to one: 6-4, 3-6, 6-2.",
+      "zh": "两盘比一：6比4、3比6、6比2。",
+      "node_ids": [
+        "20190106-13"
+      ],
+      "human_heard": false
+    }
+  ],
+  "title_nodes": [
+    "20080211-02",
+    "20121001-03",
+    "20130218-04",
+    "20140210-05",
+    "20140421-06",
+    "20140922-07",
+    "20140929-08",
+    "20150209-09",
+    "20150420-10",
+    "20150803-11",
+    "20160208-12",
+    "20190106-13"
+  ],
+  "title_count": 12,
+  "author_voice_seconds": 53.304,
+  "ending": {
+    "source": "/workspace/tennislive-work/work/nishikori-career-farewell/tokyo-postmatch-interview.mp4",
+    "source_url": "https://x.com/japanopentennis/status/2105641498721284153",
+    "windows": [
+      [
+        274.4,
+        290.4
+      ],
+      [
+        313,
+        323
+      ]
+    ],
+    "speech_seconds": 26,
+    "brand_card_seconds": 5,
+    "total_seconds": 31,
+    "actual_event_date": "2026-10-01",
+    "author_tts": false,
+    "speech_obtained": true,
+    "languages": [
+      "ja",
+      "zh"
+    ]
+  },
+  "body_duration_seconds": 292.48,
+  "planned_total_with_original_ending": 323.48,
+  "source_truth": "All12 title terminal points verified. Madrid2013 public Nico1280x720 fullpoint with complete originalEnglish; Rio2016 public Nico640x360 fullpoint with original ambience, no TikTok popmusic. Djo2014 fullpoint854x480 original27s noEnglish window. Authorvoice is Yunjian documentary narration; Tokyo2026-10-01 ending is actual Japanese speech31s includingbrand.",
+  "pending_replacements": [],
+  "native_gate_not_attested": true,
+  "native_foreground_policy": "作者VO只放已核无英语final/exit或真实照片，原point/reaction/cup原音全文packet必须完备；不mute未核英语绕gate。",
+  "frame_quantization": [
+    {
+      "scene_id": "2008-delray-point_reaction",
+      "original_source_out": 8.5,
+      "quantized_source_out": 8.52,
+      "tail_added_seconds": 0.02,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2012-tokyo-point_reaction",
+      "original_source_out": 57.35,
+      "quantized_source_out": 57.35,
+      "tail_added_seconds": 0.0,
+      "new_tail_audio_review_required": false
+    },
+    {
+      "scene_id": "2013-memphis-point_reaction",
+      "original_source_out": 89,
+      "quantized_source_out": 89.01,
+      "tail_added_seconds": 0.01,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2013-memphis-trophy",
+      "original_source_out": 117.76,
+      "quantized_source_out": 117.78,
+      "tail_added_seconds": 0.02,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2013-madrid-federer",
+      "original_source_out": 60,
+      "quantized_source_out": 60.0,
+      "tail_added_seconds": 0.0,
+      "new_tail_audio_review_required": false
+    },
+    {
+      "scene_id": "2014-memphis-point_reaction",
+      "original_source_out": 158.6,
+      "quantized_source_out": 158.63,
+      "tail_added_seconds": 0.03,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2014-memphis-trophy",
+      "original_source_out": 170.25,
+      "quantized_source_out": 170.28,
+      "tail_added_seconds": 0.03,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2014-barcelona-point_reaction",
+      "original_source_out": 194.34,
+      "quantized_source_out": 194.35,
+      "tail_added_seconds": 0.01,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2014-usopen-djokovic-complete",
+      "original_source_out": 776.0,
+      "quantized_source_out": 776.02,
+      "tail_added_seconds": 0.02,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2014-usopen-final-history",
+      "original_source_out": 151.5,
+      "quantized_source_out": 151.52,
+      "tail_added_seconds": 0.02,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2014-kuala-lumpur-point_reaction",
+      "original_source_out": 287.43,
+      "quantized_source_out": 287.45,
+      "tail_added_seconds": 0.02,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2014-tokyo-point_reaction",
+      "original_source_out": 337,
+      "quantized_source_out": 337.01,
+      "tail_added_seconds": 0.01,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2015-memphis-point_reaction",
+      "original_source_out": 386.1,
+      "quantized_source_out": 386.13,
+      "tail_added_seconds": 0.03,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2015-memphis-trophy",
+      "original_source_out": 403.35,
+      "quantized_source_out": 403.36,
+      "tail_added_seconds": 0.01,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2015-barcelona-point_reaction",
+      "original_source_out": 410.7,
+      "quantized_source_out": 410.72,
+      "tail_added_seconds": 0.02,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2015-washington-point_reaction",
+      "original_source_out": 449.5,
+      "quantized_source_out": 449.52,
+      "tail_added_seconds": 0.02,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2016-memphis-point_reaction",
+      "original_source_out": 626.6,
+      "quantized_source_out": 626.61,
+      "tail_added_seconds": 0.01,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2016-rio-nadal-complete-point",
+      "original_source_out": 15,
+      "quantized_source_out": 15.0,
+      "tail_added_seconds": 0.0,
+      "new_tail_audio_review_required": false
+    },
+    {
+      "scene_id": "2016-usopen-murray-full-commentary",
+      "original_source_out": 83.5,
+      "quantized_source_out": 83.52,
+      "tail_added_seconds": 0.02,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2018-finals-federer-point",
+      "original_source_out": 51.56,
+      "quantized_source_out": 51.585,
+      "tail_added_seconds": 0.025,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2019-brisbane-point_reaction",
+      "original_source_out": 836.5,
+      "quantized_source_out": 836.53,
+      "tail_added_seconds": 0.03,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2019-brisbane-trophy",
+      "original_source_out": 854.2,
+      "quantized_source_out": 854.23,
+      "tail_added_seconds": 0.03,
+      "new_tail_audio_review_required": true
+    },
+    {
+      "scene_id": "2026-tokyo-before-original-farewell",
+      "original_source_out": 13.264,
+      "quantized_source_out": 13.28,
+      "tail_added_seconds": 0.016,
+      "new_tail_audio_review_required": true
+    }
+  ],
+  "audio_pending_scenes": [
+    "2016-rio-nadal-complete-point",
+    "2019-brisbane-point_reaction"
+  ],
+  "edition_note": "Finalv6 rawsource Madrid full serve→point→reaction and complete original English; all12 champions retained. True archival dimensions preserved.",
+  "all_12_championship_terminal_points_verified": true,
+  "crop_policy": "2026-10-04用户指定居中裁切：所有video fixedcx0.5/cy0.5，全画布3:4无黑边，允许短暂出画，无track/squarepan。",
+  "material_promotion": "Actual renderer work materials promoted byte-identically to permanent data/reel_materials/nishikori-career-farewell; rawsource files unchanged.",
+  "subtitle_correspondence_note": "23 actual foreground English source word-boundary cues mirrored from soleclosing formalnative spec; Murray7 CN/EN correspond shot-accurately. No source/audio window or duration changes."
+}
