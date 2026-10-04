@@ -38,7 +38,8 @@ def test_policy_is_parsed_validated_and_bound_to_audio_review():
 
 
 @pytest.mark.parametrize('speed', [1.0, .6])
-def test_real_cut_keeps_body_and_video_but_zero_fills_only_dissolve_audio(tmp_path, monkeypatch, speed):
+@pytest.mark.parametrize('visual_image', [False, True])
+def test_real_cut_keeps_body_and_video_but_zero_fills_only_dissolve_audio(tmp_path, monkeypatch, speed, visual_image):
     # Original behavior must be audible in the transition tail, so this test
     # cannot pass just because the source is silent or the whole part is muted.
     monkeypatch.setattr(reel, 'VIDEO_W', 108)
@@ -51,9 +52,16 @@ def test_real_cut_keeps_body_and_video_but_zero_fills_only_dissolve_audio(tmp_pa
                     'testsrc2=size=320x180:rate=25:duration=3', '-f', 'lavfi', '-i',
                     'sine=frequency=1000:sample_rate=48000:duration=3', '-c:v', 'libx264',
                     '-preset', 'ultrafast', '-c:a', 'alac', str(source)], check=True)
+    graphic = ''
+    if visual_image:
+        from PIL import Image
+        image_path = tmp_path / 'graphic.png'
+        Image.new('RGB', (108, 144), (200, 40, 60)).save(image_path)
+        graphic = str(image_path)
     outputs = {}
     for policy in ['', 'silence']:
-        seg = reel.Segment(.4, 1.4, .5, '', audio_tail=policy, speed=speed)
+        seg = reel.Segment(.4, 1.4, .5, '', audio_tail=policy, speed=speed,
+                           visual_image=graphic)
         out = tmp_path / (policy or 'original')
         out = out.with_suffix('.mp4')
         reel.cut_segment(source, seg, out, 320, tail=.18)
