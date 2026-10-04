@@ -1,0 +1,105 @@
+{
+  "status": "actual_native_segment_previews_pass",
+  "scope": "preview only; final whole film QC pending",
+  "source": "chapter-review-derived.mp4",
+  "source_offset_seconds": 1275,
+  "checks": {
+    "noheader": "no 45px extra court above body",
+    "setpoint": "native short header retained; court to right transparent",
+    "score_details": "names, seed, service mark, all score columns retained",
+    "scale": "same source-to-canvas factor; no fixed target graphic shape"
+  },
+  "previews": {
+    "noheader": {
+      "status": "pass",
+      "profile": "wta-tour-v1",
+      "segments": [
+        {
+          "segment": 0,
+          "frames": 25,
+          "present_frames": 25,
+          "tag_frames": 0,
+          "board_edges": [
+            394,
+            394
+          ],
+          "right": 396,
+          "source_bounds": [
+            88,
+            871,
+            482,
+            983
+          ],
+          "body_bounds": [
+            [
+              3,
+              44,
+              395,
+              156
+            ]
+          ],
+          "header_bounds": [],
+          "geometry_origin": [
+            86,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "mask": "/workspace/scoreboard-autosize-research/native-preview/noheader/score_masks/segment-01.mkv",
+          "mask_sha256": "0a5613826380d9a0d629aa6318f0ba117a132f5b60964bc677bd149829169a61"
+        }
+      ]
+    },
+    "setpoint": {
+      "status": "pass",
+      "profile": "wta-tour-v1",
+      "segments": [
+        {
+          "segment": 0,
+          "frames": 25,
+          "present_frames": 25,
+          "tag_frames": 25,
+          "board_edges": [
+            429,
+            429
+          ],
+          "right": 430,
+          "source_bounds": [
+            88,
+            831,
+            516,
+            983
+          ],
+          "body_bounds": [
+            [
+              3,
+              44,
+              430,
+              156
+            ]
+          ],
+          "header_bounds": [
+            [
+              3,
+              4,
+              117,
+              45
+            ],
+            [
+              4,
+              4,
+              117,
+              45
+            ]
+          ],
+          "geometry_origin": [
+            86,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "mask": "/workspace/scoreboard-autosize-research/native-preview/setpoint/score_masks/segment-01.mkv",
+          "mask_sha256": "e136878db98a8ad50f501ef3c8ab02a16c08b58d6c0e17c83570b0ed6ce18f64"
+        }
+      ]
+    }
+  }
+}

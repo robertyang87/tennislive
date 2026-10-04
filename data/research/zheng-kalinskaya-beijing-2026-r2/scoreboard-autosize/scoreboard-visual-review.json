@@ -1,0 +1,112 @@
+{
+  "task": "read-only real source visual evidence for adaptive scoreboard masking",
+  "actual_movie": {
+    "path": "/workspace/zheng-kalinskaya-research/render-4-final/zheng-kalinskaya-beijing-2026-r2.mp4",
+    "sha256": "775b10396cb8622f1d6a7f950702f7f48d1a97d563122ce9f2b7fa2030900236"
+  },
+  "cases": [
+    {
+      "source": "official WTA chapter derived offset +1275",
+      "absolute_seconds": 1294,
+      "proxy_seconds": 19,
+      "body_bounds_xyxy": [
+        90,
+        872,
+        479,
+        983
+      ],
+      "header": null,
+      "current_hint_xyxy": [
+        86,
+        827,
+        554,
+        988
+      ],
+      "unnecessary_blank_above_body_pixels": 45
+    },
+    {
+      "source": "official WTA chapter derived offset +1275",
+      "absolute_seconds": 1432,
+      "proxy_seconds": 157,
+      "body_bounds_xyxy": [
+        90,
+        872,
+        516,
+        983
+      ],
+      "header_bounds_xyxy": [
+        90,
+        831,
+        204,
+        875
+      ],
+      "header_text": "SET POINT",
+      "current_hint_xyxy": [
+        86,
+        827,
+        554,
+        988
+      ],
+      "unnecessary_header_right_ballcourt_area_approx_pixels": 13000
+    },
+    {
+      "source": "supplement full original",
+      "absolute_seconds": 1025,
+      "body_bounds_xyxy": [
+        15,
+        974,
+        390,
+        1072
+      ],
+      "attached_header_fragment_xyxy": [
+        15,
+        965,
+        135,
+        976
+      ],
+      "header_text_readable": false,
+      "native_source_has_incomplete_header": true
+    },
+    {
+      "source": "supplement full original",
+      "absolute_seconds": 1354,
+      "body_bounds_xyxy": [
+        15,
+        974,
+        390,
+        1072
+      ],
+      "attached_header_fragment_xyxy": [
+        15,
+        965,
+        135,
+        976
+      ],
+      "header_text_readable": false,
+      "native_source_has_incomplete_header": true
+    }
+  ],
+  "recommendation": {
+    "preserve_native_details": [
+      "player names",
+      "seed [15]",
+      "server tennis ball marker",
+      "previous set columns",
+      "current games",
+      "points / Ad",
+      "native readable SET POINT / BREAK POINT header"
+    ],
+    "geometry": "Measure body and attached header independently; union alpha regions preserve their source-relative positions and a single uniform scale. Do not stretch to target W/H or shrink the main body when header appears. Make surrounding ballcourt transparent; follow board appearance/disappearance. Round corners should be alpha rather than little court triangles.",
+    "header_handling": "Keep original readable header attached above original body at its actual native width. Do not detach into separately relocated floating badge. Supplement source has already-incomplete label, so do not manufacture readable BREAK POINT or paste off-left orphan residual graphic."
+  },
+  "evidence_simulation": "official-rectangle-vs-tight-alpha.jpg is an analytical comparison using exact original pixels on neutral background, not a native rerender or final-film QC. Rounded corners remain unmasked in this bounded mock comparison; production mask should remove them too.",
+  "actual_views": [
+    "official-sp1432.png",
+    "official-bp1294.png",
+    "supplement-header-frames.jpg",
+    "film-no-header.png",
+    "film-set-point.png"
+  ],
+  "code_spec_edits": false,
+  "publication": false
+}
