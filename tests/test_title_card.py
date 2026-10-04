@@ -301,11 +301,12 @@ def test_真渲的章节卡走完切段那条路_成片第一行就是彩条(tmp
     def row(y):
         return [px.getpixel((x, y)) for x in range(0, reel.VIDEO_W, 20)]
 
-    # 彩条是四色渐变，中段混色处饱和度会掉下来，所以只按「亮」判——深底 max<40
+    # 彩条中段混色处饱和度会掉下来，所以按亮度判；柔光深蓝背景仍明显暗于彩条。
     for y in (1, 5, 9):
         hits = sum(max(c) > 120 for c in row(y))
         assert hits >= len(row(y)) * 0.9, f"y={y} 这一行该是彩条（亮），只有 {hits} 格是"
     assert px.getpixel((10, 1))[1] > 200 and px.getpixel((1070, 1))[2] > 200, \
         "彩条左端是品牌绿、右端是蓝——渐变要贯通全宽"
     for y in (60, 87, 95):
-        assert all(max(c) < 70 for c in row(y)), f"y={y} 该是深底——彩条要是还落在这儿就是又缩了"
+        assert all(max(c) < 110 and c[2] > c[1] >= c[0] for c in row(y)), \
+            f"y={y} 该是柔光深蓝底——彩条要是还落在这儿就是又缩了"

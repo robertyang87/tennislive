@@ -185,7 +185,7 @@ def test_Q8浅底上黄绿只当实底_链接用中性灰():
     里**任何一个当字用的角色**都不许是它（也不许是任何过不了 4.5 的色）。
     """
     assert T.LIGHT["primary"] == T.DARK["primary"] == "#c6f65a"
-    assert T.LIGHT["primary-foreground"] == "#04120d"
+    assert T.LIGHT["primary-foreground"] == T.DARK["background"]
     assert T.LIGHT["link"] == T.LIGHT["muted-foreground"] == "#5f6f68"
     for role in _LIGHT_TEXT_ROLES:
         assert T.LIGHT[role] != T.LIGHT["primary"], f"浅色的 {role} 拿黄绿当字了"

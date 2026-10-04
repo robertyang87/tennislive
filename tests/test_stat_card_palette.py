@@ -40,6 +40,7 @@ _SPECS = ("wong-vallejo-hangzhou-2026-r2", "ruud-zverev-doubles-laver-cup-2026")
 #: 墨绿底 #04120d / #0c1d16 ≈ 154°）。
 _LIME = (68.0, 92.0)
 _MINT = (138.0, 166.0)
+_NAVY = (210.0, 235.0)
 
 _COLOR = re.compile(
     r"#(?P<h8>[0-9a-fA-F]{8})\b|#(?P<h6>[0-9a-fA-F]{6})\b"
@@ -89,7 +90,7 @@ def _chromatic(css_body: str) -> list[tuple[str, float]]:
 
 @pytest.mark.parametrize("variant", sorted(sc.VARIANTS))
 @pytest.mark.parametrize("slug", _SPECS)
-def test_数据图底色是品牌墨绿_颜色只留黄绿和薄荷(slug, variant):
+def test_数据图底色是统一深蓝_品牌和胜负强调色保留(slug, variant):
     """Q3：藏青底 ＋ 蓝红两团光拿掉。除了顶部四色彩条（账号所有者锁定），
     整张卡上每一个「有颜色」的颜色都得落在黄绿或薄荷那一族。"""
     html = _html(slug, variant)
@@ -98,15 +99,16 @@ def test_数据图底色是品牌墨绿_颜色只留黄绿和薄荷(slug, varian
         if sel == ".bar":          # 顶部四色彩条：锁定的品牌元素，不在这条规矩里
             continue
         for literal, hue in _chromatic(body):
-            if not (_LIME[0] <= hue <= _LIME[1] or _MINT[0] <= hue <= _MINT[1]):
+            if not (_LIME[0] <= hue <= _LIME[1] or _MINT[0] <= hue <= _MINT[1]
+                    or _NAVY[0] <= hue <= _NAVY[1]):
                 stray.append(f"{sel} → {literal}（色相 {hue:.0f}°）")
     assert not stray, (
-        f"{slug} / {variant}：这几处颜色不在黄绿（{_LIME}）或薄荷（{_MINT}）那一族——"
-        "账号所有者 2026-09-27 Q3 定的是「品牌墨绿底，只留黄绿和薄荷」：\n  "
+        f"{slug} / {variant}：这几处颜色不在深蓝（{_NAVY}）、黄绿（{_LIME}）或薄荷（{_MINT}）色族——"
+        "账号所有者 2026-10-04 更新为全栏目统一深蓝底，保留品牌与胜负强调色：\n  "
         + "\n  ".join(stray))
     body_bg = _decl(html, "body", "background")
     assert DARK["background"] in body_bg, (
-        f"{slug} / {variant}：底色不是品牌墨绿 {DARK['background']}：{body_bg!r}")
+        f"{slug} / {variant}：底色不是共享深蓝 {DARK['background']}：{body_bg!r}")
 
 
 @pytest.mark.parametrize("variant", sorted(sc.VARIANTS))

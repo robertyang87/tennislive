@@ -28,7 +28,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tennislive.design_tokens import BRAND_BAR_CSS, DARK, rgb
+from tennislive.design_tokens import BRAND_BAR_CSS, CARD_BACKGROUND_CSS, DARK, rgb
 from tennislive.render.webcards import _font_css
 from tennislive.video.explainer import _data_uri
 
@@ -137,12 +137,11 @@ def _page(visible: str | None) -> str:
 {_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box}}
 body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;
- background:{'transparent' if visible else INK};
+ background:{'transparent' if visible else CARD_BACKGROUND_CSS};
  position:relative;font-family:'TL Sans SC',sans-serif;color:{TEXT}}}
 .bar{{position:absolute;top:0;left:0;right:0;height:12px;z-index:9;opacity:{base};
  background:{BRAND_BAR_CSS}}}
-.glow{{position:absolute;inset:0;opacity:{base};background:
- radial-gradient(120% 80% at 50% 38%,{_rgba(BRAND, .13)} 0%,{_rgba(INK, 0)} 62%)}}
+.glow{{position:absolute;inset:0;opacity:{base};pointer-events:none}}
 .wrap{{position:absolute;inset:0;display:flex;flex-direction:column;
  align-items:center;justify-content:center;z-index:5}}
 .ico{{width:200px;height:200px;margin-bottom:48px;opacity:{op('logo')};

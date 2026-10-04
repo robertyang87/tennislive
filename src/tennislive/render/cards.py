@@ -23,6 +23,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+from ..design_tokens import DARK, rgb
 from ..digest import Digest
 from ..models import Match, MatchStatus
 from ..timeutil import WEEKDAY_ZH, fmt_time_beijing
@@ -58,12 +59,12 @@ COLUMN = "网球晨报"
 # 下面这批 key 三个主题都必须给值：set_theme 走 globals().update，
 # 少给一个，切过一次就留在上一个主题的值上。
 _THEMES_DARK = dict(
-        BG_TOP=(14, 44, 36),
-        BG_BOTTOM=(7, 23, 18),
-        PANEL=(20, 58, 47),
-        PANEL_HI=(26, 70, 56),
-        PANEL_LINE=(34, 84, 68),
-        DECO=(22, 62, 50),
+        BG_TOP=rgb(DARK["card"]),
+        BG_BOTTOM=rgb(DARK["background"]),
+        PANEL=rgb(DARK["card"]),
+        PANEL_HI=rgb(DARK["muted"]),
+        PANEL_LINE=(46, 61, 84),
+        DECO=rgb(DARK["muted"]),
         ACCENT=(204, 255, 0),        # 标题/高亮文字
         SOFT_ACCENT=(204, 255, 0),   # 赛果/焦点两页收敛后的强调色
         BALL=(204, 255, 0),          # 网球图形
@@ -76,12 +77,12 @@ _THEMES_DARK = dict(
         STAR_PILL=(38, 92, 74),
         STAR_PILL_HOT=(176, 122, 20),
         BTN_TEXT=(10, 26, 20),
-        CARD_BG=(250, 251, 249),
-        CARD_TEXT=(18, 32, 25),
-        CARD_GREY=(128, 139, 132),
-        CARD_LINE=(227, 232, 228),
-        WIN_BAND=(216, 238, 210),
-        WIN_GREEN=(13, 96, 53),
+        CARD_BG=rgb(DARK["card"]),
+        CARD_TEXT=(247, 243, 232),
+        CARD_GREY=(168, 185, 177),
+        CARD_LINE=(46, 61, 84),
+        WIN_BAND=rgb(DARK["muted"]),
+        WIN_GREEN=(247, 243, 232),
         CHIP_GREEN=(11, 77, 47),
 )
 
@@ -119,10 +120,10 @@ _THEMES = {
     # dark 的原值——主题色不许动。Chromium 挂掉时会退到这条 Pillow 路径。
     "daily": dict(
         _THEMES_DARK,
-        BG_TOP=(30, 66, 52),          # --ground0 #1E4234
-        BG_BOTTOM=(42, 100, 80),      # --ground1 #2A6450
-        PANEL=(26, 66, 52),           # --panel 压在中间调底色上的等效实色
-        PANEL_HI=(28, 70, 56),        # --panel-strong 同上
+        BG_TOP=rgb(DARK["muted"]),          # 共享蓝色背景上层
+        BG_BOTTOM=rgb(DARK["card"]),      # 共享蓝色背景下层
+        PANEL=rgb(DARK["card"]),           # --panel 压在中间调底色上的等效实色
+        PANEL_HI=rgb(DARK["muted"]),        # --panel-strong 同上
         # 赛果速递 / 焦点复盘两页收敛成金，与 webcards 的"柔和内容色"一致；
         # 其余卡（封面、今晚焦点）仍用 ACCENT，改动范围和 HTML 那边一样。
         SOFT_ACCENT=(213, 180, 77),   # --gold #D5B44D
@@ -130,11 +131,11 @@ _THEMES = {
         # dark 的一套白卡值，于是同一份日报走哪条渲染路径长得完全不一样——
         # Chromium 一挂，发出去的卡是白底黑字，和当期封面、视频、推送正文全对不上。
         # 下面这组是 html.daily 各处的等效实色（半透明面板压在中间调底色上算出来的）。
-        CARD_BG=(26, 66, 52),         # --panel 压在 ground 上
+        CARD_BG=rgb(DARK["card"]),         # --panel 压在 ground 上
         CARD_TEXT=(247, 243, 232),    # --ivory
         CARD_GREY=(168, 185, 177),    # --panel-muted
-        CARD_LINE=(48, 84, 70),       # --divider 的中性版
-        WIN_BAND=(50, 83, 56),        # 胜方行底纹，实测取自 HTML 成品
+        CARD_LINE=(46, 61, 84),       # --divider 的中性版
+        WIN_BAND=rgb(DARK["muted"]),        # 胜方行底纹，实测取自 HTML 成品
         WIN_GREEN=(247, 243, 232),    # 胜方比分：收敛后是象牙白，不是荧光黄绿
         CHIP_GREEN=(213, 180, 77),    # 描边徽章跟着 --gold
     ),
