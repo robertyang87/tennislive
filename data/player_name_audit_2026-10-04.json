@@ -6,16 +6,16 @@
   "policy": "原生中文/汉字身份优先；国内主流媒体和官方原文核验；多译明确保留差异；国际英文排名仅确认身份，不证明中文译名；无足够证据保留暂定",
   "summary": {
     "entries": 1173,
-    "changed_entries": 47,
+    "changed_entries": 48,
     "statuses": {
-      "verified-media": 380,
+      "verified-media": 381,
       "retained-unverified": 208,
       "source-conflict": 7,
       "provisional-corrected": 5,
-      "provisional": 547,
+      "provisional": 546,
       "verified-native": 26
     },
-    "ranked_review_queue": 555
+    "ranked_review_queue": 554
   },
   "entries": [
     {
@@ -13686,15 +13686,33 @@
     {
       "name_en": "Alina Charaeva",
       "before_zh": "恰拉耶娃",
-      "name_zh": "恰拉耶娃",
+      "name_zh": "查拉耶娃",
       "scope": "WTA",
       "rank": 112,
-      "status": "provisional",
-      "evidence": [],
-      "review_notes": [
-        "无可核验国内权威原文，保持既有译名暂定"
+      "status": "verified-media",
+      "evidence": [
+        {
+          "source": "央视网",
+          "source_url": "https://sports.cctv.com/2025/08/23/ARTIwXqMHghZwuXjNzBx2edY250823.shtml",
+          "evidence": "央视网消息：北京时间8月23日，美网资格赛决胜轮比赛进行。王曦雨6-4/4-6/6-2查拉耶娃。",
+          "supporting_sources": [
+            {
+              "source": "中国新闻网（中新社）",
+              "url": "https://www.chinanews.com/ty/2026/10-04/10707670.shtml",
+              "evidence": "中新社北京10月3日电，女子赛场莱巴金娜对阵亚美尼亚选手查拉耶娃，首盘6:3，随后4:6、3:6，最终1:2遭对手逆转。"
+            },
+            {
+              "source": "WTA官方英文赛果（仅证明身份）",
+              "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+              "evidence": "LS032；2026-10-03；Alina Charaeva，ARM，PlayerID=329198；ResultString=A. Charaeva d [1]E. Rybakina 3-6,6-4,6-3。"
+            }
+          ]
+        }
       ],
-      "changed": false
+      "review_notes": [
+        "核对WTA官方英文赛果与中新网2026-10-03中网报道为同一球员；2025央视美网资格赛原文同样使用查拉耶娃，替换既有机器音译恰拉耶娃。"
+      ],
+      "changed": true
     },
     {
       "name_en": "Leolia Jeanjean",

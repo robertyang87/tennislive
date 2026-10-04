@@ -633,4 +633,5 @@ PLAYER_ZH: dict[str, str] = {
     "Selena Janicijevic": "亚尼契耶维奇",
     "Hanna Chang": "张汉娜",
     "Mimi Xu": "徐铭格",
+    "Alina Charaeva": "查拉耶娃",
 }

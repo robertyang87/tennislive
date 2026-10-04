@@ -3099,6 +3099,10 @@ def _near_misses(masked, run_re, index):
 # 这些不是新内容的合法显示名，未列出的文件仍须采用 player_zh()。
 # 哈恰诺夫旧央视用例：https://sports.cctv.com/2017/07/06/ARTI3sjUMZTbo2WB6EKs7ATW170706.shtml
 _LEGACY_CANONICAL_NAMES = {
+    ('bartunkova-charaeva.json', '恰拉耶娃'),
+    ('bartunkova-charaeva.xhs.txt', '恰拉耶娃'),
+    ('rybakina-charaeva-beijing-2026-r2.json', '恰拉耶娃'),
+    ('rybakina-charaeva-beijing-2026-r2.xhs.txt', '恰拉耶娃'),
     ('cobolli-paul-cincinnati-2026-qf.json', "达尔代里"),
     ('cobolli-paul-cincinnati-2026-qf.xhs.txt', "达尔代里"),
     ('shang-darderi-montreal-2026.xhs.txt', "达尔代里"),
