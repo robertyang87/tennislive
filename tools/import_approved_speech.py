@@ -116,7 +116,10 @@ def assemble(request):
     qc=json_read(outdir/'qc_attestation.json');render=json_read(outdir/'render.json')
     if qc['status']!='pass' or qc['film_sha256']!=EXPECTED_SHA or qc['film_bytes']!=EXPECTED_BYTES or qc['spec_sha256']!=evidence['files']['spec.json']:
         raise RuntimeError('Original native QC does not identify this master')
-    if render['qc_attestation_sha256']!=evidence['files']['qc_attestation.json'] or render['film_sha256']!=EXPECTED_SHA:
+    # Local native QC is written separately; release workflow binds its real
+    # bytes into render.json only after the Release asset has been verified.
+    if (render.get('qc_attestation_sha256') not in (None,evidence['files']['qc_attestation.json'])
+            or render['film_sha256']!=EXPECTED_SHA):
         raise RuntimeError('Original native render/QC binding differs')
     for name,key in [('poster.jpg','poster_sha256'),('cover_visual_attestation.json','cover_visual_attestation_sha256'),(f'{SLUG}.ass','ass_sha256')]:
         if qc[key]!=evidence['files'][name]:raise RuntimeError(f'Native QC artifact identity differs: {name}')
@@ -147,7 +150,7 @@ def release(request):
     for block in remote.iter_content(1024*1024):digest.update(block);size+=len(block)
     if size!=EXPECTED_BYTES or digest.hexdigest()!=EXPECTED_SHA:raise RuntimeError('Release remote GET differs from approved master')
     json_write(outdir/'release-verification.json',{'video_url':url,'bytes':size,'sha256':digest.hexdigest(),'asset_digest':asset['digest'],'method':'remote-streaming-GET'})
-    render=json_read(outdir/'render.json');render.update(video_url=url,video_bytes=size,release_asset_digest=asset['digest']);json_write(outdir/'render.json',render)
+    render=json_read(outdir/'render.json');render.update(video_url=url,video_bytes=size,film_sha256=q['film_sha256'],release_asset_digest=asset['digest'],qc_attestation_sha256=hashlib.sha256((outdir/'qc_attestation.json').read_bytes()).hexdigest());json_write(outdir/'render.json',render)
     run(sys.executable,'tools/push_reel.py','--stage','page','--outdir',str(outdir),'--copy',f'specs/interviews/{SLUG}.xhs.txt')
     print(f'Release verified and copy page generated: {url}',flush=True)
 
