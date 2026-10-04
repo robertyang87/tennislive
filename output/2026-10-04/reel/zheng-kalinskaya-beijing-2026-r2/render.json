@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "34b34450ee05ad133e699173db24dde8954a100d96fea3bd17805814e27090e1",
+  "scoreboard_qc_sha256": "ea607d2f86f7fcc9b27c43a6b25f2b2a6c0b792b7c59ec4735ada6a2d19da13c",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 0.0,
@@ -42,44 +42,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "40b65d3035196af909b5c01bac47990d46166d99a8ab484e11ee775109e66cd8",
+  "render_inputs_sha256": "6f5c07f5790e109bb63a83290567e70b9197ebbf4d9df920be565b2e6ee42c6c",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "zheng-kalinskaya-beijing-2026-r2",
-    "received_at": "2026-10-03T21:49:15Z",
-    "artifact_ready_at": "2026-10-03T21:55:28Z",
-    "elapsed_seconds": 373.69,
+    "received_at": "2026-10-04T02:26:46Z",
+    "artifact_ready_at": "2026-10-04T02:33:29Z",
+    "elapsed_seconds": 403.461,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "775b10396cb8622f1d6a7f950702f7f48d1a97d563122ce9f2b7fa2030900236",
+    "film_sha256": "1371a9ce2e0ced81dfe5f21220f78fca3c804258de9cef4334edd924d14e5ee1",
     "spec_sha256": "697a17323f6b834b25672653cba89d787af8b2aecc1aa84c94caf4182948d803",
-    "run_id": "37156362096",
+    "run_id": "37171069726",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-03T21:51:28Z",
-        "run_id": "37156362096"
+        "at": "2026-10-04T02:29:16Z",
+        "run_id": "37171069726"
       }
     ],
-    "render_seconds": 240.69,
-    "pre_render_seconds": 133.0
+    "render_seconds": 253.461,
+    "pre_render_seconds": 150.0
   },
-  "film_sha256": "775b10396cb8622f1d6a7f950702f7f48d1a97d563122ce9f2b7fa2030900236",
-  "film_bytes": 67113729,
-  "qc_attestation_sha256": "dd1b881d9b18b5a183364770953da95786f6b6e02e1fdb4ac6edf13106edfbdc",
+  "film_sha256": "1371a9ce2e0ced81dfe5f21220f78fca3c804258de9cef4334edd924d14e5ee1",
+  "film_bytes": 67420742,
+  "qc_attestation_sha256": "a0519dddeb7697d2f4f12b6867b8d49e0d9cf16b62b7971ba2aa5c18b5d78895",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-03T21:51:28Z",
-      "run_id": "37156362096"
+      "at": "2026-10-04T02:29:16Z",
+      "run_id": "37171069726"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-03T21:55:30Z",
-      "run_id": "37156362096"
+      "at": "2026-10-04T02:33:31Z",
+      "run_id": "37171069726"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zheng-kalinskaya-beijing-2026-r2/zheng-kalinskaya-beijing-2026-r2.mp4",
-  "video_bytes": 67113729
+  "video_bytes": 67420742
 }
