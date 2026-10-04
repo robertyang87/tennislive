@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
-  actions: write
 concurrency:
   group: import-approved-rna10-cup
   cancel-in-progress: false
