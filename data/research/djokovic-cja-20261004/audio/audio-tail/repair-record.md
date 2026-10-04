@@ -1,0 +1,11 @@
+# Explicit audio transition tail, 2026-10-04
+
+The selected source window245.8–266.44s ends with the first match point resolved. The following source266.44–268.56s includes an unverified short utterance and must not enter the film through the default0.18s transition continuation.
+
+`audio_tail: "silence"` is an explicit native video-segment option. The video still retains0.18s for xfade. At output48kHz, source audio is resampled after optional atempo, trimmed at the nominal segment-length sample, and padded with zero samples to the body-plus-tail length. Only this opt-in part uses lossless ALAC in its MP4 intermediate, avoiding AAC MDCT nonzero samples across the boundary. Finite sample trim replaces shortest termination for this option; ordinary parts keep their AAC160k/shortest behavior and mute remains the original-26dB floor. The final film encoder and all source bytes remain unchanged.
+
+The field is parsed and validated, rejected on still/card segments, registered as a true field, and included in foreground_audio_gate.plan_hash. render_inputs.project naturally preserves the new nonannotation key. Every changed selection must reseal its audio-review plan binding.
+
+Actual FFmpeg regressions include a non-silent tone control and the real cut_segment path at normal speed and0.6 speed. Tail decoding is checked sample-for-sample while body RMS and continued video remain present. Relevant segment/bed/slow-motion/foreground-audio tests:40 passed. Reverse verification restores the old filter-map predicate in memory, and tone samples leak into the tail again; no repository file is mutated for that check.
+
+The exact official source SHA256 remains2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2. Current source245.8–266.44s has990720 stereo samples of body followed by8640 samples/channel of padding. The old continuation has17280 nonzero stereo tail samples and peak0.095117; the explicit silence tail has0 nonzero samples and peak0, with body RMS0.015611 preserved. See actual-source-audio-tail.json for part SHA256 and exact filter strings. This verification uses108x144 video previews to limit encoding cost while retaining native production cut/audio logic; final MP4 mixing/caption QC remains separate.

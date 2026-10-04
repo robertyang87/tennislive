@@ -1,0 +1,37 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "crop": [
+    98,
+    920,
+    858,
+    1029
+  ],
+  "decode": "ffmpeg -ss <time> -i source -frames:v 1 -vf crop=760:109:98:920,format=rgb24 -f rawvideo -; lossless PNG",
+  "files": [
+    {
+      "name": "000.5.png",
+      "sha256": "c59482faa53cdedca324d13ab19923fe7685ef1935e75a30c1af56bb7d91d305"
+    },
+    {
+      "name": "010.5.png",
+      "sha256": "57b953c9c1f8ebf8c0c6198be4bf3de11e916bee9dc7885acd3e793a135f6950"
+    },
+    {
+      "name": "032.5.png",
+      "sha256": "4751b1fed1987ed9aa10fd66e208859cdcc9095b75f46cc1dbb0e75f2184018c"
+    },
+    {
+      "name": "108.5.png",
+      "sha256": "f08757185ea1d188c66d9d608cf098e004c28beaaaa84684f06b80c378b07518"
+    },
+    {
+      "name": "280.5.png",
+      "sha256": "26022f5f1d9081f767dae4a7032a0c6764972875c6a10b501795ddfb3afc9be0"
+    },
+    {
+      "name": "282.5.png",
+      "sha256": "9c96984e0d280ce932595d7fec225e235885332aeaf2e8816f94176f63446531"
+    }
+  ]
+}

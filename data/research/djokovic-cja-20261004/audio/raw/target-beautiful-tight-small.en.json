@@ -1,0 +1,54 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 147,
+  "range_to": 153,
+  "created_at": "2026-10-04T14:41:43.596968+00:00",
+  "elapsed_seconds": 1.56,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 147.0,
+      "end": 151.52,
+      "text": " Oh, beautiful, perfect placements.",
+      "avg_logprob": -0.5676795135844838,
+      "no_speech_prob": 0.10516226291656494,
+      "words": [
+        {
+          "start": 147.0,
+          "end": 147.68,
+          "word": " Oh,",
+          "probability": 0.1610965132713318
+        },
+        {
+          "start": 148.26,
+          "end": 148.8,
+          "word": " beautiful,",
+          "probability": 0.9462664127349854
+        },
+        {
+          "start": 149.82,
+          "end": 150.96,
+          "word": " perfect",
+          "probability": 0.9802759885787964
+        },
+        {
+          "start": 150.96,
+          "end": 151.52,
+          "word": " placements.",
+          "probability": 0.9781807363033295
+        }
+      ]
+    }
+  ]
+}

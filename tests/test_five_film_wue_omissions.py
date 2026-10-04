@@ -15,7 +15,8 @@ class Boundaries(unittest.TestCase):
         SCENARIOS+=1
         self.assertIsNone(value) if good else self.assertIsInstance(value,str)
     def test_five_exact_matches(self):
-        self.assertEqual(set(gate.APPROVED_WUE_OMISSIONS),set(FIXTURES) | {'yuan-andreeva-beijing-2026-r2'})
+        self.assertEqual(set(gate.APPROVED_WUE_OMISSIONS),set(FIXTURES) | {
+            'yuan-andreeva-beijing-2026-r2', 'zverev-djokovic'})
         for slug in FIXTURES:self.check(True,gate.problem(fixture(slug)))
     def test_all_match_identity_changes_rejected(self):
         mutations={'status':'scheduled','source':'wrong','source_id':'wrong','date':'2026-10-02','winner_result':'0-0','winner':'wrong','loser':'wrong','participants':['wrong','wrong'],'set_scores_home_away':[[0,0]]}

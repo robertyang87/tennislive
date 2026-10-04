@@ -55,6 +55,30 @@ _APPROVED_MATCH_IDENTITIES[YUAN_ANDREEVA_OMISSION["slug"]] = {
     "matchup": [["袁悦", "Yue Yuan"], ["米拉·安德烈耶娃", "Mirra Andreeva"]],
 }
 
+# The owner requested continuation after disclosure of this match's conflicting
+# TNNS totals. Record that literal continuation, not an invented option reply.
+# Like the Yuan exception, this is bound to one exact film and match identity.
+DJOKOVIC_ZVEREV_OMISSION = {
+    "slug": "zverev-djokovic",
+    "source_id": "Wpcpd4Ug",
+    "match_date": "2026-10-04",
+    "winner_result": "4-6 6-4 6-4",
+    "fields": ["winners", "ue"],
+    "decision": "omit_both_rows_for_this_film_only",
+    "authorization": "owner-requested-continue-after-wue-conflict-disclosure-2026-10-04",
+}
+APPROVED_WUE_OMISSIONS[DJOKOVIC_ZVEREV_OMISSION["slug"]] = DJOKOVIC_ZVEREV_OMISSION
+_APPROVED_MATCH_IDENTITIES[DJOKOVIC_ZVEREV_OMISSION["slug"]] = {
+    "source": "flashscore_points",
+    "source_id": "Wpcpd4Ug",
+    "winner": "德约科维奇",
+    "loser": "兹维列夫",
+    "participants": ["兹维列夫", "德约科维奇"],
+    "sets": [[6, 4], [4, 6], [4, 6]],
+    "result": "4-6 6-4 6-4",
+    "matchup": [["兹维列夫", "Alexander Zverev"], ["德约科维奇", "Novak Djokovic"]],
+}
+
 
 def _omission_problem(spec: dict) -> str | None:
     """Only explicitly approved films may omit rows; unknown values stay unknown."""

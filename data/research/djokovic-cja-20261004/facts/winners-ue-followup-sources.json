@@ -1,0 +1,59 @@
+{
+  "as_of": "2026-10-04T15:24Z",
+  "sources": [
+    {
+      "source": "ESPN match center",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard?dates=20261004",
+      "identity": "event959-2026/competition183465, Djokovic winner4-6 6-4 6-4, CapitalGroupDiamond",
+      "result": "both competitors statistics are []",
+      "evidence": "espn-scoreboard.json, espn-match.json"
+    },
+    {
+      "source": "ESPN core match",
+      "url": "https://sports.core.api.espn.com/v2/sports/tennis/leagues/atp/events/959-2026/competitions/183465?lang=en&region=us",
+      "result": "statsSource.id=0 description/state=none; player cores have no statistics ref; /competitors/2375/statistics and /competitors/296/statistics each404",
+      "evidence": "espn-core-competition.response, espn-zverev-core.json, espn-djokovic-core.json"
+    },
+    {
+      "source": "ESPN ATP news feed",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/news?limit=30",
+      "result": "30 articles, no10-04ZverevDjokovic report; newest Djokovic item is10-02Bu quarterfinal qualification",
+      "evidence": "espn-current-news.json"
+    },
+    {
+      "source": "ChinaOpen official English 10-04 report",
+      "url": "https://www.chinaopen.com/en/contents/353/728.html",
+      "title": "Medvedev-Djokovic, Hurkacz-DeMinaur semis set at ChinaOpen",
+      "result": "official article supports semis but no whole-match W/UE data",
+      "evidence": "chinaopen-current-report-en.html/.txt"
+    },
+    {
+      "source": "ChinaOpen official Chinese news",
+      "url": "https://www.chinaopen.com/cn/channels/279.html",
+      "result": "current latest stories concern10-03Sun/Zheng; no current ZverevDjokovic match technical-stats article",
+      "evidence": "chinaopen-news-cn.html"
+    },
+    {
+      "source": "Official ATP live UI",
+      "url": "https://www.protennislive.com/lshd/main.html?year=2026&wkno=40&eventid=0747&tour=1&lang=en",
+      "result": "HTTP503, no data obtained"
+    },
+    {
+      "source": "Official ATP Hawkeye candidate",
+      "url": "https://www.atptour.com/-/Hawkeye/MatchStats/Complete/2026/0747/MS004",
+      "result": "HTTP403; match id MS004 is draw-derived candidate, NOT verified match identity; no counts obtained"
+    },
+    {
+      "source": "Official ATP PDF candidate",
+      "url": "https://www.protennislive.com/posting/2026/747/ms004.pdf",
+      "result": "HTTP404; candidate path, NOT proof that no official stats exist"
+    },
+    {
+      "source": "TNNS refresh",
+      "url": "https://github.com/robertyang87/tennislive/actions/runs/37212675476",
+      "result": "completed failure, exact logs recovered via GitHubconnector after gh credential expiry: same match75051396, hasExtendedStats=true, winners set sum[47,29] vs match[33,42] still inconsistent",
+      "evidence": "tnns-refresh-run.log; GitHubActions job111466853566"
+    }
+  ],
+  "conclusion": "No reliable whole-match W/UE obtained from added official/ESPNroutes or TNNSrefresh. Original inconsistency persisted at15:22:45UTC; leave fields absent."
+}

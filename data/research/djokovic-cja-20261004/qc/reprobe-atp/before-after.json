@@ -1,0 +1,39 @@
+{
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "before_probe_sha256": "3313b4df3b5c537524a9b2ce7ca733e3ed3679f9da5216c0341e72030ac347f6",
+  "changed_fields": [
+    "board.scans[ATP].profiles.atp",
+    "board._recomputed"
+  ],
+  "scan_summaries": [
+    {
+      "scan_index": 1,
+      "box": [
+        98,
+        920,
+        519,
+        1029
+      ],
+      "frames": 1596,
+      "before": {
+        "present": 1396,
+        "unresolved": 24
+      },
+      "after": {
+        "present": 1420,
+        "unresolved": 1
+      }
+    }
+  ],
+  "before_findings": {
+    "hard": [],
+    "soft": [
+      "  第 29 段（源片 280.20→308.92s）：板在的 19 帧里 11 帧右缘量不出（> 30%）——这些帧 render 只能按 spec 的 x1 兜底"
+    ]
+  },
+  "after_findings": {
+    "hard": [],
+    "soft": []
+  },
+  "after_probe_sha256": "8793c66ca798e82154f7035a540d2aabf869120fac4d2b16f43f158c0c2146f0"
+}

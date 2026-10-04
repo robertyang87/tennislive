@@ -403,3 +403,19 @@ def test_yuan_omission_never_authorizes_unknown_zero_or_guessed_values(side, fie
 def test_yuan_omission_does_not_claim_complete_statistics_evidence():
     s = yuan_approved(); s['stats']['_winners_ue_evidence'] = {}
     assert G.problem(s)
+
+
+def test_djokovic_continuation_omission_is_bound_to_exact_match():
+    import json
+    s=json.loads(Path('specs/reels/zverev-djokovic.json').read_text())
+    assert G.problem(s) is None
+    for key,value in [('date','2026-10-05'), ('source_id','different-match'), ('winner','兹维列夫')]:
+        changed=deepcopy(s);changed['_match'][key]=value
+        assert G.problem(changed)
+    changed=deepcopy(s);changed['slug']='some-other-film'
+    assert G.problem(changed)
+    for field in G.FIELDS:
+        changed=deepcopy(s);changed['stats']['a'][field]=0
+        assert G.problem(changed)
+    changed=deepcopy(s);changed['cover']['matchup'].reverse()
+    assert G.problem(changed)
