@@ -192,7 +192,8 @@ def _gate(why: str, read_by: str, where: str | tuple[str, ...] = (),
 #: 值不进指纹；闸读它的那个位置上算数的，重核对时必须仍然算数（见模块 docstring）。
 GATE_ANNOTATIONS: dict[str, Gate] = {
     "_stats_availability_why": _gate(
-        "video_without_tour_stats：限定表演赛缺巡回赛统计的认领，只控制技术统计闸",
+        "team_exhibition_scope.video_without_tour_stats：实际团体表演赛缺巡回赛统计的说明，"
+        "只控制备片校验，不控制画面；自动发布仍须统计合同",
         "video_without_tour_stats", "_stats_availability_why"),
     "_approved_by_user": _gate("build_cover：approved_image 要有用户认领，缺了拒渲（编码里才查）",
                                "build_cover", "cover._approved_by_user", truthy),
@@ -388,6 +389,7 @@ PUBLISH_FIELDS: dict[str, frozenset[str]] = {
         "total_margin_problem", "summary_strip_offender", "push_summary_problem",
         "spec_taste_extra",                        # taste_gates_extra：口味闸（闸）
         "interview_taste_extra",                   # 同上，采访线入口（竖版短片不调）
+        "video_without_tour_stats",                # permission gate only; never changes pixels
     }),
 }
 

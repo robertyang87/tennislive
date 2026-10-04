@@ -1,0 +1,37 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://x.com/japanopentennis/status/2105641498721284153",
+  "source_sha256": "6bbac16ddfca0a2bf2dda52cda8a0270bac27791ce21827469b94a872c99f1d2",
+  "source_file": "/workspace/tennislive-work/work/nishikori-career-farewell/tokyo-postmatch-interview.mp4",
+  "method": "asr_cross_checked",
+  "reviewer": "closing_source multilingual small/base and independent production_qa official text crosscheck",
+  "reviewed_at": "2026-10-04T07:15:15.475702+00:00",
+  "status": "complete",
+  "reviewed_from": 274.4,
+  "reviewed_to": 290.4,
+  "foreground_english": [],
+  "no_foreground_english_reason": "Official continuous Japanese on-court speech by Nishikori. Multilingual Whisper small and base fixed Japanese transcriptions both identify only Japanese speech in this full window, followed by actual audience applause. No English utterances identified. This is ASR/text/visual crosschecking, not a claim of human listening.",
+  "uncertain_spans": [],
+  "asr_results": [
+    {
+      "model": "small",
+      "language": "ja",
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/tokyo-postmatch-ja-small-41648c425edc.json",
+      "sha256": "9368451f6ba34fc2cec7904c6757fc4cb38eed6a07df38442ae0ec0d35011275"
+    },
+    {
+      "model": "base",
+      "language": "ja",
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/tokyo-postmatch-ja-base-826bd8df55cb.json",
+      "sha256": "b3bb7a098bcdfdfab7775de51aa0ac4e4b10d3087deb5e257269b21fb7e733e0"
+    }
+  ],
+  "japanese_subtitles_evidence": "data/audio_reviews/nishikori-career-farewell/evidence/ending-real-speech-cues-89076491667c.json",
+  "official_text_correction": "誇り confirmed official JTA and NTV reporting; rejected266–270 negation disagreement entirely outside selected windows",
+  "human_listening_done": false,
+  "portable_review_provenance": {
+    "original_packet_sha256": "57c4c5cb659c662636aeb0254b7b7fdf951335db1e1cdedbf8f2ffc7eb23f55e",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

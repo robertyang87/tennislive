@@ -1,0 +1,24 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "asset_timings + closing_source full selected raw-window audit",
+  "reviewed_at": "2026-10-04T07:41:26.426480+00:00",
+  "status": "complete",
+  "reviewed_from": 613.45,
+  "reviewed_to": 626.61,
+  "foreground_english": [],
+  "no_foreground_english_reason": "Both independent small.en/base.en full original window transcripts identify no lexical English in the selected interval; cross-ASR method, no human hearing claim.",
+  "uncertain_spans": [],
+  "raw_asr": {
+    "small.en": [],
+    "base.en": []
+  },
+  "source_review": "data/audio_reviews/nishikori-career-farewell/evidence/native-foreground-titles-audit-3b8675b4a78f.json",
+  "portable_review_provenance": {
+    "original_packet_sha256": "2ac306275493a78929f7550aebad8b54b902925f7b73e1362dd7f19ad7ec47e4",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

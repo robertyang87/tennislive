@@ -1,0 +1,40 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_file": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "closing_source cached medium.en + base.en/small.en lexical crosscheck and independent word boundary alignment",
+  "reviewed_at": "2026-10-04T07:46:36.205632+00:00",
+  "status": "complete",
+  "reviewed_from": 183.15,
+  "reviewed_to": 194.55,
+  "foreground_english": [
+    {
+      "start": 191.1,
+      "end": 194.52,
+      "en": "Nishikori makes history in Barcelona.",
+      "zh": "锦织圭在巴塞罗那创造历史。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "uncertain_spans": [],
+  "human_listening_done": false,
+  "timing_evidence": "Independent medium.en final Barcelona word193.8–194.52 probability0.997; next Hes194.82 probability0.912, corroborated base.en onset194.78. Early small.en shared boundary194.34 is rejected as premature word alignment. Final source end194.55 retains first full sentence and leaves≥0.23s before next sentence.",
+  "proper_name_correction": "All models surname misrecognized Ishikori/Michigori; official event identity supports Nishikori spelling only. Rest of sentence agrees all3 models.",
+  "asr_results": [
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/barcelona2014-third-medium.en-21d2e1d3a5e9.json",
+      "sha256": "b27cc96e2df139e7e21d202dbba7fb4530201e51b1c18f0d9c16bb6bea8d1c18"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/native-foreground-titles-audit-3b8675b4a78f.json",
+      "sha256": "46f8f4b556fca8c57153f68c685e96b31f6188861a4a5f9075f3be4d4697880a"
+    }
+  ],
+  "portable_review_provenance": {
+    "original_packet_sha256": "205f0b43d9a3c11c674ffcbd1ab55000824da09e6d230f3ba5aeb12faad492c1",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}
