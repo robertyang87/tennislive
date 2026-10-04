@@ -94,7 +94,7 @@ jobs:
           git config user.email "noreply@anthropic.com"
           # Explicit file list: movie bytes must never become Git tree entries.
           git add --sparse specs/interviews/nadal-academy-10th-2026-championship-speech.json specs/interviews/nadal-academy-10th-2026-championship-speech.xhs.txt
-          git add --sparse "$OUTDIR"/*.json "$OUTDIR"/*.ass "$OUTDIR"/*.jpg "$OUTDIR"/*.html
+          git add --sparse "$OUTDIR"/*.json "$OUTDIR"/*.ass "$OUTDIR"/*.jpg "$OUTDIR"/*.html "$OUTDIR"/cap_*.json3
           if git diff --cached --name-only | grep -E '\.(mp4|mov|mkv)$'; then
             echo '::error::Movie accidentally staged'; exit 1
           fi

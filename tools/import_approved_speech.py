@@ -26,7 +26,7 @@ import requests
 
 SLUG = 'nadal-academy-10th-2026-championship-speech'
 REPOSITORY = 'robertyang87/tennislive'
-EXPECTED_EVIDENCE_SHA = '3717a72f4c91788867da3b20b62763e2347e53631841571ce64a4b86bd30a0e3'
+EXPECTED_EVIDENCE_SHA = '73c7929b486a2507836dec2dc9506f5121ab634df69316af3b8a7a33a58002e1'
 EXPECTED_BYTES = 69347277
 EXPECTED_SHA = '4d182944319b68b4bd79f5bdb7195b0c966e7c71c8768a771f40d03517dc933f'
 
@@ -123,7 +123,7 @@ def assemble(request):
         raise RuntimeError('Original native render/QC binding differs')
     for name,key in [('poster.jpg','poster_sha256'),('cover_visual_attestation.json','cover_visual_attestation_sha256'),(f'{SLUG}.ass','ass_sha256')]:
         if qc[key]!=evidence['files'][name]:raise RuntimeError(f'Native QC artifact identity differs: {name}')
-    run(sys.executable,'tools/push_reel.py','--stage','check','--outdir',str(outdir),'--copy',str(spec.with_suffix('.xhs.txt')))
+    run(sys.executable,'tools/push_reel.py','--stage','check','--outdir',str(outdir),'--copy',str(spec.with_suffix('.xhs.txt')),'--date',m['date'])
     probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=width,height','-of','json',str(film)],text=True))
     if (probe['streams'][0]['width'],probe['streams'][0]['height'])!=(1080,1440):raise RuntimeError('Canvas changed')
     json_write(outdir/'import-provenance.json',{'film_sha256':EXPECTED_SHA,'film_bytes':EXPECTED_BYTES,'original_native_qc_sha256':evidence['files']['qc_attestation.json'],'qc_status':'original-local-pass-preserved','new_audio_review':False,'user_authorization':'User explicitly requested completion of this speech WeChat publication.'})
@@ -133,7 +133,7 @@ def assemble(request):
     print('Exact speech master and original native QC bytes verified',flush=True)
 
 def release(request):
-    manifest(request);outdir=Path('output/interviews')/SLUG;film=outdir/f'{SLUG}.mp4';tag=f'interview-{SLUG}'
+    m=manifest(request);outdir=Path('output/interviews')/SLUG;film=outdir/f'{SLUG}.mp4';tag=f'interview-{SLUG}'
     q=json_read(outdir/'qc_attestation.json')
     if q['film_sha256']!=EXPECTED_SHA or q['status']!='pass':raise RuntimeError('QC identity differs')
     exists=subprocess.run(['gh','release','view',tag,'--json','assets'],capture_output=True,text=True)
@@ -151,7 +151,7 @@ def release(request):
     if size!=EXPECTED_BYTES or digest.hexdigest()!=EXPECTED_SHA:raise RuntimeError('Release remote GET differs from approved master')
     json_write(outdir/'release-verification.json',{'video_url':url,'bytes':size,'sha256':digest.hexdigest(),'asset_digest':asset['digest'],'method':'remote-streaming-GET'})
     render=json_read(outdir/'render.json');render.update(video_url=url,video_bytes=size,film_sha256=q['film_sha256'],release_asset_digest=asset['digest'],qc_attestation_sha256=hashlib.sha256((outdir/'qc_attestation.json').read_bytes()).hexdigest());json_write(outdir/'render.json',render)
-    run(sys.executable,'tools/push_reel.py','--stage','page','--outdir',str(outdir),'--copy',f'specs/interviews/{SLUG}.xhs.txt')
+    run(sys.executable,'tools/push_reel.py','--stage','page','--outdir',str(outdir),'--copy',f'specs/interviews/{SLUG}.xhs.txt','--date',m['date'])
     print(f'Release verified and copy page generated: {url}',flush=True)
 
 if __name__=='__main__':

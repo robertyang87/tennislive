@@ -227,10 +227,25 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
         raise Skip(f"{slug}：QC 的内容身份与当前 spec 不一致")
     checks = qc.get("checks") or {}
     expected_body = len(spec.get("zh") or [])
+    # L2 counts verified conservative sound-event cues separately from speech.
+    # Reuse its actual ASS/evidence checks; never inflate a declared number.
+    if spec.get("caption_gap_annotations") is not None:
+        from check_interview_landed import bilingual_body_ok, _ass_body_events
+        ass_path = outdir / f"{slug}.ass"
+        if not tracked(repo, ass_path) or qc.get("ass_sha256") != _sha256_bytes(_tracked_bytes(repo, ass_path)):
+            raise Skip(f"{slug}：声音事件双语字幕与 QC 字节不一致")
+        body_ok, detail = bilingual_body_ok(ass_path, spec)
+        if not body_ok:
+            raise Skip(f"{slug}：L2 正文与保守声音事件验证失败（{detail}）")
+        expected_body = len(_ass_body_events(ass_path)["EN"])
     expected_lead = len(((spec.get("lead_in") or {}).get("subs") or []))
     if not expected_body or checks.get("bilingual_body_cues") != expected_body:
         raise Skip(f"{slug}：QC 没有逐 cue 证明采访正文中英字幕完整")
     official_no_lead = verified_no_lead_exception(spec)
+    if not expected_lead and spec.get("requested_content_type") == "ceremony":
+        from check_interview_landed import bilingual_lead_ok
+        # Same verified trophy-speech opening contract as native L2.
+        official_no_lead, _ = bilingual_lead_ok(outdir / "_lead.ass", spec)
     if expected_lead:
         if (checks.get("bilingual_lead_cues") != expected_lead
                 or not qc.get("lead_ass_sha256")):
