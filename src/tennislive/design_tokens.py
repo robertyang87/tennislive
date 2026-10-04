@@ -1,5 +1,7 @@
 """设计 token——颜色、圆角、字阶、动效的**唯一出处**。
 
+2026-10-04 用户明确授权全栏目深蓝设计；下列墨绿迁移说明为历史档案，当前背景以 DARK 与 CARD_BACKGROUND_CSS 为准。
+
 来路（2026-09-27 那轮 UI / VI 整体评审，量出来的，不是感觉）：
 
 - 38 个出画面的文件里有 **185 个不同的 hex**，按感知距离聚类只剩 **73 簇**。
@@ -92,12 +94,12 @@ from types import MappingProxyType
 #
 # 同一个值只写一处：按定义就是另一个角色的（ring = primary 加 alpha、
 # primary-foreground = background ……）从下面这几个私有常量派生。
-_INK_DEEP = "#04120d"
+_INK_DEEP = "#080e1d"     # 2026-10-04：全栏目蓝黑底，参考图只作方向，重新设计。
 _BRAND = "#c6f65a"
 _MINT = "#4adc8c"
 _FILL = "#8fd6a8"
 _EMERALD = "#087747"      # 浅底上的「赢／成功」字色（白底 5.61）；合并 #0a7d43
-_RAISED = "#102d23"       # 深色的凸起面；也是浅色主题里那颗深色视频按钮
+_RAISED = "#20324e"       # 柔和的蓝色信息面；也是浅色主题里那颗深色视频按钮
 _FG = "#f4fbf7"
 _FG_MUTED = "#cfe6d8"
 _FG_LIGHT = "#17251f"
@@ -105,9 +107,9 @@ _FG_MUTED_LIGHT = "#5f6f68"
 
 DARK: Mapping[str, str] = MappingProxyType({
     "background": _INK_DEEP,           # 合并 #06140f / #06100c / #07140f
-    "card": "#0c1d16",                 # 合并 #0d1d16 / #10201a / #061c14
+    "card": "#15243a",                 # 蓝黑底上的柔和藏青层次
     "muted": _RAISED,                  # 凸起、分段轨道；合并 #10271d / #0d2b21
-    "hero-glow": "#155a41",            # 只给字卡示意图渐变（DARK_ONLY）
+    "hero-glow": "#304d76",            # 低饱和蓝光，不用品牌绿铺大面积背景
     "foreground": _FG,                 # (16.6) 合并 #ffffff（采访）/ #f4f8f5
     "subtitle-foreground": "#e7f3ec",  # (15.3) 账号所有者登记的「主色近白」（DARK_ONLY）
     "muted-foreground": _FG_MUTED,     # (13.3) 次级说明；别再往暗里调
@@ -126,6 +128,14 @@ DARK: Mapping[str, str] = MappingProxyType({
     "info": "#4bb8ff",                 # (8.0) 合并 #75b7ff
     "fill": _FILL,                     # 只当底，不当字（DARK_ONLY）
 })
+
+# 全栏目原生图卡的统一底图：右上柔光、正文区收暗。背景蓝是中性承托，
+# 黄绿仍只点亮品牌/重点，薄荷仍表示赢盘；不能再用它们洗绿整张卡。
+CARD_BACKGROUND_CSS = (
+    f"radial-gradient(120% 85% at 100% 0%,{DARK['hero-glow']}70 0%,"
+    f"{DARK['hero-glow']}00 65%),"
+    f"linear-gradient(160deg,{DARK['card']} 0%,{DARK['background']} 65%)"
+)
 
 #: 只有深色、浅色主题里**故意没有**的角色——全是画布（视频、字卡）专用的，
 #: 而画布永远是深底。网页浅色面上用到它们，就是用错了地方（CSS 里浅色块不声明

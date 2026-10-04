@@ -12012,9 +12012,9 @@ def _slide_html(
 html,body{{width:{W}px;height:{H}px;}}
 body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .slide{{position:relative;width:{W}px;height:{H}px;overflow:hidden;color:{P.FOREGROUND};
- background:{P.SLIDE_INK};}}
+ background:{P.BACKGROUND};}}
 .hero{{position:absolute;inset:0;}}
-.hero.diagram{{background:radial-gradient(125% 80% at 50% 20%,{P.HERO_GLOW} 0%,{P.HERO_DEEP} 55%,{P.SLIDE_INK} 100%);}}
+.hero.diagram{{background:{P.BACKGROUND};}}
 /* 信箱式缩放那几屏的底衬：同一张照片的模糊放大版，让卡片顶栏压在照片色上，
    和铺满的那几屏观感一致。压暗到 .42 是为了让上层 contain 的那张仍然是
    视觉主体；scale(1.2) 给 blur 留溢出量，否则边缘透底。 */

@@ -30,6 +30,7 @@ sys.path.insert(0, str(REPO_ROOT / "tools"))
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from tennislive.render.webcards import _font_css  # noqa: E402
+from tennislive.design_tokens import BRAND_BAR_CSS, CARD_BACKGROUND_CSS  # noqa: E402
 from tennislive.video import outro_page  # noqa: E402
 from tennislive.video.explainer import _data_uri  # noqa: E402
 
@@ -110,17 +111,17 @@ def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
     return f"""<!doctype html><meta charset="utf-8"><style>
 {_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box}}
-body{{width:{w}px;height:{h}px;overflow:hidden;background:{outro_page.INK};
+body{{width:{w}px;height:{h}px;overflow:hidden;background:{CARD_BACKGROUND_CSS};
  position:relative;font-family:'TL Sans SC',sans-serif;color:{outro_page.TEXT}}}
 .bar{{position:absolute;top:0;left:0;right:0;height:12px;
- background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%)}}
-.glow{{position:absolute;inset:0;background:
- radial-gradient(120% 80% at 50% 42%,rgba(198,246,90,.12) 0%,rgba(4,18,13,0) 62%)}}
+ background:{BRAND_BAR_CSS}}}
+.glow{{position:absolute;inset:0;pointer-events:none}}
 .wrap{{position:absolute;inset:0;display:flex;flex-direction:column;
  align-items:center;justify-content:center;padding:0 70px;text-align:center}}
 .kicker{{font-family:'TL Score','TL Numeral','TL Sans SC',sans-serif;font-size:44px;
  letter-spacing:6px;color:{outro_page.BRAND};margin-bottom:34px;
- padding:6px 22px;border:3px solid {outro_page.BRAND};border-radius:12px}}
+ padding:8px 22px;border:2px solid {outro_page.BRAND};border-radius:12px;
+ background:rgba(255,255,255,.025)}}
 .thesis{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
  font-size:{px}px;line-height:1.28;letter-spacing:2px;max-width:{min(940, w - 140)}px;
  white-space:nowrap;
