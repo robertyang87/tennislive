@@ -1,7 +1,7 @@
 {
   "review_date": "2026-10-04",
-  "status": "pending-rerender",
-  "notice": "待重渲清单。不能仅改JSON字段就声称历史视频或已发布内容已修正；重渲受影响标题、字幕、封面并重新QC后方可记录完成。保留历史source证据、旧发布凭证、render_inputs及hash。",
+  "status": "editable-source-corrections-completed",
+  "notice": "原42项已逐条处置：40项可编辑展示源对齐，2项原渲染凭证核验并原样保留。另全仓库展示字段扫描发现的遗漏已补修。来源原文、历史音视频、消息及QC凭证独立保存；本台账不冒充完成了历史视频重制。",
   "entries": [
     {
       "file": "specs/reels/kovacevic-khachanov.json",
@@ -30,7 +30,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/mensik-shelton-davis-cup-2026-q2.json",
@@ -57,7 +61,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/anisimova-bartunkova.json",
@@ -98,7 +106,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.json",
@@ -128,7 +140,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/zverev-khachanov-us-open-2026-sf.json",
@@ -156,7 +172,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/mensik-tien-davis-cup-2026-q2.json",
@@ -192,7 +212,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/shelton-mensik.json",
@@ -219,7 +243,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/zverev-atmane.json",
@@ -250,7 +278,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/mensik-nakashima-laver-cup-2026.json",
@@ -279,7 +311,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/khachanov-blockx-us-open-2026-qf.json",
@@ -307,7 +343,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/bartunkova-charaeva.json",
@@ -336,7 +376,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/rybakina-charaeva-beijing-2026-r2.json",
@@ -369,7 +413,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/osaka-mertens.json",
@@ -395,7 +443,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/tirante-mensik.json",
@@ -421,7 +473,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/fernandez-andreeva.json",
@@ -447,7 +503,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/pending/mensik-nakashima-laver-cup-2026.draft.json",
@@ -473,7 +533,11 @@
           "classification": "unpublished draft divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "status": "editable-source-corrected",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "output/2026-09-30/reel/khachanov-auger-aliassime-beijing-2026-r1/render_inputs.json",
@@ -503,7 +567,11 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲",
+      "status": "preserved-original-render-evidence",
+      "source_status": "immutable-original-evidence",
+      "review_resolved": true,
+      "notice": "原渲染输入是旧产物的真实凭证，不是当前译名表；逐字节保留，对应现行 spec 已修正。"
     },
     {
       "file": "output/2026-10-04/reel/rybakina-charaeva-beijing-2026-r2/render_inputs.json",
@@ -532,12 +600,16 @@
           "classification": "current source-linked content divergence"
         }
       ],
-      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲"
+      "recommended_action": "对今后重渲副本按name_en解析权威中文名，再重渲所有受影响标题/字幕/封面并重新QC；保留原发布凭证、旧render_inputs和旧hash，不原地改成看似已重渲",
+      "status": "preserved-original-render-evidence",
+      "source_status": "immutable-original-evidence",
+      "review_resolved": true,
+      "notice": "原渲染输入是旧产物的真实凭证，不是当前译名表；逐字节保留，对应现行 spec 已修正。"
     },
     {
       "file": "specs/reels/bu-jodar-us-open-2026-r1.xhs.txt",
       "slug": "bu-jodar-us-open-2026-r1",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/bu-jodar-us-open-2026-r1.json",
@@ -554,12 +626,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "src/tennislive/video/explainer.py",
       "slug": "fils-tokyo-qualifying",
-      "status": "historical-render-pending",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/explainer_publish_ledger/fils-tokyo-qualifying.json",
@@ -597,15 +672,17 @@
           "occurrence_status": "historical-review-snapshot-source-now-corrected"
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。",
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
       "source_status": "corrected",
       "history_needs_rerender": true,
-      "source_correction_note": "2026-10-04活动生成器显示字符串已按权威姓名表修正；保留下列旧名出现位置作为复核时的历史事实，行号描述修正前状态，不表示当前源码仍残留。历史输出及既有发布内容未重做，仍须重渲并重新QC。"
+      "source_correction_note": "2026-10-04活动生成器显示字符串已按权威姓名表修正；保留下列旧名出现位置作为复核时的历史事实，行号描述修正前状态，不表示当前源码仍残留。历史输出及既有发布内容未重做，仍须重渲并重新QC。",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/fritz-jodar-final.xhs.txt",
       "slug": "fritz-jodar-final",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/legacy_prepush_reels.json"
@@ -621,12 +698,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/fritz-michelsen.json",
       "slug": "fritz-michelsen",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "output/2026-08-17/reel/fritz-michelsen/pushed.json"
@@ -1002,12 +1082,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/fritz-michelsen.xhs.txt",
       "slug": "fritz-michelsen",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "output/2026-08-17/reel/fritz-michelsen/pushed.json"
@@ -1059,12 +1142,15 @@
           "preserve_as_source_evidence": true
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/interviews/gauff-andreeva-us-open-2026-qf-interview.xhs.txt",
       "slug": "gauff-andreeva-us-open-2026-qf-interview",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/interview_publish_ledger/gauff-andreeva-us-open-2026-qf-interview.json",
@@ -1081,12 +1167,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/interviews/osaka-walkout-us-open-2026-r1.json",
       "slug": "osaka-walkout-us-open-2026-r1",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/interview_publish_ledger/osaka-walkout-us-open-2026-r1.json",
@@ -1148,12 +1237,15 @@
           "preserve_as_source_evidence": true
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/interviews/osaka-walkout-us-open-2026-r1.xhs.txt",
       "slug": "osaka-walkout-us-open-2026-r1",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/interview_publish_ledger/osaka-walkout-us-open-2026-r1.json",
@@ -1170,12 +1262,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/pegula-waltert.json",
       "slug": "pegula-waltert",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "output/2026-08-16/reel/pegula-waltert/pushed.json"
@@ -1488,12 +1583,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/pegula-waltert.xhs.txt",
       "slug": "pegula-waltert",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "output/2026-08-16/reel/pegula-waltert/pushed.json"
@@ -1545,12 +1643,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/putintseva-bucsa-bjk-cup-2026.xhs.txt",
       "slug": "putintseva-bucsa-bjk-cup-2026",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/putintseva-bucsa-bjk-cup-2026.json",
@@ -1567,12 +1668,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/interviews/tiafoe-michelsen-us-open-2026-qf-interview.json",
       "slug": "tiafoe-michelsen-us-open-2026-qf-interview",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/interview_publish_ledger/tiafoe-michelsen-us-open-2026-qf-interview.json",
@@ -1625,12 +1729,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/interviews/tiafoe-michelsen-us-open-2026-qf-interview.xhs.txt",
       "slug": "tiafoe-michelsen-us-open-2026-qf-interview",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/interview_publish_ledger/tiafoe-michelsen-us-open-2026-qf-interview.json",
@@ -1656,12 +1763,15 @@
           "preserve_as_source_evidence": true
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/tiafoe-michelsen.json",
       "slug": "tiafoe-michelsen",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/tiafoe-michelsen.json",
@@ -2110,12 +2220,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/tiafoe-michelsen.xhs.txt",
       "slug": "tiafoe-michelsen",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/tiafoe-michelsen.json",
@@ -2141,12 +2254,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/wang-vandewinkel.xhs.txt",
       "slug": "wang-vandewinkel",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "output/2026-08-15/reel/wang-vandewinkel/pushed.json"
@@ -2162,12 +2278,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/zheng-burel-us-open-2026-q2.json",
       "slug": "zheng-burel-us-open-2026-q2",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/zheng-burel-us-open-2026-q2.json",
@@ -2238,12 +2357,15 @@
           "preserve_as_source_evidence": true
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/zheng-burel-us-open-2026-q2.xhs.txt",
       "slug": "zheng-burel-us-open-2026-q2",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/zheng-burel-us-open-2026-q2.json",
@@ -2260,12 +2382,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/zheng-from-low-to-us-open-comeback.json",
       "slug": "zheng-from-low-to-us-open-comeback",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/zheng-from-low-to-us-open-comeback.json",
@@ -2282,12 +2407,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/interviews/zheng-keys-us-open-2026-r3-presser.json",
       "slug": "zheng-keys-us-open-2026-r3-presser",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/interview_publish_ledger/zheng-keys-us-open-2026-r3-presser.json",
@@ -2322,12 +2450,15 @@
           "preserve_as_source_evidence": true
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/zheng-pridankina-us-open-2026-q3.json",
       "slug": "zheng-pridankina-us-open-2026-q3",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/zheng-pridankina-us-open-2026-q3.json",
@@ -2578,12 +2709,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/zheng-pridankina-us-open-2026-q3.xhs.txt",
       "slug": "zheng-pridankina-us-open-2026-q3",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/zheng-pridankina-us-open-2026-q3.json",
@@ -2609,12 +2743,15 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/zheng-us-open-outlook.json",
       "slug": "zheng-us-open-outlook",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/zheng-us-open-outlook.json",
@@ -2694,12 +2831,15 @@
           "preserve_as_source_evidence": true
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     },
     {
       "file": "specs/reels/zheng-us-open-outlook.xhs.txt",
       "slug": "zheng-us-open-outlook",
-      "status": "pending-rerender",
+      "status": "editable-source-corrected",
       "reason": "historical free-text legacy canonical detected by broad name guard; compatibility mask is not a content correction",
       "publication_evidence": [
         "data/reel_publish_ledger/zheng-us-open-outlook.json",
@@ -2716,10 +2856,22 @@
           "preserve_as_source_evidence": false
         }
       ],
-      "recommended_action": "保留原source/原文引用/历史发布凭证；对可重渲副本的编辑文案逐处按英文身份核对现canonical，再重渲标题、字幕、封面、平台文案并重新QC。不可仅改JSON宣称已发布内容完成修正。"
+      "recommended_action": "当前可编辑展示源已对齐；实际重制视频需从更正源重新配音、渲染并校验，原消息和音视频不会因改文本自动更新。",
+      "source_status": "corrected",
+      "review_resolved": true,
+      "historical_artifact_status": "original-publication-unmodified"
     }
   ],
   "counts": {
+    "original_entries_review_resolved": 42,
+    "original_editable_source_entries_corrected": 40,
+    "original_render_evidence_records_preserved": 2,
+    "third_round_total_corrected_editable_source_files": 179,
+    "third_round_changed_json_scalar_fields": 1006,
+    "source_only_status_does_not_claim_media_rerender": true,
+    "historical_media_rerendered": false
+  },
+  "prior_review_counts": {
     "original_files": 18,
     "original_bound_name_fields": 19,
     "additional_free_text_files": 24,
@@ -2728,5 +2880,2567 @@
     "additional_free_text_fields_or_lines": 184,
     "additional_preserved_source_or_comment_occurrences": 117,
     "corrected_active_source_files_still_needing_historical_rerender": 1
+  },
+  "corrected_source_files": [
+    {
+      "file": "specs/interviews/alcaraz-mensik-laver-cup-2026-interview.json",
+      "source_status": "corrected",
+      "original_blob_sha": "0d23a992b83c462a5431deb56a9151d15d77f1d1",
+      "corrected_source_blob_sha": "fe53f773264c0f9189ed15c576ed120400972205",
+      "changed_fields": [
+        "$.match.participants[0]",
+        "$.match.winner",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.winner",
+        "$.zh[0]",
+        "$.zh[1]",
+        "$.zh[46]",
+        "$.zh[53]"
+      ],
+      "changed_field_count": 9
+    },
+    {
+      "file": "specs/interviews/alcaraz-mensik-laver-cup-2026-interview.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "25a9aba30568a266527f462173f9129317429602",
+      "corrected_source_blob_sha": "632740470e6da6d4a3d8e8836850b54a72562afb",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/buse-winston-salem-2026-r.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "dbf0537cbc5ead7e022fa5a37304279158e2fdc2",
+      "corrected_source_blob_sha": "d57f5944055268ab57ca33af8d6e9fcaada26870",
+      "changed_fields": [
+        "$.cover.tag",
+        "$.cover.title[0]",
+        "$.match.participants[0]",
+        "$.match.winner",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.winner"
+      ],
+      "changed_field_count": 8
+    },
+    {
+      "file": "specs/interviews/cobolli-mensik-laver-cup-2026-doubles-interview.json",
+      "source_status": "corrected",
+      "original_blob_sha": "c27bf349c416af5f8eacaaf359fdff055a6db772",
+      "corrected_source_blob_sha": "d2af5689cc04ae69b0690aeff887beaff953e977",
+      "changed_fields": [
+        "$.cover.tag",
+        "$.cover.title[1]",
+        "$.lead_in.subs[1].zh",
+        "$.lead_in.subs[6].zh",
+        "$.match.participants[0]",
+        "$.match.winner",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.winner"
+      ],
+      "changed_field_count": 9
+    },
+    {
+      "file": "specs/interviews/cobolli-mensik-laver-cup-2026-doubles-interview.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "a71f4239e077dec785029a611d856c15058b268a",
+      "corrected_source_blob_sha": "4e0a461a4619a61d4310b307da42c678430195bf",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/cobolli-paul-cincinnati-2026-qf.json",
+      "source_status": "corrected",
+      "original_blob_sha": "7c8b23f4a5399fdc4b2dba623ecbe9a731a3b313",
+      "corrected_source_blob_sha": "c9dd3343f7feeb90d053e8f3cf98e9e3e4a844ea",
+      "changed_fields": [
+        "$.push.lead",
+        "$.takeaway.close.point",
+        "$.zh[56]"
+      ],
+      "changed_field_count": 3
+    },
+    {
+      "file": "specs/interviews/cobolli-paul-cincinnati-2026-qf.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "4fbc7a4b9ce675656abcde903bbc9137cf600364",
+      "corrected_source_blob_sha": "30ed0c500dcc3e98ab42ddaa69a52a682d85e363",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/gauff-andreeva-us-open-2026-qf-interview.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "76ba4df794d17cad1f1fa2675d68e2c3b45f7d8f",
+      "corrected_source_blob_sha": "36c40d563f5ea8f0961ecd59a381c53d16170289",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/khachanov-blockx-us-open-2026-qf-interview.json",
+      "source_status": "corrected",
+      "original_blob_sha": "6a295df3e0062c5e71d43b90564e05a3bf228ebf",
+      "corrected_source_blob_sha": "caefb577c227ecc14f1091e9440238efcc8ac1e5",
+      "changed_fields": [
+        "$.cover.tag",
+        "$.featured_player",
+        "$.match.participants[0]",
+        "$.match.winner",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.winner",
+        "$.zh[44]",
+        "$.zh[67]",
+        "$.zh[6]"
+      ],
+      "changed_field_count": 11
+    },
+    {
+      "file": "specs/interviews/khachanov-blockx-us-open-2026-qf-interview.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "836a089daab20d60e818f2f5679b8e0b3e278688",
+      "corrected_source_blob_sha": "e82a5ddcfef818b8a5a66fb912b4cac619cf62a9",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/laver-cup-2026-trophy-ceremony.json",
+      "source_status": "corrected",
+      "original_blob_sha": "83a22cd02bebd3339c36aeac69631a22458e2bb4",
+      "corrected_source_blob_sha": "666ae840ac48bf3067dfb1d11479ea3c9868ee3d",
+      "changed_fields": [
+        "$.zh[4]"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/interviews/mensik-hijikata-cincinnati-2026-r3.json",
+      "source_status": "corrected",
+      "original_blob_sha": "24008ff5af4440b50b793805bf48ef6cd971e2a2",
+      "corrected_source_blob_sha": "34ed6965e279e5dbcb5f3740e2d6d71aace5657c",
+      "changed_fields": [
+        "$.cover.tag",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.winner"
+      ],
+      "changed_field_count": 5
+    },
+    {
+      "file": "specs/interviews/mensik-hijikata-cincinnati-2026-r3.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "0456eaa789be37350c3fb53cdabca769a84b6ab7",
+      "corrected_source_blob_sha": "46e556104e69299a9e47999332848293c1b9ed49",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/nakashima-mensik-laver-cup-2026-interview.json",
+      "source_status": "corrected",
+      "original_blob_sha": "5a7c0c41ba2501d130dda033870788629442902a",
+      "corrected_source_blob_sha": "69f8025261fcd4c72d623fc0b90fa20294d04df2",
+      "changed_fields": [
+        "$.match.loser",
+        "$.match.participants[1]",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.zh[49]"
+      ],
+      "changed_field_count": 5
+    },
+    {
+      "file": "specs/interviews/nakashima-mensik-laver-cup-2026-interview.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "dc3c749ad513055ccf0bd91c2a79a1ff984bcc40",
+      "corrected_source_blob_sha": "bebd8cb86c36ac67f767e831e16c261877a14b21",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/noskova-boulter-cincinnati-2026-r2.json",
+      "source_status": "corrected",
+      "original_blob_sha": "243449db037baf262fcda91beae3c78f4ff928e8",
+      "corrected_source_blob_sha": "b6a354d92b5be3a110702afecf6a3eabc0e10bcd",
+      "changed_fields": [
+        "$.push.lead",
+        "$.push.matchup"
+      ],
+      "changed_field_count": 2
+    },
+    {
+      "file": "specs/interviews/noskova-boulter-cincinnati-2026-r2.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "2441df3fcbd74997c58284bfd5a7c16a35d1677c",
+      "corrected_source_blob_sha": "0d8b9ba2d900ce45672d643f1500904fb21bfab4",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/osaka-walkout-us-open-2026-r1.json",
+      "source_status": "corrected",
+      "original_blob_sha": "8772d5531bd528c3429b73315b2b04423366163d",
+      "corrected_source_blob_sha": "5158f0eb971d99f2b14739df4131c49f1c335485",
+      "changed_fields": [
+        "$.match.loser",
+        "$.match.participants[1]",
+        "$.push.lead",
+        "$.push.matchup"
+      ],
+      "changed_field_count": 4
+    },
+    {
+      "file": "specs/interviews/osaka-walkout-us-open-2026-r1.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "f0feddd5db3b326e21386f324a78262762c037de",
+      "corrected_source_blob_sha": "52454cfa8aaf7bb8af19e47613f2bf19c135a743",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/shelton-mensik-mtl2026-qf.json",
+      "source_status": "corrected",
+      "original_blob_sha": "9ff6760969ec784d44827c7399350e9b53ecbbd0",
+      "corrected_source_blob_sha": "41659d2d573e2b0c6fa2fbef627c2a291313457f",
+      "changed_fields": [
+        "$.cover.title[0]",
+        "$.push.lead",
+        "$.push.matchup"
+      ],
+      "changed_field_count": 3
+    },
+    {
+      "file": "specs/interviews/shelton-mensik-mtl2026-qf.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "9a115f2579be10fd14f7723b80c9baf6f23d9d38",
+      "corrected_source_blob_sha": "128da706aafdcc634a741167ac621240eb7f3bf3",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/tiafoe-michelsen-us-open-2026-qf-interview.json",
+      "source_status": "corrected",
+      "original_blob_sha": "001f1f1664d4a401bce6f65c9056f1a793f067eb",
+      "corrected_source_blob_sha": "f621d805e9a773e7251c9acdaf12fddf84304750",
+      "changed_fields": [
+        "$.match.loser",
+        "$.match.participants[1]",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.zh[17]"
+      ],
+      "changed_field_count": 5
+    },
+    {
+      "file": "specs/interviews/tiafoe-michelsen-us-open-2026-qf-interview.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "8ee9a3c78428d536c54fc3422603ff04b2a250ae",
+      "corrected_source_blob_sha": "654512a8b59b2c74d89e6f36f81d99480ae6be1a",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/zheng-keys-us-open-2026-r3-presser.json",
+      "source_status": "corrected",
+      "original_blob_sha": "f2a97ceef58dd6c5be887cbc96bad126044f2544",
+      "corrected_source_blob_sha": "09eb9819dbbd18ccec58c57bd311e2eeeea9ef72",
+      "changed_fields": [
+        "$.zh[242]"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/interviews/zverev-atmane-cincinnati-2026-r3.json",
+      "source_status": "corrected",
+      "original_blob_sha": "de7d0296124fac42f05da80c8f39786809b8b0b6",
+      "corrected_source_blob_sha": "3b99057aa68899572425bfdd5900546bc8f9d965",
+      "changed_fields": [
+        "$.push.lead",
+        "$.push.matchup"
+      ],
+      "changed_field_count": 2
+    },
+    {
+      "file": "specs/interviews/zverev-atmane-cincinnati-2026-r3.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "b438e64d9622cc6bce5a90c7f2b4b710dc4b2664",
+      "corrected_source_blob_sha": "f93ce29ebf9bbb0c2cd76f4f8f5af1a4a66526a3",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/zverev-khachanov-us-open-2026-sf-interview.json",
+      "source_status": "corrected",
+      "original_blob_sha": "dadc92197043bceb1a8c0546f1a49e912ecd7313",
+      "corrected_source_blob_sha": "f87c61e2e8a2f9de184a1cc4b4fd954760fead10",
+      "changed_fields": [
+        "$.match.loser",
+        "$.match.participants[1]",
+        "$.push.lead",
+        "$.push.matchup"
+      ],
+      "changed_field_count": 4
+    },
+    {
+      "file": "specs/interviews/zverev-khachanov-us-open-2026-sf-interview.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "178ac0cac50ba89ea504461aa39d359790a5e4da",
+      "corrected_source_blob_sha": "7194ff3754702e99abef1d9d345c3696e4dd568b",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/zverev-khachanov-us-open-2026-sf-presser.json",
+      "source_status": "corrected",
+      "original_blob_sha": "3d921c77ee9704e2330569124b95f5cc90350c43",
+      "corrected_source_blob_sha": "ecfec6238e22a2b9e7763bf10a300c316b917e74",
+      "changed_fields": [
+        "$.match.loser",
+        "$.match.participants[1]",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.zh[155]"
+      ],
+      "changed_field_count": 5
+    },
+    {
+      "file": "specs/interviews/zverev-khachanov-us-open-2026-sf-presser.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "e04241e69fdb7b35e8c80fa42dd036d44d59eb21",
+      "corrected_source_blob_sha": "7c05e846fe0ded53cda7f36fdac7ab0afa1b344b",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/interviews/zverev-vandezandschulp-us-open-2026-qf-interview.json",
+      "source_status": "corrected",
+      "original_blob_sha": "3eee29adeeeabc95a46511f377b6aad81069fd7a",
+      "corrected_source_blob_sha": "27834d7c9ec4441b3cb683d9053554850ff89c04",
+      "changed_fields": [
+        "$.match.loser",
+        "$.match.participants[1]",
+        "$.push.lead",
+        "$.push.matchup"
+      ],
+      "changed_field_count": 4
+    },
+    {
+      "file": "specs/interviews/zverev-vandezandschulp-us-open-2026-qf-interview.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "cbf6162373e519235c4dc8115266f3da3cc3e35f",
+      "corrected_source_blob_sha": "94bf91ee452c9501b0d4b7bc5199a4a10ecb65ee",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/alcaraz-mensik-doubles-laver-cup-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "0692620713f1843def69f60df65af0ad0eaf2abe",
+      "corrected_source_blob_sha": "75c59a530177a10b044a798f26d55614dfb2fe5a",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.matchup[0].name",
+        "$.cover.subject",
+        "$.cover.winner",
+        "$.editorial.beats[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.segments[1].narration",
+        "$.segments[4].narration",
+        "$.segments[6].narration",
+        "$.segments[7].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 16
+    },
+    {
+      "file": "specs/reels/alcaraz-mensik-doubles-laver-cup-2026.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "dcf4e1efaa9b2091cf6764d8f8e97795f5c4fd48",
+      "corrected_source_blob_sha": "c67034b56b0d1a37da3dd1b95ba05143ac9eecbe",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/anisimova-bartunkova.json",
+      "source_status": "corrected",
+      "original_blob_sha": "a7d62ee139cd9522fbd4649ebe14d4ebcd2fadb2",
+      "corrected_source_blob_sha": "ca5574ab7b9308c8d8810932771c3d749aa15bc2",
+      "changed_fields": [
+        "$.cover.hook",
+        "$.cover.matchup[0].name",
+        "$.cover.matchup[1].name",
+        "$.cover.subject",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[5].narration",
+        "$.segments[7].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 14
+    },
+    {
+      "file": "specs/reels/anisimova-bartunkova.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "ee813b090a1defe2410a2aaf2400a3db30e3bfba",
+      "corrected_source_blob_sha": "168f88739d0b373ea96c8e5d485167e7867170db",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/asiad-2026-women-draw.json",
+      "source_status": "corrected",
+      "original_blob_sha": "c9ae174ecf8a3c1da0062245f4d90077c3bffc65",
+      "corrected_source_blob_sha": "97d9d351439c8b2508ec1489af6e1e99e8a5a408",
+      "changed_fields": [
+        "$.push.lead",
+        "$.segments[10].narration",
+        "$.segments[11].narration",
+        "$.segments[16].narration"
+      ],
+      "changed_field_count": 4
+    },
+    {
+      "file": "specs/reels/asiad-2026-women-draw.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "3142945f439e34b1cef49298fa72520e1793a09b",
+      "corrected_source_blob_sha": "abb7875f9d0481b39a82dfd28b683230dfdf921b",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/bartunkova-charaeva.json",
+      "source_status": "corrected",
+      "original_blob_sha": "4757aaa7857672ef296a6aafa984d5487b514cc8",
+      "corrected_source_blob_sha": "a098a0d271477ec3cbb3e8818705d11c5d6d366d",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[2]",
+        "$.editorial.beats[4]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.human_context.facts[9]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[10].narration",
+        "$.segments[1].narration",
+        "$.segments[4].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 13
+    },
+    {
+      "file": "specs/reels/bartunkova-charaeva.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "0d797395d21c236e1cb92740d07972ae8994c2d3",
+      "corrected_source_blob_sha": "41b9fcb1a912b2c87fa9327d8f4618364165c71c",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/bjk-cup-story.json",
+      "source_status": "corrected",
+      "original_blob_sha": "7f9b9f9c69f3786c4f6563a97dc548e12c24960e",
+      "corrected_source_blob_sha": "87ca602e91e1f8086f643e4a079d60b46658f4b0",
+      "changed_fields": [
+        "$.segments[13].narration"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/bjk-cup-story.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "0c687a4b7c1e30a9e4896d53d837846e58c21ce3",
+      "corrected_source_blob_sha": "3372f4fb4bc849fae26088df618297cc58cc0d24",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/boulter-volynets.json",
+      "source_status": "corrected",
+      "original_blob_sha": "a4cac89422e32ed7143f1724229e3039c1facda0",
+      "corrected_source_blob_sha": "5591db8d7eeb728227f5c1830bdf8bd59b733c1e",
+      "changed_fields": [
+        "$.cover.matchup[0].name",
+        "$.cover.subject",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[10].narration",
+        "$.segments[16].narration",
+        "$.segments[17].narration",
+        "$.segments[3].narration",
+        "$.segments[7].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 13
+    },
+    {
+      "file": "specs/reels/boulter-volynets.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "91c47e68a7c329664f46aac9bd5ed39b3e496a96",
+      "corrected_source_blob_sha": "ad898ec828ef05290ec1ee4a3fb9070f490f3ccc",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/bu-jodar-us-open-2026-r1.json",
+      "source_status": "corrected",
+      "original_blob_sha": "e8bac7fa6f799260ae2545ad8255979a7b307946",
+      "corrected_source_blob_sha": "2db72f4ed173abe6526c8e841777e09a36fbceea",
+      "changed_fields": [
+        "$.editorial.human_context.angle"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/bu-jodar-us-open-2026-r1.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "1f84c38e80b05c7cca588e7fa41eee16fd2edf53",
+      "corrected_source_blob_sha": "ddbb9bb399dd5a0f9aff4c6daf5d4e03d12fb290",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/bu-lucky-loser-story.json",
+      "source_status": "corrected",
+      "original_blob_sha": "72382cc632836784f21fefb3273235a67639297d",
+      "corrected_source_blob_sha": "97e06aeeb5e151c3759285cbac92838a22f2bde3",
+      "changed_fields": [
+        "$.segments[23].narration"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/bu-lucky-loser-story.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "f973ef1a20221854dfdd9aa73a39929abfc80a8a",
+      "corrected_source_blob_sha": "80de323ab12c6b64b1e4351278b997835b4c8e98",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/bublik-jodar-laver-cup-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "1af218b4d9d5a41099e143512ff0e9386f1b0a3f",
+      "corrected_source_blob_sha": "91a70603ef2677b62608e44e16a1df5aedaa5644",
+      "changed_fields": [
+        "$.segments[11].narration"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/bublik-jodar-laver-cup-2026.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "e887033fa487c294869d2b23f371b917b152c01f",
+      "corrected_source_blob_sha": "204b30dbd96d2210f9d591e218df02d9f8c70f1b",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/chengdu-ng-kouame.json",
+      "source_status": "corrected",
+      "original_blob_sha": "9762221d7d6852de31967d5404fc46894cb5f23a",
+      "corrected_source_blob_sha": "0e004b0b5053dac4819b3c252e1675421261192c",
+      "changed_fields": [
+        "$.editorial.beats[5]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[16].narration",
+        "$.segments[26].narration",
+        "$.segments[27].narration",
+        "$.segments[36].narration",
+        "$.segments[36].point_end_ok"
+      ],
+      "changed_field_count": 8
+    },
+    {
+      "file": "specs/reels/chengdu-ng-kouame.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "3d110cb702ae9de0660e8ae2542086ef7b870ad4",
+      "corrected_source_blob_sha": "85e694bf193a22e964e65cafe6ac0ae09151d8ce",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/cobolli-mensik-doubles-laver-cup-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "29478d9f4d252fef92c4e3550ba70d72af9be26f",
+      "corrected_source_blob_sha": "54178840209c304402a234f385bd1e6c6ab69a30",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.hook",
+        "$.cover.matchup[0].name",
+        "$.cover.subject",
+        "$.cover.topic",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.hook[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.segments[1].narration",
+        "$.segments[3].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration",
+        "$.segments[8].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 20
+    },
+    {
+      "file": "specs/reels/cobolli-mensik-doubles-laver-cup-2026.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "cefe55235c43e6660479ccbd1f720f964d0070a2",
+      "corrected_source_blob_sha": "04745cda04c29bdbf19f1001d14b447f5d381cbe",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/davis-cup-china-first-world-group-1.json",
+      "source_status": "corrected",
+      "original_blob_sha": "b91bbeb6dd4f7c8af02324bcbe5a810e3e3a984b",
+      "corrected_source_blob_sha": "9637d7564cbd55ebb4bc7a9af6cb4145397bd7c1",
+      "changed_fields": [
+        "$.segments[13].narration"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/davis-cup-china-first-world-group-1.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "95ed098ead6630e049290aa5fe1580e964f47de8",
+      "corrected_source_blob_sha": "63724d0a5aa217b5ee81292efc2927e1be0e1a39",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/davis-cup-road-to-bologna.json",
+      "source_status": "corrected",
+      "original_blob_sha": "c0f2f2e38cacceae352d580dc3477dd50afefbaf",
+      "corrected_source_blob_sha": "81edf3fdafa6b5c88093009f44fe4e07d25910c0",
+      "changed_fields": [
+        "$.push.lead",
+        "$.segments[7].narration"
+      ],
+      "changed_field_count": 2
+    },
+    {
+      "file": "specs/reels/davis-cup-road-to-bologna.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "b00ca42415f603de99848ef1e8fbb99471008fd3",
+      "corrected_source_blob_sha": "7c99ad5316b121a20cd5b3b66720a7204ea6092f",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/fernandez-andreeva.json",
+      "source_status": "corrected",
+      "original_blob_sha": "5fc4cf06ef9a97f9fe046b3a4470c83988861f1e",
+      "corrected_source_blob_sha": "09ee1acb09fbd47c9851a732ea3ebdd3a97b66e1",
+      "changed_fields": [
+        "$.cover.hook",
+        "$.cover.matchup[0].name",
+        "$.editorial.beats[3]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[1].narration",
+        "$.segments[3].narration",
+        "$.segments[7].narration",
+        "$.segments[8].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 11
+    },
+    {
+      "file": "specs/reels/fils-tirante.json",
+      "source_status": "corrected",
+      "original_blob_sha": "0e2bb4aeef9bfff75b86cd14458782ed8b72c709",
+      "corrected_source_blob_sha": "b86fca95ca79eca996a423baadb3f2cecc44033e",
+      "changed_fields": [
+        "$.editorial.human_context.angle",
+        "$.editorial.question",
+        "$.push.lead",
+        "$.segments[2].narration"
+      ],
+      "changed_field_count": 4
+    },
+    {
+      "file": "specs/reels/fils-tirante.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "0ae6bd0a4fcbb078dee7f3986970fc77f6727bbd",
+      "corrected_source_blob_sha": "1f1a82ef9152c7b5b7905136c8bf124e21f85973",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/fonseca-van-de-zandschulp.json",
+      "source_status": "corrected",
+      "original_blob_sha": "33241c3154c51be3ad83e726e8e9f51f85da4b12",
+      "corrected_source_blob_sha": "6486e93082a112c791c0d64903dc84a7ab564c06",
+      "changed_fields": [
+        "$._match.atp_player_ids",
+        "$.cover.matchup[1].name",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[11].narration",
+        "$.segments[3].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 8
+    },
+    {
+      "file": "specs/reels/fonseca-van-de-zandschulp.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "b2aab9df170c37342d03a4e0bb07bb836bcadf38",
+      "corrected_source_blob_sha": "7db0c08d7914507736dd55e5aa0aecd3ead59bd5",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/fritz-jodar-final.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "fca58f68f8052ecbd66aca04cc8bd2212b3511f7",
+      "corrected_source_blob_sha": "8ef02896440dd8a83c47c78e3bff5242bb3b2e3e",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/fritz-michelsen.json",
+      "source_status": "corrected",
+      "original_blob_sha": "a2db7975228499d6567c2d474ef4bfc0f4b7a943",
+      "corrected_source_blob_sha": "152455cbd2775fb785224537f055643267e417fc",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[10].narration",
+        "$.segments[13].narration",
+        "$.segments[3].narration",
+        "$.segments[7].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 10
+    },
+    {
+      "file": "specs/reels/fritz-michelsen.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "227c33a95d3c9a5c362d2e850699059854956f36",
+      "corrected_source_blob_sha": "0e0326407e807e4d3bc81a4abff06e493ecf7380",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/gea-shapovalov.json",
+      "source_status": "corrected",
+      "original_blob_sha": "c7b18e96c8a0506de0254470c266696e4f609ccd",
+      "corrected_source_blob_sha": "c3200ba0de22d37f9822784b0654cacf38b07599",
+      "changed_fields": [
+        "$.segments[5].narration"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/gea-shapovalov.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "fb3fffba98dd53930061964fd7aaa6dbd754a7e8",
+      "corrected_source_blob_sha": "59ce38709e1569b60071d39f4c52f1162b26ec07",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/gea-van-de-zandschulp-us-open-2026-r4.json",
+      "source_status": "corrected",
+      "original_blob_sha": "26fd305c27e21d205a2ddeeaadd9d3c8e965fc3b",
+      "corrected_source_blob_sha": "65dcb62240c3349ae8110396032d618e60a5c69e",
+      "changed_fields": [
+        "$._match.participants[1]",
+        "$.cover.matchup[0].name",
+        "$.cover.topic",
+        "$.cover.winner",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 7
+    },
+    {
+      "file": "specs/reels/gea-van-de-zandschulp-us-open-2026-r4.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "96a60b0bec8c796134e2e948877a1410280c2c13",
+      "corrected_source_blob_sha": "ecd1955244138b476a85a561e6b0e809ac8049a8",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/halys-deminaur.json",
+      "source_status": "corrected",
+      "original_blob_sha": "60f4706822198fb97bc9d21d9a9b67bd8d2f30e6",
+      "corrected_source_blob_sha": "84cdb5c6b18b29c8f764cd0bef06009b385cf132",
+      "changed_fields": [
+        "$.editorial.human_context.angle"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/halys-deminaur.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "63d21b14c1a449d5d3a8c6cf82584181213cecaa",
+      "corrected_source_blob_sha": "a773f0f9b52be4700e3a8ef98bdd862c51642487",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/hewitt-washington.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "e92e17d0e021b4cf2180fe24ee952014c8b37032",
+      "corrected_source_blob_sha": "3a98b12d79824b9aa29202ae37ae97c3991b0c87",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/hu-kopriva-chengdu-2026-r1.json",
+      "source_status": "corrected",
+      "original_blob_sha": "95ae3a078c33cda4f98960744f9159be63097c47",
+      "corrected_source_blob_sha": "29de80fb4f715d46479033d2519388de9f182f8f",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.matchup[0].name",
+        "$.cover.winner",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.segments[0].narration",
+        "$.segments[10].narration",
+        "$.segments[10].point_end_ok",
+        "$.segments[2].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 17
+    },
+    {
+      "file": "specs/reels/hu-kopriva-chengdu-2026-r1.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "3a030acca91b5f1d534f6a97a3b84a504a10f45e",
+      "corrected_source_blob_sha": "9272f59b6562f77051141de999709f6cc95532b9",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/jodar-shoelace-saga-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "9203b330c9c932fc5e12d7126f9d6848e985e4d8",
+      "corrected_source_blob_sha": "3c3c1c2195036e4bf290fca3e95709bad55aa0ab",
+      "changed_fields": [
+        "$.editorial.beats[1]",
+        "$.segments[2].narration"
+      ],
+      "changed_field_count": 2
+    },
+    {
+      "file": "specs/reels/jodar-shoelace-saga-2026.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "37881563d111141277e0956f088ccdb33affac1b",
+      "corrected_source_blob_sha": "28c7254582e68bf5d4500b0658397e107359d746",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.json",
+      "source_status": "corrected",
+      "original_blob_sha": "22ba1ac2266a82d0f6c2da89f9ca1038538e33ad",
+      "corrected_source_blob_sha": "ae3350b021a8ddb63067661e2dbedd548dd50635",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.hook",
+        "$.cover.matchup[0].name",
+        "$.cover.subject",
+        "$.cover.topic",
+        "$.cover.winner",
+        "$.editorial.hook[1]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.question",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.segments[1].narration",
+        "$.segments[6].narration",
+        "$.segments[7].narration",
+        "$.segments[7].point_end_ok",
+        "$.segments[8].narration",
+        "$.segments[8].point_end_ok",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 21
+    },
+    {
+      "file": "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "a0f39e10964d59e2896bca091b77e410b7b5efd9",
+      "corrected_source_blob_sha": "c0d77cd0c57e266ef7d84a9c77b0b1c7c2f22471",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/khachanov-blockx-us-open-2026-qf.json",
+      "source_status": "corrected",
+      "original_blob_sha": "c1cbd759b91b0e8a5eec9841a2c0a341866731bb",
+      "corrected_source_blob_sha": "9d2719d3f32a07cbe970e8606c0086ad568b0fd8",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$.cover.matchup[0].name",
+        "$.cover.subject",
+        "$.cover.topic",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[13].narration",
+        "$.segments[16].crosses_cut",
+        "$.segments[1].narration",
+        "$.segments[4].narration",
+        "$.segments[6].narration",
+        "$.segments[7].narration",
+        "$.segments[8].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 23
+    },
+    {
+      "file": "specs/reels/khachanov-blockx-us-open-2026-qf.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "4c96828a97c73571db254da567fa392e2e1630b2",
+      "corrected_source_blob_sha": "6cbabd034d97011167bda2b70d283757cf4551dd",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/kovacevic-khachanov.json",
+      "source_status": "corrected",
+      "original_blob_sha": "3cb59e54a0e9c839e8480180d831cd24e99ca68b",
+      "corrected_source_blob_sha": "f33f610278eb00a9604032e8fa512c1a4ece3211",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.cover.subject",
+        "$.editorial.beats[0]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[11].narration",
+        "$.segments[3].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 12
+    },
+    {
+      "file": "specs/reels/kovacevic-khachanov.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "3f0e67f37d1c2971e860ff83e62d996266f4583e",
+      "corrected_source_blob_sha": "2bd7a4bd2d25b74c2d5b57866be172a734d7d491",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/krejcikova-friedsam-singapore-2026-r1.json",
+      "source_status": "corrected",
+      "original_blob_sha": "3f7614717d356bedb9d0be8478c6f972115c5ef6",
+      "corrected_source_blob_sha": "5549d72079b563cff76d980774896337fd2f0ae7",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.segments[1].narration",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[4].narration",
+        "$.segments[6].narration",
+        "$.segments[8].narration",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 18
+    },
+    {
+      "file": "specs/reels/krejcikova-friedsam-singapore-2026-r1.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "c1f15ee8ed9b4b601aa99257d5181732571fa823",
+      "corrected_source_blob_sha": "5ecbff6a091c0769dcb0c8acfce5ebe4c496c238",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/laver-cup-history-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "13074c91c457cf69f18de7763421b66c0923aa44",
+      "corrected_source_blob_sha": "80f19c1bd02de5f8d479add01f0c231618e8b7ca",
+      "changed_fields": [
+        "$.segments[19].narration"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/lina-cincinnati-2012.json",
+      "source_status": "corrected",
+      "original_blob_sha": "c1be22b269c0ac01f9beb552e0fe813625146e94",
+      "corrected_source_blob_sha": "ecdcb588a150157b45d83e9240e9f198d2524aa9",
+      "changed_fields": [
+        "$.segments[21].narration"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/lina-cincinnati-2012.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "78cead2afc9cab414bb9b4cfb7de10687a997f35",
+      "corrected_source_blob_sha": "cab8f1371b719b250196620ec19c8b6a1ac34e13",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/medvedev-zandschulp.json",
+      "source_status": "corrected",
+      "original_blob_sha": "042bca060e0dde27a4a555f599f7ec67f2cb92ea",
+      "corrected_source_blob_sha": "3c6f5294089ef81b275e16a0bac70dfb792916fc",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.cover.winner",
+        "$.segments[2].narration"
+      ],
+      "changed_field_count": 3
+    },
+    {
+      "file": "specs/reels/medvedev-zandschulp.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "c00337391da53b1015e1b4577ea7e93881a9e6ef",
+      "corrected_source_blob_sha": "44bf91f51e4814a4695c5689cd70ecfe572c0750",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/mensik-nakashima-laver-cup-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "227981a9ab7f6e92fca0db77c0a4171362e832fd",
+      "corrected_source_blob_sha": "32b1dd86ef054b4f72681ff8791c8d46a1bbc51d",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[0]",
+        "$.cover.hook",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.beats[3]",
+        "$.editorial.hook[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.segments[0].crosses_cut",
+        "$.segments[1].narration",
+        "$.segments[4].narration",
+        "$.segments[5].narration",
+        "$.segments[6].crosses_cut",
+        "$.segments[6].narration",
+        "$.segments[7].narration",
+        "$.segments[8].narration",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 25
+    },
+    {
+      "file": "specs/reels/mensik-nakashima-laver-cup-2026.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "94d636657b2aef27f9ad6d49555d2cd9eac70cf4",
+      "corrected_source_blob_sha": "f7bbebdf110bb71551e30ba278fa6c040efb05e8",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/mensik-shelton-davis-cup-2026-q2.json",
+      "source_status": "corrected",
+      "original_blob_sha": "01e55a1098439e4158ee6ad9a0604472bbbda408",
+      "corrected_source_blob_sha": "4785b3915c17e35d6cd9fefa24cf98e0496eb237",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.matchup[0].name",
+        "$.cover.subject",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.beats[3]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.segments[13].point_end_ok",
+        "$.segments[1].crosses_cut",
+        "$.segments[1].narration",
+        "$.segments[2].crosses_cut",
+        "$.segments[9].point_end_ok",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 24
+    },
+    {
+      "file": "specs/reels/mensik-shelton-davis-cup-2026-q2.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "e4e775ee4dbd35fbe3cab46c8291756da56c4113",
+      "corrected_source_blob_sha": "7b45764726b3c9636269d60013c30da917396656",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/mensik-tien-davis-cup-2026-q2.json",
+      "source_status": "corrected",
+      "original_blob_sha": "7002732171631e40b2c70d5a1c92637c6c6b2c56",
+      "corrected_source_blob_sha": "6b95e14909cad5c46e56073af2c0338cb88e661d",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[0]",
+        "$.cover.matchup[0].name",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.beats[3]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.human_context.facts[7]",
+        "$.editorial.human_context.facts[8]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.segments[10].narration",
+        "$.segments[3].narration",
+        "$.segments[4].narration",
+        "$.segments[7].narration",
+        "$.segments[8].narration",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 23
+    },
+    {
+      "file": "specs/reels/mensik-tien-davis-cup-2026-q2.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "b8c8d73b9b31f472c6e4707c8dfc5ab497fd821e",
+      "corrected_source_blob_sha": "bff766ce7a46931a7c072247b947900407a83981",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/noskova-boulter-bjk-cup-2026-qf.json",
+      "source_status": "corrected",
+      "original_blob_sha": "577c6d6326ef266e4ceda739b4bbdc87985686c9",
+      "corrected_source_blob_sha": "5752f7b89fde4f06b72f24bf75af18df8036a1fb",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.cover.topic",
+        "$.push.lead",
+        "$.segments[10].narration",
+        "$.segments[10].point_end_ok",
+        "$.segments[11].narration",
+        "$.segments[12].narration",
+        "$.segments[14].narration",
+        "$.segments[3].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration",
+        "$.segments[8].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 15
+    },
+    {
+      "file": "specs/reels/noskova-boulter-bjk-cup-2026-qf.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "8c8c05fd1fdef55c1c653014f856f016b739450c",
+      "corrected_source_blob_sha": "738c2e59d4a7fded6fbccb37e316d28e03de7a1d",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/noskova-boulter.json",
+      "source_status": "corrected",
+      "original_blob_sha": "f2c58abdd8c37794214c0946a1f40a7a18d9a745",
+      "corrected_source_blob_sha": "aba11aa713035e7cedcc1b29e0d15c40223bdf2e",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[11].narration",
+        "$.segments[15].narration",
+        "$.segments[17].narration",
+        "$.segments[18].narration",
+        "$.segments[19].narration",
+        "$.segments[21].narration",
+        "$.segments[3].narration",
+        "$.segments[6].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 14
+    },
+    {
+      "file": "specs/reels/noskova-boulter.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "6d414f1ec6ffb5231c41e487ecc2c262692c4fc3",
+      "corrected_source_blob_sha": "94b9478787eb3d4db5d1624cf3bbea2ac00fda0d",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/osaka-mertens.json",
+      "source_status": "corrected",
+      "original_blob_sha": "7f4c2797f2df6393b5aa781daee8b268496fe9bd",
+      "corrected_source_blob_sha": "1d920918cb89459f65dbd213f873f6e15811f00f",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.cover.subject",
+        "$.cover.winner",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.question",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[2].narration",
+        "$.segments[4].narration",
+        "$.segments[5].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 11
+    },
+    {
+      "file": "specs/reels/pegula-waltert.json",
+      "source_status": "corrected",
+      "original_blob_sha": "c668a147e3d018c6fc8796fcab2bc758355ce896",
+      "corrected_source_blob_sha": "7ae1a28ef7500142309082ad82bdfdd31bd39340",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[0]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[11].narration",
+        "$.segments[12].narration",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 12
+    },
+    {
+      "file": "specs/reels/pegula-waltert.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "470cd9f7f012938e06a58929ec32fc55b371b634",
+      "corrected_source_blob_sha": "8b5d0ea9f6e576abe7dbde84f427ae2610b8a3dd",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/pending/alcaraz-arnaldi.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "67309e982adcaf7d8f15452a64f287f9da91bac3",
+      "corrected_source_blob_sha": "43815869c8b8c51cca96ea459d31e9f58cf87066",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.push.lead",
+        "$.segments[0].narration",
+        "$.segments[1].narration"
+      ],
+      "changed_field_count": 8
+    },
+    {
+      "file": "specs/reels/pending/alcaraz-michelsen.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "cc25b4d9206d6104fd63b52d9ea8c30e5f79a329",
+      "corrected_source_blob_sha": "299860e50cf053357569bd0eff1d6a6be1fc19f4",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.editorial.question",
+        "$.push.lead",
+        "$.segments[2].narration",
+        "$.segments[4].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration"
+      ],
+      "changed_field_count": 16
+    },
+    {
+      "file": "specs/reels/pending/auger-aliassime-khachanov.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "3451ae1a1c78d6d1dd696972aa8f467a81deb79f",
+      "corrected_source_blob_sha": "d35eef64e5cb04db3b3bb8de4d57a95000a7a1ac",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[0]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[2]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[0].narration",
+        "$.segments[1].narration",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[4].narration",
+        "$.segments[5].narration"
+      ],
+      "changed_field_count": 17
+    },
+    {
+      "file": "specs/reels/pending/bonzi-buse.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "2c02ffd5c66b728559b972c688703ca16b3053c1",
+      "corrected_source_blob_sha": "6fade38d7e81c7c026b5328d56176b90984c8c93",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.matchup[0].name",
+        "$.cover.winner"
+      ],
+      "changed_field_count": 4
+    },
+    {
+      "file": "specs/reels/pending/boulter-muchova.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "b69da961baa95d152470809066e07ab8e806bc5c",
+      "corrected_source_blob_sha": "9c63c2a635260c5bf951b75e91adfe9ad4635cfc",
+      "changed_fields": [
+        "$._match.participants[1]",
+        "$._match.winner",
+        "$.cover.matchup[1].name",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[0].narration",
+        "$.segments[3].narration",
+        "$.segments[6].narration"
+      ],
+      "changed_field_count": 18
+    },
+    {
+      "file": "specs/reels/pending/comesana-cobolli.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "22adce5307ae7c7dc28aa0cae45bafea4782dcec",
+      "corrected_source_blob_sha": "5ad3c8a6e26e55d5a7c02b8ac6ee38b3d25a3fb4",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[0]",
+        "$.cover.matchup[0].name",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[2]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[1].narration",
+        "$.segments[2].narration",
+        "$.segments[5].narration"
+      ],
+      "changed_field_count": 13
+    },
+    {
+      "file": "specs/reels/pending/darderi-ruud.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "5702c1f91d8c8bd9aa4a46ef90009626904c6596",
+      "corrected_source_blob_sha": "7216123518a9bac65b962341ff80108d53cb8dc2",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.hook[1]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.question",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[0].narration"
+      ],
+      "changed_field_count": 13
+    },
+    {
+      "file": "specs/reels/pending/fritz-bellucci.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "34f1957f307fc8f625f3684decc97d7a81b8e3c6",
+      "corrected_source_blob_sha": "19295b1e24948864609207284e575218a04a47b2",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[0].narration",
+        "$.segments[1].narration",
+        "$.segments[2].narration"
+      ],
+      "changed_field_count": 15
+    },
+    {
+      "file": "specs/reels/pending/jacquet-darderi.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "695211c46a3646fd3834c22c9f9ff14fdc8b244b",
+      "corrected_source_blob_sha": "72bda5a2eca061d1023e001029e80d5ab7330883",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.human_context",
+        "$.editorial.question",
+        "$.push.lead",
+        "$.push.summary"
+      ],
+      "changed_field_count": 8
+    },
+    {
+      "file": "specs/reels/pending/khachanov-auger-aliassime.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "2d2d0d6484aac8aee37ae864bcef42c456f67170",
+      "corrected_source_blob_sha": "6f842378a4534d106a21e7bd12328a4ab8a6e2b4",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[2].narration",
+        "$.segments[3].narration"
+      ],
+      "changed_field_count": 14
+    },
+    {
+      "file": "specs/reels/pending/khachanov-tien.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "fdf2325e33529ea302bd97cbb263e22502928bd7",
+      "corrected_source_blob_sha": "6f06a7f7f2b6db0ad0655d51d23d14ef2ed5f910",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[2]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[1].narration",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[4].narration"
+      ],
+      "changed_field_count": 15
+    },
+    {
+      "file": "specs/reels/pending/mensik-mochizuki.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "94d5d0f3fb8cebcaf2f073f6b4f5ecddf098e36e",
+      "corrected_source_blob_sha": "82fcb4d84df0db45ec6a634154bbf11332ee4051",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.segments[0].narration",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[4].narration"
+      ],
+      "changed_field_count": 16
+    },
+    {
+      "file": "specs/reels/pending/mensik-nakashima-laver-cup-2026.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "d780a3b920bca4e92a21ae8be7fd2b19456403b2",
+      "corrected_source_blob_sha": "29ece63c51fa8c9cc4d16be81c2b8b54c934dbcf",
+      "changed_fields": [
+        "$.cover.matchup[0].name",
+        "$.editorial.beats[0]",
+        "$.editorial.human_context",
+        "$.editorial.narration[1]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[0].narration",
+        "$.segments[1].narration",
+        "$.segments[3].narration",
+        "$.segments[4].narration"
+      ],
+      "changed_field_count": 11
+    },
+    {
+      "file": "specs/reels/pending/mensik-rodionov.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "52cd1980033b417954b73de5e7bb1da7d5214ee7",
+      "corrected_source_blob_sha": "3ae03bd0545d21cdcca58a3522a3ea208f705fc7",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[2]",
+        "$.editorial.hook[1]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[2]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[0].narration",
+        "$.segments[2].narration"
+      ],
+      "changed_field_count": 15
+    },
+    {
+      "file": "specs/reels/pending/mensik-tien.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "03fe5b4d077fa88fe77dfc2b2d8f472689130743",
+      "corrected_source_blob_sha": "dc8b4cf56338bce357b79e46deb90d1b7a5f4ad3",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[0]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[2]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[2].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration"
+      ],
+      "changed_field_count": 15
+    },
+    {
+      "file": "specs/reels/pending/muchova-boulter.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "2bfe35cd256c208cf167526dd5497bc38b781f79",
+      "corrected_source_blob_sha": "82df3254f32b94152c4465f4eee7fd384dfbd641",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[1]",
+        "$.editorial.hook[1]",
+        "$.editorial.narration[1]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[1].narration",
+        "$.segments[3].narration",
+        "$.segments[6].narration"
+      ],
+      "changed_field_count": 12
+    },
+    {
+      "file": "specs/reels/pending/nakashima-michelsen.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "e6aa028d0de84e07ad0add1509993bd82dbdc011",
+      "corrected_source_blob_sha": "0239bf43fdbc20a2dfac71a9a38d792c28fe096f",
+      "changed_fields": [
+        "$._match.participants[1]",
+        "$._match.winner",
+        "$.cover.matchup[1].name",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[0].narration",
+        "$.segments[1].narration",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[6].narration"
+      ],
+      "changed_field_count": 20
+    },
+    {
+      "file": "specs/reels/pending/noskova-boulter-bjk-cup-2026-qf.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "abfe54de23cb689741ad474324aa22f035aa0000",
+      "corrected_source_blob_sha": "fbfed47d8de829828a109f8da8a5c0533e7e5477",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.chapters[1]",
+        "$.editorial.narration[1]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[0].narration",
+        "$.segments[3].narration",
+        "$.segments[4].narration"
+      ],
+      "changed_field_count": 13
+    },
+    {
+      "file": "specs/reels/pending/osaka-zakharova.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "58531203b8101decd90fec7aa3fe6e421fd6920a",
+      "corrected_source_blob_sha": "b68c0f5ddf3b5d50258a757b01ddfe872f539a24",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[1]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[5].narration"
+      ],
+      "changed_field_count": 10
+    },
+    {
+      "file": "specs/reels/pending/sabalenka-iatcenko.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "ed138203b3e8eb4a2ab6a282e637b9d9276aa1ab",
+      "corrected_source_blob_sha": "6f8d891e22174fe7030d58ef766aaef8a390504c",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[1]",
+        "$.editorial.human_context",
+        "$.editorial.narration[1]",
+        "$.editorial.question",
+        "$.segments[0].narration"
+      ],
+      "changed_field_count": 8
+    },
+    {
+      "file": "specs/reels/pending/timofeeva-mertens.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "8a00945694071a6fe8e3903632c98ea0e66a34e1",
+      "corrected_source_blob_sha": "47979f5cfff65d3088aceb8243629d47e831d3e3",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[0]",
+        "$.cover.matchup[0].name",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.chapters[1]",
+        "$.editorial.human_context",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[1].narration",
+        "$.segments[2].narration"
+      ],
+      "changed_field_count": 14
+    },
+    {
+      "file": "specs/reels/pending/timofeeva-osaka.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "13fa53d9be181d671398c22c966fb068717a3092",
+      "corrected_source_blob_sha": "784ebb4970890313deb781b902c5e4a409774977",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[0]",
+        "$.cover.matchup[0].name",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.editorial.question",
+        "$.push.lead",
+        "$.segments[2].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration",
+        "$.segments[7].narration",
+        "$.segments[8].narration"
+      ],
+      "changed_field_count": 16
+    },
+    {
+      "file": "specs/reels/pending/zheng-putintseva.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "5c6826e792ea82de7d2332308aa2cc7baa56c19c",
+      "corrected_source_blob_sha": "59b391cef82e1695e74ca5385fadb3aab598c492",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[0].narration",
+        "$.segments[1].narration"
+      ],
+      "changed_field_count": 11
+    },
+    {
+      "file": "specs/reels/pending/zverev-darderi.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "ea696e6995c82967fe7468e78b7fc3e6a6c2b5f9",
+      "corrected_source_blob_sha": "2e9a282ab433551dc5d52aeba06a5cef283e849a",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context",
+        "$.editorial.narration[2]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[2].narration",
+        "$.segments[4].narration",
+        "$.segments[6].narration"
+      ],
+      "changed_field_count": 13
+    },
+    {
+      "file": "specs/reels/pending/zverev-khachanov.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "d758ad3c4cce48313ac98372bfd81c3a3836e0f6",
+      "corrected_source_blob_sha": "1405f9e042e4e4457078e86d42a164933fba2b1b",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.chapters[1]",
+        "$.editorial.human_context",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.editorial.question",
+        "$.segments[2].narration",
+        "$.segments[5].narration"
+      ],
+      "changed_field_count": 12
+    },
+    {
+      "file": "specs/reels/putintseva-bencic-us-open-2026-r1.json",
+      "source_status": "corrected",
+      "original_blob_sha": "d8aa6f123d987c760d99b7adc893fd691d4e74ea",
+      "corrected_source_blob_sha": "5ce35986f9b9d1c8409e27074bcce35a807d4bc8",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.matchup[0].name",
+        "$.cover.subject",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.beats[3]",
+        "$.editorial.human_context.angle",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[10].narration",
+        "$.segments[13].narration",
+        "$.segments[1].narration",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[4].narration",
+        "$.segments[5].narration",
+        "$.segments[7].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 22
+    },
+    {
+      "file": "specs/reels/putintseva-bencic-us-open-2026-r1.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "3f5172520cf84a771a9cfd2adf7cc1e7b14d7180",
+      "corrected_source_blob_sha": "8e9d2e48a963e859a13e5481604dc3052eb4b40d",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/putintseva-bucsa-bjk-cup-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "b24212305e5badda0225e04925983bf6f8fefa44",
+      "corrected_source_blob_sha": "57992cb376c64c5d10abab15b84283f91a64d014",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.matchup[0].name",
+        "$.cover.subject",
+        "$.cover.topic",
+        "$.cover.winner",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context.angle",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[11].narration",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 15
+    },
+    {
+      "file": "specs/reels/putintseva-bucsa-bjk-cup-2026.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "b272a467f0618a4542939496dab5303830d28ab4",
+      "corrected_source_blob_sha": "5603f24a674ebc0e5a7e432f9d4781d06dbde664",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/ruud-zverev-doubles-laver-cup-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "f67feb75908c51b2df8da27d3925e159f247fd6e",
+      "corrected_source_blob_sha": "7f2268c291ce930f8b464ff848dce12a335acdd1",
+      "changed_fields": [
+        "$.editorial.beats[1]",
+        "$.segments[1].narration"
+      ],
+      "changed_field_count": 2
+    },
+    {
+      "file": "specs/reels/rybakina-charaeva-beijing-2026-r2.json",
+      "source_status": "corrected",
+      "original_blob_sha": "78585103f499884083b8287ad68829a4f8103cdc",
+      "corrected_source_blob_sha": "26182dade311c4456d78da5f476df54546673098",
+      "changed_fields": [
+        "$._match.participants[1]",
+        "$._match.winner",
+        "$.cover.hook",
+        "$.cover.matchup[0].name",
+        "$.cover.subject",
+        "$.cover.topic",
+        "$.cover.winner",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[10].crosses_cut",
+        "$.segments[10].point_end_ok",
+        "$.segments[11].crosses_cut",
+        "$.segments[11].narration",
+        "$.segments[11].point_end_ok",
+        "$.segments[1].kicker",
+        "$.segments[1].narration",
+        "$.segments[2].narration",
+        "$.segments[4].crosses_cut",
+        "$.segments[4].point_end_ok",
+        "$.segments[5].crosses_cut",
+        "$.segments[5].point_end_ok",
+        "$.segments[6].crosses_cut",
+        "$.segments[6].narration",
+        "$.segments[6].point_end_ok",
+        "$.segments[8].narration",
+        "$.segments[9].crosses_cut",
+        "$.segments[9].point_end_ok",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 29
+    },
+    {
+      "file": "specs/reels/rybakina-charaeva-beijing-2026-r2.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "6aa209ecfccc841dc1fa82130101bf38a4d6fe3f",
+      "corrected_source_blob_sha": "fc58b76c74cb47b2707870f53702ba5913b19ff9",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/shang-darderi-montreal-2026.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "ad0ceb06a6cb3cede3f9ff2dc00a47752c206d0d",
+      "corrected_source_blob_sha": "f7ddd9d2d158b685470ac4c5e30641130451979d",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/shelton-mensik.json",
+      "source_status": "corrected",
+      "original_blob_sha": "7ece344bb76502218a0856fdc6ceea54cf5db50f",
+      "corrected_source_blob_sha": "4b8b8fb2c609c4585975487e4f5dd2fa42a398ad",
+      "changed_fields": [
+        "$.cover.matchup[0].name",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.push.summary",
+        "$.segments[1].narration",
+        "$.segments[2].narration",
+        "$.segments[4].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 15
+    },
+    {
+      "file": "specs/reels/shelton-mensik.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "70d5569aec660f6e301b4043c9df1f1576a950dd",
+      "corrected_source_blob_sha": "1024c870a35f7f5cde18e1698f5afe6fe0083de4",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/shelton-zverev-h2h.json",
+      "source_status": "corrected",
+      "original_blob_sha": "9a52601ceb28b12bd6440bcbb8c76c678f7f1418",
+      "corrected_source_blob_sha": "381c4b3ab28c84cbd549383461973de07aa2eff2",
+      "changed_fields": [
+        "$.segments[1].narration"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/tiafoe-michelsen.json",
+      "source_status": "corrected",
+      "original_blob_sha": "8f3cc78577d5e29060c932b489f5a02ff170e100",
+      "corrected_source_blob_sha": "cea478e88703ac929b287fbd483c46cdd54946f0",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.push.lead",
+        "$.segments[1].narration",
+        "$.segments[3].narration",
+        "$.segments[5].narration",
+        "$.segments[7].narration",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 16
+    },
+    {
+      "file": "specs/reels/tiafoe-michelsen.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "16bf28880dc4b042ea6c718fe891395dde2acdd3",
+      "corrected_source_blob_sha": "3d9f5c66f54f92fb23ba9946111589eff9f1f4ea",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/tirante-landaluce.json",
+      "source_status": "corrected",
+      "original_blob_sha": "10dc612a6a007f088fbe2ae810da72321ef231c2",
+      "corrected_source_blob_sha": "45fe2009a2c6d64fcd07806116a9ca005887f912",
+      "changed_fields": [
+        "$.editorial.human_context.angle"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/tirante-landaluce.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "8695393a8216c69595b561c50c49d9e6667615d9",
+      "corrected_source_blob_sha": "6babd13d84037c28df3f6e4af00dd2f2d5682ba3",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/tirante-mensik.json",
+      "source_status": "corrected",
+      "original_blob_sha": "1496e448aacd1f5f19b65bea9989c5ac04d22593",
+      "corrected_source_blob_sha": "c33ab36da8a516e6be3f3fcab244bdbcbde8b245",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[1].narration",
+        "$.segments[4].narration",
+        "$.segments[6].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 11
+    },
+    {
+      "file": "specs/reels/tirante-mensik.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "4c27befc23986ea750a87fa35fac8595b959e9df",
+      "corrected_source_blob_sha": "1b389ea5ab74ecd4968f1b81a56c93f582bb6400",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/trungelliti-medvedev.json",
+      "source_status": "corrected",
+      "original_blob_sha": "7e39a842035e846b6dbed6e0ad33e4919281bcea",
+      "corrected_source_blob_sha": "d73dce6f6a9d9993c0e1de27fed0f1aaf34438d2",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[14].narration",
+        "$.segments[16].narration",
+        "$.segments[17].narration",
+        "$.segments[3].narration",
+        "$.segments[6].narration",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 12
+    },
+    {
+      "file": "specs/reels/trungelliti-medvedev.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "dd6b6f0aef84f94c67fbb0ec92bcf521ca3d10de",
+      "corrected_source_blob_sha": "80383c20ffe2511f9d942bdb3394e0db813184b4",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/two-handled-racket-maric-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "3cb58dde7c62b32f118cba3448f3c686c9cd1f8e",
+      "corrected_source_blob_sha": "7798b9fe65b30e8dd0ac8c19b93d565ee17337b9",
+      "changed_fields": [
+        "$.push.lead",
+        "$.segments[5].narration"
+      ],
+      "changed_field_count": 2
+    },
+    {
+      "file": "specs/reels/two-handled-racket-maric-2026.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "6ab66ac4dbb9aa75e52d3a404d9013073e1781ce",
+      "corrected_source_blob_sha": "949dafd70bf675f2035f8377afaa1f2f27446dcf",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/waiting-cover/zandschulp-deminaur-us-open-2026-r2.json",
+      "source_status": "corrected",
+      "original_blob_sha": "3d9b256c28eef3391bfeb0ceee8898d68920f918",
+      "corrected_source_blob_sha": "4e7b5a68126f3148f43681745472dc5aa1e3bde0",
+      "changed_fields": [
+        "$._match.participants[0]",
+        "$._match.winner",
+        "$.cover.matchup[0].name",
+        "$.cover.topic",
+        "$.cover.winner",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[10].narration",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[4].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration",
+        "$.segments[7].narration",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 19
+    },
+    {
+      "file": "specs/reels/waiting-cover/zandschulp-deminaur-us-open-2026-r2.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "d73b3dd83ff81b04763871759267e1f43149477e",
+      "corrected_source_blob_sha": "52bd7eb90110708e4c47c1781c75036778605c83",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/wang-vandewinkel.json",
+      "source_status": "corrected",
+      "original_blob_sha": "6f0596b79729ca21d0369d724c73c14bc01e616e",
+      "corrected_source_blob_sha": "ad1b204eca233bb6c40c86e6da5deeef5dedb968",
+      "changed_fields": [
+        "$.editorial.human_context.angle"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/wang-vandewinkel.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "aa8536ce38a3c04cb7722419d2bb50b8a708a5b7",
+      "corrected_source_blob_sha": "0511fa4792554c7c1034d114345d31880a1dc37e",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/wang-xinyu-story.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "51a21b46bf96017ce428e4d4f42a25477971954d",
+      "corrected_source_blob_sha": "adf00250f85b2b73fef5fe7f73cc347a66fd4cd2",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/wangxiyu-keys.json",
+      "source_status": "corrected",
+      "original_blob_sha": "118e2f1e7b5e576bfcfbac792ce66c2dda901dd6",
+      "corrected_source_blob_sha": "527f45b98ccd2c16fe2dd56d6d87ce190189187b",
+      "changed_fields": [
+        "$.editorial.thesis"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/wangxiyu-keys.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "63d6b16ebda5f854c102a23af3837ce751244e41",
+      "corrected_source_blob_sha": "fa768ab69dd8bff33aa31edb24ee9d8d04160b2c",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/wangxiyu-timofeeva.json",
+      "source_status": "corrected",
+      "original_blob_sha": "c5ed31cb34ba95f2e277dfb0481190086d2fff36",
+      "corrected_source_blob_sha": "b7a3048db22e382588d8b5ae0ce523434283e2d9",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[10].narration",
+        "$.segments[12].narration",
+        "$.segments[5].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 9
+    },
+    {
+      "file": "specs/reels/wangxiyu-timofeeva.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "30bcf71ed80bcc3ef7ab76bfdc6cc180c648906b",
+      "corrected_source_blob_sha": "8db4be445ef4e1499ff9f67afe2d3e2174dfe166",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/zhang-putintseva.json",
+      "source_status": "corrected",
+      "original_blob_sha": "a327a1ed31fbb9c1c0dc41b06e756d727b0995da",
+      "corrected_source_blob_sha": "c40c9158e85eaed2bc0090c36dfe26a4d4c94135",
+      "changed_fields": [
+        "$.cover.hook",
+        "$.cover.matchup[1].name",
+        "$.push.summary",
+        "$.segments[0].narration"
+      ],
+      "changed_field_count": 4
+    },
+    {
+      "file": "specs/reels/zhang-putintseva.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "18e9d9c07c5d580983ba520b64cfaa93a434aa61",
+      "corrected_source_blob_sha": "e7f7c7e763bad5f77316146fb4420895f0ea433b",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/zheng-burel-us-open-2026-q2.json",
+      "source_status": "corrected",
+      "original_blob_sha": "a8d64d14beaa5c98624134aafd5c9ee45367968c",
+      "corrected_source_blob_sha": "f4f1f476b9552cae96fa6bb0d980b18483240e20",
+      "changed_fields": [
+        "$.editorial.beats[4]",
+        "$.editorial.narration[6]",
+        "$.push.lead",
+        "$.segments[7].narration"
+      ],
+      "changed_field_count": 4
+    },
+    {
+      "file": "specs/reels/zheng-burel-us-open-2026-q2.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "9a01ab2ccf36a23f918ee60946cbc32aae58bfb1",
+      "corrected_source_blob_sha": "776d89c77c82f6f5452911d729580d045c8fc0bd",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/zheng-from-low-to-us-open-comeback.json",
+      "source_status": "corrected",
+      "original_blob_sha": "3ec8fb97f0ce9f40c5e27e84019a88a343fda606",
+      "corrected_source_blob_sha": "a775fb1f0b6b0a6c71e55245cf6a0d67e159edb6",
+      "changed_fields": [
+        "$.segments[15].narration",
+        "$.segments[17].narration"
+      ],
+      "changed_field_count": 2
+    },
+    {
+      "file": "specs/reels/zheng-kalinskaya-beijing-2026-r2.json",
+      "source_status": "corrected",
+      "original_blob_sha": "8df2c3f2b58023a15d1ff9137f887a3767af8d39",
+      "corrected_source_blob_sha": "5e5d84f471614089049a7739cf33c222d8854b1d",
+      "changed_fields": [
+        "$.push.lead",
+        "$.segments[21].narration",
+        "$.segments[21].title_card"
+      ],
+      "changed_field_count": 3
+    },
+    {
+      "file": "specs/reels/zheng-kalinskaya-beijing-2026-r2.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "224cfce9b2857e6af496deef1fe78ba178d06923",
+      "corrected_source_blob_sha": "0c16fba8c7c13baf62cee5d8b3287d9b53dfd0d5",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/zheng-pridankina-us-open-2026-q3.json",
+      "source_status": "corrected",
+      "original_blob_sha": "27d4eed620582da3099a81ad98dfd808b07b1321",
+      "corrected_source_blob_sha": "7f421cbf4687f09e2fd8c68c0747f8caf8b795a7",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[1]",
+        "$.editorial.thesis",
+        "$.segments[10].narration",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[7].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 10
+    },
+    {
+      "file": "specs/reels/zheng-pridankina-us-open-2026-q3.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "64026baef73aedc303e2207e681e6b8cbc428226",
+      "corrected_source_blob_sha": "f1da8c59546c771428f3a13734d88610134b5abc",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/zheng-putintseva-us-open-2026-r2.json",
+      "source_status": "corrected",
+      "original_blob_sha": "b13c7eb6c719f5afd13b3db8d9f3c4b11f992ee5",
+      "corrected_source_blob_sha": "4978816b627b1602d4c0789698cde50c6249489e",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.cover.topic",
+        "$.editorial.human_context.angle",
+        "$.push.lead",
+        "$.segments[10].narration",
+        "$.segments[4].narration",
+        "$.segments[6].narration",
+        "$.segments[7].narration",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 12
+    },
+    {
+      "file": "specs/reels/zheng-putintseva-us-open-2026-r2.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "4e184cc4318713255cb20a598b880a967426fd0f",
+      "corrected_source_blob_sha": "c59b35012a5e89ea03afd10766da888e5547a870",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/zheng-us-open-outlook.json",
+      "source_status": "corrected",
+      "original_blob_sha": "059f96a159ea1d46bb575189f946a39c56fa9aa6",
+      "corrected_source_blob_sha": "7f5708f1b659826130e785c24cc044d523b06d29",
+      "changed_fields": [
+        "$.editorial.beats[3]",
+        "$.segments[13].narration"
+      ],
+      "changed_field_count": 2
+    },
+    {
+      "file": "specs/reels/zheng-us-open-outlook.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "343a5839182cd2d552f97a39c48c814401276924",
+      "corrected_source_blob_sha": "04b34f77bb850067621aea09e3488950ec1299fa",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/zverev-atmane.json",
+      "source_status": "corrected",
+      "original_blob_sha": "59acd72d06e0ada6038fd8609c2dc658815f7f6d",
+      "corrected_source_blob_sha": "9eb03a7df0e43241b4d61dc6983595057134082b",
+      "changed_fields": [
+        "$.cover.matchup[1].name",
+        "$.editorial.beats[0]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[11]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[6]",
+        "$.editorial.human_context.facts[7]",
+        "$.editorial.human_context.facts[9]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[10].narration",
+        "$.segments[11].crosses_cut",
+        "$.segments[11].narration",
+        "$.segments[13].narration",
+        "$.segments[16].narration",
+        "$.segments[1].crosses_cut",
+        "$.segments[3].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration",
+        "$.segments[9].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 21
+    },
+    {
+      "file": "specs/reels/zverev-atmane.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "ea9bd361503bb5af5357ace39e5406102b71c89b",
+      "corrected_source_blob_sha": "23ee4982a773ac5c118c59b9c64dee023cfedba1",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/zverev-khachanov-us-open-2026-sf.json",
+      "source_status": "corrected",
+      "original_blob_sha": "d15732036be7bb5f4632456c21353a024278cbf3",
+      "corrected_source_blob_sha": "ce676c6b40e12bddb3ae33056f2d53cec816b80c",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.cover.topic",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[5].narration",
+        "$.segments[8].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 14
+    },
+    {
+      "file": "specs/reels/zverev-khachanov-us-open-2026-sf.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "7ef94475566cdbccd8ec9cec0c9dd3e994aa13dc",
+      "corrected_source_blob_sha": "6aaf5feced4b1ead9c5e9831e632ab6798e26258",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/zverev-vandezandschulp-us-open-2026-qf.json",
+      "source_status": "corrected",
+      "original_blob_sha": "09be5d2d5fc8a8060cbc2ec77cbe90a2360b881f",
+      "corrected_source_blob_sha": "ef0215759aaf90dbe4b84fb139ed327b9dd6c3df",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.cover.matchup[1].name",
+        "$.cover.topic",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.segments[12].narration",
+        "$.segments[2].narration",
+        "$.segments[6].narration",
+        "$.topbar.line2"
+      ],
+      "changed_field_count": 11
+    },
+    {
+      "file": "specs/reels/zverev-vandezandschulp-us-open-2026-qf.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "3778a5974ac4525a0b832519e63700f94dd96b9a",
+      "corrected_source_blob_sha": "3a986d173c4f0198d378f78b653aa00c16844bd3",
+      "content_type": "editable-copy",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "src/tennislive/render/tournament_story.py",
+      "source_status": "corrected",
+      "original_blob_sha": "5e5c8c01da495bb8d31d18506160aec213438528",
+      "corrected_source_blob_sha": "1396725809e6e34033e1c04990cc216535fb183d",
+      "content_type": "active-renderer",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "src/tennislive/video/explainer.py",
+      "source_status": "corrected",
+      "original_blob_sha": "98c6144d52d365a6ce98b1521f247c37744c6b9c",
+      "corrected_source_blob_sha": "98191a0644031e70859330bcfa3d50cbefb422c9",
+      "content_type": "active-renderer",
+      "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    }
+  ],
+  "validation": {
+    "remaining_known_old_canonical_display_matches": 0,
+    "legacy_name_mask_removed": true,
+    "legitimate_person_name_exclusions": [
+      "迈克尔·郑（Michael Zheng）",
+      "记者 Harry，不是 Nicolas Jarry"
+    ],
+    "third_round_source_audit": "All remaining pending player ledger entries have third_review; source excerpts and publication evidence remain separate.",
+    "changed_ledger_keys_scanned": 121,
+    "distinct_old_new_pairs_scanned": 120,
+    "spec_and_source_files_scanned": 1174,
+    "confirmed_display_old_name_residuals": 0,
+    "canonical_mask_policy": "Mask only complete canonical names of at least the old-name length; short surnames cannot hide longer obsolete names. Native short names require explicit English identity.",
+    "retained_original_source_and_annotation_matches": 921,
+    "retained_non_display_metadata_matches": 116,
+    "excluded_false_or_non_display_matches": 14,
+    "derived_match_labels": "Local participants/winner/loser labels synchronized; official English raw facts, scores and provenance unchanged.",
+    "layout_regression": "Shortened Darderi takeaway to fit; removed its obsolete legacy wrap exception."
   }
 }

@@ -1,0 +1,133 @@
+{
+  "failed_nodes": [
+    "tests/test_actions_write_permission.py::test_给了actions_write的工作流都真的要点Pages",
+    "tests/test_interview_clip.py::test_推送重试耗尽必须报错不许绿着过去",
+    "tests/test_interview_clip.py::test_推送撞车要把本条重放上去而不是rebase",
+    "tests/test_match_reel.py::test_冷开场不许随手取源片开头",
+    "tests/test_match_reel.py::test_赛场之上开场要给出北京时间赛事和轮次",
+    "tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上",
+    "tests/test_match_reel.py::test_栏目和封面模板要配对",
+    "tests/test_match_reel.py::test_封面固定版式是官方抠图加本场视频全场机位",
+    "tests/test_match_reel.py::test_源片自己烧了记分条时字幕要让开",
+    "tests/test_match_reel.py::test_solo封面的对阵名字也要能算出来",
+    "tests/test_match_reel.py::test_测试按包名导入的tools模块要能在tools不在sys_path时导入",
+    "tests/test_interview_segment_ruler.py::test_已渲的采访spec按钉死的尺子重切_行一行不差",
+    "tests/test_interview_segment_ruler.py::test_老尺子表只许减_每条都真的要它",
+    "tests/test_interview_segment_ruler.py::test_太宽的候选不量_切出来的行和逐个量一字不差",
+    "tests/test_interview_segment_ruler.py::test_预检按老尺子重切_已发的对得上",
+    "tests/test_interview_subs_first.py::test_每个转写输入都绑在判定上_只改它旧判定不作数",
+    "tests/test_match_reel.py::test_封面上每个球员都要有国旗和即时排名",
+    "tests/test_match_reel.py::test_小红书正文首行要点出是谁",
+    "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段",
+    "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧",
+    "tests/test_match_reel.py::test_每条spec的旁白都还估得下",
+    "tests/test_match_reel.py::test_旁白里的分不许读成分钟",
+    "tests/test_match_reel.py::test_有母版就不许再渲一遍",
+    "tests/test_match_reel.py::test_母版要按上界存",
+    "tests/test_reattest.py::test_渲染路径读到的注解键都要归类",
+    "tests/test_reel_asset_gates.py::test_仓库里的图都解得开",
+    "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报",
+    "tests/test_probe_board.py::test_标定框和全库spec用的框对得上",
+    "tests/test_outro_push.py::test_提交进仓库的母版_台标横向不漂_纵向不往回",
+    "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe",
+    "tests/test_match_reel.py::test_赛场之上要留一段精彩的原声解说_不留要写明为什么",
+    "tests/test_reel_editorial.py::test_钩子不许复述赛果条和顶栏印着的东西",
+    "tests/test_reel_editorial.py::test_赛场之上要么开自动推送要么说清走哪条路",
+    "tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有",
+    "tests/test_small_gates.py::test_片尾板那条的豁免表只许减_全库零误报",
+    "tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红",
+    "tests/test_title_echo.py::test_正文第一句不许重复标题_新片子",
+    "tests/test_unvoiced_quote.py::test_新片子没配音的段都有双语原声字幕",
+    "tests/test_venue_assets.py::test_attribution_md_is_generated_from_credits",
+    "tests/test_venue_assets.py::test_attribution_md_never_credits_a_file_that_is_gone",
+    "tests/test_subtitle_override_evidence.py::test_yuan_override_is_proved_by_real_retained_ass"
+  ],
+  "baseline_reproduced": 40,
+  "new_failures": [
+    "tests/test_match_reel.py::test_solo封面的对阵名字也要能算出来"
+  ],
+  "reviewed_at": "2026-10-04",
+  "baseline_commit": "698332220c3f02c2c6ce5149aecbc598acfaa67c",
+  "full_suite_result": {
+    "passed": 5384,
+    "failed": 41,
+    "skipped": 280,
+    "passed_subtests": 70
+  },
+  "fixed_after_full_suite": [
+    {
+      "node": "tests/test_match_reel.py::test_solo封面的对阵名字也要能算出来",
+      "reason": "Test asserted old Putintseva name; aligned both matchup/title expectations with source canonical name.",
+      "targeted_recheck": "passed"
+    }
+  ],
+  "final_focused_confirmation": {
+    "passed": 47,
+    "failed": 0
+  },
+  "remaining_baseline_failed_nodes": [
+    "tests/test_actions_write_permission.py::test_给了actions_write的工作流都真的要点Pages",
+    "tests/test_interview_clip.py::test_推送重试耗尽必须报错不许绿着过去",
+    "tests/test_interview_clip.py::test_推送撞车要把本条重放上去而不是rebase",
+    "tests/test_match_reel.py::test_冷开场不许随手取源片开头",
+    "tests/test_match_reel.py::test_赛场之上开场要给出北京时间赛事和轮次",
+    "tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上",
+    "tests/test_match_reel.py::test_栏目和封面模板要配对",
+    "tests/test_match_reel.py::test_封面固定版式是官方抠图加本场视频全场机位",
+    "tests/test_match_reel.py::test_源片自己烧了记分条时字幕要让开",
+    "tests/test_match_reel.py::test_测试按包名导入的tools模块要能在tools不在sys_path时导入",
+    "tests/test_interview_segment_ruler.py::test_已渲的采访spec按钉死的尺子重切_行一行不差",
+    "tests/test_interview_segment_ruler.py::test_老尺子表只许减_每条都真的要它",
+    "tests/test_interview_segment_ruler.py::test_太宽的候选不量_切出来的行和逐个量一字不差",
+    "tests/test_interview_segment_ruler.py::test_预检按老尺子重切_已发的对得上",
+    "tests/test_interview_subs_first.py::test_每个转写输入都绑在判定上_只改它旧判定不作数",
+    "tests/test_match_reel.py::test_封面上每个球员都要有国旗和即时排名",
+    "tests/test_match_reel.py::test_小红书正文首行要点出是谁",
+    "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段",
+    "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧",
+    "tests/test_match_reel.py::test_每条spec的旁白都还估得下",
+    "tests/test_match_reel.py::test_旁白里的分不许读成分钟",
+    "tests/test_match_reel.py::test_有母版就不许再渲一遍",
+    "tests/test_match_reel.py::test_母版要按上界存",
+    "tests/test_reattest.py::test_渲染路径读到的注解键都要归类",
+    "tests/test_reel_asset_gates.py::test_仓库里的图都解得开",
+    "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报",
+    "tests/test_probe_board.py::test_标定框和全库spec用的框对得上",
+    "tests/test_outro_push.py::test_提交进仓库的母版_台标横向不漂_纵向不往回",
+    "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe",
+    "tests/test_match_reel.py::test_赛场之上要留一段精彩的原声解说_不留要写明为什么",
+    "tests/test_reel_editorial.py::test_钩子不许复述赛果条和顶栏印着的东西",
+    "tests/test_reel_editorial.py::test_赛场之上要么开自动推送要么说清走哪条路",
+    "tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有",
+    "tests/test_small_gates.py::test_片尾板那条的豁免表只许减_全库零误报",
+    "tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红",
+    "tests/test_title_echo.py::test_正文第一句不许重复标题_新片子",
+    "tests/test_unvoiced_quote.py::test_新片子没配音的段都有双语原声字幕",
+    "tests/test_venue_assets.py::test_attribution_md_is_generated_from_credits",
+    "tests/test_venue_assets.py::test_attribution_md_never_credits_a_file_that_is_gone",
+    "tests/test_subtitle_override_evidence.py::test_yuan_override_is_proved_by_real_retained_ass"
+  ],
+  "full_suite_rerun_after_test_expectation_only_fix": false,
+  "remaining_unresolved_baseline_failure_count": 40,
+  "canonical_display_scan": {
+    "files": 1174,
+    "changed_keys": 121,
+    "distinct_pairs": 120,
+    "true_old_name_display_residuals": 0
+  },
+  "table_validation": {
+    "atp": 500,
+    "wta": 500,
+    "alignment_errors": 0,
+    "metadata_warnings": 0
+  },
+  "immutable_render_records": {
+    "records": 2,
+    "byte_preserved": true
+  },
+  "actual_preview_renders": [
+    "rybakina-charaeva-beijing-2026-r2",
+    "zverev-vandezandschulp-us-open-2026-qf"
+  ],
+  "historical_media_rerendered": false
+}

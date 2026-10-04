@@ -8,6 +8,7 @@ from unittest import mock
 
 import pytest
 
+from tennislive.zh import player_zh
 from tennislive.zh.tts_fake_words import FAKE_WORDS
 from tennislive.render.tournament_story import STORIES, find_story_by_slug
 from tennislive.video.explainer import (
@@ -2972,9 +2973,9 @@ _KNOWN_TYPOS = {
     #   蒙菲尔斯 → 孟菲尔斯      等长差一字，判据 ① 抓到了
     #   科梅萨纳 → 科梅萨尼亚    长度 4/5，判据 ① 抓不到 → 这次补了判据 ②
     #   波佩林   → 波皮林        三个字，在射程之外 → 只能钉在这儿
-    #   费恩利   → 弗恩利        同上
+    #   弗恩利   → 费恩利        2026-10-04 原文复核后的现行主名
     "波佩林": "波皮林",         # Alexei Popyrin
-    "费恩利": "弗恩利",         # Jacob Fearnley
+    "弗恩利": player_zh("Jacob Fearnley"),  # 按现行有据规范名维护
 }
 
 #: 正当地含着某个错字串的词，查之前先遮掉。「巴基斯坦」里就有「基斯」——
@@ -3095,100 +3096,14 @@ def _near_misses(masked, run_re, index):
     return hits
 
 
-# 2026-10-04 全量译名对齐：仅兼容 HEAD 存量文本的旧规范名。
-# 这些不是新内容的合法显示名，未列出的文件仍须采用 player_zh()。
-# 哈恰诺夫旧央视用例：https://sports.cctv.com/2017/07/06/ARTI3sjUMZTbo2WB6EKs7ATW170706.shtml
-_LEGACY_CANONICAL_NAMES = {
-    ('wawrinka-wildcard', '迈克尔·郑'),
-    ('bu-jodar-us-open-2026-r1.xhs.txt', '米切尔森'),
-    ('fils-tokyo-qualifying', '米切尔森'),
-    ('fritz-jodar-final.xhs.txt', '米切尔森'),
-    ('fritz-michelsen.json', '米切尔森'),
-    ('fritz-michelsen.xhs.txt', '米切尔森'),
-    ('gauff-andreeva-us-open-2026-qf-interview.xhs.txt', '米切尔森'),
-    ('osaka-walkout-us-open-2026-r1.json', '扎哈罗娃'),
-    ('osaka-walkout-us-open-2026-r1.xhs.txt', '扎哈罗娃'),
-    ('pegula-waltert.json', '瓦尔特特'),
-    ('pegula-waltert.xhs.txt', '瓦尔特特'),
-    ('putintseva-bucsa-bjk-cup-2026.xhs.txt', '达尼利娜'),
-    ('tiafoe-michelsen-us-open-2026-qf-interview.json', '米切尔森'),
-    ('tiafoe-michelsen-us-open-2026-qf-interview.xhs.txt', '米切尔森'),
-    ('tiafoe-michelsen.json', '米切尔森'),
-    ('tiafoe-michelsen.xhs.txt', '米切尔森'),
-    ('wang-vandewinkel.xhs.txt', '扎哈罗娃'),
-    ('zheng-burel-us-open-2026-q2.json', '普里丹基纳'),
-    ('zheng-burel-us-open-2026-q2.xhs.txt', '普里丹基纳'),
-    ('zheng-from-low-to-us-open-comeback.json', '普里丹基纳'),
-    ('zheng-keys-us-open-2026-r3-presser.json', '布龙泽蒂'),
-    ('zheng-pridankina-us-open-2026-q3.json', '普里丹基纳'),
-    ('zheng-pridankina-us-open-2026-q3.xhs.txt', '普里丹基纳'),
-    ('zheng-us-open-outlook.json', '普里丹基纳'),
-    ('zheng-us-open-outlook.xhs.txt', '普里丹基纳'),
-
-    ('bartunkova-charaeva.json', '恰拉耶娃'),
-    ('bartunkova-charaeva.xhs.txt', '恰拉耶娃'),
-    ('rybakina-charaeva-beijing-2026-r2.json', '恰拉耶娃'),
-    ('rybakina-charaeva-beijing-2026-r2.xhs.txt', '恰拉耶娃'),
-    ('cobolli-paul-cincinnati-2026-qf.json', "达尔代里"),
-    ('cobolli-paul-cincinnati-2026-qf.xhs.txt', "达尔代里"),
-    ('shang-darderi-montreal-2026.xhs.txt', "达尔代里"),
-    ('thiem-football', "达尔代里"),
-    ('anisimova-bartunkova.json', '安尼西莫娃'),
-    ('anisimova-bartunkova.xhs.txt', '安尼西莫娃'),
-    ('bu-lucky-loser', '哈恰诺夫'),
-    ('bu-lucky-loser-story.json', '哈恰诺夫'),
-    ('bu-lucky-loser-story.xhs.txt', '哈恰诺夫'),
-    ('chengdu-ng-kouame.json', '哈恰诺夫'),
-    ('gea-shapovalov.json', '哈恰诺夫'),
-    ('gea-shapovalov.xhs.txt', '哈恰诺夫'),
-    ('khachanov-auger-aliassime-beijing-2026-r1.json', '哈恰诺夫'),
-    ('khachanov-auger-aliassime-beijing-2026-r1.xhs.txt', '哈恰诺夫'),
-    ('khachanov-blockx-us-open-2026-qf-interview.json', '哈恰诺夫'),
-    ('khachanov-blockx-us-open-2026-qf-interview.xhs.txt', '哈恰诺夫'),
-    ('khachanov-blockx-us-open-2026-qf.json', '哈恰诺夫'),
-    ('khachanov-blockx-us-open-2026-qf.xhs.txt', '哈恰诺夫'),
-    ('kovacevic-khachanov.json', '哈恰诺夫'),
-    ('kovacevic-khachanov.xhs.txt', '哈恰诺夫'),
-    ('lucky-loser', '哈恰诺夫'),
-    ('lucky-loser', '贝尔腾斯'),
-    ('second-serve-clock', '哈恰诺夫'),
-    ('shelton-zverev-h2h.json', '哈恰诺夫'),
-    ('zheng-kalinskaya-beijing-2026-r2.json', '鲍兹科娃'),
-    ('zheng-kalinskaya-beijing-2026-r2.xhs.txt', '鲍兹科娃'),
-    ('zverev-khachanov-us-open-2026-sf-interview.json', '哈恰诺夫'),
-    ('zverev-khachanov-us-open-2026-sf-interview.xhs.txt', '哈恰诺夫'),
-    ('zverev-khachanov-us-open-2026-sf-presser.json', '哈恰诺夫'),
-    ('zverev-khachanov-us-open-2026-sf-presser.xhs.txt', '哈恰诺夫'),
-    ('zverev-khachanov-us-open-2026-sf.json', '哈恰诺夫'),
-    ('zverev-khachanov-us-open-2026-sf.xhs.txt', '哈恰诺夫'),
-    ('zverev-vandezandschulp-us-open-2026-qf.json', '哈恰诺夫'),
-    ('zverev-vandezandschulp-us-open-2026-qf.xhs.txt', '哈恰诺夫'),
-}
-
-
-def _mask_legacy_canonical_names(where, text):
-    for filename, name in _LEGACY_CANONICAL_NAMES:
-        if where == filename:
-            text = text.replace(name, "　" * len(name))
-    return text
-
-
-def test_旧译名兼容只作用于明确登记的历史文本():
-    old = "哈恰诺夫"
-    where = "bu-lucky-loser-story.json"
-    assert (where, old) in _LEGACY_CANONICAL_NAMES
-    assert old not in _mask_legacy_canonical_names(where, old)
-    assert _mask_legacy_canonical_names("new-story.json", old) == old
-    assert _mask_legacy_canonical_names(where, "卡恰诺夫") == "卡恰诺夫"
-    for historical_file, historical_name in _LEGACY_CANONICAL_NAMES:
-        assert historical_name not in _mask_legacy_canonical_names(historical_file, historical_name)
-        assert _mask_legacy_canonical_names("new-story.json", historical_name) == historical_name
-    # 兼容旧规范名不能吞掉真正手打错名，索引仍须报告它们。
+def test_历史文本不再豁免真实错名():
+    # 已修正可编辑展示文本；原始证据字段不进入展示扫描。
     for wrong, canonical in (("奥斯塔片科", "奥斯塔彭科"), ("里巴金娜", "莱巴金娜")):
-        masked = _mask_legacy_canonical_names(where, wrong)
-        assert masked == wrong
         assert (wrong, canonical) in _near_misses(
-            masked, _CJK_DOT_RUN, _typo_index([(canonical, canonical)]))
+            wrong, _CJK_DOT_RUN, _typo_index([(canonical, canonical)]))
+    # 新内容与历史内容都继续查旧规范近似名。
+    assert ("哈恰诺夫", "卡恰诺夫") in _near_misses(
+        "哈恰诺夫", _CJK_DOT_RUN, _typo_index([("卡恰诺夫", "卡恰诺夫")]))
 
 
 def test_人名要以译名表为准():
@@ -3213,7 +3128,7 @@ def test_人名要以译名表为准():
     # 只并旧表会漏掉只登记在 player_names_top500.json 里的名字，遮罩阶段
     # 遮不掉它们，也就防不住"表里明明有、却被判成手打错"的假阳性。
     known = sorted(
-        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE,
+        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE | {"迈克尔·郑"},
         key=len, reverse=True,
     )
     canon = [n for n in known if len(n) >= 4]
@@ -3250,7 +3165,7 @@ def test_人名要以译名表为准():
     typo_safe_names = _typo_safe_names(known)
 
     def scan(where: str, text: str) -> None:
-        safe = _mask_legacy_canonical_names(where, text)
+        safe = text
         for word in _TYPO_SAFE + typo_safe_names + ("普林斯顿",):
             safe = safe.replace(word, "　" * len(word))
         for wrong, right in _KNOWN_TYPOS.items():
@@ -3378,7 +3293,7 @@ def test_人名近似匹配的索引和笨办法结果一样():
     from tennislive.zh.players import PLAYER_ZH
 
     known = sorted(
-        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE,
+        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE | {"迈克尔·郑"},
         key=len, reverse=True,
     )
     # 每种长度各取几个，外加全部带间隔号的——跑得快，又盖得住 4 字到最长的

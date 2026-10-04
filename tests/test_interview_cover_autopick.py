@@ -403,18 +403,18 @@ def test_真spec_佩古拉亚军致辞_冠军那一格认人match也不许换(mo
 
 
 def test_双打只换文案点了名的那个搭档():
-    """`alcaraz-mensik` 的主角推断是「阿尔卡拉斯/门西克」（两人之一就 match），而文案只点了
-    阿尔卡拉斯（「阿尔卡拉斯笑着拿下」）：门西克那一格机器不许换。"""
+    """`alcaraz-mensik` 的主角推断是「阿尔卡拉斯/门希克」（两人之一就 match），而文案只点了
+    阿尔卡拉斯（「阿尔卡拉斯笑着拿下」）：门希克那一格机器不许换。"""
     spec = json.loads((SPECS / "alcaraz-mensik-laver-cup-2026-interview.json")
                       .read_text(encoding="utf-8"))
-    assert "门西克" not in scan.cover_copy(spec) and "阿尔卡拉斯" in scan.cover_copy(spec)
-    mensik = _entry(10.0, sims={"阿尔卡拉斯": 0.05, "门西克": 0.6})
-    alcaraz = _entry(10.2, sims={"阿尔卡拉斯": 0.6, "门西克": 0.05})
+    assert "门希克" not in scan.cover_copy(spec) and "阿尔卡拉斯" in scan.cover_copy(spec)
+    mensik = _entry(10.0, sims={"阿尔卡拉斯": 0.05, "门希克": 0.6})
+    alcaraz = _entry(10.2, sims={"阿尔卡拉斯": 0.6, "门希克": 0.05})
     assert "封面文案" in scan.autopick_problem(mensik, spec)
     assert scan.autopick_problem(alcaraz, spec) == ""
     record = _record({**spec, "cover": {**spec["cover"], "frame_at": 10.0}},
                      [mensik, {**alcaraz, "margin": 1.0}])
-    assert record["passing"][0] == 10.0, "前提：门西克那一格余量更大、排第一"
+    assert record["passing"][0] == 10.0, "前提：门希克那一格余量更大、排第一"
     assert scan.pick(record, spec)["frame_at"] == 10.2
 
 
@@ -924,7 +924,7 @@ def test_同场的人_只留有官方头像的别人_全库主角都不在里面
         seen += bool(rivals)
     assert seen >= 50, f"只有 {seen} 条采访有同场的人可比——co_present 取人那一步坏了"
     alc = json.loads((SPECS / "alcaraz-mensik-laver-cup-2026-interview.json").read_text(encoding="utf-8"))
-    assert set(scan.subject_names(alc)) == {"阿尔卡拉斯", "门西克"}, "前提：双打的主角是两个人"
+    assert set(scan.subject_names(alc)) == {"阿尔卡拉斯", "门希克"}, "前提：双打的主角是两个人"
 
 
 def test_旧记录没拿同场的人一起比就算另一把尺子():

@@ -4145,14 +4145,14 @@ def test_solo封面的对阵名字也要能算出来():
     import push_reel  # noqa: PLC0415
 
     meta = push_reel.push_meta(Path("specs/reels/zhang-putintseva.xhs.txt"))
-    assert meta["matchup"] == "张帅 vs 普汀塞娃", (
+    assert meta["matchup"] == "张帅 vs 普丁塞娃", (
         f"solo 封面算不出对阵：{meta['matchup']!r}——"
         "`push_meta` 只认 versus.names 的话，这里会是空的")
     # **赢家在前。** `matchup` 是版式顺序，`winner` 才是赛果顺序。
     title = push_reel.headline(Path("output/x/reel/zhang-putintseva"), "赛场之上",
                                meta["matchup"], meta["score"], meta["event"],
                                "", "2026-08-04")
-    assert title.index("张帅") < title.index("6-4") < title.index("普汀塞娃"), (
+    assert title.index("张帅") < title.index("6-4") < title.index("普丁塞娃"), (
         f"退路里的赛果顺序反了：{title}——"
         "比分夹在两个名字中间，顺序错就是在声称输的那个人赢了")
 
