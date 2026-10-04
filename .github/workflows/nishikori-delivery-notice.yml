@@ -1,0 +1,121 @@
+name: One-time Nishikori farewell delivery notice
+on:
+  push:
+    branches: [main]
+    paths: [data/delivery-notifications/nishikori-career-farewell-20261004.json]
+permissions:
+  contents: write
+concurrency:
+  group: nishikori-career-farewell-delivery-20261004-v1
+  cancel-in-progress: false
+jobs:
+  delivery-notice:
+    if: github.ref_name == 'main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            data/delivery-notifications
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q requests
+      - name: Reserve and send one truthful delivery notice
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          import base64, html, json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          import requests
+          from tennislive.publish.pushplus import push, message_url, PushPlusUncertainError
+
+          request_id = 'nishikori-career-farewell-delivery-20261004-v1'
+          drive_url = 'https://drive.google.com/file/d/10CaSGuVI1UZIPay96JYgD5QZ2Cjgu-V-/view'
+          request_path = Path('data/delivery-notifications/nishikori-career-farewell-20261004.json')
+          state_path = Path(os.environ['RUNNER_TEMP']) / 'nishikori-delivery-notice-state.json'
+          run_url = f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}"
+          state = {'request_id': request_id, 'kind': 'delivery_notice', 'status': 'not_sent', 'run_url': run_url}
+          def save():
+              state['updated_at'] = datetime.now(timezone.utc).isoformat()
+              state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + '\n')
+          save()
+          try:
+              request = json.loads(request_path.read_text())
+              if (request.get('request_id') != request_id or request.get('kind') != 'delivery_notice'
+                      or request.get('drive_url') != drive_url
+                      or request.get('duration_seconds') != 323.48
+                      or request.get('delivery_bytes') != 80092262
+                      or request.get('native_master_sha256') != '39349036a6976639a43fd6d0245b75662ab88cedd8b33827e46683a870e3eabf'):
+                  raise ValueError('Fixed delivery request evidence does not match')
+              if not os.environ.get('PUSHPLUS_TOKEN'):
+                  raise ValueError('PUSHPLUS_TOKEN is not configured; nothing sent')
+              endpoint = f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/contents/data/delivery-notifications/receipts/{request_id}.json"
+              headers = {'Authorization': 'Bearer ' + os.environ['GITHUB_TOKEN'], 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'}
+              existing = requests.get(endpoint, headers=headers, params={'ref': 'main'}, timeout=20)
+              if existing.status_code == 200:
+                  state['status'] = 'skipped_existing_reservation'
+                  save()
+                  print('Existing delivery-notice state: no message sent and no retry.')
+              else:
+                  if existing.status_code != 404:
+                      raise RuntimeError(f'Reservation lookup failed HTTP {existing.status_code}; nothing sent')
+                  state.update(status='reserved', drive_url=drive_url)
+                  save()
+                  def payload(status, sha=None):
+                      body = {'message': f'delivery notice: {status} {request_id}', 'branch': 'main',
+                              'content': base64.b64encode(state_path.read_bytes()).decode('ascii')}
+                      if sha:
+                          body['sha'] = sha
+                      return body
+                  reserved = requests.put(endpoint, headers=headers, json=payload('reserve'), timeout=20)
+                  if reserved.status_code != 201:
+                      raise RuntimeError(f'Reservation not confirmed HTTP {reserved.status_code}; nothing sent')
+                  reserved_sha = reserved.json()['content']['sha']
+                  # Fixed wording: this is account-restricted delivery, not a public reel release.
+                  content = ('<p>完整5分23秒的锦织圭生涯告别影片已经完成，并已备份到Google Drive。</p>'
+                             '<p><a href="' + html.escape(drive_url, quote=True) + '">观看或下载完整影片（Google Drive）</a></p>'
+                             '<p>需要使用有权限的Google账号。原片本地质检已完成；正式Release分发仍待完成。</p>'
+                             '<p>这是影片交付通知，不代表正式公网发布。</p>')
+                  try:
+                      receipt = push('锦织圭生涯告别影片交付', content)
+                  except PushPlusUncertainError:
+                      state['status'] = 'uncertain'
+                      save()
+                      # Persist uncertainty if possible, never retry the message POST.
+                      try:
+                          requests.put(endpoint, headers=headers, json=payload('uncertain', reserved_sha), timeout=20)
+                      except requests.RequestException:
+                          pass
+                      raise
+                  except Exception:
+                      state['status'] = 'send_failed_no_retry'
+                      save()
+                      raise
+                  state.update(status='accepted', pushplus_receipt=receipt, message_url=message_url(receipt))
+                  save()
+                  recorded = requests.put(endpoint, headers=headers, json=payload('sent', reserved_sha), timeout=20)
+                  if recorded.status_code != 200:
+                      raise RuntimeError(f'PushPlus accepted; receipt saved as artifact, repository receipt update failed HTTP {recorded.status_code}. Do not resend.')
+                  print('PushPlus accepted the delivery notice; handset delivery is not asserted.')
+          finally:
+              save()
+              with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+                  summary.write('\n## Nishikori delivery notice\n\nStatus: ' + state['status'] + '\n')
+                  if state.get('message_url'):
+                      summary.write('\nActual PushPlus message page: ' + state['message_url'] + '\n')
+                  summary.write('\nThis is an account-restricted Drive delivery notice, not a public reel publication.\n')
+          PY
+      - name: Preserve actual notification state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nishikori-delivery-notice-state
+          path: ${{ runner.temp }}/nishikori-delivery-notice-state.json
+          if-no-files-found: warn
