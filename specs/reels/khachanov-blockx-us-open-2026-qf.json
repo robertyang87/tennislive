@@ -153,7 +153,7 @@
     },
     "_source": "flashscore `df_st_1`（`hjrxLF3k`）的 Match 那一栏，`tools/match_stat_hooks.py hjrxLF3k --stats-block` 机器抄的，一个数没手打。⚠️ **a/b 不用对调**：工具吐出来的 `a` 是 feed 的 home（哈恰诺夫），而 `cover.matchup[0]` 也是哈恰诺夫——这一场两个顺序碰巧一致。自证：`a` 的 `Service games won 100% (12/12)`、`Break Points Converted 4/6`，对得上 6-2 7-5 3-2 里他一个发球局没丢、破了对手四次。头像跟着数字走：`atp-KE29`＝哈恰诺夫、`atp-B0PG`＝布洛克斯，两张在别的 spec 里各自只挂过这一个中文名（扫过 `specs/reels/*.json`）。`first_total` 按 `first_in + second_total` 算（66 / 74），不取接口的分母。"
   },
-  "_hit_data": "跑过 `tools/match_stat_hooks.py hjrxLF3k --stats-block`。这一场最狠的那个数是**发球局零丢分**：12 个发球局 12 个全保，全场只面对过 2 个破发点、两个都救下来了（`df_st_1` 的 `Service games won 100% (12/12)`、`Break Points Saved 2/2`），而对手 13 个发球局丢了 4 个。已经写进钩子、第 ⑧ 段旁白和小红书正文。另外三个候选没用：一发得分率 89%(32/36) 对 71%(29/41) 进了第 ⑦ 段旁白；总得分 80 比 60 和上面那条说的是同一件事（发球局锁死），只写进正文；跑动距离布洛克斯 1316 米比哈恰诺夫 1113 米多两百米——**这条和退赛是同一件事的两面，但它容易被读成「他更拼」而不是「他在硬撑」**，所以只写进正文并配上伤情，不进旁白。",
+  "_hit_data": "跑过 `tools/match_stat_hooks.py hjrxLF3k --stats-block`。这一场最狠的那个数是**发球局零丢分**：12 个发球局 12 个全保，全场只面对过 2 个破发点、两个都救下来了（`df_st_1` 的 `Service games won 100% (12/12)`、`Break Points Saved 2/2`），而对手 13 个发球局丢了 4 个。已经写进钩子、第 ⑧ 段旁白和小红书正文。另外三个候选没用：一发得分率 89%(32/36) 对 71%(29/41) 进了第 ⑦ 段旁白；总得分 80 比 60 和上面那条说的是同一件事（发球局锁死），只写进正文；跑动距离布洛克斯 1316 米比卡恰诺夫 1113 米多两百米——**这条和退赛是同一件事的两面，但它容易被读成「他更拼」而不是「他在硬撑」**，所以只写进正文并配上伤情，不进旁白。",
   "_claims": [
     "「他一个发球局没丢 / 十二个发球局全保 / 只面对过两个破发点」——flashscore `df_st_1_hjrxLF3k` 的 `Service games won SH÷100% (12/12)`、`Break Points Saved SH÷2/2`；逐分 `df_mh_1_hjrxLF3k` 里哈恰诺夫的发球局逐局核过，没有一局出现 `HH÷1`（home 被破）。两个口径同一份 feed 的不同块，互相印证。",
     "「一发得分率百分之八十九」——`df_st_1` 的 `1st serve points won SH÷89% (32/36)`。",

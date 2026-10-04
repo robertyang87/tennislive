@@ -2869,7 +2869,10 @@
     "third_round_total_corrected_editable_source_files": 179,
     "third_round_changed_json_scalar_fields": 1006,
     "source_only_status_does_not_claim_media_rerender": true,
-    "historical_media_rerendered": false
+    "historical_media_rerendered": false,
+    "current_total_corrected_editable_source_files": 193,
+    "current_changed_json_scalar_fields": 1406,
+    "fourth_round_source_files_modified": 79
   },
   "prior_review_counts": {
     "original_files": 18,
@@ -2888,11 +2891,11 @@
       "original_blob_sha": "0d23a992b83c462a5431deb56a9151d15d77f1d1",
       "corrected_source_blob_sha": "fe53f773264c0f9189ed15c576ed120400972205",
       "changed_fields": [
-        "$.match.participants[0]",
         "$.match.winner",
-        "$.push.lead",
-        "$.push.matchup",
+        "$.match.participants[0]",
         "$.winner",
+        "$.push.matchup",
+        "$.push.lead",
         "$.zh[0]",
         "$.zh[1]",
         "$.zh[46]",
@@ -2914,14 +2917,14 @@
       "original_blob_sha": "dbf0537cbc5ead7e022fa5a37304279158e2fdc2",
       "corrected_source_blob_sha": "d57f5944055268ab57ca33af8d6e9fcaada26870",
       "changed_fields": [
-        "$.cover.tag",
-        "$.cover.title[0]",
-        "$.match.participants[0]",
         "$.match.winner",
-        "$.push.lead",
+        "$.match.participants[0]",
+        "$.winner",
         "$.push.matchup",
+        "$.push.lead",
         "$.push.summary",
-        "$.winner"
+        "$.cover.title[0]",
+        "$.cover.tag"
       ],
       "changed_field_count": 8
     },
@@ -2931,15 +2934,15 @@
       "original_blob_sha": "c27bf349c416af5f8eacaaf359fdff055a6db772",
       "corrected_source_blob_sha": "d2af5689cc04ae69b0690aeff887beaff953e977",
       "changed_fields": [
-        "$.cover.tag",
-        "$.cover.title[1]",
+        "$.match.winner",
+        "$.match.participants[0]",
+        "$.winner",
         "$.lead_in.subs[1].zh",
         "$.lead_in.subs[6].zh",
-        "$.match.participants[0]",
-        "$.match.winner",
-        "$.push.lead",
         "$.push.matchup",
-        "$.winner"
+        "$.push.lead",
+        "$.cover.title[1]",
+        "$.cover.tag"
       ],
       "changed_field_count": 9
     },
@@ -2957,8 +2960,8 @@
       "original_blob_sha": "7c8b23f4a5399fdc4b2dba623ecbe9a731a3b313",
       "corrected_source_blob_sha": "c9dd3343f7feeb90d053e8f3cf98e9e3e4a844ea",
       "changed_fields": [
-        "$.push.lead",
         "$.takeaway.close.point",
+        "$.push.lead",
         "$.zh[56]"
       ],
       "changed_field_count": 3
@@ -2985,17 +2988,17 @@
       "original_blob_sha": "6a295df3e0062c5e71d43b90564e05a3bf228ebf",
       "corrected_source_blob_sha": "caefb577c227ecc14f1091e9440238efcc8ac1e5",
       "changed_fields": [
-        "$.cover.tag",
-        "$.featured_player",
-        "$.match.participants[0]",
         "$.match.winner",
-        "$.push.lead",
+        "$.match.participants[0]",
+        "$.winner",
         "$.push.matchup",
         "$.push.summary",
-        "$.winner",
+        "$.push.lead",
+        "$.zh[6]",
         "$.zh[44]",
         "$.zh[67]",
-        "$.zh[6]"
+        "$.featured_player",
+        "$.cover.tag"
       ],
       "changed_field_count": 11
     },
@@ -3023,11 +3026,11 @@
       "original_blob_sha": "24008ff5af4440b50b793805bf48ef6cd971e2a2",
       "corrected_source_blob_sha": "34ed6965e279e5dbcb5f3740e2d6d71aace5657c",
       "changed_fields": [
-        "$.cover.tag",
-        "$.push.lead",
+        "$.winner",
         "$.push.matchup",
         "$.push.summary",
-        "$.winner"
+        "$.push.lead",
+        "$.cover.tag"
       ],
       "changed_field_count": 5
     },
@@ -3047,8 +3050,8 @@
       "changed_fields": [
         "$.match.loser",
         "$.match.participants[1]",
-        "$.push.lead",
         "$.push.matchup",
+        "$.push.lead",
         "$.zh[49]"
       ],
       "changed_field_count": 5
@@ -3067,8 +3070,8 @@
       "original_blob_sha": "243449db037baf262fcda91beae3c78f4ff928e8",
       "corrected_source_blob_sha": "b6a354d92b5be3a110702afecf6a3eabc0e10bcd",
       "changed_fields": [
-        "$.push.lead",
-        "$.push.matchup"
+        "$.push.matchup",
+        "$.push.lead"
       ],
       "changed_field_count": 2
     },
@@ -3088,8 +3091,8 @@
       "changed_fields": [
         "$.match.loser",
         "$.match.participants[1]",
-        "$.push.lead",
-        "$.push.matchup"
+        "$.push.matchup",
+        "$.push.lead"
       ],
       "changed_field_count": 4
     },
@@ -3107,9 +3110,9 @@
       "original_blob_sha": "9ff6760969ec784d44827c7399350e9b53ecbbd0",
       "corrected_source_blob_sha": "41659d2d573e2b0c6fa2fbef627c2a291313457f",
       "changed_fields": [
-        "$.cover.title[0]",
+        "$.push.matchup",
         "$.push.lead",
-        "$.push.matchup"
+        "$.cover.title[0]"
       ],
       "changed_field_count": 3
     },
@@ -3129,8 +3132,8 @@
       "changed_fields": [
         "$.match.loser",
         "$.match.participants[1]",
-        "$.push.lead",
         "$.push.matchup",
+        "$.push.lead",
         "$.zh[17]"
       ],
       "changed_field_count": 5
@@ -3159,8 +3162,8 @@
       "original_blob_sha": "de7d0296124fac42f05da80c8f39786809b8b0b6",
       "corrected_source_blob_sha": "3b99057aa68899572425bfdd5900546bc8f9d965",
       "changed_fields": [
-        "$.push.lead",
-        "$.push.matchup"
+        "$.push.matchup",
+        "$.push.lead"
       ],
       "changed_field_count": 2
     },
@@ -3180,8 +3183,8 @@
       "changed_fields": [
         "$.match.loser",
         "$.match.participants[1]",
-        "$.push.lead",
-        "$.push.matchup"
+        "$.push.matchup",
+        "$.push.lead"
       ],
       "changed_field_count": 4
     },
@@ -3201,8 +3204,8 @@
       "changed_fields": [
         "$.match.loser",
         "$.match.participants[1]",
-        "$.push.lead",
         "$.push.matchup",
+        "$.push.lead",
         "$.zh[155]"
       ],
       "changed_field_count": 5
@@ -3223,8 +3226,8 @@
       "changed_fields": [
         "$.match.loser",
         "$.match.participants[1]",
-        "$.push.lead",
-        "$.push.matchup"
+        "$.push.matchup",
+        "$.push.lead"
       ],
       "changed_field_count": 4
     },
@@ -3242,22 +3245,22 @@
       "original_blob_sha": "0692620713f1843def69f60df65af0ad0eaf2abe",
       "corrected_source_blob_sha": "75c59a530177a10b044a798f26d55614dfb2fe5a",
       "changed_fields": [
-        "$._match.participants[0]",
+        "$.topbar.line2",
         "$._match.winner",
-        "$.cover.matchup[0].name",
-        "$.cover.subject",
-        "$.cover.winner",
-        "$.editorial.beats[1]",
-        "$.editorial.human_context.angle",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.matchup",
-        "$.push.summary",
+        "$._match.participants[0]",
         "$.segments[1].narration",
         "$.segments[4].narration",
         "$.segments[6].narration",
         "$.segments[7].narration",
-        "$.topbar.line2"
+        "$.editorial.beats[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.push.lead",
+        "$.cover.subject",
+        "$.cover.matchup[0].name",
+        "$.cover.winner"
       ],
       "changed_field_count": 16
     },
@@ -3275,20 +3278,20 @@
       "original_blob_sha": "a7d62ee139cd9522fbd4649ebe14d4ebcd2fadb2",
       "corrected_source_blob_sha": "ca5574ab7b9308c8d8810932771c3d749aa15bc2",
       "changed_fields": [
-        "$.cover.hook",
-        "$.cover.matchup[0].name",
-        "$.cover.matchup[1].name",
-        "$.cover.subject",
-        "$.cover.winner",
-        "$.editorial.beats[0]",
-        "$.editorial.human_context.facts[1]",
-        "$.editorial.question",
-        "$.editorial.thesis",
+        "$.topbar.line2",
         "$.push.lead",
         "$.push.summary",
         "$.segments[5].narration",
         "$.segments[7].narration",
-        "$.topbar.line2"
+        "$.editorial.beats[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.cover.hook",
+        "$.cover.subject",
+        "$.cover.matchup[0].name",
+        "$.cover.matchup[1].name",
+        "$.cover.winner"
       ],
       "changed_field_count": 14
     },
@@ -3327,7 +3330,11 @@
       "original_blob_sha": "4757aaa7857672ef296a6aafa984d5487b514cc8",
       "corrected_source_blob_sha": "a098a0d271477ec3cbb3e8818705d11c5d6d366d",
       "changed_fields": [
-        "$.cover.matchup[1].name",
+        "$.topbar.line2",
+        "$.push.lead",
+        "$.segments[1].narration",
+        "$.segments[4].narration",
+        "$.segments[10].narration",
         "$.editorial.beats[2]",
         "$.editorial.beats[4]",
         "$.editorial.human_context.angle",
@@ -3335,11 +3342,7 @@
         "$.editorial.human_context.facts[5]",
         "$.editorial.human_context.facts[9]",
         "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[10].narration",
-        "$.segments[1].narration",
-        "$.segments[4].narration",
-        "$.topbar.line2"
+        "$.cover.matchup[1].name"
       ],
       "changed_field_count": 13
     },
@@ -3373,23 +3376,32 @@
       "file": "specs/reels/boulter-volynets.json",
       "source_status": "corrected",
       "original_blob_sha": "a4cac89422e32ed7143f1724229e3039c1facda0",
-      "corrected_source_blob_sha": "5591db8d7eeb728227f5c1830bdf8bd59b733c1e",
+      "corrected_source_blob_sha": "009519d7648546ad98ac8dd2db8af35a95f56bc9",
       "changed_fields": [
-        "$.cover.matchup[0].name",
-        "$.cover.subject",
-        "$.cover.winner",
-        "$.editorial.beats[0]",
-        "$.editorial.human_context.angle",
-        "$.editorial.thesis",
-        "$.push.lead",
+        "$.topbar.line2",
+        "$._hit_data",
+        "$.segments[3].narration",
+        "$.segments[7].narration",
         "$.segments[10].narration",
         "$.segments[16].narration",
         "$.segments[17].narration",
-        "$.segments[3].narration",
-        "$.segments[7].narration",
-        "$.topbar.line2"
+        "$.push.lead",
+        "$.editorial.beats[0]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.human_context.facts[6]",
+        "$.editorial.human_context.facts[7]",
+        "$.editorial.human_context.facts[8]",
+        "$.editorial.human_context.facts[9]",
+        "$.editorial.thesis",
+        "$.cover.subject",
+        "$.cover.matchup[0].name",
+        "$.cover.winner"
       ],
-      "changed_field_count": 13
+      "changed_field_count": 22
     },
     {
       "file": "specs/reels/boulter-volynets.xhs.txt",
@@ -3403,11 +3415,12 @@
       "file": "specs/reels/bu-jodar-us-open-2026-r1.json",
       "source_status": "corrected",
       "original_blob_sha": "e8bac7fa6f799260ae2545ad8255979a7b307946",
-      "corrected_source_blob_sha": "2db72f4ed173abe6526c8e841777e09a36fbceea",
+      "corrected_source_blob_sha": "ddadd54d936ff10b5d94261b3fe976c3c07c07db",
       "changed_fields": [
-        "$.editorial.human_context.angle"
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[9]"
       ],
-      "changed_field_count": 1
+      "changed_field_count": 2
     },
     {
       "file": "specs/reels/bu-jodar-us-open-2026-r1.xhs.txt",
@@ -3439,11 +3452,12 @@
       "file": "specs/reels/bublik-jodar-laver-cup-2026.json",
       "source_status": "corrected",
       "original_blob_sha": "1af218b4d9d5a41099e143512ff0e9386f1b0a3f",
-      "corrected_source_blob_sha": "91a70603ef2677b62608e44e16a1df5aedaa5644",
+      "corrected_source_blob_sha": "411b1a3462815bfa370358da80742f8cf1509540",
       "changed_fields": [
-        "$.segments[11].narration"
+        "$.segments[11].narration",
+        "$.editorial.human_context.facts[2]"
       ],
-      "changed_field_count": 1
+      "changed_field_count": 2
     },
     {
       "file": "specs/reels/bublik-jodar-laver-cup-2026.xhs.txt",
@@ -3459,14 +3473,14 @@
       "original_blob_sha": "9762221d7d6852de31967d5404fc46894cb5f23a",
       "corrected_source_blob_sha": "0e004b0b5053dac4819b3c252e1675421261192c",
       "changed_fields": [
-        "$.editorial.beats[5]",
-        "$.editorial.thesis",
         "$.push.lead",
         "$.segments[16].narration",
         "$.segments[26].narration",
         "$.segments[27].narration",
+        "$.segments[36].point_end_ok",
         "$.segments[36].narration",
-        "$.segments[36].point_end_ok"
+        "$.editorial.beats[5]",
+        "$.editorial.thesis"
       ],
       "changed_field_count": 8
     },
@@ -3479,33 +3493,45 @@
       "validation": "Canonical display scan plus existing name-typo and reverse guard."
     },
     {
+      "file": "specs/reels/cirstea-bartunkova.json",
+      "source_status": "corrected",
+      "original_blob_sha": "72c75289ecba7ff2adf48220220751d5a8b6c853",
+      "corrected_source_blob_sha": "a041ff517235a28e31db96efcfaec08e1eb7316e",
+      "changed_fields": [
+        "$.editorial.human_context.facts[13]"
+      ],
+      "changed_field_count": 1
+    },
+    {
       "file": "specs/reels/cobolli-mensik-doubles-laver-cup-2026.json",
       "source_status": "corrected",
       "original_blob_sha": "29478d9f4d252fef92c4e3550ba70d72af9be26f",
-      "corrected_source_blob_sha": "54178840209c304402a234f385bd1e6c6ab69a30",
+      "corrected_source_blob_sha": "8ee4a393ed6103452bd880869b06f576110c8b25",
       "changed_fields": [
-        "$._match.participants[0]",
+        "$.topbar.line2",
         "$._match.winner",
-        "$.cover.hook",
-        "$.cover.matchup[0].name",
-        "$.cover.subject",
-        "$.cover.topic",
-        "$.cover.winner",
-        "$.editorial.beats[0]",
-        "$.editorial.hook[1]",
-        "$.editorial.human_context.angle",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.matchup",
-        "$.push.summary",
+        "$._match.participants[0]",
         "$.segments[1].narration",
         "$.segments[3].narration",
         "$.segments[5].narration",
         "$.segments[6].narration",
+        "$.segments[7].quote[0].text",
         "$.segments[8].narration",
-        "$.topbar.line2"
+        "$.editorial.beats[0]",
+        "$.editorial.hook[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.push.lead",
+        "$._turning_points[2]",
+        "$.cover.hook",
+        "$.cover.subject",
+        "$.cover.matchup[0].name",
+        "$.cover.winner",
+        "$.cover.topic"
       ],
-      "changed_field_count": 20
+      "changed_field_count": 22
     },
     {
       "file": "specs/reels/cobolli-mensik-doubles-laver-cup-2026.xhs.txt",
@@ -3519,11 +3545,12 @@
       "file": "specs/reels/davis-cup-china-first-world-group-1.json",
       "source_status": "corrected",
       "original_blob_sha": "b91bbeb6dd4f7c8af02324bcbe5a810e3e3a984b",
-      "corrected_source_blob_sha": "9637d7564cbd55ebb4bc7a9af6cb4145397bd7c1",
+      "corrected_source_blob_sha": "53699de598a1e7e384625d623d7a0cbbcd26914f",
       "changed_fields": [
-        "$.segments[13].narration"
+        "$.segments[13].narration",
+        "$.editorial.human_context.facts[6]"
       ],
-      "changed_field_count": 1
+      "changed_field_count": 2
     },
     {
       "file": "specs/reels/davis-cup-china-first-world-group-1.xhs.txt",
@@ -3553,22 +3580,32 @@
       "validation": "Canonical display scan plus existing name-typo and reverse guard."
     },
     {
+      "file": "specs/reels/djokovic-tirante.json",
+      "source_status": "corrected",
+      "original_blob_sha": "6b12c2d061282ebac4a8b8ad17e35afd4ff1d8e6",
+      "corrected_source_blob_sha": "c4976163dd7be3ccec875b715b08f20085468923",
+      "changed_fields": [
+        "$.editorial.human_context.facts[9]"
+      ],
+      "changed_field_count": 1
+    },
+    {
       "file": "specs/reels/fernandez-andreeva.json",
       "source_status": "corrected",
       "original_blob_sha": "5fc4cf06ef9a97f9fe046b3a4470c83988861f1e",
       "corrected_source_blob_sha": "09ee1acb09fbd47c9851a732ea3ebdd3a97b66e1",
       "changed_fields": [
-        "$.cover.hook",
-        "$.cover.matchup[0].name",
-        "$.editorial.beats[3]",
-        "$.editorial.human_context.facts[1]",
-        "$.editorial.thesis",
+        "$.topbar.line2",
         "$.push.lead",
         "$.segments[1].narration",
         "$.segments[3].narration",
         "$.segments[7].narration",
         "$.segments[8].narration",
-        "$.topbar.line2"
+        "$.editorial.beats[3]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.thesis",
+        "$.cover.hook",
+        "$.cover.matchup[0].name"
       ],
       "changed_field_count": 11
     },
@@ -3578,10 +3615,10 @@
       "original_blob_sha": "0e2bb4aeef9bfff75b86cd14458782ed8b72c709",
       "corrected_source_blob_sha": "b86fca95ca79eca996a423baadb3f2cecc44033e",
       "changed_fields": [
-        "$.editorial.human_context.angle",
-        "$.editorial.question",
+        "$.segments[2].narration",
         "$.push.lead",
-        "$.segments[2].narration"
+        "$.editorial.human_context.angle",
+        "$.editorial.question"
       ],
       "changed_field_count": 4
     },
@@ -3597,18 +3634,26 @@
       "file": "specs/reels/fonseca-van-de-zandschulp.json",
       "source_status": "corrected",
       "original_blob_sha": "33241c3154c51be3ad83e726e8e9f51f85da4b12",
-      "corrected_source_blob_sha": "6486e93082a112c791c0d64903dc84a7ab564c06",
+      "corrected_source_blob_sha": "d47c7aefdfff6ec3cbef8ee069dda2aff492cbd4",
       "changed_fields": [
-        "$._match.atp_player_ids",
-        "$.cover.matchup[1].name",
-        "$.editorial.human_context.angle",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[11].narration",
+        "$.topbar.line2",
+        "$._hit_data",
         "$.segments[3].narration",
-        "$.topbar.line2"
+        "$.segments[11].narration",
+        "$.push.lead",
+        "$._match.atp_player_ids",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.human_context.facts[8]",
+        "$.editorial.human_context.facts[9]",
+        "$.editorial.human_context.facts[10]",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 8
+      "changed_field_count": 16
     },
     {
       "file": "specs/reels/fonseca-van-de-zandschulp.xhs.txt",
@@ -3630,20 +3675,26 @@
       "file": "specs/reels/fritz-michelsen.json",
       "source_status": "corrected",
       "original_blob_sha": "a2db7975228499d6567c2d474ef4bfc0f4b7a943",
-      "corrected_source_blob_sha": "152455cbd2775fb785224537f055643267e417fc",
+      "corrected_source_blob_sha": "d19c6d19314e17cbd7c4b002c13b8c3927626a88",
       "changed_fields": [
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[1]",
-        "$.editorial.human_context.angle",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[10].narration",
-        "$.segments[13].narration",
+        "$.topbar.line2",
+        "$._hit_data",
         "$.segments[3].narration",
         "$.segments[7].narration",
-        "$.topbar.line2"
+        "$.segments[10].narration",
+        "$.segments[13].narration",
+        "$.push.lead",
+        "$.editorial.beats[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.human_context.facts[7]",
+        "$.editorial.human_context.facts[8]",
+        "$.editorial.human_context.facts[10]",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 10
+      "changed_field_count": 16
     },
     {
       "file": "specs/reels/fritz-michelsen.xhs.txt",
@@ -3675,17 +3726,19 @@
       "file": "specs/reels/gea-van-de-zandschulp-us-open-2026-r4.json",
       "source_status": "corrected",
       "original_blob_sha": "26fd305c27e21d205a2ddeeaadd9d3c8e965fc3b",
-      "corrected_source_blob_sha": "65dcb62240c3349ae8110396032d618e60a5c69e",
+      "corrected_source_blob_sha": "9060ed42dfe7d400a6157202c378c05f8e825f11",
       "changed_fields": [
-        "$._match.participants[1]",
-        "$.cover.matchup[0].name",
-        "$.cover.topic",
-        "$.cover.winner",
-        "$.editorial.thesis",
+        "$.topbar.line2",
+        "$._hit_data",
         "$.push.lead",
-        "$.topbar.line2"
+        "$._match.participants[1]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.thesis",
+        "$.cover.matchup[0].name",
+        "$.cover.winner",
+        "$.cover.topic"
       ],
-      "changed_field_count": 7
+      "changed_field_count": 9
     },
     {
       "file": "specs/reels/gea-van-de-zandschulp-us-open-2026-r4.xhs.txt",
@@ -3699,11 +3752,12 @@
       "file": "specs/reels/halys-deminaur.json",
       "source_status": "corrected",
       "original_blob_sha": "60f4706822198fb97bc9d21d9a9b67bd8d2f30e6",
-      "corrected_source_blob_sha": "84cdb5c6b18b29c8f764cd0bef06009b385cf132",
+      "corrected_source_blob_sha": "2b9ae52820d0f06c90ac88bb3cc9868b9e84c427",
       "changed_fields": [
-        "$.editorial.human_context.angle"
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]"
       ],
-      "changed_field_count": 1
+      "changed_field_count": 2
     },
     {
       "file": "specs/reels/halys-deminaur.xhs.txt",
@@ -3712,6 +3766,16 @@
       "corrected_source_blob_sha": "a773f0f9b52be4700e3a8ef98bdd862c51642487",
       "content_type": "editable-copy",
       "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "specs/reels/heide-wawrinka-davis-cup-2026-wg1.json",
+      "source_status": "corrected",
+      "original_blob_sha": "a1e98638581c4fa896252ebe72942df6da43f819",
+      "corrected_source_blob_sha": "072a46f4bd80dd8d3d242cc82e281dd9eb7ab97e",
+      "changed_fields": [
+        "$.editorial.human_context.facts[6]"
+      ],
+      "changed_field_count": 1
     },
     {
       "file": "specs/reels/hewitt-washington.xhs.txt",
@@ -3725,27 +3789,31 @@
       "file": "specs/reels/hu-kopriva-chengdu-2026-r1.json",
       "source_status": "corrected",
       "original_blob_sha": "95ae3a078c33cda4f98960744f9159be63097c47",
-      "corrected_source_blob_sha": "29de80fb4f715d46479033d2519388de9f182f8f",
+      "corrected_source_blob_sha": "63365859f769a7c356852ccec6b30a3d79a4237c",
       "changed_fields": [
-        "$._match.participants[0]",
+        "$.topbar.line2",
         "$._match.winner",
-        "$.cover.matchup[0].name",
-        "$.cover.winner",
-        "$.editorial.human_context.facts[4]",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.matchup",
-        "$.push.summary",
+        "$._match.participants[0]",
+        "$._hit_data",
         "$.segments[0].narration",
-        "$.segments[10].narration",
-        "$.segments[10].point_end_ok",
         "$.segments[2].narration",
         "$.segments[5].narration",
         "$.segments[6].narration",
         "$.segments[9].narration",
-        "$.topbar.line2"
+        "$.segments[10].point_end_ok",
+        "$.segments[10].narration",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.thesis",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.push.lead",
+        "$._turning_points[0]",
+        "$._turning_points[1]",
+        "$._turning_points[3]",
+        "$.cover.matchup[0].name",
+        "$.cover.winner"
       ],
-      "changed_field_count": 17
+      "changed_field_count": 21
     },
     {
       "file": "specs/reels/hu-kopriva-chengdu-2026-r1.xhs.txt",
@@ -3761,8 +3829,8 @@
       "original_blob_sha": "9203b330c9c932fc5e12d7126f9d6848e985e4d8",
       "corrected_source_blob_sha": "3c3c1c2195036e4bf290fca3e95709bad55aa0ab",
       "changed_fields": [
-        "$.editorial.beats[1]",
-        "$.segments[2].narration"
+        "$.segments[2].narration",
+        "$.editorial.beats[1]"
       ],
       "changed_field_count": 2
     },
@@ -3778,31 +3846,34 @@
       "file": "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.json",
       "source_status": "corrected",
       "original_blob_sha": "22ba1ac2266a82d0f6c2da89f9ca1038538e33ad",
-      "corrected_source_blob_sha": "ae3350b021a8ddb63067661e2dbedd548dd50635",
+      "corrected_source_blob_sha": "2d56c5fc0b9c4122159d6c5617c7efd591b760a9",
       "changed_fields": [
-        "$._match.participants[0]",
+        "$.topbar.line2",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.push.lead",
+        "$.segments[0].quote[0].text",
+        "$.segments[1].narration",
+        "$.segments[4].quote[0].text",
+        "$.segments[6].narration",
+        "$.segments[7].point_end_ok",
+        "$.segments[7].narration",
+        "$.segments[8].point_end_ok",
+        "$.segments[8].narration",
+        "$.segments[9].narration",
+        "$.segments[10].quote[0].text",
         "$._match.winner",
-        "$.cover.hook",
-        "$.cover.matchup[0].name",
-        "$.cover.subject",
-        "$.cover.topic",
-        "$.cover.winner",
+        "$._match.participants[0]",
         "$.editorial.hook[1]",
         "$.editorial.human_context.facts[3]",
         "$.editorial.question",
-        "$.push.lead",
-        "$.push.matchup",
-        "$.push.summary",
-        "$.segments[1].narration",
-        "$.segments[6].narration",
-        "$.segments[7].narration",
-        "$.segments[7].point_end_ok",
-        "$.segments[8].narration",
-        "$.segments[8].point_end_ok",
-        "$.segments[9].narration",
-        "$.topbar.line2"
+        "$.cover.hook",
+        "$.cover.subject",
+        "$.cover.matchup[0].name",
+        "$.cover.winner",
+        "$.cover.topic"
       ],
-      "changed_field_count": 21
+      "changed_field_count": 24
     },
     {
       "file": "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.xhs.txt",
@@ -3816,13 +3887,20 @@
       "file": "specs/reels/khachanov-blockx-us-open-2026-qf.json",
       "source_status": "corrected",
       "original_blob_sha": "c1cbd759b91b0e8a5eec9841a2c0a341866731bb",
-      "corrected_source_blob_sha": "9d2719d3f32a07cbe970e8606c0086ad568b0fd8",
+      "corrected_source_blob_sha": "372e6066dbcd4f3afb049aba379f67982f1dc43e",
       "changed_fields": [
+        "$.topbar.line2",
+        "$._hit_data",
+        "$.segments[1].narration",
+        "$.segments[4].narration",
+        "$.segments[6].narration",
+        "$.segments[7].narration",
+        "$.segments[8].narration",
+        "$.segments[13].narration",
+        "$.segments[16].crosses_cut",
         "$._match.participants[0]",
-        "$.cover.matchup[0].name",
-        "$.cover.subject",
-        "$.cover.topic",
-        "$.cover.winner",
+        "$.push.lead",
+        "$.push.summary",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
@@ -3831,18 +3909,12 @@
         "$.editorial.human_context.facts[3]",
         "$.editorial.human_context.facts[4]",
         "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.summary",
-        "$.segments[13].narration",
-        "$.segments[16].crosses_cut",
-        "$.segments[1].narration",
-        "$.segments[4].narration",
-        "$.segments[6].narration",
-        "$.segments[7].narration",
-        "$.segments[8].narration",
-        "$.topbar.line2"
+        "$.cover.subject",
+        "$.cover.matchup[0].name",
+        "$.cover.winner",
+        "$.cover.topic"
       ],
-      "changed_field_count": 23
+      "changed_field_count": 24
     },
     {
       "file": "specs/reels/khachanov-blockx-us-open-2026-qf.xhs.txt",
@@ -3856,22 +3928,23 @@
       "file": "specs/reels/kovacevic-khachanov.json",
       "source_status": "corrected",
       "original_blob_sha": "3cb59e54a0e9c839e8480180d831cd24e99ca68b",
-      "corrected_source_blob_sha": "f33f610278eb00a9604032e8fa512c1a4ece3211",
+      "corrected_source_blob_sha": "c161918c2fc06d1098b6708b131e0ab06701a18e",
       "changed_fields": [
-        "$.cover.matchup[1].name",
-        "$.cover.subject",
+        "$.topbar.line2",
+        "$._hit_data",
+        "$.segments[3].narration",
+        "$.segments[11].narration",
+        "$.push.lead",
+        "$.push.summary",
         "$.editorial.beats[0]",
         "$.editorial.human_context.angle",
         "$.editorial.human_context.facts[0]",
         "$.editorial.human_context.facts[4]",
         "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.summary",
-        "$.segments[11].narration",
-        "$.segments[3].narration",
-        "$.topbar.line2"
+        "$.cover.subject",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 12
+      "changed_field_count": 13
     },
     {
       "file": "specs/reels/kovacevic-khachanov.xhs.txt",
@@ -3885,18 +3958,9 @@
       "file": "specs/reels/krejcikova-friedsam-singapore-2026-r1.json",
       "source_status": "corrected",
       "original_blob_sha": "3f7614717d356bedb9d0be8478c6f972115c5ef6",
-      "corrected_source_blob_sha": "5549d72079b563cff76d980774896337fd2f0ae7",
+      "corrected_source_blob_sha": "d3027d963743a53a735bccdb2a9ad6bde332636f",
       "changed_fields": [
-        "$._match.loser",
-        "$._match.participants[1]",
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[1]",
-        "$.editorial.beats[2]",
-        "$.editorial.narration[0]",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.matchup",
+        "$.topbar.line2",
         "$.segments[1].narration",
         "$.segments[2].narration",
         "$.segments[3].narration",
@@ -3904,9 +3968,21 @@
         "$.segments[6].narration",
         "$.segments[8].narration",
         "$.segments[9].narration",
-        "$.topbar.line2"
+        "$.push.matchup",
+        "$.push.lead",
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 18
+      "changed_field_count": 21
     },
     {
       "file": "specs/reels/krejcikova-friedsam-singapore-2026-r1.xhs.txt",
@@ -3923,6 +3999,16 @@
       "corrected_source_blob_sha": "80f19c1bd02de5f8d479add01f0c231618e8b7ca",
       "changed_fields": [
         "$.segments[19].narration"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/lehecka-shelton-davis-cup-2026-qualifiers.json",
+      "source_status": "corrected",
+      "original_blob_sha": "01efa8101b88d2b2fbf1bf1caaea89b6db4bf090",
+      "corrected_source_blob_sha": "9ba83923801aa5d08ee65d35aeeb7a0f1219a5eb",
+      "changed_fields": [
+        "$.editorial.human_context.facts[2]"
       ],
       "changed_field_count": 1
     },
@@ -3950,9 +4036,9 @@
       "original_blob_sha": "042bca060e0dde27a4a555f599f7ec67f2cb92ea",
       "corrected_source_blob_sha": "3c6f5294089ef81b275e16a0bac70dfb792916fc",
       "changed_fields": [
+        "$.segments[2].narration",
         "$.cover.matchup[1].name",
-        "$.cover.winner",
-        "$.segments[2].narration"
+        "$.cover.winner"
       ],
       "changed_field_count": 3
     },
@@ -3968,23 +4054,12 @@
       "file": "specs/reels/mensik-nakashima-laver-cup-2026.json",
       "source_status": "corrected",
       "original_blob_sha": "227981a9ab7f6e92fca0db77c0a4171362e832fd",
-      "corrected_source_blob_sha": "32b1dd86ef054b4f72681ff8791c8d46a1bbc51d",
+      "corrected_source_blob_sha": "b9d9e23633b78a03f0973912a3166c6ad14eb432",
       "changed_fields": [
+        "$.topbar.line2",
         "$._match.loser",
         "$._match.participants[0]",
-        "$.cover.hook",
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[1]",
-        "$.editorial.beats[2]",
-        "$.editorial.beats[3]",
-        "$.editorial.hook[1]",
-        "$.editorial.human_context.angle",
-        "$.editorial.human_context.facts[1]",
-        "$.editorial.question",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.matchup",
-        "$.push.summary",
+        "$._hit_data",
         "$.segments[0].crosses_cut",
         "$.segments[1].narration",
         "$.segments[4].narration",
@@ -3994,9 +4069,23 @@
         "$.segments[7].narration",
         "$.segments[8].narration",
         "$.segments[9].narration",
-        "$.topbar.line2"
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.beats[3]",
+        "$.editorial.hook[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.push.matchup",
+        "$.push.summary",
+        "$.push.lead",
+        "$._turning_points[1]",
+        "$._turning_points[2]",
+        "$.cover.hook",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 25
+      "changed_field_count": 28
     },
     {
       "file": "specs/reels/mensik-nakashima-laver-cup-2026.xhs.txt",
@@ -4010,13 +4099,24 @@
       "file": "specs/reels/mensik-shelton-davis-cup-2026-q2.json",
       "source_status": "corrected",
       "original_blob_sha": "01e55a1098439e4158ee6ad9a0604472bbbda408",
-      "corrected_source_blob_sha": "4785b3915c17e35d6cd9fefa24cf98e0496eb237",
+      "corrected_source_blob_sha": "4bfcdd4bac36e6920d9665188aed2dc7ed8df6b1",
       "changed_fields": [
-        "$._match.participants[0]",
+        "$.topbar.line2",
         "$._match.winner",
-        "$.cover.matchup[0].name",
-        "$.cover.subject",
-        "$.cover.winner",
+        "$._match.participants[0]",
+        "$._hit_data.picked",
+        "$._hit_data.candidates[0]",
+        "$._hit_data.candidates[1]",
+        "$._hit_data.candidates[2]",
+        "$._hit_data.candidates[4]",
+        "$._hit_data.candidates[6]",
+        "$._hit_data.candidates[7]",
+        "$.segments[0].quote[2].text",
+        "$.segments[1].narration",
+        "$.segments[1].crosses_cut",
+        "$.segments[2].crosses_cut",
+        "$.segments[9].point_end_ok",
+        "$.segments[13].point_end_ok",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
@@ -4027,17 +4127,18 @@
         "$.editorial.human_context.facts[2]",
         "$.editorial.question",
         "$.editorial.thesis",
-        "$.push.lead",
         "$.push.matchup",
         "$.push.summary",
-        "$.segments[13].point_end_ok",
-        "$.segments[1].crosses_cut",
-        "$.segments[1].narration",
-        "$.segments[2].crosses_cut",
-        "$.segments[9].point_end_ok",
-        "$.topbar.line2"
+        "$.push.lead",
+        "$._turning_points.set3_game9",
+        "$._turning_points.set3_game8",
+        "$._turning_points.set1_game10",
+        "$._turning_points.set2_game10",
+        "$.cover.subject",
+        "$.cover.matchup[0].name",
+        "$.cover.winner"
       ],
-      "changed_field_count": 24
+      "changed_field_count": 36
     },
     {
       "file": "specs/reels/mensik-shelton-davis-cup-2026-q2.xhs.txt",
@@ -4051,11 +4152,22 @@
       "file": "specs/reels/mensik-tien-davis-cup-2026-q2.json",
       "source_status": "corrected",
       "original_blob_sha": "7002732171631e40b2c70d5a1c92637c6c6b2c56",
-      "corrected_source_blob_sha": "6b95e14909cad5c46e56073af2c0338cb88e661d",
+      "corrected_source_blob_sha": "bd36429073419c78c0f16d33889e6985fc8267f7",
       "changed_fields": [
+        "$.topbar.line2",
         "$._match.loser",
         "$._match.participants[0]",
-        "$.cover.matchup[0].name",
+        "$._hit_data[0].detail",
+        "$._hit_data[1].detail",
+        "$._hit_data[2].detail",
+        "$._hit_data[3].detail",
+        "$._hit_data[4].detail",
+        "$.segments[3].narration",
+        "$.segments[4].narration",
+        "$.segments[7].narration",
+        "$.segments[8].narration",
+        "$.segments[9].narration",
+        "$.segments[10].narration",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
         "$.editorial.beats[3]",
@@ -4066,18 +4178,17 @@
         "$.editorial.human_context.facts[7]",
         "$.editorial.human_context.facts[8]",
         "$.editorial.thesis",
-        "$.push.lead",
         "$.push.matchup",
         "$.push.summary",
-        "$.segments[10].narration",
-        "$.segments[3].narration",
-        "$.segments[4].narration",
-        "$.segments[7].narration",
-        "$.segments[8].narration",
-        "$.segments[9].narration",
-        "$.topbar.line2"
+        "$.push.lead",
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
+        "$.cover.matchup[0].name"
       ],
-      "changed_field_count": 23
+      "changed_field_count": 33
     },
     {
       "file": "specs/reels/mensik-tien-davis-cup-2026-q2.xhs.txt",
@@ -4088,28 +4199,54 @@
       "validation": "Canonical display scan plus existing name-typo and reverse guard."
     },
     {
+      "file": "specs/reels/nadal-academy-10th-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "770af3459306df8d1a0a403e2bb6a32b4f9a0422",
+      "corrected_source_blob_sha": "fd91a1509906ad9aea916048911771055db08341",
+      "changed_fields": [
+        "$.segments[11].narration"
+      ],
+      "changed_field_count": 1
+    },
+    {
+      "file": "specs/reels/nadal-academy-10th-2026.xhs.txt",
+      "source_status": "corrected",
+      "original_blob_sha": "a3361925e09f8f346adc95ac449f0bff7e314111",
+      "corrected_source_blob_sha": "d78a7a66b14116ff49265fed95222cc3c4c232b0",
+      "content_type": "editable-copy"
+    },
+    {
       "file": "specs/reels/noskova-boulter-bjk-cup-2026-qf.json",
       "source_status": "corrected",
       "original_blob_sha": "577c6d6326ef266e4ceda739b4bbdc87985686c9",
-      "corrected_source_blob_sha": "5752f7b89fde4f06b72f24bf75af18df8036a1fb",
+      "corrected_source_blob_sha": "7fa01365f6b9d58d0992133192bc894f49373649",
       "changed_fields": [
-        "$._match.loser",
-        "$._match.participants[1]",
-        "$.cover.matchup[1].name",
-        "$.cover.topic",
-        "$.push.lead",
-        "$.segments[10].narration",
-        "$.segments[10].point_end_ok",
-        "$.segments[11].narration",
-        "$.segments[12].narration",
-        "$.segments[14].narration",
+        "$.topbar.line2",
+        "$._hit_data[0].detail",
+        "$._hit_data[1].detail",
+        "$._hit_data[2].detail",
+        "$._hit_data[3].detail",
+        "$._hit_data[4].detail",
         "$.segments[3].narration",
         "$.segments[5].narration",
         "$.segments[6].narration",
         "$.segments[8].narration",
-        "$.topbar.line2"
+        "$.segments[10].point_end_ok",
+        "$.segments[10].narration",
+        "$.segments[11].narration",
+        "$.segments[12].narration",
+        "$.segments[14].narration",
+        "$.push.lead",
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[5]",
+        "$.cover.matchup[1].name",
+        "$.cover.topic"
       ],
-      "changed_field_count": 15
+      "changed_field_count": 24
     },
     {
       "file": "specs/reels/noskova-boulter-bjk-cup-2026-qf.xhs.txt",
@@ -4123,24 +4260,31 @@
       "file": "specs/reels/noskova-boulter.json",
       "source_status": "corrected",
       "original_blob_sha": "f2c58abdd8c37794214c0946a1f40a7a18d9a745",
-      "corrected_source_blob_sha": "aba11aa713035e7cedcc1b29e0d15c40223bdf2e",
+      "corrected_source_blob_sha": "cee4232aad6891813ed046b763428b5ee12926e6",
       "changed_fields": [
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[1]",
-        "$.editorial.beats[2]",
-        "$.editorial.thesis",
-        "$.push.lead",
+        "$.topbar.line2",
+        "$._hit_data",
+        "$.segments[3].narration",
+        "$.segments[6].narration",
         "$.segments[11].narration",
         "$.segments[15].narration",
         "$.segments[17].narration",
         "$.segments[18].narration",
         "$.segments[19].narration",
         "$.segments[21].narration",
-        "$.segments[3].narration",
-        "$.segments[6].narration",
-        "$.topbar.line2"
+        "$.push.lead",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.human_context.facts[8]",
+        "$.editorial.human_context.facts[11]",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 14
+      "changed_field_count": 21
     },
     {
       "file": "specs/reels/noskova-boulter.xhs.txt",
@@ -4151,22 +4295,32 @@
       "validation": "Canonical display scan plus existing name-typo and reverse guard."
     },
     {
+      "file": "specs/reels/noskova-tauson.json",
+      "source_status": "corrected",
+      "original_blob_sha": "6030151553a1f606cae70135e9e07259e5b818a6",
+      "corrected_source_blob_sha": "59da689cc8bd57726402a2142a9400b4a52a095b",
+      "changed_fields": [
+        "$.editorial.human_context.facts[3]"
+      ],
+      "changed_field_count": 1
+    },
+    {
       "file": "specs/reels/osaka-mertens.json",
       "source_status": "corrected",
       "original_blob_sha": "7f4c2797f2df6393b5aa781daee8b268496fe9bd",
       "corrected_source_blob_sha": "1d920918cb89459f65dbd213f873f6e15811f00f",
       "changed_fields": [
-        "$.cover.matchup[1].name",
-        "$.cover.subject",
-        "$.cover.winner",
-        "$.editorial.human_context.facts[0]",
-        "$.editorial.question",
+        "$.topbar.line2",
         "$.push.lead",
         "$.push.summary",
         "$.segments[2].narration",
         "$.segments[4].narration",
         "$.segments[5].narration",
-        "$.topbar.line2"
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.question",
+        "$.cover.subject",
+        "$.cover.matchup[1].name",
+        "$.cover.winner"
       ],
       "changed_field_count": 11
     },
@@ -4174,22 +4328,28 @@
       "file": "specs/reels/pegula-waltert.json",
       "source_status": "corrected",
       "original_blob_sha": "c668a147e3d018c6fc8796fcab2bc758355ce896",
-      "corrected_source_blob_sha": "7ae1a28ef7500142309082ad82bdfdd31bd39340",
+      "corrected_source_blob_sha": "29e0adf800d7ee955abf7d146ce1a5b1f0f4f686",
       "changed_fields": [
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[0]",
-        "$.editorial.human_context.angle",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[11].narration",
-        "$.segments[12].narration",
+        "$.topbar.line2",
+        "$._hit_data",
         "$.segments[2].narration",
         "$.segments[3].narration",
         "$.segments[5].narration",
         "$.segments[6].narration",
-        "$.topbar.line2"
+        "$.segments[11].narration",
+        "$.segments[12].narration",
+        "$.push.lead",
+        "$.editorial.beats[0]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.human_context.facts[6]",
+        "$.editorial.human_context.facts[7]",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 12
+      "changed_field_count": 18
     },
     {
       "file": "specs/reels/pegula-waltert.xhs.txt",
@@ -4203,475 +4363,677 @@
       "file": "specs/reels/pending/alcaraz-arnaldi.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "67309e982adcaf7d8f15452a64f287f9da91bac3",
-      "corrected_source_blob_sha": "43815869c8b8c51cca96ea459d31e9f58cf87066",
+      "corrected_source_blob_sha": "7ffdf13712f283544d1ac09893b41ec03309534a",
       "changed_fields": [
         "$._match.loser",
         "$._match.participants[1]",
+        "$._hit_data[0].label",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._hit_data[7].detail",
+        "$.segments[0].narration",
+        "$.segments[1].narration",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
         "$.push.lead",
-        "$.segments[0].narration",
-        "$.segments[1].narration"
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label"
       ],
-      "changed_field_count": 8
+      "changed_field_count": 18
     },
     {
       "file": "specs/reels/pending/alcaraz-michelsen.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "cc25b4d9206d6104fd63b52d9ea8c30e5f79a329",
-      "corrected_source_blob_sha": "299860e50cf053357569bd0eff1d6a6be1fc19f4",
+      "corrected_source_blob_sha": "abba6e2ebf75feaf00b1b166a071c326d0c7e34b",
       "changed_fields": [
-        "$._match.loser",
-        "$._match.participants[1]",
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[1]",
-        "$.editorial.beats[2]",
-        "$.editorial.human_context",
-        "$.editorial.narration[0]",
-        "$.editorial.narration[1]",
-        "$.editorial.narration[2]",
-        "$.editorial.question",
+        "$._hit_data[1].label",
+        "$._hit_data[3].label",
+        "$._hit_data[5].label",
+        "$._hit_data[8].detail",
         "$.push.lead",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
         "$.segments[2].narration",
         "$.segments[4].narration",
         "$.segments[5].narration",
-        "$.segments[6].narration"
+        "$.segments[6].narration",
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.editorial.human_context",
+        "$.editorial.question",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 16
+      "changed_field_count": 24
     },
     {
       "file": "specs/reels/pending/auger-aliassime-khachanov.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "3451ae1a1c78d6d1dd696972aa8f467a81deb79f",
-      "corrected_source_blob_sha": "d35eef64e5cb04db3b3bb8de4d57a95000a7a1ac",
+      "corrected_source_blob_sha": "ac149afa1ce0bcd358ad15ddaba39e89a2c06709",
       "changed_fields": [
-        "$._match.loser",
-        "$._match.participants[0]",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[1]",
-        "$.editorial.beats[2]",
-        "$.editorial.human_context",
-        "$.editorial.narration[0]",
-        "$.editorial.narration[2]",
-        "$.editorial.thesis",
+        "$._hit_data[0].detail",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._hit_data[6].label",
         "$.push.lead",
         "$.push.summary",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
         "$.segments[0].narration",
         "$.segments[1].narration",
         "$.segments[2].narration",
         "$.segments[3].narration",
         "$.segments[4].narration",
-        "$.segments[5].narration"
+        "$.segments[5].narration",
+        "$._match.loser",
+        "$._match.participants[0]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[2]",
+        "$.editorial.human_context",
+        "$.editorial.thesis"
       ],
-      "changed_field_count": 17
+      "changed_field_count": 24
     },
     {
       "file": "specs/reels/pending/bonzi-buse.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "2c02ffd5c66b728559b972c688703ca16b3053c1",
-      "corrected_source_blob_sha": "6fade38d7e81c7c026b5328d56176b90984c8c93",
+      "corrected_source_blob_sha": "184dbca07a87028b71395b5b25e1f1536ba76edb",
       "changed_fields": [
-        "$._match.participants[0]",
+        "$._hit_data[0].detail",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._hit_data[6].label",
+        "$._hit_data[7].label",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
         "$._match.winner",
+        "$._match.participants[0]",
         "$.cover.matchup[0].name",
         "$.cover.winner"
       ],
-      "changed_field_count": 4
+      "changed_field_count": 12
     },
     {
       "file": "specs/reels/pending/boulter-muchova.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "b69da961baa95d152470809066e07ab8e806bc5c",
-      "corrected_source_blob_sha": "9c63c2a635260c5bf951b75e91adfe9ad4635cfc",
+      "corrected_source_blob_sha": "3bf604744016c2f838aa3992fc307c540eb7268b",
       "changed_fields": [
-        "$._match.participants[1]",
+        "$._hit_data[0].detail",
+        "$._hit_data[1].label",
+        "$._hit_data[3].label",
+        "$._hit_data[5].label",
+        "$.push.lead",
+        "$.push.summary",
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
+        "$.segments[0].narration",
+        "$.segments[3].narration",
+        "$.segments[6].narration",
         "$._match.winner",
-        "$.cover.matchup[1].name",
-        "$.cover.winner",
+        "$._match.participants[1]",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
-        "$.editorial.human_context",
         "$.editorial.narration[0]",
         "$.editorial.narration[1]",
         "$.editorial.narration[2]",
+        "$.editorial.human_context",
         "$.editorial.question",
         "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.summary",
-        "$.segments[0].narration",
-        "$.segments[3].narration",
-        "$.segments[6].narration"
+        "$.cover.matchup[1].name",
+        "$.cover.winner"
       ],
-      "changed_field_count": 18
+      "changed_field_count": 27
     },
     {
       "file": "specs/reels/pending/comesana-cobolli.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "22adce5307ae7c7dc28aa0cae45bafea4782dcec",
-      "corrected_source_blob_sha": "5ad3c8a6e26e55d5a7c02b8ac6ee38b3d25a3fb4",
+      "corrected_source_blob_sha": "06160a3d5c2a7efc2d76135a0245c279ffb21f92",
       "changed_fields": [
-        "$._match.loser",
-        "$._match.participants[0]",
-        "$.cover.matchup[0].name",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[2]",
-        "$.editorial.human_context",
-        "$.editorial.narration[0]",
-        "$.editorial.narration[2]",
-        "$.editorial.thesis",
+        "$._hit_data[0].detail",
+        "$._hit_data[1].label",
+        "$._hit_data[3].label",
+        "$._hit_data[5].label",
         "$.push.lead",
+        "$._turning_points[0].label",
+        "$._turning_points[3].label",
         "$.segments[1].narration",
         "$.segments[2].narration",
-        "$.segments[5].narration"
+        "$.segments[5].narration",
+        "$._match.loser",
+        "$._match.participants[0]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[2]",
+        "$.editorial.human_context",
+        "$.editorial.thesis",
+        "$.cover.matchup[0].name"
       ],
-      "changed_field_count": 13
+      "changed_field_count": 19
     },
     {
       "file": "specs/reels/pending/darderi-ruud.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "5702c1f91d8c8bd9aa4a46ef90009626904c6596",
-      "corrected_source_blob_sha": "7216123518a9bac65b962341ff80108d53cb8dc2",
+      "corrected_source_blob_sha": "e3672ede190988326be71194686fadae9a32bbc8",
       "changed_fields": [
-        "$._match.participants[0]",
         "$._match.winner",
-        "$.cover.winner",
+        "$._match.participants[0]",
+        "$._hit_data[0].label",
+        "$._hit_data[1].label",
+        "$._hit_data[3].label",
+        "$._hit_data[7].detail",
+        "$.segments[0].narration",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
         "$.editorial.hook[1]",
         "$.editorial.human_context",
-        "$.editorial.narration[0]",
         "$.editorial.question",
         "$.push.lead",
         "$.push.summary",
-        "$.segments[0].narration"
+        "$._turning_points[0].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
+        "$.cover.winner"
       ],
-      "changed_field_count": 13
+      "changed_field_count": 21
     },
     {
       "file": "specs/reels/pending/fritz-bellucci.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "34f1957f307fc8f625f3684decc97d7a81b8e3c6",
-      "corrected_source_blob_sha": "19295b1e24948864609207284e575218a04a47b2",
+      "corrected_source_blob_sha": "01462df321b4e223f69717e2c09414948f56eb86",
       "changed_fields": [
+        "$._hit_data[0].detail",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._hit_data[6].label",
+        "$.push.lead",
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
+        "$.segments[0].narration",
+        "$.segments[1].narration",
+        "$.segments[2].narration",
         "$._match.loser",
         "$._match.participants[1]",
-        "$.cover.matchup[1].name",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
-        "$.editorial.human_context",
         "$.editorial.narration[0]",
         "$.editorial.narration[1]",
         "$.editorial.narration[2]",
+        "$.editorial.human_context",
         "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[0].narration",
-        "$.segments[1].narration",
-        "$.segments[2].narration"
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 15
+      "changed_field_count": 23
     },
     {
       "file": "specs/reels/pending/jacquet-darderi.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "695211c46a3646fd3834c22c9f9ff14fdc8b244b",
-      "corrected_source_blob_sha": "72bda5a2eca061d1023e001029e80d5ab7330883",
+      "corrected_source_blob_sha": "ccdc1c5e5bf5b642701c02fc05a1b89276bf164e",
       "changed_fields": [
         "$._match.loser",
         "$._match.participants[1]",
+        "$._hit_data[0].label",
+        "$._hit_data[3].label",
+        "$._hit_data[6].detail",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.human_context",
         "$.editorial.question",
         "$.push.lead",
-        "$.push.summary"
+        "$.push.summary",
+        "$._turning_points[0].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label"
       ],
-      "changed_field_count": 8
+      "changed_field_count": 15
     },
     {
       "file": "specs/reels/pending/khachanov-auger-aliassime.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "2d2d0d6484aac8aee37ae864bcef42c456f67170",
-      "corrected_source_blob_sha": "6f842378a4534d106a21e7bd12328a4ab8a6e2b4",
+      "corrected_source_blob_sha": "cd01aa30a7dac848539868b61247fb67bb22c7f5",
       "changed_fields": [
-        "$._match.participants[0]",
+        "$._hit_data[1].label",
+        "$._hit_data[2].label",
+        "$._hit_data[6].detail",
+        "$.push.lead",
+        "$.push.summary",
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$.segments[0].quote[0]",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
         "$._match.winner",
-        "$.cover.winner",
+        "$._match.participants[0]",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
-        "$.editorial.human_context",
         "$.editorial.narration[0]",
+        "$.editorial.human_context",
         "$.editorial.question",
         "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.summary",
-        "$.segments[2].narration",
-        "$.segments[3].narration"
+        "$.cover.winner"
       ],
-      "changed_field_count": 14
+      "changed_field_count": 22
     },
     {
       "file": "specs/reels/pending/khachanov-tien.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "fdf2325e33529ea302bd97cbb263e22502928bd7",
-      "corrected_source_blob_sha": "6f06a7f7f2b6db0ad0655d51d23d14ef2ed5f910",
+      "corrected_source_blob_sha": "3c7d65cac9d7cd1527709d2aeab5121d58cf68d4",
       "changed_fields": [
-        "$._match.participants[0]",
-        "$._match.winner",
-        "$.cover.winner",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[2]",
-        "$.editorial.human_context",
-        "$.editorial.narration[0]",
-        "$.editorial.narration[2]",
-        "$.editorial.thesis",
+        "$._hit_data[0].detail",
+        "$._hit_data[1].label",
+        "$._hit_data[3].label",
+        "$._hit_data[5].label",
         "$.push.lead",
         "$.push.summary",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
         "$.segments[1].narration",
         "$.segments[2].narration",
         "$.segments[3].narration",
-        "$.segments[4].narration"
+        "$.segments[4].narration",
+        "$._match.winner",
+        "$._match.participants[0]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[2]",
+        "$.editorial.human_context",
+        "$.editorial.thesis",
+        "$.cover.winner"
       ],
-      "changed_field_count": 15
+      "changed_field_count": 23
+    },
+    {
+      "file": "specs/reels/pending/medvedev-struff.draft.json",
+      "source_status": "corrected",
+      "original_blob_sha": "9b1e8caf16a0fe0db976a9cbd4752bc20e8cc593",
+      "corrected_source_blob_sha": "30ffa0e6568131f05d3bb65831357fe581f6bb24",
+      "changed_fields": [
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$._hit_data[1].label",
+        "$._hit_data[3].label",
+        "$._hit_data[6].detail",
+        "$.segments[2].narration",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[2]",
+        "$.editorial.hook[1]",
+        "$.editorial.human_context",
+        "$.push.lead",
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
+        "$.cover.matchup[1].name"
+      ],
+      "changed_field_count": 17
     },
     {
       "file": "specs/reels/pending/mensik-mochizuki.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "94d5d0f3fb8cebcaf2f073f6b4f5ecddf098e36e",
-      "corrected_source_blob_sha": "82fcb4d84df0db45ec6a634154bbf11332ee4051",
+      "corrected_source_blob_sha": "a3c561ea1b2365ce462fa048e64d2b0da21697c6",
       "changed_fields": [
-        "$._match.participants[0]",
-        "$._match.winner",
-        "$.cover.winner",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[1]",
-        "$.editorial.beats[2]",
-        "$.editorial.human_context",
-        "$.editorial.narration[0]",
-        "$.editorial.narration[1]",
-        "$.editorial.narration[2]",
-        "$.editorial.question",
-        "$.editorial.thesis",
+        "$._hit_data[0].detail",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._turning_points[0].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
         "$.segments[0].narration",
         "$.segments[2].narration",
         "$.segments[3].narration",
-        "$.segments[4].narration"
+        "$.segments[4].narration",
+        "$._match.winner",
+        "$._match.participants[0]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.editorial.human_context",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.cover.winner"
       ],
-      "changed_field_count": 16
+      "changed_field_count": 23
     },
     {
       "file": "specs/reels/pending/mensik-nakashima-laver-cup-2026.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "d780a3b920bca4e92a21ae8be7fd2b19456403b2",
-      "corrected_source_blob_sha": "29ece63c51fa8c9cc4d16be81c2b8b54c934dbcf",
+      "corrected_source_blob_sha": "150dd7f38c333f14c96b3b7e60b509f85aefa512",
       "changed_fields": [
-        "$.cover.matchup[0].name",
-        "$.editorial.beats[0]",
-        "$.editorial.human_context",
-        "$.editorial.narration[1]",
-        "$.editorial.thesis",
+        "$._hit_data[0].detail",
+        "$._hit_data[1].label",
+        "$._hit_data[3].label",
+        "$._hit_data[5].label",
         "$.push.lead",
         "$.push.summary",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
         "$.segments[0].narration",
         "$.segments[1].narration",
         "$.segments[3].narration",
-        "$.segments[4].narration"
+        "$.segments[4].narration",
+        "$.editorial.beats[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.human_context",
+        "$.editorial.thesis",
+        "$.cover.matchup[0].name"
       ],
-      "changed_field_count": 11
+      "changed_field_count": 19
     },
     {
       "file": "specs/reels/pending/mensik-rodionov.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "52cd1980033b417954b73de5e7bb1da7d5214ee7",
-      "corrected_source_blob_sha": "3ae03bd0545d21cdcca58a3522a3ea208f705fc7",
+      "corrected_source_blob_sha": "d3d74035e30d6666e573304f76f32c0b3d3aa3c3",
       "changed_fields": [
-        "$._match.participants[0]",
-        "$._match.winner",
-        "$.cover.winner",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[2]",
-        "$.editorial.hook[1]",
-        "$.editorial.human_context",
-        "$.editorial.narration[0]",
-        "$.editorial.narration[2]",
-        "$.editorial.question",
-        "$.editorial.thesis",
+        "$._hit_data[0].detail",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
         "$.push.lead",
         "$.push.summary",
+        "$._turning_points[0].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
         "$.segments[0].narration",
-        "$.segments[2].narration"
+        "$.segments[2].narration",
+        "$._match.winner",
+        "$._match.participants[0]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[2]",
+        "$.editorial.hook[1]",
+        "$.editorial.human_context",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.cover.winner"
       ],
-      "changed_field_count": 15
+      "changed_field_count": 21
     },
     {
       "file": "specs/reels/pending/mensik-tien.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "03fe5b4d077fa88fe77dfc2b2d8f472689130743",
-      "corrected_source_blob_sha": "dc8b4cf56338bce357b79e46deb90d1b7a5f4ad3",
+      "corrected_source_blob_sha": "a194019156c11188ecc8f23ef69cc1c0d09dc1a6",
       "changed_fields": [
+        "$._hit_data[0].detail",
+        "$._hit_data[1].label",
+        "$._hit_data[3].label",
+        "$._hit_data[5].label",
+        "$._hit_data[6].label",
+        "$.push.lead",
+        "$.push.summary",
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[3].label",
+        "$.segments[2].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration",
         "$._match.loser",
         "$._match.participants[0]",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
-        "$.editorial.human_context",
         "$.editorial.narration[0]",
         "$.editorial.narration[2]",
+        "$.editorial.human_context",
         "$.editorial.question",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.summary",
-        "$.segments[2].narration",
-        "$.segments[5].narration",
-        "$.segments[6].narration"
+        "$.editorial.thesis"
       ],
-      "changed_field_count": 15
+      "changed_field_count": 23
     },
     {
       "file": "specs/reels/pending/muchova-boulter.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "2bfe35cd256c208cf167526dd5497bc38b781f79",
-      "corrected_source_blob_sha": "82df3254f32b94152c4465f4eee7fd384dfbd641",
+      "corrected_source_blob_sha": "6c4341a3af857ee343445296126d66ab1d6a532f",
       "changed_fields": [
-        "$._match.loser",
-        "$._match.participants[1]",
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[1]",
-        "$.editorial.hook[1]",
-        "$.editorial.narration[1]",
-        "$.editorial.question",
-        "$.editorial.thesis",
+        "$._hit_data[0].label",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._hit_data[7].detail",
         "$.push.lead",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
         "$.segments[1].narration",
         "$.segments[3].narration",
-        "$.segments[6].narration"
+        "$.segments[6].narration",
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.editorial.beats[1]",
+        "$.editorial.narration[1]",
+        "$.editorial.hook[1]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 12
+      "changed_field_count": 20
     },
     {
       "file": "specs/reels/pending/nakashima-michelsen.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "e6aa028d0de84e07ad0add1509993bd82dbdc011",
-      "corrected_source_blob_sha": "0239bf43fdbc20a2dfac71a9a38d792c28fe096f",
+      "corrected_source_blob_sha": "edcd8608342755e333a14c5a31417104049d8575",
       "changed_fields": [
-        "$._match.participants[1]",
-        "$._match.winner",
-        "$.cover.matchup[1].name",
-        "$.cover.winner",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[1]",
-        "$.editorial.beats[2]",
-        "$.editorial.human_context",
-        "$.editorial.narration[0]",
-        "$.editorial.narration[1]",
-        "$.editorial.narration[2]",
-        "$.editorial.question",
-        "$.editorial.thesis",
+        "$._hit_data[0].detail",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._hit_data[6].label",
         "$.push.lead",
         "$.push.summary",
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
         "$.segments[0].narration",
         "$.segments[1].narration",
         "$.segments[2].narration",
         "$.segments[3].narration",
-        "$.segments[6].narration"
+        "$.segments[6].narration",
+        "$._match.winner",
+        "$._match.participants[1]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
+        "$.editorial.narration[2]",
+        "$.editorial.human_context",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name",
+        "$.cover.winner"
       ],
-      "changed_field_count": 20
+      "changed_field_count": 29
     },
     {
       "file": "specs/reels/pending/noskova-boulter-bjk-cup-2026-qf.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "abfe54de23cb689741ad474324aa22f035aa0000",
-      "corrected_source_blob_sha": "fbfed47d8de829828a109f8da8a5c0533e7e5477",
+      "corrected_source_blob_sha": "668e882faa84c35baa0efae9ccea59f1442a3b6f",
       "changed_fields": [
-        "$._match.loser",
-        "$._match.participants[1]",
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[1]",
-        "$.editorial.chapters[1]",
-        "$.editorial.narration[1]",
-        "$.editorial.thesis",
+        "$._hit_data[0].detail",
+        "$._hit_data[1].label",
+        "$._hit_data[4].label",
         "$.push.lead",
         "$.push.summary",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
         "$.segments[0].narration",
         "$.segments[3].narration",
-        "$.segments[4].narration"
+        "$.segments[4].narration",
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.narration[1]",
+        "$.editorial.thesis",
+        "$.editorial.chapters[1]",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 13
+      "changed_field_count": 19
     },
     {
       "file": "specs/reels/pending/osaka-zakharova.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "58531203b8101decd90fec7aa3fe6e421fd6920a",
-      "corrected_source_blob_sha": "b68c0f5ddf3b5d50258a757b01ddfe872f539a24",
+      "corrected_source_blob_sha": "e1a36eef413d450f80e8f1c85f3744e10981fe4e",
       "changed_fields": [
+        "$._hit_data[0].detail",
+        "$._hit_data[3].label",
+        "$._hit_data[5].label",
+        "$.push.lead",
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
+        "$.segments[5].narration",
         "$._match.loser",
         "$._match.participants[1]",
-        "$.cover.matchup[1].name",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
-        "$.editorial.human_context",
         "$.editorial.narration[1]",
+        "$.editorial.human_context",
         "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[5].narration"
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 10
+      "changed_field_count": 18
     },
     {
       "file": "specs/reels/pending/sabalenka-iatcenko.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "ed138203b3e8eb4a2ab6a282e637b9d9276aa1ab",
-      "corrected_source_blob_sha": "6f8d891e22174fe7030d58ef766aaef8a390504c",
+      "corrected_source_blob_sha": "ec72db1fd2f9e424ebf7ef01a385c22c75d32b68",
       "changed_fields": [
+        "$._hit_data[0].detail",
+        "$._hit_data[3].label",
+        "$._hit_data[5].label",
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
+        "$.segments[0].narration",
         "$._match.loser",
         "$._match.participants[1]",
-        "$.cover.matchup[1].name",
         "$.editorial.beats[1]",
-        "$.editorial.human_context",
         "$.editorial.narration[1]",
+        "$.editorial.human_context",
         "$.editorial.question",
-        "$.segments[0].narration"
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 8
+      "changed_field_count": 15
     },
     {
       "file": "specs/reels/pending/timofeeva-mertens.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "8a00945694071a6fe8e3903632c98ea0e66a34e1",
-      "corrected_source_blob_sha": "47979f5cfff65d3088aceb8243629d47e831d3e3",
+      "corrected_source_blob_sha": "ee45910d6a9d5966f067ba126cdcf2d9a06c9e1e",
       "changed_fields": [
+        "$._hit_data[0].detail",
+        "$._hit_data[1].label",
+        "$._hit_data[3].label",
+        "$._hit_data[5].label",
+        "$.push.lead",
+        "$.push.summary",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
+        "$.segments[1].narration",
+        "$.segments[2].narration",
         "$._match.loser",
         "$._match.participants[0]",
-        "$.cover.matchup[0].name",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
-        "$.editorial.chapters[1]",
-        "$.editorial.human_context",
         "$.editorial.narration[1]",
         "$.editorial.narration[2]",
-        "$.push.lead",
-        "$.push.summary",
-        "$.segments[1].narration",
-        "$.segments[2].narration"
+        "$.editorial.human_context",
+        "$.editorial.chapters[1]",
+        "$.cover.matchup[0].name"
       ],
-      "changed_field_count": 14
+      "changed_field_count": 22
     },
     {
       "file": "specs/reels/pending/timofeeva-osaka.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "13fa53d9be181d671398c22c966fb068717a3092",
-      "corrected_source_blob_sha": "784ebb4970890313deb781b902c5e4a409774977",
+      "corrected_source_blob_sha": "6fb06a067f8ec709c33ab683c64f0aaeae3077c4",
       "changed_fields": [
+        "$._hit_data[0].label",
+        "$._hit_data[1].label",
+        "$._hit_data[3].label",
+        "$._hit_data[7].detail",
+        "$.push.lead",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$.segments[0].quote[0]",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[4].narration",
+        "$.segments[5].narration",
+        "$.segments[6].narration",
+        "$.segments[7].narration",
+        "$.segments[8].narration",
         "$._match.loser",
         "$._match.participants[0]",
-        "$.cover.matchup[0].name",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
@@ -4679,108 +5041,136 @@
         "$.editorial.narration[1]",
         "$.editorial.narration[2]",
         "$.editorial.question",
-        "$.push.lead",
-        "$.segments[2].narration",
-        "$.segments[5].narration",
-        "$.segments[6].narration",
-        "$.segments[7].narration",
-        "$.segments[8].narration"
+        "$.cover.matchup[0].name"
       ],
-      "changed_field_count": 16
+      "changed_field_count": 25
     },
     {
       "file": "specs/reels/pending/zheng-putintseva.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "5c6826e792ea82de7d2332308aa2cc7baa56c19c",
-      "corrected_source_blob_sha": "59b391cef82e1695e74ca5385fadb3aab598c492",
+      "corrected_source_blob_sha": "3434155ef84d58b39825f7aa8c0720079e094b76",
       "changed_fields": [
+        "$._hit_data[0].detail",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._hit_data[7].label",
+        "$.push.lead",
+        "$.push.summary",
+        "$._turning_points[0].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$.segments[0].narration",
+        "$.segments[1].narration",
         "$._match.loser",
         "$._match.participants[1]",
-        "$.cover.matchup[1].name",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
+        "$.editorial.narration[0]",
+        "$.editorial.narration[1]",
         "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.summary",
-        "$.segments[0].narration",
-        "$.segments[1].narration"
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 11
+      "changed_field_count": 20
     },
     {
       "file": "specs/reels/pending/zverev-darderi.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "ea696e6995c82967fe7468e78b7fc3e6a6c2b5f9",
-      "corrected_source_blob_sha": "2e9a282ab433551dc5d52aeba06a5cef283e849a",
+      "corrected_source_blob_sha": "8193f8d4673cb3003b31a6bbfa3165f9fdbaf1a3",
       "changed_fields": [
+        "$._hit_data[0].detail",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._hit_data[6].label",
+        "$.push.lead",
+        "$.push.summary",
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[3].label",
+        "$._turning_points[4].label",
+        "$.segments[2].narration",
+        "$.segments[4].narration",
+        "$.segments[6].narration",
         "$._match.loser",
         "$._match.participants[1]",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
-        "$.editorial.human_context",
         "$.editorial.narration[2]",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.push.summary",
-        "$.segments[2].narration",
-        "$.segments[4].narration",
-        "$.segments[6].narration"
+        "$.editorial.human_context",
+        "$.editorial.thesis"
       ],
-      "changed_field_count": 13
+      "changed_field_count": 21
     },
     {
       "file": "specs/reels/pending/zverev-khachanov.draft.json",
       "source_status": "corrected",
       "original_blob_sha": "d758ad3c4cce48313ac98372bfd81c3a3836e0f6",
-      "corrected_source_blob_sha": "1405f9e042e4e4457078e86d42a164933fba2b1b",
+      "corrected_source_blob_sha": "fd082a958eff5dc02fdefce2183cb5157a48181e",
       "changed_fields": [
+        "$._hit_data[0].detail",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._hit_data[6].label",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$.segments[2].narration",
+        "$.segments[5].narration",
         "$._match.loser",
         "$._match.participants[1]",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
-        "$.editorial.chapters[1]",
-        "$.editorial.human_context",
         "$.editorial.narration[1]",
         "$.editorial.narration[2]",
+        "$.editorial.human_context",
         "$.editorial.question",
-        "$.segments[2].narration",
-        "$.segments[5].narration"
+        "$.editorial.chapters[1]"
       ],
-      "changed_field_count": 12
+      "changed_field_count": 19
     },
     {
       "file": "specs/reels/putintseva-bencic-us-open-2026-r1.json",
       "source_status": "corrected",
       "original_blob_sha": "d8aa6f123d987c760d99b7adc893fd691d4e74ea",
-      "corrected_source_blob_sha": "5ce35986f9b9d1c8409e27074bcce35a807d4bc8",
+      "corrected_source_blob_sha": "bc72d52374714c65b472db269d789863d7a8b815",
       "changed_fields": [
-        "$._match.participants[0]",
-        "$._match.winner",
-        "$.cover.matchup[0].name",
-        "$.cover.subject",
-        "$.cover.winner",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[1]",
-        "$.editorial.beats[2]",
-        "$.editorial.beats[3]",
-        "$.editorial.human_context.angle",
-        "$.editorial.question",
-        "$.editorial.thesis",
+        "$.topbar.line2",
+        "$._hit_data[0].detail",
+        "$._hit_data[1].label",
+        "$._hit_data[3].detail",
         "$.push.lead",
-        "$.segments[10].narration",
-        "$.segments[13].narration",
         "$.segments[1].narration",
         "$.segments[2].narration",
         "$.segments[3].narration",
         "$.segments[4].narration",
         "$.segments[5].narration",
         "$.segments[7].narration",
-        "$.topbar.line2"
+        "$.segments[10].narration",
+        "$.segments[13].narration",
+        "$._match.winner",
+        "$._match.participants[0]",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.beats[3]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.human_context.facts[6]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.cover.subject",
+        "$.cover.matchup[0].name",
+        "$.cover.winner"
       ],
-      "changed_field_count": 22
+      "changed_field_count": 31
     },
     {
       "file": "specs/reels/putintseva-bencic-us-open-2026-r1.xhs.txt",
@@ -4794,25 +5184,36 @@
       "file": "specs/reels/putintseva-bucsa-bjk-cup-2026.json",
       "source_status": "corrected",
       "original_blob_sha": "b24212305e5badda0225e04925983bf6f8fefa44",
-      "corrected_source_blob_sha": "57992cb376c64c5d10abab15b84283f91a64d014",
+      "corrected_source_blob_sha": "c881680d559bd0e67c47f8e2434ed98bd9cd18e5",
       "changed_fields": [
-        "$._match.participants[0]",
+        "$.topbar.line2",
         "$._match.winner",
-        "$.cover.matchup[0].name",
-        "$.cover.subject",
-        "$.cover.topic",
-        "$.cover.winner",
+        "$._match.participants[0]",
+        "$._hit_data[0].detail",
+        "$._hit_data[1].detail",
+        "$._hit_data[2].detail",
+        "$.segments[0].quote[0].text",
+        "$.segments[9].narration",
+        "$.segments[11].narration",
         "$.editorial.beats[2]",
         "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.human_context.facts[5]",
         "$.editorial.question",
         "$.editorial.thesis",
-        "$.push.lead",
         "$.push.summary",
-        "$.segments[11].narration",
-        "$.segments[9].narration",
-        "$.topbar.line2"
+        "$.push.lead",
+        "$._turning_points.set3_game4",
+        "$._turning_points.set2_game9",
+        "$._turning_points.set1_game3",
+        "$.cover.matchup[0].name",
+        "$.cover.winner",
+        "$.cover.topic",
+        "$.cover.subject"
       ],
-      "changed_field_count": 15
+      "changed_field_count": 26
     },
     {
       "file": "specs/reels/putintseva-bucsa-bjk-cup-2026.xhs.txt",
@@ -4823,13 +5224,23 @@
       "validation": "Canonical display scan plus existing name-typo and reverse guard."
     },
     {
+      "file": "specs/reels/rune-dimitrov-davis-cup-2026-wg1.json",
+      "source_status": "corrected",
+      "original_blob_sha": "6abf2d3c94bc98990fbe38dad5ae6dbced69cf41",
+      "corrected_source_blob_sha": "53f46b1e356be952b5f17acb602399fd5b93275b",
+      "changed_fields": [
+        "$.editorial.human_context.facts[6]"
+      ],
+      "changed_field_count": 1
+    },
+    {
       "file": "specs/reels/ruud-zverev-doubles-laver-cup-2026.json",
       "source_status": "corrected",
       "original_blob_sha": "f67feb75908c51b2df8da27d3925e159f247fd6e",
       "corrected_source_blob_sha": "7f2268c291ce930f8b464ff848dce12a335acdd1",
       "changed_fields": [
-        "$.editorial.beats[1]",
-        "$.segments[1].narration"
+        "$.segments[1].narration",
+        "$.editorial.beats[1]"
       ],
       "changed_field_count": 2
     },
@@ -4837,39 +5248,43 @@
       "file": "specs/reels/rybakina-charaeva-beijing-2026-r2.json",
       "source_status": "corrected",
       "original_blob_sha": "78585103f499884083b8287ad68829a4f8103cdc",
-      "corrected_source_blob_sha": "26182dade311c4456d78da5f476df54546673098",
+      "corrected_source_blob_sha": "fbffab7773c74736d9acd4a4a3dd9ebccaf04559",
       "changed_fields": [
-        "$._match.participants[1]",
+        "$.topbar.line2",
         "$._match.winner",
-        "$.cover.hook",
-        "$.cover.matchup[0].name",
-        "$.cover.subject",
-        "$.cover.topic",
-        "$.cover.winner",
+        "$._match.participants[1]",
+        "$._hit_data[0].detail",
+        "$.segments[1].narration",
+        "$.segments[1].kicker",
+        "$.segments[2].narration",
+        "$.segments[4].point_end_ok",
+        "$.segments[4].crosses_cut",
+        "$.segments[5].point_end_ok",
+        "$.segments[5].crosses_cut",
+        "$.segments[5].quote[2].text",
+        "$.segments[6].narration",
+        "$.segments[6].point_end_ok",
+        "$.segments[6].crosses_cut",
+        "$.segments[8].narration",
+        "$.segments[9].point_end_ok",
+        "$.segments[9].crosses_cut",
+        "$.segments[10].point_end_ok",
+        "$.segments[10].crosses_cut",
+        "$.segments[11].narration",
+        "$.segments[11].point_end_ok",
+        "$.segments[11].crosses_cut",
+        "$.segments[12].quote[0].text",
+        "$.segments[12].quote[5].text",
         "$.editorial.thesis",
         "$.push.lead",
         "$.push.summary",
-        "$.segments[10].crosses_cut",
-        "$.segments[10].point_end_ok",
-        "$.segments[11].crosses_cut",
-        "$.segments[11].narration",
-        "$.segments[11].point_end_ok",
-        "$.segments[1].kicker",
-        "$.segments[1].narration",
-        "$.segments[2].narration",
-        "$.segments[4].crosses_cut",
-        "$.segments[4].point_end_ok",
-        "$.segments[5].crosses_cut",
-        "$.segments[5].point_end_ok",
-        "$.segments[6].crosses_cut",
-        "$.segments[6].narration",
-        "$.segments[6].point_end_ok",
-        "$.segments[8].narration",
-        "$.segments[9].crosses_cut",
-        "$.segments[9].point_end_ok",
-        "$.topbar.line2"
+        "$.cover.subject",
+        "$.cover.hook",
+        "$.cover.matchup[0].name",
+        "$.cover.winner",
+        "$.cover.topic"
       ],
-      "changed_field_count": 29
+      "changed_field_count": 33
     },
     {
       "file": "specs/reels/rybakina-charaeva-beijing-2026-r2.xhs.txt",
@@ -4891,25 +5306,26 @@
       "file": "specs/reels/shelton-mensik.json",
       "source_status": "corrected",
       "original_blob_sha": "7ece344bb76502218a0856fdc6ceea54cf5db50f",
-      "corrected_source_blob_sha": "4b8b8fb2c609c4585975487e4f5dd2fa42a398ad",
+      "corrected_source_blob_sha": "13ff94c588b7709676b956a59d1c76463268bd5a",
       "changed_fields": [
-        "$.cover.matchup[0].name",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[1]",
-        "$.editorial.beats[2]",
-        "$.editorial.human_context.angle",
-        "$.editorial.human_context.facts[1]",
-        "$.editorial.human_context.facts[2]",
-        "$.editorial.question",
-        "$.editorial.thesis",
+        "$.topbar.line2",
         "$.push.lead",
         "$.push.summary",
         "$.segments[1].narration",
         "$.segments[2].narration",
         "$.segments[4].narration",
-        "$.topbar.line2"
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.question",
+        "$.editorial.thesis",
+        "$.cover.matchup[0].name"
       ],
-      "changed_field_count": 15
+      "changed_field_count": 16
     },
     {
       "file": "specs/reels/shelton-mensik.xhs.txt",
@@ -4920,12 +5336,33 @@
       "validation": "Canonical display scan plus existing name-typo and reverse guard."
     },
     {
+      "file": "specs/reels/shelton-nakashima-montreal-final.json",
+      "source_status": "corrected",
+      "original_blob_sha": "638c96d837f60e51906c886b4bde2902fe3cbb2a",
+      "corrected_source_blob_sha": "231aef5e6d024cbb501f4f17431691f474c29467",
+      "changed_fields": [
+        "$.editorial.human_context.facts[3]"
+      ],
+      "changed_field_count": 1
+    },
+    {
       "file": "specs/reels/shelton-zverev-h2h.json",
       "source_status": "corrected",
       "original_blob_sha": "9a52601ceb28b12bd6440bcbb8c76c678f7f1418",
-      "corrected_source_blob_sha": "381c4b3ab28c84cbd549383461973de07aa2eff2",
+      "corrected_source_blob_sha": "04046484e28972e0d14624db3ee14c0564da31bd",
       "changed_fields": [
-        "$.segments[1].narration"
+        "$.segments[1].narration",
+        "$.editorial.human_context.facts[1]"
+      ],
+      "changed_field_count": 2
+    },
+    {
+      "file": "specs/reels/sonmez-anisimova.json",
+      "source_status": "corrected",
+      "original_blob_sha": "ee81a1837146a1873e508b0624374f790730fa1b",
+      "corrected_source_blob_sha": "34495f0eef5934f7d68c812930f87925556be529",
+      "changed_fields": [
+        "$.editorial.human_context.facts[5]"
       ],
       "changed_field_count": 1
     },
@@ -4933,26 +5370,39 @@
       "file": "specs/reels/tiafoe-michelsen.json",
       "source_status": "corrected",
       "original_blob_sha": "8f3cc78577d5e29060c932b489f5a02ff170e100",
-      "corrected_source_blob_sha": "cea478e88703ac929b287fbd483c46cdd54946f0",
+      "corrected_source_blob_sha": "205017fc13e8484a2f204170e2e6aa651c5708c6",
       "changed_fields": [
+        "$.topbar.line2",
         "$._match.loser",
         "$._match.participants[1]",
-        "$.cover.matchup[1].name",
+        "$._hit_data[0].detail",
+        "$._hit_data[2].label",
+        "$._hit_data[4].label",
+        "$._hit_data[6].label",
+        "$._hit_data[7].label",
+        "$.segments[1].narration",
+        "$.segments[3].narration",
+        "$.segments[5].narration",
+        "$.segments[7].narration",
+        "$.segments[9].narration",
         "$.editorial.beats[0]",
         "$.editorial.beats[1]",
         "$.editorial.beats[2]",
         "$.editorial.narration[0]",
         "$.editorial.narration[1]",
         "$.editorial.narration[2]",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.human_context.facts[6]",
         "$.push.lead",
-        "$.segments[1].narration",
-        "$.segments[3].narration",
-        "$.segments[5].narration",
-        "$.segments[7].narration",
-        "$.segments[9].narration",
-        "$.topbar.line2"
+        "$._turning_points[0].label",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[4].label",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 16
+      "changed_field_count": 29
     },
     {
       "file": "specs/reels/tiafoe-michelsen.xhs.txt",
@@ -4984,21 +5434,22 @@
       "file": "specs/reels/tirante-mensik.json",
       "source_status": "corrected",
       "original_blob_sha": "1496e448aacd1f5f19b65bea9989c5ac04d22593",
-      "corrected_source_blob_sha": "c33ab36da8a516e6be3f3fcab244bdbcbde8b245",
+      "corrected_source_blob_sha": "95f8720fab627970774cb0557f1edbe39344b478",
       "changed_fields": [
-        "$.cover.matchup[1].name",
+        "$.topbar.line2",
+        "$._hit_data",
+        "$.push.lead",
+        "$.segments[1].narration",
+        "$.segments[4].narration",
+        "$.segments[6].narration",
         "$.editorial.beats[2]",
         "$.editorial.human_context.angle",
         "$.editorial.human_context.facts[1]",
         "$.editorial.human_context.facts[2]",
         "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[1].narration",
-        "$.segments[4].narration",
-        "$.segments[6].narration",
-        "$.topbar.line2"
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 11
+      "changed_field_count": 12
     },
     {
       "file": "specs/reels/tirante-mensik.xhs.txt",
@@ -5012,22 +5463,31 @@
       "file": "specs/reels/trungelliti-medvedev.json",
       "source_status": "corrected",
       "original_blob_sha": "7e39a842035e846b6dbed6e0ad33e4919281bcea",
-      "corrected_source_blob_sha": "d73dce6f6a9d9993c0e1de27fed0f1aaf34438d2",
+      "corrected_source_blob_sha": "11f8bd8387de0ac531088145a13824e8aaadc566",
       "changed_fields": [
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[1]",
-        "$.editorial.human_context.angle",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[14].narration",
-        "$.segments[16].narration",
-        "$.segments[17].narration",
+        "$.topbar.line2",
+        "$._hit_data",
         "$.segments[3].narration",
         "$.segments[6].narration",
         "$.segments[9].narration",
-        "$.topbar.line2"
+        "$.segments[14].narration",
+        "$.segments[16].narration",
+        "$.segments[17].narration",
+        "$.push.lead",
+        "$.editorial.beats[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.human_context.facts[6]",
+        "$.editorial.human_context.facts[8]",
+        "$.editorial.human_context.facts[9]",
+        "$.editorial.human_context.facts[10]",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 12
+      "changed_field_count": 21
     },
     {
       "file": "specs/reels/trungelliti-medvedev.xhs.txt",
@@ -5060,19 +5520,12 @@
       "file": "specs/reels/waiting-cover/zandschulp-deminaur-us-open-2026-r2.json",
       "source_status": "corrected",
       "original_blob_sha": "3d9b256c28eef3391bfeb0ceee8898d68920f918",
-      "corrected_source_blob_sha": "4e7b5a68126f3148f43681745472dc5aa1e3bde0",
+      "corrected_source_blob_sha": "73db71a11163598358e46995ca40a7edd578c06b",
       "changed_fields": [
-        "$._match.participants[0]",
+        "$.topbar.line2",
         "$._match.winner",
-        "$.cover.matchup[0].name",
-        "$.cover.topic",
-        "$.cover.winner",
-        "$.editorial.beats[0]",
-        "$.editorial.beats[1]",
-        "$.editorial.human_context.angle",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[10].narration",
+        "$._match.participants[0]",
+        "$._hit_data",
         "$.segments[2].narration",
         "$.segments[3].narration",
         "$.segments[4].narration",
@@ -5080,9 +5533,21 @@
         "$.segments[6].narration",
         "$.segments[7].narration",
         "$.segments[9].narration",
-        "$.topbar.line2"
+        "$.segments[10].narration",
+        "$.editorial.beats[0]",
+        "$.editorial.beats[1]",
+        "$.editorial.human_context.angle",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$._turning_points[0]",
+        "$._turning_points[1]",
+        "$._turning_points[2]",
+        "$._turning_points[3]",
+        "$.cover.matchup[0].name",
+        "$.cover.winner",
+        "$.cover.topic"
       ],
-      "changed_field_count": 19
+      "changed_field_count": 24
     },
     {
       "file": "specs/reels/waiting-cover/zandschulp-deminaur-us-open-2026-r2.xhs.txt",
@@ -5096,11 +5561,12 @@
       "file": "specs/reels/wang-vandewinkel.json",
       "source_status": "corrected",
       "original_blob_sha": "6f0596b79729ca21d0369d724c73c14bc01e616e",
-      "corrected_source_blob_sha": "ad1b204eca233bb6c40c86e6da5deeef5dedb968",
+      "corrected_source_blob_sha": "21455a7f9b5ced68db434aef350c2726cc66b736",
       "changed_fields": [
-        "$.editorial.human_context.angle"
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[2]"
       ],
-      "changed_field_count": 1
+      "changed_field_count": 2
     },
     {
       "file": "specs/reels/wang-vandewinkel.xhs.txt",
@@ -5119,14 +5585,25 @@
       "validation": "Canonical display scan plus existing name-typo and reverse guard."
     },
     {
+      "file": "specs/reels/wangxiyu-fernandez.json",
+      "source_status": "corrected",
+      "original_blob_sha": "5789bee24d508ed2f0ef59a746c94a77c5c87d76",
+      "corrected_source_blob_sha": "211a5542e690563102e432d0a91a31f430d0c62a",
+      "changed_fields": [
+        "$.editorial.human_context.facts[3]"
+      ],
+      "changed_field_count": 1
+    },
+    {
       "file": "specs/reels/wangxiyu-keys.json",
       "source_status": "corrected",
       "original_blob_sha": "118e2f1e7b5e576bfcfbac792ce66c2dda901dd6",
-      "corrected_source_blob_sha": "527f45b98ccd2c16fe2dd56d6d87ce190189187b",
+      "corrected_source_blob_sha": "a703c7b09311ae7c241993236f81ab80aee36559",
       "changed_fields": [
+        "$.editorial.human_context.facts[3]",
         "$.editorial.thesis"
       ],
-      "changed_field_count": 1
+      "changed_field_count": 2
     },
     {
       "file": "specs/reels/wangxiyu-keys.xhs.txt",
@@ -5140,19 +5617,25 @@
       "file": "specs/reels/wangxiyu-timofeeva.json",
       "source_status": "corrected",
       "original_blob_sha": "c5ed31cb34ba95f2e277dfb0481190086d2fff36",
-      "corrected_source_blob_sha": "b7a3048db22e382588d8b5ae0ce523434283e2d9",
+      "corrected_source_blob_sha": "77ac82d4ec43761e2353e101fb7aea2271c37746",
       "changed_fields": [
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[2]",
-        "$.editorial.human_context.angle",
-        "$.editorial.thesis",
-        "$.push.lead",
+        "$.topbar.line2",
+        "$._hit_data",
+        "$.segments[5].narration",
         "$.segments[10].narration",
         "$.segments[12].narration",
-        "$.segments[5].narration",
-        "$.topbar.line2"
+        "$.push.lead",
+        "$.editorial.beats[2]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 9
+      "changed_field_count": 15
     },
     {
       "file": "specs/reels/wangxiyu-timofeeva.xhs.txt",
@@ -5166,14 +5649,15 @@
       "file": "specs/reels/zhang-putintseva.json",
       "source_status": "corrected",
       "original_blob_sha": "a327a1ed31fbb9c1c0dc41b06e756d727b0995da",
-      "corrected_source_blob_sha": "c40c9158e85eaed2bc0090c36dfe26a4d4c94135",
+      "corrected_source_blob_sha": "f16504a822f9acd9fddaebbda021fe4517795542",
       "changed_fields": [
-        "$.cover.hook",
-        "$.cover.matchup[1].name",
         "$.push.summary",
-        "$.segments[0].narration"
+        "$._turning_points[2].位置",
+        "$.segments[0].narration",
+        "$.cover.hook",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 4
+      "changed_field_count": 5
     },
     {
       "file": "specs/reels/zhang-putintseva.xhs.txt",
@@ -5187,14 +5671,15 @@
       "file": "specs/reels/zheng-burel-us-open-2026-q2.json",
       "source_status": "corrected",
       "original_blob_sha": "a8d64d14beaa5c98624134aafd5c9ee45367968c",
-      "corrected_source_blob_sha": "f4f1f476b9552cae96fa6bb0d980b18483240e20",
+      "corrected_source_blob_sha": "8a1beeb811a44e73565e905cc0a8f9ae76590da9",
       "changed_fields": [
+        "$.segments[7].narration",
         "$.editorial.beats[4]",
         "$.editorial.narration[6]",
-        "$.push.lead",
-        "$.segments[7].narration"
+        "$.editorial.human_context.facts[11]",
+        "$.push.lead"
       ],
-      "changed_field_count": 4
+      "changed_field_count": 5
     },
     {
       "file": "specs/reels/zheng-burel-us-open-2026-q2.xhs.txt",
@@ -5221,9 +5706,9 @@
       "original_blob_sha": "8df2c3f2b58023a15d1ff9137f887a3767af8d39",
       "corrected_source_blob_sha": "5e5d84f471614089049a7739cf33c222d8854b1d",
       "changed_fields": [
-        "$.push.lead",
         "$.segments[21].narration",
-        "$.segments[21].title_card"
+        "$.segments[21].title_card",
+        "$.push.lead"
       ],
       "changed_field_count": 3
     },
@@ -5239,20 +5724,29 @@
       "file": "specs/reels/zheng-pridankina-us-open-2026-q3.json",
       "source_status": "corrected",
       "original_blob_sha": "27d4eed620582da3099a81ad98dfd808b07b1321",
-      "corrected_source_blob_sha": "7f421cbf4687f09e2fd8c68c0747f8caf8b795a7",
+      "corrected_source_blob_sha": "9e179b08a7d0c9be60fd38f8d79bb5fda967a608",
       "changed_fields": [
-        "$._match.loser",
-        "$._match.participants[1]",
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[1]",
-        "$.editorial.thesis",
-        "$.segments[10].narration",
+        "$.topbar.line2",
+        "$._hit_data[0].detail",
+        "$._hit_data[1].label",
+        "$._hit_data[4].label",
+        "$._turning_points[0].label",
         "$.segments[2].narration",
         "$.segments[3].narration",
         "$.segments[7].narration",
-        "$.topbar.line2"
+        "$.segments[10].narration",
+        "$._match.loser",
+        "$._match.participants[1]",
+        "$.editorial.beats[1]",
+        "$.editorial.human_context.facts[0]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.human_context.facts[4]",
+        "$.editorial.human_context.facts[5]",
+        "$.editorial.human_context.facts[8]",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name"
       ],
-      "changed_field_count": 10
+      "changed_field_count": 19
     },
     {
       "file": "specs/reels/zheng-pridankina-us-open-2026-q3.xhs.txt",
@@ -5266,22 +5760,29 @@
       "file": "specs/reels/zheng-putintseva-us-open-2026-r2.json",
       "source_status": "corrected",
       "original_blob_sha": "b13c7eb6c719f5afd13b3db8d9f3c4b11f992ee5",
-      "corrected_source_blob_sha": "4978816b627b1602d4c0789698cde50c6249489e",
+      "corrected_source_blob_sha": "9dc23e0ed25ffda7a65d5c045f4e8c5417179702",
       "changed_fields": [
+        "$.topbar.line2",
         "$._match.loser",
         "$._match.participants[1]",
-        "$.cover.matchup[1].name",
-        "$.cover.topic",
-        "$.editorial.human_context.angle",
-        "$.push.lead",
-        "$.segments[10].narration",
+        "$._hit_data[0].detail",
+        "$._hit_data[3].detail",
+        "$._hit_data[5].detail",
         "$.segments[4].narration",
         "$.segments[6].narration",
         "$.segments[7].narration",
         "$.segments[9].narration",
-        "$.topbar.line2"
+        "$.segments[10].narration",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]",
+        "$.push.lead",
+        "$._turning_points[1].label",
+        "$._turning_points[2].label",
+        "$._turning_points[3].label",
+        "$.cover.matchup[1].name",
+        "$.cover.topic"
       ],
-      "changed_field_count": 12
+      "changed_field_count": 19
     },
     {
       "file": "specs/reels/zheng-putintseva-us-open-2026-r2.xhs.txt",
@@ -5295,12 +5796,13 @@
       "file": "specs/reels/zheng-us-open-outlook.json",
       "source_status": "corrected",
       "original_blob_sha": "059f96a159ea1d46bb575189f946a39c56fa9aa6",
-      "corrected_source_blob_sha": "7f5708f1b659826130e785c24cc044d523b06d29",
+      "corrected_source_blob_sha": "86f39038050af0a0746ba07b24d05f715dbfec01",
       "changed_fields": [
+        "$.segments[13].narration",
         "$.editorial.beats[3]",
-        "$.segments[13].narration"
+        "$.editorial.human_context.facts[3]"
       ],
-      "changed_field_count": 2
+      "changed_field_count": 3
     },
     {
       "file": "specs/reels/zheng-us-open-outlook.xhs.txt",
@@ -5311,32 +5813,43 @@
       "validation": "Canonical display scan plus existing name-typo and reverse guard."
     },
     {
+      "file": "specs/reels/zhiyenbayeva-bouzas-bjk-cup-2026.json",
+      "source_status": "corrected",
+      "original_blob_sha": "e6a0ae491faf565a851338551a801c04e08a03a0",
+      "corrected_source_blob_sha": "5f113365752cca5a771cd574b1d6091260fbb3ab",
+      "changed_fields": [
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[4]"
+      ],
+      "changed_field_count": 2
+    },
+    {
       "file": "specs/reels/zverev-atmane.json",
       "source_status": "corrected",
       "original_blob_sha": "59acd72d06e0ada6038fd8609c2dc658815f7f6d",
       "corrected_source_blob_sha": "9eb03a7df0e43241b4d61dc6983595057134082b",
       "changed_fields": [
-        "$.cover.matchup[1].name",
-        "$.editorial.beats[0]",
-        "$.editorial.human_context.angle",
-        "$.editorial.human_context.facts[11]",
-        "$.editorial.human_context.facts[2]",
-        "$.editorial.human_context.facts[6]",
-        "$.editorial.human_context.facts[7]",
-        "$.editorial.human_context.facts[9]",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[10].narration",
-        "$.segments[11].crosses_cut",
-        "$.segments[11].narration",
-        "$.segments[13].narration",
-        "$.segments[16].narration",
+        "$.topbar.line2",
         "$.segments[1].crosses_cut",
         "$.segments[3].narration",
         "$.segments[5].narration",
         "$.segments[6].narration",
         "$.segments[9].narration",
-        "$.topbar.line2"
+        "$.segments[10].narration",
+        "$.segments[11].crosses_cut",
+        "$.segments[11].narration",
+        "$.segments[13].narration",
+        "$.segments[16].narration",
+        "$.push.lead",
+        "$.editorial.beats[0]",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[6]",
+        "$.editorial.human_context.facts[7]",
+        "$.editorial.human_context.facts[9]",
+        "$.editorial.human_context.facts[11]",
+        "$.editorial.thesis",
+        "$.cover.matchup[1].name"
       ],
       "changed_field_count": 21
     },
@@ -5352,24 +5865,25 @@
       "file": "specs/reels/zverev-khachanov-us-open-2026-sf.json",
       "source_status": "corrected",
       "original_blob_sha": "d15732036be7bb5f4632456c21353a024278cbf3",
-      "corrected_source_blob_sha": "ce676c6b40e12bddb3ae33056f2d53cec816b80c",
+      "corrected_source_blob_sha": "7ea47dc1cbccc1eb4ee9cc4bfa67a8d219e4b30d",
       "changed_fields": [
+        "$.topbar.line2",
         "$._match.loser",
         "$._match.participants[1]",
-        "$.cover.matchup[1].name",
-        "$.cover.topic",
+        "$._hit_data[0].detail",
+        "$.segments[2].narration",
+        "$.segments[3].narration",
+        "$.segments[5].narration",
+        "$.segments[8].narration",
         "$.editorial.human_context.facts[2]",
         "$.editorial.human_context.facts[3]",
         "$.editorial.human_context.facts[5]",
         "$.editorial.thesis",
         "$.push.lead",
-        "$.segments[2].narration",
-        "$.segments[3].narration",
-        "$.segments[5].narration",
-        "$.segments[8].narration",
-        "$.topbar.line2"
+        "$.cover.matchup[1].name",
+        "$.cover.topic"
       ],
-      "changed_field_count": 14
+      "changed_field_count": 15
     },
     {
       "file": "specs/reels/zverev-khachanov-us-open-2026-sf.xhs.txt",
@@ -5383,21 +5897,25 @@
       "file": "specs/reels/zverev-vandezandschulp-us-open-2026-qf.json",
       "source_status": "corrected",
       "original_blob_sha": "09be5d2d5fc8a8060cbc2ec77cbe90a2360b881f",
-      "corrected_source_blob_sha": "ef0215759aaf90dbe4b84fb139ed327b9dd6c3df",
+      "corrected_source_blob_sha": "ca849ff529413fba64edbe17b21a9652cebe528a",
       "changed_fields": [
+        "$.topbar.line2",
         "$._match.loser",
         "$._match.participants[1]",
-        "$.cover.matchup[1].name",
-        "$.cover.topic",
-        "$.editorial.human_context.angle",
-        "$.editorial.thesis",
-        "$.push.lead",
-        "$.segments[12].narration",
+        "$._hit_data",
         "$.segments[2].narration",
         "$.segments[6].narration",
-        "$.topbar.line2"
+        "$.segments[12].narration",
+        "$.editorial.human_context.angle",
+        "$.editorial.human_context.facts[1]",
+        "$.editorial.human_context.facts[2]",
+        "$.editorial.human_context.facts[3]",
+        "$.editorial.thesis",
+        "$.push.lead",
+        "$.cover.matchup[1].name",
+        "$.cover.topic"
       ],
-      "changed_field_count": 11
+      "changed_field_count": 15
     },
     {
       "file": "specs/reels/zverev-vandezandschulp-us-open-2026-qf.xhs.txt",
@@ -5419,12 +5937,38 @@
       "file": "src/tennislive/video/explainer.py",
       "source_status": "corrected",
       "original_blob_sha": "98c6144d52d365a6ce98b1521f247c37744c6b9c",
-      "corrected_source_blob_sha": "98191a0644031e70859330bcfa3d50cbefb422c9",
+      "corrected_source_blob_sha": "6dfa842fc0e36f960ae348560044a4591e2c73a2",
       "content_type": "active-renderer",
       "validation": "Canonical display scan plus existing name-typo and reverse guard."
+    },
+    {
+      "file": "tools/build_match_reel.py",
+      "source_status": "corrected",
+      "original_blob_sha": "31f1cf70e31538c17f2c3e849a4f980bb632d428",
+      "corrected_source_blob_sha": "48a0c8cf8fb4799fda67c65e424c457683a98bd3",
+      "content_type": "active-generator"
     }
   ],
   "validation": {
+    "changed_ledger_keys_scanned": 125,
+    "segments_quote_is_local_rendered_translation": true,
+    "pending_specs_included": true,
+    "canonical_mask_policy": "Only complete canonical names at least as long as the old name; short native surnames need English identity",
+    "historical_media_rerendered": false,
+    "final_display_scan": "See permanent fourth-round follow-up report; external original excerpts and publication receipts retained",
+    "spec_and_source_files_scanned": 1174,
+    "confirmed_display_old_name_residuals": 0,
+    "retained_original_source_annotation_matches": 651,
+    "retained_research_metadata_candidates": 9,
+    "derived_generation_fields": [
+      "editorial.narration",
+      "editorial.human_context.facts",
+      "_hit_data.label/detail",
+      "_turning_points.label/detail"
+    ],
+    "annotation_classification": "Nine residual candidates are research-only _match strings/notes; atp_player_ids is a string annotation without consumers, not a lookup map. Actual participants/winner/loser synchronized."
+  },
+  "third_round_validation": {
     "remaining_known_old_canonical_display_matches": 0,
     "legacy_name_mask_removed": true,
     "legitimate_person_name_exclusions": [

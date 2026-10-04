@@ -2974,7 +2974,8 @@ _KNOWN_TYPOS = {
     #   科梅萨纳 → 科梅萨尼亚    长度 4/5，判据 ① 抓不到 → 这次补了判据 ②
     #   波佩林   → 波皮林        三个字，在射程之外 → 只能钉在这儿
     #   弗恩利   → 费恩利        2026-10-04 原文复核后的现行主名
-    "波佩林": "波皮林",         # Alexei Popyrin
+    "波佩林": player_zh("Alexei Popyrin"),  # 按现行有据规范名维护
+    "门西克": player_zh("Jakub Mensik"),  # 本地译制字幕同样对齐主名
     "弗恩利": player_zh("Jacob Fearnley"),  # 按现行有据规范名维护
 }
 
@@ -3128,7 +3129,7 @@ def test_人名要以译名表为准():
     # 只并旧表会漏掉只登记在 player_names_top500.json 里的名字，遮罩阶段
     # 遮不掉它们，也就防不住"表里明明有、却被判成手打错"的假阳性。
     known = sorted(
-        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE | {"迈克尔·郑"},
+        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE | {"迈克尔·郑", "迈克尔·乔丹"},
         key=len, reverse=True,
     )
     canon = [n for n in known if len(n) >= 4]
@@ -3190,14 +3191,42 @@ def test_人名要以译名表为准():
     # 于是 2026-07-29 我在 `eala-fernandez.xhs.txt` 里把 Rybakina 写成
     # 「雷巴金娜」（表里是**莱巴金娜**），全绿照过——**同一个名字，第三次写错**，
     # 前两次是「里巴金娜」和这次。判据早就写好了，只是没指到这批文件上。
-    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+    for path in sorted(Path("specs/reels").rglob("*.xhs.txt")):
         scan(path.name, path.read_text(encoding="utf-8"))
-    for path in sorted(Path("specs/reels").glob("*.json")):
+    for path in sorted(Path("specs/reels").rglob("*.json")):
         spec = json.loads(path.read_text(encoding="utf-8"))
         cover = spec.get("cover") or {}
         texts = [cover.get("hook", ""), cover.get("winner", ""), cover.get("meta", "")]
         texts += list((cover.get("versus") or {}).get("names") or [])
         texts += [s.get("narration", "") for s in spec.get("segments") or []]
+        # 草稿旁白与本地中文事实会进入正式文案，不能只检查最终 segments。
+        editorial = spec.get("editorial") or {}
+        texts += [v for v in editorial.get("narration") or [] if isinstance(v, str)]
+        human = editorial.get("human_context") or {}
+        if isinstance(human, dict):
+            texts += [v for v in human.get("facts") or [] if isinstance(v, str)]
+        def derived_name_texts(value):
+            if isinstance(value, dict):
+                for key, item in value.items():
+                    if key in ("label", "detail") and isinstance(item, str):
+                        yield item
+                    elif not key.startswith("_") and isinstance(item, (dict, list)):
+                        yield from derived_name_texts(item)
+            elif isinstance(value, list):
+                for item in value:
+                    yield from derived_name_texts(item)
+        for key in ("_hit_data", "_turning_points"):
+            texts += list(derived_name_texts(spec.get(key)))
+        # quote 是实际烧进画面的本地双语字幕，英文原声保留，中文人名仍须检查。
+        for segment in spec.get("segments") or []:
+            raw = segment.get("quote")
+            if isinstance(raw, str):
+                texts.append(raw)
+            elif isinstance(raw, dict):
+                texts.append(str(raw.get("text", "")))
+            elif isinstance(raw, list):
+                texts += [str(cue.get("text", "")) if isinstance(cue, dict) else str(cue)
+                          for cue in raw]
         # **推送那几栏也要扫。** `push.summary` / `push.lead` 是微信标题和正文
         # 第一行，发出去收不回来，而它们原来一个字都没被查过——名字写错在这儿
         # 和写在旁白里一样会发出去。`_` 开头的是注解，不扫。
@@ -3293,7 +3322,7 @@ def test_人名近似匹配的索引和笨办法结果一样():
     from tennislive.zh.players import PLAYER_ZH
 
     known = sorted(
-        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE | {"迈克尔·郑"},
+        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE | {"迈克尔·郑", "迈克尔·乔丹"},
         key=len, reverse=True,
     )
     # 每种长度各取几个，外加全部带间隔号的——跑得快，又盖得住 4 字到最长的

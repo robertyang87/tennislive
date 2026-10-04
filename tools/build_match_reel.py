@@ -84,9 +84,6 @@ render 每一步都记时间，末尾按耗时排一张表（`report_timings()`�
 
 from __future__ import annotations
 
-import narrated_audio_mode
-import reviewed_effects_mode
-
 import argparse
 import json
 import math
@@ -103,7 +100,12 @@ from dataclasses import dataclass, replace
 from fractions import Fraction
 from pathlib import Path
 
+# Support both direct script execution and clean package imports (tools.build_match_reel).
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+import narrated_audio_mode
+import reviewed_effects_mode
 
 from tennislive import localca  # noqa: E402
 from tennislive.video import outro_page  # noqa: E402

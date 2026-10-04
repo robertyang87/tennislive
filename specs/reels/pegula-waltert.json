@@ -20,14 +20,14 @@
     "human_context": {
       "angle": "这一场的场外切口是**「回到决赛过的地方」**。WTA 官网给这条集锦的标题就是「前决赛选手佩古拉在辛辛那提轻松过关」——她是**二〇二四年这站的亚军**。而这是两个人**第一次交手**，转播赛后第一句问的正是这个：`an opponent you've never met`。沃尔特特二十五岁、瑞士人、世界第八十七，本站从资格赛打进正赛。",
       "facts": [
-        "佩古拉 1994-02-24 出生，本场时 32 岁；瓦尔特特 2000-12-13 出生，25 岁（WTA 官方球员接口 id 316956 / 325771）",
-        "当期世界排名：佩古拉第 3、瓦尔特特第 87（WTA 官网球员页）",
+        "佩古拉 1994-02-24 出生，本场时 32 岁；沃尔特特 2000-12-13 出生，25 岁（WTA 官方球员接口 id 316956 / 325771）",
+        "当期世界排名：佩古拉第 3、沃尔特特第 87（WTA 官网球员页）",
         "佩古拉是本站 3 号种子（WTA 官方 ResultString 写作 `[3]J. Pegula`）",
         "佩古拉是 2024 年辛辛那提亚军（WTA 官网这条集锦的摘要原文：`the 2024 Cincinnati runner-up`）",
         "两盘用时 0:45:26 / 0:46:28，合计 1:31:54；官方 MatchTimeTotal 01:31:57（差 3 秒）",
-        "双误 瓦尔特特 11、佩古拉 1（WTA 官方 dblflta/b，flashscore df_st_1 同值）",
-        "破发点 佩古拉 6/11、瓦尔特特 2/6；全场小分 48:71",
-        "瓦尔特特的发球局连着丢了五个（逐分 df_mh_1：第一盘 2-3、2-5、3-6，第二盘 0-2、1-3）",
+        "双误 沃尔特特 11、佩古拉 1（WTA 官方 dblflta/b，flashscore df_st_1 同值）",
+        "破发点 佩古拉 6/11、沃尔特特 2/6；全场小分 48:71",
+        "沃尔特特的发球局连着丢了五个（逐分 df_mh_1：第一盘 2-3、2-5、3-6，第二盘 0-2、1-3）",
         "转播 266.56 秒原话：another error ends the match",
         "转播 280.40 秒原话：A little closer than the score line suggests though at times. 63 62. Pegula is through in just over an hour and a half"
       ],
@@ -123,7 +123,7 @@
     "footer_date": "2026年8月15日",
     "_source": "数出自 `python3 tools/match_stat_hooks.py nkHJMFv0 --stats-block`。\n\n⚠️⚠️ **`a`/`b` 是调过顺序的**：工具按 flashscore 的 home/away 排，这一场 home 是**瓦尔特特**；而 `cover.matchup[0]` 是**佩古拉**（封面主体、赢家）。CLAUDE.md 写着 `stats.a` 跟的是 `cover.matchup[0]` 不是 feed 的 home/away，所以整块 a/b 对调、头像跟着换。判据是 `test_数据图的头像和matchup里的名字必须是同一个人`。\n\n两个源逐项一致（WTA 官方 `matches/LS055/stats` 对 flashscore `df_st_1`）：ACE 3:4、**双误 1:11**、一发 32/52 对 36/67、破发点 6/11 对 2/6、小分 71:48。\n\n⚠️ 制胜分和非受迫失误这场接口里没有——WTA 巡回赛这一档本来就不给。\n\n⚠️ `first_total` 按 `first_in + second_total` 算（32+20=52、36+31=67）。"
   },
-  "_hit_data": "跑过 `python3 tools/match_stat_hooks.py nkHJMFv0`，七条候选全在。挑进片子的是**双误 11:1**（钩子两行就是它）和从逐分数出来的**瓦尔特特连丢五个发球局**。\n\n没用的：\n  · 总分差 23 分（71:48）——`navarro-kalinina` 今天刚拿小分差当落点；\n  · 瓦尔特特一发得分率 61%→39%——⚠️ **`parry-mertens` 一小时前刚用过「对手一发曲线」**，所以这条换成双误这个更硬的单一数字；\n  · 破发点 6/11 对 2/6——`noskova-boulter` 用过破发点；\n  · 交手记录 0:1——首次交手，写进来路不做落点。",
+  "_hit_data": "跑过 `python3 tools/match_stat_hooks.py nkHJMFv0`，七条候选全在。挑进片子的是**双误 11:1**（钩子两行就是它）和从逐分数出来的**沃尔特特连丢五个发球局**。\n\n没用的：\n  · 总分差 23 分（71:48）——`navarro-kalinina` 今天刚拿小分差当落点；\n  · 沃尔特特一发得分率 61%→39%——⚠️ **`parry-mertens` 一小时前刚用过「对手一发曲线」**，所以这条换成双误这个更硬的单一数字；\n  · 破发点 6/11 对 2/6——`noskova-boulter` 用过破发点；\n  · 交手记录 0:1——首次交手，写进来路不做落点。",
   "_voice": "配音走仓库默认的云见（zh-CN-YunjianNeural，+6%），这条 spec 不另设 voice/style。",
   "segments": [
     {
