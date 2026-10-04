@@ -3230,29 +3230,41 @@ def transcript_language_windows(spec: dict) -> list[dict]:
 def transcribe_source_words(model, audio: Path, spec: dict) -> list[tuple[float, float, str]]:
     """Run native transcription per source language and restore source timestamps."""
     windows = transcript_language_windows(spec)
+    default_english = not windows
     kwargs = {"task": "transcribe", "word_timestamps": True,
               "vad_filter": spec.get("whisper_vad_filter", True)}
-    if not windows:
-        segs, _ = model.transcribe(str(audio), language="en", **kwargs)
-        return [(float(w.start), float(w.end), w.word.strip())
-                for seg in segs for w in (seg.words or [])
-                if spec["start"] <= w.start <= spec["end"]]
+    if default_english:
+        start, end = float(spec["start"]), float(spec["end"])
+        if not math.isfinite(start) or not math.isfinite(end) or start < 0 or end <= start:
+            raise SystemExit("ASR 需要有效正文 start/end")
+        # 集锦前几分钟与采访无关，不必送进第二份 ASR。两边留上下文，避免
+        # 切在词中间；之后只取正文窗口。沿用实际裁音频而非 clip_timestamps，
+        # 后者在 faster-whisper 中会绕过 VAD，改变这条线的校验口径。
+        windows = [{"start": start, "end": end, "language": "en"}]
     words = []
     with tempfile.TemporaryDirectory(prefix="interview-languages-") as directory:
         for index, window in enumerate(windows):
+            pad = GAP_CONTEXT_PAD_SECS if default_english else 0.0
+            audio_start = max(0.0, window["start"] - pad)
+            audio_end = window["end"] + pad
             clip = Path(directory) / f"{index}.wav"
             subprocess.run([
-                "ffmpeg", "-y", "-v", "error", "-ss", str(window["start"]),
-                "-i", str(audio), "-t", str(window["end"] - window["start"]),
+                "ffmpeg", "-y", "-v", "error", "-ss", str(audio_start),
+                "-i", str(audio), "-t", str(audio_end - audio_start),
                 "-vn", "-ac", "1", "-ar", "16000", str(clip),
-            ], check=True, capture_output=True)
+            ], check=True, capture_output=True, timeout=120)
             segs, _ = model.transcribe(str(clip), language=window["language"], **kwargs)
             for seg in segs:
                 for word in seg.words or []:
-                    a = float(word.start) + window["start"]
-                    b = float(word.end) + window["start"]
-                    if window["start"] <= a < window["end"]:
-                        words.append((a, min(b, window["end"]), word.word.strip()))
+                    a = float(word.start) + audio_start
+                    b = float(word.end) + audio_start
+                    # 英语沿用原来含 end 的边界与词尾；显式语言窗口在边界
+                    # 换语言，仍为半开区间并夹住词尾，不能串到下一种语言。
+                    inside = (window["start"] <= a <= window["end"] if default_english
+                              else window["start"] <= a < window["end"])
+                    if inside:
+                        words.append((a, b if default_english else min(b, window["end"]),
+                                      word.word.strip()))
     return words
 
 
@@ -4317,8 +4329,11 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
     player client 之间的接口问题。改成沿用 `_ytdlp_ladder()` 逐档重试，
     每档都把失败原因打出来，全灭了才报错。
     """
-    if dest.exists():
+    if dest.is_file() and dest.stat().st_size > 0:
         return dest
+    # 零字节文件不是缓存；让下一档重新下载，而不是交给 ffmpeg 才失败。
+    if dest.is_file():
+        dest.unlink()
     # 直链媒体不是播放器页面，不能套 YouTube 的 `-f bv*+ba/b` 选择器。
     # US Open/Brightcove 这类官方源会直接给 `.mp4`；yt-dlp 对 generic extractor
     # 套格式选择器会报 `Requested format is not available`，但 curl 直取完全正常。
@@ -4327,15 +4342,20 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
     if (parsed.scheme in {"http", "https"}
             and parsed.path.lower().endswith((".mp4", ".mov", ".m4v"))):
         dest.parent.mkdir(parents=True, exist_ok=True)
-        proc = subprocess.run(
-            ["curl", "-LfsS", "--retry", "2", "--connect-timeout", "15",
-             "--max-time", "240", "-o", str(dest), url],
-            capture_output=True, text=True, timeout=260)
-        if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 1024:
-            print(f"[下载] 官方直链媒体成功：{url} → {dest.name} "
-                  f"({dest.stat().st_size / 1e6:.1f}MB)")
-            return dest
-        dest.unlink(missing_ok=True)
+        # 完整落地后才改名。超时/中断留下的半截不能被下一趟当成缓存。
+        partial = dest.with_name(dest.name + ".download")
+        try:
+            proc = subprocess.run(
+                ["curl", "-LfsS", "--retry", "2", "--connect-timeout", "15",
+                 "--max-time", "240", "-o", str(partial), url],
+                capture_output=True, text=True, timeout=260)
+            if proc.returncode == 0 and partial.is_file() and partial.stat().st_size > 1024:
+                partial.replace(dest)
+                print(f"[下载] 官方直链媒体成功：{url} → {dest.name} "
+                      f"({dest.stat().st_size / 1e6:.1f}MB)")
+                return dest
+        finally:
+            partial.unlink(missing_ok=True)
         tail = (proc.stderr or proc.stdout or "直链下载没有输出").strip().splitlines()[-1]
         raise SystemExit(f"官方直链媒体下载失败 {url}：{tail[:180]}")
     media = media_url(url)  # **页面地址不一定就是下载地址**，Tennis TV 要先解一次
@@ -4355,21 +4375,38 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
         # 240 秒：够一次正常下载（YouTube 限速约 0.7 MB/s，几分钟片子的
         # 720p 源片量得到），又不至于一档卡死拖垮整个梯子——`render` 那条路
         # 和这个函数共享 45 分钟的 job 预算，装依赖已经先花掉一截。
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=240)
-        if proc.returncode == 0 and dest.exists():
+        try:
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=240)
+        except subprocess.TimeoutExpired:
+            # 单档超时同样属于梯子失败；以前在这里直接退出，后续 client 从未试过。
+            proc = subprocess.CompletedProcess(cmd, 124, "", "下载超时（240 秒）")
+        if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 0:
             if tried:
                 print(f"[下载] {label} 成功（前面 {len(tried)} 档没成）")
             return dest
         # **空结果先自证是真空**：文件没在预期的位置，不等于没下下来——
         # 某些 player client 会把最佳编码合到 `.mkv` 而不是 `dest` 本身。
         sibs = sorted(p for p in dest.parent.glob(f"{dest.stem}.*") if p.is_file())
-        if len(sibs) == 1 and sibs[0].stat().st_size > 0:
-            print(f"⚠️ yt-dlp 落到了 {sibs[0].name}（不是 {dest.name}）——按实际的用")
-            return sibs[0]
+        # 只认成功下载后的完整容器；source.mp4.part / source.f137.mp4
+        # 是中间产物，绝不能因为「目录里只有一个文件」就放行。
+        containers = _MERGE_CONTAINERS | {"m4a", "mp3", "opus", "ogg", "wav"}
+        accepted = _MERGE_CONTAINERS if dest.suffix.lstrip(".") in _MERGE_CONTAINERS else containers
+        landed = [p for p in sibs if p.stem == dest.stem
+                  and p.suffix.lstrip(".") in accepted
+                  and p.stat().st_size > 0]
+        if proc.returncode == 0 and len(landed) == 1:
+            print(f"⚠️ yt-dlp 落到了 {landed[0].name}（不是 {dest.name}）——按实际的用")
+            return landed[0]
         # 这一档确认失败了才清，不能在下一档开始前清——那样会把这一档刚刚
         # 产出的、还没来得及被上面那两条判定接住的文件冲掉。
         for stray in sibs:
-            stray.unlink(missing_ok=True)
+            # source.json / source.ass / source.info.json 是元数据或核对证据，
+            # 不能跟失败媒体一起按 source.* 整批删。只清下载器的媒体及分片。
+            suffix = stray.name[len(dest.stem) + 1:]
+            if (suffix in containers
+                    or re.fullmatch(r"(?:f\d+|temp)\.(?:" + "|".join(containers) + r")", suffix)
+                    or re.search(r"\.(?:part(?:-Frag\d+)?|ytdl)$", stray.name)):
+                stray.unlink(missing_ok=True)
         tail = (proc.stderr or proc.stdout or "").strip().splitlines()[-1:] or ["(无输出)"]
         print(f"[下载] {label} 没成：{tail[0][:150]}")
         tried.append(f"  {label}: {tail[0][:150]}")

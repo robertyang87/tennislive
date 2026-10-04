@@ -1935,14 +1935,11 @@ def _academy_span_diagram() -> str:
 
     头像出处见 assets/explainer/nadal-academy/faces/credits.json。
     """
-    import base64
-
     from ..zh import player_zh as _zh
 
-    root = _REPO / "assets/explainer/nadal-academy/faces"
     def uri(name: str) -> str:
-        return "data:image/jpeg;base64," + base64.b64encode(
-            (root / f"{name}.jpg").read_bytes()).decode()
+        # 只渲这一屏时才读头像。字幕等共享调用方 import 本模块时不该依赖素材。
+        return f"asset://assets/explainer/nadal-academy/faces/{name}.jpg"
 
     AXIS = 248
     # (真实年份位置 x, 英文名, 年份·年纪, 文件名, 在轴上方?)
@@ -9267,7 +9264,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "今年五月在罗马，辛纳成了第二个，二十四岁。",
             "", "示意图 · 网球时差绘制",
             ("九站全拿过 叫金大师", "吉尼斯有正式条目", "德约十八年 辛纳今年"),
-            nine_masters_grid(),
+            nine_masters_grid(embed_images=False),
         ),
         (
             "tables", "两张表", "只有六站重合",
@@ -11756,6 +11753,20 @@ def _data_uri(path: Path) -> str:
     return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode()
 
 
+def _embed_diagram_assets(diagram: str) -> str:
+    """Resolve local SVG photos only when rendering their card; missing files stay fatal."""
+    def embed(match: re.Match) -> str:
+        if match[1] == "venue-tile":
+            from .masters_grid import _tile_data_uri  # noqa: PLC0415
+
+            uri = _tile_data_uri(match[2])
+        else:
+            uri = _data_uri(_REPO / match[2])
+        return f'href="{uri}"'
+
+    return re.sub(r'href="(asset|venue-tile)://([^"<>]+)"', embed, diagram)
+
+
 def _assert_photo_integrity(path: Path) -> None:
     """Reject truncated photos and large flat placeholder bands before render.
 
@@ -11919,7 +11930,7 @@ def _slide_html(
         # 所以示意图这一屏的 scrim **上半整段透明**，只保留底部那一段。
         hero = (
             '<div class="hero diagram"></div>'
-            f'<div class="diagram-wrap">{segment.diagram}</div>'
+            f'<div class="diagram-wrap">{_embed_diagram_assets(segment.diagram)}</div>'
             '<div class="scrim scrim--diagram"></div>'
         )
     # One line, always: CJK glyphs run about one em wide, so size the headline
@@ -13919,8 +13930,10 @@ def assemble_explainer_video(
             badge_idx = offset
             offset += 1
     slide_secs: list[float] = []
+    audio_secs: list[float] = []
     for i, (slide, audio) in enumerate(zip(slides, audios)):
-        seconds = _audio_seconds(Path(audio), ffprobe_bin, runner) + head[i] + tail[i]
+        audio_secs.append(_audio_seconds(Path(audio), ffprobe_bin, runner))
+        seconds = audio_secs[-1] + head[i] + tail[i]
         lengths.append(float(f"{seconds:.3f}"))
         slide_secs.append(float(f"{seconds:.3f}"))
         command.extend(
@@ -14006,7 +14019,7 @@ def assemble_explainer_video(
                 marks = []
             cues = subtitle_cues(
                 readable(captions[i]),
-                _audio_seconds(Path(audios[i]), ffprobe_bin, runner),
+                audio_secs[i],
                 boundaries=marks,
                 offset=head[i],
             )
@@ -14123,12 +14136,6 @@ def generate_explainer_video(
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     segments = explainer_script(story)
-    slides = render_explainer_slides(
-        segments, outdir, theme=theme,
-        topic=(_OPENINGS.get(story.slug) or {}).get("topic", ""),
-        column=explainer_column(story.slug)
-    )
-    audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
     # 冷开场实拍片段是可选的：`_OPENINGS[slug]["intro"]` 给一个仓库相对路径，
     # 就在片头前接一段真视频（比如上一轮的制胜分+庆祝）。绝大多数「开球之前」
     # 仍是纯幻灯片，这里不写就是 None，行为和以前完全一样。
@@ -14141,6 +14148,29 @@ def generate_explainer_video(
     intro = (_REPO / intro_rel) if intro_rel else None
     if intro is not None and not intro.is_file():
         raise ExplainerVideoError(f"开场实拍片段找不到：{intro}")
+    # 配置错误在截图、TTS 和远端下载前报告，避免失败后整趟重做。
+    canvas_h = canvas_height(story.slug)
+    if intro_rel or intro_url:
+        from .crop_policy import require_fixed_center  # noqa: PLC0415
+
+        require_fixed_center(opening, where="explainer.intro")
+    start, duration = 0.0, None
+    if intro_url:
+        try:
+            start = float(opening.get("intro_start", 0.0))
+            end = opening.get("intro_end")
+            duration = float(end) - start if end is not None else None
+        except (TypeError, ValueError) as exc:
+            raise ExplainerVideoError("片头区间必须是有效秒数") from exc
+        if (not math.isfinite(start) or start < 0 or
+                (duration is not None and (not math.isfinite(duration) or duration <= 0))):
+            raise ExplainerVideoError(f"片头区间不合法：start={start}, end={end}")
+    slides = render_explainer_slides(
+        segments, outdir, theme=theme,
+        topic=(_OPENINGS.get(story.slug) or {}).get("topic", ""),
+        column=explainer_column(story.slug)
+    )
+    audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
     if intro_url:
         # 正式采访成片已经在 Release；澄清片只需要其中 19 秒。把同一段 mp4
         # 再塞进 git 会同时违反“成片走 Release”和“别复制死重量”两条，所以
@@ -14160,13 +14190,6 @@ def generate_explainer_video(
                             fh.write(chunk)
             if full_source.stat().st_size < 1024:
                 raise ExplainerVideoError(f"片头远端文件异常小：{intro_url}")
-            start = float(opening.get("intro_start", 0.0))
-            end = opening.get("intro_end")
-            duration = float(end) - start if end is not None else None
-            if start < 0 or (duration is not None and duration <= 0):
-                raise ExplainerVideoError(
-                    f"片头区间不合法：start={start}, end={end}"
-                )
             cmd = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error"]
             if start:
                 cmd += ["-ss", f"{start:.3f}"]
@@ -14179,63 +14202,63 @@ def generate_explainer_video(
                 str(intro),
             ]
             subprocess.run(cmd, check=True, capture_output=True)
-        except (OSError, requests.RequestException, subprocess.CalledProcessError) as exc:
+        except (OSError, requests.RequestException, subprocess.CalledProcessError,
+                ExplainerVideoError) as exc:
             intro_tmp.cleanup()
             raise ExplainerVideoError(f"远端片头下载或切段失败：{exc}") from exc
-    # 冷开场叠一条和幻灯片一样的台头——见 `_render_intro_badge` 的 docstring。
-    # 渲不出来（缺 Chromium）不拖垮整条片子，退回没有台头的样子。
-    intro_badge = None
-    if intro is not None:
-        try:
-            intro_badge = _render_intro_badge(
-                (_OPENINGS.get(story.slug) or {}).get("topic", ""),
-                explainer_column(story.slug),
-                outdir,
-            )
-        except Exception as exc:  # noqa: BLE001 - 台头是锦上添花
-            print(f"[冷开场台头] 渲不出来，这段片头没有台头：{exc}")
-            intro_badge = None
-    # Which voice actually spoke is otherwise unrecoverable from the output:
-    # the per-beat mp3s are deleted to keep the repo small, and nobody can
-    # read a voice name off an mp4. That gap already cost three decks — the
-    # workflow passed a stale --voice on every dispatch, so changing the
-    # default in code changed nothing, and the only way anyone found out was
-    # by reading a run log days later. Write it down beside the film instead,
-    # so checking is a matter of opening the artifact, not trusting a chain
-    # of inference about what the arguments must have been.
-    (outdir / "narration.json").write_text(
-        json.dumps(
-            {"voice": voice, "rate": rate, "pitch": pitch, "segments": len(audios),
-             "subtitles": True},
-            ensure_ascii=False, indent=2,
-        ) + "\n",
-        encoding="utf-8",
-    )
-    outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
-    # ⚠️⚠️ **2026-09-16 默认值翻面：3:4 是默认，9:16 变成要显式认领的例外。**
-    #
-    # 来路：账号所有者「我要求**所有**视频都是 3:4 的比例画面啊」。而这句话
-    # 2026-08-07 他就说过一次（「画面还不是 3:4 的啊」，原话记在 `eala-mcnally`
-    # 那条 `canvas` 旁边）——当时的修法是加了这个「写了才换」的开关，默认留在
-    # 9:16，理由写的是「改默认会把纯卡片片子一起改掉」。
-    #
-    # **那个修法没解决问题。** 量出来：49 条里只有 3 条写了这一行
-    # （`gauff-right-coco` / `eala-mcnally` / `heat-rule`），其余 46 条全部落回
-    # 9:16——`second-serve-clock`、`big-three`、`promotional-fees`、
-    # `finals-venues`、`wuhan-alternate` 逐条拉 Release 的成片 ffprobe 过，
-    # 都是 1080×1920。CLAUDE.md 早写过这个形状：**一个几乎没人会去写的开关，
-    # 本身就说明那个默认值是错的**（`scrim: "clear"` 那次 74/100 手动关掉，
-    # 这次是 46/49 根本没写，更彻底）。
-    #
-    # 所以现在反过来：不写 = 3:4，要 9:16 必须**显式写出来**。
-    # ⚠️ 那 3 条写着 `"3:4"` 的**不要删**——它们现在和不写一个意思，但删掉
-    # 之后翻面之前的历史就读不出来了（同 `scrim: "clear"` 那 74 行的处置）。
-    canvas_h = canvas_height(story.slug)
-    # `intro_cx` 同理显式认领：默认 0.5（几何居中，老行为不变），写了才换。
-    # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
-    # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
-    intro_cx = (_OPENINGS.get(story.slug) or {}).get("intro_cx", 0.5)
     try:
+        # 冷开场叠一条和幻灯片一样的台头——见 `_render_intro_badge` 的 docstring。
+        # 渲不出来（缺 Chromium）不拖垮整条片子，退回没有台头的样子。
+        intro_badge = None
+        if intro is not None:
+            try:
+                intro_badge = _render_intro_badge(
+                    (_OPENINGS.get(story.slug) or {}).get("topic", ""),
+                    explainer_column(story.slug),
+                    outdir,
+                )
+            except Exception as exc:  # noqa: BLE001 - 台头是锦上添花
+                print(f"[冷开场台头] 渲不出来，这段片头没有台头：{exc}")
+                intro_badge = None
+        # Which voice actually spoke is otherwise unrecoverable from the output:
+        # the per-beat mp3s are deleted to keep the repo small, and nobody can
+        # read a voice name off an mp4. That gap already cost three decks — the
+        # workflow passed a stale --voice on every dispatch, so changing the
+        # default in code changed nothing, and the only way anyone found out was
+        # by reading a run log days later. Write it down beside the film instead,
+        # so checking is a matter of opening the artifact, not trusting a chain
+        # of inference about what the arguments must have been.
+        (outdir / "narration.json").write_text(
+            json.dumps(
+                {"voice": voice, "rate": rate, "pitch": pitch, "segments": len(audios),
+                 "subtitles": True},
+                ensure_ascii=False, indent=2,
+            ) + "\n",
+            encoding="utf-8",
+        )
+        outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
+        # ⚠️⚠️ **2026-09-16 默认值翻面：3:4 是默认，9:16 变成要显式认领的例外。**
+        #
+        # 来路：账号所有者「我要求**所有**视频都是 3:4 的比例画面啊」。而这句话
+        # 2026-08-07 他就说过一次（「画面还不是 3:4 的啊」，原话记在 `eala-mcnally`
+        # 那条 `canvas` 旁边）——当时的修法是加了这个「写了才换」的开关，默认留在
+        # 9:16，理由写的是「改默认会把纯卡片片子一起改掉」。
+        #
+        # **那个修法没解决问题。** 量出来：49 条里只有 3 条写了这一行
+        # （`gauff-right-coco` / `eala-mcnally` / `heat-rule`），其余 46 条全部落回
+        # 9:16——`second-serve-clock`、`big-three`、`promotional-fees`、
+        # `finals-venues`、`wuhan-alternate` 逐条拉 Release 的成片 ffprobe 过，
+        # 都是 1080×1920。CLAUDE.md 早写过这个形状：**一个几乎没人会去写的开关，
+        # 本身就说明那个默认值是错的**（`scrim: "clear"` 那次 74/100 手动关掉，
+        # 这次是 46/49 根本没写，更彻底）。
+        #
+        # 所以现在反过来：不写 = 3:4，要 9:16 必须**显式写出来**。
+        # ⚠️ 那 3 条写着 `"3:4"` 的**不要删**——它们现在和不写一个意思，但删掉
+        # 之后翻面之前的历史就读不出来了（同 `scrim: "clear"` 那 74 行的处置）。
+        # `intro_cx` 同理显式认领：默认 0.5（几何居中，老行为不变），写了才换。
+        # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
+        # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
+        intro_cx = (_OPENINGS.get(story.slug) or {}).get("intro_cx", 0.5)
         return assemble_explainer_video(
             slides, audios, outdir / "explainer.mp4",
             captions=[seg.narration for seg in segments],
