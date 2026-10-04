@@ -1,0 +1,72 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-s3mqDeV5E_w/s3mqDeV5E_w.mp4",
+  "source_sha256": "ce7320181adea751842fe58f500e6fa5f788e1c547fe064d11a775d0292a5efd",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review agent — inspected provider caption text and actual-source small.en ASR word evidence; no listening claimed",
+  "reviewed_at": "2026-10-04T06:40:26.741939+00:00",
+  "status": "complete",
+  "reviewed_from": 258.88,
+  "reviewed_to": 298.5,
+  "foreground_english": [
+    {
+      "start": 264.16,
+      "end": 266.71,
+      "en": "And Nikola Bartunkova gets it done.",
+      "zh": "尼古拉·巴尔通科娃赢下了比赛。"
+    },
+    {
+      "start": 268.23,
+      "end": 271.53,
+      "en": "The number two seed, the number two player in the world, is out.",
+      "zh": "世界第二、二号种子出局了。"
+    },
+    {
+      "start": 272.31,
+      "end": 275.83,
+      "en": "Nikola Bartunkova, the biggest win of her career.",
+      "zh": "巴尔通科娃生涯最重要的胜利。"
+    },
+    {
+      "start": 278.24,
+      "end": 280.96,
+      "en": "What an impressive showing from this young 20-year-old.",
+      "zh": "20岁小将的表现令人赞叹。"
+    },
+    {
+      "start": 281.3,
+      "end": 283.34,
+      "en": "She's vaulted up the rankings this year.",
+      "zh": "她今年的排名飞速上升。"
+    },
+    {
+      "start": 283.54,
+      "end": 290.16,
+      "en": "Started the year in the 130s and now 34 and moving on up,",
+      "zh": "年初130多位，如今34位\n排名还将继续攀升，",
+      "note": "Continues into following sentence; preserve together in edit."
+    },
+    {
+      "start": 290.16,
+      "end": 298.22,
+      "en": "as Nikola Bartunkova takes out Aryna Sabalenka in straight sets, 6-4, 6-3.",
+      "zh": "巴尔通科娃6比4、6比3\n直落两盘淘汰萨巴伦卡。"
+    }
+  ],
+  "uncertain_spans": [],
+  "actual_listening_performed": false,
+  "evidence": [
+    {
+      "path": "/workspace/scratch/audio-review/whisper-small-en.json",
+      "sha256": "6e3d0d3d41b4555b44393958d712cd9ca74cb6699be6850ced3aeccfad72eefe"
+    },
+    {
+      "path": "/workspace/scratch/sabalenka-probe/captions.txt",
+      "sha256": "13653388da2db597c4e5765e023f74687c428b270127c493ab2bbf1b394e36b8"
+    },
+    {
+      "path": "/workspace/scratch/audio-review/targeted-small-en.json"
+    }
+  ],
+  "review_scope": "Only this selected window; full source review remains partial.",
+  "source_url_binding_note": "Published Release URL supplied by producer; reviewed bytes identified by source_sha256."
+}

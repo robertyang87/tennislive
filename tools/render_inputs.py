@@ -378,6 +378,7 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
 #: 这几个函数里读它（都是措辞闸、推送元数据或备料），判据同上那条测试。
 PUBLISH_FIELDS: dict[str, frozenset[str]] = {
     "push": frozenset({
+        "video_without_tour_stats",                 # 固定表演赛统计闸要求禁用自动推送
         "spec_outward_text",                       # build_match_reel：全称断言闸扫的外发文字
         "push_is_auto", "push_meta",               # push_reel：推送开关与标题
         "voiced_texts", "outward_deep", "outward_flat",

@@ -76,10 +76,14 @@ The owner requires every future video to explain the process clearly, retain com
 
 All columns should actively retain as much compelling original commentary during key moments as the story supports, with accurately checked Chinese and English subtitles. Keep complete sentences and reactions, and place our explanatory narration between source-commentary windows. Subtitle English speech with the original English and faithful Chinese translation. Do not replace exciting source commentary merely to simplify TTS or captions; preserve the full action and inspect the actual final mix and caption timing. The owner’s exact instruction is retained in the canonical owner-taste skill. Existing source-audio evidence and honest review-method requirements remain in force.
 
-字卡按完整语义分行，不拆词、不留孤字末行。通过简化文案与明确分行保持视觉平衡；逐张检查实际原生预览和最终视频，不以 JSON 的换行符作为已正确显示的证据。
+全栏目封面标题与字卡按完整语义分行，不拆人名、固定词语或比分，不留孤字末行。两行居中、共用字号并尽量视觉平衡，不能为了等长拆开意思。显式换行必须保留，禁止浏览器二次自动折行；先简化和调整文案，必要时按最长行真实宽度适度统一缩字号，仍放不下制作预检就拦住。逐张检查实际原生预览和最终字幕帧，正文、字幕和底部品牌各有空间，不以 JSON 的换行符作为已正确显示的证据。章节卡上方小框用契合当前内容的短标题（如“错失机会”“上次交手”“素材说明”），不要每张都写“赛场之上”等栏目名；逐卡拟定，不机械重复。没有合适的小标题时省略小框，不用栏目名凑数。封面栏目标签沿用既有口径。2026-10-04 用户再次确认固定为全局规则，原话见 owner-taste 的 10-03 分行条目。
 
 字卡品牌“网球时差 · TENNIS JETLAG”放在画布底部安全边距内；检查实际字幕帧，确保品牌在字幕下方且不遮挡，不把品牌抬到页面中段。
 
 ## 2026-10-04：原生比分板的紧边界和透明提示条
 
 用户要求按源板实际宽高回贴，并指出多裁入球场产生“膏药”观感。源搜索框与最终可见蒙版分开：主板及短关键分提示分别测真实边界，保留所有可读原生信息和相对位置，使用同一缩放比例；周围球场、提示条右侧和圆角外像素透明。不要为提示条出现而缩小主板，也不把缺损源提示补造成完整文字。具体规则和实帧检查见 tennis-owner-taste 的同日条目。
+
+## 2026-10-04：统一深蓝图卡设计
+
+全部栏目后续图卡统一使用重新设计的深蓝配色：蓝黑底、低饱和柔光与蓝色信息面，白字清晰、次级文字有对比，中性细线分隔；品牌黄绿只用于品牌/重点，薄荷仍表示胜负，不再铺大面积绿光或绿底。范围包括赛场之上章节/数据卡、赛后开麦解读卡、网球有故事图文图卡及视频示意图/底衬、片尾与 Pillow 兜底。参考图只作蓝色与质感方向，不照搬布局；逐类核实际原生预览，更新缓存片尾母版，不能只改规则或 token。已有语义两行、内容小标题与底部品牌安全区规则继续执行。此条取代旧的墨绿背景口径。逐类以真实浏览器背景像素核对蓝色承托、正文可读性与绿色强调色的分工；片尾同时核已缓存母版，不能让模板是蓝色、实际拼片仍是旧绿底。

@@ -4,6 +4,7 @@ ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'tools'));sy
 from render_story_info_band import render
 from render_title_card import build as title_html
 from playwright.sync_api import sync_playwright
+from tennislive.chromium import launch_chromium
 OUT=ROOT/'work/nishikori-career-farewell/opening';OUT.mkdir(parents=True,exist_ok=True)
 CAREER=ROOT/'work/nishikori-career-farewell/career.mp4';X=Path('/workspace/scratch/usopen-x-true-champion.mp4');TOKYO=Path('/workspace/scratch/tokyo-official-x-thanks.mp4');VOICE=ROOT/'work/nishikori-career-farewell/audio/opening.mp3'
 def run(a,log=None):
@@ -16,7 +17,7 @@ def crop(src,cx=.5,cy=.5):
 render('生涯纪录','12座冠军','奥运铜牌',OUT/'stats.png',metric='最高第4',variant='stat')
 html=title_html('锦织圭的来路',kicker='网球有故事',size=(1080,1440));(OUT/'title.html').write_text(html)
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);page=b.new_page(viewport={'width':1080,'height':1440},device_scale_factor=1);page.set_content(html,wait_until='load');page.wait_for_function('document.fonts.status === "loaded"');page.wait_for_timeout(300);page.screenshot(path=str(OUT/'title.png'));b.close()
+ b=launch_chromium(p,headless=True,args=['--no-sandbox']);page=b.new_page(viewport={'width':1080,'height':1440},device_scale_factor=1);page.set_content(html,wait_until='load');page.wait_for_function('document.fonts.status === "loaded"');page.wait_for_timeout(300);page.screenshot(path=str(OUT/'title.png'));b.close()
 firstcrop,box=crop(X)
 run(['ffmpeg','-y','-hide_banner','-ss','35.6','-t','6.35','-i',str(X),'-vf',firstcrop,'-r','25','-c:v','libx264','-threads','3','-preset','veryfast','-crf','19','-c:a','aac','-ar','48000','-b:a','192k','-af','asetpts=PTS-STARTPTS','-t','6.35',str(OUT/'00-original.mp4')],OUT/'first-encode.log')
 shots=[(CAREER,34,38,.5,.5,'2008 Delray trophy'),(CAREER,74,78,.5,.5,'2012 Tokyo trophy'),(CAREER,850.15,853.25,.48,.5,'2019 Brisbane trophy'),(TOKYO,7,12,.5,.35,'2026 Tokyo farewell reactions')];audit=[];parts=[]

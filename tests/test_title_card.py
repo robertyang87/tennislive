@@ -101,13 +101,78 @@ def test_卡上那句话不写标点_换行表达停顿_太长当场红():
     assert "能再来吗？" in tc.build("那一盘六比一，能再来吗？"), "？留着——那是语气不是停顿"
     assert 'class="kicker">02<' in tc.build("x", kicker="02")
     assert 'class="kicker"' not in tc.build("x")
+    assert 'class="kicker">错失机会<' in tc.build("x", kicker="错失机会")
+    for column in tc.COLUMN_LABELS:
+        assert 'class="kicker"' not in tc.build("x", kicker=column)
     with pytest.raises(SystemExit, match="最多"):
         tc.build("一" * (tc.MAX_CHARS + 1))
     with pytest.raises(SystemExit, match="空"):
         tc.build("  ")
-    # 带式画布字号小一档，字数不缩字号（缩到 50px 就不是论点卡了）
+    # 带式画布字号小一档；两行共用字号，放不下要明确按语义分行。
     assert "font-size:84px" in tc.build("x", size=(1080, 960))
-    assert "font-size:96px" in tc.build("一" * 17)
+    with pytest.raises(SystemExit, match="显式换行"):
+        tc.build("一" * 17)
+
+
+def test_单行太长在制作预检就拦住_明确分行后通过():
+    with pytest.raises(reel.ReelError, match="显式换行"):
+        reel._normalize_title_card_segments(_spec({"title_card": "一" * 17}))
+    reel._normalize_title_card_segments(_spec({"title_card": "一" * 9 + "\n" + "一" * 8}))
+
+
+def test_较长语义行适度缩字号后真实浏览器仍只有两行():
+    from playwright.sync_api import sync_playwright  # noqa: PLC0415
+    from render_stat_card import _launch_browser  # noqa: PLC0415
+
+    text = "萨巴伦卡始终没能拿到破发\n两盘出局"
+    with sync_playwright() as pw:
+        browser = _launch_browser(pw)
+        page = browser.new_page(viewport={"width": 1080, "height": 1440})
+        page.set_content(tc.build(text))
+        page.evaluate("document.fonts.ready")
+        measured = page.eval_on_selector(".thesis", """el => ({
+            font: parseFloat(getComputedStyle(el).fontSize),
+            height: el.getBoundingClientRect().height,
+            width: el.clientWidth, scroll: el.scrollWidth,
+            text: el.innerText
+        })""")
+        browser.close()
+    assert 72 <= measured["font"] < 96
+    assert measured["height"] == pytest.approx(measured["font"] * 1.28 * 2, abs=1)
+    assert measured["width"] <= 940 and measured["scroll"] <= measured["width"] + 1
+    assert measured["text"] == text
+
+
+@pytest.mark.parametrize("size", [(1080, 1440), (1080, 960)])
+def test_萨巴伦卡语义两行在真实浏览器保持完整_没有二次折行(size):
+    """10-04 手机实帧：换行被当成空格，名字挤在首行、次行只剩两盘出局。"""
+    from playwright.sync_api import sync_playwright  # noqa: PLC0415
+    from render_stat_card import _launch_browser  # noqa: PLC0415
+
+    lines = ["5次反扑机会落空", "萨巴伦卡两盘出局"]
+    with sync_playwright() as pw:
+        browser = _launch_browser(pw)
+        page = browser.new_page(viewport={"width": size[0], "height": size[1]})
+        page.set_content(tc.build("\n".join(lines), kicker="错失机会", size=size))
+        page.evaluate("document.fonts.ready")
+        assert page.locator(".kicker").inner_text() == "错失机会"
+        geometry = page.eval_on_selector(".thesis", """el => {
+            const ranges = [...el.childNodes].filter(n => n.nodeType === Node.TEXT_NODE)
+                .map(n => { const r = document.createRange(); r.selectNodeContents(n);
+                    return {text: n.textContent, rects: [...r.getClientRects()].map(b =>
+                        ({x: b.x, y: b.y, width: b.width, height: b.height}))}; });
+            return {ranges, client: el.clientWidth, scroll: el.scrollWidth,
+                fontSize: parseFloat(getComputedStyle(el).fontSize)};
+        }""")
+        browser.close()
+    assert [row["text"] for row in geometry["ranges"]] == lines
+    assert all(len(row["rects"]) == 1 for row in geometry["ranges"]), geometry
+    first, second = [row["rects"][0] for row in geometry["ranges"]]
+    assert second["y"] - first["y"] == pytest.approx(geometry["fontSize"] * 1.28, abs=1)
+    assert all(70 <= row["x"] and row["x"] + row["width"] <= size[0] - 70
+               for row in (first, second)), geometry
+    assert geometry["scroll"] <= geometry["client"] + 1
+    assert min(first["width"], second["width"]) / max(first["width"], second["width"]) > .85
 
 
 def test_真渲一张_深底上有亮字_尺寸是画布的两倍(tmp_path):
@@ -236,11 +301,12 @@ def test_真渲的章节卡走完切段那条路_成片第一行就是彩条(tmp
     def row(y):
         return [px.getpixel((x, y)) for x in range(0, reel.VIDEO_W, 20)]
 
-    # 彩条是四色渐变，中段混色处饱和度会掉下来，所以只按「亮」判——深底 max<40
+    # 彩条中段混色处饱和度会掉下来，所以按亮度判；柔光深蓝背景仍明显暗于彩条。
     for y in (1, 5, 9):
         hits = sum(max(c) > 120 for c in row(y))
         assert hits >= len(row(y)) * 0.9, f"y={y} 这一行该是彩条（亮），只有 {hits} 格是"
     assert px.getpixel((10, 1))[1] > 200 and px.getpixel((1070, 1))[2] > 200, \
         "彩条左端是品牌绿、右端是蓝——渐变要贯通全宽"
     for y in (60, 87, 95):
-        assert all(max(c) < 70 for c in row(y)), f"y={y} 该是深底——彩条要是还落在这儿就是又缩了"
+        assert all(max(c) < 110 and c[2] > c[1] >= c[0] for c in row(y)), \
+            f"y={y} 该是柔光深蓝底——彩条要是还落在这儿就是又缩了"

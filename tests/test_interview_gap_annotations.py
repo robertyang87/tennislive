@@ -88,6 +88,16 @@ def test_annotation_changes_fingerprint_without_changing_asr(monkeypatch, tmp_pa
     assert original != clip.transcript_fingerprint(spec, lines, work)
 
 
+def test_annotation_revision_invalidates_recorded_subs_verdict(monkeypatch, tmp_path):
+    spec, lines, work = setup(monkeypatch, tmp_path)
+    spec['caption_gaps_ok'] = {'3.0-6.0': 'Synthetic fixture gap assessment'}
+    clip.record_second_asr(spec, lines, work, 0.02, 100, 100)
+    assert clip.subs_verdict(spec, lines, work).state == 'ok'
+    spec['caption_gap_annotations'][0]['why'] += ' Clarified uncertainty.'
+    got = clip.subs_verdict(spec, lines, work)
+    assert got.state == 'needs_subs' and not got.reds
+
+
 def test_film_revision_tracks_event_but_not_review_prose(monkeypatch, tmp_path):
     from tools import interview_revision
     spec, _, _ = setup(monkeypatch, tmp_path)

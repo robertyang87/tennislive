@@ -1380,6 +1380,9 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
         # 这是一条**假阴性**：它不会告诉你「我拦错了」，只会逼下一个人把对的
         # 写法改成错的（判据宁可窄，不可宽——但窄不等于漏掉唯一正确的那个写法）。
         why = None
+        from team_exhibition_scope import local_exhibition_context
+        if local_exhibition_context(spec, opening):
+            continue
         if not opening.strip():
             why = "整条片子一句中文旁白都没有"
         elif "北京时间" not in opening:

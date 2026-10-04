@@ -106,10 +106,10 @@ from tennislive.design_tokens import (  # noqa: E402
 # #0d2b21 → muted #102d23），可合并是**改值不是换出处**，要账号所有者点头
 # （WP0 评审 nit 2：「均差 ≤2/255」放得过一次看得见的改色）。所以值原样留在这儿，
 # 一处定义、各处引用；真要合并，改这几行、重渲比对，再单独走一次选择题。
-_INK_BG = "#06140f"      # token-exempt: 采访线深底（字幕带、封面、收尾卡），并入 background 属改值
+_INK_BG = DARK["background"]  # 2026-10-04 全栏目统一深蓝，含字幕带和解释卡。
 _TOPIC_FG = "#dcefe4"    # token-exempt: 封面台头第二行，和 versus_poster 的 .topic 同值
 _SOFT_FG = "#cfe3d9"     # token-exempt: 封面 .sub、收尾卡 .facts 的次级字
-_CARD_GLOW = "#0d2b21"   # token-exempt: 收尾卡顶上那团径向光
+_CARD_GLOW = DARK["hero-glow"]
 _TOPBAR_BODY = "#d5e2db"  # token-exempt: 顶栏次行，= build_match_reel.TOPBAR_BODY_COLOUR
 _ASS_BLACK = "&H00000000"  # token-exempt: ASS 描边/底色占位（描边 0、BorderStyle 1 不画底）
 
