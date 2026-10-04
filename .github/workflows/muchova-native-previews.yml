@@ -1,0 +1,67 @@
+name: muchova-native-previews
+run-name: "Muchova–Boulter native static previews"
+on:
+  push:
+    branches: [codex/muchova-source-review-20261004]
+    paths:
+      - .github/workflows/muchova-native-previews.yml
+      - data/preparation/muchova-boulter.preview.json
+permissions:
+  contents: read
+concurrency:
+  group: muchova-native-previews
+  cancel-in-progress: false
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            assets
+            data
+            src
+            tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install native preview dependencies
+        run: pip install -q -e '.[webrender,visualqa]'
+      - name: Prepare Chromium
+        timeout-minutes: 10
+        run: python -m playwright install --with-deps chromium
+      - name: Run the existing native static-card functions only
+        env:
+          PYTHONPATH: src
+        run: |
+          mkdir -p previews
+          python - <<'PY'
+          import hashlib,json,pathlib,sys
+          sys.path.insert(0,'tools')
+          from build_match_reel import resolve_cover_payload,render_poster
+          from render_stat_card import render as render_stats
+          from render_title_card import render as render_title
+          p=pathlib.Path('data/preparation/muchova-boulter.preview.json')
+          spec=json.loads(p.read_text())
+          assert spec['slug']=='muchova-boulter'
+          assert spec['_draft'] is True
+          assert spec['source_url']=='https://www.youtube.com/watch?v=ml7I2o2xkco'
+          out=pathlib.Path('previews')
+          payload,layout=resolve_cover_payload(spec['cover'],out,sources=None,primary='',spec=spec)
+          render_poster(payload,out/'cover.jpg',layout)
+          render_stats(spec,out/'stat-card-film.jpg',variant='film')
+          render_stats(spec,out/'stat-card-poster.jpg',variant='poster')
+          for i,s in enumerate(spec['segments']):
+              if s.get('title_card'):
+                  render_title(s['title_card'],out/f'card-{i:02d}.jpg',kicker=s.get('kicker',''))
+          outputs=[{'path':str(x),'bytes':x.stat().st_size,'sha256':hashlib.sha256(x.read_bytes()).hexdigest()} for x in sorted(out.glob('*.jpg'))]
+          (out/'preview-manifest.json').write_text(json.dumps({'spec_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'outputs':outputs,'scope':'native static previews only; no video render, no release, no publication'},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muchova-native-previews-${{ github.run_id }}
+          path: previews/
+          if-no-files-found: error
+          retention-days: 3
