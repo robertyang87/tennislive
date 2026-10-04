@@ -156,7 +156,7 @@
     520,
     990
   ],
-  "_scorebox_why": "Source1080p native body observed x90–516,y872–982, narrow match-point tagy832–872. Search band includes both but only per-frame native mask becomes opaque; pending all-selected-frame geometry audit.",
+  "_scorebox_why": "Use the native WTA geometry extractor within search band[90,830,520,990], preserving the native proportional body and separate transparent tags. Earlier6300-frame audit passed, but its artifacts were lost; a new hash-bound scan is required before production.",
   "_source_provenance": {
     "publisher": "WTA",
     "canonical_url": "https://www.youtube.com/watch?v=ml7I2o2xkco",
@@ -171,15 +171,22 @@
   "editorial": {
     "mode": "match_review",
     "question": "首盘一比四落后，穆霍娃怎样把比赛的主动权拿回来？",
-    "thesis": "先连赢十二分追到四平，再在抢七三平时转身救球后完成穿越；首盘守住的局面，到了第二盘变成持续的主动进攻。",
+    "thesis": "先连赢12分追到4平，再在抢七3平时转身救球、完成穿越；拿下首盘后，第二盘两次破发，以6比1收尾。",
     "beats": [
       "首盘1比4落后，连续12分追成4比4",
-      "抢七3比3的转身救球与穿越，随后连拿4分",
-      "次盘3比0起步，6比1结束，完整保留赛点与拥抱"
+      "抢七3比3的转身救球与穿越，从3比3起连拿4分",
+      "次盘3比0起步，6比1结束，完整保留赛点，并保留网前拥抱"
     ],
     "human_context": {
-      "fact": "今年此前两次交手，穆霍娃都赢下比赛：迈阿密6-3 7-5、美网6-1 6-0。",
-      "source_url": "https://www.tennis.com/tournaments/china-open-wta/matches/k-muchova-vs-k-boulter-2026-10-02"
+      "angle": "第三次年度交手，如何从首盘落后找到突破口",
+      "facts": [
+        "2026年此前两次交手，穆霍娃均取胜：迈阿密6-3 7-5、美网6-1 6-0。",
+        "本场首盘1比4落后，穆霍娃连赢12分追到4比4。"
+      ],
+      "sources": [
+        "https://www.tennis.com/tournaments/china-open-wta/matches/k-muchova-vs-k-boulter-2026-10-02",
+        "https://www.wtatennis.com/news/4585671/anatomy-of-a-hot-shot-karolina-muchova-on-her-360-degree-spin-in-beijing"
+      ]
     },
     "chapters": [
       "从落后追起",
@@ -190,7 +197,7 @@
   "push": {
     "auto": true,
     "summary": "穆霍娃从首盘险境过关",
-    "lead": "首盘1比4落后，穆霍娃连赢12分追平；来到抢七3比3，她转身救球，再用大角度穿越赢下关键一分。7比6、6比1击败布尔特，故事从险境讲到网前拥抱。"
+    "lead": "首盘1比4落后，穆霍娃连赢12分追平；来到抢七3比3，她转身救球，再用大角度穿越赢下关键一分。7比6、6比1击败布尔特，从首盘落后，到网前与对手拥抱。"
   },
   "_facts": [
     {
@@ -214,7 +221,7 @@
       "why": "112points reconstruct20games,1-4deficit,12consecutivepointsto4-4,TB3-3to7-3,firstmatchpoint."
     }
   ],
-  "_preparation_status": "source recovered; audio and native visual gates pending; not render-ready",
+  "_preparation_status": "Recovered primary bytes and archived previews after workspace reset. Current audio/board evidence is being regenerated. The proposed720p replay still awaits a separate quality decision. Not render-ready.",
   "_production": {
     "status": "preparation",
     "source_probe_run": 37000433039,
@@ -224,141 +231,416 @@
     "round": "R2",
     "court": "Lotus",
     "blockers": [
-      "Exact bilingual audio cues pending independent cross-check",
-      "Selected source-frame native scoreboard audit pending",
-      "Native previews and full current-head CI pending"
+      "Quality decision pending for exact official720p replay25.60–38.32 with transition tail through38.50; no exception asserted",
+      "Primary audio and native board evidence lost in workspace reset; regeneration in progress",
+      "Final native visual/audio QC and current-head full CI not yet performed"
     ]
   },
   "segments": [
     {
-      "start": 262.2,
+      "start": 264.2,
       "end": 276.6,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
-      "narration": "",
       "score_inset": true,
+      "narration": "",
       "_role": "cold_open",
-      "_review_status": "pending exact audio captions and point boundaries",
+      "_why": "Post-win footage begins after the decisive out landing at262.5: Muchova close-up, box applause and net hand greeting. Starts with the complete She takes a bold step forward sentence. The chronological body retains the entire match point and all result commentary.",
+      "point_end_ok": "Post-win footage begins after the decisive out landing at262.5: Muchova close-up, box applause and net hand greeting. Starts with the complete She takes a bold step forward sentence. The chronological body retains the entire match point and all result commentary.",
+      "crosses_cut": "Post-win footage begins after the decisive out landing at262.5: Muchova close-up, box applause and net hand greeting. Starts with the complete She takes a bold step forward sentence. The chronological body retains the entire match point and all result commentary.",
+      "quote": [
+        {
+          "at": 0.01,
+          "end": 1.43,
+          "text": "She takes a bold step forward.\n她大步迈向下一轮。"
+        },
+        {
+          "at": 1.44,
+          "end": 3.4,
+          "text": "She was tested in the opening set.\n她在首盘经受了考验。"
+        },
+        {
+          "at": 3.41,
+          "end": 6.0,
+          "text": "Credit to Katie Boulter for doing just that.\n布尔特的表现值得肯定。"
+        },
+        {
+          "at": 6.2,
+          "end": 8.72,
+          "text": "But the second set, it's one-way traffic\n但第二盘完全是一边倒，"
+        },
+        {
+          "at": 8.72,
+          "end": 12.2,
+          "text": "as win number 40 comes in straight sets.\n她以直落两盘迎来第40场胜利。"
+        }
+      ],
+      "_quote_kind": "broadcast",
       "_ending_payoff_required": true
     },
     {
       "title_card": "首盘落后3局\n她又追了回来",
       "kicker": "比赛坐标",
-      "seconds": 12,
-      "narration": "北京时间十月二号下午，中网女单第二轮。首盘一比四落后，穆霍娃没有让这场比赛顺着对手的节奏走下去。",
-      "_why": "Start time07:10UTC=15:10Asia/Shanghai; secondround verified."
+      "seconds": 8.7,
+      "narration": "比分能追，难球也能救。北京时间十月二号下午，中网女单第二轮，穆霍娃对阵布尔特。",
+      "_why": "Official WTA LS056 start07:10UTC=15:10Asia/Shanghai, second round."
     },
     {
-      "title_card": "一度1比4落后\n连拿12分追平",
-      "kicker": "转折从这里开始",
-      "seconds": 14,
-      "narration": "她先保发，再回破，连续拿下十二分，追成四比四。官方集锦没有收录从一比四追到三比四的完整过程。",
-      "_why": "PBPgames6–8 each4-0. Officialsource12–22s1-1 then24s3-4, earlyturning-pointgap explicitly disclosed."
+      "title_card": "一度1比4落后\n连追2局再出发",
+      "kicker": "从落后追起",
+      "seconds": 10.4,
+      "narration": "她先保发，再回破，追到三比四。官方集锦没有收录这两局的完整过程。接下来的发球局，她把变化打了出来。",
+      "_why": "PBP games6–7; the official source jumps from1-1 to3-4. Missing official footage is explicitly disclosed, never replaced by another point."
     },
     {
       "start": 24.8,
-      "end": 61.8,
+      "end": 45.6,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
-      "narration": "",
       "score_inset": true,
-      "_role": "set1_level_four_all",
-      "_review_status": "pending exact audio captions and point boundaries"
+      "narration": "",
+      "_role": "set1_comeback",
+      "_why": "Three complete points of the3-4 service game, ending at40-0 before the next serve47.68. Not presented as all four points or the complete hold. Tail ends45.78 before the next English utterance45.85.",
+      "point_end_ok": "Three complete points of the3-4 service game, ending at40-0 before the next serve47.68. Not presented as all four points or the complete hold. Tail ends45.78 before the next English utterance45.85.",
+      "crosses_cut": "Three complete points of the3-4 service game, ending at40-0 before the next serve47.68. Not presented as all four points or the complete hold. Tail ends45.78 before the next English utterance45.85.",
+      "quote": [
+        {
+          "at": 6.15,
+          "end": 10.08,
+          "text": "Oh, seriously, that is so well done.\n哦，真的，这一球处理得太好了。"
+        },
+        {
+          "at": 14.0,
+          "end": 15.35,
+          "text": "Oh, seriously.\n哦，真是太精彩了。"
+        },
+        {
+          "at": 15.38,
+          "end": 16.16,
+          "text": "Too good.\n太精彩了。"
+        },
+        {
+          "at": 16.3,
+          "end": 18.02,
+          "text": "Yep. And that's what I'm talking about.\n对，我说的就是这个。"
+        },
+        {
+          "at": 18.06,
+          "end": 20.36,
+          "text": "You know, the timing is absolutely perfect.\n她的击球时机把握得完美。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "bed": "high",
+      "_bed_why": "Keep the quiet court track near its native level: native high tier0.72×1.35=0.972. Final encoded peak/audio QC remains required."
+    },
+    {
+      "title_card": "连赢12分追平\n拉锯才刚刚开始",
+      "kicker": "重回同一起点",
+      "seconds": 10.0,
+      "narration": "这个发球局也守住了。连赢十二分，从一比四追到四比四。接下来这次接发，她还要从零比三十继续争。",
+      "_why": "PBP games6–8 were each won4-0. The unshown fourth point of game8 is reported as a fact, not falsely claimed as shown."
+    },
+    {
+      "start": 61.8,
+      "end": 65.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "_role": "long_point_start",
+      "_why": "Full Boulter serve preparation at4-4,0-30. Source continues without missing frames through adjacent65.4 and89.4 seams. The existing source itself begins the commentary fragment with Gap.",
+      "point_end_ok": "Full Boulter serve preparation at4-4,0-30. Source continues without missing frames through adjacent65.4 and89.4 seams. The existing source itself begins the commentary fragment with Gap.",
+      "crosses_cut": "Full Boulter serve preparation at4-4,0-30. Source continues without missing frames through adjacent65.4 and89.4 seams. The existing source itself begins the commentary fragment with Gap.",
+      "quote": [
+        {
+          "at": 0.05,
+          "end": 3.3,
+          "text": "Gap that will actually clear the net as well.\n也能让球顺利过网的空间。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "start": 65.4,
+      "end": 89.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "四比四，零比三十，穆霍娃还在接发。双方在底线来回调动，她用正反手一次次把球送回深区。布尔特的回球，也一次次来到她面前。比分已经追平，这一盘的拉锯却还没有结束。",
+      "_role": "long_point_explained",
+      "_why": "Audio-only, source-continuous narration window. Both players exchange from the baseline; no foreground English in the reviewed window. Keep the final rally stretch with court sound instead of filling it with extra narration.",
+      "point_end_ok": "Audio-only, source-continuous narration window. Both players exchange from the baseline; no foreground English in the reviewed window. Keep the final rally stretch with court sound instead of filling it with extra narration.",
+      "crosses_cut": "Audio-only, source-continuous narration window. Both players exchange from the baseline; no foreground English in the reviewed window. Keep the final rally stretch with court sound instead of filling it with extra narration."
+    },
+    {
+      "start": 89.4,
+      "end": 92.32,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "_role": "long_point_finish",
+      "_why": "Boulter advances and stretches for a forehand volley; the return goes wide by89.6–90. Players walk at90.6 and ballkids move91.6–92.1. Tail92.50 remains before the new speech92.8. Delayed score update94.5 is not the point landing.",
+      "point_end_ok": "Boulter advances and stretches for a forehand volley; the return goes wide by89.6–90. Players walk at90.6 and ballkids move91.6–92.1. Tail92.50 remains before the new speech92.8. Delayed score update94.5 is not the point landing.",
+      "crosses_cut": "Boulter advances and stretches for a forehand volley; the return goes wide by89.6–90. Players walk at90.6 and ballkids move91.6–92.1. Tail92.50 remains before the new speech92.8. Delayed score update94.5 is not the point landing.",
+      "quote": [
+        {
+          "at": 0.55,
+          "end": 2.72,
+          "text": "Oh, that's just gonna crush.\n哦，这实在太打击人了。"
+        }
+      ],
+      "_quote_kind": "broadcast"
     },
     {
       "title_card": "两人咬到6平\n关键一分来了",
       "kicker": "胜负分界",
-      "seconds": 10,
-      "narration": "布尔特没有就此退让，两人一路打到抢七。三比三，接下来这一分，穆霍娃把防守变成了进攻。",
-      "_why": "PBPfirstsetgames9–13; officialWTAhotshotreportTB3-3."
+      "seconds": 8.05,
+      "narration": "两人一路打到抢七。三比三，穆霍娃把一个几乎来到身后的球，变成了反击的机会。",
+      "_why": "PBP and the official WTA hotshot report identify the decisive tiebreak3-3 point."
     },
     {
-      "start": 165.96,
-      "end": 184.64,
+      "start": 166.0,
+      "end": 174.8,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
-      "narration": "",
       "score_inset": true,
-      "_role": "tiebreak_magic_point",
-      "_review_status": "pending exact audio captions and point boundaries"
+      "narration": "抢七三比三。来球一步步逼向身后，这个难球，她还能救回来吗？",
+      "_role": "tiebreak_magic_narrated_start",
+      "_why": "Full temporal point starts at serve preparation166. Audio-only seam174.8 continues into the same fixed-center view. The center crop misses the wide key action175.5–176, so the proposed official replay remains a required unresolved quality dependency.",
+      "point_end_ok": "Full temporal point starts at serve preparation166. Audio-only seam174.8 continues into the same fixed-center view. The center crop misses the wide key action175.5–176, so the proposed official replay remains a required unresolved quality dependency.",
+      "crosses_cut": "Full temporal point starts at serve preparation166. Audio-only seam174.8 continues into the same fixed-center view. The center crop misses the wide key action175.5–176, so the proposed official replay remains a required unresolved quality dependency.",
+      "bed": "high",
+      "_bed_why": "Keep the quiet court track near its native level: native high tier0.72×1.35=0.972. Final encoded peak/audio QC remains required."
+    },
+    {
+      "start": 174.8,
+      "end": 179.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "_role": "tiebreak_magic_raw_finish",
+      "_why": "Continues the same point with no omitted frames through the winning exchange and reaction. Tail179.68 excludes uncertain next speech179.74. The missing wide crop is not yet remedied: required official replay awaits quality approval.",
+      "point_end_ok": "Continues the same point with no omitted frames through the winning exchange and reaction. Tail179.68 excludes uncertain next speech179.74. The missing wide crop is not yet remedied: required official replay awaits quality approval.",
+      "crosses_cut": "Continues the same point with no omitted frames through the winning exchange and reaction. Tail179.68 excludes uncertain next speech179.74. The missing wide crop is not yet remedied: required official replay awaits quality approval.",
+      "quote": [
+        {
+          "at": 2.5,
+          "end": 3.6,
+          "text": "Yes!\n漂亮！"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "bed": "high",
+      "_bed_why": "Keep the quiet court track near its native level: native high tier0.72×1.35=0.972. Final encoded peak/audio QC remains required."
     },
     {
       "title_card": "转身救回身后球\n再用斜线完成穿越",
-      "kicker": "这一分怎么赢",
-      "seconds": 11,
+      "kicker": "关键两拍回看",
+      "seconds": 10.4,
       "narration": "球已经来到身后，她转身救回；紧接着，又在移动中拉开角度完成穿越。这一分之后，她连拿三分收下首盘。",
-      "_why": "WTAhotshotreport:360degreepickupthenangledpass; PBP4-3to7-3. Fullpoint just shown; no invented shotdirection."
+      "_why": "Official WTA report confirms both strokes. Proposed replay25.60–38.32 plus tail38.50 awaits separate resolution approval; this prepared card does not establish that the complete action is already delivered."
     },
     {
       "start": 184.64,
-      "end": 196.04,
+      "end": 228.0,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
-      "narration": "",
       "score_inset": true,
-      "_role": "first_set_point",
-      "_review_status": "pending exact audio captions and point boundaries"
+      "narration": "",
+      "_role": "first_set_finish_and_second_set_holds",
+      "_why": "Continuous43.36s official-source block retains first-set point/outcome and two complete second-set hold points. Source jumps0-0 to3-1; the following card explicitly reports the missing early break. No inserted card or tail flash at196.04.",
+      "point_end_ok": "Continuous43.36s official-source block retains first-set point/outcome and two complete second-set hold points. Source jumps0-0 to3-1; the following card explicitly reports the missing early break. No inserted card or tail flash at196.04.",
+      "crosses_cut": "Continuous43.36s official-source block retains first-set point/outcome and two complete second-set hold points. Source jumps0-0 to3-1; the following card explicitly reports the missing early break. No inserted card or tail flash at196.04.",
+      "quote": [
+        {
+          "at": 5.31,
+          "end": 6.08,
+          "text": "Book it.\n拿下了。"
+        },
+        {
+          "at": 6.08,
+          "end": 7.74,
+          "text": "Done and dusted.\n这一盘拿下了。"
+        },
+        {
+          "at": 7.76,
+          "end": 9.3,
+          "text": "What an effort to come through.\n能闯过这一关，真是不容易。"
+        },
+        {
+          "at": 9.36,
+          "end": 11.3,
+          "text": "She's seven and oh in tiebreaks this season.\n本赛季，她在抢七中7战全胜。"
+        },
+        {
+          "at": 23.86,
+          "end": 29.41,
+          "text": "That is spectacular, especially when you're a player who's had so many injuries.\n经历许多伤病，仍能如此精彩。"
+        },
+        {
+          "at": 34.96,
+          "end": 36.51,
+          "text": "Oh, too good.\n哦，太精彩了。"
+        },
+        {
+          "at": 36.56,
+          "end": 39.68,
+          "text": "Good dig on that forehand side to get the ball back in play\n正手救得漂亮，球又回到场内。"
+        },
+        {
+          "at": 39.68,
+          "end": 42.96,
+          "text": "and then handled the body shot with aplomb.\n随后又从容化解追身球。"
+        }
+      ],
+      "_quote_kind": "broadcast"
     },
     {
-      "title_card": "次盘抢先到3比0\n进攻开始拉开差距",
+      "title_card": "次盘3比0开局\n随后再到4比1",
       "kicker": "第二盘",
-      "seconds": 12,
-      "narration": "第二盘，她先保发，再破掉布尔特的发球局，三比零领先。官方集锦跳过了这次破发的完整过程。接下来，主动权没有再松手。",
-      "_why": "PBPset2games1–3; officialsource196–208s0-0 then209s3-1. Missing2-0breakpoint explicitly disclosed."
+      "seconds": 12.73,
+      "narration": "第二盘，她先保发，再破发，三比零领先。布尔特随后保住一局，穆霍娃又守到四比一。官方集锦里，早段破发的完整过程没有收录。",
+      "_why": "PBP second-set games1–5. Official source shows the0-0 hold then the3-1 hold; early2-0 break is missing."
     },
     {
-      "start": 209.2,
-      "end": 227.44,
+      "start": 228.0,
+      "end": 237.0,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
-      "narration": "",
       "score_inset": true,
-      "_role": "set2_hold_four_one",
-      "_review_status": "pending exact audio captions and point boundaries"
+      "narration": "四比一，布尔特的发球局。穆霍娃又拿到破发点，继续把压力留给对面。",
+      "_role": "second_break_narrated_start",
+      "_why": "Full Boulter serve and break-point rally begin228. Audio-only seam237 retains identical source frames, crop and scoreboard; Chinese narration ends before the first English call239.2.",
+      "point_end_ok": "Full Boulter serve and break-point rally begin228. Audio-only seam237 retains identical source frames, crop and scoreboard; Chinese narration ends before the first English call239.2.",
+      "crosses_cut": "Full Boulter serve and break-point rally begin228. Audio-only seam237 retains identical source frames, crop and scoreboard; Chinese narration ends before the first English call239.2.",
+      "bed": "high",
+      "_bed_why": "Keep the quiet court track near its native level: native high tier0.72×1.35=0.972. Final encoded peak/audio QC remains required."
     },
     {
-      "start": 227.44,
-      "end": 246.96,
+      "start": 237.0,
+      "end": 241.1,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
-      "narration": "",
       "score_inset": true,
-      "_role": "set2_break_five_one",
-      "_review_status": "pending exact audio captions and point boundaries"
+      "narration": "",
+      "_role": "second_break_raw_finish",
+      "_why": "Continues the break point; rally ends239.4–239.6 and ballkid crosses240.1. Tail241.28 excludes uncertain new sentence241.4. The5-1 result is also visible in the final point.",
+      "point_end_ok": "Continues the break point; rally ends239.4–239.6 and ballkid crosses240.1. Tail241.28 excludes uncertain new sentence241.4. The5-1 result is also visible in the final point.",
+      "crosses_cut": "Continues the break point; rally ends239.4–239.6 and ballkid crosses240.1. Tail241.28 excludes uncertain new sentence241.4. The5-1 result is also visible in the final point.",
+      "quote": [
+        {
+          "at": 2.2,
+          "end": 2.78,
+          "text": "Yep.\n对。"
+        },
+        {
+          "at": 3.1,
+          "end": 4.0,
+          "text": "Too good.\n太精彩了。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "bed": "high",
+      "_bed_why": "Keep the quiet court track near its native level: native high tier0.72×1.35=0.972. Final encoded peak/audio QC remains required."
     },
     {
       "start": 246.96,
-      "end": 262.2,
+      "end": 256.8,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
-      "narration": "",
       "score_inset": true,
-      "_role": "full_match_point",
-      "_review_status": "pending exact audio captions and point boundaries"
+      "narration": "",
+      "_role": "match_point_raw_start",
+      "_why": "Complete first match point begins with serve preparation246.96 and serve248.5. Audio-only seams256.8 and261.6 retain the uninterrupted246.96–276.60 source; the final out landing is262.5, never262.2.",
+      "point_end_ok": "Complete first match point begins with serve preparation246.96 and serve248.5. Audio-only seams256.8 and261.6 retain the uninterrupted246.96–276.60 source; the final out landing is262.5, never262.2.",
+      "crosses_cut": "Complete first match point begins with serve preparation246.96 and serve248.5. Audio-only seams256.8 and261.6 retain the uninterrupted246.96–276.60 source; the final out landing is262.5, never262.2.",
+      "bed": "high",
+      "_bed_why": "Keep the quiet court track near its native level: native high tier0.72×1.35=0.972. Final encoded peak/audio QC remains required.",
+      "_quote_skip_why": "Previously reviewed as court sounds/nonlexical player sounds only; the complete hash-bound audio packet must be regenerated before promotion."
     },
     {
-      "start": 262.2,
-      "end": 293.8,
+      "start": 256.8,
+      "end": 261.6,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
-      "narration": "",
       "score_inset": true,
-      "_role": "win_and_net_reaction",
-      "_review_status": "pending exact audio captions and point boundaries"
+      "narration": "第一个赛点，双方仍在底线相持。",
+      "_role": "match_point_narrated_rally",
+      "_why": "Audio-only source-continuous window during verified foreground-English-free baseline exchanges. Native high bed preserves the quiet court track while a short factual Chinese line provides context.",
+      "point_end_ok": "Audio-only source-continuous window during verified foreground-English-free baseline exchanges. Native high bed preserves the quiet court track while a short factual Chinese line provides context.",
+      "crosses_cut": "Audio-only source-continuous window during verified foreground-English-free baseline exchanges. Native high bed preserves the quiet court track while a short factual Chinese line provides context.",
+      "bed": "high",
+      "_bed_why": "Keep the quiet court track near its native level: native high tier0.72×1.35=0.972. Final encoded peak/audio QC remains required."
+    },
+    {
+      "start": 261.6,
+      "end": 276.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "_role": "match_point_complete_finish_and_greeting",
+      "_why": "Uninterrupted final-point continuation: final Boulter strike262.2, decisive out landing262.5, result, hand greeting274.5 and visible embrace. Embrace release277.0 is not claimed. Tail276.78 ends before unresolved new speech276.96.",
+      "point_end_ok": "Uninterrupted final-point continuation: final Boulter strike262.2, decisive out landing262.5, result, hand greeting274.5 and visible embrace. Embrace release277.0 is not claimed. Tail276.78 ends before unresolved new speech276.96.",
+      "crosses_cut": "Uninterrupted final-point continuation: final Boulter strike262.2, decisive out landing262.5, result, hand greeting274.5 and visible embrace. Embrace release277.0 is not claimed. Tail276.78 ends before unresolved new speech276.96.",
+      "quote": [
+        {
+          "at": 0.64,
+          "end": 2.6,
+          "text": "And that is it for Karolina Muchova.\n卡罗琳娜·穆霍娃赢下了比赛。"
+        },
+        {
+          "at": 2.61,
+          "end": 4.03,
+          "text": "She takes a bold step forward.\n她大步迈向下一轮。"
+        },
+        {
+          "at": 4.04,
+          "end": 6.0,
+          "text": "She was tested in the opening set.\n她在首盘经受了考验。"
+        },
+        {
+          "at": 6.01,
+          "end": 8.6,
+          "text": "Credit to Katie Boulter for doing just that.\n布尔特的表现值得肯定。"
+        },
+        {
+          "at": 8.8,
+          "end": 11.32,
+          "text": "But the second set, it's one-way traffic\n但第二盘完全是一边倒，"
+        },
+        {
+          "at": 11.32,
+          "end": 14.8,
+          "text": "as win number 40 comes in straight sets.\n她以直落两盘迎来第40场胜利。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "bed": "high",
+      "_bed_why": "Keep the quiet court track near its native level: native high tier0.72×1.35=0.972. Final encoded peak/audio QC remains required."
     },
     {
       "stat_card": true,
-      "seconds": 13,
-      "narration": "二十四记制胜分，十六次非受迫失误。穆霍娃两盘晋级，第三轮对阵萨姆索诺娃。落后的时候，你更记得她的耐心，还是那一次转身？",
-      "_why": "TNNSwholematchW24UE16; nextopponentofficialarticle. Questionconnectscomebackand360shot."
+      "seconds": 13.5,
+      "narration": "二十四记制胜分，十六次非受迫失误。这场胜利让穆霍娃晋级第三轮，对手是萨姆索诺娃。从连赢十二分，到抢七那一次转身，哪一幕更让你记住她？",
+      "_why": "TNNS full-match W24/UE16; official WTA report names Samsonova as the third-round opponent. Retrospective wording for the explicitly datedOct2 film; no unverified claim that the next match is still upcoming."
     }
-  ]
+  ],
+  "_tts_backend_why": "本条采用既有Edge中文事实旁白，不需要Azure情绪风格；英文精彩解说保留真实源音频并配双语字幕。"
 }
