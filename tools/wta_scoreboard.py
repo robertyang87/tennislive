@@ -106,11 +106,27 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
             break
     if edge is None:
         edge = len(frac)
-    mint_cols = np.flatnonzero(mint_mask(band).mean(axis=0) > 0.4)
-    if mint_cols.size >= MINT_COLS:
-        edge = min(edge, int(mint_cols.max()) + 1 + POINTS_MAX)
-        # 有薄荷绿钉着：spec 右缘只是提示，板更长（双打、多一盘）就按量到的走
-        return beyond_hint(edge, cap, edge)
+    mint_cols = mint_mask(band).mean(axis=0) > 0.4
+    cells = [(lo, hi) for lo, hi in _runs(mint_cols) if hi - lo >= MINT_COLS]
+    if cells:
+        # Mint TEXT in the point-score slot (e.g. 40) is not another filled games
+        # cell. Use the broad solid cell, rather than the last mint-coloured letter.
+        cell_lo, cell_hi = max(cells, key=lambda bounds: bounds[1] - bounds[0])
+        margin = max(1, band.shape[0] // 10)
+        body = band[margin:-margin].astype(np.int16)
+        jump = np.abs(body[:, 1:] - body[:, :-1]).mean(axis=2)
+        persistent = (jump > 8).mean(axis=0)
+        # A native border/background boundary runs through both player rows.
+        # Point numerals form discontinuous strokes; no fixed point-slot width
+        # is made opaque, and stat panels without a point slot remain narrower.
+        first = cell_hi + 6
+        last = min(band.shape[1] - 1, cell_hi + POINTS_MAX + EDGE_PAD)
+        boundaries = [x for x in range(first, last + 1) if persistent[x - 1] >= .55]
+        if boundaries:
+            return boundaries[-1]
+        if edge < cell_hi + POINTS_MAX:
+            return edge
+        raise RuntimeError("WTA board present but native right boundary cannot be measured")
     # 没有薄荷绿（开局还没有局分那几秒）：没有签名色撑着，
     # 越过 spec 右缘的读数不可信，照旧封顶
     return min(edge, cap) if cap is not None else edge
@@ -187,7 +203,7 @@ def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
         raise RuntimeError("WTA board present but native body geometry is invalid")
 
     rows = []
-    right_limit = min(band.shape[1], edge + EDGE_PAD)
+    right_limit = min(band.shape[1], edge)
     for y in range(lo, hi):
         pixels = np.flatnonzero(colour[y, :right_limit])
         outer = np.flatnonzero(((band[y, :right_limit].max(axis=1) < 130)

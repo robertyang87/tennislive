@@ -32,7 +32,7 @@ def band(width=390, top=50, height=110, header=True):
 
 def test_body_and_narrow_header_keep_native_details_and_transparent_gap():
     geometry = w.frame_geometry(band())
-    assert geometry['body'][1:] == (49, 391, 161)
+    assert geometry['body'][1:] == (49, 390, 161)
     assert geometry['header'][2] <= 120
     mask = w.alpha_frame(geometry, (0, 0, 760, 200))
     assert mask[20, 50] == 255  # header text remains opaque
@@ -137,3 +137,26 @@ def test_long_native_point_header_keeps_its_actual_width_not_name_width_cap():
     mask = w.alpha_frame(geometry, (0,0,760,200))
     assert mask[25, 220] == 255
     assert mask[25, 280] == 0
+
+
+def test_mint_point_numerals_do_not_act_as_an_extra_filled_games_cell():
+    image = band(header=False)
+    image[:,390:] = (87,88,91)  # dark court/stand passes the old dark-colour test
+    image[65:93,360:364] = MINT
+    image[65:93,375:378] = MINT
+    image[115:143,360:364] = MINT
+    image[115:143,375:378] = MINT
+    geometry = w.frame_geometry(image)
+    assert geometry['body'][2] <= 392
+    assert w.alpha_frame(geometry,(0,0,760,200))[:,394:].sum() == 0
+
+
+def test_stat_panel_without_point_slot_does_not_copy_dark_racket_to_right():
+    image = band(width=360, header=True)
+    image[50:160,310:346] = MINT
+    image[50:160,346:360] = BODY
+    image[50:160,360:] = (0,22,74)  # blue racket/court mistaken for dark graphic
+    geometry = w.frame_geometry(image)
+    assert geometry['body'][2] <= 362
+    assert geometry['header'] is not None
+    assert w.alpha_frame(geometry,(0,0,760,200))[:,362:].sum() == 0
