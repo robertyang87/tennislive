@@ -139,10 +139,13 @@ def test_人工核过且指纹没变不要量数(tmp_path):
 #: 不经切行、直接绑在判定上的转写输入 → 换成的另一个值（指纹或区间要跟着变）
 _BOUND_DIRECTLY = {"asr_model": "base.en", "whisper_model": "large-v3",
                    "whisper_vad_filter": False, "start": 0.5, "end": 9.0,
+                   "transcript_languages": [{"start": 0, "end": 8, "language": "en"}],
                    "en_fixed": {"2": "great match!"}}
 #: 经切行进指纹的（`main()` 切行读它们、行一变指纹就变）——
 #: `test_转写输入的键和出片那一趟切行读的字段对得上` 钉
 _BOUND_VIA_LINES = {"url", "segment_budget_px", "word_fix"}
+# 需要源字节和模型交叉证据的输入，另在 test_interview_gap_annotations 真核旧判定失效。
+_BOUND_WITH_EVIDENCE = {"caption_gap_annotations"}
 
 
 def test_每个转写输入都绑在判定上_只改它旧判定不作数(tmp_path):
@@ -150,7 +153,7 @@ def test_每个转写输入都绑在判定上_只改它旧判定不作数(tmp_pa
     也不经切行），判定照旧 ok——render 跳过重量，拿旧配置量的数出片。`whisper_vad_filter`
     就是这么漏的（复审 2026-09-28：2 条 spec 写了它）。表自带自检：新加一样转写输入，
     要在这两份名单里说清它怎么绑。"""
-    assert set(clip.SUBS_INPUT_KEYS) == set(_BOUND_DIRECTLY) | _BOUND_VIA_LINES, (
+    assert set(clip.SUBS_INPUT_KEYS) == set(_BOUND_DIRECTLY) | _BOUND_VIA_LINES | _BOUND_WITH_EVIDENCE, (
         "新加的转写输入要说清它怎么绑判定")
     out = _outdir(tmp_path)
     spec = dict(_SPEC)

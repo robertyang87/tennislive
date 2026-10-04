@@ -41,6 +41,15 @@ def test_没开回贴的片子不管():
                                  "segments": [{"score_inset": False}]}) is None
 
 
+def test_explicit_profile_must_match_verified_broadcast():
+    spec = {"topbar": {"line1": "2026 WTA1000 北京 第二轮"},
+            "segments": ON, "scoreboard_profile": "wta_left"}
+    assert b.scoreboard_profile(spec) == "wta"
+    for wrong in ("atp", "unknown", {}):
+        with pytest.raises(b.ReelError, match="scoreboard_profile"):
+            b.scoreboard_profile(dict(spec, scoreboard_profile=wrong))
+
+
 def test_全库开了回贴的全出血片子都落在标定过的转播上():
     """新写的 spec 撞上没标定的转播，这条和 `--dry-run` 一起红。"""
     seen = 0

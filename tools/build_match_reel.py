@@ -84,9 +84,6 @@ render 每一步都记时间，末尾按耗时排一张表（`report_timings()`�
 
 from __future__ import annotations
 
-import narrated_audio_mode
-import reviewed_effects_mode
-
 import argparse
 import json
 import math
@@ -103,7 +100,11 @@ from dataclasses import dataclass, replace
 from fractions import Fraction
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+import narrated_audio_mode  # noqa: E402
+import reviewed_effects_mode  # noqa: E402
 
 from tennislive import localca  # noqa: E402
 from tennislive.video import outro_page  # noqa: E402
@@ -3719,7 +3720,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
              "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
-             "music", "outro", "push", "rate", "scorebox", "source_scorebox", "segments",
+             "music", "outro", "push", "rate", "scorebox", "scoreboard_profile", "source_scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_fallbacks", "source_url",
              "original_audio_mode", "owner_approval", "audio_effects_review", "track",
@@ -9099,6 +9100,10 @@ def scoreboard_profile(spec: dict, segments: list | None = None) -> str | None:
         return "us-open" if us_open_match_line(line1) else "band-legacy"
     event = str((spec.get("_production") or {}).get("event") or "")
     if (profile := broadcast_profile(line1, event, spec_tour(spec))):
+        declared = spec.get("scoreboard_profile")
+        if declared is not None and (not isinstance(declared, str)
+                or {"wta_left": "wta"}.get(declared, declared) != profile):
+            raise ReelError(f"scoreboard_profile {declared!r} 与已标定转播 {profile!r} 不符")
         return profile
     raise ReelError(
         f"全出血的片子开了 score_inset，可顶栏「{line1}」认不出是哪一家转播——"
