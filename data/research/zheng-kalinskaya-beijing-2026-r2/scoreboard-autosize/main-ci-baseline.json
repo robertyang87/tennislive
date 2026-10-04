@@ -39,5 +39,16 @@
     "skipped": 194,
     "new_failures_vs_main": [],
     "diagnostic_regression_fixed": true
+  },
+  "edgefix_branch_ci": {
+    "run_id": 37171016341,
+    "head_sha": "bf30dc4d7a96f7ab9bba37e8213a6f65f5d17b6c",
+    "failed": 14,
+    "passed": 5482,
+    "skipped": 194,
+    "new_failure": "test_逐帧量板用的是render那一套判据_合成帧量得出板在哪",
+    "cause": "Synthetic WTA fixture asserted right edge296 while painting its body through300; old fixed56px allowance clipped4 pixels. Fixture now paints the same real296 edge it asserts; probe measurements/assertions retained. No production code changed after the passing full native render.",
+    "fixture_fix_validation": "17 passed,1 unrelated whole-library calibration test deselected in2.38s",
+    "remaining_inherited_failures": 13
   }
 }

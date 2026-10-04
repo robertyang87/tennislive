@@ -27,7 +27,8 @@ USO_BOX = pb.CALIBRATED["us-open"][0]
 def _frame(*, atp: bool = False, wta: bool = False) -> np.ndarray:
     """一帧 1920×1080：球场绿底，按标定框画一块合成的 ATP / WTA 板（颜色取两家判据
     docstring 里量出来的那几个值）。ATP 板右缘在带内 300（盘分蓝 220~259），
-    WTA 板有薄荷绿局分格（200~239），右缘被「最后一列薄荷绿 +56」钉在 296。"""
+    WTA 板有薄荷绿局分格（200~239），右缘实际画在 296；必须量图形边界，
+    不靠「最后一列薄荷绿 +56」裁断更宽的合成图形。"""
     f = np.zeros((1080, 1920, 3), np.uint8)
     f[:] = COURT
     if atp:
@@ -39,7 +40,7 @@ def _frame(*, atp: bool = False, wta: bool = False) -> np.ndarray:
         x0, y0, _x1, y1 = pb.CALIBRATED["wta"][0]
         f[y0:y1, x0:x0 + 200] = (55, 95, 66)
         f[y0:y1, x0 + 200:x0 + 240] = (21, 255, 171)
-        f[y0:y1, x0 + 240:x0 + 300] = (55, 95, 66)
+        f[y0:y1, x0 + 240:x0 + 296] = (55, 95, 66)
     return f
 
 
