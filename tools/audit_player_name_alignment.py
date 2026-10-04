@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from urllib.parse import urlsplit, urlunsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "src") not in sys.path:
@@ -17,10 +18,14 @@ if str(ROOT / "src") not in sys.path:
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from tennislive.zh import _normalize_name, player_zh  # noqa: E402
-from tennislive.zh.players import PLAYER_ZH  # noqa: E402
-from tools.update_player_names import (  # noqa: E402
-    OUTPUT, OVERRIDES, REVIEW_QUEUE, RankedName, build_review_queue,
+from tennislive.zh import _normalize_name, player_zh
+from tennislive.zh.players import PLAYER_ZH
+from tools.update_player_names import (
+    OUTPUT,
+    OVERRIDES,
+    REVIEW_QUEUE,
+    RankedName,
+    build_review_queue,
     build_snapshot,
 )
 
@@ -70,11 +75,70 @@ def audit_refresh(snapshot, rebuilt):
     return errors, warnings
 
 
+
+def _evidence_url(value):
+    """Match HTTP/HTTPS versions of one source without counting fragments twice."""
+    raw = str(value or "").strip()
+    parsed = urlsplit(raw)
+    if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+        return ""
+    return urlunsplit(("https", parsed.netloc.lower(), parsed.path, parsed.query, ""))
+
+
+def audit_review_records(ledger, lookup=player_zh):
+    """Check editorial claims against runtime and preserve rejected-source decisions.
+
+    This is an offline structural guard: a URL and excerpt alone cannot prove
+    that an article concerns the right person. That remains a source review.
+    Native-script excerpts may differ from the simplified display name.
+    """
+    errors = []
+    for row in ledger.get("entries", []):
+        name = row.get("name_en", "")
+        current = row.get("name_zh", "")
+        actual = lookup(name)
+        if current != actual:
+            errors.append(f"review ledger lookup mismatch: {name}: {current!r} -> {actual!r}")
+        changed = row.get("before_zh") != current
+        if row.get("changed") is not changed:
+            errors.append(f"review ledger changed flag mismatch: {name}")
+        rejected = set()
+        for record in row.get("rejected_evidence", []):
+            raw = record.get("source_url", record.get("url", "")) if isinstance(record, dict) else record
+            key = _evidence_url(raw)
+            if key:
+                rejected.add(key)
+        seen, usable = set(), False
+        for evidence in row.get("evidence", []):
+            key = _evidence_url(evidence.get("source_url"))
+            if key and key in seen:
+                errors.append(f"review ledger duplicate evidence URL: {name}: {key}")
+            if key:
+                seen.add(key)
+            if key and key in rejected:
+                errors.append(f"review ledger rejected evidence revived: {name}: {key}")
+            excerpt = str(evidence.get("evidence", "")).strip()
+            source_type = str(evidence.get("source_type", ""))
+            is_excerpt = source_type not in {
+                "search-snippet", "search-result", "search-summary", "identity-only",
+                "official-english-identity", "identity-api", "english-ranking",
+                "english-match-result", "official-match-api", "official-player-api",
+                "official-identity-api",
+            }
+            if key and excerpt and is_excerpt and key not in rejected:
+                usable = True
+        if row.get("status") in {"verified-media", "verified-native"} and not usable:
+            errors.append(f"review ledger verified without usable source evidence: {name}")
+    return errors
+
 def audit_repository():
     snapshot = json.loads(OUTPUT.read_text(encoding="utf-8"))
     overrides = json.loads(OVERRIDES.read_text(encoding="utf-8"))
     queue = json.loads(REVIEW_QUEUE.read_text(encoding="utf-8"))
     errors = audit_tables(snapshot, overrides, PLAYER_ZH, queue)
+    ledger_path = ROOT / "data" / "player_name_audit_2026-10-04.json"
+    if ledger_path.is_file():
+        errors.extend(audit_review_records(json.loads(ledger_path.read_text(encoding="utf-8"))))
     rows = {tour: [RankedName(tour, row["rank"], row["name_en"],
                               row["name_en"].split()[-1], row.get("country", ""))
                    for row in entries] for tour, entries in snapshot["tours"].items()}

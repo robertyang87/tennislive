@@ -3099,6 +3099,32 @@ def _near_misses(masked, run_re, index):
 # 这些不是新内容的合法显示名，未列出的文件仍须采用 player_zh()。
 # 哈恰诺夫旧央视用例：https://sports.cctv.com/2017/07/06/ARTI3sjUMZTbo2WB6EKs7ATW170706.shtml
 _LEGACY_CANONICAL_NAMES = {
+    ('wawrinka-wildcard', '迈克尔·郑'),
+    ('bu-jodar-us-open-2026-r1.xhs.txt', '米切尔森'),
+    ('fils-tokyo-qualifying', '米切尔森'),
+    ('fritz-jodar-final.xhs.txt', '米切尔森'),
+    ('fritz-michelsen.json', '米切尔森'),
+    ('fritz-michelsen.xhs.txt', '米切尔森'),
+    ('gauff-andreeva-us-open-2026-qf-interview.xhs.txt', '米切尔森'),
+    ('osaka-walkout-us-open-2026-r1.json', '扎哈罗娃'),
+    ('osaka-walkout-us-open-2026-r1.xhs.txt', '扎哈罗娃'),
+    ('pegula-waltert.json', '瓦尔特特'),
+    ('pegula-waltert.xhs.txt', '瓦尔特特'),
+    ('putintseva-bucsa-bjk-cup-2026.xhs.txt', '达尼利娜'),
+    ('tiafoe-michelsen-us-open-2026-qf-interview.json', '米切尔森'),
+    ('tiafoe-michelsen-us-open-2026-qf-interview.xhs.txt', '米切尔森'),
+    ('tiafoe-michelsen.json', '米切尔森'),
+    ('tiafoe-michelsen.xhs.txt', '米切尔森'),
+    ('wang-vandewinkel.xhs.txt', '扎哈罗娃'),
+    ('zheng-burel-us-open-2026-q2.json', '普里丹基纳'),
+    ('zheng-burel-us-open-2026-q2.xhs.txt', '普里丹基纳'),
+    ('zheng-from-low-to-us-open-comeback.json', '普里丹基纳'),
+    ('zheng-keys-us-open-2026-r3-presser.json', '布龙泽蒂'),
+    ('zheng-pridankina-us-open-2026-q3.json', '普里丹基纳'),
+    ('zheng-pridankina-us-open-2026-q3.xhs.txt', '普里丹基纳'),
+    ('zheng-us-open-outlook.json', '普里丹基纳'),
+    ('zheng-us-open-outlook.xhs.txt', '普里丹基纳'),
+
     ('bartunkova-charaeva.json', '恰拉耶娃'),
     ('bartunkova-charaeva.xhs.txt', '恰拉耶娃'),
     ('rybakina-charaeva-beijing-2026-r2.json', '恰拉耶娃'),
@@ -3154,6 +3180,9 @@ def test_旧译名兼容只作用于明确登记的历史文本():
     assert old not in _mask_legacy_canonical_names(where, old)
     assert _mask_legacy_canonical_names("new-story.json", old) == old
     assert _mask_legacy_canonical_names(where, "卡恰诺夫") == "卡恰诺夫"
+    for historical_file, historical_name in _LEGACY_CANONICAL_NAMES:
+        assert historical_name not in _mask_legacy_canonical_names(historical_file, historical_name)
+        assert _mask_legacy_canonical_names("new-story.json", historical_name) == historical_name
     # 兼容旧规范名不能吞掉真正手打错名，索引仍须报告它们。
     for wrong, canonical in (("奥斯塔片科", "奥斯塔彭科"), ("里巴金娜", "莱巴金娜")):
         masked = _mask_legacy_canonical_names(where, wrong)
@@ -3222,7 +3251,7 @@ def test_人名要以译名表为准():
 
     def scan(where: str, text: str) -> None:
         safe = _mask_legacy_canonical_names(where, text)
-        for word in _TYPO_SAFE + typo_safe_names:
+        for word in _TYPO_SAFE + typo_safe_names + ("普林斯顿",):
             safe = safe.replace(word, "　" * len(word))
         for wrong, right in _KNOWN_TYPOS.items():
             if wrong in safe:

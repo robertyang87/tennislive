@@ -2618,13 +2618,17 @@ def test_赛场之上的比分行要带双方国旗():
     import versus_poster as vp  # noqa: PLC0415
 
     # 用时走官方接口，单元测试不联网——打桩，别让判据依赖外网。
+    from tennislive.zh import player_zh  # noqa: PLC0415
+
     vp._fetch_match_duration = lambda source, where: "1:12"  # type: ignore[assignment]
+    opponent_zh = player_zh("Yulia Putintseva")
     base = {"eyebrow": "赛场之上", "hook": "钩子", "winner": "张帅",
             "result": "6-4 6-1",
             "scoreboard": {"court": "Centre Court",
                            "duration_source": {"url": "fixture"}},
             "matchup": [{"name": "张帅", "country": "CHN", "rank": 57},
-                        {"name": "普汀塞娃", "country": "KAZ", "rank": 81}]}
+                        {"name": opponent_zh,
+                         "name_en": "Yulia Putintseva", "country": "KAZ", "rank": 81}]}
     html = vp._solo_score_html(base)
 
     # 两面矩形国旗，而且真的是这两个国家那两张图（比数据 URI，不比数量）。
@@ -2636,10 +2640,10 @@ def test_赛场之上的比分行要带双方国旗():
     # **赢家在上**：`matchup` 是版式顺序，`winner` 才是赛果顺序。
     # wang-samsonova 那次海报印「萨姆索诺娃 6-2 6-2 王欣瑜」而标题算成
     # 「王欣瑜 vs 萨姆索诺娃」——比分夹在中间，等于声称输的那个人赢了。
-    assert text.index("张帅") < text.index("普汀塞娃")
-    h2 = re.sub(r"<[^>]+>", "", vp._solo_score_html({**base, "winner": "普汀塞娃"}))
-    assert h2.index("普汀塞娃") < h2.index("张帅"), "换了赢家，比分板的上下没跟着换"
-    # 中文名底下那一行英文名从受控译名表反查，不手打。
+    assert text.index("张帅") < text.index(opponent_zh)
+    h2 = re.sub(r"<[^>]+>", "", vp._solo_score_html({**base, "winner": opponent_zh}))
+    assert h2.index(opponent_zh) < h2.index("张帅"), "换了赢家，比分板的上下没跟着换"
+    # 英文行由明确身份或受控表解析，译名变化不影响国旗和赢家顺序判据。
     assert "S. ZHANG" in text and "Y. PUTINTSEVA" in text, f"英文名没渲出来：{text}"
     # 场地和用时印在板头上。
     assert "Centre Court" in text and "1:12" in text

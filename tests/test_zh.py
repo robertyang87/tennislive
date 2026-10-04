@@ -21,8 +21,8 @@ def test_player_three_token_espn_format():
 def test_player_abbreviated():
     assert player_zh("J. Sinner") == "辛纳"
     assert player_zh("Sinner J.") == "辛纳"
-    assert player_zh("Shuo Feng") == "冯硕"
-    assert player_zh("F. Shuo") == "冯硕"
+    assert player_zh("Shuo Feng") == "丰硕"
+    assert player_zh("F. Shuo") == "丰硕"
 
 
 def test_player_unknown_passthrough():
