@@ -101,6 +101,9 @@ def test_卡上那句话不写标点_换行表达停顿_太长当场红():
     assert "能再来吗？" in tc.build("那一盘六比一，能再来吗？"), "？留着——那是语气不是停顿"
     assert 'class="kicker">02<' in tc.build("x", kicker="02")
     assert 'class="kicker"' not in tc.build("x")
+    assert 'class="kicker">错失机会<' in tc.build("x", kicker="错失机会")
+    for column in tc.COLUMN_LABELS:
+        assert 'class="kicker"' not in tc.build("x", kicker=column)
     with pytest.raises(SystemExit, match="最多"):
         tc.build("一" * (tc.MAX_CHARS + 1))
     with pytest.raises(SystemExit, match="空"):
@@ -150,8 +153,9 @@ def test_萨巴伦卡语义两行在真实浏览器保持完整_没有二次折�
     with sync_playwright() as pw:
         browser = _launch_browser(pw)
         page = browser.new_page(viewport={"width": size[0], "height": size[1]})
-        page.set_content(tc.build("\n".join(lines), kicker="赛场之上", size=size))
+        page.set_content(tc.build("\n".join(lines), kicker="错失机会", size=size))
         page.evaluate("document.fonts.ready")
+        assert page.locator(".kicker").inner_text() == "错失机会"
         geometry = page.eval_on_selector(".thesis", """el => {
             const ranges = [...el.childNodes].filter(n => n.nodeType === Node.TEXT_NODE)
                 .map(n => { const r = document.createRange(); r.selectNodeContents(n);

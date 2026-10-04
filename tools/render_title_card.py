@@ -38,6 +38,7 @@ from tennislive.video.explainer import _data_uri  # noqa: E402
 DEFAULT_SIZE = (1080, 1440)
 # 总字数上限；排版保留作者的语义分行，不能靠浏览器把长句随意折开。
 MAX_CHARS = 18
+COLUMN_LABELS = frozenset({"赛场之上", "赛后开麦", "网球有故事"})
 
 
 def semantic_lines(text: str) -> list[str]:
@@ -94,8 +95,11 @@ def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
     if problem := length_problem(text):
         raise SystemExit(problem)
     w, h = size
-    kicker_html = (f'<div class="kicker">{html.escape(str(kicker).strip())}</div>'
-                   if str(kicker or "").strip() else "")
+    # 上框是当前内容的小标题；旧 spec 的栏目名不能反复充当章节标题。
+    kicker = str(kicker or "").strip()
+    if kicker in COLUMN_LABELS:
+        kicker = ""
+    kicker_html = f'<div class="kicker">{html.escape(kicker)}</div>' if kicker else ""
     # 屏幕上不写标点（全站规矩，见 CLAUDE.md「屏幕上不写标点，而且是全站的」）：
     # 逗号/句号/顿号/分号换成换行——停顿由换行表达；？！留着，那是语气不是停顿。
     lines = semantic_lines(text)
