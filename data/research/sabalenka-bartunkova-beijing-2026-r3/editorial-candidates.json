@@ -1,0 +1,244 @@
+{
+  "slug": "sabalenka-exit-s3mqDeV5E_w",
+  "status": "SOURCE_WALL_REVIEWED_AUDIO_PENDING",
+  "copy_title": "10.4赛场之上|萨巴5次机会落空",
+  "hook": [
+    "首盘5次机会全落空",
+    "萨巴伦卡两盘出局"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "萨巴伦卡首盘曾得到五次反扑机会，为何始终没能把比赛拉回均势？",
+    "thesis": "首盘第六局的五次破发机会全部落空，萨巴伦卡没能追回开局丢掉的发球局；第二盘再次先被破发，整盘没有获得破发点，最终两盘出局。",
+    "beats": [
+      "开局丢发球局，先陷入追赶",
+      "首盘第六局五次反扑未兑现，首盘4比6",
+      "第二盘再次落后，末局再丢发球局，3比6结束"
+    ],
+    "human_context": {
+      "angle": "上次对阵曾逆转，这一次没能追回首盘的落后",
+      "facts": [
+        "WTA赛报：萨巴伦卡2026年最近一次输掉首盘后逆转获胜正是在柏林对巴通科娃；这场之后，她已连续六次在先失一盘后输球。"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4586336/bartunkova-stuns-sabalenka-in-beijing-third-round"
+      ]
+    }
+  },
+  "narration_candidates": [
+    {
+      "beat": "落点",
+      "text": "首盘五次机会，萨巴伦卡一次也没把比分扳回来。中网第三轮，她以四比六、三比六出局。"
+    },
+    {
+      "beat": "坐标与来路",
+      "text": "北京时间十月四号上午，中网女单第三轮。此前在柏林，萨巴伦卡对巴通科娃曾经先丢一盘，再逆转赢球。这一次，她又要从落后追起。"
+    },
+    {
+      "beat": "开局",
+      "text": "开场第一个发球局就被拿走，萨巴伦卡先落在了后面。真正的反扑机会，出现在首盘第六局。"
+    },
+    {
+      "beat": "关键转折",
+      "text": "那一局，她拿到了五个破发点。只要兑现一个，就能把此前丢掉的发球局追回来。但五次机会，全都没能兑现。对手保住这一局，四比二领先。"
+    },
+    {
+      "beat": "首盘收束",
+      "text": "下一局萨巴伦卡守住发球局，没有让差距继续扩大。但对手随后两个发球局，都没让她拿到一分。四比六，首盘没能追回来。"
+    },
+    {
+      "beat": "次盘",
+      "text": "第二盘，萨巴伦卡又先丢掉一个发球局，一比三落后。更难的是，这一盘她没有拿到任何破发点。反扑的门，比首盘更窄了。"
+    },
+    {
+      "beat": "终局前",
+      "text": "三比五，轮到她发球。保住这一局，比赛才能继续。"
+    },
+    {
+      "beat": "情绪与期待",
+      "text": "这一次，北京的旅程停在第三轮。失利需要复盘，但故事还没有结束。期待萨巴伦卡带着调整回来，下次把关键机会握在手里。"
+    }
+  ],
+  "required_source_coverage": [
+    {
+      "event": "开局破发",
+      "must_have": "发球前比分、完整发球及回合、0-1结果",
+      "status": "PENDING"
+    },
+    {
+      "event": "首盘第六局",
+      "must_have": "五个破发点对应画面，至少关键救分完整；4-2结果",
+      "status": "PENDING"
+    },
+    {
+      "event": "首盘终局",
+      "must_have": "最后一分从发球至结果、6-4和反应",
+      "status": "PENDING"
+    },
+    {
+      "event": "次盘3-1",
+      "must_have": "破发回合从发球至结果",
+      "status": "PENDING"
+    },
+    {
+      "event": "比赛终局",
+      "must_have": "3-5背景、赛点完整发球回合、结果、握手/反应",
+      "status": "PENDING"
+    }
+  ],
+  "quotes": [],
+  "notes": [
+    "全部旁白动作句需源墙核实后补充；未编造源时间码、原声或人物心理。",
+    "不必在钩子说破发；旁白里解释机会意味着追平此前丢掉的发球局。",
+    "如果集锦未包含五个破发点，应明确素材缺口并补找，不能宣称已经完整覆盖。"
+  ],
+  "source_wall_review": {
+    "source_duration": 308.8,
+    "source_identity": "N.BARTUNKOVA[26] / A.SABALENKA[2], Beijing Round3 6-4 6-3",
+    "method": "inspected all contact_00..05 and score_00..07 at 2s intervals; precise cut boundaries need original media frame check",
+    "critical_gaps": [
+      "Opening break absent; source begins first-set0-2 15-0",
+      "First-set game6 five saved break points absent; 55..90 contains0-0 rally and40-40 point leading to SabalenkaAd, then jump to4-2",
+      "Second-set break to3-1 absent; source jumps1-1 to3-1",
+      "First-set7 third saved break point absent; only40-15 and40-30 rallies shown"
+    ]
+  },
+  "selection_table": [
+    {
+      "id": "cold_open",
+      "start": 258.8,
+      "end": 278.8,
+      "content": "Second-set5-3 40-30 match point; serve/rally to win; Bartunkova celebration; handshake begins274",
+      "narration": null,
+      "completeness": "2-second wall shows pre-serve posture around260.5, result264.5; precise original media check needed"
+    },
+    {
+      "id": "sab_hold3_2",
+      "start": 43.4,
+      "end": 54.8,
+      "content": "First-set3-1 15-40 Sabalenka game point, serve+rally to hold3-2; Sab closeup",
+      "quote_candidate": {
+        "start": 51.6,
+        "end": 54.6,
+        "en": "Big put away from Sabalenka there.",
+        "zh": "萨巴伦卡这一下终结得很有力。",
+        "verification": "ASR only; name normalized; audio pending"
+      }
+    },
+    {
+      "id": "long_rally_game6",
+      "start": 55.3,
+      "end": 73.5,
+      "content": "First-set3-2 start; long rally; Sab overhead winner;0-15",
+      "narration": "首盘第六局，她开始向对手的发球局施压。这次网前终结，让她拿下了这一分。",
+      "quote_candidate": {
+        "start": 69.52,
+        "end": 72.1,
+        "en": "Put that overhead away.",
+        "zh": "把这记高压球打死了。",
+        "verification": "ASR only; audio pending"
+      }
+    },
+    {
+      "id": "game6_deuce_to_ad",
+      "start": 74.0,
+      "end": 91.1,
+      "content": "First-set3-2 40-40, Bartunkova serves; Sab winner toAd; Sab face90.5; next edit jumps4-2",
+      "narration": "局分二比三，她把比分逼到平分，又拿到破发点。整局一共有五次机会，但最后一个也没有拿下。",
+      "warning": "Last sentence factual recap based official report; cannot label included point as one of five failures because she WINS shown point to earn chance."
+    },
+    {
+      "id": "game7_save1",
+      "start": 105.1,
+      "end": 121.0,
+      "content": "First-set4-2 Bartunkova40-15, Sab serve and rally saving first break chance, Sab reaction120.5",
+      "quote_candidate": {
+        "start": 117.2,
+        "end": 120.0,
+        "en": "Saves one.",
+        "zh": "救回一个。",
+        "verification": "ASR only; audio pending"
+      }
+    },
+    {
+      "id": "game7_save2",
+      "start": 121.1,
+      "end": 139.2,
+      "content": "First-set4-2 Bartunkova40-30, Sab serve and extended rally saves second chance; next frame jumps4-3",
+      "quote_candidate": {
+        "start": 137.2,
+        "end": 139.1,
+        "en": "Saves the second break point.",
+        "zh": "第二个破发点也救回来了。",
+        "verification": "ASR says plural points; audio pending"
+      }
+    },
+    {
+      "id": "sab_returns",
+      "start": 154.0,
+      "end": 181.0,
+      "content": "First-set5-3 Sab attacking returns; 168 winner and176 return winner",
+      "quote_candidate": {
+        "start": 176.4,
+        "end": 180.5,
+        "en": "What a return. Well, it’s so early, Sabalenka didn’t even react.",
+        "zh": "这接发太漂亮了。／抢得太早，萨巴伦卡都没来得及反应。",
+        "verification": "Needs audio verification speaker subject; ASR says Sab despite picture Sab is RETURNER so probable attribution error; do not use second sentence unchecked"
+      }
+    },
+    {
+      "id": "set_point",
+      "start": 193.5,
+      "end": 213.6,
+      "content": "First-set5-4 40-0 set point; Bartunkova serve~196, result~198, ends first set6-4; opponent walkaway",
+      "quote_candidate": {
+        "start": 197.84,
+        "end": 202.5,
+        "en": "A great serve from Bartunkova. Served well throughout the opening set.",
+        "zh": "巴通科娃这记发球非常漂亮。／整个首盘她的发球都很好。",
+        "verification": "ASR only; name normalized; audio pending"
+      }
+    },
+    {
+      "id": "set2_long",
+      "start": 230.0,
+      "end": 243.6,
+      "content": "Second-set1-1 Sab40-15 serve long rally ends~240 with point lost; next jumps3-1",
+      "narration": "第二盘一比一，萨巴伦卡还在努力守住自己的发球局。随后对手先完成破发，三比一领先。",
+      "warning": "Do not describe this specific shown point as break point; actual break absent."
+    },
+    {
+      "id": "set2_save",
+      "start": 244.0,
+      "end": 259.0,
+      "content": "Second-set3-1 Sab advantage serve rally, Sab point won to hold3-2; Sab walkaway258",
+      "quote_candidate": {
+        "start": 254.56,
+        "end": 258.0,
+        "en": "Oh, nice pickup from Sabalenka there.",
+        "zh": "哦，萨巴伦卡这一下救得漂亮。",
+        "verification": "ASR only; audio pending"
+      }
+    },
+    {
+      "id": "ending_original",
+      "start": 264.16,
+      "end": 278.0,
+      "content": "Bartunkova celebrates then handshake",
+      "quote_candidate": {
+        "start": 264.16,
+        "end": 278.0,
+        "en": "And Nikola Bartunkova gets it done. The number two seed, the number two player in the world is out. Nikola Bartunkova, the biggest win of her career.",
+        "zh": "尼古拉·巴通科娃做到了。／二号种子、世界第二，出局了。／这是巴通科娃职业生涯最重大的胜利。",
+        "verification": "ASR only; names normalized; audio pending"
+      }
+    },
+    {
+      "id": "sab_farewell",
+      "start": 273.5,
+      "end": 279.7,
+      "content": "handshake then Sab raises hand to umpire, turns away; must check source details",
+      "narration": "这次没能把比分追回来，北京的旅程停在第三轮。期待萨巴伦卡调整之后，再把关键机会握在手里。"
+    }
+  ]
+}
