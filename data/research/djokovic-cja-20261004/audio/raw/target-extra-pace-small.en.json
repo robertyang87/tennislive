@@ -1,0 +1,72 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 222,
+  "range_to": 230,
+  "created_at": "2026-10-04T14:39:36.756360+00:00",
+  "elapsed_seconds": 2.68,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 226.14,
+      "end": 228.06,
+      "text": " Injecting the extra pace up the line.",
+      "avg_logprob": -0.7000000476837158,
+      "no_speech_prob": 0.11631885915994644,
+      "words": [
+        {
+          "start": 226.14,
+          "end": 226.72,
+          "word": " Injecting",
+          "probability": 0.7496758997440338
+        },
+        {
+          "start": 226.72,
+          "end": 226.86,
+          "word": " the",
+          "probability": 0.9896593689918518
+        },
+        {
+          "start": 226.86,
+          "end": 227.16,
+          "word": " extra",
+          "probability": 0.9928750991821289
+        },
+        {
+          "start": 227.16,
+          "end": 227.44,
+          "word": " pace",
+          "probability": 0.9905368685722351
+        },
+        {
+          "start": 227.44,
+          "end": 227.64,
+          "word": " up",
+          "probability": 0.8256271481513977
+        },
+        {
+          "start": 227.64,
+          "end": 227.76,
+          "word": " the",
+          "probability": 0.9960222840309143
+        },
+        {
+          "start": 227.76,
+          "end": 228.06,
+          "word": " line.",
+          "probability": 0.8684472441673279
+        }
+      ]
+    }
+  ]
+}

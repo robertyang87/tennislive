@@ -1,0 +1,142 @@
+{
+  "source_video": {
+    "url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+    "channel": "Tennis TV",
+    "title": "Alexander Zverev vs Novak Djokovic BLOCKBUSTER Clash 🍿 | Beijing 2026 Match Highlights",
+    "date": "2026-10-04",
+    "evidence": "youtube-jina.txt"
+  },
+  "match": {
+    "event": "China Open",
+    "city": "Beijing",
+    "category": "ATP 500",
+    "round": "quarter-final",
+    "date_beijing": "2026-10-04",
+    "natural_time_beijing": "晚上",
+    "surface": "hard",
+    "court": "Capital Group Diamond",
+    "court_status": "verified from official 2026-10-04 OOP, first column fifth match, Zverev[1] vs Djokovic[6]",
+    "winner": "Novak Djokovic",
+    "loser": "Alexander Zverev",
+    "winner_result": "4-6 6-4 6-4",
+    "home_away_order": [
+      "Alexander Zverev",
+      "Novak Djokovic"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        4
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "duration": "2:35",
+    "duration_minutes": 155,
+    "duration_crosscheck": "ATP report two-hour,35-minute; Flashscore set times59+41+55=155",
+    "scheduled_timestamp_fs": "2026-10-04T11:10:00Z",
+    "scheduled_timestamp_warning": "schedule time, not confirmed actual first serve; do not compute actual end by adding duration",
+    "court_zh": "钻石球场",
+    "court_source_url": "https://www.protennislive.com/posting/2026/747/op.pdf",
+    "official_oop_not_before_beijing": "19:00",
+    "official_oop_not_before_warning": "not before, not actual first serve"
+  },
+  "players": {
+    "Alexander Zverev": {
+      "country": "GER",
+      "nationality": "Germany",
+      "rank": 2,
+      "rank_date": "2026-09-28",
+      "seed": 1
+    },
+    "Novak Djokovic": {
+      "country": "SRB",
+      "nationality": "Serbia",
+      "rank": 11,
+      "rank_date": "2026-09-28",
+      "seed": 6,
+      "age": 39
+    }
+  },
+  "h2h": {
+    "official_atp_before": [
+      9,
+      5
+    ],
+    "official_atp_after": [
+      10,
+      5
+    ],
+    "order": [
+      "Novak Djokovic",
+      "Alexander Zverev"
+    ],
+    "official_match_number": 15,
+    "flashscore_all_after": [
+      11,
+      7
+    ],
+    "flashscore_exclusions": [
+      "Adria Tour (Serbia): Djokovic win",
+      "World Tennis League: Zverev win",
+      "Boodles Challenge: Zverev win"
+    ],
+    "warning": "Do not use draft 11-7 or 18th meeting; it counts three exhibitions"
+  },
+  "record": {
+    "beijing_record_before": [
+      31,
+      0
+    ],
+    "beijing_record_after": [
+      32,
+      0
+    ],
+    "official_scope": "best start in men singles at a tour-level event in the Open Era",
+    "comparison": "Nadal won first31 Roland Garros matches",
+    "titles_already_won": 6,
+    "seeking_title_number": 7,
+    "warning": "32-0 is China Open/Beijing career match record, not current season streak; seventh title is not won yet"
+  },
+  "next_round": {
+    "date": "2026-10-05",
+    "round": "semi-final",
+    "opponent": "Daniil Medvedev",
+    "h2h_djokovic_medvedev_before": [
+      10,
+      5
+    ],
+    "opponent_last_match": "defeated Francisco Cerundolo 7-6(4) 6-3",
+    "opponent_streak": 7
+  },
+  "stats_status": {
+    "flashscore": {
+      "metrics_match": 17,
+      "metrics_by_set": [
+        16,
+        16,
+        16
+      ],
+      "integer_count_checks": "passed: per-set sums match whole-match for aces/DF/first+second points/BP/game/point totals",
+      "identity_crosscheck": "ATP match result and duration match feed; player order from raw H2H feed"
+    },
+    "official_full_stats": "not obtained: direct ATP access denied and Jina stats/results hit Cloudflare",
+    "tnns": "rejected inconsistency, see stats.ready.json and tnns-run.log",
+    "mcp": "no Beijing Djokovic match in current index"
+  },
+  "official_source_url": "https://www.atptour.com/en/news/zverev-djokovic-beijing-2026-sunday-qf",
+  "ranking_source_url": "https://www.tennisexplorer.com/ranking/atp-men/",
+  "result_cross_source_url": "https://www.tennisexplorer.com/beijing/2026/atp-men/",
+  "tnns_run_url": "https://github.com/robertyang87/tennislive/actions/runs/37209909119"
+}

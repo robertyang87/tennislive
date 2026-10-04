@@ -1,0 +1,204 @@
+{
+  "status": "visual_review_complete_audio_handled_separately",
+  "source": {
+    "path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+    "sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+    "official_channel": "Tennis TV",
+    "width": 1920,
+    "height": 1080,
+    "source_fps": 50,
+    "probe_fps": 25,
+    "duration": 319.181497
+  },
+  "method": "亲自审看6张contact与8张score全墙；精确源5fps动作顺序辅助，发球首帧与片尾边界按50fps逐帧取图复核；未声称真人播放视频或审听音频。points结果交叉df_mh_1/ATP赛报，原声独立代理核验。",
+  "windows": [
+    {
+      "id": "opening_break",
+      "start": 0.0,
+      "end": 13.86,
+      "set_no": 1,
+      "score_before": "0-0 德约发球 兹维列夫占先",
+      "score_after": "兹维列夫破发 1-0",
+      "visual_review": "转播首帧已在德约抛球动作中、触球前；保留完整发球触球到失分、比分翻为1-0及兹维列夫反应",
+      "narrative_role": "慢热开局的唯一失守；此前2次双误来自官方赛报事实，不以此回合冒充双误画面",
+      "essential": true,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    },
+    {
+      "id": "first_set_long_deuce",
+      "start": 43.14,
+      "end": 75.28,
+      "set_no": 1,
+      "score_before": "兹维列夫2-1发球 40-40",
+      "score_after": "兹维列夫赢本分 获得占先",
+      "visual_review": "43.14第一宽景帧已在兹维列夫抛球动作中、触球前；长相持到约72秒死球；73.14–75.28是兹维列夫真实反应",
+      "narrative_role": "可选：以长回合体现首盘胶着；不能说已在这一分保发到3-1",
+      "essential": false,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    },
+    {
+      "id": "first_set_breakpoint_two",
+      "start": 75.28,
+      "end": 105.1,
+      "set_no": 1,
+      "score_before": "兹维列夫5-4发球 30-40",
+      "score_after": "兹维列夫救下第2个破发点 回到40-40",
+      "visual_review": "75.28第一宽景帧为发球抛球、触球前；同一回合贯穿约98秒后死球，101.90–105.10为兹维列夫特写；105.10开始另一分",
+      "narrative_role": "德约此前拿到15-40两个连续机会，第1个机会源未收；此第2个完整长回合必须保留，不能拿它说第1BP",
+      "essential": true,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    },
+    {
+      "id": "first_set_setpoint",
+      "start": 105.1,
+      "end": 113.04,
+      "set_no": 1,
+      "score_before": "兹维列夫5-4发球 占先",
+      "score_after": "兹维列夫ACE结束首盘6-4",
+      "visual_review": "105.10第一宽景帧为兹维列夫抛球、触球前；约106秒发球结束，108.46观众/包厢、111.58兹维列夫特写；113.04进入次盘",
+      "narrative_role": "首盘结果落定；盘点发球及完整反应",
+      "essential": true,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    },
+    {
+      "id": "second_set_opening",
+      "start": 113.04,
+      "end": 137.14,
+      "set_no": 2,
+      "score_before": "首盘兹维列夫6-4 次盘0-0 德约发球0-15",
+      "score_after": "德约赢本分 15-15",
+      "visual_review": "从源最早发球宽景开始；132.50球员近网，134.46–137.14德约低头后抬头微笑；137.14开始另一局",
+      "narrative_role": "可选：从失意到表情放松的真实反应；不能推断他此刻心理或已找回全部节奏",
+      "essential": false,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    },
+    {
+      "id": "second_set_4all_ordinary_point",
+      "start": 152.56,
+      "end": 172.48,
+      "set_no": 2,
+      "score_before": "次盘4-4 德约发球15-30",
+      "score_after": "德约赢本分至30-30",
+      "visual_review": "此分完整但之后关键破发点已被官方源省略",
+      "narrative_role": "可选：完整本分用于解释前压，但真正出现/救下30-40破发点已被官方源省略；不能说这分就是救BP或使他面对BP",
+      "essential": false,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    },
+    {
+      "id": "second_set_deciding_break",
+      "start": 172.48,
+      "end": 194.84,
+      "set_no": 2,
+      "score_before": "次盘德约5-4 兹维列夫发球15-40",
+      "score_after": "德约破发 6-4扳盘",
+      "visual_review": "172.48第一宽景帧发球动作已开始、触球前；相持到约187.8死球；189.76包厢，191.76–194.84德约举臂握拳/抬臂并转身；194.84进入决胜盘",
+      "narrative_role": "此前4-4先救BP保发，随后拿到2个连续盘点，第1个盘点直接扳盘；完整画面/原声Brilliant等",
+      "essential": true,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    },
+    {
+      "id": "decider_save_breakpoint",
+      "start": 194.84,
+      "end": 216.12,
+      "set_no": 3,
+      "score_before": "决胜盘1-1 德约发球 兹维列夫占先",
+      "score_after": "德约救BP 回到平分 随后该局保发至2-1",
+      "visual_review": "194.84第一宽景帧为德约远端发球抛球、触球前；205.6兹维列夫随正手上网，208秒向左大跨截击，211秒向右扑救；约212秒死球；214.50德约特写；216.12下一局",
+      "narrative_role": "决胜盘前段险情；不是德约破发，不能说这一分就保发",
+      "essential": true,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    },
+    {
+      "id": "decider_4all_consolidation",
+      "start": 216.12,
+      "end": 229.2,
+      "set_no": 3,
+      "score_before": "决胜盘4-4 德约发球15-0",
+      "score_after": "德约赢本分30-0 此后该局保发5-4",
+      "visual_review": "216.12第一宽景为德约发球动作开始、触球前；227.90–229.20德约握拳特写",
+      "narrative_role": "可选：托住自己发球局，衔接5-4接发机会；不能把本分直接说成取得5-4",
+      "essential": false,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    },
+    {
+      "id": "match_point_one_saved",
+      "start": 229.2,
+      "end": 272.6,
+      "set_no": 3,
+      "score_before": "决胜盘德约5-4 兹维列夫发球 德约占先 第1赛点",
+      "score_after": "兹维列夫救第1赛点 回到平分",
+      "visual_review": "229.20第一宽景帧为兹维列夫抛球、触球前；连续底线相持至约267秒死球；269.24–272.60德约躬身接发特写，272.5板已翻40-40",
+      "narrative_role": "最深谷底单独给完整长回合：兹维列夫把比赛留下；不要编造德约心态崩溃/看台心理",
+      "essential": true,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    },
+    {
+      "id": "match_point_two_and_aftermath",
+      "start": 272.6,
+      "end": 309.12,
+      "set_no": 3,
+      "score_before": "决胜盘德约5-4 兹维列夫发球 德约占先 第2赛点",
+      "score_after": "德约6-4获胜 4-6 6-4 6-4",
+      "visual_review": "272.60第一宽景帧为兹维列夫抛球、触球前；约279.4死球，280.42–282.70包厢，282.70–285.58德约特写，285.58–290.14看台，290.14–298握手/轻拍，298–309.12张臂致意+末尾握拳；309.14片尾品牌首帧",
+      "narrative_role": "正文必须兑现完整最后一分、获胜确认、握手和张臂庆祝；冷开场可取298.1–305.4但正文必须覆盖",
+      "essential": true,
+      "point_end_ok": true,
+      "cx": 0.5,
+      "track": false
+    }
+  ],
+  "gaps": [
+    {
+      "id": "first_set_saved_setpoint",
+      "score": "德约3-5发球，救1盘点并保发4-5",
+      "coverage": "官方319.18s集锦从2-1直接跳5-4，整局未收录",
+      "screen_copy": [
+        "首盘先救1个盘点",
+        "随后错过2次机会"
+      ],
+      "explanation": "官方集锦未收录救盘点与第1个破发点的完整过程。第2个破发点的完整长回合已保留75.28–105.10。"
+    },
+    {
+      "id": "first_set_first_breakpoint",
+      "score": "兹维列夫5-4发球15-40，第1个BP被救至30-40",
+      "coverage": "官方首次出现本局为30-40，第1BP缺失",
+      "merge_with": "first_set_saved_setpoint"
+    },
+    {
+      "id": "second_set_saved_breakpoint",
+      "score": "次盘4-4 德约发球30-40救BP后保发5-4",
+      "coverage": "官方152.56–172.48保留德约15-30赢至30-30这一分，随后直接跳5-4盘点，真正出现和救下BP回合缺失",
+      "screen_copy": [
+        "4比4先救破发点",
+        "5比4再抢下这一盘"
+      ],
+      "explanation": "官方集锦未收录4比4救破发点的完整过程。随后5比4的接发盘点完整已保留172.48–194.84。"
+    }
+  ],
+  "must_remove_draft_claims": [
+    "第二盘唯一一次破发机会（实际5次全场）",
+    "首盘打出9个连续保发局（跨盘累计不是首盘）",
+    "ATP第18次交手/11比7（混入3场表演赛，官方ATP15场10比5）",
+    "凭一发得分率增长直接推出耗掉对手发球局的因果"
+  ]
+}

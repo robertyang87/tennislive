@@ -1,0 +1,54 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 37.5,
+  "range_to": 43.5,
+  "created_at": "2026-10-04T14:40:35.028751+00:00",
+  "elapsed_seconds": 4.63,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 38.9,
+      "end": 42.22,
+      "text": " Gets him! Oh, Djokovic.",
+      "avg_logprob": -0.8039460380872091,
+      "no_speech_prob": 0.22410814464092255,
+      "words": [
+        {
+          "start": 38.9,
+          "end": 39.98,
+          "word": " Gets",
+          "probability": 0.19583897292613983
+        },
+        {
+          "start": 39.98,
+          "end": 40.52,
+          "word": " him!",
+          "probability": 0.6658116579055786
+        },
+        {
+          "start": 41.42,
+          "end": 41.74,
+          "word": " Oh,",
+          "probability": 0.8940690159797668
+        },
+        {
+          "start": 41.92,
+          "end": 42.22,
+          "word": " Djokovic.",
+          "probability": 0.9749307235081991
+        }
+      ]
+    }
+  ]
+}

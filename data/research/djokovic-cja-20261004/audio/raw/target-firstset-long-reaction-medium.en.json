@@ -1,0 +1,54 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 69,
+  "range_to": 77,
+  "created_at": "2026-10-04T14:40:39.157855+00:00",
+  "elapsed_seconds": 4.13,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 71.26,
+      "end": 74.64,
+      "text": " Oh, Alex Alvis-Verif!",
+      "avg_logprob": -0.9126199881235758,
+      "no_speech_prob": 0.2657596468925476,
+      "words": [
+        {
+          "start": 71.26,
+          "end": 72.66,
+          "word": " Oh,",
+          "probability": 0.38920077681541443
+        },
+        {
+          "start": 73.86,
+          "end": 73.86,
+          "word": " Alex",
+          "probability": 0.9526888132095337
+        },
+        {
+          "start": 73.86,
+          "end": 74.18,
+          "word": " Alvis",
+          "probability": 0.4795478656888008
+        },
+        {
+          "start": 74.18,
+          "end": 74.64,
+          "word": "-Verif!",
+          "probability": 0.4090556999047597
+        }
+      ]
+    }
+  ]
+}

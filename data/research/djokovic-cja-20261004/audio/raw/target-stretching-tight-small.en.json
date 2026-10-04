@@ -1,0 +1,72 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 212,
+  "range_to": 217.5,
+  "created_at": "2026-10-04T14:41:42.035573+00:00",
+  "elapsed_seconds": 1.64,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 212.54,
+      "end": 214.56,
+      "text": " Oh, he's stretching there, he's far off.",
+      "avg_logprob": -0.7319729725519816,
+      "no_speech_prob": 0.213856041431427,
+      "words": [
+        {
+          "start": 212.54,
+          "end": 213.06,
+          "word": " Oh,",
+          "probability": 0.5370427370071411
+        },
+        {
+          "start": 213.14,
+          "end": 213.32,
+          "word": " he's",
+          "probability": 0.6226146519184113
+        },
+        {
+          "start": 213.32,
+          "end": 213.68,
+          "word": " stretching",
+          "probability": 0.9932992458343506
+        },
+        {
+          "start": 213.68,
+          "end": 214.0,
+          "word": " there,",
+          "probability": 0.5929772853851318
+        },
+        {
+          "start": 214.12,
+          "end": 214.12,
+          "word": " he's",
+          "probability": 0.672889307141304
+        },
+        {
+          "start": 214.12,
+          "end": 214.3,
+          "word": " far",
+          "probability": 0.3902045488357544
+        },
+        {
+          "start": 214.3,
+          "end": 214.56,
+          "word": " off.",
+          "probability": 0.7217360734939575
+        }
+      ]
+    }
+  ]
+}

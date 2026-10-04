@@ -1,0 +1,9 @@
+# Explicit full-canvas caption restoration
+
+A full-canvas statistics card restored its undecorated input after the ordinary subtitle/topbar/footer filter chain; this also erased its narration subtitles. `full_canvas_filtergraph` now accepts the same `subtitles_ass` supplied at final composition. Only a materialized full-canvas segment with explicit `subtitle_bottom` receives subtitles burned on the clean input before restoration. Its own design remains intact; global topbar, watermark and footer are not restored. Other cards and the optional-argument default retain the previous composition.
+
+Actual FFmpeg regression tests cover mixed ordinary/default-full-canvas/opt-in-full-canvas/ordinary windows and single full-canvas branches. The legacy optional-argument behavior demonstrably erases real white libass text; the new opt-in retains it. Both top and middle decorative blocks stay absent on both full-canvas card types. The .8s/1.2s half-open boundaries are checked on decoded frames. The tests use FFV1 and decoded pixels, not graph-string assertions.
+
+Validation: 69 passed across `test_full_canvas_subtitles.py`, `test_stat_card.py`, `test_segment_audio_tail.py`, `test_foreground_audio_gate.py`; `git diff --check` passed. The full-canvas fixture remains backward compatible.
+
+This film's formally rendered seven-row statistics card, actual cached TTS word marks and native ASS pipeline also produce an 11.79s before/after sample in `/workspace/djokovic-cja-research/stat-caption-proof/`. Its paragraph is 10.584s, explicitly anchored at subtitle_bottom=96. Exact source/image and output hashes, cue timings and scope are recorded in `fullcanvas-caption-proof.json`. Final full-film QC remains a separate check. A future nine-row card requires its own layout review; this fix does not choose a subtitle position automatically.

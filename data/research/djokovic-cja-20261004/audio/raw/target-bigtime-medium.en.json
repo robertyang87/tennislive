@@ -1,0 +1,90 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 165,
+  "range_to": 173,
+  "created_at": "2026-10-04T14:40:57.893135+00:00",
+  "elapsed_seconds": 4.63,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 167.98,
+      "end": 171.48,
+      "text": " put it away, comes up with a big time play.",
+      "avg_logprob": -0.687210988998413,
+      "no_speech_prob": 0.585857093334198,
+      "words": [
+        {
+          "start": 167.98,
+          "end": 168.42,
+          "word": " put",
+          "probability": 0.023032551631331444
+        },
+        {
+          "start": 168.42,
+          "end": 168.58,
+          "word": " it",
+          "probability": 0.8946772813796997
+        },
+        {
+          "start": 168.58,
+          "end": 168.98,
+          "word": " away,",
+          "probability": 0.9973697662353516
+        },
+        {
+          "start": 169.02,
+          "end": 170.28,
+          "word": " comes",
+          "probability": 0.9436674118041992
+        },
+        {
+          "start": 170.28,
+          "end": 170.44,
+          "word": " up",
+          "probability": 0.9422427415847778
+        },
+        {
+          "start": 170.44,
+          "end": 170.56,
+          "word": " with",
+          "probability": 0.9841885566711426
+        },
+        {
+          "start": 170.56,
+          "end": 170.64,
+          "word": " a",
+          "probability": 0.9729492664337158
+        },
+        {
+          "start": 170.64,
+          "end": 170.78,
+          "word": " big",
+          "probability": 0.9964213371276855
+        },
+        {
+          "start": 170.78,
+          "end": 171.06,
+          "word": " time",
+          "probability": 0.7357598543167114
+        },
+        {
+          "start": 171.06,
+          "end": 171.48,
+          "word": " play.",
+          "probability": 0.9758155345916748
+        }
+      ]
+    }
+  ]
+}

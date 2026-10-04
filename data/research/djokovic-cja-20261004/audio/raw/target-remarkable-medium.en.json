@@ -1,0 +1,84 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 124,
+  "range_to": 137,
+  "created_at": "2026-10-04T14:40:49.306664+00:00",
+  "elapsed_seconds": 4.09,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 127.34,
+      "end": 135.54,
+      "text": " Oh no way! He's got it! That is remarkable!",
+      "avg_logprob": -0.45065551064908504,
+      "no_speech_prob": 0.16368865966796875,
+      "words": [
+        {
+          "start": 127.34,
+          "end": 128.64,
+          "word": " Oh",
+          "probability": 0.37966299057006836
+        },
+        {
+          "start": 128.64,
+          "end": 129.94,
+          "word": " no",
+          "probability": 0.5294029116630554
+        },
+        {
+          "start": 129.94,
+          "end": 130.24,
+          "word": " way!",
+          "probability": 0.9905441999435425
+        },
+        {
+          "start": 131.08,
+          "end": 131.36,
+          "word": " He's",
+          "probability": 0.9684756994247437
+        },
+        {
+          "start": 131.36,
+          "end": 131.52,
+          "word": " got",
+          "probability": 0.979064404964447
+        },
+        {
+          "start": 131.52,
+          "end": 131.9,
+          "word": " it!",
+          "probability": 0.9975121021270752
+        },
+        {
+          "start": 133.32,
+          "end": 134.14,
+          "word": " That",
+          "probability": 0.9761258363723755
+        },
+        {
+          "start": 134.14,
+          "end": 134.6,
+          "word": " is",
+          "probability": 0.9916595816612244
+        },
+        {
+          "start": 134.6,
+          "end": 135.54,
+          "word": " remarkable!",
+          "probability": 0.945727527141571
+        }
+      ]
+    }
+  ]
+}

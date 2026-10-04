@@ -2880,6 +2880,9 @@ class Segment:
     subtitle_bottom: int | None = None
     # Measured original board retained in an uncropped source frame; never an inset.
     source_scorebox: tuple[int, int, int, int] | None = None
+    # Keep the dissolve's video continuation, but zero-fill only its audio tail.
+    # Explicit opt-in: the reviewed source audio ends at the nominal segment end.
+    audio_tail: str = ""
 
     @property
     def length(self) -> float:
@@ -3023,6 +3026,13 @@ def _seg_mute(s: dict, index: int) -> bool:
                     f"不是 {raw!r}——字符串在这儿两种读法都说得通，所以一律报错")
 
 
+def _seg_audio_tail(s: dict, index: int) -> str:
+    raw = s.get("audio_tail", "")
+    if raw not in ("", "silence"):
+        raise ReelError(f"第 {index + 1} 段 audio_tail 只认 silence；不处理尾料就省略此字段")
+    return raw
+
+
 def _seg_speed(s: dict, index: int) -> float:
     """`speed` 只认慢放（0.4 ≤ speed < 1），默认 1。
 
@@ -3048,8 +3058,8 @@ def _seg_speed(s: dict, index: int) -> float:
     return v
 
 
-def _seg_audio_chain(seg: "Segment") -> str:
-    """这一段的音频滤镜：慢放走 atempo，mute 段乘地板音量，两样可叠加。"""
+def _seg_audio_chain(seg: "Segment", tail: float = 0.0) -> str:
+    """慢放、音床及显式尾料处理；silence 仅在名义段尾后补零，不静音正文。"""
     parts = []
     if seg.speed != 1:
         parts.append(_atempo(seg.speed))
@@ -3057,6 +3067,15 @@ def _seg_audio_chain(seg: "Segment") -> str:
         parts.append(f"volume={MUTE_FLOOR}")
     if seg.bed:
         parts.append(f"volume={BED_TIERS[seg.bed]}")
+    if seg.audio_tail == "silence":
+        rate = int(AUDIO_RATE)
+        body_samples = round(seg.length * rate)
+        total_samples = round((seg.length + tail) * rate)
+        # Trim after atempo and resampling: these are output-side sample counts.
+        # Padding cannot read any source speech beyond the reviewed nominal end.
+        parts.extend([f"aresample={rate}", f"atrim=end_sample={body_samples}",
+                      "asetpts=N/SR/TB", f"apad=whole_len={total_samples}",
+                      f"atrim=end_sample={total_samples}"])
     return ",".join(parts)
 
 
@@ -3085,10 +3104,10 @@ def _mix_ducks(spec: dict, segments: list["Segment"]) -> bool:
 
 
 def _seg_audio_needs_filter(seg: "Segment") -> bool:
-    """这一段的音轨要不要走滤镜（慢放 / mute / 音床）——cut_segment 那两处
+    """这一段的音轨要不要走滤镜（慢放 / mute / 音床 / 尾料）——cut_segment 那两处
     `-map` 判据的单一出处。原来写成 `seg.speed != 1 or seg.mute` 两遍，加音床
     时漏改一处的样子是：滤镜链算好了、`-map 0:a:0` 把它绕过去，**不报错**。"""
-    return seg.speed != 1 or seg.mute or bool(seg.bed)
+    return seg.speed != 1 or seg.mute or bool(seg.bed) or bool(seg.audio_tail)
 
 
 def _atempo(speed: float) -> str:
@@ -3421,7 +3440,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             # 整屏证据段：只认 image/seconds/narration/voice（外加 `_` 注解）。
             # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
             stray = sorted(set(s) & {"start", "end", "source", "track",
-                                     "quote", "inset", "speed", "mute", "cx",
+                                     "quote", "inset", "speed", "mute", "audio_tail", "cx",
                                      "crop_zoom", "fit", "crosses_cut", "point_end_ok",
                                      "score_inset", "score_inset_windows", "scorebox"})
             if stray:
@@ -3449,6 +3468,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        _seg_speed(s, i),
                        _seg_mute(s, i),
                        bed=_seg_bed(s, i),
+                       audio_tail=_seg_audio_tail(s, i),
                        score_inset=_seg_score_inset(s, i),
                        score_inset_auto=s.get("score_inset") is True,
                        score_inset_windows=_seg_score_windows(s, i),
@@ -3731,7 +3751,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
-    "segment": ("bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
+    "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
@@ -4450,6 +4470,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     `tail` 是留给**下一个接缝**的溶解料：多切这么几秒源片的自然延续，
     拼接那一步的 `xfade` 正好把它吃掉（见 `dissolve_filtergraph`）。
     所以这一段在成片里占的仍然是 `seg.length`，不是 `seg.length + tail`。
+    显式 `audio_tail="silence"` 只保留音轨正文，再按样本数给溶解尾料补零；
+    视频仍取源片自然延续，其他段的音轨行为不变。
 
     `-ss` 放在 `-i` **前面**是关键帧级的快速定位，落点可能偏几百毫秒；放在
     后面才是精确定位。高光片段一秒都不能偏，所以用精确定位（慢一点无所谓）。
@@ -4766,7 +4788,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             # ⚠️ `-t` 是**输出**时长，而 `seg.length` 是成片时长——慢放段这一行
             # 一个字不用改：0.5 倍速的 4 秒窗口，`length` 是 8，源片自然只被
             # 消耗 4+tail×speed 秒。溶解底料（tail）也是输出侧的秒数。
-            "-t", f"{seg.length + tail:.3f}",
+            "-t", (f"{seg.length + tail:.9f}" if seg.audio_tail == "silence"
+                   else f"{seg.length + tail:.3f}"),
             # 输出必须打标签并显式 map：`-map 0:v:0` 取的是**原始流**，
             # 会把整个滤镜图绕过去——裁切、缩放、跟踪全不生效，成片直接是 16:9。
             # 慢放段的音轨同理：裸 map 的原声还是原速，**画面慢了声音没慢**，
@@ -4775,9 +4798,12 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             _overlay_chain(
                 (chain + "[base]") if labeled
                 else f"[0:v]{chain}[base]", ins)
-            + (f";[0:a:0]{_seg_audio_chain(seg)}[aout]"
+            + (f";[0:a:0]{_seg_audio_chain(seg, tail)}[aout]"
                if has_audio and _seg_audio_needs_filter(seg) else ""),
-            "-shortest", "-map", "[vout]",
+            # The explicit finite sample-trim already bounds this audio stream;
+            # -shortest can drop the last ALAC packet in short seeked parts.
+            *([] if seg.audio_tail == "silence" else ["-shortest"]),
+            "-map", "[vout]",
             "-map", ("[aout]" if has_audio and _seg_audio_needs_filter(seg)
                      else "0:a:0" if has_audio else f"{null_idx}:a:0"),
             # 分段是**中间产物**：最后整片还要以 crf 18 重编一次，这里编到
@@ -4786,7 +4812,12 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             # 成片那一步的参数没有动。
             "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p",
-            "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
+            # ALAC is a lossless MP4 intermediate for the explicit zero tail:
+            # AAC's MDCT otherwise rings nonzero samples across that boundary.
+            # Final film encoding is unchanged; all ordinary parts remain AAC.
+            "-c:a", "alac" if seg.audio_tail == "silence" else "aac",
+            *([] if seg.audio_tail == "silence" else ["-b:a", "160k"]),
+            "-ar", AUDIO_RATE,
             str(dest))
     return dest
 
@@ -10116,7 +10147,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                        plain_filtergraph(ass, cover_secs, match_end, wm_input,
                                          scrim_input=scrim_input, scrim_y=scrim_y),
                        "-map", "[out]"])
-        video_args[1] = full_canvas_filtergraph(video_args[1], segments, cover_secs)
+        video_args[1] = full_canvas_filtergraph(video_args[1], segments, cover_secs,
+                                              subtitles_ass=ass)
         # **两支都要出声。** 「这个栏目不画」和「渲角标那一步没走到」在成片上
         # 长得一模一样，而后者是个真 bug——只在画的时候打印，等于把不画那一支
         # 变成静默的。
@@ -11066,27 +11098,46 @@ def band_foot_strip(dest: Path) -> Path:
     return dest
 
 
-def full_canvas_filtergraph(graph: str, segments: list[Segment], cover_secs: float) -> str:
+def full_canvas_filtergraph(graph: str, segments: list[Segment], cover_secs: float,
+                          subtitles_ass: Path | None = None) -> str:
     """Use the undecorated full-frame card during its exact half-open interval.
 
     The original canvas already contains the complete card design. Restore it after
     subtitles/topbar/footer so no normal match overlay obscures the data page.
-    Audio is mixed independently and remains intact.
+    An explicit segment subtitle_bottom restores the same ASS subtitles on the
+    clean card, while continuing to exclude topbar/footer/watermark decorations.
+    Audio is mixed independently and remains intact. Defaults keep clean cards.
     """
     cursor = cover_secs
     windows = []
+    captioned_windows = []
     for seg in segments:
         end = cursor + seg.length
         if seg.full_canvas:
-            windows.append(f"gte(t,{cursor:.6f})*lt(t,{end:.6f})")
+            window = f"gte(t,{cursor:.6f})*lt(t,{end:.6f})"
+            if seg.subtitle_bottom is not None and subtitles_ass is not None:
+                captioned_windows.append(window)
+            else:
+                windows.append(window)
         cursor = end
-    if not windows:
+    if not windows and not captioned_windows:
         return graph
     if not graph.endswith("[out]"):
         raise ReelError("Full-canvas composition requires the final [out] label")
-    return (graph[:-5] + "[decorated];[0:v]null[clean_canvas];"
-            "[decorated][clean_canvas]overlay=0:0:enable='"
-            + "+".join(windows) + "'[out]")
+    if not captioned_windows:
+        return (graph[:-5] + "[decorated];[0:v]null[clean_canvas];"
+                "[decorated][clean_canvas]overlay=0:0:enable='"
+                + "+".join(windows) + "'[out]")
+    fontsdir = _escape(str(Path(__file__).resolve().parents[1] / "assets" / "fonts"))
+    clean = ("[0:v]split=2[clean_canvas][caption_canvas];" if windows
+             else "[0:v]null[caption_canvas];")
+    restored = ("[decorated][clean_canvas]overlay=0:0:enable='"
+                + "+".join(windows) + "'[clean_restored];" if windows else "")
+    base = "[clean_restored]" if windows else "[decorated]"
+    return (graph[:-5] + "[decorated];" + clean
+            + f"[caption_canvas]subtitles={_escape(subtitles_ass)}:fontsdir={fontsdir}[captioned_canvas];"
+            + restored + base + "[captioned_canvas]overlay=0:0:enable='"
+            + "+".join(captioned_windows) + "'[out]")
 
 
 #: 竖版短片字幕的描边和投影（像素）。解说片那头是 3/0（`explainer._ass_header`

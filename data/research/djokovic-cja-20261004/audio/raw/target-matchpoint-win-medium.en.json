@@ -1,0 +1,66 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 279,
+  "range_to": 287,
+  "created_at": "2026-10-04T14:41:19.134840+00:00",
+  "elapsed_seconds": 4.12,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 280.46,
+      "end": 285.34,
+      "text": " He's done it again. Novak Djokovic.",
+      "avg_logprob": -0.48204357624053956,
+      "no_speech_prob": 0.34708932042121887,
+      "words": [
+        {
+          "start": 280.46,
+          "end": 281.72,
+          "word": " He's",
+          "probability": 0.7793754041194916
+        },
+        {
+          "start": 281.72,
+          "end": 281.82,
+          "word": " done",
+          "probability": 0.9989601373672485
+        },
+        {
+          "start": 281.82,
+          "end": 281.96,
+          "word": " it",
+          "probability": 0.9986211061477661
+        },
+        {
+          "start": 281.96,
+          "end": 282.5,
+          "word": " again.",
+          "probability": 0.995890200138092
+        },
+        {
+          "start": 284.02,
+          "end": 284.78,
+          "word": " Novak",
+          "probability": 0.9872805774211884
+        },
+        {
+          "start": 284.78,
+          "end": 285.34,
+          "word": " Djokovic.",
+          "probability": 0.9858100215593973
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,451 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI original_audio: actual source Whisper base/small auto-language, small.en/medium.en noVAD full/targeted plus large-v3-turbo third-model crosscheck; no audio perception available",
+  "reviewed_at": "2026-10-04T15:29:27.333753+00:00",
+  "status": "complete",
+  "reviewed_from": 269.0,
+  "reviewed_to": 272.6,
+  "actual_listening_performed": false,
+  "review_scope": "Entire retained nominal window. Complete means actual-source ASR crosscheck scope; human listening was unavailable and is not claimed.",
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/full-base-auto-novad.json",
+      "sha256": "b64d61d16dfb118bf124d0bc5b4e12880f0b61c9adfbad2ced86aab05c3c72e3",
+      "model": "base"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/full-medium-en-novad.json",
+      "sha256": "688ddd5904dea92c349d6ced26acc5a79858884a3326e8a2080a6799dfb7bcbe",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/full-small-auto-vad.json",
+      "sha256": "38282df6104a38c7caf8a4e97b2ab28a273594f492fa74c7c7859f541cce4c0a",
+      "model": "small"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/full-small-en-novad.json",
+      "sha256": "7f65db246193d575ef25846a3bf49a047d99a75f9c08bb9fd4fe84c2afc06494",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-beautiful-medium.en.json",
+      "sha256": "44ee39e86c5c8a3beb345fd608e16323ed9670c35a1a7cfa18da9b5d0438af6c",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-beautiful-small.en.json",
+      "sha256": "141fa195326985634aae5173e757e2db6c6d958af19d2e87717e9f9a5fc0d291",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-beautiful-tight-base.json",
+      "sha256": "e9a9d39ddf593a51a7997e057151f9e41e1af205b1da208cbd55b69955dce8e0",
+      "model": "base"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-beautiful-tight-medium.en.json",
+      "sha256": "8f52c53712b1b95b1168f52ce94f4d86ea4725a647ae7862638277908a37a93c",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-beautiful-tight-small.en.json",
+      "sha256": "e83f7fb5e925215fcf93408b075432b3ab4d50378637a26d6d39ff4bc7b1e3c8",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-bigtime-medium.en.json",
+      "sha256": "8f416e5fe60ccda9599ac24dbd429cee0412fd246b0033245203f3790b5f293c",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-bigtime-small.en.json",
+      "sha256": "8d60be89883f094e60a6ce6c269e693656c6e308c235fddf581a7db899d7bb8b",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-closing-reflection-medium.en.json",
+      "sha256": "dd5b26d38207fff35e5acd10c65b390166ad5f979a1ad199dbf653d3fefcf4e1",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-closing-reflection-small.en.json",
+      "sha256": "58e76ddb826f5ec2a42f14d104592e444dff2f02d7c7d8f0b635b4176a3822d4",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-ending-silence-medium.en.json",
+      "sha256": "5d2a7e293f9cc8005643195b20d45928b76d0fa00b09a39f3b1798b7ffbd254d",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-ending-silence-small.en.json",
+      "sha256": "64f99b95bcb479f17427501e49ff52366ba1420825adb94311ff94ce808514cc",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-exquisite-medium.en.json",
+      "sha256": "866d59a71f73ad83153681c2ce3892ea05ebd140482639d41d178e0e952f1b8a",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-exquisite-small.en.json",
+      "sha256": "93819464f4faaa0e9ebfed628ee2d51be2185045b2cdc40a59b2e387d9d8794c",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-extra-pace-medium.en.json",
+      "sha256": "f1f0850d1d3537f9924374f94c20f00f9a228147a9082d1e50cbc21ba5adecdb",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-extra-pace-small.en.json",
+      "sha256": "1847b457ce0b051cba5f86bcc37bec611ab18b55ffae76aa8e6b44faad41b082",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-false-thankyou-medium.en.json",
+      "sha256": "7ab2fcdf9b33b0e9133930337ab0a57f78e55993042ed1b634ffd32310244c39",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-false-thankyou-small.en.json",
+      "sha256": "c5083b8943119dc0276c39cec042f41fa01ff6010abb7fb5a0fffdf9ce4da28d",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-isolated-265-base.json",
+      "sha256": "6e18cd981e68714949ffc86f31070b4170c5fa6097c9ccbce9b48179f70d36bb",
+      "model": "base"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-isolated-265-medium.en.json",
+      "sha256": "29fdef696600e3ffdce5aec0fea03b00b5d7f3491d29002db86c83f3dcccf939",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-isolated-265-small.en.json",
+      "sha256": "995e6f207f4a4bb05743887ced9dbec281e1f9e0e6812e5d42b93bfb997e909d",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-isolated-266-base.json",
+      "sha256": "5d70a45a02d84347870b98f95e827c7bc884092a92b17298131262a1f2c9de18",
+      "model": "base"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-isolated-266-medium.en.json",
+      "sha256": "6c6d7d5531c3b43a190d68b8602b45965d7ff313d5a31bd2c49a3e7a92b48e2a",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-isolated-266-small.en.json",
+      "sha256": "6045feb99ce586e2b37fb4ef879a2fe8923c2e7a01c5c78ce35bf65882a2e9cc",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-isolated-267-base.json",
+      "sha256": "45a5e5d7a513e47237ae8d3f0ec3876d8b05f6d1662b953b0abdbcaa4e39163c",
+      "model": "base"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-isolated-267-medium.en.json",
+      "sha256": "e64637cd9868516037b249667e957fde9f5834203b539209b0defbd29c88d838",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-isolated-267-small.en.json",
+      "sha256": "369f5aec9a2d958520fd0d2d53f4aaaf8d8ff29543f7e1ff6df2d5859ebf0ca0",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-out-medium.en.json",
+      "sha256": "926fe1265c503dfc0f6651a5451fb8e448cc49d8e5516585412b4e9cfe5dd1e1",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstmp-out-small.en.json",
+      "sha256": "4bdf9a0805109128cd7296e37ed52e016813865480c8a6c1c4bd481c56e7bf68",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstset-bp-and-set-medium.en.json",
+      "sha256": "21f914f7d0f697d705526bb52acce367ef3587bbcf033bf9d01e2c35aa51f118",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstset-bp-and-set-small.en.json",
+      "sha256": "4659d8436f355192c4705454299b0c28376aa26e5b1ad4c323d05462b164ed0e",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstset-long-reaction-medium.en.json",
+      "sha256": "4b10fa3f096dcb2ac5af9e457667ca0679c26de5371186b711d8704e0300e613",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-firstset-long-reaction-small.en.json",
+      "sha256": "c8993dc8d560fd2fdf182c2a9d2504e53b19547908c43c1dd6f04272a2e9d02f",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-get-it-medium.en.json",
+      "sha256": "7ba1e8a7c4a5249aa7ea28cfbf68a6035abaa3348392643f73cf33264e11035c",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-get-it-small.en.json",
+      "sha256": "e4c38ca0ddf0c1dae268eb6d50ee9befa6528b0019852bf9ecf9e99360710bcd",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-matchpoint-win-medium.en.json",
+      "sha256": "feb494de872e541f80fc405c1826e6d3f2dadb80949c3ff1ee927d4eb598bc23",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-matchpoint-win-small.en.json",
+      "sha256": "2cbe113d9701e4cf0dc9db9b4f706f5c1a066fd6aa5526495851dfbe31fa9595",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-isolated-5-base.json",
+      "sha256": "289ee083207ba9ae62d197bcaaabbdb9ca21e8dc337487ce77192f5f0598e4dc",
+      "model": "base"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-isolated-5-medium.en.json",
+      "sha256": "af4c8919dc38560ce6a94051091306570cfa2d32d68f6474c66d6e9d1026a5a2",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-isolated-5-small.en.json",
+      "sha256": "3de2d948873766d06996949b547ccd4276b7fab2b527e4b596f05df3c8e38573",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-isolated-6-base.json",
+      "sha256": "bc94f75baf070147e4d5282146af815739f3dfbbac792bd4a853a67d3b3c2372",
+      "model": "base"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-isolated-6-medium.en.json",
+      "sha256": "a203f5d6ff1c6019534677edbb420e5fc6c477a3fd65fde22e4888a5760ebc92",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-isolated-6-small.en.json",
+      "sha256": "234d2d53c8d5c334d3451b4264ec1e90a2fedab1a693ffaaa1429b7de84da8df",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-isolated-7-base.json",
+      "sha256": "81abefcb296bc29de6015e042fd40db60d9410ffbb271b33e8529b1a3f9d0631",
+      "model": "base"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-isolated-7-medium.en.json",
+      "sha256": "f89109aedd1783af9820cde072b765ab51740be5bc13966772cf66d564cf779c",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-isolated-7-small.en.json",
+      "sha256": "60bf417d4a15750a79c3113b4cb12a8b44468c8c8d4de84dd823d0c1c0f9d28a",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-out-medium.en.json",
+      "sha256": "a80598ff5b975b624a2226bf239e083cb93bcd40d3fd605780dd997d24be9e82",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-opening-out-small.en.json",
+      "sha256": "134621b167d87e3462d2c158e5194660bc29676578fb6adc170eb64fd4ccf64c",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-remarkable-medium.en.json",
+      "sha256": "2d4a7a08d8733bc3678a3b692743f1ec35a7a9a2ccc861970465f21f6e567fc8",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-remarkable-small.en.json",
+      "sha256": "9a79c3aeea70a8132ed6b7ad8141d711b4daa8d677a856ee44a814f9b14d273b",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-second-set-brilliance-medium.en.json",
+      "sha256": "78020350341338db2eb390cc605d227264a5f8ae80653da66ab645be9917a917",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-second-set-brilliance-small.en.json",
+      "sha256": "cea2e140f65fdbd44e47529f264421eba410f8958a6873d092f5da0112382e8b",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-secondset-oneword-base.json",
+      "sha256": "1da442e118126d56bd48aa9b503663793737f65437aa2aaee9909034b004dc0f",
+      "model": "base"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-secondset-oneword-medium.en.json",
+      "sha256": "cee2f1becbd447189cd0a1041bd7093df7e36c266c3a797ce543e72d6cea4017",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-secondset-oneword-small.en.json",
+      "sha256": "0b54120f80bc3eb7d18ead588759a4710a97dc32ef938ce897239fd9b310e6f5",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-stretching-medium.en.json",
+      "sha256": "7aaf3c152a9442e45ee8be601003a894b6c179cae66f08c2541dcfc4b2a9def7",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-stretching-small.en.json",
+      "sha256": "08653d427a8e48b3cfbc78fa5171b8e99542e52ea98fffbffc3e0dec780ff6da",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-stretching-tight-base.json",
+      "sha256": "7a93419ac7893cf15b3c5c345a826ef4471a77cbdf2923c50dd8fb03ac221f44",
+      "model": "base"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-stretching-tight-medium.en.json",
+      "sha256": "e4d019d6b46852f6b9c9fffed0c55a5b712a2aaa737a14f97262a1298462b747",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-stretching-tight-small.en.json",
+      "sha256": "8b3daa43171f51e66cfbb559d81c5e6d02f3b52273b93c02d237b9f103077b8f",
+      "model": "small.en"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-crowd-250-large-v3-turbo.json",
+      "sha256": "3abf5c52211bb14079c7fd758f965c4a936ebff2234464b91a7e4eed3d603c0f",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-crowd-261-large-v3-turbo.json",
+      "sha256": "f8803bf2fc08d345ccb95c031f1655d99ed1a2e8a90fbf712e33a36b36d4d864",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-crowd-oh-large-v3-turbo.json",
+      "sha256": "382bf38501af6277ad221dd64ea71305cf4d90200aaa7f52af61f1b6c3758217",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-ending-tight-large-v3-turbo.json",
+      "sha256": "3928d92e819d02de026678e9a4aefbcd1ea41da5c0d8176778766c55b9615f18",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-final-large-v3-turbo.json",
+      "sha256": "41305191740f007e253d27cafcce78b0faf10264b89da189a41e351341c8e7d5",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-firstmp-alt-large-v3-turbo.json",
+      "sha256": "acabc718c640757d29ca2743348d7e4cbee74dd670be32c95f55f44ce6a4a563",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-firstmp-breathing-large-v3-turbo.json",
+      "sha256": "305c1ff0ac3e16f65a300c7e8811010dbc9e96a711f255f0bc9050ed938a7832",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-firstmp-context-large-v3-turbo.json",
+      "sha256": "c295ece25bcdd494b203c2be1a9884ce0b3aad12caadd1b79ab8a6c04dcddb80",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-firstmp-rally-large-v3-turbo.json",
+      "sha256": "1d794acbb0ec6d73e946f9c17ae8e68c46be582f0c49de8a8be286367b36f0ec",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-firstmp-tight-large-v3-turbo.json",
+      "sha256": "927272ed0f3eb34c69ccaac9e5f8d52105ff9f25808522655ccdba2aaa12f60b",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-firstset-long-large-v3-turbo.json",
+      "sha256": "4c776c68c78567f642fd9f7e3850304560765a5065b4b40d3fd3f22fff98ab00",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-gets-tightly-large-v3-turbo.json",
+      "sha256": "83a4c32c4eb5b04aa7d8a55833991e0f00c5818153cd7ecc92cd4a2c4a34b0ae",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-getshim-large-v3-turbo.json",
+      "sha256": "e6178c61b5fc6bdec025d05fef38ac8f9750cf76ac5710bbbedc7d00c04c2294",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-opening-context-large-v3-turbo.json",
+      "sha256": "9019f8f9ac60ae5a2c964ada403cabc2d076a41ad940b90919902ca3995e056d",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-opening-tight-large-v3-turbo.json",
+      "sha256": "7cbd93a4317b68b9015936b9b989fbc7464e9c4efbf26cf7d265d301ca44a804",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-placement-large-v3-turbo.json",
+      "sha256": "35fddfa37fa48f7e088e48990561a729e60628dd4e399cfdfa0e06724ecb43c4",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-placement-tight-large-v3-turbo.json",
+      "sha256": "d4643f5d2bcfd1f94d07cf1d4a521397fbceaed139191ffe05d359aa0051ced4",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-stretching-large-v3-turbo.json",
+      "sha256": "c12c630024f8ba0639b76963b5d92fde90eba28f0be9e1699eacb269b73218ee",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/research/djokovic-cja-20261004/audio/raw/target-turbo-stretching-tight-large-v3-turbo.json",
+      "sha256": "9d9d4f72717e70ad552e793d9930424348e9222ffa5a6338b1f8ebfbf8fde4c0",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 269.0,
+      "end": 271.86,
+      "en": "I don't think anybody breathing.",
+      "zh": "我觉得大家都屏住了呼吸。"
+    }
+  ],
+  "crosscheck_notes": [
+    "YouTube source-caption retrieval failed with429; no captions.txt used.",
+    "Small/base auto-language probabilities0.9913/0.9423 confirmed English.",
+    "False Thank you in248–256 is absent in both targeted English passes; do not print it.",
+    "313.05–319.18 is digitally silent according to probe; inconsistent You/Thank you hallucinations excluded, final video ends309.1.",
+    "All selected windows must separately enumerate every foreground utterance; this candidate list does not certify arbitrary TTS windows or final spec.",
+    "Two compact Chinese translations were independently accepted for subtitle width: opening wastes very little time→很快抓住了机会; firstsetverdict the set goes to our top seed→头号种子兹维列夫拿下首盘. Same verified context, no added unspoken tactical claim.",
+    "All foreground English enumerated for the entire nominal retained window. Transcription based on actual source audio, not narration/news text; no human listening attestation.",
+    "Packet source SHA binds unchanged exact official source; final audio_review plan hash binds the selected windows, quotes, narration and tail policy separately."
+  ],
+  "native_dissolve_tail": {
+    "video_from": 272.6,
+    "video_to": 272.78000000000003,
+    "audio_policy": "source",
+    "foreground_continuation": []
+  }
+}

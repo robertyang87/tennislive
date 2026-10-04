@@ -25,7 +25,7 @@ def _sha(path: Path) -> str:
 
 
 def plan_hash(spec: dict) -> str:
-    keys=('source','start','end','speed','narration','quote','mute','bed','image','stat_card','title_card')
+    keys=('source','start','end','speed','narration','quote','mute','bed','audio_tail','image','stat_card','title_card')
     segments=[]
     for seg in spec.get('segments') or []:
         row={k:seg[k] for k in keys if k in seg}
