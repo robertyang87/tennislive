@@ -1,0 +1,246 @@
+{
+  "status": "pass",
+  "segments_count": 20,
+  "spec_path": "/workspace/scratch/242e5c66fed3/muchova_prepare/prepared/muchova-boulter.working.json",
+  "spec_sha256": "468224de81c3566c5a0fbf7751f1dbd04d53094a58cad9026b828f3674d2561f",
+  "source_sha256": "c0d6fcc41bab67e076881811aaeb1d2093289e1bde06daf4985cef95527f30a9",
+  "augmented_probe": "/workspace/scratch/242e5c66fed3/muchova_prepare/evidence/board_preflight/probe.augmented.json",
+  "augmented_probe_sha256": "9ffc549fa1e637086a7de0f2fc4ed4ba20900beea00cffd50f3b99d559a0995a",
+  "original_probe_sha256": "26cbb7a9e61c74dc559e90a31b9ae92cfbe514a56627df5efbb0c13993bafa8f",
+  "original_probe_unchanged": true,
+  "all_original_nonboard_fields_preserved": true,
+  "original_board_preserved_verbatim": true,
+  "coverage": [
+    24.8,
+    276.8
+  ],
+  "fps": 25,
+  "scanned_frames": 6300,
+  "native_board_findings": {
+    "hard": [],
+    "soft": []
+  },
+  "selected_segments": [
+    {
+      "segment": 1,
+      "start": 264.2,
+      "end_with_tail": 276.78000000000003,
+      "frames": 315,
+      "present": 37,
+      "unresolved": 0
+    },
+    {
+      "segment": 4,
+      "start": 24.8,
+      "end_with_tail": 45.78,
+      "frames": 525,
+      "present": 525,
+      "unresolved": 0
+    },
+    {
+      "segment": 6,
+      "start": 61.8,
+      "end_with_tail": 65.58000000000001,
+      "frames": 95,
+      "present": 92,
+      "unresolved": 0
+    },
+    {
+      "segment": 7,
+      "start": 65.4,
+      "end_with_tail": 89.58000000000001,
+      "frames": 605,
+      "present": 605,
+      "unresolved": 0
+    },
+    {
+      "segment": 8,
+      "start": 89.4,
+      "end_with_tail": 92.5,
+      "frames": 77,
+      "present": 77,
+      "unresolved": 0
+    },
+    {
+      "segment": 10,
+      "start": 166.0,
+      "end_with_tail": 174.98000000000002,
+      "frames": 225,
+      "present": 225,
+      "unresolved": 0
+    },
+    {
+      "segment": 11,
+      "start": 174.8,
+      "end_with_tail": 179.68,
+      "frames": 122,
+      "present": 122,
+      "unresolved": 0
+    },
+    {
+      "segment": 13,
+      "start": 184.64,
+      "end_with_tail": 228.18,
+      "frames": 1089,
+      "present": 967,
+      "unresolved": 0
+    },
+    {
+      "segment": 15,
+      "start": 228.0,
+      "end_with_tail": 237.18,
+      "frames": 230,
+      "present": 230,
+      "unresolved": 0
+    },
+    {
+      "segment": 16,
+      "start": 237.0,
+      "end_with_tail": 241.28,
+      "frames": 107,
+      "present": 107,
+      "unresolved": 0
+    },
+    {
+      "segment": 17,
+      "start": 246.96,
+      "end_with_tail": 256.98,
+      "frames": 251,
+      "present": 251,
+      "unresolved": 0
+    },
+    {
+      "segment": 18,
+      "start": 256.8,
+      "end_with_tail": 261.78000000000003,
+      "frames": 125,
+      "present": 125,
+      "unresolved": 0
+    },
+    {
+      "segment": 19,
+      "start": 261.6,
+      "end_with_tail": 276.78000000000003,
+      "frames": 380,
+      "present": 102,
+      "unresolved": 0
+    }
+  ],
+  "audio_only_source_continuous_seams": [
+    {
+      "segments": [
+        6,
+        7
+      ],
+      "source_join": 65.4,
+      "visual_parameter_differences": {},
+      "frame_index": 1635,
+      "frame_aligned_at25fps": true,
+      "source_overlap": [
+        65.4,
+        65.58
+      ],
+      "omitted_source_seconds": 0,
+      "native_filtergraph": "[0:v][1:v]xfade=transition=fade:duration=0.18:offset=3.600[vout];[0:a]apad=whole_len=181440,atrim=end_sample=181440[ap0];[1:a]apad=whole_len=1152000,atrim=end_sample=1152000[ap1];[ap0][ap1]acrossfade=d=0.18:c1=tri:c2=tri[aout]",
+      "result": "continuous_source_mapping"
+    },
+    {
+      "segments": [
+        7,
+        8
+      ],
+      "source_join": 89.4,
+      "visual_parameter_differences": {},
+      "frame_index": 2235,
+      "frame_aligned_at25fps": true,
+      "source_overlap": [
+        89.4,
+        89.58
+      ],
+      "omitted_source_seconds": 0,
+      "native_filtergraph": "[0:v][1:v]xfade=transition=fade:duration=0.18:offset=24.000[vout];[0:a]apad=whole_len=1160640,atrim=end_sample=1160640[ap0];[1:a]apad=whole_len=140160,atrim=end_sample=140160[ap1];[ap0][ap1]acrossfade=d=0.18:c1=tri:c2=tri[aout]",
+      "result": "continuous_source_mapping"
+    },
+    {
+      "segments": [
+        10,
+        11
+      ],
+      "source_join": 174.8,
+      "visual_parameter_differences": {},
+      "frame_index": 4370,
+      "frame_aligned_at25fps": true,
+      "source_overlap": [
+        174.8,
+        174.98
+      ],
+      "omitted_source_seconds": 0,
+      "native_filtergraph": "[0:v][1:v]xfade=transition=fade:duration=0.18:offset=8.800[vout];[0:a]apad=whole_len=431040,atrim=end_sample=431040[ap0];[1:a]apad=whole_len=225600,atrim=end_sample=225600[ap1];[ap0][ap1]acrossfade=d=0.18:c1=tri:c2=tri[aout]",
+      "result": "continuous_source_mapping"
+    },
+    {
+      "segments": [
+        15,
+        16
+      ],
+      "source_join": 237.0,
+      "visual_parameter_differences": {},
+      "frame_index": 5925,
+      "frame_aligned_at25fps": true,
+      "source_overlap": [
+        237.0,
+        237.18
+      ],
+      "omitted_source_seconds": 0,
+      "native_filtergraph": "[0:v][1:v]xfade=transition=fade:duration=0.18:offset=9.000[vout];[0:a]apad=whole_len=440640,atrim=end_sample=440640[ap0];[1:a]apad=whole_len=196800,atrim=end_sample=196800[ap1];[ap0][ap1]acrossfade=d=0.18:c1=tri:c2=tri[aout]",
+      "result": "continuous_source_mapping"
+    },
+    {
+      "segments": [
+        17,
+        18
+      ],
+      "source_join": 256.8,
+      "visual_parameter_differences": {},
+      "frame_index": 6420,
+      "frame_aligned_at25fps": true,
+      "source_overlap": [
+        256.8,
+        256.98
+      ],
+      "omitted_source_seconds": 0,
+      "native_filtergraph": "[0:v][1:v]xfade=transition=fade:duration=0.18:offset=9.840[vout];[0:a]apad=whole_len=480960,atrim=end_sample=480960[ap0];[1:a]apad=whole_len=230400,atrim=end_sample=230400[ap1];[ap0][ap1]acrossfade=d=0.18:c1=tri:c2=tri[aout]",
+      "result": "continuous_source_mapping"
+    },
+    {
+      "segments": [
+        18,
+        19
+      ],
+      "source_join": 261.6,
+      "visual_parameter_differences": {},
+      "frame_index": 6540,
+      "frame_aligned_at25fps": true,
+      "source_overlap": [
+        261.6,
+        261.78
+      ],
+      "omitted_source_seconds": 0,
+      "native_filtergraph": "[0:v][1:v]xfade=transition=fade:duration=0.18:offset=4.800[vout];[0:a]apad=whole_len=239040,atrim=end_sample=239040[ap0];[1:a]apad=whole_len=720000,atrim=end_sample=720000[ap1];[ap0][ap1]acrossfade=d=0.18:c1=tri:c2=tri[aout]",
+      "result": "continuous_source_mapping"
+    }
+  ],
+  "complete_match_point_source_range": [
+    246.96,
+    276.6
+  ],
+  "complete_match_point_length_seconds": 29.64,
+  "board_findings_invocation": "Unchanged native function, using minimal objects with only its consumed Segment fields; source keys, scorebox overrides, and score windows follow native parser semantics. Main source only.",
+  "transition_explanation": "Each left part includes0.18s natural source continuation. At the nominal boundary xfade overlaps that tail with the right part starting at the exact same source instant. Same source/crop/speed/fps means no omitted or serially repeated footage. Native triangular acrossfade mixes synchronized source audio after sample-count normalization.",
+  "dissolve_filtergraph_source_sha256": "095819610ab8c918d5a6a468be7dd3b003a7a9fef89d5c4b2ba7842ef3bff816",
+  "limits": [
+    "Native board_findings only; no full spec parser or full dry-run claim.",
+    "Continuity checked against native transition logic and exact frame alignment; no final video render was performed. Encoded seams and per-segment scoreboard placement still require normal final QA.",
+    "This pass covers main-source board evidence only and does not approve the separate720p replay source or its audio."
+  ]
+}
