@@ -107,7 +107,8 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
     if edge is None:
         edge = len(frac)
     mint_cols = mint_mask(band).mean(axis=0) > 0.4
-    cells = [(lo, hi) for lo, hi in _runs(mint_cols) if hi - lo >= MINT_COLS]
+    cells = [(lo, hi) for lo, hi in _runs(mint_cols)
+             if lo >= MIN_BOARD_W and hi - lo >= MINT_COLS]
     if cells:
         # Mint TEXT in the point-score slot (e.g. 40) is not another filled games
         # cell. Use the broad solid cell, rather than the last mint-coloured letter.
@@ -126,6 +127,19 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
             return boundaries[-1]
         if edge < cell_hi + POINTS_MAX:
             return edge
+        # The native graphic wipes away from right to left. During the last
+        # frames the point slot is gone and the wipe crosses the mint games
+        # cell itself. Measure its remaining vertical edge, including only the
+        # observed antialias fringe; never substitute the old slot width.
+        wipe_edges = [x for x in range(max(cell_lo + 1, cell_hi - EDGE_PAD),
+                                      min(band.shape[1], cell_hi + EDGE_PAD) + 1)
+                      if persistent[x - 1] >= .55]
+        # A complete games cell spans at least half one player-row height.
+        # Require a genuinely truncated residual cell: an ordinary full cell's
+        # internal divider must never stand in for an unmeasurable point slot.
+        truncated_cell = cell_hi - cell_lo < band.shape[0] / 4
+        if truncated_cell and wipe_edges:
+            return wipe_edges[-1]
         raise RuntimeError("WTA board present but native right boundary cannot be measured")
     # 没有薄荷绿（开局还没有局分那几秒）：没有签名色撑着，
     # 越过 spec 右缘的读数不可信，照旧封顶

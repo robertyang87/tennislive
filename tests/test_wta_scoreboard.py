@@ -10,6 +10,8 @@ import sys
 from pathlib import Path
 
 import numpy as np
+from PIL import Image
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import wta_scoreboard as w  # noqa: E402
@@ -22,6 +24,39 @@ COURT = (125, 179, 110)
 CROWD = (20, 17, 22)          # 夜场看台
 FLOWERS = (98, 61, 104)       # 场边花墙
 H, W = 110, 760
+
+
+def test_beijing_native_wipe_and_tag_transition_real_crops():
+    """Real 25fps source crops: disappearing cell and animated mint tag.
+
+    Old detection either mistook the wide tag for a games cell, or searched
+    beyond the disappearing cell where no point slot remained.
+    """
+    cases = {
+        "beijing-052520-wipe.png": 322,
+        "beijing-194060-tag-transition.png": 390,
+        "beijing-200340-wipe.png": 336,
+        "beijing-267920-wipe.png": 365,
+    }
+    root = Path(__file__).parent / "fixtures" / "wta_scoreboard"
+    for name, native_right in cases.items():
+        band = np.asarray(Image.open(root / name).convert("RGB"))
+        geometry = w.frame_geometry(band, cap=460)
+        assert geometry is not None
+        assert geometry["edge"] == native_right
+        alpha = w.alpha_frame(geometry, (0, 0, band.shape[1], band.shape[0]))
+        assert alpha[:, :native_right].any()
+        assert not alpha[:, native_right:].any(), name
+
+
+def test_full_games_cell_cannot_replace_unmeasurable_points_boundary():
+    band = np.empty((110, 760, 3), np.uint8)
+    band[:] = BOARD_DARK
+    band[:, 310:340] = MINT
+    # An intact games cell plus uniform point/background area provides no
+    # native outer boundary. Its internal divider is insufficient evidence.
+    with pytest.raises(RuntimeError, match="native right boundary"):
+        w.board_edge(band)
 
 
 def _band(board_w: int | None, *, bg=COURT, body=BOARD, mint: bool = True) -> np.ndarray:
