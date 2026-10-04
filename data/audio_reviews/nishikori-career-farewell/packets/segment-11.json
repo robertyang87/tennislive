@@ -1,0 +1,26 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://usopenvideo-a.akamaihd.net/2019/1586879401548367_0003_O_1280x720_3500kbps.mp4",
+  "source_path": "/workspace/scratch/usopen-2014-final-official.mp4",
+  "source_sha256": "5b8c44d9f385a5ba88077af4791a3b1583749dbf99641e6b0e27d9b68a4b25f8",
+  "method": "asr_cross_checked",
+  "reviewer": "rio_source local cached small.en/base.en cross-check; metadata/visual identity used only for spelling normalization; no claimed human listening",
+  "reviewed_at": "2026-10-04T07:21:16.220531+00:00",
+  "status": "complete",
+  "reviewed_from": 139,
+  "reviewed_to": 154,
+  "foreground_english": [],
+  "no_foreground_english_reason": "Full139–154s contextual window processed independently by cached small.en and base.en, both return zero speech segments. Contains final/handshake imagery and event sound; no foreground English supported in either model. This supports contained139–151.5s compact author-VO window; no claim that rest of video lacks English.",
+  "uncertain_spans": [],
+  "evidence": [
+    "data/audio_reviews/nishikori-career-farewell/evidence/usfinal2014-compact-small.en-457fce3f06b9.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/usfinal2014-compact-base.en-97643f8b3382.json"
+  ],
+  "human_listening_done": false,
+  "timing_method": "Actual ASR word onsets/ends at source offsets; no uniform cue spacing",
+  "portable_review_provenance": {
+    "original_packet_sha256": "47aeb660e3b8e69c0a166deddfb7a9a6751517fe730840de862f042ca1c03cac",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

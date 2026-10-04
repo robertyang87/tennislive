@@ -1,0 +1,141 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "asset_timings + closing_source full selected raw-window audit",
+  "reviewed_at": "2026-10-04T07:41:26.420544+00:00",
+  "status": "complete",
+  "reviewed_from": 113.82,
+  "reviewed_to": 117.78,
+  "foreground_english": [
+    {
+      "start": 113.82,
+      "end": 117.76,
+      "en": "And he wins over Feliciano Lopez in dominant form.",
+      "zh": "他强势击败费利西亚诺·洛佩斯。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "uncertain_spans": [],
+  "raw_asr": {
+    "small.en": [
+      {
+        "source_start": 113.82,
+        "source_end": 117.76,
+        "text": " And he wins over Feliciano Lopez in dominant form.",
+        "words": [
+          {
+            "source_start": 113.82,
+            "source_end": 114.32,
+            "word": " And"
+          },
+          {
+            "source_start": 114.32,
+            "source_end": 114.44,
+            "word": " he"
+          },
+          {
+            "source_start": 114.44,
+            "source_end": 114.74,
+            "word": " wins"
+          },
+          {
+            "source_start": 114.74,
+            "source_end": 115.14,
+            "word": " over"
+          },
+          {
+            "source_start": 115.14,
+            "source_end": 115.84,
+            "word": " Feliciano"
+          },
+          {
+            "source_start": 115.84,
+            "source_end": 116.18,
+            "word": " Lopez"
+          },
+          {
+            "source_start": 116.18,
+            "source_end": 117.04,
+            "word": " in"
+          },
+          {
+            "source_start": 117.04,
+            "source_end": 117.36,
+            "word": " dominant"
+          },
+          {
+            "source_start": 117.36,
+            "source_end": 117.76,
+            "word": " form."
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "source_start": 113.82,
+        "source_end": 117.7,
+        "text": " And he wins over Feliciano Lopez in dominant form.",
+        "words": [
+          {
+            "source_start": 113.82,
+            "source_end": 114.3,
+            "word": " And"
+          },
+          {
+            "source_start": 114.3,
+            "source_end": 114.4,
+            "word": " he"
+          },
+          {
+            "source_start": 114.4,
+            "source_end": 114.64,
+            "word": " wins"
+          },
+          {
+            "source_start": 114.64,
+            "source_end": 115.06,
+            "word": " over"
+          },
+          {
+            "source_start": 115.06,
+            "source_end": 115.76,
+            "word": " Feliciano"
+          },
+          {
+            "source_start": 115.76,
+            "source_end": 116.08,
+            "word": " Lopez"
+          },
+          {
+            "source_start": 116.08,
+            "source_end": 116.96,
+            "word": " in"
+          },
+          {
+            "source_start": 116.96,
+            "source_end": 117.3,
+            "word": " dominant"
+          },
+          {
+            "source_start": 117.3,
+            "source_end": 117.7,
+            "word": " form."
+          }
+        ]
+      }
+    ]
+  },
+  "source_review": "data/audio_reviews/nishikori-career-farewell/evidence/native-foreground-titles-audit-3b8675b4a78f.json",
+  "prior_full_packet": {
+    "path": "data/audio_reviews/nishikori-career-farewell/evidence/final-scene-04-3bb14a58e8ff.json",
+    "sha256": "72eea0b5fbbe8bd20b6ffdf82d941983c12c577a9e46a7524e5cc567926aaa3e"
+  },
+  "portable_review_provenance": {
+    "original_packet_sha256": "870be5aa52ca960608f44bb07d09860884f392defebc87ecd14c86859474d4e1",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

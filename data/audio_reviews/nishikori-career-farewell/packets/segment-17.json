@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.nicovideo.jp/watch/sm26897731",
+  "source_file": "/workspace/scratch/compact-washington-third-set.mp4",
+  "source_sha256": "e8f266191f51392bdc780bdec3cd3e5f51af13b7394c83910cfc75aa0085dc02",
+  "method": "asr_cross_checked",
+  "reviewer": "closing_source + root medium.en wider no-prompt ASR + independent small/base source timing",
+  "reviewed_at": "2026-10-04T07:42:27.752788+00:00",
+  "status": "complete",
+  "reviewed_from": 548.5,
+  "reviewed_to": 566.86,
+  "foreground_english": [
+    {
+      "start": 563.68,
+      "end": 566.66,
+      "en": "Nishikori wins Washington.",
+      "zh": "锦织圭赢下华盛顿冠军。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "uncertain_spans": [],
+  "asr_results": [
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/washington-third-final-handle-small.en-db26896ec0e4.json",
+      "sha256": "ad97b5343ee645a688bda22215f78c0910db6bbc4c073f95554510759a2ae3df"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/washington-third-final-handle-base.en-24627aacc074.json",
+      "sha256": "7aa2b0a06e731e64b51099be4189485b9703bd49817cad9308290a900ddd5c00"
+    }
+  ],
+  "human_listening_done": false,
+  "timing_note": "Two complete narrower-window models onset563.68, wider-context onset564.50; using broad start563.68 and conservative maximum end566.66. Next independent English clause starts566.92, entirely excluded from566.86 source end.",
+  "portable_review_provenance": {
+    "original_packet_sha256": "6f22292ce8cfaa71a32a545323fae86ac90dcb2198ecd0fc87d9bda9d8e13bd7",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

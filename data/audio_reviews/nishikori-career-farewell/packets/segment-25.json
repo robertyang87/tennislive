@@ -1,0 +1,70 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "asset_timings + closing_source full selected raw-window audit",
+  "reviewed_at": "2026-10-04T07:41:26.428303+00:00",
+  "status": "complete",
+  "reviewed_from": 850.15,
+  "reviewed_to": 854.23,
+  "foreground_english": [],
+  "no_foreground_english_reason": "Both independent small.en/base.en full original window transcripts identify no lexical English in the selected interval; cross-ASR method, no human hearing claim.",
+  "uncertain_spans": [],
+  "raw_asr": {
+    "small.en": [
+      {
+        "source_start": 849.17,
+        "source_end": 849.91,
+        "text": " as a winner.",
+        "words": [
+          {
+            "source_start": 849.17,
+            "source_end": 849.5699999999999,
+            "word": " as"
+          },
+          {
+            "source_start": 849.5699999999999,
+            "source_end": 849.73,
+            "word": " a"
+          },
+          {
+            "source_start": 849.73,
+            "source_end": 849.91,
+            "word": " winner."
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "source_start": 849.17,
+        "source_end": 849.87,
+        "text": " As a winner.",
+        "words": [
+          {
+            "source_start": 849.17,
+            "source_end": 849.53,
+            "word": " As"
+          },
+          {
+            "source_start": 849.53,
+            "source_end": 849.67,
+            "word": " a"
+          },
+          {
+            "source_start": 849.67,
+            "source_end": 849.87,
+            "word": " winner."
+          }
+        ]
+      }
+    ]
+  },
+  "source_review": "data/audio_reviews/nishikori-career-farewell/evidence/native-foreground-titles-audit-3b8675b4a78f.json",
+  "portable_review_provenance": {
+    "original_packet_sha256": "622c9e7168152d6cd5515715751cc1c3c409257ed04e33b0dd2deb6c8f45f6da",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

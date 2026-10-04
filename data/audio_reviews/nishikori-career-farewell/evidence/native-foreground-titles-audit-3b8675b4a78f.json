@@ -1,0 +1,4084 @@
+{
+  "schema": "native-foreground-titles-audit-v1",
+  "source_window_count": 23,
+  "scope": "所有12冠保留point/reaction+11个trophy共23源窗。原point12双ASR复用，trophy11新增本地双ASR。",
+  "models": [
+    "small.en",
+    "base.en"
+  ],
+  "local_cache_only": true,
+  "human_listening_done": false,
+  "complete": false,
+  "source_word_policy": "同词清晰全收，低情绪Washington也收；姓名/比分正写仅有官方本场winner/原记分牌/纪录片名卡支持；无法证明实际语句者uncertain，不以事实补猜声。",
+  "candidate_count": 32,
+  "required_repairs": "源句截断、ASR分歧、人听仍未完成，不能native complete前景标记。保回合获胜状态，不以静音遮英语过闸。",
+  "windows": [
+    {
+      "name": "2008-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 0,
+      "source_out": 13.0,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 4.91,
+          "source_out": 6.73,
+          "english": "It is a remarkable story.",
+          "zh": "这是一段非凡的故事。",
+          "status": "cross_asr_candidate",
+          "verification": "small It is a remarkable story; base begins is a remarkable story. Initial It is small-only; boundary uncertainty .1s; not certified hearing.",
+          "human_heard": false
+        },
+        {
+          "source_in": 9.24,
+          "source_out": 11.85,
+          "english": "I'm not sure anyone could have scripted this one.",
+          "zh": "恐怕谁也写不出这样的剧本。",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 4.91,
+            "source_end": 6.73,
+            "review_start": 4.91,
+            "review_end": 6.73,
+            "text": " It is a remarkable story.",
+            "words": [
+              {
+                "source_start": 4.91,
+                "source_end": 5.01,
+                "word": " It"
+              },
+              {
+                "source_start": 5.01,
+                "source_end": 5.31,
+                "word": " is"
+              },
+              {
+                "source_start": 5.31,
+                "source_end": 5.49,
+                "word": " a"
+              },
+              {
+                "source_start": 5.49,
+                "source_end": 5.91,
+                "word": " remarkable"
+              },
+              {
+                "source_start": 5.91,
+                "source_end": 6.73,
+                "word": " story."
+              }
+            ]
+          },
+          {
+            "source_start": 9.3,
+            "source_end": 11.7,
+            "review_start": 9.3,
+            "review_end": 11.7,
+            "text": " I'm not sure anyone could have scripted this one.",
+            "words": [
+              {
+                "source_start": 9.3,
+                "source_end": 9.46,
+                "word": " I'm"
+              },
+              {
+                "source_start": 9.46,
+                "source_end": 9.64,
+                "word": " not"
+              },
+              {
+                "source_start": 9.64,
+                "source_end": 9.92,
+                "word": " sure"
+              },
+              {
+                "source_start": 9.92,
+                "source_end": 10.38,
+                "word": " anyone"
+              },
+              {
+                "source_start": 10.38,
+                "source_end": 10.64,
+                "word": " could"
+              },
+              {
+                "source_start": 10.64,
+                "source_end": 10.76,
+                "word": " have"
+              },
+              {
+                "source_start": 10.76,
+                "source_end": 11.12,
+                "word": " scripted"
+              },
+              {
+                "source_start": 11.12,
+                "source_end": 11.44,
+                "word": " this"
+              },
+              {
+                "source_start": 11.44,
+                "source_end": 11.7,
+                "word": " one."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 4.91,
+            "source_end": 11.6,
+            "review_start": 4.91,
+            "review_end": 11.6,
+            "text": " is a remarkable story. I'm not sure anyone could have scripted this one.",
+            "words": [
+              {
+                "source_start": 4.91,
+                "source_end": 5.27,
+                "word": " is"
+              },
+              {
+                "source_start": 5.27,
+                "source_end": 5.41,
+                "word": " a"
+              },
+              {
+                "source_start": 5.41,
+                "source_end": 5.85,
+                "word": " remarkable"
+              },
+              {
+                "source_start": 5.85,
+                "source_end": 6.63,
+                "word": " story."
+              },
+              {
+                "source_start": 9.32,
+                "source_end": 9.4,
+                "word": " I'm"
+              },
+              {
+                "source_start": 9.4,
+                "source_end": 9.56,
+                "word": " not"
+              },
+              {
+                "source_start": 9.56,
+                "source_end": 9.84,
+                "word": " sure"
+              },
+              {
+                "source_start": 9.84,
+                "source_end": 10.36,
+                "word": " anyone"
+              },
+              {
+                "source_start": 10.36,
+                "source_end": 10.58,
+                "word": " could"
+              },
+              {
+                "source_start": 10.58,
+                "source_end": 10.7,
+                "word": " have"
+              },
+              {
+                "source_start": 10.7,
+                "source_end": 10.96,
+                "word": " scripted"
+              },
+              {
+                "source_start": 10.96,
+                "source_end": 11.4,
+                "word": " this"
+              },
+              {
+                "source_start": 11.4,
+                "source_end": 11.6,
+                "word": " one."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/01-2008-point-reaction-small.en-3cbb93c384fa.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/01-2008-point-reaction-base.en-dca50c52e07a.json"
+      ],
+      "foreground_status": "lexical_candidates_human_hearing_pending",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2008-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 34.0,
+      "source_out": 38.5,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 35.14,
+          "source_out": 38.18,
+          "english": "We've been a part of so many special moments on Tennis Channel.",
+          "zh": "在Tennis Channel，我们见证过许多特别时刻。",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 38.18,
+          "source_out": 38.5,
+          "status": "uncertain",
+          "reason": "small末尾this未形成完整续句；base省略。",
+          "preserve_win_edit_recommendation": "奖杯保34–38.18，避免下一句this开始；同句末留极短缓冲需按实音。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 35.14,
+            "source_end": 38.4,
+            "text": " We've been a part of so many special moments on tennis channel this",
+            "words": [
+              {
+                "source_start": 35.14,
+                "source_end": 35.74,
+                "word": " We've"
+              },
+              {
+                "source_start": 35.74,
+                "source_end": 35.8,
+                "word": " been"
+              },
+              {
+                "source_start": 35.8,
+                "source_end": 35.88,
+                "word": " a"
+              },
+              {
+                "source_start": 35.88,
+                "source_end": 36.04,
+                "word": " part"
+              },
+              {
+                "source_start": 36.04,
+                "source_end": 36.2,
+                "word": " of"
+              },
+              {
+                "source_start": 36.2,
+                "source_end": 36.36,
+                "word": " so"
+              },
+              {
+                "source_start": 36.36,
+                "source_end": 36.52,
+                "word": " many"
+              },
+              {
+                "source_start": 36.52,
+                "source_end": 36.9,
+                "word": " special"
+              },
+              {
+                "source_start": 36.9,
+                "source_end": 37.3,
+                "word": " moments"
+              },
+              {
+                "source_start": 37.3,
+                "source_end": 37.52,
+                "word": " on"
+              },
+              {
+                "source_start": 37.52,
+                "source_end": 37.8,
+                "word": " tennis"
+              },
+              {
+                "source_start": 37.8,
+                "source_end": 38.18,
+                "word": " channel"
+              },
+              {
+                "source_start": 38.18,
+                "source_end": 38.4,
+                "word": " this"
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 35.14,
+            "source_end": 38.14,
+            "text": " We've been a part of so many special moments on tennis channel",
+            "words": [
+              {
+                "source_start": 35.14,
+                "source_end": 35.72,
+                "word": " We've"
+              },
+              {
+                "source_start": 35.72,
+                "source_end": 35.78,
+                "word": " been"
+              },
+              {
+                "source_start": 35.78,
+                "source_end": 35.84,
+                "word": " a"
+              },
+              {
+                "source_start": 35.84,
+                "source_end": 36.0,
+                "word": " part"
+              },
+              {
+                "source_start": 36.0,
+                "source_end": 36.12,
+                "word": " of"
+              },
+              {
+                "source_start": 36.12,
+                "source_end": 36.3,
+                "word": " so"
+              },
+              {
+                "source_start": 36.3,
+                "source_end": 36.48,
+                "word": " many"
+              },
+              {
+                "source_start": 36.48,
+                "source_end": 36.78,
+                "word": " special"
+              },
+              {
+                "source_start": 36.78,
+                "source_end": 37.22,
+                "word": " moments"
+              },
+              {
+                "source_start": 37.22,
+                "source_end": 37.44,
+                "word": " on"
+              },
+              {
+                "source_start": 37.44,
+                "source_end": 37.68,
+                "word": " tennis"
+              },
+              {
+                "source_start": 37.68,
+                "source_end": 38.14,
+                "word": " channel"
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2008-trophy-small.en-b74eae65e8e5.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2008-trophy-base.en-9a4b2d020773.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2012-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 48.95,
+      "source_out": 62.0,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 57.45,
+          "source_out": 62,
+          "status": "uncertain",
+          "reason": "save it/savour同音歧义，且for the young...句尾截断。两模型起点差2.46秒。",
+          "preserve_win_edit_recommendation": "冠军点48.95–56与本人庆祝56–57.35保留；57.45后含歧义解说暂不纳入完整字幕保留窗。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 59.910000000000004,
+            "source_end": 61.97,
+            "review_start": 28.46,
+            "review_end": 30.52,
+            "text": " A moment to save it for the young...",
+            "words": [
+              {
+                "source_start": 59.910000000000004,
+                "source_end": 60.39,
+                "word": " A"
+              },
+              {
+                "source_start": 60.39,
+                "source_end": 60.63,
+                "word": " moment"
+              },
+              {
+                "source_start": 60.63,
+                "source_end": 60.93000000000001,
+                "word": " to"
+              },
+              {
+                "source_start": 60.93000000000001,
+                "source_end": 61.190000000000005,
+                "word": " save"
+              },
+              {
+                "source_start": 61.190000000000005,
+                "source_end": 61.410000000000004,
+                "word": " it"
+              },
+              {
+                "source_start": 61.410000000000004,
+                "source_end": 61.650000000000006,
+                "word": " for"
+              },
+              {
+                "source_start": 61.650000000000006,
+                "source_end": 61.77,
+                "word": " the"
+              },
+              {
+                "source_start": 61.77,
+                "source_end": 61.97,
+                "word": " young..."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 57.45,
+            "source_end": 61.97,
+            "review_start": 26.0,
+            "review_end": 30.52,
+            "text": " A moment to save it for the young...",
+            "words": [
+              {
+                "source_start": 57.45,
+                "source_end": 57.61,
+                "word": " A"
+              },
+              {
+                "source_start": 57.61,
+                "source_end": 60.67,
+                "word": " moment"
+              },
+              {
+                "source_start": 60.67,
+                "source_end": 60.870000000000005,
+                "word": " to"
+              },
+              {
+                "source_start": 60.870000000000005,
+                "source_end": 61.150000000000006,
+                "word": " save"
+              },
+              {
+                "source_start": 61.150000000000006,
+                "source_end": 61.330000000000005,
+                "word": " it"
+              },
+              {
+                "source_start": 61.330000000000005,
+                "source_end": 61.59,
+                "word": " for"
+              },
+              {
+                "source_start": 61.59,
+                "source_end": 61.71,
+                "word": " the"
+              },
+              {
+                "source_start": 61.71,
+                "source_end": 61.97,
+                "word": " young..."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/02-2012-point-reaction-small.en-f3d0c8dd220a.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/02-2012-point-reaction-base.en-9e0aea8b5cd3.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2012-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 74.0,
+      "source_out": 78.5,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 74,
+          "source_out": 74.42,
+          "english": "this part.",
+          "zh": "这一部分。",
+          "status": "cross_asr_fragment",
+          "verification": "两模型同词，但上句末片段，不能称完整句。",
+          "human_heard": false
+        },
+        {
+          "source_in": 75.4,
+          "source_out": 78.48,
+          "english": "It's unlikely this will be the last time these two prodigious talents...",
+          "zh": "这两位天赋出众的球员，不太可能就此最后一次……",
+          "status": "cross_asr_truncated_clause",
+          "verification": "两模型同词；明显句尾未完，不以句号掩盖。",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 74,
+          "source_out": 78.5,
+          "status": "uncertain",
+          "reason": "进入即上句this part，末句these two prodigious talents还缺动词/后文。",
+          "preserve_win_edit_recommendation": "杯画面仍保74.5–75.35无检测词区；若要保长杯必须补接原完整句或人听，不伪造句尾。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 74.0,
+            "source_end": 78.48,
+            "text": " this part. It's unlikely this will be the last time these two prodigious talents...",
+            "words": [
+              {
+                "source_start": 74.0,
+                "source_end": 74.18,
+                "word": " this"
+              },
+              {
+                "source_start": 74.18,
+                "source_end": 74.42,
+                "word": " part."
+              },
+              {
+                "source_start": 75.5,
+                "source_end": 75.6,
+                "word": " It's"
+              },
+              {
+                "source_start": 75.6,
+                "source_end": 75.9,
+                "word": " unlikely"
+              },
+              {
+                "source_start": 75.9,
+                "source_end": 76.2,
+                "word": " this"
+              },
+              {
+                "source_start": 76.2,
+                "source_end": 76.38,
+                "word": " will"
+              },
+              {
+                "source_start": 76.38,
+                "source_end": 76.52,
+                "word": " be"
+              },
+              {
+                "source_start": 76.52,
+                "source_end": 76.62,
+                "word": " the"
+              },
+              {
+                "source_start": 76.62,
+                "source_end": 76.82,
+                "word": " last"
+              },
+              {
+                "source_start": 76.82,
+                "source_end": 77.12,
+                "word": " time"
+              },
+              {
+                "source_start": 77.12,
+                "source_end": 77.28,
+                "word": " these"
+              },
+              {
+                "source_start": 77.28,
+                "source_end": 77.54,
+                "word": " two"
+              },
+              {
+                "source_start": 77.54,
+                "source_end": 77.98,
+                "word": " prodigious"
+              },
+              {
+                "source_start": 77.98,
+                "source_end": 78.48,
+                "word": " talents..."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 74.0,
+            "source_end": 78.22,
+            "text": " this part. It's unlikely this will be the last time these two prodigious talents.",
+            "words": [
+              {
+                "source_start": 74.0,
+                "source_end": 74.12,
+                "word": " this"
+              },
+              {
+                "source_start": 74.12,
+                "source_end": 74.34,
+                "word": " part."
+              },
+              {
+                "source_start": 75.4,
+                "source_end": 75.56,
+                "word": " It's"
+              },
+              {
+                "source_start": 75.56,
+                "source_end": 75.82,
+                "word": " unlikely"
+              },
+              {
+                "source_start": 75.82,
+                "source_end": 76.16,
+                "word": " this"
+              },
+              {
+                "source_start": 76.16,
+                "source_end": 76.36,
+                "word": " will"
+              },
+              {
+                "source_start": 76.36,
+                "source_end": 76.48,
+                "word": " be"
+              },
+              {
+                "source_start": 76.48,
+                "source_end": 76.58,
+                "word": " the"
+              },
+              {
+                "source_start": 76.58,
+                "source_end": 76.76,
+                "word": " last"
+              },
+              {
+                "source_start": 76.76,
+                "source_end": 77.04,
+                "word": " time"
+              },
+              {
+                "source_start": 77.04,
+                "source_end": 77.22,
+                "word": " these"
+              },
+              {
+                "source_start": 77.22,
+                "source_end": 77.44,
+                "word": " two"
+              },
+              {
+                "source_start": 77.44,
+                "source_end": 77.86,
+                "word": " prodigious"
+              },
+              {
+                "source_start": 77.86,
+                "source_end": 78.22,
+                "word": " talents."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2012-trophy-small.en-514f864abbd7.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2012-trophy-base.en-d5c4fbc64cd1.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2013-memphis-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 79.45,
+      "source_out": 104,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 85.43,
+          "source_out": 86.86,
+          "english": "He's done it!",
+          "zh": "他做到了！",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 90.25,
+          "source_out": 91.33,
+          "english": "Kei Nishikori,",
+          "zh": "锦织圭，",
+          "status": "metadata_assisted_name_normalization",
+          "verification": "small Kei Nishikori；base Kane Ishikori。官方本场winner及原scoreboard是Kei Nishikori，仅专名正写，未补任意语句。",
+          "human_heard": false
+        },
+        {
+          "source_in": 91.6,
+          "source_out": 95.32,
+          "english": "champion in Memphis for his third career title,",
+          "zh": "孟菲斯冠军，生涯第三冠，",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 95.45,
+          "source_out": 98.63,
+          "english": "his second at an ATP World Tour 500 event.",
+          "zh": "第二座ATP500冠军。",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 99.99,
+          "source_out": 102.09,
+          "english": "And after winning in October in his home nation,",
+          "zh": "十月在自己的国家夺冠后，",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 102.45,
+          "source_out": 103.63,
+          "english": "he has come to Memphis.",
+          "zh": "他又来到孟菲斯。",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 85.48,
+            "source_end": 86.66,
+            "review_start": 41.08,
+            "review_end": 42.26,
+            "text": " He's done it.",
+            "words": [
+              {
+                "source_start": 85.48,
+                "source_end": 85.88,
+                "word": " He's"
+              },
+              {
+                "source_start": 85.88,
+                "source_end": 86.02000000000001,
+                "word": " done"
+              },
+              {
+                "source_start": 86.02000000000001,
+                "source_end": 86.66,
+                "word": " it."
+              }
+            ]
+          },
+          {
+            "source_start": 90.25,
+            "source_end": 94.81,
+            "review_start": 45.849999999999994,
+            "review_end": 50.41,
+            "text": " Kei Nishikori, champion in Memphis for his third career",
+            "words": [
+              {
+                "source_start": 90.25,
+                "source_end": 90.71000000000001,
+                "word": " Kei"
+              },
+              {
+                "source_start": 90.71000000000001,
+                "source_end": 91.33,
+                "word": " Nishikori,"
+              },
+              {
+                "source_start": 91.67,
+                "source_end": 92.25,
+                "word": " champion"
+              },
+              {
+                "source_start": 92.25,
+                "source_end": 93.03,
+                "word": " in"
+              },
+              {
+                "source_start": 93.03,
+                "source_end": 93.39,
+                "word": " Memphis"
+              },
+              {
+                "source_start": 93.39,
+                "source_end": 93.73,
+                "word": " for"
+              },
+              {
+                "source_start": 93.73,
+                "source_end": 93.95,
+                "word": " his"
+              },
+              {
+                "source_start": 93.95,
+                "source_end": 94.35000000000001,
+                "word": " third"
+              },
+              {
+                "source_start": 94.35000000000001,
+                "source_end": 94.81,
+                "word": " career"
+              }
+            ]
+          },
+          {
+            "source_start": 94.81,
+            "source_end": 98.63,
+            "review_start": 50.41,
+            "review_end": 54.23,
+            "text": " title, his second at an ATP World Tour 500 event.",
+            "words": [
+              {
+                "source_start": 94.81,
+                "source_end": 95.23,
+                "word": " title,"
+              },
+              {
+                "source_start": 95.45,
+                "source_end": 95.59,
+                "word": " his"
+              },
+              {
+                "source_start": 95.59,
+                "source_end": 96.05000000000001,
+                "word": " second"
+              },
+              {
+                "source_start": 96.05000000000001,
+                "source_end": 96.45,
+                "word": " at"
+              },
+              {
+                "source_start": 96.45,
+                "source_end": 96.55000000000001,
+                "word": " an"
+              },
+              {
+                "source_start": 96.55000000000001,
+                "source_end": 96.99000000000001,
+                "word": " ATP"
+              },
+              {
+                "source_start": 96.99000000000001,
+                "source_end": 97.37,
+                "word": " World"
+              },
+              {
+                "source_start": 97.37,
+                "source_end": 97.67,
+                "word": " Tour"
+              },
+              {
+                "source_start": 97.67,
+                "source_end": 98.13,
+                "word": " 500"
+              },
+              {
+                "source_start": 98.13,
+                "source_end": 98.63,
+                "word": " event."
+              }
+            ]
+          },
+          {
+            "source_start": 100.15,
+            "source_end": 102.09,
+            "review_start": 55.75,
+            "review_end": 57.69,
+            "text": " And after winning in October in his home nation,",
+            "words": [
+              {
+                "source_start": 100.15,
+                "source_end": 100.23,
+                "word": " And"
+              },
+              {
+                "source_start": 100.23,
+                "source_end": 100.47,
+                "word": " after"
+              },
+              {
+                "source_start": 100.47,
+                "source_end": 100.65,
+                "word": " winning"
+              },
+              {
+                "source_start": 100.65,
+                "source_end": 100.89,
+                "word": " in"
+              },
+              {
+                "source_start": 100.89,
+                "source_end": 101.19,
+                "word": " October"
+              },
+              {
+                "source_start": 101.19,
+                "source_end": 101.39,
+                "word": " in"
+              },
+              {
+                "source_start": 101.39,
+                "source_end": 101.51,
+                "word": " his"
+              },
+              {
+                "source_start": 101.51,
+                "source_end": 101.69,
+                "word": " home"
+              },
+              {
+                "source_start": 101.69,
+                "source_end": 102.09,
+                "word": " nation,"
+              }
+            ]
+          },
+          {
+            "source_start": 102.45,
+            "source_end": 103.63,
+            "review_start": 58.05,
+            "review_end": 59.23,
+            "text": " he has come to Memphis.",
+            "words": [
+              {
+                "source_start": 102.45,
+                "source_end": 102.53,
+                "word": " he"
+              },
+              {
+                "source_start": 102.53,
+                "source_end": 102.81,
+                "word": " has"
+              },
+              {
+                "source_start": 102.81,
+                "source_end": 103.13,
+                "word": " come"
+              },
+              {
+                "source_start": 103.13,
+                "source_end": 103.31,
+                "word": " to"
+              },
+              {
+                "source_start": 103.31,
+                "source_end": 103.63,
+                "word": " Memphis."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 85.48,
+            "source_end": 89.21000000000001,
+            "review_start": 41.08,
+            "review_end": 44.809999999999995,
+            "text": " He's done it.",
+            "words": [
+              {
+                "source_start": 85.48,
+                "source_end": 85.84,
+                "word": " He's"
+              },
+              {
+                "source_start": 85.84,
+                "source_end": 87.64,
+                "word": " done"
+              },
+              {
+                "source_start": 89.21000000000001,
+                "source_end": 89.21000000000001,
+                "word": " it."
+              }
+            ]
+          },
+          {
+            "source_start": 90.35000000000001,
+            "source_end": 98.57000000000001,
+            "review_start": 45.949999999999996,
+            "review_end": 54.17,
+            "text": " Kane Ishikori, champion in Memphis for his third career title, his second at an ATP World Tour 500 events.",
+            "words": [
+              {
+                "source_start": 90.35000000000001,
+                "source_end": 90.61,
+                "word": " Kane"
+              },
+              {
+                "source_start": 90.61,
+                "source_end": 91.21000000000001,
+                "word": " Ishikori,"
+              },
+              {
+                "source_start": 91.65,
+                "source_end": 92.37,
+                "word": " champion"
+              },
+              {
+                "source_start": 92.37,
+                "source_end": 92.99000000000001,
+                "word": " in"
+              },
+              {
+                "source_start": 92.99000000000001,
+                "source_end": 93.19,
+                "word": " Memphis"
+              },
+              {
+                "source_start": 93.19,
+                "source_end": 93.69,
+                "word": " for"
+              },
+              {
+                "source_start": 93.69,
+                "source_end": 93.87,
+                "word": " his"
+              },
+              {
+                "source_start": 93.87,
+                "source_end": 94.17,
+                "word": " third"
+              },
+              {
+                "source_start": 94.17,
+                "source_end": 94.59,
+                "word": " career"
+              },
+              {
+                "source_start": 94.59,
+                "source_end": 95.17,
+                "word": " title,"
+              },
+              {
+                "source_start": 95.49000000000001,
+                "source_end": 95.51,
+                "word": " his"
+              },
+              {
+                "source_start": 95.51,
+                "source_end": 95.91,
+                "word": " second"
+              },
+              {
+                "source_start": 95.91,
+                "source_end": 96.39,
+                "word": " at"
+              },
+              {
+                "source_start": 96.39,
+                "source_end": 96.51,
+                "word": " an"
+              },
+              {
+                "source_start": 96.51,
+                "source_end": 96.77000000000001,
+                "word": " ATP"
+              },
+              {
+                "source_start": 96.77000000000001,
+                "source_end": 97.33,
+                "word": " World"
+              },
+              {
+                "source_start": 97.33,
+                "source_end": 97.57000000000001,
+                "word": " Tour"
+              },
+              {
+                "source_start": 97.57000000000001,
+                "source_end": 98.07000000000001,
+                "word": " 500"
+              },
+              {
+                "source_start": 98.07000000000001,
+                "source_end": 98.57000000000001,
+                "word": " events."
+              }
+            ]
+          },
+          {
+            "source_start": 99.99000000000001,
+            "source_end": 103.55000000000001,
+            "review_start": 55.589999999999996,
+            "review_end": 59.15,
+            "text": " And after winning in October in his home nation, he has come to Memphis.",
+            "words": [
+              {
+                "source_start": 99.99000000000001,
+                "source_end": 100.17,
+                "word": " And"
+              },
+              {
+                "source_start": 100.17,
+                "source_end": 100.41,
+                "word": " after"
+              },
+              {
+                "source_start": 100.41,
+                "source_end": 100.59,
+                "word": " winning"
+              },
+              {
+                "source_start": 100.59,
+                "source_end": 100.79,
+                "word": " in"
+              },
+              {
+                "source_start": 100.79,
+                "source_end": 101.09,
+                "word": " October"
+              },
+              {
+                "source_start": 101.09,
+                "source_end": 101.37,
+                "word": " in"
+              },
+              {
+                "source_start": 101.37,
+                "source_end": 101.45,
+                "word": " his"
+              },
+              {
+                "source_start": 101.45,
+                "source_end": 101.61,
+                "word": " home"
+              },
+              {
+                "source_start": 101.61,
+                "source_end": 102.03,
+                "word": " nation,"
+              },
+              {
+                "source_start": 102.37,
+                "source_end": 102.49000000000001,
+                "word": " he"
+              },
+              {
+                "source_start": 102.49000000000001,
+                "source_end": 102.77000000000001,
+                "word": " has"
+              },
+              {
+                "source_start": 102.77000000000001,
+                "source_end": 103.05000000000001,
+                "word": " come"
+              },
+              {
+                "source_start": 103.05000000000001,
+                "source_end": 103.25,
+                "word": " to"
+              },
+              {
+                "source_start": 103.25,
+                "source_end": 103.55000000000001,
+                "word": " Memphis."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/03-2013-memphis-point-reaction-small.en-81eec0e1c5c7.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/03-2013-memphis-point-reaction-base.en-88d7e16d580b.json"
+      ],
+      "foreground_status": "lexical_candidates_human_hearing_pending",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2013-memphis-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 113,
+      "source_out": 118,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 113.82,
+          "source_out": 117.76,
+          "english": "And he wins over Feliciano Lopez in dominant form.",
+          "zh": "他以统治性的表现战胜了费利西亚诺·洛佩斯。",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 113.82,
+            "source_end": 117.76,
+            "text": " And he wins over Feliciano Lopez in dominant form.",
+            "words": [
+              {
+                "source_start": 113.82,
+                "source_end": 114.32,
+                "word": " And"
+              },
+              {
+                "source_start": 114.32,
+                "source_end": 114.44,
+                "word": " he"
+              },
+              {
+                "source_start": 114.44,
+                "source_end": 114.74,
+                "word": " wins"
+              },
+              {
+                "source_start": 114.74,
+                "source_end": 115.14,
+                "word": " over"
+              },
+              {
+                "source_start": 115.14,
+                "source_end": 115.84,
+                "word": " Feliciano"
+              },
+              {
+                "source_start": 115.84,
+                "source_end": 116.18,
+                "word": " Lopez"
+              },
+              {
+                "source_start": 116.18,
+                "source_end": 117.04,
+                "word": " in"
+              },
+              {
+                "source_start": 117.04,
+                "source_end": 117.36,
+                "word": " dominant"
+              },
+              {
+                "source_start": 117.36,
+                "source_end": 117.76,
+                "word": " form."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 113.82,
+            "source_end": 117.7,
+            "text": " And he wins over Feliciano Lopez in dominant form.",
+            "words": [
+              {
+                "source_start": 113.82,
+                "source_end": 114.3,
+                "word": " And"
+              },
+              {
+                "source_start": 114.3,
+                "source_end": 114.4,
+                "word": " he"
+              },
+              {
+                "source_start": 114.4,
+                "source_end": 114.64,
+                "word": " wins"
+              },
+              {
+                "source_start": 114.64,
+                "source_end": 115.06,
+                "word": " over"
+              },
+              {
+                "source_start": 115.06,
+                "source_end": 115.76,
+                "word": " Feliciano"
+              },
+              {
+                "source_start": 115.76,
+                "source_end": 116.08,
+                "word": " Lopez"
+              },
+              {
+                "source_start": 116.08,
+                "source_end": 116.96,
+                "word": " in"
+              },
+              {
+                "source_start": 116.96,
+                "source_end": 117.3,
+                "word": " dominant"
+              },
+              {
+                "source_start": 117.3,
+                "source_end": 117.7,
+                "word": " form."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2013-memphis-trophy-small.en-67689a1bb267.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2013-memphis-trophy-base.en-9c267124b25f.json"
+      ],
+      "foreground_status": "lexical_candidates_human_hearing_pending",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2014-memphis-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 151.15,
+      "source_out": 165,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 153.95,
+          "source_out": 156.05,
+          "english": "Game, set, match, Nishikori.",
+          "zh": "局、盘、赛，锦织圭获胜。",
+          "status": "metadata_assisted_name_normalization",
+          "verification": "两模型Game/set/match一致，姓名dish record/this is cool音形均失真；真实原记分牌已核NISHIKORI/KARLOVIC及终局，官方winner Nishikori支持专名正写；and连词不获双模型支持，需人听确认，不声称exact audio wording。",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 153.95,
+          "source_out": 156.05,
+          "status": "uncertain",
+          "reason": "winner姓名正写有官方身份支持，但裁判连接词与姓名实际读音未听审。",
+          "preserve_win_edit_recommendation": "完整关键回合151.15–155.6必须保；因语音跨死球不能为过闸截回合。此窗需要人听，不能complete。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 153.95000000000002,
+            "source_end": 156.05,
+            "review_start": 67.39999999999999,
+            "review_end": 69.5,
+            "text": " Game, set, match, dish, record.",
+            "words": [
+              {
+                "source_start": 153.95000000000002,
+                "source_end": 154.57,
+                "word": " Game,"
+              },
+              {
+                "source_start": 154.85,
+                "source_end": 154.89000000000001,
+                "word": " set,"
+              },
+              {
+                "source_start": 155.15,
+                "source_end": 155.43,
+                "word": " match,"
+              },
+              {
+                "source_start": 155.63,
+                "source_end": 155.71,
+                "word": " dish,"
+              },
+              {
+                "source_start": 155.75,
+                "source_end": 156.05,
+                "word": " record."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 153.95000000000002,
+            "source_end": 155.99,
+            "review_start": 67.39999999999999,
+            "review_end": 69.44,
+            "text": " Game set match this is cool",
+            "words": [
+              {
+                "source_start": 153.95000000000002,
+                "source_end": 154.51000000000002,
+                "word": " Game"
+              },
+              {
+                "source_start": 154.51000000000002,
+                "source_end": 154.81,
+                "word": " set"
+              },
+              {
+                "source_start": 154.81,
+                "source_end": 155.23000000000002,
+                "word": " match"
+              },
+              {
+                "source_start": 155.23000000000002,
+                "source_end": 155.65,
+                "word": " this"
+              },
+              {
+                "source_start": 155.65,
+                "source_end": 155.79,
+                "word": " is"
+              },
+              {
+                "source_start": 155.79,
+                "source_end": 155.99,
+                "word": " cool"
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/04-2014-memphis-point-reaction-small.en-2170f0016fc3.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/04-2014-memphis-point-reaction-base.en-c07647bb8804.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2014-memphis-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 168.4,
+      "source_out": 170.25,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [],
+      "raw_asr": {
+        "small.en": [],
+        "base.en": []
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2014-memphis-trophy-small.en-8278498b5471.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2014-memphis-trophy-base.en-35f9e2349e73.json"
+      ],
+      "foreground_status": "both_asr_no_lexical_speech_detected_not_human_heard",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2014-barcelona-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 183.15,
+      "source_out": 209,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 191.1,
+          "source_out": 194.34,
+          "english": "Nishikori makes history in Barcelona.",
+          "zh": "锦织圭在巴塞罗那创造历史。",
+          "status": "metadata_assisted_name_normalization",
+          "verification": "small Ishikori /base Michigori，官方winner Nishikori与本场scoreboard，后文同词。",
+          "human_heard": false
+        },
+        {
+          "source_in": 194.32,
+          "source_out": 196.65,
+          "english": "He's the first Japanese player",
+          "zh": "他是第一位日本球员，",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 196.65,
+          "source_out": 199.28,
+          "english": "ever to win this prestigious title.",
+          "zh": "赢下这项享有盛名的赛事。",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 199.22,
+          "source_out": 203.99,
+          "english": "Significantly, it's his first career title on clay.",
+          "zh": "尤其重要的是，这是他生涯首座红土冠军。",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 203.92,
+          "source_out": 208.06,
+          "english": "The second of 2014 for the Japanese star,",
+          "zh": "这位日本球星在2014年的第二冠，",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 208.06,
+          "source_out": 208.68,
+          "english": "and the fifth...",
+          "zh": "也是第五座……",
+          "status": "cross_asr_truncated_clause",
+          "verification": "两模型同词the fifth但源209切下镜，缺career等后文。",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 208.06,
+          "source_out": 209,
+          "status": "uncertain",
+          "reason": "最后and the fifth源尾截断，不补猜后文。",
+          "preserve_win_edit_recommendation": "保183.15–208.06，可止完整second of2014...star子句后；若要求完整一句须补原完整解说。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 191.1,
+            "source_end": 197.88,
+            "review_start": 88.24999999999999,
+            "review_end": 95.02999999999999,
+            "text": " Ishikori makes history in Barcelona he's the first Japanese player ever to win",
+            "words": [
+              {
+                "source_start": 191.1,
+                "source_end": 192.3,
+                "word": " Ishikori"
+              },
+              {
+                "source_start": 192.3,
+                "source_end": 192.70000000000002,
+                "word": " makes"
+              },
+              {
+                "source_start": 192.70000000000002,
+                "source_end": 193.3,
+                "word": " history"
+              },
+              {
+                "source_start": 193.3,
+                "source_end": 193.78,
+                "word": " in"
+              },
+              {
+                "source_start": 193.78,
+                "source_end": 194.34,
+                "word": " Barcelona"
+              },
+              {
+                "source_start": 194.34,
+                "source_end": 194.9,
+                "word": " he's"
+              },
+              {
+                "source_start": 194.9,
+                "source_end": 195.02,
+                "word": " the"
+              },
+              {
+                "source_start": 195.02,
+                "source_end": 195.42000000000002,
+                "word": " first"
+              },
+              {
+                "source_start": 195.42000000000002,
+                "source_end": 196.1,
+                "word": " Japanese"
+              },
+              {
+                "source_start": 196.1,
+                "source_end": 196.58,
+                "word": " player"
+              },
+              {
+                "source_start": 196.58,
+                "source_end": 197.4,
+                "word": " ever"
+              },
+              {
+                "source_start": 197.4,
+                "source_end": 197.72,
+                "word": " to"
+              },
+              {
+                "source_start": 197.72,
+                "source_end": 197.88,
+                "word": " win"
+              }
+            ]
+          },
+          {
+            "source_start": 197.88,
+            "source_end": 204.94,
+            "review_start": 95.02999999999999,
+            "review_end": 102.08999999999997,
+            "text": " this prestigious title significantly it's his first career title on clay the",
+            "words": [
+              {
+                "source_start": 197.88,
+                "source_end": 198.12,
+                "word": " this"
+              },
+              {
+                "source_start": 198.12,
+                "source_end": 198.54000000000002,
+                "word": " prestigious"
+              },
+              {
+                "source_start": 198.54000000000002,
+                "source_end": 199.22,
+                "word": " title"
+              },
+              {
+                "source_start": 199.22,
+                "source_end": 200.52,
+                "word": " significantly"
+              },
+              {
+                "source_start": 200.52,
+                "source_end": 201.3,
+                "word": " it's"
+              },
+              {
+                "source_start": 201.3,
+                "source_end": 201.48000000000002,
+                "word": " his"
+              },
+              {
+                "source_start": 201.48000000000002,
+                "source_end": 202.04000000000002,
+                "word": " first"
+              },
+              {
+                "source_start": 202.04000000000002,
+                "source_end": 202.68,
+                "word": " career"
+              },
+              {
+                "source_start": 202.68,
+                "source_end": 203.22,
+                "word": " title"
+              },
+              {
+                "source_start": 203.22,
+                "source_end": 203.54000000000002,
+                "word": " on"
+              },
+              {
+                "source_start": 203.54000000000002,
+                "source_end": 203.92000000000002,
+                "word": " clay"
+              },
+              {
+                "source_start": 203.92000000000002,
+                "source_end": 204.94,
+                "word": " the"
+              }
+            ]
+          },
+          {
+            "source_start": 204.94,
+            "source_end": 208.68,
+            "review_start": 102.08999999999997,
+            "review_end": 105.82999999999998,
+            "text": " second of 2014 for the Japanese star and the fifth",
+            "words": [
+              {
+                "source_start": 204.94,
+                "source_end": 205.36,
+                "word": " second"
+              },
+              {
+                "source_start": 205.36,
+                "source_end": 205.62,
+                "word": " of"
+              },
+              {
+                "source_start": 205.62,
+                "source_end": 206.6,
+                "word": " 2014"
+              },
+              {
+                "source_start": 206.6,
+                "source_end": 207.1,
+                "word": " for"
+              },
+              {
+                "source_start": 207.1,
+                "source_end": 207.22,
+                "word": " the"
+              },
+              {
+                "source_start": 207.22,
+                "source_end": 207.6,
+                "word": " Japanese"
+              },
+              {
+                "source_start": 207.6,
+                "source_end": 208.06,
+                "word": " star"
+              },
+              {
+                "source_start": 208.06,
+                "source_end": 208.26,
+                "word": " and"
+              },
+              {
+                "source_start": 208.26,
+                "source_end": 208.4,
+                "word": " the"
+              },
+              {
+                "source_start": 208.4,
+                "source_end": 208.68,
+                "word": " fifth"
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 191.1,
+            "source_end": 198.06,
+            "review_start": 88.24999999999999,
+            "review_end": 95.20999999999998,
+            "text": " Michigori makes history in Barcelona, he's the first Japanese player ever to win this",
+            "words": [
+              {
+                "source_start": 191.1,
+                "source_end": 192.28,
+                "word": " Michigori"
+              },
+              {
+                "source_start": 192.28,
+                "source_end": 192.62,
+                "word": " makes"
+              },
+              {
+                "source_start": 192.62,
+                "source_end": 193.06,
+                "word": " history"
+              },
+              {
+                "source_start": 193.06,
+                "source_end": 193.72,
+                "word": " in"
+              },
+              {
+                "source_start": 193.72,
+                "source_end": 194.06,
+                "word": " Barcelona,"
+              },
+              {
+                "source_start": 194.78,
+                "source_end": 194.86,
+                "word": " he's"
+              },
+              {
+                "source_start": 194.86,
+                "source_end": 194.96,
+                "word": " the"
+              },
+              {
+                "source_start": 194.96,
+                "source_end": 195.3,
+                "word": " first"
+              },
+              {
+                "source_start": 195.3,
+                "source_end": 195.94,
+                "word": " Japanese"
+              },
+              {
+                "source_start": 195.94,
+                "source_end": 196.42000000000002,
+                "word": " player"
+              },
+              {
+                "source_start": 196.42000000000002,
+                "source_end": 197.36,
+                "word": " ever"
+              },
+              {
+                "source_start": 197.36,
+                "source_end": 197.64000000000001,
+                "word": " to"
+              },
+              {
+                "source_start": 197.64000000000001,
+                "source_end": 197.82,
+                "word": " win"
+              },
+              {
+                "source_start": 197.82,
+                "source_end": 198.06,
+                "word": " this"
+              }
+            ]
+          },
+          {
+            "source_start": 198.06,
+            "source_end": 205.56,
+            "review_start": 95.20999999999998,
+            "review_end": 102.70999999999998,
+            "text": " prestigious title, significantly it's his first career title on clay, the second of",
+            "words": [
+              {
+                "source_start": 198.06,
+                "source_end": 198.36,
+                "word": " prestigious"
+              },
+              {
+                "source_start": 198.36,
+                "source_end": 199.16,
+                "word": " title,"
+              },
+              {
+                "source_start": 199.34,
+                "source_end": 200.38,
+                "word": " significantly"
+              },
+              {
+                "source_start": 200.38,
+                "source_end": 201.24,
+                "word": " it's"
+              },
+              {
+                "source_start": 201.24,
+                "source_end": 201.38,
+                "word": " his"
+              },
+              {
+                "source_start": 201.38,
+                "source_end": 201.86,
+                "word": " first"
+              },
+              {
+                "source_start": 201.86,
+                "source_end": 202.52,
+                "word": " career"
+              },
+              {
+                "source_start": 202.52,
+                "source_end": 203.14000000000001,
+                "word": " title"
+              },
+              {
+                "source_start": 203.14000000000001,
+                "source_end": 203.44,
+                "word": " on"
+              },
+              {
+                "source_start": 203.44,
+                "source_end": 203.78,
+                "word": " clay,"
+              },
+              {
+                "source_start": 204.82,
+                "source_end": 204.88,
+                "word": " the"
+              },
+              {
+                "source_start": 204.88,
+                "source_end": 205.3,
+                "word": " second"
+              },
+              {
+                "source_start": 205.3,
+                "source_end": 205.56,
+                "word": " of"
+              }
+            ]
+          },
+          {
+            "source_start": 205.56,
+            "source_end": 208.64000000000001,
+            "review_start": 102.70999999999998,
+            "review_end": 105.78999999999998,
+            "text": " 2014 for the Japanese star, and the fifth.",
+            "words": [
+              {
+                "source_start": 205.56,
+                "source_end": 206.48000000000002,
+                "word": " 2014"
+              },
+              {
+                "source_start": 206.48000000000002,
+                "source_end": 207.06,
+                "word": " for"
+              },
+              {
+                "source_start": 207.06,
+                "source_end": 207.14000000000001,
+                "word": " the"
+              },
+              {
+                "source_start": 207.14000000000001,
+                "source_end": 207.54000000000002,
+                "word": " Japanese"
+              },
+              {
+                "source_start": 207.54000000000002,
+                "source_end": 207.92000000000002,
+                "word": " star,"
+              },
+              {
+                "source_start": 208.20000000000002,
+                "source_end": 208.20000000000002,
+                "word": " and"
+              },
+              {
+                "source_start": 208.20000000000002,
+                "source_end": 208.34,
+                "word": " the"
+              },
+              {
+                "source_start": 208.34,
+                "source_end": 208.64000000000001,
+                "word": " fifth."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/05-2014-barcelona-point-reaction-small.en-54a637b32b61.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/05-2014-barcelona-point-reaction-base.en-751a0bb3cac0.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2014-barcelona-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 217,
+      "source_out": 219.2,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 217,
+          "source_out": 219.2,
+          "status": "uncertain",
+          "reason": "small All week here in Spain/base The whole week will expand，词句分歧。",
+          "preserve_win_edit_recommendation": "2.2s杯窗有英文几乎全覆盖，不静音装纯原声；保杯视觉但需人听/原完整句，不能complete。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 217.0,
+            "source_end": 219.02,
+            "text": " All week here in Spain.",
+            "words": [
+              {
+                "source_start": 217.0,
+                "source_end": 217.5,
+                "word": " All"
+              },
+              {
+                "source_start": 217.5,
+                "source_end": 218.06,
+                "word": " week"
+              },
+              {
+                "source_start": 218.06,
+                "source_end": 218.58,
+                "word": " here"
+              },
+              {
+                "source_start": 218.58,
+                "source_end": 218.92,
+                "word": " in"
+              },
+              {
+                "source_start": 218.92,
+                "source_end": 219.02,
+                "word": " Spain."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 217.0,
+            "source_end": 218.9,
+            "text": " The whole week will expand.",
+            "words": [
+              {
+                "source_start": 217.0,
+                "source_end": 217.0,
+                "word": " The"
+              },
+              {
+                "source_start": 217.0,
+                "source_end": 217.36,
+                "word": " whole"
+              },
+              {
+                "source_start": 217.36,
+                "source_end": 217.9,
+                "word": " week"
+              },
+              {
+                "source_start": 217.9,
+                "source_end": 218.46,
+                "word": " will"
+              },
+              {
+                "source_start": 218.46,
+                "source_end": 218.9,
+                "word": " expand."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2014-barcelona-trophy-small.en-53cf09548592.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2014-barcelona-trophy-base.en-c95e85759cc0.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2014-kuala-lumpur-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 278.85,
+      "source_out": 296,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 284.4,
+          "source_out": 285.85,
+          "english": "And we have a new champion!",
+          "zh": "新冠军诞生了！",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 286.41,
+          "source_out": 287.43,
+          "english": "Kei Nishikori.",
+          "zh": "锦织圭。",
+          "status": "metadata_assisted_name_normalization",
+          "verification": "small K.Nishikori/base Kaye Nishikori；本场官方winner支持专名完整正写。",
+          "human_heard": false
+        },
+        {
+          "source_in": 291.13,
+          "source_out": 293.59,
+          "english": "Michael Chang, Dante Bottini,",
+          "zh": "张德培、但丁·博蒂尼，",
+          "status": "metadata_assisted_name_normalization",
+          "verification": "两模型Michael Chang；smallButini/baseBotini同指DanteBottini，本纪录片原DanteBottini名卡已核。",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 281.59,
+          "source_out": 284.17,
+          "status": "uncertain",
+          "reason": "比赛时长One hour47min仅small，base One two seven；官方事实不能证实际发音。",
+          "preserve_win_edit_recommendation": "死球282.8本身跨疑声，不能截最后回合；保278.85–285.9需先人听时长。"
+        },
+        {
+          "source_in": 287.31,
+          "source_out": 290.71,
+          "status": "uncertain",
+          "reason": "base单模型额外And that’s what...it’s six；Water performance可能what a performance但不能凭常见句猜修。",
+          "preserve_win_edit_recommendation": "庆祝保至287.5；之后不明语句可不留，并接原杯镜，但原杯语句亦需人听。"
+        },
+        {
+          "source_in": 293.59,
+          "source_out": 296,
+          "status": "uncertain",
+          "reason": "his/is two coaches语法分歧，base末Ladies and gentlemen仅单模型且源尾截断。",
+          "preserve_win_edit_recommendation": "若保此区需人听；不要仅由两位教练事实猜his；可庆祝287.5硬止。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 281.59000000000003,
+            "source_end": 287.43,
+            "review_start": 111.08999999999996,
+            "review_end": 116.92999999999996,
+            "text": " One hour and 47 minutes, and we have a new champion, K. Nishikori.",
+            "words": [
+              {
+                "source_start": 281.59000000000003,
+                "source_end": 282.15000000000003,
+                "word": " One"
+              },
+              {
+                "source_start": 282.15000000000003,
+                "source_end": 282.69,
+                "word": " hour"
+              },
+              {
+                "source_start": 282.69,
+                "source_end": 283.11,
+                "word": " and"
+              },
+              {
+                "source_start": 283.11,
+                "source_end": 283.57000000000005,
+                "word": " 47"
+              },
+              {
+                "source_start": 283.57000000000005,
+                "source_end": 284.17,
+                "word": " minutes,"
+              },
+              {
+                "source_start": 284.49,
+                "source_end": 284.53000000000003,
+                "word": " and"
+              },
+              {
+                "source_start": 284.53000000000003,
+                "source_end": 284.67,
+                "word": " we"
+              },
+              {
+                "source_start": 284.67,
+                "source_end": 284.81,
+                "word": " have"
+              },
+              {
+                "source_start": 284.81,
+                "source_end": 284.95000000000005,
+                "word": " a"
+              },
+              {
+                "source_start": 284.95000000000005,
+                "source_end": 285.13,
+                "word": " new"
+              },
+              {
+                "source_start": 285.13,
+                "source_end": 285.61,
+                "word": " champion,"
+              },
+              {
+                "source_start": 286.41,
+                "source_end": 286.45000000000005,
+                "word": " K."
+              },
+              {
+                "source_start": 286.97,
+                "source_end": 287.43,
+                "word": " Nishikori."
+              }
+            ]
+          },
+          {
+            "source_start": 289.15000000000003,
+            "source_end": 294.59000000000003,
+            "review_start": 118.64999999999996,
+            "review_end": 124.08999999999996,
+            "text": " Water performance, Michael Chang. Dante Butini is two coaches.",
+            "words": [
+              {
+                "source_start": 289.15000000000003,
+                "source_end": 289.97,
+                "word": " Water"
+              },
+              {
+                "source_start": 289.97,
+                "source_end": 290.71000000000004,
+                "word": " performance,"
+              },
+              {
+                "source_start": 291.13,
+                "source_end": 291.33000000000004,
+                "word": " Michael"
+              },
+              {
+                "source_start": 291.33000000000004,
+                "source_end": 291.87,
+                "word": " Chang."
+              },
+              {
+                "source_start": 292.97,
+                "source_end": 293.13,
+                "word": " Dante"
+              },
+              {
+                "source_start": 293.13,
+                "source_end": 293.59000000000003,
+                "word": " Butini"
+              },
+              {
+                "source_start": 293.59000000000003,
+                "source_end": 293.89000000000004,
+                "word": " is"
+              },
+              {
+                "source_start": 293.89000000000004,
+                "source_end": 294.09000000000003,
+                "word": " two"
+              },
+              {
+                "source_start": 294.09000000000003,
+                "source_end": 294.59000000000003,
+                "word": " coaches."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 281.59000000000003,
+            "source_end": 287.31,
+            "review_start": 111.08999999999996,
+            "review_end": 116.80999999999997,
+            "text": " One, two, seven minutes, and we have a new champion, Kaye Nishikori.",
+            "words": [
+              {
+                "source_start": 281.59000000000003,
+                "source_end": 282.11,
+                "word": " One,"
+              },
+              {
+                "source_start": 282.25,
+                "source_end": 283.03000000000003,
+                "word": " two,"
+              },
+              {
+                "source_start": 283.45000000000005,
+                "source_end": 283.81,
+                "word": " seven"
+              },
+              {
+                "source_start": 283.81,
+                "source_end": 284.11,
+                "word": " minutes,"
+              },
+              {
+                "source_start": 284.23,
+                "source_end": 284.47,
+                "word": " and"
+              },
+              {
+                "source_start": 284.47,
+                "source_end": 284.63,
+                "word": " we"
+              },
+              {
+                "source_start": 284.63,
+                "source_end": 284.77000000000004,
+                "word": " have"
+              },
+              {
+                "source_start": 284.77000000000004,
+                "source_end": 284.89000000000004,
+                "word": " a"
+              },
+              {
+                "source_start": 284.89000000000004,
+                "source_end": 285.03000000000003,
+                "word": " new"
+              },
+              {
+                "source_start": 285.03000000000003,
+                "source_end": 285.43,
+                "word": " champion,"
+              },
+              {
+                "source_start": 286.07000000000005,
+                "source_end": 286.59000000000003,
+                "word": " Kaye"
+              },
+              {
+                "source_start": 286.59000000000003,
+                "source_end": 287.31,
+                "word": " Nishikori."
+              }
+            ]
+          },
+          {
+            "source_start": 287.31,
+            "source_end": 288.79,
+            "review_start": 116.80999999999997,
+            "review_end": 118.28999999999996,
+            "text": " And that's what I want to say about this,",
+            "words": [
+              {
+                "source_start": 287.31,
+                "source_end": 287.31,
+                "word": " And"
+              },
+              {
+                "source_start": 287.31,
+                "source_end": 287.33000000000004,
+                "word": " that's"
+              },
+              {
+                "source_start": 287.33000000000004,
+                "source_end": 287.45000000000005,
+                "word": " what"
+              },
+              {
+                "source_start": 287.45000000000005,
+                "source_end": 287.63,
+                "word": " I"
+              },
+              {
+                "source_start": 287.63,
+                "source_end": 287.75,
+                "word": " want"
+              },
+              {
+                "source_start": 287.75,
+                "source_end": 287.93,
+                "word": " to"
+              },
+              {
+                "source_start": 287.93,
+                "source_end": 288.35,
+                "word": " say"
+              },
+              {
+                "source_start": 288.35,
+                "source_end": 288.79,
+                "word": " about"
+              },
+              {
+                "source_start": 288.79,
+                "source_end": 288.79,
+                "word": " this,"
+              }
+            ]
+          },
+          {
+            "source_start": 288.79,
+            "source_end": 294.41,
+            "review_start": 118.28999999999996,
+            "review_end": 123.90999999999997,
+            "text": " it's six-water performance, Michael Chang, Dante Botini's two coaches.",
+            "words": [
+              {
+                "source_start": 288.79,
+                "source_end": 289.07000000000005,
+                "word": " it's"
+              },
+              {
+                "source_start": 289.07000000000005,
+                "source_end": 289.59000000000003,
+                "word": " six"
+              },
+              {
+                "source_start": 289.59000000000003,
+                "source_end": 289.99,
+                "word": "-water"
+              },
+              {
+                "source_start": 289.99,
+                "source_end": 290.33000000000004,
+                "word": " performance,"
+              },
+              {
+                "source_start": 291.27000000000004,
+                "source_end": 291.33000000000004,
+                "word": " Michael"
+              },
+              {
+                "source_start": 291.33000000000004,
+                "source_end": 291.65000000000003,
+                "word": " Chang,"
+              },
+              {
+                "source_start": 293.09000000000003,
+                "source_end": 293.09000000000003,
+                "word": " Dante"
+              },
+              {
+                "source_start": 293.09000000000003,
+                "source_end": 293.83000000000004,
+                "word": " Botini's"
+              },
+              {
+                "source_start": 293.83000000000004,
+                "source_end": 293.99,
+                "word": " two"
+              },
+              {
+                "source_start": 293.99,
+                "source_end": 294.41,
+                "word": " coaches."
+              }
+            ]
+          },
+          {
+            "source_start": 294.95000000000005,
+            "source_end": 295.97,
+            "review_start": 124.44999999999996,
+            "review_end": 125.46999999999997,
+            "text": " Ladies and gentlemen...",
+            "words": [
+              {
+                "source_start": 294.95000000000005,
+                "source_end": 294.95000000000005,
+                "word": " Ladies"
+              },
+              {
+                "source_start": 294.95000000000005,
+                "source_end": 295.39000000000004,
+                "word": " and"
+              },
+              {
+                "source_start": 295.39000000000004,
+                "source_end": 295.97,
+                "word": " gentlemen..."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/06-2014-kuala-lumpur-point-reaction-small.en-4723fb378fd8.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/06-2014-kuala-lumpur-point-reaction-base.en-9074ac504005.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2014-kuala-lumpur-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 304.4,
+      "source_out": 308,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 304.4,
+          "source_out": 306.86,
+          "status": "uncertain",
+          "reason": "a break down vs we’ll break down,片段句头已截，不能只依据比分释译为落后一次破发。",
+          "preserve_win_edit_recommendation": "杯307–308无检测词尾可用1秒；若要整3.6秒杯须核前句真实声音。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 304.4,
+            "source_end": 306.85999999999996,
+            "text": " come back and a breakdown in the first set.",
+            "words": [
+              {
+                "source_start": 304.4,
+                "source_end": 304.64,
+                "word": " come"
+              },
+              {
+                "source_start": 304.64,
+                "source_end": 304.94,
+                "word": " back"
+              },
+              {
+                "source_start": 304.94,
+                "source_end": 305.12,
+                "word": " and"
+              },
+              {
+                "source_start": 305.12,
+                "source_end": 305.2,
+                "word": " a"
+              },
+              {
+                "source_start": 305.2,
+                "source_end": 305.59999999999997,
+                "word": " breakdown"
+              },
+              {
+                "source_start": 305.59999999999997,
+                "source_end": 306.02,
+                "word": " in"
+              },
+              {
+                "source_start": 306.02,
+                "source_end": 306.15999999999997,
+                "word": " the"
+              },
+              {
+                "source_start": 306.15999999999997,
+                "source_end": 306.41999999999996,
+                "word": " first"
+              },
+              {
+                "source_start": 306.41999999999996,
+                "source_end": 306.85999999999996,
+                "word": " set."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 304.4,
+            "source_end": 306.76,
+            "text": " come back and we'll break down in the first set.",
+            "words": [
+              {
+                "source_start": 304.4,
+                "source_end": 304.62,
+                "word": " come"
+              },
+              {
+                "source_start": 304.62,
+                "source_end": 304.85999999999996,
+                "word": " back"
+              },
+              {
+                "source_start": 304.85999999999996,
+                "source_end": 305.06,
+                "word": " and"
+              },
+              {
+                "source_start": 305.06,
+                "source_end": 305.15999999999997,
+                "word": " we'll"
+              },
+              {
+                "source_start": 305.15999999999997,
+                "source_end": 305.38,
+                "word": " break"
+              },
+              {
+                "source_start": 305.38,
+                "source_end": 305.76,
+                "word": " down"
+              },
+              {
+                "source_start": 305.76,
+                "source_end": 305.96,
+                "word": " in"
+              },
+              {
+                "source_start": 305.96,
+                "source_end": 306.08,
+                "word": " the"
+              },
+              {
+                "source_start": 306.08,
+                "source_end": 306.35999999999996,
+                "word": " first"
+              },
+              {
+                "source_start": 306.35999999999996,
+                "source_end": 306.76,
+                "word": " set."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2014-kuala-lumpur-trophy-small.en-1e94048c4b3d.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2014-kuala-lumpur-trophy-base.en-2e5fad4f208e.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2014-tokyo-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 323.65,
+      "source_out": 350,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 331.86,
+          "source_out": 332.7,
+          "status": "uncertain",
+          "reason": "smallYEAH/baseUgh，非明确词义的选手/观众吼声。",
+          "preserve_win_edit_recommendation": "属于非词语情绪音不编英文；保原声+回合胜利，标签nonlexical_reaction而不是无声。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 331.85999999999996,
+            "source_end": 332.7,
+            "review_start": 137.30999999999997,
+            "review_end": 138.14999999999998,
+            "text": " YEAH!",
+            "words": [
+              {
+                "source_start": 331.85999999999996,
+                "source_end": 332.7,
+                "word": " YEAH!"
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 331.85999999999996,
+            "source_end": 332.46,
+            "review_start": 137.30999999999997,
+            "review_end": 137.90999999999997,
+            "text": " Ugh!",
+            "words": [
+              {
+                "source_start": 331.85999999999996,
+                "source_end": 332.46,
+                "word": " Ugh!"
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/07-2014-tokyo-point-reaction-small.en-1fa412ae9d19.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/07-2014-tokyo-point-reaction-base.en-5543c31ca9f0.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2015-memphis-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 377.45,
+      "source_out": 390,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 382.33,
+          "source_out": 382.87,
+          "status": "uncertain",
+          "reason": "smallYeah/baseOkay，极短反应音，非可确定解说句。",
+          "preserve_win_edit_recommendation": "真回合必须保；标nonlexical_or_uncertain_reaction，不伪造词字幕。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 382.33,
+            "source_end": 382.87,
+            "review_start": 160.32999999999998,
+            "review_end": 160.86999999999998,
+            "text": " Yeah",
+            "words": [
+              {
+                "source_start": 382.33,
+                "source_end": 382.87,
+                "word": " Yeah"
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 382.33,
+            "source_end": 382.78999999999996,
+            "review_start": 160.32999999999998,
+            "review_end": 160.79,
+            "text": " Okay.",
+            "words": [
+              {
+                "source_start": 382.33,
+                "source_end": 382.78999999999996,
+                "word": " Okay."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/08-2015-memphis-point-reaction-small.en-3d3433e9ea63.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/08-2015-memphis-point-reaction-base.en-64ea2ab087f3.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2015-memphis-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 401,
+      "source_out": 403.35,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [],
+      "raw_asr": {
+        "small.en": [],
+        "base.en": []
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2015-memphis-trophy-small.en-7a8176a6f948.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2015-memphis-trophy-base.en-6e1e681fc636.json"
+      ],
+      "foreground_status": "both_asr_no_lexical_speech_detected_not_human_heard",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2015-barcelona-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 403.4,
+      "source_out": 422,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 405.08,
+          "source_out": 407.62,
+          "english": "Victory for Nishikori!",
+          "zh": "锦织圭获胜！",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 407.63,
+          "source_out": 409.72,
+          "english": "And what a way to do it!",
+          "zh": "这样的夺冠方式，太精彩了！",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 411.8,
+          "source_out": 414.83,
+          "english": "He's successfully defended his title here in Barcelona.",
+          "zh": "他在巴塞罗那成功卫冕！",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 414.71,
+          "source_out": 418.33,
+          "english": "It's the second title of the season",
+          "zh": "这是本赛季的第二冠，",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 418.33,
+          "source_out": 420.67,
+          "english": "and the ninth of his career.",
+          "zh": "也是生涯第九冠。",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 405.13,
+            "source_end": 413.45,
+            "review_start": 172.08,
+            "review_end": 180.40000000000003,
+            "text": " Victory for Nishikori and what a way to do it he's successfully defended his",
+            "words": [
+              {
+                "source_start": 405.13,
+                "source_end": 406.54999999999995,
+                "word": " Victory"
+              },
+              {
+                "source_start": 406.54999999999995,
+                "source_end": 406.90999999999997,
+                "word": " for"
+              },
+              {
+                "source_start": 406.90999999999997,
+                "source_end": 407.48999999999995,
+                "word": " Nishikori"
+              },
+              {
+                "source_start": 407.48999999999995,
+                "source_end": 408.19,
+                "word": " and"
+              },
+              {
+                "source_start": 408.19,
+                "source_end": 408.63,
+                "word": " what"
+              },
+              {
+                "source_start": 408.63,
+                "source_end": 408.77,
+                "word": " a"
+              },
+              {
+                "source_start": 408.77,
+                "source_end": 408.92999999999995,
+                "word": " way"
+              },
+              {
+                "source_start": 408.92999999999995,
+                "source_end": 409.09,
+                "word": " to"
+              },
+              {
+                "source_start": 409.09,
+                "source_end": 409.27,
+                "word": " do"
+              },
+              {
+                "source_start": 409.27,
+                "source_end": 409.69,
+                "word": " it"
+              },
+              {
+                "source_start": 409.69,
+                "source_end": 412.04999999999995,
+                "word": " he's"
+              },
+              {
+                "source_start": 412.04999999999995,
+                "source_end": 412.57,
+                "word": " successfully"
+              },
+              {
+                "source_start": 412.57,
+                "source_end": 413.21,
+                "word": " defended"
+              },
+              {
+                "source_start": 413.21,
+                "source_end": 413.45,
+                "word": " his"
+              }
+            ]
+          },
+          {
+            "source_start": 413.45,
+            "source_end": 420.25,
+            "review_start": 180.40000000000003,
+            "review_end": 187.20000000000002,
+            "text": " title here in Barcelona it's the second title of the season and the ninth of his",
+            "words": [
+              {
+                "source_start": 413.45,
+                "source_end": 413.78999999999996,
+                "word": " title"
+              },
+              {
+                "source_start": 413.78999999999996,
+                "source_end": 414.07,
+                "word": " here"
+              },
+              {
+                "source_start": 414.07,
+                "source_end": 414.25,
+                "word": " in"
+              },
+              {
+                "source_start": 414.25,
+                "source_end": 414.71,
+                "word": " Barcelona"
+              },
+              {
+                "source_start": 414.71,
+                "source_end": 416.63,
+                "word": " it's"
+              },
+              {
+                "source_start": 416.63,
+                "source_end": 416.78999999999996,
+                "word": " the"
+              },
+              {
+                "source_start": 416.78999999999996,
+                "source_end": 417.13,
+                "word": " second"
+              },
+              {
+                "source_start": 417.13,
+                "source_end": 417.66999999999996,
+                "word": " title"
+              },
+              {
+                "source_start": 417.66999999999996,
+                "source_end": 417.83,
+                "word": " of"
+              },
+              {
+                "source_start": 417.83,
+                "source_end": 417.96999999999997,
+                "word": " the"
+              },
+              {
+                "source_start": 417.96999999999997,
+                "source_end": 418.33,
+                "word": " season"
+              },
+              {
+                "source_start": 418.33,
+                "source_end": 418.87,
+                "word": " and"
+              },
+              {
+                "source_start": 418.87,
+                "source_end": 418.98999999999995,
+                "word": " the"
+              },
+              {
+                "source_start": 418.98999999999995,
+                "source_end": 419.45,
+                "word": " ninth"
+              },
+              {
+                "source_start": 419.45,
+                "source_end": 420.07,
+                "word": " of"
+              },
+              {
+                "source_start": 420.07,
+                "source_end": 420.25,
+                "word": " his"
+              }
+            ]
+          },
+          {
+            "source_start": 420.25,
+            "source_end": 420.66999999999996,
+            "review_start": 187.20000000000002,
+            "review_end": 187.62000000000003,
+            "text": " career",
+            "words": [
+              {
+                "source_start": 420.25,
+                "source_end": 420.66999999999996,
+                "word": " career"
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 403.4,
+            "source_end": 413.40999999999997,
+            "review_start": 170.35000000000002,
+            "review_end": 180.36,
+            "text": " victory for Nishikori and what a way to do it he's successfully defended his",
+            "words": [
+              {
+                "source_start": 403.4,
+                "source_end": 404.73999999999995,
+                "word": " victory"
+              },
+              {
+                "source_start": 406.46999999999997,
+                "source_end": 406.84999999999997,
+                "word": " for"
+              },
+              {
+                "source_start": 406.84999999999997,
+                "source_end": 407.42999999999995,
+                "word": " Nishikori"
+              },
+              {
+                "source_start": 407.42999999999995,
+                "source_end": 408.10999999999996,
+                "word": " and"
+              },
+              {
+                "source_start": 408.10999999999996,
+                "source_end": 408.57,
+                "word": " what"
+              },
+              {
+                "source_start": 408.57,
+                "source_end": 408.72999999999996,
+                "word": " a"
+              },
+              {
+                "source_start": 408.72999999999996,
+                "source_end": 408.90999999999997,
+                "word": " way"
+              },
+              {
+                "source_start": 408.90999999999997,
+                "source_end": 409.01,
+                "word": " to"
+              },
+              {
+                "source_start": 409.01,
+                "source_end": 409.21,
+                "word": " do"
+              },
+              {
+                "source_start": 409.21,
+                "source_end": 409.39,
+                "word": " it"
+              },
+              {
+                "source_start": 409.39,
+                "source_end": 411.95,
+                "word": " he's"
+              },
+              {
+                "source_start": 411.95,
+                "source_end": 412.51,
+                "word": " successfully"
+              },
+              {
+                "source_start": 412.51,
+                "source_end": 413.10999999999996,
+                "word": " defended"
+              },
+              {
+                "source_start": 413.10999999999996,
+                "source_end": 413.40999999999997,
+                "word": " his"
+              }
+            ]
+          },
+          {
+            "source_start": 413.40999999999997,
+            "source_end": 420.59,
+            "review_start": 180.36,
+            "review_end": 187.54000000000002,
+            "text": " title here in Barcelona it's the second title of the season and the ninth of his career",
+            "words": [
+              {
+                "source_start": 413.40999999999997,
+                "source_end": 413.71,
+                "word": " title"
+              },
+              {
+                "source_start": 413.71,
+                "source_end": 414.03,
+                "word": " here"
+              },
+              {
+                "source_start": 414.03,
+                "source_end": 414.19,
+                "word": " in"
+              },
+              {
+                "source_start": 414.19,
+                "source_end": 414.54999999999995,
+                "word": " Barcelona"
+              },
+              {
+                "source_start": 414.54999999999995,
+                "source_end": 416.60999999999996,
+                "word": " it's"
+              },
+              {
+                "source_start": 416.60999999999996,
+                "source_end": 416.71,
+                "word": " the"
+              },
+              {
+                "source_start": 416.71,
+                "source_end": 417.13,
+                "word": " second"
+              },
+              {
+                "source_start": 417.13,
+                "source_end": 417.53,
+                "word": " title"
+              },
+              {
+                "source_start": 417.53,
+                "source_end": 417.81,
+                "word": " of"
+              },
+              {
+                "source_start": 417.81,
+                "source_end": 417.89,
+                "word": " the"
+              },
+              {
+                "source_start": 417.89,
+                "source_end": 418.15,
+                "word": " season"
+              },
+              {
+                "source_start": 418.15,
+                "source_end": 418.81,
+                "word": " and"
+              },
+              {
+                "source_start": 418.81,
+                "source_end": 418.95,
+                "word": " the"
+              },
+              {
+                "source_start": 418.95,
+                "source_end": 419.31,
+                "word": " ninth"
+              },
+              {
+                "source_start": 419.31,
+                "source_end": 420.01,
+                "word": " of"
+              },
+              {
+                "source_start": 420.01,
+                "source_end": 420.19,
+                "word": " his"
+              },
+              {
+                "source_start": 420.19,
+                "source_end": 420.59,
+                "word": " career"
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/09-2015-barcelona-point-reaction-small.en-12ce3d4a9dea.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/09-2015-barcelona-point-reaction-base.en-6fb21e98414d.json"
+      ],
+      "foreground_status": "lexical_candidates_human_hearing_pending",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2015-barcelona-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 431,
+      "source_out": 432.1,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 431.02,
+          "source_out": 432.08,
+          "status": "uncertain",
+          "reason": "smallOf course/baseof both sides，源极短截断片段。",
+          "preserve_win_edit_recommendation": "保杯视觉仍需人听语句，不能硬称noise或complete。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 431.02,
+            "source_end": 431.88,
+            "text": " Of course",
+            "words": [
+              {
+                "source_start": 431.02,
+                "source_end": 431.56,
+                "word": " Of"
+              },
+              {
+                "source_start": 431.56,
+                "source_end": 431.88,
+                "word": " course"
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 431.02,
+            "source_end": 432.08,
+            "text": " of both sides.",
+            "words": [
+              {
+                "source_start": 431.02,
+                "source_end": 431.46,
+                "word": " of"
+              },
+              {
+                "source_start": 431.46,
+                "source_end": 431.76,
+                "word": " both"
+              },
+              {
+                "source_start": 431.76,
+                "source_end": 432.08,
+                "word": " sides."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2015-barcelona-trophy-small.en-e08be412a724.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2015-barcelona-trophy-base.en-1157b95c9197.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2015-washington-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 432.2,
+      "source_out": 461,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 455.15,
+          "source_out": 457.39,
+          "english": "When he comes to a tournament,",
+          "zh": "每次来到一项赛事，",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 457.61,
+          "source_out": 458.35,
+          "english": "he comes to work.",
+          "zh": "他都是来认真工作的。",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        },
+        {
+          "source_in": 458.81,
+          "source_out": 459.87,
+          "english": "He's all business.",
+          "zh": "他专注于比赛。",
+          "status": "cross_asr_candidate",
+          "verification": "small/base normalized lexical agreement; boundary small words, human hearing pending",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 452.19,
+          "source_out": 455.07,
+          "status": "uncertain",
+          "reason": "base独有about as animated as you’ll see/Katie chicory，small未识前文。官方Kei身份仅纠名不能证额外整句。",
+          "preserve_win_edit_recommendation": "冠军点至446.5/庆祝至451.9可保；452.19前段人听待核，切出后接455.15同词新句。"
+        },
+        {
+          "source_in": 460.43,
+          "source_out": 461,
+          "status": "uncertain",
+          "reason": "This week单base，末尾裁切无法核下一句。",
+          "preserve_win_edit_recommendation": "完整同词句止459.9，避免单模型末段。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 455.15,
+            "source_end": 459.87,
+            "review_start": 213.00000000000006,
+            "review_end": 217.72000000000008,
+            "text": " When he comes to a tournament, he comes to work, he's all business.",
+            "words": [
+              {
+                "source_start": 455.15,
+                "source_end": 455.75,
+                "word": " When"
+              },
+              {
+                "source_start": 455.75,
+                "source_end": 456.34999999999997,
+                "word": " he"
+              },
+              {
+                "source_start": 456.34999999999997,
+                "source_end": 456.69,
+                "word": " comes"
+              },
+              {
+                "source_start": 456.69,
+                "source_end": 456.99,
+                "word": " to"
+              },
+              {
+                "source_start": 456.99,
+                "source_end": 457.07,
+                "word": " a"
+              },
+              {
+                "source_start": 457.07,
+                "source_end": 457.39,
+                "word": " tournament,"
+              },
+              {
+                "source_start": 457.61,
+                "source_end": 457.63,
+                "word": " he"
+              },
+              {
+                "source_start": 457.63,
+                "source_end": 457.89,
+                "word": " comes"
+              },
+              {
+                "source_start": 457.89,
+                "source_end": 458.11,
+                "word": " to"
+              },
+              {
+                "source_start": 458.11,
+                "source_end": 458.34999999999997,
+                "word": " work,"
+              },
+              {
+                "source_start": 458.96999999999997,
+                "source_end": 459.27,
+                "word": " he's"
+              },
+              {
+                "source_start": 459.27,
+                "source_end": 459.45,
+                "word": " all"
+              },
+              {
+                "source_start": 459.45,
+                "source_end": 459.87,
+                "word": " business."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 452.19,
+            "source_end": 454.11,
+            "review_start": 210.04000000000008,
+            "review_end": 211.96000000000006,
+            "text": " about as animated as you'll see",
+            "words": [
+              {
+                "source_start": 452.19,
+                "source_end": 452.78999999999996,
+                "word": " about"
+              },
+              {
+                "source_start": 452.78999999999996,
+                "source_end": 453.01,
+                "word": " as"
+              },
+              {
+                "source_start": 453.01,
+                "source_end": 453.37,
+                "word": " animated"
+              },
+              {
+                "source_start": 453.37,
+                "source_end": 453.69,
+                "word": " as"
+              },
+              {
+                "source_start": 453.69,
+                "source_end": 453.84999999999997,
+                "word": " you'll"
+              },
+              {
+                "source_start": 453.84999999999997,
+                "source_end": 454.11,
+                "word": " see"
+              }
+            ]
+          },
+          {
+            "source_start": 454.11,
+            "source_end": 457.01,
+            "review_start": 211.96000000000006,
+            "review_end": 214.86000000000007,
+            "text": " Katie chicory when he comes to a",
+            "words": [
+              {
+                "source_start": 454.11,
+                "source_end": 454.43,
+                "word": " Katie"
+              },
+              {
+                "source_start": 454.43,
+                "source_end": 455.07,
+                "word": " chicory"
+              },
+              {
+                "source_start": 455.07,
+                "source_end": 456.11,
+                "word": " when"
+              },
+              {
+                "source_start": 456.11,
+                "source_end": 456.31,
+                "word": " he"
+              },
+              {
+                "source_start": 456.31,
+                "source_end": 456.61,
+                "word": " comes"
+              },
+              {
+                "source_start": 456.61,
+                "source_end": 456.90999999999997,
+                "word": " to"
+              },
+              {
+                "source_start": 456.90999999999997,
+                "source_end": 457.01,
+                "word": " a"
+              }
+            ]
+          },
+          {
+            "source_start": 457.01,
+            "source_end": 458.27,
+            "review_start": 214.86000000000007,
+            "review_end": 216.12000000000006,
+            "text": " tournament he comes to work.",
+            "words": [
+              {
+                "source_start": 457.01,
+                "source_end": 457.28999999999996,
+                "word": " tournament"
+              },
+              {
+                "source_start": 457.28999999999996,
+                "source_end": 457.61,
+                "word": " he"
+              },
+              {
+                "source_start": 457.61,
+                "source_end": 457.78999999999996,
+                "word": " comes"
+              },
+              {
+                "source_start": 457.78999999999996,
+                "source_end": 458.05,
+                "word": " to"
+              },
+              {
+                "source_start": 458.05,
+                "source_end": 458.27,
+                "word": " work."
+              }
+            ]
+          },
+          {
+            "source_start": 458.81,
+            "source_end": 459.77,
+            "review_start": 216.66000000000008,
+            "review_end": 217.62000000000006,
+            "text": " He's all business.",
+            "words": [
+              {
+                "source_start": 458.81,
+                "source_end": 459.23,
+                "word": " He's"
+              },
+              {
+                "source_start": 459.23,
+                "source_end": 459.37,
+                "word": " all"
+              },
+              {
+                "source_start": 459.37,
+                "source_end": 459.77,
+                "word": " business."
+              }
+            ]
+          },
+          {
+            "source_start": 460.43,
+            "source_end": 460.96999999999997,
+            "review_start": 218.28000000000006,
+            "review_end": 218.82000000000008,
+            "text": " This week.",
+            "words": [
+              {
+                "source_start": 460.43,
+                "source_end": 460.73,
+                "word": " This"
+              },
+              {
+                "source_start": 460.73,
+                "source_end": 460.96999999999997,
+                "word": " week."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/10-2015-washington-point-reaction-small.en-2d9a521c5032.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/10-2015-washington-point-reaction-base.en-cc561b15243a.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2015-washington-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 475.8,
+      "source_out": 477.85,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 475.8,
+          "source_out": 476.14,
+          "status": "uncertain",
+          "reason": "smallthree cents/baseThank you for your patience .3s内5word不可信。",
+          "preserve_win_edit_recommendation": "杯476.3–477.85保无检测词尾；需VAD+实听确认不是短句残音，不能仅两模型空白当人听。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 475.8,
+            "source_end": 476.14,
+            "text": " three cents.",
+            "words": [
+              {
+                "source_start": 475.8,
+                "source_end": 475.86,
+                "word": " three"
+              },
+              {
+                "source_start": 475.86,
+                "source_end": 476.14,
+                "word": " cents."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 475.8,
+            "source_end": 476.1,
+            "text": " Thank you for your patience.",
+            "words": [
+              {
+                "source_start": 475.8,
+                "source_end": 476.06,
+                "word": " Thank"
+              },
+              {
+                "source_start": 476.06,
+                "source_end": 476.06,
+                "word": " you"
+              },
+              {
+                "source_start": 476.06,
+                "source_end": 476.08,
+                "word": " for"
+              },
+              {
+                "source_start": 476.08,
+                "source_end": 476.08,
+                "word": " your"
+              },
+              {
+                "source_start": 476.08,
+                "source_end": 476.1,
+                "word": " patience."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2015-washington-trophy-small.en-11f66abb1af2.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2015-washington-trophy-base.en-11c1bb29e33a.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2016-memphis-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 613.45,
+      "source_out": 633,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [],
+      "raw_asr": {
+        "small.en": [],
+        "base.en": []
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/11-2016-memphis-point-reaction-small.en-dace83f791b0.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/11-2016-memphis-point-reaction-base.en-47d69cde7104.json"
+      ],
+      "foreground_status": "both_asr_no_lexical_speech_detected_not_human_heard",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2016-memphis-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 634.5,
+      "source_out": 637.7,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 634.5,
+          "source_out": 636.66,
+          "status": "uncertain",
+          "reason": "smallHey Mr.Corey/baseHey，专名可能Kei Nishikori但仅官方身份不能确定全句是裁判姓名宣布或其他呼喊。",
+          "preserve_win_edit_recommendation": "杯末636.8–637.7可留；短窗原语句需要人听，不强猜专名。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 634.5,
+            "source_end": 636.66,
+            "text": " Hey, Mr. Corey!",
+            "words": [
+              {
+                "source_start": 634.5,
+                "source_end": 635.2,
+                "word": " Hey,"
+              },
+              {
+                "source_start": 635.48,
+                "source_end": 635.98,
+                "word": " Mr."
+              },
+              {
+                "source_start": 636.5,
+                "source_end": 636.66,
+                "word": " Corey!"
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 634.5,
+            "source_end": 635.08,
+            "text": " Hey",
+            "words": [
+              {
+                "source_start": 634.5,
+                "source_end": 635.08,
+                "word": " Hey"
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2016-memphis-trophy-small.en-7e3347110a5c.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2016-memphis-trophy-base.en-52137dbabb2b.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2019-brisbane-point-reaction",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 822.85,
+      "source_out": 843,
+      "all_english_and_zh_candidates": [
+        {
+          "source_in": 833.04,
+          "source_out": 836.5,
+          "english": "Two sets to one: 6-4, 3-6, 6-2.",
+          "zh": "三盘获胜：6-4、3-6、6-2。",
+          "status": "metadata_assisted_score_normalization",
+          "verification": "small/base两模型数词一致但连字符粘合。原赛事记分牌/官方Kei-first比分6-4 3-6 6-2确认数字格式；非改赛果。",
+          "human_heard": false
+        },
+        {
+          "source_in": 836.68,
+          "source_out": 840.84,
+          "english": "Kei Nishikori goes one better than two years ago in Brisbane.",
+          "zh": "锦织圭比两年前在布里斯班更进一步。",
+          "status": "metadata_assisted_name_normalization",
+          "verification": "smallKaneNishikori/baseKindnessaCorey，后半句同词；本场官方winnerKeiNishikori支持名字正写。",
+          "human_heard": false
+        }
+      ],
+      "exclusions_and_uncertain": [
+        {
+          "source_in": 827.19,
+          "source_out": 832.24,
+          "status": "uncertain",
+          "reason": "smallThe drought is over/baseAgain the draft is over，drought/draft关键词分歧。事实冠军荒结束不能替实际英文声音作证。",
+          "preserve_win_edit_recommendation": "完整赛点822.85–827.0和庆祝保；再接833–840.84计分/历史句，不能字幕猜改drought。"
+        }
+      ],
+      "raw_asr": {
+        "small.en": [
+          {
+            "source_start": 828.13,
+            "source_end": 832.24,
+            "review_start": 248.9300000000001,
+            "review_end": 253.04000000000008,
+            "text": " The drought is over.",
+            "words": [
+              {
+                "source_start": 828.13,
+                "source_end": 828.8100000000001,
+                "word": " The"
+              },
+              {
+                "source_start": 830.9200000000001,
+                "source_end": 831.3000000000001,
+                "word": " drought"
+              },
+              {
+                "source_start": 831.3000000000001,
+                "source_end": 831.64,
+                "word": " is"
+              },
+              {
+                "source_start": 831.64,
+                "source_end": 832.24,
+                "word": " over."
+              }
+            ]
+          },
+          {
+            "source_start": 833.0400000000001,
+            "source_end": 836.5,
+            "review_start": 253.8400000000001,
+            "review_end": 257.30000000000007,
+            "text": " 2 sets to 1, 6-4, 3-6-6-2.",
+            "words": [
+              {
+                "source_start": 833.0400000000001,
+                "source_end": 833.0400000000001,
+                "word": " 2"
+              },
+              {
+                "source_start": 833.0400000000001,
+                "source_end": 833.2,
+                "word": " sets"
+              },
+              {
+                "source_start": 833.2,
+                "source_end": 833.46,
+                "word": " to"
+              },
+              {
+                "source_start": 833.46,
+                "source_end": 833.66,
+                "word": " 1,"
+              },
+              {
+                "source_start": 833.94,
+                "source_end": 834.12,
+                "word": " 6"
+              },
+              {
+                "source_start": 834.12,
+                "source_end": 834.44,
+                "word": "-4,"
+              },
+              {
+                "source_start": 834.82,
+                "source_end": 835.1800000000001,
+                "word": " 3"
+              },
+              {
+                "source_start": 835.1800000000001,
+                "source_end": 835.76,
+                "word": "-6"
+              },
+              {
+                "source_start": 835.76,
+                "source_end": 836.0400000000001,
+                "word": "-6"
+              },
+              {
+                "source_start": 836.0400000000001,
+                "source_end": 836.5,
+                "word": "-2."
+              }
+            ]
+          },
+          {
+            "source_start": 836.6800000000001,
+            "source_end": 840.84,
+            "review_start": 257.4800000000001,
+            "review_end": 261.6400000000001,
+            "text": " Kane Nishikori goes one better than two years ago in Brisbane.",
+            "words": [
+              {
+                "source_start": 836.6800000000001,
+                "source_end": 836.86,
+                "word": " Kane"
+              },
+              {
+                "source_start": 836.86,
+                "source_end": 837.5600000000001,
+                "word": " Nishikori"
+              },
+              {
+                "source_start": 837.5600000000001,
+                "source_end": 838.1,
+                "word": " goes"
+              },
+              {
+                "source_start": 838.1,
+                "source_end": 838.46,
+                "word": " one"
+              },
+              {
+                "source_start": 838.46,
+                "source_end": 838.82,
+                "word": " better"
+              },
+              {
+                "source_start": 838.82,
+                "source_end": 839.52,
+                "word": " than"
+              },
+              {
+                "source_start": 839.52,
+                "source_end": 839.82,
+                "word": " two"
+              },
+              {
+                "source_start": 839.82,
+                "source_end": 840.1,
+                "word": " years"
+              },
+              {
+                "source_start": 840.1,
+                "source_end": 840.36,
+                "word": " ago"
+              },
+              {
+                "source_start": 840.36,
+                "source_end": 840.5600000000001,
+                "word": " in"
+              },
+              {
+                "source_start": 840.5600000000001,
+                "source_end": 840.84,
+                "word": " Brisbane."
+              }
+            ]
+          }
+        ],
+        "base.en": [
+          {
+            "source_start": 827.19,
+            "source_end": 831.98,
+            "review_start": 247.9900000000001,
+            "review_end": 252.7800000000001,
+            "text": " Again, the draft is over.",
+            "words": [
+              {
+                "source_start": 827.19,
+                "source_end": 827.73,
+                "word": " Again,"
+              },
+              {
+                "source_start": 828.0500000000001,
+                "source_end": 828.77,
+                "word": " the"
+              },
+              {
+                "source_start": 830.88,
+                "source_end": 831.16,
+                "word": " draft"
+              },
+              {
+                "source_start": 831.16,
+                "source_end": 831.58,
+                "word": " is"
+              },
+              {
+                "source_start": 831.58,
+                "source_end": 831.98,
+                "word": " over."
+              }
+            ]
+          },
+          {
+            "source_start": 832.38,
+            "source_end": 836.34,
+            "review_start": 253.1800000000001,
+            "review_end": 257.1400000000001,
+            "text": " Two sets, one, six-four, three, six-six-two.",
+            "words": [
+              {
+                "source_start": 832.38,
+                "source_end": 833.0,
+                "word": " Two"
+              },
+              {
+                "source_start": 833.0,
+                "source_end": 833.16,
+                "word": " sets,"
+              },
+              {
+                "source_start": 833.44,
+                "source_end": 833.46,
+                "word": " one,"
+              },
+              {
+                "source_start": 834.02,
+                "source_end": 834.0600000000001,
+                "word": " six"
+              },
+              {
+                "source_start": 834.0600000000001,
+                "source_end": 834.36,
+                "word": "-four,"
+              },
+              {
+                "source_start": 834.9,
+                "source_end": 835.12,
+                "word": " three,"
+              },
+              {
+                "source_start": 835.52,
+                "source_end": 835.58,
+                "word": " six"
+              },
+              {
+                "source_start": 835.58,
+                "source_end": 835.94,
+                "word": "-six"
+              },
+              {
+                "source_start": 835.94,
+                "source_end": 836.34,
+                "word": "-two."
+              }
+            ]
+          },
+          {
+            "source_start": 836.7,
+            "source_end": 840.76,
+            "review_start": 257.5000000000001,
+            "review_end": 261.5600000000001,
+            "text": " Kindness a Corey goes one better than two years ago in Brisbane.",
+            "words": [
+              {
+                "source_start": 836.7,
+                "source_end": 837.02,
+                "word": " Kindness"
+              },
+              {
+                "source_start": 837.02,
+                "source_end": 837.16,
+                "word": " a"
+              },
+              {
+                "source_start": 837.16,
+                "source_end": 837.38,
+                "word": " Corey"
+              },
+              {
+                "source_start": 837.38,
+                "source_end": 837.98,
+                "word": " goes"
+              },
+              {
+                "source_start": 837.98,
+                "source_end": 838.4,
+                "word": " one"
+              },
+              {
+                "source_start": 838.4,
+                "source_end": 838.66,
+                "word": " better"
+              },
+              {
+                "source_start": 838.66,
+                "source_end": 839.52,
+                "word": " than"
+              },
+              {
+                "source_start": 839.52,
+                "source_end": 839.72,
+                "word": " two"
+              },
+              {
+                "source_start": 839.72,
+                "source_end": 840.02,
+                "word": " years"
+              },
+              {
+                "source_start": 840.02,
+                "source_end": 840.3000000000001,
+                "word": " ago"
+              },
+              {
+                "source_start": 840.3000000000001,
+                "source_end": 840.52,
+                "word": " in"
+              },
+              {
+                "source_start": 840.52,
+                "source_end": 840.76,
+                "word": " Brisbane."
+              }
+            ]
+          }
+        ]
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/12-2019-brisbane-point-reaction-small.en-bbd8b3e287e5.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/12-2019-brisbane-point-reaction-base.en-548cb0d3199f.json"
+      ],
+      "foreground_status": "uncertain_not_complete",
+      "human_heard": false,
+      "complete": false
+    },
+    {
+      "name": "2019-brisbane-trophy",
+      "source": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+      "source_in": 850.15,
+      "source_out": 854.2,
+      "all_english_and_zh_candidates": [],
+      "exclusions_and_uncertain": [],
+      "raw_asr": {
+        "small.en": [],
+        "base.en": []
+      },
+      "asr_files": [
+        "data/audio_reviews/nishikori-career-farewell/evidence/2019-brisbane-trophy-small.en-a4fa12041c86.json",
+        "data/audio_reviews/nishikori-career-farewell/evidence/2019-brisbane-trophy-base.en-f09d1634c770.json"
+      ],
+      "foreground_status": "both_asr_no_lexical_speech_detected_not_human_heard",
+      "human_heard": false,
+      "complete": false
+    }
+  ],
+  "bilingual_layout": "源英语上，中文下，紧凑；需重切为最多2行英语短cue，不直接长段塞字。",
+  "renderer_action": "story一次按source_in/out与native scene边界映射烧新增候选。所有uncertain窗须保不完整状态；具体剪辑建议仅候选，未改影片。",
+  "proof_note": "原双ASR不是人工听审。双方ASR空白不是未经核验的完整no_speech声明。"
+}

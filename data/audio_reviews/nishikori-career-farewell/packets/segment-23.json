@@ -1,0 +1,33 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/2377777/the-road-to-the-2019-season-kei-nishikori",
+  "source_path": "/workspace/scratch/road2019.mp4",
+  "source_sha256": "682f3bc63b55892d9afd4e482c99abec7097ab08c8ca55a4722414237ac9507a",
+  "method": "asr_cross_checked",
+  "reviewer": "rio_source local cached small.en/base.en cross-check; metadata/visual identity used only for spelling normalization; no claimed human listening",
+  "reviewed_at": "2026-10-04T07:36:10.963327+00:00",
+  "status": "complete",
+  "reviewed_from": 44.625,
+  "reviewed_to": 51.585,
+  "foreground_english": [],
+  "no_foreground_english_reason": "Two existing44.625–56.75s ASRs and wider42–66s contextual cross-check agree no speech during44.625–51.56. Subsequent commentator starts51.68–51.745; this packet does not cover that later sentence.",
+  "uncertain_spans": [],
+  "evidence": [
+    "data/audio_reviews/nishikori-career-farewell/evidence/federer-small.en-dc1537540515.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/federer-base.en-17c4749fa834.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/federer-context-small.en-3ec1adb18983.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/federer-context-base.en-97ca518b62d8.json"
+  ],
+  "human_listening_done": false,
+  "timing_method": "Actual ASR word onsets/ends at source offsets; no uniform cue spacing",
+  "additional_frame_boundary_review": "Enclosing context ASR62–86 forMurray and42–66 forFederer covers whole selected window. LastMurray utterance ends83.44; earliestFederer speech51.68. Extended frameboundaries add no English.",
+  "asr_evidence": [
+    "data/audio_reviews/nishikori-career-farewell/evidence/federer-context-small.en-3ec1adb18983.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/federer-context-base.en-97ca518b62d8.json"
+  ],
+  "portable_review_provenance": {
+    "original_packet_sha256": "8f88017bac90bf19518c1bd6d4d027958da4014294925bc9dc5d112c511aa5cd",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

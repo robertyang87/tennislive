@@ -1,0 +1,51 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_file": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "closing_source cross-model speech intelligibility classification using multilingual small/base, forced English small/base/medium and wide VADoff evidence",
+  "reviewed_at": "2026-10-04T07:44:46.320611+00:00",
+  "status": "complete",
+  "reviewed_from": 323.65,
+  "reviewed_to": 337.01,
+  "foreground_english": [],
+  "no_foreground_english_reason": "No reliably intelligible lexical English is established in this original complete-point-and-reaction window. A brief unintelligible exertion/crowd vocalization is retained as original audio. Cross-model hypotheses are inconsistent or very low confidence; assigning Yeah/Okay/Hooray or inventing a translation would manufacture words. This review classifies audio type, does not claim the vocalization is silent or identify exact spoken words, and does not claim human hearing. Multilingual small/base both return no lexical speech. Forced English models disagree Yeah/Ugh/Hooray; wider forced-English medium produces a12second Thank you very much with zero-duration opening word and0.002probability, rejected as a non-supported lexical inference.",
+  "uncertain_spans": [],
+  "non_lexical_vocalizations": [
+    {
+      "start": 331.86,
+      "end": 332.7,
+      "classification": "unintelligible exertion/crowd vocalization",
+      "verbatim": null,
+      "translate": false,
+      "not_a_word_claim": true
+    }
+  ],
+  "asr_results": [
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/tokyo2014-third-small-54853c68047c.json",
+      "sha256": "3a72014fdb3ceb48f49f9faacc925a0ce1786104c2a3c2edcb09e98c97e5777e"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/tokyo2014-third-base-6fc0ddee4185.json",
+      "sha256": "4538b98720ea85f51e6ee6d5ba042ad54b7d799816e990a4b859c46cf398d21c"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/tokyo2014-medium.en-d4d301b24ec9.json",
+      "sha256": "d4d301b24ec974710bae0313f70e3f82be4fc13e0e4406a0f1c0253407fa7862"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/tokyo2014-medium-wide.en-f21f2743fb2c.json",
+      "sha256": "f21f2743fb2cb6623b90b6e348bd253e8e69ca3b1c3211611adc1cfc900bf858"
+    }
+  ],
+  "human_listening_done": false,
+  "review_scope": "complete cross-model intelligible-English and audio-type review; exact unintelligible shout words unclaimed",
+  "microframe_handle_evidence": "No new lexical content in final≤0.03s extension; original title audit fully spans source through350 forTokyo and390 forMemphis; wide medium reviewed through337 or387.",
+  "portable_review_provenance": {
+    "original_packet_sha256": "37c11ee79af66fa319d334a655f6bba3d788c0a4d53b55502c100c9a228a6c1a",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

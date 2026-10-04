@@ -2879,6 +2879,9 @@ class Segment:
     subtitle_bottom: int | None = None
     # Measured original board retained in an uncropped source frame; never an inset.
     source_scorebox: tuple[int, int, int, int] | None = None
+    # Full-canvas graphic with an explicit original-source audio window.
+    # Unlike image segments this still has a reviewed source/start/end.
+    visual_image: str = ""
 
     @property
     def length(self) -> float:
@@ -3397,6 +3400,13 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         return tuple(result)
 
     def _one(s: dict, i: int) -> Segment:
+        if s.get("visual_image"):
+            if s.get("image") or s.get("inset") or s.get("score_inset"):
+                raise ReelError("visual_image must be the sole full-canvas visual")
+            from PIL import Image
+            with Image.open(s["visual_image"]) as graphic:
+                if graphic.size != (VIDEO_W, VIDEO_H):
+                    raise ReelError("visual_image must match the actual video canvas")
         if s.get("stat_card"):
             # 数据统计图当整屏证据段：形状和 image 段一样，只是图由 render 现渲。
             # load_spec 已经归一过一遍；直接喂 dict 的调用方（测试）走同一道闸。
@@ -3454,7 +3464,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])),
                        fill_y=_seg_fill_y(s, i),
                        contain_keep=_seg_contain_keep(s, i),
-                       crop_zoom=_seg_crop_zoom(s, i))
+                       crop_zoom=_seg_crop_zoom(s, i),
+                       visual_image=str(s.get("visual_image") or ""))
 
     segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i))
                 for i, s in enumerate(spec["segments"])]
@@ -3725,7 +3736,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "original_audio_mode", "owner_approval", "audio_effects_review", "track",
              "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
-             "editorial"),
+             "editorial", "narration_audio_recipe", "scene_edl_recipe", "scoreboard_profile"),
     "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_accent_color", "hook_align", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
@@ -3734,7 +3745,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
-                "kicker", "track", "voice", "subtitle_bottom"),
+                "kicker", "track", "voice", "subtitle_bottom", "visual_image"),
 }
 
 
@@ -4453,6 +4464,21 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     `-ss` 放在 `-i` **前面**是关键帧级的快速定位，落点可能偏几百毫秒；放在
     后面才是精确定位。高光片段一秒都不能偏，所以用精确定位（慢一点无所谓）。
     """
+    if seg.visual_image:
+        # Source audio is mandatory here; never manufacture a silent placeholder.
+        if not _has_audio(source):
+            raise ReelError("visual_image requires real original-source audio")
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-loop", "1", "-i", seg.visual_image,
+            "-ss", f"{seg.start:.3f}", "-i", str(source),
+            "-t", f"{seg.length + tail:.3f}",
+            "-filter_complex", f"[0:v]fps={FPS_EXPR},setsar=1[vout];"
+            f"[1:a:0]{_seg_audio_chain(seg) or 'anull'}[aout]",
+            "-map", "[vout]", "-map", "[aout]",
+            "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+            "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
+            "-ar", AUDIO_RATE, "-shortest", str(dest))
+        return dest
     from tennislive.video.crop_policy import require_fixed_center
     require_fixed_center({"cx": seg.cx, "track": seg.track or bool(path),
                           "square_pan": seg.square_pan}, where="cut_segment")
@@ -6448,6 +6474,20 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
 }
 
 
+# 2026-10-04，锦织圭告别影片：用户明确说「低清的视频没有更好的源的话，
+# 也可以保留，因为为了保持这个内容的充实性，可以保留」。只登记本片实际
+# 核验过的原始 URL / 原生档位；不会把展示缩放写成原生高清，也不授予别的片子。
+NISHIKORI_FAREWELL_LOW_RES_SOURCES: dict[str, int] = {
+    "https://www.nicovideo.jp/watch/sm20856608": 720,
+    "https://www.nicovideo.jp/watch/sm24415341": 480,
+    "https://www.nicovideo.jp/watch/sm26897731": 360,
+    "https://www.nicovideo.jp/watch/sm29448713": 360,
+    "https://usopenvideo-a.akamaihd.net/2019/1586879401548367_0003_O_1280x720_3500kbps.mp4": 720,
+    "https://usopenvideo-a.akamaihd.net/2016/20160907/USTP0000000000703150_0001_1280x720_3500kbps.mp4": 720,
+    "https://www.tennistv.com/videos/2377777/the-road-to-the-2019-season-kei-nishikori": 720,
+}
+
+
 def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     """按精确 URL 记录用户授权；保留原生分辨率，默认门槛仍是 1080p。"""
     declared = spec.get("source_quality_exceptions", {})
@@ -6456,6 +6496,10 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     urls = set(spec_sources(spec).values()) if declared else set()
     for url, claim in declared.items():
         floor = APPROVED_LOW_RES_SOURCES.get(url)
+        if url in NISHIKORI_FAREWELL_LOW_RES_SOURCES:
+            if spec.get("slug") != "nishikori-career-farewell":
+                raise ReelError("source_quality_exceptions 此档案低清授权仅限锦织圭生涯告别影片")
+            floor = NISHIKORI_FAREWELL_LOW_RES_SOURCES[url]
         if floor is None or url not in urls:
             raise ReelError(f"source_quality_exceptions 未授权或未引用的源：{url}")
         if (not isinstance(claim, dict)
@@ -9091,14 +9135,34 @@ def scoreboard_profile(spec: dict, segments: list | None = None) -> str | None:
     def _on(seg) -> bool:
         return bool(seg.get("score_inset") if isinstance(seg, dict)
                     else getattr(seg, "score_inset", None))
-    if not any(_on(seg) for seg in segs or []):
+    inset_on = any(_on(seg) for seg in segs or [])
+    declared = spec.get("scoreboard_profile")
+    has_declared = "scoreboard_profile" in spec
+    if not inset_on and not has_declared:
         return None
-    from reel_facts import broadcast_profile, spec_tour, us_open_match_line  # noqa: PLC0415
+    from reel_facts import (
+        SCOREBOARD_PROFILES,
+        broadcast_profile,
+        spec_tour,
+        us_open_match_line,
+    )
     line1 = str((spec.get("topbar") or {}).get("line1", ""))
     if spec.get("layout") == "band":
-        return "us-open" if us_open_match_line(line1) else "band-legacy"
-    event = str((spec.get("_production") or {}).get("event") or "")
-    if (profile := broadcast_profile(line1, event, spec_tour(spec))):
+        profile = "us-open" if us_open_match_line(line1) else "band-legacy"
+    else:
+        event = str((spec.get("_production") or {}).get("event") or "")
+        profile = broadcast_profile(line1, event, spec_tour(spec))
+    if has_declared:
+        calibrated = {p for _, p in SCOREBOARD_PROFILES} | {"us-open", "band-legacy"}
+        normalized = "wta" if declared == "wta_left" else declared
+        if not isinstance(normalized, str) or normalized not in calibrated:
+            raise ReelError(f"scoreboard_profile 未标定的声明：{declared!r}")
+        if normalized != profile:
+            raise ReelError(
+                f"scoreboard_profile 声明 {declared!r} 与实际转播标定 {profile!r} 冲突")
+    if not inset_on:
+        return None
+    if profile:
         return profile
     raise ReelError(
         f"全出血的片子开了 score_inset，可顶栏「{line1}」认不出是哪一家转播——"

@@ -1,0 +1,30 @@
+{
+  "source_url": "https://www.nicovideo.jp/watch/sm29448713",
+  "source_path": "/workspace/scratch/rio-niconico-sm29448713.mp4",
+  "source_sha256": "b4d9c5806178c72cd078d9e2e74a16d60426794cc6a6f064d713ca8a30686483",
+  "reviewed_from": 509,
+  "reviewed_to": 531,
+  "reviewed_at": "2026-10-04T07:44:34.363278+00:00",
+  "method": "asr_cross_checked",
+  "reviewer": "local small.en/base.en VADoff, automated only, visual frame inspection",
+  "status": "complete",
+  "foreground_english": [],
+  "no_foreground_english_reason": "No intelligible foreground English in selected509–531 per unprompted VADoff medium.en and small.en (both zero segments inside), multilingualbase empty. Other lowconfidence outputs are incompatible repetitive counts/long noise hallucinations with no stable wording. This is an automated crosschecked intelligibility conclusion, not absolute absence of speech, not silent audio, and not human listening. Actual environmental source audio must remain.",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    "data/audio_reviews/nishikori-career-farewell/evidence/rio2016-nico-point-small.en-e6ed9fcae23c.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/rio2016-nico-point-base.en-3c3f083c0324.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/rio-nico-medium.en-fed492a984fa.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/rio2016-nico-small-multilingual-acc0dbfd60ca.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/rio2016-nico-base-multilingual-c2b6ec99deaa.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/rio-nico-enhanced-small.en-15c0db3c470b.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/rio-nico-enhanced-base.en-cab61cbb1137.json"
+  ],
+  "stronger_model_review": "Unprompted medium.en VADoff full context505–540 finds zero segments within selected509–531. small.en also zero selected segments and multilingualbase empty. Other models repeat mutually incompatible counts/noise words; no intelligible foreground English established. Automated only, not human hearing.",
+  "root_review": "Root approved cross-model intelligibility determination on original source and full context; no guessed umpire wording.",
+  "portable_review_provenance": {
+    "original_packet_sha256": "8638ad549a2e864bbd4dc64da7aae1ffeadab75bf9b40bed0827514927eef7d0",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}
