@@ -2825,15 +2825,17 @@ class Segment:
     # ⚠️ 排在 image 之后：`_one` 到 image 为止都是按位置传的，插在前面会把
     # mute 顶进这个槽（第一版就是这么在 `bed=` 上撞出 multiple values 的）。
     bed: str = ""
-    # **记分条回贴（只在带式版式）**：解析好的抠图坐标 (x0, y0, x1, y1)，
+    # **记分条回贴**：解析好的抠图坐标 (x0, y0, x1, y1)，
     # None＝这一段不贴。带式的窗口居中（「不要偏离中心的」），美网那条浮在
     # 左下的板会被窗口左缘裁掉——开了这个的段从同一帧把整条板抠出来、按画面
     # 带的缩放比贴回左下，正好盖住残条，比分逐帧天然同步。spec 里写
     # `"score_inset": true`（段级 `scorebox` 覆盖顶层默认坐标）或 `{"x2": N}`
     # （单独放宽这一段的板右缘）。
     # ⚠️ **顶层 scorebox 按板的最宽状态写**（「尽量把五盘大战的比分能包括
-    # 进来」）：美网每完成一盘板右缘 +38px，BO5 一律写 ~736。它现在只给
-    # **左缘和上下沿**（这两样不随盘数变）＋ 量不出来时的兜底右缘。
+    # 进来」）：美网每完成一盘板右缘 +38px，BO5 一律写 ~736。
+    # scorebox 是源片搜索提示，不是固定尺寸的实心贴片；WTA 渲染逐帧测主板
+    # 与原生提示条的真实边界，收紧四边，提示条旁的球场必须透明。
+    # 两部分取同源同帧、同比缩放，保留相对位置，不为提示条重新缩小主板。
     # ⭐ **右缘是渲染时逐段现量的**（`resolve_board_insets`，账号所有者
     # 2026-08-29：「不能固定宽度去切，要自适应」）——多抠的那截是球场，
     # 会被贴到画面上另一个位置，绿盖绿看不出来但它是错的。
@@ -3537,9 +3539,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         pinned = [i + 1 for i, g in enumerate(spec["segments"])
                   if isinstance(g.get("score_inset"), dict)]
         print(f"    [score] scorebox 宽 {bx[2] - bx[0]}px（右缘 {bx[2]}）——"
-              "板的**左缘和上下沿**取这四个数（不随盘数变），"
-              "**右缘渲染时逐段现量**（板每打完一盘 +38px，"
-              "`resolve_board_insets` 每段采 6 点，量不出来才退回这个右缘）；"
+              "这是源图形的搜索提示；渲染按对应转播标定量实际边界，"
+              "WTA 主板与提示条逐帧分别测四边、透明合成，不搬搜索框里的球场；"
               + (f"开了回贴的是第 {inset_on} 段" if inset_on else "没有段开回贴")
               + (f"，其中第 {pinned} 段用 `{{\"x2\": N}}` 把右缘钉死了"
                  "（现量就不生效了，只在量不准的时候才该这么钉）" if pinned else ""))
@@ -10211,7 +10212,10 @@ def masked_board_patch(x0: int, y0: int, x1: int, y1: int, mask: str,
     判据 `tests/test_small_gates.py::test_蒙版和裁框差一行也能alphamerge`（真跑 ffmpeg）。
     """
     w, h = x1 - x0, y1 - y0
-    return (f"[wb]crop={w}:{h}:{x0}:{y0},format=rgb24[bc];"
+    # Tight measured bounds can be odd. Cropping a YUV420 frame first silently
+    # rounds its origin/size to the chroma grid, losing a graphic edge and making
+    # the alpha plane a different size. RGB first preserves the native pixels.
+    return (f"[wb]format=rgb24,crop={w}:{h}:{x0}:{y0}:exact=1[bc];"
             f"movie='{_escape(Path(mask))}':dec_threads=1,format=gray,"
             f"scale={w}:{h}:flags=neighbor[mask];"
             f"[bc][mask]alphamerge,scale={bw}:{sh}:flags=lanczos[b];")

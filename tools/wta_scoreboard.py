@@ -33,6 +33,10 @@
 **有薄荷绿格时，右缘最多到最后一列薄荷绿再往右一格小分宽**（`POINTS_MAX`）——
 板最右边永远是「当前盘局分＋小分」，背景是深色人群时暗像素会一路连出去，
 这一刀把它钉回板上。
+
+2026-10-04：搜索带的高度也不能当作实心板。逐帧量两行主体的原生外缘，
+BREAK/SET/MATCH POINT 短窄标签按它自己的行轮廓保留；标签旁的球场始终透明。
+整段容器仅用已量到的图形并集，蒙版仍逐帧变化，宽高同比缩放由调用方统一处理。
 """
 from __future__ import annotations
 
@@ -44,7 +48,7 @@ from pathlib import Path
 
 import numpy as np
 
-from atp_scoreboard import beyond_hint, report_beyond_hint, stabilize, write_mask
+from atp_scoreboard import beyond_hint, report_beyond_hint
 
 PROFILE = "wta-tour-v1"
 EDGE_PAD = 2          # 板右缘外多留的源片像素（抗锯齿的那一列）
@@ -102,11 +106,27 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
             break
     if edge is None:
         edge = len(frac)
-    mint_cols = np.flatnonzero(mint_mask(band).mean(axis=0) > 0.4)
-    if mint_cols.size >= MINT_COLS:
-        edge = min(edge, int(mint_cols.max()) + 1 + POINTS_MAX)
-        # 有薄荷绿钉着：spec 右缘只是提示，板更长（双打、多一盘）就按量到的走
-        return beyond_hint(edge, cap, edge)
+    mint_cols = mint_mask(band).mean(axis=0) > 0.4
+    cells = [(lo, hi) for lo, hi in _runs(mint_cols) if hi - lo >= MINT_COLS]
+    if cells:
+        # Mint TEXT in the point-score slot (e.g. 40) is not another filled games
+        # cell. Use the broad solid cell, rather than the last mint-coloured letter.
+        cell_lo, cell_hi = max(cells, key=lambda bounds: bounds[1] - bounds[0])
+        margin = max(1, band.shape[0] // 10)
+        body = band[margin:-margin].astype(np.int16)
+        jump = np.abs(body[:, 1:] - body[:, :-1]).mean(axis=2)
+        persistent = (jump > 8).mean(axis=0)
+        # A native border/background boundary runs through both player rows.
+        # Point numerals form discontinuous strokes; no fixed point-slot width
+        # is made opaque, and stat panels without a point slot remain narrower.
+        first = cell_hi + 6
+        last = min(band.shape[1] - 1, cell_hi + POINTS_MAX + EDGE_PAD)
+        boundaries = [x for x in range(first, last + 1) if persistent[x - 1] >= .55]
+        if boundaries:
+            return boundaries[-1]
+        if edge < cell_hi + POINTS_MAX:
+            return edge
+        raise RuntimeError("WTA board present but native right boundary cannot be measured")
     # 没有薄荷绿（开局还没有局分那几秒）：没有签名色撑着，
     # 越过 spec 右缘的读数不可信，照旧封顶
     return min(edge, cap) if cap is not None else edge
@@ -120,29 +140,204 @@ def _sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def scan(source: Path, box: tuple[int, int, int, int], start: float,
-         seconds: float, fps: str) -> tuple[list, int]:
-    """逐帧量 → [(板右缘 or None, None)]（WTA 板没有黄条），以及扫的带宽。"""
+def _runs(flags: np.ndarray) -> list[tuple[int, int]]:
+    values = np.flatnonzero(flags)
+    if not values.size:
+        return []
+    cuts = np.flatnonzero(np.diff(values) > 1) + 1
+    return [(int(v[0]), int(v[-1]) + 1) for v in np.split(values, cuts)]
+
+
+def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
+    """Measure native body and optional narrow header; coordinates stay source-relative.
+
+    The search rectangle is never itself an opaque graphic. A positive board signature
+    with unmeasurable body geometry is an error, rather than a rectangular fallback.
+    """
+    if band.ndim != 3 or band.shape[1] < MIN_BOARD_W:
+        return None
+    mint = mint_mask(band)
+    colour = board_colour(band)
+    anchor_cols = np.flatnonzero((mint.mean(axis=0) > .25)
+                                & (np.arange(band.shape[1]) >= MIN_BOARD_W))
+    anchors = _runs(mint[:, anchor_cols].sum(axis=1) >= 2)
+    if anchor_cols.size < MINT_COLS:
+        anchors = []
+    # Text cuts holes through the mint column; join <= 3px gaps, without joining
+    # an independent small header at the left of the body.
+    merged = []
+    for lo, hi in anchors:
+        if merged and lo - merged[-1][1] <= 3:
+            merged[-1] = (merged[-1][0], hi)
+        else:
+            merged.append((lo, hi))
+    candidates = [(lo, hi) for lo, hi in merged if hi - lo >= 24]
+    if candidates:
+        lo, hi = max(candidates, key=lambda v: v[1] - v[0])
+        # Native antialiased/rounded edge can precede/follow the solid mint column.
+        broad = colour[:, :max(MIN_BOARD_W, cap or MIN_BOARD_W)].sum(axis=1) >= MIN_BOARD_W
+        for _ in range(3):
+            if lo > 0 and broad[lo - 1]:
+                lo -= 1
+            if hi < len(broad) and broad[hi]:
+                hi += 1
+        body_band = band[lo:hi]
+        edge = board_edge(body_band, cap=cap)
+        if edge is None:
+            return None
+    else:
+        # Opening graphic without a mint games cell: require the existing positive
+        # name-background signature in a broad contiguous region.
+        row_fraction = colour[:, 8:8 + NAME_W].mean(axis=1)
+        candidates = [(lo, hi) for lo, hi in _runs(row_fraction >= .5)
+                      if hi - lo >= 24 and present(band[lo:hi])]
+        if not candidates:
+            if present(band):
+                raise RuntimeError("WTA board present but native body height cannot be measured")
+            return None
+        lo, hi = max(candidates, key=lambda v: v[1] - v[0])
+        edge = board_edge(band[lo:hi], cap=cap)
+        if edge is None:
+            raise RuntimeError("WTA board present but native body width cannot be measured")
+    if lo < 0 or hi > band.shape[0] or edge < MIN_BOARD_W:
+        raise RuntimeError("WTA board present but native body geometry is invalid")
+
+    rows = []
+    right_limit = min(band.shape[1], edge)
+    for y in range(lo, hi):
+        pixels = np.flatnonzero(colour[y, :right_limit])
+        outer = np.flatnonzero(((band[y, :right_limit].max(axis=1) < 130)
+                                | mint[y, :right_limit]))
+        if not pixels.size:
+            rows.append((y, None, None))
+            continue
+        # Fill the graphic's interior (white text and service-ball icon included),
+        # retain rounded outer edges, and allow only a 1px antialias fringe.
+        left = max(0, int(outer[0] if outer.size else pixels[0]) - 1)
+        right = min(right_limit, int(pixels[-1]) + 2)
+        rows.append((y, left, right))
+    missing = _runs(np.array([r[1] is None for r in rows]))
+    if any(hi - lo > 3 for lo, hi in missing):
+        raise RuntimeError("WTA board present but native body row geometry is unmeasurable")
+    for first, last in missing:
+        neighbours = [rows[j] for j in (first - 1, last)
+                      if 0 <= j < len(rows) and rows[j][1] is not None]
+        if not neighbours:
+            raise RuntimeError("WTA board present but native body edge is unmeasurable")
+        # A <=3px antialiased outline/separator can miss all colour thresholds.
+        # Bridge only its measured adjacent row spans, never the whole search band.
+        for j in range(first, last):
+            rows[j] = (rows[j][0], int(np.mean([r[1] for r in neighbours])),
+                       int(np.mean([r[2] for r in neighbours])))
+    # Retain one pixel of native antialias at horizontal body edges.
+    if lo > 0:
+        rows.insert(0, (lo - 1, rows[0][1], rows[0][2]))
+    if hi < band.shape[0]:
+        rows.append((hi, rows[-1][1], rows[-1][2]))
+    body = (min(r[1] for r in rows), rows[0][0],
+            max(r[2] for r in rows), rows[-1][0] + 1)
+
+    if body[2] - body[0] < MIN_BOARD_W or body[3] - body[1] < 48:
+        if present(band):
+            raise RuntimeError("WTA board present but complete two-player body geometry is unmeasurable")
+        # A sliding-out remnant is not a complete board; never paste one player row.
+        return None
+
+    header_rows = []
+    # Header is native mint at the LEFT, above the two-row board. It may be
+    # only a clipped 10px animation in an already cropped supplied source.
+    header_columns = []
+    if lo:
+        for first, last in _runs(mint[:lo, :right_limit].mean(axis=0) > .2):
+            if header_columns and first - header_columns[-1][1] <= 4:
+                header_columns[-1] = (header_columns[-1][0], last)
+            else:
+                header_columns.append((first, last))
+    header_limit = next((last for first, last in header_columns
+                         if first < MIN_BOARD_W and last - first >= 12), 0)
+    for y in range(lo):
+        xs = np.flatnonzero(mint[y, :header_limit])
+        if xs.size >= 12:
+            header_rows.append((y, max(0, int(xs[0]) - 1),
+                                min(right_limit, int(xs[-1]) + 2)))
+    header = None
+    if header_rows:
+        groups = _runs(np.isin(np.arange(lo), [r[0] for r in header_rows]))
+        h0, h1 = max(groups, key=lambda v: v[1] - v[0])
+        header_rows = [r for r in header_rows if h0 <= r[0] < h1]
+        if h0 > 0:
+            header_rows.insert(0, (h0 - 1, header_rows[0][1], header_rows[0][2]))
+        # A tag's black letters are interior to its native outer mint silhouette.
+        header = (min(r[1] for r in header_rows), header_rows[0][0],
+                  max(r[2] for r in header_rows), header_rows[-1][0] + 1)
+    all_rows = rows + header_rows
+    bounds = (min(r[1] for r in all_rows), min(r[0] for r in all_rows),
+              max(r[2] for r in all_rows), max(r[0] for r in all_rows) + 1)
+    return {"body": body, "header": header, "bounds": bounds,
+            "rows": all_rows, "edge": edge}
+
+
+def scan_geometry(source: Path, box: tuple[int, int, int, int], start: float,
+                  seconds: float, fps: str) -> tuple[list, int]:
+    """Read the search band once and retain each frame's measured alpha geometry."""
     x0, y0, x1, y1 = box
     sw = int(subprocess.check_output(
         ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
          "stream=width", "-of", "csv=p=0", str(source)], text=True).strip().split(",")[0])
-    width = min(sw - x0, SCAN_W)
-    height = y1 - y0
+    width, height = min(sw - x0, SCAN_W), y1 - y0
     proc = subprocess.run(
         ["ffmpeg", "-v", "error", "-ss", f"{start:.3f}", "-t", f"{seconds:.3f}",
          "-i", str(source), "-an", "-sn",
          "-vf", f"format=rgb24,crop={width}:{height}:{x0}:{y0},fps={fps}",
          "-f", "rawvideo", "-"], capture_output=True, check=False)
-    raw = proc.stdout or b""
-    per = width * height * 3
+    if proc.returncode:
+        raise RuntimeError(proc.stderr.decode(errors="replace"))
+    raw, per = proc.stdout or b"", width * height * 3
     frames = []
     for k in range(len(raw) // per):
         band = np.frombuffer(raw[k * per:(k + 1) * per], np.uint8).reshape(height, width, 3)
-        frames.append((board_edge(band, cap=x1 - x0), None))
+        frames.append(frame_geometry(band, cap=x1 - x0))
     if not frames:
         raise RuntimeError(f"{start:.2f}s 起一帧都没解出来（解码失败，不是板不在）")
     return frames, width
+
+
+def scan(source: Path, box: tuple[int, int, int, int], start: float,
+         seconds: float, fps: str) -> tuple[list, int]:
+    """Compatible probe API: body right edge and optional measured native header."""
+    frames, width = scan_geometry(source, box, start, seconds, fps)
+    return [(f["edge"], f["header"]) if f else (None, None) for f in frames], width
+
+
+def alpha_frame(geometry: dict | None, bounds: tuple[int, int, int, int]) -> np.ndarray:
+    """Opaque native graphic rows only; every court gap stays transparent."""
+    x0, y0, x1, y1 = bounds
+    mask = np.zeros((y1 - y0, x1 - x0), np.uint8)
+    if geometry:
+        for y, left, right in geometry["rows"]:
+            if y0 <= y < y1:
+                mask[y - y0, max(0, left - x0):min(x1 - x0, right - x0)] = 255
+    return mask
+
+
+def write_geometry_mask(frames: list, bounds: tuple, fps: str, dest: Path) -> None:
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    x0, y0, x1, y1 = bounds
+    enc = subprocess.Popen(
+        ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pixel_format", "gray",
+         "-video_size", f"{x1-x0}x{y1-y0}", "-framerate", fps, "-i", "-", "-an",
+         "-c:v", "ffv1", "-threads", "1", str(dest)],
+        stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    try:
+        for geometry in frames:
+            enc.stdin.write(alpha_frame(geometry, bounds).tobytes())
+        enc.stdin.close()
+        err = enc.stderr.read()
+        if enc.wait():
+            raise RuntimeError(err.decode(errors="replace"))
+    finally:
+        if enc.poll() is None:
+            enc.kill()
 
 
 def debounce(frames: list, hold: int = 3) -> list:
@@ -160,51 +355,59 @@ def debounce(frames: list, hold: int = 3) -> list:
 
 def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
                   tail: float) -> Path:
-    """给开了 `score_inset` 的段逐帧出蒙版，就地写回 `seg.score_inset` / `score_inset_mask`。
+    """Measure each frame and crop the container to the visible native graphic union.
 
-    **整条片子一帧都没认出这块板**（换了一家转播、图形长得不一样）→ 报错，
-    **不退回老的整段矩形回贴**（账号所有者 2026-09-24「那去彻底解决啊」）。
-    有段认出了、某一段一帧都没有，照 ATP 那条报错（那一段写 `score_inset: false`）。
+    Body and BREAK/SET/MATCH POINT header keep the same source coordinates and
+    scale. Their rectangular background gaps never become an opaque patch.
     """
+    records = []
     rate = float(Fraction(fps))
-    scanned = []
     for i, seg in enumerate(segments):
         if not seg.score_inset:
             continue
-        seconds = seg.end - seg.start + tail * seg.speed
-        raw, width = scan(Path(sources[seg.source]), seg.score_inset, seg.start, seconds, fps)
-        scanned.append((i, seg, debounce(stabilize(raw)), width))
-    if scanned and not any(e is not None for _i, _s, fr, _w in scanned for e, _t in fr):
-        raise RuntimeError(
-            f"{len(scanned)} 段一帧都没认出 WTA 比分板（{PROFILE} 的薄荷绿局分格）——"
-            "多半是这场转播的图形和标定的那一版不一样。**不退回老的整段矩形回贴**"
-            "（那正是「消失后背景还在」「右边多一块补丁」的来路）：先用 frame-grab "
-            "抽几帧量颜色、给这家转播补一套判据；整段真没有板的写 "
-            "\"score_inset\": false ＋ \"_score_inset_why\"。")
-    records = []
-    for i, seg, frames, width in scanned:
         x0, y0, spec_x1, y1 = seg.score_inset
-        live = [e for e, _ in frames if e is not None]
+        seconds = seg.end - seg.start + tail * seg.speed
+        frames, width = scan_geometry(Path(sources[seg.source]), seg.score_inset,
+                                      seg.start, seconds, fps)
+        # Presence debounce suppresses isolated false positives; it never expands
+        # one frame to another frame's wider/taller opaque geometry.
+        states = debounce([(f["edge"], None) if f else (None, None) for f in frames])
+        frames = [f if state[0] is not None else None for f, state in zip(frames, states)]
+        live = [f for f in frames if f]
         if not live:
             raise RuntimeError(
                 f"第 {i + 1} 段（源片 {seg.start:.2f}→{seg.end:.2f}s）一帧都没认出 WTA 比分板。"
-                "整段都是近景/看台/回放的话写 \"score_inset\": false ＋ \"_score_inset_why\"。")
-        right = min(width, max(live) + EDGE_PAD)
-        right += right % 2
-        right = min(width, right)
+                "先核实原生图形；不退回整段矩形回贴。整段无板才写 score_inset:false ＋说明。")
+        left = min(f["bounds"][0] for f in live)
+        top = min(f["bounds"][1] for f in live)
+        right = min(width, max(f["bounds"][2] for f in live))
+        bottom = max(f["bounds"][3] for f in live)
+        # Crop coordinates must be chroma-safe; extra container pixels remain alpha0.
+        left -= left % 2
+        top -= top % 2
+        right = min(width, right + ((right - left) % 2))
+        bottom = min(y1 - y0, bottom + ((bottom - top) % 2))
+        bounds = (left, top, right, bottom)
         dest = Path(outdir) / "score_masks" / f"segment-{i + 1:02d}.mkv"
-        write_mask(frames, right, y1 - y0, fps, dest)
-        seg.score_inset = (x0, y0, x0 + right, y1)
+        write_geometry_mask(frames, bounds, fps, dest)
+        seg.score_inset = (x0 + left, y0 + top, x0 + right, y0 + bottom)
         seg.score_inset_mask = str(dest.resolve())
         seg.score_inset_spans = None
         report_beyond_hint(i, x0 + right, spec_x1)
-        widths = sorted(set(live))
+        widths = sorted({f["edge"] for f in live})
+        bodies = sorted({f["body"] for f in live})
+        headers = sorted({f["header"] for f in live if f["header"]})
         records.append({"segment": i, "frames": len(frames), "present_frames": len(live),
+                        "tag_frames": sum(bool(f["header"]) for f in live),
                         "board_edges": [widths[0], widths[-1]], "right": right,
+                        "source_bounds": list(seg.score_inset),
+                        "body_bounds": [list(b) for b in bodies],
+                        "header_bounds": [list(h) for h in headers],
+                        "geometry_origin": [x0, y0],
+                        "alpha_geometry": "native-body-and-header-rows",
                         "mask": str(dest), "mask_sha256": _sha256(dest)})
         print(f"[score-mask] 第 {i + 1} 段：板在 {len(live)}/{len(frames)} 帧，"
-              f"板宽逐帧 {widths[0]}~{widths[-1]}px，贴片最宽 {right}px"
-              f"（{rate:g} fps 逐帧蒙版：板不在就不贴，板多宽切多宽）")
+              f"原生有效外缘 {seg.score_inset}，body/header独立透明蒙版（{rate:g} fps）")
     proof = {"status": "pass", "profile": PROFILE, "segments": records}
     p = Path(outdir) / "scoreboard_qc.json"
     p.write_text(json.dumps(proof, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
