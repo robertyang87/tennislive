@@ -61,6 +61,19 @@ def _number(value) -> float:
     return float(value)
 
 
+def _intervals_overlap(a: float, b: float, c: float, d: float) -> bool:
+    """Compare half-open media intervals without float-summation edge noise.
+
+    ASS timestamps are decimal centiseconds; the sealed timeline accumulates
+    binary floats. For example, an end of 200.70 abuts a card starting at
+    200.69999999999996. Ignore only a few representational rounding units,
+    not a centisecond/frame tolerance: even a real microsecond overlap fails.
+    """
+    start, end = max(a, c), min(b, d)
+    roundoff = 4 * max(math.ulp(start), math.ulp(end))
+    return end - start > roundoff
+
+
 def _quote_windows(seg: dict):
     duration=(_number(seg['end'])-_number(seg['start']))/float(seg.get('speed') or 1)
     raw=seg.get('quote')
@@ -264,7 +277,7 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
             for a,b,text in events:
                 spoken_terms=set(re.findall(r'[a-z]+',readable(str(seg.get('narration') or '')).casefold()))
                 extra=[term for term in re.findall(r'[a-z]+',text.casefold()) if term not in spoken_terms]
-                if a<cursor+length and b>cursor and extra:
+                if _intervals_overlap(a,b,cursor,cursor+length) and extra:
                     raise ValueError('自配中文TTS窗口出现额外英文翻译行')
     for cue in required:
         a,b=offsets[cue['segment']]+cue['start'],offsets[cue['segment']]+cue['end']

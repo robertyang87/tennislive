@@ -1,0 +1,52 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=rGsZ0vrlUns",
+  "source_sha256": "9ecc50946d9c77dd2ed71d6438ba95213c78b58c93aa15929ad352d5b0bc79b4",
+  "reviewed_at": "2026-10-05T15:28:25.407051+00:00",
+  "method": "Existing natural_quiet_audio.matching_quiet on SHA-verified original source and actual second rendered film; no listening claim",
+  "film_run": 37331219805,
+  "film_sha256": "24b8dc51877380ca6436e509f624234fcc684d1e7c129792f3c865b9b0e47f49",
+  "source_path_runtime": "source_main.mp4",
+  "rate": 8000,
+  "expected_gain": 0.972,
+  "declared_source_window": [
+    222.76,
+    224.8
+  ],
+  "segment_index": 13,
+  "segment_offset_in_measured_film": 224.92,
+  "measurements": [
+    {
+      "film_second": 225,
+      "source_interval": [
+        222.76000000000002,
+        223.76000000000002
+      ],
+      "source_sha256": "9ecc50946d9c77dd2ed71d6438ba95213c78b58c93aa15929ad352d5b0bc79b4",
+      "matching_quiet": true,
+      "correlation": 0.9954220211824981,
+      "measured_gain": 0.9413644969428755,
+      "gain_error_db": -0.27816899660595523,
+      "source_db": -59.53021242184284,
+      "film_db": -60.01520100344319,
+      "source_zero_fraction": 0.011099137931034482,
+      "film_zero_fraction": 0.013
+    },
+    {
+      "film_second": 226,
+      "source_interval": [
+        223.76000000000002,
+        224.76000000000002
+      ],
+      "source_sha256": "9ecc50946d9c77dd2ed71d6438ba95213c78b58c93aa15929ad352d5b0bc79b4",
+      "matching_quiet": true,
+      "correlation": 0.9994368261998177,
+      "measured_gain": 0.9645693359410834,
+      "gain_error_db": -0.06665627045030781,
+      "source_db": -60.21468628303026,
+      "film_db": -60.52312421153335,
+      "source_zero_fraction": 0.011853448275862068,
+      "film_zero_fraction": 0.015
+    }
+  ],
+  "note": "Each third-render candidate must independently pass natural_quiet_audio with its actual bound original source, final PCM and gain. This JSON documents measurements, not a flag that overrides validation."
+}

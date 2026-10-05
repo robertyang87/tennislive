@@ -160,3 +160,30 @@ def test_stat_panel_without_point_slot_does_not_copy_dark_racket_to_right():
     assert geometry['body'][2] <= 362
     assert geometry['header'] is not None
     assert w.alpha_frame(geometry,(0,0,760,200))[:,362:].sum() == 0
+
+
+def test_beijing_swiatek_break_point_two_and_centred_result_real_pixels():
+    from PIL import Image
+    root = Path(__file__).parent / "fixtures" / "wta_scoreboard"
+    image = np.asarray(Image.open(root / "beijing-swiatek-224040-break-point-2.png"))
+    geometry = w.frame_geometry(image, cap=482)
+    assert geometry is not None
+    assert geometry["header"] is not None
+    alpha = w.alpha_frame(geometry, (0, 0, 760, 161))
+    assert alpha[20, 120] == 255  # BREAK POINT #2 remains visible
+    assert alpha[20, 220] == 0  # transparent beside the native short tag
+    assert alpha[75, 440] == 255  # rightmost current-point cell survives
+    assert not alpha[:, 465:].any()
+    result = np.asarray(Image.open(root / "beijing-swiatek-297600-centred-result.png"))
+    assert w.frame_geometry(result, cap=482) is None
+
+
+def test_native_wipe_glow_keeps_measured_edge_without_guessing_point_slot():
+    from PIL import Image
+    path = Path(__file__).parent / "fixtures" / "wta_scoreboard" / "beijing-swiatek-036960-wipe-glow.png"
+    image = np.asarray(Image.open(path))
+    geometry = w.frame_geometry(image, cap=482)
+    assert geometry["edge"] == 342
+    alpha = w.alpha_frame(geometry, (0, 0, 760, 161))
+    assert alpha[125, 320] == 255
+    assert not alpha[:, 342:].any()

@@ -1,0 +1,84 @@
+{
+  "scoreboard_qc_sha256": "ca33469aec76779b32f873fc880b8893d2dbda5a949148743df1a02438561d48",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 324.41,
+  "topbar": {
+    "line1": "2026 WTA1000 北京 第三轮",
+    "line2": "斯瓦泰克 4-6 7-6(0) 6-2 维基奇",
+    "start": 1.2,
+    "end": 325.61
+  },
+  "film_seconds": 329.48,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 12.936,
+    "3": 9.96,
+    "6": 9.552,
+    "8": 11.856,
+    "9": 14.832,
+    "11": 12.144,
+    "12": 10.656,
+    "14": 10.608,
+    "15": 13.968
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "da838aaa881918040ac09f292b4a4f3f25b5a1806b3ef0ad561dc38ca3095531",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "swiatek-vekic-beijing-2026-r3",
+    "received_at": "2026-10-05T14:10:13Z",
+    "artifact_ready_at": "2026-10-05T15:39:02Z",
+    "elapsed_seconds": 5329.572,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "50d5504424e82092cbe61dca366bd3ede0d98ad4b33ee540da2256fb66893ea7",
+    "spec_sha256": "d9dc0798575872de541bac2a5103144cea920a0c0ce0649031e38f2dd1ce9882",
+    "run_id": "37333338614",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-05T15:33:05Z",
+        "run_id": "37333338614"
+      }
+    ],
+    "render_seconds": 357.572,
+    "pre_render_seconds": 4972.0
+  },
+  "film_sha256": "50d5504424e82092cbe61dca366bd3ede0d98ad4b33ee540da2256fb66893ea7",
+  "film_bytes": 108327382,
+  "qc_attestation_sha256": "cb40cff72a0a85f990bdb6d61357852ad35038ed6220658d2257efd2bf7783ea",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-05T15:33:05Z",
+      "run_id": "37333338614"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-05T15:39:05Z",
+      "run_id": "37333338614"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-swiatek-vekic-beijing-2026-r3/swiatek-vekic-beijing-2026-r3.mp4",
+  "video_bytes": 108327382
+}

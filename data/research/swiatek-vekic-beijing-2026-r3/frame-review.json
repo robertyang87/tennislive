@@ -1,0 +1,899 @@
+{
+  "status": "pass_after_native_fixes",
+  "review_source": "/workspace/scratch/swiatek-vekic-review/review.mp4",
+  "review_dimensions": [
+    1280,
+    720
+  ],
+  "fps": 25,
+  "target_source_dimensions": [
+    1920,
+    1080
+  ],
+  "method": "ffmpeg原时刻截图，11段每段起点/起后0.8s/终前1s/终前0.04s，加发球与采访关键切点逐帧；720p等比例升1080用于frame_geometry试算，不能替代原生1080p正式蒙版全帧QC。",
+  "scorebox_1080p": [
+    88,
+    827,
+    570,
+    988
+  ],
+  "scorebox_profile": "wta-tour-v1",
+  "native_geometry_1080p_approx": {
+    "body_top": 872,
+    "body_bottom": 985,
+    "left": 88,
+    "right_by_sets": [
+      482,
+      516,
+      551
+    ],
+    "header_top": 831,
+    "header_bottom": 873,
+    "header_max_right": 260
+  },
+  "scoreboard_findings": [
+    "建议此搜索框包含两行主板与上方BREAK/SET/MATCH POINT。用现有profile透明蒙版，不把搜索框全矩形贴回；原始场上logo WTA位于右上，不属于板。",
+    "实测224.04 BREAK POINT #2误合并为body=[0,4,411,158], header=null（相对scorebox）。正常三盘主板右缘463；误识别使右侧小分被裁且标签底部混入球场（y40时蒙版到x285，真实标签仅约171）。需原生1080复测并修复或采用本条专用经验证蒙版；不得直接当pass。",
+    "297.60居中赛果大板误识别出左下body=[0,47,651,117]。需要终局后分出原生大赛果板/致意段score_inset:false，保留居中原生图形，不复制为左下补丁。盘间6-4大赛果板140.52和141.48未误识别。",
+    "本次不修改全局代码。"
+  ],
+  "segments": [
+    {
+      "index": 1,
+      "requested": [
+        35.76,
+        60.36
+      ],
+      "verdict": "change",
+      "reason": "35.76已是发球抛球末段/即将击球；34.80完整准备。57.96/58.00/58.04是前一分后斯瓦泰克近景，58.08切到下一分维基奇准备，60.32已抛球。建议34.80–58.08（结束独占）。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-01.jpg"
+    },
+    {
+      "index": 2,
+      "requested": [
+        81.52,
+        97.2
+      ],
+      "verdict": "pass",
+      "reason": "81.52官方切入斯瓦泰克发球全景，保留本源所给发球启动；97.16维基奇分后走动，小分已到40-40，非活球。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-02.jpg"
+    },
+    {
+      "index": 3,
+      "requested": [
+        120.04,
+        141.52
+      ],
+      "verdict": "pass",
+      "reason": "120.04维基奇盘点发球前准备；141.48盘间6-4大板，活球已结束。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-03.jpg"
+    },
+    {
+      "index": 4,
+      "requested": [
+        141.52,
+        155.76
+      ],
+      "verdict": "conditional",
+      "reason": "141.52斯瓦泰克发球起始；155.72已抛起下一分的球。若与第5段无缝连续则可；若独立段插卡则须把153.6附近下一分准备划给第5段。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-04.jpg"
+    },
+    {
+      "index": 5,
+      "requested": [
+        155.76,
+        182.24
+      ],
+      "verdict": "conditional",
+      "reason": "155.76接上第4段发球动作中途；需与前段连续。182.20下一分斯瓦泰克持球准备未抛，随后第6段衔接。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-05.jpg"
+    },
+    {
+      "index": 6,
+      "requested": [
+        182.24,
+        198.92
+      ],
+      "verdict": "pass",
+      "reason": "182.24发球全景启动；198.88维基奇分后走动40-40。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-06.jpg"
+    },
+    {
+      "index": 7,
+      "requested": [
+        198.92,
+        224.04
+      ],
+      "verdict": "conditional",
+      "reason": "198.92盘点接发准备，含抢七收官；223/224已开始下一局维基奇BREAK POINT #2发球准备，必须与第8段连续。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-07.jpg"
+    },
+    {
+      "index": 8,
+      "requested": [
+        224.04,
+        238.64
+      ],
+      "verdict": "pass",
+      "reason": "224.04继续维基奇发球准备全景；238.60维基奇分后近景40-40。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-08.jpg"
+    },
+    {
+      "index": 9,
+      "requested": [
+        238.64,
+        247.48
+      ],
+      "verdict": "pass",
+      "reason": "238.64斯瓦泰克发球前全景，247.44维基奇分后接发准备，比分已变化。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-09.jpg"
+    },
+    {
+      "index": 10,
+      "requested": [
+        247.48,
+        265.5
+      ],
+      "verdict": "conditional",
+      "reason": "247.48维基奇发球准备，完整破发分后265.08左右源片已切至赛点准备；须与第11段连续。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-10.jpg"
+    },
+    {
+      "index": 11,
+      "requested": [
+        265.5,
+        297.64
+      ],
+      "verdict": "pass",
+      "reason": "265.50接前段已开始的赛点发球准备，完整终局、握手、致意；297.64仍举拍，297.68才采访。终点297.64安全。",
+      "contact_sheet": "/workspace/scratch/swiatek-frame-review/seg-11.jpg"
+    }
+  ],
+  "recommended_first_segment": [
+    34.8,
+    58.08
+  ],
+  "interview_cut": 297.68,
+  "maximum_recommended_end": 297.64,
+  "geometry_sample_origin": [
+    88,
+    827
+  ],
+  "geometry_samples": [
+    {
+      "time": 120.04,
+      "body": [
+        1,
+        45,
+        393,
+        156
+      ],
+      "header": [
+        1,
+        4,
+        143,
+        46
+      ],
+      "bounds": [
+        1,
+        4,
+        393,
+        156
+      ]
+    },
+    {
+      "time": 120.84,
+      "body": [
+        1,
+        45,
+        393,
+        156
+      ],
+      "header": [
+        1,
+        4,
+        143,
+        46
+      ],
+      "bounds": [
+        1,
+        4,
+        393,
+        156
+      ]
+    },
+    {
+      "time": 141.52,
+      "body": [
+        0,
+        45,
+        427,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        427,
+        158
+      ]
+    },
+    {
+      "time": 142.32,
+      "body": [
+        0,
+        45,
+        427,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        427,
+        158
+      ]
+    },
+    {
+      "time": 181.24,
+      "body": [
+        0,
+        45,
+        427,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        427,
+        158
+      ]
+    },
+    {
+      "time": 182.2,
+      "body": [
+        0,
+        45,
+        428,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        428,
+        158
+      ]
+    },
+    {
+      "time": 182.24,
+      "body": [
+        0,
+        45,
+        428,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        428,
+        158
+      ]
+    },
+    {
+      "time": 183.04,
+      "body": [
+        0,
+        45,
+        428,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        428,
+        158
+      ]
+    },
+    {
+      "time": 197.92,
+      "body": [
+        0,
+        45,
+        428,
+        157
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        428,
+        157
+      ]
+    },
+    {
+      "time": 198.88,
+      "body": [
+        1,
+        45,
+        427,
+        157
+      ],
+      "header": null,
+      "bounds": [
+        1,
+        45,
+        427,
+        157
+      ]
+    },
+    {
+      "time": 198.92,
+      "body": [
+        0,
+        45,
+        428,
+        159
+      ],
+      "header": [
+        2,
+        4,
+        115,
+        46
+      ],
+      "bounds": [
+        0,
+        4,
+        428,
+        159
+      ]
+    },
+    {
+      "time": 199.72,
+      "body": [
+        0,
+        45,
+        428,
+        158
+      ],
+      "header": [
+        2,
+        4,
+        115,
+        46
+      ],
+      "bounds": [
+        0,
+        4,
+        428,
+        158
+      ]
+    },
+    {
+      "time": 223.04,
+      "body": [
+        0,
+        4,
+        411,
+        159
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        4,
+        411,
+        159
+      ]
+    },
+    {
+      "time": 224.0,
+      "body": [
+        0,
+        1,
+        411,
+        159
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        1,
+        411,
+        159
+      ]
+    },
+    {
+      "time": 224.04,
+      "body": [
+        0,
+        4,
+        411,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        4,
+        411,
+        158
+      ]
+    },
+    {
+      "time": 224.84,
+      "body": [
+        0,
+        4,
+        411,
+        157
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        4,
+        411,
+        157
+      ]
+    },
+    {
+      "time": 237.64,
+      "body": [
+        0,
+        46,
+        463,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        46,
+        463,
+        158
+      ]
+    },
+    {
+      "time": 238.6,
+      "body": [
+        0,
+        45,
+        463,
+        155
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        463,
+        155
+      ]
+    },
+    {
+      "time": 238.64,
+      "body": [
+        0,
+        45,
+        463,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        463,
+        158
+      ]
+    },
+    {
+      "time": 239.44,
+      "body": [
+        0,
+        45,
+        463,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        463,
+        158
+      ]
+    },
+    {
+      "time": 246.48,
+      "body": [
+        0,
+        45,
+        463,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        463,
+        158
+      ]
+    },
+    {
+      "time": 247.44,
+      "body": [
+        0,
+        45,
+        463,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        463,
+        158
+      ]
+    },
+    {
+      "time": 247.48,
+      "body": [
+        0,
+        45,
+        463,
+        155
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        463,
+        155
+      ]
+    },
+    {
+      "time": 248.28,
+      "body": [
+        0,
+        45,
+        463,
+        156
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        463,
+        156
+      ]
+    },
+    {
+      "time": 264.5,
+      "body": [
+        0,
+        45,
+        463,
+        156
+      ],
+      "header": [
+        1,
+        4,
+        138,
+        46
+      ],
+      "bounds": [
+        0,
+        4,
+        463,
+        156
+      ]
+    },
+    {
+      "time": 265.46,
+      "body": [
+        0,
+        45,
+        463,
+        156
+      ],
+      "header": [
+        1,
+        4,
+        141,
+        46
+      ],
+      "bounds": [
+        0,
+        4,
+        463,
+        156
+      ]
+    },
+    {
+      "time": 265.5,
+      "body": [
+        0,
+        45,
+        463,
+        156
+      ],
+      "header": [
+        1,
+        4,
+        141,
+        46
+      ],
+      "bounds": [
+        0,
+        4,
+        463,
+        156
+      ]
+    },
+    {
+      "time": 266.3,
+      "body": [
+        0,
+        45,
+        463,
+        156
+      ],
+      "header": [
+        1,
+        4,
+        141,
+        46
+      ],
+      "bounds": [
+        0,
+        4,
+        463,
+        156
+      ]
+    },
+    {
+      "time": 297.6,
+      "body": [
+        0,
+        47,
+        651,
+        117
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        47,
+        651,
+        117
+      ]
+    },
+    {
+      "time": 59.36,
+      "body": [
+        0,
+        45,
+        393,
+        157
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        393,
+        157
+      ]
+    },
+    {
+      "time": 60.32,
+      "body": [
+        0,
+        45,
+        392,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        392,
+        158
+      ]
+    },
+    {
+      "time": 81.52,
+      "body": [
+        0,
+        45,
+        394,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        394,
+        158
+      ]
+    },
+    {
+      "time": 82.32,
+      "body": [
+        0,
+        45,
+        393,
+        158
+      ],
+      "header": null,
+      "bounds": [
+        0,
+        45,
+        393,
+        158
+      ]
+    },
+    {
+      "time": 96.2,
+      "body": [
+        1,
+        45,
+        392,
+        156
+      ],
+      "header": null,
+      "bounds": [
+        1,
+        45,
+        392,
+        156
+      ]
+    },
+    {
+      "time": 97.16,
+      "body": [
+        1,
+        45,
+        393,
+        156
+      ],
+      "header": null,
+      "bounds": [
+        1,
+        45,
+        393,
+        156
+      ]
+    }
+  ],
+  "native_followup": {
+    "status": "pass",
+    "source_sha256": "9ecc50946d9c77dd2ed71d6438ba95213c78b58c93aa15929ad352d5b0bc79b4",
+    "source_bytes": 109258687,
+    "source_size": [
+      1920,
+      1080
+    ],
+    "scorebox": [
+      88,
+      827,
+      570,
+      988
+    ],
+    "profile": "wta-tour-v1",
+    "tests": "51 passed",
+    "frames_scanned": 5107,
+    "errors": 0,
+    "wide_false_positives": 0,
+    "scan": [
+      {
+        "start": 34.8,
+        "end": 58.08,
+        "frames": 582,
+        "present": 530,
+        "tags": 0,
+        "max_right": 358,
+        "bad_wide_times": [],
+        "last_present": 58.04
+      },
+      {
+        "start": 81.52,
+        "end": 97.2,
+        "frames": 392,
+        "present": 392,
+        "tags": 0,
+        "max_right": 392,
+        "bad_wide_times": [],
+        "last_present": 97.16
+      },
+      {
+        "start": 120.04,
+        "end": 141.52,
+        "frames": 537,
+        "present": 252,
+        "tags": 245,
+        "max_right": 392,
+        "bad_wide_times": [],
+        "last_present": 130.08
+      },
+      {
+        "start": 153.8,
+        "end": 175,
+        "frames": 530,
+        "present": 454,
+        "tags": 0,
+        "max_right": 392,
+        "bad_wide_times": [],
+        "last_present": 174.96
+      },
+      {
+        "start": 175,
+        "end": 198.92,
+        "frames": 598,
+        "present": 598,
+        "tags": 0,
+        "max_right": 432,
+        "bad_wide_times": [],
+        "last_present": 198.88
+      },
+      {
+        "start": 198.92,
+        "end": 221,
+        "frames": 552,
+        "present": 202,
+        "tags": 195,
+        "max_right": 428,
+        "bad_wide_times": [],
+        "last_present": 206.96
+      },
+      {
+        "start": 221,
+        "end": 244,
+        "frames": 575,
+        "present": 533,
+        "tags": 300,
+        "max_right": 464,
+        "bad_wide_times": [],
+        "last_present": 243.96
+      },
+      {
+        "start": 244,
+        "end": 265.08,
+        "frames": 527,
+        "present": 497,
+        "tags": 383,
+        "max_right": 464,
+        "bad_wide_times": [],
+        "last_present": 265.04
+      },
+      {
+        "start": 265.08,
+        "end": 283.28,
+        "frames": 455,
+        "present": 390,
+        "tags": 383,
+        "max_right": 462,
+        "bad_wide_times": [],
+        "last_present": 280.64
+      },
+      {
+        "start": 283.28,
+        "end": 297.64,
+        "frames": 359,
+        "present": 0,
+        "tags": 0,
+        "max_right": 0,
+        "bad_wide_times": [],
+        "last_present": 283.28
+      }
+    ],
+    "visual_alpha": "/workspace/scratch/swiatek-native/native-alpha-validation.png",
+    "correction": "Earlier 720p upsample/#2 concern was not reproducible with native 1080 and cap=482. True remaining false-positive centred result fixed by rejecting blue textless name background. Native 36.96 wipe glow edge now measured342 with exposed-background proof; prior native fixture edges unchanged.",
+    "cutpoints": {
+      "first": [
+        34.8,
+        58.08
+      ],
+      "second_set_new_start": 153.8,
+      "match_point_hard_cut": 265.08,
+      "last_native_inset_detected": 280.64,
+      "interview_cut": 297.68,
+      "safe_end": 297.64
+    }
+  }
+}

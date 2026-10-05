@@ -1,0 +1,324 @@
+{
+  "source_video": "https://www.youtube.com/watch?v=rGsZ0vrlUns",
+  "official_match_api": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+  "official_match_page": "https://www.wtatennis.com/tournaments/1020/beijing/2026/scores/LS023",
+  "official_report": "https://www.wtatennis.com/news/4586662/swiatek-rallies-from-6-4-5-2-down-to-beat-vekic-and-reach-beijing-last-16",
+  "verified_identity": {
+    "year": 2026,
+    "date_local": "2026-10-05",
+    "tournament": "China Open, Beijing, WTA 1000",
+    "round": "Third round / Round of 32",
+    "match_id": "LS023",
+    "players": [
+      "Donna Vekic",
+      "Iga Swiatek"
+    ],
+    "seed": [
+      30,
+      8
+    ],
+    "winner": "Iga Swiatek",
+    "result_winner_first": "4-6 7-6(0) 6-2",
+    "duration": "02:40:04",
+    "api_start_utc": "2026-10-05T02:42:20.83+00:00",
+    "api_start_beijing": "2026-10-05T10:42:20.83+08:00",
+    "natural_time": "白天，首分北京时间11:11:59，赛点13:51:45",
+    "time_caveat": "此前MatchTimeStamp=10:42只是比赛记录时间戳，不能当实际开赛时间。现在以PBP首分/赛点时间确定比赛时段。",
+    "first_point_timestamp_utc": "2026-10-05T03:11:59Z",
+    "first_point_timestamp_beijing": "2026-10-05T11:11:59+08:00",
+    "match_point_timestamp_utc": "2026-10-05T05:51:45Z",
+    "match_point_timestamp_beijing": "2026-10-05T13:51:45+08:00",
+    "court": "Capital Group Diamond",
+    "court_source": "https://www.wtatennis.com/tournaments/1020/beijing/2026/order-of-play"
+  },
+  "verified_turning_points": [
+    {
+      "fact": "维基奇首盘6-4，并在第二盘5-2领先",
+      "source": "WTA official report + source captions at 284.08"
+    },
+    {
+      "fact": "斯维亚泰克连破维基奇两个发球局，将第二盘追至5-5",
+      "source": "WTA official report"
+    },
+    {
+      "fact": "斯维亚泰克第二盘抢七7-0",
+      "source": "WTA official report + API ScoreTbSet2=0 + source captions 220.24"
+    },
+    {
+      "fact": "决胜盘双方开局互破，斯维亚泰克随后破发取得3-2领先，最终6-2",
+      "source": "WTA official report"
+    },
+    {
+      "fact": "第二盘两个发球胜赛局未能拿下，不等于浪费两个赛点；Flashscore赛点化解双方为0",
+      "source": "source captions 208.88 wording two chances; Flashscore stats"
+    }
+  ],
+  "next_round": {
+    "opponent": "Iva Jovic",
+    "seed": 10,
+    "round": "Round of 16",
+    "verified_by": "WTA official report",
+    "opponent_previous_result": "def Kamilla Rakhimova 6-1 7-5 on Monday"
+  },
+  "background": {
+    "prior_h2h": "Swiatek led 4-0, losing one set in those four meetings",
+    "beijing_title": "2023 champion",
+    "source": "WTA official report"
+  },
+  "winners_unforced_errors": {
+    "Donna Vekic": {
+      "winners": 37,
+      "unforced_errors": 22
+    },
+    "Iga Swiatek": {
+      "winners": 37,
+      "unforced_errors": 16
+    },
+    "status": "verified TNNS runner report; per-set totals reconcile",
+    "checks": [
+      {
+        "source": "WTA official match stats page",
+        "result": "No Winners or Unforced Errors rows in fetched HTML"
+      },
+      {
+        "source": "Flashscore match lS4V6mE8 via tools/fetch_match_stats_fs.py",
+        "result": "Full match and each set retrieved; Winners/UE absent",
+        "artifact": "/workspace/scratch/swiatek-vekic-flashscore.json"
+      },
+      {
+        "source": "TNNS https://api.tnnslive.com/v1/matches?date=2026-10-05&web=true",
+        "result": "HTTP403 Forbidden. Access failure, not evidence that stats absent"
+      },
+      {
+        "source": "Match Charting Project index via tools/mcp_stats.py find --who Vekic --year 2026",
+        "result": "18327 total index entries; 3 Vekic matches in 2026 (Australian Open R128, Queens final, US Open R128); this match not indexed"
+      }
+    ],
+    "source": "https://tnnslive.com/match/75051498",
+    "artifact": "/workspace/tennislive/data/research/swiatek-vekic-beijing-2026-r3/tnns-report.log",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/37324050871",
+    "set_winners": [
+      [
+        16,
+        9
+      ],
+      [
+        12,
+        16
+      ],
+      [
+        9,
+        12
+      ]
+    ],
+    "set_ue": [
+      [
+        4,
+        2
+      ],
+      [
+        6,
+        8
+      ],
+      [
+        12,
+        6
+      ]
+    ],
+    "player_order": [
+      "Donna Vekic",
+      "Iga Swiatek"
+    ],
+    "direct_detail_fetch": "HTTP 403; no full JSON available from this local environment"
+  },
+  "stats_conflicts": {
+    "player_order": [
+      "Donna Vekic",
+      "Iga Swiatek"
+    ],
+    "warning": "WTA page and Flashscore disagree on total points and Swiatek break-point chances. Do not silently mix.",
+    "WTA": {
+      "total_points": [
+        89,
+        106
+      ],
+      "break_points": [
+        "4/5",
+        "5/11"
+      ]
+    },
+    "Flashscore": {
+      "total_points": [
+        92,
+        107
+      ],
+      "break_points": [
+        "4/5",
+        "5/13"
+      ]
+    },
+    "common_verified": {
+      "aces": [
+        1,
+        2
+      ],
+      "double_faults": [
+        5,
+        1
+      ],
+      "first_serve_in": [
+        "67/106",
+        "61/89"
+      ],
+      "first_serve_points_won": [
+        "36/67",
+        "44/61"
+      ],
+      "second_serve_points_won": [
+        "21/39",
+        "13/28"
+      ]
+    },
+    "internal_consistency": "Flashscore first+second serve point totals (106/89) disagree with its displayed service total (109/90); WTA totals 195 consistent with first+second serve totals. Prefer WTA for self-consistent serve data but avoid disputed metrics without further adjudication."
+  },
+  "artifacts": {
+    "match_record": {
+      "BinPacketBase64": null,
+      "CourtID": 1,
+      "DateSeq": 8,
+      "DrawLevelType": "M",
+      "DrawMatchType": "S",
+      "EntryTypeA": "",
+      "EntryTypeB": "",
+      "EventID": "1020",
+      "EventYear": 2026,
+      "LastUpdated": "2026-10-05T05:52:01.213+00:00",
+      "MatchID": "LS023",
+      "MatchState": "F",
+      "MatchTimeStamp": "2026-10-05T02:42:20.83+00:00",
+      "MatchTimeTotal": "02:40:04",
+      "Message": "{11|I. Swiatek}",
+      "NumSets": 3,
+      "PlayerCountryA": "CRO",
+      "PlayerCountryA2": "",
+      "PlayerCountryB": "POL",
+      "PlayerCountryB2": "",
+      "PlayerIDA": "318516",
+      "PlayerIDA2": "",
+      "PlayerIDB": "326408",
+      "PlayerIDB2": "",
+      "PlayerNameFirstA": "Donna",
+      "PlayerNameFirstA2": "",
+      "PlayerNameFirstB": "Iga",
+      "PlayerNameFirstB2": "",
+      "PlayerNameLastA": "Vekic",
+      "PlayerNameLastA2": "",
+      "PlayerNameLastB": "Swiatek",
+      "PlayerNameLastB2": "",
+      "PointA": "",
+      "PointB": "",
+      "ResultString": "[8]I. Swiatek d [30]D. Vekic 4-6,7-6(0),6-2",
+      "RoundID": "3",
+      "ScoreSet1A": "6",
+      "ScoreSet1B": "4",
+      "ScoreSet2A": "6",
+      "ScoreSet2B": "7",
+      "ScoreSet3A": "2",
+      "ScoreSet3B": "6",
+      "ScoreSet4A": "",
+      "ScoreSet4B": "",
+      "ScoreSet5A": "",
+      "ScoreSet5B": "",
+      "ScoreString": "4-6,7-6(0),6-2",
+      "ScoreSys": "1",
+      "ScoreTbSet1": "",
+      "ScoreTbSet2": "0",
+      "ScoreTbSet3": "",
+      "ScoreTbSet4": "",
+      "SeedA": "30",
+      "SeedB": "8",
+      "Serve": "",
+      "Winner": "3"
+    },
+    "matches": "/workspace/scratch/beijing-wta-matches.json",
+    "match_page_html": "/workspace/scratch/swiatek-vekic-wta-page.html",
+    "news_html": "/workspace/scratch/swiatek-vekic-wta-news.html",
+    "wta_stats_raw": "/workspace/scratch/swiatek-vekic-wta-stats-raw.json"
+  },
+  "unverified": [
+    "YouTube exact title/channel metadata not recovered locally; source footage identity independently matched against official result."
+  ],
+  "rankings": {
+    "source": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+    "as_of": "2026-09-28",
+    "meaning": "本次检索官方当前榜返回rankedAt=2026-09-28；不可称10月5日新榜",
+    "Iga Swiatek": 9,
+    "Donna Vekic": 40,
+    "artifact": "/workspace/scratch/swiatek-vekic-rankings-raw.json"
+  },
+  "pbp": {
+    "source": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS023/point-by-point",
+    "artifact": "/workspace/scratch/swiatek-vekic-pbp-raw.json",
+    "warning": "官方PBP第2盘第13局抢七含大量空pointWinner、异常重复记录，原项目summarise抛KeyError。不要用全表算总分、抢七连分或强行修正raw；常规局逐局G结尾记录可核验。",
+    "set2_serving_for_match": [
+      {
+        "game": 8,
+        "score_before_vekic_first": "5-2",
+        "server": "Vekic",
+        "winner": "Swiatek",
+        "point_sequence": "B B B B",
+        "result": "斯维亚泰克love破发，5-3",
+        "last_point_utc": "2026-10-05T04:40:56Z"
+      },
+      {
+        "game": 10,
+        "score_before_vekic_first": "5-4",
+        "server": "Vekic",
+        "winner": "Swiatek",
+        "point_sequence": "B B B A B",
+        "result": "维基奇只得一分，5-5；没有赛点",
+        "last_point_utc": "2026-10-05T04:50:16Z"
+      }
+    ],
+    "set3_game_winners": [
+      "Swiatek",
+      "Vekic",
+      "Vekic",
+      "Swiatek",
+      "Swiatek",
+      "Swiatek",
+      "Swiatek",
+      "Swiatek"
+    ],
+    "set3_finish": "斯维亚泰克从1-2起连赢5局；3-2之后再连赢3局，最后love保发。"
+  },
+  "additional_official_report": {
+    "url": "https://www.chinaopen.com/en/contents/353/734.html",
+    "title": "Swiatek makes personal history in epic comeback win",
+    "author": "Isabel Kirkwood",
+    "artifact": "/workspace/scratch/swiatek-vekic-chinaopen.html",
+    "conflicts": [
+      "稿件写2小时38分，与WTA2小时40分/官方PBP跨度不一致；优先WTA时间。",
+      "文中The shift came in Game 5 of the second set紧接Down 5-2明显局序错误；使用PBP第8局。"
+    ],
+    "supports": [
+      "维基奇两次发球胜赛局均失败",
+      "首次发球胜赛局被love破发",
+      "斯维亚泰克决胜盘三次破发，love结束最后一局",
+      "下一轮周三迎战约维奇"
+    ]
+  },
+  "alternative_official_video": {
+    "url": "https://www.wtatennis.com/videos/4586688/from-6-4-5-2-down-swiatek-rallies-to-beat-vekic-and-reach-beijing-last-16",
+    "duration_seconds": 293.355,
+    "brightcove_id": "6406237749112",
+    "status": "已正常下载并看过中段逐秒比分帧：仍由第二盘维基奇3-1直接切到抢七6-0，缺失2-5至5-5追分回合，不能补缺口。",
+    "other_public_video": "https://www.wtatennis.com/videos/4586861/beijing-post-match-interview-r32-iga-swiatek-english_digital-download_m52342",
+    "other_video_note": "赛后采访，不是缺失回合来源",
+    "artifact": "/workspace/scratch/swiatek-vekic-wta-alt.mp4",
+    "metadata": "/workspace/scratch/swiatek-wta-alt-video-metadata.json",
+    "inspection": "/workspace/scratch/swiatek-alt-score185.jpg (185至220秒逐秒比分截图)",
+    "recommended_gap_treatment": "使用明确缺口字卡/比分进程解释2-5→5-5，不以别的回合冒充。"
+  },
+  "official_stats_api": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS023/stats"
+}
