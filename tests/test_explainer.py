@@ -634,8 +634,13 @@ def test_每条片子都以问题开场():
             assert line in doc, f"{slug} 封面少了这一行：{line}"
         assert "① " not in doc  # the cover carries no beat number
         assert explainer_column(slug) in doc
-        # ...and the first real beat still starts the count at one.
-        assert "① " in _slide_html(1, segments[1])
+        # Generic decks keep their sequence marker. The focused source layout
+        # uses one conclusion and evidence, without a second chapter/number label.
+        first = _slide_html(1, segments[1])
+        if segments[1].visual:
+            assert "scene-index" not in first
+        else:
+            assert "① " in first
 
 
 def test_每屏标题不能把自己的标签再说一遍():

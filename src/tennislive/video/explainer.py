@@ -2017,7 +2017,7 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
-    # run 37352115009 的实际3:4成片已抽帧、字幕与原声质检；见 docs/research/medvedev-beijing-default-2026-qc.json。
+    # run 37368614614 的实际3:4成片已抽帧、字幕与原声质检；见 docs/research/medvedev-beijing-default-2026-qc.json。
     "medvedev-beijing-default-2026",
     # 2026-10-01：run 36808709110 的 133.67s 成片已逐屏、字幕与音量质检；见 docs/research/atp250-medvedev-hangzhou-2026-qc.json。
     "atp250-medvedev-hangzhou-2026",
@@ -13886,6 +13886,7 @@ def assemble_explainer_video(
     canvas_h: int = VIDEO_H,
     full_bleed: bool = False,
     inserts: dict[int, Path] | None = None,
+    subtitle_profile: str | None = None,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
     """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat.
@@ -14124,6 +14125,9 @@ def assemble_explainer_video(
                     cues, output.parent / f"sub_{i:02d}.ass",
                     height=canvas_h, margin_v=margin_v,
                 )
+                if subtitle_profile == "focused-story":
+                    from .source_story_cards import focus_narration_subtitles
+                    focus_narration_subtitles(ass)
                 chain += (f",subtitles='{_filter_path(ass)}'"
                           f":fontsdir='{_filter_path(_ASS_EN_FONT_FILE.parent)}'")
         # 后面还有一路（下一屏或片尾）就垫一截底料给溶解吃，见 docstring。
@@ -14388,6 +14392,7 @@ def generate_explainer_video(
                 canvas_h=canvas_h,
                 full_bleed=bool(opening.get("full_bleed")),
                 inserts=inserts,
+                subtitle_profile=opening.get("subtitle_profile"),
             )
     finally:
         if intro_tmp is not None:
