@@ -31,3 +31,7 @@ jobs:
           compression-level: 0
           path: review/
           retention-days: 3
+      - uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-swiatek-vekic-beijing-2026-r3-f02d9c53d937a1c3
