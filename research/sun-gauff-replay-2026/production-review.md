@@ -10,4 +10,12 @@
 
 来源文字按用户要求从左下角移除；研究来源、PDF条款及音频证据保留在仓库。研究非官方185秒事故录像与慢放用于核高芙回合末已抬手，不把“丢分后才首次申诉”当事实。原始事故官方发布完整片尚未取得；材料缺口仅留内部。
 
-GitHub正常download-video第一次因hosted runner未被取得而失败（未执行任何下载步骤）；已重试。重试已成功，实际下载Sky原生1080p归档（90,370,380bytes，SHA b29d32d6295b31b634ed494e66d656859bec66d5771a11363485da81876b687c）。完整PCM、每帧画面、编码包及时间轴与已审原片精确相同，证据和新源绑定已入库。最终成片直接上传也受执行代理Bad Content-Length阻挡，尚不声明已经公开发布。
+GitHub正式云端流程现已完成：`match-reel` run [37372143319](https://github.com/robertyang87/tennislive/actions/runs/37372143319) success，使用实际官方归档源并完成渲染、最终QC、Release上传和23个产物文件提交。正式Release成片144.04秒、1080×1440、25fps、67,677,730bytes，SHA256 `5a74a1bc4d0b930399c2fc1d3954697dd02fa8db4afbad361575bc899e516944`。正式ASS与本地已审版本逐字节一致；所有选段、源SHA、旁白时长和字幕时轴一致。海报JPEG与编码环境造成正式成片字节不同，因此另行下载正式文件做质检，不用本地旧hash代替。
+
+正式成片URL：https://github.com/robertyang87/tennislive/releases/download/reel-sun-gauff-led-replay-story-2026/sun-gauff-led-replay-story-2026.mp4
+
+根制作方把正式metadata放在实际下载成片旁，重新运行 `check_reel_landed.py`，0项不合格。独立质检重新抽查37张正式云片真帧，覆盖16段、封面片尾及10条原声双语cue，结论通过；见 [cloud-final-independent-qc.md](cloud-final-independent-qc.md)。方法与未做人工听审的边界保持真实。
+
+正式render之前当前496树的全量测试：5677 passed、234 skipped、0 failed，488.81秒。234正常跳过项包含本机未安装的人脸模型；没有修改测试或闸门消掉失败。正式云runner有人脸模型，原流程检查正常完成。
+
+正式产物提交088f之后，两趟PR检查原本提示“This workflow is awaiting approval from a maintainer in #1191”，jobs为0。确认其只新增正式产物、不修改workflow后，正常通过Actions审批API批准运行，没有改安全规则。正式云片已公开存在；PR合并、Pages复制页及微信推送继续按当前头检查和发布账本完成。正式发出与否以持久账本的sent状态和PushPlus流水号为准，不把工作流已启动算成已发送。
