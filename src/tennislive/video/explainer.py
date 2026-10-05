@@ -14476,13 +14476,12 @@ def explainer_push_html(
     # `*.jsdelivr.net/gh/…@main/`，github.com 的 Release 链接匹配不上
     # （判据在 test_推送里的成片链接优先读render_json的video_url）。
     video_url = ""
+    render_meta = {}
     meta_f = outdir / "render.json"
     if meta_f.is_file():
         try:
-            video_url = str(
-                (json.loads(meta_f.read_text(encoding="utf-8")) or {})
-                .get("video_url") or ""
-            ).strip()
+            render_meta = json.loads(meta_f.read_text(encoding="utf-8")) or {}
+            video_url = str(render_meta.get("video_url") or "").strip()
         except (OSError, ValueError) as exc:
             # 坏 JSON 和「没写过」是两回事。静默退回老路的样子和正常一模一样，
             # 而新片子的 mp4 不在 git 里，老路的链接对它就是 404——要出声。
@@ -14514,6 +14513,21 @@ def explainer_push_html(
     # 「探过了没有」，按钮就无声消失了——正文里那段文案的唯一出口。
     if isinstance(copy_url, _Unset):
         copy_url = f"{_PAGES_URL}/{rel}/copy.html"
+    # The raw MP4 opens on its cold-open match frame. A selected cover must
+    # also be the player's poster, using the identical rendered slide asset.
+    if (_OPENINGS.get(outdir.name) or {}).get("playback_cover"):
+        from ..render.video_page import video_page
+
+        # Pages publishes HTML only. The cover image belongs on the image
+        # CDN; reviewed packages may pin it to an immutable cover revision.
+        poster_url = str(render_meta.get("cover_url") or
+                         f"{jsdelivr_base(_REPOSITORY)}/{rel}/slide_00.jpg")
+        (outdir / "watch.html").write_text(
+            video_page(title=segments[0].title.replace("\n", " · "),
+                       video_url=video_url, poster_url=poster_url),
+            encoding="utf-8",
+        )
+        video_url = f"{_PAGES_URL}/{rel}/watch.html"
     # 药丸写栏目名、按钮写「▶ 打开竖版成片」——都由 knowledge_push_html_from_parts
     # 自己出（2026-09-27 UI 评审 WP2：同一栏目的剪辑片推送和这条原来长得不一样，
     # 正是因为这两段文字是从这儿传进去的）。
