@@ -1,0 +1,176 @@
+{
+  "schema": "tennislive.source-remux-equivalence.v1",
+  "verified_at": "2026-10-05T20:35:46.390782+00:00",
+  "method": "Complete source decoding and complete encoded packet SHA256, without seeking, trimming, muted audio, frame sampling, or source modification",
+  "normalization": {
+    "decoded_audio": "native AAC decode to 48000Hz stereo signed16-bit PCM",
+    "decoded_video": "every frame decoded to native1920x1080 yuv420p, fps_mode passthrough"
+  },
+  "commands": {
+    "decoded_audio_s16le": [
+      "-map",
+      "0:a:0",
+      "-vn",
+      "-c:a",
+      "pcm_s16le",
+      "-ar",
+      "48000",
+      "-ac",
+      "2",
+      "-f",
+      "hash",
+      "-hash",
+      "sha256",
+      "-"
+    ],
+    "decoded_video_yuv420p": [
+      "-map",
+      "0:v:0",
+      "-an",
+      "-c:v",
+      "rawvideo",
+      "-pix_fmt",
+      "yuv420p",
+      "-fps_mode",
+      "passthrough",
+      "-f",
+      "hash",
+      "-hash",
+      "sha256",
+      "-"
+    ],
+    "encoded_audio_packets": [
+      "-map",
+      "0:a:0",
+      "-vn",
+      "-c:a",
+      "copy",
+      "-f",
+      "hash",
+      "-hash",
+      "sha256",
+      "-"
+    ],
+    "encoded_video_packets": [
+      "-map",
+      "0:v:0",
+      "-an",
+      "-c:v",
+      "copy",
+      "-f",
+      "hash",
+      "-hash",
+      "sha256",
+      "-"
+    ]
+  },
+  "sources": {
+    "reviewed": {
+      "path": "/workspace/scratch/sun-gauff-replay-2026/sky-highlight-1080.mp4",
+      "bytes": 90370372,
+      "file_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68",
+      "content_sha256": {
+        "decoded_audio_s16le": "abcb7c629a2564c80ecdda9fa522520d2feaa6cc5b6556a2566d2a7153a76823",
+        "decoded_video_yuv420p": "47d40e3c66d5d44270a81c336b9044d7378041b2f5c71bc94c5242be031dfc82",
+        "encoded_audio_packets": "dffe10aa997ad294e8bb85fd171ee52711bce258aa3c7bc79c009fd6db84b531",
+        "encoded_video_packets": "90f4d0826ee9993a9af64de5056b16d2093d2846f8e4b667749bee8998af91f3"
+      },
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080,
+          "pix_fmt": "yuv420p",
+          "r_frame_rate": "50/1",
+          "time_base": "1/90000",
+          "start_time": "0.000000",
+          "duration": "90.760000",
+          "nb_frames": "4538",
+          "sample_rate": null,
+          "channels": null
+        },
+        {
+          "index": 1,
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "pix_fmt": null,
+          "r_frame_rate": "0/0",
+          "time_base": "1/48000",
+          "start_time": "0.000000",
+          "duration": "90.837333",
+          "nb_frames": "4258",
+          "sample_rate": "48000",
+          "channels": 2
+        }
+      ],
+      "duration": "90.837333"
+    },
+    "archive": {
+      "path": "/workspace/scratch/sun-replay/sky-archive/1878225817907584085.mp4",
+      "bytes": 90370380,
+      "file_sha256": "b29d32d6295b31b634ed494e66d656859bec66d5771a11363485da81876b687c",
+      "content_sha256": {
+        "decoded_audio_s16le": "abcb7c629a2564c80ecdda9fa522520d2feaa6cc5b6556a2566d2a7153a76823",
+        "decoded_video_yuv420p": "47d40e3c66d5d44270a81c336b9044d7378041b2f5c71bc94c5242be031dfc82",
+        "encoded_audio_packets": "dffe10aa997ad294e8bb85fd171ee52711bce258aa3c7bc79c009fd6db84b531",
+        "encoded_video_packets": "90f4d0826ee9993a9af64de5056b16d2093d2846f8e4b667749bee8998af91f3"
+      },
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080,
+          "pix_fmt": "yuv420p",
+          "r_frame_rate": "50/1",
+          "time_base": "1/90000",
+          "start_time": "0.000000",
+          "duration": "90.760000",
+          "nb_frames": "4538",
+          "sample_rate": null,
+          "channels": null
+        },
+        {
+          "index": 1,
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "pix_fmt": null,
+          "r_frame_rate": "0/0",
+          "time_base": "1/48000",
+          "start_time": "0.000000",
+          "duration": "90.837333",
+          "nb_frames": "4258",
+          "sample_rate": "48000",
+          "channels": 2
+        }
+      ],
+      "duration": "90.837333"
+    }
+  },
+  "equivalent": {
+    "decoded_audio_s16le": true,
+    "decoded_video_yuv420p": true,
+    "encoded_audio_packets": true,
+    "encoded_video_packets": true
+  },
+  "all_content_equal": true,
+  "packet_timeline": {
+    "method": "All audio/video packet stream_index,pts,dts,duration,flags; exclude container-specific pos/size",
+    "sources": {
+      "reviewed": {
+        "sha256": "13653d3daa39f285012bcf0152ba7ff02fbb92b3e1108f344cfa052868d1cabb",
+        "packets": 8796
+      },
+      "archive": {
+        "sha256": "13653d3daa39f285012bcf0152ba7ff02fbb92b3e1108f344cfa052868d1cabb",
+        "packets": 8796
+      }
+    },
+    "same_packet_timeline": true
+  },
+  "ffmpeg_version": "ffmpeg version 7.1.5-0+deb13u1 Copyright (c) 2000-2026 the FFmpeg developers",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-1878225817907584085/1878225817907584085.mp4"
+}

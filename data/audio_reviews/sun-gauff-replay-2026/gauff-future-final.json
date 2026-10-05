@@ -1,0 +1,58 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Wg6m85wS3Ps/Wg6m85wS3Ps.mp4",
+  "source_sha256": "79951bd5316ac8910ce6fc1200260c62492d1f791ed3690729dadeb7a6296b90",
+  "method": "asr_cross_checked",
+  "reviewer": "production_setup three independent Whisper models plus official WTA direct quote verification",
+  "reviewed_at": "2026-10-05T19:47:38.233362+00:00",
+  "reviewed_from": 346.04,
+  "reviewed_to": 348.96,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 346.08,
+      "end": 347.42,
+      "en": "So I'm looking forward",
+      "zh": "所以我很期待"
+    },
+    {
+      "start": 347.42,
+      "end": 348.88,
+      "en": "to the future matchups we have.",
+      "zh": "未来与她再次交手"
+    }
+  ],
+  "evidence": {
+    "models": [
+      "tiny.en",
+      "base.en",
+      "small.en"
+    ],
+    "raw_transcripts": [
+      "tiny.en-gauff312-351.wav.json",
+      "base.en-gauff312-351.wav.json",
+      "small.en-gauff312-351.wav.json"
+    ],
+    "official_quote": "https://www.wtatennis.com/news/4587000/gauff-pulls-away-late-to-defeat-rising-sun-in-beijing",
+    "resolution": "base/small word boundaries are concordant; tiny boundaries are shifted slightly. For future last phrase, tiny and official direct quote agree matchups we have; base matches we have and small match-ups to have are alternate low-confidence tokenization of the same phrase. Official direct quote used to resolve text. This is not claimed human listening. Adjacent host voice begins >=349.10, cut348.96 and audio_tail silence prevent boundary leak."
+  },
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/tiny.en-gauff312-351.json",
+      "sha256": "c7ff134dc7773d9fd7190b1525e161364cba47e87f9617eeae4234c1b63e39a0",
+      "model": "tiny.en"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/base.en-gauff312-351.json",
+      "sha256": "90f8d95af2e4bf20544326cb1dbc6d8523aeb9c64a47a11792b1001b9197f553",
+      "model": "base.en"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/small.en-gauff312-351.json",
+      "sha256": "0261b59595290c1a182c5c8156d2fd2373330a90575c3227f5cac1285a8309fc",
+      "model": "small.en"
+    }
+  ],
+  "is_human_listening": false,
+  "coverage_basis": "Selected complete single closing sentence reviewed across full312–351s waveform with independent tiny.en/base.en/small.en ASR and verbatim official WTA statement. Prior sentence ends345.94, next host utterance begins>=349.10. Phrase matchups we have follows tiny+official; base matches we have and small matchups to have differ only in low-confidence tokenization. No unresolved semantic content retained."
+}

@@ -4251,18 +4251,65 @@ def test_每条spec都算得出一句过得了闸的标题():
                          (outdir / "copy.html").read_text(encoding="utf-8"),
                          re.DOTALL).group(1).strip()
         meta = push_reel.push_meta(copy_path)
-        got = push_reel.headline(outdir, push_reel.column_of(copy_path),
+        column = push_reel.column_of(copy_path)
+        got = push_reel.headline(outdir, column,
                                  meta["matchup"], meta["score"], meta["event"],
                                  meta["summary"])
         from html import unescape  # noqa: PLC0415
         from tennislive.render.copy_title import copy_title  # noqa: PLC0415
         historical = unescape(want)
-        if push_reel.column_of(copy_path) == "赛场之上":
+        # 新发布页用 publication_title 的日期+栏目+| 无空格合同；headline
+        # 是保留给历史调用方的中间接口，故事/采访仍返回旧的带空格格式。
+        # 只用 headline 回放会把符合真实发布合同的故事页误报成不一致。
+        if re.match(r"^\d{1,2}\.\d{1,2}[^\s|｜丨]+[|｜丨]", historical):
+            got = push_reel.publication_title(
+                outdir, column, meta["matchup"], meta["score"],
+                meta["summary"], slug=slug)
+        elif column == "赛场之上":
             historical = re.split(r"[|｜丨]", historical)[-1]
             historical = re.sub(r"(?<=\d)\s+(?=\d+[-:])", "，", historical)
             historical = copy_title(historical)
         assert got == historical, (
             f"{slug}：从 spec 算出来的是「{got}」，历史标题内容是「{historical}」")
+
+
+@pytest.mark.parametrize("column", ["赛场之上", "赛后开麦", "网球有故事"])
+@pytest.mark.parametrize("format_kind", ["modern", "legacy", "wrong"])
+def test_标题回放核真实发布页且保留历史兼容(tmp_path, monkeypatch, column, format_kind):
+    """实际页生成→全库回放；换成别的主题必须红，CI不依赖已有HTML。"""
+    from html import escape
+    from tennislive.render.pushmsg import to_copy_page
+
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "tools"))
+    import push_reel
+
+    monkeypatch.chdir(tmp_path)
+    specs = Path("specs/reels")
+    specs.mkdir(parents=True)
+    # 原回放的非空前提需要至少九份；不删除或跳过该前提。
+    for i in range(9):
+        (specs / f"demo-{i}.json").write_text(json.dumps({
+            "cover": {"eyebrow": column}, "push": {"summary": "重打的一分"},
+        }, ensure_ascii=False), encoding="utf-8")
+        (specs / f"demo-{i}.xhs.txt").write_text(
+            "外部干扰成立，整分重打。\n\n#网球时差", encoding="utf-8")
+    out = Path("output/2026-10-06/reel/demo-0")
+    out.mkdir(parents=True)
+    caption = specs / "demo-0.xhs.txt"
+    if format_kind == "legacy":
+        title = push_reel.headline(out, column, "", summary="重打的一分")
+        page = f'<textarea id="title">{escape(title)}</textarea>'
+    else:
+        _, title, body = push_reel.prepare_copy(caption, out)
+        if format_kind == "wrong":
+            title = title.replace("重打的一分", "虚构的一分")
+        page = to_copy_page(title + "\n\n" + body)
+    (out / "copy.html").write_text(page, encoding="utf-8")
+    if format_kind == "wrong":
+        with pytest.raises(AssertionError, match="历史标题内容"):
+            test_每条spec都算得出一句过得了闸的标题()
+    else:
+        test_每条spec都算得出一句过得了闸的标题()
 
 
 def test_写错的push字段要报错不许悄悄不生效():
