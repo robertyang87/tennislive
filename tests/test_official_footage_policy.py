@@ -24,7 +24,9 @@ def test_shared_prompt_injects_official_gap_fallback_for_both_roles(monkeypatch,
     assert 'use official footage only' in prompt
     assert 'Search available official sources first' in prompt
     assert 'native `title_card`' in prompt
-    assert 'explicitly disclosing' in prompt
+    assert 'keep footage gaps in internal production and QC records only' in prompt
+    assert 'Do not mention missing official highlights or footage in audience-facing' in prompt
+    assert 'explicitly disclosing' not in prompt
     assert 'Never substitute another rally' in prompt
     assert 'does not waive statistics' in prompt
     assert 'full-window audio review, bilingual subtitles, final QC or publication evidence' in prompt
