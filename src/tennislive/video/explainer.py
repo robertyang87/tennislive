@@ -181,6 +181,8 @@ class ExplainerSegment:
     # 所以它是**逐条认领的开关，不是把全局翻回去**——全局翻回去会把其余
     # 那四十几条重新弄坏一遍，那正是上一次翻面要修的东西。
     copy_at: str = ""
+    # Opt-in source-led layouts; existing positional scripts keep their shape.
+    visual: dict | None = None
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -2015,8 +2017,7 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
-    # 2026-10-06：run 37338109166，用户明确指定3:4且铺满画布；实际1080×1440成片、logo、双语规则名与字幕抽帧核验，详见对应qc.json。
-    "medvedev-beijing-default-2026",
+    # medvedev-beijing-default-2026：证据版重做，实际成片质检完成后才恢复自动推送。
     # 2026-10-01：run 36808709110 的 133.67s 成片已逐屏、字幕与音量质检；见 docs/research/atp250-medvedev-hangzhou-2026-qc.json。
     "atp250-medvedev-hangzhou-2026",
     # 2026-09-26 验过才加进来的。**第二趟**的数（第一趟 run 36249638228 抽帧看见
@@ -11675,6 +11676,9 @@ def explainer_script(story) -> list[ExplainerSegment]:
     scripted = _SCRIPTS.get(story.slug)
     if scripted:
         beats = [ExplainerSegment(*row) for row in scripted]
+        if story.slug == _DEFAULT_SLUG:
+            beats = [dataclasses.replace(segment, visual=spec.get("visual"))
+                     for segment, spec in zip(beats, _DEFAULT_EPISODE["beats"])]
         beats[-1] = _ask_it_out_loud(beats[-1])
         return [_opening_segment(story, beats), *beats]
 
@@ -11847,6 +11851,13 @@ def _slide_html(
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
     from . import explainer_card_palette as P
+
+    if segment.visual:
+        from .source_story_cards import source_slide_html
+
+        return source_slide_html(segment, index=index, height=height, topic=topic,
+                                 column=column, root=_REPO, font_css=_font_css(),
+                                 asset_uri=_data_uri)
 
     cover = segment.kind == "cover"
     # The cover is not a beat, so it carries no number and the beats after it
@@ -12285,6 +12296,10 @@ def render_explainer_slides(
     checked: set[Path] = set()
     for segment in segments:
         if not segment.image:
+            continue
+        if segment.visual and segment.visual.get("layout") == "rule":
+            # Authentic document crops are verified as images by source_slide_html;
+            # the photographic band check does not apply to a white PDF page.
             continue
         image_path = _REPO / segment.image
         if image_path not in checked:
@@ -13857,6 +13872,7 @@ def assemble_explainer_video(
     outro: Path | None = None,
     canvas_h: int = VIDEO_H,
     full_bleed: bool = False,
+    inserts: dict[int, Path] | None = None,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
     """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat.
@@ -13943,6 +13959,9 @@ def assemble_explainer_video(
     output.parent.mkdir(parents=True, exist_ok=True)
 
     n = len(slides)
+    inserts = inserts or {}
+    if any(not isinstance(i, int) or not 0 <= i < n for i in inserts):
+        raise ExplainerVideoError("原声插段必须放在现有屏之前")
     # Padding lands on the two outer beats only. A one-beat film is both, so
     # it takes the head and the tail on the same audio stream.
     head = [lead_silence if i == 0 else 0.0 for i in range(n)]
@@ -13971,7 +13990,17 @@ def assemble_explainer_video(
             offset += 1
     slide_secs: list[float] = []
     audio_secs: list[float] = []
+    slide_inputs: list[tuple[int, int]] = []
+    insert_inputs: dict[int, tuple[int, float]] = {}
+    next_input = offset
     for i, (slide, audio) in enumerate(zip(slides, audios)):
+        if i in inserts:
+            clip = Path(inserts[i])
+            seconds = _audio_seconds(clip, ffprobe_bin, runner)
+            insert_inputs[i] = (next_input, seconds)
+            command.extend(["-i", str(clip.resolve())])
+            lengths.append(seconds)
+            next_input += 1
         audio_secs.append(_audio_seconds(Path(audio), ffprobe_bin, runner))
         seconds = audio_secs[-1] + head[i] + tail[i]
         lengths.append(float(f"{seconds:.3f}"))
@@ -13980,6 +14009,8 @@ def assemble_explainer_video(
             ["-loop", "1", "-t", f"{seconds:.3f}", "-i", str(Path(slide).resolve())]
         )
         command.extend(["-i", str(Path(audio).resolve())])
+        slide_inputs.append((next_input, next_input + 1))
+        next_input += 2
     if outro is not None:
         # 片尾是**真视频**（自带动效和口播），不是 `-loop 1` 的静图，
         # 所以这儿不给 `-t`：它自己多长就播多长。
@@ -14043,8 +14074,17 @@ def assemble_explainer_video(
     card_top = (canvas_h - card_height) // 2
     margin_v = card_top + card_height - 156
     for i in range(n):
+        if i in insert_inputs:
+            vi, duration = insert_inputs[i]
+            filters.append(
+                f"[{vi}:v]scale={VIDEO_W}:{canvas_h},setsar=1,fps=30,"
+                f"format=yuv420p,tpad=stop_mode=clone:stop_duration={fade + 0.1:.3f}[vi{i}]")
+            filters.append(
+                f"[{vi}:a]aresample=async=1,apad=whole_dur={duration:.3f},"
+                f"atrim=end={duration:.3f}[ai{i}]")
+        image_input, audio_input = slide_inputs[i]
         chain = (
-            f"[{2 * i + offset}:v]scale={VIDEO_W}:{canvas_h}:"
+            f"[{image_input}:v]scale={VIDEO_W}:{canvas_h}:"
             f"force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
             f"pad={VIDEO_W}:{canvas_h}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
             f"setsar=1,fps=30"
@@ -14089,13 +14129,13 @@ def assemble_explainer_video(
             steps.append(f"adelay={round(head[i] * 1000)}:all=1")
         steps.append(f"apad=whole_dur={slide_secs[i]:.3f}")
         steps.append(f"atrim=end={slide_secs[i]:.3f}")
-        filters.append(f"[{2 * i + 1 + offset}:a]{','.join(steps)}[a{i}]")
+        filters.append(f"[{audio_input}:a]{','.join(steps)}[a{i}]")
     beats = n
     if outro is not None:
         # 片尾走**和幻灯片一模一样**的 scale+pad+fps 链——片尾卡是 3:4，
         # 和每一屏的卡同一个尺寸，所以 pad 出来的黑边宽度也一样。链子写成
         # 两份必分叉，所以这儿是照抄上面那一段的形状，改动只有「不加字幕」。
-        vi = 2 * n + offset
+        vi = next_input
         outro_frame = (
             f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=increase:flags={_SCALE_FLAGS},"
             f"crop={VIDEO_W}:{canvas_h}:(iw-ow)/2:(ih-oh)/2,"
@@ -14111,10 +14151,14 @@ def assemble_explainer_video(
         # 对不上时 ffmpeg 不报错，只会拼出一段爆音或者干脆没声。
         filters.append(f"[{vi}:a]aresample=async=1[a{n}]")
         beats = n + 1
-    vlabels = (["[vintro]"] if intro is not None else []) + [
-        f"[v{i}]" for i in range(beats)]
-    alabels = (["[aintro]"] if intro is not None else []) + [
-        f"[a{i}]" for i in range(beats)]
+    vlabels = ["[vintro]"] if intro is not None else []
+    alabels = ["[aintro]"] if intro is not None else []
+    for i in range(beats):
+        if i in insert_inputs:
+            vlabels.append(f"[vi{i}]")
+            alabels.append(f"[ai{i}]")
+        vlabels.append(f"[v{i}]")
+        alabels.append(f"[a{i}]")
     filters.extend(dissolve_chain(vlabels, lengths, fade))
     filters.append(f"{''.join(alabels)}concat=n={len(alabels)}:v=0:a=1[outa]")
 
@@ -14309,18 +14353,29 @@ def generate_explainer_video(
         # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
         # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
         intro_cx = (_OPENINGS.get(story.slug) or {}).get("intro_cx", 0.5)
-        return assemble_explainer_video(
-            slides, audios, outdir / "explainer.mp4",
-            captions=[seg.narration for seg in segments],
-            # 封面的大问题印在画面上，念到那一句时不再另排字幕（见 `drop_printed_cues`）。
-            printed=[seg.title if seg.kind == "cover" else "" for seg in segments],
-            intro=intro,
-            intro_badge=intro_badge,
-            intro_cx=intro_cx,
-            outro=outro,
-            canvas_h=canvas_h,
-            full_bleed=bool(opening.get("full_bleed")),
-        )
+        insert_specs = opening.get("inserts") or []
+        if insert_specs:
+            from .source_story_cards import prepare_source_inserts
+
+        from contextlib import nullcontext
+        insert_context = (tempfile.TemporaryDirectory(prefix="tennislive-inserts-")
+                          if insert_specs else nullcontext(None))
+        with insert_context as insert_root:
+            inserts = (prepare_source_inserts(insert_specs, Path(insert_root), canvas_h)
+                       if insert_specs else {})
+            return assemble_explainer_video(
+                slides, audios, outdir / "explainer.mp4",
+                captions=[seg.narration for seg in segments],
+                # 封面的大问题印在画面上，念到那一句时不再另排字幕（见 `drop_printed_cues`）。
+                printed=[seg.title if seg.kind == "cover" else "" for seg in segments],
+                intro=intro,
+                intro_badge=intro_badge,
+                intro_cx=intro_cx,
+                outro=outro,
+                canvas_h=canvas_h,
+                full_bleed=bool(opening.get("full_bleed")),
+                inserts=inserts,
+            )
     finally:
         if intro_tmp is not None:
             intro_tmp.cleanup()

@@ -10,17 +10,30 @@
     "credit": "Fred Lee / Getty Images · 2026-10-05 China Open semifinal",
     "gloss": "失格 Default · 滥用球 Ball Abuse",
     "canvas": "3:4",
-    "cards_why": "本场事故采用用户提供、YouTube oEmbed确认Tennis TV官方频道的1080p集锦，原片349–369秒保留最后一分、分后击球与失格后的离场握手，原声配中英字幕。规则的逐级处罚、直接失格及赛果与附加处罚的区别属于天然图解主题；历史官方关键视频下载受限，以有来源证据卡解释，不用无关回合冒充旧案。",
-    "source_audio_why": "片头保留Tennis TV原声，ASR逐词时间戳用于中英字幕并纠正球员姓名拼写。余下证据卡自配中文旁白；不伪造球员和裁判原话。",
+    "cards_why": "本场20秒官方原声开场，并加入卢布2024迪拜0–30秒Tennis TV官方片段。正文以本场原始转播帧、5起历史案例对应实拍及ATP规则原文短引交替讲述；加藤当场事故素材缺口用事实说明，赛后合影和混双捧杯分别准确标注日期与画面性质。规则仅使用天然文字主题所需的短引与中文解释。",
+    "source_audio_why": "两段官方原声均使用交叉ASR核验的中英字幕，保留完整回合与分后动作。自配中文旁白在原声段落之间交代原因、对照与后果，不覆盖源解说，不伪造裁判或球员原话。",
     "intro_url": "https://github.com/robertyang87/tennislive/releases/download/source-LgRD3TLoxr0/LgRD3TLoxr0.mp4",
     "intro_cx": 0.5,
     "full_bleed": true,
     "intro_start": 349,
     "intro_end": 369,
-    "intro_subtitles": "assets/explainer/medvedev-beijing-default-2026/incident-intro.ass"
+    "intro_subtitles": "assets/explainer/medvedev-beijing-default-2026/incident-intro.ass",
+    "inserts": [
+      {
+        "before_slide": 11,
+        "url": "https://github.com/robertyang87/tennislive/releases/download/source-1763592706838626304/1763592706838626304.mp4",
+        "start": 0,
+        "end": 30,
+        "subtitles": "assets/explainer/medvedev-beijing-default-2026/rublev-first30-bilingual.ass",
+        "fit": "original",
+        "topic": "2024迪拜 · 卢布列夫分后交涉",
+        "credit": "Tennis TV 官方X @TennisTV · 2024.03.01",
+        "source_url": "https://x.com/TennisTV/status/1763593166693834981"
+      }
+    ]
   },
   "caption": {
-    "hook": "10月5日中网男单半决赛，梅德韦杰夫击球打中观众，被判失格。德约以7–5、5–3的未完成比分晋级。为什么不先警告？不故意伤人就能免责吗？从2020美网德约的旧例讲起。",
+    "hook": "梅德韦杰夫击球打中观众，中网半决赛被判失格。德约以7–5、5–3晋级。为何直接失格？历史案例讲清规则。",
     "tags": [
       "网球",
       "网球时差",
@@ -33,17 +46,29 @@
   "beats": [
     {
       "kind": "cause",
-      "label": "01 / 德梅之战",
-      "title": "第二盘还没结束\n比赛先结束了",
-      "narration": "二零二六年十月五日，中网男单半决赛。德约科维奇首盘七比五，第二盘五比三，正准备发球结束比赛。此时，梅德韦杰夫被判失格。屏幕上那个英文，指的是纪律判罚。第二盘没有打到六比三。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
+      "label": "01 / 比分停住了",
+      "title": "比分停在7–5、5–3\n梅德韦杰夫被判失格",
+      "narration": "德约领先七比五、五比三，比赛却在第二盘结束前就终止了。梅德韦杰夫被判失格，德约晋级决赛。失格、因伤退赛和开赛前的不战而胜，是三种不同的结束方式。因此，不能把这场比赛写成七比五、六比三。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/incident-score-source.jpg",
+      "credit": "Tennis TV 官方集锦 · 原片359.2秒 · 保留原始记分板",
       "points": [
-        "中网半决赛 · 德约对梅德韦杰夫",
-        "7–5 5–3 · 梅德韦杰夫失格"
+        "DEF 失格 ≠ RET 退赛 · WO通常未开打",
+        "7–5 / 5–3 / 15–15"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">01 / 德梅之战</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">7–5</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">首盘 · 德约科维奇获胜</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">5–3</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">第二盘 · 德约发球时中止</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">DEF</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">失格 · 德约晋级</text></g></svg>",
+      "diagram": "",
       "question": "",
+      "visual": {
+        "layout": "incident",
+        "chapter": "本场比赛",
+        "kicker": "北京 · 2026.10.05 · 7–5 / 5–3 / 15–15",
+        "source": "Tennis TV 官方集锦 · 原片359.2秒 · 保留原始记分板",
+        "photo": "assets/explainer/medvedev-beijing-default-2026/incident-score-source.jpg",
+        "year": "",
+        "focus": "DEF 失格 ≠ RET 退赛 · WO通常未开打",
+        "quotes": [],
+        "notes": [],
+        "variant": ""
+      },
       "evidence_urls": [
         "https://www.tennis.com/tournaments/china-open-atp/matches/n-djokovic-vs-d-medvedev-2026-10-05",
         "https://www.reuters.com/sports/tennis/medvedev-disqualified-china-open-semi-after-hitting-ball-into-crowd-2026-10-05/"
@@ -51,17 +76,29 @@
     },
     {
       "kind": "cause",
-      "label": "事发经过",
-      "title": "一分已经结束\n球却飞进看台",
-      "narration": "看回放，这一分已经结束。他把反弹回来的球再次击向看台。报道说，球打中前排观众眼部。事故发生时，德约领先七比五、五比三，局内十五平。关键不是回合中丢掉的那分，而是分后的这次击球。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
+      "label": "改变赛果的那一拍",
+      "title": "回合结束后的击球\n改变了这场比赛",
+      "narration": "事发时，第二盘五比三，这一局十五比十五。这一分里，梅德韦杰夫丢掉了一分。球反弹回来后，他再次击球，把球打向看台。路透社报道，球击中前排观众眼部。这次分后的动作，触发了失格判罚。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/incident-swat-source.jpg",
+      "credit": "Tennis TV 官方集锦 · 原片357秒 · 伤情依据路透社报道",
       "points": [
-        "分后击球 · 打中前排观众",
-        "事发时德约领先 7–5 5–3 15–15"
+        "回合结束 → 再次击球 → 击中观众",
+        "原始回放 · 回合结束之后"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">事发经过</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">回合结束</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">Tennis TV官方回放 · 分后行为</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">再次击球</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">球被击向看台</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">击中观众</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">比赛暂停 · 随后判失格</text></g></svg>",
+      "diagram": "",
       "question": "",
+      "visual": {
+        "layout": "incident",
+        "chapter": "本场比赛",
+        "kicker": "原始回放 · 回合结束之后",
+        "source": "Tennis TV 官方集锦 · 原片357秒 · 伤情依据路透社报道",
+        "photo": "assets/explainer/medvedev-beijing-default-2026/incident-swat-source.jpg",
+        "year": "",
+        "focus": "回合结束 → 再次击球 → 击中观众",
+        "quotes": [],
+        "notes": [],
+        "variant": ""
+      },
       "evidence_urls": [
         "https://www.reuters.com/sports/tennis/medvedev-disqualified-china-open-semi-after-hitting-ball-into-crowd-2026-10-05/",
         "https://www.spaziotennis.com/news/atp-500-pechino-2026-default-medvedev-contro-djokovic-motivo-cosa-succede-scommesse/144205",
@@ -70,86 +107,142 @@
     },
     {
       "kind": "cause",
-      "label": "已知与未知",
-      "title": "处罚已发生\n伤情别抢着下结论",
-      "narration": "路透社报道，被击中的观众捂住左眼，在场馆工作人员协助下离开。可以确认的是，梅德韦杰夫被判失格、德约晋级。观众的具体诊断、球员的实际罚款和是否追加停赛，还不能替官方宣布。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
+      "label": "德约的另一面",
+      "title": "德约的2020美网\n一次击球，一次失格",
+      "narration": "二零二零年美网，德约对阵布斯塔，首盘五比六。他在分后击球，打中司线员喉部，随后被判失格。当年美网适用大满贯规则，这次北京适用ATP规则。六年后的这场比赛，德约站在球网另一边，见证了对手被判失格。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/djokovic2020-lineswoman-ap-2000.jpg",
+      "credit": "Seth Wenig / AP · 2020.09.06 · 事发后查看受击线审",
       "points": [
-        "观众伤情诊断尚未确认",
-        "实际罚款与追加处罚未确认"
+        "首盘5–6时失格 · 按当时大满贯规则处理",
+        "美网第四轮 · 德约对布斯塔"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">已知与未知</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">已确认</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">梅德韦杰夫失格 · 德约晋级</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">据报道</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">观众捂左眼 · 工作人员协助离场</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">未确认</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">伤情诊断 · 实际罚款 · 是否停赛</text></g></svg>",
+      "diagram": "",
       "question": "",
+      "visual": {
+        "layout": "case",
+        "chapter": "历史案例",
+        "kicker": "美网第四轮 · 德约对布斯塔",
+        "source": "Seth Wenig / AP · 2020.09.06 · 事发后查看受击线审",
+        "photo": "assets/explainer/medvedev-beijing-default-2026/djokovic2020-lineswoman-ap-2000.jpg",
+        "year": "2020",
+        "focus": "首盘5–6时失格 · 按当时大满贯规则处理",
+        "quotes": [],
+        "notes": [],
+        "variant": ""
+      },
       "evidence_urls": [
-        "https://www.reuters.com/sports/tennis/medvedev-disqualified-china-open-semi-after-hitting-ball-into-crowd-2026-10-05/"
+        "https://www.usopen.org/en_US/news/articles/2020-09-06/by_the_book_understandng_the_rule_behind_djokovics_default.html"
       ]
     },
     {
       "kind": "mechanism",
-      "label": "02 / 读懂赛果",
-      "title": "退赛和失格\n是不同的终点",
-      "narration": "先读懂截图里的结束状态。退赛通常是开打后因伤病等原因无法继续；失格是裁判取消比赛资格。还有不战而胜，通常表示对手在开打前退出。退赛和失格可能留下未完成比分；不战而胜通常没有比赛比分。原因和后果不同。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
+      "label": "一次就可能出局",
+      "title": "严重行为违例\n可以直接判失格",
+      "narration": "为什么没先警告？因为普通处罚阶梯之外，还有直接失格这条通道。二零二六年ATP规则书，允许赛事监督对单次行为违例直接判失格。严重事故，不必先走完警告、罚分、罚局。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/l4m-immediate-default.png",
+      "credit": "ATP规则书原文短引 · 印刷第256页 · ITF公开2026版",
       "points": [
-        "RET 退赛 · DEF 失格",
-        "WO 不战而胜 · 通常未开打"
+        "一次违例，也能直接失格",
+        "直接失格"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">02 / 读懂赛果</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">RET</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">开打后无法继续 · 常见于伤病</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">DEF</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">裁判作出失格判罚</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">WO</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">开打前退出 · 对手不战而胜</text></g></svg>",
+      "diagram": "",
       "question": "",
-      "evidence_urls": [
-        "https://www.tennis.com/tournaments/china-open-atp/matches/n-djokovic-vs-d-medvedev-2026-10-05",
-        "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf"
-      ]
-    },
-    {
-      "kind": "mechanism",
-      "label": "通常的处罚阶梯",
-      "title": "警告到罚分\n再到罚局",
-      "narration": "普通行为违例，通常先警告，第二次罚一分，第三次以及后续违例罚一局。第三次之后，再发生违例是否构成失格，由赛事监督决定。这是普通处罚阶梯，却不是每次严重事故都必须走完的流程。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
-      "points": [
-        "通常先警告 再罚分 再罚局",
-        "后续违例由监督判断是否失格"
-      ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">通常的处罚阶梯</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">第1次 → 第2次</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">警告 → 罚1分</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">第3次及以后</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">罚1局</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">第三次后的后续违例</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">监督决定是否失格</text></g></svg>",
-      "question": "",
-      "evidence_urls": [
-        "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf"
-      ]
-    },
-    {
-      "kind": "mechanism",
-      "label": "直接失格的通道",
-      "title": "严重违例1次\n也能直接结束比赛",
-      "narration": "二零二六年ATP规则书另有直接失格的通道。赛事监督可以对单次行为违例直接判失格。滥用球包括危险、鲁莽或不顾后果的击球。条文保留了对情境的判断，不是写着碰到任何人就自动失格，也不必先走完警告、罚分、罚局。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
-      "points": [
-        "单次严重违例可直接失格",
-        "危险 鲁莽 不顾后果均在规则内"
-      ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">直接失格的通道</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">普通违例</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">按警告 → 罚分 → 罚局处理</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">单次严重违例</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">赛事监督可直接判失格</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">两条通道</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">不必先走完逐级处罚</text></g></svg>",
-      "question": "",
+      "visual": {
+        "layout": "rule",
+        "chapter": "规则解读",
+        "kicker": "ATP 2026 官方规则书 · 8.04 L4m",
+        "source": "ATP规则书原文短引 · 印刷第256页 · ITF公开2026版",
+        "photo": "",
+        "year": "",
+        "focus": "一次违例，也能直接失格",
+        "quotes": [
+          {
+            "asset": "assets/explainer/medvedev-beijing-default-2026/l4m-immediate-default.png",
+            "meaning": "直接失格"
+          }
+        ],
+        "notes": [
+          "不是“碰到任何人都自动失格”",
+          "仍要判断动作和具体情境"
+        ],
+        "variant": ""
+      },
       "evidence_urls": [
         "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf"
       ]
     },
     {
       "kind": "mechanism",
-      "label": "责任如何判断",
-      "title": "没想打中人\n不等于不用负责",
-      "narration": "有意挥拍击球，和有意伤害别人，是两件事。没有瞄准某个人，不会自动免掉鲁莽击球的责任。反过来，正常比赛里，为争取得分合理击球，偶然打中人，也不能直接套成滥用球。要看是否仍在正常回合、怎么击球，以及危险和后果。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
+      "label": "普通违例的阶梯",
+      "title": "警告、罚分、罚局\n常规处罚如何递进",
+      "narration": "普通行为违例，通常先警告，第二次罚一分，第三次以及后续违例罚一局。第三次之后，再发生违例是否构成失格，由赛事监督判断。普通处罚和单次直接失格，两条通道都在规则里。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/l2-penalties.png",
+      "credit": "ATP规则书原文短引 · 印刷第251页 · 警告、罚分、罚局",
       "points": [
-        "不故意伤人 ≠ 自动免罚",
-        "正常合理击球不能直接类比"
+        "普通阶梯 ≠ 每起事故的必经流程",
+        "警告\n罚一分\n罚一局"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">责任如何判断</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">动作的性质</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">正常争取得分 / 分后击球</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">危险与后果</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">方向 · 力度 · 周边人员</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">意图不是唯一因素</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">鲁莽和不顾后果也要承担责任</text></g></svg>",
+      "diagram": "",
       "question": "",
+      "visual": {
+        "layout": "rule",
+        "chapter": "规则解读",
+        "kicker": "ATP 2026 官方规则书 · 8.04 L2",
+        "source": "ATP规则书原文短引 · 印刷第251页 · 警告、罚分、罚局",
+        "photo": "",
+        "year": "",
+        "focus": "普通阶梯 ≠ 每起事故的必经流程",
+        "quotes": [
+          {
+            "asset": "assets/explainer/medvedev-beijing-default-2026/l2-penalties.png",
+            "meaning": "警告\n罚一分\n罚一局"
+          }
+        ],
+        "notes": [],
+        "variant": "table"
+      },
+      "evidence_urls": [
+        "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf"
+      ]
+    },
+    {
+      "kind": "mechanism",
+      "label": "那一拍的性质",
+      "title": "危险或鲁莽的击球\n不以伤人故意为前提",
+      "narration": "有没有故意伤人，不是唯一问题。规则也管危险、鲁莽的击球。但正常回合里，为争取得分合理击球，偶然打中人，不能直接套成滥用球。看的是那一拍的性质、周边的人和它造成的危险。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/l4a-dangerously.png",
+      "credit": "ATP规则书原文短引 · 印刷第252页 · 中文为解释",
+      "points": [
+        "正常合理争分，不能直接类比",
+        "危险地"
+      ],
+      "diagram": "",
+      "question": "",
+      "visual": {
+        "layout": "rule",
+        "chapter": "规则解读",
+        "kicker": "ATP 2026 官方规则书 · 8.04 L4a",
+        "source": "ATP规则书原文短引 · 印刷第252页 · 中文为解释",
+        "photo": "",
+        "year": "",
+        "focus": "正常合理争分，不能直接类比",
+        "quotes": [
+          {
+            "asset": "assets/explainer/medvedev-beijing-default-2026/l4a-dangerously.png",
+            "meaning": "危险地"
+          },
+          {
+            "asset": "assets/explainer/medvedev-beijing-default-2026/l4a-recklessly.png",
+            "meaning": "或鲁莽地"
+          },
+          {
+            "asset": "assets/explainer/medvedev-beijing-default-2026/l4a-reasonable-point.png",
+            "meaning": "合理争取得分"
+          }
+        ],
+        "notes": [],
+        "variant": ""
+      },
       "evidence_urls": [
         "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf",
         "https://www.usopen.org/en_US/news/articles/2020-09-06/by_the_book_understandng_the_rule_behind_djokovics_default.html"
@@ -157,106 +250,232 @@
     },
     {
       "kind": "cause",
-      "label": "03 / 德约的旧例",
-      "title": "6年前的美网\n德约也被判出局",
-      "narration": "六年前，德约是被罚的那个人。二零二零年美网第四轮，对布斯塔，首盘五比六落后。他在丢掉发球局后把球打向身后，击中司线员喉部。美网裁判长判他失格。这个案例按当年的大满贯规则处理，不是拿二零二六年ATP规则重判。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
+      "label": "一脚终结决赛",
+      "title": "2012年女王杯决赛\n纳尔班迪安踢板伤人",
+      "narration": "二零一二年女王杯决赛，纳尔班迪安踢向广告板，伤到板后的司线员。他被判失格，西里奇获得冠军。危险行为不只限于击球，也可能来自踢板、摔拍等动作；是否涉及失格，需要结合行为及具体情境判断。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/nalbandian2012-linesman-afp.jpg",
+      "credit": "Miguel Medina / AFP · 2012.06.17 · 线审展示事发后腿伤",
       "points": [
-        "2020美网第四轮 · 首盘5–6",
-        "当年大满贯规则 · 德约失格"
+        "失格 · 冠军归西里奇",
+        "女王杯决赛 · 纳尔班迪安对西里奇"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">03 / 德约的旧例</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">2020.09.06</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">美网第四轮 · 德约对布斯塔</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">首盘 5–6</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">分后击球 · 击中司线员</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">裁判长判失格</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">当年美网官方规则说明</text></g></svg>",
+      "diagram": "",
       "question": "",
+      "visual": {
+        "layout": "case",
+        "chapter": "历史案例",
+        "kicker": "女王杯决赛 · 纳尔班迪安对西里奇",
+        "source": "Miguel Medina / AFP · 2012.06.17 · 线审展示事发后腿伤",
+        "photo": "assets/explainer/medvedev-beijing-default-2026/nalbandian2012-linesman-afp.jpg",
+        "year": "2012",
+        "focus": "失格 · 冠军归西里奇",
+        "quotes": [],
+        "notes": [],
+        "variant": ""
+      },
       "evidence_urls": [
-        "https://www.usopen.org/en_US/news/articles/2020-09-06/by_the_book_understandng_the_rule_behind_djokovics_default.html"
+        "https://www.tennis.com/news/articles/nalbandian-defaulted-after-hurting-line-judge"
       ]
     },
     {
       "kind": "cause",
-      "label": "球之外的危险动作",
-      "title": "踢广告板和打飞球\n也曾让比赛终止",
-      "narration": "二零一二年女王杯决赛，纳尔班迪安踢广告板，伤到司线员，被判失格，西里奇获得冠军。二零一七年戴维斯杯，沙波瓦洛夫把球打飞，击中主裁眼部，也被判失格。危及他人的动作，不只发生在输球的人身上，也不只伤到观众。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
+      "label": "主裁也在危险里",
+      "title": "2017年戴维斯杯\n沙波瓦洛夫击中主裁",
+      "narration": "二零一七年戴维斯杯，沙波瓦洛夫对阵埃德蒙德。他把球打飞，击中主裁加巴斯的左眼。主裁接受处理，比赛以沙波瓦洛夫失格结束。这个案例提醒球员，分后的击球同样可能危及场内的裁判和工作人员。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/shapovalov2017-gabas-reuters.jpg",
+      "credit": "Chris Wattie / Reuters · 2017.02.05 · 主裁Gabas事发后冰敷",
       "points": [
-        "2012纳尔班迪安 · 踢板伤司线",
-        "2017沙波瓦洛夫 · 球击主裁"
+        "对阵埃德蒙德 · 主裁左眼受击",
+        "戴维斯杯 · 沙波瓦洛夫对埃德蒙德"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">球之外的危险动作</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">2012 / 女王杯决赛</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">纳尔班迪安 · 踢广告板伤司线员</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">2017 / 戴维斯杯</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">沙波瓦洛夫 · 击球打中主裁眼部</text></g></svg>",
+      "diagram": "",
       "question": "",
+      "visual": {
+        "layout": "case",
+        "chapter": "历史案例",
+        "kicker": "戴维斯杯 · 沙波瓦洛夫对埃德蒙德",
+        "source": "Chris Wattie / Reuters · 2017.02.05 · 主裁Gabas事发后冰敷",
+        "photo": "assets/explainer/medvedev-beijing-default-2026/shapovalov2017-gabas-reuters.jpg",
+        "year": "2017",
+        "focus": "对阵埃德蒙德 · 主裁左眼受击",
+        "quotes": [],
+        "notes": [],
+        "variant": ""
+      },
       "evidence_urls": [
-        "https://www.tennis.com/news/articles/nalbandian-defaulted-after-hurting-line-judge",
         "https://legacy-daviscup.itftennis.com/en/news/253005.aspx"
       ]
     },
     {
       "kind": "cause",
-      "label": "最有争议的旧例",
-      "title": "加藤误伤球童\n搭档也一起出局",
-      "narration": "二零二三年法网女双第三轮，加藤未唯在分间送回一颗球，击中球童。主裁先给警告，裁判长和大满贯监督到场后，改判她和苏吉亚迪失格。她随后还能参加混双，并夺得冠军。一个双打项目被判出局，不等于整个赛事的所有项目一律停赛。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
+      "label": "争议最大的一颗球",
+      "title": "2023年法网女双\n加藤组合因击中球童出局",
+      "narration": "二零二三年六月四日，法网女双第三轮，加藤未唯在分间送球，击中球童。裁判起初给出警告。裁判长和监督到场后，加藤和搭档苏特吉亚迪被判失格。六月九日，加藤发布了与涉事球童的合影。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/kato-ballgirl-player-20230609.jpg",
+      "credit": "Miyu Kato / 本人X · 2023.06.09 · 与涉事球童的赛后合影",
       "points": [
-        "2023法网女双 · 加藤与搭档失格",
-        "此后仍参赛 · 加藤夺得混双冠军"
+        "警告 → 双打组合失格",
+        "女双失格：6月4日 · 合影：6月9日"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">最有争议的旧例</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">女双第三轮</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">先警告 · 后判两人失格</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">同届混双</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">加藤未唯 / 普茨夺冠</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">项目要分清</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">双打失格 ≠ 所有项目一律停赛</text></g></svg>",
+      "diagram": "",
       "question": "",
+      "visual": {
+        "layout": "case",
+        "chapter": "历史案例",
+        "kicker": "女双失格：6月4日 · 合影：6月9日",
+        "source": "Miyu Kato / 本人X · 2023.06.09 · 与涉事球童的赛后合影",
+        "photo": "assets/explainer/medvedev-beijing-default-2026/kato-ballgirl-player-20230609.jpg",
+        "year": "2023",
+        "focus": "警告 → 双打组合失格",
+        "quotes": [],
+        "notes": [],
+        "variant": ""
+      },
       "evidence_urls": [
-        "https://www.tennismajors.com/roland-garros-news/shades-of-djokovic-as-kato-and-sutjiadi-defaulted-from-doubles-after-ballgirl-injury-incident-686160.html"
+        "https://www.tennismajors.com/roland-garros-news/shades-of-djokovic-as-kato-and-sutjiadi-defaulted-from-doubles-after-ballgirl-injury-incident-686160.html",
+        "https://x.com/miyukato1121/status/1667003187520315396"
+      ]
+    },
+    {
+      "kind": "cause",
+      "label": "四天后的反转",
+      "title": "女双失格四天后\n加藤拿下混双冠军",
+      "narration": "六月八日，距离女双失格四天，加藤和普茨在同一届法网赢得混双冠军。女双被判失格，并没有自动阻止她参加混双。理解处罚范围，需要区分单场结果、一个项目的资格，以及是否被逐出整个赛事。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/kato-wta-trophy-getty-20230608.jpg",
+      "credit": "Julian Finney / Getty Images · WTA官方图 · 2023.06.08混双夺冠",
+      "points": [
+        "女双失格 ≠ 所有项目停赛",
+        "混双夺冠：6月8日 · 搭档普茨"
+      ],
+      "diagram": "",
+      "question": "",
+      "visual": {
+        "layout": "case",
+        "chapter": "历史案例",
+        "kicker": "混双夺冠：6月8日 · 搭档普茨",
+        "source": "Julian Finney / Getty Images · WTA官方图 · 2023.06.08混双夺冠",
+        "photo": "assets/explainer/medvedev-beijing-default-2026/kato-wta-trophy-getty-20230608.jpg",
+        "year": "2023",
+        "focus": "女双失格 ≠ 所有项目停赛",
+        "quotes": [],
+        "notes": [],
+        "variant": ""
+      },
+      "evidence_urls": [
+        "https://www.wtatennis.com/news/3532506/miyu-kato-tim-puetz-win-mixed-doubles-title-at-roland-garros"
       ]
     },
     {
       "kind": "mechanism",
-      "label": "04 / 结果与后续处罚",
-      "title": "输掉这场比赛\n处罚仍有不同层次",
-      "narration": "二零二四年迪拜，卢布列夫因对司线员的言语行为被判失格。后来申诉成功，保住了该站积分和奖金，但仍被罚款，也没能回去重打半决赛。要分清当场失格赛果，和奖金、积分、罚款这些后续处罚。申诉改了处罚，不代表比赛结果也被翻案。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
+      "label": "申诉后的第二个转折",
+      "title": "卢布列夫的申诉\n改变处罚，未改变赛果",
+      "narration": "二零二四年迪拜半决赛，卢布列夫因对司线员的言语行为被判失格。申诉之后，ATP恢复了他的积分和奖金，但保留罚款，比赛结果没有改变。赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛重打。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/l4m-final-result.png",
+      "credit": "ATP规则书原文短引 · 印刷第256、260页 · 当场赛果与处罚申诉",
       "points": [
-        "2024卢布列夫 · 失格赛果未改",
-        "申诉后保留积分奖金 · 仍罚款"
+        "比赛结果，和后续处罚分开看",
+        "当场失格赛果"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">04 / 结果与后续处罚</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">当场判罚</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">失格 · 布勃利克晋级</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">事后申诉</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">保留积分和奖金 · 仍有罚款</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">没有发生</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">重打半决赛 / 赛果翻案</text></g></svg>",
+      "diagram": "",
       "question": "",
+      "visual": {
+        "layout": "rule",
+        "chapter": "历史案例 / 规则解读",
+        "kicker": "卢布列夫 · 2024迪拜 / ATP 8.04 L4m、O",
+        "source": "ATP规则书原文短引 · 印刷第256、260页 · 当场赛果与处罚申诉",
+        "photo": "",
+        "year": "",
+        "focus": "比赛结果，和后续处罚分开看",
+        "quotes": [
+          {
+            "asset": "assets/explainer/medvedev-beijing-default-2026/l4m-final-result.png",
+            "meaning": "当场失格赛果"
+          },
+          {
+            "asset": "assets/explainer/medvedev-beijing-default-2026/o-modify-penalty.png",
+            "meaning": "处罚可被修改"
+          }
+        ],
+        "notes": [
+          "2024迪拜：积分奖金保留，罚款仍在"
+        ],
+        "variant": ""
+      },
       "evidence_urls": [
         "https://www.atptour.com/en/news/bublik-rublev-dubai-2024-friday",
-        "https://www.reuters.com/sports/tennis/rublev-calls-atp-review-rule-that-led-default-dubai-2024-03-05/"
-      ]
-    },
-    {
-      "kind": "today",
-      "label": "这次的规则后果",
-      "title": "积分奖金的代价\n别提前报成实罚",
-      "narration": "ATP规则书的一般后果，是因行为失格失去该站该项目的积分和奖金，并可能被追加罚款或停赛。不过，这是规则的通常后果，不是梅德韦杰夫已经收到的全部处罚。具体金额、后续复核和最终处理，仍要看正式信息。",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
-      "points": [
-        "行为失格通常失去该项目积分奖金",
-        "梅德实际处罚仍以正式信息为准"
-      ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">这次的规则后果</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">规则通常后果</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">该站该项目的积分和奖金受影响</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">可能追加</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">罚款 / 停赛 · 另看正式处理</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">本案实际金额</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">尚未确认</text></g></svg>",
-      "question": "",
-      "evidence_urls": [
+        "https://www.reuters.com/sports/tennis/rublev-calls-atp-review-rule-that-led-default-dubai-2024-03-05/",
         "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf"
       ]
     },
     {
       "kind": "today",
-      "label": "把焦点还给安全",
-      "title": "球可以打出界\n责任不能跟着出界",
-      "narration": "德梅之战结束在七比五、五比三。解释这次失格，最重要的是一分结束之后那次击球，以及它对旁人的危险。没有故意伤人的证据，不等于没有责任；历史案例也提醒我们，处罚要分层讲清。你觉得怎样的规则，才能更好保护球场里的每一个人？",
-      "image": "",
-      "credit": "原创证据图 · 网球时差",
+      "label": "回到梅德韦杰夫",
+      "title": "失格之后的后果\n积分、奖金与追加处罚",
+      "narration": "ATP规则的一般后果，是因行为失格失去该站该项目的积分和奖金，并可能面临追加罚款或停赛。这是规则框架。梅德韦杰夫最终实际受到什么处罚，要以正式处理为准，不能把一般后果直接说成已经公布的决定。",
+      "image": "assets/explainer/medvedev-beijing-default-2026/l4m-prize-money.png",
+      "credit": "ATP规则书原文短引 · 印刷第256页 · 本案后续仍待正式信息",
       "points": [
-        "分后危险击球 · 后果可能远超1分",
-        "保护观众 球童和裁判的安全"
+        "规则的一般后果 ≠ 本案已公布实罚",
+        "奖金"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">把焦点还给安全</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">7–5 5–3 / DEF</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">德约晋级 · 梅德韦杰夫失格</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">安全是共同底线</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">观众 · 球童 · 裁判 · 球员</text></g></svg>",
-      "question": "怎样的规则更能保护球场里的每个人？",
+      "diagram": "",
+      "question": "",
+      "visual": {
+        "layout": "rule",
+        "chapter": "本案后续",
+        "kicker": "ATP 2026 官方规则书 · 8.04 L4m",
+        "source": "ATP规则书原文短引 · 印刷第256页 · 本案后续仍待正式信息",
+        "photo": "",
+        "year": "",
+        "focus": "规则的一般后果 ≠ 本案已公布实罚",
+        "quotes": [
+          {
+            "asset": "assets/explainer/medvedev-beijing-default-2026/l4m-prize-money.png",
+            "meaning": "奖金"
+          },
+          {
+            "asset": "assets/explainer/medvedev-beijing-default-2026/l4m-points.png",
+            "meaning": "积分"
+          }
+        ],
+        "notes": [
+          "观众诊断、实际金额、是否停赛尚未确认"
+        ],
+        "variant": ""
+      },
+      "evidence_urls": [
+        "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf",
+        "https://www.reuters.com/sports/tennis/medvedev-disqualified-china-open-semi-after-hitting-ball-into-crowd-2026-10-05/"
+      ]
+    },
+    {
+      "kind": "today",
+      "label": "最后的一条底线",
+      "title": "北京这场比赛\n还有哪些问题待确认",
+      "narration": "北京这场比赛，确认的结果是梅德韦杰夫失格，德约以七比五、五比三的未完成比分晋级。观众的具体诊断、实际罚款以及是否进一步停赛，仍需要正式信息。你认为，危险的分后击球，处罚应如何判断？",
+      "image": "assets/explainer/medvedev-beijing-default-2026/incident-handshake-source.jpg",
+      "credit": "Tennis TV 官方集锦 · 原片367秒 · 失格后的现场画面",
+      "points": [
+        "观众诊断 · 实际罚款 · 是否进一步停赛",
+        "北京 · 2026.10.05 · 回到这场比赛"
+      ],
+      "diagram": "",
+      "question": "危险的分后击球，处罚应如何判断？",
+      "visual": {
+        "layout": "closing",
+        "chapter": "本案后续",
+        "kicker": "北京 · 2026.10.05 · 回到这场比赛",
+        "source": "Tennis TV 官方集锦 · 原片367秒 · 失格后的现场画面",
+        "photo": "assets/explainer/medvedev-beijing-default-2026/incident-handshake-source.jpg",
+        "year": "",
+        "focus": "观众诊断 · 实际罚款 · 是否进一步停赛",
+        "quotes": [],
+        "notes": [],
+        "variant": ""
+      },
       "evidence_urls": [
         "https://www.tennis.com/tournaments/china-open-atp/matches/n-djokovic-vs-d-medvedev-2026-10-05",
+        "https://www.reuters.com/sports/tennis/medvedev-disqualified-china-open-semi-after-hitting-ball-into-crowd-2026-10-05/",
         "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf"
       ]
     }
@@ -267,7 +486,8 @@
     "actual_penalties": "unconfirmed; no claimed fine amount or suspension",
     "rules_version": "2026 ITF-hosted ATP full book and official Jan25 chapter verified; March31 chapter indexed but fetch403, not claimed as line-by-line checked",
     "point_score_note": "Tennis TV提供的记分板已确认事发时15–15。",
-    "delivery_evidence": "docs/research/medvedev-beijing-default-2026-qc.json; output/2026-10-06/explainer/medvedev-beijing-default-2026/render.json; data/explainer_publish_ledger/medvedev-beijing-default-2026.json"
+    "delivery_evidence": "docs/research/medvedev-beijing-default-2026-qc.json; output/2026-10-06/explainer/medvedev-beijing-default-2026/render.json; data/explainer_publish_ledger/medvedev-beijing-default-2026.json",
+    "evidence_display": "真实PDF短引仅显示反相浅字，资产原图不变；不显示左下引用。杂志式深蓝排版，标题56px、TL Display SC 400；正文TL Sans SC 400/700，保留原品牌字号与字体；取消大面积亮绿和模拟800粗体。"
   },
   "research_references": [
     {
