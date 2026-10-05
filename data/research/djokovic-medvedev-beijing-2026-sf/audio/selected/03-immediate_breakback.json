@@ -4,7 +4,7 @@
   "official_provenance_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
   "method": "asr_cross_checked",
   "reviewer": "Codex audio_review subagent: independent small.en and medium.en ASR cross-checked with source captions; no claim of human listening",
-  "reviewed_at": "2026-10-05T15:00:23.823115+00:00",
+  "reviewed_at": "2026-10-05T15:08:26.176353+00:00",
   "method_details": [
     "Extracted full AV1 source to signed 16-bit 16kHz mono WAV using ffmpeg.",
     "faster-whisper small.en full-source VAD and no-VAD local windows; medium.en independent no-VAD local windows; separate medium.en VAD checks of narration and ASR noise gaps. Raw word timestamps and probabilities retained.",
@@ -28,15 +28,27 @@
   "foreground_english": [
     {
       "start": 89.4,
+      "end": 91.42,
+      "en": "Oh well, that could have been",
+      "zh": "噢，刚才那一下可能会"
+    },
+    {
+      "start": 91.42,
       "end": 92.7,
-      "en": "Oh well, that could have been pretty nasty.",
-      "zh": "噢，刚才那一下可能会相当危险。"
+      "en": "pretty nasty.",
+      "zh": "相当危险。"
     },
     {
       "start": 92.74,
+      "end": 93.86,
+      "en": "But what a response",
+      "zh": "但这记回应太精彩了"
+    },
+    {
+      "start": 93.86,
       "end": 94.9,
-      "en": "But what a response from Novak Djokovic.",
-      "zh": "但诺瓦克·德约科维奇的回应太精彩了。"
+      "en": "from Novak Djokovic.",
+      "zh": "来自诺瓦克·德约科维奇。"
     }
   ],
   "uncertain_spans": [],
@@ -70,5 +82,20 @@
       "sha256": "441c5b7841056337a33dc5c9c8d27f8df2221315f0be74e13517c9cb9b1144c9"
     }
   ],
-  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed."
+  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed.",
+  "original_sentence_utterances": [
+    {
+      "start": 89.4,
+      "end": 92.7,
+      "en": "Oh well, that could have been pretty nasty.",
+      "zh": "噢，刚才那一下可能会相当危险。"
+    },
+    {
+      "start": 92.74,
+      "end": 94.9,
+      "en": "But what a response from Novak Djokovic.",
+      "zh": "但诺瓦克·德约科维奇的回应太精彩了。"
+    }
+  ],
+  "caption_layout_method": "Native subtitles: English preserved exactly and split only at actual word timestamps into consecutive semantic clauses; explicit Chinese line breaks preserve complete meaning with each line <=16 Chinese widths. Original sentence transcript retained in original_sentence_utterances. No source selection changes."
 }

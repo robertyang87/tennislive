@@ -4,7 +4,7 @@
   "official_provenance_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
   "method": "asr_cross_checked",
   "reviewer": "Codex audio_review subagent: independent small.en and medium.en ASR cross-checked with source captions; no claim of human listening",
-  "reviewed_at": "2026-10-05T15:00:23.823115+00:00",
+  "reviewed_at": "2026-10-05T15:08:26.176127+00:00",
   "method_details": [
     "Extracted full AV1 source to signed 16-bit 16kHz mono WAV using ffmpeg.",
     "faster-whisper small.en full-source VAD and no-VAD local windows; medium.en independent no-VAD local windows; separate medium.en VAD checks of narration and ASR noise gaps. Raw word timestamps and probabilities retained.",
@@ -70,5 +70,20 @@
       "sha256": "441c5b7841056337a33dc5c9c8d27f8df2221315f0be74e13517c9cb9b1144c9"
     }
   ],
-  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed."
+  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed.",
+  "original_sentence_utterances": [
+    {
+      "start": 42.18,
+      "end": 45.26,
+      "en": "This time the pressure does tell.",
+      "zh": "这一次，压力终于起了作用。"
+    },
+    {
+      "start": 45.38,
+      "end": 46.14,
+      "en": "It's been coming.",
+      "zh": "此前就已经有这个苗头了。"
+    }
+  ],
+  "caption_layout_method": "Native subtitles: English preserved exactly and split only at actual word timestamps into consecutive semantic clauses; explicit Chinese line breaks preserve complete meaning with each line <=16 Chinese widths. Original sentence transcript retained in original_sentence_utterances. No source selection changes."
 }

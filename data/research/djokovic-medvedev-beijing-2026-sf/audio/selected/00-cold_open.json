@@ -4,7 +4,7 @@
   "official_provenance_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
   "method": "asr_cross_checked",
   "reviewer": "Codex audio_review subagent: independent small.en and medium.en ASR cross-checked with source captions; no claim of human listening",
-  "reviewed_at": "2026-10-05T15:00:23.823115+00:00",
+  "reviewed_at": "2026-10-05T15:08:26.175450+00:00",
   "method_details": [
     "Extracted full AV1 source to signed 16-bit 16kHz mono WAV using ffmpeg.",
     "faster-whisper small.en full-source VAD and no-VAD local windows; medium.en independent no-VAD local windows; separate medium.en VAD checks of narration and ASR noise gaps. Raw word timestamps and probabilities retained.",
@@ -28,9 +28,21 @@
   "foreground_english": [
     {
       "start": 360.6,
+      "end": 362.56,
+      "en": "After the most extraordinary level",
+      "zh": "打出极其非凡的水准后，"
+    },
+    {
+      "start": 362.56,
+      "end": 363.54,
+      "en": "in this match,",
+      "zh": "这场比赛"
+    },
+    {
+      "start": 363.72,
       "end": 366.06,
-      "en": "After the most extraordinary level in this match, it has ended on a Medvedev default.",
-      "zh": "这场比赛打出了极其非凡的水准，却以梅德韦杰夫被判失格结束。"
+      "en": "it has ended on a Medvedev default.",
+      "zh": "却以梅德韦杰夫\n被判失格结束。"
     }
   ],
   "uncertain_spans": [],
@@ -64,5 +76,14 @@
       "sha256": "441c5b7841056337a33dc5c9c8d27f8df2221315f0be74e13517c9cb9b1144c9"
     }
   ],
-  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed."
+  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed.",
+  "original_sentence_utterances": [
+    {
+      "start": 360.6,
+      "end": 366.06,
+      "en": "After the most extraordinary level in this match, it has ended on a Medvedev default.",
+      "zh": "这场比赛打出了极其非凡的水准，却以梅德韦杰夫被判失格结束。"
+    }
+  ],
+  "caption_layout_method": "Native subtitles: English preserved exactly and split only at actual word timestamps into consecutive semantic clauses; explicit Chinese line breaks preserve complete meaning with each line <=16 Chinese widths. Original sentence transcript retained in original_sentence_utterances. No source selection changes."
 }

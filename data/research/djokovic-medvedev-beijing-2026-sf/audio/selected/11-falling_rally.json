@@ -4,7 +4,7 @@
   "official_provenance_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
   "method": "asr_cross_checked",
   "reviewer": "Codex audio_review subagent: independent small.en and medium.en ASR cross-checked with source captions; no claim of human listening",
-  "reviewed_at": "2026-10-05T15:00:23.823115+00:00",
+  "reviewed_at": "2026-10-05T15:08:26.177845+00:00",
   "method_details": [
     "Extracted full AV1 source to signed 16-bit 16kHz mono WAV using ffmpeg.",
     "faster-whisper small.en full-source VAD and no-VAD local windows; medium.en independent no-VAD local windows; separate medium.en VAD checks of narration and ASR noise gaps. Raw word timestamps and probabilities retained.",
@@ -28,15 +28,27 @@
   "foreground_english": [
     {
       "start": 309.36,
+      "end": 310.84,
+      "en": "Oh, he just went straight",
+      "zh": "噢，他直接回击"
+    },
+    {
+      "start": 310.84,
       "end": 311.5,
-      "en": "Oh, he just went straight back at him.",
-      "zh": "噢，他直接朝对手打了回去。"
+      "en": "back at him.",
+      "zh": "朝对手打了回去。"
     },
     {
       "start": 311.62,
+      "end": 313.52,
+      "en": "Djokovic collapses to the ground",
+      "zh": "德约科维奇倒向地面"
+    },
+    {
+      "start": 313.52,
       "end": 314.14,
-      "en": "Djokovic collapses to the ground in a heap.",
-      "zh": "德约科维奇一下倒在了地上。"
+      "en": "in a heap.",
+      "zh": "整个人一下瘫倒了。"
     }
   ],
   "uncertain_spans": [],
@@ -70,5 +82,20 @@
       "sha256": "441c5b7841056337a33dc5c9c8d27f8df2221315f0be74e13517c9cb9b1144c9"
     }
   ],
-  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed."
+  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed.",
+  "original_sentence_utterances": [
+    {
+      "start": 309.36,
+      "end": 311.5,
+      "en": "Oh, he just went straight back at him.",
+      "zh": "噢，他直接朝对手打了回去。"
+    },
+    {
+      "start": 311.62,
+      "end": 314.14,
+      "en": "Djokovic collapses to the ground in a heap.",
+      "zh": "德约科维奇一下倒在了地上。"
+    }
+  ],
+  "caption_layout_method": "Native subtitles: English preserved exactly and split only at actual word timestamps into consecutive semantic clauses; explicit Chinese line breaks preserve complete meaning with each line <=16 Chinese widths. Original sentence transcript retained in original_sentence_utterances. No source selection changes."
 }

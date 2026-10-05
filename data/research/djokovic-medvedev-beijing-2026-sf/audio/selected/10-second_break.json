@@ -4,7 +4,7 @@
   "official_provenance_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
   "method": "asr_cross_checked",
   "reviewer": "Codex audio_review subagent: independent small.en and medium.en ASR cross-checked with source captions; no claim of human listening",
-  "reviewed_at": "2026-10-05T15:00:23.823115+00:00",
+  "reviewed_at": "2026-10-05T15:08:26.177314+00:00",
   "method_details": [
     "Extracted full AV1 source to signed 16-bit 16kHz mono WAV using ffmpeg.",
     "faster-whisper small.en full-source VAD and no-VAD local windows; medium.en independent no-VAD local windows; separate medium.en VAD checks of narration and ASR noise gaps. Raw word timestamps and probabilities retained.",
@@ -30,7 +30,7 @@
       "start": 236.26,
       "end": 244.14,
       "en": "Yeah! Yeah! Yeah! Yeah! Yeah! Yeah!",
-      "zh": "呀！呀！呀！呀！呀！呀！"
+      "zh": "呀！呀！呀！\n呀！呀！呀！"
     },
     {
       "start": 256.38,
@@ -42,13 +42,19 @@
       "start": 259.24,
       "end": 261.12,
       "en": "The shot beforehand from Djokovic.",
-      "zh": "说的是德约科维奇前一拍的击球。"
+      "zh": "说的是德约科维奇\n前一拍的击球。"
     },
     {
       "start": 267.18,
+      "end": 268.58,
+      "en": "But this time",
+      "zh": "但这一次"
+    },
+    {
+      "start": 268.58,
       "end": 270.78,
-      "en": "But this time he does find a way through.",
-      "zh": "但这一次，他终于找到了突破口。"
+      "en": "he does find a way through.",
+      "zh": "他终于找到了突破口。"
     }
   ],
   "uncertain_spans": [],
@@ -82,5 +88,32 @@
       "sha256": "441c5b7841056337a33dc5c9c8d27f8df2221315f0be74e13517c9cb9b1144c9"
     }
   ],
-  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed."
+  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed.",
+  "original_sentence_utterances": [
+    {
+      "start": 236.26,
+      "end": 244.14,
+      "en": "Yeah! Yeah! Yeah! Yeah! Yeah! Yeah!",
+      "zh": "呀！呀！呀！呀！呀！呀！"
+    },
+    {
+      "start": 256.38,
+      "end": 258.02,
+      "en": "That's just amazing depth.",
+      "zh": "这球的落点深度真是惊人。"
+    },
+    {
+      "start": 259.24,
+      "end": 261.12,
+      "en": "The shot beforehand from Djokovic.",
+      "zh": "说的是德约科维奇前一拍的击球。"
+    },
+    {
+      "start": 267.18,
+      "end": 270.78,
+      "en": "But this time he does find a way through.",
+      "zh": "但这一次，他终于找到了突破口。"
+    }
+  ],
+  "caption_layout_method": "Native subtitles: English preserved exactly and split only at actual word timestamps into consecutive semantic clauses; explicit Chinese line breaks preserve complete meaning with each line <=16 Chinese widths. Original sentence transcript retained in original_sentence_utterances. No source selection changes."
 }
