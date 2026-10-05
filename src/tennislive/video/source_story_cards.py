@@ -7,6 +7,7 @@ from pathlib import Path
 
 def source_slide_html(segment, *, index, height, topic, column, root: Path,
                       font_css: str, asset_uri) -> str:
+    """One conclusion, one supporting context and a closely grouped real source."""
     from PIL import Image
 
     visual = segment.visual
@@ -21,65 +22,78 @@ def source_slide_html(segment, *, index, height, topic, column, root: Path,
         return f'<img class="{cls}" src="{asset_uri(path)}" alt="{html.escape(asset)}">'
 
     esc = html.escape
-    photo = img(visual['photo'], 'photo') if visual.get('photo') else ''
-    quote_rows = []
-    for quote in visual.get('quotes', []):
-        quote_rows.append('<div class="quote-row"><div class="original">'
-                          + img(quote['asset']) + '</div><div class="meaning">'
-                          + esc(quote['meaning']) + '</div></div>')
-    quotes = '<div class="quotes">' + ''.join(quote_rows) + '</div>' if quote_rows else ''
-    title = '<br>'.join(f'<span class="turn">{esc(line)}</span>' if i else esc(line)
-                       for i, line in enumerate(segment.title.splitlines()))
-    notes = ''.join(f'<p>{esc(line)}</p>' for line in visual.get('notes', []))
+    headline = visual.get('headline', segment.title)
+    title = '<br>'.join(esc(line) for line in headline.splitlines())
+    context = esc(visual.get('context', visual.get('kicker', '')))
+    caption = esc(visual.get('caption', ''))
+    takeaway = esc(visual.get('takeaway', visual.get('focus', '')))
     icon = img('assets/logo/brand/icon.png', 'brand-icon')
+    if layout == 'rule':
+        rows = []
+        for quote in visual.get('quotes', []):
+            rows.append('<div class="quote-row"><div class="original">'
+                        + img(quote['asset']) + '</div><div class="meaning">'
+                        + esc(quote['meaning']).replace('\n', '<br>') + '</div></div>')
+        evidence = '<div class="quotes">' + ''.join(rows) + '</div>'
+    else:
+        evidence = img(visual['photo'], 'photo')
+    compact = 'compact' if layout == 'rule' and len(visual.get('quotes', [])) < 3 else ''
+    figcaption = f'<figcaption>{caption}</figcaption>' if caption else ''
+    support = f'<p class="support">{takeaway}</p>' if takeaway else ''
     return f'''<!doctype html><html><head><meta charset="utf-8"><style>{font_css}
 *{{box-sizing:border-box;margin:0;padding:0}}
 html,body{{width:1080px;height:{height}px;overflow:hidden}}
-body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;background:#071322;color:#f5f3ed}}
-.scene{{position:relative;height:{height}px;overflow:hidden;background:linear-gradient(160deg,#102b43,#081322 68%)}}
+body{{font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;background:#071322;color:#edf1f5}}
+.scene{{position:relative;height:{height}px;overflow:hidden;background:linear-gradient(160deg,#0c1c2d,#071322 58%)}}
 .spectrum{{height:7px;background:linear-gradient(90deg,#c9f45e,#2ee3a5,#d67d91,#5eacf6)}}
 .brand{{position:absolute;top:43px;left:70px;display:flex;align-items:center;gap:18px}}
 .brand-icon{{width:52px;height:52px}}
 .brand-name{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:38px;font-weight:400;letter-spacing:1px}}
-.topic{{display:block;font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;margin-top:2px;color:#c1ccd6;letter-spacing:1px}}
-.chapter{{position:absolute;left:70px;top:163px;font-size:22px;letter-spacing:2px;color:#e8edf1}}
-.scene-index{{position:absolute;right:70px;top:163px;font-family:'TL Score',sans-serif;font-size:23px;color:#8f9daa;letter-spacing:2px}}
-.kicker{{position:absolute;left:70px;top:220px;font-size:24px;color:#d4dde5;letter-spacing:1px}}
-.scene::before{{content:'';position:absolute;left:70px;right:70px;top:137px;border-top:1px solid #8093a333}}
-.photo{{position:absolute;top:285px;left:0;width:1080px;height:730px;object-fit:contain}}
-.headline{{position:absolute;left:70px;right:70px;top:1040px;font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:56px;font-weight:400;line-height:1.14;letter-spacing:1px}}
-.turn{{color:#e8edf1}}
-.focus{{position:absolute;left:70px;top:1200px;font-size:28px;font-weight:400;color:#e8edf1}}
-.source{{position:absolute;left:70px;right:70px;top:1190px;font-size:21px;line-height:1.5;color:#a8b7c7}}
-.source::before{{content:'';display:block;width:110px;border-top:2px solid #c9f45e;margin-bottom:13px}}
- .year{{position:absolute;right:70px;top:215px;font-size:38px;line-height:1;font-weight:400;color:#b1bdc7;font-family:'TL Score',sans-serif;letter-spacing:1px}}
-.notes{{position:absolute;left:70px;right:70px;top:1085px;font-size:31px;line-height:1.6}}
-.rule .headline{{top:243px;font-size:56px}}
-.rule .kicker{{top:210px;font-size:22px}}
-.rule .year{{display:none}}
-.rule .quotes{{position:absolute;left:70px;right:70px;top:475px}}
-.quote-row{{display:flex;align-items:center;gap:35px;min-height:145px;margin-bottom:18px;border-bottom:1px solid #d5e1ed22;padding-bottom:18px}}
-.original{{background:transparent;flex:0 0 565px;padding:10px 0;display:flex;justify-content:center;align-items:center}}
-.original img{{filter:invert(1);mix-blend-mode:screen;display:block;max-width:100%;max-height:82px;width:auto;height:auto}}
-.meaning{{font-size:30px;font-weight:400;line-height:1.2;color:#e8edf1}}
-.rule .focus{{top:1055px;font-size:28px}}
-.rule .notes{{top:1110px;font-size:27px;color:#d5dde5}}
-.rule .source{{top:1200px}}
-.rule.table .original img{{max-height:360px;width:540px}}
-.rule.table .quote-row{{min-height:410px}}
-.rule.table .meaning{{white-space:pre-line;font-size:30px;line-height:2.7}}
-.incident .photo{{top:285px;height:730px}}
-.incident .focus{{font-size:28px}}
-.closing .photo{{top:285px;height:730px}}
-.closing .headline{{top:1040px;font-size:56px}}
-.case .photo{{top:285px;height:730px}}
-</style></head><body><main class="scene {esc(layout)} {esc(visual.get('variant',''))}">
+.topic{{display:block;font-size:27px;font-weight:700;margin-top:2px;color:#c1ccd6;letter-spacing:1px}}
+.content{{position:absolute;top:212px;left:70px;right:70px;bottom:250px;display:flex;flex-direction:column;gap:28px}}
+.lead{{flex:none}}
+.headline{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:60px;font-weight:400;line-height:1.2;letter-spacing:1px}}
+.context{{font-size:28px;font-weight:400;line-height:1.5;color:#aebccc;margin-top:18px}}
+.evidence{{flex:none;display:flex;flex-direction:column;align-items:center;gap:20px}}
+.photo{{display:block;width:auto;height:auto;max-width:100%;max-height:550px;object-fit:contain}}
+figcaption{{width:100%;font-size:28px;font-weight:400;line-height:1.5;color:#aebccc}}
+.support{{flex:none;font-size:32px;font-weight:400;line-height:1.5;color:#d2dde5}}
+.rule .evidence{{margin-top:48px}}
+.rule.compact .evidence{{margin-top:96px}}
+.quotes{{width:100%}}
+.quote-row{{display:grid;grid-template-columns:1.12fr 1fr;align-items:center;gap:48px;padding:30px 0}}
+.quote-row + .quote-row{{border-top:1px solid #aebccc26}}
+.original{{display:flex;align-items:center;justify-content:flex-start;min-width:0}}
+.original img{{display:block;height:44px;width:auto;max-width:100%;object-fit:contain;object-position:left center;filter:invert(1);mix-blend-mode:screen}}
+.meaning{{font-size:34px;font-weight:400;line-height:1.65;color:#d2dde5}}
+.rule.table .original img{{height:168px;max-height:none}}
+.rule.table .meaning{{line-height:56px}}
+</style></head><body><main class="scene {esc(layout)} {esc(visual.get('variant',''))} {compact}">
 <div class="spectrum"></div><div class="brand">{icon}<div><div class="brand-name">网球时差 · {esc(column)}</div><span class="topic">{esc(topic)}</span></div></div>
-<div class="chapter">{esc(visual.get('chapter',''))}</div><div class="scene-index">{("① " if index == 1 else f"{index:02d}")}</div>
-<div class="kicker">{esc(visual.get('kicker',''))}</div><div class="year">{esc(visual.get('year',''))}</div>
-{photo}<h1 class="headline">{title}</h1>{quotes}
-<div class="focus">{esc(visual.get('focus',''))}</div><div class="notes">{notes}</div>
+<section class="content"><header class="lead"><h1 class="headline">{title}</h1><p class="context">{context}</p></header>
+<figure class="evidence">{evidence}{figcaption}</figure>{support}</section>
 </main></body></html>'''
+
+
+def focus_narration_subtitles(path: Path) -> None:
+    """Keep narration readable in its own quiet footer; preserve every cue and time."""
+    import re
+
+    text = path.read_text(encoding='utf-8')
+    lines = []
+    for line in text.splitlines():
+        if line.startswith('Style: TL,'):
+            fields = line.split(',')
+            fields[2] = '60'
+            fields[3] = '&H00E5DDD2'
+            fields[7] = '0'
+            fields[16] = '1'
+            fields[17] = '0'
+            line = ','.join(fields)
+        elif line.startswith('Dialogue:'):
+            line = re.sub(r'\\fs(?:68|78)\b', r'\\fs60', line)
+        lines.append(line)
+    path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 
 def _subtitle_intervals(path: Path) -> list[tuple[float, float]]:

@@ -1,6 +1,6 @@
 {
   "slug": "medvedev-beijing-default-2026",
-  "revision": "source-evidence / dark content hierarchy",
+  "revision": "focused information hierarchy",
   "user_requests": [
     "原始图片或视频印证内容和规则",
     "字卡内容和样式更有故事",
@@ -13,7 +13,8 @@
     "清理TennisTV/WTA等第三方平台标识",
     "左上副标题始终不变",
     "参照24冠23城右侧竖线字卡；最新要求说明放视频右上角",
-    "多智能体协同并行快速制作"
+    "多智能体协同并行快速制作",
+    "按苹果设计思维集中每页信息，消除大小字和排版混乱"
   ],
   "narrative": "本场分后击球 → 德约2020旧案 → 直接失格与常规阶梯 → 纳尔班迪安和沙波瓦洛夫 → 加藤女双失格及混双夺冠 → 卢布列夫完整官方回合、分后交涉和处罚申诉 → 本案未确认后果",
   "official_video": [
@@ -59,10 +60,10 @@
     "canvas": "1080x1440 / 3:4",
     "background": "深蓝，禁止大幅白底",
     "content_headline_px": [
-      56
+      60
     ],
-    "focus_px": 28,
-    "rule_meaning_px": 30,
+    "focus_px": 32,
+    "rule_meaning_px": 34,
     "source_px": null,
     "cover": "保持独立大标题、原始左上logo、失格 Default · 滥用球 Ball Abuse",
     "source_display": "不显示左下引用小字；可核验的来源及摄影署名完整保留在credits和研究记录，赛事/年份/规则编号保留",
@@ -109,6 +110,25 @@
       "method": "FFmpeg视频流局部delogo，仅平台固定标识；北京证据图从处理后视频抽帧，不改原始研究素材。",
       "guard": "不得遮记分板、人物、关键动作；原始来源仍在credits。",
       "evidence": "assets/explainer/medvedev-beijing-default-2026/platform-logo-processing.json; platform-logo-bounds.json"
+    },
+    "focused_layout": {
+      "grid_left": 70,
+      "grid_width": 940,
+      "headline_y": 212,
+      "title": "one conclusion, max2 lines",
+      "context": "one line,28px",
+      "image": "authentic full frame, contain, max550px tall",
+      "pdf_quote_image_height": 44,
+      "table_quote_height": 168,
+      "support": "32px adjacent to evidence",
+      "removed": [
+        "chapter",
+        "scene number",
+        "independent year",
+        "repeated focus and notes"
+      ],
+      "narration_subtitles": "ASS60, regular weight,1px outline; no separate numeral enlargement; native bilingual source captions unchanged",
+      "principles": "One primary focus, progressive hierarchy, consistent alignment, grouped related information, restrained contrast, useful whitespace; original typefaces and blue brand retained."
     }
   },
   "limits": [

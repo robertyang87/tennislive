@@ -53,3 +53,20 @@ def test_source_layout_never_substitutes_a_missing_original():
                                          'source': 'Actual source'})
     with pytest.raises(FileNotFoundError):
         E._slide_html(1, segment)
+
+
+def test_focused_narration_keeps_exact_words_and_timing(tmp_path):
+    import re
+    from tennislive.video.source_story_cards import focus_narration_subtitles
+
+    path = E.write_subtitles([(0.25, 2.1, '德约7–5、5–3领先'),
+                              (2.3, 4.8, '比赛因失格结束')],
+                             tmp_path/'source.ass', height=1440, margin_v=1284)
+    before = [line.split(',', 9) for line in path.read_text().splitlines()
+              if line.startswith('Dialogue:')]
+    focus_narration_subtitles(path)
+    after = [line.split(',', 9) for line in path.read_text().splitlines()
+             if line.startswith('Dialogue:')]
+    assert [row[:9] for row in before] == [row[:9] for row in after]
+    plain = lambda rows: [re.sub(r'\{[^}]*\}', '', row[9]) for row in rows]
+    assert plain(before) == plain(after) == ['德约7–5、5–3领先', '比赛因失格结束']
