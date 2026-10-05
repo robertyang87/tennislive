@@ -119,3 +119,24 @@ def test_no_windows_preserves_legacy_plan_hash():
     assert plan_hash(spec) == expected
     spec['segments'][0]['_digital_silence_windows'] = [[1,2]]
     assert plan_hash(spec) != expected
+
+
+def test_real_aac_fade_near_segment_start_matches_but_crossing_fails(encoded):
+    spec, film = encoded
+    # Segment starts at output .95: candidate [1,2) begins .05 into its
+    # .2-second audio fade. Use real encoding, delay and amplitude envelope.
+    source = film.parent/'source_main.mp4'
+    subprocess.run(['ffmpeg','-v','error','-y','-i',str(source),
+                    '-af','atrim=start=0.8:end=3.8,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.2,volume=0.972,adelay=950',
+                    '-c:a','aac','-b:a','192k',str(film)],check=True)
+    seg = spec['segments'][0]
+    seg['start'], seg['end'] = .8, 3.8
+    seg['_digital_silence_windows'] = [[.8,3.8]]
+    binding = json.loads((film.parent/'audio_review_binding.json').read_text())
+    binding['plan_sha256'] = plan_hash(spec)
+    binding['timeline']['offsets'] = [.95]
+    (film.parent/'audio_review_binding.json').write_text(json.dumps(binding))
+    assert Q.verified_seconds(spec, film, [1]) == [1]
+    # [0,1) crosses the leading segment boundary; [3,4) crosses its end.
+    # Neither may borrow another segment's audio even with a broad window.
+    assert Q.verified_seconds(spec, film, [0,3]) == []

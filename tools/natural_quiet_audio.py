@@ -86,7 +86,7 @@ def verified_seconds(spec: dict, film: Path, candidates: list[int]) -> list[int]
             for second in candidates:
                 start = float(seg['start']) + second - float(offsets[index])
                 end = start + 1
-                if (float(seg['start']) + .1 <= start and end <= float(seg['end']) - .1
+                if (float(seg['start']) <= start and end <= float(seg['end'])
                         and any(float(a) <= start and end <= float(b) for a, b in windows)):
                     relevant.append((second, start))
             if not relevant:
