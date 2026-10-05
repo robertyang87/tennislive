@@ -4,7 +4,7 @@
     349,
     369
   ],
-  "method": "faster-whisper small.en, word timestamps; spelling corrected to Djokovic/Medvedev; selected complete commentator sentences, no invented chair-umpire speech",
+  "method": "faster-whisper small.en word timestamps, independently cross-checked against base.en and tiny.en; names normalized to Djokovic/Medvedev; the leading Well confirmed by both cross-checks and restored; no claim of human listening",
   "raw_asr": [
     {
       "start": 3.419999999999998,
@@ -237,5 +237,179 @@
       ]
     }
   ],
-  "subtitle_file": "incident-intro.ass"
+  "subtitle_file": "incident-intro.ass",
+  "cross_checks": {
+    "base-en": [
+      {
+        "start": 3.4800000000000004,
+        "end": 5.94,
+        "text": " That's a brilliant combination from Djokovic.",
+        "words": [
+          {
+            "start": 3.4800000000000004,
+            "end": 4.2,
+            "word": " That's"
+          },
+          {
+            "start": 4.2,
+            "end": 4.3,
+            "word": " a"
+          },
+          {
+            "start": 4.3,
+            "end": 4.62,
+            "word": " brilliant"
+          },
+          {
+            "start": 4.62,
+            "end": 5.04,
+            "word": " combination"
+          },
+          {
+            "start": 5.04,
+            "end": 5.58,
+            "word": " from"
+          },
+          {
+            "start": 5.58,
+            "end": 5.94,
+            "word": " Djokovic."
+          }
+        ]
+      },
+      {
+        "start": 6.82,
+        "end": 8.6,
+        "text": " Well, can you believe it?",
+        "words": [
+          {
+            "start": 6.82,
+            "end": 7.42,
+            "word": " Well,"
+          },
+          {
+            "start": 7.58,
+            "end": 7.84,
+            "word": " can"
+          },
+          {
+            "start": 7.84,
+            "end": 7.98,
+            "word": " you"
+          },
+          {
+            "start": 7.98,
+            "end": 8.32,
+            "word": " believe"
+          },
+          {
+            "start": 8.32,
+            "end": 8.6,
+            "word": " it?"
+          }
+        ]
+      },
+      {
+        "start": 11.04,
+        "end": 16.92,
+        "text": " After the most extraordinary level in this match, it has ended on a Medpedev default.",
+        "words": [
+          {
+            "start": 11.04,
+            "end": 11.76,
+            "word": " After"
+          },
+          {
+            "start": 11.76,
+            "end": 12.02,
+            "word": " the"
+          },
+          {
+            "start": 12.02,
+            "end": 12.18,
+            "word": " most"
+          },
+          {
+            "start": 12.18,
+            "end": 12.86,
+            "word": " extraordinary"
+          },
+          {
+            "start": 12.86,
+            "end": 13.48,
+            "word": " level"
+          },
+          {
+            "start": 13.48,
+            "end": 13.8,
+            "word": " in"
+          },
+          {
+            "start": 13.8,
+            "end": 14.0,
+            "word": " this"
+          },
+          {
+            "start": 14.0,
+            "end": 14.34,
+            "word": " match,"
+          },
+          {
+            "start": 14.7,
+            "end": 14.7,
+            "word": " it"
+          },
+          {
+            "start": 14.7,
+            "end": 14.82,
+            "word": " has"
+          },
+          {
+            "start": 14.82,
+            "end": 15.26,
+            "word": " ended"
+          },
+          {
+            "start": 15.26,
+            "end": 15.72,
+            "word": " on"
+          },
+          {
+            "start": 15.72,
+            "end": 15.84,
+            "word": " a"
+          },
+          {
+            "start": 15.84,
+            "end": 16.4,
+            "word": " Medpedev"
+          },
+          {
+            "start": 16.4,
+            "end": 16.92,
+            "word": " default."
+          }
+        ]
+      }
+    ],
+    "tiny-en": [
+      {
+        "start": 3.74,
+        "end": 6.52,
+        "text": " It's a brilliant combination from Jopkovich."
+      },
+      {
+        "start": 7.34,
+        "end": 10.32,
+        "text": " Well, can you believe it?"
+      },
+      {
+        "start": 11.280000000000001,
+        "end": 17.04,
+        "text": " After the most extraordinary level in this match, it is ended on a med pidef default."
+      }
+    ]
+  },
+  "source_sha256": "80179ed4439aecc24c30cf410a2a237c93eee11299d38537f1d0289786ed24d5",
+  "coverage": "All foreground commentator speech in selected 349–369 second source window; later speech beginning at 369.5 seconds excluded."
 }
