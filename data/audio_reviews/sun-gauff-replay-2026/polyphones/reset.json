@@ -1,0 +1,280 @@
+{
+ "word": "重置",
+ "char": "重",
+ "sentence": "比分能重置，感觉未必能一起退回去。",
+ "tts_text": "比分能重置，感觉未必能一起退回去。",
+ "intended_refs": [
+  "崇",
+  "虫"
+ ],
+ "wrong_refs": [
+  "仲",
+  "众"
+ ],
+ "voice": "zh-CN-YunjianNeural",
+ "rate": "+6%",
+ "verdict": "correct",
+ "confidence": "high",
+ "verdict_raw": "correct",
+ "score": 0.992,
+ "margin": 0.2,
+ "near_identical_to": "intended",
+ "far_from_both": false,
+ "dropped_refs": [],
+ "override": null,
+ "selftest_sides": [
+  "A",
+  "B"
+ ],
+ "features": {
+  "spec": {
+   "d_intended": 0.0,
+   "d_wrong": 3.564,
+   "score": 1.0
+  },
+  "f0": {
+   "d_intended": 0.018,
+   "d_wrong": 2.825,
+   "score": 0.987
+  },
+  "comb": {
+   "d_intended": 0.018,
+   "d_wrong": 4.608,
+   "score": 0.992
+  }
+ },
+ "neighbour_shift": {
+  "intended": 0.286,
+  "wrong": 7.054
+ },
+ "separation": {
+  "spec": {
+   "within": 1.219,
+   "between": 3.606,
+   "separation": 2.957
+  },
+  "f0": {
+   "within": 0.364,
+   "between": 2.714,
+   "separation": 7.464
+  },
+  "comb": {
+   "within": 0.973,
+   "between": 4.517,
+   "separation": 4.641
+  }
+ },
+ "selftest_loo": {
+  "崇": {
+   "expect": "correct",
+   "got": "correct",
+   "score": 0.432
+  },
+  "虫": {
+   "expect": "correct",
+   "got": "correct",
+   "score": 0.39
+  },
+  "仲": {
+   "expect": "misread",
+   "got": "misread",
+   "score": -0.953
+  },
+  "众": {
+   "expect": "misread",
+   "got": "misread",
+   "score": -0.953
+  }
+ },
+ "selftest_pass": true,
+ "distances_from_orig": {
+  "A:崇": {
+   "spec": 0.0,
+   "f0": 0.018,
+   "vmis": 0.0,
+   "frames": 31,
+   "comb": 0.018
+  },
+  "A:虫": {
+   "spec": 2.425,
+   "f0": 0.613,
+   "vmis": 0.031,
+   "frames": 32,
+   "comb": 1.825
+  },
+  "B:仲": {
+   "spec": 3.564,
+   "f0": 2.869,
+   "vmis": 0.212,
+   "frames": 33,
+   "comb": 4.652
+  },
+  "B:众": {
+   "spec": 3.564,
+   "f0": 2.825,
+   "vmis": 0.212,
+   "frames": 33,
+   "comb": 4.608
+  }
+ },
+ "window_s": [
+  0.493,
+  0.798
+ ],
+ "boundary_token": "重置",
+ "window_anchor": "ORIG",
+ "tokens": {
+  "ORIG": [
+   "比分",
+   "能",
+   "重置",
+   "感觉",
+   "未必",
+   "能",
+   "一起",
+   "退",
+   "回去"
+  ],
+  "A:崇": [
+   "比分",
+   "能",
+   "崇置",
+   "感觉",
+   "未必",
+   "能",
+   "一起",
+   "退",
+   "回去"
+  ],
+  "A:虫": [
+   "比分",
+   "能虫",
+   "置",
+   "感觉",
+   "未必",
+   "能",
+   "一起",
+   "退",
+   "回去"
+  ],
+  "B:仲": [
+   "比分",
+   "能",
+   "仲置",
+   "感觉",
+   "未必",
+   "能",
+   "一起",
+   "退",
+   "回去"
+  ],
+  "B:众": [
+   "比分",
+   "能",
+   "众置",
+   "感觉",
+   "未必",
+   "能",
+   "一起",
+   "退",
+   "回去"
+  ]
+ },
+ "f0_semitones_window": {
+  "ORIG": [
+   -0.7,
+   0.9,
+   1.9,
+   2.1,
+   2.0,
+   null,
+   null,
+   null,
+   null,
+   -3.4,
+   -4.8,
+   -5.0,
+   -3.9,
+   -1.5,
+   -0.0,
+   0.8
+  ],
+  "A:崇": [
+   -0.7,
+   0.9,
+   1.9,
+   2.1,
+   2.0,
+   null,
+   null,
+   null,
+   null,
+   -3.4,
+   -4.8,
+   -5.0,
+   -3.9,
+   -1.5,
+   -0.0,
+   0.8
+  ],
+  "A:虫": [
+   1.0,
+   2.2,
+   2.8,
+   2.7,
+   null,
+   null,
+   null,
+   null,
+   -3.3,
+   -3.4,
+   -2.8,
+   -1.6,
+   -0.3,
+   0.3
+  ],
+  "B:仲": [
+   -1.7,
+   0.2,
+   1.4,
+   2.0,
+   1.7,
+   null,
+   5.5,
+   5.0,
+   3.9,
+   1.7,
+   -0.2,
+   -2.6,
+   -4.5,
+   -5.3
+  ],
+  "B:众": [
+   -1.6,
+   0.3,
+   1.5,
+   2.1,
+   1.8,
+   null,
+   5.6,
+   5.1,
+   4.0,
+   1.8,
+   -0.1,
+   -2.4,
+   -4.4,
+   -5.2
+  ]
+ },
+ "audio": {
+  "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/9b97c63564f9c4fcf4163fc1.mp3",
+  "A:崇": "/workspace/scratch/sun-replay/polyphone-audit/cache/f41a0b4cd50d0c83421ab6ba.mp3",
+  "A:虫": "/workspace/scratch/sun-replay/polyphone-audit/cache/3f259f77fac27b921ab1d7a8.mp3",
+  "B:仲": "/workspace/scratch/sun-replay/polyphone-audit/cache/f664364a27ab364d1b497647.mp3",
+  "B:众": "/workspace/scratch/sun-replay/polyphone-audit/cache/37c5a87176ad8dd2a18b6128.mp3"
+ },
+ "ref_notes": {
+  "ok_refs_from": "chong2: dominant-reading only, single-reading common",
+  "bad_refs_from": "zhong4: dominant-reading only, single-reading common"
+ }
+}

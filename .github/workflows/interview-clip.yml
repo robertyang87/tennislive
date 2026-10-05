@@ -181,7 +181,9 @@ jobs:
         env:
           SLUG: ${{ github.event.inputs.slug }}
         run: |
-          pip install -q -e .
+          pip install -q -e ".[pronunciation]"
+          python -c "import pypinyin"
+          python tools/check_polyphones.py --spec "specs/interviews/$SLUG.json"
           python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase preflight
           python tools/production_preflight.py --spec "specs/interviews/$SLUG.json" --column 赛后开麦
 
