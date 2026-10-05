@@ -11541,6 +11541,23 @@ _OPENINGS: dict[str, dict] = {
 }
 
 
+# This episode keeps its reviewed script, diagrams and evidence in package data.
+# The existing renderer and preflight still consume the same registries.
+_DEFAULT_EPISODE = json.loads(
+    (Path(__file__).parent / "episodes/medvedev-beijing-default-2026.json").read_text(
+        encoding="utf-8"))
+_DEFAULT_SLUG = _DEFAULT_EPISODE["slug"]
+_SCRIPTS[_DEFAULT_SLUG] = tuple(
+    (beat["kind"], beat["label"], beat["title"], beat["narration"],
+     beat.get("image", ""), beat.get("credit", ""), tuple(beat["points"]),
+     beat.get("diagram", ""), beat.get("question", ""))
+    for beat in _DEFAULT_EPISODE["beats"]
+)
+_OPENINGS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["opening"]
+_CAPTIONS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["caption"]
+_CLAIMS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["claims"]
+
+
 def _fixture_lines(spec: dict) -> tuple[str, ...]:
     """封面上那两行小字：比赛坐标 + 对阵。
 
