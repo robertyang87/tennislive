@@ -1,19 +1,20 @@
 [Script Info]
 ScriptType: v4.00+
 PlayResX: 1080
-PlayResY: 1440
+PlayResY: 1920
 WrapStyle: 0
 ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: TL,Noto Sans CJK SC,68,&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,1,0,0,0,100,100,0,0,1,3,0,8,150,150,1284,1
+Style: TL,Noto Sans CJK SC,68,&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,1,0,0,0,100,100,0,0,1,3,0,8,150,150,1764,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.09,0:00:01.24,TL,,0,0,0,,据路透社报道
-Dialogue: 0,0:00:01.24,0:00:02.85,TL,,0,0,0,,梅德韦杰夫丢掉一分后
-Dialogue: 0,0:00:02.85,0:00:05.77,TL,,0,0,0,,把从场边墙体弹回的球再次击向看台
-Dialogue: 0,0:00:05.77,0:00:07.68,TL,,0,0,0,,打中前排观众的眼部
-Dialogue: 0,0:00:07.68,0:00:10.22,TL,,0,0,0,,这次击球发生在一分结束之后
-Dialogue: 0,0:00:10.22,0:00:13.18,TL,,0,0,0,,它不再是正常争取得分的比赛动作
+Dialogue: 0,0:00:00.09,0:00:02.27,TL,,0,0,0,,看回放 这一分已经结束
+Dialogue: 0,0:00:02.27,0:00:05.17,TL,,0,0,0,,他把反弹回来的球再次击向看台
+Dialogue: 0,0:00:05.17,0:00:07.88,TL,,0,0,0,,报道说 球打中前排观众眼部
+Dialogue: 0,0:00:07.88,0:00:08.95,TL,,0,0,0,,事故发生时
+Dialogue: 0,0:00:08.95,0:00:12.42,TL,,0,0,0,,德约领先{\fs78}7{\fs68}比{\fs78}5{\fs68} {\fs78}5{\fs68}比{\fs78}3{\fs68} 局内{\fs78}15{\fs68}平
+Dialogue: 0,0:00:12.42,0:00:14.44,TL,,0,0,0,,关键不是回合中丢掉的那分
+Dialogue: 0,0:00:14.44,0:00:16.51,TL,,0,0,0,,而是分后的这次击球
