@@ -1514,14 +1514,9 @@ jobs:
           # _cover.html / poster.html 是封面那一屏的渲染输入，图以 data URI 内嵌，
           # 单个 12 MB，之前漏在清单外，每出一版就往仓库里塞一份。
           # **poster.jpg 要留下**：推送正文的第一屏就是它，删了推送里就没有图。
-          # **`source*` 一整片删掉，不要逐个列名字。** 这个坑连着栽了四次，
-          # 每次都是同一个形状：源片换了个名字，就从清单里溜过去了。
-          #   1. `source.fNNN.mp4.part`（yt-dlp 分轨下载的半成品，probe wang-pareja）
-          #   2. 同一个漏在 eala-zheng、potapova-venus 上各中一次
-          #   3. 分轨的 `.webm` 和 yt-dlp 的续传记录 `.ytdl`
-          #   4. **多源之后叫 `source_r1.mp4` / `source_iv.mp4`**——加多源支持时
-          #      改了下载的落盘名，没改这里（run 30603686748，三条源片 250 MB
-          #      全被兜底拦下）。又一次「加新能力就要同时改三处」。
+          # 源片按 source 前缀 + 媒体扩展名清理，兼容多源、分轨和 conform。
+          # 不可裸删 source*：已落库的 source_evidence.txt / source_identity.json /
+          # source_photo.json 是溯源证据，cover/render 重跑必须保留。
           # 同理 `_versus_*` **不带后缀**：原来写死 `.jpg`，而抽帧抠图落的是
           # `_versus_cut_top.png`。现在它只剩抠之前那张原帧（`_versus_raw_*`）。
           #
@@ -1539,7 +1534,11 @@ jobs:
           # 132 KB、12 张 1.6 MB（存 PNG 是 9 MB），**两种都过得了「单个 8 MB」
           # 那道兜底**，却每探一次就加一份。
           # 判据在 test_中间物一个都不许进仓库：按 glob 语义验覆盖，不验字面名字。
-          rm -f "$OUTDIR"/source* "$OUTDIR"/*.part "$OUTDIR"/*.ytdl \
+          rm -f "$OUTDIR"/source*.mp4 "$OUTDIR"/source*.mkv "$OUTDIR"/source*.webm \
+            "$OUTDIR"/source*.mov "$OUTDIR"/source*.m4v "$OUTDIR"/source*.avi \
+            "$OUTDIR"/source*.m4a "$OUTDIR"/source*.mp3 "$OUTDIR"/source*.opus \
+            "$OUTDIR"/source*.ogg "$OUTDIR"/source*.wav "$OUTDIR"/source*.aac \
+            "$OUTDIR"/source*.ts "$OUTDIR"/source*.flv "$OUTDIR"/*.part "$OUTDIR"/*.ytdl \
             "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \
             "$OUTDIR"/poster.html "$OUTDIR"/_versus_* "$OUTDIR"/_subs* \
             "$OUTDIR"/cover_candidates/cand_*
@@ -1589,11 +1588,9 @@ jobs:
       # 的全部。戴维斯杯那条 render 红在质检上，artifact **3.2 GB**：九条源片
       # 2.45 GB ＋ conform 中间物（crf16）0.9 GB ＋ 成片 214 MB。源片能重下
       # （还有 actions/cache 那份），conform 是从源片算出来的——都不该传。
-      # 所以这儿用**和清理那一步同一个 glob** `source*` 排除：conform 中间物
-      # （2026-09-16 起不再落盘，旧名 `source_<键>_conform.mp4` 照旧盖住）、
-      # yt-dlp 半成品叫 `source.fNNN.mp4.part`、
-      # 分轨合流叫 `source_av.mp4`，一个 glob 全盖住（清理那一步的注释里
-      # 「逐个列名字连着栽了四次」说的就是这个）；`frames/` 同理。
+      # 与清理步骤一样，按 source 前缀 + 媒体扩展名排除，多源/conform/分轨
+      # 和 .part/.ytdl 半成品均覆盖；source_*.json/.txt 溯源证据照旧上传。
+      # `frames/` 仍排除，避免失败时把逐帧图一起上传。
       # 成片、render.json、poster、voice、缩略图墙、probe.json 照旧上传——
       # 排查红了的 run 要的就是这些（第 209 秒那 1 秒数字静音正是从 artifact
       # 里的成片量出来的）。判据 `test_失败时的artifact不许带源片`。
@@ -1601,10 +1598,27 @@ jobs:
         if: always() && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies' && github.event.inputs.mode != 'reattest'
         uses: actions/upload-artifact@v4
         with:
+          # mp4 / JPEG 已压缩；跳过 ZIP 再压缩，文件内容和质检不变。
+          compression-level: 0
           name: reel-${{ github.event.inputs.slug }}-${{ github.run_number }}
           path: |
             ${{ steps.paths.outputs.outdir }}
-            !${{ steps.paths.outputs.outdir }}/source*
+            !${{ steps.paths.outputs.outdir }}/source*.mp4
+            !${{ steps.paths.outputs.outdir }}/source*.mkv
+            !${{ steps.paths.outputs.outdir }}/source*.webm
+            !${{ steps.paths.outputs.outdir }}/source*.mov
+            !${{ steps.paths.outputs.outdir }}/source*.m4v
+            !${{ steps.paths.outputs.outdir }}/source*.avi
+            !${{ steps.paths.outputs.outdir }}/source*.m4a
+            !${{ steps.paths.outputs.outdir }}/source*.mp3
+            !${{ steps.paths.outputs.outdir }}/source*.opus
+            !${{ steps.paths.outputs.outdir }}/source*.ogg
+            !${{ steps.paths.outputs.outdir }}/source*.wav
+            !${{ steps.paths.outputs.outdir }}/source*.aac
+            !${{ steps.paths.outputs.outdir }}/source*.ts
+            !${{ steps.paths.outputs.outdir }}/source*.flv
+            !${{ steps.paths.outputs.outdir }}/source*.part
+            !${{ steps.paths.outputs.outdir }}/source*.ytdl
             !${{ steps.paths.outputs.outdir }}/frames/**
           retention-days: 14
 

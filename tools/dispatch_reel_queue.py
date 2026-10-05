@@ -211,11 +211,30 @@ def discover_queue_file(
     return Path(fields[1])
 
 
+def verify_event_inputs(queue_file: Path, request: QueueRequest, after: str,
+                        *, repo_root: Path = ROOT, run: Run = subprocess.run) -> None:
+    """Latest-main checkout may contain receipts, but must not change event authority."""
+    paths = [queue_file]
+    for slug in request.slugs:
+        paths.extend((Path("specs/reels") / f"{slug}.json",
+                      Path("specs/reels") / f"{slug}.xhs.txt"))
+    for path in paths:
+        try:
+            original = run(["git", "show", f"{after}:{path.as_posix()}"],
+                           cwd=repo_root, check=True, capture_output=True, shell=False).stdout
+            current = (repo_root / path).read_bytes()
+        except (OSError, subprocess.CalledProcessError) as exc:
+            raise QueueError(f"cannot verify original event input {path}: {exc}") from exc
+        if original != current:
+            raise QueueError(f"input changed since triggering event: {path}; submit a new reviewed queue")
+
+
 def dispatch(
     request: QueueRequest,
     *,
     run: Run = subprocess.run,
     now: datetime | None = None,
+    push: bool = True,
 ) -> None:
     """Dispatch parallel production renders or one fail-closed publish run.
 
@@ -229,7 +248,7 @@ def dispatch(
         )
     # 账号所有者：质检通过就推，不再等待第二份人工 push 队列。render 和 push
     # 都传 true；match-reel 自己把重渲（并行）与发送（串行）拆成两趟。
-    push = "true"
+    push_value = "true" if push else "false"
     # One batch gets one clock edge. Different slugs render in parallel, so each one
     # is measured from the same moment the reviewed production queue was accepted.
     received_at = (now or datetime.now(timezone.utc)).astimezone(timezone.utc).strftime(
@@ -248,11 +267,11 @@ def dispatch(
             "-f",
             f"mode={request.mode}",
             "-f",
-            f"push={push}",
+            f"push={push_value}",
             "-f",
             f"received_at={received_at}",
         ]
-        print(f"[dispatch] match-reel {request.mode} {slug} push={push}")
+        print(f"[dispatch] match-reel {request.mode} {slug} push={push_value}")
         run(command, check=True, shell=False)
 
 
@@ -268,7 +287,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         queue_file = discover_queue_file(args.before, args.after)
         request = load_queue(queue_file)
-        dispatch(request)
+        verify_event_inputs(queue_file, request, args.after)
+        from reel_dispatch_outbox import drain, enqueue, persist
+
+        intent = enqueue(request, origin=f"queue/{args.after}/{queue_file}")
+        # Persist intent before API calls, receipts after each accepted slug.
+        persist(intent)
+        if drain(intent):
+            return 1
     except QueueError as exc:
         print(f"::error::{exc}", file=sys.stderr)
         return 2

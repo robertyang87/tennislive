@@ -11,7 +11,7 @@ on:
       - "data/reel-dispatch-queue/*.json"
 
 permissions:
-  contents: read
+  contents: write
   actions: write
 
 concurrency:
@@ -25,25 +25,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # Reruns must see receipts committed after the triggering event.
+          ref: main
           # The helper needs both ends of the push.  Avoid fetching the repository's
-          # full, media-heavy history; the explicit fetch below obtains only `before`.
+          # full, media-heavy history; explicitly fetch the event's two endpoint commits.
           fetch-depth: 1
           sparse-checkout: |
             data
             specs
             tools
 
-      - name: Fetch the push base commit
+      - name: Fetch both commits of the triggering push
         env:
           BEFORE: ${{ github.event.before }}
-        run: git fetch --no-tags --depth=1 origin "$BEFORE"
+          AFTER: ${{ github.sha }}
+        run: |
+          [[ "$BEFORE" =~ ^[0-9a-f]{40}$ ]] && [[ "$AFTER" =~ ^[0-9a-f]{40}$ ]]
+          git fetch --no-tags --depth=1 origin "$BEFORE" "$AFTER"
 
       - name: Validate the queue and dispatch match-reel runs
         env:
           GH_TOKEN: ${{ github.token }}
           BEFORE: ${{ github.event.before }}
           AFTER: ${{ github.sha }}
-        run: >-
-          python tools/dispatch_reel_queue.py
-          --before "$BEFORE"
-          --after "$AFTER"
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          python tools/dispatch_reel_queue.py --before "$BEFORE" --after "$AFTER"

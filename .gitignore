@@ -7,6 +7,8 @@ dist/
 build/
 .pytest_cache/
 .cache/
+# gh CLI 下载的 Actions 日志缓存；历史诊断结论另存 docs/data。
+.gh-cache/
 tmp/
 probe-out/
 *.log
@@ -57,6 +59,8 @@ output/**/cover_scan_sheet.jpg
 # 某次 `git add output/<日期>/reel/<slug>` 就会把它们一起带进去——而仓库里
 # 多一张「本地渲的封面」和多一张真产物，下一个人分不出来哪张是发出去的那张。
 output/**/poster_local.jpg
+# --out poster_local.jpg 也会写到仓库根目录，按同一本地预览规则排除。
+/poster_local.jpg
 output/**/segments_local_*.jpg
 
 # Claude Code 的 agent worktree：并行 agent 各自的仓库副本，临时工作区。

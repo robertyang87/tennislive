@@ -857,6 +857,17 @@ jobs:
           python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase asr_verify
           PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage verify
 
+      # 口播走共享 tts_one 内容缓存；以前 runner 每趟丢失它、重合成同一句。
+      # 输入稳定时命中主键，不再把同一份缓存按 run_id 重复上传。
+      - name: 缓存解读卡 TTS
+        if: github.event.inputs.mode == 'render'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive-tts
+          key: interview-tts-v1-${{ inputs.slug }}-${{ hashFiles('src/tennislive/video/tts.py', 'src/tennislive/video/azure_tts.py') }}-${{ hashFiles(format('specs/interviews/{0}.json', inputs.slug), 'tools/build_interview_clip.py', 'src/tennislive/video/explainer.py', 'src/tennislive/video/pronounce.py') }}
+          restore-keys: |
+            interview-tts-v1-${{ inputs.slug }}-${{ hashFiles('src/tennislive/video/tts.py', 'src/tennislive/video/azure_tts.py') }}-
+
       - name: 剪 + 烧字幕
         if: github.event.inputs.mode == 'render'
         env:
@@ -1215,12 +1226,15 @@ jobs:
             # 两张工作台（缩略图墙、候选墙）不在 `rendered` 里（.gitignore 挡着），
             # `rm -rf` 之后 checkout 不会把它们放回来——先挪到一边、放回来之后再
             # add（`-A` 照样认 .gitignore），不然撞一次车 artifact 里就没墙了。
-            WB="$RUNNER_TEMP/workbench"
-            mkdir -p "$WB"
+            # 本地复跑没有 RUNNER_TEMP；空值不能拼成根目录 /workbench。
+            # 每次重放独占临时目录，也不能复用前一趟留下的同名墙。
+            WB=$(mktemp -d "${RUNNER_TEMP:-${TMPDIR:-/tmp}}/interview-workbench.XXXXXX")
+            trap 'rm -rf -- "$WB"' EXIT
             cp -f "$D"/storyboard.jpg "$D"/cover_scan_sheet.jpg "$WB"/ 2>/dev/null || true
             rm -rf "$D"
             git checkout rendered -- "$D"
             cp -f "$WB"/*.jpg "$D"/ 2>/dev/null || true
+            rm -rf -- "$WB"
             git add -A "$D"
             # 换帧改过的 spec：只在别人**没动过**它的时候放回本趟那一版（比
             # `rendered^` 和最新分支上的 blob）。别人改过就留别人的——盖掉就是
@@ -1554,6 +1568,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
+          # mp4 / JPEG 已压缩；跳过 ZIP 再压缩，文件内容和质检不变。
+          compression-level: 0
           name: ${{ github.event.inputs.slug }}
           path: |
             output/interviews/${{ github.event.inputs.slug }}/

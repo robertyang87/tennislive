@@ -5081,7 +5081,8 @@ def _run_commit_step(tmp_path: Path, work: Path, slug: str, *,
                           capture_output=True, text=True)
 
 
-def test_推送重试耗尽必须报错不许绿着过去(tmp_path):
+@pytest.mark.parametrize("runner_temp", [None, "", "custom"])
+def test_推送重试耗尽必须报错不许绿着过去(tmp_path, monkeypatch, runner_temp):
     """⭐ 这条比并发本身更急：循环耗尽时**退出码是 0**，整步绿着过去。
 
     `bash -e` 下 AND-OR 列表里非末尾命令失败不触发退出，而原来那个循环体
@@ -5092,6 +5093,11 @@ def test_推送重试耗尽必须报错不许绿着过去(tmp_path):
 
     所以真跑一遍：让 `git push` 一律失败，这一步必须非零退出。
     """
+    monkeypatch.setenv("TMPDIR", str(tmp_path))
+    if runner_temp is None:
+        monkeypatch.delenv("RUNNER_TEMP", raising=False)
+    else:
+        monkeypatch.setenv("RUNNER_TEMP", str(tmp_path) if runner_temp else "")
     slug = "zz-exhaust"
     _, work = _seed_repo(tmp_path, slug)
     _this_run_writes(work, slug)
@@ -5104,9 +5110,10 @@ def test_推送重试耗尽必须报错不许绿着过去(tmp_path):
         "非零退出是对的，但没有走到循环末尾那句 ::error::——"
         "多半是死在了前面某一句，这条判据其实什么都没验到\n"
         f"--- stdout ---\n{done.stdout[-2000:]}\n--- stderr ---\n{done.stderr[-2000:]}")
+    assert not list(tmp_path.glob("interview-workbench.*"))
 
 
-def test_推送撞车要把本条重放上去而不是rebase(tmp_path):
+def test_推送撞车要把本条重放上去而不是rebase(tmp_path, monkeypatch):
     """同 slug 撞车时，`git pull --rebase` 过不去——两类文件都会冲突。
 
     合成仓库上跑过原来那一版，git 的原话：
@@ -5122,6 +5129,9 @@ def test_推送撞车要把本条重放上去而不是rebase(tmp_path):
     """
     import subprocess  # noqa: PLC0415
 
+    monkeypatch.delenv("RUNNER_TEMP", raising=False)
+    monkeypatch.setenv("TMPDIR", str(tmp_path))
+    monkeypatch.setenv("MODE", "subs")
     slug = "zz-collision"
     origin, work = _seed_repo(tmp_path, slug)
 
@@ -5137,10 +5147,20 @@ def test_推送撞车要把本条重放上去而不是rebase(tmp_path):
     subprocess.run(["git", "push", "-q", "origin", "main"], cwd=rival, check=True)
 
     _this_run_writes(work, slug)
+    # 忽略的工作台要随重试存活，但不能误拿共享临时目录里旧 run 的图。
+    sheet = work / "output" / "interviews" / slug / "storyboard.jpg"
+    (work / ".git" / "info" / "exclude").write_text("storyboard.jpg\n")
+    sheet.write_bytes(b"this-run-sheet")
+    old_workbench = tmp_path / "workbench"
+    old_workbench.mkdir()
+    (old_workbench / "cover_scan_sheet.jpg").write_bytes(b"stale-sheet")
     done = _run_commit_step(tmp_path, work, slug, block_push=False)
     assert done.returncode == 0, (
         "撞车之后本趟一次都没落库\n"
         f"--- stdout ---\n{done.stdout[-3000:]}\n--- stderr ---\n{done.stderr[-3000:]}")
+    assert sheet.read_bytes() == b"this-run-sheet"
+    assert not sheet.with_name("cover_scan_sheet.jpg").exists()
+    assert not list(tmp_path.glob("interview-workbench.*"))
 
     def landed(path: str) -> str:
         return subprocess.run(["git", "show", f"main:{path}"], cwd=origin,

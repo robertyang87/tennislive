@@ -4420,7 +4420,21 @@ def still_canvas_for_layout(card, Image, *, full_bleed: bool = False,
     return canvas, (x, y, x + fitted.width, y + fitted.height)
 
 
-def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
+def segment_encode_budget(count: int) -> tuple[int, int]:
+    """Bound concurrent decoders and x264 pools; each must not claim every CPU."""
+    cpus = os.cpu_count() or 1
+    if hasattr(os, "sched_getaffinity"):
+        try:
+            cpus = min(cpus, len(os.sched_getaffinity(0)))
+        except OSError:
+            pass
+    cpus = max(1, cpus)
+    workers = max(1, min(count, cpus, 4))
+    return workers, max(1, min(4, cpus // workers))
+
+
+def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0,
+                      *, threads: int | None = None) -> Path:
     """整屏证据段：深色底 + 卡片居中 → 一段静片。
 
     合成用 PIL（卡是透明底贴纸，缩到画幅内居中），编码参数和其他分段一致
@@ -4436,13 +4450,16 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
         card, Image, full_bleed=seg.full_bleed, full_canvas=seg.full_canvas)
     still = dest.with_suffix(".evidence.png")
     canvas.convert("RGB").save(still)
+    thread_args = ["-threads", str(threads)] if threads is not None else []
+    filter_args = ["-filter_threads", str(threads)] if threads is not None else []
     with stage(SEGMENT_STAGE):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            *filter_args, *thread_args,
             "-loop", "1", "-i", str(still), "-f", "lavfi",
             "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
             "-t", f"{seg.length + tail:.3f}",
             "-vf", f"fps={FPS_EXPR},setsar=1",
-            "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+            "-c:v", "libx264", *thread_args, "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
             "-shortest", str(dest))
@@ -4475,7 +4492,7 @@ def _canvas_fit() -> str:
 
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 path: list[tuple[float, int]] | None = None,
-                tail: float = 0.0) -> Path:
+                tail: float = 0.0, *, threads: int | None = None) -> Path:
     """切一段、裁成 3:4、放大到 1080×1440。
 
     `tail` 是留给**下一个接缝**的溶解料：多切这么几秒源片的自然延续，
@@ -4484,22 +4501,24 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     显式 `audio_tail="silence"` 只保留音轨正文，再按样本数给溶解尾料补零；
     视频仍取源片自然延续，其他段的音轨行为不变。
 
-    `-ss` 放在 `-i` **前面**是关键帧级的快速定位，落点可能偏几百毫秒；放在
-    后面才是精确定位。高光片段一秒都不能偏，所以用精确定位（慢一点无所谓）。
+    `-ss` 放在 `-i` 前面，用默认 accurate_seek 从前一关键帧精确解码到落点。
     """
+    thread_args = ["-threads", str(threads)] if threads is not None else []
+    filter_args = ["-filter_complex_threads", str(threads)] if threads is not None else []
     if seg.visual_image:
         # Source audio is mandatory here; never manufacture a silent placeholder.
         if not _has_audio(source):
             raise ReelError("visual_image requires real original-source audio")
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            *filter_args, *thread_args,
             "-loop", "1", "-i", seg.visual_image,
-            "-ss", f"{seg.start:.3f}", "-i", str(source),
+            *thread_args, "-ss", f"{seg.start:.3f}", "-i", str(source),
             "-t", (f"{seg.length + tail:.9f}" if seg.audio_tail == "silence"
                    else f"{seg.length + tail:.3f}"),
             "-filter_complex", f"[0:v]fps={FPS_EXPR},setsar=1[vout];"
             f"[1:a:0]{_seg_audio_chain(seg, tail) or 'anull'}[aout]",
             "-map", "[vout]", "-map", "[aout]",
-            "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+            "-c:v", "libx264", *thread_args, "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p", "-c:a", "alac" if seg.audio_tail == "silence" else "aac",
             *([] if seg.audio_tail == "silence" else ["-b:a", "160k"]),
             "-ar", AUDIO_RATE,
@@ -4795,6 +4814,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # 在这儿淡是「各自淡到黑」，接缝中间必然有一帧全黑（量过，见 SEG_FADE）。
     with stage(SEGMENT_STAGE):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            *filter_args, *thread_args,
             # `-ss` 放在 `-i` **前面**（输入寻址）。这里原来放在后面，理由写的是
             # 「放前面只能定位到关键帧，可能偏几百毫秒」——那是 ffmpeg 2.1 之前的
             # 老规矩了。现在输入寻址默认 accurate_seek：跳到前一个关键帧，再解码
@@ -4839,7 +4859,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             # crf 17/preset slow 是把画质编进一个马上被重编的文件里，白花时间。
             # medium/crf 20 在同一段上 6.2s → 4.0s，重编后的成片肉眼无差。
             # 成片那一步的参数没有动。
-            "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+            "-c:v", "libx264", *thread_args, "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p",
             # ALAC is a lossless MP4 intermediate for the explicit zero tail:
             # AAC's MDCT otherwise rings nonzero samples across that boundary.
@@ -9670,19 +9690,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 分段编码之前，也排在只出封面那条路之前：抽错人／闭眼的帧死在这一秒，
     # 不用等一两分钟的准备活干完（评审 2026-09-27 nit 3）。
     precheck_cover_face(spec, sources, primary, outdir)
-    # 网盘那份常常只有视频轨（DASH 的自适应流是分开的）。人另外传了 m4a 就在这儿
-    # 合上——没有原声的成片只剩解说，球声和观众声全没了，片子会很平。
-    audio = spec.get("source_audio")
-    if audio and not _has_audio(source):
-        merged = outdir / "source_av.mp4"
-        if not merged.is_file():
-            with stage("合原声"):
-                run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                    "-i", str(source), "-i", str(Path(audio)),
-                    "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy",
-                    "-c:a", "aac", "-b:a", "192k", "-shortest", str(merged))
-        print(f"[audio] 合上原声 {audio}")
-        source = merged
+    # 新渲染的 source_audio 已由原声审听闸拒绝：须先合成确定的源文件并重审。
+    # 封面预览不读音轨，也不应为历史 spec 合音或复用无身份绑定的 source_av.mp4。
 
     # 多源：几何必须一致，否则一套裁切窗口套在两种画幅上，剪出来一段满一段不满。
     # 这里**宁可报错也不自动缩放**——自动缩放会把「素材选错了」变成一个看不见的
@@ -9895,20 +9904,22 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     parts: list[Path] = [build_cover(sources, primary, spec,
                                  outdir / "part_cover.mp4", source_w,
                                  cover_secs, tail=SEG_FADE)]
+    workers, segment_threads = segment_encode_budget(len(segments))
     def _encode_one(item):
         index, seg = item
         dest = outdir / f"part_{index:02d}.mp4"
         tail = SEG_FADE if (outro_enabled or index < len(segments) - 1) else 0.0
         if seg.image:
-            return index, cut_still_segment(seg, dest, tail=tail)
+            return index, cut_still_segment(seg, dest, tail=tail, threads=segment_threads)
         return index, cut_segment(sources[seg.source], seg, dest,
-                                  source_w, tracks.get(index), tail=tail)
+                                  source_w, tracks.get(index), tail=tail,
+                                  threads=segment_threads)
 
     # **分段编码并行**：各段独立、各写各的文件、`-ss` 输入寻址后互不干扰。
     # 线程池够用——ffmpeg 是独立进程，`subprocess.run` 会放掉 GIL，瓶颈在
     # 每个 ffmpeg 进程自己的 CPU，不在这条 Python 线程上。worker 数跟着核走，
     # 但**至少 1**：单核机器或只有一段时退回串行，别为并行而并行。
-    workers = max(1, min(len(segments), os.cpu_count() or 2))
+    print(f"[分段编码] {workers} 个并行任务，每个解码/滤镜/编码池 {segment_threads} 线程")
     # 这一层记**墙钟**；每段那一行（SEGMENT_STAGE）是几个 worker 的累加
     with stage("分段编码"):
         if workers > 1 and len(segments) > 1:

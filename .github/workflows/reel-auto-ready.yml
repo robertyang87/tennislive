@@ -28,6 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # Reruns must see receipts committed after the triggering event.
+          ref: main
           fetch-depth: 1
           filter: blob:none
           sparse-checkout: |
@@ -101,7 +103,6 @@ jobs:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
-          : > /tmp/reel-ready
           shopt -s nullglob
           # 备料重跑整班的墙钟预算（秒）：每份 timeout 120 只包住一份，同一班五六份一起到期、flashscore
           # 挂住不回时累计能冲过 job 的 15 分钟——落库那步不跑，tries／last_at 不涨，下一班原样重演，
@@ -228,7 +229,7 @@ jobs:
             python tools/promote_reel_draft.py --draft "$DRAFT" --write \
               || { echo "::warning::$SLUG promote_reel_draft 失败，这一份跳过"; continue; }
             if [ -f "specs/reels/$SLUG.json" ] && [ ! -f "$DRAFT" ]; then
-              echo "$SLUG" >> /tmp/reel-ready
+              python tools/reel_dispatch_outbox.py enqueue-ready --slug "$SLUG"
             fi
           done
 
@@ -238,7 +239,8 @@ jobs:
           git config user.email "noreply@anthropic.com"
           # retry_feed_blocks 先写 <slug>.draft.json.tmp 再换名：被掐在两步之间会留下它，别提交进去
           rm -f specs/reels/pending/*.tmp
-          git add specs/reels assets/reel
+          mkdir -p data/reel-dispatch-outbox
+          git add specs/reels assets/reel data/reel-dispatch-outbox
           if git diff --cached --quiet; then
             echo "没有新证据/正式 spec"
             exit 0
@@ -255,12 +257,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          while read -r SLUG; do
-            [ -n "$SLUG" ] || continue
-            gh workflow run match-reel.yml --ref main \
-              -f mode=render -f slug="$SLUG" -f received_at="$(date -u +%FT%TZ)"
-            echo "[dispatch] render $SLUG"
-          done < /tmp/reel-ready
+          # Durable intents survive after promotion deleted the draft. Every tick
+          # drains them, even if this tick promoted nothing. API failures stay pending.
+          python tools/reel_dispatch_outbox.py drain-ready
 
       # schedule 会被 GitHub 丢弃（详见 tools/nudge_stale_ticks.sh 顶注），
       # 每一班顺手叫醒别的挨饿班次。⚠️ orchestrate 要带 apply=true——

@@ -360,6 +360,9 @@ def test_自动销过账的空档subs和verify日志不再喊没销账(monkeypat
 
 def _fake_faster_whisper(monkeypatch, words: list[tuple[float, float, str]]) -> None:
     """一个假的 faster_whisper：转写给定的词，VAD 一段人声都没有。"""
+    # 下载在这组判定测试里是空路径；音频裁剪也属于同一个媒体替身。
+    # 真正的裁剪、上下文与源时间轴由 test_interview_asr_window 覆盖。
+    monkeypatch.setattr(clip.subprocess, "run", lambda *a, **k: None)
     word_objs = [types.SimpleNamespace(start=a, end=b, word=w) for a, b, w in words]
 
     class Model:

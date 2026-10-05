@@ -272,6 +272,16 @@ jobs:
             ~/.cache/apt-lists
           key: ${{ steps.apt_cache.outputs.cache-primary-key }}
 
+      # 文本与语音参数由 tts_one 再按内容核对；旁白没变就无需再次访问 TTS。
+      # 语音实现变化隔离旧缓存；相同输入重跑命中主键，不重复保存整份音频。
+      - name: 缓存旁白 TTS
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive-tts
+          key: explainer-tts-v1-${{ inputs.slug || 'hawkeye' }}-${{ hashFiles('src/tennislive/video/tts.py', 'src/tennislive/video/azure_tts.py') }}-${{ hashFiles('src/tennislive/video/explainer.py', 'src/tennislive/video/pronounce.py', 'src/tennislive/render/tournament_story.py') }}-${{ inputs.voice }}-${{ inputs.rate }}
+          restore-keys: |
+            explainer-tts-v1-${{ inputs.slug || 'hawkeye' }}-${{ hashFiles('src/tennislive/video/tts.py', 'src/tennislive/video/azure_tts.py') }}-
+
       - name: 生成解说视频
         id: gen
         run: |
@@ -312,6 +322,8 @@ jobs:
       - name: 上传成片 artifact
         uses: actions/upload-artifact@v4
         with:
+          # mp4 / JPEG 已压缩；跳过 ZIP 再压缩，文件内容和质检不变。
+          compression-level: 0
           name: explainer-${{ github.run_number }}
           path: ${{ steps.gen.outputs.outdir }}
           retention-days: 14
