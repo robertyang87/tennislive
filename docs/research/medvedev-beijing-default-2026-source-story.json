@@ -1,0 +1,122 @@
+{
+  "slug": "medvedev-beijing-default-2026",
+  "revision": "source-evidence / dark content hierarchy",
+  "user_requests": [
+    "原始图片或视频印证内容和规则",
+    "字卡内容和样式更有故事",
+    "统一视频深色背景",
+    "内容字号区别于封面",
+    "3:4铺满画布、保留logo与中英文规则名",
+    "内容页不要左下角引用小字",
+    "字体沿用原格式",
+    "克制、精美、优雅的杂志感，去掉AI口号",
+    "清理TennisTV/WTA等第三方平台标识",
+    "左上副标题始终不变",
+    "参照24冠23城右侧竖线字卡；最新要求说明放视频右上角",
+    "多智能体协同并行快速制作"
+  ],
+  "narrative": "本场分后击球 → 德约2020旧案 → 直接失格与常规阶梯 → 纳尔班迪安和沙波瓦洛夫 → 加藤女双失格及混双夺冠 → 卢布列夫完整官方回合、分后交涉和处罚申诉 → 本案未确认后果",
+  "official_video": [
+    {
+      "source": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
+      "range_seconds": [
+        349,
+        369
+      ],
+      "coverage": "最后一分、分后击球、剪辑后现场及握手；未包含完整监督讨论",
+      "presentation": "3:4居中裁切，另有保留全幅记分板的原片证据照片"
+    },
+    {
+      "source": "https://x.com/TennisTV/status/1763593166693834981",
+      "range_seconds": [
+        0,
+        30
+      ],
+      "coverage": "开头击球前发球动作、完整随后回合、分后对司线员交涉、警告解说与等待；不声称涵盖监督处理或申诉",
+      "presentation": "保留原始方形整幅和记分板，仅局部处理平台固定标识；深蓝品牌及字幕区域填满3:4画布，说明卡放视频右上角，保留左上品牌，真实中英字幕留在下方。"
+    }
+  ],
+  "historical_photos": [
+    "Seth Wenig/AP：德约查看受击线审，2020.09.06",
+    "Miguel Medina/AFP：纳尔班迪安查看腿伤线审，2012.06.17",
+    "Chris Wattie/Reuters：Gabas主裁冰敷左眼，2017.02.05",
+    "Miyu Kato本人X：与涉事球童赛后合影，2023.06.09，不冒充六月四日事故",
+    "Julian Finney/Getty、WTA官方：加藤/普茨混双夺冠，2023.06.08"
+  ],
+  "rules": {
+    "source": "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf?download=1",
+    "source_sha256": "1536d079ca0963645d399151ea499697253a93f0d13ac56f626816690f7b3232",
+    "printed_pages": [
+      251,
+      252,
+      256,
+      260
+    ],
+    "display": "九幅原文短引，总25英文词；不重打原文、不展示整页。显示时CSS反相及screen混合，白底变为深蓝底的浅字证据，原始PNG资产未更改。中文为解释。",
+    "version_boundary": "2020美网按当时大满贯规则；本场北京使用ATP规则。历史案例不追溯套用2026规定。"
+  },
+  "visual": {
+    "canvas": "1080x1440 / 3:4",
+    "background": "深蓝，禁止大幅白底",
+    "content_headline_px": [
+      56
+    ],
+    "focus_px": 28,
+    "rule_meaning_px": 30,
+    "source_px": null,
+    "cover": "保持独立大标题、原始左上logo、失格 Default · 滥用球 Ball Abuse",
+    "source_display": "不显示左下引用小字；可核验的来源及摄影署名完整保留在credits和研究记录，赛事/年份/规则编号保留",
+    "font": "与原模板完全相同：标题/品牌TL Display SC 400；正文TL Sans SC；数字TL Score；台头字号38与27、字重400与700；不使用800模拟加粗。原文图片中的英文字体来自规则PDF，不重打。",
+    "editorial_revision": "取消亮绿第二行、巨大装饰年份、粗体重点、白底证据板和左下引用；具体新闻叙述替代口号，以完整实拍和细分隔线组织信息，深蓝画布留出字幕安全区。",
+    "persistent_topic": "中网德梅之战 · 失格规则与历史",
+    "native_annotation": {
+      "position": "top-right",
+      "line_side": "right",
+      "phases": [
+        {
+          "start": 0,
+          "end": 9,
+          "title": "2024迪拜半决赛",
+          "detail": "卢布列夫 vs 布勃利克"
+        },
+        {
+          "start": 9,
+          "end": 21.5,
+          "title": "2024迪拜半决赛",
+          "detail": "分后与司线员交涉"
+        },
+        {
+          "start": 21.5,
+          "end": 30,
+          "title": "2024迪拜半决赛",
+          "detail": "随后被判失格"
+        }
+      ]
+    },
+    "platform_marks": {
+      "beijing_source_bbox": [
+        1572,
+        36,
+        296,
+        84
+      ],
+      "rublev_source_bbox": [
+        24,
+        22,
+        294,
+        84
+      ],
+      "method": "FFmpeg视频流局部delogo，仅平台固定标识；北京证据图从处理后视频抽帧，不改原始研究素材。",
+      "guard": "不得遮记分板、人物、关键动作；原始来源仍在credits。",
+      "evidence": "assets/explainer/medvedev-beijing-default-2026/platform-logo-processing.json; platform-logo-bounds.json"
+    }
+  },
+  "limits": [
+    "加藤六月四日事故原始官方影像未取得，内部记录缺口；观众旁白只讲事实和准确标注的赛后照片",
+    "照片呈现事件后果或人物反应，不能证明完整球路或意图",
+    "观众诊断、梅德韦杰夫实际罚款及是否进一步停赛未确认",
+    "字幕为多模型ASR交叉核验，未声称人工听审"
+  ],
+  "asset_records": "assets/explainer/medvedev-beijing-default-2026/credits.json; rule-excerpts-manifest.json; rublev-first30-review.json; rublev-release-proof.json",
+  "film_validation": "docs/research/medvedev-beijing-default-2026-qc.json，必须对新成片重新质检后方可恢复自动发布"
+}
