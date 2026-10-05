@@ -1,0 +1,266 @@
+{
+  "slug": "sun-gauff-led-replay-story-2026",
+  "_column": "网球有故事",
+  "_note": "用户点名只讲LED重打一分事件，比赛剧情略过；遗憾与未来期待，明确赛事方责任。规则结构天然需图表，默认match-reel多源剪辑中配原生规则/比分证据图；不用其他回合冒充事故。",
+  "sources": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-Wg6m85wS3Ps/Wg6m85wS3Ps.mp4",
+    "rome": "https://x.com/TennisChannel/status/1921973328903860370"
+  },
+  "source_fallbacks": {
+    "rome": "https://github.com/robertyang87/tennislive/releases/download/source-1921973159768559616/1921973159768559616.mp4"
+  },
+  "primary": "main",
+  "tts_backend": "edge",
+  "track": false,
+  "outro": true,
+  "mixed_fps": {
+    "rome": "Tennis Channel官方原片实测30000/1001fps，主源25fps；所选裁判说明为静态人物机位，统一25fps，不加速原声。"
+  },
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "孙心然",
+    "hook": "这一分被判重打\n孙心然留下遗憾",
+    "hook_accent": "被判重打",
+    "narration": "这一分被判重打，孙心然留下遗憾。",
+    "topic": "中网广告牌干扰 · 为什么重打",
+    "portrait": {
+      "image": "assets/reel/sun-gauff-led-replay-story-2026/portrait.jpg",
+      "fit": "cover",
+      "focus": 0.42,
+      "focus_y": 0.34,
+      "zoom": 1.0,
+      "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/05/eed1c2b0-c2c7-4aeb-83bb-a5bd478e622a/GettyImages-2298703335.jpg",
+      "_portrait_why": "WTA官方photo4587027、本场2026-10-05第三轮孙心然对高芙，2555x1703，IPTC明确对阵/日期/轮次，Lintao Zhang/Getty，偏正面睁眼。专为本期首次采用，画面体现她的专注而不冒充落泪或事故瞬间。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "孙心然赢下的一分为什么要重打，赛事方该承担什么责任？",
+    "thesis": "外部显示干扰认定成立适用整分重打；WTA另明确禁止球员准备发球后广告切换，赛事保障责任不能消失。孙本人对错失机会的遗憾及未来的信心分别呈现，不虚构一分决定整场的因果。",
+    "chapters": [
+      "01\n这一分为何重打",
+      "02\n旧例如何判罚",
+      "03\n赛事方该负责"
+    ],
+    "beats": [
+      "5-4高芙发球15平，孙原得分被取消，重打后高芙保发",
+      "外部妨碍整分重打与故意妨碍判丢分分清，解释回看程序边界",
+      "2025罗马灯光重打与昨日中网LED复核同类案例",
+      "广告切换明文限制与赛事调查/整改责任",
+      "尊重孙的赛后解释，遗憾后的努力及高芙真实期待"
+    ],
+    "human_context": {
+      "angle": "球员已经为那一分付出努力，规则重置分数不自动重置比赛感觉；16岁新人的机会与未来同样值得看见。",
+      "facts": [
+        "WTA确认侧屏在回合中闪动，原本15-30的一分被重打",
+        "孙官方咪咕采访把落泪说成机会未能把握，期待下一次吸取经验",
+        "高芙赛后期待未来多次交手"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4587000/gauff-pulls-away-late-to-defeat-rising-sun-in-beijing",
+        "https://photoresources.wtatennis.com/wta/document/2026/08/10/f7e04e05-20c2-4f22-979c-3bbfdb3aa778/2026-WTA-Rulebook-7-27-2026-.pdf",
+        "https://weibo.com/2/detail/5350828631916743",
+        "https://weibo.com/2/detail/5350824080314504"
+      ]
+    }
+  },
+  "push": {
+    "auto": false,
+    "summary": "孙心然这一分为何重打",
+    "lead": "首盘5比4领先，高芙发球局15平。孙心然原本赢下的一分，因侧边LED广告板闪烁被判重打。为什么是重打，为什么球打完还能申请回看，历史上又怎样判？WTA规则还写着：球员准备发球后，广告不得切换。重打的依据要讲清，赛事方的保障责任也该追问。遗憾留下了，孙心然自己的赛后表态和高芙的期待，让我们继续等她的下一次。",
+    "_no_auto_why": "分支完成渲染与质检后按正常发布链显式推，避免分支自动发送。"
+  },
+  "_facts": [
+    {
+      "url": "https://www.wtatennis.com/news/4587000/gauff-pulls-away-late-to-defeat-rising-sun-in-beijing",
+      "why": "本场官方事件及比分链；首盘孙5-4，高芙发球，15-30取消，连赢三分保发。高芙赛后期待。"
+    },
+    {
+      "url": "https://photoresources.wtatennis.com/wta/document/2026/08/10/f7e04e05-20c2-4f22-979c-3bbfdb3aa778/2026-WTA-Rulebook-7-27-2026-.pdf",
+      "why": "现行2026-07-27版；VII.H.2b/3，XVIII.A.9.c.iii，XVIII.A.53，ITF23/26。"
+    },
+    {
+      "url": "https://www.reuters.com/sports/tennis/djokovic-rallies-past-zverev-reach-china-open-semi-finals-2026-10-04/",
+      "why": "同届前一天LED同类事件。"
+    },
+    {
+      "url": "https://tennisuptodate.com/wta/video-mirra-andreeva-tears-up-over-controversial-umpire-call-in-rome-victory",
+      "why": "2025罗马灯光突然开启，外部妨碍重打，安德列娃最终胜。"
+    },
+    {
+      "url": "https://www.atptour.com/en/news/wimbledon-video-review-announcement-march-2026",
+      "why": "证明有VR允许分结束后立即核妨碍，不能冒充中网协议。"
+    },
+    {
+      "url": "https://weibo.com/2/detail/5350828631916743",
+      "why": "咪咕体育官方本人对落泪与未来的解释；本环境视频地区403，用明确旁白转述。"
+    }
+  ],
+  "_editing_why": "用户要求比赛简单略过，本片只围绕LED事件。规则是天然图表题材，比分/广告切换/判罚比较以自制深蓝图卡呈现；历史主裁与当场高芙结尾用可核官方原声。由头画面仅真实本场人物，事件精确叙述通过官方事实和diagram，绝不套别的回合。",
+  "_key_point_coverage": {
+    "cancelled_point": "已查WTA425s/362s两个版本及WTA X/咪咕，未取到完整原分申诉序列，用比分重置证据图陈述；缺口只记内部。",
+    "review": "WTA/TennisNow互证成功VR，本场主裁原话未获证，旁白转述不捏造引语。",
+    "rome": "官方TennisChannel26.50–34.00完整主裁三句；前14秒循环回放与不确定英文不选。",
+    "future": "本场WTA425s高芙未来交手原声；孙本人中文文字由官方采访逐字转述。"
+  },
+  "segments": [
+    {
+      "title_card": "比分可以重置\n遗憾留在这一分",
+      "kicker": "今晚的疑问",
+      "seconds": 10.732,
+      "narration": "十月五号晚上，中网第三轮。孙心然有一分原本已经赢了，最后却要重打。为什么？赛事方又该负责什么？"
+    },
+    {
+      "image": "assets/reel/sun-gauff-led-replay-story-2026/score-before.jpg",
+      "seconds": 11.98,
+      "narration": "当时孙心然首盘五比四领先，高芙发球，小分十五平。孙心然打出好球，原本会让高芙变成十五比三十。注意，这还不是盘点。",
+      "_why": "原生深蓝信息图，主标题与字幕分区；事实按研究档核，不伪造赛场画面。"
+    },
+    {
+      "image": "assets/reel/sun-gauff-led-replay-story-2026/score-replay.jpg",
+      "seconds": 14.86,
+      "narration": "高芙提出场边广告屏闪烁，视频回看支持这次申诉。这一分被取消，回到十五平。重打后高芙赢分，随后保发。孙心然最终五比七、一比六输掉比赛。",
+      "_why": "原生深蓝信息图，主标题与字幕分区；事实按研究档核，不伪造赛场画面。"
+    },
+    {
+      "title_card": "外部干扰成立\n整分重新开始",
+      "kicker": "01 为什么重打",
+      "seconds": 9.58,
+      "narration": "球员无法控制的外部干扰，WTA列为重打情形。裁判认定成立，这一分从头来，连发球也回到一发。"
+    },
+    {
+      "image": "assets/reel/sun-gauff-led-replay-story-2026/rulings.jpg",
+      "seconds": 13.012,
+      "narration": "这不是判高芙直接得分。对手故意造成妨碍，才可能判对手丢分。外部干扰重打；不构成妨碍，原来的得分有效。判罚结果要分清。",
+      "_why": "原生深蓝信息图，主标题与字幕分区；事实按研究档核，不伪造赛场画面。"
+    },
+    {
+      "title_card": "打完再申请\n就一定违规吗？",
+      "kicker": "回看的边界",
+      "seconds": 16.876,
+      "narration": "很多人问：高芙为什么打完才申请？视频回看中，有分结束后立即审查妨碍的场景。温网今年就明确允许。具体到中网，仍要看本赛事的程序，不能只凭这一点认定违规。"
+    },
+    {
+      "title_card": "突然亮起的灯\n也曾让好球重打",
+      "kicker": "02 罗马旧例",
+      "seconds": 11.068,
+      "narration": "二零二五年罗马，安德列娃对陶森。球场灯在回合中突然开启，安德列娃的制胜球，也被判重打。听当时主裁怎么说。"
+    },
+    {
+      "source": "rome",
+      "start": 26.5,
+      "end": 34.0,
+      "fit": "crop",
+      "cx": 0.5,
+      "track": false,
+      "bed": "high",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "point_end_ok": "历史事件主裁说明，争议回合此前已落定；保留三句完整裁判话语，不拿循环回放凑长度。",
+      "crosses_cut": "现场主裁说明与球员反应属于同一争议事件，已逐帧核。",
+      "_ending_payoff_required": false,
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 1.34,
+          "text": "The lights were turned on\n灯打开了"
+        },
+        {
+          "at": 1.34,
+          "end": 3.0,
+          "text": "before Andreeva hit the ball\n在安德列娃击球之前"
+        },
+        {
+          "at": 3.0,
+          "end": 5.5,
+          "text": "That means there was a hindrance\n这意味着出现了干扰"
+        },
+        {
+          "at": 5.5,
+          "end": 7.32,
+          "text": "We will replay the point\n这一分需要重打"
+        }
+      ],
+      "audio_tail": "silence",
+      "_audio_tail_why": "主裁末句33.82结束，额外0.18秒溶解尾料补零，不纳入后续未选英文。"
+    },
+    {
+      "image": "assets/reel/sun-gauff-led-replay-story-2026/history.jpg",
+      "seconds": 15.316,
+      "narration": "安德列娃当时也争论、落泪，但后来赢下了比赛。而就在昨天的中网，兹维列夫对德约，也因LED广告变化成功申请回看、重打。这类插曲，顶尖球员同样会遇到。",
+      "_why": "原生深蓝信息图，主标题与字幕分区；事实按研究档核，不伪造赛场画面。"
+    },
+    {
+      "title_card": "准备发球之后\n广告不得切换",
+      "kicker": "03 赛事方的责任",
+      "seconds": 11.692,
+      "narration": "主办方需要负责吗？需要。WTA的赛事标准直接写着：球员准备发球后，广告不得变化。这是赛事方应遵守的明确要求。"
+    },
+    {
+      "image": "assets/reel/sun-gauff-led-replay-story-2026/advertising.jpg",
+      "seconds": 11.428,
+      "narration": "侧边广告可以在两分之间换；底线后面的广告，只能在一局结束后换。两种位置都一样，球员准备发球以后，必须保持稳定。",
+      "_why": "原生深蓝信息图，主标题与字幕分区；事实按研究档核，不伪造赛场画面。"
+    },
+    {
+      "image": "assets/reel/sun-gauff-led-replay-story-2026/responsibility.jpg",
+      "seconds": 13.18,
+      "narration": "重打一分，是裁判处理已经发生的干扰。保证广告系统稳定，是赛事运行的责任。赛事方应说明原因、排除问题，并解释怎样避免再次发生。",
+      "_why": "原生深蓝信息图，主标题与字幕分区；事实按研究档核，不伪造赛场画面。"
+    },
+    {
+      "title_card": "规则也约束赛事方\n调查整改与处罚",
+      "kicker": "责任不能止于重打",
+      "seconds": 12.532,
+      "narration": "WTA规则对赛事违规设有调查、整改和处罚，包括警告、罚款。但本场是否处罚，目前不能下结论，也没有据此整场重新比赛的依据。"
+    },
+    {
+      "image": "assets/reel/sun-gauff-led-replay-story-2026/sun-words.jpg",
+      "seconds": 16.252,
+      "narration": "我们会为这一分遗憾，也要听孙心然自己的解释。她赛后说，那一局有机会，却因为自己的原因没能拿下。看着机会流失，情绪有些崩溃。她也相信，吸取经验，下一次会更好。",
+      "_why": "原生深蓝信息图，主标题与字幕分区；事实按研究档核，不伪造赛场画面。"
+    },
+    {
+      "title_card": "她值得更多期待\n高芙也在等下一次",
+      "kicker": "对手的评价",
+      "seconds": 4.924,
+      "narration": "高芙赛后肯定了她的成熟，也期待未来再次交手。"
+    },
+    {
+      "source": "main",
+      "start": 346.04,
+      "end": 348.96,
+      "fit": "crop",
+      "cx": 0.5,
+      "track": false,
+      "bed": "high",
+      "narration": "",
+      "_quote_kind": "interview",
+      "point_end_ok": "赛后场上采访完整未来交手一句，不剪比赛回合。",
+      "crosses_cut": "同一采访连续镜头。",
+      "_ending_payoff_required": false,
+      "quote": [
+        {
+          "at": 0.04,
+          "end": 1.38,
+          "text": "So I'm looking forward\n所以我很期待"
+        },
+        {
+          "at": 1.38,
+          "end": 2.84,
+          "text": "to the future matchups we have.\n未来与她再次交手"
+        }
+      ],
+      "audio_tail": "silence",
+      "_audio_tail_why": "完整期待句截止348.88；未采用349.10开始的主持人下一句，额外0.18秒溶解尾料补零。"
+    },
+    {
+      "title_card": "遗憾留在今晚\n期待下一次见面",
+      "kicker": "把目光放远",
+      "seconds": 14.572,
+      "narration": "比分可以退回十五平，比赛的感觉未必能一起退回去。我们期待赛场更可靠，也期待孙心然在下一次机会来临时，把下一次机会握住。你最期待看到她哪一步成长？"
+    }
+  ],
+  "_tts_backend_why": "本片情绪由真实采访与事实叙述承担，无Azure情绪样式；明确采用edge云见音色，本地同后端量时长并核词界，避免两种合成后端的窗口不一致。"
+}
