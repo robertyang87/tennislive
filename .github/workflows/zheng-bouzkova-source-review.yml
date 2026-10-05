@@ -1,0 +1,32 @@
+name: zheng-bouzkova-source-review
+on:
+  push:
+    branches: [codex/zheng-bouzkova-beijing-2026-r3]
+    paths: [.github/workflows/zheng-bouzkova-source-review.yml]
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-zheng-bouzkova-beijing-2026-r3-38851c8cf3e7f309
+          fail-on-cache-miss: true
+      - name: Export official source for frame and original-audio verification
+        run: |
+          mkdir review
+          python - <<'PYCODE'
+          import pathlib,shutil,hashlib,json
+          p=pathlib.Path.home()/'.cache/tennislive-sources/b79514707c1b72f0.mp4'
+          assert p.stat().st_size > 1000000
+          shutil.copyfile(p,'review/source.mp4')
+          pathlib.Path('review/identity.json').write_text(json.dumps({'url':'https://www.youtube.com/watch?v=3Y8VqlPjzJ8','sha256':hashlib.sha256(p.read_bytes()).hexdigest()}))
+          PYCODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zheng-bouzkova-official-source-review
+          path: review/
+          retention-days: 1
