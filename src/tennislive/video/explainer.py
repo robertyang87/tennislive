@@ -11840,7 +11840,7 @@ CHIP_NUMERALS = tuple(chr(0x2460 + i) for i in range(20))
 
 def _slide_html(
     index: int, segment: ExplainerSegment, *, theme: str = "dark", topic: str = "",
-    column: str = DEFAULT_COLUMN,
+    column: str = DEFAULT_COLUMN, height: int = H,
 ) -> str:
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
@@ -12037,9 +12037,9 @@ def _slide_html(
 
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{css}
 *{{margin:0;padding:0;box-sizing:border-box;}}
-html,body{{width:{W}px;height:{H}px;}}
+html,body{{width:{W}px;height:{height}px;}}
 body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
-.slide{{position:relative;width:{W}px;height:{H}px;overflow:hidden;color:{P.FOREGROUND};
+.slide{{position:relative;width:{W}px;height:{height}px;overflow:hidden;color:{P.FOREGROUND};
  background:{P.BACKGROUND};}}
 .hero{{position:absolute;inset:0;}}
 .hero.diagram{{background:{P.BACKGROUND};}}
@@ -12052,7 +12052,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
    a 900-unit viewBox came out around 17 real pixels — legible on a monitor,
    not on a phone held at arm's length. Fill the card instead, and start
    higher so the extra height still clears the caption block. */
-.diagram-wrap{{position:absolute;left:0;right:0;top:210px;display:flex;justify-content:center;}}
+.diagram-wrap{{position:absolute;left:0;right:0;top:{210 + (height - H) * 2 // 3}px;display:flex;justify-content:center;}}
 .diagram-wrap svg{{width:920px;height:auto;}}
 .scrim{{position:absolute;inset:0;background:linear-gradient(180deg,
  {ink(.55)} 0%,{ink(.10)} 34%,{ink(.20)} 60%,{ink(.94)} 100%);}}
@@ -12274,6 +12274,7 @@ def render_explainer_slides(
     theme: str = "dark",
     topic: str = "",
     column: str = DEFAULT_COLUMN,
+    height: int = H,
 ) -> list[Path]:
     """Render one image-first 3:4 card per beat via a headless Chromium page."""
     from playwright.sync_api import sync_playwright
@@ -12296,12 +12297,12 @@ def render_explainer_slides(
         try:
             for index, seg in enumerate(segments):
                 page = browser.new_page(
-                    viewport={"width": W, "height": H}, device_scale_factor=2
+                    viewport={"width": W, "height": height}, device_scale_factor=2
                 )
                 try:
                     page.set_content(
                         _slide_html(index, seg, theme=theme, topic=topic,
-                                    column=column)
+                                    column=column, height=height)
                     )
                     page.wait_for_function(
                         "document.fonts.status === 'loaded'", timeout=15000
@@ -12332,7 +12333,7 @@ def render_explainer_slides(
                     out = outdir / f"slide_{index:02d}.jpg"
                     page.screenshot(
                         path=str(out), type="jpeg", quality=_SLIDE_JPEG_QUALITY,
-                        clip={"x": 0, "y": 0, "width": W, "height": H},
+                        clip={"x": 0, "y": 0, "width": W, "height": height},
                     )
                     paths.append(out)
                 finally:
@@ -13691,6 +13692,25 @@ def _filter_path(path: Path) -> str:
     return str(path).replace("\\", "\\\\").replace(":", r"\:").replace("'", r"\'")
 
 
+def _intro_filter(opening: dict, canvas_h: int) -> str:
+    """Prepare the declared portrait excerpt and its reviewed source subtitles."""
+    filters = []
+    if opening.get("full_bleed"):
+        filters += [
+            f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=increase",
+            f"crop={VIDEO_W}:{canvas_h}:(iw-ow)/2:(ih-oh)/2",
+        ]
+    subtitles = opening.get("intro_subtitles")
+    if subtitles:
+        path = _REPO / subtitles
+        if not path.is_file():
+            raise ExplainerVideoError(f"片头审核字幕找不到：{path}")
+        filters.append(
+            f"subtitles='{_filter_path(path)}':"
+            f"fontsdir='{_filter_path(_REPO / 'assets/fonts')}'")
+    return ",".join(filters)
+
+
 # Delivery, not just words. The old read was correct and flat — too slow to
 # hold a thumb, and even-toned in a way that made every beat sound like the
 # last. Yunjian is the one Chinese voice Microsoft tags "Passion" (their
@@ -13834,6 +13854,7 @@ def assemble_explainer_video(
     intro_cx: float = 0.5,
     outro: Path | None = None,
     canvas_h: int = VIDEO_H,
+    full_bleed: bool = False,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
     """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat.
@@ -14016,8 +14037,9 @@ def assemble_explainer_video(
     # 下面的 scale+pad 对卡片是个空操作（卡片已经等于目标画布），字幕的
     # `margin_v` 也要跟着新的画布高度重算——`card_top` 会变成 0，字幕锚点
     # 直接贴着画布底部，而不是 9:16 画布里那圈 240px 的留白之上。
-    card_top = (canvas_h - CARD_H) // 2
-    margin_v = card_top + CARD_H - 156
+    card_height = canvas_h if full_bleed else CARD_H
+    card_top = (canvas_h - card_height) // 2
+    margin_v = card_top + card_height - 156
     for i in range(n):
         chain = (
             f"[{2 * i + offset}:v]scale={VIDEO_W}:{canvas_h}:"
@@ -14072,10 +14094,15 @@ def assemble_explainer_video(
         # 和每一屏的卡同一个尺寸，所以 pad 出来的黑边宽度也一样。链子写成
         # 两份必分叉，所以这儿是照抄上面那一段的形状，改动只有「不加字幕」。
         vi = 2 * n + offset
-        filters.append(
-            f"[{vi}:v]scale={VIDEO_W}:{canvas_h}:"
-            f"force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
+        outro_frame = (
+            f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=increase:flags={_SCALE_FLAGS},"
+            f"crop={VIDEO_W}:{canvas_h}:(iw-ow)/2:(ih-oh)/2,"
+            if full_bleed else
+            f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
             f"pad={VIDEO_W}:{canvas_h}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
+        )
+        filters.append(
+            f"[{vi}:v]{outro_frame}"
             f"setsar=1,fps=30,format=yuv420p[v{n}]"
         )
         # 音轨要**重采样到和旁白同一个规格**：concat 要求各路参数一致，
@@ -14167,6 +14194,7 @@ def generate_explainer_video(
         raise ExplainerVideoError(f"开场实拍片段找不到：{intro}")
     # 配置错误在截图、TTS 和远端下载前报告，避免失败后整趟重做。
     canvas_h = canvas_height(story.slug)
+    intro_filter = _intro_filter(opening, canvas_h)
     if intro_rel or intro_url:
         from .crop_policy import require_fixed_center  # noqa: PLC0415
 
@@ -14185,7 +14213,8 @@ def generate_explainer_video(
     slides = render_explainer_slides(
         segments, outdir, theme=theme,
         topic=(_OPENINGS.get(story.slug) or {}).get("topic", ""),
-        column=explainer_column(story.slug)
+        column=explainer_column(story.slug),
+        height=canvas_h if opening.get("full_bleed") else H,
     )
     audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
     if intro_url:
@@ -14213,6 +14242,8 @@ def generate_explainer_video(
             cmd += ["-i", str(full_source)]
             if duration is not None:
                 cmd += ["-t", f"{duration:.3f}"]
+            if intro_filter:
+                cmd += ["-vf", intro_filter]
             cmd += [
                 "-c:v", "libx264", "-crf", "18", "-preset", "medium",
                 "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart",
@@ -14286,6 +14317,7 @@ def generate_explainer_video(
             intro_cx=intro_cx,
             outro=outro,
             canvas_h=canvas_h,
+            full_bleed=bool(opening.get("full_bleed")),
         )
     finally:
         if intro_tmp is not None:

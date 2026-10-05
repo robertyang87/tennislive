@@ -8,10 +8,16 @@
     "narration": "梅总击球打中观众，比赛为何直接结束？",
     "image": "assets/explainer/medvedev-beijing-default-2026/medvedev-beijing-semifinal-getty.jpg",
     "credit": "Fred Lee / Getty Images · 2026-10-05 China Open semifinal",
-    "gloss": "德约科维奇 VS 梅德韦杰夫",
-    "canvas": "3:4",
-    "cards_why": "主语是纪律规则的两条处罚路径、失格与退赛及赛果与后续处罚的区别，属于天然图表题材。事发过程已核新闻，但官方事故关键画面未取得：TennisTV本场完整回放为premium，公开X热点仅第一盘且最高576×720，美网2020官方视频下载被代理403拦截。按2026-10-04口径用原创证据卡说明缺口，不能拿第一盘其他回合冒充事故；本场实拍用于身份和坐标，不宣称其为事故瞬间。",
-    "source_audio_why": "未取得可用官方事故解说音轨。全片为自配中文旁白，不伪造英文现场解说或球员引语。"
+    "gloss": "失格 Default · 滥用球 Ball Abuse",
+    "canvas": "9:16",
+    "cards_why": "本场事故采用用户提供、YouTube oEmbed确认Tennis TV官方频道的1080p集锦，原片349–369秒保留最后一分、分后击球与失格后的离场握手，原声配中英字幕。规则的逐级处罚、直接失格及赛果与附加处罚的区别属于天然图解主题；历史官方关键视频下载受限，以有来源证据卡解释，不用无关回合冒充旧案。",
+    "source_audio_why": "片头保留Tennis TV原声，ASR逐词时间戳用于中英字幕并纠正球员姓名拼写。余下证据卡自配中文旁白；不伪造球员和裁判原话。",
+    "intro_url": "https://github.com/robertyang87/tennislive/releases/download/source-LgRD3TLoxr0/LgRD3TLoxr0.mp4",
+    "intro_cx": 0.5,
+    "full_bleed": true,
+    "intro_start": 349,
+    "intro_end": 369,
+    "intro_subtitles": "assets/explainer/medvedev-beijing-default-2026/incident-intro.ass"
   },
   "caption": {
     "hook": "10月5日中网男单半决赛，梅德韦杰夫击球打中观众，被判失格。德约以7–5、5–3的未完成比分晋级。为什么不先警告？不故意伤人就能免责吗？从2020美网德约的旧例讲起。",
@@ -47,18 +53,19 @@
       "kind": "cause",
       "label": "事发经过",
       "title": "一分已经结束\n球却飞进看台",
-      "narration": "据路透社报道，梅德韦杰夫丢掉一分后，把从场边墙体弹回的球再次击向看台，打中前排观众的眼部。这次击球发生在一分结束之后。它不再是正常争取得分的比赛动作。",
+      "narration": "看回放，这一分已经结束。他把反弹回来的球再次击向看台。报道说，球打中前排观众眼部。事故发生时，德约领先七比五、五比三，局内十五平。关键不是回合中丢掉的那分，而是分后的这次击球。",
       "image": "",
       "credit": "原创证据图 · 网球时差",
       "points": [
         "分后击球 · 打中前排观众",
-        "关键事故的官方画面未取得"
+        "事发时德约领先 7–5 5–3 15–15"
       ],
-      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">事发经过</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">回合结束</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">据现场报道整理 · 非事故复原</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">再次击球</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">球被击向看台</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">击中观众</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">比赛暂停 · 随后判失格</text></g></svg>",
+      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 620\"><g font-family=\"Noto Sans SC, sans-serif\" fill=\"#f4f7fb\"><text x=\"450\" y=\"60\" text-anchor=\"middle\" font-size=\"32\" fill=\"#bac7da\">事发经过</text><rect x=\"45\" y=\"100\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"153\" font-size=\"42\" font-weight=\"700\" fill=\"#c6f65a\">回合结束</text><text x=\"85\" y=\"201\" font-size=\"28\" fill=\"#bac7da\">Tennis TV官方回放 · 分后行为</text><rect x=\"45\" y=\"250\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"303\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">再次击球</text><text x=\"85\" y=\"351\" font-size=\"28\" fill=\"#bac7da\">球被击向看台</text><rect x=\"45\" y=\"400\" width=\"810\" height=\"130\" rx=\"16\" fill=\"#172b46\" stroke=\"#344861\"/><text x=\"85\" y=\"453\" font-size=\"42\" font-weight=\"700\" fill=\"#f4f7fb\">击中观众</text><text x=\"85\" y=\"501\" font-size=\"28\" fill=\"#bac7da\">比赛暂停 · 随后判失格</text></g></svg>",
       "question": "",
       "evidence_urls": [
         "https://www.reuters.com/sports/tennis/medvedev-disqualified-china-open-semi-after-hitting-ball-into-crowd-2026-10-05/",
-        "https://www.spaziotennis.com/news/atp-500-pechino-2026-default-medvedev-contro-djokovic-motivo-cosa-succede-scommesse/144205"
+        "https://www.spaziotennis.com/news/atp-500-pechino-2026-default-medvedev-contro-djokovic-motivo-cosa-succede-scommesse/144205",
+        "https://www.youtube.com/watch?v=LgRD3TLoxr0"
       ]
     },
     {
@@ -261,14 +268,14 @@
     "rules_version": "2026 ITF-hosted ATP full book and official Jan25 chapter verified; March31 chapter indexed but fetch403, not claimed as line-by-line checked",
     "rendered": false,
     "published": false,
-    "point_score_note": "报道提到15–15；未取得官方记分画面，成片省略局内分，不把媒体细节说成逐帧核实。"
+    "point_score_note": "Tennis TV提供的记分板已确认事发时15–15。"
   },
   "research_references": [
     {
       "url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
       "provided_by": "user",
-      "status": "reference_unviewed",
-      "note": "2026-10-05 用户提供；YouTube抓取与下载受403限制，未完成听审和逐帧核验，不据此补写事实。"
+      "status": "official_footage_downloaded_and_reviewed",
+      "note": "官方YouTube oEmbed确认为Tennis TV，原片1920×1080、389.979秒；349–369秒包含最后一分、分后击球及离场握手。原声ASR字幕保留完整句，已更正姓名拼写；眼部接触细节和诊断仍以报道和正式通告为界。"
     }
   ]
 }
