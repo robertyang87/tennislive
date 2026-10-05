@@ -1,0 +1,152 @@
+{
+  "slug": "medvedev-beijing-default-2026",
+  "checked_at": "2026-10-05",
+  "status": "pass",
+  "render_run": 37330947135,
+  "render_source_head": "b0bdd51260a15930d4727f01d969aa7ca0f7a42e",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-medvedev-beijing-default-2026/explainer.mp4",
+  "film_sha256": "13dce9189e478c6f1796a516ae4f4128244ded909e9b9b6211be372008e9a8ec",
+  "film_bytes": 13084485,
+  "duration_seconds": 250.9,
+  "width": 1080,
+  "height": 1920,
+  "fps": "30/1",
+  "av_duration_difference": 0.086,
+  "episode_content_sha256": "2d948b00894b961e5e345e9c092b796014468dbfcbcc90278bfcdb6e979f728c",
+  "full_bleed_reason": "User explicitly requested 用铺满的竖屏 on 2026-10-05; this episode uses native 9:16 cards and portrait footage/outro without letterboxing.",
+  "source": {
+    "official_channel": "Tennis TV",
+    "identity_proof": "https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=LgRD3TLoxr0&format=json",
+    "reference_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
+    "source_range_seconds": [
+      349,
+      369
+    ],
+    "source_dimensions": [
+      1920,
+      1080
+    ],
+    "coverage": "Final point, subsequent swat into stands, edited aftermath and handshake. Official highlights omit full referee deliberation and injury assessment. Portrait crop does not preserve entire wide broadcast frame.",
+    "score_verified": "Djokovic 7–5 5–3; point score 15–15 at incident",
+    "original_audio_review": "faster-whisper small.en independently cross-checked with base.en and tiny.en; names corrected and leading Well restored. No claim of human listening.",
+    "subtitle_file": "assets/explainer/medvedev-beijing-default-2026/incident-intro.ass"
+  },
+  "visual_checks": {
+    "frames_reviewed_seconds": [
+      4,
+      8,
+      15,
+      22,
+      35,
+      52,
+      65,
+      80,
+      96,
+      112,
+      128,
+      143,
+      160,
+      180,
+      199,
+      220,
+      240,
+      248
+    ],
+    "cards": 14,
+    "logo": "Original tennis-clock ball at upper left on cover, intro and cards; branded outro retained.",
+    "cover_gloss": "失格 Default · 滥用球 Ball Abuse",
+    "layout": "Native full-screen 1080×1920 cover/cards; subtitles and outro fit portrait frame. Deep-blue rules diagrams, two-line semantic titles.",
+    "caption_correction_frame": "Final intro checked for Well, can you believe it? at 8s."
+  },
+  "audio": {
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+22%",
+    "segments": 14,
+    "mean_db": -23.8,
+    "max_db": -3.2,
+    "non_silent_windows": [
+      {
+        "start": 8,
+        "mean_db": -24.1,
+        "max_db": -7.9
+      },
+      {
+        "start": 35,
+        "mean_db": -24.0,
+        "max_db": -4.0
+      },
+      {
+        "start": 52,
+        "mean_db": -22.7,
+        "max_db": -5.9
+      },
+      {
+        "start": 65,
+        "mean_db": -23.4,
+        "max_db": -5.8
+      },
+      {
+        "start": 80,
+        "mean_db": -26.5,
+        "max_db": -6.4
+      },
+      {
+        "start": 96,
+        "mean_db": -23.6,
+        "max_db": -5.0
+      },
+      {
+        "start": 112,
+        "mean_db": -23.3,
+        "max_db": -5.3
+      },
+      {
+        "start": 128,
+        "mean_db": -23.5,
+        "max_db": -6.7
+      },
+      {
+        "start": 143,
+        "mean_db": -24.5,
+        "max_db": -7.3
+      },
+      {
+        "start": 160,
+        "mean_db": -26.6,
+        "max_db": -5.1
+      },
+      {
+        "start": 180,
+        "mean_db": -24.0,
+        "max_db": -6.1
+      },
+      {
+        "start": 199,
+        "mean_db": -26.0,
+        "max_db": -7.4
+      },
+      {
+        "start": 220,
+        "mean_db": -25.5,
+        "max_db": -8.4
+      },
+      {
+        "start": 240,
+        "mean_db": -24.3,
+        "max_db": -8.4
+      }
+    ]
+  },
+  "validation": {
+    "targeted_tests": "304 passed before caption correction; 3 episode checks repeated after correction",
+    "preflight": "17/17 pass",
+    "artifact_content": "All current-match, rules and five historical-case labels found in generated text/ASS/word timing artifacts. Release size matches render.json.",
+    "ci": "Current final branch head must pass CI before merge; workflow record provides that evidence."
+  },
+  "known_limits": [
+    "Spectator diagnosis, actual Medvedev fine and any further suspension not confirmed; no invented amounts or medical claims.",
+    "Historical incidents assessed under their contemporary rules; 2026 ATP provisions not applied retroactively.",
+    "Indexed March/April 2026 ATP revisions not fully fetched; do not claim all revisions compared."
+  ],
+  "delivery_status_reference": "data/explainer_publish_ledger/medvedev-beijing-default-2026.json; no publication claim without sent receipt"
+}

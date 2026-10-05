@@ -73,13 +73,15 @@
 
 ## 用户补充参考视频
 
-用户提供：https://www.youtube.com/watch?v=LgRD3TLoxr0 。2026-10-05 尝试网页读取与 yt-dlp；网页读取限流、下载代理 CONNECT 返回403。尚未看过或听审，不以其补写动作、裁判原话、伤情；保留为后续核验线索。
+用户提供：https://www.youtube.com/watch?v=LgRD3TLoxr0 。本地直连下载受限后，项目下载工作流取得官方1080p源片；以下记录正式采用的身份、时间窗、画幅与字幕核验。
 
 
-## 用户视频已恢复并用于新版
+## 本期采用的官方视频
 
 - 官方oEmbed：https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=LgRD3TLoxr0&format=json ，返回 Tennis TV / https://www.youtube.com/@tennistv。
 - 下载工作流37326763193成功，原片缓存：https://github.com/robertyang87/tennislive/releases/download/source-LgRD3TLoxr0/LgRD3TLoxr0.mp4 。
 - 原片1920×1080、389.979138秒、68365532字节；采用349–369秒，不含片尾二维码。
 - 用户2026-10-05后续指定铺满竖屏：新版为1080×1920固定几何居中裁切，不作横移追踪；原片记分板与观众席可在原始1080p视频复核，裁切后不能声称整幅转播画面全部保留。自有logo由解说片统一台头叠加。
 - 原声字幕与逐词转写保留在本专题资产目录；不编造现场原话。
+
+- 原声经faster-whisper small.en、base.en和tiny.en交叉转写；两次交叉结果确认句首“Well”，已补入英文字幕。方法、原始结果和源片SHA-256记录于incident-intro-transcript-reviewed.json；未声称人工听审。
