@@ -1,7 +1,7 @@
 """Current global editorial time wording and match-footage defaults."""
 import re
 
-DAYPARTS = ("夜里", "凌晨", "清晨", "早上", "上午", "中午", "下午", "傍晚", "晚上", "深夜")
+DAYPARTS = ("夜里", "凌晨", "清晨", "早上", "上午", "中午", "下午", "傍晚", "晚上", "深夜", "夜场")
 NATURAL_TIME_RULE = "全栏目使用已核实的北京时间日期和自然时段，不强制具体小时或分钟"
 
 

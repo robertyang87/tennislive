@@ -148,7 +148,13 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
         # A complete games cell spans at least half one player-row height.
         # A truncated residual cell proves the wipe crossed the games cell.
         # An intact cell needs separate exposed-background evidence below.
-        truncated_cell = cell_hi - cell_lo < band.shape[0] / 4
+        # Compare with the actual mint cell's vertical span, not the search
+        # band's expanded body height. A full 28px games cell in Beijing has
+        # a ~108px native height; the geometry scan's antialias fringe expands
+        # its band to 117px and must not turn that intact cell into a wipe.
+        cell_rows = np.flatnonzero(mint_mask(band[:, cell_lo:cell_hi]).any(axis=1))
+        cell_height = int(cell_rows[-1] - cell_rows[0] + 1) if cell_rows.size else 0
+        truncated_cell = cell_hi - cell_lo < cell_height / 4
         # Prefer the established tight edge when its background is already
         # exposed. Only inspect the wider glow transition if that evidence
         # fails; do not expand previously verified native wipe silhouettes.
@@ -165,6 +171,16 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
                 (b - g > 15) & (b - r > 20)).mean() >= .8
             if truncated_cell or exposed_blue:
                 return wipe_edge
+        # Native AV1 antialias can spread the outer border over two pixels:
+        # neither one-pixel jump spans both rows, but their measured combined
+        # change does. Use this only after the established sharp/wipe edge tests
+        # fail, so an already measured wipe silhouette cannot grow into court.
+        # Numeral strokes still do not persist through both player rows.
+        across_two = (np.abs(body[:, 2:] - body[:, :-2]).mean(axis=2) > 8).mean(axis=0)
+        soft_boundaries = [x for x in range(max(2, first), last + 1)
+                           if across_two[x - 2] >= .55]
+        if soft_boundaries:
+            return soft_boundaries[-1]
         raise RuntimeError("WTA board present but native right boundary cannot be measured")
     # 没有薄荷绿（开局还没有局分那几秒）：没有签名色撑着，
     # 越过 spec 右缘的读数不可信，照旧封顶

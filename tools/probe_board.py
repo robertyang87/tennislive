@@ -134,6 +134,17 @@ def measure(profile: str, band) -> tuple[int, int | None] | None:
         if edge is None:
             return None
         return (-1, None) if edge < 0 else (int(edge), int(edge))
+    if profile == "wta":
+        # Match the renderer: a wide animated BREAK POINT tag is not a mint
+        # games cell. Locate the actual two-row body before measuring its edge
+        # or signature anchor; the search band itself is not a score graphic.
+        geometry = mod.frame_geometry(band)
+        if geometry is None:
+            return None
+        _left, top, _right, bottom = geometry["body"]
+        hint = mod.board_edge(band[top:bottom], cap=1)
+        anchored = None if hint is None or hint <= 1 else int(hint)
+        return (int(geometry["edge"]), anchored)
     raw = mod.board_edge(band, cap=None)
     if raw is None:
         return None

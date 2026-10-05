@@ -22,3 +22,21 @@ The native games-cell wipe has a measured boundary at x=342, three pixels
 beyond the mint-threshold edge; court beyond that measured edge stays transparent.
 
 Swiatek source bytes: 109258687; SHA-256: `9ecc50946d9c77dd2ed71d6438ba95213c78b58c93aa15929ad352d5b0bc79b4`.
+
+2026-10-06 Sun–Gauff production, official WTA YouTube `Wg6m85wS3Ps`:
+`beijing-sun-gauff-232880-ad-gradient.png` is the lossless original AV1 frame
+at 232.88 seconds, cropped to origin (80,820), size 760×170. Source SHA-256:
+`79951bd5316ac8910ce6fc1200260c62492d1f791ed3690729dadeb7a6296b90`.
+It shows BREAK POINT #3, an intact 28px mint games cell, and the complete Ad
+point slot. The one-pixel border gradient did not persist through both player
+rows; the measured two-pixel gradient gives native exclusive x=436 (source
+x=516). The old geometry misclassified the intact cell as a wipe because it
+compared its width to an expanded 117px body band, removing the Ad slot at
+x=384. The regression preserves the point slot and makes every pixel at or
+beyond x=436 transparent; no fixed point-slot rectangle is introduced.
+
+`beijing-sun-gauff-231880-tag-animation.png` is the same source at 231.88s,
+cropped to origin (90,820), size 760×170. It contains the large animated
+BREAK POINT tag rather than a complete two-player body. The probe regression
+uses the renderer's frame geometry and reports no board for this animation,
+so it cannot confuse the wide mint tag with a games cell and abort the scan.
