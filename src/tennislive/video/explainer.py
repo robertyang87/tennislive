@@ -2015,6 +2015,8 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # 2026-10-05：run 37332686438，官方原声与14屏竖屏、WO和处罚阶梯经独立终检修正重验；详见 docs/research/medvedev-beijing-default-2026-qc.json。
+    "medvedev-beijing-default-2026",
     # 2026-10-01：run 36808709110 的 133.67s 成片已逐屏、字幕与音量质检；见 docs/research/atp250-medvedev-hangzhou-2026-qc.json。
     "atp250-medvedev-hangzhou-2026",
     # 2026-09-26 验过才加进来的。**第二趟**的数（第一趟 run 36249638228 抽帧看见
