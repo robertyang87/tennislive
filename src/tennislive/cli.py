@@ -851,6 +851,19 @@ def cmd_publish_pushplus(args) -> int:
             "[yellow]复制页取不到或还是旧版，本次不放该按钮；正文已整段渲染在"
             "消息里，可长按复制[/yellow]"
         )
+    # A poster player is an additional published artifact. Do not send its
+    # link while Pages still serves the previous deployment or a soft 404.
+    player = d / "watch.html"
+    if player.is_file():
+        from .render.pushmsg import _probe_page
+
+        match = re.search(r'href="([^"]+/watch\.html)"', html)
+        if match and not _probe_page(
+            match.group(1), attempts=26, delay=30,
+            expect=player.read_text(encoding="utf-8"),
+        ):
+            console.print("[red]封面播放页尚未部署完成，本次未发送[/red]")
+            return 1
     try:
         receipt = push(title, html, asset_dir=d)
     except PushPlusError as e:
