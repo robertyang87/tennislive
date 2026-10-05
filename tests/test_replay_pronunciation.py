@@ -27,6 +27,8 @@ def test_current_story_corrects_all_six_replay_occurrences_without_changing_disp
 @pytest.mark.parametrize("text", [
     "重要的比赛，重伤不是小事。", "肩负重担，仍然重视对手。",
     "负重打球。", "严重打击。", "双重打击。", "承重打孔。", "多重打击。",
+    "加重打击。", "体重打破纪录。", "看重打球的态度。", "尊重打法。",
+    "侧重打正手。", "器重打球天才。", "郑重打出承诺。", "隆重打响开幕赛。",
 ])
 def test_replay_rule_does_not_change_other_meanings_or_cross_word_boundaries(text):
     assert apply(text, only=["chong-replay"]) == text
