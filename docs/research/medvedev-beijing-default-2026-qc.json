@@ -1,19 +1,19 @@
 {
   "slug": "medvedev-beijing-default-2026",
-  "checked_at": "2026-10-05",
-  "status": "superseded",
-  "render_run": 37332686438,
-  "render_source_head": "80059350f0cc800cc942f882f70dc3f212e91870",
+  "checked_at": "2026-10-06",
+  "status": "pass",
+  "render_run": 37338109166,
+  "render_source_head": "647e7f9f94074a9d83b799a4eb339849b5e21bd9",
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-medvedev-beijing-default-2026/explainer.mp4",
-  "film_sha256": "8633f86e53b894d78b342f45c9c9d3bef6a4199d7d895934b81d9af5f95dccf3",
-  "film_bytes": 13177876,
+  "film_sha256": "76bdcaff1d7611ed4aac7b68e0c119181c3c5f2823bc03cec03c31f84eb6845e",
+  "film_bytes": 11504376,
   "duration_seconds": 254.033333,
   "width": 1080,
-  "height": 1920,
+  "height": 1440,
   "fps": "30/1",
   "av_duration_difference": 0.075333,
-  "episode_content_sha256": "ecff882c0904ee9b18624e98ac3cfd1bce43f58392ced1cc6a316f9494737597",
-  "full_bleed_reason": "User explicitly requested 用铺满的竖屏 on 2026-10-05; this episode uses native 9:16 cards and portrait footage/outro without letterboxing.",
+  "episode_content_sha256": "2361ca5dc8860be1b3a37ab06a0c08716289908788e268cb277d89454f76992d",
+  "full_bleed_reason": "User explicitly specified 3:4 and clarified 铺满画布; native 1080x1440 cards and cropped footage/outro fill that canvas without letterboxing.",
   "source": {
     "official_channel": "Tennis TV",
     "identity_proof": "https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=LgRD3TLoxr0&format=json",
@@ -33,29 +33,31 @@
   },
   "visual_checks": {
     "frames_reviewed_seconds": [
+      4,
       8,
+      15,
       22,
       35,
       52,
       65,
-      83,
-      98,
-      115,
-      130,
-      147,
-      164,
-      184,
-      203,
-      224,
-      243,
-      251.033333
+      80,
+      96,
+      112,
+      128,
+      143,
+      160,
+      180,
+      199,
+      220,
+      240,
+      248,
+      252
     ],
     "cards": 14,
     "logo": "Original tennis-clock ball at upper left on cover, intro and cards; branded outro retained.",
     "cover_gloss": "失格 Default · 滥用球 Ball Abuse",
-    "layout": "Native full-screen 1080×1920 cover/cards; subtitles and outro fit portrait frame. Deep-blue rules diagrams, two-line semantic titles.",
-    "caption_correction_frame": "Final intro checked for Well, can you believe it? at 8s.",
-    "rule_correction": "WO has no played match score; verified corrected narration/ASS and escalation SVG. Independent text reviewer confirmed no remaining blocker."
+    "layout": "Native full-screen 1080×1440 cover/cards; subtitles and outro fit portrait frame. Deep-blue rules diagrams, two-line semantic titles.",
+    "caption_correction_frame": "Final intro checked for Well, can you believe it? at 8s."
   },
   "audio": {
     "voice": "zh-CN-YunjianNeural",
@@ -86,8 +88,8 @@
       },
       {
         "start": 80,
-        "mean_db": -26.6,
-        "max_db": -6.6
+        "mean_db": -26.5,
+        "max_db": -6.5
       },
       {
         "start": 96,
@@ -106,7 +108,7 @@
       },
       {
         "start": 143,
-        "mean_db": -23.2,
+        "mean_db": -23.1,
         "max_db": -4.6
       },
       {
@@ -117,7 +119,7 @@
       {
         "start": 180,
         "mean_db": -25.2,
-        "max_db": -4.9
+        "max_db": -4.8
       },
       {
         "start": 199,
@@ -131,17 +133,18 @@
       },
       {
         "start": 240,
-        "mean_db": -25.4,
-        "max_db": -8.6
+        "mean_db": -25.3,
+        "max_db": -8.4
       }
     ]
   },
   "validation": {
-    "targeted_tests": "304 passed before caption correction; 3 episode checks repeated after correction",
+    "targeted_tests": "3 episode regression checks plus project canvas default check passed after explicit 3:4 correction",
     "preflight": "17/17 pass",
     "artifact_content": "All current-match, rules and five historical-case labels found in generated text/ASS/word timing artifacts. Release size matches render.json.",
     "ci": "Current final branch head must pass CI before merge; workflow record provides that evidence.",
-    "independent_text_qc": "fact_check agent reviewed current match, rules and five historical cases; WO/no-score explanation and penalty escalation corrected and rechecked, no remaining text blockers."
+    "independent_text_qc": "fact_check agent reviewed current match, rules and five historical cases; WO/no-score explanation and penalty escalation corrected and rechecked, no remaining text blockers.",
+    "publication_fingerprint": "QC annotates narration.json with the actual film SHA256 and canvas so this corrected render has its own publish key; prior sent ledger attempt remains intact."
   },
   "known_limits": [
     "Spectator diagnosis, actual Medvedev fine and any further suspension not confirmed; no invented amounts or medical claims.",
@@ -149,5 +152,5 @@
     "Indexed March/April 2026 ATP revisions not fully fetched; do not claim all revisions compared."
   ],
   "delivery_status_reference": "data/explainer_publish_ledger/medvedev-beijing-default-2026.json; no publication claim without sent receipt",
-  "superseded_reason": "User specified 3:4 canvas with full-bleed content; 1080x1920 render no longer approved for publishing."
+  "publish_fingerprint": "e340a97d25744bab6763cf2adbd84121ef341be8c8d24d70d7dba100447a41eb"
 }
