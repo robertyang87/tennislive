@@ -35,9 +35,19 @@ def source_slide_html(segment, *, index, height, topic, column, root: Path,
                         + img(quote['asset']) + '</div><div class="meaning">'
                         + esc(quote['meaning']).replace('\n', '<br>') + '</div></div>')
         evidence = '<div class="quotes">' + ''.join(rows) + '</div>'
+        if visual.get('photo'):
+            photo_caption = f'<figcaption>{caption}</figcaption>' if caption else ''
+            evidence = ('<div class="rule-visual">' + img(visual['photo'], 'photo')
+                        + photo_caption + '</div>' + evidence)
+            caption = ''
+        elif visual.get('graphic'):
+            from .story_rule_graphics import rule_graphic_html
+            evidence = rule_graphic_html(visual['graphic']) + evidence
     else:
         evidence = img(visual['photo'], 'photo')
     compact = 'compact' if layout == 'rule' and len(visual.get('quotes', [])) < 3 else ''
+    illustrated = 'illustrated' if layout == 'rule' and (visual.get('photo') or visual.get('graphic')) else ''
+    dense = 'dense' if layout == 'rule' and len(visual.get('quotes', [])) >= 3 else ''
     figcaption = f'<figcaption>{caption}</figcaption>' if caption else ''
     support = f'<p class="support">{takeaway}</p>' if takeaway else ''
     return f'''<!doctype html><html><head><meta charset="utf-8"><style>{font_css}
@@ -68,7 +78,16 @@ figcaption{{width:100%;font-size:28px;font-weight:400;line-height:1.5;color:#aeb
 .meaning{{font-size:34px;font-weight:400;line-height:1.65;color:#d2dde5}}
 .rule.table .original img{{height:168px;max-height:none}}
 .rule.table .meaning{{line-height:56px}}
-</style></head><body><main class="scene {esc(layout)} {esc(visual.get('variant',''))} {compact}">
+.rule.illustrated .evidence{{margin-top:0;gap:20px}}
+.rule-visual{{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}}
+.rule-visual .photo{{max-height:300px}}
+.rule.dense .rule-visual .photo{{max-height:260px}}
+.rule.illustrated .quote-row{{padding:14px 0}}
+.rule.illustrated .original img{{height:36px}}
+.rule.illustrated .meaning{{font-size:30px;line-height:1.4}}
+.rule.illustrated.table .original img{{height:144px}}
+.rule.illustrated.table .meaning{{line-height:48px}}
+</style></head><body><main class="scene {esc(layout)} {esc(visual.get('variant',''))} {compact} {illustrated} {dense}">
 <div class="spectrum"></div><div class="brand">{icon}<div><div class="brand-name">网球时差 · {esc(column)}</div><span class="topic">{esc(topic)}</span></div></div>
 <section class="content"><header class="lead"><h1 class="headline">{title}</h1><p class="context">{context}</p></header>
 <figure class="evidence">{evidence}{figcaption}</figure>{support}</section>
