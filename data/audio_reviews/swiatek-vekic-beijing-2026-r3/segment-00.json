@@ -1,0 +1,42 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=rGsZ0vrlUns",
+  "source_sha256": "9ecc50946d9c77dd2ed71d6438ba95213c78b58c93aa15929ad352d5b0bc79b4",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex automated source-caption / independent ASR cross-check; no human listening",
+  "reviewed_at": "2026-10-05T14:50:25.437034+00:00",
+  "reviewed_from": 283.5,
+  "reviewed_to": 290.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 283.58,
+      "end": 285.17,
+      "en": "Looked to be down and out.",
+      "zh": "她看起来已陷入绝境。"
+    },
+    {
+      "start": 285.86,
+      "end": 288.48,
+      "en": "Was facing a 5-2 deficit",
+      "zh": "首盘失利后，第二盘又落后到二比五，"
+    },
+    {
+      "start": 288.49,
+      "end": 290.85,
+      "en": "in the second set after dropping the first.",
+      "zh": "当时，她就处在这样的局面。"
+    }
+  ],
+  "is_human_listening": false,
+  "coverage_basis": "The complete 0–298s small.en transcript was compared with the complete YouTube automatic transcript. Every selected-window foreground utterance is listed; frame-grid review identifies point action, ASR words define speech boundaries. Ambiguous lexical/named-entity spans have medium.en/base.en records; rejected non-key rally149s omitted.",
+  "evidence_files": [
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-small.en.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-medium.en.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-medium-narrow.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-base-ambiguities.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/youtube-auto-captions.txt",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/cue-crosscheck.json"
+  ],
+  "notes": "No human auditory listen was performed. Status complete describes automatic transcript cross-check for this full selected window, not human listening or final rendered-mix QC."
+}

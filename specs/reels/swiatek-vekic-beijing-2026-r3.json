@@ -1,0 +1,629 @@
+{
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 2,
+      "df": 1,
+      "first_in": 61,
+      "first_total": 89,
+      "first_won": 44,
+      "second_won": 13,
+      "second_total": 28,
+      "bp_conv": 5,
+      "bp_chances": 11,
+      "pts_won": 106,
+      "pts_total": 195,
+      "winners": 37,
+      "ue": 16,
+      "headshot": "assets/players/headshots/wta-326408.jpg"
+    },
+    "b": {
+      "aces": 1,
+      "df": 5,
+      "first_in": 67,
+      "first_total": 106,
+      "first_won": 36,
+      "second_won": 21,
+      "second_total": 39,
+      "bp_conv": 4,
+      "bp_chances": 5,
+      "pts_won": 89,
+      "pts_total": 195,
+      "winners": 37,
+      "ue": 22,
+      "headshot": "assets/players/headshots/wta-318516.jpg"
+    },
+    "footer_date": "2026-10-05",
+    "footer_venue": "北京 · 全场",
+    "_source": "WTA official LS023 setnum0 for service/break/point integers. Set sums agree with Match. Flashscore total points/break chances differ and are not mixed. TNNS Match supplies W/UE, source order Vekic/Swiatek explicitly reversed.",
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "page",
+      "source_url": "https://tnnslive.com/match/75051498",
+      "source_path": "data/research/swiatek-vekic-beijing-2026-r3/tnns-report.log",
+      "source_sha256": "721ff6acf8a426327d662ff3f87f9580d69a4a12ce91df8c5b2276f37071c31e",
+      "period": "Match",
+      "match_date": "2026-10-05",
+      "checked_at": "2026-10-05T14:22:51+00:00",
+      "winner_result": "4-6 7-6(0) 6-2",
+      "matchup": [
+        "Swiatek",
+        "Vekic"
+      ],
+      "winners": [
+        37,
+        37
+      ],
+      "ue": [
+        16,
+        22
+      ],
+      "notes": "GitHub run37324050871 job111810137404 real browser response. Source order[Vekic,Swiatek]. W16+12+9=37 vs9+16+12=37; UE4+6+12=22 vs2+8+6=16. Full raw report saved, no inferred zero."
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "date": "2026-10-05",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS023",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "participants": [
+      "维基奇",
+      "斯维亚泰克"
+    ],
+    "winner": "斯维亚泰克",
+    "loser": "维基奇",
+    "set_scores_home_away": [
+      [
+        6,
+        4
+      ],
+      [
+        6,
+        7
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      [
+        0,
+        7
+      ],
+      null
+    ],
+    "winner_result": "4-6 7-6(0) 6-2",
+    "duration": "02:40:04",
+    "daypart": "上午",
+    "observed_at": "2026-10-05T14:25:00+00:00",
+    "_order_why": "Official A=Donna Vekic318516/CRO; B=Iga Swiatek326408/POL; cover/stats use winner Swiatek first, reverse A/B.",
+    "_time_note": "Actual first point03:11:59Z, final point05:51:45Z. Morning start Beijing, finishes afternoon; API MatchTimeStamp02:42 not actual first serve.",
+    "_match_day_why": "用户2026-10-05明确指定该官方源片，本场同日完成。"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "斯维亚泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 9
+      },
+      {
+        "name": "维基奇",
+        "name_en": "Donna Vekic",
+        "country": "CRO",
+        "rank": 40
+      }
+    ],
+    "scoreboard": {
+      "court": "Capital Group Diamond",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS023"
+      }
+    },
+    "_rank_why": "WTA current ranked endpoint returns rankedAt2026-09-28, Swiatek9/Vekic40; seeded8/30, do not conflate.",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "斯维亚泰克",
+    "winner": "斯维亚泰克",
+    "result": "4-6 7-6(0) 6-2",
+    "hook": "次盘2比5落后\n斯维亚泰克逆转晋级",
+    "hook_accent": "逆转晋级",
+    "topic": "WTA1000 北京 第三轮 · 斯维亚泰克 VS 维基奇",
+    "scrim": "clear",
+    "portrait": {
+      "image": "assets/reel/swiatek-vekic-beijing-2026-r3-cover.jpg",
+      "focus": 0.36,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "source_url": "https://www.chinaopen.com/en/upload/images/2026/10/微信图片_20261005192939_566_1468.jpg",
+      "_portrait_why": "中网官方本场赛后稿734头图5000×3333；XMP/IPTC2026-10-05T13:52:08.625+08与比赛结束同刻，紫帽紫衣偏正面睁眼、脸合焦、无台标；仰头张口真实情绪，不编握拳动作。排除WTA稿10/03旧配图。"
+    }
+  },
+  "slug": "swiatek-vekic-beijing-2026-r3",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=rGsZ0vrlUns"
+  },
+  "primary": "main",
+  "tts_backend": "edge",
+  "track": false,
+  "scorebox": [
+    88,
+    827,
+    570,
+    988
+  ],
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "topbar": {
+    "line1": "2026 WTA1000 北京 第三轮",
+    "line2": "斯维亚泰克 4-6 7-6(0) 6-2 维基奇"
+  },
+  "push": {
+    "auto": false,
+    "summary": "次盘2比5落后逆转",
+    "lead": "维基奇两次发球就能赢下比赛，第一次一分未得，第二次只拿一分。斯维亚泰克追平第二盘后，抢七7比0；决胜盘1比2再连赢5局，以4比6、7比6（0）、6比2逆转晋级中网第四轮，下一轮迎战约维奇。"
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 283.5,
+      "end": 290.9,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": false,
+      "bed": "high",
+      "point_end_ok": "终球后赢家近景转网前握手；两句完整解说先落入险境再报次盘2比5。完整终局在后文兑现，不把网前镜头误标为单人庆祝。",
+      "crosses_cut": "终球后赢家近景转网前握手；两句完整解说先落入险境再报次盘2比5。完整终局在后文兑现，不把网前镜头误标为单人庆祝。",
+      "_why": "终球后赢家近景转网前握手；两句完整解说先落入险境再报次盘2比5。完整终局在后文兑现，不把网前镜头误标为单人庆祝。",
+      "_score_inset_why": "赛后赢家近景与握手，源片左下比分板已消失；不复制不存在的图形。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "后文265.08–297.60保留完整赛点、双方握手及赛后反应，覆盖冷开场全部镜头。",
+      "quote": [
+        {
+          "at": 0.08,
+          "end": 1.67,
+          "text": "Looked to be down and out.\n她看起来已陷入绝境。"
+        },
+        {
+          "at": 2.36,
+          "end": 4.98,
+          "text": "Was facing a 5-2 deficit\n首盘失利后，第二盘又落后到二比五，"
+        },
+        {
+          "at": 4.99,
+          "end": 7.35,
+          "text": "in the second set after dropping the first.\n当时，她就处在这样的局面。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "只差1局就出局\n她把结局翻了过来",
+      "kicker": "这场怎么赢",
+      "seconds": 16,
+      "narration": "北京时间十月五号上午，中网第三轮。二〇二三年的冠军斯维亚泰克，先丢一盘，第二盘又二比五落后。维基奇只要再赢一局，就能结束比赛。",
+      "_why": "WTA官方比赛身份、2023冠军及第二盘2–5；不称对手有赛点。"
+    },
+    {
+      "source": "main",
+      "start": 34.8,
+      "end": 58.08,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "34.80进入下一分发球准备，保留抛球到完整底线对攻、55秒解说与斯维亚泰克真实反应；58.08是再下一分准备，不能带入。",
+      "crosses_cut": "34.80进入下一分发球准备，保留抛球到完整底线对攻、55秒解说与斯维亚泰克真实反应；58.08是再下一分准备，不能带入。",
+      "_why": "34.80进入下一分发球准备，保留抛球到完整底线对攻、55秒解说与斯维亚泰克真实反应；58.08是再下一分准备，不能带入。",
+      "quote": [
+        {
+          "at": 20.24,
+          "end": 22.32,
+          "text": "Big hitting from both players on that point.\n这一分，两个人都打得很有力量。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "底线对攻之外\n还得防这一手",
+      "kicker": "长短变化",
+      "seconds": 11,
+      "narration": "维基奇不只从底线加力，还突然把球放短。斯维亚泰克得从底线往前追，节奏一下就变了。看这次变化。",
+      "_why": "81.52–97.2完整回合和change of pace/trickery原声；只解释这一分可见跑动，不编速度和拍数。"
+    },
+    {
+      "source": "main",
+      "start": 81.52,
+      "end": 97.2,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "保留完整发球、底线交换、前场变化及维基奇得分反应，原声change of pace/trickery全句。",
+      "crosses_cut": "保留完整发球、底线交换、前场变化及维基奇得分反应，原声change of pace/trickery全句。",
+      "_why": "保留完整发球、底线交换、前场变化及维基奇得分反应，原声change of pace/trickery全句。",
+      "quote": [
+        {
+          "at": 11.16,
+          "end": 14.93,
+          "text": "A little change of pace, a little trickery from Vekic there.\n维基奇这一下变了节奏，耍了个巧。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 120.04,
+      "end": 141.52,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "首盘盘点发球准备至完整回合，斯维亚泰克正手失误，首盘4比6；保留句尾6–4到140.85。",
+      "crosses_cut": "首盘盘点发球准备至完整回合，斯维亚泰克正手失误，首盘4比6；保留句尾6–4到140.85。",
+      "_why": "首盘盘点发球准备至完整回合，斯维亚泰克正手失误，首盘4比6；保留句尾6–4到140.85。",
+      "quote": [
+        {
+          "at": 8.16,
+          "end": 10.26,
+          "text": "Misses that forehand, does Swiatek.\n斯维亚泰克这记正手失误了。"
+        },
+        {
+          "at": 10.32,
+          "end": 12.68,
+          "text": "So, first set goes to Donna Vekic.\n这样，唐娜·维基奇拿下了第一盘。"
+        },
+        {
+          "at": 12.74,
+          "end": 17.44,
+          "text": "Hasn't been in the fourth round of a 1000 tournament in over a year.\n一年多没进过1000赛第四轮。"
+        },
+        {
+          "at": 17.6,
+          "end": 20.94,
+          "text": "Well, she's halfway to changing that narrative. 6-4.\n改变局面已走了一半。六比四。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "首盘4比6告负\n次盘还在追赶",
+      "kicker": "压力没走",
+      "seconds": 12,
+      "narration": "首盘四比六。第二盘也没有立刻好转，斯维亚泰克一比三落后。底线相持还在继续，维基奇的小球又来了。",
+      "_why": "首盘结果与153.8–198.92次盘1–3 scoreboard；删除141.52–153.80非关键小球分，149秒感叹未确定，不硬过音审。"
+    },
+    {
+      "source": "main",
+      "start": 153.8,
+      "end": 198.92,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "153.80为斯维亚泰克发球近景开始，155.76仅转广角，整分无缝保留；随后完整保留182.24另一分至维基奇小球追成平分。176秒感叹及194秒解说交叉校验。",
+      "crosses_cut": "153.80为斯维亚泰克发球近景开始，155.76仅转广角，整分无缝保留；随后完整保留182.24另一分至维基奇小球追成平分。176秒感叹及194秒解说交叉校验。",
+      "_why": "153.80为斯维亚泰克发球近景开始，155.76仅转广角，整分无缝保留；随后完整保留182.24另一分至维基奇小球追成平分。176秒感叹及194秒解说交叉校验。",
+      "quote": [
+        {
+          "at": 22.8,
+          "end": 23.25,
+          "text": "Oh!\n哦！"
+        },
+        {
+          "at": 40.63,
+          "end": 41.81,
+          "text": "There it is again.\n又来了。"
+        },
+        {
+          "at": 42.4,
+          "end": 44.68,
+          "text": "The Donna Vekic drop shot special.\n唐娜·维基奇拿手的放小球。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "次盘2比5落后\n第一次把门顶住",
+      "kicker": "还差最后1局",
+      "seconds": 15,
+      "narration": "随后，她落后到二比五。维基奇第一次发球胜赛，却一分也没拿到。斯维亚泰克连得四分破发，再保住自己的发球局，追到四比五。",
+      "_why": "WTA PBP第二盘第8局BBBB、第9局赢家Swiatek。两个发球胜赛局不是赛点。官方两版均缺2–5起完整回合，本卡与下一卡用文字如实说明。"
+    },
+    {
+      "title_card": "对手再为比赛发球\n这次也只拿到1分",
+      "kicker": "追到5比5",
+      "seconds": 19,
+      "narration": "四比五，维基奇第二次为比赛发球，这次只拿到一分。斯维亚泰克又破了，五比五！官方两版集锦，都没有收录这段追分的完整过程。之后双方保发，比赛进入抢七。",
+      "_why": "WTA PBP第10局BBBAB；官方已查两版均缺关键完整过程，明确缺口，不借其他回合冒充。"
+    },
+    {
+      "source": "main",
+      "start": 198.92,
+      "end": 222.68,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "抢七6比0盘点，发球接发与直接制胜分完整；结尾Seven points to none in that tiebreak到222.64，222.68恰为下一个服务准备镜头切点。",
+      "crosses_cut": "抢七6比0盘点，发球接发与直接制胜分完整；结尾Seven points to none in that tiebreak到222.64，222.68恰为下一个服务准备镜头切点。",
+      "_why": "抢七6比0盘点，发球接发与直接制胜分完整；结尾Seven points to none in that tiebreak到222.64，222.68恰为下一个服务准备镜头切点。",
+      "quote": [
+        {
+          "at": 6.2,
+          "end": 8.84,
+          "text": "A crushing return winner from Iga Swiatek.\n斯维亚泰克接发直接得分！"
+        },
+        {
+          "at": 9.53,
+          "end": 12.88,
+          "text": "Donna Vekic with two chances to close out the match.\n维基奇两次有机会结束比赛。"
+        },
+        {
+          "at": 12.89,
+          "end": 14.1,
+          "text": "Unable to do so.\n却没能做到。"
+        },
+        {
+          "at": 14.11,
+          "end": 16.66,
+          "text": "Iga Swiatek storms back, and...\n斯维亚泰克强势追了回来……"
+        },
+        {
+          "at": 18.46,
+          "end": 20.15,
+          "text": "What a tiebreak she played.\n这个抢七，她打得太出色了。"
+        },
+        {
+          "at": 20.96,
+          "end": 23.76,
+          "text": "Seven points to none in that tiebreak.\n这一局抢七，七比零。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "接发直接得分\n抢七一分没让",
+      "kicker": "七分的反击",
+      "seconds": 14,
+      "narration": "抢七最后这一分，她迎着发球直接回击，接发就打出制胜分。七比零，一分没让。刚才还在出局边缘，现在，比赛重新回到同一起点。",
+      "_why": "201.28–207.58完整接发制胜球与两路原声crushing return winner；不编方向、速度。"
+    },
+    {
+      "title_card": "决胜盘又1比2落后\n这一次她没再退让",
+      "kicker": "最后的拉锯",
+      "seconds": 12,
+      "narration": "决胜盘，斯维亚泰克又以一比二落后。先保发追到二比二，再去争对手的发球局。这一次，谁能先把领先拿稳？",
+      "_why": "官方PBP决胜盘前三局Swiatek/Vekic/Vekic，随后Swiatek连赢5局；解说问题对应马上展示2–2破发分。"
+    },
+    {
+      "source": "main",
+      "start": 222.68,
+      "end": 265.08,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "合并决胜盘1比1破发点维基奇救回、斯维亚泰克1比2保发追平、2比2破发完整三分；222.68包含维基奇服务准备，264.88至265.04仍上一分后走动，265.08才硬切赛点。每分服务动作完整，不在224.04或247.48加卡。",
+      "crosses_cut": "合并决胜盘1比1破发点维基奇救回、斯维亚泰克1比2保发追平、2比2破发完整三分；222.68包含维基奇服务准备，264.88至265.04仍上一分后走动，265.08才硬切赛点。每分服务动作完整，不在224.04或247.48加卡。",
+      "_why": "合并决胜盘1比1破发点维基奇救回、斯维亚泰克1比2保发追平、2比2破发完整三分；222.68包含维基奇服务准备，264.88至265.04仍上一分后走动，265.08才硬切赛点。每分服务动作完整，不在224.04或247.48加卡。",
+      "quote": [
+        {
+          "at": 12.51,
+          "end": 14.21,
+          "text": "That deserves a smile.\n这一球，值得笑一下。"
+        },
+        {
+          "at": 21.86,
+          "end": 22.86,
+          "text": "That's just the line.\n这一球刚好压线。"
+        },
+        {
+          "at": 24.86,
+          "end": 25.78,
+          "text": "Break opportunity.\n破发机会。"
+        },
+        {
+          "at": 39.62,
+          "end": 41.47,
+          "text": "Iga Swiatek gets the break.\n斯维亚泰克完成破发。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "stat_card": true,
+      "seconds": 12,
+      "narration": "两个人都打出三十七记制胜分，斯维亚泰克的非受迫失误却少了六次。赢下这个接发局后，她把三比二的领先扩大到五比二。",
+      "_why": "TNNS Match W37/37 UE16/22；官方PBP3–2后再两局到5–2。数据解释置完整终局之前，握手后只接品牌片尾。"
+    },
+    {
+      "title_card": "从1比2落后\n连赢最后5局",
+      "kicker": "最后冲刺",
+      "seconds": 16,
+      "narration": "从一比二到六比二，她连赢最后五局。中间两局的完整过程，官方集锦没有收录。下一轮对约维奇，她能把这股势头带下去吗？最后一分，交给现场。",
+      "_why": "官方PBP、官方下一轮；交代缺失3–2至5–2两局。结果与展望都在赛点前说完，握手后不再补自配旁白。"
+    },
+    {
+      "source": "main",
+      "start": 265.08,
+      "end": 297.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "265.08硬切至5比2赛点，服务准备、完整回合、教练席、赢家近景、双方握手与致意；为完整保留末段解说到297.41，延续真实赛后致意到297.60，297.68采访前切走。逐帧比分蒙版在无板帧透明。",
+      "crosses_cut": "265.08硬切至5比2赛点，服务准备、完整回合、教练席、赢家近景、双方握手与致意；为完整保留末段解说到297.41，延续真实赛后致意到297.60，297.68采访前切走。逐帧比分蒙版在无板帧透明。",
+      "_why": "265.08硬切至5比2赛点，服务准备、完整回合、教练席、赢家近景、双方握手与致意；为完整保留末段解说到297.41，延续真实赛后致意到297.60，297.68采访前切走。逐帧比分蒙版在无板帧透明。",
+      "quote": [
+        {
+          "at": 13.92,
+          "end": 15.54,
+          "text": "And then the comeback is complete.\n逆转就这样完成了。"
+        },
+        {
+          "at": 16.02,
+          "end": 18.28,
+          "text": "What a way to finish for Iga Swiatek.\n斯维亚泰克精彩地结束比赛！"
+        },
+        {
+          "at": 18.5,
+          "end": 20.09,
+          "text": "Looked to be down and out.\n她看起来已陷入绝境。"
+        },
+        {
+          "at": 20.78,
+          "end": 23.4,
+          "text": "Was facing a 5-2 deficit\n首盘失利后，第二盘又落后到二比五，"
+        },
+        {
+          "at": 23.41,
+          "end": 25.77,
+          "text": "in the second set after dropping the first.\n当时，她就处在这样的局面。"
+        },
+        {
+          "at": 26.15,
+          "end": 27.46,
+          "text": "Storms all the way back.\n她一路强势追了回来。"
+        },
+        {
+          "at": 27.47,
+          "end": 30.41,
+          "text": "Wins the tiebreak without dropping a point.\n拿下抢七，一分都没让。"
+        },
+        {
+          "at": 30.97,
+          "end": 32.48,
+          "text": "And then she wins the third set.\n接着，她又赢下了第三盘。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    }
+  ],
+  "_source_provenance": {
+    "main": {
+      "source_url": "https://www.youtube.com/watch?v=rGsZ0vrlUns",
+      "source_sha256": "9ecc50946d9c77dd2ed71d6438ba95213c78b58c93aa15929ad352d5b0bc79b4",
+      "bytes": 109258687,
+      "id": "rGsZ0vrlUns",
+      "title": "Donna Vekic vs. Iga Swiatek | 2026 Beijing Round 3 | WTA Match Highlights",
+      "channel": "WTA",
+      "channel_id": "UCaBIVVpHjq6j3tSyxwTE-8Q",
+      "uploader": "WTA",
+      "upload_date": "20261005",
+      "duration": 403,
+      "webpage_url": "https://www.youtube.com/watch?v=rGsZ0vrlUns",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "duration_seconds": 403.121633,
+      "probe_run": 37322533828,
+      "review_export_run": 37323670498
+    }
+  },
+  "_production_timing": {
+    "first_dispatch_at": "2026-10-05T14:10:13Z",
+    "note": "Actual source probe dispatch creation time, not a claimed original message timestamp."
+  },
+  "_heat_why": "世界前十、前中网冠军从第二盘2比5落后逆转；用户明确指定官方集锦。",
+  "_facts": [
+    {
+      "claim": "本场赛果、时长、开赛自然时段、第二盘两次发球胜赛局均无赛点、决胜盘1比2后连赢五局、下一轮约维奇",
+      "source": "data/research/swiatek-vekic-beijing-2026-r3/facts.json"
+    },
+    {
+      "claim": "WTA官网另一版293秒官方集锦同样从第二盘3比1跳到抢七6比0。缺失关键阶段以原生文字和旁白说明，不用其他回合冒充。",
+      "source": "https://www.wtatennis.com/videos/4586688/from-6-4-5-2-down-swiatek-rallies-to-beat-vekic-and-reach-beijing-last-16"
+    },
+    {
+      "claim": "第二盘维基奇两次发球胜赛：第8局0分、第10局1分；第三盘斯维亚泰克1比2后连赢五局。",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS023/point-by-point"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "先丢一盘、第二盘2比5落后，斯维亚泰克怎样把比赛追回来？",
+    "thesis": "维基奇的正手与小球制造压力；斯维亚泰克追回两次发球胜赛局，抢七7比0，决胜盘1比2后连赢五局。以完整官方回合和原声呈现过程，缺失逆转阶段明确说明。",
+    "beats": [
+      "首盘长短变化受压",
+      "次盘绝境与抢七反击",
+      "决胜盘关键破发与完整终局"
+    ],
+    "human_context": {
+      "angle": "前中网冠军继续争取再次夺冠",
+      "facts": [
+        "2023中网冠军",
+        "赛前对维基奇4胜0负",
+        "下一轮约维奇"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4586662/swiatek-rallies-from-6-4-5-2-down-to-beat-vekic-and-reach-beijing-last-16"
+      ]
+    }
+  },
+  "_tts_backend_why": "沿用赛场之上云见音色，旁白无需Azure专属情绪风格；Edge自然体育解说，按真实语音测长，不以加速挤压时长。",
+  "_hit_data": [
+    {
+      "label": "第二盘2比5后追回两个发球胜赛局；抢七7比0",
+      "detail": "WTA赛后稿与官方PBP常规局核验，两次发球胜赛局非赛点；抢七只用最终比分，PBP其中有空字段和重复不用于统计。",
+      "source_url": "https://www.wtatennis.com/news/4586662/swiatek-rallies-from-6-4-5-2-down-to-beat-vekic-and-reach-beijing-last-16"
+    },
+    {
+      "label": "双方37制胜分，斯维亚泰克16UE、维基奇22UE",
+      "detail": "TNNS Match以及分盘加总一致，赢家少6UE。",
+      "source_url": "https://tnnslive.com/match/75051498"
+    }
+  ],
+  "_editing_why": "完整关键回合与原声承担情绪；中文旁白置原生卡交代坐标与真实悬念。第二盘2–5→5–5缺官方完整镜头，逐局核验后两卡说明；原声不确定的149秒Oh所在整分退出，153.80才接下一完整服务动作。第三盘222.68–265.08三分合并，不在发球中插卡。数据与下一轮置赛点前，终局后只接品牌片尾。",
+  "_key_point_coverage": [
+    {
+      "key": "第二盘2–5至5–5",
+      "status": "official_full_action_missing_explained_by_cards",
+      "sources_checked": [
+        "https://www.youtube.com/watch?v=rGsZ0vrlUns",
+        "https://www.wtatennis.com/videos/4586688/from-6-4-5-2-down-swiatek-rallies-to-beat-vekic-and-reach-beijing-last-16"
+      ]
+    },
+    {
+      "key": "第二盘抢七最后一分",
+      "start": 198.92,
+      "end": 222.68,
+      "status": "complete_available_action"
+    },
+    {
+      "key": "第三盘2–2破发",
+      "start": 247.48,
+      "end": 265.08,
+      "status": "complete_available_action"
+    },
+    {
+      "key": "赛点与握手",
+      "start": 265.08,
+      "end": 297.6,
+      "status": "complete_available_action_and_commentary"
+    }
+  ]
+}

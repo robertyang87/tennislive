@@ -85,7 +85,15 @@ def present(band: np.ndarray) -> bool:
     if mint_cols >= MINT_COLS:
         # 盘间那张大图形（「ROUND 2」＋名字＋绿条）也有大片薄荷绿，但名字栏是
         # 白底——真板的名字栏暗像素 0.73~0.82，那张图形是 0.00
-        return dark >= 0.5
+        # A centred result graphic can put its mint winner row at the far
+        # right of this wide search band while the supposed name column is
+        # just a uniform blue courtside wall. Dark pixels alone accept that
+        # wall. A native name column has white lettering or the green/teal
+        # board tint; reject only the blue, textless background combination.
+        med = np.median(name.reshape(-1, 3), axis=0)
+        white = (name.min(axis=2) > 225).mean()
+        blue_background = med[2] - med[1] > 20 and white < .01
+        return dark >= 0.5 and not blue_background
     med = np.median(name.reshape(-1, 3), axis=0)
     r, g, b = (int(v) for v in med)
     near = (np.linalg.norm(name - med, axis=2) < 30).mean()
@@ -131,15 +139,22 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
         # frames the point slot is gone and the wipe crosses the mint games
         # cell itself. Measure its remaining vertical edge, including only the
         # observed antialias fringe; never substitute the old slot width.
+        # A native wipe/glow may transition across two antialias pixels on
+        # either side of the thresholded mint edge. Still require a measured
+        # persistent edge plus exposed background, never a padded rectangle.
         wipe_edges = [x for x in range(max(cell_lo + 1, cell_hi - EDGE_PAD),
-                                      min(band.shape[1], cell_hi + EDGE_PAD) + 1)
+                                      min(band.shape[1], cell_hi + 2 * EDGE_PAD) + 1)
                       if persistent[x - 1] >= .55]
         # A complete games cell spans at least half one player-row height.
         # A truncated residual cell proves the wipe crossed the games cell.
         # An intact cell needs separate exposed-background evidence below.
         truncated_cell = cell_hi - cell_lo < band.shape[0] / 4
-        if wipe_edges:
-            wipe_edge = wipe_edges[-1]
+        # Prefer the established tight edge when its background is already
+        # exposed. Only inspect the wider glow transition if that evidence
+        # fails; do not expand previously verified native wipe silhouettes.
+        tight = [x for x in wipe_edges if x <= cell_hi + EDGE_PAD]
+        candidates = tight[-1:] + [x for x in wipe_edges if x > cell_hi + EDGE_PAD]
+        for wipe_edge in candidates:
             # A wipe can remove the point slot while leaving the games cell
             # intact. Require positive exposed blue-background evidence beyond
             # its antialias fringe; a dark, unmeasurable point slot must still

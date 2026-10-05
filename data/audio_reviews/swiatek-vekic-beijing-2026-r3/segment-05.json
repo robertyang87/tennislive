@@ -1,0 +1,48 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=rGsZ0vrlUns",
+  "source_sha256": "9ecc50946d9c77dd2ed71d6438ba95213c78b58c93aa15929ad352d5b0bc79b4",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex automated source-caption / independent ASR cross-check; no human listening",
+  "reviewed_at": "2026-10-05T14:50:25.439886+00:00",
+  "reviewed_from": 120.04,
+  "reviewed_to": 141.52,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 128.2,
+      "end": 130.3,
+      "en": "Misses that forehand, does Swiatek.",
+      "zh": "斯维亚泰克这记正手失误了。"
+    },
+    {
+      "start": 130.36,
+      "end": 132.72,
+      "en": "So, first set goes to Donna Vekic.",
+      "zh": "这样，唐娜·维基奇拿下了第一盘。"
+    },
+    {
+      "start": 132.78,
+      "end": 137.48,
+      "en": "Hasn't been in the fourth round of a 1000 tournament in over a year.",
+      "zh": "一年多没进过1000赛第四轮。"
+    },
+    {
+      "start": 137.64,
+      "end": 140.98,
+      "en": "Well, she's halfway to changing that narrative. 6-4.",
+      "zh": "改变局面已走了一半。六比四。"
+    }
+  ],
+  "is_human_listening": false,
+  "coverage_basis": "The complete 0–298s small.en transcript was compared with the complete YouTube automatic transcript. Every selected-window foreground utterance is listed; frame-grid review identifies point action, ASR words define speech boundaries. Ambiguous lexical/named-entity spans have medium.en/base.en records; rejected non-key rally149s omitted.",
+  "evidence_files": [
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-small.en.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-medium.en.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-medium-narrow.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-base-ambiguities.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/youtube-auto-captions.txt",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/cue-crosscheck.json"
+  ],
+  "notes": "No human auditory listen was performed. Status complete describes automatic transcript cross-check for this full selected window, not human listening or final rendered-mix QC."
+}
