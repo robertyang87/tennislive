@@ -458,7 +458,15 @@
           "text": "Iga Swiatek gets the break.\n斯瓦泰克完成破发。"
         }
       ],
-      "_quote_kind": "broadcast"
+      "_quote_kind": "broadcast",
+      "_digital_silence_windows": [
+        [
+          222.76,
+          224.8
+        ]
+      ],
+      "_digital_silence_why": "发球前官方源现场声自然很弱，并非零波形。真实第二版成片225/226秒对应源222.760–224.760秒；源SHA与本次下载绑定一致，波形相关0.995422/0.999437，实测增益0.941364/0.964569，相对渲染预期0.972误差-0.278/-0.067dB，源/片非零样本均超过98%。声明截至224.80是25fps帧边界，只有现有natural_quiet_audio在新成片逐秒重新核验同源波形和实际增益后才可放行；保持完整服务准备与抛球，不加音、不改增益、不放宽门槛。",
+      "_natural_quiet_evidence": "data/audio_reviews/swiatek-vekic-beijing-2026-r3/natural-quiet-225-226.json"
     },
     {
       "stat_card": true,
