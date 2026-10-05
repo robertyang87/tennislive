@@ -104,7 +104,7 @@
   "scope": "Six replay occurrences across five spoken passages; also context audit for all cover, segment narrations and fixed outro. Unaffected native source speech is not re-synthesized.",
   "limitations": "The acoustic classifier sometimes cannot separate reference groups. Such cases are retained as uncertain/unreliable rather than claimed as measured-correct. Global static checks screen risk; they do not certify audible pronunciation.",
   "created_at": "2026-10-05T22:39:18.112284+00:00",
-  "spec_sha256": "65fd10531bc9e1d01a46810c76353d3b8b9ba355f5fa6a6228bab64ba933391b",
+  "spec_sha256": "3341cab600c51ea8ff21972b25ff317795c16cdc627fb0203e29acd4b8052f55",
   "canonical_replay_occurrences": [
     {
       "label": "cover",
@@ -174,5 +174,10 @@
   "rejected_contexts_reason": "Reference self-test yielded uncertainty; production now uses the separately measured cover-rephrased/opening-rephrased wording.",
   "additional_polyphones_evidence": "event-sources-audit-summary.json",
   "outro_audio_evidence": "outro-shicha-summary.json",
-  "additional_review_result": "重置/处罚/还说/落泪 measured-correct; 不得/结论/片尾时差 include limited or uncertain acoustic results retained in full. No observed mispronunciation established for those uncertain items; no blind substitutions added."
+  "additional_review_result": "重置/处罚/还说/落泪 measured-correct; 不得/结论/片尾时差 include limited or uncertain acoustic results retained in full. No observed mispronunciation established for those uncertain items; no blind substitutions added.",
+  "ending_owner_directive": "最后两个字你呢拿掉",
+  "ending_final_text": "比分能重置，感觉未必能一起退回去。期待更可靠的赛场，也期待她握住下一次机会。",
+  "ending_actual_tts_seconds": 8.184,
+  "global_hit_person_evidence": "hit-person-summary.json",
+  "global_hit_person_scope": "Actual project Medvedev story phrase; not inserted into the Sun LED story. Mid-hit 中 zhòng correction only in synth; 中网/中国/中间 retained."
 }

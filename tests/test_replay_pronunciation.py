@@ -42,3 +42,12 @@ def test_replay_correction_changes_the_existing_audio_cache_key():
     assert corrected != original
     setup = ("zh-CN-YunjianNeural", "+6%", "+0Hz", "", "", 0.0)
     assert tts_content_key(original, *setup) != tts_content_key(corrected, *setup)
+
+
+def test_hit_person_uses_zhong_four_without_changing_zhong_one_words_or_display():
+    original = "中网，中国球员从中间回球，偶然打中人。"
+    assert speakable(original) == "中网，中国球员从中间回球，偶然打众人。"
+    assert readable(original) == original
+    assert len(speakable(original)) == len(original)
+    for other in ("打中网", "打中路", "打中间位置"):
+        assert apply(other, only=["zhong-hit-person"]) == other

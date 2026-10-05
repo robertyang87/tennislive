@@ -243,6 +243,21 @@ HOMOPHONES: tuple[Homophone, ...] = (
                 "这三十中一个都没进正赛", "那十中一个也没兑现"),
     ),
     Homophone(
+        key="zhong-hit-person", pattern=r"(?<=打)中(?=人)", replace="众",
+        word="打中人", reading="zhòng",
+        evidence=(
+            "账号所有者 2026-10-06 追加指出：『还有打中人 多音字』，命中人应读 zhòng，"
+            "不是中国、中间的 zhōng。2026-10-06 实测云见 +22% 完整分句"
+            "『偶然打中人，不能直接套成滥用球』原文 misread/low（−0.332），"
+            "中换众 correct/low（1.0）。全段对照参考自检不稳定，保留 unreliable，"
+            "未宣称高置信整段通过；证据见 data/audio_reviews/sun-gauff-replay-2026/polyphones/。"
+            "仅命中打中人的固定词形，其他中读音不替换。"),
+        examples=(("偶然打中人，不能直接套成滥用球。", "偶然打众人，不能直接套成滥用球。"),
+                  ("球打中人了。", "球打众人了。")),
+        guards=("中国球员", "中网第三轮", "打中网", "打中间位置", "打中路", "从中间穿过",
+                "击中目标", "打中了球拍"),
+    ),
+    Homophone(
         key="chong-replay",
         pattern=(r"(?:(?<=判)|(?<=开启))重(?=打)"
                  r"|(?<![\u4e00-\u9fff])重(?=打一分)"
