@@ -569,12 +569,18 @@ def _sets_html(result: str) -> str:
 #: 学会这条——`cirstea-kalinskaya`（3-0 因伤退赛）撞上就是 `SystemExit`。
 #: 两个渲染器对同一种输入的容忍度不该分叉，这儿补的是**同一个已有判断**，
 #: 不是新发明一种显示方式。
-_RETIREMENT_MARKERS = {"ret.", "ret", "ret'd", "w.o.", "wo", "def.", "def", "unfinished"}
+_RETIREMENT_MARKERS = {
+    "ret.", "ret", "ret'd", "w.o.", "wo", "def.", "def", "dq", "dq.",
+    "default", "defaulted", "disqualified", "取消资格", "unfinished",
+}
 #: 英文标记 → 比分板上印的中文注脚。海报其余部分全是中文，标记不例外。
 _RETIREMENT_LABEL = {
     "ret.": "退赛", "ret": "退赛", "ret'd": "退赛",
     "w.o.": "弃权", "wo": "弃权",
-    "def.": "退赛", "def": "退赛",
+    "def.": "取消资格", "def": "取消资格",
+    "dq": "取消资格", "dq.": "取消资格",
+    "default": "取消资格", "defaulted": "取消资格",
+    "disqualified": "取消资格", "取消资格": "取消资格",
     "unfinished": "未打完",
 }
 
@@ -591,7 +597,7 @@ def _scoreboard_sets(result: str, where: str) -> tuple[list[tuple[int, int, str 
             raise SystemExit(
                 f"{where} 的 result={result!r} 含无法拆分的盘分 {token!r}；"
                 "比分板需要用 `6-1 4-6 6-2` 或带抢七小分的格式，"
-                "退赛可以在末尾单独加一个 `ret.`/`ret'd`/`w.o.` 词元。")
+                "退赛可以在末尾加 `ret.`，取消资格加 `DQ`/`Def.`。")
         scores.append((int(match.group(1)), int(match.group(2)), match.group(3)))
     if not scores:
         raise SystemExit(f"{where} 的 result 为空，无法生成比分板。")
