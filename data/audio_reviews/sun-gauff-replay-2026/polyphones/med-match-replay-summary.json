@@ -1,0 +1,249 @@
+{
+  "source": "/workspace/tennislive/src/tennislive/video/episodes/medvedev-beijing-default-2026.json",
+  "source_sha256": "702acd7f64f486c4630ac09cc57b57745d2e684e856c42706aeb2b091f8dfff4",
+  "beat_index": 10,
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+22%",
+  "results": {
+    "med-match-replay.json": {
+      "original": {
+        "sentence": "赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛重打。",
+        "tts_text": "赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛重打。",
+        "verdict": "unreliable",
+        "confidence": null,
+        "score": -1.0,
+        "selftest_pass": false,
+        "selftest_loo": {
+          "崇": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.363
+          },
+          "虫": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": -0.04
+          },
+          "蟲": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.474
+          },
+          "仲": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": 0.079
+          },
+          "众": {
+            "expect": "misread",
+            "got": "correct",
+            "score": 0.229
+          }
+        },
+        "near_identical_to": "wrong",
+        "features": {
+          "spec": {
+            "d_intended": 3.489,
+            "d_wrong": 0.0,
+            "score": -1.0
+          },
+          "f0": {
+            "d_intended": 2.24,
+            "d_wrong": 0.0,
+            "score": -1.0
+          },
+          "comb": {
+            "d_intended": 3.984,
+            "d_wrong": 0.0,
+            "score": -1.0
+          }
+        },
+        "window_s": [
+          4.52,
+          4.78
+        ]
+      },
+      "candidate": {
+        "sentence": "赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛重打。",
+        "tts_text": "赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛崇打。",
+        "verdict": "unreliable",
+        "confidence": null,
+        "score": 1.0,
+        "selftest_pass": false,
+        "selftest_loo": {
+          "崇": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.363
+          },
+          "虫": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": -0.04
+          },
+          "蟲": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.473
+          },
+          "仲": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": 0.078
+          },
+          "众": {
+            "expect": "misread",
+            "got": "correct",
+            "score": 0.23
+          }
+        },
+        "near_identical_to": "intended",
+        "features": {
+          "spec": {
+            "d_intended": 0.0,
+            "d_wrong": 3.634,
+            "score": 1.0
+          },
+          "f0": {
+            "d_intended": 0.0,
+            "d_wrong": 2.358,
+            "score": 1.0
+          },
+          "comb": {
+            "d_intended": 0.0,
+            "d_wrong": 4.239,
+            "score": 1.0
+          }
+        },
+        "window_s": [
+          4.52,
+          4.82
+        ]
+      }
+    },
+    "med-match-replay-full.json": {
+      "original": {
+        "sentence": "二零二四年迪拜半决赛，卢布列夫因对司线员的言语行为被判失格。申诉之后，ATP恢复了他的积分和奖金，但保留罚款，比赛结果没有改变。赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛重打。",
+        "tts_text": "二零二四年迪拜半决赛，卢布列夫因对司线员的言语行为被判失格。申诉之后，ATP恢复了他的积分和奖金，但保留罚款，比赛结果没有改变。赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛重打。",
+        "verdict": "unreliable",
+        "confidence": null,
+        "score": -0.663,
+        "selftest_pass": false,
+        "selftest_loo": {
+          "崇": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.31
+          },
+          "虫": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.001
+          },
+          "蟲": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.277
+          },
+          "仲": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.003
+          },
+          "众": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": 0.101
+          }
+        },
+        "near_identical_to": null,
+        "features": {
+          "spec": {
+            "d_intended": 3.201,
+            "d_wrong": 1.287,
+            "score": -0.427
+          },
+          "f0": {
+            "d_intended": 1.952,
+            "d_wrong": 0.098,
+            "score": -0.904
+          },
+          "comb": {
+            "d_intended": 3.66,
+            "d_wrong": 0.742,
+            "score": -0.663
+          }
+        },
+        "window_s": [
+          14.97,
+          15.22
+        ]
+      },
+      "candidate": {
+        "sentence": "二零二四年迪拜半决赛，卢布列夫因对司线员的言语行为被判失格。申诉之后，ATP恢复了他的积分和奖金，但保留罚款，比赛结果没有改变。赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛重打。",
+        "tts_text": "二零二四年迪拜半决赛，卢布列夫因对司线员的言语行为被判失格。申诉之后，ATP恢复了他的积分和奖金，但保留罚款，比赛结果没有改变。赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛崇打。",
+        "verdict": "unreliable",
+        "confidence": null,
+        "score": 1.0,
+        "selftest_pass": false,
+        "selftest_loo": {
+          "崇": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.31
+          },
+          "虫": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.001
+          },
+          "蟲": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.277
+          },
+          "仲": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.003
+          },
+          "众": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": 0.101
+          }
+        },
+        "near_identical_to": "intended",
+        "features": {
+          "spec": {
+            "d_intended": 0.0,
+            "d_wrong": 3.12,
+            "score": 1.0
+          },
+          "f0": {
+            "d_intended": 0.0,
+            "d_wrong": 2.692,
+            "score": 1.0
+          },
+          "comb": {
+            "d_intended": 0.0,
+            "d_wrong": 4.287,
+            "score": 1.0
+          }
+        },
+        "window_s": [
+          14.97,
+          15.26
+        ]
+      }
+    }
+  },
+  "decision": "No acoustically reliable original/candidate pass established. Both same-sentence and full-actual-narration evidence retains failed reference self-tests; do not expand a whitelist on a claimed high-confidence pass. Equivalent wording that avoids replay 重 is available for parent decision.",
+  "alternative_sentence": "赛果与后续处罚是两个问题，申诉改变处罚，不等于比赛要再赛一次。",
+  "limits": [
+    "No human-listening claim",
+    "No ASR tone inference",
+    "No thresholds adjusted",
+    "No tracked files edited"
+  ]
+}
