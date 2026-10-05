@@ -1,6 +1,6 @@
 {
   "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-1878225817907584085/1878225817907584085.mp4",
-  "source_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68",
+  "source_sha256": "b29d32d6295b31b634ed494e66d656859bec66d5771a11363485da81876b687c",
   "method": "asr_cross_checked",
   "reviewer": "Codex /root/production_setup: multilingual tiny/base full and focused plus small focused reviewer",
   "reviewed_at": "2026-10-05T20:13:49.684732+00:00",
@@ -55,23 +55,27 @@
   "raw_evidence": [
     {
       "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/tiny-sky-full.json",
-      "sha256": "79d60b318180fb3df041dd6f2c1719a18278de1dfc5f60127e37b97fdee21c7a"
+      "sha256": "85a10df64b58315674e71bfc0fbcfcb6edac45a6a18e9abe7fba22a7640e8fda"
     },
     {
       "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/base-sky-full.json",
-      "sha256": "5245b5a4c74a3180c9d384dff30ed29750ec1cf8335f5da19ce2d0cc0b624a1e"
+      "sha256": "e86850220903ab09996e1eafa0734a18d02e951204c6c17e143cf2fecfd99f1a"
     },
     {
       "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/tiny-sky-candidate-windows.json",
-      "sha256": "07f94fef165262bbf77cd61f2c4c94b7a88909adee6e139de14b8ef6dcd9cc14"
+      "sha256": "b9502616e5a8529e029793dc637aae777610f75a1d41c5d30e461cd8d7ca11f0"
     },
     {
       "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/base-sky-candidate-windows.json",
-      "sha256": "e08d5dfc2c3236633ebb162b65897c31e47de2da0a950eb473abf972ae6e0ef5"
+      "sha256": "fb6d56970b2084331da11e3481a86cad64fef321566b079269e2595cdb823c36"
     },
     {
       "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/small-sky-emotion-third.json",
-      "sha256": "ab7fbe00e38bc8413b71de83aeeda514f55e674028707598356b71340e753e76"
+      "sha256": "641d57fee879afbda6dc5cc6564faad146c5c7e44c09649b781aa5bddf18bf2a"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/sky-remux-equivalence-proof.json",
+      "sha256": "310591b9129a33e1ed1268bfa64c6425a8065649c43943e3de74b0335d81b3ff"
     }
   ],
   "schema_compatibility_note": "The existing foreground_audio_gate en/foreground_english names are legacy bilingual-caption contract fields. This entry intentionally contains actual German, declared language de, and Chinese translation; it does not claim the source is English.",
@@ -79,7 +83,8 @@
     "Three ASR models independently recognize the same German sentence; base/small agree Tränen trocknen musste. Chinese proper name normalized from phonetic model variants to independently established Sun Xinran. No other lexical rewrite.",
     "Actual source PCM silencedetect -30dB/d0.02 records a phrase boundary41.313562–41.350062; small word timestamp musste ends41.33 and und starts41.33. Selected end41.33 falls inside that low-energy boundary before the next clause; it is not the old41.44 cut.",
     "Previous sentence ends before the measured34.066188–34.779333 pause. Selected34.39 begins inside that pause, before complete War onset.",
-    "No human listening claim; transcript/model disagreements, actual German language, exact frames, and waveform boundary measurements are retained."
+    "No human listening claim; transcript/model disagreements, actual German language, exact frames, and waveform boundary measurements are retained.",
+    "Original ASR source1d2... is retained in raw JSON and explicitly linked to archived sourceb29... by complete PCM/frame/encoded-packet/timeline identity. This binding change follows measured remux equivalence, not guessed source similarity or relabeled ASR."
   ],
   "subtitle_cues_source_absolute": [
     {
@@ -117,5 +122,18 @@
       "source_text": "War bitter enttäuscht nach dem ersten Satz, Sun Xinran, die sich erst mal die Tränen trocknen musste.",
       "zh": "首盘结束后，孙心然非常失望，先擦去了眼泪。"
     }
-  ]
+  ],
+  "source_identity_verified_at": "2026-10-05T20:36:33.328376+00:00",
+  "reviewed_source_remux_equivalence": {
+    "original_reviewed_source_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68",
+    "actual_archive_source_sha256": "b29d32d6295b31b634ed494e66d656859bec66d5771a11363485da81876b687c",
+    "proof": {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/sky-remux-equivalence-proof.json",
+      "sha256": "310591b9129a33e1ed1268bfa64c6425a8065649c43943e3de74b0335d81b3ff"
+    },
+    "complete_decoded_audio_equal": true,
+    "complete_decoded_video_equal": true,
+    "encoded_audio_and_video_packets_equal": true,
+    "same_packet_timeline": true
+  }
 }

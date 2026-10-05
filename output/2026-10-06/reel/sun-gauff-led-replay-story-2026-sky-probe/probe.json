@@ -558,9 +558,11 @@
       }
     ]
   },
-  "source_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68",
-  "probe_transport": "Official Sky Sport public HLS downloaded locally with native external audio; native build_match_reel probe via local reviewed file. Expected canonical release archive has been dispatched but not claimed downloaded.",
+  "source_sha256": "b29d32d6295b31b634ed494e66d656859bec66d5771a11363485da81876b687c",
+  "probe_transport": "Native builder probe used local official Sky HLS file. Canonical archive downloaded and verified: complete decoded audio, every decoded video frame, encoded packets and all PTS/DTS/duration match exactly; container differs by8bytes. Source hash now binds canonical archive; original probe hash retained.",
   "official_page": "https://sport.sky.de/tennis/artikel/gauff-bezwingt-16-jaehriges-wunderkind-in-peking/13595497/37577",
   "native_fps": "50/1",
-  "fps_probe_note": "Native ffprobe r_frame_rate=avg_frame_rate=50/1. Native builder probe reports fps25 after its documented exact factor-2 production downsample; the source remains 50fps and was not reencoded for research."
+  "fps_probe_note": "Native ffprobe r_frame_rate=avg_frame_rate=50/1. Native builder probe reports fps25 after its documented exact factor-2 production downsample; the source remains 50fps and was not reencoded for research.",
+  "original_probe_source_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68",
+  "archive_equivalence_proof": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/sky-remux-equivalence-proof.json"
 }

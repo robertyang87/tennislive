@@ -1417,5 +1417,16 @@
         }
       ]
     }
-  ]
+  ],
+  "reviewed_source_equivalence": {
+    "original_source_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68",
+    "archive_source_sha256": "b29d32d6295b31b634ed494e66d656859bec66d5771a11363485da81876b687c",
+    "proof": {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/sky-remux-equivalence-proof.json",
+      "sha256": "310591b9129a33e1ed1268bfa64c6425a8065649c43943e3de74b0335d81b3ff"
+    },
+    "original_asr_json_sha256": "5245b5a4c74a3180c9d384dff30ed29750ec1cf8335f5da19ce2d0cc0b624a1e",
+    "original_transcript_results_unchanged": true,
+    "note": "These original ASR results were computed on the reviewed local container. Source hash is intentionally retained, not relabeled. The archived container has identical complete decoded PCM, every decoded video frame, encoded audio/video packet content and packet timeline, verified in the linked proof."
+  }
 }
