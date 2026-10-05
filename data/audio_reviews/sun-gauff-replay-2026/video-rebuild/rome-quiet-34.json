@@ -1,0 +1,35 @@
+{
+  "source_url": "https://x.com/TennisChannel/status/1921973328903860370",
+  "source_sha256": "a2833fecdf30910f5b8ea765e4b9eede8ff04a87340caf169f14324f3f83b292",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex /root/production_setup: inspected independent raw ASR and exact source-frame evidence",
+  "reviewed_at": "2026-10-05T20:13:49.684732+00:00",
+  "reviewed_from": 34.04,
+  "reviewed_to": 44.3,
+  "status": "complete",
+  "foreground_english": [],
+  "foreground_speech": [],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "Small/medium full-source ruling ends33.82/33.64. New tiny/base focused34.04–58.00 both first detect speech only44.78. Trimming44.30 retains about0.48s guard before it; no speech in selected window.",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/rome-small.en.json",
+      "sha256": "6343c169461d86ee5f05af0d5e5d63ac6e55eff34a1acd573a4ba7230c9c8067"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/rome-medium.en.json",
+      "sha256": "0c90c2d5369b3bf11da8646dc621262590a0677b622fffe33adde61ac5850358"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/tiny.en-rome-candidate-windows.json",
+      "sha256": "1b6c071723d3b40ddef7620234dbf9793b55274e70288d3c3637859a957f8e80"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/base.en-rome-candidate-windows.json",
+      "sha256": "58a2354a68361b49c8293f03419180435f56240fc183e8ddac0f1b7940c43d1f"
+    }
+  ],
+  "review_basis": "Source identity bound by actual SHA; inspected full-source word intervals and independent focused-window model output. No human listening claim. Original soundtrack retained, not replaced or inferred absent from a mute flag.",
+  "visual_review": "Andreeva reacts to the replay ruling and walks toward chair on Rome clay; historical incident only.",
+  "recommended_audio_tail": "silence"
+}

@@ -1,0 +1,123 @@
+{
+  "sources": {
+    "main": {
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Wg6m85wS3Ps/Wg6m85wS3Ps.mp4",
+      "source_sha256": "79951bd5316ac8910ce6fc1200260c62492d1f791ed3690729dadeb7a6296b90"
+    },
+    "rome": {
+      "source_url": "https://x.com/TennisChannel/status/1921973328903860370",
+      "source_sha256": "a2833fecdf30910f5b8ea765e4b9eede8ff04a87340caf169f14324f3f83b292"
+    },
+    "sky": {
+      "source_url": "https://sport.sky.de/tennis/artikel/gauff-bezwingt-16-jaehriges-wunderkind-in-peking/13595497/37577",
+      "source_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68"
+    }
+  },
+  "selected": [
+    {
+      "basename": "main-sun-walk.json",
+      "source": "main",
+      "start": 22.0,
+      "end": 27.24,
+      "duration": 5.24,
+      "visual": "Sun walking and resetting after a first-set point; complete close-up, not the LED episode.",
+      "sound_evidence": "Both full-source models have no words here; focused tiny.en/base.en 19.30–27.24 independently emit no transcript. Start22.00 avoids the preceding last live-ball stroke at19s.",
+      "audio_tail": "silence"
+    },
+    {
+      "basename": "main-point-40.json",
+      "source": "main",
+      "start": 40.2,
+      "end": 55.0,
+      "duration": 14.8,
+      "visual": "Gauff service preparation followed by complete first-set deuce rally; dead-ball tail is short before commentary.",
+      "sound_evidence": "Focused tiny.en/base.en both emit no transcript; prior commentary ends39.80, next full-source English begins55.26. Actual0.2s visual samples show final stroke/dead ball near54.8–55.0; do not extend into55.26 English.",
+      "audio_tail": "silence"
+    },
+    {
+      "basename": "main-sun-breathe.json",
+      "source": "main",
+      "start": 157.72,
+      "end": 159.78,
+      "duration": 2.06,
+      "visual": "Sun breathing and looking ahead in close-up after ordinary first-set point.",
+      "sound_evidence": "Focused tiny.en/base.en both emit no transcript. Full-source words resume around160.3–160.6, after this selected window.",
+      "audio_tail": "silence"
+    },
+    {
+      "basename": "main-sun-close.json",
+      "source": "main",
+      "start": 172.6,
+      "end": 176.24,
+      "duration": 3.64,
+      "visual": "Sun close-up recovering her position and focus after an ordinary first-set point; not canceled point.",
+      "sound_evidence": "Focused tiny.en/base.en emit no transcript. Full-source words resume185.70 after the subsequent whole point.",
+      "audio_tail": "silence"
+    },
+    {
+      "basename": "main-point-176.json",
+      "source": "main",
+      "start": 176.24,
+      "end": 185.24,
+      "duration": 9.0,
+      "visual": "Gauff service close-up and complete first-set point ending before her next close-up.",
+      "sound_evidence": "Focused tiny.en/base.en emit no transcript; both full-source models have no words here. Visual0.2s samples184–188 show play stopped by184.6 with about0.64s retained tail; next English begins185.70.",
+      "audio_tail": "silence"
+    },
+    {
+      "basename": "main-point-231.json",
+      "source": "main",
+      "start": 231.28,
+      "end": 243.2,
+      "duration": 11.92,
+      "visual": "Complete second-set break-point rally, including official receiving close-up. General match footage only.",
+      "sound_evidence": "Tiny/base full-source word intervals are empty through243.20; next phrase starts243.32–243.34. Focused tiny/base231.28–243.14 emit no transcript. Existing independently reviewed selected-23128-24320 packet covers the full exact243.20 boundary with small/medium/large focused corroboration.",
+      "audio_tail": "silence"
+    },
+    {
+      "basename": "rome-quiet-34.json",
+      "source": "rome",
+      "start": 34.04,
+      "end": 44.3,
+      "duration": 10.26,
+      "visual": "Andreeva reacts to the replay ruling and walks toward chair on Rome clay; historical incident only.",
+      "sound_evidence": "Small/medium full-source ruling ends33.82/33.64. New tiny/base focused34.04–58.00 both first detect speech only44.78. Trimming44.30 retains about0.48s guard before it; no speech in selected window.",
+      "audio_tail": "silence"
+    },
+    {
+      "basename": "rome-quiet-90.json",
+      "source": "rome",
+      "start": 90.5,
+      "end": 97.0,
+      "duration": 6.5,
+      "visual": "Rome chair and player exchange gestures, historical ruling aftermath; no Beijing attribution.",
+      "sound_evidence": "Small/medium prior utterance ends90.02/90.04, next begins97.60/97.68. New focused tiny/base90.50–97.00 both emit no transcript.",
+      "audio_tail": "silence"
+    },
+    {
+      "basename": "sky-handshake.json",
+      "source": "sky",
+      "start": 78.7,
+      "end": 87.9,
+      "duration": 9.2,
+      "visual": "Both players walk from net toward chair, greet the umpire; Sun then leaves foreground. Actual match end, not LED-point aftermath.",
+      "sound_evidence": "Independent multilingual tiny/base full-source German commentary ends78.20/78.10. Focused multilingual tiny/base78.70–87.90, language de, both emit no transcript. Native source still has actual stadium atmosphere; no mute or alternate soundtrack used.",
+      "audio_tail": "silence"
+    },
+    {
+      "basename": "sky-emotion-de.json",
+      "source": "sky",
+      "start": 34.39,
+      "end": 41.33,
+      "duration": 6.94,
+      "quote_language": "de",
+      "word_count": 17,
+      "quote": "War bitter enttäuscht nach dem ersten Satz, Sun Xinran, die sich erst mal die Tränen trocknen musste.",
+      "translation": "首盘结束后，孙心然非常失望，先擦去了眼泪。",
+      "audio_tail": "silence"
+    }
+  ],
+  "quiet_total_seconds": 72.62,
+  "selected_total_seconds": 79.56,
+  "binding_status": "UNBOUND: parent must map final segment indices, update source_url to the final exact source recipe, hash packets, and regenerate plan_sha256 manifest. Do not change source_sha256 unless the actual reviewed bytes are replaced and verified."
+}

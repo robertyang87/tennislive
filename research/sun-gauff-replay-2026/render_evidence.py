@@ -36,7 +36,7 @@ h2{{font-size:44px;line-height:1.3;margin:0 0 12px}}p{{font-size:36px;line-heigh
 """
 
 def page(kicker, title, body, footer):
-    return '<!DOCTYPE html><html lang="zh"><meta charset="utf-8"><style>'+CSS+'</style><body><main class="page"><div class="eyebrow">'+kicker+'</div><h1>'+title+'</h1>'+body+'<div class="foot">'+footer+'</div></main></body></html>'
+    return '<!DOCTYPE html><html lang="zh"><meta charset="utf-8"><style>'+CSS+'</style><body><main class="page"><div class="eyebrow">'+kicker+'</div><h1>'+title+'</h1>'+body+'</main></body></html>'
 
 PAGES = {
     'score-before': page('BEIJING 2026 · 这一分发生时', '孙心然领先<br>高芙正在发球', '''
@@ -81,9 +81,9 @@ if __name__ == '__main__':
             tab.set_content(html)
             tab.evaluate('document.fonts.ready')
             overflow = tab.evaluate('''() => [...document.querySelectorAll('h1,h2,p,.foot')].filter(e=>e.scrollWidth>e.clientWidth+1).map(e=>e.innerText)''')
-            bottoms = tab.evaluate('''() => {const foot=document.querySelector('.foot').getBoundingClientRect().top;return [...document.querySelector('.page').children].filter(e=>!e.classList.contains('foot') && e.getBoundingClientRect().bottom>foot-15).map(e=>e.innerText)}''')
+            bottoms = tab.evaluate('''() => {const foot=1044;return [...document.querySelector('.page').children].filter(e=>!e.classList.contains('foot') && e.getBoundingClientRect().bottom>foot-15).map(e=>e.innerText)}''')
             if bottoms:
-                raise ValueError((name, 'footer overlap', bottoms))
+                raise ValueError((name, 'bottom safe area overlap', bottoms))
             if overflow:
                 raise ValueError((name, overflow))
             tab.screenshot(path=str(OUT / (name+'.jpg')), type='jpeg', quality=96)

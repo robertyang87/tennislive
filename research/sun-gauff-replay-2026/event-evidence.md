@@ -74,3 +74,25 @@
 ## 建议事件叙述口径
 
 她离赢下这一盘很近，所以这次重打特别让人遗憾。裁判认定场边 LED 在回合中闪动，原本可能来到 15-30 的局面回到了 15-15。高芙赢下重打的一分，并保住了这一局。孙心然随后落泪，她自己的解释是：看见机会从眼前流失。把规则和保障讲清楚，也给一个 16 岁球员留下继续成长的空间；期待来自她本场已经做到的竞争力，以及她自己说会继续努力。
+
+## 追加复核：不能断言“输完这分才首次举手”
+
+用户提供的抖音 `7693204834988694441` 已下载并逐帧视看，全片33.6秒只包含孙坐椅、低头、擦脸、喝水等情绪，没有LED/申诉/审查/重打完整过程。其“高芙玩不起/委屈”标题不能作为动机、违规或心理因果证据。
+
+新浪聚合 [中网赛果帖](https://www.sina.cn/news/detail/5350809453724560.html)正文顶部为中网认证官方账号，但底部推荐的回放文字来自另一作者，**不是主办方回应**。回放短链 [AXWrxZeC](https://t.cn/AXWrxZeC)指向[欧阳文升微博视频](https://h5.video.weibo.com/show/1034:5350804031471716)，真实发布者为非官方体育博主 `Tennis欧阳文升`，视频185.712秒。仅作事实研究；scratch原片 `weibo-ouyang-incident.mp4`，hash及脱敏来源见 `weibo-incident-research-provenance.json`。
+
+[慢动作短链AXWrIhDE](https://t.cn/AXWrIhDE)指向[毛毛还活着-TennisAlive微博视频](https://h5.video.weibo.com/show/1034:5350801573609489)，32.832秒，亦非官方体育博主。scratch原片 `weibo-tennisalive-slow.mp4`。已视看每0.5秒contact，末段原回合慢放放大。
+
+关键静帧：慢动作视频28.4秒，scratch `slow-end-08.jpg`（ffmpeg从27秒起fps5抽帧第8张）。可见孙远端追球、伸拍、球仍在拍前，高芙网前已举左手朝主裁。29.4秒 `slow-end-13.jpg`高芙手已放下。**这足以要求撤回“丢完整分后才首次举手”的确定措辞。** 但抬手不等于已证实口头叫停，不等于正式视频复核申请时间；尚没有人工听原声，不断言“当场已经叫停”。
+
+[TennisNow](https://tennisnow.com/gauff-outshines-sun-for-beijing-round-of-16/)叙述丢分后成功申请复核，[Tennis365](https://www.tennis365.com/tennis-news/coco-gauff-china-open-controversy-novak-djokovic-stupid-rule)却描述在孙即将得分前停止并嵌非官方近景。需区分“回合末举手”与“随后正式申请”。成片可保持：高芙在回合末举手示意，随后提出LED干扰审查，VAR确认闪动并判重打。视频回看核查干扰，不是判断落点；申请时机的合法性要依本届赛事具体程序，不靠网友动机推断。
+
+欧阳文升视频窗口（研究事实，不能转为官方成片素材）：0–约18秒原分（高芙局分4/孙5、15-15）；20–60秒高芙向主裁交流；65–70秒VIDEO REVIEW IN PROGRESS；85–102秒原回合回放；110–130秒主裁说明/孙靠近椅前；145秒后准备恢复及再次交谈。片内未含重打获胜分完整回合。
+
+Sky Sport官方公开集锦已获取原生1920×1080/50fps+AAC，仅含后续5-5、SET POINT与第一盘后的擦脸情绪；同样没LED审查片。其34–38秒动作与用户抖音相同，**不能剪成事故实时反应**。来源页和本地字节hash见 `sky-highlight-provenance.json`；production_setup核全轨为德语播报，不能称纯现场声。
+
+## 尚待本人原帖核验：高芙社交回应截图
+
+[Reddit研究线索](https://www.reddit.com/r/tennis/comments/1wyh1bp/cocos_response/)转载[图片](https://i.redd.it/elzd5b4t4pth1.jpeg)，已下载并实际视看，scratch `coco-response-reddit.jpeg`。图片显示蓝标 `cocogauff` 评论（28m 相对时标，没有绝对日期或原帖 permalink）。截图称：开头闪动不确定；赛前被告知可完成回合后复核；再次闪动时在孙击球前举手；赛后为情况向孙致歉且孙理解；看到孙情绪受影响她也感同身受，并期待其职业未来。该内容与可视举手动作相容，但不能反过来将球员理解视为规则原文。**尚未找到本人IG/X原帖或可信媒体独立核验该截图，暂不将其用作已认证本人回应，不引述其中完整原文。**
+
+追加官方源追索：已按 LED/闪动/干扰/重打/裁判/高芙/孙心然组合搜索咪咕官方微博、赛事官方、WTA、TennisChannel、Sky和CCTV视频；得到咪咕其他回合与赛后采访官方条目，但事故完整片只有非官方欧阳文升/TennisAlive转载。官方咪咕独家采访与发布会metadata重取仍只有地区限制locallimit.us三档MP4、stream_url=null，没有公开合法f.video/HLS备选，未猜换host或签名。B站咪咕公开API返回412；没有绕过其限制或假装拿到媒体。

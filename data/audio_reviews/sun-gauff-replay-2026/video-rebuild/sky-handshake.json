@@ -1,0 +1,39 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-1878225817907584085/1878225817907584085.mp4",
+  "source_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex /root/production_setup: inspected independent raw ASR and exact source-frame evidence",
+  "reviewed_at": "2026-10-05T20:13:49.684732+00:00",
+  "reviewed_from": 78.7,
+  "reviewed_to": 87.9,
+  "status": "complete",
+  "foreground_english": [],
+  "foreground_speech": [],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "Independent multilingual tiny/base full-source German commentary ends78.20/78.10. Focused multilingual tiny/base78.70–87.90, language de, both emit no transcript. Native source still has actual stadium atmosphere; no mute or alternate soundtrack used.",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/tiny-sky-full.json",
+      "sha256": "79d60b318180fb3df041dd6f2c1719a18278de1dfc5f60127e37b97fdee21c7a"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/base-sky-full.json",
+      "sha256": "5245b5a4c74a3180c9d384dff30ed29750ec1cf8335f5da19ce2d0cc0b624a1e"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/tiny-sky-candidate-windows.json",
+      "sha256": "07f94fef165262bbf77cd61f2c4c94b7a88909adee6e139de14b8ef6dcd9cc14"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/base-sky-candidate-windows.json",
+      "sha256": "e08d5dfc2c3236633ebb162b65897c31e47de2da0a950eb473abf972ae6e0ef5"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/small-sky-emotion-third.json",
+      "sha256": "ab7fbe00e38bc8413b71de83aeeda514f55e674028707598356b71340e753e76"
+    }
+  ],
+  "review_basis": "Source identity bound by actual SHA; inspected full-source word intervals and independent focused-window model output. No human listening claim. Original soundtrack retained, not replaced or inferred absent from a mute flag.",
+  "visual_review": "Both players walk from net toward chair, greet the umpire; Sun then leaves foreground. Actual match end, not LED-point aftermath.",
+  "recommended_audio_tail": "silence"
+}
