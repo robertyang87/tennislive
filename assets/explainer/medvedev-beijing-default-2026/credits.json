@@ -28,8 +28,20 @@
       1920,
       1080
     ],
-    "processing": "Uncropped single original video frame, no fabricated visual details.",
-    "coverage": "Real match frame; score/action/aftermath as visible. Does not establish medical diagnosis or fine."
+    "processing": "Native video stream processed with FFmpeg delogo only in the fixed Tennis TV platform watermark region (x1572 y36 w296 h84), then a real frame extracted at the recorded source time. No crop, no AI/generative image editing, no changes to players, ball, scoreboard or event action. Lossless intermediate comparison confirms zero changed decoded pixels outside that region before JPEG export.",
+    "coverage": "Real match frame; score/action/aftermath as visible. Does not establish medical diagnosis or fine.",
+    "production_size": [
+      1920,
+      1080
+    ],
+    "sha256": "eb5222e2dcbd8a140c02cb4382f4002c9bc23e21b5ed1e5ce1a76dc5ad18e9fe",
+    "platform_logo_processing": {
+      "filter": "delogo=x=1572:y=36:w=296:h=84",
+      "applied_to": "original native video stream before still extraction",
+      "source_video_and_untreated_frames": "Retained in research archive; original author/source unchanged.",
+      "outside_region_changed_decoded_pixels": 0,
+      "visual_review": "Inspected the actual full-size processed JPEG: Tennis TV mark is not discernible, original score/action/subjects remain intact. Arena and sponsor signage retained."
+    }
   },
   "incident-swat-source.jpg": {
     "file": "assets/explainer/medvedev-beijing-default-2026/incident-swat-source.jpg",
@@ -41,8 +53,20 @@
       1920,
       1080
     ],
-    "processing": "Uncropped single original video frame, no fabricated visual details.",
-    "coverage": "Real match frame; score/action/aftermath as visible. Does not establish medical diagnosis or fine."
+    "processing": "Native video stream processed with FFmpeg delogo only in the fixed Tennis TV platform watermark region (x1572 y36 w296 h84), then a real frame extracted at the recorded source time. No crop, no AI/generative image editing, no changes to players, ball, scoreboard or event action. Lossless intermediate comparison confirms zero changed decoded pixels outside that region before JPEG export.",
+    "coverage": "Real match frame; score/action/aftermath as visible. Does not establish medical diagnosis or fine.",
+    "production_size": [
+      1920,
+      1080
+    ],
+    "sha256": "2a31a71b68d4cd82b2e6fb7500d4efe119ab480e44b933bcdbfb008ed3ef0e4c",
+    "platform_logo_processing": {
+      "filter": "delogo=x=1572:y=36:w=296:h=84",
+      "applied_to": "original native video stream before still extraction",
+      "source_video_and_untreated_frames": "Retained in research archive; original author/source unchanged.",
+      "outside_region_changed_decoded_pixels": 0,
+      "visual_review": "Inspected the actual full-size processed JPEG: Tennis TV mark is not discernible, original score/action/subjects remain intact. Arena and sponsor signage retained."
+    }
   },
   "incident-handshake-source.jpg": {
     "file": "assets/explainer/medvedev-beijing-default-2026/incident-handshake-source.jpg",
@@ -54,8 +78,20 @@
       1920,
       1080
     ],
-    "processing": "Uncropped single original video frame, no fabricated visual details.",
-    "coverage": "Real match frame; score/action/aftermath as visible. Does not establish medical diagnosis or fine."
+    "processing": "Native video stream processed with FFmpeg delogo only in the fixed Tennis TV platform watermark region (x1572 y36 w296 h84), then a real frame extracted at the recorded source time. No crop, no AI/generative image editing, no changes to players, ball, scoreboard or event action. Lossless intermediate comparison confirms zero changed decoded pixels outside that region before JPEG export.",
+    "coverage": "Real match frame; score/action/aftermath as visible. Does not establish medical diagnosis or fine.",
+    "production_size": [
+      1920,
+      1080
+    ],
+    "sha256": "3b8b636a2418b316ff4aa128ef03ab41cae5cab85ef95e5c1a1fdcc2e79d0194",
+    "platform_logo_processing": {
+      "filter": "delogo=x=1572:y=36:w=296:h=84",
+      "applied_to": "original native video stream before still extraction",
+      "source_video_and_untreated_frames": "Retained in research archive; original author/source unchanged.",
+      "outside_region_changed_decoded_pixels": 0,
+      "visual_review": "Inspected the actual full-size processed JPEG: Tennis TV mark is not discernible, original score/action/subjects remain intact. Arena and sponsor signage retained."
+    }
   },
   "djokovic2020-lineswoman-ap-2000.jpg": {
     "id": "djokovic2020_lineswoman",

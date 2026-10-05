@@ -1,0 +1,80 @@
+{
+  "method": "ffmpeg delogo on native video stream first; lossless FFV1 348–370s intermediate; still extraction from processed video, JPEG q:v2. No AI/generative image edits.",
+  "delogo": {
+    "x": 1572,
+    "y": 36,
+    "w": 296,
+    "h": 84
+  },
+  "original_video": "/workspace/research-media/LgRD3TLoxr0.mp4",
+  "processed_video": "/workspace/research-media/default-evidence-history/beijing-delogo/source-348-370-delogo-lossless.mkv",
+  "frames": [
+    {
+      "asset": "incident-score-source.jpg",
+      "source_second": 359.2,
+      "original_png": "/workspace/research-media/default-evidence-history/beijing-delogo/incident-score-source-original.png",
+      "processed_png": "/workspace/research-media/default-evidence-history/beijing-delogo/incident-score-source-processed.png",
+      "processed_jpeg": "/workspace/research-media/default-evidence-history/beijing-delogo/incident-score-source.jpg",
+      "production_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "eb5222e2dcbd8a140c02cb4382f4002c9bc23e21b5ed1e5ce1a76dc5ad18e9fe",
+      "outside_local_logo_region_changed_pixels": 0,
+      "outside_local_logo_region_max_error": 0,
+      "changed_bounds": [
+        1572,
+        36,
+        1868,
+        120
+      ]
+    },
+    {
+      "asset": "incident-swat-source.jpg",
+      "source_second": 357.0,
+      "original_png": "/workspace/research-media/default-evidence-history/beijing-delogo/incident-swat-source-original.png",
+      "processed_png": "/workspace/research-media/default-evidence-history/beijing-delogo/incident-swat-source-processed.png",
+      "processed_jpeg": "/workspace/research-media/default-evidence-history/beijing-delogo/incident-swat-source.jpg",
+      "production_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "2a31a71b68d4cd82b2e6fb7500d4efe119ab480e44b933bcdbfb008ed3ef0e4c",
+      "outside_local_logo_region_changed_pixels": 0,
+      "outside_local_logo_region_max_error": 0,
+      "changed_bounds": [
+        1572,
+        36,
+        1868,
+        120
+      ]
+    },
+    {
+      "asset": "incident-handshake-source.jpg",
+      "source_second": 367.0,
+      "original_png": "/workspace/research-media/default-evidence-history/beijing-delogo/incident-handshake-source-original.png",
+      "processed_png": "/workspace/research-media/default-evidence-history/beijing-delogo/incident-handshake-source-processed.png",
+      "processed_jpeg": "/workspace/research-media/default-evidence-history/beijing-delogo/incident-handshake-source.jpg",
+      "production_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "3b8b636a2418b316ff4aa128ef03ab41cae5cab85ef95e5c1a1fdcc2e79d0194",
+      "outside_local_logo_region_changed_pixels": 0,
+      "outside_local_logo_region_max_error": 0,
+      "changed_bounds": [
+        1572,
+        36,
+        1868,
+        120
+      ]
+    }
+  ],
+  "visual_review": "All three actual full-size JPEG assets reviewed. No discernible Tennis TV watermark letters/icon remain; no player/ball/scoreboard obstruction. The score and swat frames use nearly uniform blue sign background under the removed mark; the handshake frame has a small smooth background patch high above all subjects, without a conspicuous block or reconstructed event detail.",
+  "project_assets_updated": [
+    "/workspace/tennislive/assets/explainer/medvedev-beijing-default-2026/incident-score-source.jpg",
+    "/workspace/tennislive/assets/explainer/medvedev-beijing-default-2026/incident-swat-source.jpg",
+    "/workspace/tennislive/assets/explainer/medvedev-beijing-default-2026/incident-handshake-source.jpg"
+  ],
+  "credits_updated": "/workspace/tennislive/assets/explainer/medvedev-beijing-default-2026/credits.json"
+}

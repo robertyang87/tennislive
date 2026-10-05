@@ -1,157 +1,166 @@
 {
   "slug": "medvedev-beijing-default-2026",
   "checked_at": "2026-10-06",
-  "status": "superseded_pending_evidence_render",
-  "render_run": 37338109166,
-  "render_source_head": "647e7f9f94074a9d83b799a4eb339849b5e21bd9",
+  "status": "superseded_pending_platform_and_annotation_render",
+  "render_run": 37347591627,
+  "render_source_head": "ef317c20c99cd1a8529c63bd7de06848d8dfbc67",
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-medvedev-beijing-default-2026/explainer.mp4",
-  "film_sha256": "76bdcaff1d7611ed4aac7b68e0c119181c3c5f2823bc03cec03c31f84eb6845e",
-  "film_bytes": 11504376,
-  "duration_seconds": 254.033333,
+  "film_sha256": "259de47bf074bd60bf652106ea9b7ebe432609767cbbb78694c629366e323a2a",
+  "film_bytes": 20469977,
+  "duration_seconds": 263.433333,
   "width": 1080,
   "height": 1440,
   "fps": "30/1",
-  "av_duration_difference": 0.075333,
-  "episode_content_sha256": "2361ca5dc8860be1b3a37ab06a0c08716289908788e268cb277d89454f76992d",
-  "full_bleed_reason": "User explicitly specified 3:4 and clarified 铺满画布; native 1080x1440 cards and cropped footage/outro fill that canvas without letterboxing.",
-  "source": {
-    "official_channel": "Tennis TV",
-    "identity_proof": "https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=LgRD3TLoxr0&format=json",
-    "reference_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
-    "source_range_seconds": [
-      349,
-      369
-    ],
-    "source_dimensions": [
-      1920,
-      1080
-    ],
-    "coverage": "Final point, subsequent swat into stands, edited aftermath and handshake. Official highlights omit full referee deliberation and injury assessment. Portrait crop does not preserve entire wide broadcast frame.",
-    "score_verified": "Djokovic 7–5 5–3; point score 15–15 at incident",
-    "original_audio_review": "faster-whisper small.en independently cross-checked with base.en and tiny.en; names corrected and leading Well restored. No claim of human listening.",
-    "subtitle_file": "assets/explainer/medvedev-beijing-default-2026/incident-intro.ass"
-  },
+  "av_duration_difference": 0.067333,
   "visual_checks": {
     "frames_reviewed_seconds": [
-      4,
-      8,
-      15,
-      22,
-      35,
-      52,
-      65,
-      80,
-      96,
-      112,
-      128,
-      143,
-      160,
-      180,
-      199,
-      220,
-      240,
-      248,
-      252
+      4.0,
+      8.0,
+      15.0,
+      22.0,
+      30.0,
+      38.0,
+      46.0,
+      54.0,
+      62.0,
+      70.0,
+      78.0,
+      86.0,
+      94.0,
+      102.0,
+      110.0,
+      118.0,
+      126.0,
+      134.0,
+      142.0,
+      150.0,
+      158.0,
+      166.0,
+      174.0,
+      182.0,
+      190.0,
+      198.0,
+      206.0,
+      214.0,
+      222.0,
+      230.0,
+      238.0,
+      246.0,
+      254.0,
+      260.433333
     ],
     "cards": 14,
-    "logo": "Original tennis-clock ball at upper left on cover, intro and cards; branded outro retained.",
+    "layout": "Deep-blue editorial layouts, original template fonts at weight400, content headings56px vs independent larger cover; no left-lower source footnotes; typography uses restrained white and fine rules.",
     "cover_gloss": "失格 Default · 滥用球 Ball Abuse",
-    "layout": "Native full-screen 1080×1440 cover/cards; subtitles and outro fit portrait frame. Deep-blue rules diagrams, two-line semantic titles.",
-    "caption_correction_frame": "Final intro checked for Well, can you believe it? at 8s."
+    "logo": "Original ball/clock upper-left, retained branded outro",
+    "font_coverage": "fontTools cmap verified all final Chinese heading glyphs in SmileySans-Oblique.woff2 and all visual copy in NotoSansSC-Regular-sub.ttf; no system-font fallback for new Chinese characters.",
+    "source_footnotes": "All content pages omit lower-left citation block; provenance preserved in credits and research."
   },
   "audio": {
     "voice": "zh-CN-YunjianNeural",
     "rate": "+22%",
     "segments": 14,
-    "mean_db": -23.8,
-    "max_db": -3.2,
+    "mean_db": -23.9,
+    "max_db": -3.0,
     "non_silent_windows": [
       {
-        "start": 8,
+        "start": 8.0,
         "mean_db": -24.1,
         "max_db": -7.9
       },
       {
-        "start": 35,
-        "mean_db": -24.0,
-        "max_db": -4.0
+        "start": 32.0,
+        "mean_db": -23.6,
+        "max_db": -5.0
       },
       {
-        "start": 52,
-        "mean_db": -22.7,
-        "max_db": -5.9
-      },
-      {
-        "start": 65,
-        "mean_db": -23.4,
-        "max_db": -5.8
-      },
-      {
-        "start": 80,
-        "mean_db": -26.5,
-        "max_db": -6.5
-      },
-      {
-        "start": 96,
-        "mean_db": -23.0,
-        "max_db": -5.5
-      },
-      {
-        "start": 112,
-        "mean_db": -22.7,
-        "max_db": -5.9
-      },
-      {
-        "start": 128,
-        "mean_db": -25.1,
+        "start": 48.0,
+        "mean_db": -24.9,
         "max_db": -7.7
       },
       {
-        "start": 143,
-        "mean_db": -23.1,
-        "max_db": -4.6
+        "start": 64.0,
+        "mean_db": -22.5,
+        "max_db": -5.5
       },
       {
-        "start": 160,
-        "mean_db": -24.7,
-        "max_db": -6.8
+        "start": 80.0,
+        "mean_db": -22.5,
+        "max_db": -6.0
       },
       {
-        "start": 180,
-        "mean_db": -25.2,
-        "max_db": -4.8
+        "start": 96.0,
+        "mean_db": -23.8,
+        "max_db": -5.5
       },
       {
-        "start": 199,
-        "mean_db": -23.6,
-        "max_db": -4.6
+        "start": 112.0,
+        "mean_db": -24.3,
+        "max_db": -5.1
       },
       {
-        "start": 220,
-        "mean_db": -22.0,
-        "max_db": -6.3
+        "start": 128.0,
+        "mean_db": -21.9,
+        "max_db": -7.1
       },
       {
-        "start": 240,
-        "mean_db": -25.3,
+        "start": 144.0,
+        "mean_db": -22.9,
+        "max_db": -7.0
+      },
+      {
+        "start": 160.0,
+        "mean_db": -23.0,
+        "max_db": -4.9
+      },
+      {
+        "start": 176.0,
+        "mean_db": -23.3,
+        "max_db": -6.5
+      },
+      {
+        "start": 192.0,
+        "mean_db": -25.5,
+        "max_db": -5.6
+      },
+      {
+        "start": 208.0,
+        "mean_db": -23.9,
+        "max_db": -4.1
+      },
+      {
+        "start": 224.0,
+        "mean_db": -24.6,
+        "max_db": -5.8
+      },
+      {
+        "start": 240.0,
+        "mean_db": -25.5,
+        "max_db": -6.6
+      },
+      {
+        "start": 256.0,
+        "mean_db": -27.7,
         "max_db": -8.4
       }
     ]
   },
-  "validation": {
-    "targeted_tests": "3 episode regression checks plus project canvas default check passed after explicit 3:4 correction",
-    "preflight": "17/17 pass",
-    "artifact_content": "All current-match, rules and five historical-case labels found in generated text/ASS/word timing artifacts. Release size matches render.json.",
-    "ci": "Current final branch head must pass CI before merge; workflow record provides that evidence.",
-    "independent_text_qc": "fact_check agent reviewed current match, rules and five historical cases; WO/no-score explanation and penalty escalation corrected and rechecked, no remaining text blockers.",
-    "publication_fingerprint": "QC annotates narration.json with the actual film SHA256 and canvas so this corrected render has its own publish key; prior sent ledger attempt remains intact."
-  },
+  "evidence": "docs/research/medvedev-beijing-default-2026-source-story.json; assets/explainer/medvedev-beijing-default-2026/credits.json",
+  "original_audio_review": "Two official excerpts with bilingual ASS; cross-model ASR, no claim of human listening. The Rublev excerpt retains the source whole square frame, watermark and scoreboard inside an entirely designed3:4 canvas.",
   "known_limits": [
-    "Spectator diagnosis, actual Medvedev fine and any further suspension not confirmed; no invented amounts or medical claims.",
-    "Historical incidents assessed under their contemporary rules; 2026 ATP provisions not applied retroactively.",
-    "Indexed March/April 2026 ATP revisions not fully fetched; do not claim all revisions compared."
+    "Spectator diagnosis, actual Medvedev fine and further suspension unconfirmed.",
+    "2020 US Open case used its contemporary Grand Slam rules, not retroactive2026 ATP provisions.",
+    "Kato June9 meeting is subsequent to the June4 incident and June8 mixed title; no claim of incident footage.",
+    "Official clips are edited source material; full supervisor deliberation is not included."
   ],
-  "delivery_status_reference": "data/explainer_publish_ledger/medvedev-beijing-default-2026.json; no publication claim without sent receipt",
-  "publish_fingerprint": "e340a97d25744bab6763cf2adbd84121ef341be8c8d24d70d7dba100447a41eb",
-  "superseded_reason": "User requested authentic evidence, stronger story cards, dark backgrounds and distinct content typography; prior film QC does not authorize this revision."
+  "validation": {
+    "preflight": "17/17 pass",
+    "targeted_tests": "174 relevant checks passed before the final caption shortening; the two caption/preflight regressions then passed alongside5 episode/native-insert checks. Final exact-head CI required before merge.",
+    "independent_preview_qc": "fact_check agent reviewed all14 final editorial previews and13 rewritten beats, with no blockers.",
+    "film_visual": "Root reviewed35 actual film frames including all14 cards, two native-video intervals and branded outro: no white evidence panels, content font56 weight400, intact cover logo/gloss, no left-lower citations, subtitles readable with no explicit multiline cues.",
+    "delivery": "Real new fingerprint, sent receipt and message URL required before completion"
+  },
+  "episode_content_sha256": "3e733dd6a5fe7d642cbf725555ea243bcaa62dd58a5c147ad018a3ff6b87474b",
+  "publish_fingerprint": "5feb027348ae6cbda80767f1053cd5f6f17669a179f2eba7143a440b27ed73e6",
+  "superseded_reason": "User additionally requested clean platform branding, unchanged upper-left subtitle and bottom editorial annotation with right-side vertical line. Prior film QC applies only to prior hash."
 }

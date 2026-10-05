@@ -9,7 +9,11 @@
     "3:4铺满画布、保留logo与中英文规则名",
     "内容页不要左下角引用小字",
     "字体沿用原格式",
-    "克制、精美、优雅的杂志感，去掉AI口号"
+    "克制、精美、优雅的杂志感，去掉AI口号",
+    "清理TennisTV/WTA等第三方平台标识",
+    "左上副标题始终不变",
+    "参照24冠23城右侧竖线字卡，使用视频下方留白加入说明",
+    "多智能体协同并行快速制作"
   ],
   "narrative": "本场分后击球 → 德约2020旧案 → 直接失格与常规阶梯 → 纳尔班迪安和沙波瓦洛夫 → 加藤女双失格及混双夺冠 → 卢布列夫完整官方回合、分后交涉和处罚申诉 → 本案未确认后果",
   "official_video": [
@@ -63,7 +67,49 @@
     "cover": "保持独立大标题、原始左上logo、失格 Default · 滥用球 Ball Abuse",
     "source_display": "不显示左下引用小字；可核验的来源及摄影署名完整保留在credits和研究记录，赛事/年份/规则编号保留",
     "font": "与原模板完全相同：标题/品牌TL Display SC 400；正文TL Sans SC；数字TL Score；台头字号38与27、字重400与700；不使用800模拟加粗。原文图片中的英文字体来自规则PDF，不重打。",
-    "editorial_revision": "取消亮绿第二行、巨大装饰年份、粗体重点、白底证据板和左下引用；具体新闻叙述替代口号，以完整实拍和细分隔线组织信息，深蓝画布留出字幕安全区。"
+    "editorial_revision": "取消亮绿第二行、巨大装饰年份、粗体重点、白底证据板和左下引用；具体新闻叙述替代口号，以完整实拍和细分隔线组织信息，深蓝画布留出字幕安全区。",
+    "persistent_topic": "中网德梅之战 · 失格规则与历史",
+    "native_annotation": {
+      "position": "bottom",
+      "line_side": "right",
+      "phases": [
+        {
+          "start": 0,
+          "end": 9,
+          "title": "2024迪拜半决赛",
+          "detail": "卢布列夫 vs 布勃利克"
+        },
+        {
+          "start": 9,
+          "end": 21.5,
+          "title": "2024迪拜半决赛",
+          "detail": "分后与司线员交涉"
+        },
+        {
+          "start": 21.5,
+          "end": 30,
+          "title": "2024迪拜半决赛",
+          "detail": "随后被判失格"
+        }
+      ]
+    },
+    "platform_marks": {
+      "beijing_source_bbox": [
+        1572,
+        36,
+        296,
+        84
+      ],
+      "rublev_source_bbox": [
+        24,
+        22,
+        294,
+        84
+      ],
+      "method": "FFmpeg视频流局部delogo，仅平台固定标识；北京证据图从处理后视频抽帧，不改原始研究素材。",
+      "guard": "不得遮记分板、人物、关键动作；原始来源仍在credits。",
+      "evidence": "assets/explainer/medvedev-beijing-default-2026/platform-logo-processing.json; platform-logo-bounds.json"
+    }
   },
   "limits": [
     "加藤六月四日事故原始官方影像未取得，内部记录缺口；观众旁白只讲事实和准确标注的赛后照片",

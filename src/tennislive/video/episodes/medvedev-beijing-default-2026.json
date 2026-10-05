@@ -26,10 +26,46 @@
         "end": 30,
         "subtitles": "assets/explainer/medvedev-beijing-default-2026/rublev-first30-bilingual.ass",
         "fit": "original",
-        "topic": "2024迪拜 · 卢布列夫分后交涉",
+        "topic": "中网德梅之战 · 失格规则与历史",
         "credit": "Tennis TV 官方X @TennisTV · 2024.03.01",
-        "source_url": "https://x.com/TennisTV/status/1763593166693834981"
+        "source_url": "https://x.com/TennisTV/status/1763593166693834981",
+        "remove_logo_bbox": [
+          24,
+          22,
+          294,
+          84
+        ],
+        "annotation": {
+          "position": "bottom",
+          "line_side": "right",
+          "phases": [
+            {
+              "start": 0,
+              "end": 9,
+              "title": "2024迪拜半决赛",
+              "detail": "卢布列夫 vs 布勃利克"
+            },
+            {
+              "start": 9,
+              "end": 21.5,
+              "title": "2024迪拜半决赛",
+              "detail": "分后与司线员交涉"
+            },
+            {
+              "start": 21.5,
+              "end": 30,
+              "title": "2024迪拜半决赛",
+              "detail": "随后被判失格"
+            }
+          ]
+        }
       }
+    ],
+    "intro_remove_logo_bbox": [
+      1572,
+      36,
+      296,
+      84
     ]
   },
   "caption": {
@@ -487,7 +523,10 @@
     "rules_version": "2026 ITF-hosted ATP full book and official Jan25 chapter verified; March31 chapter indexed but fetch403, not claimed as line-by-line checked",
     "point_score_note": "Tennis TV提供的记分板已确认事发时15–15。",
     "delivery_evidence": "docs/research/medvedev-beijing-default-2026-qc.json; output/2026-10-06/explainer/medvedev-beijing-default-2026/render.json; data/explainer_publish_ledger/medvedev-beijing-default-2026.json",
-    "evidence_display": "真实PDF短引仅显示反相浅字，资产原图不变；不显示左下引用。杂志式深蓝排版，标题56px、TL Display SC 400；正文TL Sans SC 400/700，保留原品牌字号与字体；取消大面积亮绿和模拟800粗体。"
+    "evidence_display": "真实PDF短引仅显示反相浅字，资产原图不变；不显示左下引用。杂志式深蓝排版，标题56px、TL Display SC 400；正文TL Sans SC 400/700，保留原品牌字号与字体；取消大面积亮绿和模拟800粗体。",
+    "platform_marks": "仅按固定原片像素bbox局部处理平台水印，再抽真实帧；原始无处理素材和来源保留。不得改球员、关键动作、记分板或赛果。",
+    "persistent_topic": "中网德梅之战 · 失格规则与历史",
+    "native_annotation": "参考24冠23城字卡，说明置视频下方留白，文字右对齐、竖线右侧，按过程分阶段，与原声中英字幕互斥。"
   },
   "research_references": [
     {

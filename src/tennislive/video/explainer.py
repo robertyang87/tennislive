@@ -13709,9 +13709,21 @@ def _filter_path(path: Path) -> str:
     return str(path).replace("\\", "\\\\").replace(":", r"\:").replace("'", r"\'")
 
 
+def _platform_logo_filter(bbox) -> str:
+    """Remove only the declared platform mark, in original source coordinates."""
+    if (not isinstance(bbox, (list, tuple)) or len(bbox) != 4
+            or any(type(v) is not int for v in bbox)
+            or bbox[0] < 0 or bbox[1] < 0 or bbox[2] <= 0 or bbox[3] <= 0):
+        raise ExplainerVideoError("平台标识区域须为原片像素[x,y,w,h]")
+    x, y, width, height = bbox
+    return f"delogo=x={x}:y={y}:w={width}:h={height}"
+
+
 def _intro_filter(opening: dict, canvas_h: int) -> str:
     """Prepare the declared portrait excerpt and its reviewed source subtitles."""
     filters = []
+    if opening.get("intro_remove_logo_bbox"):
+        filters.append(_platform_logo_filter(opening["intro_remove_logo_bbox"]))
     if opening.get("full_bleed"):
         filters += [
             f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=increase",
