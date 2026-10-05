@@ -1,0 +1,362 @@
+{
+ "word": "处罚",
+ "char": "处",
+ "sentence": "但本场是否处罚，尚无结论。",
+ "tts_text": "但本场是否处罚，尚无结论。",
+ "intended_refs": [
+  "储",
+  "楚",
+  "础"
+ ],
+ "wrong_refs": [
+  "搐",
+  "矗",
+  "触"
+ ],
+ "voice": "zh-CN-YunjianNeural",
+ "rate": "+6%",
+ "verdict": "correct",
+ "confidence": "medium",
+ "verdict_raw": "correct",
+ "score": 0.868,
+ "margin": 0.2,
+ "near_identical_to": null,
+ "far_from_both": false,
+ "dropped_refs": [],
+ "override": null,
+ "selftest_sides": [
+  "A",
+  "B"
+ ],
+ "features": {
+  "spec": {
+   "d_intended": 1.122,
+   "d_wrong": 3.333,
+   "score": 0.496
+  },
+  "f0": {
+   "d_intended": 0.05,
+   "d_wrong": 6.979,
+   "score": 0.986
+  },
+  "comb": {
+   "d_intended": 0.612,
+   "d_wrong": 8.645,
+   "score": 0.868
+  }
+ },
+ "neighbour_shift": {
+  "intended": 0.643,
+  "wrong": 3.604
+ },
+ "separation": {
+  "spec": {
+   "within": 1.42,
+   "between": 3.427,
+   "separation": 2.414
+  },
+  "f0": {
+   "within": 0.379,
+   "between": 6.999,
+   "separation": 18.471
+  },
+  "comb": {
+   "within": 1.089,
+   "between": 8.712,
+   "separation": 8.002
+  }
+ },
+ "selftest_loo": {
+  "储": {
+   "expect": "correct",
+   "got": "correct",
+   "score": 0.811
+  },
+  "楚": {
+   "expect": "correct",
+   "got": "correct",
+   "score": 0.811
+  },
+  "础": {
+   "expect": "correct",
+   "got": "correct",
+   "score": 0.643
+  },
+  "搐": {
+   "expect": "misread",
+   "got": "misread",
+   "score": -0.888
+  },
+  "矗": {
+   "expect": "misread",
+   "got": "misread",
+   "score": -0.888
+  },
+  "触": {
+   "expect": "misread",
+   "got": "misread",
+   "score": -0.884
+  }
+ },
+ "selftest_pass": true,
+ "distances_from_orig": {
+  "A:储": {
+   "spec": 1.122,
+   "f0": 0.05,
+   "vmis": 0.0,
+   "frames": 31,
+   "comb": 0.612
+  },
+  "A:楚": {
+   "spec": 1.182,
+   "f0": 0.253,
+   "vmis": 0.032,
+   "frames": 31,
+   "comb": 0.844
+  },
+  "A:础": {
+   "spec": 1.951,
+   "f0": 0.898,
+   "vmis": 0.032,
+   "frames": 31,
+   "comb": 1.873
+  },
+  "B:搐": {
+   "spec": 3.369,
+   "f0": 6.983,
+   "vmis": 0.176,
+   "frames": 34,
+   "comb": 8.668
+  },
+  "B:矗": {
+   "spec": 3.333,
+   "f0": 6.979,
+   "vmis": 0.176,
+   "frames": 34,
+   "comb": 8.645
+  },
+  "B:触": {
+   "spec": 3.337,
+   "f0": 6.992,
+   "vmis": 0.176,
+   "frames": 34,
+   "comb": 8.66
+  }
+ },
+ "window_s": [
+  0.98,
+  1.29
+ ],
+ "boundary_token": "处罚",
+ "window_anchor": "A:础",
+ "tokens": {
+  "ORIG": [
+   "但",
+   "本场",
+   "是否",
+   "处罚",
+   "尚",
+   "无",
+   "结论"
+  ],
+  "A:储": [
+   "但",
+   "本场",
+   "是否",
+   "储罚",
+   "尚",
+   "无",
+   "结论"
+  ],
+  "A:楚": [
+   "但",
+   "本场",
+   "是否",
+   "楚罚",
+   "尚",
+   "无",
+   "结论"
+  ],
+  "A:础": [
+   "但",
+   "本场",
+   "是否",
+   "础",
+   "罚",
+   "尚",
+   "无",
+   "结论"
+  ],
+  "B:搐": [
+   "但",
+   "本场",
+   "是否",
+   "搐罚",
+   "尚",
+   "无",
+   "结论"
+  ],
+  "B:矗": [
+   "但",
+   "本场",
+   "是否",
+   "矗罚",
+   "尚",
+   "无",
+   "结论"
+  ],
+  "B:触": [
+   "但",
+   "本场",
+   "是否",
+   "触罚",
+   "尚",
+   "无",
+   "结论"
+  ]
+ },
+ "f0_semitones_window": {
+  "ORIG": [
+   2.8,
+   3.0,
+   3.8,
+   4.3,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   -5.3,
+   -5.8,
+   -6.4,
+   -6.2,
+   -5.7,
+   null
+  ],
+  "A:储": [
+   2.8,
+   3.0,
+   3.8,
+   4.3,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   -5.3,
+   -5.8,
+   -6.3,
+   -6.2,
+   -4.8,
+   null
+  ],
+  "A:楚": [
+   2.6,
+   2.7,
+   3.6,
+   4.0,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   -5.5,
+   -6.1,
+   -6.6,
+   -6.4,
+   null,
+   null
+  ],
+  "A:础": [
+   3.5,
+   3.7,
+   4.9,
+   5.3,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   -3.4,
+   -5.2,
+   -5.6,
+   -5.7,
+   -3.9,
+   null
+  ],
+  "B:搐": [
+   1.6,
+   -3.9,
+   -4.2,
+   -4.2,
+   -4.8,
+   null,
+   null,
+   null,
+   null,
+   null,
+   9.1,
+   6.8,
+   4.6,
+   1.2,
+   -1.2,
+   -2.1,
+   -5.0
+  ],
+  "B:矗": [
+   1.6,
+   -3.9,
+   -4.2,
+   -4.2,
+   -4.8,
+   null,
+   null,
+   null,
+   null,
+   null,
+   9.1,
+   6.8,
+   4.6,
+   1.2,
+   -1.2,
+   -2.1,
+   -5.0
+  ],
+  "B:触": [
+   1.6,
+   -3.9,
+   -4.2,
+   -4.2,
+   -5.3,
+   null,
+   null,
+   null,
+   null,
+   null,
+   9.2,
+   6.8,
+   4.6,
+   1.2,
+   -1.2,
+   -2.1,
+   -5.0
+  ]
+ },
+ "audio": {
+  "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/e08d5eff83c67a7bb2524419.mp3",
+  "A:储": "/workspace/scratch/sun-replay/polyphone-audit/cache/fbe95cbcc4df5e8b46c7d191.mp3",
+  "A:楚": "/workspace/scratch/sun-replay/polyphone-audit/cache/8e5170c54cb026e2c5cd2071.mp3",
+  "A:础": "/workspace/scratch/sun-replay/polyphone-audit/cache/87de509005961e3ce449c619.mp3",
+  "B:搐": "/workspace/scratch/sun-replay/polyphone-audit/cache/f2ba6921db49e55f40eb3d6d.mp3",
+  "B:矗": "/workspace/scratch/sun-replay/polyphone-audit/cache/135985503fc9ba39f3d4c7e8.mp3",
+  "B:触": "/workspace/scratch/sun-replay/polyphone-audit/cache/c1f372272b19c345a9317fba.mp3"
+ },
+ "ref_notes": {
+  "ok_refs_from": "chu3: single-reading common",
+  "bad_refs_from": "chu4: single-reading common"
+ }
+}

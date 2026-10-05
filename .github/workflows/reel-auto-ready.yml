@@ -48,7 +48,9 @@ jobs:
           cache: pip
 
       - name: 安装生产闸依赖
-        run: pip install -q -e .
+        run: |
+          pip install -q -e ".[pronunciation]"
+          python -c "import pypinyin"
 
       # 封面那一步的第一档是 ATP Media／WTA 照片接口（`refresh_reel_cover` → `cover_upgrade.pick_for_draft`，
       # 2026-09-28），和 O4 同一套机器闸——认人／睁眼要 onnxruntime ＋ opencv ＋ 三个 onnx。只在有新鲜的

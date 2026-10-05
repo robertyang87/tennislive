@@ -116,8 +116,10 @@ jobs:
         env:
           SLUG: ${{ github.event.inputs.slug || 'hawkeye' }}
         run: |
-          pip install -q -e .
+          pip install -q -e ".[pronunciation]"
+          python -c "import pypinyin"
           python tools/explainer_preflight.py --slug "$SLUG"
+          python tools/check_polyphones.py --slug "$SLUG"
 
       # ⚠️ apt 镜像会抽风且不是偶发（2026-08-04/18/19 多次撞上 `apt-get
       # update`/`install` 连着两次吃满 150 秒、零字节进度）——调重试参数治不了根，

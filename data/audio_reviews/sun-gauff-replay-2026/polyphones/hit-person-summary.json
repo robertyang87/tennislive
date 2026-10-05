@@ -1,0 +1,235 @@
+{
+  "source_episode": "/workspace/tennislive/src/tennislive/video/episodes/medvedev-beijing-default-2026.json",
+  "source_episode_sha256": "702acd7f64f486c4630ac09cc57b57745d2e684e856c42706aeb2b091f8dfff4",
+  "actual_beat_index": 5,
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+22%",
+  "pitch": "+0Hz",
+  "candidate_mapping": {
+    "pattern": "(?<=打)中(?=人)",
+    "replacement": "众",
+    "display_text_unchanged": true
+  },
+  "measurements": {
+    "hit-person-actual.json": {
+      "original": {
+        "sentence": "有没有故意伤人，不是唯一问题。规则也管危险、鲁莽的击球。但正常回合里，为争取得分合理击球，偶然打中人，不能直接套成滥用球。看的是那一拍的性质、周边的人和它造成的危险。",
+        "tts_text": "有没有故意伤人，不是唯一问题。规则也管危险、鲁莽的击球。但正常回合里，为争取得分合理击球，偶然打中人，不能直接套成滥用球。看的是那一拍的性质、周边的人和它造成的危险。",
+        "verdict": "unreliable",
+        "confidence": null,
+        "score": -0.364,
+        "selftest_pass": false,
+        "selftest_loo": {
+          "众": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.059
+          },
+          "仲": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.128
+          },
+          "钟": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.997
+          },
+          "忠": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.997
+          }
+        },
+        "dropped_refs": [],
+        "near_identical_to": null,
+        "features": {
+          "spec": {
+            "d_intended": 3.109,
+            "d_wrong": 2.681,
+            "score": -0.074
+          },
+          "f0": {
+            "d_intended": 4.197,
+            "d_wrong": 1.435,
+            "score": -0.49
+          },
+          "comb": {
+            "d_intended": 5.95,
+            "d_wrong": 2.776,
+            "score": -0.364
+          }
+        },
+        "window_s": [
+          8.351,
+          8.575
+        ]
+      },
+      "candidate": {
+        "sentence": "有没有故意伤人，不是唯一问题。规则也管危险、鲁莽的击球。但正常回合里，为争取得分合理击球，偶然打中人，不能直接套成滥用球。看的是那一拍的性质、周边的人和它造成的危险。",
+        "tts_text": "有没有故意伤人，不是唯一问题。规则也管危险、鲁莽的击球。但正常回合里，为争取得分合理击球，偶然打众人，不能直接套成滥用球。看的是那一拍的性质、周边的人和它造成的危险。",
+        "verdict": "unreliable",
+        "confidence": null,
+        "score": 1.0,
+        "selftest_pass": false,
+        "selftest_loo": {
+          "众": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.059
+          },
+          "仲": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.128
+          },
+          "钟": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.997
+          },
+          "忠": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.997
+          }
+        },
+        "dropped_refs": [],
+        "near_identical_to": "intended",
+        "features": {
+          "spec": {
+            "d_intended": 0.0,
+            "d_wrong": 3.151,
+            "score": 1.0
+          },
+          "f0": {
+            "d_intended": 0.0,
+            "d_wrong": 5.292,
+            "score": 1.0
+          },
+          "comb": {
+            "d_intended": 0.0,
+            "d_wrong": 6.867,
+            "score": 1.0
+          }
+        },
+        "window_s": [
+          8.372,
+          8.606
+        ]
+      }
+    },
+    "hit-person-clause.json": {
+      "original": {
+        "sentence": "但正常回合里，为争取得分合理击球，偶然打中人，不能直接套成滥用球。",
+        "tts_text": "但正常回合里，为争取得分合理击球，偶然打中人，不能直接套成滥用球。",
+        "verdict": "misread",
+        "confidence": "low",
+        "score": -0.332,
+        "selftest_pass": true,
+        "selftest_loo": {
+          "钟": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.995
+          },
+          "忠": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.995
+          },
+          "仲": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.198,
+            "dropped": true
+          }
+        },
+        "dropped_refs": [
+          "仲"
+        ],
+        "near_identical_to": null,
+        "features": {
+          "spec": {
+            "d_intended": 3.16,
+            "d_wrong": 2.599,
+            "score": -0.097
+          },
+          "f0": {
+            "d_intended": 4.287,
+            "d_wrong": 1.642,
+            "score": -0.446
+          },
+          "comb": {
+            "d_intended": 5.867,
+            "d_wrong": 2.942,
+            "score": -0.332
+          }
+        },
+        "window_s": [
+          3.289,
+          3.512
+        ]
+      },
+      "candidate": {
+        "sentence": "但正常回合里，为争取得分合理击球，偶然打中人，不能直接套成滥用球。",
+        "tts_text": "但正常回合里，为争取得分合理击球，偶然打众人，不能直接套成滥用球。",
+        "verdict": "correct",
+        "confidence": "low",
+        "score": 1.0,
+        "selftest_pass": true,
+        "selftest_loo": {
+          "钟": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.995
+          },
+          "忠": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.995
+          },
+          "仲": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.198,
+            "dropped": true
+          }
+        },
+        "dropped_refs": [
+          "仲"
+        ],
+        "near_identical_to": "intended",
+        "features": {
+          "spec": {
+            "d_intended": 0.0,
+            "d_wrong": 3.112,
+            "score": 1.0
+          },
+          "f0": {
+            "d_intended": 0.0,
+            "d_wrong": 5.385,
+            "score": 1.0
+          },
+          "comb": {
+            "d_intended": 0.0,
+            "d_wrong": 6.941,
+            "score": 1.0
+          }
+        },
+        "window_s": [
+          3.309,
+          3.543
+        ]
+      }
+    }
+  },
+  "conclusion": "Complete actual paragraph is unreliable; complete in-paragraph sentence yields original misread/low and candidate correct/low after automatic removal of 仲. Supports a targeted candidate with limitations, not high-confidence whole-paragraph certification.",
+  "limits": [
+    "ASR was not used to infer tone.",
+    "No manual listening claim.",
+    "No thresholds adjusted.",
+    "Sun Xinran episode does not contain 打中人; no episode/story content added.",
+    "Candidate insertion and older-episode rerender remain parent decisions."
+  ]
+}

@@ -1,0 +1,363 @@
+{
+  "word": "结论",
+  "char": "结",
+  "sentence": "但本场是否处罚，尚无结论。",
+  "tts_text": "但本场是否处罚，尚无结论。",
+  "intended_refs": [
+    "捷",
+    "洁",
+    "截"
+  ],
+  "wrong_refs": [
+    "皆",
+    "阶",
+    "街"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "low",
+  "verdict_raw": "correct",
+  "score": 0.305,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": true,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 2.702,
+      "d_wrong": 2.951,
+      "score": 0.044
+    },
+    "f0": {
+      "d_intended": 1.099,
+      "d_wrong": 3.361,
+      "score": 0.507
+    },
+    "comb": {
+      "d_intended": 2.574,
+      "d_wrong": 4.836,
+      "score": 0.305
+    }
+  },
+  "neighbour_shift": {
+    "intended": 2.518,
+    "wrong": 4.22
+  },
+  "separation": {
+    "spec": {
+      "within": 1.987,
+      "between": 3.147,
+      "separation": 1.584
+    },
+    "f0": {
+      "within": 0.499,
+      "between": 3.417,
+      "separation": 6.846
+    },
+    "comb": {
+      "within": 1.493,
+      "between": 4.991,
+      "separation": 3.343
+    }
+  },
+  "selftest_loo": {
+    "捷": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.873
+    },
+    "洁": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.873
+    },
+    "截": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.352
+    },
+    "皆": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.988
+    },
+    "阶": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.364
+    },
+    "街": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.988
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:捷": {
+      "spec": 2.734,
+      "f0": 1.546,
+      "vmis": 0.03,
+      "frames": 33,
+      "comb": 2.913
+    },
+    "A:洁": {
+      "spec": 2.702,
+      "f0": 1.609,
+      "vmis": 0.03,
+      "frames": 33,
+      "comb": 2.96
+    },
+    "A:截": {
+      "spec": 2.95,
+      "f0": 1.099,
+      "vmis": 0.121,
+      "frames": 33,
+      "comb": 2.574
+    },
+    "B:皆": {
+      "spec": 3.251,
+      "f0": 3.83,
+      "vmis": 0.091,
+      "frames": 33,
+      "comb": 5.455
+    },
+    "B:阶": {
+      "spec": 2.951,
+      "f0": 3.361,
+      "vmis": 0.088,
+      "frames": 34,
+      "comb": 4.836
+    },
+    "B:街": {
+      "spec": 3.245,
+      "f0": 3.829,
+      "vmis": 0.091,
+      "frames": 33,
+      "comb": 5.451
+    }
+  },
+  "window_s": [
+    2.11,
+    2.44
+  ],
+  "boundary_token": "结论",
+  "window_anchor": "B:皆",
+  "tokens": {
+    "ORIG": [
+      "但",
+      "本场",
+      "是否",
+      "处罚",
+      "尚",
+      "无",
+      "结论"
+    ],
+    "A:捷": [
+      "但",
+      "本场",
+      "是否",
+      "处罚",
+      "尚",
+      "无捷论"
+    ],
+    "A:洁": [
+      "但",
+      "本场",
+      "是否",
+      "处罚",
+      "尚",
+      "无洁论"
+    ],
+    "A:截": [
+      "但",
+      "本场",
+      "是否",
+      "处罚",
+      "尚",
+      "无",
+      "截论"
+    ],
+    "B:皆": [
+      "但",
+      "本场",
+      "是否",
+      "处罚",
+      "尚",
+      "无",
+      "皆",
+      "论"
+    ],
+    "B:阶": [
+      "但",
+      "本场",
+      "是否",
+      "处罚",
+      "尚",
+      "无阶论"
+    ],
+    "B:街": [
+      "但",
+      "本场",
+      "是否",
+      "处罚",
+      "尚",
+      "无",
+      "街",
+      "论"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      -5.0,
+      -1.3,
+      -2.2,
+      -1.8,
+      -5.0,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -5.8,
+      -5.4,
+      -5.1,
+      -3.7,
+      -0.7,
+      1.8
+    ],
+    "A:捷": [
+      -6.5,
+      -4.5,
+      -3.4,
+      -2.6,
+      -2.3,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -7.9,
+      -7.4,
+      -6.9,
+      -6.4,
+      -0.7,
+      -0.7,
+      1.8
+    ],
+    "A:洁": [
+      -6.6,
+      -4.6,
+      -3.5,
+      -2.7,
+      -2.4,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -8.0,
+      -7.5,
+      -7.0,
+      -6.5,
+      -0.8,
+      -0.9,
+      1.7
+    ],
+    "A:截": [
+      -6.6,
+      -4.6,
+      -3.5,
+      -2.7,
+      -5.3,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -5.8,
+      -5.9,
+      -5.8,
+      -5.7,
+      null,
+      -0.2
+    ],
+    "B:皆": [
+      -8.4,
+      -7.2,
+      -6.1,
+      -4.8,
+      -5.1,
+      null,
+      null,
+      null,
+      null,
+      null,
+      1.6,
+      0.8,
+      1.0,
+      1.0,
+      0.4,
+      0.7,
+      1.9
+    ],
+    "B:阶": [
+      -7.9,
+      -7.3,
+      -6.1,
+      -4.9,
+      -4.9,
+      -6.8,
+      null,
+      null,
+      null,
+      null,
+      0.7,
+      0.3,
+      -0.2,
+      -0.3,
+      -0.6,
+      -0.5,
+      0.1
+    ],
+    "B:街": [
+      -8.4,
+      -7.2,
+      -6.1,
+      -4.8,
+      -5.1,
+      null,
+      null,
+      null,
+      null,
+      null,
+      1.6,
+      0.8,
+      1.0,
+      1.0,
+      0.4,
+      0.7,
+      1.9
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/e08d5eff83c67a7bb2524419.mp3",
+    "A:捷": "/workspace/scratch/sun-replay/polyphone-audit/cache/51676787b0aad34091ef61ff.mp3",
+    "A:洁": "/workspace/scratch/sun-replay/polyphone-audit/cache/d6dbc50a96462dccc10fe235.mp3",
+    "A:截": "/workspace/scratch/sun-replay/polyphone-audit/cache/1ad7cf034e23dc51953f863b.mp3",
+    "B:皆": "/workspace/scratch/sun-replay/polyphone-audit/cache/300e836346ea3e7dd849c06c.mp3",
+    "B:阶": "/workspace/scratch/sun-replay/polyphone-audit/cache/1ade995700ea65d41d785563.mp3",
+    "B:街": "/workspace/scratch/sun-replay/polyphone-audit/cache/568626336e4399e47174c15e.mp3"
+  },
+  "intended_pinyin": "jie2",
+  "wrong_pinyin": "jie1",
+  "scope": "complete actual clause retained from narration",
+  "word_character_reference_limit": null
+}

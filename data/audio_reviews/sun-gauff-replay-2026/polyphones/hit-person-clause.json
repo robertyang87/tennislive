@@ -1,0 +1,621 @@
+{
+  "original": {
+    "word": "打中人",
+    "char": "中",
+    "sentence": "但正常回合里，为争取得分合理击球，偶然打中人，不能直接套成滥用球。",
+    "tts_text": "但正常回合里，为争取得分合理击球，偶然打中人，不能直接套成滥用球。",
+    "intended_refs": [
+      "众",
+      "仲"
+    ],
+    "wrong_refs": [
+      "钟",
+      "忠"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+22%",
+    "verdict": "misread",
+    "confidence": "low",
+    "verdict_raw": "misread",
+    "score": -0.332,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [
+      "仲"
+    ],
+    "override": null,
+    "selftest_sides": [
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 3.16,
+        "d_wrong": 2.599,
+        "score": -0.097
+      },
+      "f0": {
+        "d_intended": 4.287,
+        "d_wrong": 1.642,
+        "score": -0.446
+      },
+      "comb": {
+        "d_intended": 5.867,
+        "d_wrong": 2.942,
+        "score": -0.332
+      }
+    },
+    "neighbour_shift": {
+      "intended": 6.856,
+      "wrong": 4.221
+    },
+    "separation": {
+      "spec": {
+        "within": 1.533,
+        "between": 3.204,
+        "separation": 2.09
+      },
+      "f0": {
+        "within": 1.214,
+        "between": 4.905,
+        "separation": 4.042
+      },
+      "comb": {
+        "within": 1.98,
+        "between": 6.507,
+        "separation": 3.286
+      }
+    },
+    "selftest_loo": {
+      "钟": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.995
+      },
+      "忠": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.995
+      },
+      "仲": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.198,
+        "dropped": true
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:众": {
+        "spec": 3.16,
+        "f0": 4.287,
+        "vmis": 0.042,
+        "frames": 24,
+        "comb": 5.867
+      },
+      "A:仲": {
+        "spec": 3.509,
+        "f0": 2.927,
+        "vmis": 0.0,
+        "frames": 26,
+        "comb": 4.682
+      },
+      "B:钟": {
+        "spec": 2.599,
+        "f0": 1.642,
+        "vmis": 0.32,
+        "frames": 25,
+        "comb": 2.942
+      },
+      "B:忠": {
+        "spec": 2.599,
+        "f0": 1.661,
+        "vmis": 0.32,
+        "frames": 25,
+        "comb": 2.961
+      }
+    },
+    "window_s": [
+      3.289,
+      3.512
+    ],
+    "boundary_token": "中人",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "但",
+        "正常",
+        "回合",
+        "里",
+        "为",
+        "争",
+        "取得",
+        "分合",
+        "理击球",
+        "偶然",
+        "打",
+        "中人",
+        "不能",
+        "直接",
+        "套",
+        "成",
+        "滥用",
+        "球"
+      ],
+      "A:众": [
+        "但",
+        "正常",
+        "回合",
+        "里",
+        "为",
+        "争",
+        "取得",
+        "分合",
+        "理击球",
+        "偶然",
+        "打",
+        "众人",
+        "不能",
+        "直接",
+        "套",
+        "成",
+        "滥用",
+        "球"
+      ],
+      "A:仲": [
+        "但",
+        "正常",
+        "回合",
+        "里",
+        "为",
+        "争",
+        "取得",
+        "分合",
+        "理击球",
+        "偶然",
+        "打仲",
+        "人",
+        "不能",
+        "直接",
+        "套",
+        "成",
+        "滥用",
+        "球"
+      ],
+      "B:钟": [
+        "但",
+        "正常",
+        "回合",
+        "里",
+        "为",
+        "争",
+        "取得",
+        "分合",
+        "理击球",
+        "偶然",
+        "打钟",
+        "人",
+        "不能",
+        "直接",
+        "套",
+        "成",
+        "滥用",
+        "球"
+      ],
+      "B:忠": [
+        "但",
+        "正常",
+        "回合",
+        "里",
+        "为",
+        "争",
+        "取得",
+        "分合",
+        "理击球",
+        "偶然",
+        "打忠",
+        "人",
+        "不能",
+        "直接",
+        "套",
+        "成",
+        "滥用",
+        "球"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -12.7,
+        -13.3,
+        -8.5,
+        -4.3,
+        -6.1,
+        null,
+        6.3,
+        6.0,
+        7.6,
+        10.1,
+        10.5,
+        7.9
+      ],
+      "A:众": [
+        -7.8,
+        -6.2,
+        -3.9,
+        -3.3,
+        -4.0,
+        null,
+        null,
+        8.6,
+        7.2,
+        4.1,
+        1.4,
+        -1.4,
+        -3.3
+      ],
+      "A:仲": [
+        -10.5,
+        -7.7,
+        -6.8,
+        -2.4,
+        -2.8,
+        null,
+        9.8,
+        9.9,
+        10.7,
+        10.7,
+        7.9,
+        2.3,
+        0.1,
+        -3.1
+      ],
+      "B:钟": [
+        -5.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        7.0,
+        6.8,
+        8.5,
+        11.0,
+        11.7,
+        10.2,
+        7.8
+      ],
+      "B:忠": [
+        -5.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        7.0,
+        6.9,
+        8.5,
+        11.1,
+        11.7,
+        10.2,
+        7.9
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/13beef5c1c83fffcd9a38547.mp3",
+      "A:众": "/workspace/scratch/sun-replay/polyphone-audit/cache/60da0cc9ece00928b34f13e5.mp3",
+      "A:仲": "/workspace/scratch/sun-replay/polyphone-audit/cache/c4fbbbe000bf0b97b6e9cb57.mp3",
+      "B:钟": "/workspace/scratch/sun-replay/polyphone-audit/cache/f632e2440712f7f1d4d5753b.mp3",
+      "B:忠": "/workspace/scratch/sun-replay/polyphone-audit/cache/063910eb7f2fa0d27a5b8dcb.mp3"
+    }
+  },
+  "candidate": {
+    "word": "打中人",
+    "char": "中",
+    "sentence": "但正常回合里，为争取得分合理击球，偶然打中人，不能直接套成滥用球。",
+    "tts_text": "但正常回合里，为争取得分合理击球，偶然打众人，不能直接套成滥用球。",
+    "intended_refs": [
+      "众",
+      "仲"
+    ],
+    "wrong_refs": [
+      "钟",
+      "忠"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+22%",
+    "verdict": "correct",
+    "confidence": "low",
+    "verdict_raw": "correct",
+    "score": 1.0,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [
+      "仲"
+    ],
+    "override": null,
+    "selftest_sides": [
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.112,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.0,
+        "d_wrong": 5.385,
+        "score": 1.0
+      },
+      "comb": {
+        "d_intended": 0.0,
+        "d_wrong": 6.941,
+        "score": 1.0
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.0,
+      "wrong": 6.938
+    },
+    "separation": {
+      "spec": {
+        "within": 1.542,
+        "between": 3.219,
+        "separation": 2.087
+      },
+      "f0": {
+        "within": 1.214,
+        "between": 4.905,
+        "separation": 4.042
+      },
+      "comb": {
+        "within": 1.985,
+        "between": 6.514,
+        "separation": 3.282
+      }
+    },
+    "selftest_loo": {
+      "钟": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.995
+      },
+      "忠": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.995
+      },
+      "仲": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.198,
+        "dropped": true
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:众": {
+        "spec": 0.0,
+        "f0": 0.0,
+        "vmis": 0.0,
+        "frames": 25,
+        "comb": 0.0
+      },
+      "A:仲": {
+        "spec": 3.085,
+        "f0": 2.492,
+        "vmis": 0.036,
+        "frames": 28,
+        "comb": 4.034
+      },
+      "B:钟": {
+        "spec": 3.112,
+        "f0": 5.385,
+        "vmis": 0.333,
+        "frames": 27,
+        "comb": 6.941
+      },
+      "B:忠": {
+        "spec": 3.112,
+        "f0": 5.396,
+        "vmis": 0.333,
+        "frames": 27,
+        "comb": 6.952
+      }
+    },
+    "window_s": [
+      3.309,
+      3.543
+    ],
+    "boundary_token": "众人",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "但",
+        "正常",
+        "回合",
+        "里",
+        "为",
+        "争",
+        "取得",
+        "分合",
+        "理击球",
+        "偶然",
+        "打",
+        "众人",
+        "不能",
+        "直接",
+        "套",
+        "成",
+        "滥用",
+        "球"
+      ],
+      "A:众": [
+        "但",
+        "正常",
+        "回合",
+        "里",
+        "为",
+        "争",
+        "取得",
+        "分合",
+        "理击球",
+        "偶然",
+        "打",
+        "众人",
+        "不能",
+        "直接",
+        "套",
+        "成",
+        "滥用",
+        "球"
+      ],
+      "A:仲": [
+        "但",
+        "正常",
+        "回合",
+        "里",
+        "为",
+        "争",
+        "取得",
+        "分合",
+        "理击球",
+        "偶然",
+        "打仲",
+        "人",
+        "不能",
+        "直接",
+        "套",
+        "成",
+        "滥用",
+        "球"
+      ],
+      "B:钟": [
+        "但",
+        "正常",
+        "回合",
+        "里",
+        "为",
+        "争",
+        "取得",
+        "分合",
+        "理击球",
+        "偶然",
+        "打钟",
+        "人",
+        "不能",
+        "直接",
+        "套",
+        "成",
+        "滥用",
+        "球"
+      ],
+      "B:忠": [
+        "但",
+        "正常",
+        "回合",
+        "里",
+        "为",
+        "争",
+        "取得",
+        "分合",
+        "理击球",
+        "偶然",
+        "打忠",
+        "人",
+        "不能",
+        "直接",
+        "套",
+        "成",
+        "滥用",
+        "球"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -7.8,
+        -6.2,
+        -3.9,
+        -3.3,
+        -4.0,
+        null,
+        null,
+        8.6,
+        7.2,
+        4.1,
+        1.4,
+        -1.4,
+        -3.3
+      ],
+      "A:众": [
+        -7.8,
+        -6.2,
+        -3.9,
+        -3.3,
+        -4.0,
+        null,
+        null,
+        8.6,
+        7.2,
+        4.1,
+        1.4,
+        -1.4,
+        -3.3
+      ],
+      "A:仲": [
+        -10.5,
+        -7.7,
+        -6.8,
+        -2.4,
+        -2.8,
+        null,
+        9.8,
+        9.9,
+        10.7,
+        10.7,
+        7.9,
+        2.3,
+        0.1,
+        -3.1
+      ],
+      "B:钟": [
+        -5.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        7.0,
+        6.8,
+        8.5,
+        11.0,
+        11.7,
+        10.2,
+        7.8
+      ],
+      "B:忠": [
+        -5.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        7.0,
+        6.9,
+        8.5,
+        11.1,
+        11.7,
+        10.2,
+        7.9
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/60da0cc9ece00928b34f13e5.mp3",
+      "A:众": "/workspace/scratch/sun-replay/polyphone-audit/cache/60da0cc9ece00928b34f13e5.mp3",
+      "A:仲": "/workspace/scratch/sun-replay/polyphone-audit/cache/c4fbbbe000bf0b97b6e9cb57.mp3",
+      "B:钟": "/workspace/scratch/sun-replay/polyphone-audit/cache/f632e2440712f7f1d4d5753b.mp3",
+      "B:忠": "/workspace/scratch/sun-replay/polyphone-audit/cache/063910eb7f2fa0d27a5b8dcb.mp3"
+    }
+  }
+}

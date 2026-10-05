@@ -1,0 +1,277 @@
+{
+  "word": "不得",
+  "char": "得",
+  "sentence": "主办方当然要负责。WTA明确要求，球员准备发球后，广告不得变化。重打一分，不能把赛事方的保障责任一笔勾销。",
+  "tts_text": "主办方当然要负责。WTA明确要求，球员准备发球后，广告不得变化。重打一分，不能把赛事方的保障责任一笔勾销。",
+  "intended_refs": [
+    "德",
+    "锝"
+  ],
+  "wrong_refs": [
+    "的"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "low",
+  "verdict_raw": "correct",
+  "score": 0.725,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 1.252,
+      "d_wrong": 3.402,
+      "score": 0.462
+    },
+    "f0": {
+      "d_intended": 0.021,
+      "d_wrong": 2.353,
+      "score": 0.982
+    },
+    "comb": {
+      "d_intended": 0.647,
+      "d_wrong": 4.054,
+      "score": 0.725
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.799,
+    "wrong": 7.838
+  },
+  "separation": {
+    "spec": {
+      "within": 2.636,
+      "between": 3.403,
+      "separation": 1.291
+    },
+    "f0": {
+      "within": 0.315,
+      "between": 2.14,
+      "separation": 6.783
+    },
+    "comb": {
+      "within": 1.633,
+      "between": 3.841,
+      "separation": 2.352
+    }
+  },
+  "selftest_loo": {
+    "德": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.42
+    },
+    "锝": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.397
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:德": {
+      "spec": 1.252,
+      "f0": 0.021,
+      "vmis": 0.0,
+      "frames": 21,
+      "comb": 0.647
+    },
+    "A:锝": {
+      "spec": 2.438,
+      "f0": 0.326,
+      "vmis": 0.143,
+      "frames": 21,
+      "comb": 1.545
+    },
+    "B:的": {
+      "spec": 3.402,
+      "f0": 2.353,
+      "vmis": 0.333,
+      "frames": 21,
+      "comb": 4.054
+    }
+  },
+  "window_s": [
+    5.61,
+    5.82
+  ],
+  "boundary_token": "不得",
+  "window_anchor": "A:锝",
+  "tokens": {
+    "ORIG": [
+      "主办方",
+      "当然",
+      "要",
+      "负责",
+      "WTA",
+      "明确",
+      "要求",
+      "球员",
+      "准备",
+      "发球",
+      "后",
+      "广告",
+      "不得",
+      "变化",
+      "重打",
+      "一",
+      "分",
+      "不能",
+      "把",
+      "赛事方",
+      "的",
+      "保障",
+      "责任",
+      "一笔勾销"
+    ],
+    "A:德": [
+      "主办方",
+      "当然",
+      "要",
+      "负责",
+      "WTA",
+      "明确",
+      "要求",
+      "球员",
+      "准备",
+      "发球",
+      "后",
+      "广告",
+      "不德",
+      "变化",
+      "重打",
+      "一",
+      "分",
+      "不能",
+      "把",
+      "赛事方",
+      "的",
+      "保障",
+      "责任",
+      "一笔勾销"
+    ],
+    "A:锝": [
+      "主办方",
+      "当然",
+      "要",
+      "负责",
+      "WTA",
+      "明确",
+      "要求",
+      "球员",
+      "准备",
+      "发球",
+      "后",
+      "广告",
+      "不",
+      "锝",
+      "变化",
+      "重打",
+      "一",
+      "分",
+      "不能",
+      "把",
+      "赛事方",
+      "的",
+      "保障",
+      "责任",
+      "一笔勾销"
+    ],
+    "B:的": [
+      "主办方",
+      "当然",
+      "要",
+      "负责",
+      "WTA",
+      "明确",
+      "要求",
+      "球员",
+      "准备",
+      "发球",
+      "后",
+      "广告",
+      "不",
+      "的",
+      "变化",
+      "重打",
+      "一",
+      "分",
+      "不能",
+      "把",
+      "赛事方",
+      "的",
+      "保障",
+      "责任",
+      "一笔勾销"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      null,
+      null,
+      null,
+      -5.7,
+      -6.7,
+      null,
+      null,
+      -8.1,
+      -7.6,
+      -8.1
+    ],
+    "A:德": [
+      null,
+      null,
+      null,
+      null,
+      -5.8,
+      -6.8,
+      null,
+      null,
+      -8.1,
+      -7.6,
+      -8.2
+    ],
+    "A:锝": [
+      null,
+      null,
+      null,
+      -3.1,
+      -5.3,
+      -6.7,
+      null,
+      -7.8,
+      -7.8,
+      -7.4,
+      -7.3
+    ],
+    "B:的": [
+      null,
+      null,
+      -0.7,
+      -1.6,
+      -4.2,
+      -5.8,
+      -5.1,
+      -5.4,
+      -6.6
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/54fa057b95ef477db4751f49.mp3",
+    "A:德": "/workspace/scratch/sun-replay/polyphone-audit/cache/af7ff28fe1c19dd7da3d8deb.mp3",
+    "A:锝": "/workspace/scratch/sun-replay/polyphone-audit/cache/62eceab9ae66723344c0db51.mp3",
+    "B:的": "/workspace/scratch/sun-replay/polyphone-audit/cache/d73907a904a6dd9ebb3294f3.mp3"
+  },
+  "intended_pinyin": "de2",
+  "wrong_pinyin": "de5 proxy",
+  "scope": "complete actual narration segment",
+  "word_character_reference_limit": "de5 has only ambiguous 的 proxy; de3 and dei3 have no independent single-reading references"
+}
