@@ -34,6 +34,8 @@ def test_beijing_native_wipe_and_tag_transition_real_crops():
     """
     cases = {
         "beijing-052520-wipe.png": 322,
+        "beijing-133800-wipe.png": 376,
+        "beijing-234720-wipe.png": 411,
         "beijing-194060-tag-transition.png": 390,
         "beijing-200340-wipe.png": 336,
         "beijing-267920-wipe.png": 365,
@@ -47,6 +49,11 @@ def test_beijing_native_wipe_and_tag_transition_real_crops():
         alpha = w.alpha_frame(geometry, (0, 0, band.shape[1], band.shape[0]))
         assert alpha[:, :native_right].any()
         assert not alpha[:, native_right:].any(), name
+        if name in {"beijing-133800-wipe.png", "beijing-234720-wipe.png"}:
+            # Both player rows retain the intact games cell after the points
+            # slot wipes away; accepting the frame must not hide its scores.
+            assert alpha[75, native_right - 10] == 255
+            assert alpha[125, native_right - 10] == 255
 
 
 def test_full_games_cell_cannot_replace_unmeasurable_points_boundary():

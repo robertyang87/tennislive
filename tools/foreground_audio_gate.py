@@ -29,6 +29,9 @@ def plan_hash(spec: dict) -> str:
     segments=[]
     for seg in spec.get('segments') or []:
         row={k:seg[k] for k in keys if k in seg}
+        if '_digital_silence_windows' in seg:
+            row['_digital_silence_windows']=seg['_digital_silence_windows']
+            row['_digital_silence_why']=seg.get('_digital_silence_why')
         if row.get('stat_card') or row.get('title_card'):
             row.pop('image',None)  # load_spec materializes native-card placeholders
         segments.append(row)
