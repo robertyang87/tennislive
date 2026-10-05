@@ -1,0 +1,83 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 3.946,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 136.251,
+  "topbar": null,
+  "film_seconds": 144.04,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 5.088,
+    "1": 11.88,
+    "2": 12.024,
+    "3": 13.656,
+    "4": 8.04,
+    "5": 8.064,
+    "7": 11.208,
+    "8": 11.328,
+    "9": 6.144,
+    "11": 8.328,
+    "12": 3.288,
+    "13": 2.52,
+    "15": 9.216
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "67ecf7f1fdce57c9a324d13158e19db4515bc3f6a7e790aeeb42305b41aec1b4",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "sun-gauff-led-replay-story-2026",
+    "received_at": "2026-10-05T20:59:56Z",
+    "artifact_ready_at": "2026-10-05T21:06:18Z",
+    "elapsed_seconds": 382.454,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "5a74a1bc4d0b930399c2fc1d3954697dd02fa8db4afbad361575bc899e516944",
+    "spec_sha256": "3f28322970bdfb86893a8d012b27975f42011731a159c7bab9c7f4038b02cc7f",
+    "run_id": "37372143319",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-05T21:03:16Z",
+        "run_id": "37372143319"
+      }
+    ],
+    "render_seconds": 182.454,
+    "pre_render_seconds": 200.0
+  },
+  "film_sha256": "5a74a1bc4d0b930399c2fc1d3954697dd02fa8db4afbad361575bc899e516944",
+  "film_bytes": 67677730,
+  "qc_attestation_sha256": "889298bd60d8e71c033f93a2b96a6f96306ad65f78477fc9333641235e2d9ab8",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-05T21:03:16Z",
+      "run_id": "37372143319"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-05T21:06:19Z",
+      "run_id": "37372143319"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sun-gauff-led-replay-story-2026/sun-gauff-led-replay-story-2026.mp4",
+  "video_bytes": 67677730
+}
