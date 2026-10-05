@@ -15,53 +15,19 @@ jobs:
           path: ~/.cache/tennislive-sources
           key: reel-src-source-rgsz0vrluns-f02d9c53d937a1c3
           fail-on-cache-miss: true
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - uses: actions/cache/restore@v4
-        with:
-          path: ~/.cache/huggingface
-          key: faster-whisper-Linux-small.en
-          restore-keys: faster-whisper-Linux-
-      - name: Install review tools
-        run: |
-          pip install -q faster-whisper 'yt-dlp[default]'
-          command -v ffmpeg || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
-      - name: Export exact-source evidence and review media
-        env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+      - name: Export original 1080p for exact scoreboard review
         run: |
           mkdir review
-          python - <<'PY'
-          import hashlib,pathlib,json,subprocess,os
+          python - <<'PYCODE'
+          import hashlib,pathlib,shutil,json
           url='https://www.youtube.com/watch?v=rGsZ0vrlUns'
-          p=pathlib.Path.home()/'.cache/tennislive-sources'/(hashlib.sha1(url.encode()).hexdigest()[:16]+'.mp4')
-          assert p.stat().st_size>1000000
-          identity={'source_url':url,'source_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size}
-          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'review-cookies.txt'
-          jar.write_text(os.environ.get('YT_COOKIES_TXT',''));jar.chmod(0o600)
-          cmd=['yt-dlp','--js-runtimes','node','--cookies',str(jar),'--skip-download','--dump-single-json',url]
-          try:
-              r=subprocess.run(cmd,capture_output=True,text=True,timeout=100)
-              if r.returncode==0:
-                  info=json.loads(r.stdout)
-                  identity.update({k:info.get(k) for k in ('id','title','channel','channel_id','uploader','upload_date','duration','webpage_url')})
-              else:identity['metadata_status']='unavailable'
-          except Exception:identity['metadata_status']='unavailable'
-          finally:jar.unlink(missing_ok=True)
-          pathlib.Path('review/source_identity.json').write_text(json.dumps(identity,ensure_ascii=False,indent=2))
-          subprocess.run(['ffmpeg','-v','error','-i',str(p),'-t','298','-vf','scale=-2:720','-c:v','libx264','-preset','fast','-crf','27','-c:a','aac','-b:a','96k','-movflags','+faststart','review/review.mp4'],check=True)
-          subprocess.run(['ffmpeg','-v','error','-i',str(p),'-t','298','-vn','-ar','16000','-ac','1','review/audio.wav'],check=True)
-          from faster_whisper import WhisperModel
-          model=WhisperModel('small.en',device='cpu',compute_type='int8')
-          segments,info=model.transcribe('review/audio.wav',language='en',beam_size=5,vad_filter=True,word_timestamps=True)
-          results=[{'start':s.start,'end':s.end,'text':s.text,'words':[{'start':w.start,'end':w.end,'word':w.word,'probability':w.probability} for w in (s.words or [])]} for s in segments]
-          pathlib.Path('review/whisper-small.en.json').write_text(json.dumps({'source_url':url,'source_sha256':identity['source_sha256'],'model':'small.en','method':'independent_asr','segments':results},ensure_ascii=False,indent=2))
-          print('Review evidence exported; this is not a QC pass.')
-          PY
+          source=pathlib.Path.home()/'.cache/tennislive-sources'/(hashlib.sha1(url.encode()).hexdigest()[:16]+'.mp4')
+          assert hashlib.sha256(source.read_bytes()).hexdigest()=='9ecc50946d9c77dd2ed71d6438ba95213c78b58c93aa15929ad352d5b0bc79b4'
+          shutil.copyfile(source,'review/source.mp4')
+          PYCODE
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: swiatek-vekic-source-review
+          name: swiatek-vekic-original-review
+          compression-level: 0
           path: review/
           retention-days: 3
