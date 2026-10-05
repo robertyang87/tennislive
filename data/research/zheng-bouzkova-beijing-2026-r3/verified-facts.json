@@ -1,0 +1,193 @@
+{
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 11,
+      "df": 3,
+      "first_in": 57,
+      "first_total": 95,
+      "first_won": 46,
+      "second_won": 18,
+      "second_total": 38,
+      "bp_conv": 4,
+      "bp_chances": 12,
+      "pts_won": 110,
+      "pts_total": 207,
+      "winners": 56,
+      "ue": 33,
+      "headshot": "assets/players/headshots/wta-328120.jpg"
+    },
+    "b": {
+      "aces": 2,
+      "df": 2,
+      "first_in": 80,
+      "first_total": 112,
+      "first_won": 51,
+      "second_won": 15,
+      "second_total": 32,
+      "bp_conv": 4,
+      "bp_chances": 5,
+      "pts_won": 97,
+      "pts_total": 207,
+      "winners": 19,
+      "ue": 22,
+      "headshot": "assets/players/headshots/wta-320983.jpg"
+    },
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051470&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/zheng-bouzkova-beijing-2026-r3/tnns-stats.json",
+      "source_sha256": "c2b70566cd2a43541447be8da651251a90e3ab890f48759123b9c09da329ebfa",
+      "period": "Match",
+      "match_date": "2026-10-05",
+      "checked_at": "2026-10-05T10:03:37.383235+00:00",
+      "winner_result": "7-6(3) 4-6 7-5",
+      "matchup": [
+        "Zheng",
+        "Bouzkova"
+      ],
+      "winners": [
+        56,
+        19
+      ],
+      "ue": [
+        33,
+        22
+      ],
+      "notes": "Native HTTP 200. Decoded data.data.Match Key Stats.players=[Bouzkova,Zheng], so values reversed to cover order [Zheng,Bouzkova]. Winners20+13+23=56 and6+7+6=19; UE16+9+8=33 and6+8+8=22. Match core values agree with WTA setnum0. TNNS Set1 total points conflict with Match; use Match only."
+    },
+    "_source": "WTA official LS017 stats setnum0 core integers; TNNS native Match agrees on all core values and supplies W/UE. WTA PBP pointWinner contains5 inconsistent rows; scoreAfterPoint transitions independently reconstruct totals110/97. See pbp-quality-check.json.",
+    "footer_date": "2026-10-05",
+    "footer_venue": "北京 · 全场"
+  },
+  "_match": {
+    "status": "result_verified",
+    "date": "2026-10-05",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS017",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "participants": [
+      "布兹科娃",
+      "郑钦文"
+    ],
+    "winner": "郑钦文",
+    "loser": "布兹科娃",
+    "set_scores_home_away": [
+      [
+        6,
+        7
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        5,
+        7
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        3,
+        7
+      ],
+      null,
+      null
+    ],
+    "winner_result": "7-6(3) 4-6 7-5",
+    "duration": "02:54:57",
+    "daypart": "下午",
+    "observed_at": "2026-10-05T10:01:59.575880+00:00",
+    "_order_why": "WTA A/home=Marie Bouzkova320983,CZE; B/away=Qinwen Zheng328120,CHN. cover.matchup and stats.a put Zheng first, so opposite order.",
+    "_time_note": "Use afternoon, no exact first serve claim. MatchTimeStamp05:56:45Z is metadata; PBP first point06:13:58Z and last09:08:xxZ indicate Beijing afternoon; TNNS scheduled14:00 local. Duration rounds to2小时55分."
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "郑钦文",
+        "name_en": "Qinwen Zheng",
+        "country": "CHN",
+        "rank": 54
+      },
+      {
+        "name": "布兹科娃",
+        "name_en": "Marie Bouzkova",
+        "country": "CZE",
+        "rank": 27
+      }
+    ],
+    "scoreboard": {
+      "court": "Capital Group Diamond",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS017"
+      }
+    },
+    "_rank_why": "WTA live ranked endpoint snapshot rankedAt2026-09-28: Zheng54, Bouzkova27. Tournament draw seed18 uses older ranking26; do not confuse seed/ranking or overwrite current27 with draw26."
+  },
+  "facts": [
+    {
+      "claim": "首盘开局郑钦文2-0；第5局她3-1领先时有3个连续破发点但未兑现，随后发球局丢掉，局分到3-3。",
+      "source": "official-pbp.json + pbp-game-summary.json",
+      "point_refs": "set1 games1-6; game5 scoresA0/B40→A G/B40; game6 A G/B0"
+    },
+    {
+      "claim": "首盘抢七3-3后郑钦文连得4分，7-3拿下抢七。",
+      "source": "official-pbp.json scoreAfterPoint; TNNS recap",
+      "point_refs": "points72-76 scoreAfterPoint3-3→3-4→3-5→3-6→3-7; A=布B=郑"
+    },
+    {
+      "claim": "次盘郑钦文0-3后追回到2-3；2-5后追到4-5，最终4-6。",
+      "source": "official-pbp.json; TNNS recap",
+      "point_refs": "set2 all10 games"
+    },
+    {
+      "claim": "决胜盘前11局均保发；郑钦文5-5发球局从40-0被追平后仍保住，6-5领先。",
+      "source": "official-pbp.json; TNNS recap",
+      "point_refs": "set3 game11 points190-199; no break point conceded in entire set"
+    },
+    {
+      "claim": "决胜盘第12局郑钦文拿到全盘首次破发机会即赛点，首个赛点被救，第二个赛点兑现，以7-5收官。",
+      "source": "official-pbp.json + stats set3; TNNS Match match_points_saved Bouzkova1",
+      "point_refs": "set3 game12 A/B scores30-40→40-40→40-A→40-G"
+    },
+    {
+      "claim": "郑钦文决胜盘未送出破发点；全场制胜分56-19、ACE11-2。",
+      "source": "WTA setnum3 breakptsplayeda0; TNNS Match Winners and WTA Match Aces"
+    }
+  ],
+  "next_round": {
+    "opponent_en": "Alina Charaeva",
+    "opponent_zh": "恰拉耶娃",
+    "round": "1/8决赛",
+    "evidence": [
+      {
+        "source_url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1020/MDS.pdf",
+        "source_path": "data/research/zheng-bouzkova-beijing-2026-r3/official-draw.pdf",
+        "source_sha256": "e8dbede7d17c144d3251f118272549b90965d02e0f10ac11ea825b0f73732178",
+        "claim": "Official top-half bracket: winner of slots1-8(Charaeva/Kartal) meets winner of slots9-16(Bouzkova/Zheng) next. PDF released5Oct00:51, before today matches; combine bracket with actual results rather than claiming PDF already has todays winners."
+      },
+      {
+        "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "source_path": "data/research/zheng-bouzkova-beijing-2026-r3/official-matches.json",
+        "source_sha256": "01602df4186be211b32f195f50cd74ca268bd086c8aef61604f69f3e6cf3f8c7",
+        "claim": "LS016 Charaeva beat Kartal6-4,6-1; LS017 Zheng beat Bouzkova7-6(3),4-6,7-5. Charaeva country ARM in official feed."
+      }
+    ]
+  },
+  "source_frame_verification": {
+    "path": "/workspace/scratch/zheng-bouzkova/source-score-at-5s.jpg",
+    "video": "/workspace/scratch/zheng-bouzkova/wta-brightcove-720p.mp4",
+    "time_seconds": 5,
+    "observed": "Top Bouzkova0games15; bottom Zheng1game40, serve markerZheng. First set game2, not1-1/3-3.",
+    "point_context": "PBP set1 game2 Zheng40-15 before hold for2-0."
+  },
+  "quality_caveats": [
+    "WTA PBP pointWinner fields disagree with scoreAfterPoint at point67/71/72/77/197. Use scoreAfterPoint transitions, not naive pointWinner counts.",
+    "TNNS Set1 totals35/43=78 conflict with WTA34/42=76; do not mix per-set TNNS totals into full Match stats.",
+    "Official draw seed18 Bouzkova rank26 is draw-era number; ranked endpoint rankedAt2026-09-28 gives27.",
+    "No footage-specific shot type or psychological motive inferred from scores."
+  ]
+}

@@ -1,0 +1,646 @@
+[
+  {
+    "start": 12.52,
+    "end": 14.4,
+    "en": "Good put away from Zheng.",
+    "zh": "郑钦文这一下收得漂亮。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json",
+        "asr-disputes-turbo.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "编辑核定：采用平台明确的Good put away；medium只漏Good、turbo漏整个前短句，没有稳定相反词。保留Good并记录本地模型漏词，不宣称多模型逐字确认或人工听审。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 14.4,
+    "end": 17.4,
+    "en": "And just like that, breaks at love.",
+    "zh": "就这样，连下四分完成破发。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "平台breaks at ... Love；逐岛small为breaks at love；定窗small/medium把at识别成it。句义一致。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 89.08,
+    "end": 89.98,
+    "en": "Oh, it drops in!",
+    "zh": "噢，这球落在界内！",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "平台Oh,it drops in；medium Oh,drops in；小模型开头有噪声误识别，采用平台与medium共有句义。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 89.98,
+    "end": 93.54,
+    "en": "So the first set goes to Zheng Qinwen.",
+    "zh": "首盘归郑钦文！",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "三模型和平台均为首盘归郑；姓名按已确定身份规范。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 95.08,
+    "end": 96.06,
+    "en": "Coach likes that.",
+    "zh": "教练很满意。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 96.06,
+    "end": 97.5,
+    "en": "Crowd certainly likes it.",
+    "zh": "观众当然也很喜欢。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 98.02,
+    "end": 101.02,
+    "en": "Now confirmed that that ball did drop in.",
+    "zh": "现在确认了，这球确实落在界内。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 101.8,
+    "end": 104.04,
+    "en": "Extra cheer from the crowd in Beijing.",
+    "zh": "北京现场又响起一阵欢呼。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 105.18,
+    "end": 108.66,
+    "en": "So four last points won by Zheng in the tiebreak.",
+    "zh": "郑钦文拿下了抢七最后四分。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "medium与平台支持So four last points；保留解说原有语序，不把four误转为for。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 130.98,
+    "end": 132.78,
+    "en": "So, breaks back, does Zheng.",
+    "zh": "郑钦文完成回破。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json",
+        "asr-disputes-turbo.json",
+        "asr-breakback-filtered-turbo.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "编辑核定：small与原声/带通增益turbo一致将132.14–132.74尾短语识别为this young；结合已核回破者Zheng、姓名读音与英语解说倒装语法，规范为does Zheng，完整覆盖尾部。模型没有逐字输出does Zheng，这是明确记录的编辑判断，不是人工听审。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 133.98,
+    "end": 135.62,
+    "en": "That's one of the breaks back that she lost.",
+    "zh": "她追回了此前丢掉的一次破发。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json",
+        "asr-breakback-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "平台That’s、小模型It’s；medium独立128–138定窗实际识别It’s one of the breaks back that she lost，句义一致。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 146.2,
+    "end": 149.34,
+    "en": "Oh, beautiful shot from Zheng there.",
+    "zh": "噢，郑钦文这一拍真漂亮。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "平台与定窗small相符；姓名规范。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 163.45,
+    "end": 165.24,
+    "en": "Off to a third set we will go.",
+    "zh": "比赛进入决胜盘。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "定窗small词时轴跨静音漂移，采用逐岛small/base与平台共同支持的163.45起点。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 166.14,
+    "end": 168.06,
+    "en": "Second straight match on this court today,",
+    "zh": "今天这块场地连续第二场比赛，",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 168.06,
+    "end": 171.02,
+    "en": "that three sets is needed to decide a winner.",
+    "zh": "都要打满三盘才能决出胜负。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 172.64,
+    "end": 175.94,
+    "en": "Zheng Qinwen winning the opening set in the tiebreak.",
+    "zh": "郑钦文通过抢七拿下首盘。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "双ASR与平台一致，球员姓名按比赛身份规范。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 175.94,
+    "end": 179.1,
+    "en": "Bouzkova coming back to win the second, 6-4.",
+    "zh": "布兹科娃以6比4扳回第二盘。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "三源均第二盘6-4；小模型把Bouzkova转成where he boasts，平台Ribosa，按已确定身份规范。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 197.04,
+    "end": 200.4,
+    "en": "That's a really good service game from Zheng that time.",
+    "zh": "郑钦文这一局发球局打得真好。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "平台That’s；小模型It’s；姓名由已确定身份规范。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 211.4,
+    "end": 212.52,
+    "en": "Oh, what a point!",
+    "zh": "噢，多精彩的一分！",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "无VAD定窗small明确Oh,what a point，与平台211.84同句；此前VAD错词不用。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 230.84,
+    "end": 232.26,
+    "en": "Oh, what a point!",
+    "zh": "噢，多精彩的一分！",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 232.26,
+    "end": 233.7,
+    "en": "Point of the match.",
+    "zh": "这就是全场最佳一分。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "保留原解说评价，不把它扩写成我方无来源纪录。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 233.7,
+    "end": 236.24,
+    "en": "Marie Bouzkova comes away with it.",
+    "zh": "布兹科娃拿下这一分。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-youtube1080-islands-base.en.json",
+        "asr-youtube1080-islands-small.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "平台原文Marie Bova；base Rebolscova、small Rivoskeva。官方姓名Marie Bouzkova；早期草稿Maria为编辑扩写错误，非模型结果，已纠正。中文仅用布兹科娃。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 256.36,
+    "end": 257.42,
+    "en": "And it goes long!",
+    "zh": "这球出界了！",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 257.42,
+    "end": 260.86,
+    "en": "And it's Zheng Qinwen who gets it done!",
+    "zh": "郑钦文赢下了这场比赛！",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "姓名规范；模型与平台均gets it done。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 260.86,
+    "end": 263.28,
+    "en": "And the crowd is loving it.",
+    "zh": "现场观众沸腾了。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 263.68,
+    "end": 265.42,
+    "en": "Her coach pleased as well.",
+    "zh": "她的教练也很满意。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "small与平台Her，baseOur为误识别。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 265.88,
+    "end": 266.42,
+    "en": "Pere Riba.",
+    "zh": "佩雷·里巴。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "平台Periva/small Per Riva，按明确教练姓名规范。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 267.2,
+    "end": 268.3,
+    "en": "What a battle!",
+    "zh": "真是一场苦战！",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "cold独立定窗+两个逐岛结果均完整，末词268.10–268.27；长窗时间漂移不用。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 271.28,
+    "end": 273.1,
+    "en": "Bouzkova up for the challenge.",
+    "zh": "布兹科娃迎战到底。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 273.68,
+    "end": 277.9,
+    "en": "Final break of serve is the deciding moment,",
+    "zh": "最后这次破发决定了胜负，",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 277.9,
+    "end": 281.94,
+    "en": "as Zheng Qinwen in front of her home Chinese crowd.",
+    "zh": "郑钦文站在中国主场观众面前。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "句子为解说直播原有片段语法，不补他没有说的结论。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 281.94,
+    "end": 285.52,
+    "en": "Big smile and almost a little bit of a dance there.",
+    "zh": "笑容灿烂，几乎要跳起舞来。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 286.02,
+    "end": 288.32,
+    "en": "Seven-six, four-six, seven-five.",
+    "zh": "7比6、4比6、7比5。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "实际模型/平台把读出的比分正规化为7-6,4-6,7-5；英文字幕按相同原声读法拼写Seven-six,four-six,seven-five，以保留显式英文而非无语言标记的纯数字。没有增加比分内容。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 288.62,
+    "end": 291.08,
+    "en": "Two hours, 54 minutes.",
+    "zh": "2小时54分钟。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 291.68,
+    "end": 293.6,
+    "en": "What a win for Zheng Qinwen,",
+    "zh": "郑钦文拿下一场精彩的胜利，",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 293.66,
+    "end": 295.48,
+    "en": "who's through to the fourth round in Beijing.",
+    "zh": "晋级北京站第四轮。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  },
+  {
+    "start": 296.24,
+    "end": 301.42,
+    "en": "Certainly pleased with what they saw from Zheng Qinwen.",
+    "zh": "大家显然很满意郑钦文今天的表现。",
+    "evidence": {
+      "method": "actual ASR + platform captions; no human listening claimed",
+      "files": [
+        "asr-planned-windows-small.en.json",
+        "asr-review-windows-medium.en.json"
+      ],
+      "platform_captions": "output/2026-10-05/reel/zheng-bouzkova-beijing-2026-r3/captions.txt",
+      "note": "最后一句两轮small均结束301.40；计划301.6有约0.2秒余量，不取之后采访。",
+      "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+    },
+    "uncertain": false
+  }
+]

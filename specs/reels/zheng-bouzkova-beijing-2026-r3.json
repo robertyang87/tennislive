@@ -1,0 +1,667 @@
+{
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 11,
+      "df": 3,
+      "first_in": 57,
+      "first_total": 95,
+      "first_won": 46,
+      "second_won": 18,
+      "second_total": 38,
+      "bp_conv": 4,
+      "bp_chances": 12,
+      "pts_won": 110,
+      "pts_total": 207,
+      "winners": 56,
+      "ue": 33,
+      "headshot": "assets/players/headshots/wta-328120.jpg"
+    },
+    "b": {
+      "aces": 2,
+      "df": 2,
+      "first_in": 80,
+      "first_total": 112,
+      "first_won": 51,
+      "second_won": 15,
+      "second_total": 32,
+      "bp_conv": 4,
+      "bp_chances": 5,
+      "pts_won": 97,
+      "pts_total": 207,
+      "winners": 19,
+      "ue": 22,
+      "headshot": "assets/players/headshots/wta-320983.jpg"
+    },
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051470&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/zheng-bouzkova-beijing-2026-r3/tnns-stats.json",
+      "source_sha256": "c2b70566cd2a43541447be8da651251a90e3ab890f48759123b9c09da329ebfa",
+      "period": "Match",
+      "match_date": "2026-10-05",
+      "checked_at": "2026-10-05T10:03:37.383235+00:00",
+      "winner_result": "7-6(3) 4-6 7-5",
+      "matchup": [
+        "Zheng",
+        "Bouzkova"
+      ],
+      "winners": [
+        56,
+        19
+      ],
+      "ue": [
+        33,
+        22
+      ],
+      "notes": "Native HTTP 200. Decoded data.data.Match Key Stats.players=[Bouzkova,Zheng], so values reversed to cover order [Zheng,Bouzkova]. Winners20+13+23=56 and6+7+6=19; UE16+9+8=33 and6+8+8=22. Match core values agree with WTA setnum0. TNNS Set1 total points conflict with Match; use Match only."
+    },
+    "_source": "WTA official LS017 stats setnum0 core integers; TNNS native Match agrees on all core values and supplies W/UE. WTA PBP pointWinner contains5 inconsistent rows; scoreAfterPoint transitions independently reconstruct totals110/97. See pbp-quality-check.json.",
+    "footer_date": "2026-10-05",
+    "footer_venue": "北京 · 全场"
+  },
+  "_match": {
+    "status": "result_verified",
+    "date": "2026-10-05",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS017",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "participants": [
+      "布兹科娃",
+      "郑钦文"
+    ],
+    "winner": "郑钦文",
+    "loser": "布兹科娃",
+    "set_scores_home_away": [
+      [
+        6,
+        7
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        5,
+        7
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        3,
+        7
+      ],
+      null,
+      null
+    ],
+    "winner_result": "7-6(3) 4-6 7-5",
+    "duration": "02:54:57",
+    "daypart": "下午",
+    "observed_at": "2026-10-05T10:01:59.575880+00:00",
+    "_order_why": "WTA A/home=Marie Bouzkova320983,CZE; B/away=Qinwen Zheng328120,CHN. cover.matchup and stats.a put Zheng first, so opposite order.",
+    "_time_note": "Use afternoon, no exact first serve claim. MatchTimeStamp05:56:45Z is metadata; PBP first point06:13:58Z and last09:08:xxZ indicate Beijing afternoon; TNNS scheduled14:00 local. Duration rounds to2小时55分.",
+    "_match_day_why": "用户2026-10-05明确指定本场官方视频，比赛同日完成。"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "郑钦文",
+        "name_en": "Qinwen Zheng",
+        "country": "CHN",
+        "rank": 54
+      },
+      {
+        "name": "布兹科娃",
+        "name_en": "Marie Bouzkova",
+        "country": "CZE",
+        "rank": 27
+      }
+    ],
+    "scoreboard": {
+      "court": "Capital Group Diamond",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS017"
+      }
+    },
+    "_rank_why": "WTA live ranked endpoint snapshot rankedAt2026-09-28: Zheng54, Bouzkova27. Tournament draw seed18 uses older ranking26; do not confuse seed/ranking or overwrite current27 with draw26.",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "郑钦文",
+    "winner": "郑钦文",
+    "result": "7-6(3) 4-6 7-5",
+    "hook": "决胜盘拼到最后\n郑钦文闯进16强",
+    "hook_accent": "闯进16强",
+    "topic": "WTA1000 北京 第三轮 · 郑钦文 VS 布兹科娃",
+    "scrim": "clear",
+    "portrait": {
+      "image": "assets/reel/zheng-bouzkova-beijing-2026-r3-cover.jpg",
+      "focus": 0.56,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/10/05/e81b67a6-412e-440b-beec-ce1d9407e36d/Zheng-R3-LZ.jpg?width=4000",
+      "_portrait_why": "WTA本场官方视频4586771头图，本场日期与R3标识；实际检查4000x2667原图，红裙郑钦文正面睁眼握拳呐喊，无水印，无复用上一轮照片。"
+    }
+  },
+  "slug": "zheng-bouzkova-beijing-2026-r3",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=3Y8VqlPjzJ8"
+  },
+  "primary": "main",
+  "tts_backend": "edge",
+  "track": false,
+  "scorebox": [
+    88,
+    827,
+    570,
+    988
+  ],
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "topbar": {
+    "line1": "2026 WTA1000 北京 第三轮",
+    "line2": "郑钦文 7-6(3) 4-6 7-5 布兹科娃"
+  },
+  "push": {
+    "auto": true,
+    "summary": "郑钦文苦战闯进16强",
+    "lead": "首盘抢七连拿最后4分，第二盘追赶未果，决胜盘直到最后一局才分出胜负。郑钦文7-6(3)、4-6、7-5战胜布兹科娃，下一轮对阵恰拉耶娃。"
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 267.05,
+      "end": 269.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": false,
+      "_edit_id": "cold_open",
+      "point_end_ok": "赛后郑钦文微笑并走向对手，原声完整短句What a battle；正文再次完整呈现握手。",
+      "crosses_cut": "赛后郑钦文微笑并走向对手，原声完整短句What a battle；正文再次完整呈现握手。",
+      "_why": "赛后郑钦文微笑并走向对手，原声完整短句What a battle；正文再次完整呈现握手。",
+      "bed": "high",
+      "_score_inset_why": "赛后郑钦文微笑并走向对手，原声完整短句What a battle；正文再次完整呈现握手。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "正文完整赛点与庆祝248.96–301.6覆盖本冷开场。",
+      "quote": [
+        {
+          "at": 0.15,
+          "end": 1.25,
+          "text": "What a battle!\n真是一场苦战！"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "决胜盘拼到最后，胜利才落定",
+      "kicker": "北京第三轮 · 郑钦文 VS 布兹科娃",
+      "seconds": 10.8,
+      "narration": "北京时间十月五号下午，中网第三轮。郑钦文本届第三次打进决胜盘。这场近三小时的硬仗，她怎样拿下来？",
+      "_edit_id": "context",
+      "_why": "官方同场赛果与前两轮；第二轮为末盘退赛，不说连续三场打满。"
+    },
+    {
+      "source": "main",
+      "start": 0.8,
+      "end": 17.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "opening_break",
+      "point_end_ok": "首局布兹科娃0–40发球，郑接发后完整多拍上网得分，以破发开局；保留教练反应。",
+      "crosses_cut": "首局布兹科娃0–40发球，郑接发后完整多拍上网得分，以破发开局；保留教练反应。",
+      "_why": "首局布兹科娃0–40发球，郑接发后完整多拍上网得分，以破发开局；保留教练反应。",
+      "bed": "high",
+      "quote": [
+        {
+          "at": 11.72,
+          "end": 13.6,
+          "text": "Good put away from Zheng.\n郑钦文这一下收得漂亮。"
+        },
+        {
+          "at": 13.6,
+          "end": 16.6,
+          "text": "And just like that, breaks at love.\n就这样，连下四分完成破发。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "先拿到领先，再重新争回主动",
+      "kicker": "首盘 · 官方集锦未完整收录被追平过程",
+      "seconds": 12.3,
+      "narration": "高压收掉开局这一分，郑钦文随后二比零领先，三比一后却被追平。官方集锦未完整收录这段过程。抢七三比三后，她连拿四分。",
+      "_edit_id": "first_set_gap",
+      "_why": "比分来自官方逐分scoreAfterPoint及比赛总表。明确画面缺口，不用别的分冒充。 主源10.60–11.16密抽：郑在场内高压扣杀，非网前截击；仅解释此分。"
+    },
+    {
+      "source": "main",
+      "start": 70.08,
+      "end": 108.88,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "first_set_point",
+      "point_end_ok": "首盘抢七郑6–3盘点：完整发球长回合，落点IN确认、团队和球员反应；不按官网错误7-6(4)文案。",
+      "crosses_cut": "首盘抢七郑6–3盘点：完整发球长回合，落点IN确认、团队和球员反应；不按官网错误7-6(4)文案。",
+      "_why": "首盘抢七郑6–3盘点：完整发球长回合，落点IN确认、团队和球员反应；不按官网错误7-6(4)文案。",
+      "bed": "high",
+      "quote": [
+        {
+          "at": 19.0,
+          "end": 19.9,
+          "text": "Oh, it drops in!\n噢，这球落在界内！"
+        },
+        {
+          "at": 19.9,
+          "end": 23.46,
+          "text": "So the first set goes to Zheng Qinwen.\n首盘归郑钦文！"
+        },
+        {
+          "at": 25.0,
+          "end": 25.98,
+          "text": "Coach likes that.\n教练很满意。"
+        },
+        {
+          "at": 25.98,
+          "end": 27.42,
+          "text": "Crowd certainly likes it.\n观众当然也很喜欢。"
+        },
+        {
+          "at": 27.94,
+          "end": 30.94,
+          "text": "Now confirmed that that ball did drop in.\n现在确认了，这球确实落在界内。"
+        },
+        {
+          "at": 31.72,
+          "end": 33.96,
+          "text": "Extra cheer from the crowd in Beijing.\n北京现场又响起一阵欢呼。"
+        },
+        {
+          "at": 35.1,
+          "end": 38.58,
+          "text": "So four last points won by Zheng in the tiebreak.\n郑钦文拿下了抢七最后四分。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_digital_silence_why": "已核对官方主源画面与实测响度：这是盘点/赛点发球准备时现场自然安静，随后保留完整发球和回合；不是丢音轨或剪辑死秒。不人为加旁白掩盖，也不从发球动作中途截断。"
+    },
+    {
+      "title_card": "正手拿下首盘，次盘却陷入追赶",
+      "kicker": "第二盘 · 两次追赶",
+      "seconds": 12.7,
+      "narration": "盘点这记正手打向边线空当，对手追不到，郑钦文拿下首盘。但第二盘，她零比三落后。官方集锦没有完整收录这段丢分过程。",
+      "_edit_id": "second_set_gap",
+      "_why": "官方逐局比分；以下两回合分别0–3及2–5追回一次破发，不冒充追平。 主源86.88–86.96正手触球、87.4–88.4布追球未触到，IN图确认界内。"
+    },
+    {
+      "source": "main",
+      "start": 123.08,
+      "end": 150.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "second_two_breakbacks",
+      "point_end_ok": "同源连续窗口：0–3追破至1–3（源片全景始于抛球中段但含发球击球及完整回合），134秒解说句尾后跳至2–5追破至3–5；两分均保留结束反应。",
+      "crosses_cut": "第二盘0–3，郑接发破发点得分追回至1–3，后续2–3仅文字概述。",
+      "_why": "同源连续窗口：0–3追破至1–3（源片全景始于抛球中段但含发球击球及完整回合），134秒解说句尾后跳至2–5追破至3–5；两分均保留结束反应。",
+      "bed": "high",
+      "quote": [
+        {
+          "at": 7.9,
+          "end": 9.7,
+          "text": "So, breaks back, does Zheng.\n郑钦文完成回破。"
+        },
+        {
+          "at": 10.9,
+          "end": 12.54,
+          "text": "That's one of the breaks back that she lost.\n她追回了此前丢掉的一次破发。"
+        },
+        {
+          "at": 23.12,
+          "end": 26.26,
+          "text": "Oh, beautiful shot from Zheng there.\n噢，郑钦文这一拍真漂亮。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "追到4-5，仍要面对对手盘点",
+      "kicker": "第二盘 · 还没追平",
+      "seconds": 5.6,
+      "narration": "郑钦文追回到四比五，但布兹科娃的盘点，还是来了。",
+      "_edit_id": "second_set_end_context",
+      "_why": "用局分说明跳剪，不把回破这一分说成已经扳平。"
+    },
+    {
+      "source": "main",
+      "start": 150.0,
+      "end": 180.8,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "second_set_point",
+      "point_end_ok": "第二盘布5–4、40–30盘点，完整发球回合至结果，保留场上与团队反应以及比分总结。",
+      "crosses_cut": "第二盘布5–4、40–30盘点，完整发球回合至结果，保留场上与团队反应以及比分总结。",
+      "_why": "第二盘布5–4、40–30盘点，完整发球回合至结果，保留场上与团队反应以及比分总结。",
+      "bed": "high",
+      "quote": [
+        {
+          "at": 13.45,
+          "end": 15.24,
+          "text": "Off to a third set we will go.\n比赛进入决胜盘。"
+        },
+        {
+          "at": 16.14,
+          "end": 18.06,
+          "text": "Second straight match on this court today,\n今天这块场地连续第二场比赛，"
+        },
+        {
+          "at": 18.06,
+          "end": 21.02,
+          "text": "that three sets is needed to decide a winner.\n都要打满三盘才能决出胜负。"
+        },
+        {
+          "at": 22.64,
+          "end": 25.94,
+          "text": "Zheng Qinwen winning the opening set in the tiebreak.\n郑钦文通过抢七拿下首盘。"
+        },
+        {
+          "at": 25.94,
+          "end": 29.1,
+          "text": "Bouzkova coming back to win the second, 6-4.\n布兹科娃以6比4扳回第二盘。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_digital_silence_why": "已核对官方主源画面与实测响度：这是盘点/赛点发球准备时现场自然安静，随后保留完整发球和回合；不是丢音轨或剪辑死秒。不人为加旁白掩盖，也不从发球动作中途截断。"
+    },
+    {
+      "title_card": "先守住，再去争取机会",
+      "kicker": "决胜盘 · 郑钦文未送出破发点",
+      "seconds": 8.3,
+      "narration": "到了决胜盘，郑钦文没有送出破发点。先把自己的发球局守住，机会还要在一拍一拍里争。",
+      "_edit_id": "third_set_context",
+      "_why": "官方第三盘breakptsplayed对手为0；不声称她挽救过破发点。"
+    },
+    {
+      "source": "main",
+      "start": 180.96,
+      "end": 201.72,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "third_hold_two_one",
+      "point_end_ok": "决胜盘1–1郑40–0，完整发球和回合后保发2–1，含反应。",
+      "crosses_cut": "决胜盘1–1郑40–0，完整发球和回合后保发2–1，含反应。",
+      "_why": "决胜盘1–1郑40–0，完整发球和回合后保发2–1，含反应。",
+      "bed": "high",
+      "quote": [
+        {
+          "at": 16.08,
+          "end": 19.44,
+          "text": "That's a really good service game from Zheng that time.\n郑钦文这一局发球局打得真好。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 201.72,
+      "end": 217.2,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "third_net_exchange",
+      "point_end_ok": "决胜盘3–3郑40–15时完整发球与网前争夺；官方PBP显示这分至40–30、下一分才保发至4–3，该保发分未完整收录。不能把本回合当作郑保发得分；此处保留双方争夺和原声惊叹，不旁白抢报归属。",
+      "crosses_cut": "决胜盘3–3郑40–15时完整发球与网前争夺；官方PBP显示这分至40–30、下一分才保发至4–3，该保发分未完整收录。不能把本回合当作郑保发得分；此处保留双方争夺和原声惊叹，不旁白抢报归属。",
+      "_why": "决胜盘3–3郑40–15时完整发球与网前争夺；官方PBP显示这分至40–30、下一分才保发至4–3，该保发分未完整收录。不能把本回合当作郑保发得分；此处保留双方争夺和原声惊叹，不旁白抢报归属。",
+      "bed": "high",
+      "quote": [
+        {
+          "at": 9.68,
+          "end": 10.8,
+          "text": "Oh, what a point!\n噢，多精彩的一分！"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 217.2,
+      "end": 238.48,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "third_rally",
+      "point_end_ok": "决胜盘布3–4发球局0–0长回合，对手得分至15–0。现场赞叹point of the match指此分，不能说郑赢。源内部分主机位未显示比分板，自动按实际板出现区间回贴。",
+      "crosses_cut": "决胜盘布3–4发球局0–0长回合，对手得分至15–0。现场赞叹point of the match指此分，不能说郑赢。源内部分主机位未显示比分板，自动按实际板出现区间回贴。",
+      "_why": "决胜盘布3–4发球局0–0长回合，对手得分至15–0。现场赞叹point of the match指此分，不能说郑赢。源内部分主机位未显示比分板，自动按实际板出现区间回贴。",
+      "bed": "high",
+      "quote": [
+        {
+          "at": 13.64,
+          "end": 15.06,
+          "text": "Oh, what a point!\n噢，多精彩的一分！"
+        },
+        {
+          "at": 15.06,
+          "end": 16.5,
+          "text": "Point of the match.\n这就是全场最佳一分。"
+        },
+        {
+          "at": 16.5,
+          "end": 19.04,
+          "text": "Marie Bouzkova comes away with it.\n布兹科娃拿下这一分。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "守住5-5，再争到第2个赛点",
+      "kicker": "决胜盘 · 关键过程有缺失",
+      "seconds": 13.6,
+      "narration": "五比五，郑钦文从四十比零打到平分，仍守住发球局。随后，第一个赛点被救。官方集锦没有收录这两段完整过程。再一次机会，来了。",
+      "_edit_id": "final_gap",
+      "_why": "官方逐分第11、12局；不用3–4长回合冒充5–5保发或首个赛点。"
+    },
+    {
+      "source": "main",
+      "start": 248.96,
+      "end": 301.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "match_point_and_celebration",
+      "point_end_ok": "MATCH POINT #2：决胜盘郑6–5、接发Ad，完整发前、发球、回合到对手打长；保留呐喊握拳、团队反应、网前握手、挥拍致意与全部解说句。回贴仅实际源记分条出现期间。",
+      "crosses_cut": "MATCH POINT #2：决胜盘郑6–5、接发Ad，完整发前、发球、回合到对手打长；保留呐喊握拳、团队反应、网前握手、挥拍致意与全部解说句。回贴仅实际源记分条出现期间。",
+      "_why": "MATCH POINT #2：决胜盘郑6–5、接发Ad，完整发前、发球、回合到对手打长；保留呐喊握拳、团队反应、网前握手、挥拍致意与全部解说句。回贴仅实际源记分条出现期间。",
+      "bed": "high",
+      "quote": [
+        {
+          "at": 7.4,
+          "end": 8.46,
+          "text": "And it goes long!\n这球出界了！"
+        },
+        {
+          "at": 8.46,
+          "end": 11.9,
+          "text": "And it's Zheng Qinwen who gets it done!\n郑钦文赢下了这场比赛！"
+        },
+        {
+          "at": 11.9,
+          "end": 14.32,
+          "text": "And the crowd is loving it.\n现场观众沸腾了。"
+        },
+        {
+          "at": 14.72,
+          "end": 16.46,
+          "text": "Her coach pleased as well.\n她的教练也很满意。"
+        },
+        {
+          "at": 16.92,
+          "end": 17.46,
+          "text": "Pere Riba.\n佩雷·里巴。"
+        },
+        {
+          "at": 18.24,
+          "end": 19.34,
+          "text": "What a battle!\n真是一场苦战！"
+        },
+        {
+          "at": 22.32,
+          "end": 24.14,
+          "text": "Bouzkova up for the challenge.\n布兹科娃迎战到底。"
+        },
+        {
+          "at": 24.72,
+          "end": 28.94,
+          "text": "Final break of serve is the deciding moment,\n最后这次破发决定了胜负，"
+        },
+        {
+          "at": 28.94,
+          "end": 32.98,
+          "text": "as Zheng Qinwen in front of her home Chinese crowd.\n郑钦文站在中国主场观众面前。"
+        },
+        {
+          "at": 32.98,
+          "end": 36.56,
+          "text": "Big smile and almost a little bit of a dance there.\n笑容灿烂，几乎要跳起舞来。"
+        },
+        {
+          "at": 37.06,
+          "end": 39.36,
+          "text": "Seven-six, four-six, seven-five.\n7比6、4比6、7比5。"
+        },
+        {
+          "at": 39.66,
+          "end": 42.12,
+          "text": "Two hours, 54 minutes.\n2小时54分钟。"
+        },
+        {
+          "at": 42.72,
+          "end": 44.64,
+          "text": "What a win for Zheng Qinwen,\n郑钦文拿下一场精彩的胜利，"
+        },
+        {
+          "at": 44.7,
+          "end": 46.52,
+          "text": "who's through to the fourth round in Beijing.\n晋级北京站第四轮。"
+        },
+        {
+          "at": 47.28,
+          "end": 52.46,
+          "text": "Certainly pleased with what they saw from Zheng Qinwen.\n大家显然很满意郑钦文今天的表现。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_digital_silence_why": "已核对官方主源画面与实测响度：这是盘点/赛点发球准备时现场自然安静，随后保留完整发球和回合；不是丢音轨或剪辑死秒。不人为加旁白掩盖，也不从发球动作中途截断。"
+    },
+    {
+      "stat_card": true,
+      "seconds": 10,
+      "narration": "十一个ACE，五十六记制胜分，也有三十三次非受迫失误。进攻有威力，赢下这一场，还得把最后的机会抓住。",
+      "_edit_id": "statistics",
+      "_why": "WTA全场核心整数与TNNS Match制胜分失误，完整全场，非分盘拼接。"
+    },
+    {
+      "title_card": "下一关：恰拉耶娃",
+      "kicker": "中网第四轮 · 继续向前",
+      "seconds": 7.8,
+      "narration": "郑钦文闯进十六强。下一轮面对恰拉耶娃，她能继续向前，打进八强吗？",
+      "_edit_id": "next_round",
+      "_why": "官方签表路径与LS016恰拉耶娃6–4/6–1胜卡塔尔交叉；不写未核实赛程时间。"
+    }
+  ],
+  "_source_provenance": {
+    "main": {
+      "publisher": "WTA",
+      "canonical_url": "https://www.youtube.com/watch?v=3Y8VqlPjzJ8",
+      "sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+      "bytes": 158379334,
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "duration_seconds": 460.289161,
+      "probe_run": 37293844410,
+      "original_export_run": 37294977765
+    }
+  },
+  "_production_timing": {
+    "first_dispatch_at": "2026-10-05T10:01:18Z",
+    "note": "Actual GitHub probe creation time; initial probe received_at input was mistakenly midnight and is not used as measured task receipt time."
+  },
+  "_heat_why": "郑钦文本届中网连续第三场进入决胜盘，主场最后一局拿下胜利，中国球员主题。",
+  "_facts": [
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+      "type": "official_results",
+      "why": "LS017本场赛果/用时；LS070与LS035前两轮；LS016下一轮对手。"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS017/stats",
+      "type": "official_match_stats",
+      "why": "全场整数和第三盘无对手破发点；TNNS同口径交叉。"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "决胜盘拼到最后，郑钦文怎样拿下这一场？",
+    "thesis": "首盘领先被追平、次盘追分未果；决胜盘先守住全部发球局，最后一局兑现第二个赛点。用真实完整回合与精彩解说呈现进攻和耐心。",
+    "beats": [
+      "冷开场与结果",
+      "本届连续第三次打到决胜盘",
+      "首盘先领先再赢抢七",
+      "次盘追分未果",
+      "决胜盘相持与保发",
+      "第二个赛点完整兑现",
+      "庆祝握手",
+      "统计与下一轮"
+    ],
+    "human_context": {
+      "angle": "主场连战三次决胜盘，最后一个接发局赢下本场。",
+      "facts": [
+        "外卡参赛",
+        "首轮对施晗打三盘",
+        "第二轮进入第三盘后卡林斯卡娅退赛",
+        "本场近三小时后晋级16强"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches"
+      ]
+    }
+  },
+  "_tts_backend_why": "沿用赛场之上云见音色，旁白无需Azure专属情绪风格；Edge自然体育解说，按真实语音测长，不以加速挤压时长。",
+  "_hit_data": [
+    {
+      "label": "决胜盘没有送出破发点",
+      "detail": "WTA第三盘对手breakptsplayed为0；逐分比分重建确认郑守住全部6个发球局，5-5从40-0至平分仍保发。",
+      "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS017/stats"
+    },
+    {
+      "label": "11ACE / 56制胜分 / 33非受迫失误",
+      "detail": "全场Match口径，郑56W/33UE，布19W/22UE；攻击性也有代价，不说她失误更少。match_stat_hooks已尝试但缺Flashscore ID；采用已实际获取并交叉核对的WTA/TNNS原始统计。",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051470&mode=match_info&submode=stats&web=true"
+    }
+  ]
+}
