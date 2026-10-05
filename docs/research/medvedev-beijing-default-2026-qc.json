@@ -1,17 +1,18 @@
 {
   "slug": "medvedev-beijing-default-2026",
-  "checked_at": "2026-10-05T18:05:00Z",
-  "status": "superseded_pending_illustrated_rules_film",
-  "render_run": 37352115009,
-  "render_source_head": "a68a30289ddcebe2cbc84eab19a1884eb5532ea5",
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-medvedev-beijing-default-2026/explainer.mp4",
-  "film_sha256": "64a5322c7f185ec7be13d70f82d97e367d4fcfcf6b14e408e9e46ad24d959f76",
-  "film_bytes": 20633843,
+  "checked_at": "2026-10-06",
+  "status": "local_film_pass_publication_pending",
+  "render_run": null,
+  "queued_cloud_render_run": 37368614614,
+  "render_origin": "local normal explainer pipeline; TTS HTTPS proxy in temporary process wrapper",
+  "render_source_head": "7828c5bc54184f6c9a46d8c732c2a271dcd0664f",
+  "film_sha256": "68ad9529ca6698441691916daea5e75bb63d71fe9cfa5f3a768922e08333ee1c",
+  "film_bytes": 20212968,
   "duration_seconds": 263.433333,
   "width": 1080,
   "height": 1440,
   "fps": "30/1",
-  "av_duration_difference": 0.067333,
+  "av_duration_difference": 0.050333,
   "visual_checks": {
     "frames_reviewed_seconds": [
       4.0,
@@ -50,55 +51,135 @@
       260.433333
     ],
     "cards": 14,
-    "layout": "Deep-blue editorial layouts, original template fonts at weight400, content headings56px vs independent larger cover; no left-lower source footnotes; typography uses restrained white and fine rules.",
+    "layout": "Deep-blue editorial layouts, original template fonts at weight400, content headings60px, support32px, context/captions28px vs independent larger cover; all five rule pages illustrated with three real photos and two custom tennis flow/branch diagrams; no left-lower source footnotes; typography uses restrained white and fine rules.",
     "cover_gloss": "失格 Default · 滥用球 Ball Abuse",
     "logo": "Original ball/clock upper-left, retained branded outro; localized platform marks removed",
     "fixed_topic": "中网德梅之战 · 失格规则与历史",
     "native_annotation": "Right-aligned upper-right annotation, right vertical rule, half-open phases; mutually exclusive with bilingual original-audio captions",
-    "native_annotation_geometry": {
-      "title_px": 40,
-      "detail_px": 32,
-      "rule_canvas_bbox": [
-        1009,
-        192,
-        3,
-        96
+    "rule_page_forms": {
+      "photographic_rules": [
+        4,
+        6,
+        11
       ],
-      "title_ink_y": [
-        195,
-        232
+      "visual_rule_charts": [
+        5,
+        12
+      ]
+    },
+    "independent_report": {
+      "status": "pass",
+      "reviewer": "focused_layout_audit",
+      "review_scope": "Actual encoded movie frame sampling; diagram author, separate from movie export and publication",
+      "reviewed_at_utc": "2026-10-05T20:23:55.400321+00:00",
+      "movie": "/workspace/deliverables/medvedev-illustrated-rules-final/explainer.mp4",
+      "video_sha256": "68ad9529ca6698441691916daea5e75bb63d71fe9cfa5f3a768922e08333ee1c",
+      "width": 1080,
+      "height": 1440,
+      "duration_seconds": 263.433333,
+      "bytes": 20212968,
+      "contact_sheet_reviewed": "/workspace/deliverables/medvedev-illustrated-rules-final/成片抽帧.jpg",
+      "contact_frames_reviewed_seconds": [
+        4.0,
+        8.0,
+        15.0,
+        22.0,
+        30.0,
+        38.0,
+        46.0,
+        54.0,
+        62.0,
+        70.0,
+        78.0,
+        86.0,
+        94.0,
+        102.0,
+        110.0,
+        118.0,
+        126.0,
+        134.0,
+        142.0,
+        150.0,
+        158.0,
+        166.0,
+        174.0,
+        182.0,
+        190.0,
+        198.0,
+        206.0,
+        214.0,
+        222.0,
+        230.0,
+        238.0,
+        246.0,
+        254.0,
+        260.43
       ],
-      "detail_ink_y": [
-        258,
-        285
+      "full_resolution_story_frames_reviewed_seconds": [
+        78,
+        94,
+        110,
+        150,
+        166,
+        214,
+        230,
+        246
       ],
-      "source_frame_y": [
-        180,
-        1260
+      "additional_movie_frames_reviewed_seconds": [
+        4,
+        8,
+        15,
+        22,
+        181.96,
+        188.96,
+        190.8,
+        194.96,
+        198.9,
+        200.6,
+        202.96,
+        260.43
       ],
-      "brand_y": [
-        44,
-        126
+      "checks": {
+        "one_conclusion_per_content_page": "pass",
+        "hierarchy_original_display_titles_regular_small_text_quiet_subtitles": "pass",
+        "authentic_photos_and_pdf_sources_grouped_with_explanations": "pass",
+        "all_five_rule_pages_use_photo_or_original_diagram": "pass",
+        "penalty_ladder_three_stages_and_real_pdf_match": "pass",
+        "event_consequences_branch_structure_no_invented_numbers": "pass",
+        "longest_photo_pages_09_10_13_subtitle_clearance": "pass",
+        "fixed_logo_and_topic_preserved": "pass",
+        "cover_bilingual_rule_gloss": "pass",
+        "native_top_right_card_right_side_line": "pass",
+        "native_cards_hide_at_actual_bilingual_cues_190_8_198_9_200_6": "pass",
+        "platform_watermarks_absent_in_reviewed_regions": "pass",
+        "no_white_panels_or_lower_left_source_footnotes": "pass",
+        "no_text_clipping_or_overlay_collision_in_sampled_frames": "pass",
+        "outro_brand_intact": "pass"
+      },
+      "blocking_issues": [],
+      "observations": [
+        "The existing localized Rublev platform-logo repair has visible background interpolation in the wide-court frame at 181.96s; it does not cover players, ball, confrontation, or captions."
       ],
-      "side": "right",
-      "position": "top-right"
+      "limits": [
+        "This report is visual sampling of the encoded movie, not continuous playback or human audio listening. Audio and source synchronization checks are handled separately."
+      ]
     }
   },
   "audio": {
     "voice": "zh-CN-YunjianNeural",
     "rate": "+22%",
     "segments": 14,
-    "mean_db": -23.9,
-    "max_db": -3.0,
+    "mean_db": -24.0,
+    "max_db": -3.1,
     "non_silent_windows": [
       {
         "start": 8.0,
-        "mean_db": -24.1,
-        "max_db": -7.9
+        "mean_db": -24.2,
+        "max_db": -7.8
       },
       {
         "start": 32.0,
-        "mean_db": -23.6,
+        "mean_db": -23.7,
         "max_db": -5.0
       },
       {
@@ -108,13 +189,13 @@
       },
       {
         "start": 64.0,
-        "mean_db": -22.5,
+        "mean_db": -22.6,
         "max_db": -5.5
       },
       {
         "start": 80.0,
-        "mean_db": -22.5,
-        "max_db": -6.0
+        "mean_db": -22.6,
+        "max_db": -6.1
       },
       {
         "start": 96.0,
@@ -123,42 +204,42 @@
       },
       {
         "start": 112.0,
-        "mean_db": -24.3,
+        "mean_db": -24.4,
         "max_db": -5.1
       },
       {
         "start": 128.0,
         "mean_db": -21.9,
-        "max_db": -7.1
+        "max_db": -6.9
       },
       {
         "start": 144.0,
-        "mean_db": -22.9,
+        "mean_db": -23.0,
         "max_db": -7.0
       },
       {
         "start": 160.0,
-        "mean_db": -23.0,
-        "max_db": -4.9
+        "mean_db": -23.1,
+        "max_db": -4.8
       },
       {
         "start": 176.0,
-        "mean_db": -23.3,
-        "max_db": -6.5
+        "mean_db": -23.4,
+        "max_db": -6.6
       },
       {
         "start": 192.0,
-        "mean_db": -25.5,
-        "max_db": -5.6
+        "mean_db": -25.6,
+        "max_db": -5.5
       },
       {
         "start": 208.0,
-        "mean_db": -23.9,
-        "max_db": -4.1
+        "mean_db": -24.0,
+        "max_db": -4.2
       },
       {
         "start": 224.0,
-        "mean_db": -24.6,
+        "mean_db": -24.7,
         "max_db": -5.8
       },
       {
@@ -169,9 +250,114 @@
       {
         "start": 256.0,
         "mean_db": -27.7,
-        "max_db": -8.4
+        "max_db": -8.3
       }
-    ]
+    ],
+    "independent_source_report": {
+      "artifact_file": "/workspace/deliverables/medvedev-illustrated-rules-final/explainer.mp4",
+      "artifact_sha256": "68ad9529ca6698441691916daea5e75bb63d71fe9cfa5f3a768922e08333ee1c",
+      "artifact_bytes": 20212968,
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1080,
+            "height": 1440,
+            "duration": "263.433333"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "24000",
+            "channels": 1,
+            "duration": "263.383000"
+          }
+        ],
+        "format": {
+          "duration": "263.433333",
+          "size": "20212968"
+        }
+      },
+      "av_duration_difference_seconds": 0.050333000000023276,
+      "method": {
+        "type": "Actual final MP4 decoded PCM comparison against authorized official source MP4 segments",
+        "decode_sample_rate_hz": 16000,
+        "decode_channels": 1,
+        "decode_format": "float32 little-endian; converted float64 for statistics",
+        "alignment": "FFT cross-correlation within ±0.35s; Pearson correlation on aligned overlapping samples",
+        "audio_preservation_pass_threshold": 0.98,
+        "human_listening_performed": false,
+        "limitations": "Waveform similarity verifies retained source audio; it does not validate translation or claim a human listening review."
+      },
+      "segments": [
+        {
+          "label": "beijing",
+          "source_file": "/workspace/research-media/LgRD3TLoxr0.mp4",
+          "source_sha256": "80179ed4439aecc24c30cf410a2a237c93eee11299d38537f1d0289786ed24d5",
+          "source_start_seconds": 349,
+          "final_start_seconds": 0,
+          "duration_seconds": 20,
+          "source_pcm": {
+            "decoded_seconds": 20.0,
+            "rms": 0.07824954279065437,
+            "peak": 0.5060601830482483,
+            "finite": true,
+            "non_silent": true
+          },
+          "actual_final_pcm": {
+            "decoded_seconds": 20.0,
+            "rms": 0.07631426085622225,
+            "peak": 0.48644500970840454,
+            "finite": true,
+            "non_silent": true
+          },
+          "alignment_lag_samples": 0,
+          "alignment_lag_seconds": 0.0,
+          "overlap_seconds": 20.0,
+          "aligned_pearson_correlation": 0.9933399615204693,
+          "fitted_gain": 0.9687725101585407,
+          "residual_rms": 0.008792952952634471,
+          "signal_to_residual_db": 18.76941888237991,
+          "minimum_1s_rms": 0.015071440501461962,
+          "passed": true
+        },
+        {
+          "label": "rublev",
+          "source_file": "/workspace/research-media/default-evidence-history/rublev-dubai-2024-default-tennistv.mp4",
+          "source_sha256": "1d05ab10a74ca1b434b3d6c1c89722a3f0549fa468ae5c451d106f71b6708e83",
+          "source_start_seconds": 0,
+          "final_start_seconds": 179.96,
+          "duration_seconds": 30,
+          "source_pcm": {
+            "decoded_seconds": 30.0,
+            "rms": 0.049299938174748384,
+            "peak": 0.547698974609375,
+            "finite": true,
+            "non_silent": true
+          },
+          "actual_final_pcm": {
+            "decoded_seconds": 30.0,
+            "rms": 0.048106289218045925,
+            "peak": 0.5373736619949341,
+            "finite": true,
+            "non_silent": true
+          },
+          "alignment_lag_samples": 0,
+          "alignment_lag_seconds": 0.0,
+          "overlap_seconds": 30.0,
+          "aligned_pearson_correlation": 0.9920626176082349,
+          "fitted_gain": 0.968042819278212,
+          "residual_rms": 0.006049117207551852,
+          "signal_to_residual_db": 18.010197108745544,
+          "minimum_1s_rms": 0.01783388745003087,
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
   },
   "evidence": "docs/research/medvedev-beijing-default-2026-source-story.json; assets/explainer/medvedev-beijing-default-2026/credits.json",
   "original_audio_review": "Two official excerpts with bilingual ASS; cross-model ASR, no claim of human listening. The Rublev excerpt retains the source whole square frame and scoreboard; only declared platform watermark regions are processed inside an entirely designed3:4 canvas.",
@@ -180,46 +366,18 @@
     "2020 US Open case used its contemporary Grand Slam rules, not retroactive2026 ATP provisions.",
     "Kato June9 meeting is subsequent to the June4 incident and June8 mixed title; no claim of incident footage.",
     "Official clips are edited source material; full supervisor deliberation is not included.",
-    "Localized platform delogo leaves light interpolation traces; processing stays in declared source watermark bounds and does not cover faces, scoreboard or key action."
+    "Localized platform delogo leaves light interpolation traces; processing stays in declared source watermark bounds and does not cover faces, scoreboard or key action.",
+    "The cloud render and current-head CI are queued during an official GitHub Actions hosted-runner allocation incident. This hash identifies the reviewed local normal-pipeline export."
   ],
   "validation": {
     "preflight": "17/17 pass",
-    "targeted_tests": "20 latest episode/native-insert/efficiency checks passed; 5 final annotation regressions passed. Final exact-head CI required before merge.",
-    "independent_preview_qc": "Actual final upper-right30s sample and newly downloaded whole film independently checked; not a prior bottom or editorial render.",
-    "film_visual": "Primary reviewer examined 34 actual film frames plus8 native detail frames; independent fact_check examined29 separate actual film points covering all14 cards, native captions, top-right phase annotation and branded outro; no blockers.",
-    "delivery": "Real new fingerprint, sent receipt and message URL required before completion",
-    "source_head_ci": {
-      "run": 37352095379,
-      "state": "in_progress_when_film_review_completed"
-    }
+    "targeted_tests": "20 episode/native/efficiency checks passed; 3 source/story subtitle fidelity checks passed; 2 updated hierarchy contracts passed. Final exact-head CI required before merge.",
+    "independent_preview_qc": "focused_layout_audit independently reviewed redesigned photographic pages and custom rule charts; actual latest-film review required, with no blockers.",
+    "film_visual": "pass: root examined actual film contact sheet; focused_layout_audit independently reviewed34 actual frames and12 additional extracted frames, including5 illustrated rules and bilingual-caption/upper-right-card exclusions",
+    "delivery": "pending: no claim of new Release publication, merge or WeChat receipt",
+    "source_audio": "pass: Beijing20s PCM correlation0.99333996; Rublev30s correlation0.99206262; both zero best lag and non-silent",
+    "ci": "pending: GitHub Actions hosted runner allocation incident; current source-head CI37368587321 queued, prior run reported hosted job not acquired"
   },
-  "independent_native_audio": {
-    "global_seconds": [
-      179.96,
-      209.96
-    ],
-    "correlation_with_original_0_30": 0.99607,
-    "five_second_correlations_range": [
-      0.99066,
-      0.99801
-    ],
-    "gain_ratio": 1.3911,
-    "cue_frames": [
-      190.8,
-      198.9,
-      200.6
-    ],
-    "annotation_frames": [
-      181.96,
-      188.96,
-      194.96,
-      196.96,
-      202.96
-    ],
-    "method": "Decoded PCM correlation and actual FFmpeg frames; no claim of human listening."
-  },
-  "episode_content_sha256": "649e1b226859bcf9086f7a130b37404821d01d6edabec20b59f4167b32170cd4",
-  "publish_fingerprint": "826e7d8d59e8123a71c3f075121ca06b9d9fd28756cf3cf598aeabfcdaaebe1c",
-  "revision": "Focused hierarchy with three photographic rule pages and two custom visual rule diagrams",
-  "pending_revision": "Five former text-heavy rule pages now use actual source photos or custom SVG explanations plus authentic rule crops. The prior film hashes and publication receipt describe historical delivery only; a new actual film must be checked before publishing."
+  "local_video_path": "/workspace/deliverables/medvedev-illustrated-rules-final/explainer.mp4",
+  "queued_release_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-medvedev-beijing-default-2026/explainer.mp4"
 }
