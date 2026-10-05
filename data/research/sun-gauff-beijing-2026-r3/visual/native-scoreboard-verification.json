@@ -1,0 +1,87 @@
+{
+  "errors": [],
+  "segments": [
+    {
+      "segment": 0,
+      "start": 266.4,
+      "end": 272.24,
+      "frames": 146,
+      "present": 40
+    },
+    {
+      "segment": 3,
+      "start": 81.04,
+      "end": 106.32,
+      "frames": 632,
+      "present": 580
+    },
+    {
+      "segment": 5,
+      "start": 106.32,
+      "end": 139.92,
+      "frames": 840,
+      "present": 840
+    },
+    {
+      "segment": 6,
+      "start": 160.12,
+      "end": 176.24,
+      "frames": 403,
+      "present": 403
+    },
+    {
+      "segment": 8,
+      "start": 189.72,
+      "end": 214.76,
+      "frames": 626,
+      "present": 370
+    },
+    {
+      "segment": 10,
+      "start": 231.28,
+      "end": 243.2,
+      "frames": 298,
+      "present": 267
+    },
+    {
+      "segment": 14,
+      "start": 243.2,
+      "end": 298.76,
+      "frames": 1389,
+      "present": 613
+    }
+  ],
+  "small_ad_edges": [],
+  "source_url": "https://www.youtube.com/watch?v=Wg6m85wS3Ps",
+  "source_sha256": "79951bd5316ac8910ce6fc1200260c62492d1f791ed3690729dadeb7a6296b90",
+  "search_box": [
+    90,
+    820,
+    540,
+    990
+  ],
+  "fps": 25,
+  "total_decoded_frames": 4334,
+  "method": "Actual source decoding and renderer wta_scoreboard.frame_geometry on every frame of all seven complete selected video windows, including outside cold-open inset subwindows. No fixture or synthetic input substituted.",
+  "visual_checks": "Opened native-mask-final-montage.png; both 232.88/232.92 Ad slots and BREAK POINT #3 retained; animated full-width tag absent; native final wipe and subsequent absence retained without dark rectangle.",
+  "old_probe_error": "Original probe CALIBRATED WTA band failed at 232.8-second 5fps sample (source frame232.88); given wide band failed at animated tag231.2/231.8.",
+  "diagnostic_artifacts": [
+    "data/research/sun-gauff-beijing-2026-r3/visual/board-mask-proof-232.88.png",
+    "data/research/sun-gauff-beijing-2026-r3/visual/board-mask-fixed-232.88.png",
+    "data/research/sun-gauff-beijing-2026-r3/visual/native-mask-final-montage.png"
+  ],
+  "code_sha256": "03fba76f5665bf9daf51884b0ac06f1e9bc98c6dd4383cac8317e35440d247bf",
+  "native_probe": {
+    "full_source_frames": 2127,
+    "fps": 5,
+    "custom_search_box": [
+      90,
+      820,
+      540,
+      990
+    ],
+    "wta_present_frames": 1178,
+    "error": null,
+    "artifact": "native-board-probe.json"
+  }
+}

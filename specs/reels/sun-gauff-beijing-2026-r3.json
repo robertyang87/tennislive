@@ -149,7 +149,7 @@
   "tts_backend": "edge",
   "track": false,
   "scorebox": [
-    80,
+    90,
     820,
     540,
     990
@@ -209,7 +209,7 @@
       "_different_round_why": "第三轮同场正规渠道照片有带水印高清图；官方图库未取得孙本人本场无水印大图。按用户最新高清照片优先要求，选择本届首轮清晰人物照片，不当作第三轮得分瞬间。",
       "_old_photo_why": "第三轮同场正规渠道照片有带水印高清图；官方图库未取得孙本人本场无水印大图。按用户最新高清照片优先要求，选择本届首轮清晰人物照片，不当作第三轮得分瞬间。"
     },
-    "_subject_why": "用户本次明确允许孙心然封面；中国球员输球封面取本场仍在拼搏的实拍，叙事与summary均跟孙心然。"
+    "_subject_why": "用户明确要求封面可以用孙心然，并追加要求高清大图。本条聚焦中国小将首盘领先后的遗憾与未来可期，采用本届中网首轮真实高清人物摄影照作人物封面，非本场瞬间；本人自然挥拍致意，身份与双眼清楚。"
   },
   "editorial": {
     "mode": "match_review",
@@ -378,7 +378,9 @@
           "text": "And Sun is back on the lettering on the court.\n孙心然又退到场上字母标志处"
         }
       ],
-      "_quote_kind": "broadcast"
+      "_quote_kind": "broadcast",
+      "audio_tail": "silence",
+      "_audio_tail_why": "正文原声在139.86完整说完court；溶解默认尾料139.92–140.10会带入下一句（base词码140.00起，medium140.12）。audio_tail=silence只给额外0.18秒尾料补零，不动正文的完整回合或原声。"
     },
     {
       "source": "main",
@@ -469,7 +471,9 @@
           "text": "in just short of an hour.\n用时不到一小时"
         }
       ],
-      "_quote_kind": "broadcast"
+      "_quote_kind": "broadcast",
+      "audio_tail": "silence",
+      "_audio_tail_why": "首盘完整句止于214.68；默认214.76–214.94尾料碰到弃用215秒模糊句的窄窗起声（small/medium为214.80）。该句未作完成审查，额外0.18秒溶解尾料补零，不改正文。"
     },
     {
       "title_card": "次盘0比2落后\n发球局还在拉锯",
@@ -490,7 +494,9 @@
       "bed": "high",
       "point_end_ok": "第二盘2-0高芙第三破发点，发前准备/抛球/完整回合到3-0死球后；243.20前未进入下一句。",
       "crosses_cut": "本分完整，前句Well done Just stay with it于229.8结束，后句Coco relentless于243.34开始。",
-      "_quote_skip_why": "完整231.28–243.20源窗经tiny.en与base.en两独立全源ASR证据交叉核验，无前景英文；small/medium关键窗口核实此前英文止于229.80、之后英文始于243.34。完整证据见data/research/sun-gauff-beijing-2026-r3/audio/selected-23128-24320.json，方法asr_cross_checked，未声称人工听审。"
+      "_quote_skip_why": "完整231.28–243.20源窗经tiny.en与base.en两独立全源ASR证据交叉核验，无前景英文；small/medium关键窗口核实此前英文止于229.80、之后英文始于243.34。完整证据见data/research/sun-gauff-beijing-2026-r3/audio/selected-23128-24320.json，方法asr_cross_checked，未声称人工听审。",
+      "audio_tail": "silence",
+      "_audio_tail_why": "下一句Coco从243.34起；默认243.20–243.38尾料会漏入0.04秒句头。整句在下一段243.20–298.76完整保留，此段只将额外0.18秒溶解尾料补零。"
     },
     {
       "title_card": "次盘0比3落后\n她仍拿回1局",
@@ -612,7 +618,9 @@
           "text": "with a seven-five, six-one win.\n以七比五、六比一获胜"
         }
       ],
-      "_quote_kind": "broadcast"
+      "_quote_kind": "broadcast",
+      "audio_tail": "silence",
+      "_audio_tail_why": "完整赛果句已在298.74说完；末段仍接品牌outro，因此默认298.76–298.94会继续读取紧贴下一段采访句头的音频（base全源句头298.95，其他粗ASR边界有分歧）。不引入未纳入比赛正文的采访；仅额外0.18秒溶解尾料补零，终局原声正文不动。"
     }
   ],
   "_tts_backend_why": "仓库2026-09-20已记录Azure订阅到期，本条无专用情绪风格；采用edge云见+6%，真TTS量长与切词预检。",
@@ -622,5 +630,6 @@
       "detail": "官方全场孙心然二发8/32，高芙14/22；旁白与统计卡已经采用，非仅凭百分比推因果。",
       "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS020/stats"
     }
-  ]
+  ],
+  "_scorebox_why": "以原生图形实际左缘90px起搜，上沿820覆盖窄BREAK/SET/MATCH POINT提示条。原80px搜索起点会将近景深色球场10px误当主体，已实帧验证并收紧；主体与标签逐帧透明蒙版，右缘由原图量取，不按540矩形回贴。"
 }
