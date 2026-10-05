@@ -1,12 +1,12 @@
 {
   "slug": "medvedev-beijing-default-2026",
-  "checked_at": "2026-10-06",
-  "status": "superseded_pending_platform_and_annotation_render",
-  "render_run": 37347591627,
-  "render_source_head": "ef317c20c99cd1a8529c63bd7de06848d8dfbc67",
+  "checked_at": "2026-10-05T18:05:00Z",
+  "status": "pass",
+  "render_run": 37352115009,
+  "render_source_head": "a68a30289ddcebe2cbc84eab19a1884eb5532ea5",
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-medvedev-beijing-default-2026/explainer.mp4",
-  "film_sha256": "259de47bf074bd60bf652106ea9b7ebe432609767cbbb78694c629366e323a2a",
-  "film_bytes": 20469977,
+  "film_sha256": "64a5322c7f185ec7be13d70f82d97e367d4fcfcf6b14e408e9e46ad24d959f76",
+  "film_bytes": 20633843,
   "duration_seconds": 263.433333,
   "width": 1080,
   "height": 1440,
@@ -52,9 +52,37 @@
     "cards": 14,
     "layout": "Deep-blue editorial layouts, original template fonts at weight400, content headings56px vs independent larger cover; no left-lower source footnotes; typography uses restrained white and fine rules.",
     "cover_gloss": "失格 Default · 滥用球 Ball Abuse",
-    "logo": "Original ball/clock upper-left, retained branded outro",
-    "font_coverage": "fontTools cmap verified all final Chinese heading glyphs in SmileySans-Oblique.woff2 and all visual copy in NotoSansSC-Regular-sub.ttf; no system-font fallback for new Chinese characters.",
-    "source_footnotes": "All content pages omit lower-left citation block; provenance preserved in credits and research."
+    "logo": "Original ball/clock upper-left, retained branded outro; localized platform marks removed",
+    "fixed_topic": "中网德梅之战 · 失格规则与历史",
+    "native_annotation": "Right-aligned upper-right annotation, right vertical rule, half-open phases; mutually exclusive with bilingual original-audio captions",
+    "native_annotation_geometry": {
+      "title_px": 40,
+      "detail_px": 32,
+      "rule_canvas_bbox": [
+        1009,
+        192,
+        3,
+        96
+      ],
+      "title_ink_y": [
+        195,
+        232
+      ],
+      "detail_ink_y": [
+        258,
+        285
+      ],
+      "source_frame_y": [
+        180,
+        1260
+      ],
+      "brand_y": [
+        44,
+        126
+      ],
+      "side": "right",
+      "position": "top-right"
+    }
   },
   "audio": {
     "voice": "zh-CN-YunjianNeural",
@@ -146,21 +174,50 @@
     ]
   },
   "evidence": "docs/research/medvedev-beijing-default-2026-source-story.json; assets/explainer/medvedev-beijing-default-2026/credits.json",
-  "original_audio_review": "Two official excerpts with bilingual ASS; cross-model ASR, no claim of human listening. The Rublev excerpt retains the source whole square frame, watermark and scoreboard inside an entirely designed3:4 canvas.",
+  "original_audio_review": "Two official excerpts with bilingual ASS; cross-model ASR, no claim of human listening. The Rublev excerpt retains the source whole square frame and scoreboard; only declared platform watermark regions are processed inside an entirely designed3:4 canvas.",
   "known_limits": [
     "Spectator diagnosis, actual Medvedev fine and further suspension unconfirmed.",
     "2020 US Open case used its contemporary Grand Slam rules, not retroactive2026 ATP provisions.",
     "Kato June9 meeting is subsequent to the June4 incident and June8 mixed title; no claim of incident footage.",
-    "Official clips are edited source material; full supervisor deliberation is not included."
+    "Official clips are edited source material; full supervisor deliberation is not included.",
+    "Localized platform delogo leaves light interpolation traces; processing stays in declared source watermark bounds and does not cover faces, scoreboard or key action."
   ],
   "validation": {
     "preflight": "17/17 pass",
-    "targeted_tests": "174 relevant checks passed before the final caption shortening; the two caption/preflight regressions then passed alongside5 episode/native-insert checks. Final exact-head CI required before merge.",
-    "independent_preview_qc": "fact_check agent reviewed all14 final editorial previews and13 rewritten beats, with no blockers.",
-    "film_visual": "Root reviewed35 actual film frames including all14 cards, two native-video intervals and branded outro: no white evidence panels, content font56 weight400, intact cover logo/gloss, no left-lower citations, subtitles readable with no explicit multiline cues.",
-    "delivery": "Real new fingerprint, sent receipt and message URL required before completion"
+    "targeted_tests": "20 latest episode/native-insert/efficiency checks passed; 5 final annotation regressions passed. Final exact-head CI required before merge.",
+    "independent_preview_qc": "Actual final upper-right30s sample and newly downloaded whole film independently checked; not a prior bottom or editorial render.",
+    "film_visual": "Primary reviewer examined 34 actual film frames plus8 native detail frames; independent fact_check examined29 separate actual film points covering all14 cards, native captions, top-right phase annotation and branded outro; no blockers.",
+    "delivery": "Real new fingerprint, sent receipt and message URL required before completion",
+    "source_head_ci": {
+      "run": 37352095379,
+      "state": "in_progress_when_film_review_completed"
+    }
   },
-  "episode_content_sha256": "3e733dd6a5fe7d642cbf725555ea243bcaa62dd58a5c147ad018a3ff6b87474b",
-  "publish_fingerprint": "5feb027348ae6cbda80767f1053cd5f6f17669a179f2eba7143a440b27ed73e6",
-  "superseded_reason": "User additionally requested clean platform branding, unchanged upper-left subtitle and bottom editorial annotation with right-side vertical line. Prior film QC applies only to prior hash."
+  "independent_native_audio": {
+    "global_seconds": [
+      179.96,
+      209.96
+    ],
+    "correlation_with_original_0_30": 0.99607,
+    "five_second_correlations_range": [
+      0.99066,
+      0.99801
+    ],
+    "gain_ratio": 1.3911,
+    "cue_frames": [
+      190.8,
+      198.9,
+      200.6
+    ],
+    "annotation_frames": [
+      181.96,
+      188.96,
+      194.96,
+      196.96,
+      202.96
+    ],
+    "method": "Decoded PCM correlation and actual FFmpeg frames; no claim of human listening."
+  },
+  "episode_content_sha256": "649e1b226859bcf9086f7a130b37404821d01d6edabec20b59f4167b32170cd4",
+  "publish_fingerprint": "826e7d8d59e8123a71c3f075121ca06b9d9fd28756cf3cf598aeabfcdaaebe1c"
 }
