@@ -1,0 +1,152 @@
+{
+  "slug": "medvedev-beijing-default-2026",
+  "checked_at": "2026-10-05",
+  "status": "pass",
+  "render_run": 37332686438,
+  "render_source_head": "80059350f0cc800cc942f882f70dc3f212e91870",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-medvedev-beijing-default-2026/explainer.mp4",
+  "film_sha256": "8633f86e53b894d78b342f45c9c9d3bef6a4199d7d895934b81d9af5f95dccf3",
+  "film_bytes": 13177876,
+  "duration_seconds": 254.033333,
+  "width": 1080,
+  "height": 1920,
+  "fps": "30/1",
+  "av_duration_difference": 0.075333,
+  "episode_content_sha256": "ecff882c0904ee9b18624e98ac3cfd1bce43f58392ced1cc6a316f9494737597",
+  "full_bleed_reason": "User explicitly requested 用铺满的竖屏 on 2026-10-05; this episode uses native 9:16 cards and portrait footage/outro without letterboxing.",
+  "source": {
+    "official_channel": "Tennis TV",
+    "identity_proof": "https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=LgRD3TLoxr0&format=json",
+    "reference_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
+    "source_range_seconds": [
+      349,
+      369
+    ],
+    "source_dimensions": [
+      1920,
+      1080
+    ],
+    "coverage": "Final point, subsequent swat into stands, edited aftermath and handshake. Official highlights omit full referee deliberation and injury assessment. Portrait crop does not preserve entire wide broadcast frame.",
+    "score_verified": "Djokovic 7–5 5–3; point score 15–15 at incident",
+    "original_audio_review": "faster-whisper small.en independently cross-checked with base.en and tiny.en; names corrected and leading Well restored. No claim of human listening.",
+    "subtitle_file": "assets/explainer/medvedev-beijing-default-2026/incident-intro.ass"
+  },
+  "visual_checks": {
+    "frames_reviewed_seconds": [
+      8,
+      22,
+      35,
+      52,
+      65,
+      83,
+      98,
+      115,
+      130,
+      147,
+      164,
+      184,
+      203,
+      224,
+      243,
+      251.033333
+    ],
+    "cards": 14,
+    "logo": "Original tennis-clock ball at upper left on cover, intro and cards; branded outro retained.",
+    "cover_gloss": "失格 Default · 滥用球 Ball Abuse",
+    "layout": "Native full-screen 1080×1920 cover/cards; subtitles and outro fit portrait frame. Deep-blue rules diagrams, two-line semantic titles.",
+    "caption_correction_frame": "Final intro checked for Well, can you believe it? at 8s.",
+    "rule_correction": "WO has no played match score; verified corrected narration/ASS and escalation SVG. Independent text reviewer confirmed no remaining blocker."
+  },
+  "audio": {
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+22%",
+    "segments": 14,
+    "mean_db": -23.8,
+    "max_db": -3.2,
+    "non_silent_windows": [
+      {
+        "start": 8,
+        "mean_db": -24.1,
+        "max_db": -7.9
+      },
+      {
+        "start": 35,
+        "mean_db": -24.0,
+        "max_db": -4.0
+      },
+      {
+        "start": 52,
+        "mean_db": -22.7,
+        "max_db": -5.9
+      },
+      {
+        "start": 65,
+        "mean_db": -23.4,
+        "max_db": -5.8
+      },
+      {
+        "start": 80,
+        "mean_db": -26.6,
+        "max_db": -6.6
+      },
+      {
+        "start": 96,
+        "mean_db": -23.0,
+        "max_db": -5.5
+      },
+      {
+        "start": 112,
+        "mean_db": -22.7,
+        "max_db": -5.9
+      },
+      {
+        "start": 128,
+        "mean_db": -25.1,
+        "max_db": -7.7
+      },
+      {
+        "start": 143,
+        "mean_db": -23.2,
+        "max_db": -4.6
+      },
+      {
+        "start": 160,
+        "mean_db": -24.7,
+        "max_db": -6.8
+      },
+      {
+        "start": 180,
+        "mean_db": -25.2,
+        "max_db": -4.9
+      },
+      {
+        "start": 199,
+        "mean_db": -23.6,
+        "max_db": -4.6
+      },
+      {
+        "start": 220,
+        "mean_db": -22.0,
+        "max_db": -6.3
+      },
+      {
+        "start": 240,
+        "mean_db": -25.4,
+        "max_db": -8.6
+      }
+    ]
+  },
+  "validation": {
+    "targeted_tests": "304 passed before caption correction; 3 episode checks repeated after correction",
+    "preflight": "17/17 pass",
+    "artifact_content": "All current-match, rules and five historical-case labels found in generated text/ASS/word timing artifacts. Release size matches render.json.",
+    "ci": "Current final branch head must pass CI before merge; workflow record provides that evidence.",
+    "independent_text_qc": "fact_check agent reviewed current match, rules and five historical cases; WO/no-score explanation and penalty escalation corrected and rechecked, no remaining text blockers."
+  },
+  "known_limits": [
+    "Spectator diagnosis, actual Medvedev fine and any further suspension not confirmed; no invented amounts or medical claims.",
+    "Historical incidents assessed under their contemporary rules; 2026 ATP provisions not applied retroactively.",
+    "Indexed March/April 2026 ATP revisions not fully fetched; do not claim all revisions compared."
+  ],
+  "delivery_status_reference": "data/explainer_publish_ledger/medvedev-beijing-default-2026.json; no publication claim without sent receipt"
+}

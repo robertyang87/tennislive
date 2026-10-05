@@ -78,6 +78,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "tennislive.zh" = ["player_names_top500.json"]
+"tennislive.video" = ["episodes/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
