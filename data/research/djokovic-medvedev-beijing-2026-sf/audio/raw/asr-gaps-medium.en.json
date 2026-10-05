@@ -1,0 +1,76 @@
+{
+  "model": "medium.en",
+  "method": "faster-whisper; int8 CPU 4threads; beam_size5; VAD enabled; no_speech_threshold .5; secondary independent checks of non-commentary decoding hypotheses",
+  "windows": [
+    {
+      "from": 149,
+      "to": 161,
+      "duration_after_vad": 0.0,
+      "segments": []
+    },
+    {
+      "from": 180,
+      "to": 190,
+      "duration_after_vad": 0.0,
+      "segments": []
+    },
+    {
+      "from": 339.22,
+      "to": 343.8,
+      "duration_after_vad": 0.0,
+      "segments": []
+    },
+    {
+      "from": 76.58,
+      "to": 87,
+      "duration_after_vad": 0.896,
+      "segments": [
+        {
+          "start": 81.4,
+          "end": 81.92,
+          "text": "Ugh.",
+          "avg_logprob": -0.907487670580546,
+          "no_speech_prob": 0.48621058464050293,
+          "words": [
+            {
+              "start": 81.4,
+              "end": 81.92,
+              "word": " Ugh.",
+              "probability": 0.4605470383539796
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 165.88,
+      "to": 180,
+      "duration_after_vad": 0.0,
+      "segments": []
+    },
+    {
+      "from": 273.2,
+      "to": 289,
+      "duration_after_vad": 0.0,
+      "segments": []
+    },
+    {
+      "from": 289,
+      "to": 309,
+      "duration_after_vad": 0.0,
+      "segments": []
+    },
+    {
+      "from": 314.52,
+      "to": 334.5,
+      "duration_after_vad": 0.0,
+      "segments": []
+    },
+    {
+      "from": 379.96,
+      "to": 389.979,
+      "duration_after_vad": 0.0,
+      "segments": []
+    }
+  ]
+}
