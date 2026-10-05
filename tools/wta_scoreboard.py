@@ -135,11 +135,21 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
                                       min(band.shape[1], cell_hi + EDGE_PAD) + 1)
                       if persistent[x - 1] >= .55]
         # A complete games cell spans at least half one player-row height.
-        # Require a genuinely truncated residual cell: an ordinary full cell's
-        # internal divider must never stand in for an unmeasurable point slot.
+        # A truncated residual cell proves the wipe crossed the games cell.
+        # An intact cell needs separate exposed-background evidence below.
         truncated_cell = cell_hi - cell_lo < band.shape[0] / 4
-        if truncated_cell and wipe_edges:
-            return wipe_edges[-1]
+        if wipe_edges:
+            wipe_edge = wipe_edges[-1]
+            # A wipe can remove the point slot while leaving the games cell
+            # intact. Require positive exposed blue-background evidence beyond
+            # its antialias fringe; a dark, unmeasurable point slot must still
+            # fail rather than being mistaken for this native outer edge.
+            exposed = body[:, wipe_edge + 2 * EDGE_PAD:wipe_edge + 2 * EDGE_PAD + 6]
+            r, g, b = _rgb(exposed)
+            exposed_blue = exposed.size > 0 and (
+                (b - g > 15) & (b - r > 20)).mean() >= .8
+            if truncated_cell or exposed_blue:
+                return wipe_edge
         raise RuntimeError("WTA board present but native right boundary cannot be measured")
     # 没有薄荷绿（开局还没有局分那几秒）：没有签名色撑着，
     # 越过 spec 右缘的读数不可信，照旧封顶

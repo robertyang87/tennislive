@@ -1,0 +1,109 @@
+[
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/official-matches.json",
+    "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "status": 200,
+    "sha256": "01602df4186be211b32f195f50cd74ca268bd086c8aef61604f69f3e6cf3f8c7",
+    "fetched_at": "2026-10-05T10:01:59.575880+00:00"
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/official-stats.json",
+    "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS017/stats",
+    "status": 200,
+    "sha256": "10051f5269c4bf42d76926c931f1aeebdc7782fde473590af23bf78ff736835f",
+    "fetched_at": "2026-10-05T10:01:59.453590+00:00"
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/official-pbp.json",
+    "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS017/point-by-point",
+    "status": 200,
+    "sha256": "bcf7e65bc39ce227ff16110ee3365bf58ed2d8b3232a7ff09af78c74d2776d9d",
+    "fetched_at": "2026-10-05T10:02:02.308283+00:00"
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/tnns-matches-http403.txt",
+    "url": "https://api.tnnslive.com/v1/matches?date=2026-10-05&web=true",
+    "status": 403,
+    "sha256": "78342a0905a72ce44da083dcb5d23b8ea0c16992ba2a82eece97e033d76ba3d3",
+    "fetched_at": "2026-10-05T10:01:59.520724+00:00"
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/youtube-oembed.json",
+    "url": "https://noembed.com/embed?url=https://www.youtube.com/watch?v=3Y8VqlPjzJ8",
+    "status": 200,
+    "sha256": "1135b3ff53a6619841e82eb4c179ca7c84270329bdac0a142aa8f28f0a40ad46",
+    "fetched_at": "2026-10-05T10:01:59.591885+00:00"
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/tnns-stats.json",
+    "url": "https://api.tnnslive.com/v1/web?id=75051470&mode=match_info&submode=stats&web=true",
+    "status": 200,
+    "sha256": "c2b70566cd2a43541447be8da651251a90e3ab890f48759123b9c09da329ebfa",
+    "fetched_at": "2026-10-05T10:03:37.383235+00:00"
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/tnns-meta.json",
+    "url": "https://api.tnnslive.com/v1/web?id=75051470&mode=match&web=true",
+    "status": 200,
+    "sha256": "0744fdc85c29fc0b75b2c57d61fe9e6d4f49c9a8558f4ed1f8bbf2e466372588",
+    "fetched_at": "2026-10-05T10:03:37.157886+00:00"
+  },
+  {
+    "url": "https://www.chinaopen.com/en/",
+    "status": 200,
+    "sha256": "833bd531a3abc07cd1c1b0603767b9ec656b6d602c422b7cc5b5398c782bc69a",
+    "fetched_at": "2026-10-05T10:03:37.379357+00:00",
+    "retained": false,
+    "note": "Exploratory index not used as evidence; authoritative match API/PDF retained instead."
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/tnns-70525.txt",
+    "url": "https://api.tnnslive.com/v1/matches?date=2026-10-05&web=true",
+    "status": 200,
+    "sha256": "c52ce64ae69ac2cf4b77085e335a40ed30bd26254df713d2d2dd973c9b6caf48",
+    "note": "Retry with Mozilla/5.0 User-Agent, Origin/Referer https://www.tnnslive.com/"
+  },
+  {
+    "url": "https://www.wtatennis.com/tournament/1020/beijing/2026/draws",
+    "status": 200,
+    "sha256": "cdf353a25c9ee2ac106cb500524f742701c26bdd49b63830c403b0d8780e4478",
+    "fetched_at": "2026-10-05T10:04:39.864285+00:00",
+    "retained": false,
+    "note": "Exploratory index not used as evidence; authoritative match API/PDF retained instead."
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/official-draws-http403.txt",
+    "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/draws",
+    "status": 403,
+    "sha256": "492899553d985cc0122cc53bb3502fea1f837b37763efd5920fda903c3553ad8",
+    "fetched_at": "2026-10-05T10:04:39.128472+00:00"
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/official-draw.pdf",
+    "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1020/MDS.pdf",
+    "status": 200,
+    "sha256": "e8dbede7d17c144d3251f118272549b90965d02e0f10ac11ea825b0f73732178",
+    "fetched_at": "2026-10-05T10:04:39.343646+00:00"
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/tnns-preview.json",
+    "url": "https://api.tnnslive.com/v1/web?id=75051470&mode=match_info&submode=preview&web=true",
+    "status": 200,
+    "sha256": "db5e0e7ff4ceb26750b803ba90a40c96e592b2bc7527fbd3da9f9828bb59d785",
+    "fetched_at": "2026-10-05T10:04:39.132809+00:00"
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/tnns-recap.json",
+    "url": "https://api.tnnslive.com/v1/web?id=75051470&mode=match_info&submode=recap&web=true",
+    "status": 200,
+    "sha256": "21d8dd8e7d365bb44f2937a4bdaefde5b03b0a28a9d5eb9fe748ef590c59b2de",
+    "fetched_at": "2026-10-05T10:04:39.214800+00:00"
+  },
+  {
+    "path": "data/research/zheng-bouzkova-beijing-2026-r3/official-rankings.json",
+    "url": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES",
+    "status": 200,
+    "sha256": "109839b67f6503651e61ddc640efbb8fda0535d3e42480bb607758e868efad74",
+    "fetched_at": "2026-10-05T10:06:32.083594+00:00"
+  }
+]

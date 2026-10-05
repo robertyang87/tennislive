@@ -595,6 +595,11 @@ def main() -> int:
     after = math.ceil(cover) + 1
     evidence = evidence_windows(spec, cover)
     dead, exempt = dead_seconds(levels, after, evidence)
+    import natural_quiet_audio
+    natural_quiet = natural_quiet_audio.verified_seconds(spec, film, dead)
+    dead = [i for i in dead if i not in natural_quiet]
+    if natural_quiet:
+        print(f"[ok] 已声明的自然弱现场声 {natural_quiet}；源SHA、对应波形与实际增益均匹配（非数字静音）")
     import narrated_audio_mode
     pauses = narrated_audio_mode.declared_pause_seconds(spec, film, levels, after)
     dead = [i for i in dead if i not in pauses]

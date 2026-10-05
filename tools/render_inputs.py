@@ -224,7 +224,11 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
         "说完之后的那一截（上包络／真语音那几档，2026-09-28 起手写 spec 硬）。dry-run 读 probe"
         "（只在 mode=render 那一趟硬）；--check-narration 和 render 在 TTS 之后按真语音再判一遍；"
         "probe 没拉回来时这一层是哑的，所以记位置",
-        "digital_silence_findings", "segments[]._digital_silence_why"),
+        "digital_silence_findings plan_hash verified_seconds", "segments[]._digital_silence_why"),
+    "_digital_silence_windows": _gate(
+        "限定自然弱声核验的源时间窗：音频计划哈希绑定窗口与理由，渲后逐秒核对源SHA、波形和增益；"
+        "不改变画面、字幕或混音，缺证据仍按原静音闸拒绝",
+        "plan_hash verified_seconds", "segments[]._digital_silence_windows", truthy),
     "_draft": _gate("promote_reel_draft.promote：转正时按键名比出草稿块、剥掉它（备料，render "
                     "和 dry-run 都不调）", "promote"),
     "_durations": _gate("promote_reel_draft._duration（备料时读）", "_duration"),
