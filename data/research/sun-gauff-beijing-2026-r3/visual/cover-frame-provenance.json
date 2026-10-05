@@ -1,0 +1,28 @@
+{
+  "asset": "data/research/sun-gauff-beijing-2026-r3/visual/cover-video-candidate.jpg",
+  "kind": "official_video_frame",
+  "subject": "孙心然 / Xinran Sun",
+  "source_id": "main",
+  "source_url": "https://www.youtube.com/watch?v=Wg6m85wS3Ps",
+  "source_local": "/workspace/scratch/sun-gauff/Wg6m85wS3Ps.mp4",
+  "frame_at": 104.0,
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "asset_dimensions": [
+    1920,
+    1080
+  ],
+  "extraction": "ffmpeg -ss 104.00 -i Wg6m85wS3Ps.mp4 -frames:v 1 -q:v 2",
+  "sha256": "534cc4d7658fee5cc93b4809b87aa45f54e2bf1094a5e33639402ae31c029b1c",
+  "transforms": "Original full video frame extracted to JPEG. No repainting, generative editing, upscaling, retouching or logo removal.",
+  "fallback_authorization": "Owner standing September 26 authorization, after cover-research.json documents four-category current-match source searches and inability to obtain usable unwatermarked high-resolution Sun photo.",
+  "identity_visual_check": "Actually inspected full original frame and neighboring 104.0–105.8 candidates: Xinran Sun in the same-match purple Adidas visor and sleeveless top, post-point clenched fist, matching continuous rally and X.SUN scoreboard context.",
+  "eyes_visual_check": "Both eyes open and visible under visor shadow, gaze forward; not blinking or looking down. Near frontal view with slight three-quarter angle. Face relatively sharp for the native video source.",
+  "emotion_visual_check": "Left fist held beside face, wrist and forearm intact; lips closed, focused expression after holding for 3–2. Shows competitive effort suitable for the losing protagonist's promising future framing.",
+  "limitations": "Native 1080p video frame, not a professional high-resolution still photograph. Source broadcast WTA logo and scoreboard remain in the original JPEG; final portrait crop must be checked for framing and overlap. No automatic face model run claimed.",
+  "selection_reason": "104.00 preferred to 104.4 motion blur and later frames with open mouth and more sideward face; actual exact selected source frame was opened and inspected.",
+  "selected_for_final": false,
+  "superseded_why": "用户要求高清大图后改用3711×2304 WTA人物摄影原图；此视频帧只作初始未采用候选记录。"
+}

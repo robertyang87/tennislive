@@ -1,0 +1,134 @@
+{
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 5,
+      "df": 4,
+      "first_in": 33,
+      "first_total": 55,
+      "first_won": 20,
+      "second_won": 14,
+      "second_total": 22,
+      "bp_conv": 6,
+      "bp_chances": 8,
+      "pts_won": 71,
+      "pts_total": 120,
+      "headshot": "assets/players/headshots/wta-328560.jpg",
+      "winners": 29,
+      "ue": 21
+    },
+    "b": {
+      "aces": 1,
+      "df": 3,
+      "first_in": 33,
+      "first_total": 65,
+      "first_won": 20,
+      "second_won": 8,
+      "second_total": 32,
+      "bp_conv": 2,
+      "bp_chances": 2,
+      "pts_won": 49,
+      "pts_total": 120,
+      "headshot": "assets/players/headshots/wta-335958-match-LS041.jpg",
+      "winners": 14,
+      "ue": 20
+    },
+    "_source": "Official WTA setnum0: https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS020/stats . a=Coco Gauff, b=Xinran Sun. First serve source override: Flashscore has one-point inconsistent fields; all integers here WTA. Double faults remain in second_total22/32.",
+    "footer_date": "2026-10-05",
+    "footer_venue": "北京 · Diamond",
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051492&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/sun-gauff-beijing-2026-r3/tnns-match_info.txt",
+      "source_sha256": "48e8fd656d4dcc43a7c46e342e93eda34b68db0c26ca3c71deeeadc5b5f6e885",
+      "period": "Match",
+      "match_date": "2026-10-05",
+      "checked_at": "2026-10-05T16:56:20.127431+00:00",
+      "winner_result": "7-5 6-1",
+      "matchup": [
+        "Gauff",
+        "Sun"
+      ],
+      "winners": [
+        29,
+        14
+      ],
+      "ue": [
+        21,
+        20
+      ],
+      "notes": "Decoded K/P/_ using repository decoder; hasExtendedStats=True; order Gauff/Sun. Set winners16/11+13/3 and UE18/11+3/9 equal match. Direct urllib response accessible in this environment. Core full-match values checked WTA/FS; do not inherit conflicting TNNS per-set denominators or FS one-point serve stats."
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS020",
+    "date": "2026-10-05",
+    "winner": "高芙",
+    "loser": "孙心然",
+    "participants": [
+      "高芙",
+      "孙心然"
+    ],
+    "winner_result": "7-5 6-1",
+    "set_scores_home_away": [
+      [
+        7,
+        5
+      ],
+      [
+        6,
+        1
+      ]
+    ],
+    "source_url": "https://www.wtatennis.com/tournaments/china-open/scores/LS020",
+    "start_api_utc": "2026-10-05T14:00:43.363+00:00",
+    "first_point_utc": "2026-10-05T14:12:37Z",
+    "final_point_utc": "2026-10-05T15:41:48Z",
+    "date_time_copy": "北京时间2026年10月5日夜场",
+    "_time_note": "API match timestamp precedes first scored point ~12 minutes. Use natural night slot, not metadata as verified exact actual start.",
+    "daypart": "晚上",
+    "duration": "01:29:41",
+    "court": "Diamond",
+    "_pbp_note": "Some pointWinner fields conflict with scoreAfterPoint (point8 Sun AD -> deuce still pointWinner B). Reconstruct games from final G states and compare final score. Fine point streaks need video verification."
+  },
+  "_facts": [
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+      "type": "official_match_data",
+      "why": "比赛身份LS020、7-5 6-1、3号种子高芙、外卡孙心然、CourtID1、1:29:41"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS020/point-by-point",
+      "type": "official_pbp",
+      "why": "120分19局。首盘孙1-2后直落4分回破2-2；3-2/4-3/5-4领先；5-4时为高芙发球，孙从未拿盘点。高芙从4-5连赢6局至次盘3-0；孙回破3-1，高芙再连赢3局结束。"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS020/stats",
+      "type": "official_match_stats",
+      "why": "全场ACE高5孙1，双误4/3，破发6/8和2/2；孙次盘二发1/13=7.7%。分盘57:49+31:50=89:39，与比赛89:41差2秒。"
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4587000/gauff-pulls-away-late-to-defeat-rising-sun-in-beijing",
+      "type": "official_match_report",
+      "why": "高芙世界第4、赢最后10局9局、孙16岁；高芙赛后评价她比自己16岁更成熟、是出色球员、期待未来再交手，可准确转述为展望。"
+    },
+    {
+      "url": "https://www.chinaopen.com/en/contents/353/740.html",
+      "type": "official_event_report",
+      "why": "赛事官方独立确认高芙7-5 6-1夜场胜孙、下一轮梅尔滕斯。"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=Sun&metric=SINGLES",
+      "type": "official_rankings",
+      "why": "2026-09-28期孙心然582、2010-07-23生日；Gauff同端点name=Gauff为第4。"
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+      "type": "official_background_report",
+      "why": "孙16岁美网青少年冠军、青少年世界第1、WTA正赛首秀、第二轮击败27号种子布克沙6-4 7-5、排名582将首次进前500。"
+    }
+  ]
+}
