@@ -1,0 +1,369 @@
+{
+  "schema": "tennislive.independent-visual-qc.v1",
+  "status": "pass",
+  "reviewer": "independent_final_visual_qc_agent",
+  "reviewed_at": "2026-10-05T18:05:30.904189+00:00",
+  "method": "Actual film ffmpeg frame extraction plus visual inspection of all 102 samples; seven contact walls and targeted full-resolution scoreboard frames. This is sampled visual inspection, not all-frame playback or manual audio listening.",
+  "film": {
+    "sha256": "2a30aa3558c8faca0dbe23fb02ac68f5bec58f11db6efc83c1d0a12ae06408e2",
+    "bytes": 83097999,
+    "seconds": 272.36,
+    "width": 1080,
+    "height": 1440,
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-sun-gauff-beijing-2026-r3/sun-gauff-beijing-2026-r3.mp4"
+  },
+  "binding_sha256": "7206363ddf0804d92dd0666ef61e4866bf3bb2f4e06689f6506c699c574897e7",
+  "spec_sha256": "3d244637c91bb0f229e5b914d41f3495fc7b27c656b6b0ed7437e40d77f7a6e6",
+  "sampling": {
+    "samples": 102,
+    "segment_midpoints": 15,
+    "bilingual_quotes": 35,
+    "manifest": "data/research/sun-gauff-beijing-2026-r3/visual/independent-final-sample-manifest.json",
+    "manifest_sha256": "5082b33fa798eb0c6427727bed01955b06c641c7c4f702e23871a6652fd8e3b2",
+    "exact_production_timeline": {
+      "cover_seconds": 1.2,
+      "offsets": [
+        1.2,
+        7.04,
+        19.45,
+        28.28,
+        53.56,
+        62.7,
+        96.30000000000001,
+        112.42000000000002,
+        123.94000000000001,
+        148.98000000000002,
+        157.91000000000003,
+        169.83,
+        182.55,
+        194.93,
+        212.93
+      ],
+      "lengths": [
+        5.84,
+        12.41,
+        8.83,
+        25.28,
+        9.14,
+        33.6,
+        16.12,
+        11.52,
+        25.04,
+        8.93,
+        11.92,
+        12.72,
+        12.38,
+        18.0,
+        55.56
+      ]
+    }
+  },
+  "checks": {
+    "cover": "Actual film contains HD Sun official photograph with both eyes discernible, natural face, unblocked headline; Gauff winner7,6 / Sun5,1. Earlier-round provenance remains explicit in spec.",
+    "chapters": "All seven native navy title cards readable and intact; 2-line thesis, kicker, bottom brand safe. Future card visibly says 遗憾之后 / 未来可期.",
+    "statistics": "Full-canvas actual film shows both newly replaced real HD headshots and all nine statistics with no truncation; ACE5:1, DF4:3, W29:14, UE21:20, first-in60%(33/55):51%(33/65), firstwon61%(20/33):61%(20/33), secondwon64%(14/22):25%(8/32), BP6/8:2/2, points71:49.",
+    "subtitles": "All35 actual cues inspected. Chinese main reading line fully visible throughout. Long first-set sentence uses2 English lines plus1 Chinese line, entirely inside canvas. No subtitle collision with native small scoreboard.",
+    "scoreboard": "Native per-frame names, serving icon, games, points and Ad preserved in sampled stable/transition states. BREAK POINT#3, SET POINT, MATCH POINT short mint tabs retain own narrow contours; adjacent court/background visible, no opaque rectangular gutter. Native board disappears in closeups after final point.",
+    "narrowing_board_recheck": "Contact wall initially misread as only5/5 or6/5 columns at film132.02/138.72; full-resolution047-motion and050-motion prove full C.GAUFF/X.SUN names, serving icon and narrow native scores intact. Source197.8 also checked. Earlier issue claim withdrawn, no renderer fault.",
+    "ending": "Actual final segment sampled through serve preparation, long deciding rally, end/result, Gauff and team reactions, player handshake244.23s, umpire interaction250.23s, final score7-5 6-1 with terminal bilingual cue at267.04 and268.41s. Transition reaches clean brand outro; no interview inserted. Quote final-end298.74 source is within298.76 selected window per bound review; audio listening not claimed.",
+    "brand_outro": "Actual last brand frame complete and clear with 网球时差 and 时差归我，好球归你."
+  },
+  "quote_checks": [
+    {
+      "segment": 0,
+      "quote": 0,
+      "film_time": 3.05,
+      "text": "And Coco Gauff continues to refuse to lose\n科科·高芙仍保持不败",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 0,
+      "quote": 1,
+      "film_time": 5.840000000000001,
+      "text": "before the semifinals in Beijing.\n在北京的半决赛之前",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 3,
+      "quote": 0,
+      "film_time": 30.060000000000002,
+      "text": "Dip below sixty degrees Fahrenheit,\n气温降到华氏六十度以下",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 3,
+      "quote": 1,
+      "film_time": 32.3,
+      "text": "low teens Celsius.\n也就是摄氏十几度",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 3,
+      "quote": 2,
+      "film_time": 52.010000000000005,
+      "text": "Quality stuff from the youngster.\n这位小将打得真漂亮。",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 5,
+      "quote": 0,
+      "film_time": 89.05000000000001,
+      "text": "She just continues to bash the ball.\n她还在不断大力击球。",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 5,
+      "quote": 1,
+      "film_time": 91.91,
+      "text": "I mean, just continue to watch.\n我是说，继续看下去。",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 5,
+      "quote": 2,
+      "film_time": 94.75,
+      "text": "And Sun is back on the lettering on the court.\n孙心然又退到场上字母标志处",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 6,
+      "quote": 0,
+      "film_time": 98.09000000000002,
+      "text": "But here, it’s all right in front of her.\n而现在，机会就在她眼前。",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 8,
+      "quote": 0,
+      "film_time": 129.47,
+      "text": "And Coco Gauff back out in front\n科科·高芙再度领先",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 8,
+      "quote": 1,
+      "film_time": 131.25,
+      "text": "for the first time in forty minutes,\n这是四十分钟来的第一次",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 8,
+      "quote": 2,
+      "film_time": 133.08,
+      "text": "and she’s got triple set point.\n她拿到了三个盘点",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 8,
+      "quote": 3,
+      "film_time": 137.20000000000002,
+      "text": "And it’s a swing and a miss.\n这一拍挥空了。",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 8,
+      "quote": 4,
+      "film_time": 139.12,
+      "text": "And that’s a little deflated look.\n她的神情有些低落。",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 8,
+      "quote": 5,
+      "film_time": 141.15,
+      "text": "The shoulders have fallen for Sun Xinran,\n孙心然垂下了肩膀",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 8,
+      "quote": 6,
+      "film_time": 144.16000000000003,
+      "text": "because Coco Gauff finds a way to earn the opening set.\n因为科科·高芙设法拿下首盘",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 8,
+      "quote": 7,
+      "film_time": 146.96,
+      "text": "It wasn’t easy, but she gets it done\n并不容易，但她还是拿下首盘",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 8,
+      "quote": 8,
+      "film_time": 148.38000000000002,
+      "text": "in just short of an hour.\n用时不到一小时",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 0,
+      "film_time": 213.6,
+      "text": "Coco, relentless.\n科科毫不松懈",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 1,
+      "film_time": 215.5,
+      "text": "She loves the middle of the court today.\n今天她很喜欢利用场地中路",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 2,
+      "film_time": 237.98000000000002,
+      "text": "And Coco Gauff continues to refuse to lose\n科科·高芙仍保持不败",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 3,
+      "film_time": 240.77,
+      "text": "before the semifinals in Beijing.\n在北京的半决赛之前",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 4,
+      "film_time": 246.42000000000002,
+      "text": "Well, on paper\n从纸面实力看",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 5,
+      "film_time": 247.675,
+      "text": "it looked like it was going to be a beatdown.\n本该是一场悬殊的较量",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 6,
+      "film_time": 249.34,
+      "text": "Number four in the world\n世界第四",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 7,
+      "film_time": 250.59,
+      "text": "versus five eighty-two.\n对阵世界第五百八十二",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 8,
+      "film_time": 252.66000000000003,
+      "text": "The opening set was more competitive\n首盘的激烈程度",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 9,
+      "film_time": 254.53500000000003,
+      "text": "than anyone could have imagined.\n超出了所有人的想象",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 10,
+      "film_time": 256.12,
+      "text": "But in the end, it’s Coco Gauff\n但最终，是科科·高芙",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 11,
+      "film_time": 257.65,
+      "text": "who strikes a commanding pose\n展现出了压倒性的优势",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 12,
+      "film_time": 259.22,
+      "text": "in the second set,\n在第二盘",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 13,
+      "film_time": 260.73,
+      "text": "as she runs away with it.\n一路拉开了差距",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 14,
+      "film_time": 262.65,
+      "text": "And now she finds her way to the round of sixteen\n现在她晋级十六强",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 15,
+      "film_time": 264.78000000000003,
+      "text": "at this WTA one thousand event\n在这站 WTA 一千赛",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    },
+    {
+      "segment": 14,
+      "quote": 16,
+      "film_time": 267.04,
+      "text": "with a seven-five, six-one win.\n以七比五、六比一获胜",
+      "result": "Both language texts fully visible; readable; no collision with native small scoreboard."
+    }
+  ],
+  "evidence": [
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/visual/final-segment-sheet-00.jpg",
+      "sha256": "ce7503a7d77f641eea569dfb4b0865850d878a2d98f82bc2e2f779964fa5c22b",
+      "bytes": 337572
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/visual/final-segment-sheet-01.jpg",
+      "sha256": "b9de23209d52313f14fd0ea60a11bf311b936e15c4cfb6b1667d2b1e6e21feee",
+      "bytes": 305432
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/visual/final-quote-sheet-00.jpg",
+      "sha256": "0095dcc933b0352c84fb1b2e6f69d6092d7af8e11a8aeebec0b02c4d7e454974",
+      "bytes": 237174
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/visual/final-quote-sheet-01.jpg",
+      "sha256": "986e544a2e0f851cf2d85e83afcc7fdd1390b40ed9f46f7a6a3138138c98ace8",
+      "bytes": 220670
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/visual/final-quote-sheet-02.jpg",
+      "sha256": "74ac6c263f7f2cd9f549fcd14b0d7177e6f48b07ca27323279556aef6e021bcb",
+      "bytes": 269467
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/visual/final-quote-sheet-03.jpg",
+      "sha256": "eae634d7071467e3934f02e5d8c0235baaa924fc3f5389f4cb2db8257c0c89bb",
+      "bytes": 278781
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/visual/final-quote-sheet-04.jpg",
+      "sha256": "bb5588f809bbc32e213fecdf88482487de3f0af622f8e359a7a89629aef5da7c",
+      "bytes": 100861
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/visual/final-board-047-motion.jpg",
+      "sha256": "bd9a8e3ac70cbe5145a9a427b44ad872d48dbea9ddded32029c72a1f93b849e4",
+      "bytes": 91412
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/visual/final-board-050-motion.jpg",
+      "sha256": "e6488180c7d254944b490a8fba828fe950b8d7bc3352bff08a0ecfb3d22dfe0c",
+      "bytes": 149181
+    }
+  ],
+  "failures": [],
+  "limitations": [
+    "This independent review covers actual extracted visual samples; original English and boundary completeness rely additionally on the separately bound asr_cross_checked audio review. No human listening claimed."
+  ]
+}
