@@ -1,0 +1,766 @@
+{
+  "model": "small.en",
+  "method": "faster-whisper; int8 CPU 2threads; beam_size5; no VAD; no_speech_threshold .5; selected-window complement plus whole planned narration window",
+  "windows": [
+    {
+      "from": 46.28,
+      "to": 61.43,
+      "segments": [
+        {
+          "start": 46.28,
+          "end": 56.36,
+          "text": "Oh my God!",
+          "avg_logprob": -2.2142889159066335,
+          "no_speech_prob": 0.3592042624950409,
+          "words": [
+            {
+              "start": 46.28,
+              "end": 48.52,
+              "word": " Oh",
+              "probability": 0.019865158945322037
+            },
+            {
+              "start": 48.52,
+              "end": 51.36,
+              "word": " my",
+              "probability": 0.005346016492694616
+            },
+            {
+              "start": 51.36,
+              "end": 56.36,
+              "word": " God!",
+              "probability": 0.4582260251045227
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 61.43,
+      "to": 76.58,
+      "segments": [
+        {
+          "start": 72.11,
+          "end": 76.55,
+          "text": "Oh, my God.",
+          "avg_logprob": -1.103781208395958,
+          "no_speech_prob": 0.38893574476242065,
+          "words": [
+            {
+              "start": 72.11,
+              "end": 73.51,
+              "word": " Oh,",
+              "probability": 0.1346718966960907
+            },
+            {
+              "start": 76.55,
+              "end": 76.55,
+              "word": " my",
+              "probability": 0.32502424716949463
+            },
+            {
+              "start": 76.55,
+              "end": 76.55,
+              "word": " God.",
+              "probability": 0.6827705502510071
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 31.74,
+      "to": 46.28,
+      "segments": [
+        {
+          "start": 42.2,
+          "end": 46.06,
+          "text": "This time the pressure does tell it's been coming.",
+          "avg_logprob": -0.38529337516852785,
+          "no_speech_prob": 0.1802312433719635,
+          "words": [
+            {
+              "start": 42.2,
+              "end": 42.9,
+              "word": " This",
+              "probability": 0.7444924116134644
+            },
+            {
+              "start": 42.9,
+              "end": 43.3,
+              "word": " time",
+              "probability": 0.99753737449646
+            },
+            {
+              "start": 43.3,
+              "end": 44.2,
+              "word": " the",
+              "probability": 0.7294391989707947
+            },
+            {
+              "start": 44.2,
+              "end": 44.54,
+              "word": " pressure",
+              "probability": 0.9984166622161865
+            },
+            {
+              "start": 44.54,
+              "end": 44.86,
+              "word": " does",
+              "probability": 0.9862064719200134
+            },
+            {
+              "start": 44.86,
+              "end": 45.22,
+              "word": " tell",
+              "probability": 0.9553369879722595
+            },
+            {
+              "start": 45.22,
+              "end": 45.5,
+              "word": " it's",
+              "probability": 0.8215102255344391
+            },
+            {
+              "start": 45.5,
+              "end": 45.66,
+              "word": " been",
+              "probability": 0.9211865067481995
+            },
+            {
+              "start": 45.66,
+              "end": 46.06,
+              "word": " coming.",
+              "probability": 0.993301510810852
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 76.58,
+      "to": 87,
+      "segments": [
+        {
+          "start": 76.58,
+          "end": 79.06,
+          "text": "Aah!",
+          "avg_logprob": -0.6465069452921549,
+          "no_speech_prob": 0.4611569941043854,
+          "words": [
+            {
+              "start": 76.58,
+              "end": 79.06,
+              "word": " Aah!",
+              "probability": 0.14875039085745811
+            }
+          ]
+        },
+        {
+          "start": 80.58,
+          "end": 81.8,
+          "text": "Aah!",
+          "avg_logprob": -0.6465069452921549,
+          "no_speech_prob": 0.4611569941043854,
+          "words": [
+            {
+              "start": 80.58,
+              "end": 81.8,
+              "word": " Aah!",
+              "probability": 0.6984356641769409
+            }
+          ]
+        },
+        {
+          "start": 83.52,
+          "end": 84.66,
+          "text": "Aah!",
+          "avg_logprob": -0.6465069452921549,
+          "no_speech_prob": 0.4611569941043854,
+          "words": [
+            {
+              "start": 83.52,
+              "end": 84.66,
+              "word": " Aah!",
+              "probability": 0.8467026650905609
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 95.32,
+      "to": 120,
+      "segments": []
+    },
+    {
+      "from": 135,
+      "to": 149,
+      "segments": []
+    },
+    {
+      "from": 149,
+      "to": 161,
+      "segments": [
+        {
+          "start": 149.0,
+          "end": 150.26,
+          "text": "All right, let's go.",
+          "avg_logprob": -1.1812431265910466,
+          "no_speech_prob": 0.2384169101715088,
+          "words": [
+            {
+              "start": 149.0,
+              "end": 149.0,
+              "word": " All",
+              "probability": 0.0010528347920626402
+            },
+            {
+              "start": 149.0,
+              "end": 149.0,
+              "word": " right,",
+              "probability": 0.9344039559364319
+            },
+            {
+              "start": 149.3,
+              "end": 150.26,
+              "word": " let's",
+              "probability": 0.48776140064001083
+            },
+            {
+              "start": 150.26,
+              "end": 150.26,
+              "word": " go.",
+              "probability": 0.5390369296073914
+            }
+          ]
+        },
+        {
+          "start": 150.26,
+          "end": 152.92,
+          "text": "Come on.",
+          "avg_logprob": -1.1812431265910466,
+          "no_speech_prob": 0.2384169101715088,
+          "words": [
+            {
+              "start": 150.26,
+              "end": 150.26,
+              "word": " Come",
+              "probability": 0.06784005463123322
+            },
+            {
+              "start": 150.26,
+              "end": 152.92,
+              "word": " on.",
+              "probability": 0.8536489009857178
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 165.88,
+      "to": 180,
+      "segments": [
+        {
+          "start": 165.88,
+          "end": 166.64,
+          "text": "Aah!",
+          "avg_logprob": -0.4983773346870176,
+          "no_speech_prob": 0.5085192918777466,
+          "words": [
+            {
+              "start": 165.88,
+              "end": 166.64,
+              "word": " Aah!",
+              "probability": 0.08993410086259246
+            }
+          ]
+        },
+        {
+          "start": 168.74,
+          "end": 169.1,
+          "text": "Aah!",
+          "avg_logprob": -0.4983773346870176,
+          "no_speech_prob": 0.5085192918777466,
+          "words": [
+            {
+              "start": 168.74,
+              "end": 169.1,
+              "word": " Aah!",
+              "probability": 0.8079094588756561
+            }
+          ]
+        },
+        {
+          "start": 171.88,
+          "end": 172.08,
+          "text": "Aah!",
+          "avg_logprob": -0.4983773346870176,
+          "no_speech_prob": 0.5085192918777466,
+          "words": [
+            {
+              "start": 171.38,
+              "end": 172.08,
+              "word": " Aah!",
+              "probability": 0.8709524869918823
+            }
+          ]
+        },
+        {
+          "start": 173.72,
+          "end": 174.78,
+          "text": "Aah!",
+          "avg_logprob": -0.4983773346870176,
+          "no_speech_prob": 0.5085192918777466,
+          "words": [
+            {
+              "start": 173.72,
+              "end": 174.78,
+              "word": " Aah!",
+              "probability": 0.8829315006732941
+            }
+          ]
+        },
+        {
+          "start": 175.92,
+          "end": 177.32,
+          "text": "Aah!",
+          "avg_logprob": -0.4983773346870176,
+          "no_speech_prob": 0.5085192918777466,
+          "words": [
+            {
+              "start": 175.92,
+              "end": 177.32,
+              "word": " Aah!",
+              "probability": 0.8878192901611328
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 180,
+      "to": 191.68,
+      "segments": [
+        {
+          "start": 181.76,
+          "end": 182.36,
+          "text": "Come here.",
+          "avg_logprob": -0.5225414889199393,
+          "no_speech_prob": 0.2592756152153015,
+          "words": [
+            {
+              "start": 181.76,
+              "end": 182.12,
+              "word": " Come",
+              "probability": 0.8532587885856628
+            },
+            {
+              "start": 182.12,
+              "end": 182.36,
+              "word": " here.",
+              "probability": 0.9658067226409912
+            }
+          ]
+        },
+        {
+          "start": 184.3,
+          "end": 184.8,
+          "text": "Come here.",
+          "avg_logprob": -0.5225414889199393,
+          "no_speech_prob": 0.2592756152153015,
+          "words": [
+            {
+              "start": 184.3,
+              "end": 184.66,
+              "word": " Come",
+              "probability": 0.8833961486816406
+            },
+            {
+              "start": 184.66,
+              "end": 184.8,
+              "word": " here.",
+              "probability": 0.9773963689804077
+            }
+          ]
+        },
+        {
+          "start": 186.38,
+          "end": 187.0,
+          "text": "Come here.",
+          "avg_logprob": -0.5225414889199393,
+          "no_speech_prob": 0.2592756152153015,
+          "words": [
+            {
+              "start": 186.38,
+              "end": 186.38,
+              "word": " Come",
+              "probability": 0.47505059838294983
+            },
+            {
+              "start": 186.38,
+              "end": 187.08,
+              "word": " here.",
+              "probability": 0.9664231538772583
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 199.08,
+      "to": 217,
+      "segments": [
+        {
+          "start": 199.08,
+          "end": 214.08,
+          "text": "Aah. Aah. Aah. Aah. Aah. Aah. Aah.",
+          "avg_logprob": -0.6682774946093559,
+          "no_speech_prob": 0.31848815083503723,
+          "words": [
+            {
+              "start": 199.08,
+              "end": 200.56,
+              "word": " Aah.",
+              "probability": 0.2161776190623641
+            },
+            {
+              "start": 201.9,
+              "end": 202.44,
+              "word": " Aah.",
+              "probability": 0.7658843398094177
+            },
+            {
+              "start": 204.24,
+              "end": 204.98,
+              "word": " Aah.",
+              "probability": 0.9326725602149963
+            },
+            {
+              "start": 206.5,
+              "end": 207.0,
+              "word": " Aah.",
+              "probability": 0.9425981640815735
+            },
+            {
+              "start": 207.34,
+              "end": 207.34,
+              "word": " Aah.",
+              "probability": 0.931791752576828
+            },
+            {
+              "start": 207.76,
+              "end": 207.96,
+              "word": " Aah.",
+              "probability": 0.8690512776374817
+            },
+            {
+              "start": 212.68,
+              "end": 214.08,
+              "word": " Aah.",
+              "probability": 0.8253384232521057
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 221.2,
+      "to": 227,
+      "segments": []
+    },
+    {
+      "from": 233.16,
+      "to": 245,
+      "segments": []
+    },
+    {
+      "from": 245,
+      "to": 255,
+      "segments": []
+    },
+    {
+      "from": 261.5,
+      "to": 273.2,
+      "segments": [
+        {
+          "start": 267.2,
+          "end": 270.7,
+          "text": "But this time, he does find a way through.",
+          "avg_logprob": -0.3605625991310392,
+          "no_speech_prob": 0.15133827924728394,
+          "words": [
+            {
+              "start": 267.2,
+              "end": 267.92,
+              "word": " But",
+              "probability": 0.7174370288848877
+            },
+            {
+              "start": 267.92,
+              "end": 268.16,
+              "word": " this",
+              "probability": 0.9899758696556091
+            },
+            {
+              "start": 268.16,
+              "end": 268.54,
+              "word": " time,",
+              "probability": 0.9988974332809448
+            },
+            {
+              "start": 268.72,
+              "end": 269.4,
+              "word": " he",
+              "probability": 0.9955525994300842
+            },
+            {
+              "start": 269.4,
+              "end": 269.64,
+              "word": " does",
+              "probability": 0.9796455502510071
+            },
+            {
+              "start": 269.64,
+              "end": 270.0,
+              "word": " find",
+              "probability": 0.9952675104141235
+            },
+            {
+              "start": 270.0,
+              "end": 270.16,
+              "word": " a",
+              "probability": 0.9923657774925232
+            },
+            {
+              "start": 270.16,
+              "end": 270.3,
+              "word": " way",
+              "probability": 0.999293327331543
+            },
+            {
+              "start": 270.3,
+              "end": 270.7,
+              "word": " through.",
+              "probability": 0.9913596510887146
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 273.2,
+      "to": 289,
+      "segments": [
+        {
+          "start": 273.2,
+          "end": 274.04,
+          "text": "Aah!",
+          "avg_logprob": -0.45620124186238936,
+          "no_speech_prob": 0.4805048704147339,
+          "words": [
+            {
+              "start": 273.2,
+              "end": 274.04,
+              "word": " Aah!",
+              "probability": 0.14869588776491582
+            }
+          ]
+        },
+        {
+          "start": 274.42,
+          "end": 274.78,
+          "text": "Aah!",
+          "avg_logprob": -0.45620124186238936,
+          "no_speech_prob": 0.4805048704147339,
+          "words": [
+            {
+              "start": 274.42,
+              "end": 274.78,
+              "word": " Aah!",
+              "probability": 0.6546254307031631
+            }
+          ]
+        },
+        {
+          "start": 278.12,
+          "end": 279.52,
+          "text": "Aah!",
+          "avg_logprob": -0.45620124186238936,
+          "no_speech_prob": 0.4805048704147339,
+          "words": [
+            {
+              "start": 278.12,
+              "end": 279.52,
+              "word": " Aah!",
+              "probability": 0.7686090171337128
+            }
+          ]
+        },
+        {
+          "start": 280.16,
+          "end": 280.42,
+          "text": "Aah!",
+          "avg_logprob": -0.45620124186238936,
+          "no_speech_prob": 0.4805048704147339,
+          "words": [
+            {
+              "start": 280.16,
+              "end": 280.42,
+              "word": " Aah!",
+              "probability": 0.8455829918384552
+            }
+          ]
+        },
+        {
+          "start": 281.44,
+          "end": 282.18,
+          "text": "Aah!",
+          "avg_logprob": -0.45620124186238936,
+          "no_speech_prob": 0.4805048704147339,
+          "words": [
+            {
+              "start": 281.44,
+              "end": 282.18,
+              "word": " Aah!",
+              "probability": 0.8734327256679535
+            }
+          ]
+        },
+        {
+          "start": 282.86,
+          "end": 283.24,
+          "text": "Aah!",
+          "avg_logprob": -0.45620124186238936,
+          "no_speech_prob": 0.4805048704147339,
+          "words": [
+            {
+              "start": 282.86,
+              "end": 283.24,
+              "word": " Aah!",
+              "probability": 0.8996198177337646
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 289,
+      "to": 309,
+      "segments": [
+        {
+          "start": 289.0,
+          "end": 302.6,
+          "text": "Oh, fuck.",
+          "avg_logprob": -1.491370746067592,
+          "no_speech_prob": 0.4730103611946106,
+          "words": [
+            {
+              "start": 289.0,
+              "end": 291.32,
+              "word": " Oh,",
+              "probability": 0.008381318300962448
+            },
+            {
+              "start": 302.6,
+              "end": 302.6,
+              "word": " fuck.",
+              "probability": 0.3620176613330841
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 314.52,
+      "to": 334.5,
+      "segments": [
+        {
+          "start": 314.52,
+          "end": 315.22,
+          "text": "Oh",
+          "avg_logprob": -0.8067649304866791,
+          "no_speech_prob": 0.30268844962120056,
+          "words": [
+            {
+              "start": 314.52,
+              "end": 315.22,
+              "word": " Oh",
+              "probability": 0.022010480985045433
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 339.22,
+      "to": 344.48,
+      "segments": [
+        {
+          "start": 339.22,
+          "end": 340.44,
+          "text": "Yeah!",
+          "avg_logprob": -0.9275430043538412,
+          "no_speech_prob": 0.5930240154266357,
+          "words": [
+            {
+              "start": 339.22,
+              "end": 340.44,
+              "word": " Yeah!",
+              "probability": 0.0957639217376709
+            }
+          ]
+        },
+        {
+          "start": 341.86,
+          "end": 343.26,
+          "text": "Yeah!",
+          "avg_logprob": -0.9275430043538412,
+          "no_speech_prob": 0.5930240154266357,
+          "words": [
+            {
+              "start": 341.86,
+              "end": 343.26,
+              "word": " Yeah!",
+              "probability": 0.7122659087181091
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 379.96,
+      "to": 389.979,
+      "segments": [
+        {
+          "start": 388.54,
+          "end": 389.94,
+          "text": "Thanks for watching!",
+          "avg_logprob": -0.8981761591775077,
+          "no_speech_prob": 0.738166093826294,
+          "words": [
+            {
+              "start": 388.54,
+              "end": 389.94,
+              "word": " Thanks",
+              "probability": 0.007027555722743273
+            },
+            {
+              "start": 389.94,
+              "end": 389.94,
+              "word": " for",
+              "probability": 0.8271102905273438
+            },
+            {
+              "start": 389.94,
+              "end": 389.94,
+              "word": " watching!",
+              "probability": 0.9193682074546814
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
