@@ -124,17 +124,20 @@ def _annotation_enable(subtitles: Path, duration: float, annotation: dict) -> st
 
 
 def _render_source_annotation(annotation: dict, outdir: Path) -> Path:
-    """Two editorial lines below the original frame, with a fine rule on the right."""
+    """Two transparent editorial lines, with a fine rule on the right."""
     from playwright.sync_api import sync_playwright
     from ..render.webcards import _font_css
     from ..chromium import launch_chromium
 
     title = html.escape(annotation['title'])
     detail = html.escape(annotation['detail'])
+    shadow = ("text-shadow:0 1px 3px #071322,0 0 1px #071322;"
+              "-webkit-text-stroke:.5px #071322;"
+              if annotation.get('position') == 'top-right' else '')
     doc = f"""<!doctype html><html><head><meta charset="utf-8"><style>{_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box}}
 html,body{{width:1080px;height:180px;background:transparent;color:#e8edf1}}
-.card{{position:absolute;top:38px;right:96px;text-align:right}}
+.card{{position:absolute;top:38px;right:96px;text-align:right;{shadow}}}
 .title{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:40px;font-weight:400;line-height:1.35;letter-spacing:1px}}
 .detail{{font-family:'TL Sans SC',sans-serif;font-size:32px;font-weight:400;line-height:1.55;letter-spacing:1px;color:#c1ccd6;margin-top:4px}}
 .rule{{position:absolute;right:68px;top:42px;height:96px;width:3px;background:#c9f45e}}
@@ -205,13 +208,18 @@ def prepare_source_inserts(specs, temp_dir: Path, canvas_h: int) -> dict[int, Pa
         current = 'branded'
         annotation = spec.get('annotation')
         if annotation:
+            position = annotation.get('position', 'bottom')
+            if position not in {'bottom', 'top-right'}:
+                raise E.ExplainerVideoError('原声说明字卡位置只支持bottom或top-right')
+            annotation_y = 150 if position == 'top-right' else canvas_h - 180
             phases = annotation.get('phases', [annotation])
             for phase_index, phase in enumerate(phases):
-                image = _render_source_annotation(phase, badge_dir / f'annotation_{phase_index}')
+                image = _render_source_annotation({**annotation, **phase},
+                                                   badge_dir / f'annotation_{phase_index}')
                 enable = _annotation_enable(subtitles, end - start, phase)
                 extra_inputs.extend(['-loop', '1', '-i', str(image)])
                 label = f'annotation{phase_index}'
-                graph += (f";[{current}][{phase_index + 2}:v]overlay=0:{canvas_h - 180}:"
+                graph += (f";[{current}][{phase_index + 2}:v]overlay=0:{annotation_y}:"
                           f"shortest=1:format=auto:enable='{enable}'[{label}]")
                 current = label
         graph += f';[{current}]null[v]'
