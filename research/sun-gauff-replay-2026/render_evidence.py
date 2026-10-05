@@ -66,8 +66,8 @@ PAGES = {
       <div class="panel"><div class="meta">赛事运行层面</div><h2 style="margin-top:8px">说明原因 · 排除问题</h2><p class="small muted">确保广告稳定，防止再次发生</p></div>
       <div class="panel"><div class="meta">规则提供的追责机制</div><h2 class="accent" style="margin-top:8px">调查、整改及相应处罚</h2><p class="small muted">包括警告、罚款等；本场处分尚未证实。</p></div>''', '广告标准：XVIII.A.9 · 违规程序：XVIII.A.53<br>责任单位与故障原因仍需赛事方说明'),
     'sun-words': page('SUN XINRAN · 把她的声音留下', '遗憾是真实的<br>期待也来自她自己', f'''
-      <div style="display:flex;gap:38px;align-items:center;margin-bottom:30px"><img src="{PORTRAIT}" style="width:310px;height:310px;border-radius:20px;object-fit:cover;object-position:42% 28%"><div style="flex:1"><div class="meta">孙心然 · 咪咕赛后采访</div><p class="quote" style="margin-top:16px">“看到机会<br>从眼前流失”</p></div></div>
-      <div class="panel"><p class="small">她把落泪解释为：那一局有机会，<br>却因自己的原因未能拿下。</p></div>
+      <div style="display:flex;gap:38px;align-items:center;margin-bottom:24px"><img src="{PORTRAIT}" style="width:270px;height:270px;border-radius:20px;object-fit:cover;object-position:42% 28%"><div style="flex:1"><div class="meta">孙心然 · 咪咕赛后采访</div><p class="quote" style="margin-top:16px">“看到机会<br>从眼前流失”</p></div></div>
+      <div class="panel"><p class="small">她把落泪解释为：那一局有机会，<br>却因自己的原因未能拿下。<br>她也说，第二盘情绪受到影响。</p></div>
       <div class="panel"><div class="meta">关于下一次 · 赛后发布会转述</div><h2 class="accent" style="margin-top:14px">吸取经验，会做得更好</h2></div>
       ''', '文字依据：咪咕体育官方采访及赛后发布会<br>本场照片：WTA / Lintao Zhang · Getty Images'),
 }
