@@ -1,0 +1,129 @@
+name: Send two separately authorized story deliveries
+on:
+  push:
+    branches: [delivery/final-story-wechat-20261006]
+    paths: [.github/workflows/final-story-wechat-20261006.yml]
+permissions:
+  contents: write
+concurrency:
+  group: final-story-wechat-20261006
+  cancel-in-progress: false
+jobs:
+  send:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            src
+            tools
+            output/2026-10-06/review-delivery
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q -e .
+      - name: Verify releases and send each native package once
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
+          TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS: '20'
+          TENNISLIVE_PUSHPLUS_IMAGE_RETRY_SECONDS: '15'
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import base64,datetime,hashlib,html,json,os,pathlib,subprocess,tempfile
+          from html.parser import HTMLParser
+          import requests
+          from tennislive.render.pushmsg import split_xhs
+          API='https://api.github.com/repos/robertyang87/tennislive'
+          HEAD={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'}
+          rows=[
+            ('sun-xinran-coming-of-age-2026',404593999,'Sun_Xinran_Story_Reference_Aligned_Review_v3.mp4','1dd33ab7615a8220394b2a84894b72499578629466e62c876f56f7b798961a04'),
+            ('shanghai-masters-history-2026',404599122,'shanghai-masters-history-story-review.mp4','9586e7025c0d3bd96d487d97efaaaaf733754fd2164dfd03a91aedf77226c0c9')]
+          def get(path):
+              r=requests.get(API+path,headers=HEAD,timeout=30);r.raise_for_status();return r.json()
+          class Textareas(HTMLParser):
+              def __init__(self):super().__init__();self.key=None;self.values={}
+              def handle_starttag(self,t,a):
+                  if t=='textarea':
+                      self.key=dict(a).get('id');self.values[self.key]=''
+              def handle_endtag(self,t):
+                  if t=='textarea':self.key=None
+              def handle_data(self,d):
+                  if self.key:self.values[self.key]+=d
+          prepared=[]
+          for slug,rid,filename,digest in rows:
+              release=get('/releases/'+str(rid))
+              assert release['draft'] is False and release['tag_name'],'Release must already be published'
+              asset=next(a for a in release['assets'] if a['name']==filename)
+              assert asset['digest']=='sha256:'+digest and asset['size']>1000000
+              # Anonymous access is what the WeChat recipient needs.
+              response=requests.get(asset['browser_download_url'],headers={'Range':'bytes=0-0'},stream=True,timeout=60)
+              assert response.status_code in (200,206), 'Release asset inaccessible anonymously'
+              response.close()
+              out=pathlib.Path('output/2026-10-06/review-delivery')/slug
+              parser=Textareas();parser.feed((out/'copy.html').read_text())
+              title=parser.values['title'].strip();body=parser.values['body'].strip()
+              assert '网球有故事' in title and body and '这里是 @网球时差' in body
+              copy=title+'\n\n'+body+'\n'
+              push=(out/'push.html').read_text()
+              import re
+              push,count=re.subn(r'https://github.com/robertyang87/tennislive/releases/tag/untagged-[a-z0-9]+',release['html_url'],push)
+              assert count==1 or release['html_url'] in push
+              assert 'untagged-' not in push
+              (out/'push.html').write_text(push)
+              (out/'xiaohongshu.txt').write_text(copy)
+              prepared.append((slug,digest,out,release,asset))
+          # No POST occurs until both independent packages/release identities have passed.
+          failures=[]
+          for slug,digest,out,release,asset in prepared:
+              ledger_path='data/manual_delivery_ledger/'+slug+'-'+digest[:16]+'.json'
+              endpoint=API+'/contents/'+ledger_path
+              old=requests.get(endpoint,headers=HEAD,params={'ref':'main'},timeout=30)
+              assert old.status_code in (200,404)
+              if old.status_code==200:
+                  previous=json.loads(base64.b64decode(old.json()['content']))
+                  if previous.get('status') in ('sending','sent','uncertain'):
+                      print(slug+': existing ledger '+previous['status']+'; not resent')
+                      continue
+                  raise RuntimeError('Unexpected prior ledger; inspect before sending')
+              now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+              entry={'slug':slug,'film_sha256':digest,'release_id':release['id'],
+                     'release_url':release['html_url'],'video_url':asset['browser_download_url'],
+                     'human_listened':False,'audio_pronunciation_pass':None,
+                     'audio_review_status':'pending',
+                     'authorization':'Owner explicitly waived the actual-listening blocker: 那就放行，继续吧',
+                     'run_url':os.environ['RUN_URL'],'status':'sending','reserved_at':now()}
+              def put(doc,sha=None):
+                  data={'branch':'main','message':'Record separately authorized story delivery '+slug,
+                        'content':base64.b64encode((json.dumps(doc,ensure_ascii=False,indent=2)+'\n').encode()).decode()}
+                  if sha:data['sha']=sha
+                  r=requests.put(endpoint,headers=HEAD,json=data,timeout=30)
+                  r.raise_for_status();return r.json()['content']['sha']
+              # Durable reservation precedes the irreversible native send.
+              ledger_sha=put(entry)
+              receipt=pathlib.Path(os.environ['RUNNER_TEMP'])/(slug+'-receipt.json')
+              env=dict(os.environ,GITHUB_TOKEN=os.environ['GH_TOKEN'])
+              proc=subprocess.run(['tennislive','publish','pushplus','--dir',str(out),
+                                   '--receipt-out',str(receipt)],env=env)
+              if proc.returncode==0 and receipt.is_file():
+                  result=json.loads(receipt.read_text())
+                  assert result['receipt'] and result['message_url'].startswith('https://www.pushplus.plus/shortMessage/')
+                  entry.update(status='sent',completed_at=now(),receipt=result['receipt'],
+                               message_url=result['message_url'],phone_delivery_confirmed=False)
+                  put(entry,ledger_sha)
+                  print(json.dumps({'slug':slug,'message_url':result['message_url'],
+                                    'film_sha256':digest,'status':'PushPlus accepted; phone delivery not asserted'},ensure_ascii=False))
+                  with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+                      f.write(slug+': '+result['message_url']+'\n\n')
+              else:
+                  entry.update(status='uncertain',completed_at=now(),
+                               reason='Native send did not return a sealed receipt; do not rerun blindly')
+                  put(entry,ledger_sha);failures.append(slug)
+          if failures:raise RuntimeError('Delivery uncertain; inspect ledger: '+', '.join(failures))
+          PY
