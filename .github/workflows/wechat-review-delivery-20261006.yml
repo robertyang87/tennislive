@@ -45,20 +45,21 @@ jobs:
           ledger_path='data/review_delivery_ledger/20261006-sun-shanghai.json'
           ledger_url=api+'/contents/'+ledger_path
           old=requests.get(ledger_url,headers=headers,params={'ref':branch},timeout=30)
-          if old.status_code==200: raise SystemExit('Delivery already claimed; no automatic resend.')
-          assert old.status_code==404
+          if old.status_code==200:
+              prior=json.loads(base64.b64decode(old.json()['content']))
+              assert prior.get('status')=='canceled_before_post', 'Delivery already claimed; no automatic resend.'
+          else:
+              assert old.status_code==404
           record={'status':'sending','release_id':release['id'],'delivery_kind':'review_draft','publishing_voice_pass':False,'complete_actual_listening':False,'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'assets':{n:{'sha256':v[0],'bytes':v[1]} for n,v in expected.items()}}
           def save(record,sha=None):
               payload={'branch':branch,'message':'Record authorized review-only WeChat delivery','content':base64.b64encode((json.dumps(record,ensure_ascii=False,indent=2)+'\n').encode()).decode()}
               if sha:payload['sha']=sha
               response=requests.put(ledger_url,headers=headers,json=payload,timeout=30);response.raise_for_status()
               return response.json()['content']['sha']
-          claim_sha=save(record)
+          claim_sha=save(record, old.json()['sha'] if old.status_code==200 else None)
           content='<h2>网球有故事 · 两条最新版交付</h2><p>当前为审片版，完整语音听核待完成；本次按账号所有者明确授权发送，不代表发布质检通过。</p>'
           content+='<h3>孙心然成长历程</h3><p>1080×1440 · 3分50.04秒。已去除额外贴上的比分板，32处切换加入柔和转场，保留原音。</p>'
-          content+='<p><a href="'+assets['sun-xinran-growth-v2-1080x1440-review.mp4']['browser_download_url']+'">下载孙心然最新版视频</a></p>'
           content+='<h3>上海大师赛历史专题</h3><p>1080×1440 · 7分13.4秒。原生技术质检及完整解码通过，语音待核。</p>'
-          content+='<p><a href="'+assets['shanghai-masters-history-1080x1440-review.mp4']['browser_download_url']+'">下载上海大师赛最新版视频</a></p>'
           content+='<p><a href="'+release['html_url']+'">打开完整交付附件页</a></p><p>附件保存为 GitHub Release 草稿，打开须登录有仓库权限的账号。未要求你参与审片。</p>'
           try:
               receipt=push('网球有故事｜孙心然与上海大师赛最新版',content)
