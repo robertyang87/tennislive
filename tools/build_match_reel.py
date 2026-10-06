@@ -3749,7 +3749,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # `test_真字段表要盖住每条spec里出现过的字段` 拿 `specs/reels/*.json` 里实际
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
-    "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
+    "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom", "cx", "date", "title",
              "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
              "music", "outro", "push", "rate", "scorebox", "scoreboard_profile", "source_scorebox", "segments",
              "silent_source",
