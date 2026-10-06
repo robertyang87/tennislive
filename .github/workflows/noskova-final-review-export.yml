@@ -20,6 +20,8 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
           mkdir -p review
           find "$HOME/.cache/tennislive-sources" -type f -printf '%p %s\n'
           SOURCE=$(find "$HOME/.cache/tennislive-sources" -type f -name '*.mp4' | head -1)
