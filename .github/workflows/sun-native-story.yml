@@ -52,7 +52,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/native-reference"
           curl --fail --location --retry 3 'https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-24-titles-23-cities/medvedev-24-titles-23-cities.mp4' -o "$RUNNER_TEMP/native-reference/explainer.mp4"
-          echo '5af14197ef8a2dd2c93ae53ec3870ad8992e9b6b2b2b2ccfde7af254c8c0512c31  '"$RUNNER_TEMP/native-reference/explainer.mp4" | sha256sum -c
+          echo '5af14197ef8a2dd2c93ae53ec3870ad8992e9b6b2b2ccfde7af254c8c0512c31  '"$RUNNER_TEMP/native-reference/explainer.mp4" | sha256sum -c
           ffprobe -v error -show_format -show_streams -of json "$RUNNER_TEMP/native-reference/explainer.mp4" > "$RUNNER_TEMP/native-reference/probe.json"
           for AT in 0 8 20 35 55 121 177 221 298; do
             ffmpeg -y -v error -ss "$AT" -i "$RUNNER_TEMP/native-reference/explainer.mp4" -frames:v 1 "$RUNNER_TEMP/native-reference/frame-$AT.jpg"
