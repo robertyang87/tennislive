@@ -8,7 +8,7 @@ permissions:
   # Native copy pages must be deployed after GITHUB_TOKEN writes; only Pages dispatch uses this permission.
   actions: write
 concurrency:
-  group: review-pages-layout-20261006
+  group: review-pages-layout-20261006-unblock-pages
   cancel-in-progress: false
 jobs:
   prepare:
@@ -65,6 +65,14 @@ jobs:
               response = requests.get(API + path, headers=HEADERS, params=params, timeout=30)
               response.raise_for_status()
               return response.json()
+          
+          # Cancel only the identified obsolete Pages deployment that blocks the shared queue.
+          # User authorized deploying these two copy pages; no repository/environment settings change.
+          stale = api_get('/actions/runs/37438909626')
+          assert stale['path'] == '.github/workflows/pages.yml'
+          if stale['status'] in ('waiting', 'in_progress', 'pending', 'queued', 'requested'):
+              response = requests.post(API + '/actions/runs/37438909626/cancel', headers=HEADERS, timeout=30)
+              response.raise_for_status()
           
           release = api_get('/releases/404441774')
           assert release['draft'] is True, 'Review video must remain a draft release'
