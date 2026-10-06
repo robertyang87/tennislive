@@ -56,3 +56,29 @@ def write_subtitles(cues,out):
 
 def reference_record():
     return {'slug':REFERENCE_SLUG,'film_sha256':REFERENCE_SHA256,'poster_sha256':REFERENCE_POSTER_SHA256,'layout_source':'actual approved film and poster plus episode subtitles.ass','original_project_recovered':False,'subtitle_options':SUBTITLE_KWARGS}
+
+def stage_html(stage,detail,*,note=''):
+    # The approved film's upper-right transparent information hierarchy.
+    lines=str(detail).split('\n')
+    focus=''.join('<div class="stage-focus">'+html.escape(line)+'</div>' for line in lines)
+    return '<div class="story-stage"><div class="stage-label">'+html.escape(str(stage))+'</div>'+focus+('<div class="stage-note">'+html.escape(note)+'</div>' if note else '')+'</div>'
+
+def stage_css():
+    return '''
+.story-stage{position:absolute;right:70px;top:162px;max-width:680px;border-right:6px solid #c6f65a;padding-right:20px;text-align:right;text-shadow:0 2px 3px #07130f,0 0 6px #07130f;color:#f7fbf4}
+.stage-label{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:38px;line-height:1.25;letter-spacing:.4px;-webkit-text-stroke:1px #07130f;paint-order:stroke fill}
+.stage-focus{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:52px;line-height:1.22;color:#c6f65a;letter-spacing:.5px;-webkit-text-stroke:1px #07130f;paint-order:stroke fill}
+.stage-note{font-size:27px;line-height:1.4;font-weight:700}
+'''
+
+def render_stage_overlay(topic,stage,detail,out,*,note=''):
+    doc='<html><head><meta charset="utf-8"><style>'+chrome_css()+stage_css()+'</style></head><body>'+header_html(topic)+stage_html(stage,detail,note=note)+'</body></html>'
+    return screenshot(doc,Path(out),height=500,transparent=True)
+
+def render_photo_stage(image,topic,stage,detail,out,*,note='',photo_context=''):
+    image=Path(image)
+    doc='<html><head><meta charset="utf-8"><style>'+chrome_css()+stage_css()+'''
+.photo{position:absolute;inset:0;width:1080px;height:1440px;object-fit:cover;object-position:center}
+.context{position:absolute;bottom:48px;left:70px;right:70px;font-size:27px;text-shadow:0 2px 3px #07130f,0 0 6px #07130f;color:#f7fbf4}
+</style></head><body><img class="photo" src="'''+E._data_uri(image)+'">'+header_html(topic)+stage_html(stage,detail,note=note)+('<div class="context">'+html.escape(photo_context)+'</div>' if photo_context else '')+'</body></html>'
+    return screenshot(doc,Path(out))
