@@ -8,9 +8,9 @@
   "released": false,
   "frozen": true,
   "master": {
-    "filename": "孙心然成长历程_全屏修复审片版_1080x1440.mp4",
-    "sha256": "741a40cffaf08bf3d9738c321716752eb27263124fe1434a410f52d8bec5da25",
-    "size_bytes": 84130281,
+    "filename": "孙心然成长历程_全屏修复审片版_v2_柔和转场去贴比分_1080x1440.mp4",
+    "sha256": "861eae3d2cf1a8b4f6932b258e00d54308abec3eeafc7ada5599c0d829ce1272",
+    "size_bytes": 85039635,
     "duration_seconds": 230.041333,
     "video_duration_seconds": 230.04,
     "width": 1080,
@@ -32,7 +32,7 @@
     "constraints": [
       "Scene media panel extracted before fixed-center 3:4 fill; no dynamic subject tracking.",
       "Original header/subtitle pixels retained; repaired panel subtitles moved upward to avoid BEIJING court letters.",
-      "Original left native scoreboards pasted independently after center crop.",
+      "No independently pasted scoreboard layers in v2; original footage pixels remain within the fixed-center framing.",
       "Already full-canvas footage, interview material and fixed outro retained.",
       "Fixed-center framing crops some horizontal scene edges and portions of edge-positioned subjects. This is documented, not a claim that every subject is always fully visible."
     ]
@@ -54,10 +54,11 @@
     "visual_sampling": {
       "actual_view_image": true,
       "scene_wall_count": 32,
-      "scene_wall_sha256": "3248e09b0b6530aceae3e44ebf51bb5e1d56731a5ea4990b31084386097b29a9",
+      "scene_wall_sha256": "69bd82c01e2cccb66369ded9f7f2f6b7baff44874b1f1141d1243cf46f0b9c04",
       "final_first_frame_viewed": true,
       "caption_and_scoreboard_sample_viewed": true,
-      "scope": "scene midpoint contact sheets and selected full-resolution samples; not continuous human viewing"
+      "scope": "32 scene midpoint contact sheet plus 7 sampled transition seams × 6 adjacent frames and actual final first frame; not continuous human viewing",
+      "transition_seam_wall_sha256": "b1ef95e96568dff16b789216b0d7c3b369656a3fe28273b7273fea2b82a0b3ef"
     },
     "audio_packet_copy": {
       "original_packets": 10728,
@@ -71,7 +72,9 @@
     },
     "complete_actual_listening": false,
     "pronunciation_release_pass": false,
-    "new_master_ci_binding_verified": false
+    "new_master_ci_binding_verified": false,
+    "video_stream_duration_checked_seconds": 230.04,
+    "all_33_segment_durations_match": true
   },
   "ci_scope": {
     "historical_run": 37394485071,
@@ -255,5 +258,41 @@
     "quality_pass_required": true,
     "publication_performed": false,
     "latest_user_instruction": "不用我参与审片；走质检通过后就可以推送微信"
+  },
+  "previous_review_master": {
+    "filename": "孙心然成长历程_全屏修复审片版_1080x1440.mp4",
+    "sha256": "741a40cffaf08bf3d9738c321716752eb27263124fe1434a410f52d8bec5da25",
+    "size_bytes": 84130281,
+    "duration_seconds": 230.041333,
+    "video_duration_seconds": 230.04,
+    "width": 1080,
+    "height": 1440,
+    "fps": 25,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "superseded_by_user_requested_scoreboard_and_transition_revision": true
+  },
+  "revision": {
+    "version": 2,
+    "user_requested": "Remove pasted scoreboards for 网球有故事 and soften abrupt transitions.",
+    "pasted_scoreboard_overlays": 0,
+    "native_source_pixels_not_masked": true,
+    "cover_asset_unchanged": true,
+    "original_frozen_v1_untouched": true,
+    "transitions": {
+      "seams": 32,
+      "window_seconds": 0.24,
+      "method": "Adjacent endpoint clones dissolve across 0.12 seconds on each side; each original segment duration retained; no black fade.",
+      "overlap_time_removed_seconds": 0,
+      "body_timeline_seconds": 228.84,
+      "cover_seconds": 1.2,
+      "video_total_seconds": 230.04
+    },
+    "scripts": [
+      "repair_no_pasted_score_v2.py",
+      "soften_transitions_v2.py"
+    ]
   }
 }
