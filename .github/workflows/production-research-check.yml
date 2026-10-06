@@ -55,6 +55,21 @@ jobs:
             if (ref.object.sha !== context.sha) {
               throw new Error('Production branch advanced; dispatch the newest reviewed commit instead');
             }
+            // 旧审片 run 使用修改前的公开 Release 路径；先停止明确那一趟，
+            // 再派发带私有审片 artifact 路径的新提交，避免未核语音对外发布。
+            const supersededRunId = 37415222475;
+            const { data: superseded } = await github.rest.actions.getWorkflowRun({
+              ...context.repo, run_id: supersededRunId
+            });
+            if (superseded.head_branch !== branch || !superseded.name?.startsWith('match-reel')) {
+              throw new Error('Superseded run does not match the expected Shanghai render branch');
+            }
+            if (superseded.status !== 'completed') {
+              await github.rest.actions.cancelWorkflowRun({
+                ...context.repo, run_id: supersededRunId
+              });
+              core.info(`Requested cancellation of superseded public-Release render ${supersededRunId}`);
+            }
             await github.rest.actions.createWorkflowDispatch({
               ...context.repo, workflow_id: 'match-reel.yml', ref: branch,
               inputs: {

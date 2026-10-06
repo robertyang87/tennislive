@@ -1438,8 +1438,27 @@ jobs:
       #
       # 发完 Release 就**把本地那份删掉**，让下面的清理和提交步骤根本看不见它；
       # 链接写进 render.json，`push_reel.py` 优先读它。
+      # This locked Shanghai episode is still a voice-review draft. Preserve
+      # the actual film and TTS inputs privately; push=false alone does not
+      # prevent the normal public Release upload below.
+      - name: Preserve Shanghai review film and actual narration
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'shanghai-masters-history-2026'
+        uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-review-film-and-audio-${{ github.run_id }}
+          retention-days: 14
+          if-no-files-found: error
+          path: |
+            ${{ steps.paths.outputs.outdir }}/shanghai-masters-history-2026.mp4
+            ${{ steps.paths.outputs.outdir }}/voice_*.mp3
+            ${{ steps.paths.outputs.outdir }}/voice_*.words.json
+            ${{ steps.paths.outputs.outdir }}/render.json
+            ${{ steps.paths.outputs.outdir }}/qc_attestation.json
+            ${{ steps.paths.outputs.outdir }}/poster.jpg
+            ${{ steps.paths.outputs.outdir }}/*.ass
+
       - name: 成片发到 Release（不进 git）
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug != 'shanghai-masters-history-2026'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -2030,3 +2049,4 @@ jobs:
           git commit -m "reel: ${{ github.event.inputs.slug }} 推送状态待核实" || exit 0
           git pull --rebase origin main || { git rebase --abort || true; }
           git push origin main
+
