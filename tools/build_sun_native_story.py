@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Rebuild Shanghai from clean official sources and preserved actual narration.
+"""Rebuild Sun from clean official sources and preserved actual narration.
 
-The approved E story template owns all typography, cards, badge and subtitles.
+Layout follows the user-selected 23-city compiled reference using native TL fonts.
 Never uses a burned review master; never publishes; listening stays pending.
 """
 from pathlib import Path
@@ -10,6 +10,8 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
 from tennislive.video import explainer as E, outro_page
 from tennislive.design_tokens import MOTION
+import story_reference_style as R
+from story_triptych_cover import render_cover
 from PIL import Image
 W,H,FPS=1080,1440,30
 FADE=float(MOTION['video_dissolve_s'])
@@ -57,30 +59,34 @@ def render_row(row,index,audio,out,sources,topic,fonts):
         seconds=math.ceil((float(row['end'])-float(row['start']))*FPS)/FPS
         if audio and duration(audio)>seconds+.04:
             raise ValueError(f'Source window does not fit narration: {index}')
-    card=bool(row.get('title_card')) or row.get('_cover')
+    card=bool(row.get('_cover'))
+    precomposed=card or not is_video
     if card:
-        picture=native_slide(row,index,out,topic);cmd=['ffmpeg','-y','-v','error','-filter_complex_threads','1','-loop','1','-framerate',str(FPS),'-i',picture]
+        picture=render_cover([sources/'sun-usopen-trophy.jpg',sources/'sun-beijing-photo.jpg',sources/'sun-cover-court.jpg'],['16岁写进中网','成长还在继续'],[('NEW YORK 2026','美网青少年冠军'),('BEIJING 2026','中网采访实拍'),('BEIJING 2026','首次巡回赛正赛')],topic,out/f'slide-{index:03}.jpg');cmd=['ffmpeg','-y','-v','error','-filter_complex_threads','1','-loop','1','-framerate',str(FPS),'-i',picture]
     elif is_video:
         picture=sources/('source_'+row['source']+'.mp4')
         cmd=['ffmpeg','-y','-v','error','-filter_complex_threads','1','-ss',str(row['start']),'-t',str(seconds+FADE),'-i',picture]
     else:
-        picture=ROOT/row['image'];cmd=['ffmpeg','-y','-v','error','-filter_complex_threads','1','-loop','1','-framerate',str(FPS),'-i',picture]
-    if card:
+        raw_picture=Path(row['image']);lines=row.get('stage_lines',[])
+        picture=R.render_photo_stage(raw_picture,topic,lines[0] if lines else '',lines[1] if len(lines)>1 else '',out/f'slide-{index:03}.jpg',note=lines[2] if len(lines)>2 else '',photo_context=lines[3] if len(lines)>3 else row.get('photo_credit',''))
+        cmd=['ffmpeg','-y','-v','error','-filter_complex_threads','1','-loop','1','-framerate',str(FPS),'-i',picture]
+    if precomposed:
         vf=f'scale={W}:{H},setsar=1,fps={FPS}'
     else:
-        badge=E._render_intro_badge(topic,'网球有故事',out/f'badge-{index:03}')
+        lines=row.get('stage_lines',[])
+        badge=R.render_stage_overlay(topic,lines[0] if lines else '',lines[1] if len(lines)>1 else '',out/f'badge-{index:03}.png',note=lines[2] if len(lines)>2 else '')
         if not badge:raise RuntimeError('Native badge rendering failed')
         cmd+=['-loop','1','-framerate',str(FPS),'-i',badge]
         if is_video:
             vf=f'scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},setsar=1,fps={FPS}'
         else:
             vf=f'scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},zoompan=z=1+0.03*on/{max(1,round(seconds*FPS))}:x=iw/2-iw/zoom/2:y=ih/2-ih/zoom/2:d=1:s={W}x{H}:fps={FPS}'
-    audio_index=1 if card else 2
+    audio_index=1 if precomposed else 2
     if audio:cmd+=['-i',audio]
     elif is_video:audio_index=0
     else:cmd+=['-f','lavfi','-i','anullsrc=r=48000:cl=stereo']
     graph=[]
-    if card:graph+=[f'[0:v]{vf}[picture]']
+    if precomposed:graph+=[f'[0:v]{vf}[picture]']
     else:graph+=[f'[0:v]{vf}[bg]',f'[bg][1:v]overlay=0:0:shortest=1[picture]']
     cues=[]
     if audio and not row.get('_cover'):
@@ -89,7 +95,7 @@ def render_row(row,index,audio,out,sources,topic,fonts):
     elif row.get('quote'):
         cues=[(q['at'],q['end'],q['text']) for q in row['quote']]
     if card:cues=E.drop_printed_cues(cues,row.get('title_card',''))
-    ass=out/f'sub-{index:03}.ass';E.write_subtitles(cues,ass,height=H,margin_v=1284)
+    ass=out/f'sub-{index:03}.ass';R.write_subtitles(cues,ass)
     graph+=[f"[picture]subtitles=filename='{esc(ass)}':fontsdir='{esc(fonts)}',format=yuv420p,tpad=stop_mode=clone:stop_duration={FADE+.1}[v]"]
     if is_video and audio:
         graph+=[f'[0:a]volume=0.33,aresample=48000,aformat=channel_layouts=stereo[bed]',f'[{audio_index}:a]aresample=48000,aformat=channel_layouts=stereo[voice]','[bed][voice]amix=inputs=2:duration=longest:normalize=0[mixed]']
@@ -97,7 +103,7 @@ def render_row(row,index,audio,out,sources,topic,fonts):
     else:label=f'[{audio_index}:a]'
     graph+=[f'{label}apad,atrim=duration={seconds},asetpts=PTS-STARTPTS[a]']
     final=out/f'clip-{index:03}.mp4';run(cmd+['-filter_complex',';'.join(graph),'-map','[v]','-map','[a]','-t',str(seconds+FADE)]+encode()+[final])
-    return final,seconds,{'index':index,'duration':seconds,'source':str(picture),'source_sha256':sha(picture),'voice_sha256':sha(audio) if audio else None,'subtitle_sha256':sha(ass),'kind':'native_card' if card else 'clean_video' if is_video else 'clean_photo'}
+    return final,seconds,{'index':index,'duration':seconds,'source':str(picture),'source_sha256':sha(picture),'original_media_sha256':sha(raw_picture) if not is_video and not card else sha(picture) if is_video else None,'crop':'fixed_center_fill_3:4' if is_video else 'native full-canvas photo/cover','voice_sha256':sha(audio) if audio else None,'subtitle_sha256':sha(ass),'kind':'native_card' if card else 'clean_video' if is_video else 'clean_photo'}
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--audio',type=Path,required=True);ap.add_argument('--sources',type=Path,required=True);ap.add_argument('--outdir',type=Path,required=True);ap.add_argument('--preview',action='store_true');a=ap.parse_args()
@@ -120,8 +126,9 @@ def main():
     first_sentence='十六岁的孙心然，把名字写进了中网历史。'
     assert spec['chapters'][0]['narration'].startswith(first_sentence)
     cover_image=str(sources/'sun-usopen-trophy.jpg');portrait=str(sources/'sun-beijing-photo.jpg')
+    run(['ffmpeg','-y','-v','error','-ss','1','-i',sources/'source_lys.mp4','-frames:v','1',sources/'sun-cover-court.jpg'])
     cover=dict(_cover=True,image=cover_image,title_card='16岁写进中网历史\n这一步，她走了很多年',narration=first_sentence,seconds=cut,gloss='孙心然的来时路')
-    rows=[(cover,first),(dict(source='lys',start=76.12,end=76.12+duration(rest),narration=spec['chapters'][0]['narration'][len(first_sentence):]),rest)]
+    rows=[(cover,first),(dict(image=portrait,narration=spec['chapters'][0]['narration'][len(first_sentence):],photo_credit='2026中网采访实拍 · Jimmie48 / WTA',stage_lines=['2026中网','首次巡回赛正赛','两场胜利，写进中网历史']),rest)]
     # Preserve a complete official key rally and native bilingual commentary.
     quote=dict(source='lys',start=49,end=74.4,quote=[dict(at=21.66,end=22.94,text="Oh, you're kidding me.\n噢，简直不可思议！"),dict(at=23.86,end=25.06,text="Is there anything she can't do?\n她还有什么做不到的？")])
     rows.append((quote,None))
@@ -142,24 +149,21 @@ def main():
         if i in chapter_cards:
             number,title=chapter_cards[i]
             first_text,first_audio,chapter_text,chapter_audio,chapter_cut=split_chapter(ch,2 if ch['id'] in {'S02','S07'} else 1)
-            rows.append((dict(title_card=title,kicker=number,image=portrait,narration=first_text,seconds=chapter_cut,points=()),first_audio))
+            rows.append((dict(image=portrait,narration=first_text,seconds=chapter_cut,stage_lines=[number+' · '+title,'成长历程',first_text.split('。')[0]],photo_credit='2026中网采访实拍'),first_audio))
         if ch['id']=='S07':
             # Source WTA R2: exact native clip window; no pasted scoreboard.
-            row=dict(source='bucsa',start=50,end=50+duration(chapter_audio),narration=chapter_text)
+            row=dict(image=portrait,narration=chapter_text,stage_lines=['2026中网 · 成人赛场','首次巡回赛正赛','首场Top50胜利','2026中网采访实拍 · Jimmie48 / WTA'])
         else:
             image=cover_image if ch['id']=='S06' else portrait
             caption='孙心然 · 2026美网夺冠后（Getty Images / WTA）' if ch['id']=='S06' else '孙心然 · 2026中网实拍（Jimmie48 / WTA）'
-            row=dict(title_card=ch['title'],kicker=ch['id'],image=image,narration=chapter_text,visual=dict(layout='case',photo=image,context=contexts[i],caption=caption,takeaway=takeaways[i]))
+            row=dict(image=image,narration=chapter_text,stage_lines=[ch['title'],contexts[i],takeaways[i],caption])
         rows.append((row,chapter_audio))
     selected=rows[:5] if a.preview else rows;parts=[];lengths=[];records=[]
     for i,(row,voice) in enumerate(selected):
         print(f'[Sun native {i+1}/{len(selected)}]',flush=True)
         part,length,record=render_row(row,i,voice,out,sources,topic,fonts);parts.append(part);lengths.append(length);records.append(record)
-    # Explicit native chapters are generated in preview for visual review too.
-    for i,(row,_) in enumerate(rows):
-        if row.get('kicker') in {'01','02','03'}:native_slide(row,100+i,out,topic)
     final=join(parts,lengths,out);dest=out/('sun-native-story-preview.mp4' if a.preview else 'sun-native-story.mp4');shutil.copyfile(final,dest)
     run(['ffmpeg','-v','error','-i',dest,'-f','null','-'])
-    report=dict(status='review_only_not_published',human_listened=False,audio_review_pass=None,visual_review_pass=None,template='src/tennislive/video/explainer.py',template_sha256=sha(E.__file__),native_calls=['E.render_explainer_slides','E._render_intro_badge','E.write_subtitles','E.dissolve_chain'],reference='output/2026-10-06/explainer/medvedev-beijing-default-2026/slide_00.jpg',film_sha256=sha(dest),film_bytes=dest.stat().st_size,probe=probe(dest),rows=records,preview=a.preview,cover_spoken_source='S01 actual original',cover_spoken_seconds=cut,scoreboard_overlays=0,source_constraints=['No childhood or Egyptian W15 dynamic source was restored. Current portraits are explicitly dated 2026; they do not impersonate childhood, training, or the W15 event.','Full source audio and new final mix still require actual listening.'])
+    report=dict(status='review_only_not_published',human_listened=False,audio_review_pass=None,visual_review_pass=None,template='src/tennislive/video/explainer.py',template_sha256=sha(E.__file__),native_calls=['story_triptych_cover.render_cover','R.render_photo_stage','R.render_stage_overlay','R.write_subtitles via E.write_subtitles','E.dissolve_chain'],style_sha256=sha(R.__file__),cover_compositor_sha256=sha(Path(__file__).with_name('story_triptych_cover.py')),locked_component_manifest_sha256=sha(audio/'locked-manifest.json'),voice_component_hashes={k:v['sha256'] for k,v in locked.items()},voice_words_hashes={k:sha(audio/f'{k}.words.json') for k in locked},brand_logo_sha256=sha(ROOT/'assets/logo/brand/icon.png'),font_hashes={str(p.relative_to(ROOT)):sha(p) for p in (ROOT/'assets/fonts').rglob('*') if p.is_file()},cover_original_media_hashes={p.name:sha(p) for p in [sources/'sun-usopen-trophy.jpg',sources/'sun-beijing-photo.jpg',sources/'sun-cover-court.jpg']},reference=R.reference_record(),film_sha256=sha(dest),film_bytes=dest.stat().st_size,probe=probe(dest),rows=records,preview=a.preview,cover_spoken_source='S01 actual original',cover_spoken_seconds=cut,scoreboard_overlays=0,source_constraints=['No childhood or Egyptian W15 dynamic source was restored. Current portraits are explicitly dated 2026; they do not impersonate childhood, training, or the W15 event.','Full source audio and new final mix still require actual listening.'])
     (out/'native-story-review.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print(dest)
 if __name__=='__main__':main()
