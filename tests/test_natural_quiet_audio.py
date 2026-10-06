@@ -145,9 +145,22 @@ def test_real_aac_fade_near_segment_start_matches_but_crossing_fails(encoded):
 def test_real_aac_exact_boundary_float_cancellation(encoded):
     spec, film = encoded
     source = film.parent / 'source_main.mp4'
+    # Build a finite one-second prefix and three-second retained AAC clip.
+    # Ubuntu FFmpeg stalls draining atrim/adelay=1000 here; merely adding -t
+    # can also leave a packet timestamp gap. Finite concat gives a closed
+    # timeline; force float PCM so the u8 silence input cannot quantize away
+    # this very quiet source ambience.
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(source),
-                    '-af', 'atrim=start=0.4:end=3.4,asetpts=PTS-STARTPTS,volume=0.972,adelay=1000',
-                    '-c:a', 'aac', '-b:a', '192k', str(film)], check=True)
+                    '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=mono:d=1',
+                    '-filter_complex',
+                    '[0:a]atrim=start=0.4:end=3.4,asetpts=PTS-STARTPTS,volume=0.972[kept];'
+                    '[1:a]aformat=sample_fmts=fltp[prefix];'
+                    '[prefix][kept]concat=n=2:v=0:a=1[out]',
+                    '-map', '[out]', '-t', '4', '-c:a', 'aac', '-b:a', '192k', str(film)],
+                   check=True, timeout=30)
+    decoded = Q.pcm(film)
+    assert 4 * Q.RATE <= len(decoded) <= 4 * Q.RATE + 256
+    assert np.max(np.abs(decoded[:Q.RATE - 640])) == 0
     seg = spec['segments'][0]
     seg['start'], seg['end'] = .4, 3.4
     seg['_digital_silence_windows'] = [[.4, 3.4]]
