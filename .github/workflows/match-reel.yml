@@ -970,30 +970,12 @@ jobs:
           restore-keys: |
             reel-tts-${{ github.event.inputs.slug }}-
 
-      - name: 固定本条已实测语音缓存
+      - name: 本条片尾用当前原生模板
         if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'noskova-alexandrova'
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p /tmp/noskova-reviewed-audio
-          gh release download audio-renderer-noskova-alexandrova --pattern noskova-actual-renderer-audio.tar.gz --dir /tmp/noskova-reviewed-audio
-          tar -xzf /tmp/noskova-reviewed-audio/noskova-actual-renderer-audio.tar.gz -C /tmp/noskova-reviewed-audio
-          python - <<'PYREVIEW'
-          from pathlib import Path
-          import json, hashlib, zipfile
-          root=Path("/tmp/noskova-reviewed-audio")
-          cache=Path.home()/".cache/tennislive-tts"
-          cache.mkdir(parents=True,exist_ok=True)
-          rows=json.loads('[{"cache": "6517d5cd58f305b7806c2ef9751f4826-edge-v2.zip", "file": "voice_14.mp3", "sha256": "b84e486e219c82f77a0b3d060cdce87b3eb980e03760e8a7a464632d642393a0"}, {"cache": "ea588929ee3f40ec808b200fdd3a74df-edge-v2.zip", "file": "voice_13.mp3", "sha256": "a29f9c360f780e997483a7f061b31bdae3db5d3328ab4b2508267191ae39a665"}, {"cache": "96ede01ff51c7b307cc1b126051bbf72-edge-v2.zip", "file": "voice_01.mp3", "sha256": "d3ac096509663adf4f87fc863f30678f66cdb90476856ca99dad66cd12813b1b"}, {"cache": "7559865dbf4339cccd83a16a1f56beb8-edge-v2.zip", "file": "voice_outro.mp3", "sha256": "63b30a54d11905384910c4f2efc895bce0655ce4c09a1b175f72b5a7ba683a0c"}, {"cache": "36e09a002fb24adf8ea950ffd1ab5d39-edge-v2.zip", "file": "voice_06.mp3", "sha256": "e2f695348dc2c0bbdb26fe25824ac76d0d711b92b2583006780546d0678c04f5"}, {"cache": "5b3fef6136b9fcfad127d0822bb1141f-edge-v2.zip", "file": "voice_03.mp3", "sha256": "7384086d9cc9a13f6b8cf8b04c2852a96d7952fce73df244170d3d7cf1b8a053"}, {"cache": "bb5f873c1d874afd7bac2dd0a29cd18c-edge-v2.zip", "file": "voice_10.mp3", "sha256": "85a6b44f0969501fa9ba6b1ea399f335c589b0179bd1d3dcf8a54a30b21db59d"}, {"cache": "7a251fa5f6486ab65acc55785d257410-edge-v2.zip", "file": "voice_12.mp3", "sha256": "2956154f0411bb7f3f51dfc8fcc1ba63ea8e6cc6a9d9bb1eb1f4f8755b0a5daa"}]')
-          for row in rows:
-              audio=(root/row['file']).read_bytes()
-              assert hashlib.sha256(audio).hexdigest()==row['sha256']
-              marks=(root/row['file'].replace('.mp3','.words.json')).read_bytes()
-              with zipfile.ZipFile(cache/row['cache'],'w') as z:
-                  z.writestr('audio.mp3',audio)
-                  z.writestr('marks.json',marks)
-          print('Pinned all8 directly reviewed actual renderer MP3 bytes')
-          PYREVIEW
+          # 实际Release逐帧发现旧母版路径在片尾交接处出现1帧黑闪。
+          # 本条用与本地已验证版本一致的现渲模板，TTS命中已固定实际字节缓存。
+          rm -f assets/brand/outro_master.mp4
 
       - name: 算出目录
         id: paths
