@@ -4,6 +4,9 @@ on:
     branches: ['codex/shanghai-masters-history-2026']
     paths:
       - .github/workflows/production-research-check.yml
+      - .github/workflows/match-reel.yml
+      - specs/reels/shanghai-masters-history-2026.json
+      - specs/reels/shanghai-masters-history-2026.xhs.txt
       - docs/production/shanghai-masters-history-2026/audio-collection-plan.json
   pull_request:
     paths:
