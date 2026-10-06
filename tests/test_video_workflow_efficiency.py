@@ -76,8 +76,11 @@ def test_cleanup_keeps_source_evidence_and_removes_media(tmp_path):
 def test_reel_failure_artifact_keeps_source_evidence():
     from fnmatch import fnmatch
 
-    upload = next(s for s in _steps('match-reel.yml')
-                  if s.get('uses', '').startswith('actions/upload-artifact@'))
+    uploads = [s for s in _steps('match-reel.yml')
+               if s.get('uses', '').startswith('actions/upload-artifact@')
+               and s.get('name') == '上传 artifact']
+    assert len(uploads) == 1  # 审片分片另有明确allowlist，失败排查仍只认主artifact。
+    upload = uploads[0]
     root = '${{ steps.paths.outputs.outdir }}/'
     patterns = [line[len('!' + root):] for line in upload['with']['path'].splitlines()
                 if line.startswith('!' + root)]
