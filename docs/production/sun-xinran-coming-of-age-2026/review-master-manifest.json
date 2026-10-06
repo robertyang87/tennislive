@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "episode": "sun-xinran-coming-of-age-2026",
+  "pr": 1196,
+  "delivery_branch": "delivery/sun-xinran-coming-of-age-20261006",
+  "base_head_before_document_update": "8f7fa481d1684cd186859072bb7edb94ec72312c",
+  "status": "review_only_unpublished_audio_listening_pending",
+  "released": false,
+  "frozen": true,
+  "master": {
+    "filename": "孙心然成长历程_全屏修复审片版_1080x1440.mp4",
+    "sha256": "741a40cffaf08bf3d9738c321716752eb27263124fe1434a410f52d8bec5da25",
+    "size_bytes": 84130281,
+    "duration_seconds": 230.041333,
+    "video_duration_seconds": 230.04,
+    "width": 1080,
+    "height": 1440,
+    "fps": 25,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2
+  },
+  "derived_source": {
+    "sha256": "509cca3263c96588d7726604e5b44b067d803a83867018fcc31dd85558a4bdd4",
+    "size_bytes": 58737253,
+    "body_duration_seconds": 228.84,
+    "release_id": 404202921,
+    "release_asset_id": 614048923,
+    "original_raw_project_recovered": false,
+    "method": "Locked-master visual reconstruction; not original-project rerender. Narrative and source order retained.",
+    "constraints": [
+      "Scene media panel extracted before fixed-center 3:4 fill; no dynamic subject tracking.",
+      "Original header/subtitle pixels retained; repaired panel subtitles moved upward to avoid BEIJING court letters.",
+      "Original left native scoreboards pasted independently after center crop.",
+      "Already full-canvas footage, interview material and fixed outro retained.",
+      "Fixed-center framing crops some horizontal scene edges and portions of edge-positioned subjects. This is documented, not a claim that every subject is always fully visible."
+    ]
+  },
+  "cover": {
+    "filename": "孙心然成长历程_封面.jpg",
+    "sha256": "edb6479ac710a7b95fe7f0582f90113e00f71d63bc2797e15b96e665d55e5428",
+    "title": "孙心然",
+    "subtitle": "从青少年赛场到中网",
+    "duration_seconds": 1.2,
+    "first_frame_bound": true,
+    "source_type": "independent_official_photograph_not_video_frame",
+    "source_page": "https://www.wtatennis.com/news/4575656/sun-xinran-claims-us-open-junior-title-penickova-sisters-win-doubles-crown",
+    "source_photo_sha256": "a94f7a3771dcfd3cb9f18dddd7e38e5170ccea8476ce1abed91e1d336868673c",
+    "credit": "Getty Images via WTA"
+  },
+  "verification": {
+    "full_video_and_audio_decode_exit_code": 0,
+    "visual_sampling": {
+      "actual_view_image": true,
+      "scene_wall_count": 32,
+      "scene_wall_sha256": "3248e09b0b6530aceae3e44ebf51bb5e1d56731a5ea4990b31084386097b29a9",
+      "final_first_frame_viewed": true,
+      "caption_and_scoreboard_sample_viewed": true,
+      "scope": "scene midpoint contact sheets and selected full-resolution samples; not continuous human viewing"
+    },
+    "audio_packet_copy": {
+      "original_packets": 10728,
+      "final_packets": 10728,
+      "all_packet_sizes_and_sha256_equal": true,
+      "requested_delay_seconds": 1.2,
+      "observed_packet_pts_shift_seconds": 1.199333,
+      "mp4_timebase_rounding_seconds": 0.000667,
+      "final_stream_start_time_seconds": 1.178,
+      "final_stream_duration_seconds": 228.863333
+    },
+    "complete_actual_listening": false,
+    "pronunciation_release_pass": false,
+    "new_master_ci_binding_verified": false
+  },
+  "ci_scope": {
+    "historical_run": 37394485071,
+    "historical_head": "8f7fa481d1684cd186859072bb7edb94ec72312c",
+    "historical_result": "5786 passed / 203 skipped",
+    "historical_run_covers_new_master": false,
+    "new_document_push_ci_status": "not_yet_checked"
+  },
+  "scene_intervals_body_seconds": [
+    {
+      "start": 0,
+      "kind": "wide680",
+      "end": 1.72
+    },
+    {
+      "start": 1.72,
+      "kind": "wide532",
+      "end": 22.72
+    },
+    {
+      "start": 22.72,
+      "kind": "native",
+      "end": 29.12
+    },
+    {
+      "start": 29.12,
+      "kind": "archive",
+      "end": 32.32
+    },
+    {
+      "start": 32.32,
+      "kind": "photo680",
+      "end": 37.72
+    },
+    {
+      "start": 37.72,
+      "kind": "archive",
+      "end": 46.84
+    },
+    {
+      "start": 46.84,
+      "kind": "photo608",
+      "end": 53.04
+    },
+    {
+      "start": 53.04,
+      "kind": "wide532",
+      "end": 70.2
+    },
+    {
+      "start": 70.2,
+      "kind": "native",
+      "end": 74.84
+    },
+    {
+      "start": 74.84,
+      "kind": "photo948",
+      "end": 78.2
+    },
+    {
+      "start": 78.2,
+      "kind": "portrait",
+      "end": 91.8
+    },
+    {
+      "start": 91.8,
+      "kind": "photo736",
+      "end": 97.68
+    },
+    {
+      "start": 97.68,
+      "kind": "portrait",
+      "end": 103
+    },
+    {
+      "start": 103,
+      "kind": "photo736",
+      "end": 108.68
+    },
+    {
+      "start": 108.68,
+      "kind": "photo736",
+      "end": 114.2
+    },
+    {
+      "start": 114.2,
+      "kind": "photo608",
+      "end": 124.88
+    },
+    {
+      "start": 124.88,
+      "kind": "photo736",
+      "end": 128.88
+    },
+    {
+      "start": 128.88,
+      "kind": "native",
+      "end": 136.88
+    },
+    {
+      "start": 136.88,
+      "kind": "photo608",
+      "end": 143
+    },
+    {
+      "start": 143,
+      "kind": "native",
+      "end": 146.32
+    },
+    {
+      "start": 146.32,
+      "kind": "photo608",
+      "end": 152.8
+    },
+    {
+      "start": 152.8,
+      "kind": "native",
+      "end": 172.04
+    },
+    {
+      "start": 172.04,
+      "kind": "wide680",
+      "end": 173.64
+    },
+    {
+      "start": 173.64,
+      "kind": "wide532",
+      "end": 174.04
+    },
+    {
+      "start": 174.04,
+      "kind": "wide680",
+      "end": 175.04
+    },
+    {
+      "start": 175.04,
+      "kind": "wide532",
+      "end": 196.92
+    },
+    {
+      "start": 196.92,
+      "kind": "wide680",
+      "end": 198.2
+    },
+    {
+      "start": 198.2,
+      "kind": "wide532",
+      "end": 198.72
+    },
+    {
+      "start": 198.72,
+      "kind": "native",
+      "end": 199.92
+    },
+    {
+      "start": 199.92,
+      "kind": "wide532",
+      "end": 217.68
+    },
+    {
+      "start": 217.68,
+      "kind": "native",
+      "end": 224
+    },
+    {
+      "start": 224,
+      "kind": "native",
+      "end": 228.84
+    }
+  ],
+  "release_conditions_pending": [
+    "Complete actual listening of the locked final mix, including eight chapters and fixed outro.",
+    "Resolve all uncertain / unreliable / support_only pronunciation items with actual listening; none counts as pass.",
+    "Bind new master, cover and review evidence in native packaging and pass current-head applicable delivery checks; old CI does not certify this new movie.",
+    "Confirm final framing and caption legibility throughout, including edge cropping and retained interview captions.",
+    "Explicit publication decision before public Release or merge; neither performed by this documentation update."
+  ]
+}
