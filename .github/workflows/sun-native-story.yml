@@ -51,13 +51,21 @@ jobs:
       - name: Download real approved native-story reference and sample frames
         run: |
           mkdir -p "$RUNNER_TEMP/native-reference"
-          curl --fail --location --retry 3 'https://github.com/robertyang87/tennislive/releases/download/explainer-medvedev-beijing-default-2026/explainer.mp4' -o "$RUNNER_TEMP/native-reference/explainer.mp4"
-          echo '755a4f5a83a213236ed48e8589dae3498853e4afbfad2d494519bbc1de29caab  '"$RUNNER_TEMP/native-reference/explainer.mp4" | sha256sum -c
+          curl --fail --location --retry 3 'https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-24-titles-23-cities/medvedev-24-titles-23-cities.mp4' -o "$RUNNER_TEMP/native-reference/explainer.mp4"
+          echo '5af14197ef8a2dd2c93ae53ec3870ad8992e9b6b2b2b2ccfde7af254c8c0512c31  '"$RUNNER_TEMP/native-reference/explainer.mp4" | sha256sum -c
           ffprobe -v error -show_format -show_streams -of json "$RUNNER_TEMP/native-reference/explainer.mp4" > "$RUNNER_TEMP/native-reference/probe.json"
-          for AT in 0 8 20 35 55; do
+          for AT in 0 8 20 35 55 121 177 221 298; do
             ffmpeg -y -v error -ss "$AT" -i "$RUNNER_TEMP/native-reference/explainer.mp4" -frames:v 1 "$RUNNER_TEMP/native-reference/frame-$AT.jpg"
           done
           ffmpeg -y -v error -sseof -2 -i "$RUNNER_TEMP/native-reference/explainer.mp4" -frames:v 1 "$RUNNER_TEMP/native-reference/frame-outro.jpg"
+      - name: Inspect clean Sun source camera shots
+        run: |
+          mkdir -p "$RUNNER_TEMP/sun-source-camera"
+          for SOURCE in lys bucsa; do
+            for AT in 1 5 10 20 35 45 55 65 75 85 95 105 120 135 150 170 190; do
+              ffmpeg -y -v error -ss "$AT" -i "$RUNNER_TEMP/sun-clean/sources/source_$SOURCE.mp4" -frames:v 1 -vf scale=640:-1 "$RUNNER_TEMP/sun-source-camera/$SOURCE-$AT.jpg"
+            done
+          done
       - name: Render native story preview or full film
         id: native_render
         env:
@@ -90,6 +98,7 @@ jobs:
             ${{ runner.temp }}/native-delivery/film.sha256
             ${{ runner.temp }}/native-reference/*.jpg
             ${{ runner.temp }}/native-reference/probe.json
+            ${{ runner.temp }}/sun-source-camera/*.jpg
           compression-level: 0
           retention-days: 14
           if-no-files-found: warn
