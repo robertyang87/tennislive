@@ -970,13 +970,6 @@ jobs:
           restore-keys: |
             reel-tts-${{ github.event.inputs.slug }}-
 
-      - name: 本条片尾用当前原生模板
-        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'noskova-alexandrova'
-        run: |
-          # 实际Release逐帧发现旧母版路径在片尾交接处出现1帧黑闪。
-          # 本条用与本地已验证版本一致的现渲模板，TTS命中已固定实际字节缓存。
-          rm -f assets/brand/outro_master.mp4
-
       - name: 算出目录
         id: paths
         run: |
