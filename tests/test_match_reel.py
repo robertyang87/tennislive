@@ -3851,6 +3851,111 @@ def test_源片没有现场声要出声不能默默出一条哑片(tmp_path):
         reel.require_live_sound(bad, {"silent_source": "屏录，本来就没有声道"})
 
 
+def _is_shanghai_review_upload(step):
+    """唯一允许的审片旁路；它的范围与产物另由严格契约验证。"""
+    return (str(step.get("name", "")).startswith("Preserve Shanghai ")
+            and str((step.get("with") or {}).get("name", "")).startswith("shanghai-review-"))
+
+
+def _assert_shanghai_review_artifact_contract(steps):
+    """审片只保全明确产物，不能靠增加上传数量放宽全线安全判据。"""
+    scope = ("github.event.inputs.mode == 'render' && "
+             "github.event.inputs.slug == 'shanghai-masters-history-2026'")
+    clean = next(i for i, s in enumerate(steps) if s.get("name") == "丢掉不进仓库的中间物")
+    uploads = [(i, s) for i, s in enumerate(steps)
+               if "actions/upload-artifact" in str(s.get("uses", ""))
+               and _is_shanghai_review_upload(s)]
+    assert len(uploads) == 6, "Shanghai审片必须是五个明确分片和一份语音/元数据"
+    root = "${{ steps.paths.outputs.outdir }}"
+    parts = "${{ runner.temp }}/shanghai-review-parts"
+    metadata = {
+        f"{root}/voice_*.mp3", f"{root}/voice_*.words.json",
+        f"{root}/render.json", f"{root}/render_inputs.json",
+        f"{root}/qc_attestation.json", f"{root}/poster.jpg", f"{root}/*.ass",
+        f"{parts}/film.sha256", f"{parts}/film.bytes",
+    }
+    seen_parts = set()
+    for i, step in uploads:
+        assert i < clean, "保全实际审片和语音必须先于清理"
+        cond = str(step.get("if", "")).strip().removeprefix("${{").removesuffix("}}").strip()
+        assert cond == scope or cond.startswith(scope + " && "), "审片上传必须限定精确slug和render模式"
+        assert "||" not in cond and "always()" not in cond, "审片旁路不得用OR扩大范围或在失败后冒充保全"
+        settings = step.get("with") or {}
+        assert settings.get("compression-level") == 0
+        assert settings.get("retention-days") == 14
+        assert settings.get("if-no-files-found") == "error"
+        paths = [p.strip() for p in str(settings.get("path", "")).splitlines() if p.strip()]
+        match = re.fullmatch(r"Preserve Shanghai review film part ([1-5])", str(step.get("name", "")))
+        if match:
+            part = int(match.group(1)) - 1
+            assert cond == scope + f" && steps.shanghai_review_parts.outputs.parts > {part}", "只上传实际存在的指定分片"
+            seen_parts.add(part)
+            assert paths == [f"{parts}/film.mp4.part.{part:02d}"], "分片只能上传指定单个文件，不能带目录或源片"
+            assert settings.get("name") == f"shanghai-review-film-part-{part:02d}-${{{{ github.run_id }}}}"
+        else:
+            assert cond == scope
+            assert step.get("name") == "Preserve Shanghai actual narration and review metadata"
+            assert set(paths) == metadata and len(paths) == len(metadata), "语音包只能含实际voice与明确质检元数据"
+            assert settings.get("name") == "shanghai-review-audio-metadata-${{ github.run_id }}"
+    assert seen_parts == set(range(5)), "分片不能缺编号或重复"
+    split_i, split_step = next((i, s) for i, s in enumerate(steps)
+                              if s.get("name") == "Split Shanghai review film into 30 MiB parts")
+    assert split_step.get("if") == scope
+    assert split_step.get("id") == "shanghai_review_parts"
+    assert split_i < min(i for i, _s in uploads)
+    split_run = str(split_step.get("run", ""))
+    assert 'split -b 30M -d -a 2 "$REEL"' in split_run
+    assert 'test "$(stat -c%s "$REEL")" -le 157286400' in split_run
+    assert 'sha256sum "$REEL"' in split_run and 'stat -c%s "$REEL"' in split_run
+    release = next(s for s in steps if s.get("name") == "成片发到 Release（不进 git）")
+    assert release.get("if") == ("github.event.inputs.mode == 'render' && "
+                                  "github.event.inputs.slug != 'shanghai-masters-history-2026'")
+    for _i, step in uploads:
+        assert not step.get("run"), "私有保全步骤不能同时执行发布命令"
+    remove_i, remove = next((i, s) for i, s in enumerate(steps)
+                           if s.get("name") == "Remove Shanghai private review MP4 after artifact preservation")
+    assert max(i for i, _s in uploads) < remove_i < clean, "审片必须上传保全后才删除，且删除后才检查git中间物"
+    assert remove.get("if") == scope, "审片删除旁路不能影响其他片子或失败的保全"
+    assert (remove.get("env") or {}).get("OUTDIR") == root
+    assert str(remove.get("run", "")).strip() == 'rm -f "$OUTDIR/shanghai-masters-history-2026.mp4"'
+
+
+def test_Shanghai审片分片和实际语音只进限定私有artifact():
+    import yaml  # noqa: PLC0415
+
+    workflow = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    steps = workflow["jobs"]["reel"]["steps"]
+    _assert_shanghai_review_artifact_contract(steps)
+
+
+@pytest.mark.parametrize("mutation", ["scope", "source", "release", "order", "part", "remove_order"])
+def test_Shanghai私有审片契约拒绝放宽范围混入源片或公开发布(mutation):
+    import copy  # noqa: PLC0415
+    import yaml  # noqa: PLC0415
+
+    workflow = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    steps = copy.deepcopy(workflow["jobs"]["reel"]["steps"])
+    first = next(s for s in steps if _is_shanghai_review_upload(s))
+    if mutation == "scope":
+        first["if"] += " || github.event.inputs.mode == 'push'"
+    elif mutation == "source":
+        first["with"]["path"] = "${{ steps.paths.outputs.outdir }}/*"
+    elif mutation == "release":
+        release = next(s for s in steps if s.get("name") == "成片发到 Release（不进 git）")
+        release["if"] = "github.event.inputs.mode == 'render'"
+    elif mutation == "order":
+        steps.remove(first)
+        steps.append(first)
+    elif mutation == "part":
+        first["with"]["path"] = "${{ runner.temp }}/shanghai-review-parts/film.mp4.part.*"
+    else:
+        remove = next(s for s in steps if s.get("name") == "Remove Shanghai private review MP4 after artifact preservation")
+        steps.remove(remove)
+        steps.insert(steps.index(first), remove)
+    with pytest.raises(AssertionError):
+        _assert_shanghai_review_artifact_contract(steps)
+
+
 def test_渲完的成片不许因为清理那一步失败而整趟丢掉():
     """`if:` 里不含状态函数时，GitHub 会**隐式和上 `success()`**。
 
@@ -3869,7 +3974,8 @@ def test_渲完的成片不许因为清理那一步失败而整趟丢掉():
     jobs = body.split("\njobs:", 1)[1]
     blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
 
-    upload = [b for b in blocks if "actions/upload-artifact" in b]
+    upload = [b for b in blocks if "actions/upload-artifact" in b
+              and not re.search(r"- name: Preserve Shanghai ", b)]
     assert len(upload) == 1, f"上传 artifact 的步骤有 {len(upload)} 个"
     assert "always()" in upload[0], (
         "上传 artifact 没带 always()——清理那一步的体积兜底一 exit 1，"
@@ -3916,7 +4022,8 @@ def test_失败时的artifact不许带源片(workflow, job, outdir, must_drop, m
 
     spec = yaml.safe_load(workflow.read_text(encoding="utf-8"))
     steps = [s for s in spec["jobs"][job]["steps"]
-             if "actions/upload-artifact" in str(s.get("uses", ""))]
+             if "actions/upload-artifact" in str(s.get("uses", ""))
+             and not _is_shanghai_review_upload(s)]
     assert len(steps) == 1, f"{workflow} 里上传 artifact 的步骤有 {len(steps)} 个"
     step = steps[0]
     assert "always()" in str(step.get("if", ""))
