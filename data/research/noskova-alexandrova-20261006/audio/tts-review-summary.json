@@ -70,5 +70,14 @@
       "lexical_finding": "numbers and player names corroborated after Arabic numeral,homophone and traditional/simplified normalization; 保发/爆发 tone remains pending",
       "polyphone_status": "pending where uncertain/unreliable/no unique references; 打得 original intended de2 was wrong target, corrected de5 test correct"
     }
-  ]
+  ],
+  "correction": "Earlier guan1 advice withdrawn: 冠军标准guàn jūn, original intendedguan4 correct. Existing measurement uncertain(+.126), no audio alteration justified.",
+  "baofa": "actual competing bao3/bao4 controls on complete utterances: seg4 correct +.991 high; seg11 correct +1.0 low; small/medium ASR 爆发 is not evidence of wrong tone.",
+  "independent_azure_assessment": {
+    "run": 37437118577,
+    "status": "pending",
+    "reason": "AZURE_SPEECH_KEY/REGION absent in authorized runner, no API assessment performed",
+    "evidence": "tts-azure-assessment.json"
+  },
+  "tone_review_status": "pending unresolved acoustic controls; no human listening claimed"
 }

@@ -1,6 +1,6 @@
 {
   "source_url": "https://www.youtube.com/watch?v=YlKbwpraDHY",
-  "source_sha256": "6d3a37557d2195d0ac284187e8cf73679b4fc5d183c8c1002ccd678c52406802",
+  "source_sha256": "281ee2bbcc9b83672c53cdc8abd081914ee0381fa8ecafc8973d9219f255432a",
   "method": "asr_cross_checked",
   "reviewer": "Codex actual-audio cross-check: faster-whisper medium.en + large-v3 entire selected windows; additional small.en and medium.en whole source; no human listening claimed",
   "reviewed_at": "2026-10-06T08:34:16.723729+00:00",
@@ -44,5 +44,14 @@
     }
   ],
   "adjudication": "Compared every speech region from both exact-window outputs with full-source/targeted outputs. Correct canonical player spelling. Isolated low-probability function-word hallucinations were filtered: seg10 The(.287)/a(.037), full-source and separate targeted medium+large agree substantive Backhand...; no Oh what a asserted. Expanded seg9 zero-duration I(.071) discarded, can independently confirmed. Seg9 bit vs a bit article varies; substantive complete Bit of a surprise retained. Cold/ending And recovered from independent full-source word timestamps. Times use full-source and targeted consensus, not trusting a stretched first ASR word boundary.",
-  "no_foreground_english_reason": "Both exact selected-window models VAD_duration=0.0 and 0 recognized words; no foreground English, only tennis/crowd sound. No listening claim."
+  "no_foreground_english_reason": "Both exact selected-window models VAD_duration=0.0 and 0 recognized words; no foreground English, only tennis/crowd sound. No listening claim.",
+  "original_asr_source_sha256": "6d3a37557d2195d0ac284187e8cf73679b4fc5d183c8c1002ccd678c52406802",
+  "actual_source_audio_equivalence": {
+    "path": "data/research/noskova-alexandrova-20261006/audio/foreground-source-pcm-equivalence.json",
+    "sha256": "edcb06b72ba28e94b06a68cb2e834e1142eeefd77aa634a495614b76cb29387b",
+    "full_decoded_pcm_sha256": "5b12ff77b487c2be82b0eb31efd19003892245c164018603691227885b30b6c8",
+    "old_source_sha256": "6d3a37557d2195d0ac284187e8cf73679b4fc5d183c8c1002ccd678c52406802",
+    "new_source_sha256": "281ee2bbcc9b83672c53cdc8abd081914ee0381fa8ecafc8973d9219f255432a",
+    "conclusion": "Actual renderer source decoded audio is byte-identical across all9893558PCMbytes and all9selectedwindows; real original source ASR waveform evidence therefore applies to actual downloaded renderer audio, not merely URL similarity."
+  }
 }
