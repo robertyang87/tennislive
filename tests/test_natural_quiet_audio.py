@@ -145,19 +145,24 @@ def test_real_aac_fade_near_segment_start_matches_but_crossing_fails(encoded):
 def test_real_aac_exact_boundary_float_cancellation(encoded):
     spec, film = encoded
     source = film.parent / 'source_main.mp4'
-    # Build a finite one-second prefix and three-second retained AAC clip.
-    # Ubuntu FFmpeg stalls draining atrim/adelay=1000 here; merely adding -t
-    # can also leave a packet timestamp gap. Finite concat gives a closed
-    # timeline; force float PCM so the u8 silence input cannot quantize away
-    # this very quiet source ambience.
-    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(source),
-                    '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=mono:d=1',
-                    '-filter_complex',
-                    '[0:a]atrim=start=0.4:end=3.4,asetpts=PTS-STARTPTS,volume=0.972[kept];'
-                    '[1:a]aformat=sample_fmts=fltp[prefix];'
-                    '[prefix][kept]concat=n=2:v=0:a=1[out]',
-                    '-map', '[out]', '-t', '4', '-c:a', 'aac', '-b:a', '192k', str(film)],
-                   check=True, timeout=30)
+    # The regression concerns source/time mapping, not an adelay filter.
+    # Decode the actual source independently, retain .4–3.4 seconds at the
+    # renderer's gain, prepend one second, then encode real AAC. This avoids
+    # the filter-construction subprocess that stalled on CI, without mocking
+    # source identity, the codec, waveform/gain checks or boundary rejection.
+    decoded_source = subprocess.run(
+        ['ffmpeg', '-nostdin', '-v', 'error', '-i', str(source), '-vn',
+         '-ac', '1', '-ar', '8000', '-f', 'f32le', '-'],
+        check=True, capture_output=True, stdin=subprocess.DEVNULL, timeout=30)
+    original = np.frombuffer(decoded_source.stdout, dtype='<f4')
+    assert len(original) >= 27200
+    retained = original[3200:27200] * .972
+    raw = film.parent / 'mapped.f32'
+    raw.write_bytes(np.concatenate((np.zeros(8000), retained)).astype('<f4').tobytes())
+    subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-y',
+                    '-f', 'f32le', '-ar', '8000', '-ac', '1', '-i', str(raw),
+                    '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', str(film)],
+                   check=True, capture_output=True, stdin=subprocess.DEVNULL, timeout=30)
     decoded = Q.pcm(film)
     assert 4 * Q.RATE <= len(decoded) <= 4 * Q.RATE + 256
     assert np.max(np.abs(decoded[:Q.RATE - 640])) == 0
