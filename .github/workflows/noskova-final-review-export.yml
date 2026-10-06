@@ -7,40 +7,17 @@ permissions:
 jobs:
   export:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            src
-            tools
-            pyproject.toml
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - run: pip install -q -e '.[polyphone]' azure-cognitiveservices-speech
-      - run: |
-          source tools/ci_apt_install.sh
-          ensure_ffmpeg
-      - uses: actions/cache/restore@v4
-        with:
-          path: ~/.cache/tennislive-tts
-          key: reel-tts-noskova-alexandrova-37435523117
-          fail-on-cache-miss: false
-      - name: Export only audio QC artifact, never production
+      - name: Export actual renderer MP3 and marks without production publish
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
-          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: |
           mkdir review
-          mkdir prior
-          gh release download audio-review-noskova-alexandrova --pattern '*.tar.gz' --dir prior
-          tar -xzf prior/noskova-audio-review.tar.gz -C review
-          echo 'aW1wb3J0IGpzb24sc3lzLHN1YnByb2Nlc3MsaGFzaGxpYixudW1weSBhcyBucApmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKZnJvbSBzY2lweS5zaWduYWwgaW1wb3J0IGNvcnJlbGF0ZQpzeXMucGF0aFs6MF09WydzcmMnLCd0b29scyddO2ltcG9ydCBtZWFzdXJlX3BvbHlwaG9uZSBhcyBtCnJvb3Q9UGF0aCgncmV2aWV3Jyk7ZD1qc29uLmxvYWQob3Blbihyb290LydyZXBvcnQuanNvbicpKTttLkNBQ0hFPXJvb3QvJ2NhY2hlJztyb3dzPVtdCmRlZiBwY20ocCk6cmV0dXJuIG5wLmZyb21idWZmZXIoc3VicHJvY2Vzcy5jaGVja19vdXRwdXQoWydmZm1wZWcnLCctdicsJ2Vycm9yJywnLWknLHN0cihwKSwnLWYnLCdzMTZsZScsJy1hYycsJzEnLCctYXInLCcxNjAwMCcsJy0nXSksbnAuaW50MTYpCmZvciBsaW5lIGluIGRbJ2xpbmVzJ11bMTpdOgogb3JpZ2luYWwsbWFya3M9bS5zeW50aChsaW5lWyd0dHNfdGV4dCddLCd6aC1DTi1ZdW5qaWFuTmV1cmFsJyxsaW5lWydyYXRlJ10pO289cGNtKG9yaWdpbmFsKQogdGFyZ2V0cz1bXQogZm9yIGF0LGMgaW4gZW51bWVyYXRlKGxpbmVbJ3R0c190ZXh0J10pOgogIGlmIGM9PSflhqAnOnRhcmdldHMuYXBwZW5kKChhdCxjLCfngYwnLCdndWFuNCcsJ+eBjCBtb2Rlcm4gb3JkaW5hcnkgZ3VhbjQ7IGxpYnJhcnkgYXJjaGFpYyB2YXJpYW50cyBub3QgYXNzdW1lZCcpKQogIGVsaWYgYz09J+WIhic6dGFyZ2V0cy5hcHBlbmQoKGF0LGMsJ+mFmicsJ2ZlbjEnLCfphZogc2luZ2xlIG1vZGVybiBmZW4xJykpCiAgZWxpZiBjPT0n5Y+RJzp0YXJnZXRzLmFwcGVuZCgoYXQsYywn55m8JywnZmExJywnVHJhZGl0aW9uYWwgb3J0aG9ncmFwaHnnmbwgaW4gc2VydmUgY29udGV4dCBleHBsaWNpdCBtb2Rlcm4gZmExOyBsaWJyYXJ5IGxpc3RzIHJhcmUgYm8xLCBzbyBubyBmYWxzZSB1bmFtYmlndW91cyBhc3NlcnRpb24nKSkKICBlbGlmIGM9PSflvpcnIGFuZCBsaW5lWyd0dHNfdGV4dCddW2F0OmF0KzJdPT0n5b6X5YiGJzp0YXJnZXRzLmFwcGVuZCgoYXQsYywn5b63JywnZGUyJywn5b63IHNpbmdsZSBtb2Rlcm4gZGUyJykpCiBmb3IgYXQsYyxyZWYsaW50ZW5kZWQsbm90ZSBpbiB0YXJnZXRzOgogIHJvdz17J2xhYmVsJzpsaW5lWydsYWJlbCddLCdwb3NpdGlvbic6YXQsJ2NoYXInOmMsJ3JlZmVyZW5jZV9jaGFyJzpyZWYsJ2ludGVuZGVkJzppbnRlbmRlZCwncmVmZXJlbmNlX3Njb3BlJzpub3RlLCd2b2ljZSc6J3poLUNOLVl1bmppYW5OZXVyYWwnLCdyYXRlJzpsaW5lWydyYXRlJ119CiAgdHJ5OgogICBwLG1zPW0uc3ludGgobGluZVsndHRzX3RleHQnXVs6YXRdK3JlZitsaW5lWyd0dHNfdGV4dCddW2F0KzE6XSwnemgtQ04tWXVuamlhbk5ldXJhbCcsbGluZVsncmF0ZSddKTtyPXBjbShwKTthLGIsXz1tLmNoYXJfd2luZG93KGxpbmVbJ3R0c190ZXh0J10sbWFya3MsYXQpO3MsZT1pbnQoYSoxNjAwMCksaW50KGIqMTYwMDApO3g9b1tzOmVdO2xvPW1heCgwLHMtODAwMCk7aGk9bWluKGxlbihyKSxlKzgwMDApO3o9cltsbzpoaV07bGFnPWludChucC5hcmdtYXgoY29ycmVsYXRlKHouYXN0eXBlKGZsb2F0KSx4LmFzdHlwZShmbG9hdCksbW9kZT0ndmFsaWQnLG1ldGhvZD0nZmZ0JykpKTt5PXJbbG8rbGFnOmxvK2xhZytsZW4oeCldO3Jvdy51cGRhdGUod2luZG93X3NlY29uZHM9W2EsYl0sc2FtcGxlcz1sZW4oeCksb3JpZ19wY21fc2hhMjU2PWhhc2hsaWIuc2hhMjU2KHgudG9ieXRlcygpKS5oZXhkaWdlc3QoKSxyZWZlcmVuY2VfcGNtX3NoYTI1Nj1oYXNobGliLnNoYTI1Nih5LnRvYnl0ZXMoKSkuaGV4ZGlnZXN0KCksdGFyZ2V0X3BjbV9leGFjdF9lcXVhbD1ib29sKG5wLmFycmF5X2VxdWFsKHgseSkpLHNhbXBsZV9lcXVhbGl0eV9mcmFjdGlvbj1mbG9hdChucC5tZWFuKHg9PXkpKSxwZWFyc29uPWZsb2F0KG5wLmNvcnJjb2VmKHgseSlbMCwxXSkscmVmZXJlbmNlX2FsaWdubWVudF9zYW1wbGVzPWxvK2xhZy1zLG9yaWdfYXVkaW89c3RyKG9yaWdpbmFsKSxyZWZlcmVuY2VfYXVkaW89c3RyKHApLHN0YXR1cz0nbWVhc3VyZWQnKTtwcmludChsaW5lWydsYWJlbCddLGMscmVmLHJvd1sndGFyZ2V0X3BjbV9leGFjdF9lcXVhbCddLHJvd1sncGVhcnNvbiddLGZsdXNoPVRydWUpCiAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBleDpyb3cudXBkYXRlKHN0YXR1cz0ncGVuZGluZycsZXJyb3I9c3RyKGV4KSkKICByb3dzLmFwcGVuZChyb3cpOyhyb290LydjbGVhci1yZWFkaW5nLWNvbnRyb2xzLmpzb24nKS53cml0ZV90ZXh0KGpzb24uZHVtcHMocm93cyxlbnN1cmVfYXNjaWk9RmFsc2UsaW5kZW50PTIpKQo=' | base64 -d > targeted.py
-          python targeted.py
-          tar --exclude=asr-models --exclude=models -czf noskova-audio-review.tar.gz -C review .
-          sha256sum noskova-audio-review.tar.gz > SHA256SUMS
-          gh release view audio-review-noskova-alexandrova || gh release create audio-review-noskova-alexandrova --target "$GITHUB_SHA" --prerelease --title "Read-only Noskova audio QC" --notes "Actual TTS audio and acoustic QC evidence only. No production publication."
-          gh release upload audio-review-noskova-alexandrova noskova-audio-review.tar.gz SHA256SUMS --clobber
+          gh run download 37438489355 -n reel-noskova-alexandrova-2590 -D review
+          find review -type f -name 'voice*' -print
+          tar -czf noskova-actual-renderer-audio.tar.gz -C review .
+          sha256sum noskova-actual-renderer-audio.tar.gz > SHA256SUMS
+          gh release view audio-renderer-noskova-alexandrova || gh release create audio-renderer-noskova-alexandrova --target "$GITHUB_SHA" --prerelease --title "Actual renderer audio QC evidence" --notes "Actual failed-render preserved audio and metadata, no production publication."
+          gh release upload audio-renderer-noskova-alexandrova noskova-actual-renderer-audio.tar.gz SHA256SUMS --clobber
