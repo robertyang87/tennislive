@@ -56,10 +56,10 @@ jobs:
       - name: Download real approved native-story reference and sample frames
         run: |
           mkdir -p "$RUNNER_TEMP/native-reference"
-          curl --fail --location --retry 3 'https://github.com/robertyang87/tennislive/releases/download/explainer-medvedev-beijing-default-2026/explainer.mp4' -o "$RUNNER_TEMP/native-reference/explainer.mp4"
-          echo '755a4f5a83a213236ed48e8589dae3498853e4afbfad2d494519bbc1de29caab  '"$RUNNER_TEMP/native-reference/explainer.mp4" | sha256sum -c
+          curl --fail --location --retry 3 'https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-24-titles-23-cities/medvedev-24-titles-23-cities.mp4' -o "$RUNNER_TEMP/native-reference/explainer.mp4"
+          echo '5af14197ef8a2dd2c93ae53ec3870ad8992e9b6b2b2ccfde7af254c8c0512c31  '"$RUNNER_TEMP/native-reference/explainer.mp4" | sha256sum -c
           ffprobe -v error -show_format -show_streams -of json "$RUNNER_TEMP/native-reference/explainer.mp4" > "$RUNNER_TEMP/native-reference/probe.json"
-          for AT in 0 8 20 35 55; do
+          for AT in 0 2 12 17 21 35 48 97 150 215 297; do
             ffmpeg -y -v error -ss "$AT" -i "$RUNNER_TEMP/native-reference/explainer.mp4" -frames:v 1 "$RUNNER_TEMP/native-reference/frame-$AT.jpg"
           done
           ffmpeg -y -v error -sseof -2 -i "$RUNNER_TEMP/native-reference/explainer.mp4" -frames:v 1 "$RUNNER_TEMP/native-reference/frame-outro.jpg"
