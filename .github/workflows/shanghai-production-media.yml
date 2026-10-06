@@ -56,23 +56,211 @@ jobs:
               rows.append(dict(source=key,url=url,sha256=hashlib.sha256(p.read_bytes()).hexdigest(),bytes=p.stat().st_size))
           Path('/tmp/shanghai-sources/sources.json').write_text(json.dumps(rows,indent=2))
           PYTHON
+      - name: Split byte-exact originals within workspace attachment limit
+        run: |
+          mkdir -p /tmp/source-parts
+          tar -C /tmp/shanghai-sources -cf /tmp/source-originals.tar .
+          split -b 30000000 -d -a 2 /tmp/source-originals.tar /tmp/source-parts/part-
       - uses: actions/upload-artifact@v4
         with:
-          name: shanghai-native-originals-a
-          path: |
-            /tmp/shanghai-sources/source_cup2005.mp4
-            /tmp/shanghai-sources/source_final2012.mp4
-            /tmp/shanghai-sources/source_mayer2014.mp4
-            /tmp/shanghai-sources/sources.json
+          name: shanghai-original-part-00
+          path: /tmp/source-parts/part-00
           compression-level: 0
           retention-days: 7
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
-          name: shanghai-native-originals-b
-          path: |
-            /tmp/shanghai-sources/source_fedal2017.mp4
-            /tmp/shanghai-sources/source_sinner2024.mp4
-            /tmp/shanghai-sources/source_vacherot2025.mp4
-            /tmp/shanghai-sources/sources.json
+          name: shanghai-original-part-01
+          path: /tmp/source-parts/part-01
           compression-level: 0
           retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-02
+          path: /tmp/source-parts/part-02
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-03
+          path: /tmp/source-parts/part-03
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-04
+          path: /tmp/source-parts/part-04
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-05
+          path: /tmp/source-parts/part-05
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-06
+          path: /tmp/source-parts/part-06
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-07
+          path: /tmp/source-parts/part-07
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-08
+          path: /tmp/source-parts/part-08
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-09
+          path: /tmp/source-parts/part-09
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-10
+          path: /tmp/source-parts/part-10
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-11
+          path: /tmp/source-parts/part-11
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-12
+          path: /tmp/source-parts/part-12
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-13
+          path: /tmp/source-parts/part-13
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-14
+          path: /tmp/source-parts/part-14
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-15
+          path: /tmp/source-parts/part-15
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-16
+          path: /tmp/source-parts/part-16
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-17
+          path: /tmp/source-parts/part-17
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-18
+          path: /tmp/source-parts/part-18
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-19
+          path: /tmp/source-parts/part-19
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-20
+          path: /tmp/source-parts/part-20
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-21
+          path: /tmp/source-parts/part-21
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-22
+          path: /tmp/source-parts/part-22
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-23
+          path: /tmp/source-parts/part-23
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-24
+          path: /tmp/source-parts/part-24
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-25
+          path: /tmp/source-parts/part-25
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-26
+          path: /tmp/source-parts/part-26
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-27
+          path: /tmp/source-parts/part-27
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-original-part-28
+          path: /tmp/source-parts/part-28
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: ignore
