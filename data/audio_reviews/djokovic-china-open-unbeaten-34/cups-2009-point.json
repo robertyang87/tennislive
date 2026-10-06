@@ -1,0 +1,61 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/i1LtteR8jd0.mp4",
+  "source_sha256": "551d24ac4ffc3ad4a2a202cf178a2ca5f4488e1675f5e63f9a409b10e7a4cc1b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:57.708993+00:00",
+  "reviewed_from": 0,
+  "reviewed_to": 24.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 9.56,
+      "end": 10.92,
+      "en": "That'll do it.",
+      "zh": "比赛结束！"
+    },
+    {
+      "start": 12.62,
+      "end": 15.9,
+      "en": "Novak Djokovic reigns supreme in Beijing.",
+      "zh": "德约科维奇在北京登顶。"
+    },
+    {
+      "start": 17.86,
+      "end": 20.3,
+      "en": "It's his third title of the season,",
+      "zh": "这是他的赛季第三冠，"
+    },
+    {
+      "start": 21.54,
+      "end": 23.8,
+      "en": "the 14th of his young career.",
+      "zh": "也是他年轻生涯的第十四冠。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2009.targeted.small.en.json",
+      "sha256": "81ed2d5eddfa224520f92f36de1d38582797d65eacc04134fbf753a52a8b7109"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2009.targeted.base.en.json",
+      "sha256": "76920f59991636e086c2ddb001f993ff61c17b78705501c208fbe389c6c46cba"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.small.en.json",
+      "sha256": "5a238cc9dd893765a91d9e4b52a4736d44ef8c63a557e9b963f217556bffb421"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.base.en.json",
+      "sha256": "2a244e17345546b503bb82ced850538fa1225f98942c28ccfbd9108cfd803513"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "No-VAD targeted small.en resolves words omitted by full-source VAD: That'll do it / Novak Djokovic reigns. Targeted base.en has phonetic variants; medium.en genuine supplementary run independently printed same full sentence in asr-medium.log. Small.en no-VAD word boundaries chosen over silence-spanning medium onset."
+  ]
+}

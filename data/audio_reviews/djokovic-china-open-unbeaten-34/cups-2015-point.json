@@ -1,0 +1,81 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/i1LtteR8jd0.mp4",
+  "source_sha256": "551d24ac4ffc3ad4a2a202cf178a2ca5f4488e1675f5e63f9a409b10e7a4cc1b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:46:16.535441+00:00",
+  "reviewed_from": 413.5,
+  "reviewed_to": 428.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 416.56,
+      "end": 418.98,
+      "en": "It's six of the best in Beijing,",
+      "zh": "六度在北京夺冠，"
+    },
+    {
+      "start": 420.14,
+      "end": 423.0,
+      "en": "simply the best, Novak Djokovic.",
+      "zh": "实至名归的最佳，德约科维奇。"
+    },
+    {
+      "start": 424.12,
+      "end": 427.78,
+      "en": "Champion here for a sixth time.",
+      "zh": "他在这里第六次捧杯。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2015-point.medium.en.json",
+      "sha256": "759eba0d1ab031b4a13c90d86c65860dcb7c078a8a757aad283b44337117d32d"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2015.targeted.small.en.json",
+      "sha256": "f189104a0df077f9ebe1b44edf79c3b13fbc38d53dc5ca8d7b4860490d83829d"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2015.targeted.base.en.json",
+      "sha256": "9bb120cadafb49da0ced698b90a0f80038bbc984a94a3a88408978a06055e1a7"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.small.en.json",
+      "sha256": "5a238cc9dd893765a91d9e4b52a4736d44ef8c63a557e9b963f217556bffb421"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.base.en.json",
+      "sha256": "2a244e17345546b503bb82ced850538fa1225f98942c28ccfbd9108cfd803513"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2015-start.micro.base.en.json",
+      "sha256": "c21dc192e2effb8ba038c64fc13ac1b939bb29522d58af1e787166b6b0fbdcd3"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2015-start.micro.small.en.json",
+      "sha256": "dea0a5c7163de593d7dfc5243a9514e91c2477ac68a05aed1da5d6ce6620a6f9"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2015-start.micro.large-v3-turbo.json",
+      "sha256": "311df75c55cfd5469f646af320c6d149f7c7b2d4616a4cd62848fcd4a60e4013"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2015-title-tail-energy.json",
+      "sha256": "594c7c6dad92b51ca177d42036dd6bd2a5bb7215e48f8f4496d0ba07695561c9"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/2015-title-tail-preparation.jpg",
+      "sha256": "054b95592da0f187eaa1723222b914fed95edc8b40e78ac062c6b095b27f091b"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Previous 2014 clause last time ends405.01–405.13. Full-source base.en provides genuine But407.41 onset (probability0.77); short cropped models stretch first But over preceding pause to405.0, rejected for timing. Third chance phrase and sixth title phrasing independently agreed by medium.en/small.en/base.en. Stops428.1 after largest recognized full time word endpoint427.78 and before next Rafael Nadal commentary at430.64; native0.18 bottom material remains free of next English. Parent asked to visually confirm this clean shorter window preserves full match point.",
+    "Updated after parent actual visual check:406.8 still preceding2014 photo. Previous title largest ASR word endpoint413.92, so selected413.96 excludes entire third chance sentence yet precedes visually confirmed serve414.5; retains full actual2015 match point, handshake424.5, and complete sixth champion commentary. Earlier boundary/third chance notes are historical raw-ASR context, no longer selected speech.",
+    "Final2015 point boundary revised413.96 to413.50 after genuine 406.8–414.4 no-VAD independent base.en/small.en/large-v3-turbo re-transcription of preceding complete sentence (But he has a third chance for another China Open title). The title word ends413.24/413.28/413.28; older medium endpoint413.92 stretches trailing background. Direct ffmpeg decode of original audio412.8–414.2 and 150–3000Hz speech-band 10ms RMS shows title activity413.12–413.23, followed by steady venue background from413.35 onward (approximately0.0013 versus title peak0.0302). Actual original source frames413.2,413.4,413.5,413.9 visually inspected:413.5 remains ball-in-hand preparation,413.9 is ball toss. Start413.50 therefore preserves preparation/full toss after complete preceding sentence, with approximately0.22 seconds post-word margin and no preceding sentence speech inside selected window. This is ASR-cross-checked plus acoustic measurement and frame inspection, not a claim of human audio listening. All three selected English/Chinese utterances and absolute timings unchanged; only cue-relative offsets increase0.46 seconds. Historical review notes above describe superseded boundaries."
+  ]
+}

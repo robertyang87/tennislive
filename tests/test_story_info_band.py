@@ -122,3 +122,44 @@ def test_按盘上色只认整场比分_这一刻的局分照旧整块一个色(
         "2026 美网第三轮", "萨巴伦卡", "凯斯发球胜赛局 40-30",
         tmp_path / "old.png", metric="决胜盘 1-5 赛点", variant="player"))
     assert white == 0 and green > 3000, "老合同那档 metric 要整块一个强调色"
+
+
+def test_split_metric_has_four_right_aligned_rows_and_preserves_glyphs(tmp_path):
+    """比分独立成行，四行右对齐；左右版字形一致而非镜像。"""
+    from render_story_info_band import WHITE, MUTED
+    paths = {align: render("2026第二轮 中网", "第31胜", "胜布云朝克特",
+                           tmp_path / f"{align}.png", metric="4-6 7-6(2) 6-2",
+                           align=align, split_metric=True)
+             for align in ("left", "right")}
+    colors = {WHITE[:3], MUTED[:3], BRAND_GREEN[:3]}
+    masks = {}
+    for align, path in paths.items():
+        with Image.open(path) as image:
+            assert image.mode == "RGBA" and image.size == (1200, 440)
+            assert image.getpixel((27 if align == "left" else 1173, 380)) == BRAND_GREEN
+            assert image.getpixel((0, 0))[3] == 0
+            masks[align] = []
+            for top, bottom in ((0, 90), (90, 230), (230, 325), (325, 440)):
+                x0, x1 = (60, 1200) if align == "left" else (0, 1150)
+                row = image.crop((x0, top, x1, bottom))
+                mask = Image.new("L", row.size)
+                mask.putdata([255 if p[3] >= 200 and p[:3] in colors else 0
+                              for p in row.getdata()])
+                box = mask.getbbox()
+                assert box, "四行每行都必须有真实文字墨迹"
+                if align == "right":
+                    assert 1130 <= box[2] <= 1134, "各行右缘须在同一条线上"
+                masks[align].append(mask.crop(box))
+    for left, right in zip(masks["left"], masks["right"]):
+        assert left.size == right.size and left.tobytes() == right.tobytes(), "只能平移，不许镜像"
+    # 丢掉的第一盘仍白，赢下的两盘仍绿，独立行不改变比分颜色语义。
+    with Image.open(paths["right"]) as image:
+        pixels = list(image.crop((0, 230, 1150, 325)).getdata())
+        assert sum(p[:3] == WHITE[:3] and p[3] > 200 for p in pixels) > 1000
+        assert sum(p[:3] == BRAND_GREEN[:3] and p[3] > 200 for p in pixels) > 2000
+
+
+def test_split_metric_requires_an_actual_metric(tmp_path):
+    with pytest.raises(SystemExit, match="必须填写 metric"):
+        render("2026 中网", "第31胜", "胜布云朝克特", tmp_path / "bad.png",
+               split_metric=True)

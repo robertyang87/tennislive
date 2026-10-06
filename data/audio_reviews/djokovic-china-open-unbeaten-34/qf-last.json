@@ -1,0 +1,73 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/video-review/djokovic-34-sources/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:59.366674+00:00",
+  "reviewed_from": 273.2,
+  "reviewed_to": 305.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 280.66,
+      "end": 282.24,
+      "en": "He's done it again.",
+      "zh": "他又一次做到了。"
+    },
+    {
+      "start": 284.0,
+      "end": 285.26,
+      "en": "Novak Djokovic.",
+      "zh": "德约科维奇。"
+    },
+    {
+      "start": 287.86,
+      "end": 289.98,
+      "en": "There's something about this place,",
+      "zh": "这座球场有种特别的力量，"
+    },
+    {
+      "start": 294.0,
+      "end": 295.52,
+      "en": "and there is something about this man.",
+      "zh": "这个男人也有特别之处。"
+    },
+    {
+      "start": 296.68,
+      "end": 299.4,
+      "en": "The unbeaten record here in Beijing continues.",
+      "zh": "他在北京的不败纪录仍在延续。"
+    },
+    {
+      "start": 304.22,
+      "end": 305.13,
+      "en": "Breathe it in.",
+      "zh": "好好感受这一刻。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/qf-last.targeted.small.en.json",
+      "sha256": "539f31f0d3460ce3388a7ba8d6174a8de452829fef35ed0fe5ec5d8e8a02f174"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/qf-last.targeted.base.en.json",
+      "sha256": "ec9a3ff6ace37f8b1eb818adf152b531f25cfddff45f23a557559819d745faf7"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cjaHThpISKk.small.en.json",
+      "sha256": "14a5ab9fcdc05b679f1e4ecd6e9dc6581db395a05a7f3423a2622bcacc0b20ca"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cjaHThpISKk.base.en.json",
+      "sha256": "2011810012a434297e50f3024d960533e4d9ad772ee99f4bf564f23e4aa72576"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Full-source small.en and base.en plus local no-VAD base.en independently confirm complete There is something about this place clause; local no-VAD small.en dropped that clause over applause and its failure is retained. Uses local no-VAD matching He's onset280.66–280.72 rather than full-source VAD silence-spanning estimate271.77. Preceding I don't think anybody breathing ends271.72, before selected273.2, so not cut. No branding within selected end305.5 + native0.18."
+  ]
+}
