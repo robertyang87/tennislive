@@ -16,7 +16,7 @@ jobs:
         run: |
           mkdir review
           gh run download 37434124207 -n noskova-audio-review -D review
-          tar -czf noskova-audio-review.tar.gz -C review .
+          tar --exclude=asr-models --exclude=models -czf noskova-audio-review.tar.gz -C review .
           sha256sum noskova-audio-review.tar.gz > SHA256SUMS
           gh release view audio-review-noskova-alexandrova || gh release create audio-review-noskova-alexandrova --target "$GITHUB_SHA" --prerelease --title "Read-only Noskova audio QC" --notes "Actual TTS audio and acoustic QC evidence only. No production publication."
           gh release upload audio-review-noskova-alexandrova noskova-audio-review.tar.gz SHA256SUMS --clobber
