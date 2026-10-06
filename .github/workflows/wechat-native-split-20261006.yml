@@ -19,6 +19,7 @@ jobs:
           sparse-checkout: |
             src
             pyproject.toml
+            output/2026-10-06/review-delivery/*/slide_00.jpg
           sparse-checkout-cone-mode: false
           persist-credentials: false
       - uses: actions/setup-python@v5
@@ -30,6 +31,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PYTHONPATH: src
+          TENNISLIVE_ASSET_REV: '233a1d1841fea408e0e7c58ceed7e0a1a8418c94'
         run: |
           python - <<'PY'
           import os,json,base64,datetime,pathlib,requests,time
@@ -54,7 +56,7 @@ jobs:
           ]
           for slug,copy,cover,filename,digest,size in rows:
               assert assets[filename]['digest']=='sha256:'+digest and assets[filename]['size']==size
-              image_url='https://raw.githubusercontent.com/'+repo+'/a5f85e92ee3d235404ecb9a44f4c3aa55429e51b/docs/review-delivery/20261006/'+cover
+              image_url='https://raw.githubusercontent.com/'+repo+'/'+os.environ['TENNISLIVE_ASSET_REV']+'/output/2026-10-06/review-delivery/'+slug+'/slide_00.jpg'
               html=knowledge_push_html_from_parts(image_urls=[image_url],xhs_text=copy,copy_url='https://robertyang87.github.io/tennislive/output/2026-10-06/review-delivery/'+slug+'/copy.html',video_url=release['html_url'],column='网球有故事')
               # Known undeployed copy page: native fallback removes only that button.
               html,live=drop_dead_copy_button(html,probe=lambda url:False)
@@ -65,15 +67,19 @@ jobs:
               ledger_path='data/review_delivery_ledger/native-template-'+slug+'.json'
               ledger_url=api+'/contents/'+ledger_path
               check=requests.get(ledger_url,headers=headers,params={'ref':branch},timeout=30)
-              assert check.status_code==404,'Claim already exists; no automatic duplicate.'
+              if check.status_code==200:
+                  prior=json.loads(base64.b64decode(check.json()['content']))
+                  assert prior.get('status')=='failed_before_post','Claim exists; no automatic duplicate.'
+              else:
+                  assert check.status_code==404
               record={'status':'sending','slug':slug,'delivery_kind':'native_template_review','video_sha256':digest,'video_bytes':size,'release_id':404441774,'publishing_voice_pass':False,'complete_actual_listening':False,'at':datetime.datetime.now(datetime.timezone.utc).isoformat()}
               def save(sha=None):
                   payload={'branch':branch,'message':'Record independent native template review message','content':base64.b64encode((json.dumps(record,ensure_ascii=False,indent=2)+'\n').encode()).decode()}
                   if sha:payload['sha']=sha
                   r=requests.put(ledger_url,headers=headers,json=payload,timeout=30);r.raise_for_status()
                   return r.json()['content']['sha']
-              claim=save()
-              try:receipt=push(split_xhs(copy)[0],html)
+              claim=save(check.json()['sha'] if check.status_code==200 else None)
+              try:receipt=push(split_xhs(copy)[0],html,asset_dir=pathlib.Path('output/2026-10-06/review-delivery')/slug)
               except Exception as exc:
                   record.update(status='uncertain',error_type=type(exc).__name__);save(claim);raise
               record.update(status='accepted',pushplus_receipt=receipt,message_url=message_url(receipt),wechat_phone_delivery='unverified')
