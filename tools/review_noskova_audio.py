@@ -37,6 +37,7 @@ def main():
    for i,c in enumerate(text):
     if c not in PAIRS or len(PAIRS[c])<2:continue
     intended=readings[i][0]
+    if c=='得' and text[i+1:i+2]=='又':intended='de5'  # 打得又深又快: structural particle, not de2
     if c=='差' and text[max(0,i-1):i+1]=='时差':intended='cha1'
     ok,_=mp.suggest_homophones(intended,exclude=c,k=3)
     for wrong in [r for r in PAIRS[c] if r!=intended]:
