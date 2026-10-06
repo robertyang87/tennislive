@@ -9,6 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            tools
+            pyproject.toml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -q -e '.[polyphone]'
       - name: Export only audio QC artifact, never production
         env:
           GH_TOKEN: ${{ github.token }}
@@ -16,6 +26,8 @@ jobs:
         run: |
           mkdir review
           gh run download 37434124207 -n noskova-audio-review -D review
+          echo 'aW1wb3J0IGpzb24sc3lzCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aApzeXMucGF0aFs6MF09WydzcmMnLCd0b29scyddCmltcG9ydCBtZWFzdXJlX3BvbHlwaG9uZSBhcyBtCnJvb3Q9UGF0aCgncmV2aWV3Jyk7ZD1qc29uLmxvYWQob3Blbihyb290LydyZXBvcnQuanNvbicpKTttLkNBQ0hFPXJvb3QvJ2NhY2hlJztyb3dzPVtdCnJlZnM9eydndWFuMSc6WyflhbMnLCflrpgnXSwnZ3VhbjQnOlsn5oOvJywn572QJ10sJ2hhaTInOlsn5a2pJywn6aq4J10sJ2h1YW4yJzpbJ+ahkycsJ+eOryddLCdmZW4xJzpbJ+e6tycsJ+iKrCddLCdmZW40JzpbJ+aEpCcsJ+eyqiddLCdjaGExJzpbJ+aPkicsJ+mUuCddLCdjaGE0JzpbJ+WylCcsJ+ivpyddLCdjaGFpMSc6WyfpkpcnLCfmi4YnXSwncWlhbmcyJzpbJ+WimScsJ+iUtyddLCdxaWFuZzMnOlsn576fJywn6KWBJ10sJ2ppYW5nNCc6WyfljKAnLCfphbEnXSwnZGU1JzpbJ+eahCddLCdkZTInOlsn5b63Jywn6ZSdJ119CmZvciBsaW5lIGluIGRbJ2xpbmVzJ11bMTpdOgogZm9yIHByZXZpb3VzIGluIGxpbmVbJ21lYXN1cmVtZW50cyddOgogIGlmIHByZXZpb3VzLmdldCgndmVyZGljdCcpIG5vdCBpbiBbJ3VucmVsaWFibGUnLCd1bmNlcnRhaW4nLCdtaXNyZWFkJ106Y29udGludWUKICBjPXByZXZpb3VzWydjaGFyJ107YXQ9cHJldmlvdXNbJ3Bvc2l0aW9uJ107cmlnaHQ9cHJldmlvdXNbJ2ludGVuZGVkJ107d3Jvbmc9cHJldmlvdXNbJ3dyb25nJ10KICBpZiBjPT0n5YagJzpyaWdodCx3cm9uZz0nZ3VhbjEnLCdndWFuNCcKICBpZiBjPT0n5b6XJyBhbmQgbGluZVsndHRzX3RleHQnXVthdC0xOmF0KzFdPT0n5omT5b6XJzpyaWdodCx3cm9uZz0nZGU1JywnZGUyJwogIGlmIHJpZ2h0IG5vdCBpbiByZWZzIG9yIHdyb25nIG5vdCBpbiByZWZzOmNvbnRpbnVlCiAgcm93PXsnbGFiZWwnOmxpbmVbJ2xhYmVsJ10sJ2NoYXInOmMsJ2F0JzphdCwnaW50ZW5kZWQnOnJpZ2h0LCd3cm9uZyc6d3JvbmcsJ21ldGhvZCc6J0FjdHVhbCBzYW1lIGZ1bGwgdXR0ZXJhbmNlIHNhbWUgdm9pY2UvcmF0ZTsgc2VsZWN0aXZlIHN0cm9uZ2VyIGNvbnRyb2xzLCBubyBodW1hbiBsaXN0ZW5pbmcnfQogIHRyeTpyb3dbJ3Jlc3VsdCddPW0ubWVhc3VyZShjLGxpbmVbJ3R0c190ZXh0J10scmVmc1tyaWdodF0scmVmc1t3cm9uZ10sJ3poLUNOLVl1bmppYW5OZXVyYWwnLGxpbmVbJ3JhdGUnXSxjaGFyPWMsYXQ9YXQpCiAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOnJvd1sncmVzdWx0J109eyd2ZXJkaWN0JzoncGVuZGluZycsJ3doeSc6c3RyKGUpfQogIHJvd3MuYXBwZW5kKHJvdyk7cHJpbnQobGluZVsnbGFiZWwnXSxjLHJpZ2h0LHdyb25nLHJvd1sncmVzdWx0J10uZ2V0KCd2ZXJkaWN0JyksZmx1c2g9VHJ1ZSk7KHJvb3QvJ3RhcmdldGVkLWNvbnRyb2xzLmpzb24nKS53cml0ZV90ZXh0KGpzb24uZHVtcHMocm93cyxlbnN1cmVfYXNjaWk9RmFsc2UsaW5kZW50PTIpKQo=' | base64 -d > targeted.py
+          python targeted.py
           tar --exclude=asr-models --exclude=models -czf noskova-audio-review.tar.gz -C review .
           sha256sum noskova-audio-review.tar.gz > SHA256SUMS
           gh release view audio-review-noskova-alexandrova || gh release create audio-review-noskova-alexandrova --target "$GITHUB_SHA" --prerelease --title "Read-only Noskova audio QC" --notes "Actual TTS audio and acoustic QC evidence only. No production publication."
