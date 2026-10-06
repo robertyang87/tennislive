@@ -17,12 +17,14 @@ jobs:
           mkdir -p sun-cover
           curl --fail --location --retry 1 --max-time 45 'https://photoresources.wtatennis.com/photo-resources/2026/09/12/474cba43-9cf4-4e3a-8aad-a15f2992cf5a/Sun-Xinran-US-Open-2026.jpg?width=2400&height=1600' -o sun-cover/sun-usopen-trophy.jpg
           curl --fail --location --retry 1 --max-time 45 'https://photoresources.wtatennis.com/photo-resources/2026/09/29/fb7f9d8e-8bed-40c1-8268-52f23cd9f928/Xinran_Sun_-_China_Open_2026_-_Monday_Qs-DSC_8060.jpg?width=2400&height=1600' -o sun-cover/sun-beijing-photo.jpg
-          file sun-cover/*.jpg
-          sha256sum sun-cover/*.jpg | tee sun-cover/sha256.txt
+          curl --fail --location --retry 1 --max-time 60 'https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Bold.otf' -o sun-cover/NotoSansCJKsc-Bold.otf
+          curl --fail --location --retry 1 --max-time 30 'https://raw.githubusercontent.com/notofonts/noto-cjk/main/LICENSE' -o sun-cover/Noto-LICENSE.txt
+          file sun-cover/*.jpg sun-cover/*.otf
+          sha256sum sun-cover/*.jpg sun-cover/*.otf | tee sun-cover/sha256.txt
           du -h sun-cover/*.jpg
           test "$(du -sb sun-cover | cut -f1)" -lt 33554432
       - uses: actions/upload-artifact@v4
         with:
-          name: sun-official-cover-photos
+          name: sun-official-cover-photos-and-font
           path: sun-cover
           retention-days: 7
