@@ -1,5 +1,10 @@
 name: production-research-check
 on:
+  push:
+    branches: ['codex/shanghai-masters-history-2026']
+    paths:
+      - .github/workflows/production-research-check.yml
+      - docs/production/shanghai-masters-history-2026/audio-collection-plan.json
   pull_request:
     paths:
       - tools/tactical_research.py
@@ -15,7 +20,7 @@ permissions:
   contents: read
 jobs:
   read-only-probe:
-    if: inputs.episode != 'shanghai-masters-history-2026'
+    if: github.event_name != 'push' && inputs.episode != 'shanghai-masters-history-2026'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -48,7 +53,7 @@ jobs:
           path: /tmp/tactical-probe.json
 
   shanghai-audio-evidence:
-    if: inputs.episode == 'shanghai-masters-history-2026'
+    if: github.event_name == 'push' || inputs.episode == 'shanghai-masters-history-2026'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     permissions:
@@ -111,6 +116,11 @@ jobs:
         with:
           path: ~/.cache/huggingface
           key: whisper-shanghai-small-medium-v1
+      - name: Install native media tools
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
       - name: Source downloader provider
         continue-on-error: true
         run: docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
