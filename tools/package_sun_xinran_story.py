@@ -58,5 +58,7 @@ def main():
  publication_date=parse_date_arg(a.date)
  copy=native_copy(publication_date)
  (a.outdir/'copy.txt').write_text(copy+'\n')
+ # Existing explainer publication consumes this canonical filename.
+ (a.outdir/'xiaohongshu.txt').write_text(copy+'\n')
  (a.outdir/'copy.html').write_text(to_copy_page(copy));seg=E.ExplainerSegment('cover','网球有故事','孙心然的来时路','');(a.outdir/'push.html').write_text(E.explainer_push_html([seg],a.outdir,date=publication_date,xhs_text=copy));print(a.outdir)
 if __name__=='__main__':main()
