@@ -1,0 +1,169 @@
+name: Prepare native story pages without sending WeChat
+on:
+  push:
+    branches: [delivery/review-pages-layout-20261006]
+    paths: [.github/workflows/review-pages-layout-20261006.yml]
+permissions:
+  contents: write
+  # Native copy pages must be deployed after GITHUB_TOKEN writes; only Pages dispatch uses this permission.
+  actions: write
+concurrency:
+  group: review-pages-layout-20261006
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            src
+            pyproject.toml
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q -e .
+      - name: Write only two native copy pages to main and prepare story HTML
+        timeout-minutes: 14
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          import base64
+          import datetime
+          import hashlib
+          import html
+          import json
+          import os
+          import pathlib
+          import subprocess
+          import time
+          
+          import requests
+          
+          from tennislive.video import explainer as E
+          from tennislive.render.tournament_story import find_story_by_slug
+          from tennislive.render.knowledge import knowledge_push_html_from_parts
+          from tennislive.render.pushmsg import split_xhs, to_copy_page
+          from tennislive.render import push_style as ps
+          
+          REPO = 'robertyang87/tennislive'
+          API = 'https://api.github.com/repos/' + REPO
+          COVER_REV = '233a1d1841fea408e0e7c58ceed7e0a1a8418c94'
+          ROOT = 'output/2026-10-06/review-delivery'
+          SLUGS = ('sun-xinran-coming-of-age-2026', 'shanghai-masters-history-2026')
+          HEADERS = {'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                     'Accept': 'application/vnd.github+json'}
+          OUT = pathlib.Path(os.environ['RUNNER_TEMP']) / 'native-page-layout'
+          OUT.mkdir(exist_ok=True)
+          
+          def api_get(path, **params):
+              response = requests.get(API + path, headers=HEADERS, params=params, timeout=30)
+              response.raise_for_status()
+              return response.json()
+          
+          release = api_get('/releases/404441774')
+          assert release['draft'] is True, 'Review video must remain a draft release'
+          assets = {item['name']: item for item in release['assets']}
+          story = find_story_by_slug(SLUGS[0])
+          assert story is not None
+          sun_title, sun_body = split_xhs(E.explainer_xiaohongshu(story, E.explainer_script(story), '10.6'))
+          sun_copy = sun_title + '\n\n' + sun_body
+          
+          SHANGHAI_COPY = "10.6网球有故事|上海白玉兰传奇\n\n审片交付｜语音待核。附件页请下载上海大师赛对应文件。\n\n上海的秋天，又到了把目光投向旗忠的时候。白玉兰形的屋顶之下，世界网坛一次次相聚。这座球场的故事，却早在“上海大师赛”这个名字之前，就已经写下了。\n\n1996年，上海迎来自己的ATP巡回赛。2002年，年终大师杯第一次来到浦东，休伊特与费雷罗用一场五盘决赛留下开篇。2005年，旗忠启用，大师杯回归；替补入围的纳尔班迪安，在先输两盘之后逆转费德勒，把一次临时参赛机会变成冠军。\n\n2009年，上海拥有了新的身份：全球九站之一、亚洲唯一的大师1000赛。达维登科击败纳达尔，成为首届冠军。从此，顶尖网球有了一个固定的上海之约。\n\n这里记得2012年的五个冠军点。穆雷距离胜利只差一分，德约科维奇却让比赛一次次继续。这里也记得2014年的五个赛点：费德勒首战几乎出局，最终仍捧起自己的第一座上海大师赛奖杯。2017年，费德勒与纳达尔把多年的对抗带到同一张球网两边。\n\n三个取消的秋天之后，赛事在2023年回归，单打签表扩大到96人。2024年，辛纳击败此前在上海大师赛决赛四战全胜的德约科维奇，写下新的冠军名字。2025年，赛前排名204位的资格赛球员瓦舍罗与表兄林德克内希会师决赛。两个亲人争过同一座奖杯，又在赛后相拥。\n\n从浦东的大师杯，到旗忠的上海大师赛，这座城市留下的，不只有奖杯。还有逆转、重逢，以及一个新名字被记住的瞬间。下一段上海传奇，会从哪一分开始？\n\n#网球 #上海大师赛 #网球有故事 #网球时差\n"
+          shanghai_title, shanghai_body = split_xhs(SHANGHAI_COPY)
+          shanghai_body = shanghai_body.replace('审片交付｜语音待核。附件页请下载上海大师赛对应文件。\n\n', '')
+          rows = ((SLUGS[0], sun_copy, 'sun-xinran-growth-v2-1080x1440-review.mp4'),
+                  (SLUGS[1], shanghai_title + '\n\n' + shanghai_body,
+                   'shanghai-masters-history-1080x1440-review.mp4'))
+          allowed = {f'{ROOT}/{slug}/copy.html' for slug in SLUGS}
+          evidence = []
+          for slug, copy_text, filename in rows:
+              title, body = split_xhs(copy_text)
+              assert body and len(body) <= 1000
+              assert not any(qa in title + body for qa in ('审片交付', '语音待核', '质检', 'SHA256'))
+              assert filename in assets
+              asset = assets[filename]
+              assert asset['digest'].startswith('sha256:') and asset['size'] > 0
+              image_url = f'https://raw.githubusercontent.com/{REPO}/{COVER_REV}/{ROOT}/{slug}/slide_00.jpg'
+              copy_path = f'{ROOT}/{slug}/copy.html'
+              assert copy_path in allowed
+              copy_url = f'https://robertyang87.github.io/tennislive/{copy_path}'
+              copy_page = to_copy_page(copy_text)
+              assert '<textarea id="title"' in copy_page and '<textarea id="body"' in copy_page
+              assert 'data-copy="title"' in copy_page and 'data-copy="body"' in copy_page
+              push_html = knowledge_push_html_from_parts(image_urls=[image_url], xhs_text=copy_text,
+                  copy_url=copy_url, video_url=release['html_url'], column='网球有故事')
+              # Use the native template unchanged; the short review lead is outside copyable text.
+              hint = ps.title_hint()
+              assert push_html.count(hint) == 1
+              push_html = push_html.replace(hint, hint + f'<div style="{ps.LEAD}">审片版·语音待核</div>', 1)
+              assert '分别复制标题 / 正文 / 置顶评论' in push_html and copy_url in push_html
+              assert push_html.count(html.escape(body)) == 1
+              local = OUT / slug
+              local.mkdir(exist_ok=True)
+              (local / 'copy.html').write_text(copy_page, encoding='utf-8')
+              (local / 'push.html').write_text(push_html, encoding='utf-8')
+              (local / 'xiaohongshu.txt').write_text(copy_text, encoding='utf-8')
+              endpoint = API + '/contents/' + copy_path
+              previous = requests.get(endpoint, headers=HEADERS, params={'ref': 'main'}, timeout=30)
+              assert previous.status_code in (200, 404)
+              payload = {'branch': 'main', 'message': f'Fix native story copy page for {slug}',
+                         'content': base64.b64encode(copy_page.encode()).decode()}
+              if previous.status_code == 200:
+                  payload['sha'] = previous.json()['sha']
+              response = requests.put(endpoint, headers=HEADERS, json=payload, timeout=30)
+              response.raise_for_status()
+              evidence.append({'slug': slug, 'title': title, 'copy_url': copy_url,
+                  'copy_commit': response.json()['commit']['sha'],
+                  'copy_sha256': hashlib.sha256(copy_page.encode()).hexdigest(),
+                  'body_sha256': hashlib.sha256(body.encode()).hexdigest(),
+                  'push_html_sha256': hashlib.sha256(push_html.encode()).hexdigest(),
+                  'cover_url': image_url, 'release_id': release['id'], 'release_draft': release['draft'],
+                  'video_filename': filename, 'video_sha256': asset['digest'].removeprefix('sha256:'),
+                  'video_bytes': asset['size'], 'wechat_sent': False, 'publishing_voice_pass': False,
+                  'complete_actual_listening': False})
+          
+          # GITHUB_TOKEN commits do not trigger workflows: explicitly deploy Pages after both writes.
+          response = requests.post(API + '/actions/workflows/pages.yml/dispatches', headers=HEADERS,
+                                   json={'ref': 'main'}, timeout=30)
+          response.raise_for_status()
+          for row in evidence:
+              for attempt in range(30):
+                  response = requests.get(row['copy_url'], headers={'Cache-Control': 'no-cache'}, timeout=20)
+                  if (response.status_code == 200 and 'text/html' in response.headers.get('Content-Type', '')
+                          and hashlib.sha256(response.text.encode()).hexdigest() == row['copy_sha256']):
+                      row['deployed'] = True
+                      row['http_status'] = 200
+                      break
+                  if attempt == 29:
+                      row['deployed'] = False
+                      row['http_status'] = response.status_code
+                      raise RuntimeError('Pages did not expose this exact copy page: ' + row['copy_url'])
+                  time.sleep(20)
+          manifest = {'status': 'pages_deployed_messages_prepared_not_sent',
+                      'template': 'main cli.cmd_explainer -> explainer_push_html -> knowledge_push_html_from_parts',
+                      'template_revision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+                      'created_at': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'items': evidence}
+          (OUT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('Native story pages deployed; HTML prepared without sending WeChat.\n\n')
+              for row in evidence:
+                  summary.write(row['slug'] + ': ' + row['copy_url'] + '\n\n')
+          print(json.dumps(manifest, ensure_ascii=False))
+          
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-story-page-layout-evidence
+          compression-level: 0
+          path: ${{ runner.temp }}/native-page-layout/
+          if-no-files-found: error
+          retention-days: 14
