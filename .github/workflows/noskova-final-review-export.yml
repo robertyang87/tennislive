@@ -2,23 +2,35 @@ name: noskova-final-review-export
 on:
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   actions: read
 jobs:
   export:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Retrieve actual rendered film
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-noskova-alexandrova-718d234c05ed6add
+          fail-on-cache-miss: true
+      - name: Export actual renderer source
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
+          set -euo pipefail
           mkdir -p review
-          gh release download reel-noskova-svitolina-bjk-cup-2026-final --pattern '*.mp4' --dir review
-          sha256sum review/*.mp4 > review/SHA256SUMS
+          find "$HOME/.cache/tennislive-sources" -type f -printf '%p %s\n'
+          SOURCE=$(find "$HOME/.cache/tennislive-sources" -type f -name '*.mp4' | head -1)
+          test -s "$SOURCE"
+          cp "$SOURCE" review/YlKbwpraDHY.mp4
+          sha256sum review/YlKbwpraDHY.mp4 > review/SHA256SUMS
+          ffprobe -v error -show_format -show_streams -of json review/YlKbwpraDHY.mp4 > review/ffprobe.json
+          gh release view source-render-YlKbwpraDHY >/dev/null 2>&1 || gh release create source-render-YlKbwpraDHY --prerelease --title 'Actual renderer cache source YlKbwpraDHY' --notes 'Internal source binding verification; cache reel-src-noskova-alexandrova-718d234c05ed6add'
+          gh release upload source-render-YlKbwpraDHY review/* --clobber
       - uses: actions/upload-artifact@v4
         with:
-          name: noskova-final-reviewed-film
+          name: actual-renderer-source
           path: review/
           retention-days: 7
