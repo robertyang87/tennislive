@@ -1,0 +1,271 @@
+{
+  "_draft": true,
+  "slug": "djokovic-minaur",
+  "_column": "reel",
+  "cover": {
+    "matchup": [
+      {
+        "name": "德约科维奇",
+        "name_en": "novak djokovic",
+        "country": "SER",
+        "rank": 11
+      },
+      {
+        "name": "德米纳尔",
+        "name_en": "alex de minaur",
+        "country": "AUS",
+        "rank": 9
+      }
+    ]
+  },
+  "_production": {
+    "kind": "orchestrated_reel",
+    "received_at": "2026-10-06T13:39:41Z",
+    "event": "China Open",
+    "year": 2026,
+    "round": "决赛",
+    "court": "Capital Group Diamond"
+  },
+  "source_url": "https://www.tennistv.com/videos/4587393/beijing-2026-final-djokovic-de-minaur-short-highlights",
+  "_match": {
+    "flashscore_id": "8v653Rz9"
+  },
+  "stats": {
+    "a": {
+      "aces": 0,
+      "df": 0,
+      "winners": 6,
+      "ue": 10,
+      "first_in": 20,
+      "first_won": 18,
+      "second_total": 18,
+      "second_won": 13,
+      "bp_conv": 0,
+      "bp_chances": 2,
+      "pts_won": 47,
+      "pts_total": 88,
+      "first_total": 38,
+      "headshot": "assets/players/headshots/atp-D643.png"
+    },
+    "b": {
+      "aces": 4,
+      "df": 2,
+      "winners": 18,
+      "ue": 21,
+      "first_in": 34,
+      "first_won": 25,
+      "second_total": 16,
+      "second_won": 9,
+      "bp_conv": 0,
+      "bp_chances": 1,
+      "pts_won": 41,
+      "pts_total": 88,
+      "first_total": 50,
+      "headshot": "assets/players/headshots/atp-DH58.png"
+    }
+  },
+  "_hit_data": [
+    {
+      "label": "德约科维奇 一发得分率摆动",
+      "detail": "第1盘90% → 第2盘0%",
+      "swing": 90,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "德约科维奇 破发点兑现",
+      "detail": "0/2（0%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "德米纳尔 破发点兑现",
+      "detail": "0/1（0%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "德约科维奇 连续保发",
+      "detail": "6 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "德米纳尔 连续保发",
+      "detail": "7 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Djokovic N. 5 : 1 De Minaur A.（含本场） · 红土 1:0 · 草地 2:0 · 硬地 2:1",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Djokovic N. 最近 5 场 5 胜（WWWWW）；De Minaur A. 最近 5 场 4 胜（LWWWW）",
+      "source": "flashscore df_hh_1 Last matches"
+    },
+    {
+      "label": "总分差",
+      "detail": "德约科维奇 47 - 德米纳尔 41，净差 6 分，德约科维奇 领先",
+      "diff": 6,
+      "source": "flashscore df_mh_1（总分）",
+      "use": "body_only"
+    }
+  ],
+  "_durations": [
+    [
+      "Set 1",
+      "1:08"
+    ],
+    [
+      "Set 2",
+      "0:06"
+    ],
+    [
+      "全场",
+      "1:14"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 1】1-1  德米纳尔发球，德米纳尔拿下  密度1  ← 1个破发点",
+      "density": 1,
+      "tags": [
+        "1个破发点"
+      ]
+    },
+    {
+      "label": "【Set 1】3-2  德约科维奇发球，德约科维奇拿下  密度1  ← 1个破发点",
+      "density": 1,
+      "tags": [
+        "1个破发点"
+      ]
+    },
+    {
+      "label": "【Set 1】3-3  德米纳尔发球，德米纳尔拿下  密度1  ← 1个破发点",
+      "density": 1,
+      "tags": [
+        "1个破发点"
+      ]
+    }
+  ],
+  "_tactical_research": {
+    "version": 1,
+    "identity": {
+      "home": "novak djokovic",
+      "away": "alex de minaur",
+      "event": "China Open",
+      "year": 2026,
+      "source_urls": []
+    },
+    "sources": [
+      {
+        "url": "https://www.atptour.com/en/news/djokovic-de-minaur-beijing-2026-final",
+        "title": "",
+        "published_at": "",
+        "status": "read",
+        "text_sha256": "67644ffaf87ef8de39ce485143e53e1d7983e1ec171fee3022b87486e49fd5f1",
+        "scope": "candidate_match_report",
+        "excerpts": [
+          "Djokovic returned to Beijing this year for the first time since 2015, when he defeated Rafael Nadal in the final to win his sixth title at the event. This week, Djokovic defeated top seed Alexander Zverev in a thrilling quarter-final and then was serving for the match against Daniil Medvedev in the semi-finals when the latter was defaulted."
+        ],
+        "note": "读到 15 段",
+        "match_verified": false
+      },
+      {
+        "url": "https://www.atptour.com/en/video/highlights-djokovic-lifts-beijing-2026-trophy-after-de-minaurs-final-retirement",
+        "title": "",
+        "published_at": "",
+        "status": "read",
+        "text_sha256": "dc81f5fa85df4d126e85dcab000a0d9938fa3864c67f83780f69faaaa7f87d74",
+        "scope": "player_background",
+        "excerpts": [],
+        "note": "读到 3 段",
+        "match_verified": false
+      },
+      {
+        "url": "https://www.atptour.com/en/video/hot-shot-i-cant-hear-you-djokovic-saves-bp-in-style-in-beijing-2026-final",
+        "title": "",
+        "published_at": "",
+        "status": "read",
+        "text_sha256": "dc81f5fa85df4d126e85dcab000a0d9938fa3864c67f83780f69faaaa7f87d74",
+        "scope": "player_background",
+        "excerpts": [],
+        "note": "读到 3 段",
+        "match_verified": false
+      }
+    ],
+    "source_status": {
+      "brain_game": "feed HTTP 403; index HTTP 403",
+      "tennis_abstract": "feed HTTP 403; index HTTP 403",
+      "hugh_clarke": "feed HTTP 403; index HTTP 403",
+      "atp": "ok",
+      "wta": "no_matching_article",
+      "usopen": "no_matching_article",
+      "australian_open": "no_matching_article",
+      "roland_garros": "no_matching_article",
+      "wimbledon": "no_matching_article"
+    },
+    "status": "ready",
+    "collected_at": "2026-10-06T13:44:42.118644+00:00",
+    "elapsed_seconds": 1.276
+  },
+  "_notes": [
+    "flashscore id：8v653Rz9（按球员姓反查）",
+    "制胜分/非受迫失误：这场有，已填进 stats",
+    "头像 stats.a（德约科维奇）：已发 spec 里认过，复用 assets/players/headshots/atp-D643.png",
+    "头像 stats.b（德米纳尔）：已发 spec 里认过，复用 assets/players/headshots/atp-DH58.png",
+    "狠数据候选 8 条",
+    "转折局候选 3 局，取前 5",
+    "⚠️ 逐局数据不足以确定赢家和逐盘比分；不生成正式 spec",
+    "技战术资料：ready；未核观点不进入旁白",
+    "文案通道 deepseek · deepseek-v4-pro",
+    "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
+    "⚠️ 文案这一步没成（模型或网络），editorial 留空",
+    "⚠️ 没给 captions 或字幕不可读，字幕窗口起草跳过",
+    "⚠️ Tennis TV 官方头图没成（ValueError: Tennis TV 头图不是本场赛事（1I5W0qZH.jpg 不匹配 China Open），拒绝资料图）",
+    "⚠️ 封面抓取没成（SystemExit: 2026-10-04–2026-10-06 窗口里扫了 103 场，没有同时出现 ['djokovic', 'minaur'] 的比赛）——portrait 留空，终审或 render 前再补"
+  ],
+  "_visual_evidence": {
+    "model": "MiniMax-M3",
+    "status": "waiting",
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 121.12,
+      "end": 129.32,
+      "kind": "winning_shot",
+      "winner_visible": true,
+      "reason": "Frames at 122.5s–128.5s show de Minaur serving and the final point being played at the net; Djokovic visible across the court. Scoreboard shows Djokovic trailing 0-40, 1-40, then 2-5 in the tiebreak — this is the closing sequence of the match that Djokovic wins. The 121.12–129.32 window covers the deciding rally before the celebration.",
+      "confidence": 0.85
+    },
+    "ending": {
+      "start": 105.06,
+      "end": 132.56,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "110.5s shows Djokovic at the net with arm raised in celebration after winning the final point; 114.5s–118.5s shows him at his bench receiving congratulations from his box while the on-screen graphic confirms FINAL Djokovic d. de Minaur 7-6 7-6. 136.5s–146.5s show the players meeting at the net and walking off court together. The 105.06–132.56 window fully covers the cold open and contains Djokovic's celebration plus team reaction.",
+      "confidence": 0.92
+    },
+    "cover": {
+      "same_match": false,
+      "subject": "",
+      "moment": "other",
+      "wrong_or_old": true,
+      "reason": "No cover photo was provided in this task (the prompt states there is no candidate cover). Returning same_match=false because no image is supplied to verify face, clothing, court, or scoreboard against this Djokovic d. de Minaur Beijing final.",
+      "confidence": 0.5
+    },
+    "problems": [
+      "ending 理由引用窗口外时间：[136.5, 146.5]",
+      "没有官方高清封面候选",
+      "封面无法证明是同一场，或疑似旧图/错图",
+      "封面置信度 0.50 低于 0.80",
+      "封面情绪应为 winner_celebration，现在是 other"
+    ],
+    "model_attempts": 1,
+    "input_sha256": "4c7ba16d08139a836abfe64176817c583fde1708a846eb3322198cd550de2a20",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg"
+    ],
+    "cover_image": ""
+  }
+}
