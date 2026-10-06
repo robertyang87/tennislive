@@ -1,5 +1,5 @@
 {
-  "status": "sending",
+  "status": "canceled_before_post",
   "release_id": 404441774,
   "delivery_kind": "review_draft",
   "publishing_voice_pass": false,
@@ -14,5 +14,10 @@
       "sha256": "95f91fcfd666a915387f572418e9b07a0e372135e28ffaff53df53e3d825fcce",
       "bytes": 134832565
     }
+  },
+  "previous_attempt": {
+    "run_id": 37431174268,
+    "status": "cancelled_before_post",
+    "evidence": "Final log remains in wait_for_images with two unresolved authenticated draft assets, attempt 11/20; no send response or receipt; terminated before POST."
   }
 }
