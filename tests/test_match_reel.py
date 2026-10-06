@@ -7133,7 +7133,10 @@ def test_成片超过git的上限要走Release而不是砍片长(tmp_path):
     assert "gh release upload" in step["run"]
     assert 'rm -f "$REEL"' in step["run"], \
         "传完没把本地那份删掉，它还会被 git add 吃进去"
-    assert step.get("if") == "github.event.inputs.mode == 'render'"
+    assert step.get("if") == ("github.event.inputs.mode == 'render' && "
+                              "github.event.inputs.slug != 'shanghai-masters-history-2026'")
+    # 只有已登记的上海审片改走私有保全；不能给其余成片放宽Release合同。
+    _assert_shanghai_review_artifact_contract(list(steps.values()))
 
     pre = next(s for n, s in steps.items() if n.startswith("push 模式先确认"))
     assert "video_url" in pre["run"], \
