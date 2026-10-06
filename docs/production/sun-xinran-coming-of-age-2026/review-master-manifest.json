@@ -247,6 +247,13 @@
     "Resolve all uncertain / unreliable / support_only pronunciation items with actual listening; none counts as pass.",
     "Bind new master, cover and review evidence in native packaging and pass current-head applicable delivery checks; old CI does not certify this new movie.",
     "Confirm final framing and caption legibility throughout, including edge cropping and retained interview captions.",
-    "Explicit publication decision before public Release or merge; neither performed by this documentation update."
-  ]
+    "After verified QA PASS, publish the current-master Release/native package and send WeChat once under the existing user authorization; reserve/record the persistent ledger and retain the actual receipt URL."
+  ],
+  "publication_authorization": {
+    "user_review_required": false,
+    "authorized_after_quality_pass": true,
+    "quality_pass_required": true,
+    "publication_performed": false,
+    "latest_user_instruction": "不用我参与审片；走质检通过后就可以推送微信"
+  }
 }
