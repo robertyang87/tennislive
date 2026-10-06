@@ -1,0 +1,161 @@
+name: sun-native-story
+run-name: "Sun native story · ${{ contains(github.event.head_commit.message, '[native-full]') && 'full' || 'preview' }}"
+on:
+  push:
+    branches: ['repair/sun-native-story-20261006']
+    paths: ['tools/build_sun_native_story.py', 'tools/prepare_sun_native_sources.py', '.github/workflows/sun-native-story.yml']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: sun-native-story-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            src
+            tools
+            assets/fonts
+            assets/logo
+            pyproject.toml
+            README.md
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Native story dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg fonts-noto-cjk
+          pip install -q -e '.[video]'
+          pip install -q playwright pillow
+          python -m playwright install --with-deps chromium
+          python - <<'PY'
+          import os
+          from playwright.sync_api import sync_playwright
+          with sync_playwright() as p:
+              with open(os.environ['GITHUB_ENV'],'a') as f:
+                  f.write('CHROMIUM_PATH='+p.chromium.executable_path+'\n')
+          PY
+      - name: Recover actual eight voice components and clean WTA sources
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SUN_WORKDIR: ${{ runner.temp }}/sun-clean
+        run: python tools/prepare_sun_native_sources.py
+      - name: Download real approved native-story reference and sample frames
+        run: |
+          mkdir -p "$RUNNER_TEMP/native-reference"
+          curl --fail --location --retry 3 'https://github.com/robertyang87/tennislive/releases/download/explainer-medvedev-beijing-default-2026/explainer.mp4' -o "$RUNNER_TEMP/native-reference/explainer.mp4"
+          echo '755a4f5a83a213236ed48e8589dae3498853e4afbfad2d494519bbc1de29caab  '"$RUNNER_TEMP/native-reference/explainer.mp4" | sha256sum -c
+          ffprobe -v error -show_format -show_streams -of json "$RUNNER_TEMP/native-reference/explainer.mp4" > "$RUNNER_TEMP/native-reference/probe.json"
+          for AT in 0 8 20 35 55; do
+            ffmpeg -y -v error -ss "$AT" -i "$RUNNER_TEMP/native-reference/explainer.mp4" -frames:v 1 "$RUNNER_TEMP/native-reference/frame-$AT.jpg"
+          done
+          ffmpeg -y -v error -sseof -2 -i "$RUNNER_TEMP/native-reference/explainer.mp4" -frames:v 1 "$RUNNER_TEMP/native-reference/frame-outro.jpg"
+      - name: Render native story preview or full film
+        id: native_render
+        env:
+          PHASE: ${{ contains(github.event.head_commit.message, '[native-full]') && 'full' || 'preview' }}
+        run: |
+          MODE=--preview
+          if [ "$PHASE" = full ]; then MODE=; fi
+          python tools/build_sun_native_story.py \
+            --sources "$RUNNER_TEMP/sun-clean/sources" \
+            --audio "$RUNNER_TEMP/sun-clean/audio" \
+            --outdir "$RUNNER_TEMP/native-story" $MODE
+          mkdir -p "$RUNNER_TEMP/native-delivery"
+          cp "$RUNNER_TEMP/native-story/native-story-review.json" "$RUNNER_TEMP/native-delivery/"
+          cp "$RUNNER_TEMP/native-story"/slide-*.jpg "$RUNNER_TEMP/native-delivery/"
+          find "$RUNNER_TEMP/native-story" -maxdepth 1 -name 'sun-native-story*.mp4' -exec cp {} "$RUNNER_TEMP/native-delivery/" \;
+          FILM=$(find "$RUNNER_TEMP/native-delivery" -name '*.mp4' | head -1)
+          sha256sum "$FILM" > "$RUNNER_TEMP/native-delivery/film.sha256"
+          split -b 30000000 -d -a 2 "$FILM" "$RUNNER_TEMP/native-delivery/film.part."
+          rm "$FILM"
+          PARTS=$(find "$RUNNER_TEMP/native-delivery" -name 'film.part.*' | wc -l)
+          test "$PARTS" -le 7
+          echo "parts=$PARTS" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sun-native-story-metadata-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/native-delivery/*.json
+            ${{ runner.temp }}/native-delivery/*.jpg
+            ${{ runner.temp }}/native-delivery/film.sha256
+            ${{ runner.temp }}/native-reference/*.jpg
+            ${{ runner.temp }}/native-reference/probe.json
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: success() && fromJSON(steps.native_render.outputs.parts) > 0
+        with:
+          name: sun-native-story-part-00-${{ github.run_id }}
+          path: ${{ runner.temp }}/native-delivery/film.part.00
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: success() && fromJSON(steps.native_render.outputs.parts) > 1
+        with:
+          name: sun-native-story-part-01-${{ github.run_id }}
+          path: ${{ runner.temp }}/native-delivery/film.part.01
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: success() && fromJSON(steps.native_render.outputs.parts) > 2
+        with:
+          name: sun-native-story-part-02-${{ github.run_id }}
+          path: ${{ runner.temp }}/native-delivery/film.part.02
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: success() && fromJSON(steps.native_render.outputs.parts) > 3
+        with:
+          name: sun-native-story-part-03-${{ github.run_id }}
+          path: ${{ runner.temp }}/native-delivery/film.part.03
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: success() && fromJSON(steps.native_render.outputs.parts) > 4
+        with:
+          name: sun-native-story-part-04-${{ github.run_id }}
+          path: ${{ runner.temp }}/native-delivery/film.part.04
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: success() && fromJSON(steps.native_render.outputs.parts) > 5
+        with:
+          name: sun-native-story-part-05-${{ github.run_id }}
+          path: ${{ runner.temp }}/native-delivery/film.part.05
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: success() && fromJSON(steps.native_render.outputs.parts) > 6
+        with:
+          name: sun-native-story-part-06-${{ github.run_id }}
+          path: ${{ runner.temp }}/native-delivery/film.part.06
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: sun-native-story-debug-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/native-story/*.json
+            ${{ runner.temp }}/native-story/slide-*.jpg
+            ${{ runner.temp }}/native-story/*.ass
+          retention-days: 7
+          if-no-files-found: warn
