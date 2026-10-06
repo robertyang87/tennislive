@@ -77,6 +77,16 @@ class TournamentStory:
 
 STORIES = (
     TournamentStory(
+        slug="sun-xinran-coming-of-age-2026", aliases=("Xinran Sun", "孙心然"),
+        title="孙心然的来时路", location="深圳 · 贝尔格莱德", level="成长故事",
+        surface="青少年与成人赛事", founded="2026", hero_fact="16岁写进历史，这一步，她走了很多年",
+        facts=("2026连续三次青少年大满贯女单决赛，并在美网夺冠。",), moments=(),
+        venue="孙心然", image=Path("output/2026-10-05/explainer/sun-xinran-coming-of-age-2026/cover.png"),
+        image_credit="TIM Essonne official / 2024", kind="player",
+        source_url="https://www.wtatennis.com/news/4583293/who-is-sun-xinran-wta-tour-debut-beijing-get-to-know-junior-number-one",
+        image_source_url="https://www.tim91.com/en/post/xinran-sun-1", source_label="WTA与赛事官方",
+    ),
+    TournamentStory(
         slug="medvedev-beijing-default-2026",
         aliases=("djokovic medvedev beijing default",),
         title="德梅之战为何终止",

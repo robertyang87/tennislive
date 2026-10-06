@@ -536,7 +536,33 @@ CHECKS: tuple[tuple[str, Callable[[Deck], list[str]]], ...] = (
 def preflight(slug: str, date_label: str = WIDEST_DATE_LABEL) -> list[tuple[str, list[str]]]:
     """每一项的 (名字, 问题列表)——**合格的也列出来**，只在出错时出声的检查证明不了它看过。"""
     deck = load_deck(slug, date_label)
-    return [(name, check(deck)) for name, check in CHECKS]
+    episode_path = _ROOT / "src/tennislive/video/episodes" / f"{slug}.json"
+    import json
+    episode = json.loads(episode_path.read_text()) if episode_path.is_file() else {}
+    production_path = _ROOT / "specs/explainers" / f"{slug}.production.json"
+    import hashlib
+    production = json.loads(production_path.read_text()) if production_path.is_file() else {}
+    external_video = (episode.get("production_route") == "external_reviewed_video_only"
+        and episode.get("native_card_render_authorized") is False
+        and production.get("column") == "网球有故事"
+        and production.get("aspect_ratio") == "3:4"
+        and len(production.get("chapters", [])) == len(episode.get("beats", [])) > 0
+        and all(c.get("claim_ids") for c in production.get("chapters", []))
+        and [c["narration"] for c in production.get("chapters", [])] == [b["narration"] for b in episode.get("beats", [])])
+    # These inspect actual on-screen cards. Video-only productions have none;
+    # all factual, wording, copy and cover checks remain active.
+    card_only = {"字卡认领", "每屏要点", "末屏一问"}
+    def actual_check(name, check):
+        if external_video and name == "开场问题卡":
+            # External posters may use a factual statement hook rather than an
+            # on-screen question card. Retain semantic lines and points checks.
+            hook = episode.get("opening", {}).get("question", "")
+            return (["外部封面钩子必须与实际封面元数据一致"] if deck.segments[0].title != hook else []) + [
+                "外部封面钩子行长度超出16字" for line in hook.splitlines() if len(line) > 16
+            ] + (["外部封面钩子不能为空或带要点"] if not hook or deck.segments[0].points else [])
+        return check(deck)
+    return [(name + "（无正文字卡，不适用）" if external_video and name in card_only else name,
+             [] if external_video and name in card_only else actual_check(name, check)) for name, check in CHECKS]
 
 
 def main(argv: list[str] | None = None) -> int:

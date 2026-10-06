@@ -11558,6 +11558,15 @@ _SCRIPTS[_DEFAULT_SLUG] = tuple(
     for beat in _DEFAULT_EPISODE["beats"]
 )
 _OPENINGS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["opening"]
+# Registered editorial metadata for externally rendered, reviewed video-only film.
+_SUN_EPISODE = json.loads((Path(__file__).parent / "episodes/sun-xinran-coming-of-age-2026.json").read_text())
+_SUN_SLUG = _SUN_EPISODE["slug"]
+_SCRIPTS[_SUN_SLUG] = tuple((b["kind"], b["label"], b["title"], b["narration"], b["image"], b["credit"], tuple(b["points"])) for b in _SUN_EPISODE["beats"])
+_OPENINGS[_SUN_SLUG] = _SUN_EPISODE["opening"]
+_CAPTIONS[_SUN_SLUG] = _SUN_EPISODE["caption"]
+_CLAIMS[_SUN_SLUG] = _SUN_EPISODE["claims"]
+AUTO_PUSH_SLUGS = AUTO_PUSH_SLUGS | frozenset({_SUN_SLUG})
+
 _CAPTIONS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["caption"]
 _CLAIMS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["claims"]
 
@@ -14578,6 +14587,12 @@ def explainer_xiaohongshu(
 
     caption = _CAPTIONS.get(story.slug) or {}
     hook = caption.get("hook") or ""
+    # Registered external video episodes have no numbered on-screen cards.
+    # Their reviewed caption body replaces the card-point transcription.
+    episode_path = Path(__file__).parent / "episodes" / f"{story.slug}.json"
+    episode = json.loads(episode_path.read_text()) if episode_path.is_file() else {}
+    if episode.get("production_route") == "external_reviewed_video_only" and caption.get("body"):
+        sections = [caption["body"]]
     tags = " ".join(f"#{tag}" for tag in caption.get("tags") or _DEFAULT_TAGS)
     # Keep invalid draft metadata inspectable by preflight. Actual copy pages
     # validate this complete prefix+hook before they can become publication.

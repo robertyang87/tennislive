@@ -193,10 +193,15 @@ def find_spec(slug: str) -> tuple[str, Path] | None:
         path = base / f"{slug}.json"
         if path.is_file():
             return kind, path
+    production = ROOT / "specs" / "explainers" / f"{slug}.production.json"
+    if production.is_file():
+        return "explainer", production
     return None
 
 
 def line_of(kind: str, spec: dict) -> str | None:
+    if kind == "explainer":
+        return str(spec.get("column") or "")
     if kind == "interview":
         return "赛后开麦"
     eyebrow = (spec.get("cover") or {}).get("eyebrow") or spec.get("_column")
@@ -690,6 +695,16 @@ def main(argv: list[str] | None = None) -> int:
             gates += [run_reel_dry_run(ctx.path)]
             if not args.no_ci_tests:
                 gates += run_ci_tests(ctx.slug)
+        elif ctx.kind == "explainer":
+            from explainer_preflight import preflight
+            gates = [GateResult(name, "fail" if problems else "pass", "\n".join(problems))
+                     for name, problems in preflight(ctx.slug)]
+            problems = []
+            if ctx.spec.get("aspect_ratio") != "3:4": problems.append("portrait aspect must3:4")
+            if not ctx.spec.get("chapters") or any(not c.get("claim_ids") for c in ctx.spec["chapters"]): problems.append("chapter claim evidence missing")
+            if not ctx.spec.get("sound_direction"): problems.append("sourceaudio editorial direction missing")
+            gates.append(GateResult("mixed-video editorial evidence", "fail" if problems else "pass", "\n".join(problems)))
+            if not args.no_ci_tests: gates += run_ci_tests(ctx.slug)
         else:
             gates = run_interview_checks(ctx.spec, ctx.xhs)
 
