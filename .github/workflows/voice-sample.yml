@@ -22,7 +22,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: voice-sample
+  group: ${{ inputs.mode == 'project' && format('voice-project-{0}', inputs.script_path) || 'voice-sample' }}
   cancel-in-progress: false
 
 jobs:
