@@ -1,0 +1,158 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=l3spAGXS_Wc",
+  "source_sha256": "c3b1f8235f90bb64e22b7081ec290749e15ee599f0e1f56be6dc2d7b8e70ffea",
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "source_duration": 399.22068,
+  "window": [
+    240.0,
+    378.0
+  ],
+  "audio_sha256": "e13c2884a1166e8067440e54c316d1609a03f91ec13ebb8e404993e3d481c20f",
+  "collected_at": "2026-10-06T00:33:30.069255+00:00",
+  "status": "collected_awaiting_evidence_review",
+  "timecode_basis": "absolute_source_seconds",
+  "models": [
+    "small.en",
+    "medium.en"
+  ],
+  "token_similarity": 0.859375,
+  "differences": [
+    {
+      "kind": "replace",
+      "first": [
+        "federer"
+      ],
+      "second": [
+        "february"
+      ]
+    },
+    {
+      "kind": "replace",
+      "first": [
+        "melbourne"
+      ],
+      "second": [
+        "the",
+        "whole",
+        "band"
+      ]
+    },
+    {
+      "kind": "delete",
+      "first": [
+        "perhaps"
+      ],
+      "second": []
+    },
+    {
+      "kind": "replace",
+      "first": [
+        "back",
+        "and"
+      ],
+      "second": [
+        "backhand"
+      ]
+    },
+    {
+      "kind": "replace",
+      "first": [
+        "beforehand"
+      ],
+      "second": [
+        "a",
+        "forehand"
+      ]
+    },
+    {
+      "kind": "replace",
+      "first": [
+        "bangin"
+      ],
+      "second": [
+        "bandian"
+      ]
+    },
+    {
+      "kind": "replace",
+      "first": [
+        "the",
+        "federal"
+      ],
+      "second": [
+        "federer"
+      ]
+    },
+    {
+      "kind": "insert",
+      "first": [],
+      "second": [
+        "who",
+        "becomes",
+        "the",
+        "first",
+        "argentine",
+        "to",
+        "win",
+        "this",
+        "title",
+        "since",
+        "1974"
+      ]
+    },
+    {
+      "kind": "replace",
+      "first": [
+        "gugielo",
+        "viles"
+      ],
+      "second": [
+        "gugino",
+        "vilas"
+      ]
+    },
+    {
+      "kind": "delete",
+      "first": [
+        "commit",
+        "to",
+        "this"
+      ],
+      "second": []
+    }
+  ],
+  "speech_vad": [
+    {
+      "start": 240.368,
+      "end": 248.592
+    },
+    {
+      "start": 260.528,
+      "end": 266.416
+    },
+    {
+      "start": 279.76,
+      "end": 290.352
+    },
+    {
+      "start": 302.352,
+      "end": 305.392
+    },
+    {
+      "start": 311.28,
+      "end": 327.856
+    },
+    {
+      "start": 344.176,
+      "end": 348.336
+    },
+    {
+      "start": 359.376,
+      "end": 378.0
+    }
+  ],
+  "review_note": "Inspect both timed transcripts, source captions and VAD. Agreement does not certify a human listening pass. Unresolved wording or timing remains blocked."
+}

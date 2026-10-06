@@ -1,0 +1,90 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=1dfiSb6WvlA",
+  "source_sha256": "3473ec229d9b10cfbe77e558dc79c5e4e748ba02594ecc516e147da128190d2b",
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "source_duration": 115.890794,
+  "window": [
+    0.0,
+    115.89
+  ],
+  "audio_sha256": "0e2518206ac895398c7732fd07a009ba5ece8622530be7333fd98ef1a00a447d",
+  "collected_at": "2026-10-06T00:34:17.380818+00:00",
+  "status": "collected_awaiting_evidence_review",
+  "timecode_basis": "absolute_source_seconds",
+  "models": [
+    "small.en",
+    "medium.en"
+  ],
+  "token_similarity": 0.7883211678832117,
+  "differences": [
+    {
+      "kind": "replace",
+      "first": [
+        "oh"
+      ],
+      "second": [
+        "no",
+        "stop",
+        "it",
+        "novak",
+        "djokovic",
+        "what",
+        "are",
+        "you",
+        "doing"
+      ]
+    },
+    {
+      "kind": "insert",
+      "first": [],
+      "second": [
+        "water",
+        "shots"
+      ]
+    },
+    {
+      "kind": "replace",
+      "first": [
+        "shot"
+      ],
+      "second": [
+        "get",
+        "from",
+        "djokovic",
+        "there"
+      ]
+    },
+    {
+      "kind": "insert",
+      "first": [],
+      "second": [
+        "done",
+        "it",
+        "the",
+        "hard",
+        "way",
+        "saving",
+        "five",
+        "championship",
+        "points",
+        "in",
+        "that",
+        "remarkable"
+      ]
+    }
+  ],
+  "speech_vad": [
+    {
+      "start": 103.568,
+      "end": 110.096
+    },
+    {
+      "start": 112.72,
+      "end": 115.89
+    }
+  ],
+  "review_note": "Inspect both timed transcripts, source captions and VAD. Agreement does not certify a human listening pass. Unresolved wording or timing remains blocked."
+}
