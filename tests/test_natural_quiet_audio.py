@@ -140,3 +140,21 @@ def test_real_aac_fade_near_segment_start_matches_but_crossing_fails(encoded):
     # [0,1) crosses the leading segment boundary; [3,4) crosses its end.
     # Neither may borrow another segment's audio even with a broad window.
     assert Q.verified_seconds(spec, film, [0,3]) == []
+
+
+def test_real_aac_exact_boundary_float_cancellation(encoded):
+    spec, film = encoded
+    source = film.parent / 'source_main.mp4'
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(source),
+                    '-af', 'atrim=start=0.4:end=3.4,asetpts=PTS-STARTPTS,volume=0.972,adelay=1000',
+                    '-c:a', 'aac', '-b:a', '192k', str(film)], check=True)
+    seg = spec['segments'][0]
+    seg['start'], seg['end'] = .4, 3.4
+    seg['_digital_silence_windows'] = [[.4, 3.4]]
+    binding = json.loads((film.parent / 'audio_review_binding.json').read_text())
+    binding['plan_sha256'] = plan_hash(spec)
+    binding['timeline']['offsets'] = [1.0]
+    (film.parent / 'audio_review_binding.json').write_text(json.dumps(binding))
+    assert .4 + 1 - 1 < .4  # Actual cancellation that used to reject this cut.
+    assert Q.verified_seconds(spec, film, [1]) == [1]
+    assert Q.verified_seconds(spec, film, [0, 4]) == []

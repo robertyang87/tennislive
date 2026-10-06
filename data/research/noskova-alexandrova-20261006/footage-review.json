@@ -505,5 +505,175 @@
       ],
       "exact_equal": true
     }
+  },
+  "segment9_scoreboard_animation_review": {
+    "source_sha256": "281ee2bbcc9b83672c53cdc8abd081914ee0381fa8ecafc8973d9219f255432a",
+    "start": 161.9,
+    "seconds": 13.12,
+    "fps": "25",
+    "search_box": [
+      90,
+      832,
+      550,
+      1080
+    ],
+    "frames": 329,
+    "present_frames": 238,
+    "bounds_relative": [
+      0,
+      0,
+      402,
+      248
+    ],
+    "failed_old_frame_index": 33,
+    "geometry_at_frame33": {
+      "body": [
+        0,
+        78,
+        400,
+        194
+      ],
+      "header": [
+        0,
+        41,
+        19,
+        79
+      ],
+      "bounds": [
+        0,
+        41,
+        400,
+        194
+      ],
+      "edge": 400
+    },
+    "animation_frames": [
+      {
+        "index": 31,
+        "source_t_approx": 163.14000000000001,
+        "bounds": [
+          0,
+          127,
+          400,
+          248
+        ],
+        "body": [
+          0,
+          163,
+          400,
+          248
+        ]
+      },
+      {
+        "index": 32,
+        "source_t_approx": 163.18,
+        "bounds": [
+          0,
+          81,
+          400,
+          233
+        ],
+        "body": [
+          0,
+          118,
+          400,
+          233
+        ]
+      },
+      {
+        "index": 33,
+        "source_t_approx": 163.22,
+        "bounds": [
+          0,
+          41,
+          400,
+          194
+        ],
+        "body": [
+          0,
+          78,
+          400,
+          194
+        ]
+      },
+      {
+        "index": 34,
+        "source_t_approx": 163.26000000000002,
+        "bounds": [
+          0,
+          11,
+          400,
+          164
+        ],
+        "body": [
+          0,
+          48,
+          400,
+          164
+        ]
+      }
+    ],
+    "cause": "Native board slides upward from physical bottom of 1080px source; old search y1=984 cuts player row during native entrance animation, causing right edge guard failure at k33. Keep detector and full action; expand only this segment search to physical source bottom.",
+    "segment": 9,
+    "minimal_faithful_change": "segment scorebox [90,832,550,1080], native measured alpha rows remain authoritative",
+    "scanner_status": "pass all329frames incl0.18tail; no guard overrides"
+  },
+  "independent_actual_frame_review": {
+    "film": "output/2026-10-06/reel/noskova-alexandrova/noskova-alexandrova.mp4",
+    "film_sha256": "77b76c8856c2e387b15de709b3656f70768e82122d3c8b0b4ac9bc2b3cc45cde",
+    "scope": "independent actual finished-film frame and cut sampling before requested end trims",
+    "evidence": [
+      "/workspace/scratch/noskova-final-visual/grid0.jpg",
+      "/workspace/scratch/noskova-final-visual/grid1.jpg",
+      "/workspace/scratch/noskova-final-visual/grid2.jpg",
+      "/workspace/scratch/noskova-final-visual/board-entry.jpg",
+      "/workspace/scratch/noskova-final-visual/independent-cuts.jpg",
+      "/workspace/scratch/noskova-final-visual/breakpoint-source.jpg"
+    ],
+    "timeline_basis": "audio_review_binding.json.timeline offsets, lengths and cover1.2s",
+    "observations": {
+      "scoreboard": "ordinary two-row boards and break/set/match point tags visible; segment9 native slide completes after entry; sampled rows/edges readable; no full search rectangle court-background paste identified",
+      "key_actions": "first break,second break,set point and final ace include service actions/results/reactions in sampled source-aligned film windows",
+      "final_point": "film202.1 source272.88 preparation,film204.92 toss,205.2–206.5 serve/ace finish,then winner/coaches/handshake/result board",
+      "tail": "film228.48 enters branded outro; no WTA source outro at sampled end",
+      "cut_continuity": "sampled cuts show normal dissolves; no sampled unintended black frame",
+      "segment5_start": "source17–19.68 is receiver preparation; source19.72 wide view begins server action,so intervening card does not cut the serve stroke"
+    },
+    "status": "no blocking visual issue identified in sampled actual frames",
+    "limitations": [
+      "sample review is not exhaustive every-frame flicker or black-frame proof",
+      "deterministic check_reel_landed remains authoritative for full-film mechanical checks",
+      "no human audio listening claimed",
+      "trim changes create a new film requiring evidence binding to new hash"
+    ]
+  },
+  "proposed_tail_trim_visual_review": {
+    "source_sha256": "281ee2bbcc9b83672c53cdc8abd081914ee0381fa8ecafc8973d9219f255432a",
+    "evidence": "/workspace/scratch/noskova-final-visual/trim-ends.jpg",
+    "segment3": {
+      "proposed_end": 17.6,
+      "visual_safe": true,
+      "reason": "rally complete before14.8;15–17.6 retain Noskova turn/walk and reaction;next receiver preparation can be discarded",
+      "audio_limit": "quote end17.45 accepted from independent audio evidence, not listening by this reviewer"
+    },
+    "segment5": {
+      "proposed_end": 28.0,
+      "result_reaction_complete": true,
+      "reason": "rally complete before26.96;26.96–27.96 retain Alexandrova close-up raising arm/fist;28.00 starts next point preparation",
+      "fade_warning": "SEG_FADE0.18 reads to28.18 and can pull next preparation cut into dissolve",
+      "recommended_if_no_next_cut_ghost": 27.8,
+      "reason_for27_8": "tail reaches27.98 before28.00 source cut, while still retaining about0.84s reaction"
+    }
+  },
+  "final_cut_refinements": {
+    "method": "Independent actual source frame inspection by footage reviewer; no human audio listening claim",
+    "first_backhand_end": 17.6,
+    "first_breakpoint_end": 27.8,
+    "first_breakpoint_end_reason": "winner reaction26.96–27.96; .18 transition tail finishes27.98 before28.00 next preparation shot",
+    "first_break_sequence_start": 74.12,
+    "first_break_sequence_start_reason": "still bouncing/preparing; service begins74.4–75.6",
+    "fourth_breakpoint_start": 207.4,
+    "fourth_breakpoint_start_reason": "receiver preparation through209.0; wide service209.28 retained",
+    "key_action_integrity": "all changes before toss or after point reaction, no hit removed"
   }
 }

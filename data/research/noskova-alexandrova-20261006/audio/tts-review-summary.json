@@ -79,5 +79,18 @@
     "reason": "AZURE_SPEECH_KEY/REGION absent in authorized runner, no API assessment performed",
     "evidence": "tts-azure-assessment.json"
   },
-  "tone_review_status": "pending unresolved acoustic controls; no human listening claimed"
+  "tone_review_status": "pending unresolved acoustic controls; no human listening claimed",
+  "authoritative_final_actual_review": "data/research/noskova-alexandrova-20261006/audio/tts-final-utterance-review.json",
+  "actual_voice_review_completed": {
+    "renderer_run": 37438489355,
+    "status": "reviewed_with_proxy_limits",
+    "actual_control_comparisons": 57,
+    "correct_comparisons": 31,
+    "pending_missing_reference": 18,
+    "unreliable": 7,
+    "uncertain": 1,
+    "misread": 0,
+    "actual_words_and_audio_directly_checked": true,
+    "final_render_use": "Root must confirm final pipeline standard cache uses these reviewed exact MP3 bytes; no final-product claim here."
+  }
 }
