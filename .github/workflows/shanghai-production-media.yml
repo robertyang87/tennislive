@@ -1,0 +1,64 @@
+name: shanghai-production-media
+on:
+  push:
+    branches: ['codex/shanghai-masters-history-2026']
+    paths: ['.github/workflows/shanghai-production-media.yml']
+permissions:
+  contents: read
+jobs:
+  transfer-native-sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-transfer-unused-0-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2005-nalbandian-
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-transfer-unused-1-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2012-djokovic-youtube-
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-transfer-unused-2-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2014-federer-
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-transfer-unused-3-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2017-federer-
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-transfer-unused-4-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2024-sinner-
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-transfer-unused-5-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2025-vacherot-
+      - name: Verify cached originals and stage exact source bytes
+        run: |
+          mkdir -p /tmp/shanghai-sources
+          python - <<'PYTHON'
+          import hashlib,json,shutil
+          from pathlib import Path
+          sources = {'final2012': 'https://www.youtube.com/watch?v=1dfiSb6WvlA', 'cup2005': 'https://www.youtube.com/watch?v=l3spAGXS_Wc', 'mayer2014': 'https://www.youtube.com/watch?v=1IUIALrbq4w', 'fedal2017': 'https://www.youtube.com/watch?v=kFrSaccvYr8', 'sinner2024': 'https://www.youtube.com/watch?v=fQfvkym38MM', 'vacherot2025': 'https://www.youtube.com/watch?v=sTlHqhHIKis'}
+          rows=[]
+          for key,url in sources.items():
+              p=Path.home()/'.cache/tennislive-sources'/(hashlib.sha1(url.encode()).hexdigest()[:16]+'.mp4')
+              assert p.is_file() and p.stat().st_size>1_000_000, (key,str(p))
+              dest=Path('/tmp/shanghai-sources')/('source_'+key+'.mp4')
+              shutil.copyfile(p,dest)
+              rows.append(dict(source=key,url=url,sha256=hashlib.sha256(p.read_bytes()).hexdigest(),bytes=p.stat().st_size))
+          Path('/tmp/shanghai-sources/sources.json').write_text(json.dumps(rows,indent=2))
+          PYTHON
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-native-originals
+          path: /tmp/shanghai-sources/
+          compression-level: 0
+          retention-days: 7
