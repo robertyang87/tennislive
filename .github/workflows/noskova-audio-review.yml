@@ -1,0 +1,34 @@
+name: noskova-audio-review
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  read-only-audio-qc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            tools
+            specs
+            skills
+            data
+            pyproject.toml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - run: pip install -q -e '.[polyphone]' faster-whisper
+      - name: Measure final-spec full speech and competing pronunciations
+        run: python tools/review_noskova_audio.py --out audio-review
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: noskova-audio-review
+          path: audio-review/
+          retention-days: 7
