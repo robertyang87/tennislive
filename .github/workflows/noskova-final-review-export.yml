@@ -26,7 +26,7 @@ jobs:
         with:
           path: ~/.cache/tennislive-tts
           key: reel-tts-noskova-alexandrova-37435523117
-          fail-on-cache-miss: true
+          fail-on-cache-miss: false
       - name: Export only audio QC artifact, never production
         env:
           GH_TOKEN: ${{ github.token }}
