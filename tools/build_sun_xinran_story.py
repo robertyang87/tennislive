@@ -183,7 +183,7 @@ def join(parts, lengths, outdir, crf, preset):
             streams=probe(parts[i])['streams']
             native_audio=float(next(s for s in streams if s['codec_type']=='audio')['duration'])
             if 0<native_audio-lengths[i]<=.01:tail=native_audio-lengths[i]
-        graph.append(f'[{i}:a]atrim=duration={lengths[i]+tail:.9f},asetpts=PTS-STARTPTS[a{i}]')
+        graph.append(f'[{i}:a]apad,atrim=duration={lengths[i]+tail:.9f},asetpts=PTS-STARTPTS[a{i}]')
     v='v0';audio='a0';total=lengths[0]
     for i,length in enumerate(lengths[1:],1):
         nv=f'xv{i}';na=f'xa{i}'

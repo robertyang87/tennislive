@@ -188,11 +188,11 @@ def spoken_texts(slug: str):
     ⚠️ 两个面：段旁白在 `_SCRIPTS` 里，封面旁白在 `_OPENINGS[slug]["narration"]`——
     `mandatory-1000` 那处假词正是落在封面上的。`_CAPTIONS` 没人念，不在这儿。
     """
-    for beat in E._SCRIPTS.get(slug, ()):
+    for beat in (E._SCRIPTS.get(slug) or E._EXTERNAL_VIDEO_SCRIPTS.get(slug, ())):
         narration = beat[3] if len(beat) > 3 else ""
         if isinstance(narration, str) and narration:
             yield beat[0], narration
-    narration = (E._OPENINGS.get(slug) or {}).get("narration", "")
+    narration = (E.opening_metadata(slug) or {}).get("narration", "")
     if isinstance(narration, str) and narration:
         yield "__cover__", narration
 
@@ -213,7 +213,7 @@ class Deck:
 
     @property
     def opening(self) -> dict:
-        return E._OPENINGS.get(self.slug) or {}
+        return E.opening_metadata(self.slug) or {}
 
     @property
     def beats(self) -> list:

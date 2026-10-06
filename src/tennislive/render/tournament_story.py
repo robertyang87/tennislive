@@ -75,7 +75,7 @@ class TournamentStory:
 # （`research/visual_sources.py` 和几个工具在用）。但要知道**现在没有东西会拦你写长**。
 # 下面各处写「见上面那条 120 字的说明」指的就是这一段。
 
-STORIES = (
+_EXTERNAL_VIDEO_STORIES = (
     TournamentStory(
         slug="sun-xinran-coming-of-age-2026", aliases=("Xinran Sun", "孙心然"),
         title="孙心然的来时路", location="深圳 · 贝尔格莱德", level="成长故事",
@@ -86,6 +86,9 @@ STORIES = (
         source_url="https://www.wtatennis.com/news/4583293/who-is-sun-xinran-wta-tour-debut-beijing-get-to-know-junior-number-one",
         image_source_url="https://www.tim91.com/en/post/xinran-sun-1", source_label="WTA与赛事官方",
     ),
+)
+
+STORIES = (
     TournamentStory(
         slug="medvedev-beijing-default-2026",
         aliases=("djokovic medvedev beijing default",),
@@ -4806,7 +4809,7 @@ def _recently_used(slug: str, today: date, state: dict[str, str] | None = None) 
 def find_story_by_slug(slug: str) -> TournamentStory | None:
     """Look up a curated story by its exact slug, for ad-hoc/manual generation
     outside the normal editorial-relevance ranking."""
-    return next((story for story in STORIES if story.slug == slug), None)
+    return next((story for story in (*STORIES, *_EXTERNAL_VIDEO_STORIES) if story.slug == slug), None)
 
 
 def mark_story_used(slug: str, today: date) -> None:

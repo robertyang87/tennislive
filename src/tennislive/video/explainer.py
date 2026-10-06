@@ -10503,7 +10503,7 @@ _ARCHIVED_DECKS = frozenset({
 
 def explainer_column(slug: str) -> str:
     """The column a deck is published under."""
-    return (_OPENINGS.get(slug) or {}).get("column") or DEFAULT_COLUMN
+    return (opening_metadata(slug) or {}).get("column") or DEFAULT_COLUMN
 
 
 def column_of(slug: str) -> Column:
@@ -11561,14 +11561,22 @@ _OPENINGS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["opening"]
 # Registered editorial metadata for externally rendered, reviewed video-only film.
 _SUN_EPISODE = json.loads((Path(__file__).parent / "episodes/sun-xinran-coming-of-age-2026.json").read_text())
 _SUN_SLUG = _SUN_EPISODE["slug"]
-_SCRIPTS[_SUN_SLUG] = tuple((b["kind"], b["label"], b["title"], b["narration"], b["image"], b["credit"], tuple(b["points"])) for b in _SUN_EPISODE["beats"])
-_OPENINGS[_SUN_SLUG] = _SUN_EPISODE["opening"]
-_CAPTIONS[_SUN_SLUG] = _SUN_EPISODE["caption"]
-_CLAIMS[_SUN_SLUG] = _SUN_EPISODE["claims"]
+_EXTERNAL_VIDEO_SCRIPTS = {}
+_EXTERNAL_VIDEO_SCRIPTS[_SUN_SLUG] = tuple((b["kind"], b["label"], b["title"], b["narration"], b["image"], b["credit"], tuple(b["points"])) for b in _SUN_EPISODE["beats"])
+_EXTERNAL_VIDEO_OPENINGS = {_SUN_SLUG: _SUN_EPISODE["opening"]}
+_EXTERNAL_VIDEO_CAPTIONS = {_SUN_SLUG: _SUN_EPISODE["caption"]}
+_EXTERNAL_VIDEO_CLAIMS = {_SUN_SLUG: _SUN_EPISODE["claims"]}
 AUTO_PUSH_SLUGS = AUTO_PUSH_SLUGS | frozenset({_SUN_SLUG})
 
 _CAPTIONS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["caption"]
 _CLAIMS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["claims"]
+
+
+def opening_metadata(slug):
+    return _OPENINGS.get(slug) or _EXTERNAL_VIDEO_OPENINGS.get(slug) or {}
+
+def caption_metadata(slug):
+    return _CAPTIONS.get(slug) or _EXTERNAL_VIDEO_CAPTIONS.get(slug) or {}
 
 
 def _fixture_lines(spec: dict) -> tuple[str, ...]:
@@ -11603,7 +11611,7 @@ def _fixture_lines(spec: dict) -> tuple[str, ...]:
 
 def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
     """The cover card: the question, said out loud, before any explaining."""
-    spec = _OPENINGS.get(story.slug) or {}
+    spec = opening_metadata(story.slug) or {}
     question = spec.get("question") or f"{story.title}？"
     # spec 显式给了 diagram，就是封面故意不用照片——即便 beat①自己有真实照片
     # （比如那张照片够精准但分辨率撑不满整张封面卡，正文屏用它、封面另画一张）。
@@ -11683,13 +11691,16 @@ def explainer_script(story) -> list[ExplainerSegment]:
     and use the story's verified cover asset as the hero image so no beat is
     ever text-only.
     """
-    scripted = _SCRIPTS.get(story.slug)
+    scripted = _SCRIPTS.get(story.slug) or _EXTERNAL_VIDEO_SCRIPTS.get(story.slug)
     if scripted:
         beats = [ExplainerSegment(*row) for row in scripted]
         if story.slug == _DEFAULT_SLUG:
             beats = [dataclasses.replace(segment, visual=spec.get("visual"))
                      for segment, spec in zip(beats, _DEFAULT_EPISODE["beats"])]
-        beats[-1] = _ask_it_out_loud(beats[-1])
+        if story.slug in _EXTERNAL_VIDEO_SCRIPTS:
+            beats = [dataclasses.replace(segment, visual={"production_route": "external_reviewed_video_only", "native_card_render_authorized": False}) for segment in beats]
+        else:
+            beats[-1] = _ask_it_out_loud(beats[-1])
         return [_opening_segment(story, beats), *beats]
 
     moments = list(getattr(story, "moments", ()) or ())
@@ -12300,6 +12311,9 @@ def render_explainer_slides(
     height: int = H,
 ) -> list[Path]:
     """Render one image-first 3:4 card per beat via a headless Chromium page."""
+    if any(segment.visual and segment.visual.get("production_route") == "external_reviewed_video_only"
+           and segment.visual.get("native_card_render_authorized") is False for segment in segments):
+        raise ValueError("外部视频正文禁止渲染字卡；请使用已审视频拼接流程，封面可单独渲染。")
     from playwright.sync_api import sync_playwright
 
     outdir.mkdir(parents=True, exist_ok=True)
@@ -14233,7 +14247,7 @@ def canvas_height(slug: str) -> int:
     CLAUDE.md 记过这个形状（「判据喂的是假产物」「一条恒真的绿灯」）。
     现在只有这一个出处，测试和 `generate_explainer_video` 问的是同一句话。
     """
-    canvas = (_OPENINGS.get(slug) or {}).get("canvas")
+    canvas = (opening_metadata(slug) or {}).get("canvas")
     if canvas not in (None, "3:4", "9:16"):
         raise ExplainerVideoError(f"认不出来的 canvas「{canvas}」，只认 3:4 / 9:16")
     return VIDEO_H if canvas == "9:16" else CARD_H
@@ -14255,7 +14269,7 @@ def generate_explainer_video(
     # 冷开场实拍片段是可选的：`_OPENINGS[slug]["intro"]` 给一个仓库相对路径，
     # 就在片头前接一段真视频（比如上一轮的制胜分+庆祝）。绝大多数「开球之前」
     # 仍是纯幻灯片，这里不写就是 None，行为和以前完全一样。
-    opening = _OPENINGS.get(story.slug) or {}
+    opening = opening_metadata(story.slug) or {}
     intro_rel = opening.get("intro")
     intro_url = opening.get("intro_url")
     if intro_rel and intro_url:
@@ -14284,7 +14298,7 @@ def generate_explainer_video(
             raise ExplainerVideoError(f"片头区间不合法：start={start}, end={end}")
     slides = render_explainer_slides(
         segments, outdir, theme=theme,
-        topic=(_OPENINGS.get(story.slug) or {}).get("topic", ""),
+        topic=(opening_metadata(story.slug) or {}).get("topic", ""),
         column=explainer_column(story.slug),
         height=canvas_h if opening.get("full_bleed") else H,
     )
@@ -14333,7 +14347,7 @@ def generate_explainer_video(
         if intro is not None:
             try:
                 intro_badge = _render_intro_badge(
-                    (_OPENINGS.get(story.slug) or {}).get("topic", ""),
+                    (opening_metadata(story.slug) or {}).get("topic", ""),
                     explainer_column(story.slug),
                     outdir,
                 )
@@ -14378,7 +14392,7 @@ def generate_explainer_video(
         # `intro_cx` 同理显式认领：默认 0.5（几何居中，老行为不变），写了才换。
         # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
         # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
-        intro_cx = (_OPENINGS.get(story.slug) or {}).get("intro_cx", 0.5)
+        intro_cx = (opening_metadata(story.slug) or {}).get("intro_cx", 0.5)
         insert_specs = opening.get("inserts") or []
         if insert_specs:
             from .source_story_cards import prepare_source_inserts
@@ -14524,7 +14538,7 @@ def explainer_push_html(
         copy_url = f"{_PAGES_URL}/{rel}/copy.html"
     # The raw MP4 opens on its cold-open match frame. A selected cover must
     # also be the player's poster, using the identical rendered slide asset.
-    if (_OPENINGS.get(outdir.name) or {}).get("playback_cover"):
+    if (opening_metadata(outdir.name) or {}).get("playback_cover"):
         from ..render.video_page import video_page
 
         # Pages publishes HTML only. The cover image belongs on the image
@@ -14585,7 +14599,7 @@ def explainer_xiaohongshu(
         bullets = "\n".join(f"· {point}" for point in segment.points)
         sections.append(f"{marker} {segment.label}：{segment.title}\n{bullets}")
 
-    caption = _CAPTIONS.get(story.slug) or {}
+    caption = caption_metadata(story.slug) or {}
     hook = caption.get("hook") or ""
     # Registered external video episodes have no numbered on-screen cards.
     # Their reviewed caption body replaces the card-point transcription.

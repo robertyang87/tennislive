@@ -30,7 +30,7 @@ def sha(data: bytes) -> str:
 def synth(text: str, target: Path, *, voice: str, rate: str, pitch: str) -> dict:
     spoken = speakable(text)
     backend = "azure" if azure_tts.available() else "edge"
-    marks = tts_one(spoken, target, voice, rate, pitch)
+    marks = tts_one(speakable(text), target, voice, rate, pitch)
     if not marks:
         raise RuntimeError(f"No word boundaries for {target.name}")
     words = target.with_suffix(".words.json")
