@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "0f02566c625c7d2f7e2bd010ffd334334c76be24bc7f47d790c646ae6d92f5bf",
+  "scoreboard_qc_sha256": "5c5c2fdce59caa48c0bfb2f356d07f40cd8d8a7d43a00e89c8f0b942803666a2",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
@@ -102,46 +102,46 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "fd68267c3b680c7b8444c58bfe6c28fe8d7e867b8a543f7b96d298e7707b5037",
+  "render_inputs_sha256": "7c073be810b2adf27342fd5d7b8556e8d93c97e769c240ccf7d4f05a7a6275ff",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "noskova-alexandrova",
-    "received_at": "2026-10-06T09:27:52Z",
-    "artifact_ready_at": "2026-10-06T09:33:42Z",
-    "elapsed_seconds": 350.441,
+    "received_at": "2026-10-06T09:39:17Z",
+    "artifact_ready_at": "2026-10-06T09:46:31Z",
+    "elapsed_seconds": 434.424,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "249fdab2e2bc210c3a477afb9bee59a0989ad53ce8aa04aa9ad904a73c445342",
+    "film_sha256": "d0ccab664e6c9bdc4830c0b4c9bd9f773e133d57799541ad95f353e59981d362",
     "spec_sha256": "d0e632a51e279904f6f35d0a61b16563db034bf2c4320e70e7bc44bdaf77430d",
     "request_received_at": "2026-10-06T06:35:18Z",
-    "request_to_artifact_seconds": 10704.441,
-    "run_id": "37443113335",
+    "request_to_artifact_seconds": 11473.424,
+    "run_id": "37444439748",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-06T09:30:42Z",
-        "run_id": "37443113335"
+        "at": "2026-10-06T09:42:01Z",
+        "run_id": "37444439748"
       }
     ],
-    "render_seconds": 180.441,
-    "pre_render_seconds": 170.0
+    "render_seconds": 270.424,
+    "pre_render_seconds": 164.0
   },
-  "film_sha256": "249fdab2e2bc210c3a477afb9bee59a0989ad53ce8aa04aa9ad904a73c445342",
-  "film_bytes": 77048418,
-  "qc_attestation_sha256": "edf4862260e94a2d7ca199f152acfbeef37e450f3904890c8e2714a72bc536c3",
+  "film_sha256": "d0ccab664e6c9bdc4830c0b4c9bd9f773e133d57799541ad95f353e59981d362",
+  "film_bytes": 77049345,
+  "qc_attestation_sha256": "6cf795bc6d819c6f29f3b6a487c3f2fa58343a9fccfa38087a6618ad2975c3c8",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-06T09:30:42Z",
-      "run_id": "37443113335"
+      "at": "2026-10-06T09:42:01Z",
+      "run_id": "37444439748"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-06T09:33:43Z",
-      "run_id": "37443113335"
+      "at": "2026-10-06T09:46:33Z",
+      "run_id": "37444439748"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-noskova-alexandrova/noskova-alexandrova.mp4",
-  "video_bytes": 77048418
+  "video_bytes": 77049345
 }
