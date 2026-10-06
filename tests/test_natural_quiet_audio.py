@@ -140,3 +140,39 @@ def test_real_aac_fade_near_segment_start_matches_but_crossing_fails(encoded):
     # [0,1) crosses the leading segment boundary; [3,4) crosses its end.
     # Neither may borrow another segment's audio even with a broad window.
     assert Q.verified_seconds(spec, film, [0,3]) == []
+
+
+def test_real_aac_exact_boundary_float_cancellation(encoded):
+    spec, film = encoded
+    source = film.parent / 'source_main.mp4'
+    # The regression concerns source/time mapping, not an adelay filter.
+    # Decode the actual source independently, retain .4–3.4 seconds at the
+    # renderer's gain, prepend one second, then encode real AAC. This avoids
+    # the filter-construction subprocess that stalled on CI, without mocking
+    # source identity, the codec, waveform/gain checks or boundary rejection.
+    decoded_source = subprocess.run(
+        ['ffmpeg', '-nostdin', '-v', 'error', '-i', str(source), '-vn',
+         '-ac', '1', '-ar', '8000', '-f', 'f32le', '-'],
+        check=True, capture_output=True, stdin=subprocess.DEVNULL, timeout=30)
+    original = np.frombuffer(decoded_source.stdout, dtype='<f4')
+    assert len(original) >= 27200
+    retained = original[3200:27200] * .972
+    raw = film.parent / 'mapped.f32'
+    raw.write_bytes(np.concatenate((np.zeros(8000), retained)).astype('<f4').tobytes())
+    subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-y',
+                    '-f', 'f32le', '-ar', '8000', '-ac', '1', '-i', str(raw),
+                    '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', str(film)],
+                   check=True, capture_output=True, stdin=subprocess.DEVNULL, timeout=30)
+    decoded = Q.pcm(film)
+    assert 4 * Q.RATE <= len(decoded) <= 4 * Q.RATE + 256
+    assert np.max(np.abs(decoded[:Q.RATE - 640])) == 0
+    seg = spec['segments'][0]
+    seg['start'], seg['end'] = .4, 3.4
+    seg['_digital_silence_windows'] = [[.4, 3.4]]
+    binding = json.loads((film.parent / 'audio_review_binding.json').read_text())
+    binding['plan_sha256'] = plan_hash(spec)
+    binding['timeline']['offsets'] = [1.0]
+    (film.parent / 'audio_review_binding.json').write_text(json.dumps(binding))
+    assert .4 + 1 - 1 < .4  # Actual cancellation that used to reject this cut.
+    assert Q.verified_seconds(spec, film, [1]) == [1]
+    assert Q.verified_seconds(spec, film, [0, 4]) == []

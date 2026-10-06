@@ -1,0 +1,433 @@
+{
+  "checked_at": "2026-10-06T07:50:46.350385+00:00",
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS012",
+    "flashscore_id": "Iyj6tGoA",
+    "date": "2026-10-06",
+    "participants": [
+      "诺斯科娃",
+      "亚历山德罗娃"
+    ],
+    "set_scores_home_away": [
+      [
+        2,
+        6
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "winner": "亚历山德罗娃",
+    "loser": "诺斯科娃",
+    "winner_result": "6-2 6-2",
+    "loser_result": "2-6 2-6",
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "round": "1/8决赛",
+    "court": "Centre Court",
+    "official_duration": "01:06:49",
+    "_match_day_why": "Owner explicitly supplied YouTube YlKbwpraDHY for this match."
+  },
+  "stats": {
+    "a": {
+      "aces": 1,
+      "df": 2,
+      "first_in": 31,
+      "first_total": 52,
+      "first_won": 17,
+      "second_total": 21,
+      "second_won": 10,
+      "bp_conv": 0,
+      "bp_chances": 4,
+      "pts_won": 42,
+      "pts_total": 104,
+      "headshot": "assets/players/headshots/wta-329668.jpg",
+      "winners": 8,
+      "ue": 23
+    },
+    "b": {
+      "aces": 6,
+      "df": 6,
+      "first_in": 25,
+      "first_total": 52,
+      "first_won": 22,
+      "second_total": 27,
+      "second_won": 15,
+      "bp_conv": 4,
+      "bp_chances": 5,
+      "pts_won": 62,
+      "pts_total": 104,
+      "headshot": "assets/players/headshots/wta-319007.jpg",
+      "winners": 32,
+      "ue": 21
+    },
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://tnnslive.com/match/75051586",
+      "source_path": "data/research/noskova-alexandrova-20261006/tnns_match_stats.raw",
+      "source_sha256": "18377f392918b0b0a49e55c05f99c7880f5c0acdf6db8b2ea6060f4596e73138",
+      "period": "Match",
+      "checked_at": "2026-10-06T07:54:39.532366+00:00",
+      "match_date": "2026-10-06",
+      "winner_result": "6-2 6-2",
+      "matchup": [
+        "Linda Noskova",
+        "Ekaterina Alexandrova"
+      ],
+      "winners": [
+        8,
+        32
+      ],
+      "ue": [
+        23,
+        21
+      ],
+      "match_id": "75051586",
+      "validation": "tnns_stats.validate_totals completed without error; Match rows6+2=8,13+19=32; UE16+7=23,12+9=21; TNNS core match stats agree official WTA, including17/31 Noskova first-serve points won."
+    },
+    "_winners_ue_check": {
+      "sources": {
+        "official_stats": {
+          "status": "fields_absent",
+          "source_path": "data/research/noskova-alexandrova-20261006/wta_stats.raw",
+          "actual_keys": [
+            "eventyear",
+            "eventid",
+            "matchid",
+            "setnum",
+            "settime",
+            "scorea",
+            "scoreb",
+            "scoretb",
+            "acesa",
+            "acesb",
+            "dblflta",
+            "dblfltb",
+            "ptswon1stserva",
+            "ptswon1stservb",
+            "ptsplayed1stserva",
+            "ptsplayed1stservb",
+            "ptstotwonserva",
+            "ptstotwonservb",
+            "totservplayeda",
+            "totservplayedb",
+            "breakptsconva",
+            "breakptsconvb",
+            "breakptsplayeda",
+            "breakptsplayedb",
+            "servgamesplayeda",
+            "servgamesplayedb",
+            "pts1stservlosta",
+            "pts1stservlostb",
+            "totptswona",
+            "totptswonb",
+            "acesssa",
+            "acesssb"
+          ]
+        },
+        "editorial": {
+          "status": "absent_for_this_match",
+          "source_path": "data/research/noskova-alexandrova-20261006/wta_editorial.raw",
+          "source_url": "https://www.wtatennis.com/news/4587205/andreeva-seeks-first-win-over-alexandrova-in-beijing-quarterfinal",
+          "note": "18W/15UE and17W/32UE refer Andreeva/Snigur; not this match."
+        },
+        "mcp": {
+          "status": "exact_match_not_indexed",
+          "source_path": "data/research/noskova-alexandrova-20261006/mcp_index.raw",
+          "source_url": "https://www.tennisabstract.com/charting/",
+          "query": "20261006 + Noskova + Alexandrova",
+          "hits": 0
+        },
+        "tnns": {
+          "status": "verified_extended_stats",
+          "run_id": 37432093858,
+          "source_url": "https://github.com/robertyang87/tennislive/actions/runs/37432093858",
+          "http_result": "480 matches in 193357-byte day schedule; both full surnames requested, no matching match",
+          "source_path": "data/research/noskova-alexandrova-20261006/tnns_match_stats.raw",
+          "source_sha256": "55473769da81e810b6789b117f6f7f03a1a0b5db7fd9e6ac46802643119d769e",
+          "workflow_conclusion": "failure",
+          "note": "Not a Cloudflare block; source day schedule returned successfully. This does not prove no W/UE exists elsewhere.",
+          "match_id": "75051586",
+          "winners": [
+            8,
+            32
+          ],
+          "ue": [
+            23,
+            21
+          ],
+          "deep_followup": "Local browser homepage and explicit10/6 response449matches uniquely contain exact same source YouTube;10/5 has177matches and only doubles. Earlier runner480match failure superseded by raw browser evidence."
+        },
+        "broadcast": {
+          "status": "delegated_source_video_review_pending",
+          "source_url": "https://www.youtube.com/watch?v=YlKbwpraDHY",
+          "note": "Facts agent did not view full video; cannot claim broadcast W/UE search completed."
+        }
+      }
+    }
+  },
+  "official_set_stats": [
+    {
+      "eventyear": 2026,
+      "eventid": "1020",
+      "matchid": "LS012",
+      "setnum": 0,
+      "settime": "",
+      "scorea": "",
+      "scoreb": "",
+      "scoretb": "",
+      "acesa": 1,
+      "acesb": 6,
+      "dblflta": 2,
+      "dblfltb": 6,
+      "ptswon1stserva": 17,
+      "ptswon1stservb": 22,
+      "ptsplayed1stserva": 31,
+      "ptsplayed1stservb": 25,
+      "ptstotwonserva": 27,
+      "ptstotwonservb": 37,
+      "totservplayeda": 52,
+      "totservplayedb": 52,
+      "breakptsconva": 0,
+      "breakptsconvb": 4,
+      "breakptsplayeda": 4,
+      "breakptsplayedb": 5,
+      "servgamesplayeda": 8,
+      "servgamesplayedb": 8,
+      "pts1stservlosta": 14,
+      "pts1stservlostb": 3,
+      "totptswona": 42,
+      "totptswonb": 62,
+      "acesssa": 0,
+      "acesssb": 0
+    },
+    {
+      "eventyear": 2026,
+      "eventid": "1020",
+      "matchid": "LS012",
+      "setnum": 1,
+      "settime": "00:35:43",
+      "scorea": "2",
+      "scoreb": "6",
+      "scoretb": "0",
+      "acesa": 1,
+      "acesb": 3,
+      "dblflta": 2,
+      "dblfltb": 2,
+      "ptswon1stserva": 10,
+      "ptswon1stservb": 14,
+      "ptsplayed1stserva": 17,
+      "ptsplayed1stservb": 17,
+      "ptstotwonserva": 16,
+      "ptstotwonservb": 20,
+      "totservplayeda": 30,
+      "totservplayedb": 30,
+      "breakptsconva": 0,
+      "breakptsconvb": 2,
+      "breakptsplayeda": 3,
+      "breakptsplayedb": 3,
+      "servgamesplayeda": 4,
+      "servgamesplayedb": 4,
+      "pts1stservlosta": 7,
+      "pts1stservlostb": 3,
+      "totptswona": 26,
+      "totptswonb": 34,
+      "acesssa": 0,
+      "acesssb": 0
+    },
+    {
+      "eventyear": 2026,
+      "eventid": "1020",
+      "matchid": "LS012",
+      "setnum": 2,
+      "settime": "00:31:05",
+      "scorea": "2",
+      "scoreb": "6",
+      "scoretb": "0",
+      "acesa": 0,
+      "acesb": 3,
+      "dblflta": 0,
+      "dblfltb": 4,
+      "ptswon1stserva": 7,
+      "ptswon1stservb": 8,
+      "ptsplayed1stserva": 14,
+      "ptsplayed1stservb": 8,
+      "ptstotwonserva": 11,
+      "ptstotwonservb": 17,
+      "totservplayeda": 22,
+      "totservplayedb": 22,
+      "breakptsconva": 0,
+      "breakptsconvb": 2,
+      "breakptsplayeda": 1,
+      "breakptsplayedb": 2,
+      "servgamesplayeda": 4,
+      "servgamesplayedb": 4,
+      "pts1stservlosta": 7,
+      "pts1stservlostb": 0,
+      "totptswona": 16,
+      "totptswonb": 28,
+      "acesssa": 0,
+      "acesssb": 0
+    }
+  ],
+  "_facts": {
+    "result_round_date": {
+      "claim": "2026-10-06 北京WTA1000 1/8决赛 亚历山德罗娃6-2 6-2诺斯科娃",
+      "sources": [
+        "https://www.wtatennis.com/tournament/1020/beijing/2026/scores/LS012",
+        "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?page=0&pageSize=400"
+      ]
+    },
+    "wimbledon_champion": {
+      "claim": "诺斯科娃2026温网女单冠军；决赛6-2 5-7 6-3穆霍娃；21岁",
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/904/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/players/329668/headtohead/319007",
+        "https://www.wtatennis.com/news/4587205/andreeva-seeks-first-win-over-alexandrova-in-beijing-quarterfinal"
+      ]
+    },
+    "beijing_previous_rounds": {
+      "claim": "诺斯科娃首轮轮空，10月2日6-4 6-1鲁塞，10月4日6-2 6-1戈卢比奇；亚历首轮轮空，10月2日6-1 6-4萨斯诺维奇，10月4日3-6 6-4 6-3施耐德",
+      "source": "wta_matches.raw"
+    },
+    "five_straight_wins": {
+      "claim": "诺斯科娃赛前单打五连胜：金杯布尔特、布克沙、斯维托丽娜，再北京鲁塞、戈卢比奇；本场终结",
+      "source": "flashscore_h2h.raw",
+      "note": "Current WTA player/matches endpoint returned doubles-only records; do not mislabel its response as singles corroboration."
+    },
+    "recent_titles": {
+      "claim": "诺斯科娃2026单打柏林及温网冠军；2026双打柏林搭档亚历山德罗娃、辛辛那提搭档布兹科娃",
+      "source": "wta_h2h.raw bio.CareerHighlights",
+      "use": "single-sentence background only; do not imply any psychology"
+    },
+    "next_opponent": {
+      "claim": "亚历山德罗娃1/4决赛对米拉·安德烈耶娃，赛前对安德烈耶娃单打2-0",
+      "source": "https://www.wtatennis.com/news/4587205/andreeva-seeks-first-win-over-alexandrova-in-beijing-quarterfinal"
+    },
+    "alexandrova_milestones": {
+      "claim": "31岁首次晋级中网8强，为中网历史最年长首次8强选手；生涯第7次WTA1000八强、本季第2次；生涯第22胜Top10、本季第3次",
+      "source": "https://www.wtatennis.com/news/4587205/andreeva-seeks-first-win-over-alexandrova-in-beijing-quarterfinal",
+      "method": "quoted official editorial; no independent record-table enumeration"
+    },
+    "h2h": {
+      "claim": "赛前单打1-1；本场后诺斯科娃1-2，硬地0-2；官方列表奥运条目是双打须排除",
+      "source": "wta_h2h.raw / matchEncounterResults filtered s_d_flag=S"
+    },
+    "set_progression": {
+      "claim": "首盘第二局诺错过3个机会；第三和第七局失守。次盘第二局再错过1个机会；2-2后连丢4局；末局40-0三个赛点，亚第一个兑现",
+      "source": "flashscore_points.json"
+    },
+    "match_point": {
+      "claim": "官方WTA贴文Aces it out，需源片逐帧/听审确认ACE动作",
+      "source": "https://www.wtatennis.com/news/4587205/andreeva-seeks-first-win-over-alexandrova-in-beijing-quarterfinal",
+      "status": "official_editorial_ace_claim_visual_confirmation_required"
+    },
+    "recent_team_title": {
+      "claim": "此前已发spec记录金杯决赛诺斯科娃胜斯维托丽娜、捷克夺冠；此次官网HTTP403，当前独立核实仅Flashscore胜负结果，勿声称本轮重新读到官网",
+      "source": "https://www.billiejeankingcup.com/en/news/live-ukr-v-cze-2026-billie-jean-king-cup-final",
+      "status": "official_page_http403; archive_spec_plus_Flashscore_result_available"
+    },
+    "winners_ue": {
+      "claim": "诺斯科娃8制胜分23非受迫失误；亚历山德罗娃32制胜分21非受迫失误；次盘2比19制胜分",
+      "source": "https://tnnslive.com/match/75051586",
+      "scope": "TNNS extended stats, not official WTA API",
+      "set_totals_verified": true
+    }
+  },
+  "corrections": [
+    "No first-serve-all-in claim: Alexandrova set2 first-serve points won 8/8; first-in 8/22.",
+    "Noskova first-set break opportunities 3, second-set 1, match4.",
+    "Noskova official match first serve points won17/31 vs Flashscore18/31; use official17.",
+    "Round is R16; not quarterfinal.",
+    "Official time66:49 differs Flashscore68m; official editorial says1hour6minutes."
+  ],
+  "winners_ue_search": {
+    "status": "verified_tnns_extended_match_statistics",
+    "fields": [
+      "winners",
+      "ue"
+    ],
+    "official_stats": {
+      "status": "fields_absent",
+      "source_path": "data/research/noskova-alexandrova-20261006/wta_stats.raw",
+      "actual_keys": [
+        "eventyear",
+        "eventid",
+        "matchid",
+        "setnum",
+        "settime",
+        "scorea",
+        "scoreb",
+        "scoretb",
+        "acesa",
+        "acesb",
+        "dblflta",
+        "dblfltb",
+        "ptswon1stserva",
+        "ptswon1stservb",
+        "ptsplayed1stserva",
+        "ptsplayed1stservb",
+        "ptstotwonserva",
+        "ptstotwonservb",
+        "totservplayeda",
+        "totservplayedb",
+        "breakptsconva",
+        "breakptsconvb",
+        "breakptsplayeda",
+        "breakptsplayedb",
+        "servgamesplayeda",
+        "servgamesplayedb",
+        "pts1stservlosta",
+        "pts1stservlostb",
+        "totptswona",
+        "totptswonb",
+        "acesssa",
+        "acesssb"
+      ]
+    },
+    "editorial": {
+      "status": "absent_for_this_match",
+      "source_path": "data/research/noskova-alexandrova-20261006/wta_editorial.raw",
+      "source_url": "https://www.wtatennis.com/news/4587205/andreeva-seeks-first-win-over-alexandrova-in-beijing-quarterfinal",
+      "note": "18W/15UE and17W/32UE refer Andreeva/Snigur; not this match."
+    },
+    "mcp": {
+      "status": "exact_match_not_indexed",
+      "source_path": "data/research/noskova-alexandrova-20261006/mcp_index.raw",
+      "source_url": "https://www.tennisabstract.com/charting/",
+      "query": "20261006 + Noskova + Alexandrova",
+      "hits": 0
+    },
+    "tnns": {
+      "status": "verified_extended_stats",
+      "run_id": 37432093858,
+      "source_url": "https://github.com/robertyang87/tennislive/actions/runs/37432093858",
+      "http_result": "480 matches in 193357-byte day schedule; both full surnames requested, no matching match",
+      "source_path": "data/research/noskova-alexandrova-20261006/tnns_match_stats.raw",
+      "source_sha256": "55473769da81e810b6789b117f6f7f03a1a0b5db7fd9e6ac46802643119d769e",
+      "workflow_conclusion": "failure",
+      "note": "Not a Cloudflare block; source day schedule returned successfully. This does not prove no W/UE exists elsewhere.",
+      "match_id": "75051586",
+      "winners": [
+        8,
+        32
+      ],
+      "ue": [
+        23,
+        21
+      ],
+      "deep_followup": "Local browser homepage and explicit10/6 response449matches uniquely contain exact same source YouTube;10/5 has177matches and only doubles. Earlier runner480match failure superseded by raw browser evidence."
+    },
+    "broadcast": {
+      "status": "delegated_source_video_review_pending",
+      "source_url": "https://www.youtube.com/watch?v=YlKbwpraDHY",
+      "note": "Facts agent did not view full video; cannot claim broadcast W/UE search completed."
+    }
+  }
+}

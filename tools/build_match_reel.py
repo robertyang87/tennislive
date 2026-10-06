@@ -8251,6 +8251,7 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   重推（O4）；换过的 slug 由 `auto_upgraded_frame_covers()` 从这张表里减掉，
 #:   不用回来删行。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
+    "noskova-alexandrova",  # 2026-09-26常设授权；2026-10-06四类源与本场正脸证据见spec/_frame_why。
     "yastremska-chwalinska",  # 2026-09-26常设授权；本场官方图检索与36.8秒正面帧证据见spec。
     "safiullin-bu-hangzhou-2026-qf",  # Standing authorization; source-frame evidence in spec.
     "wu-duckworth-us-open-2026-r2",

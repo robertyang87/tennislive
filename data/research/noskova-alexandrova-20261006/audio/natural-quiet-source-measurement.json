@@ -1,0 +1,68 @@
+{
+  "method": "Actual source PCM8k mono RMS 1s sliding0.1s; windows allow only source-matched final natural_quiet_audio validation, no blanket silence exemption",
+  "source_sha256": "281ee2bbcc9b83672c53cdc8abd081914ee0381fa8ecafc8973d9219f255432a",
+  "windows": [
+    {
+      "segment": 3,
+      "source_windows": [
+        [
+          0.09,
+          4.41
+        ]
+      ]
+    },
+    {
+      "segment": 5,
+      "source_windows": [
+        [
+          19.72,
+          21.13
+        ]
+      ]
+    },
+    {
+      "segment": 8,
+      "source_windows": [
+        [
+          74.12,
+          77.53
+        ],
+        [
+          86.81,
+          89.43
+        ]
+      ]
+    },
+    {
+      "segment": 10,
+      "source_windows": [
+        [
+          174.84,
+          178.45
+        ]
+      ]
+    },
+    {
+      "segment": 12,
+      "source_windows": [
+        [
+          207.4,
+          209.8
+        ]
+      ]
+    },
+    {
+      "segment": 16,
+      "source_windows": [
+        [
+          273.0,
+          275.8
+        ]
+      ]
+    }
+  ],
+  "original_analysis_source_sha256": "6d3a37557d2195d0ac284187e8cf73679b4fc5d183c8c1002ccd678c52406802",
+  "renderer_8k_pcm_equivalent": true,
+  "equivalence_path": "data/research/noskova-alexandrova-20261006/audio/foreground-source-pcm-equivalence.json",
+  "final_verification_required": true
+}

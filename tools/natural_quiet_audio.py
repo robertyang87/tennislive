@@ -84,7 +84,9 @@ def verified_seconds(spec: dict, film: Path, candidates: list[int]) -> list[int]
             key = seg.get('source', spec.get('primary', ''))
             relevant = []
             for second in candidates:
-                start = float(seg['start']) + second - float(offsets[index])
+                # Timeline subtraction can put an exact boundary one float ULP outside
+                # its reviewed interval; normalize far below a single PCM sample.
+                start = round(float(seg['start']) + second - float(offsets[index]), 9)
                 end = start + 1
                 if (float(seg['start']) <= start and end <= float(seg['end'])
                         and any(float(a) <= start and end <= float(b) for a, b in windows)):
