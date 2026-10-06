@@ -1,0 +1,59 @@
+name: Recover Sun review master
+on:
+  push:
+    branches: [production/sun-xinran-coming-of-age-2026]
+    paths: [.github/workflows/recover-sun-review-master.yml]
+permissions:
+  contents: read
+concurrency:
+  group: recover-sun-review-master
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download only the existing pinned private review film
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SUN_WORKDIR: ${{ runner.temp }}/sun-review-master
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib,urllib.request
+          base='https://api.github.com/repos/robertyang87/tennislive'
+          expected='509cca3263c96588d7726604e5b44b067d803a83867018fcc31dd85558a4bdd4'
+          size=58737253
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}
+          def get(path):
+              with urllib.request.urlopen(urllib.request.Request(base+path,headers=headers),timeout=60) as response:
+                  return json.load(response)
+          def check():
+              release=get('/releases/404202921')
+              assert release['draft'] is True and release['tag_name']=='explainer-sun-xinran-coming-of-age-2026'
+              assets=[a for a in release['assets'] if a['id']==614048923 and a['name']=='sun-xinran-coming-of-age-2026.mp4']
+              assert len(assets)==1 and assets[0]['size']==size and assets[0]['digest']=='sha256:'+expected
+              return release,assets[0]
+          release,asset=check()
+          out=pathlib.Path(os.environ['SUN_WORKDIR']);out.mkdir(parents=True,exist_ok=True)
+          movie=out/asset['name'];digest=hashlib.sha256();count=0
+          binary_headers={**headers,'Accept':'application/octet-stream'}
+          with urllib.request.urlopen(urllib.request.Request(base+'/releases/assets/614048923',headers=binary_headers),timeout=120) as response,movie.open('wb') as dest:
+              while True:
+                  block=response.read(1024*1024)
+                  if not block:break
+                  digest.update(block);count+=len(block);dest.write(block)
+          assert count==size and digest.hexdigest()==expected
+          check()
+          (out/'recovery.json').write_text(json.dumps({'status':'RECOVERED_EXACT_REVIEW_MASTER','sha256':expected,'bytes':size,'release_id':404202921,'asset_id':614048923,'draft':True,'published':False,'wechat_sent':False,'audio_review_pass':None},indent=2)+'\n')
+          PY
+      - name: Retain exact movie for independent review
+        uses: actions/upload-artifact@v4
+        with:
+          name: sun-review-master-${{ github.run_id }}
+          path: ${{ runner.temp }}/sun-review-master/
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 14
