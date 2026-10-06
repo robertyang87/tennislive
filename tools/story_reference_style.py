@@ -52,10 +52,13 @@ def render_header(topic,out):
     return screenshot(doc,Path(out),height=200,transparent=True)
 
 def write_subtitles(cues,out):
-    return E.write_subtitles(cues,Path(out),**SUBTITLE_KWARGS)
+    path=E.write_subtitles(cues,Path(out),**SUBTITLE_KWARGS)
+    # Historic family names remain in the repository's instantiated Noto TTF.
+    path.write_text(path.read_text().replace('Noto Sans CJK SC','Noto Sans SC Thin'))
+    return path
 
 def reference_record():
-    return {'slug':REFERENCE_SLUG,'film_sha256':REFERENCE_SHA256,'poster_sha256':REFERENCE_POSTER_SHA256,'layout_source':'actual approved film and poster plus episode subtitles.ass','original_project_recovered':False,'subtitle_options':SUBTITLE_KWARGS}
+    return {'slug':REFERENCE_SLUG,'film_sha256':REFERENCE_SHA256,'poster_sha256':REFERENCE_POSTER_SHA256,'layout_source':'actual approved film and poster plus episode subtitles.ass','original_project_recovered':False,'subtitle_options':{**SUBTITLE_KWARGS,'font_family':'Noto Sans SC Thin','font_file':'assets/fonts/NotoSansSC-Bold-sub.ttf'}}
 
 def stage_html(stage,detail,*,note=''):
     # The approved film's upper-right transparent information hierarchy.
@@ -82,3 +85,16 @@ def render_photo_stage(image,topic,stage,detail,out,*,note='',photo_context=''):
 .context{position:absolute;bottom:48px;left:70px;right:70px;font-size:27px;text-shadow:0 2px 3px #07130f,0 0 6px #07130f;color:#f7fbf4}
 </style></head><body><img class="photo" src="'''+E._data_uri(image)+'">'+header_html(topic)+stage_html(stage,detail,note=note)+('<div class="context">'+html.escape(photo_context)+'</div>' if photo_context else '')+'</body></html>'
     return screenshot(doc,Path(out))
+
+
+def font_manifest():
+    import subprocess,hashlib
+    root=E._REPO/'assets/fonts'
+    result={}
+    for name in ['NotoSansSC-Bold-sub.ttf','NotoSansSC-Regular-sub.ttf','SmileySans-Oblique.ttf','Inter-SemiBold.ttf']:
+        path=root/name
+        families=subprocess.check_output(['fc-scan','--format','%{family}\n%{style}\n',str(path)],text=True).strip()
+        result[name]={'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'fontconfig_names':families}
+    if 'Noto Sans SC Thin' not in result['NotoSansSC-Bold-sub.ttf']['fontconfig_names']:
+        raise RuntimeError('Exact reference Noto family unavailable; do not silently fall back')
+    return result
