@@ -101,8 +101,7 @@
       "zoom": 1.1,
       "fit": "cover",
       "_frame_why": "WTA本场图库仅赢家图，诺斯科娃集锦缩略图实为团队席；WTA赛后稿无其本場照。Getty本场16张已核图注（2298829370），可取得的2048预览带水印，无水印仅612缩略图，不冒充高清。中网官网503，AP首页无本场结果。采用本场WTA官方1080p清晰偏正脸仍在拼的瞬间，实际睁眼核验后使用；官方可用高清一到即升级。查证详情data/research/noskova-alexandrova-20261006/cover-research.txt。 逐帧排除72.5低头帧；71.88秒正脸双眼睁开，本场白色Yonex遮阳帽、白衣紫裙，与比分板身份一致。 最终改取232.5秒第二盘2比2接发准备：偏正面睁眼，仍在比赛，zoom1.1/focus_y1.0让脸和钩子分开。"
-    },
-    "narration": "四次反扑机会落空，温网冠军出局。"
+    }
   },
   "stats": {
     "a": {
@@ -218,10 +217,10 @@
         "tnns": {
           "status": "verified_extended_stats",
           "run_id": 37432093858,
-          "source_url": "https://github.com/robertyang87/tennislive/actions/runs/37432093858",
+          "source_url": "https://tnnslive.com/match/75051586",
           "http_result": "480 matches in 193357-byte day schedule; both full surnames requested, no matching match",
           "source_path": "data/research/noskova-alexandrova-20261006/tnns_match_stats.raw",
-          "source_sha256": "55473769da81e810b6789b117f6f7f03a1a0b5db7fd9e6ac46802643119d769e",
+          "source_sha256": "18377f392918b0b0a49e55c05f99c7880f5c0acdf6db8b2ea6060f4596e73138",
           "workflow_conclusion": "failure",
           "note": "Not a Cloudflare block; source day schedule returned successfully. This does not prove no W/UE exists elsewhere.",
           "match_id": "75051586",
@@ -236,15 +235,17 @@
           "deep_followup": "Local browser homepage and explicit10/6 response449matches uniquely contain exact same source YouTube;10/5 has177matches and only doubles. Earlier runner480match failure superseded by raw browser evidence."
         },
         "broadcast": {
-          "status": "delegated_source_video_review_pending",
+          "status": "verified_source_video_review",
           "source_url": "https://www.youtube.com/watch?v=YlKbwpraDHY",
-          "note": "Facts agent did not view full video; cannot claim broadcast W/UE search completed."
+          "note": "完整源片分镜及逐帧关键分审核完成；转播无可用完整W/UE表，采用TNNS精确匹配统计。",
+          "source_path": "data/research/noskova-alexandrova-20261006/footage-review.json"
         }
       }
     },
     "tour": "wta",
     "footer_date": "2026-10-06",
-    "footer_venue": "北京 · 全场"
+    "footer_venue": "北京 · 全场",
+    "_source": "WTA官方1020/2026 LS012全场技术统计，原始data/research/noskova-alexandrova-20261006/wta_stats.raw；制胜分/非受迫失误来自TNNS75051586，精确同场YouTube绑定及全场分盘加总验证，原始tnns_match_stats.raw及_winners_ue_evidence。"
   },
   "push": {
     "auto": false,
@@ -340,7 +341,7 @@
       "track": false,
       "fit": "crop",
       "narration": "",
-      "score_inset": false,
+      "score_inset": true,
       "bed": "high",
       "point_end_ok": "赛点落定之后的完整三句解说；冷开场是终局反应不是假称完整赛点。完整发球赛点272.88–299.08在片尾兑现。",
       "crosses_cut": "赛点落定之后的完整三句解说；冷开场是终局反应不是假称完整赛点。完整发球赛点272.88–299.08在片尾兑现。",
@@ -353,7 +354,7 @@
         }
       ],
       "_quote_kind": "broadcast",
-      "_score_inset_why": "赛点落定的球员反应与教练席，片尾完整终局复现；不强制复制不存在的板。",
+      "_score_inset_why": "准确框5fps逐帧检测：庆祝镜头仍有完整赛果板，必须透明回贴保留比分。",
       "_ending_payoff_required": true,
       "_ending_payoff_why": "后文272.88–299.08完整赛点与握手覆盖冷开场。"
     },
@@ -408,7 +409,7 @@
       "crosses_cut": "首盘1比0、40比15的关键机会完整回合；后续跳到平分，不假称这一个回合覆盖全部三机会。",
       "_why": "首盘1比0、40比15的关键机会完整回合；后续跳到平分，不假称这一个回合覆盖全部三机会。",
       "_quote_skip_why": "本段只有发球、击球与现场声，无有意义完整解说。",
-      "_digital_silence_why": "已复听官方源片：发球准备期间现场声极轻，随后完整发球、击球及解说连续；保留运动动作起点，不人为补假现场声。"
+      "_digital_silence_why": "已核官方源片波形、逐帧画面和原声识别：发球准备期间现场声极轻，随后完整发球、击球及解说连续；保留运动动作起点，不人为补假现场声。"
     },
     {
       "source": "main",
@@ -470,7 +471,7 @@
         }
       ],
       "_quote_kind": "broadcast",
-      "_digital_silence_why": "已复听官方源片：发球准备期间现场声极轻，随后完整发球、击球及解说连续；保留运动动作起点，不人为补假现场声。"
+      "_digital_silence_why": "已核官方源片波形、逐帧画面和原声识别：发球准备期间现场声极轻，随后完整发球、击球及解说连续；保留运动动作起点，不人为补假现场声。"
     },
     {
       "source": "main",
@@ -540,7 +541,7 @@
         }
       ],
       "_quote_kind": "broadcast",
-      "_digital_silence_why": "已复听官方源片：发球准备期间现场声极轻，随后完整发球、击球及解说连续；保留运动动作起点，不人为补假现场声。"
+      "_digital_silence_why": "已核官方源片波形、逐帧画面和原声识别：发球准备期间现场声极轻，随后完整发球、击球及解说连续；保留运动动作起点，不人为补假现场声。"
     },
     {
       "title_card": "第二盘再来一次\n第4次机会仍落空",
