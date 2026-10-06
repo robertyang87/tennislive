@@ -5,6 +5,15 @@ on:
     paths:
       - data/approved_reel_imports/nadal-academy-10th-2026/request.json
   workflow_dispatch:
+    inputs:
+      draft_request_path:
+        description: Pinned data/draft_video_transfers/<slug>/request.json (draft only)
+        required: false
+        default: ''
+      request_sha256:
+        description: Independently approved request byte SHA256
+        required: false
+        default: ''
 permissions:
   contents: write
 concurrency:
@@ -129,3 +138,38 @@ jobs:
             output/*/reel/nadal-academy-10th-2026/*.json
             output/*/reel/nadal-academy-10th-2026/*.ass
           if-no-files-found: ignore
+
+  draft_transfer:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/production/sun-xinran-coming-of-age-2026' && inputs.draft_request_path != '' && inputs.request_sha256 != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      DRAFT_REQUEST: ${{ inputs.draft_request_path }}
+      REQUEST_SHA256: ${{ inputs.request_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            tools/transfer_draft_video.py
+            data/draft_video_transfers
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install standard HTTP client
+        run: pip install requests
+      - name: Transfer exact movie to existing private draft only
+        run: |
+          python tools/transfer_draft_video.py --request "$DRAFT_REQUEST" \
+            --request-sha256 "$REQUEST_SHA256" --expected-release-id 404202921 \
+            --workdir "$RUNNER_TEMP/draft-video-transfer" \
+            --receipt "$RUNNER_TEMP/draft-video-transfer/receipt.json"
+      - name: Upload actual transfer receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: draft-video-transfer-receipt-${{ github.run_id }}
+          path: ${{ runner.temp }}/draft-video-transfer/receipt.json
+          if-no-files-found: error
