@@ -3,7 +3,7 @@ run-name: "Shanghai native story · ${{ contains(github.event.head_commit.messag
 on:
   push:
     branches: ['repair/shanghai-native-story-20261006']
-    paths: ['tools/build_shanghai_native_story.py', '.github/workflows/shanghai-native-story.yml']
+    paths: ['tools/build_shanghai_native_story.py', 'tools/story_reference_style.py', 'tools/story_triptych_cover.py', '.github/workflows/shanghai-native-story.yml']
 permissions:
   contents: read
   actions: read
@@ -46,7 +46,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git fetch --depth=1 origin codex/shanghai-masters-history-2026
+          git fetch --depth=1 origin 28abaf0a9a4dc2ec8501315185fa6cb81e4e1cdf
           git checkout FETCH_HEAD -- specs/reels/shanghai-masters-history-2026.json assets/reel/shanghai-masters-history-2026
           gh run download 37394302656 --pattern 'shanghai-original-part-*' --dir "$RUNNER_TEMP/source-parts"
           mkdir -p "$RUNNER_TEMP/shanghai-clean-sources"
@@ -75,7 +75,9 @@ jobs:
             --sources "$RUNNER_TEMP/shanghai-clean-sources" \
             --audio "$RUNNER_TEMP/preserved-audio" \
             --outdir "$RUNNER_TEMP/native-story" $MODE
-          mkdir -p "$RUNNER_TEMP/native-delivery"
+          mkdir -p "$RUNNER_TEMP/native-delivery/subtitles" "$RUNNER_TEMP/native-delivery/words"
+          cp "$RUNNER_TEMP/native-story"/*.ass "$RUNNER_TEMP/native-delivery/subtitles/"
+          find "$RUNNER_TEMP/preserved-audio" -name 'voice_*.words.json' -exec cp {} "$RUNNER_TEMP/native-delivery/words/" \;
           cp "$RUNNER_TEMP/native-story/native-story-review.json" "$RUNNER_TEMP/native-delivery/"
           cp "$RUNNER_TEMP/native-story"/slide-*.jpg "$RUNNER_TEMP/native-delivery/"
           find "$RUNNER_TEMP/native-story" -maxdepth 1 -name 'shanghai-native-story*.mp4' -exec cp {} "$RUNNER_TEMP/native-delivery/" \;
@@ -94,6 +96,8 @@ jobs:
             ${{ runner.temp }}/native-delivery/*.json
             ${{ runner.temp }}/native-delivery/*.jpg
             ${{ runner.temp }}/native-delivery/film.sha256
+            ${{ runner.temp }}/native-delivery/subtitles/*.ass
+            ${{ runner.temp }}/native-delivery/words/*.json
             ${{ runner.temp }}/native-reference/*.jpg
             ${{ runner.temp }}/native-reference/probe.json
           compression-level: 0
