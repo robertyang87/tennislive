@@ -40,12 +40,25 @@ jobs:
                   digest.update(data);count+=len(data);dest.write(data)
           assert count==request['movie_bytes'] and digest.hexdigest()==request['movie_sha256']
           (out/'recovery.json').write_text(json.dumps({'status':'RECOVERED_EXACT_REVIEW_MASTER','sha256':digest.hexdigest(),'bytes':count,'release_id':404202921,'asset_id':614048923,'route':'read_only_bound_git_blobs','published':False,'wechat_sent':False,'audio_review_pass':None},indent=2)+'\n')
+          data=movie.read_bytes()
+          (out/'master-part-00.bin').write_bytes(data[:30*1024*1024])
+          (out/'master-part-01.bin').write_bytes(data[30*1024*1024:])
           PY
-      - name: Retain exact movie for independent review
+      - name: Retain first exact movie chunk
         uses: actions/upload-artifact@v4
         with:
-          name: sun-review-master-${{ github.run_id }}
-          path: ${{ runner.temp }}/sun-review-master/
+          name: sun-review-master-part-00-${{ github.run_id }}
+          path: ${{ runner.temp }}/sun-review-master/master-part-00.bin
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 14
+      - name: Retain second exact movie chunk and recovery receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: sun-review-master-part-01-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/sun-review-master/master-part-01.bin
+            ${{ runner.temp }}/sun-review-master/recovery.json
           compression-level: 0
           if-no-files-found: error
           retention-days: 14
