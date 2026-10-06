@@ -75,6 +75,8 @@ _DISPATCH_ENTRIES = (
     (r"(?<!test_)dispatch_reel_queue\.py", "tools/dispatch_reel_queue.py"),
     (r"gh\s+workflow\s+run", "gh workflow run（直接写在 run: 里）"),
     (r"gh\s+api\b[^\n]*/dispatches", "gh api …/dispatches"),
+    (r"\bgithub\.rest\.actions\.(?:createWorkflowDispatch|cancelWorkflowRun)\s*\(",
+     "actions/github-script 调用 Actions dispatch/cancel API"),
     # 「顺手叫醒挨饿班次」经 tools/nudge_stale_ticks.sh 间接 dispatch——
     # `gh workflow run` 在被 source 的脚本里，run: 正文里只看得见这个函数名
     (r"\bnudge_if_stale\b", "tools/nudge_stale_ticks.sh 的 nudge_if_stale"),
@@ -127,7 +129,31 @@ def _run_scripts(path: Path) -> str:
             for ln in str(step.get("run") or "").splitlines():
                 if not ln.lstrip().startswith("#"):
                     out.append(ln)
+            # github-script执行的是with.script；只认该action中的实际JS调用，
+            # on.paths、其他action的同名字段和注释不能证明actions:write必要。
+            if str(step.get("uses", "")).startswith("actions/github-script@"):
+                script = str((step.get("with") or {}).get("script") or "")
+                script = re.sub(r"/\*.*?\*/", "", script, flags=re.S)
+                out.extend(ln for ln in script.splitlines()
+                           if not ln.lstrip().startswith("//"))
     return "\n".join(out)
+
+
+def test_github_script权限识别只认执行脚本且排除注释与路径(tmp_path):
+    import yaml  # noqa: PLC0415
+
+    call = "await github.rest.actions.createWorkflowDispatch({});"
+    path = tmp_path / "dispatch.yml"
+    def detected(step):
+        path.write_text(yaml.safe_dump({"on": {"push": {"paths": [call]}},
+                                        "jobs": {"dispatch": {"steps": [step]}}}))
+        return any(re.search(pattern, _run_scripts(path))
+                   for pattern, _label in _DISPATCH_ENTRIES)
+    assert detected({"uses": "actions/github-script@v7", "with": {"script": call}})
+    assert not detected({"uses": "actions/github-script@v7", "with": {"script": "// " + call}})
+    assert not detected({"uses": "actions/github-script@v7", "with": {"script": "/* " + call + " */"}})
+    assert not detected({"uses": "actions/checkout@v4", "with": {"script": call}})
+    assert not detected({"run": "echo ready"})
 
 
 def test_给了actions_write的工作流都真的要点Pages():
