@@ -3757,6 +3757,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "original_audio_mode", "owner_approval", "audio_effects_review", "track",
              "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
+             "story_photo_motion",
              "editorial", "narration_audio_recipe", "scene_edl_recipe", "scoreboard_profile"),
     "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_accent_color", "hook_align", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
@@ -4433,8 +4434,30 @@ def segment_encode_budget(count: int) -> tuple[int, int]:
     return workers, max(1, min(4, cpus // workers))
 
 
+def story_photo_push_indices(spec: dict) -> frozenset[int]:
+    """Opt-in original story-photo push; cards and unmarked stills stay static.
+
+    Keep selection on raw segment indices: a photo and an evidence card can
+    share an image path, and title/stat materialization preserves segment order.
+    The actual motion is the existing native outro's centred 1→1.03 push.
+    """
+    motion = spec.get("story_photo_motion")
+    if motion is None:
+        return frozenset()
+    if motion != "push":
+        raise ReelError("story_photo_motion 只认 push；不写时照片保持静态")
+    if str((spec.get("cover") or {}).get("eyebrow", "")) != "网球有故事":
+        raise ReelError("story_photo_motion 只用于网球有故事的照片段")
+    if spec.get("layout") == "band":
+        raise ReelError("story_photo_motion 使用原生1080×1440全屏推镜，不支持band")
+    return frozenset(
+        i for i, raw in enumerate(spec.get("segments") or [])
+        if raw.get("image") and raw.get("image_kind") == "photo"
+        and not raw.get("title_card") and not raw.get("stat_card"))
+
+
 def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0,
-                      *, threads: int | None = None) -> Path:
+                      *, threads: int | None = None, photo_push: bool = False) -> Path:
     """整屏证据段：深色底 + 卡片居中 → 一段静片。
 
     合成用 PIL（卡是透明底贴纸，缩到画幅内居中），编码参数和其他分段一致
@@ -4450,6 +4473,12 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0,
         card, Image, full_bleed=seg.full_bleed, full_canvas=seg.full_canvas)
     still = dest.with_suffix(".evidence.png")
     canvas.convert("RGB").save(still)
+    # Only the explicitly selected photo uses motion. Normal evidence/title
+    # cards retain their original filter, geometry, audio and encode settings.
+    vf = f"fps={FPS_EXPR},setsar=1"
+    if photo_push:
+        frames = max(2, int((seg.length + tail) * FPS))
+        vf = f"fps={FPS_EXPR},{outro_page.push_filter(frames, FPS_EXPR)},setsar=1"
     thread_args = ["-threads", str(threads)] if threads is not None else []
     filter_args = ["-filter_threads", str(threads)] if threads is not None else []
     with stage(SEGMENT_STAGE):
@@ -4458,7 +4487,7 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0,
             "-loop", "1", "-i", str(still), "-f", "lavfi",
             "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
             "-t", f"{seg.length + tail:.3f}",
-            "-vf", f"fps={FPS_EXPR},setsar=1",
+            "-vf", vf,
             "-c:v", "libx264", *thread_args, "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
@@ -9259,6 +9288,7 @@ def validate_spec(
     # ⚠️ `spec_sources` 挪到最前面了：整改合同现在按**素材构成**判要不要填
     # （见 `_editorial_contract_required`），得先知道这条 spec 用了谁的画面。
     # 它只读 spec 的两个键、不碰任何文件，放最前面不花钱。
+    story_photo_push_indices(spec)
     urls = spec_sources(spec)
     if not urls:
         raise ReelError("spec 里一个源都没有")
@@ -9905,12 +9935,15 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                                  outdir / "part_cover.mp4", source_w,
                                  cover_secs, tail=SEG_FADE)]
     workers, segment_threads = segment_encode_budget(len(segments))
+    photo_push_indices = story_photo_push_indices(spec)
     def _encode_one(item):
         index, seg = item
         dest = outdir / f"part_{index:02d}.mp4"
         tail = SEG_FADE if (outro_enabled or index < len(segments) - 1) else 0.0
         if seg.image:
-            return index, cut_still_segment(seg, dest, tail=tail, threads=segment_threads)
+            return index, cut_still_segment(
+                seg, dest, tail=tail, threads=segment_threads,
+                photo_push=index in photo_push_indices)
         return index, cut_segment(sources[seg.source], seg, dest,
                                   source_w, tracks.get(index), tail=tail,
                                   threads=segment_threads)

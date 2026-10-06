@@ -1,0 +1,41 @@
+{
+  "schema": "tennislive.review-video-delivery.v1",
+  "slug": "shanghai-masters-history-2026",
+  "status": "actual_native_review_video_technical_qc_and_sampled_visual_review_pass",
+  "film": "output/2026-10-06/reel/shanghai-masters-history-2026/shanghai-masters-history-2026.mp4",
+  "film_bytes": 134842791,
+  "film_sha256": "e50f393f890d7f1efdabb3e32e8653998136a61533f0378449a8051c21fc0c98",
+  "poster": "output/2026-10-06/reel/shanghai-masters-history-2026/poster.jpg",
+  "native_spec": "specs/reels/shanghai-masters-history-2026.json",
+  "spec_sha256": "76299384fbb8e19601e42b6eeefab5709c17f8858834c437419b0a7bdf2ce224",
+  "width": 1080,
+  "height": 1440,
+  "aspect": "3:4",
+  "full_canvas": true,
+  "fps": 25,
+  "video_seconds": 433.4,
+  "audio_seconds": 433.386,
+  "native_landed_check": {
+    "exit_code": 0,
+    "failures": 0,
+    "attestation_file": "output/2026-10-06/reel/shanghai-masters-history-2026/qc_attestation.json",
+    "attestation_sha256": "780ff8012f2b7da044453fee1ede9acbc7b1cf047635b19730d0f8db9e0fe03d"
+  },
+  "independent_final_visual_review": {
+    "status": "sampled_visual_pass_no_blockers",
+    "report": "docs/production/shanghai-masters-history-2026/final-visual-review.md",
+    "editorial_report": "docs/production/shanghai-masters-history-2026/final-editorial-review.md",
+    "scope": "52 shot midframes,22 foreground bilingual cue midframes and8 factual frames actually viewed; not a continuous full-film human listening pass"
+  },
+  "human_listened": false,
+  "publication_listening_record": "docs/production/shanghai-masters-history-2026/voice-review.md",
+  "publication_sent": false,
+  "cover_lines": [
+    "白玉兰下的传奇",
+    "一座城与几代网坛大师"
+  ],
+  "actual_audio_volume": {
+    "mean_db": -26.8,
+    "peak_db": -5.3
+  }
+}

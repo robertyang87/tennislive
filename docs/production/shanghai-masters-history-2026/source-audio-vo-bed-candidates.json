@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "status": "candidates_only_not_approved",
+  "method": "first_attempt_raw_dual_ASR_segment_logs_and_old_provider_locator",
+  "log_job": 112043397317,
+  "source_sha256_binding": "pending successful collector preservation",
+  "candidates": [
+    {
+      "source": "cup2005",
+      "start": 327.4,
+      "end": 342.8,
+      "status": "pending",
+      "en": null,
+      "reason": "Both ASR next commentary begins343.10+, previous sentence ends327.12. Potential complete point; start/end require continuous visual and VAD/word inspection.",
+      "missing": [
+        "raw VAD speech timestamps",
+        "raw ASR word timing and confidence",
+        "raw provider json3",
+        "byte-exact source SHA",
+        "continuous source visual/audio inspection"
+      ]
+    },
+    {
+      "source": "cup2005",
+      "start": 289.2,
+      "end": 300.8,
+      "status": "pending",
+      "en": null,
+      "reason": "Both ASR gap after288.86 before301.18, provider locator consistent. Point completeness still pending.",
+      "missing": [
+        "raw VAD speech timestamps",
+        "raw ASR word timing and confidence",
+        "raw provider json3",
+        "byte-exact source SHA",
+        "continuous source visual/audio inspection"
+      ]
+    },
+    {
+      "source": "mayer2014",
+      "start": 379.0,
+      "end": 390.3,
+      "status": "pending",
+      "en": null,
+      "reason": "Between complete backhand-pass sentence and next match-point call; likely reaction/preparation footage.",
+      "missing": [
+        "raw VAD speech timestamps",
+        "raw ASR word timing and confidence",
+        "raw provider json3",
+        "byte-exact source SHA",
+        "continuous source visual/audio inspection"
+      ]
+    },
+    {
+      "source": "mayer2014",
+      "start": 334.0,
+      "end": 341.1,
+      "status": "pending",
+      "en": null,
+      "reason": "Between target-smaller sentence and Match point; likely close-up/preparation. Provider and raw VAD inspection still needed.",
+      "missing": [
+        "raw VAD speech timestamps",
+        "raw ASR word timing and confidence",
+        "raw provider json3",
+        "byte-exact source SHA",
+        "continuous source visual/audio inspection"
+      ]
+    },
+    {
+      "source": "sinner2024",
+      "start": 443.0,
+      "end": 461.7,
+      "status": "pending",
+      "en": null,
+      "reason": "Both ASR previous bulletproof sentence ends442.16, champion sentence starts462.10. Final point/reactions candidate, inaudible umpire/crowd speech must be inspected.",
+      "missing": [
+        "raw VAD speech timestamps",
+        "raw ASR word timing and confidence",
+        "raw provider json3",
+        "byte-exact source SHA",
+        "continuous source visual/audio inspection"
+      ]
+    },
+    {
+      "source": "vacherot2025",
+      "start": 381.6,
+      "end": 393.6,
+      "status": "pending",
+      "en": null,
+      "reason": "Between fairytale-week statement and Moving scenes; cousins embrace can carry Chinese VO if VAD has no unresolved foreground speech.",
+      "missing": [
+        "raw VAD speech timestamps",
+        "raw ASR word timing and confidence",
+        "raw provider json3",
+        "byte-exact source SHA",
+        "continuous source visual/audio inspection"
+      ]
+    },
+    {
+      "source": "vacherot2025",
+      "start": 354.1,
+      "end": 361.4,
+      "status": "pending",
+      "en": null,
+      "reason": "Gap after whatever-you-can-do and before Shouldnt-be-surprised; short response/reaction B-roll only pending visuals.",
+      "missing": [
+        "raw VAD speech timestamps",
+        "raw ASR word timing and confidence",
+        "raw provider json3",
+        "byte-exact source SHA",
+        "continuous source visual/audio inspection"
+      ]
+    },
+    {
+      "source": "fedal2017",
+      "start": 280.5,
+      "end": 289.3,
+      "status": "pending",
+      "en": null,
+      "reason": "Final point candidate before actual289.58 champion statement. small.en tags CHEERING AND APPLAUSE285.44–287.68, medium has no words; not an empty-speech certification.",
+      "missing": [
+        "raw VAD speech timestamps",
+        "raw ASR word timing and confidence",
+        "raw provider json3",
+        "byte-exact source SHA",
+        "continuous source visual/audio inspection"
+      ]
+    }
+  ],
+  "note": "Do not infer no speech from ASR silence. These windows are NOT authorised quote_skip or audio gate passes."
+}

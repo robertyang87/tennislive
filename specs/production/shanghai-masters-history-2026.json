@@ -2,8 +2,8 @@
   "schema": "tennislive.production-plan.v1",
   "slug": "shanghai-masters-history-2026",
   "title": "上海大师赛：白玉兰下的传奇",
-  "status": "creative_spec_complete_edl_in_progress",
-  "renderable": false,
+  "status": "review_cut_complete_technical_qc_and_sampled_visual_review_pass",
+  "renderable": true,
   "canvas": {
     "width": 1080,
     "height": 1440,
@@ -16,9 +16,9 @@
     "blurred_padding": false
   },
   "runtime": {
-    "target_seconds": 350,
-    "measured_seconds": null,
-    "policy": "extend to preserve complete decisive points and reactions"
+    "target_seconds": 433.4,
+    "measured_seconds": 433.4,
+    "policy": "Original350s was a creative budget. Final50-segment native plan preserves reviewed original-audio windows and actually measured narration; final artifact duration is checked after encoding."
   },
   "voice": {
     "name": "zh-CN-YunjianNeural",
@@ -285,11 +285,7 @@
     }
   ],
   "remaining_render_gates": [
-    "verify exact source in/out and point completeness",
-    "verify centered full-bleed crop",
-    "generate and measure TTS",
-    "bind whole-window original audio evidence and timed bilingual subtitles",
-    "native taste_preflight and final audiovisual QC"
+    "No remaining render gate for review-cut delivery. Publication listening remains documented in voice-review.md."
   ],
-  "native_render_spec": null
+  "native_render_spec": "specs/reels/shanghai-masters-history-2026.json"
 }

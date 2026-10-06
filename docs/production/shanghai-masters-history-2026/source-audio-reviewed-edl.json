@@ -1,0 +1,405 @@
+{
+  "schema_version": 1,
+  "status": "partially_reviewed",
+  "reviewer": "/root/source_audio_review",
+  "method": "asr_cross_checked",
+  "human_listened": false,
+  "segments": [
+    {
+      "id": "cup2005-vo-effects",
+      "source": "cup2005",
+      "start": 328.0,
+      "end": 343.0,
+      "source_sha256": "c3b1f8235f90bb64e22b7081ec290749e15ee599f0e1f56be6dc2d7b8e70ffea",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:43:15.747886+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/cup2005-vo-effects.json",
+        "transcript_sha256": "e1b66556749bca2bb480f5f98e0dd91df8e69a8ed8c82248971349c1f0659a8e"
+      },
+      "utterances": [],
+      "uncertain_spans": [],
+      "_quote_skip_why": "Official-source window328.0–343.0 has no resolved foreground English: both transcript lexical sequences move directly from the prior title sentence to the next tiebreak sentence; provider has only applause within the window; VAD has no speech within this narrowed range. The small-model long-word alignment error is explicitly resolved using medium/provider/VAD, not silently ignored.",
+      "intended_use": "Chinese narrative explanatory action background; serve already precedes328.0, so not a complete serve-to-result key-point presentation."
+    },
+    {
+      "id": "vacherot2025-hug-vo",
+      "source": "vacherot2025",
+      "start": 381.9,
+      "end": 393.3,
+      "source_sha256": "5040870b9d3035c26d97823a5d5132fa5661d0b2303b7005f639dd97427c1ec3",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:43:15.747886+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/vacherot2025-hug-vo.json",
+        "transcript_sha256": "dda0db5ed710712c0831c5f0f87827f5b1c049d4607dbef1cbaf2f8220d8fd07"
+      },
+      "utterances": [],
+      "uncertain_spans": [],
+      "_quote_skip_why": "Both ASR word streams have no foreground lexical words inside381.9–393.3, provider has only an applause label, and VAD has no speech inside the selected range. Window begins after prior spoken sentence and ends before next speech VAD; source SHA matches actual downloaded original."
+    },
+    {
+      "id": "sinner2024-champion-call",
+      "source": "sinner2024",
+      "start": 462.0,
+      "end": 473.4,
+      "source_sha256": "193397c2176d23d01fa7e6131914d7b393679754f8e4975205ccfdc2ab61dd90",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:43:15.747886+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/sinner2024-champion-call.json",
+        "transcript_sha256": "f410ebe7d80b6c12ea7ac81992be788443512247a8c06c7ef3670bafcf2da517"
+      },
+      "utterances": [
+        {
+          "start": 462.1,
+          "end": 465.3,
+          "en": "The world number one",
+          "zh": "世界第一"
+        },
+        {
+          "start": 465.3,
+          "end": 468.56,
+          "en": "delivers an impressive display to",
+          "zh": "奉献了一场精彩表现，"
+        },
+        {
+          "start": 468.56,
+          "end": 473.2,
+          "en": "claim a third Masters 1000 title of the year.",
+          "zh": "拿下本赛季第三座大师1000冠军。"
+        }
+      ],
+      "uncertain_spans": [],
+      "intended_use": "Post-winning-point championship commentary/reaction only. Actual winning point ended before462.0; this reviewed segment is not a full-point replay."
+    },
+    {
+      "id": "mayer2014-fourth-match-point",
+      "source": "mayer2014",
+      "start": 354.88,
+      "end": 381.96,
+      "source_sha256": "2228691202fb9b7037481b6e99f53217bf3e49e5e74a1e9e9cf9c4bc64b18c68",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:43:15.747886+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/mayer2014-fourth-match-point.json",
+        "transcript_sha256": "160aae1e052a008ce52ecfb7b1d89bfe5cab22beb47a8d8ae053e19e0c8cfd86"
+      },
+      "utterances": [
+        {
+          "start": 354.94,
+          "end": 357.2,
+          "en": "This is the moment of truth, surely.",
+          "zh": "这一刻，胜负该见分晓了。"
+        },
+        {
+          "start": 357.66,
+          "end": 359.32,
+          "en": "Three match points already.",
+          "zh": "此前已有三个赛点。"
+        },
+        {
+          "start": 359.32,
+          "end": 361.86,
+          "en": "So all of those have been on Federer's serve.",
+          "zh": "都出现在费德勒发球时。"
+        },
+        {
+          "start": 363.6,
+          "end": 366.58,
+          "en": "Here's his first on his own deal.",
+          "zh": "梅耶尔首次在发球时握有赛点。"
+        },
+        {
+          "start": 373.04,
+          "end": 376.7,
+          "en": "This time, Federer makes no mistake",
+          "zh": "这一次，费德勒没有失手，"
+        },
+        {
+          "start": 376.7,
+          "end": 378.62,
+          "en": "with the backhand pass.",
+          "zh": "反手穿越成功。"
+        }
+      ],
+      "uncertain_spans": []
+    },
+    {
+      "id": "final2012-first-championship-point",
+      "source": "final2012",
+      "start": 32.08,
+      "end": 39.48,
+      "source_sha256": "3473ec229d9b10cfbe77e558dc79c5e4e748ba02594ecc516e147da128190d2b",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:44:27.271872+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/final2012-first-championship-point.json",
+        "transcript_sha256": "f8ffac2bf74ed3607ec7426c9f9d1b253d5f1900a38c1672e9f6a9c7b145f0c0"
+      },
+      "utterances": [
+        {
+          "start": 36.52,
+          "end": 38.98,
+          "en": "Nicely done.",
+          "zh": "处理得很漂亮。"
+        }
+      ],
+      "uncertain_spans": []
+    },
+    {
+      "id": "final2012-second-set-point",
+      "source": "final2012",
+      "start": 76.44,
+      "end": 85.64,
+      "source_sha256": "3473ec229d9b10cfbe77e558dc79c5e4e748ba02594ecc516e147da128190d2b",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:44:27.271872+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/final2012-second-set-point.json",
+        "transcript_sha256": "ff309140d5c58e28af91c100bd2b3473f8aef90e70f31c06852d2e0f4e7bf588"
+      },
+      "utterances": [
+        {
+          "start": 79.88,
+          "end": 81.0,
+          "en": "He's done it!",
+          "zh": "他做到了！"
+        },
+        {
+          "start": 81.24,
+          "end": 84.6,
+          "en": "What a fantastic effort by Novak Djokovic!",
+          "zh": "德约科维奇的表现太出色了！"
+        }
+      ],
+      "uncertain_spans": []
+    },
+    {
+      "id": "final2012-match-and-handshake",
+      "source": "final2012",
+      "start": 85.64,
+      "end": 106.48,
+      "source_sha256": "3473ec229d9b10cfbe77e558dc79c5e4e748ba02594ecc516e147da128190d2b",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:44:27.271872+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/final2012-match-and-handshake.json",
+        "transcript_sha256": "358fcef6245383dca3b33f88fc5b704cc887bac2b8501fad1cd4c767bb439aeb"
+      },
+      "utterances": [
+        {
+          "start": 88.34,
+          "end": 90.4,
+          "en": "He's done it!",
+          "zh": "他做到了！"
+        },
+        {
+          "start": 92.08,
+          "end": 93.76,
+          "en": "Victory for Djokovic.",
+          "zh": "德约科维奇获胜。"
+        },
+        {
+          "start": 95.1,
+          "end": 97.8,
+          "en": "His first title here in Shanghai.",
+          "zh": "这是他的上海大师赛首冠。"
+        },
+        {
+          "start": 98.68,
+          "end": 101.0,
+          "en": "But of course, back-to-back victories",
+          "zh": "当然，他连续两站夺冠，"
+        },
+        {
+          "start": 101.0,
+          "end": 102.1,
+          "en": "here in China.",
+          "zh": "地点都在中国。"
+        },
+        {
+          "start": 103.36,
+          "end": 106.42,
+          "en": "After proving unbeatable in Beijing last week.",
+          "zh": "上周在北京，他也无人能挡。"
+        }
+      ],
+      "uncertain_spans": []
+    },
+    {
+      "id": "vacherot2025-final-point-call",
+      "source": "vacherot2025",
+      "start": 360.0,
+      "end": 381.9,
+      "source_sha256": "5040870b9d3035c26d97823a5d5132fa5661d0b2303b7005f639dd97427c1ec3",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:44:27.271872+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/vacherot2025-final-point-call.json",
+        "transcript_sha256": "2a0c27248c64c227e8c70fa89213af9f6890ef8aa3a15399726e13af2da64f7a"
+      },
+      "utterances": [
+        {
+          "start": 361.6,
+          "end": 363.48,
+          "en": "Shouldn't be surprised, should we?",
+          "zh": "这不该让我们惊讶，对吧？"
+        },
+        {
+          "start": 368.36,
+          "end": 372.4,
+          "en": "Game, set, match, Vacherot. Two sets to one.",
+          "zh": "瓦舍罗获胜，盘分2比1。"
+        },
+        {
+          "start": 372.4,
+          "end": 377.46,
+          "en": "Valentin Vacherot puts the icing on the cake",
+          "zh": "瓦舍罗锦上添花，"
+        },
+        {
+          "start": 377.46,
+          "end": 381.2,
+          "en": "to a fairy tale week in Shanghai.",
+          "zh": "让上海这童话般的一周圆满收官。"
+        }
+      ],
+      "uncertain_spans": []
+    },
+    {
+      "id": "mayer2014-preparation-vo",
+      "source": "mayer2014",
+      "start": 334.0,
+      "end": 341.1,
+      "source_sha256": "2228691202fb9b7037481b6e99f53217bf3e49e5e74a1e9e9cf9c4bc64b18c68",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:46:02.586794+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/mayer2014-preparation-vo.json",
+        "transcript_sha256": "cd20392225b48b0eca551889ea453c2e357bde8d9b55029385e2428f0cb20dd8"
+      },
+      "utterances": [],
+      "uncertain_spans": [],
+      "_quote_skip_why": "Wholewindow334.0–341.1 is between independently crosschecked complete foreground comments: both raw word streams contain no words, provider has no new lexical event in this interval, VAD has no speech. Source SHA matches actual local original. Not inferred from ASR silence alone."
+    },
+    {
+      "id": "mayer2014-reaction-vo",
+      "source": "mayer2014",
+      "start": 379.3,
+      "end": 390.3,
+      "source_sha256": "2228691202fb9b7037481b6e99f53217bf3e49e5e74a1e9e9cf9c4bc64b18c68",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:46:02.586794+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/mayer2014-reaction-vo.json",
+        "transcript_sha256": "ff0be600905f91734b6e1e4d0b39170526609830dc502e0a045cec271adda72c"
+      },
+      "utterances": [],
+      "uncertain_spans": [],
+      "_quote_skip_why": "Wholewindow379.3–390.3 contains no detected speech VAD and no lexical words in either raw ASR. Source provider only holds prior backhand-pass caption until381, then no new lexical event until390.72. Timing is after the actual prior voice and before next match-point call."
+    },
+    {
+      "id": "fedal2017-preparation-effects",
+      "source": "fedal2017",
+      "start": 280.5,
+      "end": 288.4,
+      "source_sha256": "1cd41be94c0a1780ecc42a3ed0643eddd98535d3404a26843f18af935aa30ea3",
+      "method": "asr_cross_checked",
+      "reviewer": "/root/source_audio_review",
+      "review": {
+        "status": "complete",
+        "reviewer": "/root/source_audio_review",
+        "reviewed_at": "2026-10-06T00:46:27.009837+00:00",
+        "method": "asr_cross_checked",
+        "human_listened": false,
+        "transcript_path": "docs/production/shanghai-masters-history-2026/audio-review-packets/fedal2017-preparation-effects.json",
+        "transcript_sha256": "7f3174b47c455508437c89f88069fe26716e3fef2e3ecd9d67d4cb9b42204302"
+      },
+      "utterances": [],
+      "uncertain_spans": [],
+      "_quote_skip_why": "Inside280.5–288.4, VAD has no speech, medium ASR has no spoken words, and provider labels applause. The small-model uppercase CHEERING AND APPLAUSE is a corresponding nonverbal event transcription, not foreground English speech. Window ends before288.496 first VAD speech and before unclear champion-name statement; no human listening is asserted.",
+      "intended_use": "Only pre-serve preparation/scenery subset280.5–284.0 after visual approval; optional native slow motion with no loop. Not presented as the full final point or its result."
+    }
+  ],
+  "uncertain_spans": [
+    {
+      "source": "sinner2024",
+      "start": 443,
+      "end": 461.7,
+      "reason": "Unexplained speech VAD447.424–448.416 and460.928+ inside proposed empty-English VO bed; narrower alternative448.6–460.8 available if picture continuation approved."
+    },
+    {
+      "source": "fedal2017",
+      "start": 289.48,
+      "end": 310.96,
+      "reason": "Roger Federer opening name not cross-resolved: small Peddler, medium omitted; provider omits opening. of/for this/his glorious career also disagrees. Cannot invent exact original quote."
+    },
+    {
+      "source": "cup2005",
+      "start": 348,
+      "end": 378,
+      "reason": "Original final commentary continues beyond378 and was not fully collected; two-model name Vilas not clear; source final highlight completeness separately unapproved."
+    },
+    {
+      "source": "fedal2017",
+      "start": 280.5,
+      "end": 289.3,
+      "reason": "Speech VAD288.496–289.552 overlaps proposed empty-English window; opening champion name unclear/omitted by dual ASR, so emptyEnglish not certified. Safer280.5–288.4 cuts visual final-point outcome and is not a full-point substitute."
+    }
+  ],
+  "collector_run": "https://github.com/robertyang87/tennislive/actions/runs/37393356416",
+  "note": "Only listed segments have complete wholewindow ASR-crosschecked packets. No human listening or final render/audio gate pass asserted. Other candidate windows remain pending.",
+  "reviewed_at": "2026-10-06T00:46:27.009837+00:00",
+  "source_evidence_run": "https://github.com/robertyang87/tennislive/actions/runs/37393356416"
+}

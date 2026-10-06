@@ -1,0 +1,353 @@
+{
+  "schema_version": 1,
+  "status": "candidate_only",
+  "inspected_at": "2026-10-06",
+  "scope": [
+    "cup2005",
+    "fedal2017",
+    "sinner2024",
+    "vacherot2025"
+  ],
+  "inspection": {
+    "basis": "Official probe contact and enlarged score walls at 2-second intervals, scene cuts, precise per-tile center-crop comparison. No continuous video viewing or audio verification in this pass.",
+    "point_start_ok": null,
+    "point_end_ok": null,
+    "audio_verification": "pending",
+    "warning": "No candidate is continuous-confirmed; no candidate constitutes full trajectory/crop/audio QC."
+  },
+  "geometry": {
+    "source_resolution": [
+      1920,
+      1080
+    ],
+    "canvas_resolution": [
+      1080,
+      1440
+    ],
+    "cx": 0.5,
+    "track": false,
+    "crop_source_px": [
+      555,
+      0,
+      1365,
+      1080
+    ]
+  },
+  "sources": [
+    {
+      "source_name": "cup2005",
+      "probe_slug": "shanghai-history-2005-nalbandian",
+      "publisher": "Tennis TV",
+      "url": "https://www.youtube.com/watch?v=l3spAGXS_Wc",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "fps": 25.0,
+      "duration": 399.22068
+    },
+    {
+      "source_name": "fedal2017",
+      "probe_slug": "shanghai-history-2017-federer",
+      "publisher": "Tennis TV",
+      "url": "https://www.youtube.com/watch?v=kFrSaccvYr8",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "fps": 30.0,
+      "duration": 441.016599
+    },
+    {
+      "source_name": "sinner2024",
+      "probe_slug": "shanghai-history-2024-sinner",
+      "publisher": "Tennis TV",
+      "url": "https://www.youtube.com/watch?v=fQfvkym38MM",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "fps": 25.0,
+      "duration": 493.749116
+    },
+    {
+      "source_name": "vacherot2025",
+      "probe_slug": "shanghai-history-2025-vacherot",
+      "publisher": "Tennis TV",
+      "url": "https://www.youtube.com/watch?v=sTlHqhHIKis",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "fps": 25.0,
+      "duration": 489.406984
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "2005-terminal-rally-and-aftermath",
+      "source_name": "cup2005",
+      "status": "candidate",
+      "event": "2005 Tennis Masters Cup Shanghai final, Nalbandian vs Federer",
+      "in_candidate": 346.72,
+      "out_candidate": 378.0,
+      "point_start_candidate": 346.72,
+      "point_end_candidate": 353.68,
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "score_before": null,
+      "score_after": {
+        "winner": "David Nalbandian",
+        "final_score_fact": [
+          "6-7(4)",
+          "6-7(11)",
+          "6-2",
+          "6-1",
+          "7-6(3)"
+        ],
+        "last_point_score_wall": "native scoreboard absent during terminal rally"
+      },
+      "visual_evidence": [
+        "contact_05.jpg:348.5-358.5",
+        "contact_06.jpg:360.5-376.5",
+        "score_08.jpg:348.5-358.5"
+      ],
+      "crop_assessment": {
+        "status": "blocked_for_complete_point",
+        "risk": "Near Nalbandian partly/completely outside left at348.5 and right at352.5. Opening live court shot crossfades with spectator; serve not visible. Federer face partly clipped right in370.5 handshake sample. Nalbandian lying down/fists and later face are identifiable."
+      },
+      "coverage_observation": "Source terminal rally346.72-353.68, floor reaction353.68-363 approximately, spectator363+, net handshake370.5-374.5. Native no scoreboard in last rally; do not infer last point tie-break6-3 as visually verified, nor label full serve-result-reaction."
+    },
+    {
+      "candidate_id": "2005-title-lift",
+      "source_name": "cup2005",
+      "status": "candidate",
+      "event": "2005 Nalbandian title celebration and trophy",
+      "in_candidate": 378.0,
+      "out_candidate": 395.0,
+      "point_start_candidate": null,
+      "point_end_candidate": null,
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "score_before": null,
+      "score_after": {
+        "winner": "David Nalbandian"
+      },
+      "visual_evidence": [
+        "contact_06.jpg:378.5-394.5"
+      ],
+      "crop_assessment": {
+        "status": "sampled_winner_and_trophy_fit_pending",
+        "risk": "Nalbandian smile/arms at378.5-382.5 and trophy388.5-392.5 fit center. Trophy close-up is a different ceremony shot, not immediate live-point continuity."
+      },
+      "coverage_observation": "Red-shirt winner celebration transitions at386.5 vicinity into later trophy ceremony.395.0 source channel outro; avoid beyond."
+    },
+    {
+      "candidate_id": "2017-terminal-point-and-handshake",
+      "source_name": "fedal2017",
+      "status": "candidate",
+      "event": "2017 Shanghai Masters final, Federer vs Nadal",
+      "in_candidate": 281.35,
+      "out_candidate": 305.2,
+      "point_start_candidate": 285.6,
+      "point_end_candidate": 289.2,
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "score_before": {
+        "Nadal": [
+          "4",
+          "3",
+          "15"
+        ],
+        "Federer": [
+          "6",
+          "5",
+          "40"
+        ],
+        "server": "Rafael Nadal"
+      },
+      "score_after": {
+        "winner": "Roger Federer",
+        "sets": [
+          "6-4",
+          "6-3"
+        ]
+      },
+      "visual_evidence": [
+        "score_07.jpg:282.5-288.5",
+        "contact_04.jpg:282.5-298.5",
+        "contact_05.jpg:300.5-304.5"
+      ],
+      "crop_assessment": {
+        "status": "sampled_point_fits_with_reaction_face_risk",
+        "risk": "286.5 near Federer at right edge but body remains in sampled crop; racket/ball edge pending dense QC.290.5 winning reaction cuts part of face at left;292.5 face fits.298.5 both faces during net greeting fit. Umpire greeting302.5 needs full window check."
+      },
+      "coverage_observation": "281.35-285.6 Nadal preparing after saving previous championship point. Last live point285.6-289.2, Federer reaction289.2+, Nadal face295.17+, net greeting297.33+, until305.2 change. Full serve start still pending; do not call 281.35 a live-point start."
+    },
+    {
+      "candidate_id": "2017-trophy-lift",
+      "source_name": "fedal2017",
+      "status": "candidate",
+      "event": "2017 Federer second Shanghai Masters trophy",
+      "in_candidate": 316.98,
+      "out_candidate": 337.05,
+      "point_start_candidate": null,
+      "point_end_candidate": null,
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "score_before": null,
+      "score_after": {
+        "winner": "Roger Federer"
+      },
+      "visual_evidence": [
+        "contact_05.jpg:318.5-336.5"
+      ],
+      "crop_assessment": {
+        "status": "sampled_winner_and_trophy_fit_pending",
+        "risk": "Federer centered presentation320.5-328.5 and raised trophy330.5-336.5 fit mostly; trophy top/frame edges pending final preview."
+      },
+      "coverage_observation": "Separate awards ceremony.337.05 onward Nadal speech,360.65 Federer ceremony speech,380.12-430.95 court-side interview. Tail30s is interview, not decisive match footage."
+    },
+    {
+      "candidate_id": "2024-terminal-point-and-handshake",
+      "source_name": "sinner2024",
+      "status": "candidate",
+      "event": "2024 Shanghai Masters final, Sinner vs Djokovic",
+      "in_candidate": 455.96,
+      "out_candidate": 476.0,
+      "point_start_candidate": 457.4,
+      "point_end_candidate": 461.76,
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "score_before": {
+        "Sinner": [
+          "7",
+          "5",
+          "40"
+        ],
+        "Djokovic": [
+          "6(4)",
+          "3",
+          "15"
+        ],
+        "server": "Jannik Sinner"
+      },
+      "score_after": {
+        "winner": "Jannik Sinner",
+        "sets": [
+          "7-6(4)",
+          "6-3"
+        ]
+      },
+      "visual_evidence": [
+        "score_11.jpg:458.5-462.5",
+        "contact_07.jpg:456.5-474.5"
+      ],
+      "crop_assessment": {
+        "status": "sampled_point_fits_handshake_face_risk",
+        "risk": "Live point458.5/460.5 retains near Sinner and far Djokovic; dense serve/landing QC pending.472.5 first handshake sample crops Sinner face entirely;474.5 crops part of Djokovic face. Winning Sinner face462.5-466.5 and Djokovic468.5-470.5 fit individually."
+      },
+      "coverage_observation": "455.96-457.4 preparatory close-up, live point457.4-461.76, Sinner462+, Djokovic468+, visible handshake471.76-476 approximate.449.96-455.96 score is5-3/30-15, not terminal point;448.5 belongs prior4-2 game. Native labels40-15 not40-0."
+    },
+    {
+      "candidate_id": "2024-title-portrait",
+      "source_name": "sinner2024",
+      "status": "candidate",
+      "event": "2024 Sinner trophy ceremony portrait",
+      "in_candidate": 480.0,
+      "out_candidate": 483.68,
+      "point_start_candidate": null,
+      "point_end_candidate": null,
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "score_before": null,
+      "score_after": {
+        "winner": "Jannik Sinner"
+      },
+      "visual_evidence": [
+        "contact_08.jpg:480.5-482.5"
+      ],
+      "crop_assessment": {
+        "status": "sampled_winner_and_trophy_fit_pending",
+        "risk": "480.5/482.5 centered Sinner and trophy fit; preceding476.5/478.5 presentation crops winner face at left, avoid declaring whole476-484 passed."
+      },
+      "coverage_observation": "Separate title ceremony after476.0 cut.483.68 starts channel outro. Portrait window is short; final frame precision and audio pending."
+    },
+    {
+      "candidate_id": "2025-terminal-break-and-embrace",
+      "source_name": "vacherot2025",
+      "status": "candidate",
+      "event": "2025 Shanghai Masters final, Vacherot vs Rinderknech",
+      "in_candidate": 360.2,
+      "out_candidate": 393.84,
+      "point_start_candidate": 363.32,
+      "point_end_candidate": 368.6,
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "score_before": {
+        "Rinderknech": [
+          "6",
+          "3",
+          "3",
+          "30"
+        ],
+        "Vacherot": [
+          "4",
+          "6",
+          "5",
+          "40"
+        ],
+        "server": "Arthur Rinderknech"
+      },
+      "score_after": {
+        "winner": "Valentin Vacherot",
+        "sets": [
+          "4-6",
+          "6-3",
+          "6-3"
+        ]
+      },
+      "visual_evidence": [
+        "score_09.jpg:364.5-368.5",
+        "contact_06.jpg:360.5-392.5"
+      ],
+      "crop_assessment": {
+        "status": "sampled_point_and_embrace_fit_pending",
+        "risk": "364.5/366.5/368.5 source action mostly inside center; far Vacherot approaches right edge366.5, ball/racket dense QC required.370.5 head bow face hidden by posture.382.5-392.5 embrace retains bodies/side-back heads but cap/back/posture conceal faces naturally; do not claim continuously clear two faces."
+      },
+      "coverage_observation": "Rinderknech teal shirt near end serving; Vacherot cream/white cap far end returns, then emotional winner close-ups368.6+, Rinderknech378.5, approach380.5, first visible touch382.5, embrace384.5-392.5. This is receiving-game break to win, NOT Vacherot serving for title. Source360.5/362.5 score is earlier15-0 for Vacherot vs0, not the terminal point;363.32 edit jumps to40-30."
+    },
+    {
+      "candidate_id": "2025-trophy-lift",
+      "source_name": "vacherot2025",
+      "status": "candidate",
+      "event": "2025 Vacherot trophy presentation",
+      "in_candidate": 409.92,
+      "out_candidate": 415.6,
+      "point_start_candidate": null,
+      "point_end_candidate": null,
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "score_before": null,
+      "score_after": {
+        "winner": "Valentin Vacherot"
+      },
+      "visual_evidence": [
+        "contact_06.jpg:410.5-414.5"
+      ],
+      "crop_assessment": {
+        "status": "sampled_winner_and_trophy_fit_pending",
+        "risk": "Winner/upper trophy centered in410.5-414.5 sample; full shot borders pending.415.6 switches to wide stage then speeches; natural ceremony audio unverified."
+      },
+      "coverage_observation": "Separate later trophy ceremony after emotional on-court aftermath.472.8-479.36 adds later solo title lift, not the terminal point."
+    }
+  ]
+}

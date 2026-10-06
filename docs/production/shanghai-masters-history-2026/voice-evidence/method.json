@@ -1,0 +1,18 @@
+{
+  "repository_head": "57a3ba4d88c22e731d1d9f1a6e60adb86b58bc09",
+  "method_file": "tools/measure_polyphone.py",
+  "method_sha256": "fac339699bd155c71594bdfa546ed2f619f608482774ef4a6447dcba4e4f1a51",
+  "original_audio_policy": "Use supplied actual production MP3 directly; no original sentence resynthesis",
+  "network_policy": "Inherited HTTPS proxy and system CA",
+  "dependencies": {
+    "edge-tts": "7.2.8",
+    "librosa": "1.0.0",
+    "praat-parselmouth": "0.4.7",
+    "numpy": "2.3.5",
+    "pypinyin": "0.55.0"
+  },
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "manual_listening": false,
+  "publication_approval": false
+}

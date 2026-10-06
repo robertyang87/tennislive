@@ -1,0 +1,41 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=1IUIALrbq4w",
+  "source_sha256": "2228691202fb9b7037481b6e99f53217bf3e49e5e74a1e9e9cf9c4bc64b18c68",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "/root/source_audio_review",
+  "reviewed_at": "2026-10-06T00:46:02.586794+00:00",
+  "reviewed_from": 334.0,
+  "reviewed_to": 341.1,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "human_listened": false,
+  "evidence": [
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/mayer2014/window-00-small.en.json",
+      "sha256": "8cd29448750d2d72d2ac9b6ac042039c280c132730e1cb6eed1b94f25a9b4e2e"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/mayer2014/window-00-medium.en.json",
+      "sha256": "7f0c6b525f279a4a049491d155e5fbd59ad8ba2fb289fbb08942876d6c40607e"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/mayer2014/window-00-crosscheck.json",
+      "sha256": "a0fd6b55a0218aad53f2be70ed82b42c35169732a5af480c335b4ade5990a9e5"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/mayer2014/provider.en-orig.json3",
+      "sha256": "f097db3a425f083f020ec58a9fba7ffda7e6303515623268ec3cd50effbb5d5e"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/mayer2014/source.json",
+      "sha256": "c2d6d7d765ecb99dbd2bee289e8ed930fa63dffe471cd4260b776fa270c8ae12"
+    }
+  ],
+  "review_notes": [
+    "Both model previous sentence cover-the-distance/make-target-smaller ends333.21(small)/333.72(medium); VAD previous speech ends333.76. Next ASR Match point starts341.34/341.57; provider Match point341.76. No lexical event or VAD speech inside334.0–341.1.",
+    "Explanatory player/reaction/preparation B-roll only, not a complete-match-point claim."
+  ],
+  "scope": "whole selected source-audio window; not a final mixed/rendered audio pass; visual/crop/point review separate",
+  "no_foreground_english_reason": "Wholewindow334.0–341.1 is between independently crosschecked complete foreground comments: both raw word streams contain no words, provider has no new lexical event in this interval, VAD has no speech. Source SHA matches actual local original. Not inferred from ASR silence alone."
+}
