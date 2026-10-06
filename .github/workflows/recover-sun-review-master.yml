@@ -16,38 +16,30 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Download only the existing pinned private review film
+      - name: Recover only the existing SHA-bound review film from read-only Git blobs
         env:
           GH_TOKEN: ${{ github.token }}
           SUN_WORKDIR: ${{ runner.temp }}/sun-review-master
         run: |
           python - <<'PY'
-          import hashlib,json,os,pathlib,urllib.request
+          import base64,hashlib,json,os,pathlib,urllib.request
           base='https://api.github.com/repos/robertyang87/tennislive'
-          expected='509cca3263c96588d7726604e5b44b067d803a83867018fcc31dd85558a4bdd4'
-          size=58737253
           headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}
-          def get(path):
-              with urllib.request.urlopen(urllib.request.Request(base+path,headers=headers),timeout=60) as response:
-                  return json.load(response)
-          def check():
-              release=get('/releases/404202921')
-              assert release['draft'] is True and release['tag_name']=='explainer-sun-xinran-coming-of-age-2026'
-              assets=[a for a in release['assets'] if a['id']==614048923 and a['name']=='sun-xinran-coming-of-age-2026.mp4']
-              assert len(assets)==1 and assets[0]['size']==size and assets[0]['digest']=='sha256:'+expected
-              return release,assets[0]
-          release,asset=check()
+          request={"repo":"robertyang87/tennislive","slug":"sun-xinran-coming-of-age-2026","kind":"explainer","tag":"explainer-sun-xinran-coming-of-age-2026","release_id":404202921,"asset_name":"sun-xinran-coming-of-age-2026.mp4","movie_sha256":"509cca3263c96588d7726604e5b44b067d803a83867018fcc31dd85558a4bdd4","movie_bytes":58737253,"chunks":[{"index":0,"git_blob_sha":"b10ffcedbbe2a94eb4189a5579ab60eda45efab8","bytes":3145728,"sha256":"a1e99d278f8216c1d9ee9aa5a8a711715db432e6dc393809431e529e8fa40a7c"},{"index":1,"git_blob_sha":"d0882e178f6958986b6f57e2f10129658275704d","bytes":3145728,"sha256":"80f03d268bd020c654101d12a5670733e1fe2d9d7da3e7718550a1cdbe46e852"},{"index":2,"git_blob_sha":"8d9174f0595bf2159d6046ad5664a27af4c121ad","bytes":3145728,"sha256":"72bee2aaedb573dd31aae126a112c260b288c61ee5751de4e39c4c0befbe963c"},{"index":3,"git_blob_sha":"34f629254c24ed6b3fc498639b2eae2ce162cdd4","bytes":3145728,"sha256":"82fe3f88a927f58435668719e86551b11b1393a33765b6845f3537b836a37b1e"},{"index":4,"git_blob_sha":"b8b68bfd237ac00833cd3bcb0ec4b8fd8da688d1","bytes":3145728,"sha256":"6c76a92e07d8581c68e1c1b3b75dc5fd7a9d995a0ea3838090870d6a106a8b74"},{"index":5,"git_blob_sha":"10937746a245144e69fa678fbb1716982d439903","bytes":3145728,"sha256":"2474effb639b8c9b2d732e79438b40144acaf3da64e525f4ec0903915f039faf"},{"index":6,"git_blob_sha":"9e3064c9e39706243b5f8d73987596434f570436","bytes":3145728,"sha256":"93335a141c471cfca06788b50015b0f870af40e82e4b0941703ff178afa9a6ce"},{"index":7,"git_blob_sha":"526acfe09b3f7f632982c484ff06df80b8e11083","bytes":3145728,"sha256":"535f95aaa428cfa7b9e131ebd2ff7af5da22bcf18cd40e7af5d0bc2ccdfb6c55"},{"index":8,"git_blob_sha":"99f29a371b3695de32ce96a8679821f3b68f16ea","bytes":3145728,"sha256":"8e953fdf83f3c600a9b38af4efd8f61645775daae2e074d5c40e26c3dc68d931"},{"index":9,"git_blob_sha":"946230370e016a90ba5657c01b334c2e7fdb2df0","bytes":3145728,"sha256":"1fc4e38a5f8c8b8f345824134014b3b252a420ffa611ac26ce3ab6eb3a72e21c"},{"index":10,"git_blob_sha":"dd0a5f6d327169a7d4e57c1e34bb622591d0b11c","bytes":3145728,"sha256":"780a1b4c7983eedb01cc556b348fcedec2f5ae1be4ac6151e4b105600d74a0d5"},{"index":11,"git_blob_sha":"c2a7f20aa33ebce590a8105c8da5292f2a2453c8","bytes":3145728,"sha256":"cc470f7c26948f29fd9dbc8a5ff2ff04f8f4121500545f56e0847e3ecfcf0eca"},{"index":12,"git_blob_sha":"6ec2b20bf73434e0d48e6d71f5000d0d0f44e820","bytes":3145728,"sha256":"b3fe2b8c5fa2391b8a846ce4220405d9bc6cd0b780d380c595dbcee5a7b8c426"},{"index":13,"git_blob_sha":"5a79371f9643b3d3fde50c18555c1ee648d75221","bytes":3145728,"sha256":"ab79271e8f6e58bee531b466b189b92cfabe92d7daffb379a08a75c599e32b5f"},{"index":14,"git_blob_sha":"4a35ab02b7400aa25a4a1018aaffab4260afa4b1","bytes":3145728,"sha256":"571ce31e44e35cf52e713143b72bdc70c41cab0c197f884d4b1b9ab3f4ac0088"},{"index":15,"git_blob_sha":"ac747cfd9974cb6dd55a33f948d8725d4d860ff3","bytes":3145728,"sha256":"55714915ec3856086b941ccfaa6a6474892e22c7c5de8f9824c001dc648e2968"},{"index":16,"git_blob_sha":"2b3b0f706a271f015ba55dd9b433f0f189ccd853","bytes":3145728,"sha256":"7b0d308b9858569cbf449bc2383a70406c4b1b4aa07796345110ac6a7a26698b"},{"index":17,"git_blob_sha":"70cc9a04666a864c825b04f9e63169e04cbf6566","bytes":3145728,"sha256":"3ea8fa126d7e58d28fc084efede34f920e00a3d680d64e763594925f0a16417d"},{"index":18,"git_blob_sha":"7d3903780a5ebb93a53cb884d4650cfdd9288d97","bytes":2114149,"sha256":"a894bfc17b35602c33dc6e22676f0a93ce97e5f2c183bea2de65286014d09a51"}]}
           out=pathlib.Path(os.environ['SUN_WORKDIR']);out.mkdir(parents=True,exist_ok=True)
-          movie=out/asset['name'];digest=hashlib.sha256();count=0
-          binary_headers={**headers,'Accept':'application/octet-stream'}
-          with urllib.request.urlopen(urllib.request.Request(base+'/releases/assets/614048923',headers=binary_headers),timeout=120) as response,movie.open('wb') as dest:
-              while True:
-                  block=response.read(1024*1024)
-                  if not block:break
-                  digest.update(block);count+=len(block);dest.write(block)
-          assert count==size and digest.hexdigest()==expected
-          check()
-          (out/'recovery.json').write_text(json.dumps({'status':'RECOVERED_EXACT_REVIEW_MASTER','sha256':expected,'bytes':size,'release_id':404202921,'asset_id':614048923,'draft':True,'published':False,'wechat_sent':False,'audio_review_pass':None},indent=2)+'\n')
+          movie=out/request['asset_name'];digest=hashlib.sha256();count=0
+          with movie.open('wb') as dest:
+              for chunk in request['chunks']:
+                  req=urllib.request.Request(base+'/git/blobs/'+chunk['git_blob_sha'],headers=headers)
+                  with urllib.request.urlopen(req,timeout=60) as response:
+                      blob=json.load(response)
+                  assert blob['sha']==chunk['git_blob_sha'] and blob['encoding']=='base64'
+                  data=base64.b64decode(blob['content'])
+                  assert len(data)==chunk['bytes'] and hashlib.sha256(data).hexdigest()==chunk['sha256']
+                  assert hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()==chunk['git_blob_sha']
+                  digest.update(data);count+=len(data);dest.write(data)
+          assert count==request['movie_bytes'] and digest.hexdigest()==request['movie_sha256']
+          (out/'recovery.json').write_text(json.dumps({'status':'RECOVERED_EXACT_REVIEW_MASTER','sha256':digest.hexdigest(),'bytes':count,'release_id':404202921,'asset_id':614048923,'route':'read_only_bound_git_blobs','published':False,'wechat_sent':False,'audio_review_pass':None},indent=2)+'\n')
           PY
       - name: Retain exact movie for independent review
         uses: actions/upload-artifact@v4
