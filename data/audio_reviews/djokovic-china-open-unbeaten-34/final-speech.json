@@ -1,0 +1,55 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=8Dc6BvkUEZM",
+  "source_path": "/workspace/video-review/djokovic-34-sources/8Dc6BvkUEZM.mp4",
+  "source_sha256": "fa4a6b25eb492d6d276d55e8c2739f5378f89bccc3dbf65cdf69265e5c267646",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:59.155173+00:00",
+  "reviewed_from": 451.7,
+  "reviewed_to": 458.55,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 452.0,
+      "end": 454.46,
+      "en": "This trophy means much more, much more",
+      "zh": "这座奖杯的意义远远不止于此，"
+    },
+    {
+      "start": 454.46,
+      "end": 456.86,
+      "en": "than one trophy, one tournament for all of us,",
+      "zh": "对我们来说，远不止一杯、一站赛事，"
+    },
+    {
+      "start": 456.86,
+      "end": 458.52,
+      "en": "so very, very happy for that.",
+      "zh": "所以我非常、非常开心。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/final-short-speech.targeted.small.en.json",
+      "sha256": "06a663c9b151199ef3eea9aeca0e1bd1ed921ecbb526135b933e234017063e2a"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/final-short-speech.targeted.base.en.json",
+      "sha256": "b71356a3203d2ed681d099e75a504900b90f5b58e0fd7fb11d26f4443511f4e3"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/8Dc6BvkUEZM.small.en.json",
+      "sha256": "740e2da55442e90d62c6dcb3711edaf37048bce7cea0291a3d63fcc3904e0184"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/8Dc6BvkUEZM.base.en.json",
+      "sha256": "51d096c4545592f702e1e8ef71ce77fe4069794414b2c99e75848a735f5e81d5"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Full-source and targeted small.en retain repeated much more; targeted base.en independently confirms repetition with high probabilities. Selected window excludes preceding non-semantic you know/this is false start, explicitly allowed by parent. Use local base.en This onset 452.0 because local small.en stretches it over preceding 1.3s pause. Last that ends 458.52; following English starts no earlier than 458.75, so end458.55 + native0.18 =458.73."
+  ]
+}

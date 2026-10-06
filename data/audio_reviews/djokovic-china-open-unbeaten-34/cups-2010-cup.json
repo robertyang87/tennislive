@@ -1,0 +1,53 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/i1LtteR8jd0.mp4",
+  "source_sha256": "551d24ac4ffc3ad4a2a202cf178a2ca5f4488e1675f5e63f9a409b10e7a4cc1b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:59.547231+00:00",
+  "reviewed_from": 133.94,
+  "reviewed_to": 138.85,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 133.96,
+      "end": 136.8,
+      "en": "He knows what it's like to hold the trophy aloft.",
+      "zh": "他很熟悉举起奖杯的感觉。"
+    },
+    {
+      "start": 137.48,
+      "end": 138.66,
+      "en": "He did so last year.",
+      "zh": "去年，他就曾这样捧杯。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2010-cup.medium.en.json",
+      "sha256": "0dab9f2cd28f790d0a4919a09eba04bf659515e759e7598130bd8b62af8f4c0d"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2010.targeted.small.en.json",
+      "sha256": "3113aceaf79e2fc298ea1ce2f935a653a9f3c84b920fc0fe1c9dbff36f0b8e51"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2010.targeted.base.en.json",
+      "sha256": "75f09f5f8a80b69cf38f253491ec7eb9e7260202450b408fa561b88a1e3f534d"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.small.en.json",
+      "sha256": "5a238cc9dd893765a91d9e4b52a4736d44ef8c63a557e9b963f217556bffb421"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.base.en.json",
+      "sha256": "2a244e17345546b503bb82ced850538fa1225f98942c28ccfbd9108cfd803513"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Window covers visually verified true trophy raise134–138. Medium.en genuinely resolves what it's like / aloft / last year, phonetically garbled by smaller models; raw alternatives retained. Window starts133.94 after medium.en previous (unreliable) name endpoint133.94 and before small.en He133.96; safely excludes unresolved previous clause. Ends after last year138.66 and before earliest next medium token139.06; native +0.18=139.03, so next clause not exposed. Small.en last here word stretched to139.8 carries0.21 probability and is rejected as erroneous last-year decoding over silence."
+  ]
+}

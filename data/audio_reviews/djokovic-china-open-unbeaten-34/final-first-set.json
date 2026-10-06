@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=8Dc6BvkUEZM",
+  "source_path": "/workspace/video-review/djokovic-34-sources/8Dc6BvkUEZM.mp4",
+  "source_sha256": "fa4a6b25eb492d6d276d55e8c2739f5378f89bccc3dbf65cdf69265e5c267646",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:58.320642+00:00",
+  "reviewed_from": 239.65,
+  "reviewed_to": 254.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 248.96,
+      "end": 251.5,
+      "en": "Novak Djokovic moves to within a set",
+      "zh": "德约科维奇距离冠军只差一盘，"
+    },
+    {
+      "start": 251.5,
+      "end": 253.82,
+      "en": "of a seventh Beijing title.",
+      "zh": "那将是他的第七座北京冠军。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/8Dc6BvkUEZM.small.en.json",
+      "sha256": "740e2da55442e90d62c6dcb3711edaf37048bce7cea0291a3d63fcc3904e0184"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/8Dc6BvkUEZM.base.en.json",
+      "sha256": "51d096c4545592f702e1e8ef71ce77fe4069794414b2c99e75848a735f5e81d5"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": []
+}
