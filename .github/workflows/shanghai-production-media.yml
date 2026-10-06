@@ -58,7 +58,21 @@ jobs:
           PYTHON
       - uses: actions/upload-artifact@v4
         with:
-          name: shanghai-native-originals
-          path: /tmp/shanghai-sources/
+          name: shanghai-native-originals-a
+          path: |
+            /tmp/shanghai-sources/source_cup2005.mp4
+            /tmp/shanghai-sources/source_final2012.mp4
+            /tmp/shanghai-sources/source_mayer2014.mp4
+            /tmp/shanghai-sources/sources.json
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-native-originals-b
+          path: |
+            /tmp/shanghai-sources/source_fedal2017.mp4
+            /tmp/shanghai-sources/source_sinner2024.mp4
+            /tmp/shanghai-sources/source_vacherot2025.mp4
+            /tmp/shanghai-sources/sources.json
           compression-level: 0
           retention-days: 7
