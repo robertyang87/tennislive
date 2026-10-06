@@ -1,0 +1,93 @@
+name: Send separate native story review messages
+on:
+  push:
+    branches: [delivery/wechat-native-split-20261006]
+    paths: [.github/workflows/wechat-native-split-20261006.yml]
+permissions:
+  contents: write
+concurrency:
+  group: wechat-native-split-20261006
+  cancel-in-progress: false
+jobs:
+  deliver:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            pyproject.toml
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q -e .
+      - name: Generate two native template messages and send each once
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          import os,json,base64,datetime,pathlib,requests,time
+          from tennislive.video import explainer as E
+          from tennislive.render.tournament_story import find_story_by_slug
+          from tennislive.render.knowledge import knowledge_push_html_from_parts
+          from tennislive.render.pushmsg import split_xhs,drop_dead_copy_button
+          from tennislive.publish.pushplus import push,message_url
+          repo='robertyang87/tennislive';branch='delivery/wechat-native-split-20261006'
+          api='https://api.github.com/repos/'+repo
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'}
+          out=pathlib.Path(os.environ['RUNNER_TEMP'])/'native-split';out.mkdir(exist_ok=True)
+          response=requests.get(api+'/releases/404441774',headers=headers,timeout=30);response.raise_for_status();release=response.json()
+          assert release['draft'] is True
+          assets={a['name']:a for a in release['assets']}
+          story=find_story_by_slug('sun-xinran-coming-of-age-2026');assert story is not None
+          title,body=split_xhs(E.explainer_xiaohongshu(story,E.explainer_script(story),'10.6'))
+          sun_copy=title+'\n\n审片交付｜语音待核。附件页请下载孙心然对应文件。\n\n'+body
+          rows=[
+          ('sun-xinran-coming-of-age-2026',sun_copy,'sun-cover.jpg','sun-xinran-growth-v2-1080x1440-review.mp4','861eae3d2cf1a8b4f6932b258e00d54308abec3eeafc7ada5599c0d829ce1272',85039635),
+          ('shanghai-masters-history-2026',"10.6网球有故事|上海白玉兰传奇\n\n审片交付｜语音待核。附件页请下载上海大师赛对应文件。\n\n上海的秋天，又到了把目光投向旗忠的时候。白玉兰形的屋顶之下，世界网坛一次次相聚。这座球场的故事，却早在“上海大师赛”这个名字之前，就已经写下了。\n\n1996年，上海迎来自己的ATP巡回赛。2002年，年终大师杯第一次来到浦东，休伊特与费雷罗用一场五盘决赛留下开篇。2005年，旗忠启用，大师杯回归；替补入围的纳尔班迪安，在先输两盘之后逆转费德勒，把一次临时参赛机会变成冠军。\n\n2009年，上海拥有了新的身份：全球九站之一、亚洲唯一的大师1000赛。达维登科击败纳达尔，成为首届冠军。从此，顶尖网球有了一个固定的上海之约。\n\n这里记得2012年的五个冠军点。穆雷距离胜利只差一分，德约科维奇却让比赛一次次继续。这里也记得2014年的五个赛点：费德勒首战几乎出局，最终仍捧起自己的第一座上海大师赛奖杯。2017年，费德勒与纳达尔把多年的对抗带到同一张球网两边。\n\n三个取消的秋天之后，赛事在2023年回归，单打签表扩大到96人。2024年，辛纳击败此前在上海大师赛决赛四战全胜的德约科维奇，写下新的冠军名字。2025年，赛前排名204位的资格赛球员瓦舍罗与表兄林德克内希会师决赛。两个亲人争过同一座奖杯，又在赛后相拥。\n\n从浦东的大师杯，到旗忠的上海大师赛，这座城市留下的，不只有奖杯。还有逆转、重逢，以及一个新名字被记住的瞬间。下一段上海传奇，会从哪一分开始？\n\n#网球 #上海大师赛 #网球有故事 #网球时差\n",'shanghai-cover.jpg','shanghai-masters-history-1080x1440-review.mp4','95f91fcfd666a915387f572418e9b07a0e372135e28ffaff53df53e3d825fcce',134832565)
+          ]
+          for slug,copy,cover,filename,digest,size in rows:
+              assert assets[filename]['digest']=='sha256:'+digest and assets[filename]['size']==size
+              image_url='https://raw.githubusercontent.com/'+repo+'/a5f85e92ee3d235404ecb9a44f4c3aa55429e51b/docs/review-delivery/20261006/'+cover
+              html=knowledge_push_html_from_parts(image_urls=[image_url],xhs_text=copy,copy_url='https://robertyang87.github.io/tennislive/output/2026-10-06/review-delivery/'+slug+'/copy.html',video_url=release['html_url'],column='网球有故事')
+              # Known undeployed copy page: native fallback removes only that button.
+              html,live=drop_dead_copy_button(html,probe=lambda url:False)
+              assert live is None and '分别复制标题 / 正文 / 置顶评论' not in html
+              assert html.count(image_url)>=1 and html.count(split_xhs(copy)[1].splitlines()[0])==1
+              (out/(slug+'-push.html')).write_text(html)
+              (out/(slug+'-xiaohongshu.txt')).write_text(copy)
+              ledger_path='data/review_delivery_ledger/native-template-'+slug+'.json'
+              ledger_url=api+'/contents/'+ledger_path
+              check=requests.get(ledger_url,headers=headers,params={'ref':branch},timeout=30)
+              assert check.status_code==404,'Claim already exists; no automatic duplicate.'
+              record={'status':'sending','slug':slug,'delivery_kind':'native_template_review','video_sha256':digest,'video_bytes':size,'release_id':404441774,'publishing_voice_pass':False,'complete_actual_listening':False,'at':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+              def save(sha=None):
+                  payload={'branch':branch,'message':'Record independent native template review message','content':base64.b64encode((json.dumps(record,ensure_ascii=False,indent=2)+'\n').encode()).decode()}
+                  if sha:payload['sha']=sha
+                  r=requests.put(ledger_url,headers=headers,json=payload,timeout=30);r.raise_for_status()
+                  return r.json()['content']['sha']
+              claim=save()
+              try:receipt=push(split_xhs(copy)[0],html)
+              except Exception as exc:
+                  record.update(status='uncertain',error_type=type(exc).__name__);save(claim);raise
+              record.update(status='accepted',pushplus_receipt=receipt,message_url=message_url(receipt),wechat_phone_delivery='unverified')
+              save(claim)
+              (out/(slug+'-receipt.json')).write_text(json.dumps(record,ensure_ascii=False,indent=2))
+              print(json.dumps(record,ensure_ascii=False))
+              with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write(slug+' '+record['message_url']+'\n')
+              time.sleep(3)
+          
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-split-message-evidence
+          path: ${{ runner.temp }}/native-split/
+          if-no-files-found: ignore
+          retention-days: 7
