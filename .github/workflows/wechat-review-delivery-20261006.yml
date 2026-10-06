@@ -1,0 +1,81 @@
+name: Deliver authorized review films to WeChat
+on:
+  push:
+    branches: [delivery/wechat-review-20261006-0838]
+    paths: [.github/workflows/wechat-review-delivery-20261006.yml]
+permissions:
+  contents: write
+concurrency:
+  group: wechat-review-delivery-20261006
+  cancel-in-progress: false
+jobs:
+  deliver:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q requests
+      - name: Verify exact draft attachments, claim delivery, and send once
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          import os,json,base64,datetime,pathlib,requests
+          from tennislive.publish.pushplus import push,write_receipt,message_url
+          repo='robertyang87/tennislive'
+          branch='delivery/wechat-review-20261006-0838'
+          api='https://api.github.com/repos/'+repo
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'}
+          r=requests.get(api+'/releases/404441774',headers=headers,timeout=30);r.raise_for_status();release=r.json()
+          assert release['draft'] is True
+          expected={'sun-xinran-growth-v2-1080x1440-review.mp4':('861eae3d2cf1a8b4f6932b258e00d54308abec3eeafc7ada5599c0d829ce1272',85039635),'shanghai-masters-history-1080x1440-review.mp4':('95f91fcfd666a915387f572418e9b07a0e372135e28ffaff53df53e3d825fcce',134832565)}
+          assets={a['name']:a for a in release['assets']}
+          for name,(digest,size) in expected.items():
+              assert assets[name]['digest']=='sha256:'+digest and assets[name]['size']==size
+          ledger_path='data/review_delivery_ledger/20261006-sun-shanghai.json'
+          ledger_url=api+'/contents/'+ledger_path
+          old=requests.get(ledger_url,headers=headers,params={'ref':branch},timeout=30)
+          if old.status_code==200: raise SystemExit('Delivery already claimed; no automatic resend.')
+          assert old.status_code==404
+          record={'status':'sending','release_id':release['id'],'delivery_kind':'review_draft','publishing_voice_pass':False,'complete_actual_listening':False,'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'assets':{n:{'sha256':v[0],'bytes':v[1]} for n,v in expected.items()}}
+          def save(record,sha=None):
+              payload={'branch':branch,'message':'Record authorized review-only WeChat delivery','content':base64.b64encode((json.dumps(record,ensure_ascii=False,indent=2)+'\n').encode()).decode()}
+              if sha:payload['sha']=sha
+              response=requests.put(ledger_url,headers=headers,json=payload,timeout=30);response.raise_for_status()
+              return response.json()['content']['sha']
+          claim_sha=save(record)
+          content='<h2>网球有故事 · 两条最新版交付</h2><p>当前为审片版，完整语音听核待完成；本次按账号所有者明确授权发送，不代表发布质检通过。</p>'
+          content+='<h3>孙心然成长历程</h3><p>1080×1440 · 3分50.04秒。已去除额外贴上的比分板，32处切换加入柔和转场，保留原音。</p>'
+          content+='<p><a href="'+assets['sun-xinran-growth-v2-1080x1440-review.mp4']['browser_download_url']+'">下载孙心然最新版视频</a></p>'
+          content+='<h3>上海大师赛历史专题</h3><p>1080×1440 · 7分13.4秒。原生技术质检及完整解码通过，语音待核。</p>'
+          content+='<p><a href="'+assets['shanghai-masters-history-1080x1440-review.mp4']['browser_download_url']+'">下载上海大师赛最新版视频</a></p>'
+          content+='<p><a href="'+release['html_url']+'">打开完整交付附件页</a></p><p>附件保存为 GitHub Release 草稿，打开须登录有仓库权限的账号。未要求你参与审片。</p>'
+          try:
+              receipt=push('网球有故事｜孙心然与上海大师赛最新版',content)
+          except Exception as exc:
+              record.update(status='uncertain',error_type=type(exc).__name__)
+              save(record,claim_sha)
+              raise
+          record.update(status='accepted',pushplus_receipt=receipt,message_url=message_url(receipt),wechat_phone_delivery='unverified')
+          save(record,claim_sha)
+          write_receipt('wechat-review-receipt.json',receipt)
+          print(json.dumps(record,ensure_ascii=False))
+          pathlib.Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('微信接口已接收；手机送达未验证。\n\n'+message_url(receipt)+'\n',encoding='utf-8')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wechat-review-delivery-receipt
+          path: wechat-review-receipt.json
+          if-no-files-found: ignore
+          retention-days: 7
