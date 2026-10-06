@@ -1,0 +1,54 @@
+{
+  "method": "Actual source PCM8k mono RMS 1s sliding0.1s; windows allow only source-matched final natural_quiet_audio validation, no blanket silence exemption",
+  "source_sha256": "6d3a37557d2195d0ac284187e8cf73679b4fc5d183c8c1002ccd678c52406802",
+  "windows": [
+    {
+      "segment": 3,
+      "source_windows": [
+        [
+          0.09,
+          4.41
+        ],
+        [
+          17.99,
+          19.72
+        ]
+      ]
+    },
+    {
+      "segment": 5,
+      "source_windows": [
+        [
+          19.72,
+          21.13
+        ],
+        [
+          28.01,
+          29.44
+        ]
+      ]
+    },
+    {
+      "segment": 8,
+      "source_windows": [
+        [
+          73.92,
+          77.53
+        ],
+        [
+          86.81,
+          89.43
+        ]
+      ]
+    },
+    {
+      "segment": 10,
+      "source_windows": [
+        [
+          174.84,
+          178.45
+        ]
+      ]
+    }
+  ]
+}
