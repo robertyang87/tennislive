@@ -1,6 +1,5 @@
 {
   "method": "Actual final standard render, all8 directly reviewed renderer MP3 byte-identical; no new synthesis",
-  "film_sha256": "26a9d3d5b1efc34a20210dac4018a7db4505f902187dd7865c4f1927bcb91ac3",
   "rows": [
     {
       "file": "voice_10.mp3",
@@ -42,5 +41,9 @@
       "sha256": "7384086d9cc9a13f6b8cf8b04c2852a96d7952fce73df244170d3d7cf1b8a053",
       "exact_reviewed_renderer_bytes": true
     }
-  ]
+  ],
+  "local_verified_film_sha256": "26a9d3d5b1efc34a20210dac4018a7db4505f902187dd7865c4f1927bcb91ac3",
+  "published_runner_film_sha256": "0d95379d6dda0416a84135ac8ba4386816e21b5cf261cd98d79e63f0b1a1a7b7",
+  "published_run": 37445862263,
+  "published_binding_method": "Actual renderer MP3s pinned by individual SHA in run37443113335, saved standard rolling content-addressed TTS cache; final run37445862263 restored that unchanged cache lineage and log confirms eight cache hits with no new synthesis. Native and independent final L2 pass, actual downloadable final Release SHA verified."
 }
