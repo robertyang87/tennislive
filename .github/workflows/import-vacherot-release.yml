@@ -1,0 +1,42 @@
+name: Import verified Vacherot blue master to Release
+on:
+  push:
+    branches: [codex/vacherot-2025-story]
+    paths: [data/approved_reel_imports/vacherot-shanghai-one-year/request.json]
+permissions:
+  contents: write
+concurrency:
+  group: import-vacherot-blue-master
+  cancel-in-progress: false
+jobs:
+  import-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            data/approved_reel_imports/vacherot-shanghai-one-year
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install transfer and media checker
+        run: |
+          pip install -q requests
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: Reconstruct exact master and verify remote Release bytes
+        run: >-
+          python tools/import_vacherot_release.py
+          --request data/approved_reel_imports/vacherot-shanghai-one-year/request.json
+          --proof data/approved_reel_imports/vacherot-shanghai-one-year/release-proof.json
+      - name: Preserve actual verification evidence without sending WeChat
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vacherot-blue-master-release-proof
+          path: data/approved_reel_imports/vacherot-shanghai-one-year/release-proof.json
+          if-no-files-found: warn
