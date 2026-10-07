@@ -1,6 +1,6 @@
 {
   "created_at": "2026-10-07T16:42:06.571819+00:00",
-  "spec_sha256": "0f46d1dc2abc7c475b36d1ede5b62ff0885ff60b662d877d107a15853d0bea47",
+  "spec_sha256": "6466f6102296b538b703e46cbbec475e2c502c12562e15b7ae8376087e7cf8a2",
   "sealed": true,
   "status": "acoustic_review_complete",
   "actual_final_voice": "zh-CN-YunjianNeural",
@@ -1821,5 +1821,6 @@
     "声学对照证明本期实际声音更符合预期，置信度是启发式评级，不是统计概率。",
     "混音编码后成片实际音频由独立QC继续比对；本报告绑定native实际发声输出。",
     "任何口播文字、嗓音、语速或实际发声音频变化均使相应全文测量失效。"
-  ]
+  ],
+  "display_only_revision": "中文译名与数字规范化；终局视频end收短0.20秒，全部speakable输入及8条声学测量MP3均未变"
 }

@@ -68,11 +68,11 @@
     "source_id": "1020_2026_LS008",
     "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
     "participants": [
-      "查拉耶娃",
+      "恰拉耶娃",
       "郑钦文"
     ],
     "winner": "郑钦文",
-    "loser": "查拉耶娃",
+    "loser": "恰拉耶娃",
     "set_scores_home_away": [
       [
         1,
@@ -108,7 +108,7 @@
         "rank": 54
       },
       {
-        "name": "查拉耶娃",
+        "name": "恰拉耶娃",
         "name_en": "Alina Charaeva",
         "country": "ARM",
         "rank": 118
@@ -119,18 +119,19 @@
   "point_by_point_check": "pbp-quality-check.json",
   "key_turns": "editorial-facts.md",
   "next_round": {
-    "status": "pending",
+    "status": "result_verified",
     "match_id": "LS009",
-    "candidates": [
-      "Elina Svitolina",
-      "Ann Li"
-    ],
-    "source": "official-matches.json, wta-match-report.html"
+    "opponent": "Elina Svitolina",
+    "opponent_zh": "斯维托丽娜",
+    "qualifying_result": "6-2 6-3",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "source_path": "data/research/zheng-charaeva-beijing-2026-r4/next-round-match-latest.json",
+    "checked_at": "2026-10-07T17:01:58.362018+00:00"
   },
   "human_context": {
     "facts": [
       "郑钦文在24岁生日前一天晋级；她在赛后采访谈第一盘侵略性、第二盘未保持同样专注、感谢今晚观众、第三盘艰苦战斗。",
-      "查拉耶娃此前击败世界第一莱巴金娜，首次进入WTA1000第四轮。"
+      "恰拉耶娃此前击败世界第一莱巴金娜，首次进入WTA1000第四轮。"
     ],
     "sources": [
       "https://www.wtatennis.com/news/4588007/zheng-powers-into-beijing-last-eight-with-three-set-win-over-charaeva",
