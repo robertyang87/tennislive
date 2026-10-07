@@ -1,0 +1,699 @@
+{
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "window": [
+    346.18,
+    352.0
+  ],
+  "status": "uncertain speech identity, applause supported",
+  "method": "Actual-source independent multilingual small/medium ASR, contextual large-v3 ASR, Silero VAD and AudioSet AST classifier cross-evidence; no human listening claim. Empty ASR does not attest silence, and classifier scores do not identify words or speakers.",
+  "limitations": [
+    "Speech is the highest AudioSet class; unidentified speech remains possible.",
+    "AudioSet sigmoid scores are not calibrated event probabilities.",
+    "Medium final Chinese 们 spans346.04–346.38, overlapping the first0.20sec of this word gap; that is the already-subtitled preceding sentence tail, not a newly identifiable phrase.",
+    "Both small/medium Okay tokens occur after352.0; no added gap-internal word is inferred from the report context.",
+    "Strong ASR language=en over Chinese context may translate instead of faithfully transcribe; those outputs are excluded as native-speech evidence."
+  ],
+  "evidence": {
+    "asr_small": {
+      "source_record_sha256": "9dc990e2915bbdf2ad4e51e3cc3951e9d4756b88f4520766666a62539f976d03",
+      "source_record_original_path": "/workspace/scratch/LGHCCL4VHCw/native-small-words.json",
+      "result": {
+        "results": [
+          {
+            "model": "small",
+            "method": "faster-whisper multilingual native language windows; original actual-source word results",
+            "context_window": [
+              342,
+              355
+            ],
+            "context_words": [
+              {
+                "t": 341.06,
+                "end": 342.02,
+                "text": "我"
+              },
+              {
+                "t": 342.02,
+                "end": 342.38,
+                "text": "确"
+              },
+              {
+                "t": 342.38,
+                "end": 342.54,
+                "text": "实"
+              },
+              {
+                "t": 342.54,
+                "end": 342.72,
+                "text": "非常"
+              },
+              {
+                "t": 342.72,
+                "end": 343.06,
+                "text": "一下"
+              },
+              {
+                "t": 343.06,
+                "end": 343.32,
+                "text": "这"
+              },
+              {
+                "t": 343.32,
+                "end": 343.46,
+                "text": "场"
+              },
+              {
+                "t": 343.46,
+                "end": 343.64,
+                "text": "比"
+              },
+              {
+                "t": 343.64,
+                "end": 343.9,
+                "text": "赛"
+              },
+              {
+                "t": 343.9,
+                "end": 344.22,
+                "text": "也"
+              },
+              {
+                "t": 344.22,
+                "end": 344.52,
+                "text": "为"
+              },
+              {
+                "t": 344.52,
+                "end": 344.74,
+                "text": "了"
+              },
+              {
+                "t": 344.74,
+                "end": 344.94,
+                "text": "现"
+              },
+              {
+                "t": 344.94,
+                "end": 345.14,
+                "text": "场"
+              },
+              {
+                "t": 345.14,
+                "end": 345.36,
+                "text": "所有"
+              },
+              {
+                "t": 345.36,
+                "end": 345.54,
+                "text": "的"
+              },
+              {
+                "t": 345.54,
+                "end": 345.68,
+                "text": "观"
+              },
+              {
+                "t": 345.68,
+                "end": 345.92,
+                "text": "众"
+              },
+              {
+                "t": 345.92,
+                "end": 346.18,
+                "text": "们"
+              },
+              {
+                "t": 352.0,
+                "end": 352.56,
+                "text": "Okay,"
+              },
+              {
+                "t": 353.0,
+                "end": 353.34,
+                "text": "well"
+              },
+              {
+                "t": 353.34,
+                "end": 353.74,
+                "text": "first"
+              },
+              {
+                "t": 353.74,
+                "end": 353.98,
+                "text": "of"
+              },
+              {
+                "t": 353.98,
+                "end": 354.36,
+                "text": "all,"
+              },
+              {
+                "t": 354.48,
+                "end": 354.58,
+                "text": "I"
+              },
+              {
+                "t": 354.58,
+                "end": 354.76,
+                "text": "would"
+              },
+              {
+                "t": 354.76,
+                "end": 354.98,
+                "text": "like"
+              },
+              {
+                "t": 354.98,
+                "end": 355.16,
+                "text": "to"
+              }
+            ],
+            "overlapping_gap_words": [],
+            "identifiable_additional_gap_words": []
+          }
+        ]
+      }
+    },
+    "asr_medium": {
+      "source_record_sha256": "6c9e2736a75544171f3133726b92e416db1e3c26b8830073704dcc5d51f537d8",
+      "source_record_original_path": "/workspace/scratch/LGHCCL4VHCw/native-medium-words.json",
+      "result": {
+        "results": [
+          {
+            "model": "medium",
+            "method": "faster-whisper multilingual native language windows; original actual-source word results",
+            "context_window": [
+              342,
+              355
+            ],
+            "context_words": [
+              {
+                "t": 341.26,
+                "end": 342.36,
+                "text": "我"
+              },
+              {
+                "t": 342.36,
+                "end": 342.5,
+                "text": "确"
+              },
+              {
+                "t": 342.5,
+                "end": 342.64,
+                "text": "实"
+              },
+              {
+                "t": 342.64,
+                "end": 342.9,
+                "text": "非常"
+              },
+              {
+                "t": 342.9,
+                "end": 343.14,
+                "text": "欣"
+              },
+              {
+                "t": 343.14,
+                "end": 343.24,
+                "text": "赏"
+              },
+              {
+                "t": 343.24,
+                "end": 343.44,
+                "text": "这"
+              },
+              {
+                "t": 343.44,
+                "end": 343.54,
+                "text": "场"
+              },
+              {
+                "t": 343.54,
+                "end": 343.8,
+                "text": "比"
+              },
+              {
+                "t": 343.8,
+                "end": 344.1,
+                "text": "赛"
+              },
+              {
+                "t": 344.1,
+                "end": 344.44,
+                "text": "也"
+              },
+              {
+                "t": 344.44,
+                "end": 344.66,
+                "text": "为"
+              },
+              {
+                "t": 344.66,
+                "end": 344.9,
+                "text": "了"
+              },
+              {
+                "t": 344.9,
+                "end": 345.08,
+                "text": "现"
+              },
+              {
+                "t": 345.08,
+                "end": 345.22,
+                "text": "场"
+              },
+              {
+                "t": 345.22,
+                "end": 345.48,
+                "text": "所有"
+              },
+              {
+                "t": 345.48,
+                "end": 345.72,
+                "text": "的"
+              },
+              {
+                "t": 345.72,
+                "end": 345.9,
+                "text": "观"
+              },
+              {
+                "t": 345.9,
+                "end": 346.04,
+                "text": "众"
+              },
+              {
+                "t": 346.04,
+                "end": 346.38,
+                "text": "们"
+              },
+              {
+                "t": 352.66,
+                "end": 353.1,
+                "text": "Okay,"
+              },
+              {
+                "t": 353.1,
+                "end": 353.54,
+                "text": "well"
+              },
+              {
+                "t": 353.54,
+                "end": 353.94,
+                "text": "first"
+              },
+              {
+                "t": 353.94,
+                "end": 354.16,
+                "text": "of"
+              },
+              {
+                "t": 354.16,
+                "end": 354.48,
+                "text": "all,"
+              },
+              {
+                "t": 354.48,
+                "end": 354.66,
+                "text": "I"
+              },
+              {
+                "t": 354.66,
+                "end": 354.96,
+                "text": "would"
+              },
+              {
+                "t": 354.96,
+                "end": 355.06,
+                "text": "like"
+              }
+            ],
+            "overlapping_gap_words": [
+              {
+                "t": 346.04,
+                "end": 346.38,
+                "text": "们"
+              }
+            ],
+            "identifiable_additional_gap_words": []
+          }
+        ]
+      }
+    },
+    "asr_large_v3_context": {
+      "path": "output/interviews/zheng-charaeva-beijing-2026-interview/evidence/independent-gap-asr.json",
+      "sha256": "57f6109cca2b3aeba8415447063fe87feb3fa2fbebe1c100bf9c499424f6b5dc",
+      "result": {
+        "results": [
+          {
+            "model": "large-v3",
+            "requested_language": "zh",
+            "detected_language": "zh",
+            "detected_probability": 1,
+            "window": [
+              342.0,
+              355.0
+            ],
+            "segments": [
+              {
+                "start": 342.0,
+                "end": 343.8,
+                "text": "我确实非常影响这场比赛",
+                "words": [
+                  {
+                    "start": 342.0,
+                    "end": 342.0,
+                    "text": "我"
+                  },
+                  {
+                    "start": 342.0,
+                    "end": 342.38,
+                    "text": "确"
+                  },
+                  {
+                    "start": 342.38,
+                    "end": 342.5,
+                    "text": "实"
+                  },
+                  {
+                    "start": 342.5,
+                    "end": 342.72,
+                    "text": "非常"
+                  },
+                  {
+                    "start": 342.72,
+                    "end": 342.9,
+                    "text": "影"
+                  },
+                  {
+                    "start": 342.9,
+                    "end": 343.12,
+                    "text": "响"
+                  },
+                  {
+                    "start": 343.12,
+                    "end": 343.26,
+                    "text": "这"
+                  },
+                  {
+                    "start": 343.26,
+                    "end": 343.42,
+                    "text": "场"
+                  },
+                  {
+                    "start": 343.42,
+                    "end": 343.58,
+                    "text": "比"
+                  },
+                  {
+                    "start": 343.58,
+                    "end": 343.8,
+                    "text": "赛"
+                  }
+                ]
+              },
+              {
+                "start": 343.8,
+                "end": 346.08,
+                "text": "也为了现场所有的观众们",
+                "words": [
+                  {
+                    "start": 343.8,
+                    "end": 344.14,
+                    "text": "也"
+                  },
+                  {
+                    "start": 344.14,
+                    "end": 344.4,
+                    "text": "为"
+                  },
+                  {
+                    "start": 344.4,
+                    "end": 344.68,
+                    "text": "了"
+                  },
+                  {
+                    "start": 344.68,
+                    "end": 344.84,
+                    "text": "现"
+                  },
+                  {
+                    "start": 344.84,
+                    "end": 345.08,
+                    "text": "场"
+                  },
+                  {
+                    "start": 345.08,
+                    "end": 345.3,
+                    "text": "所有"
+                  },
+                  {
+                    "start": 345.3,
+                    "end": 345.44,
+                    "text": "的"
+                  },
+                  {
+                    "start": 345.44,
+                    "end": 345.58,
+                    "text": "观"
+                  },
+                  {
+                    "start": 345.58,
+                    "end": 345.88,
+                    "text": "众"
+                  },
+                  {
+                    "start": 345.88,
+                    "end": 346.08,
+                    "text": "们"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "large-v3",
+            "requested_language": null,
+            "detected_language": "zh",
+            "detected_probability": 0.8528017401695251,
+            "window": [
+              342.0,
+              355.0
+            ],
+            "segments": [
+              {
+                "start": 342.0,
+                "end": 343.8,
+                "text": "我确实非常影响这场比赛",
+                "words": [
+                  {
+                    "start": 342.0,
+                    "end": 342.0,
+                    "text": "我"
+                  },
+                  {
+                    "start": 342.0,
+                    "end": 342.38,
+                    "text": "确"
+                  },
+                  {
+                    "start": 342.38,
+                    "end": 342.5,
+                    "text": "实"
+                  },
+                  {
+                    "start": 342.5,
+                    "end": 342.72,
+                    "text": "非常"
+                  },
+                  {
+                    "start": 342.72,
+                    "end": 342.9,
+                    "text": "影"
+                  },
+                  {
+                    "start": 342.9,
+                    "end": 343.12,
+                    "text": "响"
+                  },
+                  {
+                    "start": 343.12,
+                    "end": 343.26,
+                    "text": "这"
+                  },
+                  {
+                    "start": 343.26,
+                    "end": 343.42,
+                    "text": "场"
+                  },
+                  {
+                    "start": 343.42,
+                    "end": 343.58,
+                    "text": "比"
+                  },
+                  {
+                    "start": 343.58,
+                    "end": 343.8,
+                    "text": "赛"
+                  }
+                ]
+              },
+              {
+                "start": 343.8,
+                "end": 346.08,
+                "text": "也为了现场所有的观众们",
+                "words": [
+                  {
+                    "start": 343.8,
+                    "end": 344.14,
+                    "text": "也"
+                  },
+                  {
+                    "start": 344.14,
+                    "end": 344.4,
+                    "text": "为"
+                  },
+                  {
+                    "start": 344.4,
+                    "end": 344.68,
+                    "text": "了"
+                  },
+                  {
+                    "start": 344.68,
+                    "end": 344.84,
+                    "text": "现"
+                  },
+                  {
+                    "start": 344.84,
+                    "end": 345.08,
+                    "text": "场"
+                  },
+                  {
+                    "start": 345.08,
+                    "end": 345.3,
+                    "text": "所有"
+                  },
+                  {
+                    "start": 345.3,
+                    "end": 345.44,
+                    "text": "的"
+                  },
+                  {
+                    "start": 345.44,
+                    "end": 345.58,
+                    "text": "观"
+                  },
+                  {
+                    "start": 345.58,
+                    "end": 345.88,
+                    "text": "众"
+                  },
+                  {
+                    "start": 345.88,
+                    "end": 346.08,
+                    "text": "们"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "audioset_ast": {
+      "path": "output/interviews/zheng-charaeva-beijing-2026-interview/evidence/independent-audioset.json",
+      "sha256": "c3ab717ac4ac58ee3cf22a8bfa7310f33d88336cc7260238462f74d4869c3a32",
+      "model": "Xenova/ast-finetuned-audioset-10-10-0.4593",
+      "model_revision": "249a1fbf0286b40e7f1ed687a8ae396997bf7dc6",
+      "model_sha256": "807d244b58a30eaa89f0a721fb841619c696857aabe4eac93769bd0b61497f61",
+      "preprocessing": "16kHz mono float PCM; Kaldi-compatible fbank128; 25ms Hanning/10ms hop; dither0; no Slaney mel scale; 1024-frame pad; (fbank-mean)/(2*std)",
+      "result": {
+        "window": [
+          346.18,
+          352.0
+        ],
+        "wav_sha256": "9829d1fd81b8b5ccb6cb3f13cd24daa7723eaa24914171b425d946d109cb6e44",
+        "top_scores": [
+          {
+            "label": "Speech",
+            "sigmoid_score": 0.5222015976905823
+          },
+          {
+            "label": "Applause",
+            "sigmoid_score": 0.3019150495529175
+          },
+          {
+            "label": "Male speech, man speaking",
+            "sigmoid_score": 0.0724695548415184
+          },
+          {
+            "label": "Sound effect",
+            "sigmoid_score": 0.04811380058526993
+          },
+          {
+            "label": "Clapping",
+            "sigmoid_score": 0.047810960561037064
+          },
+          {
+            "label": "Narration, monologue",
+            "sigmoid_score": 0.03028981201350689
+          },
+          {
+            "label": "Crowd",
+            "sigmoid_score": 0.023054946213960648
+          },
+          {
+            "label": "Animal",
+            "sigmoid_score": 0.020630352199077606
+          },
+          {
+            "label": "Trickle, dribble",
+            "sigmoid_score": 0.018588947132229805
+          },
+          {
+            "label": "Liquid",
+            "sigmoid_score": 0.01851523481309414
+          },
+          {
+            "label": "Music",
+            "sigmoid_score": 0.015330162830650806
+          },
+          {
+            "label": "Snort",
+            "sigmoid_score": 0.014486298896372318
+          },
+          {
+            "label": "Run",
+            "sigmoid_score": 0.01392385084182024
+          },
+          {
+            "label": "Cheering",
+            "sigmoid_score": 0.012054035440087318
+          },
+          {
+            "label": "Slam",
+            "sigmoid_score": 0.01193027850240469
+          }
+        ],
+        "selected_scores": {
+          "Speech": 0.5222015976905823,
+          "Male speech, man speaking": 0.0724695548415184,
+          "Female speech, woman speaking": 0.007690961938351393,
+          "Child speech, kid speaking": 0.003628343576565385,
+          "Speech synthesizer": 0.0005179323488846421,
+          "Clapping": 0.047810960561037064,
+          "Cheering": 0.012054035440087318,
+          "Applause": 0.3019150495529175,
+          "Chatter": 0.0005953980144113302,
+          "Crowd": 0.023054946213960648,
+          "Hubbub, speech noise, speech babble": 0.0014447171706706285
+        }
+      }
+    },
+    "silero_vad": {
+      "path": "output/interviews/zheng-charaeva-beijing-2026-interview/gap_vad_attestation.json",
+      "sha256": "70ddf5b2ef38b350b1fa684d4a177a61f7bb2d15e3c901478fc3141b2ce2cce4",
+      "note": "Actual source VAD reports human-voice activity; that evidence is retained rather than relabeled silence."
+    }
+  }
+}

@@ -925,7 +925,8 @@ def test_手动拨的render照样在同一个job里验转写_自动链仍用GITH
     assert "--stage verify" in verify["run"]
     assert pre < at < names.index("剪 + 烧字幕")
     deps = steps[names.index("装依赖")]["run"]
-    assert 'if [ "$MODE" = "render" ]; then EXTRA_ASR="faster-whisper"' in deps
+    assert 'if [ "$MODE" = "render" ]; then EXTRA_ASR="faster-whisper' in deps
+    assert 'av==16.1.0' in deps, 'faster-whisper 1.2.1 requires PyAV metadata_errors support'
     assert "mode == 'render'" in steps[names.index("缓存第二份 ASR 模型")]["if"]
     auto = next(s for s in _wf("interview-auto-render.yml")
                 if "gh workflow run interview-clip.yml" in str(s.get("run")))

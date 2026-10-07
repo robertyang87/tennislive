@@ -301,7 +301,8 @@ def subtitle_findings(spec: dict, *, require_subs: bool = False
             lines = clip.segment(words, spec["start"], spec["end"],
                                  budget=spec.get("segment_budget_px"),
                                  word_fix=spec.get("word_fix"),
-                                 ruler=clip.segment_ruler(spec))
+                                 ruler=clip.segment_ruler(spec),
+                                 language_windows=clip.transcript_language_windows(spec))
         # `main()` 在套 `en_fixed` 之前先查行号挂没挂错（0 起写成 1 起就整体错一行），
         # 挂错了当场 SystemExit——这里同一个位置、同一个函数；后面的量宽建在错位的行上，
         # 报出来也是噪声，所以和 runner 一样到此为止。
