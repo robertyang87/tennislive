@@ -1303,7 +1303,7 @@ def test_内容指纹不看注解():
 #: 新加一个字段，不分类就红，逼着人判一次「它进不进成片」。
 _NOT_FILM = frozenset({
     "slug", "source_title", "cookies", "push",   # push 按子键另分（PUSH_FILM_KEYS）
-    "whisper_model", "whisper_vad_filter", "transcript_languages", "transcript_verified", "transcript_verification",
+    "whisper_model", "whisper_vad_filter", "transcript_verified", "transcript_verification",
     "transcript_disagree_ok", "suspect", "suspect_ok", "caption_gaps_ok",
     "human_quote", "human_quote_ok", "opening", "requested_content_type", "match",
     "source_verification", "featured_player", "interviewee", "max_zh_chars",

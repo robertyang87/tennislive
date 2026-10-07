@@ -359,7 +359,9 @@ jobs:
           # `cover` 只下源片抽帧渲海报，从不转写——原来两档一起装，cover 那趟
           # 白拖一个大包；「只挑工作不挑准备等于没挑」在依赖粒度上同样成立。
           EXTRA_ASR=""
-          if [ "$MODE" = "render" ]; then EXTRA_ASR="faster-whisper"; fi
+          # PyAV 19 removed metadata_errors, which faster-whisper 1.2.1 still
+          # passes to av.open(). Keep the compatible decoder for real audio.
+          if [ "$MODE" = "render" ]; then EXTRA_ASR="faster-whisper av==16.1.0"; fi
           # `faces`（onnxruntime）是封面认人＋睁眼要的（2026-09-27 账号所有者批的
           # O2+O3，`tools/face_checks.py`）。⚠️ **别换成 `pip install insightface`**：
           # 它依赖的是 opencv-python 5.x，装上就把 cv2 换成没有 CascadeClassifier 的
@@ -1317,7 +1319,7 @@ jobs:
           D="output/interviews/$SLUG"
           # 装在这儿不装在「装依赖（只取字幕）」：那一步排在取字幕之前，
           # 多装一个大包就把 lines.json 落库往后推——而写中文等的正是它。
-          pip install -q faster-whisper
+          pip install -q faster-whisper "av==16.1.0"
           python -c "import faster_whisper"
           set +e
           PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage verify

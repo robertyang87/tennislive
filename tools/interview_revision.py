@@ -58,7 +58,7 @@ FILM_KEYS = frozenset({
     # 源片和时间窗
     "url", "start", "end",
     # 字幕：取哪份逐词稿、怎么切行、烧进去的中英文
-    "asr_model", "segment_budget_px", "word_fix", "en_fixed", "zh", "caption_gap_annotations",
+    "asr_model", "segment_budget_px", "word_fix", "en_fixed", "zh", "caption_gap_annotations", "transcript_languages",
     # 顶栏／栏目名（`header_runs`、`topbar_layout`、卡片和封面的 eyebrow）
     "event", "winner", "interview_kind", "subject", "topbar", "topbar_layout",
     "ceremony_subtype", "column",

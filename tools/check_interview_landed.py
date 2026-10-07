@@ -128,6 +128,26 @@ def bilingual_body_ok(ass: Path, spec: dict) -> tuple[bool, str]:
                 return False, "保守声音事件缺失或没有按真实区间中英成对落入成品字幕。"
     spoken = len(spec.get("zh") or [])
     expected = spoken + len(annotations)
+    if any(w.get("language") == "zh" for w in spec.get("transcript_languages") or []):
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import build_interview_clip as clip  # noqa: PLC0415
+        try:
+            windows = clip.transcript_language_windows(spec)
+        except (SystemExit, ValueError) as exc:
+            return False, f"原声语言窗口无效：{exc}"
+
+        def native_time(pair):
+            h, m, s = pair[0].split(":")
+            time = int(h) * 3600 + int(m) * 60 + float(s) + spec["start"]
+            return any(w["language"] == "zh" and w["start"] <= time < w["end"] for w in windows)
+
+        # Sound annotations remain paired even inside a native Chinese window.
+        annotation_times = {(clip._ts(a["start"] - spec["start"]),
+                             clip._ts(a["end"] - spec["start"])) for a in annotations}
+        expected_en = [pair for pair in zh_times if not native_time(pair) or pair in annotation_times]
+        ok = bool(zh_times) and en_times == expected_en and len(zh_times) == expected
+        return ok, (f"EN {len(en_times)} / ZH {len(zh_times)} / 原生中文 {len(zh_times) - len(expected_en)}，"
+                    f"英语逐 cue 时间 {'一致' if en_times == expected_en else '不一致'}")
     ok = bool(en_times) and en_times == zh_times and len(en_times) == expected
     return ok, (f"EN {len(en_times)} / ZH {len(zh_times)} / spec.zh {spoken} + 声音事件 {len(annotations)}，"
                 f"逐 cue 时间 {'一致' if en_times == zh_times else '不一致'}")

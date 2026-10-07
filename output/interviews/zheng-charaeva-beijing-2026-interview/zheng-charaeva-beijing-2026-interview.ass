@@ -1,0 +1,125 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:03:13.80,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 WTA1000 北京 1/8决赛
+Dialogue: 1,0:00:00.00,0:03:13.80,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}郑钦文 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}1 {\r\fnTL Score\b300\fs40}2{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\c&H8CDC4A&\b1\fs40}6 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}4{\r\fnNoto Sans CJK SC\fs38} 查拉耶娃 · 赛后场上采访
+Dialogue: 0,0:00:06.19,0:00:09.55,EN,,0,0,0,,Tomorrow, she'll turn 24 years of age
+Dialogue: 0,0:00:06.19,0:00:09.55,ZH,,0,0,1186,,明天 她就要满{\fs78}24{\fs68}岁了
+Dialogue: 0,0:00:09.55,0:00:11.83,EN,,0,0,0,,as Zheng Qinwen wraps up
+Dialogue: 0,0:00:09.55,0:00:11.83,ZH,,0,0,0,,郑钦文给自己赢下了
+Dialogue: 0,0:00:11.83,0:00:14.15,EN,,0,0,0,,a well-earned early birthday present
+Dialogue: 0,0:00:11.83,0:00:14.15,ZH,,0,0,0,,一份来之不易的提前生日礼物
+Dialogue: 0,0:00:14.15,0:00:17.20,EN,,0,0,0,,in Beijing.
+Dialogue: 0,0:00:14.15,0:00:17.20,ZH,,0,0,0,,就在北京
+Dialogue: 0,0:00:17.20,0:00:18.18,EN,,0,0,0,,The tussle is over.
+Dialogue: 0,0:00:17.20,0:00:18.18,ZH,,0,0,0,,这场鏖战终于结束
+Dialogue: 0,0:00:18.18,0:00:23.06,EN,,0,0,0,,and what a tussle it ended up being.
+Dialogue: 0,0:00:18.18,0:00:23.06,ZH,,0,0,0,,这真是一场激烈的较量
+Dialogue: 0,0:00:24.48,0:00:25.84,EN,,0,0,0,,Dominating the opening set
+Dialogue: 0,0:00:24.48,0:00:25.84,ZH,,0,0,0,,她在第一盘占据优势
+Dialogue: 0,0:00:25.84,0:00:28.18,EN,,0,0,0,,but had to gut out a win in two hours
+Dialogue: 0,0:00:25.84,0:00:28.18,ZH,,0,0,0,,但还是苦战了两小时
+Dialogue: 0,0:00:28.18,0:00:28.86,EN,,0,0,0,,and eleven minutes.
+Dialogue: 0,0:00:28.18,0:00:28.86,ZH,,0,0,0,,又十一分钟 才赢下这场
+Dialogue: 0,0:00:28.86,0:00:31.36,EN,,0,0,0,,and Zheng Qinwen for the second time
+Dialogue: 0,0:00:28.86,0:00:31.36,ZH,,0,0,0,,这是郑钦文第二次
+Dialogue: 0,0:00:31.36,0:00:34.00,EN,,0,0,0,,in four appearances is a quarter-finalist
+Dialogue: 0,0:00:31.36,0:00:34.00,ZH,,0,0,1186,,在四次参赛中打进{\fs78}8{\fs68}强
+Dialogue: 0,0:00:34.00,0:00:34.70,EN,,0,0,0,,in Beijing.
+Dialogue: 0,0:00:34.00,0:00:34.70,ZH,,0,0,0,,就在北京
+Dialogue: 0,0:00:34.70,0:00:39.00,EN,,0,0,0,,Qinwen, a great match, proper battle.
+Dialogue: 0,0:00:34.70,0:00:39.00,ZH,,0,0,0,,钦文 打得真好 真是一场硬仗
+Dialogue: 0,0:00:39.00,0:00:40.04,ZH,,0,0,0,,今天这场比赛
+Dialogue: 0,0:00:40.04,0:00:41.80,ZH,,0,0,0,,非常非常的艰难
+Dialogue: 0,0:00:41.80,0:00:42.76,ZH,,0,0,0,,又是一个三盘
+Dialogue: 0,0:00:42.76,0:00:44.14,ZH,,0,0,0,,首先和我们来分享一下
+Dialogue: 0,0:00:44.14,0:00:46.14,ZH,,0,0,0,,这场比赛好吗
+Dialogue: 0,0:00:46.14,0:00:48.32,ZH,,0,0,0,,其实我一上来打得挺好的
+Dialogue: 0,0:00:48.32,0:00:51.02,ZH,,0,0,0,,就是各种技术都在线
+Dialogue: 0,0:00:51.02,0:00:52.42,ZH,,0,0,0,,可能到第二盘的时候
+Dialogue: 0,0:00:52.42,0:00:54.68,ZH,,0,0,0,,我觉得整个人有点下降
+Dialogue: 0,0:00:54.68,0:00:56.52,ZH,,0,0,0,,再加上天气越来越冷
+Dialogue: 0,0:00:56.52,0:00:58.06,ZH,,0,0,0,,然后我觉得这个球速
+Dialogue: 0,0:00:58.06,0:00:58.92,ZH,,0,0,0,,变得越来越慢
+Dialogue: 0,0:00:58.92,0:01:01.86,ZH,,0,0,0,,但是我还是非常感谢
+Dialogue: 0,0:01:01.86,0:01:04.12,ZH,,0,0,0,,现场一直坚守到最后
+Dialogue: 0,0:01:04.12,0:01:06.88,ZH,,0,0,0,,为我支持的球迷朋友们
+Dialogue: 0,0:01:06.88,0:01:07.50,ZH,,0,0,0,,因为
+Dialogue: 0,0:01:07.50,0:01:13.16,ZH,,0,0,0,,尤其是我已经很久
+Dialogue: 0,0:01:13.16,0:01:14.30,ZH,,0,0,0,,没有打夜场了
+Dialogue: 0,0:01:14.30,0:01:17.62,ZH,,0,0,0,,确实是要时间适应一下
+Dialogue: 0,0:01:17.62,0:01:19.06,ZH,,0,0,0,,再加上
+Dialogue: 0,0:01:19.06,0:01:21.90,ZH,,0,0,0,,我确实非常[未清]这场比赛
+Dialogue: 0,0:01:21.90,0:01:25.42,ZH,,0,0,0,,也为了现场所有的观众们
+Dialogue: 0,0:01:30.00,0:01:32.98,EN,,0,0,0,,Okay, well first of all, I would like
+Dialogue: 0,0:01:30.00,0:01:32.98,ZH,,0,0,0,,首先 我想说
+Dialogue: 0,0:01:32.98,0:01:35.70,EN,,0,0,0,,to say I had a great match today, especially
+Dialogue: 0,0:01:32.98,0:01:35.70,ZH,,0,0,0,,今天我打得很好 尤其是
+Dialogue: 0,0:01:35.70,0:01:38.06,EN,,0,0,0,,in the first set I play really aggressive,
+Dialogue: 0,0:01:35.70,0:01:38.06,ZH,,0,0,0,,第一盘 我打得很主动
+Dialogue: 0,0:01:38.06,0:01:40.20,EN,,0,0,0,,but I think there is up
+Dialogue: 0,0:01:38.06,0:01:40.20,ZH,,0,0,0,,但我觉得第二盘
+Dialogue: 0,0:01:40.20,0:01:41.42,EN,,0,0,0,,and down the second set.
+Dialogue: 0,0:01:40.20,0:01:41.42,ZH,,0,0,0,,有一些起伏
+Dialogue: 0,0:01:41.42,0:01:43.88,EN,,0,0,0,,I didn't keep the same focus.
+Dialogue: 0,0:01:41.42,0:01:43.88,ZH,,0,0,0,,我没有保持同样的专注
+Dialogue: 0,0:01:43.88,0:01:46.64,EN,,0,0,0,,I'm really grateful, like [unclear]
+Dialogue: 0,0:01:43.88,0:01:46.64,ZH,,0,0,0,,我真的很感谢 ［此处未辨清］
+Dialogue: 0,0:01:46.64,0:01:47.78,EN,,0,0,0,,would cheer for me tonight.
+Dialogue: 0,0:01:46.64,0:01:47.78,ZH,,0,0,0,,今晚为我加油
+Dialogue: 0,0:01:47.78,0:01:50.14,EN,,0,0,0,,and in the third set that was really tough
+Dialogue: 0,0:01:47.78,0:01:50.14,ZH,,0,0,0,,第三盘 真的很艰难
+Dialogue: 0,0:01:50.14,0:01:53.04,EN,,0,0,0,,[unclear] I'm glad that at the end I got a win
+Dialogue: 0,0:01:50.14,0:01:53.04,ZH,,0,0,0,,［未辨清］很高兴最后赢了
+Dialogue: 0,0:01:53.04,0:01:57.52,EN,,0,0,0,,and thank you so much all of you.
+Dialogue: 0,0:01:53.04,0:01:57.52,ZH,,0,0,0,,非常感谢你们所有人
+Dialogue: 0,0:01:57.84,0:02:01.24,EN,,0,0,0,,Well, obviously today is the very last day
+Dialogue: 0,0:01:57.84,0:02:01.24,ZH,,0,0,1186,,今天是你{\fs78}23{\fs68}岁的最后一天
+Dialogue: 0,0:02:01.24,0:02:05.76,EN,,0,0,0,,of your 23 year old with this win What
+Dialogue: 0,0:02:01.24,0:02:05.76,ZH,,0,0,0,,拿下了这场胜利
+Dialogue: 0,0:02:05.76,0:02:08.58,EN,,0,0,0,,was that exception wishes
+Dialogue: 0,0:02:05.76,0:02:08.58,ZH,,0,0,0,,你有什么期许
+Dialogue: 0,0:02:08.58,0:02:11.78,EN,,0,0,0,,to your 24 year old?
+Dialogue: 0,0:02:08.58,0:02:11.78,ZH,,0,0,1186,,对即将到来的{\fs78}24{\fs68}岁？
+Dialogue: 0,0:02:12.69,0:02:14.85,ZH,,0,0,1186,,{\fs78}23{\fs68} 岁的最后一天
+Dialogue: 0,0:02:14.85,0:02:16.75,ZH,,0,0,0,,拿下这场胜利
+Dialogue: 0,0:02:16.75,0:02:18.89,ZH,,0,0,1186,,郑钦文对自己的 {\fs78}24{\fs68} 岁
+Dialogue: 0,0:02:18.89,0:02:19.79,ZH,,0,0,0,,有什么期许
+Dialogue: 0,0:02:19.79,0:02:21.25,ZH,,0,0,0,,有什么期待呢
+Dialogue: 0,0:02:21.25,0:02:24.21,ZH,,0,0,0,,我只能说一切来得太快了
+Dialogue: 0,0:02:24.21,0:02:26.59,ZH,,0,0,0,,我的记忆还停留在可能
+Dialogue: 0,0:02:26.59,0:02:28.47,ZH,,0,0,1186,,我 {\fs78}21{\fs68} 岁 {\fs78}22{\fs68} 岁的时候
+Dialogue: 0,0:02:28.47,0:02:31.45,ZH,,0,0,0,,也可能因为伤病停了一年
+Dialogue: 0,0:02:31.45,0:02:32.47,ZH,,0,0,0,,导致我的记忆
+Dialogue: 0,0:02:32.47,0:02:33.87,ZH,,0,0,0,,一直停留在过去
+Dialogue: 0,0:02:33.87,0:02:35.07,ZH,,0,0,0,,我不知道现场大家
+Dialogue: 0,0:02:35.07,0:02:37.37,ZH,,0,0,0,,是否都认为时间过得太快
+Dialogue: 0,0:02:37.37,0:02:39.95,ZH,,0,0,1186,,我还没有做好 {\fs78}24{\fs68} 岁的准备
+Dialogue: 0,0:02:39.95,0:02:41.59,ZH,,0,0,1186,,因为在我看来 {\fs78}24{\fs68} 岁
+Dialogue: 0,0:02:41.59,0:02:44.63,ZH,,0,0,0,,已经要是一个成熟的大人了
+Dialogue: 0,0:02:44.63,0:02:45.91,ZH,,0,0,0,,但是我有些时候
+Dialogue: 0,0:02:45.91,0:02:46.95,ZH,,0,0,0,,没有这么感觉到
+Dialogue: 0,0:02:46.95,0:02:51.41,ZH,,0,0,0,,所以我只能说
+Dialogue: 0,0:02:51.41,0:02:53.51,ZH,,0,0,0,,我期待未来的每一天
+Dialogue: 0,0:02:53.51,0:02:55.65,ZH,,0,0,0,,也希望每个年龄阶段的自己
+Dialogue: 0,0:02:55.65,0:03:00.19,ZH,,0,0,0,,都能带给我不一样的体验
+Dialogue: 0,0:03:00.29,0:03:04.85,ZH,,0,0,0,,在此我们提前在现场
+Dialogue: 0,0:03:04.85,0:03:06.95,ZH,,0,0,0,,给钦文送一个生日快乐
+Dialogue: 0,0:03:06.95,0:03:07.15,ZH,,0,0,0,,怎么样
+Dialogue: 0,0:03:07.15,0:03:10.33,ZH,,0,0,0,,来我们全场的观众朋友一起
+Dialogue: 0,0:03:10.33,0:03:10.77,ZH,,0,0,1186,,{\fs78}3{\fs68}
+Dialogue: 0,0:03:10.77,0:03:11.21,ZH,,0,0,1186,,{\fs78}2{\fs68}
+Dialogue: 0,0:03:11.21,0:03:12.71,ZH,,0,0,1186,,{\fs78}1{\fs68}
