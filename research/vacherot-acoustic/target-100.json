@@ -1,0 +1,382 @@
+{
+  "id": "target-100",
+  "label": "第 23 段",
+  "display_char": "种",
+  "actual_tts_char": "种",
+  "position": 7,
+  "context": "月，成都头号种子，首战就输",
+  "word": "种子",
+  "intended": "zhong3",
+  "common_contrast": "zhong4",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "九月，成都头号种子，首战就输给资格赛球员哈里斯。随后东京，他逆转西西帕斯，赢下菲斯，又打进了半决赛。输过，也继续赢。",
+  "verdict": "uncertain",
+  "measurement": {
+    "word": "种",
+    "char": "种",
+    "sentence": "九月，成都头号种子，首战就输给资格赛球员哈里斯。随后东京，他逆转西西帕斯，赢下菲斯，又打进了半决赛。输过，也继续赢。",
+    "tts_text": "九月，成都头号种子，首战就输给资格赛球员哈里斯。随后东京，他逆转西西帕斯，赢下菲斯，又打进了半决赛。输过，也继续赢。",
+    "intended_refs": [
+      "肿",
+      "冢"
+    ],
+    "wrong_refs": [
+      "仲",
+      "众"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "uncertain",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": 0.097,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.979,
+        "d_wrong": 2.902,
+        "score": -0.013
+      },
+      "f0": {
+        "d_intended": 4.418,
+        "d_wrong": 5.723,
+        "score": 0.129
+      },
+      "comb": {
+        "d_intended": 5.908,
+        "d_wrong": 7.174,
+        "score": 0.097
+      }
+    },
+    "neighbour_shift": {
+      "intended": 9.888,
+      "wrong": 6.48
+    },
+    "separation": {
+      "spec": {
+        "within": 0.907,
+        "between": 2.857,
+        "separation": 3.151
+      },
+      "f0": {
+        "within": 0.129,
+        "between": 3.235,
+        "separation": 25.055
+      },
+      "comb": {
+        "within": 0.583,
+        "between": 4.664,
+        "separation": 8.007
+      }
+    },
+    "selftest_loo": {
+      "肿": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.737
+      },
+      "冢": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.728
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.823
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.823
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:肿": {
+        "spec": 3.037,
+        "f0": 4.742,
+        "vmis": 0.037,
+        "frames": 27,
+        "comb": 6.261
+      },
+      "A:冢": {
+        "spec": 2.979,
+        "f0": 4.418,
+        "vmis": 0.036,
+        "frames": 28,
+        "comb": 5.908
+      },
+      "B:仲": {
+        "spec": 2.982,
+        "f0": 5.735,
+        "vmis": 0.037,
+        "frames": 27,
+        "comb": 7.226
+      },
+      "B:众": {
+        "spec": 2.902,
+        "f0": 5.723,
+        "vmis": 0.037,
+        "frames": 27,
+        "comb": 7.174
+      }
+    },
+    "window_s": [
+      1.567,
+      1.829
+    ],
+    "boundary_token": "种子",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "九月",
+        "成都",
+        "头号",
+        "种子",
+        "首战",
+        "就",
+        "输",
+        "给",
+        "资格赛",
+        "球员",
+        "哈里斯",
+        "随后",
+        "东京",
+        "他",
+        "逆转",
+        "西西帕斯",
+        "赢",
+        "下",
+        "菲斯",
+        "又",
+        "打进",
+        "了",
+        "半决赛",
+        "输",
+        "过",
+        "也",
+        "继续",
+        "赢"
+      ],
+      "A:肿": [
+        "九月",
+        "成都",
+        "头号",
+        "肿子",
+        "首战",
+        "就",
+        "输",
+        "给",
+        "资格赛",
+        "球员",
+        "哈里斯",
+        "随后",
+        "东京",
+        "他",
+        "逆转",
+        "西西帕斯",
+        "赢",
+        "下",
+        "菲斯",
+        "又",
+        "打进",
+        "了",
+        "半决赛",
+        "输",
+        "过",
+        "也",
+        "继续",
+        "赢"
+      ],
+      "A:冢": [
+        "九月",
+        "成都",
+        "头号",
+        "冢子",
+        "首战",
+        "就",
+        "输",
+        "给",
+        "资格赛",
+        "球员",
+        "哈里斯",
+        "随后",
+        "东京",
+        "他",
+        "逆转",
+        "西西帕斯",
+        "赢",
+        "下",
+        "菲斯",
+        "又",
+        "打进",
+        "了",
+        "半决赛",
+        "输",
+        "过",
+        "也",
+        "继续",
+        "赢"
+      ],
+      "B:仲": [
+        "九月",
+        "成都",
+        "头号",
+        "仲子",
+        "首战",
+        "就",
+        "输",
+        "给",
+        "资格赛",
+        "球员",
+        "哈里斯",
+        "随后",
+        "东京",
+        "他",
+        "逆转",
+        "西西帕斯",
+        "赢",
+        "下",
+        "菲斯",
+        "又",
+        "打进",
+        "了",
+        "半决赛",
+        "输",
+        "过",
+        "也",
+        "继续",
+        "赢"
+      ],
+      "B:众": [
+        "九月",
+        "成都",
+        "头号",
+        "众子",
+        "首战",
+        "就",
+        "输",
+        "给",
+        "资格赛",
+        "球员",
+        "哈里斯",
+        "随后",
+        "东京",
+        "他",
+        "逆转",
+        "西西帕斯",
+        "赢",
+        "下",
+        "菲斯",
+        "又",
+        "打进",
+        "了",
+        "半决赛",
+        "输",
+        "过",
+        "也",
+        "继续",
+        "赢"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        8.2,
+        6.5,
+        3.4,
+        0.8,
+        -2.1,
+        null,
+        null,
+        -0.3,
+        -4.3,
+        -8.2,
+        -8.4,
+        -7.8,
+        -7.3,
+        -7.3
+      ],
+      "A:肿": [
+        6.5,
+        4.2,
+        2.0,
+        0.3,
+        -3.0,
+        null,
+        null,
+        null,
+        -1.8,
+        -1.1,
+        1.1,
+        3.8,
+        5.5,
+        5.8
+      ],
+      "A:冢": [
+        6.8,
+        4.5,
+        2.2,
+        0.6,
+        -2.5,
+        null,
+        null,
+        null,
+        -1.5,
+        -0.8,
+        1.4,
+        4.0,
+        5.8,
+        6.1
+      ],
+      "B:仲": [
+        6.5,
+        5.0,
+        3.3,
+        2.2,
+        1.0,
+        -1.0,
+        null,
+        8.0,
+        6.4,
+        5.2,
+        3.8,
+        2.1,
+        0.6,
+        -1.0
+      ],
+      "B:众": [
+        6.4,
+        5.0,
+        3.3,
+        2.2,
+        0.9,
+        -1.0,
+        null,
+        8.0,
+        6.4,
+        5.2,
+        3.8,
+        2.1,
+        0.6,
+        -1.0
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/b97a129b13ba56fe228b980d.mp3",
+      "A:肿": "/workspace/tennislive/research/vacherot-acoustic/references/c1ec1ed81c94cc2180d89109.mp3",
+      "A:冢": "/workspace/tennislive/research/vacherot-acoustic/references/946ad7d38b80aef75a53e678.mp3",
+      "B:仲": "/workspace/tennislive/research/vacherot-acoustic/references/368d5877b6081c4fdb77ba45.mp3",
+      "B:众": "/workspace/tennislive/research/vacherot-acoustic/references/825646ed183207cc32715f5b.mp3"
+    }
+  }
+}

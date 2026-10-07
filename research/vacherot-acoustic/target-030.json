@@ -1,0 +1,324 @@
+{
+  "id": "target-030",
+  "label": "第 7 段",
+  "display_char": "会",
+  "actual_tts_char": "会",
+  "position": 7,
+  "context": "这里开始，你会发现，落后一",
+  "word": "会",
+  "intended": "hui4",
+  "common_contrast": "kuai4",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "从这里开始，你会发现，落后一盘，成了他这一路反复遇见的关口。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "会",
+    "char": "会",
+    "sentence": "从这里开始，你会发现，落后一盘，成了他这一路反复遇见的关口。",
+    "tts_text": "从这里开始，你会发现，落后一盘，成了他这一路反复遇见的关口。",
+    "intended_refs": [
+      "卉",
+      "惠"
+    ],
+    "wrong_refs": [
+      "侩",
+      "快"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.667,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.974,
+        "d_wrong": 4.866,
+        "score": 0.666
+      },
+      "f0": {
+        "d_intended": 0.077,
+        "d_wrong": 0.482,
+        "score": 0.725
+      },
+      "comb": {
+        "d_intended": 0.593,
+        "d_wrong": 2.972,
+        "score": 0.667
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.514,
+      "wrong": 2.724
+    },
+    "separation": {
+      "spec": {
+        "within": 1.128,
+        "between": 4.906,
+        "separation": 4.35
+      },
+      "f0": {
+        "within": 0.113,
+        "between": 0.469,
+        "separation": 4.13
+      },
+      "comb": {
+        "within": 0.677,
+        "between": 2.921,
+        "separation": 4.313
+      }
+    },
+    "selftest_loo": {
+      "卉": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.598
+      },
+      "惠": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.584
+      },
+      "侩": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.65
+      },
+      "快": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.645
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:卉": {
+        "spec": 1.228,
+        "f0": 0.077,
+        "vmis": 0.13,
+        "frames": 23,
+        "comb": 0.69
+      },
+      "A:惠": {
+        "spec": 0.974,
+        "f0": 0.106,
+        "vmis": 0.0,
+        "frames": 23,
+        "comb": 0.593
+      },
+      "B:侩": {
+        "spec": 4.994,
+        "f0": 0.482,
+        "vmis": 0.25,
+        "frames": 24,
+        "comb": 2.979
+      },
+      "B:快": {
+        "spec": 4.866,
+        "f0": 0.539,
+        "vmis": 0.25,
+        "frames": 24,
+        "comb": 2.972
+      }
+    },
+    "window_s": [
+      1.366,
+      1.588
+    ],
+    "boundary_token": "会",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "从",
+        "这里",
+        "开始",
+        "你",
+        "会",
+        "发现",
+        "落后",
+        "一",
+        "盘",
+        "成",
+        "了",
+        "他",
+        "这",
+        "一路",
+        "反复",
+        "遇见",
+        "的",
+        "关口"
+      ],
+      "A:卉": [
+        "从",
+        "这里",
+        "开始",
+        "你",
+        "卉",
+        "发现",
+        "落后",
+        "一",
+        "盘",
+        "成",
+        "了",
+        "他",
+        "这",
+        "一路",
+        "反复",
+        "遇见",
+        "的",
+        "关口"
+      ],
+      "A:惠": [
+        "从",
+        "这里",
+        "开始",
+        "你",
+        "惠",
+        "发现",
+        "落后",
+        "一",
+        "盘",
+        "成",
+        "了",
+        "他",
+        "这",
+        "一路",
+        "反复",
+        "遇见",
+        "的",
+        "关口"
+      ],
+      "B:侩": [
+        "从",
+        "这里",
+        "开始",
+        "你",
+        "侩",
+        "发现",
+        "落后",
+        "一",
+        "盘",
+        "成",
+        "了",
+        "他",
+        "这",
+        "一路",
+        "反复",
+        "遇见",
+        "的",
+        "关口"
+      ],
+      "B:快": [
+        "从",
+        "这里",
+        "开始",
+        "你",
+        "快",
+        "发现",
+        "落后",
+        "一",
+        "盘",
+        "成",
+        "了",
+        "他",
+        "这",
+        "一路",
+        "反复",
+        "遇见",
+        "的",
+        "关口"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -1.9,
+        -2.1,
+        -1.5,
+        -1.6,
+        -2.5,
+        null,
+        12.9,
+        null,
+        0.5,
+        -0.8,
+        -2.3,
+        -3.6
+      ],
+      "A:卉": [
+        -1.9,
+        -2.0,
+        -1.5,
+        -1.5,
+        null,
+        null,
+        null,
+        null,
+        0.5,
+        -0.8,
+        -2.2,
+        -3.6
+      ],
+      "A:惠": [
+        -2.0,
+        -2.2,
+        -1.6,
+        -1.7,
+        -1.1,
+        null,
+        12.6,
+        null,
+        0.4,
+        -0.9,
+        -2.4,
+        -3.7
+      ],
+      "B:侩": [
+        -1.6,
+        -1.9,
+        -2.3,
+        -2.6,
+        -2.0,
+        null,
+        null,
+        null,
+        null,
+        1.4,
+        0.0,
+        -2.2,
+        -2.6
+      ],
+      "B:快": [
+        -1.7,
+        -2.0,
+        -2.3,
+        -2.7,
+        -2.1,
+        null,
+        null,
+        null,
+        null,
+        1.3,
+        -0.1,
+        -2.3,
+        -2.6
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/11383204aee14feb45bf4fe3.mp3",
+      "A:卉": "/workspace/tennislive/research/vacherot-acoustic/references/c029358c7e49ab6673df3020.mp3",
+      "A:惠": "/workspace/tennislive/research/vacherot-acoustic/references/db1ff71496a99bef11a86aa8.mp3",
+      "B:侩": "/workspace/tennislive/research/vacherot-acoustic/references/a0a4afb15c5ada88888f6da7.mp3",
+      "B:快": "/workspace/tennislive/research/vacherot-acoustic/references/e4f9dc9d64f7714ecf98a666.mp3"
+    }
+  }
+}

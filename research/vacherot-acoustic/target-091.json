@@ -1,0 +1,345 @@
+{
+  "id": "target-091",
+  "label": "第 21 段",
+  "display_char": "分",
+  "actual_tts_char": "分",
+  "position": 3,
+  "context": "巴黎四分之一决赛，年",
+  "word": "分",
+  "intended": "fen1",
+  "common_contrast": "fen4",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "巴黎四分之一决赛，年末世界第三十一。第二年，蒙特卡洛半决赛。这一次，他在自己的主场，站进了世界前二十。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "分",
+    "char": "分",
+    "sentence": "巴黎四分之一决赛，年末世界第三十一。第二年，蒙特卡洛半决赛。这一次，他在自己的主场，站进了世界前二十。",
+    "tts_text": "巴黎四分之一决赛，年末世界第三十一。第二年，蒙特卡洛半决赛。这一次，他在自己的主场，站进了世界前二十。",
+    "intended_refs": [
+      "氛",
+      "纷"
+    ],
+    "wrong_refs": [
+      "忿",
+      "愤"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.454,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.308,
+        "d_wrong": 3.058,
+        "score": 0.14
+      },
+      "f0": {
+        "d_intended": 0.311,
+        "d_wrong": 2.268,
+        "score": 0.759
+      },
+      "comb": {
+        "d_intended": 1.465,
+        "d_wrong": 3.896,
+        "score": 0.454
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.252,
+      "wrong": 5.389
+    },
+    "separation": {
+      "spec": {
+        "within": 2.349,
+        "between": 2.831,
+        "separation": 1.205
+      },
+      "f0": {
+        "within": 0.336,
+        "between": 2.396,
+        "separation": 7.123
+      },
+      "comb": {
+        "within": 1.511,
+        "between": 3.812,
+        "separation": 2.523
+      }
+    },
+    "selftest_loo": {
+      "氛": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.515
+      },
+      "纷": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.497
+      },
+      "忿": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.36
+      },
+      "愤": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.319
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:氛": {
+        "spec": 2.633,
+        "f0": 0.32,
+        "vmis": 0.19,
+        "frames": 21,
+        "comb": 1.636
+      },
+      "A:纷": {
+        "spec": 2.308,
+        "f0": 0.311,
+        "vmis": 0.19,
+        "frames": 21,
+        "comb": 1.465
+      },
+      "B:忿": {
+        "spec": 3.058,
+        "f0": 2.482,
+        "vmis": 0.125,
+        "frames": 24,
+        "comb": 4.011
+      },
+      "B:愤": {
+        "spec": 3.257,
+        "f0": 2.268,
+        "vmis": 0.12,
+        "frames": 25,
+        "comb": 3.896
+      }
+    },
+    "window_s": [
+      0.59,
+      0.79
+    ],
+    "boundary_token": "四分之一",
+    "window_anchor": "B:愤",
+    "tokens": {
+      "ORIG": [
+        "巴黎",
+        "四分之一",
+        "决赛",
+        "年末",
+        "世界",
+        "第三十一",
+        "第二",
+        "年",
+        "蒙特卡洛",
+        "半决赛",
+        "这",
+        "一次",
+        "他",
+        "在",
+        "自己",
+        "的",
+        "主场",
+        "站",
+        "进",
+        "了",
+        "世界",
+        "前",
+        "二十"
+      ],
+      "A:氛": [
+        "巴黎",
+        "四氛",
+        "之一",
+        "决赛",
+        "年末",
+        "世界",
+        "第三十一",
+        "第二",
+        "年",
+        "蒙特卡洛",
+        "半决赛",
+        "这",
+        "一次",
+        "他",
+        "在",
+        "自己",
+        "的",
+        "主场",
+        "站",
+        "进",
+        "了",
+        "世界",
+        "前",
+        "二十"
+      ],
+      "A:纷": [
+        "巴黎",
+        "四纷",
+        "之一",
+        "决赛",
+        "年末",
+        "世界",
+        "第三十一",
+        "第二",
+        "年",
+        "蒙特卡洛",
+        "半决赛",
+        "这",
+        "一次",
+        "他",
+        "在",
+        "自己",
+        "的",
+        "主场",
+        "站",
+        "进",
+        "了",
+        "世界",
+        "前",
+        "二十"
+      ],
+      "B:忿": [
+        "巴黎",
+        "四忿",
+        "之一",
+        "决赛",
+        "年末",
+        "世界",
+        "第三十一",
+        "第二",
+        "年",
+        "蒙特卡洛",
+        "半决赛",
+        "这",
+        "一次",
+        "他",
+        "在",
+        "自己",
+        "的",
+        "主场",
+        "站",
+        "进",
+        "了",
+        "世界",
+        "前",
+        "二十"
+      ],
+      "B:愤": [
+        "巴黎",
+        "四",
+        "愤",
+        "之一",
+        "决赛",
+        "年末",
+        "世界",
+        "第三十一",
+        "第二",
+        "年",
+        "蒙特卡洛",
+        "半决赛",
+        "这",
+        "一次",
+        "他",
+        "在",
+        "自己",
+        "的",
+        "主场",
+        "站",
+        "进",
+        "了",
+        "世界",
+        "前",
+        "二十"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        3.2,
+        2.2,
+        -0.2,
+        -2.7,
+        2.4,
+        1.8,
+        1.6,
+        1.9,
+        2.2
+      ],
+      "A:氛": [
+        null,
+        3.9,
+        2.7,
+        0.8,
+        null,
+        null,
+        1.8,
+        1.7,
+        1.9,
+        2.4
+      ],
+      "A:纷": [
+        null,
+        3.7,
+        2.7,
+        1.2,
+        null,
+        null,
+        1.8,
+        1.5,
+        1.6,
+        2.3
+      ],
+      "B:忿": [
+        5.7,
+        4.7,
+        3.4,
+        1.7,
+        -2.4,
+        null,
+        3.5,
+        -0.0,
+        -3.3,
+        -2.5,
+        -2.1
+      ],
+      "B:愤": [
+        5.9,
+        4.6,
+        3.2,
+        1.3,
+        -2.3,
+        null,
+        1.6,
+        0.5,
+        -1.4,
+        -2.6,
+        -2.8,
+        -3.5
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/09c7bde0c5fd37fea8eceade.mp3",
+      "A:氛": "/workspace/tennislive/research/vacherot-acoustic/references/e15ad25d9413a1bb0d9ca8ba.mp3",
+      "A:纷": "/workspace/tennislive/research/vacherot-acoustic/references/cd1061258db74398c01e766b.mp3",
+      "B:忿": "/workspace/tennislive/research/vacherot-acoustic/references/ddfd2f0301330a1fbcce558c.mp3",
+      "B:愤": "/workspace/tennislive/research/vacherot-acoustic/references/acb4fba28f607df9c56c2018.mp3"
+    }
+  }
+}

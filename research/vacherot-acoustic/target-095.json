@@ -1,0 +1,386 @@
+{
+  "id": "target-095",
+  "label": "第 21 段",
+  "display_char": "场",
+  "actual_tts_char": "场",
+  "position": 40,
+  "context": "他在自己的主场，站进了世界",
+  "word": "场",
+  "intended": "chang3",
+  "common_contrast": "chang2",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "巴黎四分之一决赛，年末世界第三十一。第二年，蒙特卡洛半决赛。这一次，他在自己的主场，站进了世界前二十。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "场",
+    "char": "场",
+    "sentence": "巴黎四分之一决赛，年末世界第三十一。第二年，蒙特卡洛半决赛。这一次，他在自己的主场，站进了世界前二十。",
+    "tts_text": "巴黎四分之一决赛，年末世界第三十一。第二年，蒙特卡洛半决赛。这一次，他在自己的主场，站进了世界前二十。",
+    "intended_refs": [
+      "昶",
+      "氅"
+    ],
+    "wrong_refs": [
+      "偿",
+      "尝"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "high",
+    "verdict_raw": "correct",
+    "score": 0.999,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.963,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.004,
+        "d_wrong": 10.442,
+        "score": 0.999
+      },
+      "comb": {
+        "d_intended": 0.004,
+        "d_wrong": 12.423,
+        "score": 0.999
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.004,
+      "wrong": 9.189
+    },
+    "separation": {
+      "spec": {
+        "within": 1.214,
+        "between": 4.001,
+        "separation": 3.297
+      },
+      "f0": {
+        "within": 0.366,
+        "between": 10.644,
+        "separation": 29.108
+      },
+      "comb": {
+        "within": 0.973,
+        "between": 12.645,
+        "separation": 13.002
+      }
+    },
+    "selftest_loo": {
+      "昶": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.97
+      },
+      "氅": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.97
+      },
+      "偿": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.75
+      },
+      "尝": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.761
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:昶": {
+        "spec": 0.0,
+        "f0": 0.192,
+        "vmis": 0.0,
+        "frames": 38,
+        "comb": 0.192
+      },
+      "A:氅": {
+        "spec": 0.0,
+        "f0": 0.004,
+        "vmis": 0.0,
+        "frames": 38,
+        "comb": 0.004
+      },
+      "B:偿": {
+        "spec": 3.963,
+        "f0": 10.442,
+        "vmis": 0.238,
+        "frames": 42,
+        "comb": 12.423
+      },
+      "B:尝": {
+        "spec": 4.002,
+        "f0": 10.914,
+        "vmis": 0.25,
+        "frames": 44,
+        "comb": 12.915
+      }
+    },
+    "window_s": [
+      7.86,
+      8.24
+    ],
+    "boundary_token": "主场",
+    "window_anchor": "B:尝",
+    "tokens": {
+      "ORIG": [
+        "巴黎",
+        "四分之一",
+        "决赛",
+        "年末",
+        "世界",
+        "第三十一",
+        "第二",
+        "年",
+        "蒙特卡洛",
+        "半决赛",
+        "这",
+        "一次",
+        "他",
+        "在",
+        "自己",
+        "的",
+        "主场",
+        "站",
+        "进",
+        "了",
+        "世界",
+        "前",
+        "二十"
+      ],
+      "A:昶": [
+        "巴黎",
+        "四分之一",
+        "决赛",
+        "年末",
+        "世界",
+        "第三十一",
+        "第二",
+        "年",
+        "蒙特卡洛",
+        "半决赛",
+        "这",
+        "一次",
+        "他",
+        "在",
+        "自己",
+        "的",
+        "主昶",
+        "站",
+        "进",
+        "了",
+        "世界",
+        "前",
+        "二十"
+      ],
+      "A:氅": [
+        "巴黎",
+        "四分之一",
+        "决赛",
+        "年末",
+        "世界",
+        "第三十一",
+        "第二",
+        "年",
+        "蒙特卡洛",
+        "半决赛",
+        "这",
+        "一次",
+        "他",
+        "在",
+        "自己",
+        "的",
+        "主氅",
+        "站",
+        "进",
+        "了",
+        "世界",
+        "前",
+        "二十"
+      ],
+      "B:偿": [
+        "巴黎",
+        "四分之一",
+        "决赛",
+        "年末",
+        "世界",
+        "第三十一",
+        "第二",
+        "年",
+        "蒙特卡洛",
+        "半决赛",
+        "这",
+        "一次",
+        "他",
+        "在",
+        "自己",
+        "的",
+        "主偿",
+        "站",
+        "进",
+        "了",
+        "世界",
+        "前",
+        "二十"
+      ],
+      "B:尝": [
+        "巴黎",
+        "四分之一",
+        "决赛",
+        "年末",
+        "世界",
+        "第三十一",
+        "第二",
+        "年",
+        "蒙特卡洛",
+        "半决赛",
+        "这",
+        "一次",
+        "他",
+        "在",
+        "自己",
+        "的",
+        "主",
+        "尝",
+        "站",
+        "进",
+        "了",
+        "世界",
+        "前",
+        "二十"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        1.1,
+        3.8,
+        5.9,
+        7.5,
+        7.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -13.0,
+        -12.8,
+        -12.8,
+        -11.6,
+        -11.4,
+        -9.3,
+        null,
+        null
+      ],
+      "A:昶": [
+        1.3,
+        4.0,
+        6.1,
+        7.7,
+        7.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -12.8,
+        -12.6,
+        -12.6,
+        -11.4,
+        -11.2,
+        -9.1,
+        null,
+        null
+      ],
+      "A:氅": [
+        1.2,
+        3.8,
+        6.0,
+        7.5,
+        7.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -13.0,
+        -12.8,
+        -12.8,
+        -11.6,
+        -11.4,
+        -9.3,
+        null,
+        null
+      ],
+      "B:偿": [
+        -8.5,
+        -8.5,
+        -8.9,
+        -8.5,
+        -7.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        13.2,
+        null,
+        -4.6,
+        -4.9,
+        -4.2,
+        -2.0,
+        -0.3,
+        2.1,
+        3.3,
+        3.3
+      ],
+      "B:尝": [
+        -9.0,
+        -9.3,
+        -9.2,
+        -7.0,
+        -7.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -6.2,
+        -2.2,
+        -0.6,
+        1.7,
+        3.6,
+        3.8,
+        null
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/09c7bde0c5fd37fea8eceade.mp3",
+      "A:昶": "/workspace/tennislive/research/vacherot-acoustic/references/3ed4733ff255310f370e5f7b.mp3",
+      "A:氅": "/workspace/tennislive/research/vacherot-acoustic/references/5063812d43950823dad91e9a.mp3",
+      "B:偿": "/workspace/tennislive/research/vacherot-acoustic/references/09e99cef033d8a166f963aaf.mp3",
+      "B:尝": "/workspace/tennislive/research/vacherot-acoustic/references/e86d7a4d9cd178c66b437cec.mp3"
+    }
+  }
+}

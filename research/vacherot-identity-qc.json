@@ -1,0 +1,86 @@
+{
+  "reviewed_at": "2026-10-07T21:04:17.979863+00:00",
+  "reviewer": "Codex official_sources",
+  "type": "identity_and_costume_qc",
+  "status": "pass",
+  "reviewed_artifacts": [
+    "/workspace/scratch/vacherot/final-review-0.jpg",
+    "/workspace/scratch/vacherot/final-review-1.jpg",
+    "/workspace/scratch/vacherot/final-review-2.jpg"
+  ],
+  "montecarlo": {
+    "source_window": [
+      141.0,
+      146.8
+    ],
+    "initial_concern": "Could be de Minaur due to outfit differing from Shanghai 2025.",
+    "finding": "The selected foreground subject is Valentin Vacherot. Maroon shirt has a clear Lotto double-diamond logo, Groupe Michel Pastor and EPC Private Bank Monaco sponsors; full facial features match Vacherot. The pale cap differs by season/event and cannot be used to transfer 2025 costume identification.",
+    "opponent_reference": "At source127.5–129.0, Alex de Minaur wears navy ASICS and white cap, clean-shaven/light stubble with distinctly thinner facial structure. This is not the selected maroon subject.",
+    "identity_sources": [
+      {
+        "url": "https://www.gettyimages.com.au/detail/news-photo/monacos-valentin-vacherot-celebrates-after-winning-against-news-photo/2270146793?slot=15",
+        "caption": "Valentin Vacherot celebrates after winning against Alex De Minaur; Monte-Carlo QF April10 2026. AFP Thibaud MORITZ."
+      },
+      {
+        "url": "https://www.tennismajors.com/atp/vacherot-stuns-de-minaur-to-become-the-first-monegasque-in-a-monte-carlo-masters-semifinal-848187.html",
+        "image_url": "https://www.tennismajors.com/app/uploads/2026/04/Vacherot_semis_Montecarlo_2026-1296x675.jpg",
+        "finding": "Published named Vacherot winner photo shows same maroon kit and face, celebrating with arms raised."
+      }
+    ],
+    "local_identity_only_comparison": "/workspace/scratch/vacherot/selection-review/identity-comparison-montecarlo.jpg",
+    "asset_use": "External image used for private identity comparison only. It is not a video or cover asset and must not be shipped in repository/release."
+  },
+  "other_windows": [
+    {
+      "source": "rune",
+      "window": [
+        328.8,
+        345.12
+      ],
+      "subject": "Vacherot",
+      "costume": "Vacherot in white/beige Lotto, dark cap; Rune light-green Lacoste top/backward pale cap. Final rally main camera shows both players, subsequent crouched reaction is Vacherot.",
+      "finding": "correct"
+    },
+    {
+      "source": "djokovic",
+      "window": [
+        133.6,
+        149.0
+      ],
+      "subject": "Vacherot",
+      "costume": "Vacherot white/beige Lotto, dark cap; Djokovic red Lacoste and no cap. Vacherot close-up and handshake both correctly assigned.",
+      "finding": "correct"
+    },
+    {
+      "source": "final",
+      "window": [
+        114.7,
+        137.4
+      ],
+      "subject": "Vacherot",
+      "costume": "Vacherot white/beige Lotto and WHITE cap (later removed), Rinderknech turquoise top/backward cap. Final winner facial close-up and hug identify correct cousins.",
+      "finding": "correct"
+    },
+    {
+      "source": "interview",
+      "window": [
+        11.1,
+        14.7
+      ],
+      "subject": "Vacherot",
+      "costume": "Bare head, white Lotto shirt, curly hair/full beard, ATP1000 microphone, 2025 Shanghai tournament background.",
+      "finding": "correct"
+    },
+    {
+      "source": "tokyo",
+      "window": [
+        111.8,
+        122.9
+      ],
+      "subject": "Vacherot",
+      "costume": "Vacherot white Lotto and WHITE cap in fist-pump close-up at122s; Tsitsipas far court/headband. On-screen scoreboard VACHEROT/Tsitsipas self-identifies match.",
+      "finding": "correct"
+    }
+  ],
+  "correction": "All selected principal Vacherot reactions are correctly identified. Do not describe all clips as black-capped Vacherot: Shanghai final and Tokyo use a white cap, Monte-Carlo2026 uses a beige cap and maroon Lotto shirt."
+}

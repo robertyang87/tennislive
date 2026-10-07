@@ -1,0 +1,327 @@
+{
+  "id": "target-016",
+  "label": "第 5 段",
+  "display_char": "要",
+  "actual_tts_char": "要",
+  "position": 6,
+  "context": "拿到位置，还要守住。资格赛",
+  "word": "要",
+  "intended": "yao4",
+  "common_contrast": "yao1",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "拿到位置，还要守住。资格赛第一轮，先输抢七。他连追两盘，赢下巴萨瓦雷迪。",
+  "verdict": "unreliable",
+  "measurement": {
+    "word": "要",
+    "char": "要",
+    "sentence": "拿到位置，还要守住。资格赛第一轮，先输抢七。他连追两盘，赢下巴萨瓦雷迪。",
+    "tts_text": "拿到位置，还要守住。资格赛第一轮，先输抢七。他连追两盘，赢下巴萨瓦雷迪。",
+    "intended_refs": [
+      "耀",
+      "药"
+    ],
+    "wrong_refs": [
+      "腰",
+      "邀"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": 0.094,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.538,
+        "d_wrong": 2.901,
+        "score": 0.067
+      },
+      "f0": {
+        "d_intended": 0.893,
+        "d_wrong": 1.171,
+        "score": 0.135
+      },
+      "comb": {
+        "d_intended": 2.173,
+        "d_wrong": 2.622,
+        "score": 0.094
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.982,
+      "wrong": 4.008
+    },
+    "separation": {
+      "spec": {
+        "within": 1.765,
+        "between": 3.08,
+        "separation": 1.745
+      },
+      "f0": {
+        "within": 0.893,
+        "between": 1.645,
+        "separation": 1.842
+      },
+      "comb": {
+        "within": 1.776,
+        "between": 3.185,
+        "separation": 1.794
+      }
+    },
+    "selftest_loo": {
+      "耀": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.664
+      },
+      "药": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.668
+      },
+      "腰": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.067
+      },
+      "邀": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": 0.053
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:耀": {
+        "spec": 2.538,
+        "f0": 1.068,
+        "vmis": 0.0,
+        "frames": 23,
+        "comb": 2.337
+      },
+      "A:药": {
+        "spec": 2.561,
+        "f0": 0.893,
+        "vmis": 0.0,
+        "frames": 22,
+        "comb": 2.173
+      },
+      "B:腰": {
+        "spec": 2.901,
+        "f0": 1.171,
+        "vmis": 0.0,
+        "frames": 24,
+        "comb": 2.622
+      },
+      "B:邀": {
+        "spec": 3.117,
+        "f0": 1.231,
+        "vmis": 0.0,
+        "frames": 27,
+        "comb": 2.789
+      }
+    },
+    "window_s": [
+      1.33,
+      1.54
+    ],
+    "boundary_token": "还要",
+    "window_anchor": "A:耀",
+    "tokens": {
+      "ORIG": [
+        "拿到",
+        "位置",
+        "还要",
+        "守住",
+        "资格",
+        "赛",
+        "第一",
+        "轮",
+        "先",
+        "输",
+        "抢",
+        "七",
+        "他",
+        "连追",
+        "两盘",
+        "赢",
+        "下",
+        "巴萨瓦雷迪"
+      ],
+      "A:耀": [
+        "拿到",
+        "位置",
+        "还",
+        "耀",
+        "守",
+        "住",
+        "资格",
+        "赛",
+        "第一",
+        "轮",
+        "先",
+        "输",
+        "抢",
+        "七",
+        "他",
+        "连追",
+        "两盘",
+        "赢",
+        "下",
+        "巴萨瓦雷迪"
+      ],
+      "A:药": [
+        "拿到",
+        "位置",
+        "还",
+        "药",
+        "守",
+        "住",
+        "资格",
+        "赛",
+        "第一",
+        "轮",
+        "先",
+        "输",
+        "抢",
+        "七",
+        "他",
+        "连追",
+        "两盘",
+        "赢",
+        "下",
+        "巴萨瓦雷迪"
+      ],
+      "B:腰": [
+        "拿到",
+        "位置",
+        "还",
+        "腰",
+        "守住",
+        "资格",
+        "赛",
+        "第一",
+        "轮",
+        "先",
+        "输",
+        "抢",
+        "七",
+        "他",
+        "连追",
+        "两盘",
+        "赢",
+        "下",
+        "巴萨瓦雷迪"
+      ],
+      "B:邀": [
+        "拿到",
+        "位置",
+        "还",
+        "邀",
+        "守",
+        "住",
+        "资格",
+        "赛",
+        "第一",
+        "轮",
+        "先",
+        "输",
+        "抢",
+        "七",
+        "他",
+        "连追",
+        "两盘",
+        "赢",
+        "下",
+        "巴萨瓦雷迪"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -2.7,
+        -2.6,
+        -1.2,
+        2.4,
+        3.8,
+        4.7,
+        3.6,
+        1.8,
+        0.2,
+        -0.8,
+        -1.6
+      ],
+      "A:耀": [
+        -2.2,
+        -2.2,
+        -1.3,
+        0.2,
+        2.8,
+        4.9,
+        4.0,
+        1.8,
+        -0.2,
+        -2.4,
+        -4.0
+      ],
+      "A:药": [
+        -2.2,
+        -2.2,
+        -1.3,
+        0.3,
+        3.5,
+        4.9,
+        4.1,
+        1.8,
+        -0.2,
+        -2.4,
+        -3.1
+      ],
+      "B:腰": [
+        -0.9,
+        -1.5,
+        -0.0,
+        1.8,
+        2.8,
+        3.9,
+        5.1,
+        4.6,
+        3.5,
+        2.8,
+        2.5,
+        2.2
+      ],
+      "B:邀": [
+        -1.6,
+        -2.4,
+        -1.3,
+        0.1,
+        1.0,
+        1.4,
+        2.3,
+        3.2,
+        1.8,
+        1.1,
+        0.8,
+        0.6,
+        0.7
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/26e23c984d66197a4a514fbb.mp3",
+      "A:耀": "/workspace/tennislive/research/vacherot-acoustic/references/70a35cfd873dd358bfc81ce0.mp3",
+      "A:药": "/workspace/tennislive/research/vacherot-acoustic/references/fa168f5413782459696c5746.mp3",
+      "B:腰": "/workspace/tennislive/research/vacherot-acoustic/references/af9f600b65c28107c767a40f.mp3",
+      "B:邀": "/workspace/tennislive/research/vacherot-acoustic/references/f39ecba0cf899cc532822c03.mp3"
+    }
+  }
+}

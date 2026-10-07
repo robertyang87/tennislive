@@ -1,0 +1,355 @@
+{
+  "id": "target-112",
+  "label": "第 24 段",
+  "display_char": "场",
+  "actual_tts_char": "场",
+  "position": 34,
+  "context": "比赛，仍要一场场打。",
+  "word": "一场",
+  "intended": "chang3",
+  "common_contrast": "chang2",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "一年后，他以十七号种子的身份回到上海。不用再等一个位置，比赛，仍要一场场打。",
+  "verdict": "unreliable",
+  "measurement": {
+    "word": "场",
+    "char": "场",
+    "sentence": "一年后，他以十七号种子的身份回到上海。不用再等一个位置，比赛，仍要一场场打。",
+    "tts_text": "一年后，他以十七号种子的身份回到上海。不用再等一个位置，比赛，仍要一场场打。",
+    "intended_refs": [
+      "昶",
+      "氅"
+    ],
+    "wrong_refs": [
+      "偿",
+      "尝"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": -0.14,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.614,
+        "d_wrong": 2.34,
+        "score": -0.055
+      },
+      "f0": {
+        "d_intended": 1.548,
+        "d_wrong": 0.836,
+        "score": -0.299
+      },
+      "comb": {
+        "d_intended": 2.855,
+        "d_wrong": 2.154,
+        "score": -0.14
+      }
+    },
+    "neighbour_shift": {
+      "intended": 3.48,
+      "wrong": 3.148
+    },
+    "separation": {
+      "spec": {
+        "within": 1.314,
+        "between": 2.613,
+        "separation": 1.988
+      },
+      "f0": {
+        "within": 0.522,
+        "between": 1.411,
+        "separation": 2.704
+      },
+      "comb": {
+        "within": 1.179,
+        "between": 2.718,
+        "separation": 2.305
+      }
+    },
+    "selftest_loo": {
+      "昶": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 1.0
+      },
+      "氅": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 1.0
+      },
+      "偿": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": 0.017
+      },
+      "尝": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.144
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:昶": {
+        "spec": 2.614,
+        "f0": 1.548,
+        "vmis": 0.152,
+        "frames": 33,
+        "comb": 2.855
+      },
+      "A:氅": {
+        "spec": 2.614,
+        "f0": 1.548,
+        "vmis": 0.152,
+        "frames": 33,
+        "comb": 2.855
+      },
+      "B:偿": {
+        "spec": 2.637,
+        "f0": 0.836,
+        "vmis": 0.034,
+        "frames": 29,
+        "comb": 2.154
+      },
+      "B:尝": {
+        "spec": 2.34,
+        "f0": 1.414,
+        "vmis": 0.088,
+        "frames": 34,
+        "comb": 2.584
+      }
+    },
+    "window_s": [
+      6.906,
+      7.186
+    ],
+    "boundary_token": "场",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "一年",
+        "后",
+        "他",
+        "以",
+        "十七号",
+        "种子",
+        "的",
+        "身份",
+        "回到",
+        "上海",
+        "不用",
+        "再",
+        "等",
+        "一个",
+        "位置",
+        "比赛",
+        "仍",
+        "要",
+        "一",
+        "场",
+        "场",
+        "打"
+      ],
+      "A:昶": [
+        "一年",
+        "后",
+        "他",
+        "以",
+        "十七号",
+        "种子",
+        "的",
+        "身份",
+        "回到",
+        "上海",
+        "不用",
+        "再",
+        "等",
+        "一个",
+        "位置",
+        "比赛",
+        "仍",
+        "要",
+        "一",
+        "昶场",
+        "打"
+      ],
+      "A:氅": [
+        "一年",
+        "后",
+        "他",
+        "以",
+        "十七号",
+        "种子",
+        "的",
+        "身份",
+        "回到",
+        "上海",
+        "不用",
+        "再",
+        "等",
+        "一个",
+        "位置",
+        "比赛",
+        "仍",
+        "要",
+        "一",
+        "氅场",
+        "打"
+      ],
+      "B:偿": [
+        "一年",
+        "后",
+        "他",
+        "以",
+        "十七号",
+        "种子",
+        "的",
+        "身份",
+        "回到",
+        "上海",
+        "不用",
+        "再",
+        "等",
+        "一个",
+        "位置",
+        "比赛",
+        "仍",
+        "要",
+        "一",
+        "偿",
+        "场",
+        "打"
+      ],
+      "B:尝": [
+        "一年",
+        "后",
+        "他",
+        "以",
+        "十七号",
+        "种子",
+        "的",
+        "身份",
+        "回到",
+        "上海",
+        "不用",
+        "再",
+        "等",
+        "一个",
+        "位置",
+        "比赛",
+        "仍",
+        "要",
+        "一尝",
+        "场",
+        "打"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        2.2,
+        1.9,
+        0.6,
+        0.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -7.8,
+        -7.2,
+        -6.9,
+        -6.0
+      ],
+      "A:昶": [
+        1.1,
+        -0.0,
+        -1.3,
+        -2.4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.3,
+        -4.0,
+        -5.8,
+        -5.6,
+        -5.4,
+        null
+      ],
+      "A:氅": [
+        1.1,
+        -0.0,
+        -1.3,
+        -2.4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.3,
+        -4.0,
+        -5.8,
+        -5.6,
+        -5.4,
+        null
+      ],
+      "B:偿": [
+        2.4,
+        1.1,
+        0.1,
+        -1.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -7.3,
+        -6.7,
+        -3.8,
+        null
+      ],
+      "B:尝": [
+        3.3,
+        2.2,
+        0.8,
+        -1.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -9.2,
+        -6.6,
+        -5.4,
+        -4.5
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/606156f13132a105ba792a2c.mp3",
+      "A:昶": "/workspace/tennislive/research/vacherot-acoustic/references/aeb859403a9f26068a35c996.mp3",
+      "A:氅": "/workspace/tennislive/research/vacherot-acoustic/references/489e589de985827b27292b4a.mp3",
+      "B:偿": "/workspace/tennislive/research/vacherot-acoustic/references/383c70a30b547b8158622f04.mp3",
+      "B:尝": "/workspace/tennislive/research/vacherot-acoustic/references/2f349d100910df04ae124369.mp3"
+    }
+  }
+}

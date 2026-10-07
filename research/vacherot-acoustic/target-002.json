@@ -1,0 +1,297 @@
+{
+  "id": "target-002",
+  "label": "封面",
+  "display_char": "没",
+  "actual_tts_char": "没",
+  "position": 2,
+  "context": "差点没进资格赛。他",
+  "word": "没",
+  "intended": "mei2",
+  "common_contrast": "mo4",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "差点没进资格赛。他却拿走上海冠军。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "没",
+    "char": "没",
+    "sentence": "差点没进资格赛。他却拿走上海冠军。",
+    "tts_text": "差点没进资格赛。他却拿走上海冠军。",
+    "intended_refs": [
+      "枚",
+      "梅"
+    ],
+    "wrong_refs": [
+      "寞",
+      "沫"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "high",
+    "verdict_raw": "correct",
+    "score": 0.992,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 5.72,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.027,
+        "d_wrong": 3.893,
+        "score": 0.986
+      },
+      "comb": {
+        "d_intended": 0.027,
+        "d_wrong": 6.753,
+        "score": 0.992
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.427,
+      "wrong": 6.108
+    },
+    "separation": {
+      "spec": {
+        "within": 1.426,
+        "between": 5.982,
+        "separation": 4.197
+      },
+      "f0": {
+        "within": 0.186,
+        "between": 4.081,
+        "separation": 21.977
+      },
+      "comb": {
+        "within": 0.898,
+        "between": 7.073,
+        "separation": 7.872
+      }
+    },
+    "selftest_loo": {
+      "枚": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.977
+      },
+      "梅": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.977
+      },
+      "寞": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.637
+      },
+      "沫": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.573
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:枚": {
+        "spec": 0.0,
+        "f0": 0.027,
+        "vmis": 0.0,
+        "frames": 29,
+        "comb": 0.027
+      },
+      "A:梅": {
+        "spec": 0.005,
+        "f0": 0.048,
+        "vmis": 0.0,
+        "frames": 29,
+        "comb": 0.051
+      },
+      "B:寞": {
+        "spec": 6.25,
+        "f0": 4.331,
+        "vmis": 0.0,
+        "frames": 32,
+        "comb": 7.456
+      },
+      "B:沫": {
+        "spec": 5.72,
+        "f0": 3.893,
+        "vmis": 0.0,
+        "frames": 31,
+        "comb": 6.753
+      }
+    },
+    "window_s": [
+      0.541,
+      0.821
+    ],
+    "boundary_token": "没",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "差点",
+        "没",
+        "进",
+        "资格",
+        "赛",
+        "他",
+        "却",
+        "拿走",
+        "上海",
+        "冠军"
+      ],
+      "A:枚": [
+        "差点",
+        "枚",
+        "进",
+        "资格",
+        "赛",
+        "他",
+        "却",
+        "拿走",
+        "上海",
+        "冠军"
+      ],
+      "A:梅": [
+        "差点",
+        "梅",
+        "进",
+        "资格",
+        "赛",
+        "他",
+        "却",
+        "拿走",
+        "上海",
+        "冠军"
+      ],
+      "B:寞": [
+        "差点",
+        "寞",
+        "进",
+        "资格",
+        "赛",
+        "他",
+        "却",
+        "拿走",
+        "上海",
+        "冠军"
+      ],
+      "B:沫": [
+        "差点",
+        "沫进",
+        "资格",
+        "赛",
+        "他",
+        "却",
+        "拿走",
+        "上海",
+        "冠军"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -2.1,
+        -2.7,
+        -3.6,
+        -5.4,
+        -5.7,
+        -5.8,
+        -5.3,
+        -5.2,
+        -4.6,
+        -2.0,
+        0.3,
+        1.9,
+        3.1,
+        2.8,
+        1.8
+      ],
+      "A:枚": [
+        -2.0,
+        -2.6,
+        -3.6,
+        -5.4,
+        -5.6,
+        -5.8,
+        -5.3,
+        -5.2,
+        -4.5,
+        -2.0,
+        0.3,
+        2.0,
+        3.1,
+        2.8,
+        1.9
+      ],
+      "A:梅": [
+        -2.1,
+        -2.7,
+        -3.7,
+        -5.4,
+        -5.7,
+        -5.9,
+        -5.4,
+        -5.3,
+        -4.6,
+        -2.1,
+        0.3,
+        1.9,
+        3.1,
+        2.8,
+        1.8
+      ],
+      "B:寞": [
+        -1.1,
+        -1.6,
+        -1.8,
+        -0.3,
+        0.9,
+        1.7,
+        2.5,
+        4.1,
+        4.0,
+        3.2,
+        2.2,
+        1.3,
+        -0.5,
+        -1.2,
+        -2.1
+      ],
+      "B:沫": [
+        -1.9,
+        -2.2,
+        -2.4,
+        -2.0,
+        -0.4,
+        0.6,
+        1.7,
+        3.1,
+        4.1,
+        4.1,
+        3.4,
+        2.1,
+        1.4,
+        -0.9,
+        -1.7,
+        -2.7
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/edfe090ddfc29ab1a97b269d.mp3",
+      "A:枚": "/workspace/tennislive/research/vacherot-acoustic/references/79e72c741acd35c908e18a2c.mp3",
+      "A:梅": "/workspace/tennislive/research/vacherot-acoustic/references/a6fdac7702c6158e3c88fa44.mp3",
+      "B:寞": "/workspace/tennislive/research/vacherot-acoustic/references/6264a8e5dc09677be7997575.mp3",
+      "B:沫": "/workspace/tennislive/research/vacherot-acoustic/references/e1ef70184c37125c99951bf2.mp3"
+    }
+  }
+}

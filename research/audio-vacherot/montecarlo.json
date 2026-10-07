@@ -1,0 +1,172 @@
+{
+  "source_url": "https://www.tennistv.com/videos/4485679/monte-carlo-2026-qf-vacherot-de-minaur-short-highlights",
+  "source_sha256": "6922fdf609e680e1d0b6479ed46f3d45e60e3cf294a9a8a8b2f32eb74bca2047",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex official_sources: independent base.en/small.en matching clause and frame review, no human listening claimed",
+  "reviewed_at": "2026-10-07T20:40:57.076624+00:00",
+  "status": "complete",
+  "reviewed_from": 141.0,
+  "reviewed_to": 146.8,
+  "foreground_english": [
+    {
+      "start": 141.2,
+      "end": 143.22,
+      "en": "The semi-finals are calling.",
+      "zh": "半决赛，正在向他招手。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_raw": [
+    {
+      "model": "base.en",
+      "file": "/workspace/scratch/vacherot/selection-review/montecarlo-base.en.json",
+      "result": [
+        {
+          "start": 128.0,
+          "end": 143.16,
+          "en": "Set off. Oh, he goes. The semi-finals are calling.",
+          "words": [
+            {
+              "start": 128.0,
+              "end": 128.28,
+              "word": " Set"
+            },
+            {
+              "start": 128.28,
+              "end": 132.06,
+              "word": " off."
+            },
+            {
+              "start": 132.2,
+              "end": 132.96,
+              "word": " Oh,"
+            },
+            {
+              "start": 133.22,
+              "end": 133.38,
+              "word": " he"
+            },
+            {
+              "start": 133.38,
+              "end": 140.14,
+              "word": " goes."
+            },
+            {
+              "start": 141.2,
+              "end": 141.58,
+              "word": " The"
+            },
+            {
+              "start": 141.58,
+              "end": 141.94,
+              "word": " semi"
+            },
+            {
+              "start": 141.94,
+              "end": 142.56,
+              "word": "-finals"
+            },
+            {
+              "start": 142.56,
+              "end": 142.78,
+              "word": " are"
+            },
+            {
+              "start": 142.78,
+              "end": 143.16,
+              "word": " calling."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "small.en",
+      "file": "/workspace/scratch/vacherot/selection-review/montecarlo-small.en.json",
+      "result": [
+        {
+          "start": 131.66,
+          "end": 143.22,
+          "en": "Let's settle. Oh, he goes. The semi-finals are calling.",
+          "words": [
+            {
+              "start": 131.66,
+              "end": 132.64,
+              "word": " Let's"
+            },
+            {
+              "start": 132.64,
+              "end": 132.64,
+              "word": " settle."
+            },
+            {
+              "start": 133.02,
+              "end": 133.02,
+              "word": " Oh,"
+            },
+            {
+              "start": 137.26,
+              "end": 137.48,
+              "word": " he"
+            },
+            {
+              "start": 137.48,
+              "end": 140.24,
+              "word": " goes."
+            },
+            {
+              "start": 141.58,
+              "end": 141.64,
+              "word": " The"
+            },
+            {
+              "start": 141.64,
+              "end": 142.12,
+              "word": " semi"
+            },
+            {
+              "start": 142.12,
+              "end": 142.62,
+              "word": "-finals"
+            },
+            {
+              "start": 142.62,
+              "end": 142.84,
+              "word": " are"
+            },
+            {
+              "start": 142.84,
+              "end": 143.22,
+              "word": " calling."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "full_window_note": "Original requested128.0–146.8 cannot be certified: uncertain faint utterance131.66–140.24, including an umpire-like voice and possibly Off he goes. Further small/tiny focus failed. Final selected141.0–146.8 contains only agreed complete The semi-finals are calling and clear reaction, excludes all uncertain preceding speech. This chosen clip is a celebration reaction, not a complete final rally.",
+  "rejected_larger_window": {
+    "from": 128,
+    "to": 146.8,
+    "status": "pending",
+    "uncertain_spans": [
+      {
+        "start": 131.66,
+        "end": 140.24,
+        "reason": "Different ASR systems disagree on short phrase/umpire voice under crowd noise. No authoritative independent transcript found."
+      }
+    ]
+  },
+  "suggested_segment": {
+    "source": "montecarlo",
+    "start": 141.0,
+    "end": 146.8,
+    "quote": [
+      {
+        "at": 0.2,
+        "end": 2.22,
+        "text": "The semi-finals are calling.\n半决赛，正在向他招手。"
+      }
+    ]
+  }
+}

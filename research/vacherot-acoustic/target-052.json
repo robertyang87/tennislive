@@ -1,0 +1,390 @@
+{
+  "id": "target-052",
+  "label": "第 12 段",
+  "display_char": "被",
+  "actual_tts_char": "被",
+  "position": 31,
+  "context": "十个积分，却被伤病挡住的那",
+  "word": "被",
+  "intended": "bei4",
+  "common_contrast": "pi1",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "赢下鲁内后，他在镜头上写下，世界前一百。去年只差三十个积分，却被伤病挡住的那一步，这一次，终于跨过去了。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "被",
+    "char": "被",
+    "sentence": "赢下鲁内后，他在镜头上写下，世界前一百。去年只差三十个积分，却被伤病挡住的那一步，这一次，终于跨过去了。",
+    "tts_text": "赢下鲁内后，他在镜头上写下，世界前一百。去年只差三十个积分，却被伤病挡住的那一步，这一次，终于跨过去了。",
+    "intended_refs": [
+      "备",
+      "惫"
+    ],
+    "wrong_refs": [
+      "披",
+      "砒"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.524,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 3.184,
+        "d_wrong": 4.813,
+        "score": 0.204
+      },
+      "f0": {
+        "d_intended": 1.126,
+        "d_wrong": 5.949,
+        "score": 0.682
+      },
+      "comb": {
+        "d_intended": 2.718,
+        "d_wrong": 8.699,
+        "score": 0.524
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.256,
+      "wrong": 3.329
+    },
+    "separation": {
+      "spec": {
+        "within": 2.659,
+        "between": 4.973,
+        "separation": 1.871
+      },
+      "f0": {
+        "within": 0.819,
+        "between": 4.757,
+        "separation": 5.81
+      },
+      "comb": {
+        "within": 2.148,
+        "between": 7.243,
+        "separation": 3.372
+      }
+    },
+    "selftest_loo": {
+      "备": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.635
+      },
+      "惫": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.595
+      },
+      "披": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.46
+      },
+      "砒": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.493
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:备": {
+        "spec": 3.184,
+        "f0": 1.126,
+        "vmis": 0.125,
+        "frames": 24,
+        "comb": 2.718
+      },
+      "A:惫": {
+        "spec": 3.481,
+        "f0": 1.25,
+        "vmis": 0.16,
+        "frames": 25,
+        "comb": 2.991
+      },
+      "B:披": {
+        "spec": 5.501,
+        "f0": 5.949,
+        "vmis": 0.391,
+        "frames": 23,
+        "comb": 8.699
+      },
+      "B:砒": {
+        "spec": 4.813,
+        "f0": 7.55,
+        "vmis": 0.476,
+        "frames": 21,
+        "comb": 9.956
+      }
+    },
+    "window_s": [
+      6.446,
+      6.632
+    ],
+    "boundary_token": "被",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "赢",
+        "下鲁",
+        "内",
+        "后",
+        "他",
+        "在",
+        "镜头",
+        "上",
+        "写",
+        "下",
+        "世界",
+        "前",
+        "一百",
+        "去年",
+        "只",
+        "差",
+        "三十",
+        "个",
+        "积分",
+        "却",
+        "被",
+        "伤病",
+        "挡住",
+        "的",
+        "那",
+        "一",
+        "步",
+        "这",
+        "一次",
+        "终于",
+        "跨",
+        "过去",
+        "了"
+      ],
+      "A:备": [
+        "赢",
+        "下鲁",
+        "内",
+        "后",
+        "他",
+        "在",
+        "镜头",
+        "上",
+        "写",
+        "下",
+        "世界",
+        "前",
+        "一百",
+        "去年",
+        "只",
+        "差",
+        "三十",
+        "个",
+        "积分",
+        "却",
+        "备伤病",
+        "挡住",
+        "的",
+        "那",
+        "一",
+        "步",
+        "这",
+        "一次",
+        "终于",
+        "跨",
+        "过去",
+        "了"
+      ],
+      "A:惫": [
+        "赢",
+        "下鲁",
+        "内",
+        "后",
+        "他",
+        "在",
+        "镜头",
+        "上",
+        "写",
+        "下",
+        "世界",
+        "前",
+        "一百",
+        "去年",
+        "只",
+        "差",
+        "三十",
+        "个",
+        "积分",
+        "却",
+        "惫伤病",
+        "挡住",
+        "的",
+        "那",
+        "一",
+        "步",
+        "这",
+        "一次",
+        "终于",
+        "跨",
+        "过去",
+        "了"
+      ],
+      "B:披": [
+        "赢",
+        "下鲁",
+        "内",
+        "后",
+        "他",
+        "在",
+        "镜头",
+        "上",
+        "写",
+        "下",
+        "世界",
+        "前",
+        "一百",
+        "去年",
+        "只",
+        "差",
+        "三十",
+        "个",
+        "积分",
+        "却",
+        "披伤",
+        "病",
+        "挡住",
+        "的",
+        "那",
+        "一",
+        "步",
+        "这",
+        "一次",
+        "终于",
+        "跨",
+        "过去",
+        "了"
+      ],
+      "B:砒": [
+        "赢",
+        "下鲁",
+        "内",
+        "后",
+        "他",
+        "在",
+        "镜头",
+        "上",
+        "写",
+        "下",
+        "世界",
+        "前",
+        "一百",
+        "去年",
+        "只",
+        "差",
+        "三十",
+        "个",
+        "积分",
+        "却",
+        "砒伤病",
+        "挡住",
+        "的",
+        "那",
+        "一",
+        "步",
+        "这",
+        "一次",
+        "终于",
+        "跨",
+        "过去",
+        "了"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        12.9,
+        11.4,
+        10.1,
+        6.1,
+        null,
+        null,
+        5.8,
+        4.9,
+        4.4
+      ],
+      "A:备": [
+        null,
+        11.2,
+        10.0,
+        8.7,
+        7.5,
+        3.6,
+        null,
+        9.9,
+        8.2,
+        6.5,
+        5.4,
+        4.2
+      ],
+      "A:惫": [
+        null,
+        11.6,
+        10.5,
+        9.2,
+        8.1,
+        4.6,
+        2.7,
+        null,
+        10.5,
+        8.9,
+        6.8,
+        5.5
+      ],
+      "B:披": [
+        null,
+        null,
+        3.3,
+        2.6,
+        10.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "B:砒": [
+        null,
+        5.5,
+        3.7,
+        2.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/1ec16419475a289183d01928.mp3",
+      "A:备": "/workspace/tennislive/research/vacherot-acoustic/references/82802d2747a29a084f86f1fa.mp3",
+      "A:惫": "/workspace/tennislive/research/vacherot-acoustic/references/66278730b1cba6dbec8f75d4.mp3",
+      "B:披": "/workspace/tennislive/research/vacherot-acoustic/references/75dbe0258060528fd75f96f8.mp3",
+      "B:砒": "/workspace/tennislive/research/vacherot-acoustic/references/3bda2546ef8980f2b24cc813.mp3"
+    }
+  }
+}
