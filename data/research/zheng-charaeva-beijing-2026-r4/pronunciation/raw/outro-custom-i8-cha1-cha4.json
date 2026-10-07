@@ -1,0 +1,331 @@
+{
+  "word": "差",
+  "char": "差",
+  "sentence": "关注网球时差，时差归我，好球归你。",
+  "tts_text": "关注网球时差，时差归我，好球归你。",
+  "intended_refs": [
+    "插",
+    "叉"
+  ],
+  "wrong_refs": [
+    "岔",
+    "诧",
+    "汊"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "unreliable",
+  "confidence": null,
+  "verdict_raw": "correct",
+  "score": 0.245,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 2.516,
+      "d_wrong": 2.569,
+      "score": 0.01
+    },
+    "f0": {
+      "d_intended": 0.204,
+      "d_wrong": 1.058,
+      "score": 0.677
+    },
+    "comb": {
+      "d_intended": 1.462,
+      "d_wrong": 2.411,
+      "score": 0.245
+    }
+  },
+  "neighbour_shift": {
+    "intended": 1.572,
+    "wrong": 1.98
+  },
+  "separation": {
+    "spec": {
+      "within": 2.597,
+      "between": 2.656,
+      "separation": 1.023
+    },
+    "f0": {
+      "within": 1.003,
+      "between": 2.06,
+      "separation": 2.053
+    },
+    "comb": {
+      "within": 2.302,
+      "between": 3.388,
+      "separation": 1.472
+    }
+  },
+  "selftest_loo": {
+    "插": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.288
+    },
+    "叉": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.247
+    },
+    "岔": {
+      "expect": "misread",
+      "got": "uncertain",
+      "score": -0.09
+    },
+    "诧": {
+      "expect": "misread",
+      "got": "uncertain",
+      "score": -0.171
+    },
+    "汊": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.272
+    }
+  },
+  "selftest_pass": false,
+  "distances_from_orig": {
+    "A:插": {
+      "spec": 2.725,
+      "f0": 0.411,
+      "vmis": 0.226,
+      "frames": 31,
+      "comb": 1.773
+    },
+    "A:叉": {
+      "spec": 2.516,
+      "f0": 0.204,
+      "vmis": 0.167,
+      "frames": 30,
+      "comb": 1.462
+    },
+    "B:岔": {
+      "spec": 2.707,
+      "f0": 1.058,
+      "vmis": 0.103,
+      "frames": 29,
+      "comb": 2.411
+    },
+    "B:诧": {
+      "spec": 2.718,
+      "f0": 1.42,
+      "vmis": 0.394,
+      "frames": 33,
+      "comb": 2.779
+    },
+    "B:汊": {
+      "spec": 2.569,
+      "f0": 3.084,
+      "vmis": 0.241,
+      "frames": 29,
+      "comb": 4.368
+    }
+  },
+  "window_s": [
+    1.67,
+    1.95
+  ],
+  "boundary_token": "时差",
+  "window_anchor": "A:插",
+  "tokens": {
+    "ORIG": [
+      "关注",
+      "网球",
+      "时差",
+      "时差",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "A:插": [
+      "关注",
+      "网球",
+      "时差",
+      "时",
+      "插",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "A:叉": [
+      "关注",
+      "网球",
+      "时差",
+      "时",
+      "叉",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "B:岔": [
+      "关注",
+      "网球",
+      "时差",
+      "时岔",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "B:诧": [
+      "关注",
+      "网球",
+      "时差",
+      "时",
+      "诧归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "B:汊": [
+      "关注",
+      "网球",
+      "时差",
+      "时",
+      "汊",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      1.5,
+      1.6,
+      2.0,
+      2.0,
+      null,
+      null,
+      null,
+      3.6,
+      2.7,
+      2.2,
+      2.0,
+      2.0,
+      1.9
+    ],
+    "A:插": [
+      null,
+      null,
+      1.7,
+      1.7,
+      1.4,
+      null,
+      null,
+      null,
+      null,
+      null,
+      3.2,
+      2.5,
+      1.9,
+      1.8,
+      1.4,
+      -0.4
+    ],
+    "A:叉": [
+      null,
+      1.5,
+      1.7,
+      1.8,
+      0.3,
+      null,
+      null,
+      null,
+      null,
+      null,
+      1.9,
+      1.7,
+      1.9,
+      1.6
+    ],
+    "B:岔": [
+      null,
+      null,
+      1.9,
+      2.6,
+      2.7,
+      null,
+      null,
+      null,
+      null,
+      2.6,
+      1.7,
+      0.3,
+      -0.3,
+      -0.4,
+      -2.7
+    ],
+    "B:诧": [
+      null,
+      null,
+      2.0,
+      2.2,
+      1.5,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -1.4,
+      -2.3,
+      -4.8
+    ],
+    "B:汊": [
+      null,
+      null,
+      1.8,
+      3.4,
+      3.5,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -8.8,
+      -10.3,
+      null,
+      -0.9,
+      -1.6
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/outro-2bfb6c3faf8a-ad76af6884ca.mp3",
+    "A:插": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/92ef9c7928ca15c4a0a79a51.mp3",
+    "A:叉": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/2e56b6f6fc4c06a22417d425.mp3",
+    "B:岔": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ca40915e3df126ddb120cabd.mp3",
+    "B:诧": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/73868045eaafb8c80a489ce4.mp3",
+    "B:汊": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/a171274e1b525aabb63a2e74.mp3"
+  },
+  "actual_native_mp3_sha256": "ad76af6884cacb46ce01ec8b028073fb0fac4d20f326d46f548a7210fb5710bd",
+  "native_text_sha256": "2bfb6c3faf8ae5b1711f6ea769579ce03d322ce6440b2947a0537cecf4fe660e"
+}

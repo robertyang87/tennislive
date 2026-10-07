@@ -1,0 +1,179 @@
+{
+  "sentence": "决胜盘，郑钦文五比二领先。五比三，发球胜赛局却被破掉。五比四，她在接发局继续争取最后一分。",
+  "text_sha256": "34ab0a3e1f7edfdb86d2a724bc6c56bea03e5d49704a8caec183c973df243463",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "index": 17,
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/final_pressure-34ab0a3e1f7e-841e39bca856.mp3",
+    "A:發": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/06d3ff7ec091a02593221cef.mp3",
+    "B:髮": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/e972abbeddf56ea90d963881.mp3",
+    "B:珐": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/5dcaeef81f184a3dc2b855c0.mp3"
+  },
+  "native_orig_mp3_sha256": "841e39bca8567bb7dc31b22c310f200ec1794d6e151270c0e9f316f29dff5756",
+  "method": "Exact native production; target WordBoundary onset+40ms..end+50ms; last40% of valid pitch frames, minimum3; Theil-Sen pitch slope in semitones/s; multiple references two-sided LOO (fa has only one intended ref and limits confidence)",
+  "tracks": {
+    "ORIG": {
+      "wordboundary": [
+        3.75,
+        3.9268955,
+        "发球"
+      ],
+      "all_pitchvalid_times": [
+        3.87,
+        3.88,
+        3.89,
+        3.9,
+        3.91,
+        3.92,
+        3.93,
+        3.94,
+        3.95,
+        3.96,
+        3.97
+      ],
+      "tail_times": [
+        3.93,
+        3.94,
+        3.95,
+        3.96,
+        3.97
+      ],
+      "tail_semitones": [
+        1.0082380051925277,
+        0.960557218363749,
+        0.9772966549900737,
+        1.0055325007256641,
+        1.0266817729031965
+      ],
+      "robust_slope_st_per_s": 1.8944354401928105
+    },
+    "A:發": {
+      "wordboundary": [
+        3.726416,
+        3.932791,
+        "發球"
+      ],
+      "all_pitchvalid_times": [
+        3.87,
+        3.88,
+        3.89,
+        3.9,
+        3.91,
+        3.92,
+        3.93,
+        3.94,
+        3.95,
+        3.96,
+        3.97,
+        3.98
+      ],
+      "tail_times": [
+        3.94,
+        3.95,
+        3.96,
+        3.97,
+        3.98
+      ],
+      "tail_semitones": [
+        0.758120727165537,
+        0.6825440801348526,
+        0.7236903325821449,
+        0.8728827457344877,
+        1.0304001580277462
+      ],
+      "robust_slope_st_per_s": 8.161959525768484
+    },
+    "B:髮": {
+      "wordboundary": [
+        3.738208,
+        3.9327910000000004,
+        "髮球"
+      ],
+      "all_pitchvalid_times": [
+        3.85,
+        3.86,
+        3.87,
+        3.88,
+        3.89,
+        3.95,
+        3.96,
+        3.97,
+        3.98
+      ],
+      "tail_times": [
+        3.95,
+        3.96,
+        3.97,
+        3.98
+      ],
+      "tail_semitones": [
+        -1.36404651779196,
+        -1.7411083416550208,
+        -2.0655920734087396,
+        -2.2496596632130164
+      ],
+      "robust_slope_st_per_s": -30.9844056780366
+    },
+    "B:珐": {
+      "wordboundary": [
+        3.738208,
+        3.9209995,
+        "珐球"
+      ],
+      "all_pitchvalid_times": [
+        3.87,
+        3.88,
+        3.89,
+        3.9,
+        3.91,
+        3.92,
+        3.93,
+        3.94,
+        3.95,
+        3.96,
+        3.97
+      ],
+      "tail_times": [
+        3.93,
+        3.94,
+        3.95,
+        3.96,
+        3.97
+      ],
+      "tail_semitones": [
+        0.21412494978683316,
+        -0.5345731514091661,
+        -0.969335602033182,
+        -1.3370947111021971,
+        -1.5768026462185636
+      ],
+      "robust_slope_st_per_s": -41.801161523526055
+    }
+  },
+  "selftest_loo": {
+    "B:髮": {
+      "expected": "misread",
+      "d_intended": 39.14636520380509,
+      "d_wrong": 10.816755845489453,
+      "score": -0.5670104021397125,
+      "got": "misread"
+    },
+    "B:珐": {
+      "expected": "misread",
+      "d_intended": 49.96312104929454,
+      "d_wrong": 10.816755845489453,
+      "score": -0.6440678593602837,
+      "got": "misread"
+    }
+  },
+  "selftest_pass": true,
+  "original": {
+    "d_intended": 6.2675240855756735,
+    "d_wrong": 32.87884111822941,
+    "score": 0.6797902409102105,
+    "got": "correct"
+  },
+  "verdict": "correct",
+  "confidence": "low"
+}

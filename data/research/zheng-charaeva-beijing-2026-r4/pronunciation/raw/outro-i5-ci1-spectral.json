@@ -1,0 +1,241 @@
+{
+  "word": "差",
+  "char": "差",
+  "sentence": "关注网球时差，时差归我，好球归你。",
+  "tts_text": "关注网球时差，时差归我，好球归你。",
+  "intended_refs": [
+    "插",
+    "叉"
+  ],
+  "wrong_refs": [
+    "疵"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "low",
+  "verdict_raw": "correct",
+  "score": 0.407,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 2.214,
+      "d_wrong": 5.248,
+      "score": 0.407
+    },
+    "f0": {
+      "d_intended": 0.357,
+      "d_wrong": 1.125,
+      "score": 0.519
+    },
+    "comb": {
+      "d_intended": 2.214,
+      "d_wrong": 5.248,
+      "score": 0.407
+    }
+  },
+  "neighbour_shift": {
+    "intended": 2.201,
+    "wrong": 3.044
+  },
+  "separation": {
+    "spec": {
+      "within": 1.189,
+      "between": 4.947,
+      "separation": 4.161
+    },
+    "f0": {
+      "within": 0.259,
+      "between": 0.826,
+      "separation": 3.185
+    },
+    "comb": {
+      "within": 1.189,
+      "between": 4.947,
+      "separation": 4.161
+    }
+  },
+  "selftest_loo": {
+    "插": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.614
+    },
+    "叉": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.609
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:插": {
+      "spec": 2.242,
+      "f0": 0.357,
+      "vmis": 0.265,
+      "frames": 34,
+      "comb": 2.242
+    },
+    "A:叉": {
+      "spec": 2.214,
+      "f0": 0.543,
+      "vmis": 0.088,
+      "frames": 34,
+      "comb": 2.214
+    },
+    "B:疵": {
+      "spec": 5.248,
+      "f0": 1.125,
+      "vmis": 0.121,
+      "frames": 33,
+      "comb": 5.248
+    }
+  },
+  "window_s": [
+    0.93,
+    1.25
+  ],
+  "boundary_token": "时差",
+  "window_anchor": "A:插",
+  "tokens": {
+    "ORIG": [
+      "关注",
+      "网球",
+      "时差",
+      "时差",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "A:插": [
+      "关注",
+      "网球",
+      "时",
+      "插",
+      "时差",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "A:叉": [
+      "关注",
+      "网球",
+      "时",
+      "叉",
+      "时差",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "B:疵": [
+      "关注",
+      "网球",
+      "时疵",
+      "时差",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      -3.2,
+      -2.6,
+      -2.6,
+      -3.4,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -0.1,
+      -0.2,
+      -1.0,
+      -3.7,
+      -3.3,
+      1.1
+    ],
+    "A:插": [
+      null,
+      -3.4,
+      -3.5,
+      -3.0,
+      -3.1,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      0.1,
+      -0.6,
+      null,
+      null,
+      null
+    ],
+    "A:叉": [
+      null,
+      -3.1,
+      -3.3,
+      -2.7,
+      -2.8,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      0.4,
+      -0.4,
+      -1.9,
+      -2.6,
+      -5.0
+    ],
+    "B:疵": [
+      null,
+      -3.0,
+      -3.1,
+      -2.6,
+      -2.4,
+      -3.6,
+      null,
+      null,
+      null,
+      null,
+      0.2,
+      0.1,
+      0.8,
+      0.9,
+      -0.1,
+      null
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/voice_outro.mp3",
+    "A:插": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ed327df267c1c3ca40b0309c.mp3",
+    "A:叉": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/b30e3b08f8510652baede413.mp3",
+    "B:疵": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/65d058ecf77f37cc289f86f3.mp3"
+  },
+  "method": "spectral; complete brand utterance, independent 插/叉 instead of rare锸; different-vowel alternatives (chai1/ci1)"
+}

@@ -1,0 +1,453 @@
+{
+  "job": {
+    "id": "u01-i12-同-tong2-vs-tong4",
+    "utterance": 1,
+    "label": "第 3 段",
+    "sentence": "首盘二比一领先，郑钦文在同一个发球局救下三个破发点。这一局守住了，首盘的最后四局，全归她。",
+    "text_sha256": "9a51fcfc48afe82e78988ce4c82cd62916db3e7ed64d68840609a0f134da8c68",
+    "index": 12,
+    "char": "同",
+    "intended": "tong2",
+    "wrong": "tong4",
+    "ok": [
+      "彤",
+      "瞳",
+      "铜"
+    ],
+    "bad": [
+      "痛",
+      "恸"
+    ],
+    "ok_reference_note": "single-reading common",
+    "bad_reference_note": "single-reading common, single-reading level-2"
+  },
+  "word": "同",
+  "char": "同",
+  "sentence": "首盘二比一领先，郑钦文在同一个发球局救下三个破发点。这一局守住了，首盘的最后四局，全归她。",
+  "tts_text": "首盘二比一领先，郑钦文在同一个发球局救下三个破发点。这一局守住了，首盘的最后四局，全归她。",
+  "intended_refs": [
+    "彤",
+    "瞳",
+    "铜"
+  ],
+  "wrong_refs": [
+    "痛",
+    "恸"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "medium",
+  "verdict_raw": "correct",
+  "score": 0.544,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": false,
+  "dropped_refs": [
+    "瞳"
+  ],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 1.952,
+      "d_wrong": 3.11,
+      "score": 0.229
+    },
+    "f0": {
+      "d_intended": 0.285,
+      "d_wrong": 2.72,
+      "score": 0.81
+    },
+    "comb": {
+      "d_intended": 1.261,
+      "d_wrong": 4.275,
+      "score": 0.544
+    }
+  },
+  "neighbour_shift": {
+    "intended": 1.263,
+    "wrong": 8.579
+  },
+  "separation": {
+    "spec": {
+      "within": 2.325,
+      "between": 3.079,
+      "separation": 1.325
+    },
+    "f0": {
+      "within": 2.068,
+      "between": 3.007,
+      "separation": 1.454
+    },
+    "comb": {
+      "within": 3.23,
+      "between": 4.547,
+      "separation": 1.408
+    }
+  },
+  "selftest_loo": {
+    "彤": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.545
+    },
+    "铜": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.532
+    },
+    "痛": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.974
+    },
+    "恸": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.974
+    },
+    "瞳": {
+      "expect": "correct",
+      "got": "uncertain",
+      "score": -0.069,
+      "dropped": true
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:彤": {
+      "spec": 1.952,
+      "f0": 0.285,
+      "vmis": 0.086,
+      "frames": 35,
+      "comb": 1.261
+    },
+    "A:瞳": {
+      "spec": 3.651,
+      "f0": 3.357,
+      "vmis": 0.176,
+      "frames": 34,
+      "comb": 5.183
+    },
+    "A:铜": {
+      "spec": 2.065,
+      "f0": 0.326,
+      "vmis": 0.059,
+      "frames": 34,
+      "comb": 1.358
+    },
+    "B:痛": {
+      "spec": 3.11,
+      "f0": 2.74,
+      "vmis": 0.059,
+      "frames": 34,
+      "comb": 4.295
+    },
+    "B:恸": {
+      "spec": 3.11,
+      "f0": 2.72,
+      "vmis": 0.059,
+      "frames": 34,
+      "comb": 4.275
+    }
+  },
+  "window_s": [
+    2.18,
+    2.507
+  ],
+  "boundary_token": "同",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "首盘",
+      "二比一",
+      "领先",
+      "郑钦文",
+      "在",
+      "同",
+      "一个",
+      "发球局",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:彤": [
+      "首盘",
+      "二",
+      "比",
+      "一",
+      "领先",
+      "郑钦文",
+      "在",
+      "彤",
+      "一个",
+      "发球局",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:瞳": [
+      "首盘",
+      "二",
+      "比",
+      "一",
+      "领先",
+      "郑钦文",
+      "在瞳",
+      "一个",
+      "发球局",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:铜": [
+      "首盘",
+      "二",
+      "比",
+      "一",
+      "领先",
+      "郑钦文",
+      "在",
+      "铜",
+      "一个",
+      "发球局",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:痛": [
+      "首盘",
+      "二",
+      "比",
+      "一",
+      "领先",
+      "郑钦文",
+      "在",
+      "痛",
+      "一个",
+      "发球局",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:恸": [
+      "首盘",
+      "二",
+      "比",
+      "一",
+      "领先",
+      "郑钦文",
+      "在",
+      "恸",
+      "一个",
+      "发球局",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      -0.8,
+      -1.2,
+      -1.3,
+      -1.6,
+      null,
+      null,
+      null,
+      -12.6,
+      -12.7,
+      null,
+      0.5,
+      0.2,
+      1.6,
+      4.3,
+      6.8,
+      8.5,
+      9.3
+    ],
+    "A:彤": [
+      -1.4,
+      -1.5,
+      -1.5,
+      -1.7,
+      null,
+      null,
+      null,
+      -12.4,
+      -12.2,
+      null,
+      0.6,
+      0.4,
+      1.6,
+      3.8,
+      6.5,
+      8.0,
+      8.8
+    ],
+    "A:瞳": [
+      3.0,
+      1.8,
+      0.6,
+      -0.1,
+      null,
+      null,
+      -1.9,
+      -0.7,
+      -0.8,
+      -0.4,
+      0.7,
+      1.2,
+      0.9
+    ],
+    "A:铜": [
+      -0.9,
+      -1.6,
+      -1.8,
+      -2.4,
+      null,
+      null,
+      null,
+      -13.1,
+      -14.5,
+      null,
+      0.4,
+      1.1,
+      2.6,
+      5.3,
+      7.3,
+      8.4,
+      8.7
+    ],
+    "B:痛": [
+      0.8,
+      -0.0,
+      -0.2,
+      -1.3,
+      null,
+      null,
+      null,
+      -14.1,
+      -14.3,
+      null,
+      7.1,
+      6.3,
+      5.2,
+      4.1,
+      2.6
+    ],
+    "B:恸": [
+      0.7,
+      -0.1,
+      -0.2,
+      -1.3,
+      null,
+      null,
+      null,
+      -14.2,
+      -14.3,
+      null,
+      7.1,
+      6.3,
+      5.1,
+      4.1,
+      2.5
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/f801f5db720747bce11cec66.mp3",
+    "A:彤": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/c8ae6e8370d654002f423cc2.mp3",
+    "A:瞳": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/b92924dd8de1c4bc3b321e45.mp3",
+    "A:铜": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/3eb47e07bb1f081ddbd8082e.mp3",
+    "B:痛": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/453d6a24733b31f1ca78d860.mp3",
+    "B:恸": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/3998967d7c7a3e42d1a54560.mp3"
+  }
+}

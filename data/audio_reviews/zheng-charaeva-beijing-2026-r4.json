@@ -1,7 +1,7 @@
 {
   "schema": "tennislive.foreground-audio-review.v1",
   "slug": "zheng-charaeva-beijing-2026-r4",
-  "plan_sha256": "6de5c09687c0976ab88662d0d0e0e28471628d2de8fa7e405076327edff9454f",
+  "plan_sha256": "033eb6a6ee69dfb1a22f3e02d744f32d3d55838379f85efb2e869a29f1733ba5",
   "reviewed_at": "2026-10-07T16:31:18.616093+00:00",
   "segments": [
     {
@@ -22,7 +22,7 @@
     {
       "index": 6,
       "transcript_path": "data/research/zheng-charaeva-beijing-2026-r4/audio/selected-06.json",
-      "transcript_sha256": "dbe6b7d3af1fb08b591e2644abc98b143fd124ba417b562566dcee93f666b5c9"
+      "transcript_sha256": "457fe11ef55f5082ae79921a40f8880f995e5af4b0204ac082dfc25520b6bc69"
     },
     {
       "index": 7,
@@ -42,5 +42,11 @@
   ],
   "method": "asr_cross_checked",
   "actual_listening_performed": false,
-  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2"
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "translation_revision": {
+    "reviewer": "root",
+    "previous_plan_sha256": "6de5c09687c0976ab88662d0d0e0e28471628d2de8fa7e405076327edff9454f",
+    "reason": "173.4秒中文球员译名按项目正式player_zh统一查拉耶娃；英语原文、真实source时间轴、raw模型实证及源文件均未改。",
+    "actual_listening_performed": false
+  }
 }

@@ -1,0 +1,388 @@
+{
+  "word": "的",
+  "char": "的",
+  "sentence": "郑钦文的正手敢把球压向边线。首盘二比一，她又救下三个破发点。这一局守住了，首盘的最后四局，全归她。",
+  "tts_text": "郑钦文的正手敢把球压向边线。首盘二比一，她又救下三个破发点。这一局守住了，首盘的最后四局，全归她。",
+  "intended_refs": [
+    "德",
+    "锝"
+  ],
+  "wrong_refs": [
+    "帝",
+    "蒂",
+    "缔"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "unreliable",
+  "confidence": null,
+  "verdict_raw": "uncertain",
+  "score": 0.093,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": true,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 3.254,
+      "d_wrong": 3.918,
+      "score": 0.093
+    },
+    "f0": {
+      "d_intended": 0.707,
+      "d_wrong": 1.821,
+      "score": 0.441
+    },
+    "comb": {
+      "d_intended": 3.254,
+      "d_wrong": 3.918,
+      "score": 0.093
+    }
+  },
+  "neighbour_shift": {
+    "intended": 3.603,
+    "wrong": 3.016
+  },
+  "separation": {
+    "spec": {
+      "within": 2.381,
+      "between": 4.038,
+      "separation": 1.696
+    },
+    "f0": {
+      "within": 0.714,
+      "between": 3.304,
+      "separation": 4.627
+    },
+    "comb": {
+      "within": 2.381,
+      "between": 4.038,
+      "separation": 1.696
+    }
+  },
+  "selftest_loo": {
+    "德": {
+      "expect": "correct",
+      "got": "uncertain",
+      "score": 0.176
+    },
+    "锝": {
+      "expect": "correct",
+      "got": "uncertain",
+      "score": -0.047
+    },
+    "帝": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.999
+    },
+    "蒂": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.999
+    },
+    "缔": {
+      "expect": "misread",
+      "got": "uncertain",
+      "score": -0.056
+    }
+  },
+  "selftest_pass": false,
+  "distances_from_orig": {
+    "A:德": {
+      "spec": 3.254,
+      "f0": 0.707,
+      "vmis": 0.0,
+      "frames": 10,
+      "comb": 3.254
+    },
+    "A:锝": {
+      "spec": 4.042,
+      "f0": 1.753,
+      "vmis": 0.0,
+      "frames": 10,
+      "comb": 4.042
+    },
+    "B:帝": {
+      "spec": 4.045,
+      "f0": 1.821,
+      "vmis": 0.0,
+      "frames": 12,
+      "comb": 4.045
+    },
+    "B:蒂": {
+      "spec": 4.046,
+      "f0": 1.865,
+      "vmis": 0.0,
+      "frames": 12,
+      "comb": 4.046
+    },
+    "B:缔": {
+      "spec": 3.918,
+      "f0": 1.84,
+      "vmis": 0.182,
+      "frames": 11,
+      "comb": 3.918
+    }
+  },
+  "window_s": [
+    0.633,
+    0.69
+  ],
+  "boundary_token": "的",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "郑钦文",
+      "的",
+      "正手",
+      "敢",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:德": [
+      "郑钦文",
+      "德",
+      "正手",
+      "敢",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:锝": [
+      "郑钦文",
+      "锝正",
+      "手敢",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:帝": [
+      "郑钦",
+      "文帝",
+      "正手",
+      "敢",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:蒂": [
+      "郑钦",
+      "文蒂",
+      "正手",
+      "敢",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:缔": [
+      "郑钦文",
+      "缔正",
+      "手敢",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "这",
+      "一",
+      "局",
+      "守",
+      "住",
+      "了",
+      "首",
+      "盘",
+      "的",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      0.3,
+      1.5,
+      2.5,
+      3.0
+    ],
+    "A:德": [
+      1.5,
+      0.6,
+      0.1,
+      -1.4,
+      -1.8,
+      -1.5,
+      -0.4
+    ],
+    "A:锝": [
+      -1.7,
+      -0.2,
+      0.8,
+      1.0,
+      -1.8
+    ],
+    "B:帝": [
+      0.6,
+      2.0,
+      3.5,
+      4.7,
+      5.1,
+      4.5
+    ],
+    "B:蒂": [
+      0.7,
+      2.0,
+      3.5,
+      4.7,
+      5.2,
+      4.5
+    ],
+    "B:缔": [
+      0.6,
+      2.9,
+      4.1,
+      4.5,
+      2.4,
+      null
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/6605e028797b1140fabefc57.mp3",
+    "A:德": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/6d76107d9f5b641de7cf8937.mp3",
+    "A:锝": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ee4158018b22c5a30de005f2.mp3",
+    "B:帝": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/4a0e42784dbb525db2fa6ec6.mp3",
+    "B:蒂": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/9632982734df34a09f2b9eab.mp3",
+    "B:缔": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/083ea640f947101758f228e8.mp3"
+  },
+  "method": "Padding0, central70% of actual boundary syllable to exclude neighbors; spectral-only local comparison distinguishes le vs liao / de vs di vowel; independent nearest homophone proxies have full tones, not exact neutral tone; confidence capped low; this DOES NOT attest neutral tone by itself",
+  "exact_intended": "de5",
+  "proxy_confidence": "low",
+  "text_sha256": "1529cfc78b225acda98e1de87df11151a2de7ade3fdc2d81b0633467ff7389f5",
+  "utterance": 1,
+  "index": 3,
+  "proxy_tag": "de-vowel-vs-di4"
+}

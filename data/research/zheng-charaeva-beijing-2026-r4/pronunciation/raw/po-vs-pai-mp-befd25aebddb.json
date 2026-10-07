@@ -1,0 +1,319 @@
+{
+  "word": "迫",
+  "char": "迫",
+  "sentence": "三十九记制胜分，四十二次非受迫失误。进攻有威力，也有代价。她用最后一次回应，握住胜利。",
+  "tts_text": "三十九记制胜分，四十二次非受迫失误。进攻有威力，也有代价。她用最后一次回应，握住胜利。",
+  "intended_refs": [
+    "珀",
+    "粕"
+  ],
+  "wrong_refs": [
+    "摆",
+    "凯"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "unreliable",
+  "confidence": null,
+  "verdict_raw": "correct",
+  "score": 0.358,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": true,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 2.582,
+      "d_wrong": 5.045,
+      "score": 0.323
+    },
+    "f0": {
+      "d_intended": 0.58,
+      "d_wrong": 1.244,
+      "score": 0.364
+    },
+    "comb": {
+      "d_intended": 1.872,
+      "d_wrong": 3.955,
+      "score": 0.358
+    }
+  },
+  "neighbour_shift": {
+    "intended": 1.77,
+    "wrong": 2.196
+  },
+  "separation": {
+    "spec": {
+      "within": 2.166,
+      "between": 5.155,
+      "separation": 2.38
+    },
+    "f0": {
+      "within": 2.994,
+      "between": 0.966,
+      "separation": 0.323
+    },
+    "comb": {
+      "within": 4.078,
+      "between": 3.544,
+      "separation": 0.869
+    }
+  },
+  "selftest_loo": {
+    "珀": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.998
+    },
+    "粕": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.998
+    },
+    "摆": {
+      "expect": "misread",
+      "got": "correct",
+      "score": 0.422
+    },
+    "凯": {
+      "expect": "misread",
+      "got": "correct",
+      "score": 0.373
+    }
+  },
+  "selftest_pass": false,
+  "distances_from_orig": {
+    "A:珀": {
+      "spec": 2.582,
+      "f0": 0.58,
+      "vmis": 0.16,
+      "frames": 25,
+      "comb": 1.872
+    },
+    "A:粕": {
+      "spec": 2.582,
+      "f0": 0.582,
+      "vmis": 0.16,
+      "frames": 25,
+      "comb": 1.873
+    },
+    "B:摆": {
+      "spec": 5.045,
+      "f0": 1.432,
+      "vmis": 0.5,
+      "frames": 28,
+      "comb": 3.955
+    },
+    "B:凯": {
+      "spec": 5.756,
+      "f0": 1.244,
+      "vmis": 0.304,
+      "frames": 23,
+      "comb": 4.122
+    }
+  },
+  "window_s": [
+    2.81,
+    3.04
+  ],
+  "boundary_token": "受迫",
+  "window_anchor": "A:珀",
+  "tokens": {
+    "ORIG": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "用",
+      "最后一次",
+      "回应",
+      "握住",
+      "胜利"
+    ],
+    "A:珀": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受",
+      "珀",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "用",
+      "最后一次",
+      "回应",
+      "握住",
+      "胜利"
+    ],
+    "A:粕": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受",
+      "粕",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "用",
+      "最后一次",
+      "回应",
+      "握住",
+      "胜利"
+    ],
+    "B:摆": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受",
+      "摆",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "用",
+      "最后一次",
+      "回应",
+      "握住",
+      "胜利"
+    ],
+    "B:凯": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受凯",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "用",
+      "最后一次",
+      "回应",
+      "握住",
+      "胜利"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      0.7,
+      -1.9,
+      -3.8,
+      -4.3,
+      -7.8,
+      null,
+      null,
+      null,
+      null,
+      -3.8,
+      -6.3,
+      null
+    ],
+    "A:珀": [
+      0.0,
+      -3.1,
+      -4.6,
+      -5.8,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -4.1,
+      -5.9,
+      -7.1
+    ],
+    "A:粕": [
+      0.0,
+      -3.1,
+      -4.6,
+      -5.8,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -4.1,
+      -5.9,
+      -7.2
+    ],
+    "B:摆": [
+      null,
+      -5.2,
+      -6.5,
+      -7.1,
+      null,
+      null,
+      null,
+      3.0,
+      null,
+      -9.2,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "B:凯": [
+      0.7,
+      -0.5,
+      -3.1,
+      -5.7,
+      null,
+      null,
+      null,
+      17.7,
+      null,
+      -9.8,
+      -7.7,
+      -6.5
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/8ac92400bbbbf88b16b86ee1.mp3",
+    "A:珀": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/326e31f8f16861094386605a.mp3",
+    "A:粕": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/3ff0a9b8a8305af5d0e01541.mp3",
+    "B:摆": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ca355d025bd8d03679f31d29.mp3",
+    "B:凯": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/d2845b3c20a8bc37c7213fe1.mp3"
+  }
+}
