@@ -928,8 +928,8 @@ def conservative_gap_annotations(spec: dict, outdir: Path | None = None) -> list
         if (isinstance(a, bool) or isinstance(b, bool)
                 or not isinstance(a, (int, float)) or not isinstance(b, (int, float))
                 or not math.isfinite(a) or not math.isfinite(b)
-                or not spec["start"] <= a < b <= spec["end"] or b - a > 5):
-            raise SystemExit("保守声音事件须在源区间内，且不超过5秒。")
+                or not spec["start"] <= a < b <= spec["end"] or b - a > 6):
+            raise SystemExit("保守声音事件须在源区间内，且不超过6秒。")
         if row["kind"] != "applause_with_indistinct_voices" or len(str(row["why"]).strip()) < 30:
             raise SystemExit("仅支持有交叉证据的掌声夹杂未辨识人声，不认证台词或静音。")
         if row["source_sha256"] not in source_hashes:

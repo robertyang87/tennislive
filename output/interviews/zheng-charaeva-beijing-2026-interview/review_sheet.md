@@ -1,6 +1,6 @@
 # 转写核对表：zheng-charaeva-beijing-2026-interview
 
-源片 https://www.youtube.com/watch?v=LGHCCL4VHCw　采访段 262.0–455.8 秒（共 79 行）
+源片 https://www.youtube.com/watch?v=LGHCCL4VHCw　采访段 262.0–455.8 秒（共 80 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
@@ -54,35 +54,36 @@
 | 48 | 2:01.2 | [▶](https://youtu.be/LGHCCL4VHCw?t=383) | of your 23 year old with this win What | 拿下了这场胜利 |  |
 | 49 | 2:05.8 | [▶](https://youtu.be/LGHCCL4VHCw?t=387) | was that exception wishes | 你有什么期许 |  |
 | 50 | 2:08.6 | [▶](https://youtu.be/LGHCCL4VHCw?t=390) | to your 24 year old? | 对即将到来的24岁？ |  |
-| 51 | 2:12.7 | [▶](https://youtu.be/LGHCCL4VHCw?t=394) | 23 岁的最后一天。 | 23 岁的最后一天。 |  |
-| 52 | 2:14.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=396) | 拿下这场胜利。 | 拿下这场胜利。 |  |
-| 53 | 2:16.8 | [▶](https://youtu.be/LGHCCL4VHCw?t=398) | 郑钦文对自己的 24 岁。 | 郑钦文对自己的 24 岁。 | ✏️ 已订正 |
-| 54 | 2:18.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=400) | 有什么期许。 | 有什么期许。 |  |
-| 55 | 2:19.8 | [▶](https://youtu.be/LGHCCL4VHCw?t=401) | 有什么期待呢。 | 有什么期待呢。 |  |
-| 56 | 2:21.2 | [▶](https://youtu.be/LGHCCL4VHCw?t=403) | 我只能说一切来得太快了。 | 我只能说一切来得太快了。 |  |
-| 57 | 2:24.2 | [▶](https://youtu.be/LGHCCL4VHCw?t=406) | 我的记忆还停留在可能。 | 我的记忆还停留在可能。 |  |
-| 58 | 2:26.6 | [▶](https://youtu.be/LGHCCL4VHCw?t=408) | 我 21 岁 22 岁的时候。 | 我 21 岁 22 岁的时候。 |  |
-| 59 | 2:28.5 | [▶](https://youtu.be/LGHCCL4VHCw?t=410) | 也可能因为伤病停了一年。 | 也可能因为伤病停了一年。 | ✏️ 已订正 |
-| 60 | 2:31.4 | [▶](https://youtu.be/LGHCCL4VHCw?t=413) | 导致我的记忆。 | 导致我的记忆。 |  |
-| 61 | 2:32.5 | [▶](https://youtu.be/LGHCCL4VHCw?t=414) | 一直停留在过去。 | 一直停留在过去。 |  |
-| 62 | 2:33.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=415) | 我不知道现场大家。 | 我不知道现场大家。 |  |
-| 63 | 2:35.1 | [▶](https://youtu.be/LGHCCL4VHCw?t=417) | 是否都认为时间过得太快。 | 是否都认为时间过得太快。 |  |
-| 64 | 2:37.4 | [▶](https://youtu.be/LGHCCL4VHCw?t=419) | 我还没有做好 24 岁的准备。 | 我还没有做好 24 岁的准备。 |  |
-| 65 | 2:39.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=421) | 因为在我看来 24 岁。 | 因为在我看来 24 岁。 |  |
-| 66 | 2:41.6 | [▶](https://youtu.be/LGHCCL4VHCw?t=423) | 已经要是一个成熟的大人了。 | 已经要是一个成熟的大人了。 |  |
-| 67 | 2:44.6 | [▶](https://youtu.be/LGHCCL4VHCw?t=426) | 但是我有些时候。 | 但是我有些时候。 |  |
-| 68 | 2:45.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=427) | 没有这么感觉到。 | 没有这么感觉到。 |  |
-| 69 | 2:46.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=428) | 所以我只能说。 | 所以我只能说。 |  |
-| 70 | 2:51.4 | [▶](https://youtu.be/LGHCCL4VHCw?t=433) | 我期待未来的每一天。 | 我期待未来的每一天。 |  |
-| 71 | 2:53.5 | [▶](https://youtu.be/LGHCCL4VHCw?t=435) | 也希望每个年龄阶段的自己。 | 也希望每个年龄阶段的自己。 |  |
-| 72 | 2:55.6 | [▶](https://youtu.be/LGHCCL4VHCw?t=437) | 都能带给我不一样的体验。 | 都能带给我不一样的体验。 |  |
-| 73 | 3:00.3 | [▶](https://youtu.be/LGHCCL4VHCw?t=442) | 在此我们提前在现场。 | 在此我们提前在现场。 | ✏️ 已订正 |
-| 74 | 3:04.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=446) | 给钦文送一个生日快乐。 | 给钦文送一个生日快乐。 | ✏️ 已订正 |
-| 75 | 3:06.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=448) | 怎么样。 | 怎么样。 |  |
-| 76 | 3:07.1 | [▶](https://youtu.be/LGHCCL4VHCw?t=449) | 来我们全场的观众朋友一起。 | 来我们全场的观众朋友一起。 |  |
-| 77 | 3:10.3 | [▶](https://youtu.be/LGHCCL4VHCw?t=452) | 3。 | 3。 |  |
-| 78 | 3:10.8 | [▶](https://youtu.be/LGHCCL4VHCw?t=452) | 2。 | 2。 |  |
-| 79 | 3:11.2 | [▶](https://youtu.be/LGHCCL4VHCw?t=453) | 1。 | 1。 |  |
+| 51 | 2:10.5 | [▶](https://youtu.be/LGHCCL4VHCw?t=392) | 今天是郑钦文的。 | 今天是郑钦文的。 | ✏️ 已订正 |
+| 52 | 2:12.7 | [▶](https://youtu.be/LGHCCL4VHCw?t=394) | 23 岁的最后一天。 | 23 岁的最后一天。 |  |
+| 53 | 2:14.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=396) | 拿下这场胜利。 | 拿下这场胜利。 |  |
+| 54 | 2:16.8 | [▶](https://youtu.be/LGHCCL4VHCw?t=398) | 郑钦文对自己的 24 岁。 | 郑钦文对自己的 24 岁。 | ✏️ 已订正 |
+| 55 | 2:18.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=400) | 有什么期许。 | 有什么期许。 |  |
+| 56 | 2:19.8 | [▶](https://youtu.be/LGHCCL4VHCw?t=401) | 有什么期待呢。 | 有什么期待呢。 |  |
+| 57 | 2:21.2 | [▶](https://youtu.be/LGHCCL4VHCw?t=403) | 我只能说一切来得太快了。 | 我只能说一切来得太快了。 |  |
+| 58 | 2:24.2 | [▶](https://youtu.be/LGHCCL4VHCw?t=406) | 我的记忆还停留在可能。 | 我的记忆还停留在可能。 |  |
+| 59 | 2:26.6 | [▶](https://youtu.be/LGHCCL4VHCw?t=408) | 我 21 岁 22 岁的时候。 | 我 21 岁 22 岁的时候。 |  |
+| 60 | 2:28.5 | [▶](https://youtu.be/LGHCCL4VHCw?t=410) | 也可能因为伤病停了一年。 | 也可能因为伤病停了一年。 | ✏️ 已订正 |
+| 61 | 2:31.4 | [▶](https://youtu.be/LGHCCL4VHCw?t=413) | 导致我的记忆。 | 导致我的记忆。 |  |
+| 62 | 2:32.5 | [▶](https://youtu.be/LGHCCL4VHCw?t=414) | 一直停留在过去。 | 一直停留在过去。 |  |
+| 63 | 2:33.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=415) | 我不知道现场大家。 | 我不知道现场大家。 |  |
+| 64 | 2:35.1 | [▶](https://youtu.be/LGHCCL4VHCw?t=417) | 是否都认为时间过得太快。 | 是否都认为时间过得太快。 |  |
+| 65 | 2:37.4 | [▶](https://youtu.be/LGHCCL4VHCw?t=419) | 我还没有做好 24 岁的准备。 | 我还没有做好 24 岁的准备。 |  |
+| 66 | 2:39.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=421) | 因为在我看来 24 岁。 | 因为在我看来 24 岁。 |  |
+| 67 | 2:41.6 | [▶](https://youtu.be/LGHCCL4VHCw?t=423) | 已经要是一个成熟的大人了。 | 已经要是一个成熟的大人了。 |  |
+| 68 | 2:44.6 | [▶](https://youtu.be/LGHCCL4VHCw?t=426) | 但是我有些时候。 | 但是我有些时候。 |  |
+| 69 | 2:45.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=427) | 没有这么感觉到。 | 没有这么感觉到。 |  |
+| 70 | 2:46.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=428) | 所以我只能说。 | 所以我只能说。 |  |
+| 71 | 2:51.4 | [▶](https://youtu.be/LGHCCL4VHCw?t=433) | 我期待未来的每一天。 | 我期待未来的每一天。 |  |
+| 72 | 2:53.5 | [▶](https://youtu.be/LGHCCL4VHCw?t=435) | 也希望每个年龄阶段的自己。 | 也希望每个年龄阶段的自己。 |  |
+| 73 | 2:55.6 | [▶](https://youtu.be/LGHCCL4VHCw?t=437) | 都能带给我不一样的体验。 | 都能带给我不一样的体验。 |  |
+| 74 | 3:00.3 | [▶](https://youtu.be/LGHCCL4VHCw?t=442) | 在此我们提前在现场。 | 在此我们提前在现场。 | ✏️ 已订正 |
+| 75 | 3:04.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=446) | 给钦文送一个生日快乐。 | 给钦文送一个生日快乐。 | ✏️ 已订正 |
+| 76 | 3:06.9 | [▶](https://youtu.be/LGHCCL4VHCw?t=448) | 怎么样。 | 怎么样。 |  |
+| 77 | 3:07.1 | [▶](https://youtu.be/LGHCCL4VHCw?t=449) | 来我们全场的观众朋友一起。 | 来我们全场的观众朋友一起。 |  |
+| 78 | 3:10.3 | [▶](https://youtu.be/LGHCCL4VHCw?t=452) | 3。 | 3。 |  |
+| 79 | 3:10.8 | [▶](https://youtu.be/LGHCCL4VHCw?t=452) | 2。 | 2。 |  |
+| 80 | 3:11.2 | [▶](https://youtu.be/LGHCCL4VHCw?t=453) | 1。 | 1。 |  |
 
 ## 还欠着的
 
@@ -97,7 +98,6 @@
 - **68.6–71.9 秒**（片内，3.4 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=330)）　**还没销账**
 - **84.2–90.0 秒**（片内，5.8 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=346)）　**还没销账**
 - **114.7–117.8 秒**（片内，3.1 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=376)）　**还没销账**
-- **130.5–132.7 秒**（片内，2.2 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=392)）　**还没销账**
 - **177.4–180.3 秒**（片内，2.9 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=439)）　**还没销账**
 
 打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。结论写进 spec 的 `caption_gaps_ok`（键 `起-止`，秒，一位小数）。
