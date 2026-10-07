@@ -1,0 +1,386 @@
+{
+  "id": "target-057",
+  "label": "第 13 段",
+  "display_char": "背",
+  "actual_tts_char": "背",
+  "position": 25,
+  "context": "德约接受过腰背治疗。可最后",
+  "word": "腰背",
+  "intended": "bei4",
+  "common_contrast": "bei1",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "半决赛，对面是四次上海冠军德约科维奇。德约接受过腰背治疗。可最后一局，瓦舍罗救下破发点，才收下六比三、六比四的胜利，走进决赛。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "背",
+    "char": "背",
+    "sentence": "半决赛，对面是四次上海冠军德约科维奇。德约接受过腰背治疗。可最后一局，瓦舍罗救下破发点，才收下六比三、六比四的胜利，走进决赛。",
+    "tts_text": "半决赛，对面是四次上海冠军德约科维奇。德约接受过腰背治疗。可最后一局，瓦舍罗救下破发点，才收下六比三、六比四的胜利，走进决赛。",
+    "intended_refs": [
+      "备",
+      "惫"
+    ],
+    "wrong_refs": [
+      "悲",
+      "杯"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.427,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.231,
+        "d_wrong": 2.834,
+        "score": 0.119
+      },
+      "f0": {
+        "d_intended": 0.421,
+        "d_wrong": 2.612,
+        "score": 0.722
+      },
+      "comb": {
+        "d_intended": 1.699,
+        "d_wrong": 4.234,
+        "score": 0.427
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.682,
+      "wrong": 5.037
+    },
+    "separation": {
+      "spec": {
+        "within": 2.39,
+        "between": 3.024,
+        "separation": 1.265
+      },
+      "f0": {
+        "within": 0.383,
+        "between": 2.108,
+        "separation": 5.501
+      },
+      "comb": {
+        "within": 1.578,
+        "between": 3.62,
+        "separation": 2.294
+      }
+    },
+    "selftest_loo": {
+      "备": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.317
+      },
+      "惫": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.307
+      },
+      "悲": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.394
+      },
+      "杯": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.461
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:备": {
+        "spec": 2.555,
+        "f0": 0.421,
+        "vmis": 0.167,
+        "frames": 24,
+        "comb": 1.699
+      },
+      "A:惫": {
+        "spec": 2.231,
+        "f0": 0.644,
+        "vmis": 0.167,
+        "frames": 24,
+        "comb": 1.76
+      },
+      "B:悲": {
+        "spec": 3.245,
+        "f0": 2.612,
+        "vmis": 0.16,
+        "frames": 25,
+        "comb": 4.234
+      },
+      "B:杯": {
+        "spec": 2.834,
+        "f0": 2.891,
+        "vmis": 0.154,
+        "frames": 26,
+        "comb": 4.308
+      }
+    },
+    "window_s": [
+      5.219,
+      5.441
+    ],
+    "boundary_token": "背",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "半决赛",
+        "对面",
+        "是",
+        "四",
+        "次",
+        "上海",
+        "冠军",
+        "德约科维奇",
+        "德约",
+        "接受",
+        "过",
+        "腰",
+        "背",
+        "治疗",
+        "可",
+        "最后",
+        "一",
+        "局",
+        "瓦舍罗",
+        "救",
+        "下",
+        "破发点",
+        "才",
+        "收",
+        "下",
+        "六比三",
+        "六比四",
+        "的",
+        "胜利",
+        "走进",
+        "决赛"
+      ],
+      "A:备": [
+        "半决赛",
+        "对面",
+        "是",
+        "四",
+        "次",
+        "上海",
+        "冠军",
+        "德约科维奇",
+        "德约",
+        "接受",
+        "过",
+        "腰备",
+        "治疗",
+        "可",
+        "最后",
+        "一",
+        "局",
+        "瓦舍罗",
+        "救",
+        "下",
+        "破发点",
+        "才",
+        "收",
+        "下",
+        "六比三",
+        "六比四",
+        "的",
+        "胜利",
+        "走进",
+        "决赛"
+      ],
+      "A:惫": [
+        "半决赛",
+        "对面",
+        "是",
+        "四",
+        "次",
+        "上海",
+        "冠军",
+        "德约科维奇",
+        "德约",
+        "接受",
+        "过",
+        "腰惫",
+        "治疗",
+        "可",
+        "最后",
+        "一",
+        "局",
+        "瓦舍罗",
+        "救",
+        "下",
+        "破发点",
+        "才",
+        "收",
+        "下",
+        "六比三",
+        "六比四",
+        "的",
+        "胜利",
+        "走进",
+        "决赛"
+      ],
+      "B:悲": [
+        "半决赛",
+        "对面",
+        "是",
+        "四",
+        "次",
+        "上海",
+        "冠军",
+        "德约科维奇",
+        "德约",
+        "接受",
+        "过",
+        "腰",
+        "悲",
+        "治疗",
+        "可",
+        "最后",
+        "一",
+        "局",
+        "瓦舍罗",
+        "救",
+        "下",
+        "破发点",
+        "才",
+        "收",
+        "下",
+        "六比三",
+        "六比四",
+        "的",
+        "胜利",
+        "走进",
+        "决赛"
+      ],
+      "B:杯": [
+        "半决赛",
+        "对面",
+        "是",
+        "四",
+        "次",
+        "上海",
+        "冠军",
+        "德约科维奇",
+        "德约",
+        "接受",
+        "过",
+        "腰",
+        "杯",
+        "治疗",
+        "可",
+        "最后",
+        "一",
+        "局",
+        "瓦舍罗",
+        "救",
+        "下",
+        "破发点",
+        "才",
+        "收",
+        "下",
+        "六比三",
+        "六比四",
+        "的",
+        "胜利",
+        "走进",
+        "决赛"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        5.3,
+        5.1,
+        5.0,
+        4.7,
+        1.0,
+        0.0,
+        null,
+        null,
+        -1.7,
+        -4.2,
+        -5.2,
+        -6.5
+      ],
+      "A:备": [
+        4.7,
+        4.7,
+        4.6,
+        4.2,
+        0.5,
+        1.7,
+        2.0,
+        0.0,
+        -2.3,
+        -5.3,
+        -5.9
+      ],
+      "A:惫": [
+        4.8,
+        4.8,
+        4.9,
+        4.8,
+        2.8,
+        -0.2,
+        3.2,
+        2.7,
+        0.8,
+        -2.3,
+        -4.8,
+        -6.1
+      ],
+      "B:悲": [
+        3.4,
+        3.3,
+        3.1,
+        2.7,
+        0.4,
+        0.9,
+        1.8,
+        0.9,
+        0.8,
+        0.7,
+        0.7,
+        0.5,
+        null
+      ],
+      "B:杯": [
+        3.5,
+        3.3,
+        3.0,
+        2.7,
+        -0.9,
+        -1.9,
+        1.6,
+        0.8,
+        0.6,
+        0.4,
+        0.4,
+        0.7,
+        0.5
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/897afbb89a8dabc386b995fe.mp3",
+      "A:备": "/workspace/tennislive/research/vacherot-acoustic/references/f381856da2b1d87f29f686fa.mp3",
+      "A:惫": "/workspace/tennislive/research/vacherot-acoustic/references/1d9482ea3355f802fe175845.mp3",
+      "B:悲": "/workspace/tennislive/research/vacherot-acoustic/references/1791d634b55ece66197e3d3a.mp3",
+      "B:杯": "/workspace/tennislive/research/vacherot-acoustic/references/031b0e4b18d5ecefe0645edc.mp3"
+    }
+  }
+}

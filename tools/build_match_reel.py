@@ -4353,7 +4353,10 @@ def _overlay_chain(base: str, ins: dict) -> str:
             f"[base][ins]overlay={x}:{y_expr}[vout]")
 
 
-EVIDENCE_BG = (13, 23, 18)   # 整屏证据段的深绿底，和字卡描边同一族
+from tennislive.design_tokens import DARK as _EVIDENCE_TOKENS
+
+# Evidence pages follow the current shared dark-blue palette, like title cards.
+EVIDENCE_BG = tuple(bytes.fromhex(_EVIDENCE_TOKENS["background"].lstrip("#")))
 
 
 def _band_bg_rgb() -> tuple[int, int, int]:
@@ -4371,7 +4374,7 @@ def still_canvas_for_layout(card, Image, *, full_bleed: bool = False,
     （章节卡本来就按 `(VIDEO_W, region_h)` 渲，只是 2× DPR），不一致当场红——
     一张被拉变形的设计页比一张缩过的还糟。
 
-    全出血：画面区就是整幅 1080×1440，深绿底。
+    全出血：画面区就是整幅 1080×1440，品牌深蓝底。
     带式：画面区只有 `BAND_TOP` 起那 1080×960 的带——顶带给顶栏、底带给字幕，
     卡不许伸进去（伸进去就压在顶栏底下 / 被字幕盖住）；底色用 `BAND_BG`，
     和 `_band_scale_pad` 给源片段垫的那两条带是同一个色，接缝处不露色差。
@@ -4536,7 +4539,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     #           两边时确实会出画，但**铺满的观感赢过「不丢画面」**：竖版短片
     #           在手机上是整屏播的，上下留黑边等于把冲击力先折一半。
     #           这一条是人看过两版之后定的，不是推出来的。
-    #   contain 整幅 16:9 缩到卡宽放中间，上下模糊垫底。**现在不用**——
+    #   contain 横幅画面缩到卡宽放中间，上下使用品牌深蓝底。
     #           留着是给「一屏里必须同时看见两个人且他们分得很开」那种画面的
     #           后路（比如颁奖合影），要用就在 spec 里单独写 `"fit": "contain"`。
     # **慢放在 fps 归一之前**：`setpts=PTS/speed` 把时间轴拉长，`fps` 再按
@@ -4564,7 +4567,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         chain = (
             "split=2[bg][fg];"
             f"[bg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
-            f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
+            f"crop={VIDEO_W}:{VIDEO_H},drawbox=color=0x{_EVIDENCE_TOKENS['background'].lstrip('#')}:t=fill[bgb];"
             f"[fg]crop={side}:{side}:x='{expr}':y={(native_h-side)//2},"
             f"scale={VIDEO_W}:{VIDEO_W}:flags=lanczos[fgs];"
             f"[bgb][fgs]overlay=0:{(VIDEO_H-VIDEO_W)//2},{sp}fps={FPS_EXPR},setsar=1"
@@ -4575,8 +4578,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         # 整幅铺进来会只占屏高的三成（1080 宽的 16:9 才 608 高），上下两条死黑，
         # 「冲击力先折一半」。所以两件事一起做：
         #   1. 先横向留 KEEP 的宽度再缩——画面大一圈，而球员仍在窗口内
-        #   2. 上下不留纯色，用同一帧放大模糊垫底
-        # 模糊垫底比纯色好在：屏幕是满的，眼睛跟着中间那条走，不会被两条黑边切断。
+        #   2. 上下统一用设计 token 的深蓝底（2026-10-07 用户明确要求）
+        # 不再让源片的球场、球衣颜色通过模糊垫底改变每段的背景色。
         # Cross-sport action needs both the athlete and the target in view.
         # Explicit full_source preserves the complete published frame;
         # legacy contain retains its existing 62% framing.
@@ -4596,7 +4599,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             f"split=2[bg][fg];"
             f"[bg]crop={keep}:{native_h}:{x}:0,"
             f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
-            f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
+            f"crop={VIDEO_W}:{VIDEO_H},drawbox=color=0x{_EVIDENCE_TOKENS['background'].lstrip('#')}:t=fill[bgb];"
             f"[fg]crop={keep}:{native_h}:{x}:0,"
             f"scale={VIDEO_W}:-2:flags=lanczos[fgs];"
             f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
@@ -4645,7 +4648,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 f"split=3[bg][fg][wb];"
                 f"[bg]crop={keep}:{native_h}:{x}:0,"
                 f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
-                f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
+                f"crop={VIDEO_W}:{VIDEO_H},drawbox=color=0x{_EVIDENCE_TOKENS['background'].lstrip('#')}:t=fill[bgb];"
                 # ⚠️ 转播原板在 contain 窗口里还剩一截（窗口左缘 x < 板右缘），
                 # 而贴片是**逐帧蒙版**的——胶囊之间、标签右边都是透明的，那一截
                 # 残板会从缝里露出来（渲出来左缘一排「…NSIK」）。所以先在源片上

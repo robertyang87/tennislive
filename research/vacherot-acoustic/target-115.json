@@ -1,0 +1,323 @@
+{
+  "id": "target-115",
+  "label": "第 25 段",
+  "display_char": "落",
+  "actual_tts_char": "落",
+  "position": 4,
+  "context": "下一次又落后时，你愿不",
+  "word": "落后",
+  "intended": "luo4",
+  "common_contrast": "la4",
+  "unmeasured_other_readings": [
+    "lao4"
+  ],
+  "semantic_override": null,
+  "tts_text": "下一次又落后时，你愿不愿意，再给自己一次机会？低谷，不能替一个人写下结局。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "落",
+    "char": "落",
+    "sentence": "下一次又落后时，你愿不愿意，再给自己一次机会？低谷，不能替一个人写下结局。",
+    "tts_text": "下一次又落后时，你愿不愿意，再给自己一次机会？低谷，不能替一个人写下结局。",
+    "intended_refs": [
+      "洛",
+      "骆"
+    ],
+    "wrong_refs": [
+      "辣",
+      "瘌"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "low",
+    "verdict_raw": "correct",
+    "score": 0.273,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.64,
+        "d_wrong": 5.601,
+        "score": 0.359
+      },
+      "f0": {
+        "d_intended": 0.447,
+        "d_wrong": 0.288,
+        "score": -0.216
+      },
+      "comb": {
+        "d_intended": 1.767,
+        "d_wrong": 3.096,
+        "score": 0.273
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.836,
+      "wrong": 2.269
+    },
+    "separation": {
+      "spec": {
+        "within": 2.571,
+        "between": 5.515,
+        "separation": 2.145
+      },
+      "f0": {
+        "within": 0.282,
+        "between": 0.376,
+        "separation": 1.334
+      },
+      "comb": {
+        "within": 1.568,
+        "between": 3.134,
+        "separation": 1.999
+      }
+    },
+    "selftest_loo": {
+      "洛": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.314
+      },
+      "骆": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.316
+      },
+      "辣": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.332
+      },
+      "瘌": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.342
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:洛": {
+        "spec": 2.64,
+        "f0": 0.447,
+        "vmis": 0.0,
+        "frames": 25,
+        "comb": 1.767
+      },
+      "A:骆": {
+        "spec": 3.167,
+        "f0": 0.815,
+        "vmis": 0.038,
+        "frames": 26,
+        "comb": 2.399
+      },
+      "B:辣": {
+        "spec": 5.616,
+        "f0": 0.288,
+        "vmis": 0.04,
+        "frames": 25,
+        "comb": 3.096
+      },
+      "B:瘌": {
+        "spec": 5.601,
+        "f0": 0.602,
+        "vmis": 0.0,
+        "frames": 25,
+        "comb": 3.403
+      }
+    },
+    "window_s": [
+      0.8,
+      1.04
+    ],
+    "boundary_token": "落后",
+    "window_anchor": "A:骆",
+    "tokens": {
+      "ORIG": [
+        "下",
+        "一次",
+        "又",
+        "落后",
+        "时",
+        "你愿不愿意",
+        "再",
+        "给",
+        "自己",
+        "一次机会",
+        "低谷",
+        "不能",
+        "替",
+        "一个",
+        "人",
+        "写",
+        "下",
+        "结局"
+      ],
+      "A:洛": [
+        "下",
+        "一次",
+        "又",
+        "洛后",
+        "时",
+        "你愿不愿意",
+        "再",
+        "给",
+        "自己",
+        "一次机会",
+        "低谷",
+        "不能",
+        "替",
+        "一个",
+        "人",
+        "写",
+        "下",
+        "结局"
+      ],
+      "A:骆": [
+        "下",
+        "一次",
+        "又",
+        "骆",
+        "后时",
+        "你愿不愿意",
+        "再",
+        "给",
+        "自己",
+        "一次机会",
+        "低谷",
+        "不能",
+        "替",
+        "一个",
+        "人",
+        "写",
+        "下",
+        "结局"
+      ],
+      "B:辣": [
+        "下",
+        "一次",
+        "又",
+        "辣后",
+        "时",
+        "你愿不愿意",
+        "再",
+        "给",
+        "自己",
+        "一次机会",
+        "低谷",
+        "不能",
+        "替",
+        "一个",
+        "人",
+        "写",
+        "下",
+        "结局"
+      ],
+      "B:瘌": [
+        "下",
+        "一次",
+        "又",
+        "瘌",
+        "后时",
+        "你愿不愿意",
+        "再",
+        "给",
+        "自己",
+        "一次机会",
+        "低谷",
+        "不能",
+        "替",
+        "一个",
+        "人",
+        "写",
+        "下",
+        "结局"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        2.4,
+        0.8,
+        0.0,
+        -0.2,
+        -0.4,
+        0.4,
+        0.8,
+        -0.2,
+        -0.9,
+        -2.1,
+        -3.0,
+        -3.7,
+        -3.9
+      ],
+      "A:洛": [
+        3.4,
+        1.7,
+        0.5,
+        -0.4,
+        -0.9,
+        -1.0,
+        -0.3,
+        -0.5,
+        -1.2,
+        -2.1,
+        -2.6,
+        -3.1,
+        -3.6
+      ],
+      "A:骆": [
+        2.7,
+        1.3,
+        0.0,
+        -0.5,
+        -1.0,
+        -1.0,
+        -0.5,
+        -1.1,
+        -1.7,
+        -2.2,
+        -2.5
+      ],
+      "B:辣": [
+        3.3,
+        1.4,
+        0.6,
+        0.2,
+        -0.2,
+        0.0,
+        0.1,
+        -0.6,
+        -1.4,
+        -2.1,
+        -2.6,
+        -3.3
+      ],
+      "B:瘌": [
+        2.6,
+        1.3,
+        0.7,
+        0.5,
+        -0.0,
+        -0.2,
+        -0.8,
+        -1.5,
+        -2.2,
+        -2.6
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/d0abdccb8d569902580b3222.mp3",
+      "A:洛": "/workspace/tennislive/research/vacherot-acoustic/references/39631838429d0f9259bcac4a.mp3",
+      "A:骆": "/workspace/tennislive/research/vacherot-acoustic/references/92556bfbc2a3beee831c2fae.mp3",
+      "B:辣": "/workspace/tennislive/research/vacherot-acoustic/references/cd3857b2e73bf87293fe0b83.mp3",
+      "B:瘌": "/workspace/tennislive/research/vacherot-acoustic/references/692095afb456136b002a9971.mp3"
+    }
+  }
+}

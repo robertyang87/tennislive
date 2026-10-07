@@ -1,0 +1,376 @@
+{
+  "id": "target-097",
+  "label": "第 22 段",
+  "display_char": "格",
+  "actual_tts_char": "格",
+  "position": 38,
+  "context": "之后，他才在格施塔德复出。",
+  "word": "格",
+  "intended": "ge2",
+  "common_contrast": "ge1",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "但五月，左脚伤让他在法网第二轮赛前退出。随后，退出温网。近两个月之后，他才在格施塔德复出。",
+  "verdict": "unreliable",
+  "measurement": {
+    "word": "格",
+    "char": "格",
+    "sentence": "但五月，左脚伤让他在法网第二轮赛前退出。随后，退出温网。近两个月之后，他才在格施塔德复出。",
+    "tts_text": "但五月，左脚伤让他在法网第二轮赛前退出。随后，退出温网。近两个月之后，他才在格施塔德复出。",
+    "intended_refs": [
+      "阁",
+      "嗝"
+    ],
+    "wrong_refs": [
+      "割",
+      "哥"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": 0.163,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.626,
+        "d_wrong": 2.752,
+        "score": 0.024
+      },
+      "f0": {
+        "d_intended": 0.544,
+        "d_wrong": 1.205,
+        "score": 0.378
+      },
+      "comb": {
+        "d_intended": 1.857,
+        "d_wrong": 2.582,
+        "score": 0.163
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.334,
+      "wrong": 2.192
+    },
+    "separation": {
+      "spec": {
+        "within": 3.553,
+        "between": 3.533,
+        "separation": 0.994
+      },
+      "f0": {
+        "within": 1.55,
+        "between": 2.568,
+        "separation": 1.657
+      },
+      "comb": {
+        "within": 3.326,
+        "between": 4.334,
+        "separation": 1.303
+      }
+    },
+    "selftest_loo": {
+      "阁": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.109
+      },
+      "嗝": {
+        "expect": "correct",
+        "got": "misread",
+        "score": -0.271
+      },
+      "割": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.208
+      },
+      "哥": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.165
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:阁": {
+        "spec": 3.761,
+        "f0": 3.15,
+        "vmis": 0.091,
+        "frames": 33,
+        "comb": 5.03
+      },
+      "A:嗝": {
+        "spec": 2.626,
+        "f0": 0.544,
+        "vmis": 0.0,
+        "frames": 30,
+        "comb": 1.857
+      },
+      "B:割": {
+        "spec": 3.11,
+        "f0": 1.657,
+        "vmis": 0.067,
+        "frames": 30,
+        "comb": 3.212
+      },
+      "B:哥": {
+        "spec": 2.752,
+        "f0": 1.205,
+        "vmis": 0.032,
+        "frames": 31,
+        "comb": 2.582
+      }
+    },
+    "window_s": [
+      7.92,
+      8.22
+    ],
+    "boundary_token": "格施塔德",
+    "window_anchor": "A:阁",
+    "tokens": {
+      "ORIG": [
+        "但",
+        "五月",
+        "左",
+        "脚",
+        "伤",
+        "让",
+        "他",
+        "在",
+        "法网",
+        "第二轮",
+        "赛",
+        "前",
+        "退出",
+        "随后",
+        "退出",
+        "温网",
+        "近",
+        "两",
+        "个",
+        "月",
+        "之后",
+        "他",
+        "才",
+        "在",
+        "格施塔德",
+        "复出"
+      ],
+      "A:阁": [
+        "但",
+        "五月",
+        "左",
+        "脚",
+        "伤",
+        "让",
+        "他",
+        "在",
+        "法网",
+        "第二轮",
+        "赛",
+        "前",
+        "退出",
+        "随后",
+        "退出",
+        "温网",
+        "近",
+        "两",
+        "个",
+        "月",
+        "之后",
+        "他",
+        "才",
+        "在",
+        "阁",
+        "施塔德",
+        "复出"
+      ],
+      "A:嗝": [
+        "但",
+        "五月",
+        "左",
+        "脚",
+        "伤",
+        "让",
+        "他",
+        "在",
+        "法网",
+        "第二轮",
+        "赛",
+        "前",
+        "退出",
+        "随后",
+        "退出",
+        "温网",
+        "近",
+        "两",
+        "个",
+        "月",
+        "之后",
+        "他",
+        "才",
+        "在",
+        "嗝施",
+        "塔德",
+        "复出"
+      ],
+      "B:割": [
+        "但",
+        "五月",
+        "左",
+        "脚",
+        "伤",
+        "让",
+        "他",
+        "在",
+        "法网",
+        "第二轮",
+        "赛",
+        "前",
+        "退出",
+        "随后",
+        "退出",
+        "温网",
+        "近",
+        "两",
+        "个",
+        "月",
+        "之后",
+        "他",
+        "才",
+        "在",
+        "割施",
+        "塔德",
+        "复出"
+      ],
+      "B:哥": [
+        "但",
+        "五月",
+        "左",
+        "脚",
+        "伤",
+        "让",
+        "他",
+        "在",
+        "法网",
+        "第二轮",
+        "赛",
+        "前",
+        "退出",
+        "随后",
+        "退出",
+        "温网",
+        "近",
+        "两",
+        "个",
+        "月",
+        "之后",
+        "他",
+        "才",
+        "在",
+        "哥施塔德",
+        "复出"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -0.2,
+        -1.4,
+        -2.8,
+        -5.5,
+        null,
+        null,
+        null,
+        null,
+        -0.6,
+        -0.2,
+        1.3,
+        3.5,
+        4.6,
+        5.5,
+        5.4
+      ],
+      "A:阁": [
+        -0.0,
+        -1.1,
+        -1.9,
+        -3.9,
+        null,
+        null,
+        null,
+        -4.2,
+        -3.9,
+        -3.3,
+        -2.1,
+        -1.1,
+        -0.4,
+        -0.2,
+        -0.9
+      ],
+      "A:嗝": [
+        0.3,
+        -0.9,
+        -2.0,
+        -5.3,
+        null,
+        null,
+        null,
+        -1.3,
+        -1.1,
+        0.5,
+        2.6,
+        4.0,
+        4.8,
+        4.8
+      ],
+      "B:割": [
+        0.4,
+        -0.3,
+        -0.6,
+        null,
+        null,
+        null,
+        3.1,
+        2.9,
+        3.0,
+        3.4,
+        3.9,
+        4.0,
+        3.8
+      ],
+      "B:哥": [
+        -0.4,
+        -0.9,
+        -2.4,
+        -5.5,
+        null,
+        null,
+        null,
+        3.3,
+        3.4,
+        3.8,
+        4.4,
+        4.7,
+        4.3,
+        3.3
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/42ca90aba518dd0a32704054.mp3",
+      "A:阁": "/workspace/tennislive/research/vacherot-acoustic/references/8b040f1bd9b73706c69daaff.mp3",
+      "A:嗝": "/workspace/tennislive/research/vacherot-acoustic/references/2489c55226eeeb2b6c7c85a7.mp3",
+      "B:割": "/workspace/tennislive/research/vacherot-acoustic/references/eb9f79dba2f9776c36236171.mp3",
+      "B:哥": "/workspace/tennislive/research/vacherot-acoustic/references/91d9d028302b227519d994c2.mp3"
+    }
+  }
+}
