@@ -93,11 +93,11 @@
 
 ## 自动字幕的空档（≥2 秒连一个事件都没有）
 
-- **14.9–17.2 秒**（片内，2.3 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=276)）　字幕时间轴自动销账：VAD 测到 0.024s 人声，第二份 ASR（medium）没听出词——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
-- **20.3–24.5 秒**（片内，4.1 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=282)）　VAD 自动销账：VAD 在核心区只测到 0.000s 人声（≤0.12s），第二份 ASR（medium）一个词都没听到——没人说话，自动销账（证据 gap_vad_attestation.json）
-- **68.6–71.9 秒**（片内，3.4 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=330)）　字幕时间轴自动销账：VAD 测到 0.000s 人声，第二份 ASR（medium）听到「尤」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
-- **84.2–90.0 秒**（片内，5.8 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=346)）　VAD 自动销账：VAD 在核心区只测到 0.098s 人声（≤0.12s），第二份 ASR（medium）一个词都没听到——没人说话，自动销账（证据 gap_vad_attestation.json）
-- **114.7–117.8 秒**（片内，3.1 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=376)）　双 ASR 自动销账：VAD 测到 0.000s 人声，第二份 ASR（medium）听到「Well,」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
-- **177.4–180.3 秒**（片内，2.9 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=439)）　字幕时间轴自动销账：VAD 测到 0.000s 人声，第二份 ASR（medium）没听出词——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
+- **14.9–17.2 秒**（片内，2.3 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=276)）　**还没销账**
+- **20.3–24.5 秒**（片内，4.1 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=282)）　**还没销账**
+- **68.6–71.9 秒**（片内，3.4 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=330)）　**还没销账**
+- **84.2–90.0 秒**（片内，5.8 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=346)）　**还没销账**
+- **114.7–117.8 秒**（片内，3.1 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=376)）　**还没销账**
+- **177.4–180.3 秒**（片内，2.9 秒空白，[跳过去](https://youtu.be/LGHCCL4VHCw?t=439)）　**还没销账**
 
 打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。结论写进 spec 的 `caption_gaps_ok`（键 `起-止`，秒，一位小数）。
