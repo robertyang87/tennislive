@@ -18,7 +18,16 @@
       }
     ],
     "winner": "梅尔滕斯",
-    "result": "6-3 6-3"
+    "result": "6-3 6-3",
+    "portrait": {
+      "image": "assets/reel/gauff-mertens-cover.jpg",
+      "focus": 0.383,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「elise mertens」「Beijing」，日期对上当地 2026-10-07（Asia/Shanghai；日期来源 flashscore dc_1_dlSy8jLO）；EXIF 拍摄 2026:10:07 16:00:22+08:00。② 分辨率：5888×3928，zoom 1 铺 1080×1440 是 2.73×（不放大）。③ 认人：最大那张脸像 梅尔滕斯 0.54（≥ 0.34）。④ 睁眼：EAR 0.3264（≥ 0.16）。⑤ 钩子带：脸落在 y280~581，钩子顶边 790。排序：[True, False, False, True, False, 301, 0.5443]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/07/cdce1fa9-648e-406f-b486-77f64a1b7420/Mertens-R4-FL.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/07/cdce1fa9-648e-406f-b486-77f64a1b7420/Mertens-R4-FL.jpg（条目 #4587805，接口发布 2026-10-07T08:20:30Z，EXIF 拍摄 2026:10:07 16:00:22+08:00（UTC 2026-10-07T08:00:22Z），原图 5888×3928），说明原文「Elise Mertens, Beijing 2026 · BEIJING, CHINA - OCTOBER 7: Elise Mertens of Belgium in action against Coco Gauff of the United States during Women&apos;s Singles Round of 16 match on day eight of China Open at the National Tennis Center on October 7, 2026 in Beijing, China. (Photo by Fred Lee/Getty I」，署名 Fred Lee/Getty Images；Getty Images；Fred Lee；2026 Fred Lee。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -241,49 +250,19 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "waiting",
-    "retryable": false,
-    "cold_open": {
-      "start": 248.5,
-      "end": 271.52,
-      "kind": "match_point",
-      "winner_visible": true,
-      "reason": "248.5s Mertens serves overhead smash (match-point setup); 266.5s on-court scoreboard shows Mertens leading 6-5 with scoreboard at net; 268.5s–270.5s Mertens' coach box applauding; 271.5s match concludes with Mertens walking off, confirming this is the closing service game for the final point.",
-      "confidence": 0.88
-    },
-    "ending": {
-      "start": 268.2,
-      "end": 292.16,
-      "kind": "winner_celebration",
-      "winner_visible": true,
-      "reason": "268.5s–270.5s Mertens' coaching box applauds the win; 272.5s Mertens close-up with racket post-match; 274.5s players meet at the net; 276.5s Gauff waves to crowd (loser acknowledgement); 278.5s–282.5s players walk past umpire chair and converge for handshake; 284.5s–286.5s full handshake at net with final WTA scoreboard graphic showing Coco Gauff 3 3 / Elise Mertens 6 6 (winner highlighted in mint); 288.5s–290.5s Mertens waves to crowd in celebration; 292.5s Mertens walks off court. Window contains winner celebration, loser reaction, and full handshake.",
-      "confidence": 0.95
-    },
-    "cover": {
-      "same_match": false,
-      "subject": "",
-      "moment": "other",
-      "wrong_or_old": true,
-      "reason": "No candidate cover photo was provided; no visual evidence of a same-match portrait exists in the supplied contact sheets to serve as a cover image.",
-      "confidence": 0.2
-    },
+    "visual_status": "error",
+    "retryable": true,
     "problems": [
-      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.20 低于 0.80",
-      "封面人物应为 梅尔滕斯，模型识别为 空",
-      "封面情绪应为 winner_celebration，现在是 other"
-    ],
-    "model_attempts": 1,
-    "input_sha256": "8eeff1d5e823cff56552adf327b29fb385b976d8a2fa1b3f6ffa8f367d01968d",
-    "inputs": [
-      "contact_00.jpg",
-      "contact_02.jpg",
-      "contact_03.jpg",
-      "contact_04.jpg",
-      "contact_05.jpg"
-    ],
-    "cover_image": ""
+      "MiniMax API：HTTPError: HTTP Error 400: Bad Request"
+    ]
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "dlSy8jLO",
+      "start_utc": "2026-10-07T07:05:00Z",
+      "end_utc": "2026-10-07T08:25:36Z",
+      "source": "flashscore dc_1_dlSy8jLO（DC／DD）"
+    },
+    "replaced_under": "8eeff1d5e823cff56552adf327b29fb385b976d8a2fa1b3f6ffa8f367d01968d"
   }
 }
