@@ -1,7 +1,7 @@
 {
  "status": "pass",
  "method": "silero_vad_plus_dual_asr_coverage",
- "sha256": "a97fc73a1568b320f628e672ad83e252e4569b64c1d0e4faff2ddb98fb622f7b",
+ "sha256": "d5caa45f9c84d2074cdfc6dc6e430f54b9ab4083b19e3fb2ef2098dd086600fc",
  "url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
  "edge_pad_seconds": 0.35,
  "max_speech_seconds": 0.12,
@@ -10,12 +10,12 @@
    "key": "276.9-279.2",
    "start": 276.91,
    "end": 279.2,
-   "speech_seconds": 0.056,
+   "speech_seconds": 0.024,
    "second_asr_words": [],
    "transcript_covered": false,
    "caption_timeline_covered": true,
    "status": "caption_timeline_covered",
-   "reason": "VAD 测到 0.056s 人声，第二份 ASR（medium）没听出词——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+   "reason": "VAD 测到 0.024s 人声，第二份 ASR（medium）没听出词——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
   },
   {
    "key": "282.3-286.5",
@@ -45,36 +45,25 @@
    "key": "346.2-352.0",
    "start": 346.18,
    "end": 352.0,
-   "speech_seconds": 0.13,
+   "speech_seconds": 0.098,
    "second_asr_words": [],
    "transcript_covered": false,
    "caption_timeline_covered": false,
-   "status": "speech_detected",
-   "reason": "VAD 测到 0.130s 人声，第二份 ASR（medium）没听出词——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
+   "status": "no_speech",
+   "reason": "VAD 在核心区只测到 0.098s 人声（≤0.12s），第二份 ASR（medium）一个词都没听到——没人说话，自动销账"
   },
   {
    "key": "376.7-379.8",
    "start": 376.74,
    "end": 379.84,
-   "speech_seconds": 0.002,
+   "speech_seconds": 0,
    "second_asr_words": [
     "Well,"
    ],
    "transcript_covered": true,
    "caption_timeline_covered": true,
    "status": "transcript_covered",
-   "reason": "VAD 测到 0.002s 人声，第二份 ASR（medium）听到「Well,」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
-  },
-  {
-   "key": "392.5-394.7",
-   "start": 392.48,
-   "end": 394.69,
-   "speech_seconds": 1.51,
-   "second_asr_words": [],
-   "transcript_covered": false,
-   "caption_timeline_covered": false,
-   "status": "speech_detected",
-   "reason": "VAD 测到 1.510s 人声，第二份 ASR（medium）没听出词——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
+   "reason": "VAD 测到 0.000s 人声，第二份 ASR（medium）听到「Well,」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
   },
   {
    "key": "439.4-442.3",
