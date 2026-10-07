@@ -30,45 +30,8 @@
     "transition": "dissolve",
     "dissolve_s": 0.18
   },
-  "film_sha256": "8f6efbce61b5192610e216caf19d2d53dbe3c4c4b7244a74f23ffac4f65bd528",
+  "film_sha256": "019abd113e2368637f903ea85fb25bc5225bf13e8fb469a8975d4312e04c14c7",
   "film_seconds": 205.88,
-  "production_sla": {
-    "version": 2,
-    "pipeline": "interview-clip",
-    "slug": "zheng-charaeva-beijing-2026-interview",
-    "received_at": "2026-10-07T15:48:22Z",
-    "artifact_ready_at": "2026-10-07T15:55:33Z",
-    "elapsed_seconds": 431.406,
-    "budget_seconds": 600,
-    "met": true,
-    "film_sha256": "8f6efbce61b5192610e216caf19d2d53dbe3c4c4b7244a74f23ffac4f65bd528",
-    "spec_sha256": "a6debedc071934bb47c43e071319139b41cf8feb5004c731ff93b814076471b5",
-    "run_id": "37646915177",
-    "stage_events": [
-      {
-        "stage": "preflight",
-        "at": "2026-10-07T15:50:30Z",
-        "run_id": "37646915177"
-      },
-      {
-        "stage": "cover_audit",
-        "at": "2026-10-07T15:51:26Z",
-        "run_id": "37646915177"
-      },
-      {
-        "stage": "asr_verify",
-        "at": "2026-10-07T15:51:49Z",
-        "run_id": "37646915177"
-      },
-      {
-        "stage": "render",
-        "at": "2026-10-07T15:53:38Z",
-        "run_id": "37646915177"
-      }
-    ],
-    "render_seconds": 115.406,
-    "pre_render_seconds": 316.0
-  },
   "face_checks": {
     "cover": {
       "status": "ok",
@@ -101,7 +64,7 @@
         "verdict": "open",
         "ear": 0.2258,
         "ear_each": [
-          0.2335,
+          0.2334,
           0.2182
         ],
         "face": [
@@ -125,37 +88,113 @@
   "production_stage_events": [
     {
       "stage": "preflight",
-      "at": "2026-10-07T15:50:30Z",
-      "run_id": "37646915177"
+      "at": "2026-10-07T16:08:00Z",
+      "run_id": "37649397771"
     },
     {
       "stage": "cover_audit",
-      "at": "2026-10-07T15:51:26Z",
-      "run_id": "37646915177"
+      "at": "2026-10-07T16:08:59Z",
+      "run_id": "37649397771"
     },
     {
       "stage": "asr_verify",
-      "at": "2026-10-07T15:51:49Z",
-      "run_id": "37646915177"
+      "at": "2026-10-07T16:09:16Z",
+      "run_id": "37649397771"
     },
     {
       "stage": "render",
-      "at": "2026-10-07T15:53:38Z",
-      "run_id": "37646915177"
+      "at": "2026-10-07T16:10:57Z",
+      "run_id": "37649397771"
     },
     {
       "stage": "qc",
-      "at": "2026-10-07T15:55:34Z",
-      "run_id": "37646915177"
+      "at": "2026-10-07T16:12:59Z",
+      "run_id": "37649397771"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-07T15:55:35Z",
-      "run_id": "37646915177"
+      "at": "2026-10-07T16:13:00Z",
+      "run_id": "37649397771"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-zheng-charaeva-beijing-2026-interview/zheng-charaeva-beijing-2026-interview.mp4?v=8f6efbce61b51926",
-  "video_bytes": 62804123,
-  "release_asset_digest": "sha256:8f6efbce61b5192610e216caf19d2d53dbe3c4c4b7244a74f23ffac4f65bd528",
-  "qc_attestation_sha256": "d6bcba1a139ee1cde1aa974968f88758f601251469ff8f64ec5dc1dd8af8de99"
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-zheng-charaeva-beijing-2026-interview/zheng-charaeva-beijing-2026-interview.mp4?v=019abd113e236863",
+  "video_bytes": 62821029,
+  "release_asset_digest": "sha256:019abd113e2368637f903ea85fb25bc5225bf13e8fb469a8975d4312e04c14c7",
+  "qc_attestation_sha256": "996f662bf45da4429e3bd76f6ba2380727938be65a3ac5cffbd823302aebc401",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "zheng-charaeva-beijing-2026-interview",
+      "received_at": "2026-10-07T15:48:22Z",
+      "artifact_ready_at": "2026-10-07T15:55:33Z",
+      "elapsed_seconds": 431.406,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "8f6efbce61b5192610e216caf19d2d53dbe3c4c4b7244a74f23ffac4f65bd528",
+      "spec_sha256": "a6debedc071934bb47c43e071319139b41cf8feb5004c731ff93b814076471b5",
+      "run_id": "37646915177",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-10-07T15:50:30Z",
+          "run_id": "37646915177"
+        },
+        {
+          "stage": "cover_audit",
+          "at": "2026-10-07T15:51:26Z",
+          "run_id": "37646915177"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-10-07T15:51:49Z",
+          "run_id": "37646915177"
+        },
+        {
+          "stage": "render",
+          "at": "2026-10-07T15:53:38Z",
+          "run_id": "37646915177"
+        }
+      ],
+      "render_seconds": 115.406,
+      "pre_render_seconds": 316.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "zheng-charaeva-beijing-2026-interview",
+    "received_at": "2026-10-07T16:06:19Z",
+    "artifact_ready_at": "2026-10-07T16:12:58Z",
+    "elapsed_seconds": 399.619,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "019abd113e2368637f903ea85fb25bc5225bf13e8fb469a8975d4312e04c14c7",
+    "spec_sha256": "492448434034bd5faeb034c51ccff9bfd551e7d3b25b5e7bbf2b4686818cee86",
+    "run_id": "37649397771",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-07T16:08:00Z",
+        "run_id": "37649397771"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-07T16:08:59Z",
+        "run_id": "37649397771"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-07T16:09:16Z",
+        "run_id": "37649397771"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-07T16:10:57Z",
+        "run_id": "37649397771"
+      }
+    ],
+    "render_seconds": 121.619,
+    "pre_render_seconds": 278.0
+  }
 }
