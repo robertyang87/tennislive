@@ -1,0 +1,244 @@
+{
+  "model": "medium.en",
+  "source_from": 154,
+  "source_to": 168,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 1.499999999999997,
+      "end": 9.54,
+      "text": " Now the forehand exquisite it finds its way through no winners opening set 3 in the second",
+      "tokens": [
+        50363,
+        2735,
+        262,
+        1674,
+        4993,
+        40123,
+        340,
+        7228,
+        663,
+        835,
+        832,
+        645,
+        14591,
+        4756,
+        900,
+        513,
+        287,
+        262,
+        1218,
+        50843
+      ],
+      "avg_logprob": -0.4758565498120857,
+      "compression_ratio": 1.2962962962962963,
+      "no_speech_prob": 0.001411107019521296,
+      "words": [
+        {
+          "start": 1.499999999999997,
+          "end": 2.2599999999999985,
+          "word": " Now",
+          "probability": 0.19497424364089966
+        },
+        {
+          "start": 2.2599999999999985,
+          "end": 3.02,
+          "word": " the",
+          "probability": 0.2988315522670746
+        },
+        {
+          "start": 3.02,
+          "end": 3.6,
+          "word": " forehand",
+          "probability": 0.934455394744873
+        },
+        {
+          "start": 3.6,
+          "end": 4.16,
+          "word": " exquisite",
+          "probability": 0.9742215871810913
+        },
+        {
+          "start": 4.16,
+          "end": 4.56,
+          "word": " it",
+          "probability": 0.5366808772087097
+        },
+        {
+          "start": 4.56,
+          "end": 4.84,
+          "word": " finds",
+          "probability": 0.9978708028793335
+        },
+        {
+          "start": 4.84,
+          "end": 5.02,
+          "word": " its",
+          "probability": 0.9941536784172058
+        },
+        {
+          "start": 5.02,
+          "end": 5.2,
+          "word": " way",
+          "probability": 0.9998281002044678
+        },
+        {
+          "start": 5.2,
+          "end": 5.56,
+          "word": " through",
+          "probability": 0.9992054104804993
+        },
+        {
+          "start": 5.56,
+          "end": 6.14,
+          "word": " no",
+          "probability": 0.6198218464851379
+        },
+        {
+          "start": 6.14,
+          "end": 6.54,
+          "word": " winners",
+          "probability": 0.9780233502388
+        },
+        {
+          "start": 6.54,
+          "end": 7.02,
+          "word": " opening",
+          "probability": 0.7856285572052002
+        },
+        {
+          "start": 7.02,
+          "end": 7.4,
+          "word": " set",
+          "probability": 0.9318935871124268
+        },
+        {
+          "start": 7.4,
+          "end": 8.02,
+          "word": " 3",
+          "probability": 0.31161850690841675
+        },
+        {
+          "start": 8.02,
+          "end": 9.06,
+          "word": " in",
+          "probability": 0.8104598522186279
+        },
+        {
+          "start": 9.06,
+          "end": 9.22,
+          "word": " the",
+          "probability": 0.9978618025779724
+        },
+        {
+          "start": 9.22,
+          "end": 9.54,
+          "word": " second",
+          "probability": 0.8366864323616028
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 9.54,
+      "end": 12.26,
+      "text": " and her third produces her second break of serve.",
+      "tokens": [
+        50843,
+        290,
+        607,
+        2368,
+        11073,
+        607,
+        1218,
+        2270,
+        286,
+        4691,
+        13,
+        50977
+      ],
+      "avg_logprob": -0.4758565498120857,
+      "compression_ratio": 1.2962962962962963,
+      "no_speech_prob": 0.001411107019521296,
+      "words": [
+        {
+          "start": 9.54,
+          "end": 9.82,
+          "word": " and",
+          "probability": 0.9153247475624084
+        },
+        {
+          "start": 9.82,
+          "end": 9.96,
+          "word": " her",
+          "probability": 0.7685880064964294
+        },
+        {
+          "start": 9.96,
+          "end": 10.38,
+          "word": " third",
+          "probability": 0.9609463214874268
+        },
+        {
+          "start": 10.38,
+          "end": 11.06,
+          "word": " produces",
+          "probability": 0.9651058316230774
+        },
+        {
+          "start": 11.06,
+          "end": 11.26,
+          "word": " her",
+          "probability": 0.8966236114501953
+        },
+        {
+          "start": 11.26,
+          "end": 11.6,
+          "word": " second",
+          "probability": 0.9462675452232361
+        },
+        {
+          "start": 11.6,
+          "end": 11.82,
+          "word": " break",
+          "probability": 0.9734634160995483
+        },
+        {
+          "start": 11.82,
+          "end": 12.0,
+          "word": " of",
+          "probability": 0.9971045851707458
+        },
+        {
+          "start": 12.0,
+          "end": 12.26,
+          "word": " serve.",
+          "probability": 0.7835694551467896
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

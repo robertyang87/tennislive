@@ -1,0 +1,147 @@
+{
+  "stats": {
+    "a": {
+      "aces": 7,
+      "df": 4,
+      "first_in": 36,
+      "first_total": 72,
+      "first_won": 28,
+      "second_won": 16,
+      "second_total": 36,
+      "bp_conv": 5,
+      "bp_chances": 9,
+      "pts_won": 80,
+      "pts_total": 153,
+      "winners": 39,
+      "ue": 42,
+      "headshot": "assets/players/headshots/wta-328120.jpg"
+    },
+    "b": {
+      "aces": 1,
+      "df": 3,
+      "first_in": 48,
+      "first_total": 81,
+      "first_won": 31,
+      "second_won": 14,
+      "second_total": 33,
+      "bp_conv": 3,
+      "bp_chances": 8,
+      "pts_won": 73,
+      "pts_total": 153,
+      "winners": 6,
+      "ue": 35,
+      "headshot": "assets/players/headshots/wta-329198.jpg"
+    },
+    "tour": "wta",
+    "footer_date": "2026-10-07",
+    "footer_venue": "北京 · 全场",
+    "_source": "Official WTA LS008 setnum0; TNNS Winners/UE; PBP153 points fully crosschecked, score-implied totals80:73 and9/8 BPs agree with stats.",
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051562&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/zheng-charaeva-beijing-2026-r4/tnns-stats.json",
+      "source_sha256": "ee00311c8a2f94bfcfedff50d09f76f0189131cb7f1eff84c745b29d2ed8138b",
+      "period": "Match",
+      "match_date": "2026-10-07",
+      "checked_at": "2026-10-07T15:01:53.555036+00:00",
+      "winner_result": "6-1 2-6 6-4",
+      "matchup": [
+        "Zheng",
+        "Charaeva"
+      ],
+      "winners": [
+        39,
+        6
+      ],
+      "ue": [
+        42,
+        35
+      ],
+      "notes": "Native HTTP200, decoded K/P/_ payload. Key Stats players=[Charaeva,Zheng], reversed to cover order. tnns_stats.validate_totals PASS: W18+8+13=39/0+3+3=6; UE14+14+14=42/13+7+15=35. WTA core statistics all agree."
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "date": "2026-10-07",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS008",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "participants": [
+      "查拉耶娃",
+      "郑钦文"
+    ],
+    "winner": "郑钦文",
+    "loser": "查拉耶娃",
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        6,
+        2
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "winner_result": "6-1 2-6 6-4",
+    "duration": "02:11:26",
+    "daypart": "晚上",
+    "observed_at": "2026-10-07T15:01:53.555036+00:00",
+    "_order_why": "WTA A=Charaeva B=Zheng. Cover and stats.a put winner Zheng first.",
+    "_time_note": "Official PBP first point11:08:50Z=19:08 Beijing, final13:22:29Z=21:22 Beijing. Date10-07 verified; WTA article has incorrect weekday Tuesday. Use evening; do not derive match duration or actual first-serve time from metadata timestamps."
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "郑钦文",
+        "name_en": "Qinwen Zheng",
+        "country": "CHN",
+        "rank": 54
+      },
+      {
+        "name": "查拉耶娃",
+        "name_en": "Alina Charaeva",
+        "country": "ARM",
+        "rank": 118
+      }
+    ],
+    "_rank_why": "Latest available official ranked endpoint snapshot rankedAt2026-09-28. Zheng54, Charaeva118. Not seed or live projected rank."
+  },
+  "point_by_point_check": "pbp-quality-check.json",
+  "key_turns": "editorial-facts.md",
+  "next_round": {
+    "status": "pending",
+    "match_id": "LS009",
+    "candidates": [
+      "Elina Svitolina",
+      "Ann Li"
+    ],
+    "source": "official-matches.json, wta-match-report.html"
+  },
+  "human_context": {
+    "facts": [
+      "郑钦文在24岁生日前一天晋级；她在赛后采访谈第一盘侵略性、第二盘未保持同样专注、感谢今晚观众、第三盘艰苦战斗。",
+      "查拉耶娃此前击败世界第一莱巴金娜，首次进入WTA1000第四轮。"
+    ],
+    "sources": [
+      "https://www.wtatennis.com/news/4588007/zheng-powers-into-beijing-last-eight-with-three-set-win-over-charaeva",
+      "https://www.wtatennis.com/news/4587123/who-is-alina-charaeva-on-verge-of-first-wta-1000-quarterfinal-beijing"
+    ]
+  },
+  "warnings": [
+    "Do not describe Charaeva as qualifier: official main draw has no Q, EntryTypeA blank.",
+    "Do not describe5-3 service game as missed match points: no match point until final game point153.",
+    "Do not say Zheng UE increased in set2:14 in each set.",
+    "Quoted interview text requires actual source audio listening before subtitles.",
+    "Complete official video key-point coverage remains to be checked by editing agent."
+  ]
+}

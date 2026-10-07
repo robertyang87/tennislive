@@ -1,0 +1,125 @@
+{
+  "model": "medium.en",
+  "source_from": 44,
+  "source_to": 52,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.7800000000000007,
+      "end": 5.54,
+      "text": " Oh, that's terrific stuff. This time it's measured so well just.",
+      "tokens": [
+        50363,
+        3966,
+        11,
+        326,
+        338,
+        23754,
+        3404,
+        13,
+        770,
+        640,
+        340,
+        338,
+        8630,
+        523,
+        880,
+        655,
+        13,
+        50663
+      ],
+      "avg_logprob": -0.4676288836880734,
+      "compression_ratio": 0.9411764705882353,
+      "no_speech_prob": 0.0030379504896700382,
+      "words": [
+        {
+          "start": 0.7800000000000007,
+          "end": 1.46,
+          "word": " Oh,",
+          "probability": 0.08539779484272003
+        },
+        {
+          "start": 1.94,
+          "end": 2.52,
+          "word": " that's",
+          "probability": 0.984968900680542
+        },
+        {
+          "start": 2.52,
+          "end": 2.88,
+          "word": " terrific",
+          "probability": 0.9889209270477295
+        },
+        {
+          "start": 2.88,
+          "end": 3.3,
+          "word": " stuff.",
+          "probability": 0.9967823028564453
+        },
+        {
+          "start": 3.8,
+          "end": 3.96,
+          "word": " This",
+          "probability": 0.9717546701431274
+        },
+        {
+          "start": 3.96,
+          "end": 4.24,
+          "word": " time",
+          "probability": 0.9973260164260864
+        },
+        {
+          "start": 4.24,
+          "end": 4.48,
+          "word": " it's",
+          "probability": 0.8664991557598114
+        },
+        {
+          "start": 4.48,
+          "end": 4.7,
+          "word": " measured",
+          "probability": 0.9827149510383606
+        },
+        {
+          "start": 4.7,
+          "end": 5.02,
+          "word": " so",
+          "probability": 0.9948753714561462
+        },
+        {
+          "start": 5.02,
+          "end": 5.3,
+          "word": " well",
+          "probability": 0.9982925057411194
+        },
+        {
+          "start": 5.3,
+          "end": 5.54,
+          "word": " just.",
+          "probability": 0.3575064539909363
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

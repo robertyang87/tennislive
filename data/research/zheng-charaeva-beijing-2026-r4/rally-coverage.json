@@ -1,0 +1,356 @@
+{
+  "schema": "tennislive.rally-coverage.v1",
+  "source": "/workspace/scratch/zheng-charaeva/LGHCCL4VHCw.mp4",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "timing_note": "Source hard-cut times exact to 25fps; serve/death time brackets visually checked, source score updates prove point result.",
+  "rallies": [
+    {
+      "id": "s1_5_1_30_15",
+      "source_from": 34.12,
+      "source_to_exclusive": 50.24,
+      "set": 1,
+      "games_before_zheng_charaeva": [
+        5,
+        1
+      ],
+      "points_before_zheng_charaeva": [
+        "15",
+        "30"
+      ],
+      "server": "Charaeva",
+      "winner": "Zheng",
+      "completeness": "full_serve_motion_and_rally",
+      "note": "主机位35.8；36.5抛球开始、37.3触球；49.24前后板30-30。",
+      "asr_candidates": [
+        {
+          "start": 34.4,
+          "end": 35.1,
+          "en": "A lucky number.",
+          "status": "uncertain"
+        },
+        {
+          "start": 45.5,
+          "end": 47.18,
+          "en": "Oh, that's terrific stuff.",
+          "status": "cross_checked"
+        }
+      ],
+      "visual_timing": {
+        "serve_toss_interval": [
+          36.5,
+          36.75
+        ],
+        "serve_contact_interval": [
+          37.25,
+          37.5
+        ],
+        "last_rally_action_interval": [
+          44,
+          45.25
+        ],
+        "rally_over_by": 45.5,
+        "score_result_seen_at": 49.25,
+        "min_safe_endpoint_with_reaction": 47.8,
+        "full_service_motion": true
+      }
+    },
+    {
+      "id": "s1_save_game_point",
+      "source_from": 50.24,
+      "source_to_exclusive": 65.28,
+      "set": 1,
+      "games_before_zheng_charaeva": [
+        5,
+        1
+      ],
+      "points_before_zheng_charaeva": [
+        "30",
+        "40"
+      ],
+      "server": "Charaeva",
+      "winner": "Zheng",
+      "completeness": "rally_complete_serve_toss_start_missing",
+      "note": "50.24比分已跳到40-30；52.16首帧已举拍，发球触球约52.3可见，但抛球起点源缺。62.9切观众，64s板40-40。",
+      "asr_candidates": [
+        {
+          "start": 62.38,
+          "end": 63.96,
+          "en": "Well, we've seen this before.",
+          "status": "uncertain"
+        }
+      ],
+      "visual_timing": {
+        "first_serve_frame": 52.16,
+        "serve_contact_interval": [
+          52.28,
+          52.36
+        ],
+        "last_rally_action_interval": [
+          60,
+          60.5
+        ],
+        "rally_over_by": 60.75,
+        "score_result_seen_at": 63.5,
+        "min_safe_endpoint_with_reaction": 65.28,
+        "full_service_motion": false,
+        "missing_service_part": "Toss start: server already in trophy pose on first source wide frame52.16; do not claim pre-serve start"
+      }
+    },
+    {
+      "id": "s1_set_point",
+      "source_from": 65.28,
+      "source_to_exclusive": 89.5,
+      "set": 1,
+      "games_before_zheng_charaeva": [
+        5,
+        1
+      ],
+      "points_before_zheng_charaeva": [
+        "AD",
+        "40"
+      ],
+      "server": "Charaeva",
+      "winner": "Zheng",
+      "completeness": "full_serve_motion_and_rally",
+      "note": "源从40-40跳40-Ad，拿到盘点那一分无画面。65.28已发前，66.7抛球、67.4触球，70.6死球；74.04郑反应，76.72看台，80.16换边。",
+      "asr_candidates": [
+        {
+          "start": 70.61,
+          "end": 71.78,
+          "en": "And that'll do it.",
+          "status": "cross_checked"
+        },
+        {
+          "start": 72.23,
+          "end": 78.28,
+          "en": "Opening set, just 36 minutes for Zheng Qinwen to establish a quality lead and foothold in this contest.",
+          "status": "cross_checked"
+        },
+        {
+          "start": 78.49,
+          "end": 82.68,
+          "en": "Their first ever meeting is one-way traffic, all in favor of the Golden Girl.",
+          "status": "cross_checked"
+        },
+        {
+          "start": 82.68,
+          "end": 85.12,
+          "en": "[Unclear] one set from the quarterfinals in Beijing.",
+          "status": "uncertain"
+        }
+      ],
+      "visual_timing": {
+        "serve_toss_interval": [
+          66.75,
+          67
+        ],
+        "serve_contact_interval": [
+          67.25,
+          67.5
+        ],
+        "last_rally_action_interval": [
+          70,
+          70.5
+        ],
+        "rally_over_by": 70.75,
+        "score_result_seen_at": 92,
+        "min_safe_endpoint_with_reaction": 74.04,
+        "full_service_motion": true,
+        "aftermath": "74.04郑真实反应，76.72看台，80.16换边；源窄比分板退场未显示6-1，92s原始大板显示首盘结果"
+      }
+    },
+    {
+      "id": "s2_2_3_exchange",
+      "source_from": 127.64,
+      "source_to_exclusive": 147.12,
+      "set": 2,
+      "games_before_zheng_charaeva": [
+        2,
+        3
+      ],
+      "points_before_zheng_charaeva": [
+        "15",
+        "15"
+      ],
+      "server": "Charaeva",
+      "winner": "Zheng",
+      "completeness": "full_serve_motion_and_rally",
+      "note": "131.36主机位发前；132.75抛球，133.5触球；146.75板15-30。",
+      "asr_candidates": [
+        {
+          "start": 130.88,
+          "end": 132.56,
+          "en": "That could hamper her progress.",
+          "status": "uncertain"
+        },
+        {
+          "start": 144.94,
+          "end": 146.58,
+          "en": "That left hand wasn't on there.",
+          "status": "cross_checked"
+        },
+        {
+          "start": 146.8,
+          "end": 146.92,
+          "en": "Nope.",
+          "status": "uncertain"
+        }
+      ],
+      "visual_timing": {
+        "serve_toss_interval": [
+          132.75,
+          133
+        ],
+        "serve_contact_interval": [
+          133.25,
+          133.5
+        ],
+        "last_rally_action_interval": [
+          143.75,
+          144.25
+        ],
+        "rally_over_by": 144.5,
+        "score_result_seen_at": 146.75,
+        "min_safe_endpoint_with_reaction": 147.12,
+        "full_service_motion": true
+      }
+    },
+    {
+      "id": "s2_second_break",
+      "source_from": 147.12,
+      "source_to_exclusive": 166.2,
+      "set": 2,
+      "games_before_zheng_charaeva": [
+        2,
+        4
+      ],
+      "points_before_zheng_charaeva": [
+        "0",
+        "40"
+      ],
+      "server": "Zheng",
+      "winner": "Charaeva",
+      "completeness": "full_serve_motion_and_rally",
+      "note": "郑远端发球，0-40被破，落后2-5；149.64主机位完整发前。159.36卡反应。",
+      "asr_candidates": [
+        {
+          "start": 155.18,
+          "end": 157.98,
+          "en": "Oh, the forehand, exquisite.",
+          "status": "cross_checked"
+        },
+        {
+          "start": 157.98,
+          "end": 159.42,
+          "en": "It finds its way through.",
+          "status": "cross_checked"
+        }
+      ],
+      "visual_timing": {
+        "pre_serve_start": 147.12,
+        "wide_pre_serve_start": 149.64,
+        "serve_contact_interval": [
+          151,
+          152
+        ],
+        "last_rally_action_interval": [
+          155.25,
+          155.75
+        ],
+        "rally_over_by": 156,
+        "score_result_seen_at": 166.2,
+        "min_safe_endpoint_with_reaction": 161,
+        "full_service_motion": true,
+        "aftermath": "159.36卡特写、164.2走向休息区；166.2下一局显示5-2"
+      }
+    },
+    {
+      "id": "s2_set_point",
+      "source_from": 166.2,
+      "source_to_exclusive": 183.24,
+      "set": 2,
+      "games_before_zheng_charaeva": [
+        2,
+        5
+      ],
+      "points_before_zheng_charaeva": [
+        "0",
+        "40"
+      ],
+      "server": "Charaeva",
+      "winner": "Charaeva",
+      "completeness": "full_serve_motion_and_rally",
+      "note": "166.2主机位发前，远端卡发球、近端郑接发，167.6~168.1抛球/击发；172.12切教练，178.84换边，181s官方大板1-6/6-2。",
+      "asr_candidates": [
+        {
+          "start": 169.66,
+          "end": 175.12,
+          "en": "Good effort and exposure at a WTA 1000 event has put Alina Charaeva in the spotlight.",
+          "status": "uncertain"
+        },
+        {
+          "start": 175.4,
+          "end": 179.52,
+          "en": "One thing that has become glaringly obvious: she's a fighter.",
+          "status": "cross_checked"
+        },
+        {
+          "start": 180.1,
+          "end": 182.4,
+          "en": "Third set coming up from Beijing.",
+          "status": "cross_checked"
+        }
+      ],
+      "visual_timing": {
+        "pre_serve_start": 166.2,
+        "serve_toss_interval": [
+          167.6,
+          167.84
+        ],
+        "serve_contact_interval": [
+          167.84,
+          168.12
+        ],
+        "last_rally_action_interval": [
+          169.25,
+          169.75
+        ],
+        "rally_over_by": 170,
+        "score_result_seen_at": 181,
+        "min_safe_endpoint_with_reaction": 175,
+        "full_service_motion": true,
+        "aftermath": "172.12教练鼓掌、178.84换边、181大板第二盘6-2"
+      }
+    }
+  ],
+  "source_program_cuts": {
+    "first_set": [
+      34.12,
+      35.8,
+      47.8,
+      50.24,
+      52.16,
+      62.92,
+      65.28,
+      74.04,
+      75.28,
+      76.72,
+      80.16
+    ],
+    "second_set": [
+      127.64,
+      131.36,
+      146.0,
+      147.12,
+      149.64,
+      159.36,
+      164.2,
+      166.2,
+      172.12,
+      178.84,
+      183.24
+    ]
+  },
+  "not_continuous_points": "首盘5-1仅三分精选，原片跳过30-30→40-30和40-40→40-Ad；52.16开头缺抛球起点，回合和发球触球仍完整。",
+  "score_order": "All arrays and point scores are Zheng, Charaeva; original board top Charaeva bottom Zheng."
+}
