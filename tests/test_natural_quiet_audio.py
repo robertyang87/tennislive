@@ -176,3 +176,99 @@ def test_real_aac_exact_boundary_float_cancellation(encoded):
     assert .4 + 1 - 1 < .4  # Actual cancellation that used to reject this cut.
     assert Q.verified_seconds(spec, film, [1]) == [1]
     assert Q.verified_seconds(spec, film, [0, 4]) == []
+
+
+@pytest.fixture
+def reviewed_codec_mix(encoded, tmp_path):
+    """A genuine AAC mix and immutable native review/manifest chain."""
+    from datetime import datetime, timezone
+    import render_inputs as RI
+    _, film = encoded
+    source = tmp_path / 'source_main.mp4'
+    original = Q.pcm(source)
+    selected = original[6400:26400]
+    times = np.arange(len(selected)) / Q.RATE
+    selected = selected * np.clip(times / .18, 0, 1) * .972
+    # Card has actual tone audio at its beginning, then a deliberate quiet hold.
+    card = np.zeros(12000)
+    card[:3200] = .1 * np.sin(2*np.pi*300*np.arange(3200)/Q.RATE)
+    raw = tmp_path / 'reviewed-mix.f32'
+    raw.write_bytes(np.concatenate((card, selected)).astype('<f4').tobytes())
+    subprocess.run(['ffmpeg','-nostdin','-v','error','-y','-f','f32le',
+                    '-ar','8000','-ac','1','-i',str(raw),'-ar','48000',
+                    '-c:a','aac','-b:a','192k',str(film)],check=True,timeout=30)
+    spec = {'slug':'reviewed-fixture','sources':{'main':'https://example.test/a'},
+            'segments':[{'title_card':True,'seconds':1.5,'narration':'测试证据卡'},
+                        {'source':'main','start':.8,'end':3.3,'bed':'high'}]}
+    spec_path = tmp_path/'spec.json'
+    spec_path.write_text(json.dumps(spec))
+    packet = tmp_path/'packet.json'
+    packet.write_text(json.dumps({'source_url':spec['sources']['main'],
+        'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
+        'method':'verified_source_captions','reviewer':'generated-PCM-test-fixture',
+        'reviewed_at':datetime.now(timezone.utc).isoformat(),'status':'complete',
+        'reviewed_from':.8,'reviewed_to':3.3,'uncertain_spans':[],
+        'foreground_english':[],
+        'no_foreground_english_reason':'Deterministic generated noise contains no speech.'}))
+    review = tmp_path/'data/audio_reviews/reviewed-fixture.json'
+    review.parent.mkdir(parents=True)
+    review.write_text(json.dumps({'schema':'tennislive.foreground-audio-review.v1',
+        'plan_sha256':plan_hash(spec),'segments':[{'index':1,
+        'transcript_path':'packet.json','transcript_sha256':hashlib.sha256(packet.read_bytes()).hexdigest()}]}))
+    binding = {'plan_sha256':plan_hash(spec),'review_sha256':hashlib.sha256(review.read_bytes()).hexdigest(),
+               'sources':{'main':hashlib.sha256(source.read_bytes()).hexdigest()},
+               'timeline':{'cover_seconds':0,'offsets':[0,1.5],'lengths':[1.5,2.5]}}
+    (tmp_path/'audio_review_binding.json').write_text(json.dumps(binding))
+    (tmp_path/'subtitles.ass').write_text('[Events]\n')
+    RI.record(spec_path,tmp_path,film,tmp_path)
+    return spec, film, tmp_path
+
+
+def test_complete_review_real_codec_card_join_and_full_second(reviewed_codec_mix):
+    spec, film, root = reviewed_codec_mix
+    assert Q.verified_reviewed_mix_seconds(spec,film,[1,2],root=root) == [1,2]
+    # Existing declared-window behavior is unchanged: there are no declarations.
+    assert Q.verified_seconds(spec,film,[1,2]) == []
+
+
+def test_reviewed_waveform_rejects_wrong_gain_silence_noise_and_fade():
+    rng = np.random.default_rng(17)
+    source = np.convolve(rng.normal(size=9280),np.ones(5)/5,mode='same')
+    source *= .0008 / np.sqrt(np.mean(source**2))
+    envelope = np.clip((np.arange(8000)/8000-.5)/.18,0,1)
+    landed = source[640:8640] * envelope * .972
+    assert Q._reviewed_mix_match(source,landed,envelope,.972)
+    assert not Q._reviewed_mix_match(source,landed*.3,envelope,.972)
+    assert not Q._reviewed_mix_match(source,np.zeros(8000),envelope,.972)
+    assert not Q._reviewed_mix_match(source[::-1],landed,envelope,.972)
+    # A missing fade cannot pass merely by fitting the constant-volume tail.
+    no_fade = source[640:8640] * (envelope > 0) * .972
+    assert not Q._reviewed_mix_match(source,no_fade,envelope,.972)
+
+
+@pytest.mark.parametrize('changed', ['film','source','binding','packet','declaration'])
+def test_reviewed_mix_requires_unchanged_authenticated_chain(reviewed_codec_mix,changed):
+    spec,film,root=reviewed_codec_mix
+    if changed == 'declaration':
+        spec['segments'][1]['_digital_silence_windows']=[[.8,3.3]]
+    else:
+        path={'film':film,'source':root/'source_main.mp4',
+              'binding':root/'audio_review_binding.json','packet':root/'packet.json'}[changed]
+        with path.open('ab') as stream:stream.write(b'changed')
+    assert Q.verified_reviewed_mix_seconds(spec,film,[1,2],root=root) == []
+
+
+@pytest.mark.parametrize('field,value', [('mute',True),('narration','speech'),
+    ('speed',.5),('music',{'file':'unreviewed'}),('source_audio',{'main':'unreviewed'})])
+def test_reviewed_mix_rejects_non_native_plain_audio(reviewed_codec_mix,field,value):
+    spec,film,root=reviewed_codec_mix
+    if field in ('music','source_audio'):spec[field]=value
+    else:spec['segments'][1][field]=value
+    assert Q.verified_reviewed_mix_seconds(spec,film,[1,2],root=root) == []
+
+
+def test_reviewed_mix_never_accepts_video_to_video_boundary(reviewed_codec_mix):
+    spec,film,root=reviewed_codec_mix
+    # No synthesized/changed metadata can make this raw boundary a card.
+    spec['segments'][0]={'source':'main','start':0,'end':1.5}
+    assert Q.verified_reviewed_mix_seconds(spec,film,[1],root=root) == []

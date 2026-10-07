@@ -1,0 +1,187 @@
+{
+  "sentence": "生日礼物，提前到手。郑钦文已经闯进中网八强。下一场，她能继续进攻，继续耐心争每一分吗？",
+  "text_sha256": "dce91d5c813f8254c5958264d940d9d1d87229f2447432a51c3533189fab9f72",
+  "index": 24,
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/outlook-dce91d5c813f-458ef27bb19d.mp3",
+    "A:厂": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/c8a25fce3ecc0be2e3b3f212.mp3",
+    "A:昶": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/dffd2891ba8e10b57e04c4d5.mp3",
+    "B:尝": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/897b483c2f74aeb3f5485e0f.mp3",
+    "B:偿": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/87ce510150aa2a90a06cdaf8.mp3"
+  },
+  "native_orig_mp3_sha256": "458ef27bb19d9de5643d99df2b16927ea1da709fbec610a98b28ebc452433e45",
+  "method": "WordBoundary phonetic vowel core middle35..85%, end+50ms compensation; standardized MFCC+delta mean, double-sided reference LOO; no F0 mixed into segmental contrast",
+  "tracks": {
+    "ORIG": {
+      "wordboundary": [
+        5.577833,
+        5.801874,
+        "场"
+      ],
+      "core_s": [
+        5.67374735,
+        5.8107678499999995
+      ],
+      "frames": [
+        568,
+        569,
+        570,
+        571,
+        572,
+        573,
+        574,
+        575,
+        576,
+        577,
+        578,
+        579,
+        580,
+        581
+      ]
+    },
+    "A:厂": {
+      "wordboundary": [
+        5.577833,
+        5.801874,
+        "厂"
+      ],
+      "core_s": [
+        5.67374735,
+        5.8107678499999995
+      ],
+      "frames": [
+        568,
+        569,
+        570,
+        571,
+        572,
+        573,
+        574,
+        575,
+        576,
+        577,
+        578,
+        579,
+        580,
+        581
+      ]
+    },
+    "A:昶": {
+      "wordboundary": [
+        5.577833,
+        5.801874,
+        "昶"
+      ],
+      "core_s": [
+        5.67374735,
+        5.8107678499999995
+      ],
+      "frames": [
+        568,
+        569,
+        570,
+        571,
+        572,
+        573,
+        574,
+        575,
+        576,
+        577,
+        578,
+        579,
+        580,
+        581
+      ]
+    },
+    "B:尝": {
+      "wordboundary": [
+        5.6603955,
+        5.849082999999999,
+        "一尝"
+      ],
+      "core_s": [
+        5.743936124999999,
+        5.863279874999999
+      ],
+      "frames": [
+        575,
+        576,
+        577,
+        578,
+        579,
+        580,
+        581,
+        582,
+        583,
+        584,
+        585,
+        586
+      ]
+    },
+    "B:偿": {
+      "wordboundary": [
+        5.617124666666667,
+        5.825458,
+        "下一偿"
+      ],
+      "core_s": [
+        5.707541333333333,
+        5.836708
+      ],
+      "frames": [
+        571,
+        572,
+        573,
+        574,
+        575,
+        576,
+        577,
+        578,
+        579,
+        580,
+        581,
+        582,
+        583
+      ]
+    }
+  },
+  "selftest_loo": {
+    "A:厂": {
+      "expected": "correct",
+      "d_intended": 0.2745805084705353,
+      "d_wrong": 2.398796796798706,
+      "score": 0.7945815520096354,
+      "got": "correct"
+    },
+    "A:昶": {
+      "expected": "correct",
+      "d_intended": 0.2745805084705353,
+      "d_wrong": 2.4357712268829346,
+      "score": 0.7973838562065998,
+      "got": "correct"
+    },
+    "B:尝": {
+      "expected": "misread",
+      "d_intended": 2.4588587284088135,
+      "d_wrong": 0.7180008292198181,
+      "score": -0.5479807550852074,
+      "got": "misread"
+    },
+    "B:偿": {
+      "expected": "misread",
+      "d_intended": 2.398796796798706,
+      "d_wrong": 0.7180008292198181,
+      "score": -0.5392701642056815,
+      "got": "misread"
+    }
+  },
+  "selftest_pass": true,
+  "original": {
+    "d_intended": 0.19444863498210907,
+    "d_wrong": 2.3909993171691895,
+    "score": 0.8495822475789448,
+    "got": "correct"
+  },
+  "verdict": "correct",
+  "confidence": "medium"
+}

@@ -1,0 +1,475 @@
+{
+  "job": {
+    "id": "u06-i16-中-zhong1-vs-zhong4",
+    "utterance": 6,
+    "label": "第 10 段",
+    "sentence": "生日礼物，拿到了。郑钦文已经闯进中网八强。下一场，她能把这份进攻和韧劲，一起带上吗？",
+    "text_sha256": "3828b597508a0584f333e4182b3bcc77ff13e35f0b6ce5cf8f34ec2e19d2e5ec",
+    "index": 16,
+    "char": "中",
+    "intended": "zhong1",
+    "wrong": "zhong4",
+    "ok": [
+      "忠",
+      "终",
+      "钟"
+    ],
+    "bad": [
+      "仲",
+      "众",
+      "重"
+    ],
+    "ok_reference_note": "single-reading common",
+    "bad_reference_note": "dominant-reading only, single-reading common"
+  },
+  "word": "中",
+  "char": "中",
+  "sentence": "生日礼物，拿到了。郑钦文已经闯进中网八强。下一场，她能把这份进攻和韧劲，一起带上吗？",
+  "tts_text": "生日礼物，拿到了。郑钦文已经闯进中网八强。下一场，她能把这份进攻和韧劲，一起带上吗？",
+  "intended_refs": [
+    "忠",
+    "终",
+    "钟"
+  ],
+  "wrong_refs": [
+    "仲",
+    "众",
+    "重"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "high",
+  "verdict_raw": "correct",
+  "score": 1.0,
+  "margin": 0.2,
+  "near_identical_to": "intended",
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 0.0,
+      "d_wrong": 2.918,
+      "score": 1.0
+    },
+    "f0": {
+      "d_intended": 0.0,
+      "d_wrong": 1.981,
+      "score": 1.0
+    },
+    "comb": {
+      "d_intended": 0.0,
+      "d_wrong": 3.44,
+      "score": 1.0
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.0,
+    "wrong": 3.977
+  },
+  "separation": {
+    "spec": {
+      "within": 0.0,
+      "between": 2.925,
+      "separation": null
+    },
+    "f0": {
+      "within": 0.011,
+      "between": 2.069,
+      "separation": 193.216
+    },
+    "comb": {
+      "within": 0.011,
+      "between": 3.532,
+      "separation": 329.777
+    }
+  },
+  "selftest_loo": {
+    "忠": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.994
+    },
+    "终": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.994
+    },
+    "钟": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.991
+    },
+    "仲": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.997
+    },
+    "众": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -1.0
+    },
+    "重": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -1.0
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:忠": {
+      "spec": 0.0,
+      "f0": 0.0,
+      "vmis": 0.0,
+      "frames": 24,
+      "comb": 0.0
+    },
+    "A:终": {
+      "spec": 0.0,
+      "f0": 0.01,
+      "vmis": 0.0,
+      "frames": 24,
+      "comb": 0.01
+    },
+    "A:钟": {
+      "spec": 0.0,
+      "f0": 0.027,
+      "vmis": 0.0,
+      "frames": 24,
+      "comb": 0.027
+    },
+    "B:仲": {
+      "spec": 2.918,
+      "f0": 1.984,
+      "vmis": 0.0,
+      "frames": 26,
+      "comb": 3.442
+    },
+    "B:众": {
+      "spec": 2.918,
+      "f0": 1.981,
+      "vmis": 0.0,
+      "frames": 26,
+      "comb": 3.44
+    },
+    "B:重": {
+      "spec": 2.918,
+      "f0": 1.981,
+      "vmis": 0.0,
+      "frames": 26,
+      "comb": 3.44
+    }
+  },
+  "window_s": [
+    3.804,
+    4.038
+  ],
+  "boundary_token": "中网",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "场",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ],
+    "A:忠": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "忠网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "场",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ],
+    "A:终": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "终网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "场",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ],
+    "A:钟": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "钟网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "场",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ],
+    "B:仲": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "仲网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "场",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ],
+    "B:众": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "众网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "场",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ],
+    "B:重": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "重网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "场",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      -1.6,
+      -2.2,
+      -2.9,
+      -4.1,
+      null,
+      null,
+      null,
+      4.5,
+      4.3,
+      5.3,
+      5.9,
+      3.3
+    ],
+    "A:忠": [
+      -1.6,
+      -2.2,
+      -2.9,
+      -4.1,
+      null,
+      null,
+      null,
+      4.5,
+      4.3,
+      5.3,
+      5.9,
+      3.3
+    ],
+    "A:终": [
+      -1.5,
+      -2.2,
+      -2.9,
+      -4.1,
+      null,
+      null,
+      null,
+      4.5,
+      4.3,
+      5.3,
+      5.9,
+      3.3
+    ],
+    "A:钟": [
+      -1.5,
+      -2.1,
+      -2.8,
+      -4.0,
+      null,
+      null,
+      null,
+      4.5,
+      4.3,
+      5.3,
+      6.0,
+      3.4
+    ],
+    "B:仲": [
+      -0.4,
+      -0.9,
+      -1.0,
+      -2.3,
+      null,
+      null,
+      null,
+      6.1,
+      5.1,
+      3.7,
+      1.0,
+      -1.8
+    ],
+    "B:众": [
+      -0.4,
+      -0.9,
+      -1.0,
+      -2.3,
+      null,
+      null,
+      null,
+      6.1,
+      5.1,
+      3.6,
+      1.0,
+      -1.9
+    ],
+    "B:重": [
+      -0.4,
+      -0.9,
+      -1.0,
+      -2.3,
+      null,
+      null,
+      null,
+      6.1,
+      5.1,
+      3.6,
+      1.0,
+      -1.9
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/324d346ba6c385dc68a8defd.mp3",
+    "A:忠": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/46857a732a5237858118bd0c.mp3",
+    "A:终": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/820b284765f39b35784867f6.mp3",
+    "A:钟": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/8ca98f47e6d0e4102a304262.mp3",
+    "B:仲": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/16a401fbde7a532c2b390759.mp3",
+    "B:众": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/09b1d69cc3d4bb7e1de343ad.mp3",
+    "B:重": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/8ef88d69a7e95e0e9fae7150.mp3"
+  }
+}

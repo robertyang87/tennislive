@@ -598,6 +598,11 @@ def main() -> int:
     import natural_quiet_audio
     natural_quiet = natural_quiet_audio.verified_seconds(spec, film, dead)
     dead = [i for i in dead if i not in natural_quiet]
+    reviewed_quiet = natural_quiet_audio.verified_reviewed_mix_seconds(spec, film, dead)
+    dead = [i for i in dead if i not in reviewed_quiet]
+    if reviewed_quiet:
+        print(f"[ok] 完整源声核验与实际原生混音波形一致 {reviewed_quiet}；"
+              "原声明/绑定未变，接缝含完整线性淡入，非数字静音")
     if natural_quiet:
         print(f"[ok] 已声明的自然弱现场声 {natural_quiet}；源SHA、对应波形与实际增益均匹配（非数字静音）")
     import narrated_audio_mode

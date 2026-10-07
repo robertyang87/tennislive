@@ -1,0 +1,562 @@
+{
+  "status": "pass",
+  "plan_sha256": "d2f68dbb17ffd1e16d5f30eee086ce245ab9dd42c43b6b8b289804b09f2374b1",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "spec_sha256": "58ec8eab3a6069b3e6b0649248a6446a4d35f6d68999c25097049c51f14b2c93",
+  "review_sha256": "8c0048f15785c0c74b74a0a4740ad7714ac1d8c7485ab037eaccdfaaf3b8f87a",
+  "expected_bilingual_cues": 50,
+  "source_foreground_gate": "pass",
+  "final_film_binding": "pass",
+  "checked_at": "2026-10-07T17:11:12.252529+00:00",
+  "actual_listening_performed": false,
+  "method": "Read-only native foreground gate and actual ASS/render-input/audio-review binding checks; not a human listening claim.",
+  "ass_sha256": "3e0fda0858e43e169c25804396f5ca472474751eb30c3b9d1abfd235ec2ab2dd",
+  "audio_review_binding_sha256": "ae6dcf1ee1a0e47b027af605b5b5749fdf7a9e76a2fc8a085102345f775b36e0",
+  "ass_dialogue_events": 76,
+  "actual_bilingual_cues": 50,
+  "bilingual_overlap_count": 0,
+  "tts_bilingual_overlap_count": 0,
+  "cue_checks": [
+    {
+      "segment": 0,
+      "expected_start": 1.3,
+      "expected_end": 4.46,
+      "ass_start": 1.3,
+      "ass_end": 4.46,
+      "en": "Tomorrow she'll turn 24 years of age.",
+      "zh": "明天她就满24岁了",
+      "status": "pass"
+    },
+    {
+      "segment": 0,
+      "expected_start": 5.04,
+      "expected_end": 7.7,
+      "ass_start": 5.04,
+      "ass_end": 7.7,
+      "en": "As Zheng Qinwen wraps up a well-earned",
+      "zh": "郑钦文为自己赢得了一份",
+      "status": "pass"
+    },
+    {
+      "segment": 0,
+      "expected_start": 7.7,
+      "expected_end": 9.84,
+      "ass_start": 7.7,
+      "ass_end": 9.84,
+      "en": "early birthday present in Beijing.",
+      "zh": "来自北京的提前生日礼物",
+      "status": "pass"
+    },
+    {
+      "segment": 0,
+      "expected_start": 12.08,
+      "expected_end": 13.14,
+      "ass_start": 12.08,
+      "ass_end": 13.14,
+      "en": "The tussle is over.",
+      "zh": "这场拉锯战终于结束了",
+      "status": "pass"
+    },
+    {
+      "segment": 0,
+      "expected_start": 13.5,
+      "expected_end": 15.28,
+      "ass_start": 13.5,
+      "ass_end": 15.28,
+      "en": "And what a tussle it ended up being.",
+      "zh": "最终还真是一场苦战",
+      "status": "pass"
+    },
+    {
+      "segment": 3,
+      "expected_start": 45.62,
+      "expected_end": 47.62,
+      "ass_start": 45.62,
+      "ass_end": 47.62,
+      "en": "Oh, terrific placement.",
+      "zh": "噢 落点太漂亮了",
+      "status": "pass"
+    },
+    {
+      "segment": 3,
+      "expected_start": 48.18,
+      "expected_end": 49.72,
+      "ass_start": 48.18,
+      "ass_end": 49.72,
+      "en": "That forehand just kissing the line.",
+      "zh": "这一记正手刚好擦着边线",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 59.9,
+      "expected_end": 62.42,
+      "ass_start": 59.9,
+      "ass_end": 62.42,
+      "en": "Oh, that's terrific stuff.",
+      "zh": "噢 打得太棒了",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 62.92,
+      "expected_end": 64.66,
+      "ass_start": 62.92,
+      "ass_end": 64.66,
+      "en": "This time it's measured so well, just...",
+      "zh": "这一次分寸掌握得真好 就……",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 77.5,
+      "expected_end": 79.1,
+      "ass_start": 77.5,
+      "ass_end": 79.1,
+      "en": "Well, you've seen this before.",
+      "zh": "你之前见过这样的情况",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 85.72,
+      "expected_end": 87.0,
+      "ass_start": 85.72,
+      "ass_end": 87.0,
+      "en": "And that'll do it.",
+      "zh": "首盘就此结束",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 87.12,
+      "expected_end": 89.06,
+      "ass_start": 87.12,
+      "ass_end": 89.06,
+      "en": "Opening set, just 36 minutes",
+      "zh": "首盘只用了36分钟",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 89.06,
+      "expected_end": 90.42,
+      "ass_start": 89.06,
+      "ass_end": 90.42,
+      "en": "for Zheng Qinwen to establish",
+      "zh": "让郑钦文确立",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 90.42,
+      "expected_end": 92.16,
+      "ass_start": 90.42,
+      "ass_end": 92.16,
+      "en": "a quality lead",
+      "zh": "明显的优势",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 92.16,
+      "expected_end": 93.42,
+      "ass_start": 92.16,
+      "ass_end": 93.42,
+      "en": "and foothold in this contest.",
+      "zh": "在这场比赛里站稳了脚跟",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 93.6,
+      "expected_end": 94.52,
+      "ass_start": 93.6,
+      "ass_end": 94.52000000000001,
+      "en": "Their first ever meeting",
+      "zh": "双方首次交手",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 94.52,
+      "expected_end": 95.92,
+      "ass_start": 94.52000000000001,
+      "ass_end": 95.92,
+      "en": "is one-way traffic.",
+      "zh": "目前完全是一边倒",
+      "status": "pass"
+    },
+    {
+      "segment": 4,
+      "expected_start": 96.52,
+      "expected_end": 98.1,
+      "ass_start": 96.52000000000001,
+      "ass_end": 98.1,
+      "en": "All in favor of the Golden Girl.",
+      "zh": "全部有利于这位金牌姑娘",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 120.84,
+      "expected_end": 122.6,
+      "ass_start": 120.84,
+      "ass_end": 122.6,
+      "en": "That left hand wasn't on there.",
+      "zh": "左手没有握在拍上",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 122.72,
+      "expected_end": 122.94,
+      "ass_start": 122.72,
+      "ass_end": 123.92,
+      "en": "Nope.",
+      "zh": "没有",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 131.08,
+      "expected_end": 133.96,
+      "ass_start": 131.08,
+      "ass_end": 133.96,
+      "en": "Oh, the forehand, exquisite.",
+      "zh": "噢 这一记正手太精妙了",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 133.96,
+      "expected_end": 135.4,
+      "ass_start": 133.96,
+      "ass_end": 135.4,
+      "en": "It finds its way through.",
+      "zh": "这记球打穿了防守",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 135.88,
+      "expected_end": 137.15,
+      "ass_start": 135.88,
+      "ass_end": 137.15,
+      "en": "No winners opening set,",
+      "zh": "首盘没有一个制胜分",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 137.15,
+      "expected_end": 139.36,
+      "ass_start": 137.15,
+      "ass_end": 139.36,
+      "en": "three in the second,",
+      "zh": "第二盘已有三个",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 139.36,
+      "expected_end": 140.88,
+      "ass_start": 139.36,
+      "ass_end": 140.88,
+      "en": "and her third produces",
+      "zh": "她的第三个制胜分",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 140.88,
+      "expected_end": 142.2,
+      "ass_start": 140.88,
+      "ass_end": 142.2,
+      "en": "her second break of serve.",
+      "zh": "帮她第二次破发",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 145.56,
+      "expected_end": 147.5,
+      "ass_start": 145.56,
+      "ass_end": 147.5,
+      "en": "Good effort and exposure",
+      "zh": "出色的发挥 加上曝光",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 147.5,
+      "expected_end": 149.3,
+      "ass_start": 147.5,
+      "ass_end": 149.3,
+      "en": "at a WTA 1000 event",
+      "zh": "在WTA1000赛的舞台上",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 149.3,
+      "expected_end": 150.44,
+      "ass_start": 149.3,
+      "ass_end": 150.44,
+      "en": "has put Alina Charaeva",
+      "zh": "让阿丽娜·恰拉耶娃",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 150.44,
+      "expected_end": 151.12,
+      "ass_start": 150.44,
+      "ass_end": 151.12,
+      "en": "in the spotlight.",
+      "zh": "进入了大家的视野",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 151.3,
+      "expected_end": 152.7,
+      "ass_start": 151.3,
+      "ass_end": 152.7,
+      "en": "One thing that has become",
+      "zh": "有一点已经",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 152.7,
+      "expected_end": 153.86,
+      "ass_start": 152.7,
+      "ass_end": 153.86,
+      "en": "glaringly obvious:",
+      "zh": "再明显不过",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 154.62,
+      "expected_end": 155.42,
+      "ass_start": 154.62,
+      "ass_end": 155.42000000000002,
+      "en": "she's a fighter.",
+      "zh": "她是个斗士",
+      "status": "pass"
+    },
+    {
+      "segment": 6,
+      "expected_start": 156.0,
+      "expected_end": 158.3,
+      "ass_start": 156.0,
+      "ass_end": 158.3,
+      "en": "Third set coming up from Beijing.",
+      "zh": "北京站这场比赛将进入决胜盘",
+      "status": "pass"
+    },
+    {
+      "segment": 8,
+      "expected_start": 165.72,
+      "expected_end": 167.44,
+      "ass_start": 165.72,
+      "ass_end": 167.44,
+      "en": "Five return winners in this contest",
+      "zh": "本场5个接发制胜分",
+      "status": "pass"
+    },
+    {
+      "segment": 8,
+      "expected_start": 167.44,
+      "expected_end": 168.1,
+      "ass_start": 167.44,
+      "ass_end": 168.1,
+      "en": "for Zheng Qinwen.",
+      "zh": "都来自郑钦文",
+      "status": "pass"
+    },
+    {
+      "segment": 8,
+      "expected_start": 168.18,
+      "expected_end": 169.3,
+      "ass_start": 168.18,
+      "ass_end": 169.3,
+      "en": "This might be the most important",
+      "zh": "这可能是最重要的",
+      "status": "pass"
+    },
+    {
+      "segment": 8,
+      "expected_start": 169.3,
+      "expected_end": 169.82,
+      "ass_start": 169.3,
+      "ass_end": 169.82,
+      "en": "of them all.",
+      "zh": "在这五个球之中",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 199.6,
+      "expected_end": 202.76,
+      "ass_start": 199.6,
+      "ass_end": 202.76,
+      "en": "Tomorrow she'll turn 24 years of age.",
+      "zh": "明天她就满24岁了",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 203.34,
+      "expected_end": 206.0,
+      "ass_start": 203.34,
+      "ass_end": 206.0,
+      "en": "As Zheng Qinwen wraps up a well-earned",
+      "zh": "郑钦文为自己赢得了一份",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 206.0,
+      "expected_end": 208.14,
+      "ass_start": 206.0,
+      "ass_end": 208.14,
+      "en": "early birthday present in Beijing.",
+      "zh": "来自北京的提前生日礼物",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 210.38,
+      "expected_end": 211.44,
+      "ass_start": 210.38,
+      "ass_end": 211.44,
+      "en": "The tussle is over.",
+      "zh": "这场拉锯战终于结束了",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 211.8,
+      "expected_end": 213.58,
+      "ass_start": 211.8,
+      "ass_end": 213.57999999999998,
+      "en": "And what a tussle it ended up being.",
+      "zh": "最终还真是一场苦战",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 214.28,
+      "expected_end": 215.58,
+      "ass_start": 214.28,
+      "ass_end": 215.57999999999998,
+      "en": "Ladies and gentlemen,",
+      "zh": "女士们 先生们",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 217.56,
+      "expected_end": 219.06,
+      "ass_start": 217.56,
+      "ass_end": 219.06,
+      "en": "Dominating the opening set,",
+      "zh": "首盘占尽优势",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 219.06,
+      "expected_end": 220.72,
+      "ass_start": 219.06,
+      "ass_end": 220.72,
+      "en": "but had to gut out a win",
+      "zh": "最终却得苦战才赢下来",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 220.72,
+      "expected_end": 222.16,
+      "ass_start": 220.72,
+      "ass_end": 222.16,
+      "en": "in two hours and 11 minutes.",
+      "zh": "比赛用了2小时11分钟",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 222.6,
+      "expected_end": 224.58,
+      "ass_start": 222.6,
+      "ass_end": 224.57999999999998,
+      "en": "And Zheng Qinwen, for the second time",
+      "zh": "郑钦文第二次",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 224.58,
+      "expected_end": 226.06,
+      "ass_start": 224.57999999999998,
+      "ass_end": 226.06,
+      "en": "in four appearances,",
+      "zh": "在4次北京站之旅中",
+      "status": "pass"
+    },
+    {
+      "segment": 11,
+      "expected_start": 226.06,
+      "expected_end": 228.02,
+      "ass_start": 226.06,
+      "ass_end": 228.02,
+      "en": "is a quarterfinalist in Beijing.",
+      "zh": "闯进八强",
+      "status": "pass"
+    }
+  ],
+  "cover_seconds": 1.2,
+  "timeline": {
+    "cover_seconds": 1.2,
+    "offsets": [
+      1.2,
+      15.68,
+      26.42,
+      36.92,
+      50.92,
+      98.12,
+      108.5,
+      158.9,
+      165.46,
+      169.9,
+      181.34,
+      191.82,
+      228.45999999999998,
+      237.71999999999997
+    ],
+    "lengths": [
+      14.48,
+      10.74,
+      10.5,
+      14.0,
+      47.2,
+      10.38,
+      50.4,
+      6.56,
+      4.44,
+      11.44,
+      10.48,
+      36.64,
+      9.26,
+      10.14
+    ]
+  },
+  "film_sha256": "1c7bfad0e69f83321ba77a3099bd9bfd32695657acd4634f9117068c2b6c8def",
+  "render_inputs_sha256": "12bd5e41b9030a2c1581438f2657072672d664c2a712f4a5a76b142d6fc7d5ab",
+  "render_json_sha256": "149b0ad7ffea125856f03c6402ac4c81c43f008fb92e792e4b995b7c4e8f59aa",
+  "native_verify_final": "pass",
+  "limitations": "This checks all50 required source-English/Chinese ASS cues and native sealed burn-input binding. Actual final mix/audibility and visual pixels are independently reviewed by the QC agent; no human listening is claimed here."
+}

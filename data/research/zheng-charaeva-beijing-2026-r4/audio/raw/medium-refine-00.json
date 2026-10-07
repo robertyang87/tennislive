@@ -1,0 +1,240 @@
+{
+  "model": "medium.en",
+  "source_from": 78,
+  "source_to": 89,
+  "parameters": {
+    "language": "en",
+    "beam_size": 7,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null
+  },
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.0,
+      "end": 5.0,
+      "text": " contest. Their first ever meeting is one-way traffic. All in favor of the golden girl",
+      "tokens": [
+        50363,
+        8414,
+        13,
+        5334,
+        717,
+        1683,
+        3249,
+        318,
+        530,
+        12,
+        1014,
+        4979,
+        13,
+        1439,
+        287,
+        2661,
+        286,
+        262,
+        10861,
+        2576,
+        50609
+      ],
+      "avg_logprob": -0.3699855821473258,
+      "compression_ratio": 1.25,
+      "no_speech_prob": 0.16680730879306793,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.36,
+          "word": " contest.",
+          "probability": 0.4094603657722473
+        },
+        {
+          "start": 0.56,
+          "end": 0.62,
+          "word": " Their",
+          "probability": 0.8702818751335144
+        },
+        {
+          "start": 0.62,
+          "end": 0.82,
+          "word": " first",
+          "probability": 0.985030472278595
+        },
+        {
+          "start": 0.82,
+          "end": 1.08,
+          "word": " ever",
+          "probability": 0.8222165703773499
+        },
+        {
+          "start": 1.08,
+          "end": 1.4,
+          "word": " meeting",
+          "probability": 0.9937348961830139
+        },
+        {
+          "start": 1.4,
+          "end": 1.88,
+          "word": " is",
+          "probability": 0.8939149379730225
+        },
+        {
+          "start": 1.88,
+          "end": 2.06,
+          "word": " one",
+          "probability": 0.9110903143882751
+        },
+        {
+          "start": 2.06,
+          "end": 2.26,
+          "word": "-way",
+          "probability": 0.681364506483078
+        },
+        {
+          "start": 2.26,
+          "end": 2.76,
+          "word": " traffic.",
+          "probability": 0.9955204725265503
+        },
+        {
+          "start": 3.64,
+          "end": 3.7,
+          "word": " All",
+          "probability": 0.8967517018318176
+        },
+        {
+          "start": 3.7,
+          "end": 3.92,
+          "word": " in",
+          "probability": 0.9943419694900513
+        },
+        {
+          "start": 3.92,
+          "end": 4.16,
+          "word": " favor",
+          "probability": 0.9835376143455505
+        },
+        {
+          "start": 4.16,
+          "end": 4.32,
+          "word": " of",
+          "probability": 0.9915097951889038
+        },
+        {
+          "start": 4.32,
+          "end": 4.42,
+          "word": " the",
+          "probability": 0.987503707408905
+        },
+        {
+          "start": 4.42,
+          "end": 4.7,
+          "word": " golden",
+          "probability": 0.4289228022098541
+        },
+        {
+          "start": 4.7,
+          "end": 5.0,
+          "word": " girl",
+          "probability": 0.9833800196647644
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 5.0,
+      "end": 7.08,
+      "text": " who is one set from the quarterfinals in Beijing.",
+      "tokens": [
+        50609,
+        508,
+        318,
+        530,
+        900,
+        422,
+        262,
+        3860,
+        32089,
+        287,
+        11618,
+        13,
+        50723
+      ],
+      "avg_logprob": -0.3699855821473258,
+      "compression_ratio": 1.25,
+      "no_speech_prob": 0.16680730879306793,
+      "words": [
+        {
+          "start": 5.0,
+          "end": 5.34,
+          "word": " who",
+          "probability": 0.2036481648683548
+        },
+        {
+          "start": 5.34,
+          "end": 5.46,
+          "word": " is",
+          "probability": 0.301434725522995
+        },
+        {
+          "start": 5.46,
+          "end": 5.6,
+          "word": " one",
+          "probability": 0.6105487942695618
+        },
+        {
+          "start": 5.6,
+          "end": 5.84,
+          "word": " set",
+          "probability": 0.9819948077201843
+        },
+        {
+          "start": 5.84,
+          "end": 6.02,
+          "word": " from",
+          "probability": 0.9713761210441589
+        },
+        {
+          "start": 6.02,
+          "end": 6.16,
+          "word": " the",
+          "probability": 0.993457019329071
+        },
+        {
+          "start": 6.16,
+          "end": 6.64,
+          "word": " quarterfinals",
+          "probability": 0.8659369945526123
+        },
+        {
+          "start": 6.64,
+          "end": 6.82,
+          "word": " in",
+          "probability": 0.7390868663787842
+        },
+        {
+          "start": 6.82,
+          "end": 7.08,
+          "word": " Beijing.",
+          "probability": 0.9867380857467651
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

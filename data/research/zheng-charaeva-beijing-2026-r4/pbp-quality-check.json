@@ -1,0 +1,78 @@
+{
+  "score_implied_totals": {
+    "A": 73,
+    "B": 80
+  },
+  "by_set": {
+    "1": {
+      "A": 20,
+      "B": 30
+    },
+    "2": {
+      "A": 28,
+      "B": 17
+    },
+    "3": {
+      "A": 25,
+      "B": 33
+    }
+  },
+  "reported_point_winner_mismatches": [],
+  "bp_taken_by_player": {
+    "B": 9,
+    "A": 8
+  },
+  "bp_converted_by_player": {
+    "B": 5,
+    "A": 3
+  },
+  "set_points": [
+    {
+      "point": 50,
+      "holder": "B",
+      "before_A_B": [
+        "40",
+        "AD"
+      ],
+      "won_by": "B",
+      "set": 1,
+      "game": 7
+    },
+    {
+      "point": 95,
+      "holder": "A",
+      "before_A_B": [
+        "40",
+        "0"
+      ],
+      "won_by": "A",
+      "set": 2,
+      "game": 8
+    },
+    {
+      "point": 153,
+      "holder": "B",
+      "before_A_B": [
+        "30",
+        "40"
+      ],
+      "won_by": "B",
+      "set": 3,
+      "game": 10
+    }
+  ],
+  "match_points": [
+    {
+      "point": 153,
+      "holder": "B",
+      "before_A_B": [
+        "30",
+        "40"
+      ],
+      "won_by": "B",
+      "set": 3,
+      "game": 10
+    }
+  ],
+  "notes": "A=Charaeva B=Zheng. Normalize advantage A to AD. Rebuild scores from G and game endings; scoreAfterPoint.sets contains final set score, never current games."
+}

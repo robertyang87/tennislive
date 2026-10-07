@@ -1,0 +1,75 @@
+{
+  "model": "small.en",
+  "source_from": 281.8,
+  "source_to": 287.2,
+  "parameters": {
+    "vad_filter": false,
+    "word_timestamps": true,
+    "initial_prompt": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.0,
+      "end": 5.38,
+      "text": " it up being dominating the",
+      "tokens": [
+        50363,
+        340,
+        510,
+        852,
+        30651,
+        262,
+        50731
+      ],
+      "avg_logprob": -0.7006578296422958,
+      "compression_ratio": 0.8387096774193549,
+      "no_speech_prob": 0.2843879461288452,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.08,
+          "word": " it",
+          "probability": 0.15873932838439941
+        },
+        {
+          "start": 0.08,
+          "end": 0.26,
+          "word": " up",
+          "probability": 0.9818860292434692
+        },
+        {
+          "start": 0.26,
+          "end": 0.64,
+          "word": " being",
+          "probability": 0.8361775279045105
+        },
+        {
+          "start": 0.64,
+          "end": 5.14,
+          "word": " dominating",
+          "probability": 0.7137688994407654
+        },
+        {
+          "start": 5.14,
+          "end": 5.38,
+          "word": " the",
+          "probability": 0.6602771878242493
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

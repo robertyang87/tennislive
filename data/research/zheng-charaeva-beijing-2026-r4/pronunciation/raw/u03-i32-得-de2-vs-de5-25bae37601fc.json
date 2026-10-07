@@ -1,0 +1,294 @@
+{
+  "job": {
+    "id": "u03-i32-得-de2-vs-de5",
+    "utterance": 3,
+    "label": "第 6 段",
+    "sentence": "决胜盘二比一，前三个破发点被救。第四次机会，郑钦文用反手接发直接得分。三比一，优势又回到她手里。",
+    "text_sha256": "25bae37601fc917f86f798f182a5fa28803897aeb8639c60852d583db9505f01",
+    "index": 32,
+    "char": "得",
+    "intended": "de2",
+    "wrong": "de5",
+    "ok": [
+      "德",
+      "锝"
+    ],
+    "bad": [
+      "的"
+    ],
+    "ok_reference_note": "single-reading common, single-reading level-2",
+    "bad_reference_note": "dominant-reading only"
+  },
+  "word": "得",
+  "char": "得",
+  "sentence": "决胜盘二比一，前三个破发点被救。第四次机会，郑钦文用反手接发直接得分。三比一，优势又回到她手里。",
+  "tts_text": "决胜盘二比一，前三个破发点被救。第四次机会，郑钦文用反手接发直接得分。三比一，优势又回到她手里。",
+  "intended_refs": [
+    "德",
+    "锝"
+  ],
+  "wrong_refs": [
+    "的"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "low",
+  "verdict_raw": "correct",
+  "score": 0.934,
+  "margin": 0.2,
+  "near_identical_to": "intended",
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 0.285,
+      "d_wrong": 4.407,
+      "score": 0.879
+    },
+    "f0": {
+      "d_intended": 0.012,
+      "d_wrong": 2.31,
+      "score": 0.99
+    },
+    "comb": {
+      "d_intended": 0.154,
+      "d_wrong": 4.514,
+      "score": 0.934
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.543,
+    "wrong": 3.354
+  },
+  "separation": {
+    "spec": {
+      "within": 2.353,
+      "between": 4.494,
+      "separation": 1.91
+    },
+    "f0": {
+      "within": 0.48,
+      "between": 2.344,
+      "separation": 4.887
+    },
+    "comb": {
+      "within": 1.656,
+      "between": 4.591,
+      "separation": 2.772
+    }
+  },
+  "selftest_loo": {
+    "德": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.469
+    },
+    "锝": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.461
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:德": {
+      "spec": 2.395,
+      "f0": 0.47,
+      "vmis": 0.042,
+      "frames": 24,
+      "comb": 1.668
+    },
+    "A:锝": {
+      "spec": 0.285,
+      "f0": 0.012,
+      "vmis": 0.0,
+      "frames": 23,
+      "comb": 0.154
+    },
+    "B:的": {
+      "spec": 4.407,
+      "f0": 2.31,
+      "vmis": 0.043,
+      "frames": 23,
+      "comb": 4.514
+    }
+  },
+  "window_s": [
+    6.5,
+    6.73
+  ],
+  "boundary_token": "得分",
+  "window_anchor": "B:的",
+  "tokens": {
+    "ORIG": [
+      "决胜",
+      "盘",
+      "二比一",
+      "前",
+      "三",
+      "个",
+      "破发点",
+      "被",
+      "救",
+      "第四次",
+      "机会",
+      "郑钦文",
+      "用",
+      "反手",
+      "接发",
+      "直接",
+      "得分",
+      "三比一",
+      "优势",
+      "又",
+      "回到",
+      "她",
+      "手",
+      "里"
+    ],
+    "A:德": [
+      "决胜",
+      "盘",
+      "二比一",
+      "前",
+      "三",
+      "个",
+      "破发点",
+      "被",
+      "救",
+      "第四次",
+      "机会",
+      "郑钦文",
+      "用",
+      "反手",
+      "接发",
+      "直接",
+      "德分",
+      "三比一",
+      "优势",
+      "又",
+      "回到",
+      "她",
+      "手",
+      "里"
+    ],
+    "A:锝": [
+      "决胜",
+      "盘",
+      "二比一",
+      "前",
+      "三",
+      "个",
+      "破发点",
+      "被",
+      "救",
+      "第四次",
+      "机会",
+      "郑钦文",
+      "用",
+      "反手",
+      "接发",
+      "直接",
+      "锝分",
+      "三比一",
+      "优势",
+      "又",
+      "回到",
+      "她",
+      "手",
+      "里"
+    ],
+    "B:的": [
+      "决胜",
+      "盘",
+      "二比一",
+      "前",
+      "三",
+      "个",
+      "破发点",
+      "被",
+      "救",
+      "第四次",
+      "机会",
+      "郑钦文",
+      "用",
+      "反手",
+      "接发",
+      "直接",
+      "的",
+      "分",
+      "三比一",
+      "优势",
+      "又",
+      "回到",
+      "她",
+      "手",
+      "里"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      4.0,
+      3.2,
+      2.3,
+      1.2,
+      -3.4,
+      -4.1,
+      -4.2,
+      -5.0,
+      -4.6,
+      -4.1,
+      -4.1
+    ],
+    "A:德": [
+      null,
+      2.1,
+      1.9,
+      0.9,
+      0.2,
+      -3.3,
+      -3.0,
+      -5.2,
+      -4.7,
+      -4.4,
+      -4.2
+    ],
+    "A:锝": [
+      null,
+      4.0,
+      3.2,
+      2.3,
+      1.1,
+      -3.4,
+      -4.1,
+      -4.2,
+      -5.0,
+      -4.6,
+      -4.1,
+      -4.1
+    ],
+    "B:的": [
+      null,
+      null,
+      1.5,
+      -0.1,
+      -3.8,
+      -6.0,
+      -6.2,
+      -8.1,
+      -8.6
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/d8dad872a8224d71d55a5cb5.mp3",
+    "A:德": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/3bbc16057546e61a907c015f.mp3",
+    "A:锝": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/57c0be0a11588f034ac30b15.mp3",
+    "B:的": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/294dfc80d2badc07cb76f063.mp3"
+  }
+}

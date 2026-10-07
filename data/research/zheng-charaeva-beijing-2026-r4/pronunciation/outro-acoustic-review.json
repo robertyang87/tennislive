@@ -1,0 +1,49 @@
+{
+  "tts_text": "关注网球时差，时差归我，好球归你。",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "manual_listening_claimed": false,
+  "default_check_polyphones_exit_code": 2,
+  "default_status": "uncertain/unreliable; retained",
+  "first_cha4_comparison": {
+    "verdict": "correct",
+    "confidence": "medium",
+    "method": "precisely bounded voiced nucleus; proportional robust F0 fall-rate; actual -41.8 st/s, cha1 -35.1/-46.8, cha4 -114.3/-193.4; complete two-sided LOO passed",
+    "raw": "raw/outro-nucleus-log-slope-i5.json"
+  },
+  "second_cha4_comparison": {
+    "verdict": "correct",
+    "confidence": "high",
+    "method": "F0-only local exact-utterance contrast, complete two-sided LOO passed",
+    "raw": "raw/outro-f0-i8-cha1-cha4.json"
+  },
+  "first_chai1_comparison": {
+    "verdict": "correct",
+    "confidence": "medium",
+    "raw": "raw/outro-bounded-nucleus-vowel-i5-chai1.json",
+    "method": "Bounded vowel nucleus tail MFCC contrast; both reference sides LOO passed"
+  },
+  "second_chai1_comparison": {
+    "verdict": "correct",
+    "confidence": "medium",
+    "raw": "raw/outro-bounded-nucleus-vowel-i8-chai1.json",
+    "method": "Bounded vowel nucleus tail MFCC contrast; both reference sides LOO passed"
+  },
+  "first_ci1_comparison": {
+    "verdict": "correct",
+    "confidence": "low",
+    "raw": "raw/outro-i5-ci1-combined.json",
+    "method": "Only one ci1 reference; tool confidence remains low"
+  },
+  "second_ci1_comparison": {
+    "verdict": "correct",
+    "confidence": "low",
+    "raw": "raw/outro-i8-ci1-combined.json",
+    "method": "Only one ci1 reference; tool confidence remains low"
+  },
+  "notes": [
+    "Custom comparison evidence does not overwrite default uncertain/unreliable outputs.",
+    "No overall movie pronunciation pass is claimed; final current manifest and neutral-tone pending items must be reviewed separately.",
+    "Acoustic refinements were triggered by demonstrable preceding时 / following归 contamination and reference tracking errors, not assumed static lexical correctness."
+  ]
+}

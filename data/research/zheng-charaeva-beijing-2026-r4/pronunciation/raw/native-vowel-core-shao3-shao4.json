@@ -1,0 +1,195 @@
+{
+  "sentence": "三十九记制胜分，对手六记。进攻有威力，波动也不少。最后一局，她用回应握住胜利。",
+  "text_sha256": "2d826b17dc3a0e025cbdf184b9ae9f7a79c77436d7f0e2d1b55bd02ca0c3f2a6",
+  "index": 23,
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/statistics-2d826b17dc3a-56c7dd204504.mp3",
+    "A:嫂": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/14fdfc4e4ac939e9dd70f9fd.mp3",
+    "A:扫": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/40c92121989b81fe059fd0e9.mp3",
+    "B:绍": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/9e79b3709d25419cc3c7e1e9.mp3",
+    "B:邵": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/082c261a9c30784f9a12164e.mp3"
+  },
+  "native_orig_mp3_sha256": "56c7dd2045043e7cd51d1f5c407557668580e064f5f91815b708118dab8248fc",
+  "method": "WordBoundary phonetic vowel core middle35..85%, end+50ms compensation; standardized MFCC+delta mean, double-sided reference LOO; no F0 mixed into segmental contrast",
+  "tracks": {
+    "ORIG": {
+      "wordboundary": [
+        4.8938950000000006,
+        5.058999,
+        "不少"
+      ],
+      "core_s": [
+        4.9691814,
+        5.0767334
+      ],
+      "frames": [
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507
+      ]
+    },
+    "A:嫂": {
+      "wordboundary": [
+        4.834916,
+        5.129707,
+        "嫂"
+      ],
+      "core_s": [
+        4.9555928499999995,
+        5.12798835
+      ],
+      "frames": [
+        496,
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512
+      ]
+    },
+    "A:扫": {
+      "wordboundary": [
+        4.834916,
+        5.129707,
+        "扫"
+      ],
+      "core_s": [
+        4.9555928499999995,
+        5.12798835
+      ],
+      "frames": [
+        496,
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512
+      ]
+    },
+    "B:绍": {
+      "wordboundary": [
+        4.870291,
+        5.117916,
+        "绍"
+      ],
+      "core_s": [
+        4.97445975,
+        5.12327225
+      ],
+      "frames": [
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512
+      ]
+    },
+    "B:邵": {
+      "wordboundary": [
+        4.8585,
+        5.1061250000000005,
+        "邵"
+      ],
+      "core_s": [
+        4.962668750000001,
+        5.111481250000001
+      ],
+      "frames": [
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511
+      ]
+    }
+  },
+  "selftest_loo": {
+    "A:嫂": {
+      "expected": "correct",
+      "d_intended": 0.5025946497917175,
+      "d_wrong": 1.863221287727356,
+      "score": 0.5751193980722217,
+      "got": "correct"
+    },
+    "A:扫": {
+      "expected": "correct",
+      "d_intended": 0.5025946497917175,
+      "d_wrong": 1.6633363962173462,
+      "score": 0.535908910195644,
+      "got": "correct"
+    },
+    "B:绍": {
+      "expected": "misread",
+      "d_intended": 1.6808282136917114,
+      "d_wrong": 0.4043145477771759,
+      "score": -0.6121948527952543,
+      "got": "misread"
+    },
+    "B:邵": {
+      "expected": "misread",
+      "d_intended": 1.6633363962173462,
+      "d_wrong": 0.4043145477771759,
+      "score": -0.6089141168130872,
+      "got": "misread"
+    }
+  },
+  "selftest_pass": true,
+  "original": {
+    "d_intended": 1.5020195245742798,
+    "d_wrong": 1.3277766704559326,
+    "score": -0.06157434744748,
+    "got": "uncertain"
+  },
+  "verdict": "uncertain",
+  "confidence": "medium"
+}

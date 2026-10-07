@@ -1,0 +1,434 @@
+{
+  "model": "small.en",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "source_from": 86,
+  "source_to": 104,
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+  },
+  "info": {
+    "language": "en",
+    "language_probability": 1,
+    "duration": 18.0,
+    "duration_after_vad": 18.0,
+    "all_language_probs": null,
+    "transcription_options": {
+      "beam_size": 5,
+      "best_of": 5,
+      "patience": 1,
+      "length_penalty": 1,
+      "repetition_penalty": 1,
+      "no_repeat_ngram_size": 0,
+      "log_prob_threshold": -1.0,
+      "no_speech_threshold": 0.6,
+      "compression_ratio_threshold": 2.4,
+      "condition_on_previous_text": false,
+      "prompt_reset_on_temperature": 0.5,
+      "temperatures": [
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA.",
+      "prefix": null,
+      "suppress_blank": true,
+      "suppress_tokens": [
+        1,
+        2,
+        7,
+        8,
+        9,
+        10,
+        14,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        90,
+        91,
+        92,
+        93,
+        357,
+        366,
+        438,
+        532,
+        685,
+        705,
+        796,
+        930,
+        1058,
+        1220,
+        1267,
+        1279,
+        1303,
+        1343,
+        1377,
+        1391,
+        1635,
+        1782,
+        1875,
+        2162,
+        2361,
+        2488,
+        3467,
+        4008,
+        4211,
+        4600,
+        4808,
+        5299,
+        5855,
+        6329,
+        7203,
+        9609,
+        9959,
+        10563,
+        10786,
+        11420,
+        11709,
+        11907,
+        13163,
+        13697,
+        13700,
+        14808,
+        15306,
+        16410,
+        16791,
+        17992,
+        19203,
+        19510,
+        20724,
+        22305,
+        22935,
+        27007,
+        30109,
+        30420,
+        33409,
+        34949,
+        40283,
+        40493,
+        40549,
+        47282,
+        49146,
+        50257,
+        50357,
+        50358,
+        50359,
+        50360,
+        50361
+      ],
+      "without_timestamps": false,
+      "max_initial_timestamp": 1.0,
+      "word_timestamps": true,
+      "prepend_punctuations": "\"'“¿([{-",
+      "append_punctuations": "\"'.。,，!！?？:：”)]}、",
+      "multilingual": false,
+      "max_new_tokens": null,
+      "clip_timestamps": [
+        0.0
+      ],
+      "hallucination_silence_threshold": null,
+      "hotwords": null
+    },
+    "vad_options": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 3.7600000000000007,
+      "end": 10.68,
+      "text": " Well, it's not often that player doesn't have one winner in a set, kind of like the dynamic",
+      "tokens": [
+        50363,
+        3894,
+        11,
+        340,
+        338,
+        407,
+        1690,
+        326,
+        2137,
+        1595,
+        470,
+        423,
+        530,
+        8464,
+        287,
+        257,
+        900,
+        11,
+        1611,
+        286,
+        588,
+        262,
+        8925,
+        50907
+      ],
+      "avg_logprob": -0.335437364048428,
+      "compression_ratio": 1.3488372093023255,
+      "no_speech_prob": 0.4148729145526886,
+      "words": [
+        {
+          "start": 3.7600000000000007,
+          "end": 4.36,
+          "word": " Well,",
+          "probability": 0.5326335430145264
+        },
+        {
+          "start": 4.44,
+          "end": 4.82,
+          "word": " it's",
+          "probability": 0.9713341891765594
+        },
+        {
+          "start": 4.82,
+          "end": 4.98,
+          "word": " not",
+          "probability": 0.9961817264556885
+        },
+        {
+          "start": 4.98,
+          "end": 5.36,
+          "word": " often",
+          "probability": 0.9942032694816589
+        },
+        {
+          "start": 5.36,
+          "end": 5.76,
+          "word": " that",
+          "probability": 0.9803789854049683
+        },
+        {
+          "start": 5.76,
+          "end": 6.88,
+          "word": " player",
+          "probability": 0.31125399470329285
+        },
+        {
+          "start": 6.88,
+          "end": 7.38,
+          "word": " doesn't",
+          "probability": 0.9886245131492615
+        },
+        {
+          "start": 7.38,
+          "end": 7.62,
+          "word": " have",
+          "probability": 0.9981732368469238
+        },
+        {
+          "start": 7.62,
+          "end": 8.14,
+          "word": " one",
+          "probability": 0.9680786728858948
+        },
+        {
+          "start": 8.14,
+          "end": 8.72,
+          "word": " winner",
+          "probability": 0.9926931858062744
+        },
+        {
+          "start": 8.72,
+          "end": 9.0,
+          "word": " in",
+          "probability": 0.9826093912124634
+        },
+        {
+          "start": 9.0,
+          "end": 9.14,
+          "word": " a",
+          "probability": 0.9681504964828491
+        },
+        {
+          "start": 9.14,
+          "end": 9.42,
+          "word": " set,",
+          "probability": 0.9976028800010681
+        },
+        {
+          "start": 9.68,
+          "end": 9.9,
+          "word": " kind",
+          "probability": 0.8744763135910034
+        },
+        {
+          "start": 9.9,
+          "end": 10.04,
+          "word": " of",
+          "probability": 0.9979579448699951
+        },
+        {
+          "start": 10.04,
+          "end": 10.2,
+          "word": " like",
+          "probability": 0.9656513929367065
+        },
+        {
+          "start": 10.2,
+          "end": 10.32,
+          "word": " the",
+          "probability": 0.9492436051368713
+        },
+        {
+          "start": 10.32,
+          "end": 10.68,
+          "word": " dynamic",
+          "probability": 0.9659151434898376
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 10.68,
+      "end": 15.94,
+      "text": " by hitting some different shot, higher ball, change the pace and the spin as well.",
+      "tokens": [
+        50907,
+        416,
+        9008,
+        617,
+        1180,
+        2823,
+        11,
+        2440,
+        2613,
+        11,
+        1487,
+        262,
+        8761,
+        290,
+        262,
+        7906,
+        355,
+        880,
+        13,
+        51161
+      ],
+      "avg_logprob": -0.335437364048428,
+      "compression_ratio": 1.3488372093023255,
+      "no_speech_prob": 0.4148729145526886,
+      "words": [
+        {
+          "start": 10.68,
+          "end": 11.14,
+          "word": " by",
+          "probability": 0.7190200090408325
+        },
+        {
+          "start": 11.14,
+          "end": 11.54,
+          "word": " hitting",
+          "probability": 0.9841099977493286
+        },
+        {
+          "start": 11.54,
+          "end": 11.86,
+          "word": " some",
+          "probability": 0.9818088412284851
+        },
+        {
+          "start": 11.86,
+          "end": 12.44,
+          "word": " different",
+          "probability": 0.9895063042640686
+        },
+        {
+          "start": 12.44,
+          "end": 12.76,
+          "word": " shot,",
+          "probability": 0.8522413372993469
+        },
+        {
+          "start": 13.04,
+          "end": 13.08,
+          "word": " higher",
+          "probability": 0.9185051321983337
+        },
+        {
+          "start": 13.08,
+          "end": 13.44,
+          "word": " ball,",
+          "probability": 0.964278519153595
+        },
+        {
+          "start": 13.7,
+          "end": 13.9,
+          "word": " change",
+          "probability": 0.9251740574836731
+        },
+        {
+          "start": 13.9,
+          "end": 14.46,
+          "word": " the",
+          "probability": 0.9758481383323669
+        },
+        {
+          "start": 14.46,
+          "end": 14.8,
+          "word": " pace",
+          "probability": 0.9915315508842468
+        },
+        {
+          "start": 14.8,
+          "end": 15.04,
+          "word": " and",
+          "probability": 0.6369088292121887
+        },
+        {
+          "start": 15.04,
+          "end": 15.16,
+          "word": " the",
+          "probability": 0.8719843626022339
+        },
+        {
+          "start": 15.16,
+          "end": 15.5,
+          "word": " spin",
+          "probability": 0.9954138994216919
+        },
+        {
+          "start": 15.5,
+          "end": 15.68,
+          "word": " as",
+          "probability": 0.9633244276046753
+        },
+        {
+          "start": 15.68,
+          "end": 15.94,
+          "word": " well.",
+          "probability": 0.9985193610191345
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

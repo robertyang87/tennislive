@@ -1,0 +1,215 @@
+{
+  "sentence": "郑钦文用正手压向边线。首盘二比一，她又救下三个破发点。连同这一局，首盘最后四局，全归她。",
+  "text_sha256": "9b73aabfd6854f7f035f48e9aed480664710d042c944346854490bd7dacc0534",
+  "index": 28,
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/voice_02.mp3",
+    "A:彤": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/bb701a19c85f249f7220b5b6.mp3",
+    "A:瞳": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ddc54065aeabaff29fecbc3c.mp3",
+    "A:铜": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/3bea90015e7c9c82f34cd982.mp3",
+    "B:痛": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/f0444c3a104d90155cc6247f.mp3",
+    "B:恸": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/64a930fa2d5874e12574f086.mp3"
+  },
+  "native_orig_mp3_sha256": "ea666822566d36a0d33f443c2c2f57f5908068b4f69b18c03ba3672dd6f93963",
+  "method": "WordBoundary phonetic vowel core middle35..85%, end+50ms compensation; standardized MFCC+delta mean, double-sided reference LOO; no F0 mixed into segmental contrast",
+  "tracks": {
+    "ORIG": {
+      "wordboundary": [
+        6.067208,
+        6.2617910000000006,
+        "连同"
+      ],
+      "core_s": [
+        6.15281205,
+        6.275103550000001
+      ],
+      "frames": [
+        616,
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627
+      ]
+    },
+    "A:彤": {
+      "wordboundary": [
+        6.067208,
+        6.2617910000000006,
+        "连彤"
+      ],
+      "core_s": [
+        6.15281205,
+        6.275103550000001
+      ],
+      "frames": [
+        616,
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627
+      ]
+    },
+    "A:瞳": {
+      "wordboundary": [
+        6.067208,
+        6.2617910000000006,
+        "连瞳"
+      ],
+      "core_s": [
+        6.15281205,
+        6.275103550000001
+      ],
+      "frames": [
+        616,
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627
+      ]
+    },
+    "A:铜": {
+      "wordboundary": [
+        6.1085,
+        6.297166000000001,
+        "铜"
+      ],
+      "core_s": [
+        6.192033100000001,
+        6.311366100000001
+      ],
+      "frames": [
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627,
+        628,
+        629,
+        630,
+        631
+      ]
+    },
+    "B:痛": {
+      "wordboundary": [
+        6.096708,
+        6.320748999999999,
+        "痛"
+      ],
+      "core_s": [
+        6.19262235,
+        6.329642849999999
+      ],
+      "frames": [
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627,
+        628,
+        629,
+        630,
+        631,
+        632
+      ]
+    },
+    "B:恸": {
+      "wordboundary": [
+        6.0848955,
+        6.297166,
+        "连恸"
+      ],
+      "core_s": [
+        6.176690175,
+        6.307825425
+      ],
+      "frames": [
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627,
+        628,
+        629,
+        630
+      ]
+    }
+  },
+  "selftest_loo": {
+    "A:彤": {
+      "expected": "correct",
+      "d_intended": 0.17256374657154083,
+      "d_wrong": 1.4430755376815796,
+      "score": 0.7863833242315424,
+      "got": "correct"
+    },
+    "A:瞳": {
+      "expected": "correct",
+      "d_intended": 0.17256374657154083,
+      "d_wrong": 1.5477670431137085,
+      "score": 0.7993830632966663,
+      "got": "correct"
+    },
+    "A:铜": {
+      "expected": "correct",
+      "d_intended": 1.120426893234253,
+      "d_wrong": 1.560186743736267,
+      "score": 0.16405193364568801,
+      "got": "uncertain"
+    },
+    "B:痛": {
+      "expected": "misread",
+      "d_intended": 1.560186743736267,
+      "d_wrong": 1.2888586521148682,
+      "score": -0.0952347379288919,
+      "got": "uncertain"
+    },
+    "B:恸": {
+      "expected": "misread",
+      "d_intended": 1.4430755376815796,
+      "d_wrong": 1.2888586521148682,
+      "score": -0.056449707369488976,
+      "got": "uncertain"
+    }
+  },
+  "selftest_pass": false,
+  "original": {
+    "d_intended": 0.22860874235630035,
+    "d_wrong": 1.4638668298721313,
+    "score": 0.7298528308384409,
+    "got": "correct"
+  },
+  "verdict": "unreliable",
+  "confidence": null
+}

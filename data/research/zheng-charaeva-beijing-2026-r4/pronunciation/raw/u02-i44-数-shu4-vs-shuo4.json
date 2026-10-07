@@ -1,0 +1,483 @@
+{
+  "job": {
+    "id": "u02-i44-数-shu4-vs-shuo4",
+    "utterance": 2,
+    "label": "第 4 段",
+    "sentence": "第二盘，郑钦文一比零领先，却先被对手反超。二比三之后，又连丢三局。六比二，查拉耶娃扳平盘数。",
+    "text_sha256": "4ff601328066160ed9ff219560f7f959d723192c2d3321a7c4c34078b44d8184",
+    "index": 44,
+    "char": "数",
+    "intended": "shu4",
+    "wrong": "shuo4",
+    "ok": [
+      "恕",
+      "戍",
+      "束"
+    ],
+    "bad": [
+      "朔",
+      "烁",
+      "硕"
+    ],
+    "ok_reference_note": "single-reading common",
+    "bad_reference_note": "single-reading common"
+  },
+  "word": "数",
+  "char": "数",
+  "sentence": "第二盘，郑钦文一比零领先，却先被对手反超。二比三之后，又连丢三局。六比二，查拉耶娃扳平盘数。",
+  "tts_text": "第二盘，郑钦文一比零领先，却先被对手反超。二比三之后，又连丢三局。六比二，查拉耶娃扳平盘数。",
+  "intended_refs": [
+    "恕",
+    "戍",
+    "束"
+  ],
+  "wrong_refs": [
+    "朔",
+    "烁",
+    "硕"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "uncertain",
+  "confidence": null,
+  "verdict_raw": "uncertain",
+  "score": 0.161,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": true,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 2.351,
+      "d_wrong": 2.867,
+      "score": 0.099
+    },
+    "f0": {
+      "d_intended": 1.71,
+      "d_wrong": 2.56,
+      "score": 0.199
+    },
+    "comb": {
+      "d_intended": 2.886,
+      "d_wrong": 3.994,
+      "score": 0.161
+    }
+  },
+  "neighbour_shift": {
+    "intended": 3.88,
+    "wrong": 3.83
+  },
+  "separation": {
+    "spec": {
+      "within": 0.79,
+      "between": 3.135,
+      "separation": 3.968
+    },
+    "f0": {
+      "within": 0.152,
+      "between": 1.633,
+      "separation": 10.744
+    },
+    "comb": {
+      "within": 0.547,
+      "between": 3.201,
+      "separation": 5.851
+    }
+  },
+  "selftest_loo": {
+    "恕": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.999
+    },
+    "戍": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.991
+    },
+    "束": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.999
+    },
+    "朔": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.303
+    },
+    "烁": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.983
+    },
+    "硕": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.984
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:恕": {
+      "spec": 2.351,
+      "f0": 1.721,
+      "vmis": 0.129,
+      "frames": 31,
+      "comb": 2.897
+    },
+    "A:戍": {
+      "spec": 2.351,
+      "f0": 1.71,
+      "vmis": 0.129,
+      "frames": 31,
+      "comb": 2.886
+    },
+    "A:束": {
+      "spec": 2.351,
+      "f0": 1.723,
+      "vmis": 0.129,
+      "frames": 31,
+      "comb": 2.898
+    },
+    "B:朔": {
+      "spec": 3.053,
+      "f0": 3.364,
+      "vmis": 0.133,
+      "frames": 30,
+      "comb": 4.89
+    },
+    "B:烁": {
+      "spec": 2.867,
+      "f0": 2.56,
+      "vmis": 0.2,
+      "frames": 30,
+      "comb": 3.994
+    },
+    "B:硕": {
+      "spec": 2.867,
+      "f0": 2.584,
+      "vmis": 0.2,
+      "frames": 30,
+      "comb": 4.017
+    }
+  },
+  "window_s": [
+    9.14,
+    9.44
+  ],
+  "boundary_token": "平盘数",
+  "window_anchor": "A:恕",
+  "tokens": {
+    "ORIG": [
+      "第二",
+      "盘",
+      "郑钦文",
+      "一",
+      "比",
+      "零领先",
+      "却",
+      "先",
+      "被",
+      "对手",
+      "反超",
+      "二比三",
+      "之后",
+      "又",
+      "连",
+      "丢",
+      "三",
+      "局",
+      "六比二",
+      "查拉耶娃",
+      "扳",
+      "平盘数"
+    ],
+    "A:恕": [
+      "第二",
+      "盘",
+      "郑钦文",
+      "一",
+      "比",
+      "零领先",
+      "却",
+      "先",
+      "被",
+      "对手",
+      "反超",
+      "二比三",
+      "之后",
+      "又",
+      "连",
+      "丢",
+      "三",
+      "局",
+      "六比二",
+      "查拉耶娃",
+      "扳",
+      "平",
+      "盘恕"
+    ],
+    "A:戍": [
+      "第二",
+      "盘",
+      "郑钦文",
+      "一",
+      "比",
+      "零领先",
+      "却",
+      "先",
+      "被",
+      "对手",
+      "反超",
+      "二比三",
+      "之后",
+      "又",
+      "连",
+      "丢",
+      "三",
+      "局",
+      "六比二",
+      "查拉耶娃",
+      "扳",
+      "平",
+      "盘戍"
+    ],
+    "A:束": [
+      "第二",
+      "盘",
+      "郑钦文",
+      "一",
+      "比",
+      "零领先",
+      "却",
+      "先",
+      "被",
+      "对手",
+      "反超",
+      "二比三",
+      "之后",
+      "又",
+      "连",
+      "丢",
+      "三",
+      "局",
+      "六比二",
+      "查拉耶娃",
+      "扳",
+      "平",
+      "盘束"
+    ],
+    "B:朔": [
+      "第二",
+      "盘",
+      "郑钦文",
+      "一",
+      "比",
+      "零领先",
+      "却",
+      "先",
+      "被",
+      "对手",
+      "反超",
+      "二比三",
+      "之后",
+      "又",
+      "连",
+      "丢",
+      "三",
+      "局",
+      "六比二",
+      "查拉耶娃",
+      "扳",
+      "平",
+      "盘朔"
+    ],
+    "B:烁": [
+      "第二",
+      "盘",
+      "郑钦文",
+      "一",
+      "比",
+      "零领先",
+      "却",
+      "先",
+      "被",
+      "对手",
+      "反超",
+      "二比三",
+      "之后",
+      "又",
+      "连",
+      "丢",
+      "三",
+      "局",
+      "六比二",
+      "查拉耶娃",
+      "扳",
+      "平盘烁"
+    ],
+    "B:硕": [
+      "第二",
+      "盘",
+      "郑钦文",
+      "一",
+      "比",
+      "零领先",
+      "却",
+      "先",
+      "被",
+      "对手",
+      "反超",
+      "二比三",
+      "之后",
+      "又",
+      "连",
+      "丢",
+      "三",
+      "局",
+      "六比二",
+      "查拉耶娃",
+      "扳",
+      "平盘硕"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      -4.0,
+      -4.2,
+      -3.7,
+      -2.7,
+      -1.0,
+      0.1,
+      0.1,
+      null,
+      null,
+      null,
+      null,
+      1.7,
+      -0.7,
+      -3.3,
+      null
+    ],
+    "A:恕": [
+      -1.4,
+      -7.6,
+      -6.6,
+      -4.4,
+      -2.9,
+      -1.5,
+      -0.8,
+      -0.7,
+      null,
+      null,
+      null,
+      1.8,
+      null,
+      -3.7,
+      -7.8,
+      null
+    ],
+    "A:戍": [
+      -1.4,
+      -7.6,
+      -6.6,
+      -4.4,
+      -2.9,
+      -1.5,
+      -0.8,
+      -0.7,
+      null,
+      null,
+      null,
+      1.8,
+      null,
+      -3.7,
+      -7.8,
+      null
+    ],
+    "A:束": [
+      -1.4,
+      -7.6,
+      -6.6,
+      -4.4,
+      -2.9,
+      -1.5,
+      -0.8,
+      -0.7,
+      null,
+      null,
+      null,
+      1.8,
+      null,
+      -3.7,
+      -7.8,
+      null
+    ],
+    "B:朔": [
+      -7.9,
+      -7.6,
+      -5.7,
+      -4.4,
+      -3.6,
+      -3.1,
+      null,
+      null,
+      null,
+      null,
+      -0.3,
+      null,
+      -12.3,
+      null,
+      null,
+      null
+    ],
+    "B:烁": [
+      null,
+      -7.0,
+      -6.8,
+      -5.1,
+      -3.9,
+      -3.1,
+      null,
+      null,
+      null,
+      null,
+      0.4,
+      0.1,
+      null,
+      -13.4,
+      null
+    ],
+    "B:硕": [
+      null,
+      -7.0,
+      -6.8,
+      -5.1,
+      -3.9,
+      -3.2,
+      null,
+      null,
+      null,
+      null,
+      0.4,
+      0.0,
+      null,
+      -13.5,
+      null
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/2e6d25936875dc3086362c07.mp3",
+    "A:恕": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/e042189d104af1c55969c00b.mp3",
+    "A:戍": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/6b49f61101f71be94a2b01cb.mp3",
+    "A:束": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ac367843df2bbdfca08bd81b.mp3",
+    "B:朔": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/dbbf73c5cfc9c39979627582.mp3",
+    "B:烁": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/d15cdc0f31d764be03baecc1.mp3",
+    "B:硕": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ee16012451bae5dd92b3d3c2.mp3"
+  }
+}

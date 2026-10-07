@@ -1,0 +1,364 @@
+{
+  "word": "场",
+  "char": "场",
+  "sentence": "生日礼物，提前到手。郑钦文已经闯进中网八强。下一场，她能继续进攻，继续耐心争每一分吗？",
+  "tts_text": "生日礼物，提前到手。郑钦文已经闯进中网八强。下一场，她能继续进攻，继续耐心争每一分吗？",
+  "intended_refs": [
+    "厂",
+    "昶"
+  ],
+  "wrong_refs": [
+    "尝",
+    "偿"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "unreliable",
+  "confidence": null,
+  "verdict_raw": "correct",
+  "score": 0.558,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 1.037,
+      "d_wrong": 2.93,
+      "score": 0.477
+    },
+    "f0": {
+      "d_intended": 0.025,
+      "d_wrong": 0.484,
+      "score": 0.902
+    },
+    "comb": {
+      "d_intended": 0.554,
+      "d_wrong": 1.949,
+      "score": 0.558
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.541,
+    "wrong": 1.682
+  },
+  "separation": {
+    "spec": {
+      "within": 1.696,
+      "between": 3.027,
+      "separation": 1.785
+    },
+    "f0": {
+      "within": 0.832,
+      "between": 1.947,
+      "separation": 2.34
+    },
+    "comb": {
+      "within": 1.68,
+      "between": 3.461,
+      "separation": 2.06
+    }
+  },
+  "selftest_loo": {
+    "厂": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.671
+    },
+    "昶": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.564
+    },
+    "尝": {
+      "expect": "misread",
+      "got": "uncertain",
+      "score": 0.122
+    },
+    "偿": {
+      "expect": "misread",
+      "got": "uncertain",
+      "score": -0.061
+    }
+  },
+  "selftest_pass": false,
+  "distances_from_orig": {
+    "A:厂": {
+      "spec": 1.037,
+      "f0": 0.035,
+      "vmis": 0.188,
+      "frames": 32,
+      "comb": 0.554
+    },
+    "A:昶": {
+      "spec": 1.147,
+      "f0": 0.025,
+      "vmis": 0.125,
+      "frames": 32,
+      "comb": 0.599
+    },
+    "B:尝": {
+      "spec": 2.93,
+      "f0": 0.484,
+      "vmis": 0.389,
+      "frames": 36,
+      "comb": 1.949
+    },
+    "B:偿": {
+      "spec": 3.318,
+      "f0": 1.357,
+      "vmis": 0.243,
+      "frames": 37,
+      "comb": 3.015
+    }
+  },
+  "window_s": [
+    5.538,
+    5.842
+  ],
+  "boundary_token": "场",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "生日",
+      "礼物",
+      "提前",
+      "到手",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "场",
+      "她",
+      "能",
+      "继续",
+      "进攻",
+      "继续",
+      "耐心",
+      "争",
+      "每",
+      "一",
+      "分",
+      "吗"
+    ],
+    "A:厂": [
+      "生日",
+      "礼物",
+      "提前",
+      "到手",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "厂",
+      "她",
+      "能",
+      "继续",
+      "进攻",
+      "继续",
+      "耐心",
+      "争",
+      "每",
+      "一",
+      "分",
+      "吗"
+    ],
+    "A:昶": [
+      "生日",
+      "礼物",
+      "提前",
+      "到手",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "昶",
+      "她",
+      "能",
+      "继续",
+      "进攻",
+      "继续",
+      "耐心",
+      "争",
+      "每",
+      "一",
+      "分",
+      "吗"
+    ],
+    "B:尝": [
+      "生日",
+      "礼物",
+      "提前",
+      "到手",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下",
+      "一尝",
+      "她",
+      "能",
+      "继续",
+      "进攻",
+      "继续",
+      "耐心",
+      "争",
+      "每",
+      "一",
+      "分",
+      "吗"
+    ],
+    "B:偿": [
+      "生日",
+      "礼物",
+      "提前",
+      "到手",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下一偿",
+      "她",
+      "能",
+      "继续",
+      "进攻",
+      "继续",
+      "耐心",
+      "争",
+      "每",
+      "一",
+      "分",
+      "吗"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      -7.3,
+      -8.2,
+      -8.4,
+      -8.3,
+      -5.5,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -6.7,
+      -11.9,
+      null,
+      null,
+      null,
+      null
+    ],
+    "A:厂": [
+      -7.4,
+      -8.2,
+      -8.4,
+      -8.3,
+      -5.6,
+      null,
+      null,
+      null,
+      16.9,
+      18.1,
+      null,
+      -12.0,
+      -12.9,
+      null,
+      null,
+      null
+    ],
+    "A:昶": [
+      -7.3,
+      -8.2,
+      -8.3,
+      -8.3,
+      -5.4,
+      null,
+      null,
+      null,
+      null,
+      3.2,
+      null,
+      -11.9,
+      -12.8,
+      null,
+      null,
+      null
+    ],
+    "B:尝": [
+      -7.6,
+      -8.4,
+      -9.0,
+      -9.3,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -6.2,
+      -6.5,
+      null,
+      -13.0,
+      -12.8,
+      -10.1,
+      -9.5,
+      null,
+      null
+    ],
+    "B:偿": [
+      -7.0,
+      -7.5,
+      -8.2,
+      -8.3,
+      -2.8,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -9.2,
+      -9.3,
+      -10.1,
+      -8.0,
+      -6.4,
+      -5.9,
+      null
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/outlook-dce91d5c813f-458ef27bb19d.mp3",
+    "A:厂": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/c8a25fce3ecc0be2e3b3f212.mp3",
+    "A:昶": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/dffd2891ba8e10b57e04c4d5.mp3",
+    "B:尝": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/897b483c2f74aeb3f5485e0f.mp3",
+    "B:偿": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/87ce510150aa2a90a06cdaf8.mp3"
+  },
+  "text_sha256": "dce91d5c813f8254c5958264d940d9d1d87229f2447432a51c3533189fab9f72",
+  "index": 24,
+  "intended": "chang3",
+  "tag": "chang3-chang2",
+  "actual_audio_source": "native_final_audio",
+  "method": "independent ordinary reliable ref pair after default LOO failure; native actual MP3 is ORIG; 少refs嫂/扫 share ao3 rhyme with different initial, this full-window result is diagnostic only until nucleus-only comparison"
+}

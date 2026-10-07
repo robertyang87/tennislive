@@ -1,0 +1,283 @@
+{
+  "word": "发",
+  "char": "发",
+  "sentence": "郑钦文用正手压向边线。首盘二比一，她又救下三个破发点。连同这一局，首盘最后四局，全归她。",
+  "tts_text": "郑钦文用正手压向边线。首盘二比一，她又救下三个破发点。连同这一局，首盘最后四局，全归她。",
+  "intended_refs": [
+    "發"
+  ],
+  "wrong_refs": [
+    "髮",
+    "珐"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "low",
+  "verdict_raw": "correct",
+  "score": 1.0,
+  "margin": 0.2,
+  "near_identical_to": "intended",
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 0.0,
+      "d_wrong": 2.477,
+      "score": 1.0
+    },
+    "f0": {
+      "d_intended": 0.0,
+      "d_wrong": 3.129,
+      "score": 1.0
+    },
+    "comb": {
+      "d_intended": 0.0,
+      "d_wrong": 4.367,
+      "score": 1.0
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.0,
+    "wrong": 10.783
+  },
+  "separation": {
+    "spec": {
+      "within": 0.0,
+      "between": 2.498,
+      "separation": null
+    },
+    "f0": {
+      "within": 0.014,
+      "between": 3.145,
+      "separation": 217.293
+    },
+    "comb": {
+      "within": 0.014,
+      "between": 4.394,
+      "separation": 303.585
+    }
+  },
+  "selftest_loo": {
+    "髮": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.993
+    },
+    "珐": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.993
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:發": {
+      "spec": 0.0,
+      "f0": 0.0,
+      "vmis": 0.0,
+      "frames": 27,
+      "comb": 0.0
+    },
+    "B:髮": {
+      "spec": 2.477,
+      "f0": 3.134,
+      "vmis": 0.37,
+      "frames": 27,
+      "comb": 4.373
+    },
+    "B:珐": {
+      "spec": 2.477,
+      "f0": 3.129,
+      "vmis": 0.37,
+      "frames": 27,
+      "comb": 4.367
+    }
+  },
+  "window_s": [
+    4.929,
+    5.189
+  ],
+  "boundary_token": "破发点",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "郑钦文",
+      "用",
+      "正",
+      "手压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:發": [
+      "郑钦文",
+      "用",
+      "正",
+      "手压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破發点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:髮": [
+      "郑钦文",
+      "用",
+      "正",
+      "手压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破髮点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:珐": [
+      "郑钦文",
+      "用",
+      "正",
+      "手压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破珐点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      3.9,
+      11.6,
+      12.1,
+      12.7,
+      null,
+      null,
+      null,
+      null,
+      -3.2,
+      -4.4,
+      -4.5,
+      -4.7,
+      -4.8
+    ],
+    "A:發": [
+      null,
+      3.9,
+      11.6,
+      12.1,
+      12.7,
+      null,
+      null,
+      null,
+      null,
+      -3.2,
+      -4.4,
+      -4.5,
+      -4.7,
+      -4.8
+    ],
+    "B:髮": [
+      null,
+      null,
+      12.2,
+      null,
+      -7.0,
+      -7.6,
+      -8.6,
+      null,
+      -2.8,
+      -4.5,
+      -5.5,
+      -7.8,
+      -8.7
+    ],
+    "B:珐": [
+      null,
+      null,
+      12.2,
+      null,
+      -7.0,
+      -7.6,
+      -8.6,
+      null,
+      -2.8,
+      -4.5,
+      -5.5,
+      -7.7,
+      -8.7
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/voice_02.mp3",
+    "A:發": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/1c5402c202d0e52299fc6c83.mp3",
+    "B:髮": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/28e9b255b7dbf888a8dbc2b0.mp3",
+    "B:珐": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/2b1dc29e937c60e5795e20c1.mp3"
+  },
+  "text_sha256": "9b73aabfd6854f7f035f48e9aed480664710d042c944346854490bd7dacc0534",
+  "utterance": 1,
+  "index": 24,
+  "method": "orthographic traditional 發 dominantfa1 vs 髮 dominantfa4 and 珐singlefa4; intended reference one sided so capped evidence; no identical original-char reference"
+}

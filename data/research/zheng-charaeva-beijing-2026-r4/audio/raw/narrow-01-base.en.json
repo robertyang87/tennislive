@@ -1,0 +1,132 @@
+{
+  "model": "base.en",
+  "source_from": 278.5,
+  "source_to": 284,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.0,
+      "end": 3.8,
+      "text": " The tussle is over and what a tussle it ended up being.",
+      "tokens": [
+        50363,
+        383,
+        256,
+        1046,
+        293,
+        318,
+        625,
+        290,
+        644,
+        257,
+        256,
+        1046,
+        293,
+        340,
+        4444,
+        510,
+        852,
+        13,
+        50563
+      ],
+      "avg_logprob": -0.30216046422719955,
+      "compression_ratio": 0.9821428571428571,
+      "no_speech_prob": 0.03909962251782417,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.88,
+          "word": " The",
+          "probability": 0.5520575642585754
+        },
+        {
+          "start": 0.88,
+          "end": 1.24,
+          "word": " tussle",
+          "probability": 0.9007835388183594
+        },
+        {
+          "start": 1.24,
+          "end": 1.4,
+          "word": " is",
+          "probability": 0.9829999208450317
+        },
+        {
+          "start": 1.4,
+          "end": 1.68,
+          "word": " over",
+          "probability": 0.9984588623046875
+        },
+        {
+          "start": 1.68,
+          "end": 2.34,
+          "word": " and",
+          "probability": 0.5125876069068909
+        },
+        {
+          "start": 2.34,
+          "end": 2.54,
+          "word": " what",
+          "probability": 0.980169951915741
+        },
+        {
+          "start": 2.54,
+          "end": 2.66,
+          "word": " a",
+          "probability": 0.9914798736572266
+        },
+        {
+          "start": 2.66,
+          "end": 3.04,
+          "word": " tussle",
+          "probability": 0.9932264884312948
+        },
+        {
+          "start": 3.04,
+          "end": 3.16,
+          "word": " it",
+          "probability": 0.7310479283332825
+        },
+        {
+          "start": 3.16,
+          "end": 3.32,
+          "word": " ended",
+          "probability": 0.9937716126441956
+        },
+        {
+          "start": 3.32,
+          "end": 3.52,
+          "word": " up",
+          "probability": 0.9992269277572632
+        },
+        {
+          "start": 3.52,
+          "end": 3.8,
+          "word": " being.",
+          "probability": 0.9965205192565918
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}
