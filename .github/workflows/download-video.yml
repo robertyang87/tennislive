@@ -1,181 +1,92 @@
 name: download-video
-run-name: "download-video · ${{ inputs.url }}"
-
-# 把单条公开 YouTube 视频下载到 runner，再作为 GitHub Release
-# 附件持久保存。不把大视频提交进 git 历史。
+run-name: "Upload verified Zheng Beijing master and review copy"
 on:
   workflow_dispatch:
     inputs:
       url:
-        description: "YouTube 视频链接（请确保你有权下载和存档）"
+        description: "Temporary HTTPS file page for verified full movie"
         required: true
         type: string
-
+      review_url:
+        description: "Temporary HTTPS file page for verified review copy"
+        required: true
+        type: string
 permissions:
   contents: write
-
 concurrency:
-  group: download-video-${{ inputs.url }}
+  group: deliver-zheng-charaeva-beijing-2026-r4
   cancel-in-progress: false
-
 jobs:
-  archive:
+  upload:
+    if: github.ref == 'refs/heads/delivery/zheng-charaeva-beijing-20261007'
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 15
     env:
-      VIDEO_URL: ${{ inputs.url }}
       GH_TOKEN: ${{ github.token }}
-      # 下载和 Release 显式绑定仓库；仅检出共享依赖安装脚本。
       GH_REPO: ${{ github.repository }}
+      MOVIE_PAGE: ${{ inputs.url }}
+      REVIEW_PAGE: ${{ inputs.review_url }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: tools/ci_apt_install.sh
-          sparse-checkout-cone-mode: false
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
-      - name: 安装 YouTube 下载器
-        run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
-
-      - name: 恢复音视频工具 apt 缓存
-        id: apt_cache
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            ~/.cache/apt-archives
-            ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-download-video-v1-${{ github.run_id }}
-          restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-download-video-v1-
-      - name: 安装音视频合并工具
-        timeout-minutes: 15
+      - name: Download exact verified bytes and upload only to existing draft
+        shell: bash
         run: |
-          source tools/ci_apt_install.sh
-          ensure_ffmpeg
-      - name: 回写实际下载的 apt 缓存
-        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            ~/.cache/apt-archives
-            ~/.cache/apt-lists
-          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
-
-      # YouTube 对机房 IP 经常要求 PO token。provider 起不来时不在
-      # 这里伪造一个根因，让 yt-dlp 在下一步输出真实诊断。
-      - name: 启动 PO token provider
-        continue-on-error: true
-        run: |
-          docker run --name bgutil-pot -d -p 4416:4416 \
-            brainicism/bgutil-ytdlp-pot-provider
-          for attempt in $(seq 1 25); do
-            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
-              echo "PO token provider 已就绪"
-              exit 0
-            fi
-            sleep 2
-          done
-          echo "::warning::PO token provider 50 秒内未就绪，继续尝试 cookies/client 通道"
-          docker logs bgutil-pot 2>&1 | tail -20 || true
-
-      - name: 写入 YouTube cookies（如已配置）
-        id: cookies
-        env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
-        run: |
-          if [ -n "$YT_COOKIES_TXT" ]; then
-            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
-            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
-          else
-            echo "::notice::未配置 YT_COOKIES_TXT，仅使用 PO token/client 通道"
-          fi
-
-      - name: 解析并下载原片
-        id: video
-        env:
-          YT_COOKIES: ${{ steps.cookies.outputs.path }}
-        run: |
-          set -euo pipefail
-          ARGS=(--js-runtimes node)
-          if [ -n "$YT_COOKIES" ]; then
-            ARGS+=(--cookies "$YT_COOKIES")
-          fi
-
-          VIDEO_ID=$(yt-dlp "${ARGS[@]}" --skip-download --print id "$VIDEO_URL" | tail -1)
-          TITLE=$(yt-dlp "${ARGS[@]}" --skip-download --print title "$VIDEO_URL" | tail -1)
-          test -n "$VIDEO_ID" || { echo "::error::无法解析 YouTube 视频 ID"; exit 1; }
-
-          mkdir -p "$RUNNER_TEMP/download"
-          yt-dlp "${ARGS[@]}" \
-            -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b" \
-            --merge-output-format mp4 --remux-video mp4 \
-            -o "$RUNNER_TEMP/download/$VIDEO_ID.%(ext)s" \
-            "$VIDEO_URL"
-
-          FILE="$RUNNER_TEMP/download/$VIDEO_ID.mp4"
-          test -s "$FILE" || { echo "::error::下载结束但没有生成 MP4"; exit 1; }
-          SIZE=$(stat -c%s "$FILE")
-          test "$SIZE" -gt 51200 || { echo "::error::文件只有 $SIZE 字节，不是有效视频"; exit 1; }
-
-          echo "id=$VIDEO_ID" >> "$GITHUB_OUTPUT"
-          echo "title<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$TITLE" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
-          echo "file=$FILE" >> "$GITHUB_OUTPUT"
-          echo "size=$SIZE" >> "$GITHUB_OUTPUT"
-
-      - name: 上传到 GitHub Release
-        env:
-          VIDEO_ID: ${{ steps.video.outputs.id }}
-          VIDEO_TITLE: ${{ steps.video.outputs.title }}
-          VIDEO_FILE: ${{ steps.video.outputs.file }}
-          VIDEO_SIZE: ${{ steps.video.outputs.size }}
-        run: |
-          set -euo pipefail
-          TAG="source-$VIDEO_ID"
-          ASSET="$VIDEO_ID.mp4"
-          cp "$VIDEO_FILE" "$RUNNER_TEMP/$ASSET"
-
-          gh release view "$TAG" >/dev/null 2>&1 || \
-            gh release create "$TAG" --title "$VIDEO_TITLE" \
-              --notes "由 download-video GitHub Action 保存的源视频。来源：$VIDEO_URL"
-
-          UPLOADED=0
-          for attempt in 1 2 3 4; do
-            if gh release upload "$TAG" "$RUNNER_TEMP/$ASSET" --clobber; then
-              UPLOADED=1
-              break
-            fi
-            sleep $((attempt * attempt * 5))
-          done
-          test "$UPLOADED" = 1 || { echo "::error::Release 附件连续 4 次上传失败"; exit 1; }
-
-          URL="https://github.com/${{ github.repository }}/releases/download/$TAG/$ASSET"
-          CODE=000
-          for attempt in 1 2 3 4 5 6 7 8; do
-            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
-            if [ "$CODE" = 200 ] || [ "$CODE" = 206 ]; then
-              break
-            fi
-            sleep 5
-          done
-          if [ "$CODE" != 200 ] && [ "$CODE" != 206 ]; then
-            echo "::error::Release 已上传，但直链探活返回 HTTP $CODE"
-            exit 1
-          fi
-
-          {
-            echo "## 视频已保存"
-            echo
-            echo "- 标题：$VIDEO_TITLE"
-            echo "- 大小：$VIDEO_SIZE 字节"
-            echo "- [直接下载]($URL)"
-            echo "- [Release 页](https://github.com/${{ github.repository }}/releases/tag/$TAG)"
-          } >> "$GITHUB_STEP_SUMMARY"
-          echo "download_url=$URL"
+          python3 - <<'PY'
+          import concurrent.futures, hashlib, html, json, os, re, subprocess
+          import urllib.parse, urllib.request
+          from pathlib import Path
+          repo='robertyang87/tennislive'; release_id=405992221
+          tag='reel-zheng-charaeva-beijing-2026-r4'
+          assert os.environ['GH_REPO']==repo
+          def api(endpoint):
+              return json.loads(subprocess.check_output(['gh','api',endpoint],text=True))
+          release=api(f'repos/{repo}/releases/{release_id}')
+          assert release['draft'] and release['tag_name']==tag, 'Expected exact existing draft'
+          entries=[
+              ('MOVIE_PAGE','zheng-charaeva-beijing-2026-r4.mp4',100843815,'1c7bfad0e69f83321ba77a3099bd9bfd32695657acd4634f9117068c2b6c8def'),
+              ('REVIEW_PAGE','zheng-charaeva-beijing-2026-r4-review.mp4',25970089,'1954458371f36e41ce124628595a44ff825da7ebd8b4db636b7336aad13b4b53')]
+          def prepare(entry):
+              variable,name,size,expected=entry
+              page=os.environ[variable]
+              parsed=urllib.parse.urlparse(page)
+              assert parsed.scheme=='https' and parsed.hostname=='tmpfiles.org' and '/dl/' not in parsed.path
+              with urllib.request.urlopen(page,timeout=60) as response:
+                  markup=response.read(100000).decode('utf-8')
+              found=re.search(r'class="download"\s+href="([^"]+)"',markup)
+              assert found, 'Download link missing; refuse HTML as movie'
+              download=html.unescape(found.group(1)); parsed=urllib.parse.urlparse(download)
+              assert parsed.scheme=='https' and parsed.hostname=='tmpfiles.org' and parsed.path.startswith('/dl/')
+              path=Path(os.environ['RUNNER_TEMP'])/name
+              digest=hashlib.sha256(); count=0
+              with urllib.request.urlopen(download,timeout=120) as response, path.open('wb') as output:
+                  assert response.headers.get_content_type() in ('video/mp4','application/octet-stream'), 'Unexpected file type'
+                  while True:
+                      block=response.read(1048576)
+                      if not block: break
+                      count+=len(block); assert count<=size, 'Unexpected extra bytes'
+                      digest.update(block); output.write(block)
+              assert count==size and digest.hexdigest()==expected, 'Movie identity differs'
+              print('Verified',name,count,expected,flush=True)
+              return entry,path
+          with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+              prepared=list(pool.map(prepare,entries))
+          def upload(item):
+              entry,path=item; _,name,size,expected=entry
+              existing=next((a for a in release['assets'] if a['name']==name),None)
+              if existing:
+                  assert existing['size']==size and existing.get('digest')=='sha256:'+expected, 'Existing asset differs; refuse overwrite'
+              else:
+                  subprocess.run(['gh','release','upload',tag,str(path),'--repo',repo],check=True)
+              return name,size,expected
+          with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+              uploaded=list(pool.map(upload,prepared))
+          release=api(f'repos/{repo}/releases/{release_id}')
+          assert release['draft'], 'Draft must remain unpublished'
+          proof=[]
+          for name,size,expected in uploaded:
+              asset=next(a for a in release['assets'] if a['name']==name)
+              assert asset['size']==size and asset.get('digest')=='sha256:'+expected, 'Remote asset identity differs'
+              proof.append({k:asset[k] for k in ('id','name','size','digest','browser_download_url')})
+          print(json.dumps({'release_id':release_id,'draft':True,'assets':proof},ensure_ascii=False,indent=2))
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as summary:
+              summary.write('Exact full movie and review copy uploaded to existing draft. No WeChat send, no merge, no Release publish.\n\n```json\n'+json.dumps(proof,indent=2)+'\n```\n')
+          PY
