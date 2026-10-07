@@ -1,5 +1,5 @@
 {
-  "status": "review_version",
+  "status": "review_version_wechat_accepted",
   "film_sha256": "4f32db30d1e6896ac33e18d300e3289bccb022eda5f59e365f8b9137346b861f",
   "duration_seconds": 306.8,
   "canvas": [
@@ -12,12 +12,21 @@
   "targeted_tests": "100 passed",
   "whole_suite": "SIGKILL at58%, failures seen but not classified; no blanket pass",
   "voice_review": "pending; uncertain/unreliable/skipped are not pass",
-  "published_to_wechat": false,
+  "published_to_wechat": true,
   "artifact_storage": {
     "workspace": "/workspace/exports/瓦舍罗_上海夺冠与这一年_蓝色背景审阅版.mp4",
     "github_release_upload": "verified: native Actions upload and independent complete GET; 56,213,759 bytes; full SHA256 agrees; temporary transfer workflow removed after completion",
     "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-vacherot-shanghai-one-year/vacherot-shanghai-one-year.mp4"
   },
   "delivery_authorization": "User explicitly instructed: 推送微信才算完成啊. Send existing blue review master to the account owner; retain pending acoustic state honestly.",
-  "ci": "previous head: 5826 passed,4 temporary-uploader configuration failures; transient uploader removed; current CI pending"
+  "ci": "5830 passed,205 skipped,80 warnings; current-head full CI37694168013 succeeded before merge",
+  "wechat_delivery": {
+    "status": "platform_accepted",
+    "receipt": "4e79760197e0462eaf5842d870295fb6",
+    "message_url": "https://www.pushplus.plus/shortMessage/4e79760197e0462eaf5842d870295fb6",
+    "at": "2026-10-07T22:19:59Z",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/37695373847",
+    "message_page": "HTTP200; expected title and actual video link verified",
+    "phone_delivery": "unverified"
+  }
 }
