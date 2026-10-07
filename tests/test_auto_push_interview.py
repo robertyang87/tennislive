@@ -518,7 +518,8 @@ def test_QC必须逐cue证明冷开场解说双语完整(repo: Path, capsys):
     assert "获胜画面原解说" in capsys.readouterr().out
 
 
-def _native_opening(repo: Path, *, missing_style: str = "") -> Path:
+def _native_opening(repo: Path, *, missing_style: str = "",
+                    independent_lead: dict | None = None) -> Path:
     """Model an independently attested film with its opening in body ASS."""
     from interview_source_gate import finalize_source_contract
 
@@ -526,6 +527,8 @@ def _native_opening(repo: Path, *, missing_style: str = "") -> Path:
     spec_path = repo / "specs/interviews/demo.json"
     spec = json.loads(spec_path.read_text())
     spec.pop("lead_in")
+    if independent_lead is not None:
+        spec["lead_in"] = independent_lead
     spec.update(start=10.0, end=30.0,
                 opening={"kind": "match_end", "lead_in": 5.0,
                          "why": "本场最后完整一分与庆祝"})
@@ -576,6 +579,13 @@ def test_发布拒绝质检后替换原生开场字幕(repo: Path):
     ass.write_text(ass.read_text().replace("赛点", "替换的字幕"))
     _commit_all(repo)
     with pytest.raises(gate.Skip, match="原生冷开场正文字幕与 QC 字节不一致"):
+        gate.validate_qc(repo, "demo", outdir)
+
+
+@pytest.mark.parametrize("independent_lead", [{}, {"subs": []}])
+def test_发布拒绝独立片头冒充原生开场(repo: Path, independent_lead):
+    outdir = _native_opening(repo, independent_lead=independent_lead)
+    with pytest.raises(gate.Skip, match="缺冷开场双语字幕"):
         gate.validate_qc(repo, "demo", outdir)
 
 

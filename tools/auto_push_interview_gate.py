@@ -243,7 +243,8 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
         raise Skip(f"{slug}：QC 没有逐 cue 证明采访正文中英字幕完整")
     official_no_lead = verified_no_lead_exception(spec)
     native_lead = False
-    if not expected_lead and (spec.get("opening") or {}).get("kind") == "match_end":
+    if (not expected_lead and spec.get("lead_in") is None
+            and (spec.get("opening") or {}).get("kind") == "match_end"):
         from check_interview_landed import native_bilingual_lead_ok
         ass_path = outdir / f"{slug}.ass"
         if (not tracked(repo, ass_path)
