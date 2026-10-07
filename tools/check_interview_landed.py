@@ -28,6 +28,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import re
 import subprocess
@@ -153,10 +154,75 @@ def bilingual_body_ok(ass: Path, spec: dict) -> tuple[bool, str]:
                 f"逐 cue 时间 {'一致' if en_times == zh_times else '不一致'}")
 
 
+def native_bilingual_lead_ok(directory: Path, spec: dict) -> tuple[bool, str]:
+    """Verify a match-end opening embedded in the native source's body ASS.
+
+    A declared opening is not evidence of subtitles. Validate the source
+    contract and then inspect every actual EN/ZH cue intersecting that opening.
+    Independent lead-in subtitles never use this path.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from interview_source_gate import validate_source_contract  # noqa: PLC0415
+    from build_interview_clip import _OPENING_LEAD_MAX, check_opening  # noqa: PLC0415
+
+    try:
+        validate_source_contract(spec)
+        check_opening(spec)
+        opening = spec.get("opening") or {}
+        seconds = opening.get("lead_in")
+        start, end = spec["start"], spec["end"]
+        if (opening.get("kind") != "match_end"
+                or not isinstance(opening.get("why"), str) or not opening["why"].strip()
+                or isinstance(seconds, bool) or not isinstance(seconds, (int, float))
+                or not math.isfinite(seconds) or not 0 < seconds <= _OPENING_LEAD_MAX
+                or isinstance(start, bool) or isinstance(end, bool)
+                or not math.isfinite(start) or not math.isfinite(end)
+                or start < 0 or not seconds < end - start):
+            return False, "原生冷开场 opening 或时间区间无效"
+    except (ValueError, SystemExit, TypeError, KeyError) as exc:
+        return False, f"原生冷开场来源/opening契约未核实：{exc}"
+    slug = spec.get("slug")
+    if not isinstance(slug, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", slug):
+        return False, "原生冷开场缺合法正文字幕文件名"
+    body_ass = directory / f"{slug}.ass"
+    events = _ass_body_events(body_ass)
+
+    def cues(style):
+        selected = []
+        for a, b, text in events[style]:
+            if not text:
+                continue
+            times = []
+            for raw in (a, b):
+                if not re.fullmatch(r"\d+:[0-5]\d:[0-5]\d\.\d{2}", raw):
+                    raise ValueError("字幕时间码无效")
+                h, m, s = raw.split(":")
+                times.append(int(h) * 3600 + int(m) * 60 + float(s))
+            first, last = times
+            if last <= first:
+                raise ValueError("字幕区间无效")
+            if first < seconds and last > 0:
+                # A sentence may cross the interview cut. Require the actual
+                # complete cue to be paired, including its post-cut hold.
+                selected.append((a, b))
+        return selected
+
+    try:
+        en, zh = cues("EN"), cues("ZH")
+    except ValueError as exc:
+        return False, f"原生冷开场字幕无效：{exc}"
+    ok = bool(en) and en == zh
+    return ok, (f"原生前 {seconds:g}s，正文 EN {len(en)} / ZH {len(zh)}，"
+                f"逐 cue 时间 {'一致' if en == zh else '不一致'}")
+
+
 def bilingual_lead_ok(ass: Path, spec: dict) -> tuple[bool, str]:
     """冷开场的原解说也必须逐 cue 中英成对，不能只验采访正文。"""
     expected = len(((spec.get("lead_in") or {}).get("subs") or []))
     if expected == 0:
+        if (spec.get("lead_in") is None
+                and (spec.get("opening") or {}).get("kind") == "match_end"):
+            return native_bilingual_lead_ok(ass.parent, spec)
         from interview_source_gate import validate_source_contract, verified_no_lead_exception  # noqa: PLC0415
         # The native source/opening contract permits a verified trophy speech
         # to start with the ceremony itself. Do not invent a match-end lead-in.
