@@ -242,6 +242,16 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
     if not expected_body or checks.get("bilingual_body_cues") != expected_body:
         raise Skip(f"{slug}：QC 没有逐 cue 证明采访正文中英字幕完整")
     official_no_lead = verified_no_lead_exception(spec)
+    native_lead = False
+    if not expected_lead and (spec.get("opening") or {}).get("kind") == "match_end":
+        from check_interview_landed import native_bilingual_lead_ok
+        ass_path = outdir / f"{slug}.ass"
+        if (not tracked(repo, ass_path)
+                or qc.get("ass_sha256") != _sha256_bytes(_tracked_bytes(repo, ass_path))):
+            raise Skip(f"{slug}：原生冷开场正文字幕与 QC 字节不一致")
+        native_lead, detail = native_bilingual_lead_ok(outdir, spec)
+        if not native_lead:
+            raise Skip(f"{slug}：原生冷开场双语字幕验证失败（{detail}）")
     if not expected_lead and spec.get("requested_content_type") == "ceremony":
         from check_interview_landed import bilingual_lead_ok
         # Same verified trophy-speech opening contract as native L2.
@@ -250,10 +260,10 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
         if (checks.get("bilingual_lead_cues") != expected_lead
                 or not qc.get("lead_ass_sha256")):
             raise Skip(f"{slug}：QC 没有逐 cue 证明获胜画面原解说的中英字幕完整")
-    elif not official_no_lead:
+    elif not official_no_lead and not native_lead:
         raise Skip(f"{slug}：缺冷开场双语字幕，且不符合已核验告别/入选典礼例外")
     elif checks.get("bilingual_lead_cues") not in (None, 0) or qc.get("lead_ass_sha256"):
-        raise Skip(f"{slug}：无冷开场例外与 QC 冷开场证据互相矛盾")
+        raise Skip(f"{slug}：原生开场/无冷开场契约与 QC 独立冷开场证据互相矛盾")
 
     render = _tracked_json(repo, outdir / "render.json")
     if render.get("qc_attestation_sha256") != _sha256_bytes(qc_bytes):

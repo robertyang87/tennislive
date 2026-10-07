@@ -518,6 +518,67 @@ def test_QC必须逐cue证明冷开场解说双语完整(repo: Path, capsys):
     assert "获胜画面原解说" in capsys.readouterr().out
 
 
+def _native_opening(repo: Path, *, missing_style: str = "") -> Path:
+    """Model an independently attested film with its opening in body ASS."""
+    from interview_source_gate import finalize_source_contract
+
+    outdir = repo / "output/interviews/demo"
+    spec_path = repo / "specs/interviews/demo.json"
+    spec = json.loads(spec_path.read_text())
+    spec.pop("lead_in")
+    spec.update(start=10.0, end=30.0,
+                opening={"kind": "match_end", "lead_in": 5.0,
+                         "why": "本场最后完整一分与庆祝"})
+    finalize_source_contract(spec)
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False))
+    spec_sha = hashlib.sha256(spec_path.read_bytes()).hexdigest()
+    ass = outdir / "demo.ass"
+    ass.write_text("[Events]\n" + "\n".join(
+        f"Dialogue: 0,0:00:00.00,0:00:02.00,{style},,0,0,0,,{text}"
+        for style, text in (("EN", "Match point"), ("ZH", "赛点"))
+        if style != missing_style) + "\n")
+    cover_path = outdir / "cover_visual_attestation.json"
+    cover = json.loads(cover_path.read_text())
+    cover["spec_sha256"] = spec_sha
+    cover_path.write_text(json.dumps(cover))
+    qc_path = outdir / "qc_attestation.json"
+    qc = json.loads(qc_path.read_text())
+    qc.update(spec_sha256=spec_sha,
+              source_attestation_sha256=spec["source_verification"]["attestation_sha256"],
+              cover_visual_attestation_sha256=hashlib.sha256(cover_path.read_bytes()).hexdigest(),
+              ass_sha256=hashlib.sha256(ass.read_bytes()).hexdigest())
+    qc.pop("lead_ass_sha256")
+    qc["checks"]["bilingual_lead_cues"] = 0
+    qc_path.write_text(json.dumps(qc))
+    render_path = outdir / "render.json"
+    render = json.loads(render_path.read_text())
+    render["qc_attestation_sha256"] = hashlib.sha256(qc_path.read_bytes()).hexdigest()
+    render_path.write_text(json.dumps(render))
+    _commit_all(repo)
+    return outdir
+
+
+def test_发布接受已绑定QC的原生双语开场(repo: Path):
+    outdir = _native_opening(repo)
+    assert gate.validate_qc(repo, "demo", outdir)
+
+
+@pytest.mark.parametrize("missing_style", ["EN", "ZH"])
+def test_发布拒绝原生开场缺少一种语言(repo: Path, missing_style):
+    outdir = _native_opening(repo, missing_style=missing_style)
+    with pytest.raises(gate.Skip, match="原生冷开场双语字幕验证失败"):
+        gate.validate_qc(repo, "demo", outdir)
+
+
+def test_发布拒绝质检后替换原生开场字幕(repo: Path):
+    outdir = _native_opening(repo)
+    ass = outdir / "demo.ass"
+    ass.write_text(ass.read_text().replace("赛点", "替换的字幕"))
+    _commit_all(repo)
+    with pytest.raises(gate.Skip, match="原生冷开场正文字幕与 QC 字节不一致"):
+        gate.validate_qc(repo, "demo", outdir)
+
+
 def test_稀疏检出下海报也要认得出(repo: Path):
     """**这道闸最容易写错的地方，而写错的后果比漏发大得多。**
 
