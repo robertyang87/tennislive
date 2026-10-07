@@ -49,7 +49,7 @@ jobs:
               page=os.environ[variable]
               parsed=urllib.parse.urlparse(page)
               assert parsed.scheme=='https' and parsed.hostname=='tmpfiles.org' and '/dl/' not in parsed.path
-              with urllib.request.urlopen(page,timeout=60) as response:
+              with urllib.request.urlopen(urllib.request.Request(page,headers={'User-Agent':'tennislive/1.0 (+https://github.com/robertyang87/tennislive)'}),timeout=60) as response:
                   markup=response.read(100000).decode('utf-8')
               found=re.search(r'class="download"\s+href="([^"]+)"',markup)
               assert found, 'Download link missing; refuse HTML as movie'
@@ -57,7 +57,7 @@ jobs:
               assert parsed.scheme=='https' and parsed.hostname=='tmpfiles.org' and parsed.path.startswith('/dl/')
               path=Path(os.environ['RUNNER_TEMP'])/name
               digest=hashlib.sha256(); count=0
-              with urllib.request.urlopen(download,timeout=120) as response, path.open('wb') as output:
+              with urllib.request.urlopen(urllib.request.Request(download,headers={'User-Agent':'tennislive/1.0 (+https://github.com/robertyang87/tennislive)'}),timeout=120) as response, path.open('wb') as output:
                   assert response.headers.get_content_type() in ('video/mp4','application/octet-stream'), 'Unexpected file type'
                   while True:
                       block=response.read(1048576)
