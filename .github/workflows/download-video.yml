@@ -42,8 +42,8 @@ jobs:
           release=api(f'repos/{repo}/releases/{release_id}')
           assert release['draft'] and release['tag_name']==tag, 'Expected exact existing draft'
           entries=[
-              ('MOVIE_PAGE','zheng-charaeva-beijing-2026-r4.mp4',100843815,'1c7bfad0e69f83321ba77a3099bd9bfd32695657acd4634f9117068c2b6c8def'),
-              ('REVIEW_PAGE','zheng-charaeva-beijing-2026-r4-review.mp4',25970089,'1954458371f36e41ce124628595a44ff825da7ebd8b4db636b7336aad13b4b53')]
+              ('MOVIE_PAGE','zheng-charaeva-beijing-2026-r4.mp4',100594865,'107cfcaa1a1985ce0873d291b6e79ead1d0f61f3f5ae97e4ea0f22585ac2721a'),
+              ('REVIEW_PAGE','zheng-charaeva-beijing-2026-r4-review.mp4',25938584,'e16344281701406b3281b1c90b6d95caab60928219a5ffbe21ab6439189e6791')]
           def prepare(entry):
               variable,name,size,expected=entry
               page=os.environ[variable]
@@ -72,10 +72,12 @@ jobs:
           def upload(item):
               entry,path=item; _,name,size,expected=entry
               existing=next((a for a in release['assets'] if a['name']==name),None)
+              if existing and existing['size']==size and existing.get('digest')=='sha256:'+expected:
+                  return name,size,expected
               if existing:
-                  assert existing['size']==size and existing.get('digest')=='sha256:'+expected, 'Existing asset differs; refuse overwrite'
-              else:
-                  subprocess.run(['gh','release','upload',tag,str(path),'--repo',repo],check=True)
+                  allowed_old={'zheng-charaeva-beijing-2026-r4.mp4':('sha256:1c7bfad0e69f83321ba77a3099bd9bfd32695657acd4634f9117068c2b6c8def',100843815),'zheng-charaeva-beijing-2026-r4-review.mp4':('sha256:1954458371f36e41ce124628595a44ff825da7ebd8b4db636b7336aad13b4b53',25970089)}
+                  assert (existing.get('digest'),existing['size'])==allowed_old[name], 'Unrecognized old asset; refuse overwrite'
+              subprocess.run(['gh','release','upload',tag,str(path),'--repo',repo,'--clobber'],check=True)
               return name,size,expected
           with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
               uploaded=list(pool.map(upload,prepared))
