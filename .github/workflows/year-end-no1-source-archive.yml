@@ -1,0 +1,39 @@
+name: year-end-no1-source-archive
+
+# 「年终第一」那条网球有故事的官方源片存档：只派发 download-video.yml，
+# 每条 YouTube 官方视频落成一个 source-<id> Release 附件，供本地渲染取用。
+# 不提交、不渲染、不推送、不写任何发布记录；只在这条功能分支上触发。
+on:
+  push:
+    branches: [cursor/year-end-no1-story-51b3]
+    paths: [.github/workflows/year-end-no1-source-archive.yml]
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch download-video for each official source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          IDS="b40hO04eyLo Pc7pQQvkAzU zqTAG7tEC1k WfxpIK_TvEQ u8plp_Kb6Ss OYoIP6aY8VQ \
+            cuvaPZT2AIU 8gIon03nzI0 3RIyvqQ7LGg nxzZHc672-Y PzRIkN24io0 d3V-AjoOWjM \
+            lApSrH3tWCk 3QiSxHi-6DQ Dfb2wa5zOf8 2ZcqUh3c9Jw AMlwQXCRAnU bq-RqtFlIM4 \
+            HqvN6AX6zFU N7eqPGbIspU"
+          for id in $IDS; do
+            if gh release view "source-$id" >/dev/null 2>&1; then
+              echo "already archived: $id"
+              continue
+            fi
+            gh workflow run download-video.yml --ref cursor/year-end-no1-story-51b3 \
+              -f url="https://www.youtube.com/watch?v=$id"
+            echo "dispatched: $id"
+            sleep 2
+          done

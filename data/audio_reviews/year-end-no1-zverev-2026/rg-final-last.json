@@ -1,0 +1,18 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=WfxpIK_TvEQ",
+  "source_path": "/workspace/video-review/yen1/WfxpIK_TvEQ.mp4",
+  "source_sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 642.4,
+  "reviewed_to": 689.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [],
+  "no_foreground_english_reason": "罗兰·加洛斯官方集锦本段没有英文解说：冠军点回合与倒地庆祝只有现场声；约655–665秒是主裁法语宣布比分，base/small/medium三个模型只给出彼此不一致的碎片（base「It's going to be a double match」、small「3-0. Good job」、medium数字串「6-0 4-6 6-0」），无一致英文语句，判为非英文前景。"
+}

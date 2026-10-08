@@ -1,0 +1,28 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=OYoIP6aY8VQ",
+  "source_path": "/workspace/video-review/yen1/OYoIP6aY8VQ.mp4",
+  "source_sha256": "2c40ca7b8ff59da480df8f52139ce226813d64943b7264d003ac88e6092cb0ee",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 314.3,
+  "reviewed_to": 328.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 320.3,
+      "end": 327.6,
+      "en": "Jannik Sinner seals his spot in a first Monte Carlo final.",
+      "zh": "辛纳锁定首个蒙特卡洛决赛席位。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [
+    "320.3–327.6解说一句三模型一致（Sinner误听为Yannick）。",
+    "314.3–320.3为冠军点回合现场声：medium两次窗口分别给出「And he becomes...」(首词p=0.02)与「Thank you very much」(首词p=0.00)，small给出「Oh, my God」，互不一致且概率极低，判为回合中人群噪声幻听，非前景英文。",
+    "329.6下一句在段外。"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=nxzZHc672-Y",
+  "source_path": "/workspace/video-review/yen1/nxzZHc672-Y.mp4",
+  "source_sha256": "b84921902fc78a134e8940fef61835e0ce6d6814f17e482779629d03a1f5e56b",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 24.8,
+  "reviewed_to": 35.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [],
+  "no_foreground_english_reason": "Tennis TV合集康纳斯一章24.8–35.8为配乐、片头字卡与回放画面；small无输出，medium仅24.8–25.52「Thank you.」(no_speech 0.886)，base仅一个「.」(p=0.004)，三模型无一致英文语句，判为无前景英文；本段配中文旁白。"
+}

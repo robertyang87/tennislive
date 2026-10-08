@@ -1,0 +1,32 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=Pc7pQQvkAzU",
+  "source_path": "/workspace/video-review/yen1/Pc7pQQvkAzU.mp4",
+  "source_sha256": "e22de290b5138ba449be45c89a2d96508e523b67808bf4499c96181cd06b760b",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 146.3,
+  "reviewed_to": 160.95,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 146.5,
+      "end": 154.58,
+      "en": "I think God has seen how hard we worked, how much we suffered, how much pain we went through,",
+      "zh": "上天看见了我们的努力、煎熬和伤痛，"
+    },
+    {
+      "start": 154.58,
+      "end": 160.56,
+      "en": "and I think 2026 is the outcome of all the years that... that happened before, so...",
+      "zh": "2026年是此前所有岁月的结果。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [
+    "146.5–160.56两句；161.08下一句开口在段外，audio_tail补零。"
+  ]
+}

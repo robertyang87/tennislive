@@ -1,0 +1,24 @@
+{
+ "primary": "rg",
+ "mixed_fps": {
+  "news": "29.97fps，Tennis TV 坐姿采访，固定机位说话头，重采样到主源 50fps 几乎无感。",
+  "ao": "25fps，澳网官方集锦；本段是半决赛赛点与庆祝，重采样到 50fps 几乎无感。",
+  "mc": "25fps，ATP/Tennis TV 蒙特卡洛集锦；本段是半决赛冠军点与庆祝，重采样到 50fps 几乎无感。",
+  "wim": "25fps，温网官方集锦；本段是决赛冠军点与反应，重采样到 50fps 可接受。",
+  "uso": "59.94fps，美网官方；赛点后段落以庆祝和慢镜为主，重采样到 50fps 可接受。",
+  "speech": "59.94fps，颁奖台致辞固定机位说话头，重采样到 50fps 几乎无感。",
+  "bj": "仓库里同一条中网集锦的 probe.json 记成 25fps；本片这份源片 ffprobe 为 50/1，与主源一致。dry-run 按已有 probe 预演，实际渲染不重采样。",
+  "y1989": "29.97fps，1989年存档画面，重采样到 50fps 可接受。",
+  "nastase": "60fps，Tennis TV「Every ATP World No.1 Player!」合集只用开头纳斯塔塞9秒与康纳斯一章11秒（片头字卡与回放画面），重采样到 50fps 几乎无感。",
+  "djok23": "60fps，颁奖仪式采访说话头，重采样到 50fps 几乎无感。"
+ },
+ "_ttv_tail_why": "所有窗口逐帧检查：Tennis TV 来源（news、mc、nastase、sinner、murray、djok23）均取中段，不含片头片尾推广卡；原片角落小台标按3:4固定居中裁切自然退出视窗，不另加遮挡。",
+ "_inset_alignment_why": "沿用djokovic-china-open-unbeaten-34已定版式：全部信息条PNG由native render_story_info_band --align right输出，corner tr，pad 0.065；比分里赢下的盘按胜者视角上色。",
+ "_reference_film": "https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-24-titles-23-cities/medvedev-24-titles-23-cities.mp4",
+ "_reference_why": "沿用近期网球有故事剪辑片：完整冠军点／反应、右上首次信息条、原声与中文TTS分窗、跨章节加原生章节卡、native品牌与底部字幕。",
+ "_native_cards_why": "本周新闻（辛纳结束赛季、Race差距）、规则（52周、按轮次给分）与历史年份（1975–78／1982／1989、2000）是画面讲不清的事实，用短原生字卡；凡有官方画面的关键点一律用视频。卡长按本次Edge实际合成时长＋0.4秒。",
+ "_production_status": "review_render_unpublished_waiting_owner_approval",
+ "_claims": {
+  "零胜七负／0胜7负": "2026-10-08 用 ATP 官方战报逐场核实，交手总比分推算无遗漏。澳网半决赛负阿尔卡拉斯 6-4 7-6(5) 6-7(3) 6-7(4) 7-5 https://www.atptour.com/en/news/alcaraz-zverev-australian-open-2026-sf ；印第安维尔斯半决赛负辛纳 6-2 6-4 https://www.atptour.com/en/news/sinner-zverev-miami-2026-sf-preview ；迈阿密半决赛负辛纳 6-3 7-6(4) https://www.atptour.com/en/news/sinner-zverev-miami-2026-sf ；蒙特卡洛半决赛负辛纳 6-1 6-4 https://www.atptour.com/en/news/sinner-zverev-monte-carlo-2026-sf ；马德里决赛负辛纳 6-1 6-2 https://www.atptour.com/en/news/sinner-zverev-madrid-2026-final ；温网决赛负辛纳 6-7(7) 7-6(2) 6-3 6-4 https://www.atptour.com/en/news/sinner-zverev-wimbledon-2026-final-sunday ；北京1/4决赛负德约 4-6 6-4 6-4 https://www.atptour.com/en/news/zverev-djokovic-beijing-2026-sunday-qf 。对辛纳 2026 年正好 5 场，对德约北京为唯一一场，对阿尔卡拉斯澳网后 7-6。"
+ }
+}

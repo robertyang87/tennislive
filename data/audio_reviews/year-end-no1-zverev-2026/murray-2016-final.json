@@ -1,0 +1,58 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=Dfb2wa5zOf8",
+  "source_path": "/workspace/video-review/yen1/Dfb2wa5zOf8.mp4",
+  "source_sha256": "007d1655922fb545aa1c6eed2604157704ee3259bf7dca341111539c2bbcffd6",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 972.4,
+  "reviewed_to": 1012.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 978.7,
+      "end": 981.6,
+      "en": "Murray wins!",
+      "zh": "穆雷赢了！"
+    },
+    {
+      "start": 984.6,
+      "end": 987.9,
+      "en": "Murray wins it all!",
+      "zh": "穆雷包揽一切！"
+    },
+    {
+      "start": 987.95,
+      "end": 996.7,
+      "en": "He's champion of the Barclays ATP World Tour Finals,",
+      "zh": "他是ATP年终总决赛冠军，"
+    },
+    {
+      "start": 996.8,
+      "end": 1000.6,
+      "en": "and he's created history",
+      "zh": "他创造了历史，"
+    },
+    {
+      "start": 1000.9,
+      "end": 1005.9,
+      "en": "by becoming only the 17th player in the history of the game",
+      "zh": "成为史上第17位"
+    },
+    {
+      "start": 1006.0,
+      "end": 1012.3,
+      "en": "to be crowned year-end world No. 1.",
+      "zh": "加冕年终世界第一的球员。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [
+    "源换为Tennis TV 1080p50「The Match That Decided Year-End No. 1」(Dfb2wa5zOf8)。972.4–978.7为冠军点（Ad-40）回合，仅现场声。",
+    "978.76–981.56「Murray wins!」仅medium识别出，与随后984.6起三模型都有的「Murray wins」一致。984.6–987.9「Murray wins it all!」medium完整，small只给「Murray wins,」；987.95–996.7「He's champion of the Barclays ATP World Tour Finals」medium完整，small缺「he's champion」、作「of the Barclays ATP World Tour Finals」。",
+    "996.8–1012.3三模型一致（medium漏「player」、small与base都有，保留）；1018.0下一句在段尾1012.6之后。"
+  ]
+}

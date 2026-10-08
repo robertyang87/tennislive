@@ -1,0 +1,45 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=bq-RqtFlIM4",
+  "source_path": "/workspace/video-review/yen1/bq-RqtFlIM4.mp4",
+  "source_sha256": "c63fcce09d980977eee89871bf8a24d86e3fa34aaafb1856be6904eccf7ed67b",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 181.5,
+  "reviewed_to": 204.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 182.0,
+      "end": 191.7,
+      "en": "Well, it's obviously the crown of the season, you know, finishing the year as number one in the world.",
+      "zh": "以世界第一结束赛季，是一季的王冠。"
+    },
+    {
+      "start": 191.8,
+      "end": 193.5,
+      "en": "I think it's a dream of every tennis player.",
+      "zh": "这是每个网球运动员的梦想。"
+    },
+    {
+      "start": 194.4,
+      "end": 198.3,
+      "en": "It's one of the most difficult things to do in our sport.",
+      "zh": "也是这项运动里最难做到的事之一。"
+    },
+    {
+      "start": 198.7,
+      "end": 203.7,
+      "en": "Obviously, you know, winning Grand Slams and being number one in the world are probably the pinnacles of the sport.",
+      "zh": "大满贯和世界第一是运动巅峰。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [
+    "179.0–180.72采访者问句尾在段首181.5之前。",
+    "四句base/small一致（small误听“finishing the year is”）。204后下一句在段外。"
+  ]
+}
