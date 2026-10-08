@@ -1,0 +1,132 @@
+{
+  "_draft": true,
+  "slug": "assche-yunchaokete",
+  "_column": "reel",
+  "cover": {
+    "matchup": [
+      {
+        "name": "范阿舍",
+        "name_en": "luca van assche",
+        "country": "FRA",
+        "rank": 45
+      },
+      {
+        "name": "布云朝克特",
+        "name_en": "Bu Yunchaokete",
+        "country": "CHN",
+        "rank": 93
+      }
+    ]
+  },
+  "_production": {
+    "kind": "orchestrated_reel",
+    "received_at": "2026-10-08T14:42:31Z",
+    "event": "Rolex Shanghai Masters",
+    "year": 2026,
+    "round": "第一轮",
+    "court": "Stadium Court"
+  },
+  "source_url": "https://www.youtube.com/watch?v=RK8RRSH4HCo",
+  "_tactical_research": {
+    "version": 1,
+    "identity": {
+      "home": "luca van assche",
+      "away": "Bu Yunchaokete",
+      "event": "Rolex Shanghai Masters",
+      "year": 2026,
+      "source_urls": []
+    },
+    "sources": [
+      {
+        "url": "https://www.atptour.com/en/video/highlights-home-wild-card-bu-gets-past-van-assche-in-shanghai-2026",
+        "title": "",
+        "published_at": "",
+        "status": "read",
+        "text_sha256": "dc81f5fa85df4d126e85dcab000a0d9938fa3864c67f83780f69faaaa7f87d74",
+        "scope": "player_background",
+        "excerpts": [],
+        "note": "读到 3 段",
+        "match_verified": false
+      },
+      {
+        "url": "https://www.atptour.com/en/video/hot-shot-van-assche-denies-bus-wicked-attempt-in-shanghai-2026",
+        "title": "",
+        "published_at": "",
+        "status": "read",
+        "text_sha256": "dc81f5fa85df4d126e85dcab000a0d9938fa3864c67f83780f69faaaa7f87d74",
+        "scope": "player_background",
+        "excerpts": [],
+        "note": "读到 3 段",
+        "match_verified": false
+      }
+    ],
+    "source_status": {
+      "brain_game": "feed HTTP 403; index HTTP 403",
+      "tennis_abstract": "feed HTTP 403; index HTTP 403",
+      "hugh_clarke": "feed HTTP 403; index HTTP 403",
+      "atp": "ok",
+      "wta": "no_matching_article",
+      "usopen": "no_matching_article",
+      "australian_open": "no_matching_article",
+      "roland_garros": "no_matching_article",
+      "wimbledon": "no_matching_article"
+    },
+    "status": "no_readable_analysis",
+    "collected_at": "2026-10-08T14:47:00.379853+00:00",
+    "elapsed_seconds": 0.87
+  },
+  "_notes": [
+    "⚠️ 没反查到 flashscore id——stats 块 / 狠数据 / 转折局都依赖它，这三块本轮跳过。用 tools/match_feed.py find 拿到 id 后补进 _match.flashscore_id 重跑。",
+    "技战术资料：no_readable_analysis；未核观点不进入旁白",
+    "文案通道 deepseek · deepseek-v4-pro",
+    "中文热点：扫 231 条，没有撞上这两位球员",
+    "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
+    "⚠️ 文案这一步没成（模型或网络），editorial 留空",
+    "⚠️ 没给 captions 或字幕不可读，字幕窗口起草跳过",
+    "⚠️ 封面抓取没成（SystemExit: 2026-10-06–2026-10-08 窗口里扫了 80 场，没有同时出现 ['assche', 'Yunchaokete'] 的比赛）——portrait 留空，终审或 render 前再补"
+  ],
+  "_visual_evidence": {
+    "model": "MiniMax-M3",
+    "status": "waiting",
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 117.36,
+      "end": 124.28,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "117.5s–118.5s 显示赛点阶段的对峙与 Van Assche（赢家）的近景特写；118.5s–122.5s 延续到 Van Assche 在镜头前握拍释压的画面；124.5s 已进入握手场。属于赛点瞬间及其直接延续。",
+      "confidence": 0.86
+    },
+    "ending": {
+      "start": 117.36,
+      "end": 127.4,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "117.5s–122.5s Van Assche 赛后在场边特写（118.5s 镜头里能看到双眼睁开、正面近景），124.5s–126.5s 双方在网前完成握手，覆盖整个赛后终结节拍。完全包住 cold_open 窗口。",
+      "confidence": 0.86
+    },
+    "cover": {
+      "same_match": false,
+      "subject": "",
+      "moment": "other",
+      "wrong_or_old": false,
+      "reason": "未提供候选封面照片，无法核对人物、比分字样与赛事标识；按规则标记 same_match=false。",
+      "confidence": 0.3
+    },
+    "problems": [
+      "没有官方高清封面候选",
+      "封面无法证明是同一场，或疑似旧图/错图",
+      "封面置信度 0.30 低于 0.80",
+      "封面情绪应为 winner_celebration，现在是 other"
+    ],
+    "model_attempts": 1,
+    "input_sha256": "02386731cfca005d9c8774b45f7f9625fa1f5665f73b6f0b179f1f85a8665ec1",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg"
+    ],
+    "cover_image": ""
+  }
+}
