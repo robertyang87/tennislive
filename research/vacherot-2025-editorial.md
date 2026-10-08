@@ -36,7 +36,7 @@
 | 时间 | 可讲事实 | 证据 |
 |---|---|---|
 | 2024-06-24→2025-06-23 | 2024 生涯最高110，距 Top100 仅30积分；右肩伤使下半年几乎停赛；2025-06-23最低267。2024伤病是前情，不要写成2025新发生的肩伤。 | [ATP赛事官方镜像，10/9采访](https://en.rolexshanghaimasters.com/en/media/news/vacherot-shanghai-2025-feature) |
-| 2025-04 | 蒙特卡洛6-2 6-1胜斯特鲁夫，巡回赛赛事正赛首胜；来上海前只有这1场。戴维斯杯胜场与此统计口径不同，不可写「职业生涯只赢过1场」。 | [蒙卡官网](https://montecarlotennismasters.com/vacherot-premiere/)、[ATP球员简介](https://www.atptour.com/en/players/enwiki/va25/bio) |
+| 2025-04 | 蒙特卡洛6-2 6-1胜施特鲁夫，巡回赛赛事正赛首胜；来上海前只有这1场。戴维斯杯胜场与此统计口径不同，不可写「职业生涯只赢过1场」。 | [蒙卡官网](https://montecarlotennismasters.com/vacherot-premiere/)、[ATP球员简介](https://www.atptour.com/en/players/enwiki/va25/bio) |
 | 2025温网资格赛 | 首轮摔伤并退赛；最初担心严重膝伤，但几周后已复出。不能说「ACL撕裂」或给具体医学诊断。 | [球员10/7自述](https://en.rolexshanghaimasters.com/en/media/news/vacherot-griekspoor-shanghai-2025-tuesday)、[10/16女友采访](https://en.rolexshanghaimasters.com/en/media/news/vacherot-snyder-shanghai-2025-feature) |
 | 2025上海入围 | 初始名单落后22位，周四到上海时仍落后9位，资格赛开打前不足36小时才知能入围。原计划上海后继续打5站挑战赛。 | [10/9官方采访](https://en.rolexshanghaimasters.com/en/media/news/vacherot-shanghai-2025-feature) |
 | 2025上海资格赛次轮 | 第二盘抢七5-5，距直落两盘淘汰2分；对手德拉克斯尔证实他打出对角接发制胜，再用大力发球拿盘。决胜盘德拉克斯尔4-3时还有破发点，被发球化解。**没有赛点**，不能写「救赛点」。 | [德拉克斯尔独立回忆与官方统计](https://en.rolexshanghaimasters.com/en/media/news/vacherot-shanghai-2025-near-loss-feature) |
