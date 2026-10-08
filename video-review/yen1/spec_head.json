@@ -25,10 +25,10 @@
   "_narration_why": "口播与封面钩子完全同义同数字；保留0胜7负数码让封面同句检测与口播共用正式原文，实际TTS另核读音。"
  },
  "push": {
-  "auto": false,
+  "auto": true,
   "summary": "这个年终第一算数吗",
   "lead": "对三强0胜7负，靠两座大满贯领跑。",
-  "_why": "账号所有者：「做年终第一，现在就开始出片，先不发布」。只在分支上出审阅成片，不触发任何推送或公开发布，等账号所有者明确同意。"
+  "_why": "账号所有者 Robert 2026-10-08 授权原话：「那继续按着流水线要求做，直到推送微信，然后给出链接」。打开 push.auto；分支上 mode=render（push=false）质检后合进 main，只让 auto-push-reel 发一次微信，不另拨 match-reel mode=push，避免双发。"
  },
  "editorial": {
   "mode": "match_review",

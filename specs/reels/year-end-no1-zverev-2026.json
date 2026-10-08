@@ -25,10 +25,10 @@
     "_narration_why": "口播与封面钩子完全同义同数字；保留0胜7负数码让封面同句检测与口播共用正式原文，实际TTS另核读音。"
   },
   "push": {
-    "auto": false,
+    "auto": true,
     "summary": "这个年终第一算数吗",
     "lead": "对三强0胜7负，靠两座大满贯领跑。",
-    "_why": "账号所有者：「做年终第一，现在就开始出片，先不发布」。只在分支上出审阅成片，不触发任何推送或公开发布，等账号所有者明确同意。"
+    "_why": "账号所有者 Robert 2026-10-08 授权原话：「那继续按着流水线要求做，直到推送微信，然后给出链接」。打开 push.auto；分支上 mode=render（push=false）质检后合进 main，只让 auto-push-reel 发一次微信，不另拨 match-reel mode=push，避免双发。"
   },
   "editorial": {
     "mode": "match_review",
@@ -94,7 +94,7 @@
       "zverev_ever_weekly_no1_source": "ATP 2026-10-08 https://www.atptour.com/en/news/zverev-shanghai-2026-preview：“within touching distance of becoming the 30th player to rise to No. 1”；ATP 2026-10-01 https://www.atptour.com/en/news/zverev-chasing-world-no-1-october-2026：“aiming to reach the top spot for the first time”。账号所有者 2026-10-08 确认目前确实还没当过世界第一，这句保留；发布前复核当周排名。",
       "thirtieth_player_scope": "ATP原文是第30位升上每周世界第一（rise to No. 1），不是第30位年终第一。1973–2025年终第一是19人；若兹维列夫年终第一会是第20人。片中不说“第30位年终第一”。2026-10-08复核：直播排名仍是辛纳1、兹维列夫2。",
       "interview_source": "https://www.tennistv.com/videos/4587386/shanghai-2026-zverev-preview-interview（短链 /videos/4587386 无 slug 会 404）",
-      "publish_recheck": "发布前要再查一次：若兹维列夫已升上周排名第一，第2段旁白「可他，还没当过一天世界第一」须改写后重渲。Race 实时榜与 800／810 分差一并复核。"
+      "publish_recheck": "2026-10-08T21:15Z 发布前复核 ATP 实时榜：周排名仍是辛纳 1（11,000）／兹维列夫 2（9,720），旁白「还没当过一天世界第一」成立；Live Race 兹维列夫 8,760 对辛纳 7,950，差 810，仍约 800 分。两句都成立，继续发布。出处 https://www.atptour.com/en/rankings/singles 与 https://www.atptour.com/en/rankings/singles-race-to-turin。"
     },
     "big_three_record_2026": {
       "record": "0-7",
