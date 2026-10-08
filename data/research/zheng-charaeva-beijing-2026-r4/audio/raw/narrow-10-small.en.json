@@ -1,0 +1,201 @@
+{
+  "model": "small.en",
+  "source_from": 217,
+  "source_to": 224,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 1.28,
+      "end": 5.04,
+      "text": " That's how you neutralize a player, really, I mean, by having that kind of balls.",
+      "tokens": [
+        50363,
+        1320,
+        338,
+        703,
+        345,
+        8500,
+        1096,
+        257,
+        2137,
+        11,
+        1107,
+        11,
+        314,
+        1612,
+        11,
+        416,
+        1719,
+        326,
+        1611,
+        286,
+        11333,
+        13,
+        50655
+      ],
+      "avg_logprob": -0.3123188251629472,
+      "compression_ratio": 1.064516129032258,
+      "no_speech_prob": 0.17340944707393646,
+      "words": [
+        {
+          "start": 1.28,
+          "end": 1.74,
+          "word": " That's",
+          "probability": 0.8983449637889862
+        },
+        {
+          "start": 1.74,
+          "end": 1.84,
+          "word": " how",
+          "probability": 0.9786434769630432
+        },
+        {
+          "start": 1.84,
+          "end": 1.94,
+          "word": " you",
+          "probability": 0.9964236617088318
+        },
+        {
+          "start": 1.94,
+          "end": 2.46,
+          "word": " neutralize",
+          "probability": 0.6805311441421509
+        },
+        {
+          "start": 2.46,
+          "end": 2.6,
+          "word": " a",
+          "probability": 0.8969393968582153
+        },
+        {
+          "start": 2.6,
+          "end": 2.84,
+          "word": " player,",
+          "probability": 0.9848225116729736
+        },
+        {
+          "start": 2.84,
+          "end": 3.1,
+          "word": " really,",
+          "probability": 0.987236499786377
+        },
+        {
+          "start": 3.3,
+          "end": 3.3,
+          "word": " I",
+          "probability": 0.9549888968467712
+        },
+        {
+          "start": 3.3,
+          "end": 3.44,
+          "word": " mean,",
+          "probability": 0.9976664781570435
+        },
+        {
+          "start": 3.66,
+          "end": 3.72,
+          "word": " by",
+          "probability": 0.9789549112319946
+        },
+        {
+          "start": 3.72,
+          "end": 4.16,
+          "word": " having",
+          "probability": 0.9928880333900452
+        },
+        {
+          "start": 4.16,
+          "end": 4.38,
+          "word": " that",
+          "probability": 0.9911748170852661
+        },
+        {
+          "start": 4.38,
+          "end": 4.62,
+          "word": " kind",
+          "probability": 0.9840440154075623
+        },
+        {
+          "start": 4.62,
+          "end": 4.72,
+          "word": " of",
+          "probability": 0.9994627833366394
+        },
+        {
+          "start": 4.72,
+          "end": 5.04,
+          "word": " balls.",
+          "probability": 0.9473245143890381
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 5.48,
+      "end": 6.62,
+      "text": " She's back in it.",
+      "tokens": [
+        50655,
+        1375,
+        338,
+        736,
+        287,
+        340,
+        13,
+        50685
+      ],
+      "avg_logprob": -0.3123188251629472,
+      "compression_ratio": 1.064516129032258,
+      "no_speech_prob": 0.17340944707393646,
+      "words": [
+        {
+          "start": 5.48,
+          "end": 5.94,
+          "word": " She's",
+          "probability": 0.9614191055297852
+        },
+        {
+          "start": 5.94,
+          "end": 6.14,
+          "word": " back",
+          "probability": 0.9957695007324219
+        },
+        {
+          "start": 6.14,
+          "end": 6.3,
+          "word": " in",
+          "probability": 0.9687433242797852
+        },
+        {
+          "start": 6.3,
+          "end": 6.62,
+          "word": " it.",
+          "probability": 0.9968499541282654
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

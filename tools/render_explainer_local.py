@@ -47,6 +47,8 @@ def main() -> int:
         E.explainer_script(story), out,
         topic=(E._OPENINGS.get(args.slug) or {}).get("topic", ""),
         column=E.explainer_column(args.slug),
+        height=E.canvas_height(args.slug) if
+        (E._OPENINGS.get(args.slug) or {}).get("full_bleed") else E.H,
     )
     for p in paths:
         print(" ", p)

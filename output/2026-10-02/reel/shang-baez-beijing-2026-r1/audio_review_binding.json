@@ -1,0 +1,102 @@
+{
+  "plan_sha256": "857b43d9de0d637d6d8daa4b9f8a9d03479f4d31ccd638a35cd566b02a6801d6",
+  "original_audio_mode": "muted_narrated",
+  "owner_approval": "atp-20261002-narrated-three",
+  "sources": {
+    "": "f9600f72b97012fb3107525792b5ba34a4158bc7b586dee5354b661baa178b8f"
+  },
+  "timeline": {
+    "cover_seconds": 1.2,
+    "offsets": [
+      1.2,
+      5.05,
+      10.75,
+      22.25,
+      36.95,
+      50.550000000000004,
+      58.85000000000001,
+      65.65,
+      81.2
+    ],
+    "lengths": [
+      3.85,
+      5.7,
+      11.5,
+      14.7,
+      13.6,
+      8.3,
+      6.8,
+      15.55,
+      12.5
+    ]
+  },
+  "narrated_mix": {
+    "method": "anullsrc_before_tts_mix",
+    "original_audio_gain": 0,
+    "audio_packet_sha256": "4ef01f809b1a9735f0d370112dcc2e2161e7cb26955ef3fad660cda787a39670",
+    "voices": [
+      {
+        "kind": "segment",
+        "index": 0,
+        "offset": 1.2,
+        "duration": 3.456,
+        "sha256": "475b316a8be2c6da14955999730adb6881ce4a131bd6682819874f19e8ca46e9"
+      },
+      {
+        "kind": "segment",
+        "index": 1,
+        "offset": 5.05,
+        "duration": 4.2,
+        "sha256": "675448d83aa0d561405fcdf9d317e94bd9f0b3aa9ff7efddd66a4393ab2cef7d"
+      },
+      {
+        "kind": "segment",
+        "index": 2,
+        "offset": 10.75,
+        "duration": 10.224,
+        "sha256": "ca2a19810959c5efed4b4c4d15970ebcdfe4f8c312765d596b5bbff892ba9f7b"
+      },
+      {
+        "kind": "segment",
+        "index": 3,
+        "offset": 22.25,
+        "duration": 14.496,
+        "sha256": "a1f33fbe2acd58586ba3d71096722d603171347be16a6b7baf5493bada605c11"
+      },
+      {
+        "kind": "segment",
+        "index": 4,
+        "offset": 36.95,
+        "duration": 9.72,
+        "sha256": "c29ecd1549b0a0901dda4c47bce1b2ce3d62fa5a6f4c30c9250a71f9937b58d1"
+      },
+      {
+        "kind": "segment",
+        "index": 5,
+        "offset": 50.55,
+        "duration": 4.824,
+        "sha256": "0244c9b28be67efb23dbeb57be09cd057884242d22de781621465a022447bd6a"
+      },
+      {
+        "kind": "segment",
+        "index": 6,
+        "offset": 58.85,
+        "duration": 5.904,
+        "sha256": "58547a4e1710dae1881a0f85974550222b8191d3c1a2bc546b8dec9fba099207"
+      },
+      {
+        "kind": "segment",
+        "index": 8,
+        "offset": 81.2,
+        "duration": 9.048,
+        "sha256": "1b945714f5b63fe301fc4bfd7729980f56d89bb1ad42deb22bb9a59c5b3e2100"
+      },
+      {
+        "kind": "outro",
+        "offset": 93.7,
+        "duration": 4.2,
+        "sha256": "3b4f9d29162d5fecef82e2bb0abfee69daf1cd4818970717f02b65a913d9f3b2"
+      }
+    ]
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "asset_timings + closing_source full selected raw-window audit",
+  "reviewed_at": "2026-10-04T07:41:26.417230+00:00",
+  "status": "complete",
+  "reviewed_from": 0,
+  "reviewed_to": 8.52,
+  "foreground_english": [
+    {
+      "start": 4.91,
+      "end": 6.73,
+      "en": "It is a remarkable story.",
+      "zh": "这是一段非凡的故事。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "uncertain_spans": [],
+  "raw_asr": {
+    "small.en": [
+      {
+        "source_start": 4.91,
+        "source_end": 6.73,
+        "review_start": 4.91,
+        "review_end": 6.73,
+        "text": " It is a remarkable story.",
+        "words": [
+          {
+            "source_start": 4.91,
+            "source_end": 5.01,
+            "word": " It"
+          },
+          {
+            "source_start": 5.01,
+            "source_end": 5.31,
+            "word": " is"
+          },
+          {
+            "source_start": 5.31,
+            "source_end": 5.49,
+            "word": " a"
+          },
+          {
+            "source_start": 5.49,
+            "source_end": 5.91,
+            "word": " remarkable"
+          },
+          {
+            "source_start": 5.91,
+            "source_end": 6.73,
+            "word": " story."
+          }
+        ]
+      },
+      {
+        "source_start": 9.3,
+        "source_end": 11.7,
+        "review_start": 9.3,
+        "review_end": 11.7,
+        "text": " I'm not sure anyone could have scripted this one.",
+        "words": [
+          {
+            "source_start": 9.3,
+            "source_end": 9.46,
+            "word": " I'm"
+          },
+          {
+            "source_start": 9.46,
+            "source_end": 9.64,
+            "word": " not"
+          },
+          {
+            "source_start": 9.64,
+            "source_end": 9.92,
+            "word": " sure"
+          },
+          {
+            "source_start": 9.92,
+            "source_end": 10.38,
+            "word": " anyone"
+          },
+          {
+            "source_start": 10.38,
+            "source_end": 10.64,
+            "word": " could"
+          },
+          {
+            "source_start": 10.64,
+            "source_end": 10.76,
+            "word": " have"
+          },
+          {
+            "source_start": 10.76,
+            "source_end": 11.12,
+            "word": " scripted"
+          },
+          {
+            "source_start": 11.12,
+            "source_end": 11.44,
+            "word": " this"
+          },
+          {
+            "source_start": 11.44,
+            "source_end": 11.7,
+            "word": " one."
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "source_start": 4.91,
+        "source_end": 11.6,
+        "review_start": 4.91,
+        "review_end": 11.6,
+        "text": " is a remarkable story. I'm not sure anyone could have scripted this one.",
+        "words": [
+          {
+            "source_start": 4.91,
+            "source_end": 5.27,
+            "word": " is"
+          },
+          {
+            "source_start": 5.27,
+            "source_end": 5.41,
+            "word": " a"
+          },
+          {
+            "source_start": 5.41,
+            "source_end": 5.85,
+            "word": " remarkable"
+          },
+          {
+            "source_start": 5.85,
+            "source_end": 6.63,
+            "word": " story."
+          },
+          {
+            "source_start": 9.32,
+            "source_end": 9.4,
+            "word": " I'm"
+          },
+          {
+            "source_start": 9.4,
+            "source_end": 9.56,
+            "word": " not"
+          },
+          {
+            "source_start": 9.56,
+            "source_end": 9.84,
+            "word": " sure"
+          },
+          {
+            "source_start": 9.84,
+            "source_end": 10.36,
+            "word": " anyone"
+          },
+          {
+            "source_start": 10.36,
+            "source_end": 10.58,
+            "word": " could"
+          },
+          {
+            "source_start": 10.58,
+            "source_end": 10.7,
+            "word": " have"
+          },
+          {
+            "source_start": 10.7,
+            "source_end": 10.96,
+            "word": " scripted"
+          },
+          {
+            "source_start": 10.96,
+            "source_end": 11.4,
+            "word": " this"
+          },
+          {
+            "source_start": 11.4,
+            "source_end": 11.6,
+            "word": " one."
+          }
+        ]
+      }
+    ]
+  },
+  "source_review": "data/audio_reviews/nishikori-career-farewell/evidence/native-foreground-titles-audit-3b8675b4a78f.json",
+  "portable_review_provenance": {
+    "original_packet_sha256": "e4b3e8f6165d0cf6289823c83e9dff185f5531dfaf517cc0588006dfa0e4a4b1",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

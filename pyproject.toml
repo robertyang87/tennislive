@@ -38,6 +38,9 @@ dependencies = [
 # `test_多音字预检只报换字表管不到的非常用读音` 逐项钉着预检报出来的那张表，而那张表是
 # pypinyin 的词典给的——词典一升级，报的就可能变，红了也不是代码的错。升级时重跑那条再放开。
 dev = ["pytest>=7.0", "pytest-xdist>=3.5", "ruff>=0.6", "pyyaml>=6.0", "pypinyin>=0.50,<0.60"]
+# 生产静态预检只读词典，不需要声学测量的 numpy/librosa/praat/语音后端。
+# 和 dev/polyphone 保持同一词典版本范围，避免本地与 runner 报出不同候选。
+pronunciation = ["pypinyin>=0.50,<0.60"]
 # 多音字：`tools/check_polyphones.py`（静态，只要 pypinyin；`render --dry-run` 缺它就出声说
 # 「这趟没查」）和 `--measure` / `tools/measure_polyphone.py`（真合成器声学比对，要全套）。
 # 生产的换字本身（`video/pronounce.py`）一个第三方包都不用。
@@ -78,6 +81,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "tennislive.zh" = ["player_names_top500.json"]
+"tennislive.video" = ["episodes/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

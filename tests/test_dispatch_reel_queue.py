@@ -232,7 +232,8 @@ def test_workflow_only_runs_for_main_queue_pushes_with_minimum_permissions():
             "paths": ["data/reel-dispatch-queue/*.json"],
         }
     }
-    assert workflow["permissions"] == {"contents": "read", "actions": "write"}
+    # Durable dispatch intents/receipts must be committed before/after the API call.
+    assert workflow["permissions"] == {"contents": "write", "actions": "write"}
     assert workflow["concurrency"]["cancel-in-progress"] == "false"
     body = WORKFLOW_PATH.read_text(encoding="utf-8")
     assert "github.event.before" in body and "github.sha" in body

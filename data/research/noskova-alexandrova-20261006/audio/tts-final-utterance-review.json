@@ -1,0 +1,1127 @@
+{
+  "schema": "tennislive.actual-utterance-audio-review.v1",
+  "slug": "noskova-alexandrova",
+  "status": "reviewed_with_proxy_limits",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge",
+  "human_listening_claimed": false,
+  "method": "Eight actual preserved renderer full utterances directly assessed: actual WordBoundary arrays pinned with actualMP3 as ORIG for all existing acoustic comparisons, actual full-utterance medium Chinese ASR, actual BaoFa competing controls and actual PCM comparisons. No human listening; no automatic all-pass.",
+  "audio_run": 37438489355,
+  "cache_binding_status": "Actual artifact MP3 SHA per row reviewed directly; root is seeding standard library content cache with these stable exact bytes for final local render. Final product use must still be confirmed by root cache manifests.",
+  "source_foreground_status": "complete: 9 entire windows, 21 bilingual cues, independent medium.en+large-v3; actual renderer MP4 source mono PCM bit-identical to ASR source verified separately.",
+  "lines": [
+    {
+      "label": "第 2 段",
+      "tts_text": "北京时间十月六号下午，中网女单八分之一决赛。今年温网冠军诺斯科娃，美网之后五场全胜。但这一次，她的反扑为什么没能奏效？",
+      "duration_seconds": 12.36,
+      "status": "reviewed_with_proxy_limits",
+      "actual_audio_number": null,
+      "lexical_review": "Actual full renderer MP3 mediumASR checked all words/numbers/names against intended text; spelling/numeral-format differences adjudicated. Actual BaoFa bao3/bao4 comparison correct(high seg4,low seg11). Earlier clone ASR is explicitly separate supplemental evidence, not actual-rendererASR.",
+      "targets": [
+        {
+          "position": 6,
+          "char": "六",
+          "intended": "liu4",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "low"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 11,
+          "char": "中",
+          "intended": "zhong1",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "high"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 14,
+          "char": "单",
+          "intended": "dan1",
+          "raw_actual_verdicts": [
+            "correct",
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "high",
+            "high"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 16,
+          "char": "分",
+          "intended": "fen1",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "酚",
+              "exact_pcm": false,
+              "samples": 2500,
+              "correlation": 0.9035338878838911,
+              "scope": "酚 single modern fen1"
+            }
+          ]
+        },
+        {
+          "position": 26,
+          "char": "冠",
+          "intended": "guan4",
+          "raw_actual_verdicts": [
+            "uncertain"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "灌",
+              "exact_pcm": false,
+              "samples": 3113,
+              "correlation": 0.5791997346076834,
+              "scope": "灌 modern ordinary guan4; library archaic variants not assumed"
+            }
+          ]
+        },
+        {
+          "position": 38,
+          "char": "场",
+          "intended": "chang3",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 51,
+          "char": "为",
+          "intended": "wei4",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 54,
+          "char": "没",
+          "intended": "mei2",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        }
+      ],
+      "unresolved_readings": [
+        {
+          "position": 26,
+          "char": "冠",
+          "intended": "guan4",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        }
+      ],
+      "earlier_clone_small_asr": "北京时间10月6号下午中网女丹1%决赛今年温网冠军诺斯科瓦没网之后无厂全胜但这一次他的反扑为什么没能奏效",
+      "earlier_clone_medium_asr": "北京时间10月6号下午 中网女单八分之一决赛今年温网冠军诺斯科娃 美网之后五场全胜但这一次 她的反扑为什么没能奏效",
+      "actual_medium_asr": "北京时间10月6号下午 中网女单八分之一决赛今年温网冠军诺斯科娃 美网之后五场全胜但这一次 她的反扑为什么没能奏效",
+      "actual_renderer_audio_file": "voice_01.mp3",
+      "actual_renderer_audio_sha256": "d3ac096509663adf4f87fc863f30678f66cdb90476856ca99dad66cd12813b1b",
+      "word_boundary_exact_match_to_qc": true
+    },
+    {
+      "label": "第 4 段",
+      "tts_text": "诺斯科娃的反手也能打出制胜分。先保发之后，她在对手发球局拿到三次机会。先是四十比十五，再一次占先，却全被救下。",
+      "duration_seconds": 11.688,
+      "status": "reviewed_with_proxy_limits",
+      "actual_audio_number": null,
+      "lexical_review": "Actual full renderer MP3 mediumASR checked all words/numbers/names against intended text; spelling/numeral-format differences adjudicated. Actual BaoFa bao3/bao4 comparison correct(high seg4,low seg11). Earlier clone ASR is explicitly separate supplemental evidence, not actual-rendererASR.",
+      "targets": [
+        {
+          "position": 9,
+          "char": "打",
+          "intended": "da3",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 13,
+          "char": "分",
+          "intended": "fen1",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "high"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "酚",
+              "exact_pcm": false,
+              "samples": 3208,
+              "correlation": 0.3894499483280616,
+              "scope": "酚 single modern fen1"
+            }
+          ]
+        },
+        {
+          "position": 17,
+          "char": "发",
+          "intended": "fa1",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "actual_target_pcm_identity_corroborated",
+          "limitation": "Every sample in actual target window equals actual clear modern-reading control; reference scope documented. Raw competing-control statuses preserved.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "發",
+              "exact_pcm": true,
+              "samples": 1981,
+              "correlation": 0.9999999999999998,
+              "scope": "Traditional orthography發 in serve context explicit modern fa1; library lists rare bo1, so no false unambiguous assertion"
+            }
+          ]
+        },
+        {
+          "position": 25,
+          "char": "发",
+          "intended": "fa1",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "actual_target_pcm_identity_corroborated",
+          "limitation": "Every sample in actual target window equals actual clear modern-reading control; reference scope documented. Raw competing-control statuses preserved.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "發",
+              "exact_pcm": true,
+              "samples": 2893,
+              "correlation": 1.0,
+              "scope": "Traditional orthography發 in serve context explicit modern fa1; library lists rare bo1, so no false unambiguous assertion"
+            }
+          ]
+        }
+      ],
+      "unresolved_readings": [
+        {
+          "position": 9,
+          "char": "打",
+          "intended": "da3",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        }
+      ],
+      "earlier_clone_small_asr": "诺斯科瓦的反手也能打出制胜分先爆发之后他在对手发球局拿到三次机会先是40比15再一次战先却全被救下",
+      "earlier_clone_medium_asr": "诺斯科瓦的反手也能打出制胜分先爆发之后他在对手发球局拿到三次机会先是四十比十五再一次战先却全被救下",
+      "actual_medium_asr": "诺斯科瓦的反手也能打出制胜分先爆发之后他在对手发球局拿到三次机会先是40比15再一次战先却全被救下",
+      "actual_renderer_audio_file": "voice_03.mp3",
+      "actual_renderer_audio_sha256": "7384086d9cc9a13f6b8cf8b04c2852a96d7952fce73df244170d3d7cf1b8a053",
+      "word_boundary_exact_match_to_qc": true
+    },
+    {
+      "label": "第 7 段",
+      "tts_text": "诺斯科娃在网前还能抢分，底线却开始承压。亚历山德罗娃的反手打得又深又快，接发也敢直接抢。看首盘的两次关键破发。",
+      "duration_seconds": 11.712,
+      "status": "reviewed_with_proxy_limits",
+      "actual_audio_number": null,
+      "lexical_review": "Actual full renderer MP3 mediumASR checked all words/numbers/names against intended text; spelling/numeral-format differences adjudicated. Actual BaoFa bao3/bao4 comparison correct(high seg4,low seg11). Earlier clone ASR is explicitly separate supplemental evidence, not actual-rendererASR.",
+      "targets": [
+        {
+          "position": 7,
+          "char": "还",
+          "intended": "hai2",
+          "raw_actual_verdicts": [
+            "unreliable"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 9,
+          "char": "抢",
+          "intended": "qiang3",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 10,
+          "char": "分",
+          "intended": "fen1",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "high"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "酚",
+              "exact_pcm": false,
+              "samples": 3962,
+              "correlation": 0.5322888845966259,
+              "scope": "酚 single modern fen1"
+            }
+          ]
+        },
+        {
+          "position": 29,
+          "char": "打",
+          "intended": "da3",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 30,
+          "char": "得",
+          "intended": "de5",
+          "raw_actual_verdicts": [
+            "correct",
+            "pending"
+          ],
+          "status": "actual_context_target_measured_correct_low_proxy",
+          "limitation": "Actual de5 vs de2 measured correct(low neutral-tone reference). Original dictionary de2 target was erroneous. Pending dei3 comparison does not imply actual wrong reading; no audio/text substitutions.",
+          "confidence": [
+            "low"
+          ]
+        },
+        {
+          "position": 37,
+          "char": "发",
+          "intended": "fa1",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "發",
+              "exact_pcm": false,
+              "samples": 3397,
+              "correlation": 0.19662497697471934,
+              "scope": "Traditional orthography發 in serve context explicit modern fa1; library lists rare bo1, so no false unambiguous assertion"
+            }
+          ]
+        },
+        {
+          "position": 42,
+          "char": "抢",
+          "intended": "qiang3",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "high"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 44,
+          "char": "看",
+          "intended": "kan4",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "low"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 53,
+          "char": "发",
+          "intended": "fa1",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "發",
+              "exact_pcm": false,
+              "samples": 3585,
+              "correlation": 0.9968165942581634,
+              "scope": "Traditional orthography發 in serve context explicit modern fa1; library lists rare bo1, so no false unambiguous assertion"
+            }
+          ]
+        }
+      ],
+      "unresolved_readings": [
+        {
+          "position": 7,
+          "char": "还",
+          "intended": "hai2",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 29,
+          "char": "打",
+          "intended": "da3",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 37,
+          "char": "发",
+          "intended": "fa1",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 53,
+          "char": "发",
+          "intended": "fa1",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        }
+      ],
+      "earlier_clone_small_asr": "罗斯科瓦在往前还能抢分,底线却开始乘压。亚利山德罗瓦的反手,打得又深又快,接法也敢直接抢。看手盘的两次关键破发。",
+      "earlier_clone_medium_asr": "诺斯科娃在往前还能抢分, 底线却开始承压。亚历山德罗娃的反手打得又深又快, 接法也敢直接抢。看手盘的两次关键破发。",
+      "actual_medium_asr": "诺斯科娃在往前还能抢分, 底线却开始承压。亚历山德罗娃的反手打得又深又快, 接法也敢直接抢。看手盘的两次关键破发。",
+      "actual_renderer_audio_file": "voice_06.mp3",
+      "actual_renderer_audio_sha256": "e2f695348dc2c0bbdb26fe25824ac76d0d711b92b2583006780546d0678c04f5",
+      "word_boundary_exact_match_to_qc": true
+    },
+    {
+      "label": "第 11 段",
+      "tts_text": "首盘二比六。第二盘，诺斯科娃又先保发，再在对手发球局拿到破发点。这是全场第四次机会，也是最后一次。她依然没能兑现。",
+      "duration_seconds": 12.36,
+      "status": "reviewed_with_proxy_limits",
+      "actual_audio_number": null,
+      "lexical_review": "Actual full renderer MP3 mediumASR checked all words/numbers/names against intended text; spelling/numeral-format differences adjudicated. Actual BaoFa bao3/bao4 comparison correct(high seg4,low seg11). Earlier clone ASR is explicitly separate supplemental evidence, not actual-rendererASR.",
+      "targets": [
+        {
+          "position": 4,
+          "char": "六",
+          "intended": "liu4",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "low"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 17,
+          "char": "发",
+          "intended": "fa1",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "actual_target_pcm_identity_corroborated",
+          "limitation": "Every sample in actual target window equals actual clear modern-reading control; reference scope documented. Raw competing-control statuses preserved.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "發",
+              "exact_pcm": true,
+              "samples": 3019,
+              "correlation": 1.0,
+              "scope": "Traditional orthography發 in serve context explicit modern fa1; library lists rare bo1, so no false unambiguous assertion"
+            }
+          ]
+        },
+        {
+          "position": 23,
+          "char": "发",
+          "intended": "fa1",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "actual_target_pcm_identity_corroborated",
+          "limitation": "Every sample in actual target window equals actual clear modern-reading control; reference scope documented. Raw competing-control statuses preserved.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "發",
+              "exact_pcm": true,
+              "samples": 2956,
+              "correlation": 1.0,
+              "scope": "Traditional orthography發 in serve context explicit modern fa1; library lists rare bo1, so no false unambiguous assertion"
+            }
+          ]
+        },
+        {
+          "position": 29,
+          "char": "发",
+          "intended": "fa1",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "發",
+              "exact_pcm": false,
+              "samples": 3082,
+              "correlation": 0.9910263032692201,
+              "scope": "Traditional orthography發 in serve context explicit modern fa1; library lists rare bo1, so no false unambiguous assertion"
+            }
+          ]
+        },
+        {
+          "position": 35,
+          "char": "场",
+          "intended": "chang3",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "high"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 52,
+          "char": "没",
+          "intended": "mei2",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        }
+      ],
+      "unresolved_readings": [
+        {
+          "position": 29,
+          "char": "发",
+          "intended": "fa1",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        }
+      ],
+      "earlier_clone_small_asr": "手盘2比6第二盘诺斯科瓦右鲜宝发再再对手发球局拿到破发点这是全场第四次机会也是最后一次他依然没能兑现",
+      "earlier_clone_medium_asr": "首盘2比6第二盘,诺斯科娃又先爆发,再在对手, 发球局拿到破发点这是全场第四次机会,也是最后一次他依然没能对线",
+      "actual_medium_asr": "首盘2比6第二盘诺斯科娃又先爆发再在对手发球局拿到破发点这是全场第四次机会也是最后一次他依然没能对线",
+      "actual_renderer_audio_file": "voice_10.mp3",
+      "actual_renderer_audio_sha256": "85a6b44f0969501fa9ba6b1ea399f335c589b0179bd1d3dcf8a54a30b21db59d",
+      "word_boundary_exact_match_to_qc": true
+    },
+    {
+      "label": "第 13 段",
+      "tts_text": "打到二比二，诺斯科娃还没有掉队。可随后自己的两个发球局都失守，她连丢最后四局。对手的第二盘八个一发球，全部得分。",
+      "duration_seconds": 11.112,
+      "status": "reviewed_with_proxy_limits",
+      "actual_audio_number": null,
+      "lexical_review": "Actual full renderer MP3 mediumASR checked all words/numbers/names against intended text; spelling/numeral-format differences adjudicated. Actual BaoFa bao3/bao4 comparison correct(high seg4,low seg11). Earlier clone ASR is explicitly separate supplemental evidence, not actual-rendererASR.",
+      "targets": [
+        {
+          "position": 0,
+          "char": "打",
+          "intended": "da3",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 10,
+          "char": "还",
+          "intended": "hai2",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 11,
+          "char": "没",
+          "intended": "mei2",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "low"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 24,
+          "char": "发",
+          "intended": "fa1",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "actual_target_pcm_identity_corroborated",
+          "limitation": "Every sample in actual target window equals actual clear modern-reading control; reference scope documented. Raw competing-control statuses preserved.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "發",
+              "exact_pcm": true,
+              "samples": 2893,
+              "correlation": 0.9999999999999999,
+              "scope": "Traditional orthography發 in serve context explicit modern fa1; library lists rare bo1, so no false unambiguous assertion"
+            }
+          ]
+        },
+        {
+          "position": 27,
+          "char": "都",
+          "intended": "dou1",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "low"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 48,
+          "char": "发",
+          "intended": "fa1",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "發",
+              "exact_pcm": false,
+              "samples": 2170,
+              "correlation": 0.6871460685737706,
+              "scope": "Traditional orthography發 in serve context explicit modern fa1; library lists rare bo1, so no false unambiguous assertion"
+            }
+          ]
+        },
+        {
+          "position": 53,
+          "char": "得",
+          "intended": "de2",
+          "raw_actual_verdicts": [
+            "correct",
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "德",
+              "exact_pcm": false,
+              "samples": 2547,
+              "correlation": 0.9992663756268663,
+              "scope": "德 single modern de2"
+            }
+          ]
+        },
+        {
+          "position": 54,
+          "char": "分",
+          "intended": "fen1",
+          "raw_actual_verdicts": [
+            "unreliable"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "酚",
+              "exact_pcm": false,
+              "samples": 2547,
+              "correlation": 0.7169599286589913,
+              "scope": "酚 single modern fen1"
+            }
+          ]
+        }
+      ],
+      "unresolved_readings": [
+        {
+          "position": 0,
+          "char": "打",
+          "intended": "da3",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 48,
+          "char": "发",
+          "intended": "fa1",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 53,
+          "char": "得",
+          "intended": "de2",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 54,
+          "char": "分",
+          "intended": "fen1",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        }
+      ],
+      "earlier_clone_small_asr": "达到2.2,诺斯科瓦还没有掉队可随后,自己的两个发球局都失手他连丢最后四局对手的第二盘8个一发球,全部得分",
+      "earlier_clone_medium_asr": "达到2.2,诺斯科娃还没有掉队。可随后,自己的两个发球局都失手,他连丢最后四局。对手的第二盘八个一发球,全部得分。",
+      "actual_medium_asr": "达到2.2,诺斯科娃还没有掉队。可随后自己的两个发球局都失手,他连丢最后四局。对手的第二盘八个一发球,全部得分。",
+      "actual_renderer_audio_file": "voice_12.mp3",
+      "actual_renderer_audio_sha256": "2956154f0411bb7f3f51dfc8fcc1ba63ea8e6cc6a9d9bb1eb1f4f8755b0a5daa",
+      "word_boundary_exact_match_to_qc": true
+    },
+    {
+      "label": "第 14 段",
+      "tts_text": "制胜分，诺斯科娃八记，对手三十二记。第二盘更是二比十九。四次破发机会又全都错过，她始终没能把反扑变成比分。",
+      "duration_seconds": 11.448,
+      "status": "reviewed_with_proxy_limits",
+      "actual_audio_number": null,
+      "lexical_review": "Actual full renderer MP3 mediumASR checked all words/numbers/names against intended text; spelling/numeral-format differences adjudicated. Actual BaoFa bao3/bao4 comparison correct(high seg4,low seg11). Earlier clone ASR is explicitly separate supplemental evidence, not actual-rendererASR.",
+      "targets": [
+        {
+          "position": 2,
+          "char": "分",
+          "intended": "fen1",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_target_pcm_identity_corroborated",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Every sample in actual target window equals actual clear modern-reading control; reference scope documented. Raw competing-control statuses preserved.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "酚",
+              "exact_pcm": true,
+              "samples": 3207,
+              "correlation": 1.0,
+              "scope": "酚 single modern fen1"
+            }
+          ]
+        },
+        {
+          "position": 21,
+          "char": "更",
+          "intended": "geng4",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 31,
+          "char": "发",
+          "intended": "fa1",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "發",
+              "exact_pcm": false,
+              "samples": 2642,
+              "correlation": 0.999974694781932,
+              "scope": "Traditional orthography發 in serve context explicit modern fa1; library lists rare bo1, so no false unambiguous assertion"
+            }
+          ]
+        },
+        {
+          "position": 36,
+          "char": "都",
+          "intended": "dou1",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 43,
+          "char": "没",
+          "intended": "mei2",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 51,
+          "char": "分",
+          "intended": "fen1",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "medium"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "酚",
+              "exact_pcm": false,
+              "samples": 2642,
+              "correlation": 0.30924607318023045,
+              "scope": "酚 single modern fen1"
+            }
+          ]
+        }
+      ],
+      "unresolved_readings": [
+        {
+          "position": 21,
+          "char": "更",
+          "intended": "geng4",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 31,
+          "char": "发",
+          "intended": "fa1",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        }
+      ],
+      "earlier_clone_small_asr": "智盛分,諾斯科瓦八技對手32技,第二盤更是二比十九。四次破發機會有全都錯過,他始終沒能把反撲變成比分。",
+      "earlier_clone_medium_asr": "至胜分,诺斯科娃8G,对手32G第二盘更是2比19四次破发机会又全都错过他始终没能把反扑变成比分",
+      "actual_medium_asr": "至胜分,诺斯科娃8G,对手32G,第二盘更是2比19。四次破发机会又全都错过,他始终没能把反扑变成比分。",
+      "actual_renderer_audio_file": "voice_13.mp3",
+      "actual_renderer_audio_sha256": "a29f9c360f780e997483a7f061b31bdae3db5d3328ab4b2508267191ae39a665",
+      "word_boundary_exact_match_to_qc": true
+    },
+    {
+      "label": "第 15 段",
+      "tts_text": "温网冠军暂时停步。亚历山德罗娃首次打进中网八强，下一轮对米拉·安德烈耶娃。诺斯科娃下一站能再起势吗？最后一分，交给现场。",
+      "duration_seconds": 13.392,
+      "status": "reviewed_with_proxy_limits",
+      "actual_audio_number": null,
+      "lexical_review": "Actual full renderer MP3 mediumASR checked all words/numbers/names against intended text; spelling/numeral-format differences adjudicated. Actual BaoFa bao3/bao4 comparison correct(high seg4,low seg11). Earlier clone ASR is explicitly separate supplemental evidence, not actual-rendererASR.",
+      "targets": [
+        {
+          "position": 2,
+          "char": "冠",
+          "intended": "guan4",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "high"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "灌",
+              "exact_pcm": false,
+              "samples": 3585,
+              "correlation": 0.45855380213815156,
+              "scope": "灌 modern ordinary guan4; library archaic variants not assumed"
+            }
+          ]
+        },
+        {
+          "position": 17,
+          "char": "打",
+          "intended": "da3",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 19,
+          "char": "中",
+          "intended": "zhong1",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "high"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        },
+        {
+          "position": 22,
+          "char": "强",
+          "intended": "qiang2",
+          "raw_actual_verdicts": [
+            "unreliable",
+            "unreliable"
+          ],
+          "status": "actual_target_pcm_identity_verified",
+          "limitation": "Actual renderer target all4864samples equal unambiguous 墙qiang2 control. Original tool multi-reference unreliability retained."
+        },
+        {
+          "position": 53,
+          "char": "分",
+          "intended": "fen1",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_target_pcm_identity_corroborated",
+          "confidence": [
+            "high"
+          ],
+          "limitation": "Every sample in actual target window equals actual clear modern-reading control; reference scope documented. Raw competing-control statuses preserved.",
+          "actual_reference_pcm_comparison": [
+            {
+              "reference_char": "酚",
+              "exact_pcm": true,
+              "samples": 3396,
+              "correlation": 1.0,
+              "scope": "酚 single modern fen1"
+            }
+          ]
+        },
+        {
+          "position": 56,
+          "char": "给",
+          "intended": "gei3",
+          "raw_actual_verdicts": [
+            "pending"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 58,
+          "char": "场",
+          "intended": "chang3",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "high"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        }
+      ],
+      "unresolved_readings": [
+        {
+          "position": 17,
+          "char": "打",
+          "intended": "da3",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 56,
+          "char": "给",
+          "intended": "gei3",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        }
+      ],
+      "earlier_clone_small_asr": "温网冠军暂时停步亚利山德罗瓦首次打进中网八强下一轮对米拉安德列耶瓦诺斯科瓦下一战能再启示吗?最后一分交给现场",
+      "earlier_clone_medium_asr": "温网冠军暂时停步 亚历山德罗娃首次打进中网八强下一轮对米拉安德列耶娃 诺斯科娃下一站能再启示吗最后一分交给现场",
+      "actual_medium_asr": "温网冠军暂时停步 亚历山德罗瓦首次打进中网八强下一轮对米拉安德列耶瓦 诺斯科瓦下一站能再启示吗最后一分交给现场",
+      "actual_renderer_audio_file": "voice_14.mp3",
+      "actual_renderer_audio_sha256": "b84e486e219c82f77a0b3d060cdce87b3eb980e03760e8a7a464632d642393a0",
+      "word_boundary_exact_match_to_qc": true
+    },
+    {
+      "label": "片尾",
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "duration_seconds": 4.2,
+      "status": "reviewed_with_proxy_limits",
+      "actual_audio_number": null,
+      "lexical_review": "Actual full renderer MP3 mediumASR checked all words/numbers/names against intended text; spelling/numeral-format differences adjudicated. Actual BaoFa bao3/bao4 comparison correct(high seg4,low seg11). Earlier clone ASR is explicitly separate supplemental evidence, not actual-rendererASR.",
+      "targets": [
+        {
+          "position": 5,
+          "char": "差",
+          "intended": "cha1",
+          "raw_actual_verdicts": [
+            "unreliable",
+            "correct"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 8,
+          "char": "差",
+          "intended": "cha1",
+          "raw_actual_verdicts": [
+            "unreliable",
+            "unreliable"
+          ],
+          "status": "pending_proxy_limit",
+          "limitation": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 12,
+          "char": "好",
+          "intended": "hao3",
+          "raw_actual_verdicts": [
+            "correct"
+          ],
+          "status": "actual_acoustic_control_measured_correct",
+          "confidence": [
+            "low"
+          ],
+          "limitation": "Per-comparison status retained, no automatic utterance all-pass."
+        }
+      ],
+      "unresolved_readings": [
+        {
+          "position": 5,
+          "char": "差",
+          "intended": "cha1",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        },
+        {
+          "position": 8,
+          "char": "差",
+          "intended": "cha1",
+          "why": "Actual full utterance measured; at least one competing-reading proxy lacks unique refs or clean margin/self-test. Not an actual wrong-reading finding or automaticpass."
+        }
+      ],
+      "earlier_clone_small_asr": "关注网球时差,时差归我,好球归你。",
+      "earlier_clone_medium_asr": "关注网球时差,时差归我,好球归你。",
+      "actual_medium_asr": "关注网球时差,时差归我,好球归你。",
+      "actual_renderer_audio_file": "voice_outro.mp3",
+      "actual_renderer_audio_sha256": "63b30a54d11905384910c4f2efc895bce0655ce4c09a1b175f72b5a7ba683a0c",
+      "word_boundary_exact_match_to_qc": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-run37434124207-report.json",
+      "sha256": "c1aca236ea4d08bfcce4c678d51eceb9085e47b500c572862e3cfe333bd514d3"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-medium-asr.json",
+      "sha256": "814cac9d843af7264b5412bf3c14b88e8986e7303e036943c8d1dd8fec58c59d"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-targeted-controls.json",
+      "sha256": "e7b27b5418fe5e20c609e9627c4b94b23482929ba21888a272ab16c45e6e8dd7"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-baofa-controls.json",
+      "sha256": "f6f7f28efae8f75538fd6885a50e7308939a89ca5b89cc8be7603e86b698046b"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-clear-reading-controls.json",
+      "sha256": "6ed3f00782b2273f6a2d4f91432956e6bf2615b022c9fa62467cbc41cc4c15b1"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-qiang-exact-pcm.json",
+      "sha256": "89769e5051a125a8fa377d32d279a036f078180d00270af41a704b4df9cbbbbe"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-guanjun-f0-diagnostic.json",
+      "sha256": "0e6a6c3c2c758df3a448be9482ebbb1adcfed71fd6b812a41af4747d0b270eb7"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-pcm-target-comparisons.json",
+      "sha256": "0e7482dcdd04504ec4b7b572b9d9658164f9db7478acd59005b088450027bbcb"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-azure-assessment.json",
+      "sha256": "f28d11c4e02bfeee191ddc6eda61fd875de24788535cc409d36c7393f7dce7b1"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/foreground-source-pcm-equivalence.json",
+      "sha256": "edcb06b72ba28e94b06a68cb2e834e1142eeefd77aa634a495614b76cb29387b"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-actual-renderer-controls.json",
+      "sha256": "25f5bbb53b1168316a8256c4054cc6101b5031335f82035102bba3949f00370b"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-actual-renderer-binding.json",
+      "sha256": "4c1d3f4f7227be695cc1b37ddb2c708acfcb6d5d7945e715b8859da101555484"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-actual-renderer-medium-asr.json",
+      "sha256": "2fd69245fa628b2c13b8469668bb5bcb439b730771ab72a8fbd0f16779f2d827"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-actual-renderer-clear-pcm.json",
+      "sha256": "788256c95edb9a6bc0346d8b4d5f60ef6cc70d956d52338d1683eee29fb2e02c"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-actual-renderer-qiang-exact-pcm.json",
+      "sha256": "3171fbda27195d5346cb5365fb6053eb324574ba3d2061d32c6e97e4fdff1f64"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-actual-renderer-baofa.json",
+      "sha256": "6c2cd7929098db7dbf4c492ac826b68ec8f79c7a627951a5c36a0082b9128371"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/tts-actual-renderer-guanjun-f0.json",
+      "sha256": "1b1a674cbc62f3e547724865c583916f85f052ff649dab42eec1bac823fe8df4"
+    }
+  ],
+  "proxy_limits": "Do not expand uncertain brand-outro proxy tests indefinitely or replace words solely for a proxy. Actual full text/voice/rate were measured; unresolved status is explicit. Azure independent phoneme assessment was requested in authorized runner but no API call occurred because credentials absent; not a scored result.",
+  "withdrawn_error": "Earlier guan1 advice for冠军was incorrect and withdrawn; no final text/audio changed. Earlier de2 target for打得was an incorrect contextual dictionary proxy, retested asde5.",
+  "normal_renderer_narration_record": {
+    "path": "data/narration_checks/noskova-alexandrova.json",
+    "sha256": "330be56805c320bae73b858f15f152f62c4498d599fff6cce4a4dc26d3b92a36",
+    "checked_at": "2026-10-06T08:23:24Z",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "backend": "edge-tts",
+    "all_seven_durations_match_qc": true,
+    "limitation": "Matches exact input text fingerprints and durations; this metadata is not audio byte binding."
+  },
+  "reviewed_audio": "Actual preserved renderer37438489355 eight voice MP3 bytes, not only same-text clones",
+  "earlier_clone_review_run": 37434124207,
+  "clone_binding_limitation": "Earlier same-text QCs have exact same WordBoundary arrays, sample counts and durations but different MP3 and fullPCMbytes. We did not substitute metadata equality for actualwaveform identity; actual renderer audio was directly rechecked."
+}

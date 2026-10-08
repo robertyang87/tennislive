@@ -1,0 +1,84 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "large-v3-turbo",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 4,
+  "range_to": 16,
+  "created_at": "2026-10-04T14:47:04.411390+00:00",
+  "elapsed_seconds": 5.13,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 10.08,
+      "end": 13.6,
+      "text": " That is Alexander Zverev who wastes very little time.",
+      "avg_logprob": -0.4531788267195225,
+      "no_speech_prob": 2.199344525943836e-11,
+      "words": [
+        {
+          "start": 10.08,
+          "end": 10.74,
+          "word": " That",
+          "probability": 0.3221314251422882
+        },
+        {
+          "start": 10.74,
+          "end": 11.0,
+          "word": " is",
+          "probability": 0.8171765804290771
+        },
+        {
+          "start": 11.0,
+          "end": 11.66,
+          "word": " Alexander",
+          "probability": 0.8604841828346252
+        },
+        {
+          "start": 11.66,
+          "end": 12.1,
+          "word": " Zverev",
+          "probability": 0.9458539287249247
+        },
+        {
+          "start": 12.1,
+          "end": 12.24,
+          "word": " who",
+          "probability": 0.9256321787834167
+        },
+        {
+          "start": 12.24,
+          "end": 12.56,
+          "word": " wastes",
+          "probability": 0.9670181572437286
+        },
+        {
+          "start": 12.56,
+          "end": 12.8,
+          "word": " very",
+          "probability": 0.99528968334198
+        },
+        {
+          "start": 12.8,
+          "end": 13.14,
+          "word": " little",
+          "probability": 0.9995365142822266
+        },
+        {
+          "start": 13.14,
+          "end": 13.6,
+          "word": " time.",
+          "probability": 0.9991455078125
+        }
+      ]
+    }
+  ]
+}

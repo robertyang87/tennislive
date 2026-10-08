@@ -107,7 +107,7 @@ _BREAKERS = {
     "小红书正文 1000 字": lambda d, m: dataclasses.replace(
         d, xhs=d.xhs.split("\n", 1)[0] + "\n\n" + "字" * 1001),
     "标题字位": lambda d, m: dataclasses.replace(
-        d, xhs=d.xhs.replace(f"｜{d.story.title}", f"｜{d.story.title}再加上一长串标题", 1)),
+        d, xhs="1" * 21 + "\n" + d.xhs.split("\n", 1)[1]),
     "标签": lambda d, m: dataclasses.replace(
         d, xhs=d.xhs.rsplit("\n\n", 1)[0] + "\n\n#网球时差 #网球"),
     "封面首句窗口": lambda d, m: _beat(
@@ -201,7 +201,7 @@ def test_栏目认不出时报成一行而不是炸成traceback(monkeypatch, cap
         out = capsys.readouterr().out
         assert "✗ 栏目" in out and "✗ 相对时间词" in out, out
         # 其余各项照样报完：合格的那些一个不少
-        assert out.count("✓") == len(P.CHECKS) - 2, out
+        assert out.count("✓") == len(P.CHECKS) - (3 if column == "没登记过的栏目" else 2), out
 
 
 def test_最宽的日期真的是最宽的():

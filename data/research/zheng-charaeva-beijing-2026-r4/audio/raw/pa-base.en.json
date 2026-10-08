@@ -1,0 +1,69 @@
+{
+  "model": "base.en",
+  "source_from": 282.7,
+  "source_to": 286.1,
+  "parameters": {
+    "vad_filter": false,
+    "word_timestamps": true,
+    "initial_prompt": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.0,
+      "end": 1.08,
+      "text": " That is the gentleman.",
+      "tokens": [
+        50363,
+        1320,
+        318,
+        262,
+        22427,
+        13,
+        50463
+      ],
+      "avg_logprob": -1.087192878127098,
+      "compression_ratio": 0.7333333333333333,
+      "no_speech_prob": 0.4901730716228485,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.62,
+          "word": " That",
+          "probability": 0.005267047788947821
+        },
+        {
+          "start": 0.62,
+          "end": 0.76,
+          "word": " is",
+          "probability": 0.49538454413414
+        },
+        {
+          "start": 0.76,
+          "end": 0.9,
+          "word": " the",
+          "probability": 0.5869516730308533
+        },
+        {
+          "start": 0.9,
+          "end": 1.08,
+          "word": " gentleman.",
+          "probability": 0.7089853882789612
+        }
+      ],
+      "temperature": 1.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

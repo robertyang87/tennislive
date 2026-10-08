@@ -1,0 +1,81 @@
+{
+  "model": "medium.en",
+  "source_from": 282.7,
+  "source_to": 286.1,
+  "parameters": {
+    "language": "en",
+    "beam_size": 7,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null
+  },
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.0,
+      "end": 2.7,
+      "text": " Ladies and gentlemen, Tim Siegel!",
+      "tokens": [
+        50363,
+        37401,
+        290,
+        28527,
+        11,
+        5045,
+        311,
+        28210,
+        0,
+        50513
+      ],
+      "avg_logprob": -0.8019455996426669,
+      "compression_ratio": 0.8048780487804879,
+      "no_speech_prob": 0.5478838086128235,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.8,
+          "word": " Ladies",
+          "probability": 0.6309335827827454
+        },
+        {
+          "start": 0.8,
+          "end": 1.02,
+          "word": " and",
+          "probability": 0.9937112331390381
+        },
+        {
+          "start": 1.02,
+          "end": 1.7,
+          "word": " gentlemen,",
+          "probability": 0.8137430548667908
+        },
+        {
+          "start": 2.08,
+          "end": 2.24,
+          "word": " Tim",
+          "probability": 0.044217027723789215
+        },
+        {
+          "start": 2.24,
+          "end": 2.7,
+          "word": " Siegel!",
+          "probability": 0.6184277236461639
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

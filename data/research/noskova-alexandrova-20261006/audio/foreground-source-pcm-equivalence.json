@@ -1,0 +1,108 @@
+{
+  "method": "Actual both source first audio streams decoded by same ffmpeg to mono16k signed16le PCM; byte comparison across full duration and every selected source window, no claimed human listening",
+  "old_source_sha256": "6d3a37557d2195d0ac284187e8cf73679b4fc5d183c8c1002ccd678c52406802",
+  "new_source_sha256": "281ee2bbcc9b83672c53cdc8abd081914ee0381fa8ecafc8973d9219f255432a",
+  "old_source_bytes": 38357978,
+  "new_source_bytes": 71668353,
+  "decoded_pcm_bytes": [
+    9893558,
+    9893558
+  ],
+  "decoded_pcm_sha256": [
+    "5b12ff77b487c2be82b0eb31efd19003892245c164018603691227885b30b6c8",
+    "5b12ff77b487c2be82b0eb31efd19003892245c164018603691227885b30b6c8"
+  ],
+  "full_pcm_byte_identical": true,
+  "windows": [
+    {
+      "index": 0,
+      "from": 277.2,
+      "to": 280.6,
+      "byte_identical": true,
+      "pcm_sha256": [
+        "9d789f7fc566141f194632b36ce61dbe14f733013b6d85378c289e245b3b82c0",
+        "9d789f7fc566141f194632b36ce61dbe14f733013b6d85378c289e245b3b82c0"
+      ]
+    },
+    {
+      "index": 2,
+      "from": 0.0,
+      "to": 19.72,
+      "byte_identical": true,
+      "pcm_sha256": [
+        "f88524ef6deed9a0836522d01a3cdd0d64ed01beea8f923faf9e82a644c93765",
+        "f88524ef6deed9a0836522d01a3cdd0d64ed01beea8f923faf9e82a644c93765"
+      ]
+    },
+    {
+      "index": 4,
+      "from": 19.72,
+      "to": 29.44,
+      "byte_identical": true,
+      "pcm_sha256": [
+        "38fab5fea87d8e16951469b2d0dfe80ff7842186fbd402b920cf9542efeb9e12",
+        "38fab5fea87d8e16951469b2d0dfe80ff7842186fbd402b920cf9542efeb9e12"
+      ]
+    },
+    {
+      "index": 5,
+      "from": 60.52,
+      "to": 73.92,
+      "byte_identical": true,
+      "pcm_sha256": [
+        "a4c76e117d1bc16962c8f7c5978f6581b12bdf00ad931431095e6917e937bdf7",
+        "a4c76e117d1bc16962c8f7c5978f6581b12bdf00ad931431095e6917e937bdf7"
+      ]
+    },
+    {
+      "index": 7,
+      "from": 73.92,
+      "to": 97.88,
+      "byte_identical": true,
+      "pcm_sha256": [
+        "c165ee148fe95a4ce32d77bad7429ad9f544eafa2bb848b8c9aa4bae679e92f2",
+        "c165ee148fe95a4ce32d77bad7429ad9f544eafa2bb848b8c9aa4bae679e92f2"
+      ]
+    },
+    {
+      "index": 8,
+      "from": 161.9,
+      "to": 174.84,
+      "byte_identical": true,
+      "pcm_sha256": [
+        "b5b70972eecf562bac6a5d63d08ce36eeaa572bcd541b140b858b41d381ee4b9",
+        "b5b70972eecf562bac6a5d63d08ce36eeaa572bcd541b140b858b41d381ee4b9"
+      ]
+    },
+    {
+      "index": 9,
+      "from": 174.84,
+      "to": 195.4,
+      "byte_identical": true,
+      "pcm_sha256": [
+        "2bb6c423c79470188e422637582ea54a7a6d63753fea324a452598f328583791",
+        "2bb6c423c79470188e422637582ea54a7a6d63753fea324a452598f328583791"
+      ]
+    },
+    {
+      "index": 11,
+      "from": 207.2,
+      "to": 218.6,
+      "byte_identical": true,
+      "pcm_sha256": [
+        "0e4f80d81e79d6c7ec3d18c4fdd4429e9eb4d64ff3093ba1cfedea3be39ba7b3",
+        "0e4f80d81e79d6c7ec3d18c4fdd4429e9eb4d64ff3093ba1cfedea3be39ba7b3"
+      ]
+    },
+    {
+      "index": 15,
+      "from": 272.88,
+      "to": 299.08,
+      "byte_identical": true,
+      "pcm_sha256": [
+        "61a38d6a82c66a6881bc997f6e61bb9ac3aaf68a1c7af1896e03d0f1114e707c",
+        "61a38d6a82c66a6881bc997f6e61bb9ac3aaf68a1c7af1896e03d0f1114e707c"
+      ]
+    }
+  ]
+}

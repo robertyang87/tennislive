@@ -131,6 +131,73 @@ def _jpg(path: Path) -> bytes:
     return buf.getvalue()
 
 
+def _verify_jpeg_end(path: Path, image) -> None:
+    """常规 EOI 快判；有尾数据的 JPEG 必须有 EOI 且完整解码成功。"""
+    data = path.read_bytes()
+    if data.rstrip(b"\x00").endswith(b"\xff\xd9"):
+        return
+    if b"\xff\xd9" not in data:
+        raise OSError("JPEG 缺少 EOI（FFD9）——文件是半截的")
+    # EOI 后可以有发布方的尾数据；仅搜到 FFD9 还不够，它也可能在注释块里。
+    # 完整解码必须成功，不能把含假 EOI 的截断图片当成合法尾数据。
+    image.load()
+
+
+@pytest.mark.parametrize("tail", [b"", b"\x00" * 4])
+def test_JPEG常规结束标记仍走廉价检查(tmp_path, monkeypatch, tail):
+    from PIL import Image
+    path = tmp_path / "standard.jpg"
+    data = _jpg(path)
+    path.write_bytes(data + tail)
+    with Image.open(path) as image:
+        def unexpected_decode():
+            pytest.fail("常规 EOI 不应触发全图解码")
+        monkeypatch.setattr(image, "load", unexpected_decode)
+        _verify_jpeg_end(path, image)
+
+
+def test_JPEG合法尾数据必须完整解码(tmp_path, monkeypatch):
+    from PIL import Image
+    path = tmp_path / "trailer.jpg"
+    data = _jpg(path)
+    trailer = b"official-publisher-tail!"
+    assert len(trailer) == 24
+    path.write_bytes(data + trailer)
+    with Image.open(path) as image:
+        decoded = []
+        load = image.load
+        def checked_load():
+            pixels = load()
+            decoded.append(image.size)
+            return pixels
+        monkeypatch.setattr(image, "load", checked_load)
+        _verify_jpeg_end(path, image)
+        assert decoded == [(320, 240)]
+
+
+@pytest.mark.parametrize("cut", [2, "entropy"])
+def test_JPEG缺EOI即使有尾数据也拒绝(tmp_path, cut):
+    from PIL import Image
+    path = tmp_path / "missing-end.jpg"
+    data = _jpg(path)
+    incomplete = data[:-cut] if isinstance(cut, int) else data[: len(data) * 2 // 3]
+    path.write_bytes(incomplete + b"publisher trailer")
+    with Image.open(path) as image, pytest.raises(OSError, match="缺少 EOI"):
+        _verify_jpeg_end(path, image)
+
+
+def test_JPEG注释块假EOI不能掩盖截断(tmp_path):
+    from PIL import Image
+    path = tmp_path / "false-end.jpg"
+    data = _jpg(path)
+    # 合法 COM 块里也可含 FFD9，但实际压缩数据被截断，没有真正的结束标记。
+    comment = b"not-an-end:\xff\xd9:comment"
+    com = b"\xff\xfe" + (len(comment) + 2).to_bytes(2, "big") + comment
+    path.write_bytes(data[:2] + com + data[2: len(data) * 2 // 3] + b"trailer")
+    with Image.open(path) as image, pytest.raises(OSError):
+        _verify_jpeg_end(path, image)
+
+
 def test_引用的图要在而且要解得开(tmp_path):
     (tmp_path / "assets").mkdir()
     good = _png(tmp_path / "assets" / "good.png")
@@ -166,10 +233,10 @@ def test_比分板的国旗换算不出来在dry_run就红():
 
 
 def test_仓库里的图都解得开():
-    """全库结构扫：PNG 逐块校验 CRC，JPEG 必须收在 EOI，其余格式整张解。
+    """全库结构扫：PNG 校验 CRC，JPEG 校验 EOI/合法尾数据，其余格式整张解。
 
     dry-run 那一头对**这条 spec 引用的图**整张解码（`image_load_problem`）；这条测试
-    管的是**所有提交进来的图**——不整张解（1097 张要 20 秒），但半截文件和坏块
+    管的是**所有提交进来的图**——常规 JPEG 不整张解（1097 张要 20 秒），但半截文件和坏块
     （zheng-you 那张 `wta-322451.png` 就是 IDAT 校验和错）一样逃不掉。
     """
     from PIL import Image
@@ -186,8 +253,7 @@ def test_仓库里的图都解得开():
                 if kind == "PNG":
                     image.verify()
                 elif kind == "JPEG":
-                    if path.read_bytes().rstrip(b"\x00")[-2:] != b"\xff\xd9":
-                        raise OSError("JPEG 没收在 EOI（FFD9）——文件是半截的")
+                    _verify_jpeg_end(path, image)
                 else:
                     image.load()
         except Exception as exc:  # noqa: BLE001

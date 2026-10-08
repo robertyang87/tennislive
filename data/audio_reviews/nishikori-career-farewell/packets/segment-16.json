@@ -1,0 +1,394 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "asset_timings + closing_source full selected raw-window audit",
+  "reviewed_at": "2026-10-04T07:41:26.425654+00:00",
+  "status": "complete",
+  "reviewed_from": 403.4,
+  "reviewed_to": 410.72,
+  "foreground_english": [
+    {
+      "start": 405.08,
+      "end": 407.62,
+      "en": "Victory for Nishikori!",
+      "zh": "锦织圭获胜！"
+    },
+    {
+      "start": 407.63,
+      "end": 409.72,
+      "en": "And what a way to do it!",
+      "zh": "这样的夺冠方式，太精彩了！"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "uncertain_spans": [],
+  "raw_asr": {
+    "small.en": [
+      {
+        "source_start": 405.13,
+        "source_end": 413.45,
+        "review_start": 172.08,
+        "review_end": 180.40000000000003,
+        "text": " Victory for Nishikori and what a way to do it he's successfully defended his",
+        "words": [
+          {
+            "source_start": 405.13,
+            "source_end": 406.54999999999995,
+            "word": " Victory"
+          },
+          {
+            "source_start": 406.54999999999995,
+            "source_end": 406.90999999999997,
+            "word": " for"
+          },
+          {
+            "source_start": 406.90999999999997,
+            "source_end": 407.48999999999995,
+            "word": " Nishikori"
+          },
+          {
+            "source_start": 407.48999999999995,
+            "source_end": 408.19,
+            "word": " and"
+          },
+          {
+            "source_start": 408.19,
+            "source_end": 408.63,
+            "word": " what"
+          },
+          {
+            "source_start": 408.63,
+            "source_end": 408.77,
+            "word": " a"
+          },
+          {
+            "source_start": 408.77,
+            "source_end": 408.92999999999995,
+            "word": " way"
+          },
+          {
+            "source_start": 408.92999999999995,
+            "source_end": 409.09,
+            "word": " to"
+          },
+          {
+            "source_start": 409.09,
+            "source_end": 409.27,
+            "word": " do"
+          },
+          {
+            "source_start": 409.27,
+            "source_end": 409.69,
+            "word": " it"
+          },
+          {
+            "source_start": 409.69,
+            "source_end": 412.04999999999995,
+            "word": " he's"
+          },
+          {
+            "source_start": 412.04999999999995,
+            "source_end": 412.57,
+            "word": " successfully"
+          },
+          {
+            "source_start": 412.57,
+            "source_end": 413.21,
+            "word": " defended"
+          },
+          {
+            "source_start": 413.21,
+            "source_end": 413.45,
+            "word": " his"
+          }
+        ]
+      },
+      {
+        "source_start": 413.45,
+        "source_end": 420.25,
+        "review_start": 180.40000000000003,
+        "review_end": 187.20000000000002,
+        "text": " title here in Barcelona it's the second title of the season and the ninth of his",
+        "words": [
+          {
+            "source_start": 413.45,
+            "source_end": 413.78999999999996,
+            "word": " title"
+          },
+          {
+            "source_start": 413.78999999999996,
+            "source_end": 414.07,
+            "word": " here"
+          },
+          {
+            "source_start": 414.07,
+            "source_end": 414.25,
+            "word": " in"
+          },
+          {
+            "source_start": 414.25,
+            "source_end": 414.71,
+            "word": " Barcelona"
+          },
+          {
+            "source_start": 414.71,
+            "source_end": 416.63,
+            "word": " it's"
+          },
+          {
+            "source_start": 416.63,
+            "source_end": 416.78999999999996,
+            "word": " the"
+          },
+          {
+            "source_start": 416.78999999999996,
+            "source_end": 417.13,
+            "word": " second"
+          },
+          {
+            "source_start": 417.13,
+            "source_end": 417.66999999999996,
+            "word": " title"
+          },
+          {
+            "source_start": 417.66999999999996,
+            "source_end": 417.83,
+            "word": " of"
+          },
+          {
+            "source_start": 417.83,
+            "source_end": 417.96999999999997,
+            "word": " the"
+          },
+          {
+            "source_start": 417.96999999999997,
+            "source_end": 418.33,
+            "word": " season"
+          },
+          {
+            "source_start": 418.33,
+            "source_end": 418.87,
+            "word": " and"
+          },
+          {
+            "source_start": 418.87,
+            "source_end": 418.98999999999995,
+            "word": " the"
+          },
+          {
+            "source_start": 418.98999999999995,
+            "source_end": 419.45,
+            "word": " ninth"
+          },
+          {
+            "source_start": 419.45,
+            "source_end": 420.07,
+            "word": " of"
+          },
+          {
+            "source_start": 420.07,
+            "source_end": 420.25,
+            "word": " his"
+          }
+        ]
+      },
+      {
+        "source_start": 420.25,
+        "source_end": 420.66999999999996,
+        "review_start": 187.20000000000002,
+        "review_end": 187.62000000000003,
+        "text": " career",
+        "words": [
+          {
+            "source_start": 420.25,
+            "source_end": 420.66999999999996,
+            "word": " career"
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "source_start": 403.4,
+        "source_end": 413.40999999999997,
+        "review_start": 170.35000000000002,
+        "review_end": 180.36,
+        "text": " victory for Nishikori and what a way to do it he's successfully defended his",
+        "words": [
+          {
+            "source_start": 403.4,
+            "source_end": 404.73999999999995,
+            "word": " victory"
+          },
+          {
+            "source_start": 406.46999999999997,
+            "source_end": 406.84999999999997,
+            "word": " for"
+          },
+          {
+            "source_start": 406.84999999999997,
+            "source_end": 407.42999999999995,
+            "word": " Nishikori"
+          },
+          {
+            "source_start": 407.42999999999995,
+            "source_end": 408.10999999999996,
+            "word": " and"
+          },
+          {
+            "source_start": 408.10999999999996,
+            "source_end": 408.57,
+            "word": " what"
+          },
+          {
+            "source_start": 408.57,
+            "source_end": 408.72999999999996,
+            "word": " a"
+          },
+          {
+            "source_start": 408.72999999999996,
+            "source_end": 408.90999999999997,
+            "word": " way"
+          },
+          {
+            "source_start": 408.90999999999997,
+            "source_end": 409.01,
+            "word": " to"
+          },
+          {
+            "source_start": 409.01,
+            "source_end": 409.21,
+            "word": " do"
+          },
+          {
+            "source_start": 409.21,
+            "source_end": 409.39,
+            "word": " it"
+          },
+          {
+            "source_start": 409.39,
+            "source_end": 411.95,
+            "word": " he's"
+          },
+          {
+            "source_start": 411.95,
+            "source_end": 412.51,
+            "word": " successfully"
+          },
+          {
+            "source_start": 412.51,
+            "source_end": 413.10999999999996,
+            "word": " defended"
+          },
+          {
+            "source_start": 413.10999999999996,
+            "source_end": 413.40999999999997,
+            "word": " his"
+          }
+        ]
+      },
+      {
+        "source_start": 413.40999999999997,
+        "source_end": 420.59,
+        "review_start": 180.36,
+        "review_end": 187.54000000000002,
+        "text": " title here in Barcelona it's the second title of the season and the ninth of his career",
+        "words": [
+          {
+            "source_start": 413.40999999999997,
+            "source_end": 413.71,
+            "word": " title"
+          },
+          {
+            "source_start": 413.71,
+            "source_end": 414.03,
+            "word": " here"
+          },
+          {
+            "source_start": 414.03,
+            "source_end": 414.19,
+            "word": " in"
+          },
+          {
+            "source_start": 414.19,
+            "source_end": 414.54999999999995,
+            "word": " Barcelona"
+          },
+          {
+            "source_start": 414.54999999999995,
+            "source_end": 416.60999999999996,
+            "word": " it's"
+          },
+          {
+            "source_start": 416.60999999999996,
+            "source_end": 416.71,
+            "word": " the"
+          },
+          {
+            "source_start": 416.71,
+            "source_end": 417.13,
+            "word": " second"
+          },
+          {
+            "source_start": 417.13,
+            "source_end": 417.53,
+            "word": " title"
+          },
+          {
+            "source_start": 417.53,
+            "source_end": 417.81,
+            "word": " of"
+          },
+          {
+            "source_start": 417.81,
+            "source_end": 417.89,
+            "word": " the"
+          },
+          {
+            "source_start": 417.89,
+            "source_end": 418.15,
+            "word": " season"
+          },
+          {
+            "source_start": 418.15,
+            "source_end": 418.81,
+            "word": " and"
+          },
+          {
+            "source_start": 418.81,
+            "source_end": 418.95,
+            "word": " the"
+          },
+          {
+            "source_start": 418.95,
+            "source_end": 419.31,
+            "word": " ninth"
+          },
+          {
+            "source_start": 419.31,
+            "source_end": 420.01,
+            "word": " of"
+          },
+          {
+            "source_start": 420.01,
+            "source_end": 420.19,
+            "word": " his"
+          },
+          {
+            "source_start": 420.19,
+            "source_end": 420.59,
+            "word": " career"
+          }
+        ]
+      }
+    ]
+  },
+  "source_review": "data/audio_reviews/nishikori-career-farewell/evidence/native-foreground-titles-audit-3b8675b4a78f.json",
+  "portable_review_provenance": {
+    "original_packet_sha256": "d316a99594786492324218cb77c63d86e01a43fa98953e7ec6ffe3f377d19d14",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

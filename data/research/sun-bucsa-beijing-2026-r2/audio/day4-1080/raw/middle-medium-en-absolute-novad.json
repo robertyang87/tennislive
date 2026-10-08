@@ -1,0 +1,523 @@
+{
+  "schema": "tennislive.derived-pcm-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=EuPUtfm-pA0",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 2385.0,
+  "range_to": 2510.0,
+  "created_at": "2026-10-03T18:20:10.242819+00:00",
+  "elapsed_seconds": 61.63,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 2389.5,
+      "end": 2392.12,
+      "text": " And a really good finish there.",
+      "avg_logprob": -0.5644117593765259,
+      "no_speech_prob": 0.01717008836567402,
+      "compression_ratio": 1.0153846153846153,
+      "words": [
+        {
+          "start": 2389.5,
+          "end": 2390.14,
+          "word": " And",
+          "probability": 0.29510125517845154,
+          "chapter_start": 24.5,
+          "chapter_end": 25.14
+        },
+        {
+          "start": 2390.14,
+          "end": 2390.34,
+          "word": " a",
+          "probability": 0.9872432947158813,
+          "chapter_start": 25.14,
+          "chapter_end": 25.34
+        },
+        {
+          "start": 2390.34,
+          "end": 2390.52,
+          "word": " really",
+          "probability": 0.9892646670341492,
+          "chapter_start": 25.34,
+          "chapter_end": 25.52
+        },
+        {
+          "start": 2390.52,
+          "end": 2390.74,
+          "word": " good",
+          "probability": 0.998656153678894,
+          "chapter_start": 25.52,
+          "chapter_end": 25.74
+        },
+        {
+          "start": 2390.74,
+          "end": 2391.06,
+          "word": " finish",
+          "probability": 0.9988393187522888,
+          "chapter_start": 25.74,
+          "chapter_end": 26.06
+        },
+        {
+          "start": 2391.06,
+          "end": 2392.12,
+          "word": " there.",
+          "probability": 0.9729861617088318,
+          "chapter_start": 26.06,
+          "chapter_end": 27.12
+        }
+      ],
+      "chapter_start": 24.5,
+      "chapter_end": 27.12
+    },
+    {
+      "id": 2,
+      "start": 2403.56,
+      "end": 2406.4,
+      "text": " A good opening hold of serve here.",
+      "avg_logprob": -0.5644117593765259,
+      "no_speech_prob": 0.01717008836567402,
+      "compression_ratio": 1.0153846153846153,
+      "words": [
+        {
+          "start": 2403.56,
+          "end": 2404.2,
+          "word": " A",
+          "probability": 0.32033973932266235,
+          "chapter_start": 38.56,
+          "chapter_end": 39.2
+        },
+        {
+          "start": 2404.2,
+          "end": 2404.52,
+          "word": " good",
+          "probability": 0.9727805852890015,
+          "chapter_start": 39.2,
+          "chapter_end": 39.52
+        },
+        {
+          "start": 2404.52,
+          "end": 2405.08,
+          "word": " opening",
+          "probability": 0.9969601631164551,
+          "chapter_start": 39.52,
+          "chapter_end": 40.08
+        },
+        {
+          "start": 2405.08,
+          "end": 2405.38,
+          "word": " hold",
+          "probability": 0.7327225804328918,
+          "chapter_start": 40.08,
+          "chapter_end": 40.38
+        },
+        {
+          "start": 2405.38,
+          "end": 2405.62,
+          "word": " of",
+          "probability": 0.9856411814689636,
+          "chapter_start": 40.38,
+          "chapter_end": 40.62
+        },
+        {
+          "start": 2405.62,
+          "end": 2405.84,
+          "word": " serve",
+          "probability": 0.975267231464386,
+          "chapter_start": 40.62,
+          "chapter_end": 40.84
+        },
+        {
+          "start": 2405.84,
+          "end": 2406.4,
+          "word": " here.",
+          "probability": 0.984386146068573,
+          "chapter_start": 40.84,
+          "chapter_end": 41.4
+        }
+      ],
+      "chapter_start": 38.56,
+      "chapter_end": 41.4
+    },
+    {
+      "id": 3,
+      "start": 2428.3,
+      "end": 2444.92,
+      "text": " Thank you very much.",
+      "avg_logprob": -1.3073841035366058,
+      "no_speech_prob": 0.5576888918876648,
+      "compression_ratio": 0.7142857142857143,
+      "words": [
+        {
+          "start": 2428.3,
+          "end": 2429.7,
+          "word": " Thank",
+          "probability": 0.0045783016830682755,
+          "chapter_start": 63.3,
+          "chapter_end": 64.7
+        },
+        {
+          "start": 2429.7,
+          "end": 2431.1,
+          "word": " you",
+          "probability": 0.9374014735221863,
+          "chapter_start": 64.7,
+          "chapter_end": 66.1
+        },
+        {
+          "start": 2431.1,
+          "end": 2432.64,
+          "word": " very",
+          "probability": 0.06862110644578934,
+          "chapter_start": 66.1,
+          "chapter_end": 67.64
+        },
+        {
+          "start": 2432.64,
+          "end": 2444.92,
+          "word": " much.",
+          "probability": 0.9853208661079407,
+          "chapter_start": 67.64,
+          "chapter_end": 79.92
+        }
+      ],
+      "chapter_start": 63.3,
+      "chapter_end": 79.92
+    },
+    {
+      "id": 4,
+      "start": 2447.98,
+      "end": 2449.2,
+      "text": " Nice finish there.",
+      "avg_logprob": -0.6454173982143402,
+      "no_speech_prob": 0.1228322982788086,
+      "compression_ratio": 1.0344827586206897,
+      "words": [
+        {
+          "start": 2447.98,
+          "end": 2448.58,
+          "word": " Nice",
+          "probability": 0.7096298336982727,
+          "chapter_start": 82.98,
+          "chapter_end": 83.58
+        },
+        {
+          "start": 2448.58,
+          "end": 2448.86,
+          "word": " finish",
+          "probability": 0.9923478364944458,
+          "chapter_start": 83.58,
+          "chapter_end": 83.86
+        },
+        {
+          "start": 2448.86,
+          "end": 2449.2,
+          "word": " there.",
+          "probability": 0.9033340215682983,
+          "chapter_start": 83.86,
+          "chapter_end": 84.2
+        }
+      ],
+      "chapter_start": 82.98,
+      "chapter_end": 84.2
+    },
+    {
+      "id": 5,
+      "start": 2464.02,
+      "end": 2465.38,
+      "text": " Really nice winner on the",
+      "avg_logprob": -0.6454173982143402,
+      "no_speech_prob": 0.1228322982788086,
+      "compression_ratio": 1.0344827586206897,
+      "words": [
+        {
+          "start": 2464.02,
+          "end": 2464.62,
+          "word": " Really",
+          "probability": 0.7336876392364502,
+          "chapter_start": 99.02,
+          "chapter_end": 99.62
+        },
+        {
+          "start": 2464.62,
+          "end": 2464.88,
+          "word": " nice",
+          "probability": 0.9867104887962341,
+          "chapter_start": 99.62,
+          "chapter_end": 99.88
+        },
+        {
+          "start": 2464.88,
+          "end": 2465.1,
+          "word": " winner",
+          "probability": 0.9217146635055542,
+          "chapter_start": 99.88,
+          "chapter_end": 100.1
+        },
+        {
+          "start": 2465.1,
+          "end": 2465.26,
+          "word": " on",
+          "probability": 0.9968003034591675,
+          "chapter_start": 100.1,
+          "chapter_end": 100.26
+        },
+        {
+          "start": 2465.26,
+          "end": 2465.38,
+          "word": " the",
+          "probability": 0.9994497895240784,
+          "chapter_start": 100.26,
+          "chapter_end": 100.38
+        }
+      ],
+      "chapter_start": 99.02,
+      "chapter_end": 100.38
+    },
+    {
+      "id": 6,
+      "start": 2465.38,
+      "end": 2466.1,
+      "text": " forehand there.",
+      "avg_logprob": -0.6454173982143402,
+      "no_speech_prob": 0.1228322982788086,
+      "compression_ratio": 1.0344827586206897,
+      "words": [
+        {
+          "start": 2465.38,
+          "end": 2465.78,
+          "word": " forehand",
+          "probability": 0.8831600248813629,
+          "chapter_start": 100.38,
+          "chapter_end": 100.78
+        },
+        {
+          "start": 2465.78,
+          "end": 2466.1,
+          "word": " there.",
+          "probability": 0.9416689276695251,
+          "chapter_start": 100.78,
+          "chapter_end": 101.1
+        }
+      ],
+      "chapter_start": 100.38,
+      "chapter_end": 101.1
+    },
+    {
+      "id": 7,
+      "start": 2476.14,
+      "end": 2479.0,
+      "text": " Really nice mix-up there.",
+      "avg_logprob": -0.7543499903245405,
+      "no_speech_prob": 0.09646040201187134,
+      "compression_ratio": 0.7575757575757576,
+      "words": [
+        {
+          "start": 2476.14,
+          "end": 2477.54,
+          "word": " Really",
+          "probability": 0.35346195101737976,
+          "chapter_start": 111.14,
+          "chapter_end": 112.54
+        },
+        {
+          "start": 2477.54,
+          "end": 2477.78,
+          "word": " nice",
+          "probability": 0.9904031753540039,
+          "chapter_start": 112.54,
+          "chapter_end": 112.78
+        },
+        {
+          "start": 2477.78,
+          "end": 2478.08,
+          "word": " mix",
+          "probability": 0.9819701910018921,
+          "chapter_start": 112.78,
+          "chapter_end": 113.08
+        },
+        {
+          "start": 2478.08,
+          "end": 2478.28,
+          "word": "-up",
+          "probability": 0.6760311722755432,
+          "chapter_start": 113.08,
+          "chapter_end": 113.28
+        },
+        {
+          "start": 2478.28,
+          "end": 2479.0,
+          "word": " there.",
+          "probability": 0.9510133266448975,
+          "chapter_start": 113.28,
+          "chapter_end": 114.0
+        }
+      ],
+      "chapter_start": 111.14,
+      "chapter_end": 114.0
+    },
+    {
+      "id": 8,
+      "start": 2503.28,
+      "end": 2506.16,
+      "text": " Oh, it did so well to turn that point around.",
+      "avg_logprob": -0.7619162480036418,
+      "no_speech_prob": 0.23325498402118683,
+      "compression_ratio": 0.8490566037735849,
+      "words": [
+        {
+          "start": 2503.28,
+          "end": 2503.8,
+          "word": " Oh,",
+          "probability": 0.08946993201971054,
+          "chapter_start": 138.28,
+          "chapter_end": 138.8
+        },
+        {
+          "start": 2504.02,
+          "end": 2504.02,
+          "word": " it",
+          "probability": 0.028674783185124397,
+          "chapter_start": 139.02,
+          "chapter_end": 139.02
+        },
+        {
+          "start": 2504.02,
+          "end": 2504.3,
+          "word": " did",
+          "probability": 0.8096698522567749,
+          "chapter_start": 139.02,
+          "chapter_end": 139.3
+        },
+        {
+          "start": 2504.3,
+          "end": 2504.64,
+          "word": " so",
+          "probability": 0.9905992150306702,
+          "chapter_start": 139.3,
+          "chapter_end": 139.64
+        },
+        {
+          "start": 2504.64,
+          "end": 2504.9,
+          "word": " well",
+          "probability": 0.996044397354126,
+          "chapter_start": 139.64,
+          "chapter_end": 139.9
+        },
+        {
+          "start": 2504.9,
+          "end": 2505.12,
+          "word": " to",
+          "probability": 0.9755393266677856,
+          "chapter_start": 139.9,
+          "chapter_end": 140.12
+        },
+        {
+          "start": 2505.12,
+          "end": 2505.3,
+          "word": " turn",
+          "probability": 0.9982179999351501,
+          "chapter_start": 140.12,
+          "chapter_end": 140.3
+        },
+        {
+          "start": 2505.3,
+          "end": 2505.5,
+          "word": " that",
+          "probability": 0.9961897730827332,
+          "chapter_start": 140.3,
+          "chapter_end": 140.5
+        },
+        {
+          "start": 2505.5,
+          "end": 2505.74,
+          "word": " point",
+          "probability": 0.9986812472343445,
+          "chapter_start": 140.5,
+          "chapter_end": 140.74
+        },
+        {
+          "start": 2505.74,
+          "end": 2506.16,
+          "word": " around.",
+          "probability": 0.9968881011009216,
+          "chapter_start": 140.74,
+          "chapter_end": 141.16
+        }
+      ],
+      "chapter_start": 138.28,
+      "chapter_end": 141.16
+    },
+    {
+      "id": 9,
+      "start": 2509.52,
+      "end": 2509.6,
+      "text": " Thank you very much.",
+      "avg_logprob": -0.9425652772188187,
+      "no_speech_prob": 0.6360439658164978,
+      "compression_ratio": 0.7142857142857143,
+      "words": [
+        {
+          "start": 2509.52,
+          "end": 2509.56,
+          "word": " Thank",
+          "probability": 0.010254080407321453,
+          "chapter_start": 144.52,
+          "chapter_end": 144.56
+        },
+        {
+          "start": 2509.56,
+          "end": 2509.58,
+          "word": " you",
+          "probability": 0.9785938262939453,
+          "chapter_start": 144.56,
+          "chapter_end": 144.58
+        },
+        {
+          "start": 2509.58,
+          "end": 2509.6,
+          "word": " very",
+          "probability": 0.18693099915981293,
+          "chapter_start": 144.58,
+          "chapter_end": 144.6
+        },
+        {
+          "start": 2509.6,
+          "end": 2509.6,
+          "word": " much.",
+          "probability": 0.9916741251945496,
+          "chapter_start": 144.6,
+          "chapter_end": 144.6
+        }
+      ],
+      "chapter_start": 144.52,
+      "chapter_end": 144.6
+    }
+  ],
+  "transcribed_input_sha256": "43d76393680e4224460c8d5ba3cee1daf7adb74e2027b17ffef92dc3b402a47d",
+  "transcribed_input": "chapter-review-derived-mono-48k.wav",
+  "transcribed_input_is_original_video_bytes": false,
+  "original_source_sha256": "3d750e42b40919ad12592419cd343dfaa19b44fb68fa979b6a7844d130ff302a",
+  "original_source_sha_provenance": {
+    "path": "data/research/sun-bucsa-beijing-2026-r2/audio/day4-1080/source-chapter-manifest.json",
+    "sha256": "752791a2d848ae5bdcfb4e74aee38c8c6f5e1e728c0bd61342244a04742cc6a4",
+    "source_hash_method": "actual complete original cache file read remotely during this export",
+    "export_run_id": "37143082855",
+    "export_head": "a31cfb583b22334cf41fbd81db53bdb57c60b22a"
+  },
+  "absolute_source_offset_seconds": 2365.0,
+  "reviewed_scope": "Only this183s derived PCM chapter or its recorded subwindow; full49minute original video was not transcribed locally.",
+  "actual_listening_performed": false,
+  "original_raw_local_document_sha256": "534e7996589d4ee0ba5b471c568f8a0aed946fd3f4ccce0ea5eb7c95d2f94420",
+  "time_mapping": "Originalabsolute = localchapter+2365.0",
+  "chapter_range_from": 20.0,
+  "chapter_range_to": 145.0
+}

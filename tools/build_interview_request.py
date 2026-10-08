@@ -678,6 +678,7 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
         segment,
         segment_ruler,
         strip_hesitation_lines,
+        transcript_language_windows,
     )
     from draft_interview_spec import cap_json3, translate  # noqa: PLC0415
 
@@ -751,6 +752,8 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
         lines = segment(
             [(row["t"], row["text"]) for row in rows], start, end,
             budget=req.get("segment_budget_px"), ruler=segment_ruler({"slug": slug}),
+            **({"language_windows": transcript_language_windows({**req, "start": start, "end": end})}
+               if req.get("transcript_languages") is not None else {}),
         )
         # render/verify 会在切行后清掉 um/uh 等犹豫音；初次翻译必须走完全相同的
         # 正文行，否则长讲话会出现“中文 656 行、英文 673 行”这种必然无法渲染的

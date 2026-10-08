@@ -1,0 +1,124 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "asset_timings + closing_source full selected raw-window audit",
+  "reviewed_at": "2026-10-04T07:41:26.418957+00:00",
+  "status": "complete",
+  "reviewed_from": 48.95,
+  "reviewed_to": 57.35,
+  "foreground_english": [],
+  "no_foreground_english_reason": "Both independent small.en/base.en full original window transcripts identify no lexical English in the selected interval; cross-ASR method, no human hearing claim.",
+  "uncertain_spans": [],
+  "raw_asr": {
+    "small.en": [
+      {
+        "source_start": 59.910000000000004,
+        "source_end": 61.97,
+        "review_start": 28.46,
+        "review_end": 30.52,
+        "text": " A moment to save it for the young...",
+        "words": [
+          {
+            "source_start": 59.910000000000004,
+            "source_end": 60.39,
+            "word": " A"
+          },
+          {
+            "source_start": 60.39,
+            "source_end": 60.63,
+            "word": " moment"
+          },
+          {
+            "source_start": 60.63,
+            "source_end": 60.93000000000001,
+            "word": " to"
+          },
+          {
+            "source_start": 60.93000000000001,
+            "source_end": 61.190000000000005,
+            "word": " save"
+          },
+          {
+            "source_start": 61.190000000000005,
+            "source_end": 61.410000000000004,
+            "word": " it"
+          },
+          {
+            "source_start": 61.410000000000004,
+            "source_end": 61.650000000000006,
+            "word": " for"
+          },
+          {
+            "source_start": 61.650000000000006,
+            "source_end": 61.77,
+            "word": " the"
+          },
+          {
+            "source_start": 61.77,
+            "source_end": 61.97,
+            "word": " young..."
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "source_start": 57.45,
+        "source_end": 61.97,
+        "review_start": 26.0,
+        "review_end": 30.52,
+        "text": " A moment to save it for the young...",
+        "words": [
+          {
+            "source_start": 57.45,
+            "source_end": 57.61,
+            "word": " A"
+          },
+          {
+            "source_start": 57.61,
+            "source_end": 60.67,
+            "word": " moment"
+          },
+          {
+            "source_start": 60.67,
+            "source_end": 60.870000000000005,
+            "word": " to"
+          },
+          {
+            "source_start": 60.870000000000005,
+            "source_end": 61.150000000000006,
+            "word": " save"
+          },
+          {
+            "source_start": 61.150000000000006,
+            "source_end": 61.330000000000005,
+            "word": " it"
+          },
+          {
+            "source_start": 61.330000000000005,
+            "source_end": 61.59,
+            "word": " for"
+          },
+          {
+            "source_start": 61.59,
+            "source_end": 61.71,
+            "word": " the"
+          },
+          {
+            "source_start": 61.71,
+            "source_end": 61.97,
+            "word": " young..."
+          }
+        ]
+      }
+    ]
+  },
+  "source_review": "data/audio_reviews/nishikori-career-farewell/evidence/native-foreground-titles-audit-3b8675b4a78f.json",
+  "portable_review_provenance": {
+    "original_packet_sha256": "a4e64ce3f850ffe1f4bea95d6f596caa8ff368782c1d9b3fcee4ee83976e5f97",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

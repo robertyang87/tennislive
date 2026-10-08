@@ -1,0 +1,268 @@
+{
+  "word": "重打",
+  "char": "重",
+  "sentence": "重打一分，孙心然留下遗憾。",
+  "tts_text": "崇打一分，孙心然留下遗憾。",
+  "intended_refs": [
+    "崇",
+    "虫"
+  ],
+  "wrong_refs": [
+    "众",
+    "仲"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "high",
+  "verdict_raw": "correct",
+  "score": 1.0,
+  "margin": 0.2,
+  "near_identical_to": "intended",
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 0.0,
+      "d_wrong": 2.66,
+      "score": 1.0
+    },
+    "f0": {
+      "d_intended": 0.0,
+      "d_wrong": 2.654,
+      "score": 1.0
+    },
+    "comb": {
+      "d_intended": 0.0,
+      "d_wrong": 3.984,
+      "score": 1.0
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.0,
+    "wrong": 4.676
+  },
+  "separation": {
+    "spec": {
+      "within": 1.749,
+      "between": 2.708,
+      "separation": 1.548
+    },
+    "f0": {
+      "within": 0.417,
+      "between": 3.009,
+      "separation": 7.213
+    },
+    "comb": {
+      "within": 1.292,
+      "between": 4.363,
+      "separation": 3.378
+    }
+  },
+  "selftest_loo": {
+    "崇": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.474
+    },
+    "虫": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.466
+    },
+    "众": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.602
+    },
+    "仲": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.596
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:崇": {
+      "spec": 0.0,
+      "f0": 0.0,
+      "vmis": 0.0,
+      "frames": 32,
+      "comb": 0.0
+    },
+    "A:虫": {
+      "spec": 1.804,
+      "f0": 0.518,
+      "vmis": 0.0,
+      "frames": 33,
+      "comb": 1.42
+    },
+    "B:众": {
+      "spec": 2.66,
+      "f0": 2.654,
+      "vmis": 0.125,
+      "frames": 32,
+      "comb": 3.984
+    },
+    "B:仲": {
+      "spec": 2.712,
+      "f0": 2.809,
+      "vmis": 0.125,
+      "frames": 32,
+      "comb": 4.165
+    }
+  },
+  "window_s": [
+    0.05,
+    0.36
+  ],
+  "boundary_token": "崇打",
+  "window_anchor": "A:虫",
+  "tokens": {
+    "ORIG": [
+      "崇打",
+      "一",
+      "分",
+      "孙心然",
+      "留下",
+      "遗憾"
+    ],
+    "A:崇": [
+      "崇打",
+      "一",
+      "分",
+      "孙心然",
+      "留下",
+      "遗憾"
+    ],
+    "A:虫": [
+      "虫",
+      "打",
+      "一",
+      "分",
+      "孙心然",
+      "留下",
+      "遗憾"
+    ],
+    "B:众": [
+      "众",
+      "打",
+      "一",
+      "分",
+      "孙",
+      "心然",
+      "留下",
+      "遗憾"
+    ],
+    "B:仲": [
+      "仲打",
+      "一",
+      "分",
+      "孙心然",
+      "留下",
+      "遗憾"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      3.4,
+      3.4,
+      4.0,
+      5.5,
+      6.6,
+      7.2
+    ],
+    "A:崇": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      3.4,
+      3.4,
+      4.0,
+      5.5,
+      6.6,
+      7.2
+    ],
+    "A:虫": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      3.0,
+      2.5,
+      2.9,
+      4.8,
+      6.5,
+      7.0
+    ],
+    "B:众": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      5.9,
+      5.0,
+      4.2,
+      3.2,
+      2.2,
+      1.3,
+      0.5
+    ],
+    "B:仲": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      6.5,
+      5.3,
+      4.6,
+      3.6,
+      2.4,
+      1.3,
+      0.1
+    ]
+  },
+  "audio": {
+    "ORIG": "/home/agent/.cache/tennislive/polyphone/6386ebd0a217e6f2e591a00e.mp3",
+    "A:崇": "/home/agent/.cache/tennislive/polyphone/6386ebd0a217e6f2e591a00e.mp3",
+    "A:虫": "/home/agent/.cache/tennislive/polyphone/28f567641371d10730829526.mp3",
+    "B:众": "/home/agent/.cache/tennislive/polyphone/d3f59dc69880342ec9b8fa83.mp3",
+    "B:仲": "/home/agent/.cache/tennislive/polyphone/215e97f0e3099310444c9925.mp3"
+  }
+}

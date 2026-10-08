@@ -1,0 +1,295 @@
+{
+  "model": "medium.en",
+  "source_from": 169,
+  "source_to": 183,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.6799999999999995,
+      "end": 6.12,
+      "text": " Good effort. An exposure at a WTA 1000 event has put Alina Charaeva in the spotlight.",
+      "tokens": [
+        50363,
+        4599,
+        3626,
+        13,
+        1052,
+        7111,
+        379,
+        257,
+        370,
+        5603,
+        8576,
+        1785,
+        468,
+        1234,
+        978,
+        1437,
+        3178,
+        64,
+        48855,
+        287,
+        262,
+        17838,
+        13,
+        50663
+      ],
+      "avg_logprob": -0.16274790031214556,
+      "compression_ratio": 1.2397260273972603,
+      "no_speech_prob": 0.00251044612377882,
+      "words": [
+        {
+          "start": 0.6799999999999995,
+          "end": 1.32,
+          "word": " Good",
+          "probability": 0.7178349494934082
+        },
+        {
+          "start": 1.32,
+          "end": 1.64,
+          "word": " effort.",
+          "probability": 0.975814938545227
+        },
+        {
+          "start": 2.22,
+          "end": 2.26,
+          "word": " An",
+          "probability": 0.51948082447052
+        },
+        {
+          "start": 2.26,
+          "end": 2.86,
+          "word": " exposure",
+          "probability": 0.9910717606544495
+        },
+        {
+          "start": 2.86,
+          "end": 3.26,
+          "word": " at",
+          "probability": 0.953309953212738
+        },
+        {
+          "start": 3.26,
+          "end": 3.46,
+          "word": " a",
+          "probability": 0.9583719968795776
+        },
+        {
+          "start": 3.46,
+          "end": 3.84,
+          "word": " WTA",
+          "probability": 0.6808234304189682
+        },
+        {
+          "start": 3.84,
+          "end": 4.24,
+          "word": " 1000",
+          "probability": 0.4739779531955719
+        },
+        {
+          "start": 4.24,
+          "end": 4.46,
+          "word": " event",
+          "probability": 0.9785680174827576
+        },
+        {
+          "start": 4.46,
+          "end": 4.62,
+          "word": " has",
+          "probability": 0.9642001986503601
+        },
+        {
+          "start": 4.62,
+          "end": 4.74,
+          "word": " put",
+          "probability": 0.9921017289161682
+        },
+        {
+          "start": 4.74,
+          "end": 5.02,
+          "word": " Alina",
+          "probability": 0.8159031271934509
+        },
+        {
+          "start": 5.02,
+          "end": 5.54,
+          "word": " Charaeva",
+          "probability": 0.016028868965804577
+        },
+        {
+          "start": 5.54,
+          "end": 5.7,
+          "word": " in",
+          "probability": 0.9646937251091003
+        },
+        {
+          "start": 5.7,
+          "end": 5.8,
+          "word": " the",
+          "probability": 0.9986926913261414
+        },
+        {
+          "start": 5.8,
+          "end": 6.12,
+          "word": " spotlight.",
+          "probability": 0.9927942156791687
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 6.66,
+      "end": 13.5,
+      "text": " One thing that has become glaringly obvious, she's a fighter. Third set coming up from Beijing.",
+      "tokens": [
+        50663,
+        1881,
+        1517,
+        326,
+        468,
+        1716,
+        29097,
+        306,
+        3489,
+        11,
+        673,
+        338,
+        257,
+        10543,
+        13,
+        10467,
+        900,
+        2406,
+        510,
+        422,
+        11618,
+        13,
+        51063
+      ],
+      "avg_logprob": -0.16274790031214556,
+      "compression_ratio": 1.2397260273972603,
+      "no_speech_prob": 0.00251044612377882,
+      "words": [
+        {
+          "start": 6.66,
+          "end": 6.84,
+          "word": " One",
+          "probability": 0.986873209476471
+        },
+        {
+          "start": 6.84,
+          "end": 7.14,
+          "word": " thing",
+          "probability": 0.996448278427124
+        },
+        {
+          "start": 7.14,
+          "end": 7.32,
+          "word": " that",
+          "probability": 0.9940567016601562
+        },
+        {
+          "start": 7.32,
+          "end": 7.52,
+          "word": " has",
+          "probability": 0.990598738193512
+        },
+        {
+          "start": 7.52,
+          "end": 7.92,
+          "word": " become",
+          "probability": 0.9924783706665039
+        },
+        {
+          "start": 7.92,
+          "end": 8.72,
+          "word": " glaringly",
+          "probability": 0.9980427026748657
+        },
+        {
+          "start": 8.72,
+          "end": 9.1,
+          "word": " obvious,",
+          "probability": 0.9979127049446106
+        },
+        {
+          "start": 9.64,
+          "end": 10.14,
+          "word": " she's",
+          "probability": 0.9660899341106415
+        },
+        {
+          "start": 10.14,
+          "end": 10.3,
+          "word": " a",
+          "probability": 0.9992209672927856
+        },
+        {
+          "start": 10.3,
+          "end": 10.54,
+          "word": " fighter.",
+          "probability": 0.9972997307777405
+        },
+        {
+          "start": 11.32,
+          "end": 11.44,
+          "word": " Third",
+          "probability": 0.9393295049667358
+        },
+        {
+          "start": 11.44,
+          "end": 11.8,
+          "word": " set",
+          "probability": 0.9906758069992065
+        },
+        {
+          "start": 11.8,
+          "end": 12.52,
+          "word": " coming",
+          "probability": 0.81364506483078
+        },
+        {
+          "start": 12.52,
+          "end": 12.86,
+          "word": " up",
+          "probability": 0.9975554347038269
+        },
+        {
+          "start": 12.86,
+          "end": 13.18,
+          "word": " from",
+          "probability": 0.9602631330490112
+        },
+        {
+          "start": 13.18,
+          "end": 13.5,
+          "word": " Beijing.",
+          "probability": 0.997461199760437
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

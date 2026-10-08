@@ -1,0 +1,362 @@
+{
+  "model": "base.en",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "source_from": 250,
+  "source_to": 263,
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+  },
+  "info": {
+    "language": "en",
+    "language_probability": 1,
+    "duration": 13.0,
+    "duration_after_vad": 13.0,
+    "all_language_probs": null,
+    "transcription_options": {
+      "beam_size": 5,
+      "best_of": 5,
+      "patience": 1,
+      "length_penalty": 1,
+      "repetition_penalty": 1,
+      "no_repeat_ngram_size": 0,
+      "log_prob_threshold": -1.0,
+      "no_speech_threshold": 0.6,
+      "compression_ratio_threshold": 2.4,
+      "condition_on_previous_text": false,
+      "prompt_reset_on_temperature": 0.5,
+      "temperatures": [
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA.",
+      "prefix": null,
+      "suppress_blank": true,
+      "suppress_tokens": [
+        1,
+        2,
+        7,
+        8,
+        9,
+        10,
+        14,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        90,
+        91,
+        92,
+        93,
+        357,
+        366,
+        438,
+        532,
+        685,
+        705,
+        796,
+        930,
+        1058,
+        1220,
+        1267,
+        1279,
+        1303,
+        1343,
+        1377,
+        1391,
+        1635,
+        1782,
+        1875,
+        2162,
+        2361,
+        2488,
+        3467,
+        4008,
+        4211,
+        4600,
+        4808,
+        5299,
+        5855,
+        6329,
+        7203,
+        9609,
+        9959,
+        10563,
+        10786,
+        11420,
+        11709,
+        11907,
+        13163,
+        13697,
+        13700,
+        14808,
+        15306,
+        16410,
+        16791,
+        17992,
+        19203,
+        19510,
+        20724,
+        22305,
+        22935,
+        27007,
+        30109,
+        30420,
+        33409,
+        34949,
+        40283,
+        40493,
+        40549,
+        47282,
+        49146,
+        50257,
+        50357,
+        50358,
+        50359,
+        50360,
+        50361
+      ],
+      "without_timestamps": false,
+      "max_initial_timestamp": 1.0,
+      "word_timestamps": true,
+      "prepend_punctuations": "\"'“¿([{-",
+      "append_punctuations": "\"'.。,，!！?？:：”)]}、",
+      "multilingual": false,
+      "max_new_tokens": null,
+      "clip_timestamps": [
+        0.0
+      ],
+      "hallucination_silence_threshold": null,
+      "hotwords": null
+    },
+    "vad_options": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 3.1199999999999974,
+      "end": 10.04,
+      "text": " Another return. That's one for the thumb. Five return winners in this contest, which ain't thingwen. This might be the most important of them all.",
+      "tokens": [
+        50363,
+        6023,
+        1441,
+        13,
+        1320,
+        338,
+        530,
+        329,
+        262,
+        15683,
+        13,
+        10579,
+        1441,
+        14591,
+        287,
+        428,
+        8414,
+        11,
+        543,
+        18959,
+        470,
+        1517,
+        21006,
+        13,
+        770,
+        1244,
+        307,
+        262,
+        749,
+        1593,
+        286,
+        606,
+        477,
+        13,
+        50713
+      ],
+      "avg_logprob": -0.44136802355448407,
+      "compression_ratio": 1.2695652173913043,
+      "no_speech_prob": 0.08216589689254761,
+      "words": [
+        {
+          "start": 3.1199999999999974,
+          "end": 3.5599999999999987,
+          "word": " Another",
+          "probability": 0.1319577842950821
+        },
+        {
+          "start": 3.5599999999999987,
+          "end": 4.0,
+          "word": " return.",
+          "probability": 0.9840954542160034
+        },
+        {
+          "start": 4.26,
+          "end": 4.4,
+          "word": " That's",
+          "probability": 0.9862340986728668
+        },
+        {
+          "start": 4.4,
+          "end": 4.6,
+          "word": " one",
+          "probability": 0.9740448594093323
+        },
+        {
+          "start": 4.6,
+          "end": 4.82,
+          "word": " for",
+          "probability": 0.9947637319564819
+        },
+        {
+          "start": 4.82,
+          "end": 4.94,
+          "word": " the",
+          "probability": 0.9961099028587341
+        },
+        {
+          "start": 4.94,
+          "end": 5.18,
+          "word": " thumb.",
+          "probability": 0.9550384879112244
+        },
+        {
+          "start": 5.84,
+          "end": 6.28,
+          "word": " Five",
+          "probability": 0.9058584570884705
+        },
+        {
+          "start": 6.28,
+          "end": 6.52,
+          "word": " return",
+          "probability": 0.9177708029747009
+        },
+        {
+          "start": 6.52,
+          "end": 6.86,
+          "word": " winners",
+          "probability": 0.9918221831321716
+        },
+        {
+          "start": 6.86,
+          "end": 7.12,
+          "word": " in",
+          "probability": 0.9883279204368591
+        },
+        {
+          "start": 7.12,
+          "end": 7.26,
+          "word": " this",
+          "probability": 0.9932577610015869
+        },
+        {
+          "start": 7.26,
+          "end": 7.54,
+          "word": " contest,",
+          "probability": 0.9939231276512146
+        },
+        {
+          "start": 7.82,
+          "end": 7.92,
+          "word": " which",
+          "probability": 0.9781980514526367
+        },
+        {
+          "start": 7.92,
+          "end": 8.14,
+          "word": " ain't",
+          "probability": 0.7657078802585602
+        },
+        {
+          "start": 8.14,
+          "end": 8.38,
+          "word": " thingwen.",
+          "probability": 0.12797796120867133
+        },
+        {
+          "start": 8.48,
+          "end": 8.56,
+          "word": " This",
+          "probability": 0.9951114058494568
+        },
+        {
+          "start": 8.56,
+          "end": 8.74,
+          "word": " might",
+          "probability": 0.9978887438774109
+        },
+        {
+          "start": 8.74,
+          "end": 8.9,
+          "word": " be",
+          "probability": 0.9975499510765076
+        },
+        {
+          "start": 8.9,
+          "end": 8.98,
+          "word": " the",
+          "probability": 0.9975025057792664
+        },
+        {
+          "start": 8.98,
+          "end": 9.14,
+          "word": " most",
+          "probability": 0.9991546869277954
+        },
+        {
+          "start": 9.14,
+          "end": 9.56,
+          "word": " important",
+          "probability": 0.9971736669540405
+        },
+        {
+          "start": 9.56,
+          "end": 9.72,
+          "word": " of",
+          "probability": 0.987341582775116
+        },
+        {
+          "start": 9.72,
+          "end": 9.82,
+          "word": " them",
+          "probability": 0.9322205185890198
+        },
+        {
+          "start": 9.82,
+          "end": 10.04,
+          "word": " all.",
+          "probability": 0.9748625159263611
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

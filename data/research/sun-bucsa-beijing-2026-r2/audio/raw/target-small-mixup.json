@@ -1,0 +1,67 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 66,
+  "range_to": 79,
+  "created_at": "2026-10-03T16:45:26.270579+00:00",
+  "elapsed_seconds": 2.39,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 73.3,
+      "end": 74.94,
+      "text": " Oh, really nice mix up there.",
+      "avg_logprob": -0.762948827310042,
+      "no_speech_prob": 0.15859025716781616,
+      "words": [
+        {
+          "start": 73.3,
+          "end": 73.78,
+          "word": " Oh,",
+          "probability": 0.1342540830373764
+        },
+        {
+          "start": 73.78,
+          "end": 74.02,
+          "word": " really",
+          "probability": 0.8951730728149414
+        },
+        {
+          "start": 74.02,
+          "end": 74.26,
+          "word": " nice",
+          "probability": 0.9944294691085815
+        },
+        {
+          "start": 74.26,
+          "end": 74.46,
+          "word": " mix",
+          "probability": 0.9962300658226013
+        },
+        {
+          "start": 74.46,
+          "end": 74.72,
+          "word": " up",
+          "probability": 0.4935823678970337
+        },
+        {
+          "start": 74.72,
+          "end": 74.94,
+          "word": " there.",
+          "probability": 0.9698373079299927
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "1568c32ff5adae39b7011251607b86c3a477a46580f069e50c1e710e2fe9faf5",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

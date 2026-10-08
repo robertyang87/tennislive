@@ -1,0 +1,49 @@
+{
+  "crop_from": 270,
+  "crop_to": 279,
+  "params": {
+    "min_speech_duration_ms": 60,
+    "min_silence_duration_ms": 150,
+    "speech_pad_ms": 0
+  },
+  "thresholds": {
+    "0.3": [
+      {
+        "start": 270.224,
+        "end": 273.2
+      },
+      {
+        "start": 273.488,
+        "end": 279.0
+      }
+    ],
+    "0.5": [
+      {
+        "start": 270.256,
+        "end": 271.408
+      },
+      {
+        "start": 271.856,
+        "end": 273.136
+      },
+      {
+        "start": 274.16,
+        "end": 279.0
+      }
+    ],
+    "0.7": [
+      {
+        "start": 270.288,
+        "end": 271.344
+      },
+      {
+        "start": 271.856,
+        "end": 273.104
+      },
+      {
+        "start": 274.16,
+        "end": 279.0
+      }
+    ]
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=3Y8VqlPjzJ8",
+  "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+  "source_duration": 460.289,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: independent base.en/small.en inference; focused medium.en/large-v3-turbo checks; source-platform captions; accepted editorial name/grammar normalization",
+  "reviewed_at": "2026-10-05T10:35:58+00:00",
+  "status": "complete",
+  "actual_listening_performed": false,
+  "reviewed_from": 248.96,
+  "reviewed_to": 301.6,
+  "foreground_english": [
+    {
+      "start": 256.36,
+      "end": 257.42,
+      "en": "And it goes long!",
+      "zh": "这球出界了！",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 257.42,
+      "end": 260.86,
+      "en": "And it's Zheng Qinwen who gets it done!",
+      "zh": "郑钦文赢下了这场比赛！",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "姓名规范；模型与平台均gets it done。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 260.86,
+      "end": 263.28,
+      "en": "And the crowd is loving it.",
+      "zh": "现场观众沸腾了。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 263.68,
+      "end": 265.42,
+      "en": "Her coach pleased as well.",
+      "zh": "她的教练也很满意。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "small与平台Her，baseOur为误识别。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 265.88,
+      "end": 266.42,
+      "en": "Pere Riba.",
+      "zh": "佩雷·里巴。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "平台Periva/small Per Riva，按明确教练姓名规范。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 267.2,
+      "end": 268.3,
+      "en": "What a battle!",
+      "zh": "真是一场苦战！",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "cold独立定窗+两个逐岛结果均完整，末词268.10–268.27；长窗时间漂移不用。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 271.28,
+      "end": 273.1,
+      "en": "Bouzkova up for the challenge.",
+      "zh": "布兹科娃迎战到底。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 273.68,
+      "end": 277.9,
+      "en": "Final break of serve is the deciding moment,",
+      "zh": "最后这次破发决定了胜负，",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 277.9,
+      "end": 281.94,
+      "en": "as Zheng Qinwen in front of her home Chinese crowd.",
+      "zh": "郑钦文站在中国主场观众面前。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "句子为解说直播原有片段语法，不补他没有说的结论。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 281.94,
+      "end": 285.52,
+      "en": "Big smile and almost a little bit of a dance there.",
+      "zh": "笑容灿烂，几乎要跳起舞来。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 286.02,
+      "end": 288.32,
+      "en": "Seven-six, four-six, seven-five.",
+      "zh": "7比6、4比6、7比5。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "实际模型/平台把读出的比分正规化为7-6,4-6,7-5；英文字幕按相同原声读法拼写Seven-six,four-six,seven-five，以保留显式英文而非无语言标记的纯数字。没有增加比分内容。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 288.62,
+      "end": 291.08,
+      "en": "Two hours, 54 minutes.",
+      "zh": "2小时54分钟。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 291.68,
+      "end": 293.6,
+      "en": "What a win for Zheng Qinwen,",
+      "zh": "郑钦文拿下一场精彩的胜利，",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 293.66,
+      "end": 295.48,
+      "en": "who's through to the fourth round in Beijing.",
+      "zh": "晋级北京站第四轮。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 296.24,
+      "end": 301.42,
+      "en": "Certainly pleased with what they saw from Zheng Qinwen.",
+      "zh": "大家显然很满意郑钦文今天的表现。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "最后一句两轮small均结束301.40；计划301.6有约0.2秒余量，不取之后采访。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    }
+  ],
+  "uncertain_spans": [],
+  "editorial_resolution_path": "data/research/zheng-bouzkova-beijing-2026-r3/audio/selected/asr-dispute-resolution.json",
+  "method_limitations": [
+    "No human listening was performed or claimed.",
+    "Model omissions and name errors were cross-checked with platform captions and explicit editor-approved identity/grammar corrections.",
+    "Evidence covers complete selected windows through full-source base/small inference, no-VAD selected-window transcription, and platform-captions comparison; it does not prove absence of all speech by model confidence alone."
+  ],
+  "source_identity_basis": "Actual downloaded file SHA256 equals runner-export SHA256; alternate 311-second 720p edit is archived for provenance only and is not used to bind this 460-second source.",
+  "raw_evidence_manifest": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/manifest.json"
+}

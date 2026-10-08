@@ -1,0 +1,186 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:02:57.15,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 纳达尔学院 十周年表演赛
+Dialogue: 1,0:00:00.00,0:02:57.15,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}纳达尔队 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}4{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}3{\r\fnNoto Sans CJK SC\fs38} 穆雷队 · 赛后捧杯致辞
+Dialogue: 0,0:00:00.94,0:00:03.60,EN,,0,0,0,,Well, thank you for the words.
+Dialogue: 0,0:00:00.94,0:00:03.60,ZH,,0,0,0,,谢谢你刚才说的这些话
+Dialogue: 0,0:00:03.60,0:00:04.60,EN,,0,0,0,,First of all, yeah,
+Dialogue: 0,0:00:03.60,0:00:04.60,ZH,,0,0,0,,首先
+Dialogue: 0,0:00:04.60,0:00:06.24,EN,,0,0,0,,next time we can play golf,
+Dialogue: 0,0:00:04.60,0:00:06.24,ZH,,0,0,0,,下次我们可以打高尔夫
+Dialogue: 0,0:00:06.24,0:00:07.98,EN,,0,0,0,,maybe you have a better chance.
+Dialogue: 0,0:00:06.24,0:00:07.98,ZH,,0,0,0,,也许你赢的机会会大些
+Dialogue: 0,0:00:07.98,0:00:10.22,EN,,0,0,0,,So I know you are practicing
+Dialogue: 0,0:00:07.98,0:00:10.22,ZH,,0,0,0,,我知道你平时练习
+Dialogue: 0,0:00:10.22,0:00:11.74,EN,,0,0,0,,a lot more than me.
+Dialogue: 0,0:00:10.22,0:00:11.74,ZH,,0,0,0,,比我多得多
+Dialogue: 0,0:00:11.74,0:00:12.70,EN,,0,0,0,,So maybe
+Dialogue: 0,0:00:11.74,0:00:12.70,ZH,,0,0,0,,所以 也许
+Dialogue: 0,0:00:12.70,0:00:14.82,EN,,0,0,0,,the next Rafa Nadal Academy Slam
+Dialogue: 0,0:00:12.70,0:00:14.82,ZH,,0,0,1186,,下一届纳达尔学院{\fs78}Slam{\fs68}
+Dialogue: 0,0:00:14.82,0:00:15.62,EN,,0,0,0,,can be in golf.
+Dialogue: 0,0:00:14.82,0:00:15.62,ZH,,0,0,0,,可以改打高尔夫
+Dialogue: 0,0:00:15.62,0:00:17.40,EN,,0,0,0,,So let's try.
+Dialogue: 0,0:00:15.62,0:00:17.40,ZH,,0,0,0,,我们试试看吧
+Dialogue: 0,0:00:17.40,0:00:19.54,EN,,0,0,0,,But anyway, thank you very much,
+Dialogue: 0,0:00:17.40,0:00:19.54,ZH,,0,0,0,,不过 无论如何 非常感谢
+Dialogue: 0,0:00:19.54,0:00:22.14,EN,,0,0,0,,Fabio, Marat, Dominic, Andy,
+Dialogue: 0,0:00:19.54,0:00:22.14,ZH,,0,0,0,,弗格尼尼 萨芬 蒂姆 穆雷
+Dialogue: 0,0:00:22.14,0:00:24.72,EN,,0,0,0,,Carlos, David, Richard,
+Dialogue: 0,0:00:22.14,0:00:24.72,ZH,,0,0,0,,莫亚 费雷尔 加斯奎特
+Dialogue: 0,0:00:24.72,0:00:25.80,EN,,0,0,0,,for me personally.
+Dialogue: 0,0:00:24.72,0:00:25.80,ZH,,0,0,0,,对我个人来说
+Dialogue: 0,0:00:25.80,0:00:27.66,EN,,0,0,0,,And I think for everybody here
+Dialogue: 0,0:00:25.80,0:00:27.66,ZH,,0,0,0,,我想 对这里每一个人来说
+Dialogue: 0,0:00:27.66,0:00:30.40,EN,,0,0,0,,in my village, Manacor,
+Dialogue: 0,0:00:27.66,0:00:30.40,ZH,,0,0,0,,在我的家乡马纳科尔
+Dialogue: 0,0:00:30.40,0:00:32.06,EN,,0,0,0,,and the island of Mallorca.
+Dialogue: 0,0:00:30.40,0:00:32.06,ZH,,0,0,0,,以及整个马略卡岛
+Dialogue: 0,0:00:32.06,0:00:33.14,EN,,0,0,0,,And of course, for all the kids
+Dialogue: 0,0:00:32.06,0:00:33.14,ZH,,0,0,0,,当然 也包括所有孩子
+Dialogue: 0,0:00:33.14,0:00:35.02,EN,,0,0,0,,and workers, have been amazing
+Dialogue: 0,0:00:33.14,0:00:35.02,ZH,,0,0,0,,和工作人员 能与大家一起
+Dialogue: 0,0:00:35.02,0:00:38.40,EN,,0,0,0,,to share this very special moment
+Dialogue: 0,0:00:35.02,0:00:38.40,ZH,,0,0,0,,分享这个特别的时刻
+Dialogue: 0,0:00:38.40,0:00:39.62,EN,,0,0,0,,with all of you.
+Dialogue: 0,0:00:38.40,0:00:39.62,ZH,,0,0,0,,真的太美好了
+Dialogue: 0,0:00:39.62,0:00:40.74,EN,,0,0,0,,So thank you for being part
+Dialogue: 0,0:00:39.62,0:00:40.74,ZH,,0,0,0,,谢谢大家一起度过
+Dialogue: 0,0:00:40.74,0:00:42.42,EN,,0,0,0,,of this unforgettable day.
+Dialogue: 0,0:00:40.74,0:00:42.42,ZH,,0,0,0,,这个难忘的日子
+Dialogue: 0,0:00:42.42,0:00:45.68,EN,,0,0,0,,Thank you so much.
+Dialogue: 0,0:00:42.42,0:00:45.68,ZH,,0,0,0,,非常感谢
+Dialogue: 0,0:00:52.70,0:00:53.70,EN,,0,0,0,,Bueno, quiero dar las gracias
+Dialogue: 0,0:00:52.70,0:00:53.70,ZH,,0,0,0,,我想感谢
+Dialogue: 0,0:00:53.70,0:00:54.62,EN,,0,0,0,,también a todos.
+Dialogue: 0,0:00:53.70,0:00:54.62,ZH,,0,0,0,,所有人
+Dialogue: 0,0:00:54.62,0:00:57.12,EN,,0,0,0,,Vull donar ses gràcies a tots.
+Dialogue: 0,0:00:54.62,0:00:57.12,ZH,,0,0,0,,我要感谢所有人
+Dialogue: 0,0:00:57.12,0:00:58.72,EN,,0,0,0,,els que [unclear] heu acompanyat
+Dialogue: 0,0:00:57.12,0:00:58.72,ZH,,0,0,0,,感谢今天陪伴我的人
+Dialogue: 0,0:00:58.72,0:01:01.05,EN,,0,0,0,,en el dia d'avui.
+Dialogue: 0,0:00:58.72,0:01:01.05,ZH,,0,0,0,,一起度过今天
+Dialogue: 0,0:01:01.05,0:01:02.15,EN,,0,0,0,,I want to thank everybody
+Dialogue: 0,0:01:01.05,0:01:02.15,ZH,,0,0,0,,现场英语 我要感谢大家
+Dialogue: 0,0:01:02.15,0:01:04.00,EN,,0,0,0,,that came out today.
+Dialogue: 0,0:01:02.15,0:01:04.00,ZH,,0,0,0,,感谢今天到场的每一个人
+Dialogue: 0,0:01:07.75,0:01:10.15,EN,,0,0,0,,Com sabeu, aquest lloc és
+Dialogue: 0,0:01:07.75,0:01:10.15,ZH,,0,0,0,,大家知道 这里
+Dialogue: 0,0:01:10.15,0:01:15.19,EN,,0,0,0,,un lloc molt especial per a jo,
+Dialogue: 0,0:01:10.15,0:01:15.19,ZH,,0,0,0,,对我而言是特别的地方
+Dialogue: 0,0:01:15.19,0:01:18.97,EN,,0,0,0,,i realment veure [unclear] que
+Dialogue: 0,0:01:15.19,0:01:18.97,ZH,,0,0,0,,看到大家的支持
+Dialogue: 0,0:01:18.97,0:01:21.05,EN,,0,0,0,,rebem aquí a Manacor,
+Dialogue: 0,0:01:18.97,0:01:21.05,ZH,,0,0,0,,在马纳科尔
+Dialogue: 0,0:01:21.05,0:01:21.83,EN,,0,0,0,,i a Mallorca, en general,
+Dialogue: 0,0:01:21.05,0:01:21.83,ZH,,0,0,0,,在整个马略卡岛
+Dialogue: 0,0:01:21.83,0:01:24.17,EN,,0,0,0,,per això és una gran satisfacció,
+Dialogue: 0,0:01:21.83,0:01:24.17,ZH,,0,0,0,,这让我十分欣慰
+Dialogue: 0,0:01:24.17,0:01:25.23,EN,,0,0,0,,Només puc donar les gràcies
+Dialogue: 0,0:01:24.17,0:01:25.23,ZH,,0,0,0,,我只能向大家致谢
+Dialogue: 0,0:01:25.23,0:01:27.93,EN,,0,0,0,,per haver volgut la part d'aquest dia,
+Dialogue: 0,0:01:25.23,0:01:27.93,ZH,,0,0,0,,谢谢你们愿意参与今天
+Dialogue: 0,0:01:27.93,0:01:29.89,EN,,0,0,0,,que jo crec que serà inolvidable per
+Dialogue: 0,0:01:27.93,0:01:29.89,ZH,,0,0,0,,我相信 这将是难忘的一天
+Dialogue: 0,0:01:29.89,0:01:32.87,EN,,0,0,0,,aquesta acadèmia.
+Dialogue: 0,0:01:29.89,0:01:32.87,ZH,,0,0,0,,对这所学院而言
+Dialogue: 0,0:01:32.87,0:01:36.39,EN,,0,0,0,,Se van complint etapes i avui
+Dialogue: 0,0:01:32.87,0:01:36.39,ZH,,0,0,0,,我们走过一个又一个阶段
+Dialogue: 0,0:01:36.39,0:01:38.95,EN,,0,0,0,,és un dia de celebració. Deu anys
+Dialogue: 0,0:01:36.39,0:01:38.95,ZH,,0,0,0,,今天是庆祝的日子 十年
+Dialogue: 0,0:01:38.95,0:01:41.19,EN,,0,0,0,,és un número realment important,
+Dialogue: 0,0:01:38.95,0:01:41.19,ZH,,0,0,0,,是一个很重要的数字
+Dialogue: 0,0:01:41.19,0:01:42.49,EN,,0,0,0,,per a nosaltres, pensant com van
+Dialogue: 0,0:01:41.19,0:01:42.49,ZH,,0,0,0,,对我们来说 回想最初
+Dialogue: 0,0:01:42.49,0:01:44.71,EN,,0,0,0,,començar i pensant on som avui,
+Dialogue: 0,0:01:42.49,0:01:44.71,ZH,,0,0,0,,如何开始 再看今天的我们
+Dialogue: 0,0:01:44.71,0:01:47.51,EN,,0,0,0,,realment sense l'ajuda de l'altre
+Dialogue: 0,0:01:44.71,0:01:47.51,ZH,,0,0,0,,如果没有大家的帮助
+Dialogue: 0,0:01:47.51,0:01:49.17,EN,,0,0,0,,i de tota aquesta gent
+Dialogue: 0,0:01:47.51,0:01:49.17,ZH,,0,0,0,,没有这些人
+Dialogue: 0,0:01:49.17,0:01:50.07,EN,,0,0,0,,que s'està esforçant dia
+Dialogue: 0,0:01:49.17,0:01:50.07,ZH,,0,0,0,,日复一日的努力
+Dialogue: 0,0:01:50.07,0:01:51.19,EN,,0,0,0,,a dia per fer d'aquest lloc,
+Dialogue: 0,0:01:50.07,0:01:51.19,ZH,,0,0,0,,努力让这个地方
+Dialogue: 0,0:01:51.19,0:01:53.61,EN,,0,0,0,,un lloc especial que
+Dialogue: 0,0:01:51.19,0:01:53.61,ZH,,0,0,0,,成为一个特别的地方
+Dialogue: 0,0:01:53.61,0:01:56.35,EN,,0,0,0,,rebem gent de tot el món,
+Dialogue: 0,0:01:53.61,0:01:56.35,ZH,,0,0,0,,汇聚世界各地的人们
+Dialogue: 0,0:01:56.35,0:01:58.53,EN,,0,0,0,,seria impossible. Moltíssimes
+Dialogue: 0,0:01:56.35,0:01:58.53,ZH,,0,0,0,,这不可能做到 非常感谢
+Dialogue: 0,0:01:58.53,0:02:01.01,EN,,0,0,0,,gràcies per tot el vostre suport.
+Dialogue: 0,0:01:58.53,0:02:01.01,ZH,,0,0,0,,感谢大家的支持
+Dialogue: 0,0:02:01.01,0:02:03.39,EN,,0,0,0,,Speaking in their local dialects,
+Dialogue: 0,0:02:01.01,0:02:03.39,ZH,,0,0,0,,转播评论 他用当地语言
+Dialogue: 0,0:02:03.39,0:02:05.35,EN,,0,0,0,,thanking everybody for a special day
+Dialogue: 0,0:02:03.39,0:02:05.35,ZH,,0,0,0,,感谢大家共同度过这一天
+Dialogue: 0,0:02:05.35,0:02:07.25,EN,,0,0,0,,for him and 10 years.
+Dialogue: 0,0:02:05.35,0:02:07.25,ZH,,0,0,0,,这个特别的十周年日子
+Dialogue: 0,0:02:07.25,0:02:09.33,EN,,0,0,0,,It's something very, very special.
+Dialogue: 0,0:02:07.25,0:02:09.33,ZH,,0,0,0,,转播评论 这意义非凡
+Dialogue: 0,0:02:09.33,0:02:10.63,EN,,0,0,0,,Thank you for being a part of it.
+Dialogue: 0,0:02:09.33,0:02:10.63,ZH,,0,0,0,,转播译述 感谢大家参与
+Dialogue: 0,0:02:10.63,0:02:12.93,EN,,0,0,0,,And I will remember this day forever.
+Dialogue: 0,0:02:10.63,0:02:12.93,ZH,,0,0,0,,转播译述 永远记住今天
+Dialogue: 0,0:02:12.93,0:02:14.47,EN,,0,0,0,,Para terminar, quiero agradecer
+Dialogue: 0,0:02:12.93,0:02:14.47,ZH,,0,0,0,,最后 我要感谢
+Dialogue: 0,0:02:14.47,0:02:16.81,EN,,0,0,0,,a todos los medios que nos habéis
+Dialogue: 0,0:02:14.47,0:02:16.81,ZH,,0,0,0,,所有媒体 感谢你们
+Dialogue: 0,0:02:16.81,0:02:18.13,EN,,0,0,0,,acompañado en este día.
+Dialogue: 0,0:02:16.81,0:02:18.13,ZH,,0,0,0,,今天陪伴我们
+Dialogue: 0,0:02:18.13,0:02:21.23,EN,,0,0,0,,Gracias por darnos la cobertura en
+Dialogue: 0,0:02:18.13,0:02:21.23,ZH,,0,0,0,,谢谢你们报道
+Dialogue: 0,0:02:21.23,0:02:22.61,EN,,0,0,0,,este bonito día.
+Dialogue: 0,0:02:21.23,0:02:22.61,ZH,,0,0,0,,这个美好的日子
+Dialogue: 0,0:02:22.61,0:02:25.57,EN,,0,0,0,,Y por último, antes de despedirme,
+Dialogue: 0,0:02:22.61,0:02:25.57,ZH,,0,0,0,,最后 在告别之前
+Dialogue: 0,0:02:25.57,0:02:27.23,EN,,0,0,0,,quiero dar las gracias a un muy buen
+Dialogue: 0,0:02:25.57,0:02:27.23,ZH,,0,0,0,,我要感谢一位很好的
+Dialogue: 0,0:02:27.23,0:02:29.87,EN,,0,0,0,,amigo y uno de los mejores artistas
+Dialogue: 0,0:02:27.23,0:02:29.87,ZH,,0,0,0,,朋友 也是顶尖艺人之一
+Dialogue: 0,0:02:29.87,0:02:30.91,EN,,0,0,0,,de nuestro país de las últimas
+Dialogue: 0,0:02:29.87,0:02:30.91,ZH,,0,0,0,,我国近几十年来
+Dialogue: 0,0:02:30.91,0:02:32.53,EN,,0,0,0,,décadas como es David Bisbal.
+Dialogue: 0,0:02:30.91,0:02:32.53,ZH,,0,0,0,,他就是大卫 比斯巴尔
+Dialogue: 0,0:02:32.53,0:02:34.15,EN,,0,0,0,,Gracias por haber querido
+Dialogue: 0,0:02:32.53,0:02:34.15,ZH,,0,0,0,,谢谢你愿意来
+Dialogue: 0,0:02:34.15,0:02:37.15,EN,,0,0,0,,acompañarnos.
+Dialogue: 0,0:02:34.15,0:02:37.15,ZH,,0,0,0,,陪伴我们
+Dialogue: 0,0:02:38.23,0:02:40.83,EN,,0,0,0,,Hace que el cierre de esta fiesta
+Dialogue: 0,0:02:38.23,0:02:40.83,ZH,,0,0,0,,让这场庆典的收尾
+Dialogue: 0,0:02:40.83,0:02:43.29,EN,,0,0,0,,pues sea muy bonito,
+Dialogue: 0,0:02:40.83,0:02:43.29,ZH,,0,0,0,,变得这么美好
+Dialogue: 0,0:02:43.29,0:02:44.53,EN,,0,0,0,,sea que a mí personalmente me
+Dialogue: 0,0:02:43.29,0:02:44.53,ZH,,0,0,0,,对我个人而言
+Dialogue: 0,0:02:44.53,0:02:45.55,EN,,0,0,0,,hace mucha ilusión que estés aquí
+Dialogue: 0,0:02:44.53,0:02:45.55,ZH,,0,0,0,,你能来到这里 我特别高兴
+Dialogue: 0,0:02:45.55,0:02:47.23,EN,,0,0,0,,con nosotros David y seguro que
+Dialogue: 0,0:02:45.55,0:02:47.23,ZH,,0,0,0,,大卫 我相信
+Dialogue: 0,0:02:47.23,0:02:49.21,EN,,0,0,0,,a toda la gente de aquí de Mallorca
+Dialogue: 0,0:02:47.23,0:02:49.21,ZH,,0,0,0,,马略卡的所有人
+Dialogue: 0,0:02:49.21,0:02:50.39,EN,,0,0,0,,de Manacor también.
+Dialogue: 0,0:02:49.21,0:02:50.39,ZH,,0,0,0,,马纳科尔的大家也一样
+Dialogue: 0,0:02:50.39,0:02:51.87,EN,,0,0,0,,O sea, muchísimas gracias por todo,
+Dialogue: 0,0:02:50.39,0:02:51.87,ZH,,0,0,0,,所以 非常感谢你的一切
+Dialogue: 0,0:02:51.87,0:02:52.60,EN,,0,0,0,,y gracias.
+Dialogue: 0,0:02:51.87,0:02:52.60,ZH,,0,0,0,,谢谢
+Dialogue: 0,0:02:52.60,0:02:54.16,EN,,0,0,0,,I'm very proud that you are here
+Dialogue: 0,0:02:52.60,0:02:54.16,ZH,,0,0,0,,转播译述 你在此我很自豪
+Dialogue: 0,0:02:54.16,0:02:57.86,EN,,0,0,0,,with us and before the closing ceremony.
+Dialogue: 0,0:02:54.16,0:02:57.86,ZH,,0,0,0,,转播译述 闭幕前和我们相聚
+Dialogue: 0,0:01:04.00,0:01:07.75,EN,,0,0,0,,[Applause and indistinct voices]
+Dialogue: 0,0:01:04.00,0:01:07.75,ZH,,0,0,0,,掌声 夹杂未辨识人声

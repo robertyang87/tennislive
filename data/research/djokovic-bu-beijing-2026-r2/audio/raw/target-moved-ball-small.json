@@ -1,0 +1,73 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 34.5,
+  "range_to": 38.5,
+  "created_at": "2026-10-03T06:12:57.361944+00:00",
+  "elapsed_seconds": 2.05,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 35.74,
+      "end": 37.16,
+      "text": " Well, he moved right to that ball.",
+      "avg_logprob": -0.48534588515758514,
+      "no_speech_prob": 0.21199817955493927,
+      "words": [
+        {
+          "start": 35.74,
+          "end": 36.1,
+          "word": " Well,",
+          "probability": 0.6461086869239807
+        },
+        {
+          "start": 36.14,
+          "end": 36.18,
+          "word": " he",
+          "probability": 0.8346886038780212
+        },
+        {
+          "start": 36.18,
+          "end": 36.36,
+          "word": " moved",
+          "probability": 0.9869797229766846
+        },
+        {
+          "start": 36.36,
+          "end": 36.58,
+          "word": " right",
+          "probability": 0.3538302481174469
+        },
+        {
+          "start": 36.58,
+          "end": 36.76,
+          "word": " to",
+          "probability": 0.9919690489768982
+        },
+        {
+          "start": 36.76,
+          "end": 36.94,
+          "word": " that",
+          "probability": 0.993548572063446
+        },
+        {
+          "start": 36.94,
+          "end": 37.16,
+          "word": " ball.",
+          "probability": 0.8737958669662476
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "3bffaa51e9b671b8600edb5cfeb6e353049eb38559d2b8a41090364d431c5601",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

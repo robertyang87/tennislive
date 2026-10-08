@@ -1,0 +1,237 @@
+{
+  "model": "medium.en",
+  "source_from": 251.5,
+  "source_to": 260.24,
+  "parameters": {
+    "language": "en",
+    "beam_size": 7,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null
+  },
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 1.7600000000000011,
+      "end": 6.46,
+      "text": " another return that's one for the thumb five return winners in this contest for",
+      "tokens": [
+        50363,
+        1194,
+        1441,
+        326,
+        338,
+        530,
+        329,
+        262,
+        15683,
+        1936,
+        1441,
+        14591,
+        287,
+        428,
+        8414,
+        329,
+        50685
+      ],
+      "avg_logprob": -0.36073280684649944,
+      "compression_ratio": 1.3465346534653466,
+      "no_speech_prob": 0.6412261724472046,
+      "words": [
+        {
+          "start": 1.7600000000000011,
+          "end": 2.2000000000000006,
+          "word": " another",
+          "probability": 0.04289364069700241
+        },
+        {
+          "start": 2.2000000000000006,
+          "end": 2.64,
+          "word": " return",
+          "probability": 0.962006688117981
+        },
+        {
+          "start": 2.64,
+          "end": 3.04,
+          "word": " that's",
+          "probability": 0.8881997764110565
+        },
+        {
+          "start": 3.04,
+          "end": 3.18,
+          "word": " one",
+          "probability": 0.831775963306427
+        },
+        {
+          "start": 3.18,
+          "end": 3.4,
+          "word": " for",
+          "probability": 0.9884970188140869
+        },
+        {
+          "start": 3.4,
+          "end": 3.52,
+          "word": " the",
+          "probability": 0.9852527976036072
+        },
+        {
+          "start": 3.52,
+          "end": 3.88,
+          "word": " thumb",
+          "probability": 0.7033369541168213
+        },
+        {
+          "start": 3.88,
+          "end": 4.84,
+          "word": " five",
+          "probability": 0.8542901277542114
+        },
+        {
+          "start": 4.84,
+          "end": 5.24,
+          "word": " return",
+          "probability": 0.9750926494598389
+        },
+        {
+          "start": 5.24,
+          "end": 5.52,
+          "word": " winners",
+          "probability": 0.9953461289405823
+        },
+        {
+          "start": 5.52,
+          "end": 5.68,
+          "word": " in",
+          "probability": 0.9945911765098572
+        },
+        {
+          "start": 5.68,
+          "end": 5.84,
+          "word": " this",
+          "probability": 0.9941871166229248
+        },
+        {
+          "start": 5.84,
+          "end": 6.28,
+          "word": " contest",
+          "probability": 0.9945871829986572
+        },
+        {
+          "start": 6.28,
+          "end": 6.46,
+          "word": " for",
+          "probability": 0.6780049800872803
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 6.46,
+      "end": 8.64,
+      "text": " Jenkin when this might be the most important of them all",
+      "tokens": [
+        50685,
+        13364,
+        5116,
+        618,
+        428,
+        1244,
+        307,
+        262,
+        749,
+        1593,
+        286,
+        606,
+        477,
+        50891
+      ],
+      "avg_logprob": -0.36073280684649944,
+      "compression_ratio": 1.3465346534653466,
+      "no_speech_prob": 0.6412261724472046,
+      "words": [
+        {
+          "start": 6.46,
+          "end": 6.8,
+          "word": " Jenkin",
+          "probability": 0.42103007435798645
+        },
+        {
+          "start": 6.8,
+          "end": 6.96,
+          "word": " when",
+          "probability": 0.6915454864501953
+        },
+        {
+          "start": 6.96,
+          "end": 7.12,
+          "word": " this",
+          "probability": 0.9989423155784607
+        },
+        {
+          "start": 7.12,
+          "end": 7.28,
+          "word": " might",
+          "probability": 0.9984706044197083
+        },
+        {
+          "start": 7.28,
+          "end": 7.44,
+          "word": " be",
+          "probability": 0.9992042183876038
+        },
+        {
+          "start": 7.44,
+          "end": 7.54,
+          "word": " the",
+          "probability": 0.9980794191360474
+        },
+        {
+          "start": 7.54,
+          "end": 7.76,
+          "word": " most",
+          "probability": 0.9988999366760254
+        },
+        {
+          "start": 7.76,
+          "end": 8.14,
+          "word": " important",
+          "probability": 0.9891607165336609
+        },
+        {
+          "start": 8.14,
+          "end": 8.28,
+          "word": " of",
+          "probability": 0.9869465231895447
+        },
+        {
+          "start": 8.28,
+          "end": 8.38,
+          "word": " them",
+          "probability": 0.9583818316459656
+        },
+        {
+          "start": 8.38,
+          "end": 8.64,
+          "word": " all",
+          "probability": 0.9987836480140686
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

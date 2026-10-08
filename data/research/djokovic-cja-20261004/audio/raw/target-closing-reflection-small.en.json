@@ -1,0 +1,180 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 286,
+  "range_to": 307,
+  "created_at": "2026-10-04T14:39:44.221830+00:00",
+  "elapsed_seconds": 3.32,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 288.14,
+      "end": 295.52,
+      "text": " There's something about this place, and there is something about this man.",
+      "avg_logprob": -0.3581803321838379,
+      "no_speech_prob": 0.4151289165019989,
+      "words": [
+        {
+          "start": 288.14,
+          "end": 288.84,
+          "word": " There's",
+          "probability": 0.6857594847679138
+        },
+        {
+          "start": 288.84,
+          "end": 289.06,
+          "word": " something",
+          "probability": 0.9922979474067688
+        },
+        {
+          "start": 289.06,
+          "end": 289.44,
+          "word": " about",
+          "probability": 0.9980054497718811
+        },
+        {
+          "start": 289.44,
+          "end": 289.7,
+          "word": " this",
+          "probability": 0.9953135251998901
+        },
+        {
+          "start": 289.7,
+          "end": 290.1,
+          "word": " place,",
+          "probability": 0.9973841309547424
+        },
+        {
+          "start": 290.76,
+          "end": 294.1,
+          "word": " and",
+          "probability": 0.898681640625
+        },
+        {
+          "start": 294.1,
+          "end": 294.28,
+          "word": " there",
+          "probability": 0.9906188249588013
+        },
+        {
+          "start": 294.28,
+          "end": 294.46,
+          "word": " is",
+          "probability": 0.971558690071106
+        },
+        {
+          "start": 294.46,
+          "end": 294.68,
+          "word": " something",
+          "probability": 0.9986289739608765
+        },
+        {
+          "start": 294.68,
+          "end": 295.0,
+          "word": " about",
+          "probability": 0.9977543950080872
+        },
+        {
+          "start": 295.0,
+          "end": 295.2,
+          "word": " this",
+          "probability": 0.9974746108055115
+        },
+        {
+          "start": 295.2,
+          "end": 295.52,
+          "word": " man.",
+          "probability": 0.9921080470085144
+        }
+      ]
+    },
+    {
+      "start": 296.68,
+      "end": 299.5,
+      "text": " The unbeaten record here in Beijing continues.",
+      "avg_logprob": -0.3581803321838379,
+      "no_speech_prob": 0.4151289165019989,
+      "words": [
+        {
+          "start": 296.68,
+          "end": 296.76,
+          "word": " The",
+          "probability": 0.9819167256355286
+        },
+        {
+          "start": 296.76,
+          "end": 297.3,
+          "word": " unbeaten",
+          "probability": 0.9755846858024597
+        },
+        {
+          "start": 297.3,
+          "end": 297.82,
+          "word": " record",
+          "probability": 0.9975734353065491
+        },
+        {
+          "start": 297.82,
+          "end": 298.06,
+          "word": " here",
+          "probability": 0.9766978621482849
+        },
+        {
+          "start": 298.06,
+          "end": 298.26,
+          "word": " in",
+          "probability": 0.9812852144241333
+        },
+        {
+          "start": 298.26,
+          "end": 298.64,
+          "word": " Beijing",
+          "probability": 0.9985896944999695
+        },
+        {
+          "start": 298.64,
+          "end": 299.5,
+          "word": " continues.",
+          "probability": 0.9971978664398193
+        }
+      ]
+    },
+    {
+      "start": 304.06,
+      "end": 305.14,
+      "text": " Breathe it in.",
+      "avg_logprob": -0.3581803321838379,
+      "no_speech_prob": 0.4151289165019989,
+      "words": [
+        {
+          "start": 304.06,
+          "end": 304.76,
+          "word": " Breathe",
+          "probability": 0.7799140810966492
+        },
+        {
+          "start": 304.76,
+          "end": 304.88,
+          "word": " it",
+          "probability": 0.9006657600402832
+        },
+        {
+          "start": 304.88,
+          "end": 305.14,
+          "word": " in.",
+          "probability": 0.9842666983604431
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,380 @@
+{
+  "word": "场",
+  "char": "场",
+  "sentence": "生日礼物，拿到了。郑钦文已经闯进中网八强。下一场，她能把这份进攻和韧劲，一起带上吗？",
+  "tts_text": "生日礼物，拿到了。郑钦文已经闯进中网八强。下一场，她能把这份进攻和韧劲，一起带上吗？",
+  "intended_refs": [
+    "厂",
+    "昶"
+  ],
+  "wrong_refs": [
+    "尝",
+    "偿"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "medium",
+  "verdict_raw": "correct",
+  "score": 0.74,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 1.29,
+      "d_wrong": 3.22,
+      "score": 0.428
+    },
+    "f0": {
+      "d_intended": 0.017,
+      "d_wrong": 2.839,
+      "score": 0.988
+    },
+    "comb": {
+      "d_intended": 0.665,
+      "d_wrong": 4.449,
+      "score": 0.74
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.501,
+    "wrong": 1.481
+  },
+  "separation": {
+    "spec": {
+      "within": 2.005,
+      "between": 3.307,
+      "separation": 1.649
+    },
+    "f0": {
+      "within": 0.741,
+      "between": 4.726,
+      "separation": 6.376
+    },
+    "comb": {
+      "within": 1.744,
+      "between": 6.379,
+      "separation": 3.658
+    }
+  },
+  "selftest_loo": {
+    "厂": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.778
+    },
+    "昶": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.779
+    },
+    "尝": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.479
+    },
+    "偿": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.244
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:厂": {
+      "spec": 1.297,
+      "f0": 0.017,
+      "vmis": 0.033,
+      "frames": 30,
+      "comb": 0.665
+    },
+    "A:昶": {
+      "spec": 1.29,
+      "f0": 0.022,
+      "vmis": 0.033,
+      "frames": 30,
+      "comb": 0.667
+    },
+    "B:尝": {
+      "spec": 3.292,
+      "f0": 6.131,
+      "vmis": 0.257,
+      "frames": 35,
+      "comb": 7.777
+    },
+    "B:偿": {
+      "spec": 3.22,
+      "f0": 2.839,
+      "vmis": 0.258,
+      "frames": 31,
+      "comb": 4.449
+    }
+  },
+  "window_s": [
+    5.514,
+    5.806
+  ],
+  "boundary_token": "场",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "场",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ],
+    "A:厂": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "厂",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ],
+    "A:昶": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下",
+      "一",
+      "昶",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ],
+    "B:尝": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下",
+      "一尝",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ],
+    "B:偿": [
+      "生日",
+      "礼物",
+      "拿到",
+      "了",
+      "郑钦文",
+      "已经",
+      "闯进",
+      "中网",
+      "八",
+      "强",
+      "下一偿",
+      "她",
+      "能",
+      "把",
+      "这",
+      "份",
+      "进攻",
+      "和",
+      "韧劲",
+      "一起",
+      "带",
+      "上",
+      "吗"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      -8.3,
+      -8.6,
+      -8.7,
+      -8.3,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -1.1,
+      1.4,
+      null,
+      null,
+      null
+    ],
+    "A:厂": [
+      -8.3,
+      -8.6,
+      -8.7,
+      -8.3,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -1.2,
+      1.4,
+      null,
+      null,
+      null
+    ],
+    "A:昶": [
+      -8.3,
+      -8.6,
+      -8.6,
+      -8.3,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -1.1,
+      1.4,
+      null,
+      null,
+      null
+    ],
+    "B:尝": [
+      -7.8,
+      -8.7,
+      -9.3,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -14.4,
+      -14.6,
+      -14.6,
+      -12.8,
+      -9.7,
+      -8.3,
+      null,
+      null
+    ],
+    "B:偿": [
+      -8.8,
+      -9.1,
+      -9.0,
+      -11.1,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -10.6,
+      -10.3,
+      -7.0,
+      -5.4
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/324d346ba6c385dc68a8defd.mp3",
+    "A:厂": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ee081415c48481775be07bdf.mp3",
+    "A:昶": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/5ab80619c4288861ab0afff3.mp3",
+    "B:尝": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/0e51643561245ebd44069d50.mp3",
+    "B:偿": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/dc1970067f8f91b7330a572c.mp3"
+  },
+  "method": "independent paired references; original auto reference set failed LOO; eliminate contextual anomalous refs only, all default raw retained; exact complete latest TTS paragraph",
+  "job": {
+    "id": "u06-i23-场-chang3-vs-chang2",
+    "utterance": 6,
+    "label": "第 10 段",
+    "sentence": "生日礼物，拿到了。郑钦文已经闯进中网八强。下一场，她能把这份进攻和韧劲，一起带上吗？",
+    "text_sha256": "3828b597508a0584f333e4182b3bcc77ff13e35f0b6ce5cf8f34ec2e19d2e5ec",
+    "index": 23,
+    "char": "场",
+    "intended": "chang3",
+    "wrong": "chang2",
+    "ok": [
+      "昶",
+      "氅",
+      "厂"
+    ],
+    "bad": [
+      "偿",
+      "尝",
+      "常"
+    ],
+    "ok_reference_note": "dominant-reading only, single-reading level-2",
+    "bad_reference_note": "single-reading common"
+  }
+}

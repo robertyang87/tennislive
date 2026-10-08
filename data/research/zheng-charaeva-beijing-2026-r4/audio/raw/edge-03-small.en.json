@@ -1,0 +1,99 @@
+{
+  "model": "small.en",
+  "source_from": 251,
+  "source_to": 255.7,
+  "parameters": {
+    "vad_filter": false,
+    "word_timestamps": true,
+    "initial_prompt": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 1.7000000000000002,
+      "end": 4.3,
+      "text": " Got another return, that's one for the thumb.",
+      "tokens": [
+        50363,
+        11853,
+        1194,
+        1441,
+        11,
+        326,
+        338,
+        530,
+        329,
+        262,
+        15683,
+        13,
+        50563
+      ],
+      "avg_logprob": -0.4952713293688638,
+      "compression_ratio": 0.9,
+      "no_speech_prob": 0.19272281229496002,
+      "words": [
+        {
+          "start": 1.7000000000000002,
+          "end": 2.22,
+          "word": " Got",
+          "probability": 0.1698065996170044
+        },
+        {
+          "start": 2.22,
+          "end": 2.72,
+          "word": " another",
+          "probability": 0.9807872772216797
+        },
+        {
+          "start": 2.72,
+          "end": 3.1,
+          "word": " return,",
+          "probability": 0.9955694079399109
+        },
+        {
+          "start": 3.24,
+          "end": 3.46,
+          "word": " that's",
+          "probability": 0.982867419719696
+        },
+        {
+          "start": 3.46,
+          "end": 3.64,
+          "word": " one",
+          "probability": 0.9356727004051208
+        },
+        {
+          "start": 3.64,
+          "end": 3.88,
+          "word": " for",
+          "probability": 0.9948818683624268
+        },
+        {
+          "start": 3.88,
+          "end": 4.02,
+          "word": " the",
+          "probability": 0.9906378984451294
+        },
+        {
+          "start": 4.02,
+          "end": 4.3,
+          "word": " thumb.",
+          "probability": 0.9867798089981079
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

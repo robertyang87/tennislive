@@ -1,0 +1,23 @@
+{
+  "label": "第 15 段",
+  "word": "八强",
+  "intended": "qiang2",
+  "unambiguous_reference": "墙 qiang2",
+  "method": "Compare actual decoded PCM16k sample-by-sample, same full utterance/same voice/rate with only强replacedby墙. Tool multi-control verdict staysunreliable; this supplementary equivalence is direct actualaudio evidence, not human listening.",
+  "sample_rate": 16000,
+  "window_seconds": [
+    4.665,
+    4.969
+  ],
+  "samples": 4864,
+  "byte_identical_in_target_window": true,
+  "pcm_target_sha256": [
+    "ddee76f27ba9fa4452da68180628075df1a65e65c4e0a39717eee7e902335159",
+    "ddee76f27ba9fa4452da68180628075df1a65e65c4e0a39717eee7e902335159"
+  ],
+  "audio_paths": [
+    "/workspace/scratch/noskova-audio-export/cache/d0843af17d6c33cbc0c10c78.mp3",
+    "/workspace/scratch/noskova-audio-export/cache/c7fccb206bbb116aaa435671.mp3"
+  ],
+  "conclusion": "strong target syllable equals unambiguous qiang2 reference exactly across4864samples; no rewriting 八强 justified."
+}

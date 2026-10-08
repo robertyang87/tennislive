@@ -1,0 +1,1308 @@
+{
+  "source": "/workspace/scratch/zheng-bouzkova/wta-brightcove-720p.mp4",
+  "source_sha256": "6ed76ad23370373ade62ed98ed73c58bef792edb88d258af6cce565676edcaa1",
+  "source_duration": 310.998,
+  "model": "base.en",
+  "engine": "faster-whisper",
+  "device": "cpu",
+  "compute_type": "int8",
+  "cpu_threads": 4,
+  "beam_size": 5,
+  "method": "Each actual Silero VAD speech island independently decoded, no concatenation; source timestamp offset restored; no human listening claimed",
+  "vad_options": {
+    "min_silence_duration_ms": 1000,
+    "speech_pad_ms": 450
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.03,
+      "end": 1.3900000000000001,
+      "text": " following the sport of tennis.",
+      "tokens": [
+        50363,
+        1708,
+        262,
+        6332,
+        286,
+        20790,
+        13,
+        50463
+      ],
+      "avg_logprob": -0.4076416492462158,
+      "compression_ratio": 0.7894736842105263,
+      "no_speech_prob": 0.009079908020794392,
+      "words": [
+        {
+          "start": 0.03,
+          "end": 0.67,
+          "word": " following",
+          "probability": 0.5580281019210815
+        },
+        {
+          "start": 0.67,
+          "end": 0.8300000000000001,
+          "word": " the",
+          "probability": 0.9855881929397583
+        },
+        {
+          "start": 0.8300000000000001,
+          "end": 1.03,
+          "word": " sport",
+          "probability": 0.896075963973999
+        },
+        {
+          "start": 1.03,
+          "end": 1.19,
+          "word": " of",
+          "probability": 0.9944792985916138
+        },
+        {
+          "start": 1.19,
+          "end": 1.3900000000000001,
+          "word": " tennis.",
+          "probability": 0.9777692556381226
+        }
+      ],
+      "temperature": 0.0,
+      "island": 0
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 17.918,
+      "end": 18.838,
+      "text": " John so",
+      "tokens": [
+        50363,
+        1757,
+        523,
+        50463
+      ],
+      "avg_logprob": -0.8696403503417969,
+      "compression_ratio": 0.4666666666666667,
+      "no_speech_prob": 0.3438635766506195,
+      "words": [
+        {
+          "start": 17.918,
+          "end": 18.477999999999998,
+          "word": " John",
+          "probability": 0.07657620310783386
+        },
+        {
+          "start": 18.477999999999998,
+          "end": 18.838,
+          "word": " so",
+          "probability": 0.13092941045761108
+        }
+      ],
+      "temperature": 0.0,
+      "island": 1
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 69.982,
+      "end": 71.582,
+      "text": " So the first set goes through the jungle.",
+      "tokens": [
+        50363,
+        1406,
+        262,
+        717,
+        900,
+        2925,
+        832,
+        262,
+        20712,
+        13,
+        50463
+      ],
+      "avg_logprob": -0.5150463879108429,
+      "compression_ratio": 0.9318181818181818,
+      "no_speech_prob": 0.006807219702750444,
+      "words": [
+        {
+          "start": 69.982,
+          "end": 70.082,
+          "word": " So",
+          "probability": 0.8069877028465271
+        },
+        {
+          "start": 70.082,
+          "end": 70.162,
+          "word": " the",
+          "probability": 0.9151557087898254
+        },
+        {
+          "start": 70.162,
+          "end": 70.382,
+          "word": " first",
+          "probability": 0.9979173541069031
+        },
+        {
+          "start": 70.382,
+          "end": 70.662,
+          "word": " set",
+          "probability": 0.9964722394943237
+        },
+        {
+          "start": 70.662,
+          "end": 70.942,
+          "word": " goes",
+          "probability": 0.979505181312561
+        },
+        {
+          "start": 70.942,
+          "end": 71.162,
+          "word": " through",
+          "probability": 0.8087218999862671
+        },
+        {
+          "start": 71.162,
+          "end": 71.362,
+          "word": " the",
+          "probability": 0.19723236560821533
+        },
+        {
+          "start": 71.362,
+          "end": 71.582,
+          "word": " jungle.",
+          "probability": 0.464947909116745
+        }
+      ],
+      "temperature": 0.0,
+      "island": 2
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 85.118,
+      "end": 87.158,
+      "text": " No, that's outstanding from Rie Bolzko.",
+      "tokens": [
+        50363,
+        1400,
+        11,
+        326,
+        338,
+        11660,
+        422,
+        371,
+        494,
+        10797,
+        89,
+        7204,
+        13,
+        50483
+      ],
+      "avg_logprob": -0.7596875588099162,
+      "compression_ratio": 0.8297872340425532,
+      "no_speech_prob": 0.004811601713299751,
+      "words": [
+        {
+          "start": 85.118,
+          "end": 85.27799999999999,
+          "word": " No,",
+          "probability": 0.42676976323127747
+        },
+        {
+          "start": 85.41799999999999,
+          "end": 85.618,
+          "word": " that's",
+          "probability": 0.9760376811027527
+        },
+        {
+          "start": 85.618,
+          "end": 86.018,
+          "word": " outstanding",
+          "probability": 0.9860519170761108
+        },
+        {
+          "start": 86.018,
+          "end": 86.458,
+          "word": " from",
+          "probability": 0.8842151165008545
+        },
+        {
+          "start": 86.458,
+          "end": 86.678,
+          "word": " Rie",
+          "probability": 0.19479996152222157
+        },
+        {
+          "start": 86.678,
+          "end": 87.158,
+          "word": " Bolzko.",
+          "probability": 0.5814973711967468
+        }
+      ],
+      "temperature": 0.0,
+      "island": 3
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 98.014,
+      "end": 99.054,
+      "text": " from Bosco over there.",
+      "tokens": [
+        50363,
+        422,
+        14548,
+        1073,
+        625,
+        612,
+        13,
+        50463
+      ],
+      "avg_logprob": -1.2004550298055012,
+      "compression_ratio": 0.7333333333333333,
+      "no_speech_prob": 0.11080829799175262,
+      "words": [
+        {
+          "start": 98.014,
+          "end": 98.354,
+          "word": " from",
+          "probability": 0.030842658132314682
+        },
+        {
+          "start": 98.354,
+          "end": 98.734,
+          "word": " Bosco",
+          "probability": 0.35506056249141693
+        },
+        {
+          "start": 98.734,
+          "end": 98.854,
+          "word": " over",
+          "probability": 0.158767968416214
+        },
+        {
+          "start": 98.854,
+          "end": 99.054,
+          "word": " there.",
+          "probability": 0.9987567663192749
+        }
+      ],
+      "temperature": 1.0,
+      "island": 4
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 158.366,
+      "end": 159.686,
+      "text": " beautifully constructed points.",
+      "tokens": [
+        50363,
+        21104,
+        12006,
+        2173,
+        13,
+        50463
+      ],
+      "avg_logprob": -0.6318105799811227,
+      "compression_ratio": 0.7948717948717948,
+      "no_speech_prob": 0.008171133697032928,
+      "words": [
+        {
+          "start": 158.366,
+          "end": 158.806,
+          "word": " beautifully",
+          "probability": 0.27041804790496826
+        },
+        {
+          "start": 158.806,
+          "end": 159.086,
+          "word": " constructed",
+          "probability": 0.9952636957168579
+        },
+        {
+          "start": 159.086,
+          "end": 159.686,
+          "word": " points.",
+          "probability": 0.9748716950416565
+        }
+      ],
+      "temperature": 0.0,
+      "island": 5
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 173.374,
+      "end": 174.774,
+      "text": " It's really big forehands.",
+      "tokens": [
+        50363,
+        632,
+        338,
+        1107,
+        1263,
+        1674,
+        43365,
+        13,
+        50463
+      ],
+      "avg_logprob": -0.5470246732234955,
+      "compression_ratio": 0.7647058823529411,
+      "no_speech_prob": 0.04766782000660896,
+      "words": [
+        {
+          "start": 173.374,
+          "end": 173.51399999999998,
+          "word": " It's",
+          "probability": 0.6345112025737762
+        },
+        {
+          "start": 173.51399999999998,
+          "end": 173.774,
+          "word": " really",
+          "probability": 0.520496129989624
+        },
+        {
+          "start": 173.774,
+          "end": 174.094,
+          "word": " big",
+          "probability": 0.9505266547203064
+        },
+        {
+          "start": 174.094,
+          "end": 174.774,
+          "word": " forehands.",
+          "probability": 0.9020797908306122
+        }
+      ],
+      "temperature": 0.0,
+      "island": 6
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 186.366,
+      "end": 186.686,
+      "text": " points.",
+      "tokens": [
+        50363,
+        2173,
+        13,
+        50483
+      ],
+      "avg_logprob": -1.0495007514953614,
+      "compression_ratio": 0.4666666666666667,
+      "no_speech_prob": 0.18856289982795715,
+      "words": [
+        {
+          "start": 186.366,
+          "end": 186.686,
+          "word": " points.",
+          "probability": 0.2597307860851288
+        }
+      ],
+      "temperature": 1.0,
+      "island": 7
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 201.918,
+      "end": 204.018,
+      "text": " All out of points, point of the match.",
+      "tokens": [
+        50363,
+        1439,
+        503,
+        286,
+        2173,
+        11,
+        966,
+        286,
+        262,
+        2872,
+        13,
+        50513
+      ],
+      "avg_logprob": -0.8762278747558594,
+      "compression_ratio": 0.9848484848484849,
+      "no_speech_prob": 0.10561664402484894,
+      "words": [
+        {
+          "start": 201.918,
+          "end": 201.978,
+          "word": " All",
+          "probability": 0.04302099347114563
+        },
+        {
+          "start": 201.978,
+          "end": 202.138,
+          "word": " out",
+          "probability": 0.29274147748947144
+        },
+        {
+          "start": 202.138,
+          "end": 202.21800000000002,
+          "word": " of",
+          "probability": 0.9855210185050964
+        },
+        {
+          "start": 202.21800000000002,
+          "end": 202.478,
+          "word": " points,",
+          "probability": 0.9788520932197571
+        },
+        {
+          "start": 202.838,
+          "end": 203.15800000000002,
+          "word": " point",
+          "probability": 0.6240092515945435
+        },
+        {
+          "start": 203.15800000000002,
+          "end": 203.43800000000002,
+          "word": " of",
+          "probability": 0.9600913524627686
+        },
+        {
+          "start": 203.43800000000002,
+          "end": 203.678,
+          "word": " the",
+          "probability": 0.9977186918258667
+        },
+        {
+          "start": 203.678,
+          "end": 204.018,
+          "word": " match.",
+          "probability": 0.9956191182136536
+        }
+      ],
+      "temperature": 0.0,
+      "island": 8
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 204.918,
+      "end": 206.118,
+      "text": " Re-bolscava comes with it.",
+      "tokens": [
+        50513,
+        797,
+        12,
+        65,
+        10220,
+        66,
+        4170,
+        2058,
+        351,
+        340,
+        13,
+        50613
+      ],
+      "avg_logprob": -0.8762278747558594,
+      "compression_ratio": 0.9848484848484849,
+      "no_speech_prob": 0.10561664402484894,
+      "words": [
+        {
+          "start": 204.918,
+          "end": 204.978,
+          "word": " Re",
+          "probability": 0.29256317019462585
+        },
+        {
+          "start": 204.978,
+          "end": 205.538,
+          "word": "-bolscava",
+          "probability": 0.3090264320373535
+        },
+        {
+          "start": 205.538,
+          "end": 205.758,
+          "word": " comes",
+          "probability": 0.9522112607955933
+        },
+        {
+          "start": 205.758,
+          "end": 206.058,
+          "word": " with",
+          "probability": 0.2638885974884033
+        },
+        {
+          "start": 206.058,
+          "end": 206.118,
+          "word": " it.",
+          "probability": 0.10029899328947067
+        }
+      ],
+      "temperature": 0.0,
+      "island": 8
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 214.59,
+      "end": 214.99,
+      "text": " It's too good.",
+      "tokens": [
+        50363,
+        632,
+        338,
+        1165,
+        922,
+        13,
+        50413
+      ],
+      "avg_logprob": -0.5504255443811417,
+      "compression_ratio": 0.6363636363636364,
+      "no_speech_prob": 0.1777787208557129,
+      "words": [
+        {
+          "start": 214.59,
+          "end": 214.65,
+          "word": " It's",
+          "probability": 0.5336723700165749
+        },
+        {
+          "start": 214.65,
+          "end": 214.81,
+          "word": " too",
+          "probability": 0.7736791968345642
+        },
+        {
+          "start": 214.81,
+          "end": 214.99,
+          "word": " good.",
+          "probability": 0.9901097416877747
+        }
+      ],
+      "temperature": 0.0,
+      "island": 9
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 230.782,
+      "end": 231.722,
+      "text": " with the drop shot.",
+      "tokens": [
+        50363,
+        351,
+        262,
+        4268,
+        2823,
+        13,
+        50513
+      ],
+      "avg_logprob": -0.5345312803983688,
+      "compression_ratio": 0.7037037037037037,
+      "no_speech_prob": 0.1692344844341278,
+      "words": [
+        {
+          "start": 230.782,
+          "end": 231.102,
+          "word": " with",
+          "probability": 0.28092944622039795
+        },
+        {
+          "start": 231.102,
+          "end": 231.202,
+          "word": " the",
+          "probability": 0.8822973370552063
+        },
+        {
+          "start": 231.202,
+          "end": 231.442,
+          "word": " drop",
+          "probability": 0.9081991910934448
+        },
+        {
+          "start": 231.442,
+          "end": 231.722,
+          "word": " shot.",
+          "probability": 0.9654779434204102
+        }
+      ],
+      "temperature": 0.0,
+      "island": 10
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 300.286,
+      "end": 301.246,
+      "text": " Who gets it done?",
+      "tokens": [
+        50363,
+        5338,
+        3011,
+        340,
+        1760,
+        30,
+        50463
+      ],
+      "avg_logprob": -0.4669787809252739,
+      "compression_ratio": 0.68,
+      "no_speech_prob": 0.014016307890415192,
+      "words": [
+        {
+          "start": 300.286,
+          "end": 300.606,
+          "word": " Who",
+          "probability": 0.6236962676048279
+        },
+        {
+          "start": 300.606,
+          "end": 300.786,
+          "word": " gets",
+          "probability": 0.9891120791435242
+        },
+        {
+          "start": 300.786,
+          "end": 300.986,
+          "word": " it",
+          "probability": 0.9944658875465393
+        },
+        {
+          "start": 300.986,
+          "end": 301.246,
+          "word": " done?",
+          "probability": 0.997934103012085
+        }
+      ],
+      "temperature": 0.0,
+      "island": 11
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 302.238,
+      "end": 303.658,
+      "text": " And the crowd is loving it.",
+      "tokens": [
+        50363,
+        843,
+        262,
+        4315,
+        318,
+        14442,
+        340,
+        13,
+        50463
+      ],
+      "avg_logprob": -0.5282762718200683,
+      "compression_ratio": 0.9166666666666666,
+      "no_speech_prob": 0.011494557373225689,
+      "words": [
+        {
+          "start": 302.238,
+          "end": 302.438,
+          "word": " And",
+          "probability": 0.4119086265563965
+        },
+        {
+          "start": 302.438,
+          "end": 302.538,
+          "word": " the",
+          "probability": 0.9915211200714111
+        },
+        {
+          "start": 302.538,
+          "end": 302.798,
+          "word": " crowd",
+          "probability": 0.9962819218635559
+        },
+        {
+          "start": 302.798,
+          "end": 303.098,
+          "word": " is",
+          "probability": 0.9949466586112976
+        },
+        {
+          "start": 303.098,
+          "end": 303.418,
+          "word": " loving",
+          "probability": 0.9930089712142944
+        },
+        {
+          "start": 303.418,
+          "end": 303.658,
+          "word": " it.",
+          "probability": 0.9803645610809326
+        }
+      ],
+      "temperature": 0.0,
+      "island": 12
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 304.218,
+      "end": 305.678,
+      "text": " Our coach pleased as well.",
+      "tokens": [
+        50463,
+        3954,
+        3985,
+        10607,
+        355,
+        880,
+        13,
+        50563
+      ],
+      "avg_logprob": -0.5282762718200683,
+      "compression_ratio": 0.9166666666666666,
+      "no_speech_prob": 0.011494557373225689,
+      "words": [
+        {
+          "start": 304.218,
+          "end": 304.298,
+          "word": " Our",
+          "probability": 0.5886523723602295
+        },
+        {
+          "start": 304.298,
+          "end": 304.578,
+          "word": " coach",
+          "probability": 0.9440275430679321
+        },
+        {
+          "start": 304.578,
+          "end": 305.118,
+          "word": " pleased",
+          "probability": 0.8612132668495178
+        },
+        {
+          "start": 305.118,
+          "end": 305.438,
+          "word": " as",
+          "probability": 0.9502037763595581
+        },
+        {
+          "start": 305.438,
+          "end": 305.678,
+          "word": " well.",
+          "probability": 0.9974341988563538
+        }
+      ],
+      "temperature": 0.0,
+      "island": 12
+    },
+    {
+      "id": 3,
+      "seek": 0,
+      "start": 306.438,
+      "end": 306.918,
+      "text": " Here, Reba.",
+      "tokens": [
+        50563,
+        3423,
+        11,
+        797,
+        7012,
+        13,
+        50613
+      ],
+      "avg_logprob": -0.5282762718200683,
+      "compression_ratio": 0.9166666666666666,
+      "no_speech_prob": 0.011494557373225689,
+      "words": [
+        {
+          "start": 306.438,
+          "end": 306.478,
+          "word": " Here,",
+          "probability": 0.2701861560344696
+        },
+        {
+          "start": 306.658,
+          "end": 306.918,
+          "word": " Reba.",
+          "probability": 0.4959527999162674
+        }
+      ],
+      "temperature": 0.0,
+      "island": 12
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 307.87,
+      "end": 308.65,
+      "text": " What a battle.",
+      "tokens": [
+        50363,
+        1867,
+        257,
+        3344,
+        13,
+        50463
+      ],
+      "avg_logprob": -0.5003719159535,
+      "compression_ratio": 0.6363636363636364,
+      "no_speech_prob": 0.01790689304471016,
+      "words": [
+        {
+          "start": 307.87,
+          "end": 308.27,
+          "word": " What",
+          "probability": 0.8305336833000183
+        },
+        {
+          "start": 308.27,
+          "end": 308.35,
+          "word": " a",
+          "probability": 0.9625452756881714
+        },
+        {
+          "start": 308.35,
+          "end": 308.65,
+          "word": " battle.",
+          "probability": 0.985093355178833
+        }
+      ],
+      "temperature": 0.0,
+      "island": 13
+    }
+  ],
+  "words": [
+    {
+      "start": 0.03,
+      "end": 0.67,
+      "word": " following",
+      "probability": 0.5580281019210815
+    },
+    {
+      "start": 0.67,
+      "end": 0.8300000000000001,
+      "word": " the",
+      "probability": 0.9855881929397583
+    },
+    {
+      "start": 0.8300000000000001,
+      "end": 1.03,
+      "word": " sport",
+      "probability": 0.896075963973999
+    },
+    {
+      "start": 1.03,
+      "end": 1.19,
+      "word": " of",
+      "probability": 0.9944792985916138
+    },
+    {
+      "start": 1.19,
+      "end": 1.3900000000000001,
+      "word": " tennis.",
+      "probability": 0.9777692556381226
+    },
+    {
+      "start": 17.918,
+      "end": 18.477999999999998,
+      "word": " John",
+      "probability": 0.07657620310783386
+    },
+    {
+      "start": 18.477999999999998,
+      "end": 18.838,
+      "word": " so",
+      "probability": 0.13092941045761108
+    },
+    {
+      "start": 69.982,
+      "end": 70.082,
+      "word": " So",
+      "probability": 0.8069877028465271
+    },
+    {
+      "start": 70.082,
+      "end": 70.162,
+      "word": " the",
+      "probability": 0.9151557087898254
+    },
+    {
+      "start": 70.162,
+      "end": 70.382,
+      "word": " first",
+      "probability": 0.9979173541069031
+    },
+    {
+      "start": 70.382,
+      "end": 70.662,
+      "word": " set",
+      "probability": 0.9964722394943237
+    },
+    {
+      "start": 70.662,
+      "end": 70.942,
+      "word": " goes",
+      "probability": 0.979505181312561
+    },
+    {
+      "start": 70.942,
+      "end": 71.162,
+      "word": " through",
+      "probability": 0.8087218999862671
+    },
+    {
+      "start": 71.162,
+      "end": 71.362,
+      "word": " the",
+      "probability": 0.19723236560821533
+    },
+    {
+      "start": 71.362,
+      "end": 71.582,
+      "word": " jungle.",
+      "probability": 0.464947909116745
+    },
+    {
+      "start": 85.118,
+      "end": 85.27799999999999,
+      "word": " No,",
+      "probability": 0.42676976323127747
+    },
+    {
+      "start": 85.41799999999999,
+      "end": 85.618,
+      "word": " that's",
+      "probability": 0.9760376811027527
+    },
+    {
+      "start": 85.618,
+      "end": 86.018,
+      "word": " outstanding",
+      "probability": 0.9860519170761108
+    },
+    {
+      "start": 86.018,
+      "end": 86.458,
+      "word": " from",
+      "probability": 0.8842151165008545
+    },
+    {
+      "start": 86.458,
+      "end": 86.678,
+      "word": " Rie",
+      "probability": 0.19479996152222157
+    },
+    {
+      "start": 86.678,
+      "end": 87.158,
+      "word": " Bolzko.",
+      "probability": 0.5814973711967468
+    },
+    {
+      "start": 98.014,
+      "end": 98.354,
+      "word": " from",
+      "probability": 0.030842658132314682
+    },
+    {
+      "start": 98.354,
+      "end": 98.734,
+      "word": " Bosco",
+      "probability": 0.35506056249141693
+    },
+    {
+      "start": 98.734,
+      "end": 98.854,
+      "word": " over",
+      "probability": 0.158767968416214
+    },
+    {
+      "start": 98.854,
+      "end": 99.054,
+      "word": " there.",
+      "probability": 0.9987567663192749
+    },
+    {
+      "start": 158.366,
+      "end": 158.806,
+      "word": " beautifully",
+      "probability": 0.27041804790496826
+    },
+    {
+      "start": 158.806,
+      "end": 159.086,
+      "word": " constructed",
+      "probability": 0.9952636957168579
+    },
+    {
+      "start": 159.086,
+      "end": 159.686,
+      "word": " points.",
+      "probability": 0.9748716950416565
+    },
+    {
+      "start": 173.374,
+      "end": 173.51399999999998,
+      "word": " It's",
+      "probability": 0.6345112025737762
+    },
+    {
+      "start": 173.51399999999998,
+      "end": 173.774,
+      "word": " really",
+      "probability": 0.520496129989624
+    },
+    {
+      "start": 173.774,
+      "end": 174.094,
+      "word": " big",
+      "probability": 0.9505266547203064
+    },
+    {
+      "start": 174.094,
+      "end": 174.774,
+      "word": " forehands.",
+      "probability": 0.9020797908306122
+    },
+    {
+      "start": 186.366,
+      "end": 186.686,
+      "word": " points.",
+      "probability": 0.2597307860851288
+    },
+    {
+      "start": 201.918,
+      "end": 201.978,
+      "word": " All",
+      "probability": 0.04302099347114563
+    },
+    {
+      "start": 201.978,
+      "end": 202.138,
+      "word": " out",
+      "probability": 0.29274147748947144
+    },
+    {
+      "start": 202.138,
+      "end": 202.21800000000002,
+      "word": " of",
+      "probability": 0.9855210185050964
+    },
+    {
+      "start": 202.21800000000002,
+      "end": 202.478,
+      "word": " points,",
+      "probability": 0.9788520932197571
+    },
+    {
+      "start": 202.838,
+      "end": 203.15800000000002,
+      "word": " point",
+      "probability": 0.6240092515945435
+    },
+    {
+      "start": 203.15800000000002,
+      "end": 203.43800000000002,
+      "word": " of",
+      "probability": 0.9600913524627686
+    },
+    {
+      "start": 203.43800000000002,
+      "end": 203.678,
+      "word": " the",
+      "probability": 0.9977186918258667
+    },
+    {
+      "start": 203.678,
+      "end": 204.018,
+      "word": " match.",
+      "probability": 0.9956191182136536
+    },
+    {
+      "start": 204.918,
+      "end": 204.978,
+      "word": " Re",
+      "probability": 0.29256317019462585
+    },
+    {
+      "start": 204.978,
+      "end": 205.538,
+      "word": "-bolscava",
+      "probability": 0.3090264320373535
+    },
+    {
+      "start": 205.538,
+      "end": 205.758,
+      "word": " comes",
+      "probability": 0.9522112607955933
+    },
+    {
+      "start": 205.758,
+      "end": 206.058,
+      "word": " with",
+      "probability": 0.2638885974884033
+    },
+    {
+      "start": 206.058,
+      "end": 206.118,
+      "word": " it.",
+      "probability": 0.10029899328947067
+    },
+    {
+      "start": 214.59,
+      "end": 214.65,
+      "word": " It's",
+      "probability": 0.5336723700165749
+    },
+    {
+      "start": 214.65,
+      "end": 214.81,
+      "word": " too",
+      "probability": 0.7736791968345642
+    },
+    {
+      "start": 214.81,
+      "end": 214.99,
+      "word": " good.",
+      "probability": 0.9901097416877747
+    },
+    {
+      "start": 230.782,
+      "end": 231.102,
+      "word": " with",
+      "probability": 0.28092944622039795
+    },
+    {
+      "start": 231.102,
+      "end": 231.202,
+      "word": " the",
+      "probability": 0.8822973370552063
+    },
+    {
+      "start": 231.202,
+      "end": 231.442,
+      "word": " drop",
+      "probability": 0.9081991910934448
+    },
+    {
+      "start": 231.442,
+      "end": 231.722,
+      "word": " shot.",
+      "probability": 0.9654779434204102
+    },
+    {
+      "start": 300.286,
+      "end": 300.606,
+      "word": " Who",
+      "probability": 0.6236962676048279
+    },
+    {
+      "start": 300.606,
+      "end": 300.786,
+      "word": " gets",
+      "probability": 0.9891120791435242
+    },
+    {
+      "start": 300.786,
+      "end": 300.986,
+      "word": " it",
+      "probability": 0.9944658875465393
+    },
+    {
+      "start": 300.986,
+      "end": 301.246,
+      "word": " done?",
+      "probability": 0.997934103012085
+    },
+    {
+      "start": 302.238,
+      "end": 302.438,
+      "word": " And",
+      "probability": 0.4119086265563965
+    },
+    {
+      "start": 302.438,
+      "end": 302.538,
+      "word": " the",
+      "probability": 0.9915211200714111
+    },
+    {
+      "start": 302.538,
+      "end": 302.798,
+      "word": " crowd",
+      "probability": 0.9962819218635559
+    },
+    {
+      "start": 302.798,
+      "end": 303.098,
+      "word": " is",
+      "probability": 0.9949466586112976
+    },
+    {
+      "start": 303.098,
+      "end": 303.418,
+      "word": " loving",
+      "probability": 0.9930089712142944
+    },
+    {
+      "start": 303.418,
+      "end": 303.658,
+      "word": " it.",
+      "probability": 0.9803645610809326
+    },
+    {
+      "start": 304.218,
+      "end": 304.298,
+      "word": " Our",
+      "probability": 0.5886523723602295
+    },
+    {
+      "start": 304.298,
+      "end": 304.578,
+      "word": " coach",
+      "probability": 0.9440275430679321
+    },
+    {
+      "start": 304.578,
+      "end": 305.118,
+      "word": " pleased",
+      "probability": 0.8612132668495178
+    },
+    {
+      "start": 305.118,
+      "end": 305.438,
+      "word": " as",
+      "probability": 0.9502037763595581
+    },
+    {
+      "start": 305.438,
+      "end": 305.678,
+      "word": " well.",
+      "probability": 0.9974341988563538
+    },
+    {
+      "start": 306.438,
+      "end": 306.478,
+      "word": " Here,",
+      "probability": 0.2701861560344696
+    },
+    {
+      "start": 306.658,
+      "end": 306.918,
+      "word": " Reba.",
+      "probability": 0.4959527999162674
+    },
+    {
+      "start": 307.87,
+      "end": 308.27,
+      "word": " What",
+      "probability": 0.8305336833000183
+    },
+    {
+      "start": 308.27,
+      "end": 308.35,
+      "word": " a",
+      "probability": 0.9625452756881714
+    },
+    {
+      "start": 308.35,
+      "end": 308.65,
+      "word": " battle.",
+      "probability": 0.985093355178833
+    }
+  ],
+  "seconds": 23.259127855300903
+}

@@ -407,3 +407,24 @@ def test_L2复核凭证里存的认人睁眼的数_手改判词骗不过去(tmp_
     spec_path.write_text(json.dumps(claimed, ensure_ascii=False), encoding="utf-8")
     ok, detail, _ = _verdict(_face_model_block(similarity=0.62, ear=0.097), claimed)
     assert ok, detail
+
+
+def test_verified_trophy_speech_needs_no_invented_match_lead(tmp_path):
+    import copy
+    ci = _tool()
+    spec_path = Path('specs/interviews/nadal-academy-10th-2026-championship-speech.json')
+    spec = json.loads(spec_path.read_text())
+    assert ci.bilingual_lead_ok(tmp_path / 'absent.ass', spec)[0]
+    stale = copy.deepcopy(spec)
+    stale['source_verification']['attestation_sha256'] = '0' * 64
+    assert not ci.bilingual_lead_ok(tmp_path / 'absent.ass', stale)[0]
+    unverified = copy.deepcopy(spec)
+    unverified['source_verification']['status'] = 'needs_review'
+    assert not ci.bilingual_lead_ok(tmp_path / 'absent.ass', unverified)[0]
+    on_court = copy.deepcopy(spec)
+    on_court['requested_content_type'] = 'on_court'
+    on_court['interview_kind'] = '赛后场上采访'
+    assert not ci.bilingual_lead_ok(tmp_path / 'absent.ass', on_court)[0]
+    present = copy.deepcopy(spec)
+    present['lead_in'] = {'url': 'different', 'subs': []}
+    assert not ci.bilingual_lead_ok(tmp_path / 'absent.ass', present)[0]

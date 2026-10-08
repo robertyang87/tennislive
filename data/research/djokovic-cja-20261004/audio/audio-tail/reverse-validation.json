@@ -1,0 +1,7 @@
+{
+  "mutation": "Restore original _seg_audio_needs_filter predicate so audio_tail option cannot reach filter map; no source file changes",
+  "nonzero_tail_samples": 5248,
+  "tail_samples": 5248,
+  "tail_peak": 0.124969482421875,
+  "conclusion": "Real-tail zero assertion would fail when the new filter-map connection is removed"
+}

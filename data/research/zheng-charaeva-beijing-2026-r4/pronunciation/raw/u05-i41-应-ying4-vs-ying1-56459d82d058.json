@@ -1,0 +1,428 @@
+{
+  "job": {
+    "id": "u05-i41-应-ying4-vs-ying1",
+    "utterance": 5,
+    "label": "第 9 段",
+    "sentence": "三十九记制胜分，四十二次非受迫失误。进攻有威力，也有代价。她赢下的，是最后那一次回应。",
+    "text_sha256": "56459d82d0581d36b4a9336b32fea2d387baf2528a015c456736c92925eb79f6",
+    "index": 41,
+    "char": "应",
+    "intended": "ying4",
+    "wrong": "ying1",
+    "ok": [
+      "映",
+      "硬"
+    ],
+    "bad": [
+      "婴",
+      "樱",
+      "缨"
+    ],
+    "ok_reference_note": "dominant-reading only",
+    "bad_reference_note": "single-reading common"
+  },
+  "word": "应",
+  "char": "应",
+  "sentence": "三十九记制胜分，四十二次非受迫失误。进攻有威力，也有代价。她赢下的，是最后那一次回应。",
+  "tts_text": "三十九记制胜分，四十二次非受迫失误。进攻有威力，也有代价。她赢下的，是最后那一次回应。",
+  "intended_refs": [
+    "映",
+    "硬"
+  ],
+  "wrong_refs": [
+    "婴",
+    "樱",
+    "缨"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "high",
+  "verdict_raw": "correct",
+  "score": 0.989,
+  "margin": 0.2,
+  "near_identical_to": "intended",
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 0.0,
+      "d_wrong": 3.049,
+      "score": 1.0
+    },
+    "f0": {
+      "d_intended": 0.013,
+      "d_wrong": 0.684,
+      "score": 0.964
+    },
+    "comb": {
+      "d_intended": 0.013,
+      "d_wrong": 2.209,
+      "score": 0.989
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.013,
+    "wrong": 12.828
+  },
+  "separation": {
+    "spec": {
+      "within": 0.0,
+      "between": 3.042,
+      "separation": null
+    },
+    "f0": {
+      "within": 0.033,
+      "between": 0.69,
+      "separation": 21.182
+    },
+    "comb": {
+      "within": 0.033,
+      "between": 2.211,
+      "separation": 67.843
+    }
+  },
+  "selftest_loo": {
+    "映": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.94
+    },
+    "硬": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.94
+    },
+    "婴": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.992
+    },
+    "樱": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.992
+    },
+    "缨": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.98
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:映": {
+      "spec": 0.0,
+      "f0": 0.055,
+      "vmis": 0.0,
+      "frames": 31,
+      "comb": 0.055
+    },
+    "A:硬": {
+      "spec": 0.0,
+      "f0": 0.013,
+      "vmis": 0.0,
+      "frames": 31,
+      "comb": 0.013
+    },
+    "B:婴": {
+      "spec": 3.049,
+      "f0": 0.685,
+      "vmis": 0.25,
+      "frames": 36,
+      "comb": 2.21
+    },
+    "B:樱": {
+      "spec": 3.049,
+      "f0": 0.686,
+      "vmis": 0.25,
+      "frames": 36,
+      "comb": 2.211
+    },
+    "B:缨": {
+      "spec": 3.049,
+      "f0": 0.684,
+      "vmis": 0.25,
+      "frames": 36,
+      "comb": 2.209
+    }
+  },
+  "window_s": [
+    8.875,
+    9.179
+  ],
+  "boundary_token": "回应",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下",
+      "的",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回应"
+    ],
+    "A:映": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下",
+      "的",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回映"
+    ],
+    "A:硬": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下",
+      "的",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回硬"
+    ],
+    "B:婴": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下",
+      "的",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回婴"
+    ],
+    "B:樱": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下",
+      "的",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回樱"
+    ],
+    "B:缨": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下",
+      "的",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回缨"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      null,
+      -9.5,
+      -8.2,
+      -7.0,
+      -5.8,
+      -4.7,
+      -3.0,
+      -2.1,
+      -1.8,
+      -1.9,
+      -2.7,
+      -3.7,
+      -3.7,
+      null,
+      null
+    ],
+    "A:映": [
+      null,
+      null,
+      -9.5,
+      -8.3,
+      -7.1,
+      -5.9,
+      -4.8,
+      -3.1,
+      -2.1,
+      -1.9,
+      -1.9,
+      -2.7,
+      -3.7,
+      -3.8,
+      null,
+      null
+    ],
+    "A:硬": [
+      null,
+      null,
+      -9.5,
+      -8.2,
+      -7.0,
+      -5.8,
+      -4.7,
+      -3.0,
+      -2.1,
+      -1.8,
+      -1.9,
+      -2.7,
+      -3.6,
+      -3.7,
+      null,
+      null
+    ],
+    "B:婴": [
+      -4.5,
+      -7.8,
+      -7.3,
+      -6.2,
+      -5.2,
+      -4.2,
+      -2.2,
+      -2.9,
+      -3.2,
+      -3.1,
+      -2.9,
+      -2.8,
+      -1.9,
+      -1.3,
+      -1.1,
+      -0.8,
+      null
+    ],
+    "B:樱": [
+      -4.5,
+      -7.8,
+      -7.3,
+      -6.2,
+      -5.2,
+      -4.2,
+      -2.2,
+      -2.9,
+      -3.2,
+      -3.1,
+      -2.9,
+      -2.8,
+      -1.9,
+      -1.3,
+      -1.0,
+      -0.8,
+      null
+    ],
+    "B:缨": [
+      -4.5,
+      -7.8,
+      -7.3,
+      -6.2,
+      -5.2,
+      -4.2,
+      -2.2,
+      -2.9,
+      -3.3,
+      -3.1,
+      -2.9,
+      -2.8,
+      -1.9,
+      -1.3,
+      -1.1,
+      -0.8,
+      null
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/fce76f29f31706b7c4557684.mp3",
+    "A:映": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/b5b2c55c0dc2d79f1329648e.mp3",
+    "A:硬": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/f982eddc03d0ff56e0af9126.mp3",
+    "B:婴": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/90ce5872351fdb55bdb6a1bf.mp3",
+    "B:樱": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ace90a6890ff52a028228944.mp3",
+    "B:缨": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/a5c8e9159bc217ec9b9bbfec.mp3"
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "source_url": "https://www.tennistv.com/videos/4379964/shanghai-2025-sf-djokovic-vacherot-short-highlights",
+  "source_sha256": "15b90b92121472056954a2184f4e0b3555e78d46f69c70c36b04a0dfaef2254d",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex official_sources: base.en/small.en/tiny.en cross-check and explicit phonetic/context corrections; not claimed human listening",
+  "reviewed_at": "2026-10-07T20:37:04.494625+00:00",
+  "status": "complete",
+  "reviewed_from": 133.6,
+  "reviewed_to": 149.0,
+  "foreground_english": [
+    {
+      "start": 136.74,
+      "end": 139.38,
+      "en": "Game, set and match.",
+      "zh": "比赛结束。"
+    },
+    {
+      "start": 139.4,
+      "end": 141.06,
+      "en": "Valentin Vacherot",
+      "zh": "瓦舍罗"
+    },
+    {
+      "start": 141.06,
+      "end": 143.12,
+      "en": "scripts another chapter",
+      "zh": "续写新篇"
+    },
+    {
+      "start": 143.12,
+      "end": 146.6,
+      "en": "in the story of the tennis season.",
+      "zh": "为这个网球赛季再添传奇。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_raw": [
+    {
+      "model": "base.en",
+      "file": "/workspace/scratch/vacherot/selection-review/djokovic-base.en.json",
+      "result": [
+        {
+          "start": 139.2,
+          "end": 146.56,
+          "en": "Valentin Vacherot, squints another chapter in the story of the tennis season.",
+          "words": [
+            {
+              "start": 139.2,
+              "end": 140.2,
+              "word": " Valentin"
+            },
+            {
+              "start": 140.2,
+              "end": 140.85999999999999,
+              "word": " Vacherot,"
+            },
+            {
+              "start": 141.35999999999999,
+              "end": 141.76,
+              "word": " squints"
+            },
+            {
+              "start": 141.76,
+              "end": 142.38,
+              "word": " another"
+            },
+            {
+              "start": 142.38,
+              "end": 142.84,
+              "word": " chapter"
+            },
+            {
+              "start": 142.84,
+              "end": 143.92,
+              "word": " in"
+            },
+            {
+              "start": 143.92,
+              "end": 144.14,
+              "word": " the"
+            },
+            {
+              "start": 144.14,
+              "end": 144.78,
+              "word": " story"
+            },
+            {
+              "start": 144.78,
+              "end": 145.28,
+              "word": " of"
+            },
+            {
+              "start": 145.28,
+              "end": 145.48,
+              "word": " the"
+            },
+            {
+              "start": 145.48,
+              "end": 145.76,
+              "word": " tennis"
+            },
+            {
+              "start": 145.76,
+              "end": 146.56,
+              "word": " season."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "umpire-tiny",
+      "file": "/workspace/scratch/vacherot/selection-review/djokovic-umpire-tiny.json",
+      "result": [
+        {
+          "start": 137.95999999999998,
+          "end": 139.2,
+          "en": " Game, set."
+        }
+      ]
+    },
+    {
+      "model": "small.en",
+      "file": "/workspace/scratch/vacherot/selection-review/djokovic-small.en.json",
+      "result": [
+        {
+          "start": 136.74,
+          "end": 146.6,
+          "en": "Game, set and match. Valentin Vacherot scripts another chapter in the story of the tennis season.",
+          "words": [
+            {
+              "start": 136.74,
+              "end": 138.04,
+              "word": " Game,"
+            },
+            {
+              "start": 138.9,
+              "end": 139.22,
+              "word": " set"
+            },
+            {
+              "start": 139.22,
+              "end": 139.38,
+              "word": " and"
+            },
+            {
+              "start": 139.38,
+              "end": 139.38,
+              "word": " match."
+            },
+            {
+              "start": 139.4,
+              "end": 140.2,
+              "word": " Valentin"
+            },
+            {
+              "start": 140.2,
+              "end": 141.06,
+              "word": " Vacherot"
+            },
+            {
+              "start": 141.06,
+              "end": 141.68,
+              "word": " scripts"
+            },
+            {
+              "start": 141.68,
+              "end": 142.42,
+              "word": " another"
+            },
+            {
+              "start": 142.42,
+              "end": 143.12,
+              "word": " chapter"
+            },
+            {
+              "start": 143.12,
+              "end": 143.98,
+              "word": " in"
+            },
+            {
+              "start": 143.98,
+              "end": 144.2,
+              "word": " the"
+            },
+            {
+              "start": 144.2,
+              "end": 144.68,
+              "word": " story"
+            },
+            {
+              "start": 144.68,
+              "end": 145.35999999999999,
+              "word": " of"
+            },
+            {
+              "start": 145.35999999999999,
+              "end": 145.54,
+              "word": " the"
+            },
+            {
+              "start": 145.54,
+              "end": 145.98,
+              "word": " tennis"
+            },
+            {
+              "start": 145.98,
+              "end": 146.6,
+              "word": " season."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "corrections": [
+    "Base squints corrected to scripts by small.en and exact sentence grammar.",
+    "Umpire game set and match recovered by small.en; independent tiny detects Game, set in same window, match is weak under applause."
+  ],
+  "caption_note": "Long full sentences divided at meaningful phrase boundaries for one English and one Chinese line; source word order and time remain continuous."
+}

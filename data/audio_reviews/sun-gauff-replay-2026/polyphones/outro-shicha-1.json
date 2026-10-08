@@ -1,0 +1,373 @@
+{
+  "word": "时差",
+  "char": "差",
+  "sentence": "关注网球时差，时差归我，好球归你。",
+  "tts_text": "关注网球时差，时差归我，好球归你。",
+  "intended_refs": [
+    "锸",
+    "嗏",
+    "臿"
+  ],
+  "wrong_refs": [
+    "岔",
+    "诧",
+    "姹"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "unreliable",
+  "confidence": null,
+  "verdict_raw": "correct",
+  "score": 0.595,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 0.781,
+      "d_wrong": 2.417,
+      "score": 0.511
+    },
+    "f0": {
+      "d_intended": 0.136,
+      "d_wrong": 1.03,
+      "score": 0.767
+    },
+    "comb": {
+      "d_intended": 0.568,
+      "d_wrong": 2.239,
+      "score": 0.595
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.536,
+    "wrong": 1.857
+  },
+  "separation": {
+    "spec": {
+      "within": 1.735,
+      "between": 2.513,
+      "separation": 1.448
+    },
+    "f0": {
+      "within": 0.74,
+      "between": 1.873,
+      "separation": 2.532
+    },
+    "comb": {
+      "within": 1.607,
+      "between": 3.13,
+      "separation": 1.947
+    }
+  },
+  "selftest_loo": {
+    "锸": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.663
+    },
+    "嗏": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.566
+    },
+    "臿": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.654
+    },
+    "岔": {
+      "expect": "misread",
+      "got": "uncertain",
+      "score": 0.001
+    },
+    "诧": {
+      "expect": "misread",
+      "got": "uncertain",
+      "score": -0.079
+    },
+    "姹": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.343
+    }
+  },
+  "selftest_pass": false,
+  "distances_from_orig": {
+    "A:锸": {
+      "spec": 0.781,
+      "f0": 0.268,
+      "vmis": 0.0,
+      "frames": 28,
+      "comb": 0.659
+    },
+    "A:嗏": {
+      "spec": 1.004,
+      "f0": 0.393,
+      "vmis": 0.0,
+      "frames": 28,
+      "comb": 0.895
+    },
+    "A:臿": {
+      "spec": 0.864,
+      "f0": 0.136,
+      "vmis": 0.0,
+      "frames": 28,
+      "comb": 0.568
+    },
+    "B:岔": {
+      "spec": 2.417,
+      "f0": 1.03,
+      "vmis": 0.103,
+      "frames": 29,
+      "comb": 2.239
+    },
+    "B:诧": {
+      "spec": 2.55,
+      "f0": 1.35,
+      "vmis": 0.353,
+      "frames": 34,
+      "comb": 2.625
+    },
+    "B:姹": {
+      "spec": 2.515,
+      "f0": 3.283,
+      "vmis": 0.241,
+      "frames": 29,
+      "comb": 4.54
+    }
+  },
+  "window_s": [
+    1.66,
+    1.94
+  ],
+  "boundary_token": "时差",
+  "window_anchor": "B:姹",
+  "tokens": {
+    "ORIG": [
+      "关注",
+      "网球",
+      "时差",
+      "时差",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "A:锸": [
+      "关注",
+      "网球",
+      "时差",
+      "时锸",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "A:嗏": [
+      "关注",
+      "网球",
+      "时差",
+      "时嗏",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "A:臿": [
+      "关注",
+      "网球",
+      "时差",
+      "时臿",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "B:岔": [
+      "关注",
+      "网球",
+      "时差",
+      "时岔",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "B:诧": [
+      "关注",
+      "网球",
+      "时差",
+      "时",
+      "诧归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ],
+    "B:姹": [
+      "关注",
+      "网球",
+      "时差",
+      "时",
+      "姹",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      1.2,
+      1.1,
+      1.5,
+      1.6,
+      0.1,
+      null,
+      null,
+      null,
+      3.1,
+      1.9,
+      1.7,
+      1.5,
+      1.7
+    ],
+    "A:锸": [
+      null,
+      1.4,
+      1.4,
+      1.8,
+      1.8,
+      0.4,
+      null,
+      null,
+      null,
+      1.0,
+      2.2,
+      1.9,
+      1.8,
+      1.9
+    ],
+    "A:嗏": [
+      null,
+      1.5,
+      1.5,
+      1.9,
+      2.0,
+      0.5,
+      null,
+      null,
+      null,
+      3.5,
+      2.3,
+      2.1,
+      1.9,
+      2.1
+    ],
+    "A:臿": [
+      null,
+      1.3,
+      1.3,
+      1.7,
+      1.7,
+      0.3,
+      null,
+      null,
+      null,
+      3.2,
+      2.1,
+      1.8,
+      1.7,
+      1.8
+    ],
+    "B:岔": [
+      null,
+      null,
+      2.0,
+      2.7,
+      2.3,
+      null,
+      null,
+      null,
+      null,
+      2.6,
+      1.7,
+      0.3,
+      -0.3,
+      -0.4
+    ],
+    "B:诧": [
+      null,
+      null,
+      1.9,
+      2.0,
+      1.4,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -1.5,
+      -2.4
+    ],
+    "B:姹": [
+      null,
+      null,
+      1.8,
+      3.3,
+      3.5,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -8.9,
+      -10.4,
+      null,
+      -1.0,
+      -1.7
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/45fe07c9742efcada9c0d7a4.mp3",
+    "A:锸": "/workspace/scratch/sun-replay/polyphone-audit/cache/3c34f0cfa6b1fc63f5590403.mp3",
+    "A:嗏": "/workspace/scratch/sun-replay/polyphone-audit/cache/bad087099f7b84f801c09176.mp3",
+    "A:臿": "/workspace/scratch/sun-replay/polyphone-audit/cache/2e217db58d7b7671e9f74085.mp3",
+    "B:岔": "/workspace/scratch/sun-replay/polyphone-audit/cache/ca40915e3df126ddb120cabd.mp3",
+    "B:诧": "/workspace/scratch/sun-replay/polyphone-audit/cache/73868045eaafb8c80a489ce4.mp3",
+    "B:姹": "/workspace/scratch/sun-replay/polyphone-audit/cache/26fe4ba0f18b1fdcb0fadd3b.mp3"
+  },
+  "source": "src/tennislive/video/outro_page.py:NARRATION",
+  "source_text": "关注网球时差，时差归我，好球归你。",
+  "speakable_text_at_audit": "关注网球时差，时差归我，好球归你。",
+  "occurrence_zero_based": 1,
+  "at_character_index": 8,
+  "intended_pinyin": "cha1",
+  "wrong_pinyin": "cha4",
+  "reference_note": "All six chars checked as single-reading by pypinyin; intended chars uncommon (GB level2 锸 and rare 嗏/臿). LOO and far_from_both must be respected, no own-character self-reference."
+}

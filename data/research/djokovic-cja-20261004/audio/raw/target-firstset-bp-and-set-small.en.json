@@ -1,0 +1,180 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 96,
+  "range_to": 114,
+  "created_at": "2026-10-04T14:39:21.582032+00:00",
+  "elapsed_seconds": 4.11,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 98.44,
+      "end": 101.58,
+      "text": " Well, Djokovic didn't take advantage there.",
+      "avg_logprob": -0.3615954518318176,
+      "no_speech_prob": 0.4153321385383606,
+      "words": [
+        {
+          "start": 98.44,
+          "end": 99.28,
+          "word": " Well,",
+          "probability": 0.687492847442627
+        },
+        {
+          "start": 99.54,
+          "end": 99.8,
+          "word": " Djokovic",
+          "probability": 0.8042198121547699
+        },
+        {
+          "start": 99.8,
+          "end": 100.22,
+          "word": " didn't",
+          "probability": 0.9890464544296265
+        },
+        {
+          "start": 100.22,
+          "end": 100.46,
+          "word": " take",
+          "probability": 0.9969774484634399
+        },
+        {
+          "start": 100.46,
+          "end": 100.92,
+          "word": " advantage",
+          "probability": 0.9914689064025879
+        },
+        {
+          "start": 100.92,
+          "end": 101.58,
+          "word": " there.",
+          "probability": 0.9343094825744629
+        }
+      ]
+    },
+    {
+      "start": 102.98,
+      "end": 104.76,
+      "text": " Great hustle from Zverev.",
+      "avg_logprob": -0.3615954518318176,
+      "no_speech_prob": 0.4153321385383606,
+      "words": [
+        {
+          "start": 102.98,
+          "end": 103.5,
+          "word": " Great",
+          "probability": 0.9853699207305908
+        },
+        {
+          "start": 103.5,
+          "end": 103.98,
+          "word": " hustle",
+          "probability": 0.7871452867984772
+        },
+        {
+          "start": 103.98,
+          "end": 104.18,
+          "word": " from",
+          "probability": 0.984961986541748
+        },
+        {
+          "start": 104.18,
+          "end": 104.76,
+          "word": " Zverev.",
+          "probability": 0.8042458891868591
+        }
+      ]
+    },
+    {
+      "start": 108.68,
+      "end": 112.64,
+      "text": " The set does go the way of our top seed, Alexander Zverev.",
+      "avg_logprob": -0.3615954518318176,
+      "no_speech_prob": 0.4153321385383606,
+      "words": [
+        {
+          "start": 108.36,
+          "end": 108.78,
+          "word": " The",
+          "probability": 0.39154690504074097
+        },
+        {
+          "start": 108.78,
+          "end": 109.36,
+          "word": " set",
+          "probability": 0.9770366549491882
+        },
+        {
+          "start": 109.36,
+          "end": 109.64,
+          "word": " does",
+          "probability": 0.984775722026825
+        },
+        {
+          "start": 109.64,
+          "end": 109.84,
+          "word": " go",
+          "probability": 0.9980716109275818
+        },
+        {
+          "start": 109.84,
+          "end": 109.96,
+          "word": " the",
+          "probability": 0.9909504055976868
+        },
+        {
+          "start": 109.96,
+          "end": 110.22,
+          "word": " way",
+          "probability": 0.9840362668037415
+        },
+        {
+          "start": 110.22,
+          "end": 110.86,
+          "word": " of",
+          "probability": 0.977542519569397
+        },
+        {
+          "start": 110.86,
+          "end": 111.04,
+          "word": " our",
+          "probability": 0.9907009601593018
+        },
+        {
+          "start": 111.04,
+          "end": 111.28,
+          "word": " top",
+          "probability": 0.9692947268486023
+        },
+        {
+          "start": 111.28,
+          "end": 111.58,
+          "word": " seed,",
+          "probability": 0.9670247435569763
+        },
+        {
+          "start": 111.78,
+          "end": 112.04,
+          "word": " Alexander",
+          "probability": 0.7864433526992798
+        },
+        {
+          "start": 112.04,
+          "end": 112.64,
+          "word": " Zverev.",
+          "probability": 0.9846482872962952
+        }
+      ]
+    }
+  ]
+}

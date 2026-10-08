@@ -1,0 +1,53 @@
+{
+  "status": "accepted_source_frame_fallback",
+  "subject": "Yue Yuan / 袁悦",
+  "image": "assets/reel/yuan-andreeva-beijing-2026-r2-yuan-frame-132.80.jpg",
+  "sha256": "3bf3d7c35790c0777c9e50d032693b02bb3c08cb4449a1996193592c11f3cef1",
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "source_video": "https://youtu.be/V6ekW4Qy1jA",
+  "source_channel": "WTA",
+  "source_frame": {
+    "at": 132.8,
+    "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-V6ekW4Qy1jA/V6ekW4Qy1jA.mp4",
+    "source_sha256": "ec9fed9650ac8b0f6f9c62377d9be4b7ef528ca8ef87b6cbb2527819331b866f"
+  },
+  "identity_evidence": "本场132.80s偏正面近景：袁悦薄荷绿裙、绿色遮阳帽；画面记分条Y.YUAN 5 Ad / M.ANDREEVA [4] 3、SET POINT #2；与源片18–27s袁悦外观及官方头像一致。绿帽单独不构成人物证据。",
+  "fallback_authorization": "CLAUDE.md 2026-09-26 established owner口径，已有授权：没有高清实拍时可直接用清晰偏正面抽帧。",
+  "rejected_photo": {
+    "image_url": "https://www.chinaopen.com/cn/upload/images/2026/10/827ac52c284cb630.jpg",
+    "source_page": "https://www.chinaopen.com/cn/contents/281/1624.html",
+    "dimensions": [
+      5000,
+      3335
+    ],
+    "actual_subject": "Mirra Andreeva / 米拉·安德烈耶娃",
+    "reason": "本场关联正确但人物错误；黑裙球员是Andreeva，而Yuan本场是薄荷绿裙。赛报标题点名袁悦不能证明图片人物。",
+    "production_asset_deleted": true
+  },
+  "channel_search_results": {
+    "WTA_photo_api": "袁悦id324325全部48条最新为2026-09-30首轮，已排除；10/2无本场袁悦匹配。",
+    "WTA_photo_resources": "无本场袁悦匹配。",
+    "WTA_article_lead_photo": "无本场袁悦匹配。",
+    "AP": "扫描返回无匹配。",
+    "China_Open_official_article": "本场正文唯一图是安德烈耶娃，排除；WP接口404，不视为查空。",
+    "Chinese_media": "搜狗微信27条去重后1条10/2相关推文，文章proxy403，结果未知。",
+    "local_paper": "北京来源未配置，未跑，结果未知。"
+  },
+  "limitations": "当前已成功检查渠道无可用本场袁悦高清实拍；受阻渠道仍未知，不能宣称互联网所有来源不存在。1920×1080抽帧竖版需要放大，正式spec已记录_low_res_why。",
+  "production_cover": {
+    "path": "assets/reel/yuan-andreeva-beijing-2026-r2-yuan-wta-hd.jpg",
+    "width": 3280,
+    "height": 2183,
+    "sha256": "a8d809f1dd0758893df57cf65f837b2a4b1c057a6c08a117441b1c328b195e23",
+    "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/02/03/740861ce-e945-47e2-933c-dbe36edc5bdc/Yuan-R2-PCF.JPG?width=4000",
+    "photo_id": 4443690,
+    "event": "2026 Cluj-Napoca",
+    "publish_date": "2026-02-03",
+    "same_match": false,
+    "reason": "用户2026-10-02明确要求封面换高清大图。WTA与中网公开源未取得本场袁悦无水印原图；Getty已核本场6000×4000但公开仅水印预览，未取得原图。先选WTA官方本赛季克卢日站袁悦反手动作3280×2183，正面偏三分之二、双眼睁开、面部合焦、专注无胜后庆祝。API标为2026 Cluj-Napoca，photo4443690，2月3日发布；不是本场摄影，作为人物封面，正文全部保留10月2日本场原视频。未生成、未超分、未调色。"
+  },
+  "source_frame_fallback_status": "replaced_by_HD_per_owner"
+}

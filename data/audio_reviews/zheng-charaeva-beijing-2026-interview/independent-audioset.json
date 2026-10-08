@@ -1,0 +1,354 @@
+{
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "model": "Xenova/ast-finetuned-audioset-10-10-0.4593",
+  "model_revision": "249a1fbf0286b40e7f1ed687a8ae396997bf7dc6",
+  "model_sha256": "807d244b58a30eaa89f0a721fb841619c696857aabe4eac93769bd0b61497f61",
+  "model_format": "quantized ONNX AudioSet AST",
+  "feature_preprocessing": "16kHz mono float PCM; Kaldi-compatible fbank128; 25ms Hanning/10ms hop; dither0; no Slaney mel scale; 1024-frame pad; (fbank-mean)/(2*std)",
+  "preprocessor_config": {
+    "do_normalize": true,
+    "feature_extractor_type": "ASTFeatureExtractor",
+    "feature_size": 1,
+    "max_length": 1024,
+    "mean": -4.2677393,
+    "num_mel_bins": 128,
+    "padding_side": "right",
+    "padding_value": 0.0,
+    "return_attention_mask": false,
+    "sampling_rate": 16000,
+    "std": 4.5689974
+  },
+  "kaldi_options": "frame_opts: \nsamp_freq: 16000\nframe_shift_ms: 10\nframe_length_ms: 25\ndither: 0\npreemph_coeff: 0.97\nremove_dc_offset: 1\nwindow_type: hanning\nround_to_power_of_two: 1\nblackman_coeff: 0.42\nsnip_edges: 1\n\n\nmel_opts: \nnum_bins: 128\nlow_freq: 20\nhigh_freq: 0\nvtln_low: 100\nvtln_high: -500\ndebug_mel: 0\nhtk_mode: 0\nis_librosa: 0\nnorm: slaney\nuse_slaney_mel_scale: 0\nfloor_to_int_bin: 0\n\nuse_energy: 0\nenergy_floor: 0\nraw_energy: 1\nhtk_compat: 0\nuse_log_fbank: 1\nuse_power: 1\n",
+  "runtime": "1.30.0",
+  "method": "actual-source AudioSet model inference; classifier scores are not calibrated probabilities or human listening evidence",
+  "results": [
+    {
+      "window": [
+        346.18,
+        352.0
+      ],
+      "wav_sha256": "9829d1fd81b8b5ccb6cb3f13cd24daa7723eaa24914171b425d946d109cb6e44",
+      "top_scores": [
+        {
+          "label": "Speech",
+          "sigmoid_score": 0.5222015976905823
+        },
+        {
+          "label": "Applause",
+          "sigmoid_score": 0.3019150495529175
+        },
+        {
+          "label": "Male speech, man speaking",
+          "sigmoid_score": 0.0724695548415184
+        },
+        {
+          "label": "Sound effect",
+          "sigmoid_score": 0.04811380058526993
+        },
+        {
+          "label": "Clapping",
+          "sigmoid_score": 0.047810960561037064
+        },
+        {
+          "label": "Narration, monologue",
+          "sigmoid_score": 0.03028981201350689
+        },
+        {
+          "label": "Crowd",
+          "sigmoid_score": 0.023054946213960648
+        },
+        {
+          "label": "Animal",
+          "sigmoid_score": 0.020630352199077606
+        },
+        {
+          "label": "Trickle, dribble",
+          "sigmoid_score": 0.018588947132229805
+        },
+        {
+          "label": "Liquid",
+          "sigmoid_score": 0.01851523481309414
+        },
+        {
+          "label": "Music",
+          "sigmoid_score": 0.015330162830650806
+        },
+        {
+          "label": "Snort",
+          "sigmoid_score": 0.014486298896372318
+        },
+        {
+          "label": "Run",
+          "sigmoid_score": 0.01392385084182024
+        },
+        {
+          "label": "Cheering",
+          "sigmoid_score": 0.012054035440087318
+        },
+        {
+          "label": "Slam",
+          "sigmoid_score": 0.01193027850240469
+        }
+      ],
+      "selected_scores": {
+        "Speech": 0.5222015976905823,
+        "Male speech, man speaking": 0.0724695548415184,
+        "Female speech, woman speaking": 0.007690961938351393,
+        "Child speech, kid speaking": 0.003628343576565385,
+        "Speech synthesizer": 0.0005179323488846421,
+        "Clapping": 0.047810960561037064,
+        "Cheering": 0.012054035440087318,
+        "Applause": 0.3019150495529175,
+        "Chatter": 0.0005953980144113302,
+        "Crowd": 0.023054946213960648,
+        "Hubbub, speech noise, speech babble": 0.0014447171706706285
+      }
+    },
+    {
+      "window": [
+        392.48,
+        394.69
+      ],
+      "wav_sha256": "fa1f4f262fc0cb875e5c230c6b2aae3e3155055cf2cefe4dfea3f113092a2441",
+      "top_scores": [
+        {
+          "label": "Speech",
+          "sigmoid_score": 0.5873905420303345
+        },
+        {
+          "label": "Male speech, man speaking",
+          "sigmoid_score": 0.12925170361995697
+        },
+        {
+          "label": "Narration, monologue",
+          "sigmoid_score": 0.06983739882707596
+        },
+        {
+          "label": "Sound effect",
+          "sigmoid_score": 0.02990781143307686
+        },
+        {
+          "label": "Female speech, woman speaking",
+          "sigmoid_score": 0.021819664165377617
+        },
+        {
+          "label": "Music",
+          "sigmoid_score": 0.019854454323649406
+        },
+        {
+          "label": "Animal",
+          "sigmoid_score": 0.018251487985253334
+        },
+        {
+          "label": "Conversation",
+          "sigmoid_score": 0.011795248836278915
+        },
+        {
+          "label": "Snort",
+          "sigmoid_score": 0.010617446154356003
+        },
+        {
+          "label": "Silence",
+          "sigmoid_score": 0.010318462736904621
+        },
+        {
+          "label": "Television",
+          "sigmoid_score": 0.009737645275890827
+        },
+        {
+          "label": "Vehicle",
+          "sigmoid_score": 0.009732978418469429
+        },
+        {
+          "label": "Sigh",
+          "sigmoid_score": 0.00912877731025219
+        },
+        {
+          "label": "Gasp",
+          "sigmoid_score": 0.009087196551263332
+        },
+        {
+          "label": "Inside, small room",
+          "sigmoid_score": 0.009082823060452938
+        }
+      ],
+      "selected_scores": {
+        "Speech": 0.5873905420303345,
+        "Male speech, man speaking": 0.12925170361995697,
+        "Female speech, woman speaking": 0.021819664165377617,
+        "Child speech, kid speaking": 0.0007219833787530661,
+        "Speech synthesizer": 0.0023543930146843195,
+        "Clapping": 0.0015802559209987521,
+        "Cheering": 0.0005483879940584302,
+        "Applause": 0.001383827649988234,
+        "Chatter": 0.00034215219784528017,
+        "Crowd": 0.001419118489138782,
+        "Hubbub, speech noise, speech babble": 0.0005880777607671916
+      }
+    },
+    {
+      "window": [
+        343.8,
+        346.18
+      ],
+      "wav_sha256": "fc7b1ae2aef6656b5c7b11337e4a24d301f35260030e4cdd3b7ac8a661fc4df2",
+      "top_scores": [
+        {
+          "label": "Speech",
+          "sigmoid_score": 0.6301531195640564
+        },
+        {
+          "label": "Narration, monologue",
+          "sigmoid_score": 0.12136238813400269
+        },
+        {
+          "label": "Male speech, man speaking",
+          "sigmoid_score": 0.09878724813461304
+        },
+        {
+          "label": "Female speech, woman speaking",
+          "sigmoid_score": 0.03131452202796936
+        },
+        {
+          "label": "Music",
+          "sigmoid_score": 0.025306135416030884
+        },
+        {
+          "label": "Sound effect",
+          "sigmoid_score": 0.019990215077996254
+        },
+        {
+          "label": "Silence",
+          "sigmoid_score": 0.010156691074371338
+        },
+        {
+          "label": "Inside, small room",
+          "sigmoid_score": 0.009356274269521236
+        },
+        {
+          "label": "Conversation",
+          "sigmoid_score": 0.00828332919627428
+        },
+        {
+          "label": "Mantra",
+          "sigmoid_score": 0.006703586783260107
+        },
+        {
+          "label": "Animal",
+          "sigmoid_score": 0.00648494204506278
+        },
+        {
+          "label": "Wail, moan",
+          "sigmoid_score": 0.005848615895956755
+        },
+        {
+          "label": "Television",
+          "sigmoid_score": 0.005731420591473579
+        },
+        {
+          "label": "Gasp",
+          "sigmoid_score": 0.005185059737414122
+        },
+        {
+          "label": "Vehicle",
+          "sigmoid_score": 0.004893017932772636
+        }
+      ],
+      "selected_scores": {
+        "Speech": 0.6301531195640564,
+        "Male speech, man speaking": 0.09878724813461304,
+        "Female speech, woman speaking": 0.03131452202796936,
+        "Child speech, kid speaking": 0.0009727251017466187,
+        "Speech synthesizer": 0.002836304483935237,
+        "Clapping": 0.0015345116844400764,
+        "Cheering": 0.00028646926512010396,
+        "Applause": 0.0011302216444164515,
+        "Chatter": 0.0004284554743207991,
+        "Crowd": 0.001414920319803059,
+        "Hubbub, speech noise, speech babble": 0.000537665153387934
+      }
+    },
+    {
+      "window": [
+        394.69,
+        398.0
+      ],
+      "wav_sha256": "ddb8d6f69cc38c174b601733e5cf1e6cad6a3a4972d14ad611bbd31de378ed39",
+      "top_scores": [
+        {
+          "label": "Speech",
+          "sigmoid_score": 0.6508374810218811
+        },
+        {
+          "label": "Male speech, man speaking",
+          "sigmoid_score": 0.3007231652736664
+        },
+        {
+          "label": "Narration, monologue",
+          "sigmoid_score": 0.16081494092941284
+        },
+        {
+          "label": "Chuckle, chortle",
+          "sigmoid_score": 0.03308049961924553
+        },
+        {
+          "label": "Snicker",
+          "sigmoid_score": 0.02870858833193779
+        },
+        {
+          "label": "Sound effect",
+          "sigmoid_score": 0.028065728023648262
+        },
+        {
+          "label": "Applause",
+          "sigmoid_score": 0.02295203134417534
+        },
+        {
+          "label": "Female speech, woman speaking",
+          "sigmoid_score": 0.019853519275784492
+        },
+        {
+          "label": "Music",
+          "sigmoid_score": 0.01977355033159256
+        },
+        {
+          "label": "Crowd",
+          "sigmoid_score": 0.017339546233415604
+        },
+        {
+          "label": "Conversation",
+          "sigmoid_score": 0.014684787020087242
+        },
+        {
+          "label": "Owl",
+          "sigmoid_score": 0.012446611188352108
+        },
+        {
+          "label": "Whoop",
+          "sigmoid_score": 0.012364046648144722
+        },
+        {
+          "label": "Clapping",
+          "sigmoid_score": 0.012197831645607948
+        },
+        {
+          "label": "Bird",
+          "sigmoid_score": 0.010593025013804436
+        }
+      ],
+      "selected_scores": {
+        "Speech": 0.6508374810218811,
+        "Male speech, man speaking": 0.3007231652736664,
+        "Female speech, woman speaking": 0.019853519275784492,
+        "Child speech, kid speaking": 0.0011815261095762253,
+        "Speech synthesizer": 0.004931218922138214,
+        "Clapping": 0.012197831645607948,
+        "Cheering": 0.009720243513584137,
+        "Applause": 0.02295203134417534,
+        "Chatter": 0.001082381117157638,
+        "Crowd": 0.017339546233415604,
+        "Hubbub, speech noise, speech babble": 0.0015270821750164032
+      }
+    }
+  ]
+}

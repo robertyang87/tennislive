@@ -1,0 +1,480 @@
+{
+  "model": "base.en",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "source_from": 0,
+  "source_to": 22,
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+  },
+  "info": {
+    "language": "en",
+    "language_probability": 1,
+    "duration": 22.0,
+    "duration_after_vad": 22.0,
+    "all_language_probs": null,
+    "transcription_options": {
+      "beam_size": 5,
+      "best_of": 5,
+      "patience": 1,
+      "length_penalty": 1,
+      "repetition_penalty": 1,
+      "no_repeat_ngram_size": 0,
+      "log_prob_threshold": -1.0,
+      "no_speech_threshold": 0.6,
+      "compression_ratio_threshold": 2.4,
+      "condition_on_previous_text": false,
+      "prompt_reset_on_temperature": 0.5,
+      "temperatures": [
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA.",
+      "prefix": null,
+      "suppress_blank": true,
+      "suppress_tokens": [
+        1,
+        2,
+        7,
+        8,
+        9,
+        10,
+        14,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        90,
+        91,
+        92,
+        93,
+        357,
+        366,
+        438,
+        532,
+        685,
+        705,
+        796,
+        930,
+        1058,
+        1220,
+        1267,
+        1279,
+        1303,
+        1343,
+        1377,
+        1391,
+        1635,
+        1782,
+        1875,
+        2162,
+        2361,
+        2488,
+        3467,
+        4008,
+        4211,
+        4600,
+        4808,
+        5299,
+        5855,
+        6329,
+        7203,
+        9609,
+        9959,
+        10563,
+        10786,
+        11420,
+        11709,
+        11907,
+        13163,
+        13697,
+        13700,
+        14808,
+        15306,
+        16410,
+        16791,
+        17992,
+        19203,
+        19510,
+        20724,
+        22305,
+        22935,
+        27007,
+        30109,
+        30420,
+        33409,
+        34949,
+        40283,
+        40493,
+        40549,
+        47282,
+        49146,
+        50257,
+        50357,
+        50358,
+        50359,
+        50360,
+        50361
+      ],
+      "without_timestamps": false,
+      "max_initial_timestamp": 1.0,
+      "word_timestamps": true,
+      "prepend_punctuations": "\"'“¿([{-",
+      "append_punctuations": "\"'.。,，!！?？:：”)]}、",
+      "multilingual": false,
+      "max_new_tokens": null,
+      "clip_timestamps": [
+        0.0
+      ],
+      "hallucination_silence_threshold": null,
+      "hotwords": null
+    },
+    "vad_options": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.0,
+      "end": 2.48,
+      "text": " In some respects, certainly as far as time.",
+      "tokens": [
+        50413,
+        554,
+        617,
+        19410,
+        11,
+        3729,
+        355,
+        1290,
+        355,
+        640,
+        13,
+        50613
+      ],
+      "avg_logprob": -0.316234406370383,
+      "compression_ratio": 1.2847222222222223,
+      "no_speech_prob": 0.0415632501244545,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.78,
+          "word": " In",
+          "probability": 0.6382251977920532
+        },
+        {
+          "start": 0.78,
+          "end": 1.0,
+          "word": " some",
+          "probability": 0.9944829344749451
+        },
+        {
+          "start": 1.0,
+          "end": 1.28,
+          "word": " respects,",
+          "probability": 0.5771122574806213
+        },
+        {
+          "start": 1.28,
+          "end": 1.68,
+          "word": " certainly",
+          "probability": 0.9857330322265625
+        },
+        {
+          "start": 1.68,
+          "end": 1.84,
+          "word": " as",
+          "probability": 0.9729131460189819
+        },
+        {
+          "start": 1.84,
+          "end": 1.98,
+          "word": " far",
+          "probability": 0.9983659386634827
+        },
+        {
+          "start": 1.98,
+          "end": 2.14,
+          "word": " as",
+          "probability": 0.9932075142860413
+        },
+        {
+          "start": 2.14,
+          "end": 2.48,
+          "word": " time.",
+          "probability": 0.9928122162818909
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 8.68,
+      "end": 13.2,
+      "text": " Oh, terrific placement.",
+      "tokens": [
+        50963,
+        3966,
+        11,
+        23754,
+        13127,
+        13,
+        51063
+      ],
+      "avg_logprob": -0.316234406370383,
+      "compression_ratio": 1.2847222222222223,
+      "no_speech_prob": 0.0415632501244545,
+      "words": [
+        {
+          "start": 8.68,
+          "end": 9.26,
+          "word": " Oh,",
+          "probability": 0.5094848871231079
+        },
+        {
+          "start": 12.32,
+          "end": 12.66,
+          "word": " terrific",
+          "probability": 0.9941003918647766
+        },
+        {
+          "start": 12.66,
+          "end": 13.2,
+          "word": " placement.",
+          "probability": 0.9116167426109314
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 3,
+      "seek": 0,
+      "start": 13.88,
+      "end": 15.32,
+      "text": " That forehand just kissing the line.",
+      "tokens": [
+        51063,
+        1320,
+        1674,
+        4993,
+        655,
+        25847,
+        262,
+        1627,
+        13,
+        51213
+      ],
+      "avg_logprob": -0.316234406370383,
+      "compression_ratio": 1.2847222222222223,
+      "no_speech_prob": 0.0415632501244545,
+      "words": [
+        {
+          "start": 13.88,
+          "end": 13.88,
+          "word": " That",
+          "probability": 0.7519828677177429
+        },
+        {
+          "start": 13.88,
+          "end": 14.3,
+          "word": " forehand",
+          "probability": 0.9914695620536804
+        },
+        {
+          "start": 14.3,
+          "end": 14.54,
+          "word": " just",
+          "probability": 0.5190038681030273
+        },
+        {
+          "start": 14.54,
+          "end": 14.88,
+          "word": " kissing",
+          "probability": 0.9900646805763245
+        },
+        {
+          "start": 14.88,
+          "end": 15.1,
+          "word": " the",
+          "probability": 0.974279522895813
+        },
+        {
+          "start": 15.1,
+          "end": 15.32,
+          "word": " line.",
+          "probability": 0.989832878112793
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 4,
+      "seek": 0,
+      "start": 17.32,
+      "end": 19.44,
+      "text": " Still vying for spots at the WTA Finals.",
+      "tokens": [
+        51263,
+        7831,
+        48067,
+        329,
+        10222,
+        379,
+        262,
+        370,
+        5603,
+        19705,
+        13,
+        51363
+      ],
+      "avg_logprob": -0.316234406370383,
+      "compression_ratio": 1.2847222222222223,
+      "no_speech_prob": 0.0415632501244545,
+      "words": [
+        {
+          "start": 17.32,
+          "end": 17.68,
+          "word": " Still",
+          "probability": 0.910424530506134
+        },
+        {
+          "start": 17.68,
+          "end": 17.9,
+          "word": " vying",
+          "probability": 0.988413393497467
+        },
+        {
+          "start": 17.9,
+          "end": 18.2,
+          "word": " for",
+          "probability": 0.9636961817741394
+        },
+        {
+          "start": 18.2,
+          "end": 18.4,
+          "word": " spots",
+          "probability": 0.9928586483001709
+        },
+        {
+          "start": 18.4,
+          "end": 18.7,
+          "word": " at",
+          "probability": 0.9733712673187256
+        },
+        {
+          "start": 18.7,
+          "end": 18.82,
+          "word": " the",
+          "probability": 0.9944043159484863
+        },
+        {
+          "start": 18.82,
+          "end": 19.18,
+          "word": " WTA",
+          "probability": 0.5169320106506348
+        },
+        {
+          "start": 19.18,
+          "end": 19.44,
+          "word": " Finals.",
+          "probability": 0.5503921508789062
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 5,
+      "seek": 0,
+      "start": 19.68,
+      "end": 20.92,
+      "text": " That will be in Indianapolis this year.",
+      "tokens": [
+        51363,
+        1320,
+        481,
+        307,
+        287,
+        19362,
+        428,
+        614,
+        13,
+        51513
+      ],
+      "avg_logprob": -0.316234406370383,
+      "compression_ratio": 1.2847222222222223,
+      "no_speech_prob": 0.0415632501244545,
+      "words": [
+        {
+          "start": 19.68,
+          "end": 19.68,
+          "word": " That",
+          "probability": 0.9424464106559753
+        },
+        {
+          "start": 19.68,
+          "end": 19.74,
+          "word": " will",
+          "probability": 0.34885987639427185
+        },
+        {
+          "start": 19.74,
+          "end": 19.86,
+          "word": " be",
+          "probability": 0.9977297186851501
+        },
+        {
+          "start": 19.86,
+          "end": 19.94,
+          "word": " in",
+          "probability": 0.8391211628913879
+        },
+        {
+          "start": 19.94,
+          "end": 20.2,
+          "word": " Indianapolis",
+          "probability": 0.2523680627346039
+        },
+        {
+          "start": 20.2,
+          "end": 20.68,
+          "word": " this",
+          "probability": 0.9874803423881531
+        },
+        {
+          "start": 20.68,
+          "end": 20.92,
+          "word": " year.",
+          "probability": 0.9994451403617859
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

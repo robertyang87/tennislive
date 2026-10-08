@@ -51,7 +51,7 @@ NINE_MASTERS: tuple[tuple[str, str, str], ...] = (
     ("巴黎", "paris-bercy-centre-court.jpg", "hard"),
 )
 
-VENUE_DIR = Path("assets/venues")
+VENUE_DIR = Path(__file__).resolve().parents[3] / "assets/venues"
 
 # 每格的渲染尺寸。SVG 在卡上是 920px 宽、viewBox 900 单位、2 倍截图，
 # 3 列每格约 610 设备像素——所以 560 已经略有余量，再大只是白占体积。
@@ -87,7 +87,7 @@ def _tile_data_uri(name: str) -> str:
     return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
 
 
-def nine_masters_grid() -> str:
+def nine_masters_grid(*, embed_images: bool = True) -> str:
     """九宫格 SVG。红土那三站描橙边，硬地描蓝边，一眼看得出分野。"""
     cols, gap = 3, 14
     # ⚠️ x0 收到 66（而不是贴边的 26）是为了把整张图**压矮**：格宽小了，
@@ -108,8 +108,9 @@ def nine_masters_grid() -> str:
         cx = x0 + (i % cols) * (tw + gap)
         cy = y0 + (i // cols) * (th + gap + 26)
         stroke = "#e08b3a" if surface == "clay" else "#5b9bd5"
+        uri = _tile_data_uri(fname) if embed_images else f"venue-tile://{fname}"
         parts.append(
-            f'<image href="{_tile_data_uri(fname)}" x="{cx:.1f}" y="{cy:.1f}" '
+            f'<image href="{uri}" x="{cx:.1f}" y="{cy:.1f}" '
             f'width="{tw:.1f}" height="{th:.1f}" preserveAspectRatio="xMidYMid slice"/>'
         )
         parts.append(

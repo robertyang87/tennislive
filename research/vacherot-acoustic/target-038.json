@@ -1,0 +1,381 @@
+{
+  "id": "target-038",
+  "label": "第 9 段",
+  "display_char": "格",
+  "actual_tts_char": "格",
+  "position": 1,
+  "context": "对格里克斯普尔，",
+  "word": "格",
+  "intended": "ge2",
+  "common_contrast": "ge1",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "对格里克斯普尔，又先丢一盘。他赢下第二盘抢七，再拿下决胜盘。打了两个多小时，世界第二百零四，站进了大师赛四分之一决赛。",
+  "verdict": "unreliable",
+  "measurement": {
+    "word": "格",
+    "char": "格",
+    "sentence": "对格里克斯普尔，又先丢一盘。他赢下第二盘抢七，再拿下决胜盘。打了两个多小时，世界第二百零四，站进了大师赛四分之一决赛。",
+    "tts_text": "对格里克斯普尔，又先丢一盘。他赢下第二盘抢七，再拿下决胜盘。打了两个多小时，世界第二百零四，站进了大师赛四分之一决赛。",
+    "intended_refs": [
+      "阁",
+      "嗝"
+    ],
+    "wrong_refs": [
+      "割",
+      "哥"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "correct",
+    "score": 0.349,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 1.978,
+        "d_wrong": 2.648,
+        "score": 0.145
+      },
+      "f0": {
+        "d_intended": 0.22,
+        "d_wrong": 1.182,
+        "score": 0.686
+      },
+      "comb": {
+        "d_intended": 1.209,
+        "d_wrong": 2.506,
+        "score": 0.349
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.23,
+      "wrong": 1.662
+    },
+    "separation": {
+      "spec": {
+        "within": 2.558,
+        "between": 2.678,
+        "separation": 1.047
+      },
+      "f0": {
+        "within": 0.742,
+        "between": 1.246,
+        "separation": 1.68
+      },
+      "comb": {
+        "within": 2.021,
+        "between": 2.585,
+        "separation": 1.279
+      }
+    },
+    "selftest_loo": {
+      "阁": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.114
+      },
+      "嗝": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.082
+      },
+      "割": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.102
+      },
+      "哥": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.079
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:阁": {
+        "spec": 2.583,
+        "f0": 0.493,
+        "vmis": 0.071,
+        "frames": 28,
+        "comb": 1.784
+      },
+      "A:嗝": {
+        "spec": 1.978,
+        "f0": 0.22,
+        "vmis": 0.04,
+        "frames": 25,
+        "comb": 1.209
+      },
+      "B:割": {
+        "spec": 2.873,
+        "f0": 1.544,
+        "vmis": 0.074,
+        "frames": 27,
+        "comb": 2.981
+      },
+      "B:哥": {
+        "spec": 2.648,
+        "f0": 1.182,
+        "vmis": 0.077,
+        "frames": 26,
+        "comb": 2.506
+      }
+    },
+    "window_s": [
+      0.34,
+      0.58
+    ],
+    "boundary_token": "格里克",
+    "window_anchor": "B:割",
+    "tokens": {
+      "ORIG": [
+        "对",
+        "格里克",
+        "斯普尔",
+        "又",
+        "先",
+        "丢",
+        "一",
+        "盘",
+        "他",
+        "赢",
+        "下",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "再",
+        "拿下",
+        "决胜盘",
+        "打",
+        "了",
+        "两个多小时",
+        "世界",
+        "第二百零四",
+        "站",
+        "进",
+        "了",
+        "大师赛",
+        "四分之一",
+        "决赛"
+      ],
+      "A:阁": [
+        "对",
+        "阁里",
+        "克斯普尔",
+        "又",
+        "先",
+        "丢",
+        "一",
+        "盘",
+        "他",
+        "赢",
+        "下",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "再",
+        "拿下",
+        "决胜盘",
+        "打",
+        "了",
+        "两个多小时",
+        "世界",
+        "第二百零四",
+        "站",
+        "进",
+        "了",
+        "大师赛",
+        "四分之一",
+        "决赛"
+      ],
+      "A:嗝": [
+        "对",
+        "嗝里克斯普尔",
+        "又",
+        "先",
+        "丢",
+        "一",
+        "盘",
+        "他",
+        "赢",
+        "下",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "再",
+        "拿下",
+        "决胜盘",
+        "打",
+        "了",
+        "两个多小时",
+        "世界",
+        "第二百零四",
+        "站",
+        "进",
+        "了",
+        "大师赛",
+        "四分之一",
+        "决赛"
+      ],
+      "B:割": [
+        "对",
+        "割",
+        "里",
+        "克斯普尔",
+        "又",
+        "先",
+        "丢",
+        "一",
+        "盘",
+        "他",
+        "赢",
+        "下",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "再",
+        "拿下",
+        "决胜盘",
+        "打",
+        "了",
+        "两个多小时",
+        "世界",
+        "第二百零四",
+        "站",
+        "进",
+        "了",
+        "大师赛",
+        "四分之一",
+        "决赛"
+      ],
+      "B:哥": [
+        "对",
+        "哥里克斯普尔",
+        "又",
+        "先",
+        "丢",
+        "一",
+        "盘",
+        "他",
+        "赢",
+        "下",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "再",
+        "拿下",
+        "决胜盘",
+        "打",
+        "了",
+        "两个多小时",
+        "世界",
+        "第二百零四",
+        "站",
+        "进",
+        "了",
+        "大师赛",
+        "四分之一",
+        "决赛"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        1.2,
+        0.6,
+        -0.4,
+        null,
+        null,
+        null,
+        2.5,
+        2.5,
+        3.4,
+        4.5,
+        4.7,
+        3.9,
+        1.9
+      ],
+      "A:阁": [
+        2.7,
+        2.2,
+        1.8,
+        0.1,
+        null,
+        null,
+        null,
+        1.7,
+        1.5,
+        2.5,
+        3.9,
+        4.8,
+        4.8,
+        3.9
+      ],
+      "A:嗝": [
+        1.5,
+        1.0,
+        0.4,
+        -1.7,
+        null,
+        null,
+        null,
+        2.7,
+        3.2,
+        4.1,
+        4.7,
+        4.6,
+        3.8
+      ],
+      "B:割": [
+        3.0,
+        2.8,
+        2.5,
+        -1.1,
+        null,
+        null,
+        5.0,
+        5.2,
+        5.5,
+        5.7,
+        5.4,
+        4.7,
+        3.0
+      ],
+      "B:哥": [
+        1.6,
+        1.5,
+        1.0,
+        -1.0,
+        null,
+        null,
+        6.7,
+        5.7,
+        5.8,
+        5.9,
+        5.5,
+        4.7
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/9e996c36211b1cfbffd0ce3b.mp3",
+      "A:阁": "/workspace/tennislive/research/vacherot-acoustic/references/06ad101c0133c10c87bc4939.mp3",
+      "A:嗝": "/workspace/tennislive/research/vacherot-acoustic/references/081afdf9b077f8f990640dcb.mp3",
+      "B:割": "/workspace/tennislive/research/vacherot-acoustic/references/a52793e7d33508bc0ad12805.mp3",
+      "B:哥": "/workspace/tennislive/research/vacherot-acoustic/references/37a80da433d7a2dc14214ef9.mp3"
+    }
+  }
+}

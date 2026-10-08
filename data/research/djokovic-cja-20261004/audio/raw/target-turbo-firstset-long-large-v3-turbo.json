@@ -1,0 +1,48 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "large-v3-turbo",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 69,
+  "range_to": 77,
+  "created_at": "2026-10-04T14:47:24.346663+00:00",
+  "elapsed_seconds": 4.88,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 71.16,
+      "end": 74.64,
+      "text": " Oh Alexander Zverev",
+      "avg_logprob": -0.8829179257154465,
+      "no_speech_prob": 9.247774074294668e-11,
+      "words": [
+        {
+          "start": 71.16,
+          "end": 72.56,
+          "word": " Oh",
+          "probability": 0.43777331709861755
+        },
+        {
+          "start": 72.56,
+          "end": 73.92,
+          "word": " Alexander",
+          "probability": 0.05662328004837036
+        },
+        {
+          "start": 73.92,
+          "end": 74.64,
+          "word": " Zverev",
+          "probability": 0.9041016896565756
+        }
+      ]
+    }
+  ]
+}

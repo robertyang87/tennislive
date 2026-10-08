@@ -1,0 +1,146 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:02:21.88,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 ATP500 北京 1/4决赛
+Dialogue: 1,0:00:00.00,0:02:21.88,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}德约科维奇 {\r\fnTL Score\b300\fs40}4{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\c&H8CDC4A&\b1\fs40}6 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}4 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}4{\r\fnNoto Sans CJK SC\fs38} 兹维列夫 · 赛后场上采访
+Dialogue: 0,0:00:00.00,0:00:02.20,EN,,0,0,0,,Huge congratulations.
+Dialogue: 0,0:00:00.00,0:00:02.20,ZH,,0,0,0,,热烈祝贺你
+Dialogue: 0,0:00:02.20,0:00:05.06,EN,,0,0,0,,The streak in Beijing continues.
+Dialogue: 0,0:00:02.20,0:00:05.06,ZH,,0,0,0,,你在北京的连胜还在继续
+Dialogue: 0,0:00:05.06,0:00:07.08,EN,,0,0,0,,Tell us what was the essential part
+Dialogue: 0,0:00:05.06,0:00:07.08,ZH,,0,0,0,,你觉得今晚从落后一盘
+Dialogue: 0,0:00:07.08,0:00:08.32,EN,,0,0,0,,of your tennis coming
+Dialogue: 0,0:00:07.08,0:00:08.32,ZH,,0,0,0,,到最终逆转
+Dialogue: 0,0:00:08.32,0:00:11.46,EN,,0,0,0,,from a set down tonight?
+Dialogue: 0,0:00:08.32,0:00:11.46,ZH,,0,0,0,,网球方面的关键是什么？
+Dialogue: 0,0:00:11.46,0:00:13.70,EN,,0,0,0,,I had a terrible start, you know,
+Dialogue: 0,0:00:11.46,0:00:13.70,ZH,,0,0,0,,我的开局很糟 你知道
+Dialogue: 0,0:00:13.70,0:00:15.18,EN,,0,0,0,,two double faults in the beginning.
+Dialogue: 0,0:00:13.70,0:00:15.18,ZH,,0,0,0,,一上来就有两个双误
+Dialogue: 0,0:00:15.18,0:00:16.96,EN,,0,0,0,,It was quite cold.
+Dialogue: 0,0:00:15.18,0:00:16.96,ZH,,0,0,0,,天气挺冷的
+Dialogue: 0,0:00:16.96,0:00:20.80,EN,,0,0,0,,Honestly, I didn't feel warmed up,
+Dialogue: 0,0:00:16.96,0:00:20.80,ZH,,0,0,0,,说实话 我感觉还没热开
+Dialogue: 0,0:00:20.80,0:00:22.52,EN,,0,0,0,,but my fault, you know,
+Dialogue: 0,0:00:20.80,0:00:22.52,ZH,,0,0,0,,但这是我的问题
+Dialogue: 0,0:00:22.52,0:00:24.28,EN,,0,0,0,,gave him an early break and then it was hard
+Dialogue: 0,0:00:22.52,0:00:24.28,ZH,,0,0,0,,早早让他破发之后
+Dialogue: 0,0:00:24.28,0:00:26.46,EN,,0,0,0,,to come back in the first set.
+Dialogue: 0,0:00:24.28,0:00:26.46,ZH,,0,0,0,,第一盘就很难追回来了
+Dialogue: 0,0:00:26.46,0:00:29.12,EN,,0,0,0,,I had some couples break points
+Dialogue: 0,0:00:26.46,0:00:29.12,ZH,,0,0,0,,我有过几个破发点
+Dialogue: 0,0:00:29.12,0:00:32.12,EN,,0,0,0,,to break him back when he was serving
+Dialogue: 0,0:00:29.12,0:00:32.12,ZH,,0,0,0,,想在他发球胜盘局回破
+Dialogue: 0,0:00:32.12,0:00:34.64,EN,,0,0,0,,for a set, a 5 -4, didn't use that.
+Dialogue: 0,0:00:32.12,0:00:34.64,ZH,,0,0,1186,,当时{\fs78}5{\fs68}比{\fs78}4{\fs68} 但我没抓住
+Dialogue: 0,0:00:34.64,0:00:36.28,EN,,0,0,0,,But then I kind of felt already
+Dialogue: 0,0:00:34.64,0:00:36.28,ZH,,0,0,0,,不过我已经感觉到
+Dialogue: 0,0:00:36.28,0:00:37.92,EN,,0,0,0,,from the midway first set,
+Dialogue: 0,0:00:36.28,0:00:37.92,ZH,,0,0,0,,从第一盘中段开始
+Dialogue: 0,0:00:37.92,0:00:40.78,EN,,0,0,0,,I was starting to get a good rhythm,
+Dialogue: 0,0:00:37.92,0:00:40.78,ZH,,0,0,0,,我逐渐找到了不错的节奏
+Dialogue: 0,0:00:40.78,0:00:43.32,EN,,0,0,0,,at least on my serve, serve plus one.
+Dialogue: 0,0:00:40.78,0:00:43.32,ZH,,0,0,0,,至少发球加第一拍是这样
+Dialogue: 0,0:00:43.32,0:00:44.96,EN,,0,0,0,,I was trying to be aggressive
+Dialogue: 0,0:00:43.32,0:00:44.96,ZH,,0,0,0,,我试着打得更主动
+Dialogue: 0,0:00:44.96,0:00:47.28,EN,,0,0,0,,and come to the net and, you know,
+Dialogue: 0,0:00:44.96,0:00:47.28,ZH,,0,0,0,,也尝试上网 你知道
+Dialogue: 0,0:00:47.28,0:00:48.38,EN,,0,0,0,,change up the pace, you know,
+Dialogue: 0,0:00:47.28,0:00:48.38,ZH,,0,0,0,,改变节奏
+Dialogue: 0,0:00:48.38,0:00:51.14,EN,,0,0,0,,not give him the same pattern,
+Dialogue: 0,0:00:48.38,0:00:51.14,ZH,,0,0,0,,不给他相同的套路
+Dialogue: 0,0:00:51.14,0:00:53.66,EN,,0,0,0,,you know, and he's the best player
+Dialogue: 0,0:00:51.14,0:00:53.66,ZH,,0,0,0,,他现在是世界上
+Dialogue: 0,0:00:53.66,0:00:55.64,EN,,0,0,0,,in the world at the moment, for sure,
+Dialogue: 0,0:00:53.66,0:00:55.64,ZH,,0,0,0,,最好的球员 毫无疑问
+Dialogue: 0,0:00:55.64,0:00:58.84,EN,,0,0,0,,in a huge run and confidence role.
+Dialogue: 0,0:00:55.64,0:00:58.84,ZH,,0,0,0,,连胜势头强劲 信心十足
+Dialogue: 0,0:00:58.84,0:01:00.62,EN,,0,0,0,,So, you know, when he's serving
+Dialogue: 0,0:00:58.84,0:01:00.62,ZH,,0,0,0,,所以当他发球
+Dialogue: 0,0:01:00.62,0:01:03.50,EN,,0,0,0,,the way he was serving tonight or whatever,
+Dialogue: 0,0:01:00.62,0:01:03.50,ZH,,0,0,0,,像今晚这样 或者说
+Dialogue: 0,0:01:03.50,0:01:06.84,EN,,0,0,0,,the whole year, it's just a nightmare
+Dialogue: 0,0:01:03.50,0:01:06.84,ZH,,0,0,0,,这一整年这样 对对手来说
+Dialogue: 0,0:01:06.84,0:01:08.00,EN,,0,0,0,,for the opponent, you know,
+Dialogue: 0,0:01:06.84,0:01:08.00,ZH,,0,0,0,,简直就是噩梦
+Dialogue: 0,0:01:08.00,0:01:09.80,EN,,0,0,0,,you don't have too many opportunities.
+Dialogue: 0,0:01:08.00,0:01:09.80,ZH,,0,0,0,,你不会有太多机会
+Dialogue: 0,0:01:09.80,0:01:11.18,EN,,0,0,0,,And when they're presented,
+Dialogue: 0,0:01:09.80,0:01:11.18,ZH,,0,0,0,,而机会出现时
+Dialogue: 0,0:01:11.18,0:01:12.94,EN,,0,0,0,,if you don't use them, it's frustrating.
+Dialogue: 0,0:01:11.18,0:01:12.94,ZH,,0,0,0,,如果没抓住 会很沮丧
+Dialogue: 0,0:01:12.94,0:01:14.64,EN,,0,0,0,,So I'm just glad that, you know,
+Dialogue: 0,0:01:12.94,0:01:14.64,ZH,,0,0,0,,所以我很高兴
+Dialogue: 0,0:01:14.64,0:01:19.64,EN,,0,0,0,,I kind of held my nerves, played, you know,
+Dialogue: 0,0:01:14.64,0:01:19.64,ZH,,0,0,0,,自己稳住了情绪
+Dialogue: 0,0:01:19.64,0:01:21.28,EN,,0,0,0,,I guess, good shots and read his serve
+Dialogue: 0,0:01:19.64,0:01:21.28,ZH,,0,0,0,,打出好球 也读懂了他的发球
+Dialogue: 0,0:01:21.28,0:01:22.68,EN,,0,0,0,,in important moments on 5 -4
+Dialogue: 0,0:01:21.28,0:01:22.68,ZH,,0,0,1186,,在{\fs78}5{\fs68}比{\fs78}4{\fs68}的关键时刻
+Dialogue: 0,0:01:22.68,0:01:24.56,EN,,0,0,0,,and both second and third.
+Dialogue: 0,0:01:22.68,0:01:24.56,ZH,,0,0,0,,第二盘和第三盘都是如此
+Dialogue: 0,0:01:24.56,0:01:26.14,EN,,0,0,0,,But I think I would highlight
+Dialogue: 0,0:01:24.56,0:01:26.14,ZH,,0,0,0,,不过我想特别提到
+Dialogue: 0,0:01:26.14,0:01:27.48,EN,,0,0,0,,my serve plus one, you know,
+Dialogue: 0,0:01:26.14,0:01:27.48,ZH,,0,0,0,,我的发球加第一拍
+Dialogue: 0,0:01:27.48,0:01:29.80,EN,,0,0,0,,that was pretty accurate today.
+Dialogue: 0,0:01:27.48,0:01:29.80,ZH,,0,0,0,,今天打得相当精准
+Dialogue: 0,0:01:29.80,0:01:33.00,EN,,0,0,0,,You keep on doing it, here you are, 39.
+Dialogue: 0,0:01:29.80,0:01:33.00,ZH,,0,0,1186,,你还在做到这一点 已{\fs78}39{\fs68}岁
+Dialogue: 0,0:01:33.00,0:01:33.72,EN,,0,0,0,,I mean,
+Dialogue: 0,0:01:33.00,0:01:33.72,ZH,,0,0,0,,我是说
+Dialogue: 0,0:01:33.72,0:01:35.52,EN,,0,0,0,,it hasn't always been easy for you this year,
+Dialogue: 0,0:01:33.72,0:01:35.52,ZH,,0,0,0,,今年对你来说并不总是轻松
+Dialogue: 0,0:01:35.52,0:01:38.98,EN,,0,0,0,,but you've achieved another terrific victory.
+Dialogue: 0,0:01:35.52,0:01:38.98,ZH,,0,0,0,,但你又拿下了一场精彩的胜利
+Dialogue: 0,0:01:38.98,0:01:40.20,EN,,0,0,0,,What's it like?
+Dialogue: 0,0:01:38.98,0:01:40.20,ZH,,0,0,0,,这是什么感受？
+Dialogue: 0,0:01:40.20,0:01:42.62,EN,,0,0,0,,I mean, to be honest, these are kind
+Dialogue: 0,0:01:40.20,0:01:42.62,ZH,,0,0,0,,说实话 就是这些时刻
+Dialogue: 0,0:01:42.62,0:01:45.38,EN,,0,0,0,,of moments that I still play for, compete for.
+Dialogue: 0,0:01:42.62,0:01:45.38,ZH,,0,0,0,,时刻 让我仍然打球 竞争
+Dialogue: 0,0:01:45.38,0:01:50.22,EN,,0,0,0,,I mean, motivation is big, obviously,
+Dialogue: 0,0:01:45.38,0:01:50.22,ZH,,0,0,0,,显然 这给我很大的动力
+Dialogue: 0,0:01:50.22,0:01:52.92,EN,,0,0,0,,when you're feeling good and competing
+Dialogue: 0,0:01:50.22,0:01:52.92,ZH,,0,0,0,,当你感觉不错 能够
+Dialogue: 0,0:01:52.92,0:01:55.02,EN,,0,0,0,,at par with the best players in the world
+Dialogue: 0,0:01:52.92,0:01:55.02,ZH,,0,0,0,,和世界顶尖球员势均力敌
+Dialogue: 0,0:01:55.02,0:01:57.82,EN,,0,0,0,,and in front of 15,000 people, of course.
+Dialogue: 0,0:01:55.02,0:01:57.82,ZH,,0,0,0,,当然 还有现场一万五千人
+Dialogue: 0,0:01:57.82,0:02:01.42,EN,,0,0,0,,You know, these are the kind of moments
+Dialogue: 0,0:01:57.82,0:02:01.42,ZH,,0,0,0,,你知道 就是这样的时刻
+Dialogue: 0,0:02:01.42,0:02:03.54,EN,,0,0,0,,that define dreams of, I think,
+Dialogue: 0,0:02:01.42,0:02:03.54,ZH,,0,0,0,,我想 构成了
+Dialogue: 0,0:02:03.54,0:02:04.78,EN,,0,0,0,,every tennis player.
+Dialogue: 0,0:02:03.54,0:02:04.78,ZH,,0,0,0,,每个网球运动员的梦想
+Dialogue: 0,0:02:04.78,0:02:07.24,EN,,0,0,0,,So, yeah, I mean,
+Dialogue: 0,0:02:04.78,0:02:07.24,ZH,,0,0,0,,所以 是啊
+Dialogue: 0,0:02:07.24,0:02:08.90,EN,,0,0,0,,it's been a struggle this year,
+Dialogue: 0,0:02:07.24,0:02:08.90,ZH,,0,0,0,,今年确实很艰难
+Dialogue: 0,0:02:08.90,0:02:10.56,EN,,0,0,0,,to be honest, for different reasons,
+Dialogue: 0,0:02:08.90,0:02:10.56,ZH,,0,0,0,,说实话 有各种原因
+Dialogue: 0,0:02:10.56,0:02:13.34,EN,,0,0,0,,but I'm still there, I'm still grinding,
+Dialogue: 0,0:02:10.56,0:02:13.34,ZH,,0,0,0,,但我还在这里 还在努力
+Dialogue: 0,0:02:13.34,0:02:15.22,EN,,0,0,0,,I'm still making the youngsters work
+Dialogue: 0,0:02:13.34,0:02:15.22,ZH,,0,0,0,,我还在让这些年轻人
+Dialogue: 0,0:02:15.22,0:02:18.96,EN,,0,0,0,,for their money and I'm just glad to push it
+Dialogue: 0,0:02:15.22,0:02:18.96,ZH,,0,0,0,,必须拼尽全力 很高兴我能
+Dialogue: 0,0:02:18.96,0:02:19.68,EN,,0,0,0,,through.
+Dialogue: 0,0:02:18.96,0:02:19.68,ZH,,0,0,0,,挺过来
+Dialogue: 0,0:02:19.68,0:02:20.92,EN,,0,0,0,,Long may I continue, well done.
+Dialogue: 0,0:02:19.68,0:02:20.92,ZH,,0,0,0,,愿你继续下去 干得漂亮
+Dialogue: 0,0:02:20.92,0:02:22.42,EN,,0,0,0,,Thank you.
+Dialogue: 0,0:02:20.92,0:02:22.42,ZH,,0,0,0,,谢谢

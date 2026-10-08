@@ -1,0 +1,85 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://usopenvideo-a.akamaihd.net/2016/20160907/USTP0000000000703150_0001_1280x720_3500kbps.mp4",
+  "source_path": "/workspace/scratch/usopen-3e2cf1c-00abaaeb534.mp4",
+  "source_sha256": "5a1a732167161893c4b7b7c803b1b3a6bc1c6d0fbf24b20d9da5de7634b398ee",
+  "method": "asr_cross_checked",
+  "reviewer": "rio_source local cached small.en/base.en cross-check; metadata/visual identity used only for spelling normalization; no claimed human listening",
+  "reviewed_at": "2026-10-04T07:36:10.962601+00:00",
+  "status": "complete",
+  "reviewed_from": 64.84,
+  "reviewed_to": 83.52,
+  "foreground_english": [
+    {
+      "start": 64.84,
+      "end": 66.24,
+      "en": "And with that volley,",
+      "zh": "凭借这记截击，"
+    },
+    {
+      "start": 66.24,
+      "end": 68.89,
+      "en": "Nishikori broke at five-all in the fifth.",
+      "zh": "决胜盘5比5，锦织圭破发。"
+    },
+    {
+      "start": 69.58,
+      "end": 70.75,
+      "en": "This was match point.",
+      "zh": "这是赛点。"
+    },
+    {
+      "start": 72.32,
+      "end": 75.89,
+      "en": "And Kei Nishikori, with that going in the net,",
+      "zh": "随着这一球下网，锦织圭"
+    },
+    {
+      "start": 75.89,
+      "end": 77.8,
+      "en": "finds himself in the semifinals",
+      "zh": "他晋级半决赛，"
+    },
+    {
+      "start": 77.8,
+      "end": 80.2,
+      "en": "for the second time in three years,",
+      "zh": "这是三年内第二次。"
+    },
+    {
+      "start": 80.2,
+      "end": 83.44,
+      "en": "upsetting Andy Murray, seven-five in the fifth.",
+      "zh": "击败安迪·穆雷，决胜盘七比五。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "uncertain_spans": [],
+  "evidence": [
+    "data/audio_reviews/nishikori-career-farewell/evidence/murray-context-small.en-f6e1ddbc522a.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/murray-context-base.en-2e3a1b5af48b.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/murray-small.en-f9865125e6af.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/murray-base.en-fb092314a791.json"
+  ],
+  "human_listening_done": false,
+  "timing_method": "Actual ASR word onsets/ends at source offsets; no uniform cue spacing",
+  "normalizations": [
+    "Kei Nishikori spelling normalized using visible scoreboard and official match identity; phonetic variants K Nishi Corey/Kay Nishikori were not treated as other speakers.",
+    "five-all corroborated by original-window small.en five all, visible late-final-set score and 7-5 result; context models encode identical spoken five-all as5-0."
+  ],
+  "additional_frame_boundary_review": "Enclosing context ASR62–86 forMurray and42–66 forFederer covers whole selected window. LastMurray utterance ends83.44; earliestFederer speech51.68. Extended frameboundaries add no English.",
+  "asr_evidence": [
+    "data/audio_reviews/nishikori-career-farewell/evidence/murray-context-small.en-f6e1ddbc522a.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/murray-context-base.en-2e3a1b5af48b.json"
+  ],
+  "prior_full_packet": {
+    "path": "data/audio_reviews/nishikori-career-farewell/evidence/usopen2016-murray-full-f8988a492275.json",
+    "sha256": "bbd5107b6008d9e8f20abb9b56c49a81931a7e589b3101219b9010e684b863d7"
+  },
+  "portable_review_provenance": {
+    "original_packet_sha256": "0f633151806342b22ff463af4b823c880f3862eca3d576cba195bf286b49f444",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  },
+  "actual_subcue_revision": "Whole source utterances split only at existing actual producer ASR word boundaries; no missing parent words, no changed source window. Murray Chinese now corresponds to each exact English subclause."
+}

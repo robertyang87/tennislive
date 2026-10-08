@@ -1,0 +1,310 @@
+{
+  "id": "target-007",
+  "label": "第 2 段",
+  "display_char": "场",
+  "actual_tts_char": "场",
+  "position": 15,
+  "context": "的，是一张入场券。",
+  "word": "入场券",
+  "intended": "chang3",
+  "common_contrast": "chang2",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "捧杯之前，他先要赢的，是一张入场券。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "场",
+    "char": "场",
+    "sentence": "捧杯之前，他先要赢的，是一张入场券。",
+    "tts_text": "捧杯之前，他先要赢的，是一张入场券。",
+    "intended_refs": [
+      "昶",
+      "氅"
+    ],
+    "wrong_refs": [
+      "偿",
+      "尝"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "low",
+    "verdict_raw": "correct",
+    "score": 0.986,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [
+      "氅"
+    ],
+    "override": null,
+    "selftest_sides": [
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.591,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.05,
+        "d_wrong": 5.451,
+        "score": 0.982
+      },
+      "comb": {
+        "d_intended": 0.05,
+        "d_wrong": 7.246,
+        "score": 0.986
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.05,
+      "wrong": 3.788
+    },
+    "separation": {
+      "spec": {
+        "within": 1.27,
+        "between": 3.33,
+        "separation": 2.621
+      },
+      "f0": {
+        "within": 1.254,
+        "between": 3.774,
+        "separation": 3.009
+      },
+      "comb": {
+        "within": 1.889,
+        "between": 5.439,
+        "separation": 2.879
+      }
+    },
+    "selftest_loo": {
+      "偿": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -1.0
+      },
+      "尝": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -1.0
+      },
+      "氅": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": -0.025,
+        "dropped": true
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:昶": {
+        "spec": 0.0,
+        "f0": 0.05,
+        "vmis": 0.0,
+        "frames": 32,
+        "comb": 0.05
+      },
+      "A:氅": {
+        "spec": 2.527,
+        "f0": 2.467,
+        "vmis": 0.139,
+        "frames": 36,
+        "comb": 3.731
+      },
+      "B:偿": {
+        "spec": 3.591,
+        "f0": 5.451,
+        "vmis": 0.474,
+        "frames": 38,
+        "comb": 7.247
+      },
+      "B:尝": {
+        "spec": 3.591,
+        "f0": 5.451,
+        "vmis": 0.474,
+        "frames": 38,
+        "comb": 7.246
+      }
+    },
+    "window_s": [
+      2.81,
+      3.13
+    ],
+    "boundary_token": "入场券",
+    "window_anchor": "B:偿",
+    "tokens": {
+      "ORIG": [
+        "捧杯",
+        "之前",
+        "他",
+        "先",
+        "要",
+        "赢",
+        "的",
+        "是",
+        "一",
+        "张",
+        "入场券"
+      ],
+      "A:昶": [
+        "捧杯",
+        "之前",
+        "他",
+        "先",
+        "要",
+        "赢",
+        "的",
+        "是",
+        "一",
+        "张",
+        "入昶券"
+      ],
+      "A:氅": [
+        "捧杯",
+        "之前",
+        "他",
+        "先",
+        "要",
+        "赢",
+        "的",
+        "是",
+        "一",
+        "张入氅券"
+      ],
+      "B:偿": [
+        "捧杯",
+        "之前",
+        "他",
+        "先",
+        "要",
+        "赢",
+        "的",
+        "是",
+        "一",
+        "张",
+        "入",
+        "偿券"
+      ],
+      "B:尝": [
+        "捧杯",
+        "之前",
+        "他",
+        "先",
+        "要",
+        "赢",
+        "的",
+        "是",
+        "一",
+        "张",
+        "入",
+        "尝券"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        3.5,
+        0.8,
+        -2.5,
+        -3.9,
+        -4.3,
+        null,
+        null,
+        null,
+        null,
+        18.1,
+        18.2,
+        18.3,
+        null,
+        null,
+        null,
+        null
+      ],
+      "A:昶": [
+        3.6,
+        0.9,
+        -2.4,
+        -3.9,
+        -4.3,
+        null,
+        null,
+        null,
+        null,
+        18.1,
+        18.3,
+        18.3,
+        null,
+        null,
+        null,
+        null
+      ],
+      "A:氅": [
+        2.6,
+        -0.9,
+        -3.3,
+        -4.7,
+        -6.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1.0,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "B:偿": [
+        -1.6,
+        -4.0,
+        -5.5,
+        -4.7,
+        -5.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1.4,
+        null,
+        -8.2,
+        -8.4,
+        -7.0,
+        -4.9,
+        -3.3
+      ],
+      "B:尝": [
+        -1.6,
+        -4.0,
+        -5.5,
+        -4.7,
+        -5.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1.4,
+        null,
+        -8.2,
+        -8.4,
+        -7.0,
+        -4.9,
+        -3.3
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/ca246f7096148e8e178ceeca.mp3",
+      "A:昶": "/workspace/tennislive/research/vacherot-acoustic/references/92a6d3a1255988380e13f81d.mp3",
+      "A:氅": "/workspace/tennislive/research/vacherot-acoustic/references/d4b296bdc542fb1c45611a4e.mp3",
+      "B:偿": "/workspace/tennislive/research/vacherot-acoustic/references/46a199ea731cd72e898d61c6.mp3",
+      "B:尝": "/workspace/tennislive/research/vacherot-acoustic/references/aecd42e7cf00ae69daf82c49.mp3"
+    }
+  }
+}

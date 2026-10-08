@@ -1380,6 +1380,9 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
         # 这是一条**假阴性**：它不会告诉你「我拦错了」，只会逼下一个人把对的
         # 写法改成错的（判据宁可窄，不可宽——但窄不等于漏掉唯一正确的那个写法）。
         why = None
+        from team_exhibition_scope import local_exhibition_context
+        if local_exhibition_context(spec, opening):
+            continue
         if not opening.strip():
             why = "整条片子一句中文旁白都没有"
         elif "北京时间" not in opening:
@@ -1535,7 +1538,11 @@ def test_收尾要落在一问上不能停在数据上():
     for slug, spec in _reel_specs().items():
         if not should_check('tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上', Path("specs/reels") / f"{slug}.json"):
             continue
-        tail = _TG.ending_offender(spec)
+        # Runtime already applies ENDING_LEGACY; audit its entries against the
+        # underlying predicate separately, rather than treating acceptance as a fix.
+        if slug in _ENDING_LEGACY and _TG.ending_offender(spec) is not None:
+            offenders.add(slug)
+        tail = _TG.ending_problem(spec)
         if tail is not None:
             offenders.add(slug)
             if slug not in _ENDING_LEGACY:
@@ -1922,10 +1929,14 @@ def test_推送正文里印文案且只印一遍():
     同一个结构。但**同一段不能印两遍**：以前正文印一遍、灰底复制块又印一遍，
     字符串断言全过，人一看整页才发现。"""
     sys.path.insert(0, str(Path("tools").resolve()))
-    from push_reel import build_html, split_copy  # noqa: PLC0415
+    from push_reel import build_html, prepare_copy  # noqa: PLC0415
 
-    copy = Path("specs/reels/nishikori-shang.xhs.txt").read_text("utf-8").strip()
-    title, body_text = split_copy(copy)
+    # The raw .xhs file begins with body copy; the native publishing boundary
+    # supplies the validated date+column+| title before rendering the message.
+    _, title, body_text = prepare_copy(
+        Path("specs/reels/nishikori-shang.xhs.txt"),
+        Path("output/2026-07-28/reel/nishikori-shang"))
+    copy = f"{title}\n\n{body_text}"
     page = build_html("https://v/x.mp4", "https://p/copy.html", "一句导语", copy,
                       "", "赛场之上")
     assert page.count(title) == 1
@@ -4240,18 +4251,65 @@ def test_每条spec都算得出一句过得了闸的标题():
                          (outdir / "copy.html").read_text(encoding="utf-8"),
                          re.DOTALL).group(1).strip()
         meta = push_reel.push_meta(copy_path)
-        got = push_reel.headline(outdir, push_reel.column_of(copy_path),
+        column = push_reel.column_of(copy_path)
+        got = push_reel.headline(outdir, column,
                                  meta["matchup"], meta["score"], meta["event"],
                                  meta["summary"])
         from html import unescape  # noqa: PLC0415
         from tennislive.render.copy_title import copy_title  # noqa: PLC0415
         historical = unescape(want)
-        if push_reel.column_of(copy_path) == "赛场之上":
+        # 新发布页用 publication_title 的日期+栏目+| 无空格合同；headline
+        # 是保留给历史调用方的中间接口，故事/采访仍返回旧的带空格格式。
+        # 只用 headline 回放会把符合真实发布合同的故事页误报成不一致。
+        if re.match(r"^\d{1,2}\.\d{1,2}[^\s|｜丨]+[|｜丨]", historical):
+            got = push_reel.publication_title(
+                outdir, column, meta["matchup"], meta["score"],
+                meta["summary"], slug=slug)
+        elif column == "赛场之上":
             historical = re.split(r"[|｜丨]", historical)[-1]
             historical = re.sub(r"(?<=\d)\s+(?=\d+[-:])", "，", historical)
             historical = copy_title(historical)
         assert got == historical, (
             f"{slug}：从 spec 算出来的是「{got}」，历史标题内容是「{historical}」")
+
+
+@pytest.mark.parametrize("column", ["赛场之上", "赛后开麦", "网球有故事"])
+@pytest.mark.parametrize("format_kind", ["modern", "legacy", "wrong"])
+def test_标题回放核真实发布页且保留历史兼容(tmp_path, monkeypatch, column, format_kind):
+    """实际页生成→全库回放；换成别的主题必须红，CI不依赖已有HTML。"""
+    from html import escape
+    from tennislive.render.pushmsg import to_copy_page
+
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "tools"))
+    import push_reel
+
+    monkeypatch.chdir(tmp_path)
+    specs = Path("specs/reels")
+    specs.mkdir(parents=True)
+    # 原回放的非空前提需要至少九份；不删除或跳过该前提。
+    for i in range(9):
+        (specs / f"demo-{i}.json").write_text(json.dumps({
+            "cover": {"eyebrow": column}, "push": {"summary": "重打的一分"},
+        }, ensure_ascii=False), encoding="utf-8")
+        (specs / f"demo-{i}.xhs.txt").write_text(
+            "外部干扰成立，整分重打。\n\n#网球时差", encoding="utf-8")
+    out = Path("output/2026-10-06/reel/demo-0")
+    out.mkdir(parents=True)
+    caption = specs / "demo-0.xhs.txt"
+    if format_kind == "legacy":
+        title = push_reel.headline(out, column, "", summary="重打的一分")
+        page = f'<textarea id="title">{escape(title)}</textarea>'
+    else:
+        _, title, body = push_reel.prepare_copy(caption, out)
+        if format_kind == "wrong":
+            title = title.replace("重打的一分", "虚构的一分")
+        page = to_copy_page(title + "\n\n" + body)
+    (out / "copy.html").write_text(page, encoding="utf-8")
+    if format_kind == "wrong":
+        with pytest.raises(AssertionError, match="历史标题内容"):
+            test_每条spec都算得出一句过得了闸的标题()
+    else:
+        test_每条spec都算得出一句过得了闸的标题()
 
 
 def test_写错的push字段要报错不许悄悄不生效():
@@ -8439,7 +8497,9 @@ def test_复制页打不开时消息本身留得住文案():
     html = push_reel.build_html("https://v/x.mp4", "https://p/copy.html", "",
                                 f"{title}\n\n{body}", "", "开球之前")
 
-    # 标题在，而且**只印一遍**——多印一遍就是那个老毛病
+    # 标题规范为无空白的完整日期+栏目+|，而且只印一遍。
+    from tennislive.render.copy_title import copy_title  # noqa: PLC0415
+    title = copy_title(title)
     assert html.count(title) == 1, "标题印了不止一遍"
     assert "长按" in html.split(title, 1)[1][:200], (
         "大标题底下没有「长按可复制」那一行——复制页打不开时标题就没有出口了")
@@ -15772,12 +15832,10 @@ def test_score_inset的形状校验和scorebox的死键闸(capsys):
     assert segs[1].score_inset == (104, 888, 655, 978), "x2 放宽没落到这一段"
     assert segs[2].score_inset is None
     out = capsys.readouterr().out
-    assert "现量" in out and "左缘和上下沿" in out, (
-        "带式 + scorebox 要在 --dry-run 里说清这四个数现在只给**板的左缘和"
-        "上下沿**（不随盘数变）＋ 量不出来时的兜底右缘，**右缘渲染时逐段"
-        "现量**（账号所有者 2026-08-29：「不能固定宽度去切，要自适应」）。\n"
-        "还写着「顶层按最宽那一档写、浅盘的段自己去 x2 收窄」的话，读的人"
-        f"会回去手量三档——那正是这次要去掉的那一步。实际打出来的是：{out!r}")
+    assert all(text in out for text in ["搜索提示", "实际边界", "透明合成", "不搬搜索框里的球场"]), (
+        "scorebox 必须说明它只是搜索提示，渲染按原生图形量实际边界并透明合成；"
+        "不能再暗示上下沿固定，或量不准就贴回整个球场矩形。"
+        f"实际打出来的是：{out!r}")
     assert "第 [3] 段不回贴" in out, (
         "不回贴的段要被点名——那几段的左下角是转播原样露出来的板（名字被"
         "居中窗口裁掉），得让人一眼看见有哪几段。⚠️ 美网那条线上「漏写」已经"
@@ -17173,7 +17231,7 @@ _QUOTE_NOT_BILINGUAL_LEGACY = {("hewitt-washington", 5)}
 
 
 def _iter_quote_cues():
-    """(slug, 段序号, 这一条字幕的文本) —— `quote` 可以是字符串，也可以是列表，
+    """(slug, 段序号, 字幕文本, 原声语言) —— `quote` 可以是字符串，也可以是列表，
     列表元素可以是字符串或 {"at": .., "text": ..}。三种写法都要扫到。"""
     for p in sorted(Path("specs/reels").glob("*.json")):
         spec = json.loads(p.read_text(encoding="utf-8"))
@@ -17184,7 +17242,33 @@ def _iter_quote_cues():
             items = [raw] if isinstance(raw, str) else list(raw)
             for it in items:
                 text = it if isinstance(it, str) else str(it.get("text") or "")
-                yield p.stem, i, text
+                yield p.stem, i, text, seg.get("_source_language")
+
+
+def _quote_is_bilingual(text, source_language):
+    lines = [x for x in text.split("\n") if x.strip()]
+    if len(lines) < 2:
+        return False
+    cjk = re.compile(r"[\u4e00-\u9fff]")
+    if source_language == "ja":
+        kana = re.compile(r"[\u3041-\u3096\u30a1-\u30fa\uff66-\uff9d]")
+        return any(kana.search(x) for x in lines) and any(
+            cjk.search(x) and not kana.search(x) for x in lines)
+    return any(cjk.search(x) for x in lines) and any(
+        not cjk.search(x) for x in lines)
+
+
+@pytest.mark.parametrize("text,language,expected", [
+    ("本当にありがとうございました\n真的非常感谢大家", "ja", True),
+    ("本当にありがとうございました\nThank you", "ja", False),
+    ("真的非常感谢大家\n谢谢大家", "ja", False),
+    ("\n真的非常感谢大家", "ja", False),
+    ("Thank you\n谢谢大家", "en", True),
+    ("7-6, 6-4\n七比六，六比四", None, True),
+    ("本当にありがとうございました\n真的非常感谢大家", "en", False),
+])
+def test_原声双语按真实语言验证不把日语冒充英语(text, language, expected):
+    assert _quote_is_bilingual(text, language) is expected
 
 
 def test_赛场之上要留一段精彩的原声解说_不留要写明为什么():
@@ -17217,7 +17301,9 @@ def test_赛场之上要留一段精彩的原声解说_不留要写明为什么(
         if p.stem in _NO_BROADCAST_QUOTE_LEGACY:
             legacy_seen.add(p.stem)
             continue
-        assert (spec.get("_no_quote_why") or "").strip(), (
+        from tools.narrated_audio_mode import no_quote_reason
+        structured_reason = no_quote_reason(spec)
+        assert (spec.get("_no_quote_why") or structured_reason).strip(), (
             f"{p.name} 没留原声解说，也没写 `_no_quote_why`。\n"
             f"账号所有者 2026-09-19：「精彩的原声解说，配上中英文字幕保留下来，"
             f"这样感觉更有氛围感」——这是全局要求。\n"
@@ -17236,25 +17322,25 @@ def test_赛场之上要留一段精彩的原声解说_不留要写明为什么(
 def test_原声解说的字幕一律中英双语():
     """同一句话的下半条：留下来的原声**必须配双语字幕**，不是只给中文。
 
-    判据是**这一条字幕里既有带汉字的一行、也有不带汉字的一行**（原文那一行
+    英语原声的判据是**这一条字幕里既有带汉字的一行、也有不带汉字的一行**（原文那一行
     可能是纯数字，`fritz-jodar-final` 的 `"7-6, 6-4\n七比六，六比四"` 就是
     合格的——所以不能按「有没有英文字母」判，那条会误伤它）。
+
+    真正标为 `_source_language: "ja"` 的日语原声则须有含假名的日语原文行，
+    以及另一行不含假名的中文译文；不能用英文或空行代替原话。
 
     ⚠️ 这一条**不限赛场之上**：赛后开麦、网球有故事的剪辑片，凡是留了原声的
     都走同一条。量下来 246 条字幕里只有 1 条不合格（`hewitt-washington`
     第 5 段是整段中文转述），已发不重渲，挂表。
     """
-    cjk = re.compile(r"[\u4e00-\u9fff]")
     checked = 0
     legacy_seen = set()
-    for slug, seg_no, text in _iter_quote_cues():
+    for slug, seg_no, text, source_language in _iter_quote_cues():
         checked += 1
         if (slug, seg_no) in _QUOTE_NOT_BILINGUAL_LEGACY:
             legacy_seen.add((slug, seg_no))
             continue
-        lines = [x for x in text.split("\n") if x.strip()]
-        assert len(lines) >= 2 and any(cjk.search(x) for x in lines) \
-            and any(not cjk.search(x) for x in lines), (
+        assert _quote_is_bilingual(text, source_language), (
             f"{slug} 段{seg_no} 的原声字幕不是双语：{text[:60]!r}\n"
             f"写成「原文\\n中文」两行——原声段的氛围感靠的就是听得见原话、"
             f"同时读得懂意思")

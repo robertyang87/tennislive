@@ -6,6 +6,8 @@ window, retain its transcript evidence, and bind the actual downloaded bytes.
 Historical CI snapshots are deliberately not imported here.
 """
 from __future__ import annotations
+import narrated_audio_mode
+import reviewed_effects_mode
 import hashlib
 import json
 import math
@@ -23,15 +25,22 @@ def _sha(path: Path) -> str:
 
 
 def plan_hash(spec: dict) -> str:
-    keys=('source','start','end','speed','narration','quote','mute','bed','image','stat_card','title_card')
+    keys=('source','start','end','speed','narration','quote','mute','bed','audio_tail','image','stat_card','title_card')
     segments=[]
     for seg in spec.get('segments') or []:
         row={k:seg[k] for k in keys if k in seg}
+        if '_digital_silence_windows' in seg:
+            row['_digital_silence_windows']=seg['_digital_silence_windows']
+            row['_digital_silence_why']=seg.get('_digital_silence_why')
         if row.get('stat_card') or row.get('title_card'):
             row.pop('image',None)  # load_spec materializes native-card placeholders
         segments.append(row)
     value={'slug':spec.get('slug'),'source_url':spec.get('source_url'),
            'sources':spec.get('sources'),'source_audio':spec.get('source_audio'),'segments':segments}
+    if spec.get('audio_effects_review') is not None:
+        value['audio_effects_review']=spec['audio_effects_review']
+    if spec.get('original_audio_mode') is not None:
+        value.update(original_audio_mode=spec['original_audio_mode'],owner_approval=spec.get('owner_approval'))
     return hashlib.sha256(json.dumps(value,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
 
 
@@ -50,6 +59,19 @@ def _number(value) -> float:
     if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value):
         raise ValueError('音频审听时间码必须为有限数字')
     return float(value)
+
+
+def _intervals_overlap(a: float, b: float, c: float, d: float) -> bool:
+    """Compare half-open media intervals without float-summation edge noise.
+
+    ASS timestamps are decimal centiseconds; the sealed timeline accumulates
+    binary floats. For example, an end of 200.70 abuts a card starting at
+    200.69999999999996. Ignore only a few representational rounding units,
+    not a centisecond/frame tolerance: even a real microsecond overlap fails.
+    """
+    start, end = max(a, c), min(b, d)
+    roundoff = 4 * max(math.ulp(start), math.ulp(end))
+    return end - start > roundoff
 
 
 def _quote_windows(seg: dict):
@@ -73,13 +95,16 @@ def _quote_windows(seg: dict):
 
 def inspect(spec: dict, *, root: Path=ROOT, sources: dict[str,Path]|None=None) -> list[dict]:
     """Return every required cue; missing/changed evidence is a hard failure."""
+    if narrated_audio_mode.enabled(spec,sources=sources):
+        return []
     if spec.get('source_audio'):
         raise ValueError('source_audio 额外音轨未绑定审听：先合并为确定的源文件并重新审听，不能复用旧证据')
+    effects=reviewed_effects_mode.enabled(spec)
     selected=[]
     for i,seg in enumerate(spec.get('segments') or []):
         if str(seg.get('narration') or '').strip() and seg.get('quote'):
             raise ValueError(f'第{i+1}段为自配中文TTS，不叠加英文译文；原声与TTS请分段')
-        if 'start' in seg and 'end' in seg and not seg.get('image'):
+        if 'start' in seg and 'end' in seg and not seg.get('image') and (not effects or reviewed_effects_mode.raw_segment(seg)):
             selected.append((i,seg))
     if not selected:
         return []
@@ -159,7 +184,15 @@ def require(spec: dict, **kwargs) -> list[dict]:
 
 def bind_sources(spec: dict, sources: dict[str,Path], outdir: Path, *, root: Path=ROOT) -> None:
     require(spec,root=root,sources=sources)
+    if reviewed_effects_mode.enabled(spec):
+        reviewed_effects_mode.manifest(spec,root=root,sources=sources)
     review=root/'data/audio_reviews'/f"{spec.get('slug')}.json"
+    if narrated_audio_mode.enabled(spec,sources=sources):
+        payload={'plan_sha256':plan_hash(spec),'original_audio_mode':narrated_audio_mode.MODE,
+                 'owner_approval':narrated_audio_mode.APPROVAL,
+                 'sources':{key:_sha(path) for key,path in sources.items()}}
+        (outdir/'audio_review_binding.json').write_text(json.dumps(payload,indent=2)+'\n')
+        return
     if not review.is_file():
         return  # TTS-only production has no retained original-audio windows.
     payload={'plan_sha256':plan_hash(spec),'review_sha256':_sha(review),
@@ -185,7 +218,7 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
             or render.get('render_inputs_sha256')!=_sha(manifest_path)):
         raise ValueError('烧片时的 film/ASS 绑定不匹配；只改字幕旁文件不能证明视频字幕已修复')
     review=root/'data/audio_reviews'/f"{spec.get('slug')}.json"
-    if review.is_file():
+    if review.is_file() and not narrated_audio_mode.enabled(spec):
         binding_path=ass.parent/'audio_review_binding.json'
         if manifest.get('artifacts',{}).get('audio_review_binding.json')!=_sha(binding_path):
             raise ValueError('烧片时的音频审听绑定已变')
@@ -209,6 +242,17 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
     bilingual=[e for e in events if '\n' in e[2] and re.search('[A-Za-z]',e[2].split('\n')[0])
                and not re.search('[\u3400-\u9fff]',e[2].split('\n')[0])
                and re.search('[\u3400-\u9fff]',e[2].split('\n')[-1])]
+    # Producers may burn the tightly stacked language lanes as two actual
+    # ASS events. Accept only exactly co-timed original/translation rows;
+    # do not fabricate a combined sidecar or pair unrelated caption windows.
+    for a, b, en in events:
+        if '\n' in en or not re.search('[A-Za-z]', en) or re.search('[\u3400-\u9fff]', en):
+            continue
+        matches = [(x, y, zh) for x, y, zh in events
+                   if abs(x-a) < .001 and abs(y-b) < .001 and '\n' not in zh
+                   and re.search('[\u3400-\u9fff]', zh) and not re.search('[A-Za-z]', zh)]
+        if len(matches) == 1:
+            bilingual.append((a, b, en+'\n'+matches[0][2]))
     bilingual.sort()
     if any(a[1]>b[0]+.01 for a,b in zip(bilingual,bilingual[1:])):
         raise ValueError('成片双语字幕重叠，会堆成四行')
@@ -216,7 +260,11 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
     binding_path=ass.parent/'audio_review_binding.json'
     if manifest.get('artifacts',{}).get(binding_path.name)!=_sha(binding_path):
         raise ValueError('烧片时的音频/时间轴绑定已变')
-    timeline=json.loads(binding_path.read_text())['timeline']
+    bound=json.loads(binding_path.read_text())
+    if bound.get('plan_sha256')!=plan_hash(spec):
+        raise ValueError('音频绑定不是当前剪辑配方')
+    narrated_audio_mode.verify_mix(spec,film,bound)
+    timeline=bound['timeline']
     offsets,lengths=timeline['offsets'],timeline['lengths']
     if timeline['cover_seconds']!=cover_seconds or len(offsets)!=len(spec.get('segments') or []) or len(lengths)!=len(offsets):
         raise ValueError('当前封面/分段时间不是渲染时使用的时间轴')
@@ -229,11 +277,11 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
             for a,b,text in events:
                 spoken_terms=set(re.findall(r'[a-z]+',readable(str(seg.get('narration') or '')).casefold()))
                 extra=[term for term in re.findall(r'[a-z]+',text.casefold()) if term not in spoken_terms]
-                if a<cursor+length and b>cursor and extra:
+                if _intervals_overlap(a,b,cursor,cursor+length) and extra:
                     raise ValueError('自配中文TTS窗口出现额外英文翻译行')
     for cue in required:
         a,b=offsets[cue['segment']]+cue['start'],offsets[cue['segment']]+cue['end']
         if not any(x<=a+.08 and y>=b-.08 and '\n' in text
                    and _text(cue['en']) in _text(text.split('\n')[0])
-                   and _text(readable(cue['zh'])) in _text(text.split('\n',1)[1]) for x,y,text in events):
+                   and _text(readable(cue['zh'])) in _text(text.split('\n',1)[1]) for x,y,text in bilingual):
             raise ValueError(f'成片 ASS 缺原声双语句：{a:.2f}–{b:.2f}s')

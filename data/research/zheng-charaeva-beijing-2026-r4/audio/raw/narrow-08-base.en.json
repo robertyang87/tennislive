@@ -1,0 +1,159 @@
+{
+  "model": "base.en",
+  "source_from": 89,
+  "source_to": 96,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.78,
+      "end": 6.98,
+      "text": " Well, it's not often that the player doesn't have one winner in a set kind of.",
+      "tokens": [
+        50363,
+        3894,
+        11,
+        340,
+        338,
+        407,
+        1690,
+        326,
+        262,
+        2137,
+        1595,
+        470,
+        423,
+        530,
+        8464,
+        287,
+        257,
+        900,
+        1611,
+        286,
+        13,
+        50713
+      ],
+      "avg_logprob": -0.32857475591742474,
+      "compression_ratio": 1.0263157894736843,
+      "no_speech_prob": 0.13676424324512482,
+      "words": [
+        {
+          "start": 0.78,
+          "end": 1.34,
+          "word": " Well,",
+          "probability": 0.29227638244628906
+        },
+        {
+          "start": 1.62,
+          "end": 1.78,
+          "word": " it's",
+          "probability": 0.9875056445598602
+        },
+        {
+          "start": 1.78,
+          "end": 1.94,
+          "word": " not",
+          "probability": 0.9984061121940613
+        },
+        {
+          "start": 1.94,
+          "end": 2.26,
+          "word": " often",
+          "probability": 0.9893895983695984
+        },
+        {
+          "start": 2.26,
+          "end": 2.54,
+          "word": " that",
+          "probability": 0.9811832904815674
+        },
+        {
+          "start": 2.54,
+          "end": 2.8,
+          "word": " the",
+          "probability": 0.25397512316703796
+        },
+        {
+          "start": 2.8,
+          "end": 3.94,
+          "word": " player",
+          "probability": 0.9760021567344666
+        },
+        {
+          "start": 3.94,
+          "end": 4.32,
+          "word": " doesn't",
+          "probability": 0.9940353035926819
+        },
+        {
+          "start": 4.32,
+          "end": 4.58,
+          "word": " have",
+          "probability": 0.9952101111412048
+        },
+        {
+          "start": 4.58,
+          "end": 5.02,
+          "word": " one",
+          "probability": 0.9725914597511292
+        },
+        {
+          "start": 5.02,
+          "end": 5.7,
+          "word": " winner",
+          "probability": 0.9889612793922424
+        },
+        {
+          "start": 5.7,
+          "end": 5.96,
+          "word": " in",
+          "probability": 0.9840075373649597
+        },
+        {
+          "start": 5.96,
+          "end": 6.08,
+          "word": " a",
+          "probability": 0.9617477059364319
+        },
+        {
+          "start": 6.08,
+          "end": 6.3,
+          "word": " set",
+          "probability": 0.9957727789878845
+        },
+        {
+          "start": 6.3,
+          "end": 6.86,
+          "word": " kind",
+          "probability": 0.28466707468032837
+        },
+        {
+          "start": 6.86,
+          "end": 6.98,
+          "word": " of.",
+          "probability": 0.9914455413818359
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

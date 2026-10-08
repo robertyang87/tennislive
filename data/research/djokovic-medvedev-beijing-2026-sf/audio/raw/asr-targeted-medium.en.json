@@ -1,0 +1,249 @@
+{
+  "model": "medium.en",
+  "method": "faster-whisper; int8 CPU 2threads; beam_size5; VAD enabled; no_speech_threshold .5; independent checks of non-commentary/yeah and final line starts",
+  "windows": [
+    {
+      "from": 46.28,
+      "to": 61.43,
+      "duration_after_vad": 0.0,
+      "segments": []
+    },
+    {
+      "from": 61.43,
+      "to": 76.58,
+      "duration_after_vad": 0.0,
+      "segments": []
+    },
+    {
+      "from": 234,
+      "to": 245,
+      "duration_after_vad": 0.976,
+      "segments": [
+        {
+          "start": 234.0,
+          "end": 234.94,
+          "text": "Ahh.",
+          "avg_logprob": -0.9696556131045023,
+          "no_speech_prob": 0.39838430285453796,
+          "words": [
+            {
+              "start": 234.0,
+              "end": 234.94,
+              "word": " Ahh.",
+              "probability": 0.17601323872804642
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 356.2,
+      "to": 358.5,
+      "duration_after_vad": 2.3,
+      "segments": [
+        {
+          "start": 356.2,
+          "end": 357.72,
+          "text": "Well, can you believe it?",
+          "avg_logprob": -0.4602894902229309,
+          "no_speech_prob": 0.015413617715239525,
+          "words": [
+            {
+              "start": 356.2,
+              "end": 356.54,
+              "word": " Well,",
+              "probability": 0.22341331839561462
+            },
+            {
+              "start": 356.78,
+              "end": 356.88,
+              "word": " can",
+              "probability": 0.9947180151939392
+            },
+            {
+              "start": 356.88,
+              "end": 357.06,
+              "word": " you",
+              "probability": 0.9964109063148499
+            },
+            {
+              "start": 357.06,
+              "end": 357.42,
+              "word": " believe",
+              "probability": 0.9971300959587097
+            },
+            {
+              "start": 357.42,
+              "end": 357.72,
+              "word": " it?",
+              "probability": 0.9990968704223633
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": 369.85,
+      "to": 380.3,
+      "duration_after_vad": 10.338,
+      "segments": [
+        {
+          "start": 369.96,
+          "end": 376.5,
+          "text": "and no real protest from Daniel Medvedev, but it's hard to argue with the decision from",
+          "avg_logprob": -0.3952280791366802,
+          "no_speech_prob": 0.0979599729180336,
+          "words": [
+            {
+              "start": 369.96,
+              "end": 370.16,
+              "word": " and",
+              "probability": 0.04415607452392578
+            },
+            {
+              "start": 370.16,
+              "end": 370.36,
+              "word": " no",
+              "probability": 0.8314698934555054
+            },
+            {
+              "start": 370.36,
+              "end": 370.72,
+              "word": " real",
+              "probability": 0.9977567791938782
+            },
+            {
+              "start": 370.72,
+              "end": 371.42,
+              "word": " protest",
+              "probability": 0.983988344669342
+            },
+            {
+              "start": 371.42,
+              "end": 372.28,
+              "word": " from",
+              "probability": 0.9814534187316895
+            },
+            {
+              "start": 372.28,
+              "end": 372.62,
+              "word": " Daniel",
+              "probability": 0.9411719441413879
+            },
+            {
+              "start": 372.62,
+              "end": 373.36,
+              "word": " Medvedev,",
+              "probability": 0.9913744330406189
+            },
+            {
+              "start": 373.36,
+              "end": 373.6,
+              "word": " but",
+              "probability": 0.9285650253295898
+            },
+            {
+              "start": 373.6,
+              "end": 374.42,
+              "word": " it's",
+              "probability": 0.9711440801620483
+            },
+            {
+              "start": 374.42,
+              "end": 374.66,
+              "word": " hard",
+              "probability": 0.9988802075386047
+            },
+            {
+              "start": 374.66,
+              "end": 374.9,
+              "word": " to",
+              "probability": 0.9987702965736389
+            },
+            {
+              "start": 374.9,
+              "end": 375.18,
+              "word": " argue",
+              "probability": 0.9997221827507019
+            },
+            {
+              "start": 375.18,
+              "end": 375.4,
+              "word": " with",
+              "probability": 0.9975003600120544
+            },
+            {
+              "start": 375.4,
+              "end": 375.54,
+              "word": " the",
+              "probability": 0.9968653321266174
+            },
+            {
+              "start": 375.54,
+              "end": 375.94,
+              "word": " decision",
+              "probability": 0.9905017614364624
+            },
+            {
+              "start": 375.94,
+              "end": 376.5,
+              "word": " from",
+              "probability": 0.9878373146057129
+            }
+          ]
+        },
+        {
+          "start": 376.5,
+          "end": 379.66,
+          "text": "Mohamed Leani and the ATP supervisor there.",
+          "avg_logprob": -0.3952280791366802,
+          "no_speech_prob": 0.0979599729180336,
+          "words": [
+            {
+              "start": 376.5,
+              "end": 377.1,
+              "word": " Mohamed",
+              "probability": 0.13488180935382843
+            },
+            {
+              "start": 377.1,
+              "end": 377.6,
+              "word": " Leani",
+              "probability": 0.2798050120472908
+            },
+            {
+              "start": 377.6,
+              "end": 377.82,
+              "word": " and",
+              "probability": 0.9560956358909607
+            },
+            {
+              "start": 377.82,
+              "end": 378.14,
+              "word": " the",
+              "probability": 0.9915869235992432
+            },
+            {
+              "start": 378.14,
+              "end": 378.62,
+              "word": " ATP",
+              "probability": 0.952110230922699
+            },
+            {
+              "start": 378.62,
+              "end": 379.32,
+              "word": " supervisor",
+              "probability": 0.8996751308441162
+            },
+            {
+              "start": 379.32,
+              "end": 379.66,
+              "word": " there.",
+              "probability": 0.9570088982582092
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

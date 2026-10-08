@@ -1,0 +1,378 @@
+{
+  "id": "target-088",
+  "label": "第 19 段",
+  "display_char": "差",
+  "actual_tts_char": "差",
+  "position": 34,
+  "context": "别忘了，那些差点结束的关口",
+  "word": "差点",
+  "intended": "cha4",
+  "common_contrast": "cha1",
+  "unmeasured_other_readings": [
+    "chai1",
+    "ci1"
+  ],
+  "semantic_override": null,
+  "tts_text": "九场全胜。六次先丢首盘，六次赢下比赛。我们记住了奖杯，也别忘了，那些差点结束的关口。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "差",
+    "char": "差",
+    "sentence": "九场全胜。六次先丢首盘，六次赢下比赛。我们记住了奖杯，也别忘了，那些差点结束的关口。",
+    "tts_text": "九场全胜。六次先丢首盘，六次赢下比赛。我们记住了奖杯，也别忘了，那些差点结束的关口。",
+    "intended_refs": [
+      "岔",
+      "诧"
+    ],
+    "wrong_refs": [
+      "锸",
+      "叉"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.386,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 1.959,
+        "d_wrong": 2.778,
+        "score": 0.173
+      },
+      "f0": {
+        "d_intended": 0.614,
+        "d_wrong": 2.207,
+        "score": 0.565
+      },
+      "comb": {
+        "d_intended": 1.594,
+        "d_wrong": 3.596,
+        "score": 0.386
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.722,
+      "wrong": 3.385
+    },
+    "separation": {
+      "spec": {
+        "within": 0.001,
+        "between": 2.648,
+        "separation": 2578.445
+      },
+      "f0": {
+        "within": 0.013,
+        "between": 3.158,
+        "separation": 240.677
+      },
+      "comb": {
+        "within": 0.014,
+        "between": 4.482,
+        "separation": 328.72
+      }
+    },
+    "selftest_loo": {
+      "岔": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.994
+      },
+      "诧": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.994
+      },
+      "锸": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.994
+      },
+      "叉": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.994
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:岔": {
+        "spec": 1.959,
+        "f0": 0.614,
+        "vmis": 0.032,
+        "frames": 31,
+        "comb": 1.594
+      },
+      "A:诧": {
+        "spec": 1.959,
+        "f0": 0.625,
+        "vmis": 0.032,
+        "frames": 31,
+        "comb": 1.605
+      },
+      "B:锸": {
+        "spec": 2.778,
+        "f0": 2.207,
+        "vmis": 0.065,
+        "frames": 31,
+        "comb": 3.596
+      },
+      "B:叉": {
+        "spec": 2.778,
+        "f0": 2.219,
+        "vmis": 0.065,
+        "frames": 31,
+        "comb": 3.608
+      }
+    },
+    "window_s": [
+      7.283,
+      7.581
+    ],
+    "boundary_token": "差点",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "九",
+        "场",
+        "全胜",
+        "六次",
+        "先",
+        "丢",
+        "首",
+        "盘",
+        "六次",
+        "赢",
+        "下",
+        "比赛",
+        "我们",
+        "记住",
+        "了",
+        "奖杯",
+        "也",
+        "别",
+        "忘",
+        "了",
+        "那些",
+        "差点",
+        "结束",
+        "的",
+        "关口"
+      ],
+      "A:岔": [
+        "九",
+        "场",
+        "全胜",
+        "六次",
+        "先",
+        "丢",
+        "首",
+        "盘",
+        "六次",
+        "赢",
+        "下",
+        "比赛",
+        "我们",
+        "记住",
+        "了",
+        "奖杯",
+        "也",
+        "别",
+        "忘",
+        "了",
+        "那些",
+        "岔点",
+        "结束",
+        "的",
+        "关口"
+      ],
+      "A:诧": [
+        "九",
+        "场",
+        "全胜",
+        "六次",
+        "先",
+        "丢",
+        "首",
+        "盘",
+        "六次",
+        "赢",
+        "下",
+        "比赛",
+        "我们",
+        "记住",
+        "了",
+        "奖杯",
+        "也",
+        "别",
+        "忘",
+        "了",
+        "那些",
+        "诧点",
+        "结束",
+        "的",
+        "关口"
+      ],
+      "B:锸": [
+        "九",
+        "场",
+        "全胜",
+        "六次",
+        "先",
+        "丢",
+        "首",
+        "盘",
+        "六次",
+        "赢",
+        "下",
+        "比赛",
+        "我们",
+        "记住",
+        "了",
+        "奖杯",
+        "也",
+        "别",
+        "忘",
+        "了",
+        "那些",
+        "锸点",
+        "结束",
+        "的",
+        "关口"
+      ],
+      "B:叉": [
+        "九",
+        "场",
+        "全胜",
+        "六次",
+        "先",
+        "丢",
+        "首",
+        "盘",
+        "六次",
+        "赢",
+        "下",
+        "比赛",
+        "我们",
+        "记住",
+        "了",
+        "奖杯",
+        "也",
+        "别",
+        "忘",
+        "了",
+        "那些",
+        "叉点",
+        "结束",
+        "的",
+        "关口"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        3.0,
+        2.3,
+        2.1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        8.5,
+        7.5,
+        6.1,
+        3.2
+      ],
+      "A:岔": [
+        null,
+        null,
+        4.6,
+        3.5,
+        3.1,
+        2.6,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        8.5,
+        7.8,
+        6.6
+      ],
+      "A:诧": [
+        null,
+        null,
+        4.6,
+        3.5,
+        3.1,
+        2.6,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        8.5,
+        7.8,
+        6.6
+      ],
+      "B:锸": [
+        null,
+        2.6,
+        1.0,
+        0.4,
+        0.3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        4.2,
+        3.8,
+        3.9
+      ],
+      "B:叉": [
+        null,
+        2.6,
+        1.0,
+        0.3,
+        0.3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        4.1,
+        3.8,
+        3.9
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/2ddd425cf7ec007234eb4898.mp3",
+      "A:岔": "/workspace/tennislive/research/vacherot-acoustic/references/9055e4722f63ef3bbe5ac112.mp3",
+      "A:诧": "/workspace/tennislive/research/vacherot-acoustic/references/cd1ad7dd5f23b480687d62a6.mp3",
+      "B:锸": "/workspace/tennislive/research/vacherot-acoustic/references/a96e332376eee3d5ea7469a0.mp3",
+      "B:叉": "/workspace/tennislive/research/vacherot-acoustic/references/83a7ae1e63f124b46e52da84.mp3"
+    }
+  }
+}

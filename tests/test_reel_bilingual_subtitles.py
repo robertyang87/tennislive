@@ -2,6 +2,8 @@
 
 from pathlib import Path
 
+import pytest
+
 from tennislive.video import explainer as E
 from tennislive.video.explainer import write_subtitles
 from tools.build_match_reel import explicit_quote_cues
@@ -60,3 +62,19 @@ def test_一行英文加多行中文仍按双语小字号排版(tmp_path: Path):
     assert E.ass_en_row("English reference line", outline=3) in body
     assert r"\N中文翻译第一行\N中文翻译第二行" in body
     assert "MarginV" in body
+
+
+@pytest.mark.parametrize("score", ["40-15", "40–15", "40—15", "40−15"])
+def test_broadcast_score_keeps_english_literal_and_chinese_display(score):
+    """英文比分不能被整条 readable() 转成中文，实际原声字幕必须可核验。"""
+    english = f"Oh, and Kalinskaya, from {score} up…"
+    text = english + f"\n噢，卡林斯卡娅刚才还{score}领先……"
+    explicit = explicit_quote_cues(
+        ({"at": 6.44, "end": 10.18, "text": text},),
+        span=10.30,
+        offset=152.28,
+    )
+    assert explicit[0][:2] == pytest.approx((158.72, 162.46))
+    assert explicit[0][2] == english + "\n噢 卡林斯卡娅刚才还40比15领先"
+    weighted = explicit_quote_cues((text,), span=3.74, offset=0.0)
+    assert weighted[0][2] == explicit[0][2]

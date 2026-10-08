@@ -1,0 +1,67 @@
+{
+  "selected": "/workspace/scratch/lgrd3-cover/ap-original-GZV6PEO5L5FRZGTXDGWVBHWW2Y.jpg",
+  "dimensions": [
+    6238,
+    4159
+  ],
+  "source_url": "https://www.news4jax.com/sports/2026/10/05/medvedev-disqualified-from-china-open-for-hitting-spectator-with-a-ball-during-match-vs-djokovic/",
+  "image_url": "https://cloudfront-us-east-1.images.arcpublishing.com/gmg/GZV6PEO5L5FRZGTXDGWVBHWW2Y.jpg",
+  "sha256": "0816b5ce4e77dc4bab9e6fca4b8765c5c085a159d43a01d91879873c30bb7b8f",
+  "metadata": {
+    "taken": "2026:10:05 21:02:07",
+    "offset": "+08:00",
+    "caption": "Novak Djokovic, of Serbia, reacts during the men's single semi-final match against Daniil Medvedev, of Russia, at the China Open tennis tournament in Beijing, Monday, Oct. 5, 2026. (AP Photo/Andy Wong)",
+    "instructions": "",
+    "credit": "Andy Wong；Copyright 2026 The Associated Press. All rights reserved；AP Photo/Andy Wong",
+    "segments": 12,
+    "texts": [
+      "Novak Djokovic, of Serbia, reacts during the men's single semi-final match against Daniil Medvedev, of Russia, at the China Open tennis tournament in Beijing, Monday, Oct. 5, 2026. (AP Photo/Andy Wong)",
+      "China Open Tennis",
+      "Novak Djokovic, of Serbia, reacts during the men&#39;s single semi-final match against Daniil Medvedev, of Russia, at the China Open tennis tournament in Beijing, Monday, Oct. 5, 2026. (AP Photo/Andy Wong)"
+    ]
+  },
+  "license": "unverified; Copyright 2026 The Associated Press. All rights reserved.",
+  "visual_checks": {
+    "identity": "Djokovic verified visually, consistent burgundy Lacoste shirt in source video",
+    "eyes": "both visibly open and in focus",
+    "angle": "three-quarter toward camera, about 30–40 degrees; preferred over ATYF... stronger side profile",
+    "occlusion": "raised hand next to eyebrow, does not occlude pupils or central face",
+    "framing": "upper body and racket present, not face-only; 3:4 cover crop may clip left racket rim, so actual template preview still needs checking",
+    "emotion": "alert / reacting; matches unexpected ending better than generic trophy image"
+  },
+  "searches": [
+    {
+      "channel": "ATP Media official photo API",
+      "evidence": "atp-photo-search.json + atp-photo-page0.json",
+      "result": "No Oct 5 Djokovic/Medvedev photos in fetched page; named Djokovic photos are Oct 4 quarterfinal versus Zverev; do not use historical match."
+    },
+    {
+      "channel": "China Open official homepage/news",
+      "evidence": "chinaopen-cn.html",
+      "result": "Current lead Djokovic article describes October 4 quarterfinal, not this semifinal."
+    },
+    {
+      "channel": "ATP official article guessed URL",
+      "result": "web open unavailable; not proof of no photo."
+    },
+    {
+      "channel": "Reuters Connect + AS Reuters reproduction",
+      "evidence": "reuters-as.html + reuters-as.jpg",
+      "result": "Multiple exact-match Reuters captions in search; AS downloadable version 1211x828 and hand partly across central face, less suitable than AP original."
+    },
+    {
+      "channel": "AP official syndication News4JAX + WVNews",
+      "evidence": "news4jax-ap.html; ap-original-downloads.json; ap-djokovic-react*.html",
+      "result": "Two exact-match large originals 6238x4159 and 6985x4656 from News4JAX; WVNews versions 1763x1175. AP first original selected."
+    }
+  ],
+  "portrait_starting_point": {
+    "fit": "cover",
+    "focus": 0.53,
+    "focus_y": 0.5,
+    "zoom": 1.0
+  },
+  "notes": "Photos are independently confirmed same match by embedded IPTC. No frame exception or low-resolution exception needed. Top of head is high in original; preview title/face overlap before using. Do not imply licensing cleared.",
+  "local_asset": "assets/reel/djokovic-medvedev-beijing-2026-sf-cover.jpg",
+  "derivative_sha256": "1eeea1478f574e1b7ca0d3593a972faefd94c75db970355d2520d892350c2f30"
+}

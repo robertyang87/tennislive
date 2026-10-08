@@ -1,0 +1,296 @@
+{
+  "word": "还说",
+  "char": "还",
+  "sentence": "她还说，第二盘情绪受到影响。",
+  "tts_text": "她还说，第二盘情绪受到影响。",
+  "intended_refs": [
+    "孩",
+    "骸"
+  ],
+  "wrong_refs": [
+    "桓",
+    "环",
+    "洹"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "high",
+  "verdict_raw": "correct",
+  "score": 0.984,
+  "margin": 0.2,
+  "near_identical_to": "intended",
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 0.001,
+      "d_wrong": 4.175,
+      "score": 1.0
+    },
+    "f0": {
+      "d_intended": 0.03,
+      "d_wrong": 1.665,
+      "score": 0.965
+    },
+    "comb": {
+      "d_intended": 0.03,
+      "d_wrong": 3.752,
+      "score": 0.984
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.03,
+    "wrong": 2.137
+  },
+  "separation": {
+    "spec": {
+      "within": 0.002,
+      "between": 4.276,
+      "separation": 2363.95
+    },
+    "f0": {
+      "within": 0.197,
+      "between": 1.636,
+      "separation": 8.311
+    },
+    "comb": {
+      "within": 0.198,
+      "between": 3.773,
+      "separation": 19.088
+    }
+  },
+  "selftest_loo": {
+    "孩": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.763
+    },
+    "骸": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.757
+    },
+    "桓": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.946
+    },
+    "环": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.98
+    },
+    "洹": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.98
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:孩": {
+      "spec": 0.001,
+      "f0": 0.03,
+      "vmis": 0.0,
+      "frames": 21,
+      "comb": 0.03
+    },
+    "A:骸": {
+      "spec": 0.002,
+      "f0": 0.476,
+      "vmis": 0.0,
+      "frames": 21,
+      "comb": 0.477
+    },
+    "B:桓": {
+      "spec": 4.175,
+      "f0": 1.665,
+      "vmis": 0.233,
+      "frames": 30,
+      "comb": 3.752
+    },
+    "B:环": {
+      "spec": 4.176,
+      "f0": 1.688,
+      "vmis": 0.233,
+      "frames": 30,
+      "comb": 3.776
+    },
+    "B:洹": {
+      "spec": 4.175,
+      "f0": 1.696,
+      "vmis": 0.233,
+      "frames": 30,
+      "comb": 3.783
+    }
+  },
+  "window_s": [
+    0.175,
+    0.373
+  ],
+  "boundary_token": "还",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "她",
+      "还",
+      "说",
+      "第二盘",
+      "情绪",
+      "受到",
+      "影响"
+    ],
+    "A:孩": [
+      "她",
+      "孩",
+      "说",
+      "第二盘",
+      "情绪",
+      "受到",
+      "影响"
+    ],
+    "A:骸": [
+      "她",
+      "骸",
+      "说",
+      "第二盘",
+      "情绪",
+      "受到",
+      "影响"
+    ],
+    "B:桓": [
+      "她",
+      "桓",
+      "说",
+      "第二盘",
+      "情绪",
+      "受到",
+      "影响"
+    ],
+    "B:环": [
+      "她",
+      "环",
+      "说",
+      "第二盘",
+      "情绪",
+      "受到",
+      "影响"
+    ],
+    "B:洹": [
+      "她",
+      "洹",
+      "说",
+      "第二盘",
+      "情绪",
+      "受到",
+      "影响"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      null,
+      2.3,
+      1.1,
+      0.0,
+      -1.1,
+      -0.8,
+      -2.5,
+      -2.4,
+      -3.2,
+      -3.2
+    ],
+    "A:孩": [
+      null,
+      null,
+      2.3,
+      1.1,
+      0.0,
+      -1.0,
+      -0.8,
+      -2.5,
+      -2.4,
+      -3.2,
+      -3.2
+    ],
+    "A:骸": [
+      null,
+      null,
+      1.8,
+      0.6,
+      -0.5,
+      -1.6,
+      -1.3,
+      -3.0,
+      -2.9,
+      -3.7,
+      -3.7
+    ],
+    "B:桓": [
+      null,
+      null,
+      -1.2,
+      -2.2,
+      -4.3,
+      -4.2,
+      null,
+      -2.2,
+      -3.1,
+      -2.8,
+      -2.0,
+      -1.6,
+      -1.7,
+      -2.3
+    ],
+    "B:环": [
+      null,
+      null,
+      -1.3,
+      -2.3,
+      -4.4,
+      -4.3,
+      null,
+      -2.3,
+      -3.2,
+      -2.9,
+      -2.1,
+      -1.7,
+      -1.8,
+      -2.5
+    ],
+    "B:洹": [
+      null,
+      null,
+      -1.4,
+      -2.4,
+      -4.5,
+      -4.3,
+      null,
+      -2.3,
+      -3.2,
+      -2.9,
+      -2.2,
+      -1.7,
+      -1.8,
+      -2.5
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/374152bd020b8d8ebbe84b05.mp3",
+    "A:孩": "/workspace/scratch/sun-replay/polyphone-audit/cache/7bfeb3f4d7439ed04884285c.mp3",
+    "A:骸": "/workspace/scratch/sun-replay/polyphone-audit/cache/ed791694ebd3dcb6c61c24ba.mp3",
+    "B:桓": "/workspace/scratch/sun-replay/polyphone-audit/cache/1fb2b141c0a398d1bcf25193.mp3",
+    "B:环": "/workspace/scratch/sun-replay/polyphone-audit/cache/615d91471300113b60145c65.mp3",
+    "B:洹": "/workspace/scratch/sun-replay/polyphone-audit/cache/eb5957ec63869e61254661f0.mp3"
+  },
+  "intended_pinyin": "hai2",
+  "wrong_pinyin": "huan2",
+  "scope": "complete actual narration segment",
+  "word_character_reference_limit": null
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 618.5,
+  "range_to": 625.0,
+  "selected_from": 618.5,
+  "selected_to": 625.0,
+  "decoded_pcm_sha256": "99b0c82b83dfe05c41fb78fdeac39145c522d0cffed135822bc4358d2ac1a83f",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:18:00.001541+00:00",
+  "elapsed_seconds": 2.19,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 620.82,
+      "end": 623.72,
+      "text": " And too much to bear as Kalaskaya.",
+      "avg_logprob": -0.9738506163869586,
+      "no_speech_prob": 0.1549646258354187,
+      "compression_ratio": 0.85,
+      "words": [
+        {
+          "start": 620.82,
+          "end": 621.3,
+          "word": " And",
+          "probability": 0.09350107610225677
+        },
+        {
+          "start": 621.3,
+          "end": 621.56,
+          "word": " too",
+          "probability": 0.8125695586204529
+        },
+        {
+          "start": 621.56,
+          "end": 621.78,
+          "word": " much",
+          "probability": 0.9991845488548279
+        },
+        {
+          "start": 621.78,
+          "end": 621.9,
+          "word": " to",
+          "probability": 0.831372857093811
+        },
+        {
+          "start": 621.9,
+          "end": 622.08,
+          "word": " bear",
+          "probability": 0.9527271389961243
+        },
+        {
+          "start": 622.08,
+          "end": 622.68,
+          "word": " as",
+          "probability": 0.8128124475479126
+        },
+        {
+          "start": 622.68,
+          "end": 623.72,
+          "word": " Kalaskaya.",
+          "probability": 0.5477065183222294
+        }
+      ]
+    }
+  ]
+}

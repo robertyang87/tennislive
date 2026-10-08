@@ -1,0 +1,114 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=3Y8VqlPjzJ8",
+  "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+  "source_duration": 460.289,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: independent base.en/small.en inference; focused medium.en/large-v3-turbo checks; source-platform captions; accepted editorial name/grammar normalization",
+  "reviewed_at": "2026-10-05T10:35:58+00:00",
+  "status": "complete",
+  "actual_listening_performed": false,
+  "reviewed_from": 150.0,
+  "reviewed_to": 180.8,
+  "foreground_english": [
+    {
+      "start": 163.45,
+      "end": 165.24,
+      "en": "Off to a third set we will go.",
+      "zh": "比赛进入决胜盘。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-base.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-small.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "定窗small词时轴跨静音漂移，采用逐岛small/base与平台共同支持的163.45起点。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 166.14,
+      "end": 168.06,
+      "en": "Second straight match on this court today,",
+      "zh": "今天这块场地连续第二场比赛，",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-base.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-small.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 168.06,
+      "end": 171.02,
+      "en": "that three sets is needed to decide a winner.",
+      "zh": "都要打满三盘才能决出胜负。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-base.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-small.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 172.64,
+      "end": 175.94,
+      "en": "Zheng Qinwen winning the opening set in the tiebreak.",
+      "zh": "郑钦文通过抢七拿下首盘。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-base.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-small.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "双ASR与平台一致，球员姓名按比赛身份规范。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 175.94,
+      "end": 179.1,
+      "en": "Bouzkova coming back to win the second, 6-4.",
+      "zh": "布兹科娃以6比4扳回第二盘。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-base.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-small.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "三源均第二盘6-4；小模型把Bouzkova转成where he boasts，平台Ribosa，按已确定身份规范。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    }
+  ],
+  "uncertain_spans": [],
+  "editorial_resolution_path": "data/research/zheng-bouzkova-beijing-2026-r3/audio/selected/asr-dispute-resolution.json",
+  "method_limitations": [
+    "No human listening was performed or claimed.",
+    "Model omissions and name errors were cross-checked with platform captions and explicit editor-approved identity/grammar corrections.",
+    "Evidence covers complete selected windows through full-source base/small inference, no-VAD selected-window transcription, and platform-captions comparison; it does not prove absence of all speech by model confidence alone."
+  ],
+  "source_identity_basis": "Actual downloaded file SHA256 equals runner-export SHA256; alternate 311-second 720p edit is archived for provenance only and is not used to bind this 460-second source.",
+  "raw_evidence_manifest": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/manifest.json"
+}

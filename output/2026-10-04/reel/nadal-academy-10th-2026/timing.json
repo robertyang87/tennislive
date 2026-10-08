@@ -1,0 +1,43 @@
+{
+  "schema": 2,
+  "at": "2026-10-03T21:07:08Z",
+  "pipeline": "match-reel",
+  "slug": "nadal-academy-10th-2026",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 154.995,
+  "last_stage": "烧字幕+成片",
+  "stage_seconds": {
+    "片尾配音": 0.001,
+    "TTS 合成": 0.004,
+    "封面海报": 1.828,
+    "封面编码": 0.0,
+    "分段编码·并行": 0.004,
+    "分段编码": 0.674,
+    "片尾母版转码": 0.0,
+    "拼接": 1.297,
+    "混音": 4.564,
+    "烧字幕+成片": 138.011
+  },
+  "stage_counts": {
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码·并行": 15,
+    "分段编码": 1,
+    "片尾母版转码": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1
+  },
+  "parallel_stages": [
+    "分段编码·并行"
+  ],
+  "untimed_seconds": 8.616,
+  "cpu_count": 5,
+  "run_id": null,
+  "run_attempt": null,
+  "on_runner": false
+}

@@ -1,0 +1,42 @@
+{
+  "status": "actual_final_film_technical_verification_pass",
+  "checked_at": "2026-10-03T21:56:44.349698+00:00",
+  "film_sha256": "775b10396cb8622f1d6a7f950702f7f48d1a97d563122ce9f2b7fa2030900236",
+  "film_bytes": 67113729,
+  "native_qc_attestation_binding": "pass",
+  "foreground_audio_subtitle_binding": "pass",
+  "full_audio_video_decode": "pass",
+  "video_seconds": "222.760000",
+  "streams": [
+    {
+      "codec_type": "video",
+      "width": 1080,
+      "height": 1440,
+      "duration": "222.760000",
+      "r_frame_rate": "25/1"
+    },
+    {
+      "codec_type": "audio",
+      "width": null,
+      "height": null,
+      "duration": "222.741333",
+      "r_frame_rate": "0/0"
+    }
+  ],
+  "digital_silence_dead_seconds": [],
+  "digital_silence_card_tail_seconds": [
+    88,
+    89,
+    110,
+    111,
+    127,
+    128,
+    151,
+    165,
+    166,
+    191,
+    212,
+    221
+  ],
+  "human_listening_performed": false
+}

@@ -1,0 +1,130 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 645.0,
+  "range_to": 671.0,
+  "selected_from": 647.0,
+  "selected_to": 667.0,
+  "decoded_pcm_sha256": "e9d0a6d847f9916d354c76b0a9defd366c18cdf929c338350225621c78599c70",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:12:38.992147+00:00",
+  "elapsed_seconds": 4.74,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 647.44,
+      "end": 649.64,
+      "text": " Right on the line.",
+      "avg_logprob": -0.5367922782897949,
+      "no_speech_prob": 0.1409846842288971,
+      "compression_ratio": 0.9402985074626866,
+      "words": [
+        {
+          "start": 647.44,
+          "end": 648.32,
+          "word": " Right",
+          "probability": 0.8027114272117615
+        },
+        {
+          "start": 648.32,
+          "end": 648.52,
+          "word": " on",
+          "probability": 0.9970670342445374
+        },
+        {
+          "start": 648.52,
+          "end": 648.7,
+          "word": " the",
+          "probability": 0.9993908405303955
+        },
+        {
+          "start": 648.7,
+          "end": 649.64,
+          "word": " line.",
+          "probability": 0.9990860223770142
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 660.52,
+      "end": 664.1,
+      "text": " And shank off upper serve so the break lead.",
+      "avg_logprob": -0.5367922782897949,
+      "no_speech_prob": 0.1409846842288971,
+      "compression_ratio": 0.9402985074626866,
+      "words": [
+        {
+          "start": 660.52,
+          "end": 661.4,
+          "word": " And",
+          "probability": 0.8736070394515991
+        },
+        {
+          "start": 661.4,
+          "end": 661.84,
+          "word": " shank",
+          "probability": 0.665993869304657
+        },
+        {
+          "start": 661.84,
+          "end": 662.14,
+          "word": " off",
+          "probability": 0.7581744194030762
+        },
+        {
+          "start": 662.14,
+          "end": 662.38,
+          "word": " upper",
+          "probability": 0.6314778327941895
+        },
+        {
+          "start": 662.38,
+          "end": 662.78,
+          "word": " serve",
+          "probability": 0.7720484137535095
+        },
+        {
+          "start": 662.78,
+          "end": 663.28,
+          "word": " so",
+          "probability": 0.6948457956314087
+        },
+        {
+          "start": 663.28,
+          "end": 663.42,
+          "word": " the",
+          "probability": 0.9920141100883484
+        },
+        {
+          "start": 663.42,
+          "end": 663.64,
+          "word": " break",
+          "probability": 0.6002256274223328
+        },
+        {
+          "start": 663.64,
+          "end": 664.1,
+          "word": " lead.",
+          "probability": 0.9906050562858582
+        }
+      ]
+    }
+  ]
+}

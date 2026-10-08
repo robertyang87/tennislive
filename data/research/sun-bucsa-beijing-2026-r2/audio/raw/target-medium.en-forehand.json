@@ -1,0 +1,67 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 176,
+  "range_to": 191,
+  "created_at": "2026-10-03T16:50:20.293649+00:00",
+  "elapsed_seconds": 5.51,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 184.32,
+      "end": 187.0,
+      "text": " There's nothing tentative about that forehand.",
+      "avg_logprob": -0.5134526640176773,
+      "no_speech_prob": 0.14669333398342133,
+      "words": [
+        {
+          "start": 184.32,
+          "end": 185.24,
+          "word": " There's",
+          "probability": 0.602830320596695
+        },
+        {
+          "start": 185.24,
+          "end": 185.46,
+          "word": " nothing",
+          "probability": 0.9970198273658752
+        },
+        {
+          "start": 185.46,
+          "end": 185.92,
+          "word": " tentative",
+          "probability": 0.8866484761238098
+        },
+        {
+          "start": 185.92,
+          "end": 186.26,
+          "word": " about",
+          "probability": 0.9974104762077332
+        },
+        {
+          "start": 186.26,
+          "end": 186.52,
+          "word": " that",
+          "probability": 0.9951456189155579
+        },
+        {
+          "start": 186.52,
+          "end": 187.0,
+          "word": " forehand.",
+          "probability": 0.9761801660060883
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "43f85c57f694b90262bfb527ab916ae501ee5b8b6834f78f14f373d03c9d321f",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

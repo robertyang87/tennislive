@@ -1,0 +1,77 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/i1LtteR8jd0.mp4",
+  "source_sha256": "551d24ac4ffc3ad4a2a202cf178a2ca5f4488e1675f5e63f9a409b10e7a4cc1b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:59.979441+00:00",
+  "reviewed_from": 199.1,
+  "reviewed_to": 206.66,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 199.38,
+      "end": 200.94,
+      "en": "You heard him say xie xie,",
+      "zh": "你听到他说“谢谢”，"
+    },
+    {
+      "start": 201.04,
+      "end": 202.8,
+      "en": "which is thank you in Mandarin.",
+      "zh": "用的是普通话。"
+    },
+    {
+      "start": 202.98,
+      "end": 205.2,
+      "en": "That again just going to make it more endearing",
+      "zh": "这也会更讨人喜欢，"
+    },
+    {
+      "start": 205.2,
+      "end": 206.64,
+      "en": "to the Chinese fans here.",
+      "zh": "对这里的中国球迷来说。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2012-pronoun.large-v3-turbo.json",
+      "sha256": "85c0ffdb7cee86920905c042cf9469449c77b6583b581867c92f0b741d07a6c0"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2012-cup.medium.en.json",
+      "sha256": "9f1f2ca9f5a5401ecc4b1a614c7933ed70467156b659b8914a5be51b951e50b4"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2012-pronoun.micro.small.en.json",
+      "sha256": "fc74faa80847d6b546adbe12d5c0c2825bfcc289d4359b7c9ad06944f1b56410"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2012-pronoun.micro.base.en.json",
+      "sha256": "09fc5f86b2c62f4d96bcab7b69884859a16f76b9e6c739072fc946227aa54e8f"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2012.targeted.small.en.json",
+      "sha256": "8328448e3fc15a0aa8274e07e1ee6e2ae8ca9fcc0c88e67d93b5fe75931a370c"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2012.targeted.base.en.json",
+      "sha256": "6b508b09e78d99a804540adefa3d9e39ed7b7de2fd0d4d4df53ecfac07201c59"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.small.en.json",
+      "sha256": "5a238cc9dd893765a91d9e4b52a4736d44ef8c63a557e9b963f217556bffb421"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.base.en.json",
+      "sha256": "2a244e17345546b503bb82ced850538fa1225f98942c28ccfbd9108cfd803513"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Pronoun resolved it: large-v3-turbo genuinely recognizes it with probability0.83; independent medium.en also it; full-source small.en him only probability0.36, other smaller runs omit pronoun. Preferred stronger-model agreement, not falsely claiming all models agree or human listening. Spoken fragment That again just going to... retained without inventing is. xie xie romanization standardizes audible Mandarin谢谢. Physical decoded 20ms-band RMS around last here falls from0.0774 at206.62–206.64 to0.0290 at206.66–206.68 before next plosive peak0.1112 at206.74; raw signal recorded cups-2012-here-but-energy.json, used as supporting endpoint evidence. Here model endpoints: large206.60, medium206.64, local small206.60, local base206.56. Body206.66 preserves last here and excludes next But onset burst about206.70; MUST set native audio_tail=silence so0.18 transition bottom does not introduce next But fragment."
+  ]
+}

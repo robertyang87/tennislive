@@ -1,0 +1,83 @@
+{
+  "scoreboard_qc_sha256": "24eb3f60e92e61d00f5891b4c7d6df58f82bdcd7861ab1125344136442a7d8b6",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 267.29,
+  "topbar": {
+    "line1": "2026 WTA1000 北京 第三轮",
+    "line2": "高芙 7-5 6-1 孙心然",
+    "start": 1.2,
+    "end": 268.49
+  },
+  "film_seconds": 272.36,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 11.808,
+    "2": 8.232,
+    "4": 8.544,
+    "7": 10.92,
+    "9": 8.328,
+    "11": 12.12,
+    "12": 11.784,
+    "13": 17.184
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "f5bc96d2c46a569c5ebcb6602b35e713dd8e8d2aa929ad7383c093d2caadee50",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "sun-gauff-beijing-2026-r3",
+    "received_at": "2026-10-05T17:50:14Z",
+    "artifact_ready_at": "2026-10-05T17:58:30Z",
+    "elapsed_seconds": 496.271,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "2a30aa3558c8faca0dbe23fb02ac68f5bec58f11db6efc83c1d0a12ae06408e2",
+    "spec_sha256": "3d244637c91bb0f229e5b914d41f3495fc7b27c656b6b0ed7437e40d77f7a6e6",
+    "run_id": "37351388305",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-05T17:53:21Z",
+        "run_id": "37351388305"
+      }
+    ],
+    "render_seconds": 309.271,
+    "pre_render_seconds": 187.0
+  },
+  "film_sha256": "2a30aa3558c8faca0dbe23fb02ac68f5bec58f11db6efc83c1d0a12ae06408e2",
+  "film_bytes": 83097999,
+  "qc_attestation_sha256": "5e40b877214e804732adfe7ba0de3072bad42c8578f0da5f6703a505eda82bbf",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-05T17:53:21Z",
+      "run_id": "37351388305"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-05T17:58:31Z",
+      "run_id": "37351388305"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sun-gauff-beijing-2026-r3/sun-gauff-beijing-2026-r3.mp4",
+  "video_bytes": 83097999
+}

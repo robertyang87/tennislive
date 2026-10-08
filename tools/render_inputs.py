@@ -191,6 +191,10 @@ def _gate(why: str, read_by: str, where: str | tuple[str, ...] = (),
 #: 渲染/质检路径上被读、但**只进闸不进成片**的 `_` 键（raise 或 print）。
 #: 值不进指纹；闸读它的那个位置上算数的，重核对时必须仍然算数（见模块 docstring）。
 GATE_ANNOTATIONS: dict[str, Gate] = {
+    "_stats_availability_why": _gate(
+        "team_exhibition_scope.video_without_tour_stats：实际团体表演赛缺巡回赛统计的说明，"
+        "只控制备片校验，不控制画面；自动发布仍须统计合同",
+        "video_without_tour_stats", "_stats_availability_why"),
     "_approved_by_user": _gate("build_cover：approved_image 要有用户认领，缺了拒渲（编码里才查）",
                                "build_cover", "cover._approved_by_user", truthy),
     "_beat": _gate("promote_reel_draft.insert_chapter_cards（备料提升时读，render 不调）",
@@ -220,7 +224,11 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
         "说完之后的那一截（上包络／真语音那几档，2026-09-28 起手写 spec 硬）。dry-run 读 probe"
         "（只在 mode=render 那一趟硬）；--check-narration 和 render 在 TTS 之后按真语音再判一遍；"
         "probe 没拉回来时这一层是哑的，所以记位置",
-        "digital_silence_findings", "segments[]._digital_silence_why"),
+        "digital_silence_findings plan_hash verified_seconds", "segments[]._digital_silence_why"),
+    "_digital_silence_windows": _gate(
+        "限定自然弱声核验的源时间窗：音频计划哈希绑定窗口与理由，渲后逐秒核对源SHA、波形和增益；"
+        "不改变画面、字幕或混音，缺证据仍按原静音闸拒绝",
+        "plan_hash verified_seconds", "segments[]._digital_silence_windows", truthy),
     "_draft": _gate("promote_reel_draft.promote：转正时按键名比出草稿块、剥掉它（备料，render "
                     "和 dry-run 都不调）", "promote"),
     "_durations": _gate("promote_reel_draft._duration（备料时读）", "_duration"),
@@ -281,7 +289,7 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                     "（封面用时闸）、promote_reel_draft 的撞车键（合集源片按场次 id 分开，`_compilation_only`）、list_official_uploads "
                     "认人和开球日（dry-run 只报不拦的官方上传／封面日期报告）",
                     "verified_result_problem decider_tiebreak_problem waiting_reasons "
-                    "promote _source_urls _match_keys _flashscore_id _match_date _retired event_dates spec_surnames _omission_problem _verified_retirement_problem _wang_eala_omission_problem",
+                    "promote _source_urls _match_keys _flashscore_id _official_wta_id _match_date _retired event_dates spec_surnames _omission_problem _verified_interruption_problem _verified_disqualification_problem _wang_eala_omission_problem",
                     "_match", truthy),
     "_narration_why": _gate("cover_voice_matches_hook_problem：封面口播和钩子不同的认领",
                             "cover_voice_matches_hook_problem", "cover._narration_why"),
@@ -374,6 +382,7 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
 #: 这几个函数里读它（都是措辞闸、推送元数据或备料），判据同上那条测试。
 PUBLISH_FIELDS: dict[str, frozenset[str]] = {
     "push": frozenset({
+        "video_without_tour_stats",                 # 固定表演赛统计闸要求禁用自动推送
         "spec_outward_text",                       # build_match_reel：全称断言闸扫的外发文字
         "push_is_auto", "push_meta",               # push_reel：推送开关与标题
         "voiced_texts", "outward_deep", "outward_flat",
@@ -384,6 +393,7 @@ PUBLISH_FIELDS: dict[str, frozenset[str]] = {
         "total_margin_problem", "summary_strip_offender", "push_summary_problem",
         "spec_taste_extra",                        # taste_gates_extra：口味闸（闸）
         "interview_taste_extra",                   # 同上，采访线入口（竖版短片不调）
+        "video_without_tour_stats",                # permission gate only; never changes pixels
     }),
 }
 

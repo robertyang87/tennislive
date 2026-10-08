@@ -1,0 +1,118 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 46,
+  "range_to": 53,
+  "created_at": "2026-10-03T06:12:56.567271+00:00",
+  "elapsed_seconds": 0.9,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 46.66,
+      "end": 49.94,
+      "text": " This time, boo does make his move.",
+      "avg_logprob": -0.5256065868196034,
+      "no_speech_prob": 0.28051838278770447,
+      "words": [
+        {
+          "start": 46.66,
+          "end": 47.26,
+          "word": " This",
+          "probability": 0.42523637413978577
+        },
+        {
+          "start": 47.26,
+          "end": 47.58,
+          "word": " time,",
+          "probability": 0.9690605998039246
+        },
+        {
+          "start": 47.74,
+          "end": 48.76,
+          "word": " boo",
+          "probability": 0.19275839626789093
+        },
+        {
+          "start": 48.76,
+          "end": 49.04,
+          "word": " does",
+          "probability": 0.8991184830665588
+        },
+        {
+          "start": 49.04,
+          "end": 49.34,
+          "word": " make",
+          "probability": 0.9789246320724487
+        },
+        {
+          "start": 49.34,
+          "end": 49.62,
+          "word": " his",
+          "probability": 0.9827978610992432
+        },
+        {
+          "start": 49.62,
+          "end": 49.94,
+          "word": " move.",
+          "probability": 0.9681743383407593
+        }
+      ]
+    },
+    {
+      "start": 50.16,
+      "end": 52.06,
+      "text": " First break of this opening set.",
+      "avg_logprob": -0.5256065868196034,
+      "no_speech_prob": 0.28051838278770447,
+      "words": [
+        {
+          "start": 50.16,
+          "end": 50.32,
+          "word": " First",
+          "probability": 0.9547900557518005
+        },
+        {
+          "start": 50.32,
+          "end": 50.98,
+          "word": " break",
+          "probability": 0.8570631146430969
+        },
+        {
+          "start": 50.98,
+          "end": 51.22,
+          "word": " of",
+          "probability": 0.9246460199356079
+        },
+        {
+          "start": 51.22,
+          "end": 51.42,
+          "word": " this",
+          "probability": 0.9813328385353088
+        },
+        {
+          "start": 51.42,
+          "end": 51.72,
+          "word": " opening",
+          "probability": 0.9927096366882324
+        },
+        {
+          "start": 51.72,
+          "end": 52.06,
+          "word": " set.",
+          "probability": 0.8725441694259644
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "6a7307691ccf61e7747e3aa22e4d2e430523bb5b3ae03918e1250ddaf37de51c",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

@@ -1,0 +1,385 @@
+{
+  "production": {
+    "word": "崇打",
+    "char": "崇",
+    "sentence": "二零二五年罗马，安德列娃的制胜球，也因灯突然开启崇打。她当时落泪，后来赢了。",
+    "tts_text": "二零二五年罗马，安德列娃的制胜球，也因灯突然开启崇打。她当时落泪，后来赢了。",
+    "intended_refs": [
+      "崇",
+      "虫",
+      "蟲"
+    ],
+    "wrong_refs": [
+      "众",
+      "仲"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "high",
+    "verdict_raw": "correct",
+    "score": 1.0,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 4.081,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.0,
+        "d_wrong": 4.837,
+        "score": 1.0
+      },
+      "comb": {
+        "d_intended": 0.0,
+        "d_wrong": 6.882,
+        "score": 1.0
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.0,
+      "wrong": 8.508
+    },
+    "separation": {
+      "spec": {
+        "within": 2.386,
+        "between": 4.019,
+        "separation": 1.685
+      },
+      "f0": {
+        "within": 0.688,
+        "between": 7.104,
+        "separation": 10.32
+      },
+      "comb": {
+        "within": 1.881,
+        "between": 9.113,
+        "separation": 4.845
+      }
+    },
+    "selftest_loo": {
+      "崇": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.613
+      },
+      "虫": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.663
+      },
+      "蟲": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.728
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.623
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.591
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:崇": {
+        "spec": 0.0,
+        "f0": 0.0,
+        "vmis": 0.0,
+        "frames": 34,
+        "comb": 0.0
+      },
+      "A:虫": {
+        "spec": 2.434,
+        "f0": 0.663,
+        "vmis": 0.206,
+        "frames": 34,
+        "comb": 1.879
+      },
+      "A:蟲": {
+        "spec": 2.154,
+        "f0": 0.576,
+        "vmis": 0.143,
+        "frames": 35,
+        "comb": 1.653
+      },
+      "B:众": {
+        "spec": 4.081,
+        "f0": 5.58,
+        "vmis": 0.371,
+        "frames": 35,
+        "comb": 7.621
+      },
+      "B:仲": {
+        "spec": 4.091,
+        "f0": 4.837,
+        "vmis": 0.361,
+        "frames": 36,
+        "comb": 6.882
+      }
+    },
+    "window_s": [
+      4.36,
+      4.7
+    ],
+    "boundary_token": "崇打",
+    "window_anchor": "B:众",
+    "tokens": {
+      "ORIG": [
+        "二零二五年",
+        "罗马",
+        "安德",
+        "列娃",
+        "的",
+        "制胜球",
+        "也",
+        "因",
+        "灯",
+        "突然",
+        "开启",
+        "崇打",
+        "她",
+        "当时",
+        "落泪",
+        "后来",
+        "赢",
+        "了"
+      ],
+      "A:崇": [
+        "二零二五年",
+        "罗马",
+        "安德",
+        "列娃",
+        "的",
+        "制胜球",
+        "也",
+        "因",
+        "灯",
+        "突然",
+        "开启",
+        "崇打",
+        "她",
+        "当时",
+        "落泪",
+        "后来",
+        "赢",
+        "了"
+      ],
+      "A:虫": [
+        "二零二五年",
+        "罗马",
+        "安德",
+        "列娃",
+        "的",
+        "制胜球",
+        "也",
+        "因",
+        "灯",
+        "突然",
+        "开启虫",
+        "打",
+        "她",
+        "当时",
+        "落泪",
+        "后来",
+        "赢",
+        "了"
+      ],
+      "A:蟲": [
+        "二零二五年",
+        "罗马",
+        "安德列",
+        "娃",
+        "的",
+        "制胜球",
+        "也",
+        "因",
+        "灯",
+        "突然",
+        "开启",
+        "蟲打",
+        "她",
+        "当时",
+        "落泪",
+        "后来",
+        "赢",
+        "了"
+      ],
+      "B:众": [
+        "二零二五年",
+        "罗马",
+        "安德",
+        "列娃",
+        "的",
+        "制胜球",
+        "也",
+        "因",
+        "灯",
+        "突然",
+        "开启",
+        "众",
+        "打",
+        "她",
+        "当时",
+        "落泪",
+        "后来",
+        "赢",
+        "了"
+      ],
+      "B:仲": [
+        "二零二五年",
+        "罗马",
+        "安德",
+        "列娃",
+        "的",
+        "制胜球",
+        "也",
+        "因",
+        "灯",
+        "突然",
+        "开启",
+        "仲打",
+        "她",
+        "当时",
+        "落泪",
+        "后来",
+        "赢",
+        "了"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        null,
+        -9.5,
+        -10.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -6.5,
+        -4.1,
+        -2.0,
+        -0.2,
+        1.4,
+        1.0
+      ],
+      "A:崇": [
+        null,
+        null,
+        -9.5,
+        -10.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -6.5,
+        -4.1,
+        -2.0,
+        -0.2,
+        1.4,
+        1.0
+      ],
+      "A:虫": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -6.0,
+        -5.6,
+        -4.5,
+        -2.0,
+        -0.5,
+        -0.0,
+        -1.4
+      ],
+      "A:蟲": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -6.9,
+        -5.6,
+        -4.2,
+        -2.1,
+        1.0,
+        2.1,
+        null
+      ],
+      "B:众": [
+        null,
+        null,
+        -7.7,
+        -10.9,
+        null,
+        null,
+        null,
+        6.9,
+        6.4,
+        5.8,
+        3.9,
+        null,
+        -6.2,
+        -7.2,
+        -7.8
+      ],
+      "B:仲": [
+        null,
+        null,
+        -9.3,
+        -10.8,
+        null,
+        null,
+        null,
+        6.7,
+        5.7,
+        4.6,
+        2.7,
+        null,
+        -6.5,
+        -7.4,
+        -7.4
+      ]
+    },
+    "audio": {
+      "ORIG": "/home/agent/.cache/tennislive/polyphone/53be142de1c575ee5f197506.mp3",
+      "A:崇": "/home/agent/.cache/tennislive/polyphone/53be142de1c575ee5f197506.mp3",
+      "A:虫": "/home/agent/.cache/tennislive/polyphone/0a4aff98b0fd21fa985acfab.mp3",
+      "A:蟲": "/home/agent/.cache/tennislive/polyphone/f1cb3c4adc337d7558a01bd6.mp3",
+      "B:众": "/home/agent/.cache/tennislive/polyphone/86ff69714f635a61ec70a971.mp3",
+      "B:仲": "/home/agent/.cache/tennislive/polyphone/c24971b5998f8d429d9448d8.mp3"
+    }
+  }
+}

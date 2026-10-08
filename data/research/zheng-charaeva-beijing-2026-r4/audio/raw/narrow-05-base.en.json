@@ -1,0 +1,273 @@
+{
+  "model": "base.en",
+  "source_from": 251,
+  "source_to": 260.7,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 1.8000000000000003,
+      "end": 4.16,
+      "text": " Got another return, that's one for the thumb.",
+      "tokens": [
+        50363,
+        11853,
+        1194,
+        1441,
+        11,
+        326,
+        338,
+        530,
+        329,
+        262,
+        15683,
+        13,
+        50599
+      ],
+      "avg_logprob": -0.45088046934546494,
+      "compression_ratio": 1.2956521739130435,
+      "no_speech_prob": 0.06643154472112656,
+      "words": [
+        {
+          "start": 1.8000000000000003,
+          "end": 2.22,
+          "word": " Got",
+          "probability": 0.11220068484544754
+        },
+        {
+          "start": 2.22,
+          "end": 2.64,
+          "word": " another",
+          "probability": 0.9885846972465515
+        },
+        {
+          "start": 2.64,
+          "end": 2.98,
+          "word": " return,",
+          "probability": 0.9911647439002991
+        },
+        {
+          "start": 3.2,
+          "end": 3.4,
+          "word": " that's",
+          "probability": 0.9851197004318237
+        },
+        {
+          "start": 3.4,
+          "end": 3.6,
+          "word": " one",
+          "probability": 0.9613045454025269
+        },
+        {
+          "start": 3.6,
+          "end": 3.82,
+          "word": " for",
+          "probability": 0.9942160248756409
+        },
+        {
+          "start": 3.82,
+          "end": 3.94,
+          "word": " the",
+          "probability": 0.9973495006561279
+        },
+        {
+          "start": 3.94,
+          "end": 4.16,
+          "word": " thumb.",
+          "probability": 0.9486948251724243
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 5.08,
+      "end": 7.4,
+      "text": " Five return winners in this contest, which ain't the win.",
+      "tokens": [
+        50599,
+        10579,
+        1441,
+        14591,
+        287,
+        428,
+        8414,
+        11,
+        543,
+        18959,
+        470,
+        262,
+        1592,
+        13,
+        50737
+      ],
+      "avg_logprob": -0.45088046934546494,
+      "compression_ratio": 1.2956521739130435,
+      "no_speech_prob": 0.06643154472112656,
+      "words": [
+        {
+          "start": 5.08,
+          "end": 5.28,
+          "word": " Five",
+          "probability": 0.9629946351051331
+        },
+        {
+          "start": 5.28,
+          "end": 5.52,
+          "word": " return",
+          "probability": 0.9389383792877197
+        },
+        {
+          "start": 5.52,
+          "end": 5.84,
+          "word": " winners",
+          "probability": 0.9938285946846008
+        },
+        {
+          "start": 5.84,
+          "end": 6.12,
+          "word": " in",
+          "probability": 0.9857795238494873
+        },
+        {
+          "start": 6.12,
+          "end": 6.26,
+          "word": " this",
+          "probability": 0.9934319853782654
+        },
+        {
+          "start": 6.26,
+          "end": 6.56,
+          "word": " contest,",
+          "probability": 0.9942704439163208
+        },
+        {
+          "start": 6.88,
+          "end": 6.92,
+          "word": " which",
+          "probability": 0.9848212599754333
+        },
+        {
+          "start": 6.92,
+          "end": 7.14,
+          "word": " ain't",
+          "probability": 0.7678150534629822
+        },
+        {
+          "start": 7.14,
+          "end": 7.22,
+          "word": " the",
+          "probability": 0.188043013215065
+        },
+        {
+          "start": 7.22,
+          "end": 7.4,
+          "word": " win.",
+          "probability": 0.5694226622581482
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 3,
+      "seek": 0,
+      "start": 7.5,
+      "end": 9.04,
+      "text": " This might be the most important of them all.",
+      "tokens": [
+        50737,
+        770,
+        1244,
+        307,
+        262,
+        749,
+        1593,
+        286,
+        606,
+        477,
+        13,
+        50845
+      ],
+      "avg_logprob": -0.45088046934546494,
+      "compression_ratio": 1.2956521739130435,
+      "no_speech_prob": 0.06643154472112656,
+      "words": [
+        {
+          "start": 7.5,
+          "end": 7.58,
+          "word": " This",
+          "probability": 0.9955236911773682
+        },
+        {
+          "start": 7.58,
+          "end": 7.74,
+          "word": " might",
+          "probability": 0.9972726702690125
+        },
+        {
+          "start": 7.74,
+          "end": 7.9,
+          "word": " be",
+          "probability": 0.9962071180343628
+        },
+        {
+          "start": 7.9,
+          "end": 7.98,
+          "word": " the",
+          "probability": 0.9959569573402405
+        },
+        {
+          "start": 7.98,
+          "end": 8.14,
+          "word": " most",
+          "probability": 0.9992332458496094
+        },
+        {
+          "start": 8.14,
+          "end": 8.56,
+          "word": " important",
+          "probability": 0.9983225464820862
+        },
+        {
+          "start": 8.56,
+          "end": 8.72,
+          "word": " of",
+          "probability": 0.9840288758277893
+        },
+        {
+          "start": 8.72,
+          "end": 8.8,
+          "word": " them",
+          "probability": 0.8951709270477295
+        },
+        {
+          "start": 8.8,
+          "end": 9.04,
+          "word": " all.",
+          "probability": 0.9973526000976562
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

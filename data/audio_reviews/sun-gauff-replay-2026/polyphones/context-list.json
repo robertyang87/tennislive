@@ -1,0 +1,10 @@
+{
+  "voice": "zh-CN-YunjianNeural", "rate": "+6%",
+  "method": "tools/measure_polyphone.py MFCC+F0+DTW and reference LOO, no ASR tone inference",
+  "scope": "exact individual clause from narration; not claiming whole-segment cached master audio comparison",
+  "checks": [
+    {"segment":15,"word":"重置","sentence":"比分能重置，感觉未必能一起退回去。","intended":"chong2","wrong":"zhong4"},
+    {"segment":9,"word":"处罚","sentence":"但本场是否处罚，尚无结论。","intended":"chu3","wrong":"chu4"},
+    {"segment":7,"word":"不得","sentence":"球员准备发球后，广告不得变化。","intended":"de2","wrong":"de5","note":"不得 belongs to seg7 rather than seg9. Neutral de5 has no unambiguous common single-reading reference; conclusion may be uncertain."}
+  ]
+}

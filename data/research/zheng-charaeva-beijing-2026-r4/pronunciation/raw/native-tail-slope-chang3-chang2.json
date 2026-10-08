@@ -1,0 +1,211 @@
+{
+  "sentence": "生日礼物，提前到手。郑钦文已经闯进中网八强。下一场，她能继续进攻，继续耐心争每一分吗？",
+  "text_sha256": "dce91d5c813f8254c5958264d940d9d1d87229f2447432a51c3533189fab9f72",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "index": 24,
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/outlook-dce91d5c813f-458ef27bb19d.mp3",
+    "A:厂": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/c8a25fce3ecc0be2e3b3f212.mp3",
+    "A:昶": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/dffd2891ba8e10b57e04c4d5.mp3",
+    "B:尝": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/897b483c2f74aeb3f5485e0f.mp3",
+    "B:偿": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/87ce510150aa2a90a06cdaf8.mp3"
+  },
+  "native_orig_mp3_sha256": "458ef27bb19d9de5643d99df2b16927ea1da709fbec610a98b28ebc452433e45",
+  "method": "Exact native production; target WordBoundary onset+40ms..end+50ms; last40% of valid pitch frames, minimum3; Theil-Sen pitch slope in semitones/s; multiple references two-sided LOO (fa has only one intended ref and limits confidence)",
+  "tracks": {
+    "ORIG": {
+      "wordboundary": [
+        5.577833,
+        5.801874,
+        "场"
+      ],
+      "all_pitchvalid_times": [
+        5.73,
+        5.74,
+        5.75,
+        5.76
+      ],
+      "tail_times": [
+        5.74,
+        5.75,
+        5.76
+      ],
+      "tail_semitones": [
+        -6.697707907468901,
+        -11.91233524070698,
+        -13.470783290453621
+      ],
+      "robust_slope_st_per_s": -338.6537691492432
+    },
+    "A:厂": {
+      "wordboundary": [
+        5.577833,
+        5.801874,
+        "厂"
+      ],
+      "all_pitchvalid_times": [
+        5.69,
+        5.7,
+        5.71,
+        5.74,
+        5.75,
+        5.76,
+        5.7700000000000005,
+        5.78
+      ],
+      "tail_times": [
+        5.75,
+        5.76,
+        5.7700000000000005,
+        5.78
+      ],
+      "tail_semitones": [
+        -11.95832337623834,
+        -13.515506960943714,
+        -12.91371080493377,
+        -13.665537852788287
+      ],
+      "robust_slope_st_per_s": -52.338260326550724
+    },
+    "A:昶": {
+      "wordboundary": [
+        5.577833,
+        5.801874,
+        "昶"
+      ],
+      "all_pitchvalid_times": [
+        5.71,
+        5.74,
+        5.75,
+        5.76,
+        5.7700000000000005,
+        5.78
+      ],
+      "tail_times": [
+        5.76,
+        5.7700000000000005,
+        5.78
+      ],
+      "tail_semitones": [
+        -13.432782454705281,
+        -12.849038262552352,
+        -13.620207198322978
+      ],
+      "robust_slope_st_per_s": -9.371237180884645
+    },
+    "B:尝": {
+      "wordboundary": [
+        5.6603955,
+        5.849082999999999,
+        "一尝"
+      ],
+      "all_pitchvalid_times": [
+        5.71,
+        5.72,
+        5.73,
+        5.74,
+        5.78,
+        5.79,
+        5.8,
+        5.8100000000000005,
+        5.82,
+        5.83,
+        5.84
+      ],
+      "tail_times": [
+        5.8,
+        5.8100000000000005,
+        5.82,
+        5.83,
+        5.84
+      ],
+      "tail_semitones": [
+        -12.831716886984069,
+        -11.848840674513777,
+        -10.059462773361886,
+        -9.923044543323652,
+        -9.48101456314972
+      ],
+      "robust_slope_st_per_s": 90.02868232768347
+    },
+    "B:偿": {
+      "wordboundary": [
+        5.617124666666667,
+        5.825458,
+        "下一偿"
+      ],
+      "all_pitchvalid_times": [
+        5.72,
+        5.73,
+        5.74,
+        5.75,
+        5.76,
+        5.7700000000000005,
+        5.78,
+        5.79,
+        5.8,
+        5.8100000000000005,
+        5.82,
+        5.83,
+        5.84
+      ],
+      "tail_times": [
+        5.79,
+        5.8,
+        5.8100000000000005,
+        5.82,
+        5.83,
+        5.84
+      ],
+      "tail_semitones": [
+        -8.042518745628811,
+        -6.668482912794575,
+        -6.359522003572352,
+        -6.103322240592955,
+        -5.863921842283579,
+        -4.718800353593096
+      ],
+      "robust_slope_st_per_s": 54.46492258363075
+    }
+  },
+  "selftest_loo": {
+    "A:厂": {
+      "expected": "correct",
+      "d_intended": 42.967023145666076,
+      "d_wrong": 106.80318291018148,
+      "score": 0.4262273615401961,
+      "got": "correct"
+    },
+    "A:昶": {
+      "expected": "correct",
+      "d_intended": 42.967023145666076,
+      "d_wrong": 63.8361597645154,
+      "score": 0.195398077568528,
+      "got": "uncertain"
+    },
+    "B:尝": {
+      "expected": "misread",
+      "d_intended": 99.39991950856812,
+      "d_wrong": 35.56375974405272,
+      "score": -0.47298769652706973,
+      "got": "misread"
+    },
+    "B:偿": {
+      "expected": "misread",
+      "d_intended": 63.8361597645154,
+      "d_wrong": 35.56375974405272,
+      "score": -0.28443081403124926,
+      "got": "misread"
+    }
+  },
+  "selftest_pass": false,
+  "original": {
+    "d_intended": 286.3155088226925,
+    "d_wrong": 393.11869173287397,
+    "score": 0.15719429905478646,
+    "got": "uncertain"
+  },
+  "verdict": "unreliable",
+  "confidence": null
+}

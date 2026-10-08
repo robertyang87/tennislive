@@ -1,0 +1,278 @@
+{
+  "checked_at": "2026-10-03T19:36:35.447825+00:00",
+  "match": {
+    "status": "result_verified",
+    "date": "2026-10-03",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS035",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "participants": [
+      "郑钦文",
+      "卡林斯卡娅"
+    ],
+    "winner": "郑钦文",
+    "loser": "卡林斯卡娅",
+    "set_scores_home_away": [
+      [
+        6,
+        7
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        3,
+        0
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        4,
+        7
+      ],
+      null,
+      null
+    ],
+    "winner_result": "6-7(4) 6-4 3-0 Ret.",
+    "duration": "02:22:02",
+    "daypart": "下午",
+    "observed_at": "2026-10-03T19:36:35.447825+00:00",
+    "retirement_evidence": {
+      "retired_player": "卡林斯卡娅",
+      "best_of": 3,
+      "sources": [
+        {
+          "match_key": "1020_2026_LS035",
+          "match_date": "2026-10-03",
+          "participants": [
+            "郑钦文",
+            "卡林斯卡娅"
+          ],
+          "set_scores_home_away": [
+            [
+              6,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "tiebreaks_home_away": [
+            [
+              4,
+              7
+            ],
+            null,
+            null
+          ],
+          "winner": "郑钦文",
+          "retired_player": "卡林斯卡娅",
+          "status": "retired",
+          "terminal": true,
+          "provider": "WTA",
+          "source_class": "official_result",
+          "source_id": "1020_2026_LS035",
+          "source_url": "https://www.wtatennis.com/tournaments/china-open/scores/LS035",
+          "source_sha256": "3a8591050f148fa4e30195d7b3935632418979be448257d403448970e361f3fe",
+          "source_path": "data/research/zheng-kalinskaya-beijing-2026-r2/identity-wta-LS035-original.html",
+          "checked_at": "2026-10-03T19:36:35.447825+00:00"
+        },
+        {
+          "match_key": "1020_2026_LS035",
+          "match_date": "2026-10-03",
+          "participants": [
+            "郑钦文",
+            "卡林斯卡娅"
+          ],
+          "set_scores_home_away": [
+            [
+              6,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "tiebreaks_home_away": [
+            [
+              4,
+              7
+            ],
+            null,
+            null
+          ],
+          "winner": "郑钦文",
+          "retired_player": "卡林斯卡娅",
+          "status": "retired",
+          "terminal": true,
+          "provider": "China Open",
+          "source_class": "independent_report",
+          "source_id": "chinaopen_en_353_720",
+          "source_url": "https://www.chinaopen.com/en/contents/353/720.html",
+          "source_sha256": "dbe40003fae703805ef42a08e3dfc94aba60fce3b8ebc619b7554a32b7735cb3",
+          "source_path": "data/research/zheng-kalinskaya-beijing-2026-r2/identity-chinaopen-en720-original.html",
+          "checked_at": "2026-10-03T19:36:35.447825+00:00"
+        }
+      ]
+    },
+    "_time_note": "API MatchTimeStamp07:50:06UTC=15:50Beijing is court metadata, not asserted exact first serve. ChinaOpen report explicitly describes late-afternoon sun and sunset between sets; use afternoon coordinate, not exact start minute.",
+    "_tiebreak_note": "Official score 6-7(4) and ScoreTbSet1=4 establish Zheng4/Kalinskaya7; first set completed, third set unfinished. Overall completed sets1-1, do not write2-1 sets or fabricate6-0.",
+    "_retirement_cause_note": "WTA and ChinaOpen both say illness; Chinese只写因身体不适/因病退赛，不诊断特定伤病，不声称健康完整逆转。"
+  },
+  "players": [
+    {
+      "name": "Qinwen Zheng",
+      "name_zh": "郑钦文",
+      "wta_id": "328120",
+      "country": "CHN",
+      "rank": 54,
+      "age": 23,
+      "dob": "2002-10-08",
+      "entry": "WC",
+      "seed": null,
+      "source_url": "https://www.wtatennis.com/players/328120/qinwen-zheng"
+    },
+    {
+      "name": "Anna Kalinskaya",
+      "name_zh": "卡林斯卡娅",
+      "wta_id": "323942",
+      "country": "RUS",
+      "rank": 22,
+      "age": 27,
+      "dob": "1998-12-02",
+      "seed": 15,
+      "source_url": "https://www.wtatennis.com/players/323942/anna-kalinskaya"
+    }
+  ],
+  "next_round": {
+    "name": "Marie Bouzkova",
+    "name_zh": "鲍兹科娃",
+    "wta_id": "320983",
+    "country": "CZE",
+    "rank": 27,
+    "age": 28,
+    "dob": "1998-07-21",
+    "seed": 18,
+    "round": "第三轮",
+    "first_meeting": true,
+    "determined": true,
+    "source_url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+    "profile_url": "https://www.wtatennis.com/players/320983/marie-bouzkova",
+    "qualification_match": "LS034",
+    "qualification_score": "6-4 6-4",
+    "opponent_beaten": "Kimberly Birrell",
+    "naming_note": "repo canonical src/tennislive/zh/players.py:326 is 鲍兹科娃. ChinaOpen布兹科娃另译，不引入到自写文案。"
+  },
+  "court": {
+    "id": 1,
+    "name": "Capital Group Diamond",
+    "name_zh": "首创钻石球场",
+    "source_url": "https://www.chinaopen.com/en/contents/353/720.html",
+    "evidence": "ChinaOpen text Diamond Court; Chinese1641首创钻石球场; API CourtID1."
+  },
+  "result_contract": "RET with completed sets1-1 and incomplete thirdset3-0; winner_result exactly6-7(4)6-4 3-0 Ret.",
+  "sources": {
+    "match": "https://www.wtatennis.com/tournaments/china-open/scores/LS035",
+    "api": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "wta_report": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+    "chinaopen": "https://www.chinaopen.com/en/contents/353/720.html",
+    "chinaopen_cn": "https://www.chinaopen.com/cn/contents/281/1641.html"
+  },
+  "official_raw_match": {
+    "BinPacketBase64": null,
+    "CourtID": 1,
+    "DateSeq": 6,
+    "DrawLevelType": "M",
+    "DrawMatchType": "S",
+    "EntryTypeA": "Wc",
+    "EntryTypeB": "",
+    "EventID": "1020",
+    "EventYear": 2026,
+    "LastUpdated": "2026-10-03T10:31:52.387+00:00",
+    "MatchID": "LS035",
+    "MatchState": "F",
+    "MatchTimeStamp": "2026-10-03T07:50:06.103+00:00",
+    "MatchTimeTotal": "02:22:02",
+    "Message": "{11|Q. Zheng} {20}",
+    "NumSets": 3,
+    "PlayerCountryA": "CHN",
+    "PlayerCountryA2": "",
+    "PlayerCountryB": "RUS",
+    "PlayerCountryB2": "",
+    "PlayerIDA": "328120",
+    "PlayerIDA2": "",
+    "PlayerIDB": "323942",
+    "PlayerIDB2": "",
+    "PlayerNameFirstA": "Qinwen",
+    "PlayerNameFirstA2": "",
+    "PlayerNameFirstB": "Anna",
+    "PlayerNameFirstB2": "",
+    "PlayerNameLastA": "Zheng",
+    "PlayerNameLastA2": "",
+    "PlayerNameLastB": "Kalinskaya",
+    "PlayerNameLastB2": "",
+    "PointA": "",
+    "PointB": "",
+    "ResultString": "Q. Zheng d [15]A. Kalinskaya 6-7(4),6-4,3-0 Ret'd",
+    "RoundID": "2",
+    "ScoreSet1A": "6",
+    "ScoreSet1B": "7",
+    "ScoreSet2A": "6",
+    "ScoreSet2B": "4",
+    "ScoreSet3A": "3",
+    "ScoreSet3B": "0",
+    "ScoreSet4A": "",
+    "ScoreSet4B": "",
+    "ScoreSet5A": "",
+    "ScoreSet5B": "",
+    "ScoreString": "6-7(4),6-4,3-0 Ret'd",
+    "ScoreSys": "1",
+    "ScoreTbSet1": "4",
+    "ScoreTbSet2": "",
+    "ScoreTbSet3": "",
+    "ScoreTbSet4": "",
+    "SeedA": "",
+    "SeedB": "15",
+    "Serve": "",
+    "Winner": "4"
+  },
+  "naming": {
+    "郑钦文": "Qinwen Zheng",
+    "卡林斯卡娅": "Anna Kalinskaya",
+    "鲍兹科娃": "Marie Bouzkova"
+  },
+  "retirement_source_paths": [
+    "data/research/zheng-kalinskaya-beijing-2026-r2/identity-wta-LS035-original.html",
+    "data/research/zheng-kalinskaya-beijing-2026-r2/identity-chinaopen-en720-original.html"
+  ],
+  "retirement_source_hashes": [
+    "3a8591050f148fa4e30195d7b3935632418979be448257d403448970e361f3fe",
+    "dbe40003fae703805ef42a08e3dfc94aba60fce3b8ebc619b7554a32b7735cb3"
+  ],
+  "conflicts": [
+    {
+      "field": "second_set_early_break_points",
+      "source_url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+      "source_claim": "Kalinskaya held two break points to lead2-0 in secondset",
+      "verified_resolution": "WTA prose is correct:Kalinskaya served first in set2 to0-1; Zheng saved2BP in game2 at15-40 and30-40(points103/104), holding1-1. Subsequent game4 atZheng1-2 was routinehold2-2 with noBP. Earlier teammessage1-2/saved2BP was a subject/game-index misreading and withdrawn.",
+      "status": "resolved_early_message_corrected",
+      "decision": "仅用郑次盘0比1时救两个破发点追成1比1；不写1比2时救两个BP。",
+      "pbp_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS035/point-by-point",
+      "pbp_reference": "data/research/zheng-kalinskaya-beijing-2026-r2/identity-official-pbp-original.json",
+      "pbp_sha256": "56b14c0459687400f2de8f17f099e35c87eda4091228c170e3751e08a506af02",
+      "pbp_game_summary": "data/research/zheng-kalinskaya-beijing-2026-r2/identity-pbp-game-summary.json",
+      "pbp_game_summary_sha256": "7b09de06db37181b2cd957b18244d70a775606b3bf924dc43463fa0eb3f668c3"
+    }
+  ]
+}

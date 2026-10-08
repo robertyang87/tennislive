@@ -1,0 +1,166 @@
+{
+  "sentence": "三十九记制胜分，对手六记。进攻有威力，波动也不少。最后一局，她用回应握住胜利。",
+  "text_sha256": "2d826b17dc3a0e025cbdf184b9ae9f7a79c77436d7f0e2d1b55bd02ca0c3f2a6",
+  "index": 23,
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/statistics-2d826b17dc3a-56c7dd204504.mp3",
+    "A:嫂": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/14fdfc4e4ac939e9dd70f9fd.mp3",
+    "A:扫": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/40c92121989b81fe059fd0e9.mp3",
+    "B:绍": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/9e79b3709d25419cc3c7e1e9.mp3",
+    "B:邵": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/082c261a9c30784f9a12164e.mp3"
+  },
+  "native_orig_mp3_sha256": "56c7dd2045043e7cd51d1f5c407557668580e064f5f91815b708118dab8248fc",
+  "method": "Convergent contextual acoustic evidence only: preceding 不 kept identical in all full-utterance reference inputs; compare real pitch slope on same syllable under substitution of third-tone嫂/扫 and fourth-tone绍/邵; measures actual sandhi, not dictionary. Contextual result alone never seals少.",
+  "tracks": {
+    "ORIG": {
+      "context_syllable": "不",
+      "wordboundary": [
+        4.728791,
+        4.8938950000000006,
+        "不少"
+      ],
+      "valid_times": [
+        4.82,
+        4.83,
+        4.84,
+        4.8500000000000005,
+        4.86
+      ],
+      "semitones": [
+        -1.278320629413623,
+        -1.4964360111246675,
+        -1.6037929195400307,
+        -1.6799119987813693,
+        -1.7144941989284606
+      ],
+      "slope_st_per_s": -9.954745112185712
+    },
+    "A:嫂": {
+      "context_syllable": "不",
+      "wordboundary": [
+        4.740583,
+        4.834916,
+        "不"
+      ],
+      "valid_times": [
+        4.83,
+        4.84,
+        4.8500000000000005,
+        4.86
+      ],
+      "semitones": [
+        1.1465119639456152,
+        0.897159808982559,
+        0.5786232196488199,
+        0.22727027712247772
+      ],
+      "slope_st_per_s": -31.247524247071375
+    },
+    "A:扫": {
+      "context_syllable": "不",
+      "wordboundary": [
+        4.740583,
+        4.834916,
+        "不"
+      ],
+      "valid_times": [
+        4.83,
+        4.84,
+        4.8500000000000005,
+        4.86
+      ],
+      "semitones": [
+        0.6655313178213182,
+        0.49573695669725737,
+        0.0,
+        -0.7406396643337665
+      ],
+      "slope_st_per_s": -48.223030870779084
+    },
+    "B:绍": {
+      "context_syllable": "不",
+      "wordboundary": [
+        4.764166,
+        4.870291,
+        "不"
+      ],
+      "valid_times": [
+        4.86,
+        4.87,
+        4.88,
+        4.89,
+        4.9
+      ],
+      "semitones": [
+        -3.3947692065528283,
+        -3.4648995831161646,
+        -3.455035923704374,
+        -3.462438723726309,
+        -4.018078969850912
+      ],
+      "slope_st_per_s": -5.013186756955563
+    },
+    "B:邵": {
+      "context_syllable": "不",
+      "wordboundary": [
+        4.740583,
+        4.858499,
+        "不"
+      ],
+      "valid_times": [
+        4.84,
+        4.8500000000000005,
+        4.86,
+        4.87,
+        4.88
+      ],
+      "semitones": [
+        -3.367797733724763,
+        -3.8036150944129634,
+        -3.803584011053364,
+        -3.948584208445702,
+        -4.604878115581672
+      ],
+      "slope_st_per_s": -24.249040619360187
+    }
+  },
+  "selftest_loo": {
+    "A:嫂": {
+      "expected": "correct",
+      "d_intended": 16.97550662370771,
+      "d_wrong": 6.998483627711188,
+      "score": -0.41616030086631206,
+      "got": "misread"
+    },
+    "A:扫": {
+      "expected": "correct",
+      "d_intended": 16.97550662370771,
+      "d_wrong": 23.973990251418897,
+      "score": 0.17090524088861717,
+      "got": "uncertain"
+    },
+    "B:绍": {
+      "expected": "misread",
+      "d_intended": 26.234337490115813,
+      "d_wrong": 19.235853862404625,
+      "score": -0.1539136612259552,
+      "got": "uncertain"
+    },
+    "B:邵": {
+      "expected": "misread",
+      "d_intended": 6.998483627711188,
+      "d_wrong": 19.235853862404625,
+      "score": 0.4664638563601636,
+      "got": "correct"
+    }
+  },
+  "selftest_pass": false,
+  "original": {
+    "d_intended": 21.292779134885663,
+    "d_wrong": 4.941558355230149,
+    "score": -0.6232755367203797,
+    "got": "misread"
+  },
+  "verdict": "unreliable",
+  "confidence": null
+}

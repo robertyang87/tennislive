@@ -1,0 +1,54 @@
+{
+  "run": 37168461688,
+  "head": "630b12c309a2d1324171bfd7f346fbb51b1df595",
+  "conclusion": "failure",
+  "failed": 15,
+  "passed": 5468,
+  "skipped": 194,
+  "failures": [
+    "test_赛场之上开场要给出北京时间赛事和轮次",
+    "test_源片自己烧了记分条时字幕要让开",
+    "test_中间物不许进仓库[nadal-academy-10th-2026-championship-speech]",
+    "test_测试按包名导入的tools模块要能在tools不在sys_path时导入",
+    "test_缩略图墙两头都不许进仓库[cover_scan_sheet.jpg]",
+    "test_渲染路径读到的注解键都要归类",
+    "test_真字段表要盖住每条spec里出现过的字段",
+    "test_每个转写输入都绑在判定上_只改它旧判定不作数",
+    "test_钩子不许复述赛果条和顶栏印着的东西",
+    "test_赛场之上要么开自动推送要么说清走哪条路",
+    "test_赛场之上要么有狠数据要么说清为什么没有",
+    "test_旁白里的分不许读成分钟",
+    "test_标定框和全库spec用的框对得上",
+    "test_赛场之上要留一段精彩的原声解说_不留要写明为什么",
+    "test_给了actions_write的工作流都真的要点Pages"
+  ],
+  "branch_ci_before_diagnostic_test_update": {
+    "run_id": 37169450079,
+    "failed": 14,
+    "passed": 5480,
+    "skipped": 194,
+    "new_failure": "test_score_inset的形状校验和scorebox的死键闸 (old diagnostic described fixed top/bottom/fallback rectangle; test updated to new requested contract)",
+    "local_updated_regression": "passed",
+    "focused_current_checks": "69 passed in 3.94s"
+  },
+  "branch_after_diagnostic_update": {
+    "run_id": 37170049440,
+    "head_sha": "9f3832beaec3047488fcd2f43c231e019c5ffe77",
+    "failed": 13,
+    "passed": 5481,
+    "skipped": 194,
+    "new_failures_vs_main": [],
+    "diagnostic_regression_fixed": true
+  },
+  "edgefix_branch_ci": {
+    "run_id": 37171016341,
+    "head_sha": "bf30dc4d7a96f7ab9bba37e8213a6f65f5d17b6c",
+    "failed": 14,
+    "passed": 5482,
+    "skipped": 194,
+    "new_failure": "test_逐帧量板用的是render那一套判据_合成帧量得出板在哪",
+    "cause": "Synthetic WTA fixture asserted right edge296 while painting its body through300; old fixed56px allowance clipped4 pixels. Fixture now paints the same real296 edge it asserts; probe measurements/assertions retained. No production code changed after the passing full native render.",
+    "fixture_fix_validation": "17 passed,1 unrelated whole-library calibration test deselected in2.38s",
+    "remaining_inherited_failures": 13
+  }
+}

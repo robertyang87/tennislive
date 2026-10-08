@@ -1,0 +1,88 @@
+{
+  "slug": "zheng-bouzkova-beijing-2026-r3",
+  "status": "final_artifact_review_pass",
+  "actual_listening_performed": false,
+  "review_method": "Actual native video frame inspection and measured source-to-film PCM/cue alignment; ASR+platform-caption cross-check with documented editorial normalization",
+  "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+  "local_preview": {
+    "seconds": 309.48,
+    "inspected_frames": 57,
+    "independent_full_resolution_frames": [
+      7,
+      9,
+      13,
+      16,
+      18,
+      19,
+      20,
+      21,
+      25,
+      28,
+      30,
+      32,
+      34,
+      35
+    ],
+    "native_wipe_source_seconds": [
+      133.8,
+      234.72
+    ],
+    "observations": [
+      "Both score rows survive measured wipes; no rectangular court patch beyond native graphic",
+      "Bilingual cues remain within frame and separated from board/title-card text",
+      "No fabricated board on original replay with no graphic",
+      "Full winning point, celebration and handshake before10second statcard, next-round card and native outro"
+    ],
+    "audio": {
+      "cue_count": 38,
+      "matched_cues": 38,
+      "true_peak_dbfs": -3.6,
+      "integrated_lufs": -23.3,
+      "loudness_range_lu": 18.6,
+      "digital_clipping_samples": 0,
+      "all_seven_low_level_seconds_match_source": true,
+      "low_level_seconds": [
+        14,
+        44,
+        128,
+        129,
+        187,
+        236,
+        237
+      ]
+    },
+    "limitation": "Preview began before final evidence-binding update; not accepted as final QC or publishing artifact."
+  },
+  "final_runner_run": 37300328257,
+  "reviewed_at": "2026-10-05T11:15:49.638773+00:00",
+  "film_sha256": "19afc67dc9259e2b3cb51deb55bb6ce29ab08f7aabdcde0ba2264758073df93b",
+  "film_bytes": 140327069,
+  "seconds": 309.48,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zheng-bouzkova-beijing-2026-r3/zheng-bouzkova-beijing-2026-r3.mp4",
+  "final_checks": {
+    "downloaded_release_sha_matches_render_and_qc": true,
+    "runner_qc": "pass; zero failed checks",
+    "downloaded_artifact_independent_native_qc": "pass; zero failed checks with actual source and committed masks",
+    "actual_final_frames_inspected": 57,
+    "independent_full_resolution_checks": [
+      "wipe105.17s",
+      "wipe219.83s",
+      "match-point",
+      "winning-point",
+      "handshake",
+      "9-row full-canvas stats",
+      "next-round card"
+    ],
+    "foreground_cues": 38,
+    "declared_weak_source_windows": "7 complete seconds matched original source SHA, PCM waveform and expected gain; no artificial sound added",
+    "publishing_gate_validate_qc": "pass",
+    "render_rule_identity_after_annotation_registry_fix": "unchanged",
+    "spec_and_ass": "unchanged since final render",
+    "human_listening_performed": false,
+    "loudness_log": "final-loudness-summary.txt"
+  }
+}

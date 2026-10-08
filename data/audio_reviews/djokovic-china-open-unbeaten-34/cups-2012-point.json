@@ -1,0 +1,67 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/i1LtteR8jd0.mp4",
+  "source_sha256": "551d24ac4ffc3ad4a2a202cf178a2ca5f4488e1675f5e63f9a409b10e7a4cc1b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:57.888443+00:00",
+  "reviewed_from": 152,
+  "reviewed_to": 177.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 164.4,
+      "end": 165.16,
+      "en": "It's done.",
+      "zh": "比赛结束！"
+    },
+    {
+      "start": 165.62,
+      "end": 168.4,
+      "en": "And he has done it again,",
+      "zh": "他再次做到了，"
+    },
+    {
+      "start": 168.4,
+      "end": 170.56,
+      "en": "for the 14th time in as many matches.",
+      "zh": "十四场比赛，十四次获胜。"
+    },
+    {
+      "start": 170.84,
+      "end": 173,
+      "en": "Novak Djokovic prevails,",
+      "zh": "德约科维奇赢下比赛，"
+    },
+    {
+      "start": 173.42,
+      "end": 176.52,
+      "en": "and he is a three-time champion at the China Open.",
+      "zh": "第三次成为中网冠军。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2012.targeted.base.en.json",
+      "sha256": "6b508b09e78d99a804540adefa3d9e39ed7b7de2fd0d4d4df53ecfac07201c59"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2012.targeted.small.en.json",
+      "sha256": "8328448e3fc15a0aa8274e07e1ee6e2ae8ca9fcc0c88e67d93b5fe75931a370c"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.small.en.json",
+      "sha256": "5a238cc9dd893765a91d9e4b52a4736d44ef8c63a557e9b963f217556bffb421"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.base.en.json",
+      "sha256": "2a244e17345546b503bb82ced850538fa1225f98942c28ccfbd9108cfd803513"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Whole-source small.en and base.en agree on three-time champion sentence; targeted small.en drop-out over music retained as failure, not used to assert absence. Targeted base.en word boundaries agree with full-source sentence endpoints."
+  ]
+}

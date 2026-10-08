@@ -1,0 +1,1172 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": true,
+  "condition_on_previous_text": false,
+  "requested_language": "auto",
+  "detected_language": "en",
+  "language_probability": 0.9798399806022644,
+  "range_from": 0,
+  "range_to": null,
+  "created_at": "2026-10-03T06:11:10.741726+00:00",
+  "elapsed_seconds": 15.2,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 13.01,
+      "end": 14.29,
+      "text": " Looking in from the left there",
+      "avg_logprob": -0.38013962819808866,
+      "no_speech_prob": 0.6325150728225708,
+      "compression_ratio": 1.4641148325358853,
+      "words": [
+        {
+          "start": 13.01,
+          "end": 13.47,
+          "word": " Looking",
+          "probability": 0.15923339128494263
+        },
+        {
+          "start": 13.47,
+          "end": 13.57,
+          "word": " in",
+          "probability": 0.9064382314682007
+        },
+        {
+          "start": 13.57,
+          "end": 13.69,
+          "word": " from",
+          "probability": 0.9924352765083313
+        },
+        {
+          "start": 13.69,
+          "end": 13.83,
+          "word": " the",
+          "probability": 0.998925507068634
+        },
+        {
+          "start": 13.83,
+          "end": 14.05,
+          "word": " left",
+          "probability": 0.996967613697052
+        },
+        {
+          "start": 14.05,
+          "end": 14.29,
+          "word": " there",
+          "probability": 0.8195513486862183
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 16.77,
+      "end": 47.6,
+      "text": " Well, he moved to right to that ball this time",
+      "avg_logprob": -0.38013962819808866,
+      "no_speech_prob": 0.6325150728225708,
+      "compression_ratio": 1.4641148325358853,
+      "words": [
+        {
+          "start": 16.77,
+          "end": 17.41,
+          "word": " Well,",
+          "probability": 0.37777575850486755
+        },
+        {
+          "start": 36.14,
+          "end": 36.18,
+          "word": " he",
+          "probability": 0.6160546541213989
+        },
+        {
+          "start": 36.18,
+          "end": 36.34,
+          "word": " moved",
+          "probability": 0.9631126523017883
+        },
+        {
+          "start": 36.34,
+          "end": 36.48,
+          "word": " to",
+          "probability": 0.3569610118865967
+        },
+        {
+          "start": 36.48,
+          "end": 36.62,
+          "word": " right",
+          "probability": 0.850235104560852
+        },
+        {
+          "start": 36.62,
+          "end": 36.78,
+          "word": " to",
+          "probability": 0.9340071678161621
+        },
+        {
+          "start": 36.78,
+          "end": 36.96,
+          "word": " that",
+          "probability": 0.971493124961853
+        },
+        {
+          "start": 36.96,
+          "end": 37.2,
+          "word": " ball",
+          "probability": 0.9012576341629028
+        },
+        {
+          "start": 37.2,
+          "end": 38.24,
+          "word": " this",
+          "probability": 0.8309345245361328
+        },
+        {
+          "start": 47.26,
+          "end": 47.6,
+          "word": " time",
+          "probability": 0.9977618455886841
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 48.24,
+      "end": 52.08,
+      "text": " Boo does make his move first break of this opening set",
+      "avg_logprob": -0.38013962819808866,
+      "no_speech_prob": 0.6325150728225708,
+      "compression_ratio": 1.4641148325358853,
+      "words": [
+        {
+          "start": 48.24,
+          "end": 48.76,
+          "word": " Boo",
+          "probability": 0.29294779896736145
+        },
+        {
+          "start": 48.76,
+          "end": 49.08,
+          "word": " does",
+          "probability": 0.962836503982544
+        },
+        {
+          "start": 49.08,
+          "end": 49.4,
+          "word": " make",
+          "probability": 0.9942160248756409
+        },
+        {
+          "start": 49.4,
+          "end": 49.62,
+          "word": " his",
+          "probability": 0.9787513613700867
+        },
+        {
+          "start": 49.62,
+          "end": 49.9,
+          "word": " move",
+          "probability": 0.9134315252304077
+        },
+        {
+          "start": 49.9,
+          "end": 50.48,
+          "word": " first",
+          "probability": 0.7718738913536072
+        },
+        {
+          "start": 50.48,
+          "end": 51.0,
+          "word": " break",
+          "probability": 0.8630899786949158
+        },
+        {
+          "start": 51.0,
+          "end": 51.22,
+          "word": " of",
+          "probability": 0.8786277770996094
+        },
+        {
+          "start": 51.22,
+          "end": 51.4,
+          "word": " this",
+          "probability": 0.9929722547531128
+        },
+        {
+          "start": 51.4,
+          "end": 51.7,
+          "word": " opening",
+          "probability": 0.9948745369911194
+        },
+        {
+          "start": 51.7,
+          "end": 52.08,
+          "word": " set",
+          "probability": 0.9621120691299438
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 52.08,
+      "end": 68.37,
+      "text": " So Boo Yuncha Kete stops a run of 29 consecutive sets here in Beijing for Novak Djokovic",
+      "avg_logprob": -0.38013962819808866,
+      "no_speech_prob": 0.6325150728225708,
+      "compression_ratio": 1.4641148325358853,
+      "words": [
+        {
+          "start": 52.08,
+          "end": 52.92,
+          "word": " So",
+          "probability": 0.43393072485923767
+        },
+        {
+          "start": 61.11,
+          "end": 61.45,
+          "word": " Boo",
+          "probability": 0.19240345060825348
+        },
+        {
+          "start": 61.45,
+          "end": 61.99,
+          "word": " Yuncha",
+          "probability": 0.6183863282203674
+        },
+        {
+          "start": 61.99,
+          "end": 62.37,
+          "word": " Kete",
+          "probability": 0.7015623152256012
+        },
+        {
+          "start": 62.37,
+          "end": 62.87,
+          "word": " stops",
+          "probability": 0.8875958323478699
+        },
+        {
+          "start": 62.87,
+          "end": 63.17,
+          "word": " a",
+          "probability": 0.838907778263092
+        },
+        {
+          "start": 63.17,
+          "end": 63.45,
+          "word": " run",
+          "probability": 0.9705218076705933
+        },
+        {
+          "start": 63.45,
+          "end": 63.63,
+          "word": " of",
+          "probability": 0.9531847238540649
+        },
+        {
+          "start": 63.63,
+          "end": 64.39,
+          "word": " 29",
+          "probability": 0.9446141123771667
+        },
+        {
+          "start": 64.39,
+          "end": 65.19,
+          "word": " consecutive",
+          "probability": 0.9928179979324341
+        },
+        {
+          "start": 65.19,
+          "end": 65.87,
+          "word": " sets",
+          "probability": 0.9901137351989746
+        },
+        {
+          "start": 65.87,
+          "end": 66.33,
+          "word": " here",
+          "probability": 0.991202712059021
+        },
+        {
+          "start": 66.33,
+          "end": 66.51,
+          "word": " in",
+          "probability": 0.9979028701782227
+        },
+        {
+          "start": 66.51,
+          "end": 66.87,
+          "word": " Beijing",
+          "probability": 0.9919010996818542
+        },
+        {
+          "start": 66.87,
+          "end": 67.31,
+          "word": " for",
+          "probability": 0.9756703972816467
+        },
+        {
+          "start": 67.31,
+          "end": 67.67,
+          "word": " Novak",
+          "probability": 0.9932331740856171
+        },
+        {
+          "start": 67.67,
+          "end": 68.37,
+          "word": " Djokovic",
+          "probability": 0.9706742316484451
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 68.37,
+      "end": 107.59,
+      "text": " The Deftabelle level was just rising from both throughout it. Yeah loses both points",
+      "avg_logprob": -0.38013962819808866,
+      "no_speech_prob": 0.6325150728225708,
+      "compression_ratio": 1.4641148325358853,
+      "words": [
+        {
+          "start": 68.37,
+          "end": 69.37,
+          "word": " The",
+          "probability": 0.805244505405426
+        },
+        {
+          "start": 97.44,
+          "end": 98.02,
+          "word": " Deftabelle",
+          "probability": 0.4626898169517517
+        },
+        {
+          "start": 98.02,
+          "end": 98.42,
+          "word": " level",
+          "probability": 0.9639902114868164
+        },
+        {
+          "start": 98.42,
+          "end": 98.72,
+          "word": " was",
+          "probability": 0.9615163207054138
+        },
+        {
+          "start": 98.72,
+          "end": 98.92,
+          "word": " just",
+          "probability": 0.9983293414115906
+        },
+        {
+          "start": 98.92,
+          "end": 99.44,
+          "word": " rising",
+          "probability": 0.9820619225502014
+        },
+        {
+          "start": 99.44,
+          "end": 99.7,
+          "word": " from",
+          "probability": 0.9949021339416504
+        },
+        {
+          "start": 99.7,
+          "end": 100.02,
+          "word": " both",
+          "probability": 0.9742457866668701
+        },
+        {
+          "start": 100.02,
+          "end": 100.4,
+          "word": " throughout",
+          "probability": 0.5135124325752258
+        },
+        {
+          "start": 100.4,
+          "end": 100.84,
+          "word": " it.",
+          "probability": 0.9437888860702515
+        },
+        {
+          "start": 100.98,
+          "end": 101.6,
+          "word": " Yeah",
+          "probability": 0.7356460690498352
+        },
+        {
+          "start": 106.49,
+          "end": 106.79,
+          "word": " loses",
+          "probability": 0.7712163329124451
+        },
+        {
+          "start": 106.79,
+          "end": 107.11,
+          "word": " both",
+          "probability": 0.9925315976142883
+        },
+        {
+          "start": 107.11,
+          "end": 107.59,
+          "word": " points",
+          "probability": 0.997251570224762
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 107.59,
+      "end": 114.81,
+      "text": " on serve and Novak Djokovic well and truly in control of this tiebreak now but",
+      "avg_logprob": -0.2547096980340553,
+      "no_speech_prob": 0.8669018745422363,
+      "compression_ratio": 1.4658385093167703,
+      "words": [
+        {
+          "start": 107.59,
+          "end": 108.59,
+          "word": " on",
+          "probability": 0.06940434128046036
+        },
+        {
+          "start": 108.59,
+          "end": 109.05,
+          "word": " serve",
+          "probability": 0.7007608413696289
+        },
+        {
+          "start": 109.05,
+          "end": 109.77,
+          "word": " and",
+          "probability": 0.3043576180934906
+        },
+        {
+          "start": 109.77,
+          "end": 110.15,
+          "word": " Novak",
+          "probability": 0.9805503785610199
+        },
+        {
+          "start": 110.15,
+          "end": 110.69,
+          "word": " Djokovic",
+          "probability": 0.9584562033414841
+        },
+        {
+          "start": 110.69,
+          "end": 110.93,
+          "word": " well",
+          "probability": 0.8036606311798096
+        },
+        {
+          "start": 110.93,
+          "end": 111.07,
+          "word": " and",
+          "probability": 0.8204872012138367
+        },
+        {
+          "start": 111.07,
+          "end": 111.33,
+          "word": " truly",
+          "probability": 0.9882928729057312
+        },
+        {
+          "start": 111.33,
+          "end": 111.53,
+          "word": " in",
+          "probability": 0.9922519326210022
+        },
+        {
+          "start": 111.53,
+          "end": 111.97,
+          "word": " control",
+          "probability": 0.998185932636261
+        },
+        {
+          "start": 111.97,
+          "end": 112.19,
+          "word": " of",
+          "probability": 0.9881142973899841
+        },
+        {
+          "start": 112.19,
+          "end": 112.37,
+          "word": " this",
+          "probability": 0.9901130199432373
+        },
+        {
+          "start": 112.37,
+          "end": 112.81,
+          "word": " tiebreak",
+          "probability": 0.6985467374324799
+        },
+        {
+          "start": 112.81,
+          "end": 113.21,
+          "word": " now",
+          "probability": 0.8381292819976807
+        },
+        {
+          "start": 113.21,
+          "end": 114.81,
+          "word": " but",
+          "probability": 0.11751801520586014
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 120.89,
+      "end": 137.94,
+      "text": " are we really surprised Novak Djokovic bounces back in the second set. Got him",
+      "avg_logprob": -0.2547096980340553,
+      "no_speech_prob": 0.8669018745422363,
+      "compression_ratio": 1.4658385093167703,
+      "words": [
+        {
+          "start": 120.89,
+          "end": 121.11,
+          "word": " are",
+          "probability": 0.9579810500144958
+        },
+        {
+          "start": 121.11,
+          "end": 121.23,
+          "word": " we",
+          "probability": 0.9956296682357788
+        },
+        {
+          "start": 121.23,
+          "end": 121.47,
+          "word": " really",
+          "probability": 0.9976252913475037
+        },
+        {
+          "start": 121.47,
+          "end": 121.93,
+          "word": " surprised",
+          "probability": 0.9969700574874878
+        },
+        {
+          "start": 121.93,
+          "end": 123.81,
+          "word": " Novak",
+          "probability": 0.8780653178691864
+        },
+        {
+          "start": 125.48,
+          "end": 126.22,
+          "word": " Djokovic",
+          "probability": 0.9966796636581421
+        },
+        {
+          "start": 126.22,
+          "end": 126.88,
+          "word": " bounces",
+          "probability": 0.9905559420585632
+        },
+        {
+          "start": 126.88,
+          "end": 127.26,
+          "word": " back",
+          "probability": 0.9981649518013
+        },
+        {
+          "start": 127.26,
+          "end": 127.68,
+          "word": " in",
+          "probability": 0.9911420345306396
+        },
+        {
+          "start": 127.68,
+          "end": 127.86,
+          "word": " the",
+          "probability": 0.9967775940895081
+        },
+        {
+          "start": 127.86,
+          "end": 128.18,
+          "word": " second",
+          "probability": 0.9900098443031311
+        },
+        {
+          "start": 128.18,
+          "end": 128.5,
+          "word": " set.",
+          "probability": 0.9649067521095276
+        },
+        {
+          "start": 137.5,
+          "end": 137.82,
+          "word": " Got",
+          "probability": 0.8240240812301636
+        },
+        {
+          "start": 137.82,
+          "end": 137.94,
+          "word": " him",
+          "probability": 0.9556812644004822
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 137.94,
+      "end": 170.38,
+      "text": " again looking to make an early move via Djokovic. It's a lightning quick start",
+      "avg_logprob": -0.2547096980340553,
+      "no_speech_prob": 0.8669018745422363,
+      "compression_ratio": 1.4658385093167703,
+      "words": [
+        {
+          "start": 137.94,
+          "end": 138.26,
+          "word": " again",
+          "probability": 0.9973694086074829
+        },
+        {
+          "start": 138.26,
+          "end": 140.12,
+          "word": " looking",
+          "probability": 0.6386435627937317
+        },
+        {
+          "start": 140.12,
+          "end": 140.42,
+          "word": " to",
+          "probability": 0.9991165995597839
+        },
+        {
+          "start": 140.42,
+          "end": 140.64,
+          "word": " make",
+          "probability": 0.9993046522140503
+        },
+        {
+          "start": 140.64,
+          "end": 140.84,
+          "word": " an",
+          "probability": 0.9924352765083313
+        },
+        {
+          "start": 140.84,
+          "end": 141.02,
+          "word": " early",
+          "probability": 0.9992052912712097
+        },
+        {
+          "start": 141.02,
+          "end": 141.3,
+          "word": " move",
+          "probability": 0.9951868653297424
+        },
+        {
+          "start": 141.3,
+          "end": 141.58,
+          "word": " via",
+          "probability": 0.6336538791656494
+        },
+        {
+          "start": 141.58,
+          "end": 142.72,
+          "word": " Djokovic.",
+          "probability": 0.9941599667072296
+        },
+        {
+          "start": 168.52,
+          "end": 169.16,
+          "word": " It's",
+          "probability": 0.8792659938335419
+        },
+        {
+          "start": 169.16,
+          "end": 169.24,
+          "word": " a",
+          "probability": 0.9950579404830933
+        },
+        {
+          "start": 169.24,
+          "end": 169.66,
+          "word": " lightning",
+          "probability": 0.8471740484237671
+        },
+        {
+          "start": 169.66,
+          "end": 170.0,
+          "word": " quick",
+          "probability": 0.9697478413581848
+        },
+        {
+          "start": 170.0,
+          "end": 170.38,
+          "word": " start",
+          "probability": 0.9851609468460083
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 170.38,
+      "end": 173.8,
+      "text": " from Novak Djokovic, team up on their feet.",
+      "avg_logprob": -0.1844528425307501,
+      "no_speech_prob": 0.8700160980224609,
+      "compression_ratio": 1.5238095238095237,
+      "words": [
+        {
+          "start": 170.38,
+          "end": 171.34,
+          "word": " from",
+          "probability": 0.23647262156009674
+        },
+        {
+          "start": 171.34,
+          "end": 171.82,
+          "word": " Novak",
+          "probability": 0.971163809299469
+        },
+        {
+          "start": 171.82,
+          "end": 172.5,
+          "word": " Djokovic,",
+          "probability": 0.9697519838809967
+        },
+        {
+          "start": 172.6,
+          "end": 172.86,
+          "word": " team",
+          "probability": 0.9443951845169067
+        },
+        {
+          "start": 172.86,
+          "end": 173.1,
+          "word": " up",
+          "probability": 0.8278082609176636
+        },
+        {
+          "start": 173.1,
+          "end": 173.3,
+          "word": " on",
+          "probability": 0.9913803935050964
+        },
+        {
+          "start": 173.3,
+          "end": 173.46,
+          "word": " their",
+          "probability": 0.9548887610435486
+        },
+        {
+          "start": 173.46,
+          "end": 173.8,
+          "word": " feet.",
+          "probability": 0.997634768486023
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 180.94,
+      "end": 184.82,
+      "text": " So impressive, this ball striking from Djokovic early on here.",
+      "avg_logprob": -0.1844528425307501,
+      "no_speech_prob": 0.8700160980224609,
+      "compression_ratio": 1.5238095238095237,
+      "words": [
+        {
+          "start": 180.94,
+          "end": 181.62,
+          "word": " So",
+          "probability": 0.7557580471038818
+        },
+        {
+          "start": 181.62,
+          "end": 182.34,
+          "word": " impressive,",
+          "probability": 0.987478494644165
+        },
+        {
+          "start": 182.6,
+          "end": 182.74,
+          "word": " this",
+          "probability": 0.9903638958930969
+        },
+        {
+          "start": 182.74,
+          "end": 182.94,
+          "word": " ball",
+          "probability": 0.9912147521972656
+        },
+        {
+          "start": 182.94,
+          "end": 183.36,
+          "word": " striking",
+          "probability": 0.8858097791671753
+        },
+        {
+          "start": 183.36,
+          "end": 183.58,
+          "word": " from",
+          "probability": 0.9822843074798584
+        },
+        {
+          "start": 183.58,
+          "end": 184.12,
+          "word": " Djokovic",
+          "probability": 0.9960990250110626
+        },
+        {
+          "start": 184.12,
+          "end": 184.32,
+          "word": " early",
+          "probability": 0.8602298498153687
+        },
+        {
+          "start": 184.32,
+          "end": 184.58,
+          "word": " on",
+          "probability": 0.9962826371192932
+        },
+        {
+          "start": 184.58,
+          "end": 184.82,
+          "word": " here.",
+          "probability": 0.9699081182479858
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 186.67,
+      "end": 190.51,
+      "text": " It's a shame, but I think probably just the pressure that he's feeling",
+      "avg_logprob": -0.1844528425307501,
+      "no_speech_prob": 0.8700160980224609,
+      "compression_ratio": 1.5238095238095237,
+      "words": [
+        {
+          "start": 186.67,
+          "end": 187.07,
+          "word": " It's",
+          "probability": 0.8667751252651215
+        },
+        {
+          "start": 187.07,
+          "end": 187.19,
+          "word": " a",
+          "probability": 0.9985989928245544
+        },
+        {
+          "start": 187.19,
+          "end": 187.43,
+          "word": " shame,",
+          "probability": 0.9996750354766846
+        },
+        {
+          "start": 187.81,
+          "end": 187.85,
+          "word": " but",
+          "probability": 0.9047315120697021
+        },
+        {
+          "start": 187.85,
+          "end": 187.93,
+          "word": " I",
+          "probability": 0.983024001121521
+        },
+        {
+          "start": 187.93,
+          "end": 188.11,
+          "word": " think",
+          "probability": 0.9937600493431091
+        },
+        {
+          "start": 188.11,
+          "end": 188.49,
+          "word": " probably",
+          "probability": 0.9280993938446045
+        },
+        {
+          "start": 188.49,
+          "end": 188.73,
+          "word": " just",
+          "probability": 0.9799584746360779
+        },
+        {
+          "start": 188.73,
+          "end": 188.89,
+          "word": " the",
+          "probability": 0.9948917627334595
+        },
+        {
+          "start": 188.89,
+          "end": 189.23,
+          "word": " pressure",
+          "probability": 0.9982203841209412
+        },
+        {
+          "start": 189.23,
+          "end": 190.01,
+          "word": " that",
+          "probability": 0.9689953327178955
+        },
+        {
+          "start": 190.01,
+          "end": 190.23,
+          "word": " he's",
+          "probability": 0.9856079816818237
+        },
+        {
+          "start": 190.23,
+          "end": 190.51,
+          "word": " feeling",
+          "probability": 0.9950093030929565
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 191.15,
+      "end": 192.93,
+      "text": " first double fault for either player.",
+      "avg_logprob": -0.1844528425307501,
+      "no_speech_prob": 0.8700160980224609,
+      "compression_ratio": 1.5238095238095237,
+      "words": [
+        {
+          "start": 191.15,
+          "end": 191.49,
+          "word": " first",
+          "probability": 0.45303425192832947
+        },
+        {
+          "start": 191.49,
+          "end": 191.75,
+          "word": " double",
+          "probability": 0.474234402179718
+        },
+        {
+          "start": 191.75,
+          "end": 192.03,
+          "word": " fault",
+          "probability": 0.17263641953468323
+        },
+        {
+          "start": 192.03,
+          "end": 192.29,
+          "word": " for",
+          "probability": 0.33334317803382874
+        },
+        {
+          "start": 192.29,
+          "end": 192.53,
+          "word": " either",
+          "probability": 0.9883131384849548
+        },
+        {
+          "start": 192.53,
+          "end": 192.93,
+          "word": " player.",
+          "probability": 0.9920368194580078
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 219.07,
+      "end": 223.31,
+      "text": " Novak Djokovic keeps his streak alive here in Beijing.",
+      "avg_logprob": -0.1844528425307501,
+      "no_speech_prob": 0.8700160980224609,
+      "compression_ratio": 1.5238095238095237,
+      "words": [
+        {
+          "start": 219.07,
+          "end": 219.47,
+          "word": " Novak",
+          "probability": 0.9799230098724365
+        },
+        {
+          "start": 219.47,
+          "end": 220.23,
+          "word": " Djokovic",
+          "probability": 0.9983008503913879
+        },
+        {
+          "start": 220.23,
+          "end": 220.75,
+          "word": " keeps",
+          "probability": 0.9852173924446106
+        },
+        {
+          "start": 220.75,
+          "end": 221.23,
+          "word": " his",
+          "probability": 0.990204930305481
+        },
+        {
+          "start": 221.23,
+          "end": 221.81,
+          "word": " streak",
+          "probability": 0.9944340586662292
+        },
+        {
+          "start": 221.81,
+          "end": 222.33,
+          "word": " alive",
+          "probability": 0.996747612953186
+        },
+        {
+          "start": 222.33,
+          "end": 222.71,
+          "word": " here",
+          "probability": 0.8828174471855164
+        },
+        {
+          "start": 222.71,
+          "end": 222.93,
+          "word": " in",
+          "probability": 0.9956133365631104
+        },
+        {
+          "start": 222.93,
+          "end": 223.31,
+          "word": " Beijing.",
+          "probability": 0.9825505614280701
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 225.37,
+      "end": 228.27,
+      "text": " 31-0 now for Djokovic.",
+      "avg_logprob": -0.1844528425307501,
+      "no_speech_prob": 0.8700160980224609,
+      "compression_ratio": 1.5238095238095237,
+      "words": [
+        {
+          "start": 225.37,
+          "end": 226.05,
+          "word": " 31",
+          "probability": 0.934453010559082
+        },
+        {
+          "start": 226.05,
+          "end": 226.73,
+          "word": "-0",
+          "probability": 0.6740786284208298
+        },
+        {
+          "start": 226.73,
+          "end": 227.09,
+          "word": " now",
+          "probability": 0.967951774597168
+        },
+        {
+          "start": 227.09,
+          "end": 227.45,
+          "word": " for",
+          "probability": 0.9726793169975281
+        },
+        {
+          "start": 227.45,
+          "end": 228.27,
+          "word": " Djokovic.",
+          "probability": 0.9983002841472626
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 230.65,
+      "end": 234.07,
+      "text": " At times it didn't look like it was going to happen today.",
+      "avg_logprob": -0.1844528425307501,
+      "no_speech_prob": 0.8700160980224609,
+      "compression_ratio": 1.5238095238095237,
+      "words": [
+        {
+          "start": 230.65,
+          "end": 231.33,
+          "word": " At",
+          "probability": 0.9556605815887451
+        },
+        {
+          "start": 231.33,
+          "end": 231.75,
+          "word": " times",
+          "probability": 0.9984825253486633
+        },
+        {
+          "start": 231.75,
+          "end": 232.01,
+          "word": " it",
+          "probability": 0.666120707988739
+        },
+        {
+          "start": 232.01,
+          "end": 232.29,
+          "word": " didn't",
+          "probability": 0.9966020286083221
+        },
+        {
+          "start": 232.29,
+          "end": 232.49,
+          "word": " look",
+          "probability": 0.9906755685806274
+        },
+        {
+          "start": 232.49,
+          "end": 232.71,
+          "word": " like",
+          "probability": 0.9971752166748047
+        },
+        {
+          "start": 232.71,
+          "end": 232.87,
+          "word": " it",
+          "probability": 0.9976075887680054
+        },
+        {
+          "start": 232.87,
+          "end": 232.99,
+          "word": " was",
+          "probability": 0.9987657070159912
+        },
+        {
+          "start": 232.99,
+          "end": 233.21,
+          "word": " going",
+          "probability": 0.9964007139205933
+        },
+        {
+          "start": 233.21,
+          "end": 233.43,
+          "word": " to",
+          "probability": 0.999675989151001
+        },
+        {
+          "start": 233.43,
+          "end": 233.71,
+          "word": " happen",
+          "probability": 0.9991217255592346
+        },
+        {
+          "start": 233.71,
+          "end": 234.07,
+          "word": " today.",
+          "probability": 0.9920735955238342
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "147813fabfc2137dd86ab2c20d461ee24a90becb112f2105fa1576a9771016e6",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

@@ -1,0 +1,33 @@
+{
+  "reviewer": "independent_final_visual_qc_agent",
+  "reviewed_at": "2026-10-05T17:36:03.262030+00:00",
+  "status": "preview_pass_final_film_pending",
+  "method": "actual_image_visual_inspection",
+  "preview_assets": [
+    {
+      "path": "/workspace/scratch/sun-gauff/poster-hd-preview.jpg",
+      "sha256": "a9353cd6b530d3b1eaa733265a91714fbf68ab95ecd059d2519d65b47c5c1a98"
+    },
+    {
+      "path": "/workspace/scratch/sun-gauff/stats-hd-preview.jpg",
+      "sha256": "2706f0f3c59c96f6cc2c643886589ab93c4c5f9aaf707ab18f89dd485995e606"
+    }
+  ],
+  "checks": {
+    "cover_face": "Both eyes visible beneath visor; authentic face, natural expression; headline below face, no collision. High-definition real photography.",
+    "cover_score": "Gauff 7,6 and Sun 5,1; winner row Gauff; title accurately says Sun first-set5-4 lead then exit.",
+    "stats_headshots": "Both changed to high-definition authentic photos; circular face crops clear; no crown or chin truncation.",
+    "stats_all_nine": "ACE5:1;DF4:3;Winners29:14;UE21:20;first_in60%(33/55):51%(33/65);firstwon61%(20/33):61%(20/33);secondwon64%(14/22):25%(8/32);BP6/8:2/2;total71:49. All nine fit.",
+    "layout": "Navy contrast readable, names and ranks distinct, flags correct, score 7-5 6-1, Diamond and1:29 visible."
+  },
+  "limitations": [
+    "No claim of manual audio listening. Final film not yet available; source-window/full subtitle/score inset motion checks pending."
+  ],
+  "observations": [
+    {
+      "severity": "metadata_only",
+      "field": "cover._subject_why",
+      "text": "This field still says same-match fighting photo but current official cover is earlier-round Sun photograph; change metadata to this-event real HD portrait. Parent informed."
+    }
+  ]
+}

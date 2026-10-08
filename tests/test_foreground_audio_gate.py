@@ -89,6 +89,29 @@ def test_final_ass_must_actually_contain_the_reviewed_cue(tmp_path):
     with pytest.raises(ValueError):A.verify_final(spec,ass,1.,root=tmp_path)
 
 
+def test_renderer_keeps_english_score_verifiable_in_final_ass(tmp_path):
+    from tools.build_match_reel import explicit_quote_cues
+    from tennislive.video.explainer import write_subtitles
+
+    spec,source,transcript,review_path=fixture(tmp_path)
+    en='Oh, and Kalinskaya, from 40–15 up…'
+    zh='噢，卡林斯卡娅刚才还40–15领先……'
+    spec['segments'][0]['quote'][0]['text']=en+'\n'+zh
+    packet=json.loads(transcript.read_text())
+    packet['foreground_english'][0].update(en=en,zh=zh)
+    transcript.write_text(json.dumps(packet))
+    review=json.loads(review_path.read_text())
+    review['plan_sha256']=A.plan_hash(spec)
+    review['segments'][0]['transcript_sha256']=A._sha(transcript)
+    review_path.write_text(json.dumps(review))
+    A.bind_sources(spec,{'':source},tmp_path,root=tmp_path)
+    cues=explicit_quote_cues(tuple(spec['segments'][0]['quote']),span=5.,offset=1.)
+    ass=write_subtitles(cues,tmp_path/'subtitles.ass',height=1440,margin_v=1284)
+    seal(spec,ass)
+    # The unchanged final gate checks the renderer's actual ASS and source binding.
+    A.verify_final(spec,ass,1.,root=tmp_path)
+
+
 def test_final_bilingual_overlap_is_rejected(tmp_path):
     spec,source,_,_=fixture(tmp_path);A.bind_sources(spec,{'':source},tmp_path,root=tmp_path)
     ass=tmp_path/'subtitles.ass';ass.write_text('Dialogue: 0,0:00:02.00,0:00:04.00,TL,,0,0,0,,What a finish!\\N漂亮的收尾！\nDialogue: 0,0:00:03.00,0:00:04.50,TL,,0,0,0,,Another title\\N又一座冠军\n')
@@ -176,3 +199,53 @@ def test_native_dissolve_keeps_nominal_offsets_and_records_real_subtitle_loop():
     text=(ROOT/'tools/build_match_reel.py').read_text()
     assert 'audio_cue_offsets.append(offset)' in text
     assert 'record_timeline(spec, outdir, cover_secs, audio_cue_offsets, [seg.length for seg in segments])' in text
+
+
+def test_abutting_ass_and_accumulated_timeline_are_not_overlapping():
+    # Actual 25-fps Swiatek/Vekic render: the same decimal boundary was
+    # serialized once as ASS and once after summing the segment durations.
+    assert not A._intervals_overlap(197.90, 200.70, 200.69999999999996, 213.34)
+    assert not A._intervals_overlap(213.34, 215.0, 200.70, 213.34000000000003)
+
+
+@pytest.mark.parametrize('overlap', [0.000001, 0.001, 0.01, 1 / 25])
+def test_real_english_overlap_is_not_hidden_by_roundoff_handling(overlap):
+    assert A._intervals_overlap(197.90, 200.70 + overlap, 200.70, 213.34)
+
+
+@pytest.mark.parametrize('event_end,should_fail', [('200.70', False), ('200.71', True), ('200.74', True)])
+def test_final_gate_distinguishes_abutting_from_spilling_english(tmp_path, event_end, should_fail):
+    spec, source, _, review_path = fixture(tmp_path)
+    spec['segments'][0]['end'] = 209.7
+    spec['segments'].append({'title_card': '中文', 'seconds': 3., 'narration': '中文旁白'})
+    # Retain a real full-window packet, including the closing source remark.
+    packet_path = tmp_path / 'transcript.json'
+    packet = json.loads(packet_path.read_text())
+    packet['reviewed_to'] = 209.7
+    packet['foreground_english'].append({'start': 206.9, 'end': 209.7,
+                                        'en': 'Closing remark.', 'zh': '收尾原声。'})
+    spec['segments'][0]['quote'].append({'at': 196.9, 'end': 199.7,
+                                       'text': 'Closing remark.\n收尾原声。'})
+    packet_path.write_text(json.dumps(packet))
+    review = json.loads(review_path.read_text())
+    review['plan_sha256'] = A.plan_hash(spec)
+    review['segments'][0]['transcript_sha256'] = A._sha(packet_path)
+    review_path.write_text(json.dumps(review))
+    A.bind_sources(spec, {'': source}, tmp_path, root=tmp_path)
+    ass = tmp_path / 'subtitles.ass'
+    end = f'0:03:{float(event_end) - 180:05.2f}'
+    ass.write_text('Dialogue: 0,0:00:02.00,0:00:04.00,TL,,0,0,0,,What a finish!\\N漂亮的收尾！\n'
+                   f'Dialogue: 0,0:03:17.90,{end},TL,,0,0,0,,Closing remark.\\N收尾原声。\n')
+    film = tmp_path / 'new-match.mp4'
+    film.write_bytes(b'synthetic rendered film')
+    A.record_timeline(spec, tmp_path, 1., [1., 200.69999999999996], [199.7, 3.])
+    binding = tmp_path / 'audio_review_binding.json'
+    manifest = tmp_path / 'render_inputs.json'
+    manifest.write_text(json.dumps({'film_sha256': A._sha(film), 'artifacts': {
+        'subtitles.ass': A._sha(ass), 'audio_review_binding.json': A._sha(binding)}}))
+    (tmp_path / 'render.json').write_text(json.dumps({'render_inputs_sha256': A._sha(manifest)}))
+    if should_fail:
+        with pytest.raises(ValueError, match='额外英文'):
+            A.verify_final(spec, ass, 1., root=tmp_path)
+    else:
+        A.verify_final(spec, ass, 1., root=tmp_path)

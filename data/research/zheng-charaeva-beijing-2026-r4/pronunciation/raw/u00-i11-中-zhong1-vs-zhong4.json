@@ -1,0 +1,448 @@
+{
+  "job": {
+    "id": "u00-i11-中-zhong1-vs-zhong4",
+    "utterance": 0,
+    "label": "第 2 段",
+    "sentence": "北京时间十月七号晚上，中网八分之一决赛。郑钦文在二十四岁生日前一天，六比一、二比六、六比四，战胜查拉耶娃。",
+    "text_sha256": "e2a262627d9012a5317f114897a47b2c885455ee421ef80801d55e02c44eeaea",
+    "index": 11,
+    "char": "中",
+    "intended": "zhong1",
+    "wrong": "zhong4",
+    "ok": [
+      "忠",
+      "终",
+      "钟"
+    ],
+    "bad": [
+      "仲",
+      "众",
+      "重"
+    ],
+    "ok_reference_note": "single-reading common",
+    "bad_reference_note": "dominant-reading only, single-reading common"
+  },
+  "word": "中",
+  "char": "中",
+  "sentence": "北京时间十月七号晚上，中网八分之一决赛。郑钦文在二十四岁生日前一天，六比一、二比六、六比四，战胜查拉耶娃。",
+  "tts_text": "北京时间十月七号晚上，中网八分之一决赛。郑钦文在二十四岁生日前一天，六比一、二比六、六比四，战胜查拉耶娃。",
+  "intended_refs": [
+    "忠",
+    "终",
+    "钟"
+  ],
+  "wrong_refs": [
+    "仲",
+    "众",
+    "重"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "high",
+  "verdict_raw": "correct",
+  "score": 0.998,
+  "margin": 0.2,
+  "near_identical_to": "intended",
+  "far_from_both": false,
+  "dropped_refs": [
+    "仲"
+  ],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 0.008,
+      "d_wrong": 2.185,
+      "score": 0.993
+    },
+    "f0": {
+      "d_intended": 0.001,
+      "d_wrong": 3.547,
+      "score": 0.999
+    },
+    "comb": {
+      "d_intended": 0.005,
+      "d_wrong": 4.639,
+      "score": 0.998
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.005,
+    "wrong": 2.856
+  },
+  "separation": {
+    "spec": {
+      "within": 0.902,
+      "between": 2.148,
+      "separation": 2.38
+    },
+    "f0": {
+      "within": 1.208,
+      "between": 3.087,
+      "separation": 2.555
+    },
+    "comb": {
+      "within": 1.659,
+      "between": 4.161,
+      "separation": 2.507
+    }
+  },
+  "selftest_loo": {
+    "忠": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.952
+    },
+    "终": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.952
+    },
+    "钟": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.952
+    },
+    "众": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.921
+    },
+    "重": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.918
+    },
+    "仲": {
+      "expect": "misread",
+      "got": "uncertain",
+      "score": 0.188,
+      "dropped": true
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:忠": {
+      "spec": 0.008,
+      "f0": 0.001,
+      "vmis": 0.0,
+      "frames": 27,
+      "comb": 0.005
+    },
+    "A:终": {
+      "spec": 0.222,
+      "f0": 0.003,
+      "vmis": 0.0,
+      "frames": 27,
+      "comb": 0.114
+    },
+    "A:钟": {
+      "spec": 0.087,
+      "f0": 0.072,
+      "vmis": 0.0,
+      "frames": 27,
+      "comb": 0.116
+    },
+    "B:仲": {
+      "spec": 2.004,
+      "f0": 1.892,
+      "vmis": 0.0,
+      "frames": 28,
+      "comb": 2.894
+    },
+    "B:众": {
+      "spec": 2.224,
+      "f0": 3.715,
+      "vmis": 0.0,
+      "frames": 32,
+      "comb": 4.827
+    },
+    "B:重": {
+      "spec": 2.185,
+      "f0": 3.547,
+      "vmis": 0.031,
+      "frames": 32,
+      "comb": 4.639
+    }
+  },
+  "window_s": [
+    1.99,
+    2.25
+  ],
+  "boundary_token": "中网",
+  "window_anchor": "B:众",
+  "tokens": {
+    "ORIG": [
+      "北京时间",
+      "十月",
+      "七号",
+      "晚上",
+      "中网",
+      "八分之一",
+      "决赛",
+      "郑钦文",
+      "在",
+      "二十四",
+      "岁生",
+      "日前",
+      "一天",
+      "六比一",
+      "二比六",
+      "六比四",
+      "战胜",
+      "查拉耶娃"
+    ],
+    "A:忠": [
+      "北京时间",
+      "十月",
+      "七号",
+      "晚上",
+      "忠网",
+      "八分之一",
+      "决赛",
+      "郑钦文",
+      "在",
+      "二十四",
+      "岁生",
+      "日前",
+      "一天",
+      "六比一",
+      "二比六",
+      "六比四",
+      "战胜",
+      "查拉耶娃"
+    ],
+    "A:终": [
+      "北京时间",
+      "十月",
+      "七号",
+      "晚上",
+      "终网",
+      "八分之一",
+      "决赛",
+      "郑钦文",
+      "在",
+      "二十四",
+      "岁生",
+      "日前",
+      "一天",
+      "六比一",
+      "二比六",
+      "六比四",
+      "战胜",
+      "查拉耶娃"
+    ],
+    "A:钟": [
+      "北京时间",
+      "十月",
+      "七号",
+      "晚上",
+      "钟网",
+      "八分之一",
+      "决赛",
+      "郑钦文",
+      "在",
+      "二十四",
+      "岁生",
+      "日前",
+      "一天",
+      "六比一",
+      "二比六",
+      "六比四",
+      "战胜",
+      "查拉耶娃"
+    ],
+    "B:仲": [
+      "北京时间",
+      "十月",
+      "七号",
+      "晚上",
+      "仲网",
+      "八分之一",
+      "决赛",
+      "郑钦文",
+      "在",
+      "二十四",
+      "岁生",
+      "日前",
+      "一天",
+      "六比一",
+      "二比六",
+      "六比四",
+      "战胜",
+      "查拉耶娃"
+    ],
+    "B:众": [
+      "北京时间",
+      "十月",
+      "七号",
+      "晚上",
+      "众",
+      "网",
+      "八分之一",
+      "决赛",
+      "郑钦文",
+      "在",
+      "二十四",
+      "岁生",
+      "日前",
+      "一天",
+      "六比一",
+      "二比六",
+      "六比四",
+      "战胜",
+      "查拉耶娃"
+    ],
+    "B:重": [
+      "北京时间",
+      "十月",
+      "七号",
+      "晚上",
+      "重",
+      "网",
+      "八分之一",
+      "决赛",
+      "郑钦文",
+      "在",
+      "二十四",
+      "岁生",
+      "日前",
+      "一天",
+      "六比一",
+      "二比六",
+      "六比四",
+      "战胜",
+      "查拉耶娃"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      0.5,
+      0.2,
+      0.1,
+      -0.1,
+      -1.0,
+      -2.4
+    ],
+    "A:忠": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      0.5,
+      0.2,
+      0.1,
+      -0.1,
+      -1.0,
+      -2.4
+    ],
+    "A:终": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      0.5,
+      0.2,
+      0.1,
+      -0.1,
+      -1.0,
+      -2.4
+    ],
+    "A:钟": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      0.5,
+      0.1,
+      0.1,
+      -0.2,
+      -1.0,
+      -2.5
+    ],
+    "B:仲": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      2.8,
+      1.3,
+      -0.1,
+      -1.8,
+      -3.3,
+      -4.7,
+      -6.5
+    ],
+    "B:众": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      6.9,
+      6.4,
+      5.9,
+      4.9,
+      3.2,
+      0.5,
+      -2.8
+    ],
+    "B:重": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      7.1,
+      6.5,
+      5.9,
+      4.9,
+      3.3,
+      0.5,
+      -2.8
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/376823666dec5d99e1d34d7c.mp3",
+    "A:忠": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/8da17a387a1a21093674b698.mp3",
+    "A:终": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/9c5733581b90b6bc1133f944.mp3",
+    "A:钟": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/249aa8268ccd6cde9488dadd.mp3",
+    "B:仲": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/d90b78ee4b1017be6599b363.mp3",
+    "B:众": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/050cdfce42b8d27503c5d59a.mp3",
+    "B:重": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/8ed56bf5911d5112f059d593.mp3"
+  }
+}

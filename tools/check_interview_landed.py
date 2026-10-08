@@ -28,6 +28,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import re
 import subprocess
@@ -108,22 +109,132 @@ def _ass_body_events(ass: Path) -> dict[str, list[tuple[str, str, str]]]:
 
 
 def bilingual_body_ok(ass: Path, spec: dict) -> tuple[bool, str]:
-    """正文英文和中文必须逐 cue 同时出现，数量与 spec.zh 一致。"""
+    """正文与保守声音事件必须中英逐 cue 同时出现，事件另计且检查实际内容。"""
     events = _ass_body_events(ass)
     en, zh = events["EN"], events["ZH"]
     en_times = [(a, b) for a, b, text in en if text]
     zh_times = [(a, b) for a, b, text in zh if text]
-    expected = len(spec.get("zh") or [])
+    annotations = []
+    if spec.get("caption_gap_annotations") is not None:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import build_interview_clip as clip  # noqa: PLC0415
+        try:
+            annotations = clip.conservative_gap_annotations(spec, ass.parent)
+        except (SystemExit, ValueError, OSError) as exc:
+            return False, f"声音事件证据/区间无效：{exc}"
+        for annotation in annotations:
+            a, b = clip._ts(annotation["start"] - spec["start"]), clip._ts(annotation["end"] - spec["start"])
+            if ((a, b, annotation["en"]) not in en
+                    or (a, b, clip.zh_display(annotation["zh"])) not in zh):
+                return False, "保守声音事件缺失或没有按真实区间中英成对落入成品字幕。"
+    spoken = len(spec.get("zh") or [])
+    expected = spoken + len(annotations)
+    if any(w.get("language") == "zh" for w in spec.get("transcript_languages") or []):
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import build_interview_clip as clip  # noqa: PLC0415
+        try:
+            windows = clip.transcript_language_windows(spec)
+        except (SystemExit, ValueError) as exc:
+            return False, f"原声语言窗口无效：{exc}"
+
+        def native_time(pair):
+            h, m, s = pair[0].split(":")
+            time = int(h) * 3600 + int(m) * 60 + float(s) + spec["start"]
+            return any(w["language"] == "zh" and w["start"] <= time < w["end"] for w in windows)
+
+        # Sound annotations remain paired even inside a native Chinese window.
+        annotation_times = {(clip._ts(a["start"] - spec["start"]),
+                             clip._ts(a["end"] - spec["start"])) for a in annotations}
+        expected_en = [pair for pair in zh_times if not native_time(pair) or pair in annotation_times]
+        ok = bool(zh_times) and en_times == expected_en and len(zh_times) == expected
+        return ok, (f"EN {len(en_times)} / ZH {len(zh_times)} / 原生中文 {len(zh_times) - len(expected_en)}，"
+                    f"英语逐 cue 时间 {'一致' if en_times == expected_en else '不一致'}")
     ok = bool(en_times) and en_times == zh_times and len(en_times) == expected
-    return ok, (f"EN {len(en_times)} / ZH {len(zh_times)} / spec.zh {expected}，"
+    return ok, (f"EN {len(en_times)} / ZH {len(zh_times)} / spec.zh {spoken} + 声音事件 {len(annotations)}，"
                 f"逐 cue 时间 {'一致' if en_times == zh_times else '不一致'}")
+
+
+def native_bilingual_lead_ok(directory: Path, spec: dict) -> tuple[bool, str]:
+    """Verify a match-end opening embedded in the native source's body ASS.
+
+    A declared opening is not evidence of subtitles. Validate the source
+    contract and then inspect every actual EN/ZH cue intersecting that opening.
+    Independent lead-in subtitles never use this path.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from interview_source_gate import validate_source_contract  # noqa: PLC0415
+    from build_interview_clip import _OPENING_LEAD_MAX, check_opening  # noqa: PLC0415
+
+    try:
+        validate_source_contract(spec)
+        check_opening(spec)
+        opening = spec.get("opening") or {}
+        seconds = opening.get("lead_in")
+        start, end = spec["start"], spec["end"]
+        if (opening.get("kind") != "match_end"
+                or not isinstance(opening.get("why"), str) or not opening["why"].strip()
+                or isinstance(seconds, bool) or not isinstance(seconds, (int, float))
+                or not math.isfinite(seconds) or not 0 < seconds <= _OPENING_LEAD_MAX
+                or isinstance(start, bool) or isinstance(end, bool)
+                or not math.isfinite(start) or not math.isfinite(end)
+                or start < 0 or not seconds < end - start):
+            return False, "原生冷开场 opening 或时间区间无效"
+    except (ValueError, SystemExit, TypeError, KeyError) as exc:
+        return False, f"原生冷开场来源/opening契约未核实：{exc}"
+    slug = spec.get("slug")
+    if not isinstance(slug, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", slug):
+        return False, "原生冷开场缺合法正文字幕文件名"
+    body_ass = directory / f"{slug}.ass"
+    events = _ass_body_events(body_ass)
+
+    def cues(style):
+        selected = []
+        for a, b, text in events[style]:
+            if not text:
+                continue
+            times = []
+            for raw in (a, b):
+                if not re.fullmatch(r"\d+:[0-5]\d:[0-5]\d\.\d{2}", raw):
+                    raise ValueError("字幕时间码无效")
+                h, m, s = raw.split(":")
+                times.append(int(h) * 3600 + int(m) * 60 + float(s))
+            first, last = times
+            if last <= first:
+                raise ValueError("字幕区间无效")
+            if first < seconds and last > 0:
+                # A sentence may cross the interview cut. Require the actual
+                # complete cue to be paired, including its post-cut hold.
+                selected.append((a, b))
+        return selected
+
+    try:
+        en, zh = cues("EN"), cues("ZH")
+    except ValueError as exc:
+        return False, f"原生冷开场字幕无效：{exc}"
+    ok = bool(en) and en == zh
+    return ok, (f"原生前 {seconds:g}s，正文 EN {len(en)} / ZH {len(zh)}，"
+                f"逐 cue 时间 {'一致' if en == zh else '不一致'}")
 
 
 def bilingual_lead_ok(ass: Path, spec: dict) -> tuple[bool, str]:
     """冷开场的原解说也必须逐 cue 中英成对，不能只验采访正文。"""
     expected = len(((spec.get("lead_in") or {}).get("subs") or []))
     if expected == 0:
-        from interview_source_gate import verified_no_lead_exception  # noqa: PLC0415
+        if (spec.get("lead_in") is None
+                and (spec.get("opening") or {}).get("kind") == "match_end"):
+            return native_bilingual_lead_ok(ass.parent, spec)
+        from interview_source_gate import validate_source_contract, verified_no_lead_exception  # noqa: PLC0415
+        # The native source/opening contract permits a verified trophy speech
+        # to start with the ceremony itself. Do not invent a match-end lead-in.
+        if (spec.get("requested_content_type") == "ceremony"
+                and spec.get("interview_kind") == "赛后捧杯致辞"
+                and (spec.get("opening") or {}).get("kind") == "none"
+                and spec.get("lead_in") is None):
+            try:
+                validate_source_contract(spec)
+            except (ValueError, SystemExit):
+                return False, "典礼无需冷开场的身份契约未核实或已失效"
+            return True, "已核捧杯致辞按原生opening契约无需独立比赛冷开场"
         if verified_no_lead_exception(spec):
             return True, "已核验的告别/入选典礼按编辑决定不配置独立冷开场（显式例外）"
         return False, "spec.lead_in.subs 为空"

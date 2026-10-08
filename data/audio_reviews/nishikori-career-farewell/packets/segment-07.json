@@ -1,0 +1,129 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_file": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "closing_source cached multilingual small/base plus root medium.en independent crosschecking; official player identity only for name spelling",
+  "reviewed_at": "2026-10-04T07:39:32.191282+00:00",
+  "status": "complete",
+  "reviewed_from": 151.15,
+  "reviewed_to": 165,
+  "foreground_english": [
+    {
+      "start": 153.95,
+      "end": 156.11,
+      "en": "Game, set, match, Nishikori.",
+      "zh": "局、盘、比赛，锦织圭获胜。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "uncertain_spans": [],
+  "asr_results": [
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/memphis2014-medium.en-ed99b6edc334.json",
+      "sha256": "ed99b6edc3340f8c3515c3af84b11c3908fc8c2e1ac56e580eee6ac2d0049bad"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/memphis2014-third-small-b14ac5a0dea4.json",
+      "sha256": "6da7b32b6132b094deb1de226e11f031c14c38d6307ea831cd1fc6066de86799"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/memphis2014-third-base-8edacdc19919.json",
+      "sha256": "0544be26950703d597e324be003ffd1b3ec97fae1e5d676e095a9f34854e63eb"
+    }
+  ],
+  "human_listening_done": false,
+  "correction_evidence": "Memphis medium Ishikori + multilingual small Nishikori + official winner spelling; KL full lexical utterance medium agrees with small.en and multilingual small including47, base digit errors preserved in evidence. No invented completion.",
+  "wide_original_review_for_frame_handle": {
+    "window": [
+      151.15,
+      165
+    ],
+    "raw_asr": {
+      "small.en": [
+        {
+          "source_start": 153.95000000000002,
+          "source_end": 156.05,
+          "review_start": 67.39999999999999,
+          "review_end": 69.5,
+          "text": " Game, set, match, dish, record.",
+          "words": [
+            {
+              "source_start": 153.95000000000002,
+              "source_end": 154.57,
+              "word": " Game,"
+            },
+            {
+              "source_start": 154.85,
+              "source_end": 154.89000000000001,
+              "word": " set,"
+            },
+            {
+              "source_start": 155.15,
+              "source_end": 155.43,
+              "word": " match,"
+            },
+            {
+              "source_start": 155.63,
+              "source_end": 155.71,
+              "word": " dish,"
+            },
+            {
+              "source_start": 155.75,
+              "source_end": 156.05,
+              "word": " record."
+            }
+          ]
+        }
+      ],
+      "base.en": [
+        {
+          "source_start": 153.95000000000002,
+          "source_end": 155.99,
+          "review_start": 67.39999999999999,
+          "review_end": 69.44,
+          "text": " Game set match this is cool",
+          "words": [
+            {
+              "source_start": 153.95000000000002,
+              "source_end": 154.51000000000002,
+              "word": " Game"
+            },
+            {
+              "source_start": 154.51000000000002,
+              "source_end": 154.81,
+              "word": " set"
+            },
+            {
+              "source_start": 154.81,
+              "source_end": 155.23000000000002,
+              "word": " match"
+            },
+            {
+              "source_start": 155.23000000000002,
+              "source_end": 155.65,
+              "word": " this"
+            },
+            {
+              "source_start": 155.65,
+              "source_end": 155.79,
+              "word": " is"
+            },
+            {
+              "source_start": 155.79,
+              "source_end": 155.99,
+              "word": " cool"
+            }
+          ]
+        }
+      ]
+    },
+    "note": "Old independent full15s English models contain no further utterance after156.05; medium verifies sentence to156.11. Actual end158.63 safely within audited whole source."
+  },
+  "portable_review_provenance": {
+    "original_packet_sha256": "e82b728d819954ae783c9ac5b4f3c3f5f8e65dc56a80ae93f0456d86beaf045d",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

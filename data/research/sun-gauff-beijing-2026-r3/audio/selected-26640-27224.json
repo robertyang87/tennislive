@@ -1,0 +1,91 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Wg6m85wS3Ps/Wg6m85wS3Ps.mp4",
+  "canonical_source_url": "https://www.youtube.com/watch?v=Wg6m85wS3Ps",
+  "source_sha256": "79951bd5316ac8910ce6fc1200260c62492d1f791ed3690729dadeb7a6296b90",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex /root/broadcast_audio (independent ASR evidence reviewer)",
+  "reviewed_at": "2026-10-05T17:16:20.149974+00:00",
+  "reviewed_from": 266.4,
+  "reviewed_to": 272.24,
+  "status": "complete",
+  "foreground_english": [
+    {
+      "start": 266.56,
+      "end": 269.94,
+      "en": "And Coco Gauff continues to refuse to lose",
+      "zh": "科科·高芙仍保持不败"
+    },
+    {
+      "start": 269.94,
+      "end": 272.14,
+      "en": "before the semifinals in Beijing.",
+      "zh": "在北京的半决赛之前"
+    }
+  ],
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/large-v3-turbo-resolve.json",
+      "sha256": "90269a8b0a88115c94ec46c5aba49b89b609cbb4aaeb0bd23f8d49f3b1d102b5"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/medium.en-priority.json",
+      "sha256": "a6f18d45a356d7dfe169360e1ff06295adb47bbebd94a5d038ea9bff38c6923b"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/large-v3-turbo-final.json",
+      "sha256": "637488de9b2f861224a88c8b23c859d7c5aaa9c1836402218228fcc765462e64"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/base.en-refined.json",
+      "sha256": "3520d9361150fc3a391dac178f412471e61cb1bb8add8189a3b074621cc50767"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/large-v3-final.json",
+      "sha256": "5b78163b1ea5677d1b4cc7de1838f7e44041dc66202ae3d3f8ceada3a023e8f1"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/large-v3-last.json",
+      "sha256": "d0ab8bd389787a19b49b7e782cb610b65e0d1a667eb68f8b58676c6b1cb39cf4"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/tiny.en-full.json",
+      "sha256": "49585ad194b3b90350e370a38b2c0223fb7473d80f49e3847bfdd944c1e727d6"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/base.en-full.json",
+      "sha256": "99d790d06bb0747ff88b971afbd045327ed3bfb08d9867d923e89d3f3d131f78"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/small.en-refined.json",
+      "sha256": "ed391d1bdf7b182bad3d469a7fe69469fa060117489bb4674f3b7783a9ed858c"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/medium.en-edges.json",
+      "sha256": "73713d574a27095259097e65dcaf2c7579604afa83e19c187b0becbe0397fd26"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/small.en-edges.json",
+      "sha256": "1596951727301720feac3e5e3650944cc24d4e09fece37dcd589219f071cc62a"
+    }
+  ],
+  "resolution_notes": [
+    "Names Sun and Sun Xinran normalized against official source identity from repeated phonetic Suin/Sueann/Swin-Sinaran variants. 206.98–208.2 are the full name, not a new sentence She ran.",
+    "Previous source speech around184–189 is an incomplete source-highlight fragment, excluded from retained window starting189.72; independent small and medium exact-window ASR starts foreground English only at194.32/194.46.",
+    "No human listening or aural inspection claim. Model disagreement resolution is documented, and selected-window packets remain blocked if a material unresolved wording span intersects them.",
+    "Previous Coco come-on sentence ends79.94 in clean base73–87 and80.32 in clean small73–87; tiny full-source stretches her to81.46 across silence during VAD stitching. Use80.32 as checked boundary; next weather phrase begins81.64. Both independent base and small show no previous-clause tail in selected window starting81.04.",
+    "Final wrap-up in/and dispute resolved by independent large-v3 full275–299 window saying in the second set as she runs away with it, agreeing with base full-source and base275–299. Retain in; small/medium/turbo substitutions are retained in raw outputs and not adopted.",
+    "Bilingual display cues split at inspected ASR word/phrase boundaries to fit one Chinese line. Normalized English concatenation of each split group is asserted equal to the original complete sentence; sentence_groups preserves the source sentence evidence, and edit windows still retain the whole sentence."
+  ],
+  "review_basis": "Inspected independent tiny.en/base.en full-source results; cross-checked selected foreground English with independent small.en/medium.en/large-v3-turbo and targeted large-v3 results. Source-wide ASR disagreement retained in commentary-inventory.json; unused ambiguous windows not claimed complete. No human listening claim.",
+  "sentence_groups": [
+    {
+      "id": 25,
+      "start": 266.56,
+      "end": 272.14,
+      "en": "And Coco Gauff continues to refuse to lose before the semifinals in Beijing.",
+      "zh": "科科·高芙在北京延续了半决赛前的不败纪录。",
+      "status": "resolved"
+    }
+  ]
+}

@@ -1,0 +1,944 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": true,
+  "condition_on_previous_text": false,
+  "requested_language": "auto",
+  "detected_language": "en",
+  "language_probability": 0.9913342595100403,
+  "range_from": 0,
+  "range_to": null,
+  "created_at": "2026-10-04T14:37:03.003660+00:00",
+  "elapsed_seconds": 13.84,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 7.38,
+      "end": 8.14,
+      "text": " It goes",
+      "avg_logprob": -0.39216036859311554,
+      "no_speech_prob": 0.5760313868522644,
+      "compression_ratio": 1.4968944099378882,
+      "words": [
+        {
+          "start": 7.38,
+          "end": 7.82,
+          "word": " It",
+          "probability": 0.034463781863451004
+        },
+        {
+          "start": 7.82,
+          "end": 8.14,
+          "word": " goes",
+          "probability": 0.3370167016983032
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 9.9,
+      "end": 42.46,
+      "text": " That is Alexander Sverov who wastes very little time s exquisite. Oh, Djokovic",
+      "avg_logprob": -0.39216036859311554,
+      "no_speech_prob": 0.5760313868522644,
+      "compression_ratio": 1.4968944099378882,
+      "words": [
+        {
+          "start": 9.9,
+          "end": 10.78,
+          "word": " That",
+          "probability": 0.5232861042022705
+        },
+        {
+          "start": 10.78,
+          "end": 11.06,
+          "word": " is",
+          "probability": 0.9886515736579895
+        },
+        {
+          "start": 11.06,
+          "end": 11.56,
+          "word": " Alexander",
+          "probability": 0.30129945278167725
+        },
+        {
+          "start": 11.56,
+          "end": 12.04,
+          "word": " Sverov",
+          "probability": 0.4428383906682332
+        },
+        {
+          "start": 12.04,
+          "end": 12.26,
+          "word": " who",
+          "probability": 0.8772681951522827
+        },
+        {
+          "start": 12.26,
+          "end": 12.62,
+          "word": " wastes",
+          "probability": 0.5228694975376129
+        },
+        {
+          "start": 12.62,
+          "end": 12.82,
+          "word": " very",
+          "probability": 0.9952735304832458
+        },
+        {
+          "start": 12.82,
+          "end": 13.14,
+          "word": " little",
+          "probability": 0.9967299699783325
+        },
+        {
+          "start": 13.14,
+          "end": 13.7,
+          "word": " time",
+          "probability": 0.9888532161712646
+        },
+        {
+          "start": 13.7,
+          "end": 14.54,
+          "word": " s",
+          "probability": 0.04899388551712036
+        },
+        {
+          "start": 31.4,
+          "end": 32.26,
+          "word": " exquisite.",
+          "probability": 0.7045360058546066
+        },
+        {
+          "start": 32.38,
+          "end": 33.26,
+          "word": " Oh,",
+          "probability": 0.9337354302406311
+        },
+        {
+          "start": 41.74,
+          "end": 42.46,
+          "word": " Djokovic",
+          "probability": 0.7877631932497025
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 73.44,
+      "end": 75.12,
+      "text": " Alexander Sverov",
+      "avg_logprob": -0.39216036859311554,
+      "no_speech_prob": 0.5760313868522644,
+      "compression_ratio": 1.4968944099378882,
+      "words": [
+        {
+          "start": 73.44,
+          "end": 73.88,
+          "word": " Alexander",
+          "probability": 0.6171020865440369
+        },
+        {
+          "start": 73.88,
+          "end": 75.12,
+          "word": " Sverov",
+          "probability": 0.9140835404396057
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 90.46,
+      "end": 101.4,
+      "text": " Well, Djokovic didn't take advantage there",
+      "avg_logprob": -0.39216036859311554,
+      "no_speech_prob": 0.5760313868522644,
+      "compression_ratio": 1.4968944099378882,
+      "words": [
+        {
+          "start": 90.46,
+          "end": 91.34,
+          "word": " Well,",
+          "probability": 0.7096335291862488
+        },
+        {
+          "start": 99.3,
+          "end": 99.92,
+          "word": " Djokovic",
+          "probability": 0.9602168500423431
+        },
+        {
+          "start": 99.92,
+          "end": 100.26,
+          "word": " didn't",
+          "probability": 0.98380047082901
+        },
+        {
+          "start": 100.26,
+          "end": 100.46,
+          "word": " take",
+          "probability": 0.996988832950592
+        },
+        {
+          "start": 100.46,
+          "end": 100.9,
+          "word": " advantage",
+          "probability": 0.9198325276374817
+        },
+        {
+          "start": 100.9,
+          "end": 101.4,
+          "word": " there",
+          "probability": 0.7814539670944214
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 102.58,
+      "end": 131.93,
+      "text": " Great hustle from Sverov the set does go the way of our top seed Alexander Sverov. He's got it",
+      "avg_logprob": -0.39216036859311554,
+      "no_speech_prob": 0.5760313868522644,
+      "compression_ratio": 1.4968944099378882,
+      "words": [
+        {
+          "start": 102.58,
+          "end": 103.46,
+          "word": " Great",
+          "probability": 0.8704714775085449
+        },
+        {
+          "start": 103.46,
+          "end": 103.94,
+          "word": " hustle",
+          "probability": 0.7632354497909546
+        },
+        {
+          "start": 103.94,
+          "end": 104.14,
+          "word": " from",
+          "probability": 0.9716519117355347
+        },
+        {
+          "start": 104.14,
+          "end": 105.0,
+          "word": " Sverov",
+          "probability": 0.9522062142690023
+        },
+        {
+          "start": 108.07,
+          "end": 108.77,
+          "word": " the",
+          "probability": 0.42401552200317383
+        },
+        {
+          "start": 108.77,
+          "end": 109.35,
+          "word": " set",
+          "probability": 0.9407050013542175
+        },
+        {
+          "start": 109.35,
+          "end": 109.63,
+          "word": " does",
+          "probability": 0.9882469773292542
+        },
+        {
+          "start": 109.63,
+          "end": 109.83,
+          "word": " go",
+          "probability": 0.9950217008590698
+        },
+        {
+          "start": 109.83,
+          "end": 109.93,
+          "word": " the",
+          "probability": 0.9930890202522278
+        },
+        {
+          "start": 109.93,
+          "end": 110.25,
+          "word": " way",
+          "probability": 0.9868912100791931
+        },
+        {
+          "start": 110.25,
+          "end": 110.87,
+          "word": " of",
+          "probability": 0.9086809158325195
+        },
+        {
+          "start": 110.87,
+          "end": 111.05,
+          "word": " our",
+          "probability": 0.9702693223953247
+        },
+        {
+          "start": 111.05,
+          "end": 111.27,
+          "word": " top",
+          "probability": 0.9900471568107605
+        },
+        {
+          "start": 111.27,
+          "end": 111.55,
+          "word": " seed",
+          "probability": 0.8788681030273438
+        },
+        {
+          "start": 111.55,
+          "end": 111.95,
+          "word": " Alexander",
+          "probability": 0.5135690569877625
+        },
+        {
+          "start": 111.95,
+          "end": 112.75,
+          "word": " Sverov.",
+          "probability": 0.974004864692688
+        },
+        {
+          "start": 130.43,
+          "end": 131.31,
+          "word": " He's",
+          "probability": 0.9749241471290588
+        },
+        {
+          "start": 131.31,
+          "end": 131.49,
+          "word": " got",
+          "probability": 0.9684716463088989
+        },
+        {
+          "start": 131.49,
+          "end": 131.93,
+          "word": " it",
+          "probability": 0.9744952321052551
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 133.49,
+      "end": 135.33,
+      "text": " That is remarkable.",
+      "avg_logprob": -0.37414686179455414,
+      "no_speech_prob": 0.5920708179473877,
+      "compression_ratio": 1.3771428571428572,
+      "words": [
+        {
+          "start": 133.49,
+          "end": 134.09,
+          "word": " That",
+          "probability": 0.1267431527376175
+        },
+        {
+          "start": 134.09,
+          "end": 134.49,
+          "word": " is",
+          "probability": 0.8536785840988159
+        },
+        {
+          "start": 134.49,
+          "end": 135.33,
+          "word": " remarkable.",
+          "probability": 0.8530701994895935
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 148.08,
+      "end": 148.68,
+      "text": " Beautiful.",
+      "avg_logprob": -0.37414686179455414,
+      "no_speech_prob": 0.5920708179473877,
+      "compression_ratio": 1.3771428571428572,
+      "words": [
+        {
+          "start": 148.08,
+          "end": 148.68,
+          "word": " Beautiful.",
+          "probability": 0.4438737630844116
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 150.34,
+      "end": 151.54,
+      "text": " Perfect placements.",
+      "avg_logprob": -0.37414686179455414,
+      "no_speech_prob": 0.5920708179473877,
+      "compression_ratio": 1.3771428571428572,
+      "words": [
+        {
+          "start": 150.34,
+          "end": 150.94,
+          "word": " Perfect",
+          "probability": 0.9778372049331665
+        },
+        {
+          "start": 150.94,
+          "end": 151.54,
+          "word": " placements.",
+          "probability": 0.823508083820343
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 152.02,
+      "end": 171.43,
+      "text": " The way comes up with a big-time play.",
+      "avg_logprob": -0.37414686179455414,
+      "no_speech_prob": 0.5920708179473877,
+      "compression_ratio": 1.3771428571428572,
+      "words": [
+        {
+          "start": 152.02,
+          "end": 152.2,
+          "word": " The",
+          "probability": 0.1643088012933731
+        },
+        {
+          "start": 168.65,
+          "end": 168.91,
+          "word": " way",
+          "probability": 0.9738163352012634
+        },
+        {
+          "start": 168.91,
+          "end": 170.23,
+          "word": " comes",
+          "probability": 0.4181091785430908
+        },
+        {
+          "start": 170.23,
+          "end": 170.43,
+          "word": " up",
+          "probability": 0.863050103187561
+        },
+        {
+          "start": 170.43,
+          "end": 170.53,
+          "word": " with",
+          "probability": 0.9822414517402649
+        },
+        {
+          "start": 170.53,
+          "end": 170.63,
+          "word": " a",
+          "probability": 0.9574141502380371
+        },
+        {
+          "start": 170.63,
+          "end": 170.77,
+          "word": " big",
+          "probability": 0.9917306303977966
+        },
+        {
+          "start": 170.77,
+          "end": 171.01,
+          "word": "-time",
+          "probability": 0.6184440553188324
+        },
+        {
+          "start": 171.01,
+          "end": 171.43,
+          "word": " play.",
+          "probability": 0.9829193353652954
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 192.28,
+      "end": 193.58,
+      "text": " It's a place he loves.",
+      "avg_logprob": -0.37414686179455414,
+      "no_speech_prob": 0.5920708179473877,
+      "compression_ratio": 1.3771428571428572,
+      "words": [
+        {
+          "start": 192.28,
+          "end": 192.84,
+          "word": " It's",
+          "probability": 0.9793474972248077
+        },
+        {
+          "start": 192.84,
+          "end": 192.84,
+          "word": " a",
+          "probability": 0.994050920009613
+        },
+        {
+          "start": 192.84,
+          "end": 193.08,
+          "word": " place",
+          "probability": 0.953544020652771
+        },
+        {
+          "start": 193.08,
+          "end": 193.32,
+          "word": " he",
+          "probability": 0.9874025583267212
+        },
+        {
+          "start": 193.32,
+          "end": 193.58,
+          "word": " loves.",
+          "probability": 0.9674822688102722
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 212.89,
+      "end": 215.09,
+      "text": " Oh, he was stretching there, it's very...",
+      "avg_logprob": -0.37414686179455414,
+      "no_speech_prob": 0.5920708179473877,
+      "compression_ratio": 1.3771428571428572,
+      "words": [
+        {
+          "start": 212.89,
+          "end": 213.07,
+          "word": " Oh,",
+          "probability": 0.34936001896858215
+        },
+        {
+          "start": 213.13,
+          "end": 213.21,
+          "word": " he",
+          "probability": 0.6623981595039368
+        },
+        {
+          "start": 213.21,
+          "end": 213.31,
+          "word": " was",
+          "probability": 0.8627834320068359
+        },
+        {
+          "start": 213.31,
+          "end": 213.69,
+          "word": " stretching",
+          "probability": 0.9952651262283325
+        },
+        {
+          "start": 213.69,
+          "end": 213.99,
+          "word": " there,",
+          "probability": 0.7049211859703064
+        },
+        {
+          "start": 214.11,
+          "end": 214.11,
+          "word": " it's",
+          "probability": 0.5909625589847565
+        },
+        {
+          "start": 214.11,
+          "end": 215.09,
+          "word": " very...",
+          "probability": 0.6308275163173676
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 225.91,
+      "end": 228.07,
+      "text": " ...injecting the extra pace up the line.",
+      "avg_logprob": -0.37414686179455414,
+      "no_speech_prob": 0.5920708179473877,
+      "compression_ratio": 1.3771428571428572,
+      "words": [
+        {
+          "start": 225.91,
+          "end": 226.73,
+          "word": " ...injecting",
+          "probability": 0.6068249233067036
+        },
+        {
+          "start": 226.73,
+          "end": 226.85,
+          "word": " the",
+          "probability": 0.9954870343208313
+        },
+        {
+          "start": 226.85,
+          "end": 227.15,
+          "word": " extra",
+          "probability": 0.9983729124069214
+        },
+        {
+          "start": 227.15,
+          "end": 227.39,
+          "word": " pace",
+          "probability": 0.9929170608520508
+        },
+        {
+          "start": 227.39,
+          "end": 227.65,
+          "word": " up",
+          "probability": 0.8051638603210449
+        },
+        {
+          "start": 227.65,
+          "end": 227.77,
+          "word": " the",
+          "probability": 0.9976080656051636
+        },
+        {
+          "start": 227.77,
+          "end": 228.07,
+          "word": " line.",
+          "probability": 0.9835605621337891
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 239.56,
+      "end": 268.07,
+      "text": " How it goes.",
+      "avg_logprob": -0.37414686179455414,
+      "no_speech_prob": 0.5920708179473877,
+      "compression_ratio": 1.3771428571428572,
+      "words": [
+        {
+          "start": 239.56,
+          "end": 240.16,
+          "word": " How",
+          "probability": 0.26243844628334045
+        },
+        {
+          "start": 267.71,
+          "end": 267.81,
+          "word": " it",
+          "probability": 0.9661440849304199
+        },
+        {
+          "start": 267.81,
+          "end": 268.07,
+          "word": " goes.",
+          "probability": 0.9995970129966736
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 270.01,
+      "end": 271.69,
+      "text": " I don't think anybody breathing.",
+      "avg_logprob": -0.37414686179455414,
+      "no_speech_prob": 0.5920708179473877,
+      "compression_ratio": 1.3771428571428572,
+      "words": [
+        {
+          "start": 270.01,
+          "end": 270.31,
+          "word": " I",
+          "probability": 0.9953380823135376
+        },
+        {
+          "start": 270.31,
+          "end": 270.43,
+          "word": " don't",
+          "probability": 0.9991008341312408
+        },
+        {
+          "start": 270.43,
+          "end": 270.65,
+          "word": " think",
+          "probability": 0.9985730648040771
+        },
+        {
+          "start": 270.65,
+          "end": 271.05,
+          "word": " anybody",
+          "probability": 0.9918299317359924
+        },
+        {
+          "start": 271.05,
+          "end": 271.69,
+          "word": " breathing.",
+          "probability": 0.8233413696289062
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 271.69,
+      "end": 282.18,
+      "text": " I think he's done it again.",
+      "avg_logprob": -0.41983801640313245,
+      "no_speech_prob": 0.6780379414558411,
+      "compression_ratio": 1.453125,
+      "words": [
+        {
+          "start": 271.69,
+          "end": 271.93,
+          "word": " I",
+          "probability": 0.09308454394340515
+        },
+        {
+          "start": 271.93,
+          "end": 271.93,
+          "word": " think",
+          "probability": 0.6582768559455872
+        },
+        {
+          "start": 271.93,
+          "end": 272.97,
+          "word": " he's",
+          "probability": 0.9213682115077972
+        },
+        {
+          "start": 281.64,
+          "end": 281.8,
+          "word": " done",
+          "probability": 0.9816983938217163
+        },
+        {
+          "start": 281.8,
+          "end": 281.92,
+          "word": " it",
+          "probability": 0.9920376539230347
+        },
+        {
+          "start": 281.92,
+          "end": 282.18,
+          "word": " again.",
+          "probability": 0.980000376701355
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 283.76,
+      "end": 285.64,
+      "text": " No back jock of itch.",
+      "avg_logprob": -0.41983801640313245,
+      "no_speech_prob": 0.6780379414558411,
+      "compression_ratio": 1.453125,
+      "words": [
+        {
+          "start": 283.76,
+          "end": 284.36,
+          "word": " No",
+          "probability": 0.864433765411377
+        },
+        {
+          "start": 284.36,
+          "end": 284.66,
+          "word": " back",
+          "probability": 0.589896023273468
+        },
+        {
+          "start": 284.66,
+          "end": 285.06,
+          "word": " jock",
+          "probability": 0.4204994663596153
+        },
+        {
+          "start": 285.06,
+          "end": 285.18,
+          "word": " of",
+          "probability": 0.420322448015213
+        },
+        {
+          "start": 285.18,
+          "end": 285.64,
+          "word": " itch.",
+          "probability": 0.5980207473039627
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 288.22,
+      "end": 289.96,
+      "text": " There's something about this place.",
+      "avg_logprob": -0.41983801640313245,
+      "no_speech_prob": 0.6780379414558411,
+      "compression_ratio": 1.453125,
+      "words": [
+        {
+          "start": 288.22,
+          "end": 288.82,
+          "word": " There's",
+          "probability": 0.8062191307544708
+        },
+        {
+          "start": 288.82,
+          "end": 289.14,
+          "word": " something",
+          "probability": 0.9881846904754639
+        },
+        {
+          "start": 289.14,
+          "end": 289.44,
+          "word": " about",
+          "probability": 0.9948287606239319
+        },
+        {
+          "start": 289.44,
+          "end": 289.66,
+          "word": " this",
+          "probability": 0.9880372285842896
+        },
+        {
+          "start": 289.66,
+          "end": 289.96,
+          "word": " place.",
+          "probability": 0.9879015684127808
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 293.79,
+      "end": 295.47,
+      "text": " And there is something about this man.",
+      "avg_logprob": -0.41983801640313245,
+      "no_speech_prob": 0.6780379414558411,
+      "compression_ratio": 1.453125,
+      "words": [
+        {
+          "start": 293.79,
+          "end": 294.13,
+          "word": " And",
+          "probability": 0.6787641048431396
+        },
+        {
+          "start": 294.13,
+          "end": 294.27,
+          "word": " there",
+          "probability": 0.9889678359031677
+        },
+        {
+          "start": 294.27,
+          "end": 294.43,
+          "word": " is",
+          "probability": 0.9892690777778625
+        },
+        {
+          "start": 294.43,
+          "end": 294.73,
+          "word": " something",
+          "probability": 0.9935245513916016
+        },
+        {
+          "start": 294.73,
+          "end": 294.97,
+          "word": " about",
+          "probability": 0.9942426085472107
+        },
+        {
+          "start": 294.97,
+          "end": 295.19,
+          "word": " this",
+          "probability": 0.981040894985199
+        },
+        {
+          "start": 295.19,
+          "end": 295.47,
+          "word": " man.",
+          "probability": 0.8552773594856262
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 296.27,
+      "end": 299.35,
+      "text": " The unbeaten record here in Beijing continues.",
+      "avg_logprob": -0.41983801640313245,
+      "no_speech_prob": 0.6780379414558411,
+      "compression_ratio": 1.453125,
+      "words": [
+        {
+          "start": 296.27,
+          "end": 296.87,
+          "word": " The",
+          "probability": 0.9111248254776001
+        },
+        {
+          "start": 296.87,
+          "end": 297.47,
+          "word": " unbeaten",
+          "probability": 0.898188849290212
+        },
+        {
+          "start": 297.47,
+          "end": 297.75,
+          "word": " record",
+          "probability": 0.9938218593597412
+        },
+        {
+          "start": 297.75,
+          "end": 298.05,
+          "word": " here",
+          "probability": 0.9802329540252686
+        },
+        {
+          "start": 298.05,
+          "end": 298.23,
+          "word": " in",
+          "probability": 0.9333124160766602
+        },
+        {
+          "start": 298.23,
+          "end": 298.57,
+          "word": " Beijing",
+          "probability": 0.9876625537872314
+        },
+        {
+          "start": 298.57,
+          "end": 299.35,
+          "word": " continues.",
+          "probability": 0.9652423858642578
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 304.06,
+      "end": 305.08,
+      "text": " Breathe it in.",
+      "avg_logprob": -0.41983801640313245,
+      "no_speech_prob": 0.6780379414558411,
+      "compression_ratio": 1.453125,
+      "words": [
+        {
+          "start": 304.06,
+          "end": 304.66,
+          "word": " Breathe",
+          "probability": 0.4201525151729584
+        },
+        {
+          "start": 304.66,
+          "end": 304.86,
+          "word": " it",
+          "probability": 0.7800559401512146
+        },
+        {
+          "start": 304.86,
+          "end": 305.08,
+          "word": " in.",
+          "probability": 0.9718092679977417
+        }
+      ]
+    }
+  ]
+}

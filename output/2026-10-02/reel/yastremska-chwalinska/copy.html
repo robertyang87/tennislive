@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>复制发布文案</title>
+  <style>
+
+:root {
+  --tl-brand-bar: linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);
+  --tl-radius: 10px;
+  --tl-radius-sm: 6px;
+  --tl-radius-md: 8px;
+  --tl-radius-lg: 10px;
+  --tl-radius-xl: 14px;
+  --tl-radius-full: 999px;
+  --tl-radius-hairline: 2px;
+  --tl-text-xs: 12px;
+  --tl-text-sm: 13px;
+  --tl-text-base: 15px;
+  --tl-text-lg: 18px;
+  --tl-text-xl: 22px;
+  --tl-text-2xl: 28px;
+  --tl-font-sans: -apple-system,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;
+  --tl-duration-press: 120ms;
+  --tl-duration-quick: 150ms;
+  --tl-duration-fast: 250ms;
+  --tl-duration-medium: 350ms;
+  --tl-duration-slow: 400ms;
+  --tl-duration-emphasis: 500ms;
+  --tl-duration-stagger: 40ms;
+  --tl-ease-out: cubic-bezier(0.22,1,0.36,1);
+  --tl-ease-spring: cubic-bezier(0.34,1.35,0.64,1);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --tl-background: #04120d;
+  --tl-card: #0c1d16;
+  --tl-muted: #102d23;
+  --tl-hero-glow: #155a41;
+  --tl-foreground: #f4fbf7;
+  --tl-subtitle-foreground: #e7f3ec;
+  --tl-muted-foreground: #cfe6d8;
+  --tl-subtle-foreground: #a9bcb2;
+  --tl-border: #ffffff1a;
+  --tl-input: #ffffff26;
+  --tl-ring: #c6f65a8c;
+  --tl-primary: #c6f65a;
+  --tl-primary-foreground: #04120d;
+  --tl-secondary: #102d23;
+  --tl-secondary-foreground: #f4fbf7;
+  --tl-link: #cfe6d8;
+  --tl-success: #4adc8c;
+  --tl-warning: #ffd166;
+  --tl-destructive: #ff5a6a;
+  --tl-info: #4bb8ff;
+  --tl-fill: #8fd6a8;
+  --tl-success-chip: #143927;
+  --tl-warning-chip: #2d3722;
+  --tl-destructive-chip: #2d2623;
+  --tl-info-chip: #143437;
+  --tl-chart-1: #c6f65a;
+  --tl-chart-2: #8fd6a8;
+  --tl-chart-3: #8b9892;
+  --tl-chart-4: #5d6b65;
+  --tl-chart-5: #3a4a44;
+  --tl-shadow-card: 0 0 0 1px rgba(255,255,255,.10);
+  --tl-shadow-raised: 0 0 0 1px rgba(255,255,255,.13),0 1px 2px rgba(0,0,0,.2),0 2px 6px rgba(0,0,0,.2);
+  --tl-shadow-overlay: 0 0 0 1px rgba(255,255,255,.15),0 8px 28px rgba(0,0,0,.34);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --tl-background: #f6f7f4;
+  --tl-card: #ffffff;
+  --tl-muted: #eef2ef;
+  --tl-foreground: #17251f;
+  --tl-muted-foreground: #5f6f68;
+  --tl-subtle-foreground: #5f6f68;
+  --tl-border: #e6ebe8;
+  --tl-input: #d8e2dc;
+  --tl-ring: #17251f;
+  --tl-primary: #c6f65a;
+  --tl-primary-foreground: #04120d;
+  --tl-secondary: #102d23;
+  --tl-secondary-foreground: #ffffff;
+  --tl-link: #5f6f68;
+  --tl-success: #087747;
+  --tl-warning: #846405;
+  --tl-destructive: #c0392b;
+  --tl-info: #0a6ea4;
+  --tl-success-chip: #e1efe9;
+  --tl-warning-chip: #f0ece1;
+  --tl-destructive-chip: #f7e7e6;
+  --tl-info-chip: #e2eef4;
+  --tl-shadow-card: 0 0 0 1px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --tl-shadow-raised: 0 0 0 1px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.06);
+  --tl-shadow-overlay: 0 4px 42px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.06);
+}
+
+:root:not([data-theme="light"]):not([data-theme="dark"]) {
+  color-scheme: light;
+  --tl-background: #f6f7f4;
+  --tl-card: #ffffff;
+  --tl-muted: #eef2ef;
+  --tl-foreground: #17251f;
+  --tl-muted-foreground: #5f6f68;
+  --tl-subtle-foreground: #5f6f68;
+  --tl-border: #e6ebe8;
+  --tl-input: #d8e2dc;
+  --tl-ring: #17251f;
+  --tl-primary: #c6f65a;
+  --tl-primary-foreground: #04120d;
+  --tl-secondary: #102d23;
+  --tl-secondary-foreground: #ffffff;
+  --tl-link: #5f6f68;
+  --tl-success: #087747;
+  --tl-warning: #846405;
+  --tl-destructive: #c0392b;
+  --tl-info: #0a6ea4;
+  --tl-success-chip: #e1efe9;
+  --tl-warning-chip: #f0ece1;
+  --tl-destructive-chip: #f7e7e6;
+  --tl-info-chip: #e2eef4;
+  --tl-shadow-card: 0 0 0 1px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --tl-shadow-raised: 0 0 0 1px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.06);
+  --tl-shadow-overlay: 0 4px 42px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+    --tl-background: #04120d;
+    --tl-card: #0c1d16;
+    --tl-muted: #102d23;
+    --tl-hero-glow: #155a41;
+    --tl-foreground: #f4fbf7;
+    --tl-subtitle-foreground: #e7f3ec;
+    --tl-muted-foreground: #cfe6d8;
+    --tl-subtle-foreground: #a9bcb2;
+    --tl-border: #ffffff1a;
+    --tl-input: #ffffff26;
+    --tl-ring: #c6f65a8c;
+    --tl-primary: #c6f65a;
+    --tl-primary-foreground: #04120d;
+    --tl-secondary: #102d23;
+    --tl-secondary-foreground: #f4fbf7;
+    --tl-link: #cfe6d8;
+    --tl-success: #4adc8c;
+    --tl-warning: #ffd166;
+    --tl-destructive: #ff5a6a;
+    --tl-info: #4bb8ff;
+    --tl-fill: #8fd6a8;
+    --tl-success-chip: #143927;
+    --tl-warning-chip: #2d3722;
+    --tl-destructive-chip: #2d2623;
+    --tl-info-chip: #143437;
+    --tl-chart-1: #c6f65a;
+    --tl-chart-2: #8fd6a8;
+    --tl-chart-3: #8b9892;
+    --tl-chart-4: #5d6b65;
+    --tl-chart-5: #3a4a44;
+    --tl-shadow-card: 0 0 0 1px rgba(255,255,255,.10);
+    --tl-shadow-raised: 0 0 0 1px rgba(255,255,255,.13),0 1px 2px rgba(0,0,0,.2),0 2px 6px rgba(0,0,0,.2);
+    --tl-shadow-overlay: 0 0 0 1px rgba(255,255,255,.15),0 8px 28px rgba(0,0,0,.34);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --tl-duration-press: .01ms;
+    --tl-duration-quick: .01ms;
+    --tl-duration-fast: .01ms;
+    --tl-duration-medium: .01ms;
+    --tl-duration-slow: .01ms;
+    --tl-duration-emphasis: .01ms;
+    --tl-duration-stagger: .01ms;
+  }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+  </style>
+  <style>
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--tl-background); color: var(--tl-foreground);
+  font-family: var(--tl-font-sans); -webkit-tap-highlight-color: transparent; }
+main { width: min(100%, 680px); margin: 0 auto;
+  padding: 20px max(16px, env(safe-area-inset-right))
+    calc(40px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+h1 { margin: 0 0 6px; font-size: var(--tl-text-xl); font-weight: 600; line-height: 1.3; }
+.sub { margin: 0 0 20px; color: var(--tl-muted-foreground); font-size: var(--tl-text-sm); }
+section { margin-top: 20px; }
+.label { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 8px; font-size: var(--tl-text-base); font-weight: 600; }
+button { min-height: 44px; min-width: 104px; padding: 0 16px; border: 0;
+  border-radius: var(--tl-radius-md); background: var(--tl-primary);
+  color: var(--tl-primary-foreground); font: 600 var(--tl-text-base)/1 var(--tl-font-sans);
+  cursor: pointer; touch-action: manipulation;
+  transition: transform var(--tl-duration-press) var(--tl-ease-out),
+    background-color var(--tl-duration-quick) var(--tl-ease-out),
+    color var(--tl-duration-quick) var(--tl-ease-out),
+    box-shadow var(--tl-duration-quick) var(--tl-ease-out); }
+button:active { transform: scale(.97); }
+button.copied { background: var(--tl-muted); color: var(--tl-foreground); }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--tl-ring);
+  outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  button:hover { box-shadow: var(--tl-shadow-raised); }
+}
+textarea { display: block; width: 100%; resize: vertical; border: 1px solid var(--tl-input);
+  border-radius: var(--tl-radius-md); background: var(--tl-card); color: var(--tl-foreground);
+  padding: 12px; font: var(--tl-text-base)/1.7 var(--tl-font-sans); }
+#title { min-height: 76px; }
+.alt { min-height: 52px; }
+#body { min-height: 55vh; }
+#comment { min-height: 118px; }
+#toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom));
+  width: max-content; max-width: calc(100% - 32px); text-align: center;
+  background: var(--tl-foreground); color: var(--tl-background);
+  box-shadow: var(--tl-shadow-overlay); padding: 10px 16px;
+  border-radius: var(--tl-radius-md); font-size: var(--tl-text-base); line-height: 1.5;
+  opacity: 0; pointer-events: none; transform: translate(-50%, 8px);
+  transition: opacity var(--tl-duration-quick) var(--tl-ease-out),
+    transform var(--tl-duration-quick) var(--tl-ease-out); }
+#toast.show { opacity: 1; transform: translate(-50%, 0);
+  transition-duration: var(--tl-duration-fast); }
+@media (prefers-reduced-motion: reduce) {
+  #toast, #toast.show { transform: translate(-50%, 0); }
+  button:active { transform: none; }
+}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>10.2赛场之上|月亮姐救2盘点仍告负</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>北京时间10月2日中午，2026中网女单第二轮，赫瓦林斯卡以3-6、1-6不敌亚斯特雷姆斯卡。
+
+首盘0比2落后，月亮姐追到了2比2；2比5时，她又救下2个盘点，保发到3比5。不过，首盘还是以3比6告负。
+
+第二盘发球局持续承压，她从0比4追回一局，最终1比6告负。全场制胜分6比47、非受迫失误11比24：失误更少，却没有足够的主动得分抵消压力。
+
+救点的韧劲留在这场比赛里。下一站，她能把这份坚持变成更多主动得分吗？
+
+#中网 #赫瓦林斯卡 #月亮姐 #网球中国赛季来了 #网球时间到</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>下一站，她能把救点的韧劲，变成更多主动得分吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script>
+const toast = document.getElementById('toast');
+const labels = {body: '正文已复制', comment: '评论已复制'};
+const buttonTimers = new Map();
+let toastTimer = 0;
+function say(text, ms) {
+  toast.textContent = text;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), ms);
+}
+function restore(button) {
+  clearTimeout(buttonTimers.get(button));
+  if (button.dataset.label) button.textContent = button.dataset.label;
+  button.classList.remove('copied');
+}
+function selectAll(field) {
+  field.focus();
+  field.select();
+  try { field.setSelectionRange(0, field.value.length); } catch (_) {}
+}
+async function copyText(id, button) {
+  const field = document.getElementById(id);
+  let ok = false;
+  try {
+    await navigator.clipboard.writeText(field.value);
+    ok = true;
+  } catch (_) {
+    selectAll(field);
+    try { ok = document.execCommand('copy') === true; } catch (_) { ok = false; }
+  }
+  if (!ok) {
+    restore(button);
+    selectAll(field);
+    say('复制失败，已帮你选中，长按拷贝', 2600);
+    return;
+  }
+  if (document.activeElement === field) field.blur();
+  say(labels[id] || '标题已复制', 1400);
+  if (!button.dataset.label) button.dataset.label = button.textContent;
+  button.textContent = '已复制 ✓';
+  button.classList.add('copied');
+  clearTimeout(buttonTimers.get(button));
+  buttonTimers.set(button, setTimeout(() => restore(button), 1400));
+}
+document.querySelectorAll('[data-copy]').forEach((button) => {
+  button.addEventListener('click', () => copyText(button.dataset.copy, button));
+});
+  </script>
+</body>
+</html>

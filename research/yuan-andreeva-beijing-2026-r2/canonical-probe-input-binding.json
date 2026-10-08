@@ -1,0 +1,28 @@
+{
+  "canonical_url": "https://github.com/robertyang87/tennislive/releases/download/source-V6ekW4Qy1jA/V6ekW4Qy1jA.mp4",
+  "source_path": "/workspace/scratch/yuan-source/V6ekW4Qy1jA.mp4",
+  "source_sha256": "ec9fed9650ac8b0f6f9c62377d9be4b7ef528ca8ef87b6cbb2527819331b866f",
+  "bytes": 71464448,
+  "verified_at": "2026-10-02T07:32:08.240897+00:00",
+  "native_command": "python tools/build_match_reel.py probe --url canonical_url --outdir output/2026-10-02/reel/yuan-andreeva-beijing-2026-r2 --scorebox 90,870,510,990 --every 2.0",
+  "note": "Native download cached-file path follows source.mp4 symlink to original canonical archive bytes; every native measurement is recomputed, no old probe measurement reused.",
+  "probe_path": "/workspace/tennislive/output/2026-10-02/reel/yuan-andreeva-beijing-2026-r2/probe.json",
+  "probe_sha256": "50326220b616ddf6e26add8ff9f7ac650e8006093c331e5cdd105ffe57fda7a6",
+  "native_claim_missing": [],
+  "native_measurement": {
+    "width": 1920,
+    "height": 1080,
+    "duration": 461.125079,
+    "fps": "25/1",
+    "scene_cuts_count": 38,
+    "point_ends_count": 124,
+    "silent_audio": [
+      [
+        451.1,
+        461.13
+      ]
+    ],
+    "audio_levels_blocks": 9222,
+    "scorebox": "90,870,510,990"
+  }
+}

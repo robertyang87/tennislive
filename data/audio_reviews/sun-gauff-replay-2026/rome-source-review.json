@@ -1,0 +1,62 @@
+{
+  "source_url": "https://x.com/TennisChannel/status/1921973328903860370",
+  "source_sha256": "a2833fecdf30910f5b8ea765e4b9eede8ff04a87340caf169f14324f3f83b292",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex rome_footage automated small.en / independent medium.en source ASR cross-check; no human listening",
+  "reviewed_at": "2026-10-05T19:28:14.636674+00:00",
+  "reviewed_from": 26.5,
+  "reviewed_to": 34.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 26.7,
+      "end": 29.5,
+      "en": "The lights were turned on before Andreeva hit the ball",
+      "zh": "安德列娃击球之前 灯就打开了"
+    },
+    {
+      "start": 29.5,
+      "end": 32.0,
+      "en": "That means there was a hindrance",
+      "zh": "这意味着出现了干扰"
+    },
+    {
+      "start": 32.0,
+      "end": 33.82,
+      "en": "We will replay the point",
+      "zh": "这一分需要重打"
+    }
+  ],
+  "is_human_listening": false,
+  "evidence_files": [
+    "data/audio_reviews/sun-gauff-replay-2026/rome-small.en.json",
+    "data/audio_reviews/sun-gauff-replay-2026/rome-medium.en.json"
+  ],
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/rome-small.en.json",
+      "sha256": "6343c169461d86ee5f05af0d5e5d63ac6e55eff34a1acd573a4ba7230c9c8067",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/rome-medium.en.json",
+      "sha256": "0c90c2d5369b3bf11da8646dc621262590a0677b622fffe33adde61ac5850358",
+      "model": "medium.en"
+    }
+  ],
+  "name_corrections": [
+    {
+      "source_span": [
+        28.22,
+        28.88
+      ],
+      "small_en": "Andreeva",
+      "medium_en": "and I ever",
+      "normalized": "Andreeva",
+      "basis": "Official source identifies Mirra Andreeva; small.en independently recognizes her surname; medium.en phonetically splits it into English words. No other lexical correction is required in the selected 26.50–34.00 window."
+    }
+  ],
+  "coverage_basis": "Full 118s source was transcribed separately by small.en and medium.en. The only selected window is 26.50–34.00, covering the complete chair-umpire three-sentence ruling. All 21 English words are included. Raw timecodes differ slightly; chosen starts use small.en word onset and ends span both ASR boundaries. Previous commentary ends by 25.86 and there is no later English within this window. This record is source evidence, unbound to an unknown production plan.",
+  "notes": "No human auditory listening or final rendered-mix QC is asserted. status complete refers exclusively to automatic ASR cross-check for this selected source window. Do not reuse for 5.52–12.00, 34–104 or other windows. Producer must bind transcript hash to the actual finalized plan and retained segment index."
+}
