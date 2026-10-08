@@ -4203,6 +4203,71 @@ def test_标题里的赛果顺序要和海报印的一样():
     assert checked >= 7, f"只校到 {checked} 条印赛果的 spec，判据失效了"
 
 
+_RENAME_PAIRS: tuple[tuple[str, str], ...] | None = None
+
+
+def _canonical_rename_pairs() -> tuple[tuple[str, str], ...]:
+    """2026-10-04 译名校正里「旧写法 → 现行主名」，只留不会改到别人的那些。
+
+    词典 `changed` 的旧主名，加上内容台账里已发页面还留着的旧写法。
+    一个字、两个字、同一个旧名对应两个现行名、以及旧名本身就含在现行名里的
+    （「安德烈耶娃」折进「米拉·安德烈耶娃」会叠成两遍），都不收。
+    已发复制页不回写；对照标题时两边都折，折完仍不一致才是标题真的改了。
+    """
+    global _RENAME_PAIRS
+    if _RENAME_PAIRS is not None:
+        return _RENAME_PAIRS
+    root = Path(__file__).resolve().parents[1]
+    audit = json.loads((root / "data/player_name_audit_2026-10-04.json")
+                       .read_text(encoding="utf-8"))
+    queue = json.loads(
+        (root / "data/player_name_content_review_queue_2026-10-04.json")
+        .read_text(encoding="utf-8"))
+    raw = [(e["before_zh"], e["name_zh"]) for e in audit["entries"]
+           if e.get("changed") and e.get("before_zh")
+           and e["before_zh"] != e.get("name_zh")]
+    for entry in queue["entries"]:
+        for diff in entry.get("differences") or []:
+            old, new = diff.get("stored_zh"), diff.get("canonical")
+            if old and new and old != new:
+                raw.append((old, new))
+    by_old: dict[str, set[str]] = {}
+    for old, new in raw:
+        by_old.setdefault(old, set()).add(new)
+    kept = [(old, next(iter(news))) for old, news in by_old.items()
+            if len(old) >= 3 and len(news) == 1 and old not in next(iter(news))]
+    _RENAME_PAIRS = tuple(sorted(kept, key=lambda pair: len(pair[0]), reverse=True))
+    return _RENAME_PAIRS
+
+
+def _fold_historical_display_names(text: str) -> str:
+    """先换成占位再写回，避免旧名互相包含时连着替换。"""
+    tokens: list[tuple[str, str]] = []
+    for index, (old, new) in enumerate(_canonical_rename_pairs()):
+        token = f"\ue000{index}\ue001"
+        if old in text:
+            text = text.replace(old, token)
+            tokens.append((token, new))
+    for token, new in tokens:
+        text = text.replace(token, new)
+    return text
+
+
+def test_已发标题对照只折译名表里不歧义的旧主名():
+    """已发页面留着旧译名，spec 改成现行主名，两边折完必须对得上。
+
+    标题措辞变了仍然要红。一个字的旧名不折——「李」折下去会变成另一个人。
+    """
+    folded = _fold_historical_display_names
+    assert folded("阿尔卡拉斯门西克双打获胜") == folded("阿尔卡拉斯门希克双打获胜")
+    assert folded("阿尔卡拉斯门西克双打获胜") != folded("阿尔卡拉斯门希克单打获胜")
+    assert folded("安尼西莫娃两度雨断中逆转") == folded("阿尼西莫娃两度雨断中逆转")
+    # 旧名含在现行名里时不折，否则「米拉·安德烈耶娃」会叠成两遍
+    assert folded("米拉·安德烈耶娃") == "米拉·安德烈耶娃"
+    assert folded("李晋级") == "李晋级"
+    assert folded("哈里晋级") == "哈里晋级"
+
+
 def test_每条spec都算得出一句过得了闸的标题():
     """**每条 spec 都要能算出标题，而且当场就过闸**——不能等到重推那一刻才炸。
 
@@ -4213,7 +4278,8 @@ def test_每条spec都算得出一句过得了闸的标题():
 
     这条测试只吃 `specs/`，所以它在 CI 上真的跑得起来（见 `_published_reels`：
     `output/` 从来不在 CI 的稀疏检出里）。产物在的时候再多验一层：
-    算出来的那一句要和**已经发出去的那一句**逐字相同。
+    算出来的那一句要和**已经发出去的那一句**相同。译名表里不歧义的旧主名
+    先折成现行主名再比——已发页面不回写，标题措辞变了仍然要红。
 
     比的是每个 slug **最新的那一份**：`nishikori-shang` 在 7.28 发过一版
     30 字位的长标题（那时标题闸还不存在），7.29 重发时已经收成了短的。
@@ -4273,7 +4339,9 @@ def test_每条spec都算得出一句过得了闸的标题():
             historical = re.split(r"[|｜丨]", historical)[-1]
             historical = re.sub(r"(?<=\d)\s+(?=\d+[-:])", "，", historical)
             historical = copy_title(historical)
-        assert got == historical, (
+        # 译名校正改的是现行主名。已发复制页是当时发出去的那一句，不回写；
+        # 只把译名表里不歧义的旧主名折成现行主名再比。折完还对不上，才是标题改了。
+        assert _fold_historical_display_names(got) == _fold_historical_display_names(historical), (
             f"{slug}：从 spec 算出来的是「{got}」，历史标题内容是「{historical}」")
 
 
