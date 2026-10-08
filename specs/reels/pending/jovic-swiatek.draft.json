@@ -18,7 +18,16 @@
       }
     ],
     "winner": "斯瓦泰克",
-    "result": "6-1 6-3"
+    "result": "6-1 6-3",
+    "portrait": {
+      "image": "assets/reel/jovic-swiatek-cover.jpg",
+      "focus": 0.312,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「iga swiatek」「Beijing」，日期对上当地 2026-10-07（Asia/Shanghai；日期来源 flashscore dc_1_hMOR26Vp）（放宽：标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 10-07 13:30:51，落在这场的窗口 当地 10-07 13:05~15:01 里（wta-photos #4587779））；EXIF 拍摄 2026:10:07 13:30:51+08:00。② 分辨率：4700×2801，zoom 1 铺 1080×1440 是 1.95×（不放大）。③ 认人：最大那张脸像 斯瓦泰克 0.37（≥ 0.34）。④ 睁眼：EAR 0.4234（≥ 0.16）。⑤ 钩子带：脸落在 y193~537，钩子顶边 790。排序：[True, False, False, False, True, 344, 0.3652]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/07/9a791446-3ab0-4015-8c0a-a364a5944935/Swiatek-R4-Jimmie.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/07/9a791446-3ab0-4015-8c0a-a364a5944935/Swiatek-R4-Jimmie.jpg（条目 #4587779，接口发布 2026-10-07T06:58:54Z，EXIF 拍摄 2026:10:07 13:30:51+08:00（UTC 2026-10-07T05:30:51Z），原图 4700×2801），说明原文「Iga Swiatek, Beijing 2026 · Iga Swiatek of Poland in action during the fourth round of the 2026 China Open WTA 1000 tennis tournament」，署名 Jimmie48/WTA；Rob Prange；Â©  2026 Jimmie48 Tennis Photography\n\nThis photo is available for editorial usage. Please contact: licensing@j48tennis.net \n\nUnauthorized editorial or commercial usage is fee-liable.；©  2026 Jimmie48 Tennis Photography\r\rThis photo is available for editorial usage. Please contact: licensing@j48tennis.net \r\rUna。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -267,40 +276,37 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 52.5,
-      "end": 58.5,
-      "kind": "winning_shot",
+      "start": 478.5,
+      "end": 484.5,
+      "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "52.5s–58.5s 连续小画面显示紫色服装选手（与结构化结果 winner 一致）面向镜头推进后打出一记大力击球，配 Speed/M-Plus 屏幕；该窗口为高光短片段，符合制胜分瞬间，但比分字样未在画面中特写确认赛点，故记为 winning_shot",
-      "confidence": 0.62
+      "reason": "478.5–484.5s 镜头显示斯瓦泰克（紫色上衣、白色短裙）从教练手中接过毛巾并转身准备离开场地，结合全场已结束、对手不在场上、记分为 6-1/6-3 的赛后余波，可判断为赢家赛后的庆祝与现场互动环节。",
+      "confidence": 0.72
     },
     "ending": {
-      "start": 540.5,
-      "end": 556.5,
-      "kind": "aftermath",
+      "start": 478.5,
+      "end": 494.5,
+      "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "540.5s–556.5s 显示同一名紫色服装、戴紫色帽选手（winner 斯瓦泰克）在场上接受主持人现场采访、对镜头微笑、调整帽檐并挥手告别；属于赛后采访余波，无握手/颁奖画面",
-      "confidence": 0.85
+      "reason": "478.5–494.5s 完整覆盖赛后时段：478.5–484.5s 斯瓦泰克接受现场颁奖/赠送、486.5–494.5s 继续留在场上与主持人/颁奖嘉宾互动，赢家始终在画面中并有正面情绪表现，赛果已锁定。",
+      "confidence": 0.75
     },
     "cover": {
-      "same_match": false,
-      "subject": "",
-      "moment": "other",
-      "wrong_or_old": true,
-      "reason": "没有提供候选封面照片；无法核实人物、比分或赛事标识，按规则判 same_match=false",
-      "confidence": 0.2
+      "same_match": true,
+      "subject": "斯瓦泰克",
+      "moment": "loser_fighting",
+      "wrong_or_old": false,
+      "reason": "封面人物身穿紫色 On×Infosys 球衣并佩戴同款紫色 On 帽子，与集锦中斯瓦泰克的服装/帽子一致；蓝色硬地球场、China Open 北京场馆氛围匹配；她处于高位挥拍、抬头上望的击球瞬间，属于赛中仍在拼抢的状态而非庆祝或失落，可视为输家仍在战斗的瞬间。但需注意封面人物为约维奇（Iga Świątek 为胜者，封面形象需结合具体面部特征确认归属）：从面部轮廓与集锦中紫色队服选手一致判断为本场约维奇而非斯瓦泰克，moment 应按输家仍在拼抢归类。",
+      "confidence": 0.55
     },
     "problems": [
-      "cold_open 置信度 0.62 低于 0.80",
-      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.20 低于 0.80",
-      "封面人物应为 斯瓦泰克，模型识别为 空",
-      "封面情绪应为 winner_celebration，现在是 other"
+      "cold_open 置信度 0.72 低于 0.80",
+      "ending 置信度 0.75 低于 0.80",
+      "封面置信度 0.55 低于 0.80",
+      "封面情绪应为 winner_celebration，现在是 loser_fighting"
     ],
     "model_attempts": 1,
-    "input_sha256": "4202f6ec9e0c130354ddeb8eb92de7a4997d3d31cea93496c329e6682c144157",
+    "input_sha256": "54a7f330f55564f09013d823ed98e018453aa418ea3dea08cc101d1195ddf963",
     "inputs": [
       "contact_00.jpg",
       "contact_04.jpg",
@@ -308,6 +314,15 @@
       "contact_08.jpg",
       "contact_09.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/jovic-swiatek-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "hMOR26Vp",
+      "start_utc": "2026-10-07T05:10:00Z",
+      "end_utc": "2026-10-07T06:46:02Z",
+      "source": "flashscore dc_1_hMOR26Vp（DC／DD）"
+    },
+    "replaced_under": "4202f6ec9e0c130354ddeb8eb92de7a4997d3d31cea93496c329e6682c144157"
   }
 }
