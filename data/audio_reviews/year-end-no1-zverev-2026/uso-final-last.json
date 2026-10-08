@@ -1,0 +1,57 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=b40hO04eyLo",
+  "source_path": "/workspace/video-review/yen1/b40hO04eyLo.mp4",
+  "source_sha256": "dd9a41791f99eb9a20f8e54ffa311432a957f5fd9377399c975e4a56c924a534",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 9.0,
+  "reviewed_to": 54.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 14.6,
+      "end": 21.9,
+      "en": "Game, set and match, Zverev. Three sets to one: 6-3, 7-6, 5-7, 6-2.",
+      "zh": "比赛结束，兹维列夫3比1获胜。"
+    },
+    {
+      "start": 22.0,
+      "end": 25.7,
+      "en": "Zverev doesn't know he's won. He doesn't even know he's won.",
+      "zh": "兹维列夫还不知道自己赢了。"
+    },
+    {
+      "start": 27.4,
+      "end": 28.1,
+      "en": "There you go.",
+      "zh": "这下知道了。"
+    },
+    {
+      "start": 35.0,
+      "end": 40.5,
+      "en": "He really didn't know. He was so focused in on just holding serve.",
+      "zh": "他真的不知道，一心只想保发。"
+    },
+    {
+      "start": 40.5,
+      "end": 47.0,
+      "en": "He didn't know he was at the finish line, and he finishes off Ben Shelton in four sets",
+      "zh": "没意识到已到终点，四盘击败谢尔顿，"
+    },
+    {
+      "start": 47.0,
+      "end": 53.8,
+      "en": "and wins his second major of the year, his first US Open.",
+      "zh": "拿下年度第二座大满贯、首个美网。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [
+    "14.6–21.9主裁宣布：比分逐盘念出，规范写作「6-3, 7-6, 5-7, 6-2」。",
+    "62.4下一句开口在段外。"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=HqvN6AX6zFU",
+  "source_path": "/workspace/video-review/yen1/HqvN6AX6zFU.mp4",
+  "source_sha256": "42f4679ce539c6632ee63d05ad13559d2472a3010128df8228eb3347a69f1243",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 64.4,
+  "reviewed_to": 74.95,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 64.7,
+      "end": 69.3,
+      "en": "It's a very, very exclusive club, being number one in the world,",
+      "zh": "世界第一是极少数人的俱乐部，"
+    },
+    {
+      "start": 69.4,
+      "end": 74.94,
+      "en": "and I think it's the ultimate goal we have, you know, 52 weeks of consistent tennis.",
+      "zh": "终极目标：52周稳定的网球。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [
+    "64.7–74.95一句，按词时间在69.06“world”后拆为两行；75.04下一句“and”开口在段尾之后，audio_tail补零。"
+  ]
+}

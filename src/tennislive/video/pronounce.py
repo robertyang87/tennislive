@@ -143,6 +143,15 @@ HOMOPHONES: tuple[Homophone, ...] = (
         guards=("布鲁塞尔",),
     ),
     Homophone(
+        key="nasitasai", pattern="纳斯塔塞", replace="纳斯塔赛",
+        word="纳斯塔塞", reading="sài",
+        evidence=(
+            "2026-10-08 实测（云见 +6%，measure_polyphone）：「第一位世界第一，是纳斯塔塞。」"
+            "原句读错（low）；换「赛」读对，score +1.00，离对的参考 0.0、离错的 3.478。"),
+        examples=(("第一位世界第一，是纳斯塔塞。", "第一位世界第一，是纳斯塔赛。"),),
+        guards=("纳斯塔赛",),
+    ),
+    Homophone(
         key="busai",
         # 换的是人名（Buse）。「纱布塞住」「毛巾布塞进包里」「用布塞住」的「塞」是
         # 动词 sāi，换成「赛」就念错（2026-09-27 复查）：前面是 纱／棉／毛巾…这类

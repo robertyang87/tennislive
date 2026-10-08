@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4587386/shanghai-2026-zverev-preview-interview",
+  "source_path": "/workspace/video-review/yen1/ttv4587386.mp4",
+  "source_sha256": "12dc8f7d1fd50f14019c6fb2eaf990397e8a9d3e271d5faf7c14c97d76c83f8f",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 35.95,
+  "reviewed_to": 45.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 36.14,
+      "end": 39.38,
+      "en": "For years, obviously, your unfinished goal was to win a Grand Slam.",
+      "zh": "多年来，你的心愿是赢下大满贯。"
+    },
+    {
+      "start": 39.56,
+      "end": 40.5,
+      "en": "Now that you've got two,",
+      "zh": "如今你已拿到两座，"
+    },
+    {
+      "start": 40.6,
+      "end": 44.86,
+      "en": "does the goal, number one in the world, occupy that headspace?",
+      "zh": "世界第一会占据你的心思吗？"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [
+    "采访者第二问三模型均为“does the goal number one in the world”，字幕按口语保留逗号写作“does the goal, number one in the world,”。",
+    "44.86问句尾后到48.04回答开口之间无人声，段尾45.0。"
+  ]
+}

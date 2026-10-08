@@ -1,0 +1,51 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=b40hO04eyLo",
+  "source_path": "/workspace/video-review/yen1/b40hO04eyLo.mp4",
+  "source_sha256": "dd9a41791f99eb9a20f8e54ffa311432a957f5fd9377399c975e4a56c924a534",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 262.0,
+  "reviewed_to": 277.12,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 262.3,
+      "end": 264.9,
+      "en": "But you win two majors in a season,",
+      "zh": "一个赛季赢两座大满贯，"
+    },
+    {
+      "start": 265.4,
+      "end": 269.6,
+      "en": "it's hard not to be picked as the man of the year,",
+      "zh": "很难不当选年度最佳。"
+    },
+    {
+      "start": 270.2,
+      "end": 271.9,
+      "en": "and I think if you asked any of the players,",
+      "zh": "如果问任何一位球员，"
+    },
+    {
+      "start": 273.4,
+      "end": 275.55,
+      "en": "they'd probably pick majors over world number one,",
+      "zh": "多半会选大满贯而非世界第一，"
+    },
+    {
+      "start": 275.6,
+      "end": 277.1,
+      "en": "and he might actually be able to do both.",
+      "zh": "而他也许能两样都拿到。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [
+    "三句medium一致；第二句口语重复“majors, majors”，字幕写一次。",
+    "277.1主持人下一句开口在段外，audio_tail补零。"
+  ]
+}

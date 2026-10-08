@@ -1,0 +1,44 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=cuvaPZT2AIU",
+  "source_path": "/workspace/video-review/yen1/cuvaPZT2AIU.mp4",
+  "source_sha256": "e5d94ebf528e1192dde3ddf98acae5e09bc05f7d4d2a74dd6fefaa90f900409b",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 323.5,
+  "reviewed_to": 357.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 328.2,
+      "end": 332.3,
+      "en": "How about that! How about that!",
+      "zh": "太精彩了！太精彩了！"
+    },
+    {
+      "start": 333.7,
+      "end": 339.6,
+      "en": "Sweet set-up, another forehand, crushed.",
+      "zh": "漂亮的铺垫，又一记正手，重重压下。"
+    },
+    {
+      "start": 342.3,
+      "end": 349.3,
+      "en": "Four sets of compelling tennis to finish up Wimbledon 2026.",
+      "zh": "四盘扣人心弦，为2026温网收官。"
+    },
+    {
+      "start": 351.3,
+      "end": 353.3,
+      "en": "A final to remember.",
+      "zh": "一场值得铭记的决赛。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [
+    "四句三模型一致或两模型一致；medium在349.3–349.98另出「That's it」，small连续段落与base均无，未确认，不写字幕。"
+  ]
+}

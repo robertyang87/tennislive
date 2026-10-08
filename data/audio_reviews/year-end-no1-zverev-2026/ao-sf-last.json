@@ -1,0 +1,27 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=u8plp_Kb6Ss",
+  "source_path": "/workspace/video-review/yen1/u8plp_Kb6Ss.mp4",
+  "source_sha256": "03d08cd080e523ef2fc85c3a0109cedfa55752bf4f277b0ede2205a27af85341",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-08T19:46:13.569301+00:00",
+  "reviewed_from": 208.0,
+  "reviewed_to": 229.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 216.6,
+      "end": 228.7,
+      "en": "A moment of brilliance from Carlos Alcaraz secures a place in his very first Australian Open final.",
+      "zh": "阿尔卡拉斯神来一笔，首进澳网决赛。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按多模型一致的词序写出，去掉口头重复与填充词；比分规范为阿拉伯数字连字符；中文为忠实意译并控制在字幕一行内。",
+  "review_notes": [
+    "216.6–228.7解说一句：small「a place in his very first Australian Open final」与medium「his very first Australian Open final」一致；人名与介词两模型分别误听为「Curtis」「for Carlos Arquías」，按画面与赛事事实写作「from Carlos Alcaraz」。",
+    "208–216.6为最后一分回合，仅现场声；229.3下一句开口在段外。"
+  ]
+}
