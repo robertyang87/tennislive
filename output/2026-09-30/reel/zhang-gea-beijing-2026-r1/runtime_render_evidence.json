@@ -1,0 +1,23 @@
+{
+  "film_sha256": "cedbdbb9da10829da3228cd88cbc1b56a0316932e784bfd701e066e3e746aee4",
+  "spec_sha256": "e4132c4b722b53f7d066b89ca22fcda5d0b747bb22a04cc2ba06d9eadc1e7f78",
+  "render_inputs_sha256": "98e6affec5c1dc1e8c9ca23501eb15bdf0cf0a3fefaaa6e619c2e0fb3fdc2b66",
+  "renderer": {
+    "path": "tools/build_match_reel.py",
+    "sha256": "86cebb104a489702c9aae91965e5c7c9857d2ccf16af0e493101497be76dcd25"
+  },
+  "encoding_patch": {
+    "sha256": "92dbc49757ea04ac7ee4eb1b4cf47d0f2d519feb182705ef943789b8b55df7c8",
+    "tests": "15 passed in21.61 seconds",
+    "scope": "Verified native export timing/profile/DPB/MV/VBV constraints"
+  },
+  "local_runtime_adapters": {
+    "description": "Native renderer and templates; local installed WeasyPrint rasterizer adapter; explicitly authorized Microsoft Edge/Bing TTS",
+    "native_render_wrapper_sha256": "3bcdff2f251eecb9ca0738bda815ed52241426fc082522a2855620a88ab279a1",
+    "rasterizer_sha256": "1f12cd83e9899c6915c168c9afdc7082ad5ec86d2c37fa356a1c2b8fb0daaeef",
+    "no_qc_threshold_changes": true
+  },
+  "native_L2": "0 findings; immutable attestation tied to exact film and current spec",
+  "workflow_checks": "23 workflow/cache tests plus3 identity/time-budget tests passed",
+  "physical_iphone_tested": false
+}

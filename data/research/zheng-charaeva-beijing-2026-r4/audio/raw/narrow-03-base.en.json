@@ -1,0 +1,110 @@
+{
+  "model": "base.en",
+  "source_from": 154,
+  "source_to": 160,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 1.4599999999999995,
+      "end": 5.4,
+      "text": " Oh, the forehand exquisite, it finds its way through.",
+      "tokens": [
+        50363,
+        3966,
+        11,
+        262,
+        1674,
+        4993,
+        40123,
+        11,
+        340,
+        7228,
+        663,
+        835,
+        832,
+        13,
+        50663
+      ],
+      "avg_logprob": -0.6004337221384048,
+      "compression_ratio": 0.9137931034482759,
+      "no_speech_prob": 0.1877371221780777,
+      "words": [
+        {
+          "start": 1.4599999999999995,
+          "end": 2.1,
+          "word": " Oh,",
+          "probability": 0.27981430292129517
+        },
+        {
+          "start": 2.8,
+          "end": 2.9,
+          "word": " the",
+          "probability": 0.8397745490074158
+        },
+        {
+          "start": 2.9,
+          "end": 3.44,
+          "word": " forehand",
+          "probability": 0.9920142590999603
+        },
+        {
+          "start": 3.44,
+          "end": 4.0,
+          "word": " exquisite,",
+          "probability": 0.4460352957248688
+        },
+        {
+          "start": 4.34,
+          "end": 4.48,
+          "word": " it",
+          "probability": 0.858065664768219
+        },
+        {
+          "start": 4.48,
+          "end": 4.7,
+          "word": " finds",
+          "probability": 0.9981585144996643
+        },
+        {
+          "start": 4.7,
+          "end": 4.92,
+          "word": " its",
+          "probability": 0.9155678153038025
+        },
+        {
+          "start": 4.92,
+          "end": 5.1,
+          "word": " way",
+          "probability": 0.9982376098632812
+        },
+        {
+          "start": 5.1,
+          "end": 5.4,
+          "word": " through.",
+          "probability": 0.9945265650749207
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

@@ -1,0 +1,300 @@
+{
+  "model": "medium.en",
+  "source_from": 285,
+  "source_to": 297.28,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 1.6199999999999988,
+      "end": 6.0,
+      "text": " Dominating the opening set, but had to gut out a win in two hours and 11 minutes.",
+      "tokens": [
+        50363,
+        9666,
+        6010,
+        262,
+        4756,
+        900,
+        11,
+        475,
+        550,
+        284,
+        12500,
+        503,
+        257,
+        1592,
+        287,
+        734,
+        2250,
+        290,
+        1367,
+        2431,
+        13,
+        50663
+      ],
+      "avg_logprob": -0.22819797155704905,
+      "compression_ratio": 1.288888888888889,
+      "no_speech_prob": 0.2523680329322815,
+      "words": [
+        {
+          "start": 1.6199999999999988,
+          "end": 2.06,
+          "word": " Dominating",
+          "probability": 0.642734095454216
+        },
+        {
+          "start": 2.06,
+          "end": 2.26,
+          "word": " the",
+          "probability": 0.9899939894676208
+        },
+        {
+          "start": 2.26,
+          "end": 2.54,
+          "word": " opening",
+          "probability": 0.9939007759094238
+        },
+        {
+          "start": 2.54,
+          "end": 2.98,
+          "word": " set,",
+          "probability": 0.9942324757575989
+        },
+        {
+          "start": 3.08,
+          "end": 3.48,
+          "word": " but",
+          "probability": 0.9686066508293152
+        },
+        {
+          "start": 3.48,
+          "end": 3.68,
+          "word": " had",
+          "probability": 0.9891314506530762
+        },
+        {
+          "start": 3.68,
+          "end": 3.84,
+          "word": " to",
+          "probability": 0.9906050562858582
+        },
+        {
+          "start": 3.84,
+          "end": 4.04,
+          "word": " gut",
+          "probability": 0.7756281495094299
+        },
+        {
+          "start": 4.04,
+          "end": 4.26,
+          "word": " out",
+          "probability": 0.9707819223403931
+        },
+        {
+          "start": 4.26,
+          "end": 4.4,
+          "word": " a",
+          "probability": 0.9915551543235779
+        },
+        {
+          "start": 4.4,
+          "end": 4.56,
+          "word": " win",
+          "probability": 0.9964847564697266
+        },
+        {
+          "start": 4.56,
+          "end": 4.76,
+          "word": " in",
+          "probability": 0.9786849021911621
+        },
+        {
+          "start": 4.76,
+          "end": 4.92,
+          "word": " two",
+          "probability": 0.5840786099433899
+        },
+        {
+          "start": 4.92,
+          "end": 5.22,
+          "word": " hours",
+          "probability": 0.9946445226669312
+        },
+        {
+          "start": 5.22,
+          "end": 5.4,
+          "word": " and",
+          "probability": 0.9738787412643433
+        },
+        {
+          "start": 5.4,
+          "end": 5.6,
+          "word": " 11",
+          "probability": 0.661575198173523
+        },
+        {
+          "start": 5.6,
+          "end": 6.0,
+          "word": " minutes.",
+          "probability": 0.9965798258781433
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 6.64,
+      "end": 11.84,
+      "text": " And Zheng Qinwen, for the second time in four appearances, is a quarter-finalist in Beijing.",
+      "tokens": [
+        50663,
+        843,
+        44583,
+        31482,
+        21006,
+        11,
+        329,
+        262,
+        1218,
+        640,
+        287,
+        1440,
+        11057,
+        11,
+        318,
+        257,
+        3860,
+        12,
+        20311,
+        396,
+        287,
+        11618,
+        13,
+        50963
+      ],
+      "avg_logprob": -0.22819797155704905,
+      "compression_ratio": 1.288888888888889,
+      "no_speech_prob": 0.2523680329322815,
+      "words": [
+        {
+          "start": 6.64,
+          "end": 6.64,
+          "word": " And",
+          "probability": 0.8379775881767273
+        },
+        {
+          "start": 6.64,
+          "end": 6.82,
+          "word": " Zheng",
+          "probability": 0.1753237396478653
+        },
+        {
+          "start": 6.82,
+          "end": 7.28,
+          "word": " Qinwen,",
+          "probability": 0.420770694501698
+        },
+        {
+          "start": 7.38,
+          "end": 7.6,
+          "word": " for",
+          "probability": 0.9960759282112122
+        },
+        {
+          "start": 7.6,
+          "end": 7.74,
+          "word": " the",
+          "probability": 0.9971861243247986
+        },
+        {
+          "start": 7.74,
+          "end": 8.02,
+          "word": " second",
+          "probability": 0.9841210842132568
+        },
+        {
+          "start": 8.02,
+          "end": 8.42,
+          "word": " time",
+          "probability": 0.9978281855583191
+        },
+        {
+          "start": 8.42,
+          "end": 8.56,
+          "word": " in",
+          "probability": 0.9653492569923401
+        },
+        {
+          "start": 8.56,
+          "end": 8.8,
+          "word": " four",
+          "probability": 0.9747451543807983
+        },
+        {
+          "start": 8.8,
+          "end": 9.28,
+          "word": " appearances,",
+          "probability": 0.9997586607933044
+        },
+        {
+          "start": 9.82,
+          "end": 9.94,
+          "word": " is",
+          "probability": 0.9958394765853882
+        },
+        {
+          "start": 9.94,
+          "end": 10.18,
+          "word": " a",
+          "probability": 0.9896156787872314
+        },
+        {
+          "start": 10.18,
+          "end": 10.4,
+          "word": " quarter",
+          "probability": 0.9737179279327393
+        },
+        {
+          "start": 10.4,
+          "end": 11.04,
+          "word": "-finalist",
+          "probability": 0.7540974219640096
+        },
+        {
+          "start": 11.04,
+          "end": 11.44,
+          "word": " in",
+          "probability": 0.9937171936035156
+        },
+        {
+          "start": 11.44,
+          "end": 11.84,
+          "word": " Beijing.",
+          "probability": 0.9997865557670593
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

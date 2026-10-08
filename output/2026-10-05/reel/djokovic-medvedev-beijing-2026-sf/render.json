@@ -1,0 +1,84 @@
+{
+  "scoreboard_qc_sha256": "9a7eaec86b8dc8035bc6c377220cbc209fd6932cc7498ed71fc91daaab92a195",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 345.86,
+  "topbar": {
+    "line1": "2026 ATP500 北京 半决赛",
+    "line2": "德约科维奇 7-5 5-3 DQ 梅德韦杰夫",
+    "start": 1.2,
+    "end": 347.06
+  },
+  "film_seconds": 350.92,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 12.264,
+    "4": 10.488,
+    "6": 12.072,
+    "7": 6.72,
+    "9": 7.248,
+    "12": 9.576,
+    "15": 13.896,
+    "16": 8.736,
+    "17": 8.376
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "c81ded6b9dfc47c55439aa90f4d71fdfad0a231226d16c9906ebbaef23e81100",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "djokovic-medvedev-beijing-2026-sf",
+    "received_at": "2026-10-05T14:33:00Z",
+    "artifact_ready_at": "2026-10-05T15:25:03Z",
+    "elapsed_seconds": 3123.093,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "1901668d350269b5f4c8e6b08184dd8a67fb927cdfc3eb7ebb26cfcb5a54554d",
+    "spec_sha256": "2d15f13129ccaf438c124d262fd603080961fd4fc18e8759ac0f94123b3c6d7e",
+    "run_id": "37331583130",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-05T15:19:55Z",
+        "run_id": "37331583130"
+      }
+    ],
+    "render_seconds": 308.093,
+    "pre_render_seconds": 2815.0
+  },
+  "film_sha256": "1901668d350269b5f4c8e6b08184dd8a67fb927cdfc3eb7ebb26cfcb5a54554d",
+  "film_bytes": 99996772,
+  "qc_attestation_sha256": "b7edb1d834435417577653bb2195fff3165141b3d569efa094a37443cce32008",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-05T15:19:55Z",
+      "run_id": "37331583130"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-05T15:25:04Z",
+      "run_id": "37331583130"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-djokovic-medvedev-beijing-2026-sf/djokovic-medvedev-beijing-2026-sf.mp4",
+  "video_bytes": 99996772
+}

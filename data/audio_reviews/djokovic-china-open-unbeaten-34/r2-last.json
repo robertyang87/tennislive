@@ -1,0 +1,55 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_path": "/workspace/video-review/djokovic-34-sources/U_XusSb_NV4.mp4",
+  "source_sha256": "673d3da510de9c7fd9ad930cb03d3a937c32703f18eea4194d3698710604d7e8",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:59.082105+00:00",
+  "reviewed_from": 213.3,
+  "reviewed_to": 234.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 218.64,
+      "end": 223.66,
+      "en": "Novak Djokovic keeps his streak alive here in Beijing.",
+      "zh": "德约延续了在北京的不败纪录。"
+    },
+    {
+      "start": 225.02,
+      "end": 228.04,
+      "en": "31 and 0 now for Djokovic.",
+      "zh": "现在，德约三十一胜、零负。"
+    },
+    {
+      "start": 230.9,
+      "end": 234.24,
+      "en": "At times it didn't look like it was going to happen today.",
+      "zh": "今天有些时候，真让人捏了一把汗。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/r2-last.targeted.small.en.json",
+      "sha256": "08cb40dc7efe4407bba982c0668edb8b56bfe41e5bf3bef267b615a707d75275"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/r2-last.targeted.base.en.json",
+      "sha256": "25d32cb1f1f7a23e07d87e18d5852899cb58f7fd29d37d5e8c11486c2e54c1c3"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/U_XusSb_NV4.small.en.json",
+      "sha256": "b4c53702453d49a701b5ec8920d5d65248084ff1a37b2f41a84584a93559a8f7"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/U_XusSb_NV4.base.en.json",
+      "sha256": "ed4cd0fb012123526792ec3214a701b8e998673568378c9b1b36c4525ad969b4"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Novak and 31 and 0 are proper-name/number normalizations of base.en phonetic No back/Nuno variants, independently confirmed by small.en and full-source model runs. Full selected speech including final today retained."
+  ]
+}

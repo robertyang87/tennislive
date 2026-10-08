@@ -1,0 +1,91 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/i1LtteR8jd0.mp4",
+  "source_sha256": "551d24ac4ffc3ad4a2a202cf178a2ca5f4488e1675f5e63f9a409b10e7a4cc1b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:58.068624+00:00",
+  "reviewed_from": 236,
+  "reviewed_to": 271.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 241.5,
+      "end": 243.88,
+      "en": "Djokovic defends his title.",
+      "zh": "德约科维奇成功卫冕。"
+    },
+    {
+      "start": 244.08,
+      "end": 248.8,
+      "en": "It's a record fourth trophy in Beijing for Novak Djokovic.",
+      "zh": "他在北京拿到创纪录的第四座奖杯。"
+    },
+    {
+      "start": 249.02,
+      "end": 251.8,
+      "en": "He's still unbeaten at this tournament.",
+      "zh": "他在这项赛事依然保持不败。"
+    },
+    {
+      "start": 252.26,
+      "end": 254.2,
+      "en": "Nineteen successive victories.",
+      "zh": "连续十九场获胜。"
+    },
+    {
+      "start": 255.7,
+      "end": 259.26,
+      "en": "And it was a well-earned victory this afternoon against Rafael Nadal.",
+      "zh": "今天他战胜纳达尔，赢得实至名归。"
+    },
+    {
+      "start": 259.4,
+      "end": 261.4,
+      "en": "The Serbian was the better man.",
+      "zh": "这位塞尔维亚人表现更胜一筹。"
+    },
+    {
+      "start": 263.04,
+      "end": 265.9,
+      "en": "And now the celebrations can begin in earnest.",
+      "zh": "现在可以尽情庆祝了。"
+    },
+    {
+      "start": 266.18,
+      "end": 268.28,
+      "en": "Djokovic is the king in Beijing.",
+      "zh": "德约科维奇是北京之王。"
+    },
+    {
+      "start": 268.58,
+      "end": 271.24,
+      "en": "He wins 6-3, 6-4.",
+      "zh": "他以六比三、六比四获胜。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2013.targeted.small.en.json",
+      "sha256": "54dbad1476d4d967e786b1584494f20a6a9ff239b4c9cb5a788fe37708da30c4"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2013.targeted.base.en.json",
+      "sha256": "6f17959d1d8dcf6b7c8f062784a897dd41b70d1e61dd1a36141d42ea327b38b0"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.small.en.json",
+      "sha256": "5a238cc9dd893765a91d9e4b52a4736d44ef8c63a557e9b963f217556bffb421"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.base.en.json",
+      "sha256": "2a244e17345546b503bb82ced850538fa1225f98942c28ccfbd9108cfd803513"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "earnest: base.en phonetic Ernest; full-source small.en and year-window small.en both earnest. Serbian was the better man agreed by both no-VAD year-window models."
+  ]
+}

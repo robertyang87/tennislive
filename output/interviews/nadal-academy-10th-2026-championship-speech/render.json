@@ -1,0 +1,96 @@
+{
+  "assembly": {
+    "parts": [
+      {
+        "role": "cover",
+        "file": "_cover.mp4",
+        "seconds": 2.0
+      },
+      {
+        "role": "body",
+        "file": "_body.mp4",
+        "seconds": 177.16
+      },
+      {
+        "role": "takeaway_close",
+        "file": "_takeaway_close.mp4",
+        "seconds": 5.28,
+        "peak_db": -8.8
+      },
+      {
+        "role": "outro",
+        "file": "_outro.mp4",
+        "seconds": 4.2,
+        "peak_db": -8.5
+      }
+    ]
+  },
+  "seams": {
+    "count": 3,
+    "transition": "dissolve",
+    "dissolve_s": 0.18
+  },
+  "film_sha256": "4d182944319b68b4bd79f5bdb7195b0c966e7c71c8768a771f40d03517dc933f",
+  "film_seconds": 188.04,
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "unknown",
+        "name": null,
+        "similarity": {},
+        "missing": [
+          "纳达尔"
+        ],
+        "expected": [
+          "纳达尔"
+        ],
+        "face": [
+          684,
+          130,
+          986,
+          551
+        ],
+        "face_px": 420.3,
+        "reason": "没有可比的官方头像：纳达尔",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2336,
+        "ear_each": [
+          0.2328,
+          0.2343
+        ],
+        "face": [
+          684,
+          130,
+          986,
+          551
+        ],
+        "face_px": 420.3,
+        "reason": "眼睛纵横比 0.23 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "warnings": [
+        "认人拿不准：没有可比的官方头像：纳达尔"
+      ]
+    },
+    "warnings": [
+      "认人拿不准：没有可比的官方头像：纳达尔"
+    ]
+  },
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-nadal-academy-10th-2026-championship-speech/nadal-academy-10th-2026-championship-speech.mp4",
+  "video_bytes": 69347277,
+  "release_asset_digest": "sha256:4d182944319b68b4bd79f5bdb7195b0c966e7c71c8768a771f40d03517dc933f",
+  "qc_attestation_sha256": "b76d689d07bc2a1443e85af1b25a0ae687e71fa400710e6717c181179a2b9cd9"
+}

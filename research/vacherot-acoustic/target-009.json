@@ -1,0 +1,395 @@
+{
+  "id": "target-009",
+  "label": "第 3 段",
+  "display_char": "差",
+  "actual_tts_char": "差",
+  "position": 15,
+  "context": "界前一百，只差三十个积分。",
+  "word": "差",
+  "intended": "cha4",
+  "common_contrast": "cha1",
+  "unmeasured_other_readings": [
+    "chai1",
+    "ci1"
+  ],
+  "semantic_override": null,
+  "tts_text": "二零二四年，他离世界前一百，只差三十个积分。右肩伤，却让他停赛半年。第二年，排名跌到二百六十七，温网资格赛又摔伤退赛。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "差",
+    "char": "差",
+    "sentence": "二零二四年，他离世界前一百，只差三十个积分。右肩伤，却让他停赛半年。第二年，排名跌到二百六十七，温网资格赛又摔伤退赛。",
+    "tts_text": "二零二四年，他离世界前一百，只差三十个积分。右肩伤，却让他停赛半年。第二年，排名跌到二百六十七，温网资格赛又摔伤退赛。",
+    "intended_refs": [
+      "岔",
+      "诧"
+    ],
+    "wrong_refs": [
+      "锸",
+      "叉"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "high",
+    "verdict_raw": "correct",
+    "score": 0.989,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 2.663,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.021,
+        "d_wrong": 2.621,
+        "score": 0.984
+      },
+      "comb": {
+        "d_intended": 0.021,
+        "d_wrong": 3.953,
+        "score": 0.989
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.021,
+      "wrong": 2.553
+    },
+    "separation": {
+      "spec": {
+        "within": 0.0,
+        "between": 2.666,
+        "separation": null
+      },
+      "f0": {
+        "within": 0.105,
+        "between": 2.581,
+        "separation": 24.473
+      },
+      "comb": {
+        "within": 0.105,
+        "between": 3.914,
+        "separation": 37.114
+      }
+    },
+    "selftest_loo": {
+      "岔": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.954
+      },
+      "诧": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.955
+      },
+      "锸": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.94
+      },
+      "叉": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.939
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:岔": {
+        "spec": 0.0,
+        "f0": 0.112,
+        "vmis": 0.0,
+        "frames": 28,
+        "comb": 0.112
+      },
+      "A:诧": {
+        "spec": 0.0,
+        "f0": 0.021,
+        "vmis": 0.0,
+        "frames": 28,
+        "comb": 0.021
+      },
+      "B:锸": {
+        "spec": 2.663,
+        "f0": 2.667,
+        "vmis": 0.138,
+        "frames": 29,
+        "comb": 3.999
+      },
+      "B:叉": {
+        "spec": 2.663,
+        "f0": 2.621,
+        "vmis": 0.138,
+        "frames": 29,
+        "comb": 3.953
+      }
+    },
+    "window_s": [
+      2.828,
+      3.097
+    ],
+    "boundary_token": "差",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "二零二四年",
+        "他",
+        "离",
+        "世界",
+        "前",
+        "一百",
+        "只",
+        "差",
+        "三十",
+        "个",
+        "积分",
+        "右",
+        "肩伤",
+        "却",
+        "让",
+        "他",
+        "停赛",
+        "半年",
+        "第二",
+        "年",
+        "排名",
+        "跌",
+        "到",
+        "二百六十七",
+        "温网",
+        "资格",
+        "赛",
+        "又",
+        "摔伤",
+        "退赛"
+      ],
+      "A:岔": [
+        "二零二四年",
+        "他",
+        "离",
+        "世界",
+        "前",
+        "一百",
+        "只",
+        "岔",
+        "三十",
+        "个",
+        "积分",
+        "右",
+        "肩伤",
+        "却",
+        "让",
+        "他",
+        "停赛",
+        "半年",
+        "第二",
+        "年",
+        "排名",
+        "跌",
+        "到",
+        "二百六十七",
+        "温网",
+        "资格",
+        "赛",
+        "又",
+        "摔伤",
+        "退赛"
+      ],
+      "A:诧": [
+        "二零二四年",
+        "他",
+        "离",
+        "世界",
+        "前",
+        "一百",
+        "只",
+        "诧",
+        "三十",
+        "个",
+        "积分",
+        "右",
+        "肩伤",
+        "却",
+        "让",
+        "他",
+        "停赛",
+        "半年",
+        "第二",
+        "年",
+        "排名",
+        "跌",
+        "到",
+        "二百六十七",
+        "温网",
+        "资格",
+        "赛",
+        "又",
+        "摔伤",
+        "退赛"
+      ],
+      "B:锸": [
+        "二零二四年",
+        "他",
+        "离",
+        "世界",
+        "前",
+        "一百",
+        "只",
+        "锸",
+        "三十",
+        "个",
+        "积分",
+        "右",
+        "肩伤",
+        "却",
+        "让",
+        "他",
+        "停赛",
+        "半年",
+        "第二",
+        "年",
+        "排名",
+        "跌",
+        "到",
+        "二百六十七",
+        "温网",
+        "资格",
+        "赛",
+        "又",
+        "摔伤",
+        "退赛"
+      ],
+      "B:叉": [
+        "二零二四年",
+        "他",
+        "离",
+        "世界",
+        "前",
+        "一百",
+        "只",
+        "叉",
+        "三十",
+        "个",
+        "积分",
+        "右",
+        "肩伤",
+        "却",
+        "让",
+        "他",
+        "停赛",
+        "半年",
+        "第二",
+        "年",
+        "排名",
+        "跌",
+        "到",
+        "二百六十七",
+        "温网",
+        "资格",
+        "赛",
+        "又",
+        "摔伤",
+        "退赛"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -2.2,
+        -3.1,
+        -4.9,
+        -5.3,
+        -6.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -5.4,
+        -9.5,
+        null
+      ],
+      "A:岔": [
+        -2.3,
+        -3.2,
+        -5.0,
+        -5.4,
+        -6.6,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -5.5,
+        -9.6,
+        null
+      ],
+      "A:诧": [
+        -2.3,
+        -3.2,
+        -4.9,
+        -5.3,
+        -6.6,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -5.4,
+        -9.5,
+        null
+      ],
+      "B:锸": [
+        -3.0,
+        -4.7,
+        -5.8,
+        -6.2,
+        -7.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -0.7,
+        -1.1,
+        -0.9,
+        -0.6
+      ],
+      "B:叉": [
+        -2.8,
+        -4.6,
+        -5.7,
+        -6.0,
+        -7.4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -0.6,
+        -0.9,
+        -0.8,
+        -0.5
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/7fe83fb48ae7506f926e71db.mp3",
+      "A:岔": "/workspace/tennislive/research/vacherot-acoustic/references/8eee88ef345a8ca7028cac12.mp3",
+      "A:诧": "/workspace/tennislive/research/vacherot-acoustic/references/dad376de2506244c887361f0.mp3",
+      "B:锸": "/workspace/tennislive/research/vacherot-acoustic/references/598a8064af89c4bc1e2d7517.mp3",
+      "B:叉": "/workspace/tennislive/research/vacherot-acoustic/references/5883416ed040f00dbfa6347a.mp3"
+    }
+  }
+}

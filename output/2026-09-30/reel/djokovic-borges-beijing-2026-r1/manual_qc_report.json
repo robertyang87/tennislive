@@ -1,0 +1,82 @@
+{
+  "video_stream_sha256": "039db02563fab33dbb260110d8fbe53f481fbdbc6bdf401945fb8119e3e95132",
+  "pixel_review_binding": "62samples reviewed before audio-only fix; all5158encoded video packets verified identical after repair",
+  "status": "pass",
+  "checked_at_utc": "2026-09-30T17:08:49.562651+00:00",
+  "film_sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+  "spec_sha256": "441ec04eee9ede070b9008fe78b4ee9ee34f7cfafcf49dcb76d81d27f792ad7d",
+  "ass_sha256": "c2d9f4d0b6f15afbeb8573d1aaa1a500fe980bb6cdd289b9b8543770a7e8c84a",
+  "film_bytes": 101054067,
+  "reviewer": "Actual final-frame manual inspection plus native deterministic QC; no DeepSeek/MiniMax",
+  "manual_visual_review": {
+    "count": 62,
+    "sampling": "Every subtitle cue midpoint, plus cover, last word, transition, brand outro and both Chinese/original-English handoff edges",
+    "contact_sheets": [
+      {
+        "file": "actual_bilingual_contact_1.jpg",
+        "sha256": "3348c191a489b817c9499c0ecf6c37e781bd844db87de9d30e78902f13c33f9b"
+      },
+      {
+        "file": "actual_bilingual_contact_2.jpg",
+        "sha256": "e93cde0b863a96195c4cb9b3ee157879494eb07c77e37dae1c0e959c57824677"
+      },
+      {
+        "file": "actual_bilingual_contact_3.jpg",
+        "sha256": "c57348196767fddba2077f28802892d237242bb56cc63f44917d04ccef8832dc"
+      },
+      {
+        "file": "actual_bilingual_contact_4.jpg",
+        "sha256": "2fd07b23a21f6515a4402299d72773e4f53872c211b3fe771bd147192df59259"
+      },
+      {
+        "file": "actual_bilingual_contact_5.jpg",
+        "sha256": "989aa08ff813519a2e408f7b73cff70eb4a2ed42465fd207b1168abe5b5eee9d"
+      },
+      {
+        "file": "actual_bilingual_contact_6.jpg",
+        "sha256": "34d55198bd9ecab1ce271075bb0baddd6ea7d0af84c7858250994dc17026418d"
+      }
+    ],
+    "review": "Inspected actual encoded video frames: Chinese TTS has Chinese only; original English commentary has English above Chinese. All actual final cue samples reviewed; readable and separate from scoreboard, no overlapping subtitle roles."
+  },
+  "cover": {
+    "poster_sha256": "83a2facc90ac54b478cd8d0f169661ad4efcaec88dd309badc28648660c252b8",
+    "selected_accent": "#FFD600",
+    "accent_text": "30战全胜",
+    "additional_outline_or_background": false
+  },
+  "framing": {
+    "cx": 0.5,
+    "track": false,
+    "unchanged_segments": 8,
+    "middle_motion_recaps": [
+      {
+        "film": [
+          45.12,
+          52.12
+        ],
+        "source": [
+          64.16,
+          67.66
+        ],
+        "speed": 0.5
+      },
+      {
+        "film": [
+          63.82,
+          71.42
+        ],
+        "source": [
+          144.94,
+          148.74
+        ],
+        "speed": 0.5
+      }
+    ],
+    "extended_last_segment_seconds": 0.6
+  },
+  "known_limitations": [
+    "Broadcast transcripts checked against prior localASR evidence, not claimed full manual audio listening",
+    "No physical iPhone Photos import test"
+  ]
+}

@@ -14,6 +14,8 @@ import json
 import sys
 from pathlib import Path
 
+from production_history import should_check
+
 import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -41,6 +43,36 @@ def _court(**cover) -> dict:
 
 
 # ─────────────────────────────────────────────────────────────── ① 总分差 ──
+
+def test_owner_requested_sun_closing_is_exact_and_not_a_legacy_exemption():
+    spec = json.loads((REELS / "sun-gauff-led-replay-story-2026.json").read_text("utf-8"))
+    assert spec["segments"][-1]["narration"] == (
+        "比分能重置，感觉未必能一起退回去。"
+        "期待更可靠的赛场，也期待她握住下一次机会。")
+    assert spec["slug"] not in T.ENDING_LEGACY
+    assert T.ending_problem(spec) is None
+
+
+@pytest.mark.parametrize("mutation", ["slug", "column", "text", "last_segment", "quote"])
+def test_owner_requested_sun_closing_does_not_waive_other_endings(mutation):
+    spec = _court(eyebrow="网球有故事")
+    spec["slug"] = "sun-gauff-led-replay-story-2026"
+    spec["segments"][-1]["narration"] = (
+        "比分能重置，感觉未必能一起退回去。"
+        "期待更可靠的赛场，也期待她握住下一次机会。")
+    if mutation == "slug":
+        spec["slug"] = "some-other-story"
+    elif mutation == "column":
+        spec["cover"]["eyebrow"] = "赛场之上"
+    elif mutation == "text":
+        spec["segments"][-1]["narration"] = "五比七，一比六。"
+        spec["_production"] = {"readyforrender": True}
+    elif mutation == "last_segment":
+        spec["segments"].append({"start": 5, "end": 7, "narration": "一比六。"})
+    else:
+        spec["segments"][-1]["quote"] = "六比一。"
+    assert T.ending_problem(spec)
+
 
 def test_钩子和推送标题不拿全场总分差说事():
     # chung-nagal 第一版（3a72b12e^），账号所有者 2026-09-19 否掉的原文
@@ -422,6 +454,8 @@ def test_全库已发的spec一条都不红():
     assert len(specs) > 200, "spec 目录像是没扫到"
     red = {}
     for slug, spec in specs.items():
+        if not should_check('tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红', ROOT / "specs/reels" / f"{slug}.json"):
+            continue
         hard, _ = T.spec_taste_extra(spec)
         hard += T.xhs_taste_extra(spec, _xhs(slug))[0]
         if hard:

@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-30T09:49:07Z",
+  "slug": "khachanov-auger-aliassime-beijing-2026-r1",
+  "spec_sha256": "717f271fa2215b0551b9fdebc1596445f3951359365b2d0613c511dad2f610e3",
+  "ass_sha256": "5959640715ca633097bc893f7bcb9cb6e13ac9edae36c3509ef29bbcaa240086",
+  "film_sha256": "2277310059c9c3abf19b57ec23b376563efb1fbcc6cf90a17fdcd3d71c3f96df",
+  "film_bytes": 69169621,
+  "checks": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "silence_floor_db": -60.0,
+    "ending_payoff": "pass",
+    "audio_tail_max_s": 1.0
+  },
+  "render_inputs_sha256": "ee53161ff010942a098cef3c089436f87e42f7ad6680b261c9e496610a3b1254",
+  "reattest": {
+    "previous_attestation_sha256": "27846425bfb022fde77ff539d6462ae5f03af994835c92005d1c5e9ef8901ee9",
+    "previous_spec_sha256": "25270df9c6b6cbbd4ce121afaaa8a2e4c30a96ce61f866067e989bec2dc4960b",
+    "render_spec_sha256": "25270df9c6b6cbbd4ce121afaaa8a2e4c30a96ce61f866067e989bec2dc4960b",
+    "projection_sha256": "a95f93972aaf9d9c83fd2ec1ed46fc638a32cb09a76dc1008076eeb7126ef8ca",
+    "film_verified": "release-sha256",
+    "run": ""
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "checked_at": "2026-10-05T16:59:27.562177+00:00",
+  "target": "Sun Xinran vs Coco Gauff, 2026 Beijing Round3, October5,2026",
+  "source_url": "https://www.youtube.com/watch?v=Wg6m85wS3Ps",
+  "cover_target": "Sun Xinran",
+  "decision": "用户追加要求高清照片后采用本届首轮孙心然WTA3711×2304无水印人物照作封面与统计头像；高芙统计头像用本场WTA7136×4760原图。不是本场孙抓拍，元数据与裁切实检见visual/*-hd-photo-provenance.json。原1080p帧未采用。",
+  "channels": [
+    {
+      "channel": "WTA content photo API",
+      "status": "queried fully by Sun id335958 (4 records, numPages1); latest100global also checked",
+      "evidence": "sun-photos-final.json and photos.json",
+      "result": "Sun tagged photos are Oct3 R2, Oct1 R1 and USOpen. Global feed extra Oct4 upload Xinran_Sun_China_Open_2026_Day_2 is earlier round; no Oct5 highres Sun. Latest current image is Gauff Getty2298128962 7136x4760, wrong target."
+    },
+    {
+      "channel": "WTA Match Reaction / official highlight pages",
+      "status": "queried latest100 text/video + direct full-match report4587000",
+      "evidence": "4587000-article.json;4587018-video.json",
+      "result": "Current thumbnail highres target Gauff. Sun R2 head-image4944x3296 is old match, excluded."
+    },
+    {
+      "channel": "China Open official event website",
+      "status": "English homepage plus day6 official report740 and articles736..739 fetched; Chinese homepage and latestnews1640..1644; next1645..1652 return homepage identical shell",
+      "evidence": "china-open.html;china-en-740.html;china-cn.txt;china-cn-1644.html",
+      "result": "English day6 report confirms result but displayed images are other day6 subjects. Chinese latest source has preview/night scheduled match, current result article not found. No same-match Sun highres obtained."
+    },
+    {
+      "channel": "AP news official/agency",
+      "status": "repository find_cover_photo --player Sun --event Beijing --date2026-10-05 ran AP searches+tennis hub",
+      "result": "Only unrelated Djokovic China Open photo returned; target Sun not obtained. Not an absolute no-photo claim."
+    },
+    {
+      "channel": "Getty Images (regular agency channel)",
+      "status": "Current Sun search page plus direct detail2298129250 and current Gauff2298128962 fetched; match captions saved",
+      "evidence": "getty-search.html;getty-same-match-candidates.json;getty-sun-detail.html",
+      "result": "Sun current actual match photos definitely exist (Fred Lee2298129250 reaction,2298125682 portrait action,2298131309 action,2298135387/5367/5619 leaving court; AFP2298137197/5700/5803). Public no-watermark preview612, highres2048 w=gi contains Getty watermark. No licensed unwatermarked original obtained. Agency preview not substitute for crisp cover."
+    },
+    {
+      "channel": "Chinese media / WeChat",
+      "status": "repository find_cover_photo queried Sogou three term groups, 29distinct returned,21date/name retained; direct article attempts network403",
+      "result": "Read failure, not empty content; no fullres image obtained. mp.weixin.qq.com403 blocks current article fetch. Do not claim fully read."
+    },
+    {
+      "channel": "CCTV native search and broader web",
+      "status": "CCTV search Sun/Gauff and Sun latest; Bing query results; Sogou web challenge",
+      "evidence": "cctv-search.html;cctv-sun-latest.html;search-0.json",
+      "result": "Initial CCTV search only Dec15,2025 olderSun article; latest search pending/review. Bing narrow queries returned identical broad earlier-round results despite filters; not usable proof of no image. Sogou web challenge, no bypass."
+    }
+  ],
+  "four_category_fallback_reason": "赛事官网与WTA官方图库/赛后稿及视频头图已查，未取得10月5日本场孙心然高清无水印实拍；AP检索未返回本人本场图；Getty本场实拍存在但公开高清为带水印版本、无水印仅612px预览；中文媒体搜狗微信查到本场文章但正文连接403，CCTV/native搜索未取本场高清图。按账号所有者2026-09-26常设授权，使用本场WTA官方原生1920x1080源片孙心然近景抽帧，记录frame_at、原尺寸、裁切与身份/睁眼核验，不使用旧轮次照片。",
+  "initial_decision": "No same-match Sun official high-resolution unwatermarked image obtained in bounded search. Do not use October3 R2 or October1 R1 photos as current match. Owner standing Sept26 fallback: original current official video close-up/frame, selected and validated by production agents."
+}

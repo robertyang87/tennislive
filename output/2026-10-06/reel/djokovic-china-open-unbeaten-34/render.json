@@ -1,0 +1,50 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 4.594,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 460.676,
+  "topbar": null,
+  "film_seconds": 469.12,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 6.504,
+    "2": 7.92,
+    "5": 6.888,
+    "8": 5.928,
+    "12": 5.664,
+    "13": 6.456,
+    "16": 5.52,
+    "19": 7.752,
+    "20": 7.776,
+    "21": 6.912,
+    "22": 6.816,
+    "25": 6.336,
+    "27": 8.4,
+    "31": 6.312,
+    "33": 4.056
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "unavailable",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）",
+      "report_only": true,
+      "warnings": [
+        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）"
+      ]
+    }
+  },
+  "render_inputs_sha256": "cd4213729250a6671a107cadb05f92a743e678747913b0c63b5f251f20927e81",
+  "film_sha256": "84eab146ff3724cf9c1ddfbd45220169a12787b0bcf3be80a3858f066b71f7e6",
+  "film_bytes": 363736064,
+  "qc_attestation_sha256": "8d2f49198a71f625a013c48d33e21c05e08b71f2467151fbdba04884e230f915",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-djokovic-china-open-unbeaten-34/djokovic-china-open-unbeaten-34.mp4",
+  "video_bytes": 363736064
+}

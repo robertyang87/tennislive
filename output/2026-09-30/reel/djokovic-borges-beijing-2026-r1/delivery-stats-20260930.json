@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "kind": "delivery-stats-correction",
+  "slug": "djokovic-borges-beijing-2026-r1",
+  "film_sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+  "source": {
+    "provider": "TNNS Live",
+    "method": "User-provided screenshot; Match/full-match tab, both player names and score visible",
+    "source_sha256": "19c9537840fc326ae81274f9b4e0f085c90c92ddb0b04c2e27ce6048443f018e",
+    "checked_at": "2026-09-30T17:40:34Z",
+    "match_date": "2026-09-30",
+    "winner_result": "6-3 7-6(2)",
+    "screenshot_column_order": [
+      "Nuno Borges",
+      "Novak Djokovic"
+    ],
+    "crosscheck": "Screenshot Match selected, China Open R32, both full names and score. Aces 3/8, DF2/2, first in36/65 vs48/68, first won27/36 vs42/48 agree with retained Flashscore feed."
+  },
+  "corrected_stats": {
+    "a": {
+      "aces": 8,
+      "df": 2,
+      "first_in": 48,
+      "first_total": 68,
+      "first_won": 42,
+      "second_total": 20,
+      "second_won": 9,
+      "bp_conv": 1,
+      "bp_chances": 2,
+      "pts_won": 74,
+      "pts_total": 133,
+      "headshot": "assets/players/headshots/djokovic-beijing-2026-r1.png",
+      "winners": 23,
+      "ue": 23,
+      "name": "Novak Djokovic"
+    },
+    "b": {
+      "aces": 3,
+      "df": 2,
+      "first_in": 36,
+      "first_total": 65,
+      "first_won": 27,
+      "second_total": 29,
+      "second_won": 15,
+      "bp_conv": 0,
+      "bp_chances": 2,
+      "pts_won": 59,
+      "pts_total": 133,
+      "headshot": "assets/players/headshots/borges-beijing-2026-r1.png",
+      "winners": 24,
+      "ue": 26,
+      "name": "Nuno Borges"
+    }
+  },
+  "card": {
+    "name": "stat_card.theme-stats-20260930.jpg",
+    "bytes": 996356,
+    "sha256": "cf645c50e8a0e9b03da2d03b607d6652515636417ecf051c426126990968efe8",
+    "size": [
+      2160,
+      3840
+    ]
+  },
+  "scope": "Adds verified winners and unforced errors to delivery card only; original frozen video/spec/stat card/QC and previous receipts preserved"
+}

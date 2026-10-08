@@ -1,0 +1,28 @@
+{
+  "status": "restored_verified",
+  "stable_release_id": 402706324,
+  "stable_release_tag": "reel-zheng-kalinskaya-beijing-2026-r2",
+  "asset_id": 608968691,
+  "asset_name": "zheng-kalinskaya-beijing-2026-r2.mp4",
+  "asset_bytes": 67113729,
+  "asset_digest": "sha256:775b10396cb8622f1d6a7f950702f7f48d1a97d563122ce9f2b7fa2030900236",
+  "stable_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zheng-kalinskaya-beijing-2026-r2/zheng-kalinskaya-beijing-2026-r2.mp4",
+  "restore_run_id": 37171012792,
+  "restore_run_conclusion": "success",
+  "validation": [
+    "Exact local previously-approved bytes SHA-checked before chunking",
+    "GitHub Actions reassembled 13 chunks to 67,113,729 bytes and checked exact approved SHA",
+    "GitHub Actions upload of empty stable asset succeeded without clobbering another asset",
+    "GitHub Actions downloaded stable asset and sha256sum check passed",
+    "GitHub returned server digest and byte count match exact approved movie",
+    "Temporary files deleted from latest remote branch head without overwriting new tools/tests; original frame-grab workflow blob restored",
+    "Temporary draft recovery release deleted"
+  ],
+  "cleanup_commit": "80f78d7d84bcafa65277ebc353f4a413d22e181b",
+  "cleanup_parent": "5d836a91b2f4b577841336473b3d0a4b39d2f751",
+  "main_modified": false,
+  "spec_modified": false,
+  "qc_gates_modified": false,
+  "wechat_sent": false,
+  "actual_listening_performed": false
+}

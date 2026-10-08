@@ -1,0 +1,47 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-s3mqDeV5E_w/s3mqDeV5E_w.mp4",
+  "source_sha256": "ce7320181adea751842fe58f500e6fa5f788e1c547fe064d11a775d0292a5efd",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review agent — inspected provider caption text and actual-source small.en ASR word evidence; no listening claimed",
+  "reviewed_at": "2026-10-04T06:40:26.740875+00:00",
+  "status": "complete",
+  "reviewed_from": 264.0,
+  "reviewed_to": 278.1,
+  "foreground_english": [
+    {
+      "start": 264.16,
+      "end": 266.71,
+      "en": "And Nikola Bartunkova gets it done.",
+      "zh": "尼古拉·巴尔通科娃赢下了比赛。"
+    },
+    {
+      "start": 268.23,
+      "end": 271.53,
+      "en": "The number two seed, the number two player in the world, is out.",
+      "zh": "世界第二、二号种子出局了。"
+    },
+    {
+      "start": 272.31,
+      "end": 275.83,
+      "en": "Nikola Bartunkova, the biggest win of her career.",
+      "zh": "巴尔通科娃生涯最重要的胜利。"
+    }
+  ],
+  "uncertain_spans": [],
+  "actual_listening_performed": false,
+  "evidence": [
+    {
+      "path": "/workspace/scratch/audio-review/whisper-small-en.json",
+      "sha256": "6e3d0d3d41b4555b44393958d712cd9ca74cb6699be6850ced3aeccfad72eefe"
+    },
+    {
+      "path": "/workspace/scratch/sabalenka-probe/captions.txt",
+      "sha256": "13653388da2db597c4e5765e023f74687c428b270127c493ab2bbf1b394e36b8"
+    },
+    {
+      "path": "/workspace/scratch/audio-review/targeted-small-en.json"
+    }
+  ],
+  "review_scope": "Only this selected window; full source review remains partial.",
+  "source_url_binding_note": "Published Release URL supplied by producer; reviewed bytes identified by source_sha256."
+}

@@ -1,0 +1,106 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 199.6,
+  "range_to": 206.358333,
+  "created_at": "2026-10-03T16:51:57.555381+00:00",
+  "elapsed_seconds": 4.17,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 200.8,
+      "end": 205.8,
+      "text": " And it's the biggest victory of this young 16-year-old's career.",
+      "avg_logprob": -0.34585324823856356,
+      "no_speech_prob": 0.2642933428287506,
+      "compression_ratio": 0.9142857142857143,
+      "words": [
+        {
+          "start": 200.8,
+          "end": 201.52,
+          "word": " And",
+          "probability": 0.22079771757125854
+        },
+        {
+          "start": 201.52,
+          "end": 201.8,
+          "word": " it's",
+          "probability": 0.6106522530317307
+        },
+        {
+          "start": 201.8,
+          "end": 201.98,
+          "word": " the",
+          "probability": 0.9954889416694641
+        },
+        {
+          "start": 201.98,
+          "end": 202.54,
+          "word": " biggest",
+          "probability": 0.9945268034934998
+        },
+        {
+          "start": 202.54,
+          "end": 203.16,
+          "word": " victory",
+          "probability": 0.9904148578643799
+        },
+        {
+          "start": 203.16,
+          "end": 203.78,
+          "word": " of",
+          "probability": 0.9601216912269592
+        },
+        {
+          "start": 203.78,
+          "end": 204.08,
+          "word": " this",
+          "probability": 0.9787918329238892
+        },
+        {
+          "start": 204.08,
+          "end": 204.38,
+          "word": " young",
+          "probability": 0.9869806170463562
+        },
+        {
+          "start": 204.38,
+          "end": 204.88,
+          "word": " 16",
+          "probability": 0.8554415702819824
+        },
+        {
+          "start": 204.88,
+          "end": 205.16,
+          "word": "-year",
+          "probability": 0.7009557634592056
+        },
+        {
+          "start": 205.16,
+          "end": 205.52,
+          "word": "-old's",
+          "probability": 0.9261390566825867
+        },
+        {
+          "start": 205.52,
+          "end": 205.8,
+          "word": " career.",
+          "probability": 0.9963501691818237
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "d721990827f908b84cc3d3e1d8cc96e34dc48ff573c9536cdf93dfa9f72c4acb",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

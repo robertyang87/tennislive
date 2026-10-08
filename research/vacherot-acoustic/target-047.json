@@ -1,0 +1,346 @@
+{
+  "id": "target-047",
+  "label": "第 10 段",
+  "display_char": "要",
+  "actual_tts_char": "要",
+  "position": 29,
+  "context": "后一局，他还要救下两个破发",
+  "word": "要",
+  "intended": "yao4",
+  "common_contrast": "yao1",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "对鲁内，首盘二比六。第二盘抢七追回来。决胜盘最后一局，他还要救下两个破发点。",
+  "verdict": "unreliable",
+  "measurement": {
+    "word": "要",
+    "char": "要",
+    "sentence": "对鲁内，首盘二比六。第二盘抢七追回来。决胜盘最后一局，他还要救下两个破发点。",
+    "tts_text": "对鲁内，首盘二比六。第二盘抢七追回来。决胜盘最后一局，他还要救下两个破发点。",
+    "intended_refs": [
+      "耀",
+      "药"
+    ],
+    "wrong_refs": [
+      "腰",
+      "邀"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": 0.076,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 3.062,
+        "d_wrong": 3.913,
+        "score": 0.122
+      },
+      "f0": {
+        "d_intended": 1.047,
+        "d_wrong": 1.17,
+        "score": 0.056
+      },
+      "comb": {
+        "d_intended": 2.687,
+        "d_wrong": 3.127,
+        "score": 0.076
+      }
+    },
+    "neighbour_shift": {
+      "intended": 4.007,
+      "wrong": 6.551
+    },
+    "separation": {
+      "spec": {
+        "within": 3.449,
+        "between": 4.375,
+        "separation": 1.268
+      },
+      "f0": {
+        "within": 1.844,
+        "between": 2.257,
+        "separation": 1.224
+      },
+      "comb": {
+        "within": 3.568,
+        "between": 4.445,
+        "separation": 1.246
+      }
+    },
+    "selftest_loo": {
+      "耀": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": -0.008
+      },
+      "药": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.15
+      },
+      "腰": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.108
+      },
+      "邀": {
+        "expect": "misread",
+        "got": "correct",
+        "score": 0.204
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:耀": {
+        "spec": 3.062,
+        "f0": 1.155,
+        "vmis": 0.045,
+        "frames": 22,
+        "comb": 2.687
+      },
+      "A:药": {
+        "spec": 4.592,
+        "f0": 1.047,
+        "vmis": 0.0,
+        "frames": 24,
+        "comb": 3.343
+      },
+      "B:腰": {
+        "spec": 4.234,
+        "f0": 2.428,
+        "vmis": 0.034,
+        "frames": 29,
+        "comb": 4.545
+      },
+      "B:邀": {
+        "spec": 3.913,
+        "f0": 1.17,
+        "vmis": 0.0,
+        "frames": 25,
+        "comb": 3.127
+      }
+    },
+    "window_s": [
+      6.38,
+      6.59
+    ],
+    "boundary_token": "还要",
+    "window_anchor": "A:药",
+    "tokens": {
+      "ORIG": [
+        "对",
+        "鲁",
+        "内",
+        "首盘",
+        "二比六",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "追",
+        "回来",
+        "决胜",
+        "盘",
+        "最后",
+        "一",
+        "局",
+        "他",
+        "还要",
+        "救下",
+        "两个",
+        "破发点"
+      ],
+      "A:耀": [
+        "对",
+        "鲁",
+        "内",
+        "首盘",
+        "二比六",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "追",
+        "回来",
+        "决胜",
+        "盘",
+        "最后",
+        "一",
+        "局",
+        "他",
+        "还",
+        "耀救",
+        "下",
+        "两",
+        "个",
+        "破发点"
+      ],
+      "A:药": [
+        "对",
+        "鲁",
+        "内",
+        "首盘",
+        "二比六",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "追",
+        "回来",
+        "决胜",
+        "盘",
+        "最后",
+        "一",
+        "局",
+        "他",
+        "还",
+        "药",
+        "救下",
+        "两个",
+        "破发点"
+      ],
+      "B:腰": [
+        "对",
+        "鲁",
+        "内",
+        "首盘",
+        "二比六",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "追",
+        "回来",
+        "决胜",
+        "盘",
+        "最后",
+        "一",
+        "局",
+        "他",
+        "还",
+        "腰救",
+        "下",
+        "两",
+        "个",
+        "破发点"
+      ],
+      "B:邀": [
+        "对",
+        "鲁",
+        "内",
+        "首盘",
+        "二比六",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "追",
+        "回来",
+        "决胜",
+        "盘",
+        "最后",
+        "一",
+        "局",
+        "他",
+        "还",
+        "邀",
+        "救下",
+        "两个",
+        "破发点"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        0.5,
+        0.2,
+        1.0,
+        2.9,
+        4.7,
+        4.9,
+        3.7,
+        2.9,
+        2.6,
+        2.0,
+        0.3
+      ],
+      "A:耀": [
+        null,
+        0.1,
+        0.2,
+        1.5,
+        4.0,
+        3.8,
+        2.3,
+        1.3,
+        0.7,
+        0.2,
+        -0.5
+      ],
+      "A:药": [
+        -3.3,
+        -3.0,
+        -1.3,
+        1.6,
+        2.7,
+        4.2,
+        4.9,
+        4.3,
+        2.5,
+        1.6,
+        1.1,
+        0.3
+      ],
+      "B:腰": [
+        null,
+        0.0,
+        -0.0,
+        0.5,
+        1.4,
+        3.4,
+        6.2,
+        6.5,
+        6.1,
+        6.1,
+        6.4,
+        7.4,
+        7.7,
+        7.2,
+        6.6
+      ],
+      "B:邀": [
+        null,
+        null,
+        -1.0,
+        -1.1,
+        -0.7,
+        0.4,
+        2.0,
+        3.4,
+        3.2,
+        2.4,
+        2.4,
+        2.8,
+        2.7,
+        1.8
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/fccca2e70a17f176cbcc0bcc.mp3",
+      "A:耀": "/workspace/tennislive/research/vacherot-acoustic/references/fa25a9cf23cba881eb9b84f4.mp3",
+      "A:药": "/workspace/tennislive/research/vacherot-acoustic/references/fb78e454c082b9e4b5344f1e.mp3",
+      "B:腰": "/workspace/tennislive/research/vacherot-acoustic/references/ec12eacc0190259c967748ab.mp3",
+      "B:邀": "/workspace/tennislive/research/vacherot-acoustic/references/64e2bc88475cb9c42de57d9b.mp3"
+    }
+  }
+}

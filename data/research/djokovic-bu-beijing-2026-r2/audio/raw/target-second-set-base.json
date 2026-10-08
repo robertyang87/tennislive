@@ -1,0 +1,136 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 118,
+  "range_to": 129.2,
+  "created_at": "2026-10-03T06:12:58.548226+00:00",
+  "elapsed_seconds": 0.97,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 120.38,
+      "end": 122.2,
+      "text": " Well, are we really surprised?",
+      "avg_logprob": -0.6833048057556153,
+      "no_speech_prob": 0.3025352954864502,
+      "words": [
+        {
+          "start": 120.38,
+          "end": 120.88,
+          "word": " Well,",
+          "probability": 0.21149718761444092
+        },
+        {
+          "start": 121.06,
+          "end": 121.1,
+          "word": " are",
+          "probability": 0.9509915709495544
+        },
+        {
+          "start": 121.1,
+          "end": 121.22,
+          "word": " we",
+          "probability": 0.9850116968154907
+        },
+        {
+          "start": 121.22,
+          "end": 121.44,
+          "word": " really",
+          "probability": 0.9872339963912964
+        },
+        {
+          "start": 121.44,
+          "end": 122.2,
+          "word": " surprised?",
+          "probability": 0.9824495315551758
+        }
+      ]
+    },
+    {
+      "start": 124.8,
+      "end": 128.46,
+      "text": " No, that joke of it bounces back in the second set.",
+      "avg_logprob": -0.6833048057556153,
+      "no_speech_prob": 0.3025352954864502,
+      "words": [
+        {
+          "start": 124.8,
+          "end": 125.3,
+          "word": " No,",
+          "probability": 0.8137685060501099
+        },
+        {
+          "start": 125.36,
+          "end": 125.48,
+          "word": " that",
+          "probability": 0.6739590764045715
+        },
+        {
+          "start": 125.48,
+          "end": 125.72,
+          "word": " joke",
+          "probability": 0.149596706032753
+        },
+        {
+          "start": 125.72,
+          "end": 125.94,
+          "word": " of",
+          "probability": 0.9572393298149109
+        },
+        {
+          "start": 125.94,
+          "end": 126.08,
+          "word": " it",
+          "probability": 0.8282475471496582
+        },
+        {
+          "start": 126.08,
+          "end": 126.86,
+          "word": " bounces",
+          "probability": 0.7818834781646729
+        },
+        {
+          "start": 126.86,
+          "end": 127.24,
+          "word": " back",
+          "probability": 0.9960179924964905
+        },
+        {
+          "start": 127.24,
+          "end": 127.66,
+          "word": " in",
+          "probability": 0.9657126665115356
+        },
+        {
+          "start": 127.66,
+          "end": 127.82,
+          "word": " the",
+          "probability": 0.9736819863319397
+        },
+        {
+          "start": 127.82,
+          "end": 128.2,
+          "word": " second",
+          "probability": 0.9801075458526611
+        },
+        {
+          "start": 128.2,
+          "end": 128.46,
+          "word": " set.",
+          "probability": 0.710330605506897
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "a53b18ff3bb272c0607a4a9692b5c5405d97520d41ac271fe29874ed47e87648",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

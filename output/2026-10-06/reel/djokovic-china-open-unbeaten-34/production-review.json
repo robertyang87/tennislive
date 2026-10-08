@@ -1,0 +1,83 @@
+{
+  "status": "review_copy_complete",
+  "delivery_label": "审片版",
+  "completed_at": "2026-10-06T21:24:31.334110+00:00",
+  "film": {
+    "path": "/workspace/tennislive/output/2026-10-06/reel/djokovic-china-open-unbeaten-34/djokovic-china-open-unbeaten-34.mp4",
+    "sha256": "84eab146ff3724cf9c1ddfbd45220169a12787b0bcf3be80a3858f066b71f7e6",
+    "bytes": 363736064,
+    "seconds": 469.12,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": 25
+  },
+  "spec_sha256": "85600d8998548b2c79ec132e855d69c33a3a7bc3501d6f58875d62899261f529",
+  "ass_sha256": "d7372474598ea77b0df46e060f41819187380b3c0b0fc12686acb0b880edcd41",
+  "information_card_layout": {
+    "corner": "top_right",
+    "alignment": "right",
+    "rail": "right",
+    "rows": [
+      "年份或轮次",
+      "冠数和累计胜场",
+      "比分",
+      "对手或结果说明"
+    ],
+    "asset_pixels": [
+      1200,
+      440
+    ]
+  },
+  "native_landed": {
+    "status": "pass",
+    "failures": 0,
+    "attestation": "qc_attestation.json",
+    "render_inputs_sha256": "cd4213729250a6671a107cadb05f92a743e678747913b0c63b5f251f20927e81"
+  },
+  "independent_visual": {
+    "status": "actual_final_targeted_visual_recheck_pass",
+    "report": "independent-visual-review.json",
+    "sha256": "5af1047f202194c1d97734fcb7c94acff9bf08166cf45306a6fd25f5d33ad875",
+    "method": "Final completed native film only, after root explicit exit0: actual upper-right crops at +0.45/+1.5 seconds for all18 information-strip appearances (36 frames), actual2010 first0.6s every0.1s, actual2015 entry/serve every0.3s, full-resolution2013 face/longest English/cup ending/brand page, plus all7 cups and2026 RET handshake/embrace/umpire gestures. Earlier v1 broad segment audit is retained as history for unchanged source bodies. This is a targeted visual frame review, not continuous whole-film playback or an independent audio pass.",
+    "blocking_findings": [],
+    "non_blocking_observations": [
+      {
+        "topic": "2010 entry dissolve",
+        "observation": "At75.006, the information text briefly crosses one side of the serving player brow/eye during the chapter dissolve. The later0.45/1.5 second strip samples are clear. This does not hide a trophy emotional shot, cut the point, or alter source identity; no further rerender is recommended.",
+        "evidence": "/workspace/video-review/djokovic34-final-recheck/2010-entry-01.jpg"
+      }
+    ]
+  },
+  "foreground_audio": {
+    "verified_film_cues": 80,
+    "binding": "audio_review_binding.json",
+    "binding_sha256": "a6e4bde38beebdca4cd91af83c724de0fa3a7f10f1a5bfd0bce81ba03ae6d486",
+    "method": "asr_cross_checked"
+  },
+  "narration": {
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "formal_publish_pronunciation_pass": false,
+    "human_listened": false,
+    "status": "audited_preview_audio_ready_with_pending_pronunciation_items",
+    "review_notes": "/workspace/video-review/djokovic34-tts-review/review-notes.txt"
+  },
+  "result": {
+    "event": "2026 China Open",
+    "record": "34-0",
+    "titles": 7,
+    "final": "7-6(3), 0-1 RET",
+    "first_six_titles_played_wins": 29,
+    "2010_pre_match_walkover_counted_as_win": false,
+    "official_result": "https://novakdjokovic.com/en/news/tennis/novak-makes-history-in-beijing-wins-102nd-title/"
+  },
+  "official_youtube_sources": [
+    "https://www.youtube.com/watch?v=i1LtteR8jd0",
+    "https://www.youtube.com/watch?v=8Dc6BvkUEZM",
+    "https://www.youtube.com/watch?v=U_XusSb_NV4",
+    "https://www.youtube.com/watch?v=cjaHThpISKk",
+    "https://www.youtube.com/watch?v=LgRD3TLoxr0"
+  ]
+}

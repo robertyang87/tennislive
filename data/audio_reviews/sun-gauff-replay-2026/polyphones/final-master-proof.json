@@ -1,0 +1,1847 @@
+{
+  "film": "/workspace/scratch/sun-replay/chong-cloud-final/sun-gauff-led-replay-story-2026.mp4",
+  "film_sha256": "40da9e179b499477ff2fd8a6f5d28268de9c7c194cf9865badeeb07f78f7424c",
+  "binding": "/workspace/scratch/sun-replay/chong-cloud-final/artifact/audio_review_binding.json",
+  "binding_sha256": "a423884e6efe5e8653613073af560af70bb24aeda2f8d3d11c05c5f822b1874a",
+  "negative_control": false,
+  "binding_timeline": {
+    "cover_seconds": 3.298,
+    "offsets": [
+      3.298,
+      8.538,
+      20.518,
+      32.642,
+      47.44200000000001,
+      56.44200000000001,
+      66.70200000000001,
+      74.20200000000001,
+      86.12200000000001,
+      97.55000000000001,
+      104.05000000000001,
+      110.99000000000001,
+      119.418,
+      123.058,
+      125.805,
+      128.725
+    ],
+    "lengths": [
+      5.24,
+      11.98,
+      12.124,
+      14.8,
+      9.0,
+      10.26,
+      7.5,
+      11.92,
+      11.428,
+      6.5,
+      6.94,
+      8.428,
+      3.64,
+      2.747,
+      2.92,
+      10.824
+    ]
+  },
+  "positive_thresholds": {
+    "correct_target_waveform_correlation_gt": 0.95,
+    "correct_whole_passage_waveform_correlation_gt": 0.95,
+    "mfcc_f0_dtw_score_gt": 0.2
+  },
+  "all_six_measured_positive": true,
+  "results": [
+    {
+      "label": "cover",
+      "evidence": "cover-rephrased.json",
+      "canonical_evidence_sha256": "79629cf75e4f94597c4ee9c00be3afec5508ff4aeb960366a8fd6e4a8c375fd6",
+      "sentence": "重打一分，孙心然留下遗憾。",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "canonical_selftest_pass": true,
+      "audio_references": {
+        "ORIG": {
+          "path": "/home/agent/.cache/tennislive/polyphone/6386ebd0a217e6f2e591a00e.mp3",
+          "sha256": "dfcd22f4a99a1011bcdff995540288a1d5733040db220ff2861ae112b802b942"
+        },
+        "A:崇": {
+          "path": "/home/agent/.cache/tennislive/polyphone/6386ebd0a217e6f2e591a00e.mp3",
+          "sha256": "dfcd22f4a99a1011bcdff995540288a1d5733040db220ff2861ae112b802b942"
+        },
+        "A:虫": {
+          "path": "/home/agent/.cache/tennislive/polyphone/28f567641371d10730829526.mp3",
+          "sha256": "c1cef1159bf21705f4a3e74b4c7b76404930a429815ef67b722379b812219f63"
+        },
+        "B:众": {
+          "path": "/home/agent/.cache/tennislive/polyphone/d3f59dc69880342ec9b8fa83.mp3",
+          "sha256": "ab0fac07c0f6a5dfac89263b9fb04b4664785df41eeb92695485e24c69081e07"
+        },
+        "B:仲": {
+          "path": "/home/agent/.cache/tennislive/polyphone/215e97f0e3099310444c9925.mp3",
+          "sha256": "d3ef0245a56561595335c04b3afdd37e89db2bc6b41bb4ac54193f7fa810f611"
+        },
+        "PRODUCTION_CORRECT": {
+          "path": "/workspace/scratch/sun-replay/polyphone-audit/current-tts/cover.mp3",
+          "sha256": "1591eb877d8367e5afb92b6a520c0f37c980fd5c900d276ab9a9d88b3931ff6e"
+        }
+      },
+      "absolute_segment_start_s": 0,
+      "segment_length_s": 3.298,
+      "reference_target_window_s": [
+        0.05,
+        0.36
+      ],
+      "actual_mix_target_window_s": [
+        0.05,
+        0.36
+      ],
+      "actual_mix_absolute_window_s": [
+        0.05,
+        0.36
+      ],
+      "distances": {
+        "ORIG": {
+          "spec": 0.06836017221212387,
+          "f0": 0.006698415916475131,
+          "vmis": 0.0,
+          "frames": 31,
+          "comb": 0.04087850202253707,
+          "reference_target_window_s": [
+            0.05,
+            0.36
+          ],
+          "target_waveform": {
+            "correlation": 0.999993524147478,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.993329042319321,
+            "lag_s": 0.0
+          }
+        },
+        "A:崇": {
+          "spec": 0.06836017221212387,
+          "f0": 0.006698415916475131,
+          "vmis": 0.0,
+          "frames": 31,
+          "comb": 0.04087850202253707,
+          "reference_target_window_s": [
+            0.05,
+            0.36
+          ],
+          "target_waveform": {
+            "correlation": 0.999993524147478,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.993329042319321,
+            "lag_s": 0.0
+          }
+        },
+        "A:虫": {
+          "spec": 1.8575170040130615,
+          "f0": 0.5114098901649414,
+          "vmis": 0.0,
+          "frames": 32,
+          "comb": 1.440168392171472,
+          "reference_target_window_s": [
+            0.05,
+            0.37
+          ],
+          "target_waveform": {
+            "correlation": 0.4813934758434406,
+            "lag_s": -6.25e-05
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.17267599616406842,
+            "lag_s": -0.003625
+          }
+        },
+        "B:众": {
+          "spec": 2.742483615875244,
+          "f0": 2.6527810213727916,
+          "vmis": 0.12903225806451613,
+          "frames": 31,
+          "comb": 4.024022829310414,
+          "reference_target_window_s": [
+            0.05,
+            0.33
+          ],
+          "target_waveform": {
+            "correlation": 0.27199945934265835,
+            "lag_s": -0.036125
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.15511794604606655,
+            "lag_s": 0.02875
+          }
+        },
+        "B:仲": {
+          "spec": 2.8066718578338623,
+          "f0": 2.8080342486833736,
+          "vmis": 0.12903225806451613,
+          "frames": 31,
+          "comb": 4.211370177600305,
+          "reference_target_window_s": [
+            0.05,
+            0.31
+          ],
+          "target_waveform": {
+            "correlation": 0.3088529881580837,
+            "lag_s": 0.07575
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.22821692197416182,
+            "lag_s": 0.0759375
+          }
+        },
+        "PRODUCTION_CORRECT": {
+          "spec": 0.06820467114448547,
+          "f0": 0.006457867890525382,
+          "vmis": 0.0,
+          "frames": 31,
+          "comb": 0.04056020346276812,
+          "reference_target_window_s": [
+            0.05,
+            0.36
+          ],
+          "target_waveform": {
+            "correlation": 0.999993524147478,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9970615459028169,
+            "lag_s": 0.0
+          }
+        }
+      },
+      "nearest_reference_score": 0.9798870876852833,
+      "classified_reading": "chong2",
+      "limits": "MFCC/F0 measured on final mixed audio, which can contain bed/source audio. Canonical reference self-test validity inherited; no claim of human listening. Waveform correlation is a separate byte-content check, not a pronunciation detector.",
+      "correct_content_match": true,
+      "measured_positive_pass": true
+    },
+    {
+      "label": "voice_00",
+      "evidence": "opening-rephrased.json",
+      "canonical_evidence_sha256": "ef10f25d99d530295fe61652a8cf24c17cc3b6406e097f610381bc6a3bf5978e",
+      "sentence": "十月五号晚，中网第三轮。重打一分。",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "canonical_selftest_pass": true,
+      "audio_references": {
+        "ORIG": {
+          "path": "/home/agent/.cache/tennislive/polyphone/246f34864adcd643c8c515f4.mp3",
+          "sha256": "b54d99a3c0abf088c0cb88f9d7fc2f72304a60765e0ee604fcc6c92c1be95737"
+        },
+        "A:崇": {
+          "path": "/home/agent/.cache/tennislive/polyphone/246f34864adcd643c8c515f4.mp3",
+          "sha256": "b54d99a3c0abf088c0cb88f9d7fc2f72304a60765e0ee604fcc6c92c1be95737"
+        },
+        "A:虫": {
+          "path": "/home/agent/.cache/tennislive/polyphone/c32018a5ef3f124d1ad8771e.mp3",
+          "sha256": "4f64be1e3a06a5658caae7e9482b3cffab8dc159e9feabf191b44aaf870967bf"
+        },
+        "B:众": {
+          "path": "/home/agent/.cache/tennislive/polyphone/d18230747b4e235bee7245a8.mp3",
+          "sha256": "1d78643cb64120ecb53f0793d30057660cd6c60885718cbf0bf53231523e5441"
+        },
+        "B:仲": {
+          "path": "/home/agent/.cache/tennislive/polyphone/da078df4c4d2d3109f6dcf30.mp3",
+          "sha256": "705d0d0e549d6c9e981d728676b59c2a69468f480411430e52303e496fcc646f"
+        },
+        "PRODUCTION_CORRECT": {
+          "path": "/workspace/scratch/sun-replay/polyphone-audit/current-tts/voice_00.mp3",
+          "sha256": "8df708bb62fa7a83866efe0fd26c3b6014336aad5636c441e31aa8a26aad2c7c"
+        }
+      },
+      "absolute_segment_start_s": 3.298,
+      "segment_length_s": 5.24,
+      "reference_target_window_s": [
+        2.96,
+        3.33
+      ],
+      "actual_mix_target_window_s": [
+        2.95,
+        3.33
+      ],
+      "actual_mix_absolute_window_s": [
+        6.248,
+        6.628
+      ],
+      "distances": {
+        "ORIG": {
+          "spec": 2.778646469116211,
+          "f0": 0.21902860481621966,
+          "vmis": 0.0,
+          "frames": 38,
+          "comb": 1.608351839374325,
+          "reference_target_window_s": [
+            2.96,
+            3.33
+          ],
+          "target_waveform": {
+            "correlation": 0.9782547310193851,
+            "lag_s": 0.01
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9876016348673458,
+            "lag_s": 0.0
+          }
+        },
+        "A:崇": {
+          "spec": 2.778646469116211,
+          "f0": 0.21902860481621966,
+          "vmis": 0.0,
+          "frames": 38,
+          "comb": 1.608351839374325,
+          "reference_target_window_s": [
+            2.96,
+            3.33
+          ],
+          "target_waveform": {
+            "correlation": 0.9782547310193851,
+            "lag_s": 0.01
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9876016348673458,
+            "lag_s": 0.0
+          }
+        },
+        "A:虫": {
+          "spec": 3.4887752532958984,
+          "f0": 0.6780388509698867,
+          "vmis": 0.0,
+          "frames": 38,
+          "comb": 2.4224264776178357,
+          "reference_target_window_s": [
+            2.96,
+            3.31
+          ],
+          "target_waveform": {
+            "correlation": 0.444179513794835,
+            "lag_s": 0.028125
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.8025445409314994,
+            "lag_s": 0.0
+          }
+        },
+        "B:众": {
+          "spec": 3.974367141723633,
+          "f0": 2.801735450791676,
+          "vmis": 0.10526315789473684,
+          "frames": 38,
+          "comb": 4.788919021653492,
+          "reference_target_window_s": [
+            2.96,
+            3.3
+          ],
+          "target_waveform": {
+            "correlation": 0.22496895108222845,
+            "lag_s": 0.0758125
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.8017693740507779,
+            "lag_s": 0.0
+          }
+        },
+        "B:仲": {
+          "spec": 3.9716885089874268,
+          "f0": 2.502008091253344,
+          "vmis": 0.10526315789473684,
+          "frames": 38,
+          "comb": 4.487852345747058,
+          "reference_target_window_s": [
+            2.93,
+            3.28
+          ],
+          "target_waveform": {
+            "correlation": 0.21280474183999853,
+            "lag_s": 0.060875
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.8007949211701267,
+            "lag_s": 0.0
+          }
+        },
+        "PRODUCTION_CORRECT": {
+          "spec": 2.778646469116211,
+          "f0": 0.08251940143786883,
+          "vmis": 0.0,
+          "frames": 38,
+          "comb": 1.4718426359959742,
+          "reference_target_window_s": [
+            2.96,
+            3.33
+          ],
+          "target_waveform": {
+            "correlation": 0.9782547310193851,
+            "lag_s": 0.01
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9879541867557613,
+            "lag_s": 0.0
+          }
+        }
+      },
+      "nearest_reference_score": 0.47234318584678414,
+      "classified_reading": "chong2",
+      "limits": "MFCC/F0 measured on final mixed audio, which can contain bed/source audio. Canonical reference self-test validity inherited; no claim of human listening. Waveform correlation is a separate byte-content check, not a pronunciation detector.",
+      "correct_content_match": true,
+      "measured_positive_pass": true
+    },
+    {
+      "label": "voice_02",
+      "evidence": "seg2-0-production.json",
+      "canonical_evidence_sha256": "b46237d3b0884a7e638f29ebcfa624470f8f36be3d071798f810bc3f07046e0f",
+      "sentence": "侧边LED在回合中闪动，回看后判崇打。比分退回十五平，崇打高芙赢分并保发。孙心然最终五比七、一比六告负。",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "canonical_selftest_pass": true,
+      "audio_references": {
+        "ORIG": {
+          "path": "/home/agent/.cache/tennislive/polyphone/52430b3df3b30dfea2ecfbca.mp3",
+          "sha256": "ff3591fa34d4d2d3a531f5f11ec376a5d6aab57203ef4ab808490c4b9eefaed7"
+        },
+        "A:崇": {
+          "path": "/home/agent/.cache/tennislive/polyphone/52430b3df3b30dfea2ecfbca.mp3",
+          "sha256": "ff3591fa34d4d2d3a531f5f11ec376a5d6aab57203ef4ab808490c4b9eefaed7"
+        },
+        "A:虫": {
+          "path": "/home/agent/.cache/tennislive/polyphone/660566e5976a3033645c04c9.mp3",
+          "sha256": "134f35e3a6c39e87131e21ebc11748b7f57c221a77860b0af9e9b1c32b8687ec"
+        },
+        "A:蟲": {
+          "path": "/home/agent/.cache/tennislive/polyphone/4956058721886549dc6aeecf.mp3",
+          "sha256": "e0f5de1ecc61ac1d2ddc203c08e87520b2501b2e410911524ae6395e0915dbe5"
+        },
+        "B:众": {
+          "path": "/home/agent/.cache/tennislive/polyphone/fd7962488d531912b0b1e02a.mp3",
+          "sha256": "70f665c7f2f32cd3649755fe1daf449b6345aa301361f74cf4d738dd685714ad"
+        },
+        "B:仲": {
+          "path": "/home/agent/.cache/tennislive/polyphone/49b60d6a7a204d80ae58bcd2.mp3",
+          "sha256": "6d3bb733c18427838dcb529362ce1f5819a9bc0b03d8c04e7329bc85c3dc0d2c"
+        },
+        "PRODUCTION_CORRECT": {
+          "path": "/workspace/scratch/sun-replay/polyphone-audit/current-tts/voice_02.mp3",
+          "sha256": "0af5815e7d3ae44789a919dd69ceb7e87b1aba8dec5b8e98fbb419d64bbc9f0f"
+        }
+      },
+      "absolute_segment_start_s": 20.518,
+      "segment_length_s": 12.124,
+      "reference_target_window_s": [
+        3.312,
+        3.61
+      ],
+      "actual_mix_target_window_s": [
+        3.31,
+        3.61
+      ],
+      "actual_mix_absolute_window_s": [
+        23.828,
+        24.128
+      ],
+      "distances": {
+        "ORIG": {
+          "spec": 0.059897564351558685,
+          "f0": 0.020050218615429896,
+          "vmis": 0.0,
+          "frames": 30,
+          "comb": 0.04999900079120924,
+          "reference_target_window_s": [
+            3.31,
+            3.61
+          ],
+          "target_waveform": {
+            "correlation": 0.9999841206154484,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9983075543370096,
+            "lag_s": 0.0
+          }
+        },
+        "A:崇": {
+          "spec": 0.059897564351558685,
+          "f0": 0.020050218615429896,
+          "vmis": 0.0,
+          "frames": 30,
+          "comb": 0.04999900079120924,
+          "reference_target_window_s": [
+            3.31,
+            3.61
+          ],
+          "target_waveform": {
+            "correlation": 0.9999841206154484,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9983075543370096,
+            "lag_s": 0.0
+          }
+        },
+        "A:虫": {
+          "spec": 2.5044827461242676,
+          "f0": 0.921219881147832,
+          "vmis": 0.09375,
+          "frames": 32,
+          "comb": 2.1734612542099656,
+          "reference_target_window_s": [
+            3.33,
+            3.62
+          ],
+          "target_waveform": {
+            "correlation": 0.2656330317441434,
+            "lag_s": -0.003875
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.6683559339933608,
+            "lag_s": -0.0235625
+          }
+        },
+        "A:蟲": {
+          "spec": 2.6284842491149902,
+          "f0": 0.910803418173787,
+          "vmis": 0.10810810810810811,
+          "frames": 37,
+          "comb": 2.225045542731282,
+          "reference_target_window_s": [
+            3.47,
+            3.82
+          ],
+          "target_waveform": {
+            "correlation": 0.2925987711738945,
+            "lag_s": -0.0405625
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.6454399183741008,
+            "lag_s": -0.2245625
+          }
+        },
+        "B:众": {
+          "spec": 3.3640758991241455,
+          "f0": 2.3934440517301803,
+          "vmis": 0.24242424242424243,
+          "frames": 33,
+          "comb": 4.075482001292253,
+          "reference_target_window_s": [
+            3.32,
+            3.61
+          ],
+          "target_waveform": {
+            "correlation": 0.15608005870032643,
+            "lag_s": 0.005
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.6862235227549616,
+            "lag_s": -0.0118125
+          }
+        },
+        "B:仲": {
+          "spec": 3.036761999130249,
+          "f0": 2.073924270093635,
+          "vmis": 0.2903225806451613,
+          "frames": 31,
+          "comb": 3.5923052696587594,
+          "reference_target_window_s": [
+            3.29,
+            3.55
+          ],
+          "target_waveform": {
+            "correlation": 0.2560316659943577,
+            "lag_s": -0.0029375
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.6626334366866073,
+            "lag_s": 0.07075
+          }
+        },
+        "PRODUCTION_CORRECT": {
+          "spec": 0.059897564351558685,
+          "f0": 0.019210815522419336,
+          "vmis": 0.0,
+          "frames": 30,
+          "comb": 0.04915959769819868,
+          "reference_target_window_s": [
+            3.31,
+            3.61
+          ],
+          "target_waveform": {
+            "correlation": 0.9999841206154484,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9983555612101018,
+            "lag_s": 0.0
+          }
+        }
+      },
+      "nearest_reference_score": 0.9725454014389454,
+      "classified_reading": "chong2",
+      "limits": "MFCC/F0 measured on final mixed audio, which can contain bed/source audio. Canonical reference self-test validity inherited; no claim of human listening. Waveform correlation is a separate byte-content check, not a pronunciation detector.",
+      "correct_content_match": true,
+      "measured_positive_pass": true
+    },
+    {
+      "label": "voice_02",
+      "evidence": "seg2-1-production.json",
+      "canonical_evidence_sha256": "ca66cfd55a6c019000e37008ebef08b3179be95194b607ea634f5d361dc03a50",
+      "sentence": "侧边LED在回合中闪动，回看后判崇打。比分退回十五平，崇打高芙赢分并保发。孙心然最终五比七、一比六告负。",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "canonical_selftest_pass": true,
+      "audio_references": {
+        "ORIG": {
+          "path": "/home/agent/.cache/tennislive/polyphone/52430b3df3b30dfea2ecfbca.mp3",
+          "sha256": "ff3591fa34d4d2d3a531f5f11ec376a5d6aab57203ef4ab808490c4b9eefaed7"
+        },
+        "A:崇": {
+          "path": "/home/agent/.cache/tennislive/polyphone/52430b3df3b30dfea2ecfbca.mp3",
+          "sha256": "ff3591fa34d4d2d3a531f5f11ec376a5d6aab57203ef4ab808490c4b9eefaed7"
+        },
+        "A:虫": {
+          "path": "/home/agent/.cache/tennislive/polyphone/206321c08c0d33f7e1303600.mp3",
+          "sha256": "3a26c8033409c198d8e350a81ef6709526da277c58ba08599d5aeb42922cfdc1"
+        },
+        "A:蟲": {
+          "path": "/home/agent/.cache/tennislive/polyphone/3c26182d6e4e565c679af919.mp3",
+          "sha256": "147c1399502cfef2b743ce63469975be25d8618cd7a0acb57a9494ef73a5447b"
+        },
+        "B:众": {
+          "path": "/home/agent/.cache/tennislive/polyphone/7d87f29100cdf5ca0d70f980.mp3",
+          "sha256": "67498c8b713326297c97edea6456017e0e0785483d72e9600711cea34d909ca2"
+        },
+        "B:仲": {
+          "path": "/home/agent/.cache/tennislive/polyphone/7a8bfe8f7165c29c424272fe.mp3",
+          "sha256": "7f96e9d2d0de24e2420dcabe1cb7468cf4ae6a569bde537dbf1d77a5ed7a6fe4"
+        },
+        "PRODUCTION_CORRECT": {
+          "path": "/workspace/scratch/sun-replay/polyphone-audit/current-tts/voice_02.mp3",
+          "sha256": "0af5815e7d3ae44789a919dd69ceb7e87b1aba8dec5b8e98fbb419d64bbc9f0f"
+        }
+      },
+      "absolute_segment_start_s": 20.518,
+      "segment_length_s": 12.124,
+      "reference_target_window_s": [
+        5.84,
+        6.13
+      ],
+      "actual_mix_target_window_s": [
+        5.84,
+        6.13
+      ],
+      "actual_mix_absolute_window_s": [
+        26.358,
+        26.648
+      ],
+      "distances": {
+        "ORIG": {
+          "spec": 0.6023514866828918,
+          "f0": 0.02314519368860222,
+          "vmis": 0.0,
+          "frames": 29,
+          "comb": 0.32432093703004816,
+          "reference_target_window_s": [
+            5.84,
+            6.13
+          ],
+          "target_waveform": {
+            "correlation": 0.9969163566604662,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9983075543370096,
+            "lag_s": 0.0
+          }
+        },
+        "A:崇": {
+          "spec": 0.6023514866828918,
+          "f0": 0.02314519368860222,
+          "vmis": 0.0,
+          "frames": 29,
+          "comb": 0.32432093703004816,
+          "reference_target_window_s": [
+            5.84,
+            6.13
+          ],
+          "target_waveform": {
+            "correlation": 0.9969163566604662,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9983075543370096,
+            "lag_s": 0.0
+          }
+        },
+        "A:虫": {
+          "spec": 2.4230737686157227,
+          "f0": 1.2895581478327438,
+          "vmis": 0.0,
+          "frames": 30,
+          "comb": 2.501095032140605,
+          "reference_target_window_s": [
+            5.84,
+            6.12
+          ],
+          "target_waveform": {
+            "correlation": 0.4762577057632009,
+            "lag_s": 0.0223125
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.34220587518046885,
+            "lag_s": 0.047125
+          }
+        },
+        "A:蟲": {
+          "spec": 2.166062593460083,
+          "f0": 0.433925092485481,
+          "vmis": 0.0,
+          "frames": 30,
+          "comb": 1.5169563892155224,
+          "reference_target_window_s": [
+            5.85,
+            6.14
+          ],
+          "target_waveform": {
+            "correlation": 0.5658128615250215,
+            "lag_s": 0.0023125
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.35822052727568293,
+            "lag_s": -0.0118125
+          }
+        },
+        "B:众": {
+          "spec": 3.3333120346069336,
+          "f0": 5.842238474772994,
+          "vmis": 0.125,
+          "frames": 32,
+          "comb": 7.508894492076461,
+          "reference_target_window_s": [
+            5.83,
+            6.15
+          ],
+          "target_waveform": {
+            "correlation": 0.3310629063366903,
+            "lag_s": 0.0779375
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.5181897161541043,
+            "lag_s": -0.000125
+          }
+        },
+        "B:仲": {
+          "spec": 3.394409656524658,
+          "f0": 5.9920406705375555,
+          "vmis": 0.0967741935483871,
+          "frames": 31,
+          "comb": 7.689245498799885,
+          "reference_target_window_s": [
+            5.84,
+            6.15
+          ],
+          "target_waveform": {
+            "correlation": 0.2922735422357176,
+            "lag_s": 0.0385
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.487025287523074,
+            "lag_s": -0.0003125
+          }
+        },
+        "PRODUCTION_CORRECT": {
+          "spec": 0.6154747605323792,
+          "f0": 0.023270067075625903,
+          "vmis": 0.0,
+          "frames": 29,
+          "comb": 0.3310074473418155,
+          "reference_target_window_s": [
+            5.84,
+            6.13
+          ],
+          "target_waveform": {
+            "correlation": 0.997577565483018,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9983555612101018,
+            "lag_s": 0.0
+          }
+        }
+      },
+      "nearest_reference_score": 0.9171934080033232,
+      "classified_reading": "chong2",
+      "limits": "MFCC/F0 measured on final mixed audio, which can contain bed/source audio. Canonical reference self-test validity inherited; no claim of human listening. Waveform correlation is a separate byte-content check, not a pronunciation detector.",
+      "correct_content_match": true,
+      "measured_positive_pass": true
+    },
+    {
+      "label": "voice_05",
+      "evidence": "seg5-0-production.json",
+      "canonical_evidence_sha256": "65ab5939281b117632b85135d4fdc83441823fbcbb56123427a8f878e08282e1",
+      "sentence": "二零二五年罗马，安德列娃的制胜球，也因灯突然开启崇打。她当时落泪，后来赢了。",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "canonical_selftest_pass": true,
+      "audio_references": {
+        "ORIG": {
+          "path": "/home/agent/.cache/tennislive/polyphone/53be142de1c575ee5f197506.mp3",
+          "sha256": "7f315f17efa3868524f6c15b22759c184c285b791c3127734bff6635568d3058"
+        },
+        "A:崇": {
+          "path": "/home/agent/.cache/tennislive/polyphone/53be142de1c575ee5f197506.mp3",
+          "sha256": "7f315f17efa3868524f6c15b22759c184c285b791c3127734bff6635568d3058"
+        },
+        "A:虫": {
+          "path": "/home/agent/.cache/tennislive/polyphone/0a4aff98b0fd21fa985acfab.mp3",
+          "sha256": "1cc42b8dd77d35662c7da2b25d851cf5a0dde321474f318bc0595f97c29b80a3"
+        },
+        "A:蟲": {
+          "path": "/home/agent/.cache/tennislive/polyphone/f1cb3c4adc337d7558a01bd6.mp3",
+          "sha256": "240d56277d2240332a8c84a22f6226a718966aa295670ee1aad5a39deba93c42"
+        },
+        "B:众": {
+          "path": "/home/agent/.cache/tennislive/polyphone/86ff69714f635a61ec70a971.mp3",
+          "sha256": "7f596308573ccf4c96ccdd3a70d499a84a43be9187e34fb93c259bec475edebe"
+        },
+        "B:仲": {
+          "path": "/home/agent/.cache/tennislive/polyphone/c24971b5998f8d429d9448d8.mp3",
+          "sha256": "be64fbeb97186238532fc0030e1c3789c886314d857e8f343ef51c012bd81e09"
+        },
+        "PRODUCTION_CORRECT": {
+          "path": "/workspace/scratch/sun-replay/polyphone-audit/current-tts/voice_05.mp3",
+          "sha256": "8d9cd5b5691a22537f8b8964ae206e8db0163e49da04287b9e32f5dd106c0e94"
+        }
+      },
+      "absolute_segment_start_s": 56.44200000000001,
+      "segment_length_s": 10.26,
+      "reference_target_window_s": [
+        4.36,
+        4.7
+      ],
+      "actual_mix_target_window_s": [
+        4.36,
+        4.7
+      ],
+      "actual_mix_absolute_window_s": [
+        60.80200000000001,
+        61.14200000000001
+      ],
+      "distances": {
+        "ORIG": {
+          "spec": 3.121081590652466,
+          "f0": 1.255773072152028,
+          "vmis": 0.029411764705882353,
+          "frames": 34,
+          "comb": 2.816313867478261,
+          "reference_target_window_s": [
+            4.36,
+            4.7
+          ],
+          "target_waveform": {
+            "correlation": 0.9812774035148167,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.989841099507973,
+            "lag_s": 0.0
+          }
+        },
+        "A:崇": {
+          "spec": 3.121081590652466,
+          "f0": 1.255773072152028,
+          "vmis": 0.029411764705882353,
+          "frames": 34,
+          "comb": 2.816313867478261,
+          "reference_target_window_s": [
+            4.36,
+            4.7
+          ],
+          "target_waveform": {
+            "correlation": 0.9812774035148167,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.989841099507973,
+            "lag_s": 0.0
+          }
+        },
+        "A:虫": {
+          "spec": 3.557037353515625,
+          "f0": 0.9298415411587058,
+          "vmis": 0.20588235294117646,
+          "frames": 34,
+          "comb": 2.7083602179165185,
+          "reference_target_window_s": [
+            4.4,
+            4.73
+          ],
+          "target_waveform": {
+            "correlation": 0.548569378150341,
+            "lag_s": 0.0066875
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.2890459951242168,
+            "lag_s": -0.0471875
+          }
+        },
+        "A:蟲": {
+          "spec": 3.383248805999756,
+          "f0": 1.1062302043610885,
+          "vmis": 0.2,
+          "frames": 35,
+          "comb": 2.7978546073609665,
+          "reference_target_window_s": [
+            4.3,
+            4.65
+          ],
+          "target_waveform": {
+            "correlation": 0.5525703369928988,
+            "lag_s": 0.001
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.26302499394135537,
+            "lag_s": 0.0589375
+          }
+        },
+        "B:众": {
+          "spec": 4.623106479644775,
+          "f0": 4.424527331829708,
+          "vmis": 0.45714285714285713,
+          "frames": 35,
+          "comb": 6.736080571652096,
+          "reference_target_window_s": [
+            4.37,
+            4.69
+          ],
+          "target_waveform": {
+            "correlation": 0.07155199558630358,
+            "lag_s": 0.07025
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.2569190910281689,
+            "lag_s": 0.0118125
+          }
+        },
+        "B:仲": {
+          "spec": 4.664422035217285,
+          "f0": 4.484766066867497,
+          "vmis": 0.4594594594594595,
+          "frames": 37,
+          "comb": 6.8169770844761395,
+          "reference_target_window_s": [
+            4.37,
+            4.69
+          ],
+          "target_waveform": {
+            "correlation": 0.10089585991784691,
+            "lag_s": 0.0451875
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.27638295492361664,
+            "lag_s": -0.0005
+          }
+        },
+        "PRODUCTION_CORRECT": {
+          "spec": 3.115959882736206,
+          "f0": 1.3261588143293168,
+          "vmis": 0.029411764705882353,
+          "frames": 34,
+          "comb": 2.88413875569742,
+          "reference_target_window_s": [
+            4.36,
+            4.7
+          ],
+          "target_waveform": {
+            "correlation": 0.9812774035148167,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9899505487309329,
+            "lag_s": 0.0
+          }
+        }
+      },
+      "nearest_reference_score": 0.42646467307881214,
+      "classified_reading": "chong2",
+      "limits": "MFCC/F0 measured on final mixed audio, which can contain bed/source audio. Canonical reference self-test validity inherited; no claim of human listening. Waveform correlation is a separate byte-content check, not a pronunciation detector.",
+      "correct_content_match": true,
+      "measured_positive_pass": true
+    },
+    {
+      "label": "voice_07",
+      "evidence": "seg7-0-production.json",
+      "canonical_evidence_sha256": "30bc9eaea91a1ce74a3e6bfb35a78509fca7209e1de1efda9fd4fe4386d54c73",
+      "sentence": "主办方当然要负责。WTA明确要求，球员准备发球后，广告不得变化。崇打一分，不能把赛事方的保障责任一笔勾销。",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "canonical_selftest_pass": true,
+      "audio_references": {
+        "ORIG": {
+          "path": "/home/agent/.cache/tennislive/polyphone/2864f54facb39fe665530303.mp3",
+          "sha256": "d45f5dddade2a3578f413953940b1276fdee9e09c603a8ee4210f4242cbdd91d"
+        },
+        "A:崇": {
+          "path": "/home/agent/.cache/tennislive/polyphone/2864f54facb39fe665530303.mp3",
+          "sha256": "d45f5dddade2a3578f413953940b1276fdee9e09c603a8ee4210f4242cbdd91d"
+        },
+        "A:虫": {
+          "path": "/home/agent/.cache/tennislive/polyphone/ce3dda9e06fe2c5ca60a536a.mp3",
+          "sha256": "17d54ff9b038d0d173479327c8c48a6dfc8bbc7a9f02e221237a8b2a6ff49aa7"
+        },
+        "A:蟲": {
+          "path": "/home/agent/.cache/tennislive/polyphone/1b482f4283893195c270a125.mp3",
+          "sha256": "5cbb06694a3ae08704c3d725d917e2a9fe06920b629d05bc7fa173d926328937"
+        },
+        "B:众": {
+          "path": "/home/agent/.cache/tennislive/polyphone/ab0c157a453ed1d3ad418749.mp3",
+          "sha256": "002b417110780c0682df0ec346cd85b1fef400969a962a65097a30c2099ff414"
+        },
+        "B:仲": {
+          "path": "/home/agent/.cache/tennislive/polyphone/2026eef8997bdde15d546df6.mp3",
+          "sha256": "ff16725b5ea757e2ec5dbba2f168c80187eef6af3bdf44d13b0b1af1dffe92e5"
+        },
+        "PRODUCTION_CORRECT": {
+          "path": "/workspace/scratch/sun-replay/polyphone-audit/current-tts/voice_07.mp3",
+          "sha256": "490ca7c2e32d8e50e7fbdbf76b45e6e2575d9ff865f34faad20063081017b9fc"
+        }
+      },
+      "absolute_segment_start_s": 74.20200000000001,
+      "segment_length_s": 11.92,
+      "reference_target_window_s": [
+        6.69,
+        6.97
+      ],
+      "actual_mix_target_window_s": [
+        6.69,
+        6.97
+      ],
+      "actual_mix_absolute_window_s": [
+        80.89200000000001,
+        81.17200000000001
+      ],
+      "distances": {
+        "ORIG": {
+          "spec": 1.6116712093353271,
+          "f0": 0.23723792906889762,
+          "vmis": 0.03571428571428571,
+          "frames": 28,
+          "comb": 1.0430735337365613,
+          "reference_target_window_s": [
+            6.69,
+            6.97
+          ],
+          "target_waveform": {
+            "correlation": 0.999689270358285,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9989680458733924,
+            "lag_s": 0.0
+          }
+        },
+        "A:崇": {
+          "spec": 1.6116712093353271,
+          "f0": 0.23723792906889762,
+          "vmis": 0.03571428571428571,
+          "frames": 28,
+          "comb": 1.0430735337365613,
+          "reference_target_window_s": [
+            6.69,
+            6.97
+          ],
+          "target_waveform": {
+            "correlation": 0.999689270358285,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9989680458733924,
+            "lag_s": 0.0
+          }
+        },
+        "A:虫": {
+          "spec": 2.739211320877075,
+          "f0": 0.43853093819305156,
+          "vmis": 0.034482758620689655,
+          "frames": 29,
+          "comb": 1.8081365986315892,
+          "reference_target_window_s": [
+            6.69,
+            6.98
+          ],
+          "target_waveform": {
+            "correlation": 0.8678459607561598,
+            "lag_s": 0.001625
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.6642184613830165,
+            "lag_s": 0.0
+          }
+        },
+        "A:蟲": {
+          "spec": 2.5114192962646484,
+          "f0": 0.32162788477544835,
+          "vmis": 0.06896551724137931,
+          "frames": 29,
+          "comb": 1.5773375329077726,
+          "reference_target_window_s": [
+            6.69,
+            6.98
+          ],
+          "target_waveform": {
+            "correlation": 0.8128770770389644,
+            "lag_s": -0.016625
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.656614717155286,
+            "lag_s": 0.0
+          }
+        },
+        "B:众": {
+          "spec": 3.4537010192871094,
+          "f0": 2.7431390699988043,
+          "vmis": 0.10714285714285714,
+          "frames": 28,
+          "comb": 4.469989579642359,
+          "reference_target_window_s": [
+            6.68,
+            6.95
+          ],
+          "target_waveform": {
+            "correlation": 0.2901859637826493,
+            "lag_s": 0.0776875
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.6140355423103789,
+            "lag_s": 0.0
+          }
+        },
+        "B:仲": {
+          "spec": 3.4065699577331543,
+          "f0": 1.7658591368763559,
+          "vmis": 0.10714285714285714,
+          "frames": 28,
+          "comb": 3.469144115742933,
+          "reference_target_window_s": [
+            6.69,
+            6.92
+          ],
+          "target_waveform": {
+            "correlation": 0.36030142496324535,
+            "lag_s": 0.031125
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.6271427898842151,
+            "lag_s": 0.0
+          }
+        },
+        "PRODUCTION_CORRECT": {
+          "spec": 1.6116712093353271,
+          "f0": 0.16946118548458194,
+          "vmis": 0.03571428571428571,
+          "frames": 28,
+          "comb": 0.9752967901522456,
+          "reference_target_window_s": [
+            6.69,
+            6.97
+          ],
+          "target_waveform": {
+            "correlation": 0.999689270358285,
+            "lag_s": 0.0
+          },
+          "whole_passage_waveform": {
+            "correlation": 0.9990521041285709,
+            "lag_s": 0.0
+          }
+        }
+      },
+      "nearest_reference_score": 0.5376670122032413,
+      "classified_reading": "chong2",
+      "limits": "MFCC/F0 measured on final mixed audio, which can contain bed/source audio. Canonical reference self-test validity inherited; no claim of human listening. Waveform correlation is a separate byte-content check, not a pronunciation detector.",
+      "correct_content_match": true,
+      "measured_positive_pass": true
+    }
+  ],
+  "ending_proof": {
+    "absolute_start_s": 128.725,
+    "segment_length_s": 10.824,
+    "corrected_reference": "/workspace/scratch/sun-replay/polyphone-audit/current-tts/ending-no-question.mp3",
+    "corrected_reference_sha256": "7a9e2fd00b6fd671331b0d2e8bb82d10e6c6cadf9955970d7fbe9f5b8eba822f",
+    "expected_sentence": "比分能重置，感觉未必能一起退回去。期待更可靠的赛场，也期待她握住下一次机会。",
+    "reference_duration_s": 8.184,
+    "whole_passage_waveform": {
+      "correlation": 0.9970772596297274,
+      "lag_s": 0.0
+    },
+    "reset_acoustics": {
+      "reference_evidence": "/workspace/scratch/sun-replay/polyphone-audit/reset.json",
+      "reference_evidence_sha256": "21d706a232ff6aae6c1fdff48708edf95ff426fe1c4fda4ca1dcc01b039a848f",
+      "actual_first_sentence_duration_s": 3.4,
+      "mix_target_window_s": [
+        0.49,
+        0.8
+      ],
+      "absolute_target_window_s": [
+        129.215,
+        129.525
+      ],
+      "distances": {
+        "ORIG": {
+          "spec": 0.3580237627029419,
+          "f0": 0.5804728708465785,
+          "vmis": 0.03225806451612903,
+          "frames": 31,
+          "comb": 0.7594847521980495
+        },
+        "A:崇": {
+          "spec": 0.3580237627029419,
+          "f0": 0.5988593855126585,
+          "vmis": 0.03225806451612903,
+          "frames": 31,
+          "comb": 0.7778712668641294
+        },
+        "A:虫": {
+          "spec": 2.371307134628296,
+          "f0": 0.6256404294078988,
+          "vmis": 0.0,
+          "frames": 32,
+          "comb": 1.8112939967220467
+        },
+        "B:仲": {
+          "spec": 3.528529405593872,
+          "f0": 3.037126251498653,
+          "vmis": 0.18181818181818182,
+          "frames": 33,
+          "comb": 4.801390954295589
+        },
+        "B:众": {
+          "spec": 3.528486728668213,
+          "f0": 2.9869107471564873,
+          "vmis": 0.18181818181818182,
+          "frames": 33,
+          "comb": 4.751154111490594
+        }
+      },
+      "score": 0.7186226455355497,
+      "reading": "chong2",
+      "limits": "Existing homophone references cover the first sentence; actual mix is restricted to that first sentence. Not a newly synthesized full ending-context reference set."
+    },
+    "ending_only_asr": {
+      "model": "faster-whisper-base multilingual local snapshot ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+      "actual_audio_path": "/workspace/scratch/sun-replay/polyphone-audit/final-master/new-extracted/ending-plus-native-brand-outro.wav",
+      "actual_audio_sha256": "b770bca364a155184176253494899ca1ffae572f42c1250b79fcd39e7635d3c4",
+      "scope": "Last narrated segment and complete native brand outro through film EOF",
+      "audio_duration_s": 14.6563125,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 7.6000000000000005,
+          "text": "比分能重置,感觉未必能一起退回去,期待更可靠的赛场,也期待他握住下一次机会。"
+        },
+        {
+          "start": 10.8,
+          "end": 14.4,
+          "text": "关注网球时差,时差归我,好求归你。"
+        }
+      ],
+      "text": "比分能重置,感觉未必能一起退回去,期待更可靠的赛场,也期待他握住下一次机会。关注网球时差,时差归我,好求归你。",
+      "contains_you_question": false,
+      "input_mode": "Actual decoded waveform ndarray; avoids PyAV metadata_errors incompatibility. No new synthesis.",
+      "limits": "ASR used only to corroborate deleted sentence absence, not to establish any pronunciation tone."
+    },
+    "no_question_check": {
+      "whole_passage_matches_corrected_reference": true,
+      "asr_does_not_contain_you_question": true
+    }
+  },
+  "provenance": {
+    "run": 37387720752,
+    "run_head": "103c39df04038ca1f1efa15ac8e1ef441b89902b",
+    "film": "/workspace/scratch/sun-replay/chong-cloud-final/sun-gauff-led-replay-story-2026.mp4",
+    "sha256": "40da9e179b499477ff2fd8a6f5d28268de9c7c194cf9865badeeb07f78f7424c",
+    "bytes": 67736755,
+    "artifact": "/workspace/scratch/sun-replay/chong-cloud-final/artifact",
+    "metadata_origin": "actual normal render bot commit fbc3b77978def824aa09e9ee24824b4765bfaf66",
+    "metadata_files": 21,
+    "artifact_download_status": "artifact CDN HTTP403; exact official metadata retrieved from normal bot Git objects",
+    "download_matches_api_digest": true
+  },
+  "negative_control_proof": {
+    "path": "/workspace/scratch/sun-replay/polyphone-audit/final-master/old-master-negative-control.json",
+    "sha256": "a566c848e0849a8ee9a159dadf3cfbd899754b01159c737071e6c3fd91ed3fb9",
+    "actual_old_film_sha256": "5a74a1bc4d0b930399c2fc1d3954697dd02fa8db4afbad361575bc899e516944",
+    "summary": {
+      "classified_reading": "zhong4",
+      "nearest_reference_score": -0.5354587210046419,
+      "absolute_target_window_s": [
+        81.54,
+        81.77000000000001
+      ],
+      "old_wrong_target_correlation": 0.9975947594317973,
+      "intended_correct_target_correlation": 0.35877373783083855,
+      "wrong_仲_target_correlation": 0.9963479536360538
+    }
+  },
+  "verification_script_sha256": "bf0c2c82584ff1bbf73a4b320966ddb858a5ebd804dc729c6bd96c6cd9991303",
+  "ending_verification_script_sha256": "4504ed768f33c0de0bc90bc0ea3462d691d2f0e4f293fae008fea9692a483f75",
+  "actual_cloud_word_boundaries": {
+    "voice_cover.words.json": {
+      "sha256": "691c27cad15572bd29b99f73d36c7650a6e646f2b24b67e6c292090f88e4d0d5",
+      "words": [
+        {
+          "offset": 971660,
+          "duration": 3773750,
+          "text": "崇打"
+        },
+        {
+          "offset": 4863330,
+          "duration": 1297080,
+          "text": "一"
+        },
+        {
+          "offset": 6160410,
+          "duration": 2004580,
+          "text": "分"
+        },
+        {
+          "offset": 10759580,
+          "duration": 5188750,
+          "text": "孙心然"
+        },
+        {
+          "offset": 16184160,
+          "duration": 2830000,
+          "text": "留下"
+        },
+        {
+          "offset": 19132080,
+          "duration": 3184160,
+          "text": "遗憾"
+        }
+      ]
+    },
+    "voice_00.words.json": {
+      "sha256": "ca29fd3246e34588ff62e730f72258e98dfbba0ad6a6ace28144608f28b12129",
+      "words": [
+        {
+          "offset": 971660,
+          "duration": 4363330,
+          "text": "十月"
+        },
+        {
+          "offset": 5452910,
+          "duration": 3419580,
+          "text": "五号"
+        },
+        {
+          "offset": 8872500,
+          "duration": 2358330,
+          "text": "晚"
+        },
+        {
+          "offset": 13943330,
+          "duration": 4717080,
+          "text": "中网"
+        },
+        {
+          "offset": 18896250,
+          "duration": 4127500,
+          "text": "第三"
+        },
+        {
+          "offset": 23023750,
+          "duration": 1768750,
+          "text": "轮"
+        },
+        {
+          "offset": 30070830,
+          "duration": 4599160,
+          "text": "崇打"
+        },
+        {
+          "offset": 34787910,
+          "duration": 1297080,
+          "text": "一"
+        },
+        {
+          "offset": 36085000,
+          "duration": 2594160,
+          "text": "分"
+        }
+      ]
+    },
+    "voice_02.words.json": {
+      "sha256": "c562016f16bb5061a09963f639e2e13a1248477b139ea86c5e629e635d6bc12c",
+      "words": [
+        {
+          "offset": 971660,
+          "duration": 4599160,
+          "text": "侧边"
+        },
+        {
+          "offset": 6514160,
+          "duration": 4363330,
+          "text": "LED"
+        },
+        {
+          "offset": 10995410,
+          "duration": 1650830,
+          "text": "在"
+        },
+        {
+          "offset": 12764160,
+          "duration": 3773750,
+          "text": "回合"
+        },
+        {
+          "offset": 16537910,
+          "duration": 1297080,
+          "text": "中"
+        },
+        {
+          "offset": 17952910,
+          "duration": 4245410,
+          "text": "闪动"
+        },
+        {
+          "offset": 24438750,
+          "duration": 4952910,
+          "text": "回看"
+        },
+        {
+          "offset": 29391660,
+          "duration": 1768750,
+          "text": "后"
+        },
+        {
+          "offset": 31278330,
+          "duration": 2240410,
+          "text": "判"
+        },
+        {
+          "offset": 33518750,
+          "duration": 4363330,
+          "text": "崇打"
+        },
+        {
+          "offset": 43160410,
+          "duration": 3065830,
+          "text": "比分"
+        },
+        {
+          "offset": 46344160,
+          "duration": 3891660,
+          "text": "退回"
+        },
+        {
+          "offset": 50471660,
+          "duration": 3655830,
+          "text": "十五"
+        },
+        {
+          "offset": 54127500,
+          "duration": 2358330,
+          "text": "平"
+        },
+        {
+          "offset": 58490410,
+          "duration": 3891660,
+          "text": "崇打"
+        },
+        {
+          "offset": 62500000,
+          "duration": 4481250,
+          "text": "高芙"
+        },
+        {
+          "offset": 68042500,
+          "duration": 2476250,
+          "text": "赢"
+        },
+        {
+          "offset": 70518750,
+          "duration": 2122500,
+          "text": "分"
+        },
+        {
+          "offset": 72877500,
+          "duration": 1532910,
+          "text": "并"
+        },
+        {
+          "offset": 74528330,
+          "duration": 4127500,
+          "text": "保发"
+        },
+        {
+          "offset": 83962080,
+          "duration": 6250000,
+          "text": "孙心然"
+        },
+        {
+          "offset": 90330000,
+          "duration": 3891660,
+          "text": "最终"
+        },
+        {
+          "offset": 94457500,
+          "duration": 6250000,
+          "text": "五比七"
+        },
+        {
+          "offset": 102476250,
+          "duration": 2122500,
+          "text": "一"
+        },
+        {
+          "offset": 104599160,
+          "duration": 1297080,
+          "text": "比"
+        },
+        {
+          "offset": 106014160,
+          "duration": 2122500,
+          "text": "六"
+        },
+        {
+          "offset": 108136660,
+          "duration": 3773750,
+          "text": "告负"
+        }
+      ]
+    },
+    "voice_05.words.json": {
+      "sha256": "68f0a3d0bb25bbcc4d56e275cc4491526b1a09ef1bacbb6fc2b072ef4a4dfdf2",
+      "words": [
+        {
+          "offset": 971660,
+          "duration": 7900830,
+          "text": "二零二五年"
+        },
+        {
+          "offset": 8990410,
+          "duration": 3655830,
+          "text": "罗马"
+        },
+        {
+          "offset": 14415000,
+          "duration": 3773750,
+          "text": "安德"
+        },
+        {
+          "offset": 18306660,
+          "duration": 3419580,
+          "text": "列娃"
+        },
+        {
+          "offset": 21726250,
+          "duration": 825410,
+          "text": "的"
+        },
+        {
+          "offset": 22670000,
+          "duration": 5778330,
+          "text": "制胜球"
+        },
+        {
+          "offset": 31042500,
+          "duration": 1415000,
+          "text": "也"
+        },
+        {
+          "offset": 32457500,
+          "duration": 1650830,
+          "text": "因"
+        },
+        {
+          "offset": 34226250,
+          "duration": 2004580,
+          "text": "灯"
+        },
+        {
+          "offset": 36467080,
+          "duration": 3537910,
+          "text": "突然"
+        },
+        {
+          "offset": 40122500,
+          "duration": 3655830,
+          "text": "开启"
+        },
+        {
+          "offset": 43896250,
+          "duration": 4127500,
+          "text": "崇打"
+        },
+        {
+          "offset": 53420000,
+          "duration": 1179160,
+          "text": "她"
+        },
+        {
+          "offset": 54717080,
+          "duration": 3420000,
+          "text": "当时"
+        },
+        {
+          "offset": 58254580,
+          "duration": 4009580,
+          "text": "落泪"
+        },
+        {
+          "offset": 65094160,
+          "duration": 3302080,
+          "text": "后来"
+        },
+        {
+          "offset": 68514160,
+          "duration": 2358330,
+          "text": "赢"
+        },
+        {
+          "offset": 70872500,
+          "duration": 1886660,
+          "text": "了"
+        }
+      ]
+    },
+    "voice_07.words.json": {
+      "sha256": "794bca199c003fcdaf18ec8231f12bae096e19fc4f44100278f12ae9e4b53a8f",
+      "words": [
+        {
+          "offset": 971660,
+          "duration": 5542500,
+          "text": "主办方"
+        },
+        {
+          "offset": 6750000,
+          "duration": 2830000,
+          "text": "当然"
+        },
+        {
+          "offset": 9697910,
+          "duration": 1532910,
+          "text": "要"
+        },
+        {
+          "offset": 11349160,
+          "duration": 3891660,
+          "text": "负责"
+        },
+        {
+          "offset": 20518750,
+          "duration": 7193330,
+          "text": "WTA"
+        },
+        {
+          "offset": 28537910,
+          "duration": 3184160,
+          "text": "明确"
+        },
+        {
+          "offset": 31839580,
+          "duration": 3891660,
+          "text": "要求"
+        },
+        {
+          "offset": 37617910,
+          "duration": 3184160,
+          "text": "球员"
+        },
+        {
+          "offset": 40920000,
+          "duration": 2476250,
+          "text": "准备"
+        },
+        {
+          "offset": 43514160,
+          "duration": 3655830,
+          "text": "发球"
+        },
+        {
+          "offset": 47170000,
+          "duration": 1886660,
+          "text": "后"
+        },
+        {
+          "offset": 50825410,
+          "duration": 4363330,
+          "text": "广告"
+        },
+        {
+          "offset": 55306660,
+          "duration": 2476250,
+          "text": "不得"
+        },
+        {
+          "offset": 57900830,
+          "duration": 4009580,
+          "text": "变化"
+        },
+        {
+          "offset": 67335000,
+          "duration": 3302080,
+          "text": "崇打"
+        },
+        {
+          "offset": 70754580,
+          "duration": 1297080,
+          "text": "一"
+        },
+        {
+          "offset": 72052080,
+          "duration": 2004580,
+          "text": "分"
+        },
+        {
+          "offset": 77122500,
+          "duration": 2358330,
+          "text": "不能"
+        },
+        {
+          "offset": 79599160,
+          "duration": 1532910,
+          "text": "把"
+        },
+        {
+          "offset": 81367910,
+          "duration": 5424580,
+          "text": "赛事方"
+        },
+        {
+          "offset": 86792500,
+          "duration": 943330,
+          "text": "的"
+        },
+        {
+          "offset": 87853750,
+          "duration": 3655830,
+          "text": "保障"
+        },
+        {
+          "offset": 91627500,
+          "duration": 3537910,
+          "text": "责任"
+        },
+        {
+          "offset": 96226250,
+          "duration": 7665000,
+          "text": "一笔勾销"
+        }
+      ]
+    },
+    "voice_15.words.json": {
+      "sha256": "597bb8a4eb0b0d29bb61af1ffab461842a32424275ec9c46e4dd981e5ce1503d",
+      "words": [
+        {
+          "offset": 971660,
+          "duration": 2712080,
+          "text": "比分"
+        },
+        {
+          "offset": 3920000,
+          "duration": 1415000,
+          "text": "能"
+        },
+        {
+          "offset": 5335000,
+          "duration": 4481250,
+          "text": "重置"
+        },
+        {
+          "offset": 12174580,
+          "duration": 3184160,
+          "text": "感觉"
+        },
+        {
+          "offset": 15594160,
+          "duration": 3773750,
+          "text": "未必"
+        },
+        {
+          "offset": 19485830,
+          "duration": 1297080,
+          "text": "能"
+        },
+        {
+          "offset": 21018750,
+          "duration": 3302080,
+          "text": "一起"
+        },
+        {
+          "offset": 24438750,
+          "duration": 2594160,
+          "text": "退"
+        },
+        {
+          "offset": 27032910,
+          "duration": 3655830,
+          "text": "回去"
+        },
+        {
+          "offset": 35967080,
+          "duration": 4245410,
+          "text": "期待"
+        },
+        {
+          "offset": 40447910,
+          "duration": 1886660,
+          "text": "更"
+        },
+        {
+          "offset": 42335000,
+          "duration": 3655410,
+          "text": "可靠"
+        },
+        {
+          "offset": 45990410,
+          "duration": 707500,
+          "text": "的"
+        },
+        {
+          "offset": 46815830,
+          "duration": 4599160,
+          "text": "赛场"
+        },
+        {
+          "offset": 53420000,
+          "duration": 1415000,
+          "text": "也"
+        },
+        {
+          "offset": 54952910,
+          "duration": 3537500,
+          "text": "期待"
+        },
+        {
+          "offset": 58490410,
+          "duration": 1886660,
+          "text": "她"
+        },
+        {
+          "offset": 61202910,
+          "duration": 3655410,
+          "text": "握住"
+        },
+        {
+          "offset": 64858330,
+          "duration": 1768750,
+          "text": "下"
+        },
+        {
+          "offset": 66745410,
+          "duration": 6603750,
+          "text": "一次机会"
+        }
+      ]
+    }
+  },
+  "method": {
+    "acoustic": "Same-context canonical intended and wrong homophone references; shared-standardized MFCC/delta plus Praat centered F0, full-passage DTW mapped to the target syllable. Canonical self-tests are retained by evidence SHA.",
+    "content_match": "Actual mixed film audio vs cached correct production TTS; exact normalized overlap waveform correlation with FFT cross-correlation and cumulative-square normalization. No new synthesis.",
+    "tail_asr": "Only last narrated segment plus brand outro; local multilingual base model on actual PCM array. File-path decode previously rejected metadata_errors; PCM avoids that library incompatibility. ASR does not establish tone.",
+    "human_listening_claim": false
+  },
+  "overall_proof_pass": true
+}

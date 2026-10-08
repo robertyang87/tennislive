@@ -1,0 +1,220 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source_audio agent: base.en/small.en full-source VAD, targeted no-VAD, medium.en refinement, and native platform ASR-caption comparison",
+  "reviewed_at": "2026-10-07T16:31:18.616093+00:00",
+  "status": "complete",
+  "reviewed_from": 246.24,
+  "reviewed_to": 252.8,
+  "actual_listening_performed": false,
+  "review_scope": "Entire selected source window inspected using real, retained ASR outputs and cross-checks. Complete means selected-source ASR coverage resolved, not an invented human listening attestation. Sentence subtitles split only at actual word boundaries into consecutive semantic clauses.",
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/base.en.json",
+      "sha256": "fb5e6d7b42bcc200b6e404ba867aefe3c1b5ad2c55f62da95d45dcceb95de62f",
+      "model": "base.en",
+      "source_from": 0,
+      "source_to": 350,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": true,
+        "word_timestamps": true,
+        "condition_on_previous_text": false
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/edge-03-medium.en.json",
+      "sha256": "ad739d3a3fc2d52f60896d67f1c181312b7376a0a9cc6bbf4935531bc762ed88",
+      "model": "medium.en",
+      "source_from": 251,
+      "source_to": 255.7,
+      "parameters": {
+        "vad_filter": false,
+        "word_timestamps": true,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/edge-03-small.en.json",
+      "sha256": "1baa5dd97bdc85bca21ad7253a040c50e9e6c514b7a080765cee247771da2608",
+      "model": "small.en",
+      "source_from": 251,
+      "source_to": 255.7,
+      "parameters": {
+        "vad_filter": false,
+        "word_timestamps": true,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/edge-04-medium.en.json",
+      "sha256": "e1f25afb07a16fc1c327da40360f6a094313d6f51d5f088c3e92f8efd4711e6e",
+      "model": "medium.en",
+      "source_from": 252.6,
+      "source_to": 256.2,
+      "parameters": {
+        "vad_filter": false,
+        "word_timestamps": true,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/edge-04-small.en.json",
+      "sha256": "cf38065030a2b1a5dc5159ef7236058008dd2cdddd84c4def622b5780705078c",
+      "model": "small.en",
+      "source_from": 252.6,
+      "source_to": 256.2,
+      "parameters": {
+        "vad_filter": false,
+        "word_timestamps": true,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/medium-06.json",
+      "sha256": "059ac5ca19c6bc5cb628d1d2ec7a4ce0628a769f1f59b923239edd8688b171fd",
+      "model": "medium.en",
+      "source_from": 250,
+      "source_to": 261,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/medium-refine-02.json",
+      "sha256": "fc5b443609f8c624ca02327536d32d28514a1c0c3ea53d32a7d1ed04af388f29",
+      "model": "medium.en",
+      "source_from": 251.5,
+      "source_to": 260.24,
+      "parameters": {
+        "language": "en",
+        "beam_size": 7,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/narrow-05-base.en.json",
+      "sha256": "7fd8ed852f5dcedfd667ae52307e2c36f6655044e9797137456c7fd2f1aa214b",
+      "model": "base.en",
+      "source_from": 251,
+      "source_to": 260.7,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/narrow-05-small.en.json",
+      "sha256": "d2a655aebce5a676f33dbb19b5d17b5d558bc97766aec85c907f4b88d9f675de",
+      "model": "small.en",
+      "source_from": 251,
+      "source_to": 260.7,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/small.en.json",
+      "sha256": "122d03640c703979e5c72ec7e8ba414590744abfbfda279d2a83e8e705bcf85e",
+      "model": "small.en",
+      "source_from": 0,
+      "source_to": 350,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": true,
+        "word_timestamps": true,
+        "condition_on_previous_text": false
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-15-base.en.json",
+      "sha256": "adab0ccc770ad81ca3f10cf8f756fc76170f4c6be4f075dc8c14845ea38b16a9",
+      "model": "base.en",
+      "source_from": 237,
+      "source_to": 247,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-15-small.en.json",
+      "sha256": "97a89c671b4b579a382416463a289de089925bae1f476b14b2649919d004466f",
+      "model": "small.en",
+      "source_from": 237,
+      "source_to": 247,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-16-base.en.json",
+      "sha256": "85a2ef9cc977d0d8c8879a489b16af4c7a50b77d6f6cbd40c6ee404648321fac",
+      "model": "base.en",
+      "source_from": 250,
+      "source_to": 263,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-16-small.en.json",
+      "sha256": "0e1391bcf2271e7c52df244154b9b31138c53ffe831bf99702ff909250459fd8",
+      "model": "small.en",
+      "source_from": 250,
+      "source_to": 263,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    }
+  ],
+  "source_caption_evidence": {
+    "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/native-captions.txt",
+    "sha256": "9648e1156cfb65ad74754d17e48941605e8cca20efe97c0b90fa76bd350bfb39",
+    "type": "native downloaded platform ASR captions, supporting rather than human verified"
+  },
+  "resolution_notes": [],
+  "no_foreground_english_reason": "The selected complete rally ends252.80 before the disputed commentator prefix. Full-source VAD transcripts contain no English in246.24-252.80; larger-window medium.en first disputed word starts252.88. Brief crop-padding onset variation is recorded in raw outputs; the whole disputed dead-ball utterance252.80-255.80 is excluded. Actual source ball/crowd sound retained; no artificial digital silence."
+}

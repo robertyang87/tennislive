@@ -79,6 +79,9 @@ pytest -q -n auto                                                    # 全量，
 [`docs/thirty-minute-pipeline.md`](docs/thirty-minute-pipeline.md) 和
 [`docs/video-production-fast-path.md`](docs/video-production-fast-path.md)。
 
+三条主线的代码/运行记录审查、已实施减负与验证边界见
+[2026-10-04 流水线审查](docs/review-video-pipelines-2026-10-04.md)。
+
 ## 无人值守编排
 
 `orchestrate.yml` 每 10 分钟扫一次赛果赛程，打分、路由、去重，再自动 dispatch

@@ -1,0 +1,521 @@
+{
+  "schema": "tennislive.asr-crosschecked-cue-proposal.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI international_video: actual full-source and targeted raw-ASR comparison across small, base, small.en and medium.en; no external editorial/vision models used",
+  "reviewed_at": "2026-10-03T16:59:26.714790+00:00",
+  "actual_listening_performed": false,
+  "status": "boundaries_applied_and_lexical_content_locked",
+  "scope": "All selected source audio windows compared against complete-source VAD/no-VAD records and targeted records. Source bytes untouched. Machine crosscheck does not assert human listening or determine dubbed-versus-original provenance.",
+  "language_detection": {
+    "small_no_vad": {
+      "language": "en",
+      "probability": 0.9178666472434998
+    },
+    "base_no_vad": {
+      "language": "en",
+      "probability": 0.9605065584182739
+    },
+    "small_vad": {
+      "language": "en",
+      "probability": 0.9878963232040405
+    },
+    "base_vad": {
+      "language": "en",
+      "probability": 0.98247230052948
+    }
+  },
+  "source_caption_evidence": {
+    "available": false,
+    "why": "Brightcove metadata text_tracks contains only thumbnail metadata VTT, no caption track."
+  },
+  "raw_evidence": [
+    {
+      "path": "ending-tight-base.json",
+      "sha256": "d396a43962a19f3a24a521ffdbcb1049158ceb0909b4823bac1649137665b197",
+      "model": "base",
+      "range_from": 199.6,
+      "range_to": 206.358333,
+      "vad_filter": false
+    },
+    {
+      "path": "ending-tight-small.json",
+      "sha256": "d721990827f908b84cc3d3e1d8cc96e34dc48ff573c9536cdf93dfa9f72c4acb",
+      "model": "small",
+      "range_from": 199.6,
+      "range_to": 206.358333,
+      "vad_filter": false
+    },
+    {
+      "path": "finish-tight-medium.en.json",
+      "sha256": "08914a830799ac895fe5cc8359970d1b3570219d993c272b3a9e026662ffe929",
+      "model": "medium.en",
+      "range_from": 115.5,
+      "range_to": 119.5,
+      "vad_filter": false
+    },
+    {
+      "path": "finish-tight-small.json",
+      "sha256": "9db1da86966678bae6550d5d413191b8cea5ffe6adb6fe644820b0b96f721e1a",
+      "model": "small",
+      "range_from": 115.5,
+      "range_to": 119.5,
+      "vad_filter": false
+    },
+    {
+      "path": "full-base-no-vad.json",
+      "sha256": "7a06a12d41566576dd01d4586f4bce1e84e0934221d1e42cc2de22c39a31b13d",
+      "model": "base",
+      "range_from": 0,
+      "range_to": null,
+      "vad_filter": false
+    },
+    {
+      "path": "full-base-vad.json",
+      "sha256": "7cd5b4584dc631ae565dc93aa1a7836bc7e64dbe561aa8d32b9e44302bf0d123",
+      "model": "base",
+      "range_from": 0,
+      "range_to": null,
+      "vad_filter": true
+    },
+    {
+      "path": "full-medium.en-vad.json",
+      "sha256": "eba09f0043d03fc831f6c6be431764e0dad05ceb4e74b8ae729349f39fd720d9",
+      "model": "medium.en",
+      "range_from": 0,
+      "range_to": null,
+      "vad_filter": true
+    },
+    {
+      "path": "full-small-no-vad.json",
+      "sha256": "0ca7c12fab2a7a1612acb7df46a05c51700c7ea2683d850fe722fb8537709d51",
+      "model": "small",
+      "range_from": 0,
+      "range_to": null,
+      "vad_filter": false
+    },
+    {
+      "path": "full-small-vad.json",
+      "sha256": "895011e6917b1462f4d196a6bd532aad634a81bf6baa1c672ffd1185ce791c23",
+      "model": "small",
+      "range_from": 0,
+      "range_to": null,
+      "vad_filter": true
+    },
+    {
+      "path": "target-base-backhand.json",
+      "sha256": "624cc273615bea9f9a8824828da224cae408dc5b9f2d42509e2cbc8b285d5b9c",
+      "model": "base",
+      "range_from": 138,
+      "range_to": 153,
+      "vad_filter": false
+    },
+    {
+      "path": "target-base-composed.json",
+      "sha256": "aa88961c0aa370c690a3bdbdbd03ff497ae5696e3f5a0196f2f23088ff5ae07b",
+      "model": "base",
+      "range_from": 155,
+      "range_to": 172,
+      "vad_filter": false
+    },
+    {
+      "path": "target-base-covernet.json",
+      "sha256": "7e5adde2824d263a9715f89af63424341c481f43df15f009a72675beecdaa7c4",
+      "model": "base",
+      "range_from": 120,
+      "range_to": 139,
+      "vad_filter": false
+    },
+    {
+      "path": "target-base-ending.json",
+      "sha256": "432fbf3993b93c68b021a1f538524a154682405ebc54ad8ae4b37a345bfae99b",
+      "model": "base",
+      "range_from": 188,
+      "range_to": 206.358333,
+      "vad_filter": false
+    },
+    {
+      "path": "target-base-forehand.json",
+      "sha256": "cb681a7b1cb44aa8fd203e2e39801963f43a76b0d356e31b1eeba8086633294b",
+      "model": "base",
+      "range_from": 176,
+      "range_to": 191,
+      "vad_filter": false
+    },
+    {
+      "path": "target-base-mixup.json",
+      "sha256": "74b978fffe04f4f996162d0ec8dac25674f4b0c1734da14c7f47f318c854f2e7",
+      "model": "base",
+      "range_from": 66,
+      "range_to": 79,
+      "vad_filter": false
+    },
+    {
+      "path": "target-base-opening.json",
+      "sha256": "f64bcad79bf7c39d1a069a84e25aa082477873b5e7835343fef50cf2de1963ad",
+      "model": "base",
+      "range_from": 0,
+      "range_to": 29,
+      "vad_filter": false
+    },
+    {
+      "path": "target-base-turnaround.json",
+      "sha256": "9647f1a891950e6bc00e963518cb3559dbee72cb6d71217f14072884432c9989",
+      "model": "base",
+      "range_from": 91,
+      "range_to": 108,
+      "vad_filter": false
+    },
+    {
+      "path": "target-medium.en-backhand.json",
+      "sha256": "724576d075ccba0bf23f4c710df36a82e849457d0bc20ac8724c55eeb28faada",
+      "model": "medium.en",
+      "range_from": 138,
+      "range_to": 153,
+      "vad_filter": false
+    },
+    {
+      "path": "target-medium.en-composed.json",
+      "sha256": "e62de51fca0db9dea2542e65b0f9ba74996094e9a4b73915f415d84bc1445758",
+      "model": "medium.en",
+      "range_from": 155,
+      "range_to": 172,
+      "vad_filter": false
+    },
+    {
+      "path": "target-medium.en-covernet.json",
+      "sha256": "d47e100082faedb436507af51ba4fb7160369ffe3b533c6e319eb7189142a133",
+      "model": "medium.en",
+      "range_from": 120,
+      "range_to": 139,
+      "vad_filter": false
+    },
+    {
+      "path": "target-medium.en-ending.json",
+      "sha256": "e0c469992fd18144df2b6c5b0e0a8d71853cc737f8c7875cfe72eb562d5d4e23",
+      "model": "medium.en",
+      "range_from": 188,
+      "range_to": 206.358333,
+      "vad_filter": false
+    },
+    {
+      "path": "target-medium.en-forehand.json",
+      "sha256": "43f85c57f694b90262bfb527ab916ae501ee5b8b6834f78f14f373d03c9d321f",
+      "model": "medium.en",
+      "range_from": 176,
+      "range_to": 191,
+      "vad_filter": false
+    },
+    {
+      "path": "target-medium.en-mixup.json",
+      "sha256": "4a0147b8a3a5a075fd2d288223bd04c372a7a8b492611b33099c08de40059455",
+      "model": "medium.en",
+      "range_from": 66,
+      "range_to": 79,
+      "vad_filter": false
+    },
+    {
+      "path": "target-medium.en-opening.json",
+      "sha256": "b23dd579a1bf48a93b4f06360e066db4e621b4c9a6b77724b020d0c59f8d628d",
+      "model": "medium.en",
+      "range_from": 0,
+      "range_to": 29,
+      "vad_filter": false
+    },
+    {
+      "path": "target-medium.en-turnaround.json",
+      "sha256": "fc806368d27e7a6cdc4168ed913d906ba757b1c760cc8f5328da11ecaf9b57ad",
+      "model": "medium.en",
+      "range_from": 91,
+      "range_to": 108,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small-backhand.json",
+      "sha256": "200161fb6ae1b1980ef38150ad6f9f23b40311be79d03cfe95d98c321513c363",
+      "model": "small",
+      "range_from": 138,
+      "range_to": 153,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small-composed.json",
+      "sha256": "bf05a1df505f65b1fdd60203788b8b6c8aa93fd410ca16a057595de05cf56991",
+      "model": "small",
+      "range_from": 155,
+      "range_to": 172,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small-covernet.json",
+      "sha256": "c035842471326a1208e18f17b53796dac4543c89f280cdc1f83dcbe8995aa2ff",
+      "model": "small",
+      "range_from": 120,
+      "range_to": 139,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small-ending.json",
+      "sha256": "58d7be74bdc68858ffffe0b24eae5b333810086c56bf3341942159ebe3584ff3",
+      "model": "small",
+      "range_from": 188,
+      "range_to": 206.358333,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small-forehand.json",
+      "sha256": "c546301cfccd40918af0057338b8724fa1a7df2325a308b0786187e15f8aed3a",
+      "model": "small",
+      "range_from": 176,
+      "range_to": 191,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small-mixup.json",
+      "sha256": "1568c32ff5adae39b7011251607b86c3a477a46580f069e50c1e710e2fe9faf5",
+      "model": "small",
+      "range_from": 66,
+      "range_to": 79,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small-opening.json",
+      "sha256": "9ad1de924e991ce49789f1d28a9de83c465559cacb259e4a714a090028f75a65",
+      "model": "small",
+      "range_from": 0,
+      "range_to": 29,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small-turnaround.json",
+      "sha256": "395c4504beebe8e152d5d1367fd98a1e9d3cd0cb4f1f9233b95b62629b1637f7",
+      "model": "small",
+      "range_from": 91,
+      "range_to": 108,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small.en-backhand.json",
+      "sha256": "8661e547615072481bb4978339e60b8bb5266005868a6534edd36497632b51c1",
+      "model": "small.en",
+      "range_from": 138,
+      "range_to": 153,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small.en-composed.json",
+      "sha256": "f5288d5614cc1befb0bbee7364fd4305122db71f371aa8a892e90eaa16577617",
+      "model": "small.en",
+      "range_from": 155,
+      "range_to": 172,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small.en-covernet.json",
+      "sha256": "428b33793d2766aa00fa3bc167bdf57b2a566ea657fa76a7c9d70d89b676a362",
+      "model": "small.en",
+      "range_from": 120,
+      "range_to": 139,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small.en-ending.json",
+      "sha256": "c0e45699506ac551177ab685789144459226be9cd8b45ea783cc1089424610ae",
+      "model": "small.en",
+      "range_from": 188,
+      "range_to": 206.358333,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small.en-forehand.json",
+      "sha256": "9305b5f1847587f8692333d3eacda0d165707feff9f1cd2c4f849d112b752da1",
+      "model": "small.en",
+      "range_from": 176,
+      "range_to": 191,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small.en-mixup.json",
+      "sha256": "5ed51ad6d68ad044d0953f95463561970ea5de646f3adcfab8bc693d88a1966a",
+      "model": "small.en",
+      "range_from": 66,
+      "range_to": 79,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small.en-opening.json",
+      "sha256": "a734a7214523797a0bca910fbdc29399d2375673c6a5b714c807c0ce579dd117",
+      "model": "small.en",
+      "range_from": 0,
+      "range_to": 29,
+      "vad_filter": false
+    },
+    {
+      "path": "target-small.en-turnaround.json",
+      "sha256": "8c3a2fee0943ad351c8afb91081264138681dea538323c82fe29a00d032cb864",
+      "model": "small.en",
+      "range_from": 91,
+      "range_to": 108,
+      "vad_filter": false
+    }
+  ],
+  "quote_windows": [
+    {
+      "key": "cold",
+      "start": 197.55,
+      "end": 199.75,
+      "foreground_english": [
+        {
+          "start": 197.56,
+          "end": 199.65,
+          "en": "Oh, she wins it in style.",
+          "zh": "噢，她赢得真漂亮。"
+        }
+      ],
+      "uncertain_spans": []
+    },
+    {
+      "key": "finish",
+      "start": 117.0,
+      "end": 119.1,
+      "foreground_english": [
+        {
+          "start": 117.08,
+          "end": 118.76,
+          "en": "Oh, such a good finish.",
+          "zh": "这一球收得漂亮。"
+        }
+      ],
+      "uncertain_spans": []
+    },
+    {
+      "key": "backhand",
+      "start": 144.6,
+      "end": 147.65,
+      "foreground_english": [
+        {
+          "start": 144.86,
+          "end": 147.6,
+          "en": "She finds the backhand down the line.",
+          "zh": "她打出反手直线。"
+        }
+      ],
+      "uncertain_spans": []
+    },
+    {
+      "key": "forehand",
+      "start": 184.2,
+      "end": 187.65,
+      "foreground_english": [
+        {
+          "start": 184.24,
+          "end": 187.46,
+          "en": "There's nothing tentative about that forehand.",
+          "zh": "这记正手毫不犹豫。"
+        }
+      ],
+      "uncertain_spans": []
+    },
+    {
+      "key": "ending",
+      "start": 197.55,
+      "end": 206.32,
+      "foreground_english": [
+        {
+          "start": 197.56,
+          "end": 199.65,
+          "en": "Oh, she wins it in style.",
+          "zh": "噢，她赢得真漂亮。"
+        },
+        {
+          "start": 200.8,
+          "end": 205.86,
+          "en": "And it's the biggest victory of this young sixteen-year-old's career.",
+          "zh": "16岁小将生涯最重要的一胜。"
+        }
+      ],
+      "uncertain_spans": []
+    }
+  ],
+  "quiet_windows": [
+    {
+      "key": "context",
+      "start": 26.9,
+      "end": 39.48,
+      "foreground_english": [],
+      "boundary_evidence": {
+        "previous_english_end": 26.44,
+        "next_english_start": 73.24
+      }
+    },
+    {
+      "key": "firstset",
+      "start": 102.25,
+      "end": 117.0,
+      "foreground_english": [],
+      "boundary_evidence": {
+        "previous_english_end": 101.94,
+        "next_english_start": 117.08
+      }
+    },
+    {
+      "key": "second",
+      "start": 132.65,
+      "end": 144.6,
+      "foreground_english": [],
+      "boundary_evidence": {
+        "previous_english_end": 132.64,
+        "next_english_start": 144.86
+      }
+    },
+    {
+      "key": "breakpoint",
+      "start": 168.75,
+      "end": 184.2,
+      "foreground_english": [],
+      "boundary_evidence": {
+        "previous_english_end": 168.33,
+        "next_english_start": 184.24
+      }
+    },
+    {
+      "key": "matchpoint",
+      "start": 187.65,
+      "end": 197.55,
+      "foreground_english": [],
+      "boundary_evidence": {
+        "previous_english_end": 187.46,
+        "next_english_start": 197.56
+      }
+    }
+  ],
+  "quiet_basis": "Sparse commentator speech was located by actual fullsource small/base auto-language VAD/no-VAD, additional English medium.en fullsource, four targeted model passes and standalone Silero speech events. No English inside selected TTS windows; surrounding words stay outside the source boundaries. Court sound, grunts and crowd remain in the source, so absence of commentator English does not mean digital silence.",
+  "crosscheck_resolutions": [
+    {
+      "span": [
+        144.6,
+        147.65
+      ],
+      "result": "She finds the backhand down the line.",
+      "basis": "Full small VAD and medium.en target agree including finds and backhand down the line. Base VAD vised is low-confidence; narrow multilingual/English-small no-VAD repeating sorry or You cannot do it is demonstrably contradictory window hallucination, not injected into captions. Medium fullsource loses final the line under VAD concatenation; targeted medium preserves it."
+    },
+    {
+      "span": [
+        184.2,
+        187.65
+      ],
+      "result": "There's nothing tentative about that forehand.",
+      "basis": "Full small VAD and medium.en target/full VAD agree tentative, with lexical word probabilities0.739/0.887/0.933. Base tense-to/small.en sensitive are retained in raw evidence and resolved by agreeing small+medium utterance. Word interval envelope retained through187.46; next TTS begins187.65."
+    },
+    {
+      "span": [
+        197.55,
+        206.32
+      ],
+      "result": "Oh, she wins it in style. And it's the biggest victory of this young sixteen-year-old's career.",
+      "basis": "Oh shared by target small/base/small.en and full medium VAD. And shared by tight small target, broad small/base/medium target and full medium VAD. Main clause agrees across all models. Numbers normalized16->sixteen without changing spoken content. Medium full-VAD and stretches199.89–201.53 over a crowd gap; tight pass200.80–205.80 and standalone VAD second speech201.258 onward locate second clause. Sentence cues cover all lexical speech, not whole pause."
+    }
+  ],
+  "pending_boundary_changes": []
+}

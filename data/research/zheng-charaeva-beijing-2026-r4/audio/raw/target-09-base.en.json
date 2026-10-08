@@ -1,0 +1,375 @@
+{
+  "model": "base.en",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "source_from": 153,
+  "source_to": 168,
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+  },
+  "info": {
+    "language": "en",
+    "language_probability": 1,
+    "duration": 15.0,
+    "duration_after_vad": 15.0,
+    "all_language_probs": null,
+    "transcription_options": {
+      "beam_size": 5,
+      "best_of": 5,
+      "patience": 1,
+      "length_penalty": 1,
+      "repetition_penalty": 1,
+      "no_repeat_ngram_size": 0,
+      "log_prob_threshold": -1.0,
+      "no_speech_threshold": 0.6,
+      "compression_ratio_threshold": 2.4,
+      "condition_on_previous_text": false,
+      "prompt_reset_on_temperature": 0.5,
+      "temperatures": [
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA.",
+      "prefix": null,
+      "suppress_blank": true,
+      "suppress_tokens": [
+        1,
+        2,
+        7,
+        8,
+        9,
+        10,
+        14,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        90,
+        91,
+        92,
+        93,
+        357,
+        366,
+        438,
+        532,
+        685,
+        705,
+        796,
+        930,
+        1058,
+        1220,
+        1267,
+        1279,
+        1303,
+        1343,
+        1377,
+        1391,
+        1635,
+        1782,
+        1875,
+        2162,
+        2361,
+        2488,
+        3467,
+        4008,
+        4211,
+        4600,
+        4808,
+        5299,
+        5855,
+        6329,
+        7203,
+        9609,
+        9959,
+        10563,
+        10786,
+        11420,
+        11709,
+        11907,
+        13163,
+        13697,
+        13700,
+        14808,
+        15306,
+        16410,
+        16791,
+        17992,
+        19203,
+        19510,
+        20724,
+        22305,
+        22935,
+        27007,
+        30109,
+        30420,
+        33409,
+        34949,
+        40283,
+        40493,
+        40549,
+        47282,
+        49146,
+        50257,
+        50357,
+        50358,
+        50359,
+        50360,
+        50361
+      ],
+      "without_timestamps": false,
+      "max_initial_timestamp": 1.0,
+      "word_timestamps": true,
+      "prepend_punctuations": "\"'“¿([{-",
+      "append_punctuations": "\"'.。,，!！?？:：”)]}、",
+      "multilingual": false,
+      "max_new_tokens": null,
+      "clip_timestamps": [
+        0.0
+      ],
+      "hallucination_silence_threshold": null,
+      "hotwords": null
+    },
+    "vad_options": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 2.5400000000000005,
+      "end": 13.14,
+      "text": " Oh, the forehand. It's exquisite. It finds its way through. No winners opening set three in the second and her third produces her second break of serve.",
+      "tokens": [
+        50363,
+        3966,
+        11,
+        262,
+        1674,
+        4993,
+        13,
+        632,
+        338,
+        40123,
+        13,
+        632,
+        7228,
+        663,
+        835,
+        832,
+        13,
+        1400,
+        14591,
+        4756,
+        900,
+        1115,
+        287,
+        262,
+        1218,
+        290,
+        607,
+        2368,
+        11073,
+        607,
+        1218,
+        2270,
+        286,
+        4691,
+        13,
+        51113
+      ],
+      "avg_logprob": -0.4509750540192063,
+      "compression_ratio": 1.2991452991452992,
+      "no_speech_prob": 0.08998958766460419,
+      "words": [
+        {
+          "start": 2.5400000000000005,
+          "end": 3.1,
+          "word": " Oh,",
+          "probability": 0.21017076075077057
+        },
+        {
+          "start": 3.8,
+          "end": 3.9,
+          "word": " the",
+          "probability": 0.878711998462677
+        },
+        {
+          "start": 3.9,
+          "end": 4.44,
+          "word": " forehand.",
+          "probability": 0.9883406162261963
+        },
+        {
+          "start": 4.72,
+          "end": 4.84,
+          "word": " It's",
+          "probability": 0.43810583651065826
+        },
+        {
+          "start": 4.84,
+          "end": 4.98,
+          "word": " exquisite.",
+          "probability": 0.295356422662735
+        },
+        {
+          "start": 5.46,
+          "end": 5.48,
+          "word": " It",
+          "probability": 0.8685533404350281
+        },
+        {
+          "start": 5.48,
+          "end": 5.72,
+          "word": " finds",
+          "probability": 0.9985804557800293
+        },
+        {
+          "start": 5.72,
+          "end": 5.92,
+          "word": " its",
+          "probability": 0.9368481040000916
+        },
+        {
+          "start": 5.92,
+          "end": 6.1,
+          "word": " way",
+          "probability": 0.9985557198524475
+        },
+        {
+          "start": 6.1,
+          "end": 6.38,
+          "word": " through.",
+          "probability": 0.99556964635849
+        },
+        {
+          "start": 7.02,
+          "end": 7.04,
+          "word": " No",
+          "probability": 0.9925306439399719
+        },
+        {
+          "start": 7.04,
+          "end": 7.32,
+          "word": " winners",
+          "probability": 0.9889810085296631
+        },
+        {
+          "start": 7.32,
+          "end": 7.94,
+          "word": " opening",
+          "probability": 0.7002881765365601
+        },
+        {
+          "start": 7.94,
+          "end": 8.24,
+          "word": " set",
+          "probability": 0.9699733853340149
+        },
+        {
+          "start": 8.24,
+          "end": 8.88,
+          "word": " three",
+          "probability": 0.5787360072135925
+        },
+        {
+          "start": 8.88,
+          "end": 10.02,
+          "word": " in",
+          "probability": 0.8152967095375061
+        },
+        {
+          "start": 10.02,
+          "end": 10.14,
+          "word": " the",
+          "probability": 0.9923575520515442
+        },
+        {
+          "start": 10.14,
+          "end": 10.48,
+          "word": " second",
+          "probability": 0.9803686738014221
+        },
+        {
+          "start": 10.48,
+          "end": 10.72,
+          "word": " and",
+          "probability": 0.7627399563789368
+        },
+        {
+          "start": 10.72,
+          "end": 10.84,
+          "word": " her",
+          "probability": 0.5869675278663635
+        },
+        {
+          "start": 10.84,
+          "end": 11.16,
+          "word": " third",
+          "probability": 0.9980997443199158
+        },
+        {
+          "start": 11.16,
+          "end": 11.96,
+          "word": " produces",
+          "probability": 0.7781026363372803
+        },
+        {
+          "start": 11.96,
+          "end": 12.18,
+          "word": " her",
+          "probability": 0.862095296382904
+        },
+        {
+          "start": 12.18,
+          "end": 12.5,
+          "word": " second",
+          "probability": 0.994148850440979
+        },
+        {
+          "start": 12.5,
+          "end": 12.72,
+          "word": " break",
+          "probability": 0.9960935711860657
+        },
+        {
+          "start": 12.72,
+          "end": 12.9,
+          "word": " of",
+          "probability": 0.9783329367637634
+        },
+        {
+          "start": 12.9,
+          "end": 13.14,
+          "word": " serve.",
+          "probability": 0.6577114462852478
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

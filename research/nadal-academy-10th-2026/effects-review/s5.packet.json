@@ -1,0 +1,49 @@
+{
+  "source": "s5",
+  "effects_sha256": "392b267c9d2954894170f2b922cea07f9c2972164660963da59acd9a648f0e1e",
+  "source_sha256": "a1f4265fba2d5c04b24b361839ee806e247fa7a53acf755000f0638f105e748a",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+  "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+  "reviewed_from": 229.5,
+  "reviewed_to": 257,
+  "selected_windows": [
+    {
+      "start": 229.5,
+      "end": 257
+    }
+  ],
+  "foreground_speech": [],
+  "no_foreground_speech_reason": "All selected windows independently transcribed with small and medium VAD. No reproducible foreground phrase identified. Original outputs and low-confidence candidates retained; this is automatic ASR cross-check, not human listening.",
+  "uncertain_spans": [],
+  "asr_results": [
+    {
+      "source": "s5",
+      "start": 229.5,
+      "end": 257,
+      "model": "medium",
+      "effects_sha256": "392b267c9d2954894170f2b922cea07f9c2972164660963da59acd9a648f0e1e",
+      "language": "en",
+      "language_probability": 0.3780934512615204,
+      "segments": []
+    },
+    {
+      "source": "s5",
+      "start": 229.5,
+      "end": 257,
+      "model": "small",
+      "effects_sha256": "392b267c9d2954894170f2b922cea07f9c2972164660963da59acd9a648f0e1e",
+      "language": "en",
+      "language_probability": 0.3225676417350769,
+      "segments": []
+    }
+  ],
+  "candidate_outputs": [],
+  "transient_evidence": "rna10-effects-transients.json",
+  "limitations": [
+    "No independent human listening",
+    "Energy peaks alone do not semantically prove ball hits",
+    "Empty ASR is model evidence, not mathematical absence of all speech"
+  ]
+}

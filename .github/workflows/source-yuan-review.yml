@@ -1,0 +1,343 @@
+name: source-yuan-review
+run-name: "Yuan Yue source review · E22gizsz35g"
+
+# Review-only source retrieval. No rendering, publication or repository writes.
+# Actions artifacts inherit repository access: on a public repo, authenticated
+# readers can download them. This is NOT private storage. Retention is one day;
+# dispatch only after that access boundary has been explicitly authorized.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-yuan-review-E22gizsz35g
+  cancel-in-progress: false
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: bash
+    env:
+      VIDEO_URL: https://youtu.be/E22gizsz35g
+      VIDEO_ID: E22gizsz35g
+    steps:
+      - uses: actions/checkout@v4
+        timeout-minutes: 2
+        with:
+          persist-credentials: false
+          sparse-checkout: tools/ci_apt_install.sh
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-python@v5
+        timeout-minutes: 2
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        timeout-minutes: 2
+        with:
+          node-version: "22"
+
+      - name: Install YouTube downloader
+        timeout-minutes: 4
+        # [default] supplies yt-dlp-ejs; omitting it can hide playable formats.
+        run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+
+      - name: Restore audio/video apt cache
+        id: apt_cache
+        timeout-minutes: 2
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-download-video-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-download-video-v1-
+
+      - name: Install audio/video tools
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+
+      - name: Save only refreshed apt cache
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        timeout-minutes: 2
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+
+      - name: Start PO token provider
+        timeout-minutes: 3
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          docker run --name bgutil-pot -d -p 127.0.0.1:4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider >/dev/null
+          for attempt in $(seq 1 25); do
+            if curl --max-time 2 -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "PO token provider ready"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::warning::PO token provider unavailable; downloader may still use cookies/client"
+          exit 1
+
+      - name: Restore optional YouTube cookies
+        id: cookies
+        timeout-minutes: 1
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          set -euo pipefail
+          umask 077
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download fixed official source at 1080p or higher
+        timeout-minutes: 15
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/yuan-review"
+          ARGS=(--ignore-config --no-playlist --js-runtimes node
+                --socket-timeout 30 --retries 3 --fragment-retries 3)
+          if [ -n "$YT_COOKIES" ]; then
+            ARGS+=(--cookies "$YT_COOKIES")
+          fi
+          # No 720p fallback. The real streams are checked independently below.
+          yt-dlp "${ARGS[@]}" \
+            -S "+res" \
+            -f "137+140" \
+            --merge-output-format mp4 --remux-video mp4 --write-info-json \
+            -o "$RUNNER_TEMP/yuan-review/source.%(ext)s" "$VIDEO_URL" \
+            >"$RUNNER_TEMP/yuan-download.log" 2>&1 || {
+              echo "::error::Source download failed; no artifact will be uploaded. Check source availability and cookie/provider health."
+              exit 1
+            }
+          test -s "$RUNNER_TEMP/yuan-review/source.mp4" || {
+            echo "::error::Downloader did not produce source.mp4"
+            exit 1
+          }
+
+      - name: Verify real media and write clean identity
+        timeout-minutes: 2
+        run: |
+          set -euo pipefail
+          ffprobe -v error \
+            -show_entries stream=codec_type,codec_name,width,height:format=duration,size \
+            -of json "$RUNNER_TEMP/yuan-review/source.mp4" \
+            > "$RUNNER_TEMP/yuan-review/ffprobe.json"
+          python - <<'PY'
+          import hashlib
+          import json
+          import math
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ["RUNNER_TEMP"]) / "yuan-review"
+          probe = json.loads((root / "ffprobe.json").read_text())
+          info = json.loads((root / "source.info.json").read_text())
+          if info.get("id") != os.environ["VIDEO_ID"]:
+              raise SystemExit("Downloaded source ID does not match the authorized video")
+          streams = probe.get("streams", [])
+          videos = [s for s in streams if s.get("codec_type") == "video"]
+          if not videos or not any(min(s.get("width", 0), s.get("height", 0)) >= 1080 for s in videos):
+              raise SystemExit("Source must have a real video stream with short edge >= 1080")
+          if not any(s.get("codec_name") == "h264" for s in videos):
+              raise SystemExit("Source must be H264 for native frame inspection")
+          if not any(s.get("codec_type") == "audio" for s in streams):
+              raise SystemExit("Source has no audio stream")
+          duration = float(probe.get("format", {}).get("duration", 0))
+          if not math.isfinite(duration) or duration <= 0:
+              raise SystemExit("Source duration must be finite and positive")
+          source = root / "source.mp4"
+          digest = hashlib.sha256()
+          with source.open("rb") as media:
+              for chunk in iter(lambda: media.read(1024 * 1024), b""):
+                  digest.update(chunk)
+          # Allowlist descriptive metadata only: never export full yt-dlp info or media URLs.
+          identity = {key: info.get(key) for key in ("id", "title", "channel", "channel_id", "uploader", "upload_date")}
+          identity.update(source_url=os.environ["VIDEO_URL"], duration_seconds=duration,
+                          file="source.mp4", bytes=source.stat().st_size, sha256=digest.hexdigest())
+          (root / "source_identity.json").write_text(json.dumps(identity, ensure_ascii=False, indent=2) + "\n")
+          print(f"Verified source: {duration:.3f}s, 1080p-or-higher video and audio present")
+          PY
+
+      - name: Split source losslessly into bounded review parts
+        id: parts
+        timeout-minutes: 2
+        run: |
+          set -euo pipefail
+          python - <<'PYCODE'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ["RUNNER_TEMP"]) / "yuan-review"
+          source = root / "source.mp4"
+          identity = json.loads((root / "source_identity.json").read_text())
+          chunk_bytes = 28 * 1024 * 1024
+          total = source.stat().st_size
+          count = (total + chunk_bytes - 1) // chunk_bytes
+          if not 1 <= count <= 8:
+              raise SystemExit(f"Source requires {count} parts; maximum is 8. Nothing will be uploaded.")
+          parts = []
+          whole = hashlib.sha256()
+          with source.open("rb") as media:
+              for index in range(count):
+                  data = media.read(chunk_bytes)
+                  if not data:
+                      raise SystemExit("Unexpected end of source while splitting")
+                  whole.update(data)
+                  filename = f"source.mp4.part{index:02d}"
+                  (root / filename).write_bytes(data)
+                  parts.append({"order": index, "file": filename, "bytes": len(data),
+                                "sha256": hashlib.sha256(data).hexdigest()})
+              if media.read(1):
+                  raise SystemExit("Source grew while splitting; refusing truncated artifact")
+          if sum(p["bytes"] for p in parts) != total or whole.hexdigest() != identity["sha256"]:
+              raise SystemExit("Split source does not match the validated whole-file SHA-256")
+          manifest = {"source_file": "source.mp4", "source_bytes": total,
+                      "source_sha256": whole.hexdigest(), "part_size_limit_bytes": chunk_bytes,
+                      "part_count": count, "parts": parts,
+                      "reassembly": "Concatenate parts in ascending order, then verify source_bytes and source_sha256 before use."}
+          (root / "parts_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as outputs:
+              for index in range(count):
+                  print(f"part_{index:02d}=true", file=outputs)
+          print(f"Verified {count} lossless parts, each <= 28 MiB; whole-source SHA-256 matches")
+          PYCODE
+
+      - name: Upload source identity and part manifest
+        timeout-minutes: 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: yuan-source-E22gizsz35g-${{ github.run_id }}-metadata
+          path: |
+            ${{ runner.temp }}/yuan-review/ffprobe.json
+            ${{ runner.temp }}/yuan-review/source_identity.json
+            ${{ runner.temp }}/yuan-review/parts_manifest.json
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Upload source part 00
+        if: steps.parts.outputs.part_00 == 'true'
+        timeout-minutes: 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: yuan-source-E22gizsz35g-${{ github.run_id }}-part00
+          path: ${{ runner.temp }}/yuan-review/source.mp4.part00
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Upload source part 01
+        if: steps.parts.outputs.part_01 == 'true'
+        timeout-minutes: 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: yuan-source-E22gizsz35g-${{ github.run_id }}-part01
+          path: ${{ runner.temp }}/yuan-review/source.mp4.part01
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Upload source part 02
+        if: steps.parts.outputs.part_02 == 'true'
+        timeout-minutes: 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: yuan-source-E22gizsz35g-${{ github.run_id }}-part02
+          path: ${{ runner.temp }}/yuan-review/source.mp4.part02
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Upload source part 03
+        if: steps.parts.outputs.part_03 == 'true'
+        timeout-minutes: 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: yuan-source-E22gizsz35g-${{ github.run_id }}-part03
+          path: ${{ runner.temp }}/yuan-review/source.mp4.part03
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Upload source part 04
+        if: steps.parts.outputs.part_04 == 'true'
+        timeout-minutes: 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: yuan-source-E22gizsz35g-${{ github.run_id }}-part04
+          path: ${{ runner.temp }}/yuan-review/source.mp4.part04
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Upload source part 05
+        if: steps.parts.outputs.part_05 == 'true'
+        timeout-minutes: 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: yuan-source-E22gizsz35g-${{ github.run_id }}-part05
+          path: ${{ runner.temp }}/yuan-review/source.mp4.part05
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Upload source part 06
+        if: steps.parts.outputs.part_06 == 'true'
+        timeout-minutes: 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: yuan-source-E22gizsz35g-${{ github.run_id }}-part06
+          path: ${{ runner.temp }}/yuan-review/source.mp4.part06
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Upload source part 07
+        if: steps.parts.outputs.part_07 == 'true'
+        timeout-minutes: 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: yuan-source-E22gizsz35g-${{ github.run_id }}-part07
+          path: ${{ runner.temp }}/yuan-review/source.mp4.part07
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Remove temporary credentials and diagnostics
+        if: always()
+        timeout-minutes: 1
+        run: |
+          rm -f "$RUNNER_TEMP/yt-cookies.txt" "$RUNNER_TEMP/yuan-download.log" \
+            "$RUNNER_TEMP/yuan-review/source.info.json"
+          docker rm -f bgutil-pot >/dev/null 2>&1 || true

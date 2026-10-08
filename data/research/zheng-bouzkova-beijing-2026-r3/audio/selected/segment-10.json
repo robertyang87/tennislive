@@ -1,0 +1,42 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=3Y8VqlPjzJ8",
+  "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+  "source_duration": 460.289,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: independent base.en/small.en inference; focused medium.en/large-v3-turbo checks; source-platform captions; accepted editorial name/grammar normalization",
+  "reviewed_at": "2026-10-05T10:35:58+00:00",
+  "status": "complete",
+  "actual_listening_performed": false,
+  "reviewed_from": 180.96,
+  "reviewed_to": 201.72,
+  "foreground_english": [
+    {
+      "start": 197.04,
+      "end": 200.4,
+      "en": "That's a really good service game from Zheng that time.",
+      "zh": "郑钦文这一局发球局打得真好。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-base.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-youtube1080-islands-small.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "平台That’s；小模型It’s；姓名由已确定身份规范。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    }
+  ],
+  "uncertain_spans": [],
+  "editorial_resolution_path": "data/research/zheng-bouzkova-beijing-2026-r3/audio/selected/asr-dispute-resolution.json",
+  "method_limitations": [
+    "No human listening was performed or claimed.",
+    "Model omissions and name errors were cross-checked with platform captions and explicit editor-approved identity/grammar corrections.",
+    "Evidence covers complete selected windows through full-source base/small inference, no-VAD selected-window transcription, and platform-captions comparison; it does not prove absence of all speech by model confidence alone."
+  ],
+  "source_identity_basis": "Actual downloaded file SHA256 equals runner-export SHA256; alternate 311-second 720p edit is archived for provenance only and is not used to bind this 460-second source.",
+  "raw_evidence_manifest": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/manifest.json"
+}

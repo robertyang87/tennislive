@@ -1,0 +1,333 @@
+{
+  "id": "target-032",
+  "label": "第 7 段",
+  "display_char": "落",
+  "actual_tts_char": "落",
+  "position": 11,
+  "context": "，你会发现，落后一盘，成了",
+  "word": "落后",
+  "intended": "luo4",
+  "common_contrast": "la4",
+  "unmeasured_other_readings": [
+    "lao4"
+  ],
+  "semantic_override": null,
+  "tts_text": "从这里开始，你会发现，落后一盘，成了他这一路反复遇见的关口。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "落",
+    "char": "落",
+    "sentence": "从这里开始，你会发现，落后一盘，成了他这一路反复遇见的关口。",
+    "tts_text": "从这里开始，你会发现，落后一盘，成了他这一路反复遇见的关口。",
+    "intended_refs": [
+      "洛",
+      "骆"
+    ],
+    "wrong_refs": [
+      "辣",
+      "瘌"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "low",
+    "verdict_raw": "correct",
+    "score": 0.971,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [
+      "瘌"
+    ],
+    "override": null,
+    "selftest_sides": [
+      "A"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.005,
+        "d_wrong": 5.013,
+        "score": 0.998
+      },
+      "f0": {
+        "d_intended": 0.076,
+        "d_wrong": 3.611,
+        "score": 0.959
+      },
+      "comb": {
+        "d_intended": 0.09,
+        "d_wrong": 6.117,
+        "score": 0.971
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.087,
+      "wrong": 5.36
+    },
+    "separation": {
+      "spec": {
+        "within": 1.018,
+        "between": 4.775,
+        "separation": 4.689
+      },
+      "f0": {
+        "within": 1.051,
+        "between": 2.423,
+        "separation": 2.306
+      },
+      "comb": {
+        "within": 1.56,
+        "between": 4.81,
+        "separation": 3.084
+      }
+    },
+    "selftest_loo": {
+      "洛": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.901
+      },
+      "骆": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.902
+      },
+      "瘌": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.099,
+        "dropped": true
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:洛": {
+        "spec": 0.311,
+        "f0": 0.076,
+        "vmis": 0.0,
+        "frames": 28,
+        "comb": 0.231
+      },
+      "A:骆": {
+        "spec": 0.005,
+        "f0": 0.087,
+        "vmis": 0.0,
+        "frames": 28,
+        "comb": 0.09
+      },
+      "B:辣": {
+        "spec": 5.013,
+        "f0": 3.611,
+        "vmis": 0.143,
+        "frames": 28,
+        "comb": 6.117
+      },
+      "B:瘌": {
+        "spec": 4.822,
+        "f0": 1.234,
+        "vmis": 0.214,
+        "frames": 28,
+        "comb": 3.645
+      }
+    },
+    "window_s": [
+      2.13,
+      2.41
+    ],
+    "boundary_token": "落后",
+    "window_anchor": "B:瘌",
+    "tokens": {
+      "ORIG": [
+        "从",
+        "这里",
+        "开始",
+        "你",
+        "会",
+        "发现",
+        "落后",
+        "一",
+        "盘",
+        "成",
+        "了",
+        "他",
+        "这",
+        "一路",
+        "反复",
+        "遇见",
+        "的",
+        "关口"
+      ],
+      "A:洛": [
+        "从",
+        "这里",
+        "开始",
+        "你",
+        "会",
+        "发现",
+        "洛后",
+        "一",
+        "盘",
+        "成",
+        "了",
+        "他",
+        "这",
+        "一路",
+        "反复",
+        "遇见",
+        "的",
+        "关口"
+      ],
+      "A:骆": [
+        "从",
+        "这里",
+        "开始",
+        "你",
+        "会",
+        "发现",
+        "骆后",
+        "一",
+        "盘",
+        "成",
+        "了",
+        "他",
+        "这",
+        "一路",
+        "反复",
+        "遇见",
+        "的",
+        "关口"
+      ],
+      "B:辣": [
+        "从",
+        "这里",
+        "开始",
+        "你",
+        "会",
+        "发现",
+        "辣后",
+        "一",
+        "盘",
+        "成",
+        "了",
+        "他",
+        "这",
+        "一路",
+        "反复",
+        "遇见",
+        "的",
+        "关口"
+      ],
+      "B:瘌": [
+        "从",
+        "这里",
+        "开始",
+        "你",
+        "会",
+        "发现",
+        "瘌",
+        "后",
+        "一",
+        "盘",
+        "成",
+        "了",
+        "他",
+        "这",
+        "一路",
+        "反复",
+        "遇见",
+        "的",
+        "关口"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        2.3,
+        5.6,
+        6.0,
+        5.8,
+        4.5,
+        2.4,
+        -0.2,
+        -1.2,
+        -2.8
+      ],
+      "A:洛": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        2.4,
+        5.7,
+        6.0,
+        5.9,
+        4.6,
+        2.5,
+        -0.2,
+        -1.2,
+        -2.7
+      ],
+      "A:骆": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        2.2,
+        5.5,
+        5.9,
+        5.7,
+        4.4,
+        2.3,
+        -0.3,
+        -1.3,
+        -2.9
+      ],
+      "B:辣": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        3.6,
+        5.0,
+        7.2,
+        7.2,
+        6.6,
+        5.5,
+        null,
+        -11.2,
+        -11.6,
+        -11.7
+      ],
+      "B:瘌": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        3.8,
+        5.9,
+        6.9,
+        6.6,
+        5.9,
+        null,
+        -9.8,
+        null,
+        0.0
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/11383204aee14feb45bf4fe3.mp3",
+      "A:洛": "/workspace/tennislive/research/vacherot-acoustic/references/d22e7924a253b27364900c2c.mp3",
+      "A:骆": "/workspace/tennislive/research/vacherot-acoustic/references/509f3a50e6f74b3cfb1089c2.mp3",
+      "B:辣": "/workspace/tennislive/research/vacherot-acoustic/references/bb27f2e5b8bab8c2739b13dd.mp3",
+      "B:瘌": "/workspace/tennislive/research/vacherot-acoustic/references/4b74bc6fca6d1e35a1cde72c.mp3"
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 138,
+  "range_to": 153,
+  "created_at": "2026-10-03T16:48:08.661613+00:00",
+  "elapsed_seconds": 2.97,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 144.04,
+      "end": 149.22,
+      "text": " I don't know what's going on, I don't know what's going on, I don't know what's going",
+      "avg_logprob": -0.9852246471813747,
+      "no_speech_prob": 0.4470258355140686,
+      "words": [
+        {
+          "start": 144.04,
+          "end": 145.44,
+          "word": " I",
+          "probability": 0.08295170217752457
+        },
+        {
+          "start": 145.44,
+          "end": 145.44,
+          "word": " don't",
+          "probability": 0.5339042954146862
+        },
+        {
+          "start": 145.44,
+          "end": 145.44,
+          "word": " know",
+          "probability": 0.39433133602142334
+        },
+        {
+          "start": 145.44,
+          "end": 145.6,
+          "word": " what's",
+          "probability": 0.11347956210374832
+        },
+        {
+          "start": 145.6,
+          "end": 145.8,
+          "word": " going",
+          "probability": 0.5107858777046204
+        },
+        {
+          "start": 145.8,
+          "end": 146.5,
+          "word": " on,",
+          "probability": 0.8656901121139526
+        },
+        {
+          "start": 146.5,
+          "end": 146.5,
+          "word": " I",
+          "probability": 0.17176014184951782
+        },
+        {
+          "start": 146.5,
+          "end": 146.64,
+          "word": " don't",
+          "probability": 0.5548088811337948
+        },
+        {
+          "start": 146.64,
+          "end": 146.64,
+          "word": " know",
+          "probability": 0.7292104959487915
+        },
+        {
+          "start": 146.64,
+          "end": 148.46,
+          "word": " what's",
+          "probability": 0.5392915159463882
+        },
+        {
+          "start": 148.46,
+          "end": 148.46,
+          "word": " going",
+          "probability": 0.6925921440124512
+        },
+        {
+          "start": 148.46,
+          "end": 149.22,
+          "word": " on,",
+          "probability": 0.972399890422821
+        },
+        {
+          "start": 149.22,
+          "end": 149.22,
+          "word": " I",
+          "probability": 0.25337377190589905
+        },
+        {
+          "start": 149.22,
+          "end": 149.22,
+          "word": " don't",
+          "probability": 0.7848392128944397
+        },
+        {
+          "start": 149.22,
+          "end": 149.22,
+          "word": " know",
+          "probability": 0.9298659563064575
+        },
+        {
+          "start": 149.22,
+          "end": 149.22,
+          "word": " what's",
+          "probability": 0.7817581295967102
+        },
+        {
+          "start": 149.22,
+          "end": 149.22,
+          "word": " going",
+          "probability": 0.8658726215362549
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "8661e547615072481bb4978339e60b8bb5266005868a6534edd36497632b51c1",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

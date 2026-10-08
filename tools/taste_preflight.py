@@ -684,7 +684,10 @@ def main(argv: list[str] | None = None) -> int:
     gates: list[GateResult] | None = None
     if found and not args.no_gates:
         if ctx.kind == "reel":
-            gates = [run_reel_dry_run(ctx.path)]
+            from winners_ue_gate import problem as winners_ue_problem  # noqa: PLC0415
+            stats_problem = winners_ue_problem(ctx.spec)
+            gates = [GateResult("Winners/UE 证据", "fail" if stats_problem else "pass", stats_problem or "")]
+            gates += [run_reel_dry_run(ctx.path)]
             if not args.no_ci_tests:
                 gates += run_ci_tests(ctx.slug)
         else:

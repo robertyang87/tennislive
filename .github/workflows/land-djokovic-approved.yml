@@ -1,0 +1,159 @@
+name: Land approved Djokovic Beijing package
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: land-djokovic-borges-beijing-2026-r1
+  cancel-in-progress: false
+jobs:
+  land:
+    if: github.ref_name == 'main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+        timeout-minutes: 3
+        with:
+          sparse-checkout: |
+            .github
+            data/approved_publication
+            data/reel_publish_ledger
+            data/narration_checks
+            specs/reels
+            src
+            tools
+            tests
+            assets
+            output/2026-09-30/reel/djokovic-borges-beijing-2026-r1
+      - uses: actions/setup-python@v5
+        timeout-minutes: 3
+        with:
+          python-version: '3.12'
+      - name: Install native checker dependencies
+        timeout-minutes: 5
+        run: pip install -q -e '.[dev]'
+      - name: Restore media checker apt cache
+        id: apt_cache
+        timeout-minutes: 2
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-approved-yuan-ffmpeg-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-approved-yuan-ffmpeg-v1-
+      - name: Install media checker through shared installer
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: Save media checker apt cache only after a download
+        timeout-minutes: 2
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+      - name: Verify exact film and approved small package
+        timeout-minutes: 5
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,io,json,requests,subprocess,sys,zipfile
+          sys.path.insert(0,'tools')
+          from publication_ledger import blocking_attempt
+          root=Path.cwd();slug='djokovic-borges-beijing-2026-r1';out=root/'output/2026-09-30/reel'/slug
+          p=json.loads((root/'data/approved_publication/djokovic-approved-publication.json').read_text())
+          assert p['slug']==slug
+          reservation=root/'data/approved_publication/djokovic-dispatch-reservation.json'
+          assert not reservation.exists(), 'Dispatch already reserved; inspect run and native ledger, never blindly resend'
+          prefix=f'https://github.com/robertyang87/tennislive/releases/download/reel-{slug}/'
+          assert p['film']['url']==prefix+slug+'.mp4'
+          assert not blocking_attempt(root,'reel',slug,p['film']['sha256']), 'Existing publication reservation; no resend'
+          assert not (out/'pushed.json').exists(), 'Already sent; no resend'
+          h=hashlib.sha256();size=0
+          with requests.get(p['film']['url'],stream=True,timeout=(20,180)) as r:
+              r.raise_for_status()
+              for b in r.iter_content(1048576):h.update(b);size+=len(b)
+          assert h.hexdigest()==p['film']['sha256'] and size==p['film']['bytes']
+          z=p['package'];assert z['url']==prefix+'djokovic-approved-package.zip'
+          r=requests.get(z['url'],timeout=120);r.raise_for_status();raw=r.content
+          assert len(raw)==z['bytes'] and hashlib.sha256(raw).hexdigest()==z['sha256']
+          files=p['files'];allowed={x['path'] for x in files};assert len(files)==len(allowed)
+          exact={f'specs/reels/{slug}.json',f'specs/reels/{slug}.xhs.txt',f'assets/reel/{slug}.jpg',f'assets/reel/{slug}-recap.jpg','assets/players/headshots/djokovic-beijing-2026-r1.png','assets/players/headshots/borges-beijing-2026-r1.png','assets/players/headshots/atp-D643.png','assets/players/headshots/atp-BT72.png',f'data/narration_checks/{slug}.json'}
+          output_names='copy.html poster.jpg stat_card.jpg push.html xiaohongshu.txt wechat_title.txt subtitles.ass topbar.ass scoreboard_qc.json render_inputs.json qc_attestation.json render.json probe.json source_identity.json source_photo.json facts.json encoding_compatibility.json encoding_ffprobe.json runtime_render_evidence.json manual_qc_report.json timing.json'.split()
+          exact.update(f'output/2026-09-30/reel/{slug}/{n}' for n in output_names)
+          with zipfile.ZipFile(io.BytesIO(raw)) as f:
+              assert len(f.namelist())==len(allowed) and set(f.namelist())==allowed, 'Unexpected package members'
+              for x in files:
+                  name=x['path'];assert name in exact
+                  assert '..' not in Path(name).parts and not name.endswith('.mp4') and not Path(name).is_absolute()
+                  assert 0 < x['bytes'] <= 12*1024*1024
+                  b=f.read(name);assert len(b)==x['bytes'] and hashlib.sha256(b).hexdigest()==x['sha256'],name
+                  dest=root/name
+                  dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b)
+          (root/'approved-paths.json').write_text(json.dumps(sorted(allowed)))
+          assert json.loads((out/'qc_attestation.json').read_text())['film_sha256']==p['film']['sha256']
+          assert json.loads((out/'render.json').read_text())['video_url']==p['film']['url']
+          print('Exact final movie verified; only approved small files materialized')
+          PY
+      - name: Use only the verified native H264 repair
+        timeout-minutes: 3
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,subprocess
+          def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+          expected='86cebb104a489702c9aae91965e5c7c9857d2ccf16af0e493101497be76dcd25'
+          assert sha('tools/build_match_reel.py')==expected, 'Expected verified repair already landed by Bu package; stop without code mutation'
+          assert sha('tests/test_reel_encoding.py')=='a4af210aa9e7e96ae3707ac3b7eb3f7f2eadf3bca78a2dc0bdddb70026f0d87d'
+          PY
+          PYTHONPATH=src python -m pytest tests/test_reel_encoding.py -q
+      - name: Run unchanged native publishing gates
+        timeout-minutes: 3
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python tools/push_reel.py --stage check --outdir output/2026-09-30/reel/djokovic-borges-beijing-2026-r1 --copy specs/reels/djokovic-borges-beijing-2026-r1.xhs.txt
+          python - <<'PY'
+          import json,subprocess,sys
+          from pathlib import Path
+          sys.path.insert(0,'tools')
+          from auto_push_gate import wants_auto_push
+          r=Path.cwd();slug='djokovic-borges-beijing-2026-r1'
+          paths=json.loads((r/'approved-paths.json').read_text())
+          subprocess.run(['git','add','--sparse','--']+paths,check=True)
+          wants_auto_push(r,slug,r/'output/2026-09-30/reel'/slug)
+          PY
+          python tools/auto_push_gate.py --changed output/2026-09-30/reel/djokovic-borges-beijing-2026-r1/render.json
+          python tools/check_staged_file_sizes.py
+      - name: Reserve once-only native dispatch
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path('data/approved_publication/djokovic-dispatch-reservation.json')
+          assert not p.exists()
+          p.write_text(json.dumps({'slug':'djokovic-borges-beijing-2026-r1','status':'dispatch_reserved','run_id':os.environ['GITHUB_RUN_ID'],'film_sha256':json.loads(Path('data/approved_publication/djokovic-approved-publication.json').read_text())['film']['sha256']},indent=2)+'\n')
+          PY
+          git add -- data/approved_publication/djokovic-dispatch-reservation.json
+      - name: Commit exact package before publication
+        timeout-minutes: 2
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git commit -m 'reel: land approved Djokovic Beijing final with verified H264 compatibility'
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+      - name: Dispatch existing native sender once
+        timeout-minutes: 1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml --ref main -f mode=push -f slug=djokovic-borges-beijing-2026-r1 -f push=true
+          echo 'Native sender dispatched; no direct PushPlus call in this bootstrap'

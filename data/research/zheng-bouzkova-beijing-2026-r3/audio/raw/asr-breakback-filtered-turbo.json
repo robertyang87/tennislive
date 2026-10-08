@@ -1,0 +1,136 @@
+{
+  "model": "large-v3-turbo",
+  "filter": "highpass=f=120,lowpass=f=4000,volume=6dB",
+  "source_start": 128,
+  "source_end": 138,
+  "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+  "vad_filter": false,
+  "initial_prompt": null,
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 130.96,
+      "end": 135.68,
+      "text": " So it breaks back this young, that's one of the breaks back that she lost.",
+      "tokens": [
+        50365,
+        407,
+        309,
+        9857,
+        646,
+        341,
+        2037,
+        11,
+        300,
+        311,
+        472,
+        295,
+        264,
+        9857,
+        646,
+        300,
+        750,
+        2731,
+        13,
+        50765
+      ],
+      "avg_logprob": -0.4379856586456299,
+      "compression_ratio": 1.1384615384615384,
+      "no_speech_prob": 4.413005551262561e-12,
+      "words": [
+        {
+          "start": 130.96,
+          "end": 131.4,
+          "word": " So",
+          "probability": 0.36129119992256165
+        },
+        {
+          "start": 131.4,
+          "end": 131.6,
+          "word": " it",
+          "probability": 0.5060369968414307
+        },
+        {
+          "start": 131.6,
+          "end": 131.76,
+          "word": " breaks",
+          "probability": 0.9870373010635376
+        },
+        {
+          "start": 131.76,
+          "end": 132.14,
+          "word": " back",
+          "probability": 0.9938982725143433
+        },
+        {
+          "start": 132.14,
+          "end": 132.44,
+          "word": " this",
+          "probability": 0.19981920719146729
+        },
+        {
+          "start": 132.44,
+          "end": 132.72,
+          "word": " young,",
+          "probability": 0.9540795683860779
+        },
+        {
+          "start": 133.98,
+          "end": 134.2,
+          "word": " that's",
+          "probability": 0.7156284004449844
+        },
+        {
+          "start": 134.2,
+          "end": 134.38,
+          "word": " one",
+          "probability": 0.9981229901313782
+        },
+        {
+          "start": 134.38,
+          "end": 134.46,
+          "word": " of",
+          "probability": 0.9973142743110657
+        },
+        {
+          "start": 134.46,
+          "end": 134.52,
+          "word": " the",
+          "probability": 0.9966287016868591
+        },
+        {
+          "start": 134.52,
+          "end": 134.76,
+          "word": " breaks",
+          "probability": 0.991928219795227
+        },
+        {
+          "start": 134.76,
+          "end": 135.0,
+          "word": " back",
+          "probability": 0.9643639922142029
+        },
+        {
+          "start": 135.0,
+          "end": 135.2,
+          "word": " that",
+          "probability": 0.9471797943115234
+        },
+        {
+          "start": 135.2,
+          "end": 135.34,
+          "word": " she",
+          "probability": 0.9967527985572815
+        },
+        {
+          "start": 135.34,
+          "end": 135.68,
+          "word": " lost.",
+          "probability": 0.9971787929534912
+        }
+      ],
+      "temperature": 0.0
+    }
+  ]
+}

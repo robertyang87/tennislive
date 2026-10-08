@@ -1,0 +1,45 @@
+{
+  "scoreboard_qc_sha256": "3e52b11ead25a7059c04e611f1ed4a91f6b41bbdc576e7203d1d0cde52508576",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 109.56,
+  "topbar": {
+    "line1": "2026 WTA1000 北京 首轮",
+    "line2": "袁悦 6-2 6-3 奥利尼科娃",
+    "start": 1.2,
+    "end": 110.76
+  },
+  "film_seconds": 114.6,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 16.536,
+    "2": 14.256,
+    "4": 15.768,
+    "6": 5.472,
+    "9": 13.872
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "unavailable",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（buffalo_s-v0.7）",
+      "report_only": true,
+      "warnings": [
+        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（buffalo_s-v0.7）"
+      ]
+    }
+  },
+  "render_inputs_sha256": "e918cef856fe33b998bc19a252259b87f41da2c8934115acea414d12699c1296",
+  "film_sha256": "1cf74b5faa05de8d02c6211e53075e2a8ba797882c4dfc224f4905e5d78375a3",
+  "film_bytes": 67727735,
+  "qc_attestation_sha256": "6df55700cd05b803bf17105b6d5e4cdc3008ac51e670a42d7c26879b9b7c74c8",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-yuan-oliynykova-beijing-2026-r1/yuan-oliynykova-beijing-2026-r1.mp4",
+  "video_bytes": 67727735
+}

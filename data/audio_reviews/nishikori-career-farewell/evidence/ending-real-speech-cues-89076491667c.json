@@ -1,0 +1,137 @@
+{
+  "status": "real_postmatch_original_audio_asr_and_official_text_cross_checked_not_human_heard",
+  "source_url": "https://x.com/japanopentennis/status/2105641498721284153",
+  "source_file": "/workspace/scratch/tokyo-official-postmatch-interview.mp4",
+  "source_duration": 339.266757,
+  "speaker": "Kei Nishikori",
+  "scene": "Tokyo 2026 postmatch on-court interview with Shuzo Matsuoka; blue shirt white towel microphone; independently inspected real frames",
+  "human_heard": false,
+  "method": "faster-whisper multilingual small + base, CPU int8, beam_size5, language ja, VAD, word timestamps. Corrections only where independent JTA/NTV postmatch quotation supports acoustic-ASR word. Not English-only ASR.",
+  "asr_files": [
+    "data/audio_reviews/nishikori-career-farewell/evidence/tokyo-postmatch-ja-small-41648c425edc.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/tokyo-postmatch-ja-base-826bd8df55cb.json"
+  ],
+  "official_text_sources": [
+    "https://www.japanopentennis.com/atp/news-and-media/news/2026101-jin-zhi-gui-hateiahuonibai-retsuagong-shi-zhan-wozhong-eru/",
+    "https://news.ntv.co.jp/category/sports/b800b732aaf74085a5b1a7556186f057"
+  ],
+  "windows": [
+    {
+      "source_in": 274.4,
+      "source_out": 290.4,
+      "output_in": 0,
+      "output_out": 16,
+      "purpose": "完整伤病/坚持/自豪句与自然反应"
+    },
+    {
+      "source_in": 313,
+      "source_out": 323,
+      "output_in": 16,
+      "output_out": 26,
+      "purpose": "完整本人感谢句与掌声"
+    },
+    {
+      "output_in": 26,
+      "output_out": 31,
+      "purpose": "既有品牌谢谢卡;无TTS"
+    }
+  ],
+  "cues": [
+    {
+      "source_start": 274.73,
+      "source_end": 275.77,
+      "start": 0.33,
+      "end": 1.37,
+      "ja": "ケガでこうやって",
+      "zh": "伤病让我"
+    },
+    {
+      "source_start": 275.77,
+      "source_end": 278.99,
+      "start": 1.37,
+      "end": 4.59,
+      "ja": "何年も自分が失った中で",
+      "zh": "失去了多年的时间"
+    },
+    {
+      "source_start": 279.51,
+      "source_end": 280.69,
+      "start": 5.11,
+      "end": 6.29,
+      "ja": "最後の最後まで",
+      "zh": "但直到最后的最后"
+    },
+    {
+      "source_start": 281.21,
+      "source_end": 283.53,
+      "start": 6.81,
+      "end": 9.13,
+      "ja": "諦めずにプレーできたっていうことが",
+      "zh": "我都没有放弃，一直坚持打球"
+    },
+    {
+      "source_start": 283.53,
+      "source_end": 286.7,
+      "start": 9.13,
+      "end": 12.3,
+      "ja": "自分の誇りかなと思います",
+      "zh": "我想，这是我的骄傲"
+    },
+    {
+      "source_start": 313.04,
+      "source_end": 314.7,
+      "start": 16.04,
+      "end": 17.7,
+      "ja": "本当にありがとうございました",
+      "zh": "真的非常感谢大家"
+    }
+  ],
+  "corrections": [
+    {
+      "source_window": [
+        274.73,
+        278.99
+      ],
+      "small": "ケガでこうやって何年も自分が失った中で",
+      "base": "負けがでこうやって、何年も、自分は、失った中で",
+      "applied": "ケガ/自分が using small and official postmatch injury quotation"
+    },
+    {
+      "source_window": [
+        279.51,
+        280.69
+      ],
+      "small": "最後の最後まで",
+      "base": "最後まで",
+      "applied": "最後の最後まで; small word timestamps detect both 最後, official JTA confirms"
+    },
+    {
+      "source_window": [
+        283.53,
+        286.7
+      ],
+      "small": "自分の怒りかなと思います",
+      "base": "自分のこの、おぼりかなと思います",
+      "applied": "自分の誇りかなと思います; both independent official JTA/NTV explicitly quote 誇り, models homophone/near-phoneme misrecognition"
+    },
+    {
+      "source_window": [
+        313.04,
+        314.7
+      ],
+      "small": "本当にありがとうございました",
+      "base": "本当に、ありがとうございました",
+      "applied": "same words; subtitle out padded0.58s for reading; exact boundary not manually heard"
+    }
+  ],
+  "excluded": [
+    {
+      "source_window": [
+        266,
+        270.6
+      ],
+      "reason": "Models mishandle negation 負けず嫌いがなくならなくて; exclude from short closing, do not reverse meaning by trusting ASR"
+    }
+  ],
+  "timing_note": "Times are ASR word/segment boundaries with speech-window handles; not claimed frame-perfect manual listening. Renderer must keep full clip handles and review actual caption synchronization."
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 267,
+  "range_to": 269.4,
+  "created_at": "2026-10-04T14:41:40.397980+00:00",
+  "elapsed_seconds": 1.46,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 267.0,
+      "end": 268.16,
+      "text": " how it goes",
+      "avg_logprob": -0.5620372792085012,
+      "no_speech_prob": 0.0816851332783699,
+      "words": [
+        {
+          "start": 267.0,
+          "end": 267.7,
+          "word": " how",
+          "probability": 0.14597555994987488
+        },
+        {
+          "start": 267.7,
+          "end": 267.8,
+          "word": " it",
+          "probability": 0.9350353479385376
+        },
+        {
+          "start": 267.8,
+          "end": 268.16,
+          "word": " goes",
+          "probability": 0.9982638955116272
+        }
+      ]
+    }
+  ]
+}

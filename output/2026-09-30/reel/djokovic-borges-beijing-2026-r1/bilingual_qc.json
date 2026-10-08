@@ -1,0 +1,619 @@
+{
+  "video_stream_sha256": "039db02563fab33dbb260110d8fbe53f481fbdbc6bdf401945fb8119e3e95132",
+  "pixel_review_binding": "62samples reviewed before audio-only fix; all5158encoded video packets verified identical after repair",
+  "status": "pass",
+  "checked_at_utc": "2026-09-30T17:08:49.562651+00:00",
+  "film_sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+  "spec_sha256": "441ec04eee9ede070b9008fe78b4ee9ee34f7cfafcf49dcb76d81d27f792ad7d",
+  "ass_sha256": "c2d9f4d0b6f15afbeb8573d1aaa1a500fe980bb6cdd289b9b8543770a7e8c84a",
+  "film_bytes": 101054067,
+  "original_commentary_coverage_sha256": "23d88f6cf77d7af24bf7bf41f8c0b43520f47114c903175c37671ae558b6bfb1",
+  "audited_mixed_audio_identical": true,
+  "audio_audit_scope": "Final changed mix re-audited; no assertion that replaced recap ambience equals v2",
+  "decoded_audio_sha256": "085f08fbf86734f1adecd369c4f253b34151531966c323693dfadcb924a2a070",
+  "chinese_vo_chinese_only": true,
+  "original_english_bilingual": true,
+  "actual_foreground_coverage_verified": true,
+  "rendered_pixels_verified": true,
+  "no_middle_photo_segments": true,
+  "chinese_voiceover_cues": 42,
+  "original_foreground_english_cues": 11,
+  "max_simultaneous_cue_pairs": 1,
+  "cue_source_sha256": "0e56318c3361a1b5b18b221db13f3b74a0461f0fbdf9f8faa9cd53e7554c979a",
+  "all_cues": [
+    {
+      "id": "original_v3_01",
+      "film_start": 1.2,
+      "film_end": 3.34,
+      "source_start": 221,
+      "source_end": 223.14,
+      "english": "…in business, in Beijing.",
+      "chinese": "……在北京重回胜利轨道",
+      "confidence": "high",
+      "evidence": "Two mixed models and two source models agree; retained clip starts within preceding word back, so do not restore complete missing sentence.",
+      "kind": "original_broadcast",
+      "start": 1.2,
+      "end": 3.34
+    },
+    {
+      "id": "original_v3_02",
+      "film_start": 3.5,
+      "film_end": 5.59,
+      "source_start": 223.3,
+      "source_end": 225.39,
+      "english": "Score: 6–3, 7–6",
+      "chinese": "比分：6比3、7比6",
+      "confidence": "verified-match-result-not-verbatim",
+      "evidence": "Explicitly labelled editorial result caption using independently verified score; not verbatim transcription. Audible score call has uncertain final number. This caption states result, not a claimed exact English transcription.",
+      "kind": "editorial_score_caption",
+      "start": 3.5,
+      "end": 5.59
+    },
+    {
+      "start": 5.7,
+      "end": 9.16,
+      "chinese": "11年后重返中网 德约还是没输",
+      "english": "11 years later, still unbeaten at the China Open",
+      "kind": "cn_narration",
+      "index": 1,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 9.16,
+      "end": 10.91,
+      "chinese": "但这第30场胜利",
+      "english": "But this 30th win",
+      "kind": "cn_narration",
+      "index": 2,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 10.91,
+      "end": 13.34,
+      "chinese": "远没有比分看起来轻松",
+      "english": "was far tougher than the score suggests",
+      "kind": "cn_narration",
+      "index": 3,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 13.34,
+      "end": 16.92,
+      "chinese": "北京时间9月30号晚上 中网首轮",
+      "english": "September 30, evening in Beijing. China Open, round one",
+      "kind": "cn_narration",
+      "index": 4,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 16.92,
+      "end": 20.03,
+      "chinese": "1比0领先 德约在接发局拿到机会",
+      "english": "Up 1–0, Djokovic has a chance to break",
+      "kind": "cn_narration",
+      "index": 5,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 20.03,
+      "end": 22.32,
+      "chinese": "开局就打成了消耗战",
+      "english": "Already a battle of endurance",
+      "kind": "cn_narration",
+      "index": 6,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 22.32,
+      "end": 25.33,
+      "chinese": "他要先拿下 这一个接发局",
+      "english": "First, he needs to win this return game",
+      "kind": "cn_narration",
+      "index": 7,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "id": "original_v3_03",
+      "film_start": 43.22,
+      "film_end": 44.92,
+      "source_start": 51.5,
+      "source_end": 53.2,
+      "english": "That's like he's never been away.",
+      "chinese": "仿佛他从未离开过",
+      "confidence": "medium",
+      "evidence": "Multilingual repeated source+mix agrees. base.en contraction differs; remainder agrees.",
+      "kind": "original_broadcast",
+      "start": 43.22,
+      "end": 44.92
+    },
+    {
+      "start": 45.22,
+      "end": 46.81,
+      "chinese": "3比0开局",
+      "english": "A 3–0 start",
+      "kind": "cn_narration",
+      "index": 8,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 46.81,
+      "end": 49.44,
+      "chinese": "4比2时 两个破发点都救回来",
+      "english": "At 4–2, he saves both break points",
+      "kind": "cn_narration",
+      "index": 9,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 49.44,
+      "end": 51.5,
+      "chinese": "德约守到5比2",
+      "english": "Djokovic holds for 5–2",
+      "kind": "cn_narration",
+      "index": 10,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 52.22,
+      "end": 55.16,
+      "chinese": "5比3 盘点 发球之后",
+      "english": "5–3. Set point. After the serve…",
+      "kind": "cn_narration",
+      "index": 11,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 55.16,
+      "end": 57.26,
+      "chinese": "再把这一分收好",
+      "english": "Finish this point off",
+      "kind": "cn_narration",
+      "index": 12,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "id": "original_v3_04",
+      "film_start": 59.08,
+      "film_end": 61.1,
+      "source_start": 74.76,
+      "source_end": 76.78,
+      "english": "That's a pretty strong set…",
+      "chinese": "这一盘打得相当出色……",
+      "confidence": "high",
+      "evidence": "Both source and mix agree. Rest of sentence is ducked by Chinese VO beginning61.14.",
+      "kind": "original_broadcast",
+      "start": 59.08,
+      "end": 61.1
+    },
+    {
+      "start": 61.14,
+      "end": 63.02,
+      "chinese": "6比3 首盘到手",
+      "english": "6–3. The first set is his",
+      "kind": "cn_narration",
+      "index": 13,
+      "subtitle_role": "Chinese TTS: Chinese only",
+      "boundary_adjustment_evidence": "Actual TTS ending around62.8; source name tail rises63.04–63.44; end CN caption before bilingual source fragment."
+    },
+    {
+      "id": "original_v3_05",
+      "film_start": 63.05,
+      "film_end": 63.7,
+      "source_start": 78.73,
+      "source_end": 79.38,
+      "english": "…Djokovic.",
+      "chinese": "……德约科维奇",
+      "confidence": "source-supported-fragment",
+      "evidence": "Both source models name Djokovic ending79.0–79.18. Mixed gain recovers0.44 at63.04 and0.67 at63.24; narrow mixed ASR cannot resolve isolated syllables. Caption identifies clipped name from independently corroborated source, not a complete sentence.",
+      "kind": "original_broadcast",
+      "start": 63.05,
+      "end": 63.7
+    },
+    {
+      "start": 63.92,
+      "end": 65.31,
+      "chinese": "第二盘2比3后",
+      "english": "At 2–3 in set two",
+      "kind": "cn_narration",
+      "index": 14,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 65.31,
+      "end": 67.25,
+      "chinese": "他接受了场边治疗",
+      "english": "he receives courtside treatment",
+      "kind": "cn_narration",
+      "index": 15,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 67.25,
+      "end": 70.78,
+      "chinese": "身体不适 发球局却一个也没丢",
+      "english": "In discomfort, but not broken once",
+      "kind": "cn_narration",
+      "index": 16,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 71.52,
+      "end": 74.99,
+      "chinese": "4比4 德约又想从接发局找到出路",
+      "english": "4–4. Djokovic looks for a breakthrough",
+      "kind": "cn_narration",
+      "index": 17,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 74.99,
+      "end": 76.93,
+      "chinese": "可博尔热斯不肯让",
+      "english": "But Borges refuses to give way",
+      "kind": "cn_narration",
+      "index": 18,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 76.93,
+      "end": 80.03,
+      "chinese": "这一分 从底线一侧拉到另一侧",
+      "english": "From one side of the baseline to the other",
+      "kind": "cn_narration",
+      "index": 19,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 80.03,
+      "end": 81.48,
+      "chinese": "身体已经不舒服",
+      "english": "Already in discomfort",
+      "kind": "cn_narration",
+      "index": 20,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 81.48,
+      "end": 83.32,
+      "chinese": "回合却还没结束",
+      "english": "Yet the rally goes on",
+      "kind": "cn_narration",
+      "index": 21,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 83.32,
+      "end": 84.62,
+      "chinese": "没有容易的胜利",
+      "english": "No easy win",
+      "kind": "cn_narration",
+      "index": 22,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 84.62,
+      "end": 87.28,
+      "chinese": "就先把眼前这一分拼下来",
+      "english": "Just fight for this point first",
+      "kind": "cn_narration",
+      "index": 23,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "id": "original_v3_06",
+      "film_start": 107.28,
+      "film_end": 109.46,
+      "source_start": 142.86,
+      "source_end": 145.04,
+      "english": "What a way to finish!",
+      "chinese": "这一分收得太精彩了！",
+      "confidence": "high",
+      "evidence": "Both mixed and narrow source models agree.",
+      "kind": "original_broadcast",
+      "start": 107.28,
+      "end": 109.46
+    },
+    {
+      "id": "original_v3_07",
+      "film_start": 111.24,
+      "film_end": 112.9,
+      "source_start": 146.82,
+      "source_end": 148.48,
+      "english": "Who was going to blink first?",
+      "chinese": "看谁会先撑不住？",
+      "confidence": "medium-high",
+      "evidence": "Multilingual mix, prior narrow source and latest base.en source agree blink; some passes flick/flip/play. Conservative context-consistent majority form.",
+      "kind": "original_broadcast",
+      "start": 111.24,
+      "end": 112.9
+    },
+    {
+      "start": 113.27000000000001,
+      "end": 116.15,
+      "chinese": "这一分赢了 破发却没能兑现",
+      "english": "He wins the point, but cannot get the break",
+      "kind": "cn_narration",
+      "index": 24,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 116.15,
+      "end": 116.96000000000001,
+      "chinese": "4比5",
+      "english": "At 4–5",
+      "kind": "cn_narration",
+      "index": 25,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 116.96000000000001,
+      "end": 119.64,
+      "chinese": "德约还得先守住自己的发球局",
+      "english": "Djokovic still needs to hold serve",
+      "kind": "cn_narration",
+      "index": 26,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 119.64,
+      "end": 121.94,
+      "chinese": "此后5比6 他又顶住压力",
+      "english": "Then, at 5–6, he withstands the pressure",
+      "kind": "cn_narration",
+      "index": 27,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 121.94,
+      "end": 124.28,
+      "chinese": "把第二盘带进抢七",
+      "english": "and takes set two to a tiebreak",
+      "kind": "cn_narration",
+      "index": 28,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "id": "original_v3_08",
+      "film_start": 128.4,
+      "film_end": 130.8,
+      "source_start": 164.03,
+      "source_end": 166.43,
+      "english": "That is great hustle from him.",
+      "chinese": "他这一分拼得真顽强",
+      "confidence": "medium",
+      "evidence": "Both narrow source models and repeated base.en mixed runs agree. Multilingual mix sometimes for me; possible low-confidence Borges prefix omitted because not consistently identified.",
+      "kind": "original_broadcast",
+      "start": 128.4,
+      "end": 130.8
+    },
+    {
+      "start": 131.37,
+      "end": 134.7,
+      "chinese": "抢七开始 两个人仍然在底线拉锯",
+      "english": "The tiebreak starts. Still a baseline battle",
+      "kind": "cn_narration",
+      "index": 29,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 134.7,
+      "end": 136.92000000000002,
+      "chinese": "前面守住的每一个发球局",
+      "english": "Every service game he held",
+      "kind": "cn_narration",
+      "index": 30,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 136.92000000000002,
+      "end": 138.9,
+      "chinese": "终于把比赛带到了这里",
+      "english": "has brought him to this point",
+      "kind": "cn_narration",
+      "index": 31,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 138.9,
+      "end": 140.7,
+      "chinese": "德约没有让身体的不适",
+      "english": "Djokovic has not let his discomfort",
+      "kind": "cn_narration",
+      "index": 32,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 140.7,
+      "end": 142.57999999999998,
+      "chinese": "变成比分上的失守",
+      "english": "cost him control of the match",
+      "kind": "cn_narration",
+      "index": 33,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 142.57999999999998,
+      "end": 145.84,
+      "chinese": "这一球 双方还是谁都不肯先退",
+      "english": "On this point, neither will back down",
+      "kind": "cn_narration",
+      "index": 34,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "id": "original_v3_09",
+      "film_start": 167.82,
+      "film_end": 171.66,
+      "source_start": 204.55,
+      "source_end": 208.39,
+      "english": "What a point to start a tie-break!",
+      "chinese": "抢七第一分就如此精彩！",
+      "confidence": "high",
+      "evidence": "Both mixed models agree; source base.en agrees. Article a/the minor variation.",
+      "kind": "original_broadcast",
+      "start": 167.82,
+      "end": 171.66
+    },
+    {
+      "start": 171.97,
+      "end": 175.69,
+      "chinese": "从5比1 到6比2 赛点",
+      "english": "From 5–1 to 6–2. Match point",
+      "kind": "cn_narration",
+      "index": 35,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 181.97,
+      "end": 183.91,
+      "chinese": "6比3 7比6",
+      "english": "Final score: 6–3, 7–6",
+      "kind": "cn_narration",
+      "index": 36,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 183.91,
+      "end": 186.1,
+      "chinese": "11年过去 重返中网",
+      "english": "Back at the China Open after 11 years",
+      "kind": "cn_narration",
+      "index": 37,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 186.1,
+      "end": 188.63,
+      "chinese": "他把纪录续到30战全胜",
+      "english": "His China Open record: 30 wins, no losses",
+      "kind": "cn_narration",
+      "index": 38,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 188.63,
+      "end": 189.62,
+      "chinese": "掌声还在",
+      "english": "Applause continues",
+      "kind": "cn_narration",
+      "index": 39,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 189.62,
+      "end": 192.37,
+      "chinese": "德约的北京故事也还在继续",
+      "english": "So does Djokovic’s Beijing story",
+      "kind": "cn_narration",
+      "index": 40,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 192.37,
+      "end": 194.5,
+      "chinese": "下一轮迎战布云朝克特",
+      "english": "Next up: Bu Yunchaokete",
+      "kind": "cn_narration",
+      "index": 41,
+      "subtitle_role": "Chinese TTS: Chinese only"
+    },
+    {
+      "start": 194.5,
+      "end": 196.58,
+      "chinese": "他能在这里继续赢下去吗？",
+      "english": "Can he keep winning here?",
+      "kind": "cn_narration",
+      "index": 42,
+      "subtitle_role": "Chinese TTS: Chinese only",
+      "boundary_adjustment_evidence": "TTS source residual low by196.47, original source full amplitude196.67; clear overhang to197.23 would collide with foreground English."
+    },
+    {
+      "id": "original_v3_10",
+      "film_start": 196.6,
+      "film_end": 198.1,
+      "source_start": 233.73,
+      "source_end": 235.23,
+      "english": "…it's like he's never been away.",
+      "chinese": "……仿佛他从未离开过",
+      "confidence": "high",
+      "evidence": "Both narrow mixed models support phrase; mix/source gain0.70–0.72 and correlation~1 from196.67 confirms audible foreground before previous subtitle boundary197.23.",
+      "kind": "original_broadcast",
+      "start": 196.6,
+      "end": 198.1
+    },
+    {
+      "id": "original_v3_11",
+      "film_start": 199.2,
+      "film_end": 202.43,
+      "source_start": 236.33,
+      "source_end": 239.56,
+      "english": "He maintains his perfect record here.",
+      "chinese": "他继续保持着在这里的全胜纪录",
+      "confidence": "high",
+      "evidence": "Both mixed and source models agree; extension to source239.60 preserves complete last word.",
+      "kind": "original_broadcast",
+      "start": 199.2,
+      "end": 202.43
+    }
+  ],
+  "actual_final_pixel_samples": {
+    "count": 62,
+    "sampling": "Every subtitle cue midpoint, plus cover, last word, transition, brand outro and both Chinese/original-English handoff edges",
+    "contact_sheets": [
+      {
+        "file": "actual_bilingual_contact_1.jpg",
+        "sha256": "3348c191a489b817c9499c0ecf6c37e781bd844db87de9d30e78902f13c33f9b"
+      },
+      {
+        "file": "actual_bilingual_contact_2.jpg",
+        "sha256": "e93cde0b863a96195c4cb9b3ee157879494eb07c77e37dae1c0e959c57824677"
+      },
+      {
+        "file": "actual_bilingual_contact_3.jpg",
+        "sha256": "c57348196767fddba2077f28802892d237242bb56cc63f44917d04ccef8832dc"
+      },
+      {
+        "file": "actual_bilingual_contact_4.jpg",
+        "sha256": "2fd07b23a21f6515a4402299d72773e4f53872c211b3fe771bd147192df59259"
+      },
+      {
+        "file": "actual_bilingual_contact_5.jpg",
+        "sha256": "989aa08ff813519a2e408f7b73cff70eb4a2ed42465fd207b1168abe5b5eee9d"
+      },
+      {
+        "file": "actual_bilingual_contact_6.jpg",
+        "sha256": "34d55198bd9ecab1ce271075bb0baddd6ea7d0af84c7858250994dc17026418d"
+      }
+    ],
+    "review": "Inspected actual encoded video frames: Chinese TTS has Chinese only; original English commentary has English above Chinese. All actual final cue samples reviewed; readable and separate from scoreboard, no overlapping subtitle roles."
+  },
+  "foreground_rule": "Subtitles track foreground speech. Chinese TTS has Chinese-only captions. Retained foreground original English commentary has English and Chinese. Ducking and foreground coverage independently audited across the entire mixed film.",
+  "ending": {
+    "source_end": 239.6,
+    "final_english_word_end": 239.56,
+    "promo_begins": 239.68,
+    "transition_extra": ".18second clean-frame clone and padded audio; no promo frames"
+  },
+  "coverage_scope": "Complete for detected foreground across the audited mixed film; not an absolute all-word manual transcription guarantee",
+  "wording_limitations": [
+    {
+      "film_start": 3.5,
+      "film_end": 5.59,
+      "issue": "Score-call final number and lead-in unclear; explicitly labelled editorial result caption using independently verified score, not verbatim transcription covers interval without asserting verbatim transcription."
+    },
+    {
+      "film_start": 63.05,
+      "film_end": 63.7,
+      "issue": "Only clipped end of Djokovic audible after duck release; source identifies name, mixed ASR fragment unreliable."
+    },
+    {
+      "film_start": 128.4,
+      "film_end": 130.8,
+      "issue": "Low-confidence possible Borges prefix and from him/for me variation; best-supported complete core used."
+    }
+  ],
+  "known_limitations": [
+    "Broadcast transcripts checked against prior localASR evidence, not claimed full manual audio listening",
+    "No physical iPhone Photos import test"
+  ]
+}

@@ -27,12 +27,8 @@ def _run(args: list[str]) -> None:
     subprocess.run(args, check=True, capture_output=True)
 
 
-def test_footage_beat按cx把源片的指定位置钉到画面中心(tmp_path):
-    """和 explainer.py 的 `intro_cx` 同一条公式，这里换成 `cut_footage_beat`
-    的入口验一遍。造一段源片：蓝底 + 一条洋红竖条，竖条中心精确落在源片
-    1280 宽的 30%（x=384）处。给 `cx=0.3`，裁完这条竖条应该正好落在输出
-    画面中心。
-    """
+def test_footage_beat固定几何中心并拒绝偏移(tmp_path):
+    """新全局策略保留几何中心，不能把30%处的主体重新挪到中心。"""
     if not _has_ffmpeg():
         raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
 
@@ -47,8 +43,11 @@ def test_footage_beat按cx把源片的指定位置钉到画面中心(tmp_path):
           "-map", "[v]", "-t", "2.0", "-c:v", "libx264",
           "-preset", "ultrafast", "-pix_fmt", "yuv420p", str(source)])
 
+    from tennislive.video.crop_policy import VideoCropPolicyError
+    with pytest.raises(VideoCropPolicyError, match="固定中间"):
+        R.cut_footage_beat(source, 0.0, 1.0, 0.3, tmp_path / "offcenter.mp4")
     out = R.cut_footage_beat(
-        source, 0.0, 1.0, 0.3, tmp_path / "beat.mp4",
+        source, 0.0, 1.0, 0.5, tmp_path / "beat.mp4",
         canvas_w=R.VIDEO_W, canvas_h=R.VIDEO_H,
     )
 
@@ -63,8 +62,8 @@ def test_footage_beat按cx把源片的指定位置钉到画面中心(tmp_path):
               and im.getpixel((x, row))[1] < 100)]
     assert xs, "洋红竖条在这一帧里一个像素都没找到"
     bar_x = sum(xs) / len(xs)
-    assert abs(bar_x - R.VIDEO_W / 2) < 20, (
-        f"cx=0.3 应该把 30% 处的竖条钉到输出中心 {R.VIDEO_W / 2}，实测在 {bar_x:.1f}"
+    assert abs(bar_x - R.VIDEO_W / 2) > 200, (
+        f"几何中心裁切不能把偏左竖条移到中央，实测在 {bar_x:.1f}"
     )
 
 

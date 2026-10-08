@@ -1,0 +1,40 @@
+{
+  "url": "https://x.com/TennisChannel/status/1921973328903860370",
+  "width": 1920,
+  "height": 1080,
+  "duration": 118.037333,
+  "fps": "30000/1001",
+  "fps_value": 29.97,
+  "scene_cuts": [
+    22.42,
+    34.93
+  ],
+  "scene_cuts_loose": [
+    31.0,
+    31.16
+  ],
+  "point_ends": [],
+  "scorebox_guess": null,
+  "scorebox": null,
+  "point_ends_guess": null,
+  "silent_audio": [],
+  "audio_levels": {
+    "block": 0.05,
+    "rate": 8000,
+    "window": 0.5,
+    "quietest_gain": 0.36,
+    "blocks": 2360,
+    "db": "L522 -48.6 -51.2 -50.4 -52.2 -51.5 -50.9 -52.2 -53.8 -53.4 -53.5 -54.7 L1827",
+    "_how": "逐 0.05 秒 RMS（8 kHz 单声道，同 check_reel_landed.per_second_db），dB 向上取整到 0.1；任何含它的 window 秒窗口按 quietest_gain 都红不了成片的块只记「响」，按游程写成 L<块数>"
+  },
+  "clip_from": 16.0,
+  "clip_to": 35.0,
+  "sheets": [
+    "contact_00.jpg"
+  ],
+  "every": 2.0,
+  "captions": null,
+  "board": null,
+  "source_sha256": "a2833fecdf30910f5b8ea765e4b9eede8ff04a87340caf169f14324f3f83b292",
+  "_local_probe_method": "real ffprobe, real native scene detection, real full-source RMS/silencedetect, real source frames 2-second sampling. No point-end/board inference: selected source is speech not tennis point."
+}

@@ -1,0 +1,48 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "5695ddf7b1c55f7fd0e429a14121bd55c62eb1ec76f1d4608e0a645fd7c3bb61",
+ "url": "https://www.youtube.com/watch?v=N5OzUjDXdOs",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "42.9-52.7",
+   "start": 42.88,
+   "end": 52.7,
+   "speech_seconds": 0.354,
+   "second_asr_words": [
+    "Bueno,"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 0.354s 人声，第二份 ASR（large-v3-turbo）听到「Bueno,」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "64.0-67.8",
+   "start": 63.99,
+   "end": 67.75,
+   "speech_seconds": 0.552,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "speech_detected",
+   "reason": "VAD 测到 0.552s 人声，第二份 ASR（large-v3-turbo）没听出词——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
+  },
+  {
+   "key": "154.9-158.2",
+   "start": 154.89,
+   "end": 158.23,
+   "speech_seconds": 2.64,
+   "second_asr_words": [
+    "Hace",
+    "que"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 2.640s 人声，第二份 ASR（large-v3-turbo）听到「Hace que」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  }
+ ]
+}

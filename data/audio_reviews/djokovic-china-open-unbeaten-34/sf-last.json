@@ -1,0 +1,104 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/LgRD3TLoxr0.mp4",
+  "source_sha256": "80179ed4439aecc24c30cf410a2a237c93eee11299d38537f1d0289786ed24d5",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:59.204941+00:00",
+  "reviewed_from": 343.7,
+  "reviewed_to": 379.76,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 343.9,
+      "end": 345.38,
+      "en": "Can you believe it?",
+      "zh": "你能相信吗？"
+    },
+    {
+      "start": 345.46,
+      "end": 348.92,
+      "en": "Just a flurry of errors from Medvedev.",
+      "zh": "梅德韦杰夫突然连续失误。"
+    },
+    {
+      "start": 352.52,
+      "end": 355.1,
+      "en": "That's a brilliant combination from Djokovic.",
+      "zh": "德约这套组合打得太漂亮了。"
+    },
+    {
+      "start": 355.6,
+      "end": 357.92,
+      "en": "Well, can you believe it?",
+      "zh": "这下真让人难以置信。"
+    },
+    {
+      "start": 360.56,
+      "end": 363.52,
+      "en": "After the most extraordinary level in this match,",
+      "zh": "本场双方打出了极高水平，"
+    },
+    {
+      "start": 363.54,
+      "end": 366.08,
+      "en": "it has ended on a Medvedev default.",
+      "zh": "比赛因梅德韦杰夫被判失格而结束。"
+    },
+    {
+      "start": 369.38,
+      "end": 373.36,
+      "en": "Well, no real protest from Daniil Medvedev,",
+      "zh": "梅德韦杰夫没有真正提出抗议，"
+    },
+    {
+      "start": 373.36,
+      "end": 375.94,
+      "en": "but it's hard to argue with the decision",
+      "zh": "但这项裁决实在难以争辩，"
+    },
+    {
+      "start": 375.94,
+      "end": 379.69,
+      "en": "from Mohamed Lahyani and the ATP supervisor there.",
+      "zh": "由拉亚尼和现场ATP监督作出。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/sf-last.medium.en.json",
+      "sha256": "229a848d53328ce98d60e94b3e8ba4446980e2a2af46e98ac34981d65732bca9"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/sf-last.targeted.small.en.json",
+      "sha256": "cb2751acc4cdc586efde577443144dcbdfd52fbd261a7905dc1c4498a502cbc9"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/sf-last.targeted.base.en.json",
+      "sha256": "3af8f0de1b90201169ab47e57de03baa9a4a327bf17975b0f2cd5bc0fb632288"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/LgRD3TLoxr0.small.en.json",
+      "sha256": "3e166c469defcbf313e477fc620c0d03e8a960d6c36f65feb63dcba9b13c3328"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/LgRD3TLoxr0.base.en.json",
+      "sha256": "f1b7df72d837714fa8ae79e7c00ebccd3a6d8a74dbe3d6de09cf2bb8c903baee"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/sf-lastword.micro.small.en.json",
+      "sha256": "ee22fbdc5ebcd55e0a1e12d47c2a3b1b36b3189a21c54988c79093ddd0cb4f85"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/sf-lastword.micro.base.en.json",
+      "sha256": "523ec97a3336ff01b3a5bab48422ce820af293a69d2f3a02c6e175647010a0c9"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "medium.en genuinely independently confirms brilliant combination, not an invented consternation interpretation. Proper names standardized Daniil Medvedev and Mohamed Lahyani from source identity. Well before second can retained from both full-source and targeted base.en; Well at final sentence retained from targeted small.en and medium.en. End enlarged to379.9 to retain targeted small.en final there, while full-source small/en and medium.en finish379.68–379.69. Parent must verify extra0.18 video bottom material contains no branding.",
+    "Resolved tail after genuine tighter373.3–380.02 micro-window ASR: base there ends379.60, small379.68, consistent with medium379.68 and full-source small379.69. Real decoded stereo180–3000Hz center excess power falls from0.003114 at379.6–379.7 to0.000107 at379.7–379.8 (96.6% reduction), supporting commentator voice ending before379.76 over venue bed. sf-tail-energy.json/png retained. Parent visual branding starts380.1; end379.76 +native0.18=379.94 is clean. Local52s small379.9 was a silence-spanning alignment overestimate, corrected using micro-window consensus and independent acoustic envelope, not cut to hide branding."
+  ]
+}

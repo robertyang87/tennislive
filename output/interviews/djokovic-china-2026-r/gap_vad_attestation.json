@@ -1,0 +1,24 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "7576aaef9ebfd95e200ace0a5c71cee3f9949c19a5143274237b5ebac5b6c209",
+ "url": "https://www.tennistv.com/videos/4586490/beijing-2026-qf-djokovic-interview",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "9.3-11.5",
+   "start": 9.26,
+   "end": 11.46,
+   "speech_seconds": 0.586,
+   "second_asr_words": [
+    "I",
+    "had"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 0.586s 人声，第二份 ASR（medium.en）听到「I had」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  }
+ ]
+}

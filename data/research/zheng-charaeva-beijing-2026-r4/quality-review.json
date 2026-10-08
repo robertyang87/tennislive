@@ -1,0 +1,265 @@
+{
+  "schema": "tennislive.independent-quality-review.v1",
+  "reviewer": "independent_qc",
+  "reviewed_at": "2026-10-07T18:16:15.192417+00:00",
+  "status": "passed_actual_corrected_final_artifact",
+  "publication_ready": true,
+  "actual_listening_performed": false,
+  "film": {
+    "path": "output/2026-10-08/reel/zheng-charaeva-beijing-2026-r4/zheng-charaeva-beijing-2026-r4.mp4",
+    "sha256": "107cfcaa1a1985ce0873d291b6e79ead1d0f61f3f5ae97e4ea0f22585ac2721a",
+    "seconds": 251.52
+  },
+  "spec": {
+    "path": "specs/reels/zheng-charaeva-beijing-2026-r4.json",
+    "sha256": "6466f6102296b538b703e46cbbec475e2c502c12562e15b7ae8376087e7cf8a2"
+  },
+  "source": {
+    "url": "https://youtu.be/LGHCCL4VHCw",
+    "sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+    "resolution": "1920x1080",
+    "fps": 25,
+    "identity": "WTA official match highlights; original authorized 77,446,433-byte source"
+  },
+  "actual_bindings": {
+    "subtitles.ass": "481c8f8af5531ac46fbf703ca0d2568ac793483f2ab6832d3301fc8c7f3366c7",
+    "audio_review_binding.json": "9b18b6fbaf8d3469bc66f4324b5dfa71c839d8c2d9946d54a762c757e99e5883",
+    "render_inputs.json": "569c18649b8a56138fff6027d6484237afe5803f699d42eb1b1dbdf677b07d36",
+    "qc_attestation.json": "254e8b8536bf33d9ec70f86eb5e9609e975fcdb49c2d9dd82aebe4650185c3f2"
+  },
+  "checks": {
+    "facts_and_point_by_point": {
+      "pass": true,
+      "detail": "Raw official result 6-1, 2-6, 6-4; 153 points independently counted, Zheng 80 / Charaeva 73. First-set 2-1 service game saved 3 break points; third-set fourth break point converted for 3-1. Third-set 5-3 service game contained no match point; sole final-game match point at 30-40 won 6-4."
+    },
+    "statistics": {
+      "pass": true,
+      "detail": "Raw official A/B identities reversed correctly for winner-first display; winners 39/6, unforced errors 42/35, core serving percentages and break points agree. Actual native final stat card inspected."
+    },
+    "story_and_copy": {
+      "pass": true,
+      "detail": "Three-set arc clear; source omissions described with truthful process cards. Saved-service-game wording disambiguated. Public numerals and canonical 恰拉耶娃 corrected; outlook title is two semantic lines."
+    },
+    "official_cover": {
+      "pass": true,
+      "detail": "Actual native poster inspected: sharp open-eyed face, no headline across face. Official Getty/WTA metadata confirms this match and round; opponent portrait is the actual official player image."
+    },
+    "key_rallies": {
+      "pass": true,
+      "detail": "32 actual source frames independently inspected; serve preparation, last shot, outcome and immediate reaction retained for selected full points. First-set and third-set break sequence identities agree with PBP."
+    },
+    "actual_final_picture": {
+      "pass": true,
+      "detail": "Actual corrected final MP4 inspected at all nine consecutive frame times 228.20–228.52 in 0.04-second steps: Zheng alone through the fade, then full stat card, with no interviewer. Prior 26-frame broad visual review remains historical evidence for the previous artifact; independently compared complete native production projections differ only at segment 11 end (297.28→297.08), supporting inheritance of unchanged layouts, score boxes, headers, captions, cover and ending title."
+    },
+    "captions": {
+      "pass": true,
+      "detail": "Actual foreground_audio_gate.verify_final returned normally on the corrected final MP4 / actual new ASS / current spec. All 50 source review cue pairs remain authenticated, with later cards and outro moved earlier by 0.2 seconds and zero quote/TTS overlap. Previous cue-by-cue text and visual tests are preserved as historical evidence; no human listening claimed."
+    },
+    "native_tts_and_pronunciation": {
+      "pass": true,
+      "detail": "Eight exact full speakable texts, actual MP3 SHA and actual WordBoundary SHA independently verified; 25 polyphone occurrences / 30 alternatives backed by hashed raw acoustic evidence and retained LOO labels. Original unreliable/skip reports remain unchanged. Low-confidence fa1, shao3 and one-sided alternatives remain honestly low confidence."
+    },
+    "actual_final_audio": {
+      "pass": true,
+      "detail": "Direct corrected final MP4 PCM versus each of the 8 exact native MP3 generations over full utterance minus 0.25/0.45-second edge margins: correlations .9856039–.9999751, gain -0.139 to -0.008 dB. Actual stats, outlook and outro moved earlier by exactly 0.2 seconds, all MP3 bytes unchanged. Actual source 36–37.5 and landed 51.12–52.62 match corr .9959312 / gain -0.442 dB, both nonzero ratio 1. No human auditory review claimed."
+    },
+    "natural_weak_audio_boundary": {
+      "pass": true,
+      "detail": "Independent actual 108-second card/source boundary reconstruction uses native SEG_FADE=.18 and gain .972, not an arbitrary fitted fade: whole-second corr .997511 / gain error -0.145 dB / lag 0. New checker also tests the complete varying-envelope region at the chosen codec alignment, preventing constant tails from masking incorrect fades. Actual [51,81,108] pass; original silence-floor failure preserved. Agent exact varying fade-zone check: 108.5–108.68 (all 1,440 8 kHz samples) corr .9967064855 / gain error -0.1486063 dB / nonzero .9729167; source 132.6–132.78 × t/.18, no trimmed leading samples. The independent fade raw record is for the preceding 1c7 artifact; the corrected 107c artifact directly rechecked the weak source PCM window and its actual native L2 independently authenticates all three seconds again."
+    },
+    "native_landed_qc": {
+      "pass": true,
+      "exit_code": 0,
+      "detail": "Real final-tail-safe check_reel_landed.py exit 0 on this exact corrected film 107cfcaa…; new actual attestation bound to its SHA. Previous original failure and corrected previous-film QC logs are separately retained as historical evidence."
+    },
+    "checker_regression": {
+      "pass": true,
+      "detail": "Actual codec/rebinding regression log: 29 passed. Independently inspected source authentication, fixed native envelope, gain limits and added fade-region validation. Old verifier and old rejection tests remain intact."
+    }
+  },
+  "blocking_issues": [],
+  "evidence": [
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/108-native-fade.json",
+      "sha256": "a315acc7424df3bf0444e3e7247b143228d4781b522977742407a390cca4af1d",
+      "bytes": 682
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/ending-boundary-20.jpg",
+      "sha256": "dd5ff242da90d7ba3ced76d579d152fcd3133894d15430ab7179c45077ec9bf5",
+      "bytes": 70538
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/ending-boundary-21.jpg",
+      "sha256": "a2f43260e2b5fc875b3fa666a3e63e61d8bf576c6d1990412f48b819bc234ef4",
+      "bytes": 70916
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/ending-boundary-22.jpg",
+      "sha256": "d2a8311a62aaa74db2df9feb0ed457938f2c387d027372753ba0bc1ae3e61288",
+      "bytes": 90974
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/final-audio-caption-check.json",
+      "sha256": "464f0b9f69a9d526a00ba2726326d99f7a5b357921e0a193ea4376f1ff261988",
+      "bytes": 466
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/final-mixed-audio.json",
+      "sha256": "3e385f3e115b9efc6d5e80b924fe0a5092e0a026bfa250609966d9906ed3795d",
+      "bytes": 3768
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/final-native-qc-exit.json",
+      "sha256": "4c88fe8dad709c54d0c0db1d5a09bc09da5190897b14d204c9b3cd3bc7a42f05",
+      "bytes": 188
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/final-native-qc.txt",
+      "sha256": "0607dddf116a6339d6d98d0765964c136b8eb749a3b69dd41004dee4aafebd0c",
+      "bytes": 9725
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/final-visual-contact.jpg",
+      "sha256": "65bb37a2bcb10c2d9799879f2108125c3d83946a36d850a8fe9067d682a2f720",
+      "bytes": 823537
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/final-visual-samples.json",
+      "sha256": "5c10e18ea8eb7256e49c9d982e6216ff28090ec46d1e6a8ff5c942d5fdec7292",
+      "bytes": 1761
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/original-silence-floor-check.txt",
+      "sha256": "dad5cc282fcd1b66be985f095a2a02938fa3399ea0ce63add5d6d2839755bc9b",
+      "bytes": 8672
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/pre-tail-fix-audio-caption-check.json",
+      "sha256": "5ae9baab716ea083ae239e6edc5894d7ab30667769ca1d426d64d40191c8ec2d",
+      "bytes": 14674
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/pre-tail-fix-native-qc.txt",
+      "sha256": "839cc392af0d45a26868532d87ace7d26655f98fc16c5113b57fb5a8ff55d593",
+      "bytes": 9530
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/pronunciation-evidence-review.json",
+      "sha256": "5ada53f12dbce09bc68a3e405fb01043cc17ae9408bbde5216528d8b2f5d9c36",
+      "bytes": 10674
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/quiet-codec-tests.txt",
+      "sha256": "c3e0f93081041d806294ecd41f711cda1a3d784597f6439694aad93082156908",
+      "bytes": 100
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-fix-production-diff.json",
+      "sha256": "856f743d4d50b2ff1ecfb0fec4d05c02a824f2c89990737ca6ae01cb9af0e92c",
+      "bytes": 115
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-00.jpg",
+      "sha256": "d43e69f3e8bcfae674168cdad002c53565e75267a025779620d281bf2f0d2988",
+      "bytes": 132322
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-01.jpg",
+      "sha256": "33896bbc4538c645cb3b03936ea7c7ecf01f8f09f7da7d651f1f1fdf1c1c87e3",
+      "bytes": 132747
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-02.jpg",
+      "sha256": "f4bf1543c92959349cf1f43622aaf52503c5193695b9a18e322a3d80a5f27ba3",
+      "bytes": 129057
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-03.jpg",
+      "sha256": "5cca78d166d14354834742b3dc41e681de4833f221e28268430b3b14ac1d493a",
+      "bytes": 144673
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-04.jpg",
+      "sha256": "3da5e73ed0984a613d06ba63b62440327e2eab041f8ad3f90797e3ca713c101c",
+      "bytes": 152563
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-05.jpg",
+      "sha256": "a1bce921b503bf1074f658ea9618ff589cae86ed2b6ff8421c4029c5387bb9b1",
+      "bytes": 153962
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-06.jpg",
+      "sha256": "768f8b628c0e9bc393e2c4c7d8cbca3307a7333303598d79e0fcd4c1ea83c983",
+      "bytes": 143796
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-07.jpg",
+      "sha256": "84c5930fce1b4828267b82342a34577a0eb811198c27aa6496f0ab7db3adc454",
+      "bytes": 144730
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-08.jpg",
+      "sha256": "5053bd106fa21dd5405b4e648e9f583b85f20d6aa7594f38c44a600ae33ff149",
+      "bytes": 145914
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-contact.jpg",
+      "sha256": "ca94709a177a1f00ce58eb203194f2c402eeadd757404240785b569f6b1669d7",
+      "bytes": 326368
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-samples.json",
+      "sha256": "d37030a29220e1d859f3993bef0325b4d76a1d5a986359eba7d13b06d2141ae4",
+      "bytes": 2103
+    }
+  ],
+  "scope_limit": "GitHub exact-head CI, release and delivery receipts are handled by parent agents; publication_ready records independent corrected-artifact QC, not a claim those external actions have completed. Any changed final artifact requires updated bindings and verification.",
+  "issues_found_and_fixed": [
+    {
+      "id": "interview_frame_in_transition_tail",
+      "severity": "must_fix",
+      "film_seconds": [
+        228.47,
+        228.55
+      ],
+      "source_boundary_seconds": 297.28,
+      "detail": "Selected match segment ends at source 297.28, but native transition takes a further SEG_FADE=.18 seconds of source as fade tail. The next source shot shows the interviewer and enters the delivered video during the stat-card dissolve. This contradicts the intended match-only ending.",
+      "evidence": [
+        "data/research/zheng-charaeva-beijing-2026-r4/quality/ending-boundary-21.jpg",
+        "data/research/zheng-charaeva-beijing-2026-r4/quality/ending-boundary-22.jpg"
+      ],
+      "repair": "Actual native re-render used end=297.08; native .18 transition tail ends297.26 before interview first frame297.28. Last original clause ending296.84 remains inside the selected window. Nine actual corrected final frames show no interviewer.",
+      "policy_basis": {
+        "path": ".claude/skills/tennis-owner-taste/SKILL.md",
+        "line": 287,
+        "quote": "赛场之上一帧赛后采访都不进（原声不进，垫在旁白下也不行）",
+        "type": "Explicit owner rule; actual picture self-check"
+      },
+      "status": "fixed_and_actual_artifact_reverified",
+      "resolved_film_sha256": "107cfcaa1a1985ce0873d291b6e79ead1d0f61f3f5ae97e4ea0f22585ac2721a",
+      "resolved_evidence": [
+        "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-contact.jpg",
+        "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-safe-boundary-samples.json"
+      ]
+    }
+  ],
+  "inherited_evidence": {
+    "previous_film_sha256": "1c7bfad0e69f83321ba77a3099bd9bfd32695657acd4634f9117068c2b6c8def",
+    "basis": "Native complete production projection independently compared; only segment 11 end differs. All 8 current actual voice MP3 hashes exactly match the previously independently verified full-input/wordmark acoustic evidence. Final corrected audio, caption authentication and affected picture boundary directly rechecked.",
+    "diff_path": "data/research/zheng-charaeva-beijing-2026-r4/quality/tail-fix-production-diff.json",
+    "historical_files": [
+      "final-visual-contact.jpg",
+      "final-visual-samples.json",
+      "ending-boundary-20.jpg",
+      "ending-boundary-21.jpg",
+      "ending-boundary-22.jpg",
+      "108-native-fade.json",
+      "pre-tail-fix-native-qc.txt",
+      "pre-tail-fix-audio-caption-check.json",
+      "original-silence-floor-check.txt"
+    ]
+  }
+}

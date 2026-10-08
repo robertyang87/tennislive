@@ -1,0 +1,60 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=rGsZ0vrlUns",
+  "source_sha256": "9ecc50946d9c77dd2ed71d6438ba95213c78b58c93aa15929ad352d5b0bc79b4",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex automated source-caption / independent ASR cross-check; no human listening",
+  "reviewed_at": "2026-10-05T14:50:25.442060+00:00",
+  "reviewed_from": 198.92,
+  "reviewed_to": 222.68,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 205.12,
+      "end": 207.76,
+      "en": "A crushing return winner from Iga Swiatek.",
+      "zh": "斯瓦泰克接发直接得分！"
+    },
+    {
+      "start": 208.45,
+      "end": 211.8,
+      "en": "Donna Vekic with two chances to close out the match.",
+      "zh": "维基奇两次有机会结束比赛。"
+    },
+    {
+      "start": 211.81,
+      "end": 213.02,
+      "en": "Unable to do so.",
+      "zh": "却没能做到。"
+    },
+    {
+      "start": 213.03,
+      "end": 215.58,
+      "en": "Iga Swiatek storms back, and...",
+      "zh": "斯瓦泰克强势追了回来……"
+    },
+    {
+      "start": 217.38,
+      "end": 219.07,
+      "en": "What a tiebreak she played.",
+      "zh": "这个抢七，她打得太出色了。"
+    },
+    {
+      "start": 219.88,
+      "end": 222.68,
+      "en": "Seven points to none in that tiebreak.",
+      "zh": "这一局抢七，七比零。"
+    }
+  ],
+  "is_human_listening": false,
+  "coverage_basis": "The complete 0–298s small.en transcript was compared with the complete YouTube automatic transcript. Every selected-window foreground utterance is listed; frame-grid review identifies point action, ASR words define speech boundaries. Ambiguous lexical/named-entity spans have medium.en/base.en records; rejected non-key rally149s omitted.",
+  "evidence_files": [
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-small.en.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-medium.en.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-medium-narrow.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/whisper-base-ambiguities.json",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/youtube-auto-captions.txt",
+    "data/audio_reviews/swiatek-vekic-beijing-2026-r3/cue-crosscheck.json"
+  ],
+  "notes": "No human auditory listen was performed. Status complete describes automatic transcript cross-check for this full selected window, not human listening or final rendered-mix QC."
+}

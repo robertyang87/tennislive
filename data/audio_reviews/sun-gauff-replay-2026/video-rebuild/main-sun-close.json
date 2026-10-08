@@ -1,0 +1,35 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Wg6m85wS3Ps/Wg6m85wS3Ps.mp4",
+  "source_sha256": "79951bd5316ac8910ce6fc1200260c62492d1f791ed3690729dadeb7a6296b90",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex /root/production_setup: inspected independent raw ASR and exact source-frame evidence",
+  "reviewed_at": "2026-10-05T20:13:49.684732+00:00",
+  "reviewed_from": 172.6,
+  "reviewed_to": 176.24,
+  "status": "complete",
+  "foreground_english": [],
+  "foreground_speech": [],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "Focused tiny.en/base.en emit no transcript. Full-source words resume185.70 after the subsequent whole point.",
+  "raw_evidence": [
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/tiny.en-full.json",
+      "sha256": "49585ad194b3b90350e370a38b2c0223fb7473d80f49e3847bfdd944c1e727d6"
+    },
+    {
+      "path": "data/research/sun-gauff-beijing-2026-r3/audio/base.en-full.json",
+      "sha256": "99d790d06bb0747ff88b971afbd045327ed3bfb08d9867d923e89d3f3d131f78"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/tiny.en-candidate-windows.json",
+      "sha256": "e5cd701df54b620f85bb4c8dcc22934bdd297f8eaa1d963e2763f67aaefe9a73"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/base.en-candidate-windows.json",
+      "sha256": "aa680f5c6e131e532abc5da9aa95f4f16a71a03f5d75ba1a532cb1ae07979a72"
+    }
+  ],
+  "review_basis": "Source identity bound by actual SHA; inspected full-source word intervals and independent focused-window model output. No human listening claim. Original soundtrack retained, not replaced or inferred absent from a mute flag.",
+  "visual_review": "Sun close-up recovering her position and focus after an ordinary first-set point; not canceled point.",
+  "recommended_audio_tail": "silence"
+}

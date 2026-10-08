@@ -1,0 +1,340 @@
+{
+  "id": "target-118",
+  "label": "第 25 段",
+  "display_char": "结",
+  "actual_tts_char": "结",
+  "position": 34,
+  "context": "替一个人写下结局。",
+  "word": "结局",
+  "intended": "jie2",
+  "common_contrast": "jie1",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "下一次又落后时，你愿不愿意，再给自己一次机会？低谷，不能替一个人写下结局。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "结",
+    "char": "结",
+    "sentence": "下一次又落后时，你愿不愿意，再给自己一次机会？低谷，不能替一个人写下结局。",
+    "tts_text": "下一次又落后时，你愿不愿意，再给自己一次机会？低谷，不能替一个人写下结局。",
+    "intended_refs": [
+      "劫",
+      "截"
+    ],
+    "wrong_refs": [
+      "皆",
+      "街"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "low",
+    "verdict_raw": "correct",
+    "score": 0.974,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [
+      "街"
+    ],
+    "override": null,
+    "selftest_sides": [
+      "A"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.001,
+        "d_wrong": 3.113,
+        "score": 0.999
+      },
+      "f0": {
+        "d_intended": 0.048,
+        "d_wrong": 2.137,
+        "score": 0.956
+      },
+      "comb": {
+        "d_intended": 0.049,
+        "d_wrong": 3.694,
+        "score": 0.974
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.05,
+      "wrong": 1.972
+    },
+    "separation": {
+      "spec": {
+        "within": 1.37,
+        "between": 2.91,
+        "separation": 2.124
+      },
+      "f0": {
+        "within": 0.386,
+        "between": 1.936,
+        "separation": 5.011
+      },
+      "comb": {
+        "within": 1.072,
+        "between": 3.391,
+        "separation": 3.165
+      }
+    },
+    "selftest_loo": {
+      "劫": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.991
+      },
+      "截": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.991
+      },
+      "街": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.184,
+        "dropped": true
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:劫": {
+        "spec": 0.001,
+        "f0": 0.048,
+        "vmis": 0.0,
+        "frames": 32,
+        "comb": 0.049
+      },
+      "A:截": {
+        "spec": 0.001,
+        "f0": 0.065,
+        "vmis": 0.0,
+        "frames": 32,
+        "comb": 0.066
+      },
+      "B:皆": {
+        "spec": 3.113,
+        "f0": 2.137,
+        "vmis": 0.062,
+        "frames": 32,
+        "comb": 3.694
+      },
+      "B:街": {
+        "spec": 2.709,
+        "f0": 1.726,
+        "vmis": 0.125,
+        "frames": 32,
+        "comb": 3.08
+      }
+    },
+    "window_s": [
+      6.91,
+      7.23
+    ],
+    "boundary_token": "结局",
+    "window_anchor": "B:皆",
+    "tokens": {
+      "ORIG": [
+        "下",
+        "一次",
+        "又",
+        "落后",
+        "时",
+        "你愿不愿意",
+        "再",
+        "给",
+        "自己",
+        "一次机会",
+        "低谷",
+        "不能",
+        "替",
+        "一个",
+        "人",
+        "写",
+        "下",
+        "结局"
+      ],
+      "A:劫": [
+        "下",
+        "一次",
+        "又",
+        "落后",
+        "时",
+        "你愿不愿意",
+        "再",
+        "给",
+        "自己",
+        "一次机会",
+        "低谷",
+        "不能",
+        "替",
+        "一个",
+        "人",
+        "写",
+        "下",
+        "劫局"
+      ],
+      "A:截": [
+        "下",
+        "一次",
+        "又",
+        "落后",
+        "时",
+        "你愿不愿意",
+        "再",
+        "给",
+        "自己",
+        "一次机会",
+        "低谷",
+        "不能",
+        "替",
+        "一个",
+        "人",
+        "写",
+        "下",
+        "截局"
+      ],
+      "B:皆": [
+        "下",
+        "一次",
+        "又",
+        "落后",
+        "时",
+        "你愿不愿意",
+        "再",
+        "给",
+        "自己",
+        "一次机会",
+        "低谷",
+        "不能",
+        "替",
+        "一个",
+        "人",
+        "写",
+        "下",
+        "皆",
+        "局"
+      ],
+      "B:街": [
+        "下",
+        "一次",
+        "又",
+        "落后",
+        "时",
+        "你愿不愿意",
+        "再",
+        "给",
+        "自己",
+        "一次机会",
+        "低谷",
+        "不能",
+        "替",
+        "一个",
+        "人",
+        "写",
+        "下",
+        "街局"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -2.9,
+        -3.9,
+        -4.6,
+        -4.8,
+        -6.9,
+        -7.2,
+        null,
+        null,
+        null,
+        null,
+        -5.2,
+        -4.6,
+        -3.4,
+        -1.4,
+        -0.1,
+        0.4
+      ],
+      "A:劫": [
+        -2.8,
+        -3.9,
+        -4.6,
+        -4.7,
+        -6.9,
+        -7.2,
+        null,
+        null,
+        null,
+        null,
+        -5.2,
+        -4.6,
+        -3.4,
+        -1.4,
+        -0.0,
+        0.4
+      ],
+      "A:截": [
+        -2.8,
+        -3.9,
+        -4.6,
+        -4.7,
+        -6.9,
+        -7.2,
+        null,
+        null,
+        null,
+        null,
+        -5.2,
+        -4.6,
+        -3.3,
+        -1.4,
+        -0.0,
+        0.4
+      ],
+      "B:皆": [
+        -3.6,
+        -4.8,
+        -6.5,
+        -6.0,
+        -7.3,
+        null,
+        null,
+        null,
+        null,
+        1.1,
+        0.6,
+        1.0,
+        1.2,
+        1.3,
+        1.0,
+        -1.0
+      ],
+      "B:街": [
+        null,
+        null,
+        -5.8,
+        -5.4,
+        -7.4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -0.3,
+        -0.3,
+        0.2,
+        0.3,
+        -0.1,
+        -0.9
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/d0abdccb8d569902580b3222.mp3",
+      "A:劫": "/workspace/tennislive/research/vacherot-acoustic/references/6a3dd3040d4f94cc386898f4.mp3",
+      "A:截": "/workspace/tennislive/research/vacherot-acoustic/references/fd1c581a45ae7b677e4e2f35.mp3",
+      "B:皆": "/workspace/tennislive/research/vacherot-acoustic/references/5134e8a03e3c727b0785fc9e.mp3",
+      "B:街": "/workspace/tennislive/research/vacherot-acoustic/references/44d6c8d47db86c2f8f825d07.mp3"
+    }
+  }
+}

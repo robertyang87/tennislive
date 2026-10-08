@@ -1,0 +1,308 @@
+{
+  "reviewer": "official_media independent actual-frame review",
+  "status": "actual_final_targeted_visual_recheck_pass",
+  "reviewed_film": "/workspace/tennislive/output/2026-10-06/reel/djokovic-china-open-unbeaten-34/djokovic-china-open-unbeaten-34.mp4",
+  "version": "final_native_four_line_right_aligned_information_cards",
+  "method": "Final completed native film only, after root explicit exit0: actual upper-right crops at +0.45/+1.5 seconds for all18 information-strip appearances (36 frames), actual2010 first0.6s every0.1s, actual2015 entry/serve every0.3s, full-resolution2013 face/longest English/cup ending/brand page, plus all7 cups and2026 RET handshake/embrace/umpire gestures. Earlier v1 broad segment audit is retained as history for unchanged source bodies. This is a targeted visual frame review, not continuous whole-film playback or an independent audio pass.",
+  "film_metrics": {
+    "duration_seconds": 469.12,
+    "bytes": 363736064,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": 25,
+    "cover_seconds": 4.594,
+    "body_seconds_computed": 460.676
+  },
+  "actual_film_samples": 61,
+  "cup_windows": [
+    {
+      "year": "2009",
+      "source": "i1LtteR8jd0",
+      "source_start": 55.4,
+      "source_end": 72.6,
+      "observed": "Chest hold to overhead raise, then lowers.",
+      "evidence": "/workspace/video-review/djokovic34-cup-proof/cup-2009.jpg"
+    },
+    {
+      "year": "2010",
+      "source": "i1LtteR8jd0",
+      "source_start": 133.94,
+      "source_end": 138.85,
+      "observed": "Chest hold to overhead raise.",
+      "evidence": "/workspace/video-review/djokovic34-cup-proof/cup-2010.jpg"
+    },
+    {
+      "year": "2012",
+      "source": "i1LtteR8jd0",
+      "source_start": 199.1,
+      "source_end": 206.66,
+      "observed": "Starts already overhead, turns to face camera, then lowers. This is not the full chest-to-overhead lifting motion.",
+      "evidence": "/workspace/video-review/djokovic34-cup-proof/cup-2012.jpg"
+    },
+    {
+      "year": "2013",
+      "source": "i1LtteR8jd0",
+      "source_start": 294.5,
+      "source_end": 304.1,
+      "observed": "Receives/holds chest high then raises overhead; crowd cut after raise.",
+      "evidence": "/workspace/video-review/djokovic34-cup-proof/cup-2013.jpg"
+    },
+    {
+      "year": "2014",
+      "source": "i1LtteR8jd0",
+      "source_start": 380.7,
+      "source_end": 389.4,
+      "observed": "Chest hold then raises overhead.",
+      "evidence": "/workspace/video-review/djokovic34-cup-proof/cup-2014.jpg"
+    },
+    {
+      "year": "2015",
+      "source": "i1LtteR8jd0",
+      "source_start": 459.85,
+      "source_end": 471.8,
+      "observed": "Receives chest high, raises overhead, lowers.",
+      "evidence": "/workspace/video-review/djokovic34-cup-proof/cup-2015.jpg"
+    },
+    {
+      "year": "2026",
+      "source": "8Dc6BvkUEZM",
+      "source_start": 466.2,
+      "source_end": 472.4,
+      "observed": "Starts already raised; lowers and kisses, then a complete second raise; smiling face visible at 472.4, before brand card.",
+      "evidence": "/workspace/video-review/djokovic34-cup-proof/cup-2026.jpg"
+    }
+  ],
+  "remaining": "None for this targeted independent visual task. Root independently ran and bound the native landed gate to the same final film/spec hashes; no native attestation file was modified here.",
+  "final_selected_windows": {
+    "2010_point_start": 81.48,
+    "2013_cup_repeated_inset": false,
+    "2015_point_start": 413.5
+  },
+  "intermediate_precheck": {
+    "video": "/workspace/tennislive/output/2026-10-06/reel/djokovic-china-open-unbeaten-34/_video.mp4",
+    "not_final_qc": true,
+    "2010": "74.9–75.5 sampled every0.1sec; correct service closeup, no previous2009 cheque frame.",
+    "2013": "184.52 and185.0 full1080x1440 frames; both eyebrows and eyes fully clear.",
+    "2015": "229.80 title dissolve,230.10 pre-toss hold,230.40 toss,230.70 strike then full rally; correct2015 footage.",
+    "evidence_dir": "/workspace/video-review/djokovic34-final-precheck/",
+    "superseded_by_actual_final": true
+  },
+  "current_requested_layout": {
+    "position": "top-right, closer to right edge",
+    "text_alignment": "right",
+    "vertical_separator": "rightmost",
+    "must_verify": "All actual information-strip appearances: four separate right-aligned rows, vertical separator at far right, top-right placement and no new eyebrow/eye obstruction from added row height.",
+    "rows": [
+      "year/round",
+      "title count and win count",
+      "score",
+      "explanation"
+    ]
+  },
+  "film_sha256": "84eab146ff3724cf9c1ddfbd45220169a12787b0bcf3be80a3858f066b71f7e6",
+  "spec_sha256": "85600d8998548b2c79ec132e855d69c33a3a7bc3501d6f58875d62899261f529",
+  "blocking_findings": [],
+  "final_actual_frame_index": "/workspace/video-review/djokovic34-final-recheck/frame-index.json",
+  "final_actual_extracted_frame_count": 71,
+  "unique_info_assets": 10,
+  "inset_appearances": 18,
+  "layout_observation": "All18 appearances show four genuinely separate rows: year/round, title/win count, score, explanation. Text rows end on the same right edge; the green vertical separator is at the far right, spans the four rows and is fully visible. Cards remain within the actual top-right canvas. Reviewed18x2 actual frame crops, not just PNG/CSS declarations.",
+  "layout_evidence": [
+    "/workspace/video-review/djokovic34-final-recheck/right-info-crops-01.jpg",
+    "/workspace/video-review/djokovic34-final-recheck/right-info-crops-02.jpg",
+    "/workspace/video-review/djokovic34-final-recheck/right-info-crops-03.jpg",
+    "/workspace/video-review/djokovic34-final-recheck/right-info-crops-04.jpg",
+    "/workspace/video-review/djokovic34-final-recheck/right-info-crops-05.jpg"
+  ],
+  "final_critical_observations": [
+    {
+      "topic": "2010 corrected beginning",
+      "result": "No2009 cheque presentation in74.906–75.506 sequence; correct serve and court shot.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/2010-entry-contact.jpg"
+    },
+    {
+      "topic": "2013 trophy face",
+      "result": "185.0 full-resolution frame has both eyebrows and eyes unobstructed; redundant trophy inset absent.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/2013-face-fixed.jpg"
+    },
+    {
+      "topic": "2015 serve and year",
+      "result": "229.8 chapter dissolve,230.1 holding/toss preparation,230.4 toss,230.7 strike/court view, subsequent rally. Correct2015, no2014 footage.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/2015-entry-contact.jpg"
+    },
+    {
+      "topic": "long English caption",
+      "result": "169.0 English sentence fully visible in two English lines plus one Chinese line, with safe bottom margin.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/long-en-full.jpg"
+    },
+    {
+      "topic": "7 trophies",
+      "result": "All seven actual cup appearances visibly present:2009,2010,2012,2013,2014,2015,2026. Selected original2012 window begins already held overhead; no claim that every lift begins at chest level.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/actual-cup-contact.jpg"
+    },
+    {
+      "topic": "2026 actual retirement",
+      "result": "Actual handshake416.48,embrace417.48,deMinaur-to-umpire423.48,Djokovic-to-umpire424.48. Actual final card reads7–6(3),0–1 RET; SF card separately saysDEF/失格.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/actual-ret-contact.jpg"
+    },
+    {
+      "topic": "2026 cup end and ending",
+      "result": "Raised cup and smiling Djokovic at460.694; last468.62 frame shows only the branded outro, no TennisTV promotional tail.",
+      "evidence": [
+        "/workspace/video-review/djokovic34-final-recheck/2026-cup-end.jpg",
+        "/workspace/video-review/djokovic34-final-recheck/ending.jpg"
+      ]
+    },
+    {
+      "topic": "cover and trophy inset face safety",
+      "result": "Cover face and eyes clear.2015 trophy inset can touch upper hair, but actual eyebrows and eyes are clear;2013 trophy emotional closeup is clean.",
+      "evidence": [
+        "/workspace/video-review/djokovic34-final-recheck/cover.jpg",
+        "/workspace/video-review/djokovic34-final-recheck/right-info-entry-seg-18.jpg",
+        "/workspace/video-review/djokovic34-final-recheck/right-info-seg-18.jpg"
+      ]
+    }
+  ],
+  "non_blocking_observations": [
+    {
+      "topic": "2010 entry dissolve",
+      "observation": "At75.006, the information text briefly crosses one side of the serving player brow/eye during the chapter dissolve. The later0.45/1.5 second strip samples are clear. This does not hide a trophy emotional shot, cut the point, or alter source identity; no further rerender is recommended.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/2010-entry-01.jpg"
+    }
+  ],
+  "native_gate_hash_consistency": {
+    "root_reported_film_sha256": "84eab146ff3724cf9c1ddfbd45220169a12787b0bcf3be80a3858f066b71f7e6",
+    "root_reported_spec_sha256": "85600d8998548b2c79ec132e855d69c33a3a7bc3501d6f58875d62899261f529",
+    "matches": true,
+    "performed_by": "root; not rerun or rewritten by this reviewer"
+  },
+  "historical_findings": [
+    {
+      "severity": "fix_required",
+      "status": "resolved_and_verified_in_actual_final",
+      "segment_zero_based": 12,
+      "film_second": 185.0,
+      "problem": "Repeated 2013 cup inset overlaps Djokovic right eyebrow and eye edge. The same year information has already been shown on its championship-point segment.",
+      "fix": "Remove only the repeated cup inset. Keep source range and fixed-center crop.",
+      "evidence": "/workspace/video-review/djokovic34-2013-cup-info-full.jpg"
+    },
+    {
+      "severity": "pass",
+      "topic": "2015 championship-point sequence",
+      "observation": "Correct 2015 footage throughout serve/rally/reaction. Fine source inspection shows 413.96 already begins the toss; source412.90–413.70 is also correct2015 footage and contains fuller preparation. Earlier review called the toss preparation; the wording is corrected here.",
+      "evidence": [
+        "/workspace/video-review/djokovic34-independent-frames/2015-serve-precise.jpg",
+        "/workspace/video-review/djokovic34-cup-proof/2015-source-boundary.jpg"
+      ],
+      "recommended_optional_improvement": "If rerendering due to the2010 residual shot, extend source start413.96→412.90 and increase quote offsets by1.06 to retain full preparation before the toss.",
+      "final_decision": "Final413.50 start retains hold before toss without including a clipped preceding commentator phrase. Earlier412.90 optional proposal is superseded."
+    },
+    {
+      "severity": "pass",
+      "topic": "2026 retirement",
+      "observation": "The source 309.3 start is after the first game ends, not the last isolated forehand. Film 413.5 de Minaur approaches, 416.5 handshake, 417.5 embrace, subsequent dialogue and both umpire handshakes. Score/title state RET, no false championship-point label.",
+      "evidence": [
+        "/workspace/video-review/djokovic34-independent-frames/ret-precise.jpg",
+        "/workspace/video-review/djokovic-34-contact/final-first-game-point-check-1.jpg",
+        "/workspace/video-review/djokovic-34-contact/final-first-game-point-check-2.jpg"
+      ]
+    },
+    {
+      "severity": "pass",
+      "topic": "longest English subtitle",
+      "observation": "Two English lines plus one Chinese line are fully within the actual 1080x1440 frame; no cropped words or Chinese overflow at 169.5s. Four longest English cues were visually sampled.",
+      "evidence": "/workspace/video-review/djokovic34-long-en-full.jpg"
+    },
+    {
+      "severity": "pass",
+      "topic": "other cup information strips",
+      "observation": "2009, 2010, 2012, 2014 and 2015 strips did not hide Djokovic eyes in sampled frames. 2012 and 2015 checked at full resolution.",
+      "evidence": [
+        "/workspace/video-review/djokovic34-2012-cup-info-full.jpg",
+        "/workspace/video-review/djokovic34-2015-cup-info-full.jpg"
+      ]
+    },
+    {
+      "severity": "pass",
+      "topic": "cover and ending",
+      "observation": "Actual story cover retains a clear face, brand and readable headline. Actual final frame shows only the branded outro; no TennisTV promotional footer.",
+      "evidence": [
+        "/workspace/video-review/djokovic34-independent-frames/cover.jpg",
+        "/workspace/video-review/djokovic34-independent-frames/tail-end.jpg"
+      ]
+    },
+    {
+      "severity": "fix_required",
+      "status": "resolved_and_verified_in_actual_final",
+      "segment_zero_based": 6,
+      "source_start": 81.0,
+      "problem": "Source cups 81.00–81.40 is the previous 2009 trophy cheque presentation. The v2 complete intermediate _video at film75.15–75.27 visibly places the 2010 title strip over that 2009 shot. The clip switches to Ferrer serve preparation at source81.48.",
+      "fix": "Trim start to81.48; shift all source quote relative offsets by−0.48 while keeping absolute source words unchanged, then rerender and rebind gate.",
+      "evidence": [
+        "/workspace/video-review/djokovic34-cup-proof/2010-start-transition.jpg",
+        "/workspace/video-review/djokovic34-cup-proof/v2-intermediate-2010-start.jpg"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "topic": "2010 corrected beginning",
+      "result": "No2009 cheque presentation in74.906–75.506 sequence; correct serve and court shot.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/2010-entry-contact.jpg",
+      "severity": "pass"
+    },
+    {
+      "topic": "2013 trophy face",
+      "result": "185.0 full-resolution frame has both eyebrows and eyes unobstructed; redundant trophy inset absent.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/2013-face-fixed.jpg",
+      "severity": "pass"
+    },
+    {
+      "topic": "2015 serve and year",
+      "result": "229.8 chapter dissolve,230.1 holding/toss preparation,230.4 toss,230.7 strike/court view, subsequent rally. Correct2015, no2014 footage.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/2015-entry-contact.jpg",
+      "severity": "pass"
+    },
+    {
+      "topic": "long English caption",
+      "result": "169.0 English sentence fully visible in two English lines plus one Chinese line, with safe bottom margin.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/long-en-full.jpg",
+      "severity": "pass"
+    },
+    {
+      "topic": "7 trophies",
+      "result": "All seven actual cup appearances visibly present:2009,2010,2012,2013,2014,2015,2026. Selected original2012 window begins already held overhead; no claim that every lift begins at chest level.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/actual-cup-contact.jpg",
+      "severity": "pass"
+    },
+    {
+      "topic": "2026 actual retirement",
+      "result": "Actual handshake416.48,embrace417.48,deMinaur-to-umpire423.48,Djokovic-to-umpire424.48. Actual final card reads7–6(3),0–1 RET; SF card separately saysDEF/失格.",
+      "evidence": "/workspace/video-review/djokovic34-final-recheck/actual-ret-contact.jpg",
+      "severity": "pass"
+    },
+    {
+      "topic": "2026 cup end and ending",
+      "result": "Raised cup and smiling Djokovic at460.694; last468.62 frame shows only the branded outro, no TennisTV promotional tail.",
+      "evidence": [
+        "/workspace/video-review/djokovic34-final-recheck/2026-cup-end.jpg",
+        "/workspace/video-review/djokovic34-final-recheck/ending.jpg"
+      ],
+      "severity": "pass"
+    },
+    {
+      "topic": "cover and trophy inset face safety",
+      "result": "Cover face and eyes clear.2015 trophy inset can touch upper hair, but actual eyebrows and eyes are clear;2013 trophy emotional closeup is clean.",
+      "evidence": [
+        "/workspace/video-review/djokovic34-final-recheck/cover.jpg",
+        "/workspace/video-review/djokovic34-final-recheck/right-info-entry-seg-18.jpg",
+        "/workspace/video-review/djokovic34-final-recheck/right-info-seg-18.jpg"
+      ],
+      "severity": "pass"
+    }
+  ],
+  "audio_scope": "This report does not certify continuous listening or pronunciation. Root reports pronunciation review still pending; the visual pass does not change that audio status.",
+  "current_review_version": "actual completed four-row right-aligned native film; film84eab146ff3724cf… / spec85600d8998548b2c…"
+}

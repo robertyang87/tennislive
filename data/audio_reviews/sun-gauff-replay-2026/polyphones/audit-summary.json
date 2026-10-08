@@ -1,0 +1,183 @@
+{
+  "date": "2026-10-06",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "method": "Edge real synthesis; MFCC/F0/DTW with leave-one-out reference self-tests; no ASR spelling used as pronunciation proof",
+  "user_report": "tts 里的重打，不是 zhong；要注意多音字",
+  "fix": "Only synthesis text uses 崇 for replay 重; Chinese display retains 重打. Cover/opening spoken sentence was rephrased after uncertain acoustic results; no uncertainty promoted to a pass.",
+  "checked": {
+    "seg5-0-production": {
+      "production": {
+        "verdict": "correct",
+        "confidence": "high",
+        "score": 1.0,
+        "selftest_pass": true,
+        "tts_text": "二零二五年罗马，安德列娃的制胜球，也因灯突然开启崇打。她当时落泪，后来赢了。"
+      }
+    },
+    "cover-0-production": {
+      "production": {
+        "verdict": "uncertain",
+        "confidence": null,
+        "score": 0.168,
+        "selftest_pass": true,
+        "tts_text": "这一分被判崇打，孙心然留下遗憾。"
+      }
+    },
+    "seg7-0-production": {
+      "production": {
+        "verdict": "correct",
+        "confidence": "high",
+        "score": 1.0,
+        "selftest_pass": true,
+        "tts_text": "主办方当然要负责。WTA明确要求，球员准备发球后，广告不得变化。崇打一分，不能把赛事方的保障责任一笔勾销。"
+      }
+    },
+    "seg2-0-production": {
+      "production": {
+        "verdict": "correct",
+        "confidence": "low",
+        "score": 1.0,
+        "selftest_pass": true,
+        "tts_text": "侧边LED在回合中闪动，回看后判崇打。比分退回十五平，崇打高芙赢分并保发。孙心然最终五比七、一比六告负。"
+      }
+    },
+    "seg0-0-production": {
+      "production": {
+        "verdict": "uncertain",
+        "confidence": null,
+        "score": 0.106,
+        "selftest_pass": true,
+        "tts_text": "十月五号晚，中网第三轮。一分被判崇打。"
+      }
+    },
+    "seg2-1-production": {
+      "production": {
+        "verdict": "correct",
+        "confidence": "high",
+        "score": 1.0,
+        "selftest_pass": true,
+        "tts_text": "侧边LED在回合中闪动，回看后判崇打。比分退回十五平，崇打高芙赢分并保发。孙心然最终五比七、一比六告负。"
+      }
+    },
+    "cover-rephrased": {
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 1.0,
+      "selftest_pass": true,
+      "sentence": "重打一分，孙心然留下遗憾。",
+      "tts_text": "崇打一分，孙心然留下遗憾。"
+    },
+    "opening-rephrased": {
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 1.0,
+      "selftest_pass": true,
+      "sentence": "十月五号晚，中网第三轮。重打一分。",
+      "tts_text": "十月五号晚，中网第三轮。崇打一分。"
+    },
+    "reset": {
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 0.992,
+      "selftest_pass": true,
+      "sentence": "比分能重置，感觉未必能一起退回去。",
+      "tts_text": "比分能重置，感觉未必能一起退回去。"
+    },
+    "punishment": {
+      "verdict": "correct",
+      "confidence": "medium",
+      "score": 0.868,
+      "selftest_pass": true,
+      "sentence": "但本场是否处罚，尚无结论。",
+      "tts_text": "但本场是否处罚，尚无结论。"
+    },
+    "must-not": {
+      "verdict": "unreliable",
+      "confidence": null,
+      "score": 0.336,
+      "selftest_pass": false,
+      "sentence": "球员准备发球后，广告不得变化。",
+      "tts_text": "球员准备发球后，广告不得变化。"
+    }
+  },
+  "scope": "Six replay occurrences across five spoken passages; also context audit for all cover, segment narrations and fixed outro. Unaffected native source speech is not re-synthesized.",
+  "limitations": "The acoustic classifier sometimes cannot separate reference groups. Such cases are retained as uncertain/unreliable rather than claimed as measured-correct. Global static checks screen risk; they do not certify audible pronunciation.",
+  "created_at": "2026-10-05T22:39:18.112284+00:00",
+  "spec_sha256": "3341cab600c51ea8ff21972b25ff317795c16cdc627fb0203e29acd4b8052f55",
+  "canonical_replay_occurrences": [
+    {
+      "label": "cover",
+      "original": "重打一分，孙心然留下遗憾。",
+      "synthesis_text": "崇打一分，孙心然留下遗憾。",
+      "evidence": "cover-rephrased.json",
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 1.0,
+      "selftest_pass": true
+    },
+    {
+      "label": "segment0",
+      "original": "十月五号晚，中网第三轮。重打一分。",
+      "synthesis_text": "十月五号晚，中网第三轮。崇打一分。",
+      "evidence": "opening-rephrased.json",
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 1.0,
+      "selftest_pass": true
+    },
+    {
+      "label": "segment2 occurrence0",
+      "original": "侧边LED在回合中闪动，回看后判重打。比分退回十五平，重打高芙赢分并保发。孙心然最终五比七、一比六告负。",
+      "synthesis_text": "侧边LED在回合中闪动，回看后判崇打。比分退回十五平，崇打高芙赢分并保发。孙心然最终五比七、一比六告负。",
+      "evidence": "seg2-0-production.json",
+      "verdict": "correct",
+      "confidence": "low",
+      "score": 1.0,
+      "selftest_pass": true
+    },
+    {
+      "label": "segment2 occurrence1",
+      "original": "侧边LED在回合中闪动，回看后判重打。比分退回十五平，重打高芙赢分并保发。孙心然最终五比七、一比六告负。",
+      "synthesis_text": "侧边LED在回合中闪动，回看后判崇打。比分退回十五平，崇打高芙赢分并保发。孙心然最终五比七、一比六告负。",
+      "evidence": "seg2-1-production.json",
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 1.0,
+      "selftest_pass": true
+    },
+    {
+      "label": "segment5",
+      "original": "二零二五年罗马，安德列娃的制胜球，也因灯突然开启重打。她当时落泪，后来赢了。",
+      "synthesis_text": "二零二五年罗马，安德列娃的制胜球，也因灯突然开启崇打。她当时落泪，后来赢了。",
+      "evidence": "seg5-0-production.json",
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 1.0,
+      "selftest_pass": true
+    },
+    {
+      "label": "segment7",
+      "original": "主办方当然要负责。WTA明确要求，球员准备发球后，广告不得变化。重打一分，不能把赛事方的保障责任一笔勾销。",
+      "synthesis_text": "主办方当然要负责。WTA明确要求，球员准备发球后，广告不得变化。崇打一分，不能把赛事方的保障责任一笔勾销。",
+      "evidence": "seg7-0-production.json",
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 1.0,
+      "selftest_pass": true
+    }
+  ],
+  "rejected_contexts": [
+    "cover-0-production.json",
+    "seg0-0-production.json"
+  ],
+  "rejected_contexts_reason": "Reference self-test yielded uncertainty; production now uses the separately measured cover-rephrased/opening-rephrased wording.",
+  "additional_polyphones_evidence": "event-sources-audit-summary.json",
+  "outro_audio_evidence": "outro-shicha-summary.json",
+  "additional_review_result": "重置/处罚/还说/落泪 measured-correct; 不得/结论/片尾时差 include limited or uncertain acoustic results retained in full. No observed mispronunciation established for those uncertain items; no blind substitutions added.",
+  "ending_owner_directive": "最后两个字你呢拿掉",
+  "ending_final_text": "比分能重置，感觉未必能一起退回去。期待更可靠的赛场，也期待她握住下一次机会。",
+  "ending_actual_tts_seconds": 8.184,
+  "global_hit_person_evidence": "hit-person-summary.json",
+  "global_hit_person_scope": "Actual project Medvedev story phrase; not inserted into the Sun LED story. Mid-hit 中 zhòng correction only in synth; 中网/中国/中间 retained."
+}

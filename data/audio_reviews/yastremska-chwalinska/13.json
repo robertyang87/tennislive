@@ -1,0 +1,33 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=12BOGT88OnQ",
+  "source_sha256": "a6488b8ef28119597dff4565df48a6204404f9e2305ac3cb59c06485e6f71d98",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI producer plus independent editorial/visual agents; no human listening claimed",
+  "reviewed_at": "2026-10-02T07:42:41.417842+00:00",
+  "reviewed_from": 220.44,
+  "reviewed_to": 233.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "evidence_runs": [
+    36977376249,
+    36978033285,
+    36979303385
+  ],
+  "asr_evidence": [
+    {
+      "path": "docs/production/chwalinska-owner-20261002/broadcast_asr.json",
+      "sha256": "4fa4b9ad6b142dd39b1d4ad0e24308a5c5f1a3bf20af5ee822723778facebf92"
+    },
+    {
+      "path": "docs/production/chwalinska-owner-20261002/broadcast_asr_independent.json",
+      "sha256": "bce672dd908dfbbd80bfdb59d38f646f9a3f472331f8e9b5862ae24934472524"
+    },
+    {
+      "path": "docs/production/chwalinska-owner-20261002/volley_asr_crosscheck.json",
+      "sha256": "4d47de24b89c808d02c192b89374addedef262184b3120e7d6915fc9bb7ea88a"
+    }
+  ],
+  "_review_notes": "完整选用窗口已与medium.en全片、small.en独立无提示全片逐项交叉；63秒争议开头以small.en与medium.en无提示局部窗共同确认That's a good volley，仅把姓名近音替换为本场官方名字。原声译文由OpenAI亲写，未调用DeepSeek或MiniMax。",
+  "no_foreground_english_reason": "两个独立全片ASR结果在该完整窗口未发现前景英文解说；该段保留比赛现场声并配自写中文TTS，不将自配旁白翻译成英文。"
+}

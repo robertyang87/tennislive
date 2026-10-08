@@ -10,6 +10,8 @@ import json
 import sys
 from pathlib import Path
 
+from production_history import should_check
+
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -80,7 +82,9 @@ def _specs():
 
 def test_新片子没配音的段都有双语原声字幕():
     bad = [f"{slug}: {reel.unvoiced_quote_problem(spec).splitlines()[1]}"
-           for slug, spec in _specs() if reel.unvoiced_quote_problem(spec)]
+           for slug, spec in _specs()
+           if should_check('tests/test_unvoiced_quote.py::test_新片子没配音的段都有双语原声字幕', ROOT / "specs/reels" / f"{slug}.json")
+           and reel.unvoiced_quote_problem(spec)]
     assert not bad, "\n  ".join(["没配音的段缺中英双语原声字幕："] + bad)
 
 

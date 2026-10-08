@@ -1,0 +1,80 @@
+name: Land approved Tabilo Tokyo package
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: land-tabilo-approved
+  cancel-in-progress: false
+jobs:
+  land:
+    if: github.ref_name == 'main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            data/approved_publication
+            data/reel_publish_ledger
+            specs/reels
+            src
+            tools
+            output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q -e .
+      - name: Land only exact approved final files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,requests,subprocess,sys
+          sys.path.insert(0,'tools')
+          from publication_ledger import blocking_attempt
+          slug='tabilo-paul-tokyo-2026-r1'
+          root=Path.cwd();out=root/'output/2026-09-30/reel'/slug
+          p=json.loads((root/'data/approved_publication/tabilo-approved-publication.json').read_text())
+          assert p['slug']==slug and len(p['files'])==14
+          assert not blocking_attempt(root,'reel',slug,p['film']['sha256']), 'Existing send reservation; stop without resend'
+          assert not (out/'pushed.json').exists()
+          # Verify Release movie by streaming it, never save or stage its bytes in Git.
+          h=hashlib.sha256();size=0
+          with requests.get(p['film']['url'],stream=True,timeout=(20,180)) as r:
+              r.raise_for_status()
+              for b in r.iter_content(1048576):h.update(b);size+=len(b)
+          assert h.hexdigest()==p['film']['sha256'] and size==p['film']['bytes']
+          paths=[]
+          for item in p['files']:
+              path=item['path'];assert path.startswith(f'output/2026-09-30/reel/{slug}/') or path in (f'specs/reels/{slug}.json',f'specs/reels/{slug}.xhs.txt')
+              assert '..' not in Path(path).parts and not path.endswith('.mp4')
+              if 'url' in item:
+                  assert item['url'].startswith('https://github.com/robertyang87/tennislive/releases/download/reel-'+slug+'/')
+                  r=requests.get(item['url'],timeout=60);r.raise_for_status();b=r.content
+              else:b=item['content'].encode('utf-8')
+              assert len(b)==item['bytes'] and hashlib.sha256(b).hexdigest()==item['sha256'],path
+              dest=root/path;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b);paths.append(path)
+          subprocess.run(['git','add','--sparse','--']+paths,check=True)
+          print('Exact 14-file package staged; movie remains Release-only')
+          PY
+      - name: Run existing native text and immutable publishing gates
+        run: |
+          python tools/push_reel.py --stage check --outdir output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1 --copy specs/reels/tabilo-paul-tokyo-2026-r1.xhs.txt
+          python -c "import sys;sys.path.insert(0,'tools');from pathlib import Path;from auto_push_gate import wants_auto_push;r=Path.cwd();wants_auto_push(r,'tabilo-paul-tokyo-2026-r1',r/'output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1')"
+          python tools/auto_push_gate.py --changed output/2026-09-30/reel/tabilo-paul-tokyo-2026-r1/render.json
+          python tools/check_staged_file_sizes.py
+      - name: Commit final package before publication
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git commit -m 'reel: land approved Tabilo Tokyo final package'
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+      - name: Explicitly dispatch the existing native publisher
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml --ref main -f mode=push -f slug=tabilo-paul-tokyo-2026-r1 -f push=true
+          echo 'Dispatched native mode=push; this bootstrap does not call PushPlus.'

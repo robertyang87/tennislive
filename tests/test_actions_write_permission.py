@@ -44,18 +44,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 WORKFLOWS = ROOT / ".github" / "workflows"
 
-#: 真的会走到 `trigger_pages_build()` 的三个入口。
-#:
-#: 是按 (文件, 函数) 逐个扒调用链量出来的，不是按名字猜的——⚠️ **第一版按裸
-#: 函数名跨模块做不动点，`main` 一进集合就把每个模块的 `main` 都染上了**，
-#: 扒出来 `mp4_duration.py`、`fetch_flags.py` 全都「会走到」。收窄到本文件内
-#: 传播之后，`pushmsg` 里只有 `drop_dead_copy_button`、`push_reel` 里只有
-#: `main` / `wait_for_copy_page`、`cli` 里只有 `cmd_publish_pushplus`。
-_PAGES_ENTRIES = (
-    (r"tennislive\s+publish\s+pushplus", "tennislive publish pushplus"),
-    (r"push_reel\.py", "tools/push_reel.py"),
-    (r"check_pages_trigger\.py", "tools/check_pages_trigger.py"),
-)
+# Pages callers are discovered from executable code, including publication adapters.
+from tools.workflow_contracts import pages_calls, pages_entries
 
 #: `actions: write` 的**第二种**正当理由：这条工作流自己要派发别的工作流。
 #:
@@ -116,7 +106,7 @@ def _yaml_only(text: str) -> str:
 def _run_scripts(path: Path) -> str:
     """这条工作流里**真正会执行的那些 `run:` 脚本**，拼成一份文本。
 
-    ⚠️ **`_PAGES_ENTRIES` / `_DISPATCH_ENTRIES` 只许扫这个，不许扫整份
+    ⚠️ **Pages 调用 / `_DISPATCH_ENTRIES` 只许扫这个，不许扫整份
     `_yaml_only` 文本。** `reel-queue-ci.yml` 2026-08-20 就是这么误报的：
     它的 `on.pull_request.paths` 里为了「这个文件变了就跑一下」写着
     `"tools/dispatch_reel_queue.py"`——那是**触发条件**，这条工作流自己
@@ -147,6 +137,8 @@ def test_给了actions_write的工作流都真的要点Pages():
     # 会安安静静地全绿。
     assert len(files) >= 15, f"只扫到 {len(files)} 条工作流，判据失效了"
 
+    entries = pages_entries(ROOT)
+    assert entries[0] and entries[1], "Pages 调用入口没有扫到，判据失效了"
     granted, needed = set(), {}
     pages_only = set()
     for path in files:
@@ -156,7 +148,7 @@ def test_给了actions_write的工作流都真的要点Pages():
         # ⚠️ `hits` 只吃 `_run_scripts`，不吃整份 `body`——见 `_run_scripts`
         # 的 docstring，`on.paths` 里的文件名不算「用得着」。
         run_body = _run_scripts(path)
-        hits = [label for pat, label in _PAGES_ENTRIES if re.search(pat, run_body)]
+        hits = pages_calls(run_body, entries)
         if hits:
             pages_only.add(path.name)
         hits += [label for pat, label in _DISPATCH_ENTRIES
@@ -166,7 +158,7 @@ def test_给了actions_write的工作流都真的要点Pages():
 
     # 判据自己的判据②：一条都没扫出来的话下面两个集合差恒为空。
     assert granted, "一条 actions: write 都没扫到——权限块的写法变了？"
-    assert pages_only, "一条会点 Pages 的工作流都没扫到——三个入口的名字变了？"
+    assert pages_only, "一条会点 Pages 的工作流都没扫到——调用入口的名字变了？"
 
     多给 = sorted(granted - set(needed))
     assert not 多给, (

@@ -1,0 +1,83 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 1017.5,
+  "range_to": 1027.0,
+  "selected_from": 1017.5,
+  "selected_to": 1027.0,
+  "decoded_pcm_sha256": "68bfb9cb19eb1c9675d11bfeb1040c3f3abcdba2430a9149d4717c3d4ac64225",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:17:55.069333+00:00",
+  "elapsed_seconds": 2.27,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 1020.66,
+      "end": 1022.8,
+      "text": " Oh, that's nice from Kalinskaya, she applied.",
+      "avg_logprob": -0.9535056843477137,
+      "no_speech_prob": 0.26196974515914917,
+      "compression_ratio": 0.8490566037735849,
+      "words": [
+        {
+          "start": 1020.66,
+          "end": 1021.04,
+          "word": " Oh,",
+          "probability": 0.40979281067848206
+        },
+        {
+          "start": 1021.12,
+          "end": 1021.28,
+          "word": " that's",
+          "probability": 0.9803963601589203
+        },
+        {
+          "start": 1021.28,
+          "end": 1021.44,
+          "word": " nice",
+          "probability": 0.9628134965896606
+        },
+        {
+          "start": 1021.44,
+          "end": 1021.68,
+          "word": " from",
+          "probability": 0.9579298496246338
+        },
+        {
+          "start": 1021.68,
+          "end": 1022.46,
+          "word": " Kalinskaya,",
+          "probability": 0.4504719339311123
+        },
+        {
+          "start": 1022.5,
+          "end": 1022.58,
+          "word": " she",
+          "probability": 0.5511608123779297
+        },
+        {
+          "start": 1022.58,
+          "end": 1022.8,
+          "word": " applied.",
+          "probability": 0.6241734027862549
+        }
+      ]
+    }
+  ]
+}

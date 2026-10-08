@@ -1,0 +1,86 @@
+{
+  "slug": "atp250-medvedev-hangzhou-2026",
+  "reviewed_at_utc": "2026-10-01T04:56:40.856257+00:00",
+  "release_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-atp250-medvedev-hangzhou-2026/explainer.mp4",
+  "movie": {
+    "duration_seconds": 133.766667,
+    "resolution": [
+      1080,
+      1440
+    ],
+    "fps": 30,
+    "bytes": 4429676,
+    "sha256": "b911f01bba8bdf16e6f6d548cd020d332ab288e481b53293c579d54a84604572",
+    "video_audio_duration_difference_seconds": 0.056667
+  },
+  "audio": {
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+22%",
+    "pitch": "+0Hz",
+    "mean_volume_db": -24.1,
+    "peak_volume_db": -4.0,
+    "clip_detected": false,
+    "word_boundaries_reviewed": 12,
+    "first_11_boundary_arrays_identical_to_previous_review": false,
+    "all_spoken_words_match_current_script": true
+  },
+  "visual": {
+    "all_cards_reviewed": 12,
+    "outro_reviewed": true,
+    "actual_mp4_frames_reviewed": 4,
+    "black_frames_detected": false,
+    "rules_and_hypothetical_labels_visible": true,
+    "historical_years_visible": true,
+    "no_picture_subtitle_overlap_observed": true,
+    "source_cards_identical_to_previously_reviewed_12_cards": false,
+    "review_method": "Changed cover and first content card reviewed in actual MP4; math and final narration subtitles reviewed in actual MP4; remaining ten source JPEGs byte-identical to previously reviewed edition; full stream decoded with no black frames",
+    "unchanged_source_card_indices": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ]
+  },
+  "checks": {
+    "explainer_preflight": "17/17 passed",
+    "new_deck_budget_tests": "Previously passed; latest 17/17 production preflight passed",
+    "landed_copy_checks": "4 phrases present",
+    "subtitle_lines": "all 12 ASS files read back; dates, ranking, 250/500 and 90→250 hypothetical verified",
+    "subtitle_cue_min_length": "Existing full script subtitle test passed; all 12 rendered ASS files verified for nickname replacement",
+    "photo_registry": "existing provenance assertion passed for every photo; credits.json keyed by exact filenames"
+  },
+  "content_scope": {
+    "individual_cases": 9,
+    "same_event_group_used": "2017 Brisbane: Raonic 3, Wawrinka 4, Nishikori 5, Thiem 8, Nadal 9",
+    "additional_group_in_dossier": "2022 Marseille: Tsitsipas 4, Rublev 7, Auger-Aliassime 9"
+  },
+  "supersedes": {
+    "workflow_run": 36811524280,
+    "source_commit": "29d1d811392db9fd2e59c2c195c3ce739170dc02",
+    "render_commit": "f279ed1614ea34df0045ebf24bb2a78606116a7d",
+    "movie_sha256": "a318385a0d5b41f24c90ccf37afa0511a35679d07471afeab441cea2a6d33e76"
+  },
+  "source_sha256": "72b1d23f66e01fc2a532793f94327e34b66442708958958dad97e9e46840e663",
+  "render_backend": "Native explainer.yml cloud render",
+  "source_assets_workflow_run": 36808709110,
+  "repair_scope": "User requested replacing the short name 梅德 with 梅总. Updated cover, first card, three narration segments, publication copy and story fact. Full name 梅德韦杰夫 remains intact. All 12 spoken segments match current script and no old short name remains in subtitles or copy.",
+  "source_commit": "be00de95c89923d038b8178a7a993e69104f227f",
+  "render_commit": "06edb23939943616b7d304d155da0f1a90f92350",
+  "workflow_run": 36817051948,
+  "release_asset": {
+    "id": 602466729,
+    "digest": "sha256:b911f01bba8bdf16e6f6d548cd020d332ab288e481b53293c579d54a84604572",
+    "matches_downloaded_final_movie": true
+  },
+  "artifact": {
+    "id": 11141702053,
+    "zip_sha256": "f79f264ceef14835e3146b646b7f70caeb8e3a7d3ab064c1b966f4baf4f54f13"
+  },
+  "nickname_request": "把梅德两字换成梅总"
+}

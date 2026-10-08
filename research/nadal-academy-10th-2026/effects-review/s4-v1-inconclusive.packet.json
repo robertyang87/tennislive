@@ -1,0 +1,312 @@
+{
+  "source": "s4",
+  "effects_sha256": "c7065056b6d958a16bebe42421d9bc3c260fcc35798383c5775a5304acee35df",
+  "source_sha256": "906624336a33597f300443cefcbb311ffd0d9728937fdd54b03971f59e92167d",
+  "status": "needs_review",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex effects audio evidence reviewer (automatic ASR and numeric transient verification; no listening)",
+  "reviewed_at": "2026-10-03T20:56:18.812583+00:00",
+  "reviewed_from": 74,
+  "reviewed_to": 103,
+  "selected_windows": [
+    {
+      "start": 74,
+      "end": 96
+    },
+    {
+      "start": 96,
+      "end": 103
+    }
+  ],
+  "foreground_speech": [],
+  "no_foreground_speech_reason": "Narrow98.83 outputs You/Thank you are low-confidence and disappear with full context. Full74–103 medium and tiny both detect incompatible phrases at79.87; cannot certify no foreground residual.",
+  "uncertain_spans": [
+    {
+      "start": 79.87,
+      "end": 80.89,
+      "reason": "medium and tiny detect different-language phrases at same time; no independent listening; requires targeted review or processing."
+    }
+  ],
+  "asr_results": [
+    {
+      "source": "s4",
+      "start": 74,
+      "end": 96,
+      "model": "medium",
+      "effects_sha256": "c7065056b6d958a16bebe42421d9bc3c260fcc35798383c5775a5304acee35df",
+      "language": "en",
+      "language_probability": 0.29678452014923096,
+      "segments": [
+        {
+          "start": 79.87,
+          "end": 80.89,
+          "text": " Waddup?",
+          "avg_logprob": -0.9114034324884415,
+          "no_speech_prob": 0.7858983874320984,
+          "words": [
+            {
+              "start": 79.87,
+              "end": 80.89,
+              "word": " Waddup?",
+              "probability": 0.4850233029574156
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "s4",
+      "start": 96,
+      "end": 103,
+      "model": "medium",
+      "effects_sha256": "c7065056b6d958a16bebe42421d9bc3c260fcc35798383c5775a5304acee35df",
+      "language": "en",
+      "language_probability": 0.6682939529418945,
+      "segments": [
+        {
+          "start": 98.83,
+          "end": 98.97,
+          "text": " Thank you.",
+          "avg_logprob": -0.7688111563523611,
+          "no_speech_prob": 0.8660558462142944,
+          "words": [
+            {
+              "start": 98.83,
+              "end": 98.83,
+              "word": " Thank",
+              "probability": 0.02585957571864128
+            },
+            {
+              "start": 98.83,
+              "end": 98.97,
+              "word": " you.",
+              "probability": 0.9863167405128479
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "s4",
+      "start": 74,
+      "end": 103,
+      "model": "small",
+      "effects_sha256": "c7065056b6d958a16bebe42421d9bc3c260fcc35798383c5775a5304acee35df",
+      "language": "en",
+      "language_probability": 0.21315449476242065,
+      "segments": []
+    },
+    {
+      "source": "s4",
+      "start": 74,
+      "end": 103,
+      "model": "tiny",
+      "effects_sha256": "c7065056b6d958a16bebe42421d9bc3c260fcc35798383c5775a5304acee35df",
+      "language": "ko",
+      "language_probability": 0.20143716037273407,
+      "segments": [
+        {
+          "start": 79.87,
+          "end": 80.71,
+          "text": " 뭐하냐?",
+          "avg_logprob": -1.2450792789459229,
+          "no_speech_prob": 0.3377719819545746,
+          "words": [
+            {
+              "start": 79.87,
+              "end": 80.71,
+              "word": " 뭐하냐?",
+              "probability": 0.24959404518206915
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "s4",
+      "start": 74,
+      "end": 96,
+      "model": "small",
+      "effects_sha256": "c7065056b6d958a16bebe42421d9bc3c260fcc35798383c5775a5304acee35df",
+      "language": "en",
+      "language_probability": 0.21315449476242065,
+      "segments": []
+    },
+    {
+      "source": "s4",
+      "start": 96,
+      "end": 103,
+      "model": "small",
+      "effects_sha256": "c7065056b6d958a16bebe42421d9bc3c260fcc35798383c5775a5304acee35df",
+      "language": "en",
+      "language_probability": 0.5236787796020508,
+      "segments": [
+        {
+          "start": 98.83,
+          "end": 99.67,
+          "text": " You",
+          "avg_logprob": -0.8957681357860565,
+          "no_speech_prob": 0.8940005302429199,
+          "words": [
+            {
+              "start": 98.83,
+              "end": 99.67,
+              "word": " You",
+              "probability": 0.0678923949599266
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "s4",
+      "start": 74,
+      "end": 103,
+      "model": "medium",
+      "effects_sha256": "c7065056b6d958a16bebe42421d9bc3c260fcc35798383c5775a5304acee35df",
+      "language": "en",
+      "language_probability": 0.29678452014923096,
+      "segments": [
+        {
+          "start": 79.87,
+          "end": 80.89,
+          "text": " Waddup?",
+          "avg_logprob": -0.9114034324884415,
+          "no_speech_prob": 0.7858983874320984,
+          "words": [
+            {
+              "start": 79.87,
+              "end": 80.89,
+              "word": " Waddup?",
+              "probability": 0.4850233029574156
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "candidate_outputs": [
+    {
+      "model": "medium",
+      "window": [
+        74,
+        96
+      ],
+      "segment": {
+        "start": 79.87,
+        "end": 80.89,
+        "text": " Waddup?",
+        "avg_logprob": -0.9114034324884415,
+        "no_speech_prob": 0.7858983874320984,
+        "words": [
+          {
+            "start": 79.87,
+            "end": 80.89,
+            "word": " Waddup?",
+            "probability": 0.4850233029574156
+          }
+        ]
+      }
+    },
+    {
+      "model": "medium",
+      "window": [
+        96,
+        103
+      ],
+      "segment": {
+        "start": 98.83,
+        "end": 98.97,
+        "text": " Thank you.",
+        "avg_logprob": -0.7688111563523611,
+        "no_speech_prob": 0.8660558462142944,
+        "words": [
+          {
+            "start": 98.83,
+            "end": 98.83,
+            "word": " Thank",
+            "probability": 0.02585957571864128
+          },
+          {
+            "start": 98.83,
+            "end": 98.97,
+            "word": " you.",
+            "probability": 0.9863167405128479
+          }
+        ]
+      }
+    },
+    {
+      "model": "tiny",
+      "window": [
+        74,
+        103
+      ],
+      "segment": {
+        "start": 79.87,
+        "end": 80.71,
+        "text": " 뭐하냐?",
+        "avg_logprob": -1.2450792789459229,
+        "no_speech_prob": 0.3377719819545746,
+        "words": [
+          {
+            "start": 79.87,
+            "end": 80.71,
+            "word": " 뭐하냐?",
+            "probability": 0.24959404518206915
+          }
+        ]
+      }
+    },
+    {
+      "model": "small",
+      "window": [
+        96,
+        103
+      ],
+      "segment": {
+        "start": 98.83,
+        "end": 99.67,
+        "text": " You",
+        "avg_logprob": -0.8957681357860565,
+        "no_speech_prob": 0.8940005302429199,
+        "words": [
+          {
+            "start": 98.83,
+            "end": 99.67,
+            "word": " You",
+            "probability": 0.0678923949599266
+          }
+        ]
+      }
+    },
+    {
+      "model": "medium",
+      "window": [
+        74,
+        103
+      ],
+      "segment": {
+        "start": 79.87,
+        "end": 80.89,
+        "text": " Waddup?",
+        "avg_logprob": -0.9114034324884415,
+        "no_speech_prob": 0.7858983874320984,
+        "words": [
+          {
+            "start": 79.87,
+            "end": 80.89,
+            "word": " Waddup?",
+            "probability": 0.4850233029574156
+          }
+        ]
+      }
+    }
+  ],
+  "transient_evidence": "rna10-effects-transients.json",
+  "limitations": [
+    "No independent human listening",
+    "Energy peaks alone do not semantically prove ball hits",
+    "Empty ASR is model evidence, not mathematical absence of all speech"
+  ]
+}

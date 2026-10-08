@@ -365,6 +365,36 @@ def ending_offender(spec: dict) -> str | None:
 def ending_problem(spec: dict) -> str | None:
     if _slug(spec) in ENDING_LEGACY:
         return None
+    # Explicit owner instruction, 2026-10-05: “最后两个字你呢拿掉”.
+    # This is a current editorial choice, not a grandfathered publication.
+    # Only this film's complete positive closing may omit the default question.
+    if _slug(spec) == "sun-gauff-led-replay-story-2026" and _eyebrow(spec) == "网球有故事":
+        segs = spec.get("segments") or []
+        closing = ("比分能重置，感觉未必能一起退回去。"
+                   "期待更可靠的赛场，也期待她握住下一次机会。")
+        if (segs and isinstance(segs[-1], dict)
+                and str(segs[-1].get("narration") or "").strip() == closing
+                and not segs[-1].get("quote")):
+            return None
+    # User explicitly requested the real Tokyo farewell thanks as the ending
+    # for this film (2026-10-04). Do not rewrite a player's quote into a question.
+    # Scope to the actual official source and literal, complete closing quote;
+    # only a five-second graphic with that same source's applause may follow.
+    if _slug(spec) == "nishikori-career-farewell" and _eyebrow(spec) == "网球有故事":
+        segs = spec.get("segments") or []
+        if len(segs) >= 2:
+            speech, brand = segs[-2:]
+            sources = spec.get("sources") or {}
+            official = "https://x.com/japanopentennis/status/2105641498721284153"
+            if (sources.get(speech.get("source")) == official
+                    and sources.get(brand.get("source")) == official
+                    and speech.get("start") == 313 and speech.get("end") == 323
+                    and _quote_texts(speech) == ["本当にありがとうございました\n真的非常感谢大家"]
+                    and not speech.get("narration")
+                    and brand.get("start") == 315 and brand.get("end") == 320
+                    and brand.get("visual_image")
+                    and not brand.get("narration") and not brand.get("quote")):
+                return None
     tail = ending_offender(spec)
     if tail is None:
         return None

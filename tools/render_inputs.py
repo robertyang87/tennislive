@@ -191,6 +191,10 @@ def _gate(why: str, read_by: str, where: str | tuple[str, ...] = (),
 #: 渲染/质检路径上被读、但**只进闸不进成片**的 `_` 键（raise 或 print）。
 #: 值不进指纹；闸读它的那个位置上算数的，重核对时必须仍然算数（见模块 docstring）。
 GATE_ANNOTATIONS: dict[str, Gate] = {
+    "_stats_availability_why": _gate(
+        "team_exhibition_scope.video_without_tour_stats：实际团体表演赛缺巡回赛统计的说明，"
+        "只控制备片校验，不控制画面；自动发布仍须统计合同",
+        "video_without_tour_stats", "_stats_availability_why"),
     "_approved_by_user": _gate("build_cover：approved_image 要有用户认领，缺了拒渲（编码里才查）",
                                "build_cover", "cover._approved_by_user", truthy),
     "_beat": _gate("promote_reel_draft.insert_chapter_cards（备料提升时读，render 不调）",
@@ -220,7 +224,11 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
         "说完之后的那一截（上包络／真语音那几档，2026-09-28 起手写 spec 硬）。dry-run 读 probe"
         "（只在 mode=render 那一趟硬）；--check-narration 和 render 在 TTS 之后按真语音再判一遍；"
         "probe 没拉回来时这一层是哑的，所以记位置",
-        "digital_silence_findings", "segments[]._digital_silence_why"),
+        "digital_silence_findings plan_hash verified_seconds", "segments[]._digital_silence_why"),
+    "_digital_silence_windows": _gate(
+        "限定自然弱声核验的源时间窗：音频计划哈希绑定窗口与理由，渲后逐秒核对源SHA、波形和增益；"
+        "不改变画面、字幕或混音，缺证据仍按原静音闸拒绝",
+        "plan_hash verified_seconds", "segments[]._digital_silence_windows", truthy),
     "_draft": _gate("promote_reel_draft.promote：转正时按键名比出草稿块、剥掉它（备料，render "
                     "和 dry-run 都不调）", "promote"),
     "_durations": _gate("promote_reel_draft._duration（备料时读）", "_duration"),
@@ -281,7 +289,7 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                     "（封面用时闸）、promote_reel_draft 的撞车键（合集源片按场次 id 分开，`_compilation_only`）、list_official_uploads "
                     "认人和开球日（dry-run 只报不拦的官方上传／封面日期报告）",
                     "verified_result_problem decider_tiebreak_problem waiting_reasons "
-                    "promote _source_urls _match_keys _flashscore_id _retired event_dates spec_surnames",
+                    "promote _source_urls _match_keys _flashscore_id _official_wta_id _match_date _retired event_dates spec_surnames _omission_problem _verified_interruption_problem _verified_disqualification_problem",
                     "_match", truthy),
     "_narration_why": _gate("cover_voice_matches_hook_problem：封面口播和钩子不同的认领",
                             "cover_voice_matches_hook_problem", "cover._narration_why"),
@@ -355,6 +363,10 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
                               "tts_backend）", "apply_tts_backend", "_tts_backend_why",
                               nonblank_str),
     "_visual_evidence": _gate("promote_reel_draft（备料提升时读）", "waiting_reasons promote"),
+    "_winners_ue_omission": _gate("winners_ue_gate：仅限已批准五期精确比赛的两行省略决定，身份/日期/比分和双方字段由原闸逐项核验",
+                                "problem _omission_problem", "stats._winners_ue_omission", truthy),
+    "_winners_ue_evidence": _gate("新统计卡/预检/成片QC核验完整制胜分与UE的来源、日期和列序", "problem _omission_problem", "stats._winners_ue_evidence", any_text_value),
+    "_winners_ue_check": _gate("缺统计时记录真实查找状态；不构成缺项发布许可", "problem", "stats._winners_ue_check", any_text_value),
     "_winners_ue_why": _gate("taste_gates_extra.winners_ue_missing：数据图缺制胜分/UE 的认领"
                              "（dry-run）", "winners_ue_missing", "stats._winners_ue_why",
                              truthy),
@@ -370,6 +382,7 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
 #: 这几个函数里读它（都是措辞闸、推送元数据或备料），判据同上那条测试。
 PUBLISH_FIELDS: dict[str, frozenset[str]] = {
     "push": frozenset({
+        "video_without_tour_stats",                 # 固定表演赛统计闸要求禁用自动推送
         "spec_outward_text",                       # build_match_reel：全称断言闸扫的外发文字
         "push_is_auto", "push_meta",               # push_reel：推送开关与标题
         "voiced_texts", "outward_deep", "outward_flat",
@@ -380,6 +393,7 @@ PUBLISH_FIELDS: dict[str, frozenset[str]] = {
         "total_margin_problem", "summary_strip_offender", "push_summary_problem",
         "spec_taste_extra",                        # taste_gates_extra：口味闸（闸）
         "interview_taste_extra",                   # 同上，采访线入口（竖版短片不调）
+        "video_without_tour_stats",                # permission gate only; never changes pixels
     }),
 }
 
@@ -387,7 +401,7 @@ PUBLISH_FIELDS: dict[str, frozenset[str]] = {
 #: 和渲染那一刻逐字节相同——`poster.jpg` 是推送第一屏，`subtitles.ass` 是烧进
 #: 成片的那一份（凭证本来就钉着它），换过就说明这已经不是那一次渲染的产物了。
 #: 名字和 build_match_reel.POSTER_NAME / STAT_CARD_NAME 对账，判据在测试里。
-ARTIFACTS = ("subtitles.ass", "topbar.ass", "poster.jpg", "stat_card.jpg",
+ARTIFACTS = ("audio_review_binding.json", "subtitles.ass", "topbar.ass", "poster.jpg", "stat_card.jpg",
              "scoreboard_qc.json")
 
 #: spec 里长这样的字符串当成「引用了一个本地文件」：封面照片、整屏证据图、

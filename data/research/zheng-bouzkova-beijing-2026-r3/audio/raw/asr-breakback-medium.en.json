@@ -1,0 +1,101 @@
+{
+  "model": "medium.en",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+  "windows": [
+    {
+      "window": {
+        "edit_id": "breakback_review",
+        "start": 128,
+        "end": 138
+      },
+      "decoded_start": 126,
+      "decoded_end": 140,
+      "segments": [
+        {
+          "id": 1,
+          "seek": 0,
+          "start": 131.84,
+          "end": 135.74,
+          "text": " It's one of the breaks back that she lost.",
+          "tokens": [
+            50363,
+            632,
+            338,
+            530,
+            286,
+            262,
+            9457,
+            736,
+            326,
+            673,
+            2626,
+            13,
+            50857
+          ],
+          "avg_logprob": -0.430855746780123,
+          "compression_ratio": 0.8936170212765957,
+          "no_speech_prob": 0.17484766244888306,
+          "words": [
+            {
+              "start": 131.84,
+              "end": 132.46,
+              "word": " It's",
+              "probability": 0.40675313398241997
+            },
+            {
+              "start": 132.46,
+              "end": 132.82,
+              "word": " one",
+              "probability": 0.9578611850738525
+            },
+            {
+              "start": 132.82,
+              "end": 132.96,
+              "word": " of",
+              "probability": 0.9961122870445251
+            },
+            {
+              "start": 132.96,
+              "end": 134.56,
+              "word": " the",
+              "probability": 0.9922095537185669
+            },
+            {
+              "start": 134.56,
+              "end": 134.78,
+              "word": " breaks",
+              "probability": 0.9030807018280029
+            },
+            {
+              "start": 134.78,
+              "end": 135.04,
+              "word": " back",
+              "probability": 0.9816101789474487
+            },
+            {
+              "start": 135.04,
+              "end": 135.24,
+              "word": " that",
+              "probability": 0.925384521484375
+            },
+            {
+              "start": 135.24,
+              "end": 135.38,
+              "word": " she",
+              "probability": 0.9904451370239258
+            },
+            {
+              "start": 135.38,
+              "end": 135.74,
+              "word": " lost.",
+              "probability": 0.992089033126831
+            }
+          ],
+          "temperature": 0.0
+        }
+      ]
+    }
+  ]
+}

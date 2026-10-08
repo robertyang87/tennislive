@@ -1,0 +1,64 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "zheng-charaeva-beijing-2026-r4",
+  "plan_sha256": "0c8a745ea60cd5f72ca8859551eda1591d2b41949f2e7456039775895446c0dc",
+  "reviewed_at": "2026-10-07T16:31:18.616093+00:00",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/research/zheng-charaeva-beijing-2026-r4/audio/selected-00.json",
+      "transcript_sha256": "e2d42dd7054117c439b54bd12b4867c9d7c090255381e4942d1bf86b8cc2e835"
+    },
+    {
+      "index": 3,
+      "transcript_path": "data/research/zheng-charaeva-beijing-2026-r4/audio/selected-03.json",
+      "transcript_sha256": "84944602f1f4b23bcc3c940ad411de0fbc907218a77744aa80394350f3c23b3d"
+    },
+    {
+      "index": 4,
+      "transcript_path": "data/research/zheng-charaeva-beijing-2026-r4/audio/selected-04.json",
+      "transcript_sha256": "94b00b7290cd2b833d1f02d49733007bd00585a1ca8fad99147c77306db108a8"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/research/zheng-charaeva-beijing-2026-r4/audio/selected-06.json",
+      "transcript_sha256": "c591f6e685d74c706828bcb7b1800a02d006969ff115203456743c233e09bcc6"
+    },
+    {
+      "index": 7,
+      "transcript_path": "data/research/zheng-charaeva-beijing-2026-r4/audio/selected-07.json",
+      "transcript_sha256": "e3522e00603301fb9813c3950cf250424d5da998424441c942962ba1c55624d9"
+    },
+    {
+      "index": 8,
+      "transcript_path": "data/research/zheng-charaeva-beijing-2026-r4/audio/selected-08.json",
+      "transcript_sha256": "0bb10578d0165ef6d3c4a3093c75b6ffd16481da933ceff5b6218139883347d0"
+    },
+    {
+      "index": 11,
+      "transcript_path": "data/research/zheng-charaeva-beijing-2026-r4/audio/selected-11.json",
+      "transcript_sha256": "042362c139c38660df9e51d0225c07d807aeaacc062053bb1c7b4b151b5ac5b5"
+    }
+  ],
+  "method": "asr_cross_checked",
+  "actual_listening_performed": false,
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "translation_revision": {
+    "reviewer": "root",
+    "previous_plan_sha256": "8a3869c4365ce7bbedeb68abac0b8bc8b17dc5b59e5fcf4d0164ca8b4132ad24",
+    "reason": "更正之前译名判断：按项目 player_names_top500.json 正式词表统一为恰拉耶娃。只改中文显示译名，英文、源声、时轴均未改。",
+    "actual_listening_performed": false
+  },
+  "display_revision": {
+    "reviewer": "root",
+    "previous_plan_sha256": "033eb6a6ee69dfb1a22f3e02d744f32d3d55838379f85efb2e869a29f1733ba5",
+    "reason": "屏幕数字按项目规范用阿拉伯数字，仅字幕中文与packet显示同改，真实英文、时轴、语音实证均未变。",
+    "actual_listening_performed": false
+  },
+  "boundary_revision": {
+    "reviewer": "root",
+    "previous_plan_sha256": "d2f68dbb17ffd1e16d5f30eee086ce245ab9dd42c43b6b8b289804b09f2374b1",
+    "reason": "只收短终局end0.20秒，连同nativeSEG_FADE0.18尾料都止于采访首帧之前；字幕50条实际词尾未变，仍在已审源窗内。",
+    "actual_listening_performed": false
+  }
+}

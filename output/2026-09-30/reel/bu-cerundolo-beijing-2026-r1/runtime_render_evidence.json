@@ -1,0 +1,23 @@
+{
+  "film_sha256": "60bbd51060c29c46f323538faa3acb572ceb1e10d1863ad7fba8efb0462202aa",
+  "spec_sha256": "8b86416e875b09a71ff9ef968595e297f222d2785abbc9d57188b1b4fd768f6b",
+  "render_inputs_sha256": "b078c28c5767462d140573fca7543b5163f80ee9683af7902d6d722887186db1",
+  "renderer": {
+    "path": "tools/build_match_reel.py",
+    "sha256": "86cebb104a489702c9aae91965e5c7c9857d2ccf16af0e493101497be76dcd25"
+  },
+  "encoding_patch": {
+    "sha256": "92dbc49757ea04ac7ee4eb1b4cf47d0f2d519feb182705ef943789b8b55df7c8",
+    "source": "verified two-file native H264 compatibility repair",
+    "tests": "15 passed in16.43 seconds"
+  },
+  "local_runtime_adapters": {
+    "description": "Native renderer and templates; local HTML rasterizer adapter for installed WeasyPrint; canonical scoreboard widths computed from native 80px set columns and fixed native paddings; Edge/Bing TTS with authorized existing backend",
+    "native_render_wrapper_sha256": "6b1cf85ddd2933d1436d152d48991328f9dd93ec4548146b99071a8b876cd3f6",
+    "rasterizer_sha256": "51c4309ac8b1439dbc247fb877204c6afe339b9a95c8c1f0fd3b72066432feb9",
+    "no_qc_threshold_changes": true
+  },
+  "native_L2": "0 findings; immutable attestation linked to exact film and spec",
+  "workflow_checks": "26 static workflow/cache tests and1 identity test passed",
+  "physical_iphone_tested": false
+}

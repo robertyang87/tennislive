@@ -1,0 +1,518 @@
+{
+  "status": "pass_with_disclosed_limitations",
+  "coverage_complete_for_detected_foreground": true,
+  "manual_listening_verified": false,
+  "exact_verbatim_all_words_verified": false,
+  "uncovered_detected_foreground_intervals": [],
+  "unresolved_foreground_intervals": [],
+  "wording_limitations": [
+    {
+      "film_start": 3.5,
+      "film_end": 5.59,
+      "issue": "Score-call final number and lead-in unclear; explicitly labelled editorial result caption using independently verified score, not verbatim transcription covers interval without asserting verbatim transcription."
+    },
+    {
+      "film_start": 63.05,
+      "film_end": 63.7,
+      "issue": "Only clipped end of Djokovic audible after duck release; source identifies name, mixed ASR fragment unreliable."
+    },
+    {
+      "film_start": 128.4,
+      "film_end": 130.8,
+      "issue": "Low-confidence possible Borges prefix and from him/for me variation; best-supported complete core used."
+    }
+  ],
+  "method": "Local ASR on all retained source windows and all mixed-film TTS gaps with padding using faster-whisper base and base.en; narrow and filtered checks; source/mix alignment and gain/correlation measured every200ms. No manual full-audio listening claimed.",
+  "input_source": {
+    "path": "/tmp/djokovic_beijing/source/4584426.mp4",
+    "sha256": "e6f7bc8c437cd10def5936b8327e14c878b7ca8becb39b47971aaa3d21e27ad9"
+  },
+  "input_mixed_film": {
+    "path": "/workspace/shared/djokovic_beijing/revision_v3/repo/output/2026-09-30/reel/djokovic-borges-beijing-2026-r1/djokovic-borges-beijing-2026-r1.mp4",
+    "sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+    "bytes": 101054067,
+    "description": "Frozen final v3 movie after bounded audio-only ambient repair; video stream copied"
+  },
+  "input_mixed_pcm_s16le_sha256": "085f08fbf86734f1adecd369c4f253b34151531966c323693dfadcb924a2a070",
+  "cue_packet_sha256": "b3db1c18a2e78537b2067d9c6933d5363fd7c400e64cb1e4177e160585350420",
+  "cue_count": 11,
+  "bilingual_transcript_cue_count": 10,
+  "editorial_result_caption_count": 1,
+  "chinese_tts_english_translation_cues": 0,
+  "chinese_endpoint_adjustments": [
+    {
+      "index": 13,
+      "old_end": 63.75,
+      "new_end": 63.02,
+      "reason": "Actual TTS ending around62.8; source name tail rises63.04–63.44; end CN caption before bilingual source fragment."
+    },
+    {
+      "index": 42,
+      "old_end": 197.23,
+      "new_end": 196.58,
+      "reason": "TTS source residual low by196.47, original source full amplitude196.67; clear overhang to197.23 would collide with foreground English."
+    }
+  ],
+  "coverage_mapping": [
+    {
+      "id": "original_v3_01",
+      "film_start": 1.2,
+      "film_end": 3.34,
+      "source_start": 221,
+      "source_end": 223.14,
+      "english": "…in business, in Beijing.",
+      "chinese": "……在北京重回胜利轨道",
+      "confidence": "high",
+      "evidence": "Two mixed models and two source models agree; retained clip starts within preceding word back, so do not restore complete missing sentence.",
+      "kind": "original_broadcast"
+    },
+    {
+      "id": "original_v3_02",
+      "film_start": 3.5,
+      "film_end": 5.59,
+      "source_start": 223.3,
+      "source_end": 225.39,
+      "english": "Score: 6–3, 7–6",
+      "chinese": "比分：6比3、7比6",
+      "confidence": "verified-match-result-not-verbatim",
+      "evidence": "Explicitly labelled editorial result caption using independently verified score; not verbatim transcription. Audible score call has uncertain final number. This caption states result, not a claimed exact English transcription.",
+      "kind": "editorial_score_caption"
+    },
+    {
+      "id": "original_v3_03",
+      "film_start": 43.22,
+      "film_end": 44.92,
+      "source_start": 51.5,
+      "source_end": 53.2,
+      "english": "That's like he's never been away.",
+      "chinese": "仿佛他从未离开过",
+      "confidence": "medium",
+      "evidence": "Multilingual repeated source+mix agrees. base.en contraction differs; remainder agrees.",
+      "kind": "original_broadcast"
+    },
+    {
+      "id": "original_v3_04",
+      "film_start": 59.08,
+      "film_end": 61.1,
+      "source_start": 74.76,
+      "source_end": 76.78,
+      "english": "That's a pretty strong set…",
+      "chinese": "这一盘打得相当出色……",
+      "confidence": "high",
+      "evidence": "Both source and mix agree. Rest of sentence is ducked by Chinese VO beginning61.14.",
+      "kind": "original_broadcast"
+    },
+    {
+      "id": "original_v3_05",
+      "film_start": 63.05,
+      "film_end": 63.7,
+      "source_start": 78.73,
+      "source_end": 79.38,
+      "english": "…Djokovic.",
+      "chinese": "……德约科维奇",
+      "confidence": "source-supported-fragment",
+      "evidence": "Both source models name Djokovic ending79.0–79.18. Mixed gain recovers0.44 at63.04 and0.67 at63.24; narrow mixed ASR cannot resolve isolated syllables. Caption identifies clipped name from independently corroborated source, not a complete sentence.",
+      "kind": "original_broadcast"
+    },
+    {
+      "id": "original_v3_06",
+      "film_start": 107.28,
+      "film_end": 109.46,
+      "source_start": 142.86,
+      "source_end": 145.04,
+      "english": "What a way to finish!",
+      "chinese": "这一分收得太精彩了！",
+      "confidence": "high",
+      "evidence": "Both mixed and narrow source models agree.",
+      "kind": "original_broadcast"
+    },
+    {
+      "id": "original_v3_07",
+      "film_start": 111.24,
+      "film_end": 112.9,
+      "source_start": 146.82,
+      "source_end": 148.48,
+      "english": "Who was going to blink first?",
+      "chinese": "看谁会先撑不住？",
+      "confidence": "medium-high",
+      "evidence": "Multilingual mix, prior narrow source and latest base.en source agree blink; some passes flick/flip/play. Conservative context-consistent majority form.",
+      "kind": "original_broadcast"
+    },
+    {
+      "id": "original_v3_08",
+      "film_start": 128.4,
+      "film_end": 130.8,
+      "source_start": 164.03,
+      "source_end": 166.43,
+      "english": "That is great hustle from him.",
+      "chinese": "他这一分拼得真顽强",
+      "confidence": "medium",
+      "evidence": "Both narrow source models and repeated base.en mixed runs agree. Multilingual mix sometimes for me; possible low-confidence Borges prefix omitted because not consistently identified.",
+      "kind": "original_broadcast"
+    },
+    {
+      "id": "original_v3_09",
+      "film_start": 167.82,
+      "film_end": 171.66,
+      "source_start": 204.55,
+      "source_end": 208.39,
+      "english": "What a point to start a tie-break!",
+      "chinese": "抢七第一分就如此精彩！",
+      "confidence": "high",
+      "evidence": "Both mixed models agree; source base.en agrees. Article a/the minor variation.",
+      "kind": "original_broadcast"
+    },
+    {
+      "id": "original_v3_10",
+      "film_start": 196.6,
+      "film_end": 198.1,
+      "source_start": 233.73,
+      "source_end": 235.23,
+      "english": "…it's like he's never been away.",
+      "chinese": "……仿佛他从未离开过",
+      "confidence": "high",
+      "evidence": "Both narrow mixed models support phrase; mix/source gain0.70–0.72 and correlation~1 from196.67 confirms audible foreground before previous subtitle boundary197.23.",
+      "kind": "original_broadcast"
+    },
+    {
+      "id": "original_v3_11",
+      "film_start": 199.2,
+      "film_end": 202.43,
+      "source_start": 236.33,
+      "source_end": 239.56,
+      "english": "He maintains his perfect record here.",
+      "chinese": "他继续保持着在这里的全胜纪录",
+      "confidence": "high",
+      "evidence": "Both mixed and source models agree; extension to source239.60 preserves complete last word.",
+      "kind": "original_broadcast"
+    }
+  ],
+  "mixed_gap_coverage": [
+    {
+      "film_start": 0,
+      "film_end": 5.7,
+      "cues": [
+        "original_v3_01",
+        "original_v3_02"
+      ],
+      "method": "Two independent local ASR models on actual mixed film",
+      "classification": "captioned corroborated speech"
+    },
+    {
+      "film_start": 24.8,
+      "film_end": 45.22,
+      "cues": [
+        "original_v3_03"
+      ],
+      "method": "Two independent local ASR models on actual mixed film",
+      "classification": "captioned corroborated speech"
+    },
+    {
+      "film_start": 56.8,
+      "film_end": 61.2,
+      "cues": [
+        "original_v3_04"
+      ],
+      "method": "Two independent local ASR models on actual mixed film",
+      "classification": "captioned corroborated speech"
+    },
+    {
+      "film_start": 87,
+      "film_end": 113.3,
+      "cues": [
+        "original_v3_06",
+        "original_v3_07"
+      ],
+      "method": "Two independent local ASR models on actual mixed film",
+      "classification": "captioned corroborated speech"
+    },
+    {
+      "film_start": 123.8,
+      "film_end": 131.4,
+      "cues": [
+        "original_v3_08"
+      ],
+      "method": "Two independent local ASR models on actual mixed film",
+      "classification": "captioned corroborated speech"
+    },
+    {
+      "film_start": 145.4,
+      "film_end": 172,
+      "cues": [
+        "original_v3_09"
+      ],
+      "method": "Two independent local ASR models on actual mixed film",
+      "classification": "captioned corroborated speech"
+    },
+    {
+      "film_start": 175.2,
+      "film_end": 182,
+      "cues": [],
+      "method": "Two independent local ASR models on actual mixed film",
+      "classification": "No corroborated commentary; rally impacts, grunts and crowd-like interjections rejected as hallucinated words"
+    },
+    {
+      "film_start": 196.8,
+      "film_end": 202.47,
+      "cues": [
+        "original_v3_10",
+        "original_v3_11"
+      ],
+      "method": "Two independent local ASR models on actual mixed film",
+      "classification": "captioned corroborated speech"
+    }
+  ],
+  "retained_source_windows_checked": [
+    {
+      "segment": 1,
+      "film_start": 1.2,
+      "film_end": 5.600000000000006,
+      "source_start": 221.0,
+      "source_end": 225.4,
+      "narration": ""
+    },
+    {
+      "segment": 2,
+      "film_start": 5.600000000000006,
+      "film_end": 45.120000000000005,
+      "source_start": 13.88,
+      "source_end": 53.4,
+      "narration": "十一年后重返中网，德约还是没输。但这第三十场胜利，远没有比分看起来轻松。北京时间九月三十号晚上，中网首轮。一比零领先，德约在接发局拿到机会。开局就打成了消耗战。他要先拿下，这一个接发局。"
+    },
+    {
+      "segment": 3,
+      "film_start": 45.120000000000005,
+      "film_end": 52.120000000000005,
+      "source_start": 64.16,
+      "source_end": 67.66,
+      "narration": "三比零开局。四比二时，两个破发点都救回来，德约守到五比二。",
+      "speed": 0.5,
+      "visual_role": "same-match dead-ball recap",
+      "audio_source": "speech-free arena donor145.10–146.40 loop"
+    },
+    {
+      "segment": 4,
+      "film_start": 52.120000000000005,
+      "film_end": 61.040000000000006,
+      "source_start": 67.8,
+      "source_end": 76.72,
+      "narration": "五比三，盘点。发球之后，再把这一分收好。"
+    },
+    {
+      "segment": 5,
+      "film_start": 61.040000000000006,
+      "film_end": 63.82000000000001,
+      "source_start": 76.72,
+      "source_end": 79.5,
+      "narration": "六比三，首盘到手。"
+    },
+    {
+      "segment": 6,
+      "film_start": 63.82000000000001,
+      "film_end": 71.42,
+      "source_start": 144.94,
+      "source_end": 148.74,
+      "narration": "第二盘二比三后，他接受了场边治疗。身体不适，发球局却一个也没丢。",
+      "speed": 0.5,
+      "visual_role": "same-match completed-point/reset recap, not treatment footage",
+      "audio_source": "speech-free arena donor145.10–146.40 loop"
+    },
+    {
+      "segment": 7,
+      "film_start": 71.42,
+      "film_end": 113.17,
+      "source_start": 107.0,
+      "source_end": 148.75,
+      "narration": "四比四，德约又想从接发局找到出路。可博尔热斯不肯让。这一分，从底线一侧拉到另一侧。身体已经不舒服，回合却还没结束。没有容易的胜利，就先把眼前这一分拼下来。"
+    },
+    {
+      "segment": 8,
+      "film_start": 113.17,
+      "film_end": 131.26999999999998,
+      "source_start": 148.8,
+      "source_end": 166.9,
+      "narration": "这一分赢了，破发却没能兑现。四比五，德约还得先守住自己的发球局。此后五比六，他又顶住压力，把第二盘带进抢七。"
+    },
+    {
+      "segment": 9,
+      "film_start": 131.26999999999998,
+      "film_end": 171.86999999999998,
+      "source_start": 168.0,
+      "source_end": 208.6,
+      "narration": "抢七开始，两个人仍然在底线拉锯。前面守住的每一个发球局，终于把比赛带到了这里。德约没有让身体的不适，变成比分上的失守。这一球，双方还是谁都不肯先退。"
+    },
+    {
+      "segment": 10,
+      "film_start": 171.86999999999998,
+      "film_end": 181.86999999999998,
+      "source_start": 209.0,
+      "source_end": 219.0,
+      "narration": "从五比一，到六比二。赛点。"
+    },
+    {
+      "segment": 11,
+      "film_start": 181.86999999999998,
+      "film_end": 202.47,
+      "source_start": 219.0,
+      "source_end": 239.6,
+      "narration": "六比三，七比六。十一年过去，重返中网，他把纪录续到三十战全胜。掌声还在，德约的北京故事也还在继续。下一轮迎战布云朝克特，他能在这里继续赢下去吗？"
+    }
+  ],
+  "evidence_files": {
+    "mixed_auto_multi.json": "c2b7107dc2a11b660c6544d6aef672e1f1329789d3a2852d4746c84df8d98347",
+    "mixed_gaps_multi.json": "ba556c49eb12b93bfd92fb2e44915ef699d58a6b1e291c15b9e2b043e45bc0fc",
+    "source_all_multi.json": "dc7addb637aad32a5b0aa66b7c7dc49caa4f81ced7ded2a2dcb8176d75310b31",
+    "mix_source_levels_200ms.json": "62f906ff56b38227cc4f4b8ed12cd5efd1e8918064052965f0b3cb1f8eb4982b",
+    "expanded_original_cues.json": "b3db1c18a2e78537b2067d9c6933d5363fd7c400e64cb1e4177e160585350420",
+    "mixed_narrow_multi.json": "d1412a023328f5ffeaed3b6ca43c491bbb19aacc90e4e48384c9920b5a2952d8",
+    "mixed_filtered_en.json": "7e29e64c387c3002fe51ef64715c1a1081e4b3800711734c2768fc0c5490b898",
+    "mixed_filtered_multi.json": "390819e6c6208b7ed5cfe65d2acbf3e33f477ea3949a082baa436785a57a1bbe",
+    "mixed_narrow_en.json": "2184af2b4529c7989feb0b0e7bba8907626a8a3ccc3b874845c85dcca53c2fc6",
+    "source_all_en.json": "db072792d0cb807c182f4150e48c0ae70dbaef3507bef65e690835f67c0f2c77",
+    "mixed_gaps_en.json": "b0b34e70bdaa8586de8f5c622a28911d34b2cd531496a69e382390504092c544",
+    "v3_recaps_en.json": "303650a124a6572ee8469edbf2d3300ed5f2f2cb2b216fe48576345a2d2b72c1",
+    "v3_recaps_multi.json": "df6029ae22251ad2106f8c2ff1c5df7caca7b631c55f212bcc4d9efe34a636d7",
+    "v3_repaired_tails_multi.json": "5748f3b0e135bd4aeb600a4a5d17eef2fd0038a53a4ac4ecfe29b260df64fc21",
+    "ambience_donor_multi.json": "8e24f6e03660c21904362f11183f0202ebbdb1248c9dda07ca0c3be021f9200d",
+    "v3_changed_audio_levels.json": "0715fb5a4e57a86258345df9fe4260d72c87179e805e5074aed561d42df1b512",
+    "final_recaps_en.json": "bf46ed9ee236a5cc4fd62d01ddb9740ac6f4e121825b887e4e486fbeb0dd16b2",
+    "final_recaps_multi.json": "35593c94e9d4d2b6c6c88be77dedb698059a8162a4d79f77f158a9f995dabfd6"
+  },
+  "audio_transition_findings": [
+    {
+      "film_interval": [
+        61.04,
+        63.44
+      ],
+      "finding": "Source0.70 before61.1, ducks to~0.1–0.2 during61.24–62.84 TTS, recovers0.44 at63.04 and0.67 by63.24; short Djokovic tail retained and captioned."
+    },
+    {
+      "film_interval": [
+        196.07,
+        198.1
+      ],
+      "finding": "Source0.18 at196.07 while CN present,0.52/corr0.98 by196.47,0.70–0.72/corr~1 from196.67; ending English starts196.60 and CN cue42 trimmed196.58."
+    }
+  ],
+  "rejected_asr_candidates": [
+    {
+      "source_interval": [
+        107,
+        127
+      ],
+      "reason": "base.en generic conversational hallucination; multilingual detects no speech; no agreement in mixedgap scans"
+    },
+    {
+      "source_interval": [
+        168,
+        188
+      ],
+      "reason": "Repeated Okay/Thanks hallucinations only in base.en; multilingual none, actual rally impacts"
+    },
+    {
+      "film_interval": [
+        175.69,
+        181.87
+      ],
+      "reason": "base.en contradictory Oh my gosh/Im ready/Hey man versus multilingual none or Yeah interjections; no corroborated lexical commentary. Do not subtitle grunts/crowd as invented English."
+    }
+  ],
+  "verification_scope": "Exhaustive local model-assisted scan of retained source and exact mixed audio, plus measured duck release. No claim of manual listening or proof that ASR cannot miss speech. All corroborated detections assigned captions; uncertain score wording handled as labelled result caption with explicit authorization.",
+  "previous_audited_mix": {
+    "path": "/workspace/shared/djokovic_beijing/revision_v2/repo/output/2026-09-30/reel/djokovic-borges-beijing-2026-r1/djokovic-borges-beijing-2026-r1.mp4",
+    "sha256": "37561d4bf6c4b7ea7b5e5c3b9aee78ddbda8e7e5dc740fadf9806f4f4a7eb0d2"
+  },
+  "pcm_hash_command": "ffmpeg -v error -i FILM -map 0:a:0 -c:a pcm_s16le -f hash -hash sha256 -",
+  "recap_audio_repair": {
+    "method": "Replace both complete recap backgrounds before original native duck mix; original Chinese MP3 and exact native delay offsets retained; no TTS regeneration; video copied",
+    "windows": [
+      [
+        45.12,
+        52.12
+      ],
+      [
+        63.82,
+        71.42
+      ]
+    ],
+    "donor_source": [
+      145.1,
+      146.4
+    ],
+    "donor_description": "Same-match dead-ball arena/applause between commentator phrases",
+    "donor_gain_before_native_duck": 0.18,
+    "loop_crossfade_seconds": 0.1,
+    "bed_boundary_crossfade_seconds": 0.04,
+    "native_audio_bitrate": "192k",
+    "native_voice_filters": [
+      "[2:a]adelay=5600|5600[v1]",
+      "[3:a]adelay=45120|45120[v2]",
+      "[4:a]adelay=52120|52120[v3]",
+      "[5:a]adelay=61040|61040[v4]",
+      "[6:a]adelay=63820|63820[v5]",
+      "[7:a]adelay=71420|71420[v6]",
+      "[8:a]adelay=113170|113170[v7]",
+      "[9:a]adelay=131270|131270[v8]",
+      "[10:a]adelay=171870|171870[v9]",
+      "[11:a]adelay=181870|181870[v10]",
+      "[12:a]adelay=202470[voutro]"
+    ],
+    "evidence_sha256": "b8ff9c234788f077e54e38575589495c10618008064889a78d923cae20c72d97"
+  },
+  "recap_audio_reaudit": {
+    "status": "pass_with_disclosed_limitations",
+    "windows": [
+      [
+        45.12,
+        52.12
+      ],
+      [
+        63.82,
+        71.42
+      ]
+    ],
+    "findings": "Frozen final movie: both complete7.0s/7.6s recap backgrounds use an8.5s verified overlap-add speech-free same-match arena donor loop, trimmed to exact windows. Original v2 Chinese VO and source mix retained as base. Both models scanned full recap windows and ending subwindows; output is only Chinese VO transliteration/translation hallucinations, no corroborated English after Chinese ends. No added subtitle cue required.",
+    "prior_problem_corrected": "Original slowed B-roll source leaked first game and blink first tails after actual Chinese speech ended50.72 and70.02. Entire recap source backgrounds replaced, not just hidden behind subtitle end times.",
+    "method_limitation": "Local dual-model ASR and waveform comparison; no manual listening claim.",
+    "unchanged_audio_interpretation": "Unchangedv2 timeline and mixed base preserved by final audio-only repair, with new speech-free ambient added only in two stated windows; do not claim old/new PCM equality.",
+    "last_audit": "Bounded frozen-final check of45.12–52.12 and63.82–71.42; no repeated source discovery. Native decoded PCM independently recalculated085f08fbf86734f1adecd369c4f253b34151531966c323693dfadcb924a2a070.",
+    "audio_generation_disclosure": "AAC192k audio-only repair includes extra AAC generation. Video unchanged; stream-copy. Old pre-burn6092d…PCM reference superseded.",
+    "independent_non_silent_tail_measurements": [
+      {
+        "film_start": 51,
+        "window_seconds": 0.2,
+        "rms_dbfs": -39.109432220458984
+      },
+      {
+        "film_start": 70,
+        "window_seconds": 0.2,
+        "rms_dbfs": -41.6163215637207
+      }
+    ]
+  },
+  "final_audio_repair": {
+    "verified_donor_duration": 8.5,
+    "donor_source": [
+      145.1,
+      146.4
+    ],
+    "overlap_add_crossfade_seconds": 0.1,
+    "base_audio": "Original v2 Chinese VO and source mix; recaps originally have no background",
+    "base_audio_sha256": "37561d4bf6c4b7ea7b5e5c3b9aee78ddbda8e7e5dc740fadf9806f4f4a7eb0d2",
+    "windows": [
+      [
+        45.12,
+        52.12
+      ],
+      [
+        63.82,
+        71.42
+      ]
+    ],
+    "added_bed_gain": 0.1296,
+    "video_stream_copy": true,
+    "audio_encode": "AAC192k; audio-only repair, extra AAC generation disclosed",
+    "filtergraph": "[1:a]asplit=2[base][key];[2:a]asplit=2[amb0src][amb1src];[amb0src]atrim=duration=7.0,asetpts=PTS-STARTPTS,volume=0.1296,afade=t=in:d=0.04,afade=t=out:st=6.96:d=0.04,adelay=45120|45120[amb0];[amb1src]atrim=duration=7.6,asetpts=PTS-STARTPTS,volume=0.1296,afade=t=in:d=0.04,afade=t=out:st=7.56:d=0.04,adelay=63820|63820[amb1];[amb0][amb1]amix=inputs=2:normalize=0,apad[amb];[amb][key]sidechaincompress=threshold=0.02:ratio=12:attack=15:release=450:makeup=1[duck];[base][duck]amix=inputs=2:normalize=0:dropout_transition=0[out]",
+    "evidence_sha256": "e4581615ac99d0d3f22cb1d4c7c31a7fb9d43738b31fda9f15abe007b1f5835a"
+  }
+}

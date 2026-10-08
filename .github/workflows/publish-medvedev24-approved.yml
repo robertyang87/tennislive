@@ -1,0 +1,107 @@
+name: Publish approved Medvedev 24-title film
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_send:
+        description: Send the approved 5af14197 master once to personal WeChat
+        required: true
+        type: boolean
+        default: false
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: match-reel-publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: inputs.confirm_send && github.ref_name == 'main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      OUT: output/2026-09-30/reel/medvedev-24-titles-23-cities
+      RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      GITHUB_TOKEN: ${{ github.token }}
+      TENNISLIVE_COPYPAGE_ATTEMPTS: '60'
+      TENNISLIVE_COPYPAGE_RETRY_SECONDS: '30'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            data/reel_publish_ledger
+            specs/reels
+            src
+            tools
+            output/2026-09-30/reel/medvedev-24-titles-23-cities
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing package
+        timeout-minutes: 5
+        run: |
+          pip install -q -e .
+          pip install -q numpy
+          python -c "import numpy, requests, tennislive.publish.pushplus"
+      - name: Restore media checker apt cache
+        id: apt_cache
+        timeout-minutes: 2
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-approved-medvedev24-ffmpeg-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-approved-medvedev24-ffmpeg-v1-
+      - name: Install media checker through shared installer
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: Save media checker apt cache only after a download
+        timeout-minutes: 2
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+      - name: Check actual public files and original native L2
+        run: python tools/publish_medvedev24_approved.py verify-public
+      - name: Reserve before any message is sent
+        id: reserve
+        run: |
+          python tools/auto_push_gate.py --reserve "$OUT" --run "$RUN_URL" --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse data/reel_publish_ledger/medvedev-24-titles-23-cities.json "$OUT/render.json" "$OUT/qc_attestation.json" "$OUT/public_asset_verification.json"
+          python tools/check_staged_file_sizes.py
+          git commit -m 'publish: reserve approved Medvedev 24-title film'
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+      - name: Send once using normal PushPlus implementation
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          TENNISLIVE_ASSET_REV: '793b91eaf2386742ce6d30d39648351bff2544af'
+        run: python tools/publish_medvedev24_approved.py send --run "$RUN_URL" --receipt-out "$RUNNER_TEMP/medvedev24-receipt.json"
+      - name: Record actual receipt
+        run: |
+          python tools/auto_push_gate.py --record "$OUT" --run "$RUN_URL" --now "$(date -u +%FT%TZ)" --receipt-file "$RUNNER_TEMP/medvedev24-receipt.json"
+          python tools/push_link.py --receipt-file "$RUNNER_TEMP/medvedev24-receipt.json" --slug medvedev-24-titles-23-cities --summary "$GITHUB_STEP_SUMMARY"
+          git add --sparse data/reel_publish_ledger/medvedev-24-titles-23-cities.json "$OUT/pushed.json"
+          python tools/check_staged_file_sizes.py
+          git commit -m 'publish: record Medvedev 24-title receipt'
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+      - name: Preserve receipt evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: medvedev24-push-evidence
+          path: |
+            ${{ runner.temp }}/medvedev24-receipt.json
+            output/2026-09-30/reel/medvedev-24-titles-23-cities/public_asset_verification.json
+            output/2026-09-30/reel/medvedev-24-titles-23-cities/public_native_l2_check.log
+          if-no-files-found: warn

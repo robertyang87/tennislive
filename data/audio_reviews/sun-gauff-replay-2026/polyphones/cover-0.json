@@ -1,0 +1,563 @@
+{
+  "original": {
+    "word": "重打",
+    "char": "重",
+    "sentence": "这一分被判重打，孙心然留下遗憾。",
+    "tts_text": "这一分被判重打，孙心然留下遗憾。",
+    "intended_refs": [
+      "崇",
+      "虫"
+    ],
+    "wrong_refs": [
+      "众",
+      "仲"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": -0.187,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 3.299,
+        "d_wrong": 2.533,
+        "score": -0.131
+      },
+      "f0": {
+        "d_intended": 2.137,
+        "d_wrong": 1.259,
+        "score": -0.258
+      },
+      "comb": {
+        "d_intended": 3.787,
+        "d_wrong": 2.594,
+        "score": -0.187
+      }
+    },
+    "neighbour_shift": {
+      "intended": 6.063,
+      "wrong": 3.5
+    },
+    "separation": {
+      "spec": {
+        "within": 2.591,
+        "between": 3.447,
+        "separation": 1.33
+      },
+      "f0": {
+        "within": 1.732,
+        "between": 3.005,
+        "separation": 1.735
+      },
+      "comb": {
+        "within": 3.028,
+        "between": 4.729,
+        "separation": 1.562
+      }
+    },
+    "selftest_loo": {
+      "崇": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.161
+      },
+      "虫": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": -0.085
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.288
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.235
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:崇": {
+        "spec": 3.78,
+        "f0": 3.723,
+        "vmis": 0.229,
+        "frames": 35,
+        "comb": 5.613
+      },
+      "A:虫": {
+        "spec": 3.299,
+        "f0": 2.137,
+        "vmis": 0.161,
+        "frames": 31,
+        "comb": 3.787
+      },
+      "B:众": {
+        "spec": 2.533,
+        "f0": 1.805,
+        "vmis": 0.067,
+        "frames": 30,
+        "comb": 3.071
+      },
+      "B:仲": {
+        "spec": 2.67,
+        "f0": 1.259,
+        "vmis": 0.067,
+        "frames": 30,
+        "comb": 2.594
+      }
+    },
+    "window_s": [
+      0.953,
+      1.234
+    ],
+    "boundary_token": "重打",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "这",
+        "一",
+        "分",
+        "被",
+        "判",
+        "重打",
+        "孙心然",
+        "留下",
+        "遗憾"
+      ],
+      "A:崇": [
+        "这",
+        "一",
+        "分",
+        "被",
+        "判",
+        "崇打",
+        "孙心然",
+        "留下",
+        "遗憾"
+      ],
+      "A:虫": [
+        "这",
+        "一",
+        "分",
+        "被",
+        "判虫",
+        "打",
+        "孙心然",
+        "留下",
+        "遗憾"
+      ],
+      "B:众": [
+        "这",
+        "一",
+        "分",
+        "被",
+        "判众",
+        "打",
+        "孙心然",
+        "留下",
+        "遗憾"
+      ],
+      "B:仲": [
+        "这",
+        "一",
+        "分",
+        "被",
+        "判仲",
+        "打",
+        "孙心",
+        "然",
+        "留下",
+        "遗憾"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        1.7,
+        0.4,
+        0.3,
+        -0.1,
+        -1.5,
+        null,
+        null,
+        3.8,
+        2.4,
+        0.5,
+        -3.6,
+        -5.4,
+        -6.2,
+        -8.7,
+        null
+      ],
+      "A:崇": [
+        0.8,
+        -1.3,
+        -2.5,
+        -2.9,
+        -2.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.0,
+        -3.9,
+        -1.9,
+        0.5,
+        2.0
+      ],
+      "A:虫": [
+        5.9,
+        4.8,
+        0.9,
+        -0.1,
+        -1.0,
+        -1.5,
+        null,
+        null,
+        null,
+        null,
+        -3.1,
+        -3.1,
+        -2.8,
+        -2.1,
+        -1.5,
+        -1.6
+      ],
+      "B:众": [
+        8.6,
+        8.0,
+        5.9,
+        3.8,
+        2.3,
+        1.6,
+        0.9,
+        -0.4,
+        null,
+        2.4,
+        0.8,
+        -0.3,
+        -2.4,
+        -4.8,
+        -5.3
+      ],
+      "B:仲": [
+        6.9,
+        6.1,
+        4.2,
+        2.6,
+        1.9,
+        1.2,
+        0.6,
+        null,
+        3.7,
+        3.0,
+        1.7,
+        0.3,
+        -0.8,
+        -4.0,
+        -5.9
+      ]
+    },
+    "audio": {
+      "ORIG": "/home/agent/.cache/tennislive/polyphone/182a1c228a2b8df19fa0bad9.mp3",
+      "A:崇": "/home/agent/.cache/tennislive/polyphone/09ef9bd4fbbf037362b02d84.mp3",
+      "A:虫": "/home/agent/.cache/tennislive/polyphone/9b59954be0030feffc55f46a.mp3",
+      "B:众": "/home/agent/.cache/tennislive/polyphone/0889a9d8aba077f9bd4728e9.mp3",
+      "B:仲": "/home/agent/.cache/tennislive/polyphone/8206db042ce01690dd22dd38.mp3"
+    }
+  },
+  "candidate": {
+    "word": "重打",
+    "char": "重",
+    "sentence": "这一分被判重打，孙心然留下遗憾。",
+    "tts_text": "这一分被判崇打，孙心然留下遗憾。",
+    "intended_refs": [
+      "崇",
+      "虫"
+    ],
+    "wrong_refs": [
+      "众",
+      "仲"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "correct",
+    "score": 1.0,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.791,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.0,
+        "d_wrong": 3.377,
+        "score": 1.0
+      },
+      "comb": {
+        "d_intended": 0.0,
+        "d_wrong": 5.273,
+        "score": 1.0
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.0,
+      "wrong": 5.501
+    },
+    "separation": {
+      "spec": {
+        "within": 2.603,
+        "between": 3.457,
+        "separation": 1.328
+      },
+      "f0": {
+        "within": 1.732,
+        "between": 3.005,
+        "separation": 1.735
+      },
+      "comb": {
+        "within": 3.034,
+        "between": 4.734,
+        "separation": 1.56
+      }
+    },
+    "selftest_loo": {
+      "崇": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.161
+      },
+      "虫": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": -0.086
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.287
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.234
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:崇": {
+        "spec": 0.0,
+        "f0": 0.0,
+        "vmis": 0.0,
+        "frames": 32,
+        "comb": 0.0
+      },
+      "A:虫": {
+        "spec": 2.969,
+        "f0": 2.327,
+        "vmis": 0.031,
+        "frames": 32,
+        "comb": 3.811
+      },
+      "B:众": {
+        "spec": 3.794,
+        "f0": 4.023,
+        "vmis": 0.273,
+        "frames": 33,
+        "comb": 5.92
+      },
+      "B:仲": {
+        "spec": 3.791,
+        "f0": 3.377,
+        "vmis": 0.273,
+        "frames": 33,
+        "comb": 5.273
+      }
+    },
+    "window_s": [
+      0.906,
+      1.216
+    ],
+    "boundary_token": "崇打",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "这",
+        "一",
+        "分",
+        "被",
+        "判",
+        "崇打",
+        "孙心然",
+        "留下",
+        "遗憾"
+      ],
+      "A:崇": [
+        "这",
+        "一",
+        "分",
+        "被",
+        "判",
+        "崇打",
+        "孙心然",
+        "留下",
+        "遗憾"
+      ],
+      "A:虫": [
+        "这",
+        "一",
+        "分",
+        "被",
+        "判虫",
+        "打",
+        "孙心然",
+        "留下",
+        "遗憾"
+      ],
+      "B:众": [
+        "这",
+        "一",
+        "分",
+        "被",
+        "判众",
+        "打",
+        "孙心然",
+        "留下",
+        "遗憾"
+      ],
+      "B:仲": [
+        "这",
+        "一",
+        "分",
+        "被",
+        "判仲",
+        "打",
+        "孙心",
+        "然",
+        "留下",
+        "遗憾"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        0.8,
+        -1.3,
+        -2.5,
+        -2.9,
+        -2.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.0,
+        -3.9,
+        -1.9,
+        0.5,
+        2.0
+      ],
+      "A:崇": [
+        0.8,
+        -1.3,
+        -2.5,
+        -2.9,
+        -2.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.0,
+        -3.9,
+        -1.9,
+        0.5,
+        2.0
+      ],
+      "A:虫": [
+        5.9,
+        4.8,
+        0.9,
+        -0.1,
+        -1.0,
+        -1.5,
+        null,
+        null,
+        null,
+        null,
+        -3.1,
+        -3.1,
+        -2.8,
+        -2.1,
+        -1.5,
+        -1.6
+      ],
+      "B:众": [
+        8.6,
+        8.0,
+        5.9,
+        3.8,
+        2.3,
+        1.6,
+        0.9,
+        -0.4,
+        null,
+        2.4,
+        0.8,
+        -0.3,
+        -2.4,
+        -4.8,
+        -5.3
+      ],
+      "B:仲": [
+        6.9,
+        6.1,
+        4.2,
+        2.6,
+        1.9,
+        1.2,
+        0.6,
+        null,
+        3.7,
+        3.0,
+        1.7,
+        0.3,
+        -0.8,
+        -4.0,
+        -5.9
+      ]
+    },
+    "audio": {
+      "ORIG": "/home/agent/.cache/tennislive/polyphone/09ef9bd4fbbf037362b02d84.mp3",
+      "A:崇": "/home/agent/.cache/tennislive/polyphone/09ef9bd4fbbf037362b02d84.mp3",
+      "A:虫": "/home/agent/.cache/tennislive/polyphone/9b59954be0030feffc55f46a.mp3",
+      "B:众": "/home/agent/.cache/tennislive/polyphone/0889a9d8aba077f9bd4728e9.mp3",
+      "B:仲": "/home/agent/.cache/tennislive/polyphone/8206db042ce01690dd22dd38.mp3"
+    }
+  }
+}

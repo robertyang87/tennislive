@@ -1,0 +1,165 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 609.0,
+  "range_to": 633.0,
+  "selected_from": 611.0,
+  "selected_to": 629.0,
+  "decoded_pcm_sha256": "e32ef71b9dfda3f5820afc47a95f9cfe024be2db2c6df57cdedeef4fbaffc590",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:10:32.042574+00:00",
+  "elapsed_seconds": 1.63,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 620.76,
+      "end": 623.9,
+      "text": " and too much to bear as Kalanskaya.",
+      "avg_logprob": -0.6655482119984097,
+      "no_speech_prob": 0.15439698100090027,
+      "compression_ratio": 1.1046511627906976,
+      "words": [
+        {
+          "start": 620.76,
+          "end": 621.3,
+          "word": " and",
+          "probability": 0.15085797011852264
+        },
+        {
+          "start": 621.3,
+          "end": 621.56,
+          "word": " too",
+          "probability": 0.6742185354232788
+        },
+        {
+          "start": 621.56,
+          "end": 621.78,
+          "word": " much",
+          "probability": 0.9989309906959534
+        },
+        {
+          "start": 621.78,
+          "end": 621.9,
+          "word": " to",
+          "probability": 0.8836045265197754
+        },
+        {
+          "start": 621.9,
+          "end": 622.1,
+          "word": " bear",
+          "probability": 0.9519841074943542
+        },
+        {
+          "start": 622.1,
+          "end": 622.7,
+          "word": " as",
+          "probability": 0.9166477918624878
+        },
+        {
+          "start": 622.7,
+          "end": 623.9,
+          "word": " Kalanskaya.",
+          "probability": 0.49177316948771477
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 629.43,
+      "end": 631.67,
+      "text": " Nice return winner from Kalanskaya, just caught.",
+      "avg_logprob": -0.6655482119984097,
+      "no_speech_prob": 0.15439698100090027,
+      "compression_ratio": 1.1046511627906976,
+      "words": [
+        {
+          "start": 629.43,
+          "end": 629.87,
+          "word": " Nice",
+          "probability": 0.9603631496429443
+        },
+        {
+          "start": 629.87,
+          "end": 630.13,
+          "word": " return",
+          "probability": 0.9834008812904358
+        },
+        {
+          "start": 630.13,
+          "end": 630.49,
+          "word": " winner",
+          "probability": 0.8985216617584229
+        },
+        {
+          "start": 630.49,
+          "end": 630.71,
+          "word": " from",
+          "probability": 0.9867406487464905
+        },
+        {
+          "start": 630.71,
+          "end": 631.33,
+          "word": " Kalanskaya,",
+          "probability": 0.942912682890892
+        },
+        {
+          "start": 631.41,
+          "end": 631.47,
+          "word": " just",
+          "probability": 0.7964922189712524
+        },
+        {
+          "start": 631.47,
+          "end": 631.67,
+          "word": " caught.",
+          "probability": 0.5670207738876343
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 631.99,
+      "end": 632.53,
+      "text": " A-so-four.",
+      "avg_logprob": -0.6655482119984097,
+      "no_speech_prob": 0.15439698100090027,
+      "compression_ratio": 1.1046511627906976,
+      "words": [
+        {
+          "start": 631.99,
+          "end": 632.13,
+          "word": " A",
+          "probability": 0.06664896011352539
+        },
+        {
+          "start": 632.13,
+          "end": 632.31,
+          "word": "-so",
+          "probability": 0.5754649341106415
+        },
+        {
+          "start": 632.31,
+          "end": 632.53,
+          "word": "-four.",
+          "probability": 0.5091609805822372
+        }
+      ]
+    }
+  ]
+}

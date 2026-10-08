@@ -1,0 +1,81 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 279,
+  "range_to": 287,
+  "created_at": "2026-10-04T14:39:40.904711+00:00",
+  "elapsed_seconds": 2.22,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 280.72,
+      "end": 282.26,
+      "text": " He's done it again.",
+      "avg_logprob": -0.5325901929069968,
+      "no_speech_prob": 0.20896367728710175,
+      "words": [
+        {
+          "start": 280.72,
+          "end": 281.68,
+          "word": " He's",
+          "probability": 0.8549417853355408
+        },
+        {
+          "start": 281.68,
+          "end": 281.82,
+          "word": " done",
+          "probability": 0.9981318116188049
+        },
+        {
+          "start": 281.82,
+          "end": 281.96,
+          "word": " it",
+          "probability": 0.995646059513092
+        },
+        {
+          "start": 281.96,
+          "end": 282.26,
+          "word": " again.",
+          "probability": 0.9970690608024597
+        }
+      ]
+    },
+    {
+      "start": 283.9,
+      "end": 285.22,
+      "text": " No Bank Djokovic.",
+      "avg_logprob": -0.5325901929069968,
+      "no_speech_prob": 0.20896367728710175,
+      "words": [
+        {
+          "start": 283.9,
+          "end": 284.38,
+          "word": " No",
+          "probability": 0.39796823263168335
+        },
+        {
+          "start": 284.38,
+          "end": 284.7,
+          "word": " Bank",
+          "probability": 0.19142785668373108
+        },
+        {
+          "start": 284.7,
+          "end": 285.22,
+          "word": " Djokovic.",
+          "probability": 0.733071913321813
+        }
+      ]
+    }
+  ]
+}

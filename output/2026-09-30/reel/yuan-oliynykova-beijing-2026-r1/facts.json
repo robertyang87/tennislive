@@ -1,0 +1,115 @@
+{
+  "match": {
+    "tournament": "China Open / 中国网球公开赛",
+    "level": "WTA 1000",
+    "date_local": "2026-09-30",
+    "round": "女单首轮（WTA编码Round of 128，96人正赛签表）",
+    "surface": "室外硬地",
+    "winner": "Yue Yuan / 袁悦",
+    "loser": "Oleksandra Oliynykova / 奥利尼科娃",
+    "score_winner_first": [
+      "6-2",
+      "6-3"
+    ],
+    "sets": "2-0",
+    "duration_official": "01:31:21",
+    "wta_match_id": "1020-2026-LS110",
+    "yuan_entry": "WC外卡",
+    "yuan_seed": null,
+    "oliynykova_seed": null,
+    "yuan_rank": 135,
+    "oliynykova_rank": 47,
+    "ranking_week": "2026-09-28",
+    "next_opponent_draw": "4号种子Mirra Andreeva / 米拉·安德烈耶娃",
+    "court": "Capital Group Diamond / 首创钻石球场"
+  },
+  "stats": {
+    "source": "https://www.wtatennis.com/tournaments/china-open/scores/LS110",
+    "yuan": {
+      "aces": 1,
+      "double_faults": 0,
+      "break_points_converted": "6/10 (60%)",
+      "return_games": 8,
+      "service_games": 9,
+      "break_points_saved": "0/3",
+      "first_serve_in": "39/55 (70.9%)",
+      "first_serve_points_won": "22/39 (56.4%)",
+      "second_serve_points_won": "7/16 (43.8%)",
+      "return_points_won": "36/62 (58.1%)",
+      "total_points_won": "65/117 (55.6%)"
+    },
+    "oliynykova": {
+      "aces": 1,
+      "double_faults": 2,
+      "break_points_converted": "3/3 (100%)",
+      "return_points_won": "26/55 (47.3%)",
+      "total_points_won": "52/117 (44.4%)"
+    },
+    "set_breaks_yuan": [
+      3,
+      3
+    ],
+    "set_breaks_oliynykova": [
+      1,
+      2
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://www.wtatennis.com/tournaments/china-open/scores/LS110",
+      "supports": "比分、日期、轮次、用时、全场及分盘官方技术统计"
+    },
+    {
+      "url": "https://www.wtatennis.com/tournaments/1020/beijing/2026/scores",
+      "supports": "官方嵌入比赛数据含MatchState=F、精确计时、WC/非种子状态、日期"
+    },
+    {
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1020/MDS.pdf",
+      "supports": "96人正赛；首轮配对、外卡、双方非种子、次轮安德烈耶娃（4）"
+    },
+    {
+      "url": "https://www.wtatennis.com/players/324325/yue-yuan/stats",
+      "supports": "2026-09-28单打排名135"
+    },
+    {
+      "url": "https://www.wtatennis.com/players/327182/oleksandra-oliynykova/stats",
+      "supports": "2026-09-28单打排名47"
+    },
+    {
+      "url": "https://www.wtatennis.com/videos/4584268/on-home-soil-yuan-passes-oliynykova-test-to-make-beijing-second-round",
+      "supports": "官方本场高光与本场庆祝照片绑定，原图4212x2807、CMS照片id4584281；简介历史叙述"
+    },
+    {
+      "url": "https://www.chinaopen.com/cn/contents/281/1597.html",
+      "supports": "中网本场官方战报：袁悦在首创钻石球场6-2、6-3击败奥利尼科娃"
+    }
+  ],
+  "context": [
+    {
+      "claim": "自2026查尔斯顿以来首次巡回赛正赛获胜",
+      "evidence": "本场WTA官方高光简介；不要把WTA125、ITF、资格赛胜利一并算成无胜场",
+      "status": "官方陈述，非逐场独立重算"
+    },
+    {
+      "claim": "自2025辛辛那提次轮战胜施耐德以来首次击败Top50",
+      "evidence": "本场WTA官方高光简介；2025辛辛那提比赛 https://www.wtatennis.com/tournaments/1017/cincinnati/2025/scores/LS043",
+      "status": "官方陈述，历史锚点已官方交叉验证"
+    }
+  ],
+  "verified_at_utc": "2026-09-30T11:14:00Z",
+  "second_set_evidence": {
+    "official_wta_preview_seconds": [
+      100,
+      115,
+      130
+    ],
+    "observations": [
+      "Yuan 3-1",
+      "Yuan 3-3",
+      "Yuan 3-3"
+    ],
+    "youtube_edit_skips_these_games": true,
+    "final_score": "6-2 6-3"
+  },
+  "winners_ue": "WTA官方本场统计与Flashscore G6x5en3E均未提供Winners/UE；MCP完整索引无本场记录；官方本场报道及集锦没有展示完整Winners/UE统计。TNNS被Cloudflare验证阻挡，已停止，未将访问失败当成数据不存在。保留已核实字段，不编造。"
+}

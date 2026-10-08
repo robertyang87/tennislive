@@ -1,0 +1,65 @@
+{
+  "mixed_pcm_s16le_sha256": "085f08fbf86734f1adecd369c4f253b34151531966c323693dfadcb924a2a070",
+  "audited_mix_audio_identical": true,
+  "status": "pass",
+  "film_sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+  "film_bytes": 101054067,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": "25/1",
+  "SPS": {
+    "profile_idc": 100,
+    "level_idc": 41,
+    "frame_mbs_only_flag": 1,
+    "num_units_in_tick": 1,
+    "time_scale": 50,
+    "pic_width_in_mbs_minus1": 67,
+    "pic_height_in_map_units_minus1": 89,
+    "max_num_ref_frames": 4,
+    "max_dec_frame_buffering": 4,
+    "max_num_reorder_frames": 2,
+    "log2_max_mv_length_vertical": 11
+  },
+  "macroblocks_per_frame": 6120,
+  "macroblocks_per_second": 153000,
+  "DPB_macroblocks": 24480,
+  "decoded_frames": 5158,
+  "packet_count": 5158,
+  "all_pts_deltas": [
+    0.04
+  ],
+  "motion_vectors_checked": 45953470,
+  "max_vertical_motion_px": 508.0,
+  "max_horizontal_motion_px": 508.75,
+  "max_1second_video_bitrate_bits": 15549544,
+  "encoder_declared_VBV": "12M maxrate/24M buffer from verified native export helper",
+  "full_decode_exit": 0,
+  "faststart": true,
+  "box_order": [
+    {
+      "type": "ftyp",
+      "position": 0,
+      "bytes": 32
+    },
+    {
+      "type": "moov",
+      "position": 32,
+      "bytes": 154168
+    },
+    {
+      "type": "free",
+      "position": 154200,
+      "bytes": 8
+    },
+    {
+      "type": "mdat",
+      "position": 154208,
+      "bytes": 100899859
+    }
+  ],
+  "iphone_photos_import_tested": false,
+  "scope": "Genuine final bitstream conformance; no SPS relabeling; no claim of physical iPhone import test",
+  "original_commentary_coverage_sha256": "23d88f6cf77d7af24bf7bf41f8c0b43520f47114c903175c37671ae558b6bfb1"
+}

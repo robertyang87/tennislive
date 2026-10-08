@@ -1,0 +1,57 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/i1LtteR8jd0.mp4",
+  "source_sha256": "551d24ac4ffc3ad4a2a202cf178a2ca5f4488e1675f5e63f9a409b10e7a4cc1b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:12:00.158914+00:00",
+  "reviewed_from": 380.7,
+  "reviewed_to": 389.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 382.76,
+      "end": 386.32,
+      "en": "The champion in Beijing for 2014,",
+      "zh": "二零一四年的北京冠军，"
+    },
+    {
+      "start": 387.36,
+      "end": 389.12,
+      "en": "Novak Djokovic.",
+      "zh": "德约科维奇。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2014-intro.large-v3-turbo.json",
+      "sha256": "7c04b9fd47e728948ed42318010b2befcf7b99155a2ffa6afe1250597811b6c8"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.small.en.json",
+      "sha256": "5a238cc9dd893765a91d9e4b52a4736d44ef8c63a557e9b963f217556bffb421"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.base.en.json",
+      "sha256": "2a244e17345546b503bb82ced850538fa1225f98942c28ccfbd9108cfd803513"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2014.targeted.small.en.json",
+      "sha256": "e9eb4bb5fdc3100a44e8203d90a37a49b0295c7e9322499ea6689fbd0d711158"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2014.targeted.base.en.json",
+      "sha256": "33d38291f03d10af121b26dc0d68986d3d9a44a16dec8f666e693691c35df475"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2014-cup.medium.en.json",
+      "sha256": "d086f171225ea55fc24393c56dc1113d86604658a7a641c11f80ad8f863dc2fc"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "large-v3-turbo genuinely independently decodes The champion in Beijing for2014, agreeing with full-source small.en The; smaller local variants Well/We're rejected. medium.en local9s hallucinated2015 please take picture sentence; explicitly excluded as incorrect, raw failure retained. Use large-v3-turbo/local base onset over full-source small.en The probability0.04 spread over preceding applause. Full parent visually verified raise381.2–386.5 retained by380.7–389.4. Next What a fantastic week earliest whole-model estimate389.66; native389.4+0.18=389.58 does not expose next speech."
+  ]
+}

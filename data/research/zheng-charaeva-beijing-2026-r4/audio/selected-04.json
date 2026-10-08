@@ -1,0 +1,371 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source_audio agent: base.en/small.en full-source VAD, targeted no-VAD, medium.en refinement, and native platform ASR-caption comparison",
+  "reviewed_at": "2026-10-07T16:31:18.616093+00:00",
+  "status": "complete",
+  "reviewed_from": 35.8,
+  "reviewed_to": 83.0,
+  "actual_listening_performed": false,
+  "review_scope": "Entire selected source window inspected using real, retained ASR outputs and cross-checks. Complete means selected-source ASR coverage resolved, not an invented human listening attestation. Sentence subtitles split only at actual word boundaries into consecutive semantic clauses.",
+  "foreground_english": [
+    {
+      "start": 44.78,
+      "end": 47.3,
+      "en": "Oh, that's terrific stuff.",
+      "zh": "噢 打得太棒了"
+    },
+    {
+      "start": 47.8,
+      "end": 49.54,
+      "en": "This time it's measured so well, just...",
+      "zh": "这一次分寸掌握得真好 就……"
+    },
+    {
+      "start": 62.38,
+      "end": 63.98,
+      "en": "Well, you've seen this before.",
+      "zh": "你之前见过这样的情况"
+    },
+    {
+      "start": 70.6,
+      "end": 71.88,
+      "en": "And that'll do it.",
+      "zh": "首盘就此结束"
+    },
+    {
+      "start": 72.0,
+      "end": 73.94,
+      "en": "Opening set, just 36 minutes",
+      "zh": "首盘只用了36分钟"
+    },
+    {
+      "start": 73.94,
+      "end": 75.3,
+      "en": "for Zheng Qinwen to establish",
+      "zh": "让郑钦文确立"
+    },
+    {
+      "start": 75.3,
+      "end": 77.04,
+      "en": "a quality lead",
+      "zh": "明显的优势"
+    },
+    {
+      "start": 77.04,
+      "end": 78.3,
+      "en": "and foothold in this contest.",
+      "zh": "在这场比赛里站稳了脚跟"
+    },
+    {
+      "start": 78.48,
+      "end": 79.4,
+      "en": "Their first ever meeting",
+      "zh": "双方首次交手"
+    },
+    {
+      "start": 79.4,
+      "end": 80.8,
+      "en": "is one-way traffic.",
+      "zh": "目前完全是一边倒"
+    },
+    {
+      "start": 81.4,
+      "end": 82.98,
+      "en": "All in favor of the Golden Girl.",
+      "zh": "全部有利于这位金牌姑娘"
+    }
+  ],
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/base.en.json",
+      "sha256": "fb5e6d7b42bcc200b6e404ba867aefe3c1b5ad2c55f62da95d45dcceb95de62f",
+      "model": "base.en",
+      "source_from": 0,
+      "source_to": 350,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": true,
+        "word_timestamps": true,
+        "condition_on_previous_text": false
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/medium-00.json",
+      "sha256": "c44e02ec8b3e095634a78b60e9bd7a4412843d4d73d997b1216a25b513a3b6d5",
+      "model": "medium.en",
+      "source_from": 44,
+      "source_to": 52,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/medium-01.json",
+      "sha256": "e26381fe9101ae0fd0b42970bfb2f983c1e4ad5eb7017b43edaf4712f506e835",
+      "model": "medium.en",
+      "source_from": 60,
+      "source_to": 66,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/medium-02.json",
+      "sha256": "6ce5b4934019cc947e08cd7374cfdd1d5aa559bc93f8c56761f606fdd8400088",
+      "model": "medium.en",
+      "source_from": 68,
+      "source_to": 86,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/medium-refine-00.json",
+      "sha256": "efc9b32504f49b5339ad903c9a045103e99086effcf5112e61a046122ea387ca",
+      "model": "medium.en",
+      "source_from": 78,
+      "source_to": 89,
+      "parameters": {
+        "language": "en",
+        "beam_size": 7,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/medium-refine-01.json",
+      "sha256": "3f2c020e7eae6c37e8a23c58bcb3c0cb24007df74ba0e8b7c9ac7ed156efd1af",
+      "model": "medium.en",
+      "source_from": 81,
+      "source_to": 86.5,
+      "parameters": {
+        "language": "en",
+        "beam_size": 7,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/narrow-07-base.en.json",
+      "sha256": "9741b3adfa547f9666b2c3fb8498f1589f3a30069850d7423530d6d2ec663e4f",
+      "model": "base.en",
+      "source_from": 45,
+      "source_to": 51,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/narrow-07-small.en.json",
+      "sha256": "8bb13c8e392bc7b2838ee806b9de18c267d39acba046f3edb82649868201197f",
+      "model": "small.en",
+      "source_from": 45,
+      "source_to": 51,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/small.en.json",
+      "sha256": "122d03640c703979e5c72ec7e8ba414590744abfbfda279d2a83e8e705bcf85e",
+      "model": "small.en",
+      "source_from": 0,
+      "source_to": 350,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": true,
+        "word_timestamps": true,
+        "condition_on_previous_text": false
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-01-base.en.json",
+      "sha256": "97593538117192867d39b6188e23998d9448dc35169aede80a07fcbbc2c81e0c",
+      "model": "base.en",
+      "source_from": 22,
+      "source_to": 37,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-01-small.en.json",
+      "sha256": "48dcfce7eee6eccf0488b84f925695ad9260123887f9b4f6922aaee845cb681b",
+      "model": "small.en",
+      "source_from": 22,
+      "source_to": 37,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-02-base.en.json",
+      "sha256": "735f44276196af755993c9cc9f7cfdefb14a6646bcc3fa07d859649af1128520",
+      "model": "base.en",
+      "source_from": 39,
+      "source_to": 53,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-02-small.en.json",
+      "sha256": "7baff68398872130e844d410c0ecca4cc58ba355ae4239bc013763e1a6eea8b1",
+      "model": "small.en",
+      "source_from": 39,
+      "source_to": 53,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-03-base.en.json",
+      "sha256": "5dee384f1bc63a4de232b2fbef578b24e82d4a5ce1e5f3f83a345ede12b398bb",
+      "model": "base.en",
+      "source_from": 57,
+      "source_to": 68,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-03-small.en.json",
+      "sha256": "e8cc0e3625c647dd159df5b18366c841fb3d65375c2f41d6e4316f4048786c6e",
+      "model": "small.en",
+      "source_from": 57,
+      "source_to": 68,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-04-base.en.json",
+      "sha256": "1673fb36bf48d2f0b703fac251f7ffa6e300d9b2399a3461a0587297609f7fbd",
+      "model": "base.en",
+      "source_from": 68,
+      "source_to": 86,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-04-small.en.json",
+      "sha256": "9a550ab5d8d02366db212885f2ebec655bed0c2075ef5f6a25e8d6487a91c3a0",
+      "model": "small.en",
+      "source_from": 68,
+      "source_to": 86,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    }
+  ],
+  "source_caption_evidence": {
+    "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/native-captions.txt",
+    "sha256": "9648e1156cfb65ad74754d17e48941605e8cca20efe97c0b90fa76bd350bfb39",
+    "type": "native downloaded platform ASR captions, supporting rather than human verified"
+  },
+  "resolution_notes": [
+    {
+      "span": [
+        47.8,
+        49.54
+      ],
+      "issue": "Source-program clipped trailing just.",
+      "resolution": "base.en/small.en/medium.en and native captions agree just is present; retain every audible word with ellipsis rather than complete an invented sentence. Selected source includes complete available rally and programme fragment.",
+      "evidence": [
+        "medium-00.json",
+        "target-02-base.en.json",
+        "target-02-small.en.json",
+        "native-captions.txt"
+      ]
+    },
+    {
+      "span": [
+        62.38,
+        63.98
+      ],
+      "issue": "Well/Wow and youve/weve initial variants",
+      "resolution": "medium.en and base.en independently agree Well, youve seen this before. Names and grammar are not rewritten.",
+      "evidence": [
+        "medium-01.json",
+        "base.en.json",
+        "target-03-base.en.json"
+      ]
+    }
+  ]
+}

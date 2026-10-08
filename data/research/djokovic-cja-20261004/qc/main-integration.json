@@ -1,0 +1,23 @@
+{
+  "base": "8acb855",
+  "latest_main": "f77ceaaf7bae66784234dbebdf7ff574df88704f",
+  "files": {
+    "build_match_reel.py": "c28cfc49444a199fb19fadeab2bd2b70edcca9551015d42d7ed25c29e140a036",
+    "foreground_audio_gate.py": "2b4669b97e72175638b5a080863b20f8262cdf2998a9f51c467caedd85af9261"
+  },
+  "method": "git merge-file on saved copies; one Segment-field conflict resolved with main visual_image before appended audio_tail; no git branch operation",
+  "validation": {
+    "combined_relevant_tests": 81,
+    "latest_main_visual_tests_with_temporary_main_taste_dependency": 2,
+    "latest_main_source_quality_tests": 12,
+    "actual_visual_image_audio_tail_combinations": "source body audible, 0.18s tail every decoded sample zero, both speed=1 and .6; original graphical branch defaults unchanged",
+    "cotimed_bilingual": "two real co-timed ASS events pass; .1s mismatched start rejected",
+    "diff_check": "pass"
+  },
+  "changed_shared_files": [
+    "tools/build_match_reel.py",
+    "tools/foreground_audio_gate.py",
+    "tests/test_segment_audio_tail.py"
+  ],
+  "formal_spec_changed": false
+}

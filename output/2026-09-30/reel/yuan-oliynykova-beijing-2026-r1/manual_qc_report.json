@@ -1,0 +1,52 @@
+{
+  "status": "pass",
+  "reviewed_at_utc": "2026-09-30T13:22:00Z",
+  "film_sha256": "1cf74b5faa05de8d02c6211e53075e2a8ba797882c4dfc224f4905e5d78375a3",
+  "method": "Actual final-film sampled pixels spanning all 10 segments, plus exact source point windows, native full-source probe, full AV decode and native L2. No claim of human ear-listening or physical iPhone test.",
+  "sample_seconds": [
+    0.4,
+    2.5,
+    7.5,
+    10,
+    18,
+    26.7,
+    31,
+    39,
+    44,
+    49,
+    55,
+    60,
+    66,
+    70.5,
+    72.5,
+    76,
+    80,
+    84.7,
+    88.8,
+    93,
+    96,
+    102,
+    106,
+    110,
+    112
+  ],
+  "observations": {
+    "cover": "Same-match China Open 5000x3333 official photo. Open eyes and clear face, matches Library cover v1; photograph/source unchanged.",
+    "framing": "All segments use cx=0.5, track=false, full 1080x1440 frame. No smart follow or pillarbox.",
+    "story": "First-set point, second-set 4-3 opponent game point, full match point and smile/handshake/celebration retained. Retrospective 3-1 to 3-3 is corroborated by official alternate edit, not invented as a shot in this source.",
+    "ending_payoff": "Cold source273.28–280.64 is replayed exactly at the ending; handshake and later arms-raised celebration remain.",
+    "subtitles": "Actual 102s/106s final pixels confirm subtitles sit above the large result board; player names and score are unobscured. Bilingual quotations and Chinese body fit.",
+    "scoreboard": "Native frame-by-frame masks validated. Original final result board preserved. No invented score.",
+    "stat_card": "Both official headshots visually match respective names; all figures and denominators match WTA/Flashscore facts. Winners/UE correctly omitted with explicit source-status reason."
+  },
+  "final_contact_sheet_sha256": {
+    "sheet_2.jpg": "5647009ee5e5c5c6aa70df138d2cb968823aff358015f8745c2386b90d1e6179",
+    "sheet_1.jpg": "471ab77f1c4f8d3e99bbe231c4c387fe629b0d7bf62897eae6b5a9543ff43bb6",
+    "sheet_0.jpg": "2b7a1d6e3048ba63d26ac2281be7de858fc4793b647ad6494996fd4583960af9"
+  },
+  "encoding_validation_sha256": "1dce7bfc24ab9a76af7aad5f74832aab5affaf3d45327eccf133ba2382d1e376",
+  "limitations": [
+    "Automated optional face model unavailable; real pixels manually inspected instead.",
+    "Physical iPhone Photos import not performed."
+  ]
+}

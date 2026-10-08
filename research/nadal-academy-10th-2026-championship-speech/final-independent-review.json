@@ -1,0 +1,45 @@
+{
+  "reviewer": "Codex primary independent review of producer final",
+  "method": "actual 17 extracted final frames viewed (two contact sheets plus full outro), plus PCM correlation, not human listening",
+  "film_sha256": "4d182944319b68b4bd79f5bdb7195b0c966e7c71c8768a771f40d03517dc933f",
+  "sampled_film_seconds": [
+    2.7,
+    8.2,
+    21.8,
+    24.4,
+    54.4,
+    59.5,
+    66.8,
+    80.3,
+    99.8,
+    112.5,
+    120.7,
+    123.3,
+    141,
+    153.5,
+    176.5,
+    181,
+    187
+  ],
+  "visual_status": "pass",
+  "observations": [
+    "No upper-right Tennis TV logo visible in sampled final frames; source entire 1fps crop check separately retained.",
+    "Two thanks-list caption groups show all seven players.",
+    "Chinese and original-language captions readable, no face or mic obstruction.",
+    "Applause and indistinct-voice cue shown during real source gap, separate from spoken-word transcription.",
+    "Source-language text preserved; visible broadcaster commentary and translation labelled.",
+    "Actual final closing card and brand outro complete."
+  ],
+  "audio_method": "decoded PCM source/final correlation at three 4s English/Catalan/Spanish windows",
+  "audio_minimum_correlation": 0.9973589326987464,
+  "audio_gain_range": [
+    0.9830108437701496,
+    0.991230677239837
+  ],
+  "source_to_film_audio_offset_seconds": 1.8,
+  "limitations": [
+    "Sampling does not claim frame-by-frame review of the entire final.",
+    "No human listening or unidentified-voice identity attestation.",
+    "Two original-word uncertainty markers and one short conservative sound event are retained in the product."
+  ]
+}

@@ -1,0 +1,671 @@
+{
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "track": false,
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "slug": "zheng-charaeva-beijing-2026-r4",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=LGHCCL4VHCw"
+  },
+  "primary": "main",
+  "scorebox": [
+    88,
+    827,
+    570,
+    988
+  ],
+  "stats": {
+    "a": {
+      "aces": 7,
+      "df": 4,
+      "first_in": 36,
+      "first_total": 72,
+      "first_won": 28,
+      "second_won": 16,
+      "second_total": 36,
+      "bp_conv": 5,
+      "bp_chances": 9,
+      "pts_won": 80,
+      "pts_total": 153,
+      "winners": 39,
+      "ue": 42,
+      "headshot": "assets/players/headshots/wta-328120.jpg"
+    },
+    "b": {
+      "aces": 1,
+      "df": 3,
+      "first_in": 48,
+      "first_total": 81,
+      "first_won": 31,
+      "second_won": 14,
+      "second_total": 33,
+      "bp_conv": 3,
+      "bp_chances": 8,
+      "pts_won": 73,
+      "pts_total": 153,
+      "winners": 6,
+      "ue": 35,
+      "headshot": "assets/players/headshots/wta-329198-match-LS032.jpg"
+    },
+    "tour": "wta",
+    "footer_date": "2026-10-07",
+    "footer_venue": "北京 · 全场",
+    "_source": "Official WTA LS008 setnum0; TNNS Winners/UE; PBP153 points fully crosschecked, score-implied totals80:73 and9/8 BPs agree with stats.",
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051562&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/zheng-charaeva-beijing-2026-r4/tnns-stats.json",
+      "source_sha256": "ee00311c8a2f94bfcfedff50d09f76f0189131cb7f1eff84c745b29d2ed8138b",
+      "period": "Match",
+      "match_date": "2026-10-07",
+      "checked_at": "2026-10-07T15:01:53.555036+00:00",
+      "winner_result": "6-1 2-6 6-4",
+      "matchup": [
+        "Zheng",
+        "Charaeva"
+      ],
+      "winners": [
+        39,
+        6
+      ],
+      "ue": [
+        42,
+        35
+      ],
+      "notes": "Native HTTP200, decoded K/P/_ payload. Key Stats players=[Charaeva,Zheng], reversed to cover order. tnns_stats.validate_totals PASS: W18+8+13=39/0+3+3=6; UE14+14+14=42/13+7+15=35. WTA core statistics all agree."
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "date": "2026-10-07",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS008",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "participants": [
+      "恰拉耶娃",
+      "郑钦文"
+    ],
+    "winner": "郑钦文",
+    "loser": "恰拉耶娃",
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        6,
+        2
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "winner_result": "6-1 2-6 6-4",
+    "duration": "02:11:26",
+    "daypart": "晚上",
+    "observed_at": "2026-10-07T15:01:53.555036+00:00",
+    "_order_why": "WTA A=Charaeva B=Zheng. Cover and stats.a put winner Zheng first.",
+    "_time_note": "Official PBP first point11:08:50Z=19:08 Beijing, final13:22:29Z=21:22 Beijing. Date10-07 verified; WTA article has incorrect weekday Tuesday. Use evening; do not derive match duration or actual first-serve time from metadata timestamps.",
+    "_match_day_why": "用户2026-10-07明确指定本场WTA官方集锦制作赛场之上；官方比赛同日晚上结束。"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "郑钦文",
+        "name_en": "Qinwen Zheng",
+        "country": "CHN",
+        "rank": 54
+      },
+      {
+        "name": "恰拉耶娃",
+        "name_en": "Alina Charaeva",
+        "country": "ARM",
+        "rank": 118
+      }
+    ],
+    "_rank_why": "Latest available official ranked endpoint snapshot rankedAt2026-09-28. Zheng54, Charaeva118. Not seed or live projected rank.",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "郑钦文",
+    "winner": "郑钦文",
+    "result": "6-1 2-6 6-4",
+    "hook": "决胜盘领先被追近\n郑钦文挺进8强",
+    "hook_accent": "挺进8强",
+    "topic": "WTA1000 北京 1/8决赛 · 郑钦文 VS 恰拉耶娃",
+    "scrim": "clear",
+    "portrait": {
+      "image": "assets/reels/zheng-charaeva-beijing-2026-r4/zheng-r4-getty-2299048969.jpg",
+      "focus": 0.56,
+      "focus_y": 0.0,
+      "zoom": 1.25,
+      "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/07/9fa972ee-f964-44cd-8938-299b151495f4/GettyImages-2299048969.jpg",
+      "_portrait_why": "本场Getty2299048969，WTA photo4587998。IPTC人物、对手、第四轮、National Tennis Center、10月7日完全匹配；实际审图正面偏侧，双眼睁开、合焦；来源与裁切证据data/research/zheng-charaeva-beijing-2026-r4/cover-candidates.json"
+    },
+    "scoreboard": {
+      "court": "Capital Group Diamond",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS008"
+      }
+    }
+  },
+  "topbar": {
+    "line1": "2026 WTA1000 北京 1/8决赛",
+    "line2": "郑钦文 6-1 2-6 6-4 恰拉耶娃"
+  },
+  "push": {
+    "auto": true,
+    "summary": "领先被追近，郑钦文进8强",
+    "lead": "首盘6-1，第二盘被扳平；决胜盘5-3发球胜赛局失守，郑钦文随后在接发局赢下比赛。24岁生日前一天，她拿到了中网8强席位。"
+  },
+  "_heat_why": "郑钦文主场生日前一天晋级中网8强；本届连续4次进入决胜盘，中国球员主题。",
+  "_tts_backend_why": "沿用云见zh-CN-YunjianNeural +6% Edge；实际TTS测长并按最终句子复核多音字。",
+  "_production_timing": {
+    "first_dispatch_at": "2026-10-07T14:57:01Z",
+    "note": "首次源片probe实际启动时刻；手工剪辑、双模型原声交叉核验，不使用MiniMax/DeepSeek。"
+  },
+  "_facts": [
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+      "type": "official_results",
+      "why": "LS008结果、用时；本届前3场与下一轮签表。"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS008/stats",
+      "type": "official_match_stats",
+      "why": "全场与逐盘整数；官方PBP交叉通过。"
+    },
+    {
+      "url": "https://api.tnnslive.com/v1/web?id=75051562&mode=match_info&submode=stats&web=true",
+      "type": "full_match_stats",
+      "why": "TNNS全场39/6制胜分、42/35非受迫失误；分盘加和通过。"
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4588007/zheng-powers-into-beijing-last-eight-with-three-set-win-over-charaeva",
+      "type": "official_report",
+      "why": "比赛背景与24岁生日"
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4587123/who-is-alina-charaeva-on-verge-of-first-wta-1000-quarterfinal-beijing",
+      "type": "official_report",
+      "why": "比赛背景与24岁生日"
+    }
+  ],
+  "_hit_data": [
+    {
+      "label": "首盘2-1救下3个破发点",
+      "detail": "官方PBP第4局，郑3次救点后保发到3-1，再连赢3局拿首盘6-1。",
+      "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS008/pointbypoint"
+    },
+    {
+      "label": "39制胜分 / 42非受迫失误",
+      "detail": "全场整数；制胜分首盘18、次盘8、决胜盘13，UE每盘14，不把次盘失误写成上升。",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051562&mode=match_info&submode=stats&web=true"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "拿到领先以后，郑钦文怎样把这场比赛赢下来？",
+    "thesis": "首盘救下3个破发点守住优势，次盘被扳平，决胜盘发球胜赛局失守仍在接发局结束比赛；完整关键回合和原声负责呈现压力与回应。",
+    "beats": [
+      "冷开场与结果",
+      "生日来路与坐标",
+      "首盘救点守住领先",
+      "第二盘被扳平",
+      "决胜盘再拿优势",
+      "5-3胜赛局失守",
+      "接发首个赛点兑现",
+      "庆祝握手",
+      "全场统计与继续向前"
+    ],
+    "human_context": {
+      "facts": [
+        "郑钦文在24岁生日前一天晋级；她在赛后采访谈第一盘侵略性、第二盘未保持同样专注、感谢今晚观众、第三盘艰苦战斗。",
+        "恰拉耶娃此前击败世界第一莱巴金娜，首次进入WTA1000第四轮。"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4588007/zheng-powers-into-beijing-last-eight-with-three-set-win-over-charaeva",
+        "https://www.wtatennis.com/news/4587123/who-is-alina-charaeva-on-verge-of-first-wta-1000-quarterfinal-beijing"
+      ],
+      "angle": "在24岁生日前一天，郑钦文连续第4场进入决胜盘，面对此前击败世界第一的恰拉耶娃；领先被追近后仍赢下终局。"
+    }
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 268.32,
+      "end": 282.8,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "冷开场先给本场赛点和得分反应；源片窗口逐帧/原声核对中。",
+      "point_end_ok": "获胜得分与反应。",
+      "_edit_id": "cold_open",
+      "_ending_payoff_required": true,
+      "quote": [
+        {
+          "at": 0.1,
+          "end": 3.26,
+          "text": "Tomorrow she'll turn 24 years of age.\n明天她就满24岁了"
+        },
+        {
+          "at": 3.84,
+          "end": 6.5,
+          "text": "As Zheng Qinwen wraps up a well-earned\n郑钦文为自己赢得了一份"
+        },
+        {
+          "at": 6.5,
+          "end": 8.64,
+          "text": "early birthday present in Beijing.\n来自北京的提前生日礼物"
+        },
+        {
+          "at": 10.88,
+          "end": 11.94,
+          "text": "The tussle is over.\n这场拉锯战终于结束了"
+        },
+        {
+          "at": 12.3,
+          "end": 14.08,
+          "text": "And what a tussle it ended up being.\n最终还真是一场苦战"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "生日之前，再闯中网8强",
+      "kicker": "北京时间10月7日晚上 · 北京1/8决赛",
+      "seconds": 10.74,
+      "narration": "北京时间十月七号晚上，中网八分之一决赛。郑钦文在二十四岁生日前一天，以六比一、二比六、六比四，拿下比赛。",
+      "_edit_id": "coordinate"
+    },
+    {
+      "title_card": "首盘救下3个破发点\n领先从这里守住",
+      "kicker": "第一盘 · 2-1的发球局",
+      "seconds": 10.5,
+      "narration": "郑钦文用正手压向边线。首盘二比一，她又救下三个破发点。连同这一局，首盘最后四局，全归她。",
+      "_edit_id": "set_one"
+    },
+    {
+      "source": "main",
+      "start": 2.6,
+      "end": 16.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "2.60秒仍在抛球前准备，随后完整发球、回合、正手压线和得分反应；源片2.48秒前一残句已经结束。",
+      "point_end_ok": "完整一分结束后的切点，保留解说句。",
+      "_edit_id": "first_rally",
+      "quote": [
+        {
+          "at": 8.7,
+          "end": 10.7,
+          "text": "Oh, terrific placement.\n噢 落点太漂亮了"
+        },
+        {
+          "at": 11.26,
+          "end": 12.8,
+          "text": "That forehand just kissing the line.\n这一记正手刚好擦着边线"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 35.8,
+      "end": 83.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "首盘5-1接发局选用三分：30-15到30-30，40-30到平分，40-Ad盘点兑现6-1；节目删去中间两分。中间一分源首次主机位已举拍，保留所有已发布动作、触球与完整相持，不假称抛球起点齐全。 窗口止83.0秒，完整保留Golden Girl句尾，下一句who's于83.32秒后开始。",
+      "point_end_ok": "保留发球至得分结果和真实反应；每处分界为已核官方节目死球切点。",
+      "_edit_id": "first_set_close",
+      "quote": [
+        {
+          "at": 8.98,
+          "end": 11.5,
+          "text": "Oh, that's terrific stuff.\n噢 打得太棒了"
+        },
+        {
+          "at": 12.0,
+          "end": 13.74,
+          "text": "This time it's measured so well, just...\n这一次分寸掌握得真好 就……"
+        },
+        {
+          "at": 26.58,
+          "end": 28.18,
+          "text": "Well, you've seen this before.\n你之前见过这样的情况"
+        },
+        {
+          "at": 34.8,
+          "end": 36.08,
+          "text": "And that'll do it.\n首盘就此结束"
+        },
+        {
+          "at": 36.2,
+          "end": 38.14,
+          "text": "Opening set, just 36 minutes\n首盘只用了36分钟"
+        },
+        {
+          "at": 38.14,
+          "end": 39.5,
+          "text": "for Zheng Qinwen to establish\n让郑钦文确立"
+        },
+        {
+          "at": 39.5,
+          "end": 41.24,
+          "text": "a quality lead\n明显的优势"
+        },
+        {
+          "at": 41.24,
+          "end": 42.5,
+          "text": "and foothold in this contest.\n在这场比赛里站稳了脚跟"
+        },
+        {
+          "at": 42.68,
+          "end": 43.6,
+          "text": "Their first ever meeting\n双方首次交手"
+        },
+        {
+          "at": 43.6,
+          "end": 45.0,
+          "text": "is one-way traffic.\n目前完全是一边倒"
+        },
+        {
+          "at": 45.6,
+          "end": 47.18,
+          "text": "All in favor of the Golden Girl.\n全部有利于这位金牌姑娘"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_digital_silence_why": "首盘5-1这一分发球动作前及抛球期间，官方源自然现场声较弱；保留36至38秒发球完整动作，不补假音、不让TTS遮原声。最终仅允许同源SHA绑定、非零波形相关≥0.85且实际增益误差≤2dB的自然弱声秒，不能凭文字豁免数字静音。",
+      "_digital_silence_windows": [
+        [
+          36.0,
+          38.0
+        ]
+      ]
+    },
+    {
+      "title_card": "次盘从1-0到2-6\n盘数被扳平",
+      "kicker": "第二盘 · 领先被抹平",
+      "seconds": 10.38,
+      "narration": "第二盘，郑钦文一比零领先，却先被对手反超。二比三之后，又连丢三局。六比二，比赛进入决胜盘。",
+      "_edit_id": "set_two"
+    },
+    {
+      "source": "main",
+      "start": 132.6,
+      "end": 183.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "132.60秒前无关解说句已结束，132.75秒抛球之前保留准备；第二盘查3-2的15-15这一分郑得分至15-30，随后节目跳至郑2-4发球0-40被破2-5，最后对手盘点扳成1-1。保留这些完整发球回合、死球反应和解说，三分不冒充连续。",
+      "point_end_ok": "保留发球至得分结果和真实反应；每处分界为已核官方节目死球切点。",
+      "_edit_id": "second_set_turn",
+      "quote": [
+        {
+          "at": 12.34,
+          "end": 14.1,
+          "text": "That left hand wasn't on there.\n左手没有握在拍上"
+        },
+        {
+          "at": 14.22,
+          "end": 15.42,
+          "text": "Nope.\n没有"
+        },
+        {
+          "at": 22.58,
+          "end": 25.46,
+          "text": "Oh, the forehand, exquisite.\n噢 这一记正手太精妙了"
+        },
+        {
+          "at": 25.46,
+          "end": 26.9,
+          "text": "It finds its way through.\n这记球打穿了防守"
+        },
+        {
+          "at": 27.38,
+          "end": 28.65,
+          "text": "No winners opening set,\n首盘没有一个制胜分"
+        },
+        {
+          "at": 28.65,
+          "end": 30.86,
+          "text": "three in the second,\n第二盘已有三个"
+        },
+        {
+          "at": 30.86,
+          "end": 32.38,
+          "text": "and her third produces\n她的第三个制胜分"
+        },
+        {
+          "at": 32.38,
+          "end": 33.7,
+          "text": "her second break of serve.\n帮她第二次破发"
+        },
+        {
+          "at": 37.06,
+          "end": 39.0,
+          "text": "Good effort and exposure\n出色的发挥 加上曝光"
+        },
+        {
+          "at": 39.0,
+          "end": 40.8,
+          "text": "at a WTA 1000 event\n在WTA1000赛的舞台上"
+        },
+        {
+          "at": 40.8,
+          "end": 41.94,
+          "text": "has put Alina Charaeva\n让阿丽娜·恰拉耶娃"
+        },
+        {
+          "at": 41.94,
+          "end": 42.62,
+          "text": "in the spotlight.\n进入了大家的视野"
+        },
+        {
+          "at": 42.8,
+          "end": 44.2,
+          "text": "One thing that has become\n有一点已经"
+        },
+        {
+          "at": 44.2,
+          "end": 45.36,
+          "text": "glaringly obvious:\n再明显不过"
+        },
+        {
+          "at": 46.12,
+          "end": 46.92,
+          "text": "she's a fighter.\n她是个斗士"
+        },
+        {
+          "at": 47.5,
+          "end": 49.8,
+          "text": "Third set coming up from Beijing.\n北京站这场比赛将进入决胜盘"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 246.24,
+      "end": 252.8,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "保留郑2-1第四个破发点从接发准备至完整发球、反手接发制胜、得分结果及击球后反应；源252.88秒不确定词语开始前，于252.80秒死球剪出。",
+      "point_end_ok": "保留发球至得分结果和真实反应；每处分界为已核官方节目死球切点。",
+      "_edit_id": "third_set_break",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_quote_skip_why": "246.24至252.80逐段ASR交叉覆盖，只有现场发球、击球与观众声，无前景英语；英文解说在252.88才开口，下一独立字幕段保留已核清完整五个接发制胜分解说。"
+    },
+    {
+      "source": "main",
+      "start": 255.8,
+      "end": 260.24,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "承接同一分之后的教练与看台反应；删去252.80–255.80秒仅死球原声片段，保留256.06秒开始的五个接发制胜分完整解说；不删除回合动作。",
+      "point_end_ok": "保留发球至得分结果和真实反应；每处分界为已核官方节目死球切点。",
+      "_edit_id": "third_set_break_commentary",
+      "quote": [
+        {
+          "at": 0.26,
+          "end": 1.98,
+          "text": "Five return winners in this contest\n本场5个接发制胜分"
+        },
+        {
+          "at": 1.98,
+          "end": 2.64,
+          "text": "for Zheng Qinwen.\n都来自郑钦文"
+        },
+        {
+          "at": 2.72,
+          "end": 3.84,
+          "text": "This might be the most important\n这可能是最重要的"
+        },
+        {
+          "at": 3.84,
+          "end": 4.36,
+          "text": "of them all.\n在这五个球之中"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "反手接发直接得分\n决胜盘3-1领先",
+      "kicker": "决胜盘 · 第4个破发点",
+      "seconds": 11.44,
+      "narration": "决胜盘二比一，前三个机会被对手救下。第四次，郑钦文用反手回球直接拿下这一分。三比一，优势又回到她手里。",
+      "_edit_id": "third_break_result",
+      "_why": "源片247~255郑2-1第四个破发点，反手接发直接得分，原声称another return和5 return winners；PBP第三盘第4局4次BP确认；结果后放解释卡，不提前报仍在打的一分。"
+    },
+    {
+      "title_card": "5-3没能结束比赛\n接发局还有机会",
+      "kicker": "决胜盘 · 终局的考验",
+      "seconds": 10.48,
+      "narration": "决胜盘，郑钦文五比二领先。五比三，发球胜赛局却被破掉。五比四，她在接发局继续争取最后一分。",
+      "_edit_id": "final_pressure"
+    },
+    {
+      "source": "main",
+      "start": 260.64,
+      "end": 297.08,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "首个赛点完整发球回合和结果；庆祝握手挥手结束，主持人开口前切走。",
+      "point_end_ok": "完整一分结束后保留庆祝、握手、致意和解说完整句。",
+      "_edit_id": "match_point_and_celebration",
+      "quote": [
+        {
+          "at": 7.78,
+          "end": 10.94,
+          "text": "Tomorrow she'll turn 24 years of age.\n明天她就满24岁了"
+        },
+        {
+          "at": 11.52,
+          "end": 14.18,
+          "text": "As Zheng Qinwen wraps up a well-earned\n郑钦文为自己赢得了一份"
+        },
+        {
+          "at": 14.18,
+          "end": 16.32,
+          "text": "early birthday present in Beijing.\n来自北京的提前生日礼物"
+        },
+        {
+          "at": 18.56,
+          "end": 19.62,
+          "text": "The tussle is over.\n这场拉锯战终于结束了"
+        },
+        {
+          "at": 19.98,
+          "end": 21.76,
+          "text": "And what a tussle it ended up being.\n最终还真是一场苦战"
+        },
+        {
+          "at": 22.46,
+          "end": 23.76,
+          "text": "Ladies and gentlemen,\n女士们 先生们"
+        },
+        {
+          "at": 25.74,
+          "end": 27.24,
+          "text": "Dominating the opening set,\n首盘占尽优势"
+        },
+        {
+          "at": 27.24,
+          "end": 28.9,
+          "text": "but had to gut out a win\n最终却得苦战才赢下来"
+        },
+        {
+          "at": 28.9,
+          "end": 30.34,
+          "text": "in two hours and 11 minutes.\n比赛用了2小时11分钟"
+        },
+        {
+          "at": 30.78,
+          "end": 32.76,
+          "text": "And Zheng Qinwen, for the second time\n郑钦文第二次"
+        },
+        {
+          "at": 32.76,
+          "end": 34.24,
+          "text": "in four appearances,\n在4次北京站之旅中"
+        },
+        {
+          "at": 34.24,
+          "end": 36.2,
+          "text": "is a quarterfinalist in Beijing.\n闯进八强"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_end_boundary_why": "采访首帧297.28；原生SEG_FADE额外0.18秒尾料，名义end取297.08，额外底料截至297.26，仅保留真实赛后挥手。最后解说词尾296.84完整保留。"
+    },
+    {
+      "stat_card": true,
+      "seconds": 9.26,
+      "narration": "三十九记制胜分，对手六记。进攻有威力，波动也不少。最后一局，她用回应握住胜利。",
+      "_edit_id": "statistics"
+    },
+    {
+      "title_card": "生日礼物到手\n下一场继续向前",
+      "kicker": "中网8强 · 继续向前",
+      "seconds": 10.14,
+      "narration": "生日礼物，提前到手。郑钦文已经闯进中网八强。下一场，她能继续进攻，继续耐心争每一分吗？",
+      "_edit_id": "outlook"
+    }
+  ]
+}

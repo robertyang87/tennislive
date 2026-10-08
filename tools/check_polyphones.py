@@ -23,10 +23,9 @@
 
 ⚠️ 「列出来」不等于「读错了」：静态一半报的是**风险**。真要知道读没读错，跑 `--measure`。
 
-⚠️ **静态那一半实际只在会话里生效**：runner 的 pip 行（`match-reel.yml`、
-`interview-clip.yml`）不装 pypinyin，Actions 上的 dry-run 和采访片每一趟印的都是
-「这趟没查」——那是出声，不是覆盖。字卡线（解说片）没有自动座位，只有 `--slug`。
-写完 spec 在会话里跑一次 dry-run，这一半才真的查过。
+生产任务必须安装轻量 pypinyin 并运行独立 CLI；缺依赖的 CLI 返回2，不能当成功。
+可选 dry-run 提示仍只报不拦，但「这趟没查」绝不是已覆盖。静态正确与声学正确是
+两种证据；发布前仍须对实际嗓音、语速的封面、所有旁白和片尾逐段声学复核。
 """
 from __future__ import annotations
 
@@ -273,14 +272,51 @@ MEASURED_OK: dict[str, tuple[str, str, str]] = {
     "砸中": ("中", "zhòng", "「水瓶砸中了头」+6% correct/low（0.277）；普查那轮 uncertain、F0 下降同「众」"),
 }
 
-#: 按「字＋读音」整类不报的：只有量过、而且没有一句读错的才进。
+# 旧记录明确给过原句的，只认可该原句；不能把一次正确推广到这个词的
+# 所有句子。没有保存完整原句的旧条目仍是低噪声静态筛选资料，不是声学凭证。
+# 不补造未留存的测量语境。这里只忽略句末标点；逗号、前后措辞必须相同。
+# 「要重」是旧的重字免检旁路，也必须跟「重打」一起收窄。
+MEASURED_OK_CONTEXTS: dict[str, tuple[str, ...]] = {
+    "时差": ("关注网球时差",),
+    "重打": ("这一分要重打",),
+    "要重": ("这一分要重打",),
+    "数到": ("转播数到第三个赛点",),
+    "冲着": ("冲着看台",),
+    "砸中": ("水瓶砸中了头",),
+}
+
+
+def _sentence_at(text: str, index: int) -> tuple[str, int]:
+    start = max(text.rfind(p, 0, index) for p in "。？！；") + 1
+    ends = [x for x in (text.find(p, index) for p in "。？！；") if x >= 0]
+    end = min(ends) + 1 if ends else len(text)
+    return text[start:end], index - start
+
+
+def _context_key(text: str) -> str:
+    return text.strip().rstrip("。？！!?；;")
+
+
+def _context_matches(word: str, text: str, index: int) -> bool:
+    contexts = MEASURED_OK_CONTEXTS.get(word)
+    return contexts is None or _context_key(_sentence_at(text, index)[0]) in contexts
+
+#: 历史「字＋读音」资料：没有观察到错读不等于未来所有句子都正确。
 #: 得 děi 没有只读 děi 的参考字，声学比对只能拿近似字代理（结论最多 low），
 #: 所以看的是共振峰：「得自己倒贴」「还得再守」「先得有」三句 F2 都升到 ~1950 Hz
 #: （ei，同 垒/磊/内），没有一句像「德」（dé，F2 平在 1300~1550）。
-#: 语料里 děi 四十来处，逐条报只会把真该看的几条淹掉。**听出来读错了就删掉这一行。**
+#: 原来按整类免检；现在只认可下面保留的三个原语境，新句子明确待测。
 MEASURED_OK_READINGS: dict[tuple[str, str], str] = {
     ("得", "dei3"): "三句共振峰都是 ei（2026-09-27，+6%/+22%），没有一句读成 dé",
 }
+MEASURED_OK_READING_CONTEXTS: dict[tuple[str, str], tuple[str, ...]] = {
+    ("得", "dei3"): ("得自己倒贴", "还得再守", "先得有"),
+}
+
+
+def _reading_context_ok(text: str, index: int, char: str, reading: str) -> bool:
+    contexts = MEASURED_OK_READING_CONTEXTS.get((char, reading), ())
+    return _context_key(_sentence_at(text, index)[0]) in contexts
 
 
 @dataclass
@@ -305,14 +341,11 @@ class Risk:
     lexicon: bool        # 所在的词是词典词、词典给的正是这个读音（报告里只计数）
     uncertain: bool = False
     measured: dict = field(default_factory=dict)
+    context_recheck: bool = False
 
     def sentence(self) -> tuple[str, int]:
         """这一处所在的那一句（显示那份）和它在句子里的字位。"""
-        t, i = self.text, self.index
-        s = max(t.rfind(p, 0, i) for p in "。？！；") + 1
-        ends = [x for x in (t.find(p, i) for p in "。？！；") if x >= 0]
-        e = (min(ends) + 1) if ends else len(t)
-        return t[s:e], i - s
+        return _sentence_at(self.text, self.index)
 
 
 # ---------------------------------------------------------------- pypinyin
@@ -458,9 +491,23 @@ def _measured_ok_positions(text: str) -> set[int]:
         while (k := text.find(w, start)) >= 0:
             j = w.find(ch)
             while j >= 0:
-                out.add(k + j)
+                if _context_matches(w, text, k + j):
+                    out.add(k + j)
                 j = w.find(ch, j + 1)
             start = k + 1
+    return out
+
+
+def _context_recheck_positions(text: str) -> set[int]:
+    """有原句证据的词出现在新句子里，需要实测；词典命中不能藏掉提醒。"""
+    out: set[int] = set()
+    for word in MEASURED_OK_CONTEXTS:
+        char = MEASURED_OK[word][0]
+        for match in re.finditer(re.escape(word), text):
+            for offset, current in enumerate(word):
+                index = match.start() + offset
+                if current == char and not _context_matches(word, text, index):
+                    out.add(index)
     return out
 
 
@@ -471,6 +518,7 @@ def analyze(sp: Spoken) -> tuple[list[Risk], int, list[str]]:
     covered = pronounce.covered_positions(text)
     rewrite = {m.start() for p, _ in REWRITE_ONLY for m in re.finditer(p, text)}
     ok = _measured_ok_positions(text)
+    recheck = _context_recheck_positions(text)
     unc = {m.start(1) for p in UNCERTAIN for m in re.finditer(p, text)}
     risks: list[Risk] = []
     skipped_ok = 0
@@ -482,14 +530,16 @@ def analyze(sp: Spoken) -> tuple[list[Risk], int, list[str]]:
         if (not is_poly or want in defaults or want.endswith("5") or i in covered
                 or i in rewrite):
             continue
-        if i in ok or (ch, want) in MEASURED_OK_READINGS:
+        if i in ok or _reading_context_ok(text, i, ch, want):
             skipped_ok += 1
             continue
+        new_context = (i in recheck or (ch, want) in MEASURED_OK_READING_CONTEXTS)
         others = [r for r in live if r != want and not r.endswith("5")]
         risks.append(Risk(
             label=sp.label, text=text, index=i, char=ch, word=word[i] or ch,
             intended=want, default=defaults[0] if defaults else "", others=others,
-            rate=sp.rate, lexicon=lex_reading[i] == want, uncertain=i in unc))
+            rate=sp.rate, lexicon=lex_reading[i] == want and not new_context,
+            uncertain=i in unc, context_recheck=new_context))
     notes = [f"{sp.label}「{text[max(0, m.start() - 4):m.end() + 4]}」：{why}"
              for p, why in REWRITE_ONLY for m in re.finditer(p, text)]
     return risks, skipped_ok, notes
@@ -507,7 +557,8 @@ def reel_texts(spec: dict) -> list[Spoken]:
     for i, seg in enumerate(spec.get("segments") or []):
         if isinstance(seg, dict) and str(seg.get("narration") or "").strip():
             out.append(Spoken(f"第 {i + 1} 段", readable(seg["narration"]), REEL_RATE))
-    out.append(Spoken("片尾", readable(OUTRO), REEL_RATE))
+    if spec.get("outro", True):
+        out.append(Spoken("片尾", readable(OUTRO), REEL_RATE))
     return out
 
 
@@ -518,6 +569,7 @@ def interview_texts(spec: dict, speech=None) -> list[Spoken]:
     `build_interview_clip` 等于把那个几千行的模块加载第二次。
     """
     from tennislive.video.explainer import readable
+    from tennislive.video.outro_page import NARRATION as OUTRO
     if speech is None:
         sys.path.insert(0, str(ROOT / "tools"))
         from build_interview_clip import _takeaway_speech as speech  # noqa: PLC0415
@@ -526,12 +578,15 @@ def interview_texts(spec: dict, speech=None) -> list[Spoken]:
     for which, card in (spec.get("takeaway") or {}).items():
         if isinstance(card, dict):
             out.append(Spoken(f"解读卡 {which}", readable(speech(card)), rate))
+    # 采访片无解读卡时也有品牌片尾；片尾使用默认 +22%，不跟 takeaway_rate。
+    out.append(Spoken("片尾", readable(OUTRO), STORY_RATE))
     return out
 
 
 def explainer_texts(slug: str) -> list[Spoken]:
     """网球有故事（字卡）：`explainer_script` 排出来的每一屏，含开场和末屏那一问。"""
     from tennislive.video import explainer as E
+    from tennislive.video.outro_page import NARRATION as OUTRO
     story = None
     try:
         from tennislive.render.tournament_story import find_story_by_slug
@@ -547,7 +602,8 @@ def explainer_texts(slug: str) -> list[Spoken]:
     else:
         return []
     return [Spoken(f"第 {i + 1} 屏", E.readable(s.narration), STORY_RATE)
-            for i, s in enumerate(segs) if (s.narration or "").strip()]
+            for i, s in enumerate(segs) if (s.narration or "").strip()] + [
+                Spoken("片尾", E.readable(OUTRO), STORY_RATE)]
 
 
 def spoken_texts(slug: str | None = None, spec_path: Path | None = None) -> list[Spoken]:
@@ -599,7 +655,8 @@ def static_report(texts: list[Spoken], slug: str | None = None,
                      "换字表也没管（src/tennislive/video/pronounce.py）：")
         for r in shown:
             ctx = r.text[max(0, r.index - 6):r.index + 7]
-            tag = "口径题" if r.uncertain else "⚠️ 合成器可能读错"
+            tag = ("⚠️ 新语境未实测，旧句正确不能免检" if r.context_recheck
+                   else "口径题" if r.uncertain else "⚠️ 合成器可能读错")
             lines.append(f"  {r.label}「{ctx}」 {r.char} 应读 {_show(r.intended)}"
                          f"（不看上下文会读 {_show(r.default)}）［{tag}］")
         lines.append("  要知道合成器到底读成什么（要联网，一处十几秒）：\n"
@@ -617,15 +674,17 @@ def static_report(texts: list[Spoken], slug: str | None = None,
         lines.append("  另 " + "；".join(tail) + "，不逐条报")
     for n in notes:
         lines.append(f"  ⚠️ {n}")
+    lines.append("  静态筛选不是声学通过；词典和历史词条不能证明本次整句读对。"
+                 f"本次 {len(texts)} 段仍须按实际嗓音、语速逐段声学复核，含封面、旁白和片尾。")
     return lines, risks
 
 
-NO_PYPINYIN = ("[多音字] ⚠️ 这趟没查：没装 pypinyin（pip install -e \".[polyphone]\"；"
-               "runner 上本来就不装，会话里跑 dry-run 才查得到）——**没查不等于没有**")
+NO_PYPINYIN = ("[多音字] ⚠️ 这趟没查：没装 pypinyin（pip install pypinyin；"
+               "生产任务必须安装后重跑检查）——**没查不等于没有**")
 
 
 def pypinyin_available() -> bool:
-    """只问装没装，不 import：缺它的时候（runner 上恒缺）别先付别的 import 的钱。"""
+    """只问装没装，不 import：缺它时别先付别的 import 的钱。"""
     import importlib.util  # noqa: PLC0415
     try:
         return importlib.util.find_spec("pypinyin") is not None
@@ -793,6 +852,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--limit", type=int, default=12, help="--measure 最多量几处")
     ap.add_argument("--workers", type=int, default=3)
     a = ap.parse_args(argv)
+    if not pypinyin_available():
+        print(NO_PYPINYIN)
+        return 2  # 生产独立检查命令未执行，不能作为成功凭证。
     texts = spoken_texts(a.slug, Path(a.spec) if a.spec else None)
     if not texts:
         print(f"[多音字] 找不到 {a.slug or a.spec} 的旁白（specs/reels、specs/interviews、"
@@ -808,7 +870,12 @@ def main(argv: list[str] | None = None) -> int:
             pass
         mlines, bad = measure_risks(risks, limit=a.limit, workers=a.workers)
         print("\n".join(mlines))
-        return 1 if bad else 0
+        if bad:
+            return 1
+        # 缺依赖、超 limit、uncertain/unreliable/skipped 均不是声学通过。
+        incomplete = (any("这趟没量" in line for line in mlines)
+                      or any(r.measured.get("verdict") != "correct" for r in risks))
+        return 2 if incomplete else 0
     return 0
 
 

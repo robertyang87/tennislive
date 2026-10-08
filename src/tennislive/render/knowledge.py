@@ -24,7 +24,7 @@ import html
 from ..digest import Digest
 from . import push_style as ps
 from .tournament_story import TournamentStory
-from .xiaohongshu import xhs_title_len
+from .copy_title import compact_copy_title, copy_hook_budget, make_copy_title, publication_hook
 
 # 栏目名印在标题上——读者只看标题，承诺印不出来这个栏目对外就不存在。
 # 见 docs/columns.md 与 docs/column-operations.md 的 R4。
@@ -41,6 +41,8 @@ def knowledge_column(story: TournamentStory) -> str:
 
 def knowledge_title(story: TournamentStory, digest: Digest) -> str:
     day = f"{digest.today.month}.{digest.today.day}"
+    column = knowledge_column(story)
+    budget = copy_hook_budget(day, column)
     trivia_hooks = {
         "scoring-history": "网球为什么是15、30、40？",
         "yellow-ball": "网球为什么从白色变黄？",
@@ -60,17 +62,15 @@ def knowledge_title(story: TournamentStory, digest: Digest) -> str:
         hook = trivia_hooks.get(story.slug, f"{story.title}，你真懂吗？")
     else:
         hook = f"为什么要记住{story.title}？"
-    column = knowledge_column(story)
-    prefix = f"{_COLUMN_EMOJI}{day}{column}｜"
-    if xhs_title_len(prefix + hook) > 20:
+    if len(compact_copy_title(hook)) > budget:
         if story.kind == "player":
             short_name = story.title.rsplit("·", 1)[-1]
             hook = f"{short_name}的来路"
         else:
             hook = f"{story.title}的故事"
-    if xhs_title_len(prefix + hook) > 20:
+    if len(compact_copy_title(hook)) > budget:
         hook = story.title
-    return prefix + hook
+    return make_copy_title(day, column, publication_hook(story.slug, hook))
 
 
 def knowledge_wechat_title(story: TournamentStory, digest: Digest) -> str:
@@ -118,10 +118,10 @@ def knowledge_push_html_from_parts(
     ⚠️⚠️ 卡底那颗红按钮是**字面写在这儿的**，逐字节不动（账号所有者 2026-08-31
     「微信推送的红色按钮不要改了」；它比 `push_reel` 那颗多一个分号，那也不动）。
     """
-    lines = xhs_text.strip().splitlines()
-    title = html.escape(lines[0] if lines else "")
-    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
-    body = "\n".join(lines[body_start:]).strip()
+    from .pushmsg import split_xhs  # noqa: PLC0415
+
+    raw_title, body = split_xhs(xhs_text)
+    title = html.escape(raw_title)
     # One block, not paragraph divs: the body has to be readable *and* liftable
     # in a single long-press. Splitting it into elements made copying a drag-
     # across-the-whole-screen job, and pairing pretty paragraphs with a second
@@ -135,7 +135,7 @@ def knowledge_push_html_from_parts(
     action = ps.video_button(video_url) if video_url else ""
     red = (f'<a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">'  # token-exempt: 红按钮逐字节不动（2026-08-31）
            "分别复制标题 / 正文 / 置顶评论</a>")
-    return f"""<div lang="zh-CN" style="{ps.PAGE}">
+    return f"""<div lang="zh-CN" class="tl-push" style="{ps.PAGE}">{ps.system_theme_style()}
 <div style="{ps.card("18px 16px 22px")}">
   {ps.pill(column)}
   {ps.title_block(title)}

@@ -1,0 +1,20 @@
+{
+  "scope": "Full actual seg7 original vs full speakable seg7, target 不得/得 acoustic alignment",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "original_text": "主办方当然要负责。WTA明确要求，球员准备发球后，广告不得变化。重打一分，不能把赛事方的保障责任一笔勾销。",
+  "spoken_text": "主办方当然要负责。WTA明确要求，球员准备发球后，广告不得变化。崇打一分，不能把赛事方的保障责任一笔勾销。",
+  "target_window_s": [
+    5.61,
+    5.82
+  ],
+  "change": "later 重打 to 崇打",
+  "comparison": {
+    "spec": 1.111619234085083,
+    "f0": 0.16750528925540642,
+    "vmis": 0.0,
+    "frames": 21,
+    "comb": 0.7233149062979479
+  },
+  "reading_identification_limit": "This pair comparison shows effect of the change; independently de2-vs-de5 classifiers only low confidence and cannot prove de2-vs-dei3 because no independent single-reading dei3 references."
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 210,
+  "range_to": 217,
+  "created_at": "2026-10-04T14:39:34.079755+00:00",
+  "elapsed_seconds": 2.39,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 212.56,
+      "end": 216.44,
+      "text": " Oh, he's stretching there as far as...",
+      "avg_logprob": -0.6853972765115591,
+      "no_speech_prob": 0.21459779143333435,
+      "words": [
+        {
+          "start": 212.56,
+          "end": 213.06,
+          "word": " Oh,",
+          "probability": 0.6389895081520081
+        },
+        {
+          "start": 213.18,
+          "end": 213.32,
+          "word": " he's",
+          "probability": 0.6416427791118622
+        },
+        {
+          "start": 213.32,
+          "end": 213.68,
+          "word": " stretching",
+          "probability": 0.9934945702552795
+        },
+        {
+          "start": 213.68,
+          "end": 214.0,
+          "word": " there",
+          "probability": 0.7114003300666809
+        },
+        {
+          "start": 214.0,
+          "end": 214.12,
+          "word": " as",
+          "probability": 0.2613777816295624
+        },
+        {
+          "start": 214.12,
+          "end": 214.3,
+          "word": " far",
+          "probability": 0.8385252356529236
+        },
+        {
+          "start": 214.3,
+          "end": 216.44,
+          "word": " as...",
+          "probability": 0.7346639037132263
+        }
+      ]
+    }
+  ]
+}

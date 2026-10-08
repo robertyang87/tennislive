@@ -1,0 +1,488 @@
+{
+  "job": {
+    "id": "u03-i25-被-bei4-vs-pi1",
+    "utterance": 3,
+    "label": "第 5 段",
+    "sentence": "决胜盘，郑钦文五比二领先。到了五比三，发球胜赛局却被破掉。五比四，她还要在接发局争取最后一分。",
+    "text_sha256": "6bbab9f1512a90b23c0f2f38898f525b32949fb9db96d75aed01301c5a90122e",
+    "index": 25,
+    "char": "被",
+    "intended": "bei4",
+    "wrong": "pi1",
+    "ok": [
+      "备",
+      "惫",
+      "焙"
+    ],
+    "bad": [
+      "披",
+      "砒",
+      "霹"
+    ],
+    "ok_reference_note": "single-reading common",
+    "bad_reference_note": "single-reading common"
+  },
+  "word": "被",
+  "char": "被",
+  "sentence": "决胜盘，郑钦文五比二领先。到了五比三，发球胜赛局却被破掉。五比四，她还要在接发局争取最后一分。",
+  "tts_text": "决胜盘，郑钦文五比二领先。到了五比三，发球胜赛局却被破掉。五比四，她还要在接发局争取最后一分。",
+  "intended_refs": [
+    "备",
+    "惫",
+    "焙"
+  ],
+  "wrong_refs": [
+    "披",
+    "砒",
+    "霹"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "unreliable",
+  "confidence": null,
+  "verdict_raw": "correct",
+  "score": 0.945,
+  "margin": 0.2,
+  "near_identical_to": "intended",
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 0.57,
+      "d_wrong": 4.367,
+      "score": 0.769
+    },
+    "f0": {
+      "d_intended": 0.095,
+      "d_wrong": 11.12,
+      "score": 0.983
+    },
+    "comb": {
+      "d_intended": 0.38,
+      "d_wrong": 13.335,
+      "score": 0.945
+    }
+  },
+  "neighbour_shift": {
+    "intended": 1.099,
+    "wrong": 9.12
+  },
+  "separation": {
+    "spec": {
+      "within": 2.61,
+      "between": 4.262,
+      "separation": 1.633
+    },
+    "f0": {
+      "within": 3.892,
+      "between": 6.356,
+      "separation": 1.633
+    },
+    "comb": {
+      "within": 5.197,
+      "between": 8.487,
+      "separation": 1.633
+    }
+  },
+  "selftest_loo": {
+    "备": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.408
+    },
+    "惫": {
+      "expect": "correct",
+      "got": "uncertain",
+      "score": 0.126
+    },
+    "焙": {
+      "expect": "correct",
+      "got": "misread",
+      "score": -0.472
+    },
+    "披": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.877
+    },
+    "砒": {
+      "expect": "misread",
+      "got": "uncertain",
+      "score": -0.187
+    },
+    "霹": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.879
+    }
+  },
+  "selftest_pass": false,
+  "distances_from_orig": {
+    "A:备": {
+      "spec": 0.57,
+      "f0": 0.095,
+      "vmis": 0.095,
+      "frames": 21,
+      "comb": 0.38
+    },
+    "A:惫": {
+      "spec": 2.672,
+      "f0": 3.741,
+      "vmis": 0.364,
+      "frames": 22,
+      "comb": 5.077
+    },
+    "A:焙": {
+      "spec": 3.681,
+      "f0": 8.914,
+      "vmis": 0.3,
+      "frames": 30,
+      "comb": 10.754
+    },
+    "B:披": {
+      "spec": 4.428,
+      "f0": 11.12,
+      "vmis": 0.273,
+      "frames": 33,
+      "comb": 13.335
+    },
+    "B:砒": {
+      "spec": 4.367,
+      "f0": 11.216,
+      "vmis": 0.464,
+      "frames": 28,
+      "comb": 13.399
+    },
+    "B:霹": {
+      "spec": 4.399,
+      "f0": 11.204,
+      "vmis": 0.273,
+      "frames": 33,
+      "comb": 13.403
+    }
+  },
+  "window_s": [
+    5.337,
+    5.535
+  ],
+  "boundary_token": "被",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "发球",
+      "胜赛",
+      "局",
+      "却",
+      "被",
+      "破掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ],
+    "A:备": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "发球",
+      "胜赛",
+      "局",
+      "却",
+      "备",
+      "破掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ],
+    "A:惫": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "发球",
+      "胜赛",
+      "局",
+      "却",
+      "惫",
+      "破掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ],
+    "A:焙": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "发球",
+      "胜赛",
+      "局",
+      "却",
+      "焙破",
+      "掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ],
+    "B:披": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "发球",
+      "胜赛",
+      "局",
+      "却",
+      "披破",
+      "掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ],
+    "B:砒": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "发球",
+      "胜赛",
+      "局",
+      "却",
+      "砒",
+      "破掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ],
+    "B:霹": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "发球",
+      "胜赛",
+      "局",
+      "却",
+      "霹破",
+      "掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      null,
+      9.5,
+      null,
+      -8.7,
+      null,
+      null,
+      null,
+      -10.9,
+      -10.4,
+      -10.0
+    ],
+    "A:备": [
+      null,
+      null,
+      9.5,
+      null,
+      -8.7,
+      null,
+      null,
+      null,
+      null,
+      -10.4,
+      -10.1
+    ],
+    "A:惫": [
+      -1.2,
+      -3.9,
+      -6.2,
+      -7.0,
+      -6.7,
+      null,
+      -7.5,
+      -9.4,
+      -11.0,
+      -10.9,
+      -7.8,
+      -8.1
+    ],
+    "A:焙": [
+      -4.9,
+      -6.8,
+      -8.4,
+      -8.6,
+      null,
+      null,
+      null,
+      null,
+      4.3,
+      3.3,
+      1.6,
+      -0.9,
+      -4.9
+    ],
+    "B:披": [
+      null,
+      -5.9,
+      -8.4,
+      -8.6,
+      -7.0,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -1.1,
+      -1.4,
+      -0.5,
+      0.2,
+      0.3
+    ],
+    "B:砒": [
+      -3.9,
+      -6.8,
+      -8.5,
+      -9.1,
+      -8.7,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -2.4,
+      -2.9,
+      -2.8,
+      -2.8,
+      -4.5
+    ],
+    "B:霹": [
+      null,
+      -5.8,
+      -8.3,
+      -8.5,
+      -6.8,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      -1.0,
+      -1.2,
+      -0.3,
+      0.4,
+      0.4
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/f2fc2b240cb472d4ce3373ae.mp3",
+    "A:备": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/1bd4a1c7f1742b510088e634.mp3",
+    "A:惫": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/dc53737ffa4497c194aa00e9.mp3",
+    "A:焙": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ddf6c8f880ac6355fe5f4d1d.mp3",
+    "B:披": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/8b71864b69c361ce65f6b96e.mp3",
+    "B:砒": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/4fbf5f415da1d0f06c6cce14.mp3",
+    "B:霹": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/f9eaa510afa201a70dffba9d.mp3"
+  }
+}

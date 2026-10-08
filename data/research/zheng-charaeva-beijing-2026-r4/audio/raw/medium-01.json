@@ -1,0 +1,81 @@
+{
+  "model": "medium.en",
+  "source_from": 60,
+  "source_to": 66,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 2.4799999999999995,
+      "end": 3.98,
+      "text": " Well, you've seen this before.",
+      "tokens": [
+        50363,
+        3894,
+        11,
+        345,
+        1053,
+        1775,
+        428,
+        878,
+        13,
+        50563
+      ],
+      "avg_logprob": -0.46592316844246606,
+      "compression_ratio": 0.7894736842105263,
+      "no_speech_prob": 0.07571619749069214,
+      "words": [
+        {
+          "start": 2.4799999999999995,
+          "end": 2.92,
+          "word": " Well,",
+          "probability": 0.21738624572753906
+        },
+        {
+          "start": 3.08,
+          "end": 3.28,
+          "word": " you've",
+          "probability": 0.831012636423111
+        },
+        {
+          "start": 3.28,
+          "end": 3.36,
+          "word": " seen",
+          "probability": 0.9932860732078552
+        },
+        {
+          "start": 3.36,
+          "end": 3.58,
+          "word": " this",
+          "probability": 0.991705060005188
+        },
+        {
+          "start": 3.58,
+          "end": 3.98,
+          "word": " before.",
+          "probability": 0.9973384737968445
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

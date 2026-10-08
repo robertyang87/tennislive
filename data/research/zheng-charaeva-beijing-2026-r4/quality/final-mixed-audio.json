@@ -1,0 +1,111 @@
+{
+  "film_sha256": "107cfcaa1a1985ce0873d291b6e79ead1d0f61f3f5ae97e4ea0f22585ac2721a",
+  "spec_sha256": "6466f6102296b538b703e46cbbec475e2c502c12562e15b7ae8376087e7cf8a2",
+  "actual_listening_performed": false,
+  "method": "Actual final MP4 decoded PCM versus exact signed native generation; bounded sliding normalized waveform correlation, allowing AAC encoding and overall gain",
+  "tts": [
+    {
+      "pearson": 0.9999438,
+      "offset_from_padded_start_seconds": 0.25,
+      "gain_db": -0.016,
+      "actual_nonzero_ratio": 0.956566,
+      "segment": 1,
+      "edit_id": "coordinate",
+      "film_expected_start_seconds": 15.93,
+      "native_mp3_sha256": "df7d2c41650c371381110f0f6de77749d662ad89d8c189d7ce6fc47332d1709e",
+      "excerpt_seconds": 9.644
+    },
+    {
+      "pearson": 0.9999719,
+      "offset_from_padded_start_seconds": 0.25,
+      "gain_db": -0.008,
+      "actual_nonzero_ratio": 0.955032,
+      "segment": 2,
+      "edit_id": "set_one",
+      "film_expected_start_seconds": 26.67,
+      "native_mp3_sha256": "ea666822566d36a0d33f443c2c2f57f5908068b4f69b18c03ba3672dd6f93963",
+      "excerpt_seconds": 9.404
+    },
+    {
+      "pearson": 0.999939,
+      "offset_from_padded_start_seconds": 0.25,
+      "gain_db": -0.015,
+      "actual_nonzero_ratio": 0.928674,
+      "segment": 5,
+      "edit_id": "set_two",
+      "film_expected_start_seconds": 98.37,
+      "native_mp3_sha256": "be04a8ca845ab73d008baa1839c18c93858bfd8a16f5f2f123bf8e6bcb4f7648",
+      "excerpt_seconds": 9.284
+    },
+    {
+      "pearson": 0.9999751,
+      "offset_from_padded_start_seconds": 0.25,
+      "gain_db": -0.011,
+      "actual_nonzero_ratio": 0.935572,
+      "segment": 9,
+      "edit_id": "third_break_result",
+      "film_expected_start_seconds": 170.15,
+      "native_mp3_sha256": "cae58b326775bf2c4ed8e943f68b26ece48126f630a4cd0687bfd4adac330596",
+      "excerpt_seconds": 10.34
+    },
+    {
+      "pearson": 0.9856039,
+      "offset_from_padded_start_seconds": 0.2499375,
+      "gain_db": -0.139,
+      "actual_nonzero_ratio": 0.953218,
+      "segment": 10,
+      "edit_id": "final_pressure",
+      "film_expected_start_seconds": 181.59,
+      "native_mp3_sha256": "841e39bca8567bb7dc31b22c310f200ec1794d6e151270c0e9f316f29dff5756",
+      "excerpt_seconds": 9.38
+    },
+    {
+      "pearson": 0.9999642,
+      "offset_from_padded_start_seconds": 0.25,
+      "gain_db": -0.008,
+      "actual_nonzero_ratio": 0.92812,
+      "segment": 12,
+      "edit_id": "statistics",
+      "film_expected_start_seconds": 228.51,
+      "native_mp3_sha256": "56c7dd2045043e7cd51d1f5c407557668580e064f5f91815b708118dab8248fc",
+      "excerpt_seconds": 8.156
+    },
+    {
+      "pearson": 0.9999635,
+      "offset_from_padded_start_seconds": 0.249,
+      "gain_db": -0.012,
+      "actual_nonzero_ratio": 0.921882,
+      "segment": 13,
+      "edit_id": "outlook",
+      "film_expected_start_seconds": 237.77,
+      "native_mp3_sha256": "458ef27bb19d9de5643d99df2b16927ea1da709fbec610a98b28ebc452433e45",
+      "excerpt_seconds": 9.044
+    },
+    {
+      "pearson": 0.99997,
+      "offset_from_padded_start_seconds": 0.249,
+      "gain_db": -0.009,
+      "actual_nonzero_ratio": 0.952768,
+      "edit_id": "outro",
+      "film_expected_start_seconds": 247.91,
+      "native_mp3_sha256": "ad76af6884cacb46ce01ec8b028073fb0fac4d20f326d46f548a7210fb5710bd"
+    }
+  ],
+  "natural_quiet_audio": {
+    "pearson": 0.9959312,
+    "offset_from_padded_start_seconds": 0.2,
+    "gain_db": -0.442,
+    "actual_nonzero_ratio": 1.0,
+    "source_window": [
+      36.0,
+      37.5
+    ],
+    "expected_film_window": [
+      51.12000000000002,
+      52.62000000000002
+    ],
+    "source_nonzero_ratio": 1.0
+  },
+  "tts_waveform_binding_pass": true,
+  "natural_quiet_waveform_binding_pass": true
+}

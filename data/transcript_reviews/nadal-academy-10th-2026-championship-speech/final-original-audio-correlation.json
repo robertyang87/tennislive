@@ -1,0 +1,38 @@
+{
+  "method": "actual decoded PCM correlation at three original English/Catalan/Spanish speech windows; not a human listening claim",
+  "source_sha256": "8227792fd511b0af162aa91efcc4cc1f0106d05dffb65aeec92b228d01f6a408",
+  "final_sha256": "4d182944319b68b4bd79f5bdb7195b0c966e7c71c8768a771f40d03517dc933f",
+  "status": "pass",
+  "windows": [
+    {
+      "source_start_seconds": 3.0,
+      "duration_seconds": 4,
+      "film_start_seconds": 4.8,
+      "offset_seconds": 1.7999999999999998,
+      "normalized_correlation": 0.9987522781501263,
+      "gain_estimate": 0.991230677239837,
+      "source_rms": 0.021091554002286794,
+      "final_rms": 0.020932713561815558
+    },
+    {
+      "source_start_seconds": 80.0,
+      "duration_seconds": 4,
+      "film_start_seconds": 81.8,
+      "offset_seconds": 1.7999999999999972,
+      "normalized_correlation": 0.9973589326987464,
+      "gain_estimate": 0.9830108437701496,
+      "source_rms": 0.01820983868978202,
+      "final_rms": 0.017947870429078312
+    },
+    {
+      "source_start_seconds": 142.0,
+      "duration_seconds": 4,
+      "film_start_seconds": 143.8,
+      "offset_seconds": 1.8000000000000114,
+      "normalized_correlation": 0.9975776177103813,
+      "gain_estimate": 0.9839526321295536,
+      "source_rms": 0.03255011132453536,
+      "final_rms": 0.03210553960442296
+    }
+  ]
+}

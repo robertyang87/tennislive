@@ -9,7 +9,7 @@
 - 账号所有者 Q8：浅底上药丸和按钮**黄绿实底 + 墨色字**，链接**中性灰**
 - ⚠️⚠️ **红按钮 #ff2442 逐字节不动**（账号所有者 2026-08-31「微信推送的红色按钮不要改了」）
 
-这份文件钉：① 红按钮两处产出和金样逐字节相等；② 推送只用浅色 token、Q8 的角色分工；
+这份文件钉：① 红按钮两处产出和金样逐字节相等；② 推送只用浅／深色 token、Q8 的角色分工；
 ③ 两条「网球有故事」推送同一套样子；④ 整块可选、`lang`、图片预留比例、回退链接；
 ⑤ 字卡推送的 2 万字预算没被样式挤掉；⑥ 复制页样式只写 token 变量；
 ⑦ 复制页在 Chromium 里真的：失败说失败、连点重新计时、深色 toast 看得见、按钮 44px、有焦点环。
@@ -38,7 +38,7 @@ COPY = "https://p.invalid/output/2026-09-26/copy.html"
 VIDEO = "https://v.invalid/explainer.mp4"
 POSTER = "https://gcore.jsdelivr.net/gh/o/r@main/output/2026-09-26/reel/x/poster.jpg"
 STAT = "https://gcore.jsdelivr.net/gh/o/r@main/output/2026-09-26/reel/x/stat_card.jpg"
-XHS = "9.26 网球有故事 | 标题一行\n\n正文第一段。\n\n正文第二段，带一个数 7-6(4)。\n\n#网球时差"
+XHS = "9.26网球有故事|标题一行\n\n正文第一段。\n\n正文第二段，带一个数 7-6(4)。\n\n#网球时差"
 
 
 def _reel(column: str = "赛场之上", *, stat: bool = True) -> str:
@@ -96,19 +96,19 @@ def test_推送红按钮逐字节不动_两处产出都钉金样(tmp_path):
         assert "border-top:5px solid #ff2442" in body
 
 
-# ── ② 一套浅色 token，Q8 的角色分工 ────────────────────────────────────────
+# ── ② 一套系统主题 token，Q8 的角色分工 ────────────────────────────────────────
 _HEX = re.compile(r"#[0-9a-fA-F]{6}\b")
 
 
-def test_推送正文只用浅色token一套色():
-    """推送是 PushPlus 那一页里的内联样式——只有浅色，所以每个颜色都得是 `LIGHT`
+def test_推送正文只用系统浅深色token一套色():
+    """推送浅色内联兜底、深色媒体查询覆盖，每个颜色都得是 `LIGHT` / `DARK`
     里的某个角色（红按钮／红边那一支除外）。原来这里有 #e7f5ea / #087747 / #7a8580 /
     #102d23 / #25342e 五支各配各的，**提示灰 #7a8580 白底只有 3.82:1**。"""
-    allowed = {v.lower() for v in T.LIGHT.values()} | {"#ff2442", "#ffffff"}
+    allowed = {v.lower() for theme in (T.LIGHT, T.DARK) for v in theme.values()} | {"#ff2442", "#ffffff"}
     for body in (_reel(), _knowledge()):
         used = {h.lower() for h in _HEX.findall(body)}
         stray = used - allowed
-        assert not stray, f"推送里有不属于浅色 token 的颜色：{sorted(stray)}"
+        assert not stray, f"推送里有不属于系统主题 token 的颜色：{sorted(stray)}"
         assert not re.search(r"(?i)\b(rgba?|hsla?)\(", body), "推送里有字面的颜色函数"
         assert "#7a8580" not in body, "提示灰还是 3.82:1 的那支"
 
@@ -156,7 +156,7 @@ def test_两条网球有故事推送长得一样_药丸是栏目名_有标题提
         assert gone not in deck, f"字卡推送里还有老样子：{gone}"
     # 标题提示行紧跟在大标题下面（复制页打不开时标题的出口），两条都是
     for body in (clip, deck):
-        after_title = body.split("9.26 网球有故事 | 标题一行", 1)[1]
+        after_title = body.split("9.26网球有故事|标题一行", 1)[1]
         assert after_title.index(ps.TITLE_HINT_TEXT) < 200
 
 
@@ -189,7 +189,7 @@ def test_推送标题正文整块可选_片段声明中文():
     片段没有 `lang` 时全角逗号按西文字形排（评审 `zoom_punct_push_vs_copy.jpg`）。"""
     for body in (_reel(), _knowledge()):
         assert body.startswith('<div lang="zh-CN" '), body[:60]
-        title = _style_of(body, "9.26 网球有故事 | 标题一行")
+        title = _style_of(body, "9.26网球有故事|标题一行")
         text = re.search(r'<div style="([^"]*)">正文第一段', body).group(1)
         for style in (title, text):
             assert "user-select:all" in style and "-webkit-user-select:all" in style, style
@@ -284,7 +284,7 @@ def test_字卡推送图多也装得下_每张图不比改之前更贵(tmp_path,
             for i in range(26)]
     for u in urls:
         (tmp_path / rel / u.rsplit("/", 1)[1]).write_bytes(b"x")
-    xhs = "🎾9.14 网球有故事｜谢尔顿为什么在大学多读了一年\n\n" + "字" * 1000
+    xhs = "9.14网球有故事|谢尔顿为何多读1年\n\n" + "字" * 1000
 
     def sent(n: int) -> str:
         body = knowledge_push_html_from_parts(
@@ -340,7 +340,7 @@ def test_复制页的textarea_id没改_指纹读得到(tmp_path):
     这两个 id 一个都不能动。"""
     page = tmp_path / "copy.html"
     page.write_text(to_copy_page(XHS), encoding="utf-8")
-    assert copy_page_fingerprint(page) == "9.26 网球有故事 | 标题一行"
+    assert copy_page_fingerprint(page) == "9.26网球有故事|标题一行"
     assert '<textarea id="body" readonly>' in page.read_text(encoding="utf-8")
 
 

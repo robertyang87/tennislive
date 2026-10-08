@@ -1,0 +1,295 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source_audio agent: base.en/small.en full-source VAD, targeted no-VAD, medium.en refinement, and native platform ASR-caption comparison",
+  "reviewed_at": "2026-10-07T16:31:18.616093+00:00",
+  "status": "complete",
+  "reviewed_from": 268.32,
+  "reviewed_to": 282.8,
+  "actual_listening_performed": false,
+  "review_scope": "Entire selected source window inspected using real, retained ASR outputs and cross-checks. Complete means selected-source ASR coverage resolved, not an invented human listening attestation. Sentence subtitles split only at actual word boundaries into consecutive semantic clauses.",
+  "foreground_english": [
+    {
+      "start": 268.42,
+      "end": 271.58,
+      "en": "Tomorrow she'll turn 24 years of age.",
+      "zh": "明天她就满24岁了"
+    },
+    {
+      "start": 272.16,
+      "end": 274.82,
+      "en": "As Zheng Qinwen wraps up a well-earned",
+      "zh": "郑钦文为自己赢得了一份"
+    },
+    {
+      "start": 274.82,
+      "end": 276.96,
+      "en": "early birthday present in Beijing.",
+      "zh": "来自北京的提前生日礼物"
+    },
+    {
+      "start": 279.2,
+      "end": 280.26,
+      "en": "The tussle is over.",
+      "zh": "这场拉锯战终于结束了"
+    },
+    {
+      "start": 280.62,
+      "end": 282.4,
+      "en": "And what a tussle it ended up being.",
+      "zh": "最终还真是一场苦战"
+    }
+  ],
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/base.en.json",
+      "sha256": "fb5e6d7b42bcc200b6e404ba867aefe3c1b5ad2c55f62da95d45dcceb95de62f",
+      "model": "base.en",
+      "source_from": 0,
+      "source_to": 350,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": true,
+        "word_timestamps": true,
+        "condition_on_previous_text": false
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/edge-00-medium.en.json",
+      "sha256": "c003a19a52d077a307b44af8d6b6a428ed9a841efdf60e4b3348c3813c9040d9",
+      "model": "medium.en",
+      "source_from": 281.8,
+      "source_to": 287.2,
+      "parameters": {
+        "vad_filter": false,
+        "word_timestamps": true,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/edge-00-small.en.json",
+      "sha256": "ab9f0c8051b0f86bb1577bce3d2af59ed0d1e4937bb69b2a80d5498f01c49546",
+      "model": "small.en",
+      "source_from": 281.8,
+      "source_to": 287.2,
+      "parameters": {
+        "vad_filter": false,
+        "word_timestamps": true,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/medium-07.json",
+      "sha256": "ec791e9da6ffedf1f68b98af953fe004a5cc5a96c4d5a86e7d2de04f7410a6ea",
+      "model": "medium.en",
+      "source_from": 278,
+      "source_to": 286,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/medium-08.json",
+      "sha256": "1737e127d8ccabadd3d658908d4124b9ef0db9fa15aae48b672d153ab9d515b9",
+      "model": "medium.en",
+      "source_from": 267,
+      "source_to": 278,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/medium-refine-03.json",
+      "sha256": "45f37e5b05a517d3ec672a46d7d929770aee28e41ac2b3f116504a1ec2e34dfb",
+      "model": "medium.en",
+      "source_from": 282.7,
+      "source_to": 286.1,
+      "parameters": {
+        "language": "en",
+        "beam_size": 7,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/narrow-00-base.en.json",
+      "sha256": "c48194dfd1491136eac10cc9631b2bf1ea6a055ec29371861b0accde83099ac7",
+      "model": "base.en",
+      "source_from": 268,
+      "source_to": 278,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/narrow-00-small.en.json",
+      "sha256": "8f27be3882a12ad5711bb8c4f83057c280020f2806ec8b91382b4c81c8ed2fa0",
+      "model": "small.en",
+      "source_from": 268,
+      "source_to": 278,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/narrow-01-base.en.json",
+      "sha256": "ed872457c06e55719d5cc0ee5d665715ebf756865c837c31108e35772f2d4122",
+      "model": "base.en",
+      "source_from": 278.5,
+      "source_to": 284,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/narrow-01-small.en.json",
+      "sha256": "cf49339aa876878b9c2361239cb002d0c50060e8bbfc934fee5a37442eb350f8",
+      "model": "small.en",
+      "source_from": 278.5,
+      "source_to": 284,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/pa-base.en.json",
+      "sha256": "f41fde8fdc33436d1d9ce459ed51c0545ada100a5a3c1652af49656d1bfc9ad4",
+      "model": "base.en",
+      "source_from": 282.7,
+      "source_to": 286.1,
+      "parameters": {
+        "vad_filter": false,
+        "word_timestamps": true,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/pa-small.en.json",
+      "sha256": "d8397559fd7588371e6f63a2e17eb02de117aef5b48c0833a2e018cd8d92b219",
+      "model": "small.en",
+      "source_from": 282.7,
+      "source_to": 286.1,
+      "parameters": {
+        "vad_filter": false,
+        "word_timestamps": true,
+        "initial_prompt": null
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/small.en.json",
+      "sha256": "122d03640c703979e5c72ec7e8ba414590744abfbfda279d2a83e8e705bcf85e",
+      "model": "small.en",
+      "source_from": 0,
+      "source_to": 350,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": true,
+        "word_timestamps": true,
+        "condition_on_previous_text": false
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-17-base.en.json",
+      "sha256": "22fe2268f20438014b278f91b0dfb6c806227ec4c5e4ddf9137aa3756462b99c",
+      "model": "base.en",
+      "source_from": 265,
+      "source_to": 279,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-17-small.en.json",
+      "sha256": "111c037e3f9a1771d0f2a9cf928bc010b757653643b2a9c6d925445bfc172018",
+      "model": "small.en",
+      "source_from": 265,
+      "source_to": 279,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-18-base.en.json",
+      "sha256": "02a3bba00113a5931b8da56eadd95bae222ab6da48db7d987ad17981c330fb61",
+      "model": "base.en",
+      "source_from": 279,
+      "source_to": 297.28,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    },
+    {
+      "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/target-18-small.en.json",
+      "sha256": "0435069631d39e0ae5eb51d0e24f0ea74991b754a54f78c13e7125a8552e3dbe",
+      "model": "small.en",
+      "source_from": 279,
+      "source_to": 297.28,
+      "parameters": {
+        "language": "en",
+        "beam_size": 5,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "condition_on_previous_text": false,
+        "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+      }
+    }
+  ],
+  "source_caption_evidence": {
+    "path": "data/research/zheng-charaeva-beijing-2026-r4/audio/raw/native-captions.txt",
+    "sha256": "9648e1156cfb65ad74754d17e48941605e8cca20efe97c0b90fa76bd350bfb39",
+    "type": "native downloaded platform ASR captions, supporting rather than human verified"
+  },
+  "resolution_notes": []
+}

@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "kind": "message-correction",
+  "slug": "djokovic-borges-beijing-2026-r1",
+  "revision_id": "system-theme-stats-20260930",
+  "parent_receipt": "4e2b02c4f83d4886807651708166aea3",
+  "film": {
+    "sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-djokovic-borges-beijing-2026-r1/djokovic-borges-beijing-2026-r1-subtitle-corrected.mp4",
+    "bytes": 101054067
+  },
+  "previous_pushed": {
+    "path": "pushed.subtitle-corrected-4e2b02c4.json",
+    "sha256": "52d679680feef4260f4e8ebcb44b0b0b8fb59b45442b41e5ebbb0fcc9841ebe9",
+    "bytes": 265
+  },
+  "stat_card": {
+    "path": "stat_card.theme-stats-20260930.jpg",
+    "sha256": "cf645c50e8a0e9b03da2d03b607d6652515636417ecf051c426126990968efe8",
+    "bytes": 996356
+  },
+  "stats_source": {
+    "path": "delivery-stats-20260930.json",
+    "sha256": "09070196c0ed7f9b1dc3517b2c3851300f21f15fc3926360ad830f819d393291",
+    "bytes": 1996
+  },
+  "copy_sha256": "cc3503c1ef57b0f6d3594b2bb7ccf58cbb7c9231999eb83b8c51d92a5eb82a9a",
+  "copy_page_sha256": "963f448b266bf903d52464c75dc8041cca065673db00283ad9c34fc21ad2a13f",
+  "theme_sources": {
+    "src/tennislive/design_tokens.py": "080fb665671a28cc543a160fffb30cf504a69c3ee64f3f96cc2ae31d0976a254",
+    "src/tennislive/render/push_style.py": "4a5e19b74c3b191b6e80bd63a508339696164311994fdcdf8820c8b103536474",
+    "tools/auto_push_gate.py": "51fe6019857e28868a628980af75286b29f5e31095fa0768d4410e24d26b986c",
+    "tools/publication_revision.py": "ffb21c79ded5da779ac9008c4e86134afb8b7c2bdbf03a56d3648a0f6996fe4f",
+    "tools/push_reel.py": "f07ae10b0a4a7a076bffe139e86f3cbd9441284594eb8091e232235f687d9061"
+  }
+}

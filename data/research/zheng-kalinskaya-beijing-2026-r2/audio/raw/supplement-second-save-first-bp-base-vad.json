@@ -1,0 +1,107 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 1019.0,
+  "range_to": 1038.0,
+  "selected_from": 1021.0,
+  "selected_to": 1034.0,
+  "decoded_pcm_sha256": "222767fd980894a26f1321585e978d9d88b0aaa0916e84fe6c05d2fe387efa22",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:10:36.331850+00:00",
+  "elapsed_seconds": 1.48,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 1020.52,
+      "end": 1023.46,
+      "text": " Oh, that's nice from Kellogg's guy, I see a pl-",
+      "avg_logprob": -0.7349874408621537,
+      "no_speech_prob": 0.20792856812477112,
+      "compression_ratio": 0.8703703703703703,
+      "words": [
+        {
+          "start": 1020.52,
+          "end": 1021.04,
+          "word": " Oh,",
+          "probability": 0.4155136048793793
+        },
+        {
+          "start": 1021.1,
+          "end": 1021.28,
+          "word": " that's",
+          "probability": 0.9868659675121307
+        },
+        {
+          "start": 1021.28,
+          "end": 1021.44,
+          "word": " nice",
+          "probability": 0.987146258354187
+        },
+        {
+          "start": 1021.44,
+          "end": 1021.7,
+          "word": " from",
+          "probability": 0.9485776424407959
+        },
+        {
+          "start": 1021.7,
+          "end": 1022.1,
+          "word": " Kellogg's",
+          "probability": 0.4378519803285599
+        },
+        {
+          "start": 1022.1,
+          "end": 1022.28,
+          "word": " guy,",
+          "probability": 0.6181254982948303
+        },
+        {
+          "start": 1022.42,
+          "end": 1022.42,
+          "word": " I",
+          "probability": 0.2986376881599426
+        },
+        {
+          "start": 1022.42,
+          "end": 1022.58,
+          "word": " see",
+          "probability": 0.6708309650421143
+        },
+        {
+          "start": 1022.58,
+          "end": 1022.68,
+          "word": " a",
+          "probability": 0.8458872437477112
+        },
+        {
+          "start": 1022.68,
+          "end": 1022.8,
+          "word": " pl",
+          "probability": 0.3929283618927002
+        },
+        {
+          "start": 1022.8,
+          "end": 1023.46,
+          "word": "-",
+          "probability": 0.3789704442024231
+        }
+      ]
+    }
+  ]
+}

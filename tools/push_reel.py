@@ -53,6 +53,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from tennislive.cdn import jsdelivr_base  # noqa: E402
 from tennislive.publish.pushplus import push, write_receipt  # noqa: E402
 from tennislive.render import push_style as ps  # noqa: E402
+from tennislive.render.copy_title import copy_title, make_copy_title  # noqa: E402
 from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
@@ -232,6 +233,47 @@ def wait_for_video(url: str, *, attempts: int = 8, delay: float = 15.0,
 
 def headline(outdir: Path, column: str, matchup: str, score: str = "",
              event: str = "", summary: str = "", date: str = "") -> str:
+    """Reel copy titles follow the 20-character, no-whitespace publishing rule.
+
+    Other columns keep their established generator until their independently
+    reviewed title-policy migration lands. Rendering and film inputs are unchanged.
+    """
+    if column != "赛场之上":
+        return _legacy_headline(outdir, column, matchup, score, event, summary, date)
+    if date and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+        raise SystemExit(f"--date 要写成 YYYY-MM-DD，收到 {date!r}")
+    if summary.strip():
+        pair = summary
+    else:
+        pair = matchup.replace(" vs ", f" {score} ") if score and " vs " in matchup \
+            else (f"{matchup} {score}".strip() if score else matchup)
+        # Preserve set-score boundaries before removing whitespace.
+        pair = re.sub(r"(?<=\d)\s+(?=\d+[-:])", "，", pair)
+    return copy_title(pair)
+
+
+def publication_title(outdir: Path, column: str, matchup: str = "", score: str = "",
+                      summary: str = "", date: str = "", slug: str = "") -> str:
+    """Final date+column+|+hook contract, separate from intermediate headlines."""
+    from datetime import date as Date  # noqa: PLC0415
+
+    if not date:
+        found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
+        if not found:
+            raise SystemExit("最终发布标题缺少日期；请传 --date YYYY-MM-DD")
+        date = "-".join(found.groups())
+    try:
+        when = Date.fromisoformat(date)
+    except ValueError as exc:
+        raise SystemExit(f"--date 要写成有效 YYYY-MM-DD，收到 {date!r}") from exc
+    pair = summary if summary.strip() else (
+        matchup.replace(" vs ", f" {score} ") if score and " vs " in matchup
+        else (f"{matchup} {score}".strip() if score else matchup))
+    return make_copy_title(f"{when.month}.{when.day}", column, pair, slug=slug)
+
+
+def _legacy_headline(outdir: Path, column: str, matchup: str, score: str = "",
+                     event: str = "", summary: str = "", date: str = "") -> str:
     """`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`。
 
     末尾那一格有两种写法，按这条片子哪种更说得清选：
@@ -691,7 +733,7 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
           图片长按保存
 
     ⚠️ **样子不在这儿配**（2026-09-27 UI 评审 WP2）：药丸、标题、提示行、「原图 ↗」、
-    视频按钮都从 `render/push_style.py` 的同一组函数出，颜色是 `design_tokens.LIGHT`
+    视频按钮都从 `render/push_style.py` 的同一组函数出，颜色跟随系统 `design_tokens.LIGHT` / `DARK`
     ——和字卡那条推送（`knowledge_push_html_from_parts`）、复制页同一套。
     **只有卡底那颗红按钮是字面写在这儿的**，逐字节不动（账号所有者 2026-08-31
     「微信推送的红色按钮不要改了」），判据 `tests/test_push_visual.py` 拿真产出和
@@ -756,7 +798,7 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
 
     red = btn(copy_url, "分别复制标题 / 正文", "#ff2442")  # token-exempt: 红按钮逐字节不动（2026-08-31）
 
-    return f"""<div lang="zh-CN" style="{ps.PAGE}">
+    return f"""<div lang="zh-CN" class="tl-push" style="{ps.PAGE}">{ps.system_theme_style()}
 <div style="{ps.card("18px 0 22px")}">
 <div style="{pad}">{ps.pill(column)}
 {ps.title_block(html.escape(title))}
@@ -820,8 +862,10 @@ def prepare_copy(copy_path: Path, outdir: Path, *, column: str = "", date: str =
     # 工作流那几个输入曾经挂着上一条片子的默认值，漏传一项就拿另一场球的
     # 标题发出去。
     meta = resolve_meta(Path(copy_path), args if args is not None else argparse.Namespace())
-    title = headline(outdir, column, meta["matchup"], meta["score"],
-                     meta["event"], meta["summary"], date)
+    if date and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+        raise SystemExit(f"--date 要写成 YYYY-MM-DD，收到 {date!r}")
+    title = publication_title(outdir, column, meta["matchup"], meta["score"],
+                              meta["summary"], date, Path(copy_path).name.split(".")[0])
     copy_text = copy_body_only(copy_text, title)
     if not copy_text:
         raise SystemExit("正文去掉标题后为空")
@@ -891,6 +935,30 @@ def main() -> int:
               "  这一步必须排在 git commit 之前，否则它进不了仓库。")
         return 0
 
+    # Message-only corrections keep the original QC/spec/video immutable.
+    # Their own exact delivery identity must be durably reserved before any POST.
+    revision = None
+    revision_repo = Path.cwd()
+    from publication_revision import claim_post, has_revision, resolve as resolve_revision
+    if has_revision(revision_repo, outdir):
+        from auto_push_gate import validate_qc
+        run_url = (f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/"
+                   f"{os.environ.get('GITHUB_REPOSITORY', '')}/actions/runs/"
+                   f"{os.environ.get('GITHUB_RUN_ID', '')}")
+        if (not os.environ.get("GITHUB_RUN_ID") or not os.environ.get("GITHUB_REPOSITORY")
+                or not os.environ.get("RUNNER_TEMP")):
+            raise SystemExit("消息修订只能由已预占的原生发布工作流发送")
+        film_hash = validate_qc(revision_repo, outdir.name, outdir)
+        revision = resolve_revision(revision_repo, outdir.name, outdir, film_hash,
+                                    phase="send", run_url=run_url)
+        canonical = prepare_copy(revision_repo / "specs/reels" / f"{outdir.name}.xhs.txt", outdir)
+        if ((column, title, copy_text) != (canonical[0], canonical[1],
+                                          f"{canonical[1]}\n\n{canonical[2]}")
+                or args.lead or args.title_prefix
+                or Path(args.copy).resolve() != (revision_repo / "specs/reels" / f"{outdir.name}.xhs.txt").resolve()):
+            raise SystemExit("消息修订不允许临时覆盖已经绑定的标题、正文或导语")
+    stat_name = revision.stat_card_name if revision else STAT_CARD_NAME
+
     # 走了 Release 的片子**不在仓库里**，所以先问 render.json 再找文件。
     released = released_video_url(outdir)
     name = args.video
@@ -920,20 +988,25 @@ def main() -> int:
     # 账号所有者 2026-08-25 定：赛场之上的微信推送必须带全场技术统计图。
     # 这道闸放在真正发送之前，查产物而不是查 spec：即使上游误删了 `stats`
     # 字段，也不能让一条缺数据图的消息静默发出去。其他栏目仍按原规则可选。
-    if column == "赛场之上" and not (outdir / STAT_CARD_NAME).is_file():
+    if column == "赛场之上" and not (outdir / stat_name).is_file():
         raise SystemExit(
             f"赛场之上推微信必须带全场技术统计图：缺少 "
-            f"{outdir / STAT_CARD_NAME}。补齐 spec.stats 和双方头像、重新 render 后再推。"
+            f"{outdir / stat_name}。补齐 spec.stats 和双方头像、重新 render 后再推。"
         )
     # 非赛场之上栏目仍是可选的一屏；有文件就带上。
     stat_card = ""
-    if (outdir / STAT_CARD_NAME).is_file():
-        stat_card = stat_card_url(outdir)
+    if (outdir / stat_name).is_file():
+        stat_card = stat_card_url(outdir, stat_name)
         print(f"[数据图] 带上这一屏：{stat_card}")
     body = build_html(url, copy_url, args.lead, copy_text, poster,
                       column=column, stat_card=stat_card)
     # ⚠️ 前缀**只作用在这一处**。上面 `wait_for_copy_page(copy_url, title)` 和
     # 复制页里印的都是裸 `title`——前缀混进去就是「等一句永远不出现的话」。
+    if revision:
+        # Recheck after Pages/CDN waits: no changed bytes may borrow the reservation.
+        resolve_revision(revision_repo, outdir.name, outdir, film_hash,
+                         phase="send", run_url=run_url)
+        claim_post(revision, run_url, Path(os.environ["RUNNER_TEMP"]))
     receipt = push(f"{args.title_prefix}{title}", body, asset_dir=outdir)
     if args.receipt_out:
         # 流水号和消息网页一起落：「记下已推送」那一步把它写进 pushed.json，

@@ -1,0 +1,45 @@
+{
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "source_window": [
+    245.8,
+    266.44
+  ],
+  "video_tail_seconds": 0.18,
+  "video_preview_dimensions": [
+    108,
+    144
+  ],
+  "sample_rate": 48000,
+  "channels": 2,
+  "method": "Real cut_segment on unchanged official source, decode resulting MP4 intermediate to float32 stereo and count exact samples",
+  "outputs": [
+    {
+      "audio_tail": "",
+      "audio_codec": "aac",
+      "part": "/workspace/djokovic-cja-research/audio-tail-source-check/original-tail.mp4",
+      "part_sha256": "5c11359e3cec1cf7402632b801204247eedf89298d6d19122700ad8e0556d6c1",
+      "body_samples": 990720,
+      "tail_samples_expected": 8640,
+      "tail_samples_actual": 8640,
+      "tail_nonzero_samples": 17280,
+      "tail_peak": 0.09511710703372955,
+      "body_rms": 0.015513001941144466,
+      "decoded_samples": 999424,
+      "filter": ""
+    },
+    {
+      "audio_tail": "silence",
+      "audio_codec": "alac",
+      "part": "/workspace/djokovic-cja-research/audio-tail-source-check/silenced-tail.mp4",
+      "part_sha256": "431c48abc59b189e05cbbeae1179f1b3b4d4701aa02e5ae56f0960fa40e97469",
+      "body_samples": 990720,
+      "tail_samples_expected": 8640,
+      "tail_samples_actual": 8640,
+      "tail_nonzero_samples": 0,
+      "tail_peak": 0.0,
+      "body_rms": 0.015611480921506882,
+      "decoded_samples": 999360,
+      "filter": "aresample=48000,atrim=end_sample=990720,asetpts=N/SR/TB,apad=whole_len=999360,atrim=end_sample=999360"
+    }
+  ]
+}

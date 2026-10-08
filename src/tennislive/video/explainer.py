@@ -32,6 +32,7 @@ import base64
 import html
 import json
 import mimetypes
+import math
 import os
 import re
 import shutil
@@ -180,6 +181,8 @@ class ExplainerSegment:
     # 所以它是**逐条认领的开关，不是把全局翻回去**——全局翻回去会把其余
     # 那四十几条重新弄坏一遍，那正是上一次翻面要修的东西。
     copy_at: str = ""
+    # Opt-in source-led layouts; existing positional scripts keep their shape.
+    visual: dict | None = None
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -1934,14 +1937,11 @@ def _academy_span_diagram() -> str:
 
     头像出处见 assets/explainer/nadal-academy/faces/credits.json。
     """
-    import base64
-
     from ..zh import player_zh as _zh
 
-    root = _REPO / "assets/explainer/nadal-academy/faces"
     def uri(name: str) -> str:
-        return "data:image/jpeg;base64," + base64.b64encode(
-            (root / f"{name}.jpg").read_bytes()).decode()
+        # 只渲这一屏时才读头像。字幕等共享调用方 import 本模块时不该依赖素材。
+        return f"asset://assets/explainer/nadal-academy/faces/{name}.jpg"
 
     AXIS = 248
     # (真实年份位置 x, 英文名, 年份·年纪, 文件名, 在轴上方?)
@@ -2017,6 +2017,10 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # run 37368614614 的实际3:4成片已抽帧、字幕与原声质检；见 docs/research/medvedev-beijing-default-2026-qc.json。
+    "medvedev-beijing-default-2026",
+    # 2026-10-01：run 36808709110 的 133.67s 成片已逐屏、字幕与音量质检；见 docs/research/atp250-medvedev-hangzhou-2026-qc.json。
+    "atp250-medvedev-hangzhou-2026",
     # 2026-09-26 验过才加进来的。**第二趟**的数（第一趟 run 36249638228 抽帧看见
     # 字幕「弗里茨第十 蒂亚福第12」半中半洋，旁白改写后作废，并补了判据
     # `test_同一句里的排名不许一个中文一个阿拉伯数字`）：
@@ -3594,6 +3598,170 @@ _FILS_PRECEDENT_DIAGRAM = """\
 """
 
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    'atp250-medvedev-hangzhou-2026': (('cause',
+      '杭州 · 2026',
+      '梅总这冠，拿到250分',
+      '九月二十九日，梅德韦杰夫击败卢布列夫，在杭州夺冠。二百五十，首先是赛事级别，也代表冠军的该站积分。',
+      'assets/explainer/atp250-medvedev-hangzhou-2026/hangzhou-trophy.jpg',
+      'Hangzhou Open official / 2026-09-29',
+      ('2026 杭州 · ATP 250', '签表排名第 6 · 冠军 250 分')),
+     ('cause',
+      '巨星先例',
+      '费德勒、纳达尔也打过',
+      '费德勒，二〇一五年，世界第二，在伊斯坦布尔夺冠。纳达尔，二〇一七年，世界第九，参加布里斯班赛。两站都是二百五十级别。',
+      '',
+      '官方历史签表',
+      ('年份、排名都按当年签表', '两人均直接入围正赛'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="68" text-anchor="middle" font-size="33" '
+      'fill="#b8cfc0">两代巨星 · 当年签表排名</text><rect x="35" y="115" width="830" height="100" rx="20" '
+      'fill="#183d2a"/><text x="67" y="158" font-size="32" fill="#c6f65a" font-weight="800">世界第 '
+      '2</text><text x="300" y="158" font-size="34" font-weight="800">费德勒</text><text x="67" y="195" '
+      'font-size="29" fill="#b8cfc0">2015 伊斯坦布尔 · ATP 250</text><text x="803" y="180" '
+      'text-anchor="end" font-size="29">冠军</text><rect x="35" y="245" width="830" height="100" rx="20" '
+      'fill="#183d2a"/><text x="67" y="288" font-size="32" fill="#c6f65a" font-weight="800">世界第 '
+      '9</text><text x="300" y="288" font-size="34" font-weight="800">纳达尔</text><text x="67" y="325" '
+      'font-size="29" fill="#b8cfc0">2017 布里斯班 · ATP 250</text><text x="803" y="310" text-anchor="end" '
+      'font-size="29">1/4决赛</text><text x="450" y="445" text-anchor="middle" font-size="34" '
+      'fill="#c6f65a" font-weight="800">两人均直接入围正赛</text></g></svg>'),
+     ('cause',
+      '阿尔卡拉斯 · 2023',
+      '世界第2，也在250捧杯',
+      '阿尔卡拉斯，二〇二三年，世界第二，在布宜诺斯艾利斯夺冠。顶级球员来打二百五十，有明确的先例。',
+      'assets/explainer/atp250-medvedev-hangzhou-2026/alcaraz-buenosaires-2023.jpg',
+      'Tennis TV official / 2023-02-19',
+      ('2023 阿根廷公开赛 · ATP 250', '阿尔卡拉斯 · 签表排名第 2')),
+     ('cause',
+      '德约科维奇 · 2025',
+      '第100冠，拿在250',
+      '德约更直观。二〇二五年，世界第六，在日内瓦拿到生涯第一百冠。这座冠军，也来自二百五十赛。',
+      'assets/explainer/atp250-medvedev-hangzhou-2026/djokovic-geneva-2025.jpg',
+      'Novak Djokovic official / Profimedia / AP',
+      ('2025 日内瓦 · ATP 250', '世界第 6 · 生涯第 100 冠')),
+     ('cause',
+      '德约科维奇 · 2024',
+      '世界第1，也来过',
+      '前一年，世界第一的德约也来过日内瓦，但那次拿的是外卡，打到半决赛。这里要分清年份，也要分清入围方式。',
+      '',
+      '2024 Geneva official draw',
+      ('2024 日内瓦 · 世界第 1', '持外卡 WC · 止步半决赛'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="88" text-anchor="middle" font-size="36" '
+      'fill="#b8cfc0">2024 日内瓦 · ATP 250</text><text x="450" y="235" text-anchor="middle" '
+      'font-size="120" font-weight="800" fill="#c6f65a">世界第 1</text><text x="450" y="320" '
+      'text-anchor="middle" font-size="48" font-weight="800">德约科维奇</text><rect x="255" y="365" '
+      'width="390" height="78" rx="20" fill="#183d2a"/><text x="450" y="417" text-anchor="middle" '
+      'font-size="38" font-weight="800">WC 外卡 · 半决赛</text></g></svg>'),
+     ('cause',
+      '更多近年先例',
+      '这些前十，也拿过250冠军',
+      '近年还有世界第五的西西帕斯，在洛斯卡沃斯；世界第五的卢布列夫，在香港；世界第七的鲁德，在日内瓦。他们都拿过二百五十冠军。',
+      '',
+      '2023/2024 official draws',
+      ('西西帕斯、卢布列夫、鲁德', '分别在 2023、2024 年夺冠'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><rect x="35" y="30" width="830" height="100" rx="20" '
+      'fill="#183d2a"/><text x="67" y="73" font-size="32" fill="#c6f65a" font-weight="800">世界第 '
+      '5</text><text x="300" y="73" font-size="34" font-weight="800">西西帕斯</text><text x="67" y="110" '
+      'font-size="29" fill="#b8cfc0">2023 洛斯卡沃斯 · ATP 250</text><text x="803" y="95" text-anchor="end" '
+      'font-size="29">冠军</text><rect x="35" y="155" width="830" height="100" rx="20" '
+      'fill="#183d2a"/><text x="67" y="198" font-size="32" fill="#c6f65a" font-weight="800">世界第 '
+      '5</text><text x="300" y="198" font-size="34" font-weight="800">卢布列夫</text><text x="67" y="235" '
+      'font-size="29" fill="#b8cfc0">2024 香港 · ATP 250</text><text x="803" y="220" text-anchor="end" '
+      'font-size="29">冠军</text><rect x="35" y="280" width="830" height="100" rx="20" '
+      'fill="#183d2a"/><text x="67" y="323" font-size="32" fill="#c6f65a" font-weight="800">世界第 '
+      '7</text><text x="300" y="323" font-size="34" font-weight="800">鲁德</text><text x="67" y="360" '
+      'font-size="29" fill="#b8cfc0">2024 日内瓦 · ATP 250</text><text x="803" y="345" text-anchor="end" '
+      'font-size="29">冠军</text><text x="450" y="458" text-anchor="middle" font-size="30" '
+      'fill="#b8cfc0">当年签表排名 · 均直接入围</text></g></svg>'),
+     ('mechanism',
+      '同场阵容 · 2017',
+      '1站250，来了5位前十',
+      '而且，一站可以看到多位前十。二〇一七年布里斯班，签表里有拉奥尼奇、瓦林卡、锦织圭、蒂姆和纳达尔，共五位。这张历史签表，显然不止两位前十。',
+      '',
+      '2017 Brisbane official draw',
+      ('布里斯班 ATP 250 · 5 位前十', '5 人均直接入围正赛'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 535"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="52" text-anchor="middle" font-size="32" '
+      'fill="#b8cfc0">2017 布里斯班 · 官方签表排名</text><rect x="75" y="90" width="750" height="67" rx="15" '
+      'fill="#183d2a"/><text x="113" y="136" font-size="34">拉奥尼奇</text><text x="777" y="136" '
+      'text-anchor="end" font-size="36" fill="#c6f65a" font-weight="800">第 3</text><rect x="75" '
+      'y="172" width="750" height="67" rx="15" fill="#183d2a"/><text x="113" y="218" '
+      'font-size="34">瓦林卡</text><text x="777" y="218" text-anchor="end" font-size="36" fill="#c6f65a" '
+      'font-weight="800">第 4</text><rect x="75" y="254" width="750" height="67" rx="15" '
+      'fill="#183d2a"/><text x="113" y="300" font-size="34">锦织圭</text><text x="777" y="300" '
+      'text-anchor="end" font-size="36" fill="#c6f65a" font-weight="800">第 5</text><rect x="75" '
+      'y="336" width="750" height="67" rx="15" fill="#183d2a"/><text x="113" y="382" '
+      'font-size="34">蒂姆</text><text x="777" y="382" text-anchor="end" font-size="36" fill="#c6f65a" '
+      'font-weight="800">第 8</text><rect x="75" y="418" width="750" height="67" rx="15" '
+      'fill="#183d2a"/><text x="113" y="464" font-size="34">纳达尔</text><text x="777" y="464" '
+      'text-anchor="end" font-size="36" fill="#c6f65a" font-weight="800">第 9</text></g></svg>'),
+     ('mechanism',
+      '2026 ATP 规则',
+      '能参赛，还有参赛任务',
+      '能打二百五十，和该完成什么任务，是两件事。二〇二六年的承诺球员，按上一年十一月十日的前三十认定。基本任务是四站五百赛，至少一站在美网之后。',
+      '',
+      '2026 ATP Rulebook 1.08 C–D, pp12–13',
+      ('承诺球员：指定日期排名前 30', '4 站 ATP 500 · 至少 1 站美网后'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 535"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="60" text-anchor="middle" font-size="32" '
+      'fill="#b8cfc0">2026 承诺球员 · 基本参赛任务</text><rect x="55" y="160" width="180" height="185" rx="24" '
+      'fill="#183d2a"/><text x="145" y="237" text-anchor="middle" font-size="29" fill="#b8cfc0">第 1 '
+      '站</text><text x="145" y="303" text-anchor="middle" font-size="58" font-weight="800" '
+      'fill="#f4fbf7">500</text><rect x="270" y="160" width="180" height="185" rx="24" '
+      'fill="#183d2a"/><text x="360" y="237" text-anchor="middle" font-size="29" fill="#b8cfc0">第 2 '
+      '站</text><text x="360" y="303" text-anchor="middle" font-size="58" font-weight="800" '
+      'fill="#f4fbf7">500</text><rect x="485" y="160" width="180" height="185" rx="24" '
+      'fill="#183d2a"/><text x="575" y="237" text-anchor="middle" font-size="29" fill="#b8cfc0">第 3 '
+      '站</text><text x="575" y="303" text-anchor="middle" font-size="58" font-weight="800" '
+      'fill="#f4fbf7">500</text><rect x="700" y="160" width="180" height="185" rx="24" '
+      'fill="#c6f65a"/><text x="790" y="237" text-anchor="middle" font-size="29" fill="#092317">第 4 '
+      '站</text><text x="790" y="303" text-anchor="middle" font-size="58" font-weight="800" '
+      'fill="#092317">500</text><text x="450" y="427" text-anchor="middle" font-size="36" '
+      'font-weight="800" fill="#c6f65a">至少 1 站安排在美网后</text><text x="450" y="490" text-anchor="middle" '
+      'font-size="29" fill="#b8cfc0">按 2025-11-10 前 30 认定承诺球员</text></g></svg>'),
+     ('mechanism',
+      '折抵规则',
+      '蒙特卡洛能抵，杭州不能',
+      '蒙特卡洛虽然是一千赛，也能计入这项最低参赛任务。但杭州二百五十，不能拿来折抵。这里讲的是基本参赛任务，奖金池还有另一套条件。',
+      '',
+      '2026 ATP Rulebook 1.08 D/G',
+      ('蒙特卡洛：可计入最低任务', '杭州 250：不能折抵 500'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="62" text-anchor="middle" font-size="32" '
+      'fill="#b8cfc0">能否计入「4 站 500」最低任务？</text><rect x="60" y="120" width="780" height="145" rx="24" '
+      'fill="#183d2a"/><text x="100" y="178" font-size="38" font-weight="800">蒙特卡洛 1000</text><text '
+      'x="100" y="233" font-size="30" fill="#b8cfc0">规则明确允许折抵</text><text x="790" y="210" '
+      'text-anchor="end" font-size="48" font-weight="800" fill="#c6f65a">可以</text><rect x="60" y="300" '
+      'width="780" height="145" rx="24" fill="#183d2a"/><text x="100" y="358" font-size="38" '
+      'font-weight="800">杭州 250</text><text x="100" y="413" font-size="30" '
+      'fill="#b8cfc0">冠军积分另算</text><text x="790" y="390" text-anchor="end" font-size="48" '
+      'font-weight="800">不折抵</text></g></svg>'),
+     ('mechanism',
+      '排名积分',
+      '拿250分，不等于净加250',
+      '积分也要另算。假设这项冠军成绩符合替换条件，替掉原来九十分的成绩，排名总分净增的是一百六十分，而不是二百五十分。这是假设例子，不是梅总的实际积分明细。',
+      '',
+      '2026 ATP Rulebook ranking chapter; explicit hypothetical',
+      ('假设符合替换条件 · 90 → 250', '排名总分净增 160 分'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 535"><g font-family="Noto Sans SC, '
+      'sans-serif" fill="#f4fbf7"><text x="450" y="65" text-anchor="middle" font-size="32" '
+      'fill="#b8cfc0">假设示例 · 此成绩符合替换条件</text><text x="130" y="154" font-size="31">旧成绩</text><rect '
+      'x="130" y="180" width="205" height="65" rx="14" fill="#45644f"/><text x="375" y="227" '
+      'font-size="45" font-weight="800">90 分</text><text x="130" y="300" font-size="31">250 '
+      '冠军成绩</text><rect x="130" y="326" width="570" height="65" rx="14" fill="#c6f65a"/><text x="735" '
+      'y="373" font-size="45" font-weight="800">250</text><text x="450" y="490" text-anchor="middle" '
+      'font-size="44" fill="#c6f65a" font-weight="800">净增 250 − 90 = 160 分</text></g></svg>'),
+     ('today',
+      '回到杭州',
+      '一座冠军，两件事分开算',
+      '所以梅总在杭州拿到了冠军和二百五十分。成绩能否计入排名、净增多少，要看他的有效成绩；五百赛的参赛任务则另算。二百五十是赛事级别，不是球星身份的标签。',
+      'assets/explainer/atp250-medvedev-hangzhou-2026/hangzhou-handshake.jpg',
+      'Tennis TV official / Hangzhou 2026 final',
+      ('该站冠军积分：250 分', '排名有效成绩、500 任务分别算'),
+      '',
+      '你希望哪位球星来家门口的250赛？')),
+
     "a-plus-wildcard": (
     # 「中网那张 ATP 外卡为什么给了勒纳·钱」——2026-09-21 中网公布外卡当天做的。
     #
@@ -9100,7 +9268,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "今年五月在罗马，辛纳成了第二个，二十四岁。",
             "", "示意图 · 网球时差绘制",
             ("九站全拿过 叫金大师", "吉尼斯有正式条目", "德约十八年 辛纳今年"),
-            nine_masters_grid(),
+            nine_masters_grid(embed_images=False),
         ),
         (
             "tables", "两张表", "只有六站重合",
@@ -9759,6 +9927,9 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    'atp250-medvedev-hangzhou-2026': {'hook': '梅总杭州夺冠：赛事级别、参赛任务和排名积分，是三件事。用费德勒、纳达尔、阿尔卡拉斯、德约等真实先例讲清楚。',
+     'tags': ('网球', '网球时差', '梅德韦杰夫', '杭州公开赛', '网球冷知识')},
+
     "fils-tokyo-qualifying": {
         # ⚠️ 小红书正文卡 1000 字，要点那部分自动拼进来就占五百多字（第一版
         # 1031 字当场红），所以这里只写结论和那几个数，规则细节交给要点。
@@ -10359,6 +10530,15 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    'atp250-medvedev-hangzhou-2026': {'topic': '世界前十，也打 ATP 250',
+     'question': '梅总来杭州夺冠\n大牌也能打小比赛？',
+     'narration': '世界第六的梅总，在杭州夺冠了。大牌球员，为什么能来打二百五十级别的比赛？',
+     'image': 'assets/explainer/atp250-medvedev-hangzhou-2026/medvedev-hangzhou-r2.jpg',
+     'credit': 'Tennis TV official / 2026-09-26 Hangzhou second round',
+     'gloss': '250 冠军积分 · 500 参赛任务',
+     'cards_why': '用户明确要求「最好用图片配合字卡的形式讲」「规则也可以用一些图表做展示」「多找几个案例啊」。案例用对应年份赛事实拍或原始签表信息，抽象的参赛任务与积分替换用原创图表。',
+     'canvas': '3:4'},
+
     "fils-tokyo-qualifying": {
         "topic": "世界第 11，要从资格赛打起",
         "question": "世界第 11\n为什么要打资格赛？",
@@ -11365,6 +11545,23 @@ _OPENINGS: dict[str, dict] = {
 }
 
 
+# This episode keeps its reviewed script, diagrams and evidence in package data.
+# The existing renderer and preflight still consume the same registries.
+_DEFAULT_EPISODE = json.loads(
+    (Path(__file__).parent / "episodes/medvedev-beijing-default-2026.json").read_text(
+        encoding="utf-8"))
+_DEFAULT_SLUG = _DEFAULT_EPISODE["slug"]
+_SCRIPTS[_DEFAULT_SLUG] = tuple(
+    (beat["kind"], beat["label"], beat["title"], beat["narration"],
+     beat.get("image", ""), beat.get("credit", ""), tuple(beat["points"]),
+     beat.get("diagram", ""), beat.get("question", ""))
+    for beat in _DEFAULT_EPISODE["beats"]
+)
+_OPENINGS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["opening"]
+_CAPTIONS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["caption"]
+_CLAIMS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["claims"]
+
+
 def _fixture_lines(spec: dict) -> tuple[str, ...]:
     """封面上那两行小字：比赛坐标 + 对阵。
 
@@ -11480,6 +11677,9 @@ def explainer_script(story) -> list[ExplainerSegment]:
     scripted = _SCRIPTS.get(story.slug)
     if scripted:
         beats = [ExplainerSegment(*row) for row in scripted]
+        if story.slug == _DEFAULT_SLUG:
+            beats = [dataclasses.replace(segment, visual=spec.get("visual"))
+                     for segment, spec in zip(beats, _DEFAULT_EPISODE["beats"])]
         beats[-1] = _ask_it_out_loud(beats[-1])
         return [_opening_segment(story, beats), *beats]
 
@@ -11577,6 +11777,20 @@ def _data_uri(path: Path) -> str:
     return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode()
 
 
+def _embed_diagram_assets(diagram: str) -> str:
+    """Resolve local SVG photos only when rendering their card; missing files stay fatal."""
+    def embed(match: re.Match) -> str:
+        if match[1] == "venue-tile":
+            from .masters_grid import _tile_data_uri  # noqa: PLC0415
+
+            uri = _tile_data_uri(match[2])
+        else:
+            uri = _data_uri(_REPO / match[2])
+        return f'href="{uri}"'
+
+    return re.sub(r'href="(asset|venue-tile)://([^"<>]+)"', embed, diagram)
+
+
 def _assert_photo_integrity(path: Path) -> None:
     """Reject truncated photos and large flat placeholder bands before render.
 
@@ -11633,11 +11847,18 @@ CHIP_NUMERALS = tuple(chr(0x2460 + i) for i in range(20))
 
 def _slide_html(
     index: int, segment: ExplainerSegment, *, theme: str = "dark", topic: str = "",
-    column: str = DEFAULT_COLUMN,
+    column: str = DEFAULT_COLUMN, height: int = H,
 ) -> str:
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
     from . import explainer_card_palette as P
+
+    if segment.visual:
+        from .source_story_cards import source_slide_html
+
+        return source_slide_html(segment, index=index, height=height, topic=topic,
+                                 column=column, root=_REPO, font_css=_font_css(),
+                                 asset_uri=_data_uri)
 
     cover = segment.kind == "cover"
     # The cover is not a beat, so it carries no number and the beats after it
@@ -11740,7 +11961,7 @@ def _slide_html(
         # 所以示意图这一屏的 scrim **上半整段透明**，只保留底部那一段。
         hero = (
             '<div class="hero diagram"></div>'
-            f'<div class="diagram-wrap">{segment.diagram}</div>'
+            f'<div class="diagram-wrap">{_embed_diagram_assets(segment.diagram)}</div>'
             '<div class="scrim scrim--diagram"></div>'
         )
     # One line, always: CJK glyphs run about one em wide, so size the headline
@@ -11830,12 +12051,12 @@ def _slide_html(
 
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{css}
 *{{margin:0;padding:0;box-sizing:border-box;}}
-html,body{{width:{W}px;height:{H}px;}}
+html,body{{width:{W}px;height:{height}px;}}
 body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
-.slide{{position:relative;width:{W}px;height:{H}px;overflow:hidden;color:{P.FOREGROUND};
- background:{P.SLIDE_INK};}}
+.slide{{position:relative;width:{W}px;height:{height}px;overflow:hidden;color:{P.FOREGROUND};
+ background:{P.BACKGROUND};}}
 .hero{{position:absolute;inset:0;}}
-.hero.diagram{{background:radial-gradient(125% 80% at 50% 20%,{P.HERO_GLOW} 0%,{P.HERO_DEEP} 55%,{P.SLIDE_INK} 100%);}}
+.hero.diagram{{background:{P.BACKGROUND};}}
 /* 信箱式缩放那几屏的底衬：同一张照片的模糊放大版，让卡片顶栏压在照片色上，
    和铺满的那几屏观感一致。压暗到 .42 是为了让上层 contain 的那张仍然是
    视觉主体；scale(1.2) 给 blur 留溢出量，否则边缘透底。 */
@@ -11845,7 +12066,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
    a 900-unit viewBox came out around 17 real pixels — legible on a monitor,
    not on a phone held at arm's length. Fill the card instead, and start
    higher so the extra height still clears the caption block. */
-.diagram-wrap{{position:absolute;left:0;right:0;top:210px;display:flex;justify-content:center;}}
+.diagram-wrap{{position:absolute;left:0;right:0;top:{210 + (height - H) * 2 // 3}px;display:flex;justify-content:center;}}
 .diagram-wrap svg{{width:920px;height:auto;}}
 .scrim{{position:absolute;inset:0;background:linear-gradient(180deg,
  {ink(.55)} 0%,{ink(.10)} 34%,{ink(.20)} 60%,{ink(.94)} 100%);}}
@@ -12067,6 +12288,7 @@ def render_explainer_slides(
     theme: str = "dark",
     topic: str = "",
     column: str = DEFAULT_COLUMN,
+    height: int = H,
 ) -> list[Path]:
     """Render one image-first 3:4 card per beat via a headless Chromium page."""
     from playwright.sync_api import sync_playwright
@@ -12075,6 +12297,10 @@ def render_explainer_slides(
     checked: set[Path] = set()
     for segment in segments:
         if not segment.image:
+            continue
+        if segment.visual and segment.visual.get("layout") == "rule":
+            # Authentic document crops are verified as images by source_slide_html;
+            # the photographic band check does not apply to a white PDF page.
             continue
         image_path = _REPO / segment.image
         if image_path not in checked:
@@ -12089,12 +12315,12 @@ def render_explainer_slides(
         try:
             for index, seg in enumerate(segments):
                 page = browser.new_page(
-                    viewport={"width": W, "height": H}, device_scale_factor=2
+                    viewport={"width": W, "height": height}, device_scale_factor=2
                 )
                 try:
                     page.set_content(
                         _slide_html(index, seg, theme=theme, topic=topic,
-                                    column=column)
+                                    column=column, height=height)
                     )
                     page.wait_for_function(
                         "document.fonts.status === 'loaded'", timeout=15000
@@ -12125,7 +12351,7 @@ def render_explainer_slides(
                     out = outdir / f"slide_{index:02d}.jpg"
                     page.screenshot(
                         path=str(out), type="jpeg", quality=_SLIDE_JPEG_QUALITY,
-                        clip={"x": 0, "y": 0, "width": W, "height": H},
+                        clip={"x": 0, "y": 0, "width": W, "height": height},
                     )
                     paths.append(out)
                 finally:
@@ -13416,7 +13642,8 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
                     *, height: int = VIDEO_H,
                     margin_v: int = _ASS_MARGIN_V,
                     outline: float = 3, shadow: float = 0,
-                    bottom_margin: int | None = None) -> Path:
+                    bottom_margin: int | None = None,
+                    bottom_margin_windows: Sequence[tuple[float, float, int]] = ()) -> Path:
     """`bottom_margin` 给了，就**每一条**都下锚（`\\an2`）、底边离画布底这么多——
     全出血回贴了比分板的「赛场之上」用它把字幕钉在板的正上方
     （`build_match_reel.subtitle_bottom_for_boards`）。没给照旧：单行上锚、双语下锚。"""
@@ -13445,11 +13672,27 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
 
     # 双语那一档下锚（`\\an2` ＋ 底边距），别的照旧走样式里的上锚（MarginV=0
     # 就是「用样式那个数」）。理由和那个边距怎么来的，见 `bilingual_bottom_margin`。
+    # Explicit windows affect only contained cues; a crossing cue must be fixed,
+    # never silently split or moved into a neighbouring segment.
+    previous_end = 0.0
+    for lo, hi, margin in bottom_margin_windows:
+        if (not all(isinstance(v, (int, float)) and not isinstance(v, bool)
+                    and math.isfinite(v) for v in (lo, hi))
+                or not previous_end <= lo < hi
+                or type(margin) is not int or not 96 <= margin <= height - 96):
+            raise ValueError("invalid segment subtitle-bottom window")
+        previous_end = hi
     lines = []
     for start, end, shown in cues:
+        cue_bottom = bottom_margin
+        for lo, hi, margin in bottom_margin_windows:
+            if start < hi - 1e-6 and end > lo + 1e-6:
+                if start < lo - 1e-6 or end > hi + 1e-6:
+                    raise ValueError("subtitle cue crosses its segment-position window")
+                cue_bottom = margin
         bilingual = is_bilingual_cue(shown)
-        if bottom_margin is not None:
-            margin, anchor = bottom_margin, r"{\an2}"
+        if cue_bottom is not None:
+            margin, anchor = cue_bottom, r"{\an2}"
         else:
             margin = bilingual_bottom_margin(height, margin_v) if bilingual else 0
             anchor = r"{\an2}" if bilingual else ""
@@ -13465,6 +13708,37 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
 def _filter_path(path: Path) -> str:
     """filter_complex 里的文件名要转义，冒号和反斜杠会被当成参数分隔符。"""
     return str(path).replace("\\", "\\\\").replace(":", r"\:").replace("'", r"\'")
+
+
+def _platform_logo_filter(bbox) -> str:
+    """Remove only the declared platform mark, in original source coordinates."""
+    if (not isinstance(bbox, (list, tuple)) or len(bbox) != 4
+            or any(type(v) is not int for v in bbox)
+            or bbox[0] < 0 or bbox[1] < 0 or bbox[2] <= 0 or bbox[3] <= 0):
+        raise ExplainerVideoError("平台标识区域须为原片像素[x,y,w,h]")
+    x, y, width, height = bbox
+    return f"delogo=x={x}:y={y}:w={width}:h={height}"
+
+
+def _intro_filter(opening: dict, canvas_h: int) -> str:
+    """Prepare the declared portrait excerpt and its reviewed source subtitles."""
+    filters = []
+    if opening.get("intro_remove_logo_bbox"):
+        filters.append(_platform_logo_filter(opening["intro_remove_logo_bbox"]))
+    if opening.get("full_bleed"):
+        filters += [
+            f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=increase",
+            f"crop={VIDEO_W}:{canvas_h}:(iw-ow)/2:(ih-oh)/2",
+        ]
+    subtitles = opening.get("intro_subtitles")
+    if subtitles:
+        path = _REPO / subtitles
+        if not path.is_file():
+            raise ExplainerVideoError(f"片头审核字幕找不到：{path}")
+        filters.append(
+            f"subtitles='{_filter_path(path)}':"
+            f"fontsdir='{_filter_path(_REPO / 'assets/fonts')}'")
+    return ",".join(filters)
 
 
 # Delivery, not just words. The old read was correct and flat — too slow to
@@ -13610,6 +13884,9 @@ def assemble_explainer_video(
     intro_cx: float = 0.5,
     outro: Path | None = None,
     canvas_h: int = VIDEO_H,
+    full_bleed: bool = False,
+    inserts: dict[int, Path] | None = None,
+    subtitle_profile: str | None = None,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
     """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat.
@@ -13683,6 +13960,10 @@ def assemble_explainer_video(
     `printed`：每一屏**画面上印着的那句大字**（封面的大问题）。字幕里念的正好是
     那一句的，丢掉不排（`drop_printed_cues`）——大字已经印着了。
     """
+    from tennislive.video.crop_policy import require_fixed_center
+    if intro is not None:
+        require_fixed_center({"intro_cx": intro_cx}, where="explainer.intro")
+
     if not slides or len(slides) != len(audios):
         raise ExplainerVideoError("幻灯片与音频数量不匹配")
     if shutil.which(ffmpeg_bin) is None:
@@ -13692,6 +13973,9 @@ def assemble_explainer_video(
     output.parent.mkdir(parents=True, exist_ok=True)
 
     n = len(slides)
+    inserts = inserts or {}
+    if any(not isinstance(i, int) or not 0 <= i < n for i in inserts):
+        raise ExplainerVideoError("原声插段必须放在现有屏之前")
     # Padding lands on the two outer beats only. A one-beat film is both, so
     # it takes the head and the tail on the same audio stream.
     head = [lead_silence if i == 0 else 0.0 for i in range(n)]
@@ -13719,14 +14003,28 @@ def assemble_explainer_video(
             badge_idx = offset
             offset += 1
     slide_secs: list[float] = []
+    audio_secs: list[float] = []
+    slide_inputs: list[tuple[int, int]] = []
+    insert_inputs: dict[int, tuple[int, float]] = {}
+    next_input = offset
     for i, (slide, audio) in enumerate(zip(slides, audios)):
-        seconds = _audio_seconds(Path(audio), ffprobe_bin, runner) + head[i] + tail[i]
+        if i in inserts:
+            clip = Path(inserts[i])
+            seconds = _audio_seconds(clip, ffprobe_bin, runner)
+            insert_inputs[i] = (next_input, seconds)
+            command.extend(["-i", str(clip.resolve())])
+            lengths.append(seconds)
+            next_input += 1
+        audio_secs.append(_audio_seconds(Path(audio), ffprobe_bin, runner))
+        seconds = audio_secs[-1] + head[i] + tail[i]
         lengths.append(float(f"{seconds:.3f}"))
         slide_secs.append(float(f"{seconds:.3f}"))
         command.extend(
             ["-loop", "1", "-t", f"{seconds:.3f}", "-i", str(Path(slide).resolve())]
         )
         command.extend(["-i", str(Path(audio).resolve())])
+        slide_inputs.append((next_input, next_input + 1))
+        next_input += 2
     if outro is not None:
         # 片尾是**真视频**（自带动效和口播），不是 `-loop 1` 的静图，
         # 所以这儿不给 `-t`：它自己多长就播多长。
@@ -13786,11 +14084,21 @@ def assemble_explainer_video(
     # 下面的 scale+pad 对卡片是个空操作（卡片已经等于目标画布），字幕的
     # `margin_v` 也要跟着新的画布高度重算——`card_top` 会变成 0，字幕锚点
     # 直接贴着画布底部，而不是 9:16 画布里那圈 240px 的留白之上。
-    card_top = (canvas_h - CARD_H) // 2
-    margin_v = card_top + CARD_H - 156
+    card_height = canvas_h if full_bleed else CARD_H
+    card_top = (canvas_h - card_height) // 2
+    margin_v = card_top + card_height - 156
     for i in range(n):
+        if i in insert_inputs:
+            vi, duration = insert_inputs[i]
+            filters.append(
+                f"[{vi}:v]scale={VIDEO_W}:{canvas_h},setsar=1,fps=30,"
+                f"format=yuv420p,tpad=stop_mode=clone:stop_duration={fade + 0.1:.3f}[vi{i}]")
+            filters.append(
+                f"[{vi}:a]aresample=async=1,apad=whole_dur={duration:.3f},"
+                f"atrim=end={duration:.3f}[ai{i}]")
+        image_input, audio_input = slide_inputs[i]
         chain = (
-            f"[{2 * i + offset}:v]scale={VIDEO_W}:{canvas_h}:"
+            f"[{image_input}:v]scale={VIDEO_W}:{canvas_h}:"
             f"force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
             f"pad={VIDEO_W}:{canvas_h}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
             f"setsar=1,fps=30"
@@ -13806,7 +14114,7 @@ def assemble_explainer_video(
                 marks = []
             cues = subtitle_cues(
                 readable(captions[i]),
-                _audio_seconds(Path(audios[i]), ffprobe_bin, runner),
+                audio_secs[i],
                 boundaries=marks,
                 offset=head[i],
             )
@@ -13817,6 +14125,9 @@ def assemble_explainer_video(
                     cues, output.parent / f"sub_{i:02d}.ass",
                     height=canvas_h, margin_v=margin_v,
                 )
+                if subtitle_profile == "focused-story":
+                    from .source_story_cards import focus_narration_subtitles
+                    focus_narration_subtitles(ass)
                 chain += (f",subtitles='{_filter_path(ass)}'"
                           f":fontsdir='{_filter_path(_ASS_EN_FONT_FILE.parent)}'")
         # 后面还有一路（下一屏或片尾）就垫一截底料给溶解吃，见 docstring。
@@ -13835,27 +14146,36 @@ def assemble_explainer_video(
             steps.append(f"adelay={round(head[i] * 1000)}:all=1")
         steps.append(f"apad=whole_dur={slide_secs[i]:.3f}")
         steps.append(f"atrim=end={slide_secs[i]:.3f}")
-        filters.append(f"[{2 * i + 1 + offset}:a]{','.join(steps)}[a{i}]")
+        filters.append(f"[{audio_input}:a]{','.join(steps)}[a{i}]")
     beats = n
     if outro is not None:
         # 片尾走**和幻灯片一模一样**的 scale+pad+fps 链——片尾卡是 3:4，
         # 和每一屏的卡同一个尺寸，所以 pad 出来的黑边宽度也一样。链子写成
         # 两份必分叉，所以这儿是照抄上面那一段的形状，改动只有「不加字幕」。
-        vi = 2 * n + offset
-        filters.append(
-            f"[{vi}:v]scale={VIDEO_W}:{canvas_h}:"
-            f"force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
+        vi = next_input
+        outro_frame = (
+            f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=increase:flags={_SCALE_FLAGS},"
+            f"crop={VIDEO_W}:{canvas_h}:(iw-ow)/2:(ih-oh)/2,"
+            if full_bleed else
+            f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
             f"pad={VIDEO_W}:{canvas_h}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
+        )
+        filters.append(
+            f"[{vi}:v]{outro_frame}"
             f"setsar=1,fps=30,format=yuv420p[v{n}]"
         )
         # 音轨要**重采样到和旁白同一个规格**：concat 要求各路参数一致，
         # 对不上时 ffmpeg 不报错，只会拼出一段爆音或者干脆没声。
         filters.append(f"[{vi}:a]aresample=async=1[a{n}]")
         beats = n + 1
-    vlabels = (["[vintro]"] if intro is not None else []) + [
-        f"[v{i}]" for i in range(beats)]
-    alabels = (["[aintro]"] if intro is not None else []) + [
-        f"[a{i}]" for i in range(beats)]
+    vlabels = ["[vintro]"] if intro is not None else []
+    alabels = ["[aintro]"] if intro is not None else []
+    for i in range(beats):
+        if i in insert_inputs:
+            vlabels.append(f"[vi{i}]")
+            alabels.append(f"[ai{i}]")
+        vlabels.append(f"[v{i}]")
+        alabels.append(f"[a{i}]")
     filters.extend(dissolve_chain(vlabels, lengths, fade))
     filters.append(f"{''.join(alabels)}concat=n={len(alabels)}:v=0:a=1[outa]")
 
@@ -13923,12 +14243,6 @@ def generate_explainer_video(
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     segments = explainer_script(story)
-    slides = render_explainer_slides(
-        segments, outdir, theme=theme,
-        topic=(_OPENINGS.get(story.slug) or {}).get("topic", ""),
-        column=explainer_column(story.slug)
-    )
-    audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
     # 冷开场实拍片段是可选的：`_OPENINGS[slug]["intro"]` 给一个仓库相对路径，
     # 就在片头前接一段真视频（比如上一轮的制胜分+庆祝）。绝大多数「开球之前」
     # 仍是纯幻灯片，这里不写就是 None，行为和以前完全一样。
@@ -13941,6 +14255,31 @@ def generate_explainer_video(
     intro = (_REPO / intro_rel) if intro_rel else None
     if intro is not None and not intro.is_file():
         raise ExplainerVideoError(f"开场实拍片段找不到：{intro}")
+    # 配置错误在截图、TTS 和远端下载前报告，避免失败后整趟重做。
+    canvas_h = canvas_height(story.slug)
+    intro_filter = _intro_filter(opening, canvas_h)
+    if intro_rel or intro_url:
+        from .crop_policy import require_fixed_center  # noqa: PLC0415
+
+        require_fixed_center(opening, where="explainer.intro")
+    start, duration = 0.0, None
+    if intro_url:
+        try:
+            start = float(opening.get("intro_start", 0.0))
+            end = opening.get("intro_end")
+            duration = float(end) - start if end is not None else None
+        except (TypeError, ValueError) as exc:
+            raise ExplainerVideoError("片头区间必须是有效秒数") from exc
+        if (not math.isfinite(start) or start < 0 or
+                (duration is not None and (not math.isfinite(duration) or duration <= 0))):
+            raise ExplainerVideoError(f"片头区间不合法：start={start}, end={end}")
+    slides = render_explainer_slides(
+        segments, outdir, theme=theme,
+        topic=(_OPENINGS.get(story.slug) or {}).get("topic", ""),
+        column=explainer_column(story.slug),
+        height=canvas_h if opening.get("full_bleed") else H,
+    )
+    audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
     if intro_url:
         # 正式采访成片已经在 Release；澄清片只需要其中 19 秒。把同一段 mp4
         # 再塞进 git 会同时违反“成片走 Release”和“别复制死重量”两条，所以
@@ -13960,93 +14299,101 @@ def generate_explainer_video(
                             fh.write(chunk)
             if full_source.stat().st_size < 1024:
                 raise ExplainerVideoError(f"片头远端文件异常小：{intro_url}")
-            start = float(opening.get("intro_start", 0.0))
-            end = opening.get("intro_end")
-            duration = float(end) - start if end is not None else None
-            if start < 0 or (duration is not None and duration <= 0):
-                raise ExplainerVideoError(
-                    f"片头区间不合法：start={start}, end={end}"
-                )
             cmd = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error"]
             if start:
                 cmd += ["-ss", f"{start:.3f}"]
             cmd += ["-i", str(full_source)]
             if duration is not None:
                 cmd += ["-t", f"{duration:.3f}"]
+            if intro_filter:
+                cmd += ["-vf", intro_filter]
             cmd += [
                 "-c:v", "libx264", "-crf", "18", "-preset", "medium",
                 "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart",
                 str(intro),
             ]
             subprocess.run(cmd, check=True, capture_output=True)
-        except (OSError, requests.RequestException, subprocess.CalledProcessError) as exc:
+        except (OSError, requests.RequestException, subprocess.CalledProcessError,
+                ExplainerVideoError) as exc:
             intro_tmp.cleanup()
             raise ExplainerVideoError(f"远端片头下载或切段失败：{exc}") from exc
-    # 冷开场叠一条和幻灯片一样的台头——见 `_render_intro_badge` 的 docstring。
-    # 渲不出来（缺 Chromium）不拖垮整条片子，退回没有台头的样子。
-    intro_badge = None
-    if intro is not None:
-        try:
-            intro_badge = _render_intro_badge(
-                (_OPENINGS.get(story.slug) or {}).get("topic", ""),
-                explainer_column(story.slug),
-                outdir,
-            )
-        except Exception as exc:  # noqa: BLE001 - 台头是锦上添花
-            print(f"[冷开场台头] 渲不出来，这段片头没有台头：{exc}")
-            intro_badge = None
-    # Which voice actually spoke is otherwise unrecoverable from the output:
-    # the per-beat mp3s are deleted to keep the repo small, and nobody can
-    # read a voice name off an mp4. That gap already cost three decks — the
-    # workflow passed a stale --voice on every dispatch, so changing the
-    # default in code changed nothing, and the only way anyone found out was
-    # by reading a run log days later. Write it down beside the film instead,
-    # so checking is a matter of opening the artifact, not trusting a chain
-    # of inference about what the arguments must have been.
-    (outdir / "narration.json").write_text(
-        json.dumps(
-            {"voice": voice, "rate": rate, "pitch": pitch, "segments": len(audios),
-             "subtitles": True},
-            ensure_ascii=False, indent=2,
-        ) + "\n",
-        encoding="utf-8",
-    )
-    outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
-    # ⚠️⚠️ **2026-09-16 默认值翻面：3:4 是默认，9:16 变成要显式认领的例外。**
-    #
-    # 来路：账号所有者「我要求**所有**视频都是 3:4 的比例画面啊」。而这句话
-    # 2026-08-07 他就说过一次（「画面还不是 3:4 的啊」，原话记在 `eala-mcnally`
-    # 那条 `canvas` 旁边）——当时的修法是加了这个「写了才换」的开关，默认留在
-    # 9:16，理由写的是「改默认会把纯卡片片子一起改掉」。
-    #
-    # **那个修法没解决问题。** 量出来：49 条里只有 3 条写了这一行
-    # （`gauff-right-coco` / `eala-mcnally` / `heat-rule`），其余 46 条全部落回
-    # 9:16——`second-serve-clock`、`big-three`、`promotional-fees`、
-    # `finals-venues`、`wuhan-alternate` 逐条拉 Release 的成片 ffprobe 过，
-    # 都是 1080×1920。CLAUDE.md 早写过这个形状：**一个几乎没人会去写的开关，
-    # 本身就说明那个默认值是错的**（`scrim: "clear"` 那次 74/100 手动关掉，
-    # 这次是 46/49 根本没写，更彻底）。
-    #
-    # 所以现在反过来：不写 = 3:4，要 9:16 必须**显式写出来**。
-    # ⚠️ 那 3 条写着 `"3:4"` 的**不要删**——它们现在和不写一个意思，但删掉
-    # 之后翻面之前的历史就读不出来了（同 `scrim: "clear"` 那 74 行的处置）。
-    canvas_h = canvas_height(story.slug)
-    # `intro_cx` 同理显式认领：默认 0.5（几何居中，老行为不变），写了才换。
-    # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
-    # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
-    intro_cx = (_OPENINGS.get(story.slug) or {}).get("intro_cx", 0.5)
     try:
-        return assemble_explainer_video(
-            slides, audios, outdir / "explainer.mp4",
-            captions=[seg.narration for seg in segments],
-            # 封面的大问题印在画面上，念到那一句时不再另排字幕（见 `drop_printed_cues`）。
-            printed=[seg.title if seg.kind == "cover" else "" for seg in segments],
-            intro=intro,
-            intro_badge=intro_badge,
-            intro_cx=intro_cx,
-            outro=outro,
-            canvas_h=canvas_h,
+        # 冷开场叠一条和幻灯片一样的台头——见 `_render_intro_badge` 的 docstring。
+        # 渲不出来（缺 Chromium）不拖垮整条片子，退回没有台头的样子。
+        intro_badge = None
+        if intro is not None:
+            try:
+                intro_badge = _render_intro_badge(
+                    (_OPENINGS.get(story.slug) or {}).get("topic", ""),
+                    explainer_column(story.slug),
+                    outdir,
+                )
+            except Exception as exc:  # noqa: BLE001 - 台头是锦上添花
+                print(f"[冷开场台头] 渲不出来，这段片头没有台头：{exc}")
+                intro_badge = None
+        # Which voice actually spoke is otherwise unrecoverable from the output:
+        # the per-beat mp3s are deleted to keep the repo small, and nobody can
+        # read a voice name off an mp4. That gap already cost three decks — the
+        # workflow passed a stale --voice on every dispatch, so changing the
+        # default in code changed nothing, and the only way anyone found out was
+        # by reading a run log days later. Write it down beside the film instead,
+        # so checking is a matter of opening the artifact, not trusting a chain
+        # of inference about what the arguments must have been.
+        (outdir / "narration.json").write_text(
+            json.dumps(
+                {"voice": voice, "rate": rate, "pitch": pitch, "segments": len(audios),
+                 "subtitles": True},
+                ensure_ascii=False, indent=2,
+            ) + "\n",
+            encoding="utf-8",
         )
+        outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
+        # ⚠️⚠️ **2026-09-16 默认值翻面：3:4 是默认，9:16 变成要显式认领的例外。**
+        #
+        # 来路：账号所有者「我要求**所有**视频都是 3:4 的比例画面啊」。而这句话
+        # 2026-08-07 他就说过一次（「画面还不是 3:4 的啊」，原话记在 `eala-mcnally`
+        # 那条 `canvas` 旁边）——当时的修法是加了这个「写了才换」的开关，默认留在
+        # 9:16，理由写的是「改默认会把纯卡片片子一起改掉」。
+        #
+        # **那个修法没解决问题。** 量出来：49 条里只有 3 条写了这一行
+        # （`gauff-right-coco` / `eala-mcnally` / `heat-rule`），其余 46 条全部落回
+        # 9:16——`second-serve-clock`、`big-three`、`promotional-fees`、
+        # `finals-venues`、`wuhan-alternate` 逐条拉 Release 的成片 ffprobe 过，
+        # 都是 1080×1920。CLAUDE.md 早写过这个形状：**一个几乎没人会去写的开关，
+        # 本身就说明那个默认值是错的**（`scrim: "clear"` 那次 74/100 手动关掉，
+        # 这次是 46/49 根本没写，更彻底）。
+        #
+        # 所以现在反过来：不写 = 3:4，要 9:16 必须**显式写出来**。
+        # ⚠️ 那 3 条写着 `"3:4"` 的**不要删**——它们现在和不写一个意思，但删掉
+        # 之后翻面之前的历史就读不出来了（同 `scrim: "clear"` 那 74 行的处置）。
+        # `intro_cx` 同理显式认领：默认 0.5（几何居中，老行为不变），写了才换。
+        # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
+        # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
+        intro_cx = (_OPENINGS.get(story.slug) or {}).get("intro_cx", 0.5)
+        insert_specs = opening.get("inserts") or []
+        if insert_specs:
+            from .source_story_cards import prepare_source_inserts
+
+        from contextlib import nullcontext
+        insert_context = (tempfile.TemporaryDirectory(prefix="tennislive-inserts-")
+                          if insert_specs else nullcontext(None))
+        with insert_context as insert_root:
+            inserts = (prepare_source_inserts(insert_specs, Path(insert_root), canvas_h)
+                       if insert_specs else {})
+            return assemble_explainer_video(
+                slides, audios, outdir / "explainer.mp4",
+                captions=[seg.narration for seg in segments],
+                # 封面的大问题印在画面上，念到那一句时不再另排字幕（见 `drop_printed_cues`）。
+                printed=[seg.title if seg.kind == "cover" else "" for seg in segments],
+                intro=intro,
+                intro_badge=intro_badge,
+                intro_cx=intro_cx,
+                outro=outro,
+                canvas_h=canvas_h,
+                full_bleed=bool(opening.get("full_bleed")),
+                inserts=inserts,
+                subtitle_profile=opening.get("subtitle_profile"),
+            )
     finally:
         if intro_tmp is not None:
             intro_tmp.cleanup()
@@ -14129,13 +14476,12 @@ def explainer_push_html(
     # `*.jsdelivr.net/gh/…@main/`，github.com 的 Release 链接匹配不上
     # （判据在 test_推送里的成片链接优先读render_json的video_url）。
     video_url = ""
+    render_meta = {}
     meta_f = outdir / "render.json"
     if meta_f.is_file():
         try:
-            video_url = str(
-                (json.loads(meta_f.read_text(encoding="utf-8")) or {})
-                .get("video_url") or ""
-            ).strip()
+            render_meta = json.loads(meta_f.read_text(encoding="utf-8")) or {}
+            video_url = str(render_meta.get("video_url") or "").strip()
         except (OSError, ValueError) as exc:
             # 坏 JSON 和「没写过」是两回事。静默退回老路的样子和正常一模一样，
             # 而新片子的 mp4 不在 git 里，老路的链接对它就是 404——要出声。
@@ -14167,6 +14513,21 @@ def explainer_push_html(
     # 「探过了没有」，按钮就无声消失了——正文里那段文案的唯一出口。
     if isinstance(copy_url, _Unset):
         copy_url = f"{_PAGES_URL}/{rel}/copy.html"
+    # The raw MP4 opens on its cold-open match frame. A selected cover must
+    # also be the player's poster, using the identical rendered slide asset.
+    if (_OPENINGS.get(outdir.name) or {}).get("playback_cover"):
+        from ..render.video_page import video_page
+
+        # Pages publishes HTML only. The cover image belongs on the image
+        # CDN; reviewed packages may pin it to an immutable cover revision.
+        poster_url = str(render_meta.get("cover_url") or
+                         f"{jsdelivr_base(_REPOSITORY)}/{rel}/slide_00.jpg")
+        (outdir / "watch.html").write_text(
+            video_page(title=segments[0].title.replace("\n", " · "),
+                       video_url=video_url, poster_url=poster_url),
+            encoding="utf-8",
+        )
+        video_url = f"{_PAGES_URL}/{rel}/watch.html"
     # 药丸写栏目名、按钮写「▶ 打开竖版成片」——都由 knowledge_push_html_from_parts
     # 自己出（2026-09-27 UI 评审 WP2：同一栏目的剪辑片推送和这条原来长得不一样，
     # 正是因为这两段文字是从这儿传进去的）。
@@ -14197,6 +14558,8 @@ def explainer_xiaohongshu(
     account reads the same voice whichever format they land on. Every line
     comes from the beats themselves; nothing is invented for the caption.
     """
+    from ..render.copy_title import compact_copy_title, publication_hook  # noqa: PLC0415
+
     closer = segments[-1]
     column = explainer_column(story.slug)
     question = closer.question or "你怎么看？"
@@ -14216,8 +14579,11 @@ def explainer_xiaohongshu(
     caption = _CAPTIONS.get(story.slug) or {}
     hook = caption.get("hook") or ""
     tags = " ".join(f"#{tag}" for tag in caption.get("tags") or _DEFAULT_TAGS)
+    # Keep invalid draft metadata inspectable by preflight. Actual copy pages
+    # validate this complete prefix+hook before they can become publication.
+    title = f"{date_label}{column}|" + compact_copy_title(publication_hook(story.slug, story.title))
     return with_campaign_tags(
-        f"🎾{date_label} {column}｜{story.title}\n\n"
+        f"{title}\n\n"
         + (f"{hook}\n\n" if hook else "")
         + "\n\n".join(sections)
         + "\n\n💬 留个答案\n"

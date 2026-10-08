@@ -1,0 +1,66 @@
+{
+  "source_url": "https://www.wtatennis.com/videos/4585115/junior-no-1-sun-xinran-advances-on-wta-debut-in-beijing-as-lys-retires",
+  "source_sha256": "bc607f1100401b0623ebbd90761d5263d024294c2d0daaefd8ead03f1e7ff390",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI evidence review; no human listening claimed",
+  "reviewed_at": "2026-10-01T22:32:13.021371+00:00",
+  "reviewed_from": 76.12,
+  "reviewed_to": 85.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "evidence_runs": [
+    36931897107,
+    36933060567
+  ],
+  "no_foreground_english_reason": "No retained English was identified in this window after reviewing complete-source ASR and the targeted second pass. Known uncertain late-rally and isolated190.58–191.98 hypotheses are excluded from the actual edit; no claim of human listening.",
+  "asr_evidence": [
+    {
+      "run_id": 36931897107,
+      "source_scope": [
+        0,
+        204.843333
+      ],
+      "decoding": "unseeded medium.en beam5 overlapping30s windows",
+      "transcript_sha256": "111ec3d8960e427f7e1db9d273cb363426b122b0d0eb76f0aee27b63bcc281fc"
+    },
+    {
+      "run_id": 36933060567,
+      "source_scope": [
+        [
+          36,
+          41
+        ],
+        [
+          68,
+          75
+        ],
+        [
+          106,
+          111
+        ],
+        [
+          123,
+          130
+        ],
+        [
+          178,
+          186
+        ],
+        [
+          186,
+          193
+        ],
+        [
+          193,
+          200
+        ]
+      ],
+      "decoding": "unseeded medium.en greedy short windows",
+      "transcript_sha256": "95bd706d97d09a50db89c21579d4dd20390f364ac845a48dde723c5eef0e1c3c"
+    }
+  ],
+  "review_notes": "ASR evidence cross-check, not human listening. Retained text was selected after comparing full-source and targeted decoding, actual footage boundaries, and the source identity. This does not grant final mix or publication approval.",
+  "final_mix_qc": "not_run",
+  "publication_eligible": false
+}

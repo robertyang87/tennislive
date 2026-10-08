@@ -1,0 +1,67 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 207.5,
+  "range_to": 212,
+  "created_at": "2026-10-03T06:13:00.316281+00:00",
+  "elapsed_seconds": 0.86,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 208.98,
+      "end": 210.46,
+      "text": " How does he want that point?",
+      "avg_logprob": -0.8279879450798034,
+      "no_speech_prob": 0.18711191415786743,
+      "words": [
+        {
+          "start": 208.98,
+          "end": 209.42,
+          "word": " How",
+          "probability": 0.23086728155612946
+        },
+        {
+          "start": 209.42,
+          "end": 209.62,
+          "word": " does",
+          "probability": 0.37978753447532654
+        },
+        {
+          "start": 209.62,
+          "end": 209.72,
+          "word": " he",
+          "probability": 0.992038369178772
+        },
+        {
+          "start": 209.72,
+          "end": 209.88,
+          "word": " want",
+          "probability": 0.5837960243225098
+        },
+        {
+          "start": 209.88,
+          "end": 210.1,
+          "word": " that",
+          "probability": 0.9885101914405823
+        },
+        {
+          "start": 210.1,
+          "end": 210.46,
+          "word": " point?",
+          "probability": 0.788551390171051
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "3bad80482f76cda4c22cb73eaa7812f65ba70869ccb3dac1f49e2dcdef4a1eec",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

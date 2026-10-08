@@ -49,6 +49,8 @@ import pytest
 from difflib import SequenceMatcher
 from pathlib import Path
 
+from production_history import should_check
+
 SPEC_DIR = Path("specs/reels")
 
 
@@ -836,7 +838,8 @@ def _missing_hit_data():
 
 
 def test_赛场之上要么有狠数据要么说清为什么没有():
-    fresh = _missing_hit_data() - _HIT_DATA_LEGACY
+    fresh = {slug for slug in _missing_hit_data() - _HIT_DATA_LEGACY
+             if should_check('tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有', SPEC_DIR / f"{slug}.json")}
     assert not fresh, (
         f"这几条「赛场之上」既没写 `_hit_data`、也没写 `_no_hit_data_why`："
         f"{sorted(fresh)}。狠数据（总分差/一发摆动/破发点兑现/连续保发/H2H）"

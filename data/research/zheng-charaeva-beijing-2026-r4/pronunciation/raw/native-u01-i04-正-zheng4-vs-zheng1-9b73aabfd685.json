@@ -1,0 +1,484 @@
+{
+  "job": {
+    "id": "u01-i04-正-zheng4-vs-zheng1",
+    "utterance": 1,
+    "label": "第 3 段",
+    "sentence": "郑钦文用正手压向边线。首盘二比一，她又救下三个破发点。连同这一局，首盘最后四局，全归她。",
+    "text_sha256": "9b73aabfd6854f7f035f48e9aed480664710d042c944346854490bd7dacc0534",
+    "index": 4,
+    "char": "正",
+    "intended": "zheng4",
+    "wrong": "zheng1",
+    "ok": [
+      "证",
+      "郑",
+      "诤"
+    ],
+    "bad": [
+      "争",
+      "征",
+      "狰"
+    ],
+    "ok_reference_note": "single-reading common, single-reading level-2",
+    "bad_reference_note": "single-reading common"
+  },
+  "word": "正",
+  "char": "正",
+  "sentence": "郑钦文用正手压向边线。首盘二比一，她又救下三个破发点。连同这一局，首盘最后四局，全归她。",
+  "tts_text": "郑钦文用正手压向边线。首盘二比一，她又救下三个破发点。连同这一局，首盘最后四局，全归她。",
+  "intended_refs": [
+    "证",
+    "郑",
+    "诤"
+  ],
+  "wrong_refs": [
+    "争",
+    "征",
+    "狰"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "medium",
+  "verdict_raw": "correct",
+  "score": 0.331,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 2.396,
+      "d_wrong": 2.696,
+      "score": 0.059
+    },
+    "f0": {
+      "d_intended": 0.706,
+      "d_wrong": 2.474,
+      "score": 0.556
+    },
+    "comb": {
+      "d_intended": 1.932,
+      "d_wrong": 3.847,
+      "score": 0.331
+    }
+  },
+  "neighbour_shift": {
+    "intended": 2.19,
+    "wrong": 4.31
+  },
+  "separation": {
+    "spec": {
+      "within": 1.927,
+      "between": 2.839,
+      "separation": 1.473
+    },
+    "f0": {
+      "within": 0.572,
+      "between": 2.83,
+      "separation": 4.944
+    },
+    "comb": {
+      "within": 1.536,
+      "between": 4.25,
+      "separation": 2.767
+    }
+  },
+  "selftest_loo": {
+    "证": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.447
+    },
+    "郑": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.383
+    },
+    "诤": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.209
+    },
+    "争": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.749
+    },
+    "征": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.735
+    },
+    "狰": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.747
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:证": {
+      "spec": 2.873,
+      "f0": 0.839,
+      "vmis": 0.097,
+      "frames": 31,
+      "comb": 2.275
+    },
+    "A:郑": {
+      "spec": 2.396,
+      "f0": 0.795,
+      "vmis": 0.033,
+      "frames": 30,
+      "comb": 1.993
+    },
+    "A:诤": {
+      "spec": 2.451,
+      "f0": 0.706,
+      "vmis": 0.03,
+      "frames": 33,
+      "comb": 1.932
+    },
+    "B:争": {
+      "spec": 2.856,
+      "f0": 2.492,
+      "vmis": 0.033,
+      "frames": 30,
+      "comb": 3.921
+    },
+    "B:征": {
+      "spec": 2.852,
+      "f0": 2.474,
+      "vmis": 0.033,
+      "frames": 30,
+      "comb": 3.9
+    },
+    "B:狰": {
+      "spec": 2.696,
+      "f0": 2.499,
+      "vmis": 0.033,
+      "frames": 30,
+      "comb": 3.847
+    }
+  },
+  "window_s": [
+    0.847,
+    1.128
+  ],
+  "boundary_token": "正",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "郑钦文",
+      "用",
+      "正",
+      "手压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:证": [
+      "郑钦文",
+      "用",
+      "证",
+      "手压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:郑": [
+      "郑钦文",
+      "用",
+      "郑手压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:诤": [
+      "郑钦文",
+      "用",
+      "诤手",
+      "压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:争": [
+      "郑钦文",
+      "用",
+      "争手",
+      "压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:征": [
+      "郑钦文",
+      "用",
+      "征手",
+      "压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:狰": [
+      "郑钦文",
+      "用",
+      "狰手",
+      "压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      1.5,
+      0.7,
+      0.1,
+      -1.3,
+      -2.6,
+      null,
+      null,
+      8.2,
+      8.0,
+      7.2,
+      5.3,
+      2.9,
+      0.7,
+      -1.9,
+      null
+    ],
+    "A:证": [
+      2.0,
+      1.6,
+      1.2,
+      0.6,
+      -0.8,
+      null,
+      null,
+      9.6,
+      9.3,
+      8.9,
+      7.3,
+      4.9,
+      2.6,
+      -0.0,
+      -1.7
+    ],
+    "A:郑": [
+      1.4,
+      0.8,
+      0.2,
+      -1.2,
+      null,
+      null,
+      null,
+      9.9,
+      9.7,
+      8.9,
+      6.6,
+      4.3,
+      1.6,
+      -0.8,
+      null
+    ],
+    "A:诤": [
+      0.1,
+      -0.0,
+      -0.5,
+      -2.2,
+      null,
+      null,
+      null,
+      8.9,
+      8.6,
+      7.8,
+      5.2,
+      3.0,
+      0.7,
+      -1.6,
+      -2.7,
+      null
+    ],
+    "B:争": [
+      -0.1,
+      -0.7,
+      -1.5,
+      -2.7,
+      -4.6,
+      null,
+      null,
+      3.5,
+      2.9,
+      2.7,
+      3.5,
+      3.7,
+      3.6,
+      2.5,
+      1.4
+    ],
+    "B:征": [
+      -0.1,
+      -0.7,
+      -1.4,
+      -2.7,
+      -4.5,
+      null,
+      null,
+      3.5,
+      2.9,
+      2.7,
+      3.5,
+      3.7,
+      3.6,
+      2.6,
+      1.4
+    ],
+    "B:狰": [
+      -0.1,
+      -0.7,
+      -1.5,
+      -2.8,
+      -4.6,
+      null,
+      null,
+      3.5,
+      2.9,
+      2.7,
+      3.4,
+      3.7,
+      3.6,
+      2.6,
+      1.4
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/voice_02.mp3",
+    "A:证": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/3db63a56b805e92b8ebaf171.mp3",
+    "A:郑": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/ea67b11330266862bcec591b.mp3",
+    "A:诤": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/56866988ec1841f81974b1ec.mp3",
+    "B:争": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/32e131090223c410525bc20b.mp3",
+    "B:征": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/0a31cf5e2ff646dae8a48dc1.mp3",
+    "B:狰": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/d1676bef284a86e15a1e98d6.mp3"
+  },
+  "native_orig_mp3_sha256": "ea666822566d36a0d33f443c2c2f57f5908068b4f69b18c03ba3672dd6f93963",
+  "actual_audio_source": "native renderer tts_one final voice file"
+}

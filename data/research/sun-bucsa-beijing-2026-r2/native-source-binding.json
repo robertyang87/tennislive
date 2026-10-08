@@ -1,0 +1,76 @@
+{
+  "schema": "source-bound-native-probe.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_path": "/workspace/sun-bucsa-research/sun-bucsa-wta-original-720p.mp4",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "source_bytes": 54935229,
+  "native_command": "python tools/build_match_reel.py probe --url https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next --outdir output/2026-10-03/probe/sun-bucsa-beijing-2026-r2 --every 2 --scorebox 58,552,346,658",
+  "probe_sha256": "536db569eb415e886aa2ca323b32264a6735b496d1280fc87442f1175ab6c0f4",
+  "outputs": [
+    {
+      "name": "probe.json",
+      "sha256": "536db569eb415e886aa2ca323b32264a6735b496d1280fc87442f1175ab6c0f4",
+      "bytes": 22914
+    },
+    {
+      "name": "contact_00.jpg",
+      "sha256": "340b19cbc2e70da8cc02b0a0e2d632a888cd4aa20649a4cbd41b5504facc9e12",
+      "bytes": 463493
+    },
+    {
+      "name": "contact_01.jpg",
+      "sha256": "e0a9b99ffe9db7587065a6873bef3cb14d1668dc3c0dbaea152a8940a5e63166",
+      "bytes": 465624
+    },
+    {
+      "name": "contact_02.jpg",
+      "sha256": "28825c2dc795b62a197a678a043188487d9da6a8bd0b794b984f4d85a619141f",
+      "bytes": 483694
+    },
+    {
+      "name": "contact_03.jpg",
+      "sha256": "45ef6c84133776a66def0238edb31bad9a01c1337a2e23c932fb0ba047d0b749",
+      "bytes": 234205
+    },
+    {
+      "name": "score_00.jpg",
+      "sha256": "aa8adef5f354f55843c0d07d5580949abeb2695546b70ecef4e5163d8c292a47",
+      "bytes": 165565
+    },
+    {
+      "name": "score_01.jpg",
+      "sha256": "c0d8a39b45c6fd5c40c8ffe5f181c32d5a0e6019e709e968726622d81f95726c",
+      "bytes": 182600
+    },
+    {
+      "name": "score_02.jpg",
+      "sha256": "cb4a2b65c2d3ca45cbb7a7905c8849e3b404cff1acab1bcf54520224897f583a",
+      "bytes": 182218
+    },
+    {
+      "name": "score_03.jpg",
+      "sha256": "ee819d4bc0553a36b64682a8afa14942560bd45e0b600d554b4800a3c6e46b43",
+      "bytes": 193059
+    },
+    {
+      "name": "score_04.jpg",
+      "sha256": "23bd01092bc827dfdd4455703e9cce5b85c369c379644fd22ce1048fcc722363",
+      "bytes": 208300
+    },
+    {
+      "name": "score_05.jpg",
+      "sha256": "b55c7f1da21697264638d42f7c3adae71d49b5af86485f52b208feebacc2e3a6",
+      "bytes": 24840
+    }
+  ],
+  "native_claim_path": "output/2026-10-03/reel/sun-bucsa-beijing-2026-r2",
+  "mirror_byte_identical": true,
+  "raw_source_not_in_repo": true,
+  "full_source_probed": true,
+  "board_scan_frames": 1032,
+  "board_wta_present": 882,
+  "board_wta_unresolved": 0,
+  "board_max_absolute_right": 364,
+  "captions": null,
+  "caption_note": "Native fetch_captions does not fetch captions for a non-YouTube URL; no ASR/listening review was performed by this probe."
+}

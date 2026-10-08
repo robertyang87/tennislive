@@ -1,0 +1,362 @@
+{
+  "id": "target-065",
+  "label": "第 15 段",
+  "display_char": "都",
+  "actual_tts_char": "都",
+  "position": 32,
+  "context": "谁赢，这个家都会有一个大师",
+  "word": "都会",
+  "intended": "dou1",
+  "common_contrast": "du1",
+  "unmeasured_other_readings": [],
+  "semantic_override": "Context: universal 都, not capital city 都.",
+  "tts_text": "决赛，对面站着表哥林德克内希。他们曾是大学队友。无论谁赢，这个家都会有一个大师赛冠军。",
+  "verdict": "unreliable",
+  "measurement": {
+    "word": "都",
+    "char": "都",
+    "sentence": "决赛，对面站着表哥林德克内希。他们曾是大学队友。无论谁赢，这个家都会有一个大师赛冠军。",
+    "tts_text": "决赛，对面站着表哥林德克内希。他们曾是大学队友。无论谁赢，这个家都会有一个大师赛冠军。",
+    "intended_refs": [
+      "兜",
+      "篼"
+    ],
+    "wrong_refs": [
+      "督",
+      "嘟"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "correct",
+    "score": 0.264,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 3.312,
+        "d_wrong": 4.122,
+        "score": 0.109
+      },
+      "f0": {
+        "d_intended": 1.515,
+        "d_wrong": 3.383,
+        "score": 0.381
+      },
+      "comb": {
+        "d_intended": 3.171,
+        "d_wrong": 5.444,
+        "score": 0.264
+      }
+    },
+    "neighbour_shift": {
+      "intended": 3.052,
+      "wrong": 3.478
+    },
+    "separation": {
+      "spec": {
+        "within": 3.355,
+        "between": 3.573,
+        "separation": 1.065
+      },
+      "f0": {
+        "within": 0.91,
+        "between": 1.443,
+        "separation": 1.585
+      },
+      "comb": {
+        "within": 2.588,
+        "between": 3.229,
+        "separation": 1.248
+      }
+    },
+    "selftest_loo": {
+      "兜": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.127
+      },
+      "篼": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.018
+      },
+      "督": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.079
+      },
+      "嘟": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.012
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:兜": {
+        "spec": 3.312,
+        "f0": 1.515,
+        "vmis": 0.094,
+        "frames": 32,
+        "comb": 3.171
+      },
+      "A:篼": {
+        "spec": 4.168,
+        "f0": 2.303,
+        "vmis": 0.429,
+        "frames": 42,
+        "comb": 4.387
+      },
+      "B:督": {
+        "spec": 4.122,
+        "f0": 3.383,
+        "vmis": 0.094,
+        "frames": 32,
+        "comb": 5.444
+      },
+      "B:嘟": {
+        "spec": 4.299,
+        "f0": 3.502,
+        "vmis": 0.171,
+        "frames": 35,
+        "comb": 5.651
+      }
+    },
+    "window_s": [
+      6.611,
+      6.927
+    ],
+    "boundary_token": "都",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "决赛",
+        "对面",
+        "站",
+        "着",
+        "表哥林",
+        "德克内希",
+        "他们",
+        "曾",
+        "是",
+        "大学",
+        "队友",
+        "无论",
+        "谁",
+        "赢",
+        "这个",
+        "家",
+        "都",
+        "会",
+        "有",
+        "一个",
+        "大师",
+        "赛",
+        "冠军"
+      ],
+      "A:兜": [
+        "决赛",
+        "对面",
+        "站",
+        "着",
+        "表哥林",
+        "德克内希",
+        "他们",
+        "曾",
+        "是",
+        "大学",
+        "队友",
+        "无论",
+        "谁",
+        "赢",
+        "这个",
+        "家",
+        "兜",
+        "会",
+        "有",
+        "一个",
+        "大师",
+        "赛",
+        "冠军"
+      ],
+      "A:篼": [
+        "决赛",
+        "对面",
+        "站",
+        "着",
+        "表哥林",
+        "德克内希",
+        "他们",
+        "曾",
+        "是",
+        "大学",
+        "队友",
+        "无论",
+        "谁",
+        "赢",
+        "这个",
+        "家",
+        "篼",
+        "会",
+        "有",
+        "一个",
+        "大师",
+        "赛",
+        "冠军"
+      ],
+      "B:督": [
+        "决赛",
+        "对面",
+        "站",
+        "着",
+        "表哥林",
+        "德克内希",
+        "他们",
+        "曾",
+        "是",
+        "大学",
+        "队友",
+        "无论",
+        "谁",
+        "赢",
+        "这个",
+        "家",
+        "督",
+        "会",
+        "有",
+        "一个",
+        "大师",
+        "赛",
+        "冠军"
+      ],
+      "B:嘟": [
+        "决赛",
+        "对面",
+        "站",
+        "着",
+        "表哥林",
+        "德克内希",
+        "他们",
+        "曾",
+        "是",
+        "大学",
+        "队友",
+        "无论",
+        "谁",
+        "赢",
+        "这个",
+        "家嘟",
+        "会",
+        "有",
+        "一个",
+        "大师",
+        "赛",
+        "冠军"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        1.6,
+        2.1,
+        2.7,
+        3.3,
+        1.9,
+        null,
+        null,
+        9.4,
+        9.5,
+        10.5,
+        11.4,
+        11.6,
+        11.6,
+        10.6,
+        8.8,
+        7.4
+      ],
+      "A:兜": [
+        3.4,
+        3.6,
+        4.2,
+        4.5,
+        4.6,
+        1.4,
+        7.3,
+        7.3,
+        7.5,
+        8.4,
+        9.1,
+        9.6,
+        9.6,
+        9.0,
+        7.8,
+        5.4
+      ],
+      "A:篼": [
+        2.7,
+        2.9,
+        3.7,
+        4.3,
+        4.5,
+        1.6,
+        6.2,
+        6.1,
+        6.3,
+        7.2,
+        8.2,
+        8.7,
+        8.5,
+        7.5,
+        null,
+        null
+      ],
+      "B:督": [
+        3.4,
+        3.6,
+        3.9,
+        4.3,
+        4.2,
+        4.5,
+        4.5,
+        4.8,
+        5.8,
+        6.5,
+        6.3,
+        4.9
+      ],
+      "B:嘟": [
+        4.8,
+        5.4,
+        5.6,
+        5.5,
+        2.7,
+        3.2,
+        5.2,
+        5.9,
+        6.6,
+        7.1,
+        7.7,
+        7.8,
+        7.3,
+        5.7,
+        2.5,
+        null
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/951ea874b0a73e9b8d8cfcef.mp3",
+      "A:兜": "/workspace/tennislive/research/vacherot-acoustic/references/bb8acd8004dc6f9657f7fcb7.mp3",
+      "A:篼": "/workspace/tennislive/research/vacherot-acoustic/references/b7eb98549c552e4c98d45872.mp3",
+      "B:督": "/workspace/tennislive/research/vacherot-acoustic/references/23f1ac8319cb6e5394387c93.mp3",
+      "B:嘟": "/workspace/tennislive/research/vacherot-acoustic/references/ca6a51039632599d5b329f23.mp3"
+    }
+  }
+}

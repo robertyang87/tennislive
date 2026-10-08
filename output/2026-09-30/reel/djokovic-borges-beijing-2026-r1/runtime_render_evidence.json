@@ -1,0 +1,85 @@
+{
+  "video_stream_sha256": "039db02563fab33dbb260110d8fbe53f481fbdbc6bdf401945fb8119e3e95132",
+  "pixel_review_binding": "62samples reviewed before audio-only fix; all5158encoded video packets verified identical after repair",
+  "status": "pass",
+  "checked_at_utc": "2026-09-30T17:08:49.562651+00:00",
+  "film_sha256": "1e6e6ff2d7c2ab499ba1e615ef8a08bf2c1c7fc8639215548a54b368551add5f",
+  "spec_sha256": "441ec04eee9ede070b9008fe78b4ee9ee34f7cfafcf49dcb76d81d27f792ad7d",
+  "ass_sha256": "c2d9f4d0b6f15afbeb8573d1aaa1a500fe980bb6cdd289b9b8543770a7e8c84a",
+  "film_bytes": 101054067,
+  "renderer_sha256": "86cebb104a489702c9aae91965e5c7c9857d2ccf16af0e493101497be76dcd25",
+  "renderer_unchanged": true,
+  "adapter_sha256": "091b1da3b62096b781edffa9c003258c6c5123b55f2407c4b2821a518ae9961b",
+  "recap_audio_adapter_sha256": "f75b5a615d8e70ddc78066353757f06c96c3cdab9fb7be6674d4e36a342d95cd",
+  "recap_audio_repair": {
+    "method": "Replace both complete recap backgrounds before original native duck mix; original Chinese MP3 and exact native delay offsets retained; no TTS regeneration; video copied",
+    "windows": [
+      [
+        45.12,
+        52.12
+      ],
+      [
+        63.82,
+        71.42
+      ]
+    ],
+    "donor_source": [
+      145.1,
+      146.4
+    ],
+    "donor_description": "Same-match dead-ball arena/applause between commentator phrases",
+    "donor_gain_before_native_duck": 0.18,
+    "loop_crossfade_seconds": 0.1,
+    "bed_boundary_crossfade_seconds": 0.04,
+    "native_audio_bitrate": "192k",
+    "native_voice_filters": [
+      "[2:a]adelay=5600|5600[v1]",
+      "[3:a]adelay=45120|45120[v2]",
+      "[4:a]adelay=52120|52120[v3]",
+      "[5:a]adelay=61040|61040[v4]",
+      "[6:a]adelay=63820|63820[v5]",
+      "[7:a]adelay=71420|71420[v6]",
+      "[8:a]adelay=113170|113170[v7]",
+      "[9:a]adelay=131270|131270[v8]",
+      "[10:a]adelay=171870|171870[v9]",
+      "[11:a]adelay=181870|181870[v10]",
+      "[12:a]adelay=202470[voutro]"
+    ]
+  },
+  "recap_audio_graph": "[0:a]volume='1-((min(max((t-45.12)/0.04,0),1)*min(max((52.12-t)/0.04,0),1))+(min(max((t-63.82)/0.04,0),1)*min(max((71.42-t)/0.04,0),1)))':eval=frame[oldbed];[1:a]asplit=2[ambsrc0][ambsrc1];[ambsrc0]atrim=duration=7.000,asetpts=PTS-STARTPTS,volume=0.18,afade=t=in:d=0.04,afade=t=out:st=6.960:d=0.04,adelay=45120|45120[amb0];[ambsrc1]atrim=duration=7.600,asetpts=PTS-STARTPTS,volume=0.18,afade=t=in:d=0.04,afade=t=out:st=7.560:d=0.04,adelay=63820|63820[amb1];[oldbed][amb0][amb1]amix=inputs=3:duration=first:normalize=0[rawbed];[rawbed]volume=0.72[bed];[2:a]adelay=5600|5600[v1];[3:a]adelay=45120|45120[v2];[4:a]adelay=52120|52120[v3];[5:a]adelay=61040|61040[v4];[6:a]adelay=63820|63820[v5];[7:a]adelay=71420|71420[v6];[8:a]adelay=113170|113170[v7];[9:a]adelay=131270|131270[v8];[10:a]adelay=171870|171870[v9];[11:a]adelay=181870|181870[v10];[12:a]adelay=202470[voutro];[v1][v2][v3][v4][v5][v6][v7][v8][v9][v10][voutro]amix=inputs=11:normalize=0[voice];[voice]asplit=2[vk0][vm];[vk0]apad[vk];[bed][vk]sidechaincompress=threshold=0.02:ratio=12:attack=15:release=450:makeup=1[duck];[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]",
+  "final_audio_repair": {
+    "verified_donor_duration": 8.5,
+    "donor_source": [
+      145.1,
+      146.4
+    ],
+    "overlap_add_crossfade_seconds": 0.1,
+    "base_audio": "Original v2 Chinese VO and source mix; recaps originally have no background",
+    "base_audio_sha256": "37561d4bf6c4b7ea7b5e5c3b9aee78ddbda8e7e5dc740fadf9806f4f4a7eb0d2",
+    "windows": [
+      [
+        45.12,
+        52.12
+      ],
+      [
+        63.82,
+        71.42
+      ]
+    ],
+    "added_bed_gain": 0.1296,
+    "video_stream_copy": true,
+    "audio_encode": "AAC192k; audio-only repair, extra AAC generation disclosed",
+    "filtergraph": "[1:a]asplit=2[base][key];[2:a]asplit=2[amb0src][amb1src];[amb0src]atrim=duration=7.0,asetpts=PTS-STARTPTS,volume=0.1296,afade=t=in:d=0.04,afade=t=out:st=6.96:d=0.04,adelay=45120|45120[amb0];[amb1src]atrim=duration=7.6,asetpts=PTS-STARTPTS,volume=0.1296,afade=t=in:d=0.04,afade=t=out:st=7.56:d=0.04,adelay=63820|63820[amb1];[amb0][amb1]amix=inputs=2:normalize=0,apad[amb];[amb][key]sidechaincompress=threshold=0.02:ratio=12:attack=15:release=450:makeup=1[duck];[base][duck]amix=inputs=2:normalize=0:dropout_transition=0[out]"
+  },
+  "final_audio_repair_adapter_sha256": "278f3ac3d1dd49975030ee351f9a7589c5f6fb1843d3c9fa3e09927c8c55ec6e",
+  "adapter_scope": [
+    "Exact native video/audio graphs processed in separate bounded-memory passes",
+    "Verified8unchangedsegments reused; two real-motion recap segments and extended final segment regenerated",
+    "Native write_subtitles uses audio-role-mapped cues:42Chinese-only TTS cues plus expanded original English bilingual cues",
+    "Cleanframepadding excludes promo following239.68",
+    "Approved pure#FFD600 coveraccent adapter reused"
+  ],
+  "no_quality_threshold_changes": true,
+  "native_L2": "See qc_attestation.json",
+  "encoding": "See encoding_compatibility.json"
+}

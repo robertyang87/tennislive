@@ -582,6 +582,12 @@ class _Encoded(Exception):
 def _render_until_encode(tmp_path, monkeypatch, spec: dict, probe: dict, speak: dict):
     """真调 `render()`，把下载之前那几道和源片无关的闸、TTS 打桩，走到「比分板蒙版」
     就停（抛 `_Encoded`）。源片是本地合成的 30 秒小片（已在 outdir 里，不下载）。"""
+    # This fixture tests the later digital-silence gate with synthetic noise,
+    # not a human source-review workflow. Isolate that independent upstream gate;
+    # its real render rejection and source/ASS proofs are covered separately.
+    import foreground_audio_gate
+    monkeypatch.setattr(foreground_audio_gate, "require", lambda *_a, **_k: [])
+    monkeypatch.setattr(foreground_audio_gate, "bind_sources", lambda *_a, **_k: None)
     out = tmp_path / "out"
     out.mkdir(exist_ok=True)
     src = out / "source.mp4"

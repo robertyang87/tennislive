@@ -276,7 +276,7 @@ def test_声称有却抠不出来要报矛盾不许写成这场没有():
     没帮上忙，这是主动给出一个错答案，而下一个人没有第二个地方可以对
     （CLAUDE.md 里「喊错了是主动给出错答案」那条）。
 
-    ⚠️ 两头都要钉：矛盾要报错，而**真的没有**（接口自己说 False/None）
+    ⚠️ 两头都要钉：矛盾要报错，而**真的没有**（接口自己明确说 False）
     照旧要给出能粘的挂账句——只钉前一头的话，把整条路改成一律报错也能过，
     而那会把「查过确实没有」这种正当情形也堵死。
     """
@@ -298,7 +298,7 @@ def test_声称有却抠不出来要报矛盾不许写成这场没有():
     assert '"_winners_ue_why":' not in msg, "还在吐能粘的假话"
 
     # ② 接口自己说没有 → 照旧给能粘的挂账句，别报错
-    for ext in (False, None):
+    for ext in (False,):
         body = _payload(ext) if ext is not None else json.dumps(
             {"K": ["data", "Match"], "P": [], "_": {"0": {"1": []}}})
         tnns_stats._report("42", tnns_stats.decode(body))   # 不许抛

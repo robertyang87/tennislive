@@ -726,6 +726,26 @@ def test_不提交产物也不发Release的工作流不许要写权限():
         if perms.get("contents") != "write":
             continue
         commits = "git commit" in body
+        # 队列提交封装在 Python outbox 中；沿实际调用链核对，不按 workflow 名放行。
+        # 真正 Git 提交/推送及 fresh-clone 恢复由 test_reel_dispatch_outbox 的本地 remote 测试验证。
+        if not commits and re.search(r"python(?:3)?\s+tools/dispatch_reel_queue\.py\b", body):
+            caller = ast.parse(Path("tools/dispatch_reel_queue.py").read_text())
+            callee = ast.parse(Path("tools/reel_dispatch_outbox.py").read_text())
+            imports_persist = any(
+                isinstance(node, ast.ImportFrom) and node.module == "reel_dispatch_outbox"
+                and any(alias.name == "persist" for alias in node.names)
+                for node in ast.walk(caller))
+            calls_persist = any(
+                isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+                and node.func.id == "persist" for node in ast.walk(caller))
+            git_commit_call = any(
+                isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                and isinstance(node.func.value, ast.Name) and node.func.value.id == "subprocess"
+                and node.func.attr == "run" and node.args
+                and isinstance(node.args[0], ast.List)
+                and [getattr(item, "value", None) for item in node.args[0].elts[:2]] == ["git", "commit"]
+                for node in ast.walk(callee))
+            commits = imports_persist and calls_persist and git_commit_call
         releases = bool(re.search(r"gh release|action-gh-release", body))
         # ⚠️ **删 ref 是第三个正当理由**（2026-09-15 登记）。当时
         # `branch-cleanup-oneshot.yml` 拿 `gh api -X DELETE …/git/refs/heads/…`

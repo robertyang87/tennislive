@@ -19,6 +19,7 @@ from .common import (
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
 from .hashtags import limit_hashtags
+from .copy_title import compact_copy_title, copy_hook_budget, make_copy_title
 from .narrative import data_angle as _data_angle
 from .narrative import editor_takeaway, preview_angle
 from .rating import (
@@ -75,7 +76,7 @@ def record_quiz() -> None:
 
 
 def xhs_title_len(text: str) -> float:
-    """小红书标题字数：全角/汉字/emoji 记 1，半角字符记 0.5."""
+    """Legacy visual-width helper; publishing uses copy_title and len, never this."""
     return sum(0.5 if ord(c) < 128 else 1 for c in text)
 
 
@@ -91,16 +92,10 @@ def _title_emoji(hook: str) -> str:
 
 
 def decorate_title(digest: Digest, hook: str, *, category: str = "") -> str:
-    """发布标题 = emoji + 日期 + 钩子，如 '🏆7.20｜跌至世界第85，西西帕斯终于捧杯'.
-
-    按小红书 20 字预算（半角记 0.5）裁剪钩子，日期与 emoji 不挤占核心信息。
-    """
-    prefix = (
-        f"{_title_emoji(hook)}{digest.today.month}.{digest.today.day}"
-        f"{category}｜"
-    )
-    budget = 20 - xhs_title_len(prefix)
-    return prefix + _compact_title_hook(hook, budget)
+    """Keep date/column/| and fit the editorial hook into the remaining budget."""
+    column = category or "今日球局"
+    day = f"{digest.today.month}.{digest.today.day}"
+    return make_copy_title(day, column, _compact_title_hook(hook, copy_hook_budget(day, column)))
 
 
 def _latin_short_name(value: str) -> str:
@@ -204,7 +199,7 @@ def _compact_title_hook(hook: str, budget: float) -> str:
         ("美国公开赛", "美网"),
     ):
         cleaned = cleaned.replace(long_name, short_name)
-    if xhs_title_len(cleaned) <= budget:
+    if len(compact_copy_title(cleaned)) <= budget:
         return cleaned
 
     candidates: list[str] = []
@@ -217,9 +212,11 @@ def _compact_title_hook(hook: str, budget: float) -> str:
 
     # Prefer a content-specific "球员+动作+轮次" hook over the raw clauses so the
     # title varies by the day's actual story instead of a generic fallback.
-    candidates.extend(_subject_action_hooks(cleaned))
-
     clauses = [part.strip() for part in re.split(r"[，,；;：:]", cleaned) if part.strip()]
+    # A time/context clause is not the player's name. Compress complete clauses
+    # independently so the budget cannot drop the result verb from the title.
+    for clause in reversed(clauses):
+        candidates.extend(_subject_action_hooks(clause))
     if len(clauses) >= 2:
         subject = re.split(
             r"先丢|苦战|鏖战|历经|经过|耗时|直落|连赢|三盘|两盘",
@@ -237,20 +234,20 @@ def _compact_title_hook(hook: str, budget: float) -> str:
             ),
             "",
         )
+        candidates.extend(reversed(clauses))
         if subject and action:
             candidates.append(subject + action)
-        candidates.extend(reversed(clauses))
         candidates.extend(clauses)
 
     for candidate in candidates:
         candidate = candidate.strip("，。、：|｜")
-        if candidate and xhs_title_len(candidate) <= budget:
+        if candidate and len(compact_copy_title(candidate)) <= budget:
             return candidate
 
     # A generic but complete fallback is preferable to publishing half a name
     # or half a sentence. The deck carries the detailed headline in full.
     for fallback in ("今日焦点已锁定", "昨夜最值回看", "今晚值得一看"):
-        if xhs_title_len(fallback) <= budget:
+        if len(compact_copy_title(fallback)) <= budget:
             return fallback
     return "焦点"
 

@@ -1,0 +1,78 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 212,
+  "range_to": 217.5,
+  "created_at": "2026-10-04T14:43:26.675082+00:00",
+  "elapsed_seconds": 0.8,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 212.66,
+      "end": 214.58,
+      "text": " Oh, he was stretching there, it's very rough.",
+      "avg_logprob": -0.8360810518264771,
+      "no_speech_prob": 0.17054864764213562,
+      "words": [
+        {
+          "start": 212.66,
+          "end": 213.08,
+          "word": " Oh,",
+          "probability": 0.32460132241249084
+        },
+        {
+          "start": 213.2,
+          "end": 213.22,
+          "word": " he",
+          "probability": 0.6124302744865417
+        },
+        {
+          "start": 213.22,
+          "end": 213.32,
+          "word": " was",
+          "probability": 0.8210141658782959
+        },
+        {
+          "start": 213.32,
+          "end": 213.72,
+          "word": " stretching",
+          "probability": 0.9700505137443542
+        },
+        {
+          "start": 213.72,
+          "end": 213.96,
+          "word": " there,",
+          "probability": 0.5637217164039612
+        },
+        {
+          "start": 214.14,
+          "end": 214.14,
+          "word": " it's",
+          "probability": 0.6665808856487274
+        },
+        {
+          "start": 214.14,
+          "end": 214.26,
+          "word": " very",
+          "probability": 0.18872493505477905
+        },
+        {
+          "start": 214.26,
+          "end": 214.58,
+          "word": " rough.",
+          "probability": 0.14390583336353302
+        }
+      ]
+    }
+  ]
+}

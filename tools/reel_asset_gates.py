@@ -163,6 +163,9 @@ def stats_card_problem(spec: dict, *, legacy_set: frozenset[str] | None = None) 
         return None
     if str(spec.get("slug") or "") in (legacy("no_stats") if legacy_set is None else legacy_set):
         return None
+    from team_exhibition_scope import video_without_tour_stats
+    if video_without_tour_stats(spec):
+        return None
     stats = spec.get("stats")
     if not isinstance(stats, dict) or not stats:
         return ("「赛场之上」推微信必须带全场技术统计图（push_reel：缺 stat_card.jpg 就拒发），"

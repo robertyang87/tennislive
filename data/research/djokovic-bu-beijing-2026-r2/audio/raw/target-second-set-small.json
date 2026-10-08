@@ -1,0 +1,118 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=U_XusSb_NV4",
+  "source_sha256": "8802c02443e2b6383eb798994b26c060a44f27cce59d78724467ea6aa7b3bf7e",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English >0.979 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 118,
+  "range_to": 129.2,
+  "created_at": "2026-10-03T06:13:04.503188+00:00",
+  "elapsed_seconds": 2.32,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 120.2,
+      "end": 121.94,
+      "text": " Well, are we really surprised?",
+      "avg_logprob": -0.36162131309509277,
+      "no_speech_prob": 0.6051910519599915,
+      "words": [
+        {
+          "start": 120.2,
+          "end": 120.92,
+          "word": " Well,",
+          "probability": 0.17640471458435059
+        },
+        {
+          "start": 121.02,
+          "end": 121.12,
+          "word": " are",
+          "probability": 0.9233381152153015
+        },
+        {
+          "start": 121.12,
+          "end": 121.24,
+          "word": " we",
+          "probability": 0.9966683983802795
+        },
+        {
+          "start": 121.24,
+          "end": 121.46,
+          "word": " really",
+          "probability": 0.9951363205909729
+        },
+        {
+          "start": 121.46,
+          "end": 121.94,
+          "word": " surprised?",
+          "probability": 0.9945135116577148
+        }
+      ]
+    },
+    {
+      "start": 124.84,
+      "end": 128.46,
+      "text": " Novak Djokovic bounces back in the second set.",
+      "avg_logprob": -0.36162131309509277,
+      "no_speech_prob": 0.6051910519599915,
+      "words": [
+        {
+          "start": 124.84,
+          "end": 125.56,
+          "word": " Novak",
+          "probability": 0.9338183999061584
+        },
+        {
+          "start": 125.56,
+          "end": 126.28,
+          "word": " Djokovic",
+          "probability": 0.9606947302818298
+        },
+        {
+          "start": 126.28,
+          "end": 126.86,
+          "word": " bounces",
+          "probability": 0.9689356684684753
+        },
+        {
+          "start": 126.86,
+          "end": 127.26,
+          "word": " back",
+          "probability": 0.9968552589416504
+        },
+        {
+          "start": 127.26,
+          "end": 127.7,
+          "word": " in",
+          "probability": 0.9858993887901306
+        },
+        {
+          "start": 127.7,
+          "end": 127.86,
+          "word": " the",
+          "probability": 0.9968170523643494
+        },
+        {
+          "start": 127.86,
+          "end": 128.18,
+          "word": " second",
+          "probability": 0.981007993221283
+        },
+        {
+          "start": 128.18,
+          "end": 128.46,
+          "word": " set.",
+          "probability": 0.9446709156036377
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "9a648eb04c12df16c9eaa36df067d979d926a5df13c72e6a53eb872102d2f1e7",
+  "metadata_sanitization": "Local source_path omitted for repository portability. Original source identity retained by canonical source_url and source_sha256. Transcript, word timing, probabilities and ASR configuration unchanged."
+}

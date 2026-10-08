@@ -1,0 +1,60 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 185,
+  "range_to": 195,
+  "created_at": "2026-10-04T14:39:31.686806+00:00",
+  "elapsed_seconds": 2.05,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 190.08,
+      "end": 193.6,
+      "text": " It's a place he loves.",
+      "avg_logprob": -0.4624426603317261,
+      "no_speech_prob": 0.1669033318758011,
+      "words": [
+        {
+          "start": 190.08,
+          "end": 191.48,
+          "word": " It's",
+          "probability": 0.5002960413694382
+        },
+        {
+          "start": 191.48,
+          "end": 192.88,
+          "word": " a",
+          "probability": 0.9653325080871582
+        },
+        {
+          "start": 192.88,
+          "end": 193.08,
+          "word": " place",
+          "probability": 0.9818087220191956
+        },
+        {
+          "start": 193.08,
+          "end": 193.32,
+          "word": " he",
+          "probability": 0.9633703231811523
+        },
+        {
+          "start": 193.32,
+          "end": 193.6,
+          "word": " loves.",
+          "probability": 0.9898356795310974
+        }
+      ]
+    }
+  ]
+}

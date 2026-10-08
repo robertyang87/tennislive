@@ -363,7 +363,8 @@ def test_photo_beats_embed_a_real_file_and_carry_no_burned_in_credit():
         # cover for portrait frames; contain for wide ones, whose edges
         # carry the subject and must not be cropped away.
         assert "data:image" in doc
-        assert "background-size:cover" in doc or "background-size:contain" in doc
+        assert ("background-size:cover" in doc or "background-size:contain" in doc
+                or "object-fit:contain" in doc)
         # Provenance is kept in the data for records, never painted on the frame.
         assert seg.credit
         assert seg.credit not in doc
@@ -633,8 +634,13 @@ def test_每条片子都以问题开场():
             assert line in doc, f"{slug} 封面少了这一行：{line}"
         assert "① " not in doc  # the cover carries no beat number
         assert explainer_column(slug) in doc
-        # ...and the first real beat still starts the count at one.
-        assert "① " in _slide_html(1, segments[1])
+        # Generic decks keep their sequence marker. The focused source layout
+        # uses one conclusion and evidence, without a second chapter/number label.
+        first = _slide_html(1, segments[1])
+        if segments[1].visual:
+            assert "scene-index" not in first
+        else:
+            assert "① " in first
 
 
 def test_每屏标题不能把自己的标签再说一遍():
@@ -1535,7 +1541,7 @@ def test_冷开场台头不许把片头拖到台头图那么长(tmp_path):
     )
 
 
-#: 显式写着要 9:16 的片子。**只许减不许加。**
+#: 显式写着要 9:16 的片子；新增必须对应账号所有者的明确指示。
 #:
 #: 2026-09-16 默认值翻面时这张表是**空的**——49 条 `_OPENINGS` 里没有一条
 #: 声明 9:16。留着它是为了让「某条片子要回 9:16」变成一次看得见的决定，
@@ -1638,15 +1644,7 @@ def test_canvas_h传CARD_H画布真的变成三比四不留黑边(tmp_path):
 
 
 def test_intro_cx显式给定的比例决定哪一段源片落在画面中心(tmp_path):
-    """账号所有者 2026-08-07：「居中啊，和后面视频一样啊」——`crop` 不给
-    `x` 就是缺省居中源片的几何中心，不是画面里那个人。`intro_cx` 是显式
-    给的水平中心（源片宽度的比例，0.5＝几何居中，行为跟改之前一样）。
-
-    造一段源片：蓝色背景配一条窄的洋红竖条，竖条中心精确落在源片 1280 宽
-    的 30%（x=384）处。给 `intro_cx=0.3`，这条竖条应该被钉到输出画面正
-    中心；不给（缺省 0.5，纯几何居中）时，它应该落在输出左侧、明显偏离
-    中心——两者一起验证：给了会真的移动裁切窗口，不给还是老样子。
-    """
+    """2026-09-29 全局固定几何中心：偏移应拒绝，默认画面不追到偏左主体。"""
     import shutil  # noqa: PLC0415
     import subprocess  # noqa: PLC0415
 
@@ -1696,18 +1694,15 @@ def test_intro_cx显式给定的比例决定哪一段源片落在画面中心(tm
     default_out = E.assemble_explainer_video(
         [s], [a], tmp_path / "default.mp4", intro=intro, canvas_h=E.CARD_H,
     )
-    centered_out = E.assemble_explainer_video(
-        [s], [a], tmp_path / "centered.mp4", intro=intro, canvas_h=E.CARD_H,
-        intro_cx=0.3,
-    )
+    from tennislive.video.crop_policy import VideoCropPolicyError
+    with pytest.raises(VideoCropPolicyError, match="固定中间"):
+        E.assemble_explainer_video(
+            [s], [a], tmp_path / "centered.mp4", intro=intro, canvas_h=E.CARD_H,
+            intro_cx=0.3,
+        )
 
     default_x = _bar_x(default_out)
-    centered_x = _bar_x(centered_out)
     ow = E.VIDEO_W
-
-    assert abs(centered_x - ow / 2) < 20, (
-        f"intro_cx=0.3 应该把 30% 处的竖条钉到输出中心 {ow / 2}，实测在 {centered_x:.1f}"
-    )
     assert abs(default_x - ow / 2) > 200, (
         "默认 cx=0.5 应该是纯几何居中，30% 处的竖条不该落在输出中心附近，"
         f"实测在 {default_x:.1f}——是不是默认值被意外改动了？"
@@ -2729,7 +2724,7 @@ def test_复制页可达但内容是旧版时也要摘掉按钮():
     old_page = to_copy_page("7.29 今日赛程 | 郑钦文凌晨1点战伊埃拉\n\n正文甲")
     new_page = to_copy_page("7.29 今日赛程 | 王欣瑜战萨姆索诺娃\n\n正文乙")
     live_old, live_new = _Resp(old_page), _Resp(new_page)
-    fresh = "7.29 今日赛程 | 王欣瑜战萨姆索诺娃"
+    fresh = "7.29今日赛程|王欣瑜战萨姆索诺娃"
 
     with mock.patch.object(requests, "get", return_value=live_old):
         assert not _probe_page("http://x/copy.html", attempts=1, expect=fresh), (
@@ -3774,61 +3769,40 @@ def test_触发要排在探活之前不是之后():
             f"{where} 把触发排在了探活循环**之后**——那时按钮早就摘掉了")
 
 
-#: 探复制页的那两个函数。谁（间接）调用它们，谁就要能点动 Pages。
-_COPY_PAGE_PROBES = {"drop_dead_copy_button", "wait_for_copy_page"}
+def _assert_pages_access(workflow: dict, job: dict, step: dict, where: str):
+    from tools.workflow_contracts import effective_env
+
+    perms = job.get("permissions", workflow.get("permissions")) or {}
+    env = effective_env(workflow, job, step)
+    assert perms.get("actions") == "write", (
+        f"{where} 会探复制页却没有 `actions: write`——点不动 pages.yml")
+    assert env.get("GITHUB_TOKEN") or env.get("GH_TOKEN"), (
+        f"{where} 拿不到 token，`trigger_pages_build` 会直接跳过")
 
 
-def _funcs_calling(tree, names: set[str]) -> set[str]:
-    """模块里哪些顶层函数调用了 `names` 里的任何一个。
-
-    **用 AST 不用正则**：`push_reel.py` 的 docstring 里提了三次
-    `wait_for_copy_page`，真正的调用只有一处；正则分不出这个差别，而这个
-    仓库的注释正是记教训的地方，必然会提到被测的那个名字。
-    """
-    import ast
-
-    hit = set()
-    for node in tree.body:
-        if not isinstance(node, ast.FunctionDef):
-            continue
-        for sub in ast.walk(node):
-            if isinstance(sub, ast.Call):
-                name = getattr(sub.func, "id", None) or getattr(
-                    sub.func, "attr", None)
-                if name in names:
-                    hit.add(node.name)
-    return hit
-
-
-def _probing_entry_points() -> list[str]:
-    """从代码推出「哪些命令行入口会走到探复制页」，不手写清单。"""
-    import ast
-
-    tools = sorted(
-        p.name for p in Path("tools").glob("*.py")
-        if _funcs_calling(ast.parse(p.read_text(encoding="utf-8")),
-                          _COPY_PAGE_PROBES))
-
-    cli_src = Path("src/tennislive/cli.py").read_text(encoding="utf-8")
-    probing = _funcs_calling(ast.parse(cli_src), _COPY_PAGE_PROBES)
-    # `if args.channel == "pushplus": return cmd_publish_pushplus(args)`
-    channels = sorted({
-        chan for chan, fn in re.findall(
-            r'args\.channel\s*==\s*"([^"]+)"[^\n]*\n\s*return\s+(\w+)\(', cli_src)
-        if fn in probing})
-
-    # **判据自己也要有判据**：主语没了它要出声，而不是变成一条恒真的绿灯。
-    assert tools, "一个 tools 脚本都没查到会探复制页——判据失效了"
-    assert channels, "一个 publish channel 都没查到会探复制页——判据失效了"
-    return ([re.escape(t) for t in tools]
-            + [rf"publish\s+{re.escape(c)}" for c in channels])
+def test_Pages权限检查继承环境但仍拦缺token和降权():
+    workflow = {"permissions": {"actions": "write"}, "env": {"GH_TOKEN": "workflow-token"}}
+    _assert_pages_access(workflow, {}, {}, "workflow env")
+    job = {"env": {"GITHUB_TOKEN": "job-token"}}
+    _assert_pages_access({"permissions": {"actions": "write"}}, job, {}, "job env")
+    _assert_pages_access({"permissions": {"actions": "write"}}, {},
+                         {"env": {"GITHUB_TOKEN": "step-token"}}, "step env")
+    with pytest.raises(AssertionError, match="token"):
+        _assert_pages_access({"permissions": {"actions": "write"}}, {}, {}, "missing token")
+    with pytest.raises(AssertionError, match="token"):
+        _assert_pages_access(workflow, {}, {"env": {"GH_TOKEN": ""}}, "cleared token")
+    with pytest.raises(AssertionError, match="actions: write"):
+        _assert_pages_access({"permissions": {"contents": "read"}}, job, {}, "missing permission")
+    with pytest.raises(AssertionError, match="actions: write"):
+        _assert_pages_access(workflow, {"permissions": {"contents": "read"}}, {}, "job override")
 
 
 def test_会发微信的工作流都要能触发Pages():
     """判据自己推导，不维护白名单。
 
-    凡是跑 `push_reel.py` 或 `tennislive publish pushplus` 的工作流都会走到
-    探复制页那条路，所以都要：`permissions: actions: write`（才点得动
+    只有真正走到探复制页的命令才要权限；`push_reel --stage check/page`
+    提前返回，本地校验/写页不算推送。推送步骤继承 workflow/job env，所以要查
+    合并后的环境，而不是强迫每一步重复 token。真的会探页就都要：`permissions: actions: write`（才点得动
     workflow_dispatch）+ 那一步拿得到 token。少一样就退回「探满 40 分钟再摘
     按钮」，**而它不报错**。
 
@@ -3846,26 +3820,23 @@ def test_会发微信的工作流都要能触发Pages():
     """
     import yaml
 
-    need = re.compile("|".join(_probing_entry_points()))
+    from tools.workflow_contracts import pages_calls, pages_entries
+
+    entries = pages_entries(Path.cwd())
+    assert entries[0] and entries[1], "Pages 调用入口没有扫到，判据失效了"
     checked = []
     for path in sorted(Path(".github/workflows").glob("*.yml")):
         spec = yaml.safe_load(path.read_text(encoding="utf-8"))
-        perms = spec.get("permissions") or {}
         for job in (spec.get("jobs") or {}).values():
             for step in job.get("steps") or []:
                 run = "\n".join(
                     line for line in str(step.get("run") or "").splitlines()
                     if not line.lstrip().startswith("#"))
-                if not need.search(run):
+                if not pages_calls(run, entries):
                     continue
-                env = step.get("env") or {}
-                checked.append(f"{path.name}「{step.get('name')}」")
-                assert perms.get("actions") == "write", (
-                    f"{path.name} 会发微信却没有 `actions: write`——"
-                    "点不动 pages.yml，复制页只能等别的 push 才发布")
-                assert "GITHUB_TOKEN" in env or "GH_TOKEN" in env, (
-                    f"{path.name}「{step.get('name')}」拿不到 token，"
-                    "`trigger_pages_build` 会直接跳过")
+                where = f"{path.name}「{step.get('name')}」"
+                checked.append(where)
+                _assert_pages_access(spec, job, step, where)
     assert len(checked) >= 9, f"只校到 {len(checked)} 处，判据可能失效了"
 
 
@@ -4594,7 +4565,7 @@ def test_那一千字的闸是四条线共用的一处出处():
     from tennislive.render.pushmsg import XHS_BODY_MAX, to_copy_page
 
     # ① 行为：顶格放行、多一个字就拦
-    at_cap = "标题\n\n" + "字" * XHS_BODY_MAX
+    at_cap = "10.2网球有故事|标题\n\n" + "字" * XHS_BODY_MAX
     assert "字" * 20 in to_copy_page(at_cap), "顶格那一份应该照常渲出来"
     with pytest.raises(SystemExit) as e:
         to_copy_page("标题\n\n" + "字" * (XHS_BODY_MAX + 1))
@@ -4799,4 +4770,3 @@ def test_塞伦多洛全名不误报而同句错姓氏仍报错():
     hits = scan(full + "，" + wrong + "。")
     assert ("塞伦多罗", "塞伦多洛") in hits
     assert (wrong, full) in hits
-

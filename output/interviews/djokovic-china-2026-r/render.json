@@ -1,0 +1,166 @@
+{
+  "assembly": {
+    "parts": [
+      {
+        "role": "cover",
+        "file": "_cover.mp4",
+        "seconds": 2.0
+      },
+      {
+        "role": "lead_in",
+        "file": "_lead.mp4",
+        "seconds": 24.04
+      },
+      {
+        "role": "body",
+        "file": "_body.mp4",
+        "seconds": 141.92
+      },
+      {
+        "role": "takeaway_close",
+        "file": "_takeaway_close.mp4",
+        "seconds": 5.66,
+        "peak_db": -7.5
+      },
+      {
+        "role": "outro",
+        "file": "_outro.mp4",
+        "seconds": 4.2,
+        "peak_db": -8.5
+      }
+    ]
+  },
+  "seams": {
+    "count": 4,
+    "transition": "dissolve",
+    "dissolve_s": 0.18
+  },
+  "film_sha256": "34e4578e755e61d4a59baf2752e4eeac42b108f6965b5c4f615f342ae917220b",
+  "film_seconds": 177.0,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "djokovic-china-2026-r",
+    "received_at": "2026-10-04T18:43:37Z",
+    "artifact_ready_at": "2026-10-04T18:49:38Z",
+    "elapsed_seconds": 361.48,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "34e4578e755e61d4a59baf2752e4eeac42b108f6965b5c4f615f342ae917220b",
+    "spec_sha256": "26ee6a59a6e99d96f44aebb8f65a3b350460770fc22d75ac9f5db3f20d95f1a7",
+    "run_id": "37225530876",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-04T18:44:57Z",
+        "run_id": "37225530876"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-04T18:46:15Z",
+        "run_id": "37225530876"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-04T18:46:29Z",
+        "run_id": "37225530876"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-04T18:47:35Z",
+        "run_id": "37225530876"
+      }
+    ],
+    "render_seconds": 123.48,
+    "pre_render_seconds": 238.0
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "德约科维奇",
+        "similarity": {
+          "德约科维奇": 0.6792
+        },
+        "missing": [],
+        "expected": [
+          "德约科维奇"
+        ],
+        "face": [
+          594,
+          168,
+          784,
+          445
+        ],
+        "face_px": 276.7,
+        "reason": "像 德约科维奇（0.68 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2518,
+        "ear_each": [
+          0.2568,
+          0.2468
+        ],
+        "face": [
+          594,
+          168,
+          784,
+          445
+        ],
+        "face_px": 276.7,
+        "reason": "眼睛纵横比 0.25 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "warnings": []
+    },
+    "warnings": []
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-10-04T18:44:57Z",
+      "run_id": "37225530876"
+    },
+    {
+      "stage": "cover_audit",
+      "at": "2026-10-04T18:46:15Z",
+      "run_id": "37225530876"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-10-04T18:46:29Z",
+      "run_id": "37225530876"
+    },
+    {
+      "stage": "render",
+      "at": "2026-10-04T18:47:35Z",
+      "run_id": "37225530876"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-10-04T18:49:39Z",
+      "run_id": "37225530876"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-04T18:49:39Z",
+      "run_id": "37225530876"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-djokovic-china-2026-r/djokovic-china-2026-r.mp4?v=34e4578e755e61d4",
+  "video_bytes": 39974197,
+  "release_asset_digest": "sha256:34e4578e755e61d4a59baf2752e4eeac42b108f6965b5c4f615f342ae917220b",
+  "qc_attestation_sha256": "4c7cd9f9f9301dc20e4d56cd4bd8adb146a6ba187353f8405a5f996ab091d90d"
+}

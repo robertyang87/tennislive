@@ -1,0 +1,71 @@
+{
+  "reviewers": [
+    "OpenAI parent",
+    "OpenAI visual agent",
+    "OpenAI fact_review agent"
+  ],
+  "deepseek_used": false,
+  "minimax_used": false,
+  "visual_review": {
+    "video": "yastremska-chwalinska.mp4",
+    "frames_seconds": [
+      2.2,
+      59,
+      95,
+      110,
+      145,
+      174,
+      179
+    ],
+    "subject": "黑衣赫瓦林斯卡",
+    "findings": "人物、国旗、比分、技术统计正确；双语字幕完整可读，无比分条重叠。",
+    "minor": "章节卡旁白字幕重复标题；保留固定约3.8秒品牌片尾。"
+  },
+  "fact_review": {
+    "claim": "全场八个发球局，她有五局没能守住",
+    "method": "逐局复算和统计表双向核对",
+    "first_set_service_games": 4,
+    "first_set_broken": 2,
+    "second_set_service_games": 4,
+    "second_set_broken": 3,
+    "total_service_games": 8,
+    "total_broken": 5
+  },
+  "targeted_tests": {
+    "passed": 87,
+    "files": [
+      "tests/test_foreground_audio_gate.py",
+      "tests/test_winners_ue_gate.py"
+    ]
+  },
+  "final_render_qc": {
+    "status": "pass",
+    "checked_at": "2026-10-02T08:19:16Z",
+    "slug": "yastremska-chwalinska",
+    "spec_sha256": "dceb3dce656c0daf1d5f5bdee041d002f3e64b78f6719d5f8222b84c245fc36b",
+    "ass_sha256": "83c63c777a5fb781531181178a8c89d030a41ddef4e8f7839c1998e5b627495a",
+    "film_sha256": "557784652b0aea2adae9daeead955444ec93ef00cbb325e8a700da6a58f05ce3",
+    "film_bytes": 89750864,
+    "checks": {
+      "canvas": [
+        1080,
+        1440
+      ],
+      "silence_floor_db": -60,
+      "ending_payoff": "pass",
+      "audio_tail_max_s": 1
+    },
+    "render_inputs_sha256": "e81f901c7def89f24d025dfaaf9a16ce1d1f0bf6405897ea4ae3c188d7303d56"
+  },
+  "final_render_run": 36982776082,
+  "final_video_parent_review": {
+    "download_sha256": "557784652b0aea2adae9daeead955444ec93ef00cbb325e8a700da6a58f05ce3",
+    "matches_qc": true,
+    "frames_seconds": [
+      160,
+      162,
+      174
+    ],
+    "findings": "最后一分中文旁白字幕、原始5-1/40-15比分清晰；握手双语原声字幕完整，人物与比赛对应。"
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "method": "Actual source mono16k PCM, faster-whisper small.en and medium.en full source + medium.en targeted windows; no claimed human listening. Canonical spellings corrected from known player identities; ASR uncertainty explicit.",
+  "cold_open": {
+    "start": 277.2,
+    "recommended_end": 280.6,
+    "why": "First complete sentence Alexandrova ends280.48/280.50; next A begins280.68 targeted. Current281.48 clips effort mid-word.",
+    "quotes": [
+      {
+        "at": 0.12,
+        "end": 1.08,
+        "text": "And what a way to finish"
+      },
+      {
+        "at": 1.08,
+        "end": 3.3,
+        "text": "for Ekaterina Alexandrova."
+      }
+    ]
+  },
+  "quote_adjustments": [
+    {
+      "segment": 3,
+      "source_start": 0,
+      "absolute": [
+        13.14,
+        17.39
+      ],
+      "text": "Drops in. Nicely done. Backhand side from Noskova.",
+      "split": [
+        [
+          13.14,
+          15.82
+        ],
+        [
+          15.82,
+          17.45
+        ]
+      ],
+      "why": "Current extends to18.4 though Noskova ends17.38; leave short display tail but avoid declaring speech lasts18.4."
+    },
+    {
+      "segment": 6,
+      "absolute": [
+        68.72,
+        73.3
+      ],
+      "text": "Great hands. Yeah. There's the drop shot and great coverage at the net.",
+      "split": [
+        [
+          68.7,
+          70.12
+        ],
+        [
+          70.12,
+          73.35
+        ]
+      ],
+      "status": "medium full says hands there vs targeted+small say hands Yeah; use two-vs-one, not human attested"
+    },
+    {
+      "segment": 8,
+      "absolute": [
+        82.17,
+        85.42
+      ],
+      "text": "That's a big backhand from Alexandrova.",
+      "why": "Current ends84.78 but surname ends85.42; extend relative end11.55."
+    },
+    {
+      "segment": 8,
+      "absolute": [
+        93.24,
+        96.82
+      ],
+      "text": "So, Alexandrova gets the first break of the opening set."
+    },
+    {
+      "segment": 9,
+      "absolute": [
+        169.13,
+        171.17
+      ],
+      "text": "Good return again from Alexandrova."
+    },
+    {
+      "segment": 9,
+      "absolute": [
+        171.33,
+        173.19
+      ],
+      "text": "And she has a double-break lead."
+    },
+    {
+      "segment": 9,
+      "absolute": [
+        173.27,
+        174.19
+      ],
+      "text": "Bit of a surprise.",
+      "why": "Complete sentence omitted; add rel10.83–11.81."
+    },
+    {
+      "segment": 10,
+      "absolute": [
+        181.18,
+        185.16
+      ],
+      "text": "[uncertain lead-in] backhand for Alexandrova to close out the opening set.",
+      "why": "Original Oh what a unsupported by either full ASR, targeted low-confidence The. Need additional actual listening/API check for first181.18–181.78, do not infer."
+    },
+    {
+      "segment": 10,
+      "absolute": [
+        185.59,
+        191.65
+      ],
+      "text": "So, two breaks of serve, and she hands Linda Noskova her first set loss in her last six matches.",
+      "split": [
+        [
+          185.59,
+          188.49
+        ],
+        [
+          188.49,
+          191.65
+        ]
+      ],
+      "why": "Current second split starts190.88 whereas her starts188.49: 2.39 seconds late."
+    },
+    {
+      "segment": 10,
+      "absolute": [
+        192.28,
+        195.17
+      ],
+      "text": "An upset brewing perhaps in round four.",
+      "why": "Current starts193.08, shift .8s earlier."
+    },
+    {
+      "segment": 12,
+      "absolute": [
+        216.48,
+        218.54
+      ],
+      "text": "Oh, wow!",
+      "status": "timing not confidently resolved; targeted crop215 produced start215 halluc stretched initial Oh; use whole source word timestamps and current216.48 pending"
+    }
+  ],
+  "ending_absolute_quote_ranges": [
+    [
+      277.32,
+      280.55,
+      "And what a way to finish for Ekaterina Alexandrova."
+    ],
+    [
+      280.65,
+      284.58,
+      "A dominant effort against the Wimbledon champion"
+    ],
+    [
+      285.05,
+      287.25,
+      "who hasn't lost since the US Open."
+    ],
+    [
+      287.22,
+      290.8,
+      "Had a five-match win streak going that is now gone."
+    ],
+    [
+      291.18,
+      296.1,
+      "Ekaterina Alexandrova into the quarterfinals in Beijing for the very first time."
+    ],
+    [
+      296.4,
+      298.85,
+      "Two and two over the number five seed."
+    ]
+  ],
+  "extra_source_commentary": {
+    "segment6": [
+      {
+        "source_start": 57.0,
+        "source_end": 61.08,
+        "text": "A lot of pace on the shots ... Golubic. I mean, this is ...",
+        "status": "exact wording uncertain; audible commentary ASR-confirmed, currently uncaptioned, must verify or explicitly omit with reason"
+      }
+    ]
+  },
+  "additional_large_v3": {
+    "method": "actual source targeted faster-whisper large-v3 int8 CPU",
+    "seg6_start_recommendation": 60.52,
+    "why": "I mean this is ends60.46; 60.7-61.1 server near shot preparation,61.16 wide tossing; preserves preparation without residual speech",
+    "seg10_verified_core": "Backhand for Alexandrova to close out the opening set.",
+    "seg10_uncertain_prefix": "Oh / what a not confirmed by small.en medium.en or large-v3, keep core only or obtain listening evidence",
+    "great_hands": "Great hands. Yeah. confirmed by targeted medium+large and small"
+  }
+}

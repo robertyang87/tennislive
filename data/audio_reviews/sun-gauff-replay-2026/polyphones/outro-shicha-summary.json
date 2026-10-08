@@ -1,0 +1,39 @@
+{
+  "source": "src/tennislive/video/outro_page.py:NARRATION",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "no_asr": true,
+  "no_own_character_reference": true,
+  "reference_limit": "chā independent refs exist but are uncommon: 锸/嗏/臿; common 插 and 叉 have multiple readings, so not claimed as unambiguous references.",
+  "checks": [
+    {
+      "occurrence_zero_based": 0,
+      "at_character_index": 5,
+      "verdict": "unreliable",
+      "confidence": null,
+      "score": 0.173,
+      "selftest_pass": false,
+      "far_from_both": true,
+      "window_s": [
+        0.92,
+        1.28
+      ],
+      "evidence": "/workspace/scratch/sun-replay/polyphone-audit/outro-shicha-0.json"
+    },
+    {
+      "occurrence_zero_based": 1,
+      "at_character_index": 8,
+      "verdict": "unreliable",
+      "confidence": null,
+      "score": 0.595,
+      "selftest_pass": false,
+      "far_from_both": false,
+      "window_s": [
+        1.66,
+        1.94
+      ],
+      "evidence": "/workspace/scratch/sun-replay/polyphone-audit/outro-shicha-1.json"
+    }
+  ],
+  "decision": "Both exact full-context positions are unreliable under unchanged acoustic thresholds/self-test; do not call them correct or misread; no new pronunciation substitution justified and no further expansion."
+}

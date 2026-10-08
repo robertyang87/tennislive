@@ -1,0 +1,56 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "djokovic-medvedev-beijing-2026-sf",
+  "reviewed_at": "2026-10-05T15:14:40.190724+00:00",
+  "method": "asr_cross_checked",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/selected/00-cold_open.json",
+      "transcript_sha256": "b9134667e01455bd9f33d895f3e510b03cf5187e557f5db1c7c4bca7e4abf7ed"
+    },
+    {
+      "index": 2,
+      "transcript_path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/selected/02-first_break.json",
+      "transcript_sha256": "c046c6052b697fcb55d15ab380a9164e068f5ecf92cf4b988363790564c097a5"
+    },
+    {
+      "index": 3,
+      "transcript_path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/selected/03-immediate_breakback.json",
+      "transcript_sha256": "b710f29788173f05d35a0db047d3505983c4b27d0faf1bbb9c824b2dd667b9be"
+    },
+    {
+      "index": 5,
+      "transcript_path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/selected/05-first_set_point.json",
+      "transcript_sha256": "da431caed8ed9b0cd9c3631ea751cf43aa5f9fedb76778ad985bd028d46e52ce"
+    },
+    {
+      "index": 8,
+      "transcript_path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/selected/08-second_set_pressure.json",
+      "transcript_sha256": "67cddba14907063025f785114980497aa943efc9e38de8335335ecb9b3236959"
+    },
+    {
+      "index": 10,
+      "transcript_path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/selected/10-second_break.json",
+      "transcript_sha256": "b9debb0740a6b3ecfd2cce7007a3879a5d7ac768db7ec04b398dd647f6b9cb15"
+    },
+    {
+      "index": 11,
+      "transcript_path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/selected/11-falling_rally.json",
+      "transcript_sha256": "dba33e1e384962d0b05624bbaffb03dd70f9e5afc77cd0bcf6c9a6f320117cf9"
+    },
+    {
+      "index": 13,
+      "transcript_path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/selected/13-medvedev_breakback.json",
+      "transcript_sha256": "9670f92e699cafa80c06710a451dd02579d821bc31cf050988e917ad7be42ea3"
+    },
+    {
+      "index": 14,
+      "transcript_path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/selected/14-rebreak_and_default.json",
+      "transcript_sha256": "3e89f61c22b0b24546b9ba1343fa883492756c40c5b8ee449b135bd4111173c0"
+    }
+  ],
+  "note": "Every selected full source window reviewed by actual independent small.en and medium.en ASR crosscheck with source captions. No human-listening claim. Six shout candidates retained conservatively with explicit disagreement notes. Unstable 130.64–133.94 utterance is outside all retained windows.",
+  "plan_sha256": "23f4df967dd75964bcdada994f3d836620419d39ee7bbb6d584dc4f60a97957a"
+}

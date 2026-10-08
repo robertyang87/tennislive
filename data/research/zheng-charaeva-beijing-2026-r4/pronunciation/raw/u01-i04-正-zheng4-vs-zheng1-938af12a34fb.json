@@ -1,0 +1,486 @@
+{
+  "job": {
+    "id": "u01-i04-正-zheng4-vs-zheng1",
+    "utterance": 1,
+    "label": "第 3 段",
+    "sentence": "郑钦文用正手把球压向边线。首盘二比一，她又救下三个破发点。连同这一局，首盘最后四局，全归她。",
+    "text_sha256": "938af12a34fb56b9ac690af28b59eaf6f65d3e5e53529530136b36a2a234c20c",
+    "index": 4,
+    "char": "正",
+    "intended": "zheng4",
+    "wrong": "zheng1",
+    "ok": [
+      "证",
+      "郑",
+      "诤"
+    ],
+    "bad": [
+      "争",
+      "征",
+      "狰"
+    ],
+    "ok_reference_note": "single-reading common, single-reading level-2",
+    "bad_reference_note": "single-reading common"
+  },
+  "word": "正",
+  "char": "正",
+  "sentence": "郑钦文用正手把球压向边线。首盘二比一，她又救下三个破发点。连同这一局，首盘最后四局，全归她。",
+  "tts_text": "郑钦文用正手把球压向边线。首盘二比一，她又救下三个破发点。连同这一局，首盘最后四局，全归她。",
+  "intended_refs": [
+    "证",
+    "郑",
+    "诤"
+  ],
+  "wrong_refs": [
+    "争",
+    "征",
+    "狰"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "medium",
+  "verdict_raw": "correct",
+  "score": 0.8,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": false,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 1.032,
+      "d_wrong": 3.323,
+      "score": 0.526
+    },
+    "f0": {
+      "d_intended": 0.009,
+      "d_wrong": 3.039,
+      "score": 0.994
+    },
+    "comb": {
+      "d_intended": 0.527,
+      "d_wrong": 4.736,
+      "score": 0.8
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.589,
+    "wrong": 4.603
+  },
+  "separation": {
+    "spec": {
+      "within": 1.934,
+      "between": 2.995,
+      "separation": 1.549
+    },
+    "f0": {
+      "within": 0.776,
+      "between": 2.923,
+      "separation": 3.767
+    },
+    "comb": {
+      "within": 1.743,
+      "between": 4.421,
+      "separation": 2.536
+    }
+  },
+  "selftest_loo": {
+    "证": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.816
+    },
+    "郑": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.818
+    },
+    "诤": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.209
+    },
+    "争": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.885
+    },
+    "征": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.885
+    },
+    "狰": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.29
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:证": {
+      "spec": 1.25,
+      "f0": 0.009,
+      "vmis": 0.0,
+      "frames": 29,
+      "comb": 0.635
+    },
+    "A:郑": {
+      "spec": 1.032,
+      "f0": 0.011,
+      "vmis": 0.0,
+      "frames": 29,
+      "comb": 0.527
+    },
+    "A:诤": {
+      "spec": 2.884,
+      "f0": 1.265,
+      "vmis": 0.0,
+      "frames": 29,
+      "comb": 2.707
+    },
+    "B:争": {
+      "spec": 3.432,
+      "f0": 3.047,
+      "vmis": 0.034,
+      "frames": 29,
+      "comb": 4.763
+    },
+    "B:征": {
+      "spec": 3.395,
+      "f0": 3.039,
+      "vmis": 0.034,
+      "frames": 29,
+      "comb": 4.736
+    },
+    "B:狰": {
+      "spec": 3.323,
+      "f0": 3.131,
+      "vmis": 0.034,
+      "frames": 29,
+      "comb": 4.792
+    }
+  },
+  "window_s": [
+    0.8,
+    1.086
+  ],
+  "boundary_token": "正手",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "郑钦文",
+      "用",
+      "正手",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:证": [
+      "郑钦文",
+      "用",
+      "证手",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:郑": [
+      "郑钦文",
+      "用",
+      "郑手",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "A:诤": [
+      "郑钦文",
+      "用",
+      "诤手",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:争": [
+      "郑钦文",
+      "用",
+      "争手",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:征": [
+      "郑钦文",
+      "用",
+      "征手",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ],
+    "B:狰": [
+      "郑钦文",
+      "用",
+      "狰手",
+      "把",
+      "球压",
+      "向",
+      "边线",
+      "首盘",
+      "二比一",
+      "她",
+      "又",
+      "救下",
+      "三个",
+      "破发点",
+      "连同",
+      "这",
+      "一",
+      "局",
+      "首盘",
+      "最后",
+      "四局",
+      "全",
+      "归",
+      "她"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      1.1,
+      0.8,
+      0.3,
+      -1.0,
+      null,
+      null,
+      null,
+      9.5,
+      9.3,
+      8.4,
+      5.6,
+      2.2,
+      -0.4,
+      -2.4,
+      null
+    ],
+    "A:证": [
+      1.1,
+      0.8,
+      0.3,
+      -1.0,
+      null,
+      null,
+      null,
+      9.5,
+      9.3,
+      8.4,
+      5.6,
+      2.3,
+      -0.4,
+      -2.4,
+      null
+    ],
+    "A:郑": [
+      1.1,
+      0.8,
+      0.3,
+      -1.0,
+      null,
+      null,
+      null,
+      9.5,
+      9.3,
+      8.4,
+      5.6,
+      2.3,
+      -0.5,
+      -2.4,
+      null
+    ],
+    "A:诤": [
+      1.1,
+      0.4,
+      0.2,
+      -0.2,
+      -1.6,
+      null,
+      null,
+      null,
+      8.3,
+      7.6,
+      5.8,
+      2.9,
+      0.1,
+      -2.5,
+      -3.1
+    ],
+    "B:争": [
+      0.1,
+      -0.4,
+      -0.9,
+      -1.6,
+      -3.8,
+      null,
+      null,
+      2.5,
+      1.8,
+      1.6,
+      2.1,
+      2.0,
+      1.6,
+      0.5
+    ],
+    "B:征": [
+      0.1,
+      -0.4,
+      -0.9,
+      -1.6,
+      -3.8,
+      null,
+      null,
+      2.4,
+      1.8,
+      1.6,
+      2.1,
+      2.0,
+      1.6,
+      0.5
+    ],
+    "B:狰": [
+      0.2,
+      -0.3,
+      -1.0,
+      -2.2,
+      null,
+      null,
+      null,
+      3.5,
+      3.0,
+      2.6,
+      4.0,
+      4.2,
+      3.7,
+      2.7
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/a6e8b4221343a6bcb89745f3.mp3",
+    "A:证": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/5b7072b7b4c727ea6ffef376.mp3",
+    "A:郑": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/498bda0105ddf1c36e278108.mp3",
+    "A:诤": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/94625df0d73cbaf5295b2f88.mp3",
+    "B:争": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/f95eea2366a756b781a1d235.mp3",
+    "B:征": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/337d0a1ae751771996cf083f.mp3",
+    "B:狰": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/3ef9756c3d62b2a090823800.mp3"
+  }
+}

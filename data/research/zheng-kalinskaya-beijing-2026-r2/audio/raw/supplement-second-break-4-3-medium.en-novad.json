@@ -1,0 +1,142 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=iFpkI2x5gWs",
+  "source_path": "/workspace/zheng-kalinskaya-research/source1-original/iFpkI2x5gWs-original-1080p.mp4",
+  "source_sha256": "04f824564b5b5d91bfc212a73587dff2d153b7284edf96a62eca77c7c880f1b5",
+  "source_bytes": 217141591,
+  "source_hash_method": "Actual entire original MP4 read locally before transcription",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "detected_language": "en",
+  "language_probability": 1,
+  "range_from": 1346.0,
+  "range_to": 1374.0,
+  "selected_from": 1348.0,
+  "selected_to": 1370.0,
+  "decoded_pcm_sha256": "59e463167c1715a5e1d9f85cdd76ebd63ecf82b3c20378e4bb15f3e4ca7951f9",
+  "decoded_pcm_sample_rate": 16000,
+  "timestamps": "Original source absolute seconds, no chapter/proxy offset",
+  "created_at": "2026-10-03T20:12:59.728576+00:00",
+  "elapsed_seconds": 7.91,
+  "review_status": "raw_asr_only_not_certified",
+  "actual_listening_performed": false,
+  "segments": [
+    {
+      "id": 1,
+      "start": 1356.64,
+      "end": 1364.46,
+      "text": " Oh and Kalinskaya from 40-15 up to our crew.",
+      "avg_logprob": -0.6865180565251244,
+      "no_speech_prob": 0.35616472363471985,
+      "compression_ratio": 0.8461538461538461,
+      "words": [
+        {
+          "start": 1356.64,
+          "end": 1357.96,
+          "word": " Oh",
+          "probability": 0.46323251724243164
+        },
+        {
+          "start": 1357.96,
+          "end": 1358.18,
+          "word": " and",
+          "probability": 0.42266911268234253
+        },
+        {
+          "start": 1358.18,
+          "end": 1358.86,
+          "word": " Kalinskaya",
+          "probability": 0.6118024537960688
+        },
+        {
+          "start": 1358.86,
+          "end": 1359.52,
+          "word": " from",
+          "probability": 0.9580451846122742
+        },
+        {
+          "start": 1359.52,
+          "end": 1359.9,
+          "word": " 40",
+          "probability": 0.8004218935966492
+        },
+        {
+          "start": 1359.9,
+          "end": 1360.34,
+          "word": "-15",
+          "probability": 0.750824898481369
+        },
+        {
+          "start": 1360.34,
+          "end": 1360.74,
+          "word": " up",
+          "probability": 0.9575015902519226
+        },
+        {
+          "start": 1360.74,
+          "end": 1363.42,
+          "word": " to",
+          "probability": 0.27652475237846375
+        },
+        {
+          "start": 1363.42,
+          "end": 1363.72,
+          "word": " our",
+          "probability": 0.9965599179267883
+        },
+        {
+          "start": 1363.72,
+          "end": 1364.46,
+          "word": " crew.",
+          "probability": 0.9872761368751526
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 1368.54,
+      "end": 1371.12,
+      "text": " and susceptible to the wind",
+      "avg_logprob": -0.6902933567762375,
+      "no_speech_prob": 0.16868461668491364,
+      "compression_ratio": 0.7714285714285715,
+      "words": [
+        {
+          "start": 1368.54,
+          "end": 1369.38,
+          "word": " and",
+          "probability": 0.16543413698673248
+        },
+        {
+          "start": 1369.38,
+          "end": 1370.22,
+          "word": " susceptible",
+          "probability": 0.6859729290008545
+        },
+        {
+          "start": 1370.22,
+          "end": 1370.64,
+          "word": " to",
+          "probability": 0.9989733695983887
+        },
+        {
+          "start": 1370.64,
+          "end": 1370.82,
+          "word": " the",
+          "probability": 0.998362123966217
+        },
+        {
+          "start": 1370.82,
+          "end": 1371.12,
+          "word": " wind",
+          "probability": 0.9966087341308594
+        }
+      ]
+    }
+  ]
+}

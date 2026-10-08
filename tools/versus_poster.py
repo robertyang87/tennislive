@@ -302,6 +302,10 @@ def _english_display(name: str, meta: dict, where: str) -> str:
     # `P. -. SMITH`。两种都不报错，只是印在海报上很怪。
     # 现在只按空白切：**名**里的每一段各取首字母、用 `-` 接回去
     # （`Elena-Gabriela` → `E.-G.`），**姓**原样大写。
+    # A team label is not a person's given name + surname.
+    if (name.endswith("队") and "country" in meta and meta["country"] is None
+            and "rank" in meta and meta["rank"] is None):
+        return value.upper()
     parts = value.split()
     if len(parts) > 1 and "." not in parts[0]:
         given = ["-".join(f"{bit[0]}." for bit in part.split("-") if bit)
@@ -565,12 +569,18 @@ def _sets_html(result: str) -> str:
 #: 学会这条——`cirstea-kalinskaya`（3-0 因伤退赛）撞上就是 `SystemExit`。
 #: 两个渲染器对同一种输入的容忍度不该分叉，这儿补的是**同一个已有判断**，
 #: 不是新发明一种显示方式。
-_RETIREMENT_MARKERS = {"ret.", "ret", "ret'd", "w.o.", "wo", "def.", "def", "unfinished"}
+_RETIREMENT_MARKERS = {
+    "ret.", "ret", "ret'd", "w.o.", "wo", "def.", "def", "dq", "dq.",
+    "default", "defaulted", "disqualified", "取消资格", "unfinished",
+}
 #: 英文标记 → 比分板上印的中文注脚。海报其余部分全是中文，标记不例外。
 _RETIREMENT_LABEL = {
     "ret.": "退赛", "ret": "退赛", "ret'd": "退赛",
     "w.o.": "弃权", "wo": "弃权",
-    "def.": "退赛", "def": "退赛",
+    "def.": "取消资格", "def": "取消资格",
+    "dq": "取消资格", "dq.": "取消资格",
+    "default": "取消资格", "defaulted": "取消资格",
+    "disqualified": "取消资格", "取消资格": "取消资格",
     "unfinished": "未打完",
 }
 
@@ -587,7 +597,7 @@ def _scoreboard_sets(result: str, where: str) -> tuple[list[tuple[int, int, str 
             raise SystemExit(
                 f"{where} 的 result={result!r} 含无法拆分的盘分 {token!r}；"
                 "比分板需要用 `6-1 4-6 6-2` 或带抢七小分的格式，"
-                "退赛可以在末尾单独加一个 `ret.`/`ret'd`/`w.o.` 词元。")
+                "退赛可以在末尾加 `ret.`，取消资格加 `DQ`/`Def.`。")
         scores.append((int(match.group(1)), int(match.group(2)), match.group(3)))
     if not scores:
         raise SystemExit(f"{where} 的 result 为空，无法生成比分板。")
@@ -908,6 +918,31 @@ def _score_row(meta: dict, cells: str, where: str, *, winner: bool) -> str:
         '</div>')
 
 
+def _team_exhibition_duration_error(cover: dict) -> str | None:
+    """Explicit team exhibition results may omit an unrecorded event duration.
+
+    This does not apply to a singles/doubles match, whose result is a set score.
+    """
+    board = cover.get("scoreboard") or {}
+    if board.get("result_format") != "team_exhibition":
+        return None
+    pair = cover.get("matchup") or []
+    if len(pair) != 2 or any(
+        not isinstance(side, dict)
+        or not str(side.get("name") or "").endswith("队")
+        or "country" not in side or side["country"] is not None
+        or "rank" not in side or side["rank"] is not None
+        for side in pair
+    ):
+        return "team_exhibition 必须是两支无国家代表身份、无世界排名的球队（country/rank: null）。"
+    result = re.fullmatch(r"(\d{1,2})-(\d{1,2})", str(cover.get("result") or ""))
+    if not result or int(result[1]) <= int(result[2]):
+        return "team_exhibition 的 result 必须是赢家在前的单一团体比分。"
+    if not str(board.get("duration_unavailable_why") or "").strip():
+        return "team_exhibition 必须写 duration_unavailable_why，说明未记录整场活动用时。"
+    return None
+
+
 def solo_scoreboard_shape_error(cover: dict) -> str | None:
     """「赛场之上」solo 封面的比分板**形状**够不够——只读 spec，不联网。
 
@@ -937,6 +972,12 @@ def solo_scoreboard_shape_error(cover: dict) -> str | None:
                 "cover.scoreboard 不能省略（需包含 court 和 duration_source）。")
     if not str(scoreboard.get("court") or "").strip():
         return "赛场之上比分板缺 `scoreboard.court`，不能猜场地名称。"
+    if scoreboard.get("result_format") == "team_exhibition":
+        team_problem = _team_exhibition_duration_error(cover)
+        if team_problem:
+            return team_problem
+        if "duration_source" not in scoreboard:
+            return None
     source = scoreboard.get("duration_source")
     if not isinstance(source, dict) or not str(source.get("url") or "").strip():
         return "cover.scoreboard 缺 `duration_source.url`：比赛时长不能手填。"
@@ -1007,7 +1048,12 @@ def _scoreboard_html(cover: dict) -> str:
     scoreboard = cover.get("scoreboard") or {}
     court = str(scoreboard.get("court") or "").strip()
     source = scoreboard.get("duration_source") or {}
-    duration = _fetch_match_duration(source, "cover.scoreboard")
+    duration = (_fetch_match_duration(source, "cover.scoreboard")
+                if source else "")
+    duration_html = (f'<span class="scoreboard-duration">{_CLOCK_ICON}'
+                     f'<span>{html.escape(duration)}</span></span>' if duration else "")
+    if scoreboard.get("result_format") == "team_exhibition":
+        duration_html += '<span class="scoreboard-note">团体比分</span>'
     scores, note = _scoreboard_sets(result, "cover")
     # ⚠️ 只看**位数**，不看是第几盘：同一块板上两种大小的上标比统一小一号难看。
     wide_tb = any(len(str(tb)) > 1 for _, _, tb in scores if tb)
@@ -1045,8 +1091,7 @@ def _scoreboard_html(cover: dict) -> str:
         f'<span class="scoreboard-court">{_COURT_ICON}'
         f'<span>{html.escape(court)}</span></span>'
         '<span class="scoreboard-meta">'
-        f'<span class="scoreboard-duration">{_CLOCK_ICON}'
-        f'<span>{html.escape(duration)}</span></span>'
+        f'{duration_html}'
         f'{note_html}'
         '</span>'
         '</div>'
@@ -1265,6 +1310,14 @@ def hook_title_px(lines: list[str]) -> int:
     if not lines:
         return HOOK_TITLE_PX
     return min(HOOK_TITLE_PX, int(TITLE_WIDTH_PX / max(hook_line_width(ln) for ln in lines)))
+
+
+def _hook_accent_color(cover: dict) -> str:
+    """仅覆盖封面标题重点词的字色；省略时仍用 BRAND，不改背景或描边。"""
+    color = cover.get("hook_accent_color", BRAND)
+    if not isinstance(color, str) or re.fullmatch(r"#[0-9a-fA-F]{6}", color) is None:
+        raise SystemExit("cover.hook_accent_color 必须是 #RRGGBB 六位十六进制颜色")
+    return color
 
 
 def hook_html(lines: list[str], accent: str = "") -> str:
@@ -1816,7 +1869,7 @@ __SCRIM__
  line-height:1.24;font-weight:400;color:__FOREGROUND__;white-space:nowrap;
  text-shadow:__SHADOW_HOOK__}
 /* 钩子里认领的那一截重点词（cover.hook_accent）：品牌绿，一屏只留一个强调色 */
-.storytitle .accent{color:__PRIMARY__}
+.storytitle .accent{color:__HOOK_ACCENT__}
 /* 标题底下那一行赛果。`.storycopy` 是 column flex 且 gap 34px，所以这一行
    自己不用再加 margin——加了就和钩子之间多出一截，看着像两块东西。 */
 .storyscore{display:flex;align-items:baseline;gap:20px;white-space:nowrap;
@@ -2007,6 +2060,7 @@ __SCRIM__
         .replace("__BRAND_BAR__", BRAND_BAR_CSS)
         .replace("__PRIMARY_RGB__", BRAND_RGB)
         .replace("__PRIMARY__", BRAND)
+        .replace("__HOOK_ACCENT__", _hook_accent_color(cover))
         .replace("__FOREGROUND__", TEXT)
         .replace("__TOPIC_FG__", TOPIC_FG)
         .replace("__SCORE_DASH__", SCORE_DASH)
@@ -2357,6 +2411,7 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
     # 没有 `nowrap`，所以它们是**默默多折一行**，不报错。按公式算就是
     # 94/85px，装得下。两条都已发、不重渲，这一条只管以后。
     vs_hook_px = hook_title_px(hook_lines)
+    hook_accent_color = _hook_accent_color(cover)
 
     if layout == "solo":
         body, panels = _solo_body(cover)
@@ -2438,7 +2493,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{BG};
 .copy{{position:absolute;left:66px;right:66px;bottom:150px;z-index:6}}
 .hook{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:{vs_hook_px}px;
   line-height:1.14;color:{TEXT};text-shadow:0 4px 30px rgba(0,0,0,.6)}} /* token-exempt: 纯黑投影只压暗、不带色相，不是品牌色 */
-.hook .accent{{color:{BRAND}}}
+.hook .accent{{color:{hook_accent_color}}}
 .score{{margin-top:26px;font-family:'TL Numeral','TL Sans SC',sans-serif;
   font-weight:600;font-size:50px;color:{BRAND}}}
 .sub{{margin-top:12px;font-size:32px;color:{DIM};letter-spacing:2px}}

@@ -1,0 +1,55 @@
+{
+  "same_match_getty": {
+    "confirmed_count": 16,
+    "date": "2026-10-02",
+    "round": "Beijing R2 vs Mirra Andreeva",
+    "photographer": "Fred Lee/Getty Images",
+    "native_dimensions": [
+      6000,
+      4000
+    ],
+    "native_download_status": "Getty许可购买原图，未获取；公开页面最大2048px带水印，不能用于正式封面",
+    "candidates_file": "getty-r2-candidates.json plus getty-page2.json",
+    "best_facing_camera_id": "2297611938",
+    "detail_url": "https://www.gettyimages.com/detail/news-photo/yue-yuan-of-china-in-action-against-mirra-andreeva-during-news-photo/2297611938",
+    "visual": "薄荷绿裙袁悦正面反手击球；高位中远景脸较小，公开缩略有水印"
+  },
+  "r1_backups": [
+    {
+      "path": "/workspace/scratch/yuan-cover-HD/yuan-beijing-2026-r1-chinaopen.jpg",
+      "url": "https://www.chinaopen.com/cn/upload/images/2026/9/e787332482a8faa6.jpg",
+      "dimensions": [
+        5000,
+        3333
+      ],
+      "date_original": "2026-09-30T15:39:18+08:00",
+      "match": "Yuan vs Oliynykova Beijing R1",
+      "source_page": "https://www.chinaopen.com/cn/contents/281/1597.html",
+      "visual": "袁悦薄荷绿裙正面击球，身份眼看确认",
+      "limitation": "本库首轮视频已用该图，root不希望复用"
+    },
+    {
+      "path": "/workspace/scratch/yuan-cover-HD/yuan-beijing-2026-r1-wta.jpg",
+      "url": "https://photoresources.wtatennis.com/wta/photo/2026/09/30/9d9fd4ba-9e1a-4df9-bf6b-1fd498db0451/Yuan-R1-Emmanuel-Wong.jpg",
+      "dimensions": [
+        4212,
+        2807
+      ],
+      "date_original": "2026-09-30T16:56:00+08:00",
+      "match": "Yuan vs Oliynykova Beijing R1",
+      "credit": "Emmanuel Wong/Getty Images",
+      "visual": "袁悦双臂笑脸庆祝，身份确认",
+      "limitation": "失利视频主题不适配庆祝姿态"
+    }
+  ],
+  "expanded_sources": {
+    "ChinaOpen": "本场唯一黑裙图Andreeva；首轮本人人物确认5000图备选已下载",
+    "WTA_photo_api": "id324325全48条最新仍9/30首轮；10/2无新增袁悦照片",
+    "ChinaDaily": "tennis主页最新07:46稿Djokovic，未见本场Yuan稿",
+    "Xinhua": "体育主页新闻最新至10/2凌晨、尚无袁悦本场稿；搜索接口405",
+    "Sina": "网球主页非及时比赛feed，photo album无效",
+    "Weibo": "搜索返回Visitor System，结果受阻",
+    "Getty": "4页精确caption筛出16张袁悦本场6000×4000图，公开2048带水印；未使用任何绕过方式"
+  },
+  "models": "No DeepSeek, No MiniMax; visual checks by Codex view_image"
+}

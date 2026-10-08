@@ -1,0 +1,721 @@
+{
+ "slug": "zheng-charaeva-beijing-2026-interview",
+ "method": "cover_scan_v1",
+ "auditor": "opencv-haar-v1",
+ "thresholds": {
+  "CANVAS": [
+   1080,
+   1440
+  ],
+  "FACE_CENTER_X_RANGE": [
+   0.08,
+   0.92
+  ],
+  "FACE_CENTER_Y_RANGE": [
+   0.06,
+   0.72
+  ],
+  "MIN_CLOSE_UP_FACE_HEIGHT_RATIO": 0.14,
+  "MIN_EYES": 2,
+  "MIN_FACE_AREA_RATIO": 0.01,
+  "MIN_FACE_CONTRAST": 32.0,
+  "MIN_FACE_HEIGHT_RATIO": 0.08,
+  "MIN_FACE_SHARPNESS": 45.0,
+  "MIN_ZOOM_CLOSE_UP": 1.5,
+  "PHOTO_HEIGHT": 810,
+  "PHOTO_TOP": 150
+ },
+ "layout": "6c0f76e19ce8a4f6",
+ "face_model": {
+  "cache_key": "face-models-buffalo_s-v0.7-17d6bb6dfcd3",
+  "thresholds": {
+   "CROP_MARGIN": 0.15,
+   "DET_SIZE": 640,
+   "DET_THRESH": 0.5,
+   "EYE_CLOSED_EAR": 0.12,
+   "EYE_OPEN_EAR": 0.16,
+   "MATCH_SIM": 0.34,
+   "MIN_EYE_FACE_PX": 72,
+   "MIN_ID_FACE_PX": 56,
+   "MISMATCH_SIM": 0.15,
+   "NMS_THRESH": 0.4
+  }
+ },
+ "face_in_scan": true,
+ "rivals_in_scan": 1,
+ "scanned_at": "2026-10-07T15:26:44Z",
+ "framing": {
+  "url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "mirrored": false,
+  "logo_box": null,
+  "video_eq": null,
+  "crop_ratio": 1.3333333333333333,
+  "crop_keep_top": 0.8,
+  "crop_shift_x": 0,
+  "zoom": 1.0,
+  "focus_y": 0.5,
+  "shot_type": ""
+ },
+ "window": [
+  429.0,
+  433.0
+ ],
+ "window_declared": false,
+ "step": 0.2,
+ "spec_frame_at": 431.0,
+ "candidates": [
+  {
+   "frame_at": 429.0,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 20.143，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     528,
+     518,
+     94,
+     94
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.11605,
+    "face_area_ratio": 0.0101,
+    "sharpness": 20.143,
+    "contrast": 95.0,
+    "center_x_ratio": 0.53241,
+    "center_y_ratio": 0.51235
+   },
+   "margin": 0.448,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.2428
+     },
+     "missing": [],
+     "face_px": 297.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.7236,
+     "face_px": 297.6
+    }
+   }
+  },
+  {
+   "frame_at": 429.2,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.93%，主体大小要求 ≥ 1.0%",
+    "归一化脸部清晰度 23.422，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     536,
+     518,
+     90,
+     90
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.11111,
+    "face_area_ratio": 0.00926,
+    "sharpness": 23.422,
+    "contrast": 91.0,
+    "center_x_ratio": 0.53796,
+    "center_y_ratio": 0.50988
+   },
+   "margin": 0.52,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.2702
+     },
+     "missing": [],
+     "face_px": 298.2
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.6799,
+     "face_px": 298.2
+    }
+   }
+  },
+  {
+   "frame_at": 429.4,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 17.857，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     514,
+     532,
+     103,
+     103
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.12716,
+    "face_area_ratio": 0.01213,
+    "sharpness": 17.857,
+    "contrast": 120.0,
+    "center_x_ratio": 0.52361,
+    "center_y_ratio": 0.53519
+   },
+   "margin": 0.397,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.2719
+     },
+     "missing": [],
+     "face_px": 313.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.4436,
+     "face_px": 313.3
+    }
+   }
+  },
+  {
+   "frame_at": 429.6,
+   "status": "fail",
+   "issues": [
+    "RuntimeError: 照片区域没有检出正面人脸"
+   ],
+   "face": null,
+   "margin": null
+  },
+  {
+   "frame_at": 429.8,
+   "status": "fail",
+   "issues": [
+    "RuntimeError: 照片区域没有检出正面人脸"
+   ],
+   "face": null,
+   "margin": null
+  },
+  {
+   "frame_at": 430.0,
+   "status": "fail",
+   "issues": [
+    "RuntimeError: 照片区域没有检出正面人脸"
+   ],
+   "face": null,
+   "margin": null
+  },
+  {
+   "frame_at": 430.2,
+   "status": "fail",
+   "issues": [
+    "RuntimeError: 照片区域没有检出正面人脸"
+   ],
+   "face": null,
+   "margin": null
+  },
+  {
+   "frame_at": 430.4,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     443,
+     308,
+     326,
+     326
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.40247,
+    "face_area_ratio": 0.12149,
+    "sharpness": 473.437,
+    "contrast": 150.0,
+    "center_x_ratio": 0.56111,
+    "center_y_ratio": 0.3963
+   },
+   "margin": 4.688,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.6012
+     },
+     "missing": [],
+     "face_px": 310.1
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3276,
+     "face_px": 310.1
+    }
+   }
+  },
+  {
+   "frame_at": 430.6,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     488,
+     311,
+     318,
+     318
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.39259,
+    "face_area_ratio": 0.1156,
+    "sharpness": 413.942,
+    "contrast": 144.0,
+    "center_x_ratio": 0.59907,
+    "center_y_ratio": 0.39506
+   },
+   "margin": 4.5,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.618
+     },
+     "missing": [],
+     "face_px": 330.1
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2057,
+     "face_px": 330.1
+    }
+   }
+  },
+  {
+   "frame_at": 430.8,
+   "status": "fail",
+   "issues": [
+    "这张脸闭眼：眼睛纵横比 0.06 < 0.12"
+   ],
+   "face": {
+    "box": [
+     476,
+     314,
+     343,
+     343
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.42346,
+    "face_area_ratio": 0.13449,
+    "sharpness": 449.234,
+    "contrast": 152.0,
+    "center_x_ratio": 0.59954,
+    "center_y_ratio": 0.4142
+   },
+   "margin": 4.75,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.5977
+     },
+     "missing": [],
+     "face_px": 320.1
+    },
+    "eyes": {
+     "verdict": "closed",
+     "ear": 0.0595,
+     "face_px": 320.1
+    }
+   }
+  },
+  {
+   "frame_at": 431.0,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     455,
+     330,
+     325,
+     325
+    ],
+    "eyes": 4,
+    "face_height_ratio": 0.40123,
+    "face_area_ratio": 0.12074,
+    "sharpness": 417.959,
+    "contrast": 155.0,
+    "center_x_ratio": 0.57176,
+    "center_y_ratio": 0.42284
+   },
+   "margin": 4.844,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.5883
+     },
+     "missing": [],
+     "face_px": 314.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2258,
+     "face_px": 314.4
+    }
+   }
+  },
+  {
+   "frame_at": 431.2,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     437,
+     332,
+     316,
+     316
+    ],
+    "eyes": 4,
+    "face_height_ratio": 0.39012,
+    "face_area_ratio": 0.11415,
+    "sharpness": 492.778,
+    "contrast": 156.0,
+    "center_x_ratio": 0.55093,
+    "center_y_ratio": 0.41975
+   },
+   "margin": 4.875,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.563
+     },
+     "missing": [],
+     "face_px": 310.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2394,
+     "face_px": 310.4
+    }
+   }
+  },
+  {
+   "frame_at": 431.4,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     419,
+     333,
+     309,
+     309
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.38148,
+    "face_area_ratio": 0.10915,
+    "sharpness": 437.691,
+    "contrast": 155.0,
+    "center_x_ratio": 0.53102,
+    "center_y_ratio": 0.41667
+   },
+   "margin": 4.768,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.5572
+     },
+     "missing": [],
+     "face_px": 300.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2511,
+     "face_px": 300.6
+    }
+   }
+  },
+  {
+   "frame_at": 431.6,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     412,
+     325,
+     294,
+     294
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.36296,
+    "face_area_ratio": 0.09881,
+    "sharpness": 441.341,
+    "contrast": 152.0,
+    "center_x_ratio": 0.51759,
+    "center_y_ratio": 0.39753
+   },
+   "margin": 4.537,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.5637
+     },
+     "missing": [],
+     "face_px": 294.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.1951,
+     "face_px": 294.4
+    }
+   }
+  },
+  {
+   "frame_at": 431.8,
+   "status": "fail",
+   "issues": [
+    "这张脸闭眼：眼睛纵横比 0.09 < 0.12"
+   ],
+   "face": {
+    "box": [
+     409,
+     310,
+     324,
+     324
+    ],
+    "eyes": 4,
+    "face_height_ratio": 0.4,
+    "face_area_ratio": 0.12,
+    "sharpness": 495.434,
+    "contrast": 152.0,
+    "center_x_ratio": 0.5287,
+    "center_y_ratio": 0.39753
+   },
+   "margin": 4.75,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.5423
+     },
+     "missing": [],
+     "face_px": 295.1
+    },
+    "eyes": {
+     "verdict": "closed",
+     "ear": 0.0929,
+     "face_px": 295.1
+    }
+   }
+  },
+  {
+   "frame_at": 432.0,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     424,
+     318,
+     302,
+     302
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.37284,
+    "face_area_ratio": 0.10426,
+    "sharpness": 419.986,
+    "contrast": 154.85,
+    "center_x_ratio": 0.53241,
+    "center_y_ratio": 0.39383
+   },
+   "margin": 4.66,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.5587
+     },
+     "missing": [],
+     "face_px": 305.1
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2089,
+     "face_px": 305.1
+    }
+   }
+  },
+  {
+   "frame_at": 432.2,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     436,
+     308,
+     295,
+     295
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.3642,
+    "face_area_ratio": 0.09948,
+    "sharpness": 428.465,
+    "contrast": 154.0,
+    "center_x_ratio": 0.54028,
+    "center_y_ratio": 0.37716
+   },
+   "margin": 4.553,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.5509
+     },
+     "missing": [],
+     "face_px": 309.2
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2504,
+     "face_px": 309.2
+    }
+   }
+  },
+  {
+   "frame_at": 432.4,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 8.488，必须 ≥ 45",
+    "这张脸闭眼：眼睛纵横比 0.10 < 0.12"
+   ],
+   "face": {
+    "box": [
+     673,
+     330,
+     103,
+     103
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.12716,
+    "face_area_ratio": 0.01213,
+    "sharpness": 8.488,
+    "contrast": 87.0,
+    "center_x_ratio": 0.67083,
+    "center_y_ratio": 0.2858
+   },
+   "margin": 0.189,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.5477
+     },
+     "missing": [],
+     "face_px": 298.3
+    },
+    "eyes": {
+     "verdict": "closed",
+     "ear": 0.0995,
+     "face_px": 298.3
+    }
+   }
+  },
+  {
+   "frame_at": 432.6,
+   "status": "fail",
+   "issues": [
+    "RuntimeError: 照片区域没有检出正面人脸"
+   ],
+   "face": null,
+   "margin": null
+  },
+  {
+   "frame_at": 432.8,
+   "status": "fail",
+   "issues": [
+    "RuntimeError: 照片区域没有检出正面人脸"
+   ],
+   "face": null,
+   "margin": null
+  },
+  {
+   "frame_at": 433.0,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     544,
+     276,
+     316,
+     316
+    ],
+    "eyes": 4,
+    "face_height_ratio": 0.39012,
+    "face_area_ratio": 0.11415,
+    "sharpness": 748.368,
+    "contrast": 150.0,
+    "center_x_ratio": 0.65,
+    "center_y_ratio": 0.35062
+   },
+   "margin": 4.688,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "郑钦文",
+     "similarity": {
+      "郑钦文": 0.5777
+     },
+     "missing": [],
+     "face_px": 285.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2685,
+     "face_px": 285.3
+    }
+   }
+  }
+ ],
+ "passing": [
+  431.2,
+  431.0,
+  431.4,
+  430.4,
+  433.0,
+  432.0,
+  432.2,
+  431.6,
+  430.6
+ ]
+}

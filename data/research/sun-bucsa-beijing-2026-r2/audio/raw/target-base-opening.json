@@ -1,0 +1,136 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 0,
+  "range_to": 29,
+  "created_at": "2026-10-03T16:45:22.971070+00:00",
+  "elapsed_seconds": 1.72,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 6.5,
+      "end": 26.34,
+      "text": " I'm going to really good finish that, I'm going to good opening hold of serve.",
+      "avg_logprob": -0.8266910781031069,
+      "no_speech_prob": 0.17269818484783173,
+      "words": [
+        {
+          "start": 6.5,
+          "end": 7.14,
+          "word": " I'm",
+          "probability": 0.4879547283053398
+        },
+        {
+          "start": 7.14,
+          "end": 7.14,
+          "word": " going",
+          "probability": 0.3519202172756195
+        },
+        {
+          "start": 7.14,
+          "end": 11.92,
+          "word": " to",
+          "probability": 0.9662381410598755
+        },
+        {
+          "start": 11.92,
+          "end": 12.24,
+          "word": " really",
+          "probability": 0.7832134366035461
+        },
+        {
+          "start": 12.24,
+          "end": 12.44,
+          "word": " good",
+          "probability": 0.7240689396858215
+        },
+        {
+          "start": 12.44,
+          "end": 12.78,
+          "word": " finish",
+          "probability": 0.9693650603294373
+        },
+        {
+          "start": 12.78,
+          "end": 13.4,
+          "word": " that,",
+          "probability": 0.9883318543434143
+        },
+        {
+          "start": 13.86,
+          "end": 24.68,
+          "word": " I'm",
+          "probability": 0.5829538702964783
+        },
+        {
+          "start": 24.68,
+          "end": 24.72,
+          "word": " going",
+          "probability": 0.61573725938797
+        },
+        {
+          "start": 24.72,
+          "end": 24.74,
+          "word": " to",
+          "probability": 0.98332279920578
+        },
+        {
+          "start": 24.74,
+          "end": 24.94,
+          "word": " good",
+          "probability": 0.6131460666656494
+        },
+        {
+          "start": 24.94,
+          "end": 25.56,
+          "word": " opening",
+          "probability": 0.9512678384780884
+        },
+        {
+          "start": 25.56,
+          "end": 25.88,
+          "word": " hold",
+          "probability": 0.8948122262954712
+        },
+        {
+          "start": 25.88,
+          "end": 26.08,
+          "word": " of",
+          "probability": 0.9389159083366394
+        },
+        {
+          "start": 26.08,
+          "end": 26.34,
+          "word": " serve.",
+          "probability": 0.41868388652801514
+        }
+      ]
+    },
+    {
+      "start": 26.34,
+      "end": 26.54,
+      "text": " Okay.",
+      "avg_logprob": -0.8128958702087402,
+      "no_speech_prob": 0.5810356140136719,
+      "words": [
+        {
+          "start": 26.34,
+          "end": 26.54,
+          "word": " Okay.",
+          "probability": 0.1881343275308609
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "f64bcad79bf7c39d1a069a84e25aa082477873b5e7835343fef50cf2de1963ad",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

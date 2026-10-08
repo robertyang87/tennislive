@@ -1,0 +1,762 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "scope": "research evidence only, no spec binding",
+  "models": [
+    "Systran/faster-whisper-small",
+    "Systran/faster-whisper-medium"
+  ],
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-03T20:32:37.292062+00:00",
+  "segments": [
+    {
+      "source": "rna10-source-7",
+      "source_url": "https://www.youtube.com/watch?v=7kcau8Gi7UM",
+      "source_sha256": "0c5f104a0731abe33fa7336f22ae4d479234f78cf54b104d3da73cf8ed044586",
+      "reviewed_from": 186,
+      "reviewed_to": 208,
+      "method": "asr_cross_checked",
+      "reviewer": "Codex: faster-whisper small + medium CPU/int8 VAD cross-check; no human/audio listening claim",
+      "reviewed_at": "2026-10-03T20:32:36.941753+00:00",
+      "status": "uncertain",
+      "foreground_english": [],
+      "no_foreground_english_reason": "Not certified absent; ASR contains uncertain or differing speech candidates.",
+      "uncertain_spans": [
+        {
+          "start": 186,
+          "end": 208,
+          "reason": "See retained raw model outputs; low-confidence candidates and/or disagreement prevent certification."
+        }
+      ],
+      "small_result": {
+        "source": 7,
+        "start": 186,
+        "end": 208,
+        "language": "en",
+        "probability": 0.5025498867034912,
+        "segments": [
+          {
+            "start": 196.35,
+            "end": 197.27,
+            "text": " Thank you.",
+            "avg_logprob": -0.7880910237630209,
+            "no_speech_prob": 0.730463981628418,
+            "words": [
+              {
+                "start": 196.35,
+                "end": 196.35,
+                "word": " Thank",
+                "probability": 0.03496693819761276
+              },
+              {
+                "start": 196.35,
+                "end": 197.27,
+                "word": " you.",
+                "probability": 0.9731544852256775
+              }
+            ]
+          }
+        ]
+      },
+      "medium_result": {
+        "source": 7,
+        "start": 186,
+        "end": 208,
+        "language": "en",
+        "probability": 0.76375412940979,
+        "segments": [
+          {
+            "start": 196.35,
+            "end": 197.07,
+            "text": " Thank you.",
+            "avg_logprob": -0.8168337245782217,
+            "no_speech_prob": 0.8219311833381653,
+            "words": [
+              {
+                "start": 196.35,
+                "end": 196.39,
+                "word": " Thank",
+                "probability": 0.037343915551900864
+              },
+              {
+                "start": 196.39,
+                "end": 197.07,
+                "word": " you.",
+                "probability": 0.9927814602851868
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "rna10-source-6",
+      "source_url": "https://www.youtube.com/watch?v=DItCoF_LhVw",
+      "source_sha256": "bf9f13ec42facfeb6b64afc554bdff16d937d55d320ac2e058d937c7cda990c1",
+      "reviewed_from": 188,
+      "reviewed_to": 222,
+      "method": "asr_cross_checked",
+      "reviewer": "Codex: faster-whisper small + medium CPU/int8 VAD cross-check; no human/audio listening claim",
+      "reviewed_at": "2026-10-03T20:32:37.008815+00:00",
+      "status": "uncertain",
+      "foreground_english": [],
+      "no_foreground_english_reason": "Not certified absent; ASR contains uncertain or differing speech candidates.",
+      "uncertain_spans": [
+        {
+          "start": 188,
+          "end": 222,
+          "reason": "See retained raw model outputs; low-confidence candidates and/or disagreement prevent certification."
+        }
+      ],
+      "small_result": {
+        "source": 6,
+        "start": 188,
+        "end": 222,
+        "language": "en",
+        "probability": 0.40202656388282776,
+        "segments": []
+      },
+      "medium_result": {
+        "source": 6,
+        "start": 188,
+        "end": 222,
+        "language": "en",
+        "probability": 0.5757842659950256,
+        "segments": [
+          {
+            "start": 191.79,
+            "end": 192.47,
+            "text": " Oh",
+            "avg_logprob": -0.5781728178262711,
+            "no_speech_prob": 0.733356773853302,
+            "words": [
+              {
+                "start": 191.79,
+                "end": 192.47,
+                "word": " Oh",
+                "probability": 0.1643492430448532
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "rna10-source-5",
+      "source_url": "https://www.youtube.com/watch?v=ai48JDtcGz8",
+      "source_sha256": "a1f4265fba2d5c04b24b361839ee806e247fa7a53acf755000f0638f105e748a",
+      "reviewed_from": 229.5,
+      "reviewed_to": 257,
+      "method": "asr_cross_checked",
+      "reviewer": "Codex: faster-whisper small + medium CPU/int8 VAD cross-check; no human/audio listening claim",
+      "reviewed_at": "2026-10-03T20:32:37.085248+00:00",
+      "status": "uncertain",
+      "foreground_english": [],
+      "no_foreground_english_reason": "Not certified absent; ASR contains uncertain or differing speech candidates.",
+      "uncertain_spans": [
+        {
+          "start": 229.5,
+          "end": 257,
+          "reason": "See retained raw model outputs; low-confidence candidates and/or disagreement prevent certification."
+        }
+      ],
+      "small_result": {
+        "source": 5,
+        "start": 229.5,
+        "end": 257,
+        "language": "es",
+        "probability": 0.22559821605682373,
+        "segments": [
+          {
+            "start": 239.02,
+            "end": 240.34,
+            "text": " y nos vemos en el próximo vídeo.",
+            "avg_logprob": -1.155498743057251,
+            "no_speech_prob": 0.4509883522987366,
+            "words": [
+              {
+                "start": 239.02,
+                "end": 239.3,
+                "word": " y",
+                "probability": 0.029976461082696915
+              },
+              {
+                "start": 239.3,
+                "end": 239.3,
+                "word": " nos",
+                "probability": 0.15255112946033478
+              },
+              {
+                "start": 239.3,
+                "end": 239.3,
+                "word": " vemos",
+                "probability": 0.6353551745414734
+              },
+              {
+                "start": 239.3,
+                "end": 239.52,
+                "word": " en",
+                "probability": 0.5223171710968018
+              },
+              {
+                "start": 239.52,
+                "end": 239.8,
+                "word": " el",
+                "probability": 0.1373371183872223
+              },
+              {
+                "start": 239.8,
+                "end": 240.02,
+                "word": " próximo",
+                "probability": 0.267165869474411
+              },
+              {
+                "start": 240.02,
+                "end": 240.34,
+                "word": " vídeo.",
+                "probability": 0.18405702710151672
+              }
+            ]
+          },
+          {
+            "start": 241.24,
+            "end": 241.84,
+            "text": " ¡Gracias!",
+            "avg_logprob": -1.155498743057251,
+            "no_speech_prob": 0.4509883522987366,
+            "words": [
+              {
+                "start": 241.24,
+                "end": 241.84,
+                "word": " ¡Gracias!",
+                "probability": 0.5251822341233492
+              }
+            ]
+          }
+        ]
+      },
+      "medium_result": {
+        "source": 5,
+        "start": 229.5,
+        "end": 257,
+        "language": "es",
+        "probability": 0.5040440559387207,
+        "segments": [
+          {
+            "start": 239.02,
+            "end": 241.02,
+            "text": " Y luego se partió el bienvenido.",
+            "avg_logprob": -0.9418054848909378,
+            "no_speech_prob": 0.37630996108055115,
+            "words": [
+              {
+                "start": 239.02,
+                "end": 239.02,
+                "word": " Y",
+                "probability": 0.028668325394392014
+              },
+              {
+                "start": 239.02,
+                "end": 239.34,
+                "word": " luego",
+                "probability": 0.30097874999046326
+              },
+              {
+                "start": 239.34,
+                "end": 239.64,
+                "word": " se",
+                "probability": 0.7765142917633057
+              },
+              {
+                "start": 239.64,
+                "end": 240.16,
+                "word": " partió",
+                "probability": 0.8959979116916656
+              },
+              {
+                "start": 240.16,
+                "end": 240.3,
+                "word": " el",
+                "probability": 0.3915579319000244
+              },
+              {
+                "start": 240.3,
+                "end": 241.02,
+                "word": " bienvenido.",
+                "probability": 0.5378415584564209
+              }
+            ]
+          },
+          {
+            "start": 241.78,
+            "end": 242.16,
+            "text": " ¡Gracias!",
+            "avg_logprob": -0.9418054848909378,
+            "no_speech_prob": 0.37630996108055115,
+            "words": [
+              {
+                "start": 241.78,
+                "end": 242.16,
+                "word": " ¡Gracias!",
+                "probability": 0.5297311581671238
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "rna10-source-4",
+      "source_url": "https://www.youtube.com/watch?v=jT-R3UwSRnA",
+      "source_sha256": "906624336a33597f300443cefcbb311ffd0d9728937fdd54b03971f59e92167d",
+      "reviewed_from": 74,
+      "reviewed_to": 103,
+      "method": "asr_cross_checked",
+      "reviewer": "Codex: faster-whisper small + medium CPU/int8 VAD cross-check; no human/audio listening claim",
+      "reviewed_at": "2026-10-03T20:32:37.111268+00:00",
+      "status": "uncertain",
+      "foreground_english": [],
+      "no_foreground_english_reason": "Not certified absent; ASR contains uncertain or differing speech candidates.",
+      "uncertain_spans": [
+        {
+          "start": 74,
+          "end": 103,
+          "reason": "See retained raw model outputs; low-confidence candidates and/or disagreement prevent certification."
+        }
+      ],
+      "small_result": {
+        "source": 4,
+        "start": 74,
+        "end": 103,
+        "language": "en",
+        "probability": 0.3907383680343628,
+        "segments": [
+          {
+            "start": 79.87,
+            "end": 80.49,
+            "text": " Oh, yeah.",
+            "avg_logprob": -0.8200382515788078,
+            "no_speech_prob": 0.4748459756374359,
+            "words": [
+              {
+                "start": 79.87,
+                "end": 80.15,
+                "word": " Oh,",
+                "probability": 0.006458641961216927
+              },
+              {
+                "start": 80.23,
+                "end": 80.49,
+                "word": " yeah.",
+                "probability": 0.2306240350008011
+              }
+            ]
+          },
+          {
+            "start": 81.55,
+            "end": 95.11,
+            "text": " Thank you.",
+            "avg_logprob": -0.8200382515788078,
+            "no_speech_prob": 0.4748459756374359,
+            "words": [
+              {
+                "start": 81.55,
+                "end": 81.99,
+                "word": " Thank",
+                "probability": 0.10902294516563416
+              },
+              {
+                "start": 94.73,
+                "end": 95.11,
+                "word": " you.",
+                "probability": 0.9833340048789978
+              }
+            ]
+          },
+          {
+            "start": 95.39,
+            "end": 95.53,
+            "text": " Thank you.",
+            "avg_logprob": -0.8200382515788078,
+            "no_speech_prob": 0.4748459756374359,
+            "words": [
+              {
+                "start": 95.39,
+                "end": 95.39,
+                "word": " Thank",
+                "probability": 0.44716861844062805
+              },
+              {
+                "start": 95.39,
+                "end": 95.53,
+                "word": " you.",
+                "probability": 0.997177243232727
+              }
+            ]
+          },
+          {
+            "start": 95.53,
+            "end": 95.55,
+            "text": " Thank you.",
+            "avg_logprob": -0.8200382515788078,
+            "no_speech_prob": 0.4748459756374359,
+            "words": [
+              {
+                "start": 95.53,
+                "end": 95.53,
+                "word": " Thank",
+                "probability": 0.32012683153152466
+              },
+              {
+                "start": 95.53,
+                "end": 95.55,
+                "word": " you.",
+                "probability": 0.9959154725074768
+              }
+            ]
+          },
+          {
+            "start": 95.77,
+            "end": 96.19,
+            "text": " Thank you.",
+            "avg_logprob": -0.8200382515788078,
+            "no_speech_prob": 0.4748459756374359,
+            "words": [
+              {
+                "start": 95.77,
+                "end": 96.19,
+                "word": " Thank",
+                "probability": 0.4967176914215088
+              },
+              {
+                "start": 96.19,
+                "end": 96.19,
+                "word": " you.",
+                "probability": 0.9936316609382629
+              }
+            ]
+          }
+        ]
+      },
+      "medium_result": {
+        "source": 4,
+        "start": 74,
+        "end": 103,
+        "language": "en",
+        "probability": 0.4454599618911743,
+        "segments": [
+          {
+            "start": 79.87,
+            "end": 80.75,
+            "text": " Voila!",
+            "avg_logprob": -0.70460552519018,
+            "no_speech_prob": 0.6659987568855286,
+            "words": [
+              {
+                "start": 79.87,
+                "end": 80.75,
+                "word": " Voila!",
+                "probability": 0.5619974210858345
+              }
+            ]
+          },
+          {
+            "start": 94.53,
+            "end": 95.13,
+            "text": " Thank you.",
+            "avg_logprob": -0.70460552519018,
+            "no_speech_prob": 0.6659987568855286,
+            "words": [
+              {
+                "start": 94.53,
+                "end": 94.78999999999999,
+                "word": " Thank",
+                "probability": 0.3080277442932129
+              },
+              {
+                "start": 94.78999999999999,
+                "end": 95.13,
+                "word": " you.",
+                "probability": 0.9930496215820312
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "rna10-source-3",
+      "source_url": "https://www.youtube.com/watch?v=1lo0go-8rNc",
+      "source_sha256": "5d21b2f5a28c81631e0f3d35ebf79e1c5cb33c8857f0d17f6cb10ac5ea790a05",
+      "reviewed_from": 160,
+      "reviewed_to": 169,
+      "method": "asr_cross_checked",
+      "reviewer": "Codex: faster-whisper small + medium CPU/int8 VAD cross-check; no human/audio listening claim",
+      "reviewed_at": "2026-10-03T20:32:37.158535+00:00",
+      "status": "complete",
+      "foreground_english": [],
+      "no_foreground_english_reason": "Both small and medium models with Silero VAD found no speech in the complete window; language guesses without speech are not a reliable spoken-language identification.",
+      "uncertain_spans": [],
+      "small_result": {
+        "source": 3,
+        "start": 160,
+        "end": 169,
+        "language": "en",
+        "probability": 0.3531171679496765,
+        "segments": []
+      },
+      "medium_result": {
+        "source": 3,
+        "start": 160,
+        "end": 169,
+        "language": "en",
+        "probability": 0.5062422156333923,
+        "segments": []
+      }
+    },
+    {
+      "source": "rna10-source-3",
+      "source_url": "https://www.youtube.com/watch?v=1lo0go-8rNc",
+      "source_sha256": "5d21b2f5a28c81631e0f3d35ebf79e1c5cb33c8857f0d17f6cb10ac5ea790a05",
+      "reviewed_from": 177,
+      "reviewed_to": 196,
+      "method": "asr_cross_checked",
+      "reviewer": "Codex: faster-whisper small + medium CPU/int8 VAD cross-check; no human/audio listening claim",
+      "reviewed_at": "2026-10-03T20:32:37.207338+00:00",
+      "status": "complete",
+      "foreground_english": [],
+      "no_foreground_english_reason": "Both small and medium models with Silero VAD found no speech in the complete window; language guesses without speech are not a reliable spoken-language identification.",
+      "uncertain_spans": [],
+      "small_result": {
+        "source": 3,
+        "start": 177,
+        "end": 196,
+        "language": "en",
+        "probability": 0.42347007989883423,
+        "segments": []
+      },
+      "medium_result": {
+        "source": 3,
+        "start": 177,
+        "end": 196,
+        "language": "en",
+        "probability": 0.5872450470924377,
+        "segments": []
+      }
+    },
+    {
+      "source": "rna10-source-2",
+      "source_url": "https://www.youtube.com/watch?v=HLTTYfIi5J8",
+      "source_sha256": "eef0f948d9a168240d670f13fca74b3741d865c1a9f59df74a7bb4bd28145f47",
+      "reviewed_from": 155,
+      "reviewed_to": 181,
+      "method": "asr_cross_checked",
+      "reviewer": "Codex: faster-whisper small + medium CPU/int8 VAD cross-check; no human/audio listening claim",
+      "reviewed_at": "2026-10-03T20:32:37.253984+00:00",
+      "status": "uncertain",
+      "foreground_english": [],
+      "no_foreground_english_reason": "Not certified absent; ASR contains uncertain or differing speech candidates.",
+      "uncertain_spans": [
+        {
+          "start": 155,
+          "end": 181,
+          "reason": "See retained raw model outputs; low-confidence candidates and/or disagreement prevent certification."
+        }
+      ],
+      "small_result": {
+        "source": 2,
+        "start": 155,
+        "end": 181,
+        "language": "en",
+        "probability": 0.2163311094045639,
+        "segments": []
+      },
+      "medium_result": {
+        "source": 2,
+        "start": 155,
+        "end": 181,
+        "language": "en",
+        "probability": 0.4263448715209961,
+        "segments": [
+          {
+            "start": 164.81,
+            "end": 165.83,
+            "text": " Thank you.",
+            "avg_logprob": -0.8665313323338827,
+            "no_speech_prob": 0.7635307908058167,
+            "words": [
+              {
+                "start": 164.81,
+                "end": 165.43,
+                "word": " Thank",
+                "probability": 0.09060924500226974
+              },
+              {
+                "start": 165.43,
+                "end": 165.83,
+                "word": " you.",
+                "probability": 0.988867998123169
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "rna10-source-1",
+      "source_url": "https://www.youtube.com/watch?v=mXIoUmxozgw",
+      "source_sha256": "c58680e11e07e6e08bcc72756cfe26bf974d9cd6ac03a8f7cea2007411da7f0c",
+      "reviewed_from": 117.5,
+      "reviewed_to": 158,
+      "method": "asr_cross_checked",
+      "reviewer": "Codex: faster-whisper small + medium CPU/int8 VAD cross-check; no human/audio listening claim",
+      "reviewed_at": "2026-10-03T20:32:37.292041+00:00",
+      "status": "uncertain",
+      "foreground_english": [],
+      "no_foreground_english_reason": "Not certified absent; ASR contains uncertain or differing speech candidates.",
+      "uncertain_spans": [
+        {
+          "start": 117.5,
+          "end": 158,
+          "reason": "See retained raw model outputs; low-confidence candidates and/or disagreement prevent certification."
+        }
+      ],
+      "small_result": {
+        "source": 1,
+        "start": 117.5,
+        "end": 158,
+        "language": "en",
+        "probability": 0.7449852824211121,
+        "segments": [
+          {
+            "start": 121.27,
+            "end": 122.17,
+            "text": " I've got it! Change!",
+            "avg_logprob": -0.6813240051269531,
+            "no_speech_prob": 0.4946323335170746,
+            "words": [
+              {
+                "start": 121.27,
+                "end": 121.59,
+                "word": " I've",
+                "probability": 0.2989765554666519
+              },
+              {
+                "start": 121.59,
+                "end": 121.73,
+                "word": " got",
+                "probability": 0.9858638644218445
+              },
+              {
+                "start": 121.73,
+                "end": 121.85,
+                "word": " it!",
+                "probability": 0.98457932472229
+              },
+              {
+                "start": 121.99,
+                "end": 122.17,
+                "word": " Change!",
+                "probability": 0.8050833940505981
+              }
+            ]
+          }
+        ]
+      },
+      "medium_result": {
+        "source": 1,
+        "start": 117.5,
+        "end": 158,
+        "language": "en",
+        "probability": 0.727942943572998,
+        "segments": [
+          {
+            "start": 121.27,
+            "end": 122.71,
+            "text": " I've got it, I've got it!",
+            "avg_logprob": -0.6990825946514423,
+            "no_speech_prob": 0.380896657705307,
+            "words": [
+              {
+                "start": 121.27,
+                "end": 121.63,
+                "word": " I've",
+                "probability": 0.3357766792178154
+              },
+              {
+                "start": 121.63,
+                "end": 121.81,
+                "word": " got",
+                "probability": 0.9495885968208313
+              },
+              {
+                "start": 121.81,
+                "end": 121.99,
+                "word": " it,",
+                "probability": 0.9415672421455383
+              },
+              {
+                "start": 122.13,
+                "end": 122.21,
+                "word": " I've",
+                "probability": 0.4614408165216446
+              },
+              {
+                "start": 122.21,
+                "end": 122.27,
+                "word": " got",
+                "probability": 0.7210541367530823
+              },
+              {
+                "start": 122.27,
+                "end": 122.71,
+                "word": " it!",
+                "probability": 0.9935137033462524
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "candidate_subtitles": [
+    {
+      "source": "rna10-source-1",
+      "start": 121.27,
+      "end": 121.99,
+      "en": "I've got it!",
+      "zh": "我来！",
+      "status": "candidate only: following words differ; first word probability low. Avoid 121–123s if retaining original audio."
+    }
+  ],
+  "language_conclusion": "Not all Spanish. Decider has an English call candidate. Source 5 has Spanish speech candidates with conflicting transcript. Other language labels lack reliable speech evidence.",
+  "verified_alternative_windows": [
+    {
+      "source": "rna10-source-1",
+      "source_url": "https://www.youtube.com/watch?v=mXIoUmxozgw",
+      "source_sha256": "c58680e11e07e6e08bcc72756cfe26bf974d9cd6ac03a8f7cea2007411da7f0c",
+      "reviewed_from": 132.4,
+      "reviewed_to": 145.7,
+      "method": "asr_cross_checked",
+      "reviewer": "Codex: faster-whisper small + medium CPU/int8 VAD cross-check; no human/audio listening claim",
+      "reviewed_at": "2026-10-03T20:32:37.292041+00:00",
+      "status": "complete",
+      "foreground_english": [],
+      "no_foreground_english_reason": "Both small and medium models with Silero VAD independently return no speech for this entire narrow final-two-points window; surrounding full-window ASR likewise contains no words here. ASR-only cross-check, no claim of human listening.",
+      "uncertain_spans": [],
+      "raw_results": [
+        {
+          "model": "small",
+          "language": "en",
+          "probability": 0.3531171679496765,
+          "segments": []
+        },
+        {
+          "model": "medium",
+          "language": "en",
+          "probability": 0.5062422156333923,
+          "segments": []
+        }
+      ]
+    }
+  ]
+}

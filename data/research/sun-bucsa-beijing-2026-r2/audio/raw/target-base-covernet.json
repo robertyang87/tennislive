@@ -1,0 +1,97 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next",
+  "source_sha256": "dd3a0d6f24eea364aa7038b7f3adc4441087273ba56c348f0c2461c2feb16c9d",
+  "model": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent complete-source auto-language passes detected en before targeted pass.",
+  "range_from": 120,
+  "range_to": 139,
+  "created_at": "2026-10-03T16:45:25.679970+00:00",
+  "elapsed_seconds": 0.83,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 129.68,
+      "end": 132.28,
+      "text": " I'm really good covering there on the net by books up.",
+      "avg_logprob": -0.9230349026620388,
+      "no_speech_prob": 0.1994338184595108,
+      "words": [
+        {
+          "start": 129.68,
+          "end": 130.14,
+          "word": " I'm",
+          "probability": 0.5425962433218956
+        },
+        {
+          "start": 130.14,
+          "end": 130.3,
+          "word": " really",
+          "probability": 0.5493565201759338
+        },
+        {
+          "start": 130.3,
+          "end": 130.48,
+          "word": " good",
+          "probability": 0.924716591835022
+        },
+        {
+          "start": 130.48,
+          "end": 130.84,
+          "word": " covering",
+          "probability": 0.8061075210571289
+        },
+        {
+          "start": 130.84,
+          "end": 131.12,
+          "word": " there",
+          "probability": 0.9553741216659546
+        },
+        {
+          "start": 131.12,
+          "end": 131.28,
+          "word": " on",
+          "probability": 0.9879276156425476
+        },
+        {
+          "start": 131.28,
+          "end": 131.38,
+          "word": " the",
+          "probability": 0.9806339740753174
+        },
+        {
+          "start": 131.38,
+          "end": 131.54,
+          "word": " net",
+          "probability": 0.8060681223869324
+        },
+        {
+          "start": 131.54,
+          "end": 131.76,
+          "word": " by",
+          "probability": 0.9733675122261047
+        },
+        {
+          "start": 131.76,
+          "end": 132.04,
+          "word": " books",
+          "probability": 0.3381803333759308
+        },
+        {
+          "start": 132.04,
+          "end": 132.28,
+          "word": " up.",
+          "probability": 0.62129145860672
+        }
+      ]
+    }
+  ],
+  "original_raw_document_sha256": "7e5adde2824d263a9715f89af63424341c481f43df15f009a72675beecdaa7c4",
+  "metadata_sanitization": "Local source_path omitted for repository portability; source URL/hash, words, times, probabilities and ASR configuration unchanged."
+}

@@ -76,12 +76,25 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
     frac = board_mask(band).mean(axis=0)
     if frac[4:MIN_BOARD_W].mean() < 0.7:
         return None
-    # 板一定带着饱和蓝的盘分格；盘间那张大图形（「ROUND 1 | CENTER COURT」）
-    # 和近景里的深色挡板都没有。没有这一格就不是板。
+    # 盘末蓝格会收起，但两行名字和藏青板底仍在（北京 2026 108.5s）。
+    # 用这两个同时成立的图形特征认这一版板；单有深色背景不算。
     r, g, b = (band[:, :, i].astype(np.int16) for i in range(3))
     blue_cols = ((b > 180) & (r < 70) & (g < 70)).mean(axis=0) > 0.4
-    if blue_cols.sum() < 6:
+    navy = board_mask(band) & (g - r > 4) & (b - r > 8)
+    white = (np.minimum(np.minimum(r, g), b) > 150) & (
+        np.maximum(np.maximum(r, g), b) - np.minimum(np.minimum(r, g), b) < 50)
+    h = band.shape[0]
+    names = white[:, 20:MIN_BOARD_W]
+    two_rows = (h >= 24 and names[:h // 2].mean() > 0.02
+                and names[h // 2:].mean() > 0.02
+                and navy[:, 4:MIN_BOARD_W].mean() > 0.65)
+    if blue_cols.sum() < 6 and not two_rows:
         return None
+    if two_rows:
+        # 暗近景里黑衣也满足旧 max<80，不能连着衣物一直扫到 spec x1。
+        # 这版板的藏青/半透明点分有蓝绿通道差，黑衣 g≈r；只在两行板签名
+        # 已认出时收紧颜色，其他转播保留原盘分蓝锚点及自适应宽度行为。
+        frac = (navy | ((b > 140) & (r < 80) & (g < 80))).mean(axis=0)
     low = frac < 0.5
     edge = None
     for x in range(MIN_BOARD_W, len(frac) - 4):
@@ -93,7 +106,9 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
         # 近景里板右边是深蓝挡板时，两者颜色分不开，量出来会一路宽出去——这种读数
         # 不可信，退回 spec `scorebox` 的右缘（老行为）
         return min(edge, cap) if cap is not None else edge
-    return beyond_hint(edge, cap, int(np.flatnonzero(blue_cols).max()) + 1 + POINTS_MAX)
+    anchor = (int(np.flatnonzero(blue_cols).max()) + 1 + POINTS_MAX
+              if blue_cols.any() else edge)
+    return beyond_hint(edge, cap, anchor)
 
 
 def beyond_hint(edge: int, cap: int | None, anchor: int) -> int:

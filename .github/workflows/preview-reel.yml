@@ -149,7 +149,8 @@ jobs:
 
       - name: 装依赖
         run: |
-          pip install -q -e ".[webrender,visualqa,cutout]"
+          pip install -q -e ".[webrender,visualqa,cutout,pronunciation]"
+          python -c "import pypinyin"
           # ⚠️ yt-dlp 要装 [default]，它才带 yt-dlp-ejs——少了它不报「装少了」，
           # 而是解不了 YouTube 的 n challenge，报得像个源片问题。
           pip install -q "yt-dlp[default]" edge-tts azure-cognitiveservices-speech
