@@ -3,6 +3,7 @@ from pathlib import Path
 import sys
 
 import pytest
+from tennislive.design_tokens import DARK
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 import build_match_reel as reel
@@ -56,7 +57,11 @@ def test_portrait_source_is_preserved_shrunk_and_centered(monkeypatch, tmp_path)
     # 1080*.78=842.4 -> even842: full source, including yellow header and racket.
     assert '[fg]crop=1080:1440:0:0,scale=842:-2:flags=lanczos[fgs]' in graph
     assert '[bgb][fgs]overlay=(W-w)/2:(H-h)/2' in graph
-    assert 'boxblur=42:2' in graph
+    # 2026-10-07 main replaced the blurred letterbox with the shared brand blue.
+    # Shrunk full_source still sits centered on that solid pad, not a source blur.
+    color = DARK["background"].lstrip("#")
+    assert f"drawbox=color=0x{color}:t=fill[bgb]" in graph
+    assert "boxblur" not in graph
     assert '[bg]crop=1080:1440:0:0,scale=1080:1440' in graph
 
 
