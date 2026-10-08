@@ -1,0 +1,340 @@
+{
+  "id": "target-012",
+  "label": "第 4 段",
+  "display_char": "还",
+  "actual_tts_char": "还",
+  "position": 14,
+  "context": "来到上海时，还排在资格赛第",
+  "word": "还",
+  "intended": "hai2",
+  "common_contrast": "huan2",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "世界第二百零四，来到上海时，还排在资格赛第九候补。开赛前不到三十六小时，他才等到参赛席位。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "还",
+    "char": "还",
+    "sentence": "世界第二百零四，来到上海时，还排在资格赛第九候补。开赛前不到三十六小时，他才等到参赛席位。",
+    "tts_text": "世界第二百零四，来到上海时，还排在资格赛第九候补。开赛前不到三十六小时，他才等到参赛席位。",
+    "intended_refs": [
+      "孩",
+      "骸"
+    ],
+    "wrong_refs": [
+      "桓",
+      "环"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.475,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 1.924,
+        "d_wrong": 5.27,
+        "score": 0.465
+      },
+      "f0": {
+        "d_intended": 0.455,
+        "d_wrong": 1.345,
+        "score": 0.495
+      },
+      "comb": {
+        "d_intended": 1.417,
+        "d_wrong": 3.98,
+        "score": 0.475
+      }
+    },
+    "neighbour_shift": {
+      "intended": 5.947,
+      "wrong": 4.124
+    },
+    "separation": {
+      "spec": {
+        "within": 0.156,
+        "between": 5.299,
+        "separation": 34.069
+      },
+      "f0": {
+        "within": 0.031,
+        "between": 0.677,
+        "separation": 22.066
+      },
+      "comb": {
+        "within": 0.108,
+        "between": 3.327,
+        "separation": 30.673
+      }
+    },
+    "selftest_loo": {
+      "孩": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.969
+      },
+      "骸": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.968
+      },
+      "桓": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.896
+      },
+      "环": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.896
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:孩": {
+        "spec": 1.924,
+        "f0": 0.455,
+        "vmis": 0.038,
+        "frames": 26,
+        "comb": 1.417
+      },
+      "A:骸": {
+        "spec": 1.924,
+        "f0": 0.47,
+        "vmis": 0.038,
+        "frames": 26,
+        "comb": 1.432
+      },
+      "B:桓": {
+        "spec": 5.27,
+        "f0": 1.345,
+        "vmis": 0.0,
+        "frames": 27,
+        "comb": 3.981
+      },
+      "B:环": {
+        "spec": 5.27,
+        "f0": 1.345,
+        "vmis": 0.0,
+        "frames": 27,
+        "comb": 3.98
+      }
+    },
+    "window_s": [
+      2.71,
+      2.932
+    ],
+    "boundary_token": "还",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "世界",
+        "第二百零四",
+        "来到",
+        "上海",
+        "时",
+        "还",
+        "排",
+        "在",
+        "资格",
+        "赛",
+        "第九",
+        "候补",
+        "开赛",
+        "前",
+        "不",
+        "到",
+        "三十六小时",
+        "他",
+        "才",
+        "等到",
+        "参赛",
+        "席位"
+      ],
+      "A:孩": [
+        "世界",
+        "第二百零四",
+        "来到",
+        "上海",
+        "时",
+        "孩排",
+        "在",
+        "资格",
+        "赛",
+        "第九",
+        "候补",
+        "开赛",
+        "前",
+        "不",
+        "到",
+        "三十六小时",
+        "他",
+        "才",
+        "等到",
+        "参赛",
+        "席位"
+      ],
+      "A:骸": [
+        "世界",
+        "第二百零四",
+        "来到",
+        "上海",
+        "时",
+        "骸排",
+        "在",
+        "资格",
+        "赛",
+        "第九",
+        "候补",
+        "开赛",
+        "前",
+        "不",
+        "到",
+        "三十六小时",
+        "他",
+        "才",
+        "等到",
+        "参赛",
+        "席位"
+      ],
+      "B:桓": [
+        "世界",
+        "第二百零四",
+        "来到",
+        "上海",
+        "时",
+        "桓排",
+        "在",
+        "资格",
+        "赛",
+        "第九",
+        "候补",
+        "开赛",
+        "前",
+        "不",
+        "到",
+        "三十六小时",
+        "他",
+        "才",
+        "等到",
+        "参赛",
+        "席位"
+      ],
+      "B:环": [
+        "世界",
+        "第二百零四",
+        "来到",
+        "上海",
+        "时",
+        "环排",
+        "在",
+        "资格",
+        "赛",
+        "第九",
+        "候补",
+        "开赛",
+        "前",
+        "不",
+        "到",
+        "三十六小时",
+        "他",
+        "才",
+        "等到",
+        "参赛",
+        "席位"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.4,
+        0.6,
+        1.2,
+        -0.4
+      ],
+      "A:孩": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.2,
+        0.0,
+        1.0,
+        1.6,
+        0.1
+      ],
+      "A:骸": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.2,
+        0.1,
+        1.0,
+        1.7,
+        0.2
+      ],
+      "B:桓": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.3,
+        0.6,
+        1.7
+      ],
+      "B:环": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.3,
+        0.6,
+        1.7
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/468ec523484b754431631778.mp3",
+      "A:孩": "/workspace/tennislive/research/vacherot-acoustic/references/8da4fce54e47928cfa754cee.mp3",
+      "A:骸": "/workspace/tennislive/research/vacherot-acoustic/references/20a6a73967ebb9079ec12898.mp3",
+      "B:桓": "/workspace/tennislive/research/vacherot-acoustic/references/6c532c53360b8528d5d10a91.mp3",
+      "B:环": "/workspace/tennislive/research/vacherot-acoustic/references/72d883206fd632bf3bb83f52.mp3"
+    }
+  }
+}

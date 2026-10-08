@@ -53,6 +53,8 @@ SCORE = REPO / "assets" / "fonts" / "TLScore-Bold.ttf"
 # 0.60 * 1080 = 648px in the finished reel. 1200px therefore gives a crisp
 # source while leaving enough room for the longest opponent name.
 WIDTH, HEIGHT = 1200, 340
+# 比分独立一行时多留一行高度；默认同行画布保持原样。
+SPLIT_METRIC_HEIGHT = 440
 
 # 品牌那套色（`tennislive.video.outro_page` / 封面 / 章节卡同一套）：
 # 一屏只留一个强调色。绿只给标签、短轨和硬数据；名字暖白；证据行冷灰白；
@@ -227,17 +229,25 @@ _SHADOW_BLUR = 7
 
 
 def render(kicker: str, headline: str, detail: str, out: Path, *,
-           metric: str = "", variant: str = "timeline") -> Path:
+           metric: str = "", variant: str = "timeline", align: str = "left",
+           split_metric: bool = False) -> Path:
     kicker, headline, detail, metric = _validate(
         kicker, headline, detail, metric, variant)
+    if align not in {"left", "right"}:
+        raise SystemExit("align 只能是 left 或 right")
+    if split_metric and not metric:
+        raise SystemExit("split_metric 必须填写 metric，比分才能独立成行")
 
     out.parent.mkdir(parents=True, exist_ok=True)
-    image = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
+    height = SPLIT_METRIC_HEIGHT if split_metric else HEIGHT
+    image = Image.new("RGBA", (WIDTH, height), (0, 0, 0, 0))
 
     # 短轨只有一个颜色（品牌绿）——原来蓝黄两截是两个强调色，和一屏一个强调色
     # 那条规矩打架，也和封面/章节卡的绿不是一家。轨下垫一层它自己的软光。
     rail_layer = Image.new("RGBA", image.size, (0, 0, 0, 0))
-    ImageDraw.Draw(rail_layer).rounded_rectangle((20, 34, 34, 306), radius=7,
+    rail_box = ((20, 34, 34, height - 34) if align == "left"
+                else (WIDTH - 34, 34, WIDTH - 20, height - 34))
+    ImageDraw.Draw(rail_layer).rounded_rectangle(rail_box, radius=7,
                                                  fill=BRAND_GREEN)
     image.alpha_composite(rail_layer.filter(ImageFilter.GaussianBlur(10)))
     image.alpha_composite(rail_layer)
@@ -252,11 +262,16 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
     kicker_font = _fit_font(BOLD, 44, 36, kicker, WIDTH - x - 28, stroke=_STROKE_SMALL)
     metric_width = metric_size = 0
     if metric:
-        metric_size = _fit_metric_size(draw, metric, 60, 44, 430, stroke=_STROKE_SMALL)
+        # 独立行按原60px上限绘制，不缩字去挤；默认同行继续沿用旧字号预算。
+        metric_size = _fit_metric_size(draw, metric, 60, 60 if split_metric else 44,
+                                      WIDTH - x - 28 if split_metric else 430,
+                                      stroke=_STROKE_SMALL)
         metric_width = _metric_width(draw, metric, metric_size, stroke=_STROKE_SMALL)
+        if split_metric and metric_width > WIDTH - x - 28:
+            raise SystemExit("metric 独立行仍放不下；请缩短文字，不缩小比分字号")
     # 主标题一律得意黑（和封面钩子、章节卡同一副脸）；变体只改字号。
     headline_size = {"stat": 134, "chapter": 126}.get(variant, 122)
-    headline_room = WIDTH - x - 28 - ((metric_width + 36) if metric else 0)
+    headline_room = WIDTH - x - 28 - ((metric_width + 36) if metric and not split_metric else 0)
     headline_font = _fit_font(DISPLAY, headline_size, 92, headline, headline_room,
                               stroke=_STROKE_HEAD)
     head_box = draw.textbbox((x, 86), headline, font=headline_font,
@@ -275,14 +290,28 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
     # 不是记忆点，和 metric 一起涂绿就是一屏两个强调色。没有 metric 时绿退回
     # 给 kicker，免得整张卡除了短轨一点强调都没有。
     kicker_fill = WHITE if metric else BRAND_GREEN
-    _draw_text(draw, (x, 30), kicker, font=kicker_font, fill=kicker_fill,
-               stroke=_STROKE_SMALL, shadow_layer=shadow)
-    _draw_text(draw, (x, 86), headline, font=headline_font, fill=WHITE,
-               stroke=_STROKE_HEAD, shadow_layer=shadow)
+    # 右对齐只移动每一行完整的字形层；默认主标题与 metric 同一行，分行则各自对齐。
+    # 不翻转图片或文字，也不改变默认左对齐的绘制/阴影路径。
+    right_rows: list[tuple[Image.Image, Image.Image]] = []
+    def row_canvas():
+        if align == "left":
+            return draw, shadow
+        row = Image.new("RGBA", image.size, (0, 0, 0, 0))
+        row_shadow = Image.new("RGBA", image.size, (0, 0, 0, 0))
+        right_rows.append((row, row_shadow))
+        return ImageDraw.Draw(row), row_shadow
+
+    kicker_draw, kicker_shadow = row_canvas()
+    _draw_text(kicker_draw, (x, 30), kicker, font=kicker_font, fill=kicker_fill,
+               stroke=_STROKE_SMALL, shadow_layer=kicker_shadow)
+    head_draw, head_shadow = row_canvas()
+    _draw_text(head_draw, (x, 86), headline, font=headline_font, fill=WHITE,
+               stroke=_STROKE_HEAD, shadow_layer=head_shadow)
     if metric:
         ascent, _descent = headline_font.getmetrics()
-        baseline = 86 + ascent
-        mx = head_box[2] + 36
+        baseline = 300 if split_metric else 86 + ascent
+        mx = x if split_metric else head_box[2] + 36
+        metric_draw, metric_shadow = row_canvas() if split_metric else (head_draw, head_shadow)
         cjk, score = _metric_fonts(metric_size)
         wins = set_score_wins(metric)
         if wins is not None:
@@ -291,23 +320,33 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
             # 海报是一套系统，不是两套。绿在这儿有意义——它就是「赢了哪几盘」，
             # 不再只是给标签上个色。
             for token, won in zip(metric.split(), wins):
-                _draw_text(draw, (mx, baseline), token, font=score,
+                _draw_text(metric_draw, (mx, baseline), token, font=score,
                            fill=BRAND_GREEN if won else WHITE,
-                           stroke=_STROKE_SMALL, anchor="ls", shadow_layer=shadow)
+                           stroke=_STROKE_SMALL, anchor="ls", shadow_layer=metric_shadow)
                 mx += int(round(draw.textlength(token, font=score))) + _SET_GAP
         else:
             # 数字串和汉字共用一条基线（anchor="ls"），两种字体才对得齐。
             for chunk, is_score in metric_runs(metric):
                 f = score if is_score else cjk
-                _draw_text(draw, (mx, baseline), chunk, font=f, fill=BRAND_GREEN,
-                           stroke=_STROKE_SMALL, anchor="ls", shadow_layer=shadow)
+                _draw_text(metric_draw, (mx, baseline), chunk, font=f, fill=BRAND_GREEN,
+                           stroke=_STROKE_SMALL, anchor="ls", shadow_layer=metric_shadow)
                 mx = draw.textbbox((mx, baseline), chunk, font=f,
                                    stroke_width=_STROKE_SMALL, anchor="ls")[2]
     # 证据行直接对齐主标题的左缘，**不再垫一截绿色短横线**（账号所有者
     # 2026-09-11 给的参考样式里没有它）：短轨已经把这一块的左缘立住了，
     # 再加一截同色短横就是第二个绿元素，而绿现在有明确的语义（赢下的盘）。
-    _draw_text(draw, (x, 246), detail, font=detail_font, fill=MUTED,
-               stroke=_STROKE_SMALL, shadow_layer=shadow)
+    detail_draw, detail_shadow = row_canvas()
+    _draw_text(detail_draw, (x, 340 if split_metric else 246), detail, font=detail_font, fill=MUTED,
+               stroke=_STROKE_SMALL, shadow_layer=detail_shadow)
+
+    if align == "right":
+        for row, row_shadow in right_rows:
+            bounds = row.getbbox()
+            if bounds:
+                # 每行实际墨迹右缘统一为1134；右轨左缘1166，留32px呼吸。
+                dx = WIDTH - x - bounds[2]
+                text_layer.alpha_composite(row, (dx, 0))
+                shadow.alpha_composite(row_shadow, (dx, 0))
 
     image.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(_SHADOW_BLUR)))
     image.alpha_composite(text_layer)
@@ -322,11 +361,16 @@ def main() -> int:
     ap.add_argument("--metric", default="")
     ap.add_argument("--detail", required=True)
     ap.add_argument("--variant", choices=sorted(VARIANTS), default="timeline")
+    ap.add_argument("--align", choices=["left", "right"], default="left")
+    ap.add_argument("--split-metric", action="store_true",
+                    help="比分独立成第三行，对手说明为第四行；保持原字号上限")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     out = render(args.kicker, args.headline, args.detail, Path(args.out),
-                 metric=args.metric, variant=args.variant)
-    print(f"已渲 {out}（{WIDTH}×{HEIGHT}，大字版 RGBA，无大底板）")
+                 metric=args.metric, variant=args.variant, align=args.align,
+                 split_metric=args.split_metric)
+    height = SPLIT_METRIC_HEIGHT if args.split_metric else HEIGHT
+    print(f"已渲 {out}（{WIDTH}×{height}，大字版 RGBA，无大底板）")
     return 0
 
 

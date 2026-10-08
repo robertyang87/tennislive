@@ -1,0 +1,55 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/i1LtteR8jd0.mp4",
+  "source_sha256": "551d24ac4ffc3ad4a2a202cf178a2ca5f4488e1675f5e63f9a409b10e7a4cc1b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:58.682077+00:00",
+  "reviewed_from": 459.85,
+  "reviewed_to": 471.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 462.18,
+      "end": 464.28,
+      "en": "Congratulations to Novak Djokovic.",
+      "zh": "恭喜德约科维奇。"
+    },
+    {
+      "start": 464.66,
+      "end": 466.2,
+      "en": "Please take a picture with the presenters.",
+      "zh": "请与颁奖嘉宾合影。"
+    },
+    {
+      "start": 466.7,
+      "end": 467.99,
+      "en": "Another wonderful performance from him.",
+      "zh": "他又一次献上精彩表现。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2015.targeted.small.en.json",
+      "sha256": "f189104a0df077f9ebe1b44edf79c3b13fbc38d53dc5ca8d7b4860490d83829d"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2015.targeted.base.en.json",
+      "sha256": "9bb120cadafb49da0ced698b90a0f80038bbc984a94a3a88408978a06055e1a7"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.small.en.json",
+      "sha256": "5a238cc9dd893765a91d9e4b52a4736d44ef8c63a557e9b963f217556bffb421"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.base.en.json",
+      "sha256": "2a244e17345546b503bb82ced850538fa1225f98942c28ccfbd9108cfd803513"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Previous English sentence ends by 459.62 in no-VAD selected-year transcription. All three foreground English utterances retained. Window covers parent visually verified trophy raise 467–471."
+  ]
+}

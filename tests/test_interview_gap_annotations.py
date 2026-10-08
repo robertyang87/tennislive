@@ -64,6 +64,29 @@ def test_event_is_separate_from_words_and_cuts_only_caption_hold(monkeypatch, tm
     assert (work / 'cap_asr.json3').read_bytes() == original_cap
 
 
+@pytest.mark.parametrize('duration, allowed', [(5.82, True), (6.01, False)])
+def test_brief_handoff_event_keeps_uncertainty_and_has_a_duration_limit(monkeypatch, tmp_path, duration, allowed):
+    spec, _, work = setup(monkeypatch, tmp_path)
+    end = 3 + duration
+    spec['end'] = end + 2
+    spec['caption_gap_annotations'][0]['end'] = end
+    proof_path = tmp_path / 'review.json'
+    proof = json.loads(proof_path.read_text())
+    proof['window'] = [3, end]
+    proof_path.write_text(json.dumps(proof))
+    spec['caption_gap_annotations'][0]['evidence']['sha256'] = hashlib.sha256(proof_path.read_bytes()).hexdigest()
+    (work / 'cap_asr.json3').write_text(json.dumps({'events': [
+        {'tStartMs': 0, 'dDurationMs': 3000, 'segs': [{'utf8': 'out today'}]},
+        {'tStartMs': end * 1000, 'dDurationMs': 2000, 'segs': [{'utf8': 'Com sabeu'}]},
+    ]}))
+    if allowed:
+        row, = clip.conservative_gap_annotations(spec, work)
+        assert row['en'] == '[Applause and indistinct voices]'
+    else:
+        with pytest.raises(SystemExit):
+            clip.conservative_gap_annotations(spec, work)
+
+
 def test_lexical_speech_still_blocks_event_resolution(monkeypatch, tmp_path):
     spec, lines, work = setup(monkeypatch, tmp_path)
     def attest(words):
@@ -86,6 +109,16 @@ def test_annotation_changes_fingerprint_without_changing_asr(monkeypatch, tmp_pa
     original = clip.transcript_fingerprint(spec, lines, work)
     spec['caption_gap_annotations'][0]['why'] += ' Additional explicit uncertainty.'
     assert original != clip.transcript_fingerprint(spec, lines, work)
+
+
+def test_annotation_revision_invalidates_recorded_subs_verdict(monkeypatch, tmp_path):
+    spec, lines, work = setup(monkeypatch, tmp_path)
+    spec['caption_gaps_ok'] = {'3.0-6.0': 'Synthetic fixture gap assessment'}
+    clip.record_second_asr(spec, lines, work, 0.02, 100, 100)
+    assert clip.subs_verdict(spec, lines, work).state == 'ok'
+    spec['caption_gap_annotations'][0]['why'] += ' Clarified uncertainty.'
+    got = clip.subs_verdict(spec, lines, work)
+    assert got.state == 'needs_subs' and not got.reds
 
 
 def test_film_revision_tracks_event_but_not_review_prose(monkeypatch, tmp_path):

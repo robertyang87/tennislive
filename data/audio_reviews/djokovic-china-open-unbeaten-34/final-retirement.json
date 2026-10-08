@@ -1,0 +1,99 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=8Dc6BvkUEZM",
+  "source_path": "/workspace/video-review/djokovic-34-sources/8Dc6BvkUEZM.mp4",
+  "source_sha256": "fa4a6b25eb492d6d276d55e8c2739f5378f89bccc3dbf65cdf69265e5c267646",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:59.800277+00:00",
+  "reviewed_from": 309.3,
+  "reviewed_to": 343.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 309.42,
+      "end": 311.38,
+      "en": "Puts away the forehand, but he's not looking good, is he?",
+      "zh": "他拿下正手，但看上去不太舒服。"
+    },
+    {
+      "start": 311.44,
+      "end": 312.74,
+      "en": "I think he might be done here.",
+      "zh": "我想，他可能坚持不下去了。"
+    },
+    {
+      "start": 314.0,
+      "end": 315.8,
+      "en": "Big shake of the head from de Minaur.",
+      "zh": "德米纳尔重重地摇了摇头。"
+    },
+    {
+      "start": 315.9,
+      "end": 318.36,
+      "en": "You could just tell he wasn't in a good place.",
+      "zh": "看得出，他的身体状况很不好。"
+    },
+    {
+      "start": 318.46,
+      "end": 319.52,
+      "en": "Oh, can you believe it?",
+      "zh": "天啊，你能相信吗？"
+    },
+    {
+      "start": 320.18,
+      "end": 323.5,
+      "en": "I mean that is just heartbreaking for de Minaur.",
+      "zh": "这对德米纳尔实在太令人心碎了。"
+    },
+    {
+      "start": 323.8,
+      "end": 325.68,
+      "en": "So disappointing for the fans.",
+      "zh": "球迷们也感到非常遗憾。"
+    },
+    {
+      "start": 330.06,
+      "end": 334.12,
+      "en": "But it is a seventh Beijing title",
+      "zh": "不过，这仍是第七座北京冠军，"
+    },
+    {
+      "start": 334.12,
+      "end": 335.42,
+      "en": "for Novak Djokovic,",
+      "zh": "属于德约科维奇。"
+    },
+    {
+      "start": 336.1,
+      "end": 340.54,
+      "en": "who remains unbeaten in the Chinese capital.",
+      "zh": "他在北京依然保持不败。"
+    },
+    {
+      "start": 341.84,
+      "end": 343.42,
+      "en": "34 and 0.",
+      "zh": "三十四胜，零负。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/final-last.medium.en.json",
+      "sha256": "77a6c1d928d97f36ab02a37350307c153086f1e7aaa086fd46caa086f11c0034"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/8Dc6BvkUEZM.small.en.json",
+      "sha256": "740e2da55442e90d62c6dcb3711edaf37048bce7cea0291a3d63fcc3904e0184"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/8Dc6BvkUEZM.base.en.json",
+      "sha256": "51d096c4545592f702e1e8ef71ce77fe4069794414b2c99e75848a735f5e81d5"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Previous Well done ends309.22, before selected309.3. Puts rather than base.en added He preferred by both small.en and medium.en genuine runs; complete is he? retained from both. Oh retained from small.en and phonetic base.en or. de Minaur proper spelling normalized; spoken zero/oh standardized to0. The last zero syllable ends as late343.42; next interview Look starts343.56. Native must use existing seg.audio_tail=silence solely on extra0.18 transition material to avoid exposing next English while preserving complete selected body."
+  ]
+}

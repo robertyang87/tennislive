@@ -1,0 +1,60 @@
+{
+  "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+  "method": "Model and platform-caption alignment only; no human listening claimed",
+  "utterance_count": 37,
+  "uncertain": [],
+  "boundaries": [
+    {
+      "window": "opening_break",
+      "recommended": [
+        0.8,
+        17.5
+      ],
+      "evidence": "small/medium love ends17.38, next Passionate fans begins17.68;17.5 falls in gap"
+    },
+    {
+      "window": "first_set_point",
+      "recommended": [
+        70.08,
+        108.88
+      ],
+      "evidence": "medium tiebreak ends108.66;small108.48"
+    },
+    {
+      "window": "second_two_breakbacks",
+      "recommended": [
+        123.08,
+        150.0
+      ],
+      "evidence": "merge removes internal133.68 edit through adjacent speech; preceding consolidates the break ends122.26/122.36 in base/small; next beautiful shot ends149.34"
+    },
+    {
+      "window": "cold_open",
+      "recommended": [
+        267.05,
+        269.0
+      ],
+      "evidence": "What a battle starts267.20–267.58 ends268.10–268.36 across models"
+    },
+    {
+      "window": "match_point_and_celebration",
+      "recommended": [
+        248.96,
+        301.6
+      ],
+      "evidence": "prior unrelated cant get to that one ends247.67 in VAD-island results; concluding English ends301.40/301.42 in independent noVAD models; models do not prove absence of Chinese but no additional intelligible utterance observed in this retained span"
+    }
+  ],
+  "resolution_file": "asr-dispute-resolution.json",
+  "editorial_resolutions": [
+    {
+      "start": 12.52,
+      "decision": "Keep platform Good; local models omitted word."
+    },
+    {
+      "start": 130.98,
+      "end": 132.78,
+      "decision": "Normalize phonetic this young to does Zheng using confirmed identity and syntax; preserve source tail to132.74."
+    }
+  ]
+}

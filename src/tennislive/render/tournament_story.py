@@ -77,6 +77,21 @@ class TournamentStory:
 
 STORIES = (
     TournamentStory(
+        slug="medvedev-beijing-default-2026",
+        aliases=("djokovic medvedev beijing default",),
+        title="德梅之战为何终止",
+        location="北京 · 中国", level="ATP 500", surface="室外硬地",
+        founded="2026 案例", hero_fact="德约对梅德韦杰夫，中网半决赛因失格中止。",
+        facts=("德约以7–5、5–3的未完成比分晋级，梅德韦杰夫被判失格。",),
+        moments=(), venue="分后击球、失格规则与历史先例", kind="rule",
+        image=ASSETS.parent / "explainer/medvedev-beijing-default-2026/medvedev-beijing-semifinal-getty.jpg",
+        image_credit="Fred Lee / Getty Images · 2026中网男单半决赛",
+        source_url="https://www.tennis.com/tournaments/china-open-atp/matches/n-djokovic-vs-d-medvedev-2026-10-05",
+        image_source_url="https://uk.sports.yahoo.com/news/daniil-medvedev-disqualified-at-beijing-open-after-ball-he-swatted-into-stands-hit-a-fan-in-the-face-140027455.html",
+        source_label="比赛记录、ATP规则书与历史官方说明",
+        evidence_urls=("https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf",),
+    ),
+    TournamentStory(
         slug="atp250-medvedev-hangzhou-2026",
         aliases=("medvedev hangzhou 250",),
         title="大牌为什么也打250？",

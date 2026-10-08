@@ -1,0 +1,724 @@
+{
+  "original": {
+    "word": "重打",
+    "char": "重",
+    "sentence": "赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛重打。",
+    "tts_text": "赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛重打。",
+    "intended_refs": [
+      "崇",
+      "虫",
+      "蟲"
+    ],
+    "wrong_refs": [
+      "仲",
+      "众"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+22%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "misread",
+    "score": -1.0,
+    "margin": 0.2,
+    "near_identical_to": "wrong",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 3.489,
+        "d_wrong": 0.0,
+        "score": -1.0
+      },
+      "f0": {
+        "d_intended": 2.24,
+        "d_wrong": 0.0,
+        "score": -1.0
+      },
+      "comb": {
+        "d_intended": 3.984,
+        "d_wrong": 0.0,
+        "score": -1.0
+      }
+    },
+    "neighbour_shift": {
+      "intended": 6.287,
+      "wrong": 0.0
+    },
+    "separation": {
+      "spec": {
+        "within": 2.74,
+        "between": 3.494,
+        "separation": 1.275
+      },
+      "f0": {
+        "within": 1.922,
+        "between": 2.913,
+        "separation": 1.516
+      },
+      "comb": {
+        "within": 3.292,
+        "between": 4.66,
+        "separation": 1.416
+      }
+    },
+    "selftest_loo": {
+      "崇": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.363
+      },
+      "虫": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": -0.04
+      },
+      "蟲": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.474
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": 0.079
+      },
+      "众": {
+        "expect": "misread",
+        "got": "correct",
+        "score": 0.229
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:崇": {
+        "spec": 3.749,
+        "f0": 2.358,
+        "vmis": 0.161,
+        "frames": 31,
+        "comb": 4.232
+      },
+      "A:虫": {
+        "spec": 3.489,
+        "f0": 2.24,
+        "vmis": 0.185,
+        "frames": 27,
+        "comb": 3.984
+      },
+      "A:蟲": {
+        "spec": 3.498,
+        "f0": 4.209,
+        "vmis": 0.393,
+        "frames": 28,
+        "comb": 5.958
+      },
+      "B:仲": {
+        "spec": 0.0,
+        "f0": 0.0,
+        "vmis": 0.0,
+        "frames": 26,
+        "comb": 0.0
+      },
+      "B:众": {
+        "spec": 3.145,
+        "f0": 3.092,
+        "vmis": 0.115,
+        "frames": 26,
+        "comb": 4.664
+      }
+    },
+    "window_s": [
+      4.52,
+      4.78
+    ],
+    "boundary_token": "重打",
+    "window_anchor": "A:蟲",
+    "tokens": {
+      "ORIG": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛",
+        "重打"
+      ],
+      "A:崇": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛",
+        "崇打"
+      ],
+      "A:虫": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛虫",
+        "打"
+      ],
+      "A:蟲": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛",
+        "蟲",
+        "打"
+      ],
+      "B:仲": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛",
+        "仲打"
+      ],
+      "B:众": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛",
+        "众",
+        "打"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        -4.1,
+        -5.3,
+        -5.6,
+        -6.7,
+        null,
+        null,
+        7.9,
+        5.1,
+        1.3,
+        -3.1,
+        -5.3,
+        -5.7
+      ],
+      "A:崇": [
+        -1.4,
+        -3.9,
+        -4.9,
+        -5.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.9,
+        -2.6,
+        -1.1,
+        1.1,
+        1.9
+      ],
+      "A:虫": [
+        0.2,
+        -1.8,
+        -3.4,
+        -4.1,
+        -5.8,
+        null,
+        null,
+        null,
+        null,
+        -4.4,
+        -3.6,
+        -2.8,
+        -2.2,
+        null
+      ],
+      "A:蟲": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -2.8,
+        -2.5,
+        -1.4,
+        -0.1,
+        1.2
+      ],
+      "B:仲": [
+        null,
+        -4.1,
+        -5.3,
+        -5.6,
+        -6.7,
+        null,
+        null,
+        7.9,
+        5.1,
+        1.3,
+        -3.1,
+        -5.3,
+        -5.7
+      ],
+      "B:众": [
+        null,
+        null,
+        -2.1,
+        -4.2,
+        -4.3,
+        null,
+        null,
+        -3.2,
+        -3.9,
+        -4.9,
+        -6.1,
+        -5.8
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/9ac6dc12899b2ce4c2c19987.mp3",
+      "A:崇": "/workspace/scratch/sun-replay/polyphone-audit/cache/2e282b8df664ed853a874c47.mp3",
+      "A:虫": "/workspace/scratch/sun-replay/polyphone-audit/cache/a8520b9f167af8e91776f3a8.mp3",
+      "A:蟲": "/workspace/scratch/sun-replay/polyphone-audit/cache/2785a0eaf4f7c3d3fde2e66e.mp3",
+      "B:仲": "/workspace/scratch/sun-replay/polyphone-audit/cache/7ad22a2a04478fcdc49c95c4.mp3",
+      "B:众": "/workspace/scratch/sun-replay/polyphone-audit/cache/893530e63eaa7313f19a68b4.mp3"
+    }
+  },
+  "candidate": {
+    "word": "重打",
+    "char": "重",
+    "sentence": "赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛重打。",
+    "tts_text": "赛果与后续处罚是两个问题，申诉改变处罚，并不意味着比赛崇打。",
+    "intended_refs": [
+      "崇",
+      "虫",
+      "蟲"
+    ],
+    "wrong_refs": [
+      "仲",
+      "众"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+22%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "correct",
+    "score": 1.0,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.634,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.0,
+        "d_wrong": 2.358,
+        "score": 1.0
+      },
+      "comb": {
+        "d_intended": 0.0,
+        "d_wrong": 4.239,
+        "score": 1.0
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.0,
+      "wrong": 7.325
+    },
+    "separation": {
+      "spec": {
+        "within": 2.747,
+        "between": 3.505,
+        "separation": 1.276
+      },
+      "f0": {
+        "within": 1.922,
+        "between": 2.913,
+        "separation": 1.516
+      },
+      "comb": {
+        "within": 3.296,
+        "between": 4.666,
+        "separation": 1.416
+      }
+    },
+    "selftest_loo": {
+      "崇": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.363
+      },
+      "虫": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": -0.04
+      },
+      "蟲": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.473
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": 0.078
+      },
+      "众": {
+        "expect": "misread",
+        "got": "correct",
+        "score": 0.23
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:崇": {
+        "spec": 0.0,
+        "f0": 0.0,
+        "vmis": 0.0,
+        "frames": 30,
+        "comb": 0.0
+      },
+      "A:虫": {
+        "spec": 2.732,
+        "f0": 2.03,
+        "vmis": 0.067,
+        "frames": 30,
+        "comb": 3.396
+      },
+      "A:蟲": {
+        "spec": 2.741,
+        "f0": 0.61,
+        "vmis": 0.3,
+        "frames": 30,
+        "comb": 1.98
+      },
+      "B:仲": {
+        "spec": 3.764,
+        "f0": 2.358,
+        "vmis": 0.161,
+        "frames": 31,
+        "comb": 4.239
+      },
+      "B:众": {
+        "spec": 3.634,
+        "f0": 3.437,
+        "vmis": 0.333,
+        "frames": 30,
+        "comb": 5.254
+      }
+    },
+    "window_s": [
+      4.52,
+      4.82
+    ],
+    "boundary_token": "崇打",
+    "window_anchor": "A:蟲",
+    "tokens": {
+      "ORIG": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛",
+        "崇打"
+      ],
+      "A:崇": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛",
+        "崇打"
+      ],
+      "A:虫": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛虫",
+        "打"
+      ],
+      "A:蟲": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛",
+        "蟲",
+        "打"
+      ],
+      "B:仲": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛",
+        "仲打"
+      ],
+      "B:众": [
+        "赛果",
+        "与",
+        "后续",
+        "处罚",
+        "是",
+        "两",
+        "个",
+        "问题",
+        "申诉",
+        "改变",
+        "处罚",
+        "并",
+        "不",
+        "意味",
+        "着",
+        "比赛",
+        "众",
+        "打"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -1.4,
+        -3.9,
+        -4.9,
+        -5.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.9,
+        -2.6,
+        -1.1,
+        1.1,
+        1.9
+      ],
+      "A:崇": [
+        -1.4,
+        -3.9,
+        -4.9,
+        -5.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.9,
+        -2.6,
+        -1.1,
+        1.1,
+        1.9
+      ],
+      "A:虫": [
+        0.2,
+        -1.8,
+        -3.4,
+        -4.1,
+        -5.8,
+        null,
+        null,
+        null,
+        null,
+        -4.4,
+        -3.6,
+        -2.8,
+        -2.2,
+        null
+      ],
+      "A:蟲": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -2.8,
+        -2.5,
+        -1.4,
+        -0.1,
+        1.2
+      ],
+      "B:仲": [
+        null,
+        -4.1,
+        -5.3,
+        -5.6,
+        -6.7,
+        null,
+        null,
+        7.9,
+        5.1,
+        1.3,
+        -3.1,
+        -5.3,
+        -5.7
+      ],
+      "B:众": [
+        null,
+        null,
+        -2.1,
+        -4.2,
+        -4.3,
+        null,
+        null,
+        -3.2,
+        -3.9,
+        -4.9,
+        -6.1,
+        -5.8
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/2e282b8df664ed853a874c47.mp3",
+      "A:崇": "/workspace/scratch/sun-replay/polyphone-audit/cache/2e282b8df664ed853a874c47.mp3",
+      "A:虫": "/workspace/scratch/sun-replay/polyphone-audit/cache/a8520b9f167af8e91776f3a8.mp3",
+      "A:蟲": "/workspace/scratch/sun-replay/polyphone-audit/cache/2785a0eaf4f7c3d3fde2e66e.mp3",
+      "B:仲": "/workspace/scratch/sun-replay/polyphone-audit/cache/7ad22a2a04478fcdc49c95c4.mp3",
+      "B:众": "/workspace/scratch/sun-replay/polyphone-audit/cache/893530e63eaa7313f19a68b4.mp3"
+    }
+  }
+}

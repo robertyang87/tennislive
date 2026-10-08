@@ -1,0 +1,57 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=8Dc6BvkUEZM",
+  "source_path": "/workspace/video-review/djokovic-34-sources/8Dc6BvkUEZM.mp4",
+  "source_sha256": "fa4a6b25eb492d6d276d55e8c2739f5378f89bccc3dbf65cdf69265e5c267646",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:59.278154+00:00",
+  "reviewed_from": 466.2,
+  "reviewed_to": 472.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 466.42,
+      "end": 468.48,
+      "en": "It just felt like he felt a bit guilty as well",
+      "zh": "德米纳尔好像还有些愧疚，"
+    },
+    {
+      "start": 468.48,
+      "end": 470.74,
+      "en": "for the fans that came out and watched,",
+      "zh": "对那些来到现场观赛的球迷，"
+    },
+    {
+      "start": 470.86,
+      "end": 472.24,
+      "en": "but nothing that could be done.",
+      "zh": "但也实在无能为力。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/final-cup.targeted.small.en.json",
+      "sha256": "88ffe15fa127b7e603a3855767ab49362ce76be9310dc9df052b345e7b0e5fb3"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/final-cup.targeted.base.en.json",
+      "sha256": "5a5c64c24483414cbd2af6881a662cbcef507d515feb7b1cac76a9a57f8073f7"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/8Dc6BvkUEZM.small.en.json",
+      "sha256": "740e2da55442e90d62c6dcb3711edaf37048bce7cea0291a3d63fcc3904e0184"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/8Dc6BvkUEZM.base.en.json",
+      "sha256": "51d096c4545592f702e1e8ef71ce77fe4069794414b2c99e75848a735f5e81d5"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Parent visually confirmed body466.2–472.6 and branding transition about472.8; +0.18 source bottom material ends472.78. Local small.en resolves just at466.86 probability0.70, first It and bit/as well retained despite base local omission; original full-source models confirm full sentiment. Last done ends472.24. Commentary refers to Alex de Minaur, not Djokovic; Chinese uses he intentionally and previous retirement segment supplies referent.",
+    "Updated to parent frame-by-frame confirmed branding first frame472.7; body end472.4 +0.18=472.58 retains clean trophy image, speech still ends472.24.",
+    "Chinese first cue now explicitly resolves English he to Alex de Minaur, established by preceding source commentary The heartbreak for de Minaur; English and audio/window unchanged. Parent approved this faithful referent clarification before re-assembly."
+  ]
+}

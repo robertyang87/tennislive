@@ -1,0 +1,58 @@
+{
+  "source_url": "https://www.nicovideo.jp/watch/sm20856608",
+  "source_path": "/workspace/scratch/madrid-nico-sm20856608.mp4",
+  "source_sha256": "7c7fa0e5251ebc4b9959c7fb8e4ea0f53ce9d3224c96df4fed213b267da1eed0",
+  "method": "asr_cross_checked",
+  "reviewer": "Automated ASR crosscheck with root evidence review; no human listening or claim of word-perfect human audit.",
+  "reviewed_at": "2026-10-04T07:56:42.511295+00:00",
+  "reviewed_from": 350.5,
+  "reviewed_to": 374.26,
+  "status": "complete",
+  "foreground_english": [
+    {
+      "start": 358.84,
+      "end": 364.02,
+      "en": "The defending champion is out here in Madrid.",
+      "zh": "卫冕冠军在马德里被淘汰。"
+    },
+    {
+      "start": 364.3,
+      "end": 369.44,
+      "en": "Kei Nishikori scores his first ever win over Roger Federer.",
+      "zh": "锦织圭首次击败费德勒。"
+    },
+    {
+      "start": 369.44,
+      "end": 374.24,
+      "en": "Certainly his finest win on a clay court, of the Japanese player.",
+      "zh": "这是他红土赛场最出色的胜利。"
+    }
+  ],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": null,
+  "asr_evidence": [
+    "data/audio_reviews/nishikori-career-farewell/evidence/madrid2013-nico-point-small.en-b484e1e905fc.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/madrid2013-nico-point-base.en-f296ef90b732.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/madrid2013-nico-medium.en-a57acdbbb54f.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/madrid2013-nico-small-multilingual-0a450263b386.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/madrid2013-nico-wide-medium.en-ccaabbeb1a69.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/madrid2013-nico-wide-medium-multilingual-1b8780d65630.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/madrid2013-nico-modifier-medium.en-0ad8a6daa6b7.json",
+    "data/audio_reviews/nishikori-career-farewell/evidence/madrid2013-nico-modifier-medium-da4a67ddc365.json"
+  ],
+  "visual_evidence": "/workspace/scratch/madrid-nico-point-contact.jpg",
+  "complete_point": true,
+  "stronger_full_window_review": "Unprompted medium.en350.5–385 confirms same out-here phrase in two independent windows; final complete selected utterance dearly ends381.84 before next AndNishikori starts382.28. First out/ousted lexical issue and claycourt connector remain explicit uncertain.",
+  "root_review": "Root accepted primary evidence: out here inMadrid repeated across independent medium.en and multilingualmedium; claycourt confirmed multilingualmedium and same phonetics; connector of is explicit unprompted medium.en372.78–372.96 probability0.766745 plus multilingualsmall of, multilingualmedium only omits connector, no contradictory alternativeword. No guessed for, no grammatical rewrite of. Source350.5–374.26=594frames25fps encloses full modifier ending374.24 and excludes next Federer paragraph starting374.34.",
+  "decision_notes": {
+    "out": "Preferred real strongmodel out, not guessedousted.",
+    "clay court": "Confirmed actual multilingualmedium claycourt, source genuine Madrid redclay.",
+    "of": "Primary unpromptedmedium.en probability0.766745 at372.78–372.96; retain literalof despite unusual grammar.",
+    "native_audio": "Preserve actual original broadcaster audio, no narration overlap/muting."
+  },
+  "portable_review_provenance": {
+    "original_packet_sha256": "975954c73028a4ea41d539e327eb111b2bb2a9907336d6956e401b48c73abce4",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

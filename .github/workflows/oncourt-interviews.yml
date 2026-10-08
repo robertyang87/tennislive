@@ -438,7 +438,8 @@ jobs:
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-core
           ensure_ffmpeg
-          pip install -q -e . faster-whisper "yt-dlp[default]>=2026.7.4"
+          pip install -q -e ".[pronunciation]" faster-whisper "yt-dlp[default]>=2026.7.4"
+          python -c "import pypinyin"
 
       # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
       # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：

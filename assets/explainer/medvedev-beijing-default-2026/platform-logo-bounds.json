@@ -1,0 +1,80 @@
+{
+  "coordinates": "x0,y0,x1,y1; x1/y1 exclusive; native source pixels",
+  "purpose": "Local platform watermark treatment only; preserve native source archived and original event action/score overlay.",
+  "rublev": {
+    "native": [
+      1080,
+      1080
+    ],
+    "visible_bounds": [
+      29,
+      28,
+      311,
+      99
+    ],
+    "treatment_bounds": [
+      24,
+      22,
+      318,
+      106
+    ],
+    "xywh": [
+      24,
+      22,
+      294,
+      84
+    ],
+    "current_film_bounds": [
+      24,
+      202,
+      318,
+      286
+    ],
+    "reviewed_source_seconds": [
+      0.2,
+      4,
+      8,
+      10.8,
+      13.5,
+      15.5,
+      17,
+      18.9,
+      20.6,
+      26,
+      29.8
+    ]
+  },
+  "beijing": {
+    "native": [
+      1920,
+      1080
+    ],
+    "visible_bounds": [
+      1578,
+      42,
+      1861,
+      113
+    ],
+    "treatment_bounds": [
+      1572,
+      36,
+      1868,
+      120
+    ],
+    "xywh": [
+      1572,
+      36,
+      296,
+      84
+    ],
+    "reviewed_source_seconds": [
+      349,
+      353,
+      357,
+      361,
+      367,
+      368.9
+    ],
+    "note": "Avoids bottom-left broadcast scoreboard and players. At361s a distant venue electronic board partly lies behind original watermark; do not enlarge treatment region."
+  }
+}

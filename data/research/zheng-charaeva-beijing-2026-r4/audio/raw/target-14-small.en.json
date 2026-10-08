@@ -1,0 +1,377 @@
+{
+  "model": "small.en",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "source_from": 225,
+  "source_to": 236,
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA."
+  },
+  "info": {
+    "language": "en",
+    "language_probability": 1,
+    "duration": 11.0,
+    "duration_after_vad": 11.0,
+    "all_language_probs": null,
+    "transcription_options": {
+      "beam_size": 5,
+      "best_of": 5,
+      "patience": 1,
+      "length_penalty": 1,
+      "repetition_penalty": 1,
+      "no_repeat_ngram_size": 0,
+      "log_prob_threshold": -1.0,
+      "no_speech_threshold": 0.6,
+      "compression_ratio_threshold": 2.4,
+      "condition_on_previous_text": false,
+      "prompt_reset_on_temperature": 0.5,
+      "temperatures": [
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "initial_prompt": "Zheng Qinwen. Alina Charaeva. WTA.",
+      "prefix": null,
+      "suppress_blank": true,
+      "suppress_tokens": [
+        1,
+        2,
+        7,
+        8,
+        9,
+        10,
+        14,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        90,
+        91,
+        92,
+        93,
+        357,
+        366,
+        438,
+        532,
+        685,
+        705,
+        796,
+        930,
+        1058,
+        1220,
+        1267,
+        1279,
+        1303,
+        1343,
+        1377,
+        1391,
+        1635,
+        1782,
+        1875,
+        2162,
+        2361,
+        2488,
+        3467,
+        4008,
+        4211,
+        4600,
+        4808,
+        5299,
+        5855,
+        6329,
+        7203,
+        9609,
+        9959,
+        10563,
+        10786,
+        11420,
+        11709,
+        11907,
+        13163,
+        13697,
+        13700,
+        14808,
+        15306,
+        16410,
+        16791,
+        17992,
+        19203,
+        19510,
+        20724,
+        22305,
+        22935,
+        27007,
+        30109,
+        30420,
+        33409,
+        34949,
+        40283,
+        40493,
+        40549,
+        47282,
+        49146,
+        50257,
+        50357,
+        50358,
+        50359,
+        50360,
+        50361
+      ],
+      "without_timestamps": false,
+      "max_initial_timestamp": 1.0,
+      "word_timestamps": true,
+      "prepend_punctuations": "\"'“¿([{-",
+      "append_punctuations": "\"'.。,，!！?？:：”)]}、",
+      "multilingual": false,
+      "max_new_tokens": null,
+      "clip_timestamps": [
+        0.0
+      ],
+      "hallucination_silence_threshold": null,
+      "hotwords": null
+    },
+    "vad_options": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 2.4399999999999995,
+      "end": 7.92,
+      "text": " Oh, that just clipped the outside edge. I mean, there wasn't much to work with there for Jen on the return.",
+      "tokens": [
+        50363,
+        3966,
+        11,
+        326,
+        655,
+        49305,
+        262,
+        2354,
+        5743,
+        13,
+        314,
+        1612,
+        11,
+        612,
+        2492,
+        470,
+        881,
+        284,
+        670,
+        351,
+        612,
+        329,
+        13364,
+        319,
+        262,
+        1441,
+        13,
+        50763
+      ],
+      "avg_logprob": -0.296850705312358,
+      "compression_ratio": 1.1944444444444444,
+      "no_speech_prob": 0.001414638594724238,
+      "words": [
+        {
+          "start": 2.4399999999999995,
+          "end": 2.92,
+          "word": " Oh,",
+          "probability": 0.5685307383537292
+        },
+        {
+          "start": 2.98,
+          "end": 3.16,
+          "word": " that",
+          "probability": 0.8473286032676697
+        },
+        {
+          "start": 3.16,
+          "end": 3.46,
+          "word": " just",
+          "probability": 0.9893054962158203
+        },
+        {
+          "start": 3.46,
+          "end": 3.72,
+          "word": " clipped",
+          "probability": 0.3027239441871643
+        },
+        {
+          "start": 3.72,
+          "end": 3.9,
+          "word": " the",
+          "probability": 0.9911943674087524
+        },
+        {
+          "start": 3.9,
+          "end": 4.28,
+          "word": " outside",
+          "probability": 0.9961251616477966
+        },
+        {
+          "start": 4.28,
+          "end": 4.7,
+          "word": " edge.",
+          "probability": 0.9936994314193726
+        },
+        {
+          "start": 5.18,
+          "end": 5.18,
+          "word": " I",
+          "probability": 0.9443807005882263
+        },
+        {
+          "start": 5.18,
+          "end": 5.28,
+          "word": " mean,",
+          "probability": 0.9988314509391785
+        },
+        {
+          "start": 5.32,
+          "end": 5.42,
+          "word": " there",
+          "probability": 0.9982984662055969
+        },
+        {
+          "start": 5.42,
+          "end": 5.8,
+          "word": " wasn't",
+          "probability": 0.9961941242218018
+        },
+        {
+          "start": 5.8,
+          "end": 5.94,
+          "word": " much",
+          "probability": 0.9984157085418701
+        },
+        {
+          "start": 5.94,
+          "end": 6.14,
+          "word": " to",
+          "probability": 0.9969423413276672
+        },
+        {
+          "start": 6.14,
+          "end": 6.32,
+          "word": " work",
+          "probability": 0.9989994168281555
+        },
+        {
+          "start": 6.32,
+          "end": 6.52,
+          "word": " with",
+          "probability": 0.9855778813362122
+        },
+        {
+          "start": 6.52,
+          "end": 6.78,
+          "word": " there",
+          "probability": 0.5082579851150513
+        },
+        {
+          "start": 6.78,
+          "end": 7.02,
+          "word": " for",
+          "probability": 0.7284601330757141
+        },
+        {
+          "start": 7.02,
+          "end": 7.26,
+          "word": " Jen",
+          "probability": 0.4213162064552307
+        },
+        {
+          "start": 7.26,
+          "end": 7.42,
+          "word": " on",
+          "probability": 0.9258338212966919
+        },
+        {
+          "start": 7.42,
+          "end": 7.54,
+          "word": " the",
+          "probability": 0.9973217844963074
+        },
+        {
+          "start": 7.54,
+          "end": 7.92,
+          "word": " return.",
+          "probability": 0.9977340698242188
+        }
+      ],
+      "temperature": 0.0
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 9.02,
+      "end": 10.02,
+      "text": " The victory over Jen.",
+      "tokens": [
+        50763,
+        383,
+        5373,
+        625,
+        13364,
+        13,
+        50863
+      ],
+      "avg_logprob": -0.296850705312358,
+      "compression_ratio": 1.1944444444444444,
+      "no_speech_prob": 0.001414638594724238,
+      "words": [
+        {
+          "start": 9.02,
+          "end": 9.3,
+          "word": " The",
+          "probability": 0.91501384973526
+        },
+        {
+          "start": 9.3,
+          "end": 9.56,
+          "word": " victory",
+          "probability": 0.9640227556228638
+        },
+        {
+          "start": 9.56,
+          "end": 9.78,
+          "word": " over",
+          "probability": 0.9590447545051575
+        },
+        {
+          "start": 9.78,
+          "end": 10.02,
+          "word": " Jen.",
+          "probability": 0.4059167802333832
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

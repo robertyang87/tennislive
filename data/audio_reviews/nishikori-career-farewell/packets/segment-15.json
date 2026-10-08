@@ -1,0 +1,33 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "source_file": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+  "method": "asr_cross_checked",
+  "reviewer": "asset_timings and closing_source source-window cross-ASR audit",
+  "reviewed_at": "2026-10-04T07:21:41.150938+00:00",
+  "status": "complete",
+  "reviewed_from": 401,
+  "reviewed_to": 403.35,
+  "foreground_english": [],
+  "no_foreground_english_reason": "Both independent cached English models small.en and base.en contain no lexical speech in the entire selected original-source interval. Original full audit and exact ASR hashes retained. This is cross-ASR review, not a claim of human listening.",
+  "uncertain_spans": [],
+  "asr_results": [
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/2015-memphis-trophy-small.en-7a8176a6f948.json",
+      "sha256": "13a07b0a07704c2e7f3005cf807d2d1a977bca60012bfd5c4ab3663038f8d1ee"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/2015-memphis-trophy-base.en-6e1e681fc636.json",
+      "sha256": "e1f22fb7420ddd470cc009c81cb22150897041adb39ad29e9240e873f008f9b8"
+    }
+  ],
+  "human_listening_done": false,
+  "source_review": "data/audio_reviews/nishikori-career-farewell/evidence/native-foreground-titles-audit-3b8675b4a78f.json",
+  "raw_status": "dual_asr_no_lexical_detection",
+  "portable_review_provenance": {
+    "original_packet_sha256": "02eaec3758f3e47b70253f41295fcf231101120541286ee14b393f79a8e99dbf",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

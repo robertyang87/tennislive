@@ -1,0 +1,181 @@
+{
+  "model": "tiny",
+  "source_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68",
+  "windows": [
+    {
+      "key": "sky-emotion-context",
+      "reviewed_from": 33.7,
+      "reviewed_to": 42.5,
+      "segments": [
+        {
+          "start": 34.39,
+          "end": 42.47,
+          "text": " War bitter enttäuscht, nach dem ersten Satz zu unschenranen, die sich erst mal die Tränen trockenen Muster und es war schon ein Deutsch.",
+          "avg_logprob": -0.5087333772240615,
+          "no_speech_prob": 0.010785838589072227,
+          "words": [
+            {
+              "start": 34.39,
+              "end": 35.21,
+              "word": " War",
+              "probability": 0.4668639600276947
+            },
+            {
+              "start": 35.21,
+              "end": 35.59,
+              "word": " bitter",
+              "probability": 0.8097579479217529
+            },
+            {
+              "start": 35.59,
+              "end": 37.13,
+              "word": " enttäuscht,",
+              "probability": 0.9174182862043381
+            },
+            {
+              "start": 37.41,
+              "end": 37.53,
+              "word": " nach",
+              "probability": 0.9117814302444458
+            },
+            {
+              "start": 37.53,
+              "end": 37.77,
+              "word": " dem",
+              "probability": 0.9486217498779297
+            },
+            {
+              "start": 37.77,
+              "end": 37.99,
+              "word": " ersten",
+              "probability": 0.974499523639679
+            },
+            {
+              "start": 37.99,
+              "end": 38.39,
+              "word": " Satz",
+              "probability": 0.8203403055667877
+            },
+            {
+              "start": 38.39,
+              "end": 38.51,
+              "word": " zu",
+              "probability": 0.8030692934989929
+            },
+            {
+              "start": 38.51,
+              "end": 39.63,
+              "word": " unschenranen,",
+              "probability": 0.4378888290375471
+            },
+            {
+              "start": 39.69,
+              "end": 39.77,
+              "word": " die",
+              "probability": 0.9890549182891846
+            },
+            {
+              "start": 39.77,
+              "end": 40.01,
+              "word": " sich",
+              "probability": 0.9975841045379639
+            },
+            {
+              "start": 40.01,
+              "end": 40.17,
+              "word": " erst",
+              "probability": 0.6744047403335571
+            },
+            {
+              "start": 40.17,
+              "end": 40.31,
+              "word": " mal",
+              "probability": 0.8489888310432434
+            },
+            {
+              "start": 40.31,
+              "end": 40.49,
+              "word": " die",
+              "probability": 0.9445357322692871
+            },
+            {
+              "start": 40.49,
+              "end": 40.77,
+              "word": " Tränen",
+              "probability": 0.6297049621740977
+            },
+            {
+              "start": 40.77,
+              "end": 41.23,
+              "word": " trockenen",
+              "probability": 0.7052712341149648
+            },
+            {
+              "start": 41.23,
+              "end": 41.45,
+              "word": " Muster",
+              "probability": 0.6545519679784775
+            },
+            {
+              "start": 41.45,
+              "end": 41.77,
+              "word": " und",
+              "probability": 0.9182981848716736
+            },
+            {
+              "start": 41.77,
+              "end": 41.89,
+              "word": " es",
+              "probability": 0.740864634513855
+            },
+            {
+              "start": 41.89,
+              "end": 42.01,
+              "word": " war",
+              "probability": 0.9692697525024414
+            },
+            {
+              "start": 42.01,
+              "end": 42.21,
+              "word": " schon",
+              "probability": 0.9760135412216187
+            },
+            {
+              "start": 42.21,
+              "end": 42.39,
+              "word": " ein",
+              "probability": 0.9404628872871399
+            },
+            {
+              "start": 42.39,
+              "end": 42.47,
+              "word": " Deutsch.",
+              "probability": 0.2231285572052002
+            }
+          ]
+        }
+      ],
+      "language_probability": 1,
+      "duration_after_vad": 8.112
+    },
+    {
+      "key": "sky-handshake",
+      "reviewed_from": 78.7,
+      "reviewed_to": 87.9,
+      "segments": [],
+      "language_probability": 1,
+      "duration_after_vad": 0.0
+    }
+  ],
+  "reviewed_source_equivalence": {
+    "original_source_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68",
+    "archive_source_sha256": "b29d32d6295b31b634ed494e66d656859bec66d5771a11363485da81876b687c",
+    "proof": {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/sky-remux-equivalence-proof.json",
+      "sha256": "310591b9129a33e1ed1268bfa64c6425a8065649c43943e3de74b0335d81b3ff"
+    },
+    "original_asr_json_sha256": "07f94fef165262bbf77cd61f2c4c94b7a88909adee6e139de14b8ef6dcd9cc14",
+    "original_transcript_results_unchanged": true,
+    "note": "These original ASR results were computed on the reviewed local container. Source hash is intentionally retained, not relabeled. The archived container has identical complete decoded PCM, every decoded video frame, encoded audio/video packet content and packet timeline, verified in the linked proof."
+  }
+}

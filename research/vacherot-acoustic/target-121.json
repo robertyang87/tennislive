@@ -1,0 +1,243 @@
+{
+  "id": "target-121",
+  "label": "片尾",
+  "display_char": "好",
+  "actual_tts_char": "好",
+  "position": 12,
+  "context": "，时差归我，好球归你。",
+  "word": "好",
+  "intended": "hao3",
+  "common_contrast": "hao4",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "关注网球时差，时差归我，好球归你。",
+  "verdict": "uncertain",
+  "measurement": {
+    "word": "好",
+    "char": "好",
+    "sentence": "关注网球时差，时差归我，好球归你。",
+    "tts_text": "关注网球时差，时差归我，好球归你。",
+    "intended_refs": [
+      "郝"
+    ],
+    "wrong_refs": [
+      "昊",
+      "灏"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "uncertain",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": 0.108,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 1.648,
+        "d_wrong": 2.586,
+        "score": 0.222
+      },
+      "f0": {
+        "d_intended": 8.436,
+        "d_wrong": 10.2,
+        "score": 0.095
+      },
+      "comb": {
+        "d_intended": 9.26,
+        "d_wrong": 11.5,
+        "score": 0.108
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.604,
+      "wrong": 4.493
+    },
+    "separation": {
+      "spec": {
+        "within": 0.296,
+        "between": 2.463,
+        "separation": 8.319
+      },
+      "f0": {
+        "within": 0.098,
+        "between": 1.523,
+        "separation": 15.576
+      },
+      "comb": {
+        "within": 0.246,
+        "between": 2.754,
+        "separation": 11.206
+      }
+    },
+    "selftest_loo": {
+      "昊": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.834
+      },
+      "灏": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.838
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:郝": {
+        "spec": 1.648,
+        "f0": 8.436,
+        "vmis": 0.115,
+        "frames": 26,
+        "comb": 9.26
+      },
+      "B:昊": {
+        "spec": 2.598,
+        "f0": 10.2,
+        "vmis": 0.188,
+        "frames": 32,
+        "comb": 11.5
+      },
+      "B:灏": {
+        "spec": 2.586,
+        "f0": 10.3,
+        "vmis": 0.188,
+        "frames": 32,
+        "comb": 11.593
+      }
+    },
+    "window_s": [
+      2.593,
+      2.849
+    ],
+    "boundary_token": "好",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "关注",
+        "网球",
+        "时差",
+        "时差",
+        "归",
+        "我",
+        "好",
+        "球",
+        "归",
+        "你"
+      ],
+      "A:郝": [
+        "关注",
+        "网球",
+        "时差",
+        "时差",
+        "归",
+        "我",
+        "郝球",
+        "归",
+        "你"
+      ],
+      "B:昊": [
+        "关注",
+        "网球",
+        "时差",
+        "时差",
+        "归",
+        "我",
+        "昊球",
+        "归",
+        "你"
+      ],
+      "B:灏": [
+        "关注",
+        "网球",
+        "时差",
+        "时差",
+        "归",
+        "我",
+        "灏球",
+        "归",
+        "你"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        -10.8,
+        -10.8,
+        -10.7,
+        -2.4,
+        -4.3,
+        -5.2,
+        -5.2,
+        -5.3
+      ],
+      "A:郝": [
+        null,
+        null,
+        null,
+        null,
+        16.5,
+        15.6,
+        15.7,
+        null,
+        null,
+        -3.8,
+        -4.7,
+        -5.0,
+        -5.0
+      ],
+      "B:昊": [
+        null,
+        null,
+        null,
+        null,
+        16.0,
+        15.8,
+        15.7,
+        14.9,
+        null,
+        null,
+        1.7,
+        -0.4,
+        -3.0,
+        -3.7,
+        -4.3,
+        null
+      ],
+      "B:灏": [
+        null,
+        null,
+        null,
+        null,
+        16.1,
+        16.0,
+        15.8,
+        15.0,
+        null,
+        null,
+        1.8,
+        -0.3,
+        -2.9,
+        -3.6,
+        -4.2,
+        null
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/45fe07c9742efcada9c0d7a4.mp3",
+      "A:郝": "/workspace/tennislive/research/vacherot-acoustic/references/f949b8e3b795fd073f763e84.mp3",
+      "B:昊": "/workspace/tennislive/research/vacherot-acoustic/references/332694c471c799f8329dbe30.mp3",
+      "B:灏": "/workspace/tennislive/research/vacherot-acoustic/references/ef01204cbb3803e65d2b4d25.mp3"
+    }
+  }
+}

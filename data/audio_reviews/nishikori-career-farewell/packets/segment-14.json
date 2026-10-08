@@ -1,0 +1,51 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_file": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "closing_source cross-model speech intelligibility classification using multilingual small/base, forced English small/base/medium and wide VADoff evidence",
+  "reviewed_at": "2026-10-04T07:44:46.320973+00:00",
+  "status": "complete",
+  "reviewed_from": 377.45,
+  "reviewed_to": 386.13,
+  "foreground_english": [],
+  "no_foreground_english_reason": "No reliably intelligible lexical English is established in this original complete-point-and-reaction window. A brief unintelligible exertion/crowd vocalization is retained as original audio. Cross-model hypotheses are inconsistent or very low confidence; assigning Yeah/Okay/Hooray or inventing a translation would manufacture words. This review classifies audio type, does not claim the vocalization is silent or identify exact spoken words, and does not claim human hearing. English small/base and multilingual small/base/medium disagree Yeah/Okay with probability0.075/0.112/0.042. Wider VADoff medium375–387 contains only preceding commentary375–376.74, entirely before selected start377.45; no stable word at the short exertion/reaction vocalization.",
+  "uncertain_spans": [],
+  "non_lexical_vocalizations": [
+    {
+      "start": 382.33,
+      "end": 382.87,
+      "classification": "unintelligible exertion/crowd vocalization",
+      "verbatim": null,
+      "translate": false,
+      "not_a_word_claim": true
+    }
+  ],
+  "asr_results": [
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/memphis2015-third-small-49dc809d0ed8.json",
+      "sha256": "33ad5b530cc6bf6c6c8ae943fa77231bdb7e382159b4b9b2960eb76aa935ede9"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/memphis2015-third-base-5a3eb1913702.json",
+      "sha256": "6e3ab75950e6fe41f0e96b0d3aecd89a023391e5410b07ab808b38adebe6022a"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/memphis2015-medium.en-dcf4d030f8f1.json",
+      "sha256": "dcf4d030f8f1e61d586bbea2d2c3a5b6f3d53d23fda4bb6e8b9d0845bd61bce2"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/memphis2015-medium-wide.en-e8c58d915678.json",
+      "sha256": "e8c58d9156783a98ccad338a23a7fd5333626cecb5ad456ca6e114fec3cb9985"
+    }
+  ],
+  "human_listening_done": false,
+  "review_scope": "complete cross-model intelligible-English and audio-type review; exact unintelligible shout words unclaimed",
+  "microframe_handle_evidence": "No new lexical content in final≤0.03s extension; original title audit fully spans source through350 forTokyo and390 forMemphis; wide medium reviewed through337 or387.",
+  "portable_review_provenance": {
+    "original_packet_sha256": "af58697fb808983cc98b7d45e317a0090e8cd6f8973a00413fc6aee8417bf473",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

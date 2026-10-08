@@ -1,0 +1,460 @@
+{
+  "job": {
+    "id": "u05-i06-分-fen1-vs-fen4",
+    "utterance": 5,
+    "label": "第 12 段",
+    "sentence": "三十九记制胜分，对手六记。进攻有威力，波动也不少。最后一局，她用回应握住胜利。",
+    "text_sha256": "2d826b17dc3a0e025cbdf184b9ae9f7a79c77436d7f0e2d1b55bd02ca0c3f2a6",
+    "index": 6,
+    "char": "分",
+    "intended": "fen1",
+    "wrong": "fen4",
+    "ok": [
+      "氛",
+      "纷",
+      "芬"
+    ],
+    "bad": [
+      "忿",
+      "愤",
+      "粪"
+    ],
+    "ok_reference_note": "single-reading common",
+    "bad_reference_note": "single-reading common"
+  },
+  "word": "分",
+  "char": "分",
+  "sentence": "三十九记制胜分，对手六记。进攻有威力，波动也不少。最后一局，她用回应握住胜利。",
+  "tts_text": "三十九记制胜分，对手六记。进攻有威力，波动也不少。最后一局，她用回应握住胜利。",
+  "intended_refs": [
+    "氛",
+    "纷",
+    "芬"
+  ],
+  "wrong_refs": [
+    "忿",
+    "愤",
+    "粪"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "medium",
+  "verdict_raw": "correct",
+  "score": 0.657,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": false,
+  "dropped_refs": [
+    "忿"
+  ],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 1.526,
+      "d_wrong": 2.693,
+      "score": 0.277
+    },
+    "f0": {
+      "d_intended": 0.021,
+      "d_wrong": 2.442,
+      "score": 0.983
+    },
+    "comb": {
+      "d_intended": 0.784,
+      "d_wrong": 3.789,
+      "score": 0.657
+    }
+  },
+  "neighbour_shift": {
+    "intended": 0.606,
+    "wrong": 1.916
+  },
+  "separation": {
+    "spec": {
+      "within": 1.999,
+      "between": 2.703,
+      "separation": 1.352
+    },
+    "f0": {
+      "within": 1.03,
+      "between": 2.319,
+      "separation": 2.251
+    },
+    "comb": {
+      "within": 2.03,
+      "between": 3.671,
+      "separation": 1.809
+    }
+  },
+  "selftest_loo": {
+    "氛": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.36
+    },
+    "纷": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.446
+    },
+    "芬": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 0.369
+    },
+    "愤": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.732
+    },
+    "粪": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.735
+    },
+    "忿": {
+      "expect": "misread",
+      "got": "uncertain",
+      "score": 0.055,
+      "dropped": true
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:氛": {
+      "spec": 2.226,
+      "f0": 0.651,
+      "vmis": 0.0,
+      "frames": 29,
+      "comb": 1.764
+    },
+    "A:纷": {
+      "spec": 2.272,
+      "f0": 0.49,
+      "vmis": 0.065,
+      "frames": 31,
+      "comb": 1.626
+    },
+    "A:芬": {
+      "spec": 1.526,
+      "f0": 0.021,
+      "vmis": 0.0,
+      "frames": 28,
+      "comb": 0.784
+    },
+    "B:忿": {
+      "spec": 2.706,
+      "f0": 2.09,
+      "vmis": 0.103,
+      "frames": 29,
+      "comb": 3.443
+    },
+    "B:愤": {
+      "spec": 2.693,
+      "f0": 2.442,
+      "vmis": 0.071,
+      "frames": 28,
+      "comb": 3.789
+    },
+    "B:粪": {
+      "spec": 2.807,
+      "f0": 2.465,
+      "vmis": 0.071,
+      "frames": 28,
+      "comb": 3.869
+    }
+  },
+  "window_s": [
+    1.23,
+    1.51
+  ],
+  "boundary_token": "胜分",
+  "window_anchor": "B:忿",
+  "tokens": {
+    "ORIG": [
+      "三十九",
+      "记制",
+      "胜分",
+      "对手",
+      "六",
+      "记",
+      "进攻",
+      "有",
+      "威力",
+      "波动",
+      "也",
+      "不少",
+      "最后",
+      "一",
+      "局",
+      "她",
+      "用",
+      "回应",
+      "握住",
+      "胜利"
+    ],
+    "A:氛": [
+      "三十九",
+      "记",
+      "制胜氛",
+      "对手",
+      "六",
+      "记",
+      "进攻",
+      "有",
+      "威力",
+      "波动",
+      "也",
+      "不少",
+      "最后",
+      "一",
+      "局",
+      "她",
+      "用",
+      "回应",
+      "握住",
+      "胜利"
+    ],
+    "A:纷": [
+      "三十九",
+      "记制",
+      "胜纷",
+      "对手",
+      "六",
+      "记",
+      "进攻",
+      "有",
+      "威力",
+      "波动",
+      "也",
+      "不少",
+      "最后",
+      "一",
+      "局",
+      "她",
+      "用",
+      "回应",
+      "握住",
+      "胜利"
+    ],
+    "A:芬": [
+      "三十九",
+      "记制",
+      "胜芬",
+      "对手",
+      "六",
+      "记",
+      "进攻",
+      "有",
+      "威力",
+      "波动",
+      "也",
+      "不少",
+      "最后",
+      "一",
+      "局",
+      "她",
+      "用",
+      "回应",
+      "握住",
+      "胜利"
+    ],
+    "B:忿": [
+      "三十九",
+      "记制",
+      "胜",
+      "忿",
+      "对手",
+      "六",
+      "记",
+      "进攻",
+      "有",
+      "威力",
+      "波动",
+      "也",
+      "不少",
+      "最后",
+      "一",
+      "局",
+      "她",
+      "用",
+      "回应",
+      "握住",
+      "胜利"
+    ],
+    "B:愤": [
+      "三十九",
+      "记制",
+      "胜愤",
+      "对手",
+      "六",
+      "记",
+      "进攻",
+      "有",
+      "威力",
+      "波动",
+      "也",
+      "不少",
+      "最后",
+      "一",
+      "局",
+      "她",
+      "用",
+      "回应",
+      "握住",
+      "胜利"
+    ],
+    "B:粪": [
+      "三十九",
+      "记制",
+      "胜粪",
+      "对手",
+      "六",
+      "记",
+      "进攻",
+      "有",
+      "威力",
+      "波动",
+      "也",
+      "不少",
+      "最后",
+      "一",
+      "局",
+      "她",
+      "用",
+      "回应",
+      "握住",
+      "胜利"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      -3.0,
+      -4.0,
+      -5.6,
+      -6.7,
+      -8.2,
+      null,
+      0.1,
+      -0.9,
+      -0.9,
+      -0.6,
+      -0.2,
+      -0.3,
+      -2.3,
+      null
+    ],
+    "A:氛": [
+      -1.8,
+      -3.1,
+      -4.6,
+      -5.5,
+      -6.9,
+      null,
+      1.3,
+      -0.5,
+      -0.6,
+      -0.3,
+      -0.2,
+      -0.7,
+      -2.4,
+      null
+    ],
+    "A:纷": [
+      -3.9,
+      -6.0,
+      -6.2,
+      -6.9,
+      -7.8,
+      null,
+      0.5,
+      -0.8,
+      -0.8,
+      -0.2,
+      0.1,
+      0.4,
+      -0.9,
+      -7.8
+    ],
+    "A:芬": [
+      -3.0,
+      -4.1,
+      -5.6,
+      -6.6,
+      -8.1,
+      null,
+      0.1,
+      -0.9,
+      -0.9,
+      -0.6,
+      -0.2,
+      -0.3,
+      -2.2,
+      null
+    ],
+    "B:忿": [
+      -0.4,
+      -1.9,
+      -3.8,
+      -5.7,
+      -7.7,
+      null,
+      2.2,
+      1.3,
+      0.7,
+      -1.7,
+      -3.7,
+      -9.0,
+      null,
+      null
+    ],
+    "B:愤": [
+      -2.4,
+      -3.9,
+      -4.8,
+      -6.3,
+      -9.2,
+      null,
+      -0.1,
+      -2.2,
+      -2.5,
+      -5.2,
+      -8.7,
+      -10.4,
+      null,
+      null
+    ],
+    "B:粪": [
+      -2.4,
+      -3.9,
+      -4.8,
+      -6.3,
+      -9.6,
+      null,
+      -0.1,
+      -2.2,
+      -2.5,
+      -5.2,
+      -8.6,
+      -10.4,
+      null,
+      null
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/voice_11.mp3",
+    "A:氛": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/493f1f06782fa7f4ba0af964.mp3",
+    "A:纷": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/30323fd169c6ba2c96106b32.mp3",
+    "A:芬": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/1b6e32b1d0d0df01dc5b80ac.mp3",
+    "B:忿": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/b18457b39bd4e742ee0f718c.mp3",
+    "B:愤": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/66c5ca70db036b9e4389b2fa.mp3",
+    "B:粪": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/560309dd24adc9c771b3f28c.mp3"
+  },
+  "native_orig_mp3_sha256": "56c7dd2045043e7cd51d1f5c407557668580e064f5f91815b708118dab8248fc",
+  "actual_audio_source": "native renderer tts_one final voice file"
+}

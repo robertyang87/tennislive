@@ -1,0 +1,57 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=YlKbwpraDHY",
+  "source_sha256": "281ee2bbcc9b83672c53cdc8abd081914ee0381fa8ecafc8973d9219f255432a",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-audio cross-check: faster-whisper medium.en + large-v3 entire selected windows; additional small.en and medium.en whole source; no human listening claimed",
+  "reviewed_at": "2026-10-06T08:34:16.723729+00:00",
+  "reviewed_from": 19.72,
+  "reviewed_to": 27.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/foreground-fullwindows-medium.en.json",
+      "sha256": "7d6f1245392291601ecbffba5e89a4c866669f90315757e0924c2e1d8bcf15e4"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/foreground-fullwindows-large-v3.json",
+      "sha256": "51f46906eaa4c87534a2a4fe323135149c7ea6bc9cda8b8fecba2d9b19d8cd70"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/asr-small.en.json",
+      "sha256": "640a1e4ca32465d1ca3efd4541ff816380f6c8618f2403a669c65c8c443de630"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/asr-medium.en.json",
+      "sha256": "cc965eca603f3ff601ad88b64f35a5480eb33c357bb71b256bb3df769a5a4117"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/asr-targeted-medium.en.json",
+      "sha256": "9d114cf758ec3fec37d1e44e4103edc5f5bb6de3757474bd2c47fe8d9f7ee639"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/asr-targeted-large-v3.json",
+      "sha256": "320fc88e3c960fed081579a44de1f25f7ad1f9a19c9a77ef43ebbd44af450c47"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/foreground-expanded-seg9-medium.en.json",
+      "sha256": "23efe18b8f56e5503fc4a7399235cd7a151511d061f05caf78737c5fdd477e0e"
+    },
+    {
+      "path": "data/research/noskova-alexandrova-20261006/audio/foreground-expanded-seg9-large-v3.json",
+      "sha256": "5492383f2f0e949ae2de4df18c70d70f887459316b3968ec49184a7d42204f3d"
+    }
+  ],
+  "adjudication": "Compared every speech region from both exact-window outputs with full-source/targeted outputs. Correct canonical player spelling. Isolated low-probability function-word hallucinations were filtered: seg10 The(.287)/a(.037), full-source and separate targeted medium+large agree substantive Backhand...; no Oh what a asserted. Expanded seg9 zero-duration I(.071) discarded, can independently confirmed. Seg9 bit vs a bit article varies; substantive complete Bit of a surprise retained. Cold/ending And recovered from independent full-source word timestamps. Times use full-source and targeted consensus, not trusting a stretched first ASR word boundary.",
+  "no_foreground_english_reason": "Both exact selected-window models VAD_duration=0.0 and 0 recognized words; no foreground English, only tennis/crowd sound. No listening claim.",
+  "original_asr_source_sha256": "6d3a37557d2195d0ac284187e8cf73679b4fc5d183c8c1002ccd678c52406802",
+  "actual_source_audio_equivalence": {
+    "path": "data/research/noskova-alexandrova-20261006/audio/foreground-source-pcm-equivalence.json",
+    "sha256": "edcb06b72ba28e94b06a68cb2e834e1142eeefd77aa634a495614b76cb29387b",
+    "full_decoded_pcm_sha256": "5b12ff77b487c2be82b0eb31efd19003892245c164018603691227885b30b6c8",
+    "old_source_sha256": "6d3a37557d2195d0ac284187e8cf73679b4fc5d183c8c1002ccd678c52406802",
+    "new_source_sha256": "281ee2bbcc9b83672c53cdc8abd081914ee0381fa8ecafc8973d9219f255432a",
+    "conclusion": "Actual renderer source decoded audio is byte-identical across all9893558PCMbytes and all9selectedwindows; real original source ASR waveform evidence therefore applies to actual downloaded renderer audio, not merely URL similarity."
+  }
+}

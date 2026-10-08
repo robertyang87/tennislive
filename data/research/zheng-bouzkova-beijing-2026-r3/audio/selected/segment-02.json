@@ -1,0 +1,59 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=3Y8VqlPjzJ8",
+  "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+  "source_duration": 460.289,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: independent base.en/small.en inference; focused medium.en/large-v3-turbo checks; source-platform captions; accepted editorial name/grammar normalization",
+  "reviewed_at": "2026-10-05T10:35:58+00:00",
+  "status": "complete",
+  "actual_listening_performed": false,
+  "reviewed_from": 0.8,
+  "reviewed_to": 17.5,
+  "foreground_english": [
+    {
+      "start": 12.52,
+      "end": 14.4,
+      "en": "Good put away from Zheng.",
+      "zh": "郑钦文这一下收得漂亮。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-disputes-turbo.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "编辑核定：采用平台明确的Good put away；medium只漏Good、turbo漏整个前短句，没有稳定相反词。保留Good并记录本地模型漏词，不宣称多模型逐字确认或人工听审。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 14.4,
+      "end": 17.4,
+      "en": "And just like that, breaks at love.",
+      "zh": "就这样，连下四分完成破发。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "平台breaks at ... Love；逐岛small为breaks at love；定窗small/medium把at识别成it。句义一致。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    }
+  ],
+  "uncertain_spans": [],
+  "editorial_resolution_path": "data/research/zheng-bouzkova-beijing-2026-r3/audio/selected/asr-dispute-resolution.json",
+  "method_limitations": [
+    "No human listening was performed or claimed.",
+    "Model omissions and name errors were cross-checked with platform captions and explicit editor-approved identity/grammar corrections.",
+    "Evidence covers complete selected windows through full-source base/small inference, no-VAD selected-window transcription, and platform-captions comparison; it does not prove absence of all speech by model confidence alone."
+  ],
+  "source_identity_basis": "Actual downloaded file SHA256 equals runner-export SHA256; alternate 311-second 720p edit is archived for provenance only and is not used to bind this 460-second source.",
+  "raw_evidence_manifest": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/manifest.json"
+}

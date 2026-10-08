@@ -1,0 +1,60 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/i1LtteR8jd0.mp4",
+  "source_sha256": "551d24ac4ffc3ad4a2a202cf178a2ca5f4488e1675f5e63f9a409b10e7a4cc1b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:58.861250+00:00",
+  "reviewed_from": 81.48,
+  "reviewed_to": 110,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 95.54,
+      "end": 101.08,
+      "en": "Back-to-back championship runs in 2009-2010.",
+      "zh": "二零零九、二零一零，连续两届夺冠。"
+    },
+    {
+      "start": 101.4,
+      "end": 105.12,
+      "en": "Novak Djokovic, your champion, as he defeats David Ferrer,",
+      "zh": "德约科维奇击败费雷尔，成为冠军，"
+    },
+    {
+      "start": 105.3,
+      "end": 109.36,
+      "en": "straight sets, 6-2, 6-4, at the China Open.",
+      "zh": "在中网直落两盘，六比二、六比四。"
+    }
+  ],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2010.targeted.small.en.json",
+      "sha256": "3113aceaf79e2fc298ea1ce2f935a653a9f3c84b920fc0fe1c9dbff36f0b8e51"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2010.targeted.base.en.json",
+      "sha256": "75f09f5f8a80b69cf38f253491ec7eb9e7260202450b408fa561b88a1e3f534d"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.small.en.json",
+      "sha256": "5a238cc9dd893765a91d9e4b52a4736d44ef8c63a557e9b963f217556bffb421"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.base.en.json",
+      "sha256": "2a244e17345546b503bb82ced850538fa1225f98942c28ccfbd9108cfd803513"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2010-point.medium.en.json",
+      "sha256": "5869c4d230ab402a960c0010922029ee1bfda97e31b1fa60d7cb4a848c42aa85"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [
+    "Medium.en no-VAD genuine run resolves back-to-back and at the China Open; earlier targeted small.en with and base.en shot were acoustic transcription errors retained in raw evidence. ASR spellings of numerical scores standardized.",
+    "Parent independent visual QC found prior2009 prize-cheque image at81.00–81.40; source cuts to2010 Ferrer serve preparation at81.48. Selected start narrowed to81.48, end110 and all absolute English word/utterance times unchanged. Removed0.48s contains no selected foreground English (first source utterance starts95.54); existing genuine ASR evidence covers the narrowed window, no new ASR asserted."
+  ]
+}

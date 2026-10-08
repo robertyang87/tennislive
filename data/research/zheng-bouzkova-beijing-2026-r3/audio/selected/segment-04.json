@@ -1,0 +1,143 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=3Y8VqlPjzJ8",
+  "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+  "source_duration": 460.289,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: independent base.en/small.en inference; focused medium.en/large-v3-turbo checks; source-platform captions; accepted editorial name/grammar normalization",
+  "reviewed_at": "2026-10-05T10:35:58+00:00",
+  "status": "complete",
+  "actual_listening_performed": false,
+  "reviewed_from": 70.08,
+  "reviewed_to": 108.88,
+  "foreground_english": [
+    {
+      "start": 89.08,
+      "end": 89.98,
+      "en": "Oh, it drops in!",
+      "zh": "噢，这球落在界内！",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "平台Oh,it drops in；medium Oh,drops in；小模型开头有噪声误识别，采用平台与medium共有句义。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 89.98,
+      "end": 93.54,
+      "en": "So the first set goes to Zheng Qinwen.",
+      "zh": "首盘归郑钦文！",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "三模型和平台均为首盘归郑；姓名按已确定身份规范。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 95.08,
+      "end": 96.06,
+      "en": "Coach likes that.",
+      "zh": "教练很满意。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 96.06,
+      "end": 97.5,
+      "en": "Crowd certainly likes it.",
+      "zh": "观众当然也很喜欢。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 98.02,
+      "end": 101.02,
+      "en": "Now confirmed that that ball did drop in.",
+      "zh": "现在确认了，这球确实落在界内。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 101.8,
+      "end": 104.04,
+      "en": "Extra cheer from the crowd in Beijing.",
+      "zh": "北京现场又响起一阵欢呼。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    },
+    {
+      "start": 105.18,
+      "end": 108.66,
+      "en": "So four last points won by Zheng in the tiebreak.",
+      "zh": "郑钦文拿下了抢七最后四分。",
+      "evidence": {
+        "method": "actual ASR + platform captions; no human listening claimed",
+        "files": [
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-planned-windows-small.en.json",
+          "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/asr-review-windows-medium.en.json"
+        ],
+        "platform_captions": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/platform-captions.txt",
+        "note": "medium与平台支持So four last points；保留解说原有语序，不把four误转为for。",
+        "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941"
+      },
+      "uncertain": false
+    }
+  ],
+  "uncertain_spans": [],
+  "editorial_resolution_path": "data/research/zheng-bouzkova-beijing-2026-r3/audio/selected/asr-dispute-resolution.json",
+  "method_limitations": [
+    "No human listening was performed or claimed.",
+    "Model omissions and name errors were cross-checked with platform captions and explicit editor-approved identity/grammar corrections.",
+    "Evidence covers complete selected windows through full-source base/small inference, no-VAD selected-window transcription, and platform-captions comparison; it does not prove absence of all speech by model confidence alone."
+  ],
+  "source_identity_basis": "Actual downloaded file SHA256 equals runner-export SHA256; alternate 311-second 720p edit is archived for provenance only and is not used to bind this 460-second source.",
+  "raw_evidence_manifest": "data/research/zheng-bouzkova-beijing-2026-r3/audio/raw/manifest.json"
+}

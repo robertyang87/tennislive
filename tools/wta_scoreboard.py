@@ -85,7 +85,15 @@ def present(band: np.ndarray) -> bool:
     if mint_cols >= MINT_COLS:
         # 盘间那张大图形（「ROUND 2」＋名字＋绿条）也有大片薄荷绿，但名字栏是
         # 白底——真板的名字栏暗像素 0.73~0.82，那张图形是 0.00
-        return dark >= 0.5
+        # A centred result graphic can put its mint winner row at the far
+        # right of this wide search band while the supposed name column is
+        # just a uniform blue courtside wall. Dark pixels alone accept that
+        # wall. A native name column has white lettering or the green/teal
+        # board tint; reject only the blue, textless background combination.
+        med = np.median(name.reshape(-1, 3), axis=0)
+        white = (name.min(axis=2) > 225).mean()
+        blue_background = med[2] - med[1] > 20 and white < .01
+        return dark >= 0.5 and not blue_background
     med = np.median(name.reshape(-1, 3), axis=0)
     r, g, b = (int(v) for v in med)
     near = (np.linalg.norm(name - med, axis=2) < 30).mean()
@@ -107,7 +115,8 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
     if edge is None:
         edge = len(frac)
     mint_cols = mint_mask(band).mean(axis=0) > 0.4
-    cells = [(lo, hi) for lo, hi in _runs(mint_cols) if hi - lo >= MINT_COLS]
+    cells = [(lo, hi) for lo, hi in _runs(mint_cols)
+             if lo >= MIN_BOARD_W and hi - lo >= MINT_COLS]
     if cells:
         # Mint TEXT in the point-score slot (e.g. 40) is not another filled games
         # cell. Use the broad solid cell, rather than the last mint-coloured letter.
@@ -126,6 +135,52 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
             return boundaries[-1]
         if edge < cell_hi + POINTS_MAX:
             return edge
+        # The native graphic wipes away from right to left. During the last
+        # frames the point slot is gone and the wipe crosses the mint games
+        # cell itself. Measure its remaining vertical edge, including only the
+        # observed antialias fringe; never substitute the old slot width.
+        # A native wipe/glow may transition across two antialias pixels on
+        # either side of the thresholded mint edge. Still require a measured
+        # persistent edge plus exposed background, never a padded rectangle.
+        wipe_edges = [x for x in range(max(cell_lo + 1, cell_hi - EDGE_PAD),
+                                      min(band.shape[1], cell_hi + 2 * EDGE_PAD) + 1)
+                      if persistent[x - 1] >= .55]
+        # A complete games cell spans at least half one player-row height.
+        # A truncated residual cell proves the wipe crossed the games cell.
+        # An intact cell needs separate exposed-background evidence below.
+        # Compare with the actual mint cell's vertical span, not the search
+        # band's expanded body height. A full 28px games cell in Beijing has
+        # a ~108px native height; the geometry scan's antialias fringe expands
+        # its band to 117px and must not turn that intact cell into a wipe.
+        cell_rows = np.flatnonzero(mint_mask(band[:, cell_lo:cell_hi]).any(axis=1))
+        cell_height = int(cell_rows[-1] - cell_rows[0] + 1) if cell_rows.size else 0
+        truncated_cell = cell_hi - cell_lo < cell_height / 4
+        # Prefer the established tight edge when its background is already
+        # exposed. Only inspect the wider glow transition if that evidence
+        # fails; do not expand previously verified native wipe silhouettes.
+        tight = [x for x in wipe_edges if x <= cell_hi + EDGE_PAD]
+        candidates = tight[-1:] + [x for x in wipe_edges if x > cell_hi + EDGE_PAD]
+        for wipe_edge in candidates:
+            # A wipe can remove the point slot while leaving the games cell
+            # intact. Require positive exposed blue-background evidence beyond
+            # its antialias fringe; a dark, unmeasurable point slot must still
+            # fail rather than being mistaken for this native outer edge.
+            exposed = body[:, wipe_edge + 2 * EDGE_PAD:wipe_edge + 2 * EDGE_PAD + 6]
+            r, g, b = _rgb(exposed)
+            exposed_blue = exposed.size > 0 and (
+                (b - g > 15) & (b - r > 20)).mean() >= .8
+            if truncated_cell or exposed_blue:
+                return wipe_edge
+        # Native AV1 antialias can spread the outer border over two pixels:
+        # neither one-pixel jump spans both rows, but their measured combined
+        # change does. Use this only after the established sharp/wipe edge tests
+        # fail, so an already measured wipe silhouette cannot grow into court.
+        # Numeral strokes still do not persist through both player rows.
+        across_two = (np.abs(body[:, 2:] - body[:, :-2]).mean(axis=2) > 8).mean(axis=0)
+        soft_boundaries = [x for x in range(max(2, first), last + 1)
+                           if across_two[x - 2] >= .55]
+        if soft_boundaries:
+            return soft_boundaries[-1]
         raise RuntimeError("WTA board present but native right boundary cannot be measured")
     # 没有薄荷绿（开局还没有局分那几秒）：没有签名色撑着，
     # 越过 spec 右缘的读数不可信，照旧封顶

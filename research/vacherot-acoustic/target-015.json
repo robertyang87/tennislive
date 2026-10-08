@@ -1,0 +1,345 @@
+{
+  "id": "target-015",
+  "label": "第 5 段",
+  "display_char": "还",
+  "actual_tts_char": "还",
+  "position": 5,
+  "context": "拿到位置，还要守住。资格",
+  "word": "还",
+  "intended": "hai2",
+  "common_contrast": "huan2",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "拿到位置，还要守住。资格赛第一轮，先输抢七。他连追两盘，赢下巴萨瓦雷迪。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "还",
+    "char": "还",
+    "sentence": "拿到位置，还要守住。资格赛第一轮，先输抢七。他连追两盘，赢下巴萨瓦雷迪。",
+    "tts_text": "拿到位置，还要守住。资格赛第一轮，先输抢七。他连追两盘，赢下巴萨瓦雷迪。",
+    "intended_refs": [
+      "孩",
+      "骸"
+    ],
+    "wrong_refs": [
+      "桓",
+      "环"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.467,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 1.869,
+        "d_wrong": 4.922,
+        "score": 0.449
+      },
+      "f0": {
+        "d_intended": 0.652,
+        "d_wrong": 1.813,
+        "score": 0.471
+      },
+      "comb": {
+        "d_intended": 1.587,
+        "d_wrong": 4.367,
+        "score": 0.467
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.902,
+      "wrong": 3.627
+    },
+    "separation": {
+      "spec": {
+        "within": 1.488,
+        "between": 5.183,
+        "separation": 3.483
+      },
+      "f0": {
+        "within": 0.239,
+        "between": 1.742,
+        "separation": 7.277
+      },
+      "comb": {
+        "within": 0.983,
+        "between": 4.333,
+        "separation": 4.407
+      }
+    },
+    "selftest_loo": {
+      "孩": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.772
+      },
+      "骸": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.76
+      },
+      "桓": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.505
+      },
+      "环": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.51
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:孩": {
+        "spec": 1.869,
+        "f0": 0.711,
+        "vmis": 0.121,
+        "frames": 33,
+        "comb": 1.645
+      },
+      "A:骸": {
+        "spec": 1.87,
+        "f0": 0.652,
+        "vmis": 0.121,
+        "frames": 33,
+        "comb": 1.587
+      },
+      "B:桓": {
+        "spec": 4.922,
+        "f0": 2.048,
+        "vmis": 0.128,
+        "frames": 39,
+        "comb": 4.509
+      },
+      "B:环": {
+        "spec": 5.107,
+        "f0": 1.813,
+        "vmis": 0.15,
+        "frames": 40,
+        "comb": 4.367
+      }
+    },
+    "window_s": [
+      1.13,
+      1.42
+    ],
+    "boundary_token": "还要",
+    "window_anchor": "A:孩",
+    "tokens": {
+      "ORIG": [
+        "拿到",
+        "位置",
+        "还要",
+        "守住",
+        "资格",
+        "赛",
+        "第一",
+        "轮",
+        "先",
+        "输",
+        "抢",
+        "七",
+        "他",
+        "连追",
+        "两盘",
+        "赢",
+        "下",
+        "巴萨瓦雷迪"
+      ],
+      "A:孩": [
+        "拿到",
+        "位置",
+        "孩",
+        "要",
+        "守",
+        "住",
+        "资格",
+        "赛",
+        "第一",
+        "轮",
+        "先",
+        "输",
+        "抢",
+        "七",
+        "他",
+        "连追",
+        "两盘",
+        "赢",
+        "下",
+        "巴萨瓦雷迪"
+      ],
+      "A:骸": [
+        "拿到",
+        "位置",
+        "骸",
+        "要",
+        "守",
+        "住",
+        "资格",
+        "赛",
+        "第一",
+        "轮",
+        "先",
+        "输",
+        "抢",
+        "七",
+        "他",
+        "连追",
+        "两盘",
+        "赢",
+        "下",
+        "巴萨瓦雷迪"
+      ],
+      "B:桓": [
+        "拿到",
+        "位置",
+        "桓要",
+        "守",
+        "住",
+        "资格",
+        "赛",
+        "第一",
+        "轮",
+        "先",
+        "输",
+        "抢",
+        "七",
+        "他",
+        "连追",
+        "两盘",
+        "赢",
+        "下",
+        "巴萨瓦雷迪"
+      ],
+      "B:环": [
+        "拿到",
+        "位置",
+        "环",
+        "要",
+        "守",
+        "住",
+        "资格",
+        "赛",
+        "第一",
+        "轮",
+        "先",
+        "输",
+        "抢",
+        "七",
+        "他",
+        "连追",
+        "两盘",
+        "赢",
+        "下",
+        "巴萨瓦雷迪"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        3.5,
+        3.7,
+        null,
+        null,
+        -0.3,
+        -2.7,
+        -2.6,
+        -1.2,
+        2.4,
+        3.8
+      ],
+      "A:孩": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -2.0,
+        -2.2,
+        -2.1,
+        -1.1,
+        1.3
+      ],
+      "A:骸": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -2.0,
+        -2.2,
+        -2.1,
+        -0.5,
+        1.2
+      ],
+      "B:桓": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        12.3,
+        null,
+        null,
+        -4.4,
+        -4.9,
+        -4.7,
+        -3.1,
+        -0.7,
+        1.0
+      ],
+      "B:环": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        12.4,
+        null,
+        -4.0,
+        -4.7,
+        -4.5,
+        -2.7,
+        -2.3,
+        -0.3,
+        1.2
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/26e23c984d66197a4a514fbb.mp3",
+      "A:孩": "/workspace/tennislive/research/vacherot-acoustic/references/4945a9575cb57609170b62b6.mp3",
+      "A:骸": "/workspace/tennislive/research/vacherot-acoustic/references/e513e10214607520019cc211.mp3",
+      "B:桓": "/workspace/tennislive/research/vacherot-acoustic/references/d59259f496340434b18addd8.mp3",
+      "B:环": "/workspace/tennislive/research/vacherot-acoustic/references/ffaea1a43e3ac9363047afa8.mp3"
+    }
+  }
+}

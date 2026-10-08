@@ -1,5 +1,7 @@
 """「网球有故事」字卡（`explainer._slide_html` / `_render_intro_badge`）的颜色——一处出处。
 
+2026-10-04 全栏目蓝色设计已获授权：SLIDE_INK / HERO_DEEP 现接共享背景和卡片蓝，下列零视觉变化说明为历史。
+
 来路：2026-09-27 那轮 UI / VI 整体评审（WP4）。字卡的 CSS 里原来手写了十来个
 色值，和 `design_tokens` 各配各的；这儿把它们收成**角色**，值从 token 来。
 
@@ -30,7 +32,9 @@ ASS 的 `&H` 颜色，要写就去 token 模块加角色，或者同一行写 `t
 from __future__ import annotations
 
 # design-tokens: enforced
-from ..design_tokens import BRAND_BAR_CSS, DARK, TEXT_SHADOW_CHROME, TEXT_SHADOW_HOOK, rgb
+from ..design_tokens import (
+    BRAND_BAR_CSS, CARD_BACKGROUND_CSS, DARK, TEXT_SHADOW_CHROME, TEXT_SHADOW_HOOK, rgb,
+)
 
 
 def rgba(hex_colour: str, alpha: float) -> str:
@@ -52,9 +56,10 @@ MUTED_FOREGROUND = DARK["muted-foreground"]
 HERO_GLOW = DARK["hero-glow"]
 
 #: 字卡的底色，也是 scrim 压暗用的那支墨（`rgba(6,28,20,…)`）。
-SLIDE_INK = "#061c14"  # token-exempt: 合并到 card #0c1d16 是改值，要重渲量过再合
+SLIDE_INK = DARK["background"]
 #: 示意图径向渐变的中段。
-HERO_DEEP = "#0b3a2a"  # token-exempt: token 只有渐变两头，中段是这一面自己的
+HERO_DEEP = DARK["card"]
+BACKGROUND = CARD_BACKGROUND_CSS
 #: 台头副标题（`.topic`）。
 TOPIC = "#dcefe4"  # token-exempt: 评审里 muted-foreground 的合并对象「待验证」
 #: 封面收尾那行、赛前片小字的时间行（`.tail` / `.fixture .when`）。

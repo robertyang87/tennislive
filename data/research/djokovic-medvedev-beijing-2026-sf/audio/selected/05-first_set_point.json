@@ -1,0 +1,83 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-LgRD3TLoxr0/LgRD3TLoxr0.mp4",
+  "source_sha256": "80179ed4439aecc24c30cf410a2a237c93eee11299d38537f1d0289786ed24d5",
+  "official_provenance_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review subagent: independent small.en and medium.en ASR cross-checked with source captions; no claim of human listening",
+  "reviewed_at": "2026-10-05T15:08:26.176595+00:00",
+  "method_details": [
+    "Extracted full AV1 source to signed 16-bit 16kHz mono WAV using ffmpeg.",
+    "faster-whisper small.en full-source VAD and no-VAD local windows; medium.en independent no-VAD local windows; separate medium.en VAD checks of narration and ASR noise gaps. Raw word timestamps and probabilities retained.",
+    "Source captions are automatic, so player and chair name aliases corrected deterministically; non-name wording follows source captions except the first 24-second line, independently recovered clearly by medium.en.",
+    "Word timing has limited resolution; sentence bounds include conservative padding and reflect source-absolute seconds. Some first-word ASR bounds start at a local-window edge and are rejected in favor of aligned supporting runs.",
+    "234–245 contains nonlexical court vocalizations. Source captions render three as yeah; both independent no-VAD models render six Yeah tokens. Their six lexical shout candidates are retained conservatively in one contiguous bilingual cue, covering the union of medium and small time extents. Ahh-only candidates are classified as nonlexical grunts. The note does not claim exact acoustic utterance counting by a listener.",
+    "No-VAD small generates repeated noise phrases in non-commentary gaps. At 149–161, 180–190, 339.22–343.8 and 273–309, source captions are empty and medium VAD returns zero detected speech; these noise-only hypotheses are explicitly not adopted as original words. At 76.58–87, medium VAD returns only Ugh, a nonlexical exertion sound.",
+    "46.28–76.58 planned Chinese narration window: both medium VAD subwindows have duration_after_vad=0, and full small VAD/source captions contain no foreground English. Low-confidence no-VAD Oh my God hypotheses are rejected; raw evidence is retained."
+  ],
+  "name_corrections": {
+    "Daniel Medve/Daniel Medvedev/Medvidev/Medv": "Daniil Medvedev / Medvedev",
+    "NovakJokovic/Jovovic": "Novak Djokovic / Djokovic",
+    "Muhammad Leani/Mohamed Leani": "Mohamed Lahyani"
+  },
+  "schema": "tennislive.foreground-transcript.v1",
+  "source_bytes": 68365532,
+  "reviewed_from": 135,
+  "reviewed_to": 165.88,
+  "status": "complete",
+  "actual_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 161.98,
+      "end": 164.04,
+      "en": "A ridiculously physical",
+      "zh": "体能消耗惊人的"
+    },
+    {
+      "start": 164.04,
+      "end": 165.5,
+      "en": "opening set of tennis.",
+      "zh": "首盘比赛。"
+    }
+  ],
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/raw/source-captions.txt",
+      "sha256": "9ef666c34b7bb790c306cec1648a6a8c3a42b6669161bb357834c0f9b7f45261"
+    },
+    {
+      "path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/raw/asr-small.en.json",
+      "sha256": "87454729b584e2631cf6afd1875d7225a786c8ba89d02bec26f71176148c5762"
+    },
+    {
+      "path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/raw/asr-windows-small.en.json",
+      "sha256": "0f1da9f82f7e02e1d92c4978e65de9b7f653a0d645c75a65c491f21cf1b3e4b1"
+    },
+    {
+      "path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/raw/asr-windows-medium.en.json",
+      "sha256": "6b135e9c883119f09f245c63441b933b64227402088adb5418c18f7191c016fe"
+    },
+    {
+      "path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/raw/asr-coverage-small.en.json",
+      "sha256": "ce4e89deab2a3e14423223fc3c416a59652fd61b165085fe967ac275ef947c32"
+    },
+    {
+      "path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/raw/asr-targeted-medium.en.json",
+      "sha256": "852f1299e2178b0cd0035b45d9118b28f13e4901ac289a894108512b48e965c0"
+    },
+    {
+      "path": "data/research/djokovic-medvedev-beijing-2026-sf/audio/raw/asr-gaps-medium.en.json",
+      "sha256": "441c5b7841056337a33dc5c9c8d27f8df2221315f0be74e13517c9cb9b1144c9"
+    }
+  ],
+  "completion_scope": "The complete selected source window; recognized original English and source-caption crosscheck; explicit nonlexical court sounds. ASR crosschecked, no human listening performed.",
+  "original_sentence_utterances": [
+    {
+      "start": 161.98,
+      "end": 165.5,
+      "en": "A ridiculously physical opening set of tennis.",
+      "zh": "首盘的体能消耗大得惊人。"
+    }
+  ],
+  "caption_layout_method": "Native subtitles: English preserved exactly and split only at actual word timestamps into consecutive semantic clauses; explicit Chinese line breaks preserve complete meaning with each line <=16 Chinese widths. Original sentence transcript retained in original_sentence_utterances. No source selection changes."
+}

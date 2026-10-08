@@ -1,0 +1,29 @@
+{
+  "label": "第 15 段",
+  "word": "八强",
+  "intended": "qiang2",
+  "unambiguous_reference": "墙 qiang2",
+  "method": "Actual preserved renderer voice_14.mp3 target PCM16k window compared sample-by-sample to actual same-utterance qiang2 墙control; no cloned ORIG, no human listening.",
+  "sample_rate": 16000,
+  "window_seconds": [
+    4.665,
+    4.969
+  ],
+  "samples": 4864,
+  "byte_identical_in_target_window": true,
+  "pcm_target_sha256": [
+    "ddee76f27ba9fa4452da68180628075df1a65e65c4e0a39717eee7e902335159",
+    "ddee76f27ba9fa4452da68180628075df1a65e65c4e0a39717eee7e902335159"
+  ],
+  "audio_paths": [
+    "/workspace/scratch/noskova-actual-renderer-audio/voice_14.mp3",
+    "/workspace/scratch/noskova-audio-export/cache/c7fccb206bbb116aaa435671.mp3"
+  ],
+  "conclusion": "Actual renderer target qiang2 is PCM-identical to 墙control across4864samples.",
+  "previous_clone_audio_paths": [
+    "/workspace/scratch/noskova-actual-renderer-audio/voice_14.mp3",
+    "/workspace/scratch/noskova-audio-export/cache/c7fccb206bbb116aaa435671.mp3"
+  ],
+  "renderer_run": 37438489355,
+  "renderer_audio_sha256": "b84e486e219c82f77a0b3d060cdce87b3eb980e03760e8a7a464632d642393a0"
+}

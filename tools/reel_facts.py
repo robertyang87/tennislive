@@ -15,6 +15,7 @@ from spec_wording import outward_deep
 #: 完赛盘：任一方 ≥6 局。抢七注脚 (N) 先剥掉再切。
 _SET_TOKEN = re.compile(r"(\d+)-(\d+)")
 _RETIRED = re.compile(r"ret\.?|退赛|w\.?/?o\.?|walkover|不战而胜", re.I)
+_DISQUALIFIED = re.compile(r"(?:^|\s)(?:dq\.?|def\.?|default(?:ed)?|disqualified|取消资格)$", re.I)
 
 #: 美网 2026 世界 feed 的记分条抠图坐标（源片像素，[x0, y0, x1, y1]）。
 #: 左缘/上下缘是 probe 逐像素实测；**右缘 736 是五盘满列的外推值**（板每
@@ -71,7 +72,7 @@ def decider_set_problem(spec: dict, extra_texts=()) -> str | None:
     if not any("atp-" in h for h in heads):
         return None            # 女子大满贯是三盘两胜，不归这道闸
     result = str(cover.get("result") or "")
-    if _RETIRED.search(result):
+    if _RETIRED.search(result) or _DISQUALIFIED.search(result):
         return None
     if len(_SET_TOKEN.findall(re.sub(r"\(\d+\)", "", result))) >= 5:
         return None            # 真打满五盘了，第五盘就是决胜盘
@@ -122,7 +123,7 @@ def result_direction_problem(spec: dict) -> str | None:
     result = str(cover.get("result") or "")
     if not result or not str(cover.get("winner") or "").strip():
         return None
-    if _RETIRED.search(result):
+    if _RETIRED.search(result) or _DISQUALIFIED.search(result):
         return None
     sets = _SET_TOKEN.findall(re.sub(r"\(\d+\)", "", result))
     done = [(int(a), int(b)) for a, b in sets if max(int(a), int(b)) >= 6]
@@ -172,6 +173,11 @@ def verified_match_fact(
     """
     if len(matchup) != 2 or not scores or not flashscore_id:
         return None
+    # Incomplete final-set scores do not establish a normal match result.
+    # Retirement/default winners must come from explicit terminal evidence.
+    from tennislive.sources.flashscore import _set_complete
+    if any(not _set_complete(a, b) for a, b in scores):
+        return None
     home_sets = sum(a > b for a, b in scores)
     away_sets = sum(b > a for a, b in scores)
     if home_sets == away_sets:
@@ -208,61 +214,65 @@ def verified_match_fact(
     return fact
 
 
-def _verified_retirement_problem(spec: dict, scores: list[tuple[int, int]],
-                                 tiebreaks) -> str | None:
-    """Cross-check a terminal retirement without counting an unfinished set."""
+def _verified_interruption_problem(spec: dict, scores: list[tuple[int, int]],
+                                   tiebreaks, *, disqualified: bool) -> str | None:
+    """Verify separate retirement/default evidence without inferring a winner."""
+    label = "取消资格" if disqualified else "退赛"
+    evidence_key = "disqualification_evidence" if disqualified else "retirement_evidence"
+    player_key = "disqualified_player" if disqualified else "retired_player"
+    terminal_status = "disqualified" if disqualified else "retired"
     from datetime import datetime
     from urllib.parse import urlparse
     from tennislive.sources.flashscore import _set_complete
 
     match = spec["_match"]
     cover = spec.get("cover") or {}
-    proof = match.get("retirement_evidence")
+    proof = match.get(evidence_key)
     if not isinstance(proof, dict):
-        return "退赛赛果缺结构化双源终场证据"
+        return f"{label}赛果缺结构化双源终场证据"
     players = match["participants"]
     winner, loser = match.get("winner"), match.get("loser")
     if (any(not isinstance(p, str) or not p.strip() for p in players)
             or len(set(players)) != 2 or winner not in players or loser not in players
-            or winner == loser or proof.get("retired_player") != loser):
-        return "退赛球员、赢家与参赛双方身份不一致"
+            or winner == loser or proof.get(player_key) != loser):
+        return f"{label}球员、赢家与参赛双方身份不一致"
     if any(type(v) is not int or v < 0 for row in match["set_scores_home_away"] for v in row):
-        return "退赛逐盘局数必须为非负整数"
+        return f"{label}逐盘局数必须为非负整数"
     tour = (spec.get("stats") or {}).get("tour")
     if tour not in {"wta", "atp"}:
-        return "退赛证据缺明确巡回赛身份，无法核验盘制"
+        return f"{label}证据缺明确巡回赛身份，无法核验盘制"
     event = (str(cover.get("topic") or "") + " " + str(spec.get("slug") or "")).casefold()
     best_of = 5 if tour == "atp" and any(g in event for g in _GRAND_SLAMS) else 3
     if type(proof.get("best_of")) is not int or proof["best_of"] != best_of:
-        return "退赛证据的盘制与本场不一致"
+        return f"{label}证据的盘制与本场不一致"
     complete = [_set_complete(a, b) for a, b in scores]
     if len(scores) > best_of or any(not done for done in complete[:-1]):
-        return "退赛逐盘顺序不合法，只有最后一盘可以未完成"
+        return f"{label}逐盘顺序不合法，只有最后一盘可以未完成"
     sets_won = [sum(done and row[i] > row[1-i] for row, done in zip(scores, complete))
                 for i in (0, 1)]
     if max(sets_won) >= best_of // 2 + 1:
-        return "已有一方按盘制正常赢下比赛，不能伪标退赛"
+        return f"已有一方按盘制正常赢下比赛，不能伪标{label}"
     date = match.get("date")
     try:
         datetime.strptime(str(date), "%Y-%m-%d")
     except ValueError:
-        return "退赛证据缺标准比赛日期"
+        return f"{label}证据缺标准比赛日期"
     key = str(match.get("source_id") or "")
     sources = proof.get("sources")
     if not key or not isinstance(sources, list) or len(sources) < 2:
-        return "退赛需要官方结果与独立记分源双重确认"
+        return f"{label}需要官方结果与独立记分源双重确认"
     providers, hosts, classes = set(), set(), set()
     for source in sources:
         if not isinstance(source, dict):
-            return "退赛来源证据必须为对象"
+            return f"{label}来源证据必须为对象"
         wanted = {"match_key": key, "match_date": date, "participants": players,
                   "set_scores_home_away": match["set_scores_home_away"],
-                  "winner": winner, "retired_player": loser, "status": "retired",
+                  "winner": winner, player_key: loser, "status": terminal_status,
                   "terminal": True}
         if any(source.get(k) != v for k, v in wanted.items()) or source.get("terminal") is not True:
-            return "退赛来源的比赛身份、分盘、赢家或终场状态不一致"
+            return f"{label}来源的比赛身份、分盘、赢家或终场状态不一致"
         if tiebreaks is not None and source.get("tiebreaks_home_away") != match.get("tiebreaks_home_away"):
-            return "退赛来源抢七小分不一致"
+            return f"{label}来源抢七小分不一致"
         try:
             stamp = datetime.fromisoformat(str(source.get("checked_at") or "").replace("Z", "+00:00"))
             url = urlparse(str(source.get("source_url") or ""))
@@ -274,36 +284,55 @@ def _verified_retirement_problem(spec: dict, scores: list[tuple[int, int]],
         if (not valid or not provider or not str(source.get("source_id") or "").strip()
                 or not isinstance(source.get("source_class"), str)
                 or not re.fullmatch(r"[0-9a-f]{64}", str(source.get("source_sha256") or ""))):
-            return "退赛来源缺提供方、可核URL、原文SHA或带时区核验时间"
+            return f"{label}来源缺提供方、可核URL、原文SHA或带时区核验时间"
         providers.add(provider.casefold()); hosts.add(url.hostname); classes.add(source.get("source_class"))
     if (len(providers) < 2 or len(hosts) < 2 or "official_result" not in classes
             or not {"independent_scoreboard", "independent_report"} & classes):
-        return "退赛须由不同提供方和主机的官方结果、独立明确结果来源确认"
+        return f"{label}须由不同提供方和主机的官方结果、独立明确结果来源确认"
     index = players.index(winner)
     oriented = [row if index == 0 else (row[1], row[0]) for row in scores]
     suffixes = _tb_suffixes(scores, tiebreaks)
     expected = " ".join(f"{a}-{b}{suffix}" for (a, b), suffix in zip(oriented, suffixes))
-    marker = re.compile(r"\s+(?:ret(?:ired)?\.?|ret'd|退赛)$", re.I)
+    marker = (_DISQUALIFIED if disqualified else
+              re.compile(r"\s+(?:ret(?:ired)?\.?|ret'd|退赛)$", re.I))
     for text in (match.get("winner_result"), cover.get("result")):
         text = str(text or "").strip()
         if not marker.search(text):
-            return "退赛赛果必须保留明确Ret./Retired/退赛后缀"
+            return ("取消资格赛果必须保留明确DQ/Def./取消资格后缀" if disqualified
+                    else "退赛赛果必须保留明确Ret./Retired/退赛后缀")
         bare = marker.sub("", text)
         if tiebreaks is None:
             bare = re.sub(r"\(\d+\)", "", bare)
         if bare != expected:
-            return "退赛显示比分与原始分盘或赢家视角不一致"
+            return f"{label}显示比分与原始分盘或赢家视角不一致"
     shown = [p.get("name") for p in cover.get("matchup", []) if isinstance(p, dict)]
     if (cover.get("winner") != winner or len(shown) != 2
             or any(not isinstance(p, str) for p in shown) or set(shown) != set(players)):
-        return "退赛封面的赢家或双方球员不一致"
+        return f"{label}封面的赢家或双方球员不一致"
     return None
+
+
+def _verified_retirement_problem(spec: dict, scores: list[tuple[int, int]],
+                                 tiebreaks) -> str | None:
+    return _verified_interruption_problem(spec, scores, tiebreaks, disqualified=False)
+
+
+def _verified_disqualification_problem(spec: dict, scores: list[tuple[int, int]],
+                                      tiebreaks) -> str | None:
+    if spec["_match"].get("retirement_evidence") is not None:
+        return "取消资格赛果不能借用退赛证据"
+    return _verified_interruption_problem(spec, scores, tiebreaks, disqualified=True)
 
 
 def verified_result_problem(spec: dict) -> str | None:
     """用原始 home/away 逐盘数据反校验赛果、封面和赢家视角方向。"""
     match = spec.get("_match")
     if not isinstance(match, dict) or match.get("status") != "result_verified":
+        cover_result = str((spec.get("cover") or {}).get("result") or "")
+        if (_DISQUALIFIED.search(cover_result)
+                or isinstance(match, dict) and (match.get("disqualification_evidence") is not None
+                    or _DISQUALIFIED.search(str(match.get("winner_result") or "")))):
+            return "取消资格赛果缺已核实的结构化终场证据"
         return None
     raw_scores = match.get("set_scores_home_away")
     participants = match.get("participants")
@@ -349,6 +378,10 @@ def verified_result_problem(spec: dict) -> str | None:
             tiebreaks.append((th, ta))
 
     cover_result = str((spec.get("cover") or {}).get("result") or "")
+    if (match.get("disqualification_evidence") is not None
+            or _DISQUALIFIED.search(str(match.get("winner_result") or ""))
+            or _DISQUALIFIED.search(cover_result)):
+        return _verified_disqualification_problem(spec, scores, tiebreaks)
     if (match.get("retirement_evidence") is not None
             or _RETIRED.search(str(match.get("winner_result") or ""))
             or _RETIRED.search(cover_result)):

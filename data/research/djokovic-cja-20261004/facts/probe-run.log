@@ -1,0 +1,1496 @@
+reel	Set up job	﻿2026-10-04T14:10:56.4997513Z Current runner version: '2.337.0'
+reel	Set up job	2026-10-04T14:10:56.5022901Z ##[group]Runner Image Provisioner
+reel	Set up job	2026-10-04T14:10:56.5024269Z Hosted Compute Agent
+reel	Set up job	2026-10-04T14:10:56.5025112Z Version: 20260901.588
+reel	Set up job	2026-10-04T14:10:56.5026117Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+reel	Set up job	2026-10-04T14:10:56.5027173Z Build Date: 2026-09-01T19:56:44Z
+reel	Set up job	2026-10-04T14:10:56.5028184Z Worker ID: {b15798df-49ba-4c72-8aa8-64574074fdb0}
+reel	Set up job	2026-10-04T14:10:56.5029191Z Azure Region: westcentralus
+reel	Set up job	2026-10-04T14:10:56.5030453Z ##[endgroup]
+reel	Set up job	2026-10-04T14:10:56.5032168Z ##[group]Operating System
+reel	Set up job	2026-10-04T14:10:56.5033199Z Ubuntu
+reel	Set up job	2026-10-04T14:10:56.5034010Z 24.04.5
+reel	Set up job	2026-10-04T14:10:56.5034809Z LTS
+reel	Set up job	2026-10-04T14:10:56.5035630Z ##[endgroup]
+reel	Set up job	2026-10-04T14:10:56.5036447Z ##[group]Runner Image
+reel	Set up job	2026-10-04T14:10:56.5037377Z Image: ubuntu-24.04
+reel	Set up job	2026-10-04T14:10:56.5038615Z Version: 20260927.320.1
+reel	Set up job	2026-10-04T14:10:56.5040111Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+reel	Set up job	2026-10-04T14:10:56.5042208Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+reel	Set up job	2026-10-04T14:10:56.5043430Z ##[endgroup]
+reel	Set up job	2026-10-04T14:10:56.5045044Z ##[group]GITHUB_TOKEN Permissions
+reel	Set up job	2026-10-04T14:10:56.5047802Z Actions: write
+reel	Set up job	2026-10-04T14:10:56.5048726Z Contents: write
+reel	Set up job	2026-10-04T14:10:56.5049575Z Metadata: read
+reel	Set up job	2026-10-04T14:10:56.5050570Z ##[endgroup]
+reel	Set up job	2026-10-04T14:10:56.5052874Z Secret source: Actions
+reel	Set up job	2026-10-04T14:10:56.5054221Z Cache mode: write
+reel	Set up job	2026-10-04T14:10:56.5055226Z Prepare workflow directory
+reel	Set up job	2026-10-04T14:10:56.5417889Z Prepare all required actions
+reel	Set up job	2026-10-04T14:10:56.5466420Z Getting action download info
+reel	Set up job	2026-10-04T14:10:56.8272096Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+reel	Set up job	2026-10-04T14:10:56.9415320Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+reel	Set up job	2026-10-04T14:10:57.0666562Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+reel	Set up job	2026-10-04T14:10:57.2299516Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+reel	Set up job	2026-10-04T14:10:57.5507133Z Complete job name: reel
+reel	Run actions/checkout@v4	﻿2026-10-04T14:10:57.6773086Z ##[group]Run actions/checkout@v4
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6774461Z with:
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6775584Z   sparse-checkout: .github
+reel	Run actions/checkout@v4	assets
+reel	Run actions/checkout@v4	data
+reel	Run actions/checkout@v4	docs
+reel	Run actions/checkout@v4	specs
+reel	Run actions/checkout@v4	skills
+reel	Run actions/checkout@v4	src
+reel	Run actions/checkout@v4	tests
+reel	Run actions/checkout@v4	tools
+reel	Run actions/checkout@v4	
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6776912Z   repository: robertyang87/tennislive
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6781887Z   token: ***
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6782829Z   ssh-strict: true
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6783741Z   ssh-user: git
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6784687Z   persist-credentials: true
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6785621Z   clean: true
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6786561Z   sparse-checkout-cone-mode: true
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6787532Z   fetch-depth: 1
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6788451Z   fetch-tags: false
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6789364Z   show-progress: true
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6790484Z   lfs: false
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6791423Z   submodules: false
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6792853Z   set-safe-directory: true
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6793843Z   allow-unsafe-pr-checkout: false
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.6795017Z ##[endgroup]
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7830386Z Syncing repository: robertyang87/tennislive
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7834457Z ##[group]Getting Git version info
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7836200Z Working directory is '/home/runner/work/tennislive/tennislive'
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7838861Z [command]/usr/bin/git version
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7856096Z git version 2.55.0
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7875333Z ##[endgroup]
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7888418Z Temporarily overriding HOME='/home/runner/work/_temp/f293715d-67a1-43e0-a806-0862c073108e' before making global git config changes
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7892898Z Adding repository directory to the temporary git global config as a safe directory
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7896126Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tennislive/tennislive
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7947948Z Deleting the contents of '/home/runner/work/tennislive/tennislive'
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7955026Z ##[group]Initializing the repository
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.7960722Z [command]/usr/bin/git init /home/runner/work/tennislive/tennislive
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8232628Z hint: Using 'master' as the name for the initial branch. This default branch name
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8236921Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8238941Z hint: to use in all of your new repositories, which will suppress this warning,
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8241138Z hint: call:
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8242618Z hint:
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8244171Z hint: 	git config --global init.defaultBranch <name>
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8245617Z hint:
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8247237Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8249962Z hint: 'development'. The just-created branch can be renamed via this command:
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8251992Z hint:
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8253583Z hint: 	git branch -m <name>
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8255194Z hint:
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8257191Z hint: Disable this message with "git config set advice.defaultBranchName false"
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8259750Z Initialized empty Git repository in /home/runner/work/tennislive/tennislive/.git/
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8264411Z [command]/usr/bin/git remote add origin https://github.com/robertyang87/tennislive
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8305406Z ##[endgroup]
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8308716Z ##[group]Disabling automatic garbage collection
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8311253Z [command]/usr/bin/git config --local gc.auto 0
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8335826Z ##[endgroup]
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8337976Z ##[group]Setting up auth
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8342461Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8372197Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8694465Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8723836Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8907532Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.8937167Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.9121129Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.9161864Z ##[endgroup]
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.9163876Z ##[group]Fetching the repository
+reel	Run actions/checkout@v4	2026-10-04T14:10:57.9171608Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin +6a13399d39c8eb2655208910eda8f08341ae5cb7:refs/remotes/origin/main
+reel	Run actions/checkout@v4	2026-10-04T14:10:58.6177343Z From https://github.com/robertyang87/tennislive
+reel	Run actions/checkout@v4	2026-10-04T14:10:58.6182142Z  * [new ref]         6a13399d39c8eb2655208910eda8f08341ae5cb7 -> origin/main
+reel	Run actions/checkout@v4	2026-10-04T14:10:58.6192918Z ##[endgroup]
+reel	Run actions/checkout@v4	2026-10-04T14:10:58.6197961Z ##[group]Determining the checkout info
+reel	Run actions/checkout@v4	2026-10-04T14:10:58.6202863Z ##[endgroup]
+reel	Run actions/checkout@v4	2026-10-04T14:10:58.6206115Z ##[group]Setting up sparse checkout
+reel	Run actions/checkout@v4	2026-10-04T14:10:58.6210326Z [command]/usr/bin/git sparse-checkout set .github assets data docs specs skills src tests tools
+reel	Run actions/checkout@v4	2026-10-04T14:10:58.6243871Z ##[endgroup]
+reel	Run actions/checkout@v4	2026-10-04T14:10:58.6248327Z ##[group]Checking out the ref
+reel	Run actions/checkout@v4	2026-10-04T14:10:58.6252522Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+reel	Run actions/checkout@v4	2026-10-04T14:12:03.3020941Z Updating files:   0% (1/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:03.4838827Z Updating files:   1% (43/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:03.5175249Z Updating files:   2% (85/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:03.5631776Z Updating files:   3% (128/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:03.6459075Z Updating files:   4% (170/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:03.6840452Z Updating files:   4% (198/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:03.7654867Z Updating files:   5% (213/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:03.8468369Z Updating files:   6% (255/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:03.9134826Z Updating files:   7% (298/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.0192561Z Updating files:   8% (340/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.1305416Z Updating files:   9% (383/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.1851683Z Updating files:  10% (425/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.1856664Z Updating files:  11% (468/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.1864024Z Updating files:  12% (510/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.2591854Z Updating files:  13% (553/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.2701074Z Updating files:  14% (595/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.2842122Z Updating files:  15% (638/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.2882473Z Updating files:  16% (680/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.3108467Z Updating files:  17% (723/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.3109401Z Updating files:  18% (765/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.3473426Z Updating files:  19% (808/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.6157923Z Updating files:  20% (850/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.6461080Z Updating files:  21% (893/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.6748383Z Updating files:  21% (912/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:04.8088244Z Updating files:  22% (935/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:05.0183720Z Updating files:  23% (978/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:05.2918649Z Updating files:  24% (1020/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:05.5467760Z Updating files:  25% (1063/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:05.6553664Z Updating files:  26% (1105/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:05.7445000Z Updating files:  26% (1132/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:05.9488361Z Updating files:  27% (1148/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.1357120Z Updating files:  28% (1190/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.2966505Z Updating files:  29% (1233/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.4298064Z Updating files:  30% (1275/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.5117268Z Updating files:  31% (1318/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.5946897Z Updating files:  32% (1360/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.6454724Z Updating files:  33% (1403/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.6678755Z Updating files:  33% (1430/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.6919520Z Updating files:  34% (1445/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.6950245Z Updating files:  35% (1488/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.6990683Z Updating files:  36% (1530/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7017693Z Updating files:  37% (1573/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7028186Z Updating files:  38% (1615/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7039226Z Updating files:  39% (1658/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7188985Z Updating files:  40% (1700/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7196199Z Updating files:  41% (1743/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7205298Z Updating files:  42% (1785/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7214806Z Updating files:  43% (1828/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7223639Z Updating files:  44% (1870/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7233528Z Updating files:  45% (1913/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7244592Z Updating files:  46% (1955/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7254991Z Updating files:  47% (1998/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7274861Z Updating files:  48% (2040/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7293307Z Updating files:  49% (2083/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7372591Z Updating files:  50% (2125/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7387869Z Updating files:  51% (2168/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7437574Z Updating files:  52% (2210/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7458610Z Updating files:  53% (2253/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7738775Z Updating files:  54% (2295/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7765259Z Updating files:  55% (2338/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7814569Z Updating files:  56% (2380/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7881528Z Updating files:  57% (2423/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7921115Z Updating files:  58% (2465/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7948043Z Updating files:  59% (2508/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.7976365Z Updating files:  60% (2550/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8003975Z Updating files:  61% (2593/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8032029Z Updating files:  62% (2635/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8059103Z Updating files:  63% (2678/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8097117Z Updating files:  64% (2720/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8137228Z Updating files:  65% (2763/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8178851Z Updating files:  66% (2805/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8228804Z Updating files:  67% (2848/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8263132Z Updating files:  68% (2890/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8304220Z Updating files:  69% (2933/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8348096Z Updating files:  70% (2975/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8387149Z Updating files:  71% (3018/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8427101Z Updating files:  72% (3060/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8464191Z Updating files:  73% (3103/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8498561Z Updating files:  74% (3145/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8531842Z Updating files:  75% (3188/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8558671Z Updating files:  76% (3230/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8602095Z Updating files:  77% (3273/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8640397Z Updating files:  78% (3315/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8679707Z Updating files:  79% (3358/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8717068Z Updating files:  80% (3400/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8753323Z Updating files:  81% (3443/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8794007Z Updating files:  82% (3485/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8834015Z Updating files:  83% (3528/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8876222Z Updating files:  84% (3570/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.8923377Z Updating files:  85% (3613/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9010917Z Updating files:  86% (3655/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9086247Z Updating files:  87% (3698/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9128680Z Updating files:  88% (3740/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9188527Z Updating files:  89% (3783/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9272763Z Updating files:  90% (3825/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9323397Z Updating files:  91% (3868/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9370764Z Updating files:  92% (3910/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9407392Z Updating files:  93% (3953/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9509114Z Updating files:  94% (3995/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9558009Z Updating files:  95% (4038/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9598833Z Updating files:  96% (4080/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9645309Z Updating files:  97% (4123/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9686271Z Updating files:  98% (4165/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9735640Z Updating files:  99% (4208/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9736180Z Updating files: 100% (4250/4250)
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9736570Z Updating files: 100% (4250/4250), done.
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9952089Z Switched to a new branch 'main'
+reel	Run actions/checkout@v4	2026-10-04T14:12:06.9953232Z branch 'main' set up to track 'origin/main'.
+reel	Run actions/checkout@v4	2026-10-04T14:12:07.0065289Z ##[endgroup]
+reel	Run actions/checkout@v4	2026-10-04T14:12:07.0107831Z [command]/usr/bin/git log -1 --format=%H
+reel	Run actions/checkout@v4	2026-10-04T14:12:07.0139163Z 6a13399d39c8eb2655208910eda8f08341ae5cb7
+reel	Run actions/setup-python@v5	﻿2026-10-04T14:12:07.0369507Z ##[group]Run actions/setup-python@v5
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.0370138Z with:
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.0370546Z   python-version: 3.11
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.0370896Z   cache: pip
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.0371215Z   check-latest: false
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.0373611Z   token: ***
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.0373939Z   update-environment: true
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.0374292Z   allow-prereleases: false
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.0374639Z   freethreaded: false
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.0374974Z ##[endgroup]
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.1648806Z ##[group]Installed versions
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.1734736Z (node:2443) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.1735682Z (Use `node --trace-deprecation ...` to show where the warning was created)
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.1736380Z Successfully set up CPython (3.11.16)
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.1737042Z ##[endgroup]
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.7063958Z [command]/opt/hostedtoolcache/Python/3.11.16/x64/bin/pip cache dir
+reel	Run actions/setup-python@v5	2026-10-04T14:12:07.9681510Z /home/runner/.cache/pip
+reel	Run actions/setup-python@v5	2026-10-04T14:12:08.1578811Z Cache hit for: setup-python-Linux-x64-24.04-Ubuntu-python-3.11.16-pip-f30d553b049b1e139a484dff64c8d91cee2bbd9069ad9d73af9b4046513bd2ac
+reel	Run actions/setup-python@v5	2026-10-04T14:12:08.1678024Z (node:2443) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+reel	Run actions/setup-python@v5	2026-10-04T14:12:09.3840913Z Received 46137344 of 185326816 (24.9%), 44.0 MBs/sec
+reel	Run actions/setup-python@v5	2026-10-04T14:12:10.2359990Z Received 185326816 of 185326816 (100.0%), 95.4 MBs/sec
+reel	Run actions/setup-python@v5	2026-10-04T14:12:10.2361192Z Cache Size: ~177 MB (185326816 B)
+reel	Run actions/setup-python@v5	2026-10-04T14:12:10.2399631Z [command]/usr/bin/tar -xf /home/runner/work/_temp/970e49d3-9337-44c0-bd87-d8e726808c39/cache.tzst -P -C /home/runner/work/tennislive/tennislive --use-compress-program unzstd
+reel	Run actions/setup-python@v5	2026-10-04T14:12:10.4149765Z Cache restored successfully
+reel	Run actions/setup-python@v5	2026-10-04T14:12:10.4224135Z Cache restored from key: setup-python-Linux-x64-24.04-Ubuntu-python-3.11.16-pip-f30d553b049b1e139a484dff64c8d91cee2bbd9069ad9d73af9b4046513bd2ac
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	﻿2026-10-04T14:12:10.4572273Z ##[group]Run python3 tools/source_url_check.py --mode "$MODE" --url "$URL" \
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4573030Z [36;1mpython3 tools/source_url_check.py --mode "$MODE" --url "$URL" \[0m
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4573576Z [36;1m  --slug "$SLUG" --scorebox "$SCOREBOX"[0m
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4974728Z shell: /usr/bin/bash -e {0}
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4975158Z env:
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4975568Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4976161Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4976695Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4977191Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4977678Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4978167Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4978602Z   MODE: probe
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4978998Z   URL: https://www.youtube.com/watch?v=cjaHThpISKk
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4979500Z   SLUG: zverev-djokovic
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4980023Z   SCOREBOX: 
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.4980365Z ##[endgroup]
+reel	probe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）	2026-10-04T14:12:10.5361484Z 表单自检通过（mode=probe）
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	﻿2026-10-04T14:12:10.5468230Z ##[group]Run python tools/probe_claims.py probe-step --url "$URL" --slug "$SLUG" \
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5468946Z [36;1mpython tools/probe_claims.py probe-step --url "$URL" --slug "$SLUG" \[0m
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5469479Z [36;1m  --branch "main" --run-id "37208304068"[0m
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5513461Z shell: /usr/bin/bash -e {0}
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5513876Z env:
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5514283Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5514833Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5515366Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5515865Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5516355Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5516858Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5517666Z   URL: https://www.youtube.com/watch?v=cjaHThpISKk
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5518121Z   SLUG: zverev-djokovic
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:10.5518526Z ##[endgroup]
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:12.8504630Z [认领] 源片 cjaHThpISKk：近 3 天别的 slug 的先例 0 条（按视频 id 查过 refs/remotes/origin/main、HEAD 上的认领和 probe 目录，没人做过）
+reel	probe — 认领源片（同一条集锦别 probe 两遍）	2026-10-04T14:12:12.8506272Z [认领] 已在 main 上认领源片 cjaHThpISKk → data/probe_claims/cjaHThpISKk.json（d2ca963a1a）
+reel	缓存技战术资料	﻿2026-10-04T14:12:12.8665652Z ##[group]Run actions/cache@v4
+reel	缓存技战术资料	2026-10-04T14:12:12.8666065Z with:
+reel	缓存技战术资料	2026-10-04T14:12:12.8666473Z   path: ~/.cache/tennislive-production/tactical-reading
+reel	缓存技战术资料	2026-10-04T14:12:12.8666980Z   key: tactical-reading-Linux-v1-37208304068
+reel	缓存技战术资料	2026-10-04T14:12:12.8667442Z   restore-keys: tactical-reading-Linux-v1-
+reel	缓存技战术资料	
+reel	缓存技战术资料	2026-10-04T14:12:12.8667871Z   enableCrossOsArchive: false
+reel	缓存技战术资料	2026-10-04T14:12:12.8668254Z   fail-on-cache-miss: false
+reel	缓存技战术资料	2026-10-04T14:12:12.8668624Z   lookup-only: false
+reel	缓存技战术资料	2026-10-04T14:12:12.8668974Z   save-always: false
+reel	缓存技战术资料	2026-10-04T14:12:12.8669295Z env:
+reel	缓存技战术资料	2026-10-04T14:12:12.8669689Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	缓存技战术资料	2026-10-04T14:12:12.8670484Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	缓存技战术资料	2026-10-04T14:12:12.8671045Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	缓存技战术资料	2026-10-04T14:12:12.8671554Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	缓存技战术资料	2026-10-04T14:12:12.8672064Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	缓存技战术资料	2026-10-04T14:12:12.8672785Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	缓存技战术资料	2026-10-04T14:12:12.8673235Z ##[endgroup]
+reel	缓存技战术资料	2026-10-04T14:12:12.9671905Z (node:2529) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+reel	缓存技战术资料	2026-10-04T14:12:12.9672817Z (Use `node --trace-deprecation ...` to show where the warning was created)
+reel	缓存技战术资料	2026-10-04T14:12:13.1394557Z Cache hit for restore-key: tactical-reading-Linux-v1-37198396596
+reel	缓存技战术资料	2026-10-04T14:12:13.1489410Z (node:2529) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+reel	缓存技战术资料	2026-10-04T14:12:13.4032914Z Received 7282 of 7282 (100.0%), 0.1 MBs/sec
+reel	缓存技战术资料	2026-10-04T14:12:13.4033607Z Cache Size: ~0 MB (7282 B)
+reel	缓存技战术资料	2026-10-04T14:12:13.4064356Z [command]/usr/bin/tar -xf /home/runner/work/_temp/918d327a-fc2d-47dd-a67b-2f2f5a8d236f/cache.tzst -P -C /home/runner/work/tennislive/tennislive --use-compress-program unzstd
+reel	缓存技战术资料	2026-10-04T14:12:13.4119156Z Cache restored successfully
+reel	缓存技战术资料	2026-10-04T14:12:13.4232486Z Cache restored from key: tactical-reading-Linux-v1-37198396596
+reel	装依赖	﻿2026-10-04T14:12:13.4333590Z ##[group]Run # **push 模式只装主依赖。** 它不下片、不渲染、不抠图——rembg、opencv、
+reel	装依赖	2026-10-04T14:12:13.4334555Z [36;1m# **push 模式只装主依赖。** 它不下片、不渲染、不抠图——rembg、opencv、[0m
+reel	装依赖	2026-10-04T14:12:13.4335293Z [36;1m# playwright、yt-dlp 一个都用不上，装全套只是把失败面铺大：那几个包[0m
+reel	装依赖	2026-10-04T14:12:13.4335978Z [36;1m# 里任何一个装不上，都会让一条**本来只是发消息**的 run 挂掉。[0m
+reel	装依赖	2026-10-04T14:12:13.4336689Z [36;1mif [ "probe" = "push" ]; then[0m
+reel	装依赖	2026-10-04T14:12:13.4337375Z [36;1m  pip install -q -e .[0m
+reel	装依赖	2026-10-04T14:12:13.4338040Z [36;1m  # 真验一次 push 那条路要的东西，**不许 `|| true`**：装少了要在[0m
+reel	装依赖	2026-10-04T14:12:13.4338698Z [36;1m  # 第 5 秒炸，而不是三分钟后死在推送那一步。[0m
+reel	装依赖	2026-10-04T14:12:13.4339664Z [36;1m  python -c "import requests, tennislive.publish.pushplus, tennislive.render.pushmsg"[0m
+reel	装依赖	2026-10-04T14:12:13.4341478Z [36;1m  echo "push 模式：只装主依赖，推送那条路的 import 已验过"[0m
+reel	装依赖	2026-10-04T14:12:13.4342131Z [36;1m  exit 0[0m
+reel	装依赖	2026-10-04T14:12:13.4342623Z [36;1mfi[0m
+reel	装依赖	2026-10-04T14:12:13.4343158Z [36;1m# **narration 也只装它用得上的那点。** 它不下片、不渲染、不抠图——[0m
+reel	装依赖	2026-10-04T14:12:13.4343958Z [36;1m# rembg（176 MB 模型的那个包）、opencv、playwright、yt-dlp 一个都用不上。[0m
+reel	装依赖	2026-10-04T14:12:13.4344907Z [36;1m# 装全套是 31 秒，而整趟 narration 才 1 分 37 秒；而且和 push 模式同理，[0m
+reel	装依赖	2026-10-04T14:12:13.4345639Z [36;1m# 那几个包里任何一个装不上，都会让一条**只是查旁白长度**的 run 挂掉。[0m
+reel	装依赖	2026-10-04T14:12:13.4346317Z [36;1mif [ "probe" = "narration" ]; then[0m
+reel	装依赖	2026-10-04T14:12:13.4346979Z [36;1m  pip install -q -e .[0m
+reel	装依赖	2026-10-04T14:12:13.4347645Z [36;1m  # ⚠️ **numpy 不能省**，虽然缺了它不报错。`voice_prosody` 用它量音高，[0m
+reel	装依赖	2026-10-04T14:12:13.4348390Z [36;1m  # 没有就整张表退成十一行「量不了」——而这条 run 的产物**就是那张表**[0m
+reel	装依赖	2026-10-04T14:12:13.4349116Z [36;1m  # （「风格做出来没有、有没有做过头，报在这儿」）。在干净 venv 里照这[0m
+reel	装依赖	2026-10-04T14:12:13.4349726Z [36;1m  # 一行原样装一遍才看见的，沙箱里它一直装着。[0m
+reel	装依赖	2026-10-04T14:12:13.4350896Z [36;1m  pip install -q edge-tts azure-cognitiveservices-speech numpy[0m
+reel	装依赖	2026-10-04T14:12:13.4351870Z [36;1m  # 真验一次这条路要的东西，**不许 `|| true`**：装少了要在第 5 秒炸，[0m
+reel	装依赖	2026-10-04T14:12:13.4352613Z [36;1m  # 而不是一分半之后死在合语音那一步。[0m
+reel	装依赖	2026-10-04T14:12:13.4353328Z [36;1m  python -c "import edge_tts, numpy, tennislive.video.azure_tts"[0m
+reel	装依赖	2026-10-04T14:12:13.4354178Z [36;1m  echo "narration 模式：只装合语音要的，查旁白那条路的 import 已验过"[0m
+reel	装依赖	2026-10-04T14:12:13.4354842Z [36;1m  exit 0[0m
+reel	装依赖	2026-10-04T14:12:13.4355348Z [36;1mfi[0m
+reel	装依赖	2026-10-04T14:12:13.4355920Z [36;1m# **cookies 模式装得最少**：它只拿 yt-dlp 真下 30 秒媒体流验 cookie[0m
+reel	装依赖	2026-10-04T14:12:13.4356714Z [36;1m# 活不活，不渲、不抠、不合语音——rembg 拖着 176 MB 模型的 onnxruntime、[0m
+reel	装依赖	2026-10-04T14:12:13.4357416Z [36;1m# opencv、playwright 全用不上。装全套只是把失败面铺大：那几个包里[0m
+reel	装依赖	2026-10-04T14:12:13.4358156Z [36;1m# 任何一个装不上，都会让一条**只是验 cookie**的 run 挂掉。[0m
+reel	装依赖	2026-10-04T14:12:13.4358962Z [36;1m# **reattest 装得和 narration 差不多少**：它只跑 production_preflight、[0m
+reel	装依赖	2026-10-04T14:12:13.4360040Z [36;1m# `--dry-run`（只读 spec 和 probe.json）和 reattest_check（纯标准库），[0m
+reel	装依赖	2026-10-04T14:12:13.4361317Z [36;1m# 不下片、不渲、不合语音——rembg / opencv / playwright / yt-dlp / edge-tts[0m
+reel	装依赖	2026-10-04T14:12:13.4362160Z [36;1m# 一个都用不上。numpy 留着：dry-run 的 probe 层有几处按需 import 它。[0m
+reel	装依赖	2026-10-04T14:12:13.4362893Z [36;1mif [ "probe" = "reattest" ]; then[0m
+reel	装依赖	2026-10-04T14:12:13.4363858Z [36;1m  pip install -q -e . numpy[0m
+reel	装依赖	2026-10-04T14:12:13.4364534Z [36;1m  python -c "import numpy, tennislive"[0m
+reel	装依赖	2026-10-04T14:12:13.4365289Z [36;1m  echo "reattest 模式：只装主依赖 + numpy，重核对那条路的 import 已验过"[0m
+reel	装依赖	2026-10-04T14:12:13.4366022Z [36;1m  exit 0[0m
+reel	装依赖	2026-10-04T14:12:13.4366532Z [36;1mfi[0m
+reel	装依赖	2026-10-04T14:12:13.4367068Z [36;1mif [ "probe" = "cookies" ]; then[0m
+reel	装依赖	2026-10-04T14:12:13.4367778Z [36;1m  pip install -q -e . "yt-dlp[default]"[0m
+reel	装依赖	2026-10-04T14:12:13.4368437Z [36;1m  node --version[0m
+reel	装依赖	2026-10-04T14:12:13.4369101Z [36;1m  echo "cookies 模式：只装 yt-dlp（[default] 不能省，见下面那段注释）"[0m
+reel	装依赖	2026-10-04T14:12:13.4370028Z [36;1m  exit 0[0m
+reel	装依赖	2026-10-04T14:12:13.4370546Z [36;1mfi[0m
+reel	装依赖	2026-10-04T14:12:13.4371122Z [36;1m# **probe 也不渲不抠**：下源片（yt-dlp）、拼缩略图墙（ffmpeg）、[0m
+reel	装依赖	2026-10-04T14:12:13.4371935Z [36;1m# 认死球/切点（cv2 → visualqa）、备料（requests → 主依赖）。[0m
+reel	装依赖	2026-10-04T14:12:13.4372780Z [36;1m# webrender（playwright）和 cutout（rembg + onnxruntime，一百多 MB）[0m
+reel	装依赖	2026-10-04T14:12:13.4373631Z [36;1m# 是 render/cover 的封面链路用的——probe 唯一会碰 cutout 的是[0m
+reel	装依赖	2026-10-04T14:12:13.4374437Z [36;1m# 「封面候选帧」那一步，而它只在 `cutout_candidates=true` 时才跑，[0m
+reel	装依赖	2026-10-04T14:12:13.4375106Z [36;1m# 所以 cutout 也只在那时候装。[0m
+reel	装依赖	2026-10-04T14:12:13.4375697Z [36;1mif [ "probe" = "probe" ]; then[0m
+reel	装依赖	2026-10-04T14:12:13.4376340Z [36;1m  if [ "false" = "true" ]; then[0m
+reel	装依赖	2026-10-04T14:12:13.4377037Z [36;1m    pip install -q -e ".[visualqa,cutout]"[0m
+reel	装依赖	2026-10-04T14:12:13.4377763Z [36;1m  else[0m
+reel	装依赖	2026-10-04T14:12:13.4378335Z [36;1m    pip install -q -e ".[visualqa]"[0m
+reel	装依赖	2026-10-04T14:12:13.4378965Z [36;1m  fi[0m
+reel	装依赖	2026-10-04T14:12:13.4379522Z [36;1m  pip install -q "yt-dlp[default]"[0m
+reel	装依赖	2026-10-04T14:12:13.4380489Z [36;1m  # 真验一次这条路要的东西，**不许 `|| true`**：装少了要在第 5 秒炸，[0m
+reel	装依赖	2026-10-04T14:12:13.4381226Z [36;1m  # 而不是下完几百 MB 源片之后死在拼墙/认切点那一步。[0m
+reel	装依赖	2026-10-04T14:12:13.4381922Z [36;1m  python -c "import cv2, numpy, requests"[0m
+reel	装依赖	2026-10-04T14:12:13.4382589Z [36;1m  node --version[0m
+reel	装依赖	2026-10-04T14:12:13.4383282Z [36;1m  echo "probe 模式：装 visualqa + yt-dlp，探测那条路的 import 已验过"[0m
+reel	装依赖	2026-10-04T14:12:13.4384032Z [36;1m  exit 0[0m
+reel	装依赖	2026-10-04T14:12:13.4384541Z [36;1mfi[0m
+reel	装依赖	2026-10-04T14:12:13.4385097Z [36;1m# `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。[0m
+reel	装依赖	2026-10-04T14:12:13.4385861Z [36;1m# **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、[0m
+reel	装依赖	2026-10-04T14:12:13.4386563Z [36;1m# runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了[0m
+reel	装依赖	2026-10-04T14:12:13.4387263Z [36;1m# （`_preflight_cutout`，排在下载之前），但依赖这一行还是得同一个提交里改。[0m
+reel	装依赖	2026-10-04T14:12:13.4388023Z [36;1m# `faces` 是封面认人＋睁眼（onnxruntime）：cutout 本来就带着它，显式写上是[0m
+reel	装依赖	2026-10-04T14:12:13.4388788Z [36;1m# 因为「别指望隐式带上的包永远够用」（visualqa 显式写 numpy 那条同一个理由）。[0m
+reel	装依赖	2026-10-04T14:12:13.4390246Z [36;1mpip install -q -e ".[webrender,visualqa,cutout,faces]"[0m
+reel	装依赖	2026-10-04T14:12:13.4391516Z [36;1m# **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的[0m
+reel	装依赖	2026-10-04T14:12:13.4392293Z [36;1m# n challenge 要跑一段 JS。少了它不会报「装少了」，而是[0m
+reel	装依赖	2026-10-04T14:12:13.4393094Z [36;1m# `n challenge solving failed` + `Only images are available`，[0m
+reel	装依赖	2026-10-04T14:12:13.4393945Z [36;1m# 于是任何视频格式选择器都匹配不上，看起来像「这个视频没有格式」或者[0m
+reel	装依赖	2026-10-04T14:12:13.4394674Z [36;1m# 「cookie 过期了」。JS 运行时用 runner 自带的 node（≥22），[0m
+reel	装依赖	2026-10-04T14:12:13.4395362Z [36;1m# 命令行统一带 `--js-runtimes node`。[0m
+reel	装依赖	2026-10-04T14:12:13.4396015Z [36;1mpip install -q "yt-dlp[default]" edge-tts[0m
+reel	装依赖	2026-10-04T14:12:13.4396718Z [36;1m# Azure 那条路要 SDK 才拿得到词边界（REST 接口不给），而字幕整条线[0m
+reel	装依赖	2026-10-04T14:12:13.4397376Z [36;1m# 就建立在词边界上。没配 key 的时候装着也不碍事——`azure_tts.available()`[0m
+reel	装依赖	2026-10-04T14:12:13.4397983Z [36;1m# 两样都查，缺一样就退回 edge-tts。[0m
+reel	装依赖	2026-10-04T14:12:13.4398645Z [36;1mpip install -q azure-cognitiveservices-speech[0m
+reel	装依赖	2026-10-04T14:12:13.4399303Z [36;1mnode --version[0m
+reel	装依赖	2026-10-04T14:12:13.4458518Z shell: /usr/bin/bash -e {0}
+reel	装依赖	2026-10-04T14:12:13.4459128Z env:
+reel	装依赖	2026-10-04T14:12:13.4459738Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	装依赖	2026-10-04T14:12:13.4460962Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	装依赖	2026-10-04T14:12:13.4461817Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	装依赖	2026-10-04T14:12:13.4462825Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	装依赖	2026-10-04T14:12:13.4463591Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	装依赖	2026-10-04T14:12:13.4464359Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	装依赖	2026-10-04T14:12:13.4465002Z ##[endgroup]
+reel	装依赖	2026-10-04T14:12:26.7489305Z v22.23.3
+reel	装依赖	2026-10-04T14:12:26.7509542Z probe 模式：装 visualqa + yt-dlp，探测那条路的 import 已验过
+reel	装 ffmpeg	﻿2026-10-04T14:12:26.7643888Z ##[group]Run source tools/ci_apt_install.sh
+reel	装 ffmpeg	2026-10-04T14:12:26.7644387Z [36;1msource tools/ci_apt_install.sh[0m
+reel	装 ffmpeg	2026-10-04T14:12:26.7644787Z [36;1mensure_ffmpeg[0m
+reel	装 ffmpeg	2026-10-04T14:12:26.7685602Z shell: /usr/bin/bash -e {0}
+reel	装 ffmpeg	2026-10-04T14:12:26.7686006Z env:
+reel	装 ffmpeg	2026-10-04T14:12:26.7686438Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	装 ffmpeg	2026-10-04T14:12:26.7687004Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	装 ffmpeg	2026-10-04T14:12:26.7687549Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	装 ffmpeg	2026-10-04T14:12:26.7688054Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	装 ffmpeg	2026-10-04T14:12:26.7688556Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	装 ffmpeg	2026-10-04T14:12:26.7689062Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	装 ffmpeg	2026-10-04T14:12:26.7689511Z ##[endgroup]
+reel	装 ffmpeg	2026-10-04T14:12:30.7377127Z [ffmpeg] 走静态构建（BtbN，GPL 版含 drawtext），没碰 apt 镜像：下载＋解包 4s
+reel	算出源片缓存的键	﻿2026-10-04T14:12:30.7493993Z ##[group]Run # **复用 `spec_sources()`，别在这儿再解析一遍 spec**——单源写
+reel	算出源片缓存的键	2026-10-04T14:12:30.7494608Z [36;1m# **复用 `spec_sources()`，别在这儿再解析一遍 spec**——单源写[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7495098Z [36;1m# `source_url`、多源写 `sources`，两种写法各写一遍必分叉。[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7495561Z [36;1m# 它是纯函数、不打印，所以可以直接用（`load_spec` 会打印，不能用）。[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7496163Z [36;1mpython - <<'PY'[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7496585Z [36;1mimport hashlib, json, os, pathlib, sys[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7497051Z [36;1msys.path.insert(0, "tools")[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7497513Z [36;1murl = os.environ.get("URL_INPUT", "").strip()[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7497976Z [36;1murls: list[str] = [][0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7498355Z [36;1mwhy = ""[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7498683Z [36;1mif url:[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7499039Z [36;1m    urls, why = [url], "来自 url 输入"[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7499432Z [36;1melse:[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7500036Z [36;1m    spec = pathlib.Path(f"specs/reels/{os.environ['SLUG']}.json")[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7500586Z [36;1m    if spec.is_file():[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7501031Z [36;1m        try:[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7501443Z [36;1m            from build_match_reel import spec_sources[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7501913Z [36;1m            urls = sorted(spec_sources([0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7502425Z [36;1m                json.loads(spec.read_text(encoding="utf-8"))).values())[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7502923Z [36;1m            why = f"来自 {spec}"[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7503390Z [36;1m        except Exception as exc:            # noqa: BLE001[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7503884Z [36;1m            # **算不出键不该把整趟带崩**：spec 真有问题的话，下面[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7504328Z [36;1m            # 那几步会报一个说人话的错。这儿只退化成「不缓存」。[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7504790Z [36;1m            why = f"读不出源片地址（{type(exc).__name__}: {exc}）"[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7505225Z [36;1m    else:[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7505586Z [36;1m        why = f"{spec} 还不存在"[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7506075Z [36;1mkey = (hashlib.sha256("\n".join(urls).encode()).hexdigest()[:16][0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7506578Z [36;1m       if urls else "nourl")[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7507092Z [36;1mpathlib.Path(os.environ["RUNNER_TEMP"], "srckey").write_text(key)[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7507609Z [36;1m# **两种情况都要出声**：算出来了和没算出来，日志上必须分得开，[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7508011Z [36;1m# 否则「缓存没生效」和「生效了」长得一模一样。[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7508453Z [36;1mprint(f"源片缓存键 {key}：{len(urls)} 条源片，{why}")[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7508875Z [36;1mPY[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7509294Z [36;1mecho "hash=$(cat "$RUNNER_TEMP/srckey")" >> "$GITHUB_OUTPUT"[0m
+reel	算出源片缓存的键	2026-10-04T14:12:30.7551256Z shell: /usr/bin/bash -e {0}
+reel	算出源片缓存的键	2026-10-04T14:12:30.7551670Z env:
+reel	算出源片缓存的键	2026-10-04T14:12:30.7552083Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	算出源片缓存的键	2026-10-04T14:12:30.7552638Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	算出源片缓存的键	2026-10-04T14:12:30.7553294Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	算出源片缓存的键	2026-10-04T14:12:30.7554051Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	算出源片缓存的键	2026-10-04T14:12:30.7554651Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	算出源片缓存的键	2026-10-04T14:12:30.7555192Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	算出源片缓存的键	2026-10-04T14:12:30.7555720Z   URL_INPUT: https://www.youtube.com/watch?v=cjaHThpISKk
+reel	算出源片缓存的键	2026-10-04T14:12:30.7556162Z   SLUG: zverev-djokovic
+reel	算出源片缓存的键	2026-10-04T14:12:30.7556519Z ##[endgroup]
+reel	算出源片缓存的键	2026-10-04T14:12:30.7831501Z 源片缓存键 1030d1079567471a：1 条源片，来自 url 输入
+reel	缓存源片（同一条片子只下一次）	﻿2026-10-04T14:12:30.7968140Z ##[group]Run actions/cache@v4
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7968545Z with:
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7968891Z   path: ~/.cache/tennislive-sources
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7969342Z   key: reel-src-zverev-djokovic-1030d1079567471a
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7970000Z   restore-keys: reel-src-zverev-djokovic-
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7970445Z   enableCrossOsArchive: false
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7970842Z   fail-on-cache-miss: false
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7971223Z   lookup-only: false
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7971576Z   save-always: false
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7971914Z env:
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7972308Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7972877Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7973439Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7973959Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7974643Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7975187Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.7975691Z ##[endgroup]
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.8965691Z (node:2663) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:30.8966535Z (Use `node --trace-deprecation ...` to show where the warning was created)
+reel	缓存源片（同一条片子只下一次）	2026-10-04T14:12:31.0611813Z Cache not found for input keys: reel-src-zverev-djokovic-1030d1079567471a, reel-src-zverev-djokovic-
+reel	算出目录	﻿2026-10-04T14:12:31.0703279Z ##[group]Run SLUG="zverev-djokovic"
+reel	算出目录	2026-10-04T14:12:31.0703797Z [36;1mSLUG="zverev-djokovic"[0m
+reel	算出目录	2026-10-04T14:12:31.0704270Z [36;1m# **push 模式不能按「今天」算目录。** render/cover/probe/narration 都是[0m
+reel	算出目录	2026-10-04T14:12:31.0704771Z [36;1m# 当场生成新内容，目录理应是今天；但 push 推的是**已经渲好、可能是[0m
+reel	算出目录	2026-10-04T14:12:31.0705204Z [36;1m# 好几天前的成片**——账号所有者现在允许「渲完先审、审完再推」，[0m
+reel	算出目录	2026-10-04T14:12:31.0705621Z [36;1m# 中间隔的天数不确定。按今天拼目录会拼出一个根本不存在的路径[0m
+reel	算出目录	2026-10-04T14:12:31.0706144Z [36;1m# （eala-pegula-final 是 8/4 渲的，8/7 才推——`output/2026-08-07/...`[0m
+reel	算出目录	2026-10-04T14:12:31.0706652Z [36;1m# 那天什么都没写过），下游那道「push 模式先确认成片真的落地了」的闸[0m
+reel	算出目录	2026-10-04T14:12:31.0707080Z [36;1m# 会报「既不在这个 commit 里」，而真实原因是**问错日子了**。[0m
+reel	算出目录	2026-10-04T14:12:31.0707469Z [36;1m#[0m
+reel	算出目录	2026-10-04T14:12:31.0707840Z [36;1m# `git ls-tree` 不受稀疏检出影响（读的是 git 对象库，不是工作区），[0m
+reel	算出目录	2026-10-04T14:12:31.0708315Z [36;1m# 可以在还没 `sparse-checkout add` 之前就按 slug 把日期反查出来。[0m
+reel	算出目录	2026-10-04T14:12:31.0708796Z [36;1m# 同一个 slug 可能有多个日期目录（重渲过，比如 wong-brooksby 两次）[0m
+reel	算出目录	2026-10-04T14:12:31.0709241Z [36;1m# ——排序取最新的那个，和「查产物按最新那一份，别拿被顶替掉的当基准」[0m
+reel	算出目录	2026-10-04T14:12:31.0709711Z [36;1m# 一个道理。[0m
+reel	算出目录	2026-10-04T14:12:31.0710258Z [36;1m# **reattest 同理**：它核的是已经渲好的那一版，目录是渲的那天，不是今天。[0m
+reel	算出目录	2026-10-04T14:12:31.0710698Z [36;1mif [ "probe" = "push" ] \[0m
+reel	算出目录	2026-10-04T14:12:31.0711115Z [36;1m   || [ "probe" = "reattest" ]; then[0m
+reel	算出目录	2026-10-04T14:12:31.0711582Z [36;1m  MATCH=$(git ls-tree -r HEAD --name-only \[0m
+reel	算出目录	2026-10-04T14:12:31.0712160Z [36;1m    | grep -E "^output/[0-9]{4}-[0-9]{2}-[0-9]{2}/reel/${SLUG}/render\.json$" \[0m
+reel	算出目录	2026-10-04T14:12:31.0712726Z [36;1m    | sort | tail -1)[0m
+reel	算出目录	2026-10-04T14:12:31.0713135Z [36;1m  if [ -z "$MATCH" ]; then[0m
+reel	算出目录	2026-10-04T14:12:31.0713637Z [36;1m    echo "::error::output/*/reel/$SLUG/render.json 在这个 commit 里一条都没有"[0m
+reel	算出目录	2026-10-04T14:12:31.0714243Z [36;1m    echo "::error::——先跑一次 mode=render（push=false）出片，验完再用 mode=push 发。"[0m
+reel	算出目录	2026-10-04T14:12:31.0714741Z [36;1m    exit 1[0m
+reel	算出目录	2026-10-04T14:12:31.0715095Z [36;1m  fi[0m
+reel	算出目录	2026-10-04T14:12:31.0715441Z [36;1m  OUT_DIR=$(dirname "$MATCH")[0m
+reel	算出目录	2026-10-04T14:12:31.0715955Z [36;1m  OUT_DATE=$(echo "$OUT_DIR" | sed -E 's#^output/([0-9-]+)/.*#\1#')[0m
+reel	算出目录	2026-10-04T14:12:31.0716496Z [36;1m  echo "[probe] 按 slug 反查到 $OUT_DIR（这条片子渲的那天，不是今天）"[0m
+reel	算出目录	2026-10-04T14:12:31.0716933Z [36;1melse[0m
+reel	算出目录	2026-10-04T14:12:31.0717295Z [36;1m  OUT_DATE=$(TZ=Asia/Shanghai date +%F)[0m
+reel	算出目录	2026-10-04T14:12:31.0717746Z [36;1m  OUT_DIR="output/$OUT_DATE/reel/$SLUG"[0m
+reel	算出目录	2026-10-04T14:12:31.0718363Z [36;1mfi[0m
+reel	算出目录	2026-10-04T14:12:31.0718744Z [36;1mecho "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"[0m
+reel	算出目录	2026-10-04T14:12:31.0719221Z [36;1mecho "date=$OUT_DATE" >> "$GITHUB_OUTPUT"[0m
+reel	算出目录	2026-10-04T14:12:31.0719695Z [36;1m# checkout 把整个 output/ 挡在稀疏范围外了，这儿再把**自己那一格**[0m
+reel	算出目录	2026-10-04T14:12:31.0720469Z [36;1m# 加回来。三种模式都要：render/cover 要往里写，push 要读 mp4 的大小[0m
+reel	算出目录	2026-10-04T14:12:31.0720978Z [36;1m# （超 20 MB 就退 raw）。[0m
+reel	算出目录	2026-10-04T14:12:31.0721453Z [36;1m# ⚠️ 必须排在生成**之前**——`add` 会把 HEAD 上那一版先铺回工作区，[0m
+reel	算出目录	2026-10-04T14:12:31.0721874Z [36;1m# 反过来会拿旧内容盖掉刚生成的。[0m
+reel	算出目录	2026-10-04T14:12:31.0722297Z [36;1mgit sparse-checkout add "$OUT_DIR"[0m
+reel	算出目录	2026-10-04T14:12:31.0764475Z shell: /usr/bin/bash -e {0}
+reel	算出目录	2026-10-04T14:12:31.0764898Z env:
+reel	算出目录	2026-10-04T14:12:31.0765324Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	算出目录	2026-10-04T14:12:31.0765916Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	算出目录	2026-10-04T14:12:31.0766479Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	算出目录	2026-10-04T14:12:31.0767034Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	算出目录	2026-10-04T14:12:31.0767549Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	算出目录	2026-10-04T14:12:31.0768072Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	算出目录	2026-10-04T14:12:31.0768518Z ##[endgroup]
+reel	起 PO token provider	﻿2026-10-04T14:12:32.0738804Z ##[group]Run pip install -q bgutil-ytdlp-pot-provider
+reel	起 PO token provider	2026-10-04T14:12:32.0739377Z [36;1mpip install -q bgutil-ytdlp-pot-provider[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0740059Z [36;1mdocker run --name bgutil-pot -d -p 4416:4416 \[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0740576Z [36;1m  brainicism/bgutil-ytdlp-pot-provider[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0741008Z [36;1mfor i in $(seq 1 25); do[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0741478Z [36;1m  if curl -sf http://127.0.0.1:4416/ping >/dev/null; then[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0741959Z [36;1m    echo "provider 起来了（第 $i 次探活）"[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0742375Z [36;1m    echo "up=1" >> "$GITHUB_OUTPUT"[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0742761Z [36;1m    exit 0[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0743100Z [36;1m  fi[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0743410Z [36;1m  sleep 2[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0743731Z [36;1mdone[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0744130Z [36;1mecho "::warning::PO token provider 50 秒内没起来，退回 client 梯子"[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0744632Z [36;1mdocker logs bgutil-pot 2>&1 | tail -20 || true[0m
+reel	起 PO token provider	2026-10-04T14:12:32.0785549Z shell: /usr/bin/bash -e {0}
+reel	起 PO token provider	2026-10-04T14:12:32.0786045Z env:
+reel	起 PO token provider	2026-10-04T14:12:32.0786462Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	起 PO token provider	2026-10-04T14:12:32.0787022Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	起 PO token provider	2026-10-04T14:12:32.0787566Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	起 PO token provider	2026-10-04T14:12:32.0788079Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	起 PO token provider	2026-10-04T14:12:32.0788582Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	起 PO token provider	2026-10-04T14:12:32.0789087Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	起 PO token provider	2026-10-04T14:12:32.0789532Z ##[endgroup]
+reel	起 PO token provider	2026-10-04T14:12:32.7600873Z Unable to find image 'brainicism/bgutil-ytdlp-pot-provider:latest' locally
+reel	起 PO token provider	2026-10-04T14:12:33.4606088Z latest: Pulling from brainicism/bgutil-ytdlp-pot-provider
+reel	起 PO token provider	2026-10-04T14:12:33.6453066Z 774043ccc8cc: Pulling fs layer
+reel	起 PO token provider	2026-10-04T14:12:33.6454122Z db968e0625a3: Pulling fs layer
+reel	起 PO token provider	2026-10-04T14:12:33.6455617Z 1fc5be3c2015: Pulling fs layer
+reel	起 PO token provider	2026-10-04T14:12:33.6456563Z a6bc3f60a750: Pulling fs layer
+reel	起 PO token provider	2026-10-04T14:12:33.6457116Z c99e6a7958cd: Pulling fs layer
+reel	起 PO token provider	2026-10-04T14:12:33.6457674Z 7dcc74f9e68b: Pulling fs layer
+reel	起 PO token provider	2026-10-04T14:12:33.6458278Z 76b7cbb1d964: Pulling fs layer
+reel	起 PO token provider	2026-10-04T14:12:33.6458908Z 7ea9eefd4194: Pulling fs layer
+reel	起 PO token provider	2026-10-04T14:12:33.6459585Z a6bc3f60a750: Waiting
+reel	起 PO token provider	2026-10-04T14:12:33.6460439Z c99e6a7958cd: Waiting
+reel	起 PO token provider	2026-10-04T14:12:33.6460916Z 7dcc74f9e68b: Waiting
+reel	起 PO token provider	2026-10-04T14:12:33.6461377Z 76b7cbb1d964: Waiting
+reel	起 PO token provider	2026-10-04T14:12:33.6461875Z 7ea9eefd4194: Waiting
+reel	起 PO token provider	2026-10-04T14:12:33.8395166Z db968e0625a3: Verifying Checksum
+reel	起 PO token provider	2026-10-04T14:12:33.8395847Z db968e0625a3: Download complete
+reel	起 PO token provider	2026-10-04T14:12:34.0238796Z a6bc3f60a750: Verifying Checksum
+reel	起 PO token provider	2026-10-04T14:12:34.0239506Z a6bc3f60a750: Download complete
+reel	起 PO token provider	2026-10-04T14:12:34.1156888Z 774043ccc8cc: Verifying Checksum
+reel	起 PO token provider	2026-10-04T14:12:34.1157974Z 774043ccc8cc: Download complete
+reel	起 PO token provider	2026-10-04T14:12:34.1775761Z 1fc5be3c2015: Verifying Checksum
+reel	起 PO token provider	2026-10-04T14:12:34.1776547Z 1fc5be3c2015: Download complete
+reel	起 PO token provider	2026-10-04T14:12:34.2228402Z c99e6a7958cd: Verifying Checksum
+reel	起 PO token provider	2026-10-04T14:12:34.2228960Z c99e6a7958cd: Download complete
+reel	起 PO token provider	2026-10-04T14:12:34.3432554Z 7dcc74f9e68b: Verifying Checksum
+reel	起 PO token provider	2026-10-04T14:12:34.3433827Z 7dcc74f9e68b: Download complete
+reel	起 PO token provider	2026-10-04T14:12:34.4195619Z 7ea9eefd4194: Verifying Checksum
+reel	起 PO token provider	2026-10-04T14:12:34.4196647Z 7ea9eefd4194: Download complete
+reel	起 PO token provider	2026-10-04T14:12:34.6494117Z 76b7cbb1d964: Verifying Checksum
+reel	起 PO token provider	2026-10-04T14:12:34.6494750Z 76b7cbb1d964: Download complete
+reel	起 PO token provider	2026-10-04T14:12:35.0318449Z 774043ccc8cc: Pull complete
+reel	起 PO token provider	2026-10-04T14:12:40.4297540Z db968e0625a3: Pull complete
+reel	起 PO token provider	2026-10-04T14:12:42.7026437Z 1fc5be3c2015: Pull complete
+reel	起 PO token provider	2026-10-04T14:12:42.7133194Z a6bc3f60a750: Pull complete
+reel	起 PO token provider	2026-10-04T14:12:42.7245366Z c99e6a7958cd: Pull complete
+reel	起 PO token provider	2026-10-04T14:12:42.7391817Z 7dcc74f9e68b: Pull complete
+reel	起 PO token provider	2026-10-04T14:12:44.9179693Z 76b7cbb1d964: Pull complete
+reel	起 PO token provider	2026-10-04T14:12:44.9341544Z 7ea9eefd4194: Pull complete
+reel	起 PO token provider	2026-10-04T14:12:44.9385606Z Digest: sha256:96d95372bbf04db68e29329ba05a20bd406844fa3c5ac43315fe476870c6084d
+reel	起 PO token provider	2026-10-04T14:12:44.9401515Z Status: Downloaded newer image for brainicism/bgutil-ytdlp-pot-provider:latest
+reel	起 PO token provider	2026-10-04T14:12:44.9603640Z 6c3e3b41ec5d6cb8ca08695d42c5978fd5849a8b670683d75e0254b03590b1a4
+reel	起 PO token provider	2026-10-04T14:12:47.1548412Z provider 起来了（第 2 次探活）
+reel	落 cookies（配了 Secret 才有）	﻿2026-10-04T14:12:47.1590749Z ##[group]Run if [ -n "$YT_COOKIES_TXT" ]; then
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1591279Z [36;1mif [ -n "$YT_COOKIES_TXT" ]; then[0m
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1591790Z [36;1m  printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"[0m
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1592360Z [36;1m  echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"[0m
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1592972Z [36;1m  echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"[0m
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1593461Z [36;1melse[0m
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1593872Z [36;1m  echo "::notice::未配置 YT_COOKIES_TXT，只能靠 player client 梯子碰运气"[0m
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1594327Z [36;1mfi[0m
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1634233Z shell: /usr/bin/bash -e {0}
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1634633Z env:
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1635037Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1635593Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1636138Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1636641Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1637187Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1637687Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1648170Z   YT_COOKIES_TXT: ***
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1648565Z ##[endgroup]
+reel	落 cookies（配了 Secret 才有）	2026-10-04T14:12:47.1737657Z 已写入 cookies（25 行）
+reel	probe — 下载 + 缩略图墙	﻿2026-10-04T14:12:47.1785848Z ##[group]Run # 自动链从未覆盖 every；固定 2 秒既保留原生产默认，又让表单保持在
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1786374Z [36;1m# 自动链从未覆盖 every；固定 2 秒既保留原生产默认，又让表单保持在[0m
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1786835Z [36;1m# GitHub workflow_dispatch 最多 25 个 inputs 的硬限制内。[0m
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1787305Z [36;1mpython tools/build_match_reel.py probe \[0m
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1787813Z [36;1m  --url "https://www.youtube.com/watch?v=cjaHThpISKk" \[0m
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1788270Z [36;1m  --every "2" \[0m
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1788623Z [36;1m  --from "" \[0m
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1788967Z [36;1m  --to "" \[0m
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1789310Z [36;1m  --scorebox "" \[0m
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1789731Z [36;1m  --outdir "output/2026-10-04/reel/zverev-djokovic"[0m
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1790575Z [36;1mls -la "output/2026-10-04/reel/zverev-djokovic"[0m
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1826466Z shell: /usr/bin/bash -e {0}
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1826865Z env:
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1827273Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1828111Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1828700Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1829196Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1829681Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1830431Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1830933Z   TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1831410Z   YT_COOKIES: /home/runner/work/_temp/yt-cookies.txt
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1831835Z   YT_POT_PROVIDER: 1
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:12:47.1832176Z ##[endgroup]
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9385163Z [cookies] 用 /home/runner/work/_temp/yt-cookies.txt
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9386481Z [fail] web(+POT): ERROR: [youtube] cjaHThpISKk: Requested format is not available. Use --list-formats for a list of available formats
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9387612Z [ok] mweb(+POT) 下到了 1920×1080，122.3 MB
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9388475Z [缓存] 存了一份，下一趟不用重下（c050c5b0d613d9ea.mp4）
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9389245Z [fps] 高帧率源整除降采样：50/1 / 2 → 25 = 25.000
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9390313Z 源片 1920×1080 @ 25，319.2s，检出 33 个切点，另有 9 个疑似切点（门槛 0.12）
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9391216Z   疑似切点（**线索不是判据**：落在你要取的窗口里就去缩略图墙上看一眼，别直接拿它当切点）：
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9391981Z     137.14 193.90 194.10 194.20 194.84 216.12 301.54 309.58 310.98
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9392784Z 记分条缩略图墙：crop=806:216:0:842（源片 1920x1080）
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9393548Z [字幕] web(+POT) 没拿到：for download. use --list-formats to see them
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9394616Z ERROR: [youtube] cjaHThpISKk: Requested format is not available. Use --list-formats for a list of available formats
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9396301Z [字幕] mweb(+POT) 没拿到：WARNING: [youtube] cjaHThpISKk: Unable to download webpage: HTTP Error 429: Too Many Requests (caused by <HTTPError 429: Too Many Requests>)
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9397924Z [字幕] tv(+POT) 没拿到：nd in player responses; falling back to title from initial data. Other metadata may also be missing
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9399037Z ERROR: [youtube] cjaHThpISKk: The page needs to be reloaded.
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9400600Z [字幕] 默认 没拿到：WARNING: [youtube] cjaHThpISKk: Unable to download webpage: HTTP Error 429: Too Many Requests (caused by <HTTPError 429: Too Many Requests>)
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9402559Z [字幕] android_vr 没拿到：t this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9404640Z [字幕] tv_simply 没拿到：t this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9406612Z [字幕] web_embedded 没拿到：WARNING: [youtube] cjaHThpISKk: Unable to download webpage: HTTP Error 429: Too Many Requests (caused by <HTTPError 429: Too Many Requests>)
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9408606Z [字幕] android+ios 没拿到：t this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9410871Z [字幕] 所有 client 都没拿到自动字幕 → captions_debug.txt
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9411792Z [记分条] 猜的候选：--scorebox 98,920,394,1029（填充率 1.00，只是猜的，拿缩略图墙对一眼再填进下一轮 probe）
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9412834Z [死球] 没给 --scorebox（记分条位置每家转播不一样，认不出来），这一项跳过——有猜到的候选会按猜的框再量一遍（point_ends_guess）。
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:26.9413672Z     [耗时] 量死球（猜的框） 37.64s
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5097607Z [死球·猜的框] 采样 3190 点，记分条跳变 20 次（框是 suggest_scorebox 猜的，存进 point_ends_guess）
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5098584Z   9.8 12.9 13.9 32.2 33.1 108.7 110.5 111.5 113.1 283.9 284.8 290.2 291.0 291.8 292.6 293.5 294.3 298.0 298.8 309.2
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5099456Z [静音] 源片音频的静音区间（≥0.8s，≤-60dB）：313.1–319.2
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5100260Z   段窗口别裸压上去：旁白盖不住的部分渲后就是数字静音（--dry-run 会按旁白离线估预判这一层）
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5100827Z [量板] 框 [183, 890, 645, 1000]：一帧都没认出板
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5101279Z [量板] 框 [98, 920, 519, 1029]：atp 1396/1596 帧
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5101720Z [量板] 框 [90, 870, 550, 980]：一帧都没认出板
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5102456Z [量板] 框 [145, 915, 600, 1012]：一帧都没认出板
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5102912Z [量板] 框 [80, 862, 520, 1036]：一帧都没认出板
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5103321Z [量板] 框 [80, 862, 920, 1040]：一帧都没认出板
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5103748Z [量板] 框 [104, 888, 660, 978]：us-open 7/1596 帧
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5104764Z 缩略图墙: contact_00.jpg, contact_01.jpg, contact_02.jpg, contact_03.jpg, contact_04.jpg, contact_05.jpg, score_00.jpg, score_01.jpg, score_02.jpg, score_03.jpg, score_04.jpg, score_05.jpg, score_06.jpg, score_07.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5573659Z total 123924
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5574250Z drwxr-xr-x 3 runner runner      4096 Oct  4 14:17 .
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5574928Z drwxr-xr-x 3 runner runner      4096 Oct  4 14:12 ..
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5575732Z -rw-r--r-- 1 runner runner      2927 Oct  4 14:16 captions_debug.txt
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5576359Z -rw-r--r-- 1 runner runner    547180 Oct  4 14:15 contact_00.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5576987Z -rw-r--r-- 1 runner runner    558424 Oct  4 14:15 contact_01.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5577650Z -rw-r--r-- 1 runner runner    554169 Oct  4 14:15 contact_02.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5578234Z -rw-r--r-- 1 runner runner    560251 Oct  4 14:15 contact_03.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5578712Z -rw-r--r-- 1 runner runner    610588 Oct  4 14:15 contact_04.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5579197Z -rw-r--r-- 1 runner runner    124818 Oct  4 14:15 contact_05.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5579682Z drwxr-xr-x 2 runner runner      4096 Oct  4 14:16 frames
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5580339Z -rw-r--r-- 1 runner runner     20439 Oct  4 14:17 probe.json
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5580840Z -rw-r--r-- 1 runner runner    182856 Oct  4 14:16 score_00.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5581331Z -rw-r--r-- 1 runner runner    193025 Oct  4 14:16 score_01.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5581814Z -rw-r--r-- 1 runner runner    217146 Oct  4 14:16 score_02.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5582302Z -rw-r--r-- 1 runner runner    219378 Oct  4 14:16 score_03.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5582773Z -rw-r--r-- 1 runner runner    200965 Oct  4 14:16 score_04.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5583256Z -rw-r--r-- 1 runner runner    208791 Oct  4 14:16 score_05.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5583744Z -rw-r--r-- 1 runner runner    218828 Oct  4 14:16 score_06.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5584215Z -rw-r--r-- 1 runner runner    173004 Oct  4 14:16 score_07.jpg
+reel	probe — 下载 + 缩略图墙	2026-10-04T14:17:27.5584692Z -rw-r--r-- 1 runner runner 122255880 Oct  4 14:13 source.mp4
+reel	probe — 逐分+比分板对齐备料	﻿2026-10-04T14:17:27.5638333Z ##[group]Run OUT="output/2026-10-04/reel/zverev-djokovic"
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5638893Z [36;1mOUT="output/2026-10-04/reel/zverev-djokovic"[0m
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5639389Z [36;1mPYTHONPATH=src python tools/prepare_alignment.py \[0m
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5640020Z [36;1m  --home "alexander zverev" \[0m
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5640492Z [36;1m  --away "novak djokovic" \[0m
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5640884Z [36;1m  --outdir "$OUT"[0m
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5681638Z shell: /usr/bin/bash -e {0}
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5682032Z env:
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5682437Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5682981Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5683691Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5684197Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5684701Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5685213Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5686256Z   MINIMAX_API_KEY: ***
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:17:27.5686603Z ##[endgroup]
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:18:19.5806540Z ⚠️ 逐分没拿到（可能 ATP 场或不在窗口）：2026-09-27–2026-10-05 窗口里扫了 262 场，没有同时出现 ['zverev', 'djokovic'] 的比赛
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:18:19.5807456Z 比分板读到 120 个格子
+reel	probe — 逐分+比分板对齐备料	2026-10-04T14:18:19.6005684Z 对齐备料不齐（见上），assemble 会退回读字幕老路。
+reel	probe — 自动备料写 spec 草稿	﻿2026-10-04T14:18:19.6053291Z ##[group]Run OUT="output/2026-10-04/reel/zverev-djokovic"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6053908Z [36;1mOUT="output/2026-10-04/reel/zverev-djokovic"[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6054382Z [36;1mSLUG="zverev-djokovic"[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6054759Z [36;1mALIGN_ARGS=""[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6055249Z [36;1mif [ -f "$OUT/pbp.json" ] && [ -f "$OUT/scoreboard.json" ]; then[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6055851Z [36;1m  ALIGN_ARGS="--pbp $OUT/pbp.json --scoreboard $OUT/scoreboard.json"[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6056336Z [36;1mfi[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6056669Z [36;1mMETA_ARGS=()[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6057025Z [36;1mif [ -n "2" ]; then[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6057412Z [36;1m  META_ARGS+=(--home-rank "2")[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6057801Z [36;1mfi[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6058128Z [36;1mif [ -n "11" ]; then[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6058512Z [36;1m  META_ARGS+=(--away-rank "11")[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6058896Z [36;1mfi[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6059289Z [36;1m# `year` 和上面两个一样，空的就不传：手动 probe 只填 home/away 时它是空串，[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6060038Z [36;1m# 原样传给 `--year` 会被 argparse 当成 `invalid int value: ''` 整步红掉，[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6060648Z [36;1m# 连 probe 产物都不提交（run 35869102144）。[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6061067Z [36;1mif [ -n "2026" ]; then[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6061481Z [36;1m  META_ARGS+=(--year "2026")[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6061861Z [36;1mfi[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6062253Z [36;1mPYTHONPATH=src python tools/assemble_spec.py \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6062711Z [36;1m  --slug "$SLUG" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6063177Z [36;1m  --home "alexander zverev" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6063599Z [36;1m  --away "novak djokovic" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6063998Z [36;1m  --event "Beijing" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6064378Z [36;1m  --round "" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6064729Z [36;1m  --court "" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6065087Z [36;1m  --home-country "" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6065468Z [36;1m  --away-country "" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6065916Z [36;1m  --received-at "2026-10-04T14:10:51Z" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6066377Z [36;1m  --captions "$OUT/captions.txt" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6066798Z [36;1m  --cuts "$OUT/probe.json" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6067313Z [36;1m  --source-url "https://www.youtube.com/watch?v=cjaHThpISKk" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6067810Z [36;1m  --cover \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6068154Z [36;1m  $ALIGN_ARGS \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6068516Z [36;1m  "${META_ARGS[@]}" \[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6068876Z [36;1m  --write[0m
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6110412Z shell: /usr/bin/bash -e {0}
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6110848Z env:
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6111295Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6111893Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6112473Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6113007Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6113540Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6114076Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6114755Z   DEEPSEEK_API_KEY: ***
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6115597Z   MINIMAX_API_KEY: ***
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:19.6115964Z ##[endgroup]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1786652Z {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1787919Z   "_draft": true,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1788563Z   "slug": "zverev-djokovic",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1789213Z   "_column": "reel",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1789773Z   "cover": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1790387Z     "matchup": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1790855Z       {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1791580Z         "name": "兹维列夫",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1792142Z         "name_en": "alexander zverev",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1792717Z         "country": null,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1793270Z         "rank": 2
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1793767Z       },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1794223Z       {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1794752Z         "name": "德约科维奇",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1795232Z         "name_en": "novak djokovic",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1795728Z         "country": null,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1796198Z         "rank": 11
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1797141Z       }
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1797714Z     ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1798417Z     "winner": "德约科维奇",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1799100Z     "result": "4-6 6-4 6-4"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1799964Z   },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1800618Z   "_production": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1801288Z     "kind": "orchestrated_reel",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1802057Z     "received_at": "2026-10-04T14:10:51Z",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1802855Z     "event": "Beijing",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1803523Z     "year": 2026,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1804167Z     "round": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1804807Z     "court": ""
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1805426Z   },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1806218Z   "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1807153Z   "_match": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1807811Z     "status": "result_verified",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1808587Z     "source": "flashscore_points",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1809355Z     "source_id": "Wpcpd4Ug",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1810113Z     "flashscore_id": "Wpcpd4Ug",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1810670Z     "participants": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1811223Z       "兹维列夫",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1811707Z       "德约科维奇"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1812116Z     ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1812517Z     "set_scores_home_away": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1812990Z       [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1813369Z         6,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1813753Z         4
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1814118Z       ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1814504Z       [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1814877Z         4,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1815250Z         6
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1815617Z       ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1815980Z       [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1816349Z         4,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1816716Z         6
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1817088Z       ]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1817464Z     ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1817948Z     "winner": "德约科维奇",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1818445Z     "loser": "兹维列夫",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1818876Z     "winner_result": "4-6 6-4 6-4",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1819384Z     "loser_result": "6-4 4-6 4-6",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1820050Z     "tiebreaks_home_away": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1820565Z       null,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1820958Z       null,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1821351Z       null
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1821727Z     ]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1822092Z   },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1822452Z   "stats": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1822838Z     "a": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1823233Z       "aces": 19,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1823631Z       "df": 0,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1824024Z       "first_in": 72,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1824443Z       "first_won": 51,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1824873Z       "second_total": 18,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1825327Z       "second_won": 10,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1825766Z       "bp_conv": 1,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1826203Z       "bp_chances": 4,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1826651Z       "pts_won": 85,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1827090Z       "pts_total": 180,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1827538Z       "first_total": 90,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1828073Z       "headshot": "assets/players/headshots/atp-Z355.png"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1828633Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1829012Z     "b": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1829398Z       "aces": 4,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1830074Z       "df": 3,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1830539Z       "first_in": 65,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1830980Z       "first_won": 53,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1831411Z       "second_total": 25,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1831859Z       "second_won": 13,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1832560Z       "bp_conv": 2,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1832987Z       "bp_chances": 5,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1833424Z       "pts_won": 95,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1833842Z       "pts_total": 180,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1834276Z       "first_total": 90,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1834799Z       "headshot": "assets/players/headshots/atp-D643.png"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1835349Z     }
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1835729Z   },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1836111Z   "_hit_data": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1836512Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1837083Z       "label": "德约科维奇 一发得分率摆动",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1837715Z       "detail": "第1盘76% → 第2盘80% → 第3盘90%",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1838249Z       "swing": 14,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1838807Z       "source": "flashscore df_st_1（分盘一发得分率）"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1839571Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1840124Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1840650Z       "label": "兹维列夫 破发点兑现",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1841181Z       "detail": "1/4（25%）",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1841734Z       "source": "flashscore df_st_1（破发点）"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1842255Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1842624Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1843079Z       "label": "德约科维奇 破发点兑现",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1843592Z       "detail": "2/5（40%）",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1844127Z       "source": "flashscore df_st_1（破发点）"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1844631Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1845009Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1845457Z       "label": "兹维列夫 连续保发",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1845993Z       "detail": "9 个发球局",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1846542Z       "source": "flashscore df_mh_1（逐局）"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1847058Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1847446Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1847904Z       "label": "德约科维奇 连续保发",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1848437Z       "detail": "14 个发球局",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1848994Z       "source": "flashscore df_mh_1（逐局）"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1849543Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1850094Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1850611Z       "label": "交手记录",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1851403Z       "detail": "Zverev A. 7 : 11 Djokovic N.（含本场） · 红土 1:3 · 草地 1:0 · 硬地 5:8",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1852109Z       "source": "flashscore df_hh_1"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1852665Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1853081Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1853526Z       "label": "近况",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1854256Z       "detail": "Zverev A. 最近 5 场 3 胜（LWWWL）；Djokovic N. 最近 5 场 3 胜（WWWLL）",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1855122Z       "source": "flashscore df_hh_1 Last matches"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1855689Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1856099Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1856590Z       "label": "总分差",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1857260Z       "detail": "兹维列夫 85 - 德约科维奇 95，净差 10 分，德约科维奇 领先",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1858060Z       "diff": 10,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1858796Z       "source": "flashscore df_mh_1（总分）",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1859521Z       "use": "body_only"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1860337Z     }
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1860930Z   ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1861496Z   "_durations": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1862114Z     [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1862630Z       "Set 1",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1863159Z       "0:59"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1863709Z     ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1864220Z     [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1864944Z       "Set 2",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1865501Z       "0:41"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1866051Z     ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1866570Z     [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1867102Z       "Set 3",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1867669Z       "0:55"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1868220Z     ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1868755Z     [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1869434Z       "全场",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1870229Z       "2:35"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1870820Z     ]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1871382Z   ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1871960Z   "_turning_points": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1872601Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1873488Z       "label": "【Set 3】4-6  兹维列夫发球，德约科维奇拿下  密度8  ← 2个破发点、2个赛点",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1874332Z       "density": 8,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1874823Z       "tags": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1875344Z         "2个破发点",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1875837Z         "2个赛点"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1876228Z       ]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1876611Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1877007Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1877816Z       "label": "【Set 1】6-4  兹维列夫发球，兹维列夫拿下  密度4  ← 2个破发点、1个盘点",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1878665Z       "density": 4,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1879275Z       "tags": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1880095Z         "2个破发点",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1880761Z         "1个盘点"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1881354Z       ]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1881931Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1882363Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1883034Z       "label": "【Set 1】5-4  德约科维奇发球，德约科维奇拿下  密度3  ← 1个破发点、1个盘点",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1883676Z       "density": 3,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1884146Z       "tags": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1884635Z         "1个破发点",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1885118Z         "1个盘点"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1885557Z       ]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1885970Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1886380Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1887030Z       "label": "【Set 2】4-6  兹维列夫发球，德约科维奇拿下  密度3  ← 1个破发点、1个盘点",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1887900Z       "density": 3,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1888353Z       "tags": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1888861Z         "1个破发点",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1889338Z         "1个盘点"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1889782Z       ]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1890408Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1890863Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1891569Z       "label": "【Set 1】1-0  德约科维奇发球，兹维列夫拿下  密度1  ← 1个破发点、破发成功",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1892243Z       "density": 1,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1892736Z       "tags": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1893268Z         "1个破发点",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1893795Z         "破发成功"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1894269Z       ]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1894714Z     }
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1895151Z   ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1895610Z   "_tactical_research": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1896114Z     "version": 1,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1896561Z     "identity": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1897038Z       "home": "alexander zverev",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1897603Z       "away": "novak djokovic",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1898159Z       "event": "Beijing",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1898728Z       "year": 2026,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1899241Z       "source_urls": []
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1899773Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1900431Z     "sources": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1900926Z       {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1901905Z         "url": "https://www.atptour.com/en/video/highlights-djokovic-rallies-past-zverev-for-beijing-2026-sf-spot",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1902921Z         "title": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1903437Z         "published_at": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1904005Z         "status": "read",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1904791Z         "text_sha256": "dc81f5fa85df4d126e85dcab000a0d9938fa3864c67f83780f69faaaa7f87d74",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1905666Z         "scope": "player_background",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1906230Z         "excerpts": [],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1906867Z         "note": "读到 3 段",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1907384Z         "match_verified": false
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1907899Z       },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1908339Z       {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1909024Z         "url": "https://www.atptour.com/en/news/zverev-djokovic-beijing-2026-sunday-qf",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1910064Z         "title": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1910587Z         "published_at": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1911107Z         "status": "read",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1911854Z         "text_sha256": "34c47fe5ba217d28fd881b173fe3a2269f75aa2c71a887417aa25d302f541a9f",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1912951Z         "scope": "candidate_match_report",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1913534Z         "excerpts": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1917352Z           "“I had a terrible start. Two double faults at the beginning. It was quite cold and honestly, I didn’t feel warmed up, but my fault,” Djokovic said. “I gave him an early break and then it was hard to come back in the first set. I had a couple of break points when he was serving for the set at 5-4, but didn’t use them, but I kind of felt already from midway through the first set that I was starting to get a good rhythm, at least one my serve and on serve plus one.”",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1924117Z           "Djokovic was made to pay for a slow start to what was an ultimately hard-fought opening set on Beijing’s stadium court, where Zverev expertly capitalised on a sloppy few opening points from his opponent to break serve in the first game. From there, Djokovic rapidly upped his level and, after saving a set point to hold serve for 4-5, he carved out his first break points of the match at 15/40 in the next game."
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1927353Z         ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1928057Z         "note": "读到 18 段",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1928742Z         "match_verified": false
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1929412Z       },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1930092Z       {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1930829Z         "url": "https://www.atptour.com/en/news/djokovic-beijing-2026-sunday-record",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1931672Z         "title": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1932164Z         "published_at": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1932673Z         "status": "read",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1933420Z         "text_sha256": "c0b46aeb597d17fbc321920ebf15cc2ce2ee9b3af085eb5f709f578cf877a019",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1934572Z         "scope": "player_background",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1935085Z         "excerpts": [],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1935634Z         "note": "读到 10 段",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1936124Z         "match_verified": false
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1936619Z       },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1937028Z       {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1938029Z         "url": "https://www.rolandgarros.com/en-us/article/atp-wta-jovic-guadalajara-title-davis-cup-rune-zverev-lehecka-qualies-final-8",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1939120Z         "title": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1939581Z         "published_at": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1940233Z         "status": "read",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1940949Z         "text_sha256": "590e714ceb28d17811a10cd458e47e0db4520f6cd5b915e77d47bba955d78ca4",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1941770Z         "scope": "player_background",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1942314Z         "excerpts": [],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1942868Z         "note": "读到 24 段",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1943363Z         "match_verified": false
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1943879Z       },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1944319Z       {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1945307Z         "url": "https://www.rolandgarros.com/en-us/article/2026-us-open-men-final-alexander-zverev-success-ben-shelton-second-grand-slam-title",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1946438Z         "title": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1946916Z         "published_at": "",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1947425Z         "status": "read",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1948150Z         "text_sha256": "8373215233a9454a043272ae53969c2ef94f8a69ab3ae8d7db66c54a65b7bb14",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1948946Z         "scope": "player_background",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1949481Z         "excerpts": [],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1950279Z         "note": "读到 39 段",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1950778Z         "match_verified": false
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1951247Z       }
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1951667Z     ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1952097Z     "source_status": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1952632Z       "brain_game": "feed HTTP 403; index HTTP 403",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1953341Z       "tennis_abstract": "feed HTTP 403; index HTTP 403",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1954069Z       "hugh_clarke": "feed HTTP 403; index HTTP 403",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1954790Z       "atp": "ok",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1955273Z       "wta": "no_matching_article",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1955775Z       "usopen": "no_matching_article",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1956700Z       "australian_open": "no_matching_article",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1957343Z       "roland_garros": "ok",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1957874Z       "wimbledon": "no_matching_article"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1958417Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1958855Z     "status": "ready",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1959411Z     "collected_at": "2026-10-04T14:18:21.984359+00:00",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1960206Z     "elapsed_seconds": 2.218
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1960719Z   },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1961126Z   "editorial": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1961578Z     "hook": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1962145Z       "先下一盘被连扳两盘",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1962649Z       "兹维列夫止步八强"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1963149Z     ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1963810Z     "question": "兹维列夫先下一盘后，德约科维奇是怎么把比赛翻过来的？",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1964741Z     "thesis": "德约科维奇靠着后两盘不断升高的一发得分率，耗掉了兹维列夫的9个连续保发局。",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1965414Z     "beats": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1966059Z       "首盘6比4，兹维列夫先声夺人。他打出一波9个连续保发局，发球局稳得像一面墙。",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1966806Z       "第二盘德约科维奇6比4扳回。他抓住了兹维列夫的一个发球局，比分来到1比1。",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1967608Z       "决胜盘德约科维奇6比4拿下。他的一发得分率从第2盘的百分之八十升到百分之九十，14个连续保发局锁死胜局。"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1968208Z     ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1968635Z     "chapters": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1969138Z       "先下一盘的强势",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1969638Z       "德约怎么扳回来",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1970314Z       "一发得分率定胜负"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1970766Z     ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1971367Z     "human_context": "这是两人第18次交手，德约科维奇把交手记录扩大到11比7。",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1971968Z     "narration": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1972544Z       "兹维列夫首盘6比4，一波9个连续保发局，发球局密不透风。",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1973157Z       "德约科维奇第二盘6比4扳平，抓住了兹维列夫全场仅有的一个破发点。",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1973796Z       "决胜盘德约科维奇6比4，一发得分率冲到百分之九十，连续14个发球局保发。"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1974313Z     ]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1975138Z   },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1975550Z   "push": {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1976079Z     "summary": "先丢一盘后越打越硬德约三盘翻回兹维列夫",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1977179Z     "lead": "兹维列夫首盘6比4先声夺人，还打出一波9个连续保发局。但德约科维奇此后越打越稳，第二盘抓住全场唯一一次破发机会以6比4扳平，决胜盘一发得分率冲到百分之九十，连续14个发球局保发，最终6比4拿下逆转。全场总得分德约科维奇只比兹维列夫多10分，差距全在后两盘的关键分上。",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1978047Z     "auto": true
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1978481Z   },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1978888Z   "segments": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1979320Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1979741Z       "start": 54.96,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1980503Z       "end": 61.32,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1981342Z       "narration": "兹维列夫首盘6比4，一波9个连续保发局，发球局密不透风。",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1982149Z       "fit": "crop",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1982774Z       "_beat": 1,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1983563Z       "_why": "无字幕源：按 probe 镜头切点选单镜头高光窗口；不跨切点"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1984218Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1984645Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1985091Z       "start": 158.06,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1985567Z       "end": 164.94,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1986250Z       "narration": "德约科维奇第二盘6比4扳平，抓住了兹维列夫全场仅有的一个破发点。",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1986891Z       "fit": "crop",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1987351Z       "_beat": 2,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1987937Z       "_why": "无字幕源：按 probe 镜头切点选单镜头高光窗口；不跨切点"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1988707Z     },
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1989123Z     {
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1989537Z       "start": 272.67,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1990155Z       "end": 280.35,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1990866Z       "narration": "决胜盘德约科维奇6比4，一发得分率冲到百分之九十，连续14个发球局保发。",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1991299Z       "fit": "crop",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1991623Z       "_beat": 3,
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1992029Z       "_why": "无字幕源：按 probe 镜头切点选单镜头高光窗口；不跨切点"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1992408Z     }
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1992702Z   ],
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1993114Z   "_segments_source": "probe.scene_cuts（无字幕机械兜底）",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1993517Z   "_notes": [
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1993905Z     "flashscore id：Wpcpd4Ug（按球员姓反查）",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1994425Z     "制胜分/非受迫失误：接口里没有——照 render_stat_card 的 OPTIONAL_FIELDS 留空",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1995185Z     "头像 stats.a（兹维列夫）：已发 spec 里认过，复用 assets/players/headshots/atp-Z355.png",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1995821Z     "头像 stats.b（德约科维奇）：已发 spec 里认过，复用 assets/players/headshots/atp-D643.png",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1996314Z     "狠数据候选 8 条",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1996693Z     "转折局候选 7 局，取前 5",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1997101Z     "赛果事实闸：德约科维奇 4-6 6-4 6-4 兹维列夫（赢家视角）",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1997559Z     "技战术资料：ready；未核观点不进入旁白",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1998023Z     "文案通道 deepseek · deepseek-v4-pro",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1998598Z     "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.1999124Z     "推送文案已通过事实校验；默认开启 QC 后自动推送",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.2000053Z     "⚠️ 窗口起草没成（FileNotFoundError: [Errno 2] No such file or directory: 'output/2026-10-04/reel/zverev-djokovic/captions.txt'）",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.2000793Z     "无字幕窗口兜底 3 段：全部单镜头且装得下旁白",
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.2001514Z     "⚠️ 封面抓取没成（SystemExit: 2026-10-02–2026-10-04 窗口里扫了 66 场，没有同时出现 ['zverev', 'djokovic'] 的比赛）——portrait 留空，终审或 render 前再补"
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.2002112Z   ]
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.2002451Z }
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.2002615Z 
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.2003023Z 草稿 → /home/runner/work/tennislive/tennislive/specs/reels/pending/zverev-djokovic.draft.json
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.2003428Z 
+reel	probe — 自动备料写 spec 草稿	2026-10-04T14:18:43.2003751Z 窗口（segments）和封面（cover.portrait 官方实拍）留给终审补，见草稿 _notes 里每个环节的成败。
+reel	probe — 视觉事实闸 + 双语原声冷开场	﻿2026-10-04T14:18:43.2142330Z ##[group]Run python tools/analyze_reel_visuals.py \
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2142874Z [36;1mpython tools/analyze_reel_visuals.py \[0m
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2143418Z [36;1m  --draft "specs/reels/pending/zverev-djokovic.draft.json" \[0m
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2143971Z [36;1m  --outdir "output/2026-10-04/reel/zverev-djokovic" \[0m
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2144415Z [36;1m  --write[0m
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2185397Z shell: /usr/bin/bash -e {0}
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2186021Z env:
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2186435Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2187027Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2187578Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2188083Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2188580Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2189241Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2190548Z   MINIMAX_API_KEY: ***
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2190977Z   DEEPSEEK_API_KEY: ***
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:43.2191332Z ##[endgroup]
+reel	probe — 视觉事实闸 + 双语原声冷开场	2026-10-04T14:18:56.9199269Z [waiting] 视觉证据未过闸：cold_open 理由引用窗口外时间：[278.5, 5.0, 3.0]；ending 理由引用窗口外时间：[0.25]；没有官方高清封面候选；封面无法证明是同一场，或疑似旧图/错图；封面置信度 0.20 低于 0.80；封面人物应为 德约科维奇，模型识别为 空；封面情绪应为 winner_celebration，现在是 other
+reel	probe — 提升通过硬闸的正式 spec	﻿2026-10-04T14:18:56.9503723Z ##[group]Run python tools/promote_reel_draft.py \
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9504273Z [36;1mpython tools/promote_reel_draft.py \[0m
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9504809Z [36;1m  --draft "specs/reels/pending/zverev-djokovic.draft.json" \[0m
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9505304Z [36;1m  --write[0m
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9545654Z shell: /usr/bin/bash -e {0}
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9546070Z env:
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9546474Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9547034Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9547605Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9548109Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9548606Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9549108Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:56.9549548Z ##[endgroup]
+reel	probe — 提升通过硬闸的正式 spec	2026-10-04T14:18:57.0514936Z [waiting] zverev-djokovic.draft.json: MiniMax 冷开场/结尾/封面视觉证据未通过；完整故事要求 5-10 段，现在 3 段；正片合计只有 20.9 秒，讲不清一场球的走向（低于 40 秒下界；已发语料最短约 69 秒）；赛果源缺 round，不能猜顶栏/比分板；赛果源缺 court，不能猜顶栏/比分板；兹维列夫缺 IOC 国别；德约科维奇缺 IOC 国别；官方高清封面文件未落库
+reel	丢掉不进仓库的中间物	﻿2026-10-04T14:18:57.0841074Z ##[group]Run OUTDIR="output/2026-10-04/reel/zverev-djokovic"
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0842047Z [36;1mOUTDIR="output/2026-10-04/reel/zverev-djokovic"[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0842705Z [36;1m# 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0843334Z [36;1m# _cover.html / poster.html 是封面那一屏的渲染输入，图以 data URI 内嵌，[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0844049Z [36;1m# 单个 12 MB，之前漏在清单外，每出一版就往仓库里塞一份。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0844597Z [36;1m# **poster.jpg 要留下**：推送正文的第一屏就是它，删了推送里就没有图。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0845057Z [36;1m# **`source*` 一整片删掉，不要逐个列名字。** 这个坑连着栽了四次，[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0845512Z [36;1m# 每次都是同一个形状：源片换了个名字，就从清单里溜过去了。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0846014Z [36;1m#   1. `source.fNNN.mp4.part`（yt-dlp 分轨下载的半成品，probe wang-pareja）[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0846571Z [36;1m#   2. 同一个漏在 eala-zheng、potapova-venus 上各中一次[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0847045Z [36;1m#   3. 分轨的 `.webm` 和 yt-dlp 的续传记录 `.ytdl`[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0847552Z [36;1m#   4. **多源之后叫 `source_r1.mp4` / `source_iv.mp4`**——加多源支持时[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0848103Z [36;1m#      改了下载的落盘名，没改这里（run 30603686748，三条源片 250 MB[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0848545Z [36;1m#      全被兜底拦下）。又一次「加新能力就要同时改三处」。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0848975Z [36;1m# 同理 `_versus_*` **不带后缀**：原来写死 `.jpg`，而抽帧抠图落的是[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0849455Z [36;1m# `_versus_cut_top.png`。现在它只剩抠之前那张原帧（`_versus_raw_*`）。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0850328Z [36;1m#[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0850706Z [36;1m# ⚠️ **`cover_src/` 是产物，不是中间物——别顺手加进这串 rm。**[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0851140Z [36;1m# 抓下来的帧和抠好的人存在那儿并**跟着提交**，为的是让封面返工能在[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0851598Z [36;1m# 沙箱里本地渲（`tools/render_cover_local.py`，实测 6.9 秒），[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0852081Z [36;1m# 不必为一行 CSS 上一趟 runner。量出来的账：shang-rublev 那 98 分钟里[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0852510Z [36;1m# 有 31 分钟全花在封面上，而三趟里帧一次都没变。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0852910Z [36;1m# 代价是每条片子多 0.1~3 MB（同目录下的成片是 40~95 MB）。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0853331Z [36;1m# 这是**认领过的取舍**，判据在 `test_封面素材要留在仓库里`。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0853788Z [36;1m# 下面 `rm -f "$OUTDIR"/...` 都不带 `-r` 且只作用在根上，碰不到它；[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0854257Z [36;1m# 而末尾那个「超过 8 MB 就报错」的兜底是**递归**的，所以它仍然管得住[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0854663Z [36;1m# 「有人往 cover_src 里塞了个大文件」。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0855073Z [36;1m# 封面候选帧只留候选墙和 json，12 张整帧不进仓库：q92 的 JPEG 单张[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0855546Z [36;1m# 132 KB、12 张 1.6 MB（存 PNG 是 9 MB），**两种都过得了「单个 8 MB」[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0856008Z [36;1m# 那道兜底**，却每探一次就加一份。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0856403Z [36;1m# 判据在 test_中间物一个都不许进仓库：按 glob 语义验覆盖，不验字面名字。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0856889Z [36;1mrm -f "$OUTDIR"/source* "$OUTDIR"/*.part "$OUTDIR"/*.ytdl \[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0857449Z [36;1m  "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0858007Z [36;1m  "$OUTDIR"/poster.html "$OUTDIR"/_versus_* "$OUTDIR"/_subs* \[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0858492Z [36;1m  "$OUTDIR"/cover_candidates/cand_*[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0858901Z [36;1mrm -rf "$OUTDIR"/frames[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0859284Z [36;1mls -la "$OUTDIR" || true[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0859652Z [36;1m[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0860421Z [36;1m# 兜底：上面那串模式挡住的是**已知**的中间物，挡不住下一个没见过的。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0860845Z [36;1m# 所以清完再量一次，超过 8 MB 的一律当成漏网并报错——宁可这一步红，[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0861262Z [36;1m# 也别再往仓库里塞一个没人发现的大文件（推分支吃 413 就是被 pack[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0861647Z [36;1m# 体积撑爆的）。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0861969Z [36;1m#[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0862330Z [36;1m# **成片走不到这里。** 2026-08-13 起成片不分体积一律在上面那一步发[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0862777Z [36;1m# Release 附件并当场 rm（来路见那一步的注释：.git 6.0 GB 里 4.93 GB[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0863215Z [36;1m# 是 mp4 blob），所以这个兜底不再给成片留白名单——原来那行[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0863659Z [36;1m# 「basename 是成片名就 continue」等于给「Release 步骤被跳过、成片[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0864096Z [36;1m# 漏进提交」开了个静默的口子。仍然出现在这儿的成片就是漏网，该红。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0864499Z [36;1m# 「成片按名字放行，不按体积放行」那段教训（20 MB 上限是从解说片[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0864901Z [36;1m# 搬来的、体积由时长决定，写死字节数等于给片长设暗上限）针对的是[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0865317Z [36;1m# 「成片还进 git」的时代，判据在 test_成片一律走Release不进git。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0865705Z [36;1m#[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0866101Z [36;1m# ⚠️ 这儿原来记着「实测 3315 / 3517 / 3610 kb/s」，那是 **9:16 时代**的数。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0866568Z [36;1m# 换成 3:4 之后取景窗从 608px 宽变成 810px，码率高了三成，而这句注释没跟着改，[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0867026Z [36;1m# 于是 2026-08-02 我照着它把片子排到 3 分 04 秒（按旧数算才 78 MB），[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0867480Z [36;1m# 渲出来 104 MiB，被当年提交那一步的 100 MiB 硬上限拦下，五分钟白跑。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0867989Z [36;1m# 当年的实测（都是从仓库里的成片量的，估体积仍按这套数）：[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0868406Z [36;1m#   eala-svitolina 81.9 MiB / 158.0s = 4348 kb/s[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0868862Z [36;1m#   wong-gea       80.2 MiB / 155.8s = 4318 kb/s[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0869341Z [36;1m#   eala-osaka 初版 104.0 MiB / 185.2s = 4712 kb/s   ← 进不了仓库[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0869975Z [36;1m#   eala-osaka 剪短后 94.5 MiB / 158.8s = 4990 kb/s（剪短之后码率反而更高：[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0870489Z [36;1m#     砍掉的是全片最静的那一段，留下的全是高动量的关键分）[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0870896Z [36;1m# **片长不设上限**（账号所有者：「不要砍片长」「文件多大都没关系」）。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0871312Z [36;1m# `load_spec` 在写 spec 那一刻就把估算打进日志。[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0871727Z [36;1mBAD=0[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0872063Z [36;1mwhile IFS= read -r f; do[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0872513Z [36;1m  echo "::error::清理之后仍有大文件进仓库：$f（$(stat -c%s "$f") 字节）"[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0872947Z [36;1m  BAD=1[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0873331Z [36;1mdone < <(find "$OUTDIR" -type f -size +8M)[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0873768Z [36;1m[ "$BAD" = 0 ] || exit 1[0m
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0913926Z shell: /usr/bin/bash -e {0}
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0914346Z env:
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0914769Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0915333Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0915884Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0916388Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0916887Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0917389Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.0917980Z ##[endgroup]
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1314912Z total 4536
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1315580Z drwxr-xr-x 2 runner runner   4096 Oct  4 14:18 .
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1316253Z drwxr-xr-x 3 runner runner   4096 Oct  4 14:12 ..
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1316931Z -rw-r--r-- 1 runner runner   2927 Oct  4 14:16 captions_debug.txt
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1317600Z -rw-r--r-- 1 runner runner 547180 Oct  4 14:15 contact_00.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1318093Z -rw-r--r-- 1 runner runner 558424 Oct  4 14:15 contact_01.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1318568Z -rw-r--r-- 1 runner runner 554169 Oct  4 14:15 contact_02.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1319043Z -rw-r--r-- 1 runner runner 560251 Oct  4 14:15 contact_03.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1319517Z -rw-r--r-- 1 runner runner 610588 Oct  4 14:15 contact_04.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1320225Z -rw-r--r-- 1 runner runner 124818 Oct  4 14:15 contact_05.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1320714Z -rw-r--r-- 1 runner runner  20439 Oct  4 14:17 probe.json
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1321215Z -rw-r--r-- 1 runner runner 182856 Oct  4 14:16 score_00.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1321708Z -rw-r--r-- 1 runner runner 193025 Oct  4 14:16 score_01.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1322174Z -rw-r--r-- 1 runner runner 217146 Oct  4 14:16 score_02.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1322642Z -rw-r--r-- 1 runner runner 219378 Oct  4 14:16 score_03.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1323113Z -rw-r--r-- 1 runner runner 200965 Oct  4 14:16 score_04.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1323581Z -rw-r--r-- 1 runner runner 208791 Oct  4 14:16 score_05.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1324051Z -rw-r--r-- 1 runner runner 218828 Oct  4 14:16 score_06.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1324513Z -rw-r--r-- 1 runner runner 173004 Oct  4 14:16 score_07.jpg
+reel	丢掉不进仓库的中间物	2026-10-04T14:18:57.1324999Z -rw-r--r-- 1 runner runner   5700 Oct  4 14:18 scoreboard.json
+reel	上传 artifact	﻿2026-10-04T14:18:57.1394765Z ##[group]Run actions/upload-artifact@v4
+reel	上传 artifact	2026-10-04T14:18:57.1395204Z with:
+reel	上传 artifact	2026-10-04T14:18:57.1395555Z   name: reel-zverev-djokovic-2537
+reel	上传 artifact	2026-10-04T14:18:57.1396277Z   path: output/2026-10-04/reel/zverev-djokovic
+reel	上传 artifact	!output/2026-10-04/reel/zverev-djokovic/source*
+reel	上传 artifact	!output/2026-10-04/reel/zverev-djokovic/frames/**
+reel	上传 artifact	
+reel	上传 artifact	2026-10-04T14:18:57.1396983Z   retention-days: 14
+reel	上传 artifact	2026-10-04T14:18:57.1397350Z   if-no-files-found: warn
+reel	上传 artifact	2026-10-04T14:18:57.1397719Z   compression-level: 6
+reel	上传 artifact	2026-10-04T14:18:57.1398065Z   overwrite: false
+reel	上传 artifact	2026-10-04T14:18:57.1398543Z   include-hidden-files: false
+reel	上传 artifact	2026-10-04T14:18:57.1398914Z env:
+reel	上传 artifact	2026-10-04T14:18:57.1399309Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	上传 artifact	2026-10-04T14:18:57.1400167Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	上传 artifact	2026-10-04T14:18:57.1400758Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	上传 artifact	2026-10-04T14:18:57.1401281Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	上传 artifact	2026-10-04T14:18:57.1401805Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	上传 artifact	2026-10-04T14:18:57.1402359Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	上传 artifact	2026-10-04T14:18:57.1402819Z ##[endgroup]
+reel	上传 artifact	2026-10-04T14:18:57.3050470Z (node:10800) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+reel	上传 artifact	2026-10-04T14:18:57.3051479Z (Use `node --trace-deprecation ...` to show where the warning was created)
+reel	上传 artifact	2026-10-04T14:18:57.3144153Z With the provided path, there will be 17 files uploaded
+reel	上传 artifact	2026-10-04T14:18:57.3151089Z Artifact name is valid!
+reel	上传 artifact	2026-10-04T14:18:57.3151882Z Root directory input is valid!
+reel	上传 artifact	2026-10-04T14:18:57.6412816Z Beginning upload of artifact content to blob storage
+reel	上传 artifact	2026-10-04T14:18:57.8245878Z (node:10800) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+reel	上传 artifact	2026-10-04T14:18:58.4218030Z Uploaded bytes 4391622
+reel	上传 artifact	2026-10-04T14:18:58.4775451Z Finished uploading artifact content to blob storage!
+reel	上传 artifact	2026-10-04T14:18:58.4776645Z SHA256 digest of uploaded artifact zip is 7a4eb4673c15b94076b9906a1cab0f68d51d611a434d4b39d0347508857f5208
+reel	上传 artifact	2026-10-04T14:18:58.4778131Z Finalizing artifact upload
+reel	上传 artifact	2026-10-04T14:18:58.7090916Z Artifact reel-zverev-djokovic-2537.zip successfully finalized. Artifact ID 11305494077
+reel	上传 artifact	2026-10-04T14:18:58.7092357Z Artifact reel-zverev-djokovic-2537 has been successfully uploaded! Final size is 4391622 bytes. Artifact ID is 11305494077
+reel	上传 artifact	2026-10-04T14:18:58.7097245Z Artifact download URL: https://github.com/robertyang87/tennislive/actions/runs/37208304068/artifacts/11305494077
+reel	提交产物	﻿2026-10-04T14:18:58.7227098Z ##[group]Run git config user.name "Claude"
+reel	提交产物	2026-10-04T14:18:58.7227686Z [36;1mgit config user.name "Claude"[0m
+reel	提交产物	2026-10-04T14:18:58.7228153Z [36;1mgit config user.email "noreply@anthropic.com"[0m
+reel	提交产物	2026-10-04T14:18:58.7228646Z [36;1mOUTDIR="output/2026-10-04/reel/zverev-djokovic"[0m
+reel	提交产物	2026-10-04T14:18:58.7229120Z [36;1m# 只 add 本次的目录：一起 add output/ 会把别的选题的成片一并重放，[0m
+reel	提交产物	2026-10-04T14:18:58.7229551Z [36;1m# 并行跑的时候会来回覆盖（explainer 那条线上踩过）[0m
+reel	提交产物	2026-10-04T14:18:58.7230192Z [36;1mgit add "$OUTDIR"[0m
+reel	提交产物	2026-10-04T14:18:58.7230637Z [36;1m# 自动备料的草稿 spec 也要落库——assemble_spec --write 写到[0m
+reel	提交产物	2026-10-04T14:18:58.7231135Z [36;1m# specs/reels/pending/（⚠️ 不是 specs/reels/ 正下方：那儿被非递归[0m
+reel	提交产物	2026-10-04T14:18:58.7231625Z [36;1m# glob("*.json") 的判据扫着，一份草稿曾把 main CI 红过两小时，见[0m
+reel	提交产物	2026-10-04T14:18:58.7232122Z [36;1m# specs/reels/pending/README.md），不在 $OUTDIR 里，不加这步终审在[0m
+reel	提交产物	2026-10-04T14:18:58.7232632Z [36;1m# git 里根本看不到草稿。只 add 本 slug 的草稿，别把别人的一起带上；[0m
+reel	提交产物	2026-10-04T14:18:58.7233064Z [36;1m# 文件不存在（没备料/已提升成正式 spec）就跳过。[0m
+reel	提交产物	2026-10-04T14:18:58.7233613Z [36;1mif [ -f "specs/reels/pending/zverev-djokovic.draft.json" ]; then[0m
+reel	提交产物	2026-10-04T14:18:58.7234191Z [36;1m  git add "specs/reels/pending/zverev-djokovic.draft.json"[0m
+reel	提交产物	2026-10-04T14:18:58.7234663Z [36;1mfi[0m
+reel	提交产物	2026-10-04T14:18:58.7235031Z [36;1m# 全部证据过闸时 pending 会被提升并删除；正式 spec + 推送文案必须和[0m
+reel	提交产物	2026-10-04T14:18:58.7235476Z [36;1m# probe 产物同一提交落库，后面的 render 只认这两个正式文件。[0m
+reel	提交产物	2026-10-04T14:18:58.7235955Z [36;1mif [ -f "specs/reels/zverev-djokovic.json" ]; then[0m
+reel	提交产物	2026-10-04T14:18:58.7236437Z [36;1m  git add "specs/reels/zverev-djokovic.json"[0m
+reel	提交产物	2026-10-04T14:18:58.7236845Z [36;1mfi[0m
+reel	提交产物	2026-10-04T14:18:58.7237234Z [36;1mif [ -f "specs/reels/zverev-djokovic.xhs.txt" ]; then[0m
+reel	提交产物	2026-10-04T14:18:58.7237734Z [36;1m  git add "specs/reels/zverev-djokovic.xhs.txt"[0m
+reel	提交产物	2026-10-04T14:18:58.7238154Z [36;1mfi[0m
+reel	提交产物	2026-10-04T14:18:58.7238714Z [36;1mgit add -u "specs/reels/pending" 2>/dev/null || true[0m
+reel	提交产物	2026-10-04T14:18:58.7239242Z [36;1m# assemble_spec --cover 把 WTA 官方赛后稿头图写到 assets/reel/，不在[0m
+reel	提交产物	2026-10-04T14:18:58.7239772Z [36;1m# OUTDIR 或 pending/ 里。漏 add 会让草稿引用一张 runner 消失后不存在的图。[0m
+reel	提交产物	2026-10-04T14:18:58.7240490Z [36;1mCOVER_ASSET="assets/reel/zverev-djokovic-cover.jpg"[0m
+reel	提交产物	2026-10-04T14:18:58.7240990Z [36;1mif [ -f "$COVER_ASSET" ]; then[0m
+reel	提交产物	2026-10-04T14:18:58.7241414Z [36;1m  git add "$COVER_ASSET"[0m
+reel	提交产物	2026-10-04T14:18:58.7241808Z [36;1mfi[0m
+reel	提交产物	2026-10-04T14:18:58.7242169Z [36;1mif git diff --cached --quiet; then[0m
+reel	提交产物	2026-10-04T14:18:58.7242606Z [36;1m  echo "没有变化"[0m
+reel	提交产物	2026-10-04T14:18:58.7242970Z [36;1m  exit 0[0m
+reel	提交产物	2026-10-04T14:18:58.7243312Z [36;1mfi[0m
+reel	提交产物	2026-10-04T14:18:58.7243652Z [36;1mBRANCH="main"[0m
+reel	提交产物	2026-10-04T14:18:58.7244049Z [36;1mMSG="reel: probe zverev-djokovic"[0m
+reel	提交产物	2026-10-04T14:18:58.7244517Z [36;1mpython tools/check_staged_file_sizes.py[0m
+reel	提交产物	2026-10-04T14:18:58.7244948Z [36;1mgit commit -m "$MSG"[0m
+reel	提交产物	2026-10-04T14:18:58.7245367Z [36;1m# 多条不同 slug 可以并行落库。push 被别的 run 抢先后，只把本条[0m
+reel	提交产物	2026-10-04T14:18:58.7245798Z [36;1m# OUTDIR 重放到最新分支；普通 rebase 遇到同名二进制文件会冲突，[0m
+reel	提交产物	2026-10-04T14:18:58.7246232Z [36;1m# 而 `break` 版循环在重试耗尽后还会错误地继续微信推送。[0m
+reel	提交产物	2026-10-04T14:18:58.7246612Z [36;1m#[0m
+reel	提交产物	2026-10-04T14:18:58.7246949Z [36;1m# **重放按「这次提交真正改了什么」算，不按写死的目录算。**[0m
+reel	提交产物	2026-10-04T14:18:58.7247423Z [36;1m# 老写法 `rm -rf $OUTDIR && git checkout rendered -- $OUTDIR` 有两个洞：[0m
+reel	提交产物	2026-10-04T14:18:58.7247929Z [36;1m# ① 只重放 OUTDIR——同一个提交里 OUTDIR 之外的文件（比如 probe[0m
+reel	提交产物	2026-10-04T14:18:58.7248421Z [36;1m#    自动备料写的 specs/reels/<slug>.draft.json）被 reset --hard[0m
+reel	提交产物	2026-10-04T14:18:58.7248895Z [36;1m#    抹掉之后**静默丢失**；草稿哪天挪个位置，这里还得跟着改，[0m
+reel	提交产物	2026-10-04T14:18:58.7249296Z [36;1m#    而漏改不吭声。[0m
+reel	提交产物	2026-10-04T14:18:58.7249675Z [36;1m# ② 「重放只加不减」的老毛病靠 rm -rf 补（run 30727483963：走了[0m
+reel	提交产物	2026-10-04T14:18:58.7250299Z [36;1m#    Release、已经 rm 掉的旧成片被 reset --hard 救活）——而 rm 的[0m
+reel	提交产物	2026-10-04T14:18:58.7250748Z [36;1m#    范围同样写死在 OUTDIR，跟 ① 一个形状。[0m
+reel	提交产物	2026-10-04T14:18:58.7251197Z [36;1m# 两条 diff 把这次提交动过的每一个文件原样搬回来：[0m
+reel	提交产物	2026-10-04T14:18:58.7251629Z [36;1m#   小写 d ＝ 排除删除（新增/修改的那些），checkout 恢复内容并进索引；[0m
+reel	提交产物	2026-10-04T14:18:58.7252232Z [36;1m#   大写 D ＝ 该提交删掉的那些（走了 Release 的旧成片），git rm 把[0m
+reel	提交产物	2026-10-04T14:18:58.7252713Z [36;1m#   reset --hard 刚救活的那份再删掉并进索引。--sparse：稀疏检出下[0m
+reel	提交产物	2026-10-04T14:18:58.7253205Z [36;1m#   照样能动索引；--ignore-unmatch：新 origin 上已经没有它也不红。[0m
+reel	提交产物	2026-10-04T14:18:58.7253696Z [36;1m# 每次重放都重新 `git branch -f rendered HEAD`，所以[0m
+reel	提交产物	2026-10-04T14:18:58.7254135Z [36;1m# `rendered^..rendered` 永远正好是本次这一个提交。[0m
+reel	提交产物	2026-10-04T14:18:58.7254548Z [36;1mreplay_onto_latest() {[0m
+reel	提交产物	2026-10-04T14:18:58.7254936Z [36;1m  git fetch origin "$BRANCH"[0m
+reel	提交产物	2026-10-04T14:18:58.7255337Z [36;1m  git branch -f rendered HEAD[0m
+reel	提交产物	2026-10-04T14:18:58.7255763Z [36;1m  git reset --hard "origin/$BRANCH"[0m
+reel	提交产物	2026-10-04T14:18:58.7256267Z [36;1m  git diff --name-only -z --diff-filter=d rendered^ rendered \[0m
+reel	提交产物	2026-10-04T14:18:58.7256786Z [36;1m    | xargs -0 -r git checkout rendered --[0m
+reel	提交产物	2026-10-04T14:18:58.7257385Z [36;1m  git diff --name-only -z --diff-filter=D rendered^ rendered \[0m
+reel	提交产物	2026-10-04T14:18:58.7257941Z [36;1m    | xargs -0 -r git rm -q -f --ignore-unmatch --sparse --[0m
+reel	提交产物	2026-10-04T14:18:58.7258456Z [36;1m  python tools/check_staged_file_sizes.py[0m
+reel	提交产物	2026-10-04T14:18:58.7258937Z [36;1m  git diff --cached --quiet || git commit -m "$MSG"[0m
+reel	提交产物	2026-10-04T14:18:58.7259364Z [36;1m}[0m
+reel	提交产物	2026-10-04T14:18:58.7259759Z [36;1m# **main 上的 probe 第一次 push 必然被拒**：开跑那一步（probe_claims.py[0m
+reel	提交产物	2026-10-04T14:18:58.7260498Z [36;1m# probe-step）刚往 main 推过一笔源片认领，脚下的检出落后一个提交——[0m
+reel	提交产物	2026-10-04T14:18:58.7260971Z [36;1m# 照老路要白走一趟「被拒 → fetch → 重放 → sleep 5~14 秒」。所以先取一次、[0m
+reel	提交产物	2026-10-04T14:18:58.7261452Z [36;1m# 重放到最新的 main 上再推，不 sleep（编排器点的 probe 全跑在 main 上，[0m
+reel	提交产物	2026-10-04T14:18:58.7261914Z [36;1m# 每一趟都省这 6~20 秒）。认领没推上的那趟也照样走这条，只多一次 fetch。[0m
+reel	提交产物	2026-10-04T14:18:58.7262391Z [36;1mif [ "probe" = "probe" ] && [ "$BRANCH" = "main" ]; then[0m
+reel	提交产物	2026-10-04T14:18:58.7262897Z [36;1m  echo "main 上的 probe：开跑时推过源片认领，先重放到最新的 main 上再推"[0m
+reel	提交产物	2026-10-04T14:18:58.7263361Z [36;1m  replay_onto_latest[0m
+reel	提交产物	2026-10-04T14:18:58.7263722Z [36;1mfi[0m
+reel	提交产物	2026-10-04T14:18:58.7264077Z [36;1mfor attempt in $(seq 1 10); do[0m
+reel	提交产物	2026-10-04T14:18:58.7264511Z [36;1m  if git push origin "HEAD:$BRANCH"; then[0m
+reel	提交产物	2026-10-04T14:18:58.7264929Z [36;1m    exit 0[0m
+reel	提交产物	2026-10-04T14:18:58.7265264Z [36;1m  fi[0m
+reel	提交产物	2026-10-04T14:18:58.7265666Z [36;1m  echo "push 被拒（第 $attempt 次），把本次提交动过的文件重放到最新的 $BRANCH 上"[0m
+reel	提交产物	2026-10-04T14:18:58.7266112Z [36;1m  replay_onto_latest[0m
+reel	提交产物	2026-10-04T14:18:58.7266509Z [36;1m  sleep $((attempt * 5 + RANDOM % 10))[0m
+reel	提交产物	2026-10-04T14:18:58.7266914Z [36;1mdone[0m
+reel	提交产物	2026-10-04T14:18:58.7267303Z [36;1mecho "::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链"[0m
+reel	提交产物	2026-10-04T14:18:58.7267720Z [36;1mexit 1[0m
+reel	提交产物	2026-10-04T14:18:58.7307978Z shell: /usr/bin/bash -e {0}
+reel	提交产物	2026-10-04T14:18:58.7308407Z env:
+reel	提交产物	2026-10-04T14:18:58.7308841Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	提交产物	2026-10-04T14:18:58.7309406Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	提交产物	2026-10-04T14:18:58.7310075Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	提交产物	2026-10-04T14:18:58.7310741Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	提交产物	2026-10-04T14:18:58.7311292Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	提交产物	2026-10-04T14:18:58.7311811Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	提交产物	2026-10-04T14:18:58.7312673Z ##[endgroup]
+reel	提交产物	2026-10-04T14:18:59.0263387Z staged-size gate: 18 个文件，最大 output/2026-10-04/reel/zverev-djokovic/contact_04.jpg（0.6 MiB）
+reel	提交产物	2026-10-04T14:18:59.0568618Z [main cc89397] reel: probe zverev-djokovic
+reel	提交产物	2026-10-04T14:18:59.0569409Z  18 files changed, 1210 insertions(+)
+reel	提交产物	2026-10-04T14:18:59.0570275Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/captions_debug.txt
+reel	提交产物	2026-10-04T14:18:59.0570944Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_00.jpg
+reel	提交产物	2026-10-04T14:18:59.0571510Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_01.jpg
+reel	提交产物	2026-10-04T14:18:59.0572340Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_02.jpg
+reel	提交产物	2026-10-04T14:18:59.0573124Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_03.jpg
+reel	提交产物	2026-10-04T14:18:59.0574318Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_04.jpg
+reel	提交产物	2026-10-04T14:18:59.0575119Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_05.jpg
+reel	提交产物	2026-10-04T14:18:59.0575668Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/probe.json
+reel	提交产物	2026-10-04T14:18:59.0576248Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_00.jpg
+reel	提交产物	2026-10-04T14:18:59.0576846Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_01.jpg
+reel	提交产物	2026-10-04T14:18:59.0577431Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_02.jpg
+reel	提交产物	2026-10-04T14:18:59.0578013Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_03.jpg
+reel	提交产物	2026-10-04T14:18:59.0578575Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_04.jpg
+reel	提交产物	2026-10-04T14:18:59.0579124Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_05.jpg
+reel	提交产物	2026-10-04T14:18:59.0579664Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_06.jpg
+reel	提交产物	2026-10-04T14:18:59.0580530Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_07.jpg
+reel	提交产物	2026-10-04T14:18:59.0581094Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/scoreboard.json
+reel	提交产物	2026-10-04T14:18:59.0581671Z  create mode 100644 specs/reels/pending/zverev-djokovic.draft.json
+reel	提交产物	2026-10-04T14:18:59.0582485Z main 上的 probe：开跑时推过源片认领，先重放到最新的 main 上再推
+reel	提交产物	2026-10-04T14:18:59.4351985Z From https://github.com/robertyang87/tennislive
+reel	提交产物	2026-10-04T14:18:59.4352673Z  * branch            main       -> FETCH_HEAD
+reel	提交产物	2026-10-04T14:18:59.8061976Z HEAD is now at d2ca963 probe: 认领源片 cjaHThpISKk（zverev-djokovic）
+reel	提交产物	2026-10-04T14:18:59.9608099Z staged-size gate: 18 个文件，最大 output/2026-10-04/reel/zverev-djokovic/contact_04.jpg（0.6 MiB）
+reel	提交产物	2026-10-04T14:19:00.0069062Z [main 8acb855] reel: probe zverev-djokovic
+reel	提交产物	2026-10-04T14:19:00.0070032Z  18 files changed, 1210 insertions(+)
+reel	提交产物	2026-10-04T14:19:00.0070827Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/captions_debug.txt
+reel	提交产物	2026-10-04T14:19:00.0071659Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_00.jpg
+reel	提交产物	2026-10-04T14:19:00.0072248Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_01.jpg
+reel	提交产物	2026-10-04T14:19:00.0072913Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_02.jpg
+reel	提交产物	2026-10-04T14:19:00.0073643Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_03.jpg
+reel	提交产物	2026-10-04T14:19:00.0074215Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_04.jpg
+reel	提交产物	2026-10-04T14:19:00.0074812Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/contact_05.jpg
+reel	提交产物	2026-10-04T14:19:00.0075400Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/probe.json
+reel	提交产物	2026-10-04T14:19:00.0075976Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_00.jpg
+reel	提交产物	2026-10-04T14:19:00.0076560Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_01.jpg
+reel	提交产物	2026-10-04T14:19:00.0077126Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_02.jpg
+reel	提交产物	2026-10-04T14:19:00.0077928Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_03.jpg
+reel	提交产物	2026-10-04T14:19:00.0078486Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_04.jpg
+reel	提交产物	2026-10-04T14:19:00.0079048Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_05.jpg
+reel	提交产物	2026-10-04T14:19:00.0079594Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_06.jpg
+reel	提交产物	2026-10-04T14:19:00.0080275Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/score_07.jpg
+reel	提交产物	2026-10-04T14:19:00.0080848Z  create mode 100644 output/2026-10-04/reel/zverev-djokovic/scoreboard.json
+reel	提交产物	2026-10-04T14:19:00.0081452Z  create mode 100644 specs/reels/pending/zverev-djokovic.draft.json
+reel	提交产物	2026-10-04T14:19:02.2287303Z To https://github.com/robertyang87/tennislive
+reel	提交产物	2026-10-04T14:19:02.2287876Z    d2ca963..8acb855  HEAD -> main
+reel	probe 正式 spec 就绪后自动派发 render	﻿2026-10-04T14:19:02.2393483Z ##[group]Run SPEC="specs/reels/zverev-djokovic.json"
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2394154Z [36;1mSPEC="specs/reels/zverev-djokovic.json"[0m
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2394740Z [36;1mACTION=$(python tools/probe_dispatch_gate.py --spec "$SPEC") || exit 1[0m
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2395292Z [36;1mif [ "$ACTION" != "dispatch" ]; then[0m
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2395737Z [36;1m  exit 0[0m
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2396077Z [36;1mfi[0m
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2396464Z [36;1mgh workflow run match-reel.yml --ref main \[0m
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2396925Z [36;1m  -f mode=render \[0m
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2397342Z [36;1m  -f slug="zverev-djokovic" \[0m
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2397786Z [36;1m  -f received_at="2026-10-04T14:10:51Z"[0m
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2398247Z [36;1mecho "[dispatch] render zverev-djokovic"[0m
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2440927Z shell: /usr/bin/bash -e {0}
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2441364Z env:
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2441789Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2442370Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2442986Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2443506Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2444023Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2444551Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2447183Z   GH_TOKEN: ***
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2447536Z ##[endgroup]
+reel	probe 正式 spec 就绪后自动派发 render	2026-10-04T14:19:02.2757479Z [waiting] 严格生产证据未齐；本次不 dispatch render
+reel	Post 缓存源片（同一条片子只下一次）	﻿2026-10-04T14:19:02.2933448Z Post job cleanup.
+reel	Post 缓存源片（同一条片子只下一次）	2026-10-04T14:19:02.3938318Z (node:11087) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+reel	Post 缓存源片（同一条片子只下一次）	2026-10-04T14:19:02.3939222Z (Use `node --trace-deprecation ...` to show where the warning was created)
+reel	Post 缓存源片（同一条片子只下一次）	2026-10-04T14:19:02.4078213Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/tennislive/tennislive --files-from manifest.txt --use-compress-program zstdmt
+reel	Post 缓存源片（同一条片子只下一次）	2026-10-04T14:19:02.7397760Z (node:11087) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+reel	Post 缓存源片（同一条片子只下一次）	2026-10-04T14:19:03.7332206Z Sent 53477376 of 121943594 (43.9%), 51.0 MBs/sec
+reel	Post 缓存源片（同一条片子只下一次）	2026-10-04T14:19:04.7339525Z Sent 121943594 of 121943594 (100.0%), 58.1 MBs/sec
+reel	Post 缓存源片（同一条片子只下一次）	2026-10-04T14:19:04.9405682Z Cache saved with key: reel-src-zverev-djokovic-1030d1079567471a
+reel	Post 缓存技战术资料	﻿2026-10-04T14:19:04.9512436Z Post job cleanup.
+reel	Post 缓存技战术资料	2026-10-04T14:19:05.0615833Z (node:11107) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+reel	Post 缓存技战术资料	2026-10-04T14:19:05.0617489Z (Use `node --trace-deprecation ...` to show where the warning was created)
+reel	Post 缓存技战术资料	2026-10-04T14:19:05.0779072Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/tennislive/tennislive --files-from manifest.txt --use-compress-program zstdmt
+reel	Post 缓存技战术资料	2026-10-04T14:19:05.2723866Z (node:11107) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+reel	Post 缓存技战术资料	2026-10-04T14:19:05.4721052Z Sent 8051 of 8051 (100.0%), 0.0 MBs/sec
+reel	Post 缓存技战术资料	2026-10-04T14:19:05.5599116Z Cache saved with key: tactical-reading-Linux-v1-37208304068
+reel	Post Run actions/setup-python@v5	﻿2026-10-04T14:19:05.5694467Z Post job cleanup.
+reel	Post Run actions/setup-python@v5	2026-10-04T14:19:05.6882658Z Cache hit occurred on the primary key setup-python-Linux-x64-24.04-Ubuntu-python-3.11.16-pip-f30d553b049b1e139a484dff64c8d91cee2bbd9069ad9d73af9b4046513bd2ac, not saving cache.
+reel	Post Run actions/setup-python@v5	2026-10-04T14:19:05.6884921Z (node:11127) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+reel	Post Run actions/setup-python@v5	2026-10-04T14:19:05.6886205Z (Use `node --trace-deprecation ...` to show where the warning was created)
+reel	Post Run actions/checkout@v4	﻿2026-10-04T14:19:05.6998235Z Post job cleanup.
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.7826266Z [command]/usr/bin/git version
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.7874701Z git version 2.55.0
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.7913667Z Temporarily overriding HOME='/home/runner/work/_temp/5c842b0b-e46a-4cd0-8910-15b22f686447' before making global git config changes
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.7914730Z Adding repository directory to the temporary git global config as a safe directory
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.7920333Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tennislive/tennislive
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.7963582Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.7996679Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.8257031Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.8280391Z http.https://github.com/.extraheader
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.8290783Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.8329078Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.8569731Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+reel	Post Run actions/checkout@v4	2026-10-04T14:19:05.8605538Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+reel	Complete job	﻿2026-10-04T14:19:05.9010799Z Cleaning up orphan processes
+reel	Complete job	2026-10-04T14:19:05.9291340Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache@v4, actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

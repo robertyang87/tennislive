@@ -1,0 +1,742 @@
+{
+  "original": {
+    "word": "重打",
+    "char": "重",
+    "sentence": "侧边LED在回合中闪动，回看后判重打。比分退回十五平，重打高芙赢分并保发。孙心然最终五比七、一比六告负。",
+    "tts_text": "侧边LED在回合中闪动，回看后判重打。比分退回十五平，重打高芙赢分并保发。孙心然最终五比七、一比六告负。",
+    "intended_refs": [
+      "崇",
+      "虫"
+    ],
+    "wrong_refs": [
+      "众",
+      "仲"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "correct",
+    "score": 0.998,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.04,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.003,
+        "d_wrong": 2.092,
+        "score": 0.997
+      },
+      "comb": {
+        "d_intended": 0.003,
+        "d_wrong": 3.612,
+        "score": 0.998
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.003,
+      "wrong": 6.674
+    },
+    "separation": {
+      "spec": {
+        "within": 2.654,
+        "between": 3.151,
+        "separation": 1.187
+      },
+      "f0": {
+        "within": 0.752,
+        "between": 1.894,
+        "separation": 2.519
+      },
+      "comb": {
+        "within": 2.079,
+        "between": 3.47,
+        "separation": 1.669
+      }
+    },
+    "selftest_loo": {
+      "崇": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.262
+      },
+      "虫": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.185
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.215
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.141
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:崇": {
+        "spec": 0.0,
+        "f0": 0.003,
+        "vmis": 0.0,
+        "frames": 31,
+        "comb": 0.003
+      },
+      "A:虫": {
+        "spec": 2.544,
+        "f0": 0.841,
+        "vmis": 0.091,
+        "frames": 33,
+        "comb": 2.113
+      },
+      "B:众": {
+        "spec": 3.362,
+        "f0": 2.34,
+        "vmis": 0.235,
+        "frames": 34,
+        "comb": 4.021
+      },
+      "B:仲": {
+        "spec": 3.04,
+        "f0": 2.092,
+        "vmis": 0.281,
+        "frames": 32,
+        "comb": 3.612
+      }
+    },
+    "window_s": [
+      3.312,
+      3.61
+    ],
+    "boundary_token": "重打",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "侧边",
+        "LED",
+        "在",
+        "回合",
+        "中",
+        "闪动",
+        "回看",
+        "后",
+        "判",
+        "重打",
+        "比分",
+        "退回",
+        "十五",
+        "平",
+        "重打",
+        "高芙",
+        "赢",
+        "分",
+        "并",
+        "保发",
+        "孙心然",
+        "最终",
+        "五比七",
+        "一",
+        "比",
+        "六",
+        "告负"
+      ],
+      "A:崇": [
+        "侧边",
+        "LED",
+        "在",
+        "回合",
+        "中",
+        "闪动",
+        "回看",
+        "后",
+        "判",
+        "崇打",
+        "比分",
+        "退回",
+        "十五",
+        "平",
+        "重打",
+        "高芙",
+        "赢",
+        "分",
+        "并",
+        "保发",
+        "孙心然",
+        "最终",
+        "五比七",
+        "一",
+        "比",
+        "六",
+        "告负"
+      ],
+      "A:虫": [
+        "侧边",
+        "LED",
+        "在",
+        "回合",
+        "中",
+        "闪动",
+        "回看",
+        "后",
+        "判虫",
+        "打",
+        "比分",
+        "退回",
+        "十五",
+        "平",
+        "重打",
+        "高芙",
+        "赢",
+        "分",
+        "并",
+        "保发",
+        "孙心然",
+        "最终",
+        "五比七",
+        "一",
+        "比",
+        "六",
+        "告负"
+      ],
+      "B:众": [
+        "侧边",
+        "LED",
+        "在",
+        "回合",
+        "中",
+        "闪动",
+        "回看",
+        "后",
+        "判众",
+        "打",
+        "比分",
+        "退回",
+        "十五",
+        "平",
+        "重打",
+        "高芙",
+        "赢",
+        "分",
+        "并",
+        "保发",
+        "孙心然",
+        "最终",
+        "五比七",
+        "一",
+        "比",
+        "六",
+        "告负"
+      ],
+      "B:仲": [
+        "侧边",
+        "LED",
+        "在",
+        "回合",
+        "中",
+        "闪动",
+        "回看",
+        "后",
+        "判",
+        "仲打",
+        "比分",
+        "退回",
+        "十五",
+        "平",
+        "重打",
+        "高芙",
+        "赢",
+        "分",
+        "并",
+        "保发",
+        "孙心然",
+        "最终",
+        "五比七",
+        "一",
+        "比",
+        "六",
+        "告负"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -2.6,
+        null,
+        -9.3,
+        -9.1,
+        -8.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -8.4,
+        -8.4,
+        -7.3,
+        -6.0,
+        -4.8
+      ],
+      "A:崇": [
+        -2.6,
+        null,
+        -9.3,
+        -9.1,
+        -8.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -8.4,
+        -8.4,
+        -7.3,
+        -6.0,
+        -4.8
+      ],
+      "A:虫": [
+        -2.2,
+        -3.9,
+        -5.7,
+        -7.6,
+        -8.1,
+        -8.3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -9.2,
+        -8.1,
+        -6.9,
+        -5.9,
+        -5.5
+      ],
+      "B:众": [
+        0.5,
+        -0.5,
+        -3.7,
+        -5.6,
+        -6.2,
+        -6.3,
+        -6.0,
+        null,
+        null,
+        null,
+        -2.1,
+        -4.7,
+        -6.4,
+        -7.7,
+        -8.4,
+        -8.5
+      ],
+      "B:仲": [
+        -0.3,
+        -6.9,
+        -6.0,
+        -7.4,
+        -7.8,
+        null,
+        null,
+        -1.3,
+        -4.0,
+        -5.7,
+        -6.9,
+        -8.2,
+        -7.4,
+        -7.1
+      ]
+    },
+    "audio": {
+      "ORIG": "/home/agent/.cache/tennislive/polyphone/46b1849c3af956580eeb7edc.mp3",
+      "A:崇": "/home/agent/.cache/tennislive/polyphone/d1230c2ebbee33f611ac42d4.mp3",
+      "A:虫": "/home/agent/.cache/tennislive/polyphone/10f5f1563e5090e2b390e812.mp3",
+      "B:众": "/home/agent/.cache/tennislive/polyphone/086dbf440235e0f38c4f2bb0.mp3",
+      "B:仲": "/home/agent/.cache/tennislive/polyphone/452719ca8516237f85af0db7.mp3"
+    }
+  },
+  "candidate": {
+    "word": "重打",
+    "char": "重",
+    "sentence": "侧边LED在回合中闪动，回看后判重打。比分退回十五平，重打高芙赢分并保发。孙心然最终五比七、一比六告负。",
+    "tts_text": "侧边LED在回合中闪动，回看后判崇打。比分退回十五平，重打高芙赢分并保发。孙心然最终五比七、一比六告负。",
+    "intended_refs": [
+      "崇",
+      "虫"
+    ],
+    "wrong_refs": [
+      "众",
+      "仲"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "correct",
+    "score": 1.0,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.039,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.0,
+        "d_wrong": 2.091,
+        "score": 1.0
+      },
+      "comb": {
+        "d_intended": 0.0,
+        "d_wrong": 3.611,
+        "score": 1.0
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.0,
+      "wrong": 6.677
+    },
+    "separation": {
+      "spec": {
+        "within": 2.653,
+        "between": 3.15,
+        "separation": 1.187
+      },
+      "f0": {
+        "within": 0.752,
+        "between": 1.894,
+        "separation": 2.519
+      },
+      "comb": {
+        "within": 2.079,
+        "between": 3.469,
+        "separation": 1.669
+      }
+    },
+    "selftest_loo": {
+      "崇": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.262
+      },
+      "虫": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.185
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.215
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.141
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:崇": {
+        "spec": 0.0,
+        "f0": 0.0,
+        "vmis": 0.0,
+        "frames": 31,
+        "comb": 0.0
+      },
+      "A:虫": {
+        "spec": 2.543,
+        "f0": 0.839,
+        "vmis": 0.091,
+        "frames": 33,
+        "comb": 2.111
+      },
+      "B:众": {
+        "spec": 3.361,
+        "f0": 2.338,
+        "vmis": 0.235,
+        "frames": 34,
+        "comb": 4.019
+      },
+      "B:仲": {
+        "spec": 3.039,
+        "f0": 2.091,
+        "vmis": 0.281,
+        "frames": 32,
+        "comb": 3.611
+      }
+    },
+    "window_s": [
+      3.312,
+      3.61
+    ],
+    "boundary_token": "崇打",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "侧边",
+        "LED",
+        "在",
+        "回合",
+        "中",
+        "闪动",
+        "回看",
+        "后",
+        "判",
+        "崇打",
+        "比分",
+        "退回",
+        "十五",
+        "平",
+        "重打",
+        "高芙",
+        "赢",
+        "分",
+        "并",
+        "保发",
+        "孙心然",
+        "最终",
+        "五比七",
+        "一",
+        "比",
+        "六",
+        "告负"
+      ],
+      "A:崇": [
+        "侧边",
+        "LED",
+        "在",
+        "回合",
+        "中",
+        "闪动",
+        "回看",
+        "后",
+        "判",
+        "崇打",
+        "比分",
+        "退回",
+        "十五",
+        "平",
+        "重打",
+        "高芙",
+        "赢",
+        "分",
+        "并",
+        "保发",
+        "孙心然",
+        "最终",
+        "五比七",
+        "一",
+        "比",
+        "六",
+        "告负"
+      ],
+      "A:虫": [
+        "侧边",
+        "LED",
+        "在",
+        "回合",
+        "中",
+        "闪动",
+        "回看",
+        "后",
+        "判虫",
+        "打",
+        "比分",
+        "退回",
+        "十五",
+        "平",
+        "重打",
+        "高芙",
+        "赢",
+        "分",
+        "并",
+        "保发",
+        "孙心然",
+        "最终",
+        "五比七",
+        "一",
+        "比",
+        "六",
+        "告负"
+      ],
+      "B:众": [
+        "侧边",
+        "LED",
+        "在",
+        "回合",
+        "中",
+        "闪动",
+        "回看",
+        "后",
+        "判众",
+        "打",
+        "比分",
+        "退回",
+        "十五",
+        "平",
+        "重打",
+        "高芙",
+        "赢",
+        "分",
+        "并",
+        "保发",
+        "孙心然",
+        "最终",
+        "五比七",
+        "一",
+        "比",
+        "六",
+        "告负"
+      ],
+      "B:仲": [
+        "侧边",
+        "LED",
+        "在",
+        "回合",
+        "中",
+        "闪动",
+        "回看",
+        "后",
+        "判",
+        "仲打",
+        "比分",
+        "退回",
+        "十五",
+        "平",
+        "重打",
+        "高芙",
+        "赢",
+        "分",
+        "并",
+        "保发",
+        "孙心然",
+        "最终",
+        "五比七",
+        "一",
+        "比",
+        "六",
+        "告负"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -2.6,
+        null,
+        -9.3,
+        -9.1,
+        -8.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -8.4,
+        -8.4,
+        -7.3,
+        -6.0,
+        -4.8
+      ],
+      "A:崇": [
+        -2.6,
+        null,
+        -9.3,
+        -9.1,
+        -8.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -8.4,
+        -8.4,
+        -7.3,
+        -6.0,
+        -4.8
+      ],
+      "A:虫": [
+        -2.2,
+        -3.9,
+        -5.7,
+        -7.6,
+        -8.1,
+        -8.3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -9.2,
+        -8.1,
+        -6.9,
+        -5.9,
+        -5.5
+      ],
+      "B:众": [
+        0.5,
+        -0.5,
+        -3.7,
+        -5.6,
+        -6.2,
+        -6.3,
+        -6.0,
+        null,
+        null,
+        null,
+        -2.1,
+        -4.7,
+        -6.4,
+        -7.7,
+        -8.4,
+        -8.5
+      ],
+      "B:仲": [
+        -0.3,
+        -6.9,
+        -6.0,
+        -7.4,
+        -7.8,
+        null,
+        null,
+        -1.3,
+        -4.0,
+        -5.7,
+        -6.9,
+        -8.2,
+        -7.4,
+        -7.1
+      ]
+    },
+    "audio": {
+      "ORIG": "/home/agent/.cache/tennislive/polyphone/d1230c2ebbee33f611ac42d4.mp3",
+      "A:崇": "/home/agent/.cache/tennislive/polyphone/d1230c2ebbee33f611ac42d4.mp3",
+      "A:虫": "/home/agent/.cache/tennislive/polyphone/10f5f1563e5090e2b390e812.mp3",
+      "B:众": "/home/agent/.cache/tennislive/polyphone/086dbf440235e0f38c4f2bb0.mp3",
+      "B:仲": "/home/agent/.cache/tennislive/polyphone/452719ca8516237f85af0db7.mp3"
+    }
+  }
+}

@@ -25,10 +25,13 @@ def _sha(path: Path) -> str:
 
 
 def plan_hash(spec: dict) -> str:
-    keys=('source','start','end','speed','narration','quote','mute','bed','image','stat_card','title_card')
+    keys=('source','start','end','speed','narration','quote','mute','bed','audio_tail','image','stat_card','title_card')
     segments=[]
     for seg in spec.get('segments') or []:
         row={k:seg[k] for k in keys if k in seg}
+        if '_digital_silence_windows' in seg:
+            row['_digital_silence_windows']=seg['_digital_silence_windows']
+            row['_digital_silence_why']=seg.get('_digital_silence_why')
         if row.get('stat_card') or row.get('title_card'):
             row.pop('image',None)  # load_spec materializes native-card placeholders
         segments.append(row)
@@ -56,6 +59,19 @@ def _number(value) -> float:
     if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value):
         raise ValueError('音频审听时间码必须为有限数字')
     return float(value)
+
+
+def _intervals_overlap(a: float, b: float, c: float, d: float) -> bool:
+    """Compare half-open media intervals without float-summation edge noise.
+
+    ASS timestamps are decimal centiseconds; the sealed timeline accumulates
+    binary floats. For example, an end of 200.70 abuts a card starting at
+    200.69999999999996. Ignore only a few representational rounding units,
+    not a centisecond/frame tolerance: even a real microsecond overlap fails.
+    """
+    start, end = max(a, c), min(b, d)
+    roundoff = 4 * max(math.ulp(start), math.ulp(end))
+    return end - start > roundoff
 
 
 def _quote_windows(seg: dict):
@@ -226,6 +242,17 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
     bilingual=[e for e in events if '\n' in e[2] and re.search('[A-Za-z]',e[2].split('\n')[0])
                and not re.search('[\u3400-\u9fff]',e[2].split('\n')[0])
                and re.search('[\u3400-\u9fff]',e[2].split('\n')[-1])]
+    # Producers may burn the tightly stacked language lanes as two actual
+    # ASS events. Accept only exactly co-timed original/translation rows;
+    # do not fabricate a combined sidecar or pair unrelated caption windows.
+    for a, b, en in events:
+        if '\n' in en or not re.search('[A-Za-z]', en) or re.search('[\u3400-\u9fff]', en):
+            continue
+        matches = [(x, y, zh) for x, y, zh in events
+                   if abs(x-a) < .001 and abs(y-b) < .001 and '\n' not in zh
+                   and re.search('[\u3400-\u9fff]', zh) and not re.search('[A-Za-z]', zh)]
+        if len(matches) == 1:
+            bilingual.append((a, b, en+'\n'+matches[0][2]))
     bilingual.sort()
     if any(a[1]>b[0]+.01 for a,b in zip(bilingual,bilingual[1:])):
         raise ValueError('成片双语字幕重叠，会堆成四行')
@@ -250,11 +277,11 @@ def verify_final(spec: dict, ass: Path, cover_seconds: float, *, root: Path=ROOT
             for a,b,text in events:
                 spoken_terms=set(re.findall(r'[a-z]+',readable(str(seg.get('narration') or '')).casefold()))
                 extra=[term for term in re.findall(r'[a-z]+',text.casefold()) if term not in spoken_terms]
-                if a<cursor+length and b>cursor and extra:
+                if _intervals_overlap(a,b,cursor,cursor+length) and extra:
                     raise ValueError('自配中文TTS窗口出现额外英文翻译行')
     for cue in required:
         a,b=offsets[cue['segment']]+cue['start'],offsets[cue['segment']]+cue['end']
         if not any(x<=a+.08 and y>=b-.08 and '\n' in text
                    and _text(cue['en']) in _text(text.split('\n')[0])
-                   and _text(readable(cue['zh'])) in _text(text.split('\n',1)[1]) for x,y,text in events):
+                   and _text(readable(cue['zh'])) in _text(text.split('\n',1)[1]) for x,y,text in bilingual):
             raise ValueError(f'成片 ASS 缺原声双语句：{a:.2f}–{b:.2f}s')

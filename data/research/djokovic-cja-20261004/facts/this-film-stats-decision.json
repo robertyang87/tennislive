@@ -1,0 +1,55 @@
+{
+  "slug": "zverev-djokovic",
+  "match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "Wpcpd4Ug",
+    "flashscore_id": "Wpcpd4Ug",
+    "participants": [
+      "兹维列夫",
+      "德约科维奇"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        4
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "winner": "德约科维奇",
+    "loser": "兹维列夫",
+    "winner_result": "4-6 6-4 6-4",
+    "loser_result": "6-4 4-6 4-6",
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "date": "2026-10-04",
+    "_match_day_why": "账号所有者明确提供本场官方集锦链接，按其点名制作。"
+  },
+  "literal_user_instruction": "继续",
+  "context": "after disclosure of inconsistent TNNS full-match versus set winners/UE and question whether omit or wait",
+  "production_interpretation": "continue this film with verified statistics, omit both unknown rows",
+  "explicit_option_selection": false,
+  "scope": "this exact film only",
+  "omission": {
+    "slug": "zverev-djokovic",
+    "source_id": "Wpcpd4Ug",
+    "match_date": "2026-10-04",
+    "winner_result": "4-6 6-4 6-4",
+    "fields": [
+      "winners",
+      "ue"
+    ],
+    "decision": "omit_both_rows_for_this_film_only",
+    "authorization": "owner-requested-continue-after-wue-conflict-disclosure-2026-10-04"
+  }
+}

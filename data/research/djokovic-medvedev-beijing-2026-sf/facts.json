@@ -1,0 +1,818 @@
+{
+  "match": {
+    "flashscore_id": "lEJ8JcmC",
+    "date_bjt": "2026-10-05",
+    "natural_period_bjt": "晚上",
+    "start_bjt_structured": "2026-10-05T19:25:00+08:00",
+    "start_note": "AD/ADE Unix 1791199500; 官网证实夜场。旁白不报分钟。",
+    "event": "2026中国网球公开赛",
+    "level": "ATP500",
+    "round": "男单半决赛",
+    "surface": "硬地",
+    "venue": "国家网球中心·首创钻石球场",
+    "participants_home_away": [
+      "Novak Djokovic",
+      "Daniil Medvedev"
+    ],
+    "winner": "Novak Djokovic",
+    "loser": "Daniil Medvedev",
+    "set_scores_home_away": [
+      [
+        7,
+        5
+      ],
+      [
+        5,
+        3
+      ]
+    ],
+    "status": "DISQUALIFIED",
+    "result_text": "德约科维奇7-5、5-3领先时，梅德韦杰夫被取消资格，德约晋级决赛。",
+    "result_short": "7-5 5-3 DEF",
+    "duration_minutes": 149,
+    "duration_text": "2小时29分钟",
+    "duration_source": "https://novakdjokovic.com/en/news/tennis/novak-beats-medvedev-to-reach-beijing-final/",
+    "duration_conflict": "Flashscore为2:33（79+74分钟）。球员官方赛报为2:29，应采用后者或按源片终局台标再核；首盘79分钟两个源一致。"
+  },
+  "players": [
+    {
+      "name": "Novak Djokovic",
+      "zh": "德约科维奇",
+      "country": "SRB",
+      "country_zh": "塞尔维亚",
+      "rank": 11,
+      "rank_snapshot": "2026-10-05",
+      "seed": 6,
+      "age": 39,
+      "country_source": "https://www.protennislive.com/posting/2026/747/mds.pdf",
+      "rank_source": "https://www.tennisexplorer.com/ranking/atp-men/"
+    },
+    {
+      "name": "Daniil Medvedev",
+      "zh": "梅德韦杰夫",
+      "country": "RUS",
+      "country_zh": "俄罗斯",
+      "rank": 5,
+      "rank_snapshot": "2026-10-05",
+      "seed": 3,
+      "age": 30,
+      "country_source": "https://www.clickorlando.com/sports/2026/10/05/medvedev-disqualified-from-china-open-for-hitting-spectator-with-a-ball-during-match-vs-djokovic/",
+      "rank_source": "https://www.tennisexplorer.com/ranking/atp-men/",
+      "flag_note": "赛事官方签表中性国籍标记不列旗；仓库国别按赛事登记和AP Russia核验。"
+    }
+  ],
+  "ranking_conflict_note": "官方赛事签表种子表是种子确定时的12/6。今天榜单刷新为11/5，已调用仓库fetch_rankings核验atp_at=05.10.2026；勿把种子周排名冒充今日排名。",
+  "turning_points": [
+    {
+      "set": 1,
+      "game": "0-0德约发球",
+      "fact": "德约开局救下3个破发点保发。",
+      "source": "official_player"
+    },
+    {
+      "set": 1,
+      "game": "2-2德约发球",
+      "fact": "本局德约救下前三个破发点，第4个被破，梅总3-2领先；累计是梅总第7个破发点首次兑现。",
+      "source": "official_player+flashscore_stats+point_secondary"
+    },
+    {
+      "set": 1,
+      "game": "2-3梅总发球",
+      "fact": "德约第三个破发点完成即时回破，追到3-3。",
+      "source": "official_player"
+    },
+    {
+      "set": 1,
+      "game": "4-4德约发球",
+      "fact": "德约救本盘第8个破发点保发到5-4。",
+      "source": "point_secondary+flashscore_stats"
+    },
+    {
+      "set": 1,
+      "game": "5-4梅总发球",
+      "fact": "梅总用发球救下德约的盘点，追到5-5。",
+      "source": "official_player"
+    },
+    {
+      "set": 1,
+      "game": "6-5梅总发球",
+      "fact": "德约40-0拿到连续3个盘点，第2个兑现，首盘7-5用时79分钟。",
+      "source": "official_player"
+    },
+    {
+      "set": 2,
+      "game": "1-1德约发球",
+      "fact": "德约从0-40救下本局6个破发点，保发到2-1。",
+      "source": "official_player+point_secondary"
+    },
+    {
+      "set": 2,
+      "game": "2-2德约发球",
+      "fact": "又救2个破发点，保发到3-2。",
+      "source": "official_player"
+    },
+    {
+      "set": 2,
+      "game": "3-2梅总发球",
+      "fact": "德约本局第2个破发点兑现，4-2领先。梅总随后申请医疗暂停。",
+      "source": "official_player"
+    },
+    {
+      "set": 2,
+      "game": "4-2德约发球",
+      "fact": "梅总暂停回来立即回破到4-3，本局2个破发点第2个兑现；全场累计只兑2/18。",
+      "source": "official_player+point_secondary+flashscore_stats"
+    },
+    {
+      "set": 2,
+      "game": "4-3梅总发球",
+      "fact": "德约立即再破，5-3进入发球胜赛局。",
+      "source": "official_player"
+    },
+    {
+      "set": 2,
+      "game": "5-3德约发球，15-15",
+      "fact": "死球之后梅总击球向看台，误伤前排观众，被取消资格；比赛未打到赛点，不能说德约兑现赛点。",
+      "source": "official_player+official_draw+ap+sky"
+    }
+  ],
+  "key_stats": {
+    "home": "Djokovic",
+    "away": "Medvedev",
+    "break_points_converted": [
+      [
+        4,
+        10
+      ],
+      [
+        2,
+        18
+      ]
+    ],
+    "break_points_saved": [
+      [
+        16,
+        18
+      ],
+      [
+        6,
+        10
+      ]
+    ],
+    "aces": [
+      3,
+      4
+    ],
+    "double_faults": [
+      6,
+      3
+    ],
+    "first_serve_points_won": [
+      [
+        41,
+        58
+      ],
+      [
+        26,
+        44
+      ]
+    ],
+    "second_serve_points_won": [
+      [
+        13,
+        33
+      ],
+      [
+        13,
+        31
+      ]
+    ],
+    "first_set_break_points_saved": [
+      [
+        7,
+        8
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "second_set_break_points_saved": [
+      [
+        9,
+        10
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "body_only_total_points": [
+      90,
+      76
+    ],
+    "winner_ue_available": false,
+    "winner_ue_note": "flashscore无Winner/UE。球员官网今日稿也未列。不要凭前一场对Zverev统计挪用，若必须用需TNNS或转播画面另核。"
+  },
+  "all_flashscore_stats": [
+    {
+      "scope": "Match",
+      "group": "Service",
+      "item": "Aces",
+      "djokovic": "3",
+      "medvedev": "4"
+    },
+    {
+      "scope": "Match",
+      "group": "Service",
+      "item": "Double Faults",
+      "djokovic": "6",
+      "medvedev": "3"
+    },
+    {
+      "scope": "Match",
+      "group": "Service",
+      "item": "1st serve percentage",
+      "djokovic": "64%",
+      "medvedev": "59%"
+    },
+    {
+      "scope": "Match",
+      "group": "Service",
+      "item": "1st serve points won",
+      "djokovic": "71% (41/58)",
+      "medvedev": "59% (26/44)"
+    },
+    {
+      "scope": "Match",
+      "group": "Service",
+      "item": "2nd serve points won",
+      "djokovic": "39% (13/33)",
+      "medvedev": "42% (13/31)"
+    },
+    {
+      "scope": "Match",
+      "group": "Service",
+      "item": "Break Points Saved",
+      "djokovic": "16/18",
+      "medvedev": "6/10"
+    },
+    {
+      "scope": "Match",
+      "group": "Return",
+      "item": "1st return points won",
+      "djokovic": "41% (18/44)",
+      "medvedev": "29% (17/58)"
+    },
+    {
+      "scope": "Match",
+      "group": "Return",
+      "item": "2nd return points won",
+      "djokovic": "58% (18/31)",
+      "medvedev": "61% (20/33)"
+    },
+    {
+      "scope": "Match",
+      "group": "Return",
+      "item": "Break Points Converted",
+      "djokovic": "4/10",
+      "medvedev": "2/18"
+    },
+    {
+      "scope": "Match",
+      "group": "Points",
+      "item": "Service Points Won",
+      "djokovic": "59% (54/91)",
+      "medvedev": "52% (39/75)"
+    },
+    {
+      "scope": "Match",
+      "group": "Points",
+      "item": "Return Points Won",
+      "djokovic": "48% (36/75)",
+      "medvedev": "41% (37/91)"
+    },
+    {
+      "scope": "Match",
+      "group": "Points",
+      "item": "Total Points Won",
+      "djokovic": "54% (90/166)",
+      "medvedev": "46% (76/166)"
+    },
+    {
+      "scope": "Match",
+      "group": "Points",
+      "item": "Last 10 balls",
+      "djokovic": "6",
+      "medvedev": "4"
+    },
+    {
+      "scope": "Match",
+      "group": "Points",
+      "item": "Match points saved",
+      "djokovic": "0",
+      "medvedev": "0"
+    },
+    {
+      "scope": "Match",
+      "group": "Games",
+      "item": "Service games won",
+      "djokovic": "80% (8/10)",
+      "medvedev": "60% (6/10)"
+    },
+    {
+      "scope": "Match",
+      "group": "Games",
+      "item": "Return games won",
+      "djokovic": "40% (4/10)",
+      "medvedev": "20% (2/10)"
+    },
+    {
+      "scope": "Match",
+      "group": "Games",
+      "item": "Total games won",
+      "djokovic": "60% (12/20)",
+      "medvedev": "40% (8/20)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "item": "Aces",
+      "djokovic": "0",
+      "medvedev": "3"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "item": "Double Faults",
+      "djokovic": "3",
+      "medvedev": "3"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "item": "1st serve percentage",
+      "djokovic": "67%",
+      "medvedev": "67%"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "item": "1st serve points won",
+      "djokovic": "67% (24/36)",
+      "medvedev": "65% (20/31)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "item": "2nd serve points won",
+      "djokovic": "50% (9/18)",
+      "medvedev": "33% (5/15)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Service",
+      "item": "Break Points Saved",
+      "djokovic": "7/8",
+      "medvedev": "4/6"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Return",
+      "item": "1st return points won",
+      "djokovic": "35% (11/31)",
+      "medvedev": "33% (12/36)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Return",
+      "item": "2nd return points won",
+      "djokovic": "67% (10/15)",
+      "medvedev": "50% (9/18)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Return",
+      "item": "Break Points Converted",
+      "djokovic": "2/6",
+      "medvedev": "1/8"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Points",
+      "item": "Service Points Won",
+      "djokovic": "61% (33/54)",
+      "medvedev": "54% (25/46)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Points",
+      "item": "Return Points Won",
+      "djokovic": "46% (21/46)",
+      "medvedev": "39% (21/54)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Points",
+      "item": "Total Points Won",
+      "djokovic": "54% (54/100)",
+      "medvedev": "46% (46/100)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Points",
+      "item": "Match points saved",
+      "djokovic": "0",
+      "medvedev": "0"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Games",
+      "item": "Service games won",
+      "djokovic": "83% (5/6)",
+      "medvedev": "67% (4/6)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Games",
+      "item": "Return games won",
+      "djokovic": "33% (2/6)",
+      "medvedev": "17% (1/6)"
+    },
+    {
+      "scope": "Set 1",
+      "group": "Games",
+      "item": "Total games won",
+      "djokovic": "58% (7/12)",
+      "medvedev": "42% (5/12)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "item": "Aces",
+      "djokovic": "3",
+      "medvedev": "1"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "item": "Double Faults",
+      "djokovic": "3",
+      "medvedev": "0"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "item": "1st serve percentage",
+      "djokovic": "59%",
+      "medvedev": "45%"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "item": "1st serve points won",
+      "djokovic": "77% (17/22)",
+      "medvedev": "46% (6/13)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "item": "2nd serve points won",
+      "djokovic": "27% (4/15)",
+      "medvedev": "50% (8/16)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Service",
+      "item": "Break Points Saved",
+      "djokovic": "9/10",
+      "medvedev": "2/4"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Return",
+      "item": "1st return points won",
+      "djokovic": "54% (7/13)",
+      "medvedev": "23% (5/22)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Return",
+      "item": "2nd return points won",
+      "djokovic": "50% (8/16)",
+      "medvedev": "73% (11/15)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Return",
+      "item": "Break Points Converted",
+      "djokovic": "2/4",
+      "medvedev": "1/10"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Points",
+      "item": "Service Points Won",
+      "djokovic": "57% (21/37)",
+      "medvedev": "48% (14/29)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Points",
+      "item": "Return Points Won",
+      "djokovic": "52% (15/29)",
+      "medvedev": "43% (16/37)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Points",
+      "item": "Total Points Won",
+      "djokovic": "55% (36/66)",
+      "medvedev": "45% (30/66)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Points",
+      "item": "Match points saved",
+      "djokovic": "0",
+      "medvedev": "0"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Games",
+      "item": "Service games won",
+      "djokovic": "75% (3/4)",
+      "medvedev": "50% (2/4)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Games",
+      "item": "Return games won",
+      "djokovic": "50% (2/4)",
+      "medvedev": "25% (1/4)"
+    },
+    {
+      "scope": "Set 2",
+      "group": "Games",
+      "item": "Total games won",
+      "djokovic": "63% (5/8)",
+      "medvedev": "38% (3/8)"
+    }
+  ],
+  "human_context": [
+    {
+      "fact": "德约时隔11年回到中网；此前6次参赛全夺冠，本场后33胜0负、进入第7个中网决赛。",
+      "source": "official_player+sky"
+    },
+    {
+      "fact": "德约前一晚4-6、6-4、6-4逆转头号种子兹维列夫。",
+      "source": "official_draw+official_venue_time"
+    },
+    {
+      "fact": "梅总此前连续4年进入中网半决赛，上一轮7-6(4)、6-3胜F·塞伦多洛。",
+      "source": "official_venue_time+official_draw"
+    },
+    {
+      "fact": "两人都是前世界第一；本场是第16次交手，德约赛前10-5领先，本场后11-5。",
+      "source": "official_venue_time+point_secondary+live_report_secondary"
+    },
+    {
+      "fact": "德约将争取第102个巡回赛冠军与2026首冠。",
+      "source": "official_player+sky"
+    },
+    {
+      "fact": "德约赛后表达对受伤观众的关心，也理解梅总被取消资格的感受；他本人2020美网曾因击球误伤线审被取消资格。",
+      "source": "official_player+ap"
+    }
+  ],
+  "next_round": {
+    "date_bjt": "2026-10-06",
+    "round": "决赛",
+    "opponent": "Alex de Minaur",
+    "opponent_zh": "德米纳尔",
+    "opponent_rank": 9,
+    "opponent_seed": 5,
+    "venue": "首创钻石球场",
+    "schedule_not_before_bjt": "19:00",
+    "time_note": "官方OP的Not Before是下界，不能冒充实际开球时间；口播可明晚决赛。",
+    "h2h_before_final": "德约3-1领先",
+    "source": [
+      "official_final_oop",
+      "official_player",
+      "ap"
+    ]
+  },
+  "hook_options": [
+    {
+      "lines": [
+        "18个破发点只兑2个",
+        "德约胜梅总进决赛"
+      ],
+      "angle": "全场关键分矛盾，结尾必须交代DEF"
+    },
+    {
+      "lines": [
+        "梅总误伤观众被判负",
+        "德约闯进中网决赛"
+      ],
+      "angle": "异常结尾明确，正文要先讲扎实比赛过程"
+    },
+    {
+      "lines": [
+        "救16个破发点",
+        "德约胜梅总进决赛"
+      ],
+      "angle": "德约韧性，以全场关键分为钩子"
+    }
+  ],
+  "narration_structure": [
+    "①爆点：十八个破发点，梅总只拿下两个。②落点：德约守住关键分，却在发球胜赛局迎来意外结尾。③坐标：北京时间十月五号晚上，中网男单半决赛。",
+    "交代来路：德约前一晚逆转兹维列夫，时隔十一年回北京保持全胜；对面世界第五梅总连续第四年进中网四强。",
+    "首盘：开局危机→2-3落后即刻回破→梅总救盘点追5-5→德约再破7-5。需按实际画面至少展开一次球路。",
+    "次盘：1-1的六个破发点全救，是最重要展开点；2-2再救两个→4-2→医疗暂停后被回破→立即再破5-3。需按画面至少展开一次球路。",
+    "终局：德约5-3发球胜赛、15-15，梅总将死球击向看台误伤观众而被取消资格。不要说恶意伤人，也不臆测伤势程度。",
+    "收口：33胜0负，第七次中网决赛，明晚对德米纳尔。可末屏问：北京的第七冠，德约能拿下吗？"
+  ],
+  "tactical_evidence": {
+    "official_report_general": "本人官网：德约试图主动进攻、梅总防守出色；可作总体描述，但不能据此编具体球路。",
+    "secondary_1_1_second_set": "Sportal逐分现场稿：三连BP之一德约发球直接得分，另一个反手直线；第5BP德约放小球。这些定位可指导父代理回视频画面核验，不能未经画面复核直接认领技战术。"
+  },
+  "unresolved": [
+    "Winner/UE未取到，不硬编。",
+    "精确比赛用时flashscore与球员官网有差异，采用本人官网2:29，父代理若看到转播台标应再核。",
+    "逐分第三方网页的BP标签存在视角混杂，关键局均以球员官网叙述为优先，BP总数以stats校验。"
+  ],
+  "sources": {
+    "official_player": "https://novakdjokovic.com/en/news/tennis/novak-beats-medvedev-to-reach-beijing-final/",
+    "official_draw": "https://www.protennislive.com/posting/2026/747/mds.pdf",
+    "official_venue_time": "https://www.chinaopen.com/cn/contents/281/1644.html",
+    "official_final_oop": "https://www.protennislive.com/posting/2026/747/op.pdf",
+    "official_tennistv_result": "https://x.com/TennisTV/status/2107106922780561597",
+    "official_tennistv_final_count": "https://x.com/TennisTV/status/2107108845491229153",
+    "rankings": "https://www.tennisexplorer.com/ranking/atp-men/",
+    "flashscore_results": "https://www.flashscore.com/tennis/atp-singles/beijing/results/",
+    "flashscore_stats": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_lEJ8JcmC",
+    "flashscore_duration": "https://local-global.flashscore.ninja/2/x/feed/df_sui_1_lEJ8JcmC",
+    "ap": "https://www.clickorlando.com/sports/2026/10/05/medvedev-disqualified-from-china-open-for-hitting-spectator-with-a-ball-during-match-vs-djokovic/",
+    "sky": "https://www.skysports.com/tennis/news/13595259/daniil-medvedev-defaulted-for-hitting-spectator-with-ball-as-novak-djokovic-reaches-another-china-open-final",
+    "reuters": "https://www.reuters.com/sports/tennis/medvedev-disqualified-china-open-semi-after-hitting-ball-into-crowd-2026-10-05/",
+    "point_secondary": "https://www.tennislive.net/atp/match/novak-djokovic-VS-daniil-medvedev/china-open-beijing-2026/",
+    "live_report_secondary": "https://sportal.blic.rs/prica/uzivo-djokovic-medvedev-rus-vratio-brejk-drama-u-drugom-setu-2026100509060676820"
+  },
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 6,
+      "first_in": 58,
+      "first_won": 41,
+      "second_total": 33,
+      "second_won": 13,
+      "bp_conv": 4,
+      "bp_chances": 10,
+      "pts_won": 90,
+      "pts_total": 166,
+      "first_total": 91,
+      "headshot": "assets/players/headshots/atp-D643.png"
+    },
+    "b": {
+      "aces": 4,
+      "df": 3,
+      "first_in": 44,
+      "first_won": 26,
+      "second_total": 31,
+      "second_won": 13,
+      "bp_conv": 2,
+      "bp_chances": 18,
+      "pts_won": 76,
+      "pts_total": 166,
+      "first_total": 75,
+      "headshot": "assets/players/headshots/atp-MM58.png"
+    },
+    "_source": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_lEJ8JcmC; a=Novak Djokovic, b=Daniil Medvedev; verified 2026-10-05"
+  },
+  "disqualification_evidence": {
+    "winner": "Novak Djokovic",
+    "loser": "Daniil Medvedev",
+    "result": "7-5 5-3 DEF",
+    "terminal_point_score": "15-15",
+    "official_source": "https://novakdjokovic.com/en/news/tennis/novak-beats-medvedev-to-reach-beijing-final/",
+    "official_claim": "While Djokovic was serving for the match, with the score at 15-15, Medvedev hit a ball towards the crowd, accidentally hitting a spectator. Because of the incident, The Russian was disqualified and Novak sealed the win.",
+    "official_pdf_url": "https://www.protennislive.com/posting/2026/747/mds.pdf",
+    "official_pdf_text_claim": "N. Djokovic 6\n75 53 DEF",
+    "independent_source": "https://www.flashscore.com/tennis/atp-singles/beijing/results/",
+    "independent_fields": {
+      "AE": "Djokovic N.",
+      "AF": "Medvedev D.",
+      "AS": "1",
+      "AZ": "1",
+      "BA": "7",
+      "BB": "5",
+      "BC": "5",
+      "BD": "3",
+      "AM": "Disqualification.",
+      "AW": "1",
+      "AD": "1791199500",
+      "AO": "1791208632"
+    },
+    "independent_claim": "AM=Disqualification.; AS=1 assigns winner to AE Djokovic N.; BA/BB=7/5, BC/BD=5/3.",
+    "artifacts": [
+      {
+        "path": "data/research/djokovic-medvedev-beijing-2026-sf/djokovic-medvedev-official-report.html",
+        "sha256": "6f2c4f1a361f0563b659bb59112a34f434377cf5b7eff24f99bb1e422b7a1cca",
+        "description": "球员本人官网原HTML"
+      },
+      {
+        "path": "data/research/djokovic-medvedev-beijing-2026-sf/djokovic-official.txt",
+        "sha256": "89950afd1d07c3c68d7939a5f0d999b5b2cfe5ee09226c79aa91a733293bc3e8",
+        "description": "球员本人官网纯文本"
+      },
+      {
+        "path": "data/research/djokovic-medvedev-beijing-2026-sf/beijing-mds.pdf",
+        "sha256": "1b27f5c8ad84fbbb934d737ab834fd0a5cae18bca0648ebbaf0c339c5929f181",
+        "description": "ATP官方签表PDF"
+      },
+      {
+        "path": "data/research/djokovic-medvedev-beijing-2026-sf/beijing-mds.txt",
+        "sha256": "17d9499bac17f515e4d510734f6fdcadf1c4552b46e03e2103f81fbba64c82e9",
+        "description": "ATP官方签表PDF pdftotext"
+      },
+      {
+        "path": "data/research/djokovic-medvedev-beijing-2026-sf/djokovic-medvedev-flashscore-final-proof.txt",
+        "sha256": "f9fe68076e0b6691c1b4d1fcd9fd40c0ee86595633583ad8340d8ab03ddf759f",
+        "description": "独立Flashscore结果页完整终局feed"
+      },
+      {
+        "path": "data/research/djokovic-medvedev-beijing-2026-sf/df_st_1.txt",
+        "sha256": "73a0b5274cfccfb4a9288fdca565e05941a691e3c2cd3a0f3f71d92d18c833b2",
+        "description": "Flashscore完整技术统计rawfeed"
+      },
+      {
+        "path": "data/research/djokovic-medvedev-beijing-2026-sf/df_sui_1.txt",
+        "sha256": "4df756c3c7b849cf75f09f159fd4e1f33c18e349cc00fc13768e13d4917fd6c7",
+        "description": "Flashscore分盘和全场时间rawfeed"
+      }
+    ]
+  },
+  "bp_audit": {
+    "total_medvedev_chances": 18,
+    "total_medvedev_converted": 2,
+    "total_djokovic_saved": 16,
+    "set1": {
+      "chances": 8,
+      "converted": 1,
+      "djokovic_saved": 7,
+      "games": [
+        {
+          "score_before": "0-0",
+          "bp_chances": 3,
+          "converted": 0
+        },
+        {
+          "score_before": "2-2",
+          "bp_chances": 4,
+          "converted": 1
+        },
+        {
+          "score_before": "4-4",
+          "bp_chances": 1,
+          "converted": 0
+        }
+      ]
+    },
+    "set2": {
+      "chances": 10,
+      "converted": 1,
+      "djokovic_saved": 9,
+      "games": [
+        {
+          "score_before": "1-1",
+          "bp_chances": 6,
+          "converted": 0
+        },
+        {
+          "score_before": "2-2",
+          "bp_chances": 2,
+          "converted": 0
+        },
+        {
+          "score_before": "4-2",
+          "bp_chances": 2,
+          "converted": 1
+        }
+      ]
+    },
+    "explanation": "首盘7/8和次盘9/10是德约救下数/面对数。首盘7不是BP总数，次盘11也不是；次盘6+2+2=10。首盘2-2梅总本局第4BP才兑现，累计全场第7BP首次破发。次盘4-2梅总15-40有两个BP，德约救第一个到30-40，第2个丢局。",
+    "sources": [
+      "official_player",
+      "flashscore_stats",
+      "point_secondary"
+    ],
+    "point_sequence_caution": "tennislive.net的逐局分数文字有发球/接发视角混杂，未标出的普通30-40不能一概视为接发方破发点。只用与官方叙述和分盘统计同时吻合的BP计数。"
+  },
+  "duration_resolution": {
+    "chosen": "2:29",
+    "chosen_source": "https://novakdjokovic.com/en/news/tennis/novak-beats-medvedev-to-reach-beijing-final/",
+    "conflict": "Flashscore 2:33=Set1 1:19 + Set2 1:14",
+    "note": "官网明确比赛用时149分钟，而flashscore为153；未擅自解释4分钟差异是医疗或裁判中断。首盘79分钟一致。"
+  }
+}

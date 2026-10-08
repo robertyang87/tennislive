@@ -1,0 +1,200 @@
+{
+  "source_url": "https://www.tennistv.com/videos/4378949/shanghai-2025-qf-rune-vacherot-short-highlights",
+  "source_sha256": "7d1d3c89da109074da19a4bdc60153abe5df28b71c36107ae2a11ce229c4ed68",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex official_sources: base.en/small.en/tiny.en cross-check and explicit phonetic/context corrections; not claimed human listening",
+  "reviewed_at": "2026-10-07T20:37:04.384323+00:00",
+  "status": "complete",
+  "reviewed_from": 328.8,
+  "reviewed_to": 345.12,
+  "foreground_english": [
+    {
+      "start": 335.92,
+      "end": 338.74,
+      "en": "Game, set and match.",
+      "zh": "比赛结束。"
+    },
+    {
+      "start": 338.9,
+      "end": 340.38,
+      "en": "The man from Monaco",
+      "zh": "来自摩纳哥的他"
+    },
+    {
+      "start": 340.38,
+      "end": 345.1,
+      "en": "makes more Masters history.",
+      "zh": "再创大师赛历史。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_raw": [
+    {
+      "model": "base.en",
+      "file": "/workspace/scratch/vacherot/selection-review/rune-base.en.json",
+      "result": [
+        {
+          "start": 336.02000000000004,
+          "end": 346.18,
+          "en": "Game, set, man. The man from Monaco makes more Masters history. It's a",
+          "words": [
+            {
+              "start": 336.02000000000004,
+              "end": 337.04,
+              "word": " Game,"
+            },
+            {
+              "start": 337.42,
+              "end": 337.68,
+              "word": " set,"
+            },
+            {
+              "start": 338.24,
+              "end": 338.42,
+              "word": " man."
+            },
+            {
+              "start": 338.74,
+              "end": 338.96000000000004,
+              "word": " The"
+            },
+            {
+              "start": 338.96000000000004,
+              "end": 339.2,
+              "word": " man"
+            },
+            {
+              "start": 339.2,
+              "end": 339.74,
+              "word": " from"
+            },
+            {
+              "start": 339.74,
+              "end": 340.22,
+              "word": " Monaco"
+            },
+            {
+              "start": 340.22,
+              "end": 342.1,
+              "word": " makes"
+            },
+            {
+              "start": 342.1,
+              "end": 342.92,
+              "word": " more"
+            },
+            {
+              "start": 342.92,
+              "end": 344.04,
+              "word": " Masters"
+            },
+            {
+              "start": 344.04,
+              "end": 345.06,
+              "word": " history."
+            },
+            {
+              "start": 345.38,
+              "end": 345.38,
+              "word": " It's"
+            },
+            {
+              "start": 345.38,
+              "end": 346.18,
+              "word": " a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "small.en",
+      "file": "/workspace/scratch/vacherot/selection-review/rune-small.en.json",
+      "result": [
+        {
+          "start": 335.92,
+          "end": 345.1,
+          "en": "Game, set and match. The man from Monaco makes more Masters history.",
+          "words": [
+            {
+              "start": 335.92,
+              "end": 337.16,
+              "word": " Game,"
+            },
+            {
+              "start": 337.8,
+              "end": 337.84000000000003,
+              "word": " set"
+            },
+            {
+              "start": 337.84000000000003,
+              "end": 338.44,
+              "word": " and"
+            },
+            {
+              "start": 338.44,
+              "end": 338.74,
+              "word": " match."
+            },
+            {
+              "start": 338.90000000000003,
+              "end": 339.0,
+              "word": " The"
+            },
+            {
+              "start": 339.0,
+              "end": 339.3,
+              "word": " man"
+            },
+            {
+              "start": 339.3,
+              "end": 339.92,
+              "word": " from"
+            },
+            {
+              "start": 339.92,
+              "end": 340.38,
+              "word": " Monaco"
+            },
+            {
+              "start": 340.38,
+              "end": 342.18,
+              "word": " makes"
+            },
+            {
+              "start": 342.18,
+              "end": 343.16,
+              "word": " more"
+            },
+            {
+              "start": 343.16,
+              "end": 344.2,
+              "word": " Masters"
+            },
+            {
+              "start": 344.2,
+              "end": 345.1,
+              "word": " history."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "umpire-tiny",
+      "file": "/workspace/scratch/vacherot/selection-review/rune-umpire-tiny.json",
+      "result": [
+        {
+          "start": 336.38000000000005,
+          "end": 338.92,
+          "en": " Game, set and match."
+        }
+      ]
+    }
+  ],
+  "corrections": [
+    "Base game set man resolved by small and independent tiny both Game set and match.",
+    "Window ends345.12 before next utterance It’s a begins345.38, so no next-sentence truncation."
+  ],
+  "caption_note": "Long full sentences divided at meaningful phrase boundaries for one English and one Chinese line; source word order and time remain continuous."
+}

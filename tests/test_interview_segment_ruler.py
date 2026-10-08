@@ -80,7 +80,8 @@ def _resegment(spec: dict, words: list, ruler: str) -> tuple[list[dict], list[st
     with contextlib.redirect_stdout(io.StringIO()):
         lines = clip.segment(words, spec["start"], spec["end"],
                              budget=spec.get("segment_budget_px"),
-                             word_fix=spec.get("word_fix"), ruler=ruler)
+                             word_fix=spec.get("word_fix"), ruler=ruler,
+                             language_windows=clip.transcript_language_windows(spec))
     bad = clip.en_fixed_misaligned(lines, spec.get("en_fixed") or {})
     for k, v in (spec.get("en_fixed") or {}).items():
         idx = int(k) - 1

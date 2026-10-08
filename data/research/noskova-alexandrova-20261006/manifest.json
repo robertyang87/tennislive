@@ -1,0 +1,65 @@
+[
+  {
+    "provider": "wta_matches",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?page=0&pageSize=400",
+    "status": 200,
+    "source_path": "data/research/noskova-alexandrova-20261006/wta_matches.raw",
+    "source_sha256": "d8134e2c3d046c4a22e5dfc140b7f368b38856b37e7e99657683c3e0f6ef686e"
+  },
+  {
+    "provider": "wta_stats",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS012/stats",
+    "status": 200,
+    "source_path": "data/research/noskova-alexandrova-20261006/wta_stats.raw",
+    "source_sha256": "30c0bc911b8fbc86c5cc916c83799db7b98cb0476d157422d87a21e095e21d8b"
+  },
+  {
+    "provider": "wta_h2h",
+    "source_url": "https://api.wtatennis.com/tennis/players/329668/headtohead/319007",
+    "status": 200,
+    "source_path": "data/research/noskova-alexandrova-20261006/wta_h2h.raw",
+    "source_sha256": "e74a202b81af77693d7199ff3cc497e690796cd2c94107923d69c9f77f08afe0"
+  },
+  {
+    "provider": "wimbledon_matches",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/904/2026/matches?page=0&pageSize=400",
+    "status": 200,
+    "source_path": "data/research/noskova-alexandrova-20261006/wimbledon_matches.raw",
+    "source_sha256": "d1499c5984180bbc280f5951720f9cad4ae4258005ac8d7e563762228550e130"
+  },
+  {
+    "provider": "wta_player_matches",
+    "source_url": "https://api.wtatennis.com/tennis/players/329668/matches?year=2026",
+    "status": 200,
+    "source_path": "data/research/noskova-alexandrova-20261006/wta_player_matches.raw",
+    "source_sha256": "06acc7d2e516e8e773b610f4584318ff24c8a7d79302919182b9f554b87327b4"
+  },
+  {
+    "provider": "wta_match_page",
+    "source_url": "https://www.wtatennis.com/tournament/1020/beijing/2026/scores/LS012",
+    "status": 200,
+    "source_path": "data/research/noskova-alexandrova-20261006/wta_match_page.raw",
+    "source_sha256": "21b5cbc1d7a4053e60a0b8516dbf74f91c8893fa4884e32c405c28e337672268"
+  },
+  {
+    "provider": "wta_news_index",
+    "source_url": "https://www.wtatennis.com/news",
+    "status": 200,
+    "source_path": "data/research/noskova-alexandrova-20261006/wta_news_index.raw",
+    "source_sha256": "43f8953054fc892052ee27fb785eed695fee481990f735f8513adaacc2d2e27c"
+  },
+  {
+    "provider": "mcp_index",
+    "source_url": "https://www.tennisabstract.com/charting/",
+    "status": 200,
+    "source_path": "data/research/noskova-alexandrova-20261006/mcp_index.raw",
+    "source_sha256": "abe2d1405747bee85e618d268497f46cc4e462816bf46bb9a38ea48b0e00cb3b"
+  },
+  {
+    "provider": "tnns_home",
+    "source_url": "https://tnnslive.com/",
+    "status": 200,
+    "source_path": "data/research/noskova-alexandrova-20261006/tnns_home.raw",
+    "source_sha256": "4a88be015e2912c0d47a4c5bf1228ae03c136378717a24a37733eff175f8fd50"
+  }
+]

@@ -1,0 +1,150 @@
+{
+  "model": "medium.en",
+  "source_from": 81,
+  "source_to": 86.5,
+  "parameters": {
+    "language": "en",
+    "beam_size": 7,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null
+  },
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.0,
+      "end": 4.08,
+      "text": " All in favor of the Golden Girl who's one set from the quarterfinals in Beijing",
+      "tokens": [
+        50363,
+        1439,
+        287,
+        2661,
+        286,
+        262,
+        8407,
+        7430,
+        508,
+        338,
+        530,
+        900,
+        422,
+        262,
+        3860,
+        32089,
+        287,
+        11618,
+        50570
+      ],
+      "avg_logprob": -0.27162056863307954,
+      "compression_ratio": 1.0533333333333332,
+      "no_speech_prob": 0.035232339054346085,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.66,
+          "word": " All",
+          "probability": 0.45614564418792725
+        },
+        {
+          "start": 0.66,
+          "end": 0.88,
+          "word": " in",
+          "probability": 0.9945200085639954
+        },
+        {
+          "start": 0.88,
+          "end": 1.16,
+          "word": " favor",
+          "probability": 0.9873573780059814
+        },
+        {
+          "start": 1.16,
+          "end": 1.3,
+          "word": " of",
+          "probability": 0.9943733215332031
+        },
+        {
+          "start": 1.3,
+          "end": 1.42,
+          "word": " the",
+          "probability": 0.9929158687591553
+        },
+        {
+          "start": 1.42,
+          "end": 1.7,
+          "word": " Golden",
+          "probability": 0.7185042500495911
+        },
+        {
+          "start": 1.7,
+          "end": 2.04,
+          "word": " Girl",
+          "probability": 0.7646500468254089
+        },
+        {
+          "start": 2.04,
+          "end": 2.46,
+          "word": " who's",
+          "probability": 0.482090063393116
+        },
+        {
+          "start": 2.46,
+          "end": 2.6,
+          "word": " one",
+          "probability": 0.6831943988800049
+        },
+        {
+          "start": 2.6,
+          "end": 2.84,
+          "word": " set",
+          "probability": 0.9790392518043518
+        },
+        {
+          "start": 2.84,
+          "end": 3.02,
+          "word": " from",
+          "probability": 0.9965734481811523
+        },
+        {
+          "start": 3.02,
+          "end": 3.16,
+          "word": " the",
+          "probability": 0.9990754127502441
+        },
+        {
+          "start": 3.16,
+          "end": 3.64,
+          "word": " quarterfinals",
+          "probability": 0.9581268727779388
+        },
+        {
+          "start": 3.64,
+          "end": 3.8,
+          "word": " in",
+          "probability": 0.836413562297821
+        },
+        {
+          "start": 3.8,
+          "end": 4.08,
+          "word": " Beijing",
+          "probability": 0.9969415068626404
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

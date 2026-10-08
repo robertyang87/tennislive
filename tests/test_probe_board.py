@@ -86,6 +86,15 @@ def _seg(start, end, inset, **kw):
 ON_THEN_OFF = [(25, 398, 398), (25, None, None)]
 
 
+def test_wta_probe_measures_native_body_not_animated_header():
+    from PIL import Image
+    root = ROOT / "tests" / "fixtures" / "wta_scoreboard"
+    animated = np.asarray(Image.open(root / "beijing-sun-gauff-231880-tag-animation.png"))
+    assert pb.measure("wta", animated) is None
+    normal = np.asarray(Image.open(root / "beijing-sun-gauff-232880-ad-gradient.png"))
+    assert pb.measure("wta", normal) == (436, 436)
+
+
 def test_开着回贴却一帧板都没有_dry_run就红():
     """`prozorova-eala` 第 13 段（run 36020126044）、`alcaraz-mensik-doubles` 第 9 段
     （run 36197683115）那个形状：开着 score_inset 的段里一帧板都没有，render 的逐帧

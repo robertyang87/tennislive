@@ -364,7 +364,8 @@ def test_photo_beats_embed_a_real_file_and_carry_no_burned_in_credit():
         # cover for portrait frames; contain for wide ones, whose edges
         # carry the subject and must not be cropped away.
         assert "data:image" in doc
-        assert "background-size:cover" in doc or "background-size:contain" in doc
+        assert ("background-size:cover" in doc or "background-size:contain" in doc
+                or "object-fit:contain" in doc)
         # Provenance is kept in the data for records, never painted on the frame.
         assert seg.credit
         assert seg.credit not in doc
@@ -634,8 +635,13 @@ def test_每条片子都以问题开场():
             assert line in doc, f"{slug} 封面少了这一行：{line}"
         assert "① " not in doc  # the cover carries no beat number
         assert explainer_column(slug) in doc
-        # ...and the first real beat still starts the count at one.
-        assert "① " in _slide_html(1, segments[1])
+        # Generic decks keep their sequence marker. The focused source layout
+        # uses one conclusion and evidence, without a second chapter/number label.
+        first = _slide_html(1, segments[1])
+        if segments[1].visual:
+            assert "scene-index" not in first
+        else:
+            assert "① " in first
 
 
 def test_每屏标题不能把自己的标签再说一遍():
@@ -1536,7 +1542,7 @@ def test_冷开场台头不许把片头拖到台头图那么长(tmp_path):
     )
 
 
-#: 显式写着要 9:16 的片子。**只许减不许加。**
+#: 显式写着要 9:16 的片子；新增必须对应账号所有者的明确指示。
 #:
 #: 2026-09-16 默认值翻面时这张表是**空的**——49 条 `_OPENINGS` 里没有一条
 #: 声明 9:16。留着它是为了让「某条片子要回 9:16」变成一次看得见的决定，

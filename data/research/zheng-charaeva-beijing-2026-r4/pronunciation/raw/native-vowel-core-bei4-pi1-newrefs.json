@@ -1,0 +1,207 @@
+{
+  "sentence": "决胜盘，郑钦文五比二领先。五比三，发球胜赛局却被破掉。五比四，她在接发局继续争取最后一分。",
+  "text_sha256": "34ab0a3e1f7edfdb86d2a724bc6c56bea03e5d49704a8caec183c973df243463",
+  "index": 23,
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/native-final-audio/final_pressure-34ab0a3e1f7e-841e39bca856.mp3",
+    "A:备": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/452f8352adb3cd1c40c55796.mp3",
+    "B:披": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/6164e37a7785d112c5a4e272.mp3",
+    "B:批": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/c54dafc783e16d5fcc776428.mp3",
+    "A:贝": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/0e5cdc24bef9afef18b321d3.mp3",
+    "A:倍": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/8bf0b7fbde108abc21ab2f0e.mp3"
+  },
+  "native_orig_mp3_sha256": "841e39bca8567bb7dc31b22c310f200ec1794d6e151270c0e9f316f29dff5756",
+  "method": "WordBoundary phonetic vowel core middle35..85%, end+50ms compensation; standardized MFCC+delta mean, double-sided reference LOO; no F0 mixed into segmental contrast",
+  "tracks": {
+    "ORIG": {
+      "wordboundary": [
+        5.07075,
+        5.1886660000000004,
+        "被"
+      ],
+      "core_s": [
+        5.1295206,
+        5.2134786
+      ],
+      "frames": [
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521
+      ]
+    },
+    "A:备": {
+      "wordboundary": [
+        5.07075,
+        5.1886660000000004,
+        "备"
+      ],
+      "core_s": [
+        5.1295206,
+        5.2134786
+      ],
+      "frames": [
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521
+      ]
+    },
+    "B:披": {
+      "wordboundary": [
+        4.92925,
+        5.147416499999999,
+        "披破"
+      ],
+      "core_s": [
+        5.023108274999999,
+        5.157191524999999
+      ],
+      "frames": [
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515
+      ]
+    },
+    "B:批": {
+      "wordboundary": [
+        4.964625,
+        5.1886874999999995,
+        "批破"
+      ],
+      "core_s": [
+        5.060546875,
+        5.197578125
+      ],
+      "frames": [
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519
+      ]
+    },
+    "A:贝": {
+      "wordboundary": [
+        5.035375,
+        5.176875,
+        "贝"
+      ],
+      "core_s": [
+        5.1024,
+        5.19815
+      ],
+      "frames": [
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519
+      ]
+    },
+    "A:倍": {
+      "wordboundary": [
+        5.035375,
+        5.2594375,
+        "倍破"
+      ],
+      "core_s": [
+        5.131296875,
+        5.268328125
+      ],
+      "frames": [
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526
+      ]
+    }
+  },
+  "selftest_loo": {
+    "A:备": {
+      "expected": "correct",
+      "d_intended": 1.3130022287368774,
+      "d_wrong": 3.543497323989868,
+      "score": 0.45928040784038576,
+      "got": "correct"
+    },
+    "A:贝": {
+      "expected": "correct",
+      "d_intended": 1.3130022287368774,
+      "d_wrong": 3.455326557159424,
+      "score": 0.4492820073060156,
+      "got": "correct"
+    },
+    "A:倍": {
+      "expected": "correct",
+      "d_intended": 2.026965379714966,
+      "d_wrong": 2.689469337463379,
+      "score": 0.1404671107468997,
+      "got": "uncertain"
+    },
+    "B:披": {
+      "expected": "misread",
+      "d_intended": 2.884439468383789,
+      "d_wrong": 0.8993654251098633,
+      "score": -0.52462378456334,
+      "got": "misread"
+    },
+    "B:批": {
+      "expected": "misread",
+      "d_intended": 2.689469337463379,
+      "d_wrong": 0.8993654251098633,
+      "score": -0.49879808650482066,
+      "got": "misread"
+    }
+  },
+  "selftest_pass": false,
+  "original": {
+    "d_intended": 0.0,
+    "d_wrong": 3.543497323989868,
+    "score": 1.0,
+    "got": "correct"
+  },
+  "verdict": "unreliable",
+  "confidence": null
+}

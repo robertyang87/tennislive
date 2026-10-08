@@ -1,0 +1,343 @@
+{
+  "word": "的",
+  "char": "的",
+  "sentence": "三十九记制胜分，四十二次非受迫失误。进攻有威力，也有代价。她赢下的，是最后那一次回应。",
+  "tts_text": "三十九记制胜分，四十二次非受迫失误。进攻有威力，也有代价。她赢下的，是最后那一次回应。",
+  "intended_refs": [
+    "德",
+    "锝"
+  ],
+  "wrong_refs": [
+    "帝",
+    "蒂",
+    "缔"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "uncertain",
+  "confidence": null,
+  "verdict_raw": "uncertain",
+  "score": 0.087,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": true,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "A",
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 4.189,
+      "d_wrong": 4.988,
+      "score": 0.087
+    },
+    "f0": {
+      "d_intended": null,
+      "d_wrong": 2.898,
+      "score": null
+    },
+    "comb": {
+      "d_intended": 4.189,
+      "d_wrong": 4.988,
+      "score": 0.087
+    }
+  },
+  "neighbour_shift": {
+    "intended": 2.784,
+    "wrong": 2.495
+  },
+  "separation": {
+    "spec": {
+      "within": 1.26,
+      "between": 3.933,
+      "separation": 3.121
+    },
+    "f0": {
+      "within": 0.495,
+      "between": 2.792,
+      "separation": 5.643
+    },
+    "comb": {
+      "within": 1.26,
+      "between": 3.933,
+      "separation": 3.121
+    }
+  },
+  "selftest_loo": {
+    "德": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 1.0
+    },
+    "锝": {
+      "expect": "correct",
+      "got": "correct",
+      "score": 1.0
+    },
+    "帝": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -1.0
+    },
+    "蒂": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -1.0
+    },
+    "缔": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.311
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:德": {
+      "spec": 4.189,
+      "f0": NaN,
+      "vmis": 0.2,
+      "frames": 10,
+      "comb": 4.189
+    },
+    "A:锝": {
+      "spec": 4.189,
+      "f0": NaN,
+      "vmis": 0.2,
+      "frames": 10,
+      "comb": 4.189
+    },
+    "B:帝": {
+      "spec": 4.988,
+      "f0": 2.906,
+      "vmis": 0.273,
+      "frames": 11,
+      "comb": 4.988
+    },
+    "B:蒂": {
+      "spec": 4.988,
+      "f0": 2.898,
+      "vmis": 0.273,
+      "frames": 11,
+      "comb": 4.988
+    },
+    "B:缔": {
+      "spec": 5.146,
+      "f0": NaN,
+      "vmis": 0.5,
+      "frames": 10,
+      "comb": 5.146
+    }
+  },
+  "window_s": [
+    7.101,
+    7.192
+  ],
+  "boundary_token": "的",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下",
+      "的",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回应"
+    ],
+    "A:德": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下德",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回应"
+    ],
+    "A:锝": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下锝",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回应"
+    ],
+    "B:帝": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下帝",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回应"
+    ],
+    "B:蒂": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下蒂",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回应"
+    ],
+    "B:缔": [
+      "三十九",
+      "记制",
+      "胜分",
+      "四十二",
+      "次",
+      "非",
+      "受迫",
+      "失误",
+      "进攻",
+      "有",
+      "威力",
+      "也有",
+      "代价",
+      "她",
+      "赢",
+      "下",
+      "缔",
+      "是",
+      "最后",
+      "那",
+      "一次",
+      "回应"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      -7.2,
+      -7.8,
+      null,
+      null,
+      null
+    ],
+    "A:德": [
+      -3.5,
+      -3.8,
+      null,
+      null,
+      null
+    ],
+    "A:锝": [
+      -3.5,
+      -3.8,
+      null,
+      null,
+      null
+    ],
+    "B:帝": [
+      -4.3,
+      -4.5,
+      null,
+      null,
+      1.5,
+      -1.3
+    ],
+    "B:蒂": [
+      -4.3,
+      -4.5,
+      null,
+      null,
+      1.5,
+      -1.4
+    ],
+    "B:缔": [
+      -3.6,
+      -5.2,
+      null,
+      1.1,
+      0.1,
+      -1.3
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/fce76f29f31706b7c4557684.mp3",
+    "A:德": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/c969d95d01510e0298b4ba02.mp3",
+    "A:锝": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/bd7cbf36e37befb508e76812.mp3",
+    "B:帝": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/03c2c1b2228afa93d4f57744.mp3",
+    "B:蒂": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/fd80ceba5d4c6da5e61d937a.mp3",
+    "B:缔": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/a9c705f38144364471cd67d0.mp3"
+  },
+  "method": "Padding0, central70% of actual boundary syllable to exclude neighbors; spectral-only local comparison distinguishes le vs liao / de vs di vowel; independent nearest homophone proxies have full tones, not exact neutral tone; confidence capped low; this DOES NOT attest neutral tone by itself",
+  "exact_intended": "de5",
+  "proxy_confidence": "low",
+  "text_sha256": "56459d82d0581d36b4a9336b32fea2d387baf2528a015c456736c92925eb79f6",
+  "utterance": 5,
+  "index": 32,
+  "proxy_tag": "de-vowel-vs-di4"
+}

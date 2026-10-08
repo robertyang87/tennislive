@@ -1,0 +1,210 @@
+{
+ "word": "不得",
+ "char": "得",
+ "sentence": "球员准备发球后，广告不得变化。",
+ "tts_text": "球员准备发球后，广告不得变化。",
+ "intended_refs": [
+  "德",
+  "锝"
+ ],
+ "wrong_refs": [
+  "的"
+ ],
+ "voice": "zh-CN-YunjianNeural",
+ "rate": "+6%",
+ "verdict": "unreliable",
+ "confidence": null,
+ "verdict_raw": "correct",
+ "score": 0.336,
+ "margin": 0.2,
+ "near_identical_to": null,
+ "far_from_both": true,
+ "dropped_refs": [],
+ "override": null,
+ "selftest_sides": [
+  "A"
+ ],
+ "features": {
+  "spec": {
+   "d_intended": 2.78,
+   "d_wrong": 4.172,
+   "score": 0.2
+  },
+  "f0": {
+   "d_intended": 0.256,
+   "d_wrong": 1.585,
+   "score": 0.721
+  },
+  "comb": {
+   "d_intended": 1.822,
+   "d_wrong": 3.67,
+   "score": 0.336
+  }
+ },
+ "neighbour_shift": {
+  "intended": 1.706,
+  "wrong": 6.076
+ },
+ "separation": {
+  "spec": {
+   "within": 2.737,
+   "between": 3.967,
+   "separation": 1.449
+  },
+  "f0": {
+   "within": 1.01,
+   "between": 1.313,
+   "separation": 1.3
+  },
+  "comb": {
+   "within": 2.379,
+   "between": 3.297,
+   "separation": 1.386
+  }
+ },
+ "selftest_loo": {
+  "德": {
+   "expect": "correct",
+   "got": "uncertain",
+   "score": 0.143
+  },
+  "锝": {
+   "expect": "correct",
+   "got": "uncertain",
+   "score": 0.181
+  }
+ },
+ "selftest_pass": false,
+ "distances_from_orig": {
+  "A:德": {
+   "spec": 3.281,
+   "f0": 0.256,
+   "vmis": 0.227,
+   "frames": 22,
+   "comb": 1.897
+  },
+  "A:锝": {
+   "spec": 2.78,
+   "f0": 0.432,
+   "vmis": 0.19,
+   "frames": 21,
+   "comb": 1.822
+  },
+  "B:的": {
+   "spec": 4.172,
+   "f0": 1.585,
+   "vmis": 0.19,
+   "frames": 21,
+   "comb": 3.67
+  }
+ },
+ "window_s": [
+  2.1,
+  2.31
+ ],
+ "boundary_token": "不得",
+ "window_anchor": "A:锝",
+ "tokens": {
+  "ORIG": [
+   "球员",
+   "准备",
+   "发球",
+   "后",
+   "广告",
+   "不得",
+   "变化"
+  ],
+  "A:德": [
+   "球员",
+   "准备",
+   "发球",
+   "后",
+   "广告",
+   "不德",
+   "变化"
+  ],
+  "A:锝": [
+   "球员",
+   "准备",
+   "发球",
+   "后",
+   "广告",
+   "不",
+   "锝",
+   "变化"
+  ],
+  "B:的": [
+   "球员",
+   "准备",
+   "发球",
+   "后",
+   "广告",
+   "不",
+   "的",
+   "变化"
+  ]
+ },
+ "f0_semitones_window": {
+  "ORIG": [
+   null,
+   null,
+   null,
+   2.9,
+   2.1,
+   null,
+   null,
+   -2.5,
+   -2.7,
+   -2.6,
+   -4.1
+  ],
+  "A:德": [
+   null,
+   null,
+   3.6,
+   2.8,
+   2.0,
+   -2.1,
+   -2.1,
+   -2.5,
+   -2.3,
+   -2.8,
+   -4.7
+  ],
+  "A:锝": [
+   null,
+   null,
+   null,
+   2.1,
+   0.9,
+   -3.5,
+   0.1,
+   -1.7,
+   -2.6,
+   -3.3
+  ],
+  "B:的": [
+   null,
+   null,
+   2.3,
+   1.4,
+   null,
+   null,
+   null,
+   -4.1,
+   -5.4
+  ]
+ },
+ "audio": {
+  "ORIG": "/workspace/scratch/sun-replay/polyphone-audit/cache/10207b69236c948152898f12.mp3",
+  "A:德": "/workspace/scratch/sun-replay/polyphone-audit/cache/6edab962387d3e611a7f2c55.mp3",
+  "A:锝": "/workspace/scratch/sun-replay/polyphone-audit/cache/a55c7e2e27d26006137b015e.mp3",
+  "B:的": "/workspace/scratch/sun-replay/polyphone-audit/cache/4fe5b8402c983f1957904ea5.mp3"
+ },
+ "ref_notes": {
+  "ok_refs_from": "de2: single-reading common, single-reading level-2",
+  "bad_refs_from": "de5: dominant-reading only",
+  "bad_refs_augmented": "的=de5 (+: none found)",
+  "bad_ref_warning": "的 itself has readings ['de5', 'di1', 'di2', 'di4']"
+ }
+}

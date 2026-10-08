@@ -15,7 +15,8 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-import shutil
+import tempfile
+import zipfile
 import time
 from pathlib import Path
 
@@ -192,23 +193,44 @@ def tts_one(text: str, path: Path, voice: str, rate: str,
                           lead_pause)
     cache_dir = Path(os.environ.get(
         "TENNISLIVE_TTS_CACHE",
-        str(Path.home() / ".cache" / "tennislive-tts")))
-    cached_mp3 = cache_dir / f"{key}.mp3"
-    cached_marks = cache_dir / f"{key}.json"
-    if cached_mp3.is_file() and cached_marks.is_file():
+        str(Path.home() / ".cache" / "tennislive-tts"))).expanduser()
+    # 音频与词边界必须属于同一次合成。单个未压缩 ZIP 原子替换，避免两文件
+    # 写到一半或并发覆盖后错配；CRC 读取校验挡住损坏缓存。旧双文件缓存不复用。
+    backend = "azure" if azure_tts.available() else "edge"
+    entry = cache_dir / f"{key}-{backend}-v2.zip"
+    try:
+        with zipfile.ZipFile(entry) as bundle:
+            audio = bundle.read("audio.mp3")
+            marks = json.loads(bundle.read("marks.json"))
+        if not audio or not isinstance(marks, list) or not all(
+                isinstance(mark, dict) for mark in marks):
+            raise ValueError("invalid TTS cache entry")
+    except (OSError, ValueError, KeyError, zipfile.BadZipFile, EOFError):
+        pass
+    else:
+        path.write_bytes(audio)
         print(f"[TTS] 命中缓存 {key[:10]}（{len(text)} 字），不重合成")
-        shutil.copyfile(cached_mp3, path)
-        return json.loads(cached_marks.read_text(encoding="utf-8"))
+        return marks
     marks = (synth or _tts_one_uncached)(text, path, voice, rate, pitch, style,
                                          styledegree, lead_pause, error=error)
+    temporary = None
     try:
         cache_dir.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(path, cached_mp3)
-        cached_marks.write_text(json.dumps(marks, ensure_ascii=False),
-                                encoding="utf-8")
+        with tempfile.NamedTemporaryFile(dir=cache_dir, prefix=".tts-", delete=False) as f:
+            temporary = Path(f.name)
+            with zipfile.ZipFile(f, "w", compression=zipfile.ZIP_STORED) as bundle:
+                bundle.write(path, "audio.mp3")
+                bundle.writestr("marks.json", json.dumps(marks, ensure_ascii=False))
+        os.replace(temporary, entry)
     except OSError:
         # 缓存写失败不该把整条片子带崩——缓存是加速，不是正确性。
         pass
+    finally:
+        if temporary is not None:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError:
+                pass
     return marks
 
 

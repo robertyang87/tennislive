@@ -54,15 +54,16 @@ def test_explicit_languages_crop_original_audio_and_keep_native_words(monkeypatc
     assert all(path != '/source/audio.wav' for path, _ in calls)
 
 
-def test_default_english_path_is_preserved():
+def test_default_english_language_and_timeline_are_preserved(monkeypatch):
     calls = []
+    monkeypatch.setattr(clip.subprocess, 'run', lambda cmd, **kw: None)
     class Model:
         def transcribe(self, path, **kwargs):
             calls.append((path, kwargs))
             return iter([SimpleNamespace(words=[SimpleNamespace(start=4, end=5, word='hello')])]), None
     assert clip.transcribe_source_words(Model(), Path('/audio.wav'),
                                         {'start': 0, 'end': 10}) == [(4.0, 5.0, 'hello')]
-    assert calls[0][0] == '/audio.wav'
+    assert calls[0][0] != '/audio.wav'
     assert calls[0][1]['language'] == 'en' and calls[0][1]['task'] == 'transcribe'
 
 

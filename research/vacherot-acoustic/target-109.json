@@ -1,0 +1,351 @@
+{
+  "id": "target-109",
+  "label": "第 24 段",
+  "display_char": "种",
+  "actual_tts_char": "种",
+  "position": 9,
+  "context": "，他以十七号种子的身份回到",
+  "word": "种子",
+  "intended": "zhong3",
+  "common_contrast": "zhong4",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "一年后，他以十七号种子的身份回到上海。不用再等一个位置，比赛，仍要一场场打。",
+  "verdict": "uncertain",
+  "measurement": {
+    "word": "种",
+    "char": "种",
+    "sentence": "一年后，他以十七号种子的身份回到上海。不用再等一个位置，比赛，仍要一场场打。",
+    "tts_text": "一年后，他以十七号种子的身份回到上海。不用再等一个位置，比赛，仍要一场场打。",
+    "intended_refs": [
+      "肿",
+      "冢"
+    ],
+    "wrong_refs": [
+      "仲",
+      "众"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "uncertain",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": 0.067,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 3.216,
+        "d_wrong": 3.139,
+        "score": -0.012
+      },
+      "f0": {
+        "d_intended": 5.909,
+        "d_wrong": 7.001,
+        "score": 0.085
+      },
+      "comb": {
+        "d_intended": 7.517,
+        "d_wrong": 8.596,
+        "score": 0.067
+      }
+    },
+    "neighbour_shift": {
+      "intended": 15.139,
+      "wrong": 8.77
+    },
+    "separation": {
+      "spec": {
+        "within": 0.656,
+        "between": 2.859,
+        "separation": 4.362
+      },
+      "f0": {
+        "within": 0.056,
+        "between": 4.664,
+        "separation": 83.71
+      },
+      "comb": {
+        "within": 0.383,
+        "between": 6.093,
+        "separation": 15.89
+      }
+    },
+    "selftest_loo": {
+      "肿": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.85
+      },
+      "冢": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.866
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.898
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.897
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:肿": {
+        "spec": 3.216,
+        "f0": 5.909,
+        "vmis": 0.179,
+        "frames": 28,
+        "comb": 7.517
+      },
+      "A:冢": {
+        "spec": 3.312,
+        "f0": 5.994,
+        "vmis": 0.111,
+        "frames": 27,
+        "comb": 7.65
+      },
+      "B:仲": {
+        "spec": 3.139,
+        "f0": 7.034,
+        "vmis": 0.192,
+        "frames": 26,
+        "comb": 8.603
+      },
+      "B:众": {
+        "spec": 3.189,
+        "f0": 7.001,
+        "vmis": 0.192,
+        "frames": 26,
+        "comb": 8.596
+      }
+    },
+    "window_s": [
+      1.767,
+      2.012
+    ],
+    "boundary_token": "种子",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "一年",
+        "后",
+        "他",
+        "以",
+        "十七号",
+        "种子",
+        "的",
+        "身份",
+        "回到",
+        "上海",
+        "不用",
+        "再",
+        "等",
+        "一个",
+        "位置",
+        "比赛",
+        "仍",
+        "要",
+        "一",
+        "场",
+        "场",
+        "打"
+      ],
+      "A:肿": [
+        "一年",
+        "后",
+        "他",
+        "以",
+        "十七号",
+        "肿子",
+        "的",
+        "身份",
+        "回到",
+        "上海",
+        "不用",
+        "再",
+        "等",
+        "一个",
+        "位置",
+        "比赛",
+        "仍",
+        "要",
+        "一",
+        "场",
+        "场",
+        "打"
+      ],
+      "A:冢": [
+        "一年",
+        "后",
+        "他",
+        "以",
+        "十七号",
+        "冢子",
+        "的",
+        "身份",
+        "回到",
+        "上海",
+        "不用",
+        "再",
+        "等",
+        "一个",
+        "位置",
+        "比赛",
+        "仍",
+        "要",
+        "一",
+        "场",
+        "场",
+        "打"
+      ],
+      "B:仲": [
+        "一年",
+        "后",
+        "他",
+        "以",
+        "十七号",
+        "仲子",
+        "的",
+        "身份",
+        "回到",
+        "上海",
+        "不用",
+        "再",
+        "等",
+        "一个",
+        "位置",
+        "比赛",
+        "仍",
+        "要",
+        "一",
+        "场",
+        "场",
+        "打"
+      ],
+      "B:众": [
+        "一年",
+        "后",
+        "他",
+        "以",
+        "十七号",
+        "众子",
+        "的",
+        "身份",
+        "回到",
+        "上海",
+        "不用",
+        "再",
+        "等",
+        "一个",
+        "位置",
+        "比赛",
+        "仍",
+        "要",
+        "一",
+        "场",
+        "场",
+        "打"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        null,
+        -1.0,
+        -1.8,
+        -3.5,
+        null,
+        null,
+        null,
+        null,
+        -6.8,
+        -7.3,
+        -7.9,
+        -7.9
+      ],
+      "A:肿": [
+        1.1,
+        -2.0,
+        -3.2,
+        -3.9,
+        -6.5,
+        null,
+        null,
+        null,
+        -2.3,
+        -2.3,
+        -0.3,
+        2.1,
+        4.6,
+        6.6
+      ],
+      "A:冢": [
+        null,
+        null,
+        -3.2,
+        -3.8,
+        -6.4,
+        null,
+        null,
+        null,
+        -2.3,
+        -2.2,
+        -0.3,
+        2.1,
+        4.7,
+        6.6
+      ],
+      "B:仲": [
+        3.4,
+        1.2,
+        0.1,
+        -0.5,
+        -1.2,
+        -2.3,
+        null,
+        null,
+        8.1,
+        7.6,
+        7.1,
+        5.8,
+        3.4,
+        0.7
+      ],
+      "B:众": [
+        3.5,
+        1.2,
+        0.1,
+        -0.5,
+        -1.3,
+        -2.6,
+        null,
+        null,
+        8.1,
+        7.7,
+        7.1,
+        5.8,
+        3.4,
+        0.7
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/606156f13132a105ba792a2c.mp3",
+      "A:肿": "/workspace/tennislive/research/vacherot-acoustic/references/f062f7e7b2d77e6cf34a6a5a.mp3",
+      "A:冢": "/workspace/tennislive/research/vacherot-acoustic/references/81737e28bdef668e1c6be7f0.mp3",
+      "B:仲": "/workspace/tennislive/research/vacherot-acoustic/references/6842c547d9476ff10dbf9cca.mp3",
+      "B:众": "/workspace/tennislive/research/vacherot-acoustic/references/ce2a6f6f2b0265a62fce2674.mp3"
+    }
+  }
+}

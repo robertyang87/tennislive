@@ -1,0 +1,581 @@
+{
+  "original": {
+    "word": "重打",
+    "char": "重",
+    "sentence": "十月五号晚，中网第三轮。一分被判重打。",
+    "tts_text": "十月五号晚，中网第三轮。一分被判重打。",
+    "intended_refs": [
+      "崇",
+      "虫"
+    ],
+    "wrong_refs": [
+      "众",
+      "仲"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "misread",
+    "confidence": "medium",
+    "verdict_raw": "misread",
+    "score": -1.0,
+    "margin": 0.2,
+    "near_identical_to": "wrong",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": "ORIG identical to a B-reference; B-side self-test passed, other side did not",
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 3.163,
+        "d_wrong": 0.0,
+        "score": -1.0
+      },
+      "f0": {
+        "d_intended": 2.174,
+        "d_wrong": 0.0,
+        "score": -1.0
+      },
+      "comb": {
+        "d_intended": 3.755,
+        "d_wrong": 0.0,
+        "score": -1.0
+      }
+    },
+    "neighbour_shift": {
+      "intended": 22.099,
+      "wrong": 0.0
+    },
+    "separation": {
+      "spec": {
+        "within": 2.86,
+        "between": 3.504,
+        "separation": 1.225
+      },
+      "f0": {
+        "within": 1.398,
+        "between": 2.717,
+        "separation": 1.944
+      },
+      "comb": {
+        "within": 2.828,
+        "between": 4.469,
+        "separation": 1.581
+      }
+    },
+    "selftest_loo": {
+      "崇": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.106
+      },
+      "虫": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": -0.041
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.432
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.389
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:崇": {
+        "spec": 3.658,
+        "f0": 3.165,
+        "vmis": 0.216,
+        "frames": 37,
+        "comb": 4.994
+      },
+      "A:虫": {
+        "spec": 3.163,
+        "f0": 2.174,
+        "vmis": 0.161,
+        "frames": 31,
+        "comb": 3.755
+      },
+      "B:众": {
+        "spec": 2.533,
+        "f0": 0.384,
+        "vmis": 0.031,
+        "frames": 32,
+        "comb": 1.651
+      },
+      "B:仲": {
+        "spec": 0.0,
+        "f0": 0.0,
+        "vmis": 0.0,
+        "frames": 30,
+        "comb": 0.0
+      }
+    },
+    "window_s": [
+      3.804,
+      4.091
+    ],
+    "boundary_token": "重打",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "十月",
+        "五号",
+        "晚",
+        "中网",
+        "第三",
+        "轮",
+        "一",
+        "分",
+        "被",
+        "判",
+        "重打"
+      ],
+      "A:崇": [
+        "十月",
+        "五号",
+        "晚",
+        "中网",
+        "第三",
+        "轮",
+        "一",
+        "分",
+        "被",
+        "判",
+        "崇打"
+      ],
+      "A:虫": [
+        "十月",
+        "五号",
+        "晚",
+        "中网",
+        "第三",
+        "轮",
+        "一",
+        "分",
+        "被",
+        "判虫",
+        "打"
+      ],
+      "B:众": [
+        "十月",
+        "五号",
+        "晚",
+        "中网",
+        "第三",
+        "轮",
+        "一",
+        "分",
+        "被判众",
+        "打"
+      ],
+      "B:仲": [
+        "十月",
+        "五号",
+        "晚",
+        "中网",
+        "第三",
+        "轮",
+        "一",
+        "分",
+        "被",
+        "判",
+        "仲打"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        0.9,
+        0.0,
+        -0.4,
+        -0.6,
+        -0.8,
+        -1.7,
+        null,
+        3.6,
+        2.2,
+        1.0,
+        -0.6,
+        -3.9,
+        -5.8,
+        -6.0,
+        null
+      ],
+      "A:崇": [
+        -0.4,
+        -1.9,
+        -3.4,
+        -3.4,
+        -3.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -4.5,
+        -4.5,
+        -1.6,
+        -2.5,
+        -0.7,
+        1.1,
+        2.4
+      ],
+      "A:虫": [
+        3.9,
+        2.9,
+        0.6,
+        -0.9,
+        -1.8,
+        -2.4,
+        null,
+        null,
+        null,
+        -5.4,
+        -4.9,
+        -4.2,
+        -3.2,
+        -2.4,
+        -1.9
+      ],
+      "B:众": [
+        1.1,
+        0.1,
+        -0.5,
+        -0.8,
+        -0.8,
+        -1.1,
+        null,
+        4.2,
+        3.2,
+        2.3,
+        1.0,
+        -1.4,
+        -3.9,
+        -6.2,
+        -9.4,
+        null
+      ],
+      "B:仲": [
+        0.9,
+        0.0,
+        -0.4,
+        -0.6,
+        -0.8,
+        -1.7,
+        null,
+        3.6,
+        2.2,
+        1.0,
+        -0.6,
+        -3.9,
+        -5.8,
+        -6.0,
+        null
+      ]
+    },
+    "audio": {
+      "ORIG": "/home/agent/.cache/tennislive/polyphone/d44940d8a333229d57a6bfad.mp3",
+      "A:崇": "/home/agent/.cache/tennislive/polyphone/0b5d3fe93a07c5a403b9c18d.mp3",
+      "A:虫": "/home/agent/.cache/tennislive/polyphone/9c83a29a925543e7c40b918c.mp3",
+      "B:众": "/home/agent/.cache/tennislive/polyphone/81c51e0b696b11998fe8e708.mp3",
+      "B:仲": "/home/agent/.cache/tennislive/polyphone/5167917bfdcd2e367f11cc14.mp3"
+    }
+  },
+  "candidate": {
+    "word": "重打",
+    "char": "重",
+    "sentence": "十月五号晚，中网第三轮。一分被判重打。",
+    "tts_text": "十月五号晚，中网第三轮。一分被判崇打。",
+    "intended_refs": [
+      "崇",
+      "虫"
+    ],
+    "wrong_refs": [
+      "众",
+      "仲"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "correct",
+    "score": 1.0,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.612,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.0,
+        "d_wrong": 2.991,
+        "score": 1.0
+      },
+      "comb": {
+        "d_intended": 0.0,
+        "d_wrong": 4.878,
+        "score": 1.0
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.0,
+      "wrong": 4.347
+    },
+    "separation": {
+      "spec": {
+        "within": 2.845,
+        "between": 3.506,
+        "separation": 1.232
+      },
+      "f0": {
+        "within": 1.394,
+        "between": 2.65,
+        "separation": 1.901
+      },
+      "comb": {
+        "within": 2.817,
+        "between": 4.403,
+        "separation": 1.563
+      }
+    },
+    "selftest_loo": {
+      "崇": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.106
+      },
+      "虫": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": -0.041
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.416
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.389
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:崇": {
+        "spec": 0.0,
+        "f0": 0.0,
+        "vmis": 0.0,
+        "frames": 34,
+        "comb": 0.0
+      },
+      "A:虫": {
+        "spec": 3.187,
+        "f0": 2.35,
+        "vmis": 0.059,
+        "frames": 34,
+        "comb": 3.943
+      },
+      "B:众": {
+        "spec": 3.774,
+        "f0": 2.991,
+        "vmis": 0.171,
+        "frames": 35,
+        "comb": 4.878
+      },
+      "B:仲": {
+        "spec": 3.612,
+        "f0": 3.109,
+        "vmis": 0.171,
+        "frames": 35,
+        "comb": 4.915
+      }
+    },
+    "window_s": [
+      3.793,
+      4.12
+    ],
+    "boundary_token": "崇打",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "十月",
+        "五号",
+        "晚",
+        "中网",
+        "第三",
+        "轮",
+        "一",
+        "分",
+        "被",
+        "判",
+        "崇打"
+      ],
+      "A:崇": [
+        "十月",
+        "五号",
+        "晚",
+        "中网",
+        "第三",
+        "轮",
+        "一",
+        "分",
+        "被",
+        "判",
+        "崇打"
+      ],
+      "A:虫": [
+        "十月",
+        "五号",
+        "晚",
+        "中网",
+        "第三",
+        "轮",
+        "一",
+        "分",
+        "被",
+        "判虫",
+        "打"
+      ],
+      "B:众": [
+        "十月",
+        "五号",
+        "晚",
+        "中网",
+        "第三",
+        "轮",
+        "一",
+        "分",
+        "被判众",
+        "打"
+      ],
+      "B:仲": [
+        "十月",
+        "五号",
+        "晚",
+        "中网",
+        "第三",
+        "轮",
+        "一",
+        "分",
+        "被",
+        "判",
+        "仲打"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -0.4,
+        -1.9,
+        -3.4,
+        -3.4,
+        -3.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -4.5,
+        -4.5,
+        -1.6,
+        -2.5,
+        -0.7,
+        1.1,
+        2.4
+      ],
+      "A:崇": [
+        -0.4,
+        -1.9,
+        -3.4,
+        -3.4,
+        -3.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -4.5,
+        -4.5,
+        -1.6,
+        -2.5,
+        -0.7,
+        1.1,
+        2.4
+      ],
+      "A:虫": [
+        3.9,
+        2.9,
+        0.6,
+        -0.9,
+        -1.8,
+        -2.4,
+        null,
+        null,
+        null,
+        -5.4,
+        -4.9,
+        -4.2,
+        -3.2,
+        -2.4,
+        -1.9
+      ],
+      "B:众": [
+        1.4,
+        0.6,
+        -0.4,
+        -0.6,
+        -0.8,
+        -0.9,
+        null,
+        null,
+        3.7,
+        2.8,
+        1.8,
+        -0.2,
+        -2.6,
+        -5.3,
+        -6.6
+      ],
+      "B:仲": [
+        0.9,
+        0.0,
+        -0.4,
+        -0.6,
+        -0.8,
+        -1.7,
+        null,
+        3.6,
+        2.2,
+        1.0,
+        -0.6,
+        -3.9,
+        -5.8,
+        -6.0,
+        null
+      ]
+    },
+    "audio": {
+      "ORIG": "/home/agent/.cache/tennislive/polyphone/0b5d3fe93a07c5a403b9c18d.mp3",
+      "A:崇": "/home/agent/.cache/tennislive/polyphone/0b5d3fe93a07c5a403b9c18d.mp3",
+      "A:虫": "/home/agent/.cache/tennislive/polyphone/9c83a29a925543e7c40b918c.mp3",
+      "B:众": "/home/agent/.cache/tennislive/polyphone/81c51e0b696b11998fe8e708.mp3",
+      "B:仲": "/home/agent/.cache/tennislive/polyphone/5167917bfdcd2e367f11cc14.mp3"
+    }
+  }
+}

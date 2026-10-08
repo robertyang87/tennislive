@@ -1,0 +1,136 @@
+{
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "method": "tools/measure_polyphone.py MFCC+delta / Praat F0 semitones / target-window DTW / reference leave-one-out self-test",
+  "asr_used": false,
+  "scope": "Original narration complete individual clauses synthesized separately; not a comparison against full cached production master. No source/spec/commit edited.",
+  "checks": [
+    {
+      "word": "重置",
+      "intended": "chong2",
+      "sentence": "比分能重置，感觉未必能一起退回去。",
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 0.992,
+      "selftest_pass": true,
+      "near_identical_to": "intended",
+      "far_from_both": false,
+      "evidence": "/workspace/scratch/sun-replay/polyphone-audit/reset.json"
+    },
+    {
+      "word": "处罚",
+      "intended": "chu3",
+      "sentence": "但本场是否处罚，尚无结论。",
+      "verdict": "correct",
+      "confidence": "medium",
+      "score": 0.868,
+      "selftest_pass": true,
+      "near_identical_to": null,
+      "far_from_both": false,
+      "evidence": "/workspace/scratch/sun-replay/polyphone-audit/punishment.json"
+    },
+    {
+      "word": "不得",
+      "intended": "de2",
+      "sentence": "球员准备发球后，广告不得变化。",
+      "verdict": "unreliable",
+      "confidence": null,
+      "score": 0.336,
+      "selftest_pass": false,
+      "near_identical_to": null,
+      "far_from_both": true,
+      "evidence": "/workspace/scratch/sun-replay/polyphone-audit/must-not.json"
+    },
+    {
+      "word": "不得",
+      "sentence": "主办方当然要负责。WTA明确要求，球员准备发球后，广告不得变化。重打一分，不能把赛事方的保障责任一笔勾销。",
+      "verdict": "correct",
+      "confidence": "low",
+      "score": 0.725,
+      "selftest_pass": true,
+      "selftest_sides": [
+        "A"
+      ],
+      "far_from_both": false,
+      "evidence": "/workspace/scratch/sun-replay/polyphone-audit/must-not-full-original.json",
+      "editorial_conclusion": "inconclusive - no replacement"
+    },
+    {
+      "word": "不得",
+      "sentence": "主办方当然要负责。WTA明确要求，球员准备发球后，广告不得变化。崇打一分，不能把赛事方的保障责任一笔勾销。",
+      "verdict": "correct",
+      "confidence": "low",
+      "score": 0.745,
+      "selftest_pass": true,
+      "selftest_sides": [
+        "A"
+      ],
+      "far_from_both": false,
+      "evidence": "/workspace/scratch/sun-replay/polyphone-audit/must-not-full-spoken.json",
+      "editorial_conclusion": "inconclusive - no replacement"
+    },
+    {
+      "word": "还说",
+      "sentence": "她还说，第二盘情绪受到影响。",
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 0.984,
+      "selftest_pass": true,
+      "selftest_sides": [
+        "A",
+        "B"
+      ],
+      "far_from_both": false,
+      "evidence": "/workspace/scratch/sun-replay/polyphone-audit/still.json",
+      "editorial_conclusion": "no misread found"
+    },
+    {
+      "word": "落泪",
+      "sentence": "她当时落泪，后来赢了。",
+      "verdict": "correct",
+      "confidence": "medium",
+      "score": 0.507,
+      "selftest_pass": true,
+      "selftest_sides": [
+        "A",
+        "B"
+      ],
+      "far_from_both": false,
+      "evidence": "/workspace/scratch/sun-replay/polyphone-audit/tear.json",
+      "editorial_conclusion": "no misread found"
+    },
+    {
+      "word": "结论",
+      "sentence": "但本场是否处罚，尚无结论。",
+      "verdict": "correct",
+      "confidence": "low",
+      "score": 0.305,
+      "selftest_pass": true,
+      "selftest_sides": [
+        "A",
+        "B"
+      ],
+      "far_from_both": true,
+      "evidence": "/workspace/scratch/sun-replay/polyphone-audit/conclusion.json",
+      "editorial_conclusion": "inconclusive - no replacement"
+    }
+  ],
+  "decision": "No new substitution justified. 还/hai2 and 落/luo4 supported; 不得/de2 only low confidence in full context, 结/jie2 far_from_both means still inconclusive. No ASR tone assertion, no thresholds changed.",
+  "reference_absence": {
+    "de3": [
+      [],
+      "none found"
+    ],
+    "dei3": [
+      [],
+      "none found"
+    ],
+    "fa1": [
+      [
+        "发"
+      ],
+      "dominant-reading only"
+    ]
+  },
+  "reference_absence_note": "得 must-reading is dei3, not de3. Both lack independent single-reading references; fa1 found only original 发, not an independent calibration reference. Do not use original character as its own truth reference."
+}

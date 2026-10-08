@@ -1,0 +1,66 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "large-v3-turbo",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 212.5,
+  "range_to": 215.4,
+  "created_at": "2026-10-04T14:48:54.723841+00:00",
+  "elapsed_seconds": 5.13,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 212.8,
+      "end": 214.5,
+      "text": " Oh, he was stretching there, Zverev.",
+      "avg_logprob": -0.5382261020796639,
+      "no_speech_prob": 2.1151124254825682e-11,
+      "words": [
+        {
+          "start": 212.8,
+          "end": 213.08,
+          "word": " Oh,",
+          "probability": 0.33061131834983826
+        },
+        {
+          "start": 213.12,
+          "end": 213.24,
+          "word": " he",
+          "probability": 0.6240869760513306
+        },
+        {
+          "start": 213.24,
+          "end": 213.38,
+          "word": " was",
+          "probability": 0.5408191084861755
+        },
+        {
+          "start": 213.38,
+          "end": 213.72,
+          "word": " stretching",
+          "probability": 0.993442177772522
+        },
+        {
+          "start": 213.72,
+          "end": 213.96,
+          "word": " there,",
+          "probability": 0.6443710327148438
+        },
+        {
+          "start": 214.08,
+          "end": 214.5,
+          "word": " Zverev.",
+          "probability": 0.8234182198842367
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "local_verified_render": {
+    "method": "Standard renderer and actual check_reel_landed.py, plus full ffmpeg blackdetect d=.04 pix_th=.08 pic_th=.99",
+    "film_sha256": "26a9d3d5b1efc34a20210dac4018a7db4505f902187dd7865c4f1927bcb91ac3",
+    "landed_exit": 0,
+    "blackdetect_intervals": [],
+    "decoded_frames": 5726,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": 25,
+    "final_duration": 229.04,
+    "tts_binding_path": "data/research/noskova-alexandrova-20261006/audio/final-render-frozen-speech-binding.json",
+    "visual_method": "Actual captioned final cut/scoreboard/ACE frames plus independent critical action source/final sampling; not claimed exhaustive human viewing"
+  },
+  "rejected_runner_renders": [
+    {
+      "run": 37443113335,
+      "film_sha256": "249fdab2e2bc210c3a477afb9bee59a0989ad53ce8aa04aa9ad904a73c445342",
+      "native_landed_exit": 0,
+      "independent_black_intervals": [
+        [
+          225.2,
+          225.24
+        ]
+      ],
+      "status": "rejected_black_flash"
+    },
+    {
+      "run": 37444439748,
+      "film_sha256": "d0ccab664e6c9bdc4830c0b4c9bd9f773e133d57799541ad95f353e59981d362",
+      "native_landed_exit": 0,
+      "independent_black_intervals": [
+        [
+          225.2,
+          225.24
+        ]
+      ],
+      "status": "rejected_black_flash"
+    }
+  ],
+  "published_runner_render": {
+    "run": 37445862263,
+    "film_sha256": "0d95379d6dda0416a84135ac8ba4386816e21b5cf261cd98d79e63f0b1a1a7b7",
+    "film_bytes": 77017671,
+    "duration": 228.84,
+    "native_landed_exit": 0,
+    "independent_release_landed_exit": 0,
+    "actual_release_sha_verified": true,
+    "full_decoded_black_intervals": [],
+    "blackdetect_method": "Full actual downloaded Release decode, d=.04 pix_th=.08 pic_th=.99",
+    "decoded_frames": 5721,
+    "qc_attestation_path": "output/2026-10-06/reel/noskova-alexandrova/qc_attestation.json",
+    "visual_scope": "Critical actual source/final frames independently reviewed; no exhaustive human viewing or human audio listening claimed"
+  },
+  "ending_source_review": "data/research/noskova-alexandrova-20261006/ending-black-tail-review.json"
+}

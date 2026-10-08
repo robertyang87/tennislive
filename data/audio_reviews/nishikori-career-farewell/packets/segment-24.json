@@ -1,0 +1,45 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://www.tennistv.com/videos/4498756/kei-nishikoris-incredible-career",
+  "source_file": "/workspace/tennislive-work/work/nishikori-career-farewell/career.mp4",
+  "source_sha256": "b3b6d85fcb16fdd1082acd7351f56b3131f7187520401be154b122703fb7ee51",
+  "method": "asr_cross_checked",
+  "reviewer": "closing_source + root medium.en wider no-prompt ASR + independent small/base source timing",
+  "reviewed_at": "2026-10-04T07:42:27.655980+00:00",
+  "status": "complete",
+  "reviewed_from": 822.85,
+  "reviewed_to": 836.57,
+  "foreground_english": [
+    {
+      "start": 827.4,
+      "end": 832.52,
+      "en": "The drought is over.",
+      "zh": "冠军荒结束了。"
+    },
+    {
+      "start": 832.52,
+      "end": 836.54,
+      "en": "Two sets to one: 6-4, 3-6, 6-2.",
+      "zh": "两盘比一：6比4、3比6、6比2。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "uncertain_spans": [],
+  "asr_results": [
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/brisbane2019-medium-wide.en-50c6a28ba3a2.json",
+      "sha256": "50c6a28ba3a2de5c0b04e5f12378d549fc043b0edc57e956bdcd8296a61c3369"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/12-2019-brisbane-point-reaction-small.en-bbd8b3e287e5.json",
+      "sha256": "6dd5d9f50c4e0eb4a21e2a0c1a15c5ed83d2f229080a5e5698e01b1e8873203b"
+    }
+  ],
+  "human_listening_done": false,
+  "timing_note": "Medium wider-context word alignment locates score start832.52 immediately after over ends832.52; two explicit adjacent cues avoid overlap. Small confirms entire score lexical sequence.",
+  "portable_review_provenance": {
+    "original_packet_sha256": "2cd8d57aea142bb212fe13b73764431e298c34b0940ac640da566605ac7c24c9",
+    "not_human_heard": true,
+    "source_movie_not_copied": true
+  }
+}

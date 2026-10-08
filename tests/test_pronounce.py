@@ -365,16 +365,17 @@ def test_多音字预检只报换字表管不到的非常用读音():
              C.Spoken("第 3 段", readable("四比五，他还得再守一次。"), "+6%")]
     lines, risks = C.static_report(texts, "demo")
     shown = [r for r in risks if not r.lexicon]
-    assert [(r.label, r.char, r.intended) for r in shown] == [("第 1 段", "场", "chang2")], shown
+    assert [(r.label, r.char, r.intended) for r in shown] == [
+        ("第 1 段", "场", "chang2"), ("第 3 段", "得", "dei3")], shown
     text = "\n".join(lines)
     assert "场 应读 cháng" in text and "--slug demo --measure" in text
     # dry-run 常拿**临时副本**跑（repair_reel_spec、taste_preflight）：给了路径就指路径，
     # 按 slug 会指回仓库里那份没改过的 spec
     tmp = C.static_report(texts[:1], "demo", spec_path="/tmp/x y/demo.json")[0]
     assert "--spec '/tmp/x y/demo.json' --measure" in "\n".join(tmp), tmp
-    # 空出：换字表管了；银行：词典词只计数；还得（děi）：这个读音整类量过读对
+    # 空出：换字表管了；银行：词典词只计数；还得（děi）的旧三句证据不能覆盖新句。
     assert "空" not in "".join(r.char for r in shown)
-    assert "词典词" in text and "量过读对" in text
+    assert "词典词" in text and "新语境未实测" in text
 
     clean = C.static_report([C.Spoken("第 1 段", "他赢了。", "+6%")])[0]
     assert clean[0].startswith("[多音字] 没有"), clean

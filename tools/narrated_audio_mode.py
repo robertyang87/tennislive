@@ -235,6 +235,11 @@ def validate_root_tracking(spec: dict) -> None:
 
 def no_quote_reason(spec: dict) -> str:
  """A verified mode declaration is a structured editorial reason, not ASR."""
+ import reviewed_effects_mode
+ if reviewed_effects_mode.enabled(spec):
+  return ('Exact owner-approved RNA10 effects mode retains reviewed ball sounds and '
+          'one complete raw window; it forbids broadcast quotes. Native audio identity '
+          'and foreground-speech review remain required.')
  if not enabled(spec):
   return ''
  return ('Exact source-bound Chinese-narrated mode excludes original audio and quotes; '

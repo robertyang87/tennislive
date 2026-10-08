@@ -270,7 +270,9 @@ jobs:
 
       - name: 装依赖
         if: steps.gate.outputs.work == 'true'
-        run: pip install -q -e . "yt-dlp[default]>=2026.7.4" faster-whisper
+        run: |
+          pip install -q -e ".[pronunciation]" "yt-dlp[default]>=2026.7.4" faster-whisper
+          python -c "import pypinyin"
 
       - name: 启动 YouTube PO token provider
         if: steps.gate.outputs.work == 'true'

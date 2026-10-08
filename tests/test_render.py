@@ -455,6 +455,7 @@ def test_social_card_output_uses_high_quality_compact_jpeg(tmp_path):
 
 
 def test_inner_deck_pages_reuse_cover_visual_language(sample_digest):
+    from tennislive.design_tokens import DARK, rgb
     from tennislive.render.webcards import _shell, scoreboard_body
 
     page = _shell(
@@ -462,7 +463,8 @@ def test_inner_deck_pages_reuse_cover_visual_language(sample_digest):
         theme="dark",
     )
 
-    assert "--panel:rgba(3,24,19,.82)" in page
+    panel_rgb = ",".join(str(c) for c in rgb(DARK["card"]))
+    assert f"--panel:rgba({panel_rgb},.82)" in page
     assert "background:var(--panel)" in page
     assert "font-family:'TL Display SC'" in page
     assert ".poster:not(.cover)::before" in page

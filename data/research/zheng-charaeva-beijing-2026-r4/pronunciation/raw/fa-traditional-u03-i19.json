@@ -1,0 +1,292 @@
+{
+  "word": "发",
+  "char": "发",
+  "sentence": "决胜盘，郑钦文五比二领先。到了五比三，发球胜赛局却被破掉。五比四，她还要在接发局争取最后一分。",
+  "tts_text": "决胜盘，郑钦文五比二领先。到了五比三，发球胜赛局却被破掉。五比四，她还要在接发局争取最后一分。",
+  "intended_refs": [
+    "發"
+  ],
+  "wrong_refs": [
+    "髮",
+    "珐"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "verdict": "correct",
+  "confidence": "low",
+  "verdict_raw": "correct",
+  "score": 0.289,
+  "margin": 0.2,
+  "near_identical_to": null,
+  "far_from_both": true,
+  "dropped_refs": [],
+  "override": null,
+  "selftest_sides": [
+    "B"
+  ],
+  "features": {
+    "spec": {
+      "d_intended": 2.345,
+      "d_wrong": 1.939,
+      "score": -0.095
+    },
+    "f0": {
+      "d_intended": 0.231,
+      "d_wrong": 1.575,
+      "score": 0.744
+    },
+    "comb": {
+      "d_intended": 1.403,
+      "d_wrong": 2.544,
+      "score": 0.289
+    }
+  },
+  "neighbour_shift": {
+    "intended": 1.565,
+    "wrong": 3.185
+  },
+  "separation": {
+    "spec": {
+      "within": 1.994,
+      "between": 2.332,
+      "separation": 1.169
+    },
+    "f0": {
+      "within": 0.424,
+      "between": 1.576,
+      "separation": 3.713
+    },
+    "comb": {
+      "within": 1.421,
+      "between": 2.742,
+      "separation": 1.929
+    }
+  },
+  "selftest_loo": {
+    "髮": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.349
+    },
+    "珐": {
+      "expect": "misread",
+      "got": "misread",
+      "score": -0.285
+    }
+  },
+  "selftest_pass": true,
+  "distances_from_orig": {
+    "A:發": {
+      "spec": 2.345,
+      "f0": 0.231,
+      "vmis": 0.074,
+      "frames": 27,
+      "comb": 1.403
+    },
+    "B:髮": {
+      "spec": 2.042,
+      "f0": 1.855,
+      "vmis": 0.0,
+      "frames": 29,
+      "comb": 2.876
+    },
+    "B:珐": {
+      "spec": 1.939,
+      "f0": 1.575,
+      "vmis": 0.0,
+      "frames": 29,
+      "comb": 2.544
+    }
+  },
+  "window_s": [
+    3.993,
+    4.256
+  ],
+  "boundary_token": "发球",
+  "window_anchor": "ORIG",
+  "tokens": {
+    "ORIG": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "发球",
+      "胜赛",
+      "局",
+      "却",
+      "被",
+      "破掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ],
+    "A:發": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "發球",
+      "胜",
+      "赛局",
+      "却",
+      "被",
+      "破掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ],
+    "B:髮": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "髮球",
+      "胜",
+      "赛局",
+      "却",
+      "被",
+      "破掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ],
+    "B:珐": [
+      "决胜",
+      "盘",
+      "郑钦文",
+      "五",
+      "比",
+      "二",
+      "领先",
+      "到",
+      "了",
+      "五比三",
+      "珐球",
+      "胜赛",
+      "局",
+      "却",
+      "被",
+      "破掉",
+      "五比四",
+      "她",
+      "还要",
+      "在",
+      "接发局",
+      "争取",
+      "最后",
+      "一",
+      "分"
+    ]
+  },
+  "f0_semitones_window": {
+    "ORIG": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      3.6,
+      2.5,
+      2.1,
+      2.0,
+      2.0
+    ],
+    "A:發": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      3.0,
+      2.3,
+      1.9,
+      1.8,
+      2.0
+    ],
+    "B:髮": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      5.5,
+      4.6,
+      3.3,
+      0.8,
+      -0.5,
+      -1.4
+    ],
+    "B:珐": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      5.5,
+      4.8,
+      3.9,
+      1.3,
+      0.2
+    ]
+  },
+  "audio": {
+    "ORIG": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/f2fc2b240cb472d4ce3373ae.mp3",
+    "A:發": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/be6aa7e4dfd55a7e303e3f8d.mp3",
+    "B:髮": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/c9b1b109d2d50c96bb6e7868.mp3",
+    "B:珐": "/workspace/tennislive/data/research/zheng-charaeva-beijing-2026-r4/pronunciation/audio/e3d45f36cd9733854ba8f2cc.mp3"
+  },
+  "method": "orthographic traditional 發 dominantfa1 vs 髮 dominantfa4 and 珐singlefa4; intended reference one sided so capped evidence; no identical original-char reference"
+}

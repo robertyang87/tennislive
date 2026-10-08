@@ -1,0 +1,363 @@
+{
+  "id": "target-045",
+  "label": "第 10 段",
+  "display_char": "抢",
+  "actual_tts_char": "抢",
+  "position": 13,
+  "context": "比六。第二盘抢七追回来。决",
+  "word": "抢",
+  "intended": "qiang3",
+  "common_contrast": "qiang1",
+  "unmeasured_other_readings": [],
+  "semantic_override": null,
+  "tts_text": "对鲁内，首盘二比六。第二盘抢七追回来。决胜盘最后一局，他还要救下两个破发点。",
+  "verdict": "correct",
+  "measurement": {
+    "word": "抢",
+    "char": "抢",
+    "sentence": "对鲁内，首盘二比六。第二盘抢七追回来。决胜盘最后一局，他还要救下两个破发点。",
+    "tts_text": "对鲁内，首盘二比六。第二盘抢七追回来。决胜盘最后一局，他还要救下两个破发点。",
+    "intended_refs": [
+      "羟",
+      "襁"
+    ],
+    "wrong_refs": [
+      "枪",
+      "羌"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.639,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.71,
+        "d_wrong": 3.785,
+        "score": 0.166
+      },
+      "f0": {
+        "d_intended": 0.458,
+        "d_wrong": 6.351,
+        "score": 0.865
+      },
+      "comb": {
+        "d_intended": 1.813,
+        "d_wrong": 8.244,
+        "score": 0.639
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.476,
+      "wrong": 2.794
+    },
+    "separation": {
+      "spec": {
+        "within": 3.135,
+        "between": 3.855,
+        "separation": 1.23
+      },
+      "f0": {
+        "within": 0.84,
+        "between": 6.32,
+        "separation": 7.523
+      },
+      "comb": {
+        "within": 2.407,
+        "between": 8.248,
+        "separation": 3.426
+      }
+    },
+    "selftest_loo": {
+      "羟": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.606
+      },
+      "襁": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.56
+      },
+      "枪": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.438
+      },
+      "羌": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.499
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:羟": {
+        "spec": 2.71,
+        "f0": 0.458,
+        "vmis": 0.051,
+        "frames": 39,
+        "comb": 1.813
+      },
+      "A:襁": {
+        "spec": 3.407,
+        "f0": 0.509,
+        "vmis": 0.051,
+        "frames": 39,
+        "comb": 2.213
+      },
+      "B:枪": {
+        "spec": 3.785,
+        "f0": 6.351,
+        "vmis": 0.179,
+        "frames": 39,
+        "comb": 8.244
+      },
+      "B:羌": {
+        "spec": 4.168,
+        "f0": 7.488,
+        "vmis": 0.205,
+        "frames": 39,
+        "comb": 9.572
+      }
+    },
+    "window_s": [
+      2.967,
+      3.342
+    ],
+    "boundary_token": "抢",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "对",
+        "鲁",
+        "内",
+        "首盘",
+        "二比六",
+        "第二",
+        "盘",
+        "抢",
+        "七",
+        "追",
+        "回来",
+        "决胜",
+        "盘",
+        "最后",
+        "一",
+        "局",
+        "他",
+        "还要",
+        "救下",
+        "两个",
+        "破发点"
+      ],
+      "A:羟": [
+        "对",
+        "鲁",
+        "内",
+        "首盘",
+        "二比六",
+        "第二",
+        "盘",
+        "羟七",
+        "追",
+        "回来",
+        "决胜",
+        "盘",
+        "最后",
+        "一",
+        "局",
+        "他",
+        "还要",
+        "救下",
+        "两个",
+        "破发点"
+      ],
+      "A:襁": [
+        "对",
+        "鲁",
+        "内",
+        "首盘",
+        "二比六",
+        "第二盘",
+        "襁七",
+        "追",
+        "回来",
+        "决胜",
+        "盘",
+        "最后",
+        "一",
+        "局",
+        "他",
+        "还要",
+        "救下",
+        "两个",
+        "破发点"
+      ],
+      "B:枪": [
+        "对",
+        "鲁",
+        "内",
+        "首盘",
+        "二比六",
+        "第二",
+        "盘",
+        "枪",
+        "七",
+        "追",
+        "回来",
+        "决胜",
+        "盘",
+        "最后",
+        "一",
+        "局",
+        "他",
+        "还要",
+        "救下",
+        "两个",
+        "破发点"
+      ],
+      "B:羌": [
+        "对",
+        "鲁",
+        "内",
+        "首盘",
+        "二比六",
+        "第二盘",
+        "羌七",
+        "追",
+        "回来",
+        "决胜",
+        "盘",
+        "最后",
+        "一",
+        "局",
+        "他",
+        "还要",
+        "救下",
+        "两个",
+        "破发点"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -1.5,
+        -1.1,
+        -1.1,
+        -1.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -12.6,
+        -12.8,
+        -12.8,
+        -12.7,
+        -11.1,
+        -8.8,
+        -8.1,
+        null
+      ],
+      "A:羟": [
+        -1.9,
+        -1.0,
+        -0.8,
+        -1.6,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -10.8,
+        -12.3,
+        -12.4,
+        -12.5,
+        -11.6,
+        -10.0,
+        -9.3,
+        -8.2
+      ],
+      "A:襁": [
+        -2.9,
+        -1.4,
+        -0.7,
+        -2.1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -10.2,
+        -12.5,
+        -13.2,
+        -12.1,
+        -7.7,
+        -7.1,
+        -7.5
+      ],
+      "B:枪": [
+        -3.8,
+        -1.9,
+        -0.8,
+        -0.3,
+        -1.1,
+        null,
+        null,
+        null,
+        null,
+        0.6,
+        0.2,
+        -0.0,
+        -0.2,
+        -0.0,
+        -0.1,
+        -0.5,
+        -1.5,
+        -2.7
+      ],
+      "B:羌": [
+        -3.2,
+        -1.4,
+        -0.8,
+        -1.2,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1.3,
+        1.2,
+        1.1,
+        1.6,
+        1.8,
+        1.3,
+        0.5
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/research/vacherot-acoustic/references/fccca2e70a17f176cbcc0bcc.mp3",
+      "A:羟": "/workspace/tennislive/research/vacherot-acoustic/references/61964119abe89087eb30abd1.mp3",
+      "A:襁": "/workspace/tennislive/research/vacherot-acoustic/references/88fb51dcc16fcf6bc81ca56d.mp3",
+      "B:枪": "/workspace/tennislive/research/vacherot-acoustic/references/86b7e2bfd8006c9671ab301b.mp3",
+      "B:羌": "/workspace/tennislive/research/vacherot-acoustic/references/c346879f4574412245b7a1e5.mp3"
+    }
+  }
+}

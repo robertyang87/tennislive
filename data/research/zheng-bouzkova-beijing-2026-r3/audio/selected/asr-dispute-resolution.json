@@ -1,0 +1,55 @@
+{
+  "source_sha256": "71228364152bda28488fd6918e6e2e7b58e493d6c75ba5b44485e4695aa81941",
+  "no_human_listening_claimed": true,
+  "model": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+  "settings": {
+    "cpu_threads": 4,
+    "compute_type": "int8",
+    "beam_size": 5,
+    "vad_filter": false,
+    "initial_prompt": null
+  },
+  "raw_files": [
+    "asr-disputes-turbo.json",
+    "asr-breakback-filtered-turbo.json"
+  ],
+  "decisions": [
+    {
+      "range": [
+        10,
+        20
+      ],
+      "recommended_en": "Good put away from Zheng.",
+      "basis": "Platform captions explicitly contain Good put away. Medium omits Good while retaining Put away; turbo omits entire lead-in. No stable competing lexical reading of the first adjective. Retaining platform wording is an editorial acceptance, not a claim all models heard Good.",
+      "remaining_limitation": "The adjective Good is not independently reproduced by the local models.",
+      "editorial_status": "accepted_with_explicit_method_limitations"
+    },
+    {
+      "range": [
+        128,
+        138
+      ],
+      "recommended_en": "So, breaks back, does Zheng.",
+      "recommended_zh": "郑钦文完成回破。",
+      "raw_turbo": "So it breaks back this young that's one of the breaks back that she lost.",
+      "raw_filtered_turbo": "So it breaks back this young, that's one of the breaks back that she lost.",
+      "tail_words": [
+        {
+          "start": 132.14,
+          "end": 132.44,
+          "raw": "this"
+        },
+        {
+          "start": 132.44,
+          "end": 132.74,
+          "raw": "young"
+        }
+      ],
+      "basis": "The audible tail is independently represented by small and turbo as this young. Known player identity Zheng and commentator inversion syntax support editorial normalization to does Zheng. This preserves the tail rather than dropping it.",
+      "remaining_limitation": "No model literally emitted does Zheng. Function-word restoration is a stated editorial inference, not model-verbatim confirmation.",
+      "editorial_status": "accepted_with_explicit_method_limitations"
+    }
+  ],
+  "status": "editorial_resolutions_accepted",
+  "acceptance_basis": "Production lead explicitly accepted evidence-backed platform-word retention and identity/grammar normalization; raw ASR remains unchanged."
+}

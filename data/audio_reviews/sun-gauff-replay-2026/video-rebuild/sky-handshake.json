@@ -1,0 +1,59 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-1878225817907584085/1878225817907584085.mp4",
+  "source_sha256": "b29d32d6295b31b634ed494e66d656859bec66d5771a11363485da81876b687c",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex /root/production_setup: inspected independent raw ASR and exact source-frame evidence",
+  "reviewed_at": "2026-10-05T20:13:49.684732+00:00",
+  "reviewed_from": 78.7,
+  "reviewed_to": 87.9,
+  "status": "complete",
+  "foreground_english": [],
+  "foreground_speech": [],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "Independent multilingual tiny/base full-source German commentary ends78.20/78.10. Focused multilingual tiny/base78.70–87.90, language de, both emit no transcript. Native source still has actual stadium atmosphere; no mute or alternate soundtrack used.",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/tiny-sky-full.json",
+      "sha256": "85a10df64b58315674e71bfc0fbcfcb6edac45a6a18e9abe7fba22a7640e8fda"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/base-sky-full.json",
+      "sha256": "e86850220903ab09996e1eafa0734a18d02e951204c6c17e143cf2fecfd99f1a"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/tiny-sky-candidate-windows.json",
+      "sha256": "b9502616e5a8529e029793dc637aae777610f75a1d41c5d30e461cd8d7ca11f0"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/base-sky-candidate-windows.json",
+      "sha256": "fb6d56970b2084331da11e3481a86cad64fef321566b079269e2595cdb823c36"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/small-sky-emotion-third.json",
+      "sha256": "641d57fee879afbda6dc5cc6564faad146c5c7e44c09649b781aa5bddf18bf2a"
+    },
+    {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/sky-remux-equivalence-proof.json",
+      "sha256": "310591b9129a33e1ed1268bfa64c6425a8065649c43943e3de74b0335d81b3ff"
+    }
+  ],
+  "review_basis": "Source identity bound by actual SHA; inspected full-source word intervals and independent focused-window model output. No human listening claim. Original soundtrack retained, not replaced or inferred absent from a mute flag.",
+  "visual_review": "Both players walk from net toward chair, greet the umpire; Sun then leaves foreground. Actual match end, not LED-point aftermath.",
+  "recommended_audio_tail": "silence",
+  "source_identity_verified_at": "2026-10-05T20:36:33.328376+00:00",
+  "reviewed_source_remux_equivalence": {
+    "original_reviewed_source_sha256": "1d2a70a9dc082b14ccf9c8f0149dd7163159e3c1c1dcffa89a301d68bcf88a68",
+    "actual_archive_source_sha256": "b29d32d6295b31b634ed494e66d656859bec66d5771a11363485da81876b687c",
+    "proof": {
+      "path": "data/audio_reviews/sun-gauff-replay-2026/video-rebuild/sky-remux-equivalence-proof.json",
+      "sha256": "310591b9129a33e1ed1268bfa64c6425a8065649c43943e3de74b0335d81b3ff"
+    },
+    "complete_decoded_audio_equal": true,
+    "complete_decoded_video_equal": true,
+    "encoded_audio_and_video_packets_equal": true,
+    "same_packet_timeline": true
+  },
+  "resolution_notes": [
+    "Original ASR source1d2... is retained in raw JSON and explicitly linked to archived sourceb29... by complete PCM/frame/encoded-packet/timeline identity. This binding change follows measured remux equivalence, not guessed source similarity or relabeled ASR."
+  ]
+}

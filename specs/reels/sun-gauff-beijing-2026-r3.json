@@ -1,0 +1,635 @@
+{
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 5,
+      "df": 4,
+      "first_in": 33,
+      "first_total": 55,
+      "first_won": 20,
+      "second_won": 14,
+      "second_total": 22,
+      "bp_conv": 6,
+      "bp_chances": 8,
+      "pts_won": 71,
+      "pts_total": 120,
+      "headshot": "assets/reel/sun-gauff-beijing-2026-r3-gauff-hd.jpg",
+      "winners": 29,
+      "ue": 21,
+      "headshot_zoom": 2.1,
+      "headshot_focus_x": 50,
+      "headshot_focus_y": 8,
+      "_headshot_why": "用户要求统计小头像也换：本场高芙WTA官方7136×4760原图，CSS面部裁切，不重绘；visual/gauff-hd-photo-provenance.json。"
+    },
+    "b": {
+      "aces": 1,
+      "df": 3,
+      "first_in": 33,
+      "first_total": 65,
+      "first_won": 20,
+      "second_won": 8,
+      "second_total": 32,
+      "bp_conv": 2,
+      "bp_chances": 2,
+      "pts_won": 49,
+      "pts_total": 120,
+      "headshot": "assets/reel/sun-gauff-beijing-2026-r3.jpg",
+      "winners": 14,
+      "ue": 20,
+      "headshot_zoom": 2.1,
+      "headshot_focus_x": 50,
+      "headshot_focus_y": 15,
+      "_headshot_why": "同封面3711×2304孙心然本届首轮高清原图，CSS面部裁切；作为球员头像，诚实记录不同轮次，不宣称本场抓拍。"
+    },
+    "_source": "Official WTA setnum0: https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS020/stats . a=Coco Gauff, b=Xinran Sun. First serve source override: Flashscore has one-point inconsistent fields; all integers here WTA. Double faults remain in second_total22/32.",
+    "footer_date": "2026-10-05",
+    "footer_venue": "北京 · Diamond",
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051492&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/sun-gauff-beijing-2026-r3/tnns-match_info.txt",
+      "source_sha256": "48e8fd656d4dcc43a7c46e342e93eda34b68db0c26ca3c71deeeadc5b5f6e885",
+      "period": "Match",
+      "match_date": "2026-10-05",
+      "checked_at": "2026-10-05T16:56:20.127431+00:00",
+      "winner_result": "7-5 6-1",
+      "matchup": [
+        "Gauff",
+        "Sun"
+      ],
+      "winners": [
+        29,
+        14
+      ],
+      "ue": [
+        21,
+        20
+      ],
+      "notes": "Decoded K/P/_ using repository decoder; hasExtendedStats=True; order Gauff/Sun. Set winners16/11+13/3 and UE18/11+3/9 equal match. Direct urllib response accessible in this environment. Core full-match values checked WTA/FS; do not inherit conflicting TNNS per-set denominators or FS one-point serve stats."
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS020",
+    "date": "2026-10-05",
+    "winner": "高芙",
+    "loser": "孙心然",
+    "participants": [
+      "高芙",
+      "孙心然"
+    ],
+    "winner_result": "7-5 6-1",
+    "set_scores_home_away": [
+      [
+        7,
+        5
+      ],
+      [
+        6,
+        1
+      ]
+    ],
+    "source_url": "https://www.wtatennis.com/tournaments/china-open/scores/LS020",
+    "start_api_utc": "2026-10-05T14:00:43.363+00:00",
+    "first_point_utc": "2026-10-05T14:12:37Z",
+    "final_point_utc": "2026-10-05T15:41:48Z",
+    "date_time_copy": "北京时间2026年10月5日夜场",
+    "_time_note": "API match timestamp precedes first scored point ~12 minutes. Use natural night slot, not metadata as verified exact actual start.",
+    "daypart": "晚上",
+    "duration": "01:29:41",
+    "court": "Diamond",
+    "_pbp_note": "Some pointWinner fields conflict with scoreAfterPoint (point8 Sun AD -> deuce still pointWinner B). Reconstruct games from final G states and compare final score. Fine point streaks need video verification.",
+    "_match_day_why": "用户2026-10-05明确给出本场官方YouTube链接并要求制作；赛果官方确认北京时间10月5日夜场，制作与推送跨至10月6日，不按旧比赛日自动选题。"
+  },
+  "_facts": [
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+      "type": "official_match_data",
+      "why": "比赛身份LS020、7-5 6-1、3号种子高芙、外卡孙心然、CourtID1、1:29:41"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS020/point-by-point",
+      "type": "official_pbp",
+      "why": "120分19局。首盘孙1-2后直落4分回破2-2；3-2/4-3/5-4领先；5-4时为高芙发球，孙从未拿盘点。高芙从4-5连赢6局至次盘3-0；孙回破3-1，高芙再连赢3局结束。"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS020/stats",
+      "type": "official_match_stats",
+      "why": "全场ACE高5孙1，双误4/3，破发6/8和2/2；孙次盘二发1/13=7.7%。分盘57:49+31:50=89:39，与比赛89:41差2秒。"
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4587000/gauff-pulls-away-late-to-defeat-rising-sun-in-beijing",
+      "type": "official_match_report",
+      "why": "高芙世界第4、赢最后10局9局、孙16岁；高芙赛后评价她比自己16岁更成熟、是出色球员、期待未来再交手，可准确转述为展望。"
+    },
+    {
+      "url": "https://www.chinaopen.com/en/contents/353/740.html",
+      "type": "official_event_report",
+      "why": "赛事官方独立确认高芙7-5 6-1夜场胜孙、下一轮梅尔滕斯。"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=Sun&metric=SINGLES",
+      "type": "official_rankings",
+      "why": "2026-09-28期孙心然582、2010-07-23生日；Gauff同端点name=Gauff为第4。"
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires",
+      "type": "official_background_report",
+      "why": "孙16岁美网青少年冠军、青少年世界第1、WTA正赛首秀、第二轮击败27号种子布克沙6-4 7-5、排名582将首次进前500。"
+    }
+  ],
+  "slug": "sun-gauff-beijing-2026-r3",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-Wg6m85wS3Ps/Wg6m85wS3Ps.mp4"
+  },
+  "primary": "main",
+  "tts_backend": "edge",
+  "track": false,
+  "scorebox": [
+    90,
+    820,
+    540,
+    990
+  ],
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "topbar": {
+    "line1": "2026 WTA1000 北京 第三轮",
+    "line2": "高芙 7-5 6-1 孙心然"
+  },
+  "push": {
+    "auto": false,
+    "summary": "孙心然憾别中网，未来可期",
+    "lead": "首盘曾5比4领先，孙心然最终以5比7、1比6不敌高芙，止步中网第三轮。两人一发赢分都是20/33，二发赢分却是孙心然8/32、高芙14/22；第二盘，她仍拿回过对手的发球局。第一次巡回赛正赛连赢两场，高芙赛后也肯定了她的成熟，期待未来再次交手。遗憾留在今晚，未来仍有好球。",
+    "_no_auto_why": "分支渲染QC和当前head CI通过合并后显式mode=push，防重复发送。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "winner": "高芙",
+    "result": "7-5 6-1",
+    "subject": "孙心然",
+    "layout": "solo",
+    "matchup": [
+      {
+        "name": "高芙",
+        "name_en": "Coco Gauff",
+        "country": "USA",
+        "rank": 4
+      },
+      {
+        "name": "孙心然",
+        "name_en": "Xinran Sun",
+        "country": "CHN",
+        "rank": 582
+      }
+    ],
+    "scoreboard": {
+      "court": "Diamond",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS020",
+        "match_id_field": "MatchID"
+      }
+    },
+    "hook": "首盘5比4领先\n孙心然遗憾出局",
+    "hook_accent": "遗憾出局",
+    "topic": "WTA1000 北京 第三轮 · 高芙 VS 孙心然",
+    "portrait": {
+      "image": "assets/reel/sun-gauff-beijing-2026-r3.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1,
+      "fit": "cover",
+      "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/04/8a4fcfb3-c9cc-4445-a509-4e7ff074efa6/Xinran_Sun_-_China_Open_2026_-_Day_2-DSC_7555B.jpg",
+      "_portrait_why": "用户2026-10-05要求高清大图。采用WTA官方公开3711×2304无水印摄影原图：孙心然本届中网首轮10月1日挥拍致意，非第三轮；EXIF明确first round与拍摄时间，完整记录visual/sun-hd-photo-provenance.json。作为本届人物封面，原图不重绘、不换脸。",
+      "_different_round_why": "第三轮同场正规渠道照片有带水印高清图；官方图库未取得孙本人本场无水印大图。按用户最新高清照片优先要求，选择本届首轮清晰人物照片，不当作第三轮得分瞬间。",
+      "_old_photo_why": "第三轮同场正规渠道照片有带水印高清图；官方图库未取得孙本人本场无水印大图。按用户最新高清照片优先要求，选择本届首轮清晰人物照片，不当作第三轮得分瞬间。"
+    },
+    "_subject_why": "用户明确要求封面可以用孙心然，并追加要求高清大图。本条聚焦中国小将首盘领先后的遗憾与未来可期，采用本届中网首轮真实高清人物摄影照作人物封面，非本场瞬间；本人自然挥拍致意，身份与双眼清楚。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "孙心然首盘曾5比4领先，为什么最后输掉比赛，仍值得期待？",
+    "thesis": "首盘敢于底线对攻且5比4领先，盘末关键发球局被高芙拿下；高芙后段拉开差距，孙心然次盘仍回破。二发赢分8/32与14/22是可核实的整体差距，第一次巡回赛正赛两场胜利及高芙赛后评价支持成长收尾。",
+    "beats": [
+      "第一次巡回赛正赛已连赢两场，挑战世界第4",
+      "首盘长回合保发并5比4领先",
+      "5比5被破与首盘告负，高芙跨盘连赢6局",
+      "次盘回破未能翻盘，二发差距和未来展望",
+      "完整赛点、握手与真实现场赛果总结"
+    ],
+    "human_context": {
+      "angle": "遗憾出局之后，留下成长的证据",
+      "facts": [
+        "孙心然16岁，本届首次参加WTA巡回赛正赛并连赢两轮",
+        "高芙赛后称孙心然比自己16岁时更成熟，期待未来再次交手"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4587000/gauff-pulls-away-late-to-defeat-rising-sun-in-beijing",
+        "https://www.wtatennis.com/news/4586072/sun-16-upsets-bucsa-in-beijing-zheng-advances-after-kalinskaya-retires"
+      ]
+    }
+  },
+  "_source_provenance": {
+    "publisher": "WTA",
+    "canonical_url": "https://www.youtube.com/watch?v=Wg6m85wS3Ps",
+    "title": "Coco Gauff vs. Xinran Sun | 2026 Beijing Round 3 | WTA Match Highlights",
+    "archive_run": 37343722678,
+    "bytes": 65853086,
+    "sha256": "79951bd5316ac8910ce6fc1200260c62492d1f791ed3690729dadeb7a6296b90",
+    "width": 1920,
+    "height": 1080,
+    "avg_frame_rate": "25/1",
+    "duration_seconds": 425.482449
+  },
+  "_production_timing": {
+    "received_at": "2026-10-05T16:45:00Z"
+  },
+  "_heat_why": "用户给链接点名制作，中国球员孙心然首次巡回赛正赛第三轮挑战世界第4高芙。",
+  "_key_point_coverage": {
+    "first_set_5_4": "WTA官方逐局核实，以字卡交代；未以其他分冒充5-4",
+    "first_set_5_5": "189.72–197.88关键破发完整",
+    "first_set_close": "197.88开始盘点完整，保留后续原声与第二盘发球准备连续",
+    "second_set_3_1": "WTA官方逐局核实回破3-1，源片没有该回合，用字卡事实说明，缺口仅内部记录",
+    "ending": "246.72–298.76完整赛点、球员/裁判握手、挥手、完整原声赛果总结；298.76为第一句结束后的视觉边界，未加采访或额外旁白",
+    "second_set_first_bp": "214.76–231.28非决定性首次BP救回未选，跨比赛首段解说有一处未解决语句，保留内部音频审查记录，不将未知标完成；关键第三BP兑现完整选用。"
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 266.4,
+      "end": 272.24,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "最后一分已落定，高芙近景。完整原声报她继续在北京至少进入四强；终局末段完整兑现此源窗口。",
+      "crosses_cut": "最后一分已落定，高芙近景。完整原声报她继续在北京至少进入四强；终局末段完整兑现此源窗口。",
+      "_why": "最后一分已落定，高芙近景。完整原声报她继续在北京至少进入四强；终局末段完整兑现此源窗口。",
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "最后246.72–298.76完整覆盖冷开场与终局。",
+      "_score_inset_why": "冷开保留赛点最后击球与高芙赢球反应；266.4–268.44原生比分板仍可见，按图形回贴，268.44切近景之后不再回贴。",
+      "quote": [
+        {
+          "at": 0.16,
+          "end": 3.54,
+          "text": "And Coco Gauff continues to refuse to lose\n科科·高芙仍保持不败"
+        },
+        {
+          "at": 3.54,
+          "end": 5.74,
+          "text": "before the semifinals in Beijing.\n在北京的半决赛之前"
+        }
+      ],
+      "score_inset_windows": [
+        [
+          266.4,
+          268.44
+        ]
+      ]
+    },
+    {
+      "title_card": "遗憾停在第3轮\n她的路还长",
+      "kicker": "中网这一夜",
+      "seconds": 12.41,
+      "narration": "北京时间十月五号夜场，中网第三轮。十六岁的孙心然，第一次参加巡回赛正赛，已经连赢两场。现在，她面对世界第四高芙。",
+      "_timing_why": "本地按流水线synthesize、edge云见+6%、通过继承HTTPS代理实测MP3 11.808秒，留0.6秒呼吸；正式check-narration再记旁白指纹。"
+    },
+    {
+      "title_card": "首盘2比2\n她敢和高芙对攻",
+      "kicker": "先看这一分",
+      "seconds": 8.83,
+      "narration": "先看首盘二比二这一局。孙心然连续从底线抽击，扛住高芙的回球，最后保发，三比二。",
+      "_timing_why": "本地按流水线synthesize、edge云见+6%、通过继承HTTPS代理实测MP3 8.232秒，留0.6秒呼吸；正式check-narration再记旁白指纹。"
+    },
+    {
+      "source": "main",
+      "start": 81.04,
+      "end": 106.32,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "孙发球，G30/S40是孙局点，不是破发点；全发球准备、长回合、保发3-2及握拳。",
+      "crosses_cut": "孙发球，G30/S40是孙局点，不是破发点；全发球准备、长回合、保发3-2及握拳。",
+      "_why": "孙发球，G30/S40是孙局点，不是破发点；全发球准备、长回合、保发3-2及握拳。",
+      "quote": [
+        {
+          "at": 0.6,
+          "end": 2.96,
+          "text": "Dip below sixty degrees Fahrenheit,\n气温降到华氏六十度以下"
+        },
+        {
+          "at": 3.46,
+          "end": 4.58,
+          "text": "low teens Celsius.\n也就是摄氏十几度"
+        },
+        {
+          "at": 22.84,
+          "end": 24.62,
+          "text": "Quality stuff from the youngster.\n这位小将打得真漂亮。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "被推到底线后\n仍敢把球打回来",
+      "kicker": "落点与抵抗",
+      "seconds": 9.14,
+      "narration": "下一局，高芙把球打得更深，孙心然退到底线后，仍然继续抽击。看她怎样把这一分争回来。",
+      "_timing_why": "本地按流水线synthesize、edge云见+6%、通过继承HTTPS代理实测MP3 8.544秒，留0.6秒呼吸；正式check-narration再记旁白指纹。"
+    },
+    {
+      "source": "main",
+      "start": 106.32,
+      "end": 139.92,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "高芙2-3发球40-15，孙完整长回合赢一分到40-30；不声称孙赢下本局。",
+      "crosses_cut": "高芙2-3发球40-15，孙完整长回合赢一分到40-30；不声称孙赢下本局。",
+      "_why": "高芙2-3发球40-15，孙完整长回合赢一分到40-30；不声称孙赢下本局。",
+      "quote": [
+        {
+          "at": 25.16,
+          "end": 27.54,
+          "text": "She just continues to bash the ball.\n她还在不断大力击球。"
+        },
+        {
+          "at": 28.3,
+          "end": 30.12,
+          "text": "I mean, just continue to watch.\n我是说，继续看下去。"
+        },
+        {
+          "at": 30.56,
+          "end": 33.54,
+          "text": "And Sun is back on the lettering on the court.\n孙心然又退到场上字母标志处"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "audio_tail": "silence",
+      "_audio_tail_why": "正文原声在139.86完整说完court；溶解默认尾料139.92–140.10会带入下一句（base词码140.00起，medium140.12）。audio_tail=silence只给额外0.18秒尾料补零，不动正文的完整回合或原声。"
+    },
+    {
+      "source": "main",
+      "start": 160.12,
+      "end": 176.24,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "保留前一句解说完整边界和下一分完整发球；孙首盘3-3赢分，G15/S30，孙视角30-15。",
+      "crosses_cut": "保留前一句解说完整边界和下一分完整发球；孙首盘3-3赢分，G15/S30，孙视角30-15。",
+      "_why": "保留前一句解说完整边界和下一分完整发球；孙首盘3-3赢分，G15/S30，孙视角30-15。",
+      "quote": [
+        {
+          "at": 0.12,
+          "end": 3.46,
+          "text": "But here, it’s all right in front of her.\n而现在，机会就在她眼前。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "首盘5比4领先\n却没能收下这一盘",
+      "kicker": "转折在盘末",
+      "seconds": 11.52,
+      "narration": "孙心然随后五比四领先。但那是高芙的发球局，不是孙心然拿到了盘点。高芙追平，再拿下孙心然的发球局，六比五。",
+      "_timing_why": "本地按流水线synthesize、edge云见+6%、通过继承HTTPS代理实测MP3 10.920秒，留0.6秒呼吸；正式check-narration再记旁白指纹。"
+    },
+    {
+      "source": "main",
+      "start": 189.72,
+      "end": 214.76,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "首盘5-5孙发球被破，高芙6-5发球盘点、完整盘末解说；214.76是次盘广角服务准备的新场景边界，句末最晚214.68，之前未截发球动作。",
+      "crosses_cut": "5-5关键破发和高芙发球盘点完整保留，完整盘末句后切离。",
+      "_why": "关键破发、首盘高芙盘点、次盘孙救第1破发点与高芙拿第3破发点连续保留。首盘解说跨次盘发球准备，不在214秒插卡切掉抛球。",
+      "quote": [
+        {
+          "at": 4.54,
+          "end": 6.52,
+          "text": "And Coco Gauff back out in front\n科科·高芙再度领先"
+        },
+        {
+          "at": 6.52,
+          "end": 8.1,
+          "text": "for the first time in forty minutes,\n这是四十分钟来的第一次"
+        },
+        {
+          "at": 8.1,
+          "end": 10.18,
+          "text": "and she’s got triple set point.\n她拿到了三个盘点"
+        },
+        {
+          "at": 12.56,
+          "end": 13.96,
+          "text": "And it’s a swing and a miss.\n这一拍挥空了。"
+        },
+        {
+          "at": 14.52,
+          "end": 15.84,
+          "text": "And that’s a little deflated look.\n她的神情有些低落。"
+        },
+        {
+          "at": 15.94,
+          "end": 18.48,
+          "text": "The shoulders have fallen for Sun Xinran,\n孙心然垂下了肩膀"
+        },
+        {
+          "at": 18.48,
+          "end": 21.96,
+          "text": "because Coco Gauff finds a way to earn the opening set.\n因为科科·高芙设法拿下首盘"
+        },
+        {
+          "at": 22.12,
+          "end": 23.92,
+          "text": "It wasn’t easy, but she gets it done\n并不容易，但她还是拿下首盘"
+        },
+        {
+          "at": 23.92,
+          "end": 24.96,
+          "text": "in just short of an hour.\n用时不到一小时"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "audio_tail": "silence",
+      "_audio_tail_why": "首盘完整句止于214.68；默认214.76–214.94尾料碰到弃用215秒模糊句的窄窗起声（small/medium为214.80）。该句未作完成审查，额外0.18秒溶解尾料补零，不改正文。"
+    },
+    {
+      "title_card": "次盘0比2落后\n发球局还在拉锯",
+      "kicker": "进入第二盘",
+      "seconds": 8.93,
+      "narration": "第二盘，高芙先拿两局。孙心然的发球局里，还在拉锯。高芙的第三个破发点来了。",
+      "_timing_why": "本地按流水线synthesize、edge云见+6%、通过继承HTTPS代理实测MP3 8.328秒，留0.6秒呼吸；正式check-narration再记旁白指纹。"
+    },
+    {
+      "source": "main",
+      "start": 231.28,
+      "end": 243.2,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "第二盘2-0高芙第三破发点，发前准备/抛球/完整回合到3-0死球后；243.20前未进入下一句。",
+      "crosses_cut": "本分完整，前句Well done Just stay with it于229.8结束，后句Coco relentless于243.34开始。",
+      "_quote_skip_why": "完整231.28–243.20源窗经tiny.en与base.en两独立全源ASR证据交叉核验，无前景英文；small/medium关键窗口核实此前英文止于229.80、之后英文始于243.34。完整证据见data/research/sun-gauff-beijing-2026-r3/audio/selected-23128-24320.json，方法asr_cross_checked，未声称人工听审。",
+      "audio_tail": "silence",
+      "_audio_tail_why": "下一句Coco从243.34起；默认243.20–243.38尾料会漏入0.04秒句头。整句在下一段243.20–298.76完整保留，此段只将额外0.18秒溶解尾料补零。"
+    },
+    {
+      "title_card": "次盘0比3落后\n她仍拿回1局",
+      "kicker": "还在争",
+      "seconds": 12.72,
+      "narration": "高芙从首盘四比五，连赢六局，第二盘三比零。孙心然仍拿下对手一个发球局，追到一比三。之后，高芙再连赢三局结束比赛。",
+      "_timing_why": "本地按流水线synthesize、edge云见+6%、通过继承HTTPS代理实测MP3 12.120秒，留0.6秒呼吸；正式check-narration再记旁白指纹。"
+    },
+    {
+      "stat_card": true,
+      "seconds": 12.38,
+      "narration": "一发赢分，两人都是三十三分拿二十。二发才拉开：孙心然三十二分拿八分，高芙二十二分拿十四分。她还有可以补上的地方。",
+      "_timing_why": "本地按流水线synthesize、edge云见+6%、通过继承HTTPS代理实测MP3 11.784秒，留0.6秒呼吸；正式check-narration再记旁白指纹。"
+    },
+    {
+      "title_card": "遗憾之后\n未来可期",
+      "kicker": "把这一夜带走",
+      "seconds": 18,
+      "narration": "孙心然以五比七、一比六告负。但第一次巡回赛正赛，已连赢两场。高芙赛后说，她比自己十六岁时更成熟，也期待以后再交手。遗憾之后，未来可期。下一次，她会带来怎样的惊喜？",
+      "_timing_why": "真edge云见+6% TTS测得17.184秒；18秒画面留0.816秒收口，实测台账data/narration_checks/sun-gauff-beijing-2026-r3.json。"
+    },
+    {
+      "source": "main",
+      "start": 243.2,
+      "end": 298.76,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "point_end_ok": "完整赛点从孙发球准备至最后一拍、双方/裁判握手及现场赛果总结。总结始于握手，保留至完整7-5/6-1句后第一视觉切点；不加自配旁白、重放和采访。",
+      "crosses_cut": "完整赛点从孙发球准备至最后一拍、双方/裁判握手及现场赛果总结。总结始于握手，保留至完整7-5/6-1句后第一视觉切点；不加自配旁白、重放和采访。",
+      "_why": "完整赛点从孙发球准备至最后一拍、双方/裁判握手及现场赛果总结。总结始于握手，保留至完整7-5/6-1句后第一视觉切点；不加自配旁白、重放和采访。",
+      "quote": [
+        {
+          "at": 0.14,
+          "end": 1.2,
+          "text": "Coco, relentless.\n科科毫不松懈"
+        },
+        {
+          "at": 1.74,
+          "end": 3.4,
+          "text": "She loves the middle of the court today.\n今天她很喜欢利用场地中路"
+        },
+        {
+          "at": 23.36,
+          "end": 26.74,
+          "text": "And Coco Gauff continues to refuse to lose\n科科·高芙仍保持不败"
+        },
+        {
+          "at": 26.74,
+          "end": 28.94,
+          "text": "before the semifinals in Beijing.\n在北京的半决赛之前"
+        },
+        {
+          "at": 33.04,
+          "end": 33.94,
+          "text": "Well, on paper\n从纸面实力看"
+        },
+        {
+          "at": 33.94,
+          "end": 35.55,
+          "text": "it looked like it was going to be a beatdown.\n本该是一场悬殊的较量"
+        },
+        {
+          "at": 35.84,
+          "end": 36.98,
+          "text": "Number four in the world\n世界第四"
+        },
+        {
+          "at": 36.98,
+          "end": 38.34,
+          "text": "versus five eighty-two.\n对阵世界第五百八十二"
+        },
+        {
+          "at": 38.54,
+          "end": 40.92,
+          "text": "The opening set was more competitive\n首盘的激烈程度"
+        },
+        {
+          "at": 40.92,
+          "end": 42.29,
+          "text": "than anyone could have imagined.\n超出了所有人的想象"
+        },
+        {
+          "at": 42.34,
+          "end": 44.04,
+          "text": "But in the end, it’s Coco Gauff\n但最终，是科科·高芙"
+        },
+        {
+          "at": 44.04,
+          "end": 45.4,
+          "text": "who strikes a commanding pose\n展现出了压倒性的优势"
+        },
+        {
+          "at": 45.4,
+          "end": 47.18,
+          "text": "in the second set,\n在第二盘"
+        },
+        {
+          "at": 47.18,
+          "end": 48.42,
+          "text": "as she runs away with it.\n一路拉开了差距"
+        },
+        {
+          "at": 48.42,
+          "end": 51.02,
+          "text": "And now she finds her way to the round of sixteen\n现在她晋级十六强"
+        },
+        {
+          "at": 51.02,
+          "end": 52.68,
+          "text": "at this WTA one thousand event\n在这站 WTA 一千赛"
+        },
+        {
+          "at": 52.68,
+          "end": 55.54,
+          "text": "with a seven-five, six-one win.\n以七比五、六比一获胜"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "audio_tail": "silence",
+      "_audio_tail_why": "完整赛果句已在298.74说完；末段仍接品牌outro，因此默认298.76–298.94会继续读取紧贴下一段采访句头的音频（base全源句头298.95，其他粗ASR边界有分歧）。不引入未纳入比赛正文的采访；仅额外0.18秒溶解尾料补零，终局原声正文不动。"
+    }
+  ],
+  "_tts_backend_why": "仓库2026-09-20已记录Azure订阅到期，本条无专用情绪风格；采用edge云见+6%，真TTS量长与切词预检。",
+  "_hit_data": [
+    {
+      "label": "二发赢分25%对64%",
+      "detail": "官方全场孙心然二发8/32，高芙14/22；旁白与统计卡已经采用，非仅凭百分比推因果。",
+      "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS020/stats"
+    }
+  ],
+  "_scorebox_why": "以原生图形实际左缘90px起搜，上沿820覆盖窄BREAK/SET/MATCH POINT提示条。原80px搜索起点会将近景深色球场10px误当主体，已实帧验证并收紧；主体与标签逐帧透明蒙版，右缘由原图量取，不按540矩形回贴。"
+}

@@ -181,6 +181,8 @@ class ExplainerSegment:
     # 所以它是**逐条认领的开关，不是把全局翻回去**——全局翻回去会把其余
     # 那四十几条重新弄坏一遍，那正是上一次翻面要修的东西。
     copy_at: str = ""
+    # Opt-in source-led layouts; existing positional scripts keep their shape.
+    visual: dict | None = None
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -1935,14 +1937,11 @@ def _academy_span_diagram() -> str:
 
     头像出处见 assets/explainer/nadal-academy/faces/credits.json。
     """
-    import base64
-
     from ..zh import player_zh as _zh
 
-    root = _REPO / "assets/explainer/nadal-academy/faces"
     def uri(name: str) -> str:
-        return "data:image/jpeg;base64," + base64.b64encode(
-            (root / f"{name}.jpg").read_bytes()).decode()
+        # 只渲这一屏时才读头像。字幕等共享调用方 import 本模块时不该依赖素材。
+        return f"asset://assets/explainer/nadal-academy/faces/{name}.jpg"
 
     AXIS = 248
     # (真实年份位置 x, 英文名, 年份·年纪, 文件名, 在轴上方?)
@@ -2018,6 +2017,8 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # run 37368614614 的实际3:4成片已抽帧、字幕与原声质检；见 docs/research/medvedev-beijing-default-2026-qc.json。
+    "medvedev-beijing-default-2026",
     # 2026-10-01：run 36808709110 的 133.67s 成片已逐屏、字幕与音量质检；见 docs/research/atp250-medvedev-hangzhou-2026-qc.json。
     "atp250-medvedev-hangzhou-2026",
     # 2026-09-26 验过才加进来的。**第二趟**的数（第一趟 run 36249638228 抽帧看见
@@ -9267,7 +9268,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "今年五月在罗马，辛纳成了第二个，二十四岁。",
             "", "示意图 · 网球时差绘制",
             ("九站全拿过 叫金大师", "吉尼斯有正式条目", "德约十八年 辛纳今年"),
-            nine_masters_grid(),
+            nine_masters_grid(embed_images=False),
         ),
         (
             "tables", "两张表", "只有六站重合",
@@ -11544,6 +11545,23 @@ _OPENINGS: dict[str, dict] = {
 }
 
 
+# This episode keeps its reviewed script, diagrams and evidence in package data.
+# The existing renderer and preflight still consume the same registries.
+_DEFAULT_EPISODE = json.loads(
+    (Path(__file__).parent / "episodes/medvedev-beijing-default-2026.json").read_text(
+        encoding="utf-8"))
+_DEFAULT_SLUG = _DEFAULT_EPISODE["slug"]
+_SCRIPTS[_DEFAULT_SLUG] = tuple(
+    (beat["kind"], beat["label"], beat["title"], beat["narration"],
+     beat.get("image", ""), beat.get("credit", ""), tuple(beat["points"]),
+     beat.get("diagram", ""), beat.get("question", ""))
+    for beat in _DEFAULT_EPISODE["beats"]
+)
+_OPENINGS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["opening"]
+_CAPTIONS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["caption"]
+_CLAIMS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["claims"]
+
+
 def _fixture_lines(spec: dict) -> tuple[str, ...]:
     """封面上那两行小字：比赛坐标 + 对阵。
 
@@ -11659,6 +11677,9 @@ def explainer_script(story) -> list[ExplainerSegment]:
     scripted = _SCRIPTS.get(story.slug)
     if scripted:
         beats = [ExplainerSegment(*row) for row in scripted]
+        if story.slug == _DEFAULT_SLUG:
+            beats = [dataclasses.replace(segment, visual=spec.get("visual"))
+                     for segment, spec in zip(beats, _DEFAULT_EPISODE["beats"])]
         beats[-1] = _ask_it_out_loud(beats[-1])
         return [_opening_segment(story, beats), *beats]
 
@@ -11756,6 +11777,20 @@ def _data_uri(path: Path) -> str:
     return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode()
 
 
+def _embed_diagram_assets(diagram: str) -> str:
+    """Resolve local SVG photos only when rendering their card; missing files stay fatal."""
+    def embed(match: re.Match) -> str:
+        if match[1] == "venue-tile":
+            from .masters_grid import _tile_data_uri  # noqa: PLC0415
+
+            uri = _tile_data_uri(match[2])
+        else:
+            uri = _data_uri(_REPO / match[2])
+        return f'href="{uri}"'
+
+    return re.sub(r'href="(asset|venue-tile)://([^"<>]+)"', embed, diagram)
+
+
 def _assert_photo_integrity(path: Path) -> None:
     """Reject truncated photos and large flat placeholder bands before render.
 
@@ -11812,11 +11847,18 @@ CHIP_NUMERALS = tuple(chr(0x2460 + i) for i in range(20))
 
 def _slide_html(
     index: int, segment: ExplainerSegment, *, theme: str = "dark", topic: str = "",
-    column: str = DEFAULT_COLUMN,
+    column: str = DEFAULT_COLUMN, height: int = H,
 ) -> str:
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
     from . import explainer_card_palette as P
+
+    if segment.visual:
+        from .source_story_cards import source_slide_html
+
+        return source_slide_html(segment, index=index, height=height, topic=topic,
+                                 column=column, root=_REPO, font_css=_font_css(),
+                                 asset_uri=_data_uri)
 
     cover = segment.kind == "cover"
     # The cover is not a beat, so it carries no number and the beats after it
@@ -11919,7 +11961,7 @@ def _slide_html(
         # 所以示意图这一屏的 scrim **上半整段透明**，只保留底部那一段。
         hero = (
             '<div class="hero diagram"></div>'
-            f'<div class="diagram-wrap">{segment.diagram}</div>'
+            f'<div class="diagram-wrap">{_embed_diagram_assets(segment.diagram)}</div>'
             '<div class="scrim scrim--diagram"></div>'
         )
     # One line, always: CJK glyphs run about one em wide, so size the headline
@@ -12009,12 +12051,12 @@ def _slide_html(
 
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{css}
 *{{margin:0;padding:0;box-sizing:border-box;}}
-html,body{{width:{W}px;height:{H}px;}}
+html,body{{width:{W}px;height:{height}px;}}
 body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
-.slide{{position:relative;width:{W}px;height:{H}px;overflow:hidden;color:{P.FOREGROUND};
- background:{P.SLIDE_INK};}}
+.slide{{position:relative;width:{W}px;height:{height}px;overflow:hidden;color:{P.FOREGROUND};
+ background:{P.BACKGROUND};}}
 .hero{{position:absolute;inset:0;}}
-.hero.diagram{{background:radial-gradient(125% 80% at 50% 20%,{P.HERO_GLOW} 0%,{P.HERO_DEEP} 55%,{P.SLIDE_INK} 100%);}}
+.hero.diagram{{background:{P.BACKGROUND};}}
 /* 信箱式缩放那几屏的底衬：同一张照片的模糊放大版，让卡片顶栏压在照片色上，
    和铺满的那几屏观感一致。压暗到 .42 是为了让上层 contain 的那张仍然是
    视觉主体；scale(1.2) 给 blur 留溢出量，否则边缘透底。 */
@@ -12024,7 +12066,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
    a 900-unit viewBox came out around 17 real pixels — legible on a monitor,
    not on a phone held at arm's length. Fill the card instead, and start
    higher so the extra height still clears the caption block. */
-.diagram-wrap{{position:absolute;left:0;right:0;top:210px;display:flex;justify-content:center;}}
+.diagram-wrap{{position:absolute;left:0;right:0;top:{210 + (height - H) * 2 // 3}px;display:flex;justify-content:center;}}
 .diagram-wrap svg{{width:920px;height:auto;}}
 .scrim{{position:absolute;inset:0;background:linear-gradient(180deg,
  {ink(.55)} 0%,{ink(.10)} 34%,{ink(.20)} 60%,{ink(.94)} 100%);}}
@@ -12246,6 +12288,7 @@ def render_explainer_slides(
     theme: str = "dark",
     topic: str = "",
     column: str = DEFAULT_COLUMN,
+    height: int = H,
 ) -> list[Path]:
     """Render one image-first 3:4 card per beat via a headless Chromium page."""
     from playwright.sync_api import sync_playwright
@@ -12254,6 +12297,10 @@ def render_explainer_slides(
     checked: set[Path] = set()
     for segment in segments:
         if not segment.image:
+            continue
+        if segment.visual and segment.visual.get("layout") == "rule":
+            # Authentic document crops are verified as images by source_slide_html;
+            # the photographic band check does not apply to a white PDF page.
             continue
         image_path = _REPO / segment.image
         if image_path not in checked:
@@ -12268,12 +12315,12 @@ def render_explainer_slides(
         try:
             for index, seg in enumerate(segments):
                 page = browser.new_page(
-                    viewport={"width": W, "height": H}, device_scale_factor=2
+                    viewport={"width": W, "height": height}, device_scale_factor=2
                 )
                 try:
                     page.set_content(
                         _slide_html(index, seg, theme=theme, topic=topic,
-                                    column=column)
+                                    column=column, height=height)
                     )
                     page.wait_for_function(
                         "document.fonts.status === 'loaded'", timeout=15000
@@ -12304,7 +12351,7 @@ def render_explainer_slides(
                     out = outdir / f"slide_{index:02d}.jpg"
                     page.screenshot(
                         path=str(out), type="jpeg", quality=_SLIDE_JPEG_QUALITY,
-                        clip={"x": 0, "y": 0, "width": W, "height": H},
+                        clip={"x": 0, "y": 0, "width": W, "height": height},
                     )
                     paths.append(out)
                 finally:
@@ -13663,6 +13710,37 @@ def _filter_path(path: Path) -> str:
     return str(path).replace("\\", "\\\\").replace(":", r"\:").replace("'", r"\'")
 
 
+def _platform_logo_filter(bbox) -> str:
+    """Remove only the declared platform mark, in original source coordinates."""
+    if (not isinstance(bbox, (list, tuple)) or len(bbox) != 4
+            or any(type(v) is not int for v in bbox)
+            or bbox[0] < 0 or bbox[1] < 0 or bbox[2] <= 0 or bbox[3] <= 0):
+        raise ExplainerVideoError("平台标识区域须为原片像素[x,y,w,h]")
+    x, y, width, height = bbox
+    return f"delogo=x={x}:y={y}:w={width}:h={height}"
+
+
+def _intro_filter(opening: dict, canvas_h: int) -> str:
+    """Prepare the declared portrait excerpt and its reviewed source subtitles."""
+    filters = []
+    if opening.get("intro_remove_logo_bbox"):
+        filters.append(_platform_logo_filter(opening["intro_remove_logo_bbox"]))
+    if opening.get("full_bleed"):
+        filters += [
+            f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=increase",
+            f"crop={VIDEO_W}:{canvas_h}:(iw-ow)/2:(ih-oh)/2",
+        ]
+    subtitles = opening.get("intro_subtitles")
+    if subtitles:
+        path = _REPO / subtitles
+        if not path.is_file():
+            raise ExplainerVideoError(f"片头审核字幕找不到：{path}")
+        filters.append(
+            f"subtitles='{_filter_path(path)}':"
+            f"fontsdir='{_filter_path(_REPO / 'assets/fonts')}'")
+    return ",".join(filters)
+
+
 # Delivery, not just words. The old read was correct and flat — too slow to
 # hold a thumb, and even-toned in a way that made every beat sound like the
 # last. Yunjian is the one Chinese voice Microsoft tags "Passion" (their
@@ -13806,6 +13884,9 @@ def assemble_explainer_video(
     intro_cx: float = 0.5,
     outro: Path | None = None,
     canvas_h: int = VIDEO_H,
+    full_bleed: bool = False,
+    inserts: dict[int, Path] | None = None,
+    subtitle_profile: str | None = None,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
     """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat.
@@ -13892,6 +13973,9 @@ def assemble_explainer_video(
     output.parent.mkdir(parents=True, exist_ok=True)
 
     n = len(slides)
+    inserts = inserts or {}
+    if any(not isinstance(i, int) or not 0 <= i < n for i in inserts):
+        raise ExplainerVideoError("原声插段必须放在现有屏之前")
     # Padding lands on the two outer beats only. A one-beat film is both, so
     # it takes the head and the tail on the same audio stream.
     head = [lead_silence if i == 0 else 0.0 for i in range(n)]
@@ -13919,14 +14003,28 @@ def assemble_explainer_video(
             badge_idx = offset
             offset += 1
     slide_secs: list[float] = []
+    audio_secs: list[float] = []
+    slide_inputs: list[tuple[int, int]] = []
+    insert_inputs: dict[int, tuple[int, float]] = {}
+    next_input = offset
     for i, (slide, audio) in enumerate(zip(slides, audios)):
-        seconds = _audio_seconds(Path(audio), ffprobe_bin, runner) + head[i] + tail[i]
+        if i in inserts:
+            clip = Path(inserts[i])
+            seconds = _audio_seconds(clip, ffprobe_bin, runner)
+            insert_inputs[i] = (next_input, seconds)
+            command.extend(["-i", str(clip.resolve())])
+            lengths.append(seconds)
+            next_input += 1
+        audio_secs.append(_audio_seconds(Path(audio), ffprobe_bin, runner))
+        seconds = audio_secs[-1] + head[i] + tail[i]
         lengths.append(float(f"{seconds:.3f}"))
         slide_secs.append(float(f"{seconds:.3f}"))
         command.extend(
             ["-loop", "1", "-t", f"{seconds:.3f}", "-i", str(Path(slide).resolve())]
         )
         command.extend(["-i", str(Path(audio).resolve())])
+        slide_inputs.append((next_input, next_input + 1))
+        next_input += 2
     if outro is not None:
         # 片尾是**真视频**（自带动效和口播），不是 `-loop 1` 的静图，
         # 所以这儿不给 `-t`：它自己多长就播多长。
@@ -13986,11 +14084,21 @@ def assemble_explainer_video(
     # 下面的 scale+pad 对卡片是个空操作（卡片已经等于目标画布），字幕的
     # `margin_v` 也要跟着新的画布高度重算——`card_top` 会变成 0，字幕锚点
     # 直接贴着画布底部，而不是 9:16 画布里那圈 240px 的留白之上。
-    card_top = (canvas_h - CARD_H) // 2
-    margin_v = card_top + CARD_H - 156
+    card_height = canvas_h if full_bleed else CARD_H
+    card_top = (canvas_h - card_height) // 2
+    margin_v = card_top + card_height - 156
     for i in range(n):
+        if i in insert_inputs:
+            vi, duration = insert_inputs[i]
+            filters.append(
+                f"[{vi}:v]scale={VIDEO_W}:{canvas_h},setsar=1,fps=30,"
+                f"format=yuv420p,tpad=stop_mode=clone:stop_duration={fade + 0.1:.3f}[vi{i}]")
+            filters.append(
+                f"[{vi}:a]aresample=async=1,apad=whole_dur={duration:.3f},"
+                f"atrim=end={duration:.3f}[ai{i}]")
+        image_input, audio_input = slide_inputs[i]
         chain = (
-            f"[{2 * i + offset}:v]scale={VIDEO_W}:{canvas_h}:"
+            f"[{image_input}:v]scale={VIDEO_W}:{canvas_h}:"
             f"force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
             f"pad={VIDEO_W}:{canvas_h}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
             f"setsar=1,fps=30"
@@ -14006,7 +14114,7 @@ def assemble_explainer_video(
                 marks = []
             cues = subtitle_cues(
                 readable(captions[i]),
-                _audio_seconds(Path(audios[i]), ffprobe_bin, runner),
+                audio_secs[i],
                 boundaries=marks,
                 offset=head[i],
             )
@@ -14017,6 +14125,9 @@ def assemble_explainer_video(
                     cues, output.parent / f"sub_{i:02d}.ass",
                     height=canvas_h, margin_v=margin_v,
                 )
+                if subtitle_profile == "focused-story":
+                    from .source_story_cards import focus_narration_subtitles
+                    focus_narration_subtitles(ass)
                 chain += (f",subtitles='{_filter_path(ass)}'"
                           f":fontsdir='{_filter_path(_ASS_EN_FONT_FILE.parent)}'")
         # 后面还有一路（下一屏或片尾）就垫一截底料给溶解吃，见 docstring。
@@ -14035,27 +14146,36 @@ def assemble_explainer_video(
             steps.append(f"adelay={round(head[i] * 1000)}:all=1")
         steps.append(f"apad=whole_dur={slide_secs[i]:.3f}")
         steps.append(f"atrim=end={slide_secs[i]:.3f}")
-        filters.append(f"[{2 * i + 1 + offset}:a]{','.join(steps)}[a{i}]")
+        filters.append(f"[{audio_input}:a]{','.join(steps)}[a{i}]")
     beats = n
     if outro is not None:
         # 片尾走**和幻灯片一模一样**的 scale+pad+fps 链——片尾卡是 3:4，
         # 和每一屏的卡同一个尺寸，所以 pad 出来的黑边宽度也一样。链子写成
         # 两份必分叉，所以这儿是照抄上面那一段的形状，改动只有「不加字幕」。
-        vi = 2 * n + offset
-        filters.append(
-            f"[{vi}:v]scale={VIDEO_W}:{canvas_h}:"
-            f"force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
+        vi = next_input
+        outro_frame = (
+            f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=increase:flags={_SCALE_FLAGS},"
+            f"crop={VIDEO_W}:{canvas_h}:(iw-ow)/2:(ih-oh)/2,"
+            if full_bleed else
+            f"scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
             f"pad={VIDEO_W}:{canvas_h}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
+        )
+        filters.append(
+            f"[{vi}:v]{outro_frame}"
             f"setsar=1,fps=30,format=yuv420p[v{n}]"
         )
         # 音轨要**重采样到和旁白同一个规格**：concat 要求各路参数一致，
         # 对不上时 ffmpeg 不报错，只会拼出一段爆音或者干脆没声。
         filters.append(f"[{vi}:a]aresample=async=1[a{n}]")
         beats = n + 1
-    vlabels = (["[vintro]"] if intro is not None else []) + [
-        f"[v{i}]" for i in range(beats)]
-    alabels = (["[aintro]"] if intro is not None else []) + [
-        f"[a{i}]" for i in range(beats)]
+    vlabels = ["[vintro]"] if intro is not None else []
+    alabels = ["[aintro]"] if intro is not None else []
+    for i in range(beats):
+        if i in insert_inputs:
+            vlabels.append(f"[vi{i}]")
+            alabels.append(f"[ai{i}]")
+        vlabels.append(f"[v{i}]")
+        alabels.append(f"[a{i}]")
     filters.extend(dissolve_chain(vlabels, lengths, fade))
     filters.append(f"{''.join(alabels)}concat=n={len(alabels)}:v=0:a=1[outa]")
 
@@ -14123,12 +14243,6 @@ def generate_explainer_video(
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     segments = explainer_script(story)
-    slides = render_explainer_slides(
-        segments, outdir, theme=theme,
-        topic=(_OPENINGS.get(story.slug) or {}).get("topic", ""),
-        column=explainer_column(story.slug)
-    )
-    audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
     # 冷开场实拍片段是可选的：`_OPENINGS[slug]["intro"]` 给一个仓库相对路径，
     # 就在片头前接一段真视频（比如上一轮的制胜分+庆祝）。绝大多数「开球之前」
     # 仍是纯幻灯片，这里不写就是 None，行为和以前完全一样。
@@ -14141,6 +14255,31 @@ def generate_explainer_video(
     intro = (_REPO / intro_rel) if intro_rel else None
     if intro is not None and not intro.is_file():
         raise ExplainerVideoError(f"开场实拍片段找不到：{intro}")
+    # 配置错误在截图、TTS 和远端下载前报告，避免失败后整趟重做。
+    canvas_h = canvas_height(story.slug)
+    intro_filter = _intro_filter(opening, canvas_h)
+    if intro_rel or intro_url:
+        from .crop_policy import require_fixed_center  # noqa: PLC0415
+
+        require_fixed_center(opening, where="explainer.intro")
+    start, duration = 0.0, None
+    if intro_url:
+        try:
+            start = float(opening.get("intro_start", 0.0))
+            end = opening.get("intro_end")
+            duration = float(end) - start if end is not None else None
+        except (TypeError, ValueError) as exc:
+            raise ExplainerVideoError("片头区间必须是有效秒数") from exc
+        if (not math.isfinite(start) or start < 0 or
+                (duration is not None and (not math.isfinite(duration) or duration <= 0))):
+            raise ExplainerVideoError(f"片头区间不合法：start={start}, end={end}")
+    slides = render_explainer_slides(
+        segments, outdir, theme=theme,
+        topic=(_OPENINGS.get(story.slug) or {}).get("topic", ""),
+        column=explainer_column(story.slug),
+        height=canvas_h if opening.get("full_bleed") else H,
+    )
+    audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
     if intro_url:
         # 正式采访成片已经在 Release；澄清片只需要其中 19 秒。把同一段 mp4
         # 再塞进 git 会同时违反“成片走 Release”和“别复制死重量”两条，所以
@@ -14160,93 +14299,101 @@ def generate_explainer_video(
                             fh.write(chunk)
             if full_source.stat().st_size < 1024:
                 raise ExplainerVideoError(f"片头远端文件异常小：{intro_url}")
-            start = float(opening.get("intro_start", 0.0))
-            end = opening.get("intro_end")
-            duration = float(end) - start if end is not None else None
-            if start < 0 or (duration is not None and duration <= 0):
-                raise ExplainerVideoError(
-                    f"片头区间不合法：start={start}, end={end}"
-                )
             cmd = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error"]
             if start:
                 cmd += ["-ss", f"{start:.3f}"]
             cmd += ["-i", str(full_source)]
             if duration is not None:
                 cmd += ["-t", f"{duration:.3f}"]
+            if intro_filter:
+                cmd += ["-vf", intro_filter]
             cmd += [
                 "-c:v", "libx264", "-crf", "18", "-preset", "medium",
                 "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart",
                 str(intro),
             ]
             subprocess.run(cmd, check=True, capture_output=True)
-        except (OSError, requests.RequestException, subprocess.CalledProcessError) as exc:
+        except (OSError, requests.RequestException, subprocess.CalledProcessError,
+                ExplainerVideoError) as exc:
             intro_tmp.cleanup()
             raise ExplainerVideoError(f"远端片头下载或切段失败：{exc}") from exc
-    # 冷开场叠一条和幻灯片一样的台头——见 `_render_intro_badge` 的 docstring。
-    # 渲不出来（缺 Chromium）不拖垮整条片子，退回没有台头的样子。
-    intro_badge = None
-    if intro is not None:
-        try:
-            intro_badge = _render_intro_badge(
-                (_OPENINGS.get(story.slug) or {}).get("topic", ""),
-                explainer_column(story.slug),
-                outdir,
-            )
-        except Exception as exc:  # noqa: BLE001 - 台头是锦上添花
-            print(f"[冷开场台头] 渲不出来，这段片头没有台头：{exc}")
-            intro_badge = None
-    # Which voice actually spoke is otherwise unrecoverable from the output:
-    # the per-beat mp3s are deleted to keep the repo small, and nobody can
-    # read a voice name off an mp4. That gap already cost three decks — the
-    # workflow passed a stale --voice on every dispatch, so changing the
-    # default in code changed nothing, and the only way anyone found out was
-    # by reading a run log days later. Write it down beside the film instead,
-    # so checking is a matter of opening the artifact, not trusting a chain
-    # of inference about what the arguments must have been.
-    (outdir / "narration.json").write_text(
-        json.dumps(
-            {"voice": voice, "rate": rate, "pitch": pitch, "segments": len(audios),
-             "subtitles": True},
-            ensure_ascii=False, indent=2,
-        ) + "\n",
-        encoding="utf-8",
-    )
-    outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
-    # ⚠️⚠️ **2026-09-16 默认值翻面：3:4 是默认，9:16 变成要显式认领的例外。**
-    #
-    # 来路：账号所有者「我要求**所有**视频都是 3:4 的比例画面啊」。而这句话
-    # 2026-08-07 他就说过一次（「画面还不是 3:4 的啊」，原话记在 `eala-mcnally`
-    # 那条 `canvas` 旁边）——当时的修法是加了这个「写了才换」的开关，默认留在
-    # 9:16，理由写的是「改默认会把纯卡片片子一起改掉」。
-    #
-    # **那个修法没解决问题。** 量出来：49 条里只有 3 条写了这一行
-    # （`gauff-right-coco` / `eala-mcnally` / `heat-rule`），其余 46 条全部落回
-    # 9:16——`second-serve-clock`、`big-three`、`promotional-fees`、
-    # `finals-venues`、`wuhan-alternate` 逐条拉 Release 的成片 ffprobe 过，
-    # 都是 1080×1920。CLAUDE.md 早写过这个形状：**一个几乎没人会去写的开关，
-    # 本身就说明那个默认值是错的**（`scrim: "clear"` 那次 74/100 手动关掉，
-    # 这次是 46/49 根本没写，更彻底）。
-    #
-    # 所以现在反过来：不写 = 3:4，要 9:16 必须**显式写出来**。
-    # ⚠️ 那 3 条写着 `"3:4"` 的**不要删**——它们现在和不写一个意思，但删掉
-    # 之后翻面之前的历史就读不出来了（同 `scrim: "clear"` 那 74 行的处置）。
-    canvas_h = canvas_height(story.slug)
-    # `intro_cx` 同理显式认领：默认 0.5（几何居中，老行为不变），写了才换。
-    # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
-    # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
-    intro_cx = (_OPENINGS.get(story.slug) or {}).get("intro_cx", 0.5)
     try:
-        return assemble_explainer_video(
-            slides, audios, outdir / "explainer.mp4",
-            captions=[seg.narration for seg in segments],
-            # 封面的大问题印在画面上，念到那一句时不再另排字幕（见 `drop_printed_cues`）。
-            printed=[seg.title if seg.kind == "cover" else "" for seg in segments],
-            intro=intro,
-            intro_badge=intro_badge,
-            intro_cx=intro_cx,
-            outro=outro,
-            canvas_h=canvas_h,
+        # 冷开场叠一条和幻灯片一样的台头——见 `_render_intro_badge` 的 docstring。
+        # 渲不出来（缺 Chromium）不拖垮整条片子，退回没有台头的样子。
+        intro_badge = None
+        if intro is not None:
+            try:
+                intro_badge = _render_intro_badge(
+                    (_OPENINGS.get(story.slug) or {}).get("topic", ""),
+                    explainer_column(story.slug),
+                    outdir,
+                )
+            except Exception as exc:  # noqa: BLE001 - 台头是锦上添花
+                print(f"[冷开场台头] 渲不出来，这段片头没有台头：{exc}")
+                intro_badge = None
+        # Which voice actually spoke is otherwise unrecoverable from the output:
+        # the per-beat mp3s are deleted to keep the repo small, and nobody can
+        # read a voice name off an mp4. That gap already cost three decks — the
+        # workflow passed a stale --voice on every dispatch, so changing the
+        # default in code changed nothing, and the only way anyone found out was
+        # by reading a run log days later. Write it down beside the film instead,
+        # so checking is a matter of opening the artifact, not trusting a chain
+        # of inference about what the arguments must have been.
+        (outdir / "narration.json").write_text(
+            json.dumps(
+                {"voice": voice, "rate": rate, "pitch": pitch, "segments": len(audios),
+                 "subtitles": True},
+                ensure_ascii=False, indent=2,
+            ) + "\n",
+            encoding="utf-8",
         )
+        outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
+        # ⚠️⚠️ **2026-09-16 默认值翻面：3:4 是默认，9:16 变成要显式认领的例外。**
+        #
+        # 来路：账号所有者「我要求**所有**视频都是 3:4 的比例画面啊」。而这句话
+        # 2026-08-07 他就说过一次（「画面还不是 3:4 的啊」，原话记在 `eala-mcnally`
+        # 那条 `canvas` 旁边）——当时的修法是加了这个「写了才换」的开关，默认留在
+        # 9:16，理由写的是「改默认会把纯卡片片子一起改掉」。
+        #
+        # **那个修法没解决问题。** 量出来：49 条里只有 3 条写了这一行
+        # （`gauff-right-coco` / `eala-mcnally` / `heat-rule`），其余 46 条全部落回
+        # 9:16——`second-serve-clock`、`big-three`、`promotional-fees`、
+        # `finals-venues`、`wuhan-alternate` 逐条拉 Release 的成片 ffprobe 过，
+        # 都是 1080×1920。CLAUDE.md 早写过这个形状：**一个几乎没人会去写的开关，
+        # 本身就说明那个默认值是错的**（`scrim: "clear"` 那次 74/100 手动关掉，
+        # 这次是 46/49 根本没写，更彻底）。
+        #
+        # 所以现在反过来：不写 = 3:4，要 9:16 必须**显式写出来**。
+        # ⚠️ 那 3 条写着 `"3:4"` 的**不要删**——它们现在和不写一个意思，但删掉
+        # 之后翻面之前的历史就读不出来了（同 `scrim: "clear"` 那 74 行的处置）。
+        # `intro_cx` 同理显式认领：默认 0.5（几何居中，老行为不变），写了才换。
+        # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
+        # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
+        intro_cx = (_OPENINGS.get(story.slug) or {}).get("intro_cx", 0.5)
+        insert_specs = opening.get("inserts") or []
+        if insert_specs:
+            from .source_story_cards import prepare_source_inserts
+
+        from contextlib import nullcontext
+        insert_context = (tempfile.TemporaryDirectory(prefix="tennislive-inserts-")
+                          if insert_specs else nullcontext(None))
+        with insert_context as insert_root:
+            inserts = (prepare_source_inserts(insert_specs, Path(insert_root), canvas_h)
+                       if insert_specs else {})
+            return assemble_explainer_video(
+                slides, audios, outdir / "explainer.mp4",
+                captions=[seg.narration for seg in segments],
+                # 封面的大问题印在画面上，念到那一句时不再另排字幕（见 `drop_printed_cues`）。
+                printed=[seg.title if seg.kind == "cover" else "" for seg in segments],
+                intro=intro,
+                intro_badge=intro_badge,
+                intro_cx=intro_cx,
+                outro=outro,
+                canvas_h=canvas_h,
+                full_bleed=bool(opening.get("full_bleed")),
+                inserts=inserts,
+                subtitle_profile=opening.get("subtitle_profile"),
+            )
     finally:
         if intro_tmp is not None:
             intro_tmp.cleanup()
@@ -14329,13 +14476,12 @@ def explainer_push_html(
     # `*.jsdelivr.net/gh/…@main/`，github.com 的 Release 链接匹配不上
     # （判据在 test_推送里的成片链接优先读render_json的video_url）。
     video_url = ""
+    render_meta = {}
     meta_f = outdir / "render.json"
     if meta_f.is_file():
         try:
-            video_url = str(
-                (json.loads(meta_f.read_text(encoding="utf-8")) or {})
-                .get("video_url") or ""
-            ).strip()
+            render_meta = json.loads(meta_f.read_text(encoding="utf-8")) or {}
+            video_url = str(render_meta.get("video_url") or "").strip()
         except (OSError, ValueError) as exc:
             # 坏 JSON 和「没写过」是两回事。静默退回老路的样子和正常一模一样，
             # 而新片子的 mp4 不在 git 里，老路的链接对它就是 404——要出声。
@@ -14367,6 +14513,21 @@ def explainer_push_html(
     # 「探过了没有」，按钮就无声消失了——正文里那段文案的唯一出口。
     if isinstance(copy_url, _Unset):
         copy_url = f"{_PAGES_URL}/{rel}/copy.html"
+    # The raw MP4 opens on its cold-open match frame. A selected cover must
+    # also be the player's poster, using the identical rendered slide asset.
+    if (_OPENINGS.get(outdir.name) or {}).get("playback_cover"):
+        from ..render.video_page import video_page
+
+        # Pages publishes HTML only. The cover image belongs on the image
+        # CDN; reviewed packages may pin it to an immutable cover revision.
+        poster_url = str(render_meta.get("cover_url") or
+                         f"{jsdelivr_base(_REPOSITORY)}/{rel}/slide_00.jpg")
+        (outdir / "watch.html").write_text(
+            video_page(title=segments[0].title.replace("\n", " · "),
+                       video_url=video_url, poster_url=poster_url),
+            encoding="utf-8",
+        )
+        video_url = f"{_PAGES_URL}/{rel}/watch.html"
     # 药丸写栏目名、按钮写「▶ 打开竖版成片」——都由 knowledge_push_html_from_parts
     # 自己出（2026-09-27 UI 评审 WP2：同一栏目的剪辑片推送和这条原来长得不一样，
     # 正是因为这两段文字是从这儿传进去的）。

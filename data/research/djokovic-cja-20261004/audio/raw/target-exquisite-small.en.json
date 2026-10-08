@@ -1,0 +1,48 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://www.youtube.com/watch?v=cjaHThpISKk",
+  "source_path": "/workspace/djokovic-cja-research/source/cjaHThpISKk.mp4",
+  "source_sha256": "2a62a85fb499f153e97fa3074294eb1be476a818aa480291b65b43a3e94484e2",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "vad_filter": false,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "requested_language": "en",
+  "language_why": "Independent fullsource auto-language passes both detected English 0.991/0.942 probability. This is a targeted pass after detection, not an initial assumption.",
+  "range_from": 27.5,
+  "range_to": 34,
+  "created_at": "2026-10-04T14:39:13.320623+00:00",
+  "elapsed_seconds": 1.9,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "start": 29.78,
+      "end": 32.02,
+      "text": " Oh, yes, exquisite.",
+      "avg_logprob": -0.7094741927252876,
+      "no_speech_prob": 0.22097176313400269,
+      "words": [
+        {
+          "start": 29.78,
+          "end": 30.66,
+          "word": " Oh,",
+          "probability": 0.7828958630561829
+        },
+        {
+          "start": 30.68,
+          "end": 31.26,
+          "word": " yes,",
+          "probability": 0.896809995174408
+        },
+        {
+          "start": 31.62,
+          "end": 32.02,
+          "word": " exquisite.",
+          "probability": 0.8439767360687256
+        }
+      ]
+    }
+  ]
+}

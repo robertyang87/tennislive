@@ -1,0 +1,3563 @@
+[
+  {
+    "label": "第 2 段",
+    "char": "冠",
+    "at": 26,
+    "intended": "guan4",
+    "wrong": "guan1",
+    "method": "Actual same full utterance same voice/rate; selective stronger controls, no human listening",
+    "withdrawn_incorrect_target_result": {
+      "word": "冠",
+      "char": "冠",
+      "sentence": "北京时间十月六号下午，中网女单八分之一决赛。今年温网冠军诺斯科娃，美网之后五场全胜。但这一次，她的反扑为什么没能奏效？",
+      "tts_text": "北京时间十月六号下午，中网女单八分之一决赛。今年温网冠军诺斯科娃，美网之后五场全胜。但这一次，她的反扑为什么没能奏效？",
+      "intended_refs": [
+        "关",
+        "官"
+      ],
+      "wrong_refs": [
+        "惯",
+        "罐"
+      ],
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "verdict": "uncertain",
+      "confidence": null,
+      "verdict_raw": "uncertain",
+      "score": -0.126,
+      "margin": 0.2,
+      "near_identical_to": null,
+      "far_from_both": true,
+      "dropped_refs": [
+        "惯"
+      ],
+      "override": null,
+      "selftest_sides": [
+        "A"
+      ],
+      "features": {
+        "spec": {
+          "d_intended": 2.778,
+          "d_wrong": 2.702,
+          "score": -0.014
+        },
+        "f0": {
+          "d_intended": 1.516,
+          "d_wrong": 0.905,
+          "score": -0.252
+        },
+        "comb": {
+          "d_intended": 2.905,
+          "d_wrong": 2.256,
+          "score": -0.126
+        }
+      },
+      "neighbour_shift": {
+        "intended": 2.92,
+        "wrong": 3.09
+      },
+      "separation": {
+        "spec": {
+          "within": 0.998,
+          "between": 2.533,
+          "separation": 2.54
+        },
+        "f0": {
+          "within": 0.328,
+          "between": 1.291,
+          "separation": 3.935
+        },
+        "comb": {
+          "within": 0.827,
+          "between": 2.558,
+          "separation": 3.094
+        }
+      },
+      "selftest_loo": {
+        "关": {
+          "expect": "correct",
+          "got": "correct",
+          "score": 0.979
+        },
+        "官": {
+          "expect": "correct",
+          "got": "correct",
+          "score": 0.979
+        },
+        "惯": {
+          "expect": "misread",
+          "got": "uncertain",
+          "score": -0.159,
+          "dropped": true
+        }
+      },
+      "selftest_pass": true,
+      "distances_from_orig": {
+        "A:关": {
+          "spec": 2.778,
+          "f0": 1.525,
+          "vmis": 0.069,
+          "frames": 29,
+          "comb": 2.914
+        },
+        "A:官": {
+          "spec": 2.778,
+          "f0": 1.516,
+          "vmis": 0.069,
+          "frames": 29,
+          "comb": 2.905
+        },
+        "B:惯": {
+          "spec": 2.574,
+          "f0": 1.017,
+          "vmis": 0.103,
+          "frames": 29,
+          "comb": 2.304
+        },
+        "B:罐": {
+          "spec": 2.702,
+          "f0": 0.905,
+          "vmis": 0.138,
+          "frames": 29,
+          "comb": 2.256
+        }
+      },
+      "window_s": [
+        5.149,
+        5.423
+      ],
+      "boundary_token": "冠军",
+      "window_anchor": "ORIG",
+      "tokens": {
+        "ORIG": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温网",
+          "冠军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ],
+        "A:关": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温网",
+          "关军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ],
+        "A:官": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温网",
+          "官军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ],
+        "B:惯": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温网",
+          "惯军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ],
+        "B:罐": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温",
+          "网罐军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ]
+      },
+      "f0_semitones_window": {
+        "ORIG": [
+          -8.6,
+          -6.8,
+          -5.2,
+          -2.5,
+          null,
+          null,
+          null,
+          3.2,
+          2.9,
+          2.4,
+          1.5,
+          0.2,
+          -0.9,
+          -2.2,
+          -2.8
+        ],
+        "A:关": [
+          -8.1,
+          -7.7,
+          -7.0,
+          -6.6,
+          null,
+          null,
+          null,
+          0.7,
+          0.3,
+          -0.0,
+          -0.1,
+          0.2,
+          0.3
+        ],
+        "A:官": [
+          -8.0,
+          -7.7,
+          -7.0,
+          -6.6,
+          null,
+          null,
+          null,
+          0.7,
+          0.3,
+          -0.0,
+          -0.1,
+          0.3,
+          0.4
+        ],
+        "B:惯": [
+          -6.4,
+          -6.5,
+          -6.3,
+          -6.3,
+          -8.3,
+          null,
+          null,
+          2.0,
+          1.3,
+          0.4,
+          -0.8,
+          -1.8,
+          -2.5
+        ],
+        "B:罐": [
+          -4.9,
+          -5.0,
+          -4.9,
+          -6.5,
+          null,
+          null,
+          1.9,
+          1.5,
+          0.5,
+          -0.5,
+          -1.5,
+          -2.3,
+          -2.6
+        ]
+      },
+      "audio": {
+        "ORIG": "/workspace/scratch/noskova-audio-targeted/cache/d4c72b2c5ea1b09bd4b2c62f.mp3",
+        "A:关": "/workspace/scratch/noskova-audio-targeted/cache/4907c7b556a7ad45ba66214f.mp3",
+        "A:官": "/workspace/scratch/noskova-audio-targeted/cache/3f3f59a31ca93ee7c6bf40bc.mp3",
+        "B:惯": "/workspace/scratch/noskova-audio-targeted/cache/af7b9f17ae5b568d1a20f580.mp3",
+        "B:罐": "/workspace/scratch/noskova-audio-targeted/cache/5f97d90d6ff4f953aa143dc0.mp3"
+      }
+    },
+    "result": {
+      "position": 26,
+      "char": "冠",
+      "intended": "guan4",
+      "wrong": "guan1",
+      "word": "冠",
+      "sentence": "北京时间十月六号下午，中网女单八分之一决赛。今年温网冠军诺斯科娃，美网之后五场全胜。但这一次，她的反扑为什么没能奏效？",
+      "tts_text": "北京时间十月六号下午，中网女单八分之一决赛。今年温网冠军诺斯科娃，美网之后五场全胜。但这一次，她的反扑为什么没能奏效？",
+      "intended_refs": [
+        "惯",
+        "罐",
+        "贯"
+      ],
+      "wrong_refs": [
+        "关",
+        "官",
+        "倌"
+      ],
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "verdict": "uncertain",
+      "confidence": null,
+      "verdict_raw": "uncertain",
+      "score": 0.126,
+      "margin": 0.2,
+      "near_identical_to": null,
+      "far_from_both": true,
+      "dropped_refs": [],
+      "override": null,
+      "selftest_sides": [
+        "A",
+        "B"
+      ],
+      "features": {
+        "spec": {
+          "d_intended": 2.571,
+          "d_wrong": 2.777,
+          "score": 0.039
+        },
+        "f0": {
+          "d_intended": 0.905,
+          "d_wrong": 1.516,
+          "score": 0.252
+        },
+        "comb": {
+          "d_intended": 2.255,
+          "d_wrong": 2.905,
+          "score": 0.126
+        }
+      },
+      "neighbour_shift": {
+        "intended": 2.108,
+        "wrong": 2.92
+      },
+      "separation": {
+        "spec": {
+          "within": 0.666,
+          "between": 2.516,
+          "separation": 3.779
+        },
+        "f0": {
+          "within": 0.219,
+          "between": 1.237,
+          "separation": 5.653
+        },
+        "comb": {
+          "within": 0.552,
+          "between": 2.495,
+          "separation": 4.522
+        }
+      },
+      "selftest_loo": {
+        "惯": {
+          "expect": "correct",
+          "got": "correct",
+          "score": 0.948
+        },
+        "罐": {
+          "expect": "correct",
+          "got": "correct",
+          "score": 0.291
+        },
+        "贯": {
+          "expect": "correct",
+          "got": "correct",
+          "score": 0.949
+        },
+        "关": {
+          "expect": "misread",
+          "got": "misread",
+          "score": -0.999
+        },
+        "官": {
+          "expect": "misread",
+          "got": "misread",
+          "score": -0.976
+        },
+        "倌": {
+          "expect": "misread",
+          "got": "misread",
+          "score": -0.999
+        }
+      },
+      "selftest_pass": true,
+      "distances_from_orig": {
+        "A:惯": {
+          "spec": 2.573,
+          "f0": 1.017,
+          "vmis": 0.103,
+          "frames": 29,
+          "comb": 2.303
+        },
+        "A:罐": {
+          "spec": 2.7,
+          "f0": 0.905,
+          "vmis": 0.138,
+          "frames": 29,
+          "comb": 2.255
+        },
+        "A:贯": {
+          "spec": 2.571,
+          "f0": 0.976,
+          "vmis": 0.103,
+          "frames": 29,
+          "comb": 2.262
+        },
+        "B:关": {
+          "spec": 2.777,
+          "f0": 1.525,
+          "vmis": 0.069,
+          "frames": 29,
+          "comb": 2.914
+        },
+        "B:官": {
+          "spec": 2.777,
+          "f0": 1.516,
+          "vmis": 0.069,
+          "frames": 29,
+          "comb": 2.905
+        },
+        "B:倌": {
+          "spec": 2.777,
+          "f0": 1.524,
+          "vmis": 0.069,
+          "frames": 29,
+          "comb": 2.913
+        }
+      },
+      "window_s": [
+        5.149,
+        5.423
+      ],
+      "boundary_token": "冠军",
+      "window_anchor": "ORIG",
+      "tokens": {
+        "ORIG": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温网",
+          "冠军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ],
+        "A:惯": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温网",
+          "惯军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ],
+        "A:罐": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温",
+          "网罐军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ],
+        "A:贯": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温网",
+          "贯军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ],
+        "B:关": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温网",
+          "关军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ],
+        "B:官": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温网",
+          "官军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ],
+        "B:倌": [
+          "北京时间",
+          "十月",
+          "六号",
+          "下午",
+          "中网",
+          "女单",
+          "八分之一",
+          "决赛",
+          "今年",
+          "温网",
+          "倌军",
+          "诺斯科娃",
+          "美网",
+          "之后",
+          "五场",
+          "全胜",
+          "但",
+          "这",
+          "一次",
+          "她",
+          "的",
+          "反扑",
+          "为什么",
+          "没",
+          "能",
+          "奏效"
+        ]
+      },
+      "f0_semitones_window": {
+        "ORIG": [
+          -8.6,
+          -6.8,
+          -5.2,
+          -2.5,
+          null,
+          null,
+          null,
+          3.2,
+          2.9,
+          2.4,
+          1.5,
+          0.2,
+          -0.9,
+          -2.2,
+          -2.8
+        ],
+        "A:惯": [
+          -6.4,
+          -6.5,
+          -6.3,
+          -6.3,
+          -8.3,
+          null,
+          null,
+          2.0,
+          1.3,
+          0.4,
+          -0.8,
+          -1.8,
+          -2.5
+        ],
+        "A:罐": [
+          -4.9,
+          -5.0,
+          -4.9,
+          -6.5,
+          null,
+          null,
+          1.9,
+          1.5,
+          0.5,
+          -0.5,
+          -1.5,
+          -2.3,
+          -2.6
+        ],
+        "A:贯": [
+          -6.3,
+          -6.4,
+          -6.3,
+          -6.2,
+          -8.3,
+          null,
+          null,
+          2.1,
+          1.3,
+          0.5,
+          -0.8,
+          -1.8,
+          -2.5
+        ],
+        "B:关": [
+          -8.1,
+          -7.7,
+          -7.0,
+          -6.6,
+          null,
+          null,
+          null,
+          0.7,
+          0.3,
+          -0.0,
+          -0.1,
+          0.2,
+          0.3
+        ],
+        "B:官": [
+          -8.0,
+          -7.7,
+          -7.0,
+          -6.6,
+          null,
+          null,
+          null,
+          0.7,
+          0.3,
+          -0.0,
+          -0.1,
+          0.3,
+          0.4
+        ],
+        "B:倌": [
+          -8.1,
+          -7.7,
+          -7.0,
+          -6.6,
+          null,
+          null,
+          null,
+          0.7,
+          0.3,
+          -0.0,
+          -0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "audio": {
+        "ORIG": "audio-review/cache/d4c72b2c5ea1b09bd4b2c62f.mp3",
+        "A:惯": "audio-review/cache/af7b9f17ae5b568d1a20f580.mp3",
+        "A:罐": "audio-review/cache/5f97d90d6ff4f953aa143dc0.mp3",
+        "A:贯": "audio-review/cache/764e144fe44e39d05339c0e1.mp3",
+        "B:关": "audio-review/cache/4907c7b556a7ad45ba66214f.mp3",
+        "B:官": "audio-review/cache/3f3f59a31ca93ee7c6bf40bc.mp3",
+        "B:倌": "audio-review/cache/f500ab71f9f39e00888ab06b.mp3"
+      }
+    },
+    "correction": "冠军 guàn jūn standard fourth tone; guan1 comparison withdrawn; original context target correct. Audio unchanged."
+  },
+  {
+    "label": "第 7 段",
+    "char": "还",
+    "at": 7,
+    "intended": "hai2",
+    "wrong": "huan2",
+    "method": "Actual same full utterance same voice/rate; selective stronger controls, no human listening",
+    "result": {
+      "word": "还",
+      "char": "还",
+      "sentence": "诺斯科娃在网前还能抢分，底线却开始承压。亚历山德罗娃的反手打得又深又快，接发也敢直接抢。看首盘的两次关键破发。",
+      "tts_text": "诺斯科娃在网前还能抢分，底线却开始承压。亚历山德罗娃的反手打得又深又快，接发也敢直接抢。看首盘的两次关键破发。",
+      "intended_refs": [
+        "孩",
+        "骸"
+      ],
+      "wrong_refs": [
+        "桓",
+        "环"
+      ],
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "verdict": "unreliable",
+      "confidence": null,
+      "verdict_raw": "correct",
+      "score": 0.217,
+      "margin": 0.2,
+      "near_identical_to": null,
+      "far_from_both": false,
+      "dropped_refs": [],
+      "override": null,
+      "selftest_sides": [
+        "A",
+        "B"
+      ],
+      "features": {
+        "spec": {
+          "d_intended": 2.726,
+          "d_wrong": 6.317,
+          "score": 0.397
+        },
+        "f0": {
+          "d_intended": 1.235,
+          "d_wrong": 0.88,
+          "score": -0.168
+        },
+        "comb": {
+          "d_intended": 2.598,
+          "d_wrong": 4.038,
+          "score": 0.217
+        }
+      },
+      "neighbour_shift": {
+        "intended": 2.204,
+        "wrong": 3.79
+      },
+      "separation": {
+        "spec": {
+          "within": 3.038,
+          "between": 6.385,
+          "separation": 2.102
+        },
+        "f0": {
+          "within": 1.799,
+          "between": 2.253,
+          "separation": 1.253
+        },
+        "comb": {
+          "within": 3.318,
+          "between": 5.446,
+          "separation": 1.641
+        }
+      },
+      "selftest_loo": {
+        "孩": {
+          "expect": "correct",
+          "got": "correct",
+          "score": 0.22
+        },
+        "骸": {
+          "expect": "correct",
+          "got": "uncertain",
+          "score": 0.18
+        },
+        "桓": {
+          "expect": "misread",
+          "got": "uncertain",
+          "score": -0.154
+        },
+        "环": {
+          "expect": "misread",
+          "got": "uncertain",
+          "score": -0.185
+        }
+      },
+      "selftest_pass": false,
+      "distances_from_orig": {
+        "A:孩": {
+          "spec": 3.024,
+          "f0": 2.796,
+          "vmis": 0.083,
+          "frames": 24,
+          "comb": 4.308
+        },
+        "A:骸": {
+          "spec": 2.726,
+          "f0": 1.235,
+          "vmis": 0.043,
+          "frames": 23,
+          "comb": 2.598
+        },
+        "B:桓": {
+          "spec": 6.487,
+          "f0": 2.886,
+          "vmis": 0.2,
+          "frames": 25,
+          "comb": 6.13
+        },
+        "B:环": {
+          "spec": 6.317,
+          "f0": 0.88,
+          "vmis": 0.125,
+          "frames": 24,
+          "comb": 4.038
+        }
+      },
+      "window_s": [
+        1.26,
+        1.482
+      ],
+      "boundary_token": "还",
+      "window_anchor": "ORIG",
+      "tokens": {
+        "ORIG": [
+          "诺斯科娃",
+          "在",
+          "网前",
+          "还",
+          "能",
+          "抢分",
+          "底线",
+          "却",
+          "开始",
+          "承压",
+          "亚历山",
+          "德罗娃",
+          "的",
+          "反手",
+          "打",
+          "得",
+          "又",
+          "深",
+          "又",
+          "快",
+          "接发",
+          "也",
+          "敢",
+          "直接",
+          "抢",
+          "看",
+          "首",
+          "盘",
+          "的",
+          "两",
+          "次",
+          "关键",
+          "破发"
+        ],
+        "A:孩": [
+          "诺斯科娃",
+          "在",
+          "网",
+          "前孩",
+          "能",
+          "抢分",
+          "底线",
+          "却",
+          "开始",
+          "承压",
+          "亚历山",
+          "德罗娃",
+          "的",
+          "反手",
+          "打",
+          "得",
+          "又",
+          "深",
+          "又",
+          "快",
+          "接发",
+          "也",
+          "敢",
+          "直接",
+          "抢",
+          "看",
+          "首",
+          "盘",
+          "的",
+          "两",
+          "次",
+          "关键",
+          "破发"
+        ],
+        "A:骸": [
+          "诺斯科",
+          "娃",
+          "在",
+          "网",
+          "前",
+          "骸",
+          "能",
+          "抢分",
+          "底线",
+          "却",
+          "开始",
+          "承压",
+          "亚历山",
+          "德罗娃",
+          "的",
+          "反手",
+          "打",
+          "得",
+          "又",
+          "深",
+          "又",
+          "快",
+          "接发",
+          "也",
+          "敢",
+          "直接",
+          "抢",
+          "看",
+          "首",
+          "盘",
+          "的",
+          "两",
+          "次",
+          "关键",
+          "破发"
+        ],
+        "B:桓": [
+          "诺斯科娃",
+          "在",
+          "网",
+          "前桓",
+          "能",
+          "抢分",
+          "底线",
+          "却",
+          "开始",
+          "承压",
+          "亚历山",
+          "德罗娃",
+          "的",
+          "反手",
+          "打",
+          "得",
+          "又",
+          "深",
+          "又",
+          "快",
+          "接发",
+          "也",
+          "敢",
+          "直接",
+          "抢",
+          "看",
+          "首",
+          "盘",
+          "的",
+          "两",
+          "次",
+          "关键",
+          "破发"
+        ],
+        "B:环": [
+          "诺斯科娃",
+          "在",
+          "网前",
+          "环能",
+          "抢分",
+          "底线",
+          "却",
+          "开始",
+          "承压",
+          "亚历山",
+          "德罗娃",
+          "的",
+          "反手",
+          "打",
+          "得",
+          "又",
+          "深",
+          "又",
+          "快",
+          "接发",
+          "也",
+          "敢",
+          "直接",
+          "抢",
+          "看",
+          "首",
+          "盘",
+          "的",
+          "两",
+          "次",
+          "关键",
+          "破发"
+        ]
+      },
+      "f0_semitones_window": {
+        "ORIG": [
+          0.3,
+          1.3,
+          1.6,
+          1.1,
+          null,
+          null,
+          null,
+          null,
+          1.9,
+          2.1,
+          4.1,
+          5.5
+        ],
+        "A:孩": [
+          4.4,
+          5.5,
+          5.9,
+          6.0,
+          null,
+          null,
+          null,
+          null,
+          4.3,
+          4.5,
+          5.3,
+          5.5
+        ],
+        "A:骸": [
+          0.3,
+          1.2,
+          2.8,
+          3.3,
+          2.7,
+          null,
+          null,
+          null,
+          null,
+          2.6,
+          3.8,
+          5.2
+        ],
+        "B:桓": [
+          4.5,
+          5.5,
+          5.8,
+          5.4,
+          3.1,
+          null,
+          4.4,
+          1.8,
+          1.1,
+          1.4,
+          1.8,
+          2.3
+        ],
+        "B:环": [
+          1.1,
+          1.8,
+          1.2,
+          0.1,
+          null,
+          null,
+          null,
+          1.5,
+          0.9,
+          1.3,
+          2.1,
+          3.5
+        ]
+      },
+      "audio": {
+        "ORIG": "/workspace/scratch/noskova-audio-targeted/cache/52c907d499953f391fbea5bb.mp3",
+        "A:孩": "/workspace/scratch/noskova-audio-targeted/cache/511d60d702370f65649e471b.mp3",
+        "A:骸": "/workspace/scratch/noskova-audio-targeted/cache/8546191777da554ee1b25378.mp3",
+        "B:桓": "/workspace/scratch/noskova-audio-targeted/cache/11695d537ac5bf7d0c6376af.mp3",
+        "B:环": "/workspace/scratch/noskova-audio-targeted/cache/717dd7a4db4d674f73041b92.mp3"
+      }
+    }
+  },
+  {
+    "label": "第 7 段",
+    "char": "得",
+    "at": 30,
+    "intended": "de5",
+    "wrong": "de2",
+    "method": "Actual same full utterance same voice/rate; selective stronger controls, no human listening",
+    "result": {
+      "word": "得",
+      "char": "得",
+      "sentence": "诺斯科娃在网前还能抢分，底线却开始承压。亚历山德罗娃的反手打得又深又快，接发也敢直接抢。看首盘的两次关键破发。",
+      "tts_text": "诺斯科娃在网前还能抢分，底线却开始承压。亚历山德罗娃的反手打得又深又快，接发也敢直接抢。看首盘的两次关键破发。",
+      "intended_refs": [
+        "的"
+      ],
+      "wrong_refs": [
+        "德",
+        "锝"
+      ],
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "verdict": "correct",
+      "confidence": "low",
+      "verdict_raw": "correct",
+      "score": 0.326,
+      "margin": 0.2,
+      "near_identical_to": null,
+      "far_from_both": false,
+      "dropped_refs": [],
+      "override": null,
+      "selftest_sides": [
+        "B"
+      ],
+      "features": {
+        "spec": {
+          "d_intended": 1.243,
+          "d_wrong": 4.39,
+          "score": 0.559
+        },
+        "f0": {
+          "d_intended": 1.223,
+          "d_wrong": 1.436,
+          "score": 0.08
+        },
+        "comb": {
+          "d_intended": 1.844,
+          "d_wrong": 3.631,
+          "score": 0.326
+        }
+      },
+      "neighbour_shift": {
+        "intended": 3.29,
+        "wrong": 4.076
+      },
+      "separation": {
+        "spec": {
+          "within": 3.545,
+          "between": 4.541,
+          "separation": 1.281
+        },
+        "f0": {
+          "within": 1.208,
+          "between": 2.718,
+          "separation": 2.25
+        },
+        "comb": {
+          "within": 2.98,
+          "between": 4.988,
+          "separation": 1.674
+        }
+      },
+      "selftest_loo": {
+        "德": {
+          "expect": "misread",
+          "got": "misread",
+          "score": -0.281
+        },
+        "锝": {
+          "expect": "misread",
+          "got": "misread",
+          "score": -0.233
+        }
+      },
+      "selftest_pass": true,
+      "distances_from_orig": {
+        "A:的": {
+          "spec": 1.243,
+          "f0": 1.223,
+          "vmis": 0.062,
+          "frames": 16,
+          "comb": 1.844
+        },
+        "B:德": {
+          "spec": 4.39,
+          "f0": 1.436,
+          "vmis": 0.12,
+          "frames": 25,
+          "comb": 3.631
+        },
+        "B:锝": {
+          "spec": 5.288,
+          "f0": 7.542,
+          "vmis": 0.263,
+          "frames": 19,
+          "comb": 10.185
+        }
+      },
+      "window_s": [
+        5.821,
+        5.972
+      ],
+      "boundary_token": "得",
+      "window_anchor": "ORIG",
+      "tokens": {
+        "ORIG": [
+          "诺斯科娃",
+          "在",
+          "网前",
+          "还",
+          "能",
+          "抢分",
+          "底线",
+          "却",
+          "开始",
+          "承压",
+          "亚历山",
+          "德罗娃",
+          "的",
+          "反手",
+          "打",
+          "得",
+          "又",
+          "深",
+          "又",
+          "快",
+          "接发",
+          "也",
+          "敢",
+          "直接",
+          "抢",
+          "看",
+          "首",
+          "盘",
+          "的",
+          "两",
+          "次",
+          "关键",
+          "破发"
+        ],
+        "A:的": [
+          "诺斯科娃",
+          "在",
+          "网前",
+          "还",
+          "能",
+          "抢分",
+          "底线",
+          "却",
+          "开始",
+          "承压",
+          "亚历山",
+          "德罗娃",
+          "的",
+          "反手",
+          "打",
+          "的",
+          "又",
+          "深",
+          "又",
+          "快",
+          "接发",
+          "也",
+          "敢",
+          "直接",
+          "抢",
+          "看",
+          "首",
+          "盘",
+          "的",
+          "两",
+          "次",
+          "关键",
+          "破发"
+        ],
+        "B:德": [
+          "诺斯科娃",
+          "在",
+          "网前",
+          "还",
+          "能",
+          "抢分",
+          "底线",
+          "却",
+          "开始",
+          "承压",
+          "亚历山",
+          "德罗娃",
+          "的",
+          "反手",
+          "打德",
+          "又",
+          "深",
+          "又",
+          "快",
+          "接发",
+          "也",
+          "敢",
+          "直接",
+          "抢",
+          "看",
+          "首",
+          "盘",
+          "的",
+          "两",
+          "次",
+          "关键",
+          "破发"
+        ],
+        "B:锝": [
+          "诺斯科娃",
+          "在",
+          "网前",
+          "还",
+          "能",
+          "抢分",
+          "底线",
+          "却",
+          "开始",
+          "承压",
+          "亚历山",
+          "德罗娃",
+          "的",
+          "反手",
+          "打锝",
+          "又",
+          "深",
+          "又",
+          "快",
+          "接发",
+          "也",
+          "敢",
+          "直接",
+          "抢",
+          "看",
+          "首",
+          "盘",
+          "的",
+          "两",
+          "次",
+          "关键",
+          "破发"
+        ]
+      },
+      "f0_semitones_window": {
+        "ORIG": [
+          -12.8,
+          -10.3,
+          -10.1,
+          -6.0,
+          null,
+          null,
+          null,
+          -3.3
+        ],
+        "A:的": [
+          null,
+          -6.3,
+          -7.1,
+          -6.0,
+          null,
+          null,
+          null,
+          -3.3
+        ],
+        "B:德": [
+          -9.7,
+          -9.2,
+          -8.1,
+          -7.7,
+          -6.5,
+          null,
+          null,
+          -5.4
+        ],
+        "B:锝": [
+          -2.5,
+          -2.1,
+          -2.7,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "audio": {
+        "ORIG": "/workspace/scratch/noskova-audio-targeted/cache/52c907d499953f391fbea5bb.mp3",
+        "A:的": "/workspace/scratch/noskova-audio-targeted/cache/c3575f8ba10eb7fc5e7e3128.mp3",
+        "B:德": "/workspace/scratch/noskova-audio-targeted/cache/1dedb87937d2087fd6551201.mp3",
+        "B:锝": "/workspace/scratch/noskova-audio-targeted/cache/0d57a403f3744bf68f34260c.mp3"
+      }
+    }
+  },
+  {
+    "label": "第 13 段",
+    "char": "分",
+    "at": 54,
+    "intended": "fen1",
+    "wrong": "fen4",
+    "method": "Actual same full utterance same voice/rate; selective stronger controls, no human listening",
+    "result": {
+      "word": "分",
+      "char": "分",
+      "sentence": "打到二比二，诺斯科娃还没有掉队。可随后自己的两个发球局都失守，她连丢最后四局。对手的第二盘八个一发球，全部得分。",
+      "tts_text": "打到二比二，诺斯科娃还没有掉队。可随后自己的两个发球局都失守，她连丢最后四局。对手的第二盘八个一发球，全部得分。",
+      "intended_refs": [
+        "纷",
+        "芬"
+      ],
+      "wrong_refs": [
+        "愤",
+        "粪"
+      ],
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "verdict": "unreliable",
+      "confidence": null,
+      "verdict_raw": "correct",
+      "score": 0.631,
+      "margin": 0.2,
+      "near_identical_to": null,
+      "far_from_both": false,
+      "dropped_refs": [],
+      "override": null,
+      "selftest_sides": [
+        "A",
+        "B"
+      ],
+      "features": {
+        "spec": {
+          "d_intended": 1.251,
+          "d_wrong": 3.179,
+          "score": 0.435
+        },
+        "f0": {
+          "d_intended": 0.033,
+          "d_wrong": 1.318,
+          "score": 0.951
+        },
+        "comb": {
+          "d_intended": 0.658,
+          "d_wrong": 2.908,
+          "score": 0.631
+        }
+      },
+      "neighbour_shift": {
+        "intended": 0.144,
+        "wrong": 2.165
+      },
+      "separation": {
+        "spec": {
+          "within": 3.112,
+          "between": 3.728,
+          "separation": 1.198
+        },
+        "f0": {
+          "within": 1.593,
+          "between": 5.159,
+          "separation": 3.239
+        },
+        "comb": {
+          "within": 3.149,
+          "between": 7.023,
+          "separation": 2.23
+        }
+      },
+      "selftest_loo": {
+        "纷": {
+          "expect": "correct",
+          "got": "uncertain",
+          "score": 0.181
+        },
+        "芬": {
+          "expect": "correct",
+          "got": "correct",
+          "score": 0.325
+        },
+        "愤": {
+          "expect": "misread",
+          "got": "uncertain",
+          "score": 0.186
+        },
+        "粪": {
+          "expect": "misread",
+          "got": "misread",
+          "score": -0.42
+        }
+      },
+      "selftest_pass": false,
+      "distances_from_orig": {
+        "A:纷": {
+          "spec": 1.251,
+          "f0": 0.033,
+          "vmis": 0.0,
+          "frames": 28,
+          "comb": 0.658
+        },
+        "A:芬": {
+          "spec": 2.544,
+          "f0": 0.675,
+          "vmis": 0.143,
+          "frames": 28,
+          "comb": 1.947
+        },
+        "B:愤": {
+          "spec": 3.179,
+          "f0": 1.318,
+          "vmis": 0.357,
+          "frames": 28,
+          "comb": 2.908
+        },
+        "B:粪": {
+          "spec": 3.931,
+          "f0": 7.756,
+          "vmis": 0.393,
+          "frames": 28,
+          "comb": 9.721
+        }
+      },
+      "window_s": [
+        10.08,
+        10.36
+      ],
+      "boundary_token": "得分",
+      "window_anchor": "A:芬",
+      "tokens": {
+        "ORIG": [
+          "打到",
+          "二比二",
+          "诺斯科娃",
+          "还",
+          "没有",
+          "掉队",
+          "可",
+          "随后",
+          "自己",
+          "的",
+          "两个",
+          "发球局",
+          "都",
+          "失守",
+          "她",
+          "连",
+          "丢",
+          "最后",
+          "四局",
+          "对手",
+          "的",
+          "第二",
+          "盘",
+          "八",
+          "个",
+          "一发",
+          "球",
+          "全部",
+          "得分"
+        ],
+        "A:纷": [
+          "打到",
+          "二比二",
+          "诺斯科娃",
+          "还",
+          "没有",
+          "掉队",
+          "可",
+          "随后",
+          "自己",
+          "的",
+          "两个",
+          "发球局",
+          "都",
+          "失守",
+          "她",
+          "连",
+          "丢",
+          "最后",
+          "四局",
+          "对手",
+          "的",
+          "第二",
+          "盘",
+          "八",
+          "个",
+          "一发",
+          "球",
+          "全部",
+          "得纷"
+        ],
+        "A:芬": [
+          "打到",
+          "二比二",
+          "诺斯科娃",
+          "还",
+          "没有",
+          "掉队",
+          "可",
+          "随后",
+          "自己",
+          "的",
+          "两个",
+          "发球局",
+          "都",
+          "失守",
+          "她",
+          "连",
+          "丢",
+          "最后",
+          "四局",
+          "对手",
+          "的",
+          "第二",
+          "盘",
+          "八",
+          "个",
+          "一发",
+          "球",
+          "全部",
+          "得",
+          "芬"
+        ],
+        "B:愤": [
+          "打到",
+          "二比二",
+          "诺斯科娃",
+          "还",
+          "没有",
+          "掉队",
+          "可",
+          "随后",
+          "自己",
+          "的",
+          "两个",
+          "发球局",
+          "都",
+          "失守",
+          "她",
+          "连",
+          "丢",
+          "最后",
+          "四局",
+          "对手",
+          "的",
+          "第二",
+          "盘",
+          "八",
+          "个",
+          "一发",
+          "球",
+          "全部",
+          "得愤"
+        ],
+        "B:粪": [
+          "打到",
+          "二比二",
+          "诺斯科娃",
+          "还",
+          "没有",
+          "掉队",
+          "可",
+          "随后",
+          "自己",
+          "的",
+          "两个",
+          "发球局",
+          "都",
+          "失守",
+          "她",
+          "连",
+          "丢",
+          "最后",
+          "四局",
+          "对手",
+          "的",
+          "第二",
+          "盘",
+          "八",
+          "个",
+          "一发",
+          "球",
+          "全部",
+          "得粪"
+        ]
+      },
+      "f0_semitones_window": {
+        "ORIG": [
+          -6.5,
+          -6.3,
+          -5.7,
+          -5.5,
+          null,
+          null,
+          null,
+          -0.1,
+          -1.5,
+          -2.1,
+          -2.5,
+          -4.3,
+          null,
+          null
+        ],
+        "A:纷": [
+          -6.5,
+          -6.1,
+          -5.8,
+          -5.5,
+          null,
+          null,
+          null,
+          -0.1,
+          -1.6,
+          -2.1,
+          -2.5,
+          -4.4,
+          null,
+          null
+        ],
+        "A:芬": [
+          -6.1,
+          -5.0,
+          -4.1,
+          -4.1,
+          -5.1,
+          null,
+          1.9,
+          -0.9,
+          -1.5,
+          -1.7,
+          -2.5,
+          null,
+          null,
+          null
+        ],
+        "B:愤": [
+          -8.0,
+          -7.1,
+          -7.0,
+          -7.1,
+          -7.7,
+          null,
+          null,
+          1.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "B:粪": [
+          null,
+          null,
+          -9.1,
+          -9.1,
+          null,
+          null,
+          5.5,
+          null,
+          null,
+          null,
+          17.5,
+          null,
+          null,
+          null
+        ]
+      },
+      "audio": {
+        "ORIG": "/workspace/scratch/noskova-audio-targeted/cache/c3e65d9256b8a91240d63423.mp3",
+        "A:纷": "/workspace/scratch/noskova-audio-targeted/cache/f27f46fc2a7ef3b581b74421.mp3",
+        "A:芬": "/workspace/scratch/noskova-audio-targeted/cache/6fdca49fc009a14f0426b7d8.mp3",
+        "B:愤": "/workspace/scratch/noskova-audio-targeted/cache/4fd24958d7881fe24d16afa8.mp3",
+        "B:粪": "/workspace/scratch/noskova-audio-targeted/cache/207274d052d9f7016a220bdf.mp3"
+      }
+    }
+  },
+  {
+    "label": "第 15 段",
+    "char": "强",
+    "at": 22,
+    "intended": "qiang2",
+    "wrong": "qiang3",
+    "method": "Actual same full utterance same voice/rate; selective stronger controls, no human listening",
+    "result": {
+      "word": "强",
+      "char": "强",
+      "sentence": "温网冠军暂时停步。亚历山德罗娃首次打进中网八强，下一轮对米拉·安德烈耶娃。诺斯科娃下一站能再起势吗？最后一分，交给现场。",
+      "tts_text": "温网冠军暂时停步。亚历山德罗娃首次打进中网八强，下一轮对米拉·安德烈耶娃。诺斯科娃下一站能再起势吗？最后一分，交给现场。",
+      "intended_refs": [
+        "墙",
+        "蔷"
+      ],
+      "wrong_refs": [
+        "羟",
+        "襁"
+      ],
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "verdict": "uncertain",
+      "confidence": null,
+      "verdict_raw": "uncertain",
+      "score": 0.093,
+      "margin": 0.2,
+      "near_identical_to": null,
+      "far_from_both": true,
+      "dropped_refs": [
+        "墙"
+      ],
+      "override": null,
+      "selftest_sides": [
+        "B"
+      ],
+      "features": {
+        "spec": {
+          "d_intended": 2.547,
+          "d_wrong": 2.83,
+          "score": 0.053
+        },
+        "f0": {
+          "d_intended": 0.784,
+          "d_wrong": 1.063,
+          "score": 0.151
+        },
+        "comb": {
+          "d_intended": 2.058,
+          "d_wrong": 2.478,
+          "score": 0.093
+        }
+      },
+      "neighbour_shift": {
+        "intended": 1.745,
+        "wrong": 1.487
+      },
+      "separation": {
+        "spec": {
+          "within": 2.398,
+          "between": 3.188,
+          "separation": 1.33
+        },
+        "f0": {
+          "within": 0.435,
+          "between": 1.875,
+          "separation": 4.308
+        },
+        "comb": {
+          "within": 1.634,
+          "between": 3.469,
+          "separation": 2.123
+        }
+      },
+      "selftest_loo": {
+        "羟": {
+          "expect": "misread",
+          "got": "misread",
+          "score": -0.545
+        },
+        "襁": {
+          "expect": "misread",
+          "got": "misread",
+          "score": -0.549
+        },
+        "墙": {
+          "expect": "correct",
+          "got": "uncertain",
+          "score": 0.094,
+          "dropped": true
+        }
+      },
+      "selftest_pass": true,
+      "distances_from_orig": {
+        "A:墙": {
+          "spec": 0.0,
+          "f0": 0.007,
+          "vmis": 0.0,
+          "frames": 31,
+          "comb": 0.007
+        },
+        "A:蔷": {
+          "spec": 2.547,
+          "f0": 0.784,
+          "vmis": 0.061,
+          "frames": 33,
+          "comb": 2.058
+        },
+        "B:羟": {
+          "spec": 2.83,
+          "f0": 1.063,
+          "vmis": 0.273,
+          "frames": 33,
+          "comb": 2.478
+        },
+        "B:襁": {
+          "spec": 3.297,
+          "f0": 1.194,
+          "vmis": 0.25,
+          "frames": 32,
+          "comb": 2.842
+        }
+      },
+      "window_s": [
+        4.665,
+        4.969
+      ],
+      "boundary_token": "强",
+      "window_anchor": "ORIG",
+      "tokens": {
+        "ORIG": [
+          "温网",
+          "冠军",
+          "暂时",
+          "停步",
+          "亚历山",
+          "德罗娃",
+          "首次",
+          "打进",
+          "中网",
+          "八",
+          "强",
+          "下",
+          "一",
+          "轮",
+          "对",
+          "米拉",
+          "安德烈耶娃",
+          "诺斯科娃",
+          "下",
+          "一",
+          "站",
+          "能",
+          "再",
+          "起势",
+          "吗",
+          "最后",
+          "一",
+          "分",
+          "交给",
+          "现场"
+        ],
+        "A:墙": [
+          "温网",
+          "冠军",
+          "暂时",
+          "停步",
+          "亚历山",
+          "德罗娃",
+          "首次",
+          "打进",
+          "中网",
+          "八",
+          "墙",
+          "下",
+          "一",
+          "轮",
+          "对",
+          "米拉",
+          "安德烈耶娃",
+          "诺斯科娃",
+          "下",
+          "一",
+          "站",
+          "能",
+          "再",
+          "起势",
+          "吗",
+          "最后",
+          "一",
+          "分",
+          "交给",
+          "现场"
+        ],
+        "A:蔷": [
+          "温网",
+          "冠军",
+          "暂时",
+          "停步",
+          "亚历山",
+          "德罗娃",
+          "首次",
+          "打进",
+          "中网",
+          "八蔷",
+          "下",
+          "一",
+          "轮",
+          "对",
+          "米拉",
+          "安德烈耶娃",
+          "诺斯科娃",
+          "下",
+          "一",
+          "站",
+          "能",
+          "再",
+          "起势",
+          "吗",
+          "最后",
+          "一",
+          "分",
+          "交给",
+          "现场"
+        ],
+        "B:羟": [
+          "温网",
+          "冠军",
+          "暂时",
+          "停步",
+          "亚历山",
+          "德罗娃",
+          "首次",
+          "打进",
+          "中网",
+          "八羟",
+          "下",
+          "一",
+          "轮",
+          "对",
+          "米拉",
+          "安德烈耶娃",
+          "诺斯科娃",
+          "下",
+          "一",
+          "站",
+          "能",
+          "再",
+          "起势",
+          "吗",
+          "最后",
+          "一",
+          "分",
+          "交给",
+          "现场"
+        ],
+        "B:襁": [
+          "温网",
+          "冠军",
+          "暂时",
+          "停步",
+          "亚历山",
+          "德罗娃",
+          "首次",
+          "打进",
+          "中网",
+          "八",
+          "襁",
+          "下",
+          "一",
+          "轮",
+          "对",
+          "米拉",
+          "安德烈耶娃",
+          "诺斯科娃",
+          "下",
+          "一",
+          "站",
+          "能",
+          "再",
+          "起势",
+          "吗",
+          "最后",
+          "一",
+          "分",
+          "交给",
+          "现场"
+        ]
+      },
+      "f0_semitones_window": {
+        "ORIG": [
+          5.7,
+          6.0,
+          6.0,
+          5.7,
+          4.3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -5.6,
+          -6.7,
+          -4.6,
+          -4.0,
+          null
+        ],
+        "A:墙": [
+          5.7,
+          6.0,
+          6.0,
+          5.7,
+          4.3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -5.6,
+          -6.7,
+          -4.6,
+          -4.0,
+          null
+        ],
+        "A:蔷": [
+          4.1,
+          4.7,
+          4.9,
+          4.9,
+          3.3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -4.4,
+          -6.0,
+          -5.8,
+          -3.8,
+          -3.9
+        ],
+        "B:羟": [
+          6.6,
+          7.6,
+          7.5,
+          6.6,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "B:襁": [
+          6.6,
+          7.5,
+          7.4,
+          6.7,
+          5.8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "audio": {
+        "ORIG": "/workspace/scratch/noskova-audio-targeted/cache/d0843af17d6c33cbc0c10c78.mp3",
+        "A:墙": "/workspace/scratch/noskova-audio-targeted/cache/c7fccb206bbb116aaa435671.mp3",
+        "A:蔷": "/workspace/scratch/noskova-audio-targeted/cache/4dbacaa9bd6ff757ac3d080b.mp3",
+        "B:羟": "/workspace/scratch/noskova-audio-targeted/cache/d08f046a703f68dc406dabda.mp3",
+        "B:襁": "/workspace/scratch/noskova-audio-targeted/cache/32f39129d88e33740c2aafcc.mp3"
+      }
+    }
+  },
+  {
+    "label": "第 15 段",
+    "char": "强",
+    "at": 22,
+    "intended": "qiang2",
+    "wrong": "jiang4",
+    "method": "Actual same full utterance same voice/rate; selective stronger controls, no human listening",
+    "result": {
+      "word": "强",
+      "char": "强",
+      "sentence": "温网冠军暂时停步。亚历山德罗娃首次打进中网八强，下一轮对米拉·安德烈耶娃。诺斯科娃下一站能再起势吗？最后一分，交给现场。",
+      "tts_text": "温网冠军暂时停步。亚历山德罗娃首次打进中网八强，下一轮对米拉·安德烈耶娃。诺斯科娃下一站能再起势吗？最后一分，交给现场。",
+      "intended_refs": [
+        "墙",
+        "蔷"
+      ],
+      "wrong_refs": [
+        "匠",
+        "酱"
+      ],
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "verdict": "uncertain",
+      "confidence": null,
+      "verdict_raw": "uncertain",
+      "score": 0.079,
+      "margin": 0.2,
+      "near_identical_to": null,
+      "far_from_both": true,
+      "dropped_refs": [
+        "墙"
+      ],
+      "override": null,
+      "selftest_sides": [
+        "B"
+      ],
+      "features": {
+        "spec": {
+          "d_intended": 2.548,
+          "d_wrong": 3.472,
+          "score": 0.154
+        },
+        "f0": {
+          "d_intended": 0.784,
+          "d_wrong": 0.676,
+          "score": -0.074
+        },
+        "comb": {
+          "d_intended": 2.058,
+          "d_wrong": 2.412,
+          "score": 0.079
+        }
+      },
+      "neighbour_shift": {
+        "intended": 1.745,
+        "wrong": 2.083
+      },
+      "separation": {
+        "spec": {
+          "within": 1.281,
+          "between": 3.521,
+          "separation": 2.748
+        },
+        "f0": {
+          "within": 0.422,
+          "between": 1.71,
+          "separation": 4.054
+        },
+        "comb": {
+          "within": 1.062,
+          "between": 3.47,
+          "separation": 3.266
+        }
+      },
+      "selftest_loo": {
+        "匠": {
+          "expect": "misread",
+          "got": "misread",
+          "score": -0.974
+        },
+        "酱": {
+          "expect": "misread",
+          "got": "misread",
+          "score": -0.974
+        },
+        "墙": {
+          "expect": "correct",
+          "got": "uncertain",
+          "score": 0.08,
+          "dropped": true
+        }
+      },
+      "selftest_pass": true,
+      "distances_from_orig": {
+        "A:墙": {
+          "spec": 0.0,
+          "f0": 0.007,
+          "vmis": 0.0,
+          "frames": 31,
+          "comb": 0.007
+        },
+        "A:蔷": {
+          "spec": 2.548,
+          "f0": 0.784,
+          "vmis": 0.061,
+          "frames": 33,
+          "comb": 2.058
+        },
+        "B:匠": {
+          "spec": 3.472,
+          "f0": 0.676,
+          "vmis": 0.452,
+          "frames": 31,
+          "comb": 2.412
+        },
+        "B:酱": {
+          "spec": 3.472,
+          "f0": 0.695,
+          "vmis": 0.452,
+          "frames": 31,
+          "comb": 2.431
+        }
+      },
+      "window_s": [
+        4.665,
+        4.969
+      ],
+      "boundary_token": "强",
+      "window_anchor": "ORIG",
+      "tokens": {
+        "ORIG": [
+          "温网",
+          "冠军",
+          "暂时",
+          "停步",
+          "亚历山",
+          "德罗娃",
+          "首次",
+          "打进",
+          "中网",
+          "八",
+          "强",
+          "下",
+          "一",
+          "轮",
+          "对",
+          "米拉",
+          "安德烈耶娃",
+          "诺斯科娃",
+          "下",
+          "一",
+          "站",
+          "能",
+          "再",
+          "起势",
+          "吗",
+          "最后",
+          "一",
+          "分",
+          "交给",
+          "现场"
+        ],
+        "A:墙": [
+          "温网",
+          "冠军",
+          "暂时",
+          "停步",
+          "亚历山",
+          "德罗娃",
+          "首次",
+          "打进",
+          "中网",
+          "八",
+          "墙",
+          "下",
+          "一",
+          "轮",
+          "对",
+          "米拉",
+          "安德烈耶娃",
+          "诺斯科娃",
+          "下",
+          "一",
+          "站",
+          "能",
+          "再",
+          "起势",
+          "吗",
+          "最后",
+          "一",
+          "分",
+          "交给",
+          "现场"
+        ],
+        "A:蔷": [
+          "温网",
+          "冠军",
+          "暂时",
+          "停步",
+          "亚历山",
+          "德罗娃",
+          "首次",
+          "打进",
+          "中网",
+          "八蔷",
+          "下",
+          "一",
+          "轮",
+          "对",
+          "米拉",
+          "安德烈耶娃",
+          "诺斯科娃",
+          "下",
+          "一",
+          "站",
+          "能",
+          "再",
+          "起势",
+          "吗",
+          "最后",
+          "一",
+          "分",
+          "交给",
+          "现场"
+        ],
+        "B:匠": [
+          "温网",
+          "冠军",
+          "暂时",
+          "停步",
+          "亚历山",
+          "德罗娃",
+          "首次",
+          "打进",
+          "中网",
+          "八",
+          "匠",
+          "下",
+          "一",
+          "轮",
+          "对",
+          "米拉",
+          "安德烈耶娃",
+          "诺斯科娃",
+          "下",
+          "一",
+          "站",
+          "能",
+          "再",
+          "起势",
+          "吗",
+          "最后",
+          "一",
+          "分",
+          "交给",
+          "现场"
+        ],
+        "B:酱": [
+          "温网",
+          "冠军",
+          "暂时",
+          "停步",
+          "亚历山",
+          "德罗娃",
+          "首次",
+          "打进",
+          "中网",
+          "八",
+          "酱",
+          "下",
+          "一",
+          "轮",
+          "对",
+          "米拉",
+          "安德烈耶娃",
+          "诺斯科娃",
+          "下",
+          "一",
+          "站",
+          "能",
+          "再",
+          "起势",
+          "吗",
+          "最后",
+          "一",
+          "分",
+          "交给",
+          "现场"
+        ]
+      },
+      "f0_semitones_window": {
+        "ORIG": [
+          5.7,
+          6.0,
+          6.0,
+          5.7,
+          4.3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -5.6,
+          -6.7,
+          -4.6,
+          -4.0,
+          null
+        ],
+        "A:墙": [
+          5.7,
+          6.0,
+          6.0,
+          5.7,
+          4.3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -5.6,
+          -6.7,
+          -4.6,
+          -4.0,
+          null
+        ],
+        "A:蔷": [
+          4.1,
+          4.7,
+          4.9,
+          4.9,
+          3.3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -4.4,
+          -6.0,
+          -5.8,
+          -3.8,
+          -3.9
+        ],
+        "B:匠": [
+          4.9,
+          5.8,
+          6.4,
+          6.5,
+          6.2,
+          null,
+          null,
+          8.5,
+          6.5,
+          3.8,
+          null,
+          null
+        ],
+        "B:酱": [
+          5.0,
+          5.9,
+          6.4,
+          6.5,
+          6.3,
+          null,
+          null,
+          8.6,
+          6.5,
+          3.9,
+          null,
+          null
+        ]
+      },
+      "audio": {
+        "ORIG": "/workspace/scratch/noskova-audio-targeted/cache/d0843af17d6c33cbc0c10c78.mp3",
+        "A:墙": "/workspace/scratch/noskova-audio-targeted/cache/c7fccb206bbb116aaa435671.mp3",
+        "A:蔷": "/workspace/scratch/noskova-audio-targeted/cache/4dbacaa9bd6ff757ac3d080b.mp3",
+        "B:匠": "/workspace/scratch/noskova-audio-targeted/cache/46256dc4ac31c411c4949408.mp3",
+        "B:酱": "/workspace/scratch/noskova-audio-targeted/cache/f4ed20bf70f4b9ebaf3f10d3.mp3"
+      }
+    }
+  },
+  {
+    "label": "片尾",
+    "char": "差",
+    "at": 5,
+    "intended": "cha1",
+    "wrong": "cha4",
+    "method": "Actual same full utterance same voice/rate; selective stronger controls, no human listening",
+    "result": {
+      "word": "差",
+      "char": "差",
+      "sentence": "关注网球时差，时差归我，好球归你。",
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "intended_refs": [
+        "插",
+        "锸"
+      ],
+      "wrong_refs": [
+        "岔",
+        "诧"
+      ],
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "verdict": "unreliable",
+      "confidence": null,
+      "verdict_raw": "uncertain",
+      "score": 0.159,
+      "margin": 0.2,
+      "near_identical_to": null,
+      "far_from_both": true,
+      "dropped_refs": [],
+      "override": null,
+      "selftest_sides": [
+        "A",
+        "B"
+      ],
+      "features": {
+        "spec": {
+          "d_intended": 2.333,
+          "d_wrong": 2.392,
+          "score": 0.013
+        },
+        "f0": {
+          "d_intended": 0.677,
+          "d_wrong": 1.4,
+          "score": 0.348
+        },
+        "comb": {
+          "d_intended": 1.883,
+          "d_wrong": 2.596,
+          "score": 0.159
+        }
+      },
+      "neighbour_shift": {
+        "intended": 1.372,
+        "wrong": 1.43
+      },
+      "separation": {
+        "spec": {
+          "within": 2.111,
+          "between": 2.623,
+          "separation": 1.243
+        },
+        "f0": {
+          "within": 1.16,
+          "between": 1.474,
+          "separation": 1.271
+        },
+        "comb": {
+          "within": 2.215,
+          "between": 2.786,
+          "separation": 1.257
+        }
+      },
+      "selftest_loo": {
+        "插": {
+          "expect": "correct",
+          "got": "correct",
+          "score": 0.247
+        },
+        "锸": {
+          "expect": "correct",
+          "got": "correct",
+          "score": 0.286
+        },
+        "岔": {
+          "expect": "misread",
+          "got": "uncertain",
+          "score": 0.125
+        },
+        "诧": {
+          "expect": "misread",
+          "got": "uncertain",
+          "score": -0.003
+        }
+      },
+      "selftest_pass": false,
+      "distances_from_orig": {
+        "A:插": {
+          "spec": 2.333,
+          "f0": 0.949,
+          "vmis": 0.061,
+          "frames": 33,
+          "comb": 2.116
+        },
+        "A:锸": {
+          "spec": 2.412,
+          "f0": 0.677,
+          "vmis": 0.03,
+          "frames": 33,
+          "comb": 1.883
+        },
+        "B:岔": {
+          "spec": 2.392,
+          "f0": 1.4,
+          "vmis": 0.059,
+          "frames": 34,
+          "comb": 2.596
+        },
+        "B:诧": {
+          "spec": 2.461,
+          "f0": 1.559,
+          "vmis": 0.121,
+          "frames": 33,
+          "comb": 2.79
+        }
+      },
+      "window_s": [
+        0.93,
+        1.24
+      ],
+      "boundary_token": "时差",
+      "window_anchor": "A:插",
+      "tokens": {
+        "ORIG": [
+          "关注",
+          "网球",
+          "时差",
+          "时差",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "A:插": [
+          "关注",
+          "网球",
+          "时",
+          "插",
+          "时差",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "A:锸": [
+          "关注",
+          "网球",
+          "时锸",
+          "时差",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "B:岔": [
+          "关注",
+          "网球",
+          "时岔",
+          "时差",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "B:诧": [
+          "关注",
+          "网球",
+          "时",
+          "诧",
+          "时差",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ]
+      },
+      "f0_semitones_window": {
+        "ORIG": [
+          null,
+          -3.7,
+          -3.0,
+          -3.0,
+          -3.8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -0.5,
+          -0.6,
+          -1.4,
+          -4.1,
+          2.9
+        ],
+        "A:插": [
+          null,
+          -3.1,
+          -3.3,
+          -2.8,
+          -2.8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0.4,
+          -0.5,
+          -2.0,
+          -2.6,
+          -5.0
+        ],
+        "A:锸": [
+          null,
+          null,
+          -3.3,
+          -3.1,
+          -3.0,
+          -4.1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -0.0,
+          -0.4,
+          -0.7,
+          -2.2,
+          -4.1,
+          -2.2
+        ],
+        "B:岔": [
+          null,
+          -3.0,
+          -2.4,
+          -1.3,
+          -1.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          2.2,
+          -0.2,
+          -3.6,
+          -4.8,
+          -4.7,
+          null
+        ],
+        "B:诧": [
+          null,
+          -3.2,
+          -2.9,
+          -2.6,
+          -2.9,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -0.5,
+          -3.4,
+          -7.5,
+          null,
+          -1.4,
+          -1.3,
+          0.2
+        ]
+      },
+      "audio": {
+        "ORIG": "/workspace/scratch/noskova-audio-targeted/cache/45fe07c9742efcada9c0d7a4.mp3",
+        "A:插": "/workspace/scratch/noskova-audio-targeted/cache/ed327df267c1c3ca40b0309c.mp3",
+        "A:锸": "/workspace/scratch/noskova-audio-targeted/cache/a1fb44e64b8288ad2ad687ee.mp3",
+        "B:岔": "/workspace/scratch/noskova-audio-targeted/cache/9919c93625cee7d8ce31261c.mp3",
+        "B:诧": "/workspace/scratch/noskova-audio-targeted/cache/5c0e78734dc871107665b1ca.mp3"
+      }
+    }
+  },
+  {
+    "label": "片尾",
+    "char": "差",
+    "at": 8,
+    "intended": "cha1",
+    "wrong": "cha4",
+    "method": "Actual same full utterance same voice/rate; selective stronger controls, no human listening",
+    "result": {
+      "word": "差",
+      "char": "差",
+      "sentence": "关注网球时差，时差归我，好球归你。",
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "intended_refs": [
+        "插",
+        "锸"
+      ],
+      "wrong_refs": [
+        "岔",
+        "诧"
+      ],
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "verdict": "unreliable",
+      "confidence": null,
+      "verdict_raw": "correct",
+      "score": 0.464,
+      "margin": 0.2,
+      "near_identical_to": null,
+      "far_from_both": false,
+      "dropped_refs": [],
+      "override": null,
+      "selftest_sides": [
+        "A",
+        "B"
+      ],
+      "features": {
+        "spec": {
+          "d_intended": 1.099,
+          "d_wrong": 2.593,
+          "score": 0.405
+        },
+        "f0": {
+          "d_intended": 0.307,
+          "d_wrong": 1.042,
+          "score": 0.545
+        },
+        "comb": {
+          "d_intended": 0.856,
+          "d_wrong": 2.339,
+          "score": 0.464
+        }
+      },
+      "neighbour_shift": {
+        "intended": 0.729,
+        "wrong": 1.769
+      },
+      "separation": {
+        "spec": {
+          "within": 2.687,
+          "between": 2.665,
+          "separation": 0.992
+        },
+        "f0": {
+          "within": 0.572,
+          "between": 1.381,
+          "separation": 2.416
+        },
+        "comb": {
+          "within": 1.915,
+          "between": 2.714,
+          "separation": 1.417
+        }
+      },
+      "selftest_loo": {
+        "插": {
+          "expect": "correct",
+          "got": "correct",
+          "score": 0.244
+        },
+        "锸": {
+          "expect": "correct",
+          "got": "uncertain",
+          "score": 0.156
+        },
+        "岔": {
+          "expect": "misread",
+          "got": "uncertain",
+          "score": -0.075
+        },
+        "诧": {
+          "expect": "misread",
+          "got": "uncertain",
+          "score": -0.144
+        }
+      },
+      "selftest_pass": false,
+      "distances_from_orig": {
+        "A:插": {
+          "spec": 2.635,
+          "f0": 0.424,
+          "vmis": 0.226,
+          "frames": 31,
+          "comb": 1.741
+        },
+        "A:锸": {
+          "spec": 1.099,
+          "f0": 0.307,
+          "vmis": 0.0,
+          "frames": 28,
+          "comb": 0.856
+        },
+        "B:岔": {
+          "spec": 2.593,
+          "f0": 1.042,
+          "vmis": 0.069,
+          "frames": 29,
+          "comb": 2.339
+        },
+        "B:诧": {
+          "spec": 2.666,
+          "f0": 1.491,
+          "vmis": 0.394,
+          "frames": 33,
+          "comb": 2.824
+        }
+      },
+      "window_s": [
+        1.67,
+        1.95
+      ],
+      "boundary_token": "时差",
+      "window_anchor": "A:插",
+      "tokens": {
+        "ORIG": [
+          "关注",
+          "网球",
+          "时差",
+          "时差",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "A:插": [
+          "关注",
+          "网球",
+          "时差",
+          "时",
+          "插",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "A:锸": [
+          "关注",
+          "网球",
+          "时差",
+          "时锸",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "B:岔": [
+          "关注",
+          "网球",
+          "时差",
+          "时岔",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "B:诧": [
+          "关注",
+          "网球",
+          "时差",
+          "时",
+          "诧归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ]
+      },
+      "f0_semitones_window": {
+        "ORIG": [
+          null,
+          1.2,
+          1.2,
+          1.6,
+          1.6,
+          null,
+          null,
+          null,
+          0.7,
+          2.3,
+          1.8,
+          1.6,
+          1.6,
+          1.6
+        ],
+        "A:插": [
+          null,
+          null,
+          1.6,
+          1.7,
+          1.3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          3.2,
+          2.5,
+          1.9,
+          1.8,
+          1.4,
+          -0.4
+        ],
+        "A:锸": [
+          null,
+          1.5,
+          1.5,
+          1.9,
+          1.9,
+          null,
+          null,
+          null,
+          1.0,
+          2.6,
+          2.1,
+          1.9,
+          1.9,
+          1.9
+        ],
+        "B:岔": [
+          null,
+          null,
+          1.9,
+          2.5,
+          2.2,
+          null,
+          null,
+          null,
+          null,
+          2.5,
+          1.6,
+          0.2,
+          -0.4,
+          -0.5,
+          -2.8
+        ],
+        "B:诧": [
+          null,
+          null,
+          1.9,
+          2.1,
+          1.9,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -1.5,
+          -2.4,
+          -4.8
+        ]
+      },
+      "audio": {
+        "ORIG": "/workspace/scratch/noskova-audio-targeted/cache/45fe07c9742efcada9c0d7a4.mp3",
+        "A:插": "/workspace/scratch/noskova-audio-targeted/cache/92ef9c7928ca15c4a0a79a51.mp3",
+        "A:锸": "/workspace/scratch/noskova-audio-targeted/cache/3c34f0cfa6b1fc63f5590403.mp3",
+        "B:岔": "/workspace/scratch/noskova-audio-targeted/cache/ca40915e3df126ddb120cabd.mp3",
+        "B:诧": "/workspace/scratch/noskova-audio-targeted/cache/73868045eaafb8c80a489ce4.mp3"
+      }
+    }
+  },
+  {
+    "label": "片尾",
+    "char": "差",
+    "at": 8,
+    "intended": "cha1",
+    "wrong": "chai1",
+    "method": "Actual same full utterance same voice/rate; selective stronger controls, no human listening",
+    "result": {
+      "word": "差",
+      "char": "差",
+      "sentence": "关注网球时差，时差归我，好球归你。",
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "intended_refs": [
+        "插",
+        "锸"
+      ],
+      "wrong_refs": [
+        "钗",
+        "拆"
+      ],
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "verdict": "unreliable",
+      "confidence": null,
+      "verdict_raw": "correct",
+      "score": 0.417,
+      "margin": 0.2,
+      "near_identical_to": null,
+      "far_from_both": false,
+      "dropped_refs": [],
+      "override": null,
+      "selftest_sides": [
+        "A",
+        "B"
+      ],
+      "features": {
+        "spec": {
+          "d_intended": 1.098,
+          "d_wrong": 3.432,
+          "score": 0.515
+        },
+        "f0": {
+          "d_intended": 0.307,
+          "d_wrong": 0.362,
+          "score": 0.083
+        },
+        "comb": {
+          "d_intended": 0.856,
+          "d_wrong": 2.079,
+          "score": 0.417
+        }
+      },
+      "neighbour_shift": {
+        "intended": 0.728,
+        "wrong": 2.362
+      },
+      "separation": {
+        "spec": {
+          "within": 2.607,
+          "between": 3.509,
+          "separation": 1.346
+        },
+        "f0": {
+          "within": 0.327,
+          "between": 0.349,
+          "separation": 1.069
+        },
+        "comb": {
+          "within": 1.63,
+          "between": 2.104,
+          "separation": 1.29
+        }
+      },
+      "selftest_loo": {
+        "插": {
+          "expect": "correct",
+          "got": "uncertain",
+          "score": 0.06
+        },
+        "锸": {
+          "expect": "correct",
+          "got": "uncertain",
+          "score": 0.073
+        },
+        "钗": {
+          "expect": "misread",
+          "got": "uncertain",
+          "score": -0.139
+        },
+        "拆": {
+          "expect": "misread",
+          "got": "uncertain",
+          "score": -0.163
+        }
+      },
+      "selftest_pass": false,
+      "distances_from_orig": {
+        "A:插": {
+          "spec": 2.634,
+          "f0": 0.424,
+          "vmis": 0.226,
+          "frames": 31,
+          "comb": 1.741
+        },
+        "A:锸": {
+          "spec": 1.098,
+          "f0": 0.307,
+          "vmis": 0.0,
+          "frames": 28,
+          "comb": 0.856
+        },
+        "B:钗": {
+          "spec": 3.432,
+          "f0": 0.362,
+          "vmis": 0.097,
+          "frames": 31,
+          "comb": 2.079
+        },
+        "B:拆": {
+          "spec": 3.663,
+          "f0": 0.479,
+          "vmis": 0.1,
+          "frames": 30,
+          "comb": 2.31
+        }
+      },
+      "window_s": [
+        1.67,
+        1.95
+      ],
+      "boundary_token": "时差",
+      "window_anchor": "A:插",
+      "tokens": {
+        "ORIG": [
+          "关注",
+          "网球",
+          "时差",
+          "时差",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "A:插": [
+          "关注",
+          "网球",
+          "时差",
+          "时",
+          "插",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "A:锸": [
+          "关注",
+          "网球",
+          "时差",
+          "时锸",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "B:钗": [
+          "关注",
+          "网球",
+          "时差",
+          "时",
+          "钗",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ],
+        "B:拆": [
+          "关注",
+          "网球",
+          "时差",
+          "时",
+          "拆",
+          "归",
+          "我",
+          "好",
+          "球",
+          "归",
+          "你"
+        ]
+      },
+      "f0_semitones_window": {
+        "ORIG": [
+          null,
+          1.2,
+          1.2,
+          1.6,
+          1.6,
+          null,
+          null,
+          null,
+          0.7,
+          2.3,
+          1.8,
+          1.6,
+          1.6,
+          1.6
+        ],
+        "A:插": [
+          null,
+          null,
+          1.6,
+          1.7,
+          1.3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          3.2,
+          2.5,
+          1.9,
+          1.8,
+          1.4,
+          -0.4
+        ],
+        "A:锸": [
+          null,
+          1.5,
+          1.5,
+          1.9,
+          1.9,
+          null,
+          null,
+          null,
+          1.0,
+          2.6,
+          2.1,
+          1.9,
+          1.9,
+          1.9
+        ],
+        "B:钗": [
+          null,
+          null,
+          1.6,
+          2.1,
+          1.2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          2.6,
+          2.1,
+          1.8,
+          1.7,
+          1.7,
+          0.9
+        ],
+        "B:拆": [
+          null,
+          1.7,
+          1.6,
+          1.7,
+          0.2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          3.7,
+          1.7,
+          1.5,
+          1.5,
+          1.2,
+          -0.8
+        ]
+      },
+      "audio": {
+        "ORIG": "/workspace/scratch/noskova-audio-targeted/cache/45fe07c9742efcada9c0d7a4.mp3",
+        "A:插": "/workspace/scratch/noskova-audio-targeted/cache/92ef9c7928ca15c4a0a79a51.mp3",
+        "A:锸": "/workspace/scratch/noskova-audio-targeted/cache/3c34f0cfa6b1fc63f5590403.mp3",
+        "B:钗": "/workspace/scratch/noskova-audio-targeted/cache/a3dea23b68bf2d059bb269cd.mp3",
+        "B:拆": "/workspace/scratch/noskova-audio-targeted/cache/a17ca8ac6eb759f2fc0a8da5.mp3"
+      }
+    }
+  }
+]

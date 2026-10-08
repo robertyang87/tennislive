@@ -1,0 +1,199 @@
+{
+  "model": "base.en",
+  "source_from": 29,
+  "source_to": 34,
+  "input_sha256": "98dc44b69538719ea94ce3e375262dfb8f624070d4c40367c1c598fd6ba08d73",
+  "parameters": {
+    "language": "en",
+    "beam_size": 5,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null
+  },
+  "segments": [
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 0.0,
+      "end": 4.78,
+      "text": " Oh, it's just beautiful, isn't it? I can just, I watch you and you just marvel at her power, don't you?",
+      "tokens": [
+        50363,
+        3966,
+        11,
+        340,
+        338,
+        655,
+        4950,
+        11,
+        2125,
+        470,
+        340,
+        30,
+        314,
+        460,
+        655,
+        11,
+        314,
+        2342,
+        345,
+        290,
+        345,
+        655,
+        22672,
+        379,
+        607,
+        1176,
+        11,
+        836,
+        470,
+        345,
+        30,
+        50607
+      ],
+      "avg_logprob": -0.4366492647113222,
+      "compression_ratio": 1.1318681318681318,
+      "no_speech_prob": 0.038083575665950775,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.22,
+          "word": " Oh,",
+          "probability": 0.2229466587305069
+        },
+        {
+          "start": 0.78,
+          "end": 1.0,
+          "word": " it's",
+          "probability": 0.886609822511673
+        },
+        {
+          "start": 1.0,
+          "end": 1.08,
+          "word": " just",
+          "probability": 0.9759588241577148
+        },
+        {
+          "start": 1.08,
+          "end": 1.44,
+          "word": " beautiful,",
+          "probability": 0.9932255148887634
+        },
+        {
+          "start": 1.62,
+          "end": 1.72,
+          "word": " isn't",
+          "probability": 0.7247458398342133
+        },
+        {
+          "start": 1.72,
+          "end": 1.82,
+          "word": " it?",
+          "probability": 0.9924392700195312
+        },
+        {
+          "start": 2.0,
+          "end": 2.08,
+          "word": " I",
+          "probability": 0.8003100156784058
+        },
+        {
+          "start": 2.08,
+          "end": 2.2,
+          "word": " can",
+          "probability": 0.3824855089187622
+        },
+        {
+          "start": 2.2,
+          "end": 2.58,
+          "word": " just,",
+          "probability": 0.48448729515075684
+        },
+        {
+          "start": 2.78,
+          "end": 2.82,
+          "word": " I",
+          "probability": 0.9645216464996338
+        },
+        {
+          "start": 2.82,
+          "end": 3.04,
+          "word": " watch",
+          "probability": 0.7854139804840088
+        },
+        {
+          "start": 3.04,
+          "end": 3.2,
+          "word": " you",
+          "probability": 0.7420083284378052
+        },
+        {
+          "start": 3.2,
+          "end": 3.34,
+          "word": " and",
+          "probability": 0.6003552079200745
+        },
+        {
+          "start": 3.34,
+          "end": 3.42,
+          "word": " you",
+          "probability": 0.9866328239440918
+        },
+        {
+          "start": 3.42,
+          "end": 3.56,
+          "word": " just",
+          "probability": 0.9274757504463196
+        },
+        {
+          "start": 3.56,
+          "end": 3.78,
+          "word": " marvel",
+          "probability": 0.9326488971710205
+        },
+        {
+          "start": 3.78,
+          "end": 4.04,
+          "word": " at",
+          "probability": 0.8164129257202148
+        },
+        {
+          "start": 4.04,
+          "end": 4.12,
+          "word": " her",
+          "probability": 0.3286765515804291
+        },
+        {
+          "start": 4.12,
+          "end": 4.38,
+          "word": " power,",
+          "probability": 0.9910610318183899
+        },
+        {
+          "start": 4.5,
+          "end": 4.7,
+          "word": " don't",
+          "probability": 0.9919083416461945
+        },
+        {
+          "start": 4.7,
+          "end": 4.78,
+          "word": " you?",
+          "probability": 0.7466167211532593
+        }
+      ],
+      "temperature": 0.0
+    }
+  ],
+  "source_url": "https://www.youtube.com/watch?v=LGHCCL4VHCw",
+  "source_sha256": "7b86dd1196ea96dc71a8b5880d25ce2c6d3a2bf6f4d7268d2132d55bf98df4d2",
+  "input": "/workspace/scratch/zheng-charaeva/source-350.wav",
+  "audio_extraction": {
+    "from": 0,
+    "to": 350,
+    "sample_rate": 16000,
+    "channels": 1,
+    "command": "ffmpeg -i LGHCCL4VHCw.mp4 -t 350 -vn -ac 1 -ar 16000 source-350.wav"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/djokovic-34-sources/i1LtteR8jd0.mp4",
+  "source_sha256": "551d24ac4ffc3ad4a2a202cf178a2ca5f4488e1675f5e63f9a409b10e7a4cc1b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: genuine faster-whisper model cross-check, no claim of human listening",
+  "reviewed_at": "2026-10-06T20:11:58.247220+00:00",
+  "reviewed_from": 294.5,
+  "reviewed_to": 304.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2013.targeted.small.en.json",
+      "sha256": "54dbad1476d4d967e786b1584494f20a6a9ff239b4c9cb5a788fe37708da30c4"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/cups-2013.targeted.base.en.json",
+      "sha256": "6f17959d1d8dcf6b7c8f062784a897dd41b70d1e61dd1a36141d42ea327b38b0"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.small.en.json",
+      "sha256": "5a238cc9dd893765a91d9e4b52a4736d44ef8c63a557e9b963f217556bffb421"
+    },
+    {
+      "path": "/workspace/video-review/djokovic-34-audio/i1LtteR8jd0.base.en.json",
+      "sha256": "2a244e17345546b503bb82ced850538fa1225f98942c28ccfbd9108cfd803513"
+    }
+  ],
+  "normalization_note": "Proper-name spellings and score notation standardized from official source identity; selected words checked against genuine independent model outputs. No invented unheard commentary. See retained raw outputs for ASR differences.",
+  "review_notes": [],
+  "no_foreground_english_reason": "Independent small.en/base.en full-source VAD and no-VAD 2013-window runs contain no foreground English in 294.5–304.1. Previous utterance ends by 289.14; next recognized foreground utterance starts no earlier than 304.3. Window retains applause/venue bed while covering visually verified 296–304 trophy raise. This is ASR cross-check evidence, not a claim of human listening."
+}

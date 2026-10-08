@@ -2789,7 +2789,7 @@ def test_封面这道闸真的查到了东西():
     assert checked >= 2, f"封面注里一共只抠出 {checked} 句英文引语，这道闸等于没装"
 
 
-def test_字幕带背景色和封面解读卡是同一支品牌绿():
+def test_字幕带背景色和封面解读卡是同一套共享深蓝():
     """垫底那层现在是纯色，要和 `build_cover` / `build_takeaway_card`
     用**同一支**品牌深绿（`#06140f`），不是另起一支。
 
@@ -2801,9 +2801,10 @@ def test_字幕带背景色和封面解读卡是同一支品牌绿():
     看着像三个不同的产品。
     """
     from tools.build_interview_clip import _BG_COLOUR
+    from tennislive.design_tokens import DARK
 
     hexval = _BG_COLOUR.removeprefix("0x").lower()
-    assert hexval == "06140f", (
+    assert hexval == DARK["background"].removeprefix("#"), (
         f"`_BG_COLOUR` 现在是 {_BG_COLOUR!r}，和封面/解读卡用的品牌深绿 "
         "#06140f 不一样了——三处理应是同一支颜色，改了一处要么是笔误，"
         "要么另外两处（`build_cover` / `build_takeaway_card`）也要跟着改。")
@@ -2838,7 +2839,7 @@ def test_字幕带的背景不再从模糊视频派生():
     # 所以判据改成**推导**，不再写死一个会过期的数字：十六进制字面量本身
     # 只许出现一次（定义那一行），凡是 `color=c=` 垫底源都要走 `_BG_COLOUR`
     # 这个名字——多少处引用都行，只要没人抄一遍字面量。
-    assert body.count('"#06140f"') == 1, (
+    assert body.count('_INK_BG = DARK["background"]') == 1, (
         "背景色的十六进制字面量出现了不止一次——该走 `_BG_COLOUR` 这个名字，"
         "不是各处各写一遍")
     colour_lines = [ln for ln in body.splitlines() if "color=c=" in ln]
@@ -5080,7 +5081,8 @@ def _run_commit_step(tmp_path: Path, work: Path, slug: str, *,
                           capture_output=True, text=True)
 
 
-def test_推送重试耗尽必须报错不许绿着过去(tmp_path):
+@pytest.mark.parametrize("runner_temp", [None, "", "custom"])
+def test_推送重试耗尽必须报错不许绿着过去(tmp_path, monkeypatch, runner_temp):
     """⭐ 这条比并发本身更急：循环耗尽时**退出码是 0**，整步绿着过去。
 
     `bash -e` 下 AND-OR 列表里非末尾命令失败不触发退出，而原来那个循环体
@@ -5091,6 +5093,11 @@ def test_推送重试耗尽必须报错不许绿着过去(tmp_path):
 
     所以真跑一遍：让 `git push` 一律失败，这一步必须非零退出。
     """
+    monkeypatch.setenv("TMPDIR", str(tmp_path))
+    if runner_temp is None:
+        monkeypatch.delenv("RUNNER_TEMP", raising=False)
+    else:
+        monkeypatch.setenv("RUNNER_TEMP", str(tmp_path) if runner_temp else "")
     slug = "zz-exhaust"
     _, work = _seed_repo(tmp_path, slug)
     _this_run_writes(work, slug)
@@ -5103,9 +5110,10 @@ def test_推送重试耗尽必须报错不许绿着过去(tmp_path):
         "非零退出是对的，但没有走到循环末尾那句 ::error::——"
         "多半是死在了前面某一句，这条判据其实什么都没验到\n"
         f"--- stdout ---\n{done.stdout[-2000:]}\n--- stderr ---\n{done.stderr[-2000:]}")
+    assert not list(tmp_path.glob("interview-workbench.*"))
 
 
-def test_推送撞车要把本条重放上去而不是rebase(tmp_path):
+def test_推送撞车要把本条重放上去而不是rebase(tmp_path, monkeypatch):
     """同 slug 撞车时，`git pull --rebase` 过不去——两类文件都会冲突。
 
     合成仓库上跑过原来那一版，git 的原话：
@@ -5121,6 +5129,9 @@ def test_推送撞车要把本条重放上去而不是rebase(tmp_path):
     """
     import subprocess  # noqa: PLC0415
 
+    monkeypatch.delenv("RUNNER_TEMP", raising=False)
+    monkeypatch.setenv("TMPDIR", str(tmp_path))
+    monkeypatch.setenv("MODE", "subs")
     slug = "zz-collision"
     origin, work = _seed_repo(tmp_path, slug)
 
@@ -5136,10 +5147,20 @@ def test_推送撞车要把本条重放上去而不是rebase(tmp_path):
     subprocess.run(["git", "push", "-q", "origin", "main"], cwd=rival, check=True)
 
     _this_run_writes(work, slug)
+    # 忽略的工作台要随重试存活，但不能误拿共享临时目录里旧 run 的图。
+    sheet = work / "output" / "interviews" / slug / "storyboard.jpg"
+    (work / ".git" / "info" / "exclude").write_text("storyboard.jpg\n")
+    sheet.write_bytes(b"this-run-sheet")
+    old_workbench = tmp_path / "workbench"
+    old_workbench.mkdir()
+    (old_workbench / "cover_scan_sheet.jpg").write_bytes(b"stale-sheet")
     done = _run_commit_step(tmp_path, work, slug, block_push=False)
     assert done.returncode == 0, (
         "撞车之后本趟一次都没落库\n"
         f"--- stdout ---\n{done.stdout[-3000:]}\n--- stderr ---\n{done.stderr[-3000:]}")
+    assert sheet.read_bytes() == b"this-run-sheet"
+    assert not sheet.with_name("cover_scan_sheet.jpg").exists()
+    assert not list(tmp_path.glob("interview-workbench.*"))
 
     def landed(path: str) -> str:
         return subprocess.run(["git", "show", f"main:{path}"], cwd=origin,

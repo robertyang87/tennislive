@@ -106,10 +106,10 @@ from tennislive.design_tokens import (  # noqa: E402
 # #0d2b21 → muted #102d23），可合并是**改值不是换出处**，要账号所有者点头
 # （WP0 评审 nit 2：「均差 ≤2/255」放得过一次看得见的改色）。所以值原样留在这儿，
 # 一处定义、各处引用；真要合并，改这几行、重渲比对，再单独走一次选择题。
-_INK_BG = "#06140f"      # token-exempt: 采访线深底（字幕带、封面、收尾卡），并入 background 属改值
+_INK_BG = DARK["background"]  # 2026-10-04 全栏目统一深蓝，含字幕带和解释卡。
 _TOPIC_FG = "#dcefe4"    # token-exempt: 封面台头第二行，和 versus_poster 的 .topic 同值
 _SOFT_FG = "#cfe3d9"     # token-exempt: 封面 .sub、收尾卡 .facts 的次级字
-_CARD_GLOW = "#0d2b21"   # token-exempt: 收尾卡顶上那团径向光
+_CARD_GLOW = DARK["hero-glow"]
 _TOPBAR_BODY = "#d5e2db"  # token-exempt: 顶栏次行，= build_match_reel.TOPBAR_BODY_COLOUR
 _ASS_BLACK = "&H00000000"  # token-exempt: ASS 描边/底色占位（描边 0、BorderStyle 1 不画底）
 
@@ -928,8 +928,8 @@ def conservative_gap_annotations(spec: dict, outdir: Path | None = None) -> list
         if (isinstance(a, bool) or isinstance(b, bool)
                 or not isinstance(a, (int, float)) or not isinstance(b, (int, float))
                 or not math.isfinite(a) or not math.isfinite(b)
-                or not spec["start"] <= a < b <= spec["end"] or b - a > 5):
-            raise SystemExit("保守声音事件须在源区间内，且不超过5秒。")
+                or not spec["start"] <= a < b <= spec["end"] or b - a > 6):
+            raise SystemExit("保守声音事件须在源区间内，且不超过6秒。")
         if row["kind"] != "applause_with_indistinct_voices" or len(str(row["why"]).strip()) < 30:
             raise SystemExit("仅支持有交叉证据的掌声夹杂未辨识人声，不认证台词或静音。")
         if row["source_sha256"] not in source_hashes:
@@ -1277,10 +1277,87 @@ def _text(clause: list[tuple[float, str]]) -> str:
     return " ".join(w for _, w in clause).replace("‖", "")
 
 
+def native_zh_text(words: list[tuple[float, str]]) -> str:
+    """Keep the source words; remove only speaker markers and ASR Han spacing."""
+    text = " ".join(w.replace(">>", "").replace("‖", "").strip() for _, w in words)
+    return re.sub(r"(?<=[\u3400-\u9fff，。？！；：])\s+(?=[\u3400-\u9fff，。？！；：])", "", text).strip()
+
+
+def segment_native_zh(words: list[tuple[float, str]], start: float, end: float,
+                      *, budget: float | None = None, width=None,
+                      word_fix: dict[str, str] | None = None) -> list[dict]:
+    """Explicit Chinese windows use the Chinese font and ASR word boundaries.
+
+    Punctuation ends a clause. A dangling function word or a one-character
+    remainder moves with its preceding word, rather than becoming a lone cue.
+    An indivisible ASR token wider than the canvas requires better word timing.
+    """
+    sys.path.insert(0, str(ROOT / "tools"))
+    from interview_zh_tail import has_dangling_tail  # noqa: PLC0415
+
+    budget = _LINE_PX if budget is None else budget
+    width = _zh_width if width is None else width
+    clauses, clause = [], []
+    for t, raw in words:
+        if not start <= t < end or _NOISE.match(raw):
+            continue
+        raw = (word_fix or {}).get(raw, raw)
+        if raw.startswith((">>", "‖")) and clause:
+            clauses.append(clause)
+            clause = []
+        clause.append((t, raw))
+        if raw.rstrip().endswith(("，", "。", "？", "！", "；", ",", ".", "?", "!", ";")):
+            clauses.append(clause)
+            clause = []
+    if clause:
+        clauses.append(clause)
+    packed = []
+    for clause in clauses:
+        remaining = list(clause)
+        while remaining:
+            cut = 0
+            while cut < len(remaining) and width(native_zh_text(remaining[:cut + 1])) <= budget:
+                cut += 1
+            if cut == 0:
+                raise SystemExit(f"中文原文单词超宽，需补逐词时间码：{remaining[0][1]}")
+            if cut < len(remaining):
+                # Whisper can emit 技 / 术 or 尤 / 其 as separate tokens.
+                # A one-Han token is not proof of a lexical boundary: prefer
+                # the preceding multi-character source word when one exists.
+                previous_word = cut
+                while previous_word > 1 and re.fullmatch(r"[\u3400-\u9fff]", remaining[previous_word - 1][1].strip()):
+                    previous_word -= 1
+                if previous_word > 1:
+                    cut = previous_word
+                while cut > 1 and has_dangling_tail(native_zh_text(remaining[:cut])):
+                    cut -= 1
+                tail = re.sub(r"\W", "", native_zh_text(remaining[cut:]))
+                if len(tail) == 1 and cut > 1:
+                    cut -= 1
+            packed.append(remaining[:cut])
+            remaining = remaining[cut:]
+    lines = []
+    for i, part in enumerate(packed):
+        nxt = packed[i + 1][0][0] if i + 1 < len(packed) else part[-1][0] + 1.5
+        lines.append({"a": round(part[0][0], 2),
+                      "b": round(min(end, nxt, part[-1][0] + 3.0), 2),
+                      "en": native_zh_text(part), "source_language": "zh"})
+    return lines
+
+
+def source_line_language(spec: dict, line: dict) -> str:
+    """The verified source language windows take precedence over row hints."""
+    for window in transcript_language_windows(spec):
+        if window["start"] <= line["a"] < window["end"]:
+            return window["language"]
+    return str(line.get("source_language") or "en")
+
+
 def segment(words: list[tuple[float, str]], start: float, end: float,
             budget: float | None = None, width=None,
             word_fix: dict[str, str] | None = None,
-            ruler: str | None = None) -> list[dict]:
+            ruler: str | None = None,
+            language_windows: list[dict] | None = None) -> list[dict]:
     """逐词 → 字幕行。**一行一句，不劈词组，不超宽。**
 
     `ruler` 是切行的尺子（`SEGMENT_RULERS`），**出片那条路一律传
@@ -1307,6 +1384,23 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
       而 libass 会**默默折行**压到中文那一行上
     - **整行读起来不对** → 走 `en_fixed`。它替换的是成品行，不动分词
     """
+    if language_windows and any(w["language"] == "zh" for w in language_windows):
+        lines = []
+        for window in language_windows:
+            a, b = max(start, window["start"]), min(end, window["end"])
+            if b <= a:
+                continue
+            selected = [(t, w) for t, w in words if a <= t < b]
+            if window["language"] == "zh":
+                part = segment_native_zh(selected, a, b, budget=budget, word_fix=word_fix)
+            else:
+                part = segment(selected, a, b, budget=budget, width=width,
+                               word_fix=word_fix, ruler=ruler)
+            for line in part:
+                line["b"] = min(line["b"], b)
+                line["source_language"] = window["language"]
+            lines.extend(part)
+        return lines
     budget = _LINE_PX if budget is None else budget
     ruler = SEGMENT_RULER if ruler is None else ruler
     if ruler not in SEGMENT_RULERS:
@@ -2121,7 +2215,8 @@ def en_problems(lines: list[dict], ruler: str | None = None) -> list[str]:
     width = ruler_width(SEGMENT_RULER if ruler is None else ruler)
     note = "" if ruler in (None, SEGMENT_RULER) else f"，按尺子 {ruler} 量"
     return [f"#{i} 英文超宽 {width(seg['en']):.0f}px（可用 {_LINE_PX}{note}）：{seg['en']}"
-            for i, seg in enumerate(lines, 1) if width(seg["en"]) > _LINE_PX]
+            for i, seg in enumerate(lines, 1)
+            if seg.get("source_language") != "zh" and width(seg["en"]) > _LINE_PX]
 
 
 def zh_problems(lines: list[dict], zh: list[str]) -> list[str]:
@@ -2155,7 +2250,9 @@ def zh_problems(lines: list[dict], zh: list[str]) -> list[str]:
         if (w := _zh_width(cn)) > _LINE_PX:
             bad.append(f"#{i} 中文超宽 {w:.0f}px（可用 {_LINE_PX}）：{cn}")
         # 配的英文那行以句号问号收尾 → 这一句到此为止，中文也该是完整的
-        if seg["en"].rstrip().endswith(_SENT_END):
+        ends = _SENT_END + (("。", "？", "！", "，", "；")
+                            if seg.get("source_language") == "zh" else ())
+        if seg["en"].rstrip().endswith(ends):
             continue
         if has_dangling_tail(cn):
             bad.append(f"#{i} 中文吊在「{cn.rstrip()[-1]}」上，意思被劈成两半：{cn}")
@@ -2287,6 +2384,18 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
             "⚠️ 改过字幕字号也会走到这儿：断行按子句切、放不下才拆，"
             "字号一大长子句开始被拆，行数就变了。**`en_fixed` 的行号跟着失准，"
             "得照新的行重挂一遍**。")
+    # Native Chinese is evidence, not a translation field. Keep the row count
+    # contract, but never let a translated/paraphrased zh entry replace it.
+    lines = [dict(line, source_language=source_line_language(spec or {}, line))
+             for line in lines]
+    zh = list(zh)
+    for i, line in enumerate(lines):
+        if line["source_language"] != "zh":
+            continue
+        original = line["en"].replace(">>", "").strip()
+        if zh[i] and compare_tokens(zh[i], native_chinese=True) != compare_tokens(original, native_chinese=True):
+            raise SystemExit(f"#{i + 1} 中文原声字幕必须保留原话，不得翻译改写：{original}")
+        zh[i] = original
     # **英文也要量。** 原来这道闸只查中文——于是 `en_fixed` 里一行订正写长了
     # （实测 1150px，超出可用宽两成）**一路畅通**，libass 到渲染时默默折行，
     # 压到中文那一行上。切行时量过的是 ASR 原文，订正之后没人再量一次。
@@ -2336,12 +2445,13 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
                 if seg["a"] < annotation["start"] < end:
                     end = annotation["start"]  # cut subtitle hold padding, not source speech
             a, b = _ts(seg["a"] - clip_start), _ts(end - clip_start)
-            if phrases:
+            if phrases and seg["source_language"] != "zh":
                 en, hit = highlight_en(en, phrases)
                 unmatched -= hit
             # 英文在上、中文在下，两行同起同落。中文烧上屏之前过 `zh_display`
             # （去标点、数字放大）——只改画出来的那一份，spec 里的 `zh` 不动。
-            ev.append(f"Dialogue: 0,{a},{b},EN,,0,0,0,,{en}")
+            if seg["source_language"] != "zh":
+                ev.append(f"Dialogue: 0,{a},{b},EN,,0,0,0,,{en}")
             shown = zh_display(cn)
             ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,{_zh_margin_v(shown)},,{shown}")
         if unmatched:
@@ -2488,8 +2598,12 @@ def en_fixed_misaligned(lines: list[dict], en_fixed: dict) -> list[str]:
     return out
 
 
-def compare_tokens(text: str) -> list[str]:
+def compare_tokens(text: str, *, native_chinese: bool = False) -> list[str]:
     """比对用的词流：小写、去标点、**去掉填词**。见 `_COMPARE_FILLERS`。"""
+    if native_chinese:
+        # Only explicit Chinese source windows enable Han character comparison;
+        # ASCII words retain the English comparison contract.
+        text = re.sub(r"([\u3400-\u9fff])", r" \1 ", text)
     words = re.sub(r"[^\w\s']", " ", text.lower()).split()
     return [w for w in words if w and w not in _COMPARE_FILLERS]
 
@@ -2578,17 +2692,31 @@ def strip_hesitation_lines(lines: list[dict]) -> tuple[int, int]:
     return hit, only
 
 
-def disagree_rate(first: str, second: str) -> tuple[float, list, list, difflib.SequenceMatcher]:
+def disagree_rate(first: str, second: str, *, native_chinese: bool = False) -> tuple[float, list, list, difflib.SequenceMatcher]:
     """两份转写对不上多少。返回 (比例, 第一份词流, 第二份词流, matcher)。
 
     **抽出来是为了能测**：真跑一次 `verify_transcript` 要下音频、跑 whisper，
     只有 runner 上跑得动；而「填词有没有被去掉」这件事是纯函数的事，
     不该只能靠一趟三分钟的 run 来验。
     """
-    a, b = compare_tokens(first), compare_tokens(second)
+    a, b = compare_tokens(first, native_chinese=native_chinese), compare_tokens(second, native_chinese=native_chinese)
+    return disagree_tokens(a, b)
+
+
+def disagree_tokens(a: list[str], b: list[str]) -> tuple[float, list, list, difflib.SequenceMatcher]:
+    """Compare already normalized source-language tokens using the same threshold."""
     sm = difflib.SequenceMatcher(None, a, b, autojunk=False)
     same = sum(m.size for m in sm.get_matching_blocks())
     return 1 - same / max(len(a), 1), a, b, sm
+
+
+def source_compare_tokens(rows: list[tuple[float, str]], windows: list[dict]) -> list[str]:
+    """Chinese normalization is confined to the explicitly verified time windows."""
+    tokens = []
+    for at, text in rows:
+        native = any(w["language"] == "zh" and w["start"] <= at < w["end"] for w in windows)
+        tokens.extend(compare_tokens(text, native_chinese=native))
+    return tokens
 
 # 第二份 ASR 的默认模型。**只有这一处出处**——写两处必分叉，而分叉的样子是
 # 报告上印着一个模型、真正跑的是另一个，谁也看不出来。
@@ -3230,29 +3358,41 @@ def transcript_language_windows(spec: dict) -> list[dict]:
 def transcribe_source_words(model, audio: Path, spec: dict) -> list[tuple[float, float, str]]:
     """Run native transcription per source language and restore source timestamps."""
     windows = transcript_language_windows(spec)
+    default_english = not windows
     kwargs = {"task": "transcribe", "word_timestamps": True,
               "vad_filter": spec.get("whisper_vad_filter", True)}
-    if not windows:
-        segs, _ = model.transcribe(str(audio), language="en", **kwargs)
-        return [(float(w.start), float(w.end), w.word.strip())
-                for seg in segs for w in (seg.words or [])
-                if spec["start"] <= w.start <= spec["end"]]
+    if default_english:
+        start, end = float(spec["start"]), float(spec["end"])
+        if not math.isfinite(start) or not math.isfinite(end) or start < 0 or end <= start:
+            raise SystemExit("ASR 需要有效正文 start/end")
+        # 集锦前几分钟与采访无关，不必送进第二份 ASR。两边留上下文，避免
+        # 切在词中间；之后只取正文窗口。沿用实际裁音频而非 clip_timestamps，
+        # 后者在 faster-whisper 中会绕过 VAD，改变这条线的校验口径。
+        windows = [{"start": start, "end": end, "language": "en"}]
     words = []
     with tempfile.TemporaryDirectory(prefix="interview-languages-") as directory:
         for index, window in enumerate(windows):
+            pad = GAP_CONTEXT_PAD_SECS if default_english else 0.0
+            audio_start = max(0.0, window["start"] - pad)
+            audio_end = window["end"] + pad
             clip = Path(directory) / f"{index}.wav"
             subprocess.run([
-                "ffmpeg", "-y", "-v", "error", "-ss", str(window["start"]),
-                "-i", str(audio), "-t", str(window["end"] - window["start"]),
+                "ffmpeg", "-y", "-v", "error", "-ss", str(audio_start),
+                "-i", str(audio), "-t", str(audio_end - audio_start),
                 "-vn", "-ac", "1", "-ar", "16000", str(clip),
-            ], check=True, capture_output=True)
+            ], check=True, capture_output=True, timeout=120)
             segs, _ = model.transcribe(str(clip), language=window["language"], **kwargs)
             for seg in segs:
                 for word in seg.words or []:
-                    a = float(word.start) + window["start"]
-                    b = float(word.end) + window["start"]
-                    if window["start"] <= a < window["end"]:
-                        words.append((a, min(b, window["end"]), word.word.strip()))
+                    a = float(word.start) + audio_start
+                    b = float(word.end) + audio_start
+                    # 英语沿用原来含 end 的边界与词尾；显式语言窗口在边界
+                    # 换语言，仍为半开区间并夹住词尾，不能串到下一种语言。
+                    inside = (window["start"] <= a <= window["end"] if default_english
+                              else window["start"] <= a < window["end"])
+                    if inside:
+                        words.append((a, b if default_english else min(b, window["end"]),
+                                      word.word.strip()))
     return words
 
 
@@ -3311,8 +3451,14 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
         words,
     )
 
-    rate, theirs, ours, sm = disagree_rate(
-        " ".join(seg["en"] for seg in lines), " ".join(w for _, w in mine))
+    windows = transcript_language_windows(spec)
+    if any(w["language"] == "zh" for w in windows):
+        rate, theirs, ours, sm = disagree_tokens(
+            source_compare_tokens([(s["a"], s["en"]) for s in lines], windows),
+            source_compare_tokens(mine, windows))
+    else:
+        rate, theirs, ours, sm = disagree_rate(
+            " ".join(seg["en"] for seg in lines), " ".join(w for _, w in mine))
 
     # **第一份是谁，要照实写。** 这条线原来只有一个源，所以这儿写死了「YouTube
     # 自动字幕」；接进 Tennis TV 之后第一份其实是本地跑的 ASR（spec 的 `asr_model`），
@@ -4317,8 +4463,11 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
     player client 之间的接口问题。改成沿用 `_ytdlp_ladder()` 逐档重试，
     每档都把失败原因打出来，全灭了才报错。
     """
-    if dest.exists():
+    if dest.is_file() and dest.stat().st_size > 0:
         return dest
+    # 零字节文件不是缓存；让下一档重新下载，而不是交给 ffmpeg 才失败。
+    if dest.is_file():
+        dest.unlink()
     # 直链媒体不是播放器页面，不能套 YouTube 的 `-f bv*+ba/b` 选择器。
     # US Open/Brightcove 这类官方源会直接给 `.mp4`；yt-dlp 对 generic extractor
     # 套格式选择器会报 `Requested format is not available`，但 curl 直取完全正常。
@@ -4327,15 +4476,20 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
     if (parsed.scheme in {"http", "https"}
             and parsed.path.lower().endswith((".mp4", ".mov", ".m4v"))):
         dest.parent.mkdir(parents=True, exist_ok=True)
-        proc = subprocess.run(
-            ["curl", "-LfsS", "--retry", "2", "--connect-timeout", "15",
-             "--max-time", "240", "-o", str(dest), url],
-            capture_output=True, text=True, timeout=260)
-        if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 1024:
-            print(f"[下载] 官方直链媒体成功：{url} → {dest.name} "
-                  f"({dest.stat().st_size / 1e6:.1f}MB)")
-            return dest
-        dest.unlink(missing_ok=True)
+        # 完整落地后才改名。超时/中断留下的半截不能被下一趟当成缓存。
+        partial = dest.with_name(dest.name + ".download")
+        try:
+            proc = subprocess.run(
+                ["curl", "-LfsS", "--retry", "2", "--connect-timeout", "15",
+                 "--max-time", "240", "-o", str(partial), url],
+                capture_output=True, text=True, timeout=260)
+            if proc.returncode == 0 and partial.is_file() and partial.stat().st_size > 1024:
+                partial.replace(dest)
+                print(f"[下载] 官方直链媒体成功：{url} → {dest.name} "
+                      f"({dest.stat().st_size / 1e6:.1f}MB)")
+                return dest
+        finally:
+            partial.unlink(missing_ok=True)
         tail = (proc.stderr or proc.stdout or "直链下载没有输出").strip().splitlines()[-1]
         raise SystemExit(f"官方直链媒体下载失败 {url}：{tail[:180]}")
     media = media_url(url)  # **页面地址不一定就是下载地址**，Tennis TV 要先解一次
@@ -4355,21 +4509,38 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
         # 240 秒：够一次正常下载（YouTube 限速约 0.7 MB/s，几分钟片子的
         # 720p 源片量得到），又不至于一档卡死拖垮整个梯子——`render` 那条路
         # 和这个函数共享 45 分钟的 job 预算，装依赖已经先花掉一截。
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=240)
-        if proc.returncode == 0 and dest.exists():
+        try:
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=240)
+        except subprocess.TimeoutExpired:
+            # 单档超时同样属于梯子失败；以前在这里直接退出，后续 client 从未试过。
+            proc = subprocess.CompletedProcess(cmd, 124, "", "下载超时（240 秒）")
+        if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 0:
             if tried:
                 print(f"[下载] {label} 成功（前面 {len(tried)} 档没成）")
             return dest
         # **空结果先自证是真空**：文件没在预期的位置，不等于没下下来——
         # 某些 player client 会把最佳编码合到 `.mkv` 而不是 `dest` 本身。
         sibs = sorted(p for p in dest.parent.glob(f"{dest.stem}.*") if p.is_file())
-        if len(sibs) == 1 and sibs[0].stat().st_size > 0:
-            print(f"⚠️ yt-dlp 落到了 {sibs[0].name}（不是 {dest.name}）——按实际的用")
-            return sibs[0]
+        # 只认成功下载后的完整容器；source.mp4.part / source.f137.mp4
+        # 是中间产物，绝不能因为「目录里只有一个文件」就放行。
+        containers = _MERGE_CONTAINERS | {"m4a", "mp3", "opus", "ogg", "wav"}
+        accepted = _MERGE_CONTAINERS if dest.suffix.lstrip(".") in _MERGE_CONTAINERS else containers
+        landed = [p for p in sibs if p.stem == dest.stem
+                  and p.suffix.lstrip(".") in accepted
+                  and p.stat().st_size > 0]
+        if proc.returncode == 0 and len(landed) == 1:
+            print(f"⚠️ yt-dlp 落到了 {landed[0].name}（不是 {dest.name}）——按实际的用")
+            return landed[0]
         # 这一档确认失败了才清，不能在下一档开始前清——那样会把这一档刚刚
         # 产出的、还没来得及被上面那两条判定接住的文件冲掉。
         for stray in sibs:
-            stray.unlink(missing_ok=True)
+            # source.json / source.ass / source.info.json 是元数据或核对证据，
+            # 不能跟失败媒体一起按 source.* 整批删。只清下载器的媒体及分片。
+            suffix = stray.name[len(dest.stem) + 1:]
+            if (suffix in containers
+                    or re.fullmatch(r"(?:f\d+|temp)\.(?:" + "|".join(containers) + r")", suffix)
+                    or re.search(r"\.(?:part(?:-Frag\d+)?|ytdl)$", stray.name)):
+                stray.unlink(missing_ok=True)
         tail = (proc.stderr or proc.stdout or "").strip().splitlines()[-1:] or ["(无输出)"]
         print(f"[下载] {label} 没成：{tail[0][:150]}")
         tried.append(f"  {label}: {tail[0][:150]}")
@@ -6511,7 +6682,7 @@ def main() -> int:
     lines = segment(
         fetch_words(spec["url"], outdir, spec), spec["start"], spec["end"],
         budget=spec.get("segment_budget_px"), word_fix=spec.get("word_fix"),
-        ruler=ruler,
+        ruler=ruler, language_windows=transcript_language_windows(spec),
     )
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
     # ASR 会把整句说得语法不成立（`The crazy Yes. round of applause.`），

@@ -1,0 +1,35 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "source_url": "https://x.com/japanopentennis/status/2105641498721284153",
+  "source_sha256": "6bbac16ddfca0a2bf2dda52cda8a0270bac27791ce21827469b94a872c99f1d2",
+  "method": "asr_cross_checked",
+  "reviewer": "closing_source exact5second local multilingual small/base with VADon/off plus independently reviewed full339second Japanese speech boundary",
+  "reviewed_at": "2026-10-04T08:11:48.578059+00:00",
+  "status": "complete",
+  "reviewed_from": 315,
+  "reviewed_to": 320,
+  "foreground_english": [],
+  "no_foreground_english_reason": "No reliably intelligible foreground English or attributable lexical speech in the exact315–320 original Japanese ceremony audio. Exact small model VADon/off identifies bracketed stage direction【拍手】, which is a non-speech applause label, not words spoken by the player. Exact base produces only はい at probability0.033/0.041, rejected as low-confidence lexical hallucination in applause. Independent full-source small/base finish thank-you at314.12/314.24 and start the next spoken Japanese sentence at323.84, excluding both from the selected five seconds. Genuine source applause is retained, not synthesized; no human listening claimed.",
+  "uncertain_spans": [],
+  "non_lexical_audio": "original audience applause",
+  "rejected_low_confidence_word_hypothesis": "はい probability0.033/0.041; not exact-word caption claim",
+  "asr_results": [
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/brand315-320-base-vad0.json",
+      "sha256": "9746b6180ff2755274ce7649c94011c338a87657d4334ed7dc71386ffb663d07"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/brand315-320-base-vad1.json",
+      "sha256": "c198afe650f0b4852db03dc601e62878fffb832123b37c4fe42649b20948a51a"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/brand315-320-small-vad0.json",
+      "sha256": "4c47afcb8e679a29c3139f97ff32cce2dfbe378a4588d376a931e06996e144bc"
+    },
+    {
+      "path": "data/audio_reviews/nishikori-career-farewell/evidence/brand315-320-small-vad1.json",
+      "sha256": "a677d54648bd20e54de3e9a4004f6a75a2d0e54b6f096da2b1f69fa5342b65c3"
+    }
+  ],
+  "human_listening_done": false
+}
