@@ -1,0 +1,50 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 5.314,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 465.64,
+  "topbar": null,
+  "film_seconds": 474.8,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "2": 11.64,
+    "3": 9.24,
+    "4": 8.592,
+    "7": 7.368,
+    "14": 8.424,
+    "15": 9.768,
+    "16": 7.512,
+    "18": 9.984,
+    "19": 5.688,
+    "20": 8.28,
+    "21": 8.688,
+    "23": 5.112,
+    "24": 8.808,
+    "28": 6.84
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "error",
+      "report_only": true,
+      "error": "ModuleNotFoundError: No module named 'cv2'",
+      "warnings": [
+        "分段画面认人没跑完：ModuleNotFoundError: No module named 'cv2'"
+      ]
+    }
+  },
+  "render_inputs_sha256": "d8a67f4d2fcdbb2c79ed2c03c33e2341a1dba855c709ee15c3afed0c0a7352ac",
+  "film_sha256": "cff7f2549ed78a73ca6aac7e1ec6a0631514a6a79d7dfb7999ccbdc260100612",
+  "film_bytes": 269655775,
+  "qc_attestation_sha256": "859379d2ead3f02b9ec917b15ff78360412d23c6eecd0d84798484717c391f9c",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-year-end-no1-zverev-2026/year-end-no1-zverev-2026.mp4",
+  "video_bytes": 269655775,
+  "_release_tag_note": "审片版本地渲染后上传 Release reel-year-end-no1-zverev-2026；未走 match-reel.yml，避免生产队列与微信推送。push.auto=false。"
+}
