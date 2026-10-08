@@ -1310,6 +1310,12 @@ _NOT_FILM = frozenset({
     # 固定居中策略只允许 cx=0.5/track=false；这两个键只由 crop_policy 闸读取，
     # 采访渲染器取景仍由 crop_ratio/crop_keep_top/crop_shift_x 决定。
     "cx", "track",
+    # 捧杯时刻的认领（解说是谁、源片哈希、看过的帧）只进 L0 闸，不烧进画面。
+    "trophy_moment",
+    # 重建时记下的源片 Release 地址。出片读的是 `url`，这个地址不进成片。
+    "source_media_url",
+    # 这条 spec 的 `layout` 只是重建笔记（full_bleed）。采访渲染器不读它。
+    "layout",
 })
 
 
