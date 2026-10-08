@@ -46,6 +46,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from tennislive.zh import _normalize_name  # noqa: E402
 from tennislive.zh.players import PLAYER_ZH  # noqa: E402
 
 
@@ -71,7 +72,7 @@ class RankedName:
 
 
 def _normalize(value: str) -> str:
-    return " ".join(value.casefold().replace("’", "'").split())
+    return _normalize_name(value)
 
 
 def _canonical_name(first: str, surname: str) -> str:
@@ -185,7 +186,7 @@ def _source_priority(source: str, source_url: str = "") -> int:
         or "官方中文名" in source
     ):
         return 100
-    if "央视" in source and official_domain("cctv.com"):
+    if "央视" in source and official_domain("cctv.com", "cntv.cn"):
         return 90
     if "新华社" in source and official_domain("news.cn", "xinhuanet.com"):
         return 80
@@ -199,6 +200,8 @@ def _source_priority(source: str, source_url: str = "") -> int:
         return 50
     if "百科" in source:
         return 30
+    if "受控音译" in source:
+        return 25
     if source in {"curated-media", "curated-dictionary"}:
         return 20
     if source == "machine-transliteration":
@@ -374,6 +377,7 @@ def build_review_queue(snapshot: dict) -> dict:
             if (
                 source != "machine-transliteration"
                 and "待国内媒体复核" not in source
+                and "受控音译" not in source
             ):
                 continue
             entries.append(

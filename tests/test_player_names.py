@@ -336,7 +336,15 @@ def test_中国球员名单每条都要说清是按哪条规则收的():
     # 暂缓收录的那几位要如实挂着，别默默消失：它们是「查过、译名还没定」，
     # 不是「没查过」。裸姓（一个字）正是不许收的那种，判据顺手钉住这一点。
     pending = payload.get("_pending_translation", [])
-    assert pending, "`_pending_translation` 空了——那几位是查过的，别把账抹平"
+    # 2026-10-04 六位已核实全名并移入 roster；允许队列被真正处理完。
+    resolved = {"Yufei Ren", "Yidi Yang", "Jiaqi Wang", "Yujia Huang", "Lan Mi", "Chengyiyi Yuan"}
+    assert resolved <= {p["en"] for p in roster} | {p["en"] for p in pending}, (
+        "原六项必须有明确去向，不能直接删掉待办")
+    for entry in roster:
+        if entry["en"] in resolved:
+            assert len(entry["zh"]) > 1
+            assert entry.get("name_source_url") and entry.get("country_source_url"), (
+                "补齐中文姓名还要保留姓名与国籍依据，不能根据拼音收入中国军团")
     for row in pending:
         assert len(row["machine_zh"]) == 1, (
             f"{row['en']} 的 `machine_zh` 是 {row['machine_zh']!r}，不是裸姓了——"

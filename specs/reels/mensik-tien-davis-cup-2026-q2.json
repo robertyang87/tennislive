@@ -16,7 +16,7 @@
     "result": "6-2 6-4",
     "matchup": [
       {
-        "name": "门西克",
+        "name": "门希克",
         "name_en": "Jakub Mensik",
         "country": "CZE",
         "rank": 15
@@ -56,7 +56,7 @@
   },
   "topbar": {
     "line1": "2026 戴维斯杯资格赛 第二轮",
-    "line2": "勒纳·钱 6-2 6-4 门西克"
+    "line2": "勒纳·钱 6-2 6-4 门希克"
   },
   "_topbar_why": "`line1` 的赛事名按 ITF 官方叫法 Davis Cup Qualifiers second round（en.wikipedia.org/wiki/2026_Davis_Cup 与 daviscup.com 的 tie 页 `Qualifiers - USA vs Czechia` 一致），中文写「资格赛 第二轮」。⚠️ 这是**资格赛**不是世界一组——和 ruud-te-davis-cup-2026-wg1（World Group I）是戴维斯杯的两个不同层级，别混。`line2` 赢家在前，和 `cover.result` 同一个数。",
   "_match": {
@@ -65,7 +65,7 @@
     "source_id": "tEDgPVU9",
     "flashscore_id": "tEDgPVU9",
     "participants": [
-      "门西克",
+      "门希克",
       "勒纳·钱"
     ],
     "set_scores_home_away": [
@@ -83,7 +83,7 @@
       null
     ],
     "winner": "勒纳·钱",
-    "loser": "门西克",
+    "loser": "门希克",
     "winner_result": "6-2 6-4",
     "loser_result": "2-6 4-6",
     "_direction_why": "flashscore 当日表 f_2_-1：AE=Mensik J.（home）、AF=Tien L.（away），AG/AH=0:2，AS=2（客胜）；df_sui_1 分盘 IG/IH=2/6、4/6。第二源 ČTK「Menšík … prohrál … 2:6, 4:6」（输家视角，方向一致）；第三处是源片 334.5s 的全屏比分板 `CZECHIA 2 4 / USA 6 6`。participants 跟 flashscore 的 home/away（和 set_scores_home_away 同序），这一场也和 cover.matchup 的版式顺序一致。⚠️ 两盘都没抢七，`tiebreaks_home_away` 两个都是 null——df_sui_1 里没有 `RD` 抢七小分字段，逐分表最后一局是 4-6 直落。"
@@ -137,28 +137,28 @@
   "_hit_data": [
     {
       "label": "总分差",
-      "detail": "勒纳·钱 62 - 门西克 44，净差 18 分（58% : 42%）",
+      "detail": "勒纳·钱 62 - 门希克 44，净差 18 分（58% : 42%）",
       "diff": 18,
       "source": "flashscore df_st_1 Total Points Won"
     },
     {
       "label": "一发得分率",
-      "detail": "钱 81%（30/37），门西克 63%（24/38）——差 18 个百分点",
+      "detail": "钱 81%（30/37），门希克 63%（24/38）——差 18 个百分点",
       "source": "flashscore df_st_1"
     },
     {
       "label": "非受迫失误",
-      "detail": "门西克 34，钱 15",
+      "detail": "门希克 34，钱 15",
       "source": "AP 赛报 ＋ ČTK 赛后稿（两个独立源）"
     },
     {
       "label": "发球局",
-      "detail": "钱 9 个发球局只丢 1 个（89%），门西克 9 个丢 4 个（56%）",
+      "detail": "钱 9 个发球局只丢 1 个（89%），门希克 9 个丢 4 个（56%）",
       "source": "flashscore df_st_1 Service games won"
     },
     {
       "label": "破发点兑现",
-      "detail": "钱 4/7，门西克 1/4",
+      "detail": "钱 4/7，门希克 1/4",
       "source": "flashscore df_st_1 Break Points Converted"
     },
     {
@@ -169,33 +169,33 @@
   ],
   "_turning_points": [
     {
-      "label": "【Set 1】1-2  门西克发球，钱拿下 ← 本场第一次破发",
+      "label": "【Set 1】1-2  门希克发球，钱拿下 ← 本场第一次破发",
       "tags": [
         "1个破发点"
       ]
     },
     {
-      "label": "【Set 1】2-5  门西克发球，门西克拿下 ← 救下 1 个破发点、1 个盘点",
+      "label": "【Set 1】2-5  门希克发球，门希克拿下 ← 救下 1 个破发点、1 个盘点",
       "tags": [
         "1个破发点",
         "1个盘点"
       ]
     },
     {
-      "label": "【Set 2】2-2  钱发球，门西克拿下 ← 门西克全场唯一一次破发",
+      "label": "【Set 2】2-2  钱发球，门希克拿下 ← 门希克全场唯一一次破发",
       "tags": [
         "破发",
         "1个破发点"
       ]
     },
     {
-      "label": "【Set 2】2-3  门西克发球，钱拿下 ← 破回来的那一局立刻还回去",
+      "label": "【Set 2】2-3  门希克发球，钱拿下 ← 破回来的那一局立刻还回去",
       "tags": [
         "1个破发点"
       ]
     },
     {
-      "label": "【Set 2】4-6  钱发球，钱拿下 ← 2 个赛点，门西克救下 1 个",
+      "label": "【Set 2】4-6  钱发球，钱拿下 ← 2 个赛点，门希克救下 1 个",
       "tags": [
         "2个赛点"
       ]
@@ -208,26 +208,26 @@
       "全场只被破回一次"
     ],
     "question": "两个 2005 年出生的人，世界第 13 对世界第 15，第三次碰面——前两次都打满了距离，这一次为什么 69 分钟就结束了？",
-    "thesis": "钱把两盘的第一次破发都拿在了手里：第一盘第三局破，门西克从 1-1 连丢四局；第二盘第三局又破，门西克 2-2 破回来一次，下一个发球局立刻又丢了。全场钱 9 个发球局只丢 1 个，一发得分率 81% 对 63%，非受迫失误 15 对 34。6-2 6-4，69 分钟，美国队先下一分。",
+    "thesis": "钱把两盘的第一次破发都拿在了手里：第一盘第三局破，门希克从 1-1 连丢四局；第二盘第三局又破，门希克 2-2 破回来一次，下一个发球局立刻又丢了。全场钱 9 个发球局只丢 1 个，一发得分率 81% 对 63%，非受迫失误 15 对 34。6-2 6-4，69 分钟，美国队先下一分。",
     "beats": [
       "北京时间 9 月 18 日晚上 9 点，布拉格 O2 竞技场，戴维斯杯资格赛第二轮捷克主场——戴维斯杯隔了 13 年才回到这座球馆，满场捷克国旗。这是勒纳·钱第一次代表美国队出战。",
-      "第一盘第三局钱就破了发，门西克从 1-1 开始连丢四局到 1-5；2-5 他救下一个盘点保住发球局，下一局钱直接发球胜盘。28 分钟，6-2。",
-      "第二盘第三局钱又先破发；2-2 门西克破了回来——那是他全场四个破发点里唯一兑现的一个——可紧接着的发球局又丢了，2-3 之后再没追上。",
-      "全场一发得分率钱 81% 对门西克 63%，非受迫失误门西克 34 次、钱 15 次，总分 62 比 44。不到两周之前的美网第三轮，两个人打了 3 小时 28 分、五盘，钱从 1-2 落后翻回来；这一次 69 分钟，没有第三盘。三次交手，三次都是同一个人赢。"
+      "第一盘第三局钱就破了发，门希克从 1-1 开始连丢四局到 1-5；2-5 他救下一个盘点保住发球局，下一局钱直接发球胜盘。28 分钟，6-2。",
+      "第二盘第三局钱又先破发；2-2 门希克破了回来——那是他全场四个破发点里唯一兑现的一个——可紧接着的发球局又丢了，2-3 之后再没追上。",
+      "全场一发得分率钱 81% 对门希克 63%，非受迫失误门希克 34 次、钱 15 次，总分 62 比 44。不到两周之前的美网第三轮，两个人打了 3 小时 28 分、五盘，钱从 1-2 落后翻回来；这一次 69 分钟，没有第三盘。三次交手，三次都是同一个人赢。"
     ],
     "_hook_why": "这一栏和 cover.hook 逐行相同（闸要求）。理由见 cover._hook_why。",
     "human_context": {
-      "angle": "这场球的场外主角是**年龄**：门西克 2005 年 9 月 1 日生、钱 2005 年 12 月 2 日生，相差三个月，是 2005 这一代排在最前面的两个人（世界第 15 和第 13）。他们第一次碰面就是 2024 年 12 月的下一代总决赛——那是个只收 21 岁以下球员的赛事，钱在门西克手上救下一个赛点，4-3(6) 4-3(3) 2-4 2-4 4-3(8)，门西克那场发了 20 个 ACE，是那项赛事历史上最好的发球表现。第二次是 2026 年美网第三轮，五盘 3 小时 28 分，钱从 1-2 落后翻回来。第三次就是这一场，而这一次是钱的戴维斯杯首秀，客场，满场捷克国旗，69 分钟。另一层：捷克队为这一周把戴维斯杯搬回了 13 年没用过的 O2 竞技场，门西克自己说「气氛太棒了」，但他也说「今天我在场上找不到自己」。",
+      "angle": "这场球的场外主角是**年龄**：门希克 2005 年 9 月 1 日生、钱 2005 年 12 月 2 日生，相差三个月，是 2005 这一代排在最前面的两个人（世界第 15 和第 13）。他们第一次碰面就是 2024 年 12 月的下一代总决赛——那是个只收 21 岁以下球员的赛事，钱在门希克手上救下一个赛点，4-3(6) 4-3(3) 2-4 2-4 4-3(8)，门希克那场发了 20 个 ACE，是那项赛事历史上最好的发球表现。第二次是 2026 年美网第三轮，五盘 3 小时 28 分，钱从 1-2 落后翻回来。第三次就是这一场，而这一次是钱的戴维斯杯首秀，客场，满场捷克国旗，69 分钟。另一层：捷克队为这一周把戴维斯杯搬回了 13 年没用过的 O2 竞技场，门希克自己说「气氛太棒了」，但他也说「今天我在场上找不到自己」。",
       "facts": [
-        "生日：门西克 2005-09-01（en.wikipedia.org/wiki/Jakub_Menšík），勒纳·钱 2005-12-02（en.wikipedia.org/wiki/Learner_Tien）——两页各自独立，都写 2005 年。⚠️ 我一开始按记忆写的是钱「12 月 12 日」，查出来是 **12 月 2 日**，已改。",
-        "排名：tennisexplorer ATP 榜 2026-09-15 那一期（经 `tennislive.sources.rankings.fetch_rankings()`）钱 13、门西克 15、莱赫奇卡 24、谢尔顿 4；crushrushnews.com 9/15 前瞻同样写「World No. 13 Tien … No. 15 Mensik」。",
+        "生日：门希克 2005-09-01（en.wikipedia.org/wiki/Jakub_Menšík），勒纳·钱 2005-12-02（en.wikipedia.org/wiki/Learner_Tien）——两页各自独立，都写 2005 年。⚠️ 我一开始按记忆写的是钱「12 月 12 日」，查出来是 **12 月 2 日**，已改。",
+        "排名：tennisexplorer ATP 榜 2026-09-15 那一期（经 `tennislive.sources.rankings.fetch_rankings()`）钱 13、门希克 15、莱赫奇卡 24、谢尔顿 4；crushrushnews.com 9/15 前瞻同样写「World No. 13 Tien … No. 15 Mensik」。",
         "戴维斯杯首秀：tennisnow.com 赛后稿《Tien Sweeps Mensik, Stakes USA to 1-0 Davis Cup Lead over Czechia》写 20 岁的钱 making his Davis Cup debut，并引他原话「It feels amazing. It feels even better that I can do it representing my country.」；源片解说 163.84s 同样说「A very impressive Davis Cup debut today from Learner Tien」。",
         "场地与时刻：o2arena.cz 官方活动页《Davis Cup Qualifiers – Česko vs. USA》；ČTK／ceskenoviny.cz 写节目单周五当地 15:00 开始（布拉格 CEST=UTC+2 → 13:00Z → 北京 21:00），并写「Davis Cup se do haly vrátil po 13 letech」（13 年后重回这座球馆）；室内硬地，源片全程蓝场。",
         "用时与非受迫失误：flashscore df_sui_1 分盘 0:28+0:41=1:09；ČTK「Zápas trval 69 minut … Menšík udělal 34 nevynucených chyb」；AP 赛报「Tien had only 15 unforced errors to Mensik's 34」。用时两源一致、非受迫失误两源一致。",
-        "交手记录 3-0：flashscore df_hh_1（2024-12-18 Next Gen Finals - Jeddah 2:3、2026-09-06 US Open 2:3、2026-09-18 Davis Cup 0:2，三场都是 Tien 赢）；atptour.com《Learner Tien upsets Jakub Mensik with absorbing Jeddah win》记 2024-12-18 那场 4-3(6) 4-3(3) 2-4 2-4 4-3(8)、钱救下一个赛点、2 小时 15 分、门西克 20 个 ACE；tennisnow.com「This was Tien's third consecutive victory over Mensik.」三个独立源。",
+        "交手记录 3-0：flashscore df_hh_1（2024-12-18 Next Gen Finals - Jeddah 2:3、2026-09-06 US Open 2:3、2026-09-18 Davis Cup 0:2，三场都是 Tien 赢）；atptour.com《Learner Tien upsets Jakub Mensik with absorbing Jeddah win》记 2024-12-18 那场 4-3(6) 4-3(3) 2-4 2-4 4-3(8)、钱救下一个赛点、2 小时 15 分、门希克 20 个 ACE；tennisnow.com「This was Tien's third consecutive victory over Mensik.」三个独立源。",
         "美网那一场：specs/reels/pending/mensik-tien.draft.json 的 `_match`（flashscore thCAmNM0，result_verified）——6-3 1-6 6-7(2) 6-3 6-4 钱胜，分盘 home/away [[3,6],[6,1],[7,6],[3,6],[4,6]]，全场 3:28。⚠️ 也就是钱是从 **1-2 落后**翻回来的，不是「两盘落后」——tennisnow 写的「from down two sets」是松的，源片解说 290.56s 说的才是准的：「having to come from two sets to one down」。旁白按 1-2 写。",
-        "同日另一场：莱赫奇卡 6-4 6-4 胜谢尔顿，首日 1-1（AFP/france24.com《Czechs level Davis Cup tie against USA》＋ english.radio.cz《Czechia and US tied 1-1 after opening day》两源一致）。9 月 19 日还有双打和两场反向单打（谢尔顿对门西克、钱对莱赫奇卡）。",
-        "门西克赛后（ČTK／ceskenoviny.cz）：「Těžký zápas a těžký den. Nehrál jsem, jak jsem chtěl. Ale to je tenis.」「Dnes jsem se v zápase nenašel.」「Learner je hráč, který se dobře pohybuje a výborně brání, takže je těžké s ním body rychle ukončit.」「Zítra je nový den.」"
+        "同日另一场：莱赫奇卡 6-4 6-4 胜谢尔顿，首日 1-1（AFP/france24.com《Czechs level Davis Cup tie against USA》＋ english.radio.cz《Czechia and US tied 1-1 after opening day》两源一致）。9 月 19 日还有双打和两场反向单打（谢尔顿对门希克、钱对莱赫奇卡）。",
+        "门希克赛后（ČTK／ceskenoviny.cz）：「Těžký zápas a těžký den. Nehrál jsem, jak jsem chtěl. Ale to je tenis.」「Dnes jsem se v zápase nenašel.」「Learner je hráč, který se dobře pohybuje a výborně brání, takže je těžké s ním body rychle ukončit.」「Zítra je nový den.」"
       ],
       "sources": [
         "https://www.flashscore.com/match/tennis/tEDgPVU9/",
@@ -270,9 +270,9 @@
   ],
   "_no_repeat": "同栏目此前发过 ruud-te-davis-cup-2026-wg1（鲁德胜特日格乐，戴维斯杯**世界一组**挪威对中国，讲的是那块专门铺的室内红土）——这一条是戴维斯杯**资格赛**捷克对美国，另一场球、另一个层级，一句都不碰红土和中国队那条线。specs/reels/pending/mensik-tien.draft.json 是同两人美网第三轮的**自动草稿，从未成片发布**（promote 卡在 7 条，其中一条就是「已超过 20 小时，不再生产上一比赛日内容」），所以「美网那五盘」在本栏目还没讲过，这条片子第 12 段可以用它作对照。",
   "push": {
-    "summary": "钱三次交手三次赢门西克",
-    "lead": "戴维斯杯资格赛第二轮，捷克主场布拉格 O2 竞技场，戴维斯杯隔了 13 年才回来。两个 2005 年出生的人第三次碰面：世界第 13 的勒纳·钱两盘都先破发，世界第 15 的门西克全场只破回一次，非受迫失误 34 比 15。6-2 6-4，69 分钟——这是钱的戴维斯杯首秀。当晚莱赫奇卡 6-4 6-4 胜谢尔顿，首日 1-1。",
-    "matchup": "门西克 vs 勒纳·钱",
+    "summary": "钱三次交手三次赢门希克",
+    "lead": "戴维斯杯资格赛第二轮，捷克主场布拉格 O2 竞技场，戴维斯杯隔了 13 年才回来。两个 2005 年出生的人第三次碰面：世界第 13 的勒纳·钱两盘都先破发，世界第 15 的门希克全场只破回一次，非受迫失误 34 比 15。6-2 6-4，69 分钟——这是钱的戴维斯杯首秀。当晚莱赫奇卡 6-4 6-4 胜谢尔顿，首日 1-1。",
+    "matchup": "门希克 vs 勒纳·钱",
     "score": "6-2 6-4",
     "auto": true
   },
@@ -308,7 +308,7 @@
       "start": 55.9,
       "end": 64.3,
       "cx": 0.5,
-      "narration": "这是勒纳·钱第一次代表美国队出战。开场第三局，他就破掉了门西克的发球局。",
+      "narration": "这是勒纳·钱第一次代表美国队出战。开场第三局，他就破掉了门希克的发球局。",
       "_why": "第一盘第三局的破发刚刚发生（captions 36.72s「Oh, what a return and what a breakthrough」、39.52s「What a start to Learner Tien's Davis Cup life」、44.24s「Two games to one」），这一段是破发之后的换边：54.5~60.5s 连着几格都是钱的近景（红衣白帽、手里拿拍），62.5s 是美国队替补席起立鼓掌——和「第一次代表美国队出战」这句话对题。镜头 54.44~64.48 之内，63.76s 是死球，收在 64.3（切点 64.48 之前）。"
     },
     {
@@ -316,7 +316,7 @@
       "start": 101.8,
       "end": 110.0,
       "cx": 0.5,
-      "narration": "门西克的两个发球局都被破了，从一比一掉到一比四。满场的捷克国旗没帮上忙。",
+      "narration": "门希克的两个发球局都被破了，从一比一掉到一比四。满场的捷克国旗没帮上忙。",
       "_why": "画面就在 1-4 之后：96.5~100.5s 三格是全屏比分板 `CZECHIA 1 / USA 4`，101.52s 死球、101.56s 切点，这一段从 101.8 起，镜头 101.56~134.0 之内。逐局依据 flashscore df_mh_1：第一盘门西克发球的第 3、第 5 局都被破（1-2、1-4），从 1-1 连丢四局到 1-5。⚠️ 这里只说到 1-4，不说「连丢四局」——那一局（1-5）要到第 6 段的画面才打完，说早了就是话画不符。 ⚠️ **段尾从 111.20 收到 110.00，同样是被成片逐秒响度逼出来的**：旁白真实时长 7.68s，原窗口 9.40s 留了 1.72s 的尾巴，那段尾巴只剩现场声——而源片 109.5~111.2 正好是安静的一段，成片 t=48 量到 **-65.5 dB**，被判数字静音（run 35417157439）。收到 8.20s 之后尾巴只剩 0.52s。⚠️ runner 上的 TTS 比本地 edge-tts **更快**（CLAUDE.md 记过），所以真实尾巴只会比 0.52s 更长一点，不会反过来让旁白超出窗口。"
     },
     {
@@ -340,7 +340,7 @@
       "start": 208.7,
       "end": 220.0,
       "cx": 0.5,
-      "narration": "第二盘一开始，两个人各保各的发球局。门西克赛后说，钱移动好、防守好，很难快速结束一分。",
+      "narration": "第二盘一开始，两个人各保各的发球局。门希克赛后说，钱移动好、防守好，很难快速结束一分。",
       "_why": "第二盘前两局各自保发（df_mh_1：1-0 门西克保、1-1 钱保）。门西克的话是 ČTK 赛后稿原文「Learner je hráč, který se dobře pohybuje a výborně brání, takže je těžké s ním body rychle ukončit.」——用输的那个人自己的话做技战术拆解，比我们替他总结更硬。208.72s 和 220.0s 都是死球，镜头 207.84~230.04 之内。"
     },
     {
@@ -348,7 +348,7 @@
       "start": 269.0,
       "end": 279.95,
       "cx": 0.5,
-      "narration": "第二盘第三局，钱又先破了发：把门西克左右调动，用满整个球场的宽度。两盘的第一次破发都是他的。",
+      "narration": "第二盘第三局，钱又先破了发：把门希克左右调动，用满整个球场的宽度。两盘的第一次破发都是他的。",
       "_why": "266.5s 那一格全屏比分板读 `CZECHIA 2 1 / USA 6 2`，也就是第二盘 1-2——破发刚刚完成（captions 266.80s「setting the break up」）。「左右调动、用满球场宽度」是 captions 208.96s 解说的原话「He had Mensik running left and right using the full width of the court」。269.6s 和 280.24s 都是死球，镜头 268.76~280.2 之内。 ⚠️ 第 9 段收在 280.1：下一个死球 280.24 落在**切点 280.2 之后**，也就是这一分是随着转播自己的切镜头结束的，收在切点之前是对的。 ⚠️ 段尾按 `--dry-run` 的「溶解底料跨了切点」往前挪了 0.15s 上下：淡出要 0.18s 的底料，离切点太近的话下一个镜头会被混进这一段的尾巴。"
     },
     {
@@ -356,7 +356,7 @@
       "start": 281.04,
       "end": 291.25,
       "cx": 0.5,
-      "narration": "二比二，门西克破了回来。四个破发点，他只兑现了这一个。可下一个发球局，他又丢了。",
+      "narration": "二比二，门希克破了回来。四个破发点，他只兑现了这一个。可下一个发球局，他又丢了。",
       "_why": "286.5s 那一格全屏比分板读 `CZECHIA 2 2 / USA 6 4`，第二盘已经走到 2-4——也就是这十秒画面覆盖的正是 2-2 破回来、2-3 立刻被破回去、2-4 这三局。df_mh_1 第二盘：`2-2 客队发球，主队拿下 ← 破发`（门西克全场唯一一次破发），紧接着 `2-3 主队发球，客队拿下`。df_st_1 `Break Points Converted` 主队 1/4 是同一件事的第二个读法。281.04s 和 291.2s 都是死球，镜头 280.2~313.8 之内。"
     },
     {
@@ -364,7 +364,7 @@
       "start": 291.3,
       "end": 300.8,
       "cx": 0.5,
-      "narration": "全场一发得分率，钱百分之八十一，门西克百分之六十三。非受迫失误三十四比十五。",
+      "narration": "全场一发得分率，钱百分之八十一，门希克百分之六十三。非受迫失误三十四比十五。",
       "_why": "全场数字，明说「全场」，不会被读成某一盘。一发得分率取 flashscore df_st_1 Match 段：客队（钱）81%（30/37）、主队（门西克）63%（24/38）。非受迫失误 flashscore 这场没有，取 AP 赛报「Tien had only 15 unforced errors to Mensik's 34」＋ ČTK「Menšík udělal 34 nevynucených chyb」两个独立源。⚠️ 百分比按 CLAUDE.md 写「百分之八十一」不写「八成一」。291.2s（第 10 段的收尾，死球）和 300.72s（死球）之间，镜头 280.2~313.8 之内。"
     },
     {

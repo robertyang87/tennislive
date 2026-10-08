@@ -74,16 +74,18 @@ def _draft(**extra):
     return base
 
 
-def test_find_opponent按姓找对手(tool, monkeypatch):
-    """受访者姓 zverev，赛果里他的对手是 Atmane——返回 (兹维列夫, 阿特马内, 对阵)。"""
+def test_find_opponent按姓找对手(tool):
+    """按 feed 姓氏找到对手，并采用实际译名 resolver 的统一结果。"""
+    from tennislive.zh import player_zh
+
     class _Digest:
         results = [_match("Zverev A.", "Atmane T.")]
 
-    monkeypatch.setattr("tennislive.zh.player_zh", lambda en: {
-        "Zverev A.": "兹维列夫", "Atmane T.": "阿特马内",
-        "Alexander Zverev": "兹维列夫"}.get(en, en))
+    winner = player_zh("Alexander Zverev")
+    loser = player_zh("Terence Atmane")
+    assert winner != "Alexander Zverev" and loser != "Terence Atmane"
     got = tool.find_opponent(_Digest(), "zverev")
-    assert got == ("兹维列夫", "阿特马内", "兹维列夫 vs 阿特马内")
+    assert got == (winner, loser, f"{winner} vs {loser}")
     details = tool.find_match_details(_Digest(), "zverev")
     assert details["winner_en"] == "Zverev" and details["loser_en"] == "Atmane", \
         "feed 的 Surname X. 不能把 X. 当成集锦搜索姓氏"

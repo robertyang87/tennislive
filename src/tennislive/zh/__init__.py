@@ -64,7 +64,7 @@ def _fold_accents(name: str) -> str:
 
 
 def _normalize_name(name: str) -> str:
-    return " ".join(_fold_accents(name).strip().split()).lower()
+    return " ".join(_fold_accents(name.replace("’", "'")).strip().split()).lower()
 
 
 _PLAYER_LOOKUP: dict[str, str] | None = None

@@ -1,0 +1,627 @@
+{
+  "failed_nodes": [
+    "tests/test_actions_write_permission.py::test_给了actions_write的工作流都真的要点Pages",
+    "tests/test_interview_clip.py::test_推送重试耗尽必须报错不许绿着过去",
+    "tests/test_interview_clip.py::test_推送撞车要把本条重放上去而不是rebase",
+    "tests/test_interview_segment_ruler.py::test_已渲的采访spec按钉死的尺子重切_行一行不差",
+    "tests/test_interview_segment_ruler.py::test_老尺子表只许减_每条都真的要它",
+    "tests/test_interview_segment_ruler.py::test_太宽的候选不量_切出来的行和逐个量一字不差",
+    "tests/test_match_reel.py::test_封面上每个球员都要有国旗和即时排名",
+    "tests/test_interview_segment_ruler.py::test_预检按老尺子重切_已发的对得上",
+    "tests/test_interview_subs_first.py::test_每个转写输入都绑在判定上_只改它旧判定不作数",
+    "tests/test_match_reel.py::test_小红书正文首行要点出是谁",
+    "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段",
+    "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧",
+    "tests/test_match_reel.py::test_每条spec的旁白都还估得下",
+    "tests/test_explainer.py::test_栏目名不能只活在代码里",
+    "tests/test_match_reel.py::test_冷开场不许随手取源片开头",
+    "tests/test_match_reel.py::test_赛场之上开场要给出北京时间赛事和轮次",
+    "tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上",
+    "tests/test_match_reel.py::test_栏目和封面模板要配对",
+    "tests/test_match_reel.py::test_封面固定版式是官方抠图加本场视频全场机位",
+    "tests/test_match_reel.py::test_源片自己烧了记分条时字幕要让开",
+    "tests/test_match_reel.py::test_有母版就不许再渲一遍",
+    "tests/test_match_reel.py::test_母版要按上界存",
+    "tests/test_outro_push.py::test_提交进仓库的母版_台标横向不漂_纵向不往回",
+    "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe",
+    "tests/test_match_reel.py::test_赛场之上要留一段精彩的原声解说_不留要写明为什么",
+    "tests/test_reattest.py::test_渲染路径读到的注解键都要归类",
+    "tests/test_reel_editorial.py::test_钩子不许复述赛果条和顶栏印着的东西",
+    "tests/test_reel_editorial.py::test_赛场之上要么开自动推送要么说清走哪条路",
+    "tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有",
+    "tests/test_reel_asset_gates.py::test_仓库里的图都解得开",
+    "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报",
+    "tests/test_small_gates.py::test_片尾板那条的豁免表只许减_全库零误报",
+    "tests/test_subtitle_override_evidence.py::test_yuan_override_is_proved_by_real_retained_ass",
+    "tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红",
+    "tests/test_unvoiced_quote.py::test_新片子没配音的段都有双语原声字幕",
+    "tests/test_venue_assets.py::test_attribution_md_is_generated_from_credits",
+    "tests/test_venue_assets.py::test_attribution_md_never_credits_a_file_that_is_gone",
+    "tests/test_probe_board.py::test_标定框和全库spec用的框对得上",
+    "tests/test_title_echo.py::test_正文第一句不许重复标题_新片子"
+  ],
+  "baseline_reproduced": 38,
+  "new_failures": [
+    "tests/test_explainer.py::test_栏目名不能只活在代码里"
+  ],
+  "reviewed_at": "2026-10-04",
+  "baseline_commit": "698332220c3f02c2c6ce5149aecbc598acfaa67c",
+  "full_suite_result": {
+    "passed": 5386,
+    "failed": 39,
+    "skipped": 280,
+    "errors": 0,
+    "passed_subtests": 70,
+    "xml_test_entries": 5775,
+    "seconds": 545.104,
+    "started_at": "2026-10-04T07:24:13.035591+00:00",
+    "round": "fourth"
+  },
+  "fixed_after_full_suite": [
+    {
+      "node": "tests/test_explainer.py::test_栏目名不能只活在代码里",
+      "reason": "Restore intended current top-level spec scope after an accidental recursive glob included pending drafts; preserve assertion and separate draft handling.",
+      "targeted_recheck": "3 passed in 5.48s; latest final focused includes this node"
+    }
+  ],
+  "final_focused_confirmation": {
+    "passed": 72,
+    "failed": 0,
+    "errors": 0,
+    "result": "72 passed in 12.45s",
+    "after": "All final generated editorial narration/facts and _hit_data/_turning_points label/detail corrections; expanded str/list/dict.text quote and generated-field name guard",
+    "coverage": [
+      "player_names",
+      "names",
+      "zh",
+      "player_name_alignment",
+      "promote_interview_draft",
+      "content name scan and reverse typo guard",
+      "column current-spec scope",
+      "clean tools package import",
+      "narration point-unit clarity"
+    ],
+    "quote_shapes_covered": [
+      "str",
+      "list[str or dict.text]",
+      "dict.text"
+    ],
+    "expanded_derived_display_guard": true
+  },
+  "remaining_baseline_failed_nodes": [
+    "tests/test_actions_write_permission.py::test_给了actions_write的工作流都真的要点Pages",
+    "tests/test_interview_clip.py::test_推送重试耗尽必须报错不许绿着过去",
+    "tests/test_interview_clip.py::test_推送撞车要把本条重放上去而不是rebase",
+    "tests/test_interview_segment_ruler.py::test_已渲的采访spec按钉死的尺子重切_行一行不差",
+    "tests/test_interview_segment_ruler.py::test_老尺子表只许减_每条都真的要它",
+    "tests/test_interview_segment_ruler.py::test_太宽的候选不量_切出来的行和逐个量一字不差",
+    "tests/test_match_reel.py::test_封面上每个球员都要有国旗和即时排名",
+    "tests/test_interview_segment_ruler.py::test_预检按老尺子重切_已发的对得上",
+    "tests/test_interview_subs_first.py::test_每个转写输入都绑在判定上_只改它旧判定不作数",
+    "tests/test_match_reel.py::test_小红书正文首行要点出是谁",
+    "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段",
+    "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧",
+    "tests/test_match_reel.py::test_每条spec的旁白都还估得下",
+    "tests/test_match_reel.py::test_冷开场不许随手取源片开头",
+    "tests/test_match_reel.py::test_赛场之上开场要给出北京时间赛事和轮次",
+    "tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上",
+    "tests/test_match_reel.py::test_栏目和封面模板要配对",
+    "tests/test_match_reel.py::test_封面固定版式是官方抠图加本场视频全场机位",
+    "tests/test_match_reel.py::test_源片自己烧了记分条时字幕要让开",
+    "tests/test_match_reel.py::test_有母版就不许再渲一遍",
+    "tests/test_match_reel.py::test_母版要按上界存",
+    "tests/test_outro_push.py::test_提交进仓库的母版_台标横向不漂_纵向不往回",
+    "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe",
+    "tests/test_match_reel.py::test_赛场之上要留一段精彩的原声解说_不留要写明为什么",
+    "tests/test_reattest.py::test_渲染路径读到的注解键都要归类",
+    "tests/test_reel_editorial.py::test_钩子不许复述赛果条和顶栏印着的东西",
+    "tests/test_reel_editorial.py::test_赛场之上要么开自动推送要么说清走哪条路",
+    "tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有",
+    "tests/test_reel_asset_gates.py::test_仓库里的图都解得开",
+    "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报",
+    "tests/test_small_gates.py::test_片尾板那条的豁免表只许减_全库零误报",
+    "tests/test_subtitle_override_evidence.py::test_yuan_override_is_proved_by_real_retained_ass",
+    "tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红",
+    "tests/test_unvoiced_quote.py::test_新片子没配音的段都有双语原声字幕",
+    "tests/test_venue_assets.py::test_attribution_md_is_generated_from_credits",
+    "tests/test_venue_assets.py::test_attribution_md_never_credits_a_file_that_is_gone",
+    "tests/test_probe_board.py::test_标定框和全库spec用的框对得上",
+    "tests/test_title_echo.py::test_正文第一句不许重复标题_新片子"
+  ],
+  "full_suite_rerun_after_test_expectation_only_fix": false,
+  "remaining_unresolved_baseline_failure_count": 38,
+  "canonical_display_scan": {
+    "previous_complete_scope_files": 1174,
+    "changed_keys": 125,
+    "final_four_canonical_display_residuals": 0,
+    "final_four_source_annotations_retained": 4,
+    "explicit_english_chinese_bindings_checked": 847,
+    "identity_binding_mismatches": 0,
+    "duplicated_given_names": 0,
+    "note": "Final expanded scan manually classified nine _match saved-research/atp_player_ids annotations as non-display; participant/winner/loser labels and generated editorial facts/narration were corrected. No historical-name mask or relaxed assertion.",
+    "distinct_pairs": 124,
+    "true_old_name_display_residuals": 0,
+    "final_four_canonical_fields_or_lines": 18,
+    "files": 1174,
+    "protected_source_annotation_hits": 651,
+    "retained_non_display_candidates": [
+      {
+        "file": "specs/reels/fritz-jodar-final.json",
+        "json_path": "$._match",
+        "old_zh": "米切尔森",
+        "classification": "retained-original-research-annotation"
+      },
+      {
+        "file": "specs/reels/fritz-jodar-final.json",
+        "json_path": "$._match",
+        "old_zh": "贝尔格斯",
+        "classification": "retained-original-research-annotation"
+      },
+      {
+        "file": "specs/reels/fritz-michelsen.json",
+        "json_path": "$._match.atp_player_ids",
+        "old_zh": "米切尔森",
+        "classification": "retained-original-research-annotation"
+      },
+      {
+        "file": "specs/reels/gea-shapovalov.json",
+        "json_path": "$._match.来路",
+        "old_zh": "哈恰诺夫",
+        "classification": "retained-original-research-annotation"
+      },
+      {
+        "file": "specs/reels/trungelliti-medvedev.json",
+        "json_path": "$._match.atp_player_ids",
+        "old_zh": "特伦杰利蒂",
+        "classification": "retained-original-research-annotation"
+      },
+      {
+        "file": "specs/reels/zhang-putintseva.json",
+        "json_path": "$._match.比分",
+        "old_zh": "普汀塞娃",
+        "classification": "retained-original-research-annotation"
+      },
+      {
+        "file": "specs/reels/zhang-putintseva.json",
+        "json_path": "$._match.形状",
+        "old_zh": "普汀塞娃",
+        "classification": "retained-original-research-annotation"
+      },
+      {
+        "file": "specs/reels/zverev-atmane.json",
+        "json_path": "$._match.atp_player_ids",
+        "old_zh": "阿特马内",
+        "classification": "retained-original-research-annotation"
+      },
+      {
+        "file": "specs/stat-cards/darderi-nakashima-montreal-qf.json",
+        "json_path": "$._match",
+        "old_zh": "达尔代里",
+        "classification": "retained-original-research-annotation"
+      }
+    ]
+  },
+  "table_validation": {
+    "atp": 500,
+    "wta": 500,
+    "alignment_errors": 0,
+    "metadata_warnings": 0,
+    "ledger_entries": 1173,
+    "changed_entries": 125,
+    "review_queue_entries": 474
+  },
+  "immutable_render_records": {
+    "records": 2,
+    "byte_preserved": true
+  },
+  "actual_preview_renders": [
+    "rybakina-charaeva-beijing-2026-r2",
+    "zverev-vandezandschulp-us-open-2026-qf"
+  ],
+  "historical_media_rerendered": false,
+  "validation_run_history": [
+    {
+      "round": "third",
+      "record": {
+        "failed_nodes": [
+          "tests/test_actions_write_permission.py::test_给了actions_write的工作流都真的要点Pages",
+          "tests/test_interview_clip.py::test_推送重试耗尽必须报错不许绿着过去",
+          "tests/test_interview_clip.py::test_推送撞车要把本条重放上去而不是rebase",
+          "tests/test_match_reel.py::test_冷开场不许随手取源片开头",
+          "tests/test_match_reel.py::test_赛场之上开场要给出北京时间赛事和轮次",
+          "tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上",
+          "tests/test_match_reel.py::test_栏目和封面模板要配对",
+          "tests/test_match_reel.py::test_封面固定版式是官方抠图加本场视频全场机位",
+          "tests/test_match_reel.py::test_源片自己烧了记分条时字幕要让开",
+          "tests/test_match_reel.py::test_solo封面的对阵名字也要能算出来",
+          "tests/test_match_reel.py::test_测试按包名导入的tools模块要能在tools不在sys_path时导入",
+          "tests/test_interview_segment_ruler.py::test_已渲的采访spec按钉死的尺子重切_行一行不差",
+          "tests/test_interview_segment_ruler.py::test_老尺子表只许减_每条都真的要它",
+          "tests/test_interview_segment_ruler.py::test_太宽的候选不量_切出来的行和逐个量一字不差",
+          "tests/test_interview_segment_ruler.py::test_预检按老尺子重切_已发的对得上",
+          "tests/test_interview_subs_first.py::test_每个转写输入都绑在判定上_只改它旧判定不作数",
+          "tests/test_match_reel.py::test_封面上每个球员都要有国旗和即时排名",
+          "tests/test_match_reel.py::test_小红书正文首行要点出是谁",
+          "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段",
+          "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧",
+          "tests/test_match_reel.py::test_每条spec的旁白都还估得下",
+          "tests/test_match_reel.py::test_旁白里的分不许读成分钟",
+          "tests/test_match_reel.py::test_有母版就不许再渲一遍",
+          "tests/test_match_reel.py::test_母版要按上界存",
+          "tests/test_reattest.py::test_渲染路径读到的注解键都要归类",
+          "tests/test_reel_asset_gates.py::test_仓库里的图都解得开",
+          "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报",
+          "tests/test_probe_board.py::test_标定框和全库spec用的框对得上",
+          "tests/test_outro_push.py::test_提交进仓库的母版_台标横向不漂_纵向不往回",
+          "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe",
+          "tests/test_match_reel.py::test_赛场之上要留一段精彩的原声解说_不留要写明为什么",
+          "tests/test_reel_editorial.py::test_钩子不许复述赛果条和顶栏印着的东西",
+          "tests/test_reel_editorial.py::test_赛场之上要么开自动推送要么说清走哪条路",
+          "tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有",
+          "tests/test_small_gates.py::test_片尾板那条的豁免表只许减_全库零误报",
+          "tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红",
+          "tests/test_title_echo.py::test_正文第一句不许重复标题_新片子",
+          "tests/test_unvoiced_quote.py::test_新片子没配音的段都有双语原声字幕",
+          "tests/test_venue_assets.py::test_attribution_md_is_generated_from_credits",
+          "tests/test_venue_assets.py::test_attribution_md_never_credits_a_file_that_is_gone",
+          "tests/test_subtitle_override_evidence.py::test_yuan_override_is_proved_by_real_retained_ass"
+        ],
+        "baseline_reproduced": 40,
+        "new_failures": [
+          "tests/test_match_reel.py::test_solo封面的对阵名字也要能算出来"
+        ],
+        "reviewed_at": "2026-10-04",
+        "baseline_commit": "698332220c3f02c2c6ce5149aecbc598acfaa67c",
+        "full_suite_result": {
+          "passed": 5384,
+          "failed": 41,
+          "skipped": 280,
+          "passed_subtests": 70
+        },
+        "fixed_after_full_suite": [
+          {
+            "node": "tests/test_match_reel.py::test_solo封面的对阵名字也要能算出来",
+            "reason": "Test asserted old Putintseva name; aligned both matchup/title expectations with source canonical name.",
+            "targeted_recheck": "passed"
+          }
+        ],
+        "final_focused_confirmation": {
+          "passed": 47,
+          "failed": 0
+        },
+        "remaining_baseline_failed_nodes": [
+          "tests/test_actions_write_permission.py::test_给了actions_write的工作流都真的要点Pages",
+          "tests/test_interview_clip.py::test_推送重试耗尽必须报错不许绿着过去",
+          "tests/test_interview_clip.py::test_推送撞车要把本条重放上去而不是rebase",
+          "tests/test_match_reel.py::test_冷开场不许随手取源片开头",
+          "tests/test_match_reel.py::test_赛场之上开场要给出北京时间赛事和轮次",
+          "tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上",
+          "tests/test_match_reel.py::test_栏目和封面模板要配对",
+          "tests/test_match_reel.py::test_封面固定版式是官方抠图加本场视频全场机位",
+          "tests/test_match_reel.py::test_源片自己烧了记分条时字幕要让开",
+          "tests/test_match_reel.py::test_测试按包名导入的tools模块要能在tools不在sys_path时导入",
+          "tests/test_interview_segment_ruler.py::test_已渲的采访spec按钉死的尺子重切_行一行不差",
+          "tests/test_interview_segment_ruler.py::test_老尺子表只许减_每条都真的要它",
+          "tests/test_interview_segment_ruler.py::test_太宽的候选不量_切出来的行和逐个量一字不差",
+          "tests/test_interview_segment_ruler.py::test_预检按老尺子重切_已发的对得上",
+          "tests/test_interview_subs_first.py::test_每个转写输入都绑在判定上_只改它旧判定不作数",
+          "tests/test_match_reel.py::test_封面上每个球员都要有国旗和即时排名",
+          "tests/test_match_reel.py::test_小红书正文首行要点出是谁",
+          "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段",
+          "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧",
+          "tests/test_match_reel.py::test_每条spec的旁白都还估得下",
+          "tests/test_match_reel.py::test_旁白里的分不许读成分钟",
+          "tests/test_match_reel.py::test_有母版就不许再渲一遍",
+          "tests/test_match_reel.py::test_母版要按上界存",
+          "tests/test_reattest.py::test_渲染路径读到的注解键都要归类",
+          "tests/test_reel_asset_gates.py::test_仓库里的图都解得开",
+          "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报",
+          "tests/test_probe_board.py::test_标定框和全库spec用的框对得上",
+          "tests/test_outro_push.py::test_提交进仓库的母版_台标横向不漂_纵向不往回",
+          "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe",
+          "tests/test_match_reel.py::test_赛场之上要留一段精彩的原声解说_不留要写明为什么",
+          "tests/test_reel_editorial.py::test_钩子不许复述赛果条和顶栏印着的东西",
+          "tests/test_reel_editorial.py::test_赛场之上要么开自动推送要么说清走哪条路",
+          "tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有",
+          "tests/test_small_gates.py::test_片尾板那条的豁免表只许减_全库零误报",
+          "tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红",
+          "tests/test_title_echo.py::test_正文第一句不许重复标题_新片子",
+          "tests/test_unvoiced_quote.py::test_新片子没配音的段都有双语原声字幕",
+          "tests/test_venue_assets.py::test_attribution_md_is_generated_from_credits",
+          "tests/test_venue_assets.py::test_attribution_md_never_credits_a_file_that_is_gone",
+          "tests/test_subtitle_override_evidence.py::test_yuan_override_is_proved_by_real_retained_ass"
+        ],
+        "full_suite_rerun_after_test_expectation_only_fix": false,
+        "remaining_unresolved_baseline_failure_count": 40,
+        "canonical_display_scan": {
+          "files": 1174,
+          "changed_keys": 121,
+          "distinct_pairs": 120,
+          "true_old_name_display_residuals": 0
+        },
+        "table_validation": {
+          "atp": 500,
+          "wta": 500,
+          "alignment_errors": 0,
+          "metadata_warnings": 0
+        },
+        "immutable_render_records": {
+          "records": 2,
+          "byte_preserved": true
+        },
+        "actual_preview_renders": [
+          "rybakina-charaeva-beijing-2026-r2",
+          "zverev-vandezandschulp-us-open-2026-qf"
+        ],
+        "historical_media_rerendered": false
+      }
+    }
+  ],
+  "remaining_new_failure_nodes": [],
+  "baseline_failures_fixed_before_latest_full_suite": [
+    {
+      "node": "tests/test_match_reel.py::test_旁白里的分不许读成分钟",
+      "targeted_recheck": "2 passed in 4.48s; latest full suite also passes both",
+      "changes": "Clean package/direct-script sibling import setup; Nadal academy editable narration/copy point-unit disambiguation."
+    },
+    {
+      "node": "tests/test_match_reel.py::test_测试按包名导入的tools模块要能在tools不在sys_path时导入",
+      "targeted_recheck": "2 passed in 4.48s; latest full suite also passes both",
+      "changes": "Clean package/direct-script sibling import setup; Nadal academy editable narration/copy point-unit disambiguation."
+    }
+  ],
+  "full_suite_rerun_after_final_fixes": false,
+  "actual_subtitle_preview_validation": {
+    "segments": 9,
+    "quotes": 10,
+    "ass_records": [
+      {
+        "file": "mensik-shelton-davis-cup-2026-q2-0.ass",
+        "sha256": "701dd50655828b9dca06a4717407afe1a696c105e13fdc37ee26437b3f2c4e1a",
+        "dialogue_events": 3
+      },
+      {
+        "file": "khachanov-auger-aliassime-beijing-2026-r1-0.ass",
+        "sha256": "ce645a0fe4facb5aec8a300090bc7aa54fb24ac43f0eed967a15993eb2686ea8",
+        "dialogue_events": 1
+      },
+      {
+        "file": "khachanov-auger-aliassime-beijing-2026-r1-4.ass",
+        "sha256": "57ccfedde6d66467d4b6953c8e4713eef9063b32b7ce433886cc50f48ae188da",
+        "dialogue_events": 1
+      },
+      {
+        "file": "khachanov-auger-aliassime-beijing-2026-r1-10.ass",
+        "sha256": "ce645a0fe4facb5aec8a300090bc7aa54fb24ac43f0eed967a15993eb2686ea8",
+        "dialogue_events": 1
+      },
+      {
+        "file": "putintseva-bucsa-bjk-cup-2026-0.ass",
+        "sha256": "b471e33b93fc07fb679a558b2cecccd2e46554ccf49ac57e79ffa821f19540ef",
+        "dialogue_events": 2
+      },
+      {
+        "file": "cobolli-mensik-doubles-laver-cup-2026-7.ass",
+        "sha256": "0bcaffa6894e4ddb2136916888a75da03c516f2e617c63995dd55f99294365b3",
+        "dialogue_events": 3
+      },
+      {
+        "file": "rybakina-charaeva-beijing-2026-r2-5.ass",
+        "sha256": "ef7c5b4956252eeddd4a8dbe8a7fc8ad856e20a1700aef24f39c3ca77ec23c0b",
+        "dialogue_events": 3
+      },
+      {
+        "file": "rybakina-charaeva-beijing-2026-r2-12.ass",
+        "sha256": "c73da4cc1cd1a31dbf778677d3d508f1be2f73deff265dbab0e03d26db03236a",
+        "dialogue_events": 15
+      },
+      {
+        "file": "khachanov-auger-aliassime.draft-0.ass",
+        "sha256": "ba0afd413f9fb27dc96ed8f0032a2945235fa12fd6be4e0f489eb43213df523c",
+        "dialogue_events": 1
+      }
+    ],
+    "quote_checks": [
+      {
+        "source": "specs/reels/mensik-shelton-davis-cup-2026-q2.json",
+        "json_path": "$.segments[0].quote[2].text",
+        "ass": "mensik-shelton-davis-cup-2026-q2-0.ass",
+        "canonical_names": [
+          "门希克"
+        ],
+        "canonical_names_present": true,
+        "english_original_unchanged": true
+      },
+      {
+        "source": "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.json",
+        "json_path": "$.segments[0].quote[0].text",
+        "ass": "khachanov-auger-aliassime-beijing-2026-r1-0.ass",
+        "canonical_names": [
+          "卡恰诺夫"
+        ],
+        "canonical_names_present": true,
+        "english_original_unchanged": true
+      },
+      {
+        "source": "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.json",
+        "json_path": "$.segments[4].quote[0].text",
+        "ass": "khachanov-auger-aliassime-beijing-2026-r1-4.ass",
+        "canonical_names": [
+          "卡恰诺夫"
+        ],
+        "canonical_names_present": true,
+        "english_original_unchanged": true
+      },
+      {
+        "source": "specs/reels/khachanov-auger-aliassime-beijing-2026-r1.json",
+        "json_path": "$.segments[10].quote[0].text",
+        "ass": "khachanov-auger-aliassime-beijing-2026-r1-10.ass",
+        "canonical_names": [
+          "卡恰诺夫"
+        ],
+        "canonical_names_present": true,
+        "english_original_unchanged": true
+      },
+      {
+        "source": "specs/reels/putintseva-bucsa-bjk-cup-2026.json",
+        "json_path": "$.segments[0].quote[0].text",
+        "ass": "putintseva-bucsa-bjk-cup-2026-0.ass",
+        "canonical_names": [
+          "普丁塞娃"
+        ],
+        "canonical_names_present": true,
+        "english_original_unchanged": true
+      },
+      {
+        "source": "specs/reels/cobolli-mensik-doubles-laver-cup-2026.json",
+        "json_path": "$.segments[7].quote[0].text",
+        "ass": "cobolli-mensik-doubles-laver-cup-2026-7.ass",
+        "canonical_names": [
+          "门希克"
+        ],
+        "canonical_names_present": true,
+        "english_original_unchanged": true
+      },
+      {
+        "source": "specs/reels/rybakina-charaeva-beijing-2026-r2.json",
+        "json_path": "$.segments[5].quote[2].text",
+        "ass": "rybakina-charaeva-beijing-2026-r2-5.ass",
+        "canonical_names": [
+          "查拉耶娃"
+        ],
+        "canonical_names_present": true,
+        "english_original_unchanged": true
+      },
+      {
+        "source": "specs/reels/rybakina-charaeva-beijing-2026-r2.json",
+        "json_path": "$.segments[12].quote[0].text",
+        "ass": "rybakina-charaeva-beijing-2026-r2-12.ass",
+        "canonical_names": [
+          "查拉耶娃"
+        ],
+        "canonical_names_present": true,
+        "english_original_unchanged": true
+      },
+      {
+        "source": "specs/reels/rybakina-charaeva-beijing-2026-r2.json",
+        "json_path": "$.segments[12].quote[5].text",
+        "ass": "rybakina-charaeva-beijing-2026-r2-12.ass",
+        "canonical_names": [
+          "查拉耶娃"
+        ],
+        "canonical_names_present": true,
+        "english_original_unchanged": true
+      },
+      {
+        "source": "specs/reels/pending/khachanov-auger-aliassime.draft.json",
+        "json_path": "$.segments[0].quote[0]",
+        "ass": "khachanov-auger-aliassime.draft-0.ass",
+        "canonical_names": [
+          "卡恰诺夫"
+        ],
+        "canonical_names_present": true,
+        "english_original_unchanged": true
+      }
+    ],
+    "checks_passed": true,
+    "full_historical_media_rerendered": false
+  },
+  "editable_content_source_summary": {
+    "corrected_files": 193,
+    "changed_json_scalar_fields": 1406,
+    "fourth_round_source_files_modified": 79,
+    "historical_media_rerendered": false
+  },
+  "post_final_derived_display_fields_confirmation": {
+    "changed_fields": 7,
+    "modules": [
+      "test_promote_interview_draft",
+      "test_assemble_spec"
+    ],
+    "with_normal_production_import_first": {
+      "passed": 55,
+      "failed": 0,
+      "result": "55 passed in 3.56s"
+    },
+    "standalone_pytest_without_preloaded_assemble_spec": {
+      "passed": 52,
+      "failed": 3,
+      "result": "52 passed, 3 failed in 5.60s",
+      "failed_nodes": [
+        "tests/test_assemble_spec.py::test_surname取最后一个词",
+        "tests/test_assemble_spec.py::test_facts_text把狠数据拼成行",
+        "tests/test_assemble_spec.py::test_逐局表提取最终盘分并拦模型编错比分"
+      ],
+      "reason": "These tests execute a dynamically loaded assemble_spec module without adding it to sys.modules; dataclass annotation resolution fails before assertions in a clean interpreter. Normal import first reproduces the full-suite context and all 55 pass. This test-harness ordering limitation was observed, not repaired or skipped."
+    }
+  },
+  "pre_final_derived_checkpoint": {
+    "focused_confirmation": {
+      "passed": 72,
+      "failed": 0,
+      "errors": 0,
+      "result": "72 passed in 12.45s",
+      "after": "All final generated editorial narration/facts and _hit_data/_turning_points label/detail corrections; expanded str/list/dict.text quote and generated-field name guard",
+      "coverage": [
+        "player_names",
+        "names",
+        "zh",
+        "player_name_alignment",
+        "promote_interview_draft",
+        "content name scan and reverse typo guard",
+        "column current-spec scope",
+        "clean tools package import",
+        "narration point-unit clarity"
+      ],
+      "quote_shapes_covered": [
+        "str",
+        "list[str or dict.text]",
+        "dict.text"
+      ],
+      "expanded_derived_display_guard": true
+    },
+    "editable_source_summary": {
+      "corrected_files": 183,
+      "changed_json_scalar_fields": 1037,
+      "historical_media_rerendered": false
+    },
+    "derived_confirmation": {
+      "changed_fields": 7,
+      "modules": [
+        "test_promote_interview_draft",
+        "test_assemble_spec"
+      ],
+      "with_normal_production_import_first": {
+        "passed": 55,
+        "failed": 0,
+        "result": "55 passed in 3.56s"
+      },
+      "standalone_pytest_without_preloaded_assemble_spec": {
+        "passed": 52,
+        "failed": 3,
+        "result": "52 passed, 3 failed in 5.60s",
+        "failed_nodes": [
+          "tests/test_assemble_spec.py::test_surname取最后一个词",
+          "tests/test_assemble_spec.py::test_facts_text把狠数据拼成行",
+          "tests/test_assemble_spec.py::test_逐局表提取最终盘分并拦模型编错比分"
+        ],
+        "reason": "These tests execute a dynamically loaded assemble_spec module without adding it to sys.modules; dataclass annotation resolution fails before assertions in a clean interpreter. Normal import first reproduces the full-suite context and all 55 pass. This test-harness ordering limitation was observed, not repaired or skipped."
+      }
+    }
+  },
+  "final_generated_display_source_confirmation": {
+    "changed_files": 73,
+    "distinct_changed_json_fields": 369,
+    "latin_text_numbers_urls_unchanged": true,
+    "original_json_formatting_preserved": true,
+    "promote_assemble_normal_production_import_context_result": "55 passed in 3.22s",
+    "standalone_fixture_limitation": "Earlier clean standalone 52 passed / 3 dynamic-module dataclass fixture failures remains recorded above; no fixture/assertion changes."
+  },
+  "fourth_round_lint_confirmation": {
+    "changed_players_and_alignment_tool": "ruff check passed",
+    "changed_renderer_and_guard": "ruff check --select F821 passed",
+    "unchanged_in_fourth_round_update_player_names_full_lint": "4 pre-existing I001/RUF100 findings; file unchanged from local fourth-round parent, not claimed clean",
+    "update_player_names_current_blob": "4460d5079e46649b1675fec0e542a92d13b7b660",
+    "update_player_names_parent_blob": "4460d5079e46649b1675fec0e542a92d13b7b660"
+  }
+}

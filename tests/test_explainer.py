@@ -8,6 +8,7 @@ from unittest import mock
 
 import pytest
 
+from tennislive.zh import player_zh
 from tennislive.zh.tts_fake_words import FAKE_WORDS
 from tennislive.render.tournament_story import STORIES, find_story_by_slug
 from tennislive.video.explainer import (
@@ -2902,6 +2903,8 @@ _ON_PURPOSE = {
     # 「帕特里克」和「施特里克」只差一个字，两个都对。2026-09-27
     # `cobolli-mensik-laver-cup-2026-doubles-interview` 主持人提到他时第一次扫出来。
     "帕特里克·麦肯罗",
+    # Billie Jean King 婚前姓名 Moffitt；遮完整姓名避免窗口「比利·简·莫」误报。
+    "比利·简·莫菲特",
     # Francisco Cerundolo 的完整姓名；表里用姓氏「塞伦多洛」。只遮完整真名，
     # 避免遮掉姓氏后「西斯科·」被误判成「西斯科娃」，不豁免错写的姓氏。
     "弗朗西斯科·塞伦多洛",
@@ -2956,11 +2959,9 @@ _ON_PURPOSE = {
 #: 就说明有人偷懒了。
 #:
 #: 只许减不许加，底下有自检。
-_SHIPPED_TYPOS = {
-    # 商竣程—达尔德里蒙特利尔 R3（e22a6e1）：两张译名表都是**达尔代里**。
-    # 2026-08-07 01:36:54Z 已经推过微信（run 31138555626 第 30 步 success）。
-    ("shang-darderi-montreal-2026.json", "达尔德里"),
-}
+_SHIPPED_TYPOS = set()
+# 2026-10-04：原商竣程蒙特利尔 R3 的「达尔德里」已成为当前规范名，
+# 因此删除过时错名记录；未改动历史视频或 spec。
 
 #: **近似串那条查不到两三个字的名字**——三个字的窗口会撞上普通词，所以下面那条
 #: 测试只查四个字以上。可表里有 210 个两三字的名字，「凯斯」就在里面：我把
@@ -2978,9 +2979,10 @@ _KNOWN_TYPOS = {
     #   蒙菲尔斯 → 孟菲尔斯      等长差一字，判据 ① 抓到了
     #   科梅萨纳 → 科梅萨尼亚    长度 4/5，判据 ① 抓不到 → 这次补了判据 ②
     #   波佩林   → 波皮林        三个字，在射程之外 → 只能钉在这儿
-    #   费恩利   → 弗恩利        同上
-    "波佩林": "波皮林",         # Alexei Popyrin
-    "费恩利": "弗恩利",         # Jacob Fearnley
+    #   弗恩利   → 费恩利        2026-10-04 原文复核后的现行主名
+    "波佩林": player_zh("Alexei Popyrin"),  # 按现行有据规范名维护
+    "门西克": player_zh("Jakub Mensik"),  # 本地译制字幕同样对齐主名
+    "弗恩利": player_zh("Jacob Fearnley"),  # 按现行有据规范名维护
 }
 
 #: 正当地含着某个错字串的词，查之前先遮掉。「巴基斯坦」里就有「基斯」——
@@ -3101,6 +3103,16 @@ def _near_misses(masked, run_re, index):
     return hits
 
 
+def test_历史文本不再豁免真实错名():
+    # 已修正可编辑展示文本；原始证据字段不进入展示扫描。
+    for wrong, canonical in (("奥斯塔片科", "奥斯塔彭科"), ("里巴金娜", "莱巴金娜")):
+        assert (wrong, canonical) in _near_misses(
+            wrong, _CJK_DOT_RUN, _typo_index([(canonical, canonical)]))
+    # 新内容与历史内容都继续查旧规范近似名。
+    assert ("哈恰诺夫", "卡恰诺夫") in _near_misses(
+        "哈恰诺夫", _CJK_DOT_RUN, _typo_index([("卡恰诺夫", "卡恰诺夫")]))
+
+
 def test_人名要以译名表为准():
     """人名不手打，以 `zh/players.py` 为准——这条写在 CLAUDE.md 里，仍然被违反了两次。
 
@@ -3123,7 +3135,7 @@ def test_人名要以译名表为准():
     # 只并旧表会漏掉只登记在 player_names_top500.json 里的名字，遮罩阶段
     # 遮不掉它们，也就防不住"表里明明有、却被判成手打错"的假阳性。
     known = sorted(
-        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE,
+        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE | {"迈克尔·郑", "迈克尔·乔丹"},
         key=len, reverse=True,
     )
     canon = [n for n in known if len(n) >= 4]
@@ -3161,7 +3173,7 @@ def test_人名要以译名表为准():
 
     def scan(where: str, text: str) -> None:
         safe = text
-        for word in _TYPO_SAFE + typo_safe_names:
+        for word in _TYPO_SAFE + typo_safe_names + ("普林斯顿",):
             safe = safe.replace(word, "　" * len(word))
         for wrong, right in _KNOWN_TYPOS.items():
             if wrong in safe:
@@ -3185,14 +3197,42 @@ def test_人名要以译名表为准():
     # 于是 2026-07-29 我在 `eala-fernandez.xhs.txt` 里把 Rybakina 写成
     # 「雷巴金娜」（表里是**莱巴金娜**），全绿照过——**同一个名字，第三次写错**，
     # 前两次是「里巴金娜」和这次。判据早就写好了，只是没指到这批文件上。
-    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+    for path in sorted(Path("specs/reels").rglob("*.xhs.txt")):
         scan(path.name, path.read_text(encoding="utf-8"))
-    for path in sorted(Path("specs/reels").glob("*.json")):
+    for path in sorted(Path("specs/reels").rglob("*.json")):
         spec = json.loads(path.read_text(encoding="utf-8"))
         cover = spec.get("cover") or {}
         texts = [cover.get("hook", ""), cover.get("winner", ""), cover.get("meta", "")]
         texts += list((cover.get("versus") or {}).get("names") or [])
         texts += [s.get("narration", "") for s in spec.get("segments") or []]
+        # 草稿旁白与本地中文事实会进入正式文案，不能只检查最终 segments。
+        editorial = spec.get("editorial") or {}
+        texts += [v for v in editorial.get("narration") or [] if isinstance(v, str)]
+        human = editorial.get("human_context") or {}
+        if isinstance(human, dict):
+            texts += [v for v in human.get("facts") or [] if isinstance(v, str)]
+        def derived_name_texts(value):
+            if isinstance(value, dict):
+                for key, item in value.items():
+                    if key in ("label", "detail") and isinstance(item, str):
+                        yield item
+                    elif not key.startswith("_") and isinstance(item, (dict, list)):
+                        yield from derived_name_texts(item)
+            elif isinstance(value, list):
+                for item in value:
+                    yield from derived_name_texts(item)
+        for key in ("_hit_data", "_turning_points"):
+            texts += list(derived_name_texts(spec.get(key)))
+        # quote 是实际烧进画面的本地双语字幕，英文原声保留，中文人名仍须检查。
+        for segment in spec.get("segments") or []:
+            raw = segment.get("quote")
+            if isinstance(raw, str):
+                texts.append(raw)
+            elif isinstance(raw, dict):
+                texts.append(str(raw.get("text", "")))
+            elif isinstance(raw, list):
+                texts += [str(cue.get("text", "")) if isinstance(cue, dict) else str(cue)
+                          for cue in raw]
         # **推送那几栏也要扫。** `push.summary` / `push.lead` 是微信标题和正文
         # 第一行，发出去收不回来，而它们原来一个字都没被查过——名字写错在这儿
         # 和写在旁白里一样会发出去。`_` 开头的是注解，不扫。
@@ -3288,7 +3328,7 @@ def test_人名近似匹配的索引和笨办法结果一样():
     from tennislive.zh.players import PLAYER_ZH
 
     known = sorted(
-        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE,
+        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE | {"迈克尔·郑", "迈克尔·乔丹"},
         key=len, reverse=True,
     )
     # 每种长度各取几个，外加全部带间隔号的——跑得快，又盖得住 4 字到最长的

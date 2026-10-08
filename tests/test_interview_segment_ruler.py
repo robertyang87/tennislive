@@ -111,10 +111,16 @@ def _mismatch(spec: dict, words: list, bounds, current: bool, ruler: str) -> str
 
 @functools.lru_cache(maxsize=None)
 def _default_ruler_mismatches() -> dict[str, str | None]:
-    """老尺子表里的每一条，按默认尺子重切的结果（自检「这条真的要老尺子」用）。"""
+    """老尺子表里的每一条，按默认尺子重切的结果（自检「这条真的要老尺子」用）。
+
+    边界一律拿 lines.json 比（`current=True`）。译名校正会改已发 spec 的字节，
+    QC 的 spec_sha256 就对不上，正式重切那条会把边界跳过；跳过之后默认尺子
+    只剩行数，和老尺子一样，自检会误报「可以删」。已发成片的行界还在
+    lines.json 里，删不删要看它。
+    """
     legacy = clip.legacy_segment_rulers()
-    return {spec["slug"]: _mismatch(spec, words, bounds, current, clip.SEGMENT_RULER)
-            for spec, words, bounds, current in _rendered_corpus() if spec["slug"] in legacy}
+    return {spec["slug"]: _mismatch(spec, words, bounds, True, clip.SEGMENT_RULER)
+            for spec, words, bounds, _current in _rendered_corpus() if spec["slug"] in legacy}
 
 
 def test_已渲的采访spec按钉死的尺子重切_行一行不差():
@@ -156,6 +162,9 @@ def test_老尺子表只许减_每条都真的要它():
 
     ① 表里每条都是**已渲**的正式 spec（新 spec 不许挂老尺子）；
     ② 表里每条按**默认尺子**重切都对不上——对得上就说明它不需要老尺子，删掉；
+       这里的「对不上」含 lines.json 的行边界。已发 spec 后来只改了中文译名时，
+       QC 里的 spec_sha256 对不上，正式重切会跳过边界；自检不能跟着跳，否则
+       老尺子会被误判成可以删，重渲时英文行界会挪。
     ③ 条数只许减（`_LEGACY_RULER_CAP`）；
     ④ ②里那些「对不上」要两种坏法都有：行数变了（重渲当场红），和**行数碰巧没变、
        边界挪了**（不红、中文静静配到隔壁那句英文上）——后一种最该拦，判据只看行数

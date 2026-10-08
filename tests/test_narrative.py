@@ -145,7 +145,7 @@ def test_preview_angle_falls_back_to_a_per_match_line_not_a_per_round_one():
 
     assert angle not in used, f"收尾仍然重复：{angle}"
     assert angle == data_angle(two, 80)
-    assert "波皮林" in angle or "Popyrin" in angle
+    assert "波普林" in angle or "Popyrin" in angle
 
 
 def test_data_angle_is_importable_from_both_narrative_and_xiaohongshu():
