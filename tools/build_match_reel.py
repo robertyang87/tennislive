@@ -366,6 +366,10 @@ STAT_CARD_PLACEHOLDER = "<stat_card>"
 # 深底大字卡当整屏段。占位符后面跟着那句话的 JSON——每段的字不一样，
 # 一个常量占位符认不出是哪一张。
 TITLE_CARD_PREFIX = "<title_card>"
+# 本片把章节卡品牌下移之后，字幕必须改下锚，两行才长在品牌上方。
+# 96 是 subtitle_bottom 允许的最小值：文字底边在 y=1344，品牌 bottom=28、
+# 高 40px 时顶边在 y=1372，间距约 28px。上锚两行中文会落到 y≈1380，盖住品牌。
+TITLE_CARD_SUBTITLE_BOTTOM = 96
 #: 封面素材（抓下来的帧、抠好的人）落在这儿，**跟着产物一起进仓库**。
 #
 # **它买的是「封面返工不用上 runner」。** 量出来的账（shang-rublev，2026-08-05）：
@@ -9589,8 +9593,16 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
             import render_title_card  # noqa: PLC0415
             renderer = render_title_card.render
         size = (VIDEO_W, BAND_PIC_H) if LAYOUT == "band" else (VIDEO_W, VIDEO_H)
-        # 品牌固定在卡底 64px 安全区（render_title_card 的默认值）。
-        # 字幕保留自己的真实锚，不再拿默认字幕上锚把品牌抬到标题/正文中间。
+        # 默认品牌在卡底 64px，字幕保留自己的锚。spec 写了
+        # `title_card_handle_bottom` 时，本片把品牌下移到两行字幕下方，
+        # 同时把这些字卡的字幕改成下锚，避免上锚第二行盖住品牌。
+        handle_bottom = spec.get("title_card_handle_bottom")
+        if handle_bottom is not None and (
+                type(handle_bottom) is not int
+                or not 20 <= handle_bottom <= 48):
+            raise ReelError(
+                "title_card_handle_bottom 必须是 20~48 的整数像素"
+                f"（品牌下移到字幕区下方），拿到的是 {handle_bottom!r}")
         out_segments = []
         for i, s in enumerate(segments):
             if not (s.image and s.image.startswith(TITLE_CARD_PREFIX)):
@@ -9598,13 +9610,21 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
                 continue
             card = json.loads(s.image[len(TITLE_CARD_PREFIX):])
             out = outdir / f"title_card_{i + 1:02d}.jpg"
-            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size)
+            render_kwargs = {}
+            if handle_bottom is not None:
+                render_kwargs["handle_bottom"] = handle_bottom
+            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size,
+                     **render_kwargs)
             if not out.is_file():
                 raise ReelError(f"第 {i + 1} 段的章节卡没渲出来：{out}")
             print(f"[章节卡] 第 {i + 1} 段「{card['text']}」→ {out.name}（{size[0]}×{size[1]}）")
             # full_bleed：这张是按画面区设计的整幅页，`still_canvas_for_layout`
             # 铺满不缩（渲出来是 2×，按尺寸认不出来，所以在这儿认领）
-            out_segments.append(replace(s, image=str(out), full_bleed=True))
+            landed = replace(s, image=str(out), full_bleed=True)
+            if handle_bottom is not None and (
+                    str(s.narration or "").strip() or s.quote) and s.subtitle_bottom is None:
+                landed = replace(landed, subtitle_bottom=TITLE_CARD_SUBTITLE_BOTTOM)
+            out_segments.append(landed)
     return out_segments
 
 

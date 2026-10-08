@@ -274,6 +274,53 @@ def test_章节卡品牌在真实字幕下方的底部安全区(tmp_path, monkey
         "叠字幕后底部品牌必须仍然可见，与字幕分离"
 
 
+def _bright_rows(image, y0, y1, *, thresh=110, min_hits=6):
+    rows = []
+    for y in range(y0, y1):
+        hits = sum(image.getpixel((x, y)) > thresh for x in range(180, 900, 6))
+        if hits >= min_hits:
+            rows.append(y)
+    return rows
+
+
+def test_本片字卡品牌下移到两行字幕下方(tmp_path, monkeypatch):
+    """年终第一的品牌压住烧录字幕。本片把品牌下移，并让字卡字幕下锚。
+
+    抽查的是两行同时出现的中文，不是单行。上锚两行会落到品牌里；
+    下锚之后文字底边停在品牌上方，中间要有一条暗带。"""
+    import subprocess  # noqa: PLC0415
+
+    from PIL import Image  # noqa: PLC0415
+
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    assert "bottom:64px" in tc.build("排名是怎么掉的")
+    assert "bottom:28px" in tc.build("16岁最多12站", handle_bottom=28)
+    segs = reel.parse_segments(_spec(), {"": 1}, "")
+    card = reel._materialize_title_cards(
+        {"title_card_handle_bottom": 28}, segs, tmp_path)[1]
+    assert card.subtitle_bottom == reel.TITLE_CARD_SUBTITLE_BOTTOM == 96
+    two = "16岁这一年最多12站\n外卡也算进这12站里"
+    ass = reel.write_subtitles([(0.0, 2.4, two)], tmp_path / "two.ass",
+                               height=1440, margin_v=1284, outline=4, shadow=1,
+                               bottom_margin_windows=[(0.0, 2.4, 96)])
+    frame = tmp_path / "with-two-lines.png"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", card.image,
+                    "-vf", f"scale=1080:1440,ass={ass}:fontsdir={ROOT / 'assets' / 'fonts'}",
+                    "-frames:v", "1", str(frame)], check=True)
+    bare = tmp_path / "bare.png"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", card.image,
+                    "-vf", "scale=1080:1440", "-frames:v", "1", str(bare)], check=True)
+    brand_rows = _bright_rows(Image.open(bare).convert("L"), 1280, 1440)
+    both = _bright_rows(Image.open(frame).convert("L"), 1100, 1440)
+    assert brand_rows, "下移后的品牌要画在画面底部"
+    brand_top = min(brand_rows)
+    subtitle_rows = [y for y in both if y < brand_top - 1]
+    assert subtitle_rows, "两行字幕要画在品牌上方"
+    gap = brand_top - max(subtitle_rows) - 1
+    assert gap >= 16, f"两行字幕和品牌间距只有 {gap}px（字幕底 {max(subtitle_rows)}，品牌顶 {brand_top}）"
+    assert max(subtitle_rows) < brand_top, "两行字幕不能压进品牌"
+
+
 def test_真渲的章节卡走完切段那条路_成片第一行就是彩条(tmp_path):
     """判据要过**真渲染器 + 真切段**，不许再拿手搓卡验：上一条的第一版就是这么
     绿着放过了一版彩条在 y≈87 的成片（2026-09-05 comeback-five-love-down）。
