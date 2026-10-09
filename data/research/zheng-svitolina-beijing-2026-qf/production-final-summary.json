@@ -1,0 +1,32 @@
+{
+  "editorial_and_visual_model": "current OpenAI assistant",
+  "deepseek_calls_this_turn": 0,
+  "minimax_calls_this_turn": 0,
+  "tts_backend": "Edge zh-CN-YunjianNeural",
+  "targeted_tests": {
+    "passed": 110,
+    "skipped": 1
+  },
+  "local_full_suite": "46 failures triaged; current film hit-data and true same-source custom-board evidence gaps fixed, other historical/sparse failures recorded; PR head CI remains required",
+  "l2_final": "0 findings; qc_attestation.json bound to film",
+  "final_film_duration_seconds": 226.4,
+  "signed_url_tests": {
+    "passed": 3
+  },
+  "release": {
+    "tag": "reel-zheng-svitolina-beijing-2026-qf",
+    "uploader_run": 37940051453,
+    "bytes": 100167978,
+    "github_digest": "sha256:6b49ea98dd56337d8ec0e95a5408fdf2f0a7f78c1950e8235523b896195ded5a",
+    "cdn_range_http": 206,
+    "same_as_l2_attested_film": true
+  },
+  "ci_first_final_head": {
+    "head": "6b23b4172cfc3e2f9119e46f090741ccfe32ab97",
+    "run": 37940868944,
+    "passed": 5830,
+    "skipped": 205,
+    "failed": 1,
+    "fixed": "unsupported internal scene note point_start_ok renamed _point_start_review; full rerender preserved exact film SHA256"
+  }
+}

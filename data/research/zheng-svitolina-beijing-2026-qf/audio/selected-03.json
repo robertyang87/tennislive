@@ -1,0 +1,87 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=lme6vYGvWXw",
+  "source_sha256": "da97c5eafb072aa2087e1cee2d893a2c1ea687ac8ef941373e9ccc76553f1d3d",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI root assistant: directly read actual YouTube small.en/base.en unprompted full-window words/probabilities and independently retained platform captions; Chinese translation edited by same assistant.",
+  "reviewed_at": "2026-10-09T14:11:27.444170+00:00",
+  "status": "complete",
+  "reviewed_from": 110.8,
+  "reviewed_to": 149.36,
+  "actual_listening_performed": false,
+  "review_scope": "Full selected audio windows crosschecked from actual downloaded source; base timings stretched over silence rejected, small words and platform cues preferred. Player/coach spelling grounded in verified identities. This is ASR crosscheck, not claimed human listening. Cold279.0 preroll is covered by actual winning raw256.84–296.5.",
+  "foreground_english": [
+    {
+      "start": 127.9,
+      "end": 129.03,
+      "en": "Finds the line.",
+      "zh": "压线得分。"
+    },
+    {
+      "start": 129.88,
+      "end": 132.84,
+      "en": "Good set of tennis from Zheng Qinwen.",
+      "zh": "郑钦文这一盘打得很好。"
+    },
+    {
+      "start": 133.72,
+      "end": 134.8,
+      "en": "Coach likes it.",
+      "zh": "教练很满意。"
+    },
+    {
+      "start": 135.22,
+      "end": 136.3,
+      "en": "Crowd is loving it,",
+      "zh": "现场观众也看得过瘾。"
+    },
+    {
+      "start": 137.45,
+      "end": 140.55,
+      "en": "as Zheng Qinwen from China",
+      "zh": "中国选手郑钦文"
+    },
+    {
+      "start": 140.8,
+      "end": 142.75,
+      "en": "playing well in front of her home crowd.",
+      "zh": "在主场观众面前表现出色"
+    },
+    {
+      "start": 143.16,
+      "end": 146.28,
+      "en": "Looking to get to a second semifinal in Beijing.",
+      "zh": "她争取第二次打进北京站半决赛。"
+    },
+    {
+      "start": 146.58,
+      "end": 147.8,
+      "en": "She's halfway there. Six three.",
+      "zh": "现在已走过一半，首盘6比3。"
+    }
+  ],
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-review-ready-six-windows.json",
+      "sha256": "cb485f626750aef87b70363008695b298050052036f662ab1e605f8ba4e0dd3a"
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-small.en-six-windows-unprompted.json",
+      "sha256": "c88bb46468a19afb9e129440bb705522069dd8abc66b2aebe2ba85bb9e8d53bb"
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-base.en-six-windows-unprompted.json",
+      "sha256": "dc1c3cef53d8884b5395dc7127e622353a9bfdbb30fce4f3d8f6415778388cf3"
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-asr-focus-unprompted.json",
+      "sha256": "456061539a3cf8d0ec2561d075650d5bc3363f1de15be6540cfa5e83f596084a"
+    }
+  ],
+  "source_speech_notes": [
+    "Original broadcaster ends phrase at from in216–219 window; unprompted models and platform captions contain no subsequent name, keep literal fragment with ellipsis.",
+    "The crowd wording adopted from small.en and platform, base inserts And; no unsupported new proposition.",
+    "Names corrected from ASR aliases to Qinwen Zheng/Elina Svitolina/Pere Riba using actual match identity."
+  ]
+}

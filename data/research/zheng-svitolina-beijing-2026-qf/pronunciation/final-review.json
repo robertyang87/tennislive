@@ -1,0 +1,3403 @@
+{
+  "created_at": "2026-10-09T13:43:24.173265+00:00",
+  "slug": "zheng-svitolina-beijing-2026-qf",
+  "spec_sha256": "8cdd25df62d751d4c03b9728a03abbc5b4f864c621b7ae6b27b73d741e7d9f4d",
+  "status": "acoustic_review_complete",
+  "sealed": true,
+  "editorial_and_visual_model": "current OpenAI assistant conversation; no DeepSeek/MiniMax called",
+  "actual_final_voice": "zh-CN-YunjianNeural",
+  "actual_final_rate": "+6%",
+  "actual_final_pitch": "+0Hz",
+  "utterances": 8,
+  "spoken_chars": 313,
+  "polyphone_occurrences": 40,
+  "supported_occurrences": 40,
+  "pending_occurrences": 0,
+  "default_counts": {
+    "correct": 34,
+    "uncertain": 3,
+    "unreliable": 5,
+    "skipped": 7
+  },
+  "default_results_unchanged": true,
+  "manual_listening_claimed": false,
+  "actual_final_renderer_audio_bound": true,
+  "actual_final_audio_bindings": "bindings.json",
+  "occurrences": [
+    {
+      "utterance": 0,
+      "edit_id": "coordinate",
+      "segment_index": 1,
+      "tts_text": "北京时间十月九号下午，中网四分之一决赛。二十四岁生日刚过，郑钦文对上世界第七，斯维托丽娜。",
+      "text_sha256": "d5d93bd522bde79d2c6b7f7610e2b5347bb6f3cd94d92f89d85ce85bf44a1e0c",
+      "actual_final_mp3_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+      "index": 3,
+      "char": "间",
+      "word": "北京时间",
+      "intended": "jian1",
+      "live": [
+        "jian1",
+        "jian4"
+      ],
+      "defaults": [
+        "jian1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "jian4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.334,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u00-i03-间-jian1-vs-jian4-d5d93bd522bd.json",
+          "evidence_sha256": "e01475577ecd3c516f09d9a13e860f15a7a021fbc254e4f835884b996820b2da",
+          "actual_orig_audio_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "兼": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.339
+            },
+            "坚": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.989
+            },
+            "尖": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.989
+            },
+            "健": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.906
+            },
+            "建": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.907
+            },
+            "剑": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": -0.166,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.334,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 0,
+      "edit_id": "coordinate",
+      "segment_index": 1,
+      "tts_text": "北京时间十月九号下午，中网四分之一决赛。二十四岁生日刚过，郑钦文对上世界第七，斯维托丽娜。",
+      "text_sha256": "d5d93bd522bde79d2c6b7f7610e2b5347bb6f3cd94d92f89d85ce85bf44a1e0c",
+      "actual_final_mp3_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+      "index": 7,
+      "char": "号",
+      "word": "号",
+      "intended": "hao4",
+      "live": [
+        "hao4",
+        "hao2"
+      ],
+      "defaults": [
+        "hao4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "hao2": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.717,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u00-i07-号-hao4-vs-hao2-d5d93bd522bd.json",
+          "evidence_sha256": "d7ff54b19aefe242afd7ee1f6b3ef8f82823f5d720f9825ec679ed85323e2692",
+          "actual_orig_audio_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "昊": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.737
+            },
+            "灏": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.745
+            },
+            "颢": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.674
+            },
+            "嚎": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.742
+            },
+            "壕": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.743
+            },
+            "毫": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.558
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.717,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 0,
+      "edit_id": "coordinate",
+      "segment_index": 1,
+      "tts_text": "北京时间十月九号下午，中网四分之一决赛。二十四岁生日刚过，郑钦文对上世界第七，斯维托丽娜。",
+      "text_sha256": "d5d93bd522bde79d2c6b7f7610e2b5347bb6f3cd94d92f89d85ce85bf44a1e0c",
+      "actual_final_mp3_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+      "index": 11,
+      "char": "中",
+      "word": "中",
+      "intended": "zhong1",
+      "live": [
+        "zhong1",
+        "zhong4"
+      ],
+      "defaults": [
+        "zhong1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "zhong4": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.996,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u00-i11-中-zhong1-vs-zhong4-d5d93bd522bd.json",
+          "evidence_sha256": "8798420f405606991359ddd42e133cbc389457783e6fc78ccceb8180f7d4816d",
+          "actual_orig_audio_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "忠": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.975
+            },
+            "终": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.975
+            },
+            "钟": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.965
+            },
+            "仲": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.93
+            },
+            "众": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.93
+            },
+            "重": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": 0.063,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.996,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 0,
+      "edit_id": "coordinate",
+      "segment_index": 1,
+      "tts_text": "北京时间十月九号下午，中网四分之一决赛。二十四岁生日刚过，郑钦文对上世界第七，斯维托丽娜。",
+      "text_sha256": "d5d93bd522bde79d2c6b7f7610e2b5347bb6f3cd94d92f89d85ce85bf44a1e0c",
+      "actual_final_mp3_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+      "index": 14,
+      "char": "分",
+      "word": "分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fen4": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.545,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u00-i14-分-fen1-vs-fen4-d5d93bd522bd.json",
+          "evidence_sha256": "88066d65bd2f8ece8daa603947d403a864b630961c8c59110429cf64869a8347",
+          "actual_orig_audio_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "氛": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.99
+            },
+            "纷": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.99
+            },
+            "芬": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.554
+            },
+            "忿": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.997
+            },
+            "愤": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.996
+            },
+            "粪": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.997
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.545,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 0,
+      "edit_id": "coordinate",
+      "segment_index": 1,
+      "tts_text": "北京时间十月九号下午，中网四分之一决赛。二十四岁生日刚过，郑钦文对上世界第七，斯维托丽娜。",
+      "text_sha256": "d5d93bd522bde79d2c6b7f7610e2b5347bb6f3cd94d92f89d85ce85bf44a1e0c",
+      "actual_final_mp3_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+      "index": 42,
+      "char": "丽",
+      "word": "丽",
+      "intended": "li4",
+      "live": [
+        "li4",
+        "li2"
+      ],
+      "defaults": [
+        "li4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "li2": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.975,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u00-i42-丽-li4-vs-li2-d5d93bd522bd.json",
+          "evidence_sha256": "3beba2c6568e7efbbd937d27c8ea45c8991ecf710d3c425c0fa61b450a7d0fe7",
+          "actual_orig_audio_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "俐": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.999
+            },
+            "傈": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.424
+            },
+            "利": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.999
+            },
+            "梨": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.981
+            },
+            "漓": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.981
+            },
+            "犁": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.429
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.975,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 0,
+      "edit_id": "coordinate",
+      "segment_index": 1,
+      "tts_text": "北京时间十月九号下午，中网四分之一决赛。二十四岁生日刚过，郑钦文对上世界第七，斯维托丽娜。",
+      "text_sha256": "d5d93bd522bde79d2c6b7f7610e2b5347bb6f3cd94d92f89d85ce85bf44a1e0c",
+      "actual_final_mp3_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+      "index": 43,
+      "char": "娜",
+      "word": "娜",
+      "intended": "na4",
+      "live": [
+        "na4",
+        "nuo2"
+      ],
+      "defaults": [
+        "na4",
+        "nuo2"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "nuo2": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.996,
+          "method": "distinct na/nuo vowel; full DTW MFCC-only and identical references; required two-sided reference selftests",
+          "evidence": "evidence/name-na-spectral-d5d93bd522bd.json",
+          "evidence_sha256": "2ce128ea6dc8a78ceedf6c416a9c4f9c7c94a7e790668eb3fbc6051504059c5a",
+          "actual_orig_audio_sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "纳": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.358
+            },
+            "钠": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.371
+            },
+            "捺": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.374
+            },
+            "挪": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -1.0
+            },
+            "傩": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -1.0
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "uncertain",
+          "confidence": null,
+          "score": 0.128,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 1,
+      "edit_id": "set_one_turn",
+      "segment_index": 2,
+      "tts_text": "首盘，郑钦文先破发，拿到二比零。四比二时，她又兑现第五个破发点。五比二发球拿盘没成，下一局，她再拿到盘点。",
+      "text_sha256": "3e5250def89d4fea1649c98efa0e77c2d7c6f7f1ec1b39e2153d9a8800625fc7",
+      "actual_final_mp3_sha256": "9801c3aa51ab7c01151a2d2d5a88231173d89ed3d8c5e56efd0b1f15ab6e8d14",
+      "index": 8,
+      "char": "发",
+      "word": "发",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fa4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.992,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u01-i08-发-fa1-vs-fa4-3e5250def89d.json",
+          "evidence_sha256": "08a68c0e104c07c4fab451cf48d43cdb504baab77c8db643f2939b8366588102",
+          "actual_orig_audio_sha256": "9801c3aa51ab7c01151a2d2d5a88231173d89ed3d8c5e56efd0b1f15ab6e8d14",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "髮": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.953
+            },
+            "珐": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.958
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.992,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 1,
+      "edit_id": "set_one_turn",
+      "segment_index": 2,
+      "tts_text": "首盘，郑钦文先破发，拿到二比零。四比二时，她又兑现第五个破发点。五比二发球拿盘没成，下一局，她再拿到盘点。",
+      "text_sha256": "3e5250def89d4fea1649c98efa0e77c2d7c6f7f1ec1b39e2153d9a8800625fc7",
+      "actual_final_mp3_sha256": "9801c3aa51ab7c01151a2d2d5a88231173d89ed3d8c5e56efd0b1f15ab6e8d14",
+      "index": 29,
+      "char": "发",
+      "word": "发点",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fa4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.638,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u01-i29-发-fa1-vs-fa4-3e5250def89d.json",
+          "evidence_sha256": "c65fc4a2a6e60661cf6944777dbd1c23af1545ef460c8a808ac2cf9f1eaea26a",
+          "actual_orig_audio_sha256": "9801c3aa51ab7c01151a2d2d5a88231173d89ed3d8c5e56efd0b1f15ab6e8d14",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "髮": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.321
+            },
+            "珐": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.298
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.638,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 1,
+      "edit_id": "set_one_turn",
+      "segment_index": 2,
+      "tts_text": "首盘，郑钦文先破发，拿到二比零。四比二时，她又兑现第五个破发点。五比二发球拿盘没成，下一局，她再拿到盘点。",
+      "text_sha256": "3e5250def89d4fea1649c98efa0e77c2d7c6f7f1ec1b39e2153d9a8800625fc7",
+      "actual_final_mp3_sha256": "9801c3aa51ab7c01151a2d2d5a88231173d89ed3d8c5e56efd0b1f15ab6e8d14",
+      "index": 35,
+      "char": "发",
+      "word": "发球",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fa4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.45145946173781476,
+          "method": "separate first sustained voiced vowel island starting after WordBoundary onset+60ms within end+120ms: prevents adjacent numeral二 inclusion; middle30..85% Theil-Sen F0 slope; fa only one intended 發 reference so confidence capped low, wrong-reference leave-one-out must pass",
+          "evidence": "evidence/fa-nucleus-u01-i35-发-fa1-vs-fa4.json",
+          "evidence_sha256": "15db8d85818b95a33cc6e1bc2033a7bc62f2ccede74524bcbc010a63ff22fdeb",
+          "actual_orig_audio_sha256": "9801c3aa51ab7c01151a2d2d5a88231173d89ed3d8c5e56efd0b1f15ab6e8d14",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "B:髮": {
+              "expected": "misread",
+              "d_intended": 16.421900668647684,
+              "d_wrong": 5.318782923988682,
+              "score": -0.5107069286643618,
+              "got": "misread"
+            },
+            "B:珐": {
+              "expected": "misread",
+              "d_intended": 21.740683592636366,
+              "d_wrong": 5.318782923988682,
+              "score": -0.6068819079843367,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.102,
+          "selftest_pass": false
+        }
+      ]
+    },
+    {
+      "utterance": 1,
+      "edit_id": "set_one_turn",
+      "segment_index": 2,
+      "tts_text": "首盘，郑钦文先破发，拿到二比零。四比二时，她又兑现第五个破发点。五比二发球拿盘没成，下一局，她再拿到盘点。",
+      "text_sha256": "3e5250def89d4fea1649c98efa0e77c2d7c6f7f1ec1b39e2153d9a8800625fc7",
+      "actual_final_mp3_sha256": "9801c3aa51ab7c01151a2d2d5a88231173d89ed3d8c5e56efd0b1f15ab6e8d14",
+      "index": 39,
+      "char": "没",
+      "word": "没",
+      "intended": "mei2",
+      "live": [
+        "mei2",
+        "mo4"
+      ],
+      "defaults": [
+        "mei2"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "mo4": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.472,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u01-i39-没-mei2-vs-mo4-3e5250def89d.json",
+          "evidence_sha256": "4d7d3e9a31def5423deb8a609050a5afed6816725a720cd46a712698d1464e89",
+          "actual_orig_audio_sha256": "9801c3aa51ab7c01151a2d2d5a88231173d89ed3d8c5e56efd0b1f15ab6e8d14",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "枚": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.977
+            },
+            "梅": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.977
+            },
+            "煤": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.491
+            },
+            "寞": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.51
+            },
+            "沫": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.997
+            },
+            "漠": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.997
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.472,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 2,
+      "edit_id": "second_pressure",
+      "segment_index": 4,
+      "tts_text": "第二盘三比三，郑钦文的发球局失守。她在下一局，用正手压向底线角落，又拿到破发机会。",
+      "text_sha256": "8f5bfbd3b2de0f3857ce79b5259e6389a7f463b0db06d8ce34c7ffab8e3bcaed",
+      "actual_final_mp3_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+      "index": 10,
+      "char": "的",
+      "word": "的",
+      "intended": "de5",
+      "live": [
+        "de5",
+        "di1",
+        "di2",
+        "di4"
+      ],
+      "defaults": [
+        "de5"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "di1": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.3623304204489988,
+          "method": "target WordBoundary middle 35..85% with 50ms end compensation; standardised MFCC+delta vowel core; paired leave-one-out; no F0",
+          "evidence": "evidence/core-u02-i10-的.json",
+          "evidence_sha256": "5fd8bffe39e0cf61c6a31e448974a5c9c2caec1007ce6cb0ee3627ed4765b218",
+          "actual_orig_audio_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "A:德": {
+              "expected": "correct",
+              "d_intended": 0.8146339058876038,
+              "d_wrong": 4.354201316833496,
+              "score": 0.6847901429294374,
+              "got": "correct"
+            },
+            "A:锝": {
+              "expected": "correct",
+              "d_intended": 0.8146339058876038,
+              "d_wrong": 4.364329814910889,
+              "score": 0.68540659876953,
+              "got": "correct"
+            },
+            "B:低": {
+              "expected": "misread",
+              "d_intended": 4.6854400634765625,
+              "d_wrong": 0.09758032113313675,
+              "score": -0.9591971962122008,
+              "got": "misread"
+            },
+            "B:滴": {
+              "expected": "misread",
+              "d_intended": 4.683085918426514,
+              "d_wrong": 0.09758032113313675,
+              "score": -0.9591771036741,
+              "got": "misread"
+            },
+            "B:帝": {
+              "expected": "misread",
+              "d_intended": 4.354201316833496,
+              "d_wrong": 0.6044955849647522,
+              "score": -0.7561877255512292,
+              "got": "misread"
+            },
+            "B:第": {
+              "expected": "misread",
+              "d_intended": 4.634515285491943,
+              "d_wrong": 0.6044955849647522,
+              "score": -0.7692329335014122,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        },
+        "di2": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.3623304204489988,
+          "method": "target WordBoundary middle 35..85% with 50ms end compensation; standardised MFCC+delta vowel core; paired leave-one-out; no F0",
+          "evidence": "evidence/core-u02-i10-的.json",
+          "evidence_sha256": "5fd8bffe39e0cf61c6a31e448974a5c9c2caec1007ce6cb0ee3627ed4765b218",
+          "actual_orig_audio_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "A:德": {
+              "expected": "correct",
+              "d_intended": 0.8146339058876038,
+              "d_wrong": 4.354201316833496,
+              "score": 0.6847901429294374,
+              "got": "correct"
+            },
+            "A:锝": {
+              "expected": "correct",
+              "d_intended": 0.8146339058876038,
+              "d_wrong": 4.364329814910889,
+              "score": 0.68540659876953,
+              "got": "correct"
+            },
+            "B:低": {
+              "expected": "misread",
+              "d_intended": 4.6854400634765625,
+              "d_wrong": 0.09758032113313675,
+              "score": -0.9591971962122008,
+              "got": "misread"
+            },
+            "B:滴": {
+              "expected": "misread",
+              "d_intended": 4.683085918426514,
+              "d_wrong": 0.09758032113313675,
+              "score": -0.9591771036741,
+              "got": "misread"
+            },
+            "B:帝": {
+              "expected": "misread",
+              "d_intended": 4.354201316833496,
+              "d_wrong": 0.6044955849647522,
+              "score": -0.7561877255512292,
+              "got": "misread"
+            },
+            "B:第": {
+              "expected": "misread",
+              "d_intended": 4.634515285491943,
+              "d_wrong": 0.6044955849647522,
+              "score": -0.7692329335014122,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        },
+        "di4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.3623304204489988,
+          "method": "target WordBoundary middle 35..85% with 50ms end compensation; standardised MFCC+delta vowel core; paired leave-one-out; no F0",
+          "evidence": "evidence/core-u02-i10-的.json",
+          "evidence_sha256": "5fd8bffe39e0cf61c6a31e448974a5c9c2caec1007ce6cb0ee3627ed4765b218",
+          "actual_orig_audio_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "A:德": {
+              "expected": "correct",
+              "d_intended": 0.8146339058876038,
+              "d_wrong": 4.354201316833496,
+              "score": 0.6847901429294374,
+              "got": "correct"
+            },
+            "A:锝": {
+              "expected": "correct",
+              "d_intended": 0.8146339058876038,
+              "d_wrong": 4.364329814910889,
+              "score": 0.68540659876953,
+              "got": "correct"
+            },
+            "B:低": {
+              "expected": "misread",
+              "d_intended": 4.6854400634765625,
+              "d_wrong": 0.09758032113313675,
+              "score": -0.9591971962122008,
+              "got": "misread"
+            },
+            "B:滴": {
+              "expected": "misread",
+              "d_intended": 4.683085918426514,
+              "d_wrong": 0.09758032113313675,
+              "score": -0.9591771036741,
+              "got": "misread"
+            },
+            "B:帝": {
+              "expected": "misread",
+              "d_intended": 4.354201316833496,
+              "d_wrong": 0.6044955849647522,
+              "score": -0.7561877255512292,
+              "got": "misread"
+            },
+            "B:第": {
+              "expected": "misread",
+              "d_intended": 4.634515285491943,
+              "d_wrong": 0.6044955849647522,
+              "score": -0.7692329335014122,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": []
+    },
+    {
+      "utterance": 2,
+      "edit_id": "second_pressure",
+      "segment_index": 4,
+      "tts_text": "第二盘三比三，郑钦文的发球局失守。她在下一局，用正手压向底线角落，又拿到破发机会。",
+      "text_sha256": "8f5bfbd3b2de0f3857ce79b5259e6389a7f463b0db06d8ce34c7ffab8e3bcaed",
+      "actual_final_mp3_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+      "index": 11,
+      "char": "发",
+      "word": "发球",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fa4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.976,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u02-i11-发-fa1-vs-fa4-8f5bfbd3b2de.json",
+          "evidence_sha256": "b7492a6f6c5ad805373fee1ac211ac060f8a3cb2201888756adb394f73a51b7b",
+          "actual_orig_audio_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "髮": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.552
+            },
+            "珐": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.338
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.976,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 2,
+      "edit_id": "second_pressure",
+      "segment_index": 4,
+      "tts_text": "第二盘三比三，郑钦文的发球局失守。她在下一局，用正手压向底线角落，又拿到破发机会。",
+      "text_sha256": "8f5bfbd3b2de0f3857ce79b5259e6389a7f463b0db06d8ce34c7ffab8e3bcaed",
+      "actual_final_mp3_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+      "index": 24,
+      "char": "正",
+      "word": "正手",
+      "intended": "zheng4",
+      "live": [
+        "zheng4",
+        "zheng1"
+      ],
+      "defaults": [
+        "zheng4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "zheng1": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.331,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u02-i24-正-zheng4-vs-zheng1-8f5bfbd3b2de.json",
+          "evidence_sha256": "3adbbd101c855429c1020e44e73ea2a5c5f5c3c7ef31edf32caaeae0d16b4d2a",
+          "actual_orig_audio_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "郑": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.583
+            },
+            "诤": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.597
+            },
+            "争": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.997
+            },
+            "征": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.988
+            },
+            "狰": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.997
+            },
+            "证": {
+              "expect": "correct",
+              "got": "uncertain",
+              "score": 0.104,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.331,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 2,
+      "edit_id": "second_pressure",
+      "segment_index": 4,
+      "tts_text": "第二盘三比三，郑钦文的发球局失守。她在下一局，用正手压向底线角落，又拿到破发机会。",
+      "text_sha256": "8f5bfbd3b2de0f3857ce79b5259e6389a7f463b0db06d8ce34c7ffab8e3bcaed",
+      "actual_final_mp3_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+      "index": 30,
+      "char": "角",
+      "word": "角落",
+      "intended": "jiao3",
+      "live": [
+        "jiao3",
+        "jue2"
+      ],
+      "defaults": [
+        "jiao3"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "jue2": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.574,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u02-i30-角-jiao3-vs-jue2-8f5bfbd3b2de.json",
+          "evidence_sha256": "a2f826646475a4e7296480e1349e451c0a7e11d590d1731b5bcebc65d9b673a0",
+          "actual_orig_audio_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "搅": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.857
+            },
+            "绞": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.834
+            },
+            "铰": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.854
+            },
+            "决": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.528
+            },
+            "抉": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.877
+            },
+            "攫": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.873
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.574,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 2,
+      "edit_id": "second_pressure",
+      "segment_index": 4,
+      "tts_text": "第二盘三比三，郑钦文的发球局失守。她在下一局，用正手压向底线角落，又拿到破发机会。",
+      "text_sha256": "8f5bfbd3b2de0f3857ce79b5259e6389a7f463b0db06d8ce34c7ffab8e3bcaed",
+      "actual_final_mp3_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+      "index": 31,
+      "char": "落",
+      "word": "角落",
+      "intended": "luo4",
+      "live": [
+        "luo4",
+        "la4",
+        "lao4"
+      ],
+      "defaults": [
+        "luo4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "la4": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.789,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u02-i31-落-luo4-vs-la4-8f5bfbd3b2de.json",
+          "evidence_sha256": "c082b17a37e0bb3b0c5c908a4402e5773d0ab2d485d3ebfdb680b3344ce18a80",
+          "actual_orig_audio_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "洛": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.824
+            },
+            "骆": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.806
+            },
+            "摞": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.824
+            },
+            "辣": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.699
+            },
+            "瘌": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.696
+            },
+            "腊": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": -0.181,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        },
+        "lao4": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.781,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u02-i31-落-luo4-vs-lao4-8f5bfbd3b2de.json",
+          "evidence_sha256": "14b237ce6707d14eadf57db83020e20b04d98214208230d09e81213dca5c6857",
+          "actual_orig_audio_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "洛": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.826
+            },
+            "骆": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.8
+            },
+            "摞": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.824
+            },
+            "涝": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.689
+            },
+            "耢": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.688
+            },
+            "烙": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": -0.187,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.789,
+          "selftest_pass": true
+        },
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.781,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 2,
+      "edit_id": "second_pressure",
+      "segment_index": 4,
+      "tts_text": "第二盘三比三，郑钦文的发球局失守。她在下一局，用正手压向底线角落，又拿到破发机会。",
+      "text_sha256": "8f5bfbd3b2de0f3857ce79b5259e6389a7f463b0db06d8ce34c7ffab8e3bcaed",
+      "actual_final_mp3_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+      "index": 37,
+      "char": "发",
+      "word": "发",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fa4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.932,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u02-i37-发-fa1-vs-fa4-8f5bfbd3b2de.json",
+          "evidence_sha256": "2ac1d39394f0fd743304d6bd44e1528ccc5cd0d75466bb3554fbbbfe1dda5e57",
+          "actual_orig_audio_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "髮": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.991
+            },
+            "珐": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.991
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.932,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 2,
+      "edit_id": "second_pressure",
+      "segment_index": 4,
+      "tts_text": "第二盘三比三，郑钦文的发球局失守。她在下一局，用正手压向底线角落，又拿到破发机会。",
+      "text_sha256": "8f5bfbd3b2de0f3857ce79b5259e6389a7f463b0db06d8ce34c7ffab8e3bcaed",
+      "actual_final_mp3_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+      "index": 39,
+      "char": "会",
+      "word": "机会",
+      "intended": "hui4",
+      "live": [
+        "hui4",
+        "kuai4"
+      ],
+      "defaults": [
+        "hui4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "kuai4": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.994,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u02-i39-会-hui4-vs-kuai4-8f5bfbd3b2de.json",
+          "evidence_sha256": "59a3a13ef8fb6608e93ba574a10e20d501373050316237d40b7b3a99aac16c2b",
+          "actual_orig_audio_sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "卉": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.985
+            },
+            "惠": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.98
+            },
+            "慧": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.984
+            },
+            "侩": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.998
+            },
+            "筷": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.998
+            },
+            "快": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": 0.133,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.994,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 3,
+      "edit_id": "breakback_fact",
+      "segment_index": 6,
+      "tts_text": "这个破发点，郑钦文随后兑现，追到四比四。双方各自保发，第二盘进入抢七。",
+      "text_sha256": "7e671dbaa83c5af687f2a6a1ec4fbb18b4213e2e1a0941ea58fe279126ccce44",
+      "actual_final_mp3_sha256": "6f71ee8062ea1e86a2c70a000f64f1284b14685308ee42c2d32ef22e727dda5a",
+      "index": 3,
+      "char": "发",
+      "word": "发点",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fa4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.991,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u03-i03-发-fa1-vs-fa4-7e671dbaa83c.json",
+          "evidence_sha256": "88329101e470b402d8b1922de4c531accc52bd4d750bbf780bde94a040f54a0b",
+          "actual_orig_audio_sha256": "6f71ee8062ea1e86a2c70a000f64f1284b14685308ee42c2d32ef22e727dda5a",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "髮": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.967
+            },
+            "珐": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.967
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.991,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 3,
+      "edit_id": "breakback_fact",
+      "segment_index": 6,
+      "tts_text": "这个破发点，郑钦文随后兑现，追到四比四。双方各自保发，第二盘进入抢七。",
+      "text_sha256": "7e671dbaa83c5af687f2a6a1ec4fbb18b4213e2e1a0941ea58fe279126ccce44",
+      "actual_final_mp3_sha256": "6f71ee8062ea1e86a2c70a000f64f1284b14685308ee42c2d32ef22e727dda5a",
+      "index": 25,
+      "char": "发",
+      "word": "发",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fa4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.994,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u03-i25-发-fa1-vs-fa4-7e671dbaa83c.json",
+          "evidence_sha256": "3c5cb336284325719f3b5dfd5442850adaf8de504c403e66b47661b00383eab5",
+          "actual_orig_audio_sha256": "6f71ee8062ea1e86a2c70a000f64f1284b14685308ee42c2d32ef22e727dda5a",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "髮": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.993
+            },
+            "珐": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.993
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.994,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 3,
+      "edit_id": "breakback_fact",
+      "segment_index": 6,
+      "tts_text": "这个破发点，郑钦文随后兑现，追到四比四。双方各自保发，第二盘进入抢七。",
+      "text_sha256": "7e671dbaa83c5af687f2a6a1ec4fbb18b4213e2e1a0941ea58fe279126ccce44",
+      "actual_final_mp3_sha256": "6f71ee8062ea1e86a2c70a000f64f1284b14685308ee42c2d32ef22e727dda5a",
+      "index": 32,
+      "char": "抢",
+      "word": "抢",
+      "intended": "qiang3",
+      "live": [
+        "qiang3",
+        "qiang1"
+      ],
+      "defaults": [
+        "qiang3"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "qiang1": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.603,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u03-i32-抢-qiang3-vs-qiang1-7e671dbaa83c.json",
+          "evidence_sha256": "8b6eeeb621378683451f77fb8a080e24bec25a555100c0b920c234f7369f094f",
+          "actual_orig_audio_sha256": "6f71ee8062ea1e86a2c70a000f64f1284b14685308ee42c2d32ef22e727dda5a",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "羟": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.564
+            },
+            "襁": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.55
+            },
+            "枪": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.58
+            },
+            "羌": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.635
+            },
+            "蜣": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.64
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-process-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.603,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 4,
+      "edit_id": "tb_pressure",
+      "segment_index": 8,
+      "tts_text": "抢七六比五，郑钦文的第一个赛点被救回。六比六，这一分，她再次用常回合争到机会。",
+      "text_sha256": "74b0c5f9996d5f57b05726243c1954222d4ec0305c7b2ab00e8dcaba4ba97357",
+      "actual_final_mp3_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+      "index": 0,
+      "char": "抢",
+      "word": "抢",
+      "intended": "qiang3",
+      "live": [
+        "qiang3",
+        "qiang1"
+      ],
+      "defaults": [
+        "qiang3"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "qiang1": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.937,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u04-i00-抢-qiang3-vs-qiang1-74b0c5f9996d.json",
+          "evidence_sha256": "a757118e4941b6afa9ad8aab8ee66130df521df8ca5f53cfc77d65924a043ee4",
+          "actual_orig_audio_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "羟": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.339
+            },
+            "襁": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.457
+            },
+            "枪": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.934
+            },
+            "羌": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.674
+            },
+            "蜣": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.936
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.937,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 4,
+      "edit_id": "tb_pressure",
+      "segment_index": 8,
+      "tts_text": "抢七六比五，郑钦文的第一个赛点被救回。六比六，这一分，她再次用常回合争到机会。",
+      "text_sha256": "74b0c5f9996d5f57b05726243c1954222d4ec0305c7b2ab00e8dcaba4ba97357",
+      "actual_final_mp3_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+      "index": 9,
+      "char": "的",
+      "word": "的",
+      "intended": "de5",
+      "live": [
+        "de5",
+        "di1",
+        "di2",
+        "di4"
+      ],
+      "defaults": [
+        "de5"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "di1": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.24061489295753877,
+          "method": "target WordBoundary middle 35..85% with 50ms end compensation; standardised MFCC+delta vowel core; paired leave-one-out; no F0",
+          "evidence": "evidence/core-u04-i09-的.json",
+          "evidence_sha256": "b71b914aeb6bf6a7ac37e4d84a87bea4d62113539c12485a12fdc4b9bb911bfc",
+          "actual_orig_audio_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "A:德": {
+              "expected": "correct",
+              "d_intended": 2.039548397064209,
+              "d_wrong": 4.281424522399902,
+              "score": 0.35467263566852275,
+              "got": "correct"
+            },
+            "A:锝": {
+              "expected": "correct",
+              "d_intended": 2.039548397064209,
+              "d_wrong": 3.5465638637542725,
+              "score": 0.26977894398227764,
+              "got": "correct"
+            },
+            "B:低": {
+              "expected": "misread",
+              "d_intended": 4.6766862869262695,
+              "d_wrong": 1.5521961450576782,
+              "score": -0.5016132791052562,
+              "got": "misread"
+            },
+            "B:滴": {
+              "expected": "misread",
+              "d_intended": 3.8927664756774902,
+              "d_wrong": 1.5521961450576782,
+              "score": -0.4298597609663283,
+              "got": "misread"
+            },
+            "B:帝": {
+              "expected": "misread",
+              "d_intended": 3.661623001098633,
+              "d_wrong": 0.6500658392906189,
+              "score": -0.69846347296623,
+              "got": "misread"
+            },
+            "B:第": {
+              "expected": "misread",
+              "d_intended": 3.5465638637542725,
+              "d_wrong": 0.6500658392906189,
+              "score": -0.6901962358894999,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        },
+        "di2": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.24061489295753877,
+          "method": "target WordBoundary middle 35..85% with 50ms end compensation; standardised MFCC+delta vowel core; paired leave-one-out; no F0",
+          "evidence": "evidence/core-u04-i09-的.json",
+          "evidence_sha256": "b71b914aeb6bf6a7ac37e4d84a87bea4d62113539c12485a12fdc4b9bb911bfc",
+          "actual_orig_audio_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "A:德": {
+              "expected": "correct",
+              "d_intended": 2.039548397064209,
+              "d_wrong": 4.281424522399902,
+              "score": 0.35467263566852275,
+              "got": "correct"
+            },
+            "A:锝": {
+              "expected": "correct",
+              "d_intended": 2.039548397064209,
+              "d_wrong": 3.5465638637542725,
+              "score": 0.26977894398227764,
+              "got": "correct"
+            },
+            "B:低": {
+              "expected": "misread",
+              "d_intended": 4.6766862869262695,
+              "d_wrong": 1.5521961450576782,
+              "score": -0.5016132791052562,
+              "got": "misread"
+            },
+            "B:滴": {
+              "expected": "misread",
+              "d_intended": 3.8927664756774902,
+              "d_wrong": 1.5521961450576782,
+              "score": -0.4298597609663283,
+              "got": "misread"
+            },
+            "B:帝": {
+              "expected": "misread",
+              "d_intended": 3.661623001098633,
+              "d_wrong": 0.6500658392906189,
+              "score": -0.69846347296623,
+              "got": "misread"
+            },
+            "B:第": {
+              "expected": "misread",
+              "d_intended": 3.5465638637542725,
+              "d_wrong": 0.6500658392906189,
+              "score": -0.6901962358894999,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        },
+        "di4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.24061489295753877,
+          "method": "target WordBoundary middle 35..85% with 50ms end compensation; standardised MFCC+delta vowel core; paired leave-one-out; no F0",
+          "evidence": "evidence/core-u04-i09-的.json",
+          "evidence_sha256": "b71b914aeb6bf6a7ac37e4d84a87bea4d62113539c12485a12fdc4b9bb911bfc",
+          "actual_orig_audio_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "A:德": {
+              "expected": "correct",
+              "d_intended": 2.039548397064209,
+              "d_wrong": 4.281424522399902,
+              "score": 0.35467263566852275,
+              "got": "correct"
+            },
+            "A:锝": {
+              "expected": "correct",
+              "d_intended": 2.039548397064209,
+              "d_wrong": 3.5465638637542725,
+              "score": 0.26977894398227764,
+              "got": "correct"
+            },
+            "B:低": {
+              "expected": "misread",
+              "d_intended": 4.6766862869262695,
+              "d_wrong": 1.5521961450576782,
+              "score": -0.5016132791052562,
+              "got": "misread"
+            },
+            "B:滴": {
+              "expected": "misread",
+              "d_intended": 3.8927664756774902,
+              "d_wrong": 1.5521961450576782,
+              "score": -0.4298597609663283,
+              "got": "misread"
+            },
+            "B:帝": {
+              "expected": "misread",
+              "d_intended": 3.661623001098633,
+              "d_wrong": 0.6500658392906189,
+              "score": -0.69846347296623,
+              "got": "misread"
+            },
+            "B:第": {
+              "expected": "misread",
+              "d_intended": 3.5465638637542725,
+              "d_wrong": 0.6500658392906189,
+              "score": -0.6901962358894999,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": []
+    },
+    {
+      "utterance": 4,
+      "edit_id": "tb_pressure",
+      "segment_index": 8,
+      "tts_text": "抢七六比五，郑钦文的第一个赛点被救回。六比六，这一分，她再次用常回合争到机会。",
+      "text_sha256": "74b0c5f9996d5f57b05726243c1954222d4ec0305c7b2ab00e8dcaba4ba97357",
+      "actual_final_mp3_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+      "index": 15,
+      "char": "被",
+      "word": "被",
+      "intended": "bei4",
+      "live": [
+        "bei4",
+        "pi1"
+      ],
+      "defaults": [
+        "bei4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "pi1": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.365,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u04-i15-被-bei4-vs-pi1-74b0c5f9996d.json",
+          "evidence_sha256": "7ebfb6260afb8118e2a066bbd8c5039f4c7badb8bea1a693929cf730ea23bf34",
+          "actual_orig_audio_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "备": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.435
+            },
+            "惫": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.552
+            },
+            "焙": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.535
+            },
+            "披": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.229
+            },
+            "霹": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.205
+            },
+            "砒": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": -0.138,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.365,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 4,
+      "edit_id": "tb_pressure",
+      "segment_index": 8,
+      "tts_text": "抢七六比五，郑钦文的第一个赛点被救回。六比六，这一分，她再次用常回合争到机会。",
+      "text_sha256": "74b0c5f9996d5f57b05726243c1954222d4ec0305c7b2ab00e8dcaba4ba97357",
+      "actual_final_mp3_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+      "index": 25,
+      "char": "分",
+      "word": "一分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fen4": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.988,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u04-i25-分-fen1-vs-fen4-74b0c5f9996d.json",
+          "evidence_sha256": "9cc71f8e1c2f9442a903c1305b1d39a221c37ddf67178d127b46f0be37456183",
+          "actual_orig_audio_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "氛": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.911
+            },
+            "纷": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.279
+            },
+            "芬": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.91
+            },
+            "忿": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.857
+            },
+            "愤": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.972
+            },
+            "粪": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.972
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.988,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 4,
+      "edit_id": "tb_pressure",
+      "segment_index": 8,
+      "tts_text": "抢七六比五，郑钦文的第一个赛点被救回。六比六，这一分，她再次用常回合争到机会。",
+      "text_sha256": "74b0c5f9996d5f57b05726243c1954222d4ec0305c7b2ab00e8dcaba4ba97357",
+      "actual_final_mp3_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+      "index": 37,
+      "char": "会",
+      "word": "机会",
+      "intended": "hui4",
+      "live": [
+        "hui4",
+        "kuai4"
+      ],
+      "defaults": [
+        "hui4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "kuai4": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.384,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u04-i37-会-hui4-vs-kuai4-74b0c5f9996d.json",
+          "evidence_sha256": "c3cf43d24dddb4979338eb59d3f9fe4ac3259b9d0b4116c9c91dc82301163d67",
+          "actual_orig_audio_sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "卉": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.999
+            },
+            "惠": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.972
+            },
+            "慧": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.999
+            },
+            "侩": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.59
+            },
+            "快": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.529
+            },
+            "筷": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.555
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.384,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 5,
+      "edit_id": "full_stats",
+      "segment_index": 11,
+      "tts_text": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "text_sha256": "32322b1b7c146368389bd85a5deea66bada1f2e5bc0564e0b9c011d32906d695",
+      "actual_final_mp3_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "index": 1,
+      "char": "场",
+      "word": "场",
+      "intended": "chang3",
+      "live": [
+        "chang3",
+        "chang2"
+      ],
+      "defaults": [
+        "chang3"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "chang2": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.535,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u05-i01-场-chang3-vs-chang2-32322b1b7c14.json",
+          "evidence_sha256": "058eb224909af507cdcac44b810d94609cc7b967d73762d288fd6bc511656802",
+          "actual_orig_audio_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "昶": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.997
+            },
+            "氅": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.988
+            },
+            "厂": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.997
+            },
+            "偿": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.995
+            },
+            "尝": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.992
+            },
+            "常": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.995
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.535,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 5,
+      "edit_id": "full_stats",
+      "segment_index": 11,
+      "tts_text": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "text_sha256": "32322b1b7c146368389bd85a5deea66bada1f2e5bc0564e0b9c011d32906d695",
+      "actual_final_mp3_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "index": 7,
+      "char": "发",
+      "word": "一发",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fa4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.478,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u05-i07-发-fa1-vs-fa4-32322b1b7c14.json",
+          "evidence_sha256": "55e05041ae5274ea8f405e9d582c89d7188a3c9162d009d9302552d32f4d32e1",
+          "actual_orig_audio_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "髮": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.353
+            },
+            "珐": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.426
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.478,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 5,
+      "edit_id": "full_stats",
+      "segment_index": 11,
+      "tts_text": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "text_sha256": "32322b1b7c146368389bd85a5deea66bada1f2e5bc0564e0b9c011d32906d695",
+      "actual_final_mp3_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "index": 8,
+      "char": "得",
+      "word": "得",
+      "intended": "de2",
+      "live": [
+        "de2",
+        "de5",
+        "dei3"
+      ],
+      "defaults": [
+        "de2"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "dei3": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.4353467617265584,
+          "method": "target WordBoundary middle 35..85% with 50ms end compensation; standardised MFCC+delta vowel core; paired leave-one-out; no F0",
+          "evidence": "evidence/core-u05-i08-得-32322b1b7c14.json",
+          "evidence_sha256": "4058cb62b9d116f72598d425b8e946a148e314ad597395a63a4d3646ecd2346e",
+          "actual_orig_audio_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "A:德": {
+              "expected": "correct",
+              "d_intended": 0.2852148413658142,
+              "d_wrong": 4.397620677947998,
+              "score": 0.878187119667356,
+              "got": "correct"
+            },
+            "A:锝": {
+              "expected": "correct",
+              "d_intended": 0.2852148413658142,
+              "d_wrong": 4.427675724029541,
+              "score": 0.8789639447773224,
+              "got": "correct"
+            },
+            "B:磊": {
+              "expected": "misread",
+              "d_intended": 4.397620677947998,
+              "d_wrong": 0.7655380964279175,
+              "score": -0.7034613383469115,
+              "got": "misread"
+            },
+            "B:垒": {
+              "expected": "misread",
+              "d_intended": 4.475894927978516,
+              "d_wrong": 0.7655380964279175,
+              "score": -0.7078897725628723,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": []
+    },
+    {
+      "utterance": 5,
+      "edit_id": "full_stats",
+      "segment_index": 11,
+      "tts_text": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "text_sha256": "32322b1b7c146368389bd85a5deea66bada1f2e5bc0564e0b9c011d32906d695",
+      "actual_final_mp3_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "index": 9,
+      "char": "分",
+      "word": "分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fen4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.2,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u05-i09-分-fen1-vs-fen4-32322b1b7c14.json",
+          "evidence_sha256": "fe3c9cf2e46fa0566f88cffb4812393fa8ba89f47ca9223d5aba18577e08cab4",
+          "actual_orig_audio_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "氛": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.862
+            },
+            "纷": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.863
+            },
+            "芬": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.765
+            },
+            "忿": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.275
+            },
+            "愤": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.822
+            },
+            "粪": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.826
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.2,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 5,
+      "edit_id": "full_stats",
+      "segment_index": 11,
+      "tts_text": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "text_sha256": "32322b1b7c146368389bd85a5deea66bada1f2e5bc0564e0b9c011d32906d695",
+      "actual_final_mp3_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "index": 10,
+      "char": "率",
+      "word": "率",
+      "intended": "lv4",
+      "live": [
+        "lv4",
+        "shuai4"
+      ],
+      "defaults": [
+        "lv4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "shuai4": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.98,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u05-i10-率-lv4-vs-shuai4-32322b1b7c14.json",
+          "evidence_sha256": "4833a6af0c0cafc61b7b70621e3d9f8941e53031536c17bc8001a5098782fb01",
+          "actual_orig_audio_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "律": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.566
+            },
+            "氯": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.483
+            },
+            "滤": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.501
+            },
+            "帅": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.855
+            },
+            "蟀": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.855
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.98,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 5,
+      "edit_id": "full_stats",
+      "segment_index": 11,
+      "tts_text": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "text_sha256": "32322b1b7c146368389bd85a5deea66bada1f2e5bc0564e0b9c011d32906d695",
+      "actual_final_mp3_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "index": 13,
+      "char": "分",
+      "word": "百分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fen4": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.58,
+          "method": "f0 only focused phonetic contrast, same refs and required selftests",
+          "evidence": "evidence/f0-u05-i13-分-fen1-vs-fen4-32322b1b7c14.json",
+          "evidence_sha256": "7d95fb4402b03e8546bd3ac3db18e81bc3ca87ea9bdf547b9abd4ece367aeced",
+          "actual_orig_audio_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "氛": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.548
+            },
+            "纷": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.467
+            },
+            "芬": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.501
+            },
+            "愤": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.518
+            },
+            "粪": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.541
+            },
+            "忿": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": 0.021,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.222,
+          "selftest_pass": false
+        }
+      ]
+    },
+    {
+      "utterance": 5,
+      "edit_id": "full_stats",
+      "segment_index": 11,
+      "tts_text": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "text_sha256": "32322b1b7c146368389bd85a5deea66bada1f2e5bc0564e0b9c011d32906d695",
+      "actual_final_mp3_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "index": 23,
+      "char": "发",
+      "word": "发",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "fa4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.994,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u05-i23-发-fa1-vs-fa4-32322b1b7c14.json",
+          "evidence_sha256": "b6b07c3e3df472995e988d48a2a758e4ba4bac8b9a797cb5be12e7ad23a35076",
+          "actual_orig_audio_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "髮": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.974
+            },
+            "珐": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.974
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.994,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 5,
+      "edit_id": "full_stats",
+      "segment_index": 11,
+      "tts_text": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "text_sha256": "32322b1b7c146368389bd85a5deea66bada1f2e5bc0564e0b9c011d32906d695",
+      "actual_final_mp3_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "index": 25,
+      "char": "会",
+      "word": "机会",
+      "intended": "hui4",
+      "live": [
+        "hui4",
+        "kuai4"
+      ],
+      "defaults": [
+        "hui4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "kuai4": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u05-i25-会-hui4-vs-kuai4-32322b1b7c14.json",
+          "evidence_sha256": "803e19c5a454d6d885839d650180f0579900fdfae5f41fdc4369416c0f87b6bb",
+          "actual_orig_audio_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "卉": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.974
+            },
+            "惠": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.991
+            },
+            "慧": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.991
+            },
+            "侩": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.484
+            },
+            "快": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.234
+            },
+            "筷": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.451
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 5,
+      "edit_id": "full_stats",
+      "segment_index": 11,
+      "tts_text": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "text_sha256": "32322b1b7c146368389bd85a5deea66bada1f2e5bc0564e0b9c011d32906d695",
+      "actual_final_mp3_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "index": 34,
+      "char": "被",
+      "word": "被",
+      "intended": "bei4",
+      "live": [
+        "bei4",
+        "pi1"
+      ],
+      "defaults": [
+        "bei4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "pi1": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.501,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u05-i34-被-bei4-vs-pi1-32322b1b7c14.json",
+          "evidence_sha256": "d48d9fbe6101906e9bc306a31b6049ccf31cc5a19f6b64c7d7d964a8d72b6094",
+          "actual_orig_audio_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "备": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.996
+            },
+            "惫": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 1.0
+            },
+            "焙": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 1.0
+            },
+            "披": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.997
+            },
+            "砒": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.978
+            },
+            "霹": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.997
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.501,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 5,
+      "edit_id": "full_stats",
+      "segment_index": 11,
+      "tts_text": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "text_sha256": "32322b1b7c146368389bd85a5deea66bada1f2e5bc0564e0b9c011d32906d695",
+      "actual_final_mp3_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "index": 43,
+      "char": "会",
+      "word": "机会",
+      "intended": "hui4",
+      "live": [
+        "hui4",
+        "kuai4"
+      ],
+      "defaults": [
+        "hui4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "kuai4": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u05-i43-会-hui4-vs-kuai4-32322b1b7c14.json",
+          "evidence_sha256": "a4629fd4d326de8a65b49fcb6ac31756823800bb027a1fc63bdf28552b239691",
+          "actual_orig_audio_sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "卉": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.999
+            },
+            "惠": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.954
+            },
+            "慧": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.999
+            },
+            "侩": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.992
+            },
+            "筷": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.992
+            },
+            "快": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": 0.06,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 6,
+      "edit_id": "next_round",
+      "segment_index": 12,
+      "tts_text": "第二次来到中网半决赛，郑钦文下一轮对阵梅尔滕斯。生日之后，她还能再进一轮吗？",
+      "text_sha256": "46d2f92fa4a31978fdcfe759020508584c020b3f6fdd6a67168e4dd39654e6c0",
+      "actual_final_mp3_sha256": "cbfcace558019a8dec3a24f74a55f5ac72f9501e104a4c70876e46c4736d635a",
+      "index": 5,
+      "char": "中",
+      "word": "中",
+      "intended": "zhong1",
+      "live": [
+        "zhong1",
+        "zhong4"
+      ],
+      "defaults": [
+        "zhong1"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "zhong4": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.948,
+          "method": "zhong1/zhong4 F0-only semitone contrast; excludes documented outlier钟 and polyphonic重 from original references; two independent references per side and required LOO",
+          "evidence": "evidence/zhong-f0-cleanrefs-46d2f92fa4a3.json",
+          "evidence_sha256": "21323e90824ab1eb07b17179067078b956e5c2c4c4293fbeb031a6ba5ada55e4",
+          "actual_orig_audio_sha256": "cbfcace558019a8dec3a24f74a55f5ac72f9501e104a4c70876e46c4736d635a",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "忠": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.297
+            },
+            "终": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.303
+            },
+            "仲": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.244
+            },
+            "众": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.226
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "uncertain",
+          "confidence": null,
+          "score": 0.12,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 6,
+      "edit_id": "next_round",
+      "segment_index": 12,
+      "tts_text": "第二次来到中网半决赛，郑钦文下一轮对阵梅尔滕斯。生日之后，她还能再进一轮吗？",
+      "text_sha256": "46d2f92fa4a31978fdcfe759020508584c020b3f6fdd6a67168e4dd39654e6c0",
+      "actual_final_mp3_sha256": "cbfcace558019a8dec3a24f74a55f5ac72f9501e104a4c70876e46c4736d635a",
+      "index": 30,
+      "char": "还",
+      "word": "还",
+      "intended": "hai2",
+      "live": [
+        "hai2",
+        "huan2"
+      ],
+      "defaults": [
+        "hai2",
+        "huan2"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "huan2": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.324,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u06-i30-还-hai2-vs-huan2-46d2f92fa4a3.json",
+          "evidence_sha256": "2b97e200400799963120f5a2338471f231d895577a9b989448d7a289600a71e6",
+          "actual_orig_audio_sha256": "cbfcace558019a8dec3a24f74a55f5ac72f9501e104a4c70876e46c4736d635a",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "桓": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.752
+            },
+            "环": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.75
+            },
+            "孩": {
+              "expect": "correct",
+              "got": "uncertain",
+              "score": 0.167,
+              "dropped": true
+            },
+            "洹": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": -0.15,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.324,
+          "selftest_pass": true
+        }
+      ]
+    },
+    {
+      "utterance": 7,
+      "edit_id": "outro",
+      "segment_index": "outro",
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "text_sha256": "2bfb6c3faf8ae5b1711f6ea769579ce03d322ce6440b2947a0537cecf4fe660e",
+      "actual_final_mp3_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+      "index": 5,
+      "char": "差",
+      "word": "时差",
+      "intended": "cha1",
+      "live": [
+        "cha4",
+        "cha1",
+        "chai1",
+        "ci1"
+      ],
+      "defaults": [
+        "cha4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "cha4": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.681,
+          "method": "F0-only semitone distances for same phoneme, different tone; full utterance MFCC DTW preserves alignment; independent reference LOO required",
+          "evidence": "evidence/f0-u07-i05-差-cha1-vs-cha4.json",
+          "evidence_sha256": "29b4f1b74018f08b8800df63771bce66a56a39fa33644263deb13092430c2985",
+          "actual_orig_audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+          "reference_selftest_pass": false,
+          "reference_selftest_loo": {
+            "锸": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.256
+            },
+            "叉": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.928
+            },
+            "插": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.927
+            },
+            "岔": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": 0.189
+            },
+            "诧": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": -0.046
+            },
+            "姹": {
+              "expect": "misread",
+              "got": "correct",
+              "score": 0.373
+            }
+          },
+          "override": "ORIG identical to a A-reference; A-side self-test passed, other side did not",
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        },
+        "chai1": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.636113552688585,
+          "method": "prior independently fixed first sustained vowel nucleus starting after target onset+40ms; clipped end+50ms; last40% MFCC+delta mean distinguishes cha vs chai final diphthong, paired reference LOO",
+          "evidence": "evidence/outro-bounded-nucleus-vowel-i5-chai1.json",
+          "evidence_sha256": "aad13293ed94de449b7c8caa53adcf8ca660c661981ba9bab797f0708fc209ab",
+          "actual_orig_audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "A:插": {
+              "expected": "correct",
+              "d_intended": 0.5966411828994751,
+              "d_wrong": 4.5750346183776855,
+              "score": 0.7692658218242788,
+              "got": "correct"
+            },
+            "A:叉": {
+              "expected": "correct",
+              "d_intended": 0.5966411828994751,
+              "d_wrong": 4.475752830505371,
+              "score": 0.764749669949642,
+              "got": "correct"
+            },
+            "B:钗": {
+              "expected": "misread",
+              "d_intended": 4.870116710662842,
+              "d_wrong": 1.2000412940979004,
+              "score": -0.6046095363063946,
+              "got": "misread"
+            },
+            "B:拆": {
+              "expected": "misread",
+              "d_intended": 4.475752830505371,
+              "d_wrong": 1.2000412940979004,
+              "score": -0.5771371308568098,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        },
+        "ci1": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.466,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u07-i05-差-cha1-vs-ci1-2bfb6c3faf8a.json",
+          "evidence_sha256": "e6090f92f11ea41482d4896c45ac603b5cbe6100c17e4650dc160dbcee9cc24c",
+          "actual_orig_audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "锸": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.424
+            },
+            "叉": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.695
+            },
+            "插": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.696
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.466,
+          "selftest_pass": true
+        },
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.369,
+          "selftest_pass": true
+        },
+        {
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.294,
+          "selftest_pass": false
+        }
+      ]
+    },
+    {
+      "utterance": 7,
+      "edit_id": "outro",
+      "segment_index": "outro",
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "text_sha256": "2bfb6c3faf8ae5b1711f6ea769579ce03d322ce6440b2947a0537cecf4fe660e",
+      "actual_final_mp3_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+      "index": 8,
+      "char": "差",
+      "word": "时差",
+      "intended": "cha1",
+      "live": [
+        "cha4",
+        "cha1",
+        "chai1",
+        "ci1"
+      ],
+      "defaults": [
+        "cha4"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "cha4": {
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.992,
+          "method": "F0-only semitone distances for same phoneme, different tone; full utterance MFCC DTW preserves alignment; independent reference LOO required",
+          "evidence": "evidence/f0-u07-i08-差-cha1-vs-cha4.json",
+          "evidence_sha256": "7dc9eb3c27891dca1d57962646598e1413b6a36b8f2fb4a86a7a86f618a3f844",
+          "actual_orig_audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "锸": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.684
+            },
+            "叉": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.704
+            },
+            "插": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.72
+            },
+            "诧": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.326
+            },
+            "姹": {
+              "expect": "misread",
+              "got": "misread",
+              "score": -0.489
+            },
+            "岔": {
+              "expect": "misread",
+              "got": "uncertain",
+              "score": -0.162,
+              "dropped": true
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        },
+        "chai1": {
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.48673901635853406,
+          "method": "prior independently fixed first sustained vowel nucleus starting after target onset+40ms; clipped end+50ms; last40% MFCC+delta mean distinguishes cha vs chai final diphthong, paired reference LOO",
+          "evidence": "evidence/outro-bounded-nucleus-vowel-i8-chai1.json",
+          "evidence_sha256": "bd5c862ae5553399646a06e7f689617b42a3ac45dee2f7fe56ef13ebb91f9b8b",
+          "actual_orig_audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "A:插": {
+              "expected": "correct",
+              "d_intended": 2.0562021732330322,
+              "d_wrong": 4.004316329956055,
+              "score": 0.32144347974482895,
+              "got": "correct"
+            },
+            "A:叉": {
+              "expected": "correct",
+              "d_intended": 2.0562021732330322,
+              "d_wrong": 4.621379375457764,
+              "score": 0.3841476414058409,
+              "got": "correct"
+            },
+            "B:钗": {
+              "expected": "misread",
+              "d_intended": 4.023314476013184,
+              "d_wrong": 1.5197299718856812,
+              "score": -0.4516623540835048,
+              "got": "misread"
+            },
+            "B:拆": {
+              "expected": "misread",
+              "d_intended": 4.004316329956055,
+              "d_wrong": 1.5197299718856812,
+              "score": -0.4497765265367171,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        },
+        "ci1": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.788,
+          "method": "measure_polyphone full-utterance MFCC+F0 DTW",
+          "evidence": "evidence/default-u07-i08-差-cha1-vs-ci1-2bfb6c3faf8a.json",
+          "evidence_sha256": "68dbeb718f0b0c036b363a40b329a97ba53a3aaf0921caa3ce731253594f0dad",
+          "actual_orig_audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "锸": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.358
+            },
+            "叉": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.357
+            },
+            "插": {
+              "expect": "correct",
+              "got": "correct",
+              "score": 0.321
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.788,
+          "selftest_pass": true
+        },
+        {
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.703,
+          "selftest_pass": false
+        },
+        {
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.673,
+          "selftest_pass": false
+        }
+      ]
+    },
+    {
+      "utterance": 7,
+      "edit_id": "outro",
+      "segment_index": "outro",
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "text_sha256": "2bfb6c3faf8ae5b1711f6ea769579ce03d322ce6440b2947a0537cecf4fe660e",
+      "actual_final_mp3_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+      "index": 12,
+      "char": "好",
+      "word": "好",
+      "intended": "hao3",
+      "live": [
+        "hao3",
+        "hao4"
+      ],
+      "defaults": [
+        "hao3"
+      ],
+      "status": "acoustically_supported",
+      "comparisons": {
+        "hao4": {
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.9551602592745548,
+          "method": "native target WordBoundary +40ms..end+50ms; last 40% of valid pitch frames, minimum 3; Theil-Sen pitch slope; reference LOO required; one intended reference for fa gives low confidence",
+          "evidence": "evidence/tail-u07-i12-好-hao3-vs-hao4.json",
+          "evidence_sha256": "c09a63badd3ff98ddad9d03453e4baf5a6c7c384da71298653194eb5d7640cfe",
+          "actual_orig_audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+          "reference_selftest_pass": true,
+          "reference_selftest_loo": {
+            "B:昊": {
+              "expected": "misread",
+              "d_intended": 34.02187088658337,
+              "d_wrong": 0.0,
+              "score": -1.0,
+              "got": "misread"
+            },
+            "B:灏": {
+              "expected": "misread",
+              "d_intended": 34.02187088658337,
+              "d_wrong": 0.0,
+              "score": -1.0,
+              "got": "misread"
+            },
+            "B:颢": {
+              "expected": "misread",
+              "d_intended": 34.02187088658337,
+              "d_wrong": 0.0,
+              "score": -1.0,
+              "got": "misread"
+            }
+          },
+          "override": null,
+          "evidence_archive": "pronunciation-finish-evidence.zip",
+          "evidence_path_kind": "zip_member"
+        }
+      },
+      "unresolved_readings": [],
+      "default_results_preserved": [
+        {
+          "verdict": "uncertain",
+          "confidence": null,
+          "score": 0.109,
+          "selftest_pass": true
+        }
+      ]
+    }
+  ],
+  "previous_unresolved_item_resolved_by_text_change": {
+    "edit_id": "set_one_turn",
+    "change": "仅删除兑现了的了",
+    "full_utterance_audio_regenerated_and_reviewed": true
+  },
+  "limitations": [
+    "Default checker verdicts are preserved; no failing reference selftest relabeled as pass.",
+    "Two 的 occurrences use de2 proxy vowel cores to distinguish de versus di; this supports phoneme family with low confidence, not an independently calibrated neutral-tone classifier.",
+    "得/dei contrast uses lei3 rhyme proxies for /ei/ and excludes initials; confidence low.",
+    "Fa has only one intended reference 發. Sustained-nucleus analysis removes neighboring numeral vowels; wrong-side reference LOO passes, confidence capped low.",
+    "First outro 差 F0 uses tool documented identical intended-reference override because intended-side LOO passes while wrong-side LOO is unreliable; this is explicitly retained.",
+    "All exact final renderer MP3 and production cache ZIP audio bytes agree. This report binds native synthesized outputs; encoded film mix verification belongs to independent final QC.",
+    "Initial neutral 了 uncertainty was resolved by removing that character; final entire utterance was re-synthesized and acoustically re-reviewed. No manual listening is claimed.",
+    "Any utterance text, voice, rate, pitch or native audio change invalidates that utterance evidence."
+  ],
+  "used_evidence": [
+    "evidence/core-u02-i10-的.json",
+    "evidence/core-u04-i09-的.json",
+    "evidence/core-u05-i08-得-32322b1b7c14.json",
+    "evidence/default-u00-i03-间-jian1-vs-jian4-d5d93bd522bd.json",
+    "evidence/default-u00-i07-号-hao4-vs-hao2-d5d93bd522bd.json",
+    "evidence/default-u00-i11-中-zhong1-vs-zhong4-d5d93bd522bd.json",
+    "evidence/default-u00-i14-分-fen1-vs-fen4-d5d93bd522bd.json",
+    "evidence/default-u00-i42-丽-li4-vs-li2-d5d93bd522bd.json",
+    "evidence/default-u01-i08-发-fa1-vs-fa4-3e5250def89d.json",
+    "evidence/default-u01-i29-发-fa1-vs-fa4-3e5250def89d.json",
+    "evidence/default-u01-i39-没-mei2-vs-mo4-3e5250def89d.json",
+    "evidence/default-u02-i11-发-fa1-vs-fa4-8f5bfbd3b2de.json",
+    "evidence/default-u02-i24-正-zheng4-vs-zheng1-8f5bfbd3b2de.json",
+    "evidence/default-u02-i30-角-jiao3-vs-jue2-8f5bfbd3b2de.json",
+    "evidence/default-u02-i31-落-luo4-vs-la4-8f5bfbd3b2de.json",
+    "evidence/default-u02-i31-落-luo4-vs-lao4-8f5bfbd3b2de.json",
+    "evidence/default-u02-i37-发-fa1-vs-fa4-8f5bfbd3b2de.json",
+    "evidence/default-u02-i39-会-hui4-vs-kuai4-8f5bfbd3b2de.json",
+    "evidence/default-u03-i03-发-fa1-vs-fa4-7e671dbaa83c.json",
+    "evidence/default-u03-i25-发-fa1-vs-fa4-7e671dbaa83c.json",
+    "evidence/default-u03-i32-抢-qiang3-vs-qiang1-7e671dbaa83c.json",
+    "evidence/default-u04-i00-抢-qiang3-vs-qiang1-74b0c5f9996d.json",
+    "evidence/default-u04-i15-被-bei4-vs-pi1-74b0c5f9996d.json",
+    "evidence/default-u04-i25-分-fen1-vs-fen4-74b0c5f9996d.json",
+    "evidence/default-u04-i37-会-hui4-vs-kuai4-74b0c5f9996d.json",
+    "evidence/default-u05-i01-场-chang3-vs-chang2-32322b1b7c14.json",
+    "evidence/default-u05-i07-发-fa1-vs-fa4-32322b1b7c14.json",
+    "evidence/default-u05-i09-分-fen1-vs-fen4-32322b1b7c14.json",
+    "evidence/default-u05-i10-率-lv4-vs-shuai4-32322b1b7c14.json",
+    "evidence/default-u05-i23-发-fa1-vs-fa4-32322b1b7c14.json",
+    "evidence/default-u05-i25-会-hui4-vs-kuai4-32322b1b7c14.json",
+    "evidence/default-u05-i34-被-bei4-vs-pi1-32322b1b7c14.json",
+    "evidence/default-u05-i43-会-hui4-vs-kuai4-32322b1b7c14.json",
+    "evidence/default-u06-i30-还-hai2-vs-huan2-46d2f92fa4a3.json",
+    "evidence/default-u07-i05-差-cha1-vs-ci1-2bfb6c3faf8a.json",
+    "evidence/default-u07-i08-差-cha1-vs-ci1-2bfb6c3faf8a.json",
+    "evidence/f0-u05-i13-分-fen1-vs-fen4-32322b1b7c14.json",
+    "evidence/f0-u07-i05-差-cha1-vs-cha4.json",
+    "evidence/f0-u07-i08-差-cha1-vs-cha4.json",
+    "evidence/fa-nucleus-u01-i35-发-fa1-vs-fa4.json",
+    "evidence/name-na-spectral-d5d93bd522bd.json",
+    "evidence/outro-bounded-nucleus-vowel-i5-chai1.json",
+    "evidence/outro-bounded-nucleus-vowel-i8-chai1.json",
+    "evidence/tail-u07-i12-好-hao3-vs-hao4.json",
+    "evidence/zhong-f0-cleanrefs-46d2f92fa4a3.json"
+  ],
+  "artifact_map": "artifact-map.json",
+  "default_results_files": [
+    "default-results.json",
+    "default-skipped.json"
+  ],
+  "transport_note": "引用音频与测量路径为ZIP内路径；在当前pronunciation目录解压两个ZIP后，可按原hash复现。原始测量JSON字节不改，原始绝对音频路径通过artifact-map.json映射到ZIP内相对路径；归档的逐成员SHA256见archive-manifest.json。",
+  "archives": [
+    {
+      "path": "pronunciation-process-evidence.zip",
+      "sha256": "e30cc5b39670f89ec23c0ddd7a705777220e37734ddd2781a4285852e6f370a4",
+      "bytes": 5145139,
+      "members": 247,
+      "logic": "坐标、首盘、第二盘压力与回破，以及完整复现脚本"
+    },
+    {
+      "path": "pronunciation-finish-evidence.zip",
+      "sha256": "e88621a6b035f28e23aa0ae676682f70004af7e87b81a8cac807a5995f4407dd",
+      "bytes": 5054434,
+      "members": 265,
+      "logic": "抢七、统计、下一轮与片尾"
+    }
+  ],
+  "archive_member_inventory": "archive-manifest.json",
+  "evidence_paths_kind": "ZIP内相对路径；在当前pronunciation目录解压后可按原hash复现"
+}

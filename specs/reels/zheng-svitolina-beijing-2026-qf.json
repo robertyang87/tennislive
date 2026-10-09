@@ -1,0 +1,576 @@
+{
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "云见zh-CN-YunjianNeural +6% Edge；用户明确要求不用DeepSeek和MiniMax，配音使用现有Edge工具，文字与画面判断由当前OpenAI会话完成。",
+  "track": false,
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "slug": "zheng-svitolina-beijing-2026-qf",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=lme6vYGvWXw"
+  },
+  "primary": "main",
+  "scorebox": [
+    84,
+    830,
+    590,
+    992
+  ],
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1020_2026_LS004",
+    "flashscore_id": "2o9H9s3C",
+    "participants": [
+      "郑钦文",
+      "斯维托丽娜"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        3
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "winner": "郑钦文",
+    "loser": "斯维托丽娜",
+    "winner_result": "6-3 7-6(6)",
+    "loser_result": "3-6 6-7(6)",
+    "tiebreaks_home_away": [
+      null,
+      [
+        8,
+        6
+      ]
+    ],
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "date": "2026-10-09",
+    "duration": "01:47:33",
+    "daypart": "下午",
+    "observed_at": "2026-10-09T13:09:19.480287+00:00",
+    "_time_note": "Actual first point07:09:09Z and final08:55:58Z. Scheduled MatchTimeStamp not first serve. WTA pointWinner8 rows conflict with scoreAfterPoint; scores reconstruct80:70 and agree both statistics providers."
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "郑钦文",
+        "name_en": "Qinwen Zheng",
+        "country": "CHN",
+        "rank": 54
+      },
+      {
+        "name": "斯维托丽娜",
+        "name_en": "Elina Svitolina",
+        "country": "UKR",
+        "rank": 7
+      }
+    ],
+    "_rank_why": "Latest official ranked endpoint snapshot2026-09-28: Zheng54, Svitolina7. ZhengWC/Svitolina seed6 not ranks.",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "郑钦文",
+    "winner": "郑钦文",
+    "result": "6-3 7-6(6)",
+    "hook": "次盘落后即刻追平\n郑钦文重返半决赛",
+    "hook_accent": "重返半决赛",
+    "topic": "WTA1000 北京 1/4决赛 · 郑钦文 VS 斯维托丽娜",
+    "scrim": "clear",
+    "portrait": {
+      "image": "assets/reels/zheng-svitolina-beijing-2026-qf/zheng-xinhua-action.jpg",
+      "focus": 0.5,
+      "focus_y": 0,
+      "zoom": 1,
+      "source_url": "https://n.sinaimg.cn/sinakd20261009s/300/w1080h1620/20261009/6715-510dd7b778211bb122f674e06f4eeed5.jpg",
+      "_portrait_why": "新华社谢晗10月9日本场反拍实拍；同场图文和对阵结果相互绑定。已实际审图：双眼睁开、脸合焦、无球拍遮脸，1080×1620原图以zoom1原生铺1080×1440，无放大。发布当日旧WTA图实际10月7日对恰拉耶娃，排除。"
+    },
+    "scoreboard": {
+      "court": "Capital Group Diamond",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS004"
+      }
+    }
+  },
+  "stats": {
+    "a": {
+      "aces": 6,
+      "df": 4,
+      "first_in": 36,
+      "first_won": 27,
+      "second_total": 26,
+      "second_won": 12,
+      "bp_conv": 4,
+      "bp_chances": 11,
+      "pts_won": 80,
+      "pts_total": 150,
+      "first_total": 62,
+      "headshot": "assets/players/wta-328120-zheng-qinwen.png",
+      "winners": 39,
+      "ue": 38
+    },
+    "b": {
+      "aces": 7,
+      "df": 2,
+      "first_in": 54,
+      "first_won": 30,
+      "second_total": 34,
+      "second_won": 17,
+      "bp_conv": 2,
+      "bp_chances": 2,
+      "pts_won": 70,
+      "pts_total": 150,
+      "first_total": 88,
+      "headshot": "assets/players/headshots/wta-316738.jpg",
+      "winners": 15,
+      "ue": 13
+    },
+    "tour": "wta",
+    "footer_date": "2026-10-09",
+    "footer_venue": "北京 · 全场",
+    "_source": "WTA LS004 Match-level integers; Flashscore independently agrees. Official pointWinner has8 inconsistent records, continuous score implies80:70; do not use raw88:62 total.",
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75051578&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/zheng-svitolina-beijing-2026-qf/tnns-stats.json",
+      "source_sha256": "3bf9d7a0d35dd155148f7065ed8bbc25ab8cb8ee2a118e615e1cb0ce4175188c",
+      "period": "Match",
+      "match_date": "2026-10-09",
+      "checked_at": "2026-10-09T13:10:06.224177+00:00",
+      "winner_result": "6-3 7-6(6)",
+      "matchup": [
+        "Zheng",
+        "Svitolina"
+      ],
+      "winners": [
+        39,
+        15
+      ],
+      "ue": [
+        38,
+        13
+      ],
+      "notes": "Native browser returned decoded API Match period and matched player order. Set1+Set2: Winners22+17=39/5+10=15, UE14+24=38/5+8=13. WTA indexed report36 conflicts: use complete uniquely mapped TNNS table, not index text."
+    }
+  },
+  "topbar": {
+    "line1": "2026 WTA1000 北京 1/4决赛",
+    "line2": "郑钦文 6-3 7-6(6) 斯维托丽娜"
+  },
+  "push": {
+    "auto": true,
+    "summary": "郑钦文重返半决赛",
+    "lead": "首盘5-2发球拿盘未成，郑钦文下一局再次破发；第二盘3-4落后后立刻回破，在抢七中兑现第二个赛点。24岁生日后的第一场球，她以6-3、7-6(6)击败斯维托丽娜，半决赛将对阵梅尔滕斯。"
+  },
+  "_heat_why": "郑钦文主场24岁生日后首战，击败世界第七，第二次进入中网半决赛。",
+  "_production_timing": {
+    "first_dispatch_at": "2026-10-09T12:00:28Z",
+    "note": "原自动草稿未通过模型门禁；用户明确改用当前模型。本人重写文案、重新核画面，不调用DeepSeek/MiniMax。"
+  },
+  "_model_review": {
+    "provider": "current OpenAI conversation",
+    "user_directive": "不要用任何里面的DeepSeek和MiniMax，要用自己的大模型。",
+    "editorial_and_visual": "Current assistant directly reviews retained match facts, native contact sheets and cover image. No fabricated vendor model attestation."
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "领先被追回，郑钦文怎样拿到这场胜利？",
+    "thesis": "首盘5-2没能发球拿盘后再破发；次盘3-4失守后立刻回破；抢七6-6再赢两分，兑现第二个赛点。关键回合、原声与真实庆祝呈现压力和回应。",
+    "beats": [
+      "获胜反应冷开场",
+      "生日后第一战",
+      "首盘建立优势",
+      "5-2失守后再破发",
+      "次盘3-4落后立刻回破",
+      "抢七6-6再拿赛点",
+      "第二赛点兑现与庆祝握手",
+      "全场技术统计",
+      "半决赛梅尔滕斯"
+    ],
+    "human_context": {
+      "facts": [
+        "郑钦文10月8日满24岁，本场10月9日下午",
+        "2024年曾进入中网半决赛，2026年第二次晋级"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4589376/zheng-qinwen-upsets-svitolina-to-reach-china-open-semifinals"
+      ],
+      "angle": "生日后的第一场球，用可见的倒地、教练庆祝和主场挥手呈现情绪。"
+    }
+  },
+  "_facts": [
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+      "type": "official_results",
+      "why": "LS004结果用时与LS005梅尔滕斯结果"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS004/stats",
+      "type": "official_match_stats",
+      "why": "双方全场整数"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS004/point-by-point",
+      "type": "point_by_point",
+      "why": "逐分比分核实转折；8处pointWinner错误按比分变化审计"
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4589376/zheng-qinwen-upsets-svitolina-to-reach-china-open-semifinals",
+      "type": "official_report",
+      "why": "生日背景；报道说第二盘无破发属错误，未采用"
+    },
+    {
+      "url": "https://api.tnnslive.com/v1/web?id=75051578&mode=match_info&submode=stats&web=true",
+      "type": "full_match_stats",
+      "why": "TNNS全场和逐盘加和：制胜分39/15、非受迫失误38/13"
+    }
+  ],
+  "segments": [
+    {
+      "source": "main",
+      "start": 279,
+      "end": 296.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "赢球后挥手和完整生日礼物原声；末词Beijing约296.45，源296.72开始采访，段尾含0.18秒溶解底料至296.68仍在采访前。",
+      "point_end_ok": "胜局已经结束；完整保留握手尾部和向观众挥手致意，没有进行中的回合。",
+      "_edit_id": "cold_open",
+      "quote": [
+        {
+          "at": 0.97,
+          "end": 2.6,
+          "text": "A belated birthday present.\n一份迟到的生日礼物。"
+        },
+        {
+          "at": 2.6,
+          "end": 4.62,
+          "text": "Turned 24 years old yesterday.\n她昨天刚满24岁。"
+        },
+        {
+          "at": 5.19,
+          "end": 7.1,
+          "text": "And Zheng Qinwen in front of her home crowd\n郑钦文在主场观众面前"
+        },
+        {
+          "at": 7.1,
+          "end": 9.95,
+          "text": "into the semifinals of the China Open.\n打进了中国网球公开赛半决赛。"
+        },
+        {
+          "at": 10.27,
+          "end": 11.82,
+          "text": "Six three, seven six.\n比分6比3、7比6。"
+        },
+        {
+          "at": 12.45,
+          "end": 13.6,
+          "text": "What a win. What a moment.\n多么精彩的胜利，多么动人的时刻。"
+        },
+        {
+          "at": 13.84,
+          "end": 15.35,
+          "text": "Second time that she's been\n这是她第二次"
+        },
+        {
+          "at": 15.35,
+          "end": 17.45,
+          "text": "in the semifinals here in Beijing.\n打进北京站半决赛"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "subtitle_bottom": 540
+    },
+    {
+      "title_card": "24岁后的第一战\n郑钦文再进中网四强",
+      "kicker": "北京时间10月9日下午 · 北京1/4决赛",
+      "seconds": 10.5,
+      "narration": "北京时间十月九号下午，中网四分之一决赛。二十四岁生日刚过，郑钦文对上世界第七，斯维托丽娜。",
+      "_edit_id": "coordinate"
+    },
+    {
+      "title_card": "5-2没能发球拿盘\n下一局再拿盘点",
+      "kicker": "第一盘 · 领先之后的回应",
+      "seconds": 12.5,
+      "narration": "首盘，郑钦文先破发，拿到二比零。四比二时，她又兑现第五个破发点。五比二发球拿盘没成，下一局，她再拿到盘点。",
+      "_edit_id": "set_one_turn"
+    },
+    {
+      "source": "main",
+      "start": 110.8,
+      "end": 149.36,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "首盘5-3第二个盘点：完整发球与长相持、郑钦文压线得分、教练握拳、观众与换边；保留整个首盘解说。",
+      "point_end_ok": "官方节目完整发球、相持、死球结果和随后真实反应；不以最后一拍替代关键过程。",
+      "_edit_id": "set_point",
+      "quote": [
+        {
+          "at": 17.1,
+          "end": 18.23,
+          "text": "Finds the line.\n压线得分。"
+        },
+        {
+          "at": 19.08,
+          "end": 22.04,
+          "text": "Good set of tennis from Zheng Qinwen.\n郑钦文这一盘打得很好。"
+        },
+        {
+          "at": 22.92,
+          "end": 24.0,
+          "text": "Coach likes it.\n教练很满意。"
+        },
+        {
+          "at": 24.42,
+          "end": 25.5,
+          "text": "Crowd is loving it,\n现场观众也看得过瘾。"
+        },
+        {
+          "at": 26.65,
+          "end": 29.75,
+          "text": "as Zheng Qinwen from China\n中国选手郑钦文"
+        },
+        {
+          "at": 30,
+          "end": 31.95,
+          "text": "playing well in front of her home crowd.\n在主场观众面前表现出色"
+        },
+        {
+          "at": 32.36,
+          "end": 35.48,
+          "text": "Looking to get to a second semifinal in Beijing.\n她争取第二次打进北京站半决赛。"
+        },
+        {
+          "at": 35.78,
+          "end": 37.0,
+          "text": "She's halfway there. Six three.\n现在已走过一半，首盘6比3。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "subtitle_bottom": 540
+    },
+    {
+      "title_card": "次盘3-4落后\n下一局立即追平",
+      "kicker": "第二盘 · 对手反扑",
+      "seconds": 9,
+      "narration": "第二盘三比三，郑钦文的发球局失守。她在下一局，用正手压向底线角落，又拿到破发机会。",
+      "_edit_id": "second_pressure"
+    },
+    {
+      "source": "main",
+      "start": 197.68,
+      "end": 218.8,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "郑钦文次盘3-4落后；斯维托丽娜发球30-30，从197.68接发准备至199.64完整发球长回合，郑正手角落得分升40-30制造破发点。随后回破4-4由下一原生卡事实讲，不冒充本分已破发。被破3-4本身不在选用官方集锦里，前卡事实交代；移除184.56–197.68斯维托丽娜保发追3-3的普通回合，避免配在错局面下。",
+      "point_end_ok": "官方节目完整发球、相持、死球结果和随后真实反应；不以最后一拍替代关键过程。",
+      "_edit_id": "break_and_response",
+      "quote": [
+        {
+          "at": 18.38,
+          "end": 19.9,
+          "text": "Great forehand into the corner,\n漂亮的正手 直入底线角落"
+        },
+        {
+          "at": 19.9,
+          "end": 21.12,
+          "text": "and a big roar from...\n还有一声响亮的大吼"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_source_speech_note": "Original official edited clip cuts the commentary after from; unprompted base.en and small.en agree on actual heard words and no next name. Preserve actual fragment, do not complete by guessing."
+    },
+    {
+      "title_card": "回破追到4-4\n一路进入抢七",
+      "kicker": "第二盘 · 接发局拿回应",
+      "seconds": 8.0,
+      "narration": "这个破发点，郑钦文随后兑现，追到四比四。双方各自保发，第二盘进入抢七。",
+      "_edit_id": "breakback_fact"
+    },
+    {
+      "source": "main",
+      "start": 221.04,
+      "end": 232.8,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "抢七郑5-4，斯维托丽娜网前得分追到5-5，保留发球、回合与网前反应；不冒充6-5被救赛点。",
+      "point_end_ok": "官方节目完整发球、相持、死球结果和随后真实反应；不以最后一拍替代关键过程。",
+      "_edit_id": "tb_equal",
+      "quote": [
+        {
+          "at": 6.66,
+          "end": 8.9,
+          "text": "Top ten tennis right there.\n这就是世界前十的水准"
+        },
+        {
+          "at": 9.16,
+          "end": 11.08,
+          "text": "It's great work from Svitolina.\n斯维托丽娜打得太出色了"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "title_card": "首个赛点被救回\n6-6再争下一分",
+      "kicker": "抢七 · 两次赛点",
+      "seconds": 8.6,
+      "narration": "抢七六比五，郑钦文的第一个赛点被救回。六比六，这一分，她再次用长回合争到机会。",
+      "_edit_id": "tb_pressure"
+    },
+    {
+      "source": "main",
+      "start": 233.0,
+      "end": 256.84,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "抢七6-6：郑钦文远端发球，斯维托丽娜近端接发；完整发球、双方长相持、郑得分变7-6、握拳与原声句尾。",
+      "point_end_ok": "官方节目完整发球、相持、死球结果和随后真实反应；不以最后一拍替代关键过程。",
+      "_edit_id": "tb_six_all",
+      "quote": [
+        {
+          "at": 18.78,
+          "end": 20.13,
+          "text": "Oh, what a point!\n噢 多精彩的一分"
+        },
+        {
+          "at": 20.13,
+          "end": 21.42,
+          "text": "And it's won by Zheng.\n郑钦文拿下了这一分"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_point_start_review": "源233.00为郑钦文6-6发球准备的第一帧，红衣远端郑钦文发球；完整长回合至7-6及反应。"
+    },
+    {
+      "source": "main",
+      "start": 256.84,
+      "end": 296.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "crosses_cut": "第二个赛点郑7-6：接发准备、完整发球回合与得分8-6、郑坐倒、教练席庆祝、握手和挥手致意。止于采访前，保留解说完整句。 原声Beijing词尾296.45，采访首帧296.72；主段296.5加底料0.18只至296.68。",
+      "point_end_ok": "保留官方赛点镜头自首个大全景抛球帧起，至完整相持、得分及真实庆祝；上一段连续保留郑接发准备，不声称官方镜头含SV抛球前准备。",
+      "_edit_id": "match_point_payoff",
+      "quote": [
+        {
+          "at": 5.4,
+          "end": 9.72,
+          "text": "And it's a belated birthday gift for Zheng Qinwen,\n这是送给郑钦文的迟到生日礼物"
+        },
+        {
+          "at": 9.72,
+          "end": 11.54,
+          "text": "and she cannot believe it.\n她自己都难以相信。"
+        },
+        {
+          "at": 11.88,
+          "end": 13.56,
+          "text": "Onto the ground she goes.\n她倒在了球场上。"
+        },
+        {
+          "at": 14.68,
+          "end": 16.92,
+          "text": "And her coaches are enjoying that.\n她的教练们也为此欣喜。"
+        },
+        {
+          "at": 17.02,
+          "end": 18.34,
+          "text": "Look at Pere Riba. He's loving it.\n看看佩雷·里巴 他太开心了"
+        },
+        {
+          "at": 18.46,
+          "end": 20.52,
+          "text": "The crowd going wild in Beijing.\n北京的现场观众沸腾了。"
+        },
+        {
+          "at": 23.13,
+          "end": 24.76,
+          "text": "A belated birthday present.\n一份迟到的生日礼物。"
+        },
+        {
+          "at": 24.76,
+          "end": 26.78,
+          "text": "Turned 24 years old yesterday.\n她昨天刚满24岁。"
+        },
+        {
+          "at": 27.35,
+          "end": 29.26,
+          "text": "And Zheng Qinwen in front of her home crowd\n郑钦文在主场观众面前"
+        },
+        {
+          "at": 29.26,
+          "end": 32.11,
+          "text": "into the semifinals of the China Open.\n打进了中国网球公开赛半决赛。"
+        },
+        {
+          "at": 32.43,
+          "end": 33.98,
+          "text": "Six three, seven six.\n比分6比3、7比6。"
+        },
+        {
+          "at": 34.61,
+          "end": 35.76,
+          "text": "What a win. What a moment.\n多么精彩的胜利，多么动人的时刻。"
+        },
+        {
+          "at": 36.0,
+          "end": 37.51,
+          "text": "Second time that she's been\n这是她第二次"
+        },
+        {
+          "at": 37.51,
+          "end": 39.61,
+          "text": "in the semifinals here in Beijing.\n打进北京站半决赛"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "subtitle_bottom": 540
+    },
+    {
+      "stat_card": true,
+      "seconds": 11.5,
+      "narration": "整场，郑钦文一发得分率，百分之七十五。十一次破发机会，抓住四次。领先被追回，她又抓住机会。",
+      "_edit_id": "full_stats"
+    },
+    {
+      "title_card": "半决赛迎战梅尔滕斯\n还能再进一轮吗",
+      "kicker": "下一场 · 中网半决赛",
+      "seconds": 8.8,
+      "narration": "第二次来到中网半决赛，郑钦文下一轮对阵梅尔滕斯。生日之后，她还能再进一轮吗？",
+      "_edit_id": "next_round"
+    }
+  ],
+  "_hit_data": {
+    "selected": "全场制胜分39比15；一发得分率75%比56%；郑钦文11次破发机会兑现4次。",
+    "source": "data/research/zheng-svitolina-beijing-2026-qf/tnns-stats.json and wta-stats.json",
+    "use": "原生全场统计卡及统计旁白",
+    "editorial_reading": "更多主动得分，也付出更多非受迫性失误；领先被追回后继续创造并兑现机会。"
+  }
+}

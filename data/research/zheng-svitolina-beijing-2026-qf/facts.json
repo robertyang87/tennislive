@@ -1,0 +1,971 @@
+{
+  "match": {
+    "tournament": "2026 中国网球公开赛（北京），WTA 1000",
+    "round": "女单四分之一决赛",
+    "court": "Capital Group Diamond（钻石球场）",
+    "match_day": "2026-10-09",
+    "duration": "01:47:33",
+    "winner": "郑钦文",
+    "loser": "斯维托丽娜",
+    "score": "6-3 7-6(6)",
+    "tiebreak": [
+      8,
+      6
+    ],
+    "home": "郑钦文",
+    "away": "斯维托丽娜",
+    "wta_id": "LS004",
+    "flashscore_id": "2o9H9s3C",
+    "sources": [
+      "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?states=C",
+      "https://www.wtatennis.com/tournaments/1020/beijing/2026/scores/LS004"
+    ],
+    "raw": {
+      "BinPacketBase64": null,
+      "CourtID": 1,
+      "DateSeq": 12,
+      "DrawLevelType": "M",
+      "DrawMatchType": "S",
+      "EntryTypeA": "Wc",
+      "EntryTypeB": "",
+      "EventID": "1020",
+      "EventYear": 2026,
+      "LastUpdated": "2026-10-09T08:56:02.623+00:00",
+      "MatchID": "LS004",
+      "MatchState": "F",
+      "MatchTimeStamp": "2026-10-09T06:50:22.877+00:00",
+      "MatchTimeTotal": "01:47:33",
+      "Message": "{11|Q. Zheng}",
+      "NumSets": 2,
+      "PlayerCountryA": "CHN",
+      "PlayerCountryA2": "",
+      "PlayerCountryB": "UKR",
+      "PlayerCountryB2": "",
+      "PlayerIDA": "328120",
+      "PlayerIDA2": "",
+      "PlayerIDB": "316738",
+      "PlayerIDB2": "",
+      "PlayerNameFirstA": "Qinwen",
+      "PlayerNameFirstA2": "",
+      "PlayerNameFirstB": "Elina",
+      "PlayerNameFirstB2": "",
+      "PlayerNameLastA": "Zheng",
+      "PlayerNameLastA2": "",
+      "PlayerNameLastB": "Svitolina",
+      "PlayerNameLastB2": "",
+      "PointA": "",
+      "PointB": "",
+      "ResultString": "Q. Zheng d [6]E. Svitolina 6-3,7-6(6)",
+      "RoundID": "Q",
+      "ScoreSet1A": "6",
+      "ScoreSet1B": "3",
+      "ScoreSet2A": "7",
+      "ScoreSet2B": "6",
+      "ScoreSet3A": "",
+      "ScoreSet3B": "",
+      "ScoreSet4A": "",
+      "ScoreSet4B": "",
+      "ScoreSet5A": "",
+      "ScoreSet5B": "",
+      "ScoreString": "6-3,7-6(6)",
+      "ScoreSys": "1",
+      "ScoreTbSet1": "",
+      "ScoreTbSet2": "6",
+      "ScoreTbSet3": "",
+      "ScoreTbSet4": "",
+      "SeedA": "",
+      "SeedB": "6",
+      "Serve": "",
+      "Winner": "2"
+    },
+    "listed_start_utc": "2026-10-09T06:50:22.877+00:00",
+    "listed_start_beijing": "2026-10-09 14:50:22.877 +08:00",
+    "actual_first_point_utc": "2026-10-09T07:09:09Z",
+    "actual_first_point_beijing": "2026-10-09 15:09:09 +08:00",
+    "actual_last_point_utc": "2026-10-09T08:55:58Z",
+    "actual_last_point_beijing": "2026-10-09 16:55:58 +08:00"
+  },
+  "players": {
+    "ranking_as_of": "2026-09-28（官方榜，勿把赛后即时排名当本场排名）",
+    "ranking_source": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+    "official_ranking_rows": [
+      {
+        "player": {
+          "id": 316738,
+          "firstName": "Elina",
+          "lastName": "Svitolina",
+          "fullName": "Elina Svitolina",
+          "countryCode": "UKR",
+          "dateOfBirth": "1994-09-12",
+          "metadata": null
+        },
+        "ranking": 7,
+        "points": 4809,
+        "tournamentsPlayed": 17,
+        "movement": 0,
+        "rankedAt": "2026-09-28T00:00:00Z"
+      },
+      {
+        "player": {
+          "id": 328120,
+          "firstName": "Qinwen",
+          "lastName": "Zheng",
+          "fullName": "Qinwen Zheng",
+          "countryCode": "CHN",
+          "dateOfBirth": "2002-10-08",
+          "metadata": null
+        },
+        "ranking": 54,
+        "points": 1083,
+        "tournamentsPlayed": 18,
+        "movement": -2,
+        "rankedAt": "2026-09-28T00:00:00Z"
+      }
+    ],
+    "zheng": {
+      "name_en": "Qinwen Zheng",
+      "country": "CHN",
+      "rank": 54,
+      "seed": null,
+      "entry": "WC（外卡）",
+      "birth": "2002-10-08",
+      "age": 24
+    },
+    "svitolina": {
+      "name_en": "Elina Svitolina",
+      "country": "UKR",
+      "rank": 7,
+      "seed": 6,
+      "birth": "1994-09-12",
+      "age": 32
+    }
+  },
+  "set1": {
+    "description": "郑开场破发，2-0领先。第7局4-2时共拿到5个破发点，第5个兑现到5-2；第8局发球胜盘局被破发5-3；第9局第2个盘点兑现，6-3。",
+    "key_game_points": {
+      "to_5_2": "0:15,15:15,30:15,40:15 BP,40:30 BP,40:40,A:40 BP,40:40,A:40 BP,40:40,40:A,40:40,A:40 BP, game Zheng",
+      "to_6_3": "15:0,15:15,15:30,30:30,40:30 SP,40:40,40:A,40:40,A:40 SP, game Zheng"
+    },
+    "sources": [
+      "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_2o9H9s3C",
+      "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS004/stats"
+    ]
+  },
+  "set2": {
+    "games_zheng_svitolina": [
+      "1-0",
+      "1-1",
+      "2-1",
+      "2-2",
+      "3-2",
+      "3-3",
+      "3-4",
+      "4-4",
+      "5-4",
+      "5-5",
+      "6-5",
+      "6-6",
+      "7-6"
+    ],
+    "turns": [
+      {
+        "before": "3-2，斯维托丽娜发球",
+        "event": "郑钦文拿到40-30破发点但未兑现",
+        "after": "3-3"
+      },
+      {
+        "before": "3-3，郑钦文发球",
+        "event": "连丢4分，0-40时对手兑现首个破发点",
+        "after": "3-4"
+      },
+      {
+        "before": "3-4，斯维托丽娜发球",
+        "event": "郑钦文在对手发球局40-30兑现回破",
+        "after": "4-4"
+      },
+      {
+        "before": "4-4",
+        "event": "郑保发重获领先，之后双方保发",
+        "after": "6-6"
+      }
+    ],
+    "tiebreak_scores_zheng_first": [
+      "0-1",
+      "0-2",
+      "1-2",
+      "2-2",
+      "3-2",
+      "4-2",
+      "4-3",
+      "5-3",
+      "5-4",
+      "5-5",
+      "6-5",
+      "6-6",
+      "7-6",
+      "8-6"
+    ],
+    "tiebreak_summary": "郑0-2落后连赢4分到4-2；5-3被追成5-5；6-5获得首个赛点（此后郑发球），被救到6-6；7-6获得第二个赛点（此后斯维托丽娜发球），兑现8-6。",
+    "match_points": {
+      "Zheng_faced": 0,
+      "Zheng_earned": 2,
+      "first": "抢七6-5领先时",
+      "converted": "抢七7-6领先时的第二个赛点"
+    },
+    "set_points_faced_by_Zheng": 0,
+    "sources": [
+      "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_2o9H9s3C",
+      "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS004/stats",
+      "https://www.wtatennis.com/news/4589376/zheng-qinwen-upsets-svitolina-to-reach-china-open-semifinals"
+    ],
+    "tiebreak_detail": [
+      {
+        "score": [
+          0,
+          1
+        ],
+        "server": "Zheng",
+        "point_winner": "Svitolina",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          0,
+          2
+        ],
+        "server": "Svitolina",
+        "point_winner": "Svitolina",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          1,
+          2
+        ],
+        "server": "Svitolina",
+        "point_winner": "Zheng",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          2,
+          2
+        ],
+        "server": "Zheng",
+        "point_winner": "Zheng",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          3,
+          2
+        ],
+        "server": "Zheng",
+        "point_winner": "Zheng",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          4,
+          2
+        ],
+        "server": "Svitolina",
+        "point_winner": "Zheng",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          4,
+          3
+        ],
+        "server": "Svitolina",
+        "point_winner": "Svitolina",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          5,
+          3
+        ],
+        "server": "Zheng",
+        "point_winner": "Zheng",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          5,
+          4
+        ],
+        "server": "Zheng",
+        "point_winner": "Svitolina",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          5,
+          5
+        ],
+        "server": "Svitolina",
+        "point_winner": "Svitolina",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          6,
+          5
+        ],
+        "server": "Svitolina",
+        "point_winner": "Zheng",
+        "match_point_for": "Zheng"
+      },
+      {
+        "score": [
+          6,
+          6
+        ],
+        "server": "Zheng",
+        "point_winner": "Svitolina",
+        "match_point_for": null
+      },
+      {
+        "score": [
+          7,
+          6
+        ],
+        "server": "Zheng",
+        "point_winner": "Zheng",
+        "match_point_for": "Zheng"
+      },
+      {
+        "score": [
+          8,
+          6
+        ],
+        "server": "Svitolina",
+        "point_winner": "Zheng",
+        "match_point_for": null
+      }
+    ]
+  },
+  "stats": {
+    "ordering": [
+      "郑钦文",
+      "斯维托丽娜"
+    ],
+    "official_api_source": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS004/stats",
+    "official_raw": [
+      {
+        "eventyear": 2026,
+        "eventid": "1020",
+        "matchid": "LS004",
+        "setnum": 0,
+        "settime": "",
+        "scorea": "",
+        "scoreb": "",
+        "scoretb": "",
+        "acesa": 6,
+        "acesb": 7,
+        "dblflta": 4,
+        "dblfltb": 2,
+        "ptswon1stserva": 27,
+        "ptswon1stservb": 30,
+        "ptsplayed1stserva": 36,
+        "ptsplayed1stservb": 54,
+        "ptstotwonserva": 39,
+        "ptstotwonservb": 47,
+        "totservplayeda": 62,
+        "totservplayedb": 88,
+        "breakptsconva": 4,
+        "breakptsconvb": 2,
+        "breakptsplayeda": 11,
+        "breakptsplayedb": 2,
+        "servgamesplayeda": 10,
+        "servgamesplayedb": 11,
+        "pts1stservlosta": 9,
+        "pts1stservlostb": 24,
+        "totptswona": 80,
+        "totptswonb": 70,
+        "acesssa": 0,
+        "acesssb": 0
+      },
+      {
+        "eventyear": 2026,
+        "eventid": "1020",
+        "matchid": "LS004",
+        "setnum": 1,
+        "settime": "00:45:26",
+        "scorea": "6",
+        "scoreb": "3",
+        "scoretb": "0",
+        "acesa": 1,
+        "acesb": 2,
+        "dblflta": 1,
+        "dblfltb": 1,
+        "ptswon1stserva": 9,
+        "ptswon1stservb": 14,
+        "ptsplayed1stserva": 12,
+        "ptsplayed1stservb": 27,
+        "ptstotwonserva": 15,
+        "ptstotwonservb": 20,
+        "totservplayeda": 24,
+        "totservplayedb": 43,
+        "breakptsconva": 3,
+        "breakptsconvb": 1,
+        "breakptsplayeda": 9,
+        "breakptsplayedb": 1,
+        "servgamesplayeda": 4,
+        "servgamesplayedb": 5,
+        "pts1stservlosta": 3,
+        "pts1stservlostb": 13,
+        "totptswona": 38,
+        "totptswonb": 29,
+        "acesssa": 0,
+        "acesssb": 0
+      },
+      {
+        "eventyear": 2026,
+        "eventid": "1020",
+        "matchid": "LS004",
+        "setnum": 2,
+        "settime": "01:02:05",
+        "scorea": "7",
+        "scoreb": "6",
+        "scoretb": "6",
+        "acesa": 5,
+        "acesb": 5,
+        "dblflta": 3,
+        "dblfltb": 1,
+        "ptswon1stserva": 18,
+        "ptswon1stservb": 16,
+        "ptsplayed1stserva": 24,
+        "ptsplayed1stservb": 27,
+        "ptstotwonserva": 24,
+        "ptstotwonservb": 27,
+        "totservplayeda": 38,
+        "totservplayedb": 45,
+        "breakptsconva": 1,
+        "breakptsconvb": 1,
+        "breakptsplayeda": 2,
+        "breakptsplayedb": 1,
+        "servgamesplayeda": 6,
+        "servgamesplayedb": 6,
+        "pts1stservlosta": 6,
+        "pts1stservlostb": 11,
+        "totptswona": 42,
+        "totptswonb": 41,
+        "acesssa": 0,
+        "acesssb": 0
+      }
+    ],
+    "all_match": {
+      "aces": [
+        6,
+        7
+      ],
+      "double_faults": [
+        4,
+        2
+      ],
+      "first_serve_points_won": [
+        "27/36（75%）",
+        "30/54（55.6%）"
+      ],
+      "second_serve_points_won": [
+        "12/26（46.2%）",
+        "17/34（50%）"
+      ],
+      "break_points_converted": [
+        "4/11",
+        "2/2"
+      ],
+      "total_points": [
+        80,
+        70
+      ],
+      "winners": [
+        39,
+        15
+      ],
+      "unforced_errors": [
+        38,
+        13
+      ]
+    },
+    "winners_ue_source": "https://tnnslive.com/match/75051578",
+    "winners_ue_evidence": "TNNS standard browser response, hasExtendedStats=true; players Zheng/Svitolina; Match39/15 winners38/13UE, Set1=22/5 winners14/5UE, Set2=17/10 winners24/8UE; sets sum exactly to match. Saved decoded source zheng-svitolina-tnns.json. Earlier WTA search-index36/15 conflicts and is no longer adopted.",
+    "set1": {
+      "aces": [
+        1,
+        2
+      ],
+      "double_faults": [
+        1,
+        1
+      ],
+      "breaks": [
+        3,
+        1
+      ],
+      "break_chances": [
+        9,
+        1
+      ]
+    },
+    "set2": {
+      "aces": [
+        5,
+        5
+      ],
+      "double_faults": [
+        3,
+        1
+      ],
+      "breaks": [
+        1,
+        1
+      ],
+      "break_chances": [
+        2,
+        1
+      ]
+    },
+    "tnns": {
+      "match_id": "75051578",
+      "players": [
+        "Zheng",
+        "Svitolina"
+      ],
+      "match": {
+        "winners": [
+          39,
+          15
+        ],
+        "ue": [
+          38,
+          13
+        ]
+      },
+      "set1": {
+        "winners": [
+          22,
+          5
+        ],
+        "ue": [
+          14,
+          5
+        ]
+      },
+      "set2": {
+        "winners": [
+          17,
+          10
+        ],
+        "ue": [
+          24,
+          8
+        ]
+      },
+      "has_extended_stats": true,
+      "artifact": "/workspace/scratch/zheng-svitolina-tnns.json"
+    }
+  },
+  "background": {
+    "verified": [
+      "这是两人巡回赛首次交手。",
+      "郑钦文10月8日刚满24岁，本场是24岁首胜。",
+      "郑前四轮全部三盘，本场是本届中网首次直落两盘胜出。",
+      "继2024年后再次进入中网四强，个人第4个WTA 1000四强。",
+      "郑美网从资格赛进入八强，本次胜出是近期13场巡回赛中的12胜。",
+      "郑以外卡参赛，赛前世界第54。",
+      "下一轮已确定迎战梅尔滕斯：官方LS005梅尔滕斯7-6(0)、6-3击败斯瓦泰克。"
+    ],
+    "sources": [
+      "https://www.wtatennis.com/news/4589376/zheng-qinwen-upsets-svitolina-to-reach-china-open-semifinals",
+      "https://www.wtatennis.com/news/4587446/china-open-quarterfinal-preview-qinwen-svitolina-mertens-swiatek-muchova-andreeva",
+      "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?states=C",
+      "https://ent.people.com.cn/n1/2026/1009/c1012-40811496.html"
+    ],
+    "next_round": "埃莉斯·梅尔滕斯（比利时，13号种子）",
+    "next_round_source": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+    "next_round_audit": {
+      "quarterfinal_id": "LS005",
+      "state": "F",
+      "result": "[13]E. Mertens d [8]I. Swiatek 7-6(0), 6-3",
+      "last_updated": "2026-10-09T13:00:00.463+00:00",
+      "raw_path": "/workspace/scratch/wta-next-round-latest.raw",
+      "schedule": "LS002 2026-10-10T19:00:00+08:00 (scheduled; opponent field still cached TBD)"
+    }
+  },
+  "photos": {
+    "wta_article_head_image_rejected": {
+      "item_id": "4589320",
+      "url": "https://photoresources.wtatennis.com/wta/photo/2026/10/09/4fe950f1-ee42-4619-9cf2-d864e105825c/Qinwen-Zheng.jpg",
+      "name": "Qinwen-Zheng.jpg",
+      "title": "Qinwen Zheng, Beijing 2026",
+      "caption": "Qinwen Zheng, Beijing 2026 · BEIJING, CHINA - OCTOBER 07: Qinwen Zheng of China in action against Alina Charaeva of Armenia in the fourth round on Day 8 of the China Open at National Tennis Center on October 07, 2026 in Beijing, China (Photo by Robert Prange/Getty Images)",
+      "instructions": "Not Released (NR) Strictly for editorial use only. Contact your local office for all commercial (including advertorial) and promotional uses. Use in books requires separate approval. NO LICENSING FOR CONSUMER PRINTS.",
+      "credit": "Getty Images；2026 Robert Prange；Getty Images；Robert Prange",
+      "publish_utc": "2026-10-09T09:27:38Z",
+      "wh": [
+        4154,
+        2798
+      ],
+      "refs": [
+        "328120"
+      ],
+      "others": [],
+      "taken": "2026:10:07 21:21:18",
+      "offset": "+08:00",
+      "taken_utc": "2026-10-07T13:21:18Z",
+      "bound": false,
+      "bind_why": "EXIF 拍摄于当地 10-07 21:21:18，不在这场的窗口 当地 10-09 14:45~16:52 里——拍的是别的场",
+      "restriction": ""
+    },
+    "rejection": "WTA 本场战报头图实际是10月7日对查拉耶娃的第四轮；EXIF 2026:10:07 21:21:18 +08:00，IPTC 明确点名 Alina Charaeva，不能做本场封面。",
+    "xinhua_candidates": [
+      {
+        "source_page": "https://finance.sina.com.cn/wm/2026-10-09/doc-iniurmnf2896670.shtml",
+        "gallery_match_binding": "https://m.sohu.com/a/1085603509_267106",
+        "credit": "新华社记者 谢晗",
+        "description": "10月9日，中国选手郑钦文在比赛中庆祝得分；本场对斯维托丽娜的新华社图集",
+        "url": "https://n.sinaimg.cn/sinakd20261009s/200/w1080h720/20261009/1a93-b7f69f1659e713f9a899aea213bc4630.jpg",
+        "size": [
+          1080,
+          720
+        ],
+        "local_path": "/workspace/scratch/xinhua_celebration.jpg",
+        "visual_review": "已实际查看：郑钦文握拳张嘴，偏侧面，情绪强；当前文件1080x720，裁竖屏清晰度不足，需要找到此图高清原件。"
+      },
+      {
+        "source_page": "https://finance.sina.com.cn/wm/2026-10-09/doc-iniurmnf2896670.shtml",
+        "credit": "新华社记者 谢晗",
+        "description": "10月9日，中国选手郑钦文在比赛中回球",
+        "url": "https://n.sinaimg.cn/sinakd20261009s/300/w1080h1620/20261009/6715-510dd7b778211bb122f674e06f4eeed5.jpg",
+        "size": [
+          1080,
+          1620
+        ],
+        "local_path": "/workspace/scratch/xinhua_action.jpg",
+        "visual_review": "已实际查看：郑双眼睁开、偏正面，双手反拍，竖图1080x1620；比横图容易铺满3:4，但仅1080px宽，不达1600px官方实拍优先底线。"
+      }
+    ],
+    "additional_source_to_fetch": "https://www.jfdaily.com/staticsg/res/html/web/newsDetail.html?id=1191218",
+    "additional_note": "上观新闻文章中有本场新华社完整图注，HTML 本身为 JS 壳，图片 URL 未取到。",
+    "copyright": "来源与署名已核；版权/许可未知，不将公开下载等同授权。",
+    "official_api_actual_window_search": {
+      "rows": [
+        {
+          "item_id": "4589320",
+          "url": "https://photoresources.wtatennis.com/wta/photo/2026/10/09/4fe950f1-ee42-4619-9cf2-d864e105825c/Qinwen-Zheng.jpg",
+          "name": "Qinwen-Zheng.jpg",
+          "title": "Qinwen Zheng, Beijing 2026",
+          "caption": "Qinwen Zheng, Beijing 2026 · BEIJING, CHINA - OCTOBER 07: Qinwen Zheng of China in action against Alina Charaeva of Armenia in the fourth round on Day 8 of the China Open at National Tennis Center on October 07, 2026 in Beijing, China (Photo by Robert Prange/Getty Images)",
+          "instructions": "Not Released (NR) Strictly for editorial use only. Contact your local office for all commercial (including advertorial) and promotional uses. Use in books requires separate approval. NO LICENSING FOR CONSUMER PRINTS.",
+          "credit": "Getty Images；2026 Robert Prange；Getty Images；Robert Prange",
+          "publish_utc": "2026-10-09T09:27:38Z",
+          "wh": [
+            4154,
+            2798
+          ],
+          "refs": [
+            "328120"
+          ],
+          "others": [],
+          "taken": "2026:10:07 21:21:18",
+          "offset": "+08:00",
+          "taken_utc": "2026-10-07T13:21:18Z",
+          "bound": false,
+          "bind_why": "EXIF 拍摄于当地 10-07 21:21:18，不在这场的窗口 当地 10-09 15:04~17:10 里——拍的是别的场",
+          "restriction": ""
+        }
+      ],
+      "pages_read": 1,
+      "notes": [],
+      "skipped": {
+        "标题不是这一站": 2,
+        "发布早于开赛": 96
+      },
+      "incomplete": false
+    },
+    "official_api_actual_window_verdict": "已实际翻WTA正式照片接口1页，97条因赛事或发布时刻剔除，唯一郑钦文候选仍为10月7日对查拉耶娃，EXIF绑场失败；未找到本场照片。",
+    "additional_xinhua_original_lead": {
+      "source_page": "https://www.jfdaily.com/staticsg/res/html/web/newsDetail.html?id=1191218",
+      "retrieved_api": "https://www.jfdaily.com/news/getNewsDetail?id=1191218",
+      "image_url_in_article": "https://images.shobserver.com/news/900_507/2026/10/09/1200x900_xxjpsec000127_20261009_pepfn1a001.jpg",
+      "image_virtual_path": "/2026/10/09/1200x900_xxjpsec000127_20261009_pepfn1a001.jpg",
+      "caption": "新华社照片，北京，2026年10月9日。中国选手郑钦文在比赛中庆祝得分。北京2026中国网球公开赛女子单打四分之一决赛，郑钦文对阵乌克兰斯维托丽娜。新华社记者谢晗摄。",
+      "status": "已从上观公开新闻API取回正文及图注；图片尚未下载，未量分辨率、未看图。父任务要求停止进一步检索。",
+      "raw_snapshot": "/workspace/scratch/jf-api.raw",
+      "attempts": [
+        {
+          "url": "https://images.shobserver.com/news/2026/10/09/1200x900_xxjpsec000127_20261009_pepfn1a001.jpg",
+          "http": 404
+        },
+        {
+          "url": "https://www.sohu.com/a/1085603509_267106",
+          "http": 403
+        }
+      ]
+    },
+    "full_channel_search_log": "/workspace/scratch/zheng-svitolina-full-photo-search.log",
+    "new_official_day10_photo": {
+      "url": "https://photoresources.wtatennis.com/wta/photo/2026/10/09/7a108a06-1794-4656-83e5-8783077a991f/Qinwen_Zheng_-_China_Open_2026_-_Day_10-DSC_6477.jpg",
+      "fetch_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/09/7a108a06-1794-4656-83e5-8783077a991f/Qinwen_Zheng_-_China_Open_2026_-_Day_10-DSC_6477.jpg?width=4700",
+      "source_page": "https://www.wtatennis.com/news/4589367/zheng-qinwen-maturing-perspective-on-success-fuels-energizing-beijing-run",
+      "size": [
+        4700,
+        2967
+      ],
+      "local_path": "/workspace/scratch/zheng-beijing-day10-wta.jpg",
+      "meta": {
+        "taken": "2026:10:09 17:00:34",
+        "offset": "+08:00",
+        "caption": "Qinwen Zheng of China in action during the quarter-final of the 2026 China Open WTA 1000 tennis tournament",
+        "instructions": "",
+        "credit": "Rob Prange；Â©  2026 Jimmie48 Tennis Photography\n\nThis photo is available for editorial usage. Please contact: licensing@j48tennis.net \n\nUnauthorized editorial or commercial usage is fee-liable.；©  2026 Jimmie48 Tennis Photography\r\rThis photo is available for editorial usage. Please contact: licensing@j48tennis.net \r\rUna",
+        "segments": 9,
+        "texts": [
+          "Qinwen Zheng of China in action during the quarter-final of the 2026 China Open WTA 1000 tennis tournament",
+          "China Open 2026 - Day 10"
+        ]
+      },
+      "visual_review": "已实际看图：本场赛后场上采访，郑微笑、双眼睁开偏正面合焦，采访者半背面占右侧；不是比赛中庆祝，赛场之上封面不作为首选。"
+    },
+    "selected_fallback_review": "root 已实际看过新华社反拍竖图1080×1620，决定用该本场正式来源作fallback，可铺满1080×1440无需放大，fit cover、zoom1、focus_y0；WTA采访高清图不作为当前首选。"
+  },
+  "source_conflicts_and_do_not_say": [
+    "WTA 4589376 更新稿写第二盘双方均未丢发球，与WTA官方 /stats 分盘各破发1次及Flashscore逐分均冲突；以结构化官方统计+逐分为准。",
+    "不能说郑挽救赛点或盘点：本场直落两盘，逐分里对方没有盘点/赛点。微博有误写“挽救赛点”。",
+    "直播吧部分文字把抢七5-5、6-6与常规局数混写；第一赛点只在抢七6-5。",
+    "match_feed._parse_points 忽略没有 HL 的抢七行，不能看到其返回12局就说抢七无逐分；真实抢七分在原 feed 的 HB=Tiebreak - Set 2 后 HC/HE。",
+    "match_feed._parse_points 的 broken 只认 HH=2，而本场郑两次被破发的 raw HH=1；依 server!=winner 及官方统计判定，不照 broken=false写成保发。",
+    "WTA 本场头图日期目录10月9日是上传日期，实际拍摄10月7日，不能照目录日期误认本场。",
+    "WTA MatchTimeStamp 06:50:22.877Z是列出的场次时间，实际第一分07:09:09Z、最后一分08:55:58Z，封面 EXIF 窗口应使用实际比赛时段。"
+  ],
+  "remaining_gaps": [
+    "新华社本场图已找到，但1080px版本，高清原件仍待补（上观文章是候选出处）。",
+    "新华社庆祝横图高清原件未得到；已选反拍竖图1080x1620可原生覆盖成片1080x1440。",
+    "TNNS39/15 winners与早先WTA搜索索引36/15冲突，已采用有分盘合计自证的TNNS，需保留来源。"
+  ],
+  "official_pbp_audit": {
+    "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS004/point-by-point",
+    "first_point_utc": "2026-10-09T07:09:09Z",
+    "last_point_utc": "2026-10-09T08:55:58Z",
+    "raw_pointWinner_counts": {
+      "A": 88,
+      "B": 62
+    },
+    "derived_from_scoreAfterPoint_counts": {
+      "A": 80,
+      "B": 70
+    },
+    "mismatched_pointWinner_rows": [
+      {
+        "point": 45,
+        "set_game": [
+          1,
+          7
+        ],
+        "score_before": [
+          4,
+          3
+        ],
+        "score_after": [
+          "40",
+          "40"
+        ],
+        "raw": "A",
+        "derived": "B"
+      },
+      {
+        "point": 47,
+        "set_game": [
+          1,
+          7
+        ],
+        "score_before": [
+          4,
+          3
+        ],
+        "score_after": [
+          "40",
+          "40"
+        ],
+        "raw": "A",
+        "derived": "B"
+      },
+      {
+        "point": 137,
+        "set_game": [
+          2,
+          13
+        ],
+        "score_before": [
+          0,
+          0
+        ],
+        "score_after": [
+          "0",
+          "1"
+        ],
+        "raw": "A",
+        "derived": "B"
+      },
+      {
+        "point": 138,
+        "set_game": [
+          2,
+          13
+        ],
+        "score_before": [
+          0,
+          1
+        ],
+        "score_after": [
+          "0",
+          "2"
+        ],
+        "raw": "A",
+        "derived": "B"
+      },
+      {
+        "point": 143,
+        "set_game": [
+          2,
+          13
+        ],
+        "score_before": [
+          4,
+          2
+        ],
+        "score_after": [
+          "4",
+          "3"
+        ],
+        "raw": "A",
+        "derived": "B"
+      },
+      {
+        "point": 145,
+        "set_game": [
+          2,
+          13
+        ],
+        "score_before": [
+          5,
+          3
+        ],
+        "score_after": [
+          "5",
+          "4"
+        ],
+        "raw": "A",
+        "derived": "B"
+      },
+      {
+        "point": 146,
+        "set_game": [
+          2,
+          13
+        ],
+        "score_before": [
+          5,
+          4
+        ],
+        "score_after": [
+          "5",
+          "5"
+        ],
+        "raw": "A",
+        "derived": "B"
+      },
+      {
+        "point": 148,
+        "set_game": [
+          2,
+          13
+        ],
+        "score_before": [
+          6,
+          5
+        ],
+        "score_after": [
+          "6",
+          "6"
+        ],
+        "raw": "A",
+        "derived": "B"
+      }
+    ],
+    "verdict": "官方逐分 pointWinner 多行错误；按 scoreAfterPoint 连续分数推导80:70，与官方 /stats 相合。抢七14行 pointWinner 全A，实际小分明确是8:6，不能按 pointWinner 总计/最长连胜。"
+  },
+  "official_brightcove": {
+    "page": "https://www.wtatennis.com/videos/4589311/zhengs-late-season-surge-continues-with-svitolina-win-to-reach-beijing-semifinals",
+    "player_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406524411112",
+    "media_id": "6406524411112",
+    "duration_metadata": 299,
+    "content_identity": "郑钦文6-3 7-6(6)击败6号种子斯维托丽娜，北京2026女单QF，双方player id328120/316738与tournament1020均在官方页面元数据",
+    "raw_metadata": "/workspace/scratch/wta-zheng-svitolina-video.json",
+    "download_status": "下载成功，可本地播放核原声与画面",
+    "local_video": "/workspace/scratch/zheng-svitolina-brightcove.mp4",
+    "local_metadata": "/workspace/scratch/zheng-svitolina-brightcove.info.json",
+    "video_width": 1280,
+    "video_height": 720,
+    "duration_actual_metadata": 298.752,
+    "format_id": "http-2127k-720p-1",
+    "bytes": 79569784,
+    "direct_mp4_url": "https://fastly-signed-us-east-1-prod.brightcovecdn.com/media/v1/pmp4/static/clear/6041795521001/a4db78c5-fbe3-4072-961b-7621adbe6d7c/fa09dcfa-62fd-4e9d-9c4a-8cb6285a2cdb/main.mp4?fastly_token=NmFjOTI2OGRfYTBiNzg4NTU0NjY2NzY5MzdhMjRmNDYwMzY3MzMyM2I0NTg3ODkxN2EzYzgwMGE2NTNjZDU4NWNiM2M2MTNkM18vL2Zhc3RseS1zaWduZWQtdXMtZWFzdC0xLXByb2QuYnJpZ2h0Y292ZWNkbi5jb20vbWVkaWEvdjEvcG1wNC9zdGF0aWMvY2xlYXIvNjA0MTc5NTUyMTAwMS9hNGRiNzhjNS1mYmUzLTQwNzItOTYxYi03NjIxYWRiZTZkN2MvZmEwOWRjZmEtNjJmZC00ZTlkLTljNGEtOGNiNjI4NWEyY2RiL21haW4ubXA0",
+    "usage_note": "仅供本地画面/原声核验。官网最高720p，正式成片按全局1080p门槛仍用用户给定YouTube主源；Brightcove与YouTube长度差约10秒，细切点须比对。"
+  },
+  "headshots": [
+    {
+      "player": "Qinwen Zheng",
+      "id": 328120,
+      "path": "/workspace/scratch/headshots/wta-328120.jpg",
+      "size": [
+        492,
+        656
+      ],
+      "source": "https://wtafiles.blob.core.windows.net/images/headshots/328120.jpg",
+      "method": "Copied existing official repository headshot cache and actually viewed; fresh blob request rejected by network proxy403, not an origin404."
+    },
+    {
+      "player": "Elina Svitolina",
+      "id": 316738,
+      "path": "/workspace/scratch/headshots/wta-316738.jpg",
+      "size": [
+        492,
+        656
+      ],
+      "source": "https://wtafiles.blob.core.windows.net/images/headshots/316738.jpg",
+      "method": "Copied existing official repository headshot cache and actually viewed; fresh blob request rejected by network proxy403, not an origin404."
+    }
+  ],
+  "original_audio_audit": {
+    "full_asr": "/workspace/scratch/zheng-svitolina-asr.json",
+    "clip_asr": "/workspace/scratch/zheng-svitolina-asr-clips.json",
+    "bilingual_quotes": "/workspace/scratch/zheng-svitolina-bilingual-quotes.json",
+    "srt": [
+      "/workspace/scratch/zheng-firstset-bilingual.srt",
+      "/workspace/scratch/zheng-winning-bilingual.srt"
+    ],
+    "video_offset": 0,
+    "verification": "Local ASR on official Brightcove, independent second pass on requested clips; English text compared to probe YouTube captions, same-second visual correspondence actually viewed.",
+    "seven_window_asr": "/workspace/scratch/zheng-svitolina-asr-seven-windows.json",
+    "seven_window_words": "/workspace/scratch/zheng-svitolina-asr-seven-windows-words.json",
+    "crosscheck": "/workspace/scratch/zheng-svitolina-audio-crosscheck.json",
+    "actual_youtube_source": {
+      "source": "/workspace/scratch/zheng-svitolina-source.mp4",
+      "sha256": "da97c5eafb072aa2087e1cee2d893a2c1ea687ac8ef941373e9ccc76553f1d3d",
+      "audio_demux": "/workspace/scratch/zheng-youtube-audio.m4a",
+      "audio_demux_sha256": "4adb79dc590fafc5b61071587ba1fd3f0158da2e1415acd5229079261808465f",
+      "review": "/workspace/scratch/zheng-youtube-review-ready.json",
+      "small": "/workspace/scratch/zheng-youtube-small.en-seven-windows.json",
+      "base": "/workspace/scratch/zheng-youtube-base.en-seven-windows.json",
+      "unprompted": "/workspace/scratch/zheng-youtube-asr-focus-unprompted.json",
+      "words": "/workspace/scratch/zheng-youtube-seven-windows-words.json",
+      "six_window_unprompted_review": "/workspace/scratch/zheng-youtube-review-ready-six-windows.json",
+      "six_window_unprompted_words": "/workspace/scratch/zheng-youtube-six-windows-unprompted-words.json"
+    }
+  }
+}
