@@ -1,0 +1,288 @@
+{
+  "schema": "tennislive.independent-final-qc.v1",
+  "status": "passed_with_declared_scope",
+  "reviewer": "Independent current OpenAI model /root/independent_qc; no DeepSeek or MiniMax invoked",
+  "reviewed_at_utc": "2026-10-09T13:58:20.554529+00:00",
+  "film": {
+    "path": "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/zheng-svitolina-beijing-2026-qf.mp4",
+    "sha256": "6b49ea98dd56337d8ec0e95a5408fdf2f0a7f78c1950e8235523b896195ded5a",
+    "bytes": 100167978,
+    "duration_seconds": 226.4,
+    "width": 1080,
+    "height": 1440,
+    "fps": 25,
+    "render_version": "final3"
+  },
+  "spec_sha256": "c0806792ae76472dbbf3b0be717fe6064f2c611789a1b5318499520a48ad3257",
+  "source": {
+    "url": "https://youtu.be/lme6vYGvWXw",
+    "sha256": "da97c5eafb072aa2087e1cee2d893a2c1ea687ac8ef941373e9ccc76553f1d3d",
+    "width": 1920,
+    "height": 1080,
+    "fps": 25
+  },
+  "scope": {
+    "actual_film_every_second_frames": 226,
+    "actual_ass_cue_midpoint_frames": 60,
+    "native_result_table_samples": 3,
+    "all_retained_source_windows_reviewed": 6,
+    "all_english_caption_middles_and_wording_reviewed": 36,
+    "human_continuous_playback": false,
+    "human_audio_listening": false,
+    "auditory_method": "Raw unprompted small.en/base.en ASR source cross-check and actual final AAC-to-source PCM binding; actual final PCM-to-narration-file start/tail binding. No pronunciation-tone or human-listening verdict claimed."
+  },
+  "visual_checks": [
+    {
+      "check": "cover",
+      "result": "pass",
+      "observation": "Current-match Xinhua action photograph, sharp face and open eyes, two semantic hook lines. Actual poster frame inspected."
+    },
+    {
+      "check": "bilingual_readability",
+      "result": "pass",
+      "observation": "All 36 retained English cues reviewed at actual film midpoint. English and faithful Chinese visible without overlap with native score plates. Chinese big-roar fragment corrected to 还有一声响亮的大吼; original English fragment retained without guessing a missing name."
+    },
+    {
+      "check": "three_native_result_tables",
+      "result": "pass",
+      "observation": "Cold open 8.20s, first-set 75.20s and final result 193.80s: subtitle bottom 900px clears native large result table near 950px. Native 1080x1440 evidence preserved."
+    },
+    {
+      "check": "statistics_layout",
+      "result": "pass",
+      "observation": "Three ASS cue midpoints during full_canvas stats show the intended clean full-canvas stats card; these captions are intentionally covered by the renderer clean-card restoration. Figure and 75% first-serve-points-won / 4 of 11 BP conversion are visible."
+    },
+    {
+      "check": "full_payoff_and_celebration",
+      "result": "pass",
+      "observation": "Set point includes full serve/rally, line winner, coach/crowd reaction and first-set result. Response retains the complete 30-30 point creating break point, rather than falsely depicting the later 4-4 conversion. TB5-4→5-5, Zheng serving at 6-6 to 7-6 and Svitolina second-match-point serve/rally to 8-6 retain official available preparation and payoff. Winning fall, coaches, handshake and final salute remain."
+    },
+    {
+      "check": "narrative_and_match_facts",
+      "result": "pass",
+      "observation": "Zheng wins 6-3 7-6(6), TB8-6, Beijing QF, second China Open SF and birthday24 consistent. Set2 3-3 service loss to3-4 and immediate breakback4-4 are truthful fact cards; no ordinary Svitolina hold is used as Zheng being broken. First-match-point save is explained by truthful card without invented official footage."
+    },
+    {
+      "check": "statistics_evidence",
+      "result": "pass",
+      "observation": "TNNS match winners39/15 and UE38/13 independently verified against set totals (22+17/5+10 and14+24/5+8). Total points80/70 and remaining stats match actual final figure. Conflicting WTA winners36 and corrupt point-winner rows not used."
+    },
+    {
+      "check": "source_hard_cut_boundaries",
+      "result": "pass",
+      "observation": "Native25fps scene cuts audited. Setpoint149.36 plus0.18 tail ends149.54 before149.56; response218.80+0.18 before219.00; tb_equal232.80+0.18 before233.00. TB6-all starts233.00 at actual first serve-preparation frame. Adjacent MP starts256.84 at first official wide toss, with previous segment preserving receiving preparation. Cold/winning end296.50+0.18=296.68 before296.72 interview. No unrelated next-point or interview flash seen in final3."
+    },
+    {
+      "check": "last_original_commentary",
+      "result": "pass",
+      "observation": "Final original English Beijing semifinal commentary completes before cut; retained ASR word ends and final PCM binding support it. Final wave shown without interviewer entering."
+    }
+  ],
+  "audio_checks": {
+    "source_commentary": {
+      "result": "pass",
+      "cues": 36,
+      "minimum_normalized_pcm_correlation": 0.99414,
+      "maximum_absolute_lag_seconds": 6e-05,
+      "method": "Actual final AAC mono16k PCM compared against actual source PCM for every retained English cue, normalized waveform cross-correlation with ±100ms tolerance. Not human listening. Layout-only subtitle reposition preserves source audio inputs.",
+      "evidence": "data/research/zheng-svitolina-beijing-2026-qf/independent-final-source-mix-binding.json"
+    },
+    "narration_injection_and_tail": {
+      "result": "pass",
+      "actual_voice_files": 8,
+      "minimum_checked_correlation": 0.85605,
+      "method": "Actual final film PCM compared with actual synthesized per-segment mp3 cache; First steady speech block after designed180ms transition and last speech-bearing block bound. Initial transition itself may contain intended source crowd bed. No human listening and no pronunciation-tone verdict by this check.",
+      "evidence": "data/research/zheng-svitolina-beijing-2026-qf/independent-final-tts-mix-binding.json"
+    }
+  },
+  "resolved_findings": [
+    "Removed ordinary Svitolina3-2→3-3 hold misbound as Zheng service loss; exact3-3→3-4 only factual card.",
+    "TB6-6 internal server corrected to Zheng.",
+    "Chinese incomplete from fragment replaced by faithful complete big-roar sentence.",
+    "Three native large result-table collisions fixed and actual final frames checked.",
+    "Native next-shot flashes removed by precise149.36/218.80/232.80/233.00/296.50 boundaries."
+  ],
+  "blockers": [],
+  "limits": [
+    "Visual review covers every second plus every ASS cue midpoint, retained source windows and selected native boundaries; this is not continuous human playback.",
+    "Acoustic review uses real final PCM correlation and unprompted ASR, not human listening. Mandarin pronunciation-tone acceptance is a separate parent acoustic gate.",
+    "Official highlights omit some factual pivotal points; these are explained by grounded titlecards and not substituted with a different point."
+  ],
+  "evidence": [
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/independent-scene-cuts.json",
+      "sha256": "d51c8936dc365f3ebe4513437404167dcfa8ff8bd0b3ed04960a772f4601ef5f",
+      "bytes": 1629
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/independent-scene-cuts.log",
+      "sha256": "005933bc88166ed6de25c56c47983934ee959cf7e796a110d2eaead341174d2d",
+      "bytes": 45855
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/independent-final-source-mix-binding.json",
+      "sha256": "24f9041dc2460c68cdc36c680cbf5c111f44b434e7a35fbd13c00e59183bcb5d",
+      "bytes": 8612
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/independent-final-tts-mix-binding.json",
+      "sha256": "f4d49a26b1d381aa31434d1702a9ce7cfa53e212981e11208d1170049d06841b",
+      "bytes": 5267
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/tnns-stats.json",
+      "sha256": "3bf9d7a0d35dd155148f7065ed8bbc25ab8cb8ee2a118e615e1cb0ce4175188c",
+      "bytes": 37612
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-small.en-six-windows-unprompted.json",
+      "sha256": "c88bb46468a19afb9e129440bb705522069dd8abc66b2aebe2ba85bb9e8d53bb",
+      "bytes": 44922
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-base.en-six-windows-unprompted.json",
+      "sha256": "dc1c3cef53d8884b5395dc7127e622353a9bfdbb30fce4f3d8f6415778388cf3",
+      "bytes": 44123
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-asr-focus-unprompted.json",
+      "sha256": "456061539a3cf8d0ec2561d075650d5bc3363f1de15be6540cfa5e83f596084a",
+      "bytes": 17499
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/cold-result-subtitles.jpg",
+      "sha256": "1b595dca1029c8b2672201dfb11371bee042fef5ce72b331c06818b2c91aa83b",
+      "bytes": 73471
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/cue-wall-00.jpg",
+      "sha256": "44eb9932d6104796cb8d7288650ad3d2fa5dedbb1daa37c0b727ea11ecb43d1b",
+      "bytes": 422153
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/cue-wall-01.jpg",
+      "sha256": "8c234b72d9ab5362a1af0a37a072a2444b4e389506a207815fd9e1b3fab15af8",
+      "bytes": 422330
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/cue-wall-02.jpg",
+      "sha256": "75bdacff21fcb786855de96d3d057bfeb38ceb8b058b34f2296f40ad0d5e3bd0",
+      "bytes": 341462
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/cue-wall-03.jpg",
+      "sha256": "6ed1d70ffc0bbbc636eb8049a2abdc0611befa62b6ebe3dd4e304e3b68c7d318",
+      "bytes": 433458
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-00.jpg",
+      "sha256": "9f82d75ab75ca7a9ac55ffbb1ced31b4e55e3302ab902b0b57c6e9bcc9a16e41",
+      "bytes": 440622
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-01.jpg",
+      "sha256": "6fa26bd5acbd15554551ca0780a5e4c9c4c002366dd09986565891076e1ce868",
+      "bytes": 243931
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-02.jpg",
+      "sha256": "068eb1e41d7a3bae83db545cfe36c8172d56fcaf8b5071ef448a037f8906bad8",
+      "bytes": 318077
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-03.jpg",
+      "sha256": "01121d5427184be0fb82f867d46dde0d16e9069b48839517914542ee9dcd91cd",
+      "bytes": 487453
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-04.jpg",
+      "sha256": "2542539360bc6736d26e629bcd732c9b2bcc7306ce9c33684602a40c1bf0d5a8",
+      "bytes": 277469
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-05.jpg",
+      "sha256": "19bbb4b67dc01e408df92ee6ad711a209d30ce66a0c9e77196dcc9490f1a67d1",
+      "bytes": 284511
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-06.jpg",
+      "sha256": "4db75b534fe37a4768b7096373aa449e14d2fe36c5ce26d9f4e45d2ec13070d9",
+      "bytes": 290393
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-07.jpg",
+      "sha256": "8960b93eae5c74484908295ec4771088de3c2b150aec2d5d5f971f0967d5ff3a",
+      "bytes": 327394
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-08.jpg",
+      "sha256": "949eaefa57b03b6dfa03318e26435c47966249bc6dacc39515455a2606d1fec2",
+      "bytes": 339996
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-09.jpg",
+      "sha256": "0b980b06d6d141c869310884f1afb1cb1a12fefa456bb88478c8ad705862c721",
+      "bytes": 424362
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-10.jpg",
+      "sha256": "f4ea6ded30383db2440f7db5831f9b58b059f3ce721781cfb5ba4d99d42cc2f4",
+      "bytes": 333859
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/film-wall-11.jpg",
+      "sha256": "b1affbffc91a78fb3e65e1ac7837086e7d9112d2dce5b93e7a5282d1a39923bd",
+      "bytes": 58949
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/final-result-subtitles.jpg",
+      "sha256": "567fc544de765ba644ef111e0863363dc0b85a31c95d61af1187d1a77a1d2747",
+      "bytes": 107033
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/mp-start-frames.jpg",
+      "sha256": "d393e051e19995d246e048847e777ec897150b052147b644fc1706ce20483915",
+      "bytes": 190669
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/set-result-subtitles.jpg",
+      "sha256": "7984553c346495c981c756329b92a86517e79d0fe53aa976b309af665a6e25f8",
+      "bytes": 103927
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/source-wall-0.jpg",
+      "sha256": "0d6d0ce4d718162c1de312f308260759f08cf3cbc44e468dae9133fd1dfb81f0",
+      "bytes": 224272
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/source-wall-10.jpg",
+      "sha256": "932053016af6300f537f7047b1989fc0c60a5c280c909e36fe8e7d52012cce81",
+      "bytes": 469415
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/source-wall-3.jpg",
+      "sha256": "a1c99043c72516fe6410813fe5da99af8a488cb1811a0a1458e1f8754b3697fd",
+      "bytes": 462868
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/source-wall-5.jpg",
+      "sha256": "1031d57644b19d71ac34275687831dc81072cfb17f475a0cb9c08859ab48da60",
+      "bytes": 379779
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/source-wall-7.jpg",
+      "sha256": "37eff10b0b0789489d31a0784ca0d9dfa442a0e39450f5eb4d8eb7e472885dd4",
+      "bytes": 151768
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/source-wall-9.jpg",
+      "sha256": "2d78da49327055308e2552bde90ce5e989cb0cb18d90faf4ed0993eac9fa93fd",
+      "bytes": 244335
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/frame-review-manifest.json",
+      "sha256": "fc8037dcb00673bc4f0814165260ddcba7f1f2a2dc3d86886045e4e67f7e6a76",
+      "bytes": 15240
+    }
+  ]
+}
