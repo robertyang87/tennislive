@@ -1,0 +1,486 @@
+{
+  "version": 1,
+  "status": "selected_windows_cross_checked",
+  "sources": [
+    {
+      "id": "ShSDhLGXYOk",
+      "url": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
+      "title": "Yi Zhou vs Lorenzo Musetti highlights | Shanghai 2026 Round 2",
+      "provider": "ATP Tour user link; ATP logo in actual footage",
+      "path": "/workspace/scratch/zhou-source/ShSDhLGXYOk.mp4",
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "duration": 136.277914,
+      "sha256": "b6c3f528c315274b54c694eec01123670acb01c7b7b57442dee06986f2b21cb6",
+      "archive_run": 37975033217,
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-ShSDhLGXYOk/ShSDhLGXYOk.mp4",
+      "actual_match_end_before": 121.3,
+      "excluded": "121.3+ silent brand tail"
+    },
+    {
+      "id": "4589550",
+      "url": "https://www.tennistv.com/videos/4589550/shanghai-2026-r2-zhou-musetti-short-highlights",
+      "provider": "Tennis TV official public free entitlement",
+      "match_sid": "5014_2026_MS045",
+      "players": [
+        "Z0CQ",
+        "M0EJ"
+      ],
+      "path": "/workspace/scratch/zhou-source/tennistv-4589550.mp4",
+      "width": 1920,
+      "height": 1080,
+      "fps": 50,
+      "duration": 158.016,
+      "sha256": "c8bde43f4913450a3f67b14bb2dc76792629a7c86bf751cfb762d2a80d254254",
+      "actual_match_end_before": 149.143,
+      "excluded": "149.143+ black transition/brand montage/brand slate"
+    },
+    {
+      "id": "4589553",
+      "url": "https://www.tennistv.com/videos/4589553/shanghai-2026-r2-zhou-musetti-highlights",
+      "duration": 602,
+      "entitlement": "premium",
+      "status": "metadata only; not downloaded"
+    },
+    {
+      "id": "Tennis TV YouTube alternative",
+      "status": "unresolved",
+      "reason": "Tennis TV uploads RSS and channel list both proxy403; web search did not surface verifiable same-match public single long video; cannot claim none exists"
+    },
+    {
+      "id": "OytDGQUluFs",
+      "url": "https://www.youtube.com/watch?v=OytDGQUluFs",
+      "status": "repository_short_probe_only_not_used_in_render",
+      "evidence_path": "data/evidence/zhou-musetti/alternative-yi-probe.json",
+      "duration": 126.362993,
+      "width": 1920,
+      "height": 1080,
+      "fps_effective": 25,
+      "note": "同场重复待制作草稿已有官方短片probe；主要切点23.56/35.36/48.8/65.22/79/90.70/101.36/109/121.26与用户主源相符，时长仅126.36秒。不将此metadata探针当已逐帧看过的其他免费长片。"
+    }
+  ],
+  "retained_windows": [
+    {
+      "id": "first_set_take_lead",
+      "source": "atp",
+      "start": 23.57,
+      "end": 34.5,
+      "quote": [
+        {
+          "at": 7.43,
+          "end": 9.7,
+          "text": "I love that play.\n我喜欢这样的打法。"
+        },
+        {
+          "at": 9.71,
+          "end": 10.93,
+          "text": "That's gutsy.\n真有胆量。"
+        }
+      ],
+      "foreground_english": [
+        {
+          "start": 31.1,
+          "end": 32.56,
+          "en": "I love that play.",
+          "zh": "我喜欢这样的打法。"
+        },
+        {
+          "start": 33.3,
+          "end": 34.48,
+          "en": "That's gutsy.",
+          "zh": "真有胆量。"
+        }
+      ],
+      "note": "完整6-6→7-6分和周意反应；large-v3-turbo实际宽窗确认I love31.10–32.54/gutsy33.30–34.28，与medium34.48取保守尾界；34.50剪走，避34.62 Second to/serve未知词。",
+      "transcript_path": "/workspace/scratch/zhou-source/first_set_take_lead-audio-packet.json",
+      "transcript_sha256": "e6090c07865609863bbb81cf07aec43a19c694fe53679c13d2c106d0e30490e2"
+    },
+    {
+      "id": "first_set_finish",
+      "source": "atp",
+      "start": 35.7,
+      "end": 48.8,
+      "quote": [
+        {
+          "at": 9.45,
+          "end": 10.95,
+          "text": "And he did do it.\n他真的做到了。"
+        },
+        {
+          "at": 11.55,
+          "end": 13.1,
+          "text": "And he made it happen.\n他把机会变成了现实。"
+        }
+      ],
+      "foreground_english": [
+        {
+          "start": 45.3,
+          "end": 46.38,
+          "en": "And he did do it.",
+          "zh": "他真的做到了。"
+        },
+        {
+          "start": 47.52,
+          "end": 48.58,
+          "en": "And he made it happen.",
+          "zh": "他把机会变成了现实。"
+        }
+      ],
+      "note": "8-7→9-7；35.70原生帧仍发球准备，实际发球38s后；避前一条二发尾音",
+      "transcript_path": "/workspace/scratch/zhou-source/first_set_finish-audio-packet.json",
+      "transcript_sha256": "3dbc6ac72a5f1ccf673882d6cc8d1a0f6f169432eda82bd52857fd0ea8e9e719"
+    },
+    {
+      "id": "second_set_saved_breakpoint",
+      "source": "ttv",
+      "start": 50.503,
+      "end": 91.05,
+      "quote": [
+        {
+          "at": 35.897,
+          "end": 38.297,
+          "text": "I can't believe it.\n真难以置信。"
+        },
+        {
+          "at": 38.317,
+          "end": 40.547,
+          "text": "You cannot believe he's missed it wide.\n难以置信，他竟然打偏了。"
+        }
+      ],
+      "foreground_english": [
+        {
+          "start": 86.5,
+          "end": 88.6,
+          "en": "I can't believe it.",
+          "zh": "真难以置信。"
+        },
+        {
+          "start": 88.9,
+          "end": 90.86,
+          "en": "You cannot believe he's missed it wide.",
+          "zh": "难以置信，他竟然打偏了。"
+        }
+      ],
+      "note": "3-4/30-40→40-40，不是破发得分。原声保留到90.86末句后，避91.92新句。",
+      "transcript_path": "/workspace/scratch/zhou-source/second_set_saved_breakpoint-audio-packet.json",
+      "transcript_sha256": "bde3b6e29c0c55446c69599f54b8f2dcb9efc84253d358323bec92b1cf624e32"
+    },
+    {
+      "id": "second_set_setpoint",
+      "source": "atp",
+      "start": 63.7,
+      "end": 75.2,
+      "quote": [
+        {
+          "at": 0.03,
+          "end": 1.56,
+          "text": "Break points he had to save\n他必须救下那些破发点，"
+        },
+        {
+          "at": 1.56,
+          "end": 2.95,
+          "text": "right at the beginning of the set.\n就在这一盘刚开始时。"
+        }
+      ],
+      "foreground_english": [
+        {
+          "start": 63.78,
+          "end": 65.26,
+          "en": "Break points he had to save",
+          "zh": "他必须救下那些破发点，"
+        },
+        {
+          "start": 65.26,
+          "end": 66.56,
+          "en": "right at the beginning of the set.",
+          "zh": "就在这一盘刚开始时。"
+        }
+      ],
+      "note": "完整发球准备、第二盘盘点和死球，避63.54前句尾音与75.30后句；球结束后再切。双强ASR无prompt确认句子。",
+      "transcript_path": "/workspace/scratch/zhou-source/second_set_setpoint-audio-packet.json",
+      "transcript_sha256": "e4f57a9b2cdb7611f6da3c4bef7ae86dd869b15cc64622daf56ce4e8e4fff169"
+    },
+    {
+      "id": "deciding_tiebreak",
+      "source": "atp",
+      "start": 79.0,
+      "end": 101.37,
+      "quote": [
+        {
+          "at": 6.02,
+          "end": 7.95,
+          "text": "No way!\n不会吧！"
+        }
+      ],
+      "foreground_english": [
+        {
+          "start": 86.14,
+          "end": 86.74,
+          "en": "No way!",
+          "zh": "不会吧！"
+        }
+      ],
+      "note": "保留两个决胜抢七完整回合和即时反应；85.02–86.95完整惊叹用稳定No way核心作保守语义双语转写，不猜首词；后半ASR模板幻觉拒用证据完整入packet；原音完整，无人工听审宣称。",
+      "transcript_path": "/workspace/scratch/zhou-source/deciding_tiebreak-audio-packet.json",
+      "transcript_sha256": "324fef7e3f27a172cc71dfecce9b216cea190ffcdb987fb3a1b6422d47b1798c"
+    },
+    {
+      "id": "match_point_celebration",
+      "source": "atp",
+      "start": 101.37,
+      "end": 121.2,
+      "quote": [
+        {
+          "at": 8.28,
+          "end": 10.48,
+          "text": "Incredible scenes.\n不可思议的一幕。"
+        },
+        {
+          "at": 12.68,
+          "end": 16.03,
+          "text": "The best win of his career.\n他职业生涯最棒的一胜。"
+        },
+        {
+          "at": 16.28,
+          "end": 18.78,
+          "text": "The first top 30 win.\n首次击败世界前三十球员。"
+        }
+      ],
+      "foreground_english": [
+        {
+          "start": 109.84,
+          "end": 111.64,
+          "en": "Incredible scenes.",
+          "zh": "不可思议的一幕。"
+        },
+        {
+          "start": 114.18,
+          "end": 117.16,
+          "en": "The best win of his career.",
+          "zh": "他职业生涯最棒的一胜。"
+        },
+        {
+          "start": 117.78,
+          "end": 119.94,
+          "en": "The first top 30 win.",
+          "zh": "首次击败世界前三十球员。"
+        }
+      ],
+      "note": "6-1赛点→7-1，抱头怒吼→网前握手；121.20切走静音品牌尾板",
+      "transcript_path": "/workspace/scratch/zhou-source/match_point_celebration-audio-packet.json",
+      "transcript_sha256": "eb9e62df552bdcdc290c2a6664d75bb43fa6956d7989da143ac29ce6e9fd86c7"
+    }
+  ],
+  "winners_ue_evidence": {
+    "provider": "flashscore",
+    "method": "api",
+    "source_url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_htkg4C7j",
+    "source_path": "/workspace/scratch/zhou-source/flashscore-df_st_1.raw.txt",
+    "source_sha256": "cfccf8eaa7cbeb66b2d959e95cd5f80b9930dba6e004325ae1dd2473ea534d07",
+    "period": "Match",
+    "match_date": "2026-10-09",
+    "checked_at": "2026-10-09T19:07:12.500357+00:00",
+    "matchup": [
+      "周意",
+      "穆塞蒂"
+    ],
+    "winner_result": "7-6(7) 3-6 7-6(1)",
+    "winners": [
+      34,
+      25
+    ],
+    "ue": [
+      46,
+      18
+    ]
+  },
+  "point_feed": {
+    "source_url": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_htkg4C7j",
+    "source_path": "/workspace/scratch/zhou-source/flashscore-df_mh_1.raw.txt",
+    "source_sha256": "f477a24673faf8c6e6299fe338306a6684d9efe66249711d8530d8938c246f44",
+    "parsed_path": "/workspace/scratch/zhou-source/flashscore-points.json",
+    "verified_deciding_set_third_game": {
+      "before_games": [
+        1,
+        1
+      ],
+      "server": "周意",
+      "score_sequence": [
+        "0:15",
+        "0:30",
+        "0:40 BP",
+        "15:40 BP",
+        "30:40 BP",
+        "40:40",
+        "A:40",
+        "game 周意"
+      ],
+      "after_games": [
+        2,
+        1
+      ],
+      "break_points_saved": 3
+    }
+  },
+  "corrected_coverage": [
+    {
+      "point": "首盘抢七3-4→3-5，周意输此分",
+      "atp_window": [
+        1.27,
+        23.57
+      ],
+      "state": "complete rally plus reactions"
+    },
+    {
+      "point": "首盘抢七3-6三盘点；3-6→4-6、4-6→5-6、5-6→6-6三次救分",
+      "state": "all three saving points absent from both downloaded free sources; factual card/narration follows verified official match report"
+    },
+    {
+      "point": "首盘抢七6-6→7-6，周意拿到自己的盘点（不是救第三盘点）",
+      "atp_window": [
+        23.57,
+        35.37
+      ],
+      "state": "complete serve/rally plus reaction"
+    },
+    {
+      "point": "首盘抢七8-7→9-7首盘终结",
+      "atp_window": [
+        35.37,
+        48.8
+      ],
+      "state": "complete point and Zhou celebration"
+    },
+    {
+      "point": "第二盘首局，穆塞蒂发球，周意30-15→40-15形成两破发点",
+      "atp_window": [
+        48.8,
+        63.47
+      ],
+      "state": "covered setup point; subsequent saving points not shown"
+    },
+    {
+      "point": "第二盘周意3-4/30-40，救第一个破发点→40-40",
+      "ttv_window": [
+        48.8,
+        91.3
+      ],
+      "full_rally": [
+        50.503,
+        88.663
+      ],
+      "verification_frame": "/workspace/scratch/zhou-source/ttv-score90.jpg",
+      "state": "complete long rally; NOT Musetti winning break point"
+    },
+    {
+      "point": "第二盘3-4最终被破发→3-5",
+      "state": "winning break point not covered in either free source; use verified fact narration/card, do not label preceding long point as break"
+    },
+    {
+      "point": "第二盘周意3-5/15-40，穆塞蒂盘点→6-3",
+      "atp_window": [
+        65.23,
+        79.0
+      ],
+      "ttv_window": [
+        91.3,
+        105.583
+      ],
+      "state": "complete set point and changeover"
+    },
+    {
+      "point": "第三盘1-1/0-40，周意救三破发点→2-1",
+      "state": "not covered in either downloaded free source; raw Flashscore df_mh_1 point feed verified all three break points saved before Zhou held for2-1; fact card is supported"
+    },
+    {
+      "point": "第三盘抢七2-0下一分、4-0下一分",
+      "atp_window": [
+        [
+          79.0,
+          90.7
+        ],
+        [
+          90.7,
+          101.37
+        ]
+      ],
+      "state": "points covered; 4-0 outcome5-0 visible TTV125.86"
+    },
+    {
+      "point": "第三盘抢七6-1赛点→7-1、抱头怒吼、握手",
+      "atp_window": [
+        101.37,
+        121.2
+      ],
+      "ttv_window": [
+        129.243,
+        149.14
+      ],
+      "state": "complete serve/point/celebration/handshake; 98.0s is Musetti closeup NOT start of match point"
+    }
+  ],
+  "visual_tactical_observations": [
+    {
+      "window": "ATP35.70–48.80; 42–45s especially",
+      "observed": "周意发球后向网前推进，连续处理截击，最终拿下首盘。",
+      "safe_narration": "到了盘点，他敢跟着发球上网，用截击把这一盘拿下。",
+      "evidence_image": "/workspace/scratch/zhou-source/atp-setpoint-end42.jpg"
+    },
+    {
+      "window": "ATP79.0–87.07; 85–86s especially",
+      "observed": "决胜抢七2-0这一分，周意在远端网前向右移动伸拍处理来球；穆塞蒂在近端接球，回合随后结束，周意握拳。",
+      "safe_narration": "到了决胜盘，他又一次顶到网前，伸拍把球挡了回去。",
+      "evidence_image": "/workspace/scratch/zhou-source/atp-tiebreak-net85.jpg"
+    }
+  ],
+  "remaining_limitations": [
+    {
+      "window": "UNUSED ATP75.30–77.70 / TTV103–105.58",
+      "reason": "Historical unused terminal second-set commentary remains undecodable with consistent exact wording across six models. It is outside selected63.70–75.20 window and outside current plan; no incomplete sentence is retained.",
+      "suggestion": "Selected63.70–75.20 retains the complete set point and finishes after dead ball before this unused commentary; complete selected-window audio packet exists."
+    },
+    {
+      "window": "ATP34.50–35.70",
+      "reason": "Second serve/to在34.62–35.42多模型未一致，已用34.50剪走→35.70新起避开；此前两完整句已新增完整中英字幕。"
+    }
+  ],
+  "asr_methods": {
+    "models": [
+      "faster-whisper small.en",
+      "base.en",
+      "medium.en",
+      "faster-whisper large-v3-turbo actual unprompted wide/narrow windows",
+      "faster-whisper distil-large-v3 actual unprompted wide/narrow windows",
+      "faster-whisper full large-v3 actual unprompted narrow ATP/TTV windows"
+    ],
+    "normalization": "wave16k mono input to numpy; peak-normalized; vad_filter=false; CPU int8",
+    "false_claims_excluded": [
+      "人工听审",
+      "verified YouTube captions",
+      "DeepSeek",
+      "MiniMax"
+    ]
+  },
+  "updated_at": "2026-10-09T19:21:03.184901+00:00",
+  "archived_asr_disagreement_history": {
+    "proposed_window": [
+      79,
+      101.37
+    ],
+    "stable_words": {
+      "en": "No way!",
+      "zh": "不会吧！",
+      "start": 86.14,
+      "end": 86.74
+    },
+    "preceding_exclamation": [
+      85.02,
+      85.92
+    ],
+    "preceding_exclamation_status": "ASR disagreement Wait/Oh/hey/Way/No way across crop contexts; low first-word probability. Do not invent Whoa. Stable No way could caption the whole astonished reaction; producer must decide how to represent non-verbal prefix.",
+    "cross_source_result_path": "/workspace/scratch/zhou-source/asr-final-exclamation-cross-source.json",
+    "90.7_to_101.37": "No stable contextual English; reject ending templates Thanks for watching/See you next time/Thank you and singleS from multiple context-sensitive ASR; actual raw records preserve these rejected results.",
+    "resolution": "Producer accepted conservative semantic caption over the full original reaction using the stable No way core; selected window now cross-checked and complete. Original unresolved prefix is not guessed."
+  }
+}

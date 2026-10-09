@@ -1,0 +1,48 @@
+{
+  "scope": "Local candidate text and ordering only; not official model, render, audio, cover or publication validation.",
+  "checks": {
+    "check_spec_wording": [],
+    "hook_result_problem": null,
+    "hook_jargon_problem": null,
+    "copy_count_problem": null,
+    "set_coverage_report": null,
+    "ending_order_problem": null,
+    "chapter_cards_problem": null
+  },
+  "segment_count": 10,
+  "last_match_segment": "match_point_to_handshake",
+  "declared_native_narration_timing": [
+    {
+      "id": "coordinate",
+      "estimated_speech_seconds": 10.5,
+      "declared_seconds": 11.3
+    },
+    {
+      "id": "set_two_turn",
+      "estimated_speech_seconds": 8.37,
+      "declared_seconds": 9.17
+    },
+    {
+      "id": "set_three_hold",
+      "estimated_speech_seconds": 11.64,
+      "declared_seconds": 12.44
+    },
+    {
+      "id": "statistics_before_final",
+      "estimated_speech_seconds": 8.84,
+      "declared_seconds": 11.2
+    }
+  ],
+  "unresolved": [
+    "real DeepSeek model balance",
+    "authentic English and Chinese quotes+relative times",
+    "exact frame and audio cut boundaries",
+    "Flashscore raw 1-1 three-break-points feed",
+    "cover final selection/file",
+    "rank snapshot dates",
+    "subtitle bottom actual final render",
+    "TTS pronunciation actual final audio",
+    "final QC and publication"
+  ],
+  "source_update": "TTV逐帧更正：长回合是周意救BP至40-40，最终破发分仍缺。相邻事实卡已改为先救但最终失守，重新跑文本/结构检查。"
+}

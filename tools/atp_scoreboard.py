@@ -94,7 +94,17 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
         # 暗近景里黑衣也满足旧 max<80，不能连着衣物一直扫到 spec x1。
         # 这版板的藏青/半透明点分有蓝绿通道差，黑衣 g≈r；只在两行板签名
         # 已认出时收紧颜色，其他转播保留原盘分蓝锚点及自适应宽度行为。
-        frac = (navy | ((b > 140) & (r < 80) & (g < 80))).mean(axis=0)
+        if blue_cols.sum() >= 6:
+            # 上海的半透明小分格偏绿；只要求 b-r 会截掉 15/40。
+            # 两行板签名及蓝格已确认后，纳入暗绿小分底和白字，避免
+            # 数字本身形成连续四列的假边界。黑衣 g≈r 仍不算板底。
+            navy = board_mask(band) & (g - r > 4) & (
+                (b - r > 8) | ((g - r > 10) & (np.maximum.reduce([r, g, b]) < 80)))
+        else:
+            # 盘末没有蓝格，绿色近景挡板也可能 b-r>8；藏青板底
+            # 必须蓝通道高于绿通道，不能把挡板接进回贴矩形。
+            navy = board_mask(band) & (g - r > 4) & (b - g > 5)
+        frac = (navy | white | ((b > 140) & (r < 80) & (g < 80))).mean(axis=0)
     low = frac < 0.5
     edge = None
     for x in range(MIN_BOARD_W, len(frac) - 4):
@@ -105,10 +115,77 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
         edge = len(frac)
         # 近景里板右边是深蓝挡板时，两者颜色分不开，量出来会一路宽出去——这种读数
         # 不可信，退回 spec `scorebox` 的右缘（老行为）
-        return min(edge, cap) if cap is not None else edge
+        if not two_rows:
+            return min(edge, cap) if cap is not None else edge
+        # A recognised two-row container may still have an observable border
+        # even when dark background joins the entire colour scan.
+    if two_rows and blue_cols.sum() >= 6:
+        edge = point_container_edge(band, blue_cols, edge)
     anchor = (int(np.flatnonzero(blue_cols).max()) + 1 + POINTS_MAX
               if blue_cols.any() else edge)
     return beyond_hint(edge, cap, anchor)
+
+
+def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> int:
+    """Separate the translucent point cell from a similarly coloured backdrop.
+
+    A recognised two-row board has one point cell after its last blue set cell.
+    Dark green close-ups can otherwise join the point cell for hundreds of
+    pixels. Its top and bottom borders still end together: look for that shared
+    opacity step within one cell of the last blue anchor. The cell width comes
+    from that actual blue run, so longer names and additional sets move the
+    anchor without imposing a singles-only width or the spec's rectangle.
+    """
+    last = int(np.flatnonzero(blue_cols)[-1])
+    first = last
+    while first > 0 and blue_cols[first - 1]:
+        first -= 1
+    cell = last - first + 1
+    after = last + 1
+    # Normal colour boundaries (including a withdrawn point cell) remain exact.
+    # Antialiasing removes a few pixels from the blue run, hence the allowance.
+    h = band.shape[0]
+    pixels = band.astype(np.float32)
+    whites = (pixels.min(axis=2) > 150) & (pixels.max(axis=2) - pixels.min(axis=2) < 50)
+    points = whites[:, after + 3:min(len(blue_cols), after + cell + 12)]
+    point_digits = (points.shape[1] >= 18
+                    and 0.008 < points[:h // 2].mean() < 0.25
+                    and 0.008 < points[h // 2:].mean() < 0.25)
+    if cell < 18 or (edge <= after + 6 and not point_digits):
+        return edge
+    if after + cell + 8 <= edge <= after + cell + 10:
+        return edge
+    if h < 24:
+        return edge
+    top = np.median(pixels[2:7], axis=0)
+    bottom = np.median(pixels[h - 10:h - 3], axis=0)
+    top_step = np.mean(np.diff(top, axis=0), axis=1)
+    bottom_step = np.mean(np.diff(bottom, axis=0), axis=1)
+    # Text is away from these border strips. Both rows must change together;
+    # an absolute difference from only one bright sleeve is not a board edge.
+    shared = np.minimum(top_step, bottom_step)
+    if point_digits:
+        # Dark close-ups can hide an outer strip, and a darker backdrop can
+        # reverse the opacity step. Require actual white point digits in both
+        # rows before using inner borders or a shared negative step.
+        upper = np.median(pixels[h // 2 - 15:h // 2 - 8], axis=0)
+        lower = np.median(pixels[h // 2 + 2:h // 2 + 9], axis=0)
+        upper_step = np.mean(np.diff(upper, axis=0), axis=1)
+        lower_step = np.mean(np.diff(lower, axis=0), axis=1)
+        shared = np.maximum.reduce([
+            shared, np.minimum(-top_step, -bottom_step),
+            np.minimum(upper_step, lower_step),
+            np.minimum(-upper_step, -lower_step)])
+    lo = after + 10
+    hi = min(after + cell + 16, len(shared) + 1)
+    if hi <= lo:
+        return edge
+    candidate = int(np.argmax(shared[lo - 1:hi - 1])) + lo
+    if shared[candidate - 1] >= 4:
+        return candidate
+    # No independent border evidence: retain the original detection so the
+    # audit exposes the unresolved width, rather than inventing a cell edge.
+    return edge
 
 
 def beyond_hint(edge: int, cap: int | None, anchor: int) -> int:
@@ -202,11 +279,17 @@ def stabilize(frames: list) -> list:
     out = []
     half = MEDIAN // 2
     for i, (e, tag) in enumerate(frames):
-        if e is None:
+        # 撤出动画后仅一帧认到残余 TISSOT，不让贴片闪回。
+        neighbours = edges[max(0, i - 1):i + 2]
+        if e is None or (len(edges) > 1 and sum(v is not None for v in neighbours) < 2):
             out.append((None, None))
             continue
         near = [v for v in edges[max(0, i - half):i + half + 1] if v is not None]
         m = int(np.median(near))
+        if any(v is None for v in edges[max(0, i - half):i + half + 1]):
+            # During removal, the remaining frame's exact contour must not be
+            # widened by older neighbours after newer frames are already off.
+            m = min(e, m)
         tags = [t for _, t in frames[max(0, i - 1):i + 2]]
         keep = tag if (tag is not None and sum(t is not None for t in tags) >= 2) else None
         if keep is not None:

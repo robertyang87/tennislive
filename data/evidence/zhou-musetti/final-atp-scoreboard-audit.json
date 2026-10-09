@@ -1,0 +1,215 @@
+{
+  "schema": "tennislive.atp-source-scoreboard-review.v1",
+  "status": "selected_source_masks_checked",
+  "checked_at": "2026-10-09T20:01:47.991874+00:00",
+  "code_sha256": "4562bb450035c7b58cb5619a5ed19ce3830ff0e0756f6cc4a0b642f50ce9a146",
+  "observed_repo_commit": "fb9ff33aead07324de570ef0cdb42117868af27e",
+  "scope": "All7 selected original-source video windows, including0.2s renderer tail, scanned and stabilized at30fps. Actual source RGB frames inspected; this does not claim that the newly encoded final movie was independently checked.",
+  "scan_path": "/workspace/scratch/zhou-detector/all-seven-scoreboard-scan.json",
+  "scan_sha256": "051bd7562f16619c76703b313f9c32640de192c7b0914bce740ef3917ef1f27b",
+  "total_frames": 3735,
+  "tests": {
+    "command": "python -m pytest -q tests/test_atp_scoreboard.py tests/test_atp_scoreboard_beijing_real.py tests/test_atp_scoreboard_shanghai_real.py tests/test_scoreboard_adaptive_width.py",
+    "result": "39 passed in3.57s",
+    "log_path": "/workspace/scratch/zhou-detector/score-tests-final.log"
+  },
+  "actual_pixel_evidence": "/workspace/scratch/zhou-detector/final-fixed-native-boundaries.jpg",
+  "fixture_provenance": "/workspace/tennislive/tests/fixtures/atp_scoreboard/shanghai2026/provenance.json",
+  "selected_geometry": [
+    {
+      "segment": 1,
+      "source": "main",
+      "start": 109,
+      "end": 113.7,
+      "tail": 0.2,
+      "frames": 147,
+      "present": 67,
+      "edges": {
+        "244": 1,
+        "271": 1,
+        "290": 1,
+        "298": 1,
+        "308": 1,
+        "316": 1,
+        "318": 1,
+        "320": 1,
+        "322": 29,
+        "327": 1,
+        "338": 1,
+        "344": 1,
+        "353": 1,
+        "359": 1,
+        "361": 1,
+        "365": 1,
+        "368": 1,
+        "369": 1,
+        "371": 1,
+        "372": 2,
+        "373": 18
+      },
+      "maximum": 373
+    },
+    {
+      "segment": 4,
+      "source": "main",
+      "start": 23.57,
+      "end": 34.5,
+      "tail": 0.2,
+      "frames": 335,
+      "present": 335,
+      "edges": {
+        "277": 60,
+        "278": 275
+      },
+      "maximum": 278
+    },
+    {
+      "segment": 6,
+      "source": "main",
+      "start": 35.7,
+      "end": 48.8,
+      "tail": 0.2,
+      "frames": 399,
+      "present": 399,
+      "edges": {
+        "222": 4,
+        "223": 72,
+        "225": 3,
+        "226": 6,
+        "228": 2,
+        "230": 5,
+        "234": 1,
+        "244": 1,
+        "248": 1,
+        "256": 1,
+        "260": 2,
+        "264": 3,
+        "277": 3,
+        "278": 289,
+        "325": 6
+      },
+      "maximum": 325
+    },
+    {
+      "segment": 8,
+      "source": "supplement",
+      "start": 50.503,
+      "end": 91.05,
+      "tail": 0.2,
+      "frames": 1223,
+      "present": 1223,
+      "edges": {
+        "328": 54,
+        "329": 1169
+      },
+      "maximum": 329
+    },
+    {
+      "segment": 10,
+      "source": "main",
+      "start": 63.7,
+      "end": 75.2,
+      "tail": 0.2,
+      "frames": 351,
+      "present": 351,
+      "edges": {
+        "325": 346,
+        "326": 5
+      },
+      "maximum": 326
+    },
+    {
+      "segment": 12,
+      "source": "main",
+      "start": 79.0,
+      "end": 101.37,
+      "tail": 0.2,
+      "frames": 678,
+      "present": 678,
+      "edges": {
+        "372": 671,
+        "373": 7
+      },
+      "maximum": 373
+    },
+    {
+      "segment": 14,
+      "source": "main",
+      "start": 101.37,
+      "end": 121.2,
+      "tail": 0.2,
+      "frames": 602,
+      "present": 296,
+      "edges": {
+        "244": 1,
+        "271": 1,
+        "290": 1,
+        "298": 1,
+        "308": 1,
+        "316": 1,
+        "318": 1,
+        "320": 1,
+        "322": 29,
+        "327": 1,
+        "338": 1,
+        "344": 1,
+        "353": 1,
+        "359": 1,
+        "361": 1,
+        "365": 1,
+        "368": 1,
+        "369": 1,
+        "371": 1,
+        "372": 231,
+        "373": 18
+      },
+      "maximum": 373
+    }
+  ],
+  "container_border_attempts": 313,
+  "changed_by_independent_contour": 186,
+  "no_independent_contour_count": 3,
+  "no_independent_contour_explanations": [
+    {
+      "segment": 1,
+      "source_time": 109.96666666666667,
+      "raw_colour_edge": 327,
+      "stabilized_edge": 327,
+      "white_point_digits_both_rows": false,
+      "shared_border_step": 0.0,
+      "conclusion": "Actual source109.967 shows completed third set with white small-point column withdrawn. Remaining blue-set container ends327; colour edge327 is correct and unchanged. No independent point-cell contour is asserted.",
+      "image": "/workspace/scratch/zhou-detector/no-contour-seg1-109.967.png"
+    },
+    {
+      "segment": 4,
+      "source_time": 34.70333333333333,
+      "raw_colour_edge": 236,
+      "stabilized_edge": 278,
+      "white_point_digits_both_rows": true,
+      "shared_border_step": 3.6666667461395264,
+      "conclusion": "Raw tail frame near34.700 has shared step3.666 below4 and raw colour edge236; no invented contour fallback was used. Its temporal neighbours independently retain the actual7/6 point container, and stabilized edge278 keeps both digits complete. This frame is after selected end34.50, inside renderer0.2s mask tail. All335 stabilized source frames remain277/278.",
+      "image": "/workspace/scratch/zhou-detector/no-contour-seg4-34.703.png",
+      "nearby_actual_fixture": "/workspace/tennislive/tests/fixtures/atp_scoreboard/shanghai2026/34.500.png"
+    },
+    {
+      "segment": 14,
+      "source_time": 109.97,
+      "raw_colour_edge": 327,
+      "stabilized_edge": 327,
+      "white_point_digits_both_rows": false,
+      "shared_border_step": 0.0,
+      "conclusion": "Actual source109.967 shows completed third set with white small-point column withdrawn. Remaining blue-set container ends327; colour edge327 is correct and unchanged. No independent point-cell contour is asserted.",
+      "image": "/workspace/scratch/zhou-detector/no-contour-seg1-109.967.png"
+    }
+  ],
+  "fixes": [
+    "Dark green backdrop no longer joins point-cell rectangle; actual last blue set cell anchors per-frame border search, with a shared edge from both rows.",
+    "Premature colour boundaries on white/black clothing no longer clip point columns; inner strips and shared same-direction negative contours require actual white point digits in both rows.",
+    "No-contrast cases retain the measured colour edge rather than an invented fixed singles width.",
+    "Removal animation uses min(raw,median) only when its median neighbourhood already contains None; isolated residual tile remains suppressed."
+  ],
+  "limitations": [
+    "3 raw contour attempts have no contrast of at least4. They are recorded below and were not labeled independent-contour passes.",
+    "Full-frame scan is numeric; only actual representative source frames were visually inspected. Final MP4 review belongs to the final render audit."
+  ]
+}

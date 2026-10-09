@@ -1,0 +1,32 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
+  "source_sha256": "b6c3f528c315274b54c694eec01123670acb01c7b7b57442dee06986f2b21cb6",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source evidence agent; faster-whisper small.en/base.en/medium.en actual CPU runs; no manual-hearing claim",
+  "reviewed_at": "2026-10-09T19:07:12.500357+00:00",
+  "status": "complete",
+  "reviewed_from": 35.7,
+  "reviewed_to": 48.8,
+  "foreground_english": [
+    {
+      "start": 45.3,
+      "end": 46.38,
+      "en": "And he did do it.",
+      "zh": "他真的做到了。"
+    },
+    {
+      "start": 47.52,
+      "end": 48.58,
+      "en": "And he made it happen.",
+      "zh": "他把机会变成了现实。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/evidence/zhou-musetti/atp-asr-small-en-normalized.json",
+    "data/evidence/zhou-musetti/atp-asr-base-en-windows.json",
+    "data/evidence/zhou-musetti/asr-medium-en-targeted.json",
+    "data/evidence/zhou-musetti/asr-medium-en-boundary-targeted.json",
+    "data/evidence/zhou-musetti/tennistv-asr-small-en-normalized.json"
+  ]
+}

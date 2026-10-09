@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "reviewer": "current assistant independent visual inspection",
+  "reviewed_at": "2026-10-09T19:32:50.432942+00:00",
+  "movie": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/zhou-musetti.mp4",
+  "movie_sha256": "bd618d8890a107f632a4d116d20355191639fbb2cc34b8d027ac9b0eddad8511",
+  "movie_bytes": 64550496,
+  "scope": "Actual final encoded MP4 frames, all seven video quote windows, six narrative title cards plus stats, match point/handshake/outro; grayscale masks decoded for every frame. Visual timing only; no claim of independent human audio listening or model/API pass.",
+  "evidence_directory": "data/evidence/zhou-musetti/initial-failed-frames",
+  "contact_sheets": [],
+  "frame_coordinates": "/workspace/scratch/zhou-cover/final-mask-frame-coordinates.json",
+  "issues": [
+    {
+      "id": "scoreboard-06-green-background-leak",
+      "severity": "blocking",
+      "segment": 6,
+      "global_sample_seconds": [
+        50.5,
+        52.433333,
+        52.7
+      ],
+      "mask_peak_frame": 364,
+      "mask_peak_segment_seconds": 12.133333,
+      "mask_peak_right": 616,
+      "finding": "Scoreboard navy container ends at source x317 (225 px wide from x92), but decoded mask extends to 617 px wide and includes green stadium backdrop/player detail. Final bottom board has an obvious mismatched green rectangle extending approximately 520 output pixels right of the legitimate board at 52.433 s.",
+      "actual_evidence": [
+        "initial-failed-frames/mask-peak-52.433.jpg",
+        "initial-failed-frames/q06b.jpg"
+      ],
+      "source_evidence": "initial-failed-frames/source-06-peak.jpg",
+      "source_sample_seconds": 47.833333
+    },
+    {
+      "id": "scoreboard-10-score-column-clipped",
+      "severity": "blocking",
+      "segment": 10,
+      "global_sample_seconds": 111.2,
+      "source_sample_seconds": 64.533333,
+      "finding": "Final right edge cuts the 15/40 points column. Original board reads Zhou 7 3 15, Musetti 6^7 5 40 and has a complete right boundary. Final shows only a narrow portion of the last column.",
+      "actual_evidence": "initial-failed-frames/q10a.jpg",
+      "source_evidence": "initial-failed-frames/source-10-q.jpg"
+    },
+    {
+      "id": "scoreboard-12-deciding-columns-clipped",
+      "severity": "blocking",
+      "segment": 12,
+      "global_sample_seconds": 139.8,
+      "source_sample_seconds": 85.933333,
+      "finding": "Final board ends halfway through second-set digits; deciding-set and tiebreak columns are missing. Original board reads Zhou 7 3 6 2, Musetti 6^7 6 6 0.",
+      "actual_evidence": "initial-failed-frames/q12.jpg",
+      "source_evidence": "initial-failed-frames/source-12-q.jpg"
+    },
+    {
+      "id": "scoreboard-off-animation-ghost",
+      "severity": "minor",
+      "segment": 1,
+      "global_sample_seconds": 3.5,
+      "mask_frame": 69,
+      "mask_right": 152,
+      "finding": "During scoreboard removal a partial TISSOT tile briefly reappears at bottom left. Mask present/absent transitions are frame 67 off, 69 present, 70 off.",
+      "actual_evidence": "initial-failed-frames/cold-off-middle.jpg",
+      "also_present_in_segment_14_mask": "frame 296 off, 298 present width153, 299 off; not independently confirmed on exact final MP4 frame."
+    }
+  ],
+  "passes": {
+    "cover": "Official near-frontal raised-fist photo; eyes clear, hook below chin, ranks/countries/final scores/duration correct; no fabricated HD claim.",
+    "caption_placement": "All seven video segment sampled bilingual quote windows sit in the bottom region immediately above board target (ASS MarginV235, scoreboard top1229, intended24px gap), without higher placement. Clear on sampled frames and within width.",
+    "title_cards": "All six narrative cards sampled in actual MP4 use two semantic lines, same-sized main text, deep-blue background, lower narration line and small bottom brand; no overlap.",
+    "bridge_card": "Actual final card at106.0s reads 这一局最终失守 / 穆塞蒂拿到盘点, tag 第二盘·3-5; correct requested latest wording.",
+    "stats": "Actual card159.0s: ACE14/5, DF0/3, W34/25, UE46/18, first-in76%(82/108)/67%(66/98), first-win74%(61/82)/79%(52/66), second50%(13/26)/69%(22/32), BP0/2 vs1/5, total98/108. Matches raw full-match Flashscore evidence.",
+    "ending": "Actual match point167.6s then Zhou reaction174.5/179.5, handshake184.3, pure brand186.5; no intervening ending explainer/stat card."
+  },
+  "video_quote_samples": [
+    {
+      "segment": 1,
+      "samples": [
+        2.9
+      ],
+      "text": [
+        "Incredible scenes. / 不可思议的一幕"
+      ]
+    },
+    {
+      "segment": 4,
+      "samples": [
+        31.6,
+        33.3
+      ],
+      "text": [
+        "I love that play. / 我喜欢这样的打法",
+        "That’s gutsy. / 真有胆量"
+      ]
+    },
+    {
+      "segment": 6,
+      "samples": [
+        50.5,
+        52.7
+      ],
+      "text": [
+        "And he did do it. / 他真的做到了",
+        "And he made it happen. / 他把机会变成了现实"
+      ]
+    },
+    {
+      "segment": 8,
+      "samples": [
+        97.9,
+        100.3
+      ],
+      "text": [
+        "I can’t believe it. / 真难以置信",
+        "You cannot believe he’s missed it wide. / 难以置信 他竟然打偏了"
+      ]
+    },
+    {
+      "segment": 10,
+      "samples": [
+        111.2,
+        112.7
+      ],
+      "text": [
+        "Break points he had to save / 他必须救下那些破发点",
+        "right at the beginning of the set. / 就在这一盘刚开始时"
+      ]
+    },
+    {
+      "segment": 12,
+      "samples": [
+        139.8
+      ],
+      "text": [
+        "No way! / 不会吧!"
+      ]
+    },
+    {
+      "segment": 14,
+      "samples": [
+        174.5,
+        179.5,
+        182.7
+      ],
+      "text": [
+        "Incredible scenes. / 不可思议的一幕",
+        "The best win of his career. / 他职业生涯最棒的一胜",
+        "The first top 30 win. / 首次击败世界前三十球员"
+      ]
+    }
+  ],
+  "native_card_samples": [
+    {
+      "segment": 2,
+      "seconds": 10.5
+    },
+    {
+      "segment": 3,
+      "seconds": 18
+    },
+    {
+      "segment": 5,
+      "seconds": 37.8
+    },
+    {
+      "segment": 7,
+      "seconds": 58
+    },
+    {
+      "segment": 9,
+      "seconds": 106
+    },
+    {
+      "segment": 11,
+      "seconds": 128
+    },
+    {
+      "segment": 13,
+      "seconds": 159
+    }
+  ],
+  "scoreboard_mask_review": {
+    "every_mask_frame_decoded": true,
+    "native_qc_discrepancy": "scoreboard_qc.json and check_reel_landed report pass, but mask widths only record candidate detection and did not guarantee full board columns or exclude attached background. Three final visual blocking findings override that prior pass.",
+    "optional_tag_masks": "All seven masks report tag_frames0. No actual relocated upper/lower tournament tag observed in reviewed frames; do not invent a pass for unseen tags."
+  },
+  "historical_status": "superseded_failed_visual_review_before_score_mask_repair",
+  "historical_note": "This failed SHA was never published. Its L2 attestation was revoked before scoreboard repair. The actual final movie requires a fresh independent review and fresh native QC."
+}

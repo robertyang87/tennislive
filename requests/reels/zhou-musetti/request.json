@@ -1,0 +1,86 @@
+{
+  "slug": "zhou-musetti",
+  "source_url": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
+  "column": "赛场之上",
+  "owner_request": "用github里的tennislive按要求输出赛场之上；视频字幕贴着下面的比分板，不要太高",
+  "status": "manual_production_in_progress",
+  "not_rendered": true,
+  "not_published": true,
+  "source_archive_run": "https://github.com/robertyang87/tennislive/actions/runs/37975033217",
+  "source_archive_release": "https://github.com/robertyang87/tennislive/releases/tag/source-ShSDhLGXYOk",
+  "subtitle_policy": {
+    "anchor": "bottom",
+    "gap_above_scoreboard_px": 24,
+    "manual_subtitle_top": false,
+    "scope": "All match footage cues, including Chinese narration and bilingual source quotes; cards retain native layout"
+  },
+  "layout_verification": {
+    "preview_only": true,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "score_inset": [
+      92,
+      922,
+      466,
+      1032
+    ],
+    "scoreboard_top_px": 1229,
+    "subtitle_bottom_margin": 235,
+    "subtitle_bottom_px": 1205,
+    "gap_px": 24,
+    "manual_subtitle_top_override": false
+  },
+  "preview": "subtitle-layout-preview.jpg",
+  "preview_note": "Layout-only preview produced by actual ATP scoreboard masks, cut_segment and write_subtitles. Preview text describes the visible 6-1 deciding tiebreak; it is not completed editorial or a released film.",
+  "verified_facts": {
+    "event": "2026 ATP1000 Shanghai",
+    "round": "第二轮 / Round of 64",
+    "court": "Stadium Court",
+    "winner": {
+      "name": "周意",
+      "country": "CHN",
+      "rank": 277,
+      "age": 21,
+      "entry": "WC"
+    },
+    "opponent": {
+      "name": "穆塞蒂",
+      "country": "ITA",
+      "rank": 25,
+      "seed": 24
+    },
+    "next_round": "第三轮 / Round of 32",
+    "next_opponent": {
+      "name": "胡尔卡奇",
+      "country": "POL",
+      "champion_year": 2023
+    },
+    "first_set_tiebreak": "周意3-6落后，连续救3个盘点，9-7拿下抢七",
+    "third_set_tiebreak": "周意5-0开局，7-1拿下抢七"
+  },
+  "resume": "Continue native manual spec, deterministic validations, actual narration and source audio review, render and QC; no DeepSeek/MiniMax calls for this production.",
+  "checks": {
+    "match_reel_layout_tests": "2 passed; 387 deselected",
+    "font_and_anchor_tests": "38 passed (after fetching the repository Inter font assets)"
+  },
+  "source_review": "data/evidence/zhou-musetti/final-source-review.json",
+  "candidate_only": "candidate-spec-shape.json",
+  "candidate_warning": "Historical superseded draft from the earlier attempt. The formal manual spec is the only render plan.",
+  "previous_blocker": {
+    "stage": "DeepSeek editorial",
+    "http_status": 402,
+    "error": "Insufficient Balance",
+    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/37975276311",
+    "commit": "0e0845bb41c5adbfada2aea42ae2f63458139dfe"
+  },
+  "owner_override": {
+    "instruction": "不要用 deepseek 和 minimax",
+    "scope": "本期制作与核验",
+    "editorial": "Codex manual, verified facts only",
+    "visual_review": "Codex source frames and cover review",
+    "deepseek_minimax_calls": false
+  },
+  "formal_spec": "specs/reels/zhou-musetti.json"
+}

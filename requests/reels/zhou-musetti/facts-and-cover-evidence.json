@@ -1,0 +1,78 @@
+{
+  "facts": {
+    "event": "2026 ATP1000 Shanghai",
+    "round": "第二轮 / Round of 64",
+    "court": "Stadium Court",
+    "winner": {
+      "name": "周意",
+      "country": "CHN",
+      "rank": 277,
+      "age": 21,
+      "entry": "WC"
+    },
+    "opponent": {
+      "name": "穆塞蒂",
+      "country": "ITA",
+      "rank": 25,
+      "seed": 24
+    },
+    "next_round": "第三轮 / Round of 32",
+    "next_opponent": {
+      "name": "胡尔卡奇",
+      "country": "POL",
+      "champion_year": 2023
+    },
+    "first_set_tiebreak": "周意3-6落后，连续救3个盘点，9-7拿下抢七",
+    "third_set_tiebreak": "周意5-0开局，7-1拿下抢七"
+  },
+  "sources": {
+    "report": "https://en.rolexshanghaimasters.com/en/media/news/zhou-stuns-musetti-to-reach-third-round",
+    "results": "https://en.rolexshanghaimasters.com/en/scores/results",
+    "draw": "https://www.protennislive.com/posting/2026/5014/mds.pdf",
+    "rank_secondary": "https://www.tennisexplorer.com/ranking/atp-men/"
+  },
+  "cover_recommendation": {
+    "url": "https://en.rolexshanghaimasters.com/-/media/images/news/2026/10/09/14/56/zhou-shanghai-2026-friday.jpg",
+    "file": "/workspace/scratch/zhou-cover/shanghai-atp-report.jpg",
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "description": "官方赛事首页同步 ATP 报道配图；alt 为 Zhou Yi defeats Lorenzo Musetti in three sets on Friday evening in Shanghai. 肉眼单人偏正面双眼睁开，举拳庆祝，脸合焦，装备同本场。",
+    "machine_checks": "未调用 MiniMax；face/eyes机器未测，当前缺 onnxruntime。",
+    "limitation": "1920×1080 原生上限本次 ?w=4000 及 ?mw=4000&mh=4000 均同尺寸同字节。铺满1080×1440会放大1.333倍；不可写不放大。"
+  },
+  "earliest_known_cover_blocker": "pending现图 _visual_evidence.cover.moment=other 与期望winner_celebration冲突；换图必须重做真实MiniMax视觉审核。此次取得官方庆祝图但1920×1080不足不放大铺满1080×1440。",
+  "search_evidence": {
+    "ATP_Media": "前4页400张。2026-10-09周意2张，其余周意属10-07；本场#4589534与#4589530皆击球other。",
+    "Getty": "2298758808/2298759043/2298759186全图6192×4128/6192×4128/5934×3956。公开缩略612×408；2048 comp带Getty水印，不可作无水印原图。",
+    "AP": "两条上海10-09报道当前照片不含周意。"
+  },
+  "source_files": {
+    "site2.html": "7eef72ad0518318ec290864d0e771ff7959a4d90a7dd85234c48fa887c95b1db",
+    "draw.pdf": "9027e51d6efebc19046da387ac5786c5d35a0a140045bfd388015f878e3440e8",
+    "getty-2298759186.html": "24854e84aace64f6fd395753dc27fdaea290f4832e3af25a7e7af914dc41c046",
+    "extras-3.html": "393360314df020f8928673dce049732045dfa6c0819b8a3b50f2f98e11735789",
+    "shanghai-atp-report.jpg": "0cf16a45f8e0c6224aee56487a84ede9f27ff3518de1c23da5cc501d9abd43d6",
+    "4589530-preview.jpg": "dcfb587637eaf8738b167dc4b062b35d9878deaa18508fac1ca308d4b28238f2",
+    "site4.html": "c24751d92d8fae64e655c3c58ecd4299e763f0ce1e55c22078afc27de03c9afd",
+    "getty-2298758808.html": "e0ba5d1418092523deab457a483aca8f084d0e3565c19fc76a74b9af0dc9141a",
+    "shanghai-report.html": "0d0e5177be93096aa585cf6a9902768d8cc5a962aa8b385e87b012b22aa8ecce",
+    "getty-2298759043.html": "f4a43be609e434b87ac4602adda5e301a0e8909bf759044c0fcbb3d59dbe1943",
+    "getty-2298759186-preview.jpg": "49edae87f88001702d13e5b05c514c5ae0dfed5f2b47370915961f9d5b6e02ac",
+    "site0.html": "bd651ff824e321b649c56639e04663e0b00f5674507cbeea7632f6dff2fea0a0",
+    "extras-5.html": "0d3f4214672fc5ce823ad9daecb6140439362a74718470b5a336ad4209365ab7",
+    "4589534.jpg": "ac723ce8ba89e94ec58deaa159c785ffef47cd2b3993dba85c09c859aff040c0",
+    "extras-2.html": "01f5562b5387cf1f8b3c54a587643bcbd1eb3bd097e5539e707c43c1ff105a62",
+    "ap-0.html": "5333dc9bebed6dffd1b7c3df7431d2e9a1f2ef3153592e0bb67515d66231ccc1",
+    "4589534-preview.jpg": "6494f743d128609abaec5f6971ea422529b5372eb3caa711eb0645d4057d7a49",
+    "getty-2298759043-preview.jpg": "45230bcd8e927c44c53906e06141a3d1e23528f8baeb3fa45a0cc03a538572a6",
+    "extras-1.html": "231d0b962e1dbfefae5a70e8784ca614ffffa6ef4787087c66b7f2d63940af50",
+    "ap-1.html": "c296c1f7c1c18a62cca94fceb890836fcd2819cb5e81cb7783a1feaf0a305e93",
+    "getty-2298758808-preview.jpg": "7879923c3de593ea0a646cddf48a26badb83cb94431e75df5f7f8c046a44f70f",
+    "order.pdf": "134264696d2cb852a65d80ebbfb27a290180a693ecd4619870638e4d38f1a68c",
+    "shanghai-zhou-october9.jpg": "f4627d702604edc4e87de89885b80e864ec5d5dd3734f64563fa6c76eae18e49",
+    "4589530.jpg": "d08f1e41acdbb2876435c0a6cc4e7e84b2fe7256976a6f9b1c43b2fdf7a2e818",
+    "extras-4.html": "f9add1d8d93a3116fcaf0497f4286d56efd3fd8ec6cf91e128e932fee3f7a7a2"
+  }
+}

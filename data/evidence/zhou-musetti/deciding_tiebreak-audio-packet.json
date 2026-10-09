@@ -1,0 +1,118 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
+  "source_sha256": "b6c3f528c315274b54c694eec01123670acb01c7b7b57442dee06986f2b21cb6",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source evidence agent; actual normalized faster-whisper small/base/medium/turbo/distil/full-large CPU runs; strongest independent context runs had no initial prompt; no manual-hearing claim",
+  "reviewed_at": "2026-10-09T19:21:03.184901+00:00",
+  "status": "complete",
+  "reviewed_from": 79.0,
+  "reviewed_to": 101.37,
+  "foreground_english": [
+    {
+      "start": 86.14,
+      "end": 86.74,
+      "en": "No way!",
+      "zh": "不会吧！"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/evidence/zhou-musetti/atp-asr-small-en-normalized.json",
+    "data/evidence/zhou-musetti/asr-tiebreak-base-medium.json",
+    "data/evidence/zhou-musetti/asr-turbo-autodetect-boundaries.json",
+    "data/evidence/zhou-musetti/asr-turbo-wide-context.json",
+    "data/evidence/zhou-musetti/asr-distil-large-final-context.json",
+    "data/evidence/zhou-musetti/asr-final-exclamation-cross-source.json",
+    "data/evidence/zhou-musetti/asr-large-v3-final-exclamation.json"
+  ],
+  "reaction_caption_method": {
+    "reaction_interval": [
+      85.02,
+      86.95
+    ],
+    "retained_english": "No way!",
+    "retained_chinese": "不会吧！",
+    "explanation": "Semantic transcription of the continuous astonished reaction uses only the reproducible lexical core No way. The short preceding vocalization does not produce a reproducible separate English word: crop contexts yield Wait/Oh/hey/Way/No way with low leading-word probability. Do not invent a specific prefix. The subtitle spans the full reaction while the original source sound remains intact. Producer accepted this conservative semantic transcription on2026-10-09; no claim of human listening or word-for-word resolution of that prefix.",
+    "stable_core_checks": {
+      "medium": [
+        85.2,
+        86.72
+      ],
+      "turbo_narrow": [
+        86.14,
+        86.68
+      ],
+      "distil_wide": [
+        86.3,
+        86.74
+      ],
+      "distil_narrow": [
+        86.32,
+        86.7
+      ],
+      "ttv_turbo_same_point": [
+        114.06,
+        114.56
+      ]
+    }
+  },
+  "no_other_foreground_english_reason": "The complete79–101.37 source window was cross-checked in broad and narrow contexts. No stable meaningful speech outside the astonished No way reaction. In90.7–101.37, rejected ASR endings are generic template hallucinations or single letters with very low first-word confidence, implausible duration alignment, and crop-dependent wording; actual records remain attached.",
+  "rejected_asr_outputs": [
+    {
+      "window": [
+        90.7,
+        101.37
+      ],
+      "model": "base.en",
+      "text": "repeated S",
+      "reason": "degenerate single-letter decoding"
+    },
+    {
+      "window": [
+        90.7,
+        101.37
+      ],
+      "model": "medium.en",
+      "text": "Thanks for watching",
+      "first_word_probability": 0.003,
+      "reason": "contextually false generic ending and extremely low first-word confidence"
+    },
+    {
+      "window": [
+        90.7,
+        101.37
+      ],
+      "model": "large-v3-turbo",
+      "text": "Thank you",
+      "start": 97.96,
+      "end": 100.76,
+      "first_word_probability": 0.01976916380226612,
+      "reason": "generic ending changes across windows; previous turbo contexts decode See you next time or Oh; no reproducible lexical segment"
+    },
+    {
+      "window": [
+        90.7,
+        101.37
+      ],
+      "model": "distil-large-v3",
+      "text": "Thank you",
+      "start": 90.7,
+      "end": 101.16,
+      "first_word_probability": 0.014498330652713776,
+      "reason": "whole-window alignment over10s contradicts brief ordinary utterance; generic ending hallucination"
+    },
+    {
+      "window": [
+        90.7,
+        101.37
+      ],
+      "model": "large-v3",
+      "text": "Thank you for watching",
+      "start": 97.22,
+      "end": 101.34,
+      "first_word_probability": 0.03725597262382507,
+      "no_speech_prob": 0.6629782915115356,
+      "reason": "generic ending, low first-word confidence, high no-speech probability, and final watching word has zero-length alignment"
+    }
+  ]
+}
