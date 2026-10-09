@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.wimbledon.com/en_GB/video/final_highlights_k_muchova_vs_l_noskova",
+  "source_sha256": "9f65bea19e5d7d482c172ff05b9e475e5e8787619fcf5663748cad183255ca21",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T11:40:00+00:00",
+  "status": "complete",
+  "reviewed_from": 227.15,
+  "reviewed_to": 238.2,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 227.2,
+      "end": 232.4,
+      "en": "And she gets to hold one of the most iconic trophies in sport.",
+      "zh": "她捧起最有标志性的奖杯之一。"
+    },
+    {
+      "start": 234.06,
+      "end": 238.12,
+      "en": "It's going to be one of the, if not the most beautiful trophies.",
+      "zh": "它会是最漂亮的奖杯之一。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_note": "两模型都有这两句。base 在 hold 后有 the one, one 的重复，句子主干一致。238.2 前收住，不进片尾图形。"
+}

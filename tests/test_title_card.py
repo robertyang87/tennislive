@@ -70,7 +70,7 @@ def test_render在切段之前按版式尺寸渲章节卡(tmp_path, monkeypatch)
         out.write_bytes(b"jpg")
 
     got = reel._materialize_title_cards({}, segs, tmp_path, renderer=fake)
-    # 全出血：品牌使用卡片默认的底部 64px 安全区，不受字幕上锚影响。
+    # 全出血：品牌使用卡片默认的底部 HANDLE_BOTTOM_PX（28）安全区，不受字幕上锚影响。
     assert calls == [("排名是怎么掉的", "01", (1080, 1440), "title_card_02.jpg",
                       0)]
     assert got[1].image == str(tmp_path / "title_card_02.jpg")
@@ -252,9 +252,11 @@ def test_章节卡品牌在真实字幕下方的底部安全区(tmp_path, monkey
     monkeypatch.setattr(reel, "default_margin_v", lambda: 943)
     segs = reel.parse_segments(_spec(), {"": 1}, "")
     card = reel._materialize_title_cards({}, segs, tmp_path)[1]
-    assert "bottom:64px" in tc.build("排名是怎么掉的", kicker="01")
+    html = tc.build("排名是怎么掉的", kicker="01")
+    assert f"bottom:{tc.HANDLE_BOTTOM_PX}px" in html
+    assert "bottom:64px" not in html
     im = Image.open(card.image).convert("L")  # Native browser output is 2x.
-    brand = im.crop((0, 1330 * 2, im.width, 1380 * 2))
+    brand = im.crop((0, 1368 * 2, im.width, 1416 * 2))
     assert sum(v > 120 for v in brand.getdata()) > 200, "底部品牌必须真的画出来"
     assert sum(v > 120 for v in im.crop((0, 990 * 2, im.width, 1100 * 2)).getdata()) == 0, \
         "未叠字幕时，此区域应没有被错误抬高的品牌"
@@ -270,8 +272,56 @@ def test_章节卡品牌在真实字幕下方的底部安全区(tmp_path, monkey
     assert landed.size == (1080, 1440)
     assert sum(v > 120 for v in landed.crop((0, 990, 1080, 1100)).getdata()) > 200, \
         "真实字幕必须仍在原定锚位可见"
-    assert sum(v > 120 for v in landed.crop((0, 1330, 1080, 1380)).getdata()) > 200, \
+    assert sum(v > 120 for v in landed.crop((0, 1368, 1080, 1416)).getdata()) > 200, \
         "叠字幕后底部品牌必须仍然可见，与字幕分离"
+
+
+def _bright_rows(image, y0, y1, *, thresh=110, min_hits=6):
+    rows = []
+    for y in range(y0, y1):
+        hits = sum(image.getpixel((x, y)) > thresh for x in range(180, 900, 6))
+        if hits >= min_hits:
+            rows.append(y)
+    return rows
+
+
+def test_本片字卡品牌下移到两行字幕下方(tmp_path, monkeypatch):
+    """年终第一的品牌压住烧录字幕。字卡把品牌下移到距底 28px，并让字幕下锚。
+
+    抽查的是两行同时出现的中文。上锚两行会落到品牌里；下锚之后文字底边
+    停在品牌上方，中间要有一条暗带。HANDLE_BOTTOM_PX=28 与 PR #1204 相同。"""
+    import subprocess  # noqa: PLC0415
+
+    from PIL import Image  # noqa: PLC0415
+
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    assert f"bottom:{tc.HANDLE_BOTTOM_PX}px" in tc.build("排名是怎么掉的")
+    assert "bottom:64px" not in tc.build("排名是怎么掉的")
+    assert "bottom:28px" in tc.build("第八席先留给谁", handle_bottom=28)
+    segs = reel.parse_segments(_spec(), {"": 1}, "")
+    card = reel._materialize_title_cards(
+        {"title_card_handle_bottom": 28}, segs, tmp_path)[1]
+    assert card.subtitle_bottom == reel.TITLE_CARD_SUBTITLE_BOTTOM == 96
+    two = "前七名直接入围\n第八席先留给冠军"
+    ass = reel.write_subtitles([(0.0, 2.4, two)], tmp_path / "two.ass",
+                               height=1440, margin_v=1284, outline=4, shadow=1,
+                               bottom_margin_windows=[(0.0, 2.4, 96)])
+    frame = tmp_path / "with-two-lines.png"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", card.image,
+                    "-vf", f"scale=1080:1440,ass={ass}:fontsdir={ROOT / 'assets' / 'fonts'}",
+                    "-frames:v", "1", str(frame)], check=True)
+    bare = tmp_path / "bare.png"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", card.image,
+                    "-vf", "scale=1080:1440", "-frames:v", "1", str(bare)], check=True)
+    brand_rows = _bright_rows(Image.open(bare).convert("L"), 1280, 1440)
+    both = _bright_rows(Image.open(frame).convert("L"), 1100, 1440)
+    assert brand_rows, "下移后的品牌要画在画面底部"
+    brand_top = min(brand_rows)
+    subtitle_rows = [y for y in both if y < brand_top - 1]
+    assert subtitle_rows, "两行字幕要画在品牌上方"
+    gap = brand_top - max(subtitle_rows) - 1
+    assert gap >= 16, f"两行字幕和品牌间距只有 {gap}px（字幕底 {max(subtitle_rows)}，品牌顶 {brand_top}）"
+    assert max(subtitle_rows) < brand_top, "两行字幕不能压进品牌"
 
 
 def test_真渲的章节卡走完切段那条路_成片第一行就是彩条(tmp_path):

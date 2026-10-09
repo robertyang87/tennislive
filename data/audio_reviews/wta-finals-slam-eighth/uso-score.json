@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.usopen.org/en_US/video/watch/2026/sabalenka-vs-rybakina-2026-final/17892532189284052",
+  "source_sha256": "e29938c764488c3877f02cee0c683d8b7b81f06352185f6413a647908ede58fe",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T11:40:00+00:00",
+  "status": "complete",
+  "reviewed_from": 122.5,
+  "reviewed_to": 126.48,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 122.6,
+      "end": 126.38,
+      "en": "Two sets to one, six, four, five, seven, six, two.",
+      "zh": "盘数二比一，六比四、五比七、六比二。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_note": "small.en 与孤立窗 base.en 都是 Two sets to one, six, four, five, seven, six, two。126.64 起下一句不一致，窗口停在 126.48。"
+}

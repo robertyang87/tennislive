@@ -1,0 +1,14 @@
+{
+  "source_url": "https://players.brightcove.net/4447531182001/8qx9SyWTb_default/index.html?videoId=6388588034112",
+  "source_sha256": "a891213a5b98bbdef240f4a6e05a6931cebe94387f042ad9008c1d74700fd20a",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T11:40:00+00:00",
+  "status": "complete",
+  "reviewed_from": 164.8,
+  "reviewed_to": 172.8,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "small.en 在 164.6–172.6 没有英文词。冠军宣告 the Australian Open Champion 停在 162.6。这段是网前拥抱，配中文旁白。",
+  "asr_note": "base.en 从 163.2 起的孤立窗只在切点听到一个 You，判为切点幻觉，窗口从 164.8 起。"
+}

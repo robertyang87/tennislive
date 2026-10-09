@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.usopen.org/en_US/video/watch/2026/sabalenka-vs-rybakina-2026-final/17892532189284052",
+  "source_sha256": "e29938c764488c3877f02cee0c683d8b7b81f06352185f6413a647908ede58fe",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T11:40:00+00:00",
+  "status": "complete",
+  "reviewed_from": 138.72,
+  "reviewed_to": 141.92,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 138.78,
+      "end": 141.78,
+      "en": "This woman played unbelievably well.",
+      "zh": "她这场打得非常好。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_note": "全片 small.en 138.78–141.78 与孤立窗 base.en 一致。不收 149 秒后第三座大满贯那句。"
+}

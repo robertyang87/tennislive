@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.wimbledon.com/en_GB/video/final_highlights_k_muchova_vs_l_noskova",
+  "source_sha256": "9f65bea19e5d7d482c172ff05b9e475e5e8787619fcf5663748cad183255ca21",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T11:40:00+00:00",
+  "status": "complete",
+  "reviewed_from": 220.9,
+  "reviewed_to": 224.2,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 221.12,
+      "end": 223.8,
+      "en": "It's over, and out.",
+      "zh": "结束了，球出界。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_note": "small.en 221.12–223.80 It's over, and out. base.en 孤立窗同样这句。224.38 起 Linda's right / On this right 两模型不一致，窗口停在 224.2。"
+}
