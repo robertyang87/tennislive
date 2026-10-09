@@ -18,7 +18,16 @@
       }
     ],
     "winner": "蒂亚福",
-    "result": "6-4 6-4"
+    "result": "6-4 6-4",
+    "portrait": {
+      "image": "assets/reel/hanfmann-tiafoe-cover.jpg",
+      "focus": 0.121,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「frances tiafoe」「Shanghai」，日期对上当地 2026-10-09（Asia/Shanghai；日期来源 flashscore dc_1_AeUOnSWH）。② 分辨率：5435×3623，zoom 1 铺 1080×1440 是 2.52×（不放大）。③ 认人：最大那张脸像 蒂亚福 0.45（≥ 0.34）。④ 睁眼：EAR 0.2845（≥ 0.16）。⑤ 钩子带：脸落在 y256~503，钩子顶边 790。排序：[True, False, False, True, True, 247, 0.4502]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/8b3f363c-4ad9-4bca-9456-1600174c5fd4/Yannick-HANFMANN-vs-Frances-TIAFOE-8119.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/8b3f363c-4ad9-4bca-9456-1600174c5fd4/Yannick-HANFMANN-vs-Frances-TIAFOE-8119.jpg（条目 #4589293，接口发布 2026-10-09T08:48:59Z，原图 5435×3623），说明原文「2026 Shanghai Tiafoe」。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -231,45 +240,51 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 2.12,
-      "end": 24.0,
-      "kind": "winning_shot",
-      "winner_visible": true,
-      "reason": "开门即比赛回合：2.12–10.84s 上海大师赛蓝场全景，蒂亚福（暗衣）正手/网前与汉夫曼（白衣）底线对拉；24.0s 切到中近景蒂亚福仰头高抛准备发球，时间码显示 HANFMANN 0 / TIAFOE 0，属第一盘开局普通回合的连续素材，但首段尾已出现蒂亚福侧身击球姿态，整体为开局精彩回合段落而非垃圾回合。",
-      "confidence": 0.55
-    },
-    "ending": {
-      "start": 123.56,
-      "end": 143.0,
+      "start": 136.5,
+      "end": 146.5,
       "kind": "aftermath",
       "winner_visible": true,
-      "reason": "123.56s 比分 HANFMANN 4 / TIAFOE 5× 接 124.5s、126.5s 蒂亚福仰头握拳怒吼的制胜分庆祝；128.5s 蒂亚福走近镜头、130.5s 汉夫曼低头叉腰神情失落；136.5–142.5s 两人隔网握手、并排走向球童方向致意。完整覆盖了冷开场无法兑现的制胜分/赛点/庆祝/握手结局。",
-      "confidence": 0.88
+      "reason": "136.5s–142.5s：双方在网前握手致意（赛果结构显示终局 6-4 6-4），黑马衣选手（蒂亚福）为赢家；144.5s/146.5s 切换到 'REPLAYS/CLASSICS' 后期花絮；握手本身即赛点后余波，赢家可见，置信度较高。",
+      "confidence": 0.72
+    },
+    "ending": {
+      "start": 136.5,
+      "end": 146.5,
+      "kind": "aftermath",
+      "winner_visible": true,
+      "reason": "136.5s–142.5s：网前握手完成，赢家蒂亚福（黑马衣）与输家汉夫曼均在场；144.5s/146.5s 进入 Replays 标题卡。握手作为终端比赛故事节拍，覆盖冷开场窗口。",
+      "confidence": 0.7
     },
     "cover": {
-      "same_match": false,
-      "subject": "",
+      "same_match": true,
+      "subject": "蒂亚福",
       "moment": "other",
-      "wrong_or_old": true,
-      "reason": "任务未提供候选封面照片，本场结构化赛果为蒂亚福 6-4 6-4 胜汉夫曼；现有接触表全部为 0–152s 比赛画面与网球 TV 片尾/REPLAYS&CLASSICS 集锦预告，无独立封面图可核对人物与赛事标识，故 same_match=false。",
-      "confidence": 0.3
+      "wrong_or_old": false,
+      "reason": "封面中球员穿黑马衣、白色头带、佩戴护腕，与视频 60s–142s 期间蒂亚福比赛服装一致；腕带位置和球拍握持姿态与比赛镜头相符；画面情绪为专注击球准备，并非庆祝或崩溃；无水印/旧图重涂痕迹。但无法看到具体比分或赛事 logo 来二次佐证，因此 same_match 置信适中。",
+      "confidence": 0.72
     },
     "problems": [
-      "cold_open 置信度 0.55 低于 0.80",
-      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.30 低于 0.80",
-      "封面人物应为 蒂亚福，模型识别为 空",
+      "cold_open 置信度 0.72 低于 0.80",
+      "ending 置信度 0.70 低于 0.80",
+      "封面置信度 0.72 低于 0.80",
       "封面情绪应为 winner_celebration，现在是 other"
     ],
     "model_attempts": 1,
-    "input_sha256": "bd9c9570f1b9de9e5c91e96c02835cf3941f13e30e1cc21df4b58685a3152afc",
+    "input_sha256": "ae8dd79b68964ad6bdf8feab37a1259fe34e55b6a8dcb31a3a98dfeb1985fd14",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/hanfmann-tiafoe-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "AeUOnSWH",
+      "start_utc": "2026-10-09T06:55:00Z",
+      "end_utc": "2026-10-09T08:20:15Z",
+      "source": "flashscore dc_1_AeUOnSWH（DC／DD）"
+    },
+    "replaced_under": "bd9c9570f1b9de9e5c91e96c02835cf3941f13e30e1cc21df4b58685a3152afc"
   }
 }

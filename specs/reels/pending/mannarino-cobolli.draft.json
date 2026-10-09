@@ -282,10 +282,55 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "error",
-    "retryable": true,
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 88.5,
+      "end": 114.5,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "在 ~90.5s 比分牌显示 'AD MATCH POINT #2'，马纳里诺（光头、白色 celio* 衫）正面近景在赢下赛点。112.5s–114.5s 为赢家的制胜击球/前场截击瞬间（球拍、网球可见）。该窗口涵盖 match-point 提示与制胜一击，符合冷开场必须为制胜分/赛点的硬规则。",
+      "confidence": 0.92
+    },
+    "ending": {
+      "start": 111.2,
+      "end": 123.56,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "111.2–114.5s 仍是赛点/制胜分延续；118.5–120.5s 马纳里诺赛事近景，122.5s 两名球员走向网前在球网处握手（包含赢家与输家的肢体反应），握手是正式结束节拍。完全覆盖 cold_open。",
+      "confidence": 0.88
+    },
+    "cover": {
+      "same_match": false,
+      "subject": "",
+      "moment": "other",
+      "wrong_or_old": true,
+      "reason": "任务未提供候选封面照片；按硬规则，无图则无法核验人物、比分字样、赛事标识与服装一致，不得声明本场。",
+      "confidence": 0.0
+    },
     "problems": [
-      "MiniMax API：HTTPError: HTTP Error 529: Unknown Status Code"
-    ]
+      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
+      "没有官方高清封面候选",
+      "封面无法证明是同一场，或疑似旧图/错图",
+      "封面置信度 0.00 低于 0.80",
+      "封面人物应为 科博利，模型识别为 空",
+      "封面情绪应为 loser_fighting，现在是 other"
+    ],
+    "model_attempts": 1,
+    "input_sha256": "da6bdcfb6a8418813b4bdaf3caeeeccbb2d5c68d14b56d7c3f516e393fb3f77f",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg"
+    ],
+    "cover_image": ""
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "YXVtR0It",
+      "start_utc": "2026-10-09T04:10:00Z",
+      "end_utc": "2026-10-09T06:37:03Z",
+      "source": "flashscore dc_1_YXVtR0It（DC／DD）"
+    }
   }
 }
