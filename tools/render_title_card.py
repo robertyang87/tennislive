@@ -84,24 +84,24 @@ def length_problem(text: str) -> str | None:
     return None
 
 
-# 品牌默认距卡底 64px。再往下（更小的 bottom）会压进上锚两行中文的第二行。
-# 本片把字幕改成下锚之后，才能把品牌放进字幕区下方：两行中文底边钉在
-# y=1344（subtitle_bottom=96），品牌高 40px、bottom=28 时顶边在 y=1372，
-# 中间约 28px。只在 spec 写了 title_card_handle_bottom 时用这个数。
-HANDLE_BOTTOM_DEFAULT = 64
+# 品牌距卡底的像素。2026-10-08 年终第一（1080×1440，字幕上锚 MarginV=1284）：
+# 距底 64px 时品牌墨迹约 y=1339–1372，单行旁白墨迹约 y=1303–1349，叠了约 11px。
+# 下移到距底 28px 后，品牌墨迹约 y=1375–1408，单行旁白底下留空。做法与
+# PR #1204 相同：默认就是 28，不再按字幕锚把品牌抬回页面中段。
+# 上锚两行中文的第二行仍会落到画布最底，本片字卡因此另把字幕下锚到 96px。
+HANDLE_BOTTOM_PX = 28
 HANDLE_BOTTOM_MIN = 20
 HANDLE_BOTTOM_MAX = 48
 
 
 def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
           clear_bottom: int = 0, handle_bottom: int | None = None) -> str:
-    """品牌默认距卡底 64px，保持独立于字幕锚的底部安全区。
+    """品牌默认距卡底 `HANDLE_BOTTOM_PX`（28），落在单行字幕下方。
 
-    `clear_bottom` 保留为显式增加底边留白的接口；原生章节卡使用默认值，
-    不根据全片字幕上锚自动抬高品牌。`handle_bottom` 是本片把品牌下移到
-    两行字幕下方安全区的出口：给了就用这个更小的底边距，不再被 64px 托住。"""
+    `clear_bottom` 只会把品牌再抬高。`handle_bottom` 给了就用那个 20~48 的
+    底边距，本片用来和默认 28 对齐。"""
     if handle_bottom is None:
-        brand_bottom = max(HANDLE_BOTTOM_DEFAULT, int(clear_bottom))
+        brand_bottom = max(HANDLE_BOTTOM_PX, int(clear_bottom))
     else:
         if type(handle_bottom) is not int or not HANDLE_BOTTOM_MIN <= handle_bottom <= HANDLE_BOTTOM_MAX:
             raise SystemExit(

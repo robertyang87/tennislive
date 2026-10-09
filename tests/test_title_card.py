@@ -252,9 +252,11 @@ def test_章节卡品牌在真实字幕下方的底部安全区(tmp_path, monkey
     monkeypatch.setattr(reel, "default_margin_v", lambda: 943)
     segs = reel.parse_segments(_spec(), {"": 1}, "")
     card = reel._materialize_title_cards({}, segs, tmp_path)[1]
-    assert "bottom:64px" in tc.build("排名是怎么掉的", kicker="01")
+    html = tc.build("排名是怎么掉的", kicker="01")
+    assert f"bottom:{tc.HANDLE_BOTTOM_PX}px" in html
+    assert "bottom:64px" not in html
     im = Image.open(card.image).convert("L")  # Native browser output is 2x.
-    brand = im.crop((0, 1330 * 2, im.width, 1380 * 2))
+    brand = im.crop((0, 1368 * 2, im.width, 1416 * 2))
     assert sum(v > 120 for v in brand.getdata()) > 200, "底部品牌必须真的画出来"
     assert sum(v > 120 for v in im.crop((0, 990 * 2, im.width, 1100 * 2)).getdata()) == 0, \
         "未叠字幕时，此区域应没有被错误抬高的品牌"
@@ -270,7 +272,7 @@ def test_章节卡品牌在真实字幕下方的底部安全区(tmp_path, monkey
     assert landed.size == (1080, 1440)
     assert sum(v > 120 for v in landed.crop((0, 990, 1080, 1100)).getdata()) > 200, \
         "真实字幕必须仍在原定锚位可见"
-    assert sum(v > 120 for v in landed.crop((0, 1330, 1080, 1380)).getdata()) > 200, \
+    assert sum(v > 120 for v in landed.crop((0, 1368, 1080, 1416)).getdata()) > 200, \
         "叠字幕后底部品牌必须仍然可见，与字幕分离"
 
 
@@ -293,7 +295,8 @@ def test_本片字卡品牌下移到两行字幕下方(tmp_path, monkeypatch):
     from PIL import Image  # noqa: PLC0415
 
     monkeypatch.setattr(reel, "LAYOUT", "full")
-    assert "bottom:64px" in tc.build("排名是怎么掉的")
+    assert f"bottom:{tc.HANDLE_BOTTOM_PX}px" in tc.build("排名是怎么掉的")
+    assert "bottom:64px" not in tc.build("排名是怎么掉的")
     assert "bottom:28px" in tc.build("16岁最多12站", handle_bottom=28)
     segs = reel.parse_segments(_spec(), {"": 1}, "")
     card = reel._materialize_title_cards(

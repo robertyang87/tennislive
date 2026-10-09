@@ -8,7 +8,7 @@
   "tts_backend": "edge",
   "_tts_backend_why": "本地没有 Azure Speech 钥匙。旁白用云见 Yunjian +6%，和年终第一同一条本地声线。多音字按实际合成复核。",
   "title_card_handle_bottom": 28,
-  "_title_card_handle_bottom_why": "本分支默认品牌仍在底边 64px，两行上锚中文会压住「网球时差 JETLAG」。本片把品牌下移到 bottom 28px，并把字卡字幕改成下锚 96px，两行中文底边停在品牌上方。抽查帧见 tests/test_title_card.py。",
+  "_title_card_handle_bottom_why": "品牌默认距底改为 HANDLE_BOTTOM_PX=28，与 PR #1204 相同。上锚两行中文仍会盖住这块，本片字卡字幕另下锚到 96px。实帧间距约 50px，抽查见 tests/test_title_card.py。",
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",

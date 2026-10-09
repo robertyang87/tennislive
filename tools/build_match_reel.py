@@ -9593,9 +9593,9 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
             import render_title_card  # noqa: PLC0415
             renderer = render_title_card.render
         size = (VIDEO_W, BAND_PIC_H) if LAYOUT == "band" else (VIDEO_W, VIDEO_H)
-        # 默认品牌在卡底 64px，字幕保留自己的锚。spec 写了
-        # `title_card_handle_bottom` 时，本片把品牌下移到两行字幕下方，
-        # 同时把这些字卡的字幕改成下锚，避免上锚第二行盖住品牌。
+        # 品牌默认距底 HANDLE_BOTTOM_PX（28，与 PR #1204 相同）。
+        # spec 写了 `title_card_handle_bottom` 时沿用那个底边，并把字卡字幕
+        # 改成下锚：上锚两行中文的第二行仍会盖住已经下移的品牌。
         handle_bottom = spec.get("title_card_handle_bottom")
         if handle_bottom is not None and (
                 type(handle_bottom) is not int
