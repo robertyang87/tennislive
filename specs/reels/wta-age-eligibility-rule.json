@@ -26,10 +26,10 @@
     }
   },
   "push": {
-    "auto": false,
+    "auto": true,
     "summary": "外卡也算进这12站",
     "lead": "16岁最多12站，外卡不算额外。",
-    "_why": "账号所有者要求本片先出审片版，不合并、不发布、不推送微信。push.auto 保持关闭，等同意后再打开。"
+    "_why": "账号所有者 2026-10-09 授权发布。打开 push.auto。质检通过后合进 main，只让 auto-push-reel 发一次微信，不另拨 match-reel mode=push。"
   },
   "editorial": {
     "mode": "match_review",
@@ -353,11 +353,11 @@
     {
       "source": "halep",
       "start": 147.0,
-      "end": 154.0,
+      "end": 152.6,
       "cx": 0.5,
       "track": false,
       "narration": "二零一九年温网第四轮，六比三、六比三输给哈勒普。",
-      "_why": "Wimbledon官方 DpmZnERUUSM，1280×720，格式表没有1080。150秒片尾图形是 NO.1 COURT、6-3 6-3、HALEP，温网台标。两套转写最后一句都在146.8秒之前，窗口里没有英文。"
+      "_why": "Wimbledon官方 DpmZnERUUSM，1280×720，格式表没有1080。150秒片尾图形是 NO.1 COURT、6-3 6-3、HALEP，温网台标。两套转写最后一句都在146.8秒之前，窗口里没有英文。窗口收到152.60：旁白5.304秒说完后再留约0.3秒。官方音轨大约152.2秒之后是数字静音，不再垫到154。"
     },
     {
       "source": "linz",

@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-09T12:18:27Z",
+  "slug": "wta-age-eligibility-rule",
+  "spec_sha256": "0606b2e7cf6aacc5d8486c893b01e06ac3c75aade26f69add6b2b59d7e021a61",
+  "ass_sha256": "76d0bb3f2910a6fdbc445d47f1dd031f8d00194f8227bbc34d2cf2abad48f70e",
+  "film_sha256": "c7f3af09e6532926516b915cc8824b5dc9c1cd3eb776d792bce5c8addd4e2867",
+  "film_bytes": 88935699,
+  "checks": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "silence_floor_db": -60.0,
+    "ending_payoff": "pass",
+    "audio_tail_max_s": 1.0
+  },
+  "render_inputs_sha256": "f2c3d1f5f284c298db47f5e4b8b6860e88ba8292818529f1d3a74af04e20f1fd",
+  "reattest": {
+    "previous_attestation_sha256": "305b2aca01a2447c2b76fdf52752e9ccb8e5f63edf1d6d9dc3d9d0e8ada87daa",
+    "previous_spec_sha256": "0c1e181718de0a2acc2426d50a3f5a4b7ea82060bb1dd1182c01f6123a9f69ae",
+    "render_spec_sha256": "0c1e181718de0a2acc2426d50a3f5a4b7ea82060bb1dd1182c01f6123a9f69ae",
+    "projection_sha256": "0cfdc26e45bfd6d1321f34673cfb9ad7e03996c7382cf5f69b56919a4abcacc7",
+    "film_verified": "release-sha256",
+    "run": "local-silence-fix"
+  }
+}
