@@ -6531,6 +6531,22 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 替换字卡，点名 2019 温网高芙对大威廉姆斯。Wimbledon 官方频道这条 highlights
     # 的 avc1 最高一档就是 720p（144/360/720，没有 1080），等不出更高的。
     "https://www.youtube.com/watch?v=wdr7s10gUeE": 720,
+    # 同一天后半句：「马德里、林茨、负哈勒普等没有 1080 的允许用官方 720p」。
+    # 林茨决赛 V-3v8zgbc8Y：WTA 官方，Invidious 格式表 avc1 只有 144/360/720，没有 1080。
+    "https://www.youtube.com/watch?v=V-3v8zgbc8Y": 720,
+    # 2019 温网第四轮哈勒普淘汰高芙 DpmZnERUUSM：Wimbledon 官方，avc1
+    # 144/240/360/480/720，没有 1080。片尾图形写着 6-3 6-3、HALEP。
+    "https://www.youtube.com/watch?v=DpmZnERUUSM": 720,
+    # 2023 马德里安德烈耶娃对林内特 qG9obm887Pc：WTA 官方集锦，已下到的文件是
+    # 1280×720。2026-10-09 重列格式时 Invidious 返回 500、yt-dlp 被登录墙挡住，
+    # 没有重新读到 1080 档。账号所有者已明确允许这条用官方 720p。若以后列出 1080，
+    # 这条授权不再适用。
+    "https://www.youtube.com/watch?v=qG9obm887Pc": 720,
+    # 2026 中网孙心然对布克沙：WTA 页面没有 YouTube，播放器是 Brightcove
+    # account 6041795521001 / videoId 6406166508112。yt-dlp -F 最高 1280×720
+    # （http-2125k-720p），没有 1080。页面
+    # https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406166508112": 720,
     # 谢淑薇×詹皓晴美网不握手（hsieh-chan-handshake-feud-2026）：账号所有者 2026-09-26
     # 选「放宽到 720p」。美网女双第三轮那一场官方没发集锦（@usopen 频道最近 500 条逐条
     # 扫过，只有这对组合的 1/4决赛和詹皓晴首轮），网前没握手那一幕只有 X 上
