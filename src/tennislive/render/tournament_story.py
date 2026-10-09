@@ -4772,6 +4772,54 @@ STORIES = STORIES + (
         ),
         fact_roles=("rule", "history", "today"),
     ),
+    # 2026-10-09：WTA 年终总决赛单打第八席，先留给当年大满贯冠军。
+    # 账在 docs/research/wta-finals-slam-eighth.md。不讲办在哪座城，不讲年终第一，
+    # 不讲年龄限制。数字停在 2026-09-28 的官方榜，后面的民间榜不进旁白。
+    _trivia_story(
+        slug="wta-finals-slam-eighth",
+        title="总决赛第八席",
+        subtitle="网球有故事 · 规则篇",
+        identity="第八席先看大满贯冠军",
+        chips=("前七直入", "冠军优先", "没有才后排"),
+        hero="前七名按年终积分直接入围，第八席先留给当年大满贯冠军。",
+        facts=(
+            "她要排在第8到第20名，而且尚未入围。",
+            "没有这样的冠军，才从第8名往后排。",
+            "截至2026年9月28日，诺斯科娃排第8。",
+            "东京和广州，是2026年最后计入的两站。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-11",
+                player="诺斯科娃",
+                age="温网决赛",
+                headline="捧起自己的第一座大满贯",
+                detail="六比二、五比七、六比三击败穆霍娃。",
+                source_url=(
+                    "https://www.wtatennis.com/news/4533700/at-21-linda-noskova-caps-"
+                    "brilliant-fortnight-to-become-youngest-wimbledon-champion-in-15-"
+                    "years-defeats-karolina-muchova"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-09-28",
+                player="官方积分榜",
+                age="46 站之后",
+                headline="第八名是诺斯科娃",
+                detail="她以4234分排第8，榜还没封死。",
+                source_url="https://wtafiles.wtatennis.com/pdf/rankings/Championship_Leaders.pdf",
+            ),
+        ),
+        image_keys=(),
+        source_label="WTA RaceRules.pdf",
+        image_credit="WTA 官方图库 / Getty · 2026 温网决赛",
+        source_url="https://wtafiles.wtatennis.com/pdf/rankings/RaceRules.pdf",
+        evidence_urls=(
+            "https://wtafiles.wtatennis.com/pdf/rankings/RaceRules.pdf",
+            "https://wtafiles.wtatennis.com/pdf/rankings/Championship_Leaders.pdf",
+            "https://www.atptour.com/en/rankings/rankings-faq",
+        ),
+    ),
 )
 
 

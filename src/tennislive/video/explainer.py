@@ -11545,21 +11545,32 @@ _OPENINGS: dict[str, dict] = {
 }
 
 
-# This episode keeps its reviewed script, diagrams and evidence in package data.
+# Episodes keep their reviewed script, diagrams and evidence in package data.
 # The existing renderer and preflight still consume the same registries.
-_DEFAULT_EPISODE = json.loads(
-    (Path(__file__).parent / "episodes/medvedev-beijing-default-2026.json").read_text(
-        encoding="utf-8"))
+def _load_episode(name: str) -> dict:
+    return json.loads(
+        (Path(__file__).parent / "episodes" / name).read_text(encoding="utf-8"))
+
+
+def _register_episode(episode: dict) -> None:
+    slug = episode["slug"]
+    _SCRIPTS[slug] = tuple(
+        (beat["kind"], beat["label"], beat["title"], beat["narration"],
+         beat.get("image", ""), beat.get("credit", ""), tuple(beat["points"]),
+         beat.get("diagram", ""), beat.get("question", ""))
+        for beat in episode["beats"]
+    )
+    _OPENINGS[slug] = episode["opening"]
+    _CAPTIONS[slug] = episode["caption"]
+    _CLAIMS[slug] = episode.get("claims") or {}
+
+
+_DEFAULT_EPISODE = _load_episode("medvedev-beijing-default-2026.json")
 _DEFAULT_SLUG = _DEFAULT_EPISODE["slug"]
-_SCRIPTS[_DEFAULT_SLUG] = tuple(
-    (beat["kind"], beat["label"], beat["title"], beat["narration"],
-     beat.get("image", ""), beat.get("credit", ""), tuple(beat["points"]),
-     beat.get("diagram", ""), beat.get("question", ""))
-    for beat in _DEFAULT_EPISODE["beats"]
-)
-_OPENINGS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["opening"]
-_CAPTIONS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["caption"]
-_CLAIMS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["claims"]
+_register_episode(_DEFAULT_EPISODE)
+# 2026-10-09：WTA 总决赛单打第八席的大满贯冠军优先。规则节点是示意图，
+# 人物用官方图库实拍。出处在 docs/research/wta-finals-slam-eighth.md。
+_register_episode(_load_episode("wta-finals-slam-eighth.json"))
 
 
 def _fixture_lines(spec: dict) -> tuple[str, ...]:
