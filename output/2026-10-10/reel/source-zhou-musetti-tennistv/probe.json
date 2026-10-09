@@ -104,6 +104,217 @@
   "captions": null,
   "board": {
     "version": 1,
-    "error": "WTA board present but native right boundary cannot be measured"
+    "fps": 5,
+    "t0": 0.0,
+    "frames": 790,
+    "scans": [
+      {
+        "box": [
+          92,
+          922,
+          547,
+          1032
+        ],
+        "frames": 790,
+        "profiles": {
+          "atp": {
+            "present": 696,
+            "unresolved": 0,
+            "runs": [
+              [
+                6,
+                374,
+                374
+              ],
+              [
+                1,
+                375,
+                375
+              ],
+              [
+                101,
+                374,
+                374
+              ],
+              [
+                1,
+                375,
+                375
+              ],
+              [
+                65,
+                374,
+                374
+              ],
+              [
+                1,
+                344,
+                344
+              ],
+              [
+                53,
+                374,
+                374
+              ],
+              [
+                1,
+                368,
+                368
+              ],
+              [
+                1,
+                336,
+                336
+              ],
+              [
+                1,
+                320,
+                320
+              ],
+              [
+                1,
+                321,
+                321
+              ],
+              [
+                5,
+                320,
+                320
+              ],
+              [
+                6,
+                322,
+                322
+              ],
+              [
+                1,
+                320,
+                320
+              ],
+              [
+                1,
+                340,
+                340
+              ],
+              [
+                4,
+                421,
+                421
+              ],
+              [
+                1,
+                422,
+                422
+              ],
+              [
+                193,
+                421,
+                421
+              ],
+              [
+                9,
+                420,
+                420
+              ],
+              [
+                65,
+                421,
+                421
+              ],
+              [
+                2,
+                370,
+                370
+              ],
+              [
+                12,
+                368,
+                368
+              ],
+              [
+                1,
+                406,
+                406
+              ],
+              [
+                1,
+                371,
+                371
+              ],
+              [
+                155,
+                468,
+                468
+              ],
+              [
+                1,
+                457,
+                457
+              ],
+              [
+                5,
+                416,
+                416
+              ],
+              [
+                1,
+                414,
+                414
+              ],
+              [
+                1,
+                336,
+                336
+              ],
+              [
+                94,
+                null,
+                null
+              ]
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "board_scan_history": [
+    {
+      "archived_at": "2026-10-09T20:28:07.699523+00:00",
+      "status": "historical_auto_scan_error",
+      "board": {
+        "version": 1,
+        "error": "WTA board present but native right boundary cannot be measured"
+      },
+      "reason": "Original automatic multi-profile BoardScan raised a WTA detector error on the actual ATP source. Preserved unchanged; replacement below uses a genuine ATP-only full-duration scan_plan execution at the same custom source box."
+    }
+  ],
+  "board_scan_provenance": {
+    "method": "tools.probe_board.scan_plan actual local execution",
+    "profiles": [
+      "atp"
+    ],
+    "source_url": "https://www.tennistv.com/videos/4589550/shanghai-2026-r2-zhou-musetti-short-highlights",
+    "source_path": "/workspace/scratch/zhou-source/tennistv-4589550.mp4",
+    "source_sha256": "c8bde43f4913450a3f67b14bb2dc76792629a7c86bf751cfb762d2a80d254254",
+    "source_dimensions": [
+      1920,
+      1080
+    ],
+    "source_duration_seconds": 158.016,
+    "start": 0.0,
+    "stop": 158.016,
+    "fps": 5,
+    "box": [
+      92,
+      922,
+      547,
+      1032
+    ],
+    "checked_at": "2026-10-09T20:28:26.242838+00:00",
+    "detector_sha256": "4562bb450035c7b58cb5619a5ed19ce3830ff0e0756f6cc4a0b642f50ce9a146",
+    "probe_board_sha256": "c27ba8b6f649bc17194f8cdce17186e42a6c2b7fa5d4494adbd8d4b290efc4d7",
+    "historical_auto_scan_error": "WTA board present but native right boundary cannot be measured",
+    "source_container_fps": "50/1",
+    "effective_probe_video_fps_note": "Existing probe fps25 is the production effective cadence; original downloaded source stream is50fps. This new board scan independently samples actual source at5fps."
   }
 }
