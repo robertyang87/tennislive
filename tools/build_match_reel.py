@@ -6527,6 +6527,10 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 集锦（《Zheng Qinwen vs. Taylor Townsend | 2025 Third Round Miami》），
     # probe 实测 1280×720，WTA 频道 2025 年这条就这一档。
     "https://www.youtube.com/watch?v=c9y75dSg4oU": 720,
+    # 年龄限制（wta-age-eligibility-rule）：账号所有者 2026-10-09 要求用官方集锦
+    # 替换字卡，点名 2019 温网高芙对大威廉姆斯。Wimbledon 官方频道这条 highlights
+    # 的 avc1 最高一档就是 720p（144/360/720，没有 1080），等不出更高的。
+    "https://www.youtube.com/watch?v=wdr7s10gUeE": 720,
     # 谢淑薇×詹皓晴美网不握手（hsieh-chan-handshake-feud-2026）：账号所有者 2026-09-26
     # 选「放宽到 720p」。美网女双第三轮那一场官方没发集锦（@usopen 频道最近 500 条逐条
     # 扫过，只有这对组合的 1/4决赛和詹皓晴首轮），网前没握手那一幕只有 X 上
