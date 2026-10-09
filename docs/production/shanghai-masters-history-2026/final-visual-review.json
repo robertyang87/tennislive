@@ -1,0 +1,150 @@
+{
+  "status": "passed_actual_export_sampled_visual_review_with_fixed_center_crop_tradeoffs",
+  "reviewed_at_utc": "2026-10-06T01:14:36.541635+00:00",
+  "film": "work/shanghai-masters-history-2026/render/shanghai-masters-history-2026.mp4",
+  "film_sha256": "e50f393f890d7f1efdabb3e32e8653998136a61533f0378449a8051c21fc0c98",
+  "film_bytes": 134842791,
+  "duration_seconds": 433.4,
+  "dimensions": [
+    1080,
+    1440
+  ],
+  "fps": "25/1",
+  "spec_sha256": "76299384fbb8e19601e42b6eeefab5709c17f8858834c437419b0a7bdf2ce224",
+  "ass_sha256": "b01ed284a26f548fdbf778e66f89c71a9a6cb9f72b6f7bf3aa96f01821caaa5c",
+  "binding_sha256": "3efb184c4e5e8a62da4b3227f1c88bca84cdee512c5c3471a3a5d41e80417777",
+  "method": "Independently extracted and viewed actual burned MP4; 52 cover/segment/outro midpoint frames, every 22 bilingual original-audio cue midpoint, 8 factual subtitle frames, additional full-size 169.5s/355.5s images. These are sampled visual observations, not a claim of watching every frame or human audio listening.",
+  "part_preflight": "52/52 encoded native parts independently ffprobed and extracted; all 1080x1440. This preflight was kept separate from final burned review.",
+  "viewed_contact_sheets": [
+    "work/shanghai-masters-history-2026/final-visual-qa/final-burned-timeline-00.jpg",
+    "work/shanghai-masters-history-2026/final-visual-qa/final-burned-timeline-01.jpg",
+    "work/shanghai-masters-history-2026/final-visual-qa/final-burned-timeline-02.jpg",
+    "work/shanghai-masters-history-2026/final-visual-qa/final-burned-timeline-03.jpg",
+    "work/shanghai-masters-history-2026/final-visual-qa/final-burned-timeline-04.jpg",
+    "work/shanghai-masters-history-2026/final-visual-qa/final-burned-timeline-05.jpg",
+    "work/shanghai-masters-history-2026/final-visual-qa/final-burned-bilingual-00.jpg",
+    "work/shanghai-masters-history-2026/final-visual-qa/final-burned-bilingual-01.jpg",
+    "work/shanghai-masters-history-2026/final-visual-qa/final-burned-bilingual-02.jpg",
+    "work/shanghai-masters-history-2026/final-visual-qa/final-burned-facts-00.jpg"
+  ],
+  "highlight_contact_sheet": "work/shanghai-masters-history-2026/final-visual-qa/final-burned-highlights.jpg",
+  "cover": {
+    "status": "pass",
+    "frame": "work/shanghai-masters-history-2026/final-visual-qa/cover-burned.jpg",
+    "text": "白玉兰下的传奇\n一座城与几代网坛大师",
+    "layout": "Existing native solo cover; actual two complete large lines, no list brackets, clipping, title/brand overlap, or duplicated caption. Qizhong magnolia roof remains identifiable and fills canvas."
+  },
+  "layout": {
+    "status": "pass",
+    "native": "Current native story column dark blue title/section/stat cards, lime tag/brand, restored logo and native outro. Three chapter cards observed: 世界来到上海 / 大师的主场 / 白玉兰再绽放. No new CSS/card mother template introduced by this review.",
+    "canvas": "Actual export 1080x1440. Full-frame images and match crops observed, without letterboxing/contain. Existing card background fills canvas.",
+    "caption": "All 22 original-audio cue midpoint images actually display one English line plus one Chinese line. No four-line stack, clipped glyph, or caption over the face at reviewed samples. Narration sampled uses native Chinese only; cover/outro avoid duplicate captions. Card captions sit tightly above existing native footer, whose position was preserved."
+  },
+  "critical_checks": [
+    {
+      "event": "2012 Shanghai Masters first title",
+      "at": 192.73,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/bilingual-069-burned.jpg",
+      "observed_subtitle": "这是他的上海大师赛首冠",
+      "note": "Original same-final post-match scene includes Murray foreground and Djokovic subsequent shots; wording avoids falsely calling this his first Shanghai title across Masters Cup."
+    },
+    {
+      "event": "2014 first match in tournament",
+      "at": 214.392,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-24-burned.jpg",
+      "observed_title": "2014上海大师赛\n首战救下5个赛点",
+      "note": "Original title card states 首战 and same-second-round Federer red Nike relief image follows. Not presented as 2014 final trophy footage."
+    },
+    {
+      "event": "2024 third Masters 1000 title of season",
+      "at": 356.18,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/bilingual-125-burned.jpg",
+      "observed_subtitle": "拿下本赛季第三座大师1000冠军",
+      "note": "Original 2024 Sinner/Djokovic final footage and Sinner champion reaction photograph are same event. English/Chinese fit as one line each in actual libass render."
+    },
+    {
+      "event": "2025 post-final cousins hug",
+      "at": 406.32,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-46-burned.jpg",
+      "note": "White-shirt Vacherot and turquoise-shirt Rinderknech in original same-event net hug, not a substituted still or different match."
+    },
+    {
+      "event": "2025 awards closing photograph",
+      "at": 420.13,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-48-burned.jpg",
+      "note": "Both cousins visible with bouquet/trophy, consistent with verified original 2025 source frame."
+    }
+  ],
+  "source_person_match": "Reviewed Nalbandian 2005, Djokovic/Murray 2012, Federer/Mayer 2014, Federer 2017, Sinner/Djokovic 2024, Vacherot/Rinderknech 2025 match photographs and actual shots agree with episode contexts. Modern stadium views describe location/architecture and are not certified historical 1996/2002 footage.",
+  "known_tradeoffs": [
+    "Fixed-center full-canvas crop intentionally omits some lateral players/ball actions; the archive match clips serve a promotional history film and are not a claim of complete point-path visibility.",
+    "2005 328–343s source window starts after serve opening; its real score frame is 30–40 and break-back reaction is not the championship celebration. Source/frame review records this; broader narrative describes the earlier 6–5/30–0 crisis, not literal frame-matched replay.",
+    "Historical 2005/2012/2014 broadcast detail is lower than modern stadium/official portrait material; no 4K archive-quality claim.",
+    "Actual libass output fits long English captions; PIL-only width prediction was explicitly discarded after actual burned pixels were viewed."
+  ],
+  "audio_scope": "No claim of human audio listening or silent English-free windows by visual inspection. Original-audio verification remains with independent dual-ASR/audio review.",
+  "limitations": "Sampled all scene midpoints and all original-audio caption cue midpoints; not exhaustive every-frame detection or legal licensing validation.",
+  "blocking_visual_findings": [],
+  "critical_evidence": [
+    {
+      "id": "cover",
+      "at": 2.393,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/cover-burned.jpg"
+    },
+    {
+      "id": "segment-05",
+      "at": 45.263999999999996,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-05-burned.jpg"
+    },
+    {
+      "id": "segment-12",
+      "at": 105.41999999999999,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-12-burned.jpg"
+    },
+    {
+      "id": "segment-13",
+      "at": 111.74,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-13-burned.jpg"
+    },
+    {
+      "id": "bilingual-069",
+      "at": 192.73000000000002,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/bilingual-069-burned.jpg"
+    },
+    {
+      "id": "segment-24",
+      "at": 214.392,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-24-burned.jpg"
+    },
+    {
+      "id": "segment-31",
+      "at": 285.14000000000004,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-31-burned.jpg"
+    },
+    {
+      "id": "segment-32",
+      "at": 291.26800000000003,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-32-burned.jpg"
+    },
+    {
+      "id": "bilingual-125",
+      "at": 356.18,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/bilingual-125-burned.jpg"
+    },
+    {
+      "id": "segment-46",
+      "at": 406.3239999999999,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-46-burned.jpg"
+    },
+    {
+      "id": "segment-48",
+      "at": 420.1279999999999,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/segment-48-burned.jpg"
+    },
+    {
+      "id": "outro",
+      "at": 431.59999999999997,
+      "frame": "work/shanghai-masters-history-2026/final-visual-qa/outro-burned.jpg"
+    }
+  ]
+}

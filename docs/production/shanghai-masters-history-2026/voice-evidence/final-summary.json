@@ -1,0 +1,133 @@
+{
+  "status": "review_video_supported_pronunciation_unknowns_remain",
+  "locked_spec": "specs/reels/shanghai-masters-history-2026.json",
+  "locked_spec_sha256": "76299384fbb8e19601e42b6eeefab5709c17f8858834c437419b0a7bdf2ce224",
+  "locked_segments": 50,
+  "actual_final_audio_files": 46,
+  "body_voice_files_sha_matched": 44,
+  "body_wordboundary_text_complete": 44,
+  "cover_outro_wordboundary_text_complete": 2,
+  "actual_priority_targets_measured": 21,
+  "medium_high_confirmed_target_count": 13,
+  "confirmed_misreads": [],
+  "human_listened": false,
+  "tone_evidence_scope": "Per-target actual MP3 with SHA; unchanged evidence re-used only if full utterance and exact MP3 SHA both match. No whole-sentence or whole-video pass.",
+  "native_cover_confirmed_targets": [
+    "传奇 传 chuan2",
+    "传奇 奇 qi2",
+    "几代 几 ji3"
+  ],
+  "actual_fixed_outro_pending": [
+    {
+      "word": "时差",
+      "char": "差",
+      "occurrence": 1,
+      "verdict": "unreliable",
+      "confidence": null,
+      "audio_sha256": "272982e8552ef4d4bcb2b4dd8e04a9d09972ae431cc8c58d462c479731de5f4e"
+    },
+    {
+      "word": "时差",
+      "char": "差",
+      "occurrence": 2,
+      "verdict": "unreliable",
+      "confidence": null,
+      "audio_sha256": "272982e8552ef4d4bcb2b4dd8e04a9d09972ae431cc8c58d462c479731de5f4e"
+    },
+    {
+      "word": "好球",
+      "char": "好",
+      "occurrence": 1,
+      "verdict": "uncertain",
+      "confidence": null,
+      "audio_sha256": "272982e8552ef4d4bcb2b4dd8e04a9d09972ae431cc8c58d462c479731de5f4e"
+    }
+  ],
+  "body_pending": [
+    {
+      "final_segment_index": 35,
+      "word": "重新",
+      "char": "重",
+      "occurrence": 1,
+      "verdict": "unreliable",
+      "confidence": null,
+      "audio_sha256": "2cd63ef3b61909aaa783cede4eaa63f7d46c839b226d5d040cefd39e033322ab"
+    },
+    {
+      "final_segment_index": 4,
+      "word": "伊万尼塞维奇",
+      "char": "塞",
+      "occurrence": 1,
+      "verdict": "uncertain",
+      "confidence": null,
+      "audio_sha256": "c901bbe13a7e39bdc606e006d1ed89adff7db8c0250b2cff1e3f8e2172c989f2"
+    },
+    {
+      "final_segment_index": 36,
+      "word": "单打",
+      "char": "单",
+      "occurrence": 1,
+      "verdict": "correct",
+      "confidence": "low",
+      "audio_sha256": "753f78e696b0966908c228ea37640118ad8a3645aa47b959fbf8968b742ace64"
+    },
+    {
+      "final_segment_index": 11,
+      "word": "追回",
+      "char": "回",
+      "occurrence": 1,
+      "verdict": "unreliable",
+      "confidence": null,
+      "audio_sha256": "7bdd53ff53566526f18b643bd678611b188d8f5b2f4d58d8bedb6aac289b42a0"
+    },
+    {
+      "final_segment_index": 11,
+      "word": "只差",
+      "char": "差",
+      "occurrence": 1,
+      "verdict": "uncertain",
+      "confidence": null,
+      "audio_sha256": "7bdd53ff53566526f18b643bd678611b188d8f5b2f4d58d8bedb6aac289b42a0"
+    },
+    {
+      "final_segment_index": 11,
+      "word": "发球",
+      "intended": "fa1 qiu2",
+      "verdict": "not_measured_clean_reference_unavailable",
+      "audio_sha256": "7bdd53ff53566526f18b643bd678611b188d8f5b2f4d58d8bedb6aac289b42a0"
+    },
+    {
+      "final_segment_index": 16,
+      "word": "发球",
+      "intended": "fa1 qiu2",
+      "verdict": "not_measured_clean_reference_unavailable",
+      "audio_sha256": "3b6cb481e7c29c248e7894c141ab4a8c8869490fd1eab4fa0bc7dd1d80149c46"
+    }
+  ],
+  "additional_scope_unknown": [
+    "瓦舍罗 shè has strong one-sided support only, not a two-sided tone pass. Its two actual MP3s are unchanged and bound to final indices 43 / 44.",
+    "Full names, full number phrases and ATP letter reading do not inherit a pass from a single correct syllable."
+  ],
+  "merged_2005": {
+    "final_segment_index": 11,
+    "actual_sha256": "7bdd53ff53566526f18b643bd678611b188d8f5b2f4d58d8bedb6aac289b42a0",
+    "full_sentence_words_match": true,
+    "new_measured_targets": 5,
+    "new_confirmed_targets": 3,
+    "old_short_2005_targets_retired": 4,
+    "no_old_pass_reuse": true
+  },
+  "shortest_next_step": "Play actual final review video / 4.2-second native outro and log a real listener for unresolved context-specific targets. No human listening is claimed by this audit.",
+  "locked_spec_rebind_note": {
+    "previous_spec_sha256": "9fb231b0d0d70e6761768cfe48da0303da5845e08d096dd2d5b3e02ada6c6282",
+    "current_spec_sha256": "76299384fbb8e19601e42b6eeefab5709c17f8858834c437419b0a7bdf2ce224",
+    "changes": "Two original-audio ZH translations clarified: 2012 first Shanghai Masters title and 2024 third Masters title of the season; eight real-frame photo credits corrected to TennisTV, and inherited 2019 mother-photo metadata cleared from 2024 frames.",
+    "voice_content_unchanged": true,
+    "actual_audio_sha_unchanged": true,
+    "checked_body_narrations": 44,
+    "checked_cover_and_outro_audio": 2,
+    "acoustic_measurements_rerun": false,
+    "tone_verdicts_unchanged": true,
+    "human_listened": false
+  }
+}

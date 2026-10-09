@@ -1,0 +1,91 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=kFrSaccvYr8",
+  "source_sha256": "1cd41be94c0a1780ecc42a3ed0643eddd98535d3404a26843f18af935aa30ea3",
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "source_duration": 441.016599,
+  "window": [
+    280.0,
+    325.0
+  ],
+  "audio_sha256": "67a9d0500bcbeafc883cb5348ee070a61d1115185980e48a2d2c53247b2ba397",
+  "collected_at": "2026-10-06T00:35:01.103869+00:00",
+  "status": "collected_awaiting_evidence_review",
+  "timecode_basis": "absolute_source_seconds",
+  "models": [
+    "small.en",
+    "medium.en"
+  ],
+  "token_similarity": 0.8118811881188119,
+  "differences": [
+    {
+      "kind": "delete",
+      "first": [
+        "cheering",
+        "and",
+        "applause",
+        "roger",
+        "peddler"
+      ],
+      "second": []
+    },
+    {
+      "kind": "delete",
+      "first": [
+        "cheering",
+        "and",
+        "applause"
+      ],
+      "second": []
+    },
+    {
+      "kind": "replace",
+      "first": [
+        "of"
+      ],
+      "second": [
+        "for"
+      ]
+    },
+    {
+      "kind": "insert",
+      "first": [],
+      "second": [
+        "to",
+        "present",
+        "the",
+        "trophy",
+        "to",
+        "our",
+        "champion",
+        "roger",
+        "federer"
+      ]
+    }
+  ],
+  "speech_vad": [
+    {
+      "start": 288.496,
+      "end": 289.552
+    },
+    {
+      "start": 291.184,
+      "end": 296.176
+    },
+    {
+      "start": 297.776,
+      "end": 307.79200000000003
+    },
+    {
+      "start": 309.52,
+      "end": 310.96
+    },
+    {
+      "start": 312.464,
+      "end": 325.0
+    }
+  ],
+  "review_note": "Inspect both timed transcripts, source captions and VAD. Agreement does not certify a human listening pass. Unresolved wording or timing remains blocked."
+}

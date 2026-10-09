@@ -1,0 +1,50 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=sTlHqhHIKis",
+  "source_sha256": "5040870b9d3035c26d97823a5d5132fa5661d0b2303b7005f639dd97427c1ec3",
+  "collected_at": "2026-10-06T00:35:49.669840+00:00",
+  "metadata": {
+    "streams": [
+      {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "25/1"
+      },
+      {
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "44100",
+        "channels": 2,
+        "r_frame_rate": "0/0"
+      }
+    ],
+    "format": {
+      "duration": "489.406984",
+      "size": "124423268"
+    }
+  },
+  "provider_captions": {
+    "status": "collected",
+    "files": [
+      {
+        "file": "provider.en-orig.json3",
+        "sha256": "6de7b789b29dd8a3dd1e89d96208a2388858df67326a9808862750972a4a7bcd",
+        "bytes": 31747
+      },
+      {
+        "file": "provider.en.json3",
+        "sha256": "6de7b789b29dd8a3dd1e89d96208a2388858df67326a9808862750972a4a7bcd",
+        "bytes": 31747
+      }
+    ],
+    "attempts": [
+      {
+        "client": "默认",
+        "returncode": 0,
+        "stderr_tail": "WARNING: The extractor specified to use impersonation for this download, but no impersonate target is available. If you encounter errors, then see  https://github.com/yt-dlp/yt-dlp#impersonation  for information on installing the required dependencies\nWARNING: The extractor specified to use impersonation for this download, but no impersonate target is available. If you encounter errors, then see  https://github.com/yt-dlp/yt-dlp#impersonation  for information on installing the required dependencies\n"
+      }
+    ]
+  },
+  "status": "collected_awaiting_evidence_review"
+}

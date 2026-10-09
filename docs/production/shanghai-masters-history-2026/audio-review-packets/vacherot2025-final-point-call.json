@@ -1,0 +1,66 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=sTlHqhHIKis",
+  "source_sha256": "5040870b9d3035c26d97823a5d5132fa5661d0b2303b7005f639dd97427c1ec3",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "/root/source_audio_review",
+  "reviewed_at": "2026-10-06T00:44:27.271872+00:00",
+  "reviewed_from": 360.0,
+  "reviewed_to": 381.9,
+  "foreground_english": [
+    {
+      "start": 361.6,
+      "end": 363.48,
+      "en": "Shouldn't be surprised, should we?",
+      "zh": "这不该让我们惊讶，对吧？"
+    },
+    {
+      "start": 368.36,
+      "end": 372.4,
+      "en": "Game, set, match, Vacherot. Two sets to one.",
+      "zh": "瓦舍罗获胜，盘分2比1。"
+    },
+    {
+      "start": 372.4,
+      "end": 377.46,
+      "en": "Valentin Vacherot puts the icing on the cake",
+      "zh": "瓦舍罗锦上添花，"
+    },
+    {
+      "start": 377.46,
+      "end": 381.2,
+      "en": "to a fairy tale week in Shanghai.",
+      "zh": "让上海这童话般的一周圆满收官。"
+    }
+  ],
+  "uncertain_spans": [],
+  "human_listened": false,
+  "evidence": [
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/vacherot2025/window-00-small.en.json",
+      "sha256": "6c2a7b7a88992b38505b2801ca9614880afbc36b369564bbba60bd550518f260"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/vacherot2025/window-00-medium.en.json",
+      "sha256": "6d77e6e29661bc189f86ac485bc217c103199b90af80b4467cca52996a8b4dd8"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/vacherot2025/window-00-crosscheck.json",
+      "sha256": "8756b4f64aa37cd6b9b9389c8147a4fc9a453940c49145dc265ecba1db46c56f"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/vacherot2025/provider.en-orig.json3",
+      "sha256": "6de7b789b29dd8a3dd1e89d96208a2388858df67326a9808862750972a4a7bcd"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/vacherot2025/source.json",
+      "sha256": "434c8993f791c085c04ff8bb887733adb382ba45222992bac1b2801578f7edb8"
+    }
+  ],
+  "review_notes": [
+    "Both ASR streams agree Shouldnt be surprised and complete fairytale-week sentence; provider.en-orig supports same lexical content but has misspelled names Vaso/Vashro. Both independent raw model phonetic Vachero/Vacherot is normalised to canonical name Vacherot (French final t silent), not provider spurious Vaso.",
+    "Umpire Game onset has very low probability in both ASRs (small0.03, medium0.007), but provider368.4 Game plus matching set/match/two sets to one establishes the call; final times use medium+provider368.36 onward rather than small earlier367.7.",
+    "Start360 precedes Shouldnt361.6 and complete final serve starts363.32 by separate visual review. End381.9 retains Shanghai end381.20 and entire VAD trailing voice381.792. No new words after381.20 until394.06; applause carries the immediate continuous hug window."
+  ],
+  "scope": "whole selected source-audio window; not a final mixed/rendered audio pass; visual/crop/point review separate"
+}

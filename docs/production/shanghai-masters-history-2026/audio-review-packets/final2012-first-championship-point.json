@@ -1,0 +1,46 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=1dfiSb6WvlA",
+  "source_sha256": "3473ec229d9b10cfbe77e558dc79c5e4e748ba02594ecc516e147da128190d2b",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "/root/source_audio_review",
+  "reviewed_at": "2026-10-06T00:44:27.271872+00:00",
+  "reviewed_from": 32.08,
+  "reviewed_to": 39.48,
+  "foreground_english": [
+    {
+      "start": 36.52,
+      "end": 38.98,
+      "en": "Nicely done.",
+      "zh": "处理得很漂亮。"
+    }
+  ],
+  "uncertain_spans": [],
+  "human_listened": false,
+  "evidence": [
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/window-00-small.en.json",
+      "sha256": "4fea809f7d9f4f42a9c18319b1ce108338b4dda81dc11416450b9c377251f9ef"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/window-00-medium.en.json",
+      "sha256": "420e4955cd1a50d6abea565303150c159ae08aea9b05a31754e4a18c00ab7ff3"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/window-00-crosscheck.json",
+      "sha256": "b364c943fb0fb4c5eeddf695364ea5de235a5b1fcede50024f58134450865ee4"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/provider.en-orig.json3",
+      "sha256": "cc37edd64f321ffdb650b53e30afbd0e180d27dfb5814062248c8398185aa0e2"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/source.json",
+      "sha256": "6a3719ce124b0864223e54e1cea7a44b9858b481e27e172dafc8a3767f8943b2"
+    }
+  ],
+  "review_notes": [
+    "Both raw ASRs identify exactly Nicely done, and provider.en-orig gives the same words at37.44/37.88. Subtitle extent covers both model alignments36.52–38.98. No other ASR/provider foreground words inside32.08–39.48; prior outrageous sentence ends31.54 (both models). VAD has no detected speech here, despite known commentary, and is not used as proof of silence."
+  ],
+  "scope": "whole selected source-audio window; not a final mixed/rendered audio pass; visual/crop/point review separate"
+}

@@ -1,0 +1,3205 @@
+[
+  {
+    "word": "重新",
+    "char": "重",
+    "sentence": "直到二零二三年，上海大师赛才重新回到赛历，也重新等到球员和观众。",
+    "tts_text": "直到二零二三年，上海大师赛才重新回到赛历，也重新等到球员和观众。",
+    "intended_refs": [
+      "虫",
+      "崇"
+    ],
+    "wrong_refs": [
+      "众",
+      "仲"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": 0.058,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 3.674,
+        "d_wrong": 4.11,
+        "score": 0.056
+      },
+      "f0": {
+        "d_intended": 3.26,
+        "d_wrong": 3.801,
+        "score": 0.077
+      },
+      "comb": {
+        "d_intended": 5.212,
+        "d_wrong": 5.856,
+        "score": 0.058
+      }
+    },
+    "neighbour_shift": {
+      "intended": 3.064,
+      "wrong": 5.29
+    },
+    "separation": {
+      "spec": {
+        "within": 3.159,
+        "between": 3.672,
+        "separation": 1.163
+      },
+      "f0": {
+        "within": 2.864,
+        "between": 3.134,
+        "separation": 1.094
+      },
+      "comb": {
+        "within": 4.443,
+        "between": 4.97,
+        "separation": 1.119
+      }
+    },
+    "selftest_loo": {
+      "虫": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": -0.076
+      },
+      "崇": {
+        "expect": "correct",
+        "got": "misread",
+        "score": -0.215
+      },
+      "众": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.087
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.051
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:虫": {
+        "spec": 3.674,
+        "f0": 8.056,
+        "vmis": 0.333,
+        "frames": 39,
+        "comb": 9.893
+      },
+      "A:崇": {
+        "spec": 3.904,
+        "f0": 3.26,
+        "vmis": 0.295,
+        "frames": 44,
+        "comb": 5.212
+      },
+      "B:众": {
+        "spec": 4.489,
+        "f0": 4.843,
+        "vmis": 0.526,
+        "frames": 38,
+        "comb": 7.088
+      },
+      "B:仲": {
+        "spec": 4.11,
+        "f0": 3.801,
+        "vmis": 0.447,
+        "frames": 38,
+        "comb": 5.856
+      }
+    },
+    "window_s": [
+      2.69,
+      3.07
+    ],
+    "boundary_token": "重新",
+    "window_anchor": "B:众",
+    "tokens": {
+      "ORIG": [
+        "直到",
+        "二零二三年",
+        "上海",
+        "大师",
+        "赛才",
+        "重新",
+        "回到",
+        "赛历",
+        "也",
+        "重新",
+        "等到",
+        "球员",
+        "和",
+        "观众"
+      ],
+      "A:虫": [
+        "直到",
+        "二零二三年",
+        "上海",
+        "大师",
+        "赛才虫",
+        "新",
+        "回到",
+        "赛历",
+        "也",
+        "重新",
+        "等到",
+        "球员",
+        "和",
+        "观众"
+      ],
+      "A:崇": [
+        "直到",
+        "二零二三年",
+        "上海",
+        "大师",
+        "赛才",
+        "崇新",
+        "回到",
+        "赛历",
+        "也",
+        "重新",
+        "等到",
+        "球员",
+        "和",
+        "观众"
+      ],
+      "B:众": [
+        "直到",
+        "二零二三年",
+        "上海",
+        "大师",
+        "赛才",
+        "众",
+        "新",
+        "回到",
+        "赛历",
+        "也",
+        "重新",
+        "等到",
+        "球员",
+        "和",
+        "观众"
+      ],
+      "B:仲": [
+        "直到",
+        "二零二三年",
+        "上海",
+        "大师",
+        "赛",
+        "才",
+        "仲新",
+        "回到",
+        "赛历",
+        "也",
+        "重新",
+        "等到",
+        "球员",
+        "和",
+        "观众"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -8.8,
+        -8.1,
+        -8.0,
+        -10.4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -2.0,
+        -1.3,
+        0.9
+      ],
+      "A:虫": [
+        -2.7,
+        -2.4,
+        -0.4,
+        -0.3,
+        -2.0,
+        null,
+        null,
+        null,
+        null,
+        -7.9,
+        -8.8,
+        -9.0,
+        -9.6,
+        -13.1,
+        null
+      ],
+      "A:崇": [
+        -1.7,
+        -1.6,
+        -1.7,
+        -1.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -3.6,
+        -3.3,
+        -1.4,
+        -0.3
+      ],
+      "B:众": [
+        -5.1,
+        -4.4,
+        -2.0,
+        -1.3,
+        -1.5,
+        null,
+        null,
+        2.7,
+        -0.1,
+        -3.2,
+        -5.0,
+        -5.3,
+        -5.5
+      ],
+      "B:仲": [
+        null,
+        null,
+        -3.0,
+        -2.9,
+        -2.7,
+        null,
+        null,
+        null,
+        0.6,
+        -0.5,
+        -1.5,
+        -3.0,
+        -3.8
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/work/shanghai-masters-history-2026/voice-split/voice_38.mp3",
+      "A:虫": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/f360aa1925a3679788abe435.mp3",
+      "A:崇": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/d0c30205bad2411362251271.mp3",
+      "B:众": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/706243f1f6ac459569c4fab0.mp3",
+      "B:仲": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/23787eb3ccc6fe108296e18b.mp3"
+    },
+    "segment_index": 38,
+    "occurrence": 1,
+    "intended": "chong2",
+    "original_sha256": "2cd63ef3b61909aaa783cede4eaa63f7d46c839b226d5d040cefd39e033322ab",
+    "original_audio_kind": "actual_final_split_tts_mp3",
+    "human_listened": false,
+    "reference_validity": "reviewed_for_this_target",
+    "publishing_target_pass": false,
+    "current_spec_text_match": true,
+    "current_actual_audio_sha_match": true,
+    "source_previous_segment_index": 38,
+    "final_segment_index": 35,
+    "locked_spec_binding": "full_tts_utterance_and_actual_mp3_sha_both_match"
+  },
+  {
+    "word": "重新",
+    "char": "重",
+    "sentence": "直到二零二三年，上海大师赛才重新回到赛历，也重新等到球员和观众。",
+    "tts_text": "直到二零二三年，上海大师赛才重新回到赛历，也重新等到球员和观众。",
+    "intended_refs": [
+      "虫",
+      "崇"
+    ],
+    "wrong_refs": [
+      "众",
+      "仲"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.437,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.801,
+        "d_wrong": 3.93,
+        "score": 0.168
+      },
+      "f0": {
+        "d_intended": 0.433,
+        "d_wrong": 2.709,
+        "score": 0.724
+      },
+      "comb": {
+        "d_intended": 1.834,
+        "d_wrong": 4.681,
+        "score": 0.437
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.911,
+      "wrong": 6.302
+    },
+    "separation": {
+      "spec": {
+        "within": 0.196,
+        "between": 3.927,
+        "separation": 20.083
+      },
+      "f0": {
+        "within": 0.044,
+        "between": 3.06,
+        "separation": 69.87
+      },
+      "comb": {
+        "within": 0.142,
+        "between": 5.024,
+        "separation": 35.487
+      }
+    },
+    "selftest_loo": {
+      "虫": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.967
+      },
+      "崇": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.967
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.923
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.923
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:虫": {
+        "spec": 2.801,
+        "f0": 0.433,
+        "vmis": 0.097,
+        "frames": 31,
+        "comb": 1.834
+      },
+      "A:崇": {
+        "spec": 2.801,
+        "f0": 0.471,
+        "vmis": 0.097,
+        "frames": 31,
+        "comb": 1.871
+      },
+      "B:众": {
+        "spec": 3.93,
+        "f0": 2.776,
+        "vmis": 0.129,
+        "frames": 31,
+        "comb": 4.741
+      },
+      "B:仲": {
+        "spec": 3.945,
+        "f0": 2.709,
+        "vmis": 0.129,
+        "frames": 31,
+        "comb": 4.681
+      }
+    },
+    "window_s": [
+      4.267,
+      4.553
+    ],
+    "boundary_token": "重新",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "直到",
+        "二零二三年",
+        "上海",
+        "大师",
+        "赛才",
+        "重新",
+        "回到",
+        "赛历",
+        "也",
+        "重新",
+        "等到",
+        "球员",
+        "和",
+        "观众"
+      ],
+      "A:虫": [
+        "直到",
+        "二零二三年",
+        "上海",
+        "大师",
+        "赛才",
+        "重新",
+        "回到",
+        "赛历",
+        "也",
+        "虫新",
+        "等到",
+        "球员",
+        "和",
+        "观众"
+      ],
+      "A:崇": [
+        "直到",
+        "二零二三年",
+        "上海",
+        "大师",
+        "赛才",
+        "重新",
+        "回到",
+        "赛历",
+        "也",
+        "崇新",
+        "等到",
+        "球员",
+        "和",
+        "观众"
+      ],
+      "B:众": [
+        "直到",
+        "二零二三年",
+        "上海",
+        "大师",
+        "赛才",
+        "重新",
+        "回到",
+        "赛历",
+        "也",
+        "众新",
+        "等到",
+        "球员",
+        "和",
+        "观众"
+      ],
+      "B:仲": [
+        "直到",
+        "二零二三年",
+        "上海",
+        "大师",
+        "赛才",
+        "重新",
+        "回到",
+        "赛历",
+        "也",
+        "仲新",
+        "等到",
+        "球员",
+        "和",
+        "观众"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -4.6,
+        -3.3,
+        -3.2,
+        -3.7,
+        -4.2,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2.8,
+        1.6,
+        2.7,
+        4.5,
+        5.9
+      ],
+      "A:虫": [
+        -4.1,
+        -4.0,
+        -3.9,
+        -4.1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2.1,
+        3.3,
+        4.9,
+        5.5
+      ],
+      "A:崇": [
+        -4.2,
+        -4.1,
+        -4.0,
+        -4.2,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2.0,
+        3.2,
+        4.8,
+        5.5
+      ],
+      "B:众": [
+        -1.6,
+        -0.8,
+        -0.3,
+        -0.0,
+        -0.3,
+        -2.9,
+        null,
+        null,
+        6.3,
+        5.7,
+        5.3,
+        4.1,
+        2.1
+      ],
+      "B:仲": [
+        -1.6,
+        -0.8,
+        -0.3,
+        -0.0,
+        -0.3,
+        -2.9,
+        null,
+        null,
+        6.3,
+        5.7,
+        5.3,
+        4.1,
+        2.1
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/work/shanghai-masters-history-2026/voice-split/voice_38.mp3",
+      "A:虫": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/5d8f3a7bf57de45a867e4096.mp3",
+      "A:崇": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/c0dfceac76be27a8c51f372d.mp3",
+      "B:众": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/b64d00c805f6e790d3446fd5.mp3",
+      "B:仲": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/1e81e5e9a26657e3a47e6bf7.mp3"
+    },
+    "segment_index": 38,
+    "occurrence": 2,
+    "intended": "chong2",
+    "original_sha256": "2cd63ef3b61909aaa783cede4eaa63f7d46c839b226d5d040cefd39e033322ab",
+    "original_audio_kind": "actual_final_split_tts_mp3",
+    "human_listened": false,
+    "reference_validity": "reviewed_for_this_target",
+    "publishing_target_pass": true,
+    "current_spec_text_match": true,
+    "current_actual_audio_sha_match": true,
+    "source_previous_segment_index": 38,
+    "final_segment_index": 35,
+    "locked_spec_binding": "full_tts_utterance_and_actual_mp3_sha_both_match"
+  },
+  {
+    "word": "重逢",
+    "char": "重",
+    "sentence": "还有逆转、重逢，以及一个新名字被记住的瞬间。",
+    "tts_text": "还有逆转、重逢，以及一个新名字被记住的瞬间。",
+    "intended_refs": [
+      "虫",
+      "崇"
+    ],
+    "wrong_refs": [
+      "众",
+      "仲"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.866,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.743,
+        "d_wrong": 3.033,
+        "score": 0.607
+      },
+      "f0": {
+        "d_intended": 0.011,
+        "d_wrong": 3.737,
+        "score": 0.994
+      },
+      "comb": {
+        "d_intended": 0.382,
+        "d_wrong": 5.315,
+        "score": 0.866
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.412,
+      "wrong": 4.104
+    },
+    "separation": {
+      "spec": {
+        "within": 0.747,
+        "between": 3.352,
+        "separation": 4.486
+      },
+      "f0": {
+        "within": 0.061,
+        "between": 4.327,
+        "separation": 70.848
+      },
+      "comb": {
+        "within": 0.435,
+        "between": 6.003,
+        "separation": 13.808
+      }
+    },
+    "selftest_loo": {
+      "虫": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.879
+      },
+      "崇": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.881
+      },
+      "众": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.852
+      },
+      "仲": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.85
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:虫": {
+        "spec": 0.743,
+        "f0": 0.011,
+        "vmis": 0.0,
+        "frames": 34,
+        "comb": 0.382
+      },
+      "A:崇": {
+        "spec": 0.81,
+        "f0": 0.016,
+        "vmis": 0.0,
+        "frames": 34,
+        "comb": 0.421
+      },
+      "B:众": {
+        "spec": 3.156,
+        "f0": 3.737,
+        "vmis": 0.108,
+        "frames": 37,
+        "comb": 5.315
+      },
+      "B:仲": {
+        "spec": 3.033,
+        "f0": 4.034,
+        "vmis": 0.105,
+        "frames": 38,
+        "comb": 5.55
+      }
+    },
+    "window_s": [
+      1.012,
+      1.34
+    ],
+    "boundary_token": "重逢",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "还有",
+        "逆转",
+        "重逢",
+        "以及",
+        "一个",
+        "新",
+        "名字",
+        "被",
+        "记住",
+        "的",
+        "瞬间"
+      ],
+      "A:虫": [
+        "还有",
+        "逆转",
+        "虫逢",
+        "以及",
+        "一个",
+        "新",
+        "名字",
+        "被",
+        "记住",
+        "的",
+        "瞬间"
+      ],
+      "A:崇": [
+        "还有",
+        "逆转",
+        "崇逢",
+        "以及",
+        "一个",
+        "新",
+        "名字",
+        "被",
+        "记住",
+        "的",
+        "瞬间"
+      ],
+      "B:众": [
+        "还有",
+        "逆转",
+        "众逢",
+        "以及",
+        "一个",
+        "新",
+        "名字",
+        "被",
+        "记住",
+        "的",
+        "瞬间"
+      ],
+      "B:仲": [
+        "还有",
+        "逆转",
+        "仲逢",
+        "以及",
+        "一个",
+        "新",
+        "名字",
+        "被",
+        "记住",
+        "的",
+        "瞬间"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.7,
+        -2.2,
+        -1.3,
+        0.6,
+        3.4,
+        5.2
+      ],
+      "A:虫": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.7,
+        -2.2,
+        -1.3,
+        0.6,
+        3.4,
+        5.2
+      ],
+      "A:崇": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.7,
+        -2.2,
+        -1.3,
+        0.6,
+        3.5,
+        5.2
+      ],
+      "B:众": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        5.8,
+        4.4,
+        3.1,
+        0.7,
+        -1.8,
+        -3.5,
+        -4.9,
+        null
+      ],
+      "B:仲": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        6.0,
+        4.5,
+        3.2,
+        0.8,
+        -1.6,
+        -3.4,
+        -4.8,
+        null
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/work/shanghai-masters-history-2026/voice-split/voice_51.mp3",
+      "A:虫": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/fae8b38f65ede39c96e346f4.mp3",
+      "A:崇": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/2e0d08f7c875643c6b20d71e.mp3",
+      "B:众": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/966fada751c805d651ca1d45.mp3",
+      "B:仲": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/cc18f8044e914ba7d797b317.mp3"
+    },
+    "segment_index": 51,
+    "occurrence": 1,
+    "intended": "chong2",
+    "original_sha256": "92bdb7c66ee142db98683860d4bf6b7c5900b82bbad2d740bc13df1852a9839f",
+    "original_audio_kind": "actual_final_split_tts_mp3",
+    "human_listened": false,
+    "reference_validity": "reviewed_for_this_target",
+    "publishing_target_pass": true,
+    "current_spec_text_match": true,
+    "current_actual_audio_sha_match": true,
+    "source_previous_segment_index": 51,
+    "final_segment_index": 48,
+    "locked_spec_binding": "full_tts_utterance_and_actual_mp3_sha_both_match"
+  },
+  {
+    "word": "追回",
+    "char": "追",
+    "sentence": "二零零二年，世界来到浦东。\n年终大师杯首次落户上海，新国际博览中心成了顶尖球员的赛场。决赛里，休伊特先赢两盘，费雷罗又把比赛追回起点。",
+    "tts_text": "二零零二年，世界来到浦东。\n年终大师杯首次落户上海，新国际博览中心成了顶尖球员的赛场。决赛里，休伊特先赢两盘，费雷罗又把比赛追回起点。",
+    "intended_refs": [
+      "锥",
+      "骓"
+    ],
+    "wrong_refs": [
+      "坠",
+      "赘"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.557,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.002,
+        "d_wrong": 2.464,
+        "score": 0.103
+      },
+      "f0": {
+        "d_intended": 0.466,
+        "d_wrong": 3.817,
+        "score": 0.783
+      },
+      "comb": {
+        "d_intended": 1.467,
+        "d_wrong": 5.158,
+        "score": 0.557
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.021,
+      "wrong": 8.127
+    },
+    "separation": {
+      "spec": {
+        "within": 2.415,
+        "between": 2.829,
+        "separation": 1.171
+      },
+      "f0": {
+        "within": 1.127,
+        "between": 4.799,
+        "separation": 4.259
+      },
+      "comb": {
+        "within": 2.334,
+        "between": 6.213,
+        "separation": 2.661
+      }
+    },
+    "selftest_loo": {
+      "锥": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.256
+      },
+      "骓": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.41
+      },
+      "坠": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.526
+      },
+      "赘": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.494
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:锥": {
+        "spec": 2.458,
+        "f0": 1.302,
+        "vmis": 0.027,
+        "frames": 37,
+        "comb": 2.53
+      },
+      "A:骓": {
+        "spec": 2.002,
+        "f0": 0.466,
+        "vmis": 0.081,
+        "frames": 37,
+        "comb": 1.467
+      },
+      "B:坠": {
+        "spec": 2.464,
+        "f0": 4.436,
+        "vmis": 0.056,
+        "frames": 36,
+        "comb": 5.668
+      },
+      "B:赘": {
+        "spec": 2.682,
+        "f0": 3.817,
+        "vmis": 0.081,
+        "frames": 37,
+        "comb": 5.158
+      }
+    },
+    "window_s": [
+      12.33,
+      12.69
+    ],
+    "boundary_token": "追回",
+    "window_anchor": "A:锥",
+    "tokens": {
+      "ORIG": [
+        "二零零二年",
+        "世界",
+        "来到",
+        "浦东",
+        "年终",
+        "大师",
+        "杯",
+        "首次",
+        "落户",
+        "上海",
+        "新",
+        "国际",
+        "博览",
+        "中心",
+        "成",
+        "了",
+        "顶尖",
+        "球员",
+        "的",
+        "赛场",
+        "决赛",
+        "里",
+        "休伊特",
+        "先",
+        "赢",
+        "两盘",
+        "费雷罗",
+        "又",
+        "把",
+        "比赛",
+        "追回",
+        "起点"
+      ],
+      "A:锥": [
+        "二零零二年",
+        "世界",
+        "来到",
+        "浦东",
+        "年终",
+        "大师",
+        "杯",
+        "首次",
+        "落户",
+        "上海",
+        "新",
+        "国际",
+        "博览",
+        "中心",
+        "成",
+        "了",
+        "顶尖",
+        "球员",
+        "的",
+        "赛场",
+        "决赛",
+        "里",
+        "休伊特",
+        "先",
+        "赢",
+        "两盘",
+        "费雷罗",
+        "又",
+        "把",
+        "比赛",
+        "锥",
+        "回起",
+        "点"
+      ],
+      "A:骓": [
+        "二零零二年",
+        "世界",
+        "来到",
+        "浦东",
+        "年终",
+        "大师",
+        "杯",
+        "首次",
+        "落户",
+        "上海",
+        "新",
+        "国际",
+        "博览",
+        "中心",
+        "成",
+        "了",
+        "顶尖",
+        "球员",
+        "的",
+        "赛场",
+        "决赛",
+        "里",
+        "休伊特",
+        "先",
+        "赢",
+        "两盘",
+        "费雷罗",
+        "又",
+        "把",
+        "比赛",
+        "骓",
+        "回起点"
+      ],
+      "B:坠": [
+        "二零零二年",
+        "世界",
+        "来到",
+        "浦东",
+        "年终",
+        "大师",
+        "杯",
+        "首次",
+        "落户",
+        "上海",
+        "新",
+        "国际",
+        "博览",
+        "中心",
+        "成",
+        "了",
+        "顶尖",
+        "球员",
+        "的",
+        "赛场",
+        "决赛",
+        "里",
+        "休伊特",
+        "先",
+        "赢",
+        "两盘",
+        "费雷罗",
+        "又",
+        "把",
+        "比赛",
+        "坠回",
+        "起点"
+      ],
+      "B:赘": [
+        "二零零二年",
+        "世界",
+        "来到",
+        "浦东",
+        "年终",
+        "大师",
+        "杯",
+        "首次",
+        "落户",
+        "上海",
+        "新",
+        "国际",
+        "博览",
+        "中心",
+        "成",
+        "了",
+        "顶尖",
+        "球员",
+        "的",
+        "赛场",
+        "决赛",
+        "里",
+        "休伊特",
+        "先",
+        "赢",
+        "两盘",
+        "费雷罗",
+        "又",
+        "把",
+        "比赛",
+        "赘",
+        "回起点"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -8.6,
+        -9.5,
+        -8.6,
+        -8.4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        7.0,
+        6.7,
+        7.1,
+        8.0,
+        8.8,
+        7.9,
+        6.6,
+        5.2
+      ],
+      "A:锥": [
+        -6.5,
+        -6.7,
+        -8.9,
+        -9.3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        7.0,
+        7.7,
+        9.0,
+        10.1,
+        10.1,
+        9.2,
+        8.0,
+        6.9
+      ],
+      "A:骓": [
+        -9.9,
+        -10.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        7.2,
+        6.3,
+        6.6,
+        7.4,
+        8.6,
+        8.4,
+        6.9,
+        5.6
+      ],
+      "B:坠": [
+        -7.0,
+        -9.1,
+        -9.6,
+        -8.4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        8.2,
+        7.2,
+        17.9,
+        17.8,
+        null,
+        -7.0,
+        -6.4
+      ],
+      "B:赘": [
+        -7.7,
+        -9.3,
+        -9.4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        8.5,
+        8.2,
+        7.5,
+        18.0,
+        18.0,
+        null,
+        -7.6
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/work/shanghai-masters-history-2026/voice-split/voice_05.mp3",
+      "A:锥": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/cae53ac436040724651188f0.mp3",
+      "A:骓": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/a56a688d61aef38ebd2e8422.mp3",
+      "B:坠": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/5b9cfe9e595751eef38b7c82.mp3",
+      "B:赘": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/3f5840d1d23a4fb77ff59acc.mp3"
+    },
+    "segment_index": 5,
+    "occurrence": 1,
+    "intended": "zhui1",
+    "original_sha256": "f5301280b2b1f22ba3888912a0148e0874a3d1b0ac7a86a931ed1611f0636a4b",
+    "original_audio_kind": "actual_final_split_tts_mp3",
+    "human_listened": false,
+    "reference_validity": "reviewed_for_this_target",
+    "publishing_target_pass": true,
+    "current_spec_text_match": true,
+    "current_actual_audio_sha_match": true,
+    "source_previous_segment_index": 5,
+    "final_segment_index": 5,
+    "locked_spec_binding": "full_tts_utterance_and_actual_mp3_sha_both_match"
+  },
+  {
+    "word": "五比四",
+    "char": "比",
+    "sentence": "二零一二年的决赛，穆雷先拿一盘，第二盘又以五比四领先，准备发球结束比赛。",
+    "tts_text": "二零一二年的决赛，穆雷先拿一盘，第二盘又以五比四领先，准备发球结束比赛。",
+    "intended_refs": [
+      "彼",
+      "笔"
+    ],
+    "wrong_refs": [
+      "币",
+      "闭"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "high",
+    "verdict_raw": "correct",
+    "score": 0.997,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.163,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.016,
+        "d_wrong": 10.258,
+        "score": 0.997
+      },
+      "comb": {
+        "d_intended": 0.016,
+        "d_wrong": 11.878,
+        "score": 0.997
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.016,
+      "wrong": 9.741
+    },
+    "separation": {
+      "spec": {
+        "within": 2.363,
+        "between": 3.28,
+        "separation": 1.388
+      },
+      "f0": {
+        "within": 0.969,
+        "between": 11.027,
+        "separation": 11.378
+      },
+      "comb": {
+        "within": 2.151,
+        "between": 12.667,
+        "separation": 5.889
+      }
+    },
+    "selftest_loo": {
+      "彼": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.691
+      },
+      "笔": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.713
+      },
+      "币": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.699
+      },
+      "闭": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.694
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:彼": {
+        "spec": 0.0,
+        "f0": 0.016,
+        "vmis": 0.0,
+        "frames": 25,
+        "comb": 0.016
+      },
+      "A:笔": {
+        "spec": 2.508,
+        "f0": 0.91,
+        "vmis": 0.12,
+        "frames": 25,
+        "comb": 2.164
+      },
+      "B:币": {
+        "spec": 3.163,
+        "f0": 10.41,
+        "vmis": 0.16,
+        "frames": 25,
+        "comb": 11.991
+      },
+      "B:闭": {
+        "spec": 3.239,
+        "f0": 10.258,
+        "vmis": 0.08,
+        "frames": 25,
+        "comb": 11.878
+      }
+    },
+    "window_s": [
+      3.66,
+      3.91
+    ],
+    "boundary_token": "五比四",
+    "window_anchor": "B:币",
+    "tokens": {
+      "ORIG": [
+        "二零一二",
+        "年",
+        "的",
+        "决赛",
+        "穆雷",
+        "先",
+        "拿",
+        "一",
+        "盘",
+        "第二",
+        "盘",
+        "又",
+        "以",
+        "五比四",
+        "领先",
+        "准备",
+        "发球",
+        "结束",
+        "比赛"
+      ],
+      "A:彼": [
+        "二零一二",
+        "年",
+        "的",
+        "决赛",
+        "穆雷",
+        "先",
+        "拿",
+        "一",
+        "盘",
+        "第二",
+        "盘",
+        "又",
+        "以",
+        "五彼四",
+        "领先",
+        "准备",
+        "发球",
+        "结束",
+        "比赛"
+      ],
+      "A:笔": [
+        "二零一二",
+        "年",
+        "的",
+        "决赛",
+        "穆雷",
+        "先",
+        "拿",
+        "一",
+        "盘",
+        "第二盘",
+        "又",
+        "以",
+        "五笔",
+        "四",
+        "领先",
+        "准备",
+        "发球",
+        "结束",
+        "比赛"
+      ],
+      "B:币": [
+        "二零一二",
+        "年",
+        "的",
+        "决赛",
+        "穆雷",
+        "先",
+        "拿",
+        "一",
+        "盘",
+        "第二",
+        "盘",
+        "又",
+        "以",
+        "五",
+        "币",
+        "四",
+        "领先",
+        "准备",
+        "发球",
+        "结束",
+        "比赛"
+      ],
+      "B:闭": [
+        "二零一二",
+        "年",
+        "的",
+        "决赛",
+        "穆雷",
+        "先",
+        "拿",
+        "一",
+        "盘",
+        "第二",
+        "盘",
+        "又",
+        "以",
+        "五闭四",
+        "领先",
+        "准备",
+        "发球",
+        "结束",
+        "比赛"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        7.1,
+        9.6,
+        11.1,
+        10.5,
+        6.6,
+        null,
+        0.7,
+        -1.8,
+        -3.7,
+        -4.7,
+        -4.4,
+        -4.2,
+        null
+      ],
+      "A:彼": [
+        7.1,
+        9.6,
+        11.2,
+        10.5,
+        6.6,
+        null,
+        0.8,
+        -1.8,
+        -3.7,
+        -4.7,
+        -4.4,
+        -4.2,
+        null
+      ],
+      "A:笔": [
+        7.8,
+        9.6,
+        10.6,
+        10.1,
+        7.0,
+        null,
+        null,
+        -4.6,
+        -4.8,
+        -6.6,
+        -5.7,
+        -5.4
+      ],
+      "B:币": [
+        -8.2,
+        -6.9,
+        -5.3,
+        -5.7,
+        null,
+        null,
+        null,
+        3.4,
+        3.1,
+        2.4,
+        1.7,
+        1.1
+      ],
+      "B:闭": [
+        -7.8,
+        -8.0,
+        -5.3,
+        -6.4,
+        null,
+        null,
+        4.7,
+        4.3,
+        4.4,
+        4.2,
+        3.9,
+        2.7
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/work/shanghai-masters-history-2026/voice-split/voice_18.mp3",
+      "A:彼": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/64751222754ac464ee36b54a.mp3",
+      "A:笔": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/77d3b4a8667decbfd4d5c7e5.mp3",
+      "B:币": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/d56c104f2d31f929cff384e5.mp3",
+      "B:闭": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/050ba73d4853e8f36e6dca2d.mp3"
+    },
+    "segment_index": 18,
+    "occurrence": 1,
+    "intended": "bi3",
+    "original_sha256": "3b6cb481e7c29c248e7894c141ab4a8c8869490fd1eab4fa0bc7dd1d80149c46",
+    "original_audio_kind": "actual_final_split_tts_mp3",
+    "human_listened": false,
+    "reference_validity": "reviewed_for_this_target",
+    "publishing_target_pass": true,
+    "current_spec_text_match": true,
+    "current_actual_audio_sha_match": true,
+    "source_previous_segment_index": 18,
+    "final_segment_index": 16,
+    "locked_spec_binding": "full_tts_utterance_and_actual_mp3_sha_both_match"
+  },
+  {
+    "word": "纳尔班迪安",
+    "char": "纳",
+    "sentence": "这一年的决赛，纳尔班迪安原本只是替补入围。",
+    "tts_text": "这一年的决赛，纳尔班迪安原本只是替补入围。",
+    "intended_refs": [
+      "钠",
+      "捺"
+    ],
+    "wrong_refs": [
+      "拿",
+      "镎"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.603,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 1.659,
+        "d_wrong": 2.198,
+        "score": 0.14
+      },
+      "f0": {
+        "d_intended": 0.18,
+        "d_wrong": 2.977,
+        "score": 0.886
+      },
+      "comb": {
+        "d_intended": 1.01,
+        "d_wrong": 4.076,
+        "score": 0.603
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.311,
+      "wrong": 4.053
+    },
+    "separation": {
+      "spec": {
+        "within": 1.122,
+        "between": 2.076,
+        "separation": 1.851
+      },
+      "f0": {
+        "within": 0.19,
+        "between": 3.278,
+        "separation": 17.267
+      },
+      "comb": {
+        "within": 0.751,
+        "between": 4.316,
+        "separation": 5.749
+      }
+    },
+    "selftest_loo": {
+      "钠": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.585
+      },
+      "捺": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.503
+      },
+      "拿": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.889
+      },
+      "镎": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.889
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:钠": {
+        "spec": 1.875,
+        "f0": 0.597,
+        "vmis": 0.05,
+        "frames": 20,
+        "comb": 1.534
+      },
+      "A:捺": {
+        "spec": 1.659,
+        "f0": 0.18,
+        "vmis": 0.048,
+        "frames": 21,
+        "comb": 1.01
+      },
+      "B:拿": {
+        "spec": 2.302,
+        "f0": 2.978,
+        "vmis": 0.05,
+        "frames": 20,
+        "comb": 4.129
+      },
+      "B:镎": {
+        "spec": 2.198,
+        "f0": 2.977,
+        "vmis": 0.05,
+        "frames": 20,
+        "comb": 4.076
+      }
+    },
+    "window_s": [
+      1.33,
+      1.53
+    ],
+    "boundary_token": "纳尔班",
+    "window_anchor": "A:钠",
+    "tokens": {
+      "ORIG": [
+        "这",
+        "一",
+        "年",
+        "的",
+        "决赛",
+        "纳尔班",
+        "迪安",
+        "原本",
+        "只是",
+        "替补",
+        "入围"
+      ],
+      "A:钠": [
+        "这",
+        "一",
+        "年",
+        "的",
+        "决赛",
+        "钠",
+        "尔班迪安",
+        "原本",
+        "只是",
+        "替补",
+        "入围"
+      ],
+      "A:捺": [
+        "这",
+        "一",
+        "年",
+        "的",
+        "决赛",
+        "捺尔班迪安",
+        "原本",
+        "只是",
+        "替补",
+        "入围"
+      ],
+      "B:拿": [
+        "这",
+        "一",
+        "年",
+        "的",
+        "决赛",
+        "拿尔班迪安",
+        "原本",
+        "只是",
+        "替补",
+        "入围"
+      ],
+      "B:镎": [
+        "这",
+        "一",
+        "年",
+        "的",
+        "决赛",
+        "镎尔班迪安",
+        "原本",
+        "只是",
+        "替补",
+        "入围"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        2.2,
+        2.1,
+        4.3,
+        4.2,
+        3.8
+      ],
+      "A:钠": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        3.2,
+        4.3,
+        4.3,
+        3.7,
+        2.5
+      ],
+      "A:捺": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2.4,
+        4.3,
+        4.1,
+        3.5
+      ],
+      "B:拿": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -2.3,
+        0.9,
+        2.1,
+        4.7
+      ],
+      "B:镎": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -2.3,
+        0.9,
+        2.1,
+        4.7
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/work/shanghai-masters-history-2026/voice-split/voice_09.mp3",
+      "A:钠": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/f256973ef36ed7db21be71b4.mp3",
+      "A:捺": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/1b81cbb303844c399ad52ebf.mp3",
+      "B:拿": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/b0a161dc05fc86567b0ea176.mp3",
+      "B:镎": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/6d44ebc560765a57afe07a65.mp3"
+    },
+    "segment_index": 9,
+    "occurrence": 1,
+    "intended": "na4",
+    "original_sha256": "1ebcea7d931a51ac44449129112f7850c86f8efb251a95238395799225e4b6e2",
+    "original_audio_kind": "actual_final_split_tts_mp3",
+    "human_listened": false,
+    "reference_validity": "reviewed_for_this_target",
+    "publishing_target_pass": true,
+    "current_spec_text_match": true,
+    "current_actual_audio_sha_match": true,
+    "source_previous_segment_index": 9,
+    "final_segment_index": 9,
+    "locked_spec_binding": "full_tts_utterance_and_actual_mp3_sha_both_match"
+  },
+  {
+    "word": "只差",
+    "char": "差",
+    "sentence": "五次，离结束都只差一分。五次，比赛都没有结束。",
+    "tts_text": "五次，离结束都只差一分。五次，比赛都没有结束。",
+    "intended_refs": [
+      "岔",
+      "诧"
+    ],
+    "wrong_refs": [
+      "插",
+      "锸"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.715,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.856,
+        "d_wrong": 2.503,
+        "score": 0.49
+      },
+      "f0": {
+        "d_intended": 0.011,
+        "d_wrong": 1.392,
+        "score": 0.984
+      },
+      "comb": {
+        "d_intended": 0.439,
+        "d_wrong": 2.644,
+        "score": 0.715
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.585,
+      "wrong": 5.859
+    },
+    "separation": {
+      "spec": {
+        "within": 1.533,
+        "between": 2.567,
+        "separation": 1.675
+      },
+      "f0": {
+        "within": 0.286,
+        "between": 1.701,
+        "separation": 5.952
+      },
+      "comb": {
+        "within": 1.052,
+        "between": 2.984,
+        "separation": 2.837
+      }
+    },
+    "selftest_loo": {
+      "岔": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.777
+      },
+      "诧": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.773
+      },
+      "插": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.294
+      },
+      "锸": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.243
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:岔": {
+        "spec": 0.856,
+        "f0": 0.011,
+        "vmis": 0.0,
+        "frames": 30,
+        "comb": 0.439
+      },
+      "A:诧": {
+        "spec": 0.949,
+        "f0": 0.011,
+        "vmis": 0.0,
+        "frames": 30,
+        "comb": 0.486
+      },
+      "B:插": {
+        "spec": 2.795,
+        "f0": 1.599,
+        "vmis": 0.065,
+        "frames": 31,
+        "comb": 2.997
+      },
+      "B:锸": {
+        "spec": 2.503,
+        "f0": 1.392,
+        "vmis": 0.094,
+        "frames": 32,
+        "comb": 2.644
+      }
+    },
+    "window_s": [
+      1.673,
+      1.965
+    ],
+    "boundary_token": "差",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "五",
+        "次",
+        "离",
+        "结束",
+        "都",
+        "只",
+        "差",
+        "一",
+        "分",
+        "五",
+        "次",
+        "比赛",
+        "都",
+        "没有",
+        "结束"
+      ],
+      "A:岔": [
+        "五",
+        "次",
+        "离",
+        "结束",
+        "都",
+        "只",
+        "岔",
+        "一",
+        "分",
+        "五",
+        "次",
+        "比赛",
+        "都",
+        "没有",
+        "结束"
+      ],
+      "A:诧": [
+        "五",
+        "次",
+        "离",
+        "结束",
+        "都",
+        "只",
+        "诧",
+        "一",
+        "分",
+        "五",
+        "次",
+        "比赛",
+        "都",
+        "没有",
+        "结束"
+      ],
+      "B:插": [
+        "五",
+        "次",
+        "离结束",
+        "都",
+        "只",
+        "插",
+        "一",
+        "分",
+        "五",
+        "次",
+        "比赛",
+        "都",
+        "没有",
+        "结束"
+      ],
+      "B:锸": [
+        "五",
+        "次",
+        "离",
+        "结束",
+        "都",
+        "只",
+        "锸",
+        "一",
+        "分",
+        "五",
+        "次",
+        "比赛",
+        "都",
+        "没有",
+        "结束"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -6.3,
+        -8.0,
+        -8.2,
+        -7.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.9,
+        -0.7,
+        -2.7,
+        -5.7
+      ],
+      "A:岔": [
+        -6.3,
+        -8.0,
+        -8.2,
+        -7.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.9,
+        -0.7,
+        -2.7,
+        -5.8
+      ],
+      "A:诧": [
+        -6.3,
+        -8.0,
+        -8.2,
+        -7.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.9,
+        -0.7,
+        -2.7,
+        -5.8
+      ],
+      "B:插": [
+        -6.3,
+        -7.0,
+        -7.8,
+        -7.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.2,
+        0.3,
+        0.9,
+        1.2,
+        0.5
+      ],
+      "B:锸": [
+        -6.6,
+        -7.2,
+        -7.9,
+        -7.0,
+        -6.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -0.2,
+        0.0,
+        0.4,
+        0.4,
+        -0.8
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/work/shanghai-masters-history-2026/voice-split/voice_21.mp3",
+      "A:岔": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/b72f3dac0c39026276d373d8.mp3",
+      "A:诧": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/dc126098accf5009d7eaa635.mp3",
+      "B:插": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/59af828a3956cce8696c2a53.mp3",
+      "B:锸": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/cd25e655a3e036324bfc71e3.mp3"
+    },
+    "segment_index": 21,
+    "occurrence": 1,
+    "intended": "cha4",
+    "original_sha256": "ec1b90b28a75f1e8956091cc456d24d32bcbd1d280e7e6097306f96661c73f48",
+    "original_audio_kind": "actual_final_split_tts_mp3",
+    "human_listened": false,
+    "reference_validity": "reviewed_for_this_target",
+    "publishing_target_pass": true,
+    "current_spec_text_match": true,
+    "current_actual_audio_sha_match": true,
+    "source_previous_segment_index": 21,
+    "final_segment_index": 19,
+    "locked_spec_binding": "full_tts_utterance_and_actual_mp3_sha_both_match"
+  },
+  {
+    "word": "伊万尼塞维奇",
+    "char": "塞",
+    "sentence": "两年后，张德培在这里击败伊万尼塞维奇夺冠。那时的上海，还在一步步，让更多人走近职业网球。",
+    "tts_text": "两年后，张德培在这里击败伊万尼塞维奇夺冠。那时的上海，还在一步步，让更多人走近职业网球。",
+    "intended_refs": [
+      "赛"
+    ],
+    "wrong_refs": [
+      "涩",
+      "瑟"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "uncertain",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": -0.131,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.865,
+        "d_wrong": 4.038,
+        "score": 0.17
+      },
+      "f0": {
+        "d_intended": 1.712,
+        "d_wrong": 0.396,
+        "score": -0.624
+      },
+      "comb": {
+        "d_intended": 3.144,
+        "d_wrong": 2.415,
+        "score": -0.131
+      }
+    },
+    "neighbour_shift": {
+      "intended": 3.935,
+      "wrong": 2.747
+    },
+    "separation": {
+      "spec": {
+        "within": 2.505,
+        "between": 4.54,
+        "separation": 1.813
+      },
+      "f0": {
+        "within": 1.158,
+        "between": 2.31,
+        "separation": 1.995
+      },
+      "comb": {
+        "within": 2.41,
+        "between": 4.58,
+        "separation": 1.9
+      }
+    },
+    "selftest_loo": {
+      "涩": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.297
+      },
+      "瑟": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.33
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:赛": {
+        "spec": 2.865,
+        "f0": 1.712,
+        "vmis": 0.143,
+        "frames": 28,
+        "comb": 3.144
+      },
+      "B:涩": {
+        "spec": 4.219,
+        "f0": 0.97,
+        "vmis": 0.192,
+        "frames": 26,
+        "comb": 3.079
+      },
+      "B:瑟": {
+        "spec": 4.038,
+        "f0": 0.396,
+        "vmis": 0.154,
+        "frames": 26,
+        "comb": 2.415
+      }
+    },
+    "window_s": [
+      2.79,
+      3.05
+    ],
+    "boundary_token": "伊万尼塞维奇",
+    "window_anchor": "B:涩",
+    "tokens": {
+      "ORIG": [
+        "两年",
+        "后",
+        "张德培",
+        "在",
+        "这里",
+        "击败",
+        "伊万尼塞维奇",
+        "夺冠",
+        "那时",
+        "的",
+        "上海",
+        "还",
+        "在",
+        "一",
+        "步步",
+        "让",
+        "更多",
+        "人",
+        "走近",
+        "职业",
+        "网球"
+      ],
+      "A:赛": [
+        "两年",
+        "后",
+        "张德培",
+        "在",
+        "这里",
+        "击败",
+        "伊万尼赛",
+        "维奇",
+        "夺冠",
+        "那时",
+        "的",
+        "上海",
+        "还",
+        "在",
+        "一",
+        "步步",
+        "让",
+        "更多",
+        "人",
+        "走近",
+        "职业",
+        "网球"
+      ],
+      "B:涩": [
+        "两年",
+        "后",
+        "张德培",
+        "在",
+        "这里",
+        "击败",
+        "伊万尼",
+        "涩维奇",
+        "夺冠",
+        "那时",
+        "的",
+        "上海",
+        "还",
+        "在",
+        "一",
+        "步步",
+        "让",
+        "更多",
+        "人",
+        "走近",
+        "职业",
+        "网球"
+      ],
+      "B:瑟": [
+        "两年",
+        "后",
+        "张德培",
+        "在",
+        "这里",
+        "击败",
+        "伊万尼瑟维奇",
+        "夺冠",
+        "那时",
+        "的",
+        "上海",
+        "还",
+        "在",
+        "一",
+        "步步",
+        "让",
+        "更多",
+        "人",
+        "走近",
+        "职业",
+        "网球"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -3.1,
+        -0.2,
+        2.2,
+        3.1,
+        3.1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -0.2,
+        -2.0
+      ],
+      "A:赛": [
+        -1.6,
+        0.1,
+        1.4,
+        2.0,
+        1.7,
+        null,
+        null,
+        null,
+        null,
+        -11.5,
+        -13.2,
+        null,
+        -5.5,
+        -6.4,
+        -7.3
+      ],
+      "B:涩": [
+        -2.7,
+        -0.7,
+        1.0,
+        1.2,
+        1.1,
+        null,
+        null,
+        null,
+        null,
+        2.3,
+        0.8,
+        -0.9,
+        -2.6
+      ],
+      "B:瑟": [
+        -0.9,
+        1.2,
+        2.6,
+        2.8,
+        2.1,
+        null,
+        null,
+        null,
+        null,
+        1.0,
+        -0.2,
+        -1.8,
+        -3.0
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/work/shanghai-masters-history-2026/voice-split/voice_04.mp3",
+      "A:赛": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/548f173733005ba37b5dad05.mp3",
+      "B:涩": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/d622b3e81bf7f8b136c12702.mp3",
+      "B:瑟": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/68d4871247bc41b0f6ce0dff.mp3"
+    },
+    "segment_index": 4,
+    "occurrence": 1,
+    "intended": "sai4",
+    "original_sha256": "c901bbe13a7e39bdc606e006d1ed89adff7db8c0250b2cff1e3f8e2172c989f2",
+    "original_audio_kind": "actual_final_split_tts_mp3",
+    "human_listened": false,
+    "reference_validity": "reviewed_for_this_target",
+    "publishing_target_pass": false,
+    "current_spec_text_match": true,
+    "current_actual_audio_sha_match": true,
+    "source_previous_segment_index": 4,
+    "final_segment_index": 4,
+    "locked_spec_binding": "full_tts_utterance_and_actual_mp3_sha_both_match"
+  },
+  {
+    "word": "单打",
+    "char": "单",
+    "sentence": "回归后的单打签表，扩展到九十六人；正赛，也延长到十二天。",
+    "tts_text": "回归后的单打签表，扩展到九十六人；正赛，也延长到十二天。",
+    "intended_refs": [
+      "丹",
+      "耽"
+    ],
+    "wrong_refs": [
+      "膳",
+      "擅"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "low",
+    "verdict_raw": "correct",
+    "score": 0.242,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.077,
+        "d_wrong": 3.664,
+        "score": 0.276
+      },
+      "f0": {
+        "d_intended": 0.851,
+        "d_wrong": 1.235,
+        "score": 0.184
+      },
+      "comb": {
+        "d_intended": 1.892,
+        "d_wrong": 3.101,
+        "score": 0.242
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.675,
+      "wrong": 3.708
+    },
+    "separation": {
+      "spec": {
+        "within": 1.662,
+        "between": 3.878,
+        "separation": 2.333
+      },
+      "f0": {
+        "within": 0.155,
+        "between": 1.602,
+        "separation": 10.324
+      },
+      "comb": {
+        "within": 0.986,
+        "between": 3.541,
+        "separation": 3.59
+      }
+    },
+    "selftest_loo": {
+      "丹": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.688
+      },
+      "耽": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.694
+      },
+      "膳": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.411
+      },
+      "擅": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.464
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:丹": {
+        "spec": 2.077,
+        "f0": 0.854,
+        "vmis": 0.0,
+        "frames": 26,
+        "comb": 1.892
+      },
+      "A:耽": {
+        "spec": 2.179,
+        "f0": 0.851,
+        "vmis": 0.038,
+        "frames": 26,
+        "comb": 1.94
+      },
+      "B:膳": {
+        "spec": 3.664,
+        "f0": 1.405,
+        "vmis": 0.065,
+        "frames": 31,
+        "comb": 3.237
+      },
+      "B:擅": {
+        "spec": 3.731,
+        "f0": 1.235,
+        "vmis": 0.067,
+        "frames": 30,
+        "comb": 3.101
+      }
+    },
+    "window_s": [
+      0.81,
+      1.04
+    ],
+    "boundary_token": "单打",
+    "window_anchor": "B:膳",
+    "tokens": {
+      "ORIG": [
+        "回归",
+        "后",
+        "的",
+        "单打",
+        "签表",
+        "扩展",
+        "到",
+        "九十六",
+        "人",
+        "正",
+        "赛",
+        "也",
+        "延长",
+        "到",
+        "十二",
+        "天"
+      ],
+      "A:丹": [
+        "回归",
+        "后",
+        "的",
+        "丹打",
+        "签表",
+        "扩展",
+        "到",
+        "九十六",
+        "人",
+        "正",
+        "赛",
+        "也",
+        "延长",
+        "到",
+        "十二",
+        "天"
+      ],
+      "A:耽": [
+        "回归",
+        "后",
+        "的",
+        "耽打",
+        "签表",
+        "扩展",
+        "到",
+        "九十六",
+        "人",
+        "正",
+        "赛",
+        "也",
+        "延长",
+        "到",
+        "十二",
+        "天"
+      ],
+      "B:膳": [
+        "回归",
+        "后",
+        "的",
+        "膳",
+        "打",
+        "签表",
+        "扩展",
+        "到",
+        "九十六",
+        "人",
+        "正",
+        "赛",
+        "也",
+        "延长",
+        "到",
+        "十二",
+        "天"
+      ],
+      "B:擅": [
+        "回归",
+        "后",
+        "的",
+        "擅打",
+        "签表",
+        "扩展",
+        "到",
+        "九十六",
+        "人",
+        "正",
+        "赛",
+        "也",
+        "延长",
+        "到",
+        "十二",
+        "天"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        0.3,
+        -0.1,
+        0.0,
+        null,
+        null,
+        null,
+        4.9,
+        4.4,
+        4.2,
+        4.2,
+        4.2,
+        3.8
+      ],
+      "A:丹": [
+        -1.3,
+        -1.6,
+        -2.5,
+        null,
+        null,
+        null,
+        3.8,
+        3.7,
+        3.7,
+        3.6,
+        3.5,
+        2.9
+      ],
+      "A:耽": [
+        -1.3,
+        -1.7,
+        -4.0,
+        null,
+        null,
+        null,
+        3.9,
+        3.7,
+        3.7,
+        3.6,
+        3.5,
+        3.0
+      ],
+      "B:膳": [
+        -0.6,
+        -0.8,
+        -1.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        6.6,
+        5.8,
+        5.1,
+        3.6,
+        2.2,
+        1.1,
+        0.1
+      ],
+      "B:擅": [
+        -0.2,
+        -0.1,
+        -0.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        6.6,
+        5.5,
+        4.3,
+        2.9,
+        1.3,
+        0.6,
+        -0.3
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/work/shanghai-masters-history-2026/voice-split/voice_39.mp3",
+      "A:丹": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/9bced6db190d30173cde715c.mp3",
+      "A:耽": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/b40d7a375b397faf50dc1edf.mp3",
+      "B:膳": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/62c7c358723e25eeb13f5a35.mp3",
+      "B:擅": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/f42a3bc9cd4d61a70d2ae0c4.mp3"
+    },
+    "segment_index": 39,
+    "occurrence": 1,
+    "intended": "dan1",
+    "original_sha256": "753f78e696b0966908c228ea37640118ad8a3645aa47b959fbf8968b742ace64",
+    "original_audio_kind": "actual_final_split_tts_mp3",
+    "human_listened": false,
+    "reference_validity": "reviewed_for_this_target",
+    "publishing_target_pass": false,
+    "current_spec_text_match": true,
+    "current_actual_audio_sha_match": true,
+    "source_previous_segment_index": 39,
+    "final_segment_index": 36,
+    "locked_spec_binding": "full_tts_utterance_and_actual_mp3_sha_both_match"
+  },
+  {
+    "word": "延长",
+    "char": "长",
+    "sentence": "回归后的单打签表，扩展到九十六人；正赛，也延长到十二天。",
+    "tts_text": "回归后的单打签表，扩展到九十六人；正赛，也延长到十二天。",
+    "intended_refs": [
+      "常",
+      "尝"
+    ],
+    "wrong_refs": [
+      "掌",
+      "仉"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "high",
+    "verdict_raw": "correct",
+    "score": 0.999,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.186,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.003,
+        "d_wrong": 2.524,
+        "score": 0.998
+      },
+      "comb": {
+        "d_intended": 0.003,
+        "d_wrong": 4.117,
+        "score": 0.999
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.003,
+      "wrong": 4.953
+    },
+    "separation": {
+      "spec": {
+        "within": 0.0,
+        "between": 3.16,
+        "separation": null
+      },
+      "f0": {
+        "within": 0.021,
+        "between": 2.404,
+        "separation": 114.075
+      },
+      "comb": {
+        "within": 0.021,
+        "between": 3.984,
+        "separation": 189.055
+      }
+    },
+    "selftest_loo": {
+      "常": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.981
+      },
+      "尝": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.98
+      },
+      "掌": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.999
+      },
+      "仉": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.999
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:常": {
+        "spec": 0.0,
+        "f0": 0.003,
+        "vmis": 0.0,
+        "frames": 31,
+        "comb": 0.003
+      },
+      "A:尝": {
+        "spec": 0.0,
+        "f0": 0.043,
+        "vmis": 0.0,
+        "frames": 31,
+        "comb": 0.043
+      },
+      "B:掌": {
+        "spec": 3.186,
+        "f0": 2.524,
+        "vmis": 0.219,
+        "frames": 32,
+        "comb": 4.117
+      },
+      "B:仉": {
+        "spec": 3.186,
+        "f0": 2.526,
+        "vmis": 0.219,
+        "frames": 32,
+        "comb": 4.119
+      }
+    },
+    "window_s": [
+      4.367,
+      4.665
+    ],
+    "boundary_token": "延长",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "回归",
+        "后",
+        "的",
+        "单打",
+        "签表",
+        "扩展",
+        "到",
+        "九十六",
+        "人",
+        "正",
+        "赛",
+        "也",
+        "延长",
+        "到",
+        "十二",
+        "天"
+      ],
+      "A:常": [
+        "回归",
+        "后",
+        "的",
+        "单打",
+        "签表",
+        "扩展",
+        "到",
+        "九十六",
+        "人",
+        "正",
+        "赛",
+        "也",
+        "延常",
+        "到",
+        "十二",
+        "天"
+      ],
+      "A:尝": [
+        "回归",
+        "后",
+        "的",
+        "单打",
+        "签表",
+        "扩展",
+        "到",
+        "九十六",
+        "人",
+        "正",
+        "赛",
+        "也",
+        "延尝",
+        "到",
+        "十二",
+        "天"
+      ],
+      "B:掌": [
+        "回归",
+        "后",
+        "的",
+        "单打",
+        "签表",
+        "扩展",
+        "到",
+        "九十六",
+        "人",
+        "正",
+        "赛",
+        "也",
+        "延掌",
+        "到",
+        "十二",
+        "天"
+      ],
+      "B:仉": [
+        "回归",
+        "后",
+        "的",
+        "单打",
+        "签表",
+        "扩展",
+        "到",
+        "九十六",
+        "人",
+        "正",
+        "赛",
+        "也",
+        "延仉",
+        "到",
+        "十二",
+        "天"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        0.3,
+        2.5,
+        3.5,
+        4.3,
+        4.6,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -3.5,
+        -2.6,
+        -1.5,
+        -1.4
+      ],
+      "A:常": [
+        0.3,
+        2.5,
+        3.5,
+        4.3,
+        4.6,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -3.5,
+        -2.6,
+        -1.5,
+        -1.4
+      ],
+      "A:尝": [
+        0.3,
+        2.4,
+        3.5,
+        4.2,
+        4.6,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -3.5,
+        -2.7,
+        -1.6,
+        -1.4
+      ],
+      "B:掌": [
+        -1.5,
+        0.3,
+        1.8,
+        2.7,
+        3.0,
+        2.3,
+        null,
+        null,
+        null,
+        -4.3,
+        -8.9,
+        -8.4,
+        -7.7,
+        -6.5,
+        -6.0
+      ],
+      "B:仉": [
+        -1.5,
+        0.3,
+        1.8,
+        2.7,
+        3.0,
+        2.3,
+        null,
+        null,
+        null,
+        -4.4,
+        -8.9,
+        -8.4,
+        -7.7,
+        -6.5,
+        -6.0
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/tennislive/work/shanghai-masters-history-2026/voice-split/voice_39.mp3",
+      "A:常": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/82ce53cd1993e1e66749b9c0.mp3",
+      "A:尝": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/52ef9317aa902fd90a436e7f.mp3",
+      "B:掌": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/8ab11e81f067e375add17647.mp3",
+      "B:仉": "/workspace/tennislive/docs/production/shanghai-masters-history-2026/voice-evidence/split/references/8aa7764522e0c0fd3b479a8c.mp3"
+    },
+    "segment_index": 39,
+    "occurrence": 1,
+    "intended": "chang2",
+    "original_sha256": "753f78e696b0966908c228ea37640118ad8a3645aa47b959fbf8968b742ace64",
+    "original_audio_kind": "actual_final_split_tts_mp3",
+    "human_listened": false,
+    "reference_validity": "reviewed_for_this_target",
+    "publishing_target_pass": true,
+    "current_spec_text_match": true,
+    "current_actual_audio_sha_match": true,
+    "source_previous_segment_index": 39,
+    "final_segment_index": 36,
+    "locked_spec_binding": "full_tts_utterance_and_actual_mp3_sha_both_match"
+  }
+]

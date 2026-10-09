@@ -1,0 +1,50 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=fQfvkym38MM",
+  "source_sha256": "193397c2176d23d01fa7e6131914d7b393679754f8e4975205ccfdc2ab61dd90",
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "source_duration": 493.749116,
+  "window": [
+    430.0,
+    484.0
+  ],
+  "audio_sha256": "1921d0bd91d49ac59a1eaa03273fd7133f3f0fe4f7ec2dcfdbd93d9c35a5b2eb",
+  "collected_at": "2026-10-06T00:35:30.467774+00:00",
+  "status": "collected_awaiting_evidence_review",
+  "timecode_basis": "absolute_source_seconds",
+  "models": [
+    "small.en",
+    "medium.en"
+  ],
+  "token_similarity": 0.9850746268656716,
+  "differences": [
+    {
+      "kind": "insert",
+      "first": [],
+      "second": [
+        "his"
+      ]
+    }
+  ],
+  "speech_vad": [
+    {
+      "start": 431.168,
+      "end": 434.592
+    },
+    {
+      "start": 438.848,
+      "end": 442.56
+    },
+    {
+      "start": 447.424,
+      "end": 448.416
+    },
+    {
+      "start": 460.928,
+      "end": 484.0
+    }
+  ],
+  "review_note": "Inspect both timed transcripts, source captions and VAD. Agreement does not certify a human listening pass. Unresolved wording or timing remains blocked."
+}

@@ -1,0 +1,53 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=1dfiSb6WvlA",
+  "source_sha256": "3473ec229d9b10cfbe77e558dc79c5e4e748ba02594ecc516e147da128190d2b",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "/root/source_audio_review",
+  "reviewed_at": "2026-10-06T00:44:27.271872+00:00",
+  "reviewed_from": 76.44,
+  "reviewed_to": 85.64,
+  "foreground_english": [
+    {
+      "start": 79.88,
+      "end": 81.0,
+      "en": "He's done it!",
+      "zh": "他做到了！"
+    },
+    {
+      "start": 81.24,
+      "end": 84.6,
+      "en": "What a fantastic effort by Novak Djokovic!",
+      "zh": "德约科维奇的表现太出色了！"
+    }
+  ],
+  "uncertain_spans": [],
+  "human_listened": false,
+  "evidence": [
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/window-00-small.en.json",
+      "sha256": "4fea809f7d9f4f42a9c18319b1ce108338b4dda81dc11416450b9c377251f9ef"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/window-00-medium.en.json",
+      "sha256": "420e4955cd1a50d6abea565303150c159ae08aea9b05a31754e4a18c00ab7ff3"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/window-00-crosscheck.json",
+      "sha256": "b364c943fb0fb4c5eeddf695364ea5de235a5b1fcede50024f58134450865ee4"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/provider.en-orig.json3",
+      "sha256": "cc37edd64f321ffdb650b53e30afbd0e180d27dfb5814062248c8398185aa0e2"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/source.json",
+      "sha256": "6a3719ce124b0864223e54e1cea7a44b9858b481e27e172dafc8a3767f8943b2"
+    }
+  ],
+  "review_notes": [
+    "Both models agree the two sentences. Raw first-word He’s alignment is stretched into preceding silence (small75.58–76.82 with it to80.58; medium74.64–80.26). Actual short cue start uses provider.en-orig79.88 corroborated by medium done80.26 and it80.4–81.0; stretched early He’s timestamps are retained in evidence, not falsely claimed accurate.",
+    "Provider effort sentence words81.28–84.04, both raw ASR effort/name ends84.54/84.58. Source window contains complete set point and whole call; earlier what-a-get commentary ends before76.44. No late cue clipping at85.64."
+  ],
+  "scope": "whole selected source-audio window; not a final mixed/rendered audio pass; visual/crop/point review separate"
+}

@@ -476,7 +476,10 @@ jobs:
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover' || github.event.inputs.mode == 'reattest'
         env:
           SLUG: ${{ github.event.inputs.slug }}
-        run: python tools/production_preflight.py --spec "specs/reels/$SLUG.json" --column 赛场之上
+        run: |
+          COLUMN=赛场之上
+          if [ "$SLUG" = "shanghai-masters-history-2026" ]; then COLUMN=网球有故事; fi
+          python tools/production_preflight.py --spec "specs/reels/$SLUG.json" --column "$COLUMN"
 
       # 抽帧封面的认人＋睁眼（硬拦）和分段 3:4 画面的认人（只报）要的三个 onnx
       # （insightface buffalo_s v0.7 里的 det_500m / w600k_mbf / 2d106det，21 MB；
@@ -1438,8 +1441,103 @@ jobs:
       #
       # 发完 Release 就**把本地那份删掉**，让下面的清理和提交步骤根本看不见它；
       # 链接写进 render.json，`push_reel.py` 优先读它。
+      # This locked Shanghai episode is still a voice-review draft. Preserve
+      # the actual film and TTS inputs privately; push=false alone does not
+      # prevent the normal public Release upload below.
+      - name: Split Shanghai review film into 30 MiB parts
+        id: shanghai_review_parts
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'shanghai-masters-history-2026'
+        env:
+          OUTDIR: ${{ steps.paths.outputs.outdir }}
+        run: |
+          REEL="$OUTDIR/shanghai-masters-history-2026.mp4"
+          test -f "$REEL"
+          test "$(stat -c%s "$REEL")" -le 157286400
+          mkdir -p "$RUNNER_TEMP/shanghai-review-parts"
+          split -b 30M -d -a 2 "$REEL" "$RUNNER_TEMP/shanghai-review-parts/film.mp4.part."
+          sha256sum "$REEL" > "$RUNNER_TEMP/shanghai-review-parts/film.sha256"
+          stat -c%s "$REEL" > "$RUNNER_TEMP/shanghai-review-parts/film.bytes"
+          PARTS=$(find "$RUNNER_TEMP/shanghai-review-parts" -name 'film.mp4.part.*' -type f | wc -l)
+          test "$PARTS" -ge 1
+          echo "parts=$PARTS" >> "$GITHUB_OUTPUT"
+
+      - name: Preserve Shanghai review film part 1
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'shanghai-masters-history-2026' && steps.shanghai_review_parts.outputs.parts > 0
+        uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-review-film-part-00-${{ github.run_id }}
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+          path: ${{ runner.temp }}/shanghai-review-parts/film.mp4.part.00
+
+      - name: Preserve Shanghai review film part 2
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'shanghai-masters-history-2026' && steps.shanghai_review_parts.outputs.parts > 1
+        uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-review-film-part-01-${{ github.run_id }}
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+          path: ${{ runner.temp }}/shanghai-review-parts/film.mp4.part.01
+
+      - name: Preserve Shanghai review film part 3
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'shanghai-masters-history-2026' && steps.shanghai_review_parts.outputs.parts > 2
+        uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-review-film-part-02-${{ github.run_id }}
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+          path: ${{ runner.temp }}/shanghai-review-parts/film.mp4.part.02
+
+      - name: Preserve Shanghai review film part 4
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'shanghai-masters-history-2026' && steps.shanghai_review_parts.outputs.parts > 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-review-film-part-03-${{ github.run_id }}
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+          path: ${{ runner.temp }}/shanghai-review-parts/film.mp4.part.03
+
+      - name: Preserve Shanghai review film part 5
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'shanghai-masters-history-2026' && steps.shanghai_review_parts.outputs.parts > 4
+        uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-review-film-part-04-${{ github.run_id }}
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+          path: ${{ runner.temp }}/shanghai-review-parts/film.mp4.part.04
+
+      - name: Preserve Shanghai actual narration and review metadata
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'shanghai-masters-history-2026'
+        uses: actions/upload-artifact@v4
+        with:
+          name: shanghai-review-audio-metadata-${{ github.run_id }}
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+          path: |
+            ${{ steps.paths.outputs.outdir }}/voice_*.mp3
+            ${{ steps.paths.outputs.outdir }}/voice_*.words.json
+            ${{ steps.paths.outputs.outdir }}/render.json
+            ${{ steps.paths.outputs.outdir }}/render_inputs.json
+            ${{ steps.paths.outputs.outdir }}/qc_attestation.json
+            ${{ steps.paths.outputs.outdir }}/poster.jpg
+            ${{ steps.paths.outputs.outdir }}/*.ass
+            ${{ runner.temp }}/shanghai-review-parts/film.sha256
+            ${{ runner.temp }}/shanghai-review-parts/film.bytes
+
+      - name: Remove Shanghai private review MP4 after artifact preservation
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'shanghai-masters-history-2026'
+        env:
+          OUTDIR: ${{ steps.paths.outputs.outdir }}
+        run: rm -f "$OUTDIR/shanghai-masters-history-2026.mp4"
+
       - name: 成片发到 Release（不进 git）
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug != 'shanghai-masters-history-2026'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

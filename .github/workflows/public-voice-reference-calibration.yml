@@ -1,0 +1,57 @@
+name: public-voice-reference-calibration
+on:
+  push:
+    branches: ['codex/shanghai-masters-history-2026']
+    paths: ['.github/workflows/public-voice-reference-calibration.yml']
+permissions:
+  contents: read
+jobs:
+  public-references:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install synthesis client
+        run: pip install -q edge-tts==7.2.8
+      - name: Generate only public generic reference words
+        run: |
+          python - <<'PY'
+          import asyncio, hashlib, json, pathlib
+          import edge_tts
+          out=pathlib.Path('public-voice-references')
+          out.mkdir()
+          # No repository checkout, production audio, private text, or secrets.
+          # These labels describe expected readings, not validated sound.
+          words=[('hui1','灰'),('hui2','回'),('hui3','悔'),('hui4','会'),
+                 ('cha1','插'),('cha2','茶'),('cha3','镲'),('cha4','岔'),
+                 ('sai1','腮'),('sai4','赛'),('dan1','丹'),('dan4','但'),
+                 ('hao1','蒿'),('hao2','毫'),('hao3','好'),('hao4','号'),
+                 ('chong2','虫'),('zhong4','众'),('she3','舍得'),('she4','社会'),
+                 ('fa1','发球'),('fa2','罚球'),('fa3','法则'),('fa4','头发')]
+          async def main():
+              items=[]
+              for label,text in words:
+                  for take in range(2):
+                      stem=f'{label}-{take+1}'
+                      mp3=out/(stem+'.mp3'); meta=out/(stem+'.words.json')
+                      await asyncio.wait_for(edge_tts.Communicate(text,'zh-CN-YunjianNeural',
+                          rate='+6%',boundary='WordBoundary').save(str(mp3),str(meta)),20)
+                      items.append({'label':label,'text':text,'take':take+1,
+                          'audio_sha256':hashlib.sha256(mp3.read_bytes()).hexdigest(),
+                          'words_sha256':hashlib.sha256(meta.read_bytes()).hexdigest()})
+              (out/'manifest.json').write_text(json.dumps({'voice':'zh-CN-YunjianNeural',
+                  'rate':'+6%','scope':'public generic reference synthesis only',
+                  'production_audio_read_or_uploaded':False,
+                  'pronunciation_correctness_approved':False,'items':items},
+                  ensure_ascii=False,indent=2))
+          asyncio.run(main())
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: public-voice-references-${{ github.run_id }}
+          path: public-voice-references/
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 7

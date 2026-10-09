@@ -1,0 +1,42 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=kFrSaccvYr8",
+  "source_sha256": "1cd41be94c0a1780ecc42a3ed0643eddd98535d3404a26843f18af935aa30ea3",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "/root/source_audio_review",
+  "reviewed_at": "2026-10-06T00:46:27.009837+00:00",
+  "reviewed_from": 280.5,
+  "reviewed_to": 288.4,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "human_listened": false,
+  "evidence": [
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/fedal2017/window-00-small.en.json",
+      "sha256": "27d49d158c1a094f0117b6fd548656441265c249cee3ccff2a8e26c433c567c2"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/fedal2017/window-00-medium.en.json",
+      "sha256": "4c6b8bb310baa9971eb39f5d6a843aca65c90b567fac2eb672fcf3be43ee42ce"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/fedal2017/window-00-crosscheck.json",
+      "sha256": "b639f82ba6eb97927684cd83a922854f88cc085a656eb2af65bb5c0c6238925a"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/fedal2017/provider.en-orig.json3",
+      "sha256": "f824d428701471b80bf92bc71346499f8aca02588f7bd2588db5b7c2280ac6e8"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/fedal2017/source.json",
+      "sha256": "4f097fafea109edc74715485d5f948e74706470957bd6ac52c974ef0c6e48362"
+    }
+  ],
+  "review_notes": [
+    "No VAD speech inside280.5–288.4; first actual detected speech starts288.496 and is excluded. medium.en has no lexical segment before290.12.",
+    "small.en produces uppercase accessibility-style CHEERING AND APPLAUSE285.1–287.68. It is classified as a nonverbal sound label, not words spoken by a foreground speaker: provider.en-orig contemporaneously labels Applause281.49–289.1, medium has no lexical speech and VAD has no speech here. This explicit triple comparison avoids treating empty ASR alone as proof.",
+    "Broad packet permits a narrower source280.5–284.0 preparation/scenery subset with native0.65–0.75 speed after independent visual confirmation. It does not certify a complete key point; any selection extending to288.5 or beyond leaves the approved empty-English scope."
+  ],
+  "scope": "whole selected source-audio window; not a final mixed/rendered audio pass; visual/crop/point review separate",
+  "no_foreground_english_reason": "Inside280.5–288.4, VAD has no speech, medium ASR has no spoken words, and provider labels applause. The small-model uppercase CHEERING AND APPLAUSE is a corresponding nonverbal event transcription, not foreground English speech. Window ends before288.496 first VAD speech and before unclear champion-name statement; no human listening is asserted."
+}

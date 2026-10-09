@@ -1,0 +1,78 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=1IUIALrbq4w",
+  "source_sha256": "2228691202fb9b7037481b6e99f53217bf3e49e5e74a1e9e9cf9c4bc64b18c68",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "/root/source_audio_review",
+  "reviewed_at": "2026-10-06T00:43:15.747886+00:00",
+  "reviewed_from": 354.88,
+  "reviewed_to": 381.96,
+  "foreground_english": [
+    {
+      "start": 354.94,
+      "end": 357.2,
+      "en": "This is the moment of truth, surely.",
+      "zh": "这一刻，胜负该见分晓了。"
+    },
+    {
+      "start": 357.66,
+      "end": 359.32,
+      "en": "Three match points already.",
+      "zh": "此前已有三个赛点。"
+    },
+    {
+      "start": 359.32,
+      "end": 361.86,
+      "en": "So all of those have been on Federer's serve.",
+      "zh": "都出现在费德勒发球时。"
+    },
+    {
+      "start": 363.6,
+      "end": 366.58,
+      "en": "Here's his first on his own deal.",
+      "zh": "梅耶尔首次在发球时握有赛点。"
+    },
+    {
+      "start": 373.04,
+      "end": 376.7,
+      "en": "This time, Federer makes no mistake",
+      "zh": "这一次，费德勒没有失手，"
+    },
+    {
+      "start": 376.7,
+      "end": 378.62,
+      "en": "with the backhand pass.",
+      "zh": "反手穿越成功。"
+    }
+  ],
+  "uncertain_spans": [],
+  "human_listened": false,
+  "evidence": [
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/mayer2014/window-00-small.en.json",
+      "sha256": "8cd29448750d2d72d2ac9b6ac042039c280c132730e1cb6eed1b94f25a9b4e2e"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/mayer2014/window-00-medium.en.json",
+      "sha256": "7f0c6b525f279a4a049491d155e5fbd59ad8ba2fb289fbb08942876d6c40607e"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/mayer2014/window-00-crosscheck.json",
+      "sha256": "a0fd6b55a0218aad53f2be70ed82b42c35169732a5af480c335b4ade5990a9e5"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/mayer2014/provider.en-orig.json3",
+      "sha256": "f097db3a425f083f020ec58a9fba7ffda7e6303515623268ec3cd50effbb5d5e"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/mayer2014/source.json",
+      "sha256": "c2d6d7d765ecb99dbd2bee289e8ed930fa63dffe471cd4260b776fa270c8ae12"
+    }
+  ],
+  "review_notes": [
+    "Attempt2 raw small/medium both identify Federer, backhand pass and all match-point commentary; medium each phrase highly supported. Provider lexical so359.44 is retained as a short discourse connector omitted by both ASR normalisations, rather than silently dropping a provider source word.",
+    "Source start354.88 precedes earliest small phrase onset354.94 (medium355.04); entire comment before serve and result commentary through378.62 retained, VAD speech ends379.072, next lexical Match point390.64 outside selected end381.96.",
+    "The phrase own deal is retained verbatim as all source evidence reports; Chinese translates its tennis meaning own serve, and uses 发球时 rather than 发球局 because this is a tie-break."
+  ],
+  "scope": "whole selected source-audio window; not a final mixed/rendered audio pass; visual/crop/point review separate"
+}

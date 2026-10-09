@@ -1,0 +1,715 @@
+{
+  "schema_version": 1,
+  "status": "candidate_only",
+  "inspected_at": "2026-10-06",
+  "scope": [
+    "final2012",
+    "mayer2014"
+  ],
+  "inspection": {
+    "basis": "Official probe contact and enlarged score walls, 2-second samples; scene-cut coordinates from probe.json. Selected contact tiles compared with fixed-center 3:4 crops. No continuous video inspection in this pass.",
+    "timecode_precision": "Proposed boundaries are source scene cuts/inspection brackets, not frame-confirmed EDL.",
+    "audio_verification": "pending; auto captions are locator hints only, not verified quotes or subtitles.",
+    "point_start_ok": null,
+    "point_end_ok": null
+  },
+  "geometry": {
+    "source_width": 1920,
+    "source_height": 1080,
+    "canvas_width": 1080,
+    "canvas_height": 1440,
+    "cx": 0.5,
+    "track": false,
+    "cover_crop_source_px": [
+      555,
+      0,
+      1365,
+      1080
+    ],
+    "normalized_horizontal_visible_interval": [
+      0.2890625,
+      0.7109375
+    ],
+    "scoreboard": "Native lower-left score labels mostly lost or fragmented. Rebuild TL Score from confirmed event identity/instant score, not final score during live point."
+  },
+  "sources": [
+    {
+      "source_name": "final2012",
+      "probe_slug": "shanghai-history-2012-djokovic-youtube",
+      "url": "https://www.youtube.com/watch?v=1dfiSb6WvlA",
+      "publisher": "Tennis TV",
+      "width": 1920,
+      "height": 1080,
+      "fps": 25,
+      "duration": 115.890794,
+      "event": "2012 Shanghai Masters final",
+      "players": [
+        "Andy Murray",
+        "Novak Djokovic"
+      ]
+    },
+    {
+      "source_name": "mayer2014",
+      "probe_slug": "shanghai-history-2014-federer",
+      "url": "https://www.youtube.com/watch?v=1IUIALrbq4w",
+      "publisher": "Tennis TV",
+      "width": 1920,
+      "height": 1080,
+      "fps": 25,
+      "duration": 484.646893,
+      "event": "2014 Shanghai Masters R2",
+      "players": [
+        "Roger Federer",
+        "Leonardo Mayer"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "2012-tweener-not-championship-point",
+      "source_name": "final2012",
+      "status": "candidate",
+      "priority": "alternative",
+      "event": "Second set 5-4, Murray serving 30-0; spectacular rally, NOT a championship point",
+      "in_candidate": 0,
+      "out_candidate": 32.08,
+      "score_before": {
+        "Murray": [
+          "7",
+          "5",
+          "30"
+        ],
+        "Djokovic": [
+          "5",
+          "4",
+          "0"
+        ]
+      },
+      "score_after": {
+        "Murray": [
+          "7",
+          "5",
+          "30"
+        ],
+        "Djokovic": [
+          "5",
+          "4",
+          "15"
+        ]
+      },
+      "visual_evidence": [
+        "score_00.jpg:0.5-30.5",
+        "contact_00.jpg:0.5-30.5"
+      ],
+      "coverage_observation": "Rally starts before source; result and Djokovic smile/fist are present. Use only explicitly labelled highlight/reaction, never as first saved championship point.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "blocked_for_complete_point",
+        "risk": "Near player travels to both sides beyond central crop; sampled 6.5,14.5,18.5. First frame already a rally, serve absent."
+      }
+    },
+    {
+      "candidate_id": "2012-championship-point-1",
+      "source_name": "final2012",
+      "status": "candidate",
+      "priority": "primary_if_repaired",
+      "event": "First saved championship point",
+      "in_candidate": 32.08,
+      "out_candidate": 39.48,
+      "score_before": {
+        "Murray": [
+          "7",
+          "5",
+          "40"
+        ],
+        "Djokovic": [
+          "5",
+          "4",
+          "30"
+        ]
+      },
+      "score_after": {
+        "Murray": [
+          "7",
+          "5",
+          "40"
+        ],
+        "Djokovic": [
+          "5",
+          "4",
+          "40"
+        ]
+      },
+      "visual_evidence": [
+        "score_00.jpg:32.5-38.5",
+        "contact_00.jpg:32.5-38.5"
+      ],
+      "coverage_observation": "One point plus Djokovic close-up. Candidate starts at scene cut; cannot yet assert serve motion starts inside the source.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "blocked_or_edge_risk",
+        "risk": "At 32.5 near Djokovic at left margin partly falls outside [555,1365]. Serve and preceding return require dense inspection. Reaction close-up at38.5 stays central."
+      }
+    },
+    {
+      "candidate_id": "2012-championship-point-2",
+      "source_name": "final2012",
+      "status": "candidate",
+      "priority": "alternative",
+      "event": "Second saved championship point, tie-break Murray 6-4",
+      "in_candidate": 39.48,
+      "out_candidate": 54.88,
+      "score_before": {
+        "Murray": [
+          "7",
+          "6",
+          "6"
+        ],
+        "Djokovic": [
+          "5",
+          "6",
+          "4"
+        ]
+      },
+      "score_after": {
+        "Murray": [
+          "7",
+          "6",
+          "6"
+        ],
+        "Djokovic": [
+          "5",
+          "6",
+          "5"
+        ]
+      },
+      "visual_evidence": [
+        "score_01.jpg:40.5-56.5",
+        "contact_00.jpg:40.5-54.5"
+      ],
+      "coverage_observation": "Long rally and Djokovic reaction; nominal window includes outcome but exact first/last stroke and 1.2s post-point margin pending.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "blocked_for_complete_point",
+        "risk": "At40.5 near Djokovic is on right edge and key first stroke/ball may fall outside; 54.5 reaction close-up fits."
+      }
+    },
+    {
+      "candidate_id": "2012-championship-point-3",
+      "source_name": "final2012",
+      "status": "candidate",
+      "priority": "brief_optional",
+      "event": "Third saved championship point, tie-break Murray 6-5",
+      "in_candidate": 54.88,
+      "out_candidate": 58.44,
+      "score_before": {
+        "Murray": [
+          "7",
+          "6",
+          "6"
+        ],
+        "Djokovic": [
+          "5",
+          "6",
+          "5"
+        ]
+      },
+      "score_after": {
+        "Murray": [
+          "7",
+          "6",
+          "6"
+        ],
+        "Djokovic": [
+          "5",
+          "6",
+          "6"
+        ]
+      },
+      "visual_evidence": [
+        "score_01.jpg:56.5",
+        "contact_00.jpg:56.5"
+      ],
+      "coverage_observation": "Only one wall frame sampled for this point. Source immediately cuts to tie-break8-7; do not claim complete serve-result-reaction coverage.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "sampled_action_fits_pending",
+        "risk": "Single sampled action frame56.5 central; very short 3.56s official edit. Serve start, ball landing and post-point reaction NOT established."
+      }
+    },
+    {
+      "candidate_id": "2012-championship-point-4",
+      "source_name": "final2012",
+      "status": "candidate",
+      "priority": "alternative",
+      "event": "Fourth saved championship point, tie-break Murray 8-7",
+      "in_candidate": 58.44,
+      "out_candidate": 62.84,
+      "score_before": {
+        "Murray": [
+          "7",
+          "6",
+          "8"
+        ],
+        "Djokovic": [
+          "5",
+          "6",
+          "7"
+        ]
+      },
+      "score_after": {
+        "Murray": [
+          "7",
+          "6",
+          "8"
+        ],
+        "Djokovic": [
+          "5",
+          "6",
+          "8"
+        ]
+      },
+      "visual_evidence": [
+        "score_01.jpg:58.5-62.5",
+        "contact_00.jpg:58.5",
+        "contact_01.jpg:60.5-62.5"
+      ],
+      "coverage_observation": "Short edited point, no separate sustained reaction in wall. Full serve/result cannot yet be guaranteed.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "blocked_for_complete_point",
+        "risk": "Near Murray outside left at58.5 and right at62.5; opposing return and endpoint not fully inside centered canvas."
+      }
+    },
+    {
+      "candidate_id": "2012-championship-point-5",
+      "source_name": "final2012",
+      "status": "candidate",
+      "priority": "alternate",
+      "event": "Fifth saved championship point, tie-break Murray 10-9",
+      "in_candidate": 62.84,
+      "out_candidate": 76.44,
+      "score_before": {
+        "Murray": [
+          "7",
+          "6",
+          "10"
+        ],
+        "Djokovic": [
+          "5",
+          "6",
+          "9"
+        ]
+      },
+      "score_after": {
+        "Murray": [
+          "7",
+          "6",
+          "10"
+        ],
+        "Djokovic": [
+          "5",
+          "6",
+          "10"
+        ]
+      },
+      "visual_evidence": [
+        "score_01.jpg:64.5-78.5",
+        "contact_01.jpg:64.5-74.5"
+      ],
+      "coverage_observation": "Rally, Murray error/result and reaction appear; candidate source start may already be after serve.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "blocked_for_complete_point",
+        "risk": "Near Djokovic disappears outside left at70.5; Murray reaction at74.5 is central."
+      }
+    },
+    {
+      "candidate_id": "2012-second-set-conversion",
+      "source_name": "final2012",
+      "status": "candidate",
+      "priority": "primary",
+      "event": "Djokovic converts second-set point, tie-break12-11→13-11",
+      "in_candidate": 76.44,
+      "out_candidate": 85.64,
+      "score_before": {
+        "Murray": [
+          "7",
+          "6",
+          "11"
+        ],
+        "Djokovic": [
+          "5",
+          "6",
+          "12"
+        ]
+      },
+      "score_after": {
+        "Murray": [
+          "7",
+          "6"
+        ],
+        "Djokovic": [
+          "5",
+          "7"
+        ]
+      },
+      "visual_evidence": [
+        "score_01.jpg:76.5-78.5",
+        "score_02.jpg:80.5-84.5",
+        "contact_01.jpg:76.5-84.5"
+      ],
+      "coverage_observation": "Point and Djokovic fist-pump appear together. Good candidate to close second set; never label it saved championship point.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "sampled_action_fits_pending",
+        "risk": "76.5,78.5 near Djokovic and far Murray visible; 80.5-84.5 reaction face fits. Need dense ball/serve start check to approve full point."
+      }
+    },
+    {
+      "candidate_id": "2012-match-conversion-and-handshake",
+      "source_name": "final2012",
+      "status": "candidate",
+      "priority": "primary",
+      "event": "Djokovic converts championship point in third set5-3 advantage",
+      "in_candidate": 85.64,
+      "out_candidate": 106.6,
+      "score_before": {
+        "Murray": [
+          "7",
+          "6",
+          "3"
+        ],
+        "Djokovic": [
+          "5",
+          "7",
+          "5",
+          "Ad"
+        ]
+      },
+      "score_after": {
+        "winner": "Djokovic",
+        "sets": [
+          "5-7",
+          "7-6(11)",
+          "6-3"
+        ]
+      },
+      "visual_evidence": [
+        "score_02.jpg:86.5-90.5",
+        "contact_01.jpg:86.5-106.5"
+      ],
+      "coverage_observation": "Candidate includes winning point, fists, approach and visible handshake at98.5. Tail celebration106.6-111.48 may be added separately after checking foreground interruption.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "sampled_action_and_handshake_fit_pending",
+        "risk": "86.5,88.5 near Murray/far Djokovic mostly central;85.64 cut/serve start and ball landing pending. 98.5 two faces visibly fit centered crop.102.5 Murray departs right; out106.6 avoids subsequent ballgirl foreground interruption."
+      }
+    },
+    {
+      "candidate_id": "2014-match-point-1",
+      "source_name": "mayer2014",
+      "status": "candidate",
+      "priority": "preferred_story_but_crop_blocked",
+      "event": "First saved match point, third set Federer4-5/15-40, Mayer backhand pass clips net",
+      "in_candidate": 214.36,
+      "out_candidate": 238.88,
+      "score_before": {
+        "Federer": [
+          "7",
+          "3",
+          "4",
+          "15"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "5",
+          "40"
+        ]
+      },
+      "score_after": {
+        "Federer": [
+          "7",
+          "3",
+          "4",
+          "30"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "5",
+          "40"
+        ]
+      },
+      "visual_evidence": [
+        "score_05.jpg:214.5-238.5",
+        "contact_03.jpg:214.5-238.5"
+      ],
+      "coverage_observation": "Live rally214.36-227.04, then replay and Mayer face. First MP is NOT in last120s.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "blocked_for_complete_point",
+        "risk": "Federer near right edge at214.5/216.5 is outside centered canvas; live return/early trajectory cut. Near-net finish226.5 and Mayer replay/reaction227.04-238.88 fit better but do not establish complete live point."
+      }
+    },
+    {
+      "candidate_id": "2014-match-point-2",
+      "source_name": "mayer2014",
+      "status": "candidate",
+      "priority": "alternative",
+      "event": "Second saved match point, third set Federer4-5/30-40",
+      "in_candidate": 248.72,
+      "out_candidate": 266.2,
+      "score_before": {
+        "Federer": [
+          "7",
+          "3",
+          "4",
+          "30"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "5",
+          "40"
+        ]
+      },
+      "score_after": {
+        "Federer": [
+          "7",
+          "3",
+          "4",
+          "40"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "5",
+          "40"
+        ]
+      },
+      "visual_evidence": [
+        "score_06.jpg:250.5-264.5",
+        "contact_04.jpg:250.5-264.5"
+      ],
+      "coverage_observation": "Prematch-point close-up→live point254.04-262.52→Federer reaction. Full live point fails sampled fixed-center crop.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "blocked_for_complete_point",
+        "risk": "Near Federer far right at260.5 completely outside crop. Facial reaction262.5-264.5 fits."
+      }
+    },
+    {
+      "candidate_id": "2014-match-point-3",
+      "source_name": "mayer2014",
+      "status": "candidate",
+      "priority": "alternative",
+      "event": "Third saved match point, deciding tie-break Federer4-6",
+      "in_candidate": 337.0,
+      "out_candidate": 358.48,
+      "score_before": {
+        "Federer": [
+          "7",
+          "3",
+          "6",
+          "4"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "6",
+          "6"
+        ]
+      },
+      "score_after": {
+        "Federer": [
+          "7",
+          "3",
+          "6",
+          "5"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "6",
+          "6"
+        ]
+      },
+      "visual_evidence": [
+        "score_08.jpg:338.5-358.5",
+        "contact_05.jpg:338.5-356.5"
+      ],
+      "coverage_observation": "MATCH POINT3 banner before live point341.96-351.4. Do not pretend this is first MP on Mayer serve; this point is Federer serving.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "blocked_for_complete_point",
+        "risk": "Near Federer disappears left at346.5 and right at350.5. Federer reaction352.5/354.5 and crowd356.5 fit."
+      }
+    },
+    {
+      "candidate_id": "2014-match-point-4",
+      "source_name": "mayer2014",
+      "status": "candidate",
+      "priority": "primary",
+      "event": "Fourth saved match point, deciding tie-break Federer5-6, Mayer serving",
+      "in_candidate": 361.04,
+      "out_candidate": 381.96,
+      "score_before": {
+        "Federer": [
+          "7",
+          "3",
+          "6",
+          "5"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "6",
+          "6"
+        ]
+      },
+      "score_after": {
+        "Federer": [
+          "7",
+          "3",
+          "6",
+          "6"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "6",
+          "6"
+        ]
+      },
+      "visual_evidence": [
+        "score_09.jpg:362.5-380.5",
+        "contact_06.jpg:362.5-380.5"
+      ],
+      "coverage_observation": "MATCH POINT4 banner, Mayer serving in near court, Federer pass, Mayer response, crowd. Best longer saved-MP candidate for centered canvas from sampled walls.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "sampled_action_fits_pending",
+        "risk": "Live frames368.5,370.5,372.5 retain player bodies and central net action; close-ups362.5-366.5 and374.5-378.5 retain faces. Dense ball trajectory at370-374 and serve start367.44 still pending."
+      }
+    },
+    {
+      "candidate_id": "2014-match-point-5",
+      "source_name": "mayer2014",
+      "status": "candidate",
+      "priority": "primary",
+      "event": "Fifth saved match point, deciding tie-break Federer6-7, Federer serving",
+      "in_candidate": 388.04,
+      "out_candidate": 407.88,
+      "score_before": {
+        "Federer": [
+          "7",
+          "3",
+          "6",
+          "6"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "6",
+          "7"
+        ]
+      },
+      "score_after": {
+        "Federer": [
+          "7",
+          "3",
+          "6",
+          "7"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "6",
+          "7"
+        ]
+      },
+      "visual_evidence": [
+        "score_09.jpg:390.5-398.5",
+        "score_10.jpg:400.5-406.5",
+        "contact_06.jpg:390.5-406.5"
+      ],
+      "coverage_observation": "Score confirms6-7. Includes point392.92-397.64 and consecutive faces398.5-402.5.405+ next point setup; tighter out404.4 possible after audio review.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "sampled_action_fits_pending",
+        "risk": "394.5/396.5 live action appears central;397.64 cut to Mayer then Federer reaction fits faces. Need dense serve toss394 vicinity and exact endpoint confirmation. Avoid attributing disputed tactical detail from auto-caption."
+      }
+    },
+    {
+      "candidate_id": "2014-match-conversion-and-handshake",
+      "source_name": "mayer2014",
+      "status": "candidate",
+      "priority": "story_needed_but_crop_blocked",
+      "event": "Federer first match point, deciding tie-break8-7→9-7",
+      "in_candidate": 419.0,
+      "out_candidate": 455.76,
+      "score_before": {
+        "Federer": [
+          "7",
+          "3",
+          "6",
+          "8"
+        ],
+        "Mayer": [
+          "5",
+          "6",
+          "6",
+          "7"
+        ]
+      },
+      "score_after": {
+        "winner": "Federer",
+        "sets": [
+          "7-5",
+          "3-6",
+          "7-6(7)"
+        ]
+      },
+      "visual_evidence": [
+        "score_10.jpg:420.5-438.5",
+        "contact_07.jpg:420.5-454.5"
+      ],
+      "coverage_observation": "First Federer MATCH POINT banner, full wide rally426.48-436.72, celebration436.72-442.76, handshake444.5-450.5 and Federer smile452.5. Can use separately labelled aftermath if terminal live point unsuitable; never substitute another point.",
+      "point_start_ok": null,
+      "point_end_ok": null,
+      "audio_verification": "pending",
+      "crop_assessment": {
+        "status": "blocked_for_complete_point",
+        "risk": "Federer near left margin at426.5 partly lost; near-right chase432.5 completely outside. Net handshake446.5 preserves both faces in sample but live point cannot be declared visible under fixed-center crop."
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=fQfvkym38MM",
+  "source_sha256": "193397c2176d23d01fa7e6131914d7b393679754f8e4975205ccfdc2ab61dd90",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "/root/source_audio_review",
+  "reviewed_at": "2026-10-06T00:43:15.747886+00:00",
+  "reviewed_from": 462.0,
+  "reviewed_to": 473.4,
+  "foreground_english": [
+    {
+      "start": 462.1,
+      "end": 465.3,
+      "en": "The world number one",
+      "zh": "世界第一"
+    },
+    {
+      "start": 465.3,
+      "end": 468.56,
+      "en": "delivers an impressive display to",
+      "zh": "奉献了一场精彩表现，"
+    },
+    {
+      "start": 468.56,
+      "end": 473.2,
+      "en": "claim a third Masters 1000 title of the year.",
+      "zh": "拿下本赛季第三座大师1000冠军。"
+    }
+  ],
+  "uncertain_spans": [],
+  "human_listened": false,
+  "evidence": [
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/sinner2024/window-00-small.en.json",
+      "sha256": "908722bf69728523257bba8ea8d1d8bf96ca9ffa31e732a75269f3fbf423d570"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/sinner2024/window-00-medium.en.json",
+      "sha256": "47c2a403d757a671f4a4eb34aa005e35e035a6c4f63ebd2fdd179a161ee47ac7"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/sinner2024/window-00-crosscheck.json",
+      "sha256": "26793c4a613cde6b2cd0d7108d9e3130b57aed67eb8d520ddda5d29287d12cd1"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/sinner2024/provider.en-orig.json3",
+      "sha256": "2d2317693be2f9f3abed6e24e0aaddfb1c68d48fc71780a5da7d73a45c5d218c"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/sinner2024/source.json",
+      "sha256": "ce9d590c61b88ba5c999ddd41af3b4eedba65ee24e537a17632c51c2d846766e"
+    }
+  ],
+  "review_notes": [
+    "Dual ASR agrees entire lexical sentence including of the year; medium final year472.72–473.20, small472.70–473.00. Provider misaligns year to478.44 after a Music event473.85; final timing uses agreement of both raw ASRs, not provider erroneous year position.",
+    "Whole selected window contains the one complete champion-call sentence; end473.4 preserves its final word before provider Music473.85. English clause cue splits preserve every word and original order; no claim of human listening."
+  ],
+  "scope": "whole selected source-audio window; not a final mixed/rendered audio pass; visual/crop/point review separate"
+}

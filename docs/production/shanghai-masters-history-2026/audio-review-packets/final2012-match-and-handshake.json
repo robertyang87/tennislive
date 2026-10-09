@@ -1,0 +1,78 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=1dfiSb6WvlA",
+  "source_sha256": "3473ec229d9b10cfbe77e558dc79c5e4e748ba02594ecc516e147da128190d2b",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "/root/source_audio_review",
+  "reviewed_at": "2026-10-06T00:44:27.271872+00:00",
+  "reviewed_from": 85.64,
+  "reviewed_to": 106.48,
+  "foreground_english": [
+    {
+      "start": 88.34,
+      "end": 90.4,
+      "en": "He's done it!",
+      "zh": "他做到了！"
+    },
+    {
+      "start": 92.08,
+      "end": 93.76,
+      "en": "Victory for Djokovic.",
+      "zh": "德约科维奇获胜。"
+    },
+    {
+      "start": 95.1,
+      "end": 97.8,
+      "en": "His first title here in Shanghai.",
+      "zh": "这是他的上海大师赛首冠。"
+    },
+    {
+      "start": 98.68,
+      "end": 101.0,
+      "en": "But of course, back-to-back victories",
+      "zh": "当然，他连续两站夺冠，"
+    },
+    {
+      "start": 101.0,
+      "end": 102.1,
+      "en": "here in China.",
+      "zh": "地点都在中国。"
+    },
+    {
+      "start": 103.36,
+      "end": 106.42,
+      "en": "After proving unbeatable in Beijing last week.",
+      "zh": "上周在北京，他也无人能挡。"
+    }
+  ],
+  "uncertain_spans": [],
+  "human_listened": false,
+  "evidence": [
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/window-00-small.en.json",
+      "sha256": "4fea809f7d9f4f42a9c18319b1ce108338b4dda81dc11416450b9c377251f9ef"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/window-00-medium.en.json",
+      "sha256": "420e4955cd1a50d6abea565303150c159ae08aea9b05a31754e4a18c00ab7ff3"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/window-00-crosscheck.json",
+      "sha256": "b364c943fb0fb4c5eeddf695364ea5de235a5b1fcede50024f58134450865ee4"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/provider.en-orig.json3",
+      "sha256": "cc37edd64f321ffdb650b53e30afbd0e180d27dfb5814062248c8398185aa0e2"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/final2012/source.json",
+      "sha256": "6a3719ce124b0864223e54e1cea7a44b9858b481e27e172dafc8a3767f8943b2"
+    }
+  ],
+  "review_notes": [
+    "All selected words agree in both ASR lexical sequences and provider.en-orig. provider.en.json3 is a translated/reworded English variant (He did it/consecutive etc.), so it is NOT the literal source English used for subtitles.",
+    "End106.48 is after week106.38/106.42 and before next And onset106.58/106.78 (provider106.64). It retains the full preceding Beijing sentence and omits the ENTIRE next hard-way/five-championship-points sentence, which runs to115.28 across logo. No truncation of that next sentence is accepted.",
+    "The small-model later and/he’s long alignment is unreliable after106.78; that out-of-window material is not selected or declared reviewed. The selected packet only covers85.64–106.48."
+  ],
+  "scope": "whole selected source-audio window; not a final mixed/rendered audio pass; visual/crop/point review separate"
+}

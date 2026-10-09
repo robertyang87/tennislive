@@ -1,0 +1,71 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=sTlHqhHIKis",
+  "source_sha256": "5040870b9d3035c26d97823a5d5132fa5661d0b2303b7005f639dd97427c1ec3",
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "source_duration": 489.406984,
+  "window": [
+    350.0,
+    420.0
+  ],
+  "audio_sha256": "dbba0ddd928e6fbde54d3c701bef784c5f20d4c637f48eb0f2cc5dcb9ca1842f",
+  "collected_at": "2026-10-06T00:35:53.487513+00:00",
+  "status": "collected_awaiting_evidence_review",
+  "timecode_basis": "absolute_source_seconds",
+  "models": [
+    "small.en",
+    "medium.en"
+  ],
+  "token_similarity": 0.9457364341085271,
+  "differences": [
+    {
+      "kind": "replace",
+      "first": [
+        "oh"
+      ],
+      "second": [
+        "haha"
+      ]
+    },
+    {
+      "kind": "replace",
+      "first": [
+        "vachero"
+      ],
+      "second": [
+        "vacherot"
+      ]
+    },
+    {
+      "kind": "replace",
+      "first": [
+        "monique",
+        "ask"
+      ],
+      "second": [
+        "monegask"
+      ]
+    }
+  ],
+  "speech_vad": [
+    {
+      "start": 350.592,
+      "end": 354.336
+    },
+    {
+      "start": 361.76,
+      "end": 363.68
+    },
+    {
+      "start": 371.392,
+      "end": 381.79200000000003
+    },
+    {
+      "start": 393.44,
+      "end": 420.0
+    }
+  ],
+  "review_note": "Inspect both timed transcripts, source captions and VAD. Agreement does not certify a human listening pass. Unresolved wording or timing remains blocked."
+}

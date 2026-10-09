@@ -1,14 +1,91 @@
 name: production-research-check
 on:
+  push:
+    branches: ['codex/shanghai-masters-history-2026']
+    paths:
+      - .github/workflows/production-research-check.yml
+      - .github/workflows/match-reel.yml
+      - specs/reels/shanghai-masters-history-2026.json
+      - specs/reels/shanghai-masters-history-2026.xhs.txt
+      - docs/production/shanghai-masters-history-2026/audio-collection-plan.json
   pull_request:
     paths:
       - tools/tactical_research.py
       - .github/workflows/production-research-check.yml
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      episode:
+        description: "Optional scoped production evidence collection"
+        type: string
+        default: ""
+
 permissions:
   contents: read
 jobs:
+  review-render-dispatch:
+    # 用户授权修复并产出本片；connector 无 dispatch 能力，以限定分支和
+    # 显式提交标记触发现有渲染工作流。actions:write 只用于派发这一趟审片。
+    # push=false 不能覆盖 spec.push.auto，因此派发前还核当前提交的 auto=false。
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/shanghai-masters-history-2026' && contains(github.event.head_commit.message, '[review-render]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - name: Dispatch Shanghai review render without publication
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branch = 'codex/shanghai-masters-history-2026';
+            const slug = 'shanghai-masters-history-2026';
+            if (context.eventName !== 'push' || context.ref !== `refs/heads/${branch}`) {
+              throw new Error('Review render is restricted to the Shanghai production branch push');
+            }
+            const { data: file } = await github.rest.repos.getContent({
+              ...context.repo, path: `specs/reels/${slug}.json`, ref: context.sha
+            });
+            if (Array.isArray(file) || file.type !== 'file' || file.encoding !== 'base64') {
+              throw new Error('Cannot read the exact pushed production spec');
+            }
+            const spec = JSON.parse(Buffer.from(file.content, 'base64').toString('utf8'));
+            if (spec.push?.auto !== false) {
+              throw new Error('Review spec must explicitly set push.auto=false before rendering');
+            }
+            const { data: ref } = await github.rest.git.getRef({
+              ...context.repo, ref: `heads/${branch}`
+            });
+            if (ref.object.sha !== context.sha) {
+              throw new Error('Production branch advanced; dispatch the newest reviewed commit instead');
+            }
+            // 旧审片 run 使用修改前的公开 Release 路径；先停止明确那一趟，
+            // 再派发带私有审片 artifact 路径的新提交，避免未核语音对外发布。
+            const supersededRunId = 37415222475;
+            const { data: superseded } = await github.rest.actions.getWorkflowRun({
+              ...context.repo, run_id: supersededRunId
+            });
+            if (superseded.head_branch !== branch || !superseded.name?.startsWith('match-reel')) {
+              throw new Error('Superseded run does not match the expected Shanghai render branch');
+            }
+            if (superseded.status !== 'completed') {
+              await github.rest.actions.cancelWorkflowRun({
+                ...context.repo, run_id: supersededRunId
+              });
+              core.info(`Requested cancellation of superseded public-Release render ${supersededRunId}`);
+            }
+            await github.rest.actions.createWorkflowDispatch({
+              ...context.repo, workflow_id: 'match-reel.yml', ref: branch,
+              inputs: {
+                mode: 'render', slug, voice: 'zh-CN-YunjianNeural',
+                rate: '+6%', push: 'false', received_at: new Date().toISOString()
+              }
+            });
+            await core.summary.addHeading('Shanghai review render dispatched')
+              .addRaw(`Input commit: ${context.sha}\n\nReview only; publication disabled. New audio and video SHA evidence must be reviewed; prior voice evidence is not transferable.\n`)
+              .write();
+
   read-only-probe:
+    if: github.event_name != 'push' && inputs.episode != 'shanghai-masters-history-2026'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -39,3 +116,118 @@ jobs:
         with:
           name: tactical-source-probe
           path: /tmp/tactical-probe.json
+
+  shanghai-audio-evidence:
+    # Review renders reuse the locked source evidence; do not race a collector
+    # that writes this same production branch while the renderer is running.
+    if: (github.event_name == 'push' && !contains(github.event.head_commit.message, '[review-render]')) || inputs.episode == 'shanghai-masters-history-2026'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    env:
+      TENNISLIVE_SOURCE_CACHE: /home/runner/.cache/tennislive-sources
+      OMP_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          sparse-checkout: |
+            /*
+            !output
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install collector dependencies
+        run: pip install -q -e '.[visualqa]' 'yt-dlp[default]' faster-whisper bgutil-ytdlp-pot-provider
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-evidence-unused-0-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2005-nalbandian-
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-evidence-unused-1-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2012-djokovic-youtube-
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-evidence-unused-2-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2014-federer-
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-evidence-unused-3-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2017-federer-
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-evidence-unused-4-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2024-sinner-
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: shanghai-evidence-unused-5-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-history-2025-vacherot-
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-shanghai-masters-history-2026-evidence-${{ github.run_id }}
+          restore-keys: reel-src-shanghai-masters-history-2026-evidence-
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: whisper-shanghai-small-medium-v1
+      - name: Restore apt packages
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-shanghai-audio-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-shanghai-audio-v1-
+      - name: Install native media tools
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: Save apt packages only after a network install
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+      - name: Source downloader provider
+        continue-on-error: true
+        run: docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+      - name: Configured source cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "YT_COOKIES=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_ENV"
+          fi
+      - name: Collect raw source-bound evidence
+        run: |
+          python docs/production/shanghai-masters-history-2026/collect_audio_evidence.py --plan docs/production/shanghai-masters-history-2026/audio-collection-plan.json --outdir docs/production/shanghai-masters-history-2026/audio-evidence
+      - name: Preserve collected evidence on production branch
+        if: always()
+        run: |
+          git config user.name 'Claude'
+          git config user.email 'noreply@anthropic.com'
+          git add docs/production/shanghai-masters-history-2026/audio-evidence
+          python tools/check_staged_file_sizes.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'production: collect Shanghai source audio evidence (review pending)'
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi

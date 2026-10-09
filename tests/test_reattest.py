@@ -1241,9 +1241,25 @@ def test_读取扫描认得出常量序列和import进来的键(tmp_path):
 #: 按（键, 函数）逐处登记，不按键名整批放：同一个键哪天在别的函数里被当成 spec
 #: 字段读，照样要归类。
 _NOT_SPEC_READS: dict[tuple[str, str], str] = {
+    ("push", "story_photo_push_indices"): "比较 story_photo_motion 的值 push；不是读取 spec 的推送块。下方专门判据禁止此函数读取推送块。",
     ("_key", "_gate_cover_face"): "`_FACE_REPORT[\"cover\"][\"_key\"]`：这一趟算过的封面帧"
                                   "缓存键（`_face_gate_key`），渲染自己写、自己读",
 }
+
+
+def test_story_photo_motion_push_is_a_value_not_the_publication_block():
+    tree = ast.parse((ROOT / "tools/build_match_reel.py").read_text(encoding="utf-8"))
+    fn = next(n for n in tree.body if isinstance(n, ast.FunctionDef)
+              and n.name == "story_photo_push_indices")
+    for node in ast.walk(fn):
+        if isinstance(node, ast.Subscript):
+            assert not (isinstance(node.slice, ast.Constant) and node.slice.value == "push")
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+            if node.func.attr in {"get", "pop", "setdefault"} and node.args:
+                assert not (isinstance(node.args[0], ast.Constant) and node.args[0].value == "push")
+    assert any(isinstance(n, ast.Compare) and any(
+        isinstance(c, ast.Constant) and c.value == "push" for c in n.comparators)
+        for n in ast.walk(fn))
 
 
 def test_渲染路径读到的注解键都要归类():

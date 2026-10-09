@@ -1,0 +1,42 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=l3spAGXS_Wc",
+  "source_sha256": "c3b1f8235f90bb64e22b7081ec290749e15ee599f0e1f56be6dc2d7b8e70ffea",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "/root/source_audio_review",
+  "reviewed_at": "2026-10-06T00:43:15.747886+00:00",
+  "reviewed_from": 328.0,
+  "reviewed_to": 343.0,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "human_listened": false,
+  "evidence": [
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/cup2005/window-00-small.en.json",
+      "sha256": "caeb3fe5e3b2a6ed75d4b5e9ec5a901509a06e7a667a20a2eb2441814fa293a4"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/cup2005/window-00-medium.en.json",
+      "sha256": "2e8968811dcc4f4fb8463b63ae67e0e57ffb27714939fe32b8e99bfde1ad723e"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/cup2005/window-00-crosscheck.json",
+      "sha256": "8d96b617840ec5859ad91467c1ab7c6d6fe87e3fe881be9f1b62697ac4373c56"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/cup2005/provider.en-orig.json3",
+      "sha256": "eb5d8777f46029f2b4704dc4f86f03df4c9f8577e7210081629f45afd37ef15f"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/cup2005/source.json",
+      "sha256": "5ed60f020e0cb2d107b28a688f063f70db33b84322431ddc7a3feee22c32337f"
+    }
+  ],
+  "review_notes": [
+    "medium.en title ends327.12; provider.en-orig title onset326.639; VAD prior speech ends327.856 and next begins344.176. No new provider lexical event within328–343; provider marks applause338.66.",
+    "small.en has a manifest word-alignment error: the runs326.66–337.96 and title has zero duration337.96. Do not use that stretched alignment as real 11-second speech. Its lexical phrase agrees with medium/provider and is before this selected window, as medium+provider+VAD independently locate.",
+    "This crop is explanatory action B-roll, not a certified complete serve-to-result point."
+  ],
+  "scope": "whole selected source-audio window; not a final mixed/rendered audio pass; visual/crop/point review separate",
+  "no_foreground_english_reason": "Official-source window328.0–343.0 has no resolved foreground English: both transcript lexical sequences move directly from the prior title sentence to the next tiebreak sentence; provider has only applause within the window; VAD has no speech within this narrowed range. The small-model long-word alignment error is explicitly resolved using medium/provider/VAD, not silently ignored."
+}

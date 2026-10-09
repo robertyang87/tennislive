@@ -1,0 +1,41 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=sTlHqhHIKis",
+  "source_sha256": "5040870b9d3035c26d97823a5d5132fa5661d0b2303b7005f639dd97427c1ec3",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "/root/source_audio_review",
+  "reviewed_at": "2026-10-06T00:43:15.747886+00:00",
+  "reviewed_from": 381.9,
+  "reviewed_to": 393.3,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "human_listened": false,
+  "evidence": [
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/vacherot2025/window-00-small.en.json",
+      "sha256": "6c2a7b7a88992b38505b2801ca9614880afbc36b369564bbba60bd550518f260"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/vacherot2025/window-00-medium.en.json",
+      "sha256": "6d77e6e29661bc189f86ac485bc217c103199b90af80b4467cca52996a8b4dd8"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/vacherot2025/window-00-crosscheck.json",
+      "sha256": "8756b4f64aa37cd6b9b9389c8147a4fc9a453940c49145dc265ecba1db46c56f"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/vacherot2025/provider.en-orig.json3",
+      "sha256": "6de7b789b29dd8a3dd1e89d96208a2388858df67326a9808862750972a4a7bcd"
+    },
+    {
+      "path": "docs/production/shanghai-masters-history-2026/audio-evidence/vacherot2025/source.json",
+      "sha256": "434c8993f791c085c04ff8bb887733adb382ba45222992bac1b2801578f7edb8"
+    }
+  ],
+  "review_notes": [
+    "small ends Shanghai380.98; medium ends381.20; VAD previous speech ends381.792. Next speech VAD393.44, next dual ASR words Moving394.06/394.10. Selected window has no VAD speech.",
+    "provider last Shanghai word onset380.639 persists on screen until383.639; that display hold is not new speech. Next provider nonlexical event Applause385.94; next lexical Moving395.52."
+  ],
+  "scope": "whole selected source-audio window; not a final mixed/rendered audio pass; visual/crop/point review separate",
+  "no_foreground_english_reason": "Both ASR word streams have no foreground lexical words inside381.9–393.3, provider has only an applause label, and VAD has no speech inside the selected range. Window begins after prior spoken sentence and ends before next speech VAD; source SHA matches actual downloaded original."
+}
