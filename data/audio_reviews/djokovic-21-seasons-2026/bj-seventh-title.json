@@ -1,0 +1,26 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=XTIIkb8uFXU",
+  "source_path": "/workspace/video-review/dj21/raw/y2026bj.mp4",
+  "source_sha256": "8eb10f007010dbd7f10511c4766897fefbf8f8c0e0d3b409f742a1b4da7dc842",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-09T23:09:44.726367+00:00",
+  "reviewed_from": 319.9,
+  "reviewed_to": 325.45,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 319.94,
+      "end": 325.32,
+      "en": "But it is a seventh Beijing title for Novak Djokovic.",
+      "zh": "这是德约科维奇的第七个北京冠军。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。base 在人群声上的套话幻听不采用。",
+  "review_notes": [
+    "small 与 medium 一致的只有这一句。下一句 326.22 起不收。"
+  ]
+}
