@@ -18,7 +18,16 @@
       }
     ],
     "winner": "周意",
-    "result": "7-6(7) 3-6 7-6(1)"
+    "result": "7-6(7) 3-6 7-6(1)",
+    "portrait": {
+      "image": "assets/reel/yi-musetti-cover.jpg",
+      "focus": 0.51,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「yi zhou」「Rolex Shanghai Masters」，日期对上当地 2026-10-09（Asia/Shanghai；日期来源 flashscore dc_1_htkg4C7j）（放宽：标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 10-09 20:50:50，落在这场的窗口 当地 10-09 19:50~22:41 里（atp-media #4589534））；EXIF 拍摄 2026:10:09 20:50:50+08:00。② 分辨率：5104×3400，zoom 1 铺 1080×1440 是 2.36×（不放大）。③ 认人：最大那张脸像 周意 0.48（≥ 0.34）。④ 睁眼：EAR 0.2672（≥ 0.16）。⑤ 钩子带：脸落在 y220~344，钩子顶边 790。排序：[True, False, False, True, False, 124, 0.4756]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/33a63d18-03e5-4d8b-b141-ed79ea405d6f/Yi-ZHOU-vs-Lorenzo-MUSETTI-1517.JPG",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/33a63d18-03e5-4d8b-b141-ed79ea405d6f/Yi-ZHOU-vs-Lorenzo-MUSETTI-1517.JPG（条目 #4589534，接口发布 2026-10-09T13:29:02Z，EXIF 拍摄 2026:10:09 20:50:50+08:00（UTC 2026-10-09T12:50:50Z），原图 5104×3400），说明原文「2026 Shanghai Zhou」，署名 lixiang；xiangli。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -281,39 +290,50 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 108.5,
-      "end": 116.5,
+      "start": 105.0,
+      "end": 121.0,
       "kind": "match_point",
       "winner_visible": true,
-      "reason": "108.5s 比分 ZHOU 7 6 6 / MUSETTI 6 1 1（决胜盘 6-1 局点/赛点阶段），110.5s 周意双手抱头难以置信表情，112.5s 周意张大嘴巴嘶吼庆祝，114.5s 周意低头捂脸落泪——这是赛点兑现后的赢家情绪爆发序列。",
-      "confidence": 0.92
+      "reason": "在 108.5–110.5s 比分显示 ZHOU 7-6 6-1，比赛接近结束；108.5s 看到周意握拳怒吼庆祝（winner_celebration），110.5s 周意双手抱头释放情绪；112.5s 周意张大嘴巴继续怒吼；114.5s 周意低头掩面（情绪宣泄），随后穆塞蒂低头失落（116.5s）以及两人握手（120.5s），构成完整制胜分+庆祝+赛后余波。",
+      "confidence": 0.93
     },
     "ending": {
       "start": 108.5,
       "end": 122.5,
       "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "108.5s 周意赛点回合开始，110.5s 双手抱头，112.5s 仰天嘶吼庆祝，114.5s 低头捂脸喜极而泣，116.5s 穆塞蒂低头走过神情失落，118.5s 周意走向网前，120.5s 双方在网前握手致意——完整覆盖冷开场的赛点兑现并延伸到赢家庆祝+输家反应+握手致礼。",
+      "reason": "108.5–110.5s 周意握拳/抱头庆祝，112.5s 张嘴怒吼，114.5s 低头掩面；116.5s 穆塞蒂低头失落（loser_disappointed 反应），118.5s 周意走向网边，120.5s 两人握手——庆祝+输家反应+握手完整呈现结局。",
       "confidence": 0.93
     },
     "cover": {
       "same_match": true,
       "subject": "周意",
-      "moment": "winner_celebration",
+      "moment": "other",
       "wrong_or_old": false,
-      "reason": "112.5s 画面为周意（深红色上衣）仰头张嘴嘶吼庆祝的近景，面部正面可见、双眼睁开聚焦；赛事标识 Rolex Shanghai Masters / ATP Masters 1000 烧录于角标，与结构化赛果周意 7-6(7) 3-6 7-6(1) 胜穆塞蒂的赢家庆祝时刻吻合。",
-      "confidence": 0.85
+      "reason": "封面为选手正面近身挥拍动态，身穿深栗色上衣、戴白色 Wilson 头带和护腕，与视频中周意（同样深栗色球衣、白色 Wilson 头带与护腕）一致；蓝色硬地球场与 Rolex Shanghai Masters 配色匹配；两眼睁开、面部接近正面，是比赛中奋力击球瞬间，无法判定情绪宣泄，应为 loser_fighting/other 之间的击球中态，此处归 other（认不出明显庆祝/失落/咬牙）。",
+      "confidence": 0.78
     },
     "problems": [
-      "没有官方高清封面候选"
+      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
+      "封面置信度 0.78 低于 0.80",
+      "封面情绪应为 winner_celebration，现在是 other"
     ],
     "model_attempts": 1,
-    "input_sha256": "fc3f1f9b833db1801f8259401f40c65c6075651ecc9bcd81b1cbded4ae0da80d",
+    "input_sha256": "fed26dcd2984737aba23a19869904505f9f3c55a66b0d0700bac7ace5c5db1b6",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/yi-musetti-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "htkg4C7j",
+      "start_utc": "2026-10-09T11:55:00Z",
+      "end_utc": "2026-10-09T14:26:01Z",
+      "source": "flashscore dc_1_htkg4C7j（DC／DD）"
+    },
+    "replaced_under": "fc3f1f9b833db1801f8259401f40c65c6075651ecc9bcd81b1cbded4ae0da80d"
   }
 }

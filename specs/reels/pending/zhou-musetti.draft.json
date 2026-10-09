@@ -18,7 +18,16 @@
       }
     ],
     "winner": "周意",
-    "result": "7-6(7) 3-6 7-6(1)"
+    "result": "7-6(7) 3-6 7-6(1)",
+    "portrait": {
+      "image": "assets/reel/zhou-musetti-cover.jpg",
+      "focus": 0.51,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「yi zhou」「Shanghai」，日期对上当地 2026-10-09（Asia/Shanghai；日期来源 flashscore dc_1_htkg4C7j）；EXIF 拍摄 2026:10:09 20:50:50+08:00。② 分辨率：5104×3400，zoom 1 铺 1080×1440 是 2.36×（不放大）。③ 认人：最大那张脸像 周意 0.48（≥ 0.34）。④ 睁眼：EAR 0.2672（≥ 0.16）。⑤ 钩子带：脸落在 y220~344，钩子顶边 790。排序：[True, False, False, True, False, 124, 0.4756]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/33a63d18-03e5-4d8b-b141-ed79ea405d6f/Yi-ZHOU-vs-Lorenzo-MUSETTI-1517.JPG",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/33a63d18-03e5-4d8b-b141-ed79ea405d6f/Yi-ZHOU-vs-Lorenzo-MUSETTI-1517.JPG（条目 #4589534，接口发布 2026-10-09T13:29:02Z，EXIF 拍摄 2026:10:09 20:50:50+08:00（UTC 2026-10-09T12:50:50Z），原图 5104×3400），说明原文「2026 Shanghai Zhou」，署名 lixiang；xiangli。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -281,45 +290,48 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 98.5,
-      "end": 109.0,
+      "start": 98.0,
+      "end": 120.5,
       "kind": "match_point",
       "winner_visible": true,
-      "reason": "98.5–106.5s 显示决胜盘抢七末段比分周意 7-6(6)/穆塞蒂 6-6，最后一分周意回球；108.5s 显示抢七 7-6/0-1 一刻场内紧接穆塞蒂回球未过（cut at 109.0），即决胜分瞬间。赢家周意在场内可见。",
-      "confidence": 0.78
+      "reason": "98.5s 决胜盘第3局结束后转回球员，108.5s 显示 ZHOU 7-6 MUSETTI 0-1（决胜抢七比分 7-1，对应 winner_result 7-6(1)）；110.5s/112.5s 赢家周意双手抱头、张嘴怒吼庆祝；114.5s 转身走向网前；118.5s 周意走到网前等待握手；120.5s 两人在网前握手。该窗口完整覆盖决胜赛点、赢家庆祝与赛后握手。",
+      "confidence": 0.92
     },
     "ending": {
-      "start": 108.5,
+      "start": 98.0,
       "end": 120.5,
       "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "108.5s 决胜分落地；110.5s 周意双手抱头难以置信；112.5s 周意张嘴怒吼庆祝；114.5s 周意闭眼低首仍处激动；116.5s 穆塞蒂低头失落；118.5s 周意走向网前；120.5s 两人握手（120.5s 完整握手），覆盖冷开场并兑现结局。",
+      "reason": "与 cold_open 同时段：98.5s 决胜盘结束、110.5s/112.5s 周意抱头怒吼庆祝、114.5s 转身离开、118.5s 走向网前、120.5s 与穆塞蒂在网前握手。完整覆盖赢家庆祝+握手终端场景。",
       "confidence": 0.92
     },
     "cover": {
-      "same_match": false,
-      "subject": "",
+      "same_match": true,
+      "subject": "周意",
       "moment": "other",
-      "wrong_or_old": true,
-      "reason": "题目陈述未提供候选封面照片，仅给出 SOURCE 时间码图，无法核对人物、比分、赛事标识或服装；按规则无本场封面证据，same_match=false。",
-      "confidence": 0.3
+      "wrong_or_old": false,
+      "reason": "候选封面：周意身穿与视频同款深酒红色套装、Wilson 头带（同 46.5s/48.5s 庆祝照），蓝色硬地球场（与上海大师赛 ATP1000 蓝场一致）；动作是回球后的跟进姿势，神情投入比赛，不属于庆祝、输家振作或失落瞬间。视觉与人物、装备、场地均与本场上海大师赛周意 vs 穆塞蒂吻合，但为常规击球瞬间而非决定性情绪点，故归入 other。",
+      "confidence": 0.82
     },
     "problems": [
-      "cold_open 置信度 0.78 低于 0.80",
-      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.30 低于 0.80",
-      "封面人物应为 周意，模型识别为 空",
       "封面情绪应为 winner_celebration，现在是 other"
     ],
     "model_attempts": 1,
-    "input_sha256": "86c9d4f9a1ed058e05b309e22a1915fb404c491bf04d7cddb4d42628d06a80ff",
+    "input_sha256": "67aa7e9091345d61fded96fc3b0efa46a133a03b82f8d1207b061bfeb8a3f5df",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/zhou-musetti-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "htkg4C7j",
+      "start_utc": "2026-10-09T11:55:00Z",
+      "end_utc": "2026-10-09T14:26:01Z",
+      "source": "flashscore dc_1_htkg4C7j（DC／DD）"
+    },
+    "replaced_under": "86c9d4f9a1ed058e05b309e22a1915fb404c491bf04d7cddb4d42628d06a80ff"
   }
 }
