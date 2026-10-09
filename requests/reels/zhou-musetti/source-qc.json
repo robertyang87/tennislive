@@ -1,0 +1,229 @@
+{
+  "status": "source_research_complete_production_blocked_deepseek_balance",
+  "scope": "source inspection only; no render/push",
+  "method": {
+    "visual": "Actually inspected contact sheets, native score crops, 0.2-second break-end sheets and frame at TTV90.0s",
+    "audio": "faster-whisper small.en full source normalized/noVAD and base.en independent selected windows; no human listen claimed",
+    "captions": "YouTube source has no available subtitles; captions_debug.txt records all failed/exhausted client attempts"
+  },
+  "sources": [
+    {
+      "id": "ShSDhLGXYOk",
+      "url": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
+      "title": "Yi Zhou vs Lorenzo Musetti highlights | Shanghai 2026 Round 2",
+      "provider": "ATP Tour user link; ATP logo in actual footage",
+      "path": "/workspace/scratch/zhou-source/ShSDhLGXYOk.mp4",
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "duration": 136.277914,
+      "sha256": "b6c3f528c315274b54c694eec01123670acb01c7b7b57442dee06986f2b21cb6",
+      "archive_run": 37975033217,
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-ShSDhLGXYOk/ShSDhLGXYOk.mp4",
+      "actual_match_end_before": 121.3,
+      "excluded": "121.3+ silent brand tail"
+    },
+    {
+      "id": "4589550",
+      "url": "https://www.tennistv.com/videos/4589550/shanghai-2026-r2-zhou-musetti-short-highlights",
+      "provider": "Tennis TV official public free entitlement",
+      "match_sid": "5014_2026_MS045",
+      "players": [
+        "Z0CQ",
+        "M0EJ"
+      ],
+      "path": "/workspace/scratch/zhou-source/tennistv-4589550.mp4",
+      "width": 1920,
+      "height": 1080,
+      "fps": 50,
+      "duration": 158.016,
+      "sha256": "c8bde43f4913450a3f67b14bb2dc76792629a7c86bf751cfb762d2a80d254254",
+      "actual_match_end_before": 149.143,
+      "excluded": "149.143+ black transition/brand montage/brand slate"
+    },
+    {
+      "id": "4589553",
+      "url": "https://www.tennistv.com/videos/4589553/shanghai-2026-r2-zhou-musetti-highlights",
+      "duration": 602,
+      "entitlement": "premium",
+      "status": "metadata only; not downloaded"
+    },
+    {
+      "id": "Tennis TV YouTube alternative",
+      "status": "unresolved",
+      "reason": "Tennis TV uploads RSS and channel list both proxy403; web search did not surface verifiable same-match public single long video; cannot claim none exists"
+    }
+  ],
+  "score_warning": "probe scoreboard.json is OCR-bad for t<60s (2-0); use viewed native score_*.jpg instead",
+  "coverage": [
+    {
+      "point": "首盘抢七3-4→3-5，周意输此分",
+      "atp_window": [
+        1.27,
+        23.57
+      ],
+      "state": "complete rally plus reactions"
+    },
+    {
+      "point": "首盘抢七3-6三盘点；前两救分",
+      "state": "not covered in both available free sources; truthful fact card/narration required"
+    },
+    {
+      "point": "首盘抢七6-6→7-6，周意救第三盘点",
+      "atp_window": [
+        23.57,
+        35.37
+      ],
+      "state": "complete serve/rally plus reaction"
+    },
+    {
+      "point": "首盘抢七8-7→9-7首盘终结",
+      "atp_window": [
+        35.37,
+        48.8
+      ],
+      "state": "complete point and Zhou celebration"
+    },
+    {
+      "point": "第二盘首局，穆塞蒂发球，周意30-15→40-15形成两破发点",
+      "atp_window": [
+        48.8,
+        63.47
+      ],
+      "state": "covered setup point; subsequent saving points not shown"
+    },
+    {
+      "point": "第二盘周意3-4/30-40，救第一个破发点→40-40",
+      "ttv_window": [
+        48.8,
+        91.3
+      ],
+      "full_rally": [
+        50.503,
+        88.663
+      ],
+      "verification_frame": "/workspace/scratch/zhou-source/ttv-score90.jpg",
+      "state": "complete long rally; NOT Musetti winning break point"
+    },
+    {
+      "point": "第二盘3-4最终被破发→3-5",
+      "state": "winning break point not covered in either free source; use verified fact narration/card, do not label preceding long point as break"
+    },
+    {
+      "point": "第二盘周意3-5/15-40，穆塞蒂盘点→6-3",
+      "atp_window": [
+        65.23,
+        79.0
+      ],
+      "ttv_window": [
+        91.3,
+        105.583
+      ],
+      "state": "complete set point and changeover"
+    },
+    {
+      "point": "第三盘1-1/0-40，周意救三破发点→2-1",
+      "state": "not covered in either free source; requires point-feed verification before fact card"
+    },
+    {
+      "point": "第三盘抢七2-0下一分、4-0下一分",
+      "atp_window": [
+        [
+          79.0,
+          90.7
+        ],
+        [
+          90.7,
+          101.37
+        ]
+      ],
+      "state": "points covered; 4-0 outcome5-0 visible TTV125.86"
+    },
+    {
+      "point": "第三盘抢七6-1赛点→7-1、抱头怒吼、握手",
+      "atp_window": [
+        101.37,
+        121.2
+      ],
+      "ttv_window": [
+        129.243,
+        149.14
+      ],
+      "state": "complete serve/point/celebration/handshake; 98.0s is Musetti closeup NOT start of match point"
+    }
+  ],
+  "quote_candidates_not_final_verified": [
+    {
+      "source": "ShSDhLGXYOk",
+      "at": [
+        33.34,
+        35.6
+      ],
+      "en": "That’s gutsy. Second serve.",
+      "zh": "真有胆量。还是二发。",
+      "status": "ASR candidate, boundary and wording require actual listening; prior clause small.en Not vs base.en I love conflict"
+    },
+    {
+      "source": "ShSDhLGXYOk",
+      "at": [
+        45.68,
+        48.58
+      ],
+      "en": "And he did do it. And he made it happen.",
+      "zh": "他真的做到了。他把机会变成了现实。",
+      "status": "small.en/base.en agree core words; no human hearing claim"
+    },
+    {
+      "source": "ShSDhLGXYOk",
+      "at": [
+        109.72,
+        111.44
+      ],
+      "en": "Incredible scenes!",
+      "zh": "不可思议的一幕！",
+      "status": "small.en/base.en agree core words; sentence onset could include article; actual listen still required"
+    },
+    {
+      "source": "ShSDhLGXYOk",
+      "at": [
+        114.94,
+        119.9
+      ],
+      "en": "The best win of his career. The first top 30 win.",
+      "zh": "他职业生涯最重要的一胜，首次击败世界前三十球员。",
+      "status": "small.en/base.en agree core words; facts should corroborate with official article; actual listening still required"
+    },
+    {
+      "source": "4589550",
+      "at": [
+        87.0,
+        93.28
+      ],
+      "en": "I can’t believe it. You cannot believe he’s missed it wide.",
+      "zh": "难以置信，这球居然打偏了。",
+      "status": "single ASR candidate; commentator appears to refer to Musetti miss on break point, verify by actual listening and frame; score90.0 deuce confirmed"
+    }
+  ],
+  "ASR_limitations": [
+    "initial unnormalized VAD missed most speech; normalized noVAD gives useful candidate words",
+    "word start/end may span silence (e.g. and at38.54–45.68); never treat those as true word timing",
+    "134.84–136.24 No hallucination lies in known silent brand tail and is rejected",
+    "TTV full-source normalized small.en completed at handoff; useful candidates only, no independent TTV crosscheck or human hearing claimed; 154s brand-tail speech excluded"
+  ],
+  "files": {
+    "probe_dir": "/workspace/scratch/zhou-probe",
+    "ttv_catalog": "/workspace/scratch/zhou-catalog.json",
+    "atp_asr": "/workspace/scratch/zhou-source/atp-asr-small-en-normalized.json",
+    "atp_asr_crosscheck": "/workspace/scratch/zhou-source/atp-asr-base-en-windows.json",
+    "ttv_scene_log": "/workspace/scratch/zhou-source/tennistv-scenes.txt",
+    "ttv_contact": "/workspace/scratch/zhou-source/tennistv-contact.jpg",
+    "ttv_score": "/workspace/scratch/zhou-source/tennistv-score.jpg",
+    "ttv_asr": "/workspace/scratch/zhou-source/tennistv-asr-small-en-normalized.json"
+  },
+  "next_steps": [
+    "Check verified point-feed for three set-point saves and deciding-set three breakpoint saves",
+    "Resolve disputed commentary with real source listening before quote subtitles",
+    "If mixing source dimensions match; spec must acknowledge TTV50 to primaryATP30 resampling",
+    "Production renderer layout preview already confirmed by parent: board_top1229 subtitle_bottom1205 gap24, no subtitle_top override"
+  ]
+}

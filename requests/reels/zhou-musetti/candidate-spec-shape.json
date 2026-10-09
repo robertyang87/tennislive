@@ -1,0 +1,481 @@
+{
+  "_candidate_only": true,
+  "_not_publishable_reason": "English broadcast quotes, exact cut/audio boundaries, 1-1 point feed, court, rank source, cover and real model reviews remain unresolved.",
+  "slug": "zhou-musetti",
+  "reference_spec": "specs/reels/zheng-charaeva-beijing-2026-r4.json",
+  "source_url": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
+    "supplement": "https://www.tennistv.com/videos/4589550/shanghai-2026-r2-zhou-musetti-short-highlights"
+  },
+  "primary": "main",
+  "_column": "reel",
+  "track": false,
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "scorebox": [
+    92,
+    922,
+    547,
+    1032
+  ],
+  "_scorebox_why": "probe猜框92,922,417,1032，右界预留130；实际渲染须读标定ATP板每段真实右边，不能把547硬当板宽。",
+  "stats": {
+    "a": {
+      "aces": 14,
+      "df": 0,
+      "winners": 34,
+      "ue": 46,
+      "first_in": 82,
+      "first_won": 61,
+      "second_total": 26,
+      "second_won": 13,
+      "bp_conv": 0,
+      "bp_chances": 2,
+      "pts_won": 98,
+      "pts_total": 206,
+      "first_total": 108,
+      "headshot": "assets/players/headshots/atp-Z0CQ.png"
+    },
+    "b": {
+      "aces": 5,
+      "df": 3,
+      "winners": 25,
+      "ue": 18,
+      "first_in": 66,
+      "first_won": 52,
+      "second_total": 32,
+      "second_won": 22,
+      "bp_conv": 1,
+      "bp_chances": 5,
+      "pts_won": 108,
+      "pts_total": 206,
+      "first_total": 98,
+      "headshot": "assets/players/headshots/atp-M0EJ.png"
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "htkg4C7j",
+    "flashscore_id": "htkg4C7j",
+    "participants": [
+      "周意",
+      "穆塞蒂"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        6
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "winner": "周意",
+    "loser": "穆塞蒂",
+    "winner_result": "7-6(7) 3-6 7-6(1)",
+    "loser_result": "6-7(7) 6-3 6-7(1)",
+    "tiebreaks_home_away": [
+      [
+        9,
+        7
+      ],
+      null,
+      [
+        7,
+        1
+      ]
+    ]
+  },
+  "_production": {
+    "kind": "orchestrated_reel",
+    "received_at": "2026-10-09T15:48:13Z",
+    "event": "Shanghai",
+    "year": 2026,
+    "round": "第二轮",
+    "court": "Stadium Court",
+    "status": "candidate_only"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "周意",
+        "name_en": "yi zhou",
+        "country": "CHN",
+        "rank": 277
+      },
+      {
+        "name": "穆塞蒂",
+        "name_en": "lorenzo musetti",
+        "country": "ITA",
+        "rank": 25
+      }
+    ],
+    "winner": "周意",
+    "result": "7-6(7) 3-6 7-6(1)",
+    "portrait": {
+      "image": "assets/reel/zhou-musetti-cover.jpg",
+      "focus": 0.51,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「yi zhou」「Shanghai」，日期对上当地 2026-10-09（Asia/Shanghai；日期来源 flashscore dc_1_htkg4C7j）；EXIF 拍摄 2026:10:09 20:50:50+08:00。② 分辨率：5104×3400，zoom 1 铺 1080×1440 是 2.36×（不放大）。③ 认人：最大那张脸像 周意 0.48（≥ 0.34）。④ 睁眼：EAR 0.2672（≥ 0.16）。⑤ 钩子带：脸落在 y220~344，钩子顶边 790。排序：[True, False, False, True, False, 124, 0.4756]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/33a63d18-03e5-4d8b-b141-ed79ea405d6f/Yi-ZHOU-vs-Lorenzo-MUSETTI-1517.JPG",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/33a63d18-03e5-4d8b-b141-ed79ea405d6f/Yi-ZHOU-vs-Lorenzo-MUSETTI-1517.JPG（条目 #4589534，接口发布 2026-10-09T13:29:02Z，EXIF 拍摄 2026:10:09 20:50:50+08:00（UTC 2026-10-09T12:50:50Z），原图 5104×3400），说明原文「2026 Shanghai Zhou」，署名 lixiang；xiangli。",
+      "_candidate_review_status": "导入pending自动候选，非本次终审；当前击球照已被旧MiniMax以emotion=other否决，cover_facts正在给合格备选。"
+    },
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "周意",
+    "hook": "首盘救下3个盘点\n周意击败穆塞蒂",
+    "topic": "ATP1000 上海站 第二轮 · 周意 VS 穆塞蒂",
+    "scoreboard": {
+      "court": "Stadium Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A9000%2C%22unit%22%3A%22seconds%22%2C%22source_value%22%3A%222%3A30%22%2C%22source%22%3A%22flashscore%20structured%20match%20statistics%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "Flashscore草稿全场2:30按H:MM=9000秒；上海官网实际02:30:55。封面分钟口径两者均2小时30分，不伪造精确秒。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 ATP1000 上海站 第二轮",
+    "line2": "周意 7-6(7) 3-6 7-6(1) 穆塞蒂"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "首盘救下3个盘点",
+      "周意击败穆塞蒂"
+    ],
+    "question": "首盘面对三个盘点，第二盘又被追平，周意怎样把这场苦战赢下来？",
+    "thesis": "首盘抢七3-6连救三个盘点，次盘3-6被扳平，决胜盘救破发点后以7-1抢七收官；用完整已有回合、原声和事实说明讲清三盘，不夸大缺失画面。",
+    "beats": [
+      "首盘连救三个盘点后拿下抢七",
+      "次盘被扳平后决胜盘守住发球局",
+      "决胜抢七建立优势并赢下终局"
+    ],
+    "chapters": [
+      "先扛住三个盘点",
+      "扳平后再守住",
+      "最后较量不退让"
+    ],
+    "narration": [
+      "首盘抢七三比六，周意连救三个盘点，九比七先下一城。",
+      "第二盘三比六被扳平；决胜盘一比一，周意救下三个破发点，保住发球局。",
+      "决胜抢七七比一，周意赢下三盘苦战。第三轮面对胡尔卡奇，他能继续闯关吗？"
+    ],
+    "human_context": {
+      "angle": "21岁、世界277、外卡参赛的北京球员，在上海两度赢下抢七。",
+      "facts": [
+        "北京时间2026年10月9日晚上，ATP1000上海站第二轮。21岁北京球员周意，世界排名277，通过外卡参赛。",
+        "第三轮将面对2023年上海冠军胡尔卡奇。"
+      ],
+      "sources": [
+        "https://en.rolexshanghaimasters.com/en/media/news/zhou-stuns-musetti-to-reach-third-round",
+        "https://www.protennislive.com/posting/2026/5014/mds.pdf"
+      ]
+    },
+    "_review_status": "human_candidate_not_deepseek_output"
+  },
+  "push": {
+    "auto": true,
+    "summary": "首盘连救3盘点周意闯关",
+    "lead": "周意首盘抢七3-6连救3个盘点，以9-7先下一城；第二盘3-6被扳平。决胜盘守住关键发球局后，他以7-1赢下抢七，全场14个ACE且没有双误。第三轮将面对2023年上海冠军胡尔卡奇。"
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 109,
+      "end": 113.7,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "_edit_id": "cold_open",
+      "point_end_ok": "冷开场仅给周意抱头、怒吼的真实获胜反应，不从98秒穆塞蒂普通得分近景起；句头/句尾由ASR审听决定微调。",
+      "crosses_cut": "冷开场仅给周意抱头、怒吼的真实获胜反应，不从98秒穆塞蒂普通得分近景起；句头/句尾由ASR审听决定微调。",
+      "_why": "冷开场仅给周意抱头、怒吼的真实获胜反应，不从98秒穆塞蒂普通得分近景起；句头/句尾由ASR审听决定微调。",
+      "_candidate_window_status": "contact_sheet_confirmed_exact_frames_pending",
+      "_audio_review_status": "not_run",
+      "_quote_requirement": "取真实英文解说完整语句，逐句核英文/中文/相对时间；尚未写quote，禁止以空quote转正。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "正文最后比赛段重回101.37–121.23赛点、抱头怒吼、握手；冷开场不代替完整终局。"
+    },
+    {
+      "title_card": "首盘连救3个盘点\n周意赢下三盘苦战",
+      "kicker": "上海第二轮",
+      "seconds": 11.3,
+      "narration": "北京时间十月九号晚上，上海大师赛第二轮。二十一岁的外卡球员周意，对阵穆塞蒂。首盘三个盘点，他怎样一步步挺过来？",
+      "_edit_id": "coordinate",
+      "_why": "日期/晚上/轮次/年龄/外卡来自上海官网赛报和ATP签表；赛后结果封面已有，旁白抛具体问题。",
+      "_narration_status": "human_candidate_deepseek_not_run"
+    },
+    {
+      "source": "main",
+      "start": 1.27,
+      "end": 23.57,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "_edit_id": "set_one_pressure",
+      "point_end_ok": "首盘抢七3-4长回合→3-5，周意输此分；保留完整源回合、落点和两人反应。绝不说这分是盘点或周意得分。",
+      "crosses_cut": "首盘抢七3-4长回合→3-5，周意输此分；保留完整源回合、落点和两人反应。绝不说这分是盘点或周意得分。",
+      "_why": "首盘抢七3-4长回合→3-5，周意输此分；保留完整源回合、落点和两人反应。绝不说这分是盘点或周意得分。",
+      "_candidate_window_status": "contact_sheet_confirmed_exact_frames_pending",
+      "_audio_review_status": "not_run",
+      "_quote_requirement": "取真实英文解说完整语句，逐句核英文/中文/相对时间；尚未写quote，禁止以空quote转正。"
+    },
+    {
+      "source": "main",
+      "start": 23.57,
+      "end": 48.8,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "_edit_id": "set_one_save_and_take",
+      "point_end_ok": "抢七6-6→7-6，周意救下第三盘点；源转至8-7盘点，35.37–45.6完整发球上网回合取9-7，再46–48.8耳旁手势与举臂。先在卡中事实解释3-6连救三个，不冒充三分都在本段。",
+      "crosses_cut": "抢七6-6→7-6，周意救下第三盘点；源转至8-7盘点，35.37–45.6完整发球上网回合取9-7，再46–48.8耳旁手势与举臂。先在卡中事实解释3-6连救三个，不冒充三分都在本段。",
+      "_why": "抢七6-6→7-6，周意救下第三盘点；源转至8-7盘点，35.37–45.6完整发球上网回合取9-7，再46–48.8耳旁手势与举臂。先在卡中事实解释3-6连救三个，不冒充三分都在本段。",
+      "_candidate_window_status": "contact_sheet_confirmed_exact_frames_pending",
+      "_audio_review_status": "not_run",
+      "_quote_requirement": "取真实英文解说完整语句，逐句核英文/中文/相对时间；尚未写quote，禁止以空quote转正。"
+    },
+    {
+      "title_card": "一次领先还不够\n比赛回到同一起点",
+      "kicker": "第二盘",
+      "seconds": 9.17,
+      "narration": "首盘连救三个盘点，周意九比七先下一城。第二盘错过两个破发机会，三比四的发球局又遇到险情。",
+      "_edit_id": "set_two_turn",
+      "_why": "首盘三个盘点官方赛报；次盘首局两个BP草稿/ATP影像；TTV长回合前板明确周意3-4、30-40发球，不宣称该分是最终破发。",
+      "_narration_status": "human_candidate_deepseek_not_run"
+    },
+    {
+      "source": "supplement",
+      "start": 50.503,
+      "end": 105.55,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "_edit_id": "set_two_save_then_set_lost",
+      "point_end_ok": "保留周意救下第一个破发点的完整长回合及40-40翻牌；随后按官方源跳接盘点及次盘输盘反应，真实最终破发分缺口只内部记录。",
+      "crosses_cut": "救破发点长回合、同分反应40-40，源跳至3-5盘点；这是不同分/不同局，旁白明确先救一个但最终失守，不把长回合冒充破发得分。",
+      "_why": "逐0.2秒末尾更正：TennisTV50.503–88.663是第二盘周意3-4、30-40发球救下第一个破发点，88.8–91.2更新为40-40，不是破发分。91.3官方剪辑跳到周意3-5、15-40；93.103–105.55穆塞蒂盘点回合赢盘6-3。真正最终破发分两官方源皆未收录；以事实旁白说明该局最终失守。",
+      "_candidate_window_status": "contact_sheet_confirmed_exact_frames_pending",
+      "_audio_review_status": "not_run",
+      "_quote_requirement": "取真实英文解说完整语句，逐句核英文/中文/相对时间；尚未写quote，禁止以空quote转正。"
+    },
+    {
+      "title_card": "3次险情都扛住\n胜负留给最后较量",
+      "kicker": "决胜盘",
+      "seconds": 12.44,
+      "narration": "第二盘三比四，周意先救下一个破发点，但这一局最终失守，三比六被扳平。决胜盘一比一，再救三个破发点。六比六，胜负留给抢七。",
+      "_edit_id": "set_three_hold",
+      "_why": "第二盘救一个破发点后到40-40由TTV逐帧核，随后3-5盘点→3-6；最终破发分两源无，直接说明该局失守。决胜盘1-1三BP仍需Flashscore原始逐分确认；缺口只内部记录。",
+      "_narration_status": "human_candidate_deepseek_not_run"
+    },
+    {
+      "source": "main",
+      "start": 78.67,
+      "end": 101.37,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "_edit_id": "deciding_tiebreak_charge",
+      "point_end_ok": "决胜抢七2-0阶段起，79–87完整回合与周意反应；90.7起4-0阶段回合到98/99.8双方反应。实际比分逐帧取board，不把98秒普通得分当赛点。",
+      "crosses_cut": "决胜抢七2-0阶段起，79–87完整回合与周意反应；90.7起4-0阶段回合到98/99.8双方反应。实际比分逐帧取board，不把98秒普通得分当赛点。",
+      "_why": "决胜抢七2-0阶段起，79–87完整回合与周意反应；90.7起4-0阶段回合到98/99.8双方反应。实际比分逐帧取board，不把98秒普通得分当赛点。",
+      "_candidate_window_status": "contact_sheet_confirmed_exact_frames_pending",
+      "_audio_review_status": "not_run",
+      "_quote_requirement": "取真实英文解说完整语句，逐句核英文/中文/相对时间；尚未写quote，禁止以空quote转正。"
+    },
+    {
+      "stat_card": true,
+      "seconds": 11.2,
+      "narration": "十四个ACE，没有双误。首盘救下三个盘点，决胜盘再守住三次危机；两个抢七，周意都赢了下来。",
+      "_edit_id": "statistics_before_final",
+      "_why": "完整技术统计按Flashscore赢家视角；把事实总结放在终局之前，最后一个比赛段仍是赛点到握手。",
+      "_narration_status": "human_candidate_deepseek_not_run"
+    },
+    {
+      "source": "main",
+      "start": 101.37,
+      "end": 121.23,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "_edit_id": "match_point_to_handshake",
+      "point_end_ok": "决胜抢七6-1：完整发球/回合至109获胜，109–118.37抱头、怒吼真实反应，118.37–121.23与穆塞蒂握手。最后比赛段只到实际片尾卡前，121.23之后WATCH MORE不可带入。",
+      "crosses_cut": "决胜抢七6-1：完整发球/回合至109获胜，109–118.37抱头、怒吼真实反应，118.37–121.23与穆塞蒂握手。最后比赛段只到实际片尾卡前，121.23之后WATCH MORE不可带入。",
+      "_why": "决胜抢七6-1：完整发球/回合至109获胜，109–118.37抱头、怒吼真实反应，118.37–121.23与穆塞蒂握手。最后比赛段只到实际片尾卡前，121.23之后WATCH MORE不可带入。",
+      "_candidate_window_status": "contact_sheet_confirmed_exact_frames_pending",
+      "_audio_review_status": "not_run",
+      "_quote_requirement": "取真实英文解说完整语句，逐句核英文/中文/相对时间；尚未写quote，禁止以空quote转正。"
+    }
+  ],
+  "verified_fact_packet": [
+    {
+      "id": "result",
+      "fact": "周意7-6(7)、3-6、7-6(1)击败穆塞蒂；两个抢七分别9-7、7-1。",
+      "sources": [
+        "https://en.rolexshanghaimasters.com/en/media/news/zhou-stuns-musetti-to-reach-third-round",
+        "https://www.flashscore.com/match/tennis/htkg4C7j/#/match-summary",
+        "https://www.protennislive.com/posting/2026/5014/mds.pdf"
+      ]
+    },
+    {
+      "id": "context",
+      "fact": "北京时间2026年10月9日晚上，ATP1000上海站第二轮。21岁北京球员周意，世界排名277，通过外卡参赛。",
+      "sources": [
+        "https://en.rolexshanghaimasters.com/en/media/news/zhou-stuns-musetti-to-reach-third-round",
+        "https://www.protennislive.com/posting/2026/5014/mds.pdf"
+      ]
+    },
+    {
+      "id": "set1",
+      "fact": "首盘抢七3-6，周意连救3个盘点，9-7赢下抢七。",
+      "sources": [
+        "https://en.rolexshanghaimasters.com/en/media/news/zhou-stuns-musetti-to-reach-third-round",
+        "https://www.flashscore.com/match/tennis/htkg4C7j/#/match-summary"
+      ]
+    },
+    {
+      "id": "set2",
+      "fact": "第二盘穆塞蒂6-3扳平；全场穆塞蒂兑现1/5破发点，周意0/2。",
+      "sources": [
+        "https://www.flashscore.com/match/tennis/htkg4C7j/#/match-summary",
+        "https://en.rolexshanghaimasters.com/en/media/news/zhou-stuns-musetti-to-reach-third-round"
+      ]
+    },
+    {
+      "id": "set3",
+      "fact": "决胜盘周意第二个发球局救下3个破发点，保发至2-1；这是赛后草稿逐局字段列出的2-1，不应误说2-1时开始发球。",
+      "sources": [
+        "https://www.flashscore.com/match/tennis/htkg4C7j/#/match-summary"
+      ],
+      "needs_exact_point_feed": true
+    },
+    {
+      "id": "last_tb",
+      "fact": "决胜抢七周意5-0领先，7-1取胜。",
+      "sources": [
+        "https://en.rolexshanghaimasters.com/en/media/news/zhou-stuns-musetti-to-reach-third-round",
+        "https://www.flashscore.com/match/tennis/htkg4C7j/#/match-summary"
+      ]
+    },
+    {
+      "id": "stats",
+      "fact": "周意14个ACE、0双误、34制胜分、46非受迫失误；穆塞蒂5个ACE、3双误、25制胜分、18非受迫失误。全场总得分周意98、穆塞蒂108，总分差只可正文使用。",
+      "sources": [
+        "https://www.flashscore.com/match/tennis/htkg4C7j/#/match-summary"
+      ]
+    },
+    {
+      "id": "next",
+      "fact": "第三轮将面对2023年上海冠军胡尔卡奇。",
+      "sources": [
+        "https://en.rolexshanghaimasters.com/en/media/news/zhou-stuns-musetti-to-reach-third-round",
+        "https://www.protennislive.com/posting/2026/5014/mds.pdf"
+      ]
+    },
+    {
+      "id": "court",
+      "fact": "上海官网结果页本场Men’s Round of 64、Stadium Court、02:30:55。",
+      "sources": [
+        "https://en.rolexshanghaimasters.com/en/scores/results"
+      ]
+    }
+  ],
+  "_review_state": {
+    "deepseek": "blocked_http402_no_output",
+    "minimax": "not_run",
+    "audio": "not_run",
+    "tts_pronunciation": "not_run",
+    "final_qc": "not_run"
+  },
+  "_supplement_identity": {
+    "video_id": "4589550",
+    "local_file": "/workspace/scratch/zhou-source/tennistv-4589550.mp4",
+    "duration": 158.016,
+    "fps": 50,
+    "width": 1920,
+    "height": 1080,
+    "official_url_status": "source_evidence_verified",
+    "match_sid": "5014_2026_MS045",
+    "free": true
+  },
+  "_subtitle_requirement": {
+    "column": "reel",
+    "bottom_gap_px": 24,
+    "function": "build_match_reel.subtitle_bottom_for_boards",
+    "english_font": "Inter SemiBold",
+    "applies_to": [
+      "narration",
+      "bilingual_broadcast_quote"
+    ],
+    "verification": "最终成片字幕下沿钉板上方24px；折行向上长，按各段实际板顶量，不能只查常量。"
+  },
+  "_native_insert_candidates": [
+    {
+      "title_card": "两个抢七都赢下来\n下一关面对胡尔卡奇",
+      "kicker": "上海第三轮",
+      "seconds": 9.5,
+      "narration": "两个抢七，周意都赢了下来。下一轮面对二〇二三年上海冠军胡尔卡奇，他能再过一关吗？",
+      "_edit_id": "next_round_before_match_point",
+      "_why": "官网赛报及签表确认第三轮胡尔卡奇；放统计卡后、最后赛点之前作预期收束。完整握手是叙事终点，其后只接brand outro，不追加旁白、字卡、统计或比赛回放。",
+      "_insert_before_edit_id": "match_point_to_handshake"
+    },
+    {
+      "source": "main",
+      "start": 48.8,
+      "end": 63.47,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "_edit_id": "optional_second_set_two_break_chances",
+      "_why": "若主计划需显出两个破发机会，插ATP第二盘首局30-15→40-15整分及反应；不可替代TTV完整救破发点长回合。加入后检查源视频/事实段数合同，native卡插入数量另算。",
+      "_quote_requirement": "待实际ASR审听完整英语原声，不造字幕。"
+    }
+  ],
+  "_actual_model_failure": {
+    "deepseek_workflow_run": 37975276311,
+    "error": "HTTP 402 Insufficient Balance",
+    "status": "blocked_real_call_no_pass"
+  },
+  "mixed_fps": {
+    "supplement": "本场官方TennisTV补源本地ffprobe 50fps、1920×1080，与主源ATP YouTube 30fps不同。补完整第二盘救破发点长回合，渲染按主源30fps保持时间/声画同步，不丢弃证据。"
+  },
+  "_correction_log": [
+    {
+      "reason": "TennisTV长回合末尾实际更新40-40，先前粗墙把它误判穆塞蒂破发。",
+      "corrected_claim": "周意救下第一个破发点，但该发球局最终失守。",
+      "source_evidence": "/workspace/scratch/zhou-source/ttv-break-end-86.jpg + source_evidence逐0.2秒末尾核验。",
+      "missing_action": "第二盘该局真正最终破发分仍无官方画面。"
+    }
+  ],
+  "_tts_backend_status": "未验证本期专用backend；不复制参考spec，正式版遵循match-reel默认edge云见并在本期真实音频核验。"
+}
