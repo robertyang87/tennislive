@@ -952,6 +952,25 @@ jobs:
           key: reel-src-${{ github.event.inputs.slug }}-${{ steps.srckey.outputs.hash }}
           restore-keys: reel-src-${{ github.event.inputs.slug }}-
 
+      - name: 临时导出已缓存官方源片供当前模型审听
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.slug == 'zheng-svitolina-beijing-2026-qf' && github.ref_name == 'codex/zheng-svitolina-own-model'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
+        run: |
+          python - <<'PYEXPORT'
+          import sys, shutil, hashlib
+          from pathlib import Path
+          sys.path.insert(0, "tools")
+          from build_match_reel import _cached_source
+          p = _cached_source("https://www.youtube.com/watch?v=lme6vYGvWXw", ".mp4")
+          assert p and p.is_file(), "Original probe cache must already exist"
+          shutil.copy2(p, "/tmp/zheng-svitolina-source.mp4")
+          print("Retained source SHA256:", hashlib.sha256(p.read_bytes()).hexdigest())
+          PYEXPORT
+          gh release view review-source-zheng-svitolina >/dev/null 2>&1 || gh release create review-source-zheng-svitolina --draft --title "Internal source audio review" --notes "Temporary cached official source for current-model review; not a finished reel."
+          gh release upload review-source-zheng-svitolina /tmp/zheng-svitolina-source.mp4 --clobber
+
       # TTS 缓存和源片缓存**形状不同**：源片按 URL hash 键，源不变键就不变，
       # 命中即完事；TTS 是内容寻址（`~/.cache/tennislive-tts/<内容hash>.mp3`），
       # 集合只会越跑越全。所以用**滚动键**（run_id 进 key）：每趟 restore-keys
