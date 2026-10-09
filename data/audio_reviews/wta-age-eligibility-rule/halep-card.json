@@ -1,0 +1,212 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=DpmZnERUUSM",
+  "source_sha256": "6188245e415cf03dfe50ec53cb3f4b97fb8437e90215dcd579442b661040ece3",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 全片交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T09:05:00+00:00",
+  "status": "complete",
+  "reviewed_from": 147.0,
+  "reviewed_to": 154.0,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "small.en 最后一句停在146.78，base.en 停在146.64，片尾到165秒没有下一句。147.00–154.00没有英文词。画面是6-3 6-3、HALEP的片尾图形，本段配中文旁白。",
+  "asr_window": {
+    "small.en": [
+      {
+        "start": 141.36,
+        "end": 144.88,
+        "text": "Miss Boff is challenging the call on the left-hand sideline.",
+        "words": [
+          {
+            "s": 141.36,
+            "e": 141.94,
+            "w": "Miss"
+          },
+          {
+            "s": 141.94,
+            "e": 142.38,
+            "w": "Boff"
+          },
+          {
+            "s": 142.38,
+            "e": 142.8,
+            "w": "is"
+          },
+          {
+            "s": 142.8,
+            "e": 143.12,
+            "w": "challenging"
+          },
+          {
+            "s": 143.12,
+            "e": 143.34,
+            "w": "the"
+          },
+          {
+            "s": 143.34,
+            "e": 143.58,
+            "w": "call"
+          },
+          {
+            "s": 143.58,
+            "e": 143.9,
+            "w": "on"
+          },
+          {
+            "s": 143.9,
+            "e": 144.04,
+            "w": "the"
+          },
+          {
+            "s": 144.04,
+            "e": 144.26,
+            "w": "left"
+          },
+          {
+            "s": 144.26,
+            "e": 144.58,
+            "w": "-hand"
+          },
+          {
+            "s": 144.58,
+            "e": 144.88,
+            "w": "sideline."
+          }
+        ]
+      },
+      {
+        "start": 145.52,
+        "end": 146.78,
+        "text": "The ball is scored out.",
+        "words": [
+          {
+            "s": 145.52,
+            "e": 146.0,
+            "w": "The"
+          },
+          {
+            "s": 146.0,
+            "e": 146.18,
+            "w": "ball"
+          },
+          {
+            "s": 146.18,
+            "e": 146.32,
+            "w": "is"
+          },
+          {
+            "s": 146.32,
+            "e": 146.48,
+            "w": "scored"
+          },
+          {
+            "s": 146.48,
+            "e": 146.78,
+            "w": "out."
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "start": 141.72,
+        "end": 145.02,
+        "text": "The ball is challenging the ball on the left-part-side line.",
+        "words": [
+          {
+            "s": 141.72,
+            "e": 142.28,
+            "w": "The"
+          },
+          {
+            "s": 142.28,
+            "e": 142.36,
+            "w": "ball"
+          },
+          {
+            "s": 142.36,
+            "e": 142.72,
+            "w": "is"
+          },
+          {
+            "s": 142.72,
+            "e": 143.0,
+            "w": "challenging"
+          },
+          {
+            "s": 143.0,
+            "e": 143.28,
+            "w": "the"
+          },
+          {
+            "s": 143.28,
+            "e": 143.5,
+            "w": "ball"
+          },
+          {
+            "s": 143.5,
+            "e": 143.86,
+            "w": "on"
+          },
+          {
+            "s": 143.86,
+            "e": 143.96,
+            "w": "the"
+          },
+          {
+            "s": 143.96,
+            "e": 144.22,
+            "w": "left"
+          },
+          {
+            "s": 144.22,
+            "e": 144.58,
+            "w": "-part"
+          },
+          {
+            "s": 144.58,
+            "e": 144.82,
+            "w": "-side"
+          },
+          {
+            "s": 144.82,
+            "e": 145.02,
+            "w": "line."
+          }
+        ]
+      },
+      {
+        "start": 145.8,
+        "end": 146.64,
+        "text": "The ball is scored out.",
+        "words": [
+          {
+            "s": 145.8,
+            "e": 145.98,
+            "w": "The"
+          },
+          {
+            "s": 145.98,
+            "e": 146.14,
+            "w": "ball"
+          },
+          {
+            "s": 146.14,
+            "e": 146.28,
+            "w": "is"
+          },
+          {
+            "s": 146.28,
+            "e": 146.44,
+            "w": "scored"
+          },
+          {
+            "s": 146.44,
+            "e": 146.64,
+            "w": "out."
+          }
+        ]
+      }
+    ]
+  }
+}

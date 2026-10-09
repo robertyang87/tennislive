@@ -92,12 +92,26 @@ def length_problem(text: str) -> str | None:
     return None
 
 
-def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
-          clear_bottom: int = 0) -> str:
-    """品牌默认距卡底 `HANDLE_BOTTOM_PX`，落在默认字幕区下方，仍留底边安全区。
+# 按片指定的底边距只允许落在默认 28 附近，避免把品牌抬回字幕区。
+HANDLE_BOTTOM_MIN = 20
+HANDLE_BOTTOM_MAX = 48
 
-    `clear_bottom` 保留为显式增加底边留白的接口（只会把品牌再抬高）；原生
-    章节卡传 0，不根据全片字幕上锚自动抬高品牌。"""
+
+def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
+          clear_bottom: int = 0, handle_bottom: int | None = None) -> str:
+    """品牌默认距卡底 `HANDLE_BOTTOM_PX`（28），落在默认字幕区下方。
+
+    `clear_bottom` 只会把品牌再抬高，不根据全片字幕上锚自动抬高。
+    `handle_bottom` 给了就用那个 20~48 的底边距；年龄限制这期用 28，
+    并另把字卡字幕下锚，上锚两行中文才不会盖住品牌。"""
+    if handle_bottom is None:
+        brand_bottom = max(HANDLE_BOTTOM_PX, int(clear_bottom))
+    else:
+        if type(handle_bottom) is not int or not HANDLE_BOTTOM_MIN <= handle_bottom <= HANDLE_BOTTOM_MAX:
+            raise SystemExit(
+                f"章节卡 handle_bottom 必须是 {HANDLE_BOTTOM_MIN}~{HANDLE_BOTTOM_MAX} 的整数像素，"
+                f"拿到的是 {handle_bottom!r}")
+        brand_bottom = handle_bottom
     text = str(text or "").strip()
     if not text:
         raise SystemExit("章节卡要有一句话（text 是空的）")
@@ -134,7 +148,7 @@ body{{width:{w}px;height:{h}px;overflow:hidden;background:{CARD_BACKGROUND_CSS};
  font-size:{px}px;line-height:1.28;letter-spacing:2px;max-width:{min(940, w - 140)}px;
  white-space:nowrap;
  text-shadow:0 4px 24px rgba(0,0,0,.45)}}
-.handle{{position:absolute;bottom:{max(HANDLE_BOTTOM_PX, int(clear_bottom))}px;left:0;right:0;text-align:center;
+.handle{{position:absolute;bottom:{brand_bottom}px;left:0;right:0;text-align:center;
  display:flex;align-items:center;justify-content:center;gap:14px;
  font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:26px;
  letter-spacing:3px;color:{outro_page.SUB};opacity:.72}}
@@ -145,12 +159,14 @@ body{{width:{w}px;height:{h}px;overflow:hidden;background:{CARD_BACKGROUND_CSS};
 
 
 def render(text: str, out: Path, *, kicker: str = "",
-           size: tuple[int, int] = DEFAULT_SIZE, clear_bottom: int = 0) -> Path:
+           size: tuple[int, int] = DEFAULT_SIZE, clear_bottom: int = 0,
+           handle_bottom: int | None = None) -> Path:
     from render_stat_card import _launch_browser  # noqa: PLC0415
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
     page = out.with_suffix(".html")
-    page.write_text(build(text, kicker=kicker, size=size, clear_bottom=clear_bottom),
+    page.write_text(build(text, kicker=kicker, size=size, clear_bottom=clear_bottom,
+                          handle_bottom=handle_bottom),
                     encoding="utf-8")
     w, h = size
     with sync_playwright() as pw:

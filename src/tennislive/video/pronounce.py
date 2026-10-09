@@ -349,6 +349,22 @@ HOMOPHONES: tuple[Homophone, ...] = (
                    "那之后是四连败，和第二次常时间停赛——右脚的老毛病。"),),
         guards=("长时间的拉锯", "最长时间"),
     ),
+    Homophone(
+        key="capriati-token",
+        pattern="卡普里亚蒂",
+        replace="卡浦里亚蒂",
+        word="卡普里亚蒂",
+        reading="pǔ（人名连成一个词；屏幕仍写普）",
+        evidence=(
+            "2026-10-09 实测 edge-tts Yunjian +6% WordBoundary："
+            "「十四岁的卡普里亚蒂打进四强。」切成 卡普里｜亚蒂"
+            "（0.840–1.206 与 1.206–1.559，时间戳相接、中间没有停顿，人名被切成两个词）。"
+            "换成「卡浦里亚蒂」后整个人名是一个 token（0.852–1.536）。"
+            "普和浦的拼音都是 pǔ。屏幕、字幕、字卡仍写卡普里亚蒂。"
+            "声调没有用声学工具复测（这台机器没有 librosa / parselmouth）。"),
+        examples=(("十四岁的卡普里亚蒂打进四强。", "十四岁的卡浦里亚蒂打进四强。"),),
+        guards=("卡普里",),
+    ),
 )
 
 _COMPILED: tuple[tuple[Homophone, re.Pattern[str]], ...] = tuple(

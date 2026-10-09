@@ -1,0 +1,129 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=4avQ5pyh4R4",
+  "source_sha256": "58aa043e4b8c990fae142293afd7feb6cbce6b40e92cb8ff7c0ad83508077a37",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 全片交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T06:07:15+00:00",
+  "status": "complete",
+  "reviewed_from": 107.0,
+  "reviewed_to": 116.3,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "small.en 的孤立 A 在 106.56 结束，base.en 的 A teenage triumph 从 116.46 起。107.00–116.30 两套全片转写都没有英文词。本段配中文旁白。",
+  "asr_window": {
+    "small.en": [
+      {
+        "start": 105.28,
+        "end": 106.56,
+        "text": "A",
+        "words": [
+          {
+            "s": 105.28,
+            "e": 106.56,
+            "w": "A"
+          }
+        ]
+      },
+      {
+        "start": 118.0,
+        "end": 120.56,
+        "text": "teenage triumph in tennis paradise.",
+        "words": [
+          {
+            "s": 117.76,
+            "e": 118.4,
+            "w": "teenage"
+          },
+          {
+            "s": 118.4,
+            "e": 119.04,
+            "w": "triumph"
+          },
+          {
+            "s": 119.04,
+            "e": 119.58,
+            "w": "in"
+          },
+          {
+            "s": 119.58,
+            "e": 119.96,
+            "w": "tennis"
+          },
+          {
+            "s": 119.96,
+            "e": 120.56,
+            "w": "paradise."
+          }
+        ]
+      },
+      {
+        "start": 122.28,
+        "end": 126.44,
+        "text": "Mira Andreeva is the champion in Indian Wells.",
+        "words": [
+          {
+            "s": 122.28,
+            "e": 123.36,
+            "w": "Mira"
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "start": 99.74,
+        "end": 101.38,
+        "text": "The answer to everything.",
+        "words": [
+          {
+            "s": 100.8,
+            "e": 101.06,
+            "w": "to"
+          },
+          {
+            "s": 101.06,
+            "e": 101.38,
+            "w": "everything."
+          }
+        ]
+      },
+      {
+        "start": 116.46,
+        "end": 120.3,
+        "text": "A teenage triumph in tennis paradise.",
+        "words": [
+          {
+            "s": 116.46,
+            "e": 117.42,
+            "w": "A"
+          },
+          {
+            "s": 117.42,
+            "e": 118.38,
+            "w": "teenage"
+          },
+          {
+            "s": 118.38,
+            "e": 118.92,
+            "w": "triumph"
+          },
+          {
+            "s": 118.92,
+            "e": 119.48,
+            "w": "in"
+          },
+          {
+            "s": 119.48,
+            "e": 119.78,
+            "w": "tennis"
+          },
+          {
+            "s": 119.78,
+            "e": 120.3,
+            "w": "paradise."
+          }
+        ]
+      }
+    ]
+  }
+}

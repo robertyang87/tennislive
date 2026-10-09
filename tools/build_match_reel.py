@@ -366,6 +366,10 @@ STAT_CARD_PLACEHOLDER = "<stat_card>"
 # 深底大字卡当整屏段。占位符后面跟着那句话的 JSON——每段的字不一样，
 # 一个常量占位符认不出是哪一张。
 TITLE_CARD_PREFIX = "<title_card>"
+# 本片把章节卡品牌下移之后，字幕必须改下锚，两行才长在品牌上方。
+# 96 是 subtitle_bottom 允许的最小值：文字底边在 y=1344，品牌 bottom=28、
+# 高 40px 时顶边在 y=1372，间距约 28px。上锚两行中文会落到 y≈1380，盖住品牌。
+TITLE_CARD_SUBTITLE_BOTTOM = 96
 #: 封面素材（抓下来的帧、抠好的人）落在这儿，**跟着产物一起进仓库**。
 #
 # **它买的是「封面返工不用上 runner」。** 量出来的账（shang-rublev，2026-08-05）：
@@ -3756,7 +3760,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "slug", "source_audio", "source_fallbacks", "source_url",
              "original_audio_mode", "owner_approval", "audio_effects_review", "track",
              "source_quality_exceptions", "sources", "stats",
-             "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
+             "subtitle_scrim", "subtitle_top", "title_card_handle_bottom", "topbar", "tts_backend", "voice",
              "editorial", "narration_audio_recipe", "scene_edl_recipe", "scoreboard_profile"),
     "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_accent_color", "hook_align", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
@@ -6523,6 +6527,26 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 集锦（《Zheng Qinwen vs. Taylor Townsend | 2025 Third Round Miami》），
     # probe 实测 1280×720，WTA 频道 2025 年这条就这一档。
     "https://www.youtube.com/watch?v=c9y75dSg4oU": 720,
+    # 年龄限制（wta-age-eligibility-rule）：账号所有者 2026-10-09 要求用官方集锦
+    # 替换字卡，点名 2019 温网高芙对大威廉姆斯。Wimbledon 官方频道这条 highlights
+    # 的 avc1 最高一档就是 720p（144/360/720，没有 1080），等不出更高的。
+    "https://www.youtube.com/watch?v=wdr7s10gUeE": 720,
+    # 同一天后半句：「马德里、林茨、负哈勒普等没有 1080 的允许用官方 720p」。
+    # 林茨决赛 V-3v8zgbc8Y：WTA 官方，Invidious 格式表 avc1 只有 144/360/720，没有 1080。
+    "https://www.youtube.com/watch?v=V-3v8zgbc8Y": 720,
+    # 2019 温网第四轮哈勒普淘汰高芙 DpmZnERUUSM：Wimbledon 官方，avc1
+    # 144/240/360/480/720，没有 1080。片尾图形写着 6-3 6-3、HALEP。
+    "https://www.youtube.com/watch?v=DpmZnERUUSM": 720,
+    # 2023 马德里安德烈耶娃对林内特 qG9obm887Pc：WTA 官方集锦，已下到的文件是
+    # 1280×720。2026-10-09 重列格式时 Invidious 返回 500、yt-dlp 被登录墙挡住，
+    # 没有重新读到 1080 档。账号所有者已明确允许这条用官方 720p。若以后列出 1080，
+    # 这条授权不再适用。
+    "https://www.youtube.com/watch?v=qG9obm887Pc": 720,
+    # 2026 中网孙心然对布克沙：WTA 页面没有 YouTube，播放器是 Brightcove
+    # account 6041795521001 / videoId 6406166508112。yt-dlp -F 最高 1280×720
+    # （http-2125k-720p），没有 1080。页面
+    # https://www.wtatennis.com/videos/4586047/sun-xinran-16-stuns-bucsa-in-beijing-for-first-top-50-win-to-face-gauff-next
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406166508112": 720,
     # 谢淑薇×詹皓晴美网不握手（hsieh-chan-handshake-feud-2026）：账号所有者 2026-09-26
     # 选「放宽到 720p」。美网女双第三轮那一场官方没发集锦（@usopen 频道最近 500 条逐条
     # 扫过，只有这对组合的 1/4决赛和詹皓晴首轮），网前没握手那一幕只有 X 上
@@ -9589,8 +9613,16 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
             import render_title_card  # noqa: PLC0415
             renderer = render_title_card.render
         size = (VIDEO_W, BAND_PIC_H) if LAYOUT == "band" else (VIDEO_W, VIDEO_H)
-        # 品牌固定在卡底 HANDLE_BOTTOM_PX（render_title_card，2026-10-08 从 64 下移到 28）。
-        # 字幕保留自己的真实锚，不再拿默认字幕上锚把品牌抬到标题/正文中间。
+        # 品牌默认距底 HANDLE_BOTTOM_PX（28）。字幕保留自己的锚，不拿默认
+        # 上锚把品牌抬到标题中间。spec 写了 `title_card_handle_bottom` 时沿用
+        # 那个底边，并把字卡字幕改成下锚：上锚两行中文仍会盖住已经下移的品牌。
+        handle_bottom = spec.get("title_card_handle_bottom")
+        if handle_bottom is not None and (
+                type(handle_bottom) is not int
+                or not 20 <= handle_bottom <= 48):
+            raise ReelError(
+                "title_card_handle_bottom 必须是 20~48 的整数像素"
+                f"（品牌下移到字幕区下方），拿到的是 {handle_bottom!r}")
         out_segments = []
         for i, s in enumerate(segments):
             if not (s.image and s.image.startswith(TITLE_CARD_PREFIX)):
@@ -9598,13 +9630,21 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
                 continue
             card = json.loads(s.image[len(TITLE_CARD_PREFIX):])
             out = outdir / f"title_card_{i + 1:02d}.jpg"
-            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size)
+            render_kwargs = {}
+            if handle_bottom is not None:
+                render_kwargs["handle_bottom"] = handle_bottom
+            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size,
+                     **render_kwargs)
             if not out.is_file():
                 raise ReelError(f"第 {i + 1} 段的章节卡没渲出来：{out}")
             print(f"[章节卡] 第 {i + 1} 段「{card['text']}」→ {out.name}（{size[0]}×{size[1]}）")
             # full_bleed：这张是按画面区设计的整幅页，`still_canvas_for_layout`
             # 铺满不缩（渲出来是 2×，按尺寸认不出来，所以在这儿认领）
-            out_segments.append(replace(s, image=str(out), full_bleed=True))
+            landed = replace(s, image=str(out), full_bleed=True)
+            if handle_bottom is not None and (
+                    str(s.narration or "").strip() or s.quote) and s.subtitle_bottom is None:
+                landed = replace(landed, subtitle_bottom=TITLE_CARD_SUBTITLE_BOTTOM)
+            out_segments.append(landed)
     return out_segments
 
 

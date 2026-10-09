@@ -1,0 +1,154 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=WN-TlTb8-aA",
+  "source_sha256": "7ad05d1db32c72ac2203c8538e89cc1c1c2fd810e24eecf3983769695f10806f",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 全片交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T09:05:00+00:00",
+  "status": "complete",
+  "reviewed_from": 1123.6,
+  "reviewed_to": 1132.4,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "全片 small.en 最后一句停在1096.21（She wins 6-3），base.en 被拉长的 That's the moment 停在1123.48，下一句从1133.86起。1123.60–1132.40没有英文词。画面是捧杯，本段配中文旁白。",
+  "asr_window": {
+    "small.en": [
+      {
+        "start": 1091.51,
+        "end": 1094.63,
+        "text": "And Dreva is the French Open champion.",
+        "words": [
+          {
+            "s": 1091.51,
+            "e": 1091.59,
+            "w": "And"
+          },
+          {
+            "s": 1091.59,
+            "e": 1092.03,
+            "w": "Dreva"
+          },
+          {
+            "s": 1092.03,
+            "e": 1093.45,
+            "w": "is"
+          },
+          {
+            "s": 1093.45,
+            "e": 1093.63,
+            "w": "the"
+          },
+          {
+            "s": 1093.63,
+            "e": 1093.91,
+            "w": "French"
+          },
+          {
+            "s": 1093.91,
+            "e": 1094.23,
+            "w": "Open"
+          },
+          {
+            "s": 1094.23,
+            "e": 1094.63,
+            "w": "champion."
+          }
+        ]
+      },
+      {
+        "start": 1094.97,
+        "end": 1096.21,
+        "text": "She wins 6-3.",
+        "words": [
+          {
+            "s": 1094.97,
+            "e": 1095.07,
+            "w": "She"
+          },
+          {
+            "s": 1095.07,
+            "e": 1095.33,
+            "w": "wins"
+          },
+          {
+            "s": 1095.33,
+            "e": 1095.71,
+            "w": "6"
+          },
+          {
+            "s": 1095.71,
+            "e": 1096.21,
+            "w": "-3."
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "start": 1090.04,
+        "end": 1099.48,
+        "text": "That's the moment.",
+        "words": [
+          {
+            "s": 1090.04,
+            "e": 1091.44,
+            "w": "That's"
+          },
+          {
+            "s": 1091.44,
+            "e": 1091.76,
+            "w": "the"
+          },
+          {
+            "s": 1091.76,
+            "e": 1099.48,
+            "w": "moment."
+          }
+        ]
+      },
+      {
+        "start": 1104.74,
+        "end": 1123.48,
+        "text": "That's the moment.",
+        "words": [
+          {
+            "s": 1104.74,
+            "e": 1106.14,
+            "w": "That's"
+          },
+          {
+            "s": 1106.14,
+            "e": 1106.16,
+            "w": "the"
+          },
+          {
+            "s": 1106.16,
+            "e": 1123.48,
+            "w": "moment."
+          }
+        ]
+      },
+      {
+        "start": 1133.86,
+        "end": 1135.26,
+        "text": "That's the moment.",
+        "words": [
+          {
+            "s": 1133.86,
+            "e": 1135.26,
+            "w": "That's"
+          },
+          {
+            "s": 1135.26,
+            "e": 1135.26,
+            "w": "the"
+          },
+          {
+            "s": 1135.26,
+            "e": 1135.26,
+            "w": "moment."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-V6ekW4Qy1jA/V6ekW4Qy1jA.mp4",
+  "source_sha256": "ec9fed9650ac8b0f6f9c62377d9be4b7ef528ca8ef87b6cbb2527819331b866f",
+  "method": "asr_cross_checked",
+  "reviewer": "沿用 yuan-andreeva 269.7–287.04 的 small/medium 交叉转写；287.04–291.0 对照同一条官方集锦的 provider captions，下一句英文在 293.36，帧上是挥手不是新句子",
+  "reviewed_at": "2026-10-08T23:45:00+00:00",
+  "status": "complete",
+  "reviewed_from": 269.7,
+  "reviewed_to": 291.0,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 270.16,
+      "end": 271.22,
+      "en": "Oh, and it goes long.",
+      "zh": "哦，这一球出界了。"
+    },
+    {
+      "start": 271.87,
+      "end": 275.32,
+      "en": "And Mirra Andreeva drops the opening set,",
+      "zh": "米拉·安德烈耶娃首盘告负，"
+    },
+    {
+      "start": 275.45,
+      "end": 278.33,
+      "en": "but then steamrolls through the final two sets.",
+      "zh": "但随后在最后两盘一路横扫。"
+    },
+    {
+      "start": 278.55,
+      "end": 280.76,
+      "en": "Although that was a fun last point.",
+      "zh": "不过，最后这一分还是很精彩。"
+    },
+    {
+      "start": 281.39,
+      "end": 285.14,
+      "en": "Not many points won by Yuan Yue",
+      "zh": "袁悦赢下的分数并不多，"
+    },
+    {
+      "start": 285.14,
+      "end": 286.95,
+      "en": "in that last couple sets.",
+      "zh": "在最后这两盘中。"
+    }
+  ],
+  "raw_evidence": {
+    "data/audio_reviews/yuan-andreeva-beijing-2026-r2/provider-captions.txt": "69dec73bbf71cd9a9a6a0ddfeacfd00c33f12671b0191ec5d5d4e6525ab96ba7",
+    "data/audio_reviews/yuan-andreeva-beijing-2026-r2/small-en-match.json": "7905cc751a10032baa093ddcf66c3ed285ff39aec8942cb864618071c0fb1b4b",
+    "data/audio_reviews/yuan-andreeva-beijing-2026-r2/medium-en-match.json": "c12f31ee9301c53be7cd812e788fefdf31aa4d34c71a6c69de0831bb3d6c6a56",
+    "data/audio_reviews/yuan-andreeva-beijing-2026-r2/small-en-targeted-no-vad.json": "0fcb0a5a2d2923d3e34cab70430146f94a3e4ad5032e8468f14c0d4317d08fb7",
+    "data/audio_reviews/yuan-andreeva-beijing-2026-r2/medium-en-targeted-no-vad.json": "155b5aa7617d97f958a935b4064eb76fff2a939eafc6000fca61a52ce7c1f541",
+    "data/audio_reviews/yuan-andreeva-beijing-2026-r2/vad.json": "e1fe9a77911c4e147ac8a74b106e4c057fc07e3e7d6e0304be22f67dc8e1ffb6",
+    "data/audio_reviews/yuan-andreeva-beijing-2026-r2/medium-en-opening-no-vad.json": "5aee10af9e136ff181a932d1a41a182add0eed8af1e2c2448c01256fcdfc0f98",
+    "data/audio_reviews/yuan-andreeva-beijing-2026-r2/cold-split-vad.json": "4bc8bd1c0d2e388797f326578759e050367e81564d94431ebc3e5c9860f27115"
+  },
+  "no_foreground_english_reason": ""
+}

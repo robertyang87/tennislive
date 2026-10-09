@@ -1,0 +1,220 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=V-3v8zgbc8Y",
+  "source_sha256": "29693bb217a9c6b9a4d2263ce8afa1e1d4a6db85156cdfb0d5d970042906e786",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 全片交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T09:05:00+00:00",
+  "status": "complete",
+  "reviewed_from": 245.85,
+  "reviewed_to": 258.42,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "base.en 上一句停在245.70，small.en 下一句从258.46起。245.85–258.42没有英文词。记分条是高芙对奥斯塔彭科，本段配中文旁白。",
+  "asr_window": {
+    "small.en": [
+      {
+        "start": 220.92,
+        "end": 221.96,
+        "text": "Fence like K",
+        "words": [
+          {
+            "s": 220.92,
+            "e": 221.48,
+            "w": "Fence"
+          },
+          {
+            "s": 221.48,
+            "e": 221.48,
+            "w": "like"
+          },
+          {
+            "s": 221.48,
+            "e": 221.96,
+            "w": "K"
+          }
+        ]
+      },
+      {
+        "start": 221.96,
+        "end": 234.44,
+        "text": "3 times Grand Slam",
+        "words": [
+          {
+            "s": 221.96,
+            "e": 222.02,
+            "w": "3"
+          },
+          {
+            "s": 222.02,
+            "e": 224.92,
+            "w": "times"
+          },
+          {
+            "s": 224.92,
+            "e": 234.0,
+            "w": "Grand"
+          },
+          {
+            "s": 234.0,
+            "e": 234.44,
+            "w": "Slam"
+          }
+        ]
+      },
+      {
+        "start": 258.46,
+        "end": 259.86,
+        "text": "Fence",
+        "words": [
+          {
+            "s": 258.46,
+            "e": 259.86,
+            "w": "Fence"
+          }
+        ]
+      },
+      {
+        "start": 259.86,
+        "end": 264.42,
+        "text": "Almost like before",
+        "words": [
+          {
+            "s": 259.86,
+            "e": 259.86,
+            "w": "Almost"
+          },
+          {
+            "s": 259.86,
+            "e": 264.4,
+            "w": "like"
+          },
+          {
+            "s": 264.4,
+            "e": 264.42,
+            "w": "before"
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "start": 241.32,
+        "end": 242.72,
+        "text": "Almost like before.",
+        "words": [
+          {
+            "s": 241.32,
+            "e": 242.12,
+            "w": "Almost"
+          },
+          {
+            "s": 242.12,
+            "e": 242.38,
+            "w": "like"
+          },
+          {
+            "s": 242.38,
+            "e": 242.72,
+            "w": "before."
+          }
+        ]
+      },
+      {
+        "start": 243.46,
+        "end": 245.7,
+        "text": "Once again, go for Tekken, second serve.",
+        "words": [
+          {
+            "s": 243.46,
+            "e": 243.54,
+            "w": "Once"
+          },
+          {
+            "s": 243.54,
+            "e": 243.94,
+            "w": "again,"
+          },
+          {
+            "s": 244.16,
+            "e": 244.26,
+            "w": "go"
+          },
+          {
+            "s": 244.26,
+            "e": 244.5,
+            "w": "for"
+          },
+          {
+            "s": 244.5,
+            "e": 244.96,
+            "w": "Tekken,"
+          },
+          {
+            "s": 245.16,
+            "e": 245.24,
+            "w": "second"
+          },
+          {
+            "s": 245.24,
+            "e": 245.7,
+            "w": "serve."
+          }
+        ]
+      },
+      {
+        "start": 267.48,
+        "end": 270.96,
+        "text": "Ready to yellow now stop ankle.",
+        "words": [
+          {
+            "s": 267.48,
+            "e": 268.66,
+            "w": "Ready"
+          },
+          {
+            "s": 268.66,
+            "e": 269.12,
+            "w": "to"
+          },
+          {
+            "s": 269.12,
+            "e": 270.04,
+            "w": "yellow"
+          },
+          {
+            "s": 270.04,
+            "e": 270.34,
+            "w": "now"
+          },
+          {
+            "s": 270.34,
+            "e": 270.66,
+            "w": "stop"
+          },
+          {
+            "s": 270.66,
+            "e": 270.96,
+            "w": "ankle."
+          }
+        ]
+      },
+      {
+        "start": 271.96,
+        "end": 273.02,
+        "text": "Be safe.",
+        "words": [
+          {
+            "s": 271.96,
+            "e": 272.68,
+            "w": "Be"
+          },
+          {
+            "s": 272.68,
+            "e": 273.02,
+            "w": "safe."
+          }
+        ]
+      }
+    ]
+  }
+}

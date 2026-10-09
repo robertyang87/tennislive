@@ -1,0 +1,145 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ULRfGpWKYQQ",
+  "source_sha256": "112d111d577686a4c7cf07d1d863b94025dc7ceb51612fd47bc9194997dc66c4",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 全片交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T06:07:15+00:00",
+  "status": "complete",
+  "reviewed_from": 153.75,
+  "reviewed_to": 155.45,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 153.88,
+      "end": 155.14,
+      "en": "It's way long.",
+      "zh": "这一球出界了。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_window": {
+    "small.en": [
+      {
+        "start": 153.88,
+        "end": 158.04,
+        "text": "It's way long. It's the title for Miriam Drieber.",
+        "words": [
+          {
+            "s": 153.88,
+            "e": 154.68,
+            "w": "It's"
+          },
+          {
+            "s": 154.68,
+            "e": 154.86,
+            "w": "way"
+          },
+          {
+            "s": 154.86,
+            "e": 155.14,
+            "w": "long."
+          },
+          {
+            "s": 155.58,
+            "e": 155.8,
+            "w": "It's"
+          },
+          {
+            "s": 155.8,
+            "e": 156.0,
+            "w": "the"
+          },
+          {
+            "s": 156.0,
+            "e": 156.46,
+            "w": "title"
+          },
+          {
+            "s": 156.46,
+            "e": 157.0,
+            "w": "for"
+          },
+          {
+            "s": 157.0,
+            "e": 157.46,
+            "w": "Miriam"
+          },
+          {
+            "s": 157.46,
+            "e": 158.04,
+            "w": "Drieber."
+          }
+        ]
+      },
+      {
+        "start": 158.34,
+        "end": 165.22,
+        "text": "She continues to break new ground, the youngest ever champion in a 1000 event in the history",
+        "words": [
+          {
+            "s": 158.34,
+            "e": 158.86,
+            "w": "She"
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "start": 153.88,
+        "end": 155.06,
+        "text": "It's way long.",
+        "words": [
+          {
+            "s": 153.88,
+            "e": 154.64,
+            "w": "It's"
+          },
+          {
+            "s": 154.64,
+            "e": 154.76,
+            "w": "way"
+          },
+          {
+            "s": 154.76,
+            "e": 155.06,
+            "w": "long."
+          }
+        ]
+      },
+      {
+        "start": 155.56,
+        "end": 158.02,
+        "text": "It's the title for Mirandreeva.",
+        "words": [
+          {
+            "s": 155.56,
+            "e": 155.78,
+            "w": "It's"
+          },
+          {
+            "s": 155.78,
+            "e": 155.9,
+            "w": "the"
+          },
+          {
+            "s": 155.9,
+            "e": 156.28,
+            "w": "title"
+          },
+          {
+            "s": 156.28,
+            "e": 156.92,
+            "w": "for"
+          },
+          {
+            "s": 156.92,
+            "e": 158.02,
+            "w": "Mirandreeva."
+          }
+        ]
+      }
+    ]
+  },
+  "agreement": "It's way long 两套用词一致。后面的冠军名字 small 听成 Miriam Drieber、base 听成 Mirandreeva，不收。"
+}

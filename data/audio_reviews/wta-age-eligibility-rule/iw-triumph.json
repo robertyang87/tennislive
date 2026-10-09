@@ -1,0 +1,150 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=4avQ5pyh4R4",
+  "source_sha256": "58aa043e4b8c990fae142293afd7feb6cbce6b40e92cb8ff7c0ad83508077a37",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 全片交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T06:07:15+00:00",
+  "status": "complete",
+  "reviewed_from": 116.4,
+  "reviewed_to": 120.8,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 116.46,
+      "end": 120.56,
+      "en": "A teenage triumph in tennis paradise.",
+      "zh": "网球天堂里，少年夺冠。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_window": {
+    "small.en": [
+      {
+        "start": 118.0,
+        "end": 120.56,
+        "text": "teenage triumph in tennis paradise.",
+        "words": [
+          {
+            "s": 117.76,
+            "e": 118.4,
+            "w": "teenage"
+          },
+          {
+            "s": 118.4,
+            "e": 119.04,
+            "w": "triumph"
+          },
+          {
+            "s": 119.04,
+            "e": 119.58,
+            "w": "in"
+          },
+          {
+            "s": 119.58,
+            "e": 119.96,
+            "w": "tennis"
+          },
+          {
+            "s": 119.96,
+            "e": 120.56,
+            "w": "paradise."
+          }
+        ]
+      },
+      {
+        "start": 122.28,
+        "end": 126.44,
+        "text": "Mira Andreeva is the champion in Indian Wells.",
+        "words": [
+          {
+            "s": 122.28,
+            "e": 123.36,
+            "w": "Mira"
+          },
+          {
+            "s": 123.36,
+            "e": 124.1,
+            "w": "Andreeva"
+          },
+          {
+            "s": 124.1,
+            "e": 124.82,
+            "w": "is"
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "start": 116.46,
+        "end": 120.3,
+        "text": "A teenage triumph in tennis paradise.",
+        "words": [
+          {
+            "s": 116.46,
+            "e": 117.42,
+            "w": "A"
+          },
+          {
+            "s": 117.42,
+            "e": 118.38,
+            "w": "teenage"
+          },
+          {
+            "s": 118.38,
+            "e": 118.92,
+            "w": "triumph"
+          },
+          {
+            "s": 118.92,
+            "e": 119.48,
+            "w": "in"
+          },
+          {
+            "s": 119.48,
+            "e": 119.78,
+            "w": "tennis"
+          },
+          {
+            "s": 119.78,
+            "e": 120.3,
+            "w": "paradise."
+          }
+        ]
+      },
+      {
+        "start": 122.34,
+        "end": 126.12,
+        "text": "Mira and Draver is the champion in Indian Wells.",
+        "words": [
+          {
+            "s": 122.34,
+            "e": 123.3,
+            "w": "Mira"
+          },
+          {
+            "s": 123.3,
+            "e": 123.52,
+            "w": "and"
+          },
+          {
+            "s": 123.52,
+            "e": 124.0,
+            "w": "Draver"
+          },
+          {
+            "s": 124.0,
+            "e": 124.76,
+            "w": "is"
+          },
+          {
+            "s": 124.76,
+            "e": 124.92,
+            "w": "the"
+          }
+        ]
+      }
+    ]
+  },
+  "agreement": "base 整句 A teenage triumph in tennis paradise；small 从 teenage 到 paradise，用词一致。后面冠军名字两套不一致，不收。"
+}

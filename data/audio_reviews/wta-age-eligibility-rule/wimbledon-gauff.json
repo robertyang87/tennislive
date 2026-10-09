@@ -1,0 +1,72 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=wdr7s10gUeE",
+  "source_sha256": "5a3ac9fa91fb542e01aedceb4a922286a46943366d30433508dd6aff0a972a82",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 全片交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T06:07:15+00:00",
+  "status": "complete",
+  "reviewed_from": 109.2,
+  "reviewed_to": 123.0,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "全片 small.en 在 108.54 的 Yes 之后、base.en 在 127.28 的 onents 之前，这一段没有英文词。本段配中文旁白，停在下一词之前。不是赛点。",
+  "asr_window": {
+    "small.en": [
+      {
+        "start": 106.4,
+        "end": 106.74,
+        "text": "Go!",
+        "words": [
+          {
+            "s": 106.4,
+            "e": 106.74,
+            "w": "Go!"
+          }
+        ]
+      },
+      {
+        "start": 107.56,
+        "end": 108.54,
+        "text": "Yes!",
+        "words": [
+          {
+            "s": 107.56,
+            "e": 108.54,
+            "w": "Yes!"
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "start": 127.28,
+        "end": 128.68,
+        "text": "onents.",
+        "words": [
+          {
+            "s": 127.28,
+            "e": 128.68,
+            "w": "onents."
+          }
+        ]
+      },
+      {
+        "start": 128.68,
+        "end": 129.68,
+        "text": "Let's go.",
+        "words": [
+          {
+            "s": 128.68,
+            "e": 129.12,
+            "w": "Let's"
+          },
+          {
+            "s": 129.12,
+            "e": 129.68,
+            "w": "go."
+          }
+        ]
+      }
+    ]
+  }
+}
