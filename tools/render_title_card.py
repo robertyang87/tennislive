@@ -37,6 +37,14 @@ from tennislive.video.explainer import _data_uri  # noqa: E402
 # 缺省画布就是成片的 3:4；带式（美网）传画面带的尺寸（1080×960），
 # `still_canvas_for_layout` 缩进去时才不会两边留出大片底色。
 DEFAULT_SIZE = (1080, 1440)
+# 品牌距卡底的像素。2026-10-08 年终第一（year-end-no1-zverev-2026，1080×1440，
+# 字幕上锚 MarginV=1284）：距底 64px 时品牌墨迹约 y=1339–1372，单行旁白墨迹
+# 约 y=1303–1349，叠了约 11px。下移 36px 到距底 28px 后，品牌墨迹约 y=1375–1408：
+# 单行旁白底下空约 26px，双语下锚的中文行（约到 y=1341）底下空约 33px，离画布
+# 底边约 32px，不贴边。上锚两行中文的第二行会落到 y≈1409，品牌再往下也没有
+# 安全带——闸锁的是真正烧进章节卡的单行旁白和双语两行。不按字幕锚把品牌抬回
+# 页面中段（#1172 否掉的那一版）。
+HANDLE_BOTTOM_PX = 28
 # 总字数上限；排版保留作者的语义分行，不能靠浏览器把长句随意折开。
 MAX_CHARS = 18
 COLUMN_LABELS = frozenset({"赛场之上", "赛后开麦", "网球有故事"})
@@ -84,22 +92,18 @@ def length_problem(text: str) -> str | None:
     return None
 
 
-# 品牌距卡底的像素。2026-10-08 年终第一（1080×1440，字幕上锚 MarginV=1284）：
-# 距底 64px 时品牌墨迹约 y=1339–1372，单行旁白墨迹约 y=1303–1349，叠了约 11px。
-# 下移到距底 28px 后，品牌墨迹约 y=1375–1408，单行旁白底下留空。做法与
-# PR #1204 相同：默认就是 28，不再按字幕锚把品牌抬回页面中段。
-# 上锚两行中文的第二行仍会落到画布最底，本片字卡因此另把字幕下锚到 96px。
-HANDLE_BOTTOM_PX = 28
+# 按片指定的底边距只允许落在默认 28 附近，避免把品牌抬回字幕区。
 HANDLE_BOTTOM_MIN = 20
 HANDLE_BOTTOM_MAX = 48
 
 
 def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
           clear_bottom: int = 0, handle_bottom: int | None = None) -> str:
-    """品牌默认距卡底 `HANDLE_BOTTOM_PX`（28），落在单行字幕下方。
+    """品牌默认距卡底 `HANDLE_BOTTOM_PX`（28），落在默认字幕区下方。
 
-    `clear_bottom` 只会把品牌再抬高。`handle_bottom` 给了就用那个 20~48 的
-    底边距，本片用来和默认 28 对齐。"""
+    `clear_bottom` 只会把品牌再抬高，不根据全片字幕上锚自动抬高。
+    `handle_bottom` 给了就用那个 20~48 的底边距；年龄限制这期用 28，
+    并另把字卡字幕下锚，上锚两行中文才不会盖住品牌。"""
     if handle_bottom is None:
         brand_bottom = max(HANDLE_BOTTOM_PX, int(clear_bottom))
     else:

@@ -1,0 +1,294 @@
+{
+  "_draft": true,
+  "slug": "hanfmann-tiafoe",
+  "_column": "reel",
+  "cover": {
+    "matchup": [
+      {
+        "name": "汉夫曼",
+        "name_en": "yannick hanfmann",
+        "country": null,
+        "rank": 57
+      },
+      {
+        "name": "蒂亚福",
+        "name_en": "frances tiafoe",
+        "country": null,
+        "rank": 8
+      }
+    ],
+    "winner": "蒂亚福",
+    "result": "6-4 6-4",
+    "portrait": {
+      "image": "assets/reel/hanfmann-tiafoe-cover.jpg",
+      "focus": 0.121,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「frances tiafoe」「Shanghai」，日期对上当地 2026-10-09（Asia/Shanghai；日期来源 flashscore dc_1_AeUOnSWH）。② 分辨率：5435×3623，zoom 1 铺 1080×1440 是 2.52×（不放大）。③ 认人：最大那张脸像 蒂亚福 0.45（≥ 0.34）。④ 睁眼：EAR 0.2845（≥ 0.16）。⑤ 钩子带：脸落在 y256~503，钩子顶边 790。排序：[True, False, False, True, True, 247, 0.4502]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/8b3f363c-4ad9-4bca-9456-1600174c5fd4/Yannick-HANFMANN-vs-Frances-TIAFOE-8119.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/8b3f363c-4ad9-4bca-9456-1600174c5fd4/Yannick-HANFMANN-vs-Frances-TIAFOE-8119.jpg（条目 #4589293，接口发布 2026-10-09T08:48:59Z，原图 5435×3623），说明原文「2026 Shanghai Tiafoe」。"
+    }
+  },
+  "_production": {
+    "kind": "orchestrated_reel",
+    "received_at": "2026-10-09T08:57:17Z",
+    "event": "Shanghai",
+    "year": 2026,
+    "round": "",
+    "court": ""
+  },
+  "source_url": "https://www.tennistv.com/videos/4589250/shanghai-2026-r2-hanfmann-tiafoe-short-highlights",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "AeUOnSWH",
+    "flashscore_id": "AeUOnSWH",
+    "participants": [
+      "汉夫曼",
+      "蒂亚福"
+    ],
+    "set_scores_home_away": [
+      [
+        4,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "winner": "蒂亚福",
+    "loser": "汉夫曼",
+    "winner_result": "6-4 6-4",
+    "loser_result": "4-6 4-6",
+    "tiebreaks_home_away": [
+      null,
+      null
+    ]
+  },
+  "stats": {
+    "a": {
+      "aces": 8,
+      "df": 2,
+      "first_in": 30,
+      "first_won": 22,
+      "second_total": 20,
+      "second_won": 11,
+      "bp_conv": 1,
+      "bp_chances": 3,
+      "pts_won": 51,
+      "pts_total": 109,
+      "first_total": 50
+    },
+    "b": {
+      "aces": 5,
+      "df": 0,
+      "first_in": 34,
+      "first_won": 26,
+      "second_total": 25,
+      "second_won": 15,
+      "bp_conv": 3,
+      "bp_chances": 3,
+      "pts_won": 58,
+      "pts_total": 109,
+      "first_total": 59,
+      "headshot": "assets/players/headshots/atp-TD51.png"
+    }
+  },
+  "_hit_data": [
+    {
+      "label": "蒂亚福 一发得分率摆动",
+      "detail": "第1盘71% → 第2盘85%",
+      "swing": 14,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "汉夫曼 破发点兑现",
+      "detail": "1/3（33%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "蒂亚福 破发点兑现",
+      "detail": "3/3（100%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "汉夫曼 连续保发",
+      "detail": "3 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "蒂亚福 连续保发",
+      "detail": "8 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Hanfmann Y. 1 : 2 Tiafoe F.（含本场） · 草地 0:1 · 硬地 1:1",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Hanfmann Y. 最近 5 场 1 胜（LWLLL）；Tiafoe F. 最近 5 场 3 胜（WLWLW）",
+      "source": "flashscore df_hh_1 Last matches"
+    },
+    {
+      "label": "总分差",
+      "detail": "汉夫曼 51 - 蒂亚福 58，净差 7 分，蒂亚福 领先",
+      "diff": 7,
+      "source": "flashscore df_mh_1（总分）",
+      "use": "body_only"
+    }
+  ],
+  "_durations": [
+    [
+      "Set 1",
+      "0:41"
+    ],
+    [
+      "Set 2",
+      "0:36"
+    ],
+    [
+      "全场",
+      "1:17"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 1】4-6  蒂亚福发球，蒂亚福拿下  密度4  ← 2个盘点",
+      "density": 4,
+      "tags": [
+        "2个盘点"
+      ]
+    },
+    {
+      "label": "【Set 2】4-6  蒂亚福发球，蒂亚福拿下  密度3  ← 1个赛点",
+      "density": 3,
+      "tags": [
+        "1个赛点"
+      ]
+    },
+    {
+      "label": "【Set 1】2-2  蒂亚福发球，汉夫曼拿下  密度2  ← 2个破发点、破发成功",
+      "density": 2,
+      "tags": [
+        "2个破发点",
+        "破发成功"
+      ]
+    },
+    {
+      "label": "【Set 1】0-1  汉夫曼发球，蒂亚福拿下  密度1  ← 1个破发点",
+      "density": 1,
+      "tags": [
+        "1个破发点"
+      ]
+    },
+    {
+      "label": "【Set 1】0-2  蒂亚福发球，蒂亚福拿下  密度1  ← 1个破发点",
+      "density": 1,
+      "tags": [
+        "1个破发点"
+      ]
+    }
+  ],
+  "_tactical_research": {
+    "version": 1,
+    "identity": {
+      "home": "yannick hanfmann",
+      "away": "frances tiafoe",
+      "event": "Shanghai",
+      "year": 2026,
+      "source_urls": []
+    },
+    "sources": [],
+    "source_status": {
+      "brain_game": "feed HTTP 403; index HTTP 403",
+      "tennis_abstract": "feed HTTP 403; index HTTP 403",
+      "hugh_clarke": "feed HTTP 403; index HTTP 403",
+      "atp": "no_matching_article",
+      "wta": "no_matching_article",
+      "usopen": "no_matching_article",
+      "australian_open": "no_matching_article",
+      "roland_garros": "no_matching_article",
+      "wimbledon": "no_matching_article"
+    },
+    "status": "no_readable_analysis",
+    "collected_at": "2026-10-09T09:02:13.189685+00:00",
+    "elapsed_seconds": 0.83
+  },
+  "_notes": [
+    "flashscore id：AeUOnSWH（按球员姓反查）",
+    "制胜分/非受迫失误：接口里没有——照 render_stat_card 的 OPTIONAL_FIELDS 留空",
+    "⚠️ 头像 stats.a（汉夫曼 / yannick hanfmann）：索引里没有，WTA 按名字也没抓到（SystemExit: WTA 球员库里按姓 'hanfmann' 搜不到全名精确匹配 'yannick hanfmann'；搜到的候选：[]）。ATP 球员要手动：PYTHONPATH=src python3 tools/fetch_official_headshot.py atp \"yannick hanfmann\" --id <ID> --via https://www.mubadaladcopen.com，再把路径写进 stats.a.headshot",
+    "头像 stats.b（蒂亚福）：已发 spec 里认过，复用 assets/players/headshots/atp-TD51.png",
+    "狠数据候选 8 条",
+    "转折局候选 7 局，取前 5",
+    "赛果事实闸：蒂亚福 6-4 6-4 汉夫曼（赢家视角）",
+    "技战术资料：no_readable_analysis；未核观点不进入旁白",
+    "文案通道 deepseek · deepseek-v4-pro",
+    "中文热点：扫 231 条，没有撞上这两位球员",
+    "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
+    "⚠️ 文案这一步没成（模型或网络），editorial 留空",
+    "⚠️ 没给 captions 或字幕不可读，字幕窗口起草跳过",
+    "⚠️ Tennis TV 官方头图没成（ValueError: Tennis TV 头图不是本场赛事（1KH07479-2.jpg 不匹配 Shanghai），拒绝资料图）",
+    "⚠️ 封面抓取没成（SystemExit: 2026-10-07–2026-10-09 窗口里扫了 61 场，没有同时出现 ['hanfmann', 'tiafoe'] 的比赛）——portrait 留空，终审或 render 前再补"
+  ],
+  "_visual_evidence": {
+    "model": "MiniMax-M3",
+    "status": "waiting",
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 136.5,
+      "end": 146.5,
+      "kind": "aftermath",
+      "winner_visible": true,
+      "reason": "136.5s–142.5s：双方在网前握手致意（赛果结构显示终局 6-4 6-4），黑马衣选手（蒂亚福）为赢家；144.5s/146.5s 切换到 'REPLAYS/CLASSICS' 后期花絮；握手本身即赛点后余波，赢家可见，置信度较高。",
+      "confidence": 0.72
+    },
+    "ending": {
+      "start": 136.5,
+      "end": 146.5,
+      "kind": "aftermath",
+      "winner_visible": true,
+      "reason": "136.5s–142.5s：网前握手完成，赢家蒂亚福（黑马衣）与输家汉夫曼均在场；144.5s/146.5s 进入 Replays 标题卡。握手作为终端比赛故事节拍，覆盖冷开场窗口。",
+      "confidence": 0.7
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "蒂亚福",
+      "moment": "other",
+      "wrong_or_old": false,
+      "reason": "封面中球员穿黑马衣、白色头带、佩戴护腕，与视频 60s–142s 期间蒂亚福比赛服装一致；腕带位置和球拍握持姿态与比赛镜头相符；画面情绪为专注击球准备，并非庆祝或崩溃；无水印/旧图重涂痕迹。但无法看到具体比分或赛事 logo 来二次佐证，因此 same_match 置信适中。",
+      "confidence": 0.72
+    },
+    "problems": [
+      "cold_open 置信度 0.72 低于 0.80",
+      "ending 置信度 0.70 低于 0.80",
+      "封面置信度 0.72 低于 0.80",
+      "封面情绪应为 winner_celebration，现在是 other"
+    ],
+    "model_attempts": 1,
+    "input_sha256": "ae8dd79b68964ad6bdf8feab37a1259fe34e55b6a8dcb31a3a98dfeb1985fd14",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg"
+    ],
+    "cover_image": "assets/reel/hanfmann-tiafoe-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "AeUOnSWH",
+      "start_utc": "2026-10-09T06:55:00Z",
+      "end_utc": "2026-10-09T08:20:15Z",
+      "source": "flashscore dc_1_AeUOnSWH（DC／DD）"
+    },
+    "replaced_under": "bd9c9570f1b9de9e5c91e96c02835cf3941f13e30e1cc21df4b58685a3152afc",
+    "rejected": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/8b3f363c-4ad9-4bca-9456-1600174c5fd4/Yannick-HANFMANN-vs-Frances-TIAFOE-8119.jpg"
+    ],
+    "stuck_checked": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/09/8b3f363c-4ad9-4bca-9456-1600174c5fd4/Yannick-HANFMANN-vs-Frances-TIAFOE-8119.jpg#ae8dd79b68964ad6bdf8feab37a1259fe34e55b6a8dcb31a3a98dfeb1985fd14"
+  }
+}
