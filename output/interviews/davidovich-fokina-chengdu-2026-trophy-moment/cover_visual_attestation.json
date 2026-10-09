@@ -1,0 +1,68 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-30T01:42:11Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "达维多维奇·福基纳",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "bc7b30f4ee6f7f93855722a65b7a4fb10d247378bd2b2a361da6d4f92be503b6",
+  "poster_sha256": "5c7ed31c41e779d78bd7f16ddfc82c5b5e7b9649cb571111bb089872831192d2",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        383,
+        222,
+        303,
+        303
+      ],
+      "detected_faces": 2,
+      "eyes": 2,
+      "face_height_ratio": 0.37407,
+      "face_area_ratio": 0.10495,
+      "center_x_ratio": 0.49491,
+      "center_y_ratio": 0.27593,
+      "sharpness": 315.259,
+      "contrast": 164.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 463.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    },
+    "face_model": {
+      "status": "unavailable",
+      "model": "buffalo_s-v0.7",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/root/.cache/tennislive/face-models/buffalo_s-v0.7）",
+      "problems": [],
+      "warnings": [
+        "人脸模型不可用，认人和睁眼都没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/root/.cache/tennislive/face-models/buffalo_s-v0.7）"
+      ]
+    }
+  },
+  "issues": [],
+  "warnings": [
+    "人脸模型不可用，认人和睁眼都没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/root/.cache/tennislive/face-models/buffalo_s-v0.7）"
+  ]
+}

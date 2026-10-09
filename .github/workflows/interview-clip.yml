@@ -1125,6 +1125,11 @@ jobs:
           # 别按名字：`.html` 里只有 `copy.html` 是产物（Pages 要服务它）。
           find "$D" -maxdepth 1 -name "*.html" ! -name "copy.html" -delete
           rm -f "$D"/source.* "$D"/whisper.json
+          # 本地质检稿和一次性重建脚本不是成片。成都捧杯那条把
+          # `landed-check.txt`、`reconstruction.py`、`independent-qc/` 交进了仓库，
+          # `test_中间物不许进仓库` 按「不在保留名单里」红。目录用 rm -rf。
+          rm -rf "$D"/independent-qc
+          rm -f "$D"/landed-check.txt "$D"/reconstruction.py
           # ⚠️ **`_` 开头的按前缀清，别按名字列。** 这一行原来写的是
           # `"$D"/_audio.* "$D"/_logo_mask.png`——两个具体名字。解读卡加了
           # `_takeaway_close.png` 之后，它就跟着进了仓库（367 KB/条），而
@@ -1328,6 +1333,8 @@ jobs:
           # 中间物和「提交成片」同一套清法：`_` 开头的（_audio.m4a）、whisper.json、源片
           rm -rf "$D"/_*
           rm -f "$D"/source.* "$D"/whisper.json
+          rm -rf "$D"/independent-qc
+          rm -f "$D"/landed-check.txt "$D"/reconstruction.py
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           git add "$D"
