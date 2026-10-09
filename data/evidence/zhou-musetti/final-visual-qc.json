@@ -372,5 +372,50 @@
     "visibility": "Cold present67/147 then absent; final present296/602 then absent. No return-to-visible fragments. Other five selected windows contain actual continuously visible boards.",
     "optional_tag_masks": "All seven tag_frames0 in native QC. No upper/lower ancillary tag observed in actual source and final reviewed shots; no tag resurrection asserted."
   },
-  "unchanged_files": "No spec, code or audio modified during this review."
+  "unchanged_files": "No spec, code or audio modified during this review.",
+  "metadata_fix_rerender_revalidation": {
+    "checked_at": "2026-10-09T20:33:55.783714+00:00",
+    "code_commit": "bbb7654a36a253ed952a019326a12431936780c8",
+    "method": "Native rerender after removing redundant xhs and adding stats source; actual final MP4 SHA and bytes exactly equal independently reviewed final movie. Every regenerated mask decoded via ffmpeg framemd5 and compared with prior committed reviewed mask, all equal. Existing encoded-frame visual evidence therefore applies to the exact delivered film.",
+    "film_sha256": "83a62d6a3573ab8e568a38b855ff687d8261eee0215c361cbd42c6092186cb52",
+    "film_bytes": 64463858,
+    "native_landed_qc": "0 failures",
+    "mask_comparisons": [
+      {
+        "path": "output/2026-10-10/reel/zhou-musetti/score_masks/segment-01.mkv",
+        "frame_md5_manifest_sha256": "b8110ae7f0a49179153e1231150fe1ef68beac21811b4e775e1a9641d5826b8f",
+        "decoded_frames_identical_to_reviewed_previous": true
+      },
+      {
+        "path": "output/2026-10-10/reel/zhou-musetti/score_masks/segment-04.mkv",
+        "frame_md5_manifest_sha256": "34180836628df5ebfa54766c2d65c7f4baf69148e0a2dc9b3ccc6ced2c309283",
+        "decoded_frames_identical_to_reviewed_previous": true
+      },
+      {
+        "path": "output/2026-10-10/reel/zhou-musetti/score_masks/segment-06.mkv",
+        "frame_md5_manifest_sha256": "2f0ebb362e4a0e063a546550d96d2821e3027e75f0980a5499efda333a222b51",
+        "decoded_frames_identical_to_reviewed_previous": true
+      },
+      {
+        "path": "output/2026-10-10/reel/zhou-musetti/score_masks/segment-08.mkv",
+        "frame_md5_manifest_sha256": "2eb872738bb7abc4bae399b381eeeab137ee199c51993fc274e888b187f58850",
+        "decoded_frames_identical_to_reviewed_previous": true
+      },
+      {
+        "path": "output/2026-10-10/reel/zhou-musetti/score_masks/segment-10.mkv",
+        "frame_md5_manifest_sha256": "0f40b1b60477b08f8b419d63d2b01e06d591281da3597aaa640459c0d2e6ef5c",
+        "decoded_frames_identical_to_reviewed_previous": true
+      },
+      {
+        "path": "output/2026-10-10/reel/zhou-musetti/score_masks/segment-12.mkv",
+        "frame_md5_manifest_sha256": "31a053f2446d209a51b386e12dd512d677763214991520ba1ba46ce75b26b784",
+        "decoded_frames_identical_to_reviewed_previous": true
+      },
+      {
+        "path": "output/2026-10-10/reel/zhou-musetti/score_masks/segment-14.mkv",
+        "frame_md5_manifest_sha256": "07887c690cb688e2c839fadd98d4529359b972fed1ce9034ba4039407df41e5a",
+        "decoded_frames_identical_to_reviewed_previous": true
+      }
+    ]
+  }
 }

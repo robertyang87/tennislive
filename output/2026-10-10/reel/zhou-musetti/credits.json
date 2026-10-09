@@ -41,8 +41,8 @@
   "tts": "zh-CN-YunjianNeural +6%, edge-tts",
   "pronunciation_review": "Actual production-cache audio and final mix must bind data/audio_reviews/zhou-musetti-pronunciation.json; seven occurrences remain uncertain, never marked pass; owner listening feedback requested with actual 13-second clip.",
   "native_renderer": "tools/build_match_reel.py",
-  "renderer_code_commit": "fb9ff33aead07324de570ef0cdb42117868af27e",
-  "checked_at": "2026-10-09T20:04:13.565567+00:00",
+  "renderer_code_commit": "bbb7654a36a253ed952a019326a12431936780c8",
+  "checked_at": "2026-10-09T20:33:55.857380+00:00",
   "renderer_file_sha256": {
     "tools/build_match_reel.py": "0a6afc787265e4fc25cf69956a1891e361955433183159350f1d9b9f24b594a1",
     "tools/atp_scoreboard.py": "4562bb450035c7b58cb5619a5ed19ce3830ff0e0756f6cc4a0b642f50ce9a146"
@@ -57,5 +57,7 @@
     "verified_actual_frame": "data/evidence/zhou-musetti/final-low-caption.jpg"
   },
   "release_readiness": "pending_seven_pronunciation_occurrences_owner_listening_feedback",
-  "independent_visual_review": "data/evidence/zhou-musetti/final-visual-qc.json; 41 actual final frames inspected, every encoded mask frame decoded, pass for movie 83a62d6a3573…"
+  "independent_visual_review": "data/evidence/zhou-musetti/final-visual-qc.json; 41 actual final frames inspected, every encoded mask frame decoded, pass for movie 83a62d6a3573…",
+  "spec_sha256": "f3226b67ff78ead32bca91fe9fcd42418bc1012ccb79d749e8d66e1c6b838e6f",
+  "render_inputs_sha256": "bc390a605fe57bc65ad1e3868f68ade80478becb808d5f4e472c5a25335361f7"
 }
