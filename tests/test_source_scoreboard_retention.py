@@ -33,8 +33,13 @@ def test_original_board_cannot_exempt_cropped_or_pasted_views(changes):
 
 
 def test_normal_fill_still_requires_scorebox():
+    # 删掉实测原板之后，这一段只是普通裁切，不是「整段声明没有转播板」。
+    # 完整缺席声明（每一段视频 score_inset false 且 _score_inset_why 非空）
+    # 是另一条豁免，见 test_reel_declared_no_scoreboard；这里两条都不成立，
+    # 仍要顶层 scorebox。
     s = spec()
     del s['source_scorebox']
+    del s['segments'][0]['_score_inset_why']
     s['segments'][0]['fit'] = 'crop'
     del s['segments'][0]['contain_keep']
     with pytest.raises(reel.ReelError, match='顶层缺 `scorebox`'):

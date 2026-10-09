@@ -1,0 +1,21 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/sina-matchpoint-original.mp4",
+  "source_path": "/workspace/eala-research/china/sina-597011609-1080.mp4",
+  "source_sha256": "a2562acbad782361b790428d800de04a27df13c8dd07361c9666e0c5d351e50e",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": true,
+  "condition_on_previous_text": false,
+  "requested_language": "auto",
+  "detected_language": "en",
+  "language_probability": 0.3531171679496765,
+  "range_from": 0,
+  "range_to": 7.3,
+  "created_at": "2026-10-02T06:15:19.442191+00:00",
+  "elapsed_seconds": 2.79,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": []
+}

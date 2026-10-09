@@ -80,9 +80,63 @@ _APPROVED_MATCH_IDENTITIES[DJOKOVIC_ZVEREV_OMISSION["slug"]] = {
 }
 
 
+# Single-film owner decision, 2026-10-02: use verified official statistics only.
+WANG_EALA_OMISSION = {
+    "slug": "wang-xiyu-eala-asian-games-2026-sf",
+    "source_id": "TEN.W.SINGLES-----------.SFNL.000100--",
+    "match_date": "2026-10-01",
+    "winner_result": "3-6 6-3 6-2",
+    "fields": ["winners", "ue"],
+    "decision": "omit_both_rows_for_this_film_only",
+    "authorization": "owner-approved-single-film-omission-2026-10-02",
+}
+
+
+def _wang_eala_omission_problem(spec: dict) -> str | None:
+    """Validate only the Asian Games film explicitly approved by the owner."""
+    stats = spec["stats"]
+    if any(not isinstance(stats.get(side), dict) for side in ("a", "b")):
+        return "Winners/UE 省略必须保留双方统计对象"
+    if stats.get("_winners_ue_omission") != WANG_EALA_OMISSION:
+        return "Winners/UE 省略仅限王曦雨–伊埃拉亚运半决赛本期的明确用户决定，批准记录不匹配"
+    match = spec.get("_match") or {}
+    cover = spec.get("cover") or {}
+    if not isinstance(match, dict) or not isinstance(cover, dict):
+        return "Winners/UE 省略需要本场身份和封面对象"
+    people = cover.get("matchup")
+    if (not isinstance(people, list) or len(people) != 2
+            or not all(isinstance(p, dict) for p in people)):
+        return "Winners/UE 省略需要两个明确的统计列球员"
+    if (spec.get("slug") != WANG_EALA_OMISSION["slug"]
+            or match.get("status") != "result_verified"
+            or match.get("source") != "official_asian_games"
+            or match.get("source_id") != WANG_EALA_OMISSION["source_id"]
+            or match.get("date") != WANG_EALA_OMISSION["match_date"]
+            or match.get("winner_result") != WANG_EALA_OMISSION["winner_result"]
+            or match.get("winner") != "王曦雨"
+            or match.get("loser") != "伊埃拉"
+            or match.get("participants") != ["王曦雨", "伊埃拉"]
+            or match.get("set_scores_home_away") != [[3, 6], [6, 3], [6, 2]]
+            or cover.get("eyebrow") != "赛场之上"
+            or cover.get("winner") != "王曦雨"
+            or cover.get("result") != WANG_EALA_OMISSION["winner_result"]
+            or [(p.get("name"), p.get("name_en")) for p in people]
+            != [("王曦雨", "Xiyu Wang"), ("伊埃拉", "Alexandra Eala")]):
+        return "Winners/UE 单片省略批准与本场身份、日期、赢家、比分或球员列不一致"
+    if any(key in stats[side] for side in ("a", "b") for key in FIELDS):
+        return "批准省略须移除双方 Winners/UE 字段，不得显示 null、零或推测数值"
+    if "_winners_ue_evidence" in stats:
+        return "省略不等于统计已核实，请保留查证记录而非 Winners/UE 完整证据声明"
+    return None
+
+
+
+
 def _omission_problem(spec: dict) -> str | None:
     """Only explicitly approved films may omit rows; unknown values stay unknown."""
     slug = spec.get("slug")
+    if slug == WANG_EALA_OMISSION["slug"]:
+        return _wang_eala_omission_problem(spec)
     approved = APPROVED_WUE_OMISSIONS.get(slug)
     identity = _APPROVED_MATCH_IDENTITIES.get(slug)
     stats = spec["stats"]

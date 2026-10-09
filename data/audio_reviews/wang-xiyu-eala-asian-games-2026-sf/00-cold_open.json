@@ -1,0 +1,80 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/sina-matchpoint-original.mp4",
+  "source_sha256": "a2562acbad782361b790428d800de04a27df13c8dd07361c9666e0c5d351e50e",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: independent small/base models, VAD and no-VAD outputs compared; no claim of manual listening",
+  "reviewed_at": "2026-10-02T06:23:25.122169+00:00",
+  "reviewed_from": 7.3,
+  "reviewed_to": 9.0,
+  "status": "complete",
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "small VAD/无VAD与base VAD均无句子；仅base无VAD在1.7秒庆祝窗输出泛化Thank you very much，语言概率0.288、avg_logprob−1.008、Thank/very词概率0.072/0.088，和其他三组合、长窗VAD不吻合。保留原候选并判为短窗噪声泛化，不把模型生成句烧作真实原声字幕。",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-sina-7p3-9-base-no-vad.json",
+      "sha256": "26b246bf7b04b52580d97083b0d8206c500b206984c504462407b7d9f6dbf0e2",
+      "model": "base",
+      "vad": false,
+      "utterances": [
+        {
+          "id": 1,
+          "start": 7.3,
+          "end": 8.98,
+          "text": " Thank you very much.",
+          "avg_logprob": -1.0081193894147873,
+          "no_speech_prob": 0.5208755135536194,
+          "compression_ratio": 0.7142857142857143,
+          "words": [
+            {
+              "start": 7.3,
+              "end": 7.94,
+              "word": " Thank",
+              "probability": 0.07196309417486191
+            },
+            {
+              "start": 7.94,
+              "end": 8.16,
+              "word": " you",
+              "probability": 0.9501084089279175
+            },
+            {
+              "start": 8.16,
+              "end": 8.56,
+              "word": " very",
+              "probability": 0.08834461867809296
+            },
+            {
+              "start": 8.56,
+              "end": 8.98,
+              "word": " much.",
+              "probability": 0.9923073649406433
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-sina-7p3-9-base-vad.json",
+      "sha256": "f251ed7a1eca50ada146e223aa181a3e7e072dcae064a5574535512e372c1b76",
+      "model": "base",
+      "vad": true,
+      "utterances": []
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-sina-7p3-9-small-no-vad.json",
+      "sha256": "63831d7d8ae75b527d2df9945baf59569f14971f22d6020cf962c626bac0fd99",
+      "model": "small",
+      "vad": false,
+      "utterances": []
+    },
+    {
+      "path": "data/audio_reviews/wang-xiyu-eala-asian-games-2026-sf/raw/final-sina-7p3-9-small-vad.json",
+      "sha256": "50a964d2a36400fbc76b92abc788bf8df4256eabf7381f70302d3c5efaddb79c",
+      "model": "small",
+      "vad": true,
+      "utterances": []
+    }
+  ],
+  "_review_scope": "Complete selected-window foreground-English review via permitted asr_cross_checked method. Original audio preserved. Does not certify exact non-English speech or absence of music."
+}

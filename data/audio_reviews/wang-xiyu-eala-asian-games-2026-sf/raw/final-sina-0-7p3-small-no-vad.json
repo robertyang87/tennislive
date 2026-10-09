@@ -1,0 +1,51 @@
+{
+  "schema": "tennislive.raw-asr-evidence.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wang-eala-asiad-20261001/sina-matchpoint-original.mp4",
+  "source_path": "/workspace/eala-research/china/sina-597011609-1080.mp4",
+  "source_sha256": "a2562acbad782361b790428d800de04a27df13c8dd07361c9666e0c5d351e50e",
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "word_timestamps": true,
+  "vad_filter": false,
+  "condition_on_previous_text": false,
+  "requested_language": "auto",
+  "detected_language": "ko",
+  "language_probability": 0.329764187335968,
+  "range_from": 0,
+  "range_to": 7.3,
+  "created_at": "2026-10-02T06:16:35.862545+00:00",
+  "elapsed_seconds": 13.53,
+  "review_status": "raw_asr_only_not_certified",
+  "segments": [
+    {
+      "id": 1,
+      "start": 2.48,
+      "end": 3.88,
+      "text": " 구독과 좋아요 부탁드려요!",
+      "avg_logprob": -1.01911700963974,
+      "no_speech_prob": 0.45411768555641174,
+      "compression_ratio": 0.8,
+      "words": [
+        {
+          "start": 2.48,
+          "end": 3.88,
+          "word": " 구독과",
+          "probability": 0.2597118681296706
+        },
+        {
+          "start": 3.88,
+          "end": 3.88,
+          "word": " 좋아요",
+          "probability": 0.9704604744911194
+        },
+        {
+          "start": 3.88,
+          "end": 3.88,
+          "word": " 부탁드려요!",
+          "probability": 0.5792869428793589
+        }
+      ]
+    }
+  ]
+}
