@@ -18,7 +18,16 @@
       }
     ],
     "winner": "巴尔通科娃",
-    "result": "6-3 6-0"
+    "result": "6-3 6-0",
+    "portrait": {
+      "image": "assets/reel/muchova-bartunkova-cover.jpg",
+      "focus": 0.074,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「nikola bartunkova」「Beijing」，日期对上当地 2026-10-08（Asia/Shanghai；日期来源 flashscore dc_1_0O5NGGR0）；EXIF 拍摄 2026:10:08 07:24:55+00:00。② 分辨率：5405×3604，zoom 1 铺 1080×1440 是 2.50×（不放大）。③ 认人：最大那张脸像 巴尔通科娃 0.48（≥ 0.34）。④ 睁眼：EAR 0.3206（≥ 0.16）。⑤ 钩子带：脸落在 y225~558，钩子顶边 790。排序：[True, False, False, True, True, 333, 0.4832]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/08/7613f2fa-8c28-4977-97bd-7a36d23170b2/Bartunkova-QF-Pedro-Pardo-.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/08/7613f2fa-8c28-4977-97bd-7a36d23170b2/Bartunkova-QF-Pedro-Pardo-.jpg（条目 #4588461，接口发布 2026-10-08T08:03:15Z，EXIF 拍摄 2026:10:08 07:24:55+00:00（UTC ），原图 5405×3604），说明原文「Nikola Bartunkova, Beijing 2026 · Czech Republicâs Nikola Bartunkova hits a return to Czech Republicâs Karolina Muchova during their womenâs singles quarter-final match at the China Open tennis tournament in Beijing on October 8, 2026. (Photo by Pedro Pardo / AFP)」，署名 Pedro Pardo/AFP via Getty Images；PEDRO PARDO；AFP or licensors；AFP via Getty Images。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -239,35 +248,38 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 268.6,
-      "end": 286.5,
-      "kind": "winner_celebration",
+      "start": 264.44,
+      "end": 271.76,
+      "kind": "match_point",
       "winner_visible": true,
-      "reason": "画面显示比赛已结束：268.6s 起比赛画面静止；270.5s 巴尔通科娃面对镜头微笑、握拳庆祝；276.5–278.5s 两名选手在网前握手；280.5s 巴尔通科娃与教练握手；284.5s 巴尔通科娃挥手致意。这是赛后的赢家庆祝与握手连串画面。",
+      "reason": "在 264.5s–268.5s 区间为最后一分的对拉（计时从 0 跳到 40-0，局分 6-0），268.5s–270.5s 赢家巴尔通科娃紧握拳、面带笑容庆祝，271.76s 为赛后交换场地画面。",
       "confidence": 0.92
     },
     "ending": {
-      "start": 268.6,
-      "end": 297.08,
+      "start": 264.44,
+      "end": 295.12,
       "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "从268.6s的比赛结束画面起，到270.5s巴尔通科娃面对镜头微笑庆祝，276.5–278.5s与穆霍娃在网前握手，280.5s与教练握手，284.5s挥手致意，286.5s走向场边，288.5–294.5s离场（294.94s贴实时比分卡片BARTOUNKOVA 6-3 6-0），297.08s切到WTA片尾。包含赢家庆祝、双方握手、教练握手、输家同框。",
-      "confidence": 0.93
+      "reason": "264.5s–268.5s 比赛最后一分，270.5s 赢家握拳庆祝，272.5s 教练组画面，276.5s–282.5s 网前握手，284.5s–288.5s 赢家对镜头微笑，292.5s–294.5s 收拾包袋，295.12s 为 WTA 标识切点结束。",
+      "confidence": 0.95
     },
     "cover": {
-      "same_match": true,
-      "subject": "巴尔通科娃",
-      "moment": "winner_celebration",
-      "wrong_or_old": false,
-      "reason": "无候选封面照片提交。",
-      "confidence": 0.0
+      "same_match": false,
+      "subject": "",
+      "moment": "other",
+      "wrong_or_old": true,
+      "reason": "封面是球员俯身击球的侧面瞬间，照片色调、姿态及背景观众与视频内 WTA 北京公开赛画面差异显著；无任何赛事标识或比分字样可核验为本场比赛，疑为其他赛事旧图。",
+      "confidence": 0.55
     },
     "problems": [
-      "没有官方高清封面候选",
-      "封面置信度 0.00 低于 0.80"
+      "ending 必须是 3-30 秒的完整收官窗口",
+      "封面无法证明是同一场，或疑似旧图/错图",
+      "封面置信度 0.55 低于 0.80",
+      "封面人物应为 巴尔通科娃，模型识别为 空",
+      "封面情绪应为 winner_celebration，现在是 other"
     ],
     "model_attempts": 1,
-    "input_sha256": "cf3b6610849e9ad7ce99a435ba86ecd6dd81c28f482e7890a1010a63b5ec7c8e",
+    "input_sha256": "14dad13d83f5e4eeb2466f280ebf41b6cc271fb8235c45f4fe2fd0a66a8467d7",
     "inputs": [
       "contact_00.jpg",
       "contact_02.jpg",
@@ -275,6 +287,15 @@
       "contact_04.jpg",
       "contact_05.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/muchova-bartunkova-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "0O5NGGR0",
+      "start_utc": "2026-10-08T07:10:00Z",
+      "end_utc": "2026-10-08T08:16:20Z",
+      "source": "flashscore dc_1_0O5NGGR0（DC／DD）"
+    },
+    "replaced_under": "cf3b6610849e9ad7ce99a435ba86ecd6dd81c28f482e7890a1010a63b5ec7c8e"
   }
 }
