@@ -2,7 +2,7 @@
   "schema": "tennislive.independent-final-qc.v1",
   "status": "passed_with_declared_scope",
   "reviewer": "Independent current OpenAI model /root/independent_qc; no DeepSeek or MiniMax invoked",
-  "reviewed_at_utc": "2026-10-09T13:58:20.554529+00:00",
+  "reviewed_at_utc": "2026-10-09T14:16:04.429727+00:00",
   "film": {
     "path": "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/zheng-svitolina-beijing-2026-qf.mp4",
     "sha256": "6b49ea98dd56337d8ec0e95a5408fdf2f0a7f78c1950e8235523b896195ded5a",
@@ -11,9 +11,9 @@
     "width": 1080,
     "height": 1440,
     "fps": 25,
-    "render_version": "final3"
+    "render_version": "final4"
   },
-  "spec_sha256": "c0806792ae76472dbbf3b0be717fe6064f2c611789a1b5318499520a48ad3257",
+  "spec_sha256": "3e62011b72c47daa0e05dc0e9292ff38ebe9584e7bdbc6807f5ff2f9bf6da8d6",
   "source": {
     "url": "https://youtu.be/lme6vYGvWXw",
     "sha256": "da97c5eafb072aa2087e1cee2d893a2c1ea687ac8ef941373e9ccc76553f1d3d",
@@ -29,7 +29,8 @@
     "all_english_caption_middles_and_wording_reviewed": 36,
     "human_continuous_playback": false,
     "human_audio_listening": false,
-    "auditory_method": "Raw unprompted small.en/base.en ASR source cross-check and actual final AAC-to-source PCM binding; actual final PCM-to-narration-file start/tail binding. No pronunciation-tone or human-listening verdict claimed."
+    "auditory_method": "Raw unprompted small.en/base.en ASR source cross-check and actual final AAC-to-source PCM binding; actual final PCM-to-narration-file start/tail binding. No pronunciation-tone or human-listening verdict claimed.",
+    "actual_film_review_render": "final3, inherited by full byte-identical final4"
   },
   "visual_checks": [
     {
@@ -106,7 +107,8 @@
   "limits": [
     "Visual review covers every second plus every ASS cue midpoint, retained source windows and selected native boundaries; this is not continuous human playback.",
     "Acoustic review uses real final PCM correlation and unprompted ASR, not human listening. Mandarin pronunciation-tone acceptance is a separate parent acoustic gate.",
-    "Official highlights omit some factual pivotal points; these are explained by grounded titlecards and not substituted with a different point."
+    "Official highlights omit some factual pivotal points; these are explained by grounded titlecards and not substituted with a different point.",
+    "Final4 normalized an unsupported internal annotation key and was fully rerendered. Entire output is byte-identical to audited final3; existing actual-film evidence retains its original spec hash as provenance and is inherited via independent identity proof."
   ],
   "evidence": [
     {
@@ -283,6 +285,35 @@
       "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/frame-review-manifest.json",
       "sha256": "fc8037dcb00673bc4f0814165260ddcba7f1f2a2dc3d86886045e4e67f7e6a76",
       "bytes": 15240
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/qc/final4-render.log",
+      "sha256": "8f24476782dec2ff5106d73e592842f1c071088910c4e9b391452d9eeff30a7a",
+      "bytes": 8303
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/independent-final-rerender-identity.json",
+      "sha256": "4bf55bfe7b40bd91284cd4efe049d4741dcbff00ecb3d9ff29114278f56be6ca",
+      "bytes": 1371
     }
-  ]
+  ],
+  "original_actual_film_review_spec_sha256": "c0806792ae76472dbbf3b0be717fe6064f2c611789a1b5318499520a48ad3257",
+  "rerender_identity": {
+    "schema": "tennislive.independent-rerender-identity.v1",
+    "verified_at_utc": "2026-10-09T14:16:04.429727+00:00",
+    "previous_render": "final3",
+    "current_render": "final4",
+    "previous_film_sha256": "6b49ea98dd56337d8ec0e95a5408fdf2f0a7f78c1950e8235523b896195ded5a",
+    "current_film_sha256": "6b49ea98dd56337d8ec0e95a5408fdf2f0a7f78c1950e8235523b896195ded5a",
+    "previous_bytes": 100167978,
+    "current_bytes": 100167978,
+    "same_film_byte_identity": true,
+    "prior_spec_sha256": "c0806792ae76472dbbf3b0be717fe6064f2c611789a1b5318499520a48ad3257",
+    "current_spec_sha256": "3e62011b72c47daa0e05dc0e9292ff38ebe9584e7bdbc6807f5ff2f9bf6da8d6",
+    "only_spec_change": "segments[9] annotation key point_start_ok renamed to _point_start_review; note value unchanged. Old/current JSON structurally equal after this key normalization, independently checked before rerender.",
+    "full_rerender_log": "data/research/zheng-svitolina-beijing-2026-qf/qc/final4-render.log",
+    "full_rerender_log_sha256": "8f24476782dec2ff5106d73e592842f1c071088910c4e9b391452d9eeff30a7a",
+    "render_inputs_sha256": "cb407ed64a0ffe23ba60f490785d717683f7d76676a0b92d5934dcaea2d6c168",
+    "inherited_actual_review": "Exact full-file SHA256 and byte-size identity preserves all final3 actual film frame/cue/source-PCM/narration-PCM observations. No duplicate visual/audio review claimed for final4."
+  }
 }
