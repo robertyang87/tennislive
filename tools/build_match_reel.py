@@ -3760,7 +3760,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "slug", "source_audio", "source_fallbacks", "source_url",
              "original_audio_mode", "owner_approval", "audio_effects_review", "track",
              "source_quality_exceptions", "sources", "stats",
-             "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
+             "subtitle_scrim", "subtitle_top", "title_card_handle_bottom", "topbar", "tts_backend", "voice",
              "editorial", "narration_audio_recipe", "scene_edl_recipe", "scoreboard_profile"),
     "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_accent_color", "hook_align", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
