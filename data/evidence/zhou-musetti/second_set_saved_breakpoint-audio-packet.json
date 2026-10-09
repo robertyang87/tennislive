@@ -1,0 +1,32 @@
+{
+  "source_url": "https://www.tennistv.com/videos/4589550/shanghai-2026-r2-zhou-musetti-short-highlights",
+  "source_sha256": "c8bde43f4913450a3f67b14bb2dc76792629a7c86bf751cfb762d2a80d254254",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source evidence agent; faster-whisper small.en/base.en/medium.en actual CPU runs; no manual-hearing claim",
+  "reviewed_at": "2026-10-09T19:07:12.500357+00:00",
+  "status": "complete",
+  "reviewed_from": 50.503,
+  "reviewed_to": 91.05,
+  "foreground_english": [
+    {
+      "start": 86.5,
+      "end": 88.6,
+      "en": "I can't believe it.",
+      "zh": "真难以置信。"
+    },
+    {
+      "start": 88.9,
+      "end": 90.86,
+      "en": "You cannot believe he's missed it wide.",
+      "zh": "难以置信，他竟然打偏了。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/evidence/zhou-musetti/atp-asr-small-en-normalized.json",
+    "data/evidence/zhou-musetti/atp-asr-base-en-windows.json",
+    "data/evidence/zhou-musetti/asr-medium-en-targeted.json",
+    "data/evidence/zhou-musetti/asr-medium-en-boundary-targeted.json",
+    "data/evidence/zhou-musetti/tennistv-asr-small-en-normalized.json"
+  ]
+}

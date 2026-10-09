@@ -1,0 +1,38 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
+  "source_sha256": "b6c3f528c315274b54c694eec01123670acb01c7b7b57442dee06986f2b21cb6",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source evidence agent; faster-whisper small.en/base.en/medium.en actual CPU runs; no manual-hearing claim",
+  "reviewed_at": "2026-10-09T19:07:12.500357+00:00",
+  "status": "complete",
+  "reviewed_from": 101.37,
+  "reviewed_to": 121.2,
+  "foreground_english": [
+    {
+      "start": 109.84,
+      "end": 111.64,
+      "en": "Incredible scenes.",
+      "zh": "不可思议的一幕。"
+    },
+    {
+      "start": 114.18,
+      "end": 117.16,
+      "en": "The best win of his career.",
+      "zh": "他职业生涯最棒的一胜。"
+    },
+    {
+      "start": 117.78,
+      "end": 119.94,
+      "en": "The first top 30 win.",
+      "zh": "首次击败世界前三十球员。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/evidence/zhou-musetti/atp-asr-small-en-normalized.json",
+    "data/evidence/zhou-musetti/atp-asr-base-en-windows.json",
+    "data/evidence/zhou-musetti/asr-medium-en-targeted.json",
+    "data/evidence/zhou-musetti/asr-medium-en-boundary-targeted.json",
+    "data/evidence/zhou-musetti/tennistv-asr-small-en-normalized.json"
+  ]
+}

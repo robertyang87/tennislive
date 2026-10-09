@@ -1,0 +1,48 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
+  "source_sha256": "b6c3f528c315274b54c694eec01123670acb01c7b7b57442dee06986f2b21cb6",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source evidence agent; actual faster-whisper large-v3-turbo and distil-large-v3 CPU runs, no initial prompt; earlier medium/base context checks; no manual-hearing claim",
+  "reviewed_at": "2026-10-09T19:16:23.455248+00:00",
+  "status": "complete",
+  "reviewed_from": 63.7,
+  "reviewed_to": 75.2,
+  "foreground_english": [
+    {
+      "start": 63.78,
+      "end": 65.26,
+      "en": "Break points he had to save",
+      "zh": "他必须救下那些破发点，"
+    },
+    {
+      "start": 65.26,
+      "end": 66.56,
+      "en": "right at the beginning of the set.",
+      "zh": "就在这一盘刚开始时。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/evidence/zhou-musetti/asr-turbo-wide-context.json",
+    "data/evidence/zhou-musetti/asr-distil-large-final-context.json",
+    "data/evidence/zhou-musetti/asr-medium-en-boundary-targeted.json",
+    "data/evidence/zhou-musetti/asr-boundaries-base-medium-context.json",
+    "data/evidence/zhou-musetti/atp-secondset-start64.jpg",
+    "data/evidence/zhou-musetti/atp-set-end75.2.jpg"
+  ],
+  "boundary_evidence": {
+    "previous_foreground_end_max": 63.54,
+    "sentence_confirmed_turbo": [
+      63.78,
+      66.46
+    ],
+    "sentence_confirmed_distil": [
+      63.82,
+      66.44
+    ],
+    "next_foreground_start_min": 75.3,
+    "visual_start": "63.70 before serve preparation/toss; serve trophy at66.6",
+    "visual_end": "75.20 dead ball and players walking after final shot about74.7; complete set point",
+    "note": "The original sentence is divided into two consecutive readable subtitle clauses. End66.56 conservatively incorporates medium tail."
+  }
+}

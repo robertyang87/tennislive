@@ -3,16 +3,9 @@
   "source_url": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
   "column": "赛场之上",
   "owner_request": "用github里的tennislive按要求输出赛场之上；视频字幕贴着下面的比分板，不要太高",
-  "status": "blocked_editorial_api",
+  "status": "manual_production_in_progress",
   "not_rendered": true,
   "not_published": true,
-  "earliest_blocker": {
-    "stage": "DeepSeek editorial",
-    "http_status": 402,
-    "error": "Insufficient Balance",
-    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/37975276311",
-    "commit": "0e0845bb41c5adbfada2aea42ae2f63458139dfe"
-  },
   "source_archive_run": "https://github.com/robertyang87/tennislive/actions/runs/37975033217",
   "source_archive_release": "https://github.com/robertyang87/tennislive/releases/tag/source-ShSDhLGXYOk",
   "subtitle_policy": {
@@ -67,12 +60,27 @@
     "first_set_tiebreak": "周意3-6落后，连续救3个盘点，9-7拿下抢七",
     "third_set_tiebreak": "周意5-0开局，7-1拿下抢七"
   },
-  "resume": "After funding or replacing GitHub secret DEEPSEEK_API_KEY, rerun the existing editorial-review run; retrieve successful editorial JSON, finish original-audio review and genuine MiniMax evidence, validate formal spec and then render/QC before merge and PushPlus.",
+  "resume": "Continue native manual spec, deterministic validations, actual narration and source audio review, render and QC; no DeepSeek/MiniMax calls for this production.",
   "checks": {
     "match_reel_layout_tests": "2 passed; 387 deselected",
     "font_and_anchor_tests": "38 passed (after fetching the repository Inter font assets)"
   },
-  "source_review": "source-qc.json",
+  "source_review": "data/evidence/zhou-musetti/final-source-review.json",
   "candidate_only": "candidate-spec-shape.json",
-  "candidate_warning": "Human candidate with unresolved audio, facts and model gates. Not a formal spec; must not dispatch render from this file."
+  "candidate_warning": "Historical superseded draft from the earlier attempt. The formal manual spec is the only render plan.",
+  "previous_blocker": {
+    "stage": "DeepSeek editorial",
+    "http_status": 402,
+    "error": "Insufficient Balance",
+    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/37975276311",
+    "commit": "0e0845bb41c5adbfada2aea42ae2f63458139dfe"
+  },
+  "owner_override": {
+    "instruction": "不要用 deepseek 和 minimax",
+    "scope": "本期制作与核验",
+    "editorial": "Codex manual, verified facts only",
+    "visual_review": "Codex source frames and cover review",
+    "deepseek_minimax_calls": false
+  },
+  "formal_spec": "specs/reels/zhou-musetti.json"
 }
