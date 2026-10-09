@@ -1,0 +1,61 @@
+{
+  "slug": "zhou-musetti",
+  "column": "赛场之上",
+  "cover": {
+    "source_url": "https://en.rolexshanghaimasters.com/-/media/images/news/2026/10/09/14/56/zhou-shanghai-2026-friday.jpg",
+    "publisher": "Rolex Shanghai Masters / ATP news image",
+    "photographer": "未显示具体摄影署名；不从网站通用Getty/ATP页脚推断摄影人",
+    "source_dimensions": [
+      1920,
+      1080
+    ],
+    "visible_native_crop": [
+      444,
+      0,
+      1254,
+      1080
+    ],
+    "output_dimensions": [
+      1080,
+      1440
+    ],
+    "scale": 1.3333333333333333,
+    "ai_enhancement": false,
+    "selection_tradeoff": "官方赛事站这张同场偏正面睁眼举拳照片本次只能取得1920×1080原生JPEG（56966字节，?w=4000与?mw=4000&mh=4000均同尺寸同字节）。ATP Media前4页400张本场周意2张均普通击球，另10月7日照片属于前一场；AP两篇当天稿照片不含周意；Getty本场3张庆祝照公开仅612×408，2048comp带水印。选择唯一取得的官方清晰单人同场情绪实拍，按精准与情绪优先的既有例外如实认领：zoom=1.0，不额外推近；3:4可见原生窗口810×1080 (444,0,1254,1080)，输出1080×1440需等比放大1.333333倍。原图没有伪标高清，取舍与倍率须同步写入credits.json。依据CLAUDE.md“第2、4道闸门准确读法”及tennis-cover-photos“最好的出处，是图注自己把时刻写死了”的“精准优先于清晰，但要在credits.json里写明这个取舍”，正式封面闸cover_photo_problem接受_low_res_why。"
+  },
+  "cover_sha256": "0cf16a45f8e0c6224aee56487a84ede9f27ff3518de1c23da5cc501d9abd43d6",
+  "footage": [
+    {
+      "source_url": "https://www.youtube.com/watch?v=ShSDhLGXYOk",
+      "source_sha256": "b6c3f528c315274b54c694eec01123670acb01c7b7b57442dee06986f2b21cb6",
+      "provider": "ATP Tour"
+    },
+    {
+      "source_url": "https://www.tennistv.com/videos/4589550/shanghai-2026-r2-zhou-musetti-short-highlights",
+      "source_sha256": "c8bde43f4913450a3f67b14bb2dc76792629a7c86bf751cfb762d2a80d254254",
+      "provider": "Tennis TV official free highlights"
+    }
+  ],
+  "editorial": "Current assistant manual, owner override excludes DeepSeek/MiniMax",
+  "source_audio_review": "asr_cross_checked; retained English semantic captions, not a human-hearing claim",
+  "tts": "zh-CN-YunjianNeural +6%, edge-tts",
+  "pronunciation_review": "Actual production-cache audio and final mix must bind data/audio_reviews/zhou-musetti-pronunciation.json; seven occurrences remain uncertain, never marked pass; owner listening feedback requested with actual 13-second clip.",
+  "native_renderer": "tools/build_match_reel.py",
+  "renderer_code_commit": "fb9ff33aead07324de570ef0cdb42117868af27e",
+  "checked_at": "2026-10-09T20:04:13.565567+00:00",
+  "renderer_file_sha256": {
+    "tools/build_match_reel.py": "0a6afc787265e4fc25cf69956a1891e361955433183159350f1d9b9f24b594a1",
+    "tools/atp_scoreboard.py": "4562bb450035c7b58cb5619a5ed19ce3830ff0e0756f6cc4a0b642f50ce9a146"
+  },
+  "final_film_sha256": "83a62d6a3573ab8e568a38b855ff687d8261eee0215c361cbd42c6092186cb52",
+  "caption_layout": {
+    "alignment": "bottom centre",
+    "ass_event_margin_v": 235,
+    "board_top_px": 1229,
+    "caption_bottom_anchor_px": 1205,
+    "gap_px": 24,
+    "verified_actual_frame": "data/evidence/zhou-musetti/final-low-caption.jpg"
+  },
+  "release_readiness": "pending_seven_pronunciation_occurrences_owner_listening_feedback",
+  "independent_visual_review": "data/evidence/zhou-musetti/final-visual-qc.json; 41 actual final frames inspected, every encoded mask frame decoded, pass for movie 83a62d6a3573…"
+}

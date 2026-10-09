@@ -1,0 +1,45 @@
+{
+  "scoreboard_qc_sha256": "4d42cdcfb1d9e01f211e99719900dac3f9228378410e41574329870d327dd541",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 183.737,
+  "topbar": {
+    "line1": "2026 ATP1000 上海 第二轮",
+    "line2": "周意 7-6(7) 3-6 7-6(1) 穆塞蒂",
+    "start": 1.2,
+    "end": 184.937
+  },
+  "film_seconds": 188.833,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 7.632,
+    "2": 7.944,
+    "4": 5.496,
+    "6": 6.624,
+    "8": 7.536,
+    "10": 9.912,
+    "12": 9.072
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "unavailable",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）",
+      "report_only": true,
+      "warnings": [
+        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）"
+      ]
+    }
+  },
+  "render_inputs_sha256": "504a724cba49003f808f1b7702bd9cad93f96226dbad813af450d0e9a4c83ca1",
+  "film_sha256": "83a62d6a3573ab8e568a38b855ff687d8261eee0215c361cbd42c6092186cb52",
+  "film_bytes": 64463858,
+  "qc_attestation_sha256": "30c670f1b622f07815fa2c763f2c8e15d4e0fbecc4428fad412bfd4ab8d8045d"
+}

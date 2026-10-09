@@ -1,0 +1,47 @@
+{
+  "status": "exact_audio_reuse_verified_pronunciation_still_incomplete",
+  "film_path": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/zhou-musetti.mp4",
+  "film_sha256": "83a62d6a3573ab8e568a38b855ff687d8261eee0215c361cbd42c6092186cb52",
+  "film_bytes": 64463858,
+  "code_commit": "fb9ff33aead07324de570ef0cdb42117868af27e",
+  "render_json_path": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/render.json",
+  "render_json_sha256": "39097991858530c4c79d27f2272b47b7b55d304af65e1cf4b112f3abfaea8451",
+  "render_inputs_sha256": "504a724cba49003f808f1b7702bd9cad93f96226dbad813af450d0e9a4c83ca1",
+  "qc_attestation_path": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/qc_attestation.json",
+  "qc_attestation_sha256": "30c670f1b622f07815fa2c763f2c8e15d4e0fbecc4428fad412bfd4ab8d8045d",
+  "native_qc_attestation_hash_matches_render": true,
+  "reference_previous_film_sha256": "fffdbf650f7d528e412706a1cb9349b56a7f0de7307cee8ed23f80706422a3d7",
+  "native_full_mix_pcm": {
+    "sha256": "c79f22888d9f6707a5a99627d5f5d77e58638cfe3178fa93d6a6a6cfa23b53f6",
+    "bytes": 72499200,
+    "sample_format": "f32le",
+    "audio_stream": {
+      "codec_name": "aac",
+      "sample_rate": "48000",
+      "channels": 2,
+      "channel_layout": "stereo"
+    }
+  },
+  "native_full_mix_pcm_identical_to_previous": true,
+  "mono16k_full_mix_pcm_sha256": "23ff6949951fa6ecba2d97accd439abbbfb628a46862ce1b974eb734cf7a583a",
+  "mono16k_full_mix_pcm_identical_to_previous": true,
+  "all8_actual_voice_mp3_sha_identical_to_review_and_previous": true,
+  "voice_sha256": {
+    "voice_01.mp3": "3e7e04e7bad15b67d92666f88607a14befa2f10cbd70a31973ef67dee454fda6",
+    "voice_02.mp3": "b5c7e75e3ca3a3ec6d2c0803d8e65d5cf6aed4ccca8c86587d8d2dfaed08ea6d",
+    "voice_04.mp3": "b65e4e793ba55cf3841d54f48671adcd6a8f5f25397c6e5bb80d105548a60151",
+    "voice_06.mp3": "0d22e934f064380461efb9b85e02f6df33b7e524c4b6eeb1184f8b4774332b98",
+    "voice_08.mp3": "51a051099ca182fe8327bfb40f311d7a309d4e28ff053360d08eddb47314f73a",
+    "voice_10.mp3": "5a3122e760d834aabc51b456df91bfdc6ee7cfbd52daad0c26586cee97c2b34f",
+    "voice_12.mp3": "c95fd86e1af264f3f3f70580c342e9d3625cb291523af629b8b6f0d307dfb90f",
+    "voice_outro.mp3": "16213613e6ebf0ae7d2810f71da2ab7c7aed01a77948683ffc57b630bb37e6e4"
+  },
+  "listen_manifest_path": "/workspace/scratch/zhou-story/actual-pronunciation-listen-manifest.json",
+  "listen_manifest_sha256": "2a4292629b8ef01e63bbf3438bdecebbbefc42ab31fe58b2250cbf4639776aa3",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "method": "Only rerender binding checked: exact8voice MP3 SHA and full decoded48k stereo f32le PCM SHA equality, plus16k mono PCM equality. Prior26reference acoustic analyses reused unchanged; no human listening and no ASR tone inference.",
+  "unresolved_occurrences": 7,
+  "human_review_status": "pending_real_user_reply",
+  "pronunciation_status": "incomplete_uncertain_not_release_pass"
+}

@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "reviewer": "current assistant independent visual inspection",
+  "reviewed_at": "2026-10-09T20:04:58.895004+00:00",
+  "movie": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/zhou-musetti.mp4",
+  "movie_sha256": "83a62d6a3573ab8e568a38b855ff687d8261eee0215c361cbd42c6092186cb52",
+  "movie_bytes": 64463858,
+  "movie_seconds": 188.833,
+  "scope": "New final encoded MP4 (second repair rerender), 41 actual final MP4 frames covering all seven video quote windows, six narrative cards and stats, cover, match point/handshake/outro and named regression risk moments. All seven grayscale video masks decoded frame by frame and their boundaries/visibility transitions inspected quantitatively. This is manual visual QC with sampled encoded frames; no claim of every full-color movie frame being viewed, independent human audio listening, DeepSeek or MiniMax API review.",
+  "evidence_directory": "data/evidence/zhou-musetti/repaired-final-frames",
+  "sample_times": "data/evidence/zhou-musetti/repaired-final-frames/sample-times.json",
+  "contact_sheets": [
+    "data/evidence/zhou-musetti/repaired-final-contact-1.jpg",
+    "data/evidence/zhou-musetti/repaired-final-contact-2.jpg",
+    "data/evidence/zhou-musetti/repaired-final-contact-3.jpg",
+    "data/evidence/zhou-musetti/repaired-final-contact-4.jpg",
+    "data/evidence/zhou-musetti/repaired-final-contact-5.jpg"
+  ],
+  "frame_coordinates": "data/evidence/zhou-musetti/repaired-final-mask-frame-coordinates.json",
+  "source_boundary_audit": {
+    "path": "/workspace/tennislive/data/evidence/zhou-musetti/final-atp-scoreboard-audit.json",
+    "ownership": "Separate source evidence review by source agent; supporting context, distinct from current final MP4 review.",
+    "source_frames": 3735,
+    "source_tests": "39 passed; includes original RGB fixtures."
+  },
+  "issues": [],
+  "resolved_prior_issues": [
+    {
+      "id": "scoreboard-06-green-background-leak",
+      "status": "resolved",
+      "global_seconds": [
+        50.5,
+        52.433333,
+        52.7
+      ],
+      "proof": "repaired-final-frames/06-fixed-peak.jpg",
+      "finding": "Actual bottom overlay now ends at navy first-set result board; no large green rectangle. Segment06 maximum mask width327 pixels (inclusive right coordinate326) occurs only on legitimate second-set source tail frames at48.8s; first-set ending is approximately224 pixels."
+    },
+    {
+      "id": "scoreboard-10-score-column-clipped",
+      "status": "resolved",
+      "global_seconds": [
+        111.1,
+        111.2,
+        111.567,
+        112.7
+      ],
+      "proof": [
+        "repaired-final-frames/q10a.jpg",
+        "repaired-final-frames/10-source64.433.jpg",
+        "repaired-final-frames/10-source64.9.jpg"
+      ],
+      "finding": "15/40 point column preserved whole in closeup and court shots."
+    },
+    {
+      "id": "scoreboard-12-deciding-columns-clipped",
+      "status": "resolved",
+      "global_seconds": [
+        139.8,
+        142.667,
+        142.867,
+        151.367
+      ],
+      "proof": [
+        "repaired-final-frames/q12.jpg",
+        "repaired-final-frames/12-source97.5.jpg"
+      ],
+      "finding": "Complete board, including 7 3 6 2 / 6^7 6 6 0 at139.8s and deciding tiebreak4/0 later. No half-digit clipping."
+    },
+    {
+      "id": "scoreboard-off-animation-ghost",
+      "status": "resolved",
+      "global_seconds": [
+        3.333333,
+        3.366667,
+        3.5,
+        3.6,
+        174.966667,
+        175.0,
+        175.1
+      ],
+      "proof": [
+        "repaired-final-frames/cold-off-middle.jpg",
+        "repaired-final-frames/final-off.jpg"
+      ],
+      "finding": "Withdrawal frames preserve shrinking original scoreboard. No one-frame TISSOT flashback at3.5s; mask69 and corresponding final mask298 both absent."
+    },
+    {
+      "id": "scoreboard-04-late-point-column",
+      "status": "resolved",
+      "global_seconds": [
+        33.87,
+        33.933,
+        34.0
+      ],
+      "proof": [
+        "repaired-final-frames/04-source34.37.jpg",
+        "repaired-final-frames/04-source34.433.jpg",
+        "repaired-final-frames/04-source34.5.jpg"
+      ],
+      "finding": "First-set 7/6 points column remains complete against burgundy jersey near segment end."
+    }
+  ],
+  "passes": {
+    "cover": "Official near-frontal raised-fist photo; eyes clear, hook below chin, ranks/countries/final scores/duration correct; no fabricated HD claim.",
+    "caption_placement": "All seven actual sampled video quote windows use clear bilingual bottom subtitles directly above scoreboard target, ASS MarginV235; boardtop1229/intended24px gap. Same low position persists after board withdrawal. No excessive subtitle lift.",
+    "title_cards": "All six narrative cards sampled in actual MP4 use two semantic lines, same-sized main text, deep-blue background, lower narration line and small bottom brand; no overlap.",
+    "bridge_card": "Actual final card at106.0s reads 这一局最终失守 / 穆塞蒂拿到盘点, tag 第二盘·3-5; correct requested latest wording.",
+    "stats": "Actual card159.0s: ACE14/5, DF0/3, W34/25, UE46/18, first-in76%(82/108)/67%(66/98), first-win74%(61/82)/79%(52/66), second50%(13/26)/69%(22/32), BP0/2 vs1/5, total98/108. Matches raw full-match Flashscore evidence.",
+    "ending": "Actual final match point167.6s, reaction174.5/179.5, handshake184.3, pure brand186.5. No ending explainer or stat card between payoff and brand."
+  },
+  "video_quote_samples": [
+    {
+      "segment": 1,
+      "samples": [
+        2.9
+      ],
+      "text": [
+        "Incredible scenes. / 不可思议的一幕"
+      ]
+    },
+    {
+      "segment": 4,
+      "samples": [
+        31.6,
+        33.3
+      ],
+      "text": [
+        "I love that play. / 我喜欢这样的打法",
+        "That’s gutsy. / 真有胆量"
+      ]
+    },
+    {
+      "segment": 6,
+      "samples": [
+        50.5,
+        52.7
+      ],
+      "text": [
+        "And he did do it. / 他真的做到了",
+        "And he made it happen. / 他把机会变成了现实"
+      ]
+    },
+    {
+      "segment": 8,
+      "samples": [
+        97.9,
+        100.3
+      ],
+      "text": [
+        "I can’t believe it. / 真难以置信",
+        "You cannot believe he’s missed it wide. / 难以置信 他竟然打偏了"
+      ]
+    },
+    {
+      "segment": 10,
+      "samples": [
+        111.2,
+        112.7
+      ],
+      "text": [
+        "Break points he had to save / 他必须救下那些破发点",
+        "right at the beginning of the set. / 就在这一盘刚开始时"
+      ]
+    },
+    {
+      "segment": 12,
+      "samples": [
+        139.8
+      ],
+      "text": [
+        "No way! / 不会吧!"
+      ]
+    },
+    {
+      "segment": 14,
+      "samples": [
+        174.5,
+        179.5,
+        182.7
+      ],
+      "text": [
+        "Incredible scenes. / 不可思议的一幕",
+        "The best win of his career. / 他职业生涯最棒的一胜",
+        "The first top 30 win. / 首次击败世界前三十球员"
+      ]
+    }
+  ],
+  "native_card_samples": [
+    {
+      "segment": 2,
+      "seconds": 10.5
+    },
+    {
+      "segment": 3,
+      "seconds": 18
+    },
+    {
+      "segment": 5,
+      "seconds": 37.8
+    },
+    {
+      "segment": 7,
+      "seconds": 58
+    },
+    {
+      "segment": 9,
+      "seconds": 106
+    },
+    {
+      "segment": 11,
+      "seconds": 128
+    },
+    {
+      "segment": 13,
+      "seconds": 159
+    }
+  ],
+  "mask_summaries": [
+    {
+      "mask": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/score_masks/segment-01.mkv",
+      "frames": 147,
+      "present_frames": 67,
+      "min_right_pixel": 245,
+      "max_right_pixel": 374,
+      "visibility_transitions": [
+        {
+          "frame": 67,
+          "present": false
+        }
+      ],
+      "unique_right_pixels": [
+        245,
+        272,
+        291,
+        299,
+        309,
+        317,
+        319,
+        321,
+        323,
+        328,
+        339,
+        345,
+        354,
+        360,
+        362,
+        366,
+        369,
+        370,
+        372,
+        373,
+        374
+      ]
+    },
+    {
+      "mask": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/score_masks/segment-04.mkv",
+      "frames": 335,
+      "present_frames": 335,
+      "min_right_pixel": 278,
+      "max_right_pixel": 279,
+      "visibility_transitions": [],
+      "unique_right_pixels": [
+        278,
+        279
+      ]
+    },
+    {
+      "mask": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/score_masks/segment-06.mkv",
+      "frames": 399,
+      "present_frames": 399,
+      "min_right_pixel": 223,
+      "max_right_pixel": 326,
+      "visibility_transitions": [],
+      "unique_right_pixels": [
+        223,
+        224,
+        226,
+        227,
+        229,
+        231,
+        235,
+        245,
+        249,
+        257,
+        261,
+        265,
+        278,
+        279,
+        326
+      ]
+    },
+    {
+      "mask": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/score_masks/segment-08.mkv",
+      "frames": 1222,
+      "present_frames": 1222,
+      "min_right_pixel": 329,
+      "max_right_pixel": 330,
+      "visibility_transitions": [],
+      "unique_right_pixels": [
+        329,
+        330
+      ]
+    },
+    {
+      "mask": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/score_masks/segment-10.mkv",
+      "frames": 351,
+      "present_frames": 351,
+      "min_right_pixel": 326,
+      "max_right_pixel": 327,
+      "visibility_transitions": [],
+      "unique_right_pixels": [
+        326,
+        327
+      ]
+    },
+    {
+      "mask": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/score_masks/segment-12.mkv",
+      "frames": 677,
+      "present_frames": 677,
+      "min_right_pixel": 373,
+      "max_right_pixel": 374,
+      "visibility_transitions": [],
+      "unique_right_pixels": [
+        373,
+        374
+      ]
+    },
+    {
+      "mask": "/workspace/tennislive/output/2026-10-10/reel/zhou-musetti/score_masks/segment-14.mkv",
+      "frames": 602,
+      "present_frames": 296,
+      "min_right_pixel": 245,
+      "max_right_pixel": 374,
+      "visibility_transitions": [
+        {
+          "frame": 296,
+          "present": false
+        }
+      ],
+      "unique_right_pixels": [
+        245,
+        272,
+        291,
+        299,
+        309,
+        317,
+        319,
+        321,
+        323,
+        328,
+        339,
+        345,
+        354,
+        360,
+        362,
+        366,
+        369,
+        370,
+        372,
+        373,
+        374
+      ]
+    }
+  ],
+  "scoreboard_mask_review": {
+    "every_mask_frame_decoded": true,
+    "total_mask_frames": 3733,
+    "source_audit_frame_count_note": "Actual encoded masks total3733 versus source audit3735: two fractional-duration windows end one sample earlier in mask encoding; no extra source frame asserted as encoded output.",
+    "all_seven_mask_geometry": "Widths remain in observed legitimate board ranges; first-set finish shrinks, native second-set tail expands to325, supplemental second-set stays328/329, setpoint325/326, decider372/373, final/cold withdraw once. All non-board repeated detections from old version removed.",
+    "visibility": "Cold present67/147 then absent; final present296/602 then absent. No return-to-visible fragments. Other five selected windows contain actual continuously visible boards.",
+    "optional_tag_masks": "All seven tag_frames0 in native QC. No upper/lower ancillary tag observed in actual source and final reviewed shots; no tag resurrection asserted."
+  },
+  "unchanged_files": "No spec, code or audio modified during this review."
+}
