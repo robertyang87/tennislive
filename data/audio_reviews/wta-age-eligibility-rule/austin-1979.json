@@ -1,0 +1,229 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=hoFw5UH7xXw",
+  "source_sha256": "5df0c0cb227f098900e571d53aa12839751c2d4616088dcb1730b0a14645990d",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 全片交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T06:07:15+00:00",
+  "status": "complete",
+  "reviewed_from": 18.7,
+  "reviewed_to": 25.55,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 18.72,
+      "end": 20.16,
+      "en": "Perfect shot.",
+      "zh": "这一拍打得很漂亮。"
+    },
+    {
+      "start": 22.08,
+      "end": 25.42,
+      "en": "Big shot and very timely by Austin.",
+      "zh": "奥斯汀这一拍又大又及时。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_window": {
+    "small.en": [
+      {
+        "start": 14.78,
+        "end": 16.52,
+        "text": "And a break for Tracy.",
+        "words": [
+          {
+            "s": 16.12,
+            "e": 16.52,
+            "w": "Tracy."
+          }
+        ]
+      },
+      {
+        "start": 18.86,
+        "end": 20.16,
+        "text": "Perfect shot.",
+        "words": [
+          {
+            "s": 18.86,
+            "e": 19.6,
+            "w": "Perfect"
+          },
+          {
+            "s": 19.6,
+            "e": 20.16,
+            "w": "shot."
+          }
+        ]
+      },
+      {
+        "start": 22.22,
+        "end": 25.42,
+        "text": "Big shot and very timely by Austin.",
+        "words": [
+          {
+            "s": 22.22,
+            "e": 22.96,
+            "w": "Big"
+          },
+          {
+            "s": 22.96,
+            "e": 23.48,
+            "w": "shot"
+          },
+          {
+            "s": 23.48,
+            "e": 23.8,
+            "w": "and"
+          },
+          {
+            "s": 23.8,
+            "e": 24.16,
+            "w": "very"
+          },
+          {
+            "s": 24.16,
+            "e": 24.62,
+            "w": "timely"
+          },
+          {
+            "s": 24.62,
+            "e": 24.96,
+            "w": "by"
+          },
+          {
+            "s": 24.96,
+            "e": 25.42,
+            "w": "Austin."
+          }
+        ]
+      },
+      {
+        "start": 26.58,
+        "end": 27.66,
+        "text": "Match point for Tracy.",
+        "words": [
+          {
+            "s": 26.58,
+            "e": 26.66,
+            "w": "Match"
+          },
+          {
+            "s": 26.66,
+            "e": 27.0,
+            "w": "point"
+          },
+          {
+            "s": 27.0,
+            "e": 27.3,
+            "w": "for"
+          },
+          {
+            "s": 27.3,
+            "e": 27.66,
+            "w": "Tracy."
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "start": 14.7,
+        "end": 16.34,
+        "text": "Had a break for Tracy.",
+        "words": [
+          {
+            "s": 16.06,
+            "e": 16.34,
+            "w": "Tracy."
+          }
+        ]
+      },
+      {
+        "start": 18.72,
+        "end": 20.0,
+        "text": "Perfect shot.",
+        "words": [
+          {
+            "s": 18.72,
+            "e": 19.48,
+            "w": "Perfect"
+          },
+          {
+            "s": 19.48,
+            "e": 20.0,
+            "w": "shot."
+          }
+        ]
+      },
+      {
+        "start": 22.08,
+        "end": 25.3,
+        "text": "Big shot and very timely by Austin.",
+        "words": [
+          {
+            "s": 22.08,
+            "e": 22.84,
+            "w": "Big"
+          },
+          {
+            "s": 22.84,
+            "e": 23.38,
+            "w": "shot"
+          },
+          {
+            "s": 23.38,
+            "e": 23.72,
+            "w": "and"
+          },
+          {
+            "s": 23.72,
+            "e": 24.02,
+            "w": "very"
+          },
+          {
+            "s": 24.02,
+            "e": 24.46,
+            "w": "timely"
+          },
+          {
+            "s": 24.46,
+            "e": 24.9,
+            "w": "by"
+          },
+          {
+            "s": 24.9,
+            "e": 25.3,
+            "w": "Austin."
+          }
+        ]
+      },
+      {
+        "start": 26.1,
+        "end": 27.56,
+        "text": "That's point for Tracy.",
+        "words": [
+          {
+            "s": 26.1,
+            "e": 26.74,
+            "w": "That's"
+          },
+          {
+            "s": 26.74,
+            "e": 26.92,
+            "w": "point"
+          },
+          {
+            "s": 26.92,
+            "e": 27.24,
+            "w": "for"
+          },
+          {
+            "s": 27.24,
+            "e": 27.56,
+            "w": "Tracy."
+          }
+        ]
+      }
+    ]
+  },
+  "agreement": "两句用词一致。窗口前的 break for Tracy 和窗口后的 Match point / That's point 用词不一致，不收。"
+}

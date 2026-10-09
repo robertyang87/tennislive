@@ -1,0 +1,274 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ULRfGpWKYQQ",
+  "source_sha256": "112d111d577686a4c7cf07d1d863b94025dc7ceb51612fd47bc9194997dc66c4",
+  "method": "asr_cross_checked",
+  "reviewer": "faster-whisper small.en 与 base.en 全片交叉，2026-10-09",
+  "reviewed_at": "2026-10-09T06:07:15+00:00",
+  "status": "complete",
+  "reviewed_from": 114.6,
+  "reviewed_to": 125.0,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "两套全片转写里，上一句英文在 114.34 结束（base 的 Yeah），下一句 And the break 从 126.18 起。114.60–125.00 没有英文词。本段配中文旁白。",
+  "asr_window": {
+    "small.en": [
+      {
+        "start": 110.6,
+        "end": 114.46,
+        "text": "And even the girl who can get almost everything wasn't up to that one.",
+        "words": [
+          {
+            "s": 110.6,
+            "e": 110.74,
+            "w": "And"
+          },
+          {
+            "s": 110.74,
+            "e": 111.02,
+            "w": "even"
+          },
+          {
+            "s": 111.02,
+            "e": 111.24,
+            "w": "the"
+          },
+          {
+            "s": 111.24,
+            "e": 111.44,
+            "w": "girl"
+          },
+          {
+            "s": 111.44,
+            "e": 111.56,
+            "w": "who"
+          },
+          {
+            "s": 111.56,
+            "e": 111.7,
+            "w": "can"
+          },
+          {
+            "s": 111.7,
+            "e": 111.84,
+            "w": "get"
+          },
+          {
+            "s": 111.84,
+            "e": 112.18,
+            "w": "almost"
+          },
+          {
+            "s": 112.18,
+            "e": 112.92,
+            "w": "everything"
+          },
+          {
+            "s": 112.92,
+            "e": 113.64,
+            "w": "wasn't"
+          },
+          {
+            "s": 113.64,
+            "e": 113.78,
+            "w": "up"
+          },
+          {
+            "s": 113.78,
+            "e": 113.92,
+            "w": "to"
+          },
+          {
+            "s": 113.92,
+            "e": 114.12,
+            "w": "that"
+          },
+          {
+            "s": 114.12,
+            "e": 114.46,
+            "w": "one."
+          }
+        ]
+      },
+      {
+        "start": 126.18,
+        "end": 130.32,
+        "text": "And the break is relatively easy from that moment, I have to say.",
+        "words": [
+          {
+            "s": 126.18,
+            "e": 126.74,
+            "w": "And"
+          },
+          {
+            "s": 126.74,
+            "e": 126.86,
+            "w": "the"
+          },
+          {
+            "s": 126.86,
+            "e": 127.24,
+            "w": "break"
+          },
+          {
+            "s": 127.24,
+            "e": 127.54,
+            "w": "is"
+          },
+          {
+            "s": 127.54,
+            "e": 128.14,
+            "w": "relatively"
+          },
+          {
+            "s": 128.14,
+            "e": 128.66,
+            "w": "easy"
+          },
+          {
+            "s": 128.66,
+            "e": 129.04,
+            "w": "from"
+          }
+        ]
+      }
+    ],
+    "base.en": [
+      {
+        "start": 110.1,
+        "end": 114.28,
+        "text": "And even the girl who can get almost everything wasn't up to that one.",
+        "words": [
+          {
+            "s": 110.1,
+            "e": 110.66,
+            "w": "And"
+          },
+          {
+            "s": 110.66,
+            "e": 110.92,
+            "w": "even"
+          },
+          {
+            "s": 110.92,
+            "e": 111.18,
+            "w": "the"
+          },
+          {
+            "s": 111.18,
+            "e": 111.34,
+            "w": "girl"
+          },
+          {
+            "s": 111.34,
+            "e": 111.52,
+            "w": "who"
+          },
+          {
+            "s": 111.52,
+            "e": 111.64,
+            "w": "can"
+          },
+          {
+            "s": 111.64,
+            "e": 111.78,
+            "w": "get"
+          },
+          {
+            "s": 111.78,
+            "e": 112.02,
+            "w": "almost"
+          },
+          {
+            "s": 112.02,
+            "e": 112.88,
+            "w": "everything"
+          },
+          {
+            "s": 112.88,
+            "e": 113.62,
+            "w": "wasn't"
+          },
+          {
+            "s": 113.62,
+            "e": 113.72,
+            "w": "up"
+          },
+          {
+            "s": 113.72,
+            "e": 113.88,
+            "w": "to"
+          },
+          {
+            "s": 113.88,
+            "e": 114.04,
+            "w": "that"
+          },
+          {
+            "s": 114.04,
+            "e": 114.28,
+            "w": "one."
+          }
+        ]
+      },
+      {
+        "start": 114.28,
+        "end": 114.34,
+        "text": "Yeah.",
+        "words": [
+          {
+            "s": 114.28,
+            "e": 114.34,
+            "w": "Yeah."
+          }
+        ]
+      },
+      {
+        "start": 126.72,
+        "end": 130.28,
+        "text": "And the break is relatively easy from that moment I have to say.",
+        "words": [
+          {
+            "s": 126.72,
+            "e": 126.72,
+            "w": "And"
+          },
+          {
+            "s": 126.72,
+            "e": 126.8,
+            "w": "the"
+          },
+          {
+            "s": 126.8,
+            "e": 127.14,
+            "w": "break"
+          },
+          {
+            "s": 127.14,
+            "e": 127.46,
+            "w": "is"
+          },
+          {
+            "s": 127.46,
+            "e": 127.96,
+            "w": "relatively"
+          },
+          {
+            "s": 127.96,
+            "e": 128.64,
+            "w": "easy"
+          },
+          {
+            "s": 128.64,
+            "e": 128.98,
+            "w": "from"
+          },
+          {
+            "s": 128.98,
+            "e": 129.18,
+            "w": "that"
+          }
+        ]
+      }
+    ]
+  }
+}
