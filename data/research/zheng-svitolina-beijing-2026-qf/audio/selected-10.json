@@ -1,0 +1,123 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=lme6vYGvWXw",
+  "source_sha256": "da97c5eafb072aa2087e1cee2d893a2c1ea687ac8ef941373e9ccc76553f1d3d",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI root assistant: directly read actual YouTube small.en/base.en unprompted full-window words/probabilities and independently retained platform captions; Chinese translation edited by same assistant.",
+  "reviewed_at": "2026-10-09T13:45:02.122922+00:00",
+  "status": "complete",
+  "reviewed_from": 256.84,
+  "reviewed_to": 296.5,
+  "actual_listening_performed": false,
+  "review_scope": "Full selected audio windows crosschecked from actual downloaded source; base timings stretched over silence rejected, small words and platform cues preferred. Player/coach spelling grounded in verified identities. This is ASR crosscheck, not claimed human listening. Cold279.0 preroll is covered by actual winning raw256.84–296.5.",
+  "foreground_english": [
+    {
+      "start": 262.24,
+      "end": 266.56,
+      "en": "And it's a belated birthday gift for Zheng Qinwen,",
+      "zh": "这是送给郑钦文的迟到生日礼物"
+    },
+    {
+      "start": 266.56,
+      "end": 268.38,
+      "en": "and she cannot believe it.",
+      "zh": "她自己都难以相信。"
+    },
+    {
+      "start": 268.72,
+      "end": 270.4,
+      "en": "Onto the ground she goes.",
+      "zh": "她倒在了球场上。"
+    },
+    {
+      "start": 271.52,
+      "end": 273.76,
+      "en": "And her coaches are enjoying that.",
+      "zh": "她的教练们也为此欣喜。"
+    },
+    {
+      "start": 273.86,
+      "end": 275.18,
+      "en": "Look at Pere Riba. He's loving it.",
+      "zh": "看看佩雷·里巴 他太开心了"
+    },
+    {
+      "start": 275.3,
+      "end": 277.36,
+      "en": "The crowd going wild in Beijing.",
+      "zh": "北京的现场观众沸腾了。"
+    },
+    {
+      "start": 279.97,
+      "end": 281.6,
+      "en": "A belated birthday present.",
+      "zh": "一份迟到的生日礼物。"
+    },
+    {
+      "start": 281.6,
+      "end": 283.62,
+      "en": "Turned 24 years old yesterday.",
+      "zh": "她昨天刚满24岁。"
+    },
+    {
+      "start": 284.19,
+      "end": 286.1,
+      "en": "And Zheng Qinwen in front of her home crowd",
+      "zh": "郑钦文在主场观众面前"
+    },
+    {
+      "start": 286.1,
+      "end": 288.95,
+      "en": "into the semifinals of the China Open.",
+      "zh": "打进了中国网球公开赛半决赛。"
+    },
+    {
+      "start": 289.27,
+      "end": 290.82,
+      "en": "Six three, seven six.",
+      "zh": "比分6比3、7比6。"
+    },
+    {
+      "start": 291.45,
+      "end": 292.6,
+      "en": "What a win. What a moment.",
+      "zh": "多么精彩的胜利，多么动人的时刻。"
+    },
+    {
+      "start": 292.84,
+      "end": 294.35,
+      "en": "Second time that she's been",
+      "zh": "这是她第二次"
+    },
+    {
+      "start": 294.35,
+      "end": 296.45,
+      "en": "in the semifinals here in Beijing.",
+      "zh": "打进北京站半决赛"
+    }
+  ],
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-review-ready-six-windows.json",
+      "sha256": "cb485f626750aef87b70363008695b298050052036f662ab1e605f8ba4e0dd3a"
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-small.en-six-windows-unprompted.json",
+      "sha256": "c88bb46468a19afb9e129440bb705522069dd8abc66b2aebe2ba85bb9e8d53bb"
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-base.en-six-windows-unprompted.json",
+      "sha256": "dc1c3cef53d8884b5395dc7127e622353a9bfdbb30fce4f3d8f6415778388cf3"
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-asr-focus-unprompted.json",
+      "sha256": "456061539a3cf8d0ec2561d075650d5bc3363f1de15be6540cfa5e83f596084a"
+    }
+  ],
+  "source_speech_notes": [
+    "Original broadcaster ends phrase at from in216–219 window; unprompted models and platform captions contain no subsequent name, keep literal fragment with ellipsis.",
+    "The crowd wording adopted from small.en and platform, base inserts And; no unsupported new proposition.",
+    "Names corrected from ASR aliases to Qinwen Zheng/Elina Svitolina/Pere Riba using actual match identity."
+  ]
+}

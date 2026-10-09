@@ -1,0 +1,176 @@
+{
+  "film_sha256": "6b49ea98dd56337d8ec0e95a5408fdf2f0a7f78c1950e8235523b896195ded5a",
+  "spec_sha256": "c0806792ae76472dbbf3b0be717fe6064f2c611789a1b5318499520a48ad3257",
+  "method": "Actual final film PCM compared with actual synthesized per-segment mp3 cache; First steady speech block after designed180ms transition and last speech-bearing block bound. Initial transition itself may contain intended source crowd bed. No human listening and no pronunciation-tone verdict by this check.",
+  "rows": [
+    {
+      "edit_id": "coordinate",
+      "path": "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/voice_01.mp3",
+      "sha256": "cdefa19bfac27939456b9d5e7fca9de9903e817d53f2cd17381931bdfdcfded5",
+      "duration": 9.192,
+      "film_start": 18.7,
+      "checks": [
+        {
+          "voice_pcm_at": 0.35,
+          "film_pcm_at": 19.05,
+          "correlation": 0.99998,
+          "lag_seconds": 0.0
+        },
+        {
+          "voice_pcm_at": 8.225,
+          "film_pcm_at": 26.925,
+          "correlation": 0.9999,
+          "lag_seconds": 6.3e-05
+        }
+      ]
+    },
+    {
+      "edit_id": "set_one_turn",
+      "path": "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/voice_02.mp3",
+      "sha256": "9801c3aa51ab7c01151a2d2d5a88231173d89ed3d8c5e56efd0b1f15ab6e8d14",
+      "duration": 11.568,
+      "film_start": 29.2,
+      "checks": [
+        {
+          "voice_pcm_at": 0.35,
+          "film_pcm_at": 29.55,
+          "correlation": 0.99997,
+          "lag_seconds": 0.0
+        },
+        {
+          "voice_pcm_at": 10.5,
+          "film_pcm_at": 39.7,
+          "correlation": 0.99998,
+          "lag_seconds": 0.0
+        }
+      ]
+    },
+    {
+      "edit_id": "second_pressure",
+      "path": "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/voice_04.mp3",
+      "sha256": "e1ba37d238e9171133fa1f1708dfc11fd379d9f50f03568edeacf56813cc2696",
+      "duration": 8.496,
+      "film_start": 80.26,
+      "checks": [
+        {
+          "voice_pcm_at": 0.35,
+          "film_pcm_at": 80.61,
+          "correlation": 0.99998,
+          "lag_seconds": 0.0
+        },
+        {
+          "voice_pcm_at": 7.525,
+          "film_pcm_at": 87.785,
+          "correlation": 0.99979,
+          "lag_seconds": 0.0
+        }
+      ]
+    },
+    {
+      "edit_id": "breakback_fact",
+      "path": "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/voice_06.mp3",
+      "sha256": "6f71ee8062ea1e86a2c70a000f64f1284b14685308ee42c2d32ef22e727dda5a",
+      "duration": 7.608,
+      "film_start": 110.38,
+      "checks": [
+        {
+          "voice_pcm_at": 0.35,
+          "film_pcm_at": 110.73,
+          "correlation": 0.99997,
+          "lag_seconds": 0.0
+        },
+        {
+          "voice_pcm_at": 6.65,
+          "film_pcm_at": 117.03,
+          "correlation": 0.99997,
+          "lag_seconds": 0.0
+        }
+      ]
+    },
+    {
+      "edit_id": "tb_pressure",
+      "path": "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/voice_08.mp3",
+      "sha256": "d638adad1f8ccd03da079d173ad9e7a9501e2af76b85df8a9fa4772008e36f21",
+      "duration": 8.088,
+      "film_start": 130.14,
+      "checks": [
+        {
+          "voice_pcm_at": 0.35,
+          "film_pcm_at": 130.49,
+          "correlation": 0.99999,
+          "lag_seconds": 0.0
+        },
+        {
+          "voice_pcm_at": 7.175,
+          "film_pcm_at": 137.315,
+          "correlation": 0.99997,
+          "lag_seconds": 0.0
+        }
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "path": "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/voice_11.mp3",
+      "sha256": "fcbd8361575d68693079743ae22eb59928bf5e2b149beae1aac6d41ebbaf5fbc",
+      "duration": 9.96,
+      "film_start": 202.24,
+      "checks": [
+        {
+          "voice_pcm_at": 0.35,
+          "film_pcm_at": 202.59,
+          "correlation": 0.99976,
+          "lag_seconds": 0.0
+        },
+        {
+          "voice_pcm_at": 8.925,
+          "film_pcm_at": 211.165,
+          "correlation": 0.99997,
+          "lag_seconds": 0.0
+        }
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "path": "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/voice_12.mp3",
+      "sha256": "cbfcace558019a8dec3a24f74a55f5ac72f9501e104a4c70876e46c4736d635a",
+      "duration": 8.208,
+      "film_start": 213.74,
+      "checks": [
+        {
+          "voice_pcm_at": 0.35,
+          "film_pcm_at": 214.09,
+          "correlation": 0.99347,
+          "lag_seconds": -6.3e-05
+        },
+        {
+          "voice_pcm_at": 7.175,
+          "film_pcm_at": 220.915,
+          "correlation": 0.99685,
+          "lag_seconds": -6.3e-05
+        }
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "path": "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/voice_outro.mp3",
+      "sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+      "duration": 4.2,
+      "film_start": 222.54,
+      "checks": [
+        {
+          "voice_pcm_at": 0.35,
+          "film_pcm_at": 222.89,
+          "correlation": 0.97946,
+          "lag_seconds": -6.3e-05
+        },
+        {
+          "voice_pcm_at": 3.15,
+          "film_pcm_at": 225.69,
+          "correlation": 0.85605,
+          "lag_seconds": -0.007063
+        }
+      ]
+    }
+  ],
+  "pass": true
+}

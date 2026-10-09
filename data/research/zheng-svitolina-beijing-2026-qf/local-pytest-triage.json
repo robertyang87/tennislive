@@ -1,0 +1,782 @@
+{
+  "log": "/workspace/scratch/own-pytest.log",
+  "summary": {
+    "failed": 46,
+    "passed": 5524,
+    "skipped": 465,
+    "subtests_passed": 70,
+    "elapsed_seconds": 573.96,
+    "category_counts": {
+      "current_slug_and_other_slug_hit_data_missing": 1,
+      "historical_output_or_probe_not_materialized": 12,
+      "other_slugs_missing_cover_assets": 3,
+      "other_slugs_spec_content": 10,
+      "sparse_missing_dashboard_or_requests": 20
+    }
+  },
+  "scope": "Read-only triage; no code/spec/exemption edits, no full pytest rerun, no workflows or model APIs. Pure existing helper functions used to inspect calibration and probe ownership.",
+  "checkout_evidence": {
+    "sparse_paths": [
+      ".claude",
+      ".github",
+      "assets",
+      "data",
+      "docs",
+      "output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf",
+      "skills",
+      "specs",
+      "src",
+      "tests",
+      "tools"
+    ],
+    "dashboard_requests_skip_worktree": [
+      "S dashboard/app.js",
+      "S dashboard/styles.css",
+      "S dashboard/tokens.css",
+      "S requests/interviews/nishikori-sakamoto-us-open-2026-q3-farewell.json",
+      "S requests/interviews/pegula-navarro-us-open-2026-qf-interview.json"
+    ],
+    "current_spec_snapshot_sha256": "e65fb6bdbda661bc1ff385fbe84da8c844299e2e149ac8a8c9954a41e040cdd6",
+    "current_spec_snapshot_mtime_utc": "2026-10-09T13:33:56.680280+00:00"
+  },
+  "current_slug_actionable": [
+    {
+      "issue": "Missing explicit fact-based _hit_data claim",
+      "test": "tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有",
+      "status": "confirmed in log and current spec",
+      "fields_present": {
+        "_hit_data": null,
+        "_no_hit_data_why": null
+      },
+      "recommended_fix": "Parent editor records already source-verified match-stat candidates in _hit_data. This match has real statistics, so do not invent no-data rationale or add exemption. Available official total80:70, break4/11 vs2/2, TNNS winners39:15; use exact supported claims appropriate to actual narrative.",
+      "read_validation_after_fix": "Read current spec _hit_data and per-slug missing-hit-data helper; full corpus test may remain red for khachanov."
+    },
+    {
+      "issue": "Same-source custom WTA scorebox has no valid measured board scan",
+      "test": "tests/test_probe_board.py::test_标定框和全库spec用的框对得上",
+      "status": "confirmed by current per-slug helper, hidden in original assertion because ATP failed first",
+      "current_scorebox": [
+        84,
+        830,
+        590,
+        992
+      ],
+      "wta_calibrated_box": [
+        90,
+        870,
+        550,
+        980
+      ],
+      "probes_for_spec_missing": [],
+      "custom_box_has_probe": false,
+      "current_probe_board": {
+        "version": 1,
+        "error": "WTA board present but native right boundary cannot be measured"
+      },
+      "diagnostic_artifact": "/workspace/scratch/pytest-calibration-triage.json",
+      "recommended_fix": "Measure actual source board boundaries and create genuine same-source custom-box board frames/scans/wta runs. Existing generic calibrated box is a comparison only; do not blindly change to it or add waiver.",
+      "read_validation_after_fix": "Current-slug _custom_box_has_probe must become true with real scan; full corpus test can remain red for other historical films."
+    }
+  ],
+  "dependency_failures": {
+    "confirmed_count": 0,
+    "evidence": "No ModuleNotFoundError/ImportError/missing executables in failure log. Dashboard browser timeout follows absent dashboard files, not missing browser binary. Current board error is geometric boundary measurement, not missing Python dependency."
+  },
+  "concurrency_assessment": {
+    "confirmed_race_failures": [],
+    "note": "Parent states spec was evolving during 9m34s parallel test run. Log lacks immutable spec hashes or file revision timestamps per test; do not assign failures solely to concurrency. Current hit-data issue persists in inspected snapshot; custom-board issue also presently reproducible. Unsupported root fields are verified in older Medvedev JSON, not current film."
+  },
+  "failure_records": [
+    {
+      "nodeid": "tests/test_absolute_claims.py::test_仓库里的人工采访请求都读得开_slug合法且和文件名一致",
+      "log_lines": [
+        90,
+        104
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       AssertionError: requests/interviews 下一条都没有——路径变了？这条会静静空转",
+        "E       assert []"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::DashboardSnapshotTest::test_dashboard_does_not_claim_phone_delivery_from_provider_acceptance",
+      "log_lines": [
+        105,
+        136
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/app.js'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_卡片标题读cover_topic_同名spec按栏目认",
+      "log_lines": [
+        137,
+        181
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/app.js'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_没有成片数据时达标率是空_页面显示破折号",
+      "log_lines": [
+        182,
+        215
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/app.js'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_页面没有空锚点_没链接就渲div",
+      "log_lines": [
+        216,
+        247
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/app.js'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_样式字阶不小于12_字重只用400_500_600_数字等宽",
+      "log_lines": [
+        248,
+        283
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/styles.css'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_hover只写在指针设备里_按压97_不写transition_all",
+      "log_lines": [
+        284,
+        319
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/styles.css'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_运行中的点用光环扩散_减少动态时扫光和光环都停",
+      "log_lines": [
+        320,
+        355
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/styles.css'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_样式只用tl变量且浅深两套主题都定义了",
+      "log_lines": [
+        356,
+        393
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/styles.css'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_看板品牌与主题跟着token走",
+      "log_lines": [
+        394,
+        423
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/index.html'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_分段控件有aria_pressed_筛选不重建按钮",
+      "log_lines": [
+        424,
+        453
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/index.html'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_刷新失败保留上次状态并标过期",
+      "log_lines": [
+        454,
+        483
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/app.js'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_看板页面引用的本地文件pages都拷过去了",
+      "log_lines": [
+        484,
+        515
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/index.html'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_dashboard_snapshot.py::test_看板真渲出来_阻塞态_窄屏失败排前_刷新失败保留",
+      "log_lines": [
+        516,
+        590
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E           playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.",
+        "E           Call log:",
+        "E             - waiting for locator(\"#hero[data-status=\\\"failed\\\"]\") to be visible"
+      ]
+    },
+    {
+      "nodeid": "tests/test_design_tokens.py::test_enforced名单只许加不许减",
+      "log_lines": [
+        591,
+        604
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       AssertionError: 这几个文件的 design-tokens enforced 标记被拿掉了（或文件被挪走 / 删了），它们的绕过检测不吭声地关了：['dashboard/styles.css']",
+        "E       assert not ['dashboard/styles.css']"
+      ]
+    },
+    {
+      "nodeid": "tests/test_design_tokens.py::test_tokens_css是生成物",
+      "log_lines": [
+        605,
+        641
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/tokens.css'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_design_tokens.py::test_CSS变量带tl前缀_和看板自己的变量不撞名",
+      "log_lines": [
+        642,
+        670
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       AssertionError: 判据失效：看板的 styles.css 没扫到",
+        "E       assert 'styles.css' in {}"
+      ]
+    },
+    {
+      "nodeid": "tests/test_design_tokens.py::test_文档里指向的判据名字都真的存在",
+      "log_lines": [
+        671,
+        711
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/dashboard/app.js'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_封面上每个球员都要有国旗和即时排名",
+      "log_lines": [
+        712,
+        756
+      ],
+      "category": "other_slugs_spec_content",
+      "current_slug_explicitly_named": false,
+      "reason": "Historical/noncurrent spec field, copy, cover layout or quote failure; current slug is not named. canvas/column/fps owners verified as medvedev-24-titles-23-cities only.",
+      "error_excerpt": [
+        "E       AssertionError: 封面缺国旗/排名：{'medvedev-24-titles-23-cities.json': [\"top 缺 ['country', 'rank']\", \"bottom 缺 ['country', 'rank']\"]}",
+        "E       assert not {'medvedev-24-titles-23-cities.json': [\"top 缺 ['country', 'rank']\", \"bottom 缺 ['country', 'rank']\"]}"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_小红书正文首行要点出是谁",
+      "log_lines": [
+        757,
+        821
+      ],
+      "category": "other_slugs_spec_content",
+      "current_slug_explicitly_named": false,
+      "reason": "Historical/noncurrent spec field, copy, cover layout or quote failure; current slug is not named. canvas/column/fps owners verified as medvedev-24-titles-23-cities only.",
+      "error_excerpt": [
+        "E       AssertionError: 判不了的条数涨了：['eala-pegula', 'eala-zheng', 'jodar-fritz', 'medvedev-24-titles-23-cities', 'nishikori-shang']",
+        "E       assert 5 <= 4",
+        "E        +  where 5 = len(['eala-pegula', 'eala-zheng', 'jodar-fritz', 'medvedev-24-titles-23-cities', 'nishikori-shang'])"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段",
+      "log_lines": [
+        822,
+        851
+      ],
+      "category": "other_slugs_spec_content",
+      "current_slug_explicitly_named": false,
+      "reason": "Historical/noncurrent spec field, copy, cover layout or quote failure; current slug is not named. canvas/column/fps owners verified as medvedev-24-titles-23-cities only.",
+      "error_excerpt": [
+        "E           AssertionError: `_REAL_FIELDS['spec']` 少了 ['canvas', 'column', 'fps']——这几个字段写成 `_xxx` 时不会被拦住，会静静地不生效",
+        "E           assert not ['canvas', 'column', 'fps']"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧",
+      "log_lines": [
+        852,
+        950
+      ],
+      "category": "other_slugs_missing_cover_assets",
+      "current_slug_explicitly_named": false,
+      "reason": "Failure names khachanov/tabilo and/or medvedev poster asset. Current film photo is not named. Named khachanov/tabilo files are absent from working tree and HEAD paths; not explained merely by output sparse scope.",
+      "error_excerpt": [
+        "E       AssertionError: 这几条既不在豁免表里、封面又过不了闸：['khachanov-auger-aliassime-beijing-2026-r1', 'tabilo-paul-tokyo-2026-r1']",
+        "E       assert not ['khachanov-auger-aliassime-beijing-2026-r1', 'tabilo-paul-tokyo-2026-r1']"
+      ]
+    },
+    {
+      "nodeid": "tests/test_list_official_uploads.py::test_dry_run真的印官方上传那一段而且不碰网络",
+      "log_lines": [
+        951,
+        974
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E       AssertionError:",
+        "E       assert 1 == 0",
+        "E        +  where 1 = CompletedProcess(args=['/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python', '/workspace/tennisl.../preview_segments_local.py --slug tiafoe-musetti-cincinnati-2026-qf\\n  （本地，几秒钟；改了哪几段就 `--seg 3,7` 只看那几段）\\n', stderr='').returncode"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_冷开场不许随手取源片开头",
+      "log_lines": [
+        975,
+        1015
+      ],
+      "category": "other_slugs_spec_content",
+      "current_slug_explicitly_named": false,
+      "reason": "Historical/noncurrent spec field, copy, cover layout or quote failure; current slug is not named. canvas/column/fps owners verified as medvedev-24-titles-23-cities only.",
+      "error_excerpt": [
+        "E           AssertionError: medvedev-24-titles-23-cities 的冷开场取自源片第 0.6 秒——那是集锦的开头，也就是这场球戏剧性最低的一格。爆点（最后一球／赛点落地／捧杯／那个拥抱）在集锦里几乎必然靠后。真要用开头就写一句 `_head_open_why` 说清楚为什么它是全片最强的那一格。",
+        "E           assert ''",
+        "E            +  where '' = <built-in method strip of str object at 0x154dcc0>()",
+        "E            +    where <built-in method strip of str object at 0x154dcc0> = ''.strip",
+        "E            +      where '' = str('')"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上",
+      "log_lines": [
+        1016,
+        1067
+      ],
+      "category": "other_slugs_spec_content",
+      "current_slug_explicitly_named": false,
+      "reason": "Historical/noncurrent spec field, copy, cover layout or quote failure; current slug is not named. canvas/column/fps owners verified as medvedev-24-titles-23-cities only.",
+      "error_excerpt": [
+        "E       AssertionError: 这些片子的收尾停在数据上，没有落在一问上：",
+        "E           medvedev-24-titles-23-cities: …收尾停在数据上，没有落在一问上：…二十三记发球直接得分，杭州写下第二十四冠。",
+        "E         账号所有者：「不要平白地叙事，要能引爆传播」。最后一段要么旁白问出一个针对这场的问题，要么留一句带问号的原声；先用一个数字回答开场的问题，再抛下一问。往积极的方向落——请读者期待他兑现，不是请读者怀疑他。",
+        "E       assert not ['medvedev-24-titles-23-cities: …收尾停在数据上，没有落在一问上：…二十三记发球直接得分，杭州写下第二十四冠。\\n账号所有者：「不要平白地叙事，要能引爆传播」。最后一段要么旁白问出一个针对这场的问题，要么留一句带问号的原声；先用一个数字回答开场的问题，再抛下一问。往积极的方向落——请读者期待他兑现，不是请读者怀疑他。']"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_栏目和封面模板要配对",
+      "log_lines": [
+        1068,
+        1105
+      ],
+      "category": "other_slugs_spec_content",
+      "current_slug_explicitly_named": false,
+      "reason": "Historical/noncurrent spec field, copy, cover layout or quote failure; current slug is not named. canvas/column/fps owners verified as medvedev-24-titles-23-cities only.",
+      "error_excerpt": [
+        "E           AssertionError: medvedev-24-titles-23-cities.json：网球有故事 只能用 ('solo', 'cutout')，写的是 None",
+        "E           assert None in ('solo', 'cutout')",
+        "E            +  where None = <built-in method get of dict object at 0x7f067dd4e780>('layout')",
+        "E            +    where <built-in method get of dict object at 0x7f067dd4e780> = {'eyebrow': '网球有故事', 'title': ['24座冠军', '23座城市'], 'hook': 'Mr. Worldwide', 'poster': 'poster.jpg'}.get"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_封面固定版式是官方抠图加本场视频全场机位",
+      "log_lines": [
+        1106,
+        1138
+      ],
+      "category": "other_slugs_spec_content",
+      "current_slug_explicitly_named": false,
+      "reason": "Historical/noncurrent spec field, copy, cover layout or quote failure; current slug is not named. canvas/column/fps owners verified as medvedev-24-titles-23-cities only.",
+      "error_excerpt": [
+        "E           AssertionError: medvedev-24-titles-23-cities.json 没写 layout——会跟着默认值漂",
+        "E           assert None"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_源片自己烧了记分条时字幕要让开",
+      "log_lines": [
+        1139,
+        1188
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E           AssertionError: yastremska-chwalinska.json",
+        "E           assert 'no matching QC-bound ASS proves this exact per-film subtitle anchor' is None",
+        "E            +  where 'no matching QC-bound ASS proves this exact per-film subtitle anchor' = <function override_problem at 0x7f06a0bb7920>(PosixPath('specs/reels/yastremska-chwalinska.json'), PosixPath('/workspace/tennislive'))",
+        "E            +    where PosixPath('/workspace/tennislive') = cwd()",
+        "E            +      where cwd = Path.cwd"
+      ]
+    },
+    {
+      "nodeid": "tests/test_interview_farewell.py::test_请求文件本身可构建且比分方向没有反转",
+      "log_lines": [
+        1189,
+        1219
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/requests/interviews/nishikori-sakamoto-us-open-2026-q3-farewell.json'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_interview_preflight.py::test_请求预检拦比分输家视角和总分差",
+      "log_lines": [
+        1220,
+        1256
+      ],
+      "category": "sparse_missing_dashboard_or_requests",
+      "current_slug_explicitly_named": false,
+      "reason": "Required tracked dashboard or requests/interviews files are skip-worktree (git ls-files -t shows S); not materialized in this sparse checkout.",
+      "error_excerpt": [
+        "E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/requests/interviews/pegula-navarro-us-open-2026-qf-interview.json'"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_每条spec的旁白都还估得下",
+      "log_lines": [
+        1257,
+        1528
+      ],
+      "category": "other_slugs_missing_cover_assets",
+      "current_slug_explicitly_named": false,
+      "reason": "Failure names khachanov/tabilo and/or medvedev poster asset. Current film photo is not named. Named khachanov/tabilo files are absent from working tree and HEAD paths; not explained merely by output sparse scope.",
+      "error_excerpt": [
+        "E           build_match_reel.ReelError: 封面大图找不到：assets/reel/khachanov-auger-aliassime-beijing-2026-r1.jpg"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_dry_run要把装不下的旁白当场报出来",
+      "log_lines": [
+        1529,
+        1627
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E       AssertionError: 真 spec 没过 dry-run：",
+        "E         [片长] 247.9s = 4 分 7 秒，按实测 12560 kb/s 估 371 MiB —— 成片一律走 Release 附件，不进 git",
+        "E         [多音字] 2 处读音不是这个字的常用读音、不在词典词里、换字表也没管（src/tennislive/video/pronounce.py）：",
+        "E           片尾「关注网球时差，时差归我，」 差 应读 chā（不看上下文会读 chà）［⚠️ 新语境未实测，旧句正确不能免检］",
+        "E           片尾「网球时差，时差归我，好球归」 差 应读 chā（不看上下文会读 chà）［⚠️ 新语境未实测，旧句正确不能免检］"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_全单字那条判据在真产物上不误报",
+      "log_lines": [
+        1628,
+        1681
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E           AssertionError: 有成片目录却只校到 0 条——主语找错了",
+        "E           assert 0 >= 5"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_文案的闸要在dry_run里就报不许等渲完",
+      "log_lines": [
+        1682,
+        1738
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E           AssertionError: 干净的文案不该红：incinnati-2026-qf",
+        "E                 量完把 data/narration_checks/tiafoe-musetti-cincinnati-2026-qf.json 和 spec 一起提交",
+        "E",
+        "E             [节奏] 中段 4 段旁白里 4 段在报数据（比分/破发点/百分比这类，占 100%）——这条只是粗代理，不是判定，但比例这么高时通读一遍稿子自查：除了末屏那一问，中段有没有至少一次停顿、转折或纯情绪的句子？「不要平白叙事」「每一拍留一个问题」管的正是这件事。",
+        "E"
+      ]
+    },
+    {
+      "nodeid": "tests/test_probe_board.py::test_标定框和全库spec用的框对得上",
+      "log_lines": [
+        1739,
+        1776
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E           AssertionError: atp 有 spec 的 scorebox 既不在 CALIBRATED，也缺少同源自定义扫描",
+        "E           assert False",
+        "E            +  where False = all([True, True, True, True, True, True, ...])"
+      ]
+    },
+    {
+      "nodeid": "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe",
+      "log_lines": [
+        1777,
+        2802
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E       AssertionError: alcaraz-faria-us-open-2026-r2: 源 (主源)（https://youtu.be/Hz6jq9Ebvuc）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的。",
+        "E             本地没检出 output/（精简 worktree）时 probe 可",
+        "E         alcaraz-fritz-laver-cup-2026: 源 main（https://players.brightcove.net/6199586113001/default_default/index.html?videoId=6405677225）一份 probe.json 都认领不上——宽",
+        "E         alcaraz-mensik-doubles-laver-cup-2026: 源 main（https://www.youtube.com/watch?v=sQB2Q3Lq-70）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的。",
+        "E             本地没检出 output/（精简 wor"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_审片版拉回来的原片不许落在output底下",
+      "log_lines": [
+        2803,
+        2834
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E       AssertionError: output/ 里一条走 Release 的片子都没有——这条判据的主语没了，换判据",
+        "E       assert ''"
+      ]
+    },
+    {
+      "nodeid": "tests/test_match_reel.py::test_审片版每一条出片线的产物目录都找得到",
+      "log_lines": [
+        2835,
+        2876
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E       AssertionError: 只推出 0 条出片线（[]）——这条判据的主语没了，换判据",
+        "E       assert 0 >= 3",
+        "E        +  where 0 = len({})"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有",
+      "log_lines": [
+        2877,
+        2894
+      ],
+      "category": "current_slug_and_other_slug_hit_data_missing",
+      "current_slug_explicitly_named": true,
+      "reason": "Explicitly names current slug and khachanov; current JSON still has neither _hit_data nor _no_hit_data_why at read-only inspection.",
+      "error_excerpt": [
+        "E       AssertionError: 这几条「赛场之上」既没写 `_hit_data`、也没写 `_no_hit_data_why`：['khachanov-auger-aliassime-beijing-2026-r1', 'zheng-svitolina-beijing-2026-qf']。狠数据（总分差/一发摆动/破发点兑现/连续保发/H2H）是显式认领——「忘了跑 match_stat_hooks」和「查过确实没有」在产物上分不出来。先跑 `python tools/match_stat_hooks.py --from-spec <slug>`，把候选记进 `_hit_data`；真没有（首次交手/低级别无统计）就写一句`_no_hit_data_why` 说清查过哪些源。",
+        "E       assert not {'khachanov-auger-aliassime-beijing-2026-r1', 'zheng-svitolina-beijing-2026-qf'}"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报",
+      "log_lines": [
+        2895,
+        2924
+      ],
+      "category": "other_slugs_missing_cover_assets",
+      "current_slug_explicitly_named": false,
+      "reason": "Failure names khachanov/tabilo and/or medvedev poster asset. Current film photo is not named. Named khachanov/tabilo files are absent from working tree and HEAD paths; not explained merely by output sparse scope.",
+      "error_excerpt": [
+        "E       AssertionError: 新闸在存量上红了：",
+        "E           khachanov-auger-aliassime-beijing-2026-r1: cover.portrait.image 指的 assets/reel/khachanov-auger-aliassime-beijing-2026-r1.jpg 不在",
+        "E           medvedev-24-titles-23-cities: cover.poster 指的 poster.jpg 不在",
+        "E           tabilo-paul-tokyo-2026-r1: cover.portrait.image 指的 assets/reel/tabilo-paul-tokyo-2026-r1.jpg 不在",
+        "E       assert not ['khachanov-auger-aliassime-beijing-2026-r1: cover.portrait.image 指的 assets/reel/khachanov-auger-aliassime-beijing-202...r 指的 poster.jpg 不在', 'tabilo-paul-tokyo-2026-r1: cover.portrait.image 指的 assets/reel/tabilo-paul-tokyo-2026-r1.jpg 不在']"
+      ]
+    },
+    {
+      "nodeid": "tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红",
+      "log_lines": [
+        2925,
+        2943
+      ],
+      "category": "other_slugs_spec_content",
+      "current_slug_explicitly_named": false,
+      "reason": "Historical/noncurrent spec field, copy, cover layout or quote failure; current slug is not named. canvas/column/fps owners verified as medvedev-24-titles-23-cities only.",
+      "error_excerpt": [
+        "E       AssertionError: 已发的 spec 被判红了（误伤，或者存量表漏挂）：{'medvedev-24-titles-23-cities': ['收尾停在数据上，没有落在一问上：…二十三记发球直接得分，杭州写下第二十四冠。']}",
+        "E       assert not {'medvedev-24-titles-23-cities': ['收尾停在数据上，没有落在一问上：…二十三记发球直接得分，杭州写下第二十四冠。']}"
+      ]
+    },
+    {
+      "nodeid": "tests/test_unvoiced_quote.py::test_新片子没配音的段都有双语原声字幕",
+      "log_lines": [
+        2944,
+        2957
+      ],
+      "category": "other_slugs_spec_content",
+      "current_slug_explicitly_named": false,
+      "reason": "Historical/noncurrent spec field, copy, cover layout or quote failure; current slug is not named. canvas/column/fps owners verified as medvedev-24-titles-23-cities only.",
+      "error_excerpt": [
+        "E       AssertionError: 没配音的段缺中英双语原声字幕：",
+        "E           medvedev-24-titles-23-cities:   - 冷开场（第 1 段）没配旁白，也没有原声字幕",
+        "E       assert not ['medvedev-24-titles-23-cities:   - 冷开场（第 1 段）没配旁白，也没有原声字幕']"
+      ]
+    },
+    {
+      "nodeid": "tests/test_small_gates.py::test_没有Azure的runner_量账之后dry_run认账_一条路走通",
+      "log_lines": [
+        2958,
+        3034
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E       AssertionError: [片长] 122.9s = 2 分 2 秒，按实测 12560 kb/s 估 184 MiB —— 成片一律走 Release 附件，不进 git",
+        "E         [多音字] 2 处读音不是这个字的常用读音、不在词典词里、换字表也没管（src/tennislive/video/pronounce.py）：",
+        "E           片尾「关注网球时差，时差归我，」 差 应读 chā（不看上下文会读 chà）［⚠️ 新语境未实测，旧句正确不能免检］",
+        "E           片尾「网球时差，时差归我，好球归」 差 应读 chā（不看上下文会读 chà）［⚠️ 新语境未实测，旧句正确不能免检］",
+        "E           要知道合成器到底读成什么（要联网，一处十几秒）："
+      ]
+    },
+    {
+      "nodeid": "tests/test_small_gates.py::test_新的手写spec误差带里没账_dry_run照样过_只报带命令[render]",
+      "log_lines": [
+        3035,
+        3103
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E       AssertionError: 态筛选不是声学通过；词典和历史词条不能证明本次整句读对。本次 12 段仍须按实际嗓音、语速逐段声学复核，含封面、旁白和片尾。",
+        "E",
+        "E         [口味·文案] 只报：推送标题「阿尔卡拉斯抢十险胜」里有术语 ['抢十']——它和钩子印在同一张推送卡上，能换就换",
+        "E             [score] scorebox 宽 440px（右缘 520）——这是源图形的搜索提示；渲染按对应转播标定量实际边界，WTA 主板与提示条逐帧分别测四边、透明合成，不搬搜索框里的球场；开了回贴的是第 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] 段",
+        "E         [dry-run] spec 形状没问题：13 段，画面共 121.7s"
+      ]
+    },
+    {
+      "nodeid": "tests/test_subtitle_override_evidence.py::test_yuan_override_is_proved_by_real_retained_ass",
+      "log_lines": [
+        3104,
+        3112
+      ],
+      "category": "historical_output_or_probe_not_materialized",
+      "current_slug_explicitly_named": false,
+      "reason": "Full-suite test depends on older film probe/render/ASS/voice evidence; sparse output materializes only current slug. See exact original failure excerpt; calibration has an additional current-slug issue described separately.",
+      "error_excerpt": [
+        "E       AssertionError: assert 'no matching QC-bound ASS proves this exact per-film subtitle anchor' is None",
+        "E        +  where 'no matching QC-bound ASS proves this exact per-film subtitle anchor' = override_problem(((PosixPath('/workspace/tennislive') / 'specs/reels') / 'yuan-oliynykova-beijing-2026-r1.json'), PosixPath('/workspace/tennislive'))"
+      ]
+    },
+    {
+      "nodeid": "tests/test_title_echo.py::test_正文第一句不许重复标题_新片子",
+      "log_lines": [
+        3113,
+        3126
+      ],
+      "category": "other_slugs_spec_content",
+      "current_slug_explicitly_named": false,
+      "reason": "Historical/noncurrent spec field, copy, cover layout or quote failure; current slug is not named. canvas/column/fps owners verified as medvedev-24-titles-23-cities only.",
+      "error_excerpt": [
+        "E       AssertionError: khachanov-auger-aliassime-beijing-2026-r1：小红书正文第一句重复了标题（重合 100%）：标题「哈恰诺夫淘汰2号种子」／正文第一句「哈恰诺夫淘汰2号种子」——标题已经单独印在推送和复制页顶上，正文第一句写标题没说的东西（北京时间、赛事、比分、来路），别把标题再抄一遍（账号所有者 2026-09-25）",
+        "E         medvedev-24-titles-23-cities：小红书正文第一句重复了标题（重合 90%）：标题「梅德韦杰夫24冠23城」／正文第一句「24冠23城，梅德韦杰夫的冠军地图」——标题已经单独印在推送和复制页顶上，正文第一句写标题没说的东西（北京时间、赛事、比分、来路），别把标题再抄一遍（账号所有者 2026-09-25）",
+        "E       assert not ['khachanov-auger-aliassime-beijing-2026-r1：小红书正文第一句重复了标题（重合 100%）：标题「哈恰诺夫淘汰2号种子」／正文第一句「哈恰诺夫淘汰2号种子」——标题已经单独印在推送和复制页顶上，...%）：标题「梅德韦杰夫24冠23城」／正文第一句「24冠23城，梅德韦杰夫的冠军地图」——标题已经单独印在推送和复制页顶上，正文第一句写标题没说的东西（北京时间、赛事、比分、来路），别把标题再抄一遍（账号所有者 2026-09-25）']"
+      ]
+    }
+  ],
+  "post_triage_board_resolution": {
+    "status": "resolved for current slug by actual source scan",
+    "validation": {
+      "probe_path": "/workspace/tennislive/output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/probe.json",
+      "source_sha256": "da97c5eafb072aa2087e1cee2d893a2c1ea687ac8ef941373e9ccc76553f1d3d",
+      "box": [
+        84,
+        830,
+        590,
+        992
+      ],
+      "requested_interval": [
+        110.8,
+        296.68
+      ],
+      "frames": 929,
+      "present": 680,
+      "unresolved": 0,
+      "measured_absolute_right_edges": [
+        424,
+        520
+      ],
+      "pick_scan_problem": "",
+      "custom_box_has_probe": true,
+      "run_frames_sum": 929,
+      "probe_sha256": "150599479ead260e477f85df3811f06bdb260c58743ccbeebab8caf6e2941c3b"
+    },
+    "note": "Original historical full-suite failures/counts retained as original log audit. No full-suite rerun; per-slug existing _pick_scan/_custom_box_has_probe read validation passed."
+  }
+}

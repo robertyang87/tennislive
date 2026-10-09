@@ -1,0 +1,51 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=lme6vYGvWXw",
+  "source_sha256": "da97c5eafb072aa2087e1cee2d893a2c1ea687ac8ef941373e9ccc76553f1d3d",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI root assistant: directly read actual YouTube small.en/base.en unprompted full-window words/probabilities and independently retained platform captions; Chinese translation edited by same assistant.",
+  "reviewed_at": "2026-10-09T13:45:02.122922+00:00",
+  "status": "complete",
+  "reviewed_from": 221.04,
+  "reviewed_to": 232.8,
+  "actual_listening_performed": false,
+  "review_scope": "Full selected audio windows crosschecked from actual downloaded source; base timings stretched over silence rejected, small words and platform cues preferred. Player/coach spelling grounded in verified identities. This is ASR crosscheck, not claimed human listening. Cold279.0 preroll is covered by actual winning raw256.84–296.5.",
+  "foreground_english": [
+    {
+      "start": 227.7,
+      "end": 229.94,
+      "en": "Top ten tennis right there.",
+      "zh": "这就是世界前十的水准"
+    },
+    {
+      "start": 230.2,
+      "end": 232.12,
+      "en": "It's great work from Svitolina.",
+      "zh": "斯维托丽娜打得太出色了"
+    }
+  ],
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-review-ready-six-windows.json",
+      "sha256": "cb485f626750aef87b70363008695b298050052036f662ab1e605f8ba4e0dd3a"
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-small.en-six-windows-unprompted.json",
+      "sha256": "c88bb46468a19afb9e129440bb705522069dd8abc66b2aebe2ba85bb9e8d53bb"
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-base.en-six-windows-unprompted.json",
+      "sha256": "dc1c3cef53d8884b5395dc7127e622353a9bfdbb30fce4f3d8f6415778388cf3"
+    },
+    {
+      "path": "data/research/zheng-svitolina-beijing-2026-qf/audio/zheng-youtube-asr-focus-unprompted.json",
+      "sha256": "456061539a3cf8d0ec2561d075650d5bc3363f1de15be6540cfa5e83f596084a"
+    }
+  ],
+  "source_speech_notes": [
+    "Original broadcaster ends phrase at from in216–219 window; unprompted models and platform captions contain no subsequent name, keep literal fragment with ellipsis.",
+    "The crowd wording adopted from small.en and platform, base inserts And; no unsupported new proposition.",
+    "Names corrected from ASR aliases to Qinwen Zheng/Elina Svitolina/Pere Riba using actual match identity."
+  ]
+}

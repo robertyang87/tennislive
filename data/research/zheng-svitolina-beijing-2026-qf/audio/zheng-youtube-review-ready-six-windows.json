@@ -1,0 +1,3490 @@
+{
+  "source": "/workspace/scratch/zheng-svitolina-source.mp4",
+  "source_sha256": "da97c5eafb072aa2087e1cee2d893a2c1ea687ac8ef941373e9ccc76553f1d3d",
+  "audio_demux": "/workspace/scratch/zheng-youtube-audio.m4a",
+  "audio_demux_sha256": "4adb79dc590fafc5b61071587ba1fd3f0158da2e1415acd5229079261808465f",
+  "transcription_identity": "Both models decoded actual YouTube1080p source. Brightcove previous results are supplemental only.",
+  "models": [
+    "small.en",
+    "base.en"
+  ],
+  "probe_caption_path": "/workspace/tennislive/output/2026-10-09/reel/zheng-svitolina-beijing-2026-qf/captions.txt",
+  "boundary_policy": {
+    "cold_open": [
+      279.92,
+      296.5
+    ],
+    "match_win": [
+      256.84,
+      296.5
+    ],
+    "fade_underlying_max": 296.68,
+    "interview_first_frame": 296.72
+  },
+  "rejected_evidence": [
+    {
+      "model": "base.en",
+      "window_index": 2,
+      "reason": "With initial_prompt, repeated China Open in Beijing with nearly zero word probabilities; prompt hallucination. Unprompted retry supplied separately."
+    },
+    {
+      "model": "base.en",
+      "interval": [
+        218.64,
+        218.82
+      ],
+      "text": "Svitolina.",
+      "word_probability": 5.22535e-05,
+      "reason": "Only prompted base.en supplies this word; no-prompt base.en, small.en, and probe captions do not. Cannot confirm a player name after from."
+    }
+  ],
+  "manual_listening_status": "No listening confirmation is claimed; source ASR + independently available YouTube automatic captions supplied for parent model/editor review.",
+  "retained_window_count": 6,
+  "removed_window": {
+    "window_index": 2,
+    "interval": [
+      2.2,
+      14
+    ],
+    "reason": "Parent editorial decision: remove noncritical ordinary rally; retain all previous raw ASR artifacts as audit history."
+  },
+  "method": "Actual source small.en and base.en each independently decode every retained entire window with no initial_prompt, no VAD, beam8 and word timestamps; probe captions third evidence. Player/coach phonetic spellings in proposed English are normalized from established official identities, never silently rewriting raw ASR.",
+  "raw_unprompted_artifacts": {
+    "small": "/workspace/scratch/zheng-youtube-small.en-six-windows-unprompted.json",
+    "base": "/workspace/scratch/zheng-youtube-base.en-six-windows-unprompted.json"
+  },
+  "raw_prompted_artifacts": {
+    "small": "/workspace/scratch/zheng-youtube-small.en-seven-windows.json",
+    "base": "/workspace/scratch/zheng-youtube-base.en-seven-windows.json",
+    "note": "Retained as previous run history; they supply reviewable comparison, not substitutes for current no-prompt results. Base first-window prompt repetition and invented Svitolina after from are explicitly rejected."
+  },
+  "windows": [
+    {
+      "window_index": 1,
+      "interval": [
+        279.92,
+        296.5
+      ],
+      "candidate_bilingual_phrases": [
+        {
+          "start": 279.97,
+          "end": 281.6,
+          "en": "A belated birthday present.",
+          "zh": "一份迟到的生日礼物。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 281.6,
+          "end": 283.62,
+          "en": "Turned 24 years old yesterday.",
+          "zh": "她昨天刚满24岁。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 284.32,
+          "end": 286.12,
+          "en": "And Zheng Qinwen in front of her home crowd",
+          "zh": "郑钦文在主场观众面前",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 286.12,
+          "end": 288.96,
+          "en": "into the semifinals of the China Open.",
+          "zh": "打进了中国网球公开赛半决赛。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 289.32,
+          "end": 290.9,
+          "en": "Six three, seven six.",
+          "zh": "比分6比3、7比6。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 291.58,
+          "end": 292.6,
+          "en": "What a win. What a moment.",
+          "zh": "多么精彩的胜利，多么动人的时刻。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 292.9,
+          "end": 296.35,
+          "en": "Second time that she's been in the semifinals here in Beijing.",
+          "zh": "这是她第二次打进北京站半决赛。",
+          "status": "supported_core_phrase_names_normalized"
+        }
+      ],
+      "small_en_unprompted_raw_segments": [
+        {
+          "start": 279.92,
+          "end": 283.64000000000004,
+          "text": " A belated birthday present turned 24 years old yesterday",
+          "avg_logprob": -0.30671423843928747,
+          "no_speech_prob": 0.30816900730133057,
+          "words": [
+            {
+              "start": 279.92,
+              "end": 280.14000000000004,
+              "word": " A",
+              "probability": 0.577156126499176
+            },
+            {
+              "start": 280.14000000000004,
+              "end": 280.72,
+              "word": " belated",
+              "probability": 0.9925434589385986
+            },
+            {
+              "start": 280.72,
+              "end": 281.12,
+              "word": " birthday",
+              "probability": 0.9761022329330444
+            },
+            {
+              "start": 281.12,
+              "end": 281.62,
+              "word": " present",
+              "probability": 0.9882054328918457
+            },
+            {
+              "start": 281.62,
+              "end": 281.90000000000003,
+              "word": " turned",
+              "probability": 0.7397118210792542
+            },
+            {
+              "start": 281.90000000000003,
+              "end": 282.62,
+              "word": " 24",
+              "probability": 0.9534094333648682
+            },
+            {
+              "start": 282.62,
+              "end": 282.88,
+              "word": " years",
+              "probability": 0.938248336315155
+            },
+            {
+              "start": 282.88,
+              "end": 283.22,
+              "word": " old",
+              "probability": 0.9936819076538086
+            },
+            {
+              "start": 283.22,
+              "end": 283.64000000000004,
+              "word": " yesterday",
+              "probability": 0.9888134598731995
+            }
+          ]
+        },
+        {
+          "start": 283.64000000000004,
+          "end": 288.94,
+          "text": " and Jiang Kinwen in front of her home crowd into the semi-finals of the China Open.",
+          "avg_logprob": -0.30671423843928747,
+          "no_speech_prob": 0.30816900730133057,
+          "words": [
+            {
+              "start": 283.64000000000004,
+              "end": 284.40000000000003,
+              "word": " and",
+              "probability": 0.45508840680122375
+            },
+            {
+              "start": 284.40000000000003,
+              "end": 284.58000000000004,
+              "word": " Jiang",
+              "probability": 0.04807934910058975
+            },
+            {
+              "start": 284.58000000000004,
+              "end": 284.98,
+              "word": " Kinwen",
+              "probability": 0.5120857506990433
+            },
+            {
+              "start": 284.98,
+              "end": 285.18,
+              "word": " in",
+              "probability": 0.8463318943977356
+            },
+            {
+              "start": 285.18,
+              "end": 285.36,
+              "word": " front",
+              "probability": 0.9973951578140259
+            },
+            {
+              "start": 285.36,
+              "end": 285.48,
+              "word": " of",
+              "probability": 0.9969775676727295
+            },
+            {
+              "start": 285.48,
+              "end": 285.6,
+              "word": " her",
+              "probability": 0.9894682765007019
+            },
+            {
+              "start": 285.6,
+              "end": 285.8,
+              "word": " home",
+              "probability": 0.9961199760437012
+            },
+            {
+              "start": 285.8,
+              "end": 286.14000000000004,
+              "word": " crowd",
+              "probability": 0.9978613257408142
+            },
+            {
+              "start": 286.14000000000004,
+              "end": 286.5,
+              "word": " into",
+              "probability": 0.9107705950737
+            },
+            {
+              "start": 286.5,
+              "end": 286.82,
+              "word": " the",
+              "probability": 0.9978089928627014
+            },
+            {
+              "start": 286.82,
+              "end": 287.04,
+              "word": " semi",
+              "probability": 0.42977574467658997
+            },
+            {
+              "start": 287.04,
+              "end": 287.5,
+              "word": "-finals",
+              "probability": 0.8816043138504028
+            },
+            {
+              "start": 287.5,
+              "end": 288.1,
+              "word": " of",
+              "probability": 0.9831053614616394
+            },
+            {
+              "start": 288.1,
+              "end": 288.22,
+              "word": " the",
+              "probability": 0.9901874661445618
+            },
+            {
+              "start": 288.22,
+              "end": 288.54,
+              "word": " China",
+              "probability": 0.9731100797653198
+            },
+            {
+              "start": 288.54,
+              "end": 288.94,
+              "word": " Open.",
+              "probability": 0.9485925436019897
+            }
+          ]
+        },
+        {
+          "start": 289.3,
+          "end": 292.6,
+          "text": " 6-3, 7-6, what a win, what a moment.",
+          "avg_logprob": -0.30671423843928747,
+          "no_speech_prob": 0.30816900730133057,
+          "words": [
+            {
+              "start": 289.3,
+              "end": 289.58000000000004,
+              "word": " 6",
+              "probability": 0.8021790981292725
+            },
+            {
+              "start": 289.58000000000004,
+              "end": 289.92,
+              "word": "-3,",
+              "probability": 0.847097784280777
+            },
+            {
+              "start": 290.16,
+              "end": 290.5,
+              "word": " 7",
+              "probability": 0.9855016469955444
+            },
+            {
+              "start": 290.5,
+              "end": 290.88,
+              "word": "-6,",
+              "probability": 0.9982230067253113
+            },
+            {
+              "start": 291.40000000000003,
+              "end": 291.64000000000004,
+              "word": " what",
+              "probability": 0.9759693741798401
+            },
+            {
+              "start": 291.64000000000004,
+              "end": 291.78000000000003,
+              "word": " a",
+              "probability": 0.9992795586585999
+            },
+            {
+              "start": 291.78000000000003,
+              "end": 291.98,
+              "word": " win,",
+              "probability": 0.9914405345916748
+            },
+            {
+              "start": 292.12,
+              "end": 292.22,
+              "word": " what",
+              "probability": 0.9966762065887451
+            },
+            {
+              "start": 292.22,
+              "end": 292.34000000000003,
+              "word": " a",
+              "probability": 0.9958868622779846
+            },
+            {
+              "start": 292.34000000000003,
+              "end": 292.6,
+              "word": " moment.",
+              "probability": 0.998721182346344
+            }
+          ]
+        },
+        {
+          "start": 292.92,
+          "end": 296.32,
+          "text": " Second time that she's been in the semi-finals here in Beijing.",
+          "avg_logprob": -0.30671423843928747,
+          "no_speech_prob": 0.30816900730133057,
+          "words": [
+            {
+              "start": 292.92,
+              "end": 293.04,
+              "word": " Second",
+              "probability": 0.9461561441421509
+            },
+            {
+              "start": 293.04,
+              "end": 293.52000000000004,
+              "word": " time",
+              "probability": 0.9971538782119751
+            },
+            {
+              "start": 293.52000000000004,
+              "end": 293.7,
+              "word": " that",
+              "probability": 0.9828022122383118
+            },
+            {
+              "start": 293.7,
+              "end": 293.94,
+              "word": " she's",
+              "probability": 0.9771084487438202
+            },
+            {
+              "start": 293.94,
+              "end": 294.1,
+              "word": " been",
+              "probability": 0.998873770236969
+            },
+            {
+              "start": 294.1,
+              "end": 294.44,
+              "word": " in",
+              "probability": 0.998223602771759
+            },
+            {
+              "start": 294.44,
+              "end": 295.1,
+              "word": " the",
+              "probability": 0.9773285984992981
+            },
+            {
+              "start": 295.1,
+              "end": 295.36,
+              "word": " semi",
+              "probability": 0.9751458168029785
+            },
+            {
+              "start": 295.36,
+              "end": 295.76,
+              "word": "-finals",
+              "probability": 0.9888145625591278
+            },
+            {
+              "start": 295.76,
+              "end": 296.0,
+              "word": " here",
+              "probability": 0.9888808727264404
+            },
+            {
+              "start": 296.0,
+              "end": 296.18,
+              "word": " in",
+              "probability": 0.9972606897354126
+            },
+            {
+              "start": 296.18,
+              "end": 296.32,
+              "word": " Beijing.",
+              "probability": 0.9286469221115112
+            }
+          ]
+        }
+      ],
+      "base_en_unprompted_raw_segments": [
+        {
+          "start": 279.92,
+          "end": 283.56,
+          "text": " A belated birthday present turned 24 years old yesterday",
+          "avg_logprob": -0.3014698668437846,
+          "no_speech_prob": 0.13447342813014984,
+          "words": [
+            {
+              "start": 279.92,
+              "end": 280.08000000000004,
+              "word": " A",
+              "probability": 0.46680161356925964
+            },
+            {
+              "start": 280.08000000000004,
+              "end": 280.64000000000004,
+              "word": " belated",
+              "probability": 0.9817051887512207
+            },
+            {
+              "start": 280.64000000000004,
+              "end": 280.88,
+              "word": " birthday",
+              "probability": 0.9596049189567566
+            },
+            {
+              "start": 280.88,
+              "end": 281.56,
+              "word": " present",
+              "probability": 0.9927870631217957
+            },
+            {
+              "start": 281.56,
+              "end": 281.82,
+              "word": " turned",
+              "probability": 0.8220910429954529
+            },
+            {
+              "start": 281.82,
+              "end": 282.36,
+              "word": " 24",
+              "probability": 0.949883222579956
+            },
+            {
+              "start": 282.36,
+              "end": 282.84000000000003,
+              "word": " years",
+              "probability": 0.9457845687866211
+            },
+            {
+              "start": 282.84000000000003,
+              "end": 283.14000000000004,
+              "word": " old",
+              "probability": 0.994583785533905
+            },
+            {
+              "start": 283.14000000000004,
+              "end": 283.56,
+              "word": " yesterday",
+              "probability": 0.9808623194694519
+            }
+          ]
+        },
+        {
+          "start": 284.16,
+          "end": 287.06,
+          "text": " and Junkin went in front of her home crowd into the semifinals",
+          "avg_logprob": -0.3014698668437846,
+          "no_speech_prob": 0.13447342813014984,
+          "words": [
+            {
+              "start": 284.12,
+              "end": 284.36,
+              "word": " and",
+              "probability": 0.528022289276123
+            },
+            {
+              "start": 284.36,
+              "end": 284.7,
+              "word": " Junkin",
+              "probability": 0.24405483156442642
+            },
+            {
+              "start": 284.7,
+              "end": 284.90000000000003,
+              "word": " went",
+              "probability": 0.7551713585853577
+            },
+            {
+              "start": 284.90000000000003,
+              "end": 285.1,
+              "word": " in",
+              "probability": 0.986427366733551
+            },
+            {
+              "start": 285.1,
+              "end": 285.3,
+              "word": " front",
+              "probability": 0.9962170720100403
+            },
+            {
+              "start": 285.3,
+              "end": 285.46000000000004,
+              "word": " of",
+              "probability": 0.9985119700431824
+            },
+            {
+              "start": 285.46000000000004,
+              "end": 285.54,
+              "word": " her",
+              "probability": 0.9910032749176025
+            },
+            {
+              "start": 285.54,
+              "end": 285.74,
+              "word": " home",
+              "probability": 0.9941311478614807
+            },
+            {
+              "start": 285.74,
+              "end": 286.04,
+              "word": " crowd",
+              "probability": 0.9909866452217102
+            },
+            {
+              "start": 286.04,
+              "end": 286.40000000000003,
+              "word": " into",
+              "probability": 0.9302108287811279
+            },
+            {
+              "start": 286.40000000000003,
+              "end": 286.74,
+              "word": " the",
+              "probability": 0.9931206107139587
+            },
+            {
+              "start": 286.74,
+              "end": 287.06,
+              "word": " semifinals",
+              "probability": 0.7376172542572021
+            }
+          ]
+        },
+        {
+          "start": 287.56,
+          "end": 290.88,
+          "text": " of the China Open 6-3, 7-6.",
+          "avg_logprob": -0.3014698668437846,
+          "no_speech_prob": 0.13447342813014984,
+          "words": [
+            {
+              "start": 287.56,
+              "end": 288.04,
+              "word": " of",
+              "probability": 0.9735573530197144
+            },
+            {
+              "start": 288.04,
+              "end": 288.18,
+              "word": " the",
+              "probability": 0.9903201460838318
+            },
+            {
+              "start": 288.18,
+              "end": 288.40000000000003,
+              "word": " China",
+              "probability": 0.830715537071228
+            },
+            {
+              "start": 288.40000000000003,
+              "end": 288.86,
+              "word": " Open",
+              "probability": 0.9188219308853149
+            },
+            {
+              "start": 288.86,
+              "end": 289.48,
+              "word": " 6",
+              "probability": 0.3731343448162079
+            },
+            {
+              "start": 289.48,
+              "end": 289.82,
+              "word": "-3,",
+              "probability": 0.6123853996396065
+            },
+            {
+              "start": 290.32,
+              "end": 290.46000000000004,
+              "word": " 7",
+              "probability": 0.9829819798469543
+            },
+            {
+              "start": 290.46000000000004,
+              "end": 290.88,
+              "word": "-6.",
+              "probability": 0.9971194565296173
+            }
+          ]
+        },
+        {
+          "start": 291.36,
+          "end": 294.22,
+          "text": " What a win, what a moment, second time that she's been in.",
+          "avg_logprob": -0.3014698668437846,
+          "no_speech_prob": 0.13447342813014984,
+          "words": [
+            {
+              "start": 291.36,
+              "end": 291.6,
+              "word": " What",
+              "probability": 0.9903167486190796
+            },
+            {
+              "start": 291.6,
+              "end": 291.72,
+              "word": " a",
+              "probability": 0.999408483505249
+            },
+            {
+              "start": 291.72,
+              "end": 291.88,
+              "word": " win,",
+              "probability": 0.9990134239196777
+            },
+            {
+              "start": 292.12,
+              "end": 292.18,
+              "word": " what",
+              "probability": 0.9948530793190002
+            },
+            {
+              "start": 292.18,
+              "end": 292.3,
+              "word": " a",
+              "probability": 0.9990209341049194
+            },
+            {
+              "start": 292.3,
+              "end": 292.46000000000004,
+              "word": " moment,",
+              "probability": 0.9972084164619446
+            },
+            {
+              "start": 292.74,
+              "end": 292.98,
+              "word": " second",
+              "probability": 0.9850322008132935
+            },
+            {
+              "start": 292.98,
+              "end": 293.48,
+              "word": " time",
+              "probability": 0.9980625510215759
+            },
+            {
+              "start": 293.48,
+              "end": 293.66,
+              "word": " that",
+              "probability": 0.9715315103530884
+            },
+            {
+              "start": 293.66,
+              "end": 293.88,
+              "word": " she's",
+              "probability": 0.9891465306282043
+            },
+            {
+              "start": 293.88,
+              "end": 294.04,
+              "word": " been",
+              "probability": 0.9968452453613281
+            },
+            {
+              "start": 294.04,
+              "end": 294.22,
+              "word": " in.",
+              "probability": 0.9967766404151917
+            }
+          ]
+        },
+        {
+          "start": 294.98,
+          "end": 296.24,
+          "text": " The semifinals here in Beijing.",
+          "avg_logprob": -0.3014698668437846,
+          "no_speech_prob": 0.13447342813014984,
+          "words": [
+            {
+              "start": 294.98,
+              "end": 295.04,
+              "word": " The",
+              "probability": 0.9843058586120605
+            },
+            {
+              "start": 295.04,
+              "end": 295.44,
+              "word": " semifinals",
+              "probability": 0.9510090351104736
+            },
+            {
+              "start": 295.44,
+              "end": 295.94,
+              "word": " here",
+              "probability": 0.986170768737793
+            },
+            {
+              "start": 295.94,
+              "end": 296.1,
+              "word": " in",
+              "probability": 0.9930087327957153
+            },
+            {
+              "start": 296.1,
+              "end": 296.24,
+              "word": " Beijing.",
+              "probability": 0.9476915001869202
+            }
+          ]
+        }
+      ],
+      "probe_captions": [
+        {
+          "start": 280.0,
+          "text": "A belated birthday present. Turned 24"
+        },
+        {
+          "start": 282.8,
+          "text": "years old yesterday. And Junkin went in"
+        },
+        {
+          "start": 285.28,
+          "text": "front of her home crowd into the"
+        },
+        {
+          "start": 286.88,
+          "text": "semifinals of the China Open. 6376."
+        },
+        {
+          "start": 291.44,
+          "text": "What a win. What a moment. Second time"
+        },
+        {
+          "start": 293.52,
+          "text": "that she's been in the semi-finals here"
+        },
+        {
+          "start": 296.0,
+          "text": "in Beijing."
+        }
+      ],
+      "editor_review_status": "Parent review pending; ASR agreement is not claimed as manual listening."
+    },
+    {
+      "window_index": 3,
+      "interval": [
+        110.8,
+        149.5
+      ],
+      "candidate_bilingual_phrases": [
+        {
+          "start": 127.9,
+          "end": 129.03,
+          "en": "Finds the line.",
+          "zh": "压线得分。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 129.88,
+          "end": 132.84,
+          "en": "Good set of tennis from Zheng Qinwen.",
+          "zh": "郑钦文这一盘打得很好。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 133.72,
+          "end": 134.8,
+          "en": "Coach likes it.",
+          "zh": "教练很满意。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 135.22,
+          "end": 136.3,
+          "en": "Crowd is loving it,",
+          "zh": "现场观众也看得过瘾。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 137.49,
+          "end": 142.66,
+          "en": "as Zheng Qinwen from China playing well in front of her home crowd.",
+          "zh": "中国选手郑钦文在主场观众面前表现出色。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 143.16,
+          "end": 146.28,
+          "en": "Looking to get to a second semifinal in Beijing.",
+          "zh": "她争取第二次打进北京站半决赛。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 146.58,
+          "end": 147.8,
+          "en": "She's halfway there. Six three.",
+          "zh": "现在已走过一半，首盘6比3。",
+          "status": "supported_core_phrase_names_normalized"
+        }
+      ],
+      "small_en_unprompted_raw_segments": [
+        {
+          "start": 127.96,
+          "end": 132.84,
+          "text": " Finds the line, a good set of tennis from Jung Kin-wen.",
+          "avg_logprob": -0.7112637758255005,
+          "no_speech_prob": 0.6167756915092468,
+          "words": [
+            {
+              "start": 127.96,
+              "end": 128.6,
+              "word": " Finds",
+              "probability": 0.7177721560001373
+            },
+            {
+              "start": 128.6,
+              "end": 128.7,
+              "word": " the",
+              "probability": 0.9962034821510315
+            },
+            {
+              "start": 128.7,
+              "end": 129.06,
+              "word": " line,",
+              "probability": 0.9926697015762329
+            },
+            {
+              "start": 129.72,
+              "end": 130.1,
+              "word": " a",
+              "probability": 0.2196301966905594
+            },
+            {
+              "start": 130.1,
+              "end": 130.16,
+              "word": " good",
+              "probability": 0.996242880821228
+            },
+            {
+              "start": 130.16,
+              "end": 130.42,
+              "word": " set",
+              "probability": 0.9951621890068054
+            },
+            {
+              "start": 130.42,
+              "end": 130.56,
+              "word": " of",
+              "probability": 0.9921523928642273
+            },
+            {
+              "start": 130.56,
+              "end": 130.84,
+              "word": " tennis",
+              "probability": 0.986182451248169
+            },
+            {
+              "start": 130.84,
+              "end": 131.24,
+              "word": " from",
+              "probability": 0.9650164246559143
+            },
+            {
+              "start": 131.24,
+              "end": 132.34,
+              "word": " Jung",
+              "probability": 0.10040535777807236
+            },
+            {
+              "start": 132.34,
+              "end": 132.57999999999998,
+              "word": " Kin",
+              "probability": 0.4809763729572296
+            },
+            {
+              "start": 132.57999999999998,
+              "end": 132.84,
+              "word": "-wen.",
+              "probability": 0.6066127717494965
+            }
+          ]
+        },
+        {
+          "start": 133.62,
+          "end": 141.66,
+          "text": " Coach likes it, crowd is loving it as Jung Kin-wen from China playing well in",
+          "avg_logprob": -0.25494107428719015,
+          "no_speech_prob": 0.8299809098243713,
+          "words": [
+            {
+              "start": 133.62,
+              "end": 134.18,
+              "word": " Coach",
+              "probability": 0.04219092056155205
+            },
+            {
+              "start": 134.18,
+              "end": 134.54,
+              "word": " likes",
+              "probability": 0.98977130651474
+            },
+            {
+              "start": 134.54,
+              "end": 134.8,
+              "word": " it,",
+              "probability": 0.9939035773277283
+            },
+            {
+              "start": 135.26,
+              "end": 135.3,
+              "word": " crowd",
+              "probability": 0.6876106262207031
+            },
+            {
+              "start": 135.3,
+              "end": 135.56,
+              "word": " is",
+              "probability": 0.9962961077690125
+            },
+            {
+              "start": 135.56,
+              "end": 135.9,
+              "word": " loving",
+              "probability": 0.997584342956543
+            },
+            {
+              "start": 135.9,
+              "end": 136.92,
+              "word": " it",
+              "probability": 0.9923686385154724
+            },
+            {
+              "start": 136.92,
+              "end": 137.57999999999998,
+              "word": " as",
+              "probability": 0.3672851026058197
+            },
+            {
+              "start": 137.57999999999998,
+              "end": 138.68,
+              "word": " Jung",
+              "probability": 0.00704245874658227
+            },
+            {
+              "start": 138.68,
+              "end": 138.9,
+              "word": " Kin",
+              "probability": 0.05649735778570175
+            },
+            {
+              "start": 138.9,
+              "end": 139.16,
+              "word": "-wen",
+              "probability": 0.32692277431488037
+            },
+            {
+              "start": 139.16,
+              "end": 140.01999999999998,
+              "word": " from",
+              "probability": 0.928149938583374
+            },
+            {
+              "start": 140.01999999999998,
+              "end": 140.48,
+              "word": " China",
+              "probability": 0.9983634352684021
+            },
+            {
+              "start": 140.48,
+              "end": 141.2,
+              "word": " playing",
+              "probability": 0.6135153770446777
+            },
+            {
+              "start": 141.2,
+              "end": 141.46,
+              "word": " well",
+              "probability": 0.9974014759063721
+            },
+            {
+              "start": 141.46,
+              "end": 141.66,
+              "word": " in",
+              "probability": 0.9934902191162109
+            }
+          ]
+        },
+        {
+          "start": 141.66,
+          "end": 146.72,
+          "text": " front of her home crowd. Looking to get to a second semi-final in Beijing. She's",
+          "avg_logprob": -0.25494107428719015,
+          "no_speech_prob": 0.8299809098243713,
+          "words": [
+            {
+              "start": 141.66,
+              "end": 141.78,
+              "word": " front",
+              "probability": 0.9723941683769226
+            },
+            {
+              "start": 141.78,
+              "end": 141.92,
+              "word": " of",
+              "probability": 0.9987937211990356
+            },
+            {
+              "start": 141.92,
+              "end": 142.01999999999998,
+              "word": " her",
+              "probability": 0.9916604161262512
+            },
+            {
+              "start": 142.01999999999998,
+              "end": 142.2,
+              "word": " home",
+              "probability": 0.9957159161567688
+            },
+            {
+              "start": 142.2,
+              "end": 142.68,
+              "word": " crowd.",
+              "probability": 0.9980944991111755
+            },
+            {
+              "start": 143.22,
+              "end": 143.32,
+              "word": " Looking",
+              "probability": 0.9011146426200867
+            },
+            {
+              "start": 143.32,
+              "end": 143.48,
+              "word": " to",
+              "probability": 0.9980928301811218
+            },
+            {
+              "start": 143.48,
+              "end": 143.6,
+              "word": " get",
+              "probability": 0.9982309937477112
+            },
+            {
+              "start": 143.6,
+              "end": 143.8,
+              "word": " to",
+              "probability": 0.9697759747505188
+            },
+            {
+              "start": 143.8,
+              "end": 143.92,
+              "word": " a",
+              "probability": 0.8209477066993713
+            },
+            {
+              "start": 143.92,
+              "end": 144.22,
+              "word": " second",
+              "probability": 0.9848136305809021
+            },
+            {
+              "start": 144.22,
+              "end": 144.5,
+              "word": " semi",
+              "probability": 0.5184711217880249
+            },
+            {
+              "start": 144.5,
+              "end": 144.95999999999998,
+              "word": "-final",
+              "probability": 0.9052307605743408
+            },
+            {
+              "start": 144.95999999999998,
+              "end": 145.98,
+              "word": " in",
+              "probability": 0.8608253002166748
+            },
+            {
+              "start": 145.98,
+              "end": 146.32,
+              "word": " Beijing.",
+              "probability": 0.996859073638916
+            },
+            {
+              "start": 146.6,
+              "end": 146.72,
+              "word": " She's",
+              "probability": 0.9871906042098999
+            }
+          ]
+        },
+        {
+          "start": 146.72,
+          "end": 147.8,
+          "text": " halfway there 6-3.",
+          "avg_logprob": -0.25494107428719015,
+          "no_speech_prob": 0.8299809098243713,
+          "words": [
+            {
+              "start": 146.72,
+              "end": 146.94,
+              "word": " halfway",
+              "probability": 0.9539903402328491
+            },
+            {
+              "start": 146.94,
+              "end": 147.22,
+              "word": " there",
+              "probability": 0.9926405549049377
+            },
+            {
+              "start": 147.22,
+              "end": 147.45999999999998,
+              "word": " 6",
+              "probability": 0.3595188558101654
+            },
+            {
+              "start": 147.45999999999998,
+              "end": 147.8,
+              "word": "-3.",
+              "probability": 0.895478755235672
+            }
+          ]
+        }
+      ],
+      "base_en_unprompted_raw_segments": [
+        {
+          "start": 127.83999999999999,
+          "end": 129.0,
+          "text": " Finds the line.",
+          "avg_logprob": -0.499318671948982,
+          "no_speech_prob": 0.24308982491493225,
+          "words": [
+            {
+              "start": 127.83999999999999,
+              "end": 128.56,
+              "word": " Finds",
+              "probability": 0.6530521959066391
+            },
+            {
+              "start": 128.56,
+              "end": 128.66,
+              "word": " the",
+              "probability": 0.9909995198249817
+            },
+            {
+              "start": 128.66,
+              "end": 129.0,
+              "word": " line.",
+              "probability": 0.988556981086731
+            }
+          ]
+        },
+        {
+          "start": 129.4,
+          "end": 132.76,
+          "text": " Good set of tennis from junkinwin.",
+          "avg_logprob": -0.499318671948982,
+          "no_speech_prob": 0.24308982491493225,
+          "words": [
+            {
+              "start": 129.4,
+              "end": 130.12,
+              "word": " Good",
+              "probability": 0.8360582590103149
+            },
+            {
+              "start": 130.12,
+              "end": 130.34,
+              "word": " set",
+              "probability": 0.9313026666641235
+            },
+            {
+              "start": 130.34,
+              "end": 130.5,
+              "word": " of",
+              "probability": 0.9876114726066589
+            },
+            {
+              "start": 130.5,
+              "end": 130.72,
+              "word": " tennis",
+              "probability": 0.9659329652786255
+            },
+            {
+              "start": 130.72,
+              "end": 131.14,
+              "word": " from",
+              "probability": 0.9873495697975159
+            },
+            {
+              "start": 131.14,
+              "end": 132.76,
+              "word": " junkinwin.",
+              "probability": 0.20096808423598608
+            }
+          ]
+        },
+        {
+          "start": 133.48,
+          "end": 134.72,
+          "text": " Coach likes it.",
+          "avg_logprob": -0.499318671948982,
+          "no_speech_prob": 0.24308982491493225,
+          "words": [
+            {
+              "start": 133.48,
+              "end": 134.14,
+              "word": " Coach",
+              "probability": 0.8520543575286865
+            },
+            {
+              "start": 134.14,
+              "end": 134.48,
+              "word": " likes",
+              "probability": 0.9817153215408325
+            },
+            {
+              "start": 134.48,
+              "end": 134.72,
+              "word": " it.",
+              "probability": 0.9955195188522339
+            }
+          ]
+        },
+        {
+          "start": 135.18,
+          "end": 136.22,
+          "text": " Crowd is loving it.",
+          "avg_logprob": -0.499318671948982,
+          "no_speech_prob": 0.24308982491493225,
+          "words": [
+            {
+              "start": 135.18,
+              "end": 135.18,
+              "word": " Crowd",
+              "probability": 0.708660364151001
+            },
+            {
+              "start": 135.18,
+              "end": 135.5,
+              "word": " is",
+              "probability": 0.989638090133667
+            },
+            {
+              "start": 135.5,
+              "end": 135.85999999999999,
+              "word": " loving",
+              "probability": 0.9965517520904541
+            },
+            {
+              "start": 135.85999999999999,
+              "end": 136.22,
+              "word": " it.",
+              "probability": 0.9918054342269897
+            }
+          ]
+        },
+        {
+          "start": 137.92,
+          "end": 142.48,
+          "text": " As junkinwin from China playing well in front of her home crowd,",
+          "avg_logprob": -0.27410182148911233,
+          "no_speech_prob": 0.17422793805599213,
+          "words": [
+            {
+              "start": 137.92,
+              "end": 138.48,
+              "word": " As",
+              "probability": 0.12100609391927719
+            },
+            {
+              "start": 138.48,
+              "end": 139.04,
+              "word": " junkinwin",
+              "probability": 0.047361386163781084
+            },
+            {
+              "start": 139.04,
+              "end": 139.96,
+              "word": " from",
+              "probability": 0.9013679623603821
+            },
+            {
+              "start": 139.96,
+              "end": 140.26,
+              "word": " China",
+              "probability": 0.7886462211608887
+            },
+            {
+              "start": 140.26,
+              "end": 141.12,
+              "word": " playing",
+              "probability": 0.7090035676956177
+            },
+            {
+              "start": 141.12,
+              "end": 141.4,
+              "word": " well",
+              "probability": 0.9907426238059998
+            },
+            {
+              "start": 141.4,
+              "end": 141.57999999999998,
+              "word": " in",
+              "probability": 0.9910372495651245
+            },
+            {
+              "start": 141.57999999999998,
+              "end": 141.74,
+              "word": " front",
+              "probability": 0.9927704930305481
+            },
+            {
+              "start": 141.74,
+              "end": 141.88,
+              "word": " of",
+              "probability": 0.9980822801589966
+            },
+            {
+              "start": 141.88,
+              "end": 141.98,
+              "word": " her",
+              "probability": 0.9934684038162231
+            },
+            {
+              "start": 141.98,
+              "end": 142.14,
+              "word": " home",
+              "probability": 0.9939373731613159
+            },
+            {
+              "start": 142.14,
+              "end": 142.48,
+              "word": " crowd,",
+              "probability": 0.993728518486023
+            }
+          ]
+        },
+        {
+          "start": 143.0,
+          "end": 146.1,
+          "text": " looking to get to a second semi-final in Beijing.",
+          "avg_logprob": -0.27410182148911233,
+          "no_speech_prob": 0.17422793805599213,
+          "words": [
+            {
+              "start": 143.0,
+              "end": 143.24,
+              "word": " looking",
+              "probability": 0.5637515783309937
+            },
+            {
+              "start": 143.24,
+              "end": 143.44,
+              "word": " to",
+              "probability": 0.9906715154647827
+            },
+            {
+              "start": 143.44,
+              "end": 143.56,
+              "word": " get",
+              "probability": 0.9969308972358704
+            },
+            {
+              "start": 143.56,
+              "end": 143.76,
+              "word": " to",
+              "probability": 0.9356541037559509
+            },
+            {
+              "start": 143.76,
+              "end": 143.86,
+              "word": " a",
+              "probability": 0.7362475991249084
+            },
+            {
+              "start": 143.86,
+              "end": 144.16,
+              "word": " second",
+              "probability": 0.9588661789894104
+            },
+            {
+              "start": 144.16,
+              "end": 144.45999999999998,
+              "word": " semi",
+              "probability": 0.7817578315734863
+            },
+            {
+              "start": 144.45999999999998,
+              "end": 144.9,
+              "word": "-final",
+              "probability": 0.815079391002655
+            },
+            {
+              "start": 144.9,
+              "end": 145.92,
+              "word": " in",
+              "probability": 0.6411009430885315
+            },
+            {
+              "start": 145.92,
+              "end": 146.1,
+              "word": " Beijing.",
+              "probability": 0.9796828627586365
+            }
+          ]
+        },
+        {
+          "start": 146.56,
+          "end": 147.74,
+          "text": " She's halfway there, 6-3.",
+          "avg_logprob": -0.27410182148911233,
+          "no_speech_prob": 0.17422793805599213,
+          "words": [
+            {
+              "start": 146.56,
+              "end": 146.66,
+              "word": " She's",
+              "probability": 0.9665347039699554
+            },
+            {
+              "start": 146.66,
+              "end": 146.88,
+              "word": " halfway",
+              "probability": 0.9127066135406494
+            },
+            {
+              "start": 146.88,
+              "end": 147.18,
+              "word": " there,",
+              "probability": 0.9925668239593506
+            },
+            {
+              "start": 147.24,
+              "end": 147.4,
+              "word": " 6",
+              "probability": 0.8223892450332642
+            },
+            {
+              "start": 147.4,
+              "end": 147.74,
+              "word": "-3.",
+              "probability": 0.8229590654373169
+            }
+          ]
+        }
+      ],
+      "probe_captions": [
+        {
+          "start": 128.24,
+          "text": "finds the line. Good set of tennis from"
+        },
+        {
+          "start": 132.08,
+          "text": "Jung Kinwen."
+        },
+        {
+          "start": 134.0,
+          "text": "Coach likes it. Crowd is loving it as"
+        },
+        {
+          "start": 138.4,
+          "text": "Jungqinw from China. Playing well in"
+        },
+        {
+          "start": 141.76,
+          "text": "front of her home crowd. Looking to get"
+        },
+        {
+          "start": 143.68,
+          "text": "to a second semifinal in Beijing. She's"
+        },
+        {
+          "start": 146.8,
+          "text": "halfway there. 6-3."
+        }
+      ],
+      "editor_review_status": "Parent review pending; ASR agreement is not claimed as manual listening."
+    },
+    {
+      "window_index": 4,
+      "interval": [
+        184.56,
+        220.0
+      ],
+      "candidate_bilingual_phrases": [
+        {
+          "start": 194.18,
+          "end": 197.48,
+          "en": "Yeah, it's so much better from Svitolina.",
+          "zh": "是的，斯维托丽娜这次打得好多了。",
+          "status": "supported_names_normalized"
+        },
+        {
+          "start": 216.06,
+          "end": 218.75,
+          "en": "Great forehand into the corner and a big roar from...",
+          "zh": "漂亮的正手打进角落，……以及来自……的一声大吼",
+          "status": "source_programme_truncated_phrase",
+          "evidence": "Both no-prompt models for whole184.56–220 and diagnostic214.5–221 end at from, agreeing with probe captions. All supplied audible words complete; original programme clause is truncated here. No following player name is added."
+        }
+      ],
+      "small_en_unprompted_raw_segments": [
+        {
+          "start": 194.18,
+          "end": 197.48,
+          "text": " Yeah, it's so much better from Spitalina.",
+          "avg_logprob": -0.5945036932826042,
+          "no_speech_prob": 0.1368107944726944,
+          "words": [
+            {
+              "start": 194.18,
+              "end": 194.74,
+              "word": " Yeah,",
+              "probability": 0.874731183052063
+            },
+            {
+              "start": 194.82,
+              "end": 195.02,
+              "word": " it's",
+              "probability": 0.8233497440814972
+            },
+            {
+              "start": 195.02,
+              "end": 195.28,
+              "word": " so",
+              "probability": 0.9975337982177734
+            },
+            {
+              "start": 195.28,
+              "end": 195.5,
+              "word": " much",
+              "probability": 0.9991227984428406
+            },
+            {
+              "start": 195.5,
+              "end": 195.78,
+              "word": " better",
+              "probability": 0.9954906105995178
+            },
+            {
+              "start": 195.78,
+              "end": 196.48,
+              "word": " from",
+              "probability": 0.9864593744277954
+            },
+            {
+              "start": 196.48,
+              "end": 197.48,
+              "word": " Spitalina.",
+              "probability": 0.7123744388421377
+            }
+          ]
+        },
+        {
+          "start": 216.06,
+          "end": 218.74,
+          "text": " Great forehand into the corner and a big roar from.",
+          "avg_logprob": -0.360671333471934,
+          "no_speech_prob": 0.32059183716773987,
+          "words": [
+            {
+              "start": 216.06,
+              "end": 216.58,
+              "word": " Great",
+              "probability": 0.4082408547401428
+            },
+            {
+              "start": 216.58,
+              "end": 217.1,
+              "word": " forehand",
+              "probability": 0.9663034677505493
+            },
+            {
+              "start": 217.1,
+              "end": 217.3,
+              "word": " into",
+              "probability": 0.9531824588775635
+            },
+            {
+              "start": 217.3,
+              "end": 217.44,
+              "word": " the",
+              "probability": 0.9982037544250488
+            },
+            {
+              "start": 217.44,
+              "end": 217.7,
+              "word": " corner",
+              "probability": 0.9989709854125977
+            },
+            {
+              "start": 217.7,
+              "end": 217.88,
+              "word": " and",
+              "probability": 0.7728703618049622
+            },
+            {
+              "start": 217.88,
+              "end": 217.98000000000002,
+              "word": " a",
+              "probability": 0.9870816469192505
+            },
+            {
+              "start": 217.98000000000002,
+              "end": 218.1,
+              "word": " big",
+              "probability": 0.9889525175094604
+            },
+            {
+              "start": 218.1,
+              "end": 218.36,
+              "word": " roar",
+              "probability": 0.9860973358154297
+            },
+            {
+              "start": 218.36,
+              "end": 218.74,
+              "word": " from.",
+              "probability": 0.9704679846763611
+            }
+          ]
+        }
+      ],
+      "base_en_unprompted_raw_segments": [
+        {
+          "start": 194.1,
+          "end": 197.42000000000002,
+          "text": " Yeah, it's so much better from Spittelina.",
+          "avg_logprob": -0.5658254623413086,
+          "no_speech_prob": 0.03502226248383522,
+          "words": [
+            {
+              "start": 194.1,
+              "end": 194.7,
+              "word": " Yeah,",
+              "probability": 0.7305008172988892
+            },
+            {
+              "start": 194.76,
+              "end": 194.94,
+              "word": " it's",
+              "probability": 0.7847586572170258
+            },
+            {
+              "start": 194.94,
+              "end": 195.24,
+              "word": " so",
+              "probability": 0.9916988611221313
+            },
+            {
+              "start": 195.24,
+              "end": 195.44,
+              "word": " much",
+              "probability": 0.9992446899414062
+            },
+            {
+              "start": 195.44,
+              "end": 195.74,
+              "word": " better",
+              "probability": 0.985808253288269
+            },
+            {
+              "start": 195.74,
+              "end": 196.04,
+              "word": " from",
+              "probability": 0.9950990080833435
+            },
+            {
+              "start": 196.04,
+              "end": 197.42000000000002,
+              "word": " Spittelina.",
+              "probability": 0.6103661507368088
+            }
+          ]
+        },
+        {
+          "start": 216.14,
+          "end": 218.64,
+          "text": " Great forehand into the corner and a big roar from",
+          "avg_logprob": -0.563267320394516,
+          "no_speech_prob": 0.10105432569980621,
+          "words": [
+            {
+              "start": 216.14,
+              "end": 216.57999999999998,
+              "word": " Great",
+              "probability": 0.11717255413532257
+            },
+            {
+              "start": 216.57999999999998,
+              "end": 217.02,
+              "word": " forehand",
+              "probability": 0.9755592942237854
+            },
+            {
+              "start": 217.02,
+              "end": 217.2,
+              "word": " into",
+              "probability": 0.8578850626945496
+            },
+            {
+              "start": 217.2,
+              "end": 217.38,
+              "word": " the",
+              "probability": 0.9955713152885437
+            },
+            {
+              "start": 217.38,
+              "end": 217.66,
+              "word": " corner",
+              "probability": 0.9973904490470886
+            },
+            {
+              "start": 217.66,
+              "end": 217.84,
+              "word": " and",
+              "probability": 0.6471018195152283
+            },
+            {
+              "start": 217.84,
+              "end": 217.92000000000002,
+              "word": " a",
+              "probability": 0.9785722494125366
+            },
+            {
+              "start": 217.92000000000002,
+              "end": 218.04,
+              "word": " big",
+              "probability": 0.9890263676643372
+            },
+            {
+              "start": 218.04,
+              "end": 218.3,
+              "word": " roar",
+              "probability": 0.9702602028846741
+            },
+            {
+              "start": 218.3,
+              "end": 218.64,
+              "word": " from",
+              "probability": 0.9739109873771667
+            }
+          ]
+        }
+      ],
+      "probe_captions": [
+        {
+          "start": 194.56,
+          "text": "Yeah, it's so much better from"
+        },
+        {
+          "start": 196.88,
+          "text": "Spitellina."
+        },
+        {
+          "start": 216.08,
+          "text": "Oh, great forehand into the corner and a"
+        },
+        {
+          "start": 218.08,
+          "text": "big roar from"
+        }
+      ],
+      "editor_review_status": "Parent review pending; ASR agreement is not claimed as manual listening."
+    },
+    {
+      "window_index": 5,
+      "interval": [
+        221.04,
+        234.8
+      ],
+      "candidate_bilingual_phrases": [
+        {
+          "start": 227.7,
+          "end": 229.9,
+          "en": "Top ten tennis right there.",
+          "zh": "这就是世界前十的网球水准。",
+          "status": "supported"
+        },
+        {
+          "start": 230.26,
+          "end": 232.02,
+          "en": "Great work from Svitolina.",
+          "zh": "斯维托丽娜打得很出色。",
+          "status": "minor_variation",
+          "evidence": "base.en/probe prepend It's; small.en omits. The core phrase is supported."
+        }
+      ],
+      "small_en_unprompted_raw_segments": [
+        {
+          "start": 227.57999999999998,
+          "end": 230.0,
+          "text": " Top 10 tennis right there.",
+          "avg_logprob": -0.59068973440873,
+          "no_speech_prob": 0.11537520587444305,
+          "words": [
+            {
+              "start": 227.57999999999998,
+              "end": 228.42,
+              "word": " Top",
+              "probability": 0.8399723172187805
+            },
+            {
+              "start": 228.42,
+              "end": 228.66,
+              "word": " 10",
+              "probability": 0.350655198097229
+            },
+            {
+              "start": 228.66,
+              "end": 229.0,
+              "word": " tennis",
+              "probability": 0.8124632239341736
+            },
+            {
+              "start": 229.0,
+              "end": 229.22,
+              "word": " right",
+              "probability": 0.9159647822380066
+            },
+            {
+              "start": 229.22,
+              "end": 230.0,
+              "word": " there.",
+              "probability": 0.9941054582595825
+            }
+          ]
+        },
+        {
+          "start": 230.14,
+          "end": 231.98,
+          "text": " Great work from Svetlina.",
+          "avg_logprob": -0.59068973440873,
+          "no_speech_prob": 0.11537520587444305,
+          "words": [
+            {
+              "start": 230.14,
+              "end": 230.98,
+              "word": " Great",
+              "probability": 0.392868310213089
+            },
+            {
+              "start": 230.98,
+              "end": 231.23999999999998,
+              "word": " work",
+              "probability": 0.9969434142112732
+            },
+            {
+              "start": 231.23999999999998,
+              "end": 231.48,
+              "word": " from",
+              "probability": 0.994857668876648
+            },
+            {
+              "start": 231.48,
+              "end": 231.98,
+              "word": " Svetlina.",
+              "probability": 0.46826308593153954
+            }
+          ]
+        }
+      ],
+      "base_en_unprompted_raw_segments": [
+        {
+          "start": 227.73999999999998,
+          "end": 229.44,
+          "text": " Top 10 tennis right there.",
+          "avg_logprob": -0.48462175187610446,
+          "no_speech_prob": 0.041364993900060654,
+          "words": [
+            {
+              "start": 227.73999999999998,
+              "end": 228.38,
+              "word": " Top",
+              "probability": 0.7541095614433289
+            },
+            {
+              "start": 228.38,
+              "end": 228.62,
+              "word": " 10",
+              "probability": 0.7942244410514832
+            },
+            {
+              "start": 228.62,
+              "end": 228.79999999999998,
+              "word": " tennis",
+              "probability": 0.9504448175430298
+            },
+            {
+              "start": 228.79999999999998,
+              "end": 229.16,
+              "word": " right",
+              "probability": 0.9589056372642517
+            },
+            {
+              "start": 229.16,
+              "end": 229.44,
+              "word": " there.",
+              "probability": 0.9975382089614868
+            }
+          ]
+        },
+        {
+          "start": 230.12,
+          "end": 231.94,
+          "text": " It's great work from Svetelina.",
+          "avg_logprob": -0.48462175187610446,
+          "no_speech_prob": 0.041364993900060654,
+          "words": [
+            {
+              "start": 230.12,
+              "end": 230.76,
+              "word": " It's",
+              "probability": 0.7556725740432739
+            },
+            {
+              "start": 230.76,
+              "end": 230.92,
+              "word": " great",
+              "probability": 0.9537508487701416
+            },
+            {
+              "start": 230.92,
+              "end": 231.18,
+              "word": " work",
+              "probability": 0.9976060390472412
+            },
+            {
+              "start": 231.18,
+              "end": 231.45999999999998,
+              "word": " from",
+              "probability": 0.9934927821159363
+            },
+            {
+              "start": 231.45999999999998,
+              "end": 231.94,
+              "word": " Svetelina.",
+              "probability": 0.6196138933300972
+            }
+          ]
+        }
+      ],
+      "probe_captions": [
+        {
+          "start": 228.16,
+          "text": "top 10 tennis right there. It's great"
+        },
+        {
+          "start": 231.12,
+          "text": "work from Spidilina."
+        }
+      ],
+      "editor_review_status": "Parent review pending; ASR agreement is not claimed as manual listening."
+    },
+    {
+      "window_index": 6,
+      "interval": [
+        234.8,
+        256.84
+      ],
+      "candidate_bilingual_phrases": [
+        {
+          "start": 251.9,
+          "end": 254.3,
+          "en": "Oh, what a point. And it's won by Zheng.",
+          "zh": "多精彩的一分！郑钦文赢下了这一分。",
+          "status": "supported_names_normalized",
+          "evidence": "small.en won by Zhang, base.en won by Zheng; known identity supports Zheng. Probe swung by Jang is an ASR spelling error."
+        }
+      ],
+      "small_en_unprompted_raw_segments": [
+        {
+          "start": 251.96,
+          "end": 254.3,
+          "text": " Oh, what a point, and it's won by Zhang.",
+          "avg_logprob": -0.7151474989950657,
+          "no_speech_prob": 0.31225159764289856,
+          "words": [
+            {
+              "start": 251.96,
+              "end": 252.38,
+              "word": " Oh,",
+              "probability": 0.12501652538776398
+            },
+            {
+              "start": 252.44,
+              "end": 252.56,
+              "word": " what",
+              "probability": 0.8361081480979919
+            },
+            {
+              "start": 252.56,
+              "end": 252.62,
+              "word": " a",
+              "probability": 0.9233831167221069
+            },
+            {
+              "start": 252.62,
+              "end": 252.96,
+              "word": " point,",
+              "probability": 0.9815309047698975
+            },
+            {
+              "start": 253.44,
+              "end": 253.5,
+              "word": " and",
+              "probability": 0.9108114242553711
+            },
+            {
+              "start": 253.5,
+              "end": 253.62,
+              "word": " it's",
+              "probability": 0.9758071601390839
+            },
+            {
+              "start": 253.62,
+              "end": 253.8,
+              "word": " won",
+              "probability": 0.9286148548126221
+            },
+            {
+              "start": 253.8,
+              "end": 254.04000000000002,
+              "word": " by",
+              "probability": 0.9880228042602539
+            },
+            {
+              "start": 254.04000000000002,
+              "end": 254.3,
+              "word": " Zhang.",
+              "probability": 0.48509711027145386
+            }
+          ]
+        }
+      ],
+      "base_en_unprompted_raw_segments": [
+        {
+          "start": 243.06,
+          "end": 254.18,
+          "text": " Oh, what a point, and it's won by Zhang.",
+          "avg_logprob": -0.9006238728761673,
+          "no_speech_prob": 0.08574065566062927,
+          "words": [
+            {
+              "start": 243.06,
+              "end": 244.14000000000001,
+              "word": " Oh,",
+              "probability": 0.03277917578816414
+            },
+            {
+              "start": 245.26000000000002,
+              "end": 245.26000000000002,
+              "word": " what",
+              "probability": 0.4354442059993744
+            },
+            {
+              "start": 245.26000000000002,
+              "end": 249.82000000000002,
+              "word": " a",
+              "probability": 0.9794597029685974
+            },
+            {
+              "start": 249.82000000000002,
+              "end": 252.8,
+              "word": " point,",
+              "probability": 0.9805788397789001
+            },
+            {
+              "start": 253.34,
+              "end": 253.46,
+              "word": " and",
+              "probability": 0.8587710857391357
+            },
+            {
+              "start": 253.46,
+              "end": 253.60000000000002,
+              "word": " it's",
+              "probability": 0.9478886425495148
+            },
+            {
+              "start": 253.60000000000002,
+              "end": 253.72000000000003,
+              "word": " won",
+              "probability": 0.8555949330329895
+            },
+            {
+              "start": 253.72000000000003,
+              "end": 253.98000000000002,
+              "word": " by",
+              "probability": 0.9964303374290466
+            },
+            {
+              "start": 253.98000000000002,
+              "end": 254.18,
+              "word": " Zhang.",
+              "probability": 0.1781434416770935
+            }
+          ]
+        }
+      ],
+      "probe_captions": [
+        {
+          "start": 252.16,
+          "text": "Oh, what a point. And it's swung by"
+        },
+        {
+          "start": 254.16,
+          "text": "Jang."
+        }
+      ],
+      "editor_review_status": "Parent review pending; ASR agreement is not claimed as manual listening.",
+      "timing_note": "base.en stretches Oh beginning to243.06 despite next words around252; small.en251.96 and probe252.16 corroborate actual speech onset. Prefer small/probe timing, preserve base raw."
+    },
+    {
+      "window_index": 7,
+      "interval": [
+        256.84,
+        296.5
+      ],
+      "candidate_bilingual_phrases": [
+        {
+          "start": 262.32,
+          "end": 266.6,
+          "en": "And it's a belated birthday gift for Zheng Qinwen,",
+          "zh": "这是送给郑钦文一份迟到的生日礼物。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 266.82,
+          "end": 268.25,
+          "en": "and she cannot believe it.",
+          "zh": "她自己都难以相信。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 269.16,
+          "end": 270.35,
+          "en": "Onto the ground she goes.",
+          "zh": "她倒在了球场上。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 271.54,
+          "end": 273.8,
+          "en": "And her coaches are enjoying that.",
+          "zh": "她的教练们也为此欣喜。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 273.9,
+          "end": 275.2,
+          "en": "Look at Pere Riba. He's loving it.",
+          "zh": "看看佩雷·里巴，他太开心了。",
+          "status": "supported_core_phrase_names_normalized",
+          "evidence": "Unprompted small Perriva / base pariva / probe Pereiva; editorial normalization to established coach name Pere Riba, prompted auxiliary runs also transcribe Pere Riba."
+        },
+        {
+          "start": 275.32,
+          "end": 277.35,
+          "en": "The crowd going wild in Beijing.",
+          "zh": "北京的现场观众沸腾了。",
+          "status": "minor_connective_variation",
+          "evidence": "Both unprompted models prepend And; probe and prompted small omit it. And is a minor uncertain connective, substantive phrase agrees."
+        },
+        {
+          "start": 279.97,
+          "end": 281.6,
+          "en": "A belated birthday present.",
+          "zh": "一份迟到的生日礼物。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 281.6,
+          "end": 283.62,
+          "en": "Turned 24 years old yesterday.",
+          "zh": "她昨天刚满24岁。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 284.32,
+          "end": 286.12,
+          "en": "And Zheng Qinwen in front of her home crowd",
+          "zh": "郑钦文在主场观众面前",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 286.12,
+          "end": 288.96,
+          "en": "into the semifinals of the China Open.",
+          "zh": "打进了中国网球公开赛半决赛。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 289.32,
+          "end": 290.9,
+          "en": "Six three, seven six.",
+          "zh": "比分6比3、7比6。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 291.58,
+          "end": 292.6,
+          "en": "What a win. What a moment.",
+          "zh": "多么精彩的胜利，多么动人的时刻。",
+          "status": "supported_core_phrase_names_normalized"
+        },
+        {
+          "start": 292.9,
+          "end": 296.35,
+          "en": "Second time that she's been in the semifinals here in Beijing.",
+          "zh": "这是她第二次打进北京站半决赛。",
+          "status": "supported_core_phrase_names_normalized"
+        }
+      ],
+      "small_en_unprompted_raw_segments": [
+        {
+          "start": 262.32,
+          "end": 268.26,
+          "text": " And it's a belated birthday gift for Jung Kin-wen and she cannot believe it.",
+          "avg_logprob": -0.315115628419099,
+          "no_speech_prob": 0.7508095502853394,
+          "words": [
+            {
+              "start": 262.32,
+              "end": 263.0,
+              "word": " And",
+              "probability": 0.6304369568824768
+            },
+            {
+              "start": 263.0,
+              "end": 263.23999999999995,
+              "word": " it's",
+              "probability": 0.9324605166912079
+            },
+            {
+              "start": 263.23999999999995,
+              "end": 263.35999999999996,
+              "word": " a",
+              "probability": 0.990496039390564
+            },
+            {
+              "start": 263.35999999999996,
+              "end": 263.78,
+              "word": " belated",
+              "probability": 0.9917377829551697
+            },
+            {
+              "start": 263.78,
+              "end": 264.26,
+              "word": " birthday",
+              "probability": 0.9951199889183044
+            },
+            {
+              "start": 264.26,
+              "end": 264.7,
+              "word": " gift",
+              "probability": 0.9967471361160278
+            },
+            {
+              "start": 264.7,
+              "end": 265.26,
+              "word": " for",
+              "probability": 0.979197084903717
+            },
+            {
+              "start": 265.26,
+              "end": 265.96,
+              "word": " Jung",
+              "probability": 0.14682450890541077
+            },
+            {
+              "start": 265.96,
+              "end": 266.32,
+              "word": " Kin",
+              "probability": 0.5694122314453125
+            },
+            {
+              "start": 266.32,
+              "end": 266.58,
+              "word": "-wen",
+              "probability": 0.440258264541626
+            },
+            {
+              "start": 266.58,
+              "end": 266.84,
+              "word": " and",
+              "probability": 0.6899384260177612
+            },
+            {
+              "start": 266.84,
+              "end": 267.11999999999995,
+              "word": " she",
+              "probability": 0.9918310046195984
+            },
+            {
+              "start": 267.11999999999995,
+              "end": 267.47999999999996,
+              "word": " cannot",
+              "probability": 0.8915094137191772
+            },
+            {
+              "start": 267.47999999999996,
+              "end": 267.82,
+              "word": " believe",
+              "probability": 0.995469331741333
+            },
+            {
+              "start": 267.82,
+              "end": 268.26,
+              "word": " it.",
+              "probability": 0.9969481825828552
+            }
+          ]
+        },
+        {
+          "start": 269.15999999999997,
+          "end": 274.94,
+          "text": " Onto the ground she goes and her coaches are enjoying that, look at Perriva, he's loving",
+          "avg_logprob": -0.315115628419099,
+          "no_speech_prob": 0.7508095502853394,
+          "words": [
+            {
+              "start": 269.15999999999997,
+              "end": 269.32,
+              "word": " Onto",
+              "probability": 0.6835422217845917
+            },
+            {
+              "start": 269.32,
+              "end": 269.44,
+              "word": " the",
+              "probability": 0.9946103096008301
+            },
+            {
+              "start": 269.44,
+              "end": 269.73999999999995,
+              "word": " ground",
+              "probability": 0.99437016248703
+            },
+            {
+              "start": 269.73999999999995,
+              "end": 270.0,
+              "word": " she",
+              "probability": 0.7144647240638733
+            },
+            {
+              "start": 270.0,
+              "end": 270.35999999999996,
+              "word": " goes",
+              "probability": 0.9985809326171875
+            },
+            {
+              "start": 270.35999999999996,
+              "end": 271.7,
+              "word": " and",
+              "probability": 0.282962828874588
+            },
+            {
+              "start": 271.7,
+              "end": 271.84,
+              "word": " her",
+              "probability": 0.9906988739967346
+            },
+            {
+              "start": 271.84,
+              "end": 272.17999999999995,
+              "word": " coaches",
+              "probability": 0.9870278835296631
+            },
+            {
+              "start": 272.17999999999995,
+              "end": 272.59999999999997,
+              "word": " are",
+              "probability": 0.9853954315185547
+            },
+            {
+              "start": 272.59999999999997,
+              "end": 273.4,
+              "word": " enjoying",
+              "probability": 0.9939956068992615
+            },
+            {
+              "start": 273.4,
+              "end": 273.78,
+              "word": " that,",
+              "probability": 0.9886186122894287
+            },
+            {
+              "start": 273.91999999999996,
+              "end": 273.91999999999996,
+              "word": " look",
+              "probability": 0.6155504584312439
+            },
+            {
+              "start": 273.91999999999996,
+              "end": 274.03999999999996,
+              "word": " at",
+              "probability": 0.9190154075622559
+            },
+            {
+              "start": 274.03999999999996,
+              "end": 274.52,
+              "word": " Perriva,",
+              "probability": 0.44380756715933484
+            },
+            {
+              "start": 274.64,
+              "end": 274.76,
+              "word": " he's",
+              "probability": 0.9493914842605591
+            },
+            {
+              "start": 274.76,
+              "end": 274.94,
+              "word": " loving",
+              "probability": 0.9570306539535522
+            }
+          ]
+        },
+        {
+          "start": 274.94,
+          "end": 275.2,
+          "text": " it.",
+          "avg_logprob": -0.315115628419099,
+          "no_speech_prob": 0.7508095502853394,
+          "words": [
+            {
+              "start": 274.94,
+              "end": 275.2,
+              "word": " it.",
+              "probability": 0.9900505542755127
+            }
+          ]
+        },
+        {
+          "start": 275.34,
+          "end": 277.35999999999996,
+          "text": " And the crowd going wild in Beijing.",
+          "avg_logprob": -0.315115628419099,
+          "no_speech_prob": 0.7508095502853394,
+          "words": [
+            {
+              "start": 275.34,
+              "end": 275.4,
+              "word": " And",
+              "probability": 0.4864566922187805
+            },
+            {
+              "start": 275.4,
+              "end": 275.52,
+              "word": " the",
+              "probability": 0.9911088943481445
+            },
+            {
+              "start": 275.52,
+              "end": 275.79999999999995,
+              "word": " crowd",
+              "probability": 0.9987013339996338
+            },
+            {
+              "start": 275.79999999999995,
+              "end": 276.2,
+              "word": " going",
+              "probability": 0.9084278345108032
+            },
+            {
+              "start": 276.2,
+              "end": 276.58,
+              "word": " wild",
+              "probability": 0.995612621307373
+            },
+            {
+              "start": 276.58,
+              "end": 276.91999999999996,
+              "word": " in",
+              "probability": 0.9931548833847046
+            },
+            {
+              "start": 276.91999999999996,
+              "end": 277.35999999999996,
+              "word": " Beijing.",
+              "probability": 0.9954417943954468
+            }
+          ]
+        },
+        {
+          "start": 279.46,
+          "end": 285.44,
+          "text": " A belated birthday present turned 24 years old yesterday and Jung Kin-wen in front of",
+          "avg_logprob": -0.315115628419099,
+          "no_speech_prob": 0.7508095502853394,
+          "words": [
+            {
+              "start": 279.46,
+              "end": 280.14,
+              "word": " A",
+              "probability": 0.8938363194465637
+            },
+            {
+              "start": 280.14,
+              "end": 280.7,
+              "word": " belated",
+              "probability": 0.999028742313385
+            },
+            {
+              "start": 280.7,
+              "end": 281.17999999999995,
+              "word": " birthday",
+              "probability": 0.9902894496917725
+            },
+            {
+              "start": 281.17999999999995,
+              "end": 281.59999999999997,
+              "word": " present",
+              "probability": 0.9957606196403503
+            },
+            {
+              "start": 281.59999999999997,
+              "end": 281.88,
+              "word": " turned",
+              "probability": 0.8726339936256409
+            },
+            {
+              "start": 281.88,
+              "end": 282.55999999999995,
+              "word": " 24",
+              "probability": 0.9374665021896362
+            },
+            {
+              "start": 282.55999999999995,
+              "end": 282.88,
+              "word": " years",
+              "probability": 0.9436615705490112
+            },
+            {
+              "start": 282.88,
+              "end": 283.2,
+              "word": " old",
+              "probability": 0.9949561953544617
+            },
+            {
+              "start": 283.2,
+              "end": 283.59999999999997,
+              "word": " yesterday",
+              "probability": 0.9913522005081177
+            },
+            {
+              "start": 283.59999999999997,
+              "end": 284.38,
+              "word": " and",
+              "probability": 0.6943874955177307
+            },
+            {
+              "start": 284.38,
+              "end": 284.59999999999997,
+              "word": " Jung",
+              "probability": 0.9682227373123169
+            },
+            {
+              "start": 284.59999999999997,
+              "end": 284.79999999999995,
+              "word": " Kin",
+              "probability": 0.9461736083030701
+            },
+            {
+              "start": 284.79999999999995,
+              "end": 284.97999999999996,
+              "word": "-wen",
+              "probability": 0.9937663674354553
+            },
+            {
+              "start": 284.97999999999996,
+              "end": 285.2,
+              "word": " in",
+              "probability": 0.9022508859634399
+            },
+            {
+              "start": 285.2,
+              "end": 285.35999999999996,
+              "word": " front",
+              "probability": 0.9972062706947327
+            },
+            {
+              "start": 285.35999999999996,
+              "end": 285.7,
+              "word": " of",
+              "probability": 0.9978097081184387
+            }
+          ]
+        },
+        {
+          "start": 285.7,
+          "end": 290.91999999999996,
+          "text": " the home crowd into the semi-finals of the China Open, 6-3, 7-6.",
+          "avg_logprob": -0.23802000162552814,
+          "no_speech_prob": 0.9125509262084961,
+          "words": [
+            {
+              "start": 285.7,
+              "end": 285.82,
+              "word": " the",
+              "probability": 0.06869377195835114
+            },
+            {
+              "start": 285.82,
+              "end": 285.82,
+              "word": " home",
+              "probability": 0.5780113935470581
+            },
+            {
+              "start": 285.82,
+              "end": 286.12,
+              "word": " crowd",
+              "probability": 0.9826447367668152
+            },
+            {
+              "start": 286.12,
+              "end": 286.62,
+              "word": " into",
+              "probability": 0.9496096968650818
+            },
+            {
+              "start": 286.62,
+              "end": 286.79999999999995,
+              "word": " the",
+              "probability": 0.9909606575965881
+            },
+            {
+              "start": 286.79999999999995,
+              "end": 287.05999999999995,
+              "word": " semi",
+              "probability": 0.414823055267334
+            },
+            {
+              "start": 287.05999999999995,
+              "end": 287.52,
+              "word": "-finals",
+              "probability": 0.680999755859375
+            },
+            {
+              "start": 287.52,
+              "end": 288.09999999999997,
+              "word": " of",
+              "probability": 0.97324138879776
+            },
+            {
+              "start": 288.09999999999997,
+              "end": 288.23999999999995,
+              "word": " the",
+              "probability": 0.9833735227584839
+            },
+            {
+              "start": 288.23999999999995,
+              "end": 288.53999999999996,
+              "word": " China",
+              "probability": 0.9683977365493774
+            },
+            {
+              "start": 288.53999999999996,
+              "end": 288.96,
+              "word": " Open,",
+              "probability": 0.9254162907600403
+            },
+            {
+              "start": 289.2,
+              "end": 289.58,
+              "word": " 6",
+              "probability": 0.6995764374732971
+            },
+            {
+              "start": 289.58,
+              "end": 289.9,
+              "word": "-3,",
+              "probability": 0.7786679565906525
+            },
+            {
+              "start": 290.41999999999996,
+              "end": 290.47999999999996,
+              "word": " 7",
+              "probability": 0.9863834381103516
+            },
+            {
+              "start": 290.47999999999996,
+              "end": 290.91999999999996,
+              "word": "-6.",
+              "probability": 0.9982317686080933
+            }
+          ]
+        },
+        {
+          "start": 291.58,
+          "end": 296.32,
+          "text": " What a win, what a moment, second time that she's been in the semi-finals here in Beijing.",
+          "avg_logprob": -0.23802000162552814,
+          "no_speech_prob": 0.9125509262084961,
+          "words": [
+            {
+              "start": 291.58,
+              "end": 291.64,
+              "word": " What",
+              "probability": 0.9936187267303467
+            },
+            {
+              "start": 291.64,
+              "end": 291.78,
+              "word": " a",
+              "probability": 0.9991793036460876
+            },
+            {
+              "start": 291.78,
+              "end": 291.96,
+              "word": " win,",
+              "probability": 0.9907044768333435
+            },
+            {
+              "start": 292.12,
+              "end": 292.21999999999997,
+              "word": " what",
+              "probability": 0.9953189492225647
+            },
+            {
+              "start": 292.21999999999997,
+              "end": 292.34,
+              "word": " a",
+              "probability": 0.996978759765625
+            },
+            {
+              "start": 292.34,
+              "end": 292.62,
+              "word": " moment,",
+              "probability": 0.9984177350997925
+            },
+            {
+              "start": 292.82,
+              "end": 293.03999999999996,
+              "word": " second",
+              "probability": 0.9423093199729919
+            },
+            {
+              "start": 293.03999999999996,
+              "end": 293.53999999999996,
+              "word": " time",
+              "probability": 0.9925662279129028
+            },
+            {
+              "start": 293.53999999999996,
+              "end": 293.7,
+              "word": " that",
+              "probability": 0.9682943224906921
+            },
+            {
+              "start": 293.7,
+              "end": 293.94,
+              "word": " she's",
+              "probability": 0.9723497927188873
+            },
+            {
+              "start": 293.94,
+              "end": 294.09999999999997,
+              "word": " been",
+              "probability": 0.9984683394432068
+            },
+            {
+              "start": 294.09999999999997,
+              "end": 294.41999999999996,
+              "word": " in",
+              "probability": 0.9977118968963623
+            },
+            {
+              "start": 294.41999999999996,
+              "end": 295.09999999999997,
+              "word": " the",
+              "probability": 0.9600022435188293
+            },
+            {
+              "start": 295.09999999999997,
+              "end": 295.32,
+              "word": " semi",
+              "probability": 0.9778738617897034
+            },
+            {
+              "start": 295.32,
+              "end": 295.76,
+              "word": "-finals",
+              "probability": 0.9860185980796814
+            },
+            {
+              "start": 295.76,
+              "end": 296.0,
+              "word": " here",
+              "probability": 0.9841737747192383
+            },
+            {
+              "start": 296.0,
+              "end": 296.17999999999995,
+              "word": " in",
+              "probability": 0.9963812232017517
+            },
+            {
+              "start": 296.17999999999995,
+              "end": 296.32,
+              "word": " Beijing.",
+              "probability": 0.927646815776825
+            }
+          ]
+        }
+      ],
+      "base_en_unprompted_raw_segments": [
+        {
+          "start": 262.34,
+          "end": 265.15999999999997,
+          "text": " And it's a belated birthday gift for",
+          "avg_logprob": -0.508316665103561,
+          "no_speech_prob": 0.3736518323421478,
+          "words": [
+            {
+              "start": 262.34,
+              "end": 262.96,
+              "word": " And",
+              "probability": 0.27024635672569275
+            },
+            {
+              "start": 262.96,
+              "end": 263.21999999999997,
+              "word": " it's",
+              "probability": 0.9686375558376312
+            },
+            {
+              "start": 263.21999999999997,
+              "end": 263.28,
+              "word": " a",
+              "probability": 0.9901973009109497
+            },
+            {
+              "start": 263.28,
+              "end": 263.7,
+              "word": " belated",
+              "probability": 0.9885973632335663
+            },
+            {
+              "start": 263.7,
+              "end": 264.02,
+              "word": " birthday",
+              "probability": 0.9709392189979553
+            },
+            {
+              "start": 264.02,
+              "end": 264.53999999999996,
+              "word": " gift",
+              "probability": 0.995452344417572
+            },
+            {
+              "start": 264.53999999999996,
+              "end": 265.15999999999997,
+              "word": " for",
+              "probability": 0.9841229319572449
+            }
+          ]
+        },
+        {
+          "start": 265.84,
+          "end": 268.0,
+          "text": " Zhunkinwen and she cannot believe it.",
+          "avg_logprob": -0.508316665103561,
+          "no_speech_prob": 0.3736518323421478,
+          "words": [
+            {
+              "start": 265.84,
+              "end": 266.46,
+              "word": " Zhunkinwen",
+              "probability": 0.3871837556362152
+            },
+            {
+              "start": 266.46,
+              "end": 266.78,
+              "word": " and",
+              "probability": 0.5257188081741333
+            },
+            {
+              "start": 266.78,
+              "end": 267.06,
+              "word": " she",
+              "probability": 0.9916245341300964
+            },
+            {
+              "start": 267.06,
+              "end": 267.34,
+              "word": " cannot",
+              "probability": 0.8901281952857971
+            },
+            {
+              "start": 267.34,
+              "end": 267.76,
+              "word": " believe",
+              "probability": 0.9765897393226624
+            },
+            {
+              "start": 267.76,
+              "end": 268.0,
+              "word": " it.",
+              "probability": 0.9953847527503967
+            }
+          ]
+        },
+        {
+          "start": 268.7,
+          "end": 273.7,
+          "text": " Onto the ground, she goes, and her coaches are enjoying that.",
+          "avg_logprob": -0.508316665103561,
+          "no_speech_prob": 0.3736518323421478,
+          "words": [
+            {
+              "start": 268.7,
+              "end": 269.32,
+              "word": " Onto",
+              "probability": 0.7903567552566528
+            },
+            {
+              "start": 269.32,
+              "end": 269.4,
+              "word": " the",
+              "probability": 0.9883461594581604
+            },
+            {
+              "start": 269.4,
+              "end": 269.64,
+              "word": " ground,",
+              "probability": 0.9111745953559875
+            },
+            {
+              "start": 269.9,
+              "end": 269.96,
+              "word": " she",
+              "probability": 0.9688387513160706
+            },
+            {
+              "start": 269.96,
+              "end": 270.21999999999997,
+              "word": " goes,",
+              "probability": 0.9937810301780701
+            },
+            {
+              "start": 271.46,
+              "end": 271.65999999999997,
+              "word": " and",
+              "probability": 0.9563961625099182
+            },
+            {
+              "start": 271.65999999999997,
+              "end": 271.78,
+              "word": " her",
+              "probability": 0.9943141341209412
+            },
+            {
+              "start": 271.78,
+              "end": 272.09999999999997,
+              "word": " coaches",
+              "probability": 0.8559991717338562
+            },
+            {
+              "start": 272.09999999999997,
+              "end": 272.44,
+              "word": " are",
+              "probability": 0.9899711608886719
+            },
+            {
+              "start": 272.44,
+              "end": 273.2,
+              "word": " enjoying",
+              "probability": 0.9955754280090332
+            },
+            {
+              "start": 273.2,
+              "end": 273.7,
+              "word": " that.",
+              "probability": 0.976177990436554
+            }
+          ]
+        },
+        {
+          "start": 273.88,
+          "end": 277.03999999999996,
+          "text": " Like a pariva, he's loving it, and the crowd going wild in Beijing.",
+          "avg_logprob": -0.508316665103561,
+          "no_speech_prob": 0.3736518323421478,
+          "words": [
+            {
+              "start": 273.88,
+              "end": 273.88,
+              "word": " Like",
+              "probability": 0.4284234344959259
+            },
+            {
+              "start": 273.88,
+              "end": 273.96,
+              "word": " a",
+              "probability": 0.7390676140785217
+            },
+            {
+              "start": 273.96,
+              "end": 274.35999999999996,
+              "word": " pariva,",
+              "probability": 0.290800292044878
+            },
+            {
+              "start": 274.59999999999997,
+              "end": 274.67999999999995,
+              "word": " he's",
+              "probability": 0.949514776468277
+            },
+            {
+              "start": 274.67999999999995,
+              "end": 274.9,
+              "word": " loving",
+              "probability": 0.9512145519256592
+            },
+            {
+              "start": 274.9,
+              "end": 275.09999999999997,
+              "word": " it,",
+              "probability": 0.9808719158172607
+            },
+            {
+              "start": 275.32,
+              "end": 275.32,
+              "word": " and",
+              "probability": 0.6424165964126587
+            },
+            {
+              "start": 275.32,
+              "end": 275.4,
+              "word": " the",
+              "probability": 0.8985914587974548
+            },
+            {
+              "start": 275.4,
+              "end": 275.64,
+              "word": " crowd",
+              "probability": 0.9973742961883545
+            },
+            {
+              "start": 275.64,
+              "end": 276.14,
+              "word": " going",
+              "probability": 0.8997508883476257
+            },
+            {
+              "start": 276.14,
+              "end": 276.52,
+              "word": " wild",
+              "probability": 0.9976636171340942
+            },
+            {
+              "start": 276.52,
+              "end": 276.82,
+              "word": " in",
+              "probability": 0.9925746917724609
+            },
+            {
+              "start": 276.82,
+              "end": 277.03999999999996,
+              "word": " Beijing.",
+              "probability": 0.9976536631584167
+            }
+          ]
+        },
+        {
+          "start": 279.38,
+          "end": 284.34,
+          "text": " A belated birthday present turned 24 years old yesterday, and",
+          "avg_logprob": -0.508316665103561,
+          "no_speech_prob": 0.3736518323421478,
+          "words": [
+            {
+              "start": 279.38,
+              "end": 280.0,
+              "word": " A",
+              "probability": 0.9655471444129944
+            },
+            {
+              "start": 280.0,
+              "end": 280.62,
+              "word": " belated",
+              "probability": 0.9987744688987732
+            },
+            {
+              "start": 280.62,
+              "end": 280.91999999999996,
+              "word": " birthday",
+              "probability": 0.9899751543998718
+            },
+            {
+              "start": 280.91999999999996,
+              "end": 281.5,
+              "word": " present",
+              "probability": 0.9928200840950012
+            },
+            {
+              "start": 281.5,
+              "end": 281.82,
+              "word": " turned",
+              "probability": 0.8637398481369019
+            },
+            {
+              "start": 281.82,
+              "end": 282.35999999999996,
+              "word": " 24",
+              "probability": 0.9702963829040527
+            },
+            {
+              "start": 282.35999999999996,
+              "end": 282.84,
+              "word": " years",
+              "probability": 0.9656973481178284
+            },
+            {
+              "start": 282.84,
+              "end": 283.14,
+              "word": " old",
+              "probability": 0.9910585284233093
+            },
+            {
+              "start": 283.14,
+              "end": 283.7,
+              "word": " yesterday,",
+              "probability": 0.961064338684082
+            },
+            {
+              "start": 284.21999999999997,
+              "end": 284.34,
+              "word": " and",
+              "probability": 0.9813451766967773
+            }
+          ]
+        },
+        {
+          "start": 284.34,
+          "end": 290.88,
+          "text": " Zhunkinwen in front of her home crowd into the semifinals of the China Open 6-3, 7-6.",
+          "avg_logprob": -0.24552424387498337,
+          "no_speech_prob": 0.22639323770999908,
+          "words": [
+            {
+              "start": 284.34,
+              "end": 284.9,
+              "word": " Zhunkinwen",
+              "probability": 0.3378642910902272
+            },
+            {
+              "start": 284.9,
+              "end": 285.09999999999997,
+              "word": " in",
+              "probability": 0.8752797842025757
+            },
+            {
+              "start": 285.09999999999997,
+              "end": 285.29999999999995,
+              "word": " front",
+              "probability": 0.9962848424911499
+            },
+            {
+              "start": 285.29999999999995,
+              "end": 285.46,
+              "word": " of",
+              "probability": 0.9979490637779236
+            },
+            {
+              "start": 285.46,
+              "end": 285.55999999999995,
+              "word": " her",
+              "probability": 0.9877749681472778
+            },
+            {
+              "start": 285.55999999999995,
+              "end": 285.73999999999995,
+              "word": " home",
+              "probability": 0.9920958876609802
+            },
+            {
+              "start": 285.73999999999995,
+              "end": 286.02,
+              "word": " crowd",
+              "probability": 0.9817054271697998
+            },
+            {
+              "start": 286.02,
+              "end": 286.4,
+              "word": " into",
+              "probability": 0.8568453192710876
+            },
+            {
+              "start": 286.4,
+              "end": 286.73999999999995,
+              "word": " the",
+              "probability": 0.9948464632034302
+            },
+            {
+              "start": 286.73999999999995,
+              "end": 287.08,
+              "word": " semifinals",
+              "probability": 0.7115821838378906
+            },
+            {
+              "start": 287.08,
+              "end": 288.03999999999996,
+              "word": " of",
+              "probability": 0.9740890860557556
+            },
+            {
+              "start": 288.03999999999996,
+              "end": 288.17999999999995,
+              "word": " the",
+              "probability": 0.9854466915130615
+            },
+            {
+              "start": 288.17999999999995,
+              "end": 288.41999999999996,
+              "word": " China",
+              "probability": 0.8753248453140259
+            },
+            {
+              "start": 288.41999999999996,
+              "end": 288.85999999999996,
+              "word": " Open",
+              "probability": 0.9492185711860657
+            },
+            {
+              "start": 288.85999999999996,
+              "end": 289.47999999999996,
+              "word": " 6",
+              "probability": 0.4527687728404999
+            },
+            {
+              "start": 289.47999999999996,
+              "end": 289.84,
+              "word": "-3,",
+              "probability": 0.6960261762142181
+            },
+            {
+              "start": 290.28,
+              "end": 290.46,
+              "word": " 7",
+              "probability": 0.9807141423225403
+            },
+            {
+              "start": 290.46,
+              "end": 290.88,
+              "word": "-6.",
+              "probability": 0.9975095093250275
+            }
+          ]
+        },
+        {
+          "start": 291.35999999999996,
+          "end": 294.21999999999997,
+          "text": " What a win, what a moment, second time that she's been in.",
+          "avg_logprob": -0.24552424387498337,
+          "no_speech_prob": 0.22639323770999908,
+          "words": [
+            {
+              "start": 291.35999999999996,
+              "end": 291.59999999999997,
+              "word": " What",
+              "probability": 0.9841585159301758
+            },
+            {
+              "start": 291.59999999999997,
+              "end": 291.71999999999997,
+              "word": " a",
+              "probability": 0.999237060546875
+            },
+            {
+              "start": 291.71999999999997,
+              "end": 291.9,
+              "word": " win,",
+              "probability": 0.9980841875076294
+            },
+            {
+              "start": 292.12,
+              "end": 292.17999999999995,
+              "word": " what",
+              "probability": 0.9949485063552856
+            },
+            {
+              "start": 292.17999999999995,
+              "end": 292.28,
+              "word": " a",
+              "probability": 0.999038815498352
+            },
+            {
+              "start": 292.28,
+              "end": 292.47999999999996,
+              "word": " moment,",
+              "probability": 0.9939101934432983
+            },
+            {
+              "start": 292.71999999999997,
+              "end": 292.97999999999996,
+              "word": " second",
+              "probability": 0.9844287633895874
+            },
+            {
+              "start": 292.97999999999996,
+              "end": 293.47999999999996,
+              "word": " time",
+              "probability": 0.9977530837059021
+            },
+            {
+              "start": 293.47999999999996,
+              "end": 293.65999999999997,
+              "word": " that",
+              "probability": 0.9582793712615967
+            },
+            {
+              "start": 293.65999999999997,
+              "end": 293.88,
+              "word": " she's",
+              "probability": 0.9899344742298126
+            },
+            {
+              "start": 293.88,
+              "end": 294.03999999999996,
+              "word": " been",
+              "probability": 0.9978087544441223
+            },
+            {
+              "start": 294.03999999999996,
+              "end": 294.21999999999997,
+              "word": " in.",
+              "probability": 0.9966751337051392
+            }
+          ]
+        },
+        {
+          "start": 294.94,
+          "end": 296.23999999999995,
+          "text": " The semifinals here in Beijing.",
+          "avg_logprob": -0.24552424387498337,
+          "no_speech_prob": 0.22639323770999908,
+          "words": [
+            {
+              "start": 294.94,
+              "end": 295.03999999999996,
+              "word": " The",
+              "probability": 0.9851611852645874
+            },
+            {
+              "start": 295.03999999999996,
+              "end": 295.46,
+              "word": " semifinals",
+              "probability": 0.943165123462677
+            },
+            {
+              "start": 295.46,
+              "end": 295.94,
+              "word": " here",
+              "probability": 0.9784718155860901
+            },
+            {
+              "start": 295.94,
+              "end": 296.09999999999997,
+              "word": " in",
+              "probability": 0.991926908493042
+            },
+            {
+              "start": 296.09999999999997,
+              "end": 296.23999999999995,
+              "word": " Beijing.",
+              "probability": 0.960787832736969
+            }
+          ]
+        }
+      ],
+      "probe_captions": [
+        {
+          "start": 262.8,
+          "text": "And it's a belated birthday gift for"
+        },
+        {
+          "start": 265.76,
+          "text": "Jangqinwen. And she cannot believe it."
+        },
+        {
+          "start": 268.96,
+          "text": "Onto the ground she goes. And her"
+        },
+        {
+          "start": 271.92,
+          "text": "coaches are enjoying that. Look at"
+        },
+        {
+          "start": 274.08,
+          "text": "Pereiva. He's loving it. The crowd going"
+        },
+        {
+          "start": 276.32,
+          "text": "wild in Beijing. [cheering]"
+        },
+        {
+          "start": 280.0,
+          "text": "A belated birthday present. Turned 24"
+        },
+        {
+          "start": 282.8,
+          "text": "years old yesterday. And Junkin went in"
+        },
+        {
+          "start": 285.28,
+          "text": "front of her home crowd into the"
+        },
+        {
+          "start": 286.88,
+          "text": "semifinals of the China Open. 6376."
+        },
+        {
+          "start": 291.44,
+          "text": "What a win. What a moment. Second time"
+        },
+        {
+          "start": 293.52,
+          "text": "that she's been in the semi-finals here"
+        },
+        {
+          "start": 296.0,
+          "text": "in Beijing."
+        }
+      ],
+      "editor_review_status": "Parent review pending; ASR agreement is not claimed as manual listening."
+    }
+  ]
+}
